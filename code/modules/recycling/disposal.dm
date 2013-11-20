@@ -499,7 +499,7 @@
 		for(var/obj/O in D)
 			if(O.contents)
 				for(var/mob/living/M in O.contents)
-					if(M && M.stat != 2 && !istype(M.get_item_by_slot(slot_w_uniform), /obj/item/clothing/under/syndiemail)) //Snowflakey check for the mailman jumpsuit.
+					if(M && M.stat != 2)
 						hasmob = 1
 
 		// now everything inside the disposal gets put into the holder
@@ -984,10 +984,10 @@
 		if(istype(I, /obj/item/device/destTagger))
 			var/obj/item/device/destTagger/O = I
 
-			if(O.currTag > 0)// Tag set
-				sortType = O.currTag
+			if(O.sortTag > 0)// Tag set
+				sortType = O.sortTag
 				playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
-				var/tag = uppertext(TAGGERLOCATIONS[O.currTag])
+				var/tag = uppertext(TAGGERLOCATIONS[O.sortTag])
 				user << "\blue Changed filter to [tag]"
 				updatedesc()
 

@@ -8,20 +8,6 @@
 	var/sortTag //Disposals code reads this.
 	action_button_name = "Set Tag"
 
-/obj/item/clothing/under/syndiemail/proc/openwindow(mob/user)
-	var/dat = "<tt><center><h1><b>MailRider 0.3</b></h1></center>"
-
-	dat += "<table style='width:100%; padding:4px;'><tr>"
-	for (var/i = 1, i <= TAGGERLOCATIONS.len, i++)
-		dat += "<td><a href='?src=\ref[src];nextTag=[i]'>[TAGGERLOCATIONS[i]]</a></td>"
-
-		if(i%4==0)
-			dat += "</tr><tr>"
-
-	dat += "</tr></table><br>Current Selection: [sortTag ? TAGGERLOCATIONS[sortTag] : "None"]</tt>"
-
-	user << browse(dat, "window=destTagScreen;size=450x350")
-	onclose(user, "destTagScreen")
 
 /obj/item/clothing/under/syndiemail/Topic(href, href_list)
 	if (usr.restrained() || usr.stat)
@@ -30,11 +16,11 @@
 	if(href_list["nextTag"])
 		var/n = text2num(href_list["nextTag"])
 		sortTag = n
-	openwindow(usr)
+	tag_menu(usr, src)
 
 /obj/item/clothing/under/syndiemail/attack_self(mob/user)
 	..()
-	openwindow(user)
+	tag_menu(user, src)
 
 /obj/item/clothing/under/syndiemail/verb/toggle_light()
 	set name = "Set Tag"

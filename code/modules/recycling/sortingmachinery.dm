@@ -1,3 +1,18 @@
+/proc/tag_menu(mob/user, obj/item/device/destTagger/target) //used for disposal taggers and mailman jumpsuits. totally worth it to prevent 14 lines of copypaste
+	var/dat = "<tt><center><h1><b>TagMaster 2.2</b></h1></center>"
+
+	dat += "<table style='width:100%; padding:4px;'><tr>"
+	for (var/i = 1, i <= TAGGERLOCATIONS.len, i++)
+		dat += "<td><a href='?src=\ref[target];nextTag=[i]'>[TAGGERLOCATIONS[i]]</a></td>"
+
+		if(i%4==0)
+			dat += "</tr><tr>"
+
+	dat += "</tr></table><br>Current Selection: [target.sortTag ? TAGGERLOCATIONS[target.sortTag] : "None"]</tt>"
+
+	user << browse(dat, "window=destTagScreen;size=450x350")
+	onclose(user, "destTagScreen")
+
 /obj/structure/bigDelivery
 	name = "large parcel"
 	desc = "A big wrapped package."
@@ -23,10 +38,10 @@
 		if(istype(W, /obj/item/device/destTagger))
 			var/obj/item/device/destTagger/O = W
 
-			if(sortTag != O.currTag)
-				var/tag = uppertext(TAGGERLOCATIONS[O.currTag])
+			if(sortTag != O.sortTag)
+				var/tag = uppertext(TAGGERLOCATIONS[O.sortTag])
 				user << "\blue *[tag]*"
-				sortTag = O.currTag
+				sortTag = O.sortTag
 				playsound(loc, 'sound/machines/twobeep.ogg', 100, 1)
 
 		else if(istype(W, /obj/item/weapon/pen))
@@ -70,10 +85,10 @@
 		if(istype(W, /obj/item/device/destTagger))
 			var/obj/item/device/destTagger/O = W
 
-			if(sortTag != O.currTag)
-				var/tag = uppertext(TAGGERLOCATIONS[O.currTag])
+			if(sortTag != O.sortTag)
+				var/tag = uppertext(TAGGERLOCATIONS[O.sortTag])
 				user << "\blue *[tag]*"
-				sortTag = O.currTag
+				sortTag = O.sortTag
 				playsound(loc, 'sound/machines/twobeep.ogg', 100, 1)
 
 		else if(istype(W, /obj/item/weapon/pen))
@@ -170,7 +185,7 @@
 	name = "destination tagger"
 	desc = "Used to set the destination of properly wrapped packages."
 	icon_state = "forensic0"
-	var/currTag = 0
+	var/sortTag = 0
 	//The whole system for the sorttype var is determined based on the order of this list,
 	//disposals must always be 1, since anything that's untagged will automatically go to disposals, or sorttype = 1 --Superxpdude
 
@@ -182,31 +197,18 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
 
-/obj/item/device/destTagger/proc/openwindow(mob/user)
-	var/dat = "<tt><center><h1><b>TagMaster 2.2</b></h1></center>"
-
-	dat += "<table style='width:100%; padding:4px;'><tr>"
-	for (var/i = 1, i <= TAGGERLOCATIONS.len, i++)
-		dat += "<td><a href='?src=\ref[src];nextTag=[i]'>[TAGGERLOCATIONS[i]]</a></td>"
-
-		if(i%4==0)
-			dat += "</tr><tr>"
-
-	dat += "</tr></table><br>Current Selection: [currTag ? TAGGERLOCATIONS[currTag] : "None"]</tt>"
-
-	user << browse(dat, "window=destTagScreen;size=450x350")
-	onclose(user, "destTagScreen")
-
 /obj/item/device/destTagger/attack_self(mob/user as mob)
-	openwindow(user)
+	tag_menu(user, src)
 	return
 
 /obj/item/device/destTagger/Topic(href, href_list)
 	add_fingerprint(usr)
+	world << "dm is a shitfest"
 	if(href_list["nextTag"])
+		world << "byond is a laggy clusterfuck"
 		var/n = text2num(href_list["nextTag"])
-		currTag = n
-	openwindow(usr)
+		sortTag = n
+	tag_menu(usr, src)
 
 /obj/machinery/disposal/deliveryChute
 	name = "delivery chute"

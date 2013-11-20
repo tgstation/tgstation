@@ -13,8 +13,10 @@ By Miauw */
 	var/saved_icon_state
 	var/saved_dir
 	var/saved_item_state
+	var/saved_pixel_x
+	var/saved_pixel_y
 
-	var/list/forbidden_objs = list(/obj/item/weapon/reagent_containers/food/snacks/icecream, /obj/structure/sign, /obj/structure/cable, /obj/machinery/atmospherics/pipe, /obj/machinery/light, /obj/machinery/hologram, /obj/machinery/camera, /obj/machinery/power/apc, /obj/machinery/field/containment, /obj/machinery/shieldwall, /obj/machinery/shield, /obj/effect, /obj/screen, /obj/structure/c_tray, /obj/structure/shuttle, /obj/structure/disposalpipe) //Some things just shouldn't be scanned. This mostly has to do with overlays or things that don't make sense, like AI holograms.
+	var/list/forbidden_objs = list(/obj/item/weapon/reagent_containers/food/snacks/icecream, /obj/structure/sign, /obj/structure/cable, /obj/machinery/atmospherics, /obj/machinery/light, /obj/machinery/hologram, /obj/machinery/camera, /obj/machinery/power/apc, /obj/machinery/field/containment, /obj/machinery/shieldwall, /obj/machinery/shield, /obj/effect, /obj/screen /*Just to be sure*/, /obj/structure/c_tray, /obj/structure/shuttle, /obj/structure/disposalpipe, /obj/machinery/alarm, /obj/machinery/access_button, /obj/machinery/embedded_controller, /obj/machinery/flasher_button, /obj/machinery/ignition_switch, /obj/machinery/light_switch, /obj/machinery/power/terminal, /obj/machinery/airlock_sensor, /obj/structure/extinguisher_cabinet, /obj/machinery/computer/security/telescreen/entertainment, /obj/item/ammo_casing, /obj/item/weapon/cigbutt, /obj/item/weapon/match, /obj/item/weapon/pai_cable, /obj/item/weapon/pen, /obj/item/weapon/paper_bin, /obj/item/device/radio/beacon, /obj/item/device/radio/intercom, /obj/item/trash, /obj/item/clothing/mask/cigarette, /obj/structure/flora, /obj/structure/m_tray, /obj/structure/window, /obj/structure/noticeboard, /obj/machinery/firealarm, /obj/machinery/newscaster, /obj/machinery/requests_console, /obj/structure/plasticflaps, /obj/structure/lattice, /obj/machinery/conveyor, /obj/machinery/keycard_auth, /obj/machinery/driver_button, /obj/machinery/door/firedoor) //Some things just shouldn't be scanned. This generally has to do with: 1. Overlays (Ice cream cones), 2. Stuff that doesn't make sense (Holograms) and 3. Balancing.
 	origin_tech = "syndicate=2;magnets=2"
 
 /obj/item/weapon/storage/box/chameleon/attack_self(mob/user)
@@ -39,6 +41,9 @@ By Miauw */
 			saved_icon = target.icon
 			saved_icon_state = target.icon_state
 			saved_dir = target.dir
+			saved_pixel_x = target.pixel_x
+			saved_pixel_y = target.pixel_y
+
 			if(istype(target, /obj/item))
 				var/obj/item/targetitem = target //Neccesary for item_state
 				saved_item_state = targetitem.item_state
@@ -51,10 +56,11 @@ By Miauw */
 		icon = initial(icon)
 		item_state = initial(item_state)
 		dir = initial(dir)
+		pixel_x = initial(pixel_x)
+		pixel_y = initial(pixel_y)
 
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
 		active = 0
-		//world << "deactivated"
 
 	else if(!active && saved_name) //Only one saved_ var is checked because they're all set at the same time.
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
@@ -65,6 +71,8 @@ By Miauw */
 		icon_state = saved_icon_state
 		item_state = saved_item_state
 		dir = saved_dir
+		pixel_x = saved_pixel_x
+		pixel_y = saved_pixel_y
 
 		saved_name = null //Reset the vars.
 		saved_desc = null
@@ -72,8 +80,9 @@ By Miauw */
 		saved_icon_state = null
 		saved_item_state = null
 		saved_dir = null
+		saved_pixel_x = null
+		saved_pixel_y = null
 
-		//world << "activated"
 		active = 1
 
 	if(istype(loc, /mob/living/carbon)) //Update inhands (hopefully)
@@ -87,7 +96,7 @@ By Miauw */
 		s.set_up(3, 0, src)
 		s.start()
 		toggle()
-		return //Attention, return here. If you're changing this make sure it's on the END of the proc you're calling it in!
+		return //Attention, return here. If you're calling this make sure it's on the END of the proc you're calling it in!
 
 /obj/item/weapon/storage/box/chameleon/handle_item_insertion(obj/item/W, prevent_warning = 0)
 	disrupt() //Can't push things trough from the outside if it's on.

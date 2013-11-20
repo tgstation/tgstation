@@ -402,7 +402,7 @@ var/list/uplink_items = list()
 	name = "Mailman Jumpsuit"
 	desc = "This jumpsuit allows you to use disposals to break into departments by setting the sorting tag."
 	item = /obj/item/clothing/under/syndiemail
-	cost = 2
+	cost = 3
 
 
 // IMPLANTS
