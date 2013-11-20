@@ -151,3 +151,16 @@
 	new /obj/item/weapon/implanter/emp/(src)
 	new /obj/item/device/flashlight/emp/(src)
 	return
+
+/obj/item/weapon/storage/box/syndie_kit/chameleon
+	name = "Chameleon Kit"
+	desc = "Comes with all the clothes you need to impersonate most people.  Acting lessions sold seperately."
+
+/obj/item/weapon/storage/box/syndie_kit/chameleon/New()
+	..()
+	new /obj/item/clothing/under/chameleon(src)
+	new /obj/item/clothing/head/chameleon(src)
+	new /obj/item/clothing/suit/chameleon(src)
+	new /obj/item/clothing/shoes/chameleon(src)
+	new /obj/item/weapon/storage/backpack/chameleon(src)
+	new /obj/item/weapon/paper/nogloves(src)

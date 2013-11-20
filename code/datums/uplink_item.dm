@@ -249,10 +249,10 @@ var/list/uplink_items = list()
 /datum/uplink_item/stealthy_tools
 	category = "Stealth and Camouflage Items"
 
-/datum/uplink_item/stealthy_tools/chameleon_jumpsuit
-	name = "Chameleon Jumpsuit"
-	desc = "A jumpsuit used to imitate the uniforms of Nanotrasen crewmembers."
-	item = /obj/item/clothing/under/chameleon
+/datum/uplink_item/stealthy_tools/chameleon_kit
+	name = "Chameleon Kit"
+	desc = "A kit containing a chameleon jumpsuit, exosuit, helmet, shoes, and backpack, able to alter their appearance to imitate uniforms and armor."
+	item = /obj/item/weapon/storage/box/syndie_kit/chameleon
 	cost = 3
 
 /datum/uplink_item/stealthy_tools/chameleon_stamp
