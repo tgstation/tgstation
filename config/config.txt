@@ -110,11 +110,14 @@ GUEST_BAN
 # Don't set this to the same server, BYOND will automatically restart players to the server when it has restarted.
 # SERVER ss13.example.com:2506
 
+## donate address
+DONATEURL http://www.yogstation.com/index.php?goals/cover-server-forum-hosting.2/donate
+
 ## forum address
-# FORUMURL http://justanotherday.example.com
+FORUMURL http://www.yogstation.com/index.php
 
 ## Wiki address
-# WIKIURL http://www.nanotrasen.com/wiki/index.php
+WIKIURL http://www.nanotrasen.com/wiki/index.php
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
 # BANAPPEALS http://justanotherday.example.com

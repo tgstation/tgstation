@@ -31,6 +31,18 @@
 	src << browse(file(RULES_FILE), "window=rules;size=480x320")
 #undef RULES_FILE
 
+		//Added donate button.
+/client/verb/donate()
+	set name = "donate"
+	set desc = "Donate to the server!"
+	set hidden = 1
+	if( config.donateurl )
+		if(alert("This will open the donation site in your browser. Are you sure?",,"Yes","No")=="No")
+			return
+		src << link(config.donateurl)
+	else
+		src << "\red The donate URL is not set in the server configuration."
+
 /client/verb/hotkeys_help()
 	set name = "hotkeys-help"
 	set category = "OOC"

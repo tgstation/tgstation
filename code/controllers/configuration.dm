@@ -55,6 +55,7 @@
 
 	var/server
 	var/banappeals
+	var/donateurl						//Added donate button.
 	var/wikiurl
 	var/forumurl
 
@@ -238,6 +239,8 @@
 					config.server = value
 				if("banappeals")
 					config.banappeals = value
+				if("donateurl")							//Added donate button.
+					config.donateurl = value
 				if("wikiurl")
 					config.wikiurl = value
 				if("forumurl")
