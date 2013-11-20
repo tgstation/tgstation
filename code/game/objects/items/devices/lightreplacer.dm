@@ -181,7 +181,7 @@
 	emagged = !emagged
 	playsound(src.loc, "sparks", 100, 1)
 	if(emagged)
-		name = "Shortcircuited [initial(name)]"
+		name = "shortcircuited [initial(name)]"
 	else
 		name = initial(name)
 	update_icon()
