@@ -249,7 +249,16 @@ datum/objective/escape
 		else
 			return 0
 
+datum/objective/escapefake //antimeta for an antagonist that usually needs to escape to win in a roundtype that doesn't allow escape
+	explanation_text = "Escape on the shuttle or an escape pod alive." //looks like escape
 
+	check_completion() //works like survive
+		explanation_text = "Stay alive until the end." //reveals itself no matter what
+		if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current))
+			return 0		//Brains no longer win survive objectives. --NEO
+		if(!is_special_character(owner.current)) //This fails borg'd traitors
+			return 0
+		return 1
 
 datum/objective/survive
 	explanation_text = "Stay alive until the end."
@@ -316,6 +325,8 @@ Nobody takes these seriously anyways -- Ikki
 		steal_target = possible_items[target_name]
 		if (!steal_target )
 			steal_target = possible_items_special[target_name]
+		if(ticker.mode.name == "AI malfunction" && target_name == "a functional AI") //Impossible Objective
+			set_target(pick(possible_items))
 		explanation_text = "Steal [target_name]."
 		return steal_target
 
@@ -362,6 +373,8 @@ Nobody takes these seriously anyways -- Ikki
 					for(var/mob/living/silicon/ai/M in C)
 						if(istype(M, /mob/living/silicon/ai) && M.stat != 2) //See if any AI's are alive inside that card.
 							return 1
+				if(ticker.mode.name == "AI malfunction") //Impossible Objective
+					return 1
 
 			if("the station blueprints")
 				for(var/obj/item/I in all_items)	//the actual blueprints are good too!

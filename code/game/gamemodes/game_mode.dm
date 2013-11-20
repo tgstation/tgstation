@@ -31,7 +31,7 @@
 	var/uplink_welcome = "Syndicate Uplink Console:"
 	var/uplink_uses = 10
 	var/antag_flag = null //preferences flag such as BE_WIZARD that need to be turned on for players to be antag
-	var/secondary_antag = null 	//keeps track of what additional antag(s) can spawn in a given mode (if any)
+	var/list/secondary_antag = list() 	//keeps track of what additional antag(s) can spawn in a given mode (if any)
 	var/secondary_chance = 0 	//the probability of there being a secondary antag
 	var/secondary_amount = 1 	//the number of secondary antags that will be spawned if they spawn at all
 
@@ -59,9 +59,10 @@
 ///Attempts to select players for special roles the mode might have. Generic Secondary Antags are delt with here
 /datum/game_mode/proc/pre_setup()
 
-	if(secondary_antag && prob(secondary_chance))
+	if(secondary_antag.len > 0 && prob(secondary_chance))
+		var/chosen_secondary_antag = pick(secondary_antag)
 		var/list/secondary_candidates = list()
-		switch(secondary_antag)
+		switch(chosen_secondary_antag)
 			if("changeling")
 				var/datum/game_mode/changeling/temp = new
 				if(config.protect_roles_from_antagonist)
@@ -72,12 +73,14 @@
 					for(var/job in temp.restricted_jobs)
 						if(player.assigned_role == job)
 							secondary_candidates -= player
+			else
+				error("An invalid secondary antag, [chosen_secondary_antag], was specified. Valid secondary antag values are: changeling and the null set")
 
 		if(secondary_candidates.len)
 			var/datum/mind/secondary = null
 			if(secondary_candidates.len < secondary_amount)
 				secondary_amount = secondary_candidates.len
-			switch(secondary_antag)
+			switch(chosen_secondary_antag)
 				if("changeling")
 					for(var/i = 0, i<secondary_amount, i++)
 						secondary = pick(secondary_candidates)

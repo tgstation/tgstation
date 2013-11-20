@@ -9,7 +9,7 @@
 	required_enemies = 1
 	recommended_enemies = 1
 	pre_setup_before_jobs = 1
-	secondary_antag = "changeling"
+	secondary_antag = list("changeling")
 	secondary_chance = 50
 
 	uplink_welcome = "Wizardly Uplink Console:"

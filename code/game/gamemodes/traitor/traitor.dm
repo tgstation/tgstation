@@ -12,7 +12,7 @@
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 4
-	secondary_antag = "changeling"
+	secondary_antag = list("changeling")
 	secondary_chance = 75
 
 	uplink_welcome = "Syndicate Uplink Console:"

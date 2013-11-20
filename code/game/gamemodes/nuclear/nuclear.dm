@@ -10,7 +10,7 @@
 	recommended_enemies = 5
 	pre_setup_before_jobs = 1
 	antag_flag = BE_OPERATIVE
-	secondary_antag = "changeling"
+	secondary_antag = list("changeling")
 	secondary_chance = 50
 
 	uplink_welcome = "Corporate Backed Uplink Console:"

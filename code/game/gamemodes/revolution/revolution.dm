@@ -19,7 +19,7 @@
 	required_players = 20
 	required_enemies = 3
 	recommended_enemies = 3
-	secondary_antag = "changeling"
+	secondary_antag = list("changeling")
 	secondary_chance = 50
 
 

@@ -125,8 +125,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 	if (!(locate(/datum/objective/escape) in changeling.objectives))
 		if(emergency_shuttle)
-			if(emergency_shuttle.always_fake_recall == 1)//Lets changelings win if they're put into modes where the shuttle never comes
-				var/datum/objective/survive/survive_objective = new
+			if(emergency_shuttle.always_fake_recall == 1 || config.continuous_round_wiz == 0)//Lets changelings win if they're put into modes where the shuttle never comes
+				var/datum/objective/escapefake/survive_objective = new
 				survive_objective.owner = changeling
 				changeling.objectives += survive_objective
 

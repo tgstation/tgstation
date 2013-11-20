@@ -25,7 +25,7 @@
 	required_players = 15
 	required_enemies = 3
 	recommended_enemies = 4
-	secondary_antag = "changeling"
+	secondary_antag = list("changeling")
 	secondary_chance = 50
 
 	uplink_welcome = "Nar-Sie Uplink Console:"
