@@ -21,12 +21,12 @@ datum/computer/file/embedded_program
 obj/machinery/embedded_controller
 	var/datum/computer/file/embedded_program/program
 
-	name = "Embedded Controller"
+	name = "embedded controller"
 	density = 0
 	anchored = 1
 
 	var/on = 1
-	
+
 	interact(mob/user as mob)
 		//user << browse(return_text(), "window=computer")
 		//onclose(user, "computer")
@@ -34,7 +34,7 @@ obj/machinery/embedded_controller
 		var/datum/browser/popup = new(user, "computer", name) // Set up the popup browser window
 		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 		popup.set_content(return_text())
-		popup.open()		
+		popup.open()
 
 	attack_hand(mob/user as mob)
 		interact(user)

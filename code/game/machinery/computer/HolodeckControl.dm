@@ -1,5 +1,5 @@
 /obj/machinery/computer/HolodeckControl
-	name = "Holodeck Control Console"
+	name = "holodeck control console"
 	desc = "A computer used to control a nearby holodeck."
 	icon_state = "holocontrol"
 	var/area/linkedholodeck = null
@@ -289,7 +289,8 @@
 	thermal_conductivity = 0
 
 /turf/simulated/floor/holofloor/grass
-	name = "Lush Grass"
+	gender = PLURAL
+	name = "lush grass"
 	icon_state = "grass1"
 	floor_tile = new/obj/item/stack/tile/grass
 
@@ -474,7 +475,7 @@
 
 
 /obj/machinery/readybutton
-	name = "Ready Declaration Device"
+	name = "ready declaration device"
 	desc = "This device is used to declare ready. If all devices in an area are ready, the event will begin!"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "auth_off"

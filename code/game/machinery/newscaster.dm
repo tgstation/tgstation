@@ -95,7 +95,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 
 /obj/machinery/newscaster/security_unit                   //Security unit
-	name = "Security Newscaster"
+	name = "security newscaster"
 	securityCaster = 1
 
 /obj/machinery/newscaster/New()         //Constructor, ho~

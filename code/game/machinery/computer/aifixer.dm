@@ -1,5 +1,5 @@
 /obj/machinery/computer/aifixer
-	name = "AI System Integrity Restorer"
+	name = "\improper AI system integrity restorer"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "ai-fixer"
 	req_access = list(access_captain, access_robotics, access_heads)

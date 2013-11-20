@@ -1,5 +1,5 @@
 /obj/machinery/shield
-		name = "Emergency energy shield"
+		name = "emergency energy shield"
 		desc = "An energy shield used to contain hull breaches."
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "shield-old"
@@ -134,7 +134,7 @@
 
 
 /obj/machinery/shieldgen
-		name = "Anti-breach shielding projector"
+		name = "anti-breach shielding projector"
 		desc = "Used to seal minor hull breaches."
 		icon = 'icons/obj/objects.dmi'
 		icon_state = "shieldoff"
@@ -313,7 +313,7 @@
 ////FIELD GEN START //shameless copypasta from fieldgen, powersink, and grille
 #define maxstoredpower 500
 /obj/machinery/shieldwallgen
-		name = "Shield Generator"
+		name = "shield generator"
 		desc = "A shield generator."
 		icon = 'icons/obj/stationobjs.dmi'
 		icon_state = "Shield_Gen"
@@ -536,7 +536,7 @@
 
 //////////////Containment Field START
 /obj/machinery/shieldwall
-		name = "Shield"
+		name = "shield"
 		desc = "An energy shield."
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "shieldwall"
