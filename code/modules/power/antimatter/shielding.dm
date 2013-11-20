@@ -129,16 +129,16 @@ proc/cardinalrange(var/center)
 	coredirs = 0
 	dirs = 0
 	for(var/direction in alldirs)
-		var/machine = locate(/obj/machinery, get_step(loc, direction))
+		var/turf/T = get_step(loc, direction)
+		for(var/obj/machinery/machine in T)
+			// Detect cores
+			if((istype(machine, /obj/machinery/am_shielding) && machine:control_unit == control_unit && machine:processing))
+				coredirs |= direction
 
-		// Detect cores
-		if((istype(machine, /obj/machinery/am_shielding) && machine:control_unit == control_unit && machine:processing))
-			coredirs |= direction
-
-		// Detect cores, shielding, and control boxen.
-		if(direction in cardinal)
-			if((istype(machine, /obj/machinery/am_shielding) && machine:control_unit == control_unit) ||(istype(machine, /obj/machinery/power/am_control_unit) && machine == control_unit))
-				dirs |= direction
+			// Detect cores, shielding, and control boxen.
+			if(direction in cardinal)
+				if((istype(machine, /obj/machinery/am_shielding) && machine:control_unit == control_unit) || (istype(machine, /obj/machinery/power/am_control_unit) && machine == control_unit))
+					dirs |= direction
 
 	// If we're next to a core, set the prefix.
 	var/prefix = ""

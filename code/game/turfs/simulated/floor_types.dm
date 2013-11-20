@@ -238,6 +238,11 @@
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
 
+/turf/simulated/floor/plating/snow/concrete
+	name = "concrete"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "concrete"
+
 /turf/simulated/floor/plating/snow/ex_act(severity)
 	return
 
