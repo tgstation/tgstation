@@ -492,7 +492,7 @@
 
 	// initialize a holder from the contents of a disposal unit
 	proc/init(var/obj/machinery/disposal/D)
-		gas = D.air_contents// transfer gas resv. into holder object
+		gas = D.air_contents //transfer gas resv. into holder object
 
 		//Check for any living mobs trigger hasmob.
 		//hasmob effects whether the package goes to cargo or its tagged destination.
@@ -505,7 +505,7 @@
 		for(var/obj/O in D)
 			if(O.contents)
 				for(var/mob/living/M in O.contents)
-					if(M && M.stat != 2)
+					if(M && M.stat != 2 && !istype(M.get_item_by_slot(slot_w_uniform), /obj/item/clothing/under/syndiemail)) //Snowflakey check for the mailman jumpsuit.
 						hasmob = 1
 
 		// now everything inside the disposal gets put into the holder
@@ -516,13 +516,15 @@
 				var/mob/living/carbon/human/H = AM
 				if(FAT in H.mutations)		// is a human and fat?
 					has_fat_guy = 1			// set flag on holder
+				if(istype(H.get_item_by_slot(slot_w_uniform), /obj/item/clothing/under/syndiemail))
+					var/obj/item/clothing/under/syndiemail/temptag = H.get_item_by_slot(slot_w_uniform)
+					destinationTag = temptag.sortTag
 			if(istype(AM, /obj/structure/bigDelivery) && !hasmob)
 				var/obj/structure/bigDelivery/T = AM
-				src.destinationTag = T.sortTag
+				destinationTag = T.sortTag
 			if(istype(AM, /obj/item/smallDelivery) && !hasmob)
 				var/obj/item/smallDelivery/T = AM
-				src.destinationTag = T.sortTag
-
+				destinationTag = T.sortTag
 
 	// start the movement process
 	// argument is the disposal unit the holder started in

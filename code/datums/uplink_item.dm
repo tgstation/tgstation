@@ -292,6 +292,12 @@ var/list/uplink_items = list()
 	item = /obj/item/device/camera_bug
 	cost = 2
 
+/datum/uplink_item/stealthy_tools/chameleon_box
+	name = "Chameleon Box"
+	desc = "A normal-looking box that can be disguised as almost anything."
+	item = /obj/item/weapon/storage/box/chameleon
+	cost = 2
+
 // DEVICE AND TOOLS
 
 /datum/uplink_item/device_tools
@@ -391,6 +397,12 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/shield/energy
 	cost = 8
 	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/device_tools/mailman_jumpsuit
+	name = "Mailman Jumpsuit"
+	desc = "This jumpsuit allows you to use disposals to break into departments by setting the sorting tag."
+	item = /obj/item/clothing/under/syndiemail
+	cost = 2
 
 
 // IMPLANTS

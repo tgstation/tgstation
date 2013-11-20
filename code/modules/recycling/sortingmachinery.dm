@@ -187,31 +187,31 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
 
-	proc/openwindow(mob/user as mob)
-		var/dat = "<tt><center><h1><b>TagMaster 2.2</b></h1></center>"
+/obj/item/device/destTagger/proc/openwindow(mob/user)
+	var/dat = "<tt><center><h1><b>TagMaster 2.2</b></h1></center>"
 
-		dat += "<table style='width:100%; padding:4px;'><tr>"
-		for (var/i = 1, i <= TAGGERLOCATIONS.len, i++)
-			dat += "<td><a href='?src=\ref[src];nextTag=[i]'>[TAGGERLOCATIONS[i]]</a></td>"
+	dat += "<table style='width:100%; padding:4px;'><tr>"
+	for (var/i = 1, i <= TAGGERLOCATIONS.len, i++)
+		dat += "<td><a href='?src=\ref[src];nextTag=[i]'>[TAGGERLOCATIONS[i]]</a></td>"
 
-			if(i%4==0)
-				dat += "</tr><tr>"
+		if(i%4==0)
+			dat += "</tr><tr>"
 
-		dat += "</tr></table><br>Current Selection: [currTag ? TAGGERLOCATIONS[currTag] : "None"]</tt>"
+	dat += "</tr></table><br>Current Selection: [currTag ? TAGGERLOCATIONS[currTag] : "None"]</tt>"
 
-		user << browse(dat, "window=destTagScreen;size=450x350")
-		onclose(user, "destTagScreen")
+	user << browse(dat, "window=destTagScreen;size=450x350")
+	onclose(user, "destTagScreen")
 
-	attack_self(mob/user as mob)
-		openwindow(user)
-		return
+/obj/item/device/destTagger/attack_self(mob/user as mob)
+	openwindow(user)
+	return
 
-	Topic(href, href_list)
-		add_fingerprint(usr)
-		if(href_list["nextTag"])
-			var/n = text2num(href_list["nextTag"])
-			currTag = n
-		openwindow(usr)
+/obj/item/device/destTagger/Topic(href, href_list)
+	add_fingerprint(usr)
+	if(href_list["nextTag"])
+		var/n = text2num(href_list["nextTag"])
+		currTag = n
+	openwindow(usr)
 
 /obj/machinery/disposal/deliveryChute
 	name = "delivery chute"
