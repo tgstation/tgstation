@@ -778,9 +778,9 @@
 	src.occupant.verbs += /mob/living/silicon/ai/proc/corereturn
 	src.occupant.verbs += /datum/game_mode/malfunction/proc/takeover
 	src.occupant.cancel_camera()
-
-	for(var/obj/item/weapon/pinpointer/point in world)
-		point.the_disk = src //the pinpointer will detect the shunted AI
+	if (seclevel2num(get_security_level()) == SEC_LEVEL_DELTA)
+		for(var/obj/item/weapon/pinpointer/point in world)
+			point.the_disk = src //the pinpointer will detect the shunted AI
 
 
 /obj/machinery/power/apc/proc/malfvacate(var/forced)
@@ -791,11 +791,12 @@
 		src.occupant.parent.adjustOxyLoss(src.occupant.getOxyLoss())
 		src.occupant.parent.cancel_camera()
 		del(src.occupant)
-		for(var/obj/item/weapon/pinpointer/point in world)
-			for(var/datum/mind/AI_mind in ticker.mode.malf_ai)
-				var/mob/living/silicon/ai/A = AI_mind.current // the current mob the mind owns
-				if(A.stat != DEAD)
-					point.the_disk = A //The pinpointer tracks the AI back into its core.
+		if (seclevel2num(get_security_level()) == SEC_LEVEL_DELTA)
+			for(var/obj/item/weapon/pinpointer/point in world)
+				for(var/datum/mind/AI_mind in ticker.mode.malf_ai)
+					var/mob/living/silicon/ai/A = AI_mind.current // the current mob the mind owns
+					if(A.stat != DEAD)
+						point.the_disk = A //The pinpointer tracks the AI back into its core.
 
 	else
 		src.occupant << "\red Primary core damaged, unable to return core processes."
