@@ -4,8 +4,8 @@
 	var/accept_hand = 0				//does the surgery step require an open hand? If true, ignores implements. Compatible with accept_any_item.
 	var/accept_any_item = 0			//does the surgery step accept any item? If true, ignores implements. Compatible with require_hand.
 	var/time = 10					//how long does the step take?
-	var/list/allowed_organs = list() //Used for multilocation operations
-	var/new_organ = null //Used for multilocation operations
+	var/new_organ = null 			//Used for multilocation operations
+	var/allowed_organs = list()		//Allowed organs, see Handle_Multi_Loc below - RR
 
 
 /datum/surgery_step/proc/try_op(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -112,6 +112,9 @@
 				new_organ = target.getlimb(/obj/item/organ/limb/head)
 			if("mouth")
 				new_organ = target.getlimb(/obj/item/organ/limb/head)
+			else
+				user << "<span class='warning'>You cannot perform this operation on this body part!</span>" //Explain to the surgeon what went wrong - RR
+				return 0
 
 		return new_organ
 

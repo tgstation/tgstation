@@ -39,6 +39,7 @@
 	location = "anywhere" //Check attempt_initate_surgery() (in code/modules/surgery/helpers) to see what this does if you can't tell
 	has_multi_loc = 1 //Multi location stuff, See multiple_location_example.dm
 
+
 //SURGERY STEP SUCCESSES
 
 /datum/surgery_step/add_limb/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -48,21 +49,22 @@
 			user.visible_message("<span class='notice'>[user] successfully augments [target]'s [target_zone]!</span>")
 			L.loc = get_turf(target)
 			H.organs -= L
-			if(user.zone_sel.selecting == "r_leg") //for the surgery to progress this MUST still be the original "location" so it's safe to do this.
-				H.organs += new /obj/item/organ/limb/robot/r_leg(src)
-			if(user.zone_sel.selecting == "r_arm")
-				H.organs += new /obj/item/organ/limb/robot/r_arm(src)
-			if(user.zone_sel.selecting == "l_leg")
-				H.organs += new /obj/item/organ/limb/robot/l_leg(src)
-			if(user.zone_sel.selecting == "l_arm")
-				H.organs += new /obj/item/organ/limb/robot/l_arm(src)
-			if(user.zone_sel.selecting == "head")
-				H.organs += new /obj/item/organ/limb/robot/head(src)
-			if(user.zone_sel.selecting == "chest")
-				H.organs += new /obj/item/organ/limb/robot/chest(src)
+			switch(user.zone_sel.selecting)  //for the surgery to progress this MUST still be the original "location" so it's safe to do this.
+				if("r_leg")
+					H.organs += new /obj/item/organ/limb/robot/r_leg(src)
+				if("l_leg")
+					H.organs += new /obj/item/organ/limb/robot/l_leg(src)
+				if("r_arm")
+					H.organs += new /obj/item/organ/limb/robot/r_arm(src)
+				if("l_arm")
+					H.organs += new /obj/item/organ/limb/robot/l_arm(src)
+				if("head")
+					H.organs += new /obj/item/organ/limb/robot/head(src)
+				if("chest")
+					H.organs += new /obj/item/organ/limb/robot/chest(src)
 			user.drop_item()
 			del(tool)
-			H.update_damage_overlays(0) //Remove the gaping hole in what used to be his old limb but is now his Cyber limb.
+			H.update_damage_overlays(0)
 			H.update_augments() //Gives them the Cyber limb overlay
 			user.attack_log += "\[[time_stamp()]\]<font color='red'> Augmented [target.name]'s [target_zone] ([target.ckey]) INTENT: [uppertext(user.a_intent)])</font>"
 			target.attack_log += "\[[time_stamp()]\]<font color='orange'> Augmented by [user.name] ([user.ckey]) (INTENT: [uppertext(user.a_intent)])</font>"

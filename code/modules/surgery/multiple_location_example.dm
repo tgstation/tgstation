@@ -38,8 +38,11 @@ EG: a zone on a mob (where user is targetting) to the limb thats actually there.
 
 
 /datum/surgery_step/multiLocExampleStep/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-This is a standard Success child,
 You can use whatever you substituted "L" for here for useful things, swapping limbs for other limbs, etc.
+if the surgery is intended to be MultiLoc but should only be performable once per limb, add this
+"surgery.invalid_locations += user.zone_sel.selecting"
+Just after you have swapped limbs around, see limb augmentation for an example of this
+
 */
 
 //This file is commented out as to avoid:

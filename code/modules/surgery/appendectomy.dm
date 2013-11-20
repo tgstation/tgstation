@@ -5,6 +5,7 @@
 	location = "groin"
 	requires_organic_chest = 1
 
+
 //extract appendix
 /datum/surgery_step/extract_appendix
 	accept_hand = 1

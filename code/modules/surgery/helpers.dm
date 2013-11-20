@@ -12,7 +12,14 @@
 					continue
 				if(S.target_must_be_fat && !(FAT in M.mutations))
 					continue
-				if(S.requires_organic_chest && M.getlimb(/obj/item/organ/limb/robot/chest))
+
+				if(S.requires_organic_chest && !M.getlimb(/obj/item/organ/limb/robot/chest)) //This a seperate case to below, see "***" in surgery.dm - RR
+					continue
+
+				var/mob/living/carbon/human/H = M //So we can use get_organ and not some terriblly long Switch or something worse - RR
+				var/obj/item/organ/limb/affecting = H.get_organ(user.zone_sel.selecting)
+
+				if(affecting.status == ORGAN_ROBOTIC) //Cannot operate on Robotic organs - RR
 					continue
 
 				for(var/path in S.species)

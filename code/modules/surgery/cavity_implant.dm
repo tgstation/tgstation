@@ -5,6 +5,7 @@
 	location = "chest"
 	requires_organic_chest = 1
 
+
 //handle cavity
 /datum/surgery_step/handle_cavity
 	accept_hand = 1
