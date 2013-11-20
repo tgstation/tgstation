@@ -15,7 +15,7 @@ datum/objective
 	proc/find_target()
 		var/list/possible_targets = list()
 		for(var/datum/mind/possible_target in ticker.minds)
-			if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != 2) && (possible_target.special_role != "Syndicate") && (possible_target.special_role != "Wizard"))
+			if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != 2) && (possible_target.assigned_role != "MODE")) //MODE roles are those that start off jobless and off station (Wizards, Nuke Ops, Ninjas).
 				possible_targets += possible_target
 		if(possible_targets.len > 0)
 			target = pick(possible_targets)
@@ -249,10 +249,9 @@ datum/objective/escape
 		else
 			return 0
 
-datum/objective/escapefake //antimeta for an antagonist that usually needs to escape to win in a roundtype that doesn't allow escape
-	explanation_text = "Escape on the shuttle or an escape pod alive." //looks like escape
+datum/objective/escape/fake //antimeta for an antagonist that usually needs to escape to win in a roundtype that doesn't allow escape
 
-	check_completion() //works like survive
+	check_completion() //looks like escape, works like survive
 		explanation_text = "Stay alive until the end." //reveals itself no matter what
 		if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current))
 			return 0		//Brains no longer win survive objectives. --NEO
@@ -325,11 +324,10 @@ Nobody takes these seriously anyways -- Ikki
 		steal_target = possible_items[target_name]
 		if (!steal_target )
 			steal_target = possible_items_special[target_name]
-		if(ticker.mode.name == "AI malfunction" && target_name == "a functional AI") //Impossible Objective
+		if(istype("AI malfunction", ticker.mode.name) && istype("a functional AI", target_name)) //Impossible Objective
 			set_target(pick(possible_items))
 		explanation_text = "Steal [target_name]."
 		return steal_target
-
 
 	find_target()
 		return set_target(pick(possible_items))
