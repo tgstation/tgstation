@@ -556,3 +556,8 @@ What a mess.*/
 /obj/machinery/computer/secure_data/detective_computer
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "messyfiles"
+
+/obj/machinery/computer/secure_data/laptop
+	name = "Security Records Laptop"
+	desc = "Cheap, slower and bolted to the table."
+	icon_state = "seclaptop"
