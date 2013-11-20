@@ -170,6 +170,17 @@
 		state = 1 - state
 		playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
 		user << (state ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>")
+	else if(istype(I, /obj/item/weapon/wrench) && !anchored)
+		var/glass_type
+		if(reinf)
+			glass_type = /obj/item/stack/sheet/rglass
+		else
+			glass_type = /obj/item/stack/sheet/glass
+		new glass_type(user.loc)
+		if(is_fulltile())//fulltiles drop two panes
+			new glass_type(user.loc)
+		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		src.Del(1)
 	else
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			hit(I.force)
@@ -281,10 +292,10 @@
 	return
 
 
-/obj/structure/window/Del()
+/obj/structure/window/Del(quiet)
 	density = 0
 	air_update_turf(1)
-	playsound(src, "shatter", 70, 1)
+	if(!quiet)playsound(src, "shatter", 70, 1)
 	update_nearby_icons()
 	loc = null //garbage collect
 
