@@ -10352,8 +10352,8 @@
 "dRd" = (/obj/effect/decal/cleanable/dirt,/obj/effect/landmark/corpse/mime,/obj/effect/decal/cleanable/blood,/turf/simulated/floor,/area/planet/clown)
 "dRe" = (/obj/effect/decal/cleanable/blood,/obj/effect/landmark/corpse/mime,/turf/simulated/floor/plating/snow,/area/planet/clown)
 "dRf" = (/obj/structure/rack,/obj/item/weapon/bikehorn,/obj/item/weapon/bikehorn,/obj/item/weapon/bananapeel,/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor{icon_state = "dark"},/area/planet/clown)
-"dRg" = (/obj/effect/landmark{name = "Clown Planet"},/turf/simulated/floor/bluegrid,/area/planet/clown)
-"dRh" = (/turf/simulated/floor{dir = 8; icon_state = "warning"},/area/planet/clown)
+"dRg" = (/obj/structure/signpost{icon_state = "portal"; name = "Portal"},/turf/simulated/floor/bluegrid,/area/planet/clown)
+"dRh" = (/obj/effect/landmark{name = "Clown Planet"},/turf/simulated/floor{dir = 8; icon_state = "warning"},/area/planet/clown)
 "dRi" = (/turf/simulated/floor{tag = "icon-vault-border (EAST)"; icon_state = "vault-border"; dir = 4},/area/planet/clown)
 "dRj" = (/obj/effect/decal/remains/human,/turf/simulated/floor{tag = "icon-vault-border (EAST)"; icon_state = "vault-border"; dir = 4},/area/planet/clown)
 "dRk" = (/obj/item/weapon/bananapeel,/turf/simulated/floor{tag = "icon-vault-border (EAST)"; icon_state = "vault-border"; dir = 4},/area/planet/clown)
@@ -12314,3 +12314,4 @@ dPUdPUdPZdPZdPZdPZdPZdPZdPZdPZdPZdPZdPZdPZdPZdPZdPZdPZdPZdPZdPZdPZdPZdPZdPZdPZdP
 dPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPU
 dPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPUdPU
 "}
+
