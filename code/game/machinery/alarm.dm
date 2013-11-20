@@ -1016,7 +1016,7 @@ FIRE ALARM
 				else if(istype(W, /obj/item/weapon/crowbar))
 					user << "You pry out the circuit!"
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-					spawn(20)
+					spawn(5) // makes it so that its faster to pull out the circuit but removes the infinite circuit spawn bug - swagfag
 						var/obj/item/weapon/firealarm_electronics/circuit = new /obj/item/weapon/firealarm_electronics()
 						circuit.loc = user.loc
 						buildstage = 0

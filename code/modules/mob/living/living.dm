@@ -252,6 +252,7 @@
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
+	suiciding = 0 // fixes suicide oxy loss, duh lol - swagfag scrublorde
 	radiation = 0
 	nutrition = 400
 	bodytemperature = 310
