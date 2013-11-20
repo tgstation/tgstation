@@ -5,7 +5,7 @@
 	var/accept_any_item = 0			//does the surgery step accept any item? If true, ignores implements. Compatible with require_hand.
 	var/time = 10					//how long does the step take?
 	var/new_organ = null 			//Used for multilocation operations
-	var/allowed_organs = list()		//Allowed organs, see Handle_Multi_Loc below - RR
+	var/list/allowed_organs = list()//Allowed organs, see Handle_Multi_Loc below - RR
 
 
 /datum/surgery_step/proc/try_op(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
