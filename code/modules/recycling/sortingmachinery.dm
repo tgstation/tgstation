@@ -203,9 +203,7 @@
 
 /obj/item/device/destTagger/Topic(href, href_list)
 	add_fingerprint(usr)
-	world << "dm is a shitfest"
 	if(href_list["nextTag"])
-		world << "byond is a laggy clusterfuck"
 		var/n = text2num(href_list["nextTag"])
 		sortTag = n
 	tag_menu(usr, src)
