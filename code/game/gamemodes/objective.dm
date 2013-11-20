@@ -15,7 +15,7 @@ datum/objective
 	proc/find_target()
 		var/list/possible_targets = list()
 		for(var/datum/mind/possible_target in ticker.minds)
-			if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != 2))
+			if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != 2) && (possible_target.special_role != "Syndicate") && (possible_target.special_role != "Wizard"))
 				possible_targets += possible_target
 		if(possible_targets.len > 0)
 			target = pick(possible_targets)
