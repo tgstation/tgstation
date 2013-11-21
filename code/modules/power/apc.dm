@@ -489,10 +489,7 @@
 	return ui_interact(user)
 
 
-/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main")
-	if(!user)
-		return
-
+/obj/machinery/power/apc/proc/get_malf_status(mob/user)
 	var/malfStatus
 	if (ticker && ticker.mode && (user.mind in ticker.mode.malf_ai) && istype(user, /mob/living/silicon/ai))
 		if (src.malfai == (user:parent ? user:parent : user))
@@ -506,6 +503,14 @@
 			malfStatus = 1 // 1 = APC not hacked.
 	else
 		malfStatus = 0 // 0 = User is not a Malf AI
+	return malfStatus
+
+
+/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main")
+	if(!user)
+		return
+
+	var/malfStatus = get_malf_status(user)
 
 	var/list/data = list(
 		"locked" = locked,
@@ -643,6 +648,9 @@
 			return 0
 	return 1
 
+/obj/machinery/power/apc/proc/validation()
+	return (!locked && !istype(usr, /mob/living/silicon/ai)) || (istype(usr, /mob/living/silicon/ai) && !src.aidisabled)
+
 /obj/machinery/power/apc/Topic(href, href_list)
 	if(..())
 		return 0
@@ -654,37 +662,40 @@
 	usr.set_machine(src)
 
 	if (href_list["lock"])
-		coverlocked = !coverlocked
+		if(validation())
+			coverlocked = !coverlocked
 
 	else if (href_list["breaker"])
-		toggle_breaker()
+		if(validation())
+			toggle_breaker()
 
 	else if (href_list["cmode"])
-		chargemode = !chargemode
-		if(!chargemode)
-			charging = 0
-			update_icon()
+		if(validation())
+			chargemode = !chargemode
+			if(!chargemode)
+				charging = 0
+				update_icon()
 
 	else if (href_list["eqp"])
-		var/val = text2num(href_list["eqp"])
-
-		equipment = setsubsystem(val)
-		update_icon()
-		update()
+		if(validation())
+			var/val = text2num(href_list["eqp"])
+			equipment = setsubsystem(val)
+			update_icon()
+			update()
 
 	else if (href_list["lgt"])
-		var/val = text2num(href_list["lgt"])
-
-		lighting = setsubsystem(val)
-		update_icon()
-		update()
+		if(validation())
+			var/val = text2num(href_list["lgt"])
+			lighting = setsubsystem(val)
+			update_icon()
+			update()
 
 	else if (href_list["env"])
-		var/val = text2num(href_list["env"])
-
-		environ = setsubsystem(val)
-		update_icon()
-		update()
+		if(validation())
+			var/val = text2num(href_list["env"])
+			environ = setsubsystem(val)
+			update_icon()
+			update()
 
 	else if( href_list["close"] )
 		usr << browse(null, "window=apc")
@@ -701,7 +712,7 @@
 
 	else if (href_list["malfhack"])
 		var/mob/living/silicon/ai/malfai = usr
-		if( istype(malfai, /mob/living/silicon/ai) && !src.aidisabled && (ticker && ticker.mode && (malfai.mind in ticker.mode.malf_ai)) )
+		if(get_malf_status(malfai))
 			if (malfai.malfhacking)
 				malfai << "You are already hacking an APC."
 				return 1
@@ -725,10 +736,12 @@
 					update_icon()
 
 	else if (href_list["occupyapc"])
-		malfoccupy(usr)
+		if(get_malf_status(usr))
+			malfoccupy(usr)
 
 	else if (href_list["deoccupyapc"])
-		malfvacate()
+		if(get_malf_status(usr))
+			malfvacate()
 
 	else if (href_list["toggleaccess"])
 		if (istype(usr, /mob/living/silicon/ai) && !src.aidisabled)
