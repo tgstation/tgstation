@@ -471,3 +471,19 @@
 				src.attackby(R.module_state_3,R)
 			else
 				return
+
+/turf/simulated/mineral/hard
+	name = "Hard Rock"
+	icon_state = "hard_rock"
+	desc = "Literally nothing is able to break this apart"
+
+/turf/simulated/mineral/hard/ex_act()
+	return
+
+/turf/simulated/mineral/hard/attackby(mob/user as mob)
+	user << "\red This rock feels too tough to break through."
+	playsound(user, 'sound/weapons/Genhit.ogg', 20, 1)
+	return
+
+/turf/simulated/mineral/hard/Bumped()
+	return
