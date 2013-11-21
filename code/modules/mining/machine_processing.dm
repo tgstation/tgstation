@@ -213,12 +213,17 @@ span.notsmelting {
 			if(src.output) break
 		processing_objects.Add(src)
 
-		for(var/recipetype in typesof(/datum/smelting_recipe) - /datum/smelting_recipe)
-			recipes += new recipetype
-
 		for(var/oredata in typesof(/datum/processable_ore) - /datum/processable_ore)
 			var/datum/processable_ore/ore_datum = new oredata
 			ore[ore_datum.id]=ore_datum
+
+		for(var/recipetype in typesof(/datum/smelting_recipe) - /datum/smelting_recipe)
+			var/datum/smelting_recipe/recipe= new recipetype
+			// Sanity
+			for(var/ingredient in recipe.ingredients)
+				if(!(ingredient in ore))
+					warning("Unknown ingredient [ingredient] in recipe [recipe.name]!")
+			recipes += recipe
 
 		return
 	return
@@ -227,7 +232,6 @@ span.notsmelting {
 	if(!(ore_id in ore))
 		warning("addMaterial(): Unknown material [ore_id]!")
 		return
-	// Oh how I wish ore[ore_id].stored-- worked.
 	var/datum/processable_ore/po=ore[ore_id]
 	po.stored += amount
 	ore[ore_id]=po
@@ -381,9 +385,10 @@ span.notsmelting {
 					if (O.recycle(src))
 						//O.loc=null
 						del(O)
-						continue
+						break
 				if(O && istype(O,/obj/item))
 					O.loc = src.output.loc
+					break
 
 
 /obj/machinery/mineral/processing_unit_console/recycle/attack_ai(var/mob/user as mob)

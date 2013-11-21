@@ -38,14 +38,14 @@
 /datum/smelting_recipe/glass
 	name="Glass"
 	ingredients=list(
-		"sand"=1
+		"glass"=1
 	)
 	yieldtype=/obj/item/stack/sheet/glass
 
 /datum/smelting_recipe/rglass
 	name="Reinforced Glass"
 	ingredients=list(
-		"sand"=1,
+		"glass"=1,
 		"iron"=1
 	)
 	yieldtype=/obj/item/stack/sheet/rglass
