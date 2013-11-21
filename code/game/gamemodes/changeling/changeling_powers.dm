@@ -179,10 +179,55 @@
 
 	O.make_changeling(1)
 	O.verbs += /mob/living/carbon/proc/changeling_human_form
+	O.unset_sting()
 	feedback_add_details("changeling_powers","LF")
 	. = 1
 	del(src)
 	return
+/*
+/mob/living/carbon/proc/changeling_greater_form()
+	set category = "Changeling"
+	set name = "Greater Form ON (45)"
+
+	var/datum/changeling/changeling = changeling_power(45,0,1)
+	if(!changeling)	return
+
+	changeling.chem_charges -= 45
+	changeling.geneticdamage = 5
+	src << "<span class='warning'>Our genes cry out!</span>"
+	mutations.Add(HULK, XRAY, COLD_RESISTANCE)
+	update_mutations()
+	src.mind.changeling.chem_storage -= 45
+	src.mind.changeling.chem_recharge_rate /= 2
+	verbs -= /mob/living/carbon/proc/changeling_greater_form
+	verbs -= /mob/living/carbon/proc/changeling_lesser_form
+	verbs += /mob/living/carbon/proc/changeling_greater_form_off
+	feedback_add_details("changeling_powers","GF")
+	. = 1
+	return
+
+/mob/living/carbon/proc/changeling_greater_form_off()
+	set category = "Changeling"
+	set name = "Greater Form OFF (5)"
+
+	var/datum/changeling/changeling = changeling_power(5,0,1)
+	if(!changeling)	return
+
+	changeling.chem_charges -= 5
+	changeling.geneticdamage = 5
+	src << "<span class='warning'>Our genes cry out!</span>"
+	mutations.Remove(HULK, XRAY, COLD_RESISTANCE)
+	update_mutations()
+	src.mind.changeling.chem_storage += 45
+	src.mind.changeling.chem_recharge_rate *= 2
+	verbs += /mob/living/carbon/proc/changeling_greater_form
+	verbs -= /mob/living/carbon/proc/changeling_greater_form_off
+	for(var/datum/power/changeling/lesser_form in mind.changeling.purchasedpowers)
+		verbs += /mob/living/carbon/proc/changeling_lesser_form
+	feedback_add_details("changeling_powers","NF")
+	. = 1
+	return
+*/
 
 
 //Transform into a human
@@ -214,6 +259,9 @@
 	var/mob/living/carbon/human/O = humanize((TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPSRC),chosen_dna.real_name)
 
 	O.make_changeling()
+	O.unset_sting()
+	for(var/obj/item/C in O.loc)
+		O.equip_to_appropriate_slot(C) //Rejoice
 	feedback_add_details("changeling_powers","LFT")
 	. = 1
 	del(src)
@@ -524,12 +572,48 @@ var/list/datum/dna/hivemind_bank = list()
 		if(src && src.mind && src.mind.changeling)
 			src.mind.changeling.mimicing = ""
 
+/mob/living/carbon/proc/retract_stinger()
+	set category = "Changeling"
+	set name = "-Retract stinger-" //essential enough to be always second after evolution
+	set desc = "Retracts the stinger, making hands useful again."
 
+	if(!src.mind.changeling.chosen_sting)
+		src << "<span class='notice'>Our stinger is already retracted.</span>"
+		return 0
+	unset_sting()
+	src << "<span class='notice'>We retract our stinger.</span>"
+	return 1
 
 	//////////
 	//STINGS//	//They get a pretty header because there's just so fucking many of them ;_;
 	//////////
 
+/mob/living/carbon/proc/set_sting(A, icon, dna=null) //setting the sting and ui icon for it
+	src.mind.changeling.chosen_sting = A
+	if(dna)
+		src.mind.changeling.chosen_dna = dna
+	hud_used.lingstingdisplay.icon_state = icon
+	hud_used.lingstingdisplay.invisibility = 0
+
+/mob/living/carbon/proc/unset_sting() //unsetting the previous
+	src.mind.changeling.chosen_sting = null
+	hud_used.lingstingdisplay.icon_state = null
+	hud_used.lingstingdisplay.invisibility = 101
+
+/mob/living/carbon/proc/sting_can_reach(mob/living/carbon/C, chem_cost) //handles all the checks there is
+	if(!isturf(src.loc))	return 0
+	if(get_dist(src, C) > (src.mind.changeling.sting_range))	return 0 //sanity check as AStar is still throwing insane stunts
+	if(!AStar(src.loc, C.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, src.mind.changeling.sting_range))	return 0 //hope this ancient magic still works
+	if(src.mind.changeling.chem_charges < chem_cost)
+		src << "<span class='warning'>Not enough chemicals.</span>"
+		return 0
+	src.mind.changeling.chem_charges -= chem_cost
+	src << "<span class='notice'>We stealthly sting [C.name].</span>"
+	if(C.mind && C.mind.changeling)
+		C << "<span class='warning'>You feel a tiny prick.</span>"
+		return 0
+	else
+		return 1
 
 /mob/living/carbon/proc/changeling_transformation_sting()
 	set category = "Changeling"
@@ -543,18 +627,21 @@ var/list/datum/dna/hivemind_bank = list()
 	var/S = input("Select the target DNA: ", "Target DNA", null) as null|anything in names
 	if(!S)	return
 
-	var/datum/dna/chosen_dna = mind.changeling.GetDNA(S)
-	if(!chosen_dna)
+	var/datum/dna/D = mind.changeling.GetDNA(S)
+	if(!D)
 		return
 
-	give_stinger("transformation stinger", "sting_transform", /mob/living/carbon/proc/sting_effect_trasnform, 1, 40, chosen_dna)
+	set_sting(/mob/living/carbon/proc/sting_effect_trasnform, "sting_transform", D)
 
-/mob/living/carbon/proc/sting_effect_trasnform(mob/living/carbon/T, datum/dna/chosen_dna)
+/mob/living/carbon/proc/sting_effect_trasnform(mob/living/carbon/T)
+	if(!sting_can_reach(T, 40))
+		return 0
 	if((HUSK in T.mutations) || !check_dna_integrity(T))
 		src << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
 		return 0
-	T.dna = chosen_dna
-	T.real_name = chosen_dna.real_name
+
+	T.dna = src.mind.changeling.chosen_dna
+	T.real_name = src.mind.changeling.chosen_dna.real_name
 	updateappearance(T)
 	domutcheck(T, null)
 	feedback_add_details("changeling_powers","TS")
@@ -566,10 +653,11 @@ var/list/datum/dna/hivemind_bank = list()
 	set name = "Extract DNA Sting (25)"
 	set desc="Stealthily sting a target to extract their DNA."
 
-	give_stinger("extraction stinger", "sting_extract", /mob/living/carbon/proc/sting_effect_extract, 1, 25)
+	set_sting(/mob/living/carbon/proc/sting_effect_extract, "sting_extract")
 
 /mob/living/carbon/proc/sting_effect_extract(mob/living/carbon/T)
-
+	if(!sting_can_reach(T, 25))
+		return 0
 	if(src.mind.changeling.can_absorb_dna(T, usr))
 		src.mind.changeling.absorb_dna(T, usr)
 	else//If the sting fails, give the guy most of his chems back.
@@ -584,9 +672,11 @@ var/list/datum/dna/hivemind_bank = list()
 	set name = "Mute sting (20)"
 	set desc= "Temporarily mutes the target."
 
-	give_stinger("muting stinger", "sting_mute", /mob/living/carbon/proc/sting_effect_mute, 1, 20)
+	set_sting(/mob/living/carbon/proc/sting_effect_mute, "sting_mute")
 
 /mob/living/carbon/proc/sting_effect_mute(mob/living/carbon/T)
+	if(!sting_can_reach(T, 20))
+		return 0
 	T.silent += 30
 	feedback_add_details("changeling_powers","MS")
 	return 1
@@ -596,9 +686,11 @@ var/list/datum/dna/hivemind_bank = list()
 	set name = "Poison sting (15)"
 	set desc= "Poisons target and gives them brain damage."
 
-	give_stinger("poisoning stinger", "sting_poison", /mob/living/carbon/proc/sting_effect_poison, 1, 15)
+	set_sting(/mob/living/carbon/proc/sting_effect_poison, "sting_poison")
 
 /mob/living/carbon/proc/sting_effect_poison(mob/living/carbon/T)
+	if(!sting_can_reach(T, 15))
+		return 0
 	if(T.reagents)
 		T.reagents.add_reagent("plantbgone", 10)
 		T.reagents.add_reagent("changelingsting", 15)
@@ -613,9 +705,11 @@ var/list/datum/dna/hivemind_bank = list()
 	set name = "Blind Sting (25)"
 	set desc= "Temporarily blinds the target."
 
-	give_stinger("blinding stinger", "sting_blind", /mob/living/carbon/proc/sting_effect_blind, 1, 25)
+	set_sting(/mob/living/carbon/proc/sting_effect_blind, "sting_blind")
 
 /mob/living/carbon/proc/sting_effect_blind(mob/living/carbon/T)
+	if(!sting_can_reach(T, 25))
+		return 0
 	T << "<span class='danger'>Your eyes burn horrifically!</span>"
 	T.disabilities |= NEARSIGHTED
 	T.eye_blind = 20
@@ -629,9 +723,11 @@ var/list/datum/dna/hivemind_bank = list()
 	set name = "Hallucination Sting (5)"
 	set desc = "Causes terror in the target."
 
-	give_stinger("hallucinogenic stinger", "sting_lsd", /mob/living/carbon/proc/sting_effect_lsd, 1, 5)
+	set_sting(/mob/living/carbon/proc/sting_effect_lsd, "sting_lsd")
 
 /mob/living/carbon/proc/sting_effect_lsd(mob/living/carbon/T)
+	if(!sting_can_reach(T, 5))
+		return 0
 	spawn(rand(300,600))
 		if(T)	T.hallucination += 400
 	feedback_add_details("changeling_powers","HS")
@@ -643,74 +739,14 @@ var/list/datum/dna/hivemind_bank = list()
 	set name = "Cryogenic Sting (15)"
 	set desc = "Cools the target, slowing them."
 
-	give_stinger("cryogenic stinger", "sting_cryo", /mob/living/carbon/proc/sting_effect_cryo, 1, 15)
+	set_sting(/mob/living/carbon/proc/sting_effect_cryo, "sting_cryo")
 
 /mob/living/carbon/proc/sting_effect_cryo(mob/living/carbon/T)
+	if(!sting_can_reach(T, 15))
+		return 0
 	if(T.reagents)
 		T.reagents.add_reagent("frostoil", 30)
 		T.reagents.add_reagent("ice", 30)
 
 	feedback_add_details("changeling_powers","CS")
 	return 1
-
-/mob/living/carbon/proc/give_stinger(name, icon, sting, range, cost, dna=null)
-	var/obj/item/stinger/P = new(src)
-	P.sting_type = sting
-	P.sting_range = range
-	P.sting_cost = cost
-	P.owner = src
-	P.dna = dna
-	P.name = name
-	P.icon_state = icon
-	src.put_in_active_hand(P)
-
-/obj/item/stinger
-	name = "stinger"
-	desc = "Thing chanelings use to sting people."
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "sord"
-	flags = NOBLUDGEON | ABSTRACT
-	w_class = 10.0
-	layer = 20
-	item_state = "nothing"
-	var/sting_type
-	var/sting_range
-	var/sting_cost
-	var/dna = null
-	var/mob/living/carbon/owner
-
-/obj/item/stinger/attack_hand(mob/user)
-	del(src)
-
-/obj/item/stinger/attack_paw(mob/user)
-	del(src)
-
-/obj/item/stinger/dropped()
-	del(src)
-
-/obj/item/stinger/equipped(mob/user, slot)
-	if(!((slot == slot_l_hand) || (slot== slot_r_hand)))
-		del(src)
-
-/obj/item/stinger/attack(target)
-	return
-
-/obj/item/stinger/afterattack(target)
-	if(!istype(target, /mob/living/carbon/) || target == owner)
-		return
-
-	var/mob/living/carbon/C = target
-
-	if(owner.mind.changeling.chem_charges < sting_cost)
-		owner << "<span class='warning'>Not enough chemicals.</span>"
-		return
-
-	if(isturf(owner.loc)) //no stinging from inside of mechs, lockers and so on
-		if(get_dist(owner.loc, C.loc) <= sting_range + 1) // sanity check because AStar do some crazy shit and i have no idea how to fix it
-			if(AStar(owner.loc, C.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, 0)) //holy shit this thing is insane, please someone fix it!
-				owner.mind.changeling.chem_charges -= sting_cost
-				owner << "<span class='notice'>We stealthily sting [C].</span>"
-				if(!C.mind || !C.mind.changeling)
-					call(owner, sting_type)(C, dna)
-				else
-					C << "<span class='warning'>You feel a tiny prick.</span>"

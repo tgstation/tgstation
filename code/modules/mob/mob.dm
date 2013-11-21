@@ -483,7 +483,7 @@ var/list/slot_equipment_priority = list( \
 			var/slot = text2num(href_list["item"])
 			var/obj/item/what = get_item_by_slot(slot)
 
-			if(what && what.canremove && !(what.flags&ABSTRACT))
+			if(what && what.canremove)
 				visible_message("<span class='danger'>[usr] tries to remove [src]'s [what.name].</span>", \
 								"<span class='userdanger'>[usr] tries to remove [src]'s [what.name].</span>")
 				what.add_fingerprint(usr)
@@ -492,7 +492,7 @@ var/list/slot_equipment_priority = list( \
 						u_equip(what)
 			else
 				what = usr.get_active_hand()
-				if(what && what.mob_can_equip(src, slot, 1) && !(what.flags&ABSTRACT))
+				if(what && what.mob_can_equip(src, slot, 1))
 					visible_message("<span class='notice'>[usr] tries to put [what] on [src].</span>")
 					if(do_mob(usr, src, STRIP_DELAY * 0.5))
 						if(what && Adjacent(usr))
