@@ -28,6 +28,7 @@
 
 //removes our changeling verbs
 /mob/proc/remove_changeling_powers()
+	src:unset_sting()
 	for(var/datum/power/changeling/P in powerinstances)
 		if(P.isVerb)
 			verbs -= P.verbpath
@@ -260,8 +261,6 @@
 
 	O.make_changeling()
 	O.unset_sting()
-	for(var/obj/item/C in O.loc)
-		O.equip_to_appropriate_slot(C) //Rejoice
 	feedback_add_details("changeling_powers","LFT")
 	. = 1
 	del(src)

@@ -49,7 +49,7 @@
 /mob/living/carbon/ClickOn(var/atom/A, var/params)
 	var/list/L = params2list(params)
 	L.Remove("left", "icon-y", "icon-x", "screen-loc") //remove all the default params
-	if(!L.len && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src)) //if there are still params then its not a usual click so pass it to parent
+	if(L["alt"] && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src)) //checks for alt+click
 		if(world.time <= next_click)
 			return
 		next_click = world.time + 5
