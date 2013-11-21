@@ -357,7 +357,7 @@
 	m_amt = 3750
 
 	recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-		rec.iron++
+		rec.addMaterial("iron",1)
 		return 1
 
 /obj/item/weapon/shard
@@ -379,7 +379,7 @@
 		return (BRUTELOSS)
 
 /obj/item/weapon/shard/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-	rec.glass++
+	rec.addMaterial("glass",1)
 	return 1
 
 /obj/item/weapon/shard/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
@@ -490,7 +490,7 @@
 	attack_verb = list("slammed", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
 	recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-		rec.iron+=2
+		rec.addMaterial("iron",2)
 		return 1
 
 /obj/item/weapon/table_parts/reinforced
@@ -503,7 +503,7 @@
 
 	recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
 		// 2 metal + 4 rods (0.5 metal ea)
-		rec.iron+=4
+		rec.addMaterial("iron",4)
 		return 1
 
 /obj/item/weapon/table_parts/wood

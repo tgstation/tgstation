@@ -24,8 +24,8 @@
 /obj/machinery/portable_atmospherics/canister/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
 	if (src.m_amt == 0 && src.g_amt == 0)
 		return 0
-	rec.iron += src.m_amt/CC_PER_SHEET_METAL
-	rec.glass += src.g_amt/CC_PER_SHEET_GLASS
+	rec.addMaterial("iron",src.m_amt/CC_PER_SHEET_METAL)
+	rec.addMaterial("glass",src.g_amt/CC_PER_SHEET_GLASS)
 	return 1
 
 /obj/machinery/portable_atmospherics/canister/sleeping_agent
