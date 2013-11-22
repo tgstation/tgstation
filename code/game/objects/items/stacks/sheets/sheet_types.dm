@@ -94,6 +94,11 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 		recipes = plasteel_recipes
 		return ..()
 
+/obj/item/stack/sheet/plasteel/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
+	rec.addMaterial("plasma",1)
+	rec.addMaterial("iron",1)
+	return 1
+
 /*
  * Wood
  */
