@@ -28,6 +28,8 @@
 	src.icon_state = pick(types)
 	src.icon_living = src.icon_state
 	src.icon_dead = "[src.icon_state]_dead"
+	src.pixel_x = rand(-5.0, 5)
+	src.pixel_y = rand(-5.0, 5)
 	tribble_list += src
 
 /obj/item/toy/tribble
@@ -100,3 +102,100 @@
 			else if(gestation >= 30)
 				if(prob(80))
 					src.procreate()
+
+
+/obj/structure/tribble
+	name = "Lab Cage"
+	icon = 'icons/mob/tribbles.dmi'
+	icon_state = "labcage1"
+	desc = "A glass lab container for storing interesting creatures."
+	density = 1
+	anchored = 1
+	unacidable = 1//Dissolving the case would also delete tribble
+	var/health = 30
+	var/occupied = 1
+	var/destroyed = 0
+
+/obj/structure/tribble/ex_act(severity)
+	switch(severity)
+		if (1)
+			new /obj/item/weapon/shard( src.loc )
+			Break()
+			del(src)
+		if (2)
+			if (prob(50))
+				src.health -= 15
+				src.healthcheck()
+		if (3)
+			if (prob(50))
+				src.health -= 5
+				src.healthcheck()
+
+
+/obj/structure/tribble/bullet_act(var/obj/item/projectile/Proj)
+	health -= Proj.damage
+	..()
+	src.healthcheck()
+	return
+
+
+/obj/structure/tribble/blob_act()
+	if (prob(75))
+		new /obj/item/weapon/shard( src.loc )
+		Break()
+		del(src)
+
+
+/obj/structure/tribble/meteorhit(obj/O as obj)
+		new /obj/item/weapon/shard( src.loc )
+		Break()
+		del(src)
+
+
+/obj/structure/tribble/proc/healthcheck()
+	if (src.health <= 0)
+		if (!( src.destroyed ))
+			src.density = 0
+			src.destroyed = 1
+			new /obj/item/weapon/shard( src.loc )
+			playsound(src, "shatter", 70, 1)
+			Break()
+	else
+		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+	return
+
+/obj/structure/tribble/update_icon()
+	if(src.destroyed)
+		src.icon_state = "labcageb[src.occupied]"
+	else
+		src.icon_state = "labcage[src.occupied]"
+	return
+
+
+/obj/structure/tribble/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	src.health -= W.force
+	src.healthcheck()
+	..()
+	return
+
+/obj/structure/tribble/attack_paw(mob/user as mob)
+	return src.attack_hand(user)
+
+/obj/structure/tribble/attack_hand(mob/user as mob)
+	if (src.destroyed)
+		return
+	else
+		usr << text("\blue You kick the lab cage.")
+		for(var/mob/O in oviewers())
+			if ((O.client && !( O.blinded )))
+				O << text("\red [] kicks the lab cage.", usr)
+		src.health -= 2
+		healthcheck()
+		return
+
+/obj/structure/tribble/proc/Break()
+	if(occupied)
+		new /mob/living/simple_animal/tribble( src.loc )
+		occupied = 0
+	update_icon()
+	return
