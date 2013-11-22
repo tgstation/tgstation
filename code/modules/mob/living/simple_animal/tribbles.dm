@@ -1,3 +1,5 @@
+var/global/totaltribbles = 0
+
 /mob/living/simple_animal/tribble
 	name = "tribble"
 	desc = "It's a small furry creature that makes a soft trill."
@@ -29,6 +31,7 @@
 	src.icon_dead = "[src.icon_state]_dead"
 	src.pixel_x = rand(-5.0, 5)
 	src.pixel_y = rand(-5.0, 5)
+	totaltribbles += 1
 
 /obj/item/toy/tribble
 	name = "tribble"
@@ -46,6 +49,7 @@
 		T.icon_living = src.icon_state
 		T.icon_dead = "[src.icon_state]_dead"
 		T.gestation = src.gestation
+		totaltribbles += 1
 
 	user << "<span class='notice'>You place the tribble on the floor.</span>"
 	del(src)
@@ -69,6 +73,7 @@
 			T.gestation = src.gestation
 			T.pickup(user)
 			user.put_in_active_hand(T)
+			totaltribbles -= 1
 			del(src)
 
 /mob/living/simple_animal/tribble/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
@@ -80,10 +85,6 @@
 
 /mob/living/simple_animal/tribble/proc/procreate()
 	..()
-	var/totaltribbles = 0
-	for(var/mob/living/simple_animal/tribble/T in mob_list)
-		if(T.stat == CONSCIOUS && T.health >= 1)
-			totaltribbles++
 	if(totaltribbles <= maxtribbles)
 		for(var/mob/living/simple_animal/tribble/F in src.loc)
 			if(!F || F == src)
@@ -100,6 +101,10 @@
 			else if(gestation >= 30)
 				if(prob(80))
 					src.procreate()
+
+/mob/living/simple_animal/tribble/Die()
+	..()
+	totaltribbles -= 1
 
 
 /obj/structure/tribble
