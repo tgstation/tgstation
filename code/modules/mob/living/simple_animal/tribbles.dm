@@ -82,7 +82,6 @@
 	if(totaltribbles <= maxtribbles)
 		for(var/mob/living/simple_animal/tribble/F in src.loc)
 			if(!F || F == src)
-				spawn(5)
 				new /mob/living/simple_animal/tribble(src.loc)
 				gestation = 0
 
