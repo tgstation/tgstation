@@ -52,9 +52,12 @@
 
 /obj/item/toy/tribble/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
 	..()
-	if(istype(O, /obj/item/weapon/scalpel))
+	if(istype(O, /obj/item/weapon/scalpel) && src.gestation != null)
 		gestation = null
 		user << "<span class='notice'>You neuter the tribble so that it can no longer re-produce.</span>"
+	else if (istype(O, /obj/item/weapon/cautery) && src.gestation == null)
+		gestation = 0
+		user << "<span class='notice'>You fuse some recently cut tubes together, it should be able to reproduce again.</span>"
 
 /mob/living/simple_animal/tribble/attack_hand(mob/user as mob)
 	..()
