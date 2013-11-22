@@ -5,7 +5,7 @@ VOX HEIST ROUNDTYPE
 #define MAX_VOX_KILLS 10 //Number of kills during the round before the Inviolate is broken.
 						 //Would be nice to use vox-specific kills but is currently not feasible.
 
-var/global/vox_kills = 0 //Used to check the Inviolate.
+//var/global/vox_kills = 0 //Used to check the Inviolate.
 
 /datum/game_mode/
 	var/list/datum/mind/raiders = list()  //Antags.
