@@ -11,7 +11,7 @@
  *		Water flower
  *		Toy AI
  *		Postcard
- *		Old bluprints
+ *		Old blueprints
  */
 
 /obj/item/toy
