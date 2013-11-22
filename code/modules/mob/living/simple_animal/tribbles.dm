@@ -19,7 +19,6 @@
 	harm_intent_damage = 5
 	var/gestation = 0
 	var/maxtribbles = 50
-	var/list/tribble_list = list()
 	wander = 1
 
 /mob/living/simple_animal/tribble/New()
@@ -30,7 +29,6 @@
 	src.icon_dead = "[src.icon_state]_dead"
 	src.pixel_x = rand(-5.0, 5)
 	src.pixel_y = rand(-5.0, 5)
-	tribble_list += src
 
 /obj/item/toy/tribble
 	name = "tribble"
@@ -83,7 +81,7 @@
 /mob/living/simple_animal/tribble/proc/procreate()
 	..()
 	var/totaltribbles = 0
-	for(var/mob/living/simple_animal/tribble/T in tribble_list)
+	for(var/mob/living/simple_animal/tribble/T in mob_list)
 		if(T.stat == CONSCIOUS && T.health >= 1)
 			totaltribbles++
 	if(totaltribbles <= maxtribbles)
