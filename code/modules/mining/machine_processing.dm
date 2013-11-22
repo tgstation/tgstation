@@ -28,6 +28,7 @@
 /obj/machinery/mineral/processing_unit_console/interact(mob/user)
 	user.set_machine(src)
 
+	var/nloaded=0
 	var/dat = {"
 	<html>
 		<head>
@@ -56,44 +57,49 @@ tr:nth-child(even) {
 	background: #efefef;
 }
 
-span.smelting {
-	color:green;
+a.smelting {
+	color:white;
 	font-weight:bold;
+	text-decoration:none;
+	background-color:green;
 }
 
-span.notsmelting {
-	color:red;
+a.notsmelting {
+	color:white;
 	font-weight:bold;
+	text-decoration:none;
+	background-color:maroon;
 }
 			</style>
 		</head>
 		<body>
-			<h1>Smelter Control</h1>"}
-	var/nloaded=0
-	var/body={"
+			<h1>Smelter Control</h1>
 			<table>
 				<tr>
 					<th>Mineral</th>
-					<th>Amount</th>
+					<th># Sheets</th>
 					<th>Controls</th>
 				</tr>"}
 	for(var/ore_id in machine.ore)
 		var/datum/processable_ore/ore_info=machine.ore[ore_id]
 		if(ore_info.stored)
-			body += "<tr><td class=\"clmName\">[ore_info.name]</td><td>[ore_info.stored]</td><td><A href='?src=\ref[src];toggle_select=[ore_id]'>"
+			dat += {"
+			<tr>
+				<td class="clmName">[ore_info.name]</td>
+				<td>[ore_info.stored]</td>
+				<td>
+					<a href="?src=\ref[src];toggle_select=[ore_id]" "}
 			if (ore_info.selected)
-				body += "<span class=\"smelting\">Smelting</span>"
+				dat += "class=\"smelting\">Smelting"
 			else
-				body += "<span class=\"notsmelting\">Not smelting</span>"
-			body += "</A></td></tr>"
+				dat += "class=\"notsmelting\">Not smelting"
+			dat += "</a></td></tr>"
 			nloaded++
 		else
 			ore_info.selected=0
 			machine.ore[ore_id]=ore_info
-
 	if(nloaded)
 		dat += {"
-			[body]
 			</table>
 			<p>Machine is currently "}
 		//On or off
@@ -102,7 +108,7 @@ span.notsmelting {
 		else
 			dat += "<A href='?src=\ref[src];set_on=on'>Off</A></p>"
 	else
-		dat+="<em>No Materials Loaded</em>"
+		dat+="<tr><td colspan=\"3\"><em>No Materials Loaded</em></td></tr></table>"
 	dat+={"
 		</body>
 	</html>"}
