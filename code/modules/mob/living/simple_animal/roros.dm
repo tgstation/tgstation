@@ -231,7 +231,7 @@ var/global/totalroros = 0   //global variable so it updates for all roros, not j
 	max_amount = 50
 
 /obj/item/clothing/ears/earmuffs/roromuffs //earmuffs but with roros
-	name = "earmuffs"
+	name = "roro-muffs"
 	desc = "Protects your hearing from loud noises, and quiet ones as well."
 	icon = 'icons/mob/roros.dmi'
 	icon_state = "roromuffs"
@@ -291,3 +291,19 @@ var/global/totalroros = 0   //global variable so it updates for all roros, not j
 	body_parts_covered = CHEST|LEGS|ARMS
 	cold_protection = CHEST | LEGS | ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+
+
+
+/* ||Fur Recipes & Crafting|| */
+var/global/list/datum/stack_recipe/fur_recipes = list ( \
+	new/datum/stack_recipe("fur cap", /obj/item/clothing/head/furcap, 4, time = 8), \
+	new/datum/stack_recipe("fur gloves", /obj/item/clothing/gloves/furgloves, 3, time = 6), \
+	new/datum/stack_recipe("fur coat", /obj/item/clothing/suit/furcoat, 8,  time = 16), \
+	new/datum/stack_recipe("fur cape", /obj/item/clothing/suit/furcape, 5,  time = 10), \
+	new/datum/stack_recipe("fur boots", /obj/item/clothing/shoes/furboots, 4,  time = 8), \
+	new/datum/stack_recipe("roro-muffs", /obj/item/clothing/ears/earmuffs/roromuffs, 2,  time = 4), \
+)
+
+/obj/item/stack/sheet/fur/New(var/loc, var/amount=null)
+	recipes = fur_recipes
+	return ..()
