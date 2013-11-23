@@ -1,5 +1,5 @@
 /obj/item/stack/light_w
-	name = "wired glass tiles"
+	name = "wired glass tile"
 	singular_name = "wired glass floor tile"
 	desc = "A glass tile, which is wired, somehow."
 	icon_state = "glass_wire"
