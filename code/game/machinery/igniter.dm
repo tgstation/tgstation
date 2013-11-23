@@ -48,7 +48,7 @@
 // Wall mounted remote-control igniter.
 
 /obj/machinery/sparker
-	name = "Mounted igniter"
+	name = "mounted igniter"
 	desc = "A wall-mounted ignition device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "migniter"

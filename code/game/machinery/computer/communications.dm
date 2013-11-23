@@ -2,7 +2,7 @@
 
 // The communications computer
 /obj/machinery/computer/communications
-	name = "Communications Console"
+	name = "communications console"
 	desc = "This can be used for various important functions. Still under developement."
 	icon_state = "comm"
 	req_access = list(access_heads)

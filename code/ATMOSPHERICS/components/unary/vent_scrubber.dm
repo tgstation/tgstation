@@ -2,7 +2,7 @@
 	icon = 'icons/obj/atmospherics/vent_scrubber.dmi'
 	icon_state = "off"
 
-	name = "Air Scrubber"
+	name = "air scrubber"
 	desc = "Has a valve and pump attached to it"
 	use_power = 1
 
@@ -78,7 +78,7 @@
 				"sigtype" = "status"
 			)
 			if(!initial_loc.air_scrub_names[id_tag])
-				var/new_name = "[initial_loc.name] Air Scrubber #[initial_loc.air_scrub_names.len+1]"
+				var/new_name = "\improper [initial_loc.name] air scrubber #[initial_loc.air_scrub_names.len+1]"
 				initial_loc.air_scrub_names[id_tag] = new_name
 				src.name = new_name
 			initial_loc.air_scrub_info[id_tag] = signal.data

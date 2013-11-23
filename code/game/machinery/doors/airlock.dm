@@ -86,7 +86,7 @@
 	doortype = 8
 
 /obj/machinery/door/airlock/vault
-	name = "vault"
+	name = "vault door"
 	icon = 'icons/obj/doors/vault.dmi'
 	opacity = 1
 	doortype = 9

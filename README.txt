@@ -62,10 +62,9 @@ config/admin_ranks.txt
 
 The format is
 
-byondkey - Rank
+byondkey = Rank
 
-where the BYOND key must be in lowercase and the admin rank must be properly
-capitalised.
+where the admin rank must be properly capitalised.
 
 Finally, to start the server, run Dream Daemon and enter the path to your
 compiled tgstation.dmb file.  Make sure to set the port to the one you 

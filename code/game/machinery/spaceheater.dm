@@ -33,8 +33,7 @@
 		set src in oview(12)
 		if (!( usr ))
 			return
-		usr << "This is \icon[src] \an [src.name]."
-		usr << src.desc
+		..()
 
 		usr << "The heater is [on ? "on" : "off"] and the hatch is [open ? "open" : "closed"]."
 		if(open)

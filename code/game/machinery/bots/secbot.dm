@@ -1,5 +1,5 @@
 /obj/machinery/bot/secbot
-	name = "Securitron"
+	name = "\improper Securitron"
 	desc = "A little security robot.  He looks less than thrilled."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "secbot0"

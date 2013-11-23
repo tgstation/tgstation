@@ -311,16 +311,17 @@
 // examine verb
 /obj/machinery/light/examine()
 	set src in oview(1)
+	..()
 	if(usr && !usr.stat)
 		switch(status)
 			if(LIGHT_OK)
-				usr << "[desc] It is turned [on? "on" : "off"]."
+				usr << "It is turned [on? "on" : "off"]."
 			if(LIGHT_EMPTY)
-				usr << "[desc] The [fitting] has been removed."
+				usr << "The [fitting] has been removed."
 			if(LIGHT_BURNED)
-				usr << "[desc] The [fitting] is burnt out."
+				usr << "The [fitting] is burnt out."
 			if(LIGHT_BROKEN)
-				usr << "[desc] The [fitting] has been smashed."
+				usr << "The [fitting] has been smashed."
 
 
 

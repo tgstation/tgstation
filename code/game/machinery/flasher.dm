@@ -1,7 +1,7 @@
 // It is a gizmo that flashes a small area
 
 /obj/machinery/flasher
-	name = "Mounted flash"
+	name = "mounted flash"
 	desc = "A wall-mounted flashbulb device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"

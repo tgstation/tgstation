@@ -38,9 +38,8 @@
 
 /obj/item/weapon/extinguisher/examine()
 	set src in usr
-
-	usr << text("\icon[] [] contains [] units of water left!", src, src.name, src.reagents.total_volume)
 	..()
+	usr << "It contains [src.reagents.total_volume] units of water!"
 	return
 
 /obj/item/weapon/extinguisher/attack_self(mob/user as mob)
