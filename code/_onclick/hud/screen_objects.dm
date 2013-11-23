@@ -179,6 +179,10 @@
 				var/mob/living/carbon/human/H = usr
 				H.quick_equip()
 
+		if("current sting")
+			var/mob/living/carbon/U = usr
+			U.unset_sting()
+
 		if("resist")
 			if(isliving(usr))
 				var/mob/living/L = usr
