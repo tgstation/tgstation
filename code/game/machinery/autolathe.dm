@@ -34,7 +34,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/reagent_containers/glass/bucket(), \
 		new /obj/item/ammo_casing/shotgun/blank(), \
 		new /obj/item/ammo_casing/shotgun/beanbag(), \
-		new /obj/item/ammo_magazine/c38(), \
+		new /obj/item/ammo_casing/c38(), \
 		new /obj/item/device/taperecorder/empty(), \
 		new /obj/item/device/tape(), \
 		new /obj/item/device/assembly/igniter(), \
@@ -51,6 +51,8 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/clothing/gloves/furgloves(), \
 		new /obj/item/clothing/head/furcap(), \
 		new /obj/item/clothing/shoes/furboots(), \
+		new /obj/item/clothing/suit/furcoat(), \
+		new /obj/item/clothing/suit/furcape(), \
 	)
 
 var/global/list/autolathe_recipes_hidden = list( \
@@ -59,7 +61,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 		new /obj/item/device/radio/electropack(), \
 		new /obj/item/weapon/weldingtool/largetank(), \
 		new /obj/item/weapon/handcuffs(), \
-		new /obj/item/ammo_magazine/a357(), \
+		new /obj/item/ammo_casing/a357(), \
 		new /obj/item/ammo_casing/shotgun(), \
 		new /obj/item/ammo_casing/shotgun/dart(), \
 		/* new /obj/item/weapon/shield/riot(), */ \

@@ -274,3 +274,28 @@ var/global/totaltribbles = 0   //global variable so it updates for all tribbles,
 
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
+
+/obj/item/clothing/suit/furcoat
+	name = "fur coat"
+	desc = "A trenchcoat made from fur. You could put an oxygen tank in one of the pockets."
+	icon = 'icons/mob/tribbles.dmi'
+	icon_state = "furcoat"
+	item_state = "furcoat"
+	blood_overlay_type = "armor"
+	f_amt = 15000
+	body_parts_covered = CHEST|LEGS|ARMS|GROIN
+	allowed = list (/obj/item/weapon/tank/emergency_oxygen)
+	cold_protection = CHEST | GROIN | LEGS | ARMS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+
+/obj/item/clothing/suit/furcape
+	name = "fur cape"
+	desc = "A cape made from fur. You'll really be stylin' now."
+	icon = 'icons/mob/tribbles.dmi'
+	icon_state = "furcape"
+	item_state = "furcape"
+	blood_overlay_type = "armor"
+	f_amt = 10000
+	body_parts_covered = CHEST|LEGS|ARMS
+	cold_protection = CHEST | LEGS | ARMS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
