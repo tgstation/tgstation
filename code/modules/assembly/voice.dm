@@ -8,7 +8,9 @@
 	var/listening = 0
 	var/recorded	//the activation message
 
-	hear_talk(mob/living/M as mob, msg)
+	hear_talk(mob/M as mob, msg)
+		if(!istype(M,/mob/living))
+			return
 		if(listening)
 			recorded = msg
 			listening = 0
@@ -17,6 +19,8 @@
 		else
 			if(findtext(msg, recorded))
 				pulse(0)
+				var/turf/T = get_turf(src)	//otherwise it won't work in hand
+				T.visible_message("\icon[src] \red beeps!")
 
 	activate()
 		if(secured)
