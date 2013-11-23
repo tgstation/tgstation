@@ -1,4 +1,7 @@
-
+// Assuming this is http://en.wikipedia.org/wiki/Butane
+// (Autoignition temp 288°C, or 561.15°K)
+// Used in fueltanks exploding.
+#define AUTOIGNITION_WELDERFUEL 561.15
 
 /obj/structure/reagent_dispensers
 	name = "Dispenser"
@@ -153,6 +156,11 @@
 
 	ex_act()
 		explode()
+
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+		if(exposed_temperature >= AUTOIGNITION_WELDERFUEL)
+			explode()
+
 
 	proc/explode()
 		if (reagents.total_volume > 500)
