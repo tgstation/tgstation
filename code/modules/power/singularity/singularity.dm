@@ -2,7 +2,8 @@
 
 var/global/list/uneatable = list(
 	/turf/space,
-	/obj/effect/overlay
+	/obj/effect/overlay,
+	/turf/simulated/mineral/hard
 	)
 
 /obj/machinery/singularity

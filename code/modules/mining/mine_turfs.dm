@@ -40,15 +40,15 @@
 		if((istype(get_step(src, SOUTH), /turf/simulated/floor)) || (istype(get_step(src, SOUTH), /turf/space)) || (istype(get_step(src, SOUTH), /turf/simulated/shuttle/floor)))
 			T = get_step(src, SOUTH)
 			if (T)
-				T.overlays += image('icons/turf/walls.dmi', "rock_side_n", layer=6)
+				T.overlays += image('icons/turf/walls.dmi', "rock_side_n")
 		if((istype(get_step(src, EAST), /turf/simulated/floor)) || (istype(get_step(src, EAST), /turf/space)) || (istype(get_step(src, EAST), /turf/simulated/shuttle/floor)))
 			T = get_step(src, EAST)
 			if (T)
-				T.overlays += image('icons/turf/walls.dmi', "rock_side_w", layer=6)
+				T.overlays += image('icons/turf/walls.dmi', "rock_side_w")
 		if((istype(get_step(src, WEST), /turf/simulated/floor)) || (istype(get_step(src, WEST), /turf/space)) || (istype(get_step(src, WEST), /turf/simulated/shuttle/floor)))
 			T = get_step(src, WEST)
 			if (T)
-				T.overlays += image('icons/turf/walls.dmi', "rock_side_e", layer=6)
+				T.overlays += image('icons/turf/walls.dmi', "rock_side_e")
 
 	if (mineralName && mineralAmt && spread && spreadChance)
 		for(var/dir in cardinal)
@@ -471,3 +471,19 @@
 				src.attackby(R.module_state_3,R)
 			else
 				return
+
+/turf/simulated/mineral/hard
+	name = "Hard Rock"
+	icon_state = "hard_rock"
+	desc = "Literally nothing is able to break this apart"
+
+/turf/simulated/mineral/hard/ex_act()
+	return
+
+/turf/simulated/mineral/hard/attackby(mob/user as mob)
+	user << "\red This rock feels too tough to break through."
+	playsound(user, 'sound/weapons/Genhit.ogg', 20, 1)
+	return
+
+/turf/simulated/mineral/hard/Bumped()
+	return

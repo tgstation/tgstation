@@ -58,3 +58,7 @@
 /area/mine/laborcamp/security
 	name = "Labor Camp Security"
 	icon_state = "security"
+
+/area/mine/explored/hard_rock
+	name = "Mine"
+	icon_state = "cave"

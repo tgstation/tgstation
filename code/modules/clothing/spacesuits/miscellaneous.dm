@@ -97,4 +97,15 @@
 	slowdown = 0
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 
+//Prison mining space suit
+/obj/item/clothing/head/helmet/space/prison
+	name = "Prison Mining Helmet"
+	desc = "A low quality space helmet for penal activities. The label says \"GET BACK TO WORK."
+	icon_state = "engspace_helmet"
+	item_state = "engspace_helmet"
 
+/obj/item/clothing/suit/space/prison
+	name = "Prison Mining Suit"
+	icon_state = "engspace_suit"
+	item_state = "engspace_suit"
+	desc = "A low quality space suit for penal activities. The label says \"GET BACK TO WORK."

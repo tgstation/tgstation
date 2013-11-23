@@ -9,8 +9,10 @@
  *		Crayons
  *		Snap pops
  *		Water flower
+ *		Toy AI
+ *		Postcard
+ *		Old blueprints
  */
-
 
 /obj/item/toy
 	throwforce = 0
@@ -558,3 +560,15 @@
 		return
 
 	..()
+
+/obj/item/toy/postcard
+	name = "Commemorative Postcard"
+	desc = "A rare Nanotrasen-issued postcard addressed to Mr.Phillip, this was delivered by Head-Postmaster Rathens himself!"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "postcard"
+
+/obj/item/toy/oldprints
+	name = "Obsolete Blueprints"
+	desc = "These old blueprints show the original design of the BLULIGHT-model medbay proposed by pioneering engineer Scotty Sybilla."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "blueprints"
