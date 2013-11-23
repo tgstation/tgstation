@@ -1,7 +1,6 @@
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
-	var/abstract = 0
 	var/item_state = null
 	var/r_speed = 1.0
 	var/health = null
@@ -180,19 +179,23 @@
 	if(istype(W,/obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		if(S.use_to_pickup)
-			if(S.collection_mode) //Mode is set to collect all items on a tile and we clicked on a valid one.
+			if(S.collection_mode) //Mode is set to collect multiple items on a tile and we clicked on a valid one.
 				if(isturf(src.loc))
 					var/list/rejections = list()
 					var/success = 0
 					var/failure = 0
 
 					for(var/obj/item/I in src.loc)
+						if(S.collection_mode == 2 && !istype(I,src.type)) // We're only picking up items of the target type
+							failure = 1
+							continue
 						if(I.type in rejections) // To limit bag spamming: any given type only complains once
 							continue
 						if(!S.can_be_inserted(I))	// Note can_be_inserted still makes noise when the answer is no
 							rejections += I.type	// therefore full bags are still a little spammy
 							failure = 1
 							continue
+							
 						success = 1
 						S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
 					if(success && !failure)

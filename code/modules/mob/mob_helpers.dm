@@ -264,9 +264,9 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 
 /proc/shake_camera(mob/M, duration, strength=1)
-	if(!M || !M.client || M.shakecamera)
-		return
-	spawn(1)
+	spawn(0)
+		if(!M || !M.client || M.shakecamera)
+			return
 		var/oldeye=M.client.eye
 		var/x
 		M.shakecamera = 1
@@ -287,7 +287,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 
 /mob/proc/abiotic(full_body = 0)
-	if(l_hand && !l_hand.abstract || r_hand && !r_hand.abstract)
+	if(l_hand && !l_hand.flags&ABSTRACT || r_hand && !r_hand.flags&ABSTRACT)
 		return 1
 	return 0
 

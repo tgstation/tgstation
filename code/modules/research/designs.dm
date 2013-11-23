@@ -250,14 +250,23 @@ datum/design/clonescanner
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/clonescanner"
 
-datum/design/arcademachine
-	name = "Circuit Design (Arcade Machine)"
+datum/design/arcadebattle
+	name = "Circuit Design (Battle Arcade Machine)"
 	desc = "Allows for the construction of circuit boards used to build a new arcade machine."
 	id = "arcademachine"
 	req_tech = list("programming" = 1)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
-	build_path = "/obj/item/weapon/circuitboard/arcade"
+	build_path = "/obj/item/weapon/circuitboard/arcade/battle"
+
+datum/design/orion_trail
+	name = "Circuit Design (Orion Trail Arcade Machine)"
+	desc = "Allows for the construction of circuit boards used to build a new Orion Trail machine."
+	id = "arcademachine"
+	req_tech = list("programming" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/arcade/orion_trail"
 
 datum/design/powermonitor
 	name = "Circuit Design (Power Monitor)"
@@ -749,12 +758,12 @@ datum/design/mech_grenade_launcher
 	category = "Exosuit Equipment"
 
 datum/design/clusterbang_launcher
-	name = "Exosuit Module Design (SOP-6 Clusterbang Launcher)"
-	desc = "A weapon that violates the Geneva Convention at 6 rounds per minute"
+	name = "Exosuit Module Design (SOB-3 Clusterbang Launcher)"
+	desc = "A weapon that violates the Geneva Convention at 3 rounds per minute"
 	id = "clusterbang_launcher"
 	build_type = MECHFAB
 	req_tech = list("combat"= 5, "materials" = 5, "syndicate" = 3)
-	build_path = "/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang/limited"
+	build_path = "/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang"
 	category = "Exosuit Equipment"
 
 datum/design/mech_wormhole_gen

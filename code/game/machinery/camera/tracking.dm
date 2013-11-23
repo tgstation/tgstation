@@ -54,7 +54,7 @@
 	var/datum/trackable/TB = new()
 	for(var/mob/living/M in mob_list)
 		// Easy checks first.
-		// Don't detect mobs on Centcom. Since the wizard den is on Centcomm, we only need this.
+		// Don't detect mobs on Centcom. Since the wizard den is on Centcom, we only need this.
 		var/turf/T = get_turf(M)
 		if(!T)
 			continue
