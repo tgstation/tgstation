@@ -20,8 +20,8 @@
 	var/mess = 0 //Need to clean out it if it's full of exploded clone.
 	var/attempting = 0 //One clone attempt at a time thanks
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
-	var/biomass = CLONE_BIOMASS
-	var/opened = 0.0
+	var/biomass = CLONE_BIOMASS * 3
+	var/opened = 0
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
@@ -214,6 +214,7 @@
 		H.h_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 
 	H.species = mrace
+	H.add_language(mrace.language)
 	H.update_mutantrace()
 	H.suiciding = 0
 	src.attempting = 0
