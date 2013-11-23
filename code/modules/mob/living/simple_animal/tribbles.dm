@@ -91,6 +91,7 @@ var/global/totaltribbles = 0   //global variable so it updates for all tribbles,
 	icon = 'icons/mob/tribbles.dmi'
 	icon_state = "tribble1"
 	item_state = "tribble1"
+	w_class = 10.0
 	var/gestation = 0
 
 /obj/item/toy/tribble/attack_self(mob/user as mob) //hug that tribble (and play a sound if we add one)
