@@ -1,4 +1,4 @@
-/proc/playsound(var/atom/source, soundin, vol as num, vary, extrarange as num)
+/proc/playsound(var/atom/source, soundin, vol as num, vary, extrarange as num, falloff)
 
 	soundin = get_sfx(soundin) // same sound for everyone
 
@@ -16,9 +16,10 @@
 		var/turf/T = get_turf(M)
 		if(T && T.z == source.z)
 			if(get_dist(T, source) <= world.view + extrarange)
-				M.playsound_local(source, soundin, vol, vary, frequency)
+				M.playsound_local(source, soundin, vol, vary, frequency, falloff)
 
 var/const/FALLOFF_SOUNDS = 1
+var/const/SURROUND_CAP = 7
 
 /mob/proc/playsound_local(var/atom/source, soundin, vol as num, vary, frequency, falloff)
 	if(!src.client || ear_deaf > 0)	return
@@ -35,18 +36,19 @@ var/const/FALLOFF_SOUNDS = 1
 		else
 			S.frequency = get_rand_frequency()
 
-	if(isturf(source))
+	var/turf/turf_source = get_turf(source)
+	if(isturf(turf_source))
 		// 3D sounds, the technology is here!
 		var/turf/T = get_turf(src)
-		var/dx = source.x - T.x // Hearing from the right/left
-		S.x = round(max(-10, min(10, dx)), 1)
+		var/dx = turf_source.x - T.x // Hearing from the right/left
 
-		var/dz = source.y - T.y // Hearing from infront/behind
-		S.z = round(max(-10, min(10, dz)), 1)
+		S.x = round(max(-SURROUND_CAP, min(SURROUND_CAP, dx)), 1)
+
+		var/dz = turf_source.y - T.y // Hearing from infront/behind
+		S.z = round(max(-SURROUND_CAP, min(SURROUND_CAP, dz)), 1)
 
 		// The y value is for above your head, but there is no ceiling in 2d spessmens.
 		S.y = 1
-
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 
 	src << S

@@ -50,7 +50,7 @@
 	// and play
 	var/turf/source = get_turf(instrumentObj)
 	for(var/mob/M in hearers(15, source))
-		M.playsound_local(source, file(soundfile), 100, falloff = 2)
+		M.playsound_local(source, file(soundfile), 100, falloff = 5)
 
 /datum/song/proc/updateDialog(mob/user as mob)
 	instrumentObj.updateDialog()		// assumes it's an object in world, override if otherwise
