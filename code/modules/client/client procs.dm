@@ -228,6 +228,8 @@ var/next_external_rsc = 0
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
+	set name = "Resend resources"
+	set category = "Debug"
 	getFiles(
 		'nano/js/libraries.min.js',
 		'nano/js/nano_update.js',
@@ -238,6 +240,8 @@ var/next_external_rsc = 0
 		'nano/templates/chem_dispenser.tmpl',
 		'nano/templates/apc.tmpl',
 		'nano/templates/cryo.tmpl',
+		'nano/templates/firealarm.tmpl',
+		'nano/templates/vending.tmpl',
 		'nano/images/uiBackground.png',
 		'nano/images/uiIcons16.png',
 		'nano/images/uiIcons24.png',
