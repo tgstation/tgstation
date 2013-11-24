@@ -37,6 +37,10 @@ var/const/SAFETY_COOLDOWN = 100
 			safety_mode = 0
 			update_icon()
 		playsound(src.loc, "sparks", 75, 1, -1)
+	else if(istype(I, /obj/item/weapon/screwdriver) && emagged)
+		emagged = 0
+		update_icon()
+		user << "<span class='notice'>You reset the crusher to its default factory settings.</span>"
 	else
 		..()
 
