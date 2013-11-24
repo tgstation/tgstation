@@ -10,6 +10,7 @@
 	idle_power_usage = 5
 	active_power_usage = 50
 	var/list/accepted = list()
+	var/running = 0
 
 /obj/machinery/drying_rack/New()
 	..()
@@ -26,21 +27,26 @@
 /obj/machinery/drying_rack/attackby(var/obj/item/W as obj, var/mob/user as mob)
 	if(is_type_in_list(W,accepted))
 		if(W:dry == 0)
-			var/J = W.type
-			user << "You add the [W] to the drying rack."
-			user.u_equip(W)
-			del(W)
-			user << "\red Please wait for the item to finish drying..."
-			use_power = 2
-			icon_state = "drying_rack_on"
-			sleep(60)
-			icon_state = "drying_rack"
-			var/obj/item/weapon/reagent_containers/food/snacks/grown/D = new J(src.loc)
-			user << "\blue You finish drying the [D]"
-			D.icon_state = "[D.icon_state]_dry"
-			D.dry = 1
-			use_power = 1
-			return
+			if(!running)
+				var/J = W.type
+				user << "You add the [W] to the drying rack."
+				user.u_equip(W)
+				del(W)
+				user << "\red Please wait for the item to finish drying..."
+				src.running = 1
+				use_power = 2
+				icon_state = "drying_rack_on"
+				sleep(60)
+				icon_state = "drying_rack"
+				var/obj/item/weapon/reagent_containers/food/snacks/grown/D = new J(src.loc)
+				user << "\blue You finish drying the [D]"
+				D.icon_state = "[D.icon_state]_dry"
+				D.dry = 1
+				use_power = 1
+				src.running = 0
+				return
+			else
+				user << "\red Please wait until the last item has dried."
 		else
 			user << "\red That has already been dried!"
 	else

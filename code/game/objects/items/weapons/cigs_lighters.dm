@@ -473,15 +473,15 @@ obj/item/weapon/rollingpaperpack
 	w_class = 1
 	var/papers = 25
 
-obj/item/weapon/rollingpaperpack/attack_hand(mob/user)
+obj/item/weapon/rollingpaperpack/attack_self(mob/user)
 	if(papers > 1)
 		var/obj/item/weapon/rollingpaper/P = new /obj/item/weapon/rollingpaper(user.loc)
-		user.put_in_active_hand(P)
+		user.put_in_inactive_hand(P)
 		user << "You take a paper out of the pack."
 		papers --
 	else
 		var/obj/item/weapon/rollingpaper/P = new /obj/item/weapon/rollingpaper(user.loc)
-		user.put_in_active_hand(P)
+		user.put_in_inactive_hand(P)
 		user << "You take the last paper out of the pack, and throw the pack away."
 		del(src)
 
@@ -503,6 +503,5 @@ obj/item/weapon/rollingpaperpack/attack_hand(mob/user)
 				M.put_in_l_hand(src)
 
 /obj/item/weapon/rollingpaperpack/examine()
-	set src in range(0)
 	..()
 	usr << "There are [src.papers] left"

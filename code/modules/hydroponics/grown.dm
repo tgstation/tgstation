@@ -1013,6 +1013,10 @@
 	desc = "Dry them out to make coffee."
 	icon_state = "coffee_arabica"
 	potency = 20
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("coffeepowder", 1+round((potency / 10), 2))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/coffee_robusta
 	seed = "/obj/item/seeds/coffee_robusta_seed"
@@ -1023,6 +1027,7 @@
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("coffeepowder", 1+round((potency / 10), 2))
 			reagents.add_reagent("hyperzine", 1+round((potency / 20), 1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco
@@ -1080,6 +1085,10 @@
 	desc = "These aromatic tips of the tea plant can be dried to make tea."
 	icon_state = "tea_aspera_leaves"
 	potency = 20
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("teapowder", 1+round((potency / 10), 2))
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tea_astra
@@ -1091,4 +1100,5 @@
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("teapowder", 1+round((potency / 10), 2))
 			reagents.add_reagent("kelotane", 1+round((potency / 20), 1))

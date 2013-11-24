@@ -2119,6 +2119,36 @@ datum
 				..()
 				return
 
+		coffeepowder
+			name = "Coffee Grounds"
+			id = "coffeepowder"
+			description = "Finely ground coffee beans, used to make coffee."
+			reagent_state = SOLID
+			color = "#5B2E0D" // rgb: 91, 46, 13
+			var/toxpwr = 0.5
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				if(toxpwr)
+					M.adjustToxLoss(toxpwr*REM)
+				..()
+				return
+
+		teapowder
+			name = "Ground Tea Leaves"
+			id = "teapowder"
+			description = "Finely shredded tea leaves, used for making tea."
+			reagent_state = SOLID
+			color = "#7F8400" // rgb: 127, 132, 0
+			var/toxpwr = 0.5
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				if(toxpwr)
+					M.adjustToxLoss(toxpwr*REM)
+				..()
+				return
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////// DRINKS BELOW, Beer is up there though, along with cola. Cap'n Pete's Cuban Spiced Rum////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
