@@ -221,7 +221,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/joint
 	name = "joint"
-	desc = "A roll of ambrosium vulgaris wrapped in a thin paper. Dude."
+	desc = "A roll of ambrosium wrapped in a thin paper. Dude."
 	icon_state = "spliffoff"
 	icon_on = "spliffon"
 	icon_off = "spliffoff"
