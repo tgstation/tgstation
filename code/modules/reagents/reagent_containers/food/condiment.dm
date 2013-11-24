@@ -157,12 +157,13 @@
 /obj/item/weapon/reagent_containers/food/condiment/pack
 	name = "condiment pack"
 	desc = "A small plastic pack with condiments to put on your food"
-	icon_state = "blankbag"
+	icon_state = "condi_empty"
 	volume = 10
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = 10
 	flags = FPRINT | TABLEPASS
-	var/originaldesc
+	possible_states = list("ketchup" = list("condi_ketchup", "Ketchup", "You feel more American already."), "capsaicin" = list("condi_hotsauce", "Hotsauce", "You can almost TASTE the stomach ulcers now!"), "soysauce" = list("condi_soysauce", "Soy Sauce", "A salty soy-based flavoring"), "frostoil" = list("condi_frostoil", "Coldsauce", "Leaves the tongue numb in it's passage"), "sodiumchloride" = list("condi_salt", "Salt Shaker", "Salt. From space oceans, presumably"), "blackpepper" = list("condi_pepper", "Pepper Mill", "Often used to flavor food or make people sneeze"), "cornoil" = list("condi_cornoil", "Corn Oil", "A delicious oil used in cooking. Made from corn"), "sugar" = list("condi_sugar", "Sugar", "Tasty spacey sugar!"))
+	var/originalname = "condiment" //Can't use initial(name) for this. This stores the name set by condimasters.
 
 /obj/item/weapon/reagent_containers/food/condiment/pack/New()
 	..()
@@ -175,10 +176,10 @@
 /obj/item/weapon/reagent_containers/food/condiment/pack/afterattack(obj/target, mob/user , proximity)
 	if(!proximity) return
 
-	//You can tear the bag open above food to put the condiments on it.
-	else if(istype(target, /obj/item/weapon/reagent_containers/food/snacks))
+	//You can tear the bag open above food to put the condiments on it, obviously.
+	if(istype(target, /obj/item/weapon/reagent_containers/food/snacks))
 		if(!reagents.total_volume)
-			user << "<span class='warning'>You tear open the [src], but there's nothing in it.</span>"
+			user << "<span class='warning'>You tear open [src], but there's nothing in it.</span>"
 			Del()
 			return
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
@@ -186,7 +187,7 @@
 			Del()
 			return
 		else
-			user << "<span class='notice'>You tear open the [src] above [target] and the condiments drip onto it.</span>"
+			user << "<span class='notice'>You tear open [src] above [target] and the condiments drip onto it.</span>"
 			src.reagents.trans_to(target, amount_per_transfer_from_this)
 			Del()
 
@@ -198,8 +199,26 @@
 			icon_state = temp_list[1]
 			desc = temp_list[3]
 		else
-			icon_state = pick("mixedbag")
-			desc = originaldesc
+			icon_state = "condi_mixed"
+			desc = "A small condiment pack. The label says it contains [originalname]"
 	else
-		icon_state = "blankbag"
-		desc = "A small condiment bag. It looks empty."
+		icon_state = "condi_empty"
+		desc = "A small condiment pack. It is empty."
+
+//Ketchup
+/obj/item/weapon/reagent_containers/food/condiment/pack/ketchup
+	name = "Ketchup pack"
+	originalname = "Ketchup"
+
+/obj/item/weapon/reagent_containers/food/condiment/pack/ketchup/New()
+		..()
+		reagents.add_reagent("ketchup", 10)
+
+//Hot sauce
+/obj/item/weapon/reagent_containers/food/condiment/pack/hotsauce
+	name = "Hotsauce pack"
+	originalname = "Hotsauce"
+
+/obj/item/weapon/reagent_containers/food/condiment/pack/hotsauce/New()
+		..()
+		reagents.add_reagent("capsaicin", 10)
