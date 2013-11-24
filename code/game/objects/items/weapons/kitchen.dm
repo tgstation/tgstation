@@ -129,7 +129,7 @@
  * Bucher's cleaver
  */
 /obj/item/weapon/butch
-	name = "butcher's Cleaver"
+	name = "butcher's cleaver"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "butch"
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products."

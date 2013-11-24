@@ -70,7 +70,7 @@
 
 
 /obj/item/weapon/storage/lockbox/loyalty
-	name = "Lockbox (Loyalty Implants)"
+	name = "lockbox (Loyalty Implants)"
 	req_access = list(access_security)
 
 	New()

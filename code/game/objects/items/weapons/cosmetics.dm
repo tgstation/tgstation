@@ -1,4 +1,5 @@
 /obj/item/weapon/lipstick
+	gender = PLURAL
 	name = "red lipstick"
 	desc = "A generic brand of lipstick."
 	icon = 'icons/obj/items.dmi'

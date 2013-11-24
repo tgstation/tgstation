@@ -1,5 +1,5 @@
 /obj/item/weapon/vending_refill
-	name = "Resupply canister"
+	name = "resupply canister"
 	var/machine_name = "Generic"
 
 	icon = 'icons/obj/vending_restock.dmi'
