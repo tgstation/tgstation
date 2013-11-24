@@ -219,6 +219,38 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else
 		return ..()
 
+/obj/item/clothing/mask/cigarette/joint
+	name = "joint"
+	desc = "A roll of ambrosium vulgaris wrapped in a thin paper. Dude."
+	icon_state = "spliffoff"
+	icon_on = "spliffon"
+	icon_off = "spliffoff"
+	type_butt = /obj/item/weapon/cigbutt/roach
+	throw_speed = 0.5
+	item_state = "spliffoff"
+	smoketime = 300
+	chem_volume = 20
+
+/obj/item/clothing/mask/cigarette/joint/New()
+	..()
+	var/list/jointnames = list("joint","doobie","spliff","blunt")
+	name = pick(jointnames)
+	src.pixel_x = rand(-5.0, 5)
+	src.pixel_y = rand(-5.0, 5)
+
+
+
+/obj/item/weapon/cigbutt/roach
+	name = "roach"
+	desc = "A manky old roach."
+	icon_state = "roach"
+
+/obj/item/weapon/cigbutt/roach/New()
+	..()
+	src.pixel_x = rand(-5.0, 5)
+	src.pixel_y = rand(-5.0, 5)
+
+
 ////////////
 // CIGARS //
 ////////////
@@ -420,3 +452,57 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		user.SetLuminosity(user.luminosity-1)
 		SetLuminosity(1)
 	return
+
+
+///////////
+//ROLLING//
+///////////
+obj/item/weapon/rollingpaper
+	name = "rolling paper"
+	desc = "A thin piece of paper used to make fine smokeables."
+	icon = 'icons/obj/cigarettes.dmi'
+	icon_state = "cig_paper"
+	w_class = 1
+
+
+obj/item/weapon/rollingpaperpack
+	name = "rolling paper pack"
+	desc = "A pack of NanoTrasen brand rolling papers."
+	icon = 'icons/obj/cigarettes.dmi'
+	icon_state = "cig_paper_pack"
+	w_class = 1
+	var/papers = 25
+
+obj/item/weapon/rollingpaperpack/attack_hand(mob/user)
+	if(papers > 1)
+		var/obj/item/weapon/rollingpaper/P = new /obj/item/weapon/rollingpaper(user.loc)
+		user.put_in_active_hand(P)
+		user << "You take a paper out of the pack."
+		papers --
+	else
+		var/obj/item/weapon/rollingpaper/P = new /obj/item/weapon/rollingpaper(user.loc)
+		user.put_in_active_hand(P)
+		user << "You take the last paper out of the pack, and throw the pack away."
+		del(src)
+
+/obj/item/weapon/rollingpaperpack/MouseDrop(atom/over_object)
+	var/mob/M = usr
+	if(M.restrained() || M.stat)
+		return
+
+	if(over_object == M)
+		M.put_in_hands(src)
+
+	else if(istype(over_object, /obj/screen))
+		switch(over_object.name)
+			if("r_hand")
+				M.u_equip(src)
+				M.put_in_r_hand(src)
+			if("l_hand")
+				M.u_equip(src)
+				M.put_in_l_hand(src)
+
+/obj/item/weapon/rollingpaperpack/examine()
+	set src in range(0)
+	..()
+	usr << "There are [src.papers] left"
