@@ -101,6 +101,12 @@ var/list/department_radio_keys = list(
 	if (stat)
 		return
 
+	// undo last word status.
+	if(ishuman(src))
+		var/mob/living/carbon/human/H=src
+		if(H.said_last_words)
+			H.said_last_words=0
+
 	// Mute disability
 	if (sdisabilities & MUTE)
 		return

@@ -458,6 +458,10 @@
 	changeling.chem_charges -= 45
 
 	var/mob/living/carbon/human/C = src
+	if(ishuman(src))
+		var/mob/living/carbon/human/H=src
+		if(H.said_last_words)
+			H.said_last_words=0
 	C.stat = 0
 	C.SetParalysis(0)
 	C.SetStunned(0)
