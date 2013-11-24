@@ -179,7 +179,7 @@ emp_act
 
 	var/bloody = 0
 	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (I.force * 2)))
-		if(affecting.status == ORGAN_ORGANIC) //Organic limbs bleed - RR
+		if(affecting.status == ORGAN_ORGANIC)
 			I.add_blood(src)	//Make the weapon bloody, not the person.
 			if(prob(I.force * 2))	//blood spatter!
 				bloody = 1
@@ -205,6 +205,7 @@ emp_act
 							H.bloody_hands = 2
 							H.bloody_hands_mob = H
 						H.update_inv_gloves()	//updates on-mob overlays for bloody hands and/or bloody gloves
+
 
 		switch(hit_area)
 			if("head")	//Harder to score a stun but if you do it lasts a bit longer

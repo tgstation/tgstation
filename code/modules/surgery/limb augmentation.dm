@@ -10,7 +10,7 @@
 
 
 /datum/surgery_step/replace/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("<span class ='notice'>[user] begins to sever the muscles on [target]'s [target_zone]!</span>")
+	user.visible_message("<span class ='notice'>[user] begins to sever the muscles on [target]'s [parse_zone(user.zone_sel.selecting)]!</span>")
 
 
 /datum/surgery_step/add_limb
@@ -24,9 +24,9 @@
 /datum/surgery_step/add_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	L = new_organ
 	if(L)
-		user.visible_message("<span class ='notice'>[user] begins to augment [target]'s [target_zone].</span>")
+		user.visible_message("<span class ='notice'>[user] begins to augment [target]'s [parse_zone(user.zone_sel.selecting)].</span>")
 	else
-		user.visible_message("<span class ='notice'>[user] looks for [target]'s [target_zone].</span>")
+		user.visible_message("<span class ='notice'>[user] looks for [target]'s [parse_zone(user.zone_sel.selecting)].</span>")
 
 
 
@@ -46,7 +46,7 @@
 	if(L)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
-			user.visible_message("<span class='notice'>[user] successfully augments [target]'s [target_zone]!</span>")
+			user.visible_message("<span class='notice'>[user] successfully augments [target]'s [parse_zone(user.zone_sel.selecting)]!</span>")
 			L.loc = get_turf(target)
 			H.organs -= L
 			switch(user.zone_sel.selecting)  //for the surgery to progress this MUST still be the original "location" so it's safe to do this.
@@ -62,13 +62,15 @@
 					H.organs += new /obj/item/organ/limb/robot/head(src)
 				if("chest")
 					H.organs += new /obj/item/organ/limb/robot/chest(src)
+					for(var/datum/disease/appendicitis/A in H.viruses) //If they already have Appendicitis, Remove it
+						A.cure(1)
 			user.drop_item()
 			del(tool)
 			H.update_damage_overlays(0)
 			H.update_augments() //Gives them the Cyber limb overlay
-			user.attack_log += "\[[time_stamp()]\]<font color='red'> Augmented [target.name]'s [target_zone] ([target.ckey]) INTENT: [uppertext(user.a_intent)])</font>"
+			user.attack_log += "\[[time_stamp()]\]<font color='red'> Augmented [target.name]'s [parse_zone(user.zone_sel.selecting)] ([target.ckey]) INTENT: [uppertext(user.a_intent)])</font>"
 			target.attack_log += "\[[time_stamp()]\]<font color='orange'> Augmented by [user.name] ([user.ckey]) (INTENT: [uppertext(user.a_intent)])</font>"
 			log_attack("<font color='red'>[user.name] ([user.ckey]) augmented [target.name] ([target.ckey]) (INTENT: [uppertext(user.a_intent)])</font>")
 	else
-		user.visible_message("<span class='notice'>[user] [target] has no organic [target_zone] there!</span>")
+		user.visible_message("<span class='notice'>[user] [target] has no organic [parse_zone(user.zone_sel.selecting)] there!</span>")
 	return 1

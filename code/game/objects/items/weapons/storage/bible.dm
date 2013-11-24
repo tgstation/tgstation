@@ -73,15 +73,22 @@
 			bless(M)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
+				var/message_halt = 0
 				for(var/obj/item/organ/limb/affecting in H.organs)
 					if(affecting.status == ORGAN_ORGANIC)
-						for(var/mob/O in viewers(M, null))
-							O.show_message(text("\red <B>[] heals [] with the power of [src.deity_name]!</B>", user, M), 1)
-						M << "\red May the power of [src.deity_name] compel you to be healed!"
-						playsound(src.loc, "punch", 25, 1, -1)
+						if(message_halt == 0)
+							for(var/mob/O in viewers(M, null))
+								O.show_message(text("\red <B>[] heals [] with the power of [src.deity_name]!</B>", user, M), 1)
+							M << "\red May the power of [src.deity_name] compel you to be healed!"
+							playsound(src.loc, "punch", 25, 1, -1)
+							message_halt = 1
 					else
-						src << "<span class= 'warning'>You cannot heal someone who's body is tainted by metal!</span>"
+						src << "<span class='warning'>[src.deity_name] refuses to heal this metalic taint!</span>"
 						return
+
+
+
+
 		else
 			if(ishuman(M) && !istype(M:head, /obj/item/clothing/head/helmet))
 				M.adjustBrainLoss(10)
@@ -89,6 +96,7 @@
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] beats [] over the head with []!</B>", user, M, src), 1)
 			playsound(src.loc, "punch", 25, 1, -1)
+
 	else if(M.stat == 2)
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red <B>[] smacks []'s lifeless corpse with [].</B>", user, M, src), 1)

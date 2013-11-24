@@ -47,12 +47,14 @@
 	var/status = ORGAN_ORGANIC
 
 
+
 /obj/item/organ/limb/chest
 	name = "chest"
 	desc = "why is it detached..."
 	icon_state = "chest"
 	max_damage = 200
 	body_part = CHEST
+
 
 /obj/item/organ/limb/head
 	name = "head"
@@ -61,12 +63,14 @@
 	max_damage = 200
 	body_part = HEAD
 
+
 /obj/item/organ/limb/l_arm
 	name = "l_arm"
 	desc = "why is it detached..."
 	icon_state = "l_arm"
 	max_damage = 75
 	body_part = ARM_LEFT
+
 
 /obj/item/organ/limb/l_leg
 	name = "l_leg"
@@ -75,6 +79,7 @@
 	max_damage = 75
 	body_part = LEG_LEFT
 
+
 /obj/item/organ/limb/r_arm
 	name = "r_arm"
 	desc = "why is it detached..."
@@ -82,12 +87,14 @@
 	max_damage = 75
 	body_part = ARM_RIGHT
 
+
 /obj/item/organ/limb/r_leg
 	name = "r_leg"
 	desc = "why is it detached..."
 	icon_state = "r_leg"
 	max_damage = 75
 	body_part = LEG_RIGHT
+
 
 
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
