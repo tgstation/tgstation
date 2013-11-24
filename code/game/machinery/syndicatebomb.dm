@@ -147,8 +147,8 @@
 	name = "bomb payload"
 	desc = "A powerful secondary explosive of syndicate design and unknown composition, it should be stable under normal conditions..."
 	icon = 'icons/obj/assemblies.dmi'
-	icon_state = "plastic-explosive0"
-	item_state = "plasticx"
+	icon_state = "bombcore"
+	item_state = "eshield0"
 	flags = FPRINT | TABLEPASS
 	w_class = 2.0
 	origin_tech = "syndicate=6;combat=5"
@@ -161,8 +161,8 @@
 	name = "big red button"
 	desc = "Nothing good can come of pressing a button this garish..."
 	icon = 'icons/obj/assemblies.dmi'
-	icon_state = "plastic-explosive0"
-	item_state = "plasticx"
+	icon_state = "bigred"
+	item_state = "electronic"
 	flags = FPRINT | TABLEPASS
 	w_class = 1.0
 	origin_tech = "syndicate=2"
