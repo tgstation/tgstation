@@ -826,7 +826,8 @@ datum/mind
 							log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
 							message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(current)]")
 							H = M.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_DEFAULTMSG)
-							src = H.mind
+							if(H)
+								src = H.mind
 
 		else if (href_list["silicon"])
 			switch(href_list["silicon"])

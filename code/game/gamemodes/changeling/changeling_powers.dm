@@ -213,7 +213,8 @@
 
 	var/mob/living/carbon/human/O = humanize((TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPSRC),chosen_dna.real_name)
 
-	O.make_changeling()
+	if(O)
+		O.make_changeling()
 	feedback_add_details("changeling_powers","LFT")
 	. = 1
 	del(src)
