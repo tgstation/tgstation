@@ -83,6 +83,12 @@ a.notsmelting {
 	for(var/ore_id in machine.ore)
 		var/datum/processable_ore/ore_info=machine.ore[ore_id]
 		if(ore_info.stored)
+			// Can't do squat unless we have at least one.
+			if(ore_info.stored<1)
+				if(ore_info.selected)
+					machine.on=0
+				ore_info.selected=0
+				machine.ore[ore_id]=ore_info
 			dat += {"
 			<tr>
 				<td class="clmName">[ore_info.name]</td>
@@ -465,6 +471,12 @@ a.notsmelting {
 	for(var/ore_id in machine.ore)
 		var/datum/processable_ore/ore_info=machine.ore[ore_id]
 		if(ore_info.stored)
+			// Can't do squat unless we have at least one.
+			if(ore_info.stored<1)
+				if(ore_info.selected)
+					machine.on=0
+				ore_info.selected=0
+				machine.ore[ore_id]=ore_info
 			html += {"
 			<tr>
 				<td class="clmName">[ore_info.name]</td>
