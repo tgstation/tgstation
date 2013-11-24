@@ -235,8 +235,9 @@
 /obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W as obj, prevent_warning = 0)
 	if(!istype(W)) return 0
 	if(usr)
-		if(!istype(usr, /mob/living/silicon/robot/mommi))
-			usr.u_equip(W)
+		// MoMMIs have to drop it, too. - N3X
+		//if(!istype(usr, /mob/living/silicon/robot/mommi))
+		usr.u_equip(W)
 		usr.update_icons()	//update our overlays
 	W.loc = src
 	W.on_enter_storage(src)
@@ -299,7 +300,7 @@
 /obj/item/weapon/storage/attackby(obj/item/W as obj, mob/user as mob)
 	..()
 
-	if(isrobot(user) && !(istype(user, /mob/living/silicon/robot/mommi)))
+	if(isrobot(user) && !isMoMMI(user))
 		user << "\blue You're a robot. No."
 		return //Robots can't interact with storage items.
 

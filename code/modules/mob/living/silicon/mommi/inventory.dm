@@ -37,7 +37,12 @@
 	tool_state = W
 	W.layer = 20
 	contents += W
-	inv_tool.icon_state = "inv1"
+
+	// Make crap we pick up active so there's less clicking and carpal. - N3X
+	module_active=tool_state
+	inv_tool.icon_state = "inv1 +a"
+	inv_sight.icon_state = "sight"
+
 	update_items()
 	return 1
 
