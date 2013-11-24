@@ -88,7 +88,7 @@
 	item_state = "jetpack-mini"
 	volume = 40
 	throw_range = 7
-	w_class = 2
+	w_class = 3
 
 /obj/item/weapon/tank/jetpack/carbondioxide
 	name = "jetpack (carbon dioxide)"
