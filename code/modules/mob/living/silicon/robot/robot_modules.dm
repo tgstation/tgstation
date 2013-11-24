@@ -44,7 +44,6 @@
 /obj/item/weapon/robot_module/standard
 	name = "standard robot module"
 
-
 	New()
 		..()
 		src.modules += new /obj/item/weapon/melee/baton(src)
@@ -131,7 +130,6 @@
 
 /obj/item/weapon/robot_module/security
 	name = "security robot module"
-
 
 	New()
 		..()
