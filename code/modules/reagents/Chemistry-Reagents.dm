@@ -163,7 +163,7 @@ datum
 						newVirus.holder = blood_prop
 
 				else if(istype(self.data["donor"], /mob/living/carbon/alien))
-					var/obj/effect/decal/cleanable/xenoblood/blood_prop = locate() in T
+					var/obj/effect/decal/cleanable/blood/xeno/blood_prop = locate() in T
 					if(!blood_prop)
 						blood_prop = new(T)
 						blood_prop.blood_DNA["UNKNOWN DNA STRUCTURE"] = "X*"
@@ -213,6 +213,44 @@ datum
 			color = "#0064C8" // rgb: 0, 100, 200
 			custom_metabolism = 0.01
 
+			on_mob_life(var/mob/living/M as mob)
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if(H.species.name=="Grey")
+						if(!M) M = holder.my_atom
+						M.adjustToxLoss(1*REM)
+						M.take_organ_damage(0, 1*REM)
+				..()
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+				if(!istype(M, /mob/living))
+					return
+
+				// Grays treat water like acid.
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if(H.species.name=="Grey")
+						if(method == TOUCH)
+							if(H.wear_mask)
+								H << "\red Your mask protects you from the water!"
+								return
+
+							if(H.head)
+								H << "\red Your helmet protects you from the water!"
+								return
+							if(!M.unacidable)
+								if(prob(15) && volume >= 30)
+									var/datum/organ/external/affecting = H.get_organ("head")
+									if(affecting)
+										if(affecting.take_damage(25, 0))
+											H.UpdateDamageIcon()
+										H.status_flags |= DISFIGURED
+										H.emote("scream")
+								else
+									M.take_organ_damage(min(15, volume * 2)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
+						else
+							if(!M.unacidable)
+								M.take_organ_damage(min(15, volume * 2))
+
 			reaction_turf(var/turf/simulated/T, var/volume)
 				if (!istype(T)) return
 				src = null
@@ -259,6 +297,15 @@ datum
 					if(!cube.wrapped)
 						cube.Expand()
 				return
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with water can help put them out!
+				if(!istype(M, /mob/living))
+					return
+				if(method == TOUCH)
+					M.adjust_fire_stacks(-(volume / 10))
+					if(M.fire_stacks <= 0)
+						M.ExtinguishMob()
+					return
 
 		lube
 			name = "Space Lube"
@@ -361,6 +408,29 @@ datum
 				M.adjustOxyLoss(4)
 				M.sleeping += 1
 				..()
+				return
+
+		chefspecial
+			// Quiet and lethal, needs atleast 4 units in the person before they'll die
+			name = "Chef's Special"
+			id = "chefspecial"
+			description = "An extremely toxic chemical that will surely end in death."
+			reagent_state = LIQUID
+			color = "#CF3600" // rgb: 207, 54, 0
+			custom_metabolism = 0.39
+
+			on_mob_life(var/mob/living/M as mob)
+				var/random = rand(150,180)
+				if(!M) M = holder.my_atom
+				if(!data) data = 1
+				switch(data)
+					if(0 to 5)
+						..()
+				if(data >= random)
+					if(M.stat != DEAD)
+						M.death(0)
+						M.attack_log += "\[[time_stamp()]\]<font color='red'>Died a quick and painless death by <font color='green'>Chef Excellence's Special Sauce</font>.</font>"
+				data++
 				return
 
 		minttoxin
@@ -755,6 +825,13 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
+
+				if(ishuman(M))
+					var/mob/living/carbon/human/H=M
+					if(H.species.name=="Grey")
+						..()
+						return // Greys lurve dem some sacid
+
 				M.adjustToxLoss(1*REM)
 				M.take_organ_damage(0, 1*REM)
 				..()
@@ -798,6 +875,9 @@ datum
 					if(!M.unacidable)
 						if(prob(15) && istype(M, /mob/living/carbon/human) && volume >= 30)
 							var/mob/living/carbon/human/H = M
+							if(H.species.name=="Grey")
+								..()
+								return // Greys lurve dem some sacid
 							var/datum/organ/external/affecting = H.get_organ("head")
 							if(affecting)
 								if(affecting.take_damage(25, 0))
@@ -808,6 +888,11 @@ datum
 							M.take_organ_damage(min(15, volume * 2)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
 				else
 					if(!M.unacidable)
+						if(ishuman(M))
+							var/mob/living/carbon/human/H = M
+							if(H.species.name=="Grey")
+								..()
+								return // Greys lurve dem some sacid
 						M.take_organ_damage(min(15, volume * 2))
 
 			reaction_obj(var/obj/O, var/volume)
@@ -929,11 +1014,15 @@ datum
 				M.apply_effect(2*REM,IRRADIATE,0)
 				// radium may increase your chances to cure a disease
 				if(istype(M,/mob/living/carbon)) // make sure to only use it on carbon mobs
-					if(M:virus2 && prob(5))
-						if(prob(50))
-							M.radiation += 50 // curing it that way may kill you instead
-							M.adjustToxLoss(100)
-						M:antibodies |= M:virus2.antigen
+					var/mob/living/carbon/C = M
+					if(C.virus2.len)
+						for (var/ID in C.virus2)
+							var/datum/disease2/disease/V = C.virus2[ID]
+							if(prob(5))
+								if(prob(50))
+									M.radiation += 50 // curing it that way may kill you instead
+									M.adjustToxLoss(100)
+								M:antibodies |= V.antigen
 				..()
 				return
 
@@ -1253,7 +1342,7 @@ datum
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
 						if(H.dna)
-							if(H.dna.mutantrace == "plant") //plantmen take a LOT of damage
+							if(H.species.flags & IS_PLANT) //plantmen take a LOT of damage
 								H.adjustToxLoss(10)
 
 		plasma
@@ -1653,6 +1742,33 @@ datum
 				..()
 				return
 
+		rezadone
+			name = "Rezadone"
+			id = "rezadone"
+			description = "A powder derived from fish toxin, this substance can effectively treat genetic damage in humanoids, though excessive consumption has side effects."
+			reagent_state = SOLID
+			color = "#669900" // rgb: 102, 153, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				if(!data) data = 1
+				data++
+				switch(data)
+					if(1 to 15)
+						M.adjustCloneLoss(-1)
+						M.heal_organ_damage(1,1)
+					if(15 to 35)
+						M.adjustCloneLoss(-2)
+						M.heal_organ_damage(2,1)
+						M.status_flags &= ~DISFIGURED
+					if(35 to INFINITY)
+						M.adjustToxLoss(1)
+						M.make_dizzy(5)
+						M.make_jittery(5)
+
+				..()
+				return
+
 		spaceacillin
 			name = "Spaceacillin"
 			id = "spaceacillin"
@@ -2046,6 +2162,11 @@ datum
 							victim.eye_blind = max(M.eye_blind, 10)
 							victim.Paralyse(1)
 							victim.drop_item()
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				if(prob(5))
+					M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
+				return
 
 		frostoil
 			name = "Frost Oil"
@@ -2788,7 +2909,7 @@ datum
 
 				// make all the beverages work together
 				for(var/datum/reagent/ethanol/A in holder.reagent_list)
-					if(A.data) d += A.data
+					if(isnum(A.data)) d += A.data
 
 				M.dizziness +=dizzy_adj.
 				if(d >= slur_start && d < pass_out)
@@ -2803,6 +2924,12 @@ datum
 				if(d >= pass_out)
 					M:paralysis = max(M:paralysis, 20)
 					M:drowsyness  = max(M:drowsyness, 30)
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						var/datum/organ/internal/liver/L = H.internal_organs["liver"]
+						if (istype(L))
+							L.take_damage(0.1, 1)
+						H.adjustToxLoss(0.1)
 
 				holder.remove_reagent(src.id, 0.4)
 				..()
@@ -3449,14 +3576,14 @@ datum
 				nutriment_factor = 1 * FOOD_METABOLISM
 				color = "#2E6671" // rgb: 46, 102, 113
 
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=10
-				if(data >= 55 && data <115)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 10
-				else if(data >= 115 && prob(33))
-					M.confused = max(M.confused+15,15)
-				..()
-				return
+				on_mob_life(var/mob/living/M as mob)
+					if(!data) data = 1
+					data++
+					M.dizziness +=10
+					if(data >= 55 && data <115)
+						if (!M.stuttering) M.stuttering = 1
+						M.stuttering += 10
+					else if(data >= 115 && prob(33))
+						M.confused = max(M.confused+15,15)
+					..()
+					return

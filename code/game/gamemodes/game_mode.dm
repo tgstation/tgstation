@@ -22,7 +22,7 @@
 	var/explosion_in_progress = 0 //sit back and relax
 	var/list/datum/mind/modePlayer = new
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
-	var/list/protected_jobs = list()	// Jobs that can't be tratiors because
+	var/list/protected_jobs = list()	// Jobs that can't be traitors
 	var/required_players = 0
 	var/required_players_secret = 0 //Minimum number of players for that game mode to be chose in Secret
 	var/required_enemies = 0
@@ -30,12 +30,6 @@
 	var/newscaster_announcements = null
 	var/uplink_welcome = "Syndicate Uplink Console:"
 	var/uplink_uses = 10
-
-
-// Items removed from above:
-/*
-/obj/item/weapon/cloaking_device:4:Cloaking Device;	//Replacing cloakers with thermals.	-Pete
-*/
 
 /datum/game_mode/proc/announce() //to be calles when round starts
 	world << "<B>Notice</B>: [src] did not define announce()"
@@ -83,6 +77,73 @@
 ///Called by the gameticker
 /datum/game_mode/proc/process()
 	return 0
+
+
+//Called by the gameticker
+/datum/game_mode/proc/process_job_tasks()
+	var/obj/machinery/message_server/useMS = null
+	if(message_servers)
+		for (var/obj/machinery/message_server/MS in message_servers)
+			if(MS.active)
+				useMS = MS
+				break
+	for(var/mob/M in player_list)
+		if(M.mind)
+			var/obj/item/device/pda/P=null
+			for(var/obj/item/device/pda/check_pda in PDAs)
+				if (check_pda.owner==M.name)
+					P=check_pda
+					break
+			var/count=0
+			for(var/datum/job_objective/objective in M.mind.job_objectives)
+				count++
+				var/msg=""
+				var/pay=0
+				if(objective.per_unit && objective.units_compensated<objective.units_completed)
+					var/newunits = objective.units_completed - objective.units_compensated
+					msg="We see that you completed [newunits] new unit[newunits>1?"s":""] for Task #[count]! "
+					pay=objective.completion_payment * newunits
+					objective.units_compensated += newunits
+				else if(!objective.completed)
+					if(objective.is_completed())
+						pay=objective.completion_payment
+						msg="Task #[count] completed! "
+				if(pay>0)
+					if(M.mind.initial_account)
+						M.mind.initial_account.money += objective.completion_payment
+						var/datum/transaction/T = new()
+						T.target_name = "[command_name()] Payroll"
+						T.purpose = "Payment"
+						T.amount = objective.completion_payment
+						T.date = current_date_string
+						T.time = worldtime2text()
+						T.source_terminal = "\[CLASSIFIED\] Terminal #[rand(111,333)]"
+						M.mind.initial_account.transaction_log.Add(T)
+						msg += "You have been sent the $[pay], as agreed."
+					else
+						msg += "However, we were unable to send you the $[pay] you're entitled."
+					if(useMS)
+						// THIS SHOULD HAVE DONE EVERYTHING FOR ME
+						useMS.send_pda_message("[P.owner]", "[command_name()] Payroll", msg)
+
+						// BUT NOPE, NEED TO DO THIS BULLSHIT.
+						P.tnote += "<i><b>&larr; From [command_name()] (Payroll):</b></i><br>[msg]<br>"
+
+						if (!P.silent)
+							playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
+						for (var/mob/O in hearers(3, P.loc))
+							if(!P.silent) O.show_message(text("\icon[P] *[P.ttone]*"))
+						//Search for holder of the PDA.
+						var/mob/living/L = null
+						if(P.loc && isliving(P.loc))
+							L = P.loc
+						//Maybe they are a pAI!
+						else
+							L = get(P, /mob/living/silicon)
+
+						if(L)
+							L << "\icon[P] <b>Message from [command_name()] (Payroll), </b>\"[msg]\" (<i>Unable to Reply</i>)"
+					break
 
 
 /datum/game_mode/proc/check_finished() //to be called by ticker
@@ -167,10 +228,12 @@
 
 
 /datum/game_mode/proc/send_intercept()
-	var/intercepttext = "<FONT size = 3><B>[command_name()] Update</B> Requested status information:</FONT><HR>"
-	intercepttext += "<B> In case you have misplaced your copy, attached is a list of personnel whom reliable sources&trade; suspect may be affiliated with the Syndicate:</B><br>"
 
-
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\gamemodes\game_mode.dm:230: var/intercepttext = "<FONT size = 3><B>[command_name()] Update</B> Requested status information:</FONT><HR>"
+	var/intercepttext = {"<FONT size = 3><B>[command_name()] Update</B> Requested status information:</FONT><HR>
+<B> In case you have misplaced your copy, attached is a list of personnel whom reliable sources&trade; suspect may be affiliated with the Syndicate:</B><br> <I>Reminder: Acting upon this information without solid evidence will result in termination of your working contract with Nanotrasen.</I></br>"}
+	// END AUTOFIX
 	var/list/suspects = list()
 	for(var/mob/living/carbon/human/man in player_list) if(man.client && man.mind)
 		// NT relation option
@@ -208,7 +271,7 @@
 			else
 				intercepttext += "<b>[M.name]</b>, the <b>[M.mind.assigned_role]</b> <br>"
 
-	for (var/obj/machinery/computer/communications/comm in world)
+	for (var/obj/machinery/computer/communications/comm in machines)
 		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
 			intercept.name = "paper- '[command_name()] Status Summary'"
@@ -216,7 +279,7 @@
 
 			comm.messagetitle.Add("[command_name()] Status Summary")
 			comm.messagetext.Add(intercepttext)
-	world << sound('commandreport.ogg')
+	world << sound('sound/AI/commandreport.ogg')
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept.")
 /*	for(var/mob/M in player_list)
@@ -240,6 +303,7 @@
 		if(BE_WIZARD)		roletext="wizard"
 		if(BE_REV)			roletext="revolutionary"
 		if(BE_CULTIST)		roletext="cultist"
+		if(BE_RAIDER)       roletext="Vox Raider"
 
 
 	// Ultimate randomizing code right here
@@ -357,8 +421,8 @@
 			heads += player.mind
 	return heads
 
-/datum/game_mode/New()
-	newscaster_announcements = pick(newscaster_standard_feeds)
+/*/datum/game_mode/New()
+	newscaster_announcements = pick(newscaster_standard_feeds)*/
 
 //////////////////////////
 //Reports player logouts//

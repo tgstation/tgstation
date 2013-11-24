@@ -32,6 +32,8 @@ REVIVAL_CLONING 1
 ## amount of time (in hundredths of seconds) for which a brain retains the "spark of life" after the person's death (set to -1 for infinite)
 REVIVAL_BRAIN_LIFE -1
 
+## Amount of time users must wait to respawn (as a human, assuming the server has respawn enabled)
+RESPAWN_DELAY 30
 
 
 ### MOB MOVEMENT ###

@@ -569,6 +569,10 @@ datum/objective/steal
 					for(var/mob/living/silicon/ai/M in C)
 						if(istype(M, /mob/living/silicon/ai) && M.stat != 2) //See if any AI's are alive inside that card.
 							return 1
+
+				for(var/obj/item/clothing/suit/space/space_ninja/S in all_items) //Let an AI downloaded into a space ninja suit count
+					if(S.AI && S.AI.stat != 2)
+						return 1
 				for(var/mob/living/silicon/ai/ai in world)
 					if(istype(ai.loc, /turf))
 						var/area/check_area = get_area(ai)
@@ -586,6 +590,9 @@ datum/objective/steal
 
 				for(var/obj/I in all_items) //Check for items
 					if(istype(I, steal_target))
+						//Stealing the cheap autoinjector doesn't count
+						if(istype(I, /obj/item/weapon/reagent_containers/hypospray/autoinjector))
+							continue
 						return 1
 		return 0
 

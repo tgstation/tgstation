@@ -5,10 +5,61 @@
 	var/mob/living/carbon/occupant
 	var/locked
 	name = "Body Scanner"
-	icon = 'Cryogenic2.dmi'
+	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "body_scanner_0"
 	density = 1
 	anchored = 1
+
+/obj/machinery/bodyscanner/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+	if(O.loc == user) //no you can't pull things out of your ass
+		return
+	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
+		return
+	if(O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)) // is the mob anchored, too far away from you, or are you too far away from the source
+		return
+	if(!ismob(O)) //humans only
+		return
+	if(istype(O, /mob/living/simple_animal) || istype(O, /mob/living/silicon)) //animals and robutts dont fit
+		return
+	if(!ishuman(user) && !isrobot(user)) //No ghosts or mice putting people into the sleeper
+		return
+	if(user.loc==null) // just in case someone manages to get a closet into the blue light dimension, as unlikely as that seems
+		return
+	if(!istype(user.loc, /turf) || !istype(O.loc, /turf)) // are you in a container/closet/pod/etc?
+		return
+	if(occupant)
+		user << "\blue <B>The body scanner is already occupied!</B>"
+		return
+	if(isrobot(user))
+		if(!istype(user:module, /obj/item/weapon/robot_module/medical))
+			user << "<span class='warning'>You do not have the means to do this!</span>"
+			return
+	var/mob/living/L = O
+	if(!istype(L) || L.buckled)
+		return
+	if(L.abiotic())
+		user << "\blue <B>Subject cannot have abiotic items on.</B>"
+		return
+	for(var/mob/living/carbon/slime/M in range(1,L))
+		if(M.Victim == L)
+			usr << "[L.name] will not fit into the body scanner because they have a slime latched onto their head."
+			return
+	if(L == user)
+		visible_message("[user] climbs into the body scanner.", 3)
+	else
+		visible_message("[user] puts [L.name] into the body scanner.", 3)
+
+	if (L.client)
+		L.client.perspective = EYE_PERSPECTIVE
+		L.client.eye = src
+	L.loc = src
+	src.occupant = L
+	src.icon_state = "body_scanner_1"
+	for(var/obj/OO in src)
+		OO.loc = src.loc
+		//Foreach goto(154)
+	src.add_fingerprint(user)
+	return
 
 /*/obj/machinery/bodyscanner/allow_drop()
 	return 0*/
@@ -167,7 +218,7 @@
 	var/delete
 	var/temphtml
 	name = "Body Scanner Console"
-	icon = 'Cryogenic2.dmi'
+	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "body_scannerconsole"
 	density = 1
 	anchored = 1
@@ -236,7 +287,7 @@
 				else
 					dat += text("[]\tHealth %: [] ([])</FONT><BR>", (occupant.health > 50 ? "<font color='blue'>" : "<font color='red'>"), occupant.health, t1)
 
-					if(occupant.virus2)
+					if(occupant.virus2.len)
 						dat += text("<font color='red'>Viral pathogen detected in blood stream.</font><BR>")
 
 					dat += text("[]\t-Brute Damage %: []</FONT><BR>", (occupant.getBruteLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getBruteLoss())
@@ -266,14 +317,17 @@
 						if(!D.hidden[SCANNER])
 							dat += text("<font color='red'><B>Warning: [D.form] Detected</B>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</FONT><BR>")
 
-					dat += "<HR><table border='1'>"
-					dat += "<tr>"
-					dat += "<th>Organ</th>"
-					dat += "<th>Burn Damage</th>"
-					dat += "<th>Brute Damage</th>"
-					dat += "<th>Other Wounds</th>"
-					dat += "</tr>"
 
+					// AUTOFIXED BY fix_string_idiocy.py
+					// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\adv_med.dm:269: dat += "<HR><table border='1'>"
+					dat += {"<HR><table border='1'>
+						<tr>
+						<th>Organ</th>
+						<th>Burn Damage</th>
+						<th>Brute Damage</th>
+						<th>Other Wounds</th>
+						</tr>"}
+					// END AUTOFIX
 					for(var/datum/organ/external/e in occupant.organs)
 						dat += "<tr>"
 						var/AN = ""
@@ -285,10 +339,10 @@
 						var/internal_bleeding = ""
 						var/lung_ruptured = ""
 						for(var/datum/wound/W in e.wounds) if(W.internal)
-							internal_bleeding = "<br>Internal Bleeding"
+							internal_bleeding = "<br>Internal bleeding"
 							break
 						if(istype(e, /datum/organ/external/chest) && occupant.is_lung_ruptured())
-							lung_ruptured = "Lung Ruptured:"
+							lung_ruptured = "Lung ruptured:"
 						if(e.status & ORGAN_SPLINTED)
 							splint = "Splinted:"
 						if(e.status & ORGAN_BLEEDING)
@@ -298,7 +352,7 @@
 						if(e.open)
 							open = "Open:"
 						if(e.implants.len)
-							imp = "Implanted:"
+							imp = "Unknown body present:"
 						if(!AN && !open && !infected & !imp)
 							AN = "None:"
 						if(!(e.status & ORGAN_DESTROYED))
@@ -308,9 +362,13 @@
 						dat += "</tr>"
 					for(var/organ_name in occupant.internal_organs)
 						var/datum/organ/internal/i = occupant.internal_organs[organ_name]
-						dat += "<tr>"
-						dat += "<td>[i.name]</td><td>N/A</td><td>[i.damage]</td><td>None:</td>"
-						dat += "</tr>"
+
+						// AUTOFIXED BY fix_string_idiocy.py
+						// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\adv_med.dm:311: dat += "<tr>"
+						dat += {"<tr>
+							<td>[i.name]</td><td>N/A</td><td>[i.damage]</td><td>None:</td>
+							</tr>"}
+						// END AUTOFIX
 					dat += "</table>"
 			else
 				dat += "\The [src] is empty."

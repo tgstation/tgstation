@@ -61,6 +61,7 @@ RCD
 <A href='?src=\ref[src];makemeter=1;type=3'>Meter</A><BR>
 <A href='?src=\ref[src];makepipe=13;dir=1;type=2'>Gas Filter</A><BR>
 <A href='?src=\ref[src];makepipe=14;dir=1;type=2'>Gas Mixer</A><BR>
+<A href='?src=\ref[src];makepipe=[PIPE_THERMAL_PLATE];dir=1;type=3'>Thermal Plate</A><BR>
 <b>Heat exchange:</b><BR>
 <A href='?src=\ref[src];makepipe=2;dir=1;type=0'>Pipe</A><BR>
 <A href='?src=\ref[src];makepipe=3;dir=5;type=1'>Bent Pipe</A><BR>
@@ -169,7 +170,7 @@ RCD
 
 
 /obj/item/weapon/pipe_dispenser/afterattack(atom/A, mob/user)
-	if(!isrobot(user))
+	if(!isrobot(user) && !ishuman(user))
 		return 0
 	if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
 		return 0
@@ -190,6 +191,8 @@ RCD
 			user << "The [src]'s error light flickers.  Perhaps you need to only use it on pipes and pipe meters?"
 			return 0
 		if(0)
+			if(!(istype(A, /turf)))
+				return 0
 			user << "Building Pipes ..."
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 20))
@@ -201,6 +204,8 @@ RCD
 			return 0
 
 		if(1)
+			if(!(istype(A, /turf)))
+				return 0
 			user << "Building Meter..."
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 20))
@@ -210,6 +215,8 @@ RCD
 			return 0
 
 		if(2)
+			if(!(istype(A, /turf)))
+				return 0
 			user << "Building Pipes..."
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 20))

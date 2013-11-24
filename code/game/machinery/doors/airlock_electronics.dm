@@ -11,6 +11,7 @@
 	req_access = list(access_engine)
 
 	var/list/conf_access = null
+	var/one_access = 0 //if set to 1, door would receive req_one_access instead of req_access
 	var/last_configurator = null
 	var/locked = 1
 
@@ -33,6 +34,8 @@
 		else
 			t1 += "<a href='?src=\ref[src];logout=1'>Block</a><hr>"
 
+			t1 += "Access requirement is set to "
+			t1 += one_access ? "<a style='color: green' href='?src=\ref[src];one_access=1'>ONE</a><hr>" : "<a style='color: red' href='?src=\ref[src];one_access=1'>ALL</a><hr>"
 
 			t1 += conf_access == null ? "<font color=red>All</font><br>" : "<a href='?src=\ref[src];access=all'>All</a><br>"
 
@@ -44,6 +47,8 @@
 
 				if (!conf_access || !conf_access.len || !(acc in conf_access))
 					t1 += "<a href='?src=\ref[src];access=[acc]'>[aname]</a><br>"
+				else if(one_access)
+					t1 += "<a style='color: green' href='?src=\ref[src];access=[acc]'>[aname]</a><br>"
 				else
 					t1 += "<a style='color: red' href='?src=\ref[src];access=[acc]'>[aname]</a><br>"
 
@@ -74,6 +79,9 @@
 
 		if (href_list["logout"])
 			locked = 1
+
+		if (href_list["one_access"])
+			one_access = !one_access
 
 		if (href_list["access"])
 			toggle_access(href_list["access"])

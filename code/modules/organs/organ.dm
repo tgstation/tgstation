@@ -75,21 +75,20 @@
 
 		//Robotic limb malfunctions
 		var/malfunction = 0
-		if (E.status & ORGAN_ROBOT && prob(E.brute_dam + E.burn_dam))
+		if (E.status & (ORGAN_ROBOT|ORGAN_PEG) && prob(E.brute_dam + E.burn_dam))
 			malfunction = 1
 
 		//Broken limbs hurt too
 		var/broken = 0
-		if(E.status & ORGAN_BROKEN && !(E.status & ORGAN_SPLINTED && prob(10)) )
+		if(E.status & ORGAN_BROKEN && !(E.status & ORGAN_SPLINTED) )
 			broken = 1
 
 		//Moving around with fractured ribs won't do you any good
-		if (broken && internal_organs && prob(15))
+		if (broken && E.internal_organs && prob(15))
 			if (!lying && world.timeofday - l_move_time < 15)
 				var/datum/organ/internal/I = pick(E.internal_organs)
 				custom_pain("You feel broken bones moving in your [E.display_name]!", 1)
-				if(I)
-					I.take_damage(rand(3,5))
+				I.take_damage(rand(3,5))
 
 		//Special effects for limbs.
 		if(E.name in list("l_hand","l_arm","r_hand","r_arm"))
@@ -115,7 +114,7 @@
 						del(spark_system)
 
 		else if(E.name in list("l_leg","l_foot","r_leg","r_foot") && !lying)
-			if (E.status & ORGAN_DESTROYED || malfunction || (broken && !(E.status & ORGAN_SPLINTED)))
+			if (!E.is_usable() || malfunction || (broken && !(E.status & ORGAN_SPLINTED)))
 				leg_tally--			// let it fail even if just foot&leg
 
 	// standing is poor
@@ -127,6 +126,8 @@
 	//Check arms and legs for existence
 	var/canstand_l = 1  //Can stand on left leg
 	var/canstand_r = 1  //Can stand on right leg
+	var/legispeg_l=0
+	var/legispeg_r=0
 	var/hasleg_l = 1  //Have left leg
 	var/hasleg_r = 1  //Have right leg
 	var/hasarm_l = 1  //Have left arm
@@ -136,15 +137,21 @@
 	if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
 		canstand_l = 0
 		hasleg_l = 0
+	legispeg_l=E.status & ORGAN_PEG
+
 	E = get_organ("r_leg")
 	if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
 		canstand_r = 0
 		hasleg_r = 0
+	legispeg_r=E.status & ORGAN_PEG
+
+
+	// We CAN stand if we're on a peg.
 	E = get_organ("l_foot")
-	if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
+	if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED) && !legispeg_l)
 		canstand_l = 0
 	E = get_organ("r_foot")
-	if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
+	if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED) && !legispeg_r)
 		canstand_r = 0
 	E = get_organ("l_arm")
 	if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
@@ -153,7 +160,7 @@
 	if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
 		hasarm_r = 0
 
-	// Can stand if have at least one full leg (with leg and foot parts present)
+	// Can stand if have at least one full leg (with leg and foot parts present, or an entire pegleg)
 	// Has limbs to move around if at least one arm or leg is at least partially there
 	can_stand = canstand_l||canstand_r
 	has_limbs = hasleg_l||hasleg_r||hasarm_l||hasarm_r

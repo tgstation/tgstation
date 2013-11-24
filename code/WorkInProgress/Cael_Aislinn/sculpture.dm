@@ -5,7 +5,7 @@
 	name = "\improper sculpture"
 	real_name = "sculpture"
 	desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid. "
-	icon = 'unknown.dmi'
+	icon = 'code/WorkInProgress/Cael_Aislinn/unknown.dmi'
 	icon_state = "sculpture"
 	icon_living = "sculpture"
 	icon_dead = "sculpture"
@@ -30,7 +30,7 @@
 		G.synch()
 		target.LAssailant = src
 
-		playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
+		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 		visible_message("\red [src] has grabbed [target]!")
 		target << "\red <b>You feel something suddenly grab you around the neck from behind!</b> Everything goes black..."
 

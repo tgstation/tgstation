@@ -62,9 +62,11 @@
 	name = "storage"
 	master = null
 
-/obj/screen/storage/attackby(W, mob/user as mob)
-	src.master.attackby(W, user)
-	return
+/obj/screen/storage/attack_hand(mob/user)
+	if(master)
+		var/obj/item/I = user.get_active_hand()
+		if(I)
+			master.attackby(I, user)
 
 /obj/screen/zone_sel
 	name = "Damage Zone"
@@ -75,7 +77,7 @@
 
 /obj/screen/gun
 	name = "gun"
-	icon = 'screen1.dmi'
+	icon = 'icons/mob/screen1.dmi'
 	master = null
 	dir = 2
 
@@ -626,6 +628,37 @@
 
 	var/mob/living/L = usr
 
+	//Resisting control by an alien mind.
+	if(istype(src.loc,/mob/living/simple_animal/borer))
+		var/mob/living/simple_animal/borer/B = src.loc
+		var/mob/living/captive_brain/H = src
+
+		H << "\red <B>You begin doggedly resisting the parasite's control (this will take approximately sixty seconds).</B>"
+		B.host << "\red <B>You feel the captive mind of [src] begin to resist your control.</B>"
+
+		spawn(rand(350,450)+B.host.brainloss)
+
+			if(!B || !B.controlling)
+				return
+
+			B.host.adjustBrainLoss(rand(5,10))
+			H << "\red <B>With an immense exertion of will, you regain control of your body!</B>"
+			B.host << "\red <B>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</b>"
+			B.controlling = 0
+
+			B.ckey = B.host.ckey
+			B.host.ckey = H.ckey
+
+			H.ckey = null
+			H.name = "host brain"
+			H.real_name = "host brain"
+
+			verbs -= /mob/living/carbon/proc/release_control
+			verbs -= /mob/living/carbon/proc/punish_host
+			verbs -= /mob/living/carbon/proc/spawn_larvae
+
+			return
+
 	//resisting grabs (as if it helps anyone...)
 	if ((!( L.stat ) && L.canmove && !( L.restrained() )))
 		var/resisting = 0
@@ -745,6 +778,16 @@
 	//breaking out of handcuffs
 	else if(iscarbon(L))
 		var/mob/living/carbon/CM = L
+		if(CM.on_fire && CM.canmove)
+			CM.fire_stacks -= 5
+			CM.weakened = 5
+			CM.visible_message("<span class='danger'>[CM] rolls on the floor, trying to put themselves out!</span>", \
+				"<span class='notice'>You stop, drop, and roll!</span>")
+			if(fire_stacks <= 0)
+				CM.visible_message("<span class='danger'>[CM] has successfully extinguished themselves!</span>", \
+					"<span class='notice'>You extinguish yourself.</span>")
+				ExtinguishMob()
+			return
 		if(CM.handcuffed && CM.canmove && (CM.last_special <= world.time))
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100

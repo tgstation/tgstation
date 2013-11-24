@@ -4,7 +4,7 @@
 
 /obj/item/projectile/missile
 	name = "missile"
-	icon = 'meteor_turret.dmi'
+	icon = 'code/WorkInProgress/Cael_Aislinn/meteor_turret.dmi'
 	icon_state = "missile"
 	var/turf/target
 	var/tracking = 0
@@ -39,7 +39,7 @@
 
 /obj/machinery/meteor_battery
 	name = "meteor battery"
-	icon = 'meteor_turret.dmi'
+	icon = 'code/WorkInProgress/Cael_Aislinn/meteor_turret.dmi'
 	icon_state = "turret0"
 	var/raised = 0
 	var/enabled = 1
@@ -217,7 +217,7 @@
 
 /obj/machinery/meteor_battery/attackby(obj/item/weapon/W, mob/user)//I can't believe no one added this before/N
 	..()
-	playsound(src.loc, 'smash.ogg', 60, 1)
+	playsound(src.loc, 'sound/weapons/smash.ogg', 60, 1)
 	src.spark_system.start()
 	src.health -= W.force * 0.5
 	if (src.health <= 0)
@@ -249,7 +249,7 @@
 
 /obj/machinery/meteor_battery/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if(!(stat & BROKEN))
-		playsound(src.loc, 'slash.ogg', 25, 1, -1)
+		playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
 				O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)

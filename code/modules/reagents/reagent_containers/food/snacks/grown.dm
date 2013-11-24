@@ -1,5 +1,4 @@
 
-
 // ***********************************************************
 // Foods that are produced from hydroponics ~~~~~~~~~~
 // Data from the seeds carry over to these grown foods
@@ -39,13 +38,17 @@
 				msg += "- Plant type: <i>Weed</i>\n"
 			if(2)
 				msg += "- Plant type: <i>Mushroom</i>\n"
-		msg += "- Potency: <i>[potency]</i>\n"
-		msg += "- Yield: <i>[yield]</i>\n"
-		msg += "- Maturation speed: <i>[maturation]</i>\n"
-		msg += "- Production speed: <i>[production]</i>\n"
-		msg += "- Endurance: <i>[endurance]</i>\n"
-		msg += "- Healing properties: <i>[reagents.get_reagent_amount("nutriment")]</i>\n"
-		msg += "*---------*</span>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\reagent_containers\food\snacks\grown.dm:42: msg += "- Potency: <i>[potency]</i>\n"
+		msg += {"- Potency: <i>[potency]</i>\n
+			- Yield: <i>[yield]</i>\n
+			- Maturation speed: <i>[maturation]</i>\n
+			- Production speed: <i>[production]</i>\n
+			- Endurance: <i>[endurance]</i>\n
+			- Healing properties: <i>[reagents.get_reagent_amount("nutriment")]</i>\n
+			*---------*</span>"}
+		// END AUTOFIX
 		usr << msg
 		return
 
@@ -98,12 +101,16 @@
 				msg += "- Plant type: <i>Weed</i>\n"
 			if(2)
 				msg += "- Plant type: <i>Mushroom</i>\n"
-		msg += "- Acid strength: <i>[potency]</i>\n"
-		msg += "- Yield: <i>[yield]</i>\n"
-		msg += "- Maturation speed: <i>[maturation]</i>\n"
-		msg += "- Production speed: <i>[production]</i>\n"
-		msg += "- Endurance: <i>[endurance]</i>\n"
-		msg += "*---------*</span>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\reagent_containers\food\snacks\grown.dm:101: msg += "- Acid strength: <i>[potency]</i>\n"
+		msg += {"- Acid strength: <i>[potency]</i>\n
+			- Yield: <i>[yield]</i>\n
+			- Maturation speed: <i>[maturation]</i>\n
+			- Production speed: <i>[production]</i>\n
+			- Endurance: <i>[endurance]</i>\n
+			*---------*</span>"}
+		// END AUTOFIX
 		usr << msg
 		return
 
@@ -150,7 +157,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell
 	seed = "obj/item/seeds/harebellseed"
 	name = "harebell"
-	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweeten’d not thy breath.\""
+	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweetenï¿½d not thy breath.\""
 	icon_state = "harebell"
 	potency = 1
 	New()
@@ -517,7 +524,26 @@
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "<span class='info'>- Capsaicin: <i>[reagents.get_reagent_amount("capsaicin")]%</i></span>"
+		
+/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli
+	seed = "/obj/item/seeds/chillighost"
+	name = "ghost chili"
+	desc = "It seems to be vibrating gently."
+	icon_state = "ghostchilipepper"
+	var/mob/held_mob
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("nutriment", 1+round((potency / 25), 1))
+			reagents.add_reagent("capsaicin", 8+round(potency / 2, 1))
+			reagents.add_reagent("condensedcapsaicin", 4+round(potency / 4, 1))
+			bitesize = 1+round(reagents.total_volume / 4, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	. = ..()
+	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+		user << "<span class='info'>- Capsaicin: <i>[reagents.get_reagent_amount("capsaicin")]%</i></span>"
+		user << "<span class='info'>- Condensed Capsaicin: <i>[reagents.get_reagent_amount("condensedcapsaicin")]%</i></span>"
 /obj/item/weapon/reagent_containers/food/snacks/grown/eggplant
 	seed = "/obj/item/seeds/eggplantseed"
 	name = "eggplant"
@@ -539,6 +565,31 @@
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
 			reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
+			bitesize = 1+round(reagents.total_volume / 2, 1)
+			
+/obj/item/weapon/reagent_containers/food/snacks/grown/koibeans
+	seed = "/obj/item/seeds/koiseed"
+	name = "koibean"
+	desc = "Something about these seems fishy."
+	icon_state = "koibeans"
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("nutriment", 1+round((potency / 30), 1))
+			reagents.add_reagent("carpotoxin", 1+round((potency / 20), 1))
+			bitesize = 1+round(reagents.total_volume / 2, 1)
+			
+/obj/item/weapon/reagent_containers/food/snacks/grown/moonflower
+	seed = "/obj/item/seeds/moonflowerseed"
+	name = "moonflower"
+	desc = "Store in a location at least 50 yards away from werewolves."
+	icon_state = "moonflower"
+	slot_flags = SLOT_HEAD
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("nutriment", 1+round((potency / 50), 1))
+			reagents.add_reagent("moonshine", 1+round((potency / 10), 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato
@@ -627,7 +678,7 @@
 
 	throw_impact(atom/hit_atom)
 		..()
-		new/obj/effect/decal/cleanable/oil(src.loc)
+		new/obj/effect/decal/cleanable/blood/oil(src.loc)
 		src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
 		src.reagents.reaction(get_turf(hit_atom))
 		for(var/atom/A in get_turf(hit_atom))
@@ -959,7 +1010,7 @@
 		var/list/turfs = new/list()
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		if(inner_teleport_radius < 1) //Wasn't potent enough, it just splats.
-			new/obj/effect/decal/cleanable/oil(src.loc)
+			new/obj/effect/decal/cleanable/blood/oil(src.loc)
 			src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
 			del(src)
 			return
@@ -996,7 +1047,7 @@
 					sleep(1)
 					s.set_up(3, 1, A)
 					s.start()
-		new/obj/effect/decal/cleanable/oil(src.loc)
+		new/obj/effect/decal/cleanable/blood/oil(src.loc)
 		src.visible_message("<span class='notice'>The [src.name] has been squashed, causing a distortion in space-time.</span>","<span class='moderate'>You hear a splat and a crackle.</span>")
 		del(src)
 		return

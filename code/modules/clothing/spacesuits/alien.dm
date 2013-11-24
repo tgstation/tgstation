@@ -3,14 +3,14 @@
 	var/up = 0 //So Unathi helmets play nicely with the weldervision check.
 	mob_can_equip(M as mob, slot)
 		var/mob/living/carbon/human/U = M
-		if(U.dna.mutantrace != "lizard")
+		if(U.species.name != "Unathi")
 			U << "<span class='warning'>This clearly isn't designed for your species!</span>"
 			return 0
 		return ..()
 
 /obj/item/clothing/suit/space/unathi/mob_can_equip(M as mob, slot)
 	var/mob/living/carbon/human/U = M
-	if(U.dna.mutantrace != "lizard")
+	if(U.species.name != "Unathi")
 		U << "<span class='warning'>This clearly isn't designed for your species!</span>"
 		return 0
 
@@ -21,7 +21,7 @@
 	desc = "Hey! Watch it with that thing! It's a knock-off of a Unathi battle-helm, and that spike could put someone's eye out."
 	icon_state = "unathi_helm_cheap"
 	item_state = "unathi_helm_cheap"
-	color = "unathi_helm_cheap"
+	_color = "unathi_helm_cheap"
 	armor = list(melee = 40, bullet = 30, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 50)
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECITON_TEMPERATURE
@@ -56,6 +56,8 @@
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,/obj/item/weapon/tank)
 	slowdown = 2
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
+	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECITON_TEMPERATURE
 
 /obj/item/clothing/head/helmet/space/vox/carapace
 	name = "alien visor"
@@ -63,6 +65,7 @@
 	item_state = "vox-carapace"
 	desc = "A glowing visor, perhaps stolen from a depressed Cylon."
 	armor = list(melee = 60, bullet = 50, laser = 30, energy = 15, bomb = 30, bio = 30, rad = 30)
+	flags = HEADCOVERSEYES|STOPSPRESSUREDMAGE
 
 /obj/item/clothing/suit/space/vox/carapace
 	name = "alien carapace armour"
@@ -76,29 +79,152 @@
 
 /obj/item/clothing/head/helmet/space/vox/mob_can_equip(M as mob, slot)
 	var/mob/living/carbon/human/V = M
-	if(V.dna.mutantrace != "vox")
+	if(V.species.name != "Vox")
 		V << "<span class='warning'>This clearly isn't designed for your species!</span>"
 		return 0
 	return ..()
 
 /obj/item/clothing/suit/space/vox/mob_can_equip(M as mob, slot)
 	var/mob/living/carbon/human/V = M
-	if(V.dna.mutantrace != "vox")
+	if(V.species.name != "Vox")
 		V << "<span class='warning'>This clearly isn't designed for your species!</span>"
 		return 0
 
 	return ..()
 
+/obj/item/clothing/under/vox
+	has_sensor = 0
+
 /obj/item/clothing/under/vox/vox_casual
 	name = "alien clothing"
 	desc = "This doesn't look very comfortable."
 	icon_state = "vox-casual-1"
-	color = "vox-casual-1"
+	_color = "vox-casual-1"
 	item_state = "vox-casual-1"
 
 /obj/item/clothing/under/vox/vox_robes
 	name = "alien robes"
 	desc = "Weird and flowing!"
 	icon_state = "vox-casual-2"
-	color = "vox-casual-2"
+	_color = "vox-casual-2"
 	item_state = "vox-casual-2"
+
+/obj/item/clothing/gloves/yellow/vox
+	desc = "These bizarre gauntlets seem to be fitted for... bird claws?"
+	name = "insulated gauntlets"
+	icon_state = "gloves-vox"
+	item_state = "gloves-vox"
+	siemens_coefficient = 0
+	permeability_coefficient = 0.05
+	_color="gloves-vox"
+
+/obj/item/clothing/gloves/yellow/vox/mob_can_equip(M as mob, slot)
+	var/mob/living/carbon/human/U = M
+	if(U.species.name != "Vox")
+		U << "<span class='warning'>This clearly isn't designed for your species!</span>"
+		return 0
+	return ..()
+
+/obj/item/clothing/shoes/magboots/vox
+
+	desc = "A pair of heavy, jagged armoured foot pieces, seemingly suitable for a velociraptor."
+	name = "vox boots"
+	item_state = "boots-vox"
+	icon_state = "boots-vox"
+
+	toggle()
+		//set name = "Toggle Floor Grip"
+		if(usr.stat)
+			return
+		if(src.magpulse)
+			src.flags &= ~NOSLIP
+			src.magpulse = 0
+			usr << "You relax your deathgrip on the flooring."
+		else
+			src.flags |= NOSLIP
+			src.magpulse = 1
+			usr << "You dig your claws deeply into the flooring, bracing yourself."
+
+
+	examine()
+		set src in view()
+		..()
+
+/obj/item/clothing/shoes/magboots/vox/mob_can_equip(M as mob, slot)
+	var/mob/living/carbon/human/U = M
+	if(U.species.name != "Vox")
+		U << "<span class='warning'>This clearly isn't designed for your species!</span>"
+		return 0
+	return ..()
+
+// Vox Casual
+// Civvie
+/obj/item/clothing/suit/space/vox/casual
+	name = "vox civilian pressure suit"
+	desc = "A modernized pressure suit for Vox who've decided to work for the winning team."
+	icon_state = "vox-pressure-normal"
+	item_state = "vox-pressure-normal"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	allowed = list(/obj/item/weapon/tank/nitrogen,/obj/item/weapon/tank/emergency_nitrogen,/obj/item/weapon/pen,/obj/item/device/flashlight/pen)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 10)
+
+/obj/item/clothing/head/helmet/space/vox/casual
+	name = "vox civilian pressure helmet"
+	icon_state = "vox-pressure-normal"
+	item_state = "vox-pressure-normal"
+	desc = "A very alien-looking helmet for Nanotrasen-hired Vox."
+	flags = HEADCOVERSEYES|STOPSPRESSUREDMAGE|BLOCKHAIR
+	flags_inv = HIDEMASK
+
+/obj/item/clothing/suit/space/vox/casual/engineer
+	name = "vox engineering pressure suit"
+	desc = "A modernized pressure suit for Vox who've decided to work for the winning team.  This one comes with more radiation protection."
+	icon_state = "vox-pressure-engineer"
+	item_state = "vox-pressure-engineer"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 80)
+
+/obj/item/clothing/head/helmet/space/vox/casual/engineer
+	name = "vox engineering pressure helmet"
+	icon_state = "vox-pressure-engineer"
+	item_state = "vox-pressure-engineer"
+	desc = "A very alien-looking helmet for Nanotrasen-hired Vox. This one is yellow."
+
+/obj/item/clothing/suit/space/vox/casual/science
+	name = "vox science pressure suit"
+	desc = "A modernized pressure suit for Vox who've decided to work for the winning team.  This one's for SCIENCE."
+	icon_state = "vox-pressure-science"
+	item_state = "vox-pressure-science"
+
+/obj/item/clothing/head/helmet/space/vox/casual/science
+	name = "vox science pressure helmet"
+	icon_state = "vox-pressure-science"
+	item_state = "vox-pressure-science"
+	desc = "A very alien-looking helmet for Nanotrasen-hired Vox. This one is white."
+
+/obj/item/clothing/suit/space/vox/casual/medical
+	name = "vox medical pressure suit"
+	desc = "A modernized pressure suit for Vox who've decided to work for the winning team.  This one's for medical personnel."
+	icon_state = "vox-pressure-medical"
+	item_state = "vox-pressure-medical"
+	allowed = list(/obj/item/weapon/tank/nitrogen,/obj/item/weapon/tank/emergency_nitrogen,/obj/item/device/flashlight,/obj/item/weapon/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical)
+
+/obj/item/clothing/head/helmet/space/vox/casual/medical
+	name = "vox medical pressure helmet"
+	icon_state = "vox-pressure-medical"
+	item_state = "vox-pressure-medical"
+	desc = "A very alien-looking helmet for Nanotrasen-hired Vox. This one is white."
+
+/obj/item/clothing/suit/space/vox/casual/security
+	name = "vox medical pressure suit"
+	desc = "A modernized pressure suit for Vox who've decided to work for shitcurity."
+	icon_state = "vox-pressure-security"
+	item_state = "vox-pressure-security"
+	armor = list(melee = 60, bullet = 10, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 10)
+	allowed = list(/obj/item/weapon/tank/nitrogen,/obj/item/weapon/tank/emergency_nitrogen,/obj/item/weapon/gun,/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/melee/baton)
+
+/obj/item/clothing/head/helmet/space/vox/casual/security
+	name = "vox security pressure helmet"
+	icon_state = "vox-pressure-security"
+	item_state = "vox-pressure-security"
+	desc = "A very alien-looking helmet for Nanotrasen-hired Vox. This one is for shitcurity."

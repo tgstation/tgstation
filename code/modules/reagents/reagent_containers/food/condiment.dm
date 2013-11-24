@@ -126,6 +126,9 @@
 				if("sugar")
 					name = "Sugar"
 					desc = "Tastey space sugar!"
+				if("chefspecial")
+					name = "Chef Excellence's Special Sauce"
+					desc = "A potent sauce distilled from the toxin glands of 1000 Space Carp."
 				else
 					name = "Misc Condiment Bottle"
 					if (reagents.reagent_list.len==1)
@@ -173,3 +176,12 @@
 	New()
 		..()
 		reagents.add_reagent("blackpepper", 20)
+
+/obj/item/weapon/reagent_containers/food/condiment/syndisauce
+	name = "Chef Excellence's Special Sauce"
+	desc = "A potent sauce distilled from the toxin glands of 1000 Space Carp with an extra touch of LSD because why not?"
+	amount_per_transfer_from_this = 1
+	volume = 20
+	New()
+		..()
+		reagents.add_reagent("chefspecial", 20)

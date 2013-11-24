@@ -16,7 +16,7 @@
 /obj/item/device/core_sampler
 	name = "core sampler"
 	desc = "Used to extract geological core samples."
-	icon = 'device.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "sampler0"
 	item_state = "screwdriver_brown"
 	w_class = 1.0
@@ -49,8 +49,8 @@
 
 /obj/item/device/core_sampler/proc/sample_item(var/item_to_sample, var/mob/user as mob)
 	var/datum/geosample/geo_data
-	if(istype(item_to_sample, /turf/simulated/mineral))
-		var/turf/simulated/mineral/T = item_to_sample
+	if(istype(item_to_sample, /turf/unsimulated/mineral))
+		var/turf/unsimulated/mineral/T = item_to_sample
 		T.geological_data.UpdateNearbyArtifactInfo(T)
 		geo_data = T.geological_data
 	else if(istype(item_to_sample, /obj/item/weapon/ore))

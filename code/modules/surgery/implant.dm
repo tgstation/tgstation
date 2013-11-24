@@ -41,6 +41,8 @@
 	max_duration = 80
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		if(!istype(target))
+			user << "<span class='warning'>This isn't a human!.</span>"
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		return ..() && !affected.cavity && !affected.hidden
 
@@ -106,7 +108,8 @@
 	max_duration = 100
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		if(!istype(target, /mob/living/carbon/human)) return
+		if(!istype(target))
+			user << "<span class='warning'>This isn't a human!.</span>"
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		var/can_fit = !affected.hidden && affected.cavity && tool.w_class <= get_max_wclass(affected)
 		return ..() && can_fit
@@ -164,19 +167,40 @@
 		var/datum/organ/external/chest/affected = target.get_organ(target_zone)
 
 		var/find_prob = 0
+
 		if (affected.implants.len)
-			var/obj/item/weapon/implant/imp = affected.implants[1]
-			if (imp.islegal())
-				find_prob +=60
+
+			var/obj/item/obj = affected.implants[1]
+
+			if(istype(obj,/obj/item/weapon/implant))
+				var/obj/item/weapon/implant/imp = obj
+				if (imp.islegal())
+					find_prob +=60
+				else
+					find_prob +=40
 			else
-				find_prob +=40
+				find_prob +=50
+
 			if (prob(find_prob))
 				user.visible_message("\blue [user] takes something out of incision on [target]'s [affected.display_name] with \the [tool].", \
-				"\blue You take something out of incision on [target]'s [affected.display_name]s with \the [tool]." )
-				affected.implants -= imp
-				imp.loc = get_turf(target)
-				imp.imp_in = null
-				imp.implanted = 0
+				"\blue You take [obj] out of incision on [target]'s [affected.display_name]s with \the [tool]." )
+				affected.implants -= obj
+
+				//Handle possessive brain borers.
+				if(istype(obj,/mob/living/simple_animal/borer))
+					var/mob/living/simple_animal/borer/worm = obj
+					if(worm.controlling)
+						target.release_control()
+					worm.detatch()
+
+				obj.loc = get_turf(target)
+				if(istype(obj,/obj/item/weapon/implant))
+					var/obj/item/weapon/implant/imp = obj
+					imp.imp_in = null
+					imp.implanted = 0
+			else
+				user.visible_message("\blue [user] removes \the [tool] from [target]'s [affected.display_name].", \
+				"\blue There's something inside [target]'s [affected.display_name], but you just missed it this time." )
 		else if (affected.hidden)
 			user.visible_message("\blue [user] takes something out of incision on [target]'s [affected.display_name] with \the [tool].", \
 			"\blue You take something out of incision on [target]'s [affected.display_name]s with \the [tool]." )

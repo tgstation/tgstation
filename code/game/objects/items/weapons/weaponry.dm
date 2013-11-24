@@ -37,9 +37,7 @@
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
 
-	log_admin("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
-	message_admins("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
-	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+	msg_admin_attack("[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		user << "\red You don't have the dexterity to do this!"
@@ -139,3 +137,40 @@
 /obj/item/weapon/katana/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return ..()
+
+/obj/item/weapon/harpoon
+	name = "harpoon"
+	sharp = 1
+	desc = "Tharr she blows!"
+	icon_state = "harpoon"
+	item_state = "harpoon"
+	force = 20
+	throwforce = 15
+	w_class = 3
+	attack_verb = list("jabbed","stabbed","ripped")
+
+
+obj/item/weapon/wirerod
+	name = "Wired rod"
+	desc = "A rod with some wire wrapped around the top. It'd be easy to attach something to the top bit."
+	icon_state = "wiredrod"
+	item_state = "rods"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	force = 9
+	throwforce = 10
+	w_class = 3
+	m_amt = 1875
+	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
+
+obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
+	..()
+	if(istype(I, /obj/item/weapon/wirecutters))
+		var/obj/item/weapon/melee/baton/cattleprod/P = new /obj/item/weapon/melee/baton/cattleprod
+
+		user.before_take_item(I)
+		user.before_take_item(src)
+
+		user.put_in_hands(P)
+		user << "<span class='notice'>You fasten the wirecutters to the top of the rod with the cable, prongs outward.</span>"
+		del(I)
+		del(src)

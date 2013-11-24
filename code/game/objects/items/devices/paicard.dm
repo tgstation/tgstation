@@ -29,29 +29,49 @@
 	if(pai && (!pai.master_dna || !pai.master))
 		dat += "<a href='byond://?src=\ref[src];setdna=1'>Imprint Master DNA</a><br>"
 	if(pai)
-		dat += "Installed Personality: [pai.name]<br>"
-		dat += "Prime directive: <br>[pai.pai_law0]<br>"
-		dat += "Additional directives: <br>[pai.pai_laws]<br>"
-		dat += "<a href='byond://?src=\ref[src];setlaws=1'>Configure Directives</a><br>"
-		dat += "<br>"
-		dat += "<h3>Device Settings</h3><br>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\paicard.dm:32: dat += "Installed Personality: [pai.name]<br>"
+		dat += {"Installed Personality: [pai.name]<br>
+			Prime directive: <br>[pai.pai_law0]<br>
+			Additional directives: <br>[pai.pai_laws]<br>
+			<a href='byond://?src=\ref[src];setlaws=1'>Configure Directives</a><br>
+			<br>
+			<h3>Device Settings</h3><br>"}
+		// END AUTOFIX
 		if(radio)
-			dat += "<b>Radio Uplink</b><br>"
-			dat += "Transmit: <A href='byond://?src=\ref[src];wires=4'>[(radio.wires & 4) ? "Enabled" : "Disabled"]</A><br>"
-			dat += "Receive: <A href='byond://?src=\ref[src];wires=2'>[(radio.wires & 2) ? "Enabled" : "Disabled"]</A><br>"
-			dat += "Signal Pulser: <A href='byond://?src=\ref[src];wires=1'>[(radio.wires & 1) ? "Enabled" : "Disabled"]</A><br>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\paicard.dm:39: dat += "<b>Radio Uplink</b><br>"
+			dat += {"<b>Radio Uplink</b><br>
+				Transmit: <A href='byond://?src=\ref[src];wires=4'>[(radio.wires & 4) ? "Enabled" : "Disabled"]</A><br>
+				Receive: <A href='byond://?src=\ref[src];wires=2'>[(radio.wires & 2) ? "Enabled" : "Disabled"]</A><br>
+				Signal Pulser: <A href='byond://?src=\ref[src];wires=1'>[(radio.wires & 1) ? "Enabled" : "Disabled"]</A><br>"}
+			// END AUTOFIX
 		else
-			dat += "<b>Radio Uplink</b><br>"
-			dat += "<font color=red><i>Radio firmware not loaded. Please install a pAI personality to load firmware.</i></font><br>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\paicard.dm:44: dat += "<b>Radio Uplink</b><br>"
+			dat += {"<b>Radio Uplink</b><br>
+				<font color=red><i>Radio firmware not loaded. Please install a pAI personality to load firmware.</i></font><br>"}
+		// END AUTOFIX
 		dat += "<A href='byond://?src=\ref[src];wipe=1'>\[Wipe current pAI personality\]</a><br>"
 	else
 		if(looking_for_personality)
-			dat += "Searching for a personality..."
-			dat += "<A href='byond://?src=\ref[src];request=1'>\[View available personalities\]</a><br>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\paicard.dm:49: dat += "Searching for a personality..."
+			dat += {"Searching for a personality...
+				<A href='byond://?src=\ref[src];request=1'>\[View available personalities\]</a><br>"}
+			// END AUTOFIX
 		else
-			dat += "No personality is installed.<br>"
-			dat += "<A href='byond://?src=\ref[src];request=1'>\[Request personal AI personality\]</a><br>"
-			dat += "Each time this button is pressed, a request will be sent out to any available personalities. Check back often and alot time for personalities to respond. This process could take anywhere from 15 seconds to several minutes, depending on the available personalities' timeliness."
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\paicard.dm:52: dat += "No personality is installed.<br>"
+			dat += {"No personality is installed.<br>
+				<A href='byond://?src=\ref[src];request=1'>\[Request personal AI personality\]</a><br>
+				Each time this button is pressed, a request will be sent out to any available personalities. Check back often and alot time for personalities to respond. This process could take anywhere from 15 seconds to several minutes, depending on the available personalities' timeliness."}
+			// END AUTOFIX
 	user << browse(dat, "window=paicard")
 	onclose(user, "paicard")
 	return

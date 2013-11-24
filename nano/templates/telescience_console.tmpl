@@ -1,0 +1,20 @@
+<!-- 
+Title: Telescience Control UI 
+Used In File(s): \code\modules\telesci\telesci_computer.dm
+ -->
+<div class="item">
+	<div class="itemLabel">Coordinates:</div>
+	<div class="itemContent">
+		{^{:~link('X: ' + coordx, 'gear', {'setx': 1})}}
+		{^{:~link('Y: ' + coordy, 'gear', {'sety': 1})}}
+		{^{:~link('Z: ' + coordz, 'gear', {'setz': 1})}}
+	</div>
+</div>
+<div class="item">
+	<div class="itemLabel">Controls:</div>
+	<div class="itemContent">
+		{^{:~link('Send', 'gear', {'send': 1}, null, (coordx != null && coordy != null && coordz != null) ? '' : 'disabled')}}
+		{^{:~link('Receive', 'gear', {'receive': 1}, null, (coordx != null && coordy != null && coordz != null) ? '' : 'disabled')}}
+		{^{:~link('Recalibrate', 'gear', {'recal': 1})}}
+	</div>
+</div>

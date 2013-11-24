@@ -165,7 +165,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		for(var/datum/mind/changeling in changelings)
 			var/changelingwin = 1
 
-			text += "<br>[changeling.key] was [changeling.name] ("
+			text += "<br><br>[changeling.key] was [changeling.name] ("
 			if(changeling.current)
 				if(changeling.current.stat == DEAD)
 					text += "died"
@@ -179,9 +179,12 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 			text += ")"
 
 			//Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.
-			text += "<br><b>Changeling ID:</b> [changeling.changeling.changelingID]."
-			text += "<br><b>Genomes Absorbed:</b> [changeling.changeling.absorbedcount]"
 
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\gamemodes\changeling\changeling.dm:182: text += "<br><b>Changeling ID:</b> [changeling.changeling.changelingID]."
+			text += {"<br><b>Changeling ID:</b> [changeling.changeling.changelingID].
+<b>Genomes Absorbed:</b> [changeling.changeling.absorbedcount]"}
+			// END AUTOFIX
 			if(changeling.objectives.len)
 				var/count = 1
 				for(var/datum/objective/objective in changeling.objectives)

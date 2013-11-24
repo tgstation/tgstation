@@ -18,7 +18,7 @@
 
 /obj/item/weapon/anodevice
 	name = "Anomaly power utilizer"
-	icon = 'xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "anodev"
 	var/cooldown = 0
 	var/activated = 0
@@ -58,33 +58,54 @@
 			else
 				dat += "Device active in timed mode.<br>"
 
-		dat += "[inserted_battery] inserted, anomaly ID: [inserted_battery.battery_effect.artifact_id ? inserted_battery.battery_effect.artifact_id : "NA"]<BR>"
-		dat += "<b>Total Power:</b> [inserted_battery.stored_charge]/[inserted_battery.capacity]<BR><BR>"
-		dat += "<b>Timed activation:</b> <A href='?src=\ref[src];neg_changetime_max=-100'>--</a> <A href='?src=\ref[src];neg_changetime=-10'>-</a> [time >= 1000 ? "[time/10]" : time >= 100 ? " [time/10]" : "  [time/10]" ] <A href='?src=\ref[src];changetime=10'>+</a> <A href='?src=\ref[src];changetime_max=100'>++</a><BR>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\tools\ano_device_battery.dm:61: dat += "[inserted_battery] inserted, anomaly ID: [inserted_battery.battery_effect.artifact_id ? inserted_battery.battery_effect.artifact_id : "NA"]<BR>"
+		dat += {"[inserted_battery] inserted, anomaly ID: [inserted_battery.battery_effect.artifact_id ? inserted_battery.battery_effect.artifact_id : "NA"]<BR>
+			<b>Total Power:</b> [inserted_battery.stored_charge]/[inserted_battery.capacity]<BR><BR>
+			<b>Timed activation:</b> <A href='?src=\ref[src];neg_changetime_max=-100'>--</a> <A href='?src=\ref[src];neg_changetime=-10'>-</a> [time >= 1000 ? "[time/10]" : time >= 100 ? " [time/10]" : "  [time/10]" ] <A href='?src=\ref[src];changetime=10'>+</a> <A href='?src=\ref[src];changetime_max=100'>++</a><BR>"}
+		// END AUTOFIX
 		if(cooldown)
-			dat += "<font color=red>Cooldown in progress.</font><BR>"
-			dat += "<br>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\tools\ano_device_battery.dm:65: dat += "<font color=red>Cooldown in progress.</font><BR>"
+			dat += {"<font color=red>Cooldown in progress.</font><BR>
+				<br>"}
+			// END AUTOFIX
 		else if(!activated)
-			dat += "<A href='?src=\ref[src];startup=1'>Start</a><BR>"
-			dat += "<A href='?src=\ref[src];startup=1;starttimer=1'>Start in timed mode</a><BR>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\tools\ano_device_battery.dm:68: dat += "<A href='?src=\ref[src];startup=1'>Start</a><BR>"
+			dat += {"<A href='?src=\ref[src];startup=1'>Start</a><BR>
+				<A href='?src=\ref[src];startup=1;starttimer=1'>Start in timed mode</a><BR>"}
+			// END AUTOFIX
 		else
-			dat += "<a href='?src=\ref[src];shutdown=1'>Shutdown emission</a><br>"
-			dat += "<br>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\tools\ano_device_battery.dm:71: dat += "<a href='?src=\ref[src];shutdown=1'>Shutdown emission</a><br>"
+			dat += {"<a href='?src=\ref[src];shutdown=1'>Shutdown emission</a><br>
+				<br>"}
+			// END AUTOFIX
 		dat += "<A href='?src=\ref[src];ejectbattery=1'>Eject battery</a><BR>"
 	else
-		dat += "Please insert battery<br>"
 
-		dat += "<br>"
-		dat += "<br>"
-		dat += "<br>"
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\tools\ano_device_battery.dm:75: dat += "Please insert battery<br>"
+		dat += {"Please insert battery<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>"}
+		// END AUTOFIX
 
-		dat += "<br>"
-		dat += "<br>"
-		dat += "<br>"
 
-	dat += "<hr>"
-	dat += "<a href='?src=\ref[src]'>Refresh</a> <a href='?src=\ref[src];close=1'>Close</a>"
-
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\tools\ano_device_battery.dm:85: dat += "<hr>"
+	dat += {"<hr>
+		<a href='?src=\ref[src]'>Refresh</a> <a href='?src=\ref[src];close=1'>Close</a>"}
+	// END AUTOFIX
 	user << browse(dat, "window=anodevice;size=400x500")
 	onclose(user, "anodevice")
 

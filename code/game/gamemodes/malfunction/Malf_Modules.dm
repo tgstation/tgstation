@@ -298,10 +298,10 @@ rcd light flash thingy on matter drain
 
 /datum/module_picker/proc/use(user as mob)
 	var/dat
-	dat = "<B>Select use of processing time: (currently #[src.processing_time] left.)</B><BR>"
-	dat += "<HR>"
-	dat += "<B>Install Module:</B><BR>"
-	dat += "<I>The number afterwards is the amount of processing time it consumes.</I><BR>"
+	dat += {"<B>Select use of processing time: (currently #[src.processing_time] left.)</B><BR>
+			<HR>
+			<B>Install Module:</B><BR>
+			<I>The number afterwards is the amount of processing time it consumes.</I><BR>"}
 	for(var/datum/AI_Module/large/module in src.possible_modules)
 		dat += "<A href='byond://?src=\ref[src];[module.mod_pick_name]=1'>[module.module_name]</A> ([module.cost])<BR>"
 	for(var/datum/AI_Module/small/module in src.possible_modules)

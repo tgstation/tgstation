@@ -41,6 +41,12 @@
 	//If you have use_age_restriction_for_jobs config option enabled and the database set up, this option will add a requirement for players to be at least minimal_player_age days old. (meaning they first signed in at least that many days before.)
 	var/minimal_player_age = 0
 
+	/////////////////////////////////
+	// /vg/ feature: Job Objectives!
+	/////////////////////////////////
+	var/required_objectives=list() // Objectives that are ALWAYS added.
+	var/optional_objectives=list() // Objectives that are SOMETIMES added.
+
 /datum/job/proc/equip(var/mob/living/carbon/human/H)
 	return 1
 

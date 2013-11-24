@@ -111,6 +111,8 @@
 					usr << "\red It's is already wearing something."
 					return
 				else
+					place_on_head(usr.get_active_hand())
+
 					var/obj/item/item_to_add = usr.get_active_hand()
 					if(!item_to_add)
 						return

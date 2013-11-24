@@ -43,7 +43,8 @@
 
 /obj/machinery/power/am_control_unit/process()
 	if(exploding)
-		explosion(get_turf(src),8,12,18,12)
+		message_admins("AME explosion at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) - Last touched by [fingerprintslast]",0,1)
+		explosion(get_turf(src),8,10,12,15)
 		if(src) del(src)
 
 	if(update_shield_icons && !shield_icon_delay)
@@ -75,7 +76,7 @@
 	var/core_damage = 0
 	var/fuel = fueljar.usefuel(fuel_injection)
 
-	stored_power = (fuel/core_power)*fuel*200000
+	stored_power = (fuel/core_power)*fuel*20000 // Was 200000, was too much. New value run past Aurx. - N3X
 	//Now check if the cores could deal with it safely, this is done after so you can overload for more power if needed, still a bad idea
 	if(fuel > (2*core_power))//More fuel has been put in than the current cores can deal with
 		if(prob(50))core_damage = 1//Small chance of damage
@@ -171,11 +172,12 @@
 			user << "\red There is already a [fueljar] inside!"
 			return
 		fueljar = W
-		W.loc = src
 		if(user.client)
 			user.client.screen -= W
 		user.u_equip(W)
+		W.loc = src
 		user.update_icons()
+		message_admins("AME loaded with fuel by [user.name] at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		user.visible_message("[user.name] loads an [W.name] into the [src.name].", \
 				"You load an [W.name].", \
 				"You hear a thunk.")
@@ -225,6 +227,8 @@
 	else
 		use_power = 1
 		visible_message("The [src.name] shuts down.")
+	for(var/obj/machinery/am_shielding/AMS in linked_cores)
+		AMS.update_icon()
 	update_icon()
 	return
 
@@ -266,7 +270,7 @@
 			user.unset_machine()
 			user << browse(null, "window=AMcontrol")
 			return
-	user.set_machine(src)
+	/*user.set_machine(src)
 
 	var/dat = ""
 	dat += "AntiMatter Control Panel<BR>"
@@ -295,8 +299,51 @@
 
 
 	user << browse(dat, "window=AMcontrol;size=420x500")
-	onclose(user, "AMcontrol")
+	onclose(user, "AMcontrol")*/
+	return ui_interact(user)
 	return
+
+
+
+/obj/machinery/power/am_control_unit/ui_interact(mob/user, ui_key = "main")
+	if(!user)
+		return
+
+	check_core_stability()
+
+	var/list/fueljar_data=null
+	if(fueljar)
+		fueljar_data=list(
+			"fuel"=fueljar.fuel,
+			"fuel_max"=fueljar.fuel_max,
+			"injecting"=fuel_injection
+		)
+
+	var/list/data = list(
+		"active" = active,
+		"stability" = stability,
+		"linked_shields" = linked_shielding.len,
+		"linked_cores" = linked_cores.len,
+		"efficiency" = reported_core_efficiency,
+		"stability" = stored_core_stability,
+		"stored_power" = stored_power,
+		"fueljar" = fueljar_data,
+		"siliconUser" = istype(user, /mob/living/silicon),
+	)
+
+	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, ui_key)
+	if (!ui)
+		// the ui does not exist, so we'll create a new one
+		ui = new(user, src, ui_key, "ame.tmpl", "Antimatter Control Unit", 500, data["siliconUser"] ? 465 : 390)
+		// When the UI is first opened this is the data it will use
+		ui.set_initial_data(data)
+		ui.open()
+		// Auto update every Master Controller tick
+		ui.set_auto_update(1)
+	else
+		// The UI is already open so push the new data to it
+		ui.push_data(data)
+		return
 
 
 /obj/machinery/power/am_control_unit/Topic(href, href_list)
@@ -314,23 +361,26 @@
 
 	if(href_list["togglestatus"])
 		toggle_power()
+		message_admins("AME toggled [active?"on":"off"] by [usr.name] at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 
 	if(href_list["refreshicons"])
 		update_shield_icons = 1
 
 	if(href_list["ejectjar"])
 		if(fueljar)
+			message_admins("AME fuel jar ejected by [usr.name] at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 			fueljar.loc = src.loc
 			fueljar = null
 			//fueljar.control_unit = null currently it does not care where it is
 			//update_icon() when we have the icon for it
 
-	if(href_list["strengthup"])
-		fuel_injection++
-
-	if(href_list["strengthdown"])
-		fuel_injection--
-		if(fuel_injection < 0) fuel_injection = 0
+	if(href_list["set_strength"])
+		var/newval = input("Enter new injection strength") as num|null
+		if(isnull(newval))
+			return
+		fuel_injection=newval
+		fuel_injection=max(1,fuel_injection)
+		message_admins("AME injection strength set to [fuel_injection] by [usr.name] at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 
 	if(href_list["refreshstability"])
 		check_core_stability()

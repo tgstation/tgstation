@@ -14,7 +14,7 @@
 	name = "captain's gloves"
 	icon_state = "captain"
 	item_state = "egloves"
-	color = "captain"
+	_color = "captain"
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECITON_TEMPERATURE
 	heat_protection = HANDS
@@ -59,10 +59,10 @@
 	item_state = "lgloves"
 	siemens_coefficient = 0.30
 	permeability_coefficient = 0.01
-	color="white"
+	_color="white"
 
 	cmo
-		color = "medical"		//Exists for washing machines. Is not different from latex gloves in any way.
+		_color = "medical"		//Exists for washing machines. Is not different from latex gloves in any way.
 
 /obj/item/clothing/gloves/botanic_leather
 	desc = "These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin."

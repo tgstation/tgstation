@@ -171,9 +171,12 @@
 	slot_flags = SLOT_BELT
 
 	proc/openwindow(mob/user as mob)
-		var/dat = "<tt><center><h1><b>TagMaster 2.2</b></h1></center>"
 
-		dat += "<table style='width:100%; padding:4px;'><tr>"
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\recycling\sortingmachinery.dm:174: var/dat = "<tt><center><h1><b>TagMaster 2.2</b></h1></center>"
+		var/dat = {"<tt><center><h1><b>TagMaster 2.2</b></h1></center>
+<table style='width:100%; padding:4px;'><tr>"}
+		// END AUTOFIX
 		for (var/i = 1, i <= TAGGERLOCATIONS.len, i++)
 			dat += "<td><a href='?src=\ref[src];nextTag=[i]'>[TAGGERLOCATIONS[i]]</a></td>"
 
@@ -202,7 +205,8 @@
 	density = 1
 	icon_state = "intake"
 	var/c_mode = 0
-	var/doFlush=0
+	var/doFlushIn=0
+	var/num_contents=0
 
 	New()
 		..()
@@ -242,12 +246,12 @@
 		// Instead, we queue up for the next process.
 		if(!(src in processing_objects))
 			processing_objects.Add(src)
-		flick("intake-closing", src) // We can play this, though.
-		doFlush=1
+		doFlushIn=5 // Ticks, adjust if delay is too long or too short
+		num_contents++
 
 	flush()
 		flushing = 1
-		//flick("intake-closing", src)
+		flick("intake-closing", src)
 		var/deliveryCheck = 0
 		var/obj/structure/disposalholder/H = new()	// virtual holder object which actually
 													// travels through the pipes.
@@ -269,6 +273,8 @@
 		sleep(5) // wait for animation to finish
 
 		H.init(src)	// copy the contents of disposer to holder
+		num_contents=0
+		doFlushIn=0
 
 		H.start(src) // start the holder processing movement
 		flushing = 0
@@ -314,10 +320,11 @@
 				return
 
 	process()
-		if(doFlush)
-			//testing("[src] FLUSHING")
-			src.flush()
-			doFlush=0
+		if(doFlushIn>0)
+			if(doFlushIn==1 || num_contents>=50)
+				//testing("[src] FLUSHING")
+				src.flush()
+			doFlushIn--
 
 
 /obj/machinery/sorting_machine
@@ -483,7 +490,7 @@ table {
 				</style>
 			</head>
 			<body>
-				<h1>SortMaster 5000</h1><br>
+				<h1>MinerX SortMaster 5000</h1><br>
 				<p>Select the desired items to sort from the line.</p>"}
 	dat += "<ul>"
 	for (var/n in types)

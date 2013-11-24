@@ -22,11 +22,15 @@
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	var/t = "\blue Coordinates: [x],[y] \n"
-	t+= "\red Temperature: [environment.temperature] \n"
-	t+= "\blue Nitrogen: [environment.nitrogen] \n"
-	t+= "\blue Oxygen: [environment.oxygen] \n"
-	t+= "\blue Plasma : [environment.toxins] \n"
-	t+= "\blue Carbon Dioxide: [environment.carbon_dioxide] \n"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\mob.dm:25: t+= "\red Temperature: [environment.temperature] \n"
+	t += {"\red Temperature: [environment.temperature] \n
+\blue Nitrogen: [environment.nitrogen] \n
+\blue Oxygen: [environment.oxygen] \n
+\blue Plasma : [environment.toxins] \n
+\blue Carbon Dioxide: [environment.carbon_dioxide] \n"}
+	// END AUTOFIX
 	for(var/datum/gas/trace_gas in environment.trace_gases)
 		usr << "\blue [trace_gas.type]: [trace_gas.moles] \n"
 
@@ -127,6 +131,14 @@
 //		organStructure.ProcessOrgans()
 	return
 
+/mob/proc/get_item_by_slot(slot_id)
+	switch(slot_id)
+		if(slot_l_hand)
+			return l_hand
+		if(slot_r_hand)
+			return r_hand
+	return null
+
 
 /mob/proc/restrained()
 	return
@@ -138,10 +150,10 @@
 	if(istype(W))
 		equip_to_slot_if_possible(W, slot)
 
-/mob/proc/put_in_any_hand_if_possible(obj/item/W as obj, del_on_fail = 0, disable_warning = 1, redraw_mob = 1)
-	if(equip_to_slot_if_possible(W, slot_l_hand, del_on_fail, disable_warning, redraw_mob))
+/mob/proc/put_in_any_hand_if_possible(obj/item/W as obj, act_on_fail = 0, disable_warning = 1, redraw_mob = 1)
+	if(equip_to_slot_if_possible(W, slot_l_hand, act_on_fail, disable_warning, redraw_mob))
 		return 1
-	else if(equip_to_slot_if_possible(W, slot_r_hand, del_on_fail, disable_warning, redraw_mob))
+	else if(equip_to_slot_if_possible(W, slot_r_hand, act_on_fail, disable_warning, redraw_mob))
 		return 1
 	return 0
 
@@ -149,17 +161,20 @@
 //set del_on_fail to have it delete W if it fails to equip
 //set disable_warning to disable the 'you are unable to equip that' warning.
 //unset redraw_mob to prevent the mob from being redrawn at the end.
-/mob/proc/equip_to_slot_if_possible(obj/item/W as obj, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1, automatic = 0)
+/mob/proc/equip_to_slot_if_possible(obj/item/W as obj, slot, act_on_fail = 0, disable_warning = 0, redraw_mob = 1, automatic = 0)
 	if(!istype(W)) return 0
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		switch(W.mob_can_equip(src, slot, disable_warning, automatic))
 			if(0)
-				if(del_on_fail)
-					del(W)
-				else
-					if(!disable_warning)
-						src << "\red You are unable to equip that." //Only print if del_on_fail is false
+				switch(act_on_fail)
+					if(EQUIP_FAILACTION_DELETE)
+						del(W)
+					if(EQUIP_FAILACTION_DROP)
+						W.loc=get_turf(src) // I think.
+					else
+						if(!disable_warning)
+							src << "\red You are unable to equip that." //Only print if act_on_fail is NOTHING
 				return 0
 			if(1)
 				equip_to_slot(W, slot, redraw_mob)
@@ -386,11 +401,14 @@
 		return 1
 	else
 		if(!W.mob_can_equip(src, slot, disable_warning))
-			if(del_on_fail)
-				del(W)
-			else
-				if(!disable_warning)
-					src << "\red You are unable to equip that." //Only print if del_on_fail is false
+			switch(act_on_fail)
+				if(EQUIP_FAILACTION_DELETE)
+					del(W)
+				if(EQUIP_FAILACTION_DROP)
+					W.loc=get_turf(src) // I think.
+				else
+					if(!disable_warning)
+						src << "\red You are unable to equip that." //Only print if act_on_fail is NOTHING
 			return 0
 
 		equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
@@ -403,7 +421,11 @@
 
 //This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the rounds tarts and when events happen and such.
 /mob/proc/equip_to_slot_or_del(obj/item/W as obj, slot)
-	return equip_to_slot_if_possible(W, slot, 1, 1, 0)
+	return equip_to_slot_if_possible(W, slot, EQUIP_FAILACTION_DELETE, 1, 0)
+
+//This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the rounds tarts and when events happen and such.
+/mob/proc/equip_to_slot_or_drop(obj/item/W as obj, slot)
+	return equip_to_slot_if_possible(W, slot, EQUIP_FAILACTION_DROP, 1, 0)
 
 //The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
 var/list/slot_equipment_priority = list( \
@@ -429,7 +451,7 @@ var/list/slot_equipment_priority = list( \
 	if(!istype(W)) return 0
 
 	for(var/slot in slot_equipment_priority)
-		if(equip_to_slot_if_possible(W, slot, 0, 1, 1, 1)) //del_on_fail = 0; disable_warning = 0; redraw_mob = 1
+		if(equip_to_slot_if_possible(W, slot, 0, 1, 1, 1)) //act_on_fail = 0; disable_warning = 0; redraw_mob = 1
 			return 1
 
 	return 0
@@ -655,10 +677,10 @@ var/list/slot_equipment_priority = list( \
 	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
 	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
 	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
-	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
+	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
 	<BR>"}
 	user << browse(dat, text("window=mob[];size=325x500", name))
-	onclose(user, "mob[name]")
+	onclose(user, "mob\ref[src]")
 	return
 
 /mob/proc/ret_grab(obj/effect/list_container/mobl/L as obj, flag)
@@ -725,7 +747,7 @@ var/list/slot_equipment_priority = list( \
 
 /mob/verb/memory()
 	set name = "Notes"
-	set category = "OOC"
+	set category = "IC"
 	if(mind)
 		mind.show_memory(src)
 	else
@@ -733,7 +755,7 @@ var/list/slot_equipment_priority = list( \
 
 /mob/verb/add_memory(msg as message)
 	set name = "Add Note"
-	set category = "OOC"
+	set category = "IC"
 
 	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 	msg = sanitize(msg)
@@ -778,9 +800,9 @@ var/list/slot_equipment_priority = list( \
 	if (flavor_text && flavor_text != "")
 		var/msg = replacetext(flavor_text, "\n", " ")
 		if(lentext(msg) <= 40)
-			return "\blue [msg]"
+			return "<font color='#ffa000'><b>[msg]</b></font>"
 		else
-			return "\blue [copytext(msg, 1, 37)]... <a href='byond://?src=\ref[src];flavor_more=1'>More...</a>"
+			return "<font color='#ffa000'><b>[copytext(msg, 1, 37)]... <a href='byond://?src=\ref[src];flavor_more=1'>More...</a></b></font>"
 
 /*
 /mob/verb/help()
@@ -814,8 +836,8 @@ var/list/slot_equipment_priority = list( \
 			pluralcheck = " [deathtimeminutes] minutes and"
 		var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10,1)
 		usr << "You have been dead for[pluralcheck] [deathtimeseconds] seconds."
-		if (deathtime < 18000)
-			usr << "You must wait 30 minutes to respawn!"
+		if (deathtime < config.respawn_delay*600)
+			usr << "You must wait [config.respawn_delay] minutes to respawn!"
 			return
 		else
 			usr << "You can respawn now, enjoy your new life!"
@@ -1012,22 +1034,31 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/start_pulling(var/atom/movable/AM)
 	if ( !AM || !usr || src==AM || !isturf(src.loc) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
 		return
-	if (!( AM.anchored ))
-		if(pulling)
-			var/pulling_old = pulling
-			stop_pulling()
-			// Are we pulling the same thing twice? Just stop pulling.
-			if(pulling_old == AM)
-				return
-		src.pulling = AM
-		AM.pulledby = src
-		if(ismob(AM))
-			var/mob/M = AM
-			if(!iscarbon(src))
-				M.LAssailant = null
-			else
-				M.LAssailant = usr
 
+	if (AM.anchored)
+		return
+
+	var/mob/M = AM
+	if(ismob(AM))
+		if(!iscarbon(src))
+			M.LAssailant = null
+		else
+			M.LAssailant = usr
+
+	if(pulling)
+		var/pulling_old = pulling
+		stop_pulling()
+		// Are we pulling the same thing twice? Just stop pulling.
+		if(pulling_old == AM)
+			return
+
+	src.pulling = AM
+	AM.pulledby = src
+
+	//Attempted fix for people flying away through space when cuffed and dragged.
+	if(ismob(AM))
+		var/mob/pulled = AM
+		pulled.inertia_dir = 0
 
 /mob/proc/can_use_hands()
 	return
@@ -1136,6 +1167,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 				stat(null,"Mch-[master_controller.machines_cost]\t#[machines.len]")
 				stat(null,"Obj-[master_controller.objects_cost]\t#[processing_objects.len]")
 				stat(null,"Net-[master_controller.networks_cost]\tPnet-[master_controller.powernets_cost]")
+				stat(null,"NanoUI-[master_controller.nano_cost]\t#[nanomanager.processing_uis.len]")
 				stat(null,"Tick-[master_controller.ticker_cost]\tALL-[master_controller.total_cost]")
 			else
 				stat(null,"MasterController-ERROR")
@@ -1143,6 +1175,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	if(spell_list && spell_list.len)
 		for(var/obj/effect/proc_holder/spell/S in spell_list)
+			if(istype(S, /obj/effect/proc_holder/spell/noclothes))
+				continue //Not showing the noclothes spell
 			switch(S.charge_type)
 				if("recharge")
 					statpanel("Spells","[S.charge_counter/10.0]/[S.charge_max/10]",S)
@@ -1151,6 +1185,15 @@ note dizziness decrements automatically in the mob's Life() proc.
 				if("holdervar")
 					statpanel("Spells","[S.holder_var_type] [S.holder_var_amount]",S)
 
+	if(listed_turf)
+		if(get_dist(listed_turf,src) > 1)
+			listed_turf = null
+		else
+			statpanel(listed_turf.name,listed_turf.name,listed_turf)
+			for(var/atom/A in listed_turf)
+				if(A.invisibility > see_invisible)
+					continue
+				statpanel(listed_turf.name,A.name,A)
 
 
 // facing verbs
@@ -1315,3 +1358,66 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/flash_weak_pain()
 	flick("weak_pain",pain)
+
+mob/verb/yank_out_object()
+	set category = "Object"
+	set name = "Yank out object"
+	set desc = "Remove an embedded item at the cost of bleeding and pain."
+	set src in view(1)
+
+	if(!isliving(usr) || usr.next_move > world.time)
+		return
+	usr.next_move = world.time + 20
+
+	if(usr.stat == 1)
+		usr << "You are unconcious and cannot do that!"
+		return
+
+	if(usr.restrained())
+		usr << "You are restrained and cannot do that!"
+		return
+
+	var/mob/S = src
+	var/mob/U = usr
+	var/list/valid_objects = list()
+	var/self = null
+
+	if(S == U)
+		self = 1 // Removing object from yourself.
+
+	for(var/obj/item/weapon/W in embedded)
+		if(W.w_class >= 2)
+			valid_objects += W
+
+	if(!valid_objects.len)
+		if(self)
+			src << "You have nothing stuck in your body that is large enough to remove."
+		else
+			U << "[src] has nothing stuck in their wounds that is large enough to remove."
+		return
+
+	var/obj/item/weapon/selection = input("What do you want to yank out?", "Embedded objects") in valid_objects
+
+	if(self)
+		src << "<span class='warning'>You attempt to get a good grip on the [selection] in your body.</span>"
+	else
+		U << "<span class='warning'>You attempt to get a good grip on the [selection] in [S]'s body.</span>"
+
+	if(!do_after(U, 80))
+		return
+	if(!selection || !S || !U)
+		return
+
+	if(self)
+		visible_message("<span class='warning'><b>[src] rips [selection] out of their body.</b></span>","<span class='warning'><b>You rip [selection] out of your body.</b></span>")
+	else
+		visible_message("<span class='warning'><b>[usr] rips [selection] out of [src]'s body.</b></span>","<span class='warning'><b>[usr] rips [selection] out of your body.</b></span>")
+
+	selection.loc = get_turf(src)
+
+	for(var/obj/item/weapon/O in pinned)
+		if(O == selection)
+			pinned -= O
+		if(!pinned.len)
+			anchored = 0
+	return 1

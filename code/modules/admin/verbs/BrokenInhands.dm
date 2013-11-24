@@ -1,4 +1,7 @@
 /proc/getbrokeninhands()
+	set name = "Broken Sprite List"
+	set category = "Debug"
+
 	var/icon/IL = new('icons/mob/items_lefthand.dmi')
 	var/list/Lstates = IL.IconStates()
 	var/icon/IR = new('icons/mob/items_righthand.dmi')
@@ -28,9 +31,8 @@
 		//text+="\n"
 		del(O)
 	if(text)
-		var/F = file("broken_icons.txt")
+		var/F = file("broken_hand_icons.txt")
 		fdel(F)
 		F << text
-		world << "Completeled successfully and written to [F]"
-
+		world << "Completed and written to [F]"
 

@@ -19,7 +19,7 @@
 	return
 
 /obj/item/stack/tile/plasteel/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-	rec.iron += amount/4
+	rec.addMaterial("iron",amount/4)
 	return 1
 
 /*

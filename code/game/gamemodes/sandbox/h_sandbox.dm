@@ -6,28 +6,87 @@ var/list
 					"hsbsuit" = "Suit Up (Space Travel Gear)",
 					"hsbmetal" = "Spawn 50 Metal",
 					"hsbglass" = "Spawn 50 Glass",
-					"hsbairlock" = "Spawn Airlock",
+					"hsbplasma" = "Spawn 50 Plasma",
+					"phazon" = "Spawn 50 Phazon",
 					"hsbregulator" = "Spawn Air Regulator",
 					"hsbfilter" = "Spawn Air Filter",
 					"hsbcanister" = "Spawn Canister",
 					"hsbfueltank" = "Spawn Welding Fuel Tank",
 					"hsbwater	tank" = "Spawn Water Tank",
 					"hsbtoolbox" = "Spawn Toolbox",
-					"hsbmedkit" = "Spawn Medical Kit")
+					"hsbmedkit" = "Spawn Medical Kit",
+					"revive" = "Rejuvinate")
 
-mob
-	var/datum/hSB/sandbox = null
-	proc
-		CanBuild()
-			if(master_mode == "sandbox")
-				sandbox = new/datum/hSB
-				sandbox.owner = src.ckey
-				if(src.client.holder)
-					sandbox.admin = 1
-				verbs += new/mob/proc/sandbox_panel
-		sandbox_panel()
-			if(sandbox)
-				sandbox.update()
+/mob/var/datum/hSB/sandbox = null
+/mob/proc/CanBuild()
+	if(ticker.mode.name == "sandbox")
+		sandbox = new/datum/hSB
+		sandbox.owner = src.ckey
+		if(src.client.holder)
+			sandbox.admin = 1
+		verbs += new /mob/proc/sandbox_panel
+		verbs += new /mob/proc/sandbox_spawn_atom
+
+/mob/proc/sandbox_panel()
+	set name = "Sandbox Panel"
+	set category = "Sandbox"
+
+	if(sandbox)
+		sandbox.update()
+
+var/global/list/banned_sandbox_types=list(
+	/obj/item/weapon/gun,
+	/obj/item/assembly,
+	/obj/item/device/camera,
+	/obj/item/weapon/cloaking_device,
+	/obj/item/weapon/dummy,
+	/obj/item/weapon/melee/energy/sword,
+	/obj/item/weapon/veilrender,
+	/obj/item/weapon/reagent_containers/glass/bottle/wizarditis,
+	/obj/item/weapon/spellbook,
+	/obj/machinery/singularity,
+	/obj/item/weapon/gun/energy/staff)
+
+proc/is_banned_type(typepath)
+	for(var/btype in banned_sandbox_types)
+		if(findtext("[typepath]", "[btype]")!=0)
+			return 1
+	return 0
+
+/mob/proc/sandbox_spawn_atom(var/object as text)
+	set category = "Sandbox"
+	set desc = "Spawn any item or machine"
+	set name = "Sandbox Spawn"
+
+	var/list/types = typesof(/obj/item) + typesof(/obj/machinery)
+	for(var/type in types)
+		if(is_banned_type(type))
+			types -= type
+	var/list/matches = new()
+
+	for(var/path in types)
+		if(is_banned_type(path))
+			continue
+		if(findtext("[path]", object)!=0)
+			matches += path
+
+	if(matches.len==0)
+		return
+
+	var/chosen
+	if(matches.len==1)
+		chosen = matches[1]
+	else
+		chosen = input("Select an atom type", "Spawn Atom", matches[1]) as null|anything in matches
+		if(!chosen)
+			return
+	if(is_banned_type(chosen))
+		src << "\red Denied."
+		return
+	new chosen(usr.loc)
+
+	message_admins("\[SANDBOX\] [key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
+	feedback_add_details("admin_verb","hSBSA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 datum/hSB
 	var/owner = null
@@ -36,8 +95,12 @@ datum/hSB
 		update()
 			var/hsbpanel = "<center><b>h_Sandbox Panel</b></center><hr>"
 			if(admin)
-				hsbpanel += "<b>Administration Tools:</b><br>"
-				hsbpanel += "- <a href=\"?\ref[src];hsb=hsbtobj\">Toggle Object Spawning</a><br><br>"
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\gamemodes\sandbox\h_sandbox.dm:39: hsbpanel += "<b>Administration Tools:</b><br>"
+				hsbpanel += {"<b>Administration Tools:</b><br>
+					- <a href=\"?\ref[src];hsb=hsbtobj\">Toggle Object Spawning</a><br><br>"}
+			// END AUTOFIX
 			hsbpanel += "<b>Regular Tools:</b><br>"
 			for(var/T in hrefs)
 				hsbpanel += "- <a href=\"?\ref[src];hsb=[T]\">[hrefs[T]]</a><br>"
@@ -49,6 +112,10 @@ datum/hSB
 		if(!usr) return //I guess this is possible if they log out or die with the panel open? It happened.
 		if(href_list["hsb"])
 			switch(href_list["hsb"])
+				if("revive")
+					if(istype(usr,/mob/living))
+						var/mob/living/M = usr
+						M.revive()
 				if("hsbtobj")
 					if(!admin) return
 					if(hsboxspawn)
@@ -94,29 +161,24 @@ datum/hSB
 					var/obj/item/stack/sheet/hsb = new/obj/item/stack/sheet/glass
 					hsb.amount = 50
 					hsb.loc = usr.loc
-				if("hsbairlock")
-					var/obj/machinery/door/hsb = new/obj/machinery/door/airlock
-
-					//TODO: DEFERRED make this better, with an HTML window or something instead of 15 popups
-					hsb.req_access = list()
-					var/accesses = get_all_accesses()
-					for(var/A in accesses)
-						if(alert(usr, "Will this airlock require [get_access_desc(A)] access?", "Sandbox:", "Yes", "No") == "Yes")
-							hsb.req_access += A
-
+				if("hsbplasma")
+					var/obj/item/stack/sheet/hsb = new/obj/item/stack/sheet/mineral/plasma
+					hsb.amount = 50
 					hsb.loc = usr.loc
-					usr << "<b>Sandbox:  Created an airlock."
+				if("phazon")
+					var/obj/item/stack/sheet/hsb = new/obj/item/stack/sheet/mineral/phazon
+					hsb.amount = 50
+					hsb.loc = usr.loc
 				if("hsbcanister")
 					var/list/hsbcanisters = typesof(/obj/machinery/portable_atmospherics/canister/) - /obj/machinery/portable_atmospherics/canister/
+//					hsbcanisters -= /obj/machinery/portable_atmospherics/canister/sleeping
 					var/hsbcanister = input(usr, "Choose a canister to spawn.", "Sandbox:") in hsbcanisters + "Cancel"
 					if(!(hsbcanister == "Cancel"))
 						new hsbcanister(usr.loc)
 				if("hsbfueltank")
-					//var/obj/hsb = new/obj/weldfueltank
-					//hsb.loc = usr.loc
+					new /obj/structure/reagent_dispensers/fueltank(usr.loc)
 				if("hsbwatertank")
-					//var/obj/hsb = new/obj/watertank
-					//hsb.loc = usr.loc
+					new /obj/structure/reagent_dispensers/watertank(usr.loc)
 				if("hsbtoolbox")
 					var/obj/item/weapon/storage/hsb = new/obj/item/weapon/storage/toolbox/mechanical
 					for(var/obj/item/device/radio/T in hsb)
@@ -126,28 +188,3 @@ datum/hSB
 				if("hsbmedkit")
 					var/obj/item/weapon/storage/firstaid/hsb = new/obj/item/weapon/storage/firstaid/regular
 					hsb.loc = usr.loc
-				if("hsbobj")
-					if(!hsboxspawn) return
-
-					var/list/selectable = list()
-					for(var/O in typesof(/obj/item/))
-					//Note, these istypes don't work
-						if(istype(O, /obj/item/weapon/gun))
-							continue
-						if(istype(O, /obj/item/assembly))
-							continue
-						if(istype(O, /obj/item/device/camera))
-							continue
-						if(istype(O, /obj/item/weapon/cloaking_device))
-							continue
-						if(istype(O, /obj/item/weapon/dummy))
-							continue
-						if(istype(O, /obj/item/weapon/melee/energy/sword))
-							continue
-						if(istype(O, /obj/structure))
-							continue
-						selectable += O
-
-					var/hsbitem = input(usr, "Choose an object to spawn.", "Sandbox:") in selectable + "Cancel"
-					if(hsbitem != "Cancel")
-						new hsbitem(usr.loc)

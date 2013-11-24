@@ -79,13 +79,20 @@
 		for (var/O in item_quants)
 			if(item_quants[O] > 0)
 				var/N = item_quants[O]
-				dat += "<FONT color = 'blue'><B>[capitalize(O)]</B>:"
-				dat += " [N] </font>"
-				dat += "<a href='byond://?src=\ref[src];vend=[O]'>Vend</A>"
-				dat += "<br>"
 
-		dat += "<br><a href='byond://?src=\ref[src];unload=1'>Unload All</A>"
-		dat += "</TT>"
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\weapons\hydroponics.dm:82: dat += "<FONT color = 'blue'><B>[capitalize(O)]</B>:"
+				dat += {"<FONT color = 'blue'><B>[capitalize(O)]</B>:
+					[N] </font>
+					<a href='byond://?src=\ref[src];vend=[O]'>Vend</A>
+					<br>"}
+				// END AUTOFIX
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\weapons\hydroponics.dm:87: dat += "<br><a href='byond://?src=\ref[src];unload=1'>Unload All</A>"
+		dat += {"<br><a href='byond://?src=\ref[src];unload=1'>Unload All</A>
+			</TT>"}
+		// END AUTOFIX
 	user << browse("<HEAD><TITLE>Seedbag Supplies</TITLE></HEAD><TT>[dat]</TT>", "window=seedbag")
 	onclose(user, "seedbag")
 	return
@@ -123,13 +130,30 @@
 			src.attack_self(M)
 */
 /*
- * Sunflower
+ * Sunflower & NovaFlower
  */
-
 /obj/item/weapon/grown/sunflower/attack(mob/M as mob, mob/user as mob)
 	M << "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>"
 	user << "<font color='green'> Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'> strikes [M]</font>"
 
+/obj/item/weapon/grown/novaflower/attack(mob/living/carbon/M as mob, mob/user as mob)
+	if(!..()) return
+	if(istype(M, /mob/living))
+		M << "\red You are heated by the warmth of the of the [name]!"
+		M.bodytemperature += potency/2 * TEMPERATURE_DAMAGE_COEFFICIENT
+
+/obj/item/weapon/grown/novaflower/afterattack(atom/A as mob|obj, mob/user as mob,proximity)
+	if(!proximity) return
+	if(endurance > 0)
+		endurance -= rand(1,(endurance/3)+1)
+	else
+		usr << "All the petals have fallen off the [name] from violent whacking."
+		del(src)
+
+/obj/item/weapon/grown/novaflower/pickup(mob/living/carbon/human/user as mob)
+	if(!user.gloves)
+		user << "\red The [name] burns your bare hand!"
+		user.adjustFireLoss(rand(1,5))
 
 /*
  * Nettle

@@ -59,6 +59,17 @@ var/global/datum/controller/occupations/job_master
 				Debug("Player: [player] is now Rank: [rank], JCP:[job.current_positions], JPL:[position_limit]")
 				player.mind.assigned_role = rank
 				player.mind.role_alt_title = GetPlayerAltTitle(player, rank)
+
+				// JOB OBJECTIVES OH SHIT
+				player.mind.job_objectives.Cut()
+				for(var/objectiveType in job.required_objectives)
+					new objectiveType(player.mind)
+
+				// 50/50 chance of getting optional objectives.
+				for(var/objectiveType in job.optional_objectives)
+					if(prob(50))
+						new objectiveType(player.mind)
+
 				unassigned -= player
 				job.current_positions++
 				return 1
@@ -307,7 +318,7 @@ var/global/datum/controller/occupations/job_master
 		//For ones returning to lobby
 		for(var/mob/new_player/player in unassigned)
 			if(player.client.prefs.alternate_option == RETURN_TO_LOBBY)
-				player << "\blue You have been returned to the lobby"
+				player.ready = 0
 				unassigned -= player
 		return 1
 
@@ -336,7 +347,8 @@ var/global/datum/controller/occupations/job_master
 
 		//give them an account in the station database
 		if(centcomm_account_db)
-			var/datum/money_account/M = centcomm_account_db.add_account_across_all(H.real_name, starting_funds = rand(50,500)*10, pre_existing = 1)
+			var/balance = round(rand(1,5))*100 // Between $100 and $500
+			var/datum/money_account/M = create_account(H.real_name, balance , null)
 			if(H.mind)
 				var/remembered_info = ""
 				remembered_info += "<b>Your account number is:</b> #[M.account_number]<br>"
@@ -381,19 +393,25 @@ var/global/datum/controller/occupations/job_master
 				else
 					switch(H.backbag) //BS12 EDIT
 						if(1)
-							H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
+							if(H.species.survival_gear)
+								H.equip_to_slot_or_del(new H.species.survival_gear(H), slot_r_hand)
 						if(2)
 							var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack(H)
-							new /obj/item/weapon/storage/box/survival(BPK)
+							if(H.species.survival_gear)
+								new H.species.survival_gear(BPK)
 							H.equip_to_slot_or_del(BPK, slot_back,1)
 						if(3)
 							var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel_norm(H)
-							new /obj/item/weapon/storage/box/survival(BPK)
+							if(H.species.survival_gear)
+								new H.species.survival_gear(BPK)
 							H.equip_to_slot_or_del(BPK, slot_back,1)
 						if(4)
 							var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel(H)
-							new /obj/item/weapon/storage/box/survival(BPK)
+							if(H.species.survival_gear)
+								new H.species.survival_gear(BPK)
 							H.equip_to_slot_or_del(BPK, slot_back,1)
+					H.species.equip(H)
+
 
 		H << "<B>You are the [alt_title ? alt_title : rank].</B>"
 		H << "<b>As the [alt_title ? alt_title : rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
@@ -404,7 +422,7 @@ var/global/datum/controller/occupations/job_master
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_ears)
 
 		//Gives glasses to the vision impaired
-		if(H.disabilities & NEARSIGHTED)
+		if(H.disabilities & DISABILITY_FLAG_NEARSIGHTED)
 			var/equipped = H.equip_to_slot_or_del(new /obj/item/clothing/glasses/regular(H), slot_glasses)
 			if(equipped != 1)
 				var/obj/item/clothing/glasses/G = H.glasses

@@ -71,10 +71,10 @@
 #define DOOR_CRUSH_DAMAGE 10
 
 // Factor of how fast mob nutrition decreases
-#define	HUNGER_FACTOR 0.05
+#define HUNGER_FACTOR 0.12
 
 // How many units of reagent are consumed per tick, by default.
-#define  REAGENTS_METABOLISM 0.2
+#define REAGENTS_METABOLISM 0.2
 
 // By defining the effect multiplier this way, it'll exactly adjust
 // all effects according to how they originally were with the 0.4 metabolism
@@ -175,8 +175,7 @@ var/MAX_EXPLOSION_RANGE = 14
 
 //FLAGS BITMASK
 #define STOPSPRESSUREDMAGE 1	//This flag is used on the flags variable for SUIT and HEAD items which stop pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & SLOT_BACK) if you see it anywhere
-//To successfully stop you taking all pressure damage you must have both a suit and head item with this flag.
-
+                                //To successfully stop you taking all pressure damage you must have both a suit and head item with this flag.
 #define TABLEPASS 2			// can pass by a table or rack
 
 #define MASKINTERNALS	8	// mask allows internals
@@ -205,7 +204,8 @@ var/MAX_EXPLOSION_RANGE = 14
 
 #define	NOREACT		16384 			//Reagents dont' react inside this container.
 
-#define BLOCKHAIR	32768			// temporarily removes the user's hair icon
+#define BLOCKHEADHAIR 4             // temporarily removes the user's hair overlay. Leaves facial hair.
+#define BLOCKHAIR	32768			// temporarily removes the user's hair, facial and otherwise.
 
 //flags for pass_flags
 #define PASSTABLE	1
@@ -305,6 +305,12 @@ var/MAX_EXPLOSION_RANGE = 14
 
 #define STRUCDNASIZE 27
 #define UNIDNASIZE 13
+
+// Used in preferences.
+#define DISABILITY_FLAG_NEARSIGHTED 1
+#define DISABILITY_FLAG_FAT         2
+#define DISABILITY_FLAG_EPILEPTIC   4
+#define DISABILITY_FLAG_DEAF        8
 
 	// Generic mutations:
 #define	TK				1
@@ -506,6 +512,7 @@ var/list/liftable_structures = list(\
 #define BANTYPE_JOB_PERMA	3
 #define BANTYPE_JOB_TEMP	4
 #define BANTYPE_ANY_FULLBAN	5 //used to locate stuff to unban.
+#define BANTYPE_APPEARANCE	6
 
 #define SEE_INVISIBLE_MINIMUM 5
 
@@ -543,12 +550,31 @@ var/list/liftable_structures = list(\
 // Reference list for disposal sort junctions. Set the sortType variable on disposal sort junctions to
 // the index of the sort department that you want. For example, sortType set to 2 will reroute all packages
 // tagged for the Cargo Bay.
-var/list/TAGGERLOCATIONS = list("Disposals",
-	"Cargo Bay", "QM Office", "Engineering", "CE Office",
-	"Atmospherics", "Security", "HoS Office", "Medbay",
-	"CMO Office", "Chemistry", "Research", "RD Office",
-	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
-	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics")
+var/list/TAGGERLOCATIONS = list(
+	"Disposals",     // 1
+	"Cargo Bay",     // 2
+	"QM Office",     // 3
+	"Engineering",   // 4
+	"CE Office",     // 5
+	"Atmospherics",  // 6
+	"Security",      // 7
+	"HoS Office",    // 8
+	"Medbay",        // 9
+	"CMO Office",    // 10
+	"Chemistry",     // 11
+	"Research",      // 12
+	"RD Office",     // 13
+	"Robotics",      // 14
+	"HoP Office",    // 15
+	"Library",       // 16
+	"Chapel",        // 17
+	"Theatre",       // 18
+	"Bar",           // 19
+	"Kitchen",       // 20
+	"Hydroponics",   // 21
+	"Janitor Closet",// 22
+	"Genetics",      // 23
+	"Telecomms")     // 24
 
 #define HOSTILE_STANCE_IDLE 1
 #define HOSTILE_STANCE_ALERT 2
@@ -580,17 +606,18 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 
 ///////////////////ORGAN DEFINES///////////////////
 
-#define ORGAN_CUT_AWAY 1
-#define ORGAN_GAUZED 2
-#define ORGAN_ATTACHABLE 4
-#define ORGAN_BLEEDING 8
-#define ORGAN_BROKEN 32
-#define ORGAN_DESTROYED 64
-#define ORGAN_ROBOT 128
-#define ORGAN_SPLINTED 256
-#define SALVED 512
-#define ORGAN_DEAD 1024
-#define ORGAN_MUTATED 2048
+#define ORGAN_CUT_AWAY		1
+#define ORGAN_GAUZED		2
+#define ORGAN_ATTACHABLE	4
+#define ORGAN_BLEEDING		8
+#define ORGAN_BROKEN		32
+#define ORGAN_DESTROYED		64
+#define ORGAN_ROBOT			128
+#define ORGAN_SPLINTED		256
+#define SALVED				512
+#define ORGAN_DEAD			1024
+#define ORGAN_MUTATED		2048
+#define ORGAN_PEG			4096 // ROB'S MAGICAL PEGLEGS v2
 
 #define ROUNDSTART_LOGOUT_REPORT_TIME 6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
 
@@ -630,9 +657,10 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 #define CHAT_RADIO		512
 #define CHAT_ATTACKLOGS	1024
 #define CHAT_DEBUGLOGS	2048
+#define CHAT_LOOC		4096
 
 
-#define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_ATTACKLOGS)
+#define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_ATTACKLOGS|CHAT_LOOC)
 
 #define BE_TRAITOR		1
 #define BE_OPERATIVE	2
@@ -645,6 +673,8 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 #define BE_CULTIST		256
 #define BE_MONKEY		512
 #define BE_NINJA		1024
+#define BE_RAIDER		2048
+#define BE_PLANT		4096
 
 var/list/be_special_flags = list(
 	"Traitor" = BE_TRAITOR,
@@ -657,7 +687,9 @@ var/list/be_special_flags = list(
 	"pAI" = BE_PAI,
 	"Cultist" = BE_CULTIST,
 	"Monkey" = BE_MONKEY,
-	"Ninja" = BE_NINJA
+	"Ninja" = BE_NINJA,
+	"Raider" = BE_RAIDER,
+	"Diona" = BE_PLANT
 	)
 
 #define AGE_MIN 17			//youngest a character can be
@@ -684,3 +716,53 @@ var/list/be_special_flags = list(
 #define IMPLOYAL_HUD	5 // loyality implant
 #define IMPCHEM_HUD		6 // chemical implant
 #define IMPTRACK_HUD	7 // tracking implant
+
+//Pulse levels, very simplified
+#define PULSE_NONE		0	//so !M.pulse checks would be possible
+#define PULSE_SLOW		1	//<60 bpm
+#define PULSE_NORM		2	//60-90 bpm
+#define PULSE_FAST		3	//90-120 bpm
+#define PULSE_2FAST		4	//>120 bpm
+#define PULSE_THREADY	5	//occurs during hypovolemic shock
+//feel free to add shit to lists below
+var/list/tachycardics = list("coffee", "inaprovaline", "hyperzine", "nitroglycerin", "thirteenloko", "nicotine")	//increase heart rate
+var/list/bradycardics = list("neurotoxin", "cryoxadone", "clonexadone", "space_drugs", "stoxin")					//decrease heart rate
+
+//proc/get_pulse methods
+#define GETPULSE_HAND	0	//less accurate (hand)
+#define GETPULSE_TOOL	1	//more accurate (med scanner, sleeper, etc)
+
+var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accessed by preexisting terminals. AIs and new terminals can't use them.
+	"thunder",
+	"ERT",
+	"NUKE",
+	"CREED"
+	)
+
+//Species flags.
+#define NO_EAT 1
+#define NO_BREATHE 2
+#define NO_SLEEP 4
+#define RAD_ABSORB 8
+#define NO_SCAN 16
+#define NON_GENDERED 32
+#define REQUIRE_LIGHT 64
+#define WHITELISTED 128
+#define HAS_SKIN_TONE 256
+#define HAS_LIPS 512
+#define HAS_UNDERWEAR 1024
+#define HAS_TAIL 2048
+#define IS_PLANT 4096
+#define CAN_BE_FAT 8192 // /vg/
+
+//Language flags.
+#define WHITELISTED 1  // Language is available if the speaker is whitelisted.
+#define RESTRICTED 2   // Language can only be accquired by spawning or an admin.
+
+// Hairstyle flags
+#define HAIRSTYLE_CANTRIP 1 // 5% chance of tripping your stupid ass if you're running.
+
+// equip_to_slot_if_possible flags
+#define EQUIP_FAILACTION_NOTHING 0
+#define EQUIP_FAILACTION_DELETE 1
+#define EQUIP_FAILACTION_DROP 2

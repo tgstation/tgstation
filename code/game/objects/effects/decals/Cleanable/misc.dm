@@ -89,8 +89,10 @@
 	density = 0
 	anchored = 1
 	layer = 2
+	var/basecolor="#FFFF99"
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "vomit_1"
+	var/amount = 2
 	random_icon_states = list("vomit_1", "vomit_2", "vomit_3", "vomit_4")
 	var/list/viruses = list()
 
@@ -98,6 +100,31 @@
 		for(var/datum/disease/D in viruses)
 			D.cure(0)
 		..()
+
+/obj/effect/decal/cleanable/vomit/HasEntered(mob/living/carbon/human/perp)
+	if (!istype(perp))
+		return
+	if(amount < 1)
+		return
+
+	if(perp.shoes)
+		perp.shoes:track_blood = max(amount,perp.shoes:track_blood)		//Adding blood to shoes
+		if(!perp.shoes.blood_overlay)
+			perp.shoes.generate_blood_overlay()
+		if(!perp.shoes.blood_DNA)
+			perp.shoes.blood_DNA = list()
+			perp.shoes.overlays += perp.shoes.blood_overlay
+			perp.update_inv_shoes(1)
+		//perp.shoes.blood_DNA |= blood_DNA.Copy()
+		perp.shoes.blood_color=basecolor
+	else
+		perp.track_blood = max(amount,perp.track_blood)				//Or feet
+		if(!perp.feet_blood_DNA)
+			perp.feet_blood_DNA = list()
+		//perp.feet_blood_DNA |= blood_DNA.Copy()
+		perp.feet_blood_color=basecolor
+
+	amount--
 
 /obj/effect/decal/cleanable/tomato_smudge
 	name = "tomato smudge"

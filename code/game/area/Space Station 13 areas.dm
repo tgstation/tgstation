@@ -20,6 +20,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/atmosalm = 0
 	var/poweralm = 1
 	var/party = null
+	var/radalert = 0
 	level = null
 	name = "Space"
 	icon = 'icons/turf/areas.dmi'
@@ -309,6 +310,11 @@ proc/process_ghost_teleport_locs()
 /area/shuttle/research/outpost
 	icon_state = "shuttle"
 
+/area/shuttle/vox/station
+	name = "\improper Vox Skipjack"
+	icon_state = "yellow"
+	requires_power = 0
+
 /area/airtunnel1/      // referenced in airtunnel.dm:759
 
 /area/dummy/           // Referenced in engine.dm:261
@@ -415,6 +421,11 @@ proc/process_ghost_teleport_locs()
 	icon_state = "honk"
 	requires_power = 0
 
+/area/asteroid/clown
+	name = "\improper Clown Roid"
+	icon_state = "honk"
+	requires_power = 0
+
 /area/tdome
 	name = "\improper Thunderdome"
 	icon_state = "thunder"
@@ -489,10 +500,29 @@ proc/process_ghost_teleport_locs()
 	icon_state = "yellow"
 	requires_power = 0
 
+/area/vox_station/transit
+	name = "\improper hyperspace"
+	icon_state = "shuttle"
 
+/area/vox_station/southwest_solars
+	name = "\improper aft port solars"
+	icon_state = "southwest"
 
+/area/vox_station/northwest_solars
+	name = "\improper fore port solars"
+	icon_state = "northwest"
 
+/area/vox_station/northeast_solars
+	name = "\improper fore starboard solars"
+	icon_state = "northeast"
 
+/area/vox_station/southeast_solars
+	name = "\improper aft starboard solars"
+	icon_state = "southeast"
+
+/area/vox_station/mining
+	name = "\improper nearby mining asteroid"
+	icon_state = "north"
 
 //PRISON
 /area/prison
@@ -611,6 +641,10 @@ proc/process_ghost_teleport_locs()
 
 /area/maintenance/asmaint2
 	name = "Science Maintenance"
+	icon_state = "asmaint"
+
+/area/maintenance/xenomaint
+	name = "Xenobiology Maintenance"
 	icon_state = "asmaint"
 
 /area/maintenance/apmaint
@@ -1088,6 +1122,26 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Prison Wing"
 	icon_state = "sec_prison"
 
+/area/security/gas_chamber
+	name = "\improper Execution Chamber"
+	icon_state = "bar" // Because it's all parties from here on.
+
+
+/obj/item/weapon/paper/Gaschamber
+	name = "paper - 'Gas Chambers for Idiots'"
+	info = {"<h4>Gas Chambers for Idiots</h4>
+<p>So here you are, with a fancy, new gas chamber thanks to cheap MoMMI labor.  Now you've got a guy you need to die and have no idea what to do.</p>
+<ol>
+	<li>First, use the computer in the witnessing room to shut off the scrubbers: Set Environmental Mode, Off.</li>
+	<li>Run down to the door for the room south of the witnessing room. You'll see a bunch of N2O or CO2 tanks.</li>
+	<li>Select the tank you want and drag it onto the connector.  N2O (same shit used in anesthesia tanks in surgery) makes you go sleepy and kills in high enough doses, while CO2 makes people fall over comically and eventually die. CO2 is best because it's easier to tell when Mr. Revpants is dead, and because the room is configured for CO2 executions..</li>
+	<li>Make sure everyone you don't want dead is out of the chamber and the door is closed.</li>
+	<li>Wrench the tank in and go watch the fun from witnessing.</li>
+	<li>Once he's dead, set environmentals to filtering (or Cycle, if you're an idiot and used N2O).</li>
+	<li>Run back down to gas control and unwrench the tank.</li>
+	<li>Drag the dead bastard out once the computer says it's safe to enter.</li>
+</ol>"}
+
 /area/security/warden
 	name = "\improper Warden"
 	icon_state = "Warden"
@@ -1227,6 +1281,30 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Xenobiology Lab"
 	icon_state = "toxlab"
 
+/area/toxins/xenobiology/specimen_1
+	name = "\improper Xenobiology Specimen Cage 1"
+	icon_state = "xenocell1"
+
+/area/toxins/xenobiology/specimen_2
+	name = "\improper Xenobiology Specimen Cage 2"
+	icon_state = "xenocell2"
+
+/area/toxins/xenobiology/specimen_3
+	name = "\improper Xenobiology Specimen Cage 3"
+	icon_state = "xenocell3"
+
+/area/toxins/xenobiology/specimen_4
+	name = "\improper Xenobiology Specimen Cage 4"
+	icon_state = "xenocell4"
+
+/area/toxins/xenobiology/specimen_5
+	name = "\improper Xenobiology Specimen Cage 5"
+	icon_state = "xenocell5"
+
+/area/toxins/xenobiology/specimen_6
+	name = "\improper Xenobiology Specimen Cage 6"
+	icon_state = "xenocell6"
+
 /area/toxins/storage
 	name = "\improper Toxins Storage"
 	icon_state = "toxstorage"
@@ -1239,8 +1317,8 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Toxins Mixing Room"
 	icon_state = "toxmix"
 
-/area/toxins/misc_lab
-	name = "\improper Miscellaneous Research"
+/area/toxins/telescience
+	name = "\improper Telescience"
 	icon_state = "toxmisc"
 
 /area/toxins/server
@@ -1515,19 +1593,71 @@ proc/process_ghost_teleport_locs()
 	icon_state = "storage"
 
 
+//////////////////////////////
+// VOX TRADING POST
+//////////////////////////////
+/area/vox_trading_post/trading_floor
+	name = "\improper Vox Trading Floor"
+	icon_state = "yellow"
+
+/area/vox_trading_post/trade_processing
+	name = "\improper Vox Trade Processing"
+	icon_state = "green"
+
+/area/vox_trading_post/armory
+	name = "\improper Vox Armory"
+	icon_state = "armory"
+
+/area/vox_trading_post/gardens
+	name = "\improper Vox Botanical Gardens"
+	icon_state = "hydro"
+
+/area/vox_trading_post/atmos
+	name = "\improper Vox Atmospherics"
+	icon_state = "atmos"
+
+/area/vox_trading_post/eva
+	name = "\improper Vox EVA"
+	icon_state = "eva"
+
+/area/vox_trading_post/storage_1
+	name = "\improper Vox Storage Room"
+	icon_state = "storage"
+
+/area/vox_trading_post/vault
+	name = "\improper Vox Vault"
+	icon_state = "primarystorage"
+
+/area/vox_trading_post/hallway
+	name = "\improper Vox Hallways"
+	icon_state = "hallP"
+
+
 
 // Telecommunications Satellite
 
 /area/tcommsat/entrance
-	name = "\improper Telecoms Teleporter"
+	name = "\improper Satellite Teleporter"
 	icon_state = "tcomsatentrance"
 
 /area/tcommsat/chamber
 	name = "\improper Telecoms Central Compartment"
 	icon_state = "tcomsatcham"
 
+/area/tcomms/chamber
+	name = "\improper Telecoms Chamber"
+	icon_state = "ai"
+
+/area/tcomms/storage
+	name = "\improper Telecoms Storage"
+	icon_state = "primarystorage"
+
+/area/turret_protected/tcomms_control_room
+	name = "\improper Telecomms Control Room"
+	icon_state = "tcomsatcomp"
+
 /area/turret_protected/tcomsat
-	name = "\improper Telecoms Satellite"
+	name = "\improper Satellite Entrance"
 	icon_state = "tcomsatlob"
 
 /area/turret_protected/tcomfoyer
@@ -1543,11 +1673,11 @@ proc/process_ghost_teleport_locs()
 	icon_state = "tcomsateast"
 
 /area/tcommsat/computer
-	name = "\improper Telecoms Control Room"
+	name = "\improper Satellite Control Room"
 	icon_state = "tcomsatcomp"
 
 /area/tcommsat/lounge
-	name = "\improper Telecommunications Satellite Lounge"
+	name = "\improper Satellite Lounge"
 	icon_state = "tcomsatlounge"
 
 
@@ -1753,11 +1883,13 @@ var/list/the_station_areas = list (
 	/area/hydroponics,
 	/area/toxins,
 	/area/storage,
+	/area/tcomms,
 	/area/construction,
 	/area/ai_monitored/storage/eva, //do not try to simplify to "/area/ai_monitored" --rastaf0
 	/area/ai_monitored/storage/secure,
 	/area/ai_monitored/storage/emergency,
 	/area/turret_protected/ai_upload, //do not try to simplify to "/area/turret_protected" --rastaf0
+	/area/turret_protected/tcomms_control_room,
 	/area/turret_protected/ai_upload_foyer,
 	/area/turret_protected/ai,
 )

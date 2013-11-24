@@ -30,13 +30,20 @@
 							  <a href='?src=\ref[src];get_log=\ref[TR]'>Show exosuit log</a> | <a style='color: #f00;' href='?src=\ref[src];shock=\ref[TR]'>(Detonate Beacon)</a><br>"}
 
 		if(screen==1)
-			dat += "<h3>Log contents</h3>"
-			dat += "<a href='?src=\ref[src];return=1'>Return</a><hr>"
-			dat += "[stored_data]"
 
-		dat += "<A href='?src=\ref[src];refresh=1'>(Refresh)</A><BR>"
-		dat += "</body></html>"
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\mecha\mecha_control_console.dm:33: dat += "<h3>Log contents</h3>"
+			dat += {"<h3>Log contents</h3>
+				<a href='?src=\ref[src];return=1'>Return</a><hr>
+				[stored_data]"}
+			// END AUTOFIX
 
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\mecha\mecha_control_console.dm:37: dat += "<A href='?src=\ref[src];refresh=1'>(Refresh)</A><BR>"
+		dat += {"<A href='?src=\ref[src];refresh=1'>(Refresh)</A><BR>
+			</body></html>"}
+		// END AUTOFIX
 		user << browse(dat, "window=computer;size=400x500")
 		onclose(user, "computer")
 		return

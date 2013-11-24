@@ -152,28 +152,32 @@ Note: Must be placed west/left of and R&D console to function.
 	icon_state = "protolathe"
 	busy = 1
 	use_power(max(1000, (3750*amount/10)))
-	spawn(16)
+	var/stacktype = stack.type
+	stack.use(amount)
+	if (do_after(user, 16))
 		user << "\blue You add [amount] sheets to the [src.name]."
 		icon_state = "protolathe"
-		if(istype(stack, /obj/item/stack/sheet/metal))
-			m_amount += amount * 3750
-		else if(istype(stack, /obj/item/stack/sheet/glass))
-			g_amount += amount * 3750
-		else if(istype(stack, /obj/item/stack/sheet/mineral/gold))
-			gold_amount += amount * 2000
-		else if(istype(stack, /obj/item/stack/sheet/mineral/silver))
-			silver_amount += amount * 2000
-		else if(istype(stack, /obj/item/stack/sheet/mineral/plasma))
-			plasma_amount += amount * 2000
-		else if(istype(stack, /obj/item/stack/sheet/mineral/uranium))
-			uranium_amount += amount * 2000
-		else if(istype(stack, /obj/item/stack/sheet/mineral/diamond))
-			diamond_amount += amount * 2000
-		else if(istype(stack, /obj/item/stack/sheet/mineral/clown))
-			clown_amount += amount * 2000
-		else if(istype(stack, /obj/item/stack/sheet/mineral/adamantine))
-			adamantine_amount += amount * 2000
-		stack.use(amount)
-		busy = 0
-		src.updateUsrDialog()
+		switch(stacktype)
+			if(/obj/item/stack/sheet/metal)
+				m_amount += amount * 3750
+			if(/obj/item/stack/sheet/glass)
+				g_amount += amount * 3750
+			if(/obj/item/stack/sheet/mineral/gold)
+				gold_amount += amount * 2000
+			if(/obj/item/stack/sheet/mineral/silver)
+				silver_amount += amount * 2000
+			if(/obj/item/stack/sheet/mineral/plasma)
+				plasma_amount += amount * 2000
+			if(/obj/item/stack/sheet/mineral/uranium)
+				uranium_amount += amount * 2000
+			if(/obj/item/stack/sheet/mineral/diamond)
+				diamond_amount += amount * 2000
+			if(/obj/item/stack/sheet/mineral/clown)
+				clown_amount += amount * 2000
+			if(/obj/item/stack/sheet/mineral/adamantine)
+				adamantine_amount += amount * 2000
+	else
+		new stacktype(src.loc, amount)
+	busy = 0
+	src.updateUsrDialog()
 	return

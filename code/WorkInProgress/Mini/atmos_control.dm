@@ -1,17 +1,37 @@
 /obj/item/weapon/circuitboard/atmoscontrol
 	name = "\improper Central Atmospherics Computer Circuitboard"
-	build_path = "/obj/machinery/computer/security/atmoscontrol"
+	build_path = /obj/machinery/computer/atmoscontrol
 
 /obj/machinery/computer/atmoscontrol
 	name = "\improper Central Atmospherics Computer"
-	icon = 'computer.dmi'
-	icon_state = "computer_generic"
+	icon = 'icons/obj/computer.dmi'
+	icon_state = "tank"
 	density = 1
 	anchored = 1.0
 	circuit = "/obj/item/weapon/circuitboard/atmoscontrol"
 	var/obj/machinery/alarm/current
+	var/list/filter=null
 	var/overridden = 0 //not set yet, can't think of a good way to do it
-	req_access = list(access_ce)
+	req_one_access = list(access_ce)
+
+
+/obj/machinery/computer/atmoscontrol/xeno
+	name = "\improper Xenobiology Atmospherics Computer"
+	filter=list(
+		/area/toxins/xenobiology/specimen_1,
+		/area/toxins/xenobiology/specimen_2,
+		/area/toxins/xenobiology/specimen_3,
+		/area/toxins/xenobiology/specimen_4,
+		/area/toxins/xenobiology/specimen_5,
+		/area/toxins/xenobiology/specimen_6)
+	req_one_access = list(access_xenobiology,access_ce)
+
+
+/obj/machinery/computer/atmoscontrol/gas_chamber
+	name = "\improper Gas Chamber Atmospherics Computer"
+	filter=list(
+		/area/security/gas_chamber)
+	req_one_access = list(access_ce,access_hos)
 
 
 /obj/machinery/computer/atmoscontrol/attack_ai(var/mob/user as mob)
@@ -32,11 +52,18 @@
 		overridden = 1
 	else if(!emagged)
 		overridden = 0
+
+	return ui_interact(user)
+	/*
+
 	var/dat = "<a href='?src=\ref[src]&reset=1'>Main Menu</a><hr>"
 	if(current)
-		dat += specific()
+		//dat += specific()
+		//return ui_interact(user)
 	else
-		for(var/obj/machinery/alarm/alarm in world)
+		for(var/obj/machinery/alarm/alarm in sortAtom(machines))
+			if(!is_in_filter(alarm.alarm_area.type))
+				continue // NO ACCESS 4 U
 			dat += "<a href='?src=\ref[src]&alarm=\ref[alarm]'>"
 			switch(max(alarm.danger_level, alarm.alarm_area.atmosalm))
 				if (0)
@@ -47,6 +74,8 @@
 					dat += "<font color=red>"
 			dat += "[alarm]</font></a><br/>"
 	user << browse(dat, "window=atmoscontrol")
+	*/
+
 
 /obj/machinery/computer/atmoscontrol/attackby(var/obj/item/I as obj, var/mob/user as mob)
 	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
@@ -58,14 +87,49 @@
 		return
 	return ..()
 
-/obj/machinery/computer/atmoscontrol/proc/specific()
-	if(!current)
-		return ""
-	var/dat = "<h3>[current.name]</h3><hr>"
-	dat += current.return_status()
-	if(current.remote_control || overridden)
-		dat += "<hr>[return_controls()]"
-	return dat
+/obj/machinery/computer/atmoscontrol/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+	if(user.stat && !isobserver(user))
+		return
+
+	var/list/data[0]
+	data["alarm"]=null
+	if(current)
+		data += current.get_nano_data(user,TRUE)
+		data["alarm"] = "\ref[current]"
+
+	var/list/alarms=list()
+	for(var/obj/machinery/alarm/alarm in sortAtom(machines))
+		if(!is_in_filter(alarm.alarm_area.type))
+			continue // NO ACCESS 4 U
+
+		var/list/alarm_data=list()
+		alarm_data["ID"]="\ref[alarm]"
+		alarm_data["danger"] = max(alarm.danger_level, alarm.alarm_area.atmosalm)
+		alarm_data["name"] = "[alarm]"
+		alarms+=list(alarm_data)
+	data["alarms"]=alarms
+
+	if (!ui) // no ui has been passed, so we'll search for one
+		ui = nanomanager.get_open_ui(user, src, ui_key)
+
+	if (!ui)
+		// the ui does not exist, so we'll create a new one
+		ui = new(user, src, ui_key, "atmos_control.tmpl", name, 550, 410)
+		// When the UI is first opened this is the data it will use
+		ui.set_initial_data(data)
+		ui.open()
+		// Auto update every Master Controller tick
+		if(current)
+			ui.set_auto_update(1)
+	else
+		// The UI is already open so push the new data to it
+		ui.push_data(data)
+		return
+
+
+/obj/machinery/computer/atmoscontrol/proc/is_in_filter(var/typepath)
+	if(!filter) return 1 // YEP.  TOTALLY.
+	return typepath in filter
 
 //a bunch of this is copied from atmos alarms
 /obj/machinery/computer/atmoscontrol/Topic(href, href_list)
@@ -73,6 +137,7 @@
 		return
 	if(href_list["reset"])
 		current = null
+
 	if(href_list["alarm"])
 		current = locate(href_list["alarm"])
 		if(href_list["command"])
@@ -85,10 +150,19 @@
 					"co2_scrub",
 					"tox_scrub",
 					"n2o_scrub",
+					"o2_scrub",
 					"panic_siphon",
 					"scrubbing"
 				)
-					current.send_signal(device_id, list (href_list["command"] = text2num(href_list["val"])))
+					var/val
+					if(href_list["val"])
+						val=text2num(href_list["val"])
+					else
+						var/newval = input("Enter new value") as num|null
+						if(isnull(newval))
+							return
+						val = newval
+					current.send_signal(device_id, list (href_list["command"] = val))
 					spawn(3)
 						src.updateUsrDialog()
 				//if("adjust_threshold") //was a good idea but required very wide window
@@ -142,7 +216,10 @@
 
 					//Sets the temperature the built-in heater/cooler tries to maintain.
 					if(env == "temperature")
-						current.target_temperature = (selected[2] + selected[3])/2
+						if(current.target_temperature < selected[2])
+							current.target_temperature = selected[2]
+						if(current.target_temperature > selected[3])
+							current.target_temperature = selected[3]
 
 					spawn(1)
 						updateUsrDialog()
@@ -182,16 +259,42 @@
 			spawn(5)
 				src.updateUsrDialog()
 			return
+
+		if(href_list["preset"])
+			current.preset = text2num(href_list["preset"])
+			current.apply_preset()
+			spawn(5)
+				src.updateUsrDialog()
+			return
+
+		if(href_list["temperature"])
+			var/list/selected = current.TLV["temperature"]
+			var/max_temperature = min(selected[3] - T0C, MAX_TEMPERATURE)
+			var/min_temperature = max(selected[2] - T0C, MIN_TEMPERATURE)
+			var/input_temperature = input("What temperature would you like the system to maintain? (Capped between [min_temperature]C and [max_temperature]C)", "Thermostat Controls") as num|null
+			if(input_temperature==null)
+				return
+			if(input_temperature > max_temperature || input_temperature < min_temperature)
+				usr << "Temperature must be between [min_temperature]C and [max_temperature]C"
+			else
+				current.target_temperature = input_temperature + T0C
+			return
 	updateUsrDialog()
 
 //copypasta from alarm code, changed to work with this without derping hard
 //---START COPYPASTA----
+/obj/machinery/computer/atmoscontrol/proc/fmtScrubberGasStatus(var/id_tag,var/code,var/list/data)
+	var/label=replacetext(uppertext(code),"2","<sub>2</sub>")
+	if(code=="tox")
+		label="Plasma"
+	return "<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=[code]_scrub;val=[!data["filter_"+code]]' class='scrub[data["filter_"+code]]'>[label]</A>"
 
 /obj/machinery/computer/atmoscontrol/proc/return_controls()
 	var/output = ""//"<B>[alarm_zone] Air [name]</B><HR>"
 
 	switch(current.screen)
 		if (AALARM_SCREEN_MAIN)
+			output += "<table width=\"100%\"><td align=\"center\"><b>Thermostat:</b><br><a href='?src=\ref[src];alarm=\ref[current];temperature=1'>[current.target_temperature - T0C]C</a></td></table>"
 			if(current.alarm_area.atmosalm)
 				output += {"<a href='?src=\ref[src];alarm=\ref[current];atmos_reset=1'>Reset - Atmospheric Alarm</a><hr>"}
 			else
@@ -209,7 +312,7 @@
 			else
 				output += "<A href='?src=\ref[src];alarm=\ref[current];mode=[AALARM_MODE_PANIC]'><font color='red'><B>ACTIVATE PANIC SYPHON IN AREA</B></font></A>"
 
-			output += "<br><br>Atmospheric Lockdown: <a href='?src=\ref[src];alarm=\ref[current];atmos_unlock=[current.alarm_area.air_doors_activated]'>[current.alarm_area.air_doors_activated ? "<b>ENABLED</b>" : "Disabled"]</a>"
+			//output += "<br><br>Atmospheric Lockdown: <a href='?src=\ref[src];alarm=\ref[current];atmos_unlock=[current.alarm_area.air_doors_activated]'>[current.alarm_area.air_doors_activated ? "<b>ENABLED</b>" : "Disabled"]</a>"
 		if (AALARM_SCREEN_VENT)
 			var/sensor_data = ""
 			if(current.alarm_area.air_vent_names.len)
@@ -277,12 +380,10 @@ siphoning
 					if(data["scrubbing"])
 						sensor_data += {"
 <B>Filtering:</B>
-Carbon Dioxide
-<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=co2_scrub;val=[!data["filter_co2"]]'>[data["filter_co2"]?"on":"off"]</A>;
-Toxins
-<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=tox_scrub;val=[!data["filter_toxins"]]'>[data["filter_toxins"]?"on":"off"]</A>;
-Nitrous Oxide
-<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=n2o_scrub;val=[!data["filter_n2o"]]'>[data["filter_n2o"]?"on":"off"]</A>
+[fmtScrubberGasStatus(id_tag,"co2",data)],
+[fmtScrubberGasStatus(id_tag,"tox",data)],
+[fmtScrubberGasStatus(id_tag,"n2o",data)],
+[fmtScrubberGasStatus(id_tag,"o2",data)]
 <BR>
 "}
 					sensor_data += {"
@@ -298,18 +399,28 @@ Nitrous Oxide
 			output += {"
 <a href='?src=\ref[src];alarm=\ref[current];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br>
 <b>Air machinery mode for the area:</b><ul>"}
-			var/list/modes = list(
-					AALARM_MODE_SCRUBBING   = "Filtering",
-					AALARM_MODE_REPLACEMENT = "<font color='red'>REPLACE AIR</font>",
-					AALARM_MODE_PANIC       = "<font color='red'>PANIC</font>",
-					AALARM_MODE_CYCLE		= "<font color='red'>CYCLE</font>",
-					AALARM_MODE_FILL = "<font color='red'>FILL</font>",\
-					AALARM_MODE_OFF         = "<font color='blue'>OFFF</font>",)
+			var/list/modes = list(AALARM_MODE_SCRUBBING   = "Filtering - Scrubs out contaminants",\
+					AALARM_MODE_REPLACEMENT = "<font color='blue'>Replace Air - Siphons out air while replacing</font>",\
+					AALARM_MODE_PANIC       = "<font color='red'>Panic - Siphons air out of the room</font>",\
+					AALARM_MODE_CYCLE       = "<font color='red'>Cycle - Siphons air before replacing</font>",\
+					AALARM_MODE_FILL        = "<font color='green'>Fill - Shuts off scrubbers and opens vents</font>",\
+					AALARM_MODE_OFF         = "<font color='blue'>Off - Shuts off vents and scrubbers</font>",)
 			for (var/m=1,m<=modes.len,m++)
 				if (current.mode==m)
 					output += {"<li><A href='?src=\ref[src];alarm=\ref[current];mode=[m]'><b>[modes[m]]</b></A> (selected)</li>"}
 				else
 					output += {"<li><A href='?src=\ref[src];alarm=\ref[current];mode=[m]'>[modes[m]]</A></li>"}
+			output += {"</ul>
+<hr><br><b>Sensor presets:</b><br><i>(Note, this only sets sensors, air supplied to vents must still be changed.)</i><ul>"}
+			var/list/presets = list(
+				AALARM_PRESET_HUMAN   = "Human - Checks for Oxygen and Nitrogen",\
+				AALARM_PRESET_VOX 	= "Vox - Checks for Nitrogen only",\
+				AALARM_PRESET_SERVER 	= "Coldroom - For server rooms and freezers")
+			for(var/p=1;p<=presets.len;p++)
+				if (current.preset==p)
+					output += "<li><A href='?src=\ref[src];alarm=\ref[current];preset=[p]'><b>[presets[p]]</b></A> (selected)</li>"
+				else
+					output += "<li><A href='?src=\ref[src];alarm=\ref[current];preset=[p]'>[presets[p]]</A></li>"
 			output += "</ul>"
 		if (AALARM_SCREEN_SENSORS)
 			output += {"
@@ -352,8 +463,11 @@ table tr:first-child th:first-child { border: none;}
 			output += "<TR><th>Temperature</th>"
 			for (var/i = 1, i <= 4, i++)
 				output += "<td><A href='?src=\ref[src];alarm=\ref[current];command=set_threshold;env=temperature;var=[i]'>[tlv[i]>= 0?tlv[i]:"OFF"]</A></td>"
-			output += "</TR>"
-			output += "</table>"
 
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Mini\atmos_control.dm:357: output += "</TR>"
+			output += {"</TR>
+				</table>"}
+			// END AUTOFIX
 	return output
 //---END COPYPASTA----

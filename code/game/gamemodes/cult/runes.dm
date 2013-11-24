@@ -112,6 +112,7 @@ var/list/sacrificed = list()
 					M.mind.special_role = "Cultist"
 					M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
 					M << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
+					log_admin("[usr]([ckey(usr.key)]) has converted [M] ([ckey(M.key)]) to the cult at [M.loc.x], [M.loc.y], [M.loc.z]")
 					return 1
 				else
 					M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
@@ -271,21 +272,7 @@ var/list/sacrificed = list()
 				usr << "\red You require a restless spirit which clings to this world. Beckon their prescence with the sacred chants of Nar-Sie."
 				return fizzle()
 
-			for(var/datum/organ/external/affecting in corpse_to_raise.organs)
-				affecting.heal_damage(1000, 1000)
-			corpse_to_raise.setToxLoss(0)
-			corpse_to_raise.setOxyLoss(0)
-			corpse_to_raise.SetParalysis(0)
-			corpse_to_raise.SetStunned(0)
-			corpse_to_raise.SetWeakened(0)
-			corpse_to_raise.radiation = 0
-//			corpse_to_raise.buckled = null
-//			if(corpse_to_raise.handcuffed)
-//				del(corpse_to_raise.handcuffed)
-//				corpse_to_raise.update_inv_handcuffed(0)
-			corpse_to_raise.stat = CONSCIOUS
-			corpse_to_raise.updatehealth()
-			corpse_to_raise.UpdateDamageIcon()
+			corpse_to_raise.revive()
 
 			corpse_to_raise.key = ghost.key	//the corpse will keep its old mind! but a new player takes ownership of it (they are essentially possessed)
 											//This means, should that player leave the body, the original may re-enter

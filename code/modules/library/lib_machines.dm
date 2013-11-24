@@ -37,11 +37,15 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	var/dat = "<HEAD><TITLE>Library Visitor</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	switch(screenstate)
 		if(0)
-			dat += "<h2>Search Settings</h2><br>"
-			dat += "<A href='?src=\ref[src];settitle=1'>Filter by Title: [title]</A><BR>"
-			dat += "<A href='?src=\ref[src];setcategory=1'>Filter by Category: [category]</A><BR>"
-			dat += "<A href='?src=\ref[src];setauthor=1'>Filter by Author: [author]</A><BR>"
-			dat += "<A href='?src=\ref[src];search=1'>\[Start Search\]</A><BR>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\library\lib_machines.dm:40: dat += "<h2>Search Settings</h2><br>"
+			dat += {"<h2>Search Settings</h2><br>
+				<A href='?src=\ref[src];settitle=1'>Filter by Title: [title]</A><BR>
+				<A href='?src=\ref[src];setcategory=1'>Filter by Category: [category]</A><BR>
+				<A href='?src=\ref[src];setauthor=1'>Filter by Author: [author]</A><BR>
+				<A href='?src=\ref[src];search=1'>\[Start Search\]</A><BR>"}
+			// END AUTOFIX
 		if(1)
 			establish_old_db_connection()
 			if(!dbcon_old.IsConnected())
@@ -49,9 +53,12 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			else if(!SQLquery)
 				dat += "<font color=red><b>ERROR</b>: Malformed search request. Please contact your system administrator for assistance.</font><BR>"
 			else
-				dat += "<table>"
-				dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td>SS<sup>13</sup>BN</td></tr>"
 
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\library\lib_machines.dm:52: dat += "<table>"
+				dat += {"<table>
+					<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td>SS<sup>13</sup>BN</td></tr>"}
+				// END AUTOFIX
 				var/DBQuery/query = dbcon_old.NewQuery(SQLquery)
 				query.Execute()
 
@@ -138,12 +145,16 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	switch(screenstate)
 		if(0)
 			// Main Menu
-			dat += "<A href='?src=\ref[src];switchscreen=1'>1. View General Inventory</A><BR>"
-			dat += "<A href='?src=\ref[src];switchscreen=2'>2. View Checked Out Inventory</A><BR>"
-			dat += "<A href='?src=\ref[src];switchscreen=3'>3. Check out a Book</A><BR>"
-			dat += "<A href='?src=\ref[src];switchscreen=4'>4. Connect to External Archive</A><BR>"
-			dat += "<A href='?src=\ref[src];switchscreen=5'>5. Upload New Title to Archive</A><BR>"
-			dat += "<A href='?src=\ref[src];switchscreen=6'>6. Print a Bible</A><BR>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\library\lib_machines.dm:141: dat += "<A href='?src=\ref[src];switchscreen=1'>1. View General Inventory</A><BR>"
+			dat += {"<A href='?src=\ref[src];switchscreen=1'>1. View General Inventory</A><BR>
+				<A href='?src=\ref[src];switchscreen=2'>2. View Checked Out Inventory</A><BR>
+				<A href='?src=\ref[src];switchscreen=3'>3. Check out a Book</A><BR>
+				<A href='?src=\ref[src];switchscreen=4'>4. Connect to External Archive</A><BR>
+				<A href='?src=\ref[src];switchscreen=5'>5. Upload New Title to Archive</A><BR>
+				<A href='?src=\ref[src];switchscreen=6'>6. Print a Bible</A><BR>"}
+			// END AUTOFIX
 			if(src.emagged)
 				dat += "<A href='?src=\ref[src];switchscreen=7'>7. Access the Forbidden Lore Vault</A><BR>"
 			if(src.arcanecheckout)
@@ -172,31 +183,42 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 					timedue = "<font color=red><b>(OVERDUE)</b> [timedue]</font>"
 				else
 					timedue = round(timedue)
-				dat += "\"[b.bookname]\", Checked out to: [b.mobname]<BR>--- Taken: [timetaken] minutes ago, Due: in [timedue] minutes<BR>"
-				dat += "<A href='?src=\ref[src];checkin=\ref[b]'>(Check In)</A><BR><BR>"
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\library\lib_machines.dm:175: dat += "\"[b.bookname]\", Checked out to: [b.mobname]<BR>--- Taken: [timetaken] minutes ago, Due: in [timedue] minutes<BR>"
+				dat += {"\"[b.bookname]\", Checked out to: [b.mobname]<BR>--- Taken: [timetaken] minutes ago, Due: in [timedue] minutes<BR>
+					<A href='?src=\ref[src];checkin=\ref[b]'>(Check In)</A><BR><BR>"}
+				// END AUTOFIX
 			dat += "<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
 		if(3)
 			// Check Out a Book
-			dat += "<h3>Check Out a Book</h3><BR>"
-			dat += "Book: [src.buffer_book] "
-			dat += "<A href='?src=\ref[src];editbook=1'>\[Edit\]</A><BR>"
-			dat += "Recipient: [src.buffer_mob] "
-			dat += "<A href='?src=\ref[src];editmob=1'>\[Edit\]</A><BR>"
-			dat += "Checkout Date : [world.time/600]<BR>"
-			dat += "Due Date: [(world.time + checkoutperiod)/600]<BR>"
-			dat += "(Checkout Period: [checkoutperiod] minutes) (<A href='?src=\ref[src];increasetime=1'>+</A>/<A href='?src=\ref[src];decreasetime=1'>-</A>)"
-			dat += "<A href='?src=\ref[src];checkout=1'>(Commit Entry)</A><BR>"
-			dat += "<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\library\lib_machines.dm:180: dat += "<h3>Check Out a Book</h3><BR>"
+			dat += {"<h3>Check Out a Book</h3><BR>
+				Book: [src.buffer_book] 
+				<A href='?src=\ref[src];editbook=1'>\[Edit\]</A><BR>
+				Recipient: [src.buffer_mob] 
+				<A href='?src=\ref[src];editmob=1'>\[Edit\]</A><BR>
+				Checkout Date : [world.time/600]<BR>
+				Due Date: [(world.time + checkoutperiod)/600]<BR>
+				(Checkout Period: [checkoutperiod] minutes) (<A href='?src=\ref[src];increasetime=1'>+</A>/<A href='?src=\ref[src];decreasetime=1'>-</A>)
+				<A href='?src=\ref[src];checkout=1'>(Commit Entry)</A><BR>
+				<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"}
+			// END AUTOFIX
 		if(4)
 			dat += "<h3>External Archive</h3>"
 			establish_old_db_connection()
 			if(!dbcon_old.IsConnected())
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font>"
 			else
-				dat += "<A href='?src=\ref[src];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A><BR><BR>"
-				dat += "<table>"
-				dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td></tr>"
 
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\library\lib_machines.dm:196: dat += "<A href='?src=\ref[src];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A><BR><BR>"
+				dat += {"<A href='?src=\ref[src];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A><BR><BR>
+					<table>
+					<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td></tr>"}
+				// END AUTOFIX
 				var/DBQuery/query = dbcon_old.NewQuery("SELECT id, author, title, category FROM library")
 				query.Execute()
 
@@ -219,20 +241,31 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			else if(!scanner.cache)
 				dat += "<FONT color=red>No data found in scanner memory.</FONT><BR>"
 			else
-				dat += "<TT>Data marked for upload...</TT><BR>"
-				dat += "<TT>Title: </TT>[scanner.cache.name]<BR>"
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\library\lib_machines.dm:222: dat += "<TT>Data marked for upload...</TT><BR>"
+				dat += {"<TT>Data marked for upload...</TT><BR>
+					<TT>Title: </TT>[scanner.cache.name]<BR>"}
+				// END AUTOFIX
 				if(!scanner.cache.author)
 					scanner.cache.author = "Anonymous"
-				dat += "<TT>Author: </TT><A href='?src=\ref[src];setauthor=1'>[scanner.cache.author]</A><BR>"
-				dat += "<TT>Category: </TT><A href='?src=\ref[src];setcategory=1'>[upload_category]</A><BR>"
-				dat += "<A href='?src=\ref[src];upload=1'>\[Upload\]</A><BR>"
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\library\lib_machines.dm:226: dat += "<TT>Author: </TT><A href='?src=\ref[src];setauthor=1'>[scanner.cache.author]</A><BR>"
+				dat += {"<TT>Author: </TT><A href='?src=\ref[src];setauthor=1'>[scanner.cache.author]</A><BR>
+					<TT>Category: </TT><A href='?src=\ref[src];setcategory=1'>[upload_category]</A><BR>
+					<A href='?src=\ref[src];upload=1'>\[Upload\]</A><BR>"}
+				// END AUTOFIX
 			dat += "<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
 		if(7)
-			dat += "<h3>Accessing Forbidden Lore Vault v 1.3</h3>"
-			dat += "Are you absolutely sure you want to proceed? EldritchTomes Inc. takes no responsibilities for loss of sanity resulting from this action.<p>"
-			dat += "<A href='?src=\ref[src];arccheckout=1'>Yes.</A><BR>"
-			dat += "<A href='?src=\ref[src];switchscreen=0'>No.</A><BR>"
 
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\library\lib_machines.dm:231: dat += "<h3>Accessing Forbidden Lore Vault v 1.3</h3>"
+			dat += {"<h3>Accessing Forbidden Lore Vault v 1.3</h3>
+				Are you absolutely sure you want to proceed? EldritchTomes Inc. takes no responsibilities for loss of sanity resulting from this action.<p>
+				<A href='?src=\ref[src];arccheckout=1'>Yes.</A><BR>
+				<A href='?src=\ref[src];switchscreen=0'>No.</A><BR>"}
+			// END AUTOFIX
 	//dat += "<A HREF='?src=\ref[user];mach_close=library'>Close</A><br><br>"
 	user << browse(dat, "window=library")
 	onclose(user, "library")

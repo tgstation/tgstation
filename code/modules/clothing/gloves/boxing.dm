@@ -21,7 +21,12 @@
 	desc = "These look pretty fancy."
 	icon_state = "latex"
 	item_state = "lgloves"
-	color="mime"
+	_color="mime"
+
+	stunglove // For Clown Planet's mimes. - N3X
+		New()
+			..()
+			cell = new /obj/item/weapon/cell/crap/empty(src)
 
 	redcoat
-		color = "redcoat"		//Exists for washing machines. Is not different from white gloves in any way.
+		_color = "redcoat"		//Exists for washing machines. Is not different from white gloves in any way.

@@ -5,7 +5,6 @@
 	if (src.monkeyizing)
 		return
 
-
 	src.blinded = null
 
 	//Status updates, death etc.
@@ -20,7 +19,7 @@
 		process_killswitch()
 		process_locks()
 	update_canmove()
-
+	handle_fire()
 
 
 
@@ -37,23 +36,25 @@
 
 /mob/living/silicon/robot/proc/use_power()
 
-	if (src.cell)
+	if (is_component_functioning("power cell") && cell)
 		if(src.cell.charge <= 0)
 			uneq_all()
 			src.stat = 1
-		else if (src.cell.charge <= 100)
-			uneq_all()
-			src.sight_mode = 0
-			src.cell.use(1)
 		else
 			if(src.module_state_1)
-				src.cell.use(5)
+				src.cell.use(3)
 			if(src.module_state_2)
-				src.cell.use(5)
+				src.cell.use(3)
 			if(src.module_state_3)
-				src.cell.use(5)
-			src.cell.use(1)
-			src.blinded = 0
+				src.cell.use(3)
+
+			for(var/V in components)
+				var/datum/robot_component/C = components[V]
+				C.consume_power()
+
+			if(!is_component_functioning("actuator"))
+				Paralyse(3)
+
 			src.stat = 0
 	else
 		uneq_all()
@@ -68,9 +69,7 @@
 		else
 			src.camera.status = 1
 
-	health = 200 - (getOxyLoss() + getFireLoss() + getBruteLoss())
-
-	if(getOxyLoss() > 50) Paralyse(3)
+	updatehealth()
 
 	if(src.sleeping)
 		Paralyse(3)
@@ -127,6 +126,17 @@
 	if (src.druggy > 0)
 		src.druggy--
 		src.druggy = max(0, src.druggy)
+
+	if(!is_component_functioning("radio"))
+		radio.on = 0
+	else
+		radio.on = 1
+
+	if(is_component_functioning("camera"))
+		src.blinded = 0
+	else
+		src.blinded = 1
+
 
 	return 1
 
@@ -273,7 +283,7 @@
 		src.module_state_2:screen_loc = ui_inv2
 	if(src.module_state_3)
 		src.module_state_3:screen_loc = ui_inv3
-
+	updateicon()
 
 /mob/living/silicon/robot/proc/process_killswitch()
 	if(killswitch)
@@ -294,6 +304,26 @@
 				src << "\red <B>Weapon Lock Timed Out!"
 			weapon_lock = 0
 			weaponlock_time = 120
+
+//Robots on fire
+/mob/living/silicon/robot/handle_fire()
+	if(..())
+		return
+	adjustFireLoss(3)
+	return
+
+/mob/living/silicon/robot/update_fire()
+	overlays -= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
+	if(on_fire)
+		overlays += image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
+	update_icons()
+	return
+
+/mob/living/silicon/robot/fire_act()
+	if(!on_fire) //Silicons don't gain stacks from hotspots, but hotspots can ignite them
+		IgniteMob()
+
+//Robots on fire
 
 /mob/living/silicon/robot/update_canmove()
 	if(paralysis || stunned || weakened || buckled || lockcharge) canmove = 0

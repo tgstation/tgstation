@@ -28,6 +28,9 @@
 			animation.icon_state = "liquify"
 			animation.layer = 5
 			animation.master = holder
+			target.ExtinguishMob()
+			if(target.buckled)
+				target.buckled.unbuckle()
 			if(phaseshift == 1)
 				animation.dir = target.dir
 				flick("phase_shift",animation)

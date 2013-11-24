@@ -7,18 +7,74 @@
 	layer = 2.8
 
 	var/on = 0
+	var/opened=0
 	var/temperature_archived
 	var/mob/living/carbon/occupant = null
-	var/beaker = null
-	var/opened = 0
+	var/obj/item/weapon/reagent_containers/glass/beaker = null
 
 	var/current_heat_capacity = 50
 
-
-
 /obj/machinery/atmospherics/unary/cryo_cell/New()
 	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/cryo
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/console_screen
+	RefreshParts()
+
 	initialize_directions = dir
+
+/obj/machinery/atmospherics/unary/cryo_cell/Del()
+	go_out()
+	var/obj/item/weapon/reagent_containers/glass/B = beaker
+	if(beaker)
+		B.loc = get_step(loc, SOUTH) //Beaker is carefully ejected from the wreckage of the cryotube
+	..()
+
+/obj/machinery/atmospherics/unary/cryo_cell/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+	if(O.loc == user) //no you can't pull things out of your ass
+		return
+	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
+		return
+	if(O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)) // is the mob anchored, too far away from you, or are you too far away from the source
+		return
+	if(!ismob(O)) //humans only
+		return
+	if(istype(O, /mob/living/simple_animal) || istype(O, /mob/living/silicon)) //animals and robutts dont fit
+		return
+	if(!ishuman(user) && !isrobot(user)) //No ghosts or mice putting people into the sleeper
+		return
+	if(user.loc==null) // just in case someone manages to get a closet into the blue light dimension, as unlikely as that seems
+		return
+	if(!istype(user.loc, /turf) || !istype(O.loc, /turf)) // are you in a container/closet/pod/etc?
+		return
+	if(occupant)
+		user << "\blue <B>The cryo cell is already occupied!</B>"
+		return
+	if(isrobot(user))
+		if(!istype(user:module, /obj/item/weapon/robot_module/medical))
+			user << "<span class='warning'>You do not have the means to do this!</span>"
+			return
+	var/mob/living/L = O
+	if(!istype(L) || L.buckled)
+		return
+	if(L.abiotic())
+		user << "\red <B>Subject cannot have abiotic items on.</B>"
+		return
+	for(var/mob/living/carbon/slime/M in range(1,L))
+		if(M.Victim == L)
+			usr << "[L.name] will not fit into the cryo cell because they have a slime latched onto their head."
+			return
+	if(put_mob(L))
+		if(L == user)
+			visible_message("[user] climbs into the cryo cell.", 3)
+		else
+			visible_message("[user] puts [L.name] into the cryo cell.", 3)
+
 
 /obj/machinery/atmospherics/unary/cryo_cell/initialize()
 	if(node) return
@@ -62,52 +118,137 @@
 	go_out()
 	return
 
-/obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user as mob)
-	user.set_machine(src)
-	var/beaker_text = ""
-	var/health_text = ""
-	var/temp_text = ""
-	if(occupant)
-		if(occupant.health <= -100)
-			health_text = "<FONT color=red>Dead</FONT>"
-		else if(occupant.health < 0)
-			health_text = "<FONT color=red>[round(occupant.health,0.1)]</FONT>"
-		else
-			health_text = "[round(occupant.health,0.1)]"
-	if(air_contents.temperature > T0C)
-		temp_text = "<FONT color=red>[air_contents.temperature]</FONT>"
+/obj/machinery/atmospherics/unary/cryo_cell/examine()
+	..()
+
+	if(in_range(usr, src))
+		usr << "You can just about make out some loose objects floating in the murk:"
+		for(var/obj/O in src)
+			if(O != beaker)
+				usr << O.name
+		for(var/mob/M in src)
+			if(M != occupant)
+				usr << M.name
+	else
+		usr << "<span class='notice'>Too far away to view contents.</span>"
+
+/obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user)
+	ui_interact(user)
+
+ /**
+  * The ui_interact proc is used to open and update Nano UIs
+  * If ui_interact is not used then the UI will not update correctly
+  * ui_interact is currently defined for /atom/movable
+  *
+  * @param user /mob The mob who is interacting with this ui
+  * @param ui_key string A string key to use for this ui. Allows for multiple unique uis on one obj/mob (defaut value "main")
+  * @param ui /datum/nanoui This parameter is passed by the nanoui process() proc when updating an open ui
+  *
+  * @return nothing
+  */
+/obj/machinery/atmospherics/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+
+	if(user == occupant || (user.stat && !isobserver(user)))
+		return
+
+	// this is the data which will be sent to the ui
+	var/data[0]
+	data["isOperating"] = on
+	data["hasOccupant"] = occupant ? 1 : 0
+
+	var/occupantData[0]
+	if (!occupant)
+		occupantData["name"] = null
+		occupantData["stat"] = null
+		occupantData["health"] = null
+		occupantData["maxHealth"] = null
+		occupantData["minHealth"] = null
+		occupantData["bruteLoss"] = null
+		occupantData["oxyLoss"] = null
+		occupantData["toxLoss"] = null
+		occupantData["fireLoss"] = null
+		occupantData["bodyTemperature"] = null
+	else
+		occupantData["name"] = occupant.name
+		occupantData["stat"] = occupant.stat
+		occupantData["health"] = occupant.health
+		occupantData["maxHealth"] = occupant.maxHealth
+		occupantData["minHealth"] = config.health_threshold_dead
+		occupantData["bruteLoss"] = occupant.getBruteLoss()
+		occupantData["oxyLoss"] = occupant.getOxyLoss()
+		occupantData["toxLoss"] = occupant.getToxLoss()
+		occupantData["fireLoss"] = occupant.getFireLoss()
+		occupantData["bodyTemperature"] = occupant.bodytemperature
+	data["occupant"] = occupantData;
+
+	data["cellTemperature"] = round(air_contents.temperature)
+	data["cellTemperatureStatus"] = "good"
+	if(air_contents.temperature > T0C) // if greater than 273.15 kelvin (0 celcius)
+		data["cellTemperatureStatus"] = "bad"
 	else if(air_contents.temperature > 225)
-		temp_text = "<FONT color=black>[air_contents.temperature]</FONT>"
-	else
-		temp_text = "<FONT color=blue>[air_contents.temperature]</FONT>"
+		data["cellTemperatureStatus"] = "average"
+
+	data["isBeakerLoaded"] = beaker ? 1 : 0
+	/* // Removing beaker contents list from front-end, replacing with a total remaining volume
+	var beakerContents[0]
+	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
+		for(var/datum/reagent/R in beaker.reagents.reagent_list)
+			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
+	data["beakerContents"] = beakerContents
+	*/
+	data["beakerLabel"] = null
+	data["beakerVolume"] = 0
 	if(beaker)
-		beaker_text = "<B>Beaker:</B> <A href='?src=\ref[src];eject=1'>Eject</A>"
+		data["beakerLabel"] = beaker.label_text ? beaker.label_text : null
+		if (beaker.reagents && beaker.reagents.reagent_list.len)
+			for(var/datum/reagent/R in beaker.reagents.reagent_list)
+				data["beakerVolume"] += R.volume
+
+	if (!ui) // no ui has been passed, so we'll search for one
+	{
+		ui = nanomanager.get_open_ui(user, src, ui_key)
+	}
+	if (!ui)
+		// the ui does not exist, so we'll create a new one
+		ui = new(user, src, ui_key, "cryo.tmpl", "Cryo Cell Control System", 520, 410)
+		// When the UI is first opened this is the data it will use
+		ui.set_initial_data(data)
+		ui.open()
+		// Auto update every Master Controller tick
+		ui.set_auto_update(1)
 	else
-		beaker_text = "<B>Beaker:</B> <FONT color=red>No beaker loaded</FONT>"
-	var/dat = {"<B>Cryo cell control system</B><BR>
-		<B>Current cell temperature:</B> [temp_text]K<BR>
-		<B>Cryo status:</B> [ on ? "<A href='?src=\ref[src];start=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];start=1'>On</A>"]<BR>
-		[beaker_text]<BR><BR>
-		<B>Current occupant:</B> [occupant ? "<BR>Name: [occupant]<BR>Health: [health_text]<BR>Oxygen deprivation: [round(occupant.getOxyLoss(),0.1)]<BR>Brute damage: [round(occupant.getBruteLoss(),0.1)]<BR>Fire damage: [round(occupant.getFireLoss(),0.1)]<BR>Toxin damage: [round(occupant.getToxLoss(),0.1)]<BR>Body temperature: [occupant.bodytemperature]" : "<FONT color=red>None</FONT>"]<BR>
-		"}
-	user.set_machine(src)
-	user << browse(dat, "window=cryo")
-	onclose(user, "cryo")
+		// The UI is already open so push the new data to it
+		ui.push_data(data)
+		return
+	//user.set_machine(src)
 
 /obj/machinery/atmospherics/unary/cryo_cell/Topic(href, href_list)
-	if ((get_dist(src, usr) <= 1) || istype(usr, /mob/living/silicon/ai))
-		if(href_list["start"])
-			on = !on
-			update_icon()
-		if(href_list["eject"])
-			if (beaker)
-				var/obj/item/weapon/reagent_containers/glass/B = beaker
-				B.loc = get_step(loc, SOUTH)
-				beaker = null
+	if(usr == occupant)
+		return 0 // don't update UIs attached to this object
 
-		updateUsrDialog()
-		add_fingerprint(usr)
-		return
+	if(..())
+		return 0 // don't update UIs attached to this object
+
+	if(href_list["switchOn"])
+		on = 1
+		update_icon()
+
+	if(href_list["switchOff"])
+		on = 0
+		update_icon()
+
+	if(href_list["ejectBeaker"])
+		if(beaker)
+			beaker.loc = get_step(loc, SOUTH)
+			beaker = null
+
+	if(href_list["ejectOccupant"])
+		if(!occupant || isslime(usr) || ispAI(usr))
+			return 0 // don't update UIs attached to this object
+		go_out()
+
+	add_fingerprint(usr)
+	return 1 // update UIs attached to this object
 
 /obj/machinery/atmospherics/unary/cryo_cell/attackby(var/obj/item/weapon/G as obj, var/mob/user as mob)
 	if(istype(G, /obj/item/weapon/reagent_containers/glass))
@@ -204,8 +345,8 @@
 		var/has_clonexa = occupant.reagents.get_reagent_amount("clonexadone") >= 1
 		var/has_cryo_medicine = has_cryo || has_clonexa
 		if(beaker && !has_cryo_medicine)
-			beaker:reagents.trans_to(occupant, 1, 10)
-			beaker:reagents.reaction(occupant)
+			beaker.reagents.trans_to(occupant, 1, 10)
+			beaker.reagents.reaction(occupant)
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/heat_gas_contents()
 	if(air_contents.total_moles() < 1)
@@ -244,7 +385,7 @@
 	return
 /obj/machinery/atmospherics/unary/cryo_cell/proc/put_mob(mob/living/carbon/M as mob)
 	if (!istype(M))
-		usr << "\red <B>The cryo cell cannot handle such liveform!</B>"
+		usr << "\red <B>The cryo cell cannot handle such lifeform!</B>"
 		return
 	if (occupant)
 		usr << "\red <B>The cryo cell is already occupied!</B>"
@@ -263,9 +404,10 @@
 	if(M.health > -100 && (M.health < 0 || M.sleeping))
 		M << "\blue <b>You feel a cold liquid surround you. Your skin starts to freeze up.</b>"
 	occupant = M
-//	M.metabslow = 1
+	//M.metabslow = 1
 	add_fingerprint(usr)
 	update_icon()
+	M.ExtinguishMob()
 	return 1
 
 /obj/machinery/atmospherics/unary/cryo_cell/verb/move_eject()

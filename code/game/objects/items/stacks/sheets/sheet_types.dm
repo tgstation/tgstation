@@ -26,11 +26,13 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("floor tile", /obj/item/stack/tile/plasteel, 1, 4, 20), \
 	new/datum/stack_recipe("metal rod", /obj/item/stack/rods, 1, 2, 60), \
 	null, \
-	new/datum/stack_recipe("computer frame", /obj/structure/computerframe, 5, time = 25, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("wall girders", /obj/structure/girder, 2, time = 50, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("airlock assembly", /obj/structure/door_assembly, 4, time = 50, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("machine frame", /obj/machinery/constructable_frame/machine_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("turret frame", /obj/machinery/porta_turret_construct, 5, time = 25, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("computer frame",   /obj/structure/computerframe,                      5, time = 25, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("wall girders",     /obj/structure/girder,                             2, time = 50, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("airlock assembly", /obj/structure/door_assembly,                      4, time = 50, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("machine frame",    /obj/machinery/constructable_frame/machine_frame,  5, time = 25, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("turret frame",     /obj/machinery/porta_turret_construct,             5, time = 25, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("iv drip",          /obj/machinery/iv_drip,                            2, time = 25, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("meat spike",       /obj/structure/kitchenspike,                       2, time = 25, one_per_turf = 1, on_floor = 1), \
 	null, \
 	new/datum/stack_recipe("grenade casing", /obj/item/weapon/grenade/chem_grenade), \
 	new/datum/stack_recipe("light fixture frame", /obj/item/light_fixture_frame, 2), \
@@ -91,6 +93,11 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 /obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
 		recipes = plasteel_recipes
 		return ..()
+
+/obj/item/stack/sheet/plasteel/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
+	rec.addMaterial("plasma",1)
+	rec.addMaterial("iron",1)
+	return 1
 
 /*
  * Wood

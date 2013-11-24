@@ -211,8 +211,14 @@
 	orient2hud()
 	return
 
-/obj/item/weapon/storage/emp_act(severity)
+/obj/item/clothing/suit/emp_act(severity)
 	if(!istype(src.loc, /mob/living))
 		for(var/obj/O in contents)
 			O.emp_act(severity)
 	..()
+
+/obj/item/clothing/suit/hear_talk(mob/M, var/msg)
+	for (var/atom/A in src)
+		if(istype(A,/obj/))
+			var/obj/O = A
+			O.hear_talk(M, msg)

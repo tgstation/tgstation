@@ -2,6 +2,7 @@
 
 var/const/commandos_possible = 6 //if more Commandos are needed in the future
 var/global/sent_strike_team = 0
+
 /client/proc/strike_team()
 	if(!ticker)
 		usr << "<font color='red'>The game hasn't started yet!</font>"

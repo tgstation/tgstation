@@ -156,6 +156,11 @@
 
 	return
 
+/obj/structure/closet/attack_robot(mob/living/silicon/robot/user as mob)
+	if(istype(user,/mob/living/silicon/robot/mommi))
+		return src.attack_hand(user)
+	..(user)
+
 /obj/structure/closet/attack_animal(mob/living/simple_animal/user as mob)
 	if(user.wall_smash)
 		visible_message("\red [user] destroys the [src]. ")

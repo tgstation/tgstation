@@ -458,6 +458,13 @@ datum
 			required_reagents = list("carpotoxin" = 5, "stoxin" = 5, "copper" = 5)
 			result_amount = 2
 
+		rezadone
+			name = "Rezadone"
+			id = "rezadone"
+			result = "rezadone"
+			required_reagents = list("carpotoxin" = 1, "cryptobiolin" = 1, "copper" = 1)
+			result_amount = 3
+
 		mindbreaker
 			name = "Mindbreaker Toxin"
 			id = "mindbreaker"
@@ -501,7 +508,7 @@ datum
 			result = "virusfood"
 			required_reagents = list("water" = 5, "milk" = 5, "oxygen" = 5)
 			result_amount = 15
-
+/*
 		mix_virus
 			name = "Mix Virus"
 			id = "mixvirus"
@@ -539,7 +546,7 @@ datum
 						var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
 						if(D)
 							D.Devolve()
-
+*/
 		condensedcapsaicin
 			name = "Condensed Capsaicin"
 			id = "condensedcapsaicin"
@@ -972,9 +979,12 @@ datum
 				if(A)
 					var/turf/T = get_turf(A)
 					var/area/my_area = get_area(T)
-					message += " in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
-					message += " (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
 
+					// AUTOFIXED BY fix_string_idiocy.py
+					// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\Chemistry-Recipes.dm:975: message += " in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
+					message += {"in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)
+						(<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"}
+					// END AUTOFIX
 					var/mob/M = get(A, /mob)
 					if(M)
 						message += " - Carried By: [M.real_name] ([M.key]) (<A HREF='?_src_=holder;adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>)"
@@ -1062,9 +1072,12 @@ datum
 				if(A)
 					var/turf/T = get_turf(A)
 					var/area/my_area = get_area(T)
-					message += " in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
-					message += " (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
 
+					// AUTOFIXED BY fix_string_idiocy.py
+					// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\Chemistry-Recipes.dm:1065: message += " in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
+					message += {"in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)
+						(<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"}
+					// END AUTOFIX
 					var/mob/M = get(A, /mob)
 					if(M)
 						message += " - Carried By: [M.real_name] ([M.key]) (<A HREF='?_src_=holder;adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>)"
@@ -1128,9 +1141,12 @@ datum
 				if(A)
 					var/turf/T = get_turf(A)
 					var/area/my_area = get_area(T)
-					message += " in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
-					message += " (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
 
+					// AUTOFIXED BY fix_string_idiocy.py
+					// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\Chemistry-Recipes.dm:1131: message += " in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
+					message += {"in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)
+						(<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"}
+					// END AUTOFIX
 					var/mob/M = get(A, /mob)
 					if(M)
 						message += " - Carried By: [M.real_name] ([M.key]) (<A HREF='?_src_=holder;adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>)"
@@ -1473,6 +1489,12 @@ datum
 				var/location = get_turf(holder.my_atom)
 				new /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel(location)
 				return
+		Cream
+			name = "Cream"
+			id = "cream"
+			result = "cream"
+			required_reagents = list("milk" = 10,"sacid" = 1)
+			result_amount = 5
 
 		syntiflesh
 			name = "Syntiflesh"
@@ -2043,6 +2065,3 @@ datum
 			result = "rewriter"
 			required_reagents = list("spacemountainwind" = 1, "coffee" = 1)
 			result_amount = 2
-
-
-

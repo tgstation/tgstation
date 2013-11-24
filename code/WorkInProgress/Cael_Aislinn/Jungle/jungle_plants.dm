@@ -5,7 +5,7 @@
 /obj/structure/bush
 	name = "foliage"
 	desc = "Pretty thick scrub, it'll take something sharp and a lot of determination to clear away."
-	icon = 'jungle.dmi'
+	icon = 'code/WorkInProgress/Cael_Aislinn/Jungle/jungle.dmi'
 	icon_state = "bush1"
 	density = 1
 	anchored = 1
@@ -68,12 +68,12 @@ var/jungle_plants_init = 0
 	seed = ""
 	name = "jungle fruit"
 	desc = "It smells weird and looks off."
-	icon = 'jungle.dmi'
+	icon = 'code/WorkInProgress/Cael_Aislinn/Jungle/jungle.dmi'
 	icon_state = "orange"
 	potency = 1
 
 /obj/structure/jungle_plant
-	icon = 'jungle.dmi'
+	icon = 'code/WorkInProgress/Cael_Aislinn/Jungle/jungle.dmi'
 	icon_state = "plant1"
 	desc = "Looks like some of that fruit might be edible."
 	var/fruits_left = 3
@@ -92,7 +92,7 @@ var/jungle_plants_init = 0
 	fruit_type = rand(1,7)
 	icon_state = "plant[fruit_type]"
 	fruits_left = rand(1,5)
-	fruit_overlay = icon('jungle.dmi',"fruit[fruits_left]")
+	fruit_overlay = icon('code/WorkInProgress/Cael_Aislinn/Jungle/jungle.dmi',"fruit[fruits_left]")
 	fruit_r = 255 - fruit_type * 36
 	fruit_g = rand(1,255)
 	fruit_b = fruit_type * 36
@@ -113,7 +113,7 @@ var/jungle_plants_init = 0
 		J.attack_hand(user)
 
 		overlays -= fruit_overlay
-		fruit_overlay = icon('jungle.dmi',"fruit[fruits_left]")
+		fruit_overlay = icon('code/WorkInProgress/Cael_Aislinn/Jungle/jungle.dmi',"fruit[fruits_left]")
 		fruit_overlay.Blend(rgb(fruit_r, fruit_g, fruit_b), ICON_ADD)
 		overlays += fruit_overlay
 	else

@@ -15,7 +15,7 @@
 
 	update()
 		if (src.imp)
-			src.icon_state = text("implantcase-[]", src.imp.color)
+			src.icon_state = text("implantcase-[]", src.imp._color)
 		else
 			src.icon_state = "implantcase-0"
 		return
@@ -121,7 +121,7 @@
 /obj/item/weapon/implantcase/death_alarm
 	name = "Glass Case- 'Death Alarm'"
 	desc = "A case containing a death alarm implant."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-b"
 
 	New()

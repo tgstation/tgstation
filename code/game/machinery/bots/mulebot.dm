@@ -69,6 +69,7 @@
 
 
 	var/bloodiness = 0		// count of bloodiness
+	var/currentBloodColor = "#A10808"
 
 /obj/machinery/bot/mulebot/New()
 	..()
@@ -206,10 +207,13 @@
 
 /obj/machinery/bot/mulebot/interact(var/mob/user, var/ai=0)
 	var/dat
-	dat += "<TT><B>Multiple Utility Load Effector Mk. III</B></TT><BR><BR>"
-	dat += "ID: [suffix]<BR>"
-	dat += "Power: [on ? "On" : "Off"]<BR>"
 
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\bots\mulebot.dm:209: dat += "<TT><B>Multiple Utility Load Effector Mk. III</B></TT><BR><BR>"
+	dat += {"<TT><B>Multiple Utility Load Effector Mk. III</B></TT><BR><BR>
+		ID: [suffix]<BR>
+		Power: [on ? "On" : "Off"]<BR>"}
+	// END AUTOFIX
 	if(!open)
 
 		dat += "Status: "
@@ -229,34 +233,41 @@
 			if(7)
 				dat += "Unable to locate destination"
 
-
-		dat += "<BR>Current Load: [load ? load.name : "<i>none</i>"]<BR>"
-		dat += "Destination: [!destination ? "<i>none</i>" : destination]<BR>"
-		dat += "Power level: [cell ? cell.percent() : 0]%<BR>"
-
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\bots\mulebot.dm:233: dat += "<BR>Current Load: [load ? load.name : "<i>none</i>"]<BR>"
+		dat += {"<BR>Current Load: [load ? load.name : "<i>none</i>"]<BR>
+			Destination: [!destination ? "<i>none</i>" : destination]<BR>
+			Power level: [cell ? cell.percent() : 0]%<BR>"}
+		// END AUTOFIX
 		if(locked && !ai)
 			dat += "<HR>Controls are locked <A href='byond://?src=\ref[src];op=unlock'><I>(unlock)</I></A>"
 		else
-			dat += "<HR>Controls are unlocked <A href='byond://?src=\ref[src];op=lock'><I>(lock)</I></A><BR><BR>"
 
-			dat += "<A href='byond://?src=\ref[src];op=power'>Toggle Power</A><BR>"
-			dat += "<A href='byond://?src=\ref[src];op=stop'>Stop</A><BR>"
-			dat += "<A href='byond://?src=\ref[src];op=go'>Proceed</A><BR>"
-			dat += "<A href='byond://?src=\ref[src];op=home'>Return to Home</A><BR>"
-			dat += "<A href='byond://?src=\ref[src];op=destination'>Set Destination</A><BR>"
-			dat += "<A href='byond://?src=\ref[src];op=setid'>Set Bot ID</A><BR>"
-			dat += "<A href='byond://?src=\ref[src];op=sethome'>Set Home</A><BR>"
-			dat += "<A href='byond://?src=\ref[src];op=autoret'>Toggle Auto Return Home</A> ([auto_return ? "On":"Off"])<BR>"
-			dat += "<A href='byond://?src=\ref[src];op=autopick'>Toggle Auto Pickup Crate</A> ([auto_pickup ? "On":"Off"])<BR>"
-
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\bots\mulebot.dm:240: dat += "<HR>Controls are unlocked <A href='byond://?src=\ref[src];op=lock'><I>(lock)</I></A><BR><BR>"
+			dat += {"<HR>Controls are unlocked <A href='byond://?src=\ref[src];op=lock'><I>(lock)</I></A><BR><BR>
+				<A href='byond://?src=\ref[src];op=power'>Toggle Power</A><BR>
+				<A href='byond://?src=\ref[src];op=stop'>Stop</A><BR>
+				<A href='byond://?src=\ref[src];op=go'>Proceed</A><BR>
+				<A href='byond://?src=\ref[src];op=home'>Return to Home</A><BR>
+				<A href='byond://?src=\ref[src];op=destination'>Set Destination</A><BR>
+				<A href='byond://?src=\ref[src];op=setid'>Set Bot ID</A><BR>
+				<A href='byond://?src=\ref[src];op=sethome'>Set Home</A><BR>
+				<A href='byond://?src=\ref[src];op=autoret'>Toggle Auto Return Home</A> ([auto_return ? "On":"Off"])<BR>
+				<A href='byond://?src=\ref[src];op=autopick'>Toggle Auto Pickup Crate</A> ([auto_pickup ? "On":"Off"])<BR>"}
+			// END AUTOFIX
 			if(load)
 				dat += "<A href='byond://?src=\ref[src];op=unload'>Unload Now</A><BR>"
 			dat += "<HR>The maintenance hatch is closed.<BR>"
 
 	else
 		if(!ai)
-			dat += "The maintenance hatch is open.<BR><BR>"
-			dat += "Power cell: "
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\bots\mulebot.dm:258: dat += "The maintenance hatch is open.<BR><BR>"
+			dat += {"The maintenance hatch is open.<BR><BR>
+				Power cell: "}
+			// END AUTOFIX
 			if(cell)
 				dat += "<A href='byond://?src=\ref[src];op=cellremove'>Installed</A><BR>"
 			else
@@ -602,27 +613,25 @@
 				if(next == loc)
 					path -= next
 					return
-
-
 				if(istype( next, /turf/simulated))
 					//world << "at ([x],[y]) moving to ([next.x],[next.y])"
-
-
 					if(bloodiness)
-						var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
-						var/newdir = get_dir(next, loc)
-						if(newdir == dir)
-							B.dir = newdir
-						else
-							newdir = newdir | dir
-							if(newdir == 3)
-								newdir = 1
-							else if(newdir == 12)
-								newdir = 4
-							B.dir = newdir
+						var/turf/simulated/T=loc
+						if(istype(T))
+							var/goingdir=0
+
+							var/newdir = get_dir(next, loc)
+							if(newdir == dir)
+								goingdir = newdir
+							else
+								newdir = newdir | dir
+								if(newdir == 3)
+									newdir = 1
+								else if(newdir == 12)
+									newdir = 4
+								goingdir = newdir
+							T.AddTracks(/obj/effect/decal/cleanable/blood/tracks/wheels,list(),0,goingdir,currentBloodColor)
 						bloodiness--
-
-
 
 					var/moved = step_towards(src, next)	// attempt to move
 					if(cell) cell.use(1)
@@ -809,6 +818,13 @@
 	B.blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
 
 	bloodiness += 4
+	currentBloodColor="#A10808" // For if species get different blood colors.
+
+/obj/machinery/bot/mulebot/proc/RunOverCreature(var/mob/living/H,var/bloodcolor)
+	src.visible_message("\red [src] drives over [H]!")
+	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+	bloodiness += 4
+	currentBloodColor=bloodcolor // For if species get different blood colors.
 
 // player on mulebot attempted to move
 /obj/machinery/bot/mulebot/relaymove(var/mob/user)
@@ -965,6 +981,6 @@
 	s.set_up(3, 1, src)
 	s.start()
 
-	new /obj/effect/decal/cleanable/oil(src.loc)
+	new /obj/effect/decal/cleanable/blood/oil(src.loc)
 	unload(0)
 	del(src)

@@ -50,7 +50,7 @@
 /mob/living/simple_animal/hostile/panther
 	name = "panther"
 	desc = "A long sleek, black cat with sharp teeth and claws."
-	icon = 'jungle.dmi'
+	icon = 'code/WorkInProgress/Cael_Aislinn/Jungle/jungle.dmi'
 	icon_state = "panther"
 	icon_living = "panther"
 	icon_dead = "panther_dead"
@@ -95,10 +95,10 @@
 
 /mob/living/simple_animal/hostile/panther/AttackTarget()
 	..()
-	if(stance == HOSTILE_STANCE_ATTACKING && get_dist(src, target))
+	if(stance == HOSTILE_STANCE_ATTACKING && get_dist(src, target_mob))
 		stalk_tick_delay -= 1
 		if(stalk_tick_delay <= 0)
-			src.loc = get_step_towards(src, target)
+			src.loc = get_step_towards(src, target_mob)
 			stalk_tick_delay = 3
 
 //*******//
@@ -108,7 +108,7 @@
 /mob/living/simple_animal/hostile/snake
 	name = "snake"
 	desc = "A sinuously coiled, venomous looking reptile."
-	icon = 'jungle.dmi'
+	icon = 'code/WorkInProgress/Cael_Aislinn/Jungle/jungle.dmi'
 	icon_state = "snake"
 	icon_living = "snake"
 	icon_dead = "snake_dead"
@@ -151,8 +151,8 @@
 
 /mob/living/simple_animal/hostile/snake/AttackTarget()
 	..()
-	if(stance == HOSTILE_STANCE_ATTACKING && get_dist(src, target))
+	if(stance == HOSTILE_STANCE_ATTACKING && get_dist(src, target_mob))
 		stalk_tick_delay -= 1
 		if(stalk_tick_delay <= 0)
-			src.loc = get_step_towards(src, target)
+			src.loc = get_step_towards(src, target_mob)
 			stalk_tick_delay = 3

@@ -83,7 +83,7 @@
 //----------------------------------------
 
 /proc/generate_color_animation(icon/icon, list/colors, list/frames)
-	var/icon/out = icon('uristrunes.dmi', "")
+	var/icon/out = icon('icons/effects/uristrunes.dmi', "")
 	var/frame_num = 1
 
 	for(var/frame in frames)

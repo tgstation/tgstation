@@ -3,8 +3,9 @@
 #define X_SUIT_LAYER			2
 #define X_L_HAND_LAYER			3
 #define X_R_HAND_LAYER			4
-#define TARGETED_LAYER			5
-#define X_TOTAL_LAYERS			5
+#define X_FIRE_LAYER			5
+#define TARGETED_LAYER			6
+#define X_TOTAL_LAYERS			6
 /////////////////////////////////
 
 /mob/living/carbon/alien/humanoid
@@ -49,7 +50,7 @@
 	update_inv_pockets(0)
 	update_hud()
 	update_icons()
-
+	update_fire()
 
 /mob/living/carbon/alien/humanoid/update_hud()
 	//TODO
@@ -145,10 +146,27 @@
 		overlays_standing[TARGETED_LAYER]	= null
 	if(update_icons)		update_icons()
 
+
+/mob/living/carbon/alien/humanoid/update_fire()
+	overlays -= overlays_lying[X_FIRE_LAYER]
+	overlays -= overlays_standing[X_FIRE_LAYER]
+	if(on_fire)
+		overlays_lying[X_FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="Lying", "layer"= -X_FIRE_LAYER)
+		overlays_standing[X_FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing", "layer"= -X_FIRE_LAYER)
+		if(src.lying)
+			overlays += overlays_lying[X_FIRE_LAYER]
+		else
+			overlays += overlays_standing[X_FIRE_LAYER]
+		return
+	else
+		overlays_lying[X_FIRE_LAYER] = null
+		overlays_standing[X_FIRE_LAYER] = null
+
 //Xeno Overlays Indexes//////////
 #undef X_HEAD_LAYER
 #undef X_SUIT_LAYER
 #undef X_L_HAND_LAYER
 #undef X_R_HAND_LAYER
 #undef TARGETED_LAYER
+#undef X_FIRE_LAYER
 #undef X_TOTAL_LAYERS

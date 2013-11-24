@@ -142,12 +142,15 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/datum/gas_mixture/env = T.return_air()
 
 	var/t = ""
-	t+= "Nitrogen : [env.nitrogen]\n"
-	t+= "Oxygen : [env.oxygen]\n"
-	t+= "Plasma : [env.toxins]\n"
-	t+= "CO2: [env.carbon_dioxide]\n"
-	t+= "Pressure: [env.return_pressure()]\n"
 
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\verbs\debug.dm:145: t+= "Nitrogen : [env.nitrogen]\n"
+	t += {"Nitrogen : [env.nitrogen]
+Oxygen : [env.oxygen]
+Plasma : [env.toxins]
+CO2: [env.carbon_dioxide]
+Pressure: [env.return_pressure()]"}
+	// END AUTOFIX
 	usr.show_message(t, 1)
 	feedback_add_details("admin_verb","ASL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -437,10 +440,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if( isobserver(adminmob) )
 		del(adminmob)
 	feedback_add_details("admin_verb","ADC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-
-
-
 
 /client/proc/cmd_switch_radio()
 	set category = "Debug"
@@ -942,6 +941,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(alert("Are you sure? This will start up the engine. Should only be used during debug!",,"Yes","No") != "Yes")
 		return
 
+	log_admin("[key_name(usr)] set up the singulo.")
+	message_admins("\blue [key_name_admin(usr)] set up the singulo.", 1)
+
 	for(var/obj/machinery/power/emitter/E in world)
 		if(E.anchored)
 			E.active = 1
@@ -982,7 +984,58 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	for(var/obj/machinery/power/smes/SMES in world)
 		if(SMES.anchored)
+			SMES.connect_to_network() // Just in case.
 			SMES.chargemode = 1
+			SMES.online=1
+
+/client/proc/cheat_power()
+
+	set category = "Debug"
+	set name = "Free Power"
+	set desc = "Replaces all SMES on the map with magical ones."
+
+	if(alert("Are you sure? This will completely fuck over your round!",,"Yes","No") != "Yes")
+		return
+
+	log_admin("[key_name(usr)] haxed the powergrid with magic SMES.")
+	message_admins("\blue [key_name_admin(usr)] haxed the powergrid with magic SMES.", 1)
+
+	for(var/obj/machinery/power/smes/SMES in world)
+		var/turf/T=SMES.loc
+		del(SMES)
+		var/obj/machinery/power/smes/magical/magic = new(T)
+		// Manually set up our powernets since stupid seems to reign in the powernet code.
+		magic.connect_to_network()
+		magic.output=200000 // AKA rape
+		magic.online=1
+
+	world << "<b>LET THERE BE JUICE</b>"
+
+
+// Getting tired of doing this shit every fucking round when I'm testing something atmos-related
+/client/proc/setup_atmos()
+
+	set category = "Debug"
+	set name = "Start Atmos"
+	set desc = "WOW ATMOS DID THEIR JOBS!!!1"
+
+	if(alert("Are you sure? This will completely fuck over your round!",,"Yes","No") != "Yes")
+		return
+
+	log_admin("[key_name(usr)] haxed atmos.")
+	message_admins("\blue [key_name_admin(usr)] haxed atmos.", 1)
+
+	for(var/obj/machinery/atmospherics/binary/pump/P in world)
+		//if(p.name == "Air to Distro")
+		P.target_pressure=4500
+	for(var/obj/machinery/atmospherics/unary/vent_pump/high_volume/P in world)
+		if(P.id_tag=="air_out")
+			P.internal_pressure_bound=4500
+	for(var/obj/machinery/atmospherics/trinary/filter/F in world)
+		F.target_pressure=4500
+
+	world << "<b>LET THERE BE AIR</b>"
+
 
 /client/proc/cmd_debug_mob_lists()
 	set category = "Debug"

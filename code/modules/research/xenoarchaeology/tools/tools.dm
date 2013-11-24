@@ -5,7 +5,7 @@
 /obj/item/device/gps
 	name = "relay positioning device"
 	desc = "Triangulates the approximate co-ordinates using a nearby satellite network."
-	icon = 'device.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 	item_state = "locator"
 	w_class = 2

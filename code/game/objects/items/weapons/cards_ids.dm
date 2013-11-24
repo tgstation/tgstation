@@ -42,14 +42,14 @@
 	return
 
 /obj/item/weapon/card/data/clown
-	name = "coordinates to clown planet"
+	name = "Coordinates to Clown Planet"
 	icon_state = "data"
 	item_state = "card-id"
 	layer = 3
 	level = 2
 	desc = "This card contains coordinates to the fabled Clown Planet. Handle with care."
 	function = "teleporter"
-	data = "Clown Land"
+	data = "Clown Planet"
 
 /*
  * ID CARDS
@@ -100,7 +100,19 @@
 
 /obj/item/weapon/card/id/GetID()
 	return src
-
+// vgedit: We have different wallets.
+/*
+/obj/item/weapon/card/id/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
+	if(istype(W,/obj/item/weapon/id_wallet))
+		user << "You slip [src] into [W]."
+		src.name = "[src.registered_name]'s [W.name] ([src.assignment])"
+		src.desc = W.desc
+		src.icon = W.icon
+		src.icon_state = W.icon_state
+		del(W)
+		return
+*/
 /obj/item/weapon/card/id/verb/read()
 	set name = "Read ID Card"
 	set category = "Object"

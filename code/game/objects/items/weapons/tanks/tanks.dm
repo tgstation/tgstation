@@ -213,7 +213,8 @@
 
 /obj/item/weapon/tank/proc/check_status()
 	//Handle exploding, leaking, and rupturing of the tank
-
+	var/cap = 0
+	var/uncapped = 0
 	if(!air_contents)
 		return 0
 
@@ -229,12 +230,20 @@
 		air_contents.react()
 		pressure = air_contents.return_pressure()
 		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
+		if(range > MAX_EXPLOSION_RANGE)
+			cap = 1
+			uncapped = range
 		range = min(range, MAX_EXPLOSION_RANGE)		// was 8 - - - Changed to a configurable define -- TLE
 		var/turf/epicenter = get_turf(loc)
 
 		//world << "\blue Exploding Pressure: [pressure] kPa, intensity: [range]"
 
-		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
+		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5), 1, cap)
+		if(cap)
+			for(var/i,i<=doppler_arrays.len,i++)
+				var/obj/machinery/doppler_array/Array = doppler_arrays[i]
+				if(Array)
+					Array.sense_explosion(epicenter.x,epicenter.y,epicenter.z,round(uncapped*0.25), round(uncapped*0.5), round(uncapped),"???", cap)
 		del(src)
 
 	else if(pressure > TANK_RUPTURE_PRESSURE)

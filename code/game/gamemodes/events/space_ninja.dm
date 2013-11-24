@@ -241,8 +241,8 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 				if(xeno_queen_list.len&&side=="face")//If there are queen about and the probability is 50.
 					for(var/mob/living/carbon/alien/humanoid/queen/xeno_queen in xeno_queen_list)
 						var/datum/objective/assassinate/ninja_objective = new
-						//We'll do some manual overrides to properly set it up.
 						ninja_objective.owner = ninja_mind
+						//We'll do some manual overrides to properly set it up.
 						ninja_objective.target = xeno_queen.mind
 						ninja_objective.explanation_text = "Kill \the [xeno_queen]."
 						ninja_mind.objectives += ninja_objective
@@ -307,6 +307,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 							hostile_targets -= current_mind//Remove them from the list.
 						if(2)//Steal
 							var/datum/objective/steal/ninja_objective = new
+							ninja_objective.owner = ninja_mind
 							var/target_item = pick(ninja_objective.possible_items_special)
 							ninja_objective.set_target(target_item)
 							ninja_mind.objectives += ninja_objective
@@ -342,12 +343,14 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 							hostile_targets -= current_mind//Remove them from the list.
 						if(5)//Download research
 							var/datum/objective/download/ninja_objective = new
+							ninja_objective.owner = ninja_mind
 							ninja_objective.gen_amount_goal()
 							ninja_mind.objectives += ninja_objective
 
 							objective_list -= 5
 						if(6)//Capture
 							var/datum/objective/capture/ninja_objective = new
+							ninja_objective.owner = ninja_mind
 							ninja_objective.gen_amount_goal()
 							ninja_mind.objectives += ninja_objective
 
@@ -394,7 +397,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 */
 /proc/generate_ninja_directive(side)
 	var/directive = "[side=="face"?"Nanotrasen":"The Syndicate"] is your employer. "//Let them know which side they're on.
-	switch(rand(1,13))
+	switch(rand(1,19))
 		if(1)
 			directive += "The Spider Clan must not be linked to this operation. Remain as hidden and covert as possible."
 		if(2)

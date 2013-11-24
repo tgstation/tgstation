@@ -2,12 +2,12 @@
 #define MALFUNCTION_PERMANENT 2
 /obj/item/weapon/implant
 	name = "implant"
-	icon = 'device.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "implant"
 	var/implanted = null
 	var/mob/imp_in = null
 	var/datum/organ/external/part = null
-	color = "b"
+	_color = "b"
 	var/allow_reagents = 0
 	var/malfunction = 0
 
@@ -159,9 +159,14 @@ Implant Specifics:<BR>"}
 			return
 		if(istype(imp_in, /mob/))
 			var/mob/T = imp_in
+
+			message_admins("Explosive implant triggered in [T] ([T.key]). (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>) ")
+			log_game("Explosive implant triggered in [T] ([T.key]).")
+
 			T.gib()
 		explosion(get_turf(imp_in), 1, 3, 4, 6, 3)
 		var/turf/t = get_turf(imp_in)
+
 		if(t)
 			t.hotspot_expose(3500,125)
 
@@ -306,7 +311,60 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		H << "\blue You feel a surge of loyalty towards Nanotrasen."
 		return 1
 
+/obj/item/weapon/implant/traitor
+	name = "Greytide Implant"
+	desc = "Greytide Station wide"
+	icon_state = "implant_evil"
 
+	get_data()
+		var/dat = {"
+<b>Implant Specifications:</b><BR>
+<b>Name:</b> Greytide Mind-Slave Implant<BR>
+<b>Life:</b> ??? <BR>
+<b>Important Notes:</b> Any humanoid injected with this implant will become loyal to the injector and the greytide, unless of course the host is already loyal to someone else.<BR>
+<HR>
+<b>Implant Details:</b><BR>
+<b>Function:</b> Contains a small pod of nanobots that manipulate the host's mental functions.<BR>
+<b>Special Features:</b> Glory to the Greytide!<BR>
+<b>Integrity:</b> Implant will last so long as the nanobots are inside the bloodstream."}
+		return dat
+
+	implanted(mob/M, mob/user)
+		var/list/implanters
+		var/ref = "\ref[user.mind]"
+		if(!ishuman(M)) return 0
+		if(!M.mind) return 0
+		var/mob/living/carbon/human/H = M
+		if(locate(/obj/item/weapon/implant/traitor) in H.contents || locate(/obj/item/weapon/implant/traitor) in H.contents)
+			H.visible_message("[H] seems to resist the implant!", "You feel a strange sensation in your head that quickly dissipates.")
+			return 0
+		else if(H.mind in ticker.mode.traitors)
+			H.visible_message("[H] seems to resist the implant!", "You feel a familiar sensation in your head that quickly dissipates.")
+			return 0
+		H.implanting = 1
+		H << "\blue You feel a surge of loyalty towards [user.name]."
+		if(!(user.mind in ticker.mode:implanter))
+			ticker.mode:implanter[ref] = list()
+		implanters = ticker.mode:implanter[ref]
+		implanters.Add(H.mind)
+		ticker.mode.implanted.Add(H.mind)
+		ticker.mode.implanted[H.mind] = user.mind
+		//ticker.mode:implanter[user.mind] += H.mind
+		ticker.mode:implanter[ref] = implanters
+		ticker.mode.traitors += H.mind
+		H.mind.special_role = "traitor"
+		H << "<B>\red You've been shown the Greytide by [user.name]!</B> You now must lay down your life to protect them and assist in their goals at any cost."
+		var/datum/objective/protect/p = new
+		p.owner = H.mind
+		p.target = user:mind
+		p.explanation_text = "Protect [user:real_name], the [user:mind:assigned_role=="MODE" ? (user:mind:special_role) : (user:mind:assigned_role)]."
+		H.mind.objectives += p
+		for(var/datum/objective/objective in H.mind.objectives)
+			H << "<B>Objective #1</B>: [objective.explanation_text]"
+		ticker.mode.update_traitor_icons_added(H.mind)
+		ticker.mode.update_traitor_icons_added(user.mind)
+		log_admin("[ckey(user.key)] has mind-slaved [ckey(H.key)].")
+		return 1
 /obj/item/weapon/implant/adrenalin
 	name = "adrenalin"
 	desc = "Removes all stuns and knockdowns."
@@ -455,9 +513,13 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	implanted(mob/source as mob)
 		src.activation_emote = input("Choose activation emote:") in list("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
 		if (source.mind)
-			source.mind.store_memory("Freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
-		source << "The implanted freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
+			source.mind.store_memory("Compressed matter implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
+		source << "The implanted compressed matter implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
 		return 1
 
 	islegal()
 		return 0
+
+/obj/item/weapon/implant/cortical
+	name = "cortical stack"
+	desc = "A fist-sized mass of biocircuits and chips."

@@ -293,6 +293,56 @@
 	flags = FPRINT | TABLEPASS
 	attack_verb = list("warned", "cautioned", "smashed")
 
+	proximity_sign
+		var/timing = 0
+		var/armed = 0
+		var/timepassed = 0
+
+		attack_self(mob/user as mob)
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
+				if(H.mind.assigned_role != "Janitor")
+					return
+				if(armed)
+					armed = 0
+					user << "\blue You disarm \the [src]."
+					return
+				timing = !timing
+				if(timing)
+					processing_objects.Add(src)
+				else
+					armed = 0
+					timepassed = 0
+				H << "\blue You [timing ? "activate \the [src]'s timer, you have 15 seconds." : "de-activate \the [src]'s timer."]"
+
+		process()
+			if(!timing)
+				processing_objects.Remove(src)
+			timepassed++
+			if(timepassed >= 15 && !armed)
+				armed = 1
+				timing = 0
+
+		HasProximity(atom/movable/AM as mob|obj)
+			if(armed)
+				if(istype(AM, /mob/living/carbon) && !istype(AM, /mob/living/carbon/brain))
+					var/mob/living/carbon/C = AM
+					if(C.m_intent != "walk")
+						src.visible_message("The [src.name] beeps, \"Running on wet floors is hazardous to your health.\"")
+						explosion(src.loc,-1,2,0)
+						if(ishuman(C))
+							dead_legs(C)
+						if(src)
+							del(src)
+
+		proc/dead_legs(mob/living/carbon/human/H as mob)
+			var/datum/organ/external/l = H.get_organ("l_leg")
+			var/datum/organ/external/r = H.get_organ("r_leg")
+			if(l && !(l.status & ORGAN_DESTROYED))
+				l.status |= ORGAN_DESTROYED
+			if(r && !(r.status & ORGAN_DESTROYED))
+				r.status |= ORGAN_DESTROYED
+
 /obj/item/weapon/caution/cone
 	desc = "This cone is trying to warn you of something!"
 	name = "warning cone"
@@ -307,13 +357,14 @@
 	m_amt = 3750
 
 	recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-		rec.iron++
+		rec.addMaterial("iron",1)
 		return 1
 
 /obj/item/weapon/shard
 	name = "shard"
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "large"
+	sharp = 1
 	desc = "Could probably be used as ... a throwing weapon?"
 	w_class = 1.0
 	force = 5.0
@@ -328,7 +379,7 @@
 		return (BRUTELOSS)
 
 /obj/item/weapon/shard/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-	rec.glass++
+	rec.addMaterial("glass",1)
 	return 1
 
 /obj/item/weapon/shard/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
@@ -353,6 +404,28 @@
 	throw_range = 20
 	m_amt = 100
 	origin_tech = "magnets=2;syndicate=3"*/
+
+/obj/item/weapon/shard/shrapnel
+	name = "shrapnel"
+	icon = 'icons/obj/shards.dmi'
+	icon_state = "shrapnellarge"
+	desc = "A bunch of tiny bits of shattered metal."
+
+/obj/item/weapon/shard/shrapnel/New()
+
+	src.icon_state = pick("shrapnellarge", "shrapnelmedium", "shrapnelsmall")
+	switch(src.icon_state)
+		if("shrapnelsmall")
+			src.pixel_x = rand(-12, 12)
+			src.pixel_y = rand(-12, 12)
+		if("shrapnelmedium")
+			src.pixel_x = rand(-8, 8)
+			src.pixel_y = rand(-8, 8)
+		if("shrapnellarge")
+			src.pixel_x = rand(-5, 5)
+			src.pixel_y = rand(-5, 5)
+		else
+	return
 
 /obj/item/weapon/SWF_uplink
 	name = "station-bounced radio"
@@ -417,7 +490,7 @@
 	attack_verb = list("slammed", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
 	recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-		rec.iron+=2
+		rec.addMaterial("iron",2)
 		return 1
 
 /obj/item/weapon/table_parts/reinforced
@@ -430,7 +503,7 @@
 
 	recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
 		// 2 metal + 4 rods (0.5 metal ea)
-		rec.iron+=4
+		rec.addMaterial("iron",4)
 		return 1
 
 /obj/item/weapon/table_parts/wood
@@ -497,7 +570,7 @@
 	item_state = ""
 	throw_speed = 4
 	throw_range = 20
-
+/*unused
 /obj/item/weapon/camera_bug/attack_self(mob/usr as mob)
 	var/list/cameras = new/list()
 	for (var/obj/machinery/camera/C in cameranet.cameras)
@@ -522,7 +595,7 @@
 	if (usr.stat == 2) return
 
 	usr.client.eye = target
-
+*/
 
 /obj/item/weapon/syntiflesh
 	name = "syntiflesh"
@@ -551,6 +624,13 @@
 /obj/item/weapon/hatchet/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return ..()
+
+/obj/item/weapon/hatchet/unathiknife
+	name = "duelling knife"
+	desc = "A length of leather-bound wood studded with razor-sharp teeth. How crude."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "unathiknife"
+	attack_verb = list("ripped", "torn", "cut")
 
 /obj/item/weapon/scythe
 	icon_state = "scythe0"
@@ -689,7 +769,7 @@
 	name = "nano-manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "nano_mani"
-	origin_tech = "materials=3,programming=2"
+	origin_tech = "materials=3;programming=2"
 	rating = 2
 	m_amt = 30
 
@@ -732,7 +812,7 @@
 	name = "pico-manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "pico_mani"
-	origin_tech = "materials=5,programming=2"
+	origin_tech = "materials=5;programming=2"
 	rating = 3
 	m_amt = 30
 
@@ -822,3 +902,66 @@
 	icon_state = "capacitor"
 	desc = "A debug item for research."
 	origin_tech = "materials=8;programming=8;magnets=8;powerstorage=8;bluespace=8;combat=8;biotech=8;syndicate=8"
+
+/////////Random shit////////
+
+/obj/item/weapon/lightning
+	name = "lightning"
+	icon = 'icons/obj/lightning.dmi'
+	icon_state = "lightning"
+	desc = "test lightning"
+	flags = USEDELAY
+
+	New()
+		icon = midicon
+		icon_state = "1"
+
+	afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
+		var/angle = get_angle(A, user)
+		//world << angle
+		angle = round(angle) + 45
+		if(angle > 180)
+			angle -= 180
+		else
+			angle += 180
+
+		if(!angle)
+			angle = 1
+		//world << "adjusted [angle]"
+		icon_state = "[angle]"
+		//world << "[angle] [(get_dist(user, A) - 1)]"
+		user.Beam(A, "lightning", 'icons/obj/zap.dmi', 50, 15)
+/*Testing
+proc/get_angle(atom/a, atom/b)
+    return atan2(b.y - a.y, b.x - a.x)
+proc/atan2(x, y)
+    if(!x && !y) return 0
+    return y >= 0 ? arccos(x / sqrt(x * x + y * y)) : -arccos(x / sqrt(x * x + y * y))
+proc
+    //  creates an /icon object with 360 states of rotation
+    rotate_icon(file, state, step = 1, aa = FALSE)
+        var icon/base = icon(file, state)
+
+        var w, h, w2, h2
+        if(aa)
+            aa ++
+            w = base.Width()
+            w2 = w * aa
+            h = base.Height()
+            h2 = h * aa
+
+        var icon{result = icon(base); temp}
+
+        for(var/angle in 0 to 360 step step)
+            if(angle == 0  ) continue
+            if(angle == 360)   continue
+
+            temp = icon(base)
+
+            if(aa) temp.Scale(w2, h2)
+            temp.Turn(angle)
+            if(aa) temp.Scale(w,   h)
+
+            result.Insert(temp, "[angle]")
+
+        return result*/

@@ -20,10 +20,18 @@
 	if (length(message) >= 2)
 		var/prefix = copytext(message, 1, 3)
 		if (department_radio_keys[prefix] == "binary")
-			if(istype(src, /mob/living/silicon/pai))
+			if(istype(src, /mob/living/silicon/pai) || istype(src, /mob/living/carbon/brain))
 				return ..(message)
 			message = copytext(message, 3)
 			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+
+			// TODO: move the component system up to silicon so we don't have to use this ugly hack..
+			if(istype(src, /mob/living/silicon/robot))
+				var/mob/living/silicon/robot/R = src
+				if(!R.is_component_functioning("comms"))
+					src << "\red Your binary communications component isn't functional."
+					return
+
 			robot_talk(message)
 		else if (department_radio_keys[prefix] == "department")
 			if(isAI(src)&&client)//For patching directly into AI holopads.
@@ -41,7 +49,7 @@
 					return ..(message)
 				var/mob/living/silicon/robot/mommi/U = src
 				if(U.keeper)
-					src << "\red Your KEEPER module has disabled your vocalizer.  Try :b to attempt to relay your message through the AI or borgs, or try an *emote (say \"*help\" for a listing)."
+					U.mommi_talk(message)
 					return
 			return ..(message)
 	else

@@ -1,4 +1,4 @@
-/mob/living/carbon/slime/emote(var/act, var/type, var/desc)
+/mob/living/carbon/slime/emote(var/act,var/m_type=1,var/message = null)
 
 
 	if (findtext(act, "-", 1, null))
@@ -9,40 +9,58 @@
 	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
 		act = copytext(act,1,length(act))
 
-	var/m_type = 1
-	var/message
-
 	switch(act)
 		if ("me")
-			return custom_emote(m_type, desc)
-		if ("custom")
-			return custom_emote(m_type, desc)
-		if("moan")
-			message = "<B>The [src.name]</B> moans."
-			m_type = 2
-		if("shiver")
-			message = "<B>The [src.name]</B> shivers."
-			m_type = 2
-		if("sway")
-			message = "<B>The [src.name]</B> sways around dizzily."
-			m_type = 1
-		if("twitch")
-			message = "<B>The [src.name]</B> twitches."
-			m_type = 1
-		if("vibrate")
-			message = "<B>The [src.name]</B> vibrates!"
-			m_type = 1
-		if("light")
-			message = "<B>The [src.name]</B> lights up for a bit, then stops."
-			m_type = 1
-		if("jiggle")
-			message = "<B>The [src.name]</B> jiggles!"
-			m_type = 1
+			if(silent)
+				return
+			if (src.client)
+				if (client.prefs.muted & MUTE_IC)
+					src << "\red You cannot send IC messages (muted)."
+					return
+				if (src.client.handle_spam_prevention(message,MUTE_IC))
+					return
+			if (stat)
+				return
+			if(!(message))
+				return
+			return custom_emote(m_type, message)
 		if("bounce")
 			message = "<B>The [src.name]</B> bounces in place."
 			m_type = 1
+
+		if("jiggle")
+			message = "<B>The [src.name]</B> jiggles!"
+			m_type = 1
+
+		if("light")
+			message = "<B>The [src.name]</B> lights up for a bit, then stops."
+			m_type = 1
+
+		if("moan")
+			message = "<B>The [src.name]</B> moans."
+			m_type = 2
+
+		if("shiver")
+			message = "<B>The [src.name]</B> shivers."
+			m_type = 2
+
+		if("sway")
+			message = "<B>The [src.name]</B> sways around dizzily."
+			m_type = 1
+
+		if("twitch")
+			message = "<B>The [src.name]</B> twitches."
+			m_type = 1
+
+		if("vibrate")
+			message = "<B>The [src.name]</B> vibrates!"
+			m_type = 1
+
+		if ("help") //This is an exception
+			src << "Help for slime emotes. You can use these emotes with say \"*emote\":\n\nbounce, jiggle, light, moan, shiver, sway, twitch, vibrate"
+
 		else
-			src << text("Invalid Emote: []", act)
+			src << "\blue Unusable emote '[act]'. Say *help for a list."
 	if ((message && src.stat == 0))
 		if (m_type & 1)
 			for(var/mob/O in viewers(src, null))

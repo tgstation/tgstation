@@ -2,7 +2,7 @@
 /obj/machinery/replicator
 	name = "alien machine"
 	desc = "It's some kind of pod with strange wires and gadgets all over it."
-	icon = 'xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "borgcharger0(old)"
 	density = 1
 
@@ -96,8 +96,12 @@
 	interact(user)
 
 /obj/machinery/replicator/interact(mob/user)
-	var/dat = "The control panel displays an incomprehensible selection of controls, many with unusual markings or text around them.<br>"
-	dat += "<br>"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\artifact\artifact_replicator.dm:99: var/dat = "The control panel displays an incomprehensible selection of controls, many with unusual markings or text around them.<br>"
+	var/dat = {"The control panel displays an incomprehensible selection of controls, many with unusual markings or text around them.<br>
+<br>"}
+	// END AUTOFIX
 	for(var/index=1, index<=construction.len, index++)
 		dat += "<A href='?src=\ref[src];activate=[index]'>\[[construction[index]]\]</a><br>"
 

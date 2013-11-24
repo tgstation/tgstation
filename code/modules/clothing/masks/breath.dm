@@ -18,14 +18,14 @@
 			if(!src.hanging)
 				src.hanging = !src.hanging
 				gas_transfer_coefficient = 1 //gas is now escaping to the turf and vice versa
-				flags_inv |= MASKCOVERSMOUTH | MASKINTERNALS
+				flags &= ~(MASKCOVERSMOUTH | MASKINTERNALS)
 				icon_state = "breathdown"
 				usr << "Your mask is now hanging on your neck."
 
 			else
 				src.hanging = !src.hanging
 				gas_transfer_coefficient = 0.10
-				flags_inv &= ~(MASKCOVERSMOUTH | MASKINTERNALS)
+				flags |= MASKCOVERSMOUTH | MASKINTERNALS
 				icon_state = "breath"
 				usr << "You pull the mask up to cover your face."
 			usr.update_inv_wear_mask()
@@ -53,7 +53,7 @@
 
 /obj/item/clothing/mask/breath/vox/mob_can_equip(M as mob, slot)
 	var/mob/living/carbon/human/V = M
-	if(V.dna.mutantrace != "vox")
+	if(V.species.name != "Vox")
 		V << "<span class='warning'>This clearly isn't designed for your species!</span>"
 		return 0
 

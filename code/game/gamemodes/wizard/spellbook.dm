@@ -19,42 +19,52 @@
 	if(temp)
 		dat = "[temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
 	else
-		dat = "<B>The Book of Spells:</B><BR>"
-		dat += "Spells left to memorize: [uses]<BR>"
-		dat += "<HR>"
-		dat += "<B>Memorize which spell:</B><BR>"
-		dat += "<I>The number after the spell name is the cooldown time.</I><BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=magicmissile'>Magic Missile</A> (10)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=fireball'>Fireball</A> (10)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=disintegrate'>Disintegrate</A> (60)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=disabletech'>Disable Technology</A> (60)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=smoke'>Smoke</A> (10)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=blind'>Blind</A> (30)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=mindswap'>Mind Transfer</A> (60)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=forcewall'>Forcewall</A> (10)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=blink'>Blink</A> (2)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=teleport'>Teleport</A> (60)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=mutate'>Mutate</A> (60)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=etherealjaunt'>Ethereal Jaunt</A> (60)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=knock'>Knock</A> (10)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=horseman'>Curse of the Horseman</A> (15)<BR>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\gamemodes\wizard\spellbook.dm:22: dat = "<B>The Book of Spells:</B><BR>"
+		dat = {"<B>The Book of Spells:</B><BR>
+			Spells left to memorize: [uses]<BR>
+			<HR>
+			<B>Memorize which spell:</B><BR>
+			<I>The number after the spell name is the cooldown time.</I><BR>
+			<A href='byond://?src=\ref[src];spell_choice=magicmissile'>Magic Missile</A> (10)<BR>
+			<A href='byond://?src=\ref[src];spell_choice=fireball'>Fireball</A> (10)<BR>
+			<A href='byond://?src=\ref[src];spell_choice=disintegrate'>Disintegrate</A> (60)<BR>
+			<A href='byond://?src=\ref[src];spell_choice=disabletech'>Disable Technology</A> (60)<BR>
+			<A href='byond://?src=\ref[src];spell_choice=smoke'>Smoke</A> (10)<BR>
+			<A href='byond://?src=\ref[src];spell_choice=blind'>Blind</A> (30)<BR>
+			<A href='byond://?src=\ref[src];spell_choice=mindswap'>Mind Transfer</A> (60)<BR>
+			<A href='byond://?src=\ref[src];spell_choice=forcewall'>Forcewall</A> (10)<BR>
+			<A href='byond://?src=\ref[src];spell_choice=blink'>Blink</A> (2)<BR>
+			<A href='byond://?src=\ref[src];spell_choice=teleport'>Teleport</A> (60)<BR>
+			<A href='byond://?src=\ref[src];spell_choice=mutate'>Mutate</A> (60)<BR>
+			<A href='byond://?src=\ref[src];spell_choice=etherealjaunt'>Ethereal Jaunt</A> (60)<BR>
+			<A href='byond://?src=\ref[src];spell_choice=knock'>Knock</A> (10)<BR>
+			<A href='byond://?src=\ref[src];spell_choice=horseman'>Curse of the Horseman</A> (15)<BR>
+			<A href='byond://?src=\ref[src];spell_choice=noclothes'>Remove Clothes Requirement</A> <b>Warning: this takes away 2 spell choices.</b><BR>"}
+
+		// END AUTOFIX
 //		if(op)
-		dat += "<A href='byond://?src=\ref[src];spell_choice=summonguns'>Summon Guns</A> (One time use, global spell)<BR>"
-		dat += "<HR>"
-		dat += "<B>Artefacts:</B><BR>"
-		dat += "Powerful items imbued with eldritch magics. Summoning one will count towards your maximum number of spells.<BR>"
-		dat += "It is recommended that only experienced wizards attempt to wield such artefacts.<BR>"
-		dat += "<HR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=staffchange'>Staff of Change</A><BR>"
-		dat += "<HR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=mentalfocus'>Mental Focus</A><BR>"
-		dat += "<HR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=soulstone'>Six Soul Stone Shards and the spell Artificer</A><BR>"
-		dat += "<HR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=armor'>Mastercrafted Armor Set</A><BR>"
-		dat += "<HR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=staffanimation'>Staff of Animation</A><BR>"
-		dat += "<HR>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\gamemodes\wizard\spellbook.dm:42: dat += "<A href='byond://?src=\ref[src];spell_choice=summonguns'>Summon Guns</A> (One time use, global spell)<BR>"
+		dat += {"<A href='byond://?src=\ref[src];spell_choice=summonguns'>Summon Guns</A> (One time use, global spell)<BR>
+			<HR>
+			<B>Artefacts:</B><BR>
+			Powerful items imbued with eldritch magics. Summoning one will count towards your maximum number of spells.<BR>
+			It is recommended that only experienced wizards attempt to wield such artefacts.<BR>
+			<HR>
+			<A href='byond://?src=\ref[src];spell_choice=staffchange'>Staff of Change</A><BR>
+			<HR>
+			<A href='byond://?src=\ref[src];spell_choice=mentalfocus'>Mental Focus</A><BR>
+			<HR>
+			<A href='byond://?src=\ref[src];spell_choice=soulstone'>Six Soul Stone Shards and the spell Artificer</A><BR>
+			<HR>
+			<A href='byond://?src=\ref[src];spell_choice=armor'>Mastercrafted Armor Set</A><BR>
+			<HR>
+			<A href='byond://?src=\ref[src];spell_choice=staffanimation'>Staff of Animation</A><BR>
+			<HR>"}
+		// END AUTOFIX
 		if(op)
 			dat += "<A href='byond://?src=\ref[src];spell_choice=rememorize'>Re-memorize Spells</A><BR>"
 	user << browse(dat, "window=radio")
@@ -86,7 +96,7 @@
 				uses--
 			/*
 			*/
-				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", smoke = "Smoke", blind = "Blind", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", summonguns = "Summon Guns", staffchange = "Staff of Change", mentalfocus = "Mental Focus", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation")
+				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", smoke = "Smoke", blind = "Blind", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", summonguns = "Summon Guns", staffchange = "Staff of Change", mentalfocus = "Mental Focus", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation", noclothes = "No Clothes")
 				var/already_knows = 0
 				for(var/obj/effect/proc_holder/spell/aspell in H.spell_list)
 					if(available_spells[href_list["spell_choice"]] == aspell.name)
@@ -98,6 +108,11 @@
 			*/
 				if(!already_knows)
 					switch(href_list["spell_choice"])
+						if("noclothes")
+							feedback_add_details("wizard_spell_learned","NC")
+							H.spell_list += new /obj/effect/proc_holder/spell/noclothes
+							temp = "This teaches you how to use your spells without your magical garb, truely you are the wizardest."
+							uses--
 						if("magicmissile")
 							feedback_add_details("wizard_spell_learned","MM") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							H.spell_list += new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(H)

@@ -27,7 +27,7 @@
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
-	var/color = null
+	var/_color = null
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
 	//var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
 	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
@@ -112,6 +112,8 @@
 	if(isMoMMI(user))
 		var/in_range = in_range(src, user) || src.loc == user
 		if(in_range)
+			if(src == user:tool_state || src == user:sight_state)
+				return 0
 			attack_hand(user)
 
 /obj/item/attack_hand(mob/user as mob)
@@ -406,6 +408,14 @@
 		//START HUMAN
 		var/mob/living/carbon/human/H = M
 
+		if(istype(src, /obj/item/clothing/under) || istype(src, /obj/item/clothing/suit))
+			if(FAT in H.mutations)
+				testing("[M] TOO FAT TO WEAR [src]!")
+				if(!(flags & ONESIZEFITSALL))
+					if(!disable_warning)
+						H << "\red You're too fat to wear the [name]."
+					return 0
+
 		switch(slot)
 			if(slot_l_hand)
 				if(H.l_hand)
@@ -486,7 +496,7 @@
 					if(automatic)
 						if(H.check_for_open_slot(src))
 							return 0
-					if(H.belt.canremove)
+					if(H.belt.canremove && !istype(H.belt, /obj/item/weapon/storage/belt))
 						return 2
 					else
 						return 0
@@ -670,9 +680,10 @@
 
 	if(!(usr)) //BS12 EDIT
 		return
-	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))//Is humanoid, and is not a brain
-		usr << "\red You can't pick things up!"
-		return
+	if(!istype(usr, /mob/living/carbon) && !isMoMMI(usr))//Is not a carbon being or MoMMI
+		usr << "You can't pick things up!"
+	if(istype(usr, /mob/living/carbon/brain))//Is a brain
+		usr << "You can't pick things up!"
 	if( usr.stat || usr.restrained() )//Is not asleep/dead and is not restrained
 		usr << "\red You can't pick things up!"
 		return
@@ -682,7 +693,7 @@
 	if(!usr.hand && usr.r_hand) //Right hand is not full
 		usr << "\red Your right hand is full."
 		return
-	if(usr.hand && usr.l_hand) //Left hand is not full
+	if(usr.hand && usr.l_hand && !isMoMMI(usr)) //Left hand is not full
 		usr << "\red Your left hand is full."
 		return
 	if(!istype(src.loc, /turf)) //Object is on a turf

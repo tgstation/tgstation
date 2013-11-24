@@ -49,6 +49,7 @@
 		//src.brainmob.mind = candidate.mind Causes issues with traitor overlays and traitor specific chat.
 		//src.brainmob.key = candidate.key
 		src.brainmob.ckey = candidate.ckey
+		src.brainmob.stat = 0
 		src.name = "positronic brain ([src.brainmob.name])"
 
 		src.brainmob << "<b>You are a positronic brain, brought into existence on [station_name()].</b>"
@@ -82,9 +83,12 @@
 		usr << "<span class='notice'>Something is there but you can't see it.</span>"
 		return
 
-	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n"
-	msg += "<span class='warning'>"
 
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\living\carbon\brain\posibrain.dm:86: var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n"
+	var/msg = {"<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n
+<span class='warning'>"}
+	// END AUTOFIX
 	if(src.brainmob && src.brainmob.key)
 		switch(src.brainmob.stat)
 			if(CONSCIOUS)
@@ -117,12 +121,12 @@
 	src.brainmob.real_name = src.brainmob.name
 	src.brainmob.loc = src
 	src.brainmob.container = src
+	src.brainmob.robot_talk_understand = 0
 	src.brainmob.stat = 0
 	src.brainmob.silent = 0
 	src.brainmob.brain_op_stage = 4.0
 	dead_mob_list -= src.brainmob
-	//mob_list -= src.brainmob
-	living_mob_list |= src.brainmob
+
 	..()
 
 /obj/item/device/mmi/posibrain/attackby(var/obj/item/O as obj, var/mob/user as mob)

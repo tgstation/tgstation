@@ -63,18 +63,18 @@
 //Medical
 /obj/item/clothing/head/surgery
 	name = "surgical cap"
-	desc = "A cap surgeons wear during operations. Keeps thier hair from tickling your internal organs."
+	desc = "A cap surgeons wear during operations. Keeps their hair from tickling your internal organs."
 	icon_state = "surgcap_blue"
-	flags = FPRINT | TABLEPASS | BLOCKHAIR
+	flags = FPRINT | TABLEPASS | BLOCKHEADHAIR
 
 /obj/item/clothing/head/surgery/purple
-	desc = "A cap surgeons wear during operations. Keeps thier hair from tickling your internal organs. This one is deep purple."
+	desc = "A cap surgeons wear during operations. Keeps their hair from tickling your internal organs. This one is deep purple."
 	icon_state = "surgcap_purple"
 
 /obj/item/clothing/head/surgery/blue
-	desc = "A cap surgeons wear during operations. Keeps thier hair from tickling your internal organs. This one is baby blue"
+	desc = "A cap surgeons wear during operations. Keeps their hair from tickling your internal organs. This one is baby blue."
 	icon_state = "surgcap_blue"
 
 /obj/item/clothing/head/surgery/green
-	desc = "A cap surgeons wear during operations. Keeps thier hair from tickling your internal organs. This one is dark green"
+	desc = "A cap surgeons wear during operations. Keeps their hair from tickling your internal organs. This one is dark green."
 	icon_state = "surgcap_green"

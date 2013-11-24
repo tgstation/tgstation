@@ -77,13 +77,53 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	//playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 	playsound(loc, 'sound/misc/interference.ogg', 75, 1)
 
-/mob/living/silicon/robot/mommi/proc/choose_icon()
+
+/mob/living/silicon/robot/mommi/choose_icon()
 	var/icontype = input("Select an icon!", "Mobile MMI", null) in list("Basic", "Keeper")
 	switch(icontype)
 		if("Basic")	subtype = "mommi"
 		else		subtype = "keeper"
-	picked=1
 	updateicon()
+	var/answer = input("Is this what you want?", "Mobile MMI", null) in list("Yes", "No")
+	switch(answer)
+		if("No")
+			choose_icon()
+			return
+	picked = 1
+
+/mob/living/silicon/robot/mommi/pick_module()
+
+	if(module)
+		return
+	var/list/modules = list("MoMMI")
+	if(modules.len)
+		modtype = input("Please, select a module!", "Robot", null, null) in modules
+	else:
+		modtype=modules[0]
+
+	var/module_sprites[0] //Used to store the associations between sprite names and sprite index.
+	var/channels = list()
+
+	if(module)
+		return
+
+	switch(modtype)
+		if("MoMMI")
+			module = new /obj/item/weapon/robot_module/standard(src)
+			module_sprites["Basic"] = "mommi"
+			module_sprites["Keeper"] = "keeper"
+
+	//Custom_sprite check and entry
+	if (custom_sprite == 1)
+		module_sprites["Custom"] = "[src.ckey]-[modtype]"
+
+	hands.icon_state = lowertext(modtype)
+	feedback_inc("mommi_[lowertext(modtype)]",1)
+	updatename()
+
+	choose_icon(6,module_sprites)
+	radio.config(channels)
+	base_icon = icon_state
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 //Improved /N
@@ -97,9 +137,6 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		nmmi.icon = 'icons/obj/assemblies.dmi'
 		nmmi.invisibility = 0
 	..()
-
-/mob/living/silicon/robot/mommi/pick_module()
-	return // Nope
 
 /mob/living/silicon/robot/mommi/updatename(var/prefix as text)
 
@@ -304,6 +341,11 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
 			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("CYBORG",src,user:wear_suit)
 			return
+		if(user.a_intent == "help")
+			user.visible_message("\blue [user.name] pats [src.name] on the head.")
+			return
+
+
 
 	if(!istype(user, /mob/living/silicon))
 		switch(user.a_intent)
@@ -358,7 +400,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	if(layer==MOB_LAYER)
 		overlays+=image(icon,"eyes-[subtype][emagged?"-emagged":""]",LIGHTING_LAYER+1)
 	else
-		overlays+="eyes-[subtype][emagged?"-emagged":""]"
+		overlays+=image(icon,"eyes-[subtype][emagged?"-emagged":""]",TURF_LAYER+0.2) // Fixes floating eyes
 	return
 
 
@@ -403,6 +445,9 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 /mob/living/silicon/robot/mommi/Topic(href, href_list)
 	..()
+	if(usr && (src != usr))
+		return
+
 	if (href_list["mach_close"])
 		var/t1 = text("window=[href_list["mach_close"]]")
 		unset_machine()
@@ -420,7 +465,11 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 	if (href_list["act"])
 		var/obj/item/O = locate(href_list["act"])
+		var/obj/item/TS
+		if(!(locate(O) in src.module.modules) && O != src.module.emag)
+			return
 		if(istype(O,/obj/item/borg/sight))
+			TS = sight_state
 			if(sight_state)
 				contents -= sight_state
 				sight_mode &= ~sight_state:sight_mode
@@ -430,8 +479,12 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			O.layer = 20
 			contents += O
 			sight_mode |= sight_state:sight_mode
-			inv_sight.icon_state = "sight"
+
+			inv_sight.icon_state = "sight +a"
+			inv_tool.icon_state = "inv1"
+			module_active=sight_state
 		else
+			TS = tool_state
 			if(tool_state)
 				contents -= tool_state
 				if (client)
@@ -439,7 +492,17 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			tool_state = O
 			O.layer = 20
 			contents += O
-			inv_tool.icon_state = "inv1"
+
+			inv_sight.icon_state = "sight"
+			inv_tool.icon_state = "inv1 +a"
+			module_active=tool_state
+		if(TS && istype(TS))
+			if(src.is_in_modules(TS))
+				TS.loc = src.module
+			else
+				TS.layer=initial(TS.layer)
+				TS.loc = src.loc
+
 		installed_modules()
 	return
 

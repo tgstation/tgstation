@@ -9,6 +9,35 @@
 		..()
 		name = "floor"
 
+
+
+/turf/simulated/floor/plating/vox
+	icon_state = "plating"
+	name = "vox plating"
+	//icon = 'icons/turf/shuttle-debug.dmi'
+	oxygen=0 // BIRDS HATE OXYGEN FOR SOME REASON
+	nitrogen = MOLES_O2STANDARD+MOLES_N2STANDARD // So it totals to the same pressure
+
+	New()
+		..()
+		name = "plating"
+
+/turf/simulated/floor/vox
+	icon_state = "floor"
+	name = "vox floor"
+	//icon = 'icons/turf/shuttle-debug.dmi'
+	oxygen=0 // BIRDS HATE OXYGEN FOR SOME REASON
+	nitrogen = MOLES_O2STANDARD+MOLES_N2STANDARD // So it totals to the same pressure
+
+	New()
+		..()
+		name = "floor"
+
+/turf/simulated/floor/vox/wood
+	name = "floor"
+	icon_state = "wood"
+	floor_tile = new/obj/item/stack/tile/wood
+
 /turf/simulated/floor/light
 	name = "Light floor"
 	luminosity = 5
@@ -74,14 +103,11 @@
 /turf/simulated/floor/engine/n20
 	New()
 		..()
-		var/datum/gas_mixture/adding = new
+		// EXACTLY the same code as fucking roomfillers.  If this doesn't work, something's fucked.
 		var/datum/gas/sleeping_agent/trace_gas = new
-
-		trace_gas.moles = 2000
-		adding.trace_gases += trace_gas
-		adding.temperature = T20C
-
-		assume_air(adding)
+		air.trace_gases += trace_gas
+		trace_gas.moles = 9*4000
+		air.update_values()
 
 /turf/simulated/floor/engine/vacuum
 	name = "vacuum floor"
@@ -122,6 +148,7 @@
 	thermal_conductivity = 0.05
 	heat_capacity = 0
 	layer = 2
+	accepts_lighting=0
 
 /turf/simulated/shuttle/wall
 	name = "wall"
@@ -211,5 +238,21 @@
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
 
+/turf/simulated/floor/plating/snow/concrete
+	name = "concrete"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "concrete"
+
 /turf/simulated/floor/plating/snow/ex_act(severity)
 	return
+
+// VOX SHUTTLE SHIT
+/turf/simulated/shuttle/floor/vox
+	oxygen=0 // BIRDS HATE OXYGEN FOR SOME REASON
+	nitrogen = MOLES_O2STANDARD+MOLES_N2STANDARD // So it totals to the same pressure
+	//icon = 'icons/turf/shuttle-debug.dmi'
+
+/turf/simulated/shuttle/plating/vox
+	oxygen=0 // BIRDS HATE OXYGEN FOR SOME REASON
+	nitrogen = MOLES_O2STANDARD+MOLES_N2STANDARD // So it totals to the same pressure
+	//icon = 'icons/turf/shuttle-debug.dmi'

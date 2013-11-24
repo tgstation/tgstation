@@ -58,7 +58,7 @@
 						aiPlayer.cancelAlarm("Power", src, source)
 					else
 						aiPlayer.triggerAlarm("Power", src, cameras, source)
-			for(var/obj/machinery/computer/station_alert/a in world)
+			for(var/obj/machinery/computer/station_alert/a in machines)
 				if(a.z == source.z)
 					if(state == 1)
 						a.cancelAlarm("Power", src, source)
@@ -81,7 +81,7 @@
 					C.network.Add("Atmosphere Alarms")
 			for(var/mob/living/silicon/aiPlayer in player_list)
 				aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
-			for(var/obj/machinery/computer/station_alert/a in world)
+			for(var/obj/machinery/computer/station_alert/a in machines)
 				a.triggerAlarm("Atmosphere", src, cameras, src)
 		else if (atmosalm == 2)
 			for(var/area/RA in related)
@@ -89,9 +89,12 @@
 					C.network.Remove("Atmosphere Alarms")
 			for(var/mob/living/silicon/aiPlayer in player_list)
 				aiPlayer.cancelAlarm("Atmosphere", src, src)
-			for(var/obj/machinery/computer/station_alert/a in world)
+			for(var/obj/machinery/computer/station_alert/a in machines)
 				a.cancelAlarm("Atmosphere", src, src)
 		atmosalm = danger_level
+		for (var/obj/machinery/alarm/AA in src)
+			if ( !(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
+				AA.update_icon()
 		return 1
 	return 0
 
@@ -116,7 +119,7 @@
 				C.network.Add("Fire Alarms")
 		for (var/mob/living/silicon/ai/aiPlayer in player_list)
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
-		for (var/obj/machinery/computer/station_alert/a in world)
+		for (var/obj/machinery/computer/station_alert/a in machines)
 			a.triggerAlarm("Fire", src, cameras, src)
 
 /area/proc/firereset()
@@ -136,8 +139,24 @@
 				C.network.Remove("Fire Alarms")
 		for (var/mob/living/silicon/ai/aiPlayer in player_list)
 			aiPlayer.cancelAlarm("Fire", src, src)
-		for (var/obj/machinery/computer/station_alert/a in world)
+		for (var/obj/machinery/computer/station_alert/a in machines)
 			a.cancelAlarm("Fire", src, src)
+
+/area/proc/radiation_alert()
+	if(name == "Space")
+		return
+	if(!radalert)
+		radalert = 1
+		updateicon()
+	return
+
+/area/proc/reset_radiation_alert()
+	if(name == "Space")
+		return
+	if(radalert)
+		radalert = 0
+		updateicon()
+	return
 
 /area/proc/readyalert()
 	if(name == "Space")
@@ -177,8 +196,11 @@
 	return
 
 /area/proc/updateicon()
-	if ((fire || eject || party) && ((!requires_power)?(!requires_power):power_environ))//If it doesn't require power, can still activate this proc.
-		if(fire && !eject && !party)
+	if ((fire || eject || party || radalert) && ((!requires_power)?(!requires_power):power_environ))//If it doesn't require power, can still activate this proc.
+		// Highest priority at the top.
+		if(radalert && !fire)
+			icon_state = "radiation"
+		else if(fire && !radalert && !eject && !party)
 			icon_state = "blue"
 		/*else if(atmosalm && !fire && !eject && !party)
 			icon_state = "bluenew"*/

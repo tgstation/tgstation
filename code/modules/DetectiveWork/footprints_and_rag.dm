@@ -3,6 +3,7 @@
 	var/mob/living/carbon/human/bloody_hands_mob
 	var/track_blood = 0
 	var/list/feet_blood_DNA
+	var/feet_blood_color
 	var/track_blood_type
 
 /obj/item/clothing/gloves
@@ -23,6 +24,8 @@
 	volume = 5
 	can_be_placed_into = null
 
+/obj/item/weapon/reagent_containers/glass/rag/attack_self(mob/user as mob)
+	return
 
 /obj/item/weapon/reagent_containers/glass/rag/attack(atom/target as obj|turf|area, mob/user as mob , flag)
 	if(ismob(target) && target.reagents && reagents.total_volume)

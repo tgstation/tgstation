@@ -7,6 +7,7 @@
 	active_power_usage = 500
 	circuit = "/obj/item/weapon/circuitboard/crew"
 	var/list/tracked = list(  )
+	var/track_special_role=null
 
 
 /obj/machinery/computer/crew/New()
@@ -64,9 +65,13 @@
 	user.set_machine(src)
 	src.scan()
 	var/t = "<TT><B>Crew Monitoring</B><HR>"
-	t += "<BR><A href='?src=\ref[src];update=1'>Refresh</A> "
-	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-	t += "<table><tr><td width='40%'>Name</td><td width='20%'>Vitals</td><td width='40%'>Position</td></tr>"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\crew.dm:67: t += "<BR><A href='?src=\ref[src];update=1'>Refresh</A> "
+	t += {"<BR><A href='?src=\ref[src];update=1'>Refresh</A>
+		<A href='?src=\ref[src];close=1'>Close</A><BR>
+		<table><tr><td width='40%'>Name</td><td width='20%'>Vitals</td><td width='40%'>Position</td></tr>"}
+	// END AUTOFIX
 	var/list/logs = list()
 	for(var/obj/item/clothing/under/C in src.tracked)
 		var/log = ""
@@ -101,15 +106,26 @@
 	logs = sortList(logs)
 	for(var/log in logs)
 		t += log
-	t += "</table>"
-	t += "</FONT></PRE></TT>"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\crew.dm:104: t += "</table>"
+	t += {"</table>
+		</FONT></PRE></TT>"}
+	// END AUTOFIX
 	user << browse(t, "window=crewcomp;size=900x600")
 	onclose(user, "crewcomp")
+
+/obj/machinery/computer/crew/proc/is_scannable(var/obj/item/clothing/under/C,var/mob/living/carbon/human/H)
+	if(!istype(H))
+		return 0
+	if(track_special_role==null)
+		return C.has_sensor
+	return H.mind.special_role == track_special_role
 
 
 /obj/machinery/computer/crew/proc/scan()
 	for(var/obj/item/clothing/under/C in world)
-		if((C.has_sensor) && (istype(C.loc, /mob/living/carbon/human)))
+		if(is_scannable(C,C.loc))
 			var/check = 0
 			for(var/O in src.tracked)
 				if(O == C)

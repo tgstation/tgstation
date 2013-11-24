@@ -11,6 +11,15 @@
 		if(hand)	return l_hand
 		else		return r_hand
 
+// Get the organ of the active hand
+/mob/proc/get_active_hand_organ()
+	if(!istype(src, /mob/living/carbon)) return
+	if (hasorgans(src))
+		var/datum/organ/external/temp = src:organs_by_name["r_hand"]
+		if (hand)
+			temp = src:organs_by_name["l_hand"]
+		return temp
+
 //Returns the thing in our inactive hand
 /mob/proc/get_inactive_hand()
 	if(hand)	return r_hand
@@ -223,7 +232,7 @@
 			return r_hand
 		return
 
-/mob/living/carbon/human/proc/equip_if_possible(obj/item/W, slot, del_on_fail = 1) // since byond doesn't seem to have pointers, this seems like the best way to do this :/
+/mob/living/carbon/human/proc/equip_if_possible(obj/item/W, slot, act_on_fail = EQUIP_FAILACTION_DELETE) // since byond doesn't seem to have pointers, this seems like the best way to do this :/
 	//warning: icky code
 	var/equipped = 0
 	switch(slot)
@@ -307,7 +316,10 @@
 		if(src.back && W.loc != src.back)
 			W.loc = src
 	else
-		if (del_on_fail)
-			del(W)
+		switch(act_on_fail)
+			if(EQUIP_FAILACTION_DELETE)
+				del(W)
+			if(EQUIP_FAILACTION_DROP)
+				W.loc=get_turf(src) // I think.
 	return equipped
 

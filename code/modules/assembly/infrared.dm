@@ -20,6 +20,8 @@
 	proc
 		trigger_beam()
 
+	//describe()
+	//	return "The infrared trigger is [on?"on":"off"]."
 
 	activate()
 		if(!..())	return 0//Cooldown check
@@ -57,9 +59,19 @@
 			if(first)
 				del(first)
 				return
-
-		if((!(first) && (secured && (istype(loc, /turf) || (holder && istype(holder.loc, /turf))))))
-			var/obj/effect/beam/i_beam/I = new /obj/effect/beam/i_beam((holder ? holder.loc : loc) )
+		if(first || !secured) return
+		var/turf/T = null
+		if(istype(loc,/turf))
+			T = loc
+		else if (holder)
+			if (istype(holder.loc,/turf))
+				T = holder.loc
+			else if (istype(holder.loc.loc,/turf)) //for onetankbombs and other tertiary builds with assemblies
+				T = holder.loc.loc
+		else if(istype(loc,/obj/item/weapon/grenade) && istype(loc.loc,/turf))
+			T = loc.loc
+		if(T)
+			var/obj/effect/beam/i_beam/I = new /obj/effect/beam/i_beam(T)
 			I.master = src
 			I.density = 1
 			I.dir = dir
@@ -114,8 +126,12 @@
 		if(!secured)	return
 		user.set_machine(src)
 		var/dat = text("<TT><B>Infrared Laser</B>\n<B>Status</B>: []<BR>\n<B>Visibility</B>: []<BR>\n</TT>", (on ? text("<A href='?src=\ref[];state=0'>On</A>", src) : text("<A href='?src=\ref[];state=1'>Off</A>", src)), (src.visible ? text("<A href='?src=\ref[];visible=0'>Visible</A>", src) : text("<A href='?src=\ref[];visible=1'>Invisible</A>", src)))
-		dat += "<BR><BR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
-		dat += "<BR><BR><A href='?src=\ref[src];close=1'>Close</A>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\assembly\infrared.dm:117: dat += "<BR><BR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
+		dat += {"<BR><BR><A href='?src=\ref[src];refresh=1'>Refresh</A>
+			<BR><BR><A href='?src=\ref[src];close=1'>Close</A>"}
+		// END AUTOFIX
 		user << browse(dat, "window=infra")
 		onclose(user, "infra")
 		return

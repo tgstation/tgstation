@@ -26,7 +26,9 @@
 
 /mob/camera/blob/Login()
 	..()
-	sync_mind()
+	//Mind updates
+	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
+	mind.active = 1		//indicates that the mind is currently synced with a client
 
 	src << "<span class='notice'>You are the overmind!</span>"
 	src << "You are the overmind and can control the blob by placing new blob pieces such as..."
@@ -37,7 +39,7 @@
 	src << "<b>Factory Blob</b> is a blob which will spawn blob spores which will attack nearby food. Putting this nearby nodes and your core will increase the spawn rate; put it alone and it will not spawn any spores."
 
 
-mob/camera/blob/Life()
+/mob/camera/blob/Life()
 	//sanity for manual spawned blob cameras
 	if(hud_used)
 		hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#82ed00'>[src.blob_points]</font></div>"

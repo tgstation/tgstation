@@ -1,7 +1,7 @@
 
 /obj/item/clothing/glasses
 	name = "glasses"
-	icon = 'glasses.dmi'
+	icon = 'icons/obj/clothing/glasses.dmi'
 	//w_class = 2.0
 	//flags = GLASSESCOVERSEYES
 	//slot_flags = SLOT_EYES
@@ -179,7 +179,7 @@
 	origin_tech = "magnets=3;syndicate=4"
 
 /obj/item/clothing/glasses/thermal/monocle
-	name = "Thermoncle"
+	name = "Thermonocle"
 	desc = "A monocle thermal."
 	icon_state = "thermoncle"
 	flags = null //doesn't protect eyes because it's a monocle, duh

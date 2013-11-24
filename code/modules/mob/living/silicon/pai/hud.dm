@@ -9,6 +9,8 @@
 		var/image/holder
 		var/turf/T = get_turf_or_move(src.loc)
 		for(var/mob/living/carbon/human/perp in view(T))
+			if(src.see_invisible < perp.invisibility)
+				continue
 			var/perpname = "wot"
 			holder = perp.hud_list[ID_HUD]
 			if(perp.wear_id)
@@ -51,11 +53,17 @@
 		var/image/holder
 		var/turf/T = get_turf_or_move(src.loc)
 		for(var/mob/living/carbon/human/patient in view(T))
-
+			if(src.see_invisible < patient.invisibility)
+				continue
 			var/foundVirus = 0
 			for(var/datum/disease/D in patient.viruses)
 				if(!D.hidden[SCANNER])
+					foundVirus++
+
+			for (var/ID in patient.virus2)
+				if (ID in virusDB)
 					foundVirus = 1
+					break
 
 			holder = patient.hud_list[HEALTH_HUD]
 			if(patient.stat == 2)

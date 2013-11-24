@@ -12,6 +12,8 @@
 // The behavior panel can be unlocked with hydroponics access and be modified to disable certain behaviors
 // By default, it will ignore weeds and mushrooms, but can be set to tend to these types of plants as well.
 
+//Seems a little stupid handling multiple Go direction X,Y,Z to do Job F,G,H if it's in multiple directions so I'd reccomend only enabling 1 water/fertilize/weed task at a time. - SarahJohnson
+
 
 #define FARMBOT_MODE_WATER			1
 #define FARMBOT_MODE_FERTILIZE	 	2
@@ -26,7 +28,7 @@
 /obj/machinery/bot/farmbot
 	name = "Farmbot"
 	desc = "The botanist's best friend."
-	icon = 'aibots.dmi'
+	icon = 'icons/obj/aibots.dmi'
 	icon_state = "farmbot0"
 	layer = 5.0
 	density = 1
@@ -100,7 +102,8 @@
 	if (.)
 		return
 	var/dat
-	dat += "<TT><B>Automatic Hyrdoponic Assisting Unit v1.0</B></TT><BR><BR>"
+	dat += "<TT><B>Automatic Hydroponic Assisting Unit v1.0</B></TT><BR><BR>"
+/*	dat += "<TT>WARNING: Due to experimental programming this model is inefficient at attempting more than one Water/Fertilize/Weed task at a time.</TT><BR><BR>"*/
 	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
 
 	dat += "Water Tank: "
@@ -515,7 +518,7 @@
 /obj/item/weapon/farmbot_arm_assembly
 	name = "water tank/robot arm assembly"
 	desc = "A water tank with a robot arm permanently grafted to it."
-	icon = 'aibots.dmi'
+	icon = 'icons/obj/aibots.dmi'
 	icon_state = "water_arm"
 	var/build_step = 0
 	var/created_name = "Farmbot" //To preserve the name if it's a unique farmbot I guess

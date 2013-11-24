@@ -12,7 +12,7 @@ log transactions
 /obj/machinery/atm
 	name = "\improper NanoTrasen Automatic Teller Machine"
 	desc = "For all your monetary needs!"
-	icon = 'terminals.dmi'
+	icon = 'icons/obj/terminals.dmi'
 	icon_state = "atm"
 	anchored = 1
 	use_power = 1

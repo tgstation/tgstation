@@ -16,9 +16,27 @@
 	var/beaker = null
 	var/recharged = 0
 	var/opened = 0
+	var/custom = 0
 	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine",
 	"sodium","aluminum","silicon","phosphorus","sulfur","chlorine","potassium","iron",
 	"copper","mercury","radium","water","ethanol","sugar","sacid","tungsten")
+
+/********************************************************************
+**   Adding Stock Parts to VV so preconstructed shit has its candy **
+********************************************************************/
+/obj/machinery/chem_dispenser/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/chem_dispenser
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser
+	component_parts += new /obj/item/weapon/stock_parts/console_screen
+	RefreshParts()
 
 /obj/machinery/chem_dispenser/proc/recharge()
 	if(stat & (BROKEN|NOPOWER)) return
@@ -27,6 +45,7 @@
 	energy = min(energy + addenergy, max_energy)
 	if(energy != oldenergy)
 		use_power(3000) // This thing uses up alot of power (this is still low as shit for creating reagents from thin air)
+		nanomanager.update_uis(src) // update all UIs attached to src
 
 /obj/machinery/chem_dispenser/power_change()
 	if(powered())
@@ -34,6 +53,7 @@
 	else
 		spawn(rand(0, 15))
 			stat |= NOPOWER
+	nanomanager.update_uis(src) // update all UIs attached to src
 
 /obj/machinery/chem_dispenser/process()
 
@@ -66,110 +86,104 @@
 	del(src)
 	return
 
-/obj/machinery/chem_dispenser/proc/updateWindow(mob/user as mob)
-	winset(user, "chemdispenser.energy", "text=\"Energy: [src.energy]\"")
-	winset(user, "chemdispenser.amount", "text=\"Amount: [src.amount]\"")
-	if (beaker)
-		winset(user, "chemdispenser.eject", "text=\"Eject beaker\"")
-	else
-		winset(user, "chemdispenser.eject", "text=\"\[Insert beaker\]\"")
-
-/*Old
-/obj/machinery/chem_dispenser/proc/initWindow(mob/user as mob)
-	var/i = 0
-	var/list/nameparams = params2list(winget(user, "chemdispenser_reagents.template_name", "pos;size;type;image;image-mode"))
-	var/list/buttonparams = params2list(winget(user, "chemdispenser_reagents.template_dispense", "pos;size;type;image;image-mode;text;is-flat"))
-	for(var/re in dispensable_reagents)
-		var/datum/reagent/temp = chemical_reagents_list[re]
-		if(temp)
-			var/list/newparams1 = nameparams.Copy()
-			var/list/newparams2 = buttonparams.Copy()
-			var/posy = 8 + 40 * i
-			newparams1["pos"] = text("8,[posy]")
-			newparams2["pos"] = text("248,[posy]")
-			newparams1["parent"] = "chemdispenser_reagents"
-			newparams2["parent"] = "chemdispenser_reagents"
-			newparams1["text"] = temp.name
-			newparams2["command"] = text("skincmd \"chemdispenser;[temp.id]\"")
-			winset(user, "chemdispenser_reagent_name[i]", list2params(newparams1))
-			winset(user, "chemdispenser_reagent_dispense[i]", list2params(newparams2))
-			i++
-	winset(user, "chemdispenser_reagents", "size=340x[8 + 40 * i]")
-*/
-
-//New
-/obj/machinery/chem_dispenser/proc/initWindow(mob/user as mob)
-	var/i = 0
-	var/chemC = 0
-	var/j = 0
-	//var/selectedChemical = null
-	var/list/nameparams = params2list(winget(user, "chemdispenser_reagents.template_name", "pos;size;background-color;text-color;type;"))
-	for(var/re in dispensable_reagents)
-		var/datum/reagent/temp = chemical_reagents_list[re]
-		if(temp)
-			var/list/newparams1 = nameparams.Copy()
-			//var/list/newparams2 = buttonparams.Copy()
-			var/posy = 8 + 40 * i
-			var/posx = 16 + 176 * j
-			newparams1["pos"] = text("[posx],[posy]")
-			newparams1["font-size"] = "13"
-			//newparams1["font-style"] = "bold"
-			newparams1["parent"] = "chemdispenser_reagents"
-			newparams1["text"] = temp.name //+ " " + "[chemC]"
-			newparams1["command"] = text("skincmd \"chemdispenser;[temp.id]\"")
-			winset(user, "chemdispenser_reagent_name[chemC]", list2params(newparams1))
-			j++
-			chemC = chemC + 1
-			if(j>=3)
-				j = 0
-				i++
-	winset(user, "chemdispenser_reagents", "size=340x[8 + 32 * (i-2)]")
-
-/obj/machinery/chem_dispenser/SkinCmd(mob/user as mob, var/data as text)
+ /**
+  * The ui_interact proc is used to open and update Nano UIs
+  * If ui_interact is not used then the UI will not update correctly
+  * ui_interact is currently defined for /atom/movable
+  *
+  * @param user /mob The mob who is interacting with this ui
+  * @param ui_key string A string key to use for this ui. Allows for multiple unique uis on one obj/mob (defaut value "main")
+  * @param ui /datum/nanoui This parameter is passed by the nanoui process() proc when updating an open ui
+  *
+  * @return nothing
+  */
+/obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER)) return
-	if(usr.stat || usr.restrained()) return
-	if(!in_range(src, usr)) return
+	if((user.stat && !isobserver(user)) || user.restrained()) return
 
-	usr.set_machine(src)
+	// this is the data which will be sent to the ui
+	var/data[0]
+	data["amount"] = amount
+	data["energy"] = energy
+	data["maxEnergy"] = max_energy
+	data["isBeakerLoaded"] = beaker ? 1 : 0
+	data["custom"] = custom
 
-	if (data == "amountc")
-		var/num = input("Enter desired output amount", "Amount", "30") as num
-		if (num)
-			amount = text2num(num)
-	else if (data == "eject")
-		if (src.beaker)
-			var/obj/item/weapon/reagent_containers/glass/B = src.beaker
-			B.loc = src.loc
-			src.beaker = null
-	else if (copytext(data, 1, 7) == "amount")
-		if (text2num(copytext(data, 7)))
-			amount = text2num(copytext(data, 7))
+	var beakerContents[0]
+	var beakerCurrentVolume = 0
+	if(beaker && beaker:reagents && beaker:reagents.reagent_list.len)
+		for(var/datum/reagent/R in beaker:reagents.reagent_list)
+			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
+			beakerCurrentVolume += R.volume
+	data["beakerContents"] = beakerContents
+
+	if (beaker)
+		data["beakerCurrentVolume"] = beakerCurrentVolume
+		data["beakerMaxVolume"] = beaker:volume
 	else
-		if (dispensable_reagents.Find(data) && beaker != null)
+		data["beakerCurrentVolume"] = null
+		data["beakerMaxVolume"] = null
+
+	var chemicals[0]
+	for (var/re in dispensable_reagents)
+		var/datum/reagent/temp = chemical_reagents_list[re]
+		if(temp)
+			chemicals.Add(list(list("title" = temp.name, "id" = temp.id, "commands" = list("dispense" = temp.id)))) // list in a list because Byond merges the first list...
+	data["chemicals"] = chemicals
+
+	if (!ui) // no ui has been passed, so we'll search for one
+	{
+		ui = nanomanager.get_open_ui(user, src, ui_key)
+	}
+	if (!ui)
+		// the ui does not exist, so we'll create a new one
+		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "Chem Dispenser 5000", 374, 640)
+		// When the UI is first opened this is the data it will use
+		ui.set_initial_data(data)
+		ui.open()
+	else
+		// The UI is already open so push the new data to it
+		ui.push_data(data)
+		return
+
+/obj/machinery/chem_dispenser/Topic(href, href_list)
+	if(stat & (NOPOWER|BROKEN))
+		return 0 // don't update UIs attached to this object
+
+	if(href_list["amount"])
+		if(href_list["amount"] == "0")
+			var/num = input("Enter desired output amount", "Amount", "30") as num
+			if (num)
+				amount = round(text2num(num), 5)
+				custom = 1
+		else
+			custom = 0
+			amount = round(text2num(href_list["amount"]), 5) // round to nearest 5
+		if (amount < 0) // Since the user can actually type the commands himself, some sanity checking
+			amount = 0
+		if (amount > 100)
+			amount = 100
+
+	if(href_list["dispense"])
+		if (dispensable_reagents.Find(href_list["dispense"]) && beaker != null)
 			var/obj/item/weapon/reagent_containers/glass/B = src.beaker
 			var/datum/reagents/R = B.reagents
 			var/space = R.maximum_volume - R.total_volume
 
-			R.add_reagent(data, min(amount, energy * 10, space))
+			R.add_reagent(href_list["dispense"], min(amount, energy * 10, space))
 			energy = max(energy - min(amount, energy * 10, space) / 10, 0)
 
-	amount = round(amount, 5) // Chem dispenser doesnt really have that much prescion
-	if (amount < 0) // Since the user can actually type the commands himself, some sanity checking
-		amount = 0
-	if (amount > 100)
-		amount = 100
+	if(href_list["ejectBeaker"])
+		if(beaker)
+			var/obj/item/weapon/reagent_containers/glass/B = beaker
+			B.loc = loc
+			beaker = null
 
-	for(var/mob/player in player_list)
-		if (player.machine == src && player.client)
-			updateWindow(player)
-
-	src.add_fingerprint(usr)
-	return
+	add_fingerprint(usr)
+	return 1 // update UIs attached to this object
 
 
 /obj/machinery/chem_dispenser/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob) //to be worked on
-	if(isrobot(user))
-		return
 
 	if(!istype(D, /obj/item/weapon/reagent_containers/glass))
 		if(istype(D, /obj/item/weapon/screwdriver))
@@ -201,6 +215,12 @@
 		else
 			return
 
+	if(isrobot(user))
+		// UNLESS MoMMI or medbutt.
+		var/mob/living/silicon/robot/R=user
+		if(!isMoMMI(user) && !istype(R.module,/obj/item/weapon/robot_module/medical))
+			return
+
 	if(src.beaker)
 		user << "A beaker is already loaded into the machine."
 		return
@@ -209,9 +229,7 @@
 	user.drop_item()
 	D.loc = src
 	user << "You add the beaker to the machine!"
-	for(var/mob/player in player_list)
-		if (player.machine == src && player.client)
-			updateWindow(player)
+	nanomanager.update_uis(src) // update all UIs attached to src
 
 /obj/machinery/chem_dispenser/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
@@ -223,13 +241,8 @@
 /obj/machinery/chem_dispenser/attack_hand(mob/user as mob)
 	if(stat & BROKEN)
 		return
-	user.set_machine(src)
 
-	initWindow(user)
-	updateWindow(user)
-	winshow(user, "chemdispenser", 1)
-	user.skincmds["chemdispenser"] = src
-	return
+	ui_interact(user)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -248,14 +261,33 @@
 	var/condi = 0
 	var/opened = 0
 	var/useramount = 30 // Last used amount
+	var/pillamount = 10
 	var/bottlesprite = "1" //yes, strings
 	var/pillsprite = "1"
 	var/client/has_sprites = list()
 
+/********************************************************************
+**   Adding Stock Parts to VV so preconstructed shit has its candy **
+********************************************************************/
 /obj/machinery/chem_master/New()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
+	..()
+	component_parts = list()
+	if(istype(src, /obj/machinery/chem_master/condimaster))
+		component_parts += new /obj/item/weapon/circuitboard/condimaster
+	else
+		component_parts += new /obj/item/weapon/circuitboard/chemmaster3000
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser
+	component_parts += new /obj/item/weapon/stock_parts/console_screen
+	component_parts += new /obj/item/weapon/stock_parts/console_screen
+	RefreshParts()
 
 /obj/machinery/chem_master/ex_act(severity)
 	switch(severity)
@@ -309,10 +341,10 @@
 		src.updateUsrDialog()
 	else if(istype(B, /obj/item/weapon/screwdriver))
 		if(src.beaker)
-			user << "A beaker is loaded in [src]."
+			user << "\red A beaker is loaded in [src]."
 			return
 		if(src.loaded_pill_bottle)
-			user << "A pill bottle is loaded in [src]."
+			user << "\red A pill bottle is loaded in [src]."
 			return
 		if(!opened)
 			src.opened = 1
@@ -324,9 +356,13 @@
 			user << "You close the maintenance hatch of [src]."
 		return 1
 	if(opened)
-		if(src.beaker || src.loaded_pill_bottle)
-			return
 		if(istype(B, /obj/item/weapon/crowbar))
+			if(src.beaker)
+				user << "\red A beaker is loaded in [src]."
+				return
+			if(src.loaded_pill_bottle)
+				user << "\red A pill bottle is loaded in [src]."
+				return
 			user << "You begin to remove the circuits from the [src]."
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			if(do_after(user, 50))
@@ -427,19 +463,25 @@
 				beaker = null
 				reagents.clear_reagents()
 				icon_state = "mixer0"
-		else if (href_list["createpill"])
-			var/name = reject_bad_text(input(usr,"Name:","Name your pill!",reagents.get_master_reagent_name()))
-			var/obj/item/weapon/reagent_containers/pill/P = new/obj/item/weapon/reagent_containers/pill(src.loc)
-			if(!name) name = reagents.get_master_reagent_name()
-			P.name = "[name] pill"
-			P.pixel_x = rand(-7, 7) //random position
-			P.pixel_y = rand(-7, 7)
-			P.icon_state = "pill"+pillsprite
-			reagents.trans_to(P,50)
-			if(src.loaded_pill_bottle)
-				if(loaded_pill_bottle.contents.len < loaded_pill_bottle.storage_slots)
-					P.loc = loaded_pill_bottle
-					src.updateUsrDialog()
+		else if (href_list["createpill"] || href_list["createpill_multiple"])
+			var/count = 1
+			if (href_list["createpill_multiple"]) count = isgoodnumber(input("Select the number of pills to make.", 10, pillamount) as num)
+			if (count > 20) count = 20	//Pevent people from creating huge stacks of pills easily. Maybe move the number to defines?
+			var/amount_per_pill = reagents.total_volume/count
+			if (amount_per_pill > 50) amount_per_pill = 50
+			var/name = reject_bad_text(input(usr,"Name:","Name your pill!","[reagents.get_master_reagent_name()] ([amount_per_pill] units)"))
+			while (count--)
+				var/obj/item/weapon/reagent_containers/pill/P = new/obj/item/weapon/reagent_containers/pill(src.loc)
+				if(!name) name = "[reagents.get_master_reagent_name()] ([amount_per_pill] units)"
+				P.name = "[name] pill"
+				P.pixel_x = rand(-7, 7) //random position
+				P.pixel_y = rand(-7, 7)
+				P.icon_state = "pill"+pillsprite
+				reagents.trans_to(P,amount_per_pill)
+				if(src.loaded_pill_bottle)
+					if(loaded_pill_bottle.contents.len < loaded_pill_bottle.storage_slots)
+						P.loc = loaded_pill_bottle
+						src.updateUsrDialog()
 		else if (href_list["createbottle"])
 			if(!condi)
 				var/name = reject_bad_text(input(usr,"Name:","Name your bottle!",reagents.get_master_reagent_name()))
@@ -492,9 +534,9 @@
 		spawn()
 			has_sprites += user.client
 			for(var/i = 1 to MAX_PILL_SPRITE)
-				usr << browse_rsc(icon('chemical.dmi', "pill" + num2text(i)), "pill[i].png")
+				usr << browse_rsc(icon('icons/obj/chemical.dmi', "pill" + num2text(i)), "pill[i].png")
 			for(var/i = 1 to MAX_BOTTLE_SPRITE)
-				usr << browse_rsc(icon('chemical.dmi', "bottle" + num2text(i)), "bottle[i].png")
+				usr << browse_rsc(icon('icons/obj/chemical.dmi', "bottle" + num2text(i)), "bottle[i].png")
 	var/dat = ""
 	if(!beaker)
 		dat = "Please insert beaker.<BR>"
@@ -515,29 +557,41 @@
 		else
 			dat += "Add to buffer:<BR>"
 			for(var/datum/reagent/G in R.reagent_list)
-				dat += "[G.name] , [G.volume] Units - "
-				dat += "<A href='?src=\ref[src];analyze=1;desc=[G.description];name=[G.name]'>(Analyze)</A> "
-				dat += "<A href='?src=\ref[src];add=[G.id];amount=1'>(1)</A> "
-				dat += "<A href='?src=\ref[src];add=[G.id];amount=5'>(5)</A> "
-				dat += "<A href='?src=\ref[src];add=[G.id];amount=10'>(10)</A> "
-				dat += "<A href='?src=\ref[src];add=[G.id];amount=[G.volume]'>(All)</A> "
-				dat += "<A href='?src=\ref[src];addcustom=[G.id]'>(Custom)</A><BR>"
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\Chemistry-Machinery.dm:518: dat += "[G.name] , [G.volume] Units - "
+				dat += {"[G.name] , [G.volume] Units -
+					<A href='?src=\ref[src];analyze=1;desc=[G.description];name=[G.name]'>(Analyze)</A>
+					<A href='?src=\ref[src];add=[G.id];amount=1'>(1)</A>
+					<A href='?src=\ref[src];add=[G.id];amount=5'>(5)</A>
+					<A href='?src=\ref[src];add=[G.id];amount=10'>(10)</A>
+					<A href='?src=\ref[src];add=[G.id];amount=[G.volume]'>(All)</A>
+					<A href='?src=\ref[src];addcustom=[G.id]'>(Custom)</A><BR>"}
+				// END AUTOFIX
 
 		dat += "<HR>Transfer to <A href='?src=\ref[src];toggle=1'>[(!mode ? "disposal" : "beaker")]:</A><BR>"
 		if(reagents.total_volume)
 			for(var/datum/reagent/N in reagents.reagent_list)
-				dat += "[N.name] , [N.volume] Units - "
-				dat += "<A href='?src=\ref[src];analyze=1;desc=[N.description];name=[N.name]'>(Analyze)</A> "
-				dat += "<A href='?src=\ref[src];remove=[N.id];amount=1'>(1)</A> "
-				dat += "<A href='?src=\ref[src];remove=[N.id];amount=5'>(5)</A> "
-				dat += "<A href='?src=\ref[src];remove=[N.id];amount=10'>(10)</A> "
-				dat += "<A href='?src=\ref[src];remove=[N.id];amount=[N.volume]'>(All)</A> "
-				dat += "<A href='?src=\ref[src];removecustom=[N.id]'>(Custom)</A><BR>"
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\Chemistry-Machinery.dm:529: dat += "[N.name] , [N.volume] Units - "
+				dat += {"[N.name] , [N.volume] Units -
+					<A href='?src=\ref[src];analyze=1;desc=[N.description];name=[N.name]'>(Analyze)</A>
+					<A href='?src=\ref[src];remove=[N.id];amount=1'>(1)</A>
+					<A href='?src=\ref[src];remove=[N.id];amount=5'>(5)</A>
+					<A href='?src=\ref[src];remove=[N.id];amount=10'>(10)</A>
+					<A href='?src=\ref[src];remove=[N.id];amount=[N.volume]'>(All)</A>
+					<A href='?src=\ref[src];removecustom=[N.id]'>(Custom)</A><BR>"}
+				// END AUTOFIX
 		else
 			dat += "Empty<BR>"
 		if(!condi)
-			dat += "<HR><BR><A href='?src=\ref[src];createpill=1'>Create pill (50 units max)</A><a href=\"?src=\ref[src]&change_pill=1\"><img src=\"pill[pillsprite].png\" /></a><BR>"
-			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (30 units max)<a href=\"?src=\ref[src]&change_bottle=1\"><img src=\"bottle[bottlesprite].png\" /></A>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\Chemistry-Machinery.dm:539: dat += "<HR><BR><A href='?src=\ref[src];createpill=1'>Create pill (50 units max)</A><a href=\"?src=\ref[src]&change_pill=1\"><img src=\"pill[pillsprite].png\" /></a><BR>"
+			dat += {"<HR><BR><A href='?src=\ref[src];createpill=1'>Create pill (50 units max)</A><a href=\"?src=\ref[src]&change_pill=1\"><img src=\"pill[pillsprite].png\" /></a><BR>
+				<A href='?src=\ref[src];createbottle=1'>Create bottle (30 units max)<a href=\"?src=\ref[src]&change_bottle=1\"><img src=\"bottle[bottlesprite].png\" /></A>"}
+			// END AUTOFIX
 		else
 			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (50 units max)</A>"
 	if(!condi)
@@ -559,8 +613,6 @@
 	else
 		return 0
 
-
-
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"
 	condi = 1
@@ -579,6 +631,15 @@
 	var/temphtml = ""
 	var/wait = null
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
+
+/********************************************************************
+**   Adding Stock Parts to VV so preconstructed shit has its candy **
+********************************************************************/
+/obj/machinery/computer/pandemic/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/pandemic
+	RefreshParts()
 
 
 /obj/machinery/computer/pandemic/set_broken()
@@ -719,8 +780,12 @@
 	if(src.temphtml)
 		dat = "[src.temphtml]<BR><BR><A href='?src=\ref[src];clear=1'>Main Menu</A>"
 	else if(!beaker)
-		dat += "Please insert beaker.<BR>"
-		dat += "<A href='?src=\ref[user];mach_close=pandemic'>Close</A>"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\Chemistry-Machinery.dm:722: dat += "Please insert beaker.<BR>"
+		dat += {"Please insert beaker.<BR>
+			<A href='?src=\ref[user];mach_close=pandemic'>Close</A>"}
+		// END AUTOFIX
 	else
 		var/datum/reagents/R = beaker.reagents
 		var/datum/reagent/blood/Blood = null
@@ -735,11 +800,13 @@
 		else if(!Blood.data)
 			dat += "No blood data found in beaker."
 		else
-			dat += "<h3>Blood sample data:</h3>"
-			dat += "<b>Blood DNA:</b> [(Blood.data["blood_DNA"]||"none")]<BR>"
-			dat += "<b>Blood Type:</b> [(Blood.data["blood_type"]||"none")]<BR>"
 
-
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\Chemistry-Machinery.dm:738: dat += "<h3>Blood sample data:</h3>"
+			dat += {"<h3>Blood sample data:</h3>
+				<b>Blood DNA:</b> [(Blood.data["blood_DNA"]||"none")]<BR>
+				<b>Blood Type:</b> [(Blood.data["blood_type"]||"none")]<BR>"}
+			// END AUTOFIX
 			if(Blood.data["viruses"])
 				var/list/vir = Blood.data["viruses"]
 				if(vir.len)
@@ -759,12 +826,15 @@
 							if(!D)
 								CRASH("We weren't able to get the advance disease from the archive.")
 
-							dat += "<b>Disease Agent:</b> [D?"[D.agent] - <A href='?src=\ref[src];create_virus_culture=[disease_creation]'>Create virus culture bottle</A>":"none"]<BR>"
-							dat += "<b>Common name:</b> [(D.name||"none")]<BR>"
-							dat += "<b>Description: </b> [(D.desc||"none")]<BR>"
-							dat += "<b>Spread:</b> [(D.spread||"none")]<BR>"
-							dat += "<b>Possible cure:</b> [(D.cure||"none")]<BR><BR>"
 
+							// AUTOFIXED BY fix_string_idiocy.py
+							// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\Chemistry-Machinery.dm:762: dat += "<b>Disease Agent:</b> [D?"[D.agent] - <A href='?src=\ref[src];create_virus_culture=[disease_creation]'>Create virus culture bottle</A>":"none"]<BR>"
+							dat += {"<b>Disease Agent:</b> [D?"[D.agent] - <A href='?src=\ref[src];create_virus_culture=[disease_creation]'>Create virus culture bottle</A>":"none"]<BR>
+								<b>Common name:</b> [(D.name||"none")]<BR>
+								<b>Description: </b> [(D.desc||"none")]<BR>
+								<b>Spread:</b> [(D.spread||"none")]<BR>
+								<b>Possible cure:</b> [(D.cure||"none")]<BR><BR>"}
+							// END AUTOFIX
 							if(istype(D, /datum/disease/advance))
 								var/datum/disease/advance/A = D
 								dat += "<b>Symptoms:</b> "
@@ -796,9 +866,12 @@
 					dat += "nothing<BR>"
 			else
 				dat += "nothing<BR>"
-		dat += "<BR><A href='?src=\ref[src];eject=1'>Eject beaker</A>[((R.total_volume&&R.reagent_list.len) ? "-- <A href='?src=\ref[src];empty_beaker=1'>Empty beaker</A>":"")]<BR>"
-		dat += "<A href='?src=\ref[user];mach_close=pandemic'>Close</A>"
 
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\Chemistry-Machinery.dm:799: dat += "<BR><A href='?src=\ref[src];eject=1'>Eject beaker</A>[((R.total_volume&&R.reagent_list.len) ? "-- <A href='?src=\ref[src];empty_beaker=1'>Empty beaker</A>":"")]<BR>"
+		dat += {"<BR><A href='?src=\ref[src];eject=1'>Eject beaker</A>[((R.total_volume&&R.reagent_list.len) ? "-- <A href='?src=\ref[src];empty_beaker=1'>Empty beaker</A>":"")]<BR>
+			<A href='?src=\ref[user];mach_close=pandemic'>Close</A>"}
+		// END AUTOFIX
 	user << browse("<TITLE>[src.name]</TITLE><BR>[dat]", "window=pandemic;size=575x400")
 	onclose(user, "pandemic")
 	return
@@ -863,6 +936,7 @@
 	var/inuse = 0
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/limit = 10
+	var/opened = 0.0
 	var/list/blend_items = list (
 
 		//Sheets
@@ -912,9 +986,21 @@
 
 	var/list/holdingitems = list()
 
+/********************************************************************
+**   Adding Stock Parts to VV so preconstructed shit has its candy **
+********************************************************************/
+//Leaving large beakers out of the component part list to try and dodge beaker cloning.
 /obj/machinery/reagentgrinder/New()
 	..()
 	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/reagentgrinder
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	RefreshParts()
+
 	return
 
 /obj/machinery/reagentgrinder/update_icon()
@@ -940,7 +1026,7 @@
 			return 0
 
 	if(holdingitems && holdingitems.len >= limit)
-		usr << "The machine cannot hold anymore items."
+		usr << "The machine cannot hold any more items."
 		return 1
 
 	//Fill machine with the plantbag!
@@ -959,6 +1045,30 @@
 
 		src.updateUsrDialog()
 		return 0
+	else if (istype(O, /obj/item/weapon/screwdriver))
+		if (!opened)
+			user << "You open the maintenance hatch of [src]."
+			//src.icon_state = "autolathe_t"
+		else
+			user << "You close the maintenance hatch of [src]."
+			//src.icon_state = "autolathe"
+		opened = !opened
+		return 1
+	else if(istype(O, /obj/item/weapon/crowbar))
+		if (opened)
+			if(beaker)
+				user << "\red A beaker is loaded, you cannot deconstruct [src]."
+				return 1
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+			M.state = 2
+			M.icon_state = "box_1"
+			for(var/obj/I in component_parts)
+				if(I.reliability != 100 && crit_fail)
+					I.crit_fail = 1
+				I.loc = src.loc
+			del(src)
+			return 1
 
 	if (!is_type_in_list(O, blend_items) && !is_type_in_list(O, juice_items))
 		user << "Cannot refine into a reagent."
@@ -1013,8 +1123,12 @@
 	[beaker_contents]<hr>
 	"}
 		if (is_beaker_ready && !is_chamber_empty && !(stat & (NOPOWER|BROKEN)))
-			dat += "<A href='?src=\ref[src];action=grind'>Grind the reagents</a><BR>"
-			dat += "<A href='?src=\ref[src];action=juice'>Juice the reagents</a><BR><BR>"
+
+			// AUTOFIXED BY fix_string_idiocy.py
+			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\Chemistry-Machinery.dm:1016: dat += "<A href='?src=\ref[src];action=grind'>Grind the reagents</a><BR>"
+			dat += {"<A href='?src=\ref[src];action=grind'>Grind the reagents</a><BR>
+				<A href='?src=\ref[src];action=juice'>Juice the reagents</a><BR><BR>"}
+			// END AUTOFIX
 		if(holdingitems && holdingitems.len > 0)
 			dat += "<A href='?src=\ref[src];action=eject'>Eject the reagents</a><BR>"
 		if (beaker)

@@ -18,6 +18,29 @@
 			return
 
 	. = src.say_dead(message)
+
+
+/mob/dead/observer/emote(var/act, var/type, var/message)
+	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+
+	if(!message)
+		return
+
+	if(act != "me")
+		return
+
+	log_emote("Ghost/[src.key] : [message]")
+
+	if(src.client)
+		if(src.client.prefs.muted & MUTE_DEADCHAT)
+			src << "\red You cannot emote in deadchat (muted)."
+			return
+
+		if(src.client.handle_spam_prevention(message, MUTE_DEADCHAT))
+			return
+
+	. = src.emote_dead(message)
+
 /*
 	for (var/mob/M in hearers(null, null))
 		if (!M.stat)

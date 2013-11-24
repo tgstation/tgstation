@@ -1,7 +1,7 @@
 // Base Class
 /mob/living/simple_animal/livestock
 	desc = "Tasty!"
-	icon = 'livestock.dmi'
+	icon = 'icons/mob/livestock.dmi'
 	emote_see = list("shakes its head", "kicks the ground")
 	speak_chance = 1
 	turns_per_move = 15
@@ -165,7 +165,7 @@
 /obj/structure/closet/critter
 	desc = "\improper Critter crate."
 	name = "Critter Crate"
-	icon = 'storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "critter"
 	density = 1
 	icon_opened = "critteropen"

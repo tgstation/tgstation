@@ -7,6 +7,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/device/flashlight(), \
 		new /obj/item/weapon/extinguisher(), \
 		new /obj/item/device/multitool(), \
+		new /obj/item/device/analyzer(), \
 		new /obj/item/device/t_scanner(), \
 		new /obj/item/weapon/weldingtool(), \
 		new /obj/item/weapon/screwdriver(), \
@@ -28,8 +29,11 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/surgicaldrill(),\
 		new /obj/item/weapon/retractor(),\
 		new /obj/item/weapon/cautery(),\
+		new /obj/item/weapon/hemostat(),\
 		new /obj/item/weapon/reagent_containers/glass/beaker(), \
 		new /obj/item/weapon/reagent_containers/glass/beaker/large(), \
+		new /obj/item/weapon/reagent_containers/glass/beaker/vial(), \
+		new /obj/item/weapon/reagent_containers/syringe(), \
 		new /obj/item/ammo_casing/shotgun/blank(), \
 		new /obj/item/ammo_casing/shotgun/beanbag(), \
 		new /obj/item/ammo_magazine/c38(), \
@@ -40,6 +44,8 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/device/radio/off(), \
 		new /obj/item/device/assembly/infra(), \
 		new /obj/item/device/assembly/timer(), \
+		new /obj/item/device/assembly/voice(), \
+		new /obj/item/device/assembly/prox_sensor(), \
 		new /obj/item/weapon/light/tube(), \
 		new /obj/item/weapon/light/bulb(), \
 		new /obj/item/ashtray/glass(), \
@@ -193,7 +199,15 @@ var/global/list/autolathe_recipes_hidden = list( \
 				user.set_machine(src)
 				interact(user)
 				return 1
-
+		if(isrobot(user))
+			if(!isMoMMI(user))
+				user << "\red You're a robot. No."
+				return 1
+			else
+				var/mob/living/silicon/robot/mommi/M = user
+				if(M.is_in_modules(O))
+					user << "\red You can't put something built into you in [src]."
+					return 1
 		if (src.m_amount + O.m_amt > max_m_amount)
 			user << "\red The autolathe is full. Please remove metal from the autolathe in order to insert more."
 			return 1

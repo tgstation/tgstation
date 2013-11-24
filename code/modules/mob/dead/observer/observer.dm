@@ -1,3 +1,6 @@
+#define GHOST_DARK_ALPHA 10
+#define GHOST_LIGHT_ALPHA 255
+#define GHOST_DARK_CUTOFF 1
 /mob/dead/observer
 	name = "ghost"
 	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
@@ -10,6 +13,10 @@
 	blinded = 0
 	anchored = 1	//  don't get pushed around
 	invisibility = INVISIBILITY_OBSERVER
+
+	// For Aghosts dicking with telecoms equipment.
+	var/obj/item/device/multitool/ghostMulti = null
+
 	var/can_reenter_corpse
 	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0
@@ -18,6 +25,7 @@
 							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
 	universal_speak = 1
 	var/atom/movable/following = null
+
 /mob/dead/observer/New(mob/body)
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	see_invisible = SEE_INVISIBLE_OBSERVER
@@ -50,6 +58,9 @@
 	if(!name)							//To prevent nameless ghosts
 		name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 	real_name = name
+
+	ghostMulti = new(src)
+
 	..()
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -65,6 +76,7 @@ Works together with spawning an observer, noted above.
 		ghost.can_reenter_corpse = can_reenter_corpse
 		ghost.timeofdeath = timeofdeath //BS12 EDIT
 		ghost.key = key
+
 		return ghost
 
 /*
@@ -85,12 +97,33 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	return
 
 
+// In darkness over a certain threshold, ghosts become slightly visible for the spooky value.
+/mob/dead/observer/proc/amInDarkPlace()
+	//var/turf/simulated/T = get_turf(src)
+	//if(!istype(T))
+	//	return 0
+	//if(T.lighting_lumcount <= GHOST_DARK_CUTOFF)
+	//	return 1
+	return 0
+
+/mob/dead/observer/proc/updateSpookyAlpha()
+	if(amInDarkPlace())
+		alpha=GHOST_DARK_ALPHA
+		invisibility=0
+	else
+		alpha=GHOST_LIGHT_ALPHA
+		invisibility=INVISIBILITY_OBSERVER
+
+///mob/dead/observer/SetLuminosity(new_luminosity, max_luminosity)
+//	..()
+//	updateSpookyAlpha()
+
 /mob/dead/observer/Move(NewLoc, direct)
 	if(NewLoc)
 		loc = NewLoc
 		for(var/obj/effect/step_trigger/S in NewLoc)
 			S.HasEntered(src)
-
+		updateSpookyAlpha() // Added SetLuminosity above, probably not worth it.
 		return
 	loc = get_turf(src) //Get out of closets and such as a ghost
 	if((direct & NORTH) && y < world.maxy)
@@ -104,6 +137,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	for(var/obj/effect/step_trigger/S in locate(x, y, z))	//<-- this is dumb
 		S.HasEntered(src)
+	updateSpookyAlpha()
 
 /mob/dead/observer/examine()
 	if(usr)
@@ -226,7 +260,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				A.loc = T
 			else
 				A << "This mob is not located in the game world."
-/*
+
 /mob/dead/observer/verb/boo()
 	set category = "Ghost"
 	set name = "Boo!"
@@ -240,7 +274,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	//Maybe in the future we can add more <i>spooky</i> code here!
 	return
-*/
 
 /mob/dead/observer/memory()
 	set hidden = 1
@@ -263,6 +296,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Become mouse"
 	set category = "Ghost"
 
+	if(!config.respawn_as_mouse)
+		src << "<span class='warning'>Respawning as mouse is disabled..</span>"
+		return
+
 	var/timedifference = world.time - client.time_died_as_mouse
 	if(client.time_died_as_mouse && timedifference <= mouse_respawn_time * 600)
 		var/timedifference_text
@@ -275,7 +312,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/obj/machinery/atmospherics/unary/vent_pump/vent_found
 	var/list/found_vents = list()
 	for(var/obj/machinery/atmospherics/unary/vent_pump/v in world)
-		if(!v.welded && v.z == src.z)
+		if(!v.welded && v.z == src.z && v.canSpawnMice==1) // No more spawning in atmos.  Assuming the mappers did their jobs, anyway.
 			found_vents.Add(v)
 	if(found_vents.len)
 		vent_found = pick(found_vents)
@@ -286,6 +323,49 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(host)
 		host.ckey = src.ckey
 		host << "<span class='info'>You are now a mouse. Try to avoid interaction with players, and do not give hints away that you are more than a simple rodent.</span>"
+
+/mob/dead/observer/verb/view_manfiest()
+	set name = "View Crew Manifest"
+	set category = "Ghost"
+
+	var/dat
+	dat += "<h4>Crew Manifest</h4>"
+	dat += data_core.get_manifest()
+
+	src << browse(dat, "window=manifest;size=370x420;can_close=1")
+
+
+/mob/dead/observer/verb/become_mommi()
+	set name = "Become MoMMI"
+	set category = "Ghost"
+
+	if(!config.respawn_as_mommi)
+		src << "<span class='warning'>Respawning as MoMMI is disabled..</span>"
+		return
+
+	var/timedifference = world.time - client.time_died_as_mouse
+	if(client.time_died_as_mouse && timedifference <= mouse_respawn_time * 600)
+		var/timedifference_text
+		timedifference_text = time2text(mouse_respawn_time * 600 - timedifference,"mm:ss")
+		src << "<span class='warning'>You may only spawn again as a mouse or MoMMI more than [mouse_respawn_time] minutes after your death. You have [timedifference_text] left.</span>"
+		return
+
+	//find a viable mouse candidate
+	var/obj/machinery/mommi_spawner/spawner
+	var/list/found_spawners = list()
+	for(var/obj/machinery/mommi_spawner/s in world)
+		if(s.z == src.z && s.canSpawn())
+			found_spawners.Add(s)
+	if(found_spawners.len)
+		spawner = pick(found_spawners)
+		//host = new /mob/living/silicon/robot/mommi(spawner.loc)
+		spawner.attack_ghost(src)
+	else
+		src << "<span class='warning'>Unable to find any powered MoMMI Spawners on this z-level to spawn MoMMIs at.</span>"
+
+	//if(host)
+	//	host.ckey = src.ckey
+	//	//host << "<span class='info'>You are now a mouse. Try to avoid interaction with players, and do not give hints away that you are more than a simple rodent.</span>"
 
 //BEGIN TELEPORT HREF CODE
 /mob/dead/observer/Topic(href, href_list)

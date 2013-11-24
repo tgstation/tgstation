@@ -13,6 +13,12 @@
 	..()
 	levelupdate()
 
+/turf/simulated/proc/AddTracks(var/typepath,var/bloodDNA,var/comingdir,var/goingdir,var/bloodcolor="#A10808")
+	var/obj/effect/decal/cleanable/blood/tracks/tracks = locate(typepath) in src
+	if(!tracks)
+		tracks = new typepath(src)
+	tracks.AddTracks(bloodDNA,comingdir,goingdir,bloodcolor)
+
 /turf/simulated/Entered(atom/A, atom/OL)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
 		usr << "\red Movement is admin-disabled." //This is to identify lag problems
@@ -34,30 +40,40 @@
 				else
 					playsound(src, "clownstep", 20, 1)
 
+			// Tracking blood
 			var/list/bloodDNA = null
+			var/bloodcolor=""
 			if(H.shoes)
 				var/obj/item/clothing/shoes/S = H.shoes
 				if(S.track_blood && S.blood_DNA)
 					bloodDNA = S.blood_DNA
+					bloodcolor=S.blood_color
 					S.track_blood--
 			else
 				if(H.track_blood && H.feet_blood_DNA)
 					bloodDNA = H.feet_blood_DNA
+					bloodcolor=H.feet_blood_color
 					H.track_blood--
 
 			if (bloodDNA)
-				var/obj/effect/decal/cleanable/blood/footprints/here = new(src)
-				here.icon_state = "blood1"
-				here.dir = H.dir
-				here.blood_DNA |= bloodDNA.Copy()
+				src.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,H.dir,0,bloodcolor) // Coming
 				var/turf/simulated/from = get_step(H,reverse_direction(H.dir))
-				if(from)
-					var/obj/effect/decal/cleanable/blood/footprints/there = new(from)
-					there.icon_state = "blood2"
-					there.dir = H.dir
-					there.blood_DNA |= bloodDNA.Copy()
+				if(istype(from) && from)
+					from.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,0,H.dir,bloodcolor) // Going
 
 			bloodDNA = null
+
+			// Floorlength braids?  Enjoy your tripping.
+			if((H.h_style && !(H.head && (H.head.flags & BLOCKHEADHAIR))))
+				var/datum/sprite_accessory/hair_style = hair_styles_list[H.h_style]
+				if(hair_style && (hair_style.flags & HAIRSTYLE_CANTRIP))
+					if(H.m_intent == "run" && prob(5))
+						H.stop_pulling()
+						step(H, H.dir)
+						H << "\blue You tripped over your hair!"
+						playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+						H.Stun(4)
+						H.Weaken(5)
 
 		switch (src.wet)
 			if(1)
@@ -67,8 +83,8 @@
 						step(M, M.dir)
 						M << "\blue You slipped on the wet floor!"
 						playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
-						M.Stun(8)
-						M.Weaken(5)
+						M.Stun(5)
+						M.Weaken(3)
 					else
 						M.inertia_dir = 0
 						return
@@ -78,8 +94,8 @@
 						step(M, M.dir)
 						M << "\blue You slipped on the wet floor!"
 						playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
-						M.Stun(8)
-						M.Weaken(5)
+						M.Stun(5)
+						M.Weaken(3)
 					else
 						M.inertia_dir = 0
 						return
@@ -96,6 +112,29 @@
 					M << "\blue You slipped on the floor!"
 					playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 					M.Weaken(10)
+			if(3) // Ice
+				if(istype(M, /mob/living/carbon/human)) // Added check since monkeys don't have shoes
+					if ((M.m_intent == "run") && !(istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP) && prob(30))
+						M.stop_pulling()
+						step(M, M.dir)
+						M << "\blue You slipped on the icy floor!"
+						playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+						M.Stun(4)
+						M.Weaken(3)
+					else
+						M.inertia_dir = 0
+						return
+				else if(!istype(M, /mob/living/carbon/slime))
+					if (M.m_intent == "run" && prob(30))
+						M.stop_pulling()
+						step(M, M.dir)
+						M << "\blue You slipped on the icy floor!"
+						playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+						M.Stun(4)
+						M.Weaken(3)
+					else
+						M.inertia_dir = 0
+						return
 
 	..()
 
@@ -122,8 +161,8 @@
 		this.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 
 	else if( istype(M, /mob/living/carbon/alien ))
-		var/obj/effect/decal/cleanable/xenoblood/this = new /obj/effect/decal/cleanable/xenoblood(src)
+		var/obj/effect/decal/cleanable/blood/xeno/this = new /obj/effect/decal/cleanable/blood/xeno(src)
 		this.blood_DNA["UNKNOWN BLOOD"] = "X*"
 
 	else if( istype(M, /mob/living/silicon/robot ))
-		new /obj/effect/decal/cleanable/oil(src)
+		new /obj/effect/decal/cleanable/blood/oil(src)

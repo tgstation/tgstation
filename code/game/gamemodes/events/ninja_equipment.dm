@@ -243,60 +243,60 @@ ________________________________________________________________________________
 	var/mob/living/silicon/ai/A = AI
 	var/display_to = s_control ? U : A//Who do we want to display certain messages to?
 
-	var/dat = "<html><head><title>SpiderOS</title></head><body bgcolor=\"#3D5B43\" text=\"#DB2929\"><style>a, a:link, a:visited, a:active, a:hover { color: #DB2929; }img {border-style:none;}</style>"
-	dat += "<a href='byond://?src=\ref[src];choice=Refresh'><img src=sos_7.png> Refresh</a>"
+	var/dat = {"<html><head><title>SpiderOS</title></head><body bgcolor=\"#3D5B43\" text=\"#B65B5B\"><style>a, a:link, a:visited, a:active, a:hover { color: #B65B5B; }img {border-style:none;}</style>
+		<a href='byond://?src=\ref[src];choice=Refresh'><img src=sos_7.png> Refresh</a>"}
 	if(spideros)
-		dat += " | <a href='byond://?src=\ref[src];choice=Return'><img src=sos_1.png> Return</a>"
-	dat += " | <a href='byond://?src=\ref[src];choice=Close'><img src=sos_8.png> Close</a>"
-	dat += "<br>"
+		dat += {" | <a href='byond://?src=\ref[src];choice=Return'><img src=sos_1.png> Return</a>
+		 | <a href='byond://?src=\ref[src];choice=Close'><img src=sos_8.png> Close</a><br>"}
 	if(s_control)
-		dat += "<h2 ALIGN=CENTER>SpiderOS v.1.337</h2>"
-		dat += "Welcome, <b>[U.real_name]</b>.<br>"
+		dat += {"<h2 ALIGN=CENTER>SpiderOS v.1.337</h2>
+			Welcome, <b>[U.real_name]</b>.<br>"}
 	else
-		dat += "<h2 ALIGN=CENTER>SpiderOS v.<b>ERR-RR00123</b></h2>"
-	dat += "<br>"
-	dat += "<img src=sos_10.png> Current Time: [worldtime2text()]<br>"
-	dat += "<img src=sos_9.png> Battery Life: [round(cell.charge/100)]%<br>"
-	dat += "<img src=sos_11.png> Smoke Bombs: \Roman [s_bombs]<br>"
-	dat += "<img src=sos_14.png> pai Device: "
+		dat += {"<h2 ALIGN=CENTER>SpiderOS v.<b>ERR-RR00123</b></h2>
+		<br>
+		<img src=sos_10.png> Current Time: [worldtime2text()]<br>
+		<img src=sos_9.png> Battery Life: [round(cell.charge/100)]%<br>
+		<img src=sos_11.png> Smoke Bombs: \Roman [s_bombs]<br>
+		<img src=sos_14.png> pai Device: "}
 	if(pai)
-		dat += "<a href='byond://?src=\ref[src];choice=Configure pAI'>Configure</a>"
-		dat += " | "
-		dat += "<a href='byond://?src=\ref[src];choice=Eject pAI'>Eject</a>"
+		dat += {"
+		<a href='byond://?src=\ref[src];choice=Configure pAI'>Configure</a>
+		 |
+		<a href='byond://?src=\ref[src];choice=Eject pAI'>Eject</a>"}
 	else
 		dat += "None Detected"
 	dat += "<br><br>"
 
 	switch(spideros)
 		if(0)
-			dat += "<h4><img src=sos_1.png> Available Functions:</h4>"
-			dat += "<ul>"
-			dat += "<li><a href='byond://?src=\ref[src];choice=7'><img src=sos_4.png> Research Stored</a></li>"
+			dat += {"<h4><img src=sos_1.png> Available Functions:</h4>
+				<ul>
+				<li><a href='byond://?src=\ref[src];choice=7'><img src=sos_4.png> Research Stored</a></li>"}
 			if(s_control)
 				if(AI)
 					dat += "<li><a href='byond://?src=\ref[src];choice=5'><img src=sos_13.png> AI Status</a></li>"
 			else
-				dat += "<li><a href='byond://?src=\ref[src];choice=Shock'><img src=sos_4.png> Shock [U.real_name]</a></li>"
-				dat += "<li><a href='byond://?src=\ref[src];choice=6'><img src=sos_6.png> Activate Abilities</a></li>"
-			dat += "<li><a href='byond://?src=\ref[src];choice=3'><img src=sos_3.png> Medical Screen</a></li>"
-			dat += "<li><a href='byond://?src=\ref[src];choice=1'><img src=sos_5.png> Atmos Scan</a></li>"
-			dat += "<li><a href='byond://?src=\ref[src];choice=2'><img src=sos_12.png> Messenger</a></li>"
+				dat += {"<li><a href='byond://?src=\ref[src];choice=Shock'><img src=sos_4.png> Shock [U.real_name]</a></li>
+					<li><a href='byond://?src=\ref[src];choice=6'><img src=sos_6.png> Activate Abilities</a></li>"}
+			dat += {"<li><a href='byond://?src=\ref[src];choice=3'><img src=sos_3.png> Medical Screen</a></li>
+				<li><a href='byond://?src=\ref[src];choice=1'><img src=sos_5.png> Atmos Scan</a></li>
+				<li><a href='byond://?src=\ref[src];choice=2'><img src=sos_12.png> Messenger</a></li>"}
 			if(s_control)
 				dat += "<li><a href='byond://?src=\ref[src];choice=4'><img src=sos_6.png> Other</a></li>"
 			dat += "</ul>"
 		if(3)
 			dat += "<h4><img src=sos_3.png> Medical Report:</h4>"
 			if(U.dna)
-				dat += "<b>Fingerprints</b>: <i>[md5(U.dna.uni_identity)]</i><br>"
-				dat += "<b>Unique identity</b>: <i>[U.dna.unique_enzymes]</i><br>"
-			dat += "<h4>Overall Status: [U.stat > 1 ? "dead" : "[U.health]% healthy"]</h4>"
-			dat += "<h4>Nutrition Status: [U.nutrition]</h4>"
-			dat += "Oxygen loss: [U.getOxyLoss()]"
-			dat += " | Toxin levels: [U.getToxLoss()]<br>"
-			dat += "Burn severity: [U.getFireLoss()]"
-			dat += " | Brute trauma: [U.getBruteLoss()]<br>"
-			dat += "Radiation Level: [U.radiation] rad<br>"
-			dat += "Body Temperature: [U.bodytemperature-T0C]&deg;C ([U.bodytemperature*1.8-459.67]&deg;F)<br>"
+				dat += {"<b>Fingerprints</b>: <i>[md5(U.dna.uni_identity)]</i><br>
+					<b>Unique identity</b>: <i>[U.dna.unique_enzymes]</i><br>"}
+			dat += {"<h4>Overall Status: [U.stat > 1 ? "dead" : "[U.health]% healthy"]</h4>
+				<h4>Nutrition Status: [U.nutrition]</h4>
+				Oxygen loss: [U.getOxyLoss()]
+				 | Toxin levels: [U.getToxLoss()]<br>
+				Burn severity: [U.getFireLoss()]
+				 | Brute trauma: [U.getBruteLoss()]<br>
+				Radiation Level: [U.radiation] rad<br>
+				Body Temperature: [U.bodytemperature-T0C]&deg;C ([U.bodytemperature*1.8-459.67]&deg;F)<br>"}
 
 			for(var/datum/disease/D in U.viruses)
 				dat += "Warning: Virus Detected. Name: [D.name].Type: [D.spread]. Stage: [D.stage]/[D.max_stages]. Possible Cure: [D.cure].<br>"
@@ -325,12 +325,12 @@ ________________________________________________________________________________
 					var/co2_level = environment.carbon_dioxide/total_moles
 					var/plasma_level = environment.toxins/total_moles
 					var/unknown_level =  1-(o2_level+n2_level+co2_level+plasma_level)
-					dat += "<ul>"
-					dat += "<li>Nitrogen: [round(n2_level*100)]%</li>"
-					dat += "<li>Oxygen: [round(o2_level*100)]%</li>"
-					dat += "<li>Carbon Dioxide: [round(co2_level*100)]%</li>"
-					dat += "<li>Plasma: [round(plasma_level*100)]%</li>"
-					dat += "</ul>"
+					dat += {"<ul>
+						<li>Nitrogen: [round(n2_level*100)]%</li>
+						<li>Oxygen: [round(o2_level*100)]%</li>
+						<li>Carbon Dioxide: [round(co2_level*100)]%</li>
+						<li>Plasma: [round(plasma_level*100)]%</li>
+						</ul>"}
 					if(unknown_level > 0.01)
 						dat += "OTHER: [round(unknown_level)]%<br>"
 
@@ -338,15 +338,19 @@ ________________________________________________________________________________
 		if(2)
 			if(k_unlock==7||!s_control)
 				dat += "<a href='byond://?src=\ref[src];choice=32'><img src=sos_1.png> Hidden Menu</a>"
-			dat += "<h4><img src=sos_12.png> Anonymous Messenger:</h4>"//Anonymous because the receiver will not know the sender's identity.
-			dat += "<h4><img src=sos_6.png> Detected PDAs:</h4>"
-			dat += "<ul>"
+			dat += {"<h4><img src=sos_12.png> Anonymous Messenger:</h4>
+				<h4><img src=sos_6.png> Detected PDAs:</h4>
+				<ul>"}
 			var/count = 0
 			for (var/obj/item/device/pda/P in world)
 				if (!P.owner||P.toff)
 					continue
-				dat += "<li><a href='byond://?src=\ref[src];choice=Message;target=\ref[P]'>[P]</a>"
-				dat += "</li>"
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\gamemodes\events\ninja_equipment.dm:348: dat += "<li><a href='byond://?src=\ref[src];choice=Message;target=\ref[P]'>[P]</a>"
+				dat += {"<li><a href='byond://?src=\ref[src];choice=Message;target=\ref[P]'>[P]</a>
+					</li>"}
+				// END AUTOFIX
 				count++
 			dat += "</ul>"
 			if (count == 0)
@@ -354,15 +358,15 @@ ________________________________________________________________________________
 		if(32)
 			dat += "<h4><img src=sos_1.png> Hidden Menu:</h4>"
 			if(s_control)
-				dat += "Please input password: "
-				dat += "<a href='byond://?src=\ref[src];choice=Unlock Kamikaze'><b>HERE</b></a><br>"
-				dat += "<br>"
-				dat += "Remember, you will not be able to recharge energy during this function. If energy runs out, the suit will auto self-destruct.<br>"
-				dat += "Use with caution. De-initialize the suit when energy is low."
+				dat += {"Please input password:
+					<a href='byond://?src=\ref[src];choice=Unlock Kamikaze'><b>HERE</b></a><br>
+					<br>
+					Remember, you will not be able to recharge energy during this function. If energy runs out, the suit will auto self-destruct.<br>
+					Use with caution. De-initialize the suit when energy is low."}
 			else
 				//Only leaving this in for funnays. CAN'T LET YOU DO THAT STAR FOX
-				dat += "<b>WARNING</b>: Hostile runtime intrusion detected: operation locked. The Spider Clan is watching you, <b>INTRUDER</b>."
-				dat += "<b>ERROR</b>: TARANTULA.v.4.77.12 encryption algorithm detected. Unable to decrypt archive.<br>"
+				dat += {"<b>WARNING</b>: Hostile runtime intrusion detected: operation locked. The Spider Clan is watching you, <b>INTRUDER</b>.
+					<b>ERROR</b>: TARANTULA.v.4.77.12 encryption algorithm detected. Unable to decrypt archive.<br>"}
 		if(4)
 			dat += {"
 					<h4><img src=sos_6.png> Ninja Manual:</h4>
@@ -413,9 +417,12 @@ ________________________________________________________________________________
 			dat += "<h4><img src=sos_13.png> AI Control:</h4>"
 			//var/mob/living/silicon/ai/A = AI
 			if(AI)//If an AI exists.
-				dat += "Stored AI: <b>[A.name]</b><br>"
-				dat += "System integrity: [(A.health+100)/2]%<br>"
 
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\gamemodes\events\ninja_equipment.dm:416: dat += "Stored AI: <b>[A.name]</b><br>"
+				dat += {"Stored AI: <b>[A.name]</b><br>
+					System integrity: [(A.health+100)/2]%<br>"}
+				// END AUTOFIX
 				//I personally think this makes things a little more fun. Ninjas can override all but law 0.
 				//if (A.laws.zeroth)
 				//	laws += "<li>0: [A.laws.zeroth]</li>"
@@ -467,8 +474,12 @@ ________________________________________________________________________________
 			dat += "<ul>"
 			if(istype(stored_research,/list))//If there is stored research. Should be but just in case.
 				for(var/datum/tech/current_data in stored_research)
-					dat += "<li>"
-					dat += "[current_data.name]: [current_data.level]"
+
+					// AUTOFIXED BY fix_string_idiocy.py
+					// C:\Users\Rob\Documents\Projects\vgstation13\code\game\gamemodes\events\ninja_equipment.dm:470: dat += "<li>"
+					dat += {"<li>
+						[current_data.name]: [current_data.level]"}
+					// END AUTOFIX
 					if(t_disk)//If there is a disk inserted. We can either write or overwrite.
 						dat += " <a href='byond://?src=\ref[src];choice=Copy to Disk;target=\ref[current_data]'><i>*Copy to Disk</i></a><br>"
 					dat += "</li>"
@@ -872,10 +883,12 @@ ________________________________________________________________________________
 		spawn(0)
 			anim(U.loc,U,'icons/mob/mob.dmi',,"cloak",,U.dir)
 		s_active=!s_active
-		U.update_icons()	//update their icons
+		icon_state = U.gender==FEMALE ? "s-ninjasf" : "s-ninjas"
+		U.regenerate_icons()	//update their icons
 		U << "\blue You are now invisible to normal detection."
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] vanishes into thin air!",1)
+		U.invisibility = INVISIBILITY_OBSERVER
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/cancel_stealth()
@@ -884,10 +897,12 @@ ________________________________________________________________________________
 		spawn(0)
 			anim(U.loc,U,'icons/mob/mob.dmi',,"uncloak",,U.dir)
 		s_active=!s_active
-		U.update_icons()	//update their icons
 		U << "\blue You are now visible."
+		U.invisibility = 0
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] appears from thin air!",1)
+		icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
+		U.regenerate_icons()	//update their icons
 		return 1
 	return 0
 

@@ -7,6 +7,9 @@ import urllib
 import json
 import logging
 import logging.handlers
+import shutil
+import cPickle
+import HTMLParser
 
 MONITOR = ('127.0.0.1',1336) # IP, port.
 RESTART_COMMAND="/home/gmod/byond/ss13.sh" # What shell script restarts SS13?
@@ -14,7 +17,8 @@ COMPILE_COMMAND="/home/gmod/byond/compile_ss13.sh" # What shell script should be
 STATS_FILE='/home/gmod/stats.json' # Where do you want stats.json placed?
 
 MAX_FAILURES=3
-TIMEOUT=30.0
+TIMEOUT=30.0 # 30 seconds
+WAIT_FOR_SERVER_RESPONSE=True # Wait for server to write ready4update.txt before running COMPILE_COMMAND?
 
 LOGPATH='/home/gmod/byond/crashlogs/' # Where do you want crash.log stored?
 GAMEPATH='/home/gmod/byond/tgstation/' # Where is the game directory?
@@ -22,6 +26,29 @@ CONFIGPATH='/home/gmod/byond/config/' # Where is your current list of config fil
 
 GIT_REMOTE='origin'
 GIT_BRANCH='Bleeding-Edge'
+
+NUDGE_IP='localhost'
+
+def send_nudge(message):
+	if NUDGE_IP is None:
+		return
+
+	ht = HTMLParser.HTMLParser()
+	blocks = []
+	try:
+		for in_data in message.split(' '): #The rest of the arguments is data
+			blocks += {ht.unescape(in_data)}
+	except:
+		blocks = "NO DATA SPECIFIED"
+	dictionary = {"ip":NUDGE_IP,"data":blocks}
+	data = cPickle.dumps(dictionary)
+	HOST = "localhost"
+	PORT = 45678
+	size = 1024
+	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	s.connect((HOST,PORT))
+	s.send(data)
+	s.close()
 
 def git_commit():
 	try:
@@ -43,8 +70,87 @@ def git_branch():
 		pass
 	return '[UNKNOWN]'
 	
+def Compile(serverState):
+	global waiting_for_next_commit
+	currentCommit = git_commit()
+	currentBranch = git_branch()
+	
+	# Compile
+	log.info('Code is at {0} ({1}).  Triggering compile.'.format(currentCommit,currentBranch))
+	stdout,stderr = subprocess.Popen(COMPILE_COMMAND,shell=True, stdout=subprocess.PIPE).communicate()
+	failed=False
+	if stdout:
+		for line in stdout.split('\n'):
+			if 'error:' in line:
+				send_nudge('COMPILE ERROR: {0}'.format(line))
+				failed=True
+				logging.error(line)
+			else:
+				logging.info(line)
+				
+	waiting_for_next_commit = not failed
+	if failed:
+		send_nudge('Compile failed. Waiting for next commit.')
+		log.info('Compile failed. Waiting for next commit.')
+		return
+	
+	# Update MOTD
+	inputRules=os.path.join(CONFIGPATH,'motd.txt')
+	outputRules=os.path.join(GAMEPATH,'config','motd.txt')
+	with open(inputRules,'r') as template:
+		with open(outputRules,'w') as motd:
+			for _line in template:
+				line=_line.format(GIT_BRANCH=GIT_BRANCH,GIT_REMOTE=GIT_REMOTE,GIT_COMMIT=currentCommit)
+				motd.write(line)
+	lastCommit=currentCommit
+	os.chdir(cwd)
+
+	if serverState:
+		send_nudge('Update completed. Restarting...')
+		log.info('Server updated. Restarting...')
+	
+	# Recheck in a bit to be sure
+	lastState=False
+	
+	subprocess.call(RESTART_COMMAND,shell=True)
+	
+def PerformServerReadyCheck(serverState):
+	global waiting_on_server_response
+	global last_response
+	if not waiting_on_server_response:
+		return
+	currentCommit = git_commit()
+	currentBranch = git_branch()
+	
+	updatereadyfile=os.path.join(GAMEPATH,'data','UPDATE_READY.txt')
+	serverreadyfile=os.path.join(GAMEPATH,'data','SERVER_READY.txt')
+	srf_exists=os.path.isfile(serverreadyfile)
+	if not srf_exists and 'players' in last_response:
+		srf_exists = last_response['players'] == 0
+	nudgemsg="Server has "
+	if (srf_exists):
+		nudgemsg += "sent the READY signal."
+	elif (not serverState):
+		nudgemsg += "exited."
+	if srf_exists or not serverState:
+		send_nudge(nudgemsg+' Now recompiling.')
+		waiting_on_server_response=False
+		if srf_exists:
+			os.remove(serverreadyfile)
+		if os.path.isfile(updatereadyfile):
+			os.remove(updatereadyfile)
+		Compile(serverState)
+
 def checkForUpdate(serverState):
-	global GIT_REMOTE,GIT_BRANCH,COMPILE_COMMAND,GAMEPATH,CONFIGPATH,lastCommit
+	global GIT_REMOTE
+	global GIT_BRANCH
+	global COMPILE_COMMAND
+	global GAMEPATH
+	global CONFIGPATH
+	global WAIT_FOR_SERVER_RESPONSE
+	global lastCommit
+	global waiting_on_server_response
+	global waiting_for_next_commit
 	cwd=os.getcwd()
 	os.chdir(GAMEPATH)
 	#subprocess.call('git pull -q -s recursive -X theirs {0} {1}'.format(GIT_REMOTE,GIT_BRANCH),shell=True)
@@ -53,32 +159,47 @@ def checkForUpdate(serverState):
 	currentCommit = git_commit()
 	currentBranch = git_branch()
 	if currentCommit != lastCommit and lastCommit is not None:
+		lastCommit=currentCommit
+		send_nudge('Updating server to {GIT_REMOTE}/{GIT_COMMIT}!'.format(GIT_REMOTE=GIT_REMOTE,GIT_COMMIT=currentCommit))
 		subprocess.call('git reset --hard {0}/{1}'.format(GIT_REMOTE,GIT_BRANCH),shell=True) 
-		subprocess.call('cp -av {0} {1}'.format(CONFIGPATH,GAMEPATH),shell=True)
-		log.info('Updated to {0} ({1}).  Triggering compile.'.format(currentCommit,currentBranch))
-		subprocess.call(COMPILE_COMMAND,shell=True)
-		updateTrigger=os.path.join(GAMEPATH,'data','UPDATE_READY.txt')
-		if not os.path.isdir(os.path.dirname(updateTrigger)):
-			os.makedirs(os.path.dirname(updateTrigger))
-		if serverState:
-			log.info('Server will restart after round ends.')
-			with open(updateTrigger,'w') as f:
-				f.write('honk')
+		subprocess.call('cp -a {0} {1}'.format(CONFIGPATH,GAMEPATH),shell=True)
+
+		# Copy bot config, if it exists.
+		botConfigSource=os.path.join(GAMEPATH,'config','CORE_DATA.py')
+		botConfigDest=os.path.join(GAMEPATH,'bot','CORE_DATA.py')
+		if os.path.isfile(botConfigSource):
+			if os.path.isfile(botConfigDest):
+				os.remove(botConfigDest)
+				log.warn('rm {0}'.format(botConfigDest))
+			shutil.move(botConfigSource,botConfigDest)
+			log.warn('mv {0} {1}'.format(botConfigSource,botConfigDest))
+
+		# Copy gamemode, if it exists.
+		botConfigSource=os.path.join(GAMEPATH,'config','mode.txt')
+		botConfigDest=os.path.join(GAMEPATH,'data','mode.txt')
+		if os.path.isfile(botConfigSource):
+			if os.path.isfile(botConfigDest):
+				os.remove(botConfigDest)
+				log.warn('rm {0}'.format(botConfigDest))
+			shutil.move(botConfigSource,botConfigDest)
+			log.warn('mv {0} {1}'.format(botConfigSource,botConfigDest))
+	
+		if waiting_for_next_commit:
+			Compile(serverState)
+			return
+			
+		if WAIT_FOR_SERVER_RESPONSE:
+			if not waiting_on_server_response:
+				waiting_on_server_response=True
+				send_nudge('Waiting for server to exit.')
+				with open(os.path.join(GAMEPATH,'data','UPDATE_READY.txt'),'w') as updatenotice:
+					updatenotice.write('{GIT_REMOTE}/{GIT_BRANCH} {GIT_COMMIT}'.format(GIT_REMOTE=GIT_REMOTE,GIT_COMMIT=currentCommit,GIT_BRANCH=currentBranch))
+			PerformServerReadyCheck(serverState)
+			return
 		else:
-			if os.path.isfile(updateTrigger):
-				os.remove(updateTrigger)
-	# Update MOTD
-	inputRules=os.path.join(CONFIGPATH,'motd.txt')
-	outputRules=os.path.join(GAMEPATH,'config','motd.txt')
-	with open(inputRules,'r') as template:
-		with open(outputRules,'w') as motd:
-			for _line in template:
-				line=_line.replace('{GIT_BRANCH}',GIT_BRANCH)
-				line=line.replace('{GIT_REMOTE}',GIT_REMOTE)
-				line=line.replace('{GIT_COMMIT}',currentCommit)
-				motd.write(line)
-	lastCommit=currentCommit
-	os.chdir(cwd)
+			Compile(serverState)
+	else:
+		PerformServerReadyCheck(serverState)
 
 # Return True for success, False otherwise.
 def open_socket():
@@ -113,6 +234,7 @@ def decode_packet(packet):
 	return b''
 				
 def ping_server(request):
+	global last_response
 	try:
 		# Snippet below from http://pastebin.com/TGhPBPGp
 		#==============================================================
@@ -163,6 +285,7 @@ def ping_server(request):
 					parsed_response[dt[0]] = ''
 					if len(dt) == 2:
 						parsed_response[dt[0]] = urllib.unquote(dt[1])
+			last_response=parsed_response
 			#print 'Received: ', repr(parsed_response) #, response
 			# {'ai': '1', 'respawn': '0', 'admins': '0', 'players': '0', 'host': '', 'version': '/vg/+Station+13', 'mode': 'secret', 'enter': '1', 'vote': '0'}
 			with open(STATS_FILE,'w') as f:
@@ -195,36 +318,50 @@ log.addHandler(consoleHandler)
 
 log.info('-----')
 log.info('/vg/station Watchdog: Started.')
+send_nudge('Watchdog script restarted.')
 lastState=True
 failChain=0
 firstRun=True
 lastCommit=None
+lastResponse={}
 cwd=os.getcwd()
 os.chdir(GAMEPATH)
 lastCommit=git_commit()
 currentBranch=git_branch()
+waiting_on_server_response=False
+waiting_for_next_commit=False
 os.chdir(cwd)
 log.info('Git repository on branch {1}, commit {0}.'.format(lastCommit,currentBranch))
 while True:
+	if waiting_for_next_commit:
+		checkForUpdate(False)
+		if waiting_for_next_commit:
+			time.sleep(50)
+			continue
 	if not ping_server(b'?status'):
 		# try to start the server again
 		checkForUpdate(False)
 		failChain += 1
 		if lastState == False:
 			if failChain > MAX_FAILURES:
+				send_nudge('Watchdog script has failed to restart the server.')
 				log.error('Too many failures, quitting!')
 				sys.exit(1)
 			log.error('Try {0}/{1}...'.format(failChain,MAX_FAILURES))
+			send_nudge('Try {0}/{1}...'.format(failChain,MAX_FAILURES))
 		else:
 			log.error("Detected a problem, attempting restart ({0}/{1}).".format(failChain,MAX_FAILURES))
+			send_nudge('Attempting restart ({0}/{1})...'.format(failChain,MAX_FAILURES))
 		subprocess.call(RESTART_COMMAND,shell=True)
 		time.sleep(50) # Sleep 50 seconds for a total of almost 2 minutes before we ping again.
 		lastState=False
 	else:
 		if lastState == False:
 			log.info('Server is confirmed to be back up and running.')
+			send_nudge('Server is back online and responding to queries.')
 		if firstRun:
 			log.info('Server is confirmed to be up and running.')
+			send_nudge('Server is online and responding to queries.')
 		else:
 			checkForUpdate(True)
 		

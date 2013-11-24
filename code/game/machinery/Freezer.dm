@@ -11,6 +11,17 @@
 
 	New()
 		..()
+		component_parts = list()
+		component_parts += new /obj/item/weapon/circuitboard/freezer
+		component_parts += new /obj/item/weapon/stock_parts/manipulator
+		component_parts += new /obj/item/weapon/stock_parts/manipulator
+		component_parts += new /obj/item/weapon/stock_parts/manipulator
+		component_parts += new /obj/item/weapon/stock_parts/scanning_module
+		component_parts += new /obj/item/weapon/stock_parts/scanning_module
+		component_parts += new /obj/item/weapon/stock_parts/micro_laser
+		component_parts += new /obj/item/weapon/stock_parts/console_screen
+		RefreshParts()
+
 		initialize_directions = dir
 
 	initialize()
@@ -157,6 +168,17 @@
 
 	New()
 		..()
+		component_parts = list()
+		component_parts += new /obj/item/weapon/circuitboard/heater
+		component_parts += new /obj/item/weapon/stock_parts/manipulator
+		component_parts += new /obj/item/weapon/stock_parts/manipulator
+		component_parts += new /obj/item/weapon/stock_parts/manipulator
+		component_parts += new /obj/item/weapon/stock_parts/scanning_module
+		component_parts += new /obj/item/weapon/stock_parts/scanning_module
+		component_parts += new /obj/item/weapon/stock_parts/micro_laser
+		component_parts += new /obj/item/weapon/stock_parts/console_screen
+		RefreshParts()
+
 		initialize_directions = dir
 
 	initialize()

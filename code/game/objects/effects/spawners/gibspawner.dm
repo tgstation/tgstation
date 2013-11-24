@@ -17,7 +17,7 @@
 			..()
 
 	xeno
-		gibtypes = list(/obj/effect/decal/cleanable/xenoblood/xgibs/up,/obj/effect/decal/cleanable/xenoblood/xgibs/down,/obj/effect/decal/cleanable/xenoblood/xgibs,/obj/effect/decal/cleanable/xenoblood/xgibs,/obj/effect/decal/cleanable/xenoblood/xgibs/body,/obj/effect/decal/cleanable/xenoblood/xgibs/limb,/obj/effect/decal/cleanable/xenoblood/xgibs/core)
+		gibtypes = list(/obj/effect/decal/cleanable/blood/xeno/xgibs/up,/obj/effect/decal/cleanable/blood/xeno/xgibs/down,/obj/effect/decal/cleanable/blood/xeno/xgibs,/obj/effect/decal/cleanable/blood/xeno/xgibs,/obj/effect/decal/cleanable/blood/xeno/xgibs/body,/obj/effect/decal/cleanable/blood/xeno/xgibs/limb,/obj/effect/decal/cleanable/blood/xeno/xgibs/core)
 		gibamounts = list(1,1,1,1,1,1,1)
 
 		New()
@@ -27,7 +27,7 @@
 
 	robot
 		sparks = 1
-		gibtypes = list(/obj/effect/decal/cleanable/robot_debris/up,/obj/effect/decal/cleanable/robot_debris/down,/obj/effect/decal/cleanable/robot_debris,/obj/effect/decal/cleanable/robot_debris,/obj/effect/decal/cleanable/robot_debris,/obj/effect/decal/cleanable/robot_debris/limb)
+		gibtypes = list(/obj/effect/decal/cleanable/blood/robot/up,/obj/effect/decal/cleanable/blood/robot/down,/obj/effect/decal/cleanable/blood/robot,/obj/effect/decal/cleanable/blood/robot,/obj/effect/decal/cleanable/blood/robot,/obj/effect/decal/cleanable/blood/robot/limb)
 		gibamounts = list(1,1,1,1,1,1)
 
 		New()

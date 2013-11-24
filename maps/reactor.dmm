@@ -12,7 +12,7 @@
 "l" = (/obj/structure/cable/heavyduty{tag = "icon-4-8"; icon_state = "4-8"},/obj/machinery/atmospherics/trinary/filter{dir = 1; filter_type = 1; icon_state = "intact_on"; name = "Gas filter (O2 tank)"; on = 1; pressure_resistance = 4500},/turf/simulated/floor,/area)
 "m" = (/obj/machinery/power/generator_type2{dir = 8},/obj/structure/cable/heavyduty{tag = "icon-0-8"; icon_state = "0-8"},/obj/machinery/atmospherics/pipe/simple/supply/visible{tag = "icon-intact-b (WEST)"; icon_state = "intact-b"; dir = 8},/turf/simulated/floor,/area)
 "n" = (/obj/machinery/atmospherics/pipe/manifold/supply/visible{icon_state = "manifold-b"; dir = 4},/turf/simulated/floor,/area)
-"o" = (/obj/machinery/atmospherics/pipe/tank{icon = 'orange_pipe_tank.dmi'},/turf/simulated/floor,/area)
+"o" = (/obj/machinery/atmospherics/pipe/tank{icon = 'icons/obj/atmospherics/orange_pipe_tank.dmi'},/turf/simulated/floor,/area)
 "p" = (/obj/machinery/power/smes,/obj/structure/cable,/turf/simulated/floor,/area)
 "q" = (/obj/structure/cable/heavyduty,/obj/machinery/power/terminal{dir = 8},/obj/machinery/atmospherics/pipe/simple/supply/visible,/turf/simulated/floor,/area)
 "r" = (/obj/machinery/atmospherics/trinary/filter{dir = 1; icon_state = "intact_on"; name = "Gas filter (Toxins tank)"; on = 1; pressure_resistance = 4500},/turf/simulated/floor,/area)

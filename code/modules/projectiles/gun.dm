@@ -30,6 +30,15 @@
 	var/tmp/told_cant_shoot = 0 //So that it doesn't spam them with the fact they cannot hit them.
 	var/firerate = 1 	// 0 for one bullet after tarrget moves and aim is lowered,
 						//1 for keep shooting until aim is lowered
+	var/fire_delay = 2
+	var/last_fired = 0
+
+	proc/ready_to_fire()
+		if(world.time >= last_fired + fire_delay)
+			last_fired = world.time
+			return 1
+		else
+			return 0
 
 	proc/load_into_chamber()
 		return 0
@@ -73,8 +82,13 @@
 			M << "\red Your meaty finger is much too large for the trigger guard!"
 			return
 	if(ishuman(user))
+		var/mob/living/carbon/human/H=user
 		if(user.dna && user.dna.mutantrace == "adamantine")
 			user << "\red Your metal fingers don't fit in the trigger guard!"
+			return
+		var/datum/organ/external/a_hand = H.get_active_hand_organ()
+		if(!a_hand.can_use_advanced_tools())
+			user << "\red Your [a_hand] doesn't have the dexterity to do this!"
 			return
 
 	add_fingerprint(user)
@@ -87,12 +101,18 @@
 	if(!special_check(user))
 		return
 
+	if (!ready_to_fire())
+		if (world.time % 3) //to prevent spam
+			user << "<span class='warning'>[src] is not ready to fire again!"
+		return
+
 	if(!load_into_chamber()) //CHECK
 		return click_empty(user)
 
 	if(!in_chamber)
 		return
-
+	if(!istype(src, /obj/item/weapon/gun/energy/laser/redtag) && !istype(src, /obj/item/weapon/gun/energy/laser/redtag))
+		log_attack("[user.name] ([user.ckey]) fired \the [src] (proj:[in_chamber.name]) at [target] [ismob(target) ? "([target:ckey])" : ""] ([target.x],[target.y],[target.z])" )
 	in_chamber.firer = user
 	in_chamber.def_zone = user.zone_sel.selecting
 	if(targloc == curloc)
@@ -187,15 +207,15 @@
 			mouthshoot = 0
 			return
 
-	if (load_into_chamber())
+	if (src.load_into_chamber())
 		//Point blank shooting if on harm intent or target we were targeting.
 		if(user.a_intent == "hurt")
 			user.visible_message("\red <b> \The [user] fires \the [src] point blank at [M]!</b>")
 			in_chamber.damage *= 1.3
-			Fire(M,user)
+			src.Fire(M,user,0,0,1)
 			return
 		else if(target && M in target)
-			Fire(M,user) ///Otherwise, shoot!
+			src.Fire(M,user,0,0,1) ///Otherwise, shoot!
 			return
 	else
 		return ..() //Pistolwhippin'

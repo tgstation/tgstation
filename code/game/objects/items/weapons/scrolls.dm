@@ -14,11 +14,15 @@
 /obj/item/weapon/teleportation_scroll/attack_self(mob/user as mob)
 	user.set_machine(src)
 	var/dat = "<B>Teleportation Scroll:</B><BR>"
-	dat += "Number of uses: [src.uses]<BR>"
-	dat += "<HR>"
-	dat += "<B>Four uses use them wisely:</B><BR>"
-	dat += "<A href='byond://?src=\ref[src];spell_teleport=1'>Teleport</A><BR>"
-	dat += "Kind regards,<br>Wizards Federation<br><br>P.S. Don't forget to bring your gear, you'll need it to cast most spells.<HR>"
+
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\weapons\scrolls.dm:17: dat += "Number of uses: [src.uses]<BR>"
+	dat += {"Number of uses: [src.uses]<BR>
+		<HR>
+		<B>Four uses use them wisely:</B><BR>
+		<A href='byond://?src=\ref[src];spell_teleport=1'>Teleport</A><BR>
+		Kind regards,<br>Wizards Federation<br><br>P.S. Don't forget to bring your gear, you'll need it to cast most spells.<HR>"}
+	// END AUTOFIX
 	user << browse(dat, "window=scroll")
 	onclose(user, "scroll")
 	return

@@ -153,15 +153,15 @@
 
 	var/t = "<TT><B>Gas Turbine Generator</B><HR><PRE>"
 
-	t += "Generated power : [round(lastgen)] W<BR><BR>"
 
-	t += "Turbine: [round(compressor.rpm)] RPM<BR>"
-
-	t += "Starter: [ compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]"
-
-	t += "</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>"
-
-	t += "</TT>"
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\turbine.dm:156: t += "Generated power : [round(lastgen)] W<BR><BR>"
+	t += {"Generated power : [round(lastgen)] W<BR><BR>
+		Turbine: [round(compressor.rpm)] RPM<BR>
+		Starter: [ compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]
+		</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>
+		</TT>"}
+	// END AUTOFIX
 	user << browse(t, "window=turbine")
 	onclose(user, "turbine")
 
@@ -212,11 +212,11 @@
 /obj/machinery/computer/turbine_computer/New()
 	..()
 	spawn(5)
-		for(var/obj/machinery/compressor/C in world)
+		for(var/obj/machinery/compressor/C in machines)
 			if(id == C.comp_id)
 				compressor = C
 		doors = new /list()
-		for(var/obj/machinery/door/poddoor/P in world)
+		for(var/obj/machinery/door/poddoor/P in machines)
 			if(P.id == id)
 				doors += P
 

@@ -267,12 +267,12 @@
 				if(prob(round((50 - nutrition) / 100)))
 					src << "\blue You feel fit again!"
 					mutations.Remove(FAT)
-/*		else
+		else
 			if(nutrition > 500)
 				if(prob(5 + round((nutrition - 200) / 2)))
 					src << "\red You suddenly feel blubbery!"
 					mutations.Add(FAT)
- FUCK YOU FATCODE -Hawk */
+
 		if (nutrition > 0)
 			nutrition -= HUNGER_FACTOR
 
@@ -383,13 +383,13 @@
 			sight |= SEE_MOBS
 			sight |= SEE_OBJS
 			see_in_dark = 8
-			see_invisible = SEE_INVISIBLE_LEVEL_TWO
+			see_invisible = SEE_INVISIBLE_MINIMUM
 		else if (stat != 2)
 			sight |= SEE_MOBS
 			sight &= ~SEE_TURFS
 			sight &= ~SEE_OBJS
 			see_in_dark = 4
-			see_invisible = SEE_INVISIBLE_LEVEL_TWO
+			see_invisible = SEE_INVISIBLE_MINIMUM
 
 		if (healths)
 			if (stat != 2)

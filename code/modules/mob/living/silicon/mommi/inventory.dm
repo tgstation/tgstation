@@ -6,7 +6,11 @@
 	return module_active
 
 /mob/living/silicon/robot/mommi/proc/is_in_modules(obj/item/W)
-	var/obj/item/found = locate(W) in src.module.modules
+	var/obj/item/found
+	if(istype(W, src.module.emag.type))
+		found = W
+	else
+		found = locate(W) in src.module.modules
 	return found
 /mob/living/silicon/robot/mommi/put_in_hands(var/obj/item/W)
 	// Fixing NPEs caused by PDAs giving me NULLs to hold :V - N3X
@@ -20,18 +24,25 @@
 		return 0
 	if(tool_state)
 		//var/obj/item/found = locate(tool_state) in src.module.modules
+		var/obj/item/TS = tool_state
 		if(!is_in_modules(tool_state))
-			var/obj/item/TS = tool_state
 			drop_item()
 			if(TS && TS.loc)
 				TS.loc = src.loc
+		else
+			TS.loc = src.module
 		contents -= tool_state
 		if (client)
 			client.screen -= tool_state
 	tool_state = W
 	W.layer = 20
 	contents += W
-	inv_tool.icon_state = "inv1"
+
+	// Make crap we pick up active so there's less clicking and carpal. - N3X
+	module_active=tool_state
+	inv_tool.icon_state = "inv1 +a"
+	inv_sight.icon_state = "sight"
+
 	update_items()
 	return 1
 
@@ -57,6 +68,8 @@
 // Override the default /mob version since we only have one hand slot.
 /mob/living/silicon/robot/mommi/put_in_active_hand(var/obj/item/W)
 	// If we have anything active, deactivate it.
+	if(!W)
+		return 0
 	if(get_active_hand())
 		uneq_active()
 	return put_in_hands(W)
@@ -98,9 +111,11 @@
 /*-------TODOOOOOOOOOO--------*/
 // Called by store button
 /mob/living/silicon/robot/mommi/uneq_active()
+	var/obj/item/TS
 	if(isnull(module_active))
 		return
 	if(sight_state == module_active)
+		TS = sight_state
 		if(istype(sight_state,/obj/item/borg/sight))
 			sight_mode &= ~sight_state:sight_mode
 		if (client)
@@ -111,8 +126,8 @@
 		inv_sight.icon_state = "sight"
 	if(tool_state == module_active)
 		//var/obj/item/found = locate(tool_state) in src.module.modules
-		if(!is_in_modules(tool_state))
-			var/obj/item/TS = tool_state
+		TS = tool_state
+		if(!is_in_modules(TS))
 			drop_item()
 
 			if(TS && TS.loc)
@@ -125,6 +140,8 @@
 		module_active = null
 		tool_state = null
 		inv_tool.icon_state = "inv1"
+	if(is_in_modules(TS))
+		TS.loc = src.module
 
 /mob/living/silicon/robot/mommi/uneq_all()
 	module_active = null

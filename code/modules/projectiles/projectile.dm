@@ -94,7 +94,15 @@
 				var/obj/item/weapon/gun/daddy = shot_from //Kinda balanced by fact you need like 2 seconds to aim
 				if (daddy.target && original in daddy.target) //As opposed to no-delay pew pew
 					miss_modifier += -30
-			def_zone = get_zone_with_miss_chance(def_zone, M, -30 + 8*distance)
+			if(istype(src, /obj/item/projectile/beam/lightning)) //Lightning is quite accurate
+				miss_modifier += -200
+				def_zone = get_zone_with_miss_chance(def_zone, M, miss_modifier)
+				var/turf/simulated/floor/f = get_turf(A.loc)
+				if(f && istype(f))
+					f.break_tile()
+					f.hotspot_expose(1000,CELL_VOLUME)
+			else
+				def_zone = get_zone_with_miss_chance(def_zone, M, miss_modifier + 8*distance)
 
 			if(!def_zone)
 				visible_message("\blue \The [src] misses [M] narrowly!")
@@ -105,14 +113,15 @@
 				else
 					visible_message("\red [A.name] is hit by the [src.name] in the [parse_zone(def_zone)]!")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 				if(istype(firer, /mob))
+					log_attack("<font color='red'>[firer] ([firer.ckey]) shot [M] ([M.ckey]) with a [src.type]</font>")
 					M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
 					firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
-					log_attack("<font color='red'>[firer] ([firer.ckey]) shot [M] ([M.ckey]) with a [src.type]</font>")
-					msg_admin_attack("ATTACK: [firer] ([firer.ckey]) shot [M] ([M.ckey]) with a [src]") //BS12 EDIT ALG
+					msg_admin_attack("[firer] ([firer.ckey]) shot [M] ([M.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
 				else
 					M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
+					msg_admin_attack("UNKNOWN shot [M] ([M.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
 					log_attack("<font color='red'>UNKNOWN shot [M] ([M.ckey]) with a [src.type]</font>")
-					msg_admin_attack("ATTACK: UNKNOWN shot [M] ([M.ckey]) with a [src]") //BS12 EDIT ALG
+
 		spawn(0)
 
 			if(A)
@@ -144,8 +153,9 @@
 						O.bullet_act(src)
 					for(var/mob/M in A)
 						M.bullet_act(src, def_zone)
-				density = 0
-				invisibility = 101
+				if(!istype(src, /obj/item/projectile/beam/lightning))
+					density = 0
+					invisibility = 101
 				del(src)
 		return 1
 

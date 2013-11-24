@@ -3,7 +3,7 @@
 
 //Potential replacement for genetics revives or something I dunno (?)
 
-//#define CLONE_BIOMASS 150
+#define CLONE_BIOMASS 150
 
 /obj/machinery/clonepod
 	anchored = 1
@@ -20,7 +20,23 @@
 	var/mess = 0 //Need to clean out it if it's full of exploded clone.
 	var/attempting = 0 //One clone attempt at a time thanks
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
-//	var/biomass = CLONE_BIOMASS
+	var/biomass = CLONE_BIOMASS * 3
+	var/opened = 0
+
+/********************************************************************
+**   Adding Stock Parts to VV so preconstructed shit has its candy **
+********************************************************************/
+/obj/machinery/clonepod/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/clonepod
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/console_screen
+	RefreshParts()
+
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
@@ -117,7 +133,7 @@
 //Clonepod
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/mrace)
+/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/datum/species/mrace)
 	if(mess || attempting)
 		return 0
 	var/datum/mind/clonemind = locate(mindref)
@@ -178,6 +194,8 @@
 			if (H.mind in ticker.mode.cult)
 				ticker.mode.add_cultist(src.occupant.mind)
 				ticker.mode.update_all_cult_icons() //So the icon actually appears
+	if("\ref[H.mind]" in ticker.mode.implanter || H.mind in ticker.mode.implanted)
+		ticker.mode.update_traitor_icons_added(H.mind) //So the icon actually appears
 
 	// -- End mode specific stuff
 
@@ -192,13 +210,12 @@
 		randmutb(H) //Sometimes the clones come out wrong.
 
 	H.f_style = "Shaved"
-	if(mrace == "none") //no more xenos losing ears/tentacles
+	if(mrace.name == "Human") //no more xenos losing ears/tentacles
 		H.h_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 
-	if(H.dna)
-		H.dna.mutantrace = mrace
-		H.update_mutantrace()
-		H.update_mutantrace_languages()
+	H.species = mrace
+	H.add_language(mrace.language)
+	H.update_mutantrace()
 	H.suiciding = 0
 	src.attempting = 0
 	return 1
@@ -276,6 +293,31 @@
 		src.locked = 0
 		src.go_out()
 		return
+	else if (istype(W, /obj/item/weapon/screwdriver))
+		if (!opened)
+			src.opened = 1
+			user << "You open the maintenance hatch of [src]."
+			//src.icon_state = "autolathe_t"
+		else
+			src.opened = 0
+			user << "You close the maintenance hatch of [src]."
+			//src.icon_state = "autolathe"
+			return 1
+	else if(istype(W, /obj/item/weapon/crowbar))
+		if (occupant)
+			user << "\red You cannot disassemble this [src], it's occupado."
+			return 1
+		if (opened)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+			M.state = 2
+			M.icon_state = "box_1"
+			for(var/obj/I in component_parts)
+				if(I.reliability != 100 && crit_fail)
+					I.crit_fail = 1
+				I.loc = src.loc
+			del(src)
+			return 
 /*Removing cloning pod biomass
 	else if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
 		user << "\blue \The [src] processes \the [W]."
@@ -342,7 +384,7 @@
 	src.occupant.add_side_effect("Bad Stomach") // Give them an extra side-effect for free.
 	src.occupant = null
 
-//	src.biomass -= CLONE_BIOMASS
+	//src.biomass -= CLONE_BIOMASS
 
 	return
 

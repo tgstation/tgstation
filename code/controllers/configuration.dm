@@ -16,6 +16,7 @@
 	var/log_attack = 0					// log attack messages
 	var/log_adminchat = 0				// log admin chat messages
 	var/log_adminwarn = 0				// log warnings admins get about bomb construction and such
+	var/log_adminghost = 1				// log warnings admins get about bomb construction and such
 	var/log_pda = 0						// log pda messages
 	var/log_hrefs = 0					// logs all links clicked in-game. Could be used for debugging and tracking down exploits
 	var/sql_enabled = 1					// for sql switching
@@ -40,6 +41,7 @@
 	var/Ticklag = 0.9
 	var/Tickcomp = 0
 	var/socket_talk	= 0					// use socket_talk to communicate with other processes
+	var/list/resource_urls = null
 
 	var/list/mode_names = list()
 	var/list/modes = list()				// allowed modes
@@ -50,6 +52,9 @@
 	var/allow_ai = 1					// allow ai job
 	var/hostedby = null
 	var/respawn = 1
+	var/respawn_delay=30
+	var/respawn_as_mommi = 0
+	var/respawn_as_mouse = 1
 	var/guest_jobban = 1
 	var/usewhitelist = 0
 	var/kick_inactive = 0				//force disconnect for inactive players
@@ -76,7 +81,6 @@
 	var/alert_desc_delta = "The station's self-destruct mechanism has been engaged. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill."
 
 	var/forbid_singulo_possession = 0
-	var/useircbot = 0
 
 	//game_options.txt configs
 
@@ -117,6 +121,14 @@
 	var/assistant_maint = 0 //Do assistants get maint access?
 	var/gateway_delay = 18000 //How long the gateway takes before it activates. Default is half an hour.
 	var/ghost_interaction = 0
+
+	var/comms_password = ""
+
+	var/use_irc_bot = 0
+	var/irc_bot_host = ""
+	var/main_irc = ""
+	var/admin_irc = ""
+	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python2" on unix
 
 
 /datum/configuration/New()
@@ -164,6 +176,9 @@
 
 		if(type == "config")
 			switch (name)
+				if ("resource_urls")
+					config.resource_urls = stringsplit(value, " ")
+
 				if ("admin_legacy_system")
 					config.admin_legacy_system = 1
 
@@ -218,6 +233,9 @@
 				if ("log_adminwarn")
 					config.log_adminwarn = 1
 
+				if ("log_adminghost")
+					config.log_adminghost = 1
+
 				if ("log_pda")
 					config.log_pda = 1
 
@@ -262,6 +280,12 @@
 
 				if ("norespawn")
 					config.respawn = 0
+
+				if ("respawn_as_mommi")
+					config.respawn_as_mommi = 1
+
+				if ("no_respawn_as_mouse")
+					config.respawn_as_mouse = 0
 
 				if ("servername")
 					config.server_name = value
@@ -359,8 +383,8 @@
 				if("allow_holidays")
 					Holiday = 1
 
-				if("useircbot")
-					useircbot = 1
+				if("use_irc_bot")
+					use_irc_bot = 1
 
 				if("ticklag")
 					Ticklag = text2num(value)
@@ -398,6 +422,27 @@
 
 				if("ghost_interaction")
 					config.ghost_interaction = 1
+
+				if("comms_password")
+					config.comms_password = value
+
+				if("irc_bot_host")
+					config.irc_bot_host = value
+
+				if("main_irc")
+					config.main_irc = value
+
+				if("admin_irc")
+					config.admin_irc = value
+
+				if("python_path")
+					if(value)
+						config.python_path = value
+					else
+						if(world.system_type == UNIX)
+							config.python_path = "/usr/bin/env python2"
+						else //probably windows, if not this should work anyway
+							config.python_path = "python"
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"
@@ -443,6 +488,8 @@
 					config.bones_can_break = value
 				if("limbs_can_break")
 					config.limbs_can_break = value
+				if("respawn_delay")
+					config.respawn_delay = value
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
@@ -548,7 +595,7 @@
 	var/list/datum/game_mode/runnable_modes = new
 	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
 		var/datum/game_mode/M = new T()
-		//world << "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]"
+		world.log << "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]"
 		if (!(M.config_tag in modes))
 			del(M)
 			continue

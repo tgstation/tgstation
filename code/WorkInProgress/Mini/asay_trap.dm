@@ -1,7 +1,7 @@
 /obj/effect/admin_log_trap
 	name = "Herprpr"
 	desc = "Stepping on this is good."
-	icon = 'screen1.dmi'
+	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x2"
 	anchored = 1.0
 	unacidable = 1

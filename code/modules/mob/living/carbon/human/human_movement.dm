@@ -1,6 +1,10 @@
 /mob/living/carbon/human/movement_delay()
 	var/tally = 0
 
+	if (istype(loc, /turf/space)) return -1 // It's hard to be slowed down in space by... anything
+
+	//(VG EDIT disabling for now) handle_embedded_objects() //Moving with objects stuck in you can cause bad times.
+
 	if(reagents.has_reagent("hyperzine")) return -1
 
 	if(reagents.has_reagent("nuka_cola")) return -1
@@ -25,10 +29,12 @@
 		var/datum/organ/external/E = get_organ(organ_name)
 		if(!E || (E.status & ORGAN_DESTROYED))
 			tally += 4
+		if(E.status & ORGAN_SPLINTED)
+			tally += 0.5
 		else if(E.status & ORGAN_BROKEN)
 			tally += 1.5
 
-	if(shock_stage >= 10) tally += 3
+	if(shock_stage >= 50) tally += 3
 
 	if(FAT in src.mutations)
 		tally += 1.5

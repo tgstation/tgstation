@@ -5,17 +5,43 @@
 	damage_type = BRUTE
 	nodamage = 0
 	flag = "bullet"
+	var/embed = 1
 
 	on_hit(var/atom/target, var/blocked = 0)
 		if (..(target, blocked))
 			var/mob/living/L = target
 			shake_camera(L, 3, 2)
+			return 1
+		return 0
 
 /obj/item/projectile/bullet/weakbullet
 	damage = 10
 	stun = 5
 	weaken = 5
-
+	embed = 0
+/obj/item/projectile/bullet/weakbullet/booze
+	on_hit(var/atom/target, var/blocked = 0)
+		if(..(target, blocked))
+			var/mob/living/M = target
+			M.dizziness += 20
+			M:slurring += 20
+			M.confused += 20
+			M.eye_blurry += 20
+			M.drowsyness += 20
+			if(M.dizziness <= 150)
+				M.make_dizzy(150)
+				M.dizziness = 150
+			for(var/datum/reagent/ethanol/A in M.reagents.reagent_list)
+				M.paralysis += 2
+				M.dizziness += 10
+				M:slurring += 10
+				M.confused += 10
+				M.eye_blurry += 10
+				M.drowsyness += 10
+				A.volume += 5 //Because we can
+				M.dizziness += 10
+			return 1
+		return 0
 
 /obj/item/projectile/bullet/midbullet
 	damage = 20

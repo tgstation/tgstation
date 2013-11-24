@@ -72,7 +72,9 @@ var/event = 0
 var/hadevent = 0
 var/blobevent = 0
 	///////////////
-
+var/starticon = null
+var/midicon = null
+var/endicon = null
 var/diary = null
 var/diaryofmeanpeople = null
 var/href_logfile = null
@@ -109,7 +111,7 @@ var/list/shuttles = list(  )
 var/list/reg_dna = list(  )
 //	list/traitobj = list(  )
 
-var/mouse_respawn_time = 5 //Amount of time that must pass between a player dying as a mouse and repawning as a mouse. In minutes.
+var/mouse_respawn_time = 1 //Amount of time that must pass between a player dying as a mouse and repawning as a mouse. In minutes.
 
 var/CELLRATE = 0.002  // multiplier for watts per tick <> cell storage (eg: .002 means if there is a load of 1000 watts, 20 units will be taken from a cell per second)
 var/CHARGELEVEL = 0.001 // Cap for how fast cells charge, as a percentage-per-tick (.001 means cellcharge is capped to 1% per second)
@@ -133,6 +135,7 @@ var/list/tdomeadmin = list()
 var/list/prisonsecuritywarp = list()	//prison security goes to these
 var/list/prisonwarped = list()	//list of players already warped
 var/list/blobstart = list()
+var/list/ninjastart = list()
 //	list/traitors = list()	//traitor list
 var/list/cardinal = list( NORTH, SOUTH, EAST, WEST )
 var/list/alldirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
@@ -163,6 +166,9 @@ var/shuttlecoming = 0
 
 var/join_motd = null
 var/forceblob = 0
+
+// nanomanager, the manager for Nano UIs
+var/datum/nanomanager/nanomanager = new()
 
 	//airlockWireColorToIndex takes a number representing the wire color, e.g. the orange wire is always 1, the dark red wire is always 2, etc. It returns the index for whatever that wire does.
 	//airlockIndexToWireColor does the opposite thing - it takes the index for what the wire does, for example AIRLOCK_WIRE_IDSCAN is 1, AIRLOCK_WIRE_POWER1 is 2, etc. It returns the wire color number.

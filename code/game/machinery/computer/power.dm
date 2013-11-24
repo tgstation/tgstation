@@ -81,9 +81,12 @@
 	user.set_machine(src)
 	var/t = "<TT><B>Power Monitoring</B><HR>"
 
-	t += "<BR><HR><A href='?src=\ref[src];update=1'>Refresh</A>"
-	t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A>"
 
+	// AUTOFIXED BY fix_string_idiocy.py
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\power.dm:84: t += "<BR><HR><A href='?src=\ref[src];update=1'>Refresh</A>"
+	t += {"<BR><HR><A href='?src=\ref[src];update=1'>Refresh</A>
+		<BR><HR><A href='?src=\ref[src];close=1'>Close</A>"}
+	// END AUTOFIX
 	if(!powernet)
 		t += "\red No connection"
 	else
@@ -94,10 +97,12 @@
 				var/obj/machinery/power/apc/A = term.master
 				L += A
 
-		t += "<PRE>Total power: [powernet.avail] W<BR>Total load:  [num2text(powernet.viewload,10)] W<BR>"
 
-		t += "<FONT SIZE=-1>"
-
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\power.dm:97: t += "<PRE>Total power: [powernet.avail] W<BR>Total load:  [num2text(powernet.viewload,10)] W<BR>"
+		t += {"<PRE>Total power: [powernet.avail] W<BR>Total load:  [num2text(powernet.viewload,10)] W<BR>
+			<FONT SIZE=-1>"}
+		// END AUTOFIX
 		if(L.len > 0)
 
 			t += "Area                           Eqp./Lgt./Env.  Load   Cell<HR>"
@@ -139,4 +144,3 @@
 			spawn(rand(0, 15))
 				src.icon_state = "c_unpowered"
 				stat |= NOPOWER
-

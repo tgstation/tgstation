@@ -40,7 +40,10 @@ var/global/datum/controller/gameticker/ticker
 	login_music = pick(\
 	'sound/music/space.ogg',\
 	'sound/music/traitor.ogg',\
-	'sound/music/space_oddity.ogg') //Ground Control to Major Tom, this song is cool, what's going on?
+	'sound/music/space_oddity.ogg',\
+	'sound/music/title1.ogg',\
+	'sound/music/title2.ogg',\
+	'sound/music/clown.ogg')
 	do
 		pregame_timeleft = 180
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
@@ -49,6 +52,11 @@ var/global/datum/controller/gameticker/ticker
 			for(var/i=0, i<10, i++)
 				sleep(1)
 				vote.process()
+				watchdog.check_for_update()
+				if(watchdog.waiting)
+					world << "\blue Server update detected, restarting momentarily."
+					watchdog.signal_ready()
+					return
 			if(going)
 				pregame_timeleft--
 
@@ -108,7 +116,7 @@ var/global/datum/controller/gameticker/ticker
 
 	//setup the money accounts
 	if(!centcomm_account_db)
-		for(var/obj/machinery/account_database/check_db in world)
+		for(var/obj/machinery/account_database/check_db in machines)
 			if(check_db.z == 2)
 				centcomm_account_db = check_db
 				break
@@ -121,10 +129,6 @@ var/global/datum/controller/gameticker/ticker
 
 	//here to initialize the random events nicely at round start
 	setup_economy()
-
-	supply_shuttle.process() 		//Start the supply shuttle regenerating points -- TLE
-	master_controller.process()		//Start master_controller.process()
-	lighting_controller.process()	//Start processing DynamicAreaLighting updates
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
 		mode.post_setup()
@@ -146,7 +150,12 @@ var/global/datum/controller/gameticker/ticker
 		if(C.holder)
 			admins_number++
 	if(admins_number == 0)
-		send2irc("Server", "Round just started with no admins online!")
+		send2adminirc("Round has started with no admins online.")
+
+	supply_shuttle.process() 		//Start the supply shuttle regenerating points -- TLE
+	master_controller.process()		//Start master_controller.process()
+	lighting_controller.process()	//Start processing DynamicAreaLighting updates
+
 
 	if(config.sql_enabled)
 		spawn(3000)
@@ -297,10 +306,18 @@ var/global/datum/controller/gameticker/ticker
 			return 0
 
 		mode.process()
+		mode.process_job_tasks()
 
 		emergency_shuttle.process()
+		watchdog.check_for_update()
 
-		var/mode_finished = mode.check_finished() || (emergency_shuttle.location == 2 && emergency_shuttle.alert == 1)
+		var/force_round_end=0
+
+		// If server's empty, force round end.
+		if(watchdog.waiting && player_list.len == 0)
+			force_round_end=1
+
+		var/mode_finished = mode.check_finished() || (emergency_shuttle.location == 2 && emergency_shuttle.alert == 1) || force_round_end
 		if(!mode.explosion_in_progress && mode_finished)
 			current_state = GAME_STATE_FINISHED
 
@@ -310,18 +327,20 @@ var/global/datum/controller/gameticker/ticker
 			spawn(50)
 				if (mode.station_was_nuked)
 					feedback_set_details("end_proper","nuke")
-					if(!delay_end)
+					if(!delay_end && !watchdog.waiting)
 						world << "\blue <B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B>"
 				else
 					feedback_set_details("end_proper","proper completion")
-					if(!delay_end)
+					if(!delay_end && !watchdog.waiting)
 						world << "\blue <B>Restarting in [restart_timeout/10] seconds</B>"
-
 
 				if(blackbox)
 					blackbox.save_all_data_to_sql()
 
-				if(!delay_end)
+				if (watchdog.waiting)
+					world << "\blue <B>Server will shut down for an automatic update in a few seconds.</B>"
+					watchdog.signal_ready()
+				else if(!delay_end)
 					sleep(restart_timeout)
 					if(!delay_end)
 						world.Reboot()
@@ -350,20 +369,27 @@ var/global/datum/controller/gameticker/ticker
 		if (aiPlayer.connected_robots.len)
 			var/robolist = "<b>The AI's loyal minions were:</b> "
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
+				if (!robo.connected_ai || !isMoMMI(robo)) // Don't report MoMMIs or unslaved robutts
+					continue
 				robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.key]), ":" (Played by: [robo.key]), "]"
 			world << "[robolist]"
 
 	for (var/mob/living/silicon/robot/robo in mob_list)
+		if(!robo)
+			continue
 		if (!robo.connected_ai)
 			if (robo.stat != 2)
-				world << "<b>[robo.name] (Played by: [robo.key]) survived as an AI-less borg! Its laws were:</b>"
+				world << "<b>[robo.name] (Played by: [robo.key]) survived as an AI-less [isMoMMI(robo)?"MoMMI":"borg"]! Its laws were:</b>"
 			else
-				world << "<b>[robo.name] (Played by: [robo.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</b>"
-
-			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
-				robo.laws.show_laws(world)
+				world << "<b>[robo.name] (Played by: [robo.key]) was unable to survive the rigors of being a [isMoMMI(robo)?"MoMMI":"cyborg"] without an AI. Its laws were:</b>"
+		else
+			world << "<b>[robo.name] (Played by: [robo.key]) [robo.stat!=2?"survived":"perished"] as a [isMoMMI(robo)?"MoMMI":"cyborg"] slaved to [robo.connected_ai]! Its laws were:</b>"
+		robo.laws.show_laws(world)
 
 	mode.declare_completion()//To declare normal completion.
+
+	mode.declare_job_completion() // /vg/ stuff
+
 
 	//calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))

@@ -128,7 +128,7 @@
 
 			for(var/area/A in gravity_generator:localareas)
 				var/obj/machinery/gravity_generator/G
-				for(G in world)
+				for(G in machines)
 					if((A.master in G.localareas) && (G.on))
 						break
 				if(!G)

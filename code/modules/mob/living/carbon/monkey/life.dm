@@ -55,6 +55,9 @@
 	if(environment)	// More error checking -- TLE
 		handle_environment(environment)
 
+	//Check if we're on fire
+	handle_fire()
+
 	//Status updates, death etc.
 	handle_regular_status_updates()
 	update_canmove()
@@ -117,6 +120,17 @@
 			emote("collapse")
 
 		if (radiation)
+
+			if(istype(src,/mob/living/carbon/monkey/diona)) //Filthy check. Dionaea don't take rad damage.
+				var/rads = radiation/25
+				radiation -= rads
+				nutrition += rads
+				heal_overall_damage(rads,rads)
+				adjustOxyLoss(-(rads))
+				adjustToxLoss(-(rads))
+				updatehealth()
+				return
+
 			if (radiation > 100)
 				radiation = 100
 				Weaken(10)
@@ -150,28 +164,48 @@
 						emote("gasp")
 					updatehealth()
 
-	proc/handle_virus_updates()//copypaste from mob/carbon/human/life.dm
+	// Separate proc so we can jump out of it when we've succeeded in spreading disease.
+	proc/findAirborneVirii()
+		for(var/obj/effect/decal/cleanable/blood/B in get_turf(src))
+			if(B.virus2.len)
+				for (var/ID in B.virus2)
+					var/datum/disease2/disease/V = B.virus2[ID]
+					if (infect_virus2(src,V))
+						return 1
+
+		for(var/obj/effect/decal/cleanable/mucus/M in get_turf(src))
+			if(M.virus2.len)
+				for (var/ID in M.virus2)
+					var/datum/disease2/disease/V = M.virus2[ID]
+					if (infect_virus2(src,V))
+						return 1
+		return 0
+
+	proc/handle_virus_updates()
+		if(status_flags & GODMODE)	return 0	//godmode
 		if(bodytemperature > 406)
 			for(var/datum/disease/D in viruses)
 				D.cure()
-		if(!virus2)
-			for(var/obj/effect/decal/cleanable/blood/B in view(1,src))
-				if(B.virus2 && get_infection_chance())
-					infect_virus2(src,B.virus2)
-			for(var/obj/effect/decal/cleanable/mucus/M in view(1,src))
-				if(M.virus2 && get_infection_chance())
-					infect_virus2(src,M.virus2)
-		else
-			if(isnull(virus2)) // Trying to figure out a runtime error that keeps repeating
+			for (var/ID in virus2)
+				var/datum/disease2/disease/V = virus2[ID]
+				V.cure(src)
+
+		src.findAirborneVirii()
+
+		for (var/ID in virus2)
+			var/datum/disease2/disease/V = virus2[ID]
+			if(isnull(V)) // Trying to figure out a runtime error that keeps repeating
 				CRASH("virus2 nulled before calling activate()")
 			else
-				virus2.activate(src)
-
+				V.activate(src)
 			// activate may have deleted the virus
-			if(!virus2) return
+			if(!V) continue
 
 			// check if we're immune
-			if(virus2.antigen & src.antibodies) virus2.dead = 1
+			if(V.antigen & src.antibodies)
+				V.dead = 1
+
+		return
 
 	proc/breathe()
 		if(reagents)
@@ -352,10 +386,11 @@
 			var/turf/heat_turf = get_turf(src)
 			environment_heat_capacity = heat_turf.heat_capacity
 
-		if((environment.temperature > (T0C + 50)) || (environment.temperature < (T0C + 10)))
-			var/transfer_coefficient = 1
+		if(!on_fire)
+			if((environment.temperature > (T0C + 50)) || (environment.temperature < (T0C + 10)))
+				var/transfer_coefficient = 1
 
-			handle_temperature_damage(HEAD, environment.temperature, environment_heat_capacity*transfer_coefficient)
+				handle_temperature_damage(HEAD, environment.temperature, environment_heat_capacity*transfer_coefficient)
 
 		if(stat==2)
 			bodytemperature += 0.1*(environment.temperature - bodytemperature)*environment_heat_capacity/(environment_heat_capacity + 270000)
@@ -395,6 +430,25 @@
 			adjustFireLoss(5.0*discomfort)
 
 	proc/handle_chemicals_in_body()
+
+		if(istype(src,/mob/living/carbon/monkey/diona)) //Filthy check. Dionaea nymphs need light or they get sad.
+			var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
+			if(isturf(loc)) //else, there's considered to be no light
+				var/turf/T = loc
+				var/area/A = T.loc
+				if(A)
+					if(A.lighting_use_dynamic)	light_amount = min(10,T.lighting_lumcount) - 5 //hardcapped so it's not abused by having a ton of flashlights
+					else						light_amount =  5
+
+			nutrition += light_amount
+			traumatic_shock -= light_amount
+
+			if(nutrition > 500)
+				nutrition = 500
+			if(light_amount > 2) //if there's enough light, heal
+				heal_overall_damage(1,1)
+				adjustToxLoss(-1)
+				adjustOxyLoss(-1)
 
 		if(reagents) reagents.metabolize(src)
 
@@ -438,21 +492,36 @@
 				if(!reagents.has_reagent("inaprovaline"))
 					adjustOxyLoss(1)
 				Paralyse(3)
+			if(halloss > 100)
+				src << "<span class='notice'>You're in too much pain to keep going...</span>"
+				for(var/mob/O in oviewers(src, null))
+					O.show_message("<B>[src]</B> slumps to the ground, too weak to continue fighting.", 1)
+				Paralyse(10)
+				setHalLoss(99)
 
 			if(paralysis)
 				AdjustParalysis(-1)
 				blinded = 1
 				stat = UNCONSCIOUS
+				if(halloss > 0)
+					adjustHalLoss(-3)
 			else if(sleeping)
+				handle_dreams()
+				adjustHalLoss(-3)
 				sleeping = max(sleeping-1, 0)
 				blinded = 1
 				stat = UNCONSCIOUS
-				if( prob(10) && health )
+				if( prob(10) && health && !hal_crit )
 					spawn(0)
 						emote("snore")
+			else if(resting)
+				if(halloss > 0)
+					adjustHalLoss(-3)
 			//CONSCIOUS
 			else
 				stat = CONSCIOUS
+				if(halloss > 0)
+					adjustHalLoss(-1)
 
 			//Eyes
 			if(sdisabilities & BLIND)	//disabled-blind, doesn't get better on its own
@@ -595,3 +664,11 @@
 	proc/handle_changeling()
 		if(mind && mind.changeling)
 			mind.changeling.regenerate()
+
+///FIRE CODE
+	handle_fire()
+		if(..())
+			return
+		adjustFireLoss(6)
+		return
+//END FIRE CODE

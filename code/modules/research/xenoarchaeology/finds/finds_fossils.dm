@@ -4,7 +4,7 @@
 
 /obj/item/weapon/fossil
 	name = "Fossil"
-	icon = 'xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "bone"
 	desc = "It's a fossil."
 
@@ -14,7 +14,7 @@
 	var/t = pickweight(l)
 	var/obj/item/weapon/W = new t(src.loc)
 	var/turf/T = get_turf(src)
-	if(istype(T, /turf/simulated/mineral))
+	if(istype(T, /turf/unsimulated/mineral))
 		T:last_find = W
 	del src
 
@@ -44,7 +44,7 @@
 
 /obj/skeleton
 	name = "Incomplete skeleton"
-	icon = 'xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "uskel"
 	desc = "Incomplete skeleton."
 	var/bnum = 1

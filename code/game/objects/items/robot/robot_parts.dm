@@ -8,12 +8,18 @@
 	var/construction_time = 100
 	var/list/construction_cost = list("metal"=20000,"glass"=5000)
 	var/list/part = null
+	var/sabotaged = 0 //Emagging limbs can have repercussions when installed as prosthetics.
 
 /obj/item/robot_parts/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-	if("metal" in construction_cost)
-		rec.iron += construction_cost["metal"]/CC_PER_SHEET_METAL
-	if("glass" in construction_cost)
-		rec.glass += construction_cost["glass"]/CC_PER_SHEET_GLASS
+	for(var/material in construction_cost)
+		var/rec_mat=material
+		var/CCPS=CC_PER_SHEET_MISC
+		if(rec_mat=="metal")
+			rec_mat="iron"
+			CCPS=CC_PER_SHEET_METAL
+		if(rec_mat=="glass")
+			CCPS=CC_PER_SHEET_GLASS
+		rec.addMaterial(material,construction_cost[material]/CCPS)
 	return 1
 
 /obj/item/robot_parts/l_arm
@@ -200,10 +206,14 @@
 				user << "\red This [W] does not seem to fit."
 				return
 
-			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc))
+			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc), unfinished = 1)
 			if(!O)	return
 
 			user.drop_item()
+
+			var/datum/job_objective/make_cyborg/task = user.mind.findJobTask(/datum/job_objective/make_cyborg)
+			if(istype(task))
+				task.unit_completed()
 
 			O.mmi = W
 			O.invisibility = 0
@@ -220,6 +230,12 @@
 			O.cell = chest.cell
 			O.cell.loc = O
 			W.loc = O//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
+
+			// Since we "magically" installed a cell, we also have to update the correct component.
+			if(O.cell)
+				var/datum/robot_component/cell_component = O.components["power cell"]
+				cell_component.wrapped = O.cell
+				cell_component.installed = 1
 
 			feedback_inc("cyborg_birth",1)
 			O.Namepick()
@@ -285,3 +301,13 @@
 		del(src)
 		return
 	return
+
+/obj/item/robot_parts/attackby(obj/item/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/weapon/card/emag))
+		if(sabotaged)
+			user << "\red [src] is already sabotaged!"
+		else
+			user << "\red You slide [W] into the dataport on [src] and short out the safeties."
+			sabotaged = 1
+		return
+	..()

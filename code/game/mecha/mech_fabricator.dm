@@ -23,7 +23,8 @@
 										"diamond"=0,
 										"plasma"=0,
 										"uranium"=0,
-										"bananium"=0
+										"bananium"=0,
+										"phazon"=0
 										)
 	var/res_max_amount = 200000
 	var/datum/research/files
@@ -44,7 +45,13 @@
 						/obj/item/robot_parts/l_arm,
 						/obj/item/robot_parts/r_arm,
 						/obj/item/robot_parts/l_leg,
-						/obj/item/robot_parts/r_leg
+						/obj/item/robot_parts/r_leg,
+						/obj/item/robot_parts/robot_component/binary_communication_device,
+						/obj/item/robot_parts/robot_component/radio,
+						/obj/item/robot_parts/robot_component/actuator,
+						/obj/item/robot_parts/robot_component/diagnosis_unit,
+						/obj/item/robot_parts/robot_component/camera,
+						/obj/item/robot_parts/robot_component/armour
 					),
 	"Ripley"=list(
 						/obj/item/mecha_parts/chassis/ripley,
@@ -93,6 +100,15 @@
 						/obj/item/mecha_parts/part/honker_left_leg,
 						/obj/item/mecha_parts/part/honker_right_leg
 						),
+	"Phazon"=list(
+						/obj/item/mecha_parts/chassis/phazon,
+						/obj/item/mecha_parts/part/phazon_torso,
+						/obj/item/mecha_parts/part/phazon_head,
+						/obj/item/mecha_parts/part/phazon_left_arm,
+						/obj/item/mecha_parts/part/phazon_right_arm,
+						/obj/item/mecha_parts/part/phazon_left_leg,
+						/obj/item/mecha_parts/part/phazon_right_leg
+						),
 	"Exosuit Equipment"=list(
 						/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp,
 						/obj/item/mecha_parts/mecha_equipment/tool/drill,
@@ -108,7 +124,8 @@
 						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg,
 						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar,
 						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar,
-						/obj/item/mecha_parts/mecha_equipment/weapon/honker
+						/obj/item/mecha_parts/mecha_equipment/weapon/honker,
+						/obj/item/mecha_parts/part/phazon_phase_array
 						),
 
 	"Robotic Upgrade Modules" = list(
@@ -119,13 +136,9 @@
 						/obj/item/borg/upgrade/tasercooler,
 						/obj/item/borg/upgrade/jetpack
 						),
-
-
-
-
-
-
-	"Misc"=list(/obj/item/mecha_parts/mecha_tracking)
+	"Misc"=list(
+						/obj/item/mecha_parts/mecha_tracking
+						)
 	)
 
 
@@ -438,8 +451,12 @@
 				else//Prevents junk items from even appearing in the list, and they will be silently removed when the fab processes
 					remove_from_queue(i)//Trash it
 					return list_queue()//Rebuild it
-		output += "</ol>"
-		output += "\[<a href='?src=\ref[src];process_queue=1'>Process queue</a> | <a href='?src=\ref[src];clear_queue=1'>Clear queue</a>\]"
+
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\mecha\mech_fabricator.dm:441: output += "</ol>"
+		output += {"</ol>
+			\[<a href='?src=\ref[src];process_queue=1'>Process queue</a> | <a href='?src=\ref[src];clear_queue=1'>Clear queue</a>\]"}
+		// END AUTOFIX
 	return output
 
 /obj/machinery/mecha_part_fabricator/proc/convert_designs()
@@ -448,10 +465,10 @@
 	for(var/datum/design/D in files.known_designs)
 		if(D.build_type&16)
 			if(D.category in part_sets)//Checks if it's a valid category
-				if(add_part_to_set(D.category, text2path(D.build_path)))//Adds it to said category
+				if(add_part_to_set(D.category, D.build_path))//Adds it to said category
 					i++
 			else
-				if(add_part_to_set("Misc", text2path(D.build_path)))//If in doubt, chunk it into the Misc
+				if(add_part_to_set("Misc", D.build_path))//If in doubt, chunk it into the Misc
 					i++
 	return i
 
@@ -677,6 +694,8 @@
 			type = /obj/item/stack/sheet/mineral/uranium
 		if("bananium")
 			type = /obj/item/stack/sheet/mineral/clown
+		if("phazon")
+			type = /obj/item/stack/sheet/mineral/phazon
 		else
 			return 0
 	var/result = 0
@@ -737,6 +756,9 @@
 			if(src.resources["bananium"] >= 2000)
 				var/obj/item/stack/sheet/mineral/clown/G = new /obj/item/stack/sheet/mineral/clown(src.loc)
 				G.amount = round(src.resources["bananium"] / G.perunit)
+			if(src.resources["phazon"] >= 2000)
+				var/obj/item/stack/sheet/mineral/phazon/G = new /obj/item/stack/sheet/mineral/phazon(src.loc)
+				G.amount = round(src.resources["phazon"] / G.perunit)
 			del(src)
 			return 1
 		else
@@ -764,6 +786,8 @@
 			material = "bananium"
 		if(/obj/item/stack/sheet/mineral/uranium)
 			material = "uranium"
+		if(/obj/item/stack/sheet/mineral/phazon)
+			material = "phazon"
 		else
 			return ..()
 

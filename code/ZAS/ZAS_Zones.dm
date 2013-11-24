@@ -178,24 +178,28 @@ var/list/CounterDoorDirections = list(SOUTH,EAST) //Which directions doors turfs
 	//Check the graphic.
 	progress = "problem with: modifying turf graphics"
 
-	air.graphic = 0
+	air.graphics = 0
 	if(air.toxins > MOLES_PLASMA_VISIBLE)
-		air.graphic = 1
-	else if(air.trace_gases.len)
+		air.graphics |= GRAPHICS_PLASMA
+	if(air.trace_gases.len)
 		var/datum/gas/sleeping_agent = locate(/datum/gas/sleeping_agent) in air.trace_gases
 		if(sleeping_agent && (sleeping_agent.moles > 1))
-			air.graphic = 2
+			air.graphics |= GRAPHICS_N2O
+	// If configured and cold, maek ice
+	if(zas_settings.Get(/datum/ZAS_Setting/ice_formation))
+		if(air.temperature <= TEMPERATURE_ICE_FORMATION && air.return_pressure()>MIN_PRESSURE_ICE_FORMATION)
+			air.graphics |= GRAPHICS_COLD
 
 	progress = "problem with an inbuilt byond function: some conditional checks"
 
 	//Only run through the individual turfs if there's reason to.
-	if(air.graphic != air.graphic_archived || air.temperature > PLASMA_FLASHPOINT)
+	if(air.graphics != air.graphics_archived || air.temperature > PLASMA_FLASHPOINT)
 
 		progress = "problem with: turf/simulated/update_visuals()"
 
 		for(var/turf/simulated/S in contents)
 			//Update overlays.
-			if(air.graphic != air.graphic_archived)
+			if(air.graphics != air.graphics_archived)
 				if(S.HasDoor(1))
 					S.update_visuals()
 				else
@@ -212,7 +216,7 @@ var/list/CounterDoorDirections = list(SOUTH,EAST) //Which directions doors turfs
 	progress = "problem with: calculating air graphic"
 
 	//Archive graphic so we can know if it's different.
-	air.graphic_archived = air.graphic
+	air.graphics_archived = air.graphics
 
 	progress = "problem with: calculating air temp"
 
@@ -276,7 +280,7 @@ var/list/CounterDoorDirections = list(SOUTH,EAST) //Which directions doors turfs
  //Air Movement//
 ////////////////
 
-var/list/sharing_lookup_table = list(0.03, 0.07, 0.11, 0.15, 0.18, 0.20)
+var/list/sharing_lookup_table = list(0.30, 0.40, 0.48, 0.54, 0.60, 0.66)
 
 proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 	//Shares a specific ratio of gas between mixtures using simple weighted averages.
@@ -407,15 +411,15 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles, dbg_output)
 	if(sharing_lookup_table.len >= unsimulated_tiles.len) //6 or more interconnecting tiles will max at 42% of air moved per tick.
 		ratio = sharing_lookup_table[unsimulated_tiles.len]
 
-	//We need to adjust it to account for the insulation settings.
-	ratio *= 1 - zas_settings.Get(/datum/ZAS_Setting/connection_insulation)
-
 	A.oxygen = max(0, (A.oxygen - oxy_avg) * (1 - ratio) + oxy_avg )
 	A.nitrogen = max(0, (A.nitrogen - nit_avg) * (1 - ratio) + nit_avg )
 	A.carbon_dioxide = max(0, (A.carbon_dioxide - co2_avg) * (1 - ratio) + co2_avg )
 	A.toxins = max(0, (A.toxins - plasma_avg) * (1 - ratio) + plasma_avg )
 
-	A.temperature = max(TCMB, (A.temperature - temp_avg) * (1 - ratio) + temp_avg )
+	// EXPERIMENTAL: Disable space being cold
+	// N3X: Made this togglable for Pomf. Comment recovered from older code.
+	if(!zas_settings.Get(/datum/ZAS_Setting/space_isnt_cold))
+		A.temperature = max(TCMB, (A.temperature - temp_avg) * (1 - ratio) + temp_avg )
 
 	for(var/datum/gas/G in A.trace_gases)
 		var/G_avg = (G.moles * size) / (size + share_size)
@@ -443,6 +447,9 @@ proc/ShareHeat(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 	if(sharing_lookup_table.len >= connecting_tiles) //6 or more interconnecting tiles will max at 42% of air moved per tick.
 		ratio = sharing_lookup_table[connecting_tiles]
 	//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
+
+	//We need to adjust it to account for the insulation settings.
+	ratio *= 1 - zas_settings.Get(/datum/ZAS_Setting/connection_insulation)
 
 	A.temperature = max(0, (A.temperature - temp_avg) * (1- (ratio / max(1,A.group_multiplier)) ) + temp_avg )
 	B.temperature = max(0, (B.temperature - temp_avg) * (1- (ratio / max(1,B.group_multiplier)) ) + temp_avg )

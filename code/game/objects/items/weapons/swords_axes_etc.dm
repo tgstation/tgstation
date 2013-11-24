@@ -24,7 +24,7 @@
 	return 0
 
 /obj/item/weapon/melee/energy/sword/New()
-	color = pick("red","blue","green","purple")
+	_color = pick("red","blue","green","purple")
 
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user as mob)
 	if ((CLUMSY in user.mutations) && prob(50))
@@ -36,7 +36,7 @@
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass1"
 		else
-			icon_state = "sword[color]"
+			icon_state = "sword[_color]"
 		w_class = 4
 		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
 		user << "\blue [src] is now active."
@@ -176,11 +176,20 @@
 			else
 				user.take_organ_damage(2*force)
 			return
-		if(!..()) return
-		if(!isrobot(target))
-			playsound(src.loc, "swing_hit", 50, 1, -1)
-			//target.Stun(4)	//naaah
-			target.Weaken(4)
+		if (user.a_intent == "hurt")
+			if(!..()) return
+			if(!isrobot(target))
+				playsound(src.loc, "swing_hit", 50, 1, -1)
+				//target.Stun(4)	//naaah
+				target.Weaken(4)
+		else
+			playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1, -1)
+			target.Weaken(2)
+			target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
+			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [target.name] ([target.ckey])</font>")
+			log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [target.name] ([target.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+			src.add_fingerprint(user)
+			target.visible_message("\red <B>[target] has been stunned with \the [src] by [user]!</B>")
 		return
 	else
 		return ..()
@@ -193,11 +202,11 @@
 
 /obj/item/weapon/melee/energy/sword/green
 	New()
-		color = "green"
+		_color = "green"
 
 /obj/item/weapon/melee/energy/sword/red
 	New()
-		color = "red"
+		_color = "red"
 
 /obj/item/weapon/melee/energy/blade/New()
 	spark_system = new /datum/effect/effect/system/spark_spread()

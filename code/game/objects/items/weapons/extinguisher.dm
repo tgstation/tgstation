@@ -41,7 +41,10 @@
 /obj/item/weapon/extinguisher/examine()
 	set src in usr
 
-	usr << text("\icon[] [] contains [] units of water left!", src, src.name, src.reagents.total_volume)
+	usr << "\icon[src] [src.name] contains [src.reagents.total_volume] units of water!"
+	for(var/thing in src)
+		usr << "\red \A [thing] is jammed into the nozzle!"
+
 	..()
 	return
 
@@ -52,6 +55,20 @@
 	user << "The safety is [safety ? "on" : "off"]."
 	return
 
+/obj/item/weapon/extinguisher/attackby(obj/item/W, mob/user)
+	if(user.stat || user.restrained() || user.lying)	return
+	if (istype(W, /obj/item))
+		if(W.w_class>1)
+			user << "\The [W] won't fit into the nozzle!"
+			return
+		if(locate(/obj) in src)
+			user << "There's already something crammed into the nozzle."
+			return
+		user.drop_item()
+		W.loc=src
+		user << "You cram \the [W] into the nozzle of \the [src]."
+		message_admins("[user]/[user.ckey] has crammed \a [W] into a [src].")
+
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
 	//TODO; Add support for reagents in water.
 
@@ -61,7 +78,6 @@
 		user << "\blue \The [src] is now refilled"
 		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
 		return
-
 	if (!safety)
 		if (src.reagents.total_volume < 1)
 			usr << "\red \The [src] is empty."
@@ -98,6 +114,15 @@
 				sleep(3)
 				B.Move(get_step(usr,movementdirection), movementdirection)
 
+		if(locate(/obj) in src)
+			for(var/obj/thing in src)
+				thing.loc = get_turf(src)
+				thing.throw_at(target,10,rand(45,50))
+				user.visible_message(
+					"<span class='danger'>[user] fires [src] and launches [thing] at [target]!</span>",
+					"<span class='danger'>You fire [src] and launch [thing] at [target]!</span>")
+				break
+
 		var/turf/T = get_turf(target)
 		var/turf/T1 = get_step(T,turn(direction, 90))
 		var/turf/T2 = get_step(T,turn(direction, -90))
@@ -116,16 +141,18 @@
 				src.reagents.trans_to(W,1)
 				for(var/b=0, b<5, b++)
 					step_towards(W,my_target)
-					if(!W) return
-					if(!W.reagents) return
+					if(!W || !W.reagents) return
 					W.reagents.reaction(get_turf(W))
 					for(var/atom/atm in get_turf(W))
 						if(!W) return
 						W.reagents.reaction(atm)
+						if(isliving(atm)) //For extinguishing mobs on fire
+							var/mob/living/M = atm
+							M.ExtinguishMob()
 					if(W.loc == my_target) break
 					sleep(2)
 
-		if((istype(usr.loc, /turf/space)) || (usr.lastarea.has_gravity == 0))
+		if((istype(usr.loc, /turf/space)) || (usr.lastarea && usr.lastarea.has_gravity == 0))
 			user.inertia_dir = get_dir(target, user)
 			step(user, user.inertia_dir)
 	else

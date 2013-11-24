@@ -13,22 +13,23 @@
 	var/installed = 0
 
 /obj/item/borg/upgrade/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-	if("metal" in construction_cost)
-		rec.iron += construction_cost["metal"]/CC_PER_SHEET_METAL
-	if("glass" in construction_cost)
-		rec.glass += construction_cost["glass"]/CC_PER_SHEET_GLASS
-	if("gold" in construction_cost)
-		rec.gold += construction_cost["gold"]/CC_PER_SHEET_MISC
-	if("diamond" in construction_cost)
-		rec.diamond += construction_cost["diamond"]/CC_PER_SHEET_MISC
-	if("uranium" in construction_cost)
-		rec.uranium += construction_cost["uranium"]/CC_PER_SHEET_MISC
+	for(var/material in construction_cost)
+		var/rec_mat=material
+		var/CCPS=CC_PER_SHEET_MISC
+		if(rec_mat=="metal")
+			rec_mat="iron"
+			CCPS=CC_PER_SHEET_METAL
+		if(rec_mat=="glass")
+			CCPS=CC_PER_SHEET_GLASS
+		rec.addMaterial(material,construction_cost[material]/CCPS)
 	return 1
 
 /obj/item/borg/upgrade/proc/action(var/mob/living/silicon/robot/R)
 	if(R.stat == DEAD)
 		usr << "\red The [src] will not function on a deceased robot."
 		return 1
+	if(isMoMMI(R))
+		usr << "\red The [src] only functions on Nanotrasen Cyborgs."
 	return 0
 
 
@@ -52,6 +53,7 @@
 		R.module.modules += new/obj/item/weapon/circular_saw
 		R.module.modules += new/obj/item/weapon/scalpel
 		R.module.modules += new/obj/item/weapon/bonesetter
+		R.module.modules += new/obj/item/weapon/bonegel // Requested by Hoshi-chan
 		R.module.modules += new/obj/item/weapon/FixOVein
 		R.module.modules += new/obj/item/weapon/surgicaldrill
 		R.module.modules += new/obj/item/weapon/cautery
@@ -73,9 +75,10 @@
 	R.uneq_all()
 	R.hands.icon_state = "nomod"
 	R.icon_state = "robot"
+	R.base_icon = "robot"
 	del(R.module)
 	R.module = null
-	R.modtype = "robot"
+	R.camera.network.Remove(list("Engineering","Medical","MINE"))
 	R.updatename("Default")
 	R.status_flags |= CANPUSH
 	R.updateicon()
@@ -95,6 +98,7 @@
 /obj/item/borg/upgrade/rename/action(var/mob/living/silicon/robot/R)
 	if(..()) return 0
 	R.name = heldname
+	R.custom_name = heldname
 	R.real_name = heldname
 
 	return 1
@@ -182,7 +186,7 @@
 /obj/item/borg/upgrade/jetpack/action(var/mob/living/silicon/robot/R)
 	if(..()) return 0
 
-	if(!istype(R.module, /obj/item/weapon/robot_module/miner))
+	if(!istype(R.module, /obj/item/weapon/robot_module/miner)&&!isMoMMI(R))
 		R << "Upgrade mounting error!  No suitable hardpoint detected!"
 		usr << "There's no mounting point for the module!"
 		return 0
@@ -190,7 +194,7 @@
 		R.module.modules += new/obj/item/weapon/tank/jetpack/carbondioxide
 		for(var/obj/item/weapon/tank/jetpack/carbondioxide in R.module.modules)
 			R.internals = src
-		R.icon_state="Miner+j"
+		//R.icon_state="Miner+j"
 		return 1
 
 
