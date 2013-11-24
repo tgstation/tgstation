@@ -309,7 +309,7 @@
 	else
 		if(istype(M, /mob/living/carbon/monkey))	// monkey > human,
 			var/mob/living/carbon/human/O = M.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS)
-			if(connected) //inside dna thing
+			if(O && connected) //inside dna thing
 				var/obj/machinery/dna_scannernew/C = connected
 				O.loc = C
 				C.occupant = O
@@ -324,7 +324,7 @@
 
 /////////////////////////// DNA MACHINES
 /obj/machinery/dna_scannernew
-	name = "\improper DNA Scanner"
+	name = "\improper DNA scanner"
 	desc = "It scans DNA structures."
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "scanner"
@@ -483,7 +483,7 @@
 
 
 /obj/machinery/computer/scan_consolenew
-	name = "DNA Scanner Access Console"
+	name = "\improper DNA scanner access console"
 	desc = "Scan DNA."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "scanner"

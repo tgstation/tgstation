@@ -88,7 +88,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 
 /obj/machinery/computer/ordercomp
-	name = "Supply Ordering Console"
+	name = "supply ordering console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "request"
 	circuit = /obj/item/weapon/circuitboard/ordercomp
@@ -378,7 +378,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 		return
 
 /obj/item/weapon/paper/manifest
-	name = "Supply Manifest"
+	name = "supply manifest"
 	var/erroneous = 0
 	var/points = 0
 	var/ordernumber = 0
@@ -464,7 +464,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 		supply_shuttle.ordernum++
 		var/obj/item/weapon/paper/reqform = new /obj/item/weapon/paper(loc)
-		reqform.name = "Requisition Form - [P.name]"
+		reqform.name = "requisition form - [P.name]"
 		reqform.info += "<h3>[station_name] Supply Requisition Form</h3><hr>"
 		reqform.info += "INDEX: #[supply_shuttle.ordernum]<br>"
 		reqform.info += "REQUESTED BY: [idname]<br>"
@@ -654,7 +654,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 		supply_shuttle.ordernum++
 		var/obj/item/weapon/paper/reqform = new /obj/item/weapon/paper(loc)
-		reqform.name = "Requisition Form - [P.name]"
+		reqform.name = "requisition form - [P.name]"
 		reqform.info += "<h3>[station_name] Supply Requisition Form</h3><hr>"
 		reqform.info += "INDEX: #[supply_shuttle.ordernum]<br>"
 		reqform.info += "REQUESTED BY: [idname]<br>"

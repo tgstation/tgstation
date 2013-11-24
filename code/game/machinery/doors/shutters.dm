@@ -1,5 +1,7 @@
 /obj/machinery/door/poddoor/shutters
+	gender = PLURAL
 	name = "shutters"
+	desc = "Heavy duty metal shutters that opens mechanically."
 	icon = 'icons/obj/doors/shutters.dmi'
 	layer = 3.1
 

@@ -2,7 +2,7 @@
 	icon = 'icons/obj/atmospherics/vent_pump.dmi'
 	icon_state = "off"
 
-	name = "Air Vent"
+	name = "air vent"
 	desc = "Has a valve and pump attached to it"
 	use_power = 1
 
@@ -58,7 +58,7 @@
 			src.broadcast_status()
 
 	high_volume
-		name = "Large Air Vent"
+		name = "large air vent"
 		power_channel = EQUIP
 		New()
 			..()
@@ -168,7 +168,7 @@
 			)
 
 			if(!initial_loc.air_vent_names[id_tag])
-				var/new_name = "[initial_loc.name] Vent Pump #[initial_loc.air_vent_names.len+1]"
+				var/new_name = "\improper [initial_loc.name] vent pump #[initial_loc.air_vent_names.len+1]"
 				initial_loc.air_vent_names[id_tag] = new_name
 				src.name = new_name
 			initial_loc.air_vent_info[id_tag] = signal.data

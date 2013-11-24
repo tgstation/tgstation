@@ -12,7 +12,7 @@
 	var/z_co = 1
 	var/power_off
 	var/rotation_off
-	var/angle_off
+	//var/angle_off
 
 	var/rotation = 0
 	var/angle = 45
@@ -36,7 +36,7 @@
 
 /obj/machinery/computer/telescience/examine()
 	..()
-	usr << "There are [crystals.len] bluespace crystals in the crystal ports."
+	usr << "There are [crystals.len ? crystals.len : "no"] bluespace crystals in the crystal slots."
 
 /obj/machinery/computer/telescience/initialize()
 	..()
@@ -66,12 +66,12 @@
 /obj/machinery/computer/telescience/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/bluespace_crystal))
 		if(crystals.len >= power_options.len)
-			user << "<span class='warning'>There are not enough crystal ports.</span>"
+			user << "<span class='warning'>There are not enough crystal slots.</span>"
 			return
 		user.drop_item()
 		crystals += W
 		W.loc = null
-		user.visible_message("<span class='notice'>[user] inserts a [W] into the [src]'s crystal port.</span>")
+		user.visible_message("<span class='notice'>[user] inserts [W] into \the [src]'s crystal slot.</span>")
 	else
 		..()
 
@@ -152,7 +152,7 @@
 
 		var/truePower = Clamp(power + power_off, 1, 1000)
 		var/trueRotation = rotation + rotation_off
-		var/trueAngle = Clamp(angle + angle_off, 1, 90)
+		var/trueAngle = Clamp(angle, 1, 90)
 
 		var/datum/projectile_data/proj_data = projectile_trajectory(telepad.x, telepad.y, trueRotation, trueAngle, truePower)
 		last_tele_data = proj_data
@@ -207,7 +207,7 @@
 				dest = target
 
 			flick("pad-beam", telepad)
-			playsound(telepad.loc, 'sound/weapons/emitter2.ogg', 25, 1)
+			playsound(telepad.loc, 'sound/weapons/emitter2.ogg', 25, 1, extrarange = 3, falloff = 5)
 			for(var/atom/movable/ROI in source)
 				// if is anchored, don't let through
 				if(ROI.anchored)
@@ -304,6 +304,6 @@
 
 /obj/machinery/computer/telescience/proc/recalibrate()
 	teles_left = rand(30, 40)
-	angle_off = rand(-25, 25)
+	//angle_off = rand(-25, 25)
 	power_off = rand(-4, 0)
 	rotation_off = rand(-10, 10)

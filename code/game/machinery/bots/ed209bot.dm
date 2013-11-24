@@ -1,5 +1,5 @@
 /obj/machinery/bot/ed209
-	name = "ED-209 Security Robot"
+	name = "\improper ED-209 Security Robot"
 	desc = "A security robot.  He looks less than thrilled."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "ed2090"
@@ -61,7 +61,7 @@
 
 
 /obj/item/weapon/ed209_assembly
-	name = "ED-209 assembly"
+	name = "\improper ED-209 assembly"
 	desc = "Some sort of bizarre assembly."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "ed209_frame"

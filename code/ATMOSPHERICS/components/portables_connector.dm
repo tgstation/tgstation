@@ -2,7 +2,7 @@
 	icon = 'icons/obj/atmospherics/portables_connector.dmi'
 	icon_state = "intact"
 
-	name = "Connector Port"
+	name = "connector port"
 	desc = "For connecting portables devices related to atmospherics control."
 
 	dir = SOUTH
@@ -79,10 +79,7 @@
 		..()
 
 	initialize()
-		if(node)
-			node.disconnect(src)
-			del(network)
-			node = null
+		src.disconnect(src)
 
 		var/node_connect = dir
 

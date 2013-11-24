@@ -1,6 +1,6 @@
 
 /obj/machinery/gibber
-	name = "Gibber"
+	name = "gibber"
 	desc = "The name isn't descriptive enough?"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"
@@ -104,7 +104,7 @@
 
 /obj/machinery/gibber/verb/eject()
 	set category = "Object"
-	set name = "Empty Gibber"
+	set name = "empty gibber"
 	set src in oview(1)
 
 	if (usr.stat != 0)

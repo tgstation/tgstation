@@ -66,6 +66,9 @@ datum/mind
 				current.verbs -= /datum/changeling/proc/EvolutionMenu
 			current.mind = null
 
+			nanomanager.user_transferred(current, new_character)
+
+
 		if(key)
 			if(new_character.key != key)					//if we're transfering into a body with a key associated which is not ours
 				new_character.ghostize(1)						//we'll need to ghostize so that key isn't mobless.
@@ -74,8 +77,6 @@ datum/mind
 
 		if(new_character.mind)								//disassociate any mind currently in our new body's mind variable
 			new_character.mind.current = null
-
-		nanomanager.user_transferred(current, new_character)
 
 		current = new_character								//associate ourself with our new body
 		new_character.mind = src							//and associate our new body with ourself
@@ -825,7 +826,8 @@ datum/mind
 							log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
 							message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(current)]")
 							H = M.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_DEFAULTMSG)
-							src = H.mind
+							if(H)
+								src = H.mind
 
 		else if (href_list["silicon"])
 			switch(href_list["silicon"])
