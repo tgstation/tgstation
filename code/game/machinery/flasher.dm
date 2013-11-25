@@ -121,7 +121,7 @@
 /obj/machinery/flasher/portable/flash()
 	if(!..())
 		return
-	if(prob(4))	//Small chance to burn out on use
+	if(prob(2))	//Small chance to burn out on use
 		bulb.burn_out()
 		power_change()
 
