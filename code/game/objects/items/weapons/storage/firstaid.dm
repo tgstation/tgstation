@@ -149,6 +149,16 @@
 			return
 	return
 
+/obj/item/weapon/storage/pill_bottle/verb/rename()
+	set name = "Rename pill bottle"
+	set category = "Object"
+	set src in usr
+
+	var/n_name = copytext(sanitize(input(usr, "What would you like to label the pill bottle?", "Bottle labelling", null)  as text), 1, MAX_NAME_LEN)
+	if((loc == usr && usr.stat == 0))
+		name = "pill bottle[(n_name ? text(" - ([n_name])") : null)]"
+	add_fingerprint(usr)
+
 /obj/item/weapon/storage/pill_bottle/kelotane
 	name = "Pill bottle (kelotane)"
 	desc = "Contains pills used to treat burns."
