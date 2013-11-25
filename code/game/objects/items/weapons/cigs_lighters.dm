@@ -221,7 +221,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/joint
 	name = "joint"
-	desc = "A roll of ambrosium wrapped in a thin paper. Dude."
+	desc = "A roll of ambrosium vulgaris wrapped in a thin paper. Dude."
 	icon_state = "spliffoff"
 	icon_on = "spliffon"
 	icon_off = "spliffoff"
@@ -229,7 +229,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	throw_speed = 0.5
 	item_state = "spliffoff"
 	smoketime = 300
-	chem_volume = 20
+	chem_volume = 50
 
 /obj/item/clothing/mask/cigarette/joint/New()
 	..()
@@ -238,7 +238,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	src.pixel_x = rand(-5.0, 5)
 	src.pixel_y = rand(-5.0, 5)
 
-
+/obj/item/clothing/mask/cigarette/joint/deus
+	desc = "A roll of ambrosium deus wrapped in a thin paper. Dude."
 
 /obj/item/weapon/cigbutt/roach
 	name = "roach"

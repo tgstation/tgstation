@@ -337,6 +337,7 @@
 		if(src.dry == 1)
 			user.u_equip(W)
 			var/obj/item/clothing/mask/cigarette/joint/J = new /obj/item/clothing/mask/cigarette/joint(user.loc)
+			J.chem_volume = src.reagents.total_volume
 			src.reagents.trans_to(J, J.chem_volume)
 			del(W)
 			user.put_in_active_hand(J)
@@ -370,7 +371,8 @@
 	if(istype(W, /obj/item/weapon/rollingpaper))
 		if(src.dry == 1)
 			user.u_equip(W)
-			var/obj/item/clothing/mask/cigarette/joint/J = new /obj/item/clothing/mask/cigarette/joint(user.loc)
+			var/obj/item/clothing/mask/cigarette/joint/deus/J = new /obj/item/clothing/mask/cigarette/joint/deus(user.loc)
+			J.chem_volume = src.reagents.total_volume
 			src.reagents.trans_to(J, J.chem_volume)
 			del(W)
 			user.put_in_active_hand(J)
