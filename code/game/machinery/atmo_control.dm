@@ -1,7 +1,7 @@
 obj/machinery/air_sensor
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "gsensor1"
-	name = "Gas Sensor"
+	name = "gas sensor"
 
 	anchored = 1
 	var/state = 0
@@ -79,7 +79,7 @@ obj/machinery/computer/general_air_control
 	icon_state = "tank"
 
 	circuit = /obj/item/weapon/circuitboard/air_management
-	name = "Computer"
+	name = "computer"
 
 	var/frequency = 1439
 	var/list/sensors = list()

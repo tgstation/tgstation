@@ -1,6 +1,6 @@
 /obj/machinery/syndicatebomb
 	icon = 'icons/obj/assemblies.dmi'
-	name = "Syndicate Bomb"
+	name = "syndicate bomb"
 	icon_state = "syndicate-bomb-inactive"
 	desc = "A large and menacing device. Can be bolted down with a wrench."
 
@@ -23,7 +23,7 @@
 		active = 0
 		timer = 60
 		processing_objects.Remove(src)
-		explosion(src.loc,2,5,11)
+		explosion(src.loc,2,5,11, flame_range = 11)
 		del(src)
 		return
 	if(!active || defused)					//Counter terrorists win

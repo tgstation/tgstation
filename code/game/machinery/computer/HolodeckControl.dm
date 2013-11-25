@@ -1,5 +1,5 @@
 /obj/machinery/computer/HolodeckControl
-	name = "Holodeck Control Console"
+	name = "holodeck control console"
 	desc = "A computer used to control a nearby holodeck."
 	icon_state = "holocontrol"
 	var/area/linkedholodeck = null
@@ -289,7 +289,8 @@
 	thermal_conductivity = 0
 
 /turf/simulated/floor/holofloor/grass
-	name = "Lush Grass"
+	gender = PLURAL
+	name = "lush grass"
 	icon_state = "grass1"
 	floor_tile = new/obj/item/stack/tile/grass
 
@@ -374,11 +375,11 @@
 
 /obj/item/weapon/holo/esword/green
 	New()
-		color = "green"
+		item_color = "green"
 
 /obj/item/weapon/holo/esword/red
 	New()
-		color = "red"
+		item_color = "red"
 
 /obj/item/weapon/holo/esword/IsShield()
 	if(active)
@@ -389,13 +390,13 @@
 	..()
 
 /obj/item/weapon/holo/esword/New()
-	color = pick("red","blue","green","purple")
+	item_color = pick("red","blue","green","purple")
 
 /obj/item/weapon/holo/esword/attack_self(mob/living/user as mob)
 	active = !active
 	if (active)
 		force = 30
-		icon_state = "sword[color]"
+		icon_state = "sword[item_color]"
 		w_class = 4
 		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
 		user << "\blue [src] is now active."
@@ -474,7 +475,7 @@
 
 
 /obj/machinery/readybutton
-	name = "Ready Declaration Device"
+	name = "ready declaration device"
 	desc = "This device is used to declare ready. If all devices in an area are ready, the event will begin!"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "auth_off"

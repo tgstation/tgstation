@@ -202,7 +202,7 @@
 /obj/machinery/ai_status_display
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
-	name = "AI display"
+	name = "\improper AI display"
 	anchored = 1
 	density = 0
 
@@ -263,6 +263,10 @@
 					set_picture("ai_facepalm")
 				if("Friend Computer")
 					set_picture("ai_friend")
+				if("Blue Glow")
+					set_picture("ai_sal")
+				if("Red Glow")
+					set_picture("ai_hal")
 
 			return
 

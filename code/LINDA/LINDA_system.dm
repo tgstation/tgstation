@@ -24,6 +24,8 @@ datum/controller/air_system
 
 	setup_allturfs()
 
+	global_activeturfs = active_turfs.len
+
 	world << "\red \b Geometry processed in [(world.timeofday-start_time)/10] seconds!"
 
 /datum/controller/air_system/proc/process()
@@ -213,23 +215,43 @@ turf/CanPass(atom/movable/mover, turf/target, height=1.5,air_group=0)
 		return
 	T.atmos_spawn_air(text, amount)
 
-/turf/simulated/proc/atmos_spawn_air(var/text, var/amount)
+var/const/SPAWN_HEAT = 1
+
+var/const/SPAWN_TOXINS = 4
+var/const/SPAWN_OXYGEN = 8
+var/const/SPAWN_CO2 = 16
+var/const/SPAWN_NITROGEN = 32
+
+var/const/SPAWN_N2O = 64
+
+var/const/SPAWN_AIR = 256
+
+/turf/simulated/proc/atmos_spawn_air(var/flag, var/amount)
 	if(!text || !amount || !air)
 		return
 
 	var/datum/gas_mixture/G = new
 
-	if(text == "fire")
-		G.toxins = amount
-		G.temperature = 1000
-	else if(text == "n2o")
+	if(flag & SPAWN_HEAT)
+		G.temperature += 1000
+
+	if(flag & SPAWN_TOXINS)
+		G.toxins += amount
+	if(flag & SPAWN_OXYGEN)
+		G.oxygen += amount
+	if(flag & SPAWN_CO2)
+		G.carbon_dioxide += amount
+	if(flag & SPAWN_NITROGEN)
+		G.nitrogen += amount
+
+	if(flag & SPAWN_N2O)
 		var/datum/gas/sleeping_agent/T = new
-		T.moles = amount
-		G += T
-	else if(text == "fuel")
-		var/datum/gas/volatile_fuel/T
-		T.moles = amount
-		G += T
+		T.moles += amount
+		G.trace_gases += T
+
+	if(flag & SPAWN_AIR)
+		G.oxygen += MOLES_O2STANDARD * amount
+		G.nitrogen += MOLES_N2STANDARD * amount
 
 	air.merge(G)
 	air_master.add_to_active(src, 0)

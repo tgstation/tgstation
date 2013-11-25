@@ -319,6 +319,7 @@
 	name = "ambrosia vulgaris branch"
 	desc = "This is a plant containing various healing chemicals."
 	icon_state = "ambrosiavulgaris"
+	slot_flags = SLOT_HEAD
 	potency = 10
 	New()
 		..()
@@ -335,6 +336,7 @@
 	name = "ambrosia deus branch"
 	desc = "Eating this makes you feel immortal!"
 	icon_state = "ambrosiadeus"
+	slot_flags = SLOT_HEAD
 	potency = 10
 	New()
 		..()
@@ -677,7 +679,7 @@
 	del(src)
 	return
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/HasEntered(AM as mob|obj)
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/Crossed(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))
 		var/mob/M =	AM
 		if (istype(M, /mob/living/carbon/human) && (isobj(M:shoes) && M:shoes.flags&NOSLIP))
@@ -924,7 +926,7 @@
 	user.SetLuminosity(round(user.luminosity + (potency/10),1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/dropped(mob/user)
-	user.SetLuminosity(round(user.luminosity + (potency/10),1))
+	user.SetLuminosity(round(user.luminosity - (potency/10),1))
 	SetLuminosity(round(potency/10,1))
 
 //This object is just a transition object. All it does is make dosh and delete itself. -Cheridan

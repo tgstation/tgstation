@@ -88,7 +88,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 
 /obj/machinery/computer/ordercomp
-	name = "Supply Ordering Console"
+	name = "supply ordering console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "request"
 	circuit = /obj/item/weapon/circuitboard/ordercomp
@@ -134,6 +134,8 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	var/moving = 0
 	var/eta_timeofday
 	var/eta
+	//shuttle loan
+	var/datum/round_event/shuttle_loan/shuttle_loan
 
 	New()
 		ordernum = rand(1,9000)
@@ -376,7 +378,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 		return
 
 /obj/item/weapon/paper/manifest
-	name = "Supply Manifest"
+	name = "supply manifest"
 	var/erroneous = 0
 	var/points = 0
 	var/ordernumber = 0
@@ -462,7 +464,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 		supply_shuttle.ordernum++
 		var/obj/item/weapon/paper/reqform = new /obj/item/weapon/paper(loc)
-		reqform.name = "Requisition Form - [P.name]"
+		reqform.name = "requisition form - [P.name]"
 		reqform.info += "<h3>[station_name] Supply Requisition Form</h3><hr>"
 		reqform.info += "INDEX: #[supply_shuttle.ordernum]<br>"
 		reqform.info += "REQUESTED BY: [idname]<br>"
@@ -527,10 +529,11 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 		<HR>\nSupply Points: [supply_shuttle.points]<BR>\n<BR>
 		[supply_shuttle.moving ? "\n*Must be away to order items*<BR>\n<BR>":supply_shuttle.at_station ? "\n*Must be away to order items*<BR>\n<BR>":"\n<A href='?src=\ref[src];order=categories'>Order items</A><BR>\n<BR>"]
 		[supply_shuttle.moving ? "\n*Shuttle already called*<BR>\n<BR>":supply_shuttle.at_station ? "\n<A href='?src=\ref[src];send=1'>Send away</A><BR>\n<BR>":"\n<A href='?src=\ref[src];send=1'>Send to station</A><BR>\n<BR>"]
+		[supply_shuttle.shuttle_loan ? (supply_shuttle.shuttle_loan.dispatched ? "\n*Shuttle loaned to CentComm*<BR>\n<BR>" : "\n<A href='?src=\ref[src];send=1;loan=1'>Loan shuttle to CentComm (5 mins duration)</A><BR>\n<BR>") : "\n*No pending external shuttle requests*<BR>\n<BR>"]
 		\n<A href='?src=\ref[src];viewrequests=1'>View requests</A><BR>\n<BR>
 		\n<A href='?src=\ref[src];vieworders=1'>View orders</A><BR>\n<BR>
 		\n<A href='?src=\ref[user];mach_close=computer'>Close</A><BR>
-		<HR>\n<B>Central Command messages</B><BR> [supply_shuttle.centcom_message ? supply_shuttle.centcom_message : "Glory to Nanotrasen."]"}
+		<HR>\n<B>Central Command messages</B><BR> [supply_shuttle.centcom_message ? supply_shuttle.centcom_message : "Remember to stamp and send back the supply manifests."]"}
 
 	user << browse(dat, "window=computer;size=700x450")
 	onclose(user, "computer")
@@ -558,19 +561,41 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	//Calling the shuttle
 	if(href_list["send"])
 		if(!supply_shuttle.can_move())
-			temp = "For safety reasons the automated supply shuttle cannot transport live organisms, classified nuclear weaponry or homing beacons.<BR><BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+			if(supply_shuttle.shuttle_loan)
+				temp = "The supply shuttle must be docked to send new commands.<BR><BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+			else
+				temp = "For safety reasons the automated supply shuttle cannot transport live organisms, classified nuclear weaponry or homing beacons.<BR><BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 
 		else if(supply_shuttle.at_station)
-			supply_shuttle.moving = -1
-			supply_shuttle.sell()
-			supply_shuttle.send()
-			temp = "The supply shuttle has departed.<BR><BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+			if(href_list["loan"] && supply_shuttle.shuttle_loan)
+				if(!supply_shuttle.shuttle_loan.dispatched)
+					supply_shuttle.sell()
+					supply_shuttle.send()
+					supply_shuttle.shuttle_loan.loan_shuttle()
+					temp = "The supply shuttle has been loaned to CentComm.<BR><BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+					post_signal("supply")
+				else
+					temp = "You can not loan the supply shuttle at this time.<BR><BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+			else
+				temp = "The supply shuttle has departed.<BR><BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+				supply_shuttle.moving = -1
+				supply_shuttle.sell()
+				supply_shuttle.send()
+
 		else
-			supply_shuttle.moving = 1
-			supply_shuttle.buy()
-			supply_shuttle.eta_timeofday = (world.timeofday + supply_shuttle.movetime) % 864000
-			temp = "The supply shuttle has been called and will arrive in [round(supply_shuttle.movetime/600,1)] minutes.<BR><BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
-			post_signal("supply")
+			if(href_list["loan"] && supply_shuttle.shuttle_loan)
+				if(!supply_shuttle.shuttle_loan.dispatched)
+					supply_shuttle.shuttle_loan.loan_shuttle()
+					temp = "The supply shuttle has been loaned to CentComm.<BR><BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+					post_signal("supply")
+				else
+					temp = "You can not loan the supply shuttle at this time.<BR><BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+			else
+				supply_shuttle.buy()
+				temp = "The supply shuttle has been called and will arrive in [round(supply_shuttle.movetime/600,1)] minutes.<BR><BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+				supply_shuttle.moving = 1
+				supply_shuttle.eta_timeofday = (world.timeofday + supply_shuttle.movetime) % 864000
+				post_signal("supply")
 
 	else if (href_list["order"])
 		if(supply_shuttle.moving) return
@@ -629,7 +654,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 		supply_shuttle.ordernum++
 		var/obj/item/weapon/paper/reqform = new /obj/item/weapon/paper(loc)
-		reqform.name = "Requisition Form - [P.name]"
+		reqform.name = "requisition form - [P.name]"
 		reqform.info += "<h3>[station_name] Supply Requisition Form</h3><hr>"
 		reqform.info += "INDEX: #[supply_shuttle.ordernum]<br>"
 		reqform.info += "REQUESTED BY: [idname]<br>"

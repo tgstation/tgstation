@@ -82,7 +82,7 @@
 		return 0
 
 
-	if(health < 1)
+	if(health < 1 && stat != DEAD)
 		Die()
 
 	if(health > maxHealth)
@@ -254,6 +254,7 @@
 /mob/living/simple_animal/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj)	return
 	adjustBruteLoss(Proj.damage)
+	Proj.on_hit(src, 0)
 	return 0
 
 /mob/living/simple_animal/attack_hand(mob/living/carbon/human/M as mob)
@@ -457,20 +458,26 @@
 
 /mob/living/simple_animal/adjustBruteLoss(damage)
 	health = Clamp(health - damage, 0, maxHealth)
-	if(health < 1)
+	if(health < 1 && stat != DEAD)
 		Die()
 
-/mob/living/simple_animal/proc/SA_attackable(target)
-	if (isliving(target))
-		var/mob/living/L = target
-		if(!L.stat)
+/mob/living/simple_animal/proc/CanAttack(var/atom/the_target)
+	if(see_invisible < the_target.invisibility)
+		return 0
+	if (isliving(the_target))
+		var/mob/living/L = the_target
+		if(L.stat != CONSCIOUS)
 			return 0
-	if (istype(target,/obj/mecha))
-		var/obj/mecha/M = target
+	if (istype(the_target, /obj/mecha))
+		var/obj/mecha/M = the_target
 		if (M.occupant)
 			return 0
 	return 1
 
 
 /mob/living/simple_animal/update_fire()
+	return
+/mob/living/simple_animal/IgniteMob()
+	return
+/mob/living/simple_animal/ExtinguishMob()
 	return

@@ -150,7 +150,8 @@
 
 /obj/item/weapon/weldingtool/examine()
 	set src in usr
-	usr << "[src] \icon[src] contains [get_fuel()]/[max_fuel] units of fuel!"
+	..()
+	usr << "It contains [get_fuel()]/[max_fuel] units of fuel!"
 
 
 /obj/item/weapon/weldingtool/attackby(obj/item/I, mob/user)
@@ -202,7 +203,7 @@
 			message_admins("[key_name_admin(user)] triggered a fueltank explosion.")
 			log_game("[key_name(user)] triggered a fueltank explosion.")
 			user << "<span class='warning'>That was stupid of you.</span>"
-			explosion(O.loc, -1, 0, 2)
+			explosion(O.loc, -1, 0, 2, flame_range = 2)
 			if(O)
 				del(O)
 			return

@@ -38,7 +38,7 @@
 		var/mob/living/carbon/human/H = src	//make this damage method divide the damage to be done among all the body parts, then burn each body part for that much damage. will have better effect then just randomly picking a body part
 		var/divided_damage = (burn_amount)/(H.organs.len)
 		var/extradam = 0	//added to when organ is at max dam
-		for(var/datum/limb/affecting in H.organs)
+		for(var/obj/item/organ/limb/affecting in H.organs)
 			if(!affecting)	continue
 			if(affecting.take_damage(0, divided_damage+extradam))	//TODO: fix the extradam stuff. Or, ebtter yet...rewrite this entire proc ~Carn
 				H.update_damage_overlays(0)
@@ -216,7 +216,7 @@
 	var/t = shooter:zone_sel.selecting
 	if ((t in list( "eyes", "mouth" )))
 		t = "head"
-	var/datum/limb/def_zone = ran_zone(t)
+	var/obj/item/organ/limb/def_zone = ran_zone(t)
 	return def_zone
 
 
@@ -263,8 +263,8 @@
 	ear_deaf = 0
 	ear_damage = 0
 	heal_overall_damage(1000, 1000)
+	ExtinguishMob()
 	fire_stacks = 0
-	on_fire = 0 
 	buckled = initial(src.buckled)
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
@@ -365,7 +365,7 @@
 							var/trail_type = M.getTrail()
 							for(var/obj/effect/decal/cleanable/trail_holder/C in M.loc) //checks for blood splatter already on the floor
 								blood_exists = 1
-							if (istype(M.loc, /turf/simulated))
+							if (istype(M.loc, /turf/simulated) && trail_type != null)
 								var/newdir = get_dir(T, M.loc)
 								if(newdir != M.dir)
 									newdir = newdir | M.dir
@@ -373,13 +373,15 @@
 										newdir = NORTH
 									else if(newdir == 12) //E + W
 										newdir = EAST
+								if((newdir in list(1, 2, 4, 8)) && (prob(50)))
+									newdir = turn(get_dir(T, M.loc), 180)
 								if(!blood_exists)
 									new /obj/effect/decal/cleanable/trail_holder(M.loc)
 								for(var/obj/effect/decal/cleanable/trail_holder/H in M.loc)
-									if((!(newdir in H.existing_dirs) || trail_type == "trails") && H.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
+									if((!(newdir in H.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && H.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
 										H.existing_dirs += newdir
 										H.overlays.Add(image('icons/effects/blood.dmi',trail_type,dir = newdir))
-										if(istype(M, /mob/living/carbon/human)) //blood DNA
+										if(check_dna_integrity(M)) //blood DNA
 											var/mob/living/carbon/DNA_helper = pulling
 											H.blood_DNA[DNA_helper.dna.unique_enzymes] = DNA_helper.dna.blood_type
 						step(pulling, get_dir(pulling.loc, T))
@@ -460,39 +462,13 @@
 		else
 			L.buckled.manual_unbuckle(L)
 
-	//Breaking out of a locker?
-	else if(loc && istype(loc, /obj/structure/closet))
-		var/obj/structure/closet/C = L.loc
-		var/breakout_time = 2 //2 minutes by default
-		if(istype(L.loc, /obj/structure/closet/critter) && !C.welded)
-			breakout_time = 0.75 //45 seconds if it's an unwelded critter crate
+	//Breaking out of a container (Locker, sleeper, cryo...)
+	else if(loc && istype(loc, /obj) && !isturf(loc))
+		if(L.stat == CONSCIOUS && !L.stunned && !L.weakened && !L.paralysis)
+			var/obj/C = loc
+			C.container_resist(L)
 
-		if(C.opened || (!C.welded && !C.locked))
-			return	//Door's open, not locked or welded, no point in resisting.
-
-		//okay, so the closet is either welded or locked... resist!!!
-		usr.next_move = world.time + 100
-		L.last_special = world.time + 100
-		L << "<span class='notice'>You lean on the back of [C] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>"
-		for(var/mob/O in viewers(C))
-			O << "<span class='warning'>[C] begins to shake violently!</span>"
-
-		if(do_after(usr,(breakout_time*60*10))) //minutes * 60seconds * 10deciseconds
-			if(!C || !L || L.stat != CONSCIOUS || L.loc != C || C.opened || (!C.locked && !C.welded))
-				return
-			//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
-
-			C.welded = 0 //applies to all lockers lockers
-			C.locked = 0 //applies to critter crates and secure lockers only
-			C.broken = 1 //applies to secure lockers only
-			L.visible_message("<span class='danger'>[L] successfully broke out of [C]!</span>", \
-							"<span class='notice'>You successfully break out of [C]!</span>")
-			if(istype(C.loc, /obj/structure/bigDelivery)) //Do this to prevent contents from being opened into nullspace (read: bluespace)
-				var/obj/structure/bigDelivery/BD = C.loc
-				BD.attack_hand(usr)
-			C.open()
-
-	//Stop drop and roll & Handcuffs 
+	//Stop drop and roll & Handcuffs
 	else if(iscarbon(L))
 		var/mob/living/carbon/CM = L
 		if(CM.on_fire && CM.canmove)

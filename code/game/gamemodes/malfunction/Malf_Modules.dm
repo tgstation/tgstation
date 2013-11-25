@@ -1,18 +1,3 @@
-// TO DO:
-/*
-epilepsy flash on lights
-delay round message
-microwave makes robots
-dampen radios
-reactivate cameras - done
-eject engine
-core sheild
-cable stun
-rcd light flash thingy on matter drain
-
-
-
-*/
 
 /datum/AI_Module
 	var/uses = 0
@@ -107,11 +92,39 @@ rcd light flash thingy on matter drain
 				for(var/mob/V in hearers(M, null))
 					V.show_message("\blue You hear a loud electrical buzzing sound!", 2)
 				spawn(50)
-					explosion(get_turf(M), 0,1,1,0)
-					del(M)
+					if(M)
+						explosion(get_turf(M), 0,1,1,0)
+						del(M)
 			else src << "Out of uses."
 	else src << "That's not a machine."
 
+/datum/AI_Module/small/override_machine
+	module_name = "Machine override"
+	mod_pick_name = "override"
+	description = "Overrides a machine's programming, causing it to rise up attack everyone except you (WARNING: It will attack cyborgs). 4 uses."
+	uses = 4
+	cost = 15
+
+	power_type = /mob/living/silicon/ai/proc/override_machine
+
+
+/mob/living/silicon/ai/proc/override_machine(obj/machinery/M as obj in world)
+	set name = "Override Machine"
+	set category = "Malfunction"
+	if (istype(M, /obj/machinery))
+		for(var/datum/AI_Module/small/override_machine/override in current_modules)
+			if(override.uses > 0)
+				override.uses --
+				for(var/mob/V in hearers(M, null))
+					V.show_message("\blue You hear a loud electrical buzzing sound!", 2)
+				spawn(50)
+					if(M)
+						var/mob/living/simple_animal/hostile/mimic/copy/machine = new(get_turf(M), M, src, 1)
+						machine.speak = list("HUMANS ARE IMPERFECT!", "YOU SHALL BE ASSIMILATED!", "YOU ARE HARMING YOURSELF", "You have been deemed hazardous. Will you comply?", \
+									   "My logic is undeniable.", "One of us.", "FLESH IS WEAK", "THIS ISN'T WAR, THIS IS EXTERMINATION!")
+						machine.speak_chance = 15
+			else src << "Out of uses."
+	else src << "That's not a machine."
 
 /datum/AI_Module/large/place_cyborg_transformer
 	module_name = "Robotic Factory (Removes Shunting)"
@@ -214,9 +227,9 @@ rcd light flash thingy on matter drain
 /datum/AI_Module/small/reactivate_camera
 	module_name = "Reactivate camera"
 	mod_pick_name = "recam"
-	description = "Reactivates a currently disabled camera. 10 uses."
-	uses = 10
-	cost = 15
+	description = "Reactivates a currently disabled camera. 5 uses."
+	uses = 5
+	cost = 5
 
 	power_type = /mob/living/silicon/ai/proc/reactivate_camera
 
@@ -237,9 +250,9 @@ rcd light flash thingy on matter drain
 /datum/AI_Module/small/upgrade_camera
 	module_name = "Upgrade Camera"
 	mod_pick_name = "upgradecam"
-	description = "Upgrades a camera to have X-Ray vision, Motion and be EMP-Proof. 10 uses."
-	uses = 10
-	cost = 15
+	description = "Upgrades a camera to have X-Ray vision, Motion and be EMP-Proof. 5 uses."
+	uses = 5
+	cost = 5
 
 	power_type = /mob/living/silicon/ai/proc/upgrade_camera
 
@@ -303,9 +316,9 @@ rcd light flash thingy on matter drain
 	dat += "<B>Install Module:</B><BR>"
 	dat += "<I>The number afterwards is the amount of processing time it consumes.</I><BR>"
 	for(var/datum/AI_Module/large/module in src.possible_modules)
-		dat += "<A href='byond://?src=\ref[src];[module.mod_pick_name]=1'>[module.module_name]</A> ([module.cost])<BR>"
+		dat += "<A href='byond://?src=\ref[src];[module.mod_pick_name]=1'>[module.module_name]</A><A href='byond://?src=\ref[src];showdesc=[module.mod_pick_name]'>\[?\]</A> ([module.cost])<BR>"
 	for(var/datum/AI_Module/small/module in src.possible_modules)
-		dat += "<A href='byond://?src=\ref[src];[module.mod_pick_name]=1'>[module.module_name]</A> ([module.cost])<BR>"
+		dat += "<A href='byond://?src=\ref[src];[module.mod_pick_name]=1'>[module.module_name]</A><A href='byond://?src=\ref[src];showdesc=[module.mod_pick_name]'>\[?\]</A> ([module.cost])<BR>"
 	dat += "<HR>"
 	if (src.temp)
 		dat += "[src.temp]"
@@ -347,5 +360,8 @@ rcd light flash thingy on matter drain
 			temp = AM.description
 			src.processing_time -= AM.cost
 
+		if(href_list["showdesc"])
+			if(AM.mod_pick_name == href_list["showdesc"])
+				temp = AM.description
 	src.use(usr)
 	return

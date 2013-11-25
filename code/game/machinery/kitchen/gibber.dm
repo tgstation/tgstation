@@ -1,6 +1,6 @@
 
 /obj/machinery/gibber
-	name = "Gibber"
+	name = "gibber"
 	desc = "The name isn't descriptive enough?"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"
@@ -65,7 +65,7 @@
 /obj/machinery/gibber/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
-/obj/machinery/gibber/relaymove(mob/user as mob)
+/obj/machinery/gibber/container_resist()
 	src.go_out()
 	return
 
@@ -104,7 +104,7 @@
 
 /obj/machinery/gibber/verb/eject()
 	set category = "Object"
-	set name = "Empty Gibber"
+	set name = "empty gibber"
 	set src in oview(1)
 
 	if (usr.stat != 0)

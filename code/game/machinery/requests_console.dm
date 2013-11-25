@@ -7,7 +7,7 @@ var/req_console_information = list()
 var/list/obj/machinery/requests_console/allConsoles = list()
 
 /obj/machinery/requests_console
-	name = "Requests Console"
+	name = "requests console"
 	desc = "A console intended to send requests to diferent departments on the station."
 	anchored = 1
 	icon = 'icons/obj/terminals.dmi'
@@ -80,7 +80,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			icon_state = "req_comp0"
 
 /obj/machinery/requests_console/New()
-	name = "[department] Requests Console"
+	name = "\improper [department] requests console"
 	allConsoles += src
 	//req_console_departments += department
 	switch(departmentType)
@@ -432,14 +432,13 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			user << "You can't do much with that."
 	update_icon()
 
-	if (istype(O, /obj/item/weapon/card/id))
+	var/obj/item/weapon/card/id/ID = O.GetID()
+	if (ID)
 		if(screen == 9)
-			var/obj/item/weapon/card/id/T = O
-			msgVerified = "<font color='green'><b>Verified by [T.registered_name] ([T.assignment])</b></font>"
+			msgVerified = "<font color='green'><b>Verified by [ID.registered_name] ([ID.assignment])</b></font>"
 			updateUsrDialog()
 		if(screen == 10)
-			var/obj/item/weapon/card/id/ID = O
-			if (access_RC_announce in ID.GetAccess())
+			if (access_RC_announce in ID.access)
 				announceAuth = 1
 			else
 				announceAuth = 0

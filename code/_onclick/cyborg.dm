@@ -16,17 +16,17 @@
 		return
 
 	var/list/modifiers = params2list(params)
-	if("middle" in modifiers)
+	if(modifiers["middle"])
 		MiddleClickOn(A)
 		return
-	if("shift" in modifiers)
+	if(modifiers["shift"])
 		ShiftClickOn(A)
 		return
-	if("ctrl" in modifiers)
-		CtrlClickOn(A)
-		return
-	if("alt" in modifiers)
+	if(modifiers["alt"]) // alt and alt-gr (rightalt)
 		AltClickOn(A)
+		return
+	if(modifiers["ctrl"])
+		CtrlClickOn(A)
 		return
 
 	if(stat || lockcharge || weakened || stunned || paralysis)
@@ -94,6 +94,12 @@
 			W.afterattack(A, src, 0, params)
 			return
 	return
+
+//Middle click cycles through selected modules.
+/mob/living/silicon/robot/MiddleClickOn(var/atom/A)
+	cycle_modules()
+	return
+
 /*
 	As with AI, these are not used in click code,
 	because the code for robots is specific, not generic.

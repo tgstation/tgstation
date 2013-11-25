@@ -88,7 +88,7 @@
 
 	if (alert(usr, "Are you sure you want to empty that?", "Empty Bottle:", "Yes", "No") != "Yes")
 		return
-	if(isturf(usr.loc))
+	if(isturf(usr.loc) && src.loc == usr)
 		usr << "<span class='notice'>You empty \the [src] onto the floor.</span>"
 		reagents.reaction(usr.loc)
 		spawn(5) src.reagents.clear_reagents()
@@ -221,6 +221,14 @@
 		log_game("[key_name(user)] fired Space lube from a chem sprayer.")
 	return
 
+/obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror/New()
+	..()
+	reagents.add_reagent("spore", 150)
+	reagents.add_reagent("cryptobiolin", 150)
+	reagents.add_reagent("mutagen", 150)
+	reagents.add_reagent("chloralhydrate", 150)
+
+
 // Plant-B-Gone
 /obj/item/weapon/reagent_containers/spray/plantbgone // -- Skie
 	name = "Plant-B-Gone"
@@ -234,14 +242,3 @@
 /obj/item/weapon/reagent_containers/spray/plantbgone/New()
 	..()
 	reagents.add_reagent("plantbgone", 100)
-
-
-/obj/item/weapon/reagent_containers/spray/plantbgone/afterattack(atom/A as mob|obj, mob/user as mob, proximity)
-	if(proximity)
-		if (istype(A, /obj/machinery/hydroponics)) // We are targeting hydrotray
-			return
-
-		if (istype(A, /obj/effect/blob)) // blob damage in blob code
-			return
-
-	..()

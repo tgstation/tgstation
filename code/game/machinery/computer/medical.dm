@@ -1,7 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj/machinery/computer/med_data//TODO:SANITY
-	name = "Medical Records Console"
+	name = "medical records console"
 	desc = "This can be used to check medical records."
 	icon_state = "medcomp"
 	req_one_access = list(access_medical, access_forensics_lockers)
@@ -450,6 +450,6 @@
 
 
 /obj/machinery/computer/med_data/laptop
-	name = "Medical Laptop"
+	name = "medical laptop"
 	desc = "Cheap Nanotrasen Laptop."
 	icon_state = "medlaptop"

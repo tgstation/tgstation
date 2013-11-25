@@ -118,7 +118,7 @@
 	..()
 	var/turf/simulated/T = get_turf(src)
 	if(istype(T))
-		T.atmos_spawn_air("fire", 3)
+		T.atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 3)
 
 /////////////////////
 
