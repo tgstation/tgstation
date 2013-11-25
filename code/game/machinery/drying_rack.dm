@@ -11,9 +11,12 @@
 	active_power_usage = 50
 	var/list/accepted = list()
 	var/running = 0
+	var/volume = 100
 
 /obj/machinery/drying_rack/New()
 	..()
+	flags |= NOREACT
+	create_reagents(volume)
 	accepted = list(/obj/item/weapon/reagent_containers/food/snacks/grown/coffee_arabica,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/coffee_robusta,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco,
@@ -73,6 +76,8 @@
 			else
 				if(W:dry == 0)
 					var/J = W.type
+					var/obj/item/weapon/reagent_containers/food/snacks/grown/B = W
+					B.reagents.trans_to(src, B.reagents.total_volume)
 					user << "You add the [W] to the drying rack."
 					user.u_equip(W)
 					del(W)
@@ -85,6 +90,8 @@
 					user << "\blue You finish drying the [D]"
 					D.icon_state = "[D.icon_state]_dry"
 					D.dry = 1
+					D.reagents.remove_any(50)
+					src.reagents.trans_to(D, src.reagents.total_volume)
 					use_power = 1
 					src.running = 0
 					return

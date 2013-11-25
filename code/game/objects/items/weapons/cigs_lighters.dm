@@ -228,7 +228,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	type_butt = /obj/item/weapon/cigbutt/roach
 	throw_speed = 0.5
 	item_state = "spliffoff"
-	smoketime = 300
+	smoketime = 180
 	chem_volume = 50
 
 /obj/item/clothing/mask/cigarette/joint/New()
