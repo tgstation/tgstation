@@ -30,7 +30,7 @@
 	var/const/deffont = "Verdana"
 	var/const/signfont = "Times New Roman"
 	var/const/crayonfont = "Comic Sans MS"
-
+	var/const/jobfont = "Arial"
 
 /obj/item/weapon/paper/New()
 	..()
@@ -174,6 +174,18 @@
 	t = replacetext(t, "\[/large\]", "</font>")
 	t = replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[user.real_name]</i></font>")
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.wear_id)
+			if(istype(H.wear_id,/obj/item/device/pda))
+				var/obj/item/device/pda/PDA = H.wear_id
+				t = replacetext(t, "\[job\]", "<font face=\"[jobfont]\"><i>[PDA.ownjob]</i></font>")
+			else if(istype(H.wear_id,/obj/item/weapon/card/id))
+				var/obj/item/weapon/card/id/ID = H.wear_id
+				t = replacetext(t, "\[job\]", "<font face=\"[jobfont]\"><i>[ID.assignment]</i></font>")
+
+	t = replacetext(t, "\[job\]", "")//If somehow a job tag is not cleared. destroy it.
 
 	if(!iscrayon)
 		t = replacetext(t, "\[*\]", "<li>")
