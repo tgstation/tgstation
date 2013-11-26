@@ -137,6 +137,7 @@ emp_act
 	var/armor = run_armor_check(affecting, "melee", "<span class='warning'>Your armour has protected your [hit_area].</span>", "<span class='warning'>Your armour has softened a hit to your [hit_area].</span>")
 	if(armor >= 2)	return 0
 	if(!I.force)	return 0
+	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
 	apply_damage(I.force, I.damtype, affecting, armor , I)
 
@@ -202,5 +203,5 @@ emp_act
 						w_uniform.add_blood(src)
 						update_inv_w_uniform(0)
 
-		if(I.force > 10 || I.force >= 5 && prob(33))
+		if(Iforce > 10 || Iforce >= 5 && prob(33))
 			forcesay(hit_appends)	//forcesay checks stat already.
