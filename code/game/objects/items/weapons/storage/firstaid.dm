@@ -154,8 +154,8 @@
 	set category = "Object"
 	set src in usr
 
-	var/n_name = copytext(sanitize(input(usr, "What would you like to label the pill bottle?", "Bottle labelling", null)  as text), 1, MAX_NAME_LEN)
-	if((loc == usr && usr.stat == 0))
+	var/n_name = stripped_input(usr, "What would you like to label the pill bottle?", "Bottle labelling", null, MAX_NAME_LEN)
+	if((usr != null && loc == usr && usr.stat == 0))
 		name = "pill bottle[(n_name ? text(" - ([n_name])") : null)]"
 	add_fingerprint(usr)
 
