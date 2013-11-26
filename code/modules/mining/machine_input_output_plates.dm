@@ -17,3 +17,12 @@
 	anchored = 1.0
 	New()
 		icon_state = "blank"
+
+/obj/machinery/mineral/proc/unload_mineral(var/atom/movable/S)
+	//S.loc = loc
+	var/D = turn(dir,180)
+	world << "D is [D]"
+	var/turf/T = get_step(src,D)
+	world << "Turf [T] at [T.x], [T.y], [T.z]"
+	if(T)
+		S.loc = T.loc
