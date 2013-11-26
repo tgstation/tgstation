@@ -150,7 +150,7 @@
 	icon_state = "bombcore"
 	item_state = "eshield0"
 	flags = FPRINT | TABLEPASS
-	w_class = 2.0
+	w_class = 3.0
 	origin_tech = "syndicate=6;combat=5"
 
 /obj/item/weapon/syndicatebombcore/ex_act(severity) //Little boom can chain a big boom
