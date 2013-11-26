@@ -512,11 +512,11 @@
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/U = M
 		var/obj/item/organ/limb/affecting = U.get_organ("head")
-		if(affecting.take_damage(7))
+		if(affecting.take_damage(force))
 			U.update_damage_overlays(0)
 
 	else
-		M.take_organ_damage(7)
+		M.take_organ_damage(force)
 	M.eye_blurry += rand(3,4)
 	M.eye_stat += rand(2,4)
 	if (M.eye_stat >= 10)
@@ -525,13 +525,12 @@
 		if(M.stat != 2)
 			M << "\red Your eyes start to bleed profusely!"
 		if(prob(50))
-			if(M.stat != 2)
-				M << "\red You drop what you're holding and clutch at your eyes!"
-				M.drop_item()
 			M.eye_blurry += 10
-			M.Paralyse(1)
-			M.Weaken(4)
 		if (prob(M.eye_stat - 10 + 1))
+			if(M.stat == 0 && prob(force))
+				visible_message("<span class='danger'>[src] has been knocked unconscious!</span>", \
+								"<span class='userdanger'>[src] has been knocked unconscious!</span>")
+				M.apply_effect(20, PARALYZE, armor)
 			if(M.stat != 2)
 				M << "\red You go blind!"
 			M.sdisabilities |= BLIND
