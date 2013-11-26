@@ -67,6 +67,8 @@
 	var/stk_amt   = list()
 	var/stack_list[0] //Key: Type.  Value: Instance of type.
 	var/stack_amt = 50; //ammount to stack before releassing
+	input_dir = EAST
+	output_dir = WEST
 
 /obj/machinery/mineral/stacking_machine/proc/process_sheet(obj/item/stack/sheet/inp)
 	if(!(inp.type in stack_list)) //It's the first of this sheet added
@@ -83,7 +85,7 @@
 		storage.amount -= stack_amt
 
 /obj/machinery/mineral/stacking_machine/process()
-	var/turf/T = get_step(src, dir)
+	var/turf/T = get_step(src, input_dir)
 	if(T)
 		for(var/obj/item/stack/sheet/S in T)
 			process_sheet(S)

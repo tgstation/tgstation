@@ -7,9 +7,11 @@
 	icon_state = "unloader"
 	density = 1
 	anchored = 1.0
+	input_dir = WEST
+	output_dir = EAST
 
 /obj/machinery/mineral/unloading_machine/process()
-	var/turf/T = get_step(src,dir)
+	var/turf/T = get_step(src,input_dir)
 	if(T)
 		var/limit
 		for(var/obj/structure/ore_box/B in T)

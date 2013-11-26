@@ -18,11 +18,12 @@
 	New()
 		icon_state = "blank"
 
+/obj/machinery/mineral
+	var/input_dir = NORTH
+	var/output_dir = SOUTH
+
 /obj/machinery/mineral/proc/unload_mineral(var/atom/movable/S)
-	//S.loc = loc
-	var/D = turn(dir,180)
-	world << "D is [D]"
-	var/turf/T = get_step(src,D)
-	world << "Turf [T] at [T.x], [T.y], [T.z]"
+	S.loc = loc
+	var/turf/T = get_step(src,output_dir)
 	if(T)
-		S.loc = T.loc
+		S.loc = T

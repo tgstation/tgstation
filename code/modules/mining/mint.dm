@@ -22,7 +22,7 @@
 	var/coinsToProduce = 10
 
 /obj/machinery/mineral/mint/process()
-	var/turf/T = get_step(src,dir)
+	var/turf/T = get_step(src,input_dir)
 	if(T)
 		for(var/obj/item/stack/sheet/O in T)
 			if (istype(O,/obj/item/stack/sheet/mineral/gold))
@@ -207,7 +207,7 @@
 	return
 
 /obj/machinery/mineral/mint/proc/create_coins(var/S)
-	var/turf/T = get_step(src, turn(dir,180))
+	var/turf/T = get_step(src,output_dir)
 	if(T)
 		var/P = text2path(S)
 		var/obj/item/O = new P(src)

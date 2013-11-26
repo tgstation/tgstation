@@ -350,7 +350,7 @@
 			break
 		else
 			break
-	var/turf/T = get_step(src,dir)
+	var/turf/T = get_step(src,input_dir)
 	if(T)
 		var/n = 0
 		for(var/obj/item/O in T)
