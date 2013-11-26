@@ -133,7 +133,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/syndicate
 	default_cartridge = /obj/item/weapon/cartridge/syndicate
 	icon_state = "pda-syndi"
-	name = "Military PDA"
+	name = "military PDA"
 	owner = "John Doe"
 	hidden = 1
 
