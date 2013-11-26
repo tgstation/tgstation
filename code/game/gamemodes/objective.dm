@@ -15,7 +15,7 @@ datum/objective
 	proc/find_target()
 		var/list/possible_targets = list()
 		for(var/datum/mind/possible_target in ticker.minds)
-			if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != 2))
+			if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != 2) && (possible_target.assigned_role != "MODE")) //MODE roles are those that start off jobless and off station (Wizards, Nuke Ops, Ninjas).
 				possible_targets += possible_target
 		if(possible_targets.len > 0)
 			target = pick(possible_targets)
@@ -249,7 +249,15 @@ datum/objective/escape
 		else
 			return 0
 
+datum/objective/escape/fake //antimeta for an antagonist that usually needs to escape to win in a roundtype that doesn't allow escape
 
+	check_completion() //looks like escape, works like survive
+		explanation_text = "Stay alive until the end." //reveals itself no matter what
+		if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current))
+			return 0		//Brains no longer win survive objectives. --NEO
+		if(!is_special_character(owner.current)) //This fails borg'd traitors
+			return 0
+		return 1
 
 datum/objective/survive
 	explanation_text = "Stay alive until the end."
@@ -316,9 +324,10 @@ Nobody takes these seriously anyways -- Ikki
 		steal_target = possible_items[target_name]
 		if (!steal_target )
 			steal_target = possible_items_special[target_name]
+		if(istype("AI malfunction", ticker.mode.name) && istype("a functional AI", target_name)) //Impossible Objective
+			set_target(pick(possible_items))
 		explanation_text = "Steal [target_name]."
 		return steal_target
-
 
 	find_target()
 		return set_target(pick(possible_items))
@@ -362,6 +371,8 @@ Nobody takes these seriously anyways -- Ikki
 					for(var/mob/living/silicon/ai/M in C)
 						if(istype(M, /mob/living/silicon/ai) && M.stat != 2) //See if any AI's are alive inside that card.
 							return 1
+				if(ticker.mode.name == "AI malfunction") //Impossible Objective
+					return 1
 
 			if("the station blueprints")
 				for(var/obj/item/I in all_items)	//the actual blueprints are good too!

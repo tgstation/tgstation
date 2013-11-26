@@ -25,6 +25,8 @@
 	required_players = 15
 	required_enemies = 3
 	recommended_enemies = 4
+	secondary_antag = list("changeling")
+	secondary_chance = 50
 
 	uplink_welcome = "Nar-Sie Uplink Console:"
 	uplink_uses = 10
@@ -73,7 +75,7 @@
 		antag_candidates -= cultist
 		cult += cultist
 		log_game("[cultist.key] (ckey) has been selected as a cultist")
-
+	..()
 	return (cult.len>=required_enemies)
 
 

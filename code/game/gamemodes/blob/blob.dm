@@ -14,6 +14,8 @@ var/list/blob_nodes = list()
 	required_players = 30
 	required_enemies = 1
 	recommended_enemies = 1
+	secondary_antag = list("changeling")
+	secondary_chance = 25
 
 	restricted_jobs = list("Cyborg", "AI")
 
@@ -51,7 +53,7 @@ var/list/blob_nodes = list()
 
 	if(!infected_crew.len)
 		return 0
-
+	..()
 	return 1
 
 

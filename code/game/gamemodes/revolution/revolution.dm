@@ -19,6 +19,8 @@
 	required_players = 20
 	required_enemies = 3
 	recommended_enemies = 3
+	secondary_antag = list("changeling")
+	secondary_chance = 50
 
 
 	uplink_welcome = "Revolutionary Uplink Console:"
@@ -66,7 +68,7 @@
 
 	if((head_revolutionaries.len < required_enemies)||(!head_check))
 		return 0
-
+	..()
 	return 1
 
 

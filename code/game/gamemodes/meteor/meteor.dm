@@ -6,6 +6,8 @@
 	var/const/meteordelay = 2000
 	var/nometeors = 1
 	required_players = 0
+	secondary_antag = list("changeling")
+	secondary_chance = 50
 
 	uplink_welcome = "EVIL METEOR Uplink Console:"
 	uplink_uses = 10
