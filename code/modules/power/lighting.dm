@@ -498,7 +498,6 @@
 			user << "You try to remove the light [fitting], but you burn your hand on it!"
 
 			var/obj/item/organ/limb/affecting = H.get_organ("[user.hand ? "l" : "r" ]_arm")
-
 			if(affecting.take_damage( 0, 5 ))		// 5 burn damage
 				H.update_damage_overlays(0)
 			H.updatehealth()
