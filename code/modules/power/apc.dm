@@ -649,7 +649,7 @@
 	return 1
 
 /obj/machinery/power/apc/proc/validation()
-	return (!locked && !istype(usr, /mob/living/silicon/ai)) || (istype(usr, /mob/living/silicon/ai) && !src.aidisabled)
+	return (!locked && !istype(usr, /mob/living/silicon/ai)) || (istype(usr, /mob/living/silicon) && !src.aidisabled)
 
 /obj/machinery/power/apc/Topic(href, href_list)
 	if(..())
