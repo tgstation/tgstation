@@ -27,8 +27,9 @@
 		var/mob/living/carbon/human/H = M
 		var/heal_amt = 10
 		for(var/obj/item/organ/limb/affecting in H.organs)
-			if(affecting.heal_damage(heal_amt, heal_amt))
-				H.update_damage_overlays(0)
+			if(affecting.status == ORGAN_ORGANIC) //No Bible can heal a robotic arm!
+				if(affecting.heal_damage(heal_amt, heal_amt))
+					H.update_damage_overlays(0)
 	return
 
 /obj/item/weapon/storage/bible/attack(mob/living/M as mob, mob/living/user as mob)
@@ -70,10 +71,24 @@
 			ticker.mode.remove_cultist(M.mind)*/
 		if ((istype(M, /mob/living/carbon/human) && prob(60)))
 			bless(M)
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red <B>[] heals [] with the power of [src.deity_name]!</B>", user, M), 1)
-			M << "\red May the power of [src.deity_name] compel you to be healed!"
-			playsound(src.loc, "punch", 25, 1, -1)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				var/message_halt = 0
+				for(var/obj/item/organ/limb/affecting in H.organs)
+					if(affecting.status == ORGAN_ORGANIC)
+						if(message_halt == 0)
+							for(var/mob/O in viewers(M, null))
+								O.show_message(text("\red <B>[] heals [] with the power of [src.deity_name]!</B>", user, M), 1)
+							M << "\red May the power of [src.deity_name] compel you to be healed!"
+							playsound(src.loc, "punch", 25, 1, -1)
+							message_halt = 1
+					else
+						src << "<span class='warning'>[src.deity_name] refuses to heal this metalic taint!</span>"
+						return
+
+
+
+
 		else
 			if(ishuman(M) && !istype(M:head, /obj/item/clothing/head/helmet))
 				M.adjustBrainLoss(10)
@@ -81,6 +96,7 @@
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] beats [] over the head with []!</B>", user, M, src), 1)
 			playsound(src.loc, "punch", 25, 1, -1)
+
 	else if(M.stat == 2)
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red <B>[] smacks []'s lifeless corpse with [].</B>", user, M, src), 1)
