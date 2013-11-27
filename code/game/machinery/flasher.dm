@@ -29,9 +29,9 @@
 	if (powered() && anchored && bulb)
 		stat &= ~NOPOWER
 		if(bulb.broken)
-			icon_state = "[base_state]1"
-		else
 			icon_state = "[base_state]1-p"
+		else
+			icon_state = "[base_state]1"
 	else
 		stat |= ~NOPOWER
 		icon_state = "[base_state]1-p"
@@ -134,8 +134,6 @@
 			overlays.Cut()
 			anchored = 1
 			power_change()
-
-
 		else
 			user << "<span class='notice'>[src] can now be moved.</span>"
 			overlays += "[base_state]-s"
