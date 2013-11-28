@@ -149,6 +149,11 @@
 			return
 	return
 
+/obj/item/weapon/storage/pill_bottle/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/weapon/hand_labeler))
+		return 0
+	..()
+
 /obj/item/weapon/storage/pill_bottle/kelotane
 	name = "Pill bottle (kelotane)"
 	desc = "Contains pills used to treat burns."
