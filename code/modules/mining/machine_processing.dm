@@ -148,55 +148,80 @@ a.notsmelting {
 
 /datum/processable_ore
 	var/name=""
+	var/processed_name=""
 	var/id=""
 	var/stored=0
 	var/selected=0
-	var/itemtype=null
+	var/oretype=null
+	var/sheettype=null
+	var/cointype=null
+
+/datum/processable_ore/New()
+	if(processed_name=="")
+		processed_name=name
 
 /datum/processable_ore/iron
 	name="Iron"
 	id="iron"
-	itemtype=/obj/item/weapon/ore/iron
+	oretype=/obj/item/weapon/ore/iron
+	sheettype=/obj/item/stack/sheet/metal
+	cointype=/obj/item/weapon/coin/iron
 
 /datum/processable_ore/glass
 	name="Sand"
+	processed_name="Glass"
 	id="glass"
-	itemtype=/obj/item/weapon/ore/glass
+	oretype=/obj/item/weapon/ore/glass
+	sheettype=/obj/item/stack/sheet/glass
 
 /datum/processable_ore/diamond
 	name="Diamond"
 	id="diamond"
-	itemtype=/obj/item/weapon/ore/diamond
+	oretype=/obj/item/weapon/ore/diamond
+	sheettype=/obj/item/stack/sheet/mineral/diamond
+	cointype=/obj/item/weapon/coin/diamond
 
 /datum/processable_ore/plasma
 	name="Plasma"
 	id="plasma"
-	itemtype=/obj/item/weapon/ore/plasma
+	oretype=/obj/item/weapon/ore/plasma
+	sheettype=/obj/item/stack/sheet/mineral/plasma
+	cointype=/obj/item/weapon/coin/plasma
 
 /datum/processable_ore/gold
 	name="Gold"
 	id="gold"
-	itemtype=/obj/item/weapon/ore/gold
+	oretype=/obj/item/weapon/ore/gold
+	sheettype=/obj/item/stack/sheet/mineral/gold
+	cointype=/obj/item/weapon/coin/gold
 
 /datum/processable_ore/silver
 	name="Silver"
 	id="silver"
-	itemtype=/obj/item/weapon/ore/silver
+	oretype=/obj/item/weapon/ore/silver
+	sheettype=/obj/item/stack/sheet/mineral/silver
+	cointype=/obj/item/weapon/coin/silver
 
 /datum/processable_ore/uranium
 	name="Uranium"
 	id="uranium"
-	itemtype=/obj/item/weapon/ore/uranium
+	oretype=/obj/item/weapon/ore/uranium
+	sheettype=/obj/item/stack/sheet/mineral/uranium
+	cointype=/obj/item/weapon/coin/uranium
 
 /datum/processable_ore/clown
 	name="Bananium"
 	id="clown"
-	itemtype=/obj/item/weapon/ore/clown
+	oretype=/obj/item/weapon/ore/clown
+	sheettype=/obj/item/stack/sheet/mineral/clown
+	cointype=/obj/item/weapon/coin/clown
 
 /datum/processable_ore/phazon
 	name="Phazon"
 	id="phazon"
-	itemtype=/obj/item/weapon/ore/phazon
+	oretype=/obj/item/weapon/ore/phazon
+	sheettype=/obj/item/stack/sheet/mineral/phazon
+	cointype=/obj/item/weapon/coin/phazon
 
 /**********************Mineral processing unit**************************/
 
@@ -309,7 +334,7 @@ a.notsmelting {
 			if (O)
 				for(var/ore_id in ore)
 					var/datum/processable_ore/po=ore[ore_id]
-					if (istype(O,po.itemtype))
+					if (istype(O,po.oretype))
 						po.stored++
 						ore[ore_id]=po
 						O.loc = null
