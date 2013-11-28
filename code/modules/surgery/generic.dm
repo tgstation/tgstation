@@ -5,6 +5,7 @@
 
 /datum/surgery_step/generic/
 	can_infect = 1
+	var/painful=1
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if (target_zone == "eyes")	//there are specific steps for eye surgery
 			return 0
@@ -18,6 +19,9 @@
 		if (affected.status & ORGAN_ROBOT)
 			return 0
 		if (affected.status & ORGAN_PEG)
+			return 0
+		// N3X:  Patient must be sleeping, dead, or unconscious.
+		if(!check_anesthesia(target) && painful)
 			return 0
 		return 1
 
@@ -33,8 +37,7 @@
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
-		// N3X:  Patient must be sleeping, dead, or unconscious.
-		return ..() && affected.open == 0 && target_zone != "mouth" && (target.sleeping>0 || target.stat)
+		return ..() && affected.open == 0 && target_zone != "mouth"
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -71,7 +74,7 @@
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
-		return ..() && affected.open && (affected.status & ORGAN_BLEEDING) && (target.sleeping>0 || target.stat)
+		return ..() && affected.open && (affected.status & ORGAN_BLEEDING)
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -105,7 +108,7 @@
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
-		return ..() && affected.open == 1 && !(affected.status & ORGAN_BLEEDING) && (target.sleeping>0 || target.stat)
+		return ..() && affected.open == 1 && !(affected.status & ORGAN_BLEEDING)
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -160,7 +163,7 @@
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
-		return ..() && affected.open && target_zone != "mouth" && (target.sleeping>0 || target.stat)
+		return ..() && affected.open && target_zone != "mouth"
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -202,7 +205,7 @@
 			return 0
 		if (affected.status & ORGAN_DESTROYED)
 			return 0
-		return target_zone != "chest" && target_zone != "groin" && target_zone != "head" && (target.sleeping>0 || target.stat)
+		return target_zone != "chest" && target_zone != "groin" && target_zone != "head"
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
