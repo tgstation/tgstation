@@ -479,6 +479,10 @@
  - alice_mccrea_12
  - alice_mccrea_1up
  - alice_mccrea_1up2
+ + ambrosiadeus
+ + ambrosiadeus2
+ + ambrosiavulgaris
+ + ambrosiavulgaris2
  - amp
  - amp2
  - centcomcaptain
@@ -1083,6 +1087,12 @@
  - medicalrobot
  - mommi
  - mommiold
+ + ov-opencover +c
+ + ov-opencover +w
+ + ov-opencover -c
+ - ov-openpanel +c
+ - ov-openpanel +w
+ - ov-openpanel -c
  - rowtree-engineering
  - rowtree-lucy
  - rowtree-medical
@@ -1977,6 +1987,7 @@
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\device.dmi
  - bunsen0
  - bunsen1
+ - dest_tagger
  - eftpos
  - forensic0-old
  - forensic1-old
@@ -1985,6 +1996,8 @@
  - implant
  - implant_evil
  - implant_melted
+ - megaphone
+ - modkit
  + multitool_red
  + pointer
  + pointer_blue_laser
@@ -1992,6 +2005,7 @@
  + pointer_purple_laser
  + pointer_red_laser
  + ribbonoverlay
+ - robotanalyzer
  - sampler0
  - sampler1
  - solution_tray
@@ -2707,6 +2721,9 @@
  - emergency_nitrogen
  - jetpack-red
  - jetpack-red-on
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\telescience.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\telescience.dmi
+ + bluespace_crystal
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\terminals.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\terminals.dmi
  - atm
@@ -2810,14 +2827,6 @@
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\wizard.dmi
  - focus
  + scroll2
---- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\assemblies\new_assemblies.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\assemblies\new_assemblies.dmi
- + anomaly core
- + anomaly core_left
- + anomaly core_right
- + voice
- + voice_left
- + voice_right
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\atmospherics\cold_sink.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\cold_sink.dmi
  + exposed
@@ -3169,9 +3178,9 @@
  C:\Users\Rob\Documents\Projects\tgstation\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
   File "tools/OpenBYOND/src/DMITool.py", line 133, in compare
     theirsDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 160, in loadMetadata
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 165, in loadMetadata
     self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 168, in load
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 173, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
@@ -3180,9 +3189,9 @@ OSError: cannot identify image file
  C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
   File "tools/OpenBYOND/src/DMITool.py", line 149, in compare
     mineDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 160, in loadMetadata
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 165, in loadMetadata
     self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 168, in load
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 173, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
