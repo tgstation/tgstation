@@ -2113,7 +2113,7 @@ datum
 			name = "Hippies Delight"
 			id = "hippiesdelight"
 			result = "hippiesdelight"
-			required_reagents = list("psilocybin" = 1, "gargleblaster" = 1)
+			required_reagents = list("mushroomhallucinogen" = 1, "gargleblaster" = 1)
 			result_amount = 2
 
 		bananahonk
