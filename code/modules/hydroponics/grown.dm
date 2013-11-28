@@ -773,7 +773,7 @@
 		spawn(5)	//So potency can be set in the proc that creates these crops
 			reagents.add_reagent("nutriment", 1)
 			reagents.add_reagent("anti_toxin", 3+round(potency / 3, 1))
-			reagents.add_reagent("stoxin", 2+round(potency / 3, 1))
+			reagents.add_reagent("stoxin", 3+round(potency / 3, 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi/attackby(var/obj/item/O as obj, var/mob/user as mob)
