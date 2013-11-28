@@ -228,7 +228,7 @@ obj/machinery/hydroponics/proc/hardmutate()
 obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 	if(!planted || dead)
 		return
-	
+
 	var/oldPlantName = myseed.plantname
 	if(myseed.mutatelist.len > 0)
 		var/mutantseed = pick(myseed.mutatelist)
@@ -282,7 +282,6 @@ obj/machinery/hydroponics/proc/plantdies() // OH NOES!!!!! I put this all in one
 	pestlevel = 0 // Pests die
 	if(!dead)
 		update_icon()
-		visible_message("\improper\red [myseed.plantname] are looking very unhealthy!")
 		dead = 1
 
 
@@ -314,9 +313,9 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	else if(istype(O, /obj/item/weapon/reagent_containers) )  // Syringe stuff (and other reagent containers now too)
 		var/obj/item/weapon/reagent_containers/reagent_source = O
 		var/datum/reagents/S = new /datum/reagents()
-		
+
 		S.my_atom = src
-		
+
 		var/obj/target = myseed ? myseed.plantname : src
 
 		if(istype(reagent_source, /obj/item/weapon/reagent_containers/syringe))
@@ -327,7 +326,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if(!reagent_source.reagents.total_volume)
 			user << "<span class='notice'>[reagent_source] is empty.</span>"
 			return 1
-		
+
 		if(istype(reagent_source, /obj/item/weapon/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/weapon/reagent_containers/pill))
 			visible_message("<span class='notice'>[user] composts [reagent_source], spreading it through [target].</span>")
 			reagent_source.reagents.trans_to(S,reagent_source.reagents.total_volume)
@@ -345,7 +344,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 			else if(reagent_source.amount_per_transfer_from_this) // Droppers, cans, beakers, what have you.
 				visible_message("<span class='notice'>[user] uses [reagent_source] on [target].</span>")
-			
+
 			// Beakers, bottles, buckets, etc.  Can't use is_open_container though.
 			if(istype(reagent_source, /obj/item/weapon/reagent_containers/glass/))
 				playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
@@ -540,7 +539,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			user << "-Water level: \blue [waterlevel]/100"
 			user << "-Nutrition level: \blue [nutrilevel]/10"
 			user << ""
-	
+
 	else if(istype(O, /obj/item/weapon/minihoe))
 		if(weedlevel > 0)
 			user.visible_message("<span class='notice'>[user] uproots the weeds.</span>", "<span class='notice'>You remove the weeds from [src].</span>")
