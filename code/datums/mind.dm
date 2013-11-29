@@ -47,6 +47,8 @@ datum/mind
 
 	var/has_been_rev = 0//Tracks if this mind has been a rev or not
 
+	var/list/cult_words = list()
+
 	var/datum/faction/faction 			//associated faction
 	var/datum/changeling/changeling		//changeling holder
 
@@ -63,6 +65,9 @@ datum/mind
 				current.remove_changeling_powers()
 				current.verbs -= /datum/changeling/proc/EvolutionMenu
 			current.mind = null
+
+			nanomanager.user_transferred(current, new_character)
+
 
 		if(key)
 			if(new_character.key != key)					//if we're transfering into a body with a key associated which is not ours
@@ -821,7 +826,8 @@ datum/mind
 							log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
 							message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(current)]")
 							H = M.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_DEFAULTMSG)
-							src = H.mind
+							if(H)
+								src = H.mind
 
 		else if (href_list["silicon"])
 			switch(href_list["silicon"])
@@ -1184,7 +1190,7 @@ datum/mind
 	mind.special_role = ""
 
 //BLOB
-/mob/camera/overmind/mind_initialize()
+/mob/camera/blob/mind_initialize()
 	..()
 	mind.special_role = "Blob"
 
@@ -1215,6 +1221,5 @@ datum/mind
 	..()
 	mind.assigned_role = "Juggernaut"
 	mind.special_role = "Cultist"
-
 
 
