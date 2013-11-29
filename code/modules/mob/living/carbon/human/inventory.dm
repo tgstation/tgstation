@@ -16,15 +16,15 @@
 				update_inv_r_hand(0)
 		else if(s_active && s_active.can_be_inserted(I,1))	//if storage active insert there
 			s_active.handle_item_insertion(I)
-		else if(S && S.can_be_inserted(I,1))	//see if we have box in other hand
+		else if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))	//see if we have box in other hand
 			S.handle_item_insertion(I)
 		else
 			S = H.get_item_by_slot(slot_belt)
-			if(S && S.can_be_inserted(I,1))		//else we put in belt
+			if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))		//else we put in belt
 				S.handle_item_insertion(I)
 			else 
 				S = H.get_item_by_slot(slot_back)	//else we put in backpack
-				if(S && S.can_be_inserted(I,1))		
+				if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))		
 					S.handle_item_insertion(I)
 				else
 					H << "\red You are unable to equip that."
