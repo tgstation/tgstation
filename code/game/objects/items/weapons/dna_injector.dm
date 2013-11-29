@@ -28,7 +28,7 @@
 		selblock=1
 	else
 		real_block=selblock
-	var/list/BOUNDS = dna_activity_bounds[real_block]
+	var/list/BOUNDS = GetDNABounds(real_block)
 	return dna[selblock] > BOUNDS[DNA_ON_LOWERBOUND]
 
 /obj/item/weapon/dnainjector/proc/SetState(var/on, var/selblock=0)
@@ -38,7 +38,7 @@
 		selblock=1
 	else
 		real_block=selblock
-	var/list/BOUNDS=dna_activity_bounds[real_block]
+	var/list/BOUNDS=GetDNABounds(real_block)
 	var/val
 	if(on)
 		val=rand(BOUNDS[DNA_ON_LOWERBOUND],BOUNDS[DNA_ON_UPPERBOUND])

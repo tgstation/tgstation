@@ -10,6 +10,8 @@
 #define DNA_ON_LOWERBOUND  2
 #define DNA_ON_UPPERBOUND  3
 
+#define DNA_DEFAULT_BOUNDS list(1,2049,2050,4095)
+
 // Defines which values mean "on" or "off".
 //  This is to make some of the more OP superpowers a larger PITA to activate,
 //  and to tell our new DNA datum which values to set in order to turn something
@@ -20,19 +22,19 @@ var/global/list/dna_activity_bounds[STRUCDNASIZE]
 var/global/list/assigned_blocks[STRUCDNASIZE]
 
 // UI Indices (can change to mutblock style, if desired)
-#define DNA_UI_HAIR_R      0
-#define DNA_UI_HAIR_G      1
-#define DNA_UI_HAIR_B      2
-#define DNA_UI_BEARD_R     3
-#define DNA_UI_BEARD_G     4
-#define DNA_UI_BEARD_B     5
-#define DNA_UI_SKIN_TONE   6
-#define DNA_UI_EYES_R      7
-#define DNA_UI_EYES_G      8
-#define DNA_UI_EYES_B      9
-#define DNA_UI_GENDER      10
-#define DNA_UI_BEARD_STYLE 11
-#define DNA_UI_HAIR_STYLE  12
+#define DNA_UI_HAIR_R      1
+#define DNA_UI_HAIR_G      2
+#define DNA_UI_HAIR_B      3
+#define DNA_UI_BEARD_R     4
+#define DNA_UI_BEARD_G     5
+#define DNA_UI_BEARD_B     6
+#define DNA_UI_SKIN_TONE   7
+#define DNA_UI_EYES_R      8
+#define DNA_UI_EYES_G      9
+#define DNA_UI_EYES_B      10
+#define DNA_UI_GENDER      11
+#define DNA_UI_BEARD_STYLE 12
+#define DNA_UI_HAIR_STYLE  13
 #define DNA_UI_LENGTH      13 // Update this or you WILL break shit.
 
 /proc/add_zero2(t, u)
@@ -43,6 +45,12 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 	if (length(t) > u)
 		temp1 = copytext(t,2,u+1)
 	return temp1
+
+/proc/GetDNABounds(var/block)
+	var/list/BOUNDS=dna_activity_bounds[block]
+	if(!istype(BOUNDS))
+		return DNA_DEFAULT_BOUNDS
+	return BOUNDS
 
 /datum/dna
 	// READ-ONLY, GETS OVERWRITTEN
@@ -72,7 +80,7 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 /datum/dna/proc/ResetUIFrom(var/mob/living/carbon/human/character)
 	// INITIALIZE!
 	for(var/i=1,i<=DNA_UI_LENGTH,i++)
-		UI[i]=0
+		UI[i]=1
 	// Hair
 	// FIXME:  Species-specific defaults pls
 	if(!character.h_style)
@@ -109,8 +117,8 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 
 // Set a DNA UI block's raw value.
 /datum/dna/proc/SetUIValue(var/block,var/value,var/defer=0)
-	ASSERT(value>0)
-	ASSERT(value<4095)
+	ASSERT(value>=0)
+	ASSERT(value<=4095)
 	UI[block]=value
 	if(defer)
 		dirtyUI=1
@@ -124,7 +132,7 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 // Set a DNA UI block's value, given a value and a max possible value.
 // Used in hair and facial styles (value being the index and maxvalue being the len of the hairstyle list)
 /datum/dna/proc/SetUIValueRange(var/block,var/value,var/maxvalue)
-	ASSERT(maxvalue<4095)
+	ASSERT(maxvalue<=4095)
 	var/range = round(4095 / maxvalue)
 	if(value)
 		SetUIValue(block,value * range - rand(1,range-1))
@@ -145,7 +153,7 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 	SetUIValue(block,val,defer)
 
 /datum/dna/proc/GetUIBlock(var/block)
-	return EncodeBlockValue(GetUIValue(block))
+	return EncodeDNABlock(GetUIValue(block))
 
 // Do not use this unless you absolutely have to.
 /datum/dna/proc/SetUIBlock(var/block,var/value,var/defer=0)
@@ -177,8 +185,8 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 
 // Set a DNA SE block's raw value.
 /datum/dna/proc/SetSEValue(var/block,var/value,var/defer=0)
-	ASSERT(value>0)
-	ASSERT(value<4095)
+	ASSERT(value>=0)
+	ASSERT(value<=4095)
 	SE[block]=value
 	if(defer)
 		dirtySE=1
@@ -187,23 +195,23 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 
 // Get a DNA SE block's raw value.
 /datum/dna/proc/GetSEValue(var/block)
-	return UI[block]
+	return SE[block]
 
 // Set a DNA SE block's value, given a value and a max possible value.
 // Might be used for species?
 /datum/dna/proc/SetSEValueRange(var/block,var/value,var/maxvalue)
-	ASSERT(maxvalue<4095)
+	ASSERT(maxvalue<=4095)
 	var/range = round(4095 / maxvalue)
 	if(value)
 		SetSEValue(block, value * range - rand(1,range-1))
 
 /datum/dna/proc/GetSEState(var/block)
-	var/list/BOUNDS=dna_activity_bounds[block]
+	var/list/BOUNDS=GetDNABounds(block)
 	var/value=GetSEValue(block)
 	return (value > BOUNDS[DNA_ON_LOWERBOUND])
 
 /datum/dna/proc/SetSEState(var/block,var/on,var/defer=0)
-	var/list/BOUNDS=dna_activity_bounds[block]
+	var/list/BOUNDS=GetDNABounds(block)
 	var/val
 	if(on)
 		val=rand(BOUNDS[DNA_ON_LOWERBOUND],BOUNDS[DNA_ON_UPPERBOUND])
@@ -212,7 +220,7 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 	SetSEValue(block,val,defer)
 
 /datum/dna/proc/GetSEBlock(var/block)
-	return EncodeBlockValue(GetSEValue(block))
+	return EncodeDNABlock(GetSEValue(block))
 
 // Do not use this unless you absolutely have to.
 /datum/dna/proc/SetSEBlock(var/block,var/value,var/defer=0)
@@ -232,19 +240,19 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 	SetSEBlock(block,newBlock,defer)
 
 
-/datum/dna/proc/EncodeBlockValue(var/value)
+/proc/EncodeDNABlock(var/value)
 	return add_zero2(num2hex(value,1), 3)
 
 /datum/dna/proc/UpdateUI()
 	src.unique_enzymes=""
 	for(var/block in UI)
-		unique_enzymes += EncodeBlockValue(block)
+		unique_enzymes += EncodeDNABlock(block)
 	dirtyUI=0
 
 /datum/dna/proc/UpdateSE()
 	struc_enzymes=""
 	for(var/block in SE)
-		struc_enzymes += EncodeBlockValue(block)
+		struc_enzymes += EncodeDNABlock(block)
 	dirtySE=0
 
 // BACK-COMPAT!

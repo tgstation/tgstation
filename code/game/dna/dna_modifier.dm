@@ -369,19 +369,19 @@
 		return
 	return
 
-/obj/machinery/computer/scan_consolenew/proc/all_dna_blocks(var/buffer)
+/obj/machinery/computer/scan_consolenew/proc/all_dna_blocks(var/list/buffer)
 	var/list/arr = list()
-	for(var/i = 1, i <= length(buffer)/3, i++)
-		arr += "[i]:[copytext(buffer,i*3-2,i*3+1)]"
+	for(var/i = 1, i <= buffer.len, i++)
+		arr += "[i]:[EncodeDNABlock(buffer[i])]"
 	return arr
 
-/obj/machinery/computer/scan_consolenew/proc/setInjectorBlock(var/obj/item/weapon/dnainjector/I, var/blk, var/buffer)
+/obj/machinery/computer/scan_consolenew/proc/setInjectorBlock(var/obj/item/weapon/dnainjector/I, var/blk, var/list/buffer)
 	var/pos = findtext(blk,":")
 	if(!pos) return 0
 	var/id = text2num(copytext(blk,1,pos))
 	if(!id) return 0
 	I.block = id
-	I.dna = copytext(buffer,id*3-2,id*3+1)
+	I.dna = list(buffer[id])
 	return 1
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/W as obj, mob/user as mob)
@@ -786,7 +786,7 @@
 		if (bufferOption == "saveUI")
 			if(src.connected.occupant && src.connected.occupant.dna)
 				src.buffers[bufferId]["ue"] = 0
-				src.buffers[bufferId]["data"] = src.connected.occupant.dna.uni_identity
+				src.buffers[bufferId]["data"] = src.connected.occupant.dna.UI
 				if (!istype(src.connected.occupant,/mob/living/carbon/human))
 					src.buffers[bufferId]["owner"] = src.connected.occupant.name
 				else
@@ -797,7 +797,7 @@
 
 		if (bufferOption == "saveUIAndUE")
 			if(src.connected.occupant && src.connected.occupant.dna)
-				src.buffers[bufferId]["data"] = src.connected.occupant.dna.uni_identity
+				src.buffers[bufferId]["data"] = src.connected.occupant.dna.UI
 				if (!istype(src.connected.occupant,/mob/living/carbon/human))
 					src.buffers[bufferId]["owner"] = src.connected.occupant.name
 				else
@@ -810,7 +810,7 @@
 		if (bufferOption == "saveSE")
 			if(src.connected.occupant && src.connected.occupant.dna)
 				src.buffers[bufferId]["ue"] = 0
-				src.buffers[bufferId]["data"] = src.connected.occupant.dna.struc_enzymes
+				src.buffers[bufferId]["data"] = src.connected.occupant.dna.SE
 				if (!istype(src.connected.occupant,/mob/living/carbon/human))
 					src.buffers[bufferId]["owner"] = src.connected.occupant.name
 				else
@@ -849,10 +849,12 @@
 				if (src.buffers[bufferId]["ue"])
 					src.connected.occupant.real_name = src.buffers[bufferId]["owner"]
 					src.connected.occupant.name = src.buffers[bufferId]["owner"]
-				src.connected.occupant.dna.uni_identity = src.buffers[bufferId]["data"]
+				src.connected.occupant.dna.UI = src.buffers[bufferId]["data"]
+				src.connected.occupant.dna.UpdateUI()
 				updateappearance(src.connected.occupant,src.connected.occupant.dna.uni_identity)
 			else if (src.buffers[bufferId]["type"] == "se")
-				src.connected.occupant.dna.struc_enzymes = src.buffers[bufferId]["data"]
+				src.connected.occupant.dna.SE = src.buffers[bufferId]["data"]
+				src.connected.occupant.dna.UpdateSE()
 				domutcheck(src.connected.occupant,src.connected)
 			src.connected.occupant.radiation += rand(20,50)
 			return 1

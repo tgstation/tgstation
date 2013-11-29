@@ -1,6 +1,6 @@
 
 
-/proc/getAssignedBlock(var/name,var/list/blocksLeft, var/activity_bounds=list(1,2049,2050,4095))
+/proc/getAssignedBlock(var/name,var/list/blocksLeft, var/activity_bounds=DNA_DEFAULT_BOUNDS)
 	var/assigned = pick(blocksLeft)
 	blocksLeft.Remove(assigned)
 	assigned_blocks[assigned]=name
