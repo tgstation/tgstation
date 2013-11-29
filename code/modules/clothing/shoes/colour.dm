@@ -9,8 +9,8 @@
 	heat_protection = FEET
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 
-	redcoat
-		item_color = "redcoat"	//Exists for washing machines. Is not different from black shoes in any way.
+/obj/item/clothing/shoes/black/redcoat
+	item_color = "redcoat"	//Exists for washing machines. Is not different from black shoes in any way.
 
 /obj/item/clothing/shoes/brown
 	name = "brown shoes"

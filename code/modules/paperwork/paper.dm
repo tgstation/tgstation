@@ -347,3 +347,7 @@
 
 /obj/item/weapon/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"
+
+/obj/item/weapon/paper/nogloves
+	name = "No gloves included."
+	info = "We're sorry, but we could not provide Chameleon Gloves due to a conflict with several space wizards rumored to steal suns for fun.<BR>However, spy specialists say that dying your gloves will work.  Find some crayons and gloves to dye.<BR>Good luck, agent.<BR><BR><I>- Anonymous MI13 Representive"
