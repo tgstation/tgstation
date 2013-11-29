@@ -5,6 +5,7 @@
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		var/obj/item/I = H.get_active_hand()
+		var/obj/item/weapon/storage/S = H.get_inactive_hand()
 		if(!I)
 			H << "<span class='notice'>You are not holding anything to equip.</span>"
 			return
@@ -15,8 +16,10 @@
 				update_inv_r_hand(0)
 		else if(s_active && s_active.can_be_inserted(I,1))	//if storage active insert there
 			s_active.handle_item_insertion(I)
-		else 
-			var/obj/item/weapon/storage/S = H.get_item_by_slot(slot_belt)
+		else if(S && S.can_be_inserted(I,1))	//see if we have box in other hand
+			S.handle_item_insertion(I)
+		else
+			S = H.get_item_by_slot(slot_belt)
 			if(S && S.can_be_inserted(I,1))		//else we put in belt
 				S.handle_item_insertion(I)
 			else 
