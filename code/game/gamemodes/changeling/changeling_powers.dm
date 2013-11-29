@@ -314,7 +314,7 @@
 			W.layer = initial(W.layer)
 
 	var/mob/living/carbon/human/O = new /mob/living/carbon/human( src )
-	if (isblockon(getblock(C.dna.uni_identity, 11,3),11))
+	if (C.dna.GetUIState(DNA_UI_GENDER))
 		O.gender = FEMALE
 	else
 		O.gender = MALE

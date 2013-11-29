@@ -4,7 +4,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "dnainjector"
 	var/dnatype = null
-	var/dna = null
+	var/list/dna = null
 	var/block = null
 	var/owner = null
 	var/ue = null
@@ -21,6 +21,34 @@
 	return attack_hand(user)
 
 
+/obj/item/weapon/dnainjector/proc/GetState(var/selblock=0)
+	var/real_block
+	if(!selblock)
+		real_block=block
+		selblock=1
+	else
+		real_block=selblock
+	var/list/BOUNDS = dna_activity_bounds[real_block]
+	return dna[selblock] > BOUNDS[DNA_ON_LOWERBOUND]
+
+/obj/item/weapon/dnainjector/proc/SetState(var/on, var/selblock=0)
+	var/real_block
+	if(!selblock)
+		real_block=block
+		selblock=1
+	else
+		real_block=selblock
+	var/list/BOUNDS=dna_activity_bounds[real_block]
+	var/val
+	if(on)
+		val=rand(BOUNDS[DNA_ON_LOWERBOUND],BOUNDS[DNA_ON_UPPERBOUND])
+	else
+		val=rand(BOUNDS[DNA_OFF_LOWERBOUND],BOUNDS[DNA_OFF_UPPERBOUND])
+	dna[selblock]=val
+
+/obj/item/weapon/dnainjector/proc/GetValue(var/block=1)
+	return dna[block]
+
 /obj/item/weapon/dnainjector/proc/inject(mob/M as mob, mob/user as mob)
 	if(istype(M,/mob/living))
 		M.radiation += rand(5,20)
@@ -29,26 +57,29 @@
 		if (dnatype == "ui")
 			if (!block) //isolated block?
 				if (ue) //unique enzymes? yes
-					M.dna.uni_identity = dna
+					M.dna.UI = dna
+					M.dna.UpdateUI()
 					updateappearance(M, M.dna.uni_identity)
 					M.real_name = ue
 					M.name = ue
 					uses--
 				else //unique enzymes? no
-					M.dna.uni_identity = dna
+					M.dna.UI = dna
+					M.dna.UpdateUI()
 					updateappearance(M, M.dna.uni_identity)
 					uses--
 			else
-				M.dna.uni_identity = setblock(M.dna.uni_identity,block,dna,3)
+				M.dna.SetUIValue(block,src.GetValue())
 				updateappearance(M, M.dna.uni_identity)
 				uses--
 		if (dnatype == "se")
 			if (!block) //isolated block?
-				M.dna.struc_enzymes = dna
+				M.dna.SE = dna
+				M.dna.UpdateSE()
 				domutcheck(M, null)
 				uses--
 			else
-				M.dna.struc_enzymes = setblock(M.dna.struc_enzymes,block,dna,3)
+				M.dna.SetUIValue(block,src.GetValue())
 				domutcheck(M, null,1)
 				uses--
 			if(prob(5))
@@ -86,7 +117,7 @@
 				M.requests += O
 				if (dnatype == "se")
 					if(!block)
-						if (isblockon(getblock(dna, 27,3),27) && istype(M, /mob/living/carbon/human) )
+						if (GetState(MONKEYBLOCK) && istype(M, /mob/living/carbon/human) )
 							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
 							log_attack("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
 							log_game("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
@@ -94,7 +125,7 @@
 	//						message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
 							log_attack("[key_name(user)] injected [key_name(M)] with the [name]")
 					else // Isolated injector
-						if (isblockon(getblock(dna, 1, 3), 1) && block == 27&& istype(M, /mob/living/carbon/human)  )
+						if (GetState() && block == MONKEYBLOCK && istype(M, /mob/living/carbon/human)  )
 							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] \red(MONKEY)")
 							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name] (MONKEY)")
 							log_game("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] \red(MONKEY)")
@@ -117,7 +148,7 @@
 					user << "\red Apparently it didn't work."
 					return
 				if (dnatype == "se")
-					if (isblockon(getblock(dna, 27,3),27) && istype(M, /mob/living/carbon/human))
+					if (GetState(MONKEYBLOCK) && istype(M, /mob/living/carbon/human))
 						message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
 						log_game("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
 					else
@@ -148,7 +179,7 @@
 	name = "DNA-Injector (Hulk)"
 	desc = "This will make you big and strong, but give you a bad skin condition."
 	dnatype = "se"
-	dna = "FED"
+	dna = list(4090)
 	//block = 2
 	New()
 		..()
@@ -158,7 +189,7 @@
 	name = "DNA-Injector (Anti-Hulk)"
 	desc = "Cures green skin."
 	dnatype = "se"
-	dna = "708"
+	dna = list(1)
 	//block = 2
 	New()
 		..()
@@ -168,7 +199,7 @@
 	name = "DNA-Injector (Xray)"
 	desc = "Finally you can see what the Captain does."
 	dnatype = "se"
-	dna = "FED"
+	dna = list(4090)
 	//block = 8
 	New()
 		..()
@@ -178,7 +209,7 @@
 	name = "DNA-Injector (Anti-Xray)"
 	desc = "It will make you see harder."
 	dnatype = "se"
-	dna = "708"
+	dna = list(1)
 	//block = 8
 	New()
 		..()
@@ -188,7 +219,7 @@
 	name = "DNA-Injector (Fire)"
 	desc = "Gives you fire."
 	dnatype = "se"
-	dna = "FED"
+	dna = list(4090)
 	//block = 10
 	New()
 		..()
@@ -198,7 +229,7 @@
 	name = "DNA-Injector (Anti-Fire)"
 	desc = "Cures fire."
 	dnatype = "se"
-	dna = "708"
+	dna = list(1)
 	//block = 10
 	New()
 		..()
@@ -208,7 +239,7 @@
 	name = "DNA-Injector (Tele.)"
 	desc = "Super brain man!"
 	dnatype = "se"
-	dna = "FED"
+	dna = list(4090)
 	//block = 12
 	New()
 		..()
@@ -218,7 +249,7 @@
 	name = "DNA-Injector (Anti-Tele.)"
 	desc = "Will make you not able to control your mind."
 	dnatype = "se"
-	dna = "708"
+	dna = list(1)
 	//block = 12
 	New()
 		..()
@@ -228,7 +259,7 @@
 	name = "DNA-Injector (No Breath)"
 	desc = "Hold your breath and count to infinity."
 	dnatype = "se"
-	dna = "FED"
+	dna = list(4090)
 	//block = 2
 	New()
 		..()
@@ -238,7 +269,7 @@
 	name = "DNA-Injector (Anti-No Breath)"
 	desc = "Hold your breath and count to 100."
 	dnatype = "se"
-	dna = "708"
+	dna = list(1)
 	//block = 2
 	New()
 		..()
@@ -248,7 +279,7 @@
 	name = "DNA-Injector (Remote View)"
 	desc = "Stare into the distance for a reason."
 	dnatype = "se"
-	dna = "FED"
+	dna = list(4090)
 	//block = 2
 	New()
 		..()
@@ -258,7 +289,7 @@
 	name = "DNA-Injector (Anti-Remote View)"
 	desc = "Cures green skin."
 	dnatype = "se"
-	dna = "708"
+	dna = list(1)
 	//block = 2
 	New()
 		..()
@@ -268,7 +299,7 @@
 	name = "DNA-Injector (Regeneration)"
 	desc = "Healthy but hungry."
 	dnatype = "se"
-	dna = "FED"
+	dna = list(4090)
 	//block = 2
 	New()
 		..()
@@ -278,7 +309,7 @@
 	name = "DNA-Injector (Anti-Regeneration)"
 	desc = "Sickly but sated."
 	dnatype = "se"
-	dna = "708"
+	dna = list(1)
 	//block = 2
 	New()
 		..()
@@ -288,7 +319,7 @@
 	name = "DNA-Injector (Increase Run)"
 	desc = "Running Man."
 	dnatype = "se"
-	dna = "FED"
+	dna = list(4090)
 	//block = 2
 	New()
 		..()
@@ -298,7 +329,7 @@
 	name = "DNA-Injector (Anti-Increase Run)"
 	desc = "Walking Man."
 	dnatype = "se"
-	dna = "708"
+	dna = list(1)
 	//block = 2
 	New()
 		..()
@@ -308,7 +339,7 @@
 	name = "DNA-Injector (Morph)"
 	desc = "A total makeover."
 	dnatype = "se"
-	dna = "FED"
+	dna = list(4090)
 	//block = 2
 	New()
 		..()
@@ -318,7 +349,7 @@
 	name = "DNA-Injector (Anti-Morph)"
 	desc = "Cures identity crisis."
 	dnatype = "se"
-	dna = "708"
+	dna = list(1)
 	//block = 2
 	New()
 		..()
@@ -328,7 +359,7 @@
 	name = "DNA-Injector (Cold)"
 	desc = "Feels a bit chilly."
 	dnatype = "se"
-	dna = "FED"
+	dna = list(4090)
 	//block = 2
 	New()
 		..()
@@ -338,7 +369,7 @@
 	name = "DNA-Injector (Anti-Cold)"
 	desc = "Feels room-temperature."
 	dnatype = "se"
-	dna = "708"
+	dna = list(1)
 	//block = 2
 	New()
 		..()
@@ -348,7 +379,7 @@
 	name = "DNA-Injector (No Prints)"
 	desc = "Better than a pair of budget insulated gloves."
 	dnatype = "se"
-	dna = "FED"
+	dna = list(4090)
 	//block = 2
 	New()
 		..()
@@ -358,7 +389,7 @@
 	name = "DNA-Injector (Anti-No Prints)"
 	desc = "Not quite as good as a pair of budget insulated gloves."
 	dnatype = "se"
-	dna = "708"
+	dna = list(1)
 	//block = 2
 	New()
 		..()
@@ -368,7 +399,7 @@
 	name = "DNA-Injector (Shock Immunity)"
 	desc = "Better than a pair of real insulated gloves."
 	dnatype = "se"
-	dna = "FED"
+	dna = list(4090)
 	//block = 2
 	New()
 		..()
@@ -378,7 +409,7 @@
 	name = "DNA-Injector (Anti-Shock Immunity)"
 	desc = "Not quite as good as a pair of real insulated gloves."
 	dnatype = "se"
-	dna = "708"
+	dna = list(1)
 	//block = 2
 	New()
 		..()
@@ -388,7 +419,7 @@
 	name = "DNA-Injector (Small Size)"
 	desc = "Makes you shrink."
 	dnatype = "se"
-	dna = "FED"
+	dna = list(4090)
 	//block = 2
 	New()
 		..()
@@ -398,7 +429,7 @@
 	name = "DNA-Injector (Anti-Small Size)"
 	desc = "Makes you grow. But not too much."
 	dnatype = "se"
-	dna = "708"
+	dna = list(1)
 	//block = 2
 	New()
 		..()
@@ -409,7 +440,7 @@
 	name = "DNA-Injector (Anti-Glasses)"
 	desc = "Toss away those glasses!"
 	dnatype = "se"
-	dna = "708"
+	dna = list(1)
 	//block = 1
 	New()
 		..()
@@ -419,7 +450,7 @@
 	name = "DNA-Injector (Glasses)"
 	desc = "Will make you need dorkish glasses."
 	dnatype = "se"
-	dna = "FED"
+	dna = list(4090)
 	//block = 1
 	New()
 		..()
@@ -429,7 +460,7 @@
 	name = "DNA-Injector (Epi.)"
 	desc = "Shake shake shake the room!"
 	dnatype = "se"
-	dna = "FED"
+	dna = list(4090)
 	//block = 3
 	New()
 		..()
@@ -439,7 +470,7 @@
 	name = "DNA-Injector (Anti-Epi.)"
 	desc = "Will fix you up from shaking the room."
 	dnatype = "se"
-	dna = "708"
+	dna = list(1)
 	//block = 3
 	New()
 		..()
@@ -449,7 +480,7 @@
 	name = "DNA-Injector (Anti-Cough)"
 	desc = "Will stop that awful noise."
 	dnatype = "se"
-	dna = "708"
+	dna = list(1)
 	//block = 5
 	New()
 		..()
@@ -459,7 +490,7 @@
 	name = "DNA-Injector (Cough)"
 	desc = "Will bring forth a sound of horror from your throat."
 	dnatype = "se"
-	dna = "FED"
+	dna = list(4090)
 	//block = 5
 	New()
 		..()
@@ -469,7 +500,7 @@
 	name = "DNA-Injector (Clumsy)"
 	desc = "Makes clumsy minions."
 	dnatype = "se"
-	dna = "FED"
+	dna = list(4090)
 	//block = 6
 	New()
 		..()
@@ -479,7 +510,7 @@
 	name = "DNA-Injector (Anti-Clumy)"
 	desc = "Cleans up confusion."
 	dnatype = "se"
-	dna = "708"
+	dna = list(1)
 	//block = 6
 	New()
 		..()
@@ -489,7 +520,7 @@
 	name = "DNA-Injector (Anti-Tour.)"
 	desc = "Will cure tourrets."
 	dnatype = "se"
-	dna = "708"
+	dna = list(1)
 	//block = 7
 	New()
 		..()
@@ -499,7 +530,7 @@
 	name = "DNA-Injector (Tour.)"
 	desc = "Gives you a nasty case off tourrets."
 	dnatype = "se"
-	dna = "FED"
+	dna = list(4090)
 	//block = 7
 	New()
 		..()
@@ -509,7 +540,7 @@
 	name = "DNA-Injector (Stutt.)"
 	desc = "Makes you s-s-stuttterrr"
 	dnatype = "se"
-	dna = "FED"
+	dna = list(4090)
 	//block = 9
 	New()
 		..()
@@ -519,7 +550,7 @@
 	name = "DNA-Injector (Anti-Stutt.)"
 	desc = "Fixes that speaking impairment."
 	dnatype = "se"
-	dna = "708"
+	dna = list(1)
 	//block = 9
 	New()
 		..()
@@ -529,7 +560,7 @@
 	name = "DNA-Injector (Blind)"
 	desc = "Makes you not see anything."
 	dnatype = "se"
-	dna = "FED"
+	dna = list(4090)
 	//block = 11
 	New()
 		..()
@@ -539,7 +570,7 @@
 	name = "DNA-Injector (Anti-Blind)"
 	desc = "ITS A MIRACLE!!!"
 	dnatype = "se"
-	dna = "708"
+	dna = list(1)
 	//block = 11
 	New()
 		..()
@@ -549,7 +580,7 @@
 	name = "DNA-Injector (Deaf)"
 	desc = "Sorry, what did you say?"
 	dnatype = "se"
-	dna = "FED"
+	dna = list(4090)
 	//block = 13
 	New()
 		..()
@@ -559,7 +590,7 @@
 	name = "DNA-Injector (Anti-Deaf)"
 	desc = "Will make you hear once more."
 	dnatype = "se"
-	dna = "708"
+	dna = list(1)
 	//block = 13
 	New()
 		..()
@@ -569,7 +600,7 @@
 	name = "DNA-Injector (Halluctination)"
 	desc = "What you see isn't always what you get."
 	dnatype = "se"
-	dna = "FED"
+	dna = list(4090)
 	//block = 2
 	New()
 		..()
@@ -579,7 +610,7 @@
 	name = "DNA-Injector (Anti-Hallucination)"
 	desc = "What you see is what you get."
 	dnatype = "se"
-	dna = "708"
+	dna = list(1)
 	//block = 2
 	New()
 		..()
@@ -589,7 +620,7 @@
 	name = "DNA-Injector (Human > Monkey)"
 	desc = "Will make you a flea bag."
 	dnatype = "se"
-	dna = "FED"
+	dna = list(4090)
 	//block = 14
 	New()
 		..()
@@ -599,7 +630,7 @@
 	name = "DNA-Injector (Monkey > Human)"
 	desc = "Will make you...less hairy."
 	dnatype = "se"
-	dna = "708"
+	dna = list(1)
 	//block = 14
 	New()
 		..()

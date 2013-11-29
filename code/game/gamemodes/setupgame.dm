@@ -1,9 +1,10 @@
-var/global/list/assigned_blocks[STRUCDNASIZE]
 
-/proc/getAssignedBlock(var/name,var/list/blocksLeft)
+
+/proc/getAssignedBlock(var/name,var/list/blocksLeft, var/activity_bounds=list(1,2049,2050,4095))
 	var/assigned = pick(blocksLeft)
 	blocksLeft.Remove(assigned)
 	assigned_blocks[assigned]=name
+	dna_activity_bounds[assigned]=activity_bounds
 	//Debug message_admins("[name] assigned to block #[assigned].")
 	testing("[name] assigned to block #[assigned].")
 	return assigned
@@ -14,45 +15,9 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 		BLOCKADD = rand(-300,300)
 	if (prob(75))
 		DIFFMUT = rand(0,20)
-/*
-	var/list/avnums = new/list()
-	var/tempnum
-
-	avnums.Add(2)
-	avnums.Add(12)
-	avnums.Add(10)
-	avnums.Add(8)
-	avnums.Add(4)
-	avnums.Add(11)
-	avnums.Add(13)
-	avnums.Add(6)
-
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	HULKBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	TELEBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	FIREBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	XRAYBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	CLUMSYBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	FAKEBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	DEAFBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	BLINDBLOCK = tempnum
-	*/
 //Thanks to nexis for the fancy code
+// BITCH I AIN'T DONE YET
+
 	var/list/numsToAssign=new()
 	for(var/i=1;i<STRUCDNASIZE;i++)
 		numsToAssign += i

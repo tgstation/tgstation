@@ -65,6 +65,12 @@
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 
+		if(check_mutations)
+			testing("Updating [src.real_name]'s mutations: "+english_list(mutations))
+			domutcheck(src,null)
+			update_mutations()
+			check_mutations=0
+
 		//Updates the number of stored chemicals for powers
 		handle_changeling()
 

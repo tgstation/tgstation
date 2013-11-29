@@ -38,7 +38,7 @@
 
 	// For grays
 	var/max_hurt_damage = 5 // Max melee damage dealt + 5 if hulk
-	var/default_mutations = list()
+	var/list/default_mutations = list()
 
 	var/flags = 0       // Various specific features.
 

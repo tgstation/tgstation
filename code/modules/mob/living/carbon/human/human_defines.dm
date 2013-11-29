@@ -58,3 +58,5 @@
 	var/mob/remoteview_target = null
 
 	var/meatleft = 3 //For chef item
+
+	var/check_mutations=0 // Check mutations on next life tick
