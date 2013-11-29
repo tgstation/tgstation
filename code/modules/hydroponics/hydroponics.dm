@@ -491,13 +491,18 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				if(1   to 10)  mutatepest()
 				else 			user << "Nothing happens..."
 		// Can change the yield and other stats, but requires more than mutagen
-		else if(S.has_reagent("radium", 4) || S.has_reagent("uranium", 5))
+		else if(S.has_reagent("radium", 5) || S.has_reagent("uranium", 5))
 			hardmutate()
-		else if(S.has_reagent("radium", 2) || S.has_reagent("uranium", 3))
+		else if(S.has_reagent("radium", 2) || S.has_reagent("uranium", 2))
 			mutate()
-		else if(S.has_reagent("radium", 1) || S.has_reagent("uranium", 1))
-			adjustHealth(-round(S.get_reagent_amount("radium")*1.5))
-			adjustToxic(round(S.get_reagent_amount("radium")*2))
+		
+		// After handling the mutating, we now handle the damage from adding crude radioactives...
+		if(S.has_reagent("uranium", 1))
+			adjustHealth(-round(S.get_reagent_amount("uranium")*1))
+			adjustToxic(round(S.get_reagent_amount("uranium")*2))
+		if(S.has_reagent("radium", 1))
+			adjustHealth(-round(S.get_reagent_amount("radium")*1))
+			adjustToxic(round(S.get_reagent_amount("radium")*3)) // Radium is harsher (OOC: also easier to produce)
 
 		// The best stuff there is. For testing/debugging.
 		if(S.has_reagent("adminordrazine", 1))
