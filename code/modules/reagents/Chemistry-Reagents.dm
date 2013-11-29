@@ -1098,7 +1098,7 @@ datum
 					else
 						randmutg(M)
 					domutcheck(M, null)
-					updateappearance(M,M.dna.uni_identity)
+					M.UpdateAppearance()
 				return
 			on_mob_life(var/mob/living/M as mob)
 				if(!M.dna) return //No robots, AIs, aliens, Ians or other mobs should be affected by this.

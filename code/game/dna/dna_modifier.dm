@@ -656,7 +656,7 @@
 		if (prob((80 + (src.radiation_duration / 2))))
 			block = miniscrambletarget(num2text(selected_ui_target), src.radiation_intensity, src.radiation_duration)
 			src.connected.occupant.dna.SetUISubBlock(src.selected_ui_block,src.selected_ui_subblock,block)
-			updateappearance(src.connected.occupant,src.connected.occupant.dna.uni_identity)
+			src.connected.occupant.UpdateAppearance()
 			src.connected.occupant.radiation += (src.radiation_intensity+src.radiation_duration)
 		else
 			if	(prob(20+src.radiation_intensity))
@@ -664,7 +664,7 @@
 				domutcheck(src.connected.occupant,src.connected)
 			else
 				randmuti(src.connected.occupant)
-				updateappearance(src.connected.occupant,src.connected.occupant.dna.uni_identity)
+				src.connected.occupant.UpdateAppearance()
 			src.connected.occupant.radiation += ((src.radiation_intensity*2)+src.radiation_duration)
 		src.connected.locked = lock_state
 		return 1 // return 1 forces an update to all Nano uis attached to src
@@ -695,9 +695,9 @@
 		return 1 // return 1 forces an update to all Nano uis attached to src
 
 	if (href_list["pulseSERadiation"])
-		var/block
-		var/oldblock
-		block = src.connected.occupant.dna.GetSESubBlock(src.selected_se_block,src.selected_se_subblock)
+		var/block = src.connected.occupant.dna.GetSESubBlock(src.selected_se_block,src.selected_se_subblock)
+		var/original_block=block
+		testing("Irradiating SE block [src.selected_se_block]:[src.selected_se_subblock] ([block])...")
 
 		irradiating = src.radiation_duration
 		var/lock_state = src.connected.locked
@@ -711,30 +711,26 @@
 		if(src.connected.occupant)
 			if (prob((80 + (src.radiation_duration / 2))))
 				// FIXME: Find out what these corresponded to and change them to the WHATEVERBLOCK they need to be.
-				if ((src.selected_se_block != 2 || src.selected_se_block != 12 || src.selected_se_block != 8 || src.selected_se_block || 10) && prob (20))
-					oldblock = src.selected_se_block
-					block = miniscramble(block, src.radiation_intensity, src.radiation_duration)
+				//if ((src.selected_se_block != 2 || src.selected_se_block != 12 || src.selected_se_block != 8 || src.selected_se_block || 10) && prob (20))
+				var/real_SE_block=selected_se_block
+				block = miniscramble(block, src.radiation_intensity, src.radiation_duration)
+				if(prob(20))
 					if (src.selected_se_block > 1 && src.selected_se_block < STRUCDNASIZE/2)
-						src.selected_se_block++
+						real_SE_block++
 					else if (src.selected_se_block > STRUCDNASIZE/2 && src.selected_se_block < STRUCDNASIZE)
-						src.selected_se_block--
-					src.connected.occupant.dna.SetSESubBlock(src.selected_ui_block,src.selected_ui_subblock,block)
-					domutcheck(src.connected.occupant,src.connected)
-					src.connected.occupant.radiation += (src.radiation_intensity+src.radiation_duration)
-					src.selected_se_block = oldblock
-				else
-				//
-					block = miniscramble(block, src.radiation_intensity, src.radiation_duration)
-					src.connected.occupant.dna.SetSESubBlock(src.selected_ui_block,src.selected_ui_subblock,block)
-					domutcheck(src.connected.occupant,src.connected)
-					src.connected.occupant.radiation += (src.radiation_intensity+src.radiation_duration)
+						real_SE_block--
+
+				testing("Irradiated SE block [real_SE_block]:[src.selected_se_subblock] ([original_block] now [block]) [(real_SE_block!=selected_se_block) ? "(SHIFTED)":""]!")
+				src.connected.occupant.dna.SetSESubBlock(src.selected_ui_block,src.selected_ui_subblock,block)
+				domutcheck(src.connected.occupant,src.connected)
+				src.connected.occupant.radiation += (src.radiation_intensity+src.radiation_duration)
 			else
 				if	(prob(80-src.radiation_duration))
 					randmutb(src.connected.occupant)
 					domutcheck(src.connected.occupant,src.connected)
 				else
 					randmuti(src.connected.occupant)
-					updateappearance(src.connected.occupant,src.connected.occupant.dna.uni_identity)
+					src.connected.occupant.UpdateAppearance()
 				src.connected.occupant.radiation += ((src.radiation_intensity*2)+src.radiation_duration)
 		src.connected.locked = lock_state
 		return 1 // return 1 forces an update to all Nano uis attached to src
@@ -851,7 +847,7 @@
 					src.connected.occupant.name = src.buffers[bufferId]["owner"]
 				src.connected.occupant.dna.UI = src.buffers[bufferId]["data"]
 				src.connected.occupant.dna.UpdateUI()
-				updateappearance(src.connected.occupant,src.connected.occupant.dna.uni_identity)
+				src.connected.occupant.UpdateAppearance()
 			else if (src.buffers[bufferId]["type"] == "se")
 				src.connected.occupant.dna.SE = src.buffers[bufferId]["data"]
 				src.connected.occupant.dna.UpdateSE()

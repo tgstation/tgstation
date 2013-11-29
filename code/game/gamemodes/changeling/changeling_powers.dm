@@ -187,7 +187,7 @@
 	src.dna = chosen_dna
 	src.real_name = chosen_dna.real_name
 	src.flavor_text = ""
-	updateappearance(src, src.dna.uni_identity)
+	src.UpdateAppearance()
 	domutcheck(src, null)
 
 	src.verbs -= /mob/proc/changeling_transform
@@ -327,7 +327,7 @@
 
 	O.loc = C.loc
 
-	updateappearance(O,O.dna.uni_identity)
+	O.UpdateAppearance()
 	domutcheck(O, null)
 	O.setToxLoss(C.getToxLoss())
 	O.adjustBruteLoss(C.getBruteLoss())
@@ -761,7 +761,7 @@ var/list/datum/dna/hivemind_bank = list()
 	T.visible_message("<span class='warning'>[T] transforms!</span>")
 	T.dna = chosen_dna
 	T.real_name = chosen_dna.real_name
-	updateappearance(T, T.dna.uni_identity)
+	T.UpdateAppearance()
 	domutcheck(T, null)
 	feedback_add_details("changeling_powers","TS")
 	return 1

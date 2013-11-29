@@ -56,32 +56,23 @@
 	if (!(NOCLONE in M.mutations)) // prevents drained people from having their DNA changed
 		if (dnatype == "ui")
 			if (!block) //isolated block?
+				M.UpdateAppearance(dna)
 				if (ue) //unique enzymes? yes
-					M.dna.UI = dna
-					M.dna.UpdateUI()
-					updateappearance(M, M.dna.uni_identity)
 					M.real_name = ue
 					M.name = ue
-					uses--
-				else //unique enzymes? no
-					M.dna.UI = dna
-					M.dna.UpdateUI()
-					updateappearance(M, M.dna.uni_identity)
-					uses--
+				uses--
 			else
 				M.dna.SetUIValue(block,src.GetValue())
-				updateappearance(M, M.dna.uni_identity)
+				M.UpdateAppearance()
 				uses--
 		if (dnatype == "se")
 			if (!block) //isolated block?
 				M.dna.SE = dna
 				M.dna.UpdateSE()
-				domutcheck(M, null)
-				uses--
 			else
-				M.dna.SetUIValue(block,src.GetValue())
-				domutcheck(M, null,1)
-				uses--
+				M.dna.SetSEValue(block,src.GetValue())
+			domutcheck(M, null, block!=null)
+			uses--
 			if(prob(5))
 				trigger_side_effect(M)
 

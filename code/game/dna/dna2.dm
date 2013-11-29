@@ -77,10 +77,16 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 // UNIQUE IDENTITY
 ///////////////////////////////////////
 
+// Create random UI.
+/datum/dna/proc/ResetUI(var/defer=0)
+	for(var/i=1,i<=DNA_UI_LENGTH,i++)
+		UI[i]=rand(0,4095)
+	if(!defer)
+		UpdateUI()
+
 /datum/dna/proc/ResetUIFrom(var/mob/living/carbon/human/character)
 	// INITIALIZE!
-	for(var/i=1,i<=DNA_UI_LENGTH,i++)
-		UI[i]=1
+	ResetUI(1)
 	// Hair
 	// FIXME:  Species-specific defaults pls
 	if(!character.h_style)
@@ -224,7 +230,9 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 
 // Do not use this unless you absolutely have to.
 /datum/dna/proc/SetSEBlock(var/block,var/value,var/defer=0)
-	return SetSEValue(block,hex2num(value),defer)
+	var/nval=hex2num(value)
+	testing("SetSESBlock([block],[value],[defer]): [value] -> [nval]")
+	return SetSEValue(block,nval,defer)
 
 /datum/dna/proc/GetSESubBlock(var/block,var/subBlock)
 	return copytext(GetSEBlock(block),subBlock,subBlock+1)
@@ -250,9 +258,12 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 	dirtyUI=0
 
 /datum/dna/proc/UpdateSE()
+	var/oldse=struc_enzymes
 	struc_enzymes=""
 	for(var/block in SE)
 		struc_enzymes += EncodeDNABlock(block)
+	testing("Old SE: [oldse]")
+	testing("New SE: [struc_enzymes]")
 	dirtySE=0
 
 // BACK-COMPAT!

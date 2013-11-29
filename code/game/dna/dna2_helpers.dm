@@ -28,7 +28,7 @@
 			if(prob(prob))
 				M.dna.SetUIValue(i,rand(1,4095),1)
 		M.dna.UpdateUI()
-		updateappearance(M, M.dna.uni_identity)
+		M.UpdateAppearance()
 
 	else
 		for(var/i = 1, i <= STRUCDNASIZE-1, i++)
@@ -99,11 +99,17 @@
 
 	return output
 
+// /proc/updateappearance has changed behavior, so it's been removed
+// Use mob.UpdateAppearance() instead.
 
-/proc/updateappearance(var/mob/M, var/datum/dna/dna)
-	if(istype(M, /mob/living/carbon/human))
-		M.dna.check_integrity()
-		var/mob/living/carbon/human/H = M
+// Simpler. Don't specify UI in order for the mob to use its own.
+/mob/proc/UpdateAppearance(var/list/UI=null)
+	if(istype(src, /mob/living/carbon/human))
+		if(UI!=null)
+			src.dna.UI=UI
+			src.dna.UpdateUI()
+		dna.check_integrity()
+		var/mob/living/carbon/human/H = src
 		H.r_hair = dna.GetUIValue(DNA_UI_HAIR_R)
 		H.b_hair = dna.GetUIValue(DNA_UI_HAIR_B)
 		H.g_hair = dna.GetUIValue(DNA_UI_HAIR_G)
@@ -432,7 +438,7 @@
 			else
 				O.real_name = randomname
 				i++
-		updateappearance(O,O.dna.uni_identity)
+		O.UpdateAppearance()
 		O.take_overall_damage(M.getBruteLoss(), M.getFireLoss())
 		O.adjustToxLoss(M.getToxLoss())
 		O.adjustOxyLoss(M.getOxyLoss())
