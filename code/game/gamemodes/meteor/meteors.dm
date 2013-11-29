@@ -1,5 +1,3 @@
-#define METEOR_TEMPERATURE
-
 /var/const/meteor_wave_delay = 625 //minimum wait between waves in tenths of seconds
 //set to at least 100 unless you want evarr ruining every round
 
@@ -95,18 +93,9 @@
 	icon_state = "smallf"
 	pass_flags = PASSTABLE | PASSGRILLE
 
-/obj/effect/meteor/Move()
-	var/turf/T = src.loc
-	if (istype(T, /turf))
-		T.hotspot_expose(METEOR_TEMPERATURE, 1000)
-	..()
-	return
-
 /obj/effect/meteor/Bump(atom/A)
 	spawn(0)
-		for(var/mob/M in range(10, src))
-			if(!M.stat && !istype(M, /mob/living/silicon/ai)) //bad idea to shake an ai's view
-				shake_camera(M, 3, 1)
+
 		if (A)
 			A.meteorhit(src)
 			playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
@@ -117,9 +106,7 @@
 			if(!istype(A,/obj/machinery/power/emitter) && \
 				!istype(A,/obj/machinery/field/generator) && \
 				prob(15))
-
 				explosion(src.loc, 4, 5, 6, 7, 0)
-				playsound(src.loc, "explosion", 50, 1)
 			del(src)
 	return
 
@@ -146,16 +133,18 @@
 				if(--src.hits <= 0)
 					del(src) //Dont blow up singularity containment if we get stuck there.
 
-			for(var/mob/M in range(10, src))
-				if(!M.stat && !istype(M, /mob/living/silicon/ai)) //bad idea to shake an ai's view
-					shake_camera(M, 3, 1)
 			if (A)
+				for(var/mob/M in player_list)
+					var/turf/T = get_turf(M)
+					if(!T || T.z != src.z)
+						continue
+					shake_camera(M, 3, get_dist(M.loc, src.loc) > 20 ? 1 : 3)
+					M.playsound_local(src.loc, 'sound/effects/meteorimpact.ogg', 50, 1, get_rand_frequency(), 10)
 				explosion(src.loc, 0, 1, 2, 3, 0)
-				playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
+
 			if (--src.hits <= 0)
 				if(prob(15) && !istype(A, /obj/structure/grille))
 					explosion(src.loc, 1, 2, 3, 4, 0)
-					playsound(src.loc, "explosion", 50, 1)
 				del(src)
 		return
 
