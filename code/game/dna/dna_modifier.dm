@@ -721,7 +721,7 @@
 						real_SE_block--
 
 				testing("Irradiated SE block [real_SE_block]:[src.selected_se_subblock] ([original_block] now [block]) [(real_SE_block!=selected_se_block) ? "(SHIFTED)":""]!")
-				src.connected.occupant.dna.SetSESubBlock(src.selected_ui_block,src.selected_ui_subblock,block)
+				connected.occupant.dna.SetSESubBlock(selected_ui_block,selected_ui_subblock,block)
 				domutcheck(src.connected.occupant,src.connected)
 				src.connected.occupant.radiation += (src.radiation_intensity+src.radiation_duration)
 			else
