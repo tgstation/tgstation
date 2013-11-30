@@ -496,7 +496,7 @@ datum/design/pipedispenser
 datum/design/pipedispenser/disposal
 	name = "Circuit Design (Disposal Pipe Dispenser)"
 	desc = "Allows for the construction of circuit boards used to build a Pipe Dispenser."
-	id = "pipedispenser"
+	id = "dpipedispenser"
 	req_tech = list("programming" = 3, "materials" = 3,"engineering" = 2, "powerstorage" = 2)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
