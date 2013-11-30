@@ -31,7 +31,32 @@
 				modifystate = "energystun"
 		update_icon()
 
+/obj/item/weapon/gun/energy/gun/mini
+	name = "mini energy gun"
+	desc = "An older, more compact version of the energy gun. It's very light and small but at the cost of a smaller battery."
+	w_class = 2
+	cell_type = "/obj/item/weapon/cell/crap" //5 shots
+	icon_state = "ministun100"
+	item_state = null
+	modifystate = "ministun"
 
+	attack_self(mob/living/user as mob) //Needed or else the sprite reverts to the egun if the mode changes.
+		switch(mode)
+			if(0)
+				mode = 1
+				charge_cost = 100
+				fire_sound = 'sound/weapons/Laser.ogg'
+				user << "\red [src.name] is now set to kill."
+				projectile_type = "/obj/item/projectile/beam"
+				modifystate = "minikill"
+			if(1)
+				mode = 0
+				charge_cost = 100
+				fire_sound = 'sound/weapons/Taser.ogg'
+				user << "\red [src.name] is now set to stun."
+				projectile_type = "/obj/item/projectile/energy/electrode"
+				modifystate = "ministun"
+		update_icon()
 
 /obj/item/weapon/gun/energy/gun/nuclear
 	name = "Advanced Energy Gun"

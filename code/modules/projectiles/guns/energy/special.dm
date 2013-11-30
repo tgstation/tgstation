@@ -2,7 +2,7 @@
 	name = "ion rifle"
 	desc = "A man portable anti-armor weapon designed to disable mechanical threats"
 	icon_state = "ionrifle"
-	fire_sound = 'sound/weapons/Laser.ogg'
+	fire_sound = 'sound/weapons/emitter2.ogg'
 	origin_tech = "combat=2;magnets=4"
 	w_class = 5
 	flags =  FPRINT | TABLEPASS | CONDUCT
