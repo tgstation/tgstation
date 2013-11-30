@@ -24,14 +24,14 @@
 		numsToAssign += i
 
 	testing("Assigning DNA blocks:")
-	message_admins("Assigning DNA blocks:")
+
 	// Standard muts
 	BLINDBLOCK         = getAssignedBlock("BLIND",         numsToAssign)
 	DEAFBLOCK          = getAssignedBlock("DEAF",          numsToAssign)
-	HULKBLOCK          = getAssignedBlock("HULK",          numsToAssign)
-	TELEBLOCK          = getAssignedBlock("TELE",          numsToAssign)
-	FIREBLOCK          = getAssignedBlock("FIRE",          numsToAssign)
-	XRAYBLOCK          = getAssignedBlock("XRAY",          numsToAssign)
+	HULKBLOCK          = getAssignedBlock("HULK",          numsToAssign, DNA_HARD_BOUNDS)
+	TELEBLOCK          = getAssignedBlock("TELE",          numsToAssign, DNA_HARD_BOUNDS)
+	FIREBLOCK          = getAssignedBlock("FIRE",          numsToAssign, DNA_HARDER_BOUNDS)
+	XRAYBLOCK          = getAssignedBlock("XRAY",          numsToAssign, DNA_HARDER_BOUNDS)
 	CLUMSYBLOCK        = getAssignedBlock("CLUMSY",        numsToAssign)
 	FAKEBLOCK          = getAssignedBlock("FAKE",          numsToAssign)
 	COUGHBLOCK         = getAssignedBlock("COUGH",         numsToAssign)
@@ -42,17 +42,17 @@
 
 	// Bay muts
 	HEADACHEBLOCK      = getAssignedBlock("HEADACHE",      numsToAssign)
-	NOBREATHBLOCK      = getAssignedBlock("NOBREATH",      numsToAssign)
-	REMOTEVIEWBLOCK    = getAssignedBlock("REMOTEVIEW",    numsToAssign)
-	REGENERATEBLOCK    = getAssignedBlock("REGENERATE",    numsToAssign)
-	INCREASERUNBLOCK   = getAssignedBlock("INCREASERUN",   numsToAssign)
-	REMOTETALKBLOCK    = getAssignedBlock("REMOTETALK",    numsToAssign)
-	MORPHBLOCK         = getAssignedBlock("MORPH",         numsToAssign)
+	NOBREATHBLOCK      = getAssignedBlock("NOBREATH",      numsToAssign, DNA_HARD_BOUNDS)
+	REMOTEVIEWBLOCK    = getAssignedBlock("REMOTEVIEW",    numsToAssign, DNA_HARDER_BOUNDS)
+	REGENERATEBLOCK    = getAssignedBlock("REGENERATE",    numsToAssign, DNA_HARDER_BOUNDS)
+	INCREASERUNBLOCK   = getAssignedBlock("INCREASERUN",   numsToAssign, DNA_HARDER_BOUNDS)
+	REMOTETALKBLOCK    = getAssignedBlock("REMOTETALK",    numsToAssign, DNA_HARDER_BOUNDS)
+	MORPHBLOCK         = getAssignedBlock("MORPH",         numsToAssign, DNA_HARDER_BOUNDS)
 	COLDBLOCK          = getAssignedBlock("COLD",          numsToAssign)
 	HALLUCINATIONBLOCK = getAssignedBlock("HALLUCINATION", numsToAssign)
-	NOPRINTSBLOCK      = getAssignedBlock("NOPRINTS",      numsToAssign)
+	NOPRINTSBLOCK      = getAssignedBlock("NOPRINTS",      numsToAssign, DNA_HARD_BOUNDS)
 	SHOCKIMMUNITYBLOCK = getAssignedBlock("SHOCKIMMUNITY", numsToAssign)
-	SMALLSIZEBLOCK     = getAssignedBlock("SMALLSIZE",     numsToAssign)
+	SMALLSIZEBLOCK     = getAssignedBlock("SMALLSIZE",     numsToAssign, DNA_HARD_BOUNDS)
 
 
 	// HIDDEN MUTATIONS / SUPERPOWERS INITIALIZTION
