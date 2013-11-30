@@ -32,6 +32,7 @@
 	unsuitable_atoms_damage = 15
 	var/corpse = /obj/effect/landmark/mobcorpse/assistant
 	var/weapon1 = /obj/item/weapon/storage/toolbox/mechanical
+	var/enemy_list = list()
 
 	faction = "hostile"
 	idle_env_destroyer = 1
@@ -49,3 +50,48 @@
 		new weapon1 (src.loc)
 	del src
 	return
+
+/mob/living/simple_animal/hostile/assistant/FindTarget() //Modified FindTarget proc allows for sneaking
+	var/atom/T = null
+	stop_automated_movement = 0
+	for(var/atom/A in ListTargets())
+
+		var/atom/F = Found(A)
+		if(F)
+			T = F
+			break
+
+		if(isliving(A))
+			if(istype(A, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = A
+				if(H.name == "Unknown") //Target is masked (appears as Unknown)
+					break
+				if((H.get_assignment() == "Assistant") && !(H in enemy_list)) //If the target is an assistant AND he is not our enemy
+					break
+			var/mob/living/L = A
+			if(L.faction == src.faction && !attack_same)
+				continue
+			else if(L in friends)
+				continue
+			else
+				if(!L.stat)
+					T = L
+					break
+
+		else if(istype(A, /obj/mecha)) // Our line of sight stuff was already done in ListTargets().
+			var/obj/mecha/M = A
+			if (M.occupant)
+				T = M
+				break
+
+	return T
+//Adds attacker to enemy_list and makes him the new target
+/mob/living/simple_animal/hostile/assistant/attackby(obj/O as obj, mob/user as mob)
+	..()
+	enemy_list += user
+	GiveTarget(user)
+
+/mob/living/simple_animal/hostile/assistant/attack_hand(mob/user as mob)
+	..()
+	enemy_list += user
+	GiveTarget(user)
