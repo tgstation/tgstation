@@ -127,9 +127,8 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 	ASSERT(value>=0)
 	ASSERT(value<=4095)
 	UI[block]=value
-	if(defer)
-		dirtyUI=1
-	else
+	dirtyUI=1
+	if(!defer)
 		UpdateUI()
 
 // Get a DNA UI block's raw value.
@@ -191,11 +190,12 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 
 // Set a DNA SE block's raw value.
 /datum/dna/proc/SetSEValue(var/block,var/value,var/defer=0)
+	//testing("SetSEBlock([block],[value],[defer]): [value] -> [nval]")
 	ASSERT(value>=0)
 	ASSERT(value<=4095)
 	SE[block]=value
 	dirtySE=1
-	if(defer)
+	if(!defer)
 		UpdateSE()
 
 // Get a DNA SE block's raw value.
@@ -230,7 +230,7 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 // Do not use this unless you absolutely have to.
 /datum/dna/proc/SetSEBlock(var/block,var/value,var/defer=0)
 	var/nval=hex2num(value)
-	testing("SetSEBlock([block],[value],[defer]): [value] -> [nval]")
+	//testing("SetSEBlock([block],[value],[defer]): [value] -> [nval]")
 	return SetSEValue(block,nval,defer)
 
 /datum/dna/proc/GetSESubBlock(var/block,var/subBlock)
@@ -244,7 +244,7 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 			newBlock+=newSubBlock
 		else
 			newBlock+=copytext(oldBlock,i,i+1)
-	testing("SetSESubBlock([block],[subBlock],[newSubBlock],[defer]): [oldBlock] -> [newBlock]")
+	//testing("SetSESubBlock([block],[subBlock],[newSubBlock],[defer]): [oldBlock] -> [newBlock]")
 	SetSEBlock(block,newBlock,defer)
 
 
@@ -255,7 +255,7 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 	src.uni_identity=""
 	for(var/block in UI)
 		uni_identity += EncodeDNABlock(block)
-	testing("New UI: [uni_identity]")
+	//testing("New UI: [uni_identity]")
 	dirtyUI=0
 
 /datum/dna/proc/UpdateSE()
@@ -264,7 +264,7 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 	for(var/block in SE)
 		struc_enzymes += EncodeDNABlock(block)
 	//testing("Old SE: [oldse]")
-	testing("New SE: [struc_enzymes]")
+	//testing("New SE: [struc_enzymes]")
 	dirtySE=0
 
 // BACK-COMPAT!
