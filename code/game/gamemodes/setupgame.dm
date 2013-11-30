@@ -15,8 +15,9 @@
 		BLOCKADD = rand(-300,300)
 	if (prob(75))
 		DIFFMUT = rand(0,20)
-//Thanks to nexis for the fancy code
-// BITCH I AIN'T DONE YET
+
+	//Thanks to nexis for the fancy code
+	// BITCH I AIN'T DONE YET
 
 	var/list/numsToAssign=new()
 	for(var/i=1;i<STRUCDNASIZE;i++)
@@ -56,7 +57,7 @@
 
 	// HIDDEN MUTATIONS / SUPERPOWERS INITIALIZTION
 
-/*
+	/*
 	for(var/x in typesof(/datum/mutations) - /datum/mutations)
 		var/datum/mutations/mut = new x
 
@@ -73,7 +74,23 @@
 
 
 		global_mutations += mut// add to global mutations list!
-*/
+	*/
+
+// Run AFTER genetics setup and AFTER species setup.
+/proc/setup_species()
+	// SPECIES GENETICS FUN
+	for(var/name in all_species)
+		// I hate BYOND.  Can't just call while it's in the list.
+		var/datum/species/species = all_species[name]
+		if(species.default_block_names.len>0)
+			testing("Setting up genetics for [species.name] (needs [english_list(species.default_block_names)])")
+			species.default_blocks.Cut()
+			for(var/block=1;block<STRUCDNASIZE;block++)
+				if(assigned_blocks[block] in species.default_block_names)
+					testing("  Found [assigned_blocks[block]] ([block])")
+					species.default_blocks.Add(block)
+			if(species.default_blocks.len)
+				all_species[name]=species
 
 
 /proc/setupfactions()

@@ -692,6 +692,7 @@
 			src.selected_se_block = select_block
 		if ((select_subblock <= DNA_BLOCK_SIZE) && (select_subblock >= 1))
 			src.selected_se_subblock = select_subblock
+		testing("User selected block [selected_se_block] (sent [select_block]), subblock [selected_se_subblock] (sent [select_block]).")
 		return 1 // return 1 forces an update to all Nano uis attached to src
 
 	if (href_list["pulseSERadiation"])
@@ -721,7 +722,7 @@
 						real_SE_block--
 
 				testing("Irradiated SE block [real_SE_block]:[src.selected_se_subblock] ([original_block] now [block]) [(real_SE_block!=selected_se_block) ? "(SHIFTED)":""]!")
-				connected.occupant.dna.SetSESubBlock(selected_ui_block,selected_ui_subblock,block)
+				connected.occupant.dna.SetSESubBlock(selected_se_block,selected_se_subblock,block)
 				domutcheck(src.connected.occupant,src.connected)
 				src.connected.occupant.radiation += (src.radiation_intensity+src.radiation_duration)
 			else

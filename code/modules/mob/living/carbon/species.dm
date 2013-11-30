@@ -39,6 +39,8 @@
 	// For grays
 	var/max_hurt_damage = 5 // Max melee damage dealt + 5 if hulk
 	var/list/default_mutations = list()
+	var/list/default_blocks = list() // Don't touch.
+	var/list/default_block_names = list() // Use this instead, using the names from setupgame.dm
 
 	var/flags = 0       // Various specific features.
 
@@ -111,11 +113,14 @@
 	eyes = "grey_eyes_s"
 
 	max_hurt_damage = 3 // From 5 (for humans)
-	default_mutations=list(mRemotetalk) // TK is also another candidate, but TK is overpowered as fuck.
 
 	primitive = /mob/living/carbon/monkey // TODO
 
 	flags = WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | CAN_BE_FAT
+
+	// Both must be set or it's only a 45% chance of manifesting.
+	default_mutations=list(mRemotetalk)
+	default_block_names=list("REMOTETALK")
 
 /datum/species/skrell
 	name = "Skrell"

@@ -11,6 +11,7 @@
 #define DNA_ON_UPPERBOUND  3
 
 #define DNA_DEFAULT_BOUNDS list(1,2049,2050,4095)
+#define DNA_HARDER_BOUNDS  list(1,2049,2050,4095)
 
 // Defines which values mean "on" or "off".
 //  This is to make some of the more OP superpowers a larger PITA to activate,
@@ -251,17 +252,18 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 	return add_zero2(num2hex(value,1), 3)
 
 /datum/dna/proc/UpdateUI()
-	src.unique_enzymes=""
+	src.uni_identity=""
 	for(var/block in UI)
-		unique_enzymes += EncodeDNABlock(block)
+		uni_identity += EncodeDNABlock(block)
+	testing("New UI: [uni_identity]")
 	dirtyUI=0
 
 /datum/dna/proc/UpdateSE()
-	var/oldse=struc_enzymes
+	//var/oldse=struc_enzymes
 	struc_enzymes=""
 	for(var/block in SE)
 		struc_enzymes += EncodeDNABlock(block)
-	testing("Old SE: [oldse]")
+	//testing("Old SE: [oldse]")
 	testing("New SE: [struc_enzymes]")
 	dirtySE=0
 
