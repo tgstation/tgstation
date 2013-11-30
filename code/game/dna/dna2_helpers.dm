@@ -110,16 +110,19 @@
 			src.dna.UpdateUI()
 		dna.check_integrity()
 		var/mob/living/carbon/human/H = src
-		H.r_hair = dna.GetUIValue(DNA_UI_HAIR_R)
-		H.b_hair = dna.GetUIValue(DNA_UI_HAIR_B)
-		H.g_hair = dna.GetUIValue(DNA_UI_HAIR_G)
-		H.r_facial = dna.GetUIValue(DNA_UI_BEARD_R)
-		H.b_facial = dna.GetUIValue(DNA_UI_BEARD_B)
-		H.g_facial = dna.GetUIValue(DNA_UI_BEARD_G)
-		H.s_tone = round((dna.GetUIValue(DNA_UI_SKIN_TONE) / 16) - 220)
-		H.r_eyes = dna.GetUIValue(DNA_UI_EYES_R)
-		H.g_eyes = dna.GetUIValue(DNA_UI_EYES_G)
-		H.b_eyes = dna.GetUIValue(DNA_UI_EYES_B)
+		H.r_hair   = dna.GetUIValueRange(DNA_UI_HAIR_R,    255)
+		H.g_hair   = dna.GetUIValueRange(DNA_UI_HAIR_G,    255)
+		H.b_hair   = dna.GetUIValueRange(DNA_UI_HAIR_B,    255)
+
+		H.r_facial = dna.GetUIValueRange(DNA_UI_BEARD_R,   255)
+		H.g_facial = dna.GetUIValueRange(DNA_UI_BEARD_G,   255)
+		H.b_facial = dna.GetUIValueRange(DNA_UI_BEARD_B,   255)
+
+		H.r_eyes   = dna.GetUIValueRange(DNA_UI_EYES_R,    255)
+		H.g_eyes   = dna.GetUIValueRange(DNA_UI_EYES_G,    255)
+		H.b_eyes   = dna.GetUIValueRange(DNA_UI_EYES_B,    255)
+
+		H.s_tone   = dna.GetUIValueRange(DNA_UI_SKIN_TONE, 220)
 
 		if (dna.GetUIState(DNA_UI_GENDER))
 			H.gender = FEMALE

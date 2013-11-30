@@ -22,7 +22,7 @@
 //  on or off.
 var/global/list/dna_activity_bounds[STRUCDNASIZE]
 
-// Used to determine what each block means (admin hax, mostly)
+// Used to determine what each block means (admin hax and species stuff, mostly)
 var/global/list/assigned_blocks[STRUCDNASIZE]
 
 // UI Indices (can change to mutblock style, if desired)
@@ -102,23 +102,21 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 		character.f_style = "Shaved"
 	var/beard	= facial_hair_styles_list.Find(character.f_style)
 
-	var/gender
-	if(character.gender == MALE)
-		gender = rand(1,(2050+BLOCKADD))
-	else
-		gender = rand((2051+BLOCKADD),4094)
+	SetUIValueRange(DNA_UI_HAIR_R,    character.r_hair,    255,    1)
+	SetUIValueRange(DNA_UI_HAIR_G,    character.g_hair,    255,    1)
+	SetUIValueRange(DNA_UI_HAIR_B,    character.b_hair,    255,    1)
 
-	SetUIValue(DNA_UI_HAIR_R,   character.r_hair,              1)
-	SetUIValue(DNA_UI_HAIR_G,   character.g_hair,              1)
-	SetUIValue(DNA_UI_HAIR_B,   character.b_hair,              1)
-	SetUIValue(DNA_UI_BEARD_R,  character.r_facial,            1)
-	SetUIValue(DNA_UI_BEARD_G,  character.g_facial,            1)
-	SetUIValue(DNA_UI_BEARD_B,  character.b_facial,            1)
-	SetUIValue(DNA_UI_SKIN_TONE,(character.s_tone + 220) * 16, 1)
-	SetUIValue(DNA_UI_BEARD_R,  character.r_eyes,              1)
-	SetUIValue(DNA_UI_BEARD_G,  character.g_eyes,              1)
-	SetUIValue(DNA_UI_BEARD_B,  character.b_eyes,              1)
-	SetUIValue(DNA_UI_GENDER,   gender,                        1)
+	SetUIValueRange(DNA_UI_BEARD_R,   character.r_facial,  255,    1)
+	SetUIValueRange(DNA_UI_BEARD_G,   character.g_facial,  255,    1)
+	SetUIValueRange(DNA_UI_BEARD_B,   character.b_facial,  255,    1)
+
+	SetUIValueRange(DNA_UI_BEARD_R,   character.r_eyes,    255,    1)
+	SetUIValueRange(DNA_UI_BEARD_G,   character.g_eyes,    255,    1)
+	SetUIValueRange(DNA_UI_BEARD_B,   character.b_eyes,    255,    1)
+
+	SetUIValueRange(DNA_UI_SKIN_TONE, character.s_tone,    220,    1)
+
+	SetUIState(DNA_UI_GENDER,         character.gender!=MALE,      1)
 
 	SetUIValueRange(DNA_UI_HAIR_STYLE,  hair,  hair_styles_list.len,       1)
 	SetUIValueRange(DNA_UI_BEARD_STYLE, beard, facial_hair_styles_list.len,1)
