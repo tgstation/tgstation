@@ -34,7 +34,7 @@
 	var/weapon1 = /obj/item/weapon/storage/toolbox/mechanical
 	var/enemy_list = list()
 
-	faction = "hostile"
+	faction = "greytide"
 	idle_env_destroyer = 1
 	wall_smash = 1
 
