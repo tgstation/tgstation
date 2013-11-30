@@ -726,10 +726,12 @@
 				src.connected.occupant.radiation += (src.radiation_intensity+src.radiation_duration)
 			else
 				if	(prob(80-src.radiation_duration))
+					testing("Random bad mut!")
 					randmutb(src.connected.occupant)
 					domutcheck(src.connected.occupant,src.connected)
 				else
 					randmuti(src.connected.occupant)
+					testing("Random identity mut!")
 					src.connected.occupant.UpdateAppearance()
 				src.connected.occupant.radiation += ((src.radiation_intensity*2)+src.radiation_duration)
 		src.connected.locked = lock_state
