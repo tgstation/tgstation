@@ -1357,9 +1357,8 @@ mob/living/carbon/human/yank_out_object()
 	else
 		see_invisible = SEE_INVISIBLE_LIVING
 
-	//testing("Mutations = "+english_list(mutations))
-	mutations+=species.default_mutations
-	//testing("SpeciesMut + Mutations = "+english_list(mutations))
+	if(species.default_mutations.len>0 || species.default_blocks.len>0)
+		do_deferred_species_setup=1
 
 	spawn(0)
 		update_icons()
@@ -1368,3 +1367,4 @@ mob/living/carbon/human/yank_out_object()
 		return 1
 	else
 		return 0
+

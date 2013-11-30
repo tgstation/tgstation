@@ -29,7 +29,30 @@
 	var/prev_gender = null // Debug for plural genders
 	var/temperature_alert = 0
 	var/in_stasis = 0
+	var/do_deferred_species_setup=0
 
+// Doing this during species init breaks shit.
+/mob/living/carbon/human/proc/DeferredSpeciesSetup()
+	//testing("Mutations = "+english_list(mutations))
+	var/mut_update=0
+	if(species.default_mutations.len>0)
+		for(var/mutation in species.default_mutations)
+			if(!(mutation in mutations))
+				//src << "TESTING [__FILE__]:[__LINE__]: Added mutation [mutation]."
+				mutations.Add(mutation)
+				mut_update=1
+	if(species.default_blocks.len>0)
+		for(var/block in species.default_blocks)
+			// DNA2 should make this less of a clusterfuck.
+			if(!ismuton(block,src))
+				dna.struc_enzymes = setblock(dna.struc_enzymes,block,toggledblock(getblock(dna.struc_enzymes,block,3)),3)
+				//src << "TESTING [__FILE__]:[__LINE__]: Set block [block] to on."
+				mut_update=1
+	if(mut_update)
+		//src << "TESTING [__FILE__]:[__LINE__]: Forcing domutcheck() and update_mutations()."
+		domutcheck(src)
+		update_mutations()
+	//testing("SpeciesMut + Mutations = "+english_list(mutations))
 
 /mob/living/carbon/human/Life()
 	set invisibility = 0
@@ -39,6 +62,10 @@
 	if(!loc)			return	// Fixing a null error that occurs when the mob isn't found in the world -- TLE
 
 	..()
+
+	if(do_deferred_species_setup)
+		DeferredSpeciesSetup()
+		do_deferred_species_setup=0
 
 	//Apparently, the person who wrote this code designed it so that
 	//blinded get reset each cycle and then get activated later in the

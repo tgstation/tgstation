@@ -14,51 +14,16 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 		BLOCKADD = rand(-300,300)
 	if (prob(75))
 		DIFFMUT = rand(0,20)
-/*
-	var/list/avnums = new/list()
-	var/tempnum
 
-	avnums.Add(2)
-	avnums.Add(12)
-	avnums.Add(10)
-	avnums.Add(8)
-	avnums.Add(4)
-	avnums.Add(11)
-	avnums.Add(13)
-	avnums.Add(6)
 
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	HULKBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	TELEBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	FIREBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	XRAYBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	CLUMSYBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	FAKEBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	DEAFBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	BLINDBLOCK = tempnum
-	*/
 //Thanks to nexis for the fancy code
 	var/list/numsToAssign=new()
 	for(var/i=1;i<STRUCDNASIZE;i++)
 		numsToAssign += i
 
 	testing("Assigning DNA blocks:")
-	message_admins("Assigning DNA blocks:")
+	//message_admins("Assigning DNA blocks:")
+
 	// Standard muts
 	BLINDBLOCK         = getAssignedBlock("BLIND",         numsToAssign)
 	DEAFBLOCK          = getAssignedBlock("DEAF",          numsToAssign)
@@ -91,7 +56,7 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 
 	// HIDDEN MUTATIONS / SUPERPOWERS INITIALIZTION
 
-/*
+	/*
 	for(var/x in typesof(/datum/mutations) - /datum/mutations)
 		var/datum/mutations/mut = new x
 
@@ -108,8 +73,23 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 
 
 		global_mutations += mut// add to global mutations list!
-*/
+	*/
 
+// Run AFTER genetics setup and AFTER species setup.
+/proc/setup_species()
+	// SPECIES GENETICS FUN
+	for(var/name in all_species)
+		// I hate BYOND.  Can't just call while it's in the list.
+		var/datum/species/species = all_species[name]
+		if(species.default_block_names.len>0)
+			testing("Setting up genetics for [species.name] (needs [english_list(species.default_block_names)])")
+			species.default_blocks.Cut()
+			for(var/block=1;block<STRUCDNASIZE;block++)
+				if(assigned_blocks[block] in species.default_block_names)
+					testing("  Found [assigned_blocks[block]] ([block])")
+					species.default_blocks.Add(block)
+			if(species.default_blocks.len)
+				all_species[name]=species
 
 /proc/setupfactions()
 
