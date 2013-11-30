@@ -1003,6 +1003,7 @@
 #include "code\modules\mob\living\simple_animal\friendly\slime.dm"
 #include "code\modules\mob\living\simple_animal\friendly\tomato.dm"
 #include "code\modules\mob\living\simple_animal\hostile\alien.dm"
+#include "code\modules\mob\living\simple_animal\hostile\assistant.dm"
 #include "code\modules\mob\living\simple_animal\hostile\bear.dm"
 #include "code\modules\mob\living\simple_animal\hostile\carp.dm"
 #include "code\modules\mob\living\simple_animal\hostile\creature.dm"
