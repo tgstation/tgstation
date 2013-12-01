@@ -176,6 +176,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		M.IgniteMob()
 	smoketime--
 	if(smoketime < 1)
+		new /obj/effect/decal/cleanable/ash(location)
 		new type_butt(location)
 		processing_objects.Remove(src)
 		if(ismob(loc))
@@ -202,6 +203,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		user.visible_message("<span class='notice'>[user] calmly drops and treads on the lit [src], putting it out instantly.</span>")
 		var/turf/T = get_turf(src)
 		new type_butt(T)
+		new /obj/effect/decal/cleanable/ash(location)
 		processing_objects.Remove(src)
 		del(src)
 	return ..()
@@ -218,6 +220,34 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights the [cig.name].</span>")
 	else
 		return ..()
+
+/obj/item/clothing/mask/cigarette/rollie
+	name = "rollie"
+	desc = "A roll of dried plant matter wrapped in thin paper."
+	icon_state = "spliffoff"
+	icon_on = "spliffon"
+	icon_off = "spliffoff"
+	type_butt = /obj/item/weapon/cigbutt/roach
+	throw_speed = 0.5
+	item_state = "spliffoff"
+	smoketime = 180
+	chem_volume = 50
+
+/obj/item/clothing/mask/cigarette/rollie/New()
+	..()
+	src.pixel_x = rand(-5.0, 5)
+	src.pixel_y = rand(-5.0, 5)
+
+
+/obj/item/weapon/cigbutt/roach
+	name = "roach"
+	desc = "A manky old roach."
+	icon_state = "roach"
+
+/obj/item/weapon/cigbutt/roach/New()
+	..()
+	src.pixel_x = rand(-5.0, 5)
+	src.pixel_y = rand(-5.0, 5)
 
 
 ////////////
@@ -465,6 +495,24 @@ obj/item/weapon/rollingpaper
 	icon_state = "cig_paper"
 	w_class = 1
 
+obj/item/weapon/rollingpaper/afterattack(atom/target, mob/user as mob, proximity)
+	if(!proximity)
+		return
+	if(istype(target, /obj/item/weapon/reagent_containers/food/snacks/grown))
+		if(target:dry)
+			user.u_equip(target)
+			user.u_equip(src)
+			var/obj/item/clothing/mask/cigarette/rollie/R = new /obj/item/clothing/mask/cigarette/rollie(user.loc)
+			R.chem_volume = target.reagents.total_volume
+			target.reagents.trans_to(R, R.chem_volume)
+			user.put_in_active_hand(R)
+			user << "\blue You roll the [target.name] into a rolling paper."
+			del(target)
+			del(src)
+		else
+			user << "\red You need to dry this first."
+	else
+		..()
 
 obj/item/weapon/rollingpaperpack
 	name = "rolling paper pack"

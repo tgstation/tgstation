@@ -332,10 +332,6 @@
 			reagents.add_reagent("toxin", 1+round(potency / 10, 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
-<<<<<<< HEAD
-=======
-
->>>>>>> d252a1b658a36251dd64cdbd614b8fb6449e6197
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus
 	seed = "/obj/item/seeds/ambrosiadeus"
 	name = "ambrosia deus branch"
@@ -353,10 +349,7 @@
 			reagents.add_reagent("space_drugs", 1+round(potency / 10, 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
-<<<<<<< HEAD
-=======
 
->>>>>>> d252a1b658a36251dd64cdbd614b8fb6449e6197
 /obj/item/weapon/reagent_containers/food/snacks/grown/apple
 	seed = "/obj/item/seeds/appleseed"
 	name = "apple"
