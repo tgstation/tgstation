@@ -68,7 +68,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_packs/farwa
 	name = "Farwa crate"
-	contains = list (/obj/item/weapon/storage/box/farwacubes)
+	contains = list (/obj/item/weapon/storage/box/monkeycubes/farwacubes)
 	cost = 30
 	containertype = /obj/structure/closet/crate/freezer
 	containername = "Farwa crate"
@@ -76,7 +76,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_packs/skrell
 	name = "Neaera crate"
-	contains = list (/obj/item/weapon/storage/box/neaeracubes)
+	contains = list (/obj/item/weapon/storage/box/monkeycubes/neaeracubes)
 	cost = 30
 	containertype = /obj/structure/closet/crate/freezer
 	containername = "Neaera crate"
@@ -84,7 +84,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_packs/stok
 	name = "Stok crate"
-	contains = list (/obj/item/weapon/storage/box/stokcubes)
+	contains = list (/obj/item/weapon/storage/box/monkeycubes/stokcubes)
 	cost = 30
 	containertype = /obj/structure/closet/crate/freezer
 	containername = "Stok crate"
