@@ -41,14 +41,13 @@ var/global/totaltrubbles = 0   //global variable so it updates for all trubbles,
 /mob/living/simple_animal/trubble/attack_hand(mob/user as mob)
 	..()
 	if(src.stat != DEAD)
-		new /obj/item/toy/trubble(user.loc)
-		for(var/obj/item/toy/trubble/T in user.loc)
-			T.icon_state = src.icon_state
-			T.item_state = src.icon_state
-			T.gestation = src.gestation
-			T.pickup(user)
-			user.put_in_active_hand(T)
-			del(src)
+		var/obj/item/toy/trubble/T = new /obj/item/toy/trubble(user.loc)
+		T.icon_state = src.icon_state
+		T.item_state = src.icon_state
+		T.gestation = src.gestation
+		T.pickup(user)
+		user.put_in_active_hand(T)
+		del(src)
 
 
 /mob/living/simple_animal/trubble/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
@@ -100,13 +99,11 @@ var/global/totaltrubbles = 0   //global variable so it updates for all trubbles,
 
 /obj/item/toy/trubble/dropped(mob/user as mob) //now you can't item form them to get rid of them all so easily
 	..()
-	new /mob/living/simple_animal/trubble(user.loc)
-	for(var/mob/living/simple_animal/trubble/T in user.loc)
-		T.icon_state = src.icon_state
-		T.icon_living = src.icon_state
-		T.icon_dead = "[src.icon_state]_dead"
-		T.gestation = src.gestation
-
+	var/mob/living/simple_animal/trubble/T = new /mob/living/simple_animal/trubble(user.loc)
+	T.icon_state = src.icon_state
+	T.icon_living = src.icon_state
+	T.icon_dead = "[src.icon_state]_dead"
+	T.gestation = src.gestation
 	user << "<span class='notice'>The trubble gets up and wanders around.</span>"
 	del(src)
 
