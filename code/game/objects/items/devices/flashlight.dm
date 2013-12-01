@@ -200,8 +200,15 @@
 	w_class = 4
 	brightness_on = 7
 	icon_state = "torch"
+	item_state = "torch_off"
 	on_damage = 10
 
+/obj/item/device/flashlight/flare/torch/process()
+	..()
+	if(on)
+		item_state = "torch_on"
+	else
+		item_state = "torch_off"
 
 /obj/item/device/flashlight/slime
 	name = "glowing slime extract"
