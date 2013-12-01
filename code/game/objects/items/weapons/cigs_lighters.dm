@@ -352,16 +352,23 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	chem_volume = 100
 
 /obj/item/clothing/mask/cigarette/pipe/cobpipe/attackby(var/obj/item/O, var/mob/user)
-	..()
-	if(istype(O, /obj/item) && !istype(O, /obj/item/weapon/lighter))
+	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
 		if(!packeditem)
-			user << "You stuff [O] into [src]."
-			name = "[O]-packed corn cob pipe"
-			smoketime = 400
-			packeditem = 1
-			if(O.reagents)
-				O.reagents.trans_to(src, src.reagents.total_volume)
-			del(O)
+			if(O:dry == 1)
+				user << "You stuff [O] into [src]."
+				name = "[O]-packed corn cob pipe"
+				smoketime = 400
+				packeditem = 1
+				if(O:reagents)
+					O.reagents.trans_to(src, O.reagents.total_volume)
+				del(O)
+			else
+				user << "\red It has to be dried first."
+		else
+			user << "\red It is already packed."
+	else
+		user << "\red You can't put that in the pipe."
+	..()
 
 
 /obj/item/clothing/mask/cigarette/pipe/cobpipe/attack_self(mob/user as mob)
