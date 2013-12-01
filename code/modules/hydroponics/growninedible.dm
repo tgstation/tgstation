@@ -53,6 +53,14 @@
 				usr << "You add the newly-formed wood to the stack. It now contains [NG.amount] planks."
 		del(src)
 		return
+	if(istype(W, /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco))
+		var/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco/leaf = W
+		if(leaf.dry)
+			user.show_message("<span class='notice'>You wrap the dried leaf around the log, turning it into a torch!</span>")
+			new /obj/item/device/flashlight/flare/torch(user.loc)
+			del(leaf)
+			del(src)
+			return
 
 /obj/item/weapon/grown/sunflower // FLOWER POWER!
 	name = "sunflower"
