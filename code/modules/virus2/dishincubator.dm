@@ -105,46 +105,26 @@
 	var/string = "Off"
 	if(on)
 		string = "On"
-
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\virus2\dishincubator.dm:108: dat += "Power status : <A href='?src=\ref[src];power=1'>[string]</a>"
-	dat += {"Power status : <A href='?src=\ref[src];power=1'>[string]</a>
-<BR>
-Food supply : [foodsupply]
-<BR>
-Radiation Levels : [radiation] RADS : <A href='?src=\ref[src];rad=1'>Radiate</a>
-<BR>
-Toxins : [toxins]
-<BR><BR>"}
-	// END AUTOFIX
+	dat += "Power status : <A href='?src=\ref[src];power=1'>[string]</a>"
+	dat += "<BR>"
+	dat += "Food supply : [foodsupply]"
+	dat += "<BR>"
+	dat += "Radiation Levels : [radiation] RADS : <A href='?src=\ref[src];rad=1'>Radiate</a>"
+	dat += "<BR>"
+	dat += "Toxins : [toxins]"
+	dat += "<BR><BR>"
 	if(beaker)
-
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\virus2\dishincubator.dm:117: dat += "Eject chemicals : <A href='?src=\ref[src];ejectchem=1'> Eject</a>"
-		dat += {"Eject chemicals : <A href='?src=\ref[src];ejectchem=1'> Eject</a>
-<BR>"}
-		// END AUTOFIX
+		dat += "Eject chemicals : <A href='?src=\ref[src];ejectchem=1'> Eject</a>"
+		dat += "<BR>"
 	if(dish)
-
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\virus2\dishincubator.dm:120: dat += "Eject Virus dish : <A href='?src=\ref[src];ejectdish=1'> Eject</a>"
-		dat += {"Eject Virus dish : <A href='?src=\ref[src];ejectdish=1'> Eject</a>
-<BR>"}
-		// END AUTOFIX
+		dat += "Eject Virus dish : <A href='?src=\ref[src];ejectdish=1'> Eject</a>"
+		dat += "<BR>"
 		if(beaker)
-
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\virus2\dishincubator.dm:123: dat += "Breed viral culture in beaker : <A href='?src=\ref[src];virus=1'> Start</a>"
-			dat += {"Breed viral culture in beaker : <A href='?src=\ref[src];virus=1'> Start</a>
-<BR>"}
-			// END AUTOFIX
-
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\virus2\dishincubator.dm:125: dat += "<BR><BR>"
-	dat += {"<BR><BR>
-<A href='?src=\ref[src];flush=1'>Flush system</a><BR>
-<A href='?src=\ref[src];close=1'>Close</A><BR>"}
-	// END AUTOFIX
+			dat += "Breed viral culture in beaker : <A href='?src=\ref[src];virus=1'> Start</a>"
+			dat += "<BR>"
+	dat += "<BR><BR>"
+	dat += "<A href='?src=\ref[src];flush=1'>Flush system</a><BR>"
+	dat += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
 	user << browse("<TITLE>Pathogenic incubator</TITLE>incubator menu:<BR><BR>[dat]", "window=incubator;size=575x400")
 	onclose(user, "incubator")
 	return
