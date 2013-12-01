@@ -37,6 +37,14 @@
 	origin_tech = "materials=1"
 	seed = "/obj/item/seeds/towermycelium"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
+	var/list/accepted = list(/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/tea_aspera,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/tea_astra,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/wheat)
 
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -53,10 +61,10 @@
 				usr << "You add the newly-formed wood to the stack. It now contains [NG.amount] planks."
 		del(src)
 		return
-	if(istype(W, /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco))
-		var/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco/leaf = W
+	if(is_type_in_list(W,accepted))
+		var/obj/item/weapon/reagent_containers/food/snacks/grown/leaf = W
 		if(leaf.dry)
-			user.show_message("<span class='notice'>You wrap the dried leaf around the log, turning it into a torch!</span>")
+			user.show_message("<span class='notice'>You wrap the [W] around the log, turning it into a torch!</span>")
 			new /obj/item/device/flashlight/flare/torch(user.loc)
 			del(leaf)
 			del(src)
