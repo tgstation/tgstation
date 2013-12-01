@@ -120,8 +120,8 @@
 	potency = 30
 	plant_type = 0
 	growthstages = 6
-	var/ui = null //for storing the guy
-	var/se = null
+	var/list/ui = null //for storing the guy
+	var/list/se = null
 	var/ckey = null
 	var/realName = null
 	var/datum/mind/mind = null
@@ -434,7 +434,7 @@
 	potency = 5
 	plant_type = 0
 	growthstages = 6
-	
+
 /obj/item/seeds/koiseed
 	name = "pack of koibean seeds"
 	desc = "These seeds grow into koibean plants."
@@ -757,7 +757,7 @@
 	oneharvest = 1
 	growthstages = 3
 	plant_type = 1
-	
+
 /obj/item/seeds/moonflowerseed
 	name = "pack of moonflower seeds"
 	desc = "These seeds grow into moonflowers."
@@ -1260,7 +1260,7 @@
 	throw_range = 3
 	plant_type = 1
 	seed = "/obj/item/seeds/sunflower"
-	
+
 /obj/item/weapon/grown/novaflower
 	name = "novaflower"
 	desc = "These beautiful flowers have a crisp smokey scent, like a summer bonfire."
@@ -1283,7 +1283,7 @@
 			reagents.add_reagent("nutriment", 1)
 			reagents.add_reagent("capsaicin", round(potency, 1))
 			force = round((5+potency/5), 1)
-	
+
 /*
 /obj/item/weapon/grown/gibtomato
 	desc = "A plump tomato."

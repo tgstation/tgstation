@@ -218,8 +218,7 @@
 	stage = 3
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.dna.check_integrity()
-		var/newdna = setblock(mob.dna.struc_enzymes,REMOTETALKBLOCK,toggledblock(getblock(mob.dna.struc_enzymes,REMOTETALKBLOCK,3)),3)
-		mob.dna.struc_enzymes = newdna
+		mob.dna.SetSEState(REMOTETALKBLOCK,1)
 		domutcheck(mob, null)
 
 /datum/disease2/effect/mind

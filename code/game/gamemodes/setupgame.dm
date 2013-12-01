@@ -1,9 +1,10 @@
-var/global/list/assigned_blocks[STRUCDNASIZE]
 
-/proc/getAssignedBlock(var/name,var/list/blocksLeft)
+
+/proc/getAssignedBlock(var/name,var/list/blocksLeft, var/activity_bounds=DNA_DEFAULT_BOUNDS)
 	var/assigned = pick(blocksLeft)
 	blocksLeft.Remove(assigned)
 	assigned_blocks[assigned]=name
+	dna_activity_bounds[assigned]=activity_bounds
 	//Debug message_admins("[name] assigned to block #[assigned].")
 	testing("[name] assigned to block #[assigned].")
 	return assigned
@@ -15,22 +16,22 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 	if (prob(75))
 		DIFFMUT = rand(0,20)
 
+	//Thanks to nexis for the fancy code
+	// BITCH I AIN'T DONE YET
 
-//Thanks to nexis for the fancy code
 	var/list/numsToAssign=new()
 	for(var/i=1;i<STRUCDNASIZE;i++)
 		numsToAssign += i
 
 	testing("Assigning DNA blocks:")
-	//message_admins("Assigning DNA blocks:")
 
 	// Standard muts
 	BLINDBLOCK         = getAssignedBlock("BLIND",         numsToAssign)
 	DEAFBLOCK          = getAssignedBlock("DEAF",          numsToAssign)
-	HULKBLOCK          = getAssignedBlock("HULK",          numsToAssign)
-	TELEBLOCK          = getAssignedBlock("TELE",          numsToAssign)
-	FIREBLOCK          = getAssignedBlock("FIRE",          numsToAssign)
-	XRAYBLOCK          = getAssignedBlock("XRAY",          numsToAssign)
+	HULKBLOCK          = getAssignedBlock("HULK",          numsToAssign, DNA_HARD_BOUNDS)
+	TELEBLOCK          = getAssignedBlock("TELE",          numsToAssign, DNA_HARD_BOUNDS)
+	FIREBLOCK          = getAssignedBlock("FIRE",          numsToAssign, DNA_HARDER_BOUNDS)
+	XRAYBLOCK          = getAssignedBlock("XRAY",          numsToAssign, DNA_HARDER_BOUNDS)
 	CLUMSYBLOCK        = getAssignedBlock("CLUMSY",        numsToAssign)
 	FAKEBLOCK          = getAssignedBlock("FAKE",          numsToAssign)
 	COUGHBLOCK         = getAssignedBlock("COUGH",         numsToAssign)
@@ -41,17 +42,17 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 
 	// Bay muts
 	HEADACHEBLOCK      = getAssignedBlock("HEADACHE",      numsToAssign)
-	NOBREATHBLOCK      = getAssignedBlock("NOBREATH",      numsToAssign)
-	REMOTEVIEWBLOCK    = getAssignedBlock("REMOTEVIEW",    numsToAssign)
-	REGENERATEBLOCK    = getAssignedBlock("REGENERATE",    numsToAssign)
-	INCREASERUNBLOCK   = getAssignedBlock("INCREASERUN",   numsToAssign)
-	REMOTETALKBLOCK    = getAssignedBlock("REMOTETALK",    numsToAssign)
-	MORPHBLOCK         = getAssignedBlock("MORPH",         numsToAssign)
+	NOBREATHBLOCK      = getAssignedBlock("NOBREATH",      numsToAssign, DNA_HARD_BOUNDS)
+	REMOTEVIEWBLOCK    = getAssignedBlock("REMOTEVIEW",    numsToAssign, DNA_HARDER_BOUNDS)
+	REGENERATEBLOCK    = getAssignedBlock("REGENERATE",    numsToAssign, DNA_HARDER_BOUNDS)
+	INCREASERUNBLOCK   = getAssignedBlock("INCREASERUN",   numsToAssign, DNA_HARDER_BOUNDS)
+	REMOTETALKBLOCK    = getAssignedBlock("REMOTETALK",    numsToAssign, DNA_HARDER_BOUNDS)
+	MORPHBLOCK         = getAssignedBlock("MORPH",         numsToAssign, DNA_HARDER_BOUNDS)
 	COLDBLOCK          = getAssignedBlock("COLD",          numsToAssign)
 	HALLUCINATIONBLOCK = getAssignedBlock("HALLUCINATION", numsToAssign)
-	NOPRINTSBLOCK      = getAssignedBlock("NOPRINTS",      numsToAssign)
+	NOPRINTSBLOCK      = getAssignedBlock("NOPRINTS",      numsToAssign, DNA_HARD_BOUNDS)
 	SHOCKIMMUNITYBLOCK = getAssignedBlock("SHOCKIMMUNITY", numsToAssign)
-	SMALLSIZEBLOCK     = getAssignedBlock("SMALLSIZE",     numsToAssign)
+	SMALLSIZEBLOCK     = getAssignedBlock("SMALLSIZE",     numsToAssign, DNA_HARD_BOUNDS)
 
 
 	// HIDDEN MUTATIONS / SUPERPOWERS INITIALIZTION
@@ -90,6 +91,7 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 					species.default_blocks.Add(block)
 			if(species.default_blocks.len)
 				all_species[name]=species
+
 
 /proc/setupfactions()
 

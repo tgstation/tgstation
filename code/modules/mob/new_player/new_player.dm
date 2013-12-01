@@ -392,7 +392,7 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 		new_character.dna.b_type = client.prefs.b_type
 
 		if(client.prefs.disabilities & DISABILITY_FLAG_NEARSIGHTED)
-			new_character.dna.struc_enzymes = setblock(new_character.dna.struc_enzymes,GLASSESBLOCK,toggledblock(getblock(new_character.dna.struc_enzymes,GLASSESBLOCK,3)),3)
+			new_character.dna.SetSEState(GLASSESBLOCK,1,1)
 			new_character.disabilities |= NEARSIGHTED
 
 		if(client.prefs.disabilities & DISABILITY_FLAG_FAT)
@@ -400,12 +400,14 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 			new_character.overeatduration = 600 // Max overeat
 
 		if(client.prefs.disabilities & DISABILITY_FLAG_EPILEPTIC)
-			new_character.dna.struc_enzymes = setblock(new_character.dna.struc_enzymes,EPILEPSYBLOCK,toggledblock(getblock(new_character.dna.struc_enzymes,EPILEPSYBLOCK,3)),3)
+			new_character.dna.SetSEState(EPILEPSYBLOCK,1,1)
 			new_character.disabilities |= EPILEPSY
 
 		if(client.prefs.disabilities & DISABILITY_FLAG_DEAF)
-			new_character.dna.struc_enzymes = setblock(new_character.dna.struc_enzymes,DEAFBLOCK,toggledblock(getblock(new_character.dna.struc_enzymes,DEAFBLOCK,3)),3)
+			new_character.dna.SetSEState(DEAFBLOCK,1,1)
 			new_character.sdisabilities |= DEAF
+
+		new_character.dna.UpdateSE()
 
 		new_character.key = key		//Manually transfer the key to log them in
 

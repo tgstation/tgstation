@@ -547,9 +547,9 @@ datum/reagent/zed
 
 	Z.gender = pick(MALE, FEMALE)
 
+	/* DNA2 broke this
 	var/flooks = new/list()
 	var/mlooks = new/list()
-
 	flooks += "0990CC0FF000000000DC0000033000902136F93"
 	flooks += "0CC000033000000000DC0000033000C4308DEB4"
 	flooks += "066000033000000000B90000033000E1E03FD3F"
@@ -567,8 +567,9 @@ datum/reagent/zed
 		Z.dna.unique_enzymes = pick(mlooks)
 	else
 		Z.dna.unique_enzymes = pick(flooks)
+	*/
 
-	updateappearance(Z, Z.dna.unique_enzymes)
+	Z.UpdateAppearance()
 
 	if(Z.gender == MALE)
 		Z.real_name = text("[] []", pick(first_names_male), pick(last_names))

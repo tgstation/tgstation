@@ -43,9 +43,8 @@
 				mut_update=1
 	if(species.default_blocks.len>0)
 		for(var/block in species.default_blocks)
-			// DNA2 should make this less of a clusterfuck.
-			if(!ismuton(block,src))
-				dna.struc_enzymes = setblock(dna.struc_enzymes,block,toggledblock(getblock(dna.struc_enzymes,block,3)),3)
+			if(!dna.GetSEState(block))
+				dna.SetSEState(block,1)
 				//src << "TESTING [__FILE__]:[__LINE__]: Set block [block] to on."
 				mut_update=1
 	if(mut_update)
@@ -91,6 +90,12 @@
 			if(istype(loc, /obj/))
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
+
+		if(check_mutations)
+			testing("Updating [src.real_name]'s mutations: "+english_list(mutations))
+			domutcheck(src,null)
+			update_mutations()
+			check_mutations=0
 
 		//Updates the number of stored chemicals for powers
 		handle_changeling()

@@ -133,7 +133,7 @@
 //Clonepod
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/datum/species/mrace)
+/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/list/ui, var/list/se, var/mindref, var/datum/species/mrace)
 	if(mess || attempting)
 		return 0
 	var/datum/mind/clonemind = locate(mindref)
@@ -203,10 +203,10 @@
 		H.dna = new /datum/dna()
 		H.dna.real_name = H.real_name
 	if(ui)
-		H.dna.uni_identity = ui
-		updateappearance(H, ui)
+		H.UpdateAppearance(ui)
 	if(se)
-		H.dna.struc_enzymes = se
+		H.dna.SE = se
+		H.dna.UpdateSE()
 		randmutb(H) //Sometimes the clones come out wrong.
 
 	H.f_style = "Shaved"
@@ -317,7 +317,7 @@
 					I.crit_fail = 1
 				I.loc = src.loc
 			del(src)
-			return 
+			return
 /*Removing cloning pod biomass
 	else if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
 		user << "\blue \The [src] processes \the [W]."

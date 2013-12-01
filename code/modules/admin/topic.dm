@@ -1317,6 +1317,19 @@
 
 		usr.client.cmd_admin_animalize(M)
 
+	else if(href_list["togmutate"])
+		if(!check_rights(R_SPAWN))	return
+
+		var/mob/living/carbon/human/H = locate(href_list["togmutate"])
+		if(!istype(H))
+			usr << "This can only be used on instances of type /mob/living/carbon/human"
+			return
+		var/block=text2num(href_list["block"])
+		//testing("togmutate([href_list["block"]] -> [block])")
+		usr.client.cmd_admin_toggle_block(H,block)
+		show_player_panel(H)
+		//H.regenerate_icons()
+
 /***************** BEFORE**************
 
 	if (href_list["l_players"])
@@ -2013,7 +2026,7 @@
 					if(20)	MAX_EXPLOSION_RANGE = 28
 					if(28)	MAX_EXPLOSION_RANGE = 56
 					if(56)	MAX_EXPLOSION_RANGE = 128
-					if(128)	MAX_EXPLOSION_RANGE = 14
+					else	MAX_EXPLOSION_RANGE = 14
 				var/range_dev = MAX_EXPLOSION_RANGE *0.25
 				var/range_high = MAX_EXPLOSION_RANGE *0.5
 				var/range_low = MAX_EXPLOSION_RANGE
