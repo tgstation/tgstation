@@ -325,7 +325,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	..()
 	if(istype(O, /obj/item) && !istype(O, /obj/item/weapon/lighter))
 		if(!packeditem)
-			user << "You stuff the [O] into [src]."
+			user << "You stuff [O] into [src]."
 			name = "[O]-packed corn cob pipe"
 			smoketime = 400
 			packeditem = 1

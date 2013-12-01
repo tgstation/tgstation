@@ -332,6 +332,10 @@
 			reagents.add_reagent("toxin", 1+round(potency / 10, 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> d252a1b658a36251dd64cdbd614b8fb6449e6197
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus
 	seed = "/obj/item/seeds/ambrosiadeus"
 	name = "ambrosia deus branch"
@@ -349,6 +353,10 @@
 			reagents.add_reagent("space_drugs", 1+round(potency / 10, 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> d252a1b658a36251dd64cdbd614b8fb6449e6197
 /obj/item/weapon/reagent_containers/food/snacks/grown/apple
 	seed = "/obj/item/seeds/appleseed"
 	name = "apple"
@@ -1004,21 +1012,6 @@
 	icon_state = "tobacco_leaves"
 	potency = 20
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco/attackby(var/obj/item/W as obj, var/mob/user as mob)
-	if(istype(W, /obj/item/weapon/rollingpaper))
-		if(src.dry == 1)
-			user.u_equip(W)
-			var/obj/item/clothing/mask/cigarette/J = new /obj/item/clothing/mask/cigarette(user.loc)
-			src.reagents.trans_to(J, J.chem_volume)
-			del(W)
-			user.put_in_active_hand(J)
-			user << "\blue You roll the tobacco into a rolling paper."
-			del(src)
-		else
-			user << "\red You need to dry this first."
-	else
-		..()
-
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space
 	seed = "/obj/item/seeds/tobacco_space_seed"
@@ -1031,20 +1024,6 @@
 		spawn(5)	//So potency can be set in the proc that creates these crops
 			reagents.add_reagent("dexalin", 1+round((potency / 20), 1))
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space/attackby(var/obj/item/W as obj, var/mob/user as mob)
-	if(istype(W, /obj/item/weapon/rollingpaper))
-		if(src.dry == 1)
-			user.u_equip(W)
-			var/obj/item/clothing/mask/cigarette/J = new /obj/item/clothing/mask/cigarette(user.loc)
-			src.reagents.trans_to(J, J.chem_volume)
-			del(W)
-			user.put_in_active_hand(J)
-			user << "\blue You roll the space tobacco into a rolling paper."
-			del(src)
-		else
-			user << "\red You need to dry this first."
-	else
-		..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tea_aspera
 	seed = "/obj/item/seeds/tea_aspera_seed"
