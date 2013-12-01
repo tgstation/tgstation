@@ -142,7 +142,8 @@ var/global/floorIsLava = 0
 					bname = assigned_blocks[block]
 					body += "<td>"
 					if(bname)
-						var/bcolor="[(block in M.mutations)?"#006600":"#ff0000"]"
+						var/bstate=M.dna.GetSEState(block)
+						var/bcolor="[(bstate)?"#006600":"#ff0000"]"
 						body += "<A href='?src=\ref[src];togmutate=\ref[M];block=[block]' style='color:[bcolor];'>[bname]</A><sub>[block]</sub>"
 					else
 						body += "[block]"

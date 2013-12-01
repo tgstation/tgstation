@@ -1096,15 +1096,12 @@ Pressure: [env.return_pressure()]"}
 			usr << dd_list2text(clients,",")
 
 
-/client/proc/cmd_admin_toggle_block(var/mob/M in mob_list,var/block)
-	set category = "Fun"
-	set name = "Toggle a DNA Block"
-
+/client/proc/cmd_admin_toggle_block(var/mob/M,var/block)
 	if(!ticker)
 		alert("Wait until the game starts")
 		return
 	if(istype(M, /mob/living/carbon))
-		M.dna.SetSEState(!M.dna.GetSEState(block))
+		M.dna.SetSEState(block,!M.dna.GetSEState(block))
 		domutcheck(M,null)
 		M.update_mutations()
 		var/state="[M.dna.GetSEState(block)?"on":"off"]"
