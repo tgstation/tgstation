@@ -22,8 +22,8 @@
 
 /obj/item/weapon/melee/baton/New()
 	..()
-	bcell = new(src) //I'm lazy
-	update_icon()
+	//bcell = new(src) //I'm lazy // Get fucked
+	//update_icon()
 	return
 
 /obj/item/weapon/melee/baton/loaded/New() //this one starts with a cell pre-installed.
