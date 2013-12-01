@@ -203,7 +203,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		user.visible_message("<span class='notice'>[user] calmly drops and treads on the lit [src], putting it out instantly.</span>")
 		var/turf/T = get_turf(src)
 		new type_butt(T)
-		new /obj/effect/decal/cleanable/ash(T)
+		new /obj/effect/decal/cleanable/ash(location)
 		processing_objects.Remove(src)
 		del(src)
 	return ..()
@@ -305,6 +305,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_on = "pipeon"  //Note - these are in masks.dmi
 	icon_off = "pipeoff"
 	smoketime = 100
+	var/packeditem = 0
 
 /obj/item/clothing/mask/cigarette/pipe/process()
 	var/turf/location = get_turf(src)
@@ -318,6 +319,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			icon_state = icon_off
 			item_state = icon_off
 			M.update_inv_wear_mask(0)
+			if(istype(src, /obj/item/clothing/mask/cigarette/pipe/cobpipe))
+				name = "empty corn cob pipe"
+				packeditem = 0
 		processing_objects.Remove(src)
 		return
 	if(location)
@@ -333,20 +337,48 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		processing_objects.Remove(src)
 		return
 	if(smoketime <= 0)
-		user << "<span class='notice'>You refill the pipe with tobacco.</span>"
+		user << "<span class='notice'>You refill [src] with tobacco.</span>"
 		smoketime = initial(smoketime)
 	return
 
 /obj/item/clothing/mask/cigarette/pipe/cobpipe
-	name = "corn cob pipe"
-	desc = "A nicotine delivery system popularized by folksy backwoodsmen and kept popular in the modern age and beyond by space hipsters."
+	name = "empty corn cob pipe"
+	desc = "A nicotine delivery system popularized by folksy backwoodsmen and kept popular in the modern age and beyond by space hipsters. Can be loaded with objects."
 	icon_state = "cobpipeoff"
 	item_state = "cobpipeoff"
 	icon_on = "cobpipeon"  //Note - these are in masks.dmi
 	icon_off = "cobpipeoff"
-	smoketime = 400
+	smoketime = 0
+	chem_volume = 100
+
+/obj/item/clothing/mask/cigarette/pipe/cobpipe/attackby(var/obj/item/O, var/mob/user)
+	..()
+	if(istype(O, /obj/item) && !istype(O, /obj/item/weapon/lighter))
+		if(!packeditem)
+			user << "You stuff [O] into [src]."
+			name = "[O]-packed corn cob pipe"
+			smoketime = 400
+			packeditem = 1
+			if(O.reagents)
+				O.reagents.trans_to(src, src.reagents.total_volume)
+			del(O)
 
 
+/obj/item/clothing/mask/cigarette/pipe/cobpipe/attack_self(mob/user as mob)
+	var/turf/location = get_turf(user)
+	if(lit)
+		user.visible_message("<span class='notice'>[user] puts out [src].</span>")
+		lit = 0
+		icon_state = icon_off
+		item_state = icon_off
+		processing_objects.Remove(src)
+		return
+	if(!lit && smoketime > 0)
+		user << "<span class='notice'>You empty [src] onto the [location].</span>"
+		name = "empty corn cob pipe"
+		packeditem = 0
+		smoketime = 0
+	return
 
 /////////
 //ZIPPO//
@@ -463,7 +495,6 @@ obj/item/weapon/rollingpaper
 	icon_state = "cig_paper"
 	w_class = 1
 
-
 obj/item/weapon/rollingpaper/afterattack(atom/target, mob/user as mob, proximity)
 	if(!proximity)
 		return
@@ -482,7 +513,6 @@ obj/item/weapon/rollingpaper/afterattack(atom/target, mob/user as mob, proximity
 			user << "\red You need to dry this first."
 	else
 		..()
-
 
 obj/item/weapon/rollingpaperpack
 	name = "rolling paper pack"
