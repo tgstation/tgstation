@@ -12,7 +12,7 @@
 	attack_verb = list("beaten")
 	var/stunforce = 10
 	var/status = 0
-	var/obj/item/weapon/cell/high/bcell = null
+	var/obj/item/weapon/cell/bcell = null
 	var/hitcost = 1000
 	var/mob/foundmob = "" //Used in throwing proc.
 
