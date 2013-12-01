@@ -1389,12 +1389,27 @@ datum
 				return
 
 		toxin/carpotoxin
-			name = "Carpotoxin"
+			name = "Carpotoxin"		//Special carp attack
 			id = "carpotoxin"
 			description = "A deadly neurotoxin produced by the dreaded spess carp."
 			reagent_state = LIQUID
 			color = "#003333" // rgb: 0, 51, 51
-			toxpwr = 2
+			toxpwr = 0
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				if(!data) data = 1
+				data++
+				switch(data)	
+					if(5 to 15)	//needs some time to take affect 
+						if(prob(7))		//collapse sometimes
+							M.Weaken(3)
+					if(15 to 40)	//your oportunity of surviving
+						if(prob(10))
+							M.Weaken(6)
+					if(40 to INFINITY)	 //GG no re
+						M.Weaken(10)
+				..()
+				return
 
 		toxin/zombiepowder
 			name = "Zombie Powder"
