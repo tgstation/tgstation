@@ -22,7 +22,7 @@
 //  on or off.
 var/global/list/dna_activity_bounds[STRUCDNASIZE]
 
-// Used to determine what each block means (admin hax and species stuff, mostly)
+// Used to determine what each block means (admin hax and species stuff on /vg/, mostly)
 var/global/list/assigned_blocks[STRUCDNASIZE]
 
 // UI Indices (can change to mutblock style, if desired)
@@ -39,22 +39,7 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 #define DNA_UI_GENDER      11
 #define DNA_UI_BEARD_STYLE 12
 #define DNA_UI_HAIR_STYLE  13
-#define DNA_UI_LENGTH      13 // Update this or you WILL break shit.
-
-/proc/add_zero2(t, u)
-	var/temp1
-	while (length(t) < u)
-		t = "0[t]"
-	temp1 = t
-	if (length(t) > u)
-		temp1 = copytext(t,2,u+1)
-	return temp1
-
-/proc/GetDNABounds(var/block)
-	var/list/BOUNDS=dna_activity_bounds[block]
-	if(!istype(BOUNDS))
-		return DNA_DEFAULT_BOUNDS
-	return BOUNDS
+#define DNA_UI_LENGTH      13 // Update this when you add something, or you WILL break shit.
 
 /datum/dna
 	// READ-ONLY, GETS OVERWRITTEN
@@ -76,7 +61,6 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 	var/b_type = "A+"  // Should probably change to an integer => string map but I'm lazy.
 	var/mutantrace = null  // The type of mutant race the player is, if applicable (i.e. potato-man)
 	var/real_name          // Stores the real name of the person who originally got this dna datum. Used primarily for changelings,
-
 ///////////////////////////////////////
 // UNIQUE IDENTITY
 ///////////////////////////////////////
@@ -125,6 +109,7 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 
 // Set a DNA UI block's raw value.
 /datum/dna/proc/SetUIValue(var/block,var/value,var/defer=0)
+	if (block<=0) return
 	ASSERT(value>=0)
 	ASSERT(value<=4095)
 	UI[block]=value
@@ -134,24 +119,34 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 
 // Get a DNA UI block's raw value.
 /datum/dna/proc/GetUIValue(var/block)
+	if (block<=0) return 0
 	return UI[block]
 
 // Set a DNA UI block's value, given a value and a max possible value.
 // Used in hair and facial styles (value being the index and maxvalue being the len of the hairstyle list)
 /datum/dna/proc/SetUIValueRange(var/block,var/value,var/maxvalue)
+	if (block<=0) return
 	ASSERT(maxvalue<=4095)
 	var/range = round(4095 / maxvalue)
 	if(value)
 		SetUIValue(block,value * range - rand(1,range-1))
 
+// Getter version of above.
 /datum/dna/proc/GetUIValueRange(var/block,var/maxvalue)
+	if (block<=0) return 0
 	var/value = GetUIValue(block)
 	return round(1 +(value / 4096)*maxvalue)
 
+// Is the UI gene "on" or "off"?
+// For UI, this is simply a check of if the value is > 2050.
 /datum/dna/proc/GetUIState(var/block)
+	if (block<=0) return
 	return UI[block] > 2050
 
+
+// Set UI gene "on" (1) or "off" (0)
 /datum/dna/proc/SetUIState(var/block,var/on,var/defer=0)
+	if (block<=0) return
 	var/val
 	if(on)
 		val=rand(2050,4095)
@@ -159,17 +154,26 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 		val=rand(1,2049)
 	SetUIValue(block,val,defer)
 
+// Get a hex-encoded UI block.
 /datum/dna/proc/GetUIBlock(var/block)
 	return EncodeDNABlock(GetUIValue(block))
 
 // Do not use this unless you absolutely have to.
+// Set a block from a hex string.  This is inefficient.  If you can, use SetUIValue().
+// Used in DNA modifiers.
 /datum/dna/proc/SetUIBlock(var/block,var/value,var/defer=0)
+	if (block<=0) return
 	return SetUIValue(block,hex2num(value),defer)
 
+// Get a sub-block from a block.
 /datum/dna/proc/GetUISubBlock(var/block,var/subBlock)
 	return copytext(GetUIBlock(block),subBlock,subBlock+1)
 
+// Do not use this unless you absolutely have to.
+// Set a block from a hex string.  This is inefficient.  If you can, use SetUIValue().
+// Used in DNA modifiers.
 /datum/dna/proc/SetUISubBlock(var/block,var/subBlock, var/newSubBlock, var/defer=0)
+	if (block<=0) return
 	var/oldBlock=GetUIBlock(block)
 	var/newBlock=""
 	for(var/i=1, i<=length(oldBlock), i++)
@@ -183,7 +187,7 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 // STRUCTURAL ENZYMES
 ///////////////////////////////////////
 
-// Zeroes out all of the blocks.
+// "Zeroes out" all of the blocks.
 /datum/dna/proc/ResetSE()
 	for(var/i = 1, i <= STRUCDNASIZE, i++)
 		SetSEValue(i,rand(1,1024),1)
@@ -192,6 +196,7 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 // Set a DNA SE block's raw value.
 /datum/dna/proc/SetSEValue(var/block,var/value,var/defer=0)
 	//testing("SetSEBlock([block],[value],[defer]): [value] -> [nval]")
+	if (block<=0) return
 	ASSERT(value>=0)
 	ASSERT(value<=4095)
 	SE[block]=value
@@ -201,22 +206,28 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 
 // Get a DNA SE block's raw value.
 /datum/dna/proc/GetSEValue(var/block)
+	if (block<=0) return 0
 	return SE[block]
 
 // Set a DNA SE block's value, given a value and a max possible value.
 // Might be used for species?
 /datum/dna/proc/SetSEValueRange(var/block,var/value,var/maxvalue)
+	if (block<=0) return
 	ASSERT(maxvalue<=4095)
 	var/range = round(4095 / maxvalue)
 	if(value)
 		SetSEValue(block, value * range - rand(1,range-1))
 
+// Is the block "on" (1) or "off" (0)? (Un-assigned genes are always off.)
 /datum/dna/proc/GetSEState(var/block)
+	if (block<=0) return 0
 	var/list/BOUNDS=GetDNABounds(block)
 	var/value=GetSEValue(block)
 	return (value > BOUNDS[DNA_ON_LOWERBOUND])
 
+// Set a block "on" or "off".
 /datum/dna/proc/SetSEState(var/block,var/on,var/defer=0)
+	if (block<=0) return
 	var/list/BOUNDS=GetDNABounds(block)
 	var/val
 	if(on)
@@ -225,11 +236,15 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 		val=rand(BOUNDS[DNA_OFF_LOWERBOUND],BOUNDS[DNA_OFF_UPPERBOUND])
 	SetSEValue(block,val,defer)
 
+// Get hex-encoded SE block.
 /datum/dna/proc/GetSEBlock(var/block)
 	return EncodeDNABlock(GetSEValue(block))
 
 // Do not use this unless you absolutely have to.
+// Set a block from a hex string.  This is inefficient.  If you can, use SetUIValue().
+// Used in DNA modifiers.
 /datum/dna/proc/SetSEBlock(var/block,var/value,var/defer=0)
+	if (block<=0) return
 	var/nval=hex2num(value)
 	//testing("SetSEBlock([block],[value],[defer]): [value] -> [nval]")
 	return SetSEValue(block,nval,defer)
@@ -237,7 +252,11 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 /datum/dna/proc/GetSESubBlock(var/block,var/subBlock)
 	return copytext(GetSEBlock(block),subBlock,subBlock+1)
 
+// Do not use this unless you absolutely have to.
+// Set a sub-block from a hex character.  This is inefficient.  If you can, use SetUIValue().
+// Used in DNA modifiers.
 /datum/dna/proc/SetSESubBlock(var/block,var/subBlock, var/newSubBlock, var/defer=0)
+	if (block<=0) return
 	var/oldBlock=GetSEBlock(block)
 	var/newBlock=""
 	for(var/i=1, i<=length(oldBlock), i++)

@@ -43,9 +43,7 @@
 				src.original_dna["SE"] = affected_mob.dna.SE
 
 				affected_mob << "\red You don't feel like yourself.."
-				affected_mob.dna.UI = strain_data["UI"]
-				affected_mob.dna.UpdateUI()
-				affected_mob.UpdateAppearance()
+				affected_mob.UpdateAppearance(strain_data["UI"])
 				affected_mob.dna.SE = strain_data["SE"]
 				affected_mob.dna.UpdateSE()
 				affected_mob.real_name = strain_data["name"]
@@ -58,9 +56,7 @@
 
 /datum/disease/dnaspread/Del()
 	if ((original_dna["name"]) && (original_dna["UI"]) && (original_dna["SE"]))
-		affected_mob.dna.UI = original_dna["UI"]
-		affected_mob.dna.UpdateUI()
-		affected_mob.UpdateAppearance()
+		affected_mob.UpdateAppearance(original_dna["UI"])
 		affected_mob.dna.SE = original_dna["SE"]
 		affected_mob.dna.UpdateSE()
 		affected_mob.real_name = original_dna["name"]

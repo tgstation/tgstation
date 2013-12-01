@@ -1,12 +1,33 @@
+/////////////////////////////
+// Helpers for DNA2
+/////////////////////////////
 
-// Random Bad Mutation
+// Pads 0s to t until length == u
+/proc/add_zero2(t, u)
+	var/temp1
+	while (length(t) < u)
+		t = "0[t]"
+	temp1 = t
+	if (length(t) > u)
+		temp1 = copytext(t,2,u+1)
+	return temp1
+
+// DNA Gene activation boundaries, see dna2.dm.
+// Returns a list object with 4 numbers.
+/proc/GetDNABounds(var/block)
+	var/list/BOUNDS=dna_activity_bounds[block]
+	if(!istype(BOUNDS))
+		return DNA_DEFAULT_BOUNDS
+	return BOUNDS
+
+// Give Random Bad Mutation to M
 /proc/randmutb(var/mob/living/M)
 	if(!M) return
 	M.dna.check_integrity()
 	var/block = pick(GLASSESBLOCK,COUGHBLOCK,FAKEBLOCK,NERVOUSBLOCK,CLUMSYBLOCK,TWITCHBLOCK,HEADACHEBLOCK,BLINDBLOCK,DEAFBLOCK,HALLUCINATIONBLOCK)
 	M.dna.SetSEState(block, 1)
 
-// Random Good Mutation
+// Give Random Good Mutation to M
 /proc/randmutg(var/mob/living/M)
 	if(!M) return
 	M.dna.check_integrity()
@@ -146,9 +167,15 @@
 	else
 		return 0
 
+// Used below, simple injection modifier.
 /proc/probinj(var/pr, var/inj)
 	return prob(pr+inj*pr)
 
+// (Re-)Apply mutations.
+// TODO: Turn into a /mob proc, change inj to a bitflag for various forms of differing behavior.
+// M: Mob to mess with
+// connected: Machine we're in, type unchecked so I doubt it's used beyond monkeying
+// inj: 1 for if we're checking this from an injector, screws with manifestation probability calc.
 /proc/domutcheck(mob/living/M as mob, connected, inj)
 	if (!M) return
 

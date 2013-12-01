@@ -848,9 +848,7 @@
 				if (src.buffers[bufferId]["ue"])
 					src.connected.occupant.real_name = src.buffers[bufferId]["owner"]
 					src.connected.occupant.name = src.buffers[bufferId]["owner"]
-				src.connected.occupant.dna.UI = src.buffers[bufferId]["data"]
-				src.connected.occupant.dna.UpdateUI()
-				src.connected.occupant.UpdateAppearance()
+				src.connected.occupant.UpdateAppearance(src.buffers[bufferId]["data"])
 			else if (src.buffers[bufferId]["type"] == "se")
 				src.connected.occupant.dna.SE = src.buffers[bufferId]["data"]
 				src.connected.occupant.dna.UpdateSE()
