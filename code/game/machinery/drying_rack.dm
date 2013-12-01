@@ -14,20 +14,62 @@
 	var/volume = 100
 
 /obj/machinery/drying_rack/New()
-	..()
-	flags |= NOREACT
-	create_reagents(volume)
-	accepted = list(/obj/item/weapon/reagent_containers/food/snacks/grown/coffee_arabica,
-	/obj/item/weapon/reagent_containers/food/snacks/grown/coffee_robusta,
-	/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco,
-	/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space,
-	/obj/item/weapon/reagent_containers/food/snacks/grown/tea_aspera,
-	/obj/item/weapon/reagent_containers/food/snacks/grown/tea_astra,
-	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
-	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
-	/obj/item/weapon/reagent_containers/food/snacks/meat,
-	/obj/item/weapon/reagent_containers/food/snacks/grown/grapes,
-	/obj/item/weapon/reagent_containers/food/snacks/grown/greengrapes)
+        ..()
+        flags |= NOREACT
+        create_reagents(volume)
+        accepted = list(/obj/item/weapon/reagent_containers/food/snacks/grown/coffee_arabica,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/coffee_robusta,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/tea_aspera,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/tea_astra,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
+        /obj/item/weapon/reagent_containers/food/snacks/meat,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/grapes,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/greengrapes,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/corn,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/cherries,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/poppy,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/harebell,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/potato,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/cabbage,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/berries,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/deathberries,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/apple,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/apple/poisoned,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/goldapple,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/watermelon,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/lime,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/lemon,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/orange,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/banana,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/chili,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/eggplant,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/koibeans,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/wheat,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom,
+        /obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato
+        )
 
 
 
@@ -101,5 +143,3 @@
 			user << "\red Please wait until the last item has dried."
 	else
 		user << "\red You cannot add that to the drying rack."
-
-
