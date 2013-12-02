@@ -27,7 +27,7 @@
 	bulb = new /obj/item/device/flash(src)
 
 /obj/machinery/flasher/power_change()
-	if (powered() && bulb && anchored)
+	if (powered() && anchored && bulb)
 		stat &= ~NOPOWER
 		if(bulb.broken)
 			icon_state = "[base_state]1-p"
