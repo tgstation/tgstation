@@ -33,13 +33,6 @@ var/list/powerinstances
 	genomecost = 0
 	verbpath = /mob/living/carbon/proc/changeling_transform
 
-/datum/power/changeling/retract
-	name = "Retract stinger"
-	desc = "We retract our stinger, making possible to use hands."
-	genomecost = 0
-	allowduringlesserform = 1
-	verbpath = /mob/living/carbon/proc/retract_stinger
-
 /datum/power/changeling/fakedeath
 	name = "Regenerative Stasis"
 	desc = "We become weakened to a death-like state, where we will rise again from death."
@@ -115,15 +108,6 @@ var/list/powerinstances
 	genomecost = 1
 	verbpath = /mob/living/carbon/proc/changeling_fleshmend
 
-/*
-/datum/power/changeling/greater_form
-	name = "Greater form"
-	desc = "We become very strong, resistant and perceptive."
-	helptext = "Gives you a hulk, cold resistance and x-ray while active."
-	genomecost = 2
-	verbpath = /mob/living/carbon/proc/changeling_greater_form
-*/
-
 /datum/power/changeling/panacea
 	name = "Anatomic Panacea"
 	desc = "Expels impurifications from our form; curing diseases, genetic disabilities, and removing toxins and radiation."
@@ -153,13 +137,6 @@ var/list/powerinstances
 	genomecost = 1
 	allowduringlesserform = 1
 	verbpath = /mob/living/carbon/proc/changeling_lsd_sting
-
-/datum/power/changeling/poison_sting
-	name = "Poison sting"
-	desc = "We evolve the ability to sting a target with a poisonous chemical, causing toxic and brain damage."
-	genomecost = 1
-	allowduringlesserform = 1
-	verbpath = /mob/living/carbon/proc/changeling_poison_sting
 
 /datum/power/changeling/blind_sting
 	name = "Blind Sting"

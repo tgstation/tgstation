@@ -23,10 +23,6 @@
 */
 
 /mob/living/carbon/RestrainedClickOn(var/atom/A)
-	var/obj/item/I = get_active_hand()
-	if(I != null && I.flags&ABSTRACT)
-		I.afterattack(A)
-		return 1
 	return 0
 
 /mob/living/carbon/human/RangedAttack(var/atom/A)

@@ -2,10 +2,6 @@
 	if (monkeyizing)
 		return
 	//Handle items on mob
-	var/obj/item/rHand = r_hand
-	var/obj/item/lHand = l_hand
-	var/obj/item/Mask = wear_mask
-	var/obj/item/Back = back
 
 	//first implants
 	var/list/implants = list()
@@ -16,17 +12,6 @@
 	if(tr_flags & TR_KEEPITEMS)
 		for(var/obj/item/W in (src.contents-implants))
 			drop_from_inventory(W)
-
-	if(tr_flags & TR_KEEPITEMS)
-		if(rHand)
-			rHand.loc = src
-		if(lHand)
-			lHand.loc = src
-		if(Back)
-			Back.loc = src
-		if(Mask)
-			Mask.loc = src
-
 
 	//Make mob invisible and spawn animation
 	regenerate_icons()
@@ -43,15 +28,6 @@
 	sleep(22)
 	//animation = null
 	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( loc )
-	if(tr_flags & TR_KEEPITEMS)
-		if(rHand)
-			O.equip_to_slot(rHand, slot_r_hand)
-		if(lHand)
-			O.equip_to_slot(lHand, slot_l_hand)
-		if(Mask)
-			O.equip_to_slot(Mask, slot_wear_mask)
-		if(Back)
-			O.equip_to_slot(Back, slot_back)
 	del(animation)
 
 

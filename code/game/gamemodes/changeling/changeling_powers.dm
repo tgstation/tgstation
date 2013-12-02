@@ -28,7 +28,8 @@
 
 //removes our changeling verbs
 /mob/proc/remove_changeling_powers()
-	src:unset_sting()
+	var/mob/living/carbon/C = src
+	C.unset_sting()
 	for(var/datum/power/changeling/P in powerinstances)
 		if(P.isVerb)
 			verbs -= P.verbpath
@@ -185,51 +186,6 @@
 	. = 1
 	del(src)
 	return
-/*
-/mob/living/carbon/proc/changeling_greater_form()
-	set category = "Changeling"
-	set name = "Greater Form ON (45)"
-
-	var/datum/changeling/changeling = changeling_power(45,0,1)
-	if(!changeling)	return
-
-	changeling.chem_charges -= 45
-	changeling.geneticdamage = 5
-	src << "<span class='warning'>Our genes cry out!</span>"
-	mutations.Add(HULK, XRAY, COLD_RESISTANCE)
-	update_mutations()
-	src.mind.changeling.chem_storage -= 45
-	src.mind.changeling.chem_recharge_rate /= 2
-	verbs -= /mob/living/carbon/proc/changeling_greater_form
-	verbs -= /mob/living/carbon/proc/changeling_lesser_form
-	verbs += /mob/living/carbon/proc/changeling_greater_form_off
-	feedback_add_details("changeling_powers","GF")
-	. = 1
-	return
-
-/mob/living/carbon/proc/changeling_greater_form_off()
-	set category = "Changeling"
-	set name = "Greater Form OFF (5)"
-
-	var/datum/changeling/changeling = changeling_power(5,0,1)
-	if(!changeling)	return
-
-	changeling.chem_charges -= 5
-	changeling.geneticdamage = 5
-	src << "<span class='warning'>Our genes cry out!</span>"
-	mutations.Remove(HULK, XRAY, COLD_RESISTANCE)
-	update_mutations()
-	src.mind.changeling.chem_storage += 45
-	src.mind.changeling.chem_recharge_rate *= 2
-	verbs += /mob/living/carbon/proc/changeling_greater_form
-	verbs -= /mob/living/carbon/proc/changeling_greater_form_off
-	for(var/datum/power/changeling/lesser_form in mind.changeling.purchasedpowers)
-		verbs += /mob/living/carbon/proc/changeling_lesser_form
-	feedback_add_details("changeling_powers","NF")
-	. = 1
-	return
-*/
-
 
 //Transform into a human
 /mob/living/carbon/proc/changeling_human_form()
@@ -571,18 +527,6 @@ var/list/datum/dna/hivemind_bank = list()
 		if(src && src.mind && src.mind.changeling)
 			src.mind.changeling.mimicing = ""
 
-/mob/living/carbon/proc/retract_stinger()
-	set category = "Changeling"
-	set name = "-Retract stinger-" //essential enough to be always second after evolution
-	set desc = "Retracts the stinger, making hands useful again."
-
-	if(!src.mind.changeling.chosen_sting)
-		src << "<span class='notice'>Our stinger is already retracted.</span>"
-		return 0
-	unset_sting()
-	src << "<span class='notice'>We retract our stinger.</span>"
-	return 1
-
 	//////////
 	//STINGS//	//They get a pretty header because there's just so fucking many of them ;_;
 	//////////
@@ -599,7 +543,7 @@ var/list/datum/dna/hivemind_bank = list()
 	hud_used.lingstingdisplay.icon_state = null
 	hud_used.lingstingdisplay.invisibility = 101
 
-/mob/living/carbon/proc/sting_can_reach(mob/living/carbon/C, chem_cost) //handles all the checks there is
+/mob/living/carbon/proc/sting_can_reach(mob/living/carbon/C, chem_cost) //handles all the checks there are
 	if(!isturf(src.loc))	return 0
 	if(get_dist(src, C) > (src.mind.changeling.sting_range))	return 0 //sanity check as AStar is still throwing insane stunts
 	if(!AStar(src.loc, C.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, src.mind.changeling.sting_range))	return 0 //hope this ancient magic still works
@@ -646,7 +590,6 @@ var/list/datum/dna/hivemind_bank = list()
 	feedback_add_details("changeling_powers","TS")
 	return 1
 
-
 /mob/living/carbon/proc/changeling_extract_dna_sting()
 	set category = "Changeling"
 	set name = "Extract DNA Sting (25)"
@@ -665,7 +608,6 @@ var/list/datum/dna/hivemind_bank = list()
 	feedback_add_details("changeling_powers","ED")
 	return 1
 
-
 /mob/living/carbon/proc/changeling_mute_sting()
 	set category = "Changeling"
 	set name = "Mute sting (20)"
@@ -679,13 +621,6 @@ var/list/datum/dna/hivemind_bank = list()
 	T.silent += 30
 	feedback_add_details("changeling_powers","MS")
 	return 1
-
-/mob/living/carbon/proc/changeling_poison_sting()
-	set category = "Changeling"
-	set name = "Poison sting (15)"
-	set desc= "Poisons target and gives them brain damage."
-
-	set_sting(/mob/living/carbon/proc/sting_effect_poison, "sting_poison")
 
 /mob/living/carbon/proc/sting_effect_poison(mob/living/carbon/T)
 	if(!sting_can_reach(T, 15))

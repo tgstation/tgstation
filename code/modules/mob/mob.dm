@@ -713,10 +713,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	if(lying)
 		density = 0
-		if(r_hand && !(r_hand.flags&ABSTRACT))
-			drop_r_hand()
-		if(l_hand && !(l_hand.flags&ABSTRACT))
-			drop_l_hand()
+		drop_r_hand()
+		drop_l_hand()
 	else
 		density = 1
 
