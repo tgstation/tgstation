@@ -175,10 +175,10 @@
 // TODO: Turn into a /mob proc, change inj to a bitflag for various forms of differing behavior.
 // M: Mob to mess with
 // connected: Machine we're in, type unchecked so I doubt it's used beyond monkeying
-// inj: 1 for if we're checking this from an injector, screws with manifestation probability calc.
+// flags: See below, bitfield.
 #define MUTCHK_FROM_INJECTOR 1
 #define MUTCHK_FORCED        2
-/proc/domutcheck(mob/living/M as mob, connected, flags)
+/proc/domutcheck(var/mob/living/M, var/connected, var/flags)
 	if (!M) return
 
 	M.dna.check_integrity()
