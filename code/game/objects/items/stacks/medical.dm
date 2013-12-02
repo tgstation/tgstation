@@ -11,61 +11,72 @@
 	var/heal_burn = 0
 
 /obj/item/stack/medical/attack(mob/living/carbon/M as mob, mob/user as mob)
-	if (M.stat == 2)
-		var/t_him = "it"
-		if (M.gender == MALE)
-			t_him = "him"
-		else if (M.gender == FEMALE)
-			t_him = "her"
-		user << "\red \The [M] is dead, you cannot help [t_him]!"
-		return
+	var/mob/living/carbon/human/H = M
+	var/obj/item/organ/limb/affecting = H.get_organ("chest")
 
-	if (!istype(M))
-		user << "\red \The [src] cannot be applied to [M]!"
-		return 1
 
-	if ( ! (istype(user, /mob/living/carbon/human) || \
-			istype(user, /mob/living/silicon) || \
-			istype(user, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
-		user << "\red You don't have the dexterity to do this!"
-		return 1
+	if(affecting.status == ORGAN_ORGANIC) //Limb must be organic to be healed - RR
+		if (M.stat == 2)
+			var/t_him = "it"
+			if (M.gender == MALE)
+				t_him = "him"
+			else if (M.gender == FEMALE)
+				t_him = "her"
+			user << "\red \The [M] is dead, you cannot help [t_him]!"
+			return
 
-	if (user)
-		if (M != user)
-			user.visible_message( \
-				"\blue [M] has been applied with [src] by [user].", \
-				"\blue You apply \the [src] to [M]." \
-			)
+		if (!istype(M))
+			user << "\red \The [src] cannot be applied to [M]!"
+			return 1
+
+		if ( ! (istype(user, /mob/living/carbon/human) || \
+				istype(user, /mob/living/silicon) || \
+				istype(user, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
+			user << "\red You don't have the dexterity to do this!"
+			return 1
+
+		if (user)
+			if (M != user)
+				user.visible_message( \
+					"\blue [M] has been applied with [src] by [user].", \
+					"\blue You apply \the [src] to [M]." \
+				)
+			else
+				var/t_himself = "itself"
+				if (user.gender == MALE)
+					t_himself = "himself"
+				else if (user.gender == FEMALE)
+					t_himself = "herself"
+
+				user.visible_message( \
+					"\blue [M] applied [src] on [t_himself].", \
+					"\blue You apply \the [src] on yourself." \
+				)
+
+		if (istype(M, /mob/living/carbon/human))
+
+
+			if(istype(user, /mob/living/carbon/human))
+				var/mob/living/carbon/human/user2 = user
+				affecting = H.get_organ(check_zone(user2.zone_sel.selecting))
+			else
+				if(!istype(affecting, /obj/item/organ/limb) || affecting:burn_dam <= 0)
+					affecting = H.get_organ("head")
+
+			if(affecting.status == ORGAN_ORGANIC) // Just in case a robotic limb SOMEHOW got down to this point of the proc all you get is a message - RR
+
+				if (affecting.heal_damage(src.heal_brute, src.heal_burn))
+					H.update_damage_overlays(0)
+
+				M.updatehealth()
 		else
-			var/t_himself = "itself"
-			if (user.gender == MALE)
-				t_himself = "himself"
-			else if (user.gender == FEMALE)
-				t_himself = "herself"
+			M.heal_organ_damage((src.heal_brute/2), (src.heal_burn/2))
 
-			user.visible_message( \
-				"\blue [M] applied [src] on [t_himself].", \
-				"\blue You apply \the [src] on yourself." \
-			)
 
-	if (istype(M, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = M
-		var/obj/item/organ/limb/affecting = H.get_organ("chest")
-
-		if(istype(user, /mob/living/carbon/human))
-			var/mob/living/carbon/human/user2 = user
-			affecting = H.get_organ(check_zone(user2.zone_sel.selecting))
-		else
-			if(!istype(affecting, /obj/item/organ/limb) || affecting:burn_dam <= 0)
-				affecting = H.get_organ("head")
-
-		if (affecting.heal_damage(src.heal_brute, src.heal_burn))
-			H.update_damage_overlays(0)
-		M.updatehealth()
+		use(1)
 	else
-		M.heal_organ_damage((src.heal_brute/2), (src.heal_burn/2))
+		user << "<span class='notice'>Medicine won't work on a robotic limb!</span>"
 
-	use(1)
 
 /obj/item/stack/medical/bruise_pack
 	name = "bruise pack"
