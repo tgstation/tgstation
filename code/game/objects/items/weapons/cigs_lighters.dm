@@ -176,7 +176,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		M.IgniteMob()
 	smoketime--
 	if(smoketime < 1)
-		new /obj/effect/decal/cleanable/ash(location)
 		new type_butt(location)
 		processing_objects.Remove(src)
 		if(ismob(loc))
@@ -304,7 +303,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	item_state = "pipeoff"
 	icon_on = "pipeon"  //Note - these are in masks.dmi
 	icon_off = "pipeoff"
-	smoketime = 100
+	smoketime = 0
+	chem_volume = 100
 	var/packeditem = 0
 
 /obj/item/clothing/mask/cigarette/pipe/process()
@@ -319,46 +319,36 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			icon_state = icon_off
 			item_state = icon_off
 			M.update_inv_wear_mask(0)
+			packeditem = 0
 			if(istype(src, /obj/item/clothing/mask/cigarette/pipe/cobpipe))
 				name = "empty corn cob pipe"
-				packeditem = 0
+			else
+				name = "empty smoking pipe"
 		processing_objects.Remove(src)
 		return
 	if(location)
 		location.hotspot_expose(700, 5)
+	if(reagents && reagents.total_volume)	//	check if it has any reagents at all
+		if(iscarbon(loc) && (src == loc:wear_mask)) // if it's in the human/monkey mouth, transfer reagents to the mob
+			var/mob/living/carbon/C = loc
+			if(prob(15)) // so it's not an instarape in case of acid
+				reagents.reaction(C, INGEST)
+			reagents.trans_to(C, REAGENTS_METABOLISM)
+		else // else just remove some of the reagents
+			reagents.remove_any(REAGENTS_METABOLISM)
 	return
 
-/obj/item/clothing/mask/cigarette/pipe/attack_self(mob/user as mob) //Refills the pipe. Can be changed to an attackby later, if loose tobacco is added to vendors or something.
-	if(lit == 1)
-		user.visible_message("<span class='notice'>[user] puts out [src].</span>")
-		lit = 0
-		icon_state = icon_off
-		item_state = icon_off
-		processing_objects.Remove(src)
-		return
-	if(smoketime <= 0)
-		user << "<span class='notice'>You refill [src] with tobacco.</span>"
-		smoketime = initial(smoketime)
-	return
-
-/obj/item/clothing/mask/cigarette/pipe/cobpipe
-	name = "empty corn cob pipe"
-	desc = "A nicotine delivery system popularized by folksy backwoodsmen and kept popular in the modern age and beyond by space hipsters. Can be loaded with objects."
-	icon_state = "cobpipeoff"
-	item_state = "cobpipeoff"
-	icon_on = "cobpipeon"  //Note - these are in masks.dmi
-	icon_off = "cobpipeoff"
-	smoketime = 0
-	chem_volume = 100
-
-/obj/item/clothing/mask/cigarette/pipe/cobpipe/attackby(var/obj/item/O, var/mob/user)
+/obj/item/clothing/mask/cigarette/pipe/attackby(var/obj/item/O, var/mob/user)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
 		if(!packeditem)
 			if(O:dry == 1)
-				user << "You stuff [O] into [src]."
-				name = "[O]-packed corn cob pipe"
+				user << "You stuff [O] into the [src]."
 				smoketime = 400
 				packeditem = 1
+				if(istype(src, /obj/item/clothing/mask/cigarette/pipe/cobpipe))
+					name = "[O.name]-packed corn cob pipe"
+				else
+					name = "[O.name]-packed smoking pipe"
 				if(O:reagents)
 					O.reagents.trans_to(src, O.reagents.total_volume)
 				del(O)
@@ -371,21 +361,37 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	..()
 
 
-/obj/item/clothing/mask/cigarette/pipe/cobpipe/attack_self(mob/user as mob)
+/obj/item/clothing/mask/cigarette/pipe/attack_self(mob/user as mob)
 	var/turf/location = get_turf(user)
 	if(lit)
-		user.visible_message("<span class='notice'>[user] puts out [src].</span>")
+		user.visible_message("<span class='notice'>[user] puts out the [src].</span>")
 		lit = 0
 		icon_state = icon_off
 		item_state = icon_off
 		processing_objects.Remove(src)
 		return
 	if(!lit && smoketime > 0)
-		user << "<span class='notice'>You empty [src] onto the [location].</span>"
-		name = "empty corn cob pipe"
+		user << "<span class='notice'>You empty the [src] onto the [location].</span>"
+		new /obj/effect/decal/cleanable/ash(location)
 		packeditem = 0
 		smoketime = 0
+		reagents.clear_reagents()
+		if(istype(src, /obj/item/clothing/mask/cigarette/pipe/cobpipe))
+			name = "empty corn cob pipe"
+		else
+			name = "empty smoking pipe"
 	return
+
+
+/obj/item/clothing/mask/cigarette/pipe/cobpipe
+	name = "empty corn cob pipe"
+	desc = "A nicotine delivery system popularized by folksy backwoodsmen and kept popular in the modern age and beyond by space hipsters. Can be loaded with objects."
+	icon_state = "cobpipeoff"
+	item_state = "cobpipeoff"
+	icon_on = "cobpipeon"  //Note - these are in masks.dmi
+	icon_off = "cobpipeoff"
+	smoketime = 0
+
 
 /////////
 //ZIPPO//
@@ -514,6 +520,7 @@ obj/item/weapon/rollingpaper/afterattack(atom/target, mob/user as mob, proximity
 			target.reagents.trans_to(R, R.chem_volume)
 			user.put_in_active_hand(R)
 			user << "\blue You roll the [target.name] into a rolling paper."
+			R.desc = "Dried [target.name] rolled up in a thin piece of paper."
 			del(target)
 			del(src)
 		else
