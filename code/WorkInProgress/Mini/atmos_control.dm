@@ -23,14 +23,16 @@
 		/area/toxins/xenobiology/specimen_3,
 		/area/toxins/xenobiology/specimen_4,
 		/area/toxins/xenobiology/specimen_5,
-		/area/toxins/xenobiology/specimen_6)
+		/area/toxins/xenobiology/specimen_6
+	)
 	req_one_access = list(access_xenobiology,access_ce)
 
 
 /obj/machinery/computer/atmoscontrol/gas_chamber
 	name = "\improper Gas Chamber Atmospherics Computer"
 	filter=list(
-		/area/security/gas_chamber)
+		/area/security/gas_chamber
+	)
 	req_one_access = list(access_ce,access_hos)
 
 
