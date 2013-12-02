@@ -9,6 +9,7 @@
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
 	var/last_flash = 0 //Don't want it getting spammed like regular flashes
+	var/times_flashed = 0 //Counts how many times it was used since a new bulb was installed
 	var/strength = 10 //How weakened targets are when flashed.
 	var/base_state = "mflash"
 	anchored = 1
@@ -42,6 +43,7 @@
 		if (bulb)
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			user.visible_message("<span class='warning'>[user] has disconnected [src]'s flashbulb!</span>", "<span class='notice'>You disconnect [src]'s flashbulb!</span>")
+			times_flashed = 0
 			bulb.loc = src.loc
 			bulb = null
 			power_change()
@@ -121,9 +123,10 @@
 /obj/machinery/flasher/portable/flash()
 	if(!..())
 		return
-	if(prob(4))	//Small chance to burn out on use
+	if(prob(times_flashed * 0.2))	//The more it has been used, the higher chance it has of burning out
 		bulb.burn_out()
 		power_change()
+	times_flashed ++
 
 /obj/machinery/flasher/portable/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench))
@@ -131,12 +134,13 @@
 
 		if (!anchored && !isinspace())
 			user << "<span class='notice'>[src] is now secured.</span>"
-			overlays.Cut()
+			overlays += "[base_state]-s"
 			anchored = 1
 			power_change()
+
 		else
 			user << "<span class='notice'>[src] can now be moved.</span>"
-			overlays += "[base_state]-s"
+			overlays.Cut()
 			anchored = 0
 			power_change()
 
