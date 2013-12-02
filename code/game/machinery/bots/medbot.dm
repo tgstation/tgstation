@@ -4,7 +4,7 @@
 
 
 /obj/machinery/bot/medbot
-	name = "Medibot"
+	name = "\improper Medibot"
 	desc = "A little medical robot. He looks somewhat underwhelmed."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "medibot0"
@@ -40,7 +40,7 @@
 	var/shut_up = 0 //self explanatory :)
 
 /obj/machinery/bot/medbot/mysterious
-	name = "Mysterious Medibot"
+	name = "\improper Mysterious Medibot"
 	desc = "International Medibot of mystery."
 	skin = "bezerk"
 	treatment_oxy = "dexalinp"

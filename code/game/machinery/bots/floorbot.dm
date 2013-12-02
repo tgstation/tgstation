@@ -27,7 +27,7 @@
 
 //Floorbot
 /obj/machinery/bot/floorbot
-	name = "Floorbot"
+	name = "\improper Floorbot"
 	desc = "A little floor repairing robot, he looks so excited!"
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "floorbot0"

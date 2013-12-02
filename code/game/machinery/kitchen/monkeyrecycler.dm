@@ -1,5 +1,5 @@
 /obj/machinery/monkey_recycler
-	name = "Monkey Recycler"
+	name = "monkey recycler"
 	desc = "A machine used for recycling dead monkeys into monkey cubes."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"

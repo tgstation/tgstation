@@ -749,12 +749,12 @@ datum/design/mech_grenade_launcher
 	category = "Exosuit Equipment"
 
 datum/design/clusterbang_launcher
-	name = "Exosuit Module Design (SOP-6 Clusterbang Launcher)"
-	desc = "A weapon that violates the Geneva Convention at 6 rounds per minute"
+	name = "Exosuit Module Design (SOB-3 Clusterbang Launcher)"
+	desc = "A weapon that violates the Geneva Convention at 3 rounds per minute"
 	id = "clusterbang_launcher"
 	build_type = MECHFAB
 	req_tech = list("combat"= 5, "materials" = 5, "syndicate" = 3)
-	build_path = "/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang/limited"
+	build_path = "/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang"
 	category = "Exosuit Equipment"
 
 datum/design/mech_wormhole_gen
@@ -1578,9 +1578,9 @@ datum/design/bluespace_crystal
 	name = "Artificial Bluespace Crystal"
 	desc = "A small blue crystal with mystical properties."
 	id = "bluespace_crystal"
-	req_tech = list("bluespace" = 5, "materials" = 7)
+	req_tech = list("bluespace" = 4, "materials" = 6)
 	build_type = PROTOLATHE
-	materials = list("$gold" = 1500, "$diamond" = 3000, "$plasma" = 1500)
+	materials = list("$diamond" = 1500, "$plasma" = 1500)
 	reliability_base = 100
 	build_path = "/obj/item/bluespace_crystal/artificial"
 

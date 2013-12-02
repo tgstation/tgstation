@@ -1,6 +1,6 @@
 /obj/mecha/combat/phazon
 	desc = "An exosuit which can only be described as 'WTF?'."
-	name = "Phazon"
+	name = "\improper Phazon"
 	icon_state = "phazon"
 	step_in = 1
 	dir_in = 1 //Facing North.

@@ -13,6 +13,25 @@
 	..()
 	levelupdate()
 
+/turf/simulated/proc/MakeSlippery(var/wet_setting = 1) // 1 = Water, 2 = Lube
+	if(wet >= wet_setting)
+		return
+	wet = wet_setting
+	if(wet_setting == 1)
+		if(wet_overlay)
+			overlays -= wet_overlay
+			wet_overlay = null
+		wet_overlay = image('icons/effects/water.dmi', src, "wet_floor_static")
+		overlays += wet_overlay
+
+	spawn(rand(790, 820)) // Purely so for visual effect
+		if(!istype(src, /turf/simulated)) //Because turfs don't get deleted, they change, adapt, transform, evolve and deform. they are one and they are all.
+			return
+		if(wet > wet_setting) return
+		wet = 0
+		if(wet_overlay)
+			overlays -= wet_overlay
+
 /turf/simulated/Entered(atom/A, atom/OL)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
 		usr << "\red Movement is admin-disabled." //This is to identify lag problems

@@ -5,7 +5,7 @@
 /obj/machinery/mecha_part_fabricator
 	icon = 'icons/obj/robotics.dmi'
 	icon_state = "fab-idle"
-	name = "Exosuit Fabricator"
+	name = "exosuit fabricator"
 	desc = "Nothing is being built."
 	density = 1
 	anchored = 1
@@ -367,7 +367,7 @@
 	src.overlays -= "fab-active"
 	src.desc = initial(src.desc)
 	if(being_built)
-		src.being_built.Move(get_step(src,SOUTH))
+		src.being_built.loc = get_step(src,SOUTH)
 		src.visible_message("\icon[src] <b>[src]</b> beeps, \"The [src.being_built] is complete\".")
 		src.being_built = null
 	src.updateUsrDialog()
