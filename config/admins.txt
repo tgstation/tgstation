@@ -49,4 +49,3 @@ s0ldi3rkr4s0 = Game Master
 ergosavi = Game Master
 vistapowa = Game Master
 miauw62 = Game Master
-kazeespada = Game Master
