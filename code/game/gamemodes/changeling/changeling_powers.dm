@@ -622,18 +622,6 @@ var/list/datum/dna/hivemind_bank = list()
 	feedback_add_details("changeling_powers","MS")
 	return 1
 
-/mob/living/carbon/proc/sting_effect_poison(mob/living/carbon/T)
-	if(!sting_can_reach(T, 15))
-		return 0
-	if(T.reagents)
-		T.reagents.add_reagent("plantbgone", 10)
-		T.reagents.add_reagent("changelingsting", 15)
-		T.reagents.add_reagent("impedrezene", 25)
-
-	feedback_add_details("changeling_powers","PS")
-	return 1
-
-
 /mob/living/carbon/proc/changeling_blind_sting()
 	set category = "Changeling"
 	set name = "Blind Sting (25)"
@@ -651,7 +639,6 @@ var/list/datum/dna/hivemind_bank = list()
 	feedback_add_details("changeling_powers","BS")
 	return 1
 
-
 /mob/living/carbon/proc/changeling_lsd_sting()
 	set category = "Changeling"
 	set name = "Hallucination Sting (5)"
@@ -666,7 +653,6 @@ var/list/datum/dna/hivemind_bank = list()
 		if(T)	T.hallucination += 400
 	feedback_add_details("changeling_powers","HS")
 	return 1
-
 
 /mob/living/carbon/proc/changeling_cryo_sting()
 	set category = "Changeling"
