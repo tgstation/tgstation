@@ -349,7 +349,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					name = "[O.name]-packed corn cob pipe"
 				else
 					name = "[O.name]-packed smoking pipe"
-				if(O:reagents)
+				if(O.reagents)
 					O.reagents.trans_to(src, O.reagents.total_volume)
 				del(O)
 			else
@@ -512,7 +512,8 @@ obj/item/weapon/rollingpaper/afterattack(atom/target, mob/user as mob, proximity
 	if(!proximity)
 		return
 	if(istype(target, /obj/item/weapon/reagent_containers/food/snacks/grown))
-		if(target:dry)
+		var/obj/item/weapon/reagent_containers/food/snacks/grown/O = target
+		if(O.dry)
 			user.u_equip(target)
 			user.u_equip(src)
 			var/obj/item/clothing/mask/cigarette/rollie/R = new /obj/item/clothing/mask/cigarette/rollie(user.loc)

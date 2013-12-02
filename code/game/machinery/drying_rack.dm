@@ -116,7 +116,8 @@
 				src.running = 0
 				return
 			else
-				if(W:dry == 0)
+				var/obj/item/weapon/reagent_containers/food/snacks/grown/O = W
+				if(O.dry == 0)
 					var/J = W.type
 					var/obj/item/weapon/reagent_containers/food/snacks/grown/B = W
 					B.reagents.trans_to(src, B.reagents.total_volume)
