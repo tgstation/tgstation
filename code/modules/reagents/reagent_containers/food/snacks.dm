@@ -545,7 +545,6 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
-		reagents.add_reagent("psilocybin", 3)
 		src.bitesize = 6
 
 /obj/item/weapon/reagent_containers/food/snacks/tomatomeat
@@ -873,7 +872,7 @@
 		..()
 		reagents.add_reagent("nutriment", 5)
 		reagents.add_reagent("amatoxin", 3)
-		reagents.add_reagent("psilocybin", 1)
+		reagents.add_reagent("mushroomhallucinogen", 1)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/plump_pie
@@ -1112,7 +1111,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
-		reagents.add_reagent("psilocybin", 6)
+		reagents.add_reagent("mushroomhallucinogen", 6)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/amanitajelly
@@ -1124,7 +1123,7 @@
 		..()
 		reagents.add_reagent("nutriment", 6)
 		reagents.add_reagent("amatoxin", 6)
-		reagents.add_reagent("psilocybin", 3)
+		reagents.add_reagent("mushroomhallucinogen", 3)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/poppypretzel
@@ -1467,7 +1466,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 8)
-		reagents.add_reagent("psilocybin", 8)
+		reagents.add_reagent("mushroomhallucinogen", 8)
 		bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/stew

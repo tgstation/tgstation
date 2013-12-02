@@ -15,6 +15,7 @@
 
 	var/list/affecting	// the list of all items that will be moved this ptick
 	var/id = ""			// the control ID	- must match controller ID
+	var/verted = 1		// set to -1 to have the conveyour belt be inverted, so you can use the other corner icons
 
 /obj/machinery/conveyor/centcom_auto
 	id = "round_end_belt"
@@ -38,7 +39,7 @@
 		operating = 0
 	else
 		operating = 1
-	icon_state = "conveyor[operating]"
+	icon_state = "conveyor[operating * verted]"
 
 	// create a conveyor
 /obj/machinery/conveyor/New(loc, newdir)
@@ -70,6 +71,10 @@
 		if(SOUTHWEST)
 			forwards = WEST
 			backwards = NORTH
+	if(verted == -1)
+		var/temp = forwards
+		forwards = backwards
+		backwards = temp
 
 /obj/machinery/conveyor/proc/setmove()
 	if(operating == 1)
@@ -87,7 +92,7 @@
 		operating = 0
 	if(stat & NOPOWER)
 		operating = 0
-	icon_state = "conveyor[operating]"
+	icon_state = "conveyor[operating * verted]"
 
 	// machine process
 	// move items to the target location
