@@ -30,6 +30,7 @@ var/const/SAFETY_COOLDOWN = 100
 	..()
 	update_icon()
 
+/*
 /obj/machinery/recycler/attackby(var/obj/item/I, var/mob/user)
 	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
 		emagged = 1
@@ -43,6 +44,7 @@ var/const/SAFETY_COOLDOWN = 100
 		user << "<span class='notice'>You reset the crusher to its default factory settings.</span>"
 	else
 		..()
+*/
 
 /obj/machinery/recycler/update_icon()
 	..()
