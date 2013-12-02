@@ -112,28 +112,28 @@
 
 	var/to_restock = 0
 	for(var/datum/data/vending_product/machine_content in machine)
+		if(machine_content.amount == 0 && refill.charges > 0)
+			machine_content.amount++
+			refill.charges--
+			total++
 		to_restock += machine_content.max_amount - machine_content.amount
 
 	if(to_restock <= refill.charges)
 		for(var/datum/data/vending_product/machine_content in machine)
-			if(machine_content.amount != machine_content.max_amount)
-				usr << "<span class='notice'>[machine_content.max_amount - machine_content.amount] of [machine_content.product_name]</span>"
-				machine_content.amount = machine_content.max_amount
+			machine_content.amount = machine_content.max_amount
 		refill.charges -= to_restock
-		total = to_restock
+		total += to_restock
 	else
 		var/tmp_charges = refill.charges
 		for(var/datum/data/vending_product/machine_content in machine)
+			if(refill.charges == 0)
+				break
 			var/restock = Ceiling(((machine_content.max_amount - machine_content.amount)/to_restock)*tmp_charges)
 			if(restock > refill.charges)
 				restock = refill.charges
 			machine_content.amount += restock
 			refill.charges -= restock
 			total += restock
-			if(restock)
-				usr << "<span class='notice'>[restock] of [machine_content.product_name]</span>"
-			if(refill.charges == 0) //due to rounding, we ran out of refill charges, exit.
-				break
 	return total
 
 
