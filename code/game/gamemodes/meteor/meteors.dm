@@ -94,25 +94,21 @@
 	pass_flags = PASSTABLE | PASSGRILLE
 
 /obj/effect/meteor/Bump(atom/A)
-	spawn(0)
+	if (A)
+		A.meteorhit(src)
+		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
+	if (--src.hits <= 0)
 
-		if (A)
-			A.meteorhit(src)
-			playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
-		if (--src.hits <= 0)
-
-			//Prevent meteors from blowing up the singularity's containment.
-			//Changing emitter and generator ex_act would result in them being bomb and C4 proof.
-			if(!istype(A,/obj/machinery/power/emitter) && \
-				!istype(A,/obj/machinery/field/generator) && \
-				prob(15))
-				explosion(src.loc, 4, 5, 6, 7, 0)
-			del(src)
-	return
+		//Prevent meteors from blowing up the singularity's containment.
+		//Changing emitter and generator ex_act would result in them being bomb and C4 proof.
+		if(!istype(A,/obj/machinery/power/emitter) && \
+			!istype(A,/obj/machinery/field/generator) && \
+			prob(15))
+			explosion(src.loc, 4, 5, 6, 7, 0)
+		del(src)
 
 
 /obj/effect/meteor/ex_act(severity)
-
 	if (severity < 4)
 		del(src)
 	return
@@ -125,28 +121,26 @@
 		return
 
 	Bump(atom/A)
-		spawn(0)
-			//Prevent meteors from blowing up the singularity's containment.
-			//Changing emitter and generator ex_act would result in them being bomb and C4 proof
-			if(!istype(A,/obj/machinery/power/emitter) && \
-				!istype(A,/obj/machinery/field/generator))
-				if(--src.hits <= 0)
-					del(src) //Dont blow up singularity containment if we get stuck there.
+		//Prevent meteors from blowing up the singularity's containment.
+		//Changing emitter and generator ex_act would result in them being bomb and C4 proof
+		if(!istype(A,/obj/machinery/power/emitter) && \
+			!istype(A,/obj/machinery/field/generator))
+			if(--src.hits <= 0)
+				del(src) //Dont blow up singularity containment if we get stuck there.
 
-			if (A)
-				for(var/mob/M in player_list)
-					var/turf/T = get_turf(M)
-					if(!T || T.z != src.z)
-						continue
-					shake_camera(M, 3, get_dist(M.loc, src.loc) > 20 ? 1 : 3)
-					M.playsound_local(src.loc, 'sound/effects/meteorimpact.ogg', 50, 1, get_rand_frequency(), 10)
-				explosion(src.loc, 0, 1, 2, 3, 0)
+		if (A)
+			for(var/mob/M in player_list)
+				var/turf/T = get_turf(M)
+				if(!T || T.z != src.z)
+					continue
+				shake_camera(M, 3, get_dist(M.loc, src.loc) > 20 ? 1 : 3)
+				M.playsound_local(src.loc, 'sound/effects/meteorimpact.ogg', 50, 1, get_rand_frequency(), 10)
+			explosion(src.loc, 0, 1, 2, 3, 0)
 
-			if (--src.hits <= 0)
-				if(prob(15) && !istype(A, /obj/structure/grille))
-					explosion(src.loc, 1, 2, 3, 4, 0)
-				del(src)
-		return
+		if (--src.hits <= 0)
+			if(prob(15) && !istype(A, /obj/structure/grille))
+				explosion(src.loc, 1, 2, 3, 4, 0)
+			del(src)
 
 /obj/effect/meteor/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/pickaxe))
