@@ -53,6 +53,12 @@
 					return
 			return ..(message)
 	else
+		// Fix MoMMIs speaking one letter at a time.
+		if(isMoMMI(src)&&client)
+			var/mob/living/silicon/robot/mommi/U = src
+			if(U.keeper)
+				U.mommi_talk(message)
+				return
 		return ..(message)
 
 //For holopads only. Usable by AI.
