@@ -1,7 +1,7 @@
 /obj/structure/AIcore
 	density = 1
 	anchored = 0
-	name = "AI core"
+	name = "\improper AI core"
 	icon = 'icons/mob/AI.dmi'
 	icon_state = "0"
 	var/state = 0
@@ -169,16 +169,27 @@
 				del(src)
 
 /obj/structure/AIcore/deactivated
-	name = "Inactive AI"
+	name = "inactive AI"
 	icon = 'icons/mob/AI.dmi'
 	icon_state = "ai-empty"
 	anchored = 1
 	state = 20//So it doesn't interact based on the above. Not really necessary.
 
-	attackby(var/obj/item/device/aicard/A as obj, var/mob/user as mob)
-		if(istype(A, /obj/item/device/aicard))//Is it?
-			A.transfer_ai("INACTIVE","AICARD",src,user)
-		return
+/obj/structure/AIcore/deactivated/attackby(var/obj/item/A as obj, var/mob/user as mob)
+	if(istype(A, /obj/item/device/aicard))//Is it?
+		A.transfer_ai("INACTIVE","AICARD",src,user)
+	if(istype(A, /obj/item/weapon/wrench))
+		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		switch(anchored)
+			if(0)
+				if(do_after(user, 20))
+					user << "\blue You wrench the core into place."
+					anchored = 1
+			if(1)
+				if(do_after(user, 20))
+					user << "\blue You unfasten the core."
+					anchored = 0
+	return
 
 /*
 This is a good place for AI-related object verbs so I'm sticking it here.

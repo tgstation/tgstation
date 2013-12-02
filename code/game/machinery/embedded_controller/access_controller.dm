@@ -150,7 +150,7 @@ obj/machinery/embedded_controller/radio/access_controller
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "access_control_standby"
 
-	name = "Access Console"
+	name = "access console"
 	density = 0
 	power_channel = ENVIRON
 

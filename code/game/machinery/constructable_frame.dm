@@ -160,7 +160,7 @@ Note: Once everything is added to the public areas, will add m_amt and g_amt to 
 to destroy them and players will be able to make replacements.
 */
 /obj/item/weapon/circuitboard/destructive_analyzer
-	name = "Circuit board (Destructive Analyzer)"
+	name = "circuit board (Destructive Analyzer)"
 	build_path = "/obj/machinery/r_n_d/destructive_analyzer"
 	board_type = "machine"
 	origin_tech = "magnets=2;engineering=2;programming=2"
@@ -170,7 +170,7 @@ to destroy them and players will be able to make replacements.
 							"/obj/item/weapon/stock_parts/micro_laser" = 1)
 
 /obj/item/weapon/circuitboard/autolathe
-	name = "Circuit board (Autolathe)"
+	name = "circuit board (Autolathe)"
 	build_path = "/obj/machinery/autolathe"
 	board_type = "machine"
 	origin_tech = "engineering=2;programming=2"
@@ -180,7 +180,7 @@ to destroy them and players will be able to make replacements.
 							"/obj/item/weapon/stock_parts/console_screen" = 1)
 
 /obj/item/weapon/circuitboard/protolathe
-	name = "Circuit board (Protolathe)"
+	name = "circuit board (Protolathe)"
 	build_path = "/obj/machinery/r_n_d/protolathe"
 	board_type = "machine"
 	origin_tech = "engineering=2;programming=2"
@@ -191,7 +191,7 @@ to destroy them and players will be able to make replacements.
 
 
 /obj/item/weapon/circuitboard/circuit_imprinter
-	name = "Circuit board (Circuit Imprinter)"
+	name = "circuit board (Circuit Imprinter)"
 	build_path = "/obj/machinery/r_n_d/circuit_imprinter"
 	board_type = "machine"
 	origin_tech = "engineering=2;programming=2"
@@ -201,7 +201,7 @@ to destroy them and players will be able to make replacements.
 							"/obj/item/weapon/reagent_containers/glass/beaker" = 2)
 
 /obj/item/weapon/circuitboard/pacman
-	name = "Circuit Board (PACMAN-type Generator)"
+	name = "circuit board (PACMAN-type Generator)"
 	build_path = "/obj/machinery/power/port_gen/pacman"
 	board_type = "machine"
 	origin_tech = "programming=3:powerstorage=3;plasmatech=3;engineering=3"
@@ -212,17 +212,17 @@ to destroy them and players will be able to make replacements.
 							"/obj/item/weapon/stock_parts/capacitor" = 1)
 
 /obj/item/weapon/circuitboard/pacman/super
-	name = "Circuit Board (SUPERPACMAN-type Generator)"
+	name = "circuit board (SUPERPACMAN-type Generator)"
 	build_path = "/obj/machinery/power/port_gen/pacman/super"
 	origin_tech = "programming=3;powerstorage=4;engineering=4"
 
 /obj/item/weapon/circuitboard/pacman/mrs
-	name = "Circuit Board (MRSPACMAN-type Generator)"
+	name = "circuit board (MRSPACMAN-type Generator)"
 	build_path = "/obj/machinery/power/port_gen/pacman/mrs"
 	origin_tech = "programming=3;powerstorage=5;engineering=5"
 
 obj/item/weapon/circuitboard/rdserver
-	name = "Circuit Board (R&D Server)"
+	name = "circuit board (R&D Server)"
 	build_path = "/obj/machinery/r_n_d/server"
 	board_type = "machine"
 	origin_tech = "programming=3"
@@ -231,7 +231,7 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/scanning_module" = 1)
 
 /obj/item/weapon/circuitboard/mechfab
-	name = "Circuit board (Exosuit Fabricator)"
+	name = "circuit board (Exosuit Fabricator)"
 	build_path = "/obj/machinery/mecha_part_fabricator"
 	board_type = "machine"
 	origin_tech = "programming=3;engineering=3"
@@ -242,7 +242,7 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/console_screen" = 1)
 
 /obj/item/weapon/circuitboard/clonepod
-	name = "Circuit board (Clone Pod)"
+	name = "circuit board (Clone Pod)"
 	build_path = "/obj/machinery/clonepod"
 	board_type = "machine"
 	origin_tech = "programming=3;biotech=3"
@@ -253,7 +253,7 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/console_screen" = 1)
 
 /obj/item/weapon/circuitboard/clonescanner
-	name = "Circuit board (Cloning Scanner)"
+	name = "circuit board (Cloning Scanner)"
 	build_path = "/obj/machinery/dna_scannernew"
 	board_type = "machine"
 	origin_tech = "programming=2;biotech=2"
@@ -265,7 +265,7 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/cable_coil" = 2,)
 
 /obj/item/weapon/circuitboard/cyborgrecharger
-	name = "Circuit board (Cyborg Recharger)"
+	name = "circuit board (Cyborg Recharger)"
 	build_path = "/obj/machinery/recharge_station"
 	board_type = "machine"
 	origin_tech = "powerstorage=3;engineering=3"
@@ -277,7 +277,7 @@ obj/item/weapon/circuitboard/rdserver
 // Telecomms circuit boards:
 
 /obj/item/weapon/circuitboard/telecomms/receiver
-	name = "Circuit Board (Subspace Receiver)"
+	name = "circuit board (Subspace Receiver)"
 	build_path = "/obj/machinery/telecomms/receiver"
 	board_type = "machine"
 	origin_tech = "programming=2;engineering=2;bluespace=1"
@@ -288,7 +288,7 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/micro_laser" = 1)
 
 /obj/item/weapon/circuitboard/telecomms/hub
-	name = "Circuit Board (Hub Mainframe)"
+	name = "circuit board (Hub Mainframe)"
 	build_path = "/obj/machinery/telecomms/hub"
 	board_type = "machine"
 	origin_tech = "programming=2;engineering=2"
@@ -298,7 +298,7 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/subspace/filter" = 2)
 
 /obj/item/weapon/circuitboard/telecomms/relay
-	name = "Circuit Board (Relay Mainframe)"
+	name = "circuit board (Relay Mainframe)"
 	build_path = "/obj/machinery/telecomms/relay"
 	board_type = "machine"
 	origin_tech = "programming=2;engineering=2;bluespace=2"
@@ -308,7 +308,7 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/subspace/filter" = 2)
 
 /obj/item/weapon/circuitboard/telecomms/bus
-	name = "Circuit Board (Bus Mainframe)"
+	name = "circuit board (Bus Mainframe)"
 	build_path = "/obj/machinery/telecomms/bus"
 	board_type = "machine"
 	origin_tech = "programming=2;engineering=2"
@@ -318,7 +318,7 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/subspace/filter" = 1)
 
 /obj/item/weapon/circuitboard/telecomms/processor
-	name = "Circuit Board (Processor Unit)"
+	name = "circuit board (Processor Unit)"
 	build_path = "/obj/machinery/telecomms/processor"
 	board_type = "machine"
 	origin_tech = "programming=2;engineering=2"
@@ -331,7 +331,7 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/subspace/amplifier" = 1)
 
 /obj/item/weapon/circuitboard/telecomms/server
-	name = "Circuit Board (Telecommunication Server)"
+	name = "circuit board (Telecommunication Server)"
 	build_path = "/obj/machinery/telecomms/server"
 	board_type = "machine"
 	origin_tech = "programming=2;engineering=2"
@@ -341,7 +341,7 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/subspace/filter" = 1)
 
 /obj/item/weapon/circuitboard/telecomms/broadcaster
-	name = "Circuit Board (Subspace Broadcaster)"
+	name = "circuit board (Subspace Broadcaster)"
 	build_path = "/obj/machinery/telecomms/broadcaster"
 	board_type = "machine"
 	origin_tech = "programming=2;engineering=2;bluespace=1"

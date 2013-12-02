@@ -5,7 +5,7 @@
 	w_class = 1.0
 
 	raisins
-		name = "4no raisins"
+		name = "\improper 4no raisins"
 		icon_state= "4no_raisins"
 	candy
 		name = "candy"

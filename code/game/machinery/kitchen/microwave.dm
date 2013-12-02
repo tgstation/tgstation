@@ -1,6 +1,6 @@
 
 /obj/machinery/microwave
-	name = "Microwave"
+	name = "microwave"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "mw"
 	layer = 2.9
@@ -206,9 +206,9 @@
 		for (var/datum/reagent/R in reagents.reagent_list)
 			var/display_name = R.name
 			if (R.id == "capsaicin")
-				display_name = "Hotsauce"
+				display_name = "hot sauce"
 			if (R.id == "frostoil")
-				display_name = "Coldsauce"
+				display_name = "cold sauce"
 			dat += {"<B>[display_name]:</B> [R.volume] unit\s<BR>"}
 
 		if (items_counts.len==0 && reagents.reagent_list.len==0)

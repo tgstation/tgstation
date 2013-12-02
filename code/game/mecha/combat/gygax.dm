@@ -1,6 +1,6 @@
 /obj/mecha/combat/gygax
 	desc = "A lightweight, security exosuit. Popular among private and corporate security."
-	name = "Gygax"
+	name = "\improper Gygax"
 	icon_state = "gygax"
 	step_in = 3
 	dir_in = 1 //Facing North.
@@ -17,7 +17,7 @@
 
 /obj/mecha/combat/gygax/dark
 	desc = "A lightweight exosuit, painted in a dark scheme. This model appears to have some modifications."
-	name = "Dark Gygax"
+	name = "\improper Dark Gygax"
 	icon_state = "darkgygax"
 	health = 300
 	deflect_chance = 15

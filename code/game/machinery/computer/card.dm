@@ -1,7 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj/machinery/computer/card
-	name = "Identification Console"
+	name = "identification console"
 	desc = "You can use this to change ID's."
 	icon_state = "id"
 	req_access = list(access_change_ids)
@@ -407,7 +407,7 @@
 
 
 /obj/machinery/computer/card/centcom
-	name = "Centcom Identification Console"
+	name = "\improper Centcom identification console"
 	circuit = /obj/item/weapon/circuitboard/card/centcom
 	req_access = list(access_cent_captain)
 

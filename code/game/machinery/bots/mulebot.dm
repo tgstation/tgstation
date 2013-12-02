@@ -83,7 +83,7 @@ var/global/mulebot_count = 0
 		mulebot_count += 1
 		if(!suffix)
 			suffix = "#[mulebot_count]"
-		name = "Mulebot ([suffix])"
+		name = "\improper Mulebot ([suffix])"
 
 
 	verbs -= /atom/movable/verb/pull
@@ -330,7 +330,7 @@ var/global/mulebot_count = 0
 				refresh=1
 				if(new_id)
 					suffix = new_id
-					name = "Mulebot ([suffix])"
+					name = "\improper Mulebot ([suffix])"
 					updateDialog()
 
 			if("sethome")
