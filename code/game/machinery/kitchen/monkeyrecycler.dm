@@ -41,7 +41,7 @@
 	if(grinded >=4)
 		user << "\blue The machine hisses loudly as it condenses the grinded monkey meat. After a moment, it dispenses a brand new monkey cube."
 		playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
-		grinded -= 5
+		grinded -= 4
 		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src.loc)
 		user << "\blue The machine's display flashes that it has [grinded] monkeys worth of material left."
 	else
