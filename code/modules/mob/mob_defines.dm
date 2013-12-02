@@ -218,3 +218,5 @@
 	var/immune_to_ssd = 0
 
 	var/turf/listed_turf = null
+
+	var/list/active_genes=list()
