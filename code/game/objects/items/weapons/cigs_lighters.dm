@@ -340,8 +340,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/pipe/attackby(var/obj/item/O, var/mob/user)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
+		var/obj/item/weapon/reagent_containers/food/snacks/grown/G = O
 		if(!packeditem)
-			if(O:dry == 1)
+			if(G.dry == 1)
 				user << "You stuff [O] into the [src]."
 				smoketime = 400
 				packeditem = 1
