@@ -1946,10 +1946,10 @@ datum
 				..()
 				return
 
-		psilocybin
-			name = "Psilocybin"
-			id = "psilocybin"
-			description = "A strong psycotropic derived from certain species of mushroom."
+		mushroomhallucinogen
+			name = "Mushroom Hallucinogen"
+			id = "mushroomhallucinogen"
+			description = "A strong hallucinogenic drug derived from certain species of mushroom."
 			color = "#E700E7" // rgb: 231, 0, 231
 
 			on_mob_life(var/mob/living/M as mob)

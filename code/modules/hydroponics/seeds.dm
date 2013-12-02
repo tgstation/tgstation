@@ -429,7 +429,7 @@
 
 /obj/item/seeds/reishimycelium
 	name = "pack of reishi mycelium"
-	desc = "This mycelium grows into something relaxing."
+	desc = "This mycelium grows into something medicinal and relaxing."
 	icon_state = "mycelium-reishi"
 	species = "reishi"
 	plantname = "Reishi"
@@ -439,7 +439,7 @@
 	maturation = 10
 	production = 5
 	yield = 4
-	potency = 15 // Sleeping based on potency?
+	potency = 15
 	oneharvest = 1
 	growthstages = 4
 	plant_type = 2
