@@ -716,7 +716,12 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/grass/attack_self(mob/user as mob)
 	user << "<span class='notice'>You prepare the astroturf.</span>"
-	new/obj/item/stack/tile/grass(user.loc)
+	// Copied Urist's from sandstone-creation code:
+	var/location = get_turf(user)
+	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/grass/grassToConvert in location)
+		new /obj/item/stack/tile/grass(location)
+		del(grassToConvert)
+	new /obj/item/stack/tile/grass(location)
 	del(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod
