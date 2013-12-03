@@ -1209,12 +1209,6 @@
 					// make it so you can only puke so fast
 					lastpuke = 0
 
-		//0.1% chance of playing a scary sound to someone who's in complete darkness
-		if(isturf(loc) && rand(1,1000) == 1)
-			var/turf/currentTurf = loc
-			if(!currentTurf.lighting_lumcount)
-				playsound_local(src,pick(scarySounds),50, 1, -1)
-
 	proc/handle_stomach()
 		spawn(0)
 			for(var/mob/living/M in stomach_contents)
