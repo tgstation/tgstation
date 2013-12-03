@@ -19,26 +19,26 @@
 	create_reagents(volume)
 
 
-/obj/machinery/drying_rack/attackby(var/obj/item/W as obj, var/mob/user as mob)
+/obj/machinery/drying_rack/attackby(var/obj/item/I as obj, var/mob/user as mob)
 	if(running)
 		user << "\red Please wait until the last item has dried."
 		return
-	if(!istype(W,/obj/item/weapon/reagent_containers/food/snacks))
+	if(!istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		user << "\red You cannot add that to the drying rack."
 		return
-	var/obj/item/weapon/reagent_containers/food/snacks/S = W
+	var/obj/item/weapon/reagent_containers/food/snacks/S = I
 	if(!S.dried_type)
 		user << "\red You cannot add that to the drying rack."
 		return
-	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/grown))
-		var/obj/item/weapon/reagent_containers/food/snacks/grown/P = W
-		var/obj/item/weapon/reagent_containers/food/snacks/grown/T = P.dried_type
+	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/grown))
+		var/obj/item/weapon/reagent_containers/food/snacks/grown/P = I
+		var/T = P.dried_type
 		if(ispath(T,/obj/item/weapon/reagent_containers/food/snacks/grown))
 			if(P.dry == 0)
 				P.reagents.trans_to(src, P.reagents.total_volume)
-				user.u_equip(W)
-				user << "You add the [W] to the drying rack."
-				del(W)
+				user.u_equip(I)
+				user << "You add the [I] to the drying rack."
+				del(I)
 				src.running = 1
 				use_power = 2
 				icon_state = "drying_rack_on"
@@ -56,9 +56,9 @@
 			else
 				user << "\red That has already been dried."
 		else
-			user.u_equip(W)
-			user << "You add the [W] to the drying rack."
-			del(W)
+			user.u_equip(I)
+			user << "You add the [I] to the drying rack."
+			del(I)
 			src.running = 1
 			use_power = 2
 			icon_state = "drying_rack_on"
@@ -68,10 +68,10 @@
 			use_power = 1
 			src.running = 0
 	else
-		var/obj/item/weapon/reagent_containers/food/snacks/N = S.dried_type
-		user.u_equip(W)
-		user << "You add the [W] to the drying rack."
-		del(W)
+		var/N = S.dried_type
+		user.u_equip(I)
+		user << "You add the [I] to the drying rack."
+		del(I)
 		src.running = 1
 		use_power = 2
 		icon_state = "drying_rack_on"
