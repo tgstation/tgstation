@@ -378,25 +378,3 @@
 			src.req_access += pick(get_all_accesses())
 	..()
 
-
-/obj/structure/closet/crate/ex_act(severity)
-	switch(severity)
-		
-		if(1)
-			for(var/atom/movable/O as mob|obj in src.contents)	//pulls everything out of the crate and hits it with an explosion
-				O.loc = src.loc
-				O.ex_act(severity++)
-			del(src)
-		if(2)
-			if(prob(50))
-				for (var/atom/movable/O as mob|obj in src.contents)
-					O.loc = src.loc
-					O.ex_act(severity++)
-				del(src)
-		if(3)
-			if(prob(5))
-				for(var/atom/movable/O as mob|obj in src.contents)
-					O.loc = src.loc
-					O.ex_act(severity++)
-				del(src)
-	return
