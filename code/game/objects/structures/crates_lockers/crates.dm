@@ -381,20 +381,22 @@
 
 /obj/structure/closet/crate/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			for(var/obj/O in src.contents)
-				del(O)
+		
+		if(1)
+			for(var/atom/movable/O as mob|obj in src.contents)	//pulls everything out of the crate and hits it with an explosion
+				O.loc = src.loc
+				O.ex_act(severity++)
 			del(src)
-			return
-		if(2.0)
-			for(var/obj/O in src.contents)
-				if(prob(50))
-					del(O)
-			del(src)
-			return
-		if(3.0)
-			if (prob(50))
+		if(2)
+			if(prob(50))
+				for (var/atom/movable/O as mob|obj in src.contents)
+					O.loc = src.loc
+					O.ex_act(severity++)
 				del(src)
-			return
-		else
+		if(3)
+			if(prob(5))
+				for(var/atom/movable/O as mob|obj in src.contents)
+					O.loc = src.loc
+					O.ex_act(severity++)
+				del(src)
 	return
