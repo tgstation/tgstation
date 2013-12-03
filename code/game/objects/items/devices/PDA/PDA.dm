@@ -829,11 +829,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			id = I
 			user.put_in_hands(old_id)
 	return
-/obj/item/device/pda/proc/id_inject(mob/user as mob, obj/item/weapon/card/I) //Injects Id data into PDAs at roundstart
-	if (istype(I, /obj/item/weapon/card/id) && I:registered_name)
-		I.loc = src
-		id = I
-	return
 
 // access to status display signals
 /obj/item/device/pda/attackby(obj/item/C as obj, mob/user as mob)
