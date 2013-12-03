@@ -184,7 +184,7 @@ datum/hSB
 				//
 
 				if("hsbrglass")
-					new/obj/item/stack/sheet/rglass{amount=50}(usr.loc) // might work. probably. i dunno.
+					new/obj/item/stack/sheet/rglass{amount=50}(usr.loc)
 
 				if("hsbmetal")
 					new/obj/item/stack/sheet/metal{amount=50}(usr.loc)
