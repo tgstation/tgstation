@@ -131,12 +131,12 @@
 
 		if (!anchored && !isinspace())
 			user << "<span class='notice'>[src] is now secured.</span>"
-			overlays.Cut()
+			overlays += "[base_state]-s"
 			anchored = 1
 			power_change()
 		else
 			user << "<span class='notice'>[src] can now be moved.</span>"
-			overlays += "[base_state]-s"
+			overlays.Cut()
 			anchored = 0
 			power_change()
 
