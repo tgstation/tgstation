@@ -1,7 +1,5 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-// OOC: Subtumaka: i need to go an roll around in pain on the ground for a bit, i forgot i have a hude paper cut and i tried to squeeze a lemon for lemon nande brb
-
 var/hsboxspawn = 1
 
 mob
@@ -65,8 +63,6 @@ datum/hSB
 
 					"Miscellaneous",
 					"Spawn Air Scrubber"				= "hsbscrubber",
-				//	"Spawn Canister..."					= "hsbcanister",
-				// Removed for further redevlopment.
 					"Spawn Welding Fuel Tank"			= "hsbspawn&path=[/obj/structure/reagent_dispensers/fueltank]",
 					"Spawn Water Tank"					= "hsbspawn&path=[/obj/structure/reagent_dispensers/watertank]",
 
@@ -74,8 +70,7 @@ datum/hSB
 					"Spawn Cleanbot"					= "hsbspawn&path=[/obj/machinery/bot/cleanbot]",
 					"Spawn Floorbot"					= "hsbspawn&path=[/obj/machinery/bot/floorbot]",
 					"Spawn Medbot"						= "hsbspawn&path=[/obj/machinery/bot/medbot]",
-				// the following is code built to replace the shit hsbcanister thing and to prevent griff.
-				// note as of 2/12/13: this shit works fine, admin ones need to be fixed.
+
 					"Canisters",
 					"Spawn O2 Canister" 				= "hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/oxygen]",
 					"Spawn Air Canister"				= "hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/air]")
@@ -87,7 +82,6 @@ datum/hSB
 					hsbinfo += "<b>Administration</b><br>"
 					hsbinfo += "- <a href='?src=\ref[src];hsb=hsbtobj'>Toggle Object Spawning</a><br>"
 					hsbinfo += "- <a href='?src=\ref[src];hsb=hsbtac'>Toggle Item Spawn Panel Auto-close</a><br>"
-					// these buttons seem to just be for admin dickery really. might have a use or somethin'.
 					hsbinfo += "<b>Canister Spawning</b><br>"
 					hsbinfo += "<i>Remember, the first rule about adminbuse, is don't talk about the adminbuse</i><br>"
 					hsbinfo += "- <a href='?src=\ref[src];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/toxins]'><b>!!!DANGER!!!</b> Spawn Plasma Canister</a><br>"
@@ -186,7 +180,7 @@ datum/hSB
 					hsb.update_icon() // hackish but it wasn't meant to be spawned I guess?
 
 				//
-				// General Purpose Items
+				// Stacked Materials
 				//
 
 				if("hsbrglass")
@@ -229,19 +223,6 @@ datum/hSB
 				if("hsbairlock")
 					new /datum/airlock_maker(usr.loc)
 
-				//
-				// Canister select window
-				//
-			/*
-			code cut for better replacement.
-			uncomment if new code breaks
-				if("hsbcanister")
-					if(!canisterinfo)
-						canisterinfo = "Choose a canister type:<hr>"
-						for(var/O in (typesof(/obj/machinery/portable_atmospherics/canister/) - /obj/machinery/portable_atmospherics/canister/))
-							canisterinfo += "<a href='?src=\ref[src];hsb=hsbspawn&path=[O]'>[O]</a><br>"
-					usr << browse(canisterinfo,"window=sandbox")
-			*/
 				//
 				// Object spawn window
 				//
