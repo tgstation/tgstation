@@ -495,7 +495,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			if(istype(P))
 				if(P.info)
 					var/newinfo = "<font color = #FFFFFF>"
-					var/copied = html_decode(P.info)
+					var/copied = P.info
 					copied = replacetext(copied, "<font face=\"[P.deffont]\" color=", "<font face=\"[P.deffont]\" nocolor=")	//state of the art techniques in action
 					copied = replacetext(copied, "<font face=\"[P.crayonfont]\" color=", "<font face=\"[P.crayonfont]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
 					newinfo += copied
