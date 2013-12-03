@@ -46,7 +46,7 @@
 
 	New()
 		..()
-		src.modules += new /obj/item/weapon/melee/baton(src)
+		src.modules += new /obj/item/weapon/melee/baton/loaded(src)
 		src.modules += new /obj/item/weapon/extinguisher(src)
 		src.modules += new /obj/item/weapon/wrench(src)
 		src.modules += new /obj/item/weapon/crowbar(src)
@@ -135,7 +135,7 @@
 		..()
 		src.modules += new /obj/item/borg/sight/hud/sec(src)
 		src.modules += new /obj/item/weapon/handcuffs/cyborg(src)
-		src.modules += new /obj/item/weapon/melee/baton(src)
+		src.modules += new /obj/item/weapon/melee/baton/loaded(src)
 		src.modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
 		src.emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
 		return
