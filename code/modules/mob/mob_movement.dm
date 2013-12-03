@@ -426,6 +426,20 @@
 	prob_slip = round(prob_slip)
 	return(prob_slip)
 
+var/list/CLIMABLES = list("/obj/machinery/portable_atmospherics", "/obj/machinery/bot/mulebot", "/obj/structure/closet/crate","/obj/structure/table","/obj/structure/rack")
+
+/mob/proc/Can_Climb()	
+	if (!canmove || restrained())
+		return
+	
+	var/L = get_step(src.loc, src.dir) //dir should be cardinal facing
+	for(var/obj/O in L)
+		for(var/item in CLIMABLES)
+			if(istype(O, text2path(item)))
+				return O
+	return 0
+	
+
 /mob/proc/Move_Pulled(var/atom/A)
 	if (!canmove || restrained() || !pulling)
 		return

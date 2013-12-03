@@ -408,6 +408,33 @@
 /mob/living/proc/getTrail() //silicon and simple_animals don't get blood trails
     return null
 
+/mob/living/verb/climb()
+
+	set name = "Climb"
+	set category = "IC"
+
+	if(!isliving(usr) || usr.next_move > world.time)
+		return
+	usr.next_move = world.time + 30
+	var/mob/living/L = usr
+	if(!L.stat && L.canmove && !L.restrained()&& L.last_special <= world.time)
+		var/D = L.dir
+		var/obj/O = L.Can_Climb()
+		if(O)
+			L.visible_message("<span class='warning'>[usr] attempts to climb over [O]!</span>", \
+						"<span class='notice'>You attempt to climb ontop of [O]. (This will take around half a minute and you need to stay still.)</span>")
+			spawn(0)
+				if(do_after(usr, 300))
+					L.visible_message("<span class='danger'>[usr] manages to climb on [O]!</span>", \
+										"<span class='notice'>You successfully climbed on [O].</span>")
+					L.loc = get_step(L.loc, D)	
+					L.SetWeakened(5)
+		else
+			L.visible_message("<span class='notice'>You don't seem to find a way to climb over anything.</span>")
+
+		
+		
+    
 /mob/living/verb/resist()
 	set name = "Resist"
 	set category = "IC"
