@@ -377,7 +377,7 @@ var/global/datum/controller/occupations/job_master
 			pda.owner = H.real_name
 			pda.ownjob = C.assignment
 			pda.name = "PDA-[H.real_name] ([pda.ownjob])"
-			if(istype(C,/obj/item/weapon/card/id)
+			if(istype(C,/obj/item/weapon/card/id))
 				pda.id_inject(H, C) //cyborgs don't have PDAs but jsut in case
 			
 		return 1
