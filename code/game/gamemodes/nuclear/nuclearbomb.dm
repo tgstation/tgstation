@@ -69,19 +69,7 @@ var/bomb_set
 	popup.set_content(dat)
 	popup.open()
 	return
-/*
-/obj/machinery/nuclearbomb/verb/make_deployable()
-	set category = "Object"
-	set name = "Deploy Bomb"
-	set src in oview(1)
 
-	if(isliving(usr))
-		if(!src.extended)
-			src.anchored = 1
-			flick("nuclearbombc", src)
-			src.icon_state = "nuclearbomb1"
-			src.extended = 1
-*/
 /obj/machinery/nuclearbomb/Topic(href, href_list)
 	if(..())
 		return
