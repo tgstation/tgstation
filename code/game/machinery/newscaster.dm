@@ -491,8 +491,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.updateUsrDialog()
 
 		else if(href_list["set_new_message"])
-			if(istype(usr.get_active_hand(), /obj/item/weapon/paper))
-				var/obj/item/weapon/paper/P = usr.get_active_hand()
+			var/obj/item/weapon/paper/P = usr.get_active_hand()
+			if(istype(P))
 				if(P.info)
 					var/newinfo = "<font color = #FFFFFF>"
 					var/copied = html_decode(P.info)
