@@ -1,17 +1,6 @@
-/obj/machinery/computer/arcade
-	name = "arcade machine"
-	desc = "Does not support Pinball."
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "arcade"
-	circuit = /obj/item/weapon/circuitboard/arcade
-	var/enemy_name = "Space Villian"
-	var/temp = "Winners Don't Use Spacedrugs" //Temporary message, for attack messages, etc
-	var/player_hp = 30 //Player health/attack points
-	var/player_mp = 10
-	var/enemy_hp = 45 //Enemy health/attack points
-	var/enemy_mp = 20
-	var/gameover = 0
-	var/blocked = 0 //Player cannot attack/heal while set
+/obj/machinery/computer/arcade/
+	name = "arcade"
+	desc = "generic arcade machine"
 	var/list/prizes = list(	/obj/item/weapon/storage/box/snappops			= 2,
 							/obj/item/toy/AI								= 2,
 							/obj/item/clothing/under/syndicate/tacticool	= 2,
@@ -34,10 +23,25 @@
 							/obj/item/toy/prize/phazon						= 1
 							)
 
-/obj/machinery/computer/arcade
+/obj/machinery/computer/arcade/battle
+	name = "arcade machine"
+	desc = "Does not support Pinball."
+	icon = 'icons/obj/computer.dmi'
+	icon_state = "arcade"
+	circuit = /obj/item/weapon/circuitboard/arcade
+	var/enemy_name = "Space Villian"
+	var/temp = "Winners Don't Use Spacedrugs" //Temporary message, for attack messages, etc
+	var/player_hp = 30 //Player health/attack points
+	var/player_mp = 10
+	var/enemy_hp = 45 //Enemy health/attack points
+	var/enemy_mp = 20
+	var/gameover = 0
+	var/blocked = 0 //Player cannot attack/heal while set
+
+/obj/machinery/computer/arcade/battle
 	var/turtle = 0
 
-/obj/machinery/computer/arcade/New()
+/obj/machinery/computer/arcade/battle/New()
 	..()
 	var/name_action
 	var/name_part1
@@ -51,7 +55,7 @@
 	src.enemy_name = replacetext((name_part1 + name_part2), "the ", "")
 	src.name = (name_action + name_part1 + name_part2)
 
-/obj/machinery/computer/arcade/attack_hand(mob/user as mob)
+/obj/machinery/computer/arcade/battle/attack_hand(mob/user as mob)
 	if(..())
 		return
 	user.set_machine(src)
@@ -78,7 +82,7 @@
 	popup.open()
 	return
 
-/obj/machinery/computer/arcade/Topic(href, href_list)
+/obj/machinery/computer/arcade/battle/Topic(href, href_list)
 	if(..())
 		return
 
@@ -143,7 +147,7 @@
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/computer/arcade/proc/arcade_action()
+/obj/machinery/computer/arcade/battle/proc/arcade_action()
 	if ((src.enemy_mp <= 0) || (src.enemy_hp <= 0))
 		if(!gameover)
 			src.gameover = 1
@@ -217,7 +221,7 @@
 	return
 
 
-/obj/machinery/computer/arcade/attackby(I as obj, user as mob)
+/obj/machinery/computer/arcade/battle/attackby(I as obj, user as mob)
 	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
 		temp = "If you die in the game, you die for real!"
 		player_hp = 30
@@ -238,7 +242,7 @@
 		..()
 	return
 
-/obj/machinery/computer/arcade/emp_act(severity)
+/obj/machinery/computer/arcade/battle/emp_act(severity)
 	if(stat & (NOPOWER|BROKEN))
 		..(severity)
 		return
@@ -265,7 +269,7 @@
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "arcade"
-	circuit = /obj/item/weapon/circuitboard/orion_trail
+	circuit = /obj/item/weapon/circuitboard/arcade/orion_trail
 	var/engine = 0
 	var/hull = 0
 	var/electronics = 0
@@ -273,6 +277,7 @@
 	var/fuel = 60
 	var/turns = 4
 	var/playing = 0
+	var/gameover = 0
 	var/alive = 4
 	var/eventdat = null
 	var/event = null
@@ -287,7 +292,7 @@
 	// Sets up the main trail
 	var/list/stops = list("Pluto","Asteroid Belt","Proxima Centauri","Dead Space","Rigel Prime","Tau Ceti Beta","Black Hole","Space Outpost Beta-9","Orion Prime")
 	var/list/stopblurbs = list(
-		"Long since occupied with long-range sensors and scanners stands ready to, and indeed continues to, probe the far reaches of the galaxy.",
+		"Pluto, long since occupied with long-range sensors and scanners stands ready to, and indeed continues to, probe the far reaches of the galaxy.",
 		"At the edge of the Sol system lies a treacherous asteroid belt, many have been crushed by stray asteroids and miss-guided judgement.",
 		"The nearest star system to Sol, in ages past it stood as a reminder of the boundaries of sub-light travel, now it is a low-population sanctuary for adventureres and traders.",
 		"This region of space is particularly devoid of matter. Such low-density pockets are known to exist, but the vastness of it is astounding.",
@@ -328,7 +333,14 @@
 	if(gameover)
 		dat = "<center><h1>Game Over</h1></center>"
 		dat += "Like many before you, your crew never made it to Orion, lost to space... <br><b>Forever</b>."
-		dat += "<P ALIGN=Right><a href='byond://?src=\ref[src];menu=1'>OK...</a></P>"
+		if(settlers.len == 0)
+			dat += "<br>Your entire crew died, your ship joins the fleet of ghost-ships littering the galaxy."
+		else
+			if(food <= 0)
+				dat += "<br>You ran out of food and starved."
+			if(fuel <= 0)
+				dat += "<br>You ran out of fuel, and drift, slowly, into a star."
+		dat += "<br><P ALIGN=Right><a href='byond://?src=\ref[src];menu=1'>OK...</a></P>"
 		var/datum/browser/popup = new(user, "arcade", "The Orion Trail")
 		popup.set_content(dat)
 		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -440,6 +452,7 @@
 			event()
 		else
 			event = null
+			turns += 1
 	else if(href_list["holedeath"])
 		gameover = 1
 		event = null
@@ -525,7 +538,7 @@
 		eventdat += "You were swept away into the black hole."
 		eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];holedeath=1'>Oh...</a></P>"
 		eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];close=1'>Close</a></P>"
-
+		settlers = list()
 
 
 /obj/machinery/computer/arcade/orion_trail/proc/win()

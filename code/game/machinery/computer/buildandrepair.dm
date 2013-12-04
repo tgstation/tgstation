@@ -105,11 +105,11 @@
 	name = "circuit board (Cloning)"
 	build_path = "/obj/machinery/computer/cloning"
 	origin_tech = "programming=3;biotech=3"
-/obj/item/weapon/circuitboard/arcade
+/obj/item/weapon/circuitboard/arcade/battle
 	name = "circuit board (Arcade)"
-	build_path = "/obj/machinery/computer/arcade"
+	build_path = "/obj/machinery/computer/arcade/battle"
 	origin_tech = "programming=1"
-/obj/item/weapon/circuitboard/orion_trail
+/obj/item/weapon/circuitboard/arcade/orion_trail
 	name = "circuit board (Orion_Trail)"
 	build_path = "/obj/machinery/computer/arcade/orion_trail"
 	origin_tech = "programming=2"
