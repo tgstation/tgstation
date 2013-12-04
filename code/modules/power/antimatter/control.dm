@@ -4,6 +4,8 @@
 	//icon = 'icons/obj/machines/antimatter.dmi'
 	icon = 'icons/obj/machines/new_ame.dmi'
 	icon_state = "control"
+	var/icon_mod = "on" // on, critical, or fuck
+	var/old_icon_mod = "on"
 	anchored = 1
 	density = 1
 	use_power = 1
@@ -59,6 +61,8 @@
 		toggle_power()
 		//Angry buzz or such here
 		return
+
+	check_core_stability()
 
 	add_avail(stored_power)
 
@@ -142,7 +146,8 @@
 
 
 /obj/machinery/power/am_control_unit/update_icon()
-	if(active) icon_state = "control_on"
+	if(active)
+		icon_state = "control_[icon_mod]"
 	else icon_state = "control"
 	//No other icons for it atm
 
@@ -254,14 +259,26 @@
 
 
 /obj/machinery/power/am_control_unit/proc/check_core_stability()
-	if(stored_core_stability_delay || linked_cores.len <= 0)	return
-	stored_core_stability_delay = 1
+	//if(stored_core_stability_delay || linked_cores.len <= 0)	return
+	if(linked_cores.len <=0) return
+	//stored_core_stability_delay = 1
 	stored_core_stability = 0
 	for(var/obj/machinery/am_shielding/AMS in linked_cores)
 		stored_core_stability += AMS.stability
 	stored_core_stability/=linked_cores.len
-	spawn(40)
-		stored_core_stability_delay = 0
+	switch(stored_core_stability)
+		if(0 to 24)
+			icon_mod="fuck"
+		if(25 to 49)
+			icon_mod="critical"
+		if(50 to INFINITY)
+			icon_mod="on"
+	if(icon_mod!=old_icon_mod)
+		old_icon_mod=icon_mod
+		update_icon()
+
+	//spawn(40)
+	//	stored_core_stability_delay = 0
 	return
 
 
@@ -279,8 +296,6 @@
 	if(!user)
 		return
 
-	check_core_stability()
-
 	var/list/fueljar_data=null
 	if(fueljar)
 		fueljar_data=list(
@@ -291,7 +306,7 @@
 
 	var/list/data = list(
 		"active" = active,
-		"stability" = stability,
+		//"stability" = stability,
 		"linked_shields" = linked_shielding.len,
 		"linked_cores" = linked_cores.len,
 		"efficiency" = reported_core_efficiency,
