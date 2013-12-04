@@ -426,7 +426,7 @@
 	prob_slip = round(prob_slip)
 	return(prob_slip)
 
-var/list/CLIMABLES = list("/obj/machinery/portable_atmospherics", "/obj/machinery/bot/mulebot", "/obj/structure/closet/crate","/obj/structure/table","/obj/structure/rack")
+var/list/CLIMABLES = list("/obj/machinery/portable_atmospherics", "/obj/machinery/bot/mulebot", "/obj/structure/closet/crate","/obj/structure/janitorialcart","/obj/structure/rack")
 
 /mob/proc/Can_Climb()	
 	if (!canmove || restrained())

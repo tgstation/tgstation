@@ -428,7 +428,7 @@
 					L.visible_message("<span class='danger'>[usr] manages to climb on [O]!</span>", \
 										"<span class='notice'>You successfully climbed on [O].</span>")
 					L.loc = get_step(L.loc, D)	
-					L.SetWeakened(5)
+					L.Weaken(5)
 		else
 			L.visible_message("<span class='notice'>You don't seem to find a way to climb over anything.</span>")
 
