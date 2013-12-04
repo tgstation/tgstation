@@ -543,7 +543,7 @@ var/global/floorIsLava = 0
 	set desc ="Set an announcement that appears to everyone who joins the server. Only lasts this round"
 	if(!check_rights(0))	return
 
-	admin_notice = input(src,"Set a public notice for this round. Everyone who joins the server will see it.\n(Leaving it blank will delete the current notice):","Set Notice",null) as null|message
+	admin_notice = input(src,"Set a public notice for this round. Everyone who joins the server will see it.\n(Leaving it blank will delete the current notice):","Set Notice",admin_notice) as null|message
 	switch(admin_notice)
 		if(null)
 			return
