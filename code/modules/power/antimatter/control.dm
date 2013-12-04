@@ -1,10 +1,8 @@
 /obj/machinery/power/am_control_unit
 	name = "antimatter control unit"
 	desc = "This device injects antimatter into connected shielding units, the more antimatter injected the more power produced.  Wrench the device to set it up."
-	icon = 'icons/obj/machines/antimatter.dmi'
-
-	// Uncomment this if desired, but it's not quite right just yet. - N3X
-	//icon = 'icons/obj/machines/new_ame.dmi'
+	//icon = 'icons/obj/machines/antimatter.dmi'
+	icon = 'icons/obj/machines/new_ame.dmi'
 	icon_state = "control"
 	anchored = 1
 	density = 1
