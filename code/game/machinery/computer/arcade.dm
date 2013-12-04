@@ -1,6 +1,8 @@
 /obj/machinery/computer/arcade/
-	name = "arcade"
-	desc = "generic arcade machine"
+	name = "random arcade"
+	desc = "random arcade machine"
+	icon = 'icons/obj/computer.dmi'
+	icon_state = "arcade"
 	var/list/prizes = list(	/obj/item/weapon/storage/box/snappops			= 2,
 							/obj/item/toy/AI								= 2,
 							/obj/item/clothing/under/syndicate/tacticool	= 2,
@@ -23,6 +25,12 @@
 							/obj/item/toy/prize/phazon						= 1
 							)
 
+/obj/machinery/computer/arcade/New()
+	..()
+	var/choice = pick(typesof(/obj/machinery/computer/arcade) - /obj/machinery/computer/arcade)
+	new choice(loc)
+	del(src)
+
 /obj/machinery/computer/arcade/battle
 	name = "arcade machine"
 	desc = "Does not support Pinball."
@@ -42,7 +50,6 @@
 	var/turtle = 0
 
 /obj/machinery/computer/arcade/battle/New()
-	..()
 	var/name_action
 	var/name_part1
 	var/name_part2
@@ -289,9 +296,13 @@
 						   "Malfunction"			= 2,
 						   "Collision"              = 1
 						   )
+	var/list/stops = list()
+	var/list/stopblurbs = list()
+
+/obj/machinery/computer/arcade/orion_trail/New()
 	// Sets up the main trail
-	var/list/stops = list("Pluto","Asteroid Belt","Proxima Centauri","Dead Space","Rigel Prime","Tau Ceti Beta","Black Hole","Space Outpost Beta-9","Orion Prime")
-	var/list/stopblurbs = list(
+	stops = list("Pluto","Asteroid Belt","Proxima Centauri","Dead Space","Rigel Prime","Tau Ceti Beta","Black Hole","Space Outpost Beta-9","Orion Prime")
+	stopblurbs = list(
 		"Pluto, long since occupied with long-range sensors and scanners stands ready to, and indeed continues to, probe the far reaches of the galaxy.",
 		"At the edge of the Sol system lies a treacherous asteroid belt, many have been crushed by stray asteroids and miss-guided judgement.",
 		"The nearest star system to Sol, in ages past it stood as a reminder of the boundaries of sub-light travel, now it is a low-population sanctuary for adventureres and traders.",
@@ -302,7 +313,6 @@
 		"You have come into range of the first man-made structure in this region of space. It has been constructed, not by travellers from Sol, but by colonists from Orion. It stands as a monument to the colonist's success.",
 		"You have made it to Orion! Congratulations! Your crew is one of the few to start a new foothold for man-kind!"
 		)
-
 
 /obj/machinery/computer/arcade/orion_trail/proc/newgame()
 	// Set names of settlers in crew
