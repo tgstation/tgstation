@@ -38,6 +38,7 @@ datum/preferences
 	var/UI_style = "Midnight"
 	var/toggles = TOGGLES_DEFAULT
 	var/ghost_form = "ghost"
+	var/id2pda = 0						//Option to slot ID to PDA at roundstart
 
 	//character preferences
 	var/real_name						//our character's name
@@ -203,6 +204,7 @@ datum/preferences
 				dat += "<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</a><br>"
 				dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'>[(toggles & CHAT_GHOSTEARS) ? "Nearest Creatures" : "All Speech"]</a><br>"
 				dat += "<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'>[(toggles & CHAT_GHOSTSIGHT) ? "Nearest Creatures" : "All Emotes"]</a><br>"
+				dat += "<b>Put your ID into the PDA:</b><a href='?_src_=prefs;preference=IdToPda'> [id2pda ? "Yes" : "No"]</a><BR>"
 
 				if(config.allow_Metadata)
 					dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'> Edit </a><br>"
@@ -670,6 +672,9 @@ datum/preferences
 
 					if("ghost_sight")
 						toggles ^= CHAT_GHOSTSIGHT
+						
+					if("IdToPda")
+						id2pda = !id2pda
 
 					if("save")
 						save_preferences()
@@ -725,6 +730,7 @@ datum/preferences
 		if(backbag > 3 || backbag < 1)
 			backbag = 1 //Same as above
 		character.backbag = backbag
+		character.id2pda = id2pda
 
 		/*
 		//Debugging report to track down a bug, which randomly assigned the plural gender to people.

@@ -821,13 +821,18 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				I.loc = src
 				id = I
 	else
-		var/obj/item/weapon/card/I = user.get_active_hand()
-		if (istype(I, /obj/item/weapon/card/id) && I:registered_name)
+		var/obj/item/weapon/card/id/I = user.get_active_hand()
+		if (istype(I, /obj/item/weapon/card/id) && I.registered_name)
 			var/obj/old_id = id
 			user.drop_item()
 			I.loc = src
 			id = I
 			user.put_in_hands(old_id)
+	return
+/obj/item/device/pda/proc/id_inject(mob/user as mob, obj/item/weapon/card/id/I) //Injects Id data into PDAs at roundstart
+	if (istype(I, /obj/item/weapon/card/id) && I.registered_name)
+		I.loc = src
+		id = I
 	return
 
 // access to status display signals

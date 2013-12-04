@@ -19,7 +19,8 @@
 
 	var/underwear = "Nude"	//Which underwear the player wants
 	var/backbag = 2		//Which backpack type the player has chosen. Nothing, Satchel or Backpack.
-
+	var/id2pda = 0    //Put ID in PDA or not
+	
 	//Equipment slots
 	var/obj/item/wear_suit = null
 	var/obj/item/w_uniform = null
