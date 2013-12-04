@@ -26,7 +26,7 @@
 	bulb = new /obj/item/device/flash(src)
 
 /obj/machinery/flasher/power_change()
-	if (powered() && bulb && anchored)
+	if (powered() && anchored && bulb)
 		stat &= ~NOPOWER
 		if(bulb.broken)
 			icon_state = "[base_state]1-p"
@@ -132,14 +132,13 @@
 		if (!anchored && !isinspace())
 			user << "<span class='notice'>[src] is now secured.</span>"
 			overlays.Cut()
-			power_change()
 			anchored = 1
-
+			power_change()
 		else
 			user << "<span class='notice'>[src] can now be moved.</span>"
 			overlays += "[base_state]-s"
-			power_change()
 			anchored = 0
+			power_change()
 
 	else
 		..()
