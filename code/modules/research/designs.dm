@@ -259,6 +259,15 @@ datum/design/arcademachine
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/arcade"
 
+datum/design/orion_trail
+	name = "Circuit Design (Orion Trail)"
+	desc = "Allows for the construction of circuit boards used to build a new Orion Trail machine."
+	id = "arcademachine"
+	req_tech = list("programming" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/orion_trail"
+
 datum/design/powermonitor
 	name = "Circuit Design (Power Monitor)"
 	desc = "Allows for the construction of circuit boards used to build a new power monitor"
