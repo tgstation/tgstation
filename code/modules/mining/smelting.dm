@@ -8,7 +8,7 @@
 	var/sufficient_ore=1
 	var/matching_ingredient_count=0
 	for(var/ore_id in P.ore)
-		var/datum/processable_ore/po=P.ore[ore_id]
+		var/datum/material/po=P.ore[ore_id]
 		var/required=(ore_id in ingredients)
 
 		// Selected but not in ingredients

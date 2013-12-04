@@ -11,19 +11,19 @@
 
 /obj/item/weapon/moneybag/attack_hand(user as mob)
 	var/list/ore=list()
-	for(var/oredata in typesof(/datum/processable_ore) - /datum/processable_ore)
-		var/datum/processable_ore/ore_datum = new oredata
+	for(var/oredata in typesof(/datum/material) - /datum/material)
+		var/datum/material/ore_datum = new oredata
 		ore[ore_datum.id]=ore_datum
 
 	for (var/obj/item/weapon/coin/C in contents)
 		if (istype(C,/obj/item/weapon/coin))
-			var/datum/processable_ore/ore_info=ore[C.material]
+			var/datum/material/ore_info=ore[C.material]
 			ore_info.stored++
 			ore[C.material]=ore_info
 
 	var/dat = text("<b>The contents of the moneybag reveal...</b><br>")
 	for(var/ore_id in ore)
-		var/datum/processable_ore/ore_info=ore[ore_id]
+		var/datum/material/ore_info=ore[ore_id]
 		if(ore_info.stored)
 			dat += "[ore_info.processed_name] coins: [ore_info.stored] <A href='?src=\ref[src];remove=[ore_id]'>Remove one</A><br>"
 	user << browse("[dat]", "window=moneybag")
