@@ -275,29 +275,6 @@
 	if(src.tool_state)
 		src.tool_state:screen_loc = ui_inv2
 
-/* INHERIT
-/mob/living/silicon/robot/mommi/process_killswitch()
-	if(killswitch)
-		killswitch_time --
-		if(killswitch_time <= 0)
-			if(src.client)
-				src << "\red <B>Killswitch Activated"
-			killswitch = 0
-			spawn(5)
-				gib()
-
-/mob/living/silicon/robot/mommi/process_locks()
-	if(weapon_lock)
-		uneq_all()
-		weaponlock_time --
-		if(weaponlock_time <= 0)
-			if(src.client)
-				src << "\red <B>Weapon Lock Timed Out!"
-			weapon_lock = 0
-			weaponlock_time = 120
-
 /mob/living/silicon/robot/mommi/update_canmove()
-	if(paralysis || stunned || weakened || buckled || lockcharge) canmove = 0
-	else canmove = 1
+	canmove = !(paralysis || stunned || weakened || buckled || lockcharge || anchored)
 	return canmove
-*/
