@@ -11,12 +11,8 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	var/stage = 0
 
 /obj/item/alien_embryo/New()
-
 	if(istype(loc, /mob/living))
 		affected_mob = loc
-		if(affected_mob.getlimb(/obj/item/organ/limb/robot/chest) || affected_mob.status_flags & XENO_HOST) //If our Victim is augmented in the chest, No Babby - RR
-			del(src)
-			return
 		affected_mob.status_flags |= XENO_HOST
 		processing_objects.Add(src)
 		spawn(0)
