@@ -155,3 +155,11 @@
 
 /obj/effect/landmark/mobcorpse/russian/ranged
 	corpsehelmet = /obj/item/clothing/head/ushanka
+
+/obj/effect/landmark/mobcorpse/assistant
+	name = "Assistant"
+	corpseuniform = /obj/item/clothing/under/color/grey
+	corpseshoes = /obj/item/clothing/shoes/black
+	corpseid = 1
+	corpseidjob = "Assistant"
+	corpseidaccess = "Assistant"
