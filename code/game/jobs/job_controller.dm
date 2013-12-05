@@ -369,9 +369,6 @@ var/global/datum/controller/occupations/job_master
 			C.name = "[C.registered_name]'s ID Card ([C.assignment])"
 			if(!H.id2pda)
 				H.equip_to_slot_or_del(C, slot_wear_id)
-				H.equip_to_slot_or_del(new /obj/item/device/pda(H), slot_belt)		//for new jobs in case they don't have it in their own equip, just like assistants
-			else
-				H.equip_to_slot_or_del(new /obj/item/device/pda(H), slot_wear_id)
 	/*	if(prob(50))
 			H.equip_to_slot_or_del(new /obj/item/weapon/pen(H), slot_r_store)
 		else

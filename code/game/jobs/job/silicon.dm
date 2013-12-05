@@ -11,8 +11,6 @@
 	minimal_player_age = 30
 
 	equip(var/mob/living/carbon/human/H)
-		if(!H)	return 0
-		..()
 		return 1
 
 	config_check()
@@ -34,6 +32,4 @@
 	minimal_player_age = 21
 
 	equip(var/mob/living/carbon/human/H)
-		if(!H)	return 0
-		..()
 		return 1
