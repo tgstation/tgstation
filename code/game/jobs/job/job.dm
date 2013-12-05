@@ -32,6 +32,9 @@
 	//the type of the ID the player will have
 	var/idtype = /obj/item/weapon/card/id
 
+	//Where to put the PDA
+	var/PDA_slot
+
 	//If this is set to 1, a text is printed to the player when jobs are assigned, telling him that he should let admins know that he has to disconnect.
 	var/req_admin_notify
 
@@ -39,6 +42,11 @@
 	var/minimal_player_age = 0
 
 /datum/job/proc/equip(var/mob/living/carbon/human/H)
+	if(!H)	return 0
+	if(H.id2pda)
+		PDA_slot = slot_wear_id
+	else
+		PDA_slot = slot_belt
 	return 1
 
 /datum/job/proc/apply_fingerprints(var/mob/living/carbon/human/H)

@@ -27,15 +27,13 @@
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
+		..()
 		if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security (H), slot_back)
 		if(H.backbag == 3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_sec(H), slot_back)
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/hos(H), slot_ears)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security(H), slot_w_uniform)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
-		if(H.id2pda)
-			H.equip_to_slot_or_del(new /obj/item/device/pda/heads/hos(H), slot_wear_id)
-		else
-			H.equip_to_slot_or_del(new /obj/item/device/pda/heads/hos(H), slot_belt)
+		H.equip_to_slot_or_del(new /obj/item/device/pda/heads/hos(H), PDA_slot)
 		H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/hos(H), slot_wear_suit)
 		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
 		H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/HoS(H), slot_head)
@@ -70,15 +68,13 @@
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
+		..()
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), slot_ears)
 		if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(H), slot_back)
 		if(H.backbag == 3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_sec(H), slot_back)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden(H), slot_w_uniform)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
-		if(H.id2pda)
-			H.equip_to_slot_or_del(new /obj/item/device/pda/warden(H), slot_wear_id)
-		else
-			H.equip_to_slot_or_del(new /obj/item/device/pda/warden(H), slot_belt)
+		H.equip_to_slot_or_del(new /obj/item/device/pda/warden(H), PDA_slot)
 		H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/warden(H), slot_wear_suit)
 		H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/warden(H), slot_head)
 		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
@@ -117,15 +113,13 @@
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
+		..()
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), slot_ears)
 		if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
 		if(H.backbag == 3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(H), slot_back)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/det(H), slot_w_uniform)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
-		if(H.id2pda)
-			H.equip_to_slot_or_del(new /obj/item/device/pda/detective(H), slot_wear_id)
-		else
-			H.equip_to_slot_or_del(new /obj/item/device/pda/detective(H), slot_belt)
+		H.equip_to_slot_or_del(new /obj/item/device/pda/detective(H), PDA_slot)
 		H.equip_to_slot_or_del(new /obj/item/clothing/head/det_hat(H), slot_head)
 		var/obj/item/clothing/mask/cigarette/CIG = new /obj/item/clothing/mask/cigarette(H)
 		CIG.light("")
@@ -166,15 +160,13 @@
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
+		..()
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), slot_ears)
 		if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(H), slot_back)
 		if(H.backbag == 3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_sec(H), slot_back)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security(H), slot_w_uniform)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
-		if(H.id2pda)
-			H.equip_to_slot_or_del(new /obj/item/device/pda/security(H), slot_wear_id)
-		else
-			H.equip_to_slot_or_del(new /obj/item/device/pda/security(H), slot_belt)
+		H.equip_to_slot_or_del(new /obj/item/device/pda/security(H), PDA_slot)
 		H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(H), slot_wear_suit)
 		H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet(H), slot_head)
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_s_store)

@@ -12,6 +12,7 @@
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
+		..()
 		return 1
 
 	config_check()
@@ -34,4 +35,5 @@
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
+		..()
 		return 1

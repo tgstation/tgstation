@@ -21,13 +21,11 @@
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
+		..()
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/rd(H), slot_ears)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/research_director(H), slot_w_uniform)
-		if(H.id2pda)
-			H.equip_to_slot_or_del(new /obj/item/device/pda/heads/rd(H), slot_wear_id)
-		else
-			H.equip_to_slot_or_del(new /obj/item/device/pda/heads/rd(H), slot_belt)
+		H.equip_to_slot_or_del(new /obj/item/device/pda/heads/rd(H), PDA_slot)
 		H.equip_to_slot_or_del(new /obj/item/clothing/suit/labcoat(H), slot_wear_suit)
 		H.equip_to_slot_or_del(new /obj/item/weapon/clipboard(H), slot_l_hand)
 		H.equip_to_slot_or_del(new /obj/item/device/laser_pointer(H), slot_l_store)
@@ -50,13 +48,11 @@
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
+		..()
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sci(H), slot_ears)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/scientist(H), slot_w_uniform)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)
-		if(H.id2pda)
-			H.equip_to_slot_or_del(new /obj/item/device/pda/toxins(H), slot_wear_id)
-		else
-			H.equip_to_slot_or_del(new /obj/item/device/pda/toxins(H), slot_belt)
+		H.equip_to_slot_or_del(new /obj/item/device/pda/toxins(H), PDA_slot)
 		H.equip_to_slot_or_del(new /obj/item/clothing/suit/labcoat/science(H), slot_wear_suit)
 //		H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas(H), slot_wear_mask)
 //		H.equip_to_slot_or_del(new /obj/item/weapon/tank/oxygen(H), slot_l_hand)
@@ -78,15 +74,13 @@
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
+		..()
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sci(H), slot_ears)
 		if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
 		if(H.backbag == 3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(H), slot_back)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/roboticist(H), slot_w_uniform)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
-		if(H.id2pda)
-			H.equip_to_slot_or_del(new /obj/item/device/pda/roboticist(H), slot_wear_id)
-		else
-			H.equip_to_slot_or_del(new /obj/item/device/pda/roboticist(H), slot_belt)
+		H.equip_to_slot_or_del(new /obj/item/device/pda/roboticist(H), PDA_slot)
 		H.equip_to_slot_or_del(new /obj/item/clothing/suit/labcoat(H), slot_wear_suit)
 //		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/toolbox/mechanical(H), slot_l_hand)
