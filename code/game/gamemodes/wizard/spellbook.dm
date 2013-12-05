@@ -86,6 +86,9 @@
 		dat += "<A href='byond://?src=\ref[src];spell_choice=summonguns'>Summon Guns</A> (One time use, global spell)<BR>"
 		dat += "<I>Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill eachother. Just be careful not to get hit in the crossfire!</I><BR>"
 
+		dat += "<A href='byond://?src=\ref[src];spell_choice=summonmagic'>Summon Magic</A> (One time use, global spell)<BR>"
+		dat += "<I>Share the wonders of magic with the crew and show them why they aren't to be trusted with it at the same time.</I><BR>"
+
 		dat += "<HR>"
 		dat += "<B>Artefacts:</B><BR>"
 		dat += "Powerful items imbued with eldritch magics. Summoning one will count towards your maximum number of spells.<BR>"
@@ -150,7 +153,7 @@
 				uses--
 			/*
 			*/
-				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", smoke = "Smoke", blind = "Blind", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", fleshtostone = "Flesh to Stone", summonguns = "Summon Guns", staffchange = "Staff of Change", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation")
+				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", smoke = "Smoke", blind = "Blind", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", fleshtostone = "Flesh to Stone", summonguns = "Summon Guns", summonmagic = "Summon Magic", staffchange = "Staff of Change", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation")
 				var/already_knows = 0
 				for(var/obj/effect/proc_holder/spell/aspell in H.spell_list)
 					if(available_spells[href_list["spell_choice"]] == initial(aspell.name))
@@ -246,12 +249,17 @@
 							temp = "You have learned flesh to stone."
 						if("summonguns")
 							feedback_add_details("wizard_spell_learned","SG") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.rightandwrong()
+							H.rightandwrong(0)
 							max_uses--
 							temp = "You have cast summon guns."
+						if("summonmagic")
+							feedback_add_details("wizard_spell_learned","SM") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							H.rightandwrong(1)
+							max_uses--
+							temp = "You have cast summon magic."
 						if("staffchange")
 							feedback_add_details("wizard_spell_learned","ST") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							new /obj/item/weapon/gun/energy/staff(get_turf(H))
+							new /obj/item/weapon/gun/magic/staff/change(get_turf(H))
 							temp = "You have purchased a staff of change."
 							max_uses--
 						if("soulstone")
@@ -270,7 +278,7 @@
 							max_uses--
 						if("staffanimation")
 							feedback_add_details("wizard_spell_learned","SA") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							new /obj/item/weapon/gun/energy/staff/animate(get_turf(H))
+							new /obj/item/weapon/gun/magic/staff/animate(get_turf(H))
 							temp = "You have purchased a staff of animation."
 							max_uses--
 						if("contract")
@@ -295,3 +303,82 @@
 		attack_self(H)
 
 	return
+
+//Single Use Spellbooks//
+
+/obj/item/weapon/spellbook/oneuse
+	var/spell = /obj/effect/proc_holder/spell/targeted/projectile/magic_missile //just a placeholder to avoid runtimes if someone spawned the generic
+	var/spellname = "sandbox"
+	name = "spellbook of "
+	uses = 1
+	max_uses = 1
+	desc = "This template spellbook was never meant for the eyes of man..."
+
+/obj/item/weapon/spellbook/oneuse/New()
+	..()
+	name += spellname
+
+/obj/item/weapon/spellbook/oneuse/attack_self(mob/user as mob)
+	var/obj/effect/proc_holder/spell/S = new spell
+	for(var/obj/effect/proc_holder/spell/knownspell in user.spell_list)
+		if(knownspell.type == S.type)
+			if(user.mind)
+				if(user.mind.special_role == "apprentice" || user.mind.special_role == "wizard")
+					user <<"\blue You're already far more versed in this spell than this flimsy how-to book can provide."
+				else
+					user <<"\blue You've already read this one."
+			return
+	user.spell_list += S
+	user <<"\blue you rapidly read through the arcane book. Suddenly it vanishes and you realize you understand [spellname]!"
+	del (src)
+
+/obj/item/weapon/spellbook/oneuse/attackby()
+	return
+
+/obj/item/weapon/spellbook/oneuse/fireball
+	spell = /obj/effect/proc_holder/spell/dumbfire/fireball
+	spellname = "fireball"
+	icon_state ="book2"
+	desc = "This book feels warm to the touch."
+
+/obj/item/weapon/spellbook/oneuse/smoke
+	spell = /obj/effect/proc_holder/spell/targeted/smoke
+	spellname = "smoke"
+	icon_state ="book5"
+	desc = "This book is overflowing with the dank arts."
+
+/obj/item/weapon/spellbook/oneuse/blind
+	spell = /obj/effect/proc_holder/spell/targeted/trigger/blind
+	spellname = "blind"
+	icon_state ="book1"
+	desc = "This book looks blurry, no matter how you look at it."
+
+/obj/item/weapon/spellbook/oneuse/mindswap
+	spell = /obj/effect/proc_holder/spell/targeted/mind_transfer
+	spellname = "mindswap"
+	icon_state ="book6"
+	desc = "This book's cover is pristine, though its pages look ragged and torn."
+
+/obj/item/weapon/spellbook/oneuse/forcewall
+	spell = /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall
+	spellname = "forcewall"
+	icon_state ="book4"
+	desc = "This book has a dedication to mimes everywhere inside the front cover."
+
+/obj/item/weapon/spellbook/oneuse/knock
+	spell = /obj/effect/proc_holder/spell/aoe_turf/knock
+	spellname = "knock"
+	icon_state ="book7"
+	desc = "This book is hard to hold closed properly."
+
+/obj/item/weapon/spellbook/oneuse/horsemask
+	spell = /obj/effect/proc_holder/spell/targeted/horsemask
+	spellname = "horses"
+	icon_state ="book3"
+	desc = "This book is more horse than your mind has room for."
+
+/obj/item/weapon/spellbook/oneuse/charge
+	spell = /obj/effect/proc_holder/spell/targeted/charge
+	spellname = "charging"
+	icon_state ="bookInfections"
+	desc = "This book is made of 100% post-consumer wizard."
