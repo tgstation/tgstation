@@ -59,6 +59,8 @@
 	if(stat || paralysis || stunned || weakened)
 		return
 
+	face_atom(A)
+
 	if(next_move > world.time) // in the year 2000...
 		return
 
@@ -68,11 +70,6 @@
 		var/obj/mecha/M = loc
 		return M.click_action(A,src)
 
-	var/obj/item/W = get_active_hand()
-
-	if(W == null || !(W.flags & ABSTRACT))
-		face_atom(A)
-
 	if(restrained())
 		RestrainedClickOn(A)
 		return
@@ -80,6 +77,8 @@
 	if(in_throw_mode)
 		throw_item(A)
 		return
+
+	var/obj/item/W = get_active_hand()
 
 	if(W == A)
 		next_move = world.time + 6
