@@ -595,9 +595,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(user, /mob/living/silicon))		//How does AI know what plant is?
 		return
 	if(harvest)
-		if(!user in range(1,src))
-			return
-		myseed.harvest()
+		myseed.harvest(Adjacent(user))
 	else if(dead)
 		planted = 0
 		dead = 0
@@ -619,12 +617,13 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			user << "[src] is filled with tiny worms!"
 		user << "" // Empty line for readability.
 
-/obj/item/seeds/proc/harvest(mob/user = usr)
+/obj/item/seeds/proc/harvest(adjacent ,mob/user = usr)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
 	var/t_amount = 0
+	var/new_loc = adjacent ? user.loc : parent.loc
 
 	while(t_amount < (yield * parent.yieldmod))
-		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new product(user.loc, potency) // User gets a consumable
+		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new product(new_loc, potency) // User gets a consumable
 		if(!t_prod)	return
 		t_prod.seed = type
 		t_prod.species = species
@@ -669,12 +668,13 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	parent.update_tray()
 */
-/obj/item/seeds/nettleseed/harvest(mob/user = usr)
+/obj/item/seeds/nettleseed/harvest(adjacent ,mob/user = usr)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
 	var/t_amount = 0
+	var/new_loc = adjacent ? user.loc : parent.loc
 
 	while(t_amount < (yield * parent.yieldmod))
-		var/obj/item/weapon/grown/t_prod = new product(user.loc, potency) // User gets a consumable -QualityVan
+		var/obj/item/weapon/grown/t_prod = new product(new_loc, potency) // User gets a consumable -QualityVan
 		t_prod.seed = type
 		t_prod.species = species
 		t_prod.lifespan = lifespan
@@ -688,12 +688,13 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	parent.update_tray()
 
-/obj/item/seeds/deathnettleseed/harvest(mob/user = usr) //isn't a nettle subclass yet, so
+/obj/item/seeds/deathnettleseed/harvest(adjacent ,mob/user = usr) //isn't a nettle subclass yet, so
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
 	var/t_amount = 0
+	var/new_loc = adjacent ? user.loc : parent.loc
 
 	while(t_amount < (yield * parent.yieldmod))
-		var/obj/item/weapon/grown/t_prod = new product(user.loc, potency) // User gets a consumable -QualityVan
+		var/obj/item/weapon/grown/t_prod = new product(new_loc, potency) // User gets a consumable -QualityVan
 		t_prod.seed = type
 		t_prod.species = species
 		t_prod.lifespan = lifespan
@@ -707,17 +708,18 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	parent.update_tray()
 
-/obj/item/seeds/eggyseed/harvest(mob/user = usr)
+/obj/item/seeds/eggyseed/harvest(adjacent ,mob/user = usr)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
 	var/t_amount = 0
+	var/new_loc = adjacent ? user.loc : parent.loc
 
 	while(t_amount < (yield * parent.yieldmod))
-		new product(user.loc)
+		new product(new_loc)
 		t_amount++
 
 	parent.update_tray()
 
-/obj/item/seeds/replicapod/harvest(mob/user = usr) //now that one is fun -- Urist
+/obj/item/seeds/replicapod/harvest(adjacent ,mob/user = usr) //now that one is fun -- Urist
 	var/obj/machinery/hydroponics/parent = loc
 	var/make_podman = 0
 	var/mob/ghost
@@ -767,10 +769,11 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	else //else, one packet of seeds. maybe two
 		var/seed_count = 1
+		var/new_loc = adjacent ? user.loc : parent.loc
 		if(prob(yield * parent.yieldmod * 20))
 			seed_count++
 		for(var/i=0,i<seed_count,i++)
-			var/obj/item/seeds/replicapod/harvestseeds = new /obj/item/seeds/replicapod(user.loc)
+			var/obj/item/seeds/replicapod/harvestseeds = new /obj/item/seeds/replicapod(new_loc)
 			harvestseeds.lifespan = lifespan
 			harvestseeds.endurance = endurance
 			harvestseeds.maturation = maturation
