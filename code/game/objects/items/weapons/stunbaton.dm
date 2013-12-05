@@ -1,7 +1,7 @@
 /obj/item/weapon/melee/baton
 	name = "stun baton"
 	desc = "A stun baton for incapacitating people with."
-	icon_state = "stunbaton"
+	icon_state = "stun baton"
 	item_state = "baton"
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
@@ -12,7 +12,7 @@
 	attack_verb = list("beaten")
 	var/stunforce = 10
 	var/status = 0
-	var/obj/item/weapon/cell/high/bcell = null
+	var/obj/item/weapon/cell/bcell = null
 	var/hitcost = 1000
 	var/mob/foundmob = "" //Used in throwing proc.
 
@@ -22,8 +22,8 @@
 
 /obj/item/weapon/melee/baton/New()
 	..()
-	bcell = new(src) //I'm lazy
-	update_icon()
+	//bcell = new(src) //I'm lazy // Get fucked
+	//update_icon()
 	return
 
 /obj/item/weapon/melee/baton/loaded/New() //this one starts with a cell pre-installed.

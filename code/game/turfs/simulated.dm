@@ -66,7 +66,7 @@
 			// Floorlength braids?  Enjoy your tripping.
 			if((H.h_style && !(H.head && (H.head.flags & BLOCKHEADHAIR))))
 				var/datum/sprite_accessory/hair_style = hair_styles_list[H.h_style]
-				if(hair_style.flags & HAIRSTYLE_CANTRIP)
+				if(hair_style && (hair_style.flags & HAIRSTYLE_CANTRIP))
 					if(H.m_intent == "run" && prob(5))
 						H.stop_pulling()
 						step(H, H.dir)

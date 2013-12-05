@@ -29,7 +29,7 @@
 	if (A.requires_power == 0 || A.name == "Space")
 		usr << "\red Compressor cannot be placed in this area."
 		return
-	new /obj/machinery/rust_fuel_assembly_port(loc, ndir, 1)
+	new /obj/machinery/rust_fuel_compressor(loc, ndir, 1)
 	del(src)
 
 //construction steps

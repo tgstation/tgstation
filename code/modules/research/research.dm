@@ -222,7 +222,7 @@ datum/tech/biotech
 	name = "Biological Technology"
 	desc = "Research into the deeper mysteries of life and organic substances."
 	id = "biotech"
-	max_level=8
+	max_level=5 // Max USABLE level.
 
 datum/tech/combat
 	name = "Combat Systems Research"

@@ -30,8 +30,8 @@
 				continue
 			var/datum/disease/dnaspread/D = new
 			D.strain_data["name"] = H.real_name
-			D.strain_data["UI"] = H.dna.uni_identity
-			D.strain_data["SE"] = H.dna.struc_enzymes
+			D.strain_data["UI"] = H.dna.UI
+			D.strain_data["SE"] = H.dna.SE
 			D.carrier = 1
 			D.holder = H
 			D.affected_mob = H

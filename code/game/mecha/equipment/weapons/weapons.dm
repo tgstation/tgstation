@@ -27,6 +27,7 @@
 		set_ready_state(0)
 		playsound(chassis, fire_sound, 50, 1)
 		var/obj/item/projectile/A = new projectile(curloc)
+		A.firer = chassis.occupant
 		A.original = target
 		A.current = curloc
 		A.yo = targloc.y - curloc.y
@@ -78,9 +79,19 @@
 	icon_state = "pulse1_bl"
 	var/life = 20
 
-	Bump(atom/A)
+
+	Bump(atom/A) //this is just awful
 		A.bullet_act(src, def_zone)
 		src.life -= 10
+		if(ismob(A))
+			var/mob/M = A
+			if(istype(firer, /mob))
+				M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
+				firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
+				log_attack("<font color='red'>[firer] ([firer.ckey]) shot [M] ([M.ckey]) with a [src]</font>")
+			else
+				M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
+				log_attack("<font color='red'>UNKNOWN shot [M] ([M.ckey]) with a [src]</font>")
 		if(life <= 0)
 			del(src)
 		return

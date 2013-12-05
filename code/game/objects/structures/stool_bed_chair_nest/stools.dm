@@ -34,6 +34,12 @@
 		del(src)
 	return
 
+/obj/structure/stool/hologram/blob_act()
+	return
+
+/obj/structure/stool/hologram/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	return
+
 /obj/structure/stool/MouseDrop(atom/over_object)
 	if (istype(over_object, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = over_object
@@ -65,9 +71,10 @@
 	if (prob(5) && istype(M,/mob/living))
 		user.visible_message("\red [user] breaks [src] over [M]'s back!.")
 		user.u_equip(src)
-		var/obj/item/stack/sheet/metal/m = new/obj/item/stack/sheet/metal
-		m.loc = get_turf(src)
-		del src
+		if(!istype(origin,/obj/structure/stool/hologram))
+			var/obj/item/stack/sheet/metal/m = new/obj/item/stack/sheet/metal
+			m.loc = get_turf(src)
+			del src
 		var/mob/living/T = M
 		T.Weaken(10)
 		T.apply_damage(20)

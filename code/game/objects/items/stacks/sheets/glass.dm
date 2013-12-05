@@ -310,9 +310,15 @@
 	desc = "A very strong and very resistant sheet of a plasma-glass alloy."
 	singular_name = "glass sheet"
 	icon_state = "sheet-plasmaglass"
-	g_amt = 7500
+	//g_amt = 7500
+	g_amt=CC_PER_SHEET_GLASS
 	origin_tech = "materials=3;plasma=2"
 	created_window = /obj/structure/window/plasmabasic
+
+/obj/item/stack/sheet/glass/plasmaglass/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
+	rec.addMaterial("plasma",1)
+	rec.addMaterial("glass",1)
+	return 1
 
 /obj/item/stack/sheet/glass/plasmaglass/attack_self(mob/user as mob)
 	construct_window(user)
@@ -342,10 +348,16 @@
 	desc = "Plasma glass which seems to have rods or something stuck in them."
 	singular_name = "reinforced plasma glass sheet"
 	icon_state = "sheet-plasmarglass"
-	g_amt = 7500
+	g_amt=CC_PER_SHEET_GLASS
 	m_amt = 1875
 	origin_tech = "materials=4;plasma=2"
 	created_window = /obj/structure/window/plasmareinforced
+
+/obj/item/stack/sheet/glass/plasmaglass/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
+	rec.addMaterial("plasma",1)
+	rec.addMaterial("glass",1)
+	rec.addMaterial("iron",0.5)
+	return 1
 
 /obj/item/stack/sheet/glass/plasmarglass/attack_self(mob/user as mob)
 	construct_window(user)

@@ -90,6 +90,45 @@
 	src.add_fingerprint(usr)
 	return
 
+/obj/machinery/dna_scannernew/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+	if(O.loc == user) //no you can't pull things out of your ass
+		return
+	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
+		return
+	if(O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)) // is the mob anchored, too far away from you, or are you too far away from the source
+		return
+	if(!ismob(O)) //humans only
+		return
+	if(istype(O, /mob/living/simple_animal) || istype(O, /mob/living/silicon)) //animals and robutts dont fit
+		return
+	if(!ishuman(user) && !isrobot(user)) //No ghosts or mice putting people into the sleeper
+		return
+	if(user.loc==null) // just in case someone manages to get a closet into the blue light dimension, as unlikely as that seems
+		return
+	if(!istype(user.loc, /turf) || !istype(O.loc, /turf)) // are you in a container/closet/pod/etc?
+		return
+	if(occupant)
+		user << "\blue <B>The DNA Scanner is already occupied!</B>"
+		return
+	if(isrobot(user))
+		if(!istype(user:module, /obj/item/weapon/robot_module/medical))
+			user << "<span class='warning'>You do not have the means to do this!</span>"
+			return
+	var/mob/living/L = O
+	if(!istype(L) || L.buckled)
+		return
+	if(L.abiotic())
+		user << "\red <B>Subject cannot have abiotic items on.</B>"
+		return
+	for(var/mob/living/carbon/slime/M in range(1,L))
+		if(M.Victim == L)
+			usr << "[L.name] will not fit into the DNA Scanner because they have a slime latched onto their head."
+			return
+	if(L == user)
+		return
+	visible_message("[user] puts [L.name] into the DNA Scanner.", 3)
+	put_in(L)
+
 /obj/machinery/dna_scannernew/attackby(var/obj/item/weapon/item as obj, var/mob/user as mob)
 	if (istype(item, /obj/item/weapon/screwdriver))
 		if (!opened)
@@ -137,15 +176,18 @@
 	if (G.affecting.abiotic())
 		user << "\blue <B>Subject cannot have abiotic items on.</B>"
 		return
-	var/mob/M = G.affecting
+	put_in(G.affecting)
+	src.add_fingerprint(user)
+	del(G)
+	return
+
+/obj/machinery/dna_scannernew/proc/put_in(var/mob/M)
 	if(M.client)
 		M.client.perspective = EYE_PERSPECTIVE
 		M.client.eye = src
 	M.loc = src
 	src.occupant = M
 	src.icon_state = "scanner_1"
-
-	src.add_fingerprint(user)
 
 	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
 	if(locate(/obj/machinery/computer/cloning, get_step(src, NORTH)) \
@@ -158,7 +200,6 @@
 				if(ghost.mind == M.mind)
 					ghost << "<b><font color = #330033><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
 					break
-	del(G)
 	return
 
 /obj/machinery/dna_scannernew/proc/go_out()
@@ -328,19 +369,19 @@
 		return
 	return
 
-/obj/machinery/computer/scan_consolenew/proc/all_dna_blocks(var/buffer)
+/obj/machinery/computer/scan_consolenew/proc/all_dna_blocks(var/list/buffer)
 	var/list/arr = list()
-	for(var/i = 1, i <= length(buffer)/3, i++)
-		arr += "[i]:[copytext(buffer,i*3-2,i*3+1)]"
+	for(var/i = 1, i <= buffer.len, i++)
+		arr += "[i]:[EncodeDNABlock(buffer[i])]"
 	return arr
 
-/obj/machinery/computer/scan_consolenew/proc/setInjectorBlock(var/obj/item/weapon/dnainjector/I, var/blk, var/buffer)
+/obj/machinery/computer/scan_consolenew/proc/setInjectorBlock(var/obj/item/weapon/dnainjector/I, var/blk, var/list/buffer)
 	var/pos = findtext(blk,":")
 	if(!pos) return 0
 	var/id = text2num(copytext(blk,1,pos))
 	if(!id) return 0
 	I.block = id
-	I.dna = copytext(buffer,id*3-2,id*3+1)
+	I.dna = list(buffer[id])
 	return 1
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/W as obj, mob/user as mob)
@@ -598,10 +639,7 @@
 		return 1 // return 1 forces an update to all Nano uis attached to src
 
 	if (href_list["pulseUIRadiation"])
-		var/block
-		var/newblock
-		var/tstructure2
-		block = getblock(getblock(src.connected.occupant.dna.uni_identity,src.selected_ui_block,DNA_BLOCK_SIZE),src.selected_ui_subblock,1)
+		var/block = src.connected.occupant.dna.GetUISubBlock(src.selected_ui_block,src.selected_ui_subblock)
 
 		irradiating = src.radiation_duration
 		var/lock_state = src.connected.locked
@@ -617,13 +655,8 @@
 
 		if (prob((80 + (src.radiation_duration / 2))))
 			block = miniscrambletarget(num2text(selected_ui_target), src.radiation_intensity, src.radiation_duration)
-			newblock = null
-			if (src.selected_ui_subblock == 1) newblock = block + getblock(getblock(src.connected.occupant.dna.uni_identity,src.selected_ui_block,DNA_BLOCK_SIZE),2,1) + getblock(getblock(src.connected.occupant.dna.uni_identity,src.selected_ui_block,DNA_BLOCK_SIZE),3,1)
-			if (src.selected_ui_subblock == 2) newblock = getblock(getblock(src.connected.occupant.dna.uni_identity,src.selected_ui_block,DNA_BLOCK_SIZE),1,1) + block + getblock(getblock(src.connected.occupant.dna.uni_identity,src.selected_ui_block,DNA_BLOCK_SIZE),3,1)
-			if (src.selected_ui_subblock == 3) newblock = getblock(getblock(src.connected.occupant.dna.uni_identity,src.selected_ui_block,DNA_BLOCK_SIZE),1,1) + getblock(getblock(src.connected.occupant.dna.uni_identity,src.selected_ui_block,DNA_BLOCK_SIZE),2,1) + block
-			tstructure2 = setblock(src.connected.occupant.dna.uni_identity, src.selected_ui_block, newblock,DNA_BLOCK_SIZE)
-			src.connected.occupant.dna.uni_identity = tstructure2
-			updateappearance(src.connected.occupant,src.connected.occupant.dna.uni_identity)
+			src.connected.occupant.dna.SetUISubBlock(src.selected_ui_block,src.selected_ui_subblock,block)
+			src.connected.occupant.UpdateAppearance()
 			src.connected.occupant.radiation += (src.radiation_intensity+src.radiation_duration)
 		else
 			if	(prob(20+src.radiation_intensity))
@@ -631,7 +664,7 @@
 				domutcheck(src.connected.occupant,src.connected)
 			else
 				randmuti(src.connected.occupant)
-				updateappearance(src.connected.occupant,src.connected.occupant.dna.uni_identity)
+				src.connected.occupant.UpdateAppearance()
 			src.connected.occupant.radiation += ((src.radiation_intensity*2)+src.radiation_duration)
 		src.connected.locked = lock_state
 		return 1 // return 1 forces an update to all Nano uis attached to src
@@ -659,15 +692,13 @@
 			src.selected_se_block = select_block
 		if ((select_subblock <= DNA_BLOCK_SIZE) && (select_subblock >= 1))
 			src.selected_se_subblock = select_subblock
+		//testing("User selected block [selected_se_block] (sent [select_block]), subblock [selected_se_subblock] (sent [select_block]).")
 		return 1 // return 1 forces an update to all Nano uis attached to src
 
 	if (href_list["pulseSERadiation"])
-		var/block
-		var/newblock
-		var/tstructure2
-		var/oldblock
-
-		block = getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.selected_se_block,DNA_BLOCK_SIZE),src.selected_se_subblock,1)
+		var/block = src.connected.occupant.dna.GetSESubBlock(src.selected_se_block,src.selected_se_subblock)
+		//var/original_block=block
+		//testing("Irradiating SE block [src.selected_se_block]:[src.selected_se_subblock] ([block])...")
 
 		irradiating = src.radiation_duration
 		var/lock_state = src.connected.locked
@@ -680,40 +711,29 @@
 
 		if(src.connected.occupant)
 			if (prob((80 + (src.radiation_duration / 2))))
-				if ((src.selected_se_block != 2 || src.selected_se_block != 12 || src.selected_se_block != 8 || src.selected_se_block || 10) && prob (20))
-					oldblock = src.selected_se_block
-					block = miniscramble(block, src.radiation_intensity, src.radiation_duration)
-					newblock = null
+				// FIXME: Find out what these corresponded to and change them to the WHATEVERBLOCK they need to be.
+				//if ((src.selected_se_block != 2 || src.selected_se_block != 12 || src.selected_se_block != 8 || src.selected_se_block || 10) && prob (20))
+				var/real_SE_block=selected_se_block
+				block = miniscramble(block, src.radiation_intensity, src.radiation_duration)
+				if(prob(20))
 					if (src.selected_se_block > 1 && src.selected_se_block < STRUCDNASIZE/2)
-						src.selected_se_block++
+						real_SE_block++
 					else if (src.selected_se_block > STRUCDNASIZE/2 && src.selected_se_block < STRUCDNASIZE)
-						src.selected_se_block--
-					if (src.selected_se_subblock == 1) newblock = block + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.selected_se_block,DNA_BLOCK_SIZE),2,1) + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.selected_se_block,DNA_BLOCK_SIZE),3,1)
-					if (src.selected_se_subblock == 2) newblock = getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.selected_se_block,DNA_BLOCK_SIZE),1,1) + block + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.selected_se_block,DNA_BLOCK_SIZE),3,1)
-					if (src.selected_se_subblock == 3) newblock = getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.selected_se_block,DNA_BLOCK_SIZE),1,1) + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.selected_se_block,DNA_BLOCK_SIZE),2,1) + block
-					tstructure2 = setblock(src.connected.occupant.dna.struc_enzymes, src.selected_se_block, newblock,DNA_BLOCK_SIZE)
-					src.connected.occupant.dna.struc_enzymes = tstructure2
-					domutcheck(src.connected.occupant,src.connected)
-					src.connected.occupant.radiation += (src.radiation_intensity+src.radiation_duration)
-					src.selected_se_block = oldblock
-				else
-				//
-					block = miniscramble(block, src.radiation_intensity, src.radiation_duration)
-					newblock = null
-					if (src.selected_se_subblock == 1) newblock = block + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.selected_se_block,DNA_BLOCK_SIZE),2,1) + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.selected_se_block,DNA_BLOCK_SIZE),3,1)
-					if (src.selected_se_subblock == 2) newblock = getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.selected_se_block,DNA_BLOCK_SIZE),1,1) + block + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.selected_se_block,DNA_BLOCK_SIZE),3,1)
-					if (src.selected_se_subblock == 3) newblock = getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.selected_se_block,DNA_BLOCK_SIZE),1,1) + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.selected_se_block,DNA_BLOCK_SIZE),2,1) + block
-					tstructure2 = setblock(src.connected.occupant.dna.struc_enzymes, src.selected_se_block, newblock,DNA_BLOCK_SIZE)
-					src.connected.occupant.dna.struc_enzymes = tstructure2
-					domutcheck(src.connected.occupant,src.connected)
-					src.connected.occupant.radiation += (src.radiation_intensity+src.radiation_duration)
+						real_SE_block--
+
+				//testing("Irradiated SE block [real_SE_block]:[src.selected_se_subblock] ([original_block] now [block]) [(real_SE_block!=selected_se_block) ? "(SHIFTED)":""]!")
+				connected.occupant.dna.SetSESubBlock(real_SE_block,selected_se_subblock,block)
+				domutcheck(src.connected.occupant,src.connected)
+				src.connected.occupant.radiation += (src.radiation_intensity+src.radiation_duration)
 			else
 				if	(prob(80-src.radiation_duration))
+					//testing("Random bad mut!")
 					randmutb(src.connected.occupant)
 					domutcheck(src.connected.occupant,src.connected)
 				else
 					randmuti(src.connected.occupant)
-					updateappearance(src.connected.occupant,src.connected.occupant.dna.uni_identity)
+					//testing("Random identity mut!")
+					src.connected.occupant.UpdateAppearance()
 				src.connected.occupant.radiation += ((src.radiation_intensity*2)+src.radiation_duration)
 		src.connected.locked = lock_state
 		return 1 // return 1 forces an update to all Nano uis attached to src
@@ -765,7 +785,7 @@
 		if (bufferOption == "saveUI")
 			if(src.connected.occupant && src.connected.occupant.dna)
 				src.buffers[bufferId]["ue"] = 0
-				src.buffers[bufferId]["data"] = src.connected.occupant.dna.uni_identity
+				src.buffers[bufferId]["data"] = src.connected.occupant.dna.UI
 				if (!istype(src.connected.occupant,/mob/living/carbon/human))
 					src.buffers[bufferId]["owner"] = src.connected.occupant.name
 				else
@@ -776,7 +796,7 @@
 
 		if (bufferOption == "saveUIAndUE")
 			if(src.connected.occupant && src.connected.occupant.dna)
-				src.buffers[bufferId]["data"] = src.connected.occupant.dna.uni_identity
+				src.buffers[bufferId]["data"] = src.connected.occupant.dna.UI
 				if (!istype(src.connected.occupant,/mob/living/carbon/human))
 					src.buffers[bufferId]["owner"] = src.connected.occupant.name
 				else
@@ -789,7 +809,7 @@
 		if (bufferOption == "saveSE")
 			if(src.connected.occupant && src.connected.occupant.dna)
 				src.buffers[bufferId]["ue"] = 0
-				src.buffers[bufferId]["data"] = src.connected.occupant.dna.struc_enzymes
+				src.buffers[bufferId]["data"] = src.connected.occupant.dna.SE
 				if (!istype(src.connected.occupant,/mob/living/carbon/human))
 					src.buffers[bufferId]["owner"] = src.connected.occupant.name
 				else
@@ -828,10 +848,10 @@
 				if (src.buffers[bufferId]["ue"])
 					src.connected.occupant.real_name = src.buffers[bufferId]["owner"]
 					src.connected.occupant.name = src.buffers[bufferId]["owner"]
-				src.connected.occupant.dna.uni_identity = src.buffers[bufferId]["data"]
-				updateappearance(src.connected.occupant,src.connected.occupant.dna.uni_identity)
+				src.connected.occupant.UpdateAppearance(src.buffers[bufferId]["data"])
 			else if (src.buffers[bufferId]["type"] == "se")
-				src.connected.occupant.dna.struc_enzymes = src.buffers[bufferId]["data"]
+				src.connected.occupant.dna.SE = src.buffers[bufferId]["data"]
+				src.connected.occupant.dna.UpdateSE()
 				domutcheck(src.connected.occupant,src.connected)
 			src.connected.occupant.radiation += rand(20,50)
 			return 1

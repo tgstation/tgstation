@@ -121,7 +121,7 @@
 			return "carbon"
 	return "plasma"
 
-//see /turf/simulated/mineral/New() in code/modules/mining/mine_turfs.dm
+//see /turf/unsimulated/mineral/New() in code/modules/mining/mine_turfs.dm
 /proc/get_random_digsite_type()
 	return pick(100;DIGSITE_GARDEN,95;DIGSITE_ANIMAL,90;DIGSITE_HOUSE,85;DIGSITE_TECHNICAL,80;DIGSITE_TEMPLE,75;DIGSITE_WAR)
 

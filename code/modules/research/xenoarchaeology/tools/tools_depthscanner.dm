@@ -26,8 +26,8 @@
 
 /obj/item/device/depth_scanner/proc/scan_atom(var/mob/user, var/atom/A)
 	user.visible_message("\blue [user] scans [A], the air around them humming gently.")
-	if(istype(A,/turf/simulated/mineral))
-		var/turf/simulated/mineral/M = A
+	if(istype(A,/turf/unsimulated/mineral))
+		var/turf/unsimulated/mineral/M = A
 		if(M.excavation_minerals.len || M.finds.len || M.artifact_find)
 
 			//create a new scanlog entry

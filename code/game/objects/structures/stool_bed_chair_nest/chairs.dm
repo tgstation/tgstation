@@ -90,6 +90,22 @@
 	else
 		..()
 
+/obj/structure/stool/bed/chair/holowood/normal
+	icon_state = "wooden_chair"
+	name = "wooden chair"
+	desc = "Old is never too old to not be in fashion."
+
+/obj/structure/stool/bed/chair/holowood/wings
+	icon_state = "wooden_chair_wings"
+	name = "wooden chair"
+	desc = "Old is never too old to not be in fashion."
+
+/obj/structure/stool/bed/chair/holowood/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/wrench))
+		user << "Your [W] passes harmlessly through the hologram."
+	else
+		..()
+
 /obj/structure/stool/bed/chair/comfy
 	name = "comfy chair"
 	desc = "It looks comfy."

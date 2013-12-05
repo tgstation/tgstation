@@ -1,9 +1,10 @@
-var/global/list/assigned_blocks[STRUCDNASIZE]
 
-/proc/getAssignedBlock(var/name,var/list/blocksLeft)
+
+/proc/getAssignedBlock(var/name,var/list/blocksLeft, var/activity_bounds=DNA_DEFAULT_BOUNDS)
 	var/assigned = pick(blocksLeft)
 	blocksLeft.Remove(assigned)
 	assigned_blocks[assigned]=name
+	dna_activity_bounds[assigned]=activity_bounds
 	//Debug message_admins("[name] assigned to block #[assigned].")
 	testing("[name] assigned to block #[assigned].")
 	return assigned
@@ -14,58 +15,23 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 		BLOCKADD = rand(-300,300)
 	if (prob(75))
 		DIFFMUT = rand(0,20)
-/*
-	var/list/avnums = new/list()
-	var/tempnum
 
-	avnums.Add(2)
-	avnums.Add(12)
-	avnums.Add(10)
-	avnums.Add(8)
-	avnums.Add(4)
-	avnums.Add(11)
-	avnums.Add(13)
-	avnums.Add(6)
+	//Thanks to nexis for the fancy code
+	// BITCH I AIN'T DONE YET
 
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	HULKBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	TELEBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	FIREBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	XRAYBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	CLUMSYBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	FAKEBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	DEAFBLOCK = tempnum
-	tempnum = pick(avnums)
-	avnums.Remove(tempnum)
-	BLINDBLOCK = tempnum
-	*/
-//Thanks to nexis for the fancy code
 	var/list/numsToAssign=new()
 	for(var/i=1;i<STRUCDNASIZE;i++)
 		numsToAssign += i
 
 	testing("Assigning DNA blocks:")
-	message_admins("Assigning DNA blocks:")
+
 	// Standard muts
 	BLINDBLOCK         = getAssignedBlock("BLIND",         numsToAssign)
 	DEAFBLOCK          = getAssignedBlock("DEAF",          numsToAssign)
-	HULKBLOCK          = getAssignedBlock("HULK",          numsToAssign)
-	TELEBLOCK          = getAssignedBlock("TELE",          numsToAssign)
-	FIREBLOCK          = getAssignedBlock("FIRE",          numsToAssign)
-	XRAYBLOCK          = getAssignedBlock("XRAY",          numsToAssign)
+	HULKBLOCK          = getAssignedBlock("HULK",          numsToAssign, DNA_HARD_BOUNDS)
+	TELEBLOCK          = getAssignedBlock("TELE",          numsToAssign, DNA_HARD_BOUNDS)
+	FIREBLOCK          = getAssignedBlock("FIRE",          numsToAssign, DNA_HARDER_BOUNDS)
+	XRAYBLOCK          = getAssignedBlock("XRAY",          numsToAssign, DNA_HARDER_BOUNDS)
 	CLUMSYBLOCK        = getAssignedBlock("CLUMSY",        numsToAssign)
 	FAKEBLOCK          = getAssignedBlock("FAKE",          numsToAssign)
 	COUGHBLOCK         = getAssignedBlock("COUGH",         numsToAssign)
@@ -76,22 +42,22 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 
 	// Bay muts
 	HEADACHEBLOCK      = getAssignedBlock("HEADACHE",      numsToAssign)
-	NOBREATHBLOCK      = getAssignedBlock("NOBREATH",      numsToAssign)
-	REMOTEVIEWBLOCK    = getAssignedBlock("REMOTEVIEW",    numsToAssign)
-	REGENERATEBLOCK    = getAssignedBlock("REGENERATE",    numsToAssign)
-	INCREASERUNBLOCK   = getAssignedBlock("INCREASERUN",   numsToAssign)
-	REMOTETALKBLOCK    = getAssignedBlock("REMOTETALK",    numsToAssign)
-	MORPHBLOCK         = getAssignedBlock("MORPH",         numsToAssign)
+	NOBREATHBLOCK      = getAssignedBlock("NOBREATH",      numsToAssign, DNA_HARD_BOUNDS)
+	REMOTEVIEWBLOCK    = getAssignedBlock("REMOTEVIEW",    numsToAssign, DNA_HARDER_BOUNDS)
+	REGENERATEBLOCK    = getAssignedBlock("REGENERATE",    numsToAssign, DNA_HARDER_BOUNDS)
+	INCREASERUNBLOCK   = getAssignedBlock("INCREASERUN",   numsToAssign, DNA_HARDER_BOUNDS)
+	REMOTETALKBLOCK    = getAssignedBlock("REMOTETALK",    numsToAssign, DNA_HARDER_BOUNDS)
+	MORPHBLOCK         = getAssignedBlock("MORPH",         numsToAssign, DNA_HARDER_BOUNDS)
 	COLDBLOCK          = getAssignedBlock("COLD",          numsToAssign)
 	HALLUCINATIONBLOCK = getAssignedBlock("HALLUCINATION", numsToAssign)
-	NOPRINTSBLOCK      = getAssignedBlock("NOPRINTS",      numsToAssign)
+	NOPRINTSBLOCK      = getAssignedBlock("NOPRINTS",      numsToAssign, DNA_HARD_BOUNDS)
 	SHOCKIMMUNITYBLOCK = getAssignedBlock("SHOCKIMMUNITY", numsToAssign)
-	SMALLSIZEBLOCK     = getAssignedBlock("SMALLSIZE",     numsToAssign)
+	SMALLSIZEBLOCK     = getAssignedBlock("SMALLSIZE",     numsToAssign, DNA_HARD_BOUNDS)
 
 
 	// HIDDEN MUTATIONS / SUPERPOWERS INITIALIZTION
 
-/*
+	/*
 	for(var/x in typesof(/datum/mutations) - /datum/mutations)
 		var/datum/mutations/mut = new x
 
@@ -108,7 +74,23 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 
 
 		global_mutations += mut// add to global mutations list!
-*/
+	*/
+
+// Run AFTER genetics setup and AFTER species setup.
+/proc/setup_species()
+	// SPECIES GENETICS FUN
+	for(var/name in all_species)
+		// I hate BYOND.  Can't just call while it's in the list.
+		var/datum/species/species = all_species[name]
+		if(species.default_block_names.len>0)
+			testing("Setting up genetics for [species.name] (needs [english_list(species.default_block_names)])")
+			species.default_blocks.Cut()
+			for(var/block=1;block<STRUCDNASIZE;block++)
+				if(assigned_blocks[block] in species.default_block_names)
+					testing("  Found [assigned_blocks[block]] ([block])")
+					species.default_blocks.Add(block)
+			if(species.default_blocks.len)
+				all_species[name]=species
 
 
 /proc/setupfactions()

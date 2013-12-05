@@ -101,6 +101,17 @@
 			var/mob/living/carbon/human/h = mob
 			h.monkeyize()
 
+/datum/disease2/effect/catbeast
+	name = "Kingston Syndrome"
+	stage = 4
+	badness = 2
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		if(istype(mob,/mob/living/carbon/human))
+			var/mob/living/carbon/human/h = mob
+			if(h.species.name != "Tajaran")
+				if(h.set_species("Tajaran"))
+					h.regenerate_icons()
+
 /datum/disease2/effect/suicide
 	name = "Suicidal Syndrome"
 	stage = 4
@@ -141,6 +152,7 @@
 				H << "<span class='notice'>You can't feel your [E.display_name] anymore...</span>"
 				for (var/datum/organ/external/C in E.children)
 					C.status |= ORGAN_DEAD
+			H.update_body(1)
 		mob.adjustToxLoss(15*multiplier)
 
 	deactivate(var/mob/living/carbon/mob,var/multiplier)
@@ -150,6 +162,7 @@
 				E.status &= ~ORGAN_DEAD
 				for (var/datum/organ/external/C in E.children)
 					C.status &= ~ORGAN_DEAD
+			H.update_body(1)
 
 /datum/disease2/effect/immortal
 	name = "Longevity Syndrome"
@@ -207,8 +220,7 @@
 	stage = 3
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.dna.check_integrity()
-		var/newdna = setblock(mob.dna.struc_enzymes,REMOTETALKBLOCK,toggledblock(getblock(mob.dna.struc_enzymes,REMOTETALKBLOCK,3)),3)
-		mob.dna.struc_enzymes = newdna
+		mob.dna.SetSEState(REMOTETALKBLOCK,1)
 		domutcheck(mob, null)
 
 /datum/disease2/effect/mind

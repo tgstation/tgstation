@@ -20,8 +20,8 @@
 	var/mess = 0 //Need to clean out it if it's full of exploded clone.
 	var/attempting = 0 //One clone attempt at a time thanks
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
-	var/biomass = CLONE_BIOMASS
-	var/opened = 0.0
+	var/biomass = CLONE_BIOMASS * 3
+	var/opened = 0
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
@@ -133,7 +133,7 @@
 //Clonepod
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/datum/species/mrace)
+/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/list/ui, var/list/se, var/mindref, var/datum/species/mrace)
 	if(mess || attempting)
 		return 0
 	var/datum/mind/clonemind = locate(mindref)
@@ -203,10 +203,10 @@
 		H.dna = new /datum/dna()
 		H.dna.real_name = H.real_name
 	if(ui)
-		H.dna.uni_identity = ui
-		updateappearance(H, ui)
+		H.UpdateAppearance(ui)
 	if(se)
-		H.dna.struc_enzymes = se
+		H.dna.SE = se
+		H.dna.UpdateSE()
 		randmutb(H) //Sometimes the clones come out wrong.
 
 	H.f_style = "Shaved"
@@ -214,6 +214,7 @@
 		H.h_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 
 	H.species = mrace
+	H.add_language(mrace.language)
 	H.update_mutantrace()
 	H.suiciding = 0
 	src.attempting = 0
@@ -316,7 +317,7 @@
 					I.crit_fail = 1
 				I.loc = src.loc
 			del(src)
-			return 
+			return
 /*Removing cloning pod biomass
 	else if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
 		user << "\blue \The [src] processes \the [W]."

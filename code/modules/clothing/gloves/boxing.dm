@@ -23,5 +23,10 @@
 	item_state = "lgloves"
 	_color="mime"
 
+	stunglove // For Clown Planet's mimes. - N3X
+		New()
+			..()
+			cell = new /obj/item/weapon/cell/crap/empty(src)
+
 	redcoat
 		_color = "redcoat"		//Exists for washing machines. Is not different from white gloves in any way.

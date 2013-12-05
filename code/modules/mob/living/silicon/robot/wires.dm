@@ -43,6 +43,7 @@
 				src << "LawSync protocol engaged."
 				src.show_laws()
 		if (BORG_WIRE_AI_CONTROL) //Cut the AI wire to reset AI control
+			if(isMoMMI(src)) return
 			if (src.connected_ai)
 				src.connected_ai = null
 		if (BORG_WIRE_CAMERA)

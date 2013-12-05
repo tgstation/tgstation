@@ -39,7 +39,7 @@
 	reagents = R
 	R.my_atom = src
 
-	if(name == "monkey" || name == "farwa" || name == "stok" || name == "neara" || name == "diona nymph") //Hideous but necessary to stop Pun-Pun becoming generic.
+	if(name == initial(name)) //To stop Pun-Pun becoming generic.
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
 
@@ -48,8 +48,10 @@
 			gender = pick(MALE, FEMALE)
 		dna = new /datum/dna( null )
 		dna.real_name = real_name
-		dna.uni_identity = "00600200A00E0110148FC01300B009"
-		dna.struc_enzymes = "43359156756131E13763334D1C369012032164D4FE4CD61544B6C03F251B6C60A42821D26BA3B0FD6"
+		dna.ResetSE()
+		dna.ResetUI()
+		//dna.uni_identity = "00600200A00E0110148FC01300B009"
+		//dna.struc_enzymes = "43359156756131E13763334D1C369012032164D4FE4CD61544B6C03F251B6C60A42821D26BA3B0FD6"
 		dna.unique_enzymes = md5(name)
 				//////////blah
 		var/gendervar

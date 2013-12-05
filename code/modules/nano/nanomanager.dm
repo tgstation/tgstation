@@ -113,21 +113,13 @@
 		ui.close();
 
 /**
-
  * This is called when a player transfers from one mob to another
-
  * Transfers all open UIs to the new mob
-
  *
-
  * @param oldMob /mob The user's old mob
-
  * @param newMob /mob The user's new mob
-
  *
-
  * @return nothing
-
  */
 
 /datum/nanomanager/proc/user_transferred(var/mob/oldMob, var/mob/newMob)

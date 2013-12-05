@@ -720,7 +720,7 @@ Auto Patrol: []"},
 	Sa.overlays += image('icons/obj/aibots.dmi', "hs_hole")
 	Sa.created_name = src.name
 	new /obj/item/device/assembly/prox_sensor(Tsec)
-	new /obj/item/weapon/melee/baton(Tsec)
+	new /obj/item/weapon/melee/baton/loaded(Tsec)
 
 	if(prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)

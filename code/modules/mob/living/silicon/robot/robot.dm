@@ -223,6 +223,7 @@
 				camera.network.Add("Engineering")
 			module_sprites["Basic"] = "Engineering"
 			module_sprites["Antique"] = "engineerrobot"
+			module_sprites["Engiseer"] = "Engiseer"
 			module_sprites["Landmate"] = "landmate"
 
 		if("Janitor")

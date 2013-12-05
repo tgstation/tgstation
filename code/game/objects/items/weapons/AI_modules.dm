@@ -27,9 +27,9 @@ AI MODULES
 	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
 
 /obj/item/weapon/aiModule/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-	rec.glass += g_amt
-	rec.gold += gold_amt
-	rec.diamond += diamond_amt
+	rec.addMaterial("glass",  g_amt)
+	rec.addMaterial("gold",   gold_amt)
+	rec.addMaterial("diamond",diamond_amt)
 	return 1
 
 /obj/item/weapon/aiModule/attack_ai(mob/user as mob)

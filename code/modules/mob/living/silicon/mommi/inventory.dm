@@ -9,6 +9,11 @@
 	var/obj/item/found
 	if(istype(W, src.module.emag.type))
 		found = W
+	// Exact matching for stacks (so we can load machines)
+	if(istype(W, /obj/item/stack/sheet))
+		for(var/obj/item/stack/sheet/S in src.module.modules)
+			if(S.type==W.type)
+				return S
 	else
 		found = locate(W) in src.module.modules
 	return found
@@ -37,7 +42,12 @@
 	tool_state = W
 	W.layer = 20
 	contents += W
-	inv_tool.icon_state = "inv1"
+
+	// Make crap we pick up active so there's less clicking and carpal. - N3X
+	module_active=tool_state
+	inv_tool.icon_state = "inv1 +a"
+	inv_sight.icon_state = "sight"
+
 	update_items()
 	return 1
 

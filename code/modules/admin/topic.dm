@@ -47,12 +47,9 @@
 				if(!makeDeathsquad())
 					usr << "\red Unfortunatly there were no candidates available"
 			if("11")
-				usr << "\red Vox Raiders is removed indefinately."
-				/* REMOVED as requested
 				log_admin("[key_name(usr)] has spawned vox raiders.")
 				if(!src.makeVoxRaiders())
 					usr << "\red Unfortunately there weren't enough candidates available."
-				*/
 	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"])
 		var/adminckey = href_list["dbsearchadmin"]
 		var/playerckey = href_list["dbsearchckey"]
@@ -1320,6 +1317,19 @@
 
 		usr.client.cmd_admin_animalize(M)
 
+	else if(href_list["togmutate"])
+		if(!check_rights(R_SPAWN))	return
+
+		var/mob/living/carbon/human/H = locate(href_list["togmutate"])
+		if(!istype(H))
+			usr << "This can only be used on instances of type /mob/living/carbon/human"
+			return
+		var/block=text2num(href_list["block"])
+		//testing("togmutate([href_list["block"]] -> [block])")
+		usr.client.cmd_admin_toggle_block(H,block)
+		show_player_panel(H)
+		//H.regenerate_icons()
+
 /***************** BEFORE**************
 
 	if (href_list["l_players"])
@@ -1538,7 +1548,49 @@
 
 		src.owner << "You sent [input] to [H] via a secure channel."
 		log_admin("[src.owner] replied to [key_name(H)]'s Syndicate message with the message [input].")
-		H << "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. [input].  Message ends.\""
+		H << "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. <b>\"[input]\"</b>  Message ends.\""
+
+	else if(href_list["CentcommFaxView"])
+		var/info = locate(href_list["CentcommFaxView"])
+
+		usr << browse("<HTML><HEAD><TITLE>Centcomm Fax Message</TITLE></HEAD><BODY>[info]</BODY></HTML>", "window=Centcomm Fax Message")
+
+	else if(href_list["CentcommFaxReply"])
+		var/mob/living/carbon/human/H = locate(href_list["CentcommFaxReply"])
+
+		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via secure connection. NOTE: BBCode does not work, but HTML tags do! Use <br> for line breaks.", "Outgoing message from Centcomm", "") as message|null
+		if(!input)	return
+
+		var/customname = input(src.owner, "Pick a title for the report", "Title") as text|null
+
+		for(var/obj/machinery/faxmachine/F in machines)
+			if(! (F.stat & (BROKEN|NOPOWER) ) )
+
+				// animate! it's alive!
+				flick("faxreceive", F)
+
+				// give the sprite some time to flick
+				spawn(20)
+					var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( F.loc )
+					P.name = "[command_name()]- [customname]"
+					P.info = input
+					P.update_icon()
+
+					playsound(F.loc, "sound/items/polaroid1.ogg", 50, 1)
+
+					// Stamps
+					var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
+					stampoverlay.icon_state = "paper_stamp-cent"
+					if(!P.stamped)
+						P.stamped = new
+					P.stamped += /obj/item/weapon/stamp
+					P.overlays += stampoverlay
+					P.stamps += "<HR><i>This paper has been stamped by the Central Command Quantum Relay.</i>"
+
+		src.owner << "Message reply to transmitted successfully."
+		log_admin("[key_name(src.owner)] replied to a fax message from [key_name(H)]: [input]")
+		message_admins("[key_name_admin(src.owner)] replied to a fax message from [key_name_admin(H)]", 1)
+
 
 	else if(href_list["jumpto"])
 		if(!check_rights(R_ADMIN))	return
@@ -1799,6 +1851,27 @@
 					log_admin("[key_name(usr)] toggled gravity off.", 1)
 					message_admins("\blue [key_name_admin(usr)] toggled gravity off.", 1)
 					command_alert("Feedback surge detected in mass-distributions systems. Artifical gravity has been disabled whilst the system reinitializes. Further failures may result in a gravitational collapse and formation of blackholes. Have a nice day.")
+			if("wave")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","Meteor")
+				log_admin("[key_name(usr)] spawned a meteor wave", 1)
+				message_admins("\blue [key_name_admin(usr)] spawned a meteor wave.", 1)
+				new /datum/event/meteor_wave
+			if("goblob")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","Blob")
+				log_admin("[key_name(usr)] spawned a blob", 1)
+				message_admins("\blue [key_name_admin(usr)] spawned a blob.", 1)
+				new /datum/event/blob
+
+			if("aliens")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","Aliens")
+				log_admin("[key_name(usr)] spawned an alien infestation", 1)
+				message_admins("\blue [key_name_admin(usr)] attempted an alien infestation", 1)
+				new /datum/event/alien_infestation
+
+
 			if("power")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","P")
@@ -1953,7 +2026,7 @@
 					if(20)	MAX_EXPLOSION_RANGE = 28
 					if(28)	MAX_EXPLOSION_RANGE = 56
 					if(56)	MAX_EXPLOSION_RANGE = 128
-					if(128)	MAX_EXPLOSION_RANGE = 14
+					else	MAX_EXPLOSION_RANGE = 14
 				var/range_dev = MAX_EXPLOSION_RANGE *0.25
 				var/range_high = MAX_EXPLOSION_RANGE *0.5
 				var/range_low = MAX_EXPLOSION_RANGE
@@ -2033,6 +2106,76 @@
 					spawn(0)
 						sleep(rand(30,400))
 						Wall.ex_act(rand(2,1)) */
+			if("wave")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","MW")
+				new /datum/event/meteor_wave
+
+			if("gravanomalies")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","GA")
+				command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
+				world << sound('sound/AI/granomalies.ogg')
+				var/turf/T = pick(blobstart)
+				var/obj/effect/bhole/bh = new /obj/effect/bhole( T.loc, 30 )
+				spawn(rand(100, 600))
+					del(bh)
+
+			if("timeanomalies")	//dear god this code was awful :P Still needs further optimisation
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","STA")
+				//moved to its own dm so I could split it up and prevent the spawns copying variables over and over
+				//can be found in code\game\game_modes\events\wormholes.dm
+				wormhole_event()
+
+			if("goblob")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","BL")
+				mini_blob_event()
+				message_admins("[key_name_admin(usr)] has spawned blob", 1)
+			if("aliens")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","AL")
+				if(aliens_allowed)
+					new /datum/event/alien_infestation
+					message_admins("[key_name_admin(usr)] has spawned aliens", 1)
+			if("alien_silent")								//replaces the spawn_xeno verb
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","ALS")
+				if(aliens_allowed)
+					create_xeno()
+			if("spiders")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","SL")
+				new /datum/event/spider_infestation
+				message_admins("[key_name_admin(usr)] has spawned spiders", 1)
+			if("comms_blackout")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","CB")
+				var/answer = alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No")
+				if(answer == "Yes")
+					communications_blackout(0)
+				else
+					communications_blackout(1)
+				message_admins("[key_name_admin(usr)] triggered a communications blackout.", 1)
+			if("spaceninja")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","SN")
+				if(toggle_space_ninja)
+					if(space_ninja_arrival())//If the ninja is actually spawned. They may not be depending on a few factors.
+						message_admins("[key_name_admin(usr)] has sent in a space ninja", 1)
+			if("carp")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","C")
+				var/choice = input("You sure you want to spawn carp?") in list("Badmin", "Cancel")
+				if(choice == "Badmin")
+					message_admins("[key_name_admin(usr)] has spawned carp.", 1)
+					new /datum/event/carp_migration
+			if("radiation")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","R")
+				message_admins("[key_name_admin(usr)] has has irradiated the station", 1)
+				new /datum/event/radiation_storm
 			if("immovable")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","IR")
@@ -2190,7 +2333,7 @@
 			if("spacevines")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","K")
-				//new /datum/event/spacevine
+				new /datum/event/spacevine
 				message_admins("[key_name_admin(usr)] has spawned spacevines", 1)
 			if("onlyone")
 				feedback_inc("admin_secrets_fun_used",1)

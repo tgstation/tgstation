@@ -159,9 +159,13 @@ datum/preferences
 		for(var/name in organ_data)
 			if(organ_data[name] == "amputated") continue
 
-			var/icon/temp = new /icon(icobase, "[name]")
-			if(organ_data[name] == "cyborg")
-				temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+			var/o_icobase=icobase
+			if(organ_data[name] == "peg")
+				o_icobase='icons/mob/human_races/o_peg.dmi'
+			else if(organ_data[name] == "cyborg")
+				o_icobase='icons/mob/human_races/o_robot.dmi'
+
+			var/icon/temp = new /icon(o_icobase, "[name]")
 
 			preview_icon.Blend(temp, ICON_OVERLAY)
 

@@ -69,6 +69,10 @@ var/const/VOX_DELAY = 600
 		src << "<span class='notice'>Please wait [round((announcing_vox - world.time) / 10)] seconds.</span>"
 		return
 
+	if(control_disabled)
+		src << "<span class='notice'>Wireless interface disabled, unable to interact with announcement PA.</span>"
+		return
+
 	var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text
 
 	last_announcement = message
@@ -83,7 +87,7 @@ var/const/VOX_DELAY = 600
 		words.len = 30
 
 	for(var/word in words)
-		word = trim(word)
+		word = lowertext(trim(word))
 		if(!word)
 			words -= word
 			continue

@@ -12,6 +12,14 @@
 	var/health = 10
 	var/destroyed = 0
 
+/obj/structure/grille/fence/east_west
+	//width=80
+	//height=42
+	icon='icons/fence-ew.dmi'
+/obj/structure/grille/fence/north_south
+	//width=80
+	//height=42
+	icon='icons/fence-ns.dmi'
 
 /obj/structure/grille/ex_act(severity)
 	del(src)
@@ -145,9 +153,9 @@
 					return
 			var/obj/structure/window/WD
 			if(istype(W,/obj/item/stack/sheet/rglass))
-				WD = new/obj/structure/window(loc,1) //reinforced window
+				WD = new/obj/structure/window/reinforced(loc,1) //reinforced window
 			else
-				WD = new/obj/structure/window(loc,0) //normal window
+				WD = new/obj/structure/window/basic(loc,0) //normal window
 			WD.dir = dir_to_set
 			WD.ini_dir = dir_to_set
 			WD.anchored = 0

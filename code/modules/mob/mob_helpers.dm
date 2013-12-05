@@ -141,6 +141,12 @@ proc/isorgan(A)
 		return 1
 	return 0
 
+/proc/isloyal(A) //Checks to see if the person contains a loyalty implant, then checks that the implant is actually inside of them
+	for(var/obj/item/weapon/implant/loyalty/L in A)
+		if(L && L.implanted)
+			return 1
+	return 0
+
 proc/hasorgans(A)
 	return ishuman(A)
 
@@ -364,9 +370,11 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 
 /proc/findname(msg)
+	if(!istext(msg))
+		msg = "[msg]"
 	for(var/mob/M in mob_list)
-		if (M.real_name == text("[msg]"))
-			return 1
+		if(M.real_name == msg)
+			return M
 	return 0
 
 
@@ -475,3 +483,9 @@ var/list/intents = list("help","disarm","grab","hurt")
 				hud_used.action_intent.icon_state = "harm"
 			else
 				hud_used.action_intent.icon_state = "help"
+proc/is_blind(A)
+	if(istype(A, /mob/living/carbon))
+		var/mob/living/carbon/C = A
+		if(C.blinded != null)
+			return 1
+	return 0

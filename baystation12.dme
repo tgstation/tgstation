@@ -7,6 +7,7 @@
 #define FILE_DIR .
 // END_FILE_DIR
 // BEGIN_PREFERENCES
+#define DEBUG
 // END_PREFERENCES
 // BEGIN_INCLUDE
 #include "code\global.dm"
@@ -152,7 +153,6 @@
 #include "code\game\atoms.dm"
 #include "code\game\atoms_movable.dm"
 #include "code\game\communications.dm"
-#include "code\game\dna.dm"
 #include "code\game\hud.dm"
 #include "code\game\response_team.dm"
 #include "code\game\shuttle_engines.dm"
@@ -164,6 +164,8 @@
 #include "code\game\area\ai_monitored.dm"
 #include "code\game\area\areas.dm"
 #include "code\game\area\Space Station 13 areas.dm"
+#include "code\game\dna\dna2.dm"
+#include "code\game\dna\dna2_helpers.dm"
 #include "code\game\dna\dna_modifier.dm"
 #include "code\game\gamemodes\events.dm"
 #include "code\game\gamemodes\factions.dm"
@@ -459,6 +461,7 @@
 #include "code\game\objects\items\devices\flashlight.dm"
 #include "code\game\objects\items\devices\handtv.dm"
 #include "code\game\objects\items\devices\lightreplacer.dm"
+#include "code\game\objects\items\devices\megaphone.dm"
 #include "code\game\objects\items\devices\multitool.dm"
 #include "code\game\objects\items\devices\paicard.dm"
 #include "code\game\objects\items\devices\pipe_painter.dm"
@@ -497,6 +500,7 @@
 #include "code\game\objects\items\stacks\tiles\plasteel.dm"
 #include "code\game\objects\items\stacks\tiles\tile_types.dm"
 #include "code\game\objects\items\weapons\AI_modules.dm"
+#include "code\game\objects\items\weapons\airlock_painter.dm"
 #include "code\game\objects\items\weapons\cards_ids.dm"
 #include "code\game\objects\items\weapons\cigs_lighters.dm"
 #include "code\game\objects\items\weapons\clown_items.dm"
@@ -701,6 +705,7 @@
 #include "code\modules\assembly\shock_kit.dm"
 #include "code\modules\assembly\signaler.dm"
 #include "code\modules\assembly\timer.dm"
+#include "code\modules\assembly\voice.dm"
 #include "code\modules\awaymissions\bluespaceartillery.dm"
 #include "code\modules\awaymissions\corpse.dm"
 #include "code\modules\awaymissions\exile.dm"
@@ -827,6 +832,7 @@
 #include "code\modules\mining\money_bag.dm"
 #include "code\modules\mining\ores_coins.dm"
 #include "code\modules\mining\satchel_ore_boxdm.dm"
+#include "code\modules\mining\smelting.dm"
 #include "code\modules\mob\death.dm"
 #include "code\modules\mob\emote.dm"
 #include "code\modules\mob\inventory.dm"
@@ -861,6 +867,7 @@
 #include "code\modules\mob\living\carbon\carbon.dm"
 #include "code\modules\mob\living\carbon\carbon_defines.dm"
 #include "code\modules\mob\living\carbon\give.dm"
+#include "code\modules\mob\living\carbon\inventory.dm"
 #include "code\modules\mob\living\carbon\shock.dm"
 #include "code\modules\mob\living\carbon\species.dm"
 #include "code\modules\mob\living\carbon\alien\alien.dm"
@@ -1272,6 +1279,9 @@
 #include "code\modules\surgery\ribcage.dm"
 #include "code\modules\surgery\robolimbs.dm"
 #include "code\modules\surgery\surgery.dm"
+#include "code\modules\telesci\gps.dm"
+#include "code\modules\telesci\telepad.dm"
+#include "code\modules\telesci\telesci_computer.dm"
 #include "code\modules\virus2\analyser.dm"
 #include "code\modules\virus2\antibodies.dm"
 #include "code\modules\virus2\centrifuge.dm"

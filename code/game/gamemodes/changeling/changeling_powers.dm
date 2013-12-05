@@ -187,7 +187,7 @@
 	src.dna = chosen_dna
 	src.real_name = chosen_dna.real_name
 	src.flavor_text = ""
-	updateappearance(src, src.dna.uni_identity)
+	src.UpdateAppearance()
 	domutcheck(src, null)
 
 	src.verbs -= /mob/proc/changeling_transform
@@ -314,7 +314,7 @@
 			W.layer = initial(W.layer)
 
 	var/mob/living/carbon/human/O = new /mob/living/carbon/human( src )
-	if (isblockon(getblock(C.dna.uni_identity, 11,3),11))
+	if (C.dna.GetUIState(DNA_UI_GENDER))
 		O.gender = FEMALE
 	else
 		O.gender = MALE
@@ -327,7 +327,7 @@
 
 	O.loc = C.loc
 
-	updateappearance(O,O.dna.uni_identity)
+	O.UpdateAppearance()
 	domutcheck(O, null)
 	O.setToxLoss(C.getToxLoss())
 	O.adjustBruteLoss(C.getBruteLoss())
@@ -458,6 +458,10 @@
 	changeling.chem_charges -= 45
 
 	var/mob/living/carbon/human/C = src
+	if(ishuman(src))
+		var/mob/living/carbon/human/H=src
+		if(H.said_last_words)
+			H.said_last_words=0
 	C.stat = 0
 	C.SetParalysis(0)
 	C.SetStunned(0)
@@ -757,7 +761,7 @@ var/list/datum/dna/hivemind_bank = list()
 	T.visible_message("<span class='warning'>[T] transforms!</span>")
 	T.dna = chosen_dna
 	T.real_name = chosen_dna.real_name
-	updateappearance(T, T.dna.uni_identity)
+	T.UpdateAppearance()
 	domutcheck(T, null)
 	feedback_add_details("changeling_powers","TS")
 	return 1
