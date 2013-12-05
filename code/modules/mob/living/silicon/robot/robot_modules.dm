@@ -20,7 +20,6 @@
 		..()
 		return
 
-
 	New()
 		src.modules += new /obj/item/device/flashlight(src)
 		src.modules += new /obj/item/device/flash(src)
@@ -53,6 +52,12 @@
 		src.modules += new /obj/item/device/healthanalyzer(src)
 		src.emag = new /obj/item/weapon/melee/energy/sword(src)
 		return
+
+	respawn_consumable(var/mob/living/silicon/robot/R)
+		// Recharge baton battery
+		for(var/obj/item/weapon/melee/baton/B in src.modules)
+			if(B && B.bcell)
+				B.bcell.give(175)
 
 
 
@@ -140,7 +145,13 @@
 		src.emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
 		return
 
-
+	respawn_consumable(var/mob/living/silicon/robot/R)
+		// Recharge baton battery
+		for(var/obj/item/M in src.modules)
+			if(istype(M,/obj/item/weapon/melee/baton))
+				var/obj/item/weapon/melee/baton/B=M
+				if(B && B.bcell)
+					B.bcell.give(175)
 
 /obj/item/weapon/robot_module/janitor
 	name = "janitorial robot module"
