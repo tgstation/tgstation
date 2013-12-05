@@ -26,12 +26,14 @@ datum/hSB
 	var/objinfo = null
 	var/canisterinfo = null
 	var/hsbinfo = null
-
+	// This is a list of banned items, they've been banned due to being technical or just for grief.
 	var/global/list/spawn_forbidden = list(
 		/obj/item/weapon/grab, /obj/item/tk_grab, /obj/item/weapon/implant, // not implanter, the actual thing that is inside you
 		/obj/item/assembly,/obj/item/device/onetankbomb, /obj/item/radio, /obj/item/device/pda/ai,
 		/obj/item/device/uplink/hidden, /obj/item/smallDelivery, /obj/item/missile,/obj/item/projectile,
-		/obj/item/borg/sight,/obj/item/borg/overdrive,/obj/item/borg/stun)
+		/obj/item/borg/sight,/obj/item/borg/overdrive,/obj/item/borg/stun,/obj/item/organ,
+		/obj/item/alien_embryo,/obj/item/weapon/robot_module,/obj/item/weapon/storage/secure/safe,
+		/obj/item/weapon/veilrender,/obj/item/device/radio/intercom)
 
 	proc
 		update()
@@ -56,7 +58,7 @@ datum/hSB
 					"Spawn 50 Glass"					= "hsbglass",
 					"Spawn Full Cable Coil"				= "hsbspawn&path=[/obj/item/weapon/cable_coil]",
 					"Spawn Hyper Capacity Power Cell"	= "hsbspawn&path=[/obj/item/weapon/cell/hyper]",
-					"Spawn Inf. Capacity Power Cell"	= "hsbspawn&path=[/obj/item/weapon/cell/infinte]",
+					"Spawn Inf. Capacity Power Cell"	= "hsbspawn&path=[/obj/item/weapon/cell/infinite]",
 					"Spawn Rapid Construction Device"	= "hsbrcd",
 					"Spawn RCD Ammo"					= "hsb_safespawn&path=[/obj/item/weapon/rcd_ammo]",
 					"Spawn Airlock"						= "hsbairlock",
