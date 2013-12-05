@@ -26,14 +26,12 @@ datum/hSB
 	var/objinfo = null
 	var/canisterinfo = null
 	var/hsbinfo = null
-	// This is a list of banned items, they've been banned due to being technical or just for grief.
+	//items that shouldn't spawn on the floor because they would bug or act weird
 	var/global/list/spawn_forbidden = list(
 		/obj/item/weapon/grab, /obj/item/tk_grab, /obj/item/weapon/implant, // not implanter, the actual thing that is inside you
 		/obj/item/assembly,/obj/item/device/onetankbomb, /obj/item/radio, /obj/item/device/pda/ai,
 		/obj/item/device/uplink/hidden, /obj/item/smallDelivery, /obj/item/missile,/obj/item/projectile,
-		/obj/item/borg/sight,/obj/item/borg/overdrive,/obj/item/borg/stun,/obj/item/organ,
-		/obj/item/alien_embryo,/obj/item/weapon/robot_module,/obj/item/weapon/storage/secure/safe,
-		/obj/item/weapon/veilrender,/obj/item/device/radio/intercom)
+		/obj/item/borg/sight,/obj/item/borg/overdrive,/obj/item/borg/stun,/obj/item/weapon/robot_module)
 
 	proc
 		update()
@@ -85,11 +83,10 @@ datum/hSB
 					hsbinfo += "- <a href='?src=\ref[src];hsb=hsbtobj'>Toggle Object Spawning</a><br>"
 					hsbinfo += "- <a href='?src=\ref[src];hsb=hsbtac'>Toggle Item Spawn Panel Auto-close</a><br>"
 					hsbinfo += "<b>Canister Spawning</b><br>"
-					hsbinfo += "<i>Remember, the first rule about adminbuse, is don't talk about the adminbuse</i><br>"
-					hsbinfo += "- <a href='?src=\ref[src];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/toxins]'><b>!!!DANGER!!!</b> Spawn Plasma Canister</a><br>"
-					hsbinfo += "- <a href='?src=\ref[src];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/carbon_dioxide]'><b>!!!DANGER!!!</b> Spawn CO2 Canister</a><br>"
-					hsbinfo += "- <a href='?src=\ref[src];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/nitrogen]'><b>!!!DANGER!!!</b> Spawn Nitrogen Canister</a><br>"
-					hsbinfo += "- <a href='?src=\ref[src];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/sleeping_agent]'><b>!!!DANGER!!!</b> Spawn N2O Canister</a><hr>"
+					hsbinfo += "- <a href='?src=\ref[src];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/toxins]'>Spawn Plasma Canister</a><br>"
+					hsbinfo += "- <a href='?src=\ref[src];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/carbon_dioxide]'>Spawn CO2 Canister</a><br>"
+					hsbinfo += "- <a href='?src=\ref[src];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/nitrogen]'>Spawn Nitrogen Canister</a><br>"
+					hsbinfo += "- <a href='?src=\ref[src];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/sleeping_agent]'>Spawn N2O Canister</a><hr>"
 				else
 					hsbinfo += "<i>Some item spawning may be disabled by the administrators.</i><br>"
 					hsbinfo += "<i>Only administrators may spawn dangerous canisters.</i><br>"
