@@ -268,7 +268,11 @@ datum/shuttle_controller
 							var/turf/D = locate(T.x, throwy - 1, 1)
 							//var/turf/E = get_step(D, SOUTH)
 							for(var/atom/movable/AM as mob|obj in T)
-								AM.Move(D)
+								if(ismob(AM))
+									var/mob/M=AM
+									M.gib()
+								else
+									AM.Move(D)
 								// NOTE: Commenting this out to avoid recreating mass driver glitch
 								/*
 								spawn(0)
