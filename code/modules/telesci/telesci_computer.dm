@@ -223,6 +223,10 @@
 	trueY = Clamp(trueY, 1, world.maxy)
 	if(telepad)
 		var/turf/target = locate(trueX, trueY, z_co)
+		var/area/A=target.loc
+		if(A && A.jammed)
+			src.visible_message("\red \icon[src] [src] buzzes.", "\icon[src]\red You hear something buzz.")
+			return
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, telepad)
 		s.start()
