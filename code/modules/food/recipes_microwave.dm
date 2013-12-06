@@ -27,7 +27,7 @@
 
 /*
 /datum/recipe/bananaphone
-	reagents = list("psilocybin" = 5) //Trippin' balls, man.
+	reagents = list("mushroomhallucinogen" = 5) //Trippin' balls, man.
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
 		/obj/item/device/radio
@@ -704,7 +704,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/tomatosoup
 
 /datum/recipe/rofflewaffles
-	reagents = list("psilocybin" = 5, "flour" = 10)
+	reagents = list("mushroomhallucinogen" = 5, "flour" = 10)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/weapon/reagent_containers/food/snacks/egg,

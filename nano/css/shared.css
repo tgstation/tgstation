@@ -220,8 +220,7 @@ h4
 
 .notice
 {
-	position: relative;
-	background: url(uiNoticeBackground.jpg) 50% 50% repeat;
+	background: url(uiNoticeBackground.jpg) 0 0 repeat;
 	color: #15345A;
 	font-size: 12px;
 	font-style: italic;

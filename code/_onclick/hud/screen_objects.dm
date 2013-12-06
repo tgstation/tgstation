@@ -179,6 +179,10 @@
 				var/mob/living/carbon/human/H = usr
 				H.quick_equip()
 
+		if("current sting")
+			var/mob/living/carbon/U = usr
+			U.unset_sting()
+
 		if("resist")
 			if(isliving(usr))
 				var/mob/living/L = usr
@@ -201,26 +205,6 @@
 						usr.hud_used.move_intent.icon_state = "running"
 				if(istype(usr,/mob/living/carbon/alien/humanoid))
 					usr.update_icons()
-		if("m_intent")
-			if(!usr.m_int)
-				switch(usr.m_intent)
-					if("run")
-						usr.m_int = "13,14"
-					if("walk")
-						usr.m_int = "14,14"
-					if("face")
-						usr.m_int = "15,14"
-			else
-				usr.m_int = null
-		if("walk")
-			usr.m_intent = "walk"
-			usr.m_int = "14,14"
-		if("face")
-			usr.m_intent = "face"
-			usr.m_int = "15,14"
-		if("run")
-			usr.m_intent = "run"
-			usr.m_int = "13,14"
 		if("Reset Machine")
 			usr.unset_machine()
 		if("internal")

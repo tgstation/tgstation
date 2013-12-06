@@ -104,7 +104,7 @@ var/list/uplink_items = list()
 	name = "C-20r Submachine Gun"
 	desc = "A fully-loaded Scarborough Arms-developed submachine gun that fires 12mm automatic rounds with a 20-round magazine."
 	item = /obj/item/weapon/gun/projectile/automatic/c20r
-	cost = 8
+	cost = 7
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/machinegun
@@ -159,7 +159,7 @@ var/list/uplink_items = list()
 	desc = "A chemical sprayer that allows a wide dispersal of selected chemicals. Especially tailored by the Tiger Cooperative, the deadly blend it comes stocked with will disorient, damage, and disable your foes... \
 	Use with extreme caution, to prevent exposure to yourself and your fellow operatives."
 	item = /obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror
-	cost = 15
+	cost = 10
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/gygax
@@ -201,7 +201,7 @@ var/list/uplink_items = list()
 	name = "Ammo-10mm"
 	desc = "An additional 8-round 10mm magazine for use in the Stetchkin pistol."
 	item = /obj/item/ammo_box/magazine/m10mm
-	cost = 2
+	cost = 1
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/machinegun
@@ -241,7 +241,7 @@ var/list/uplink_items = list()
 	name = "Stetchkin Silencer"
 	desc = "Fitted for use on the Stetchkin pistol, this silencer will make its shots quieter when equipped onto it."
 	item = /obj/item/weapon/silencer
-	cost = 3
+	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 
 // STEALTHY TOOLS
