@@ -25,63 +25,61 @@
 	usr << "It contains [reagents.total_volume] unit\s of liquid!"
 	//everything else is visible, so doesn't need to be mentioned
 
+/obj/structure/janitorialcart/proc/wet_mop(obj/item/weapon/mop, mob/user)
+	if(reagents.total_volume < 1)
+		user << "[src] is out of water!</span>"
+	else
+		reagents.trans_to(mop, 5)	//
+		user << "<span class='notice'>You wet [mop] in [src].</span>"
+		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+
+/obj/structure/janitorialcart/proc/put_in_cart(obj/item/I, mob/user)
+	user.drop_item()
+	I.loc = src
+	update_icon()
+	updateUsrDialog()
+	user << "<span class='notice'>You put [I] into [src].</span>"
+	return I
 
 /obj/structure/janitorialcart/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/storage/bag/trash) && !mybag)
-		user.drop_item()
-		mybag = I
-		I.loc = src
-		update_icon()
-		updateUsrDialog()
-		user << "<span class='notice'>You put [I] into [src].</span>"
+	var/fail_msg = "<span class='notice'>There is already one of those in [src].</span>"
 
-	else if(istype(I, /obj/item/weapon/mop))
+	if(istype(I, /obj/item/weapon/mop))
 		if(I.reagents.total_volume < I.reagents.maximum_volume)	//if it's not completely soaked we assume they want to wet it, otherwise store it
-			if(reagents.total_volume < 1)
-				user << "[src] is out of water!</span>"
-			else
-				reagents.trans_to(I, 5)	//
-				user << "<span class='notice'>You wet [I] in [src].</span>"
-				playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
-				return
+			wet_mop(I, user)
+			return
+		if(isrobot(user))
+			user << "<span class='notice'>You are a robot. No.</span>"
+			return
 		if(!mymop)
-			user.drop_item()
-			mymop = I
-			I.loc = src
-			update_icon()
-			updateUsrDialog()
-			user << "<span class='notice'>You put [I] into [src].</span>"
+			mymop=put_in_cart(I,user)
+		else user <<  fail_msg;	return
 
-	else if(istype(I, /obj/item/weapon/reagent_containers/spray) && !myspray)
-		user.drop_item()
-		myspray = I
-		I.loc = src
-		update_icon()
-		updateUsrDialog()
-		user << "<span class='notice'>You put [I] into [src].</span>"
 
-	else if(istype(I, /obj/item/device/lightreplacer) && !myreplacer)
-		user.drop_item()
-		myreplacer = I
-		I.loc = src
-		update_icon()
-		updateUsrDialog()
-		user << "<span class='notice'>You put [I] into [src].</span>"
-
+	else if(isrobot(user))
+		user << "<span class='notice'>You are a robot. No.</span>"
+		return
+	else if(istype(I, /obj/item/weapon/storage/bag/trash))
+		if(!mybag)
+			mybag=put_in_cart(I, user)
+		else user <<  fail_msg;	return
+	else if(istype(I, /obj/item/weapon/reagent_containers/spray))
+		if(!myspray)
+			myspray=put_in_cart(I, user)
+		else user << fail_msg;	return
+	else if(istype(I, /obj/item/device/lightreplacer))
+		if(!myreplacer)
+			myreplacer = put_in_cart(I,user)
+		else user << fail_msg;	return
 	else if(istype(I, /obj/item/weapon/caution))
 		if(signs < 4)
-			user.drop_item()
-			I.loc = src
+			put_in_cart(I, user)
 			signs++
-			update_icon()
-			updateUsrDialog()
-			user << "<span class='notice'>You put [I] into [src].</span>"
 		else
 			user << "<span class='notice'>[src] can't hold any more signs.</span>"
-
+			return
 	else if(mybag)
 		mybag.attackby(I, user)
-
 
 /obj/structure/janitorialcart/attack_hand(mob/user)
 	user.set_machine(src)
