@@ -45,7 +45,7 @@
 	var/minimal_player_age = 0
 
 /datum/job/proc/equip(var/mob/living/carbon/human/H)
-	if(!H && flag==AI && flag == CYBORG)	return 0	//Do not give borgs PDAs
+	if(!H || flag==AI || flag == CYBORG)	return 0	//Do not give borgs PDAs
 	if(H.id2pda)
 		H.equip_to_slot_or_del(new PDA_job_path(H), slot_wear_id)
 	else
