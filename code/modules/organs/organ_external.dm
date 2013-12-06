@@ -188,6 +188,28 @@
 	var/result = update_icon()
 	return result
 
+/*
+This function completely restores a damaged organ to perfect condition.
+*/
+/datum/organ/external/proc/rejuvenate()
+	damage_state = "00"
+	status = 0
+	perma_injury = 0
+	brute_dam = 0
+	burn_dam = 0
+
+	// handle internal organs
+	for(var/datum/organ/internal/current_organ in internal_organs)
+		current_organ.rejuvenate()
+
+	// remove embedded objects and drop them on the floor
+	for(var/obj/implanted_object in implants)
+		if(!istype(implanted_object,/obj/item/weapon/implant))	// We don't want to remove REAL implants. Just shrapnel etc.
+			implanted_object.loc = owner.loc
+			implants -= implanted_object
+
+	owner.updatehealth()
+
 
 /datum/organ/external/proc/createwound(var/type = CUT, var/damage)
 	if(damage == 0) return
@@ -814,27 +836,6 @@ obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 			else
 				base.Blend(rgb(-H.s_tone,  -H.s_tone,  -H.s_tone), ICON_SUBTRACT)
 
-		//this is put here since I can't easially edit the same icon from head's constructor
-		if(istype(src, /obj/item/weapon/organ/head))
-			//Add (facial) hair.
-			if(H.f_style)
-				var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[H.f_style]
-				if(facial_hair_style)
-					var/icon/facial = new/icon("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_l")
-					if(facial_hair_style.do_colouration)
-						facial.Blend(rgb(H.r_facial, H.g_facial, H.b_facial), ICON_ADD)
-
-					base.Blend(facial, ICON_OVERLAY)
-
-			if(H.h_style && !(H.head && (H.head.flags & BLOCKHEADHAIR)))
-				var/datum/sprite_accessory/hair_style = hair_styles_list[H.h_style]
-				if(hair_style)
-					var/icon/hair = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_l")
-					if(hair_style.do_colouration)
-						hair.Blend(rgb(H.r_hair, H.g_hair, H.b_hair), ICON_ADD)
-
-					base.Blend(hair, ICON_OVERLAY)
-
 	icon = base
 
 
@@ -876,6 +877,24 @@ obj/item/weapon/organ/head/New(loc, mob/living/carbon/human/H)
 	if(istype(H))
 		src.icon_state = H.gender == MALE? "head_m" : "head_f"
 	..()
+	//Add (facial) hair.
+	if(H.f_style)
+		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[H.f_style]
+		if(facial_hair_style)
+			var/icon/facial = new/icon("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s")
+			if(facial_hair_style.do_colouration)
+				facial.Blend(rgb(H.r_facial, H.g_facial, H.b_facial), ICON_ADD)
+
+			overlays.Add(facial) // icon.Blend(facial, ICON_OVERLAY)
+
+	if(H.h_style && !(H.head && (H.head.flags & BLOCKHEADHAIR)))
+		var/datum/sprite_accessory/hair_style = hair_styles_list[H.h_style]
+		if(hair_style)
+			var/icon/hair = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
+			if(hair_style.do_colouration)
+				hair.Blend(rgb(H.r_hair, H.g_hair, H.b_hair), ICON_ADD)
+
+			overlays.Add(hair) //icon.Blend(hair, ICON_OVERLAY)
 	spawn(5)
 	if(brainmob && brainmob.client)
 		brainmob.client.screen.len = null //clear the hud
@@ -890,8 +909,8 @@ obj/item/weapon/organ/head/New(loc, mob/living/carbon/human/H)
 
 	H.regenerate_icons()
 
-	H.stat = 2
-	H.death()
+    brainmob.stat = 2
+    brainmob.death()
 
 obj/item/weapon/organ/head/proc/transfer_identity(var/mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
 	brainmob = new(src)
