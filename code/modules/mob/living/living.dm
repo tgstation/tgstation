@@ -417,12 +417,11 @@
 		return
 	usr.next_move = world.time + 30
 	var/mob/living/L = usr
-	if(!L.stat && L.canmove && !L.restrained()&& L.last_special <= world.time)
+	if(!L.stat && L.canmove && !L.restrained())
 		var/D = L.dir
 		var/obj/O = L.Can_Climb()
 		if(O)
 			L.next_move = world.time + 100
-			L.last_special = world.time + 100
 			L.visible_message("<span class='warning'>[usr] attempts to climb over [O]!</span>", \
 						"<span class='notice'>You attempt to climb ontop of [O]. (This will take around half a minute and you need to stay still.)</span>")
 			spawn(0)
