@@ -426,17 +426,23 @@
 	prob_slip = round(prob_slip)
 	return(prob_slip)
 
-var/list/climables = list(/obj/machinery/portable_atmospherics, /obj/machinery/bot/mulebot, /obj/structure/closet/crate,/obj/structure/janitorialcart,/obj/structure/rack)
+var/list/climables = list(/obj/machinery/portable_atmospherics, /obj/machinery/bot/mulebot, /obj/structure/closet/crate,/obj/structure/janitorialcart,/obj/structure/rack,/obj/structure/table)
+//var/list/unclimables = list(/obj/machinery/door,/obj/structure/plasticflaps)
 
 /mob/proc/Can_Climb()
 	if (!canmove || restrained())
 		return
 
-	var/L = get_step(src.loc, src.dir) //dir should be cardinal facing
-	for(var/obj/O in L)
+	var/turf/L = get_step(src.loc, src.dir) //dir should be cardinal facing
+	for(var/obj/C in L.contents)
+		if(istype(C,/obj/machinery/door) && C.density)
+			return 0
+		if(istype(C,/obj/structure/plasticflaps))
+			return 0
+	for(var/obj/C in L.contents)
 		for(var/item in climables)
-			if(istype(O, item))
-				return O
+			if(istype(C,item))
+				return C
 	return 0
 
 
