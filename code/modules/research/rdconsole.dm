@@ -988,6 +988,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	user << browse("<TITLE>Research and Development Console</TITLE><HR>[dat]", "window=rdconsole;size=575x400")
 	onclose(user, "rdconsole")
 
+/obj/machinery/computer/rdconsole/mommi
+	name = "MoMMI R&D Console"
+	id = 3
+	req_access = null
+	req_access_txt = "29"
+
 /obj/machinery/computer/rdconsole/robotics
 	name = "Robotics R&D Console"
 	id = 2
