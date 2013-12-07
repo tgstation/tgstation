@@ -90,29 +90,37 @@
 		if (href_list["rune"])
 			switch(href_list["rune"])
 				if("newtome")
-					var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))
+					var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(usr)
+					usr.put_in_hands(T)
 					T.imbue = "newtome"
 				if("teleport")
-					var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))
+					var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(usr)
+					usr.put_in_hands(T)
 					T.imbue = "[pick("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri", "orkan", "allaq")]"
 					T.info = "[T.imbue]"
 				if("emp")
-					var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))
+					var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(usr)
+					usr.put_in_hands(T)
 					T.imbue = "emp"
 				if("conceal")
-					var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))
+					var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(usr)
+					usr.put_in_hands(T)
 					T.imbue = "conceal"
 				if("communicate")
-					var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))
+					var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(usr)
+					usr.put_in_hands(T)
 					T.imbue = "communicate"
 				if("runestun")
-					var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))
+					var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(usr)
+					usr.put_in_hands(T)
 					T.imbue = "runestun"
 				if("armor")
-					var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))
+					var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(usr)
+					usr.put_in_hands(T)
 					T.imbue = "armor"
 				if("soulstone")
-					new /obj/item/device/soulstone(get_turf(usr))
+					var/obj/item/device/soulstone/T = new /obj/item/device/soulstone(usr)
+					usr.put_in_hands(T)
 				if("construct")
 					new /obj/structure/constructshell(get_turf(usr))
 			src.uses--
