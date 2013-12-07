@@ -695,9 +695,9 @@ datum
 					if(!istype(T, /turf/space))
 						new /obj/effect/decal/cleanable/greenglow(T)
 
-		aluminum
-			name = "Aluminum"
-			id = "aluminum"
+		aluminium
+			name = "Aluminium"
+			id = "aluminium"
 			description = "A silvery white and ductile member of the boron group of chemical elements."
 			reagent_state = SOLID
 			color = "#A8A8A8" // rgb: 168, 168, 168
