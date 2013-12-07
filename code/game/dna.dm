@@ -339,16 +339,15 @@
 
 /obj/machinery/dna_scannernew/New()
 	..()
-	component_parts = newlist(
-		/obj/item/weapon/circuitboard/clonescanner,
-		/obj/item/weapon/stock_parts/scanning_module,
-		/obj/item/weapon/stock_parts/manipulator,
-		/obj/item/weapon/stock_parts/micro_laser,
-		/obj/item/weapon/stock_parts/console_screen,
-		/obj/item/weapon/cable_coil,
-		/obj/item/weapon/cable_coil
-		)
-	RefreshParts()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/clonescanner(null)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+	component_parts += new /obj/item/weapon/cable_coil(null, 1)
+	component_parts += new /obj/item/weapon/cable_coil(null, 1)
+
 
 /obj/machinery/dna_scannernew/proc/toggle_open()
 	if(open)	return close()
@@ -378,6 +377,9 @@
 
 /obj/machinery/dna_scannernew/proc/close()
 	if(open)
+		if(panel_open)
+			usr << "<span class='notice'>Close the maintenance panel first.</span>"
+			return 0
 		open = 0
 		density = 1
 		for(var/mob/living/carbon/C in loc)
@@ -409,6 +411,9 @@
 
 /obj/machinery/dna_scannernew/proc/open()
 	if(!open)
+		if(panel_open)
+			usr << "<span class='notice'>Close the maintenance panel first.</span>"
+			return
 		if(locked)
 			usr << "<span class='notice'>The bolts are locked down, securing the door shut.</span>"
 			return
@@ -432,6 +437,31 @@
 	return
 
 /obj/machinery/dna_scannernew/attackby(obj/item/weapon/grab/G, mob/user)
+
+	if(istype(G, /obj/item/weapon/screwdriver))
+		if(occupant)
+			user << "<span class='notice'>The maintenance panel is locked.</span>"
+			return
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		panel_open = !panel_open
+		if(panel_open)
+			icon_state = "[icon_state]_maintenance"
+			user << "You open the maintenance panel of [src]."
+		else
+			if(open)
+				icon_state = "[initial(icon_state)]_open"
+			else
+				icon_state = "[initial(icon_state)]"
+			user << "You close the maintenance panel of [src]."
+		return
+
+	if(istype(G, /obj/item/weapon/crowbar))
+		if(panel_open)
+			for(var/obj/I in contents) // in case there is something in the scanner
+				I.loc = src.loc
+			default_deconstruction_crowbar()
+		return
+
 	if(!istype(G, /obj/item/weapon/grab) || !ismob(G.affecting))
 		return
 	if(!open)
@@ -482,6 +512,7 @@
 		del(src)
 
 
+//DNA COMPUTER
 /obj/machinery/computer/scan_consolenew
 	name = "\improper DNA scanner access console"
 	desc = "Scan DNA."

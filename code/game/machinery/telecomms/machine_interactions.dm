@@ -68,9 +68,12 @@
 					user << "You finish prying out the components."
 
 					// Drop all the component stuff
-					if(contents.len > 0)
-						for(var/obj/x in src)
-							x.loc = user.loc
+					if(component_parts)
+						for(var/obj/I in component_parts)
+							if(I.reliability != 100 && crit_fail)
+								I.crit_fail = 1
+							I.loc = src.loc
+
 					else
 
 						// If the machine wasn't made during runtime, probably doesn't have components:
@@ -81,13 +84,14 @@
 							for(var/i = 1, i <= C.req_components[I], i++)
 								newpath = text2path(I)
 								var/obj/item/s = new newpath
-								s.loc = user.loc
-								if(istype(P, /obj/item/weapon/cable_coil))
-									var/obj/item/weapon/cable_coil/A = P
+								s.loc = src.loc
+								if(istype(s, /obj/item/weapon/cable_coil))
+									var/obj/item/weapon/cable_coil/A = s
 									A.amount = 1
+									A.update_icon()
 
 						// Drop a circuit board too
-						C.loc = user.loc
+						C.loc = src.loc
 
 					// Create a machine frame and delete the current machine
 					var/obj/machinery/constructable_frame/machine_frame/F = new

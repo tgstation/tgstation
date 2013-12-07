@@ -34,7 +34,6 @@
 	var/list/queue = list()
 	var/processing_queue = 0
 	var/screen = "main"
-	var/opened = 0
 	var/temp
 	var/list/part_sets = list( //set names must be unique
 	"Cyborg"=list(
@@ -701,25 +700,11 @@
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/screwdriver))
-		if (!opened)
-			opened = 1
-			icon_state = "fab-o"
-			user << "You open the maintenance hatch of [src]."
-		else
-			opened = 0
-			icon_state = "fab-idle"
-			user << "You close the maintenance hatch of [src]."
+		default_deconstruction_screwdriver(user, "fab-o", "fab-idle")
+
 		return
-	if (opened)
+	if (panel_open)
 		if(istype(W, /obj/item/weapon/crowbar))
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
-			M.icon_state = "box_1"
-			for(var/obj/I in component_parts)
-				if(I.reliability != 100 && crit_fail)
-					I.crit_fail = 1
-				I.loc = src.loc
 			if(src.resources["metal"] >= 3750)
 				var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src.loc)
 				G.amount = round(src.resources["metal"] / G.perunit)
@@ -744,7 +729,7 @@
 			if(src.resources["bananium"] >= 2000)
 				var/obj/item/stack/sheet/mineral/clown/G = new /obj/item/stack/sheet/mineral/clown(src.loc)
 				G.amount = round(src.resources["bananium"] / G.perunit)
-			del(src)
+			default_deconstruction_crowbar()
 			return 1
 		else
 			user << "\red You can't load the [src.name] while it's opened."

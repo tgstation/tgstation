@@ -125,9 +125,9 @@
 						del(O)
 					new_machine.component_parts = list()
 					for(var/obj/O in src)
-						O.loc = new_machine
+						O.loc = null
 						new_machine.component_parts += O
-					circuit.loc = new_machine
+					circuit.loc = null
 					new_machine.RefreshParts()
 					del(src)
 
@@ -137,8 +137,10 @@
 						if(istype(P, /obj/item/weapon/cable_coil))
 							var/obj/item/weapon/cable_coil/CP = P
 							if(CP.amount > 1)
-								var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src)
-								CC.amount = 1
+								var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src, 1)
+								CP.amount--
+								if(!CP.amount) del(CP)
+								else CP.update_icon()
 								components += CC
 								req_components[I]--
 								update_req_desc()

@@ -176,21 +176,13 @@ var/global/list/autolathe_recipes_hidden = list( \
 			return 1
 		if (opened)
 			if(istype(O, /obj/item/weapon/crowbar))
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-				M.state = 2
-				M.icon_state = "box_1"
-				for(var/obj/I in component_parts)
-					if(I.reliability != 100 && crit_fail)
-						I.crit_fail = 1
-					I.loc = src.loc
 				if(m_amount >= 3750)
 					var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src.loc)
 					G.amount = round(m_amount / 3750)
 				if(g_amount >= 3750)
 					var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
 					G.amount = round(g_amount / 3750)
-				del(src)
+				default_deconstruction_crowbar()
 				return 1
 			else
 				user.set_machine(src)

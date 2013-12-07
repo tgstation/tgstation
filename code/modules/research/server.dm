@@ -19,8 +19,8 @@
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/rdserver(src)
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
-	component_parts += new /obj/item/weapon/cable_coil(src)
-	component_parts += new /obj/item/weapon/cable_coil(src)
+	component_parts += new /obj/item/weapon/cable_coil(src, 1)
+	component_parts += new /obj/item/weapon/cable_coil(src, 1)
 	RefreshParts()
 	src.initialize(); //Agouri
 
@@ -131,27 +131,12 @@
 	if (shocked)
 		shock(user,50)
 	if (istype(O, /obj/item/weapon/screwdriver))
-		if (!opened)
-			opened = 1
-			icon_state = "server_o"
-			user << "You open the maintenance hatch of [src]."
-		else
-			opened = 0
-			icon_state = "server"
-			user << "You close the maintenance hatch of [src]."
+		default_deconstruction_screwdriver(user, "server_o", "server")
 		return
-	if (opened)
+	if (panel_open)
 		if(istype(O, /obj/item/weapon/crowbar))
 			griefProtection()
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
-			M.icon_state = "box_1"
-			for(var/obj/I in component_parts)
-				if(I.reliability != 100 && crit_fail)
-					I.crit_fail = 1
-				I.loc = src.loc
-			del(src)
+			default_deconstruction_crowbar()
 			return 1
 
 /obj/machinery/r_n_d/server/attack_hand(mob/user as mob) // I guess only exists to stop ninjas or hell does it even work I dunno.  See also ninja gloves.
