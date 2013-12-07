@@ -19,5 +19,3 @@
 //
 // *** IF I SEE THIS SORT OF SHIT IN THE TREE I WILL NOT ACCEPT YOUR PULL. ***
 ////////////////////////////////////////////////////////////////////////////////
-
-/obj/item/var/custom=0 // Set to override DMI locations in creature overlays, etc.
