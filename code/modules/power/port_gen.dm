@@ -236,7 +236,7 @@ display round(lastgen) and plasmatank amount
 				user << "\blue You open the access panel."
 			else
 				user << "\blue You close the access panel."
-		else if(istype(O, /obj/item/weapon/crowbar) && !panel_open)
+		else if(istype(O, /obj/item/weapon/crowbar) && panel_open)
 			default_deconstruction_crowbar()
 
 /obj/machinery/power/port_gen/pacman/attack_hand(mob/user as mob)
