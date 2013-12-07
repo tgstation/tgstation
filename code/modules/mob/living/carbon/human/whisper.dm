@@ -89,10 +89,10 @@
 	var/list/heard_b = list() // didn't understand us
 	var/and_passes_on=""
 
-	if(!said_last_words)
+	if(!said_last_words && src.stat)
 		and_passes_on=" - and passes on"
 
-	said_last_words=src.stat
+		said_last_words=src.stat
 
 
 	for (var/mob/M in listening)
