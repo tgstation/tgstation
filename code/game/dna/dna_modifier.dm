@@ -740,7 +740,8 @@
 
 	if(href_list["ejectBeaker"])
 		if(connected.beaker)
-			connected.beaker.loc = connected.loc
+			var/obj/item/weapon/reagent_containers/glass/B = connected.beaker
+			B.loc = connected.loc
 			connected.beaker = null
 		return 1
 
@@ -869,7 +870,8 @@
 				if(success)
 					I.loc = src.loc
 					I.name += " ([src.buffers[bufferId]["label"]])"
-					if (src.buffers[bufferId]["ue"]) I.ue = src.buffers[bufferId]["owner"] //lazy haw haw
+					if (src.buffers[bufferId]["ue"])
+						I.ue = src.buffers[bufferId]["owner"] //lazy haw haw
 					//src.temphtml = "Injector created."
 					src.injector_ready = 0
 					spawn(300)
