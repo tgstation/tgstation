@@ -14,7 +14,7 @@
 	var/locked = 0
 	var/mob/living/carbon/occupant = null
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
-	var/opened = 0.0
+	var/opened = 0
 
 /obj/machinery/dna_scannernew/New()
 	..()
@@ -286,6 +286,7 @@
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 400
+	var/waiting_for_user_input=0 // Fix for #274 (Mash create block injector without answering dialog to make unlimited injectors) - N3X
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver))
@@ -740,7 +741,8 @@
 
 	if(href_list["ejectBeaker"])
 		if(connected.beaker)
-			connected.beaker.loc = connected.loc
+			var/obj/item/weapon/reagent_containers/glass/B = connected.beaker
+			B.loc = connected.loc
 			connected.beaker = null
 		return 1
 
@@ -857,19 +859,23 @@
 			return 1
 
 		if (bufferOption == "createInjector")
-			if (src.injector_ready)
+			if (src.injector_ready || waiting_for_user_input)
+
 				var/success = 1
 				var/obj/item/weapon/dnainjector/I = new /obj/item/weapon/dnainjector
 				I.dnatype = src.buffers[bufferId]["type"]
 				if(href_list["createBlockInjector"])
+					waiting_for_user_input=1
 					var/blk = input(usr,"Select Block","Block") in all_dna_blocks(src.buffers[bufferId]["data"])
 					success = setInjectorBlock(I,blk,src.buffers[bufferId]["data"])
 				else
 					I.dna = src.buffers[bufferId]["data"]
+				waiting_for_user_input=0
 				if(success)
 					I.loc = src.loc
 					I.name += " ([src.buffers[bufferId]["label"]])"
-					if (src.buffers[bufferId]["ue"]) I.ue = src.buffers[bufferId]["owner"] //lazy haw haw
+					if (src.buffers[bufferId]["ue"])
+						I.ue = src.buffers[bufferId]["owner"] //lazy haw haw
 					//src.temphtml = "Injector created."
 					src.injector_ready = 0
 					spawn(300)

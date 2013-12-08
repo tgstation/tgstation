@@ -111,14 +111,17 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(linked_destroy == null)
 				linked_destroy = D
 				D.linked_console = src
+				D.update_icon()
 		else if(istype(D, /obj/machinery/r_n_d/protolathe))
 			if(linked_lathe == null)
 				linked_lathe = D
 				D.linked_console = src
+				D.update_icon()
 		else if(istype(D, /obj/machinery/r_n_d/circuit_imprinter))
 			if(linked_imprinter == null)
 				linked_imprinter = D
 				D.linked_console = src
+				D.update_icon()
 	return
 
 //Have it automatically push research to the centcomm server so wild griffins can't fuck up R&D's work --NEO
@@ -497,12 +500,15 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		switch(href_list["disconnect"])
 			if("destroy")
 				linked_destroy.linked_console = null
+				linked_destroy.update_icon()
 				linked_destroy = null
 			if("lathe")
 				linked_lathe.linked_console = null
+				linked_lathe.update_icon()
 				linked_lathe = null
 			if("imprinter")
 				linked_imprinter.linked_console = null
+				linked_imprinter.update_icon()
 				linked_imprinter = null
 
 	else if(href_list["reset"]) //Reset the R&D console's database.
@@ -981,6 +987,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	user << browse("<TITLE>Research and Development Console</TITLE><HR>[dat]", "window=rdconsole;size=575x400")
 	onclose(user, "rdconsole")
+
+/obj/machinery/computer/rdconsole/mommi
+	name = "MoMMI R&D Console"
+	id = 3
+	req_access = null
+	req_access_txt = "29"
 
 /obj/machinery/computer/rdconsole/robotics
 	name = "Robotics R&D Console"

@@ -53,6 +53,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/list/all_doors = list()		//Added by Strumpetplaya - Alarm Change - Contains a list of doors adjacent to this area
 	var/air_doors_activated = 0
 
+	var/jammed = 0 // No teleporting for you.
+
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
 var/list/teleportlocs = list()
@@ -315,6 +317,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "yellow"
 	requires_power = 0
 	lighting_use_dynamic = 0
+	luminosity=1
 
 /area/airtunnel1/      // referenced in airtunnel.dm:759
 
@@ -402,20 +405,6 @@ proc/process_ghost_teleport_locs()
 /area/asteroid/artifactroom
 	name = "\improper Asteroid - Artifact"
 	icon_state = "cave"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /area/planet/clown
 	name = "\improper Clown Planet"
@@ -730,35 +719,43 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Bridge"
 	icon_state = "bridge"
 	music = "signal"
+	jammed=1
 
 /area/bridge/meeting_room
 	name = "\improper Heads of Staff Meeting Room"
 	icon_state = "bridge"
 	music = null
+	jammed=0
 
 /area/crew_quarters/captain
 	name = "\improper Captain's Office"
 	icon_state = "captain"
+	jammed=1
 
 /area/crew_quarters/heads/hop
 	name = "\improper Head of Personnel's Quarters"
 	icon_state = "head_quarters"
+	jammed=1
 
 /area/crew_quarters/heads/hor
 	name = "\improper Research Director's Quarters"
 	icon_state = "head_quarters"
+	jammed=1
 
 /area/crew_quarters/heads/chief
 	name = "\improper Chief Engineer's Quarters"
 	icon_state = "head_quarters"
+	jammed=1
 
 /area/crew_quarters/heads/hos
 	name = "\improper Head of Security's Quarters"
 	icon_state = "head_quarters"
+	jammed=1
 
 /area/crew_quarters/heads/cmo
 	name = "\improper Chief Medical Officer's Quarters"
 	icon_state = "head_quarters"
+	jammed=1
 
 /area/crew_quarters/courtroom
 	name = "\improper Courtroom"
@@ -767,18 +764,22 @@ proc/process_ghost_teleport_locs()
 /area/crew_quarters/heads
 	name = "\improper Head of Personnel's Office"
 	icon_state = "head_quarters"
+	jammed=1
 
 /area/crew_quarters/hor
 	name = "\improper Research Director's Office"
 	icon_state = "head_quarters"
+	jammed=1
 
 /area/crew_quarters/hos
 	name = "\improper Head of Security's Office"
 	icon_state = "head_quarters"
+	jammed=1
 
 /area/crew_quarters/chief
 	name = "\improper Chief Engineer's Office"
 	icon_state = "head_quarters"
+	jammed=1
 
 /area/mint
 	name = "\improper Mint"
@@ -885,46 +886,60 @@ proc/process_ghost_teleport_locs()
 /area/holodeck/source_plating
 	name = "\improper Holodeck - Off"
 	icon_state = "Holodeck"
+	jammed=1
 
 /area/holodeck/source_emptycourt
 	name = "\improper Holodeck - Empty Court"
+	jammed=1
 
 /area/holodeck/source_boxingcourt
 	name = "\improper Holodeck - Boxing Court"
+	jammed=1
 
 /area/holodeck/source_basketball
 	name = "\improper Holodeck - Basketball Court"
+	jammed=1
 
 /area/holodeck/source_thunderdomecourt
 	name = "\improper Holodeck - Thunderdome Court"
+	jammed=1
 
 /area/holodeck/source_beach
 	name = "\improper Holodeck - Beach"
 	icon_state = "Holodeck" // Lazy.
+	jammed=1
 
 /area/holodeck/source_burntest
 	name = "\improper Holodeck - Atmospheric Burn Test"
+	jammed=1
 
 /area/holodeck/source_wildlife
 	name = "\improper Holodeck - Wildlife Simulation"
+	jammed=1
 
 /area/holodeck/source_meetinghall
 	name = "\improper Holodeck - Meeting Hall"
+	jammed=1
 
 /area/holodeck/source_theatre
 	name = "\improper Holodeck - Theatre"
+	jammed=1
 
 /area/holodeck/source_picnicarea
 	name = "\improper Holodeck - Picnic Area"
+	jammed=1
 
 /area/holodeck/source_snowfield
 	name = "\improper Holodeck - Snow Field"
+	jammed=1
 
 /area/holodeck/source_desert
 	name = "\improper Holodeck - Desert"
+	jammed=1
 
 /area/holodeck/source_space
 	name = "\improper Holodeck - Space"
+	jammed=1
 
 
 
@@ -955,6 +970,7 @@ proc/process_ghost_teleport_locs()
 	chiefs_office
 		name = "\improper Chief Engineer's office"
 		icon_state = "engine_control"
+		jammed=1
 
 
 //Solars
@@ -1030,6 +1046,7 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Teleporter"
 	icon_state = "teleporter"
 	music = "signal"
+	jammed=1
 
 /area/gateway
 	name = "\improper Gateway"
@@ -1066,6 +1083,7 @@ proc/process_ghost_teleport_locs()
 /area/medical/cmo
 	name = "\improper Chief Medical Officer's office"
 	icon_state = "CMO"
+	jammed=1
 
 /area/medical/robotics
 	name = "Robotics"
@@ -1132,6 +1150,7 @@ proc/process_ghost_teleport_locs()
 /area/security/gas_chamber
 	name = "\improper Execution Chamber"
 	icon_state = "bar" // Because it's all parties from here on.
+	jammed=1
 
 
 /obj/item/weapon/paper/Gaschamber
@@ -1152,14 +1171,17 @@ proc/process_ghost_teleport_locs()
 /area/security/warden
 	name = "\improper Warden"
 	icon_state = "Warden"
+	jammed=1
 
 /area/security/armoury
 	name = "\improper Armory"
 	icon_state = "Warden"
+	jammed=1
 
 /area/security/hos
 	name = "\improper Head of Security's Office"
 	icon_state = "sec_hos"
+	jammed=1
 
 /area/security/detectives_office
 	name = "\improper Detective's Office"
@@ -1245,6 +1267,7 @@ proc/process_ghost_teleport_locs()
 /area/quartermaster/qm
 	name = "\improper Quartermaster's Office"
 	icon_state = "quart"
+	jammed=1
 
 /area/quartermaster/miningdock
 	name = "\improper Mining Dock"
@@ -1279,6 +1302,7 @@ proc/process_ghost_teleport_locs()
 /area/toxins/rdoffice
 	name = "\improper Research Director's Office"
 	icon_state = "head_quarters"
+	jammed=1
 
 /area/toxins/supermatter
 	name = "\improper Supermatter Lab"
@@ -1331,6 +1355,7 @@ proc/process_ghost_teleport_locs()
 /area/toxins/server
 	name = "\improper Server Room"
 	icon_state = "server"
+	jammed=1
 
 //Storage
 
@@ -1357,10 +1382,12 @@ proc/process_ghost_teleport_locs()
 /area/storage/eva
 	name = "EVA Storage"
 	icon_state = "eva"
+	jammed=1
 
 /area/storage/secure
 	name = "Secure Storage"
 	icon_state = "storage"
+	jammed=1
 
 /area/storage/emergency
 	name = "Starboard Emergency Storage"
@@ -1373,6 +1400,7 @@ proc/process_ghost_teleport_locs()
 /area/storage/tech
 	name = "Technical Storage"
 	icon_state = "auxstorage"
+	jammed=1
 
 /area/storage/testroom
 	requires_power = 0
@@ -1520,6 +1548,7 @@ proc/process_ghost_teleport_locs()
 /area/ai_monitored/storage/eva
 	name = "EVA Storage"
 	icon_state = "eva"
+	jammed=1
 
 /area/ai_monitored/storage/secure
 	name = "Secure Storage"
@@ -1532,6 +1561,7 @@ proc/process_ghost_teleport_locs()
 /area/turret_protected/ai_upload
 	name = "\improper AI Upload Chamber"
 	icon_state = "ai_upload"
+	jammed=1
 
 /area/turret_protected/ai_upload_foyer
 	name = "AI Upload Access"
@@ -1540,6 +1570,7 @@ proc/process_ghost_teleport_locs()
 /area/turret_protected/ai
 	name = "\improper AI Chamber"
 	icon_state = "ai_chamber"
+	jammed=1
 
 /area/turret_protected/aisat
 	name = "\improper AI Satellite"
@@ -1666,6 +1697,7 @@ proc/process_ghost_teleport_locs()
 /area/turret_protected/tcomms_control_room
 	name = "\improper Telecomms Control Room"
 	icon_state = "tcomsatcomp"
+	jammed=1
 
 /area/turret_protected/tcomsat
 	name = "\improper Satellite Entrance"

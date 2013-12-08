@@ -134,6 +134,12 @@ it creates. All the menus and other manipulation commands are in the R&D console
 				return n
 	return 0
 
+
+/obj/machinery/r_n_d/protolathe/update_icon()
+	overlays.Cut()
+	if(linked_console)
+		overlays += "protolathe_link"
+
 /obj/machinery/r_n_d/protolathe/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (shocked)
 		shock(user,50)

@@ -267,7 +267,15 @@
 	master.used_environ = 0
 
 /area/proc/use_power(var/amount, var/chan)
+	switch(chan)
+		if(EQUIP)
+			master.used_equip += amount
+		if(LIGHT)
+			master.used_light += amount
+		if(ENVIRON)
+			master.used_environ += amount
 
+/area/proc/use_battery_power(var/amount, var/chan)
 	switch(chan)
 		if(EQUIP)
 			master.used_equip += amount

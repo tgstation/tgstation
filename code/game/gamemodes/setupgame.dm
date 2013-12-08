@@ -5,8 +5,7 @@
 	blocksLeft.Remove(assigned)
 	assigned_blocks[assigned]=name
 	dna_activity_bounds[assigned]=activity_bounds
-	//Debug message_admins("[name] assigned to block #[assigned].")
-	testing("[name] assigned to block #[assigned].")
+	//testing("[name] assigned to block #[assigned].")
 	return assigned
 
 /proc/setupgenetics()
@@ -23,7 +22,7 @@
 	for(var/i=1;i<STRUCDNASIZE;i++)
 		numsToAssign += i
 
-	testing("Assigning DNA blocks:")
+	//testing("Assigning DNA blocks:")
 
 	// Standard muts
 	BLINDBLOCK         = getAssignedBlock("BLIND",         numsToAssign)
