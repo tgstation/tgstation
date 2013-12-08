@@ -75,19 +75,19 @@
 	return 0
 
 
-/mob/proc/drop_from_inventory(var/obj/item/W)
+/mob/proc/drop_from_inventory(var/obj/item/W, var/location=src.loc) //use location when the mob is not on turf
 	if(W)
-		if(client)	client.screen -= W
+		if(!src)
+			return // I do not understand why this starts working after I put in this check.
+		if(src.client)
+			src.client.screen -= W
 		u_equip(W)
 		if(!W) return 1 // self destroying objects (tk, grabs)
-		W.layer = initial(W.layer)
-		W.loc = loc
 
-		var/turf/T = get_turf(loc)
+		var/turf/T = get_turf(location)
 		if(isturf(T))
 			T.Entered(W)
 
-		W.dropped(src)
 		update_icons()
 		return 1
 	return 0
@@ -137,10 +137,23 @@
 	else		return drop_r_hand(Target)
 
 
+/mob/proc/get_implants()
+	var/list/implants = list()
+	for(var/obj/item/weapon/implant/W in src)
+		implants += W
+	return implants
 
+/mob/proc/get_items() // includes items that have been cavity implanted.
+	var/list/items = list()
+	var/list/implants = get_implants()
+	for(var/obj/item/W in (src.contents-implants))
+		items += W
+	return items
 
-
-
+/mob/proc/drop_all_items(var/location=src.loc)
+	var/list/items = get_items()
+	for(var/obj/item/W in items)
+		drop_from_inventory(W, location)
 
 
 

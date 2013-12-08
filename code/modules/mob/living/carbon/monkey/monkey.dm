@@ -393,3 +393,9 @@
 	if(!ticker.mode.name == "monkey")	return 0
 	return 1
 
+/mob/living/carbon/monkey/abiotic(var/full_body = 0)
+	if(full_body && ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask)))
+		return 1
+	else if( (src.l_hand && !src.l_hand.abstract) || (src.r_hand && !src.r_hand.abstract) )
+		return 1
+	return 0
