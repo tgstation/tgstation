@@ -20,7 +20,7 @@
 	var/display_contents_with_number	//Set this to make the storage item group contents of the same type and display them as a number.
 	var/allow_quick_empty	//Set this variable to allow the object to have the 'empty' verb, which dumps all the contents on the floor.
 	var/allow_quick_gather	//Set this variable to allow the object to have the 'toggle mode' verb, which quickly collects all items from a tile.
-	var/collection_mode = 1;  //0 = pick one at a time, 1 = pick all on tile
+	var/collection_mode = 1;  //0 = pick one at a time, 1 = pick all on tile, 2 = pick all of a type
 
 
 /obj/item/weapon/storage/MouseDrop(obj/over_object)
@@ -351,8 +351,10 @@
 	set name = "Switch Gathering Method"
 	set category = "Object"
 
-	collection_mode = !collection_mode
+	collection_mode = (collection_mode+1)%3
 	switch (collection_mode)
+		if(2)
+			usr << "[src] now picks up all items of a single type at once."
 		if(1)
 			usr << "[src] now picks up all items in a tile at once."
 		if(0)
