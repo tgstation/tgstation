@@ -16,7 +16,7 @@
 	var/beaker = null
 	var/recharged = 0
 	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine",
-	"sodium","aluminum","silicon","phosphorus","sulfur","chlorine","potassium","iron",
+	"sodium","aluminium","silicon","phosphorus","sulfur","chlorine","potassium","iron",
 	"copper","mercury","radium","water","ethanol","sugar","sacid")
 
 /obj/machinery/chem_dispenser/proc/recharge()
