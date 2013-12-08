@@ -131,6 +131,8 @@ var/bomb_set
 			if (href_list["anchor"])
 				if(!isinspace())
 					src.anchored = !( src.anchored )
+				else
+					usr << "<span class='warning'>There is nothing to anchor to!</span>"
 	src.add_fingerprint(usr)
 	for(var/mob/M in viewers(1, src))
 		if ((M.client && M.machine == src))
