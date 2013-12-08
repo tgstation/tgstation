@@ -92,6 +92,10 @@ datum/controller/vote
 		if(winners.len > 0)
 			if(question)	text += "<b>[question]</b>"
 			else			text += "<b>[capitalize(mode)] Vote</b>"
+			for(var/i=1,i<=choices.len,i++)
+				var/votes = choices[choices[i]]
+				if(!votes)	votes = 0
+				text += "\n<b>[choices[i]]:</b> [votes]"
 			if(mode != "custom")
 				if(winners.len > 1)
 					text = "\n<b>Vote Tied Between:</b>"
@@ -99,10 +103,8 @@ datum/controller/vote
 						text += "\n\t[option]"
 				. = pick(winners)
 				text += "\n<b>Vote Result: [.]</b>"
-			for(var/i=1,i<=choices.len,i++)
-				var/votes = choices[choices[i]]
-				if(!votes)	votes = 0
-				text += "\n<b>[choices[i]]:</b> [votes] ([(votes/clients.len)*100]%)"
+			else
+				text += "\n<b>Did not vote:</b> [clients.len-voted.len]"
 		else
 			text += "<b>Vote Result: Inconclusive - No Votes!</b>"
 		log_vote(text)
