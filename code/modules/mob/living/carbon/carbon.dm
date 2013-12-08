@@ -541,3 +541,22 @@
 	else if(prob(50))
 		return "trails_1"
 	return "trails_2"
+	
+/mob/living/carbon/verb/climb()
+
+	set name = "Climb"
+	set category = "IC"
+
+	if(!iscarbon(usr) || usr.next_move > world.time)
+		return
+	usr.next_move = world.time + 30
+	var/mob/living/L = usr
+	if(!L.stat && L.canmove && !L.restrained())
+		var/D = L.dir
+		var/obj/O = L.Can_Climb()
+		if(O)
+			L.visible_message("<span class='warning'>[usr] has climbed over [O]!</span>", \
+						"<span class='notice'>You climb on [O]. </span>")
+			L.loc = get_step(L.loc, D)						
+		else
+			L.visible_message("<span class='notice'>You don't seem to find a way to climb over anything.</span>")
