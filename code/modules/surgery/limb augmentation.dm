@@ -61,6 +61,8 @@
 				if("head")
 					H.organs += new /obj/item/organ/limb/robot/head(src)
 				if("chest")
+					var/datum/surgery_step/xenomorph_removal/xeno_removal = new
+					xeno_removal.remove_xeno(user, target) // remove an alien if there is one
 					H.organs += new /obj/item/organ/limb/robot/chest(src)
 					for(var/datum/disease/appendicitis/A in H.viruses) //If they already have Appendicitis, Remove it
 						A.cure(1)

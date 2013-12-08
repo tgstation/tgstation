@@ -716,7 +716,13 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/grass/attack_self(mob/user as mob)
 	user << "<span class='notice'>You prepare the astroturf.</span>"
-	new/obj/item/stack/tile/grass(user.loc)
+	var/location = get_turf(user)
+	var/grassAmt = 1 // The grass we're holding
+	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/grass/grassToConvert in location) // The grass on the floor
+		grassAmt += 1
+		del(grassToConvert)
+	var/obj/item/stack/tile/newAstroturf = new /obj/item/stack/tile/grass(location)
+	newAstroturf.amount = grassAmt
 	del(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod
