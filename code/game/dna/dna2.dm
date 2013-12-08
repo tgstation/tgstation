@@ -68,7 +68,11 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 // Create random UI.
 /datum/dna/proc/ResetUI(var/defer=0)
 	for(var/i=1,i<=DNA_UI_LENGTH,i++)
-		UI[i]=rand(0,4095)
+		switch(i)
+			if(DNA_UI_SKIN_TONE)
+				SetUIValueRange(DNA_UI_SKIN_TONE,rand(1,220),220,1) // Otherwise, it gets fucked
+			else
+				UI[i]=rand(0,4095)
 	if(!defer)
 		UpdateUI()
 
@@ -98,7 +102,7 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 	SetUIValueRange(DNA_UI_BEARD_G,   character.g_eyes,    255,    1)
 	SetUIValueRange(DNA_UI_BEARD_B,   character.b_eyes,    255,    1)
 
-	SetUIValueRange(DNA_UI_SKIN_TONE, character.s_tone,    220,    1)
+	SetUIValueRange(DNA_UI_SKIN_TONE, 35-character.s_tone, 220,    1) // Value can be negative.
 
 	SetUIState(DNA_UI_GENDER,         character.gender!=MALE,      1)
 
