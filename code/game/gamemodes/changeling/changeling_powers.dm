@@ -541,7 +541,7 @@ var/list/datum/dna/hivemind_bank = list()
 	hud_used.lingstingdisplay.invisibility = 0
 
 /mob/living/carbon/proc/unset_sting() //unsetting the previous
-	src << "<span class='warning'>We retract our sting, you cant sting anyone for now.</span>"
+	src << "<span class='warning'>We retract our sting, you can't sting anyone for now.</span>"
 	src.mind.changeling.chosen_sting = null
 	hud_used.lingstingdisplay.icon_state = null
 	hud_used.lingstingdisplay.invisibility = 101
