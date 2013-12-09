@@ -287,7 +287,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 
 /mob/proc/abiotic(full_body = 0)
-	if(l_hand && !l_hand.abstract || r_hand && !r_hand.abstract)
+	if(l_hand && !l_hand.flags&ABSTRACT || r_hand && !r_hand.flags&ABSTRACT)
 		return 1
 	return 0
 

@@ -309,7 +309,7 @@
 	else
 		if(istype(M, /mob/living/carbon/monkey))	// monkey > human,
 			var/mob/living/carbon/human/O = M.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS)
-			if(connected) //inside dna thing
+			if(O && connected) //inside dna thing
 				var/obj/machinery/dna_scannernew/C = connected
 				O.loc = C
 				C.occupant = O

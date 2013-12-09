@@ -46,6 +46,13 @@
 		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
 	. = ..()
 
+/mob/living/carbon/AltClickOn(var/atom/A)
+	if(!src.stat && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
+		next_click = world.time + 5
+		call(src, src.mind.changeling.chosen_sting)(A)
+	else
+		..()
+
 /mob/living/carbon/attack_hand(mob/user)
 	if(!iscarbon(user)) return
 
@@ -466,9 +473,9 @@
 	<HR>
 	<B><FONT size=3>[name]</FONT></B>
 	<HR>
-	<BR><B>Mask:</B> <A href='?src=\ref[src];item=[slot_wear_mask]'>		[wear_mask	? wear_mask	: "Nothing"]</A>
-	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=[slot_l_hand]'>		[l_hand		? l_hand	: "Nothing"]</A>
-	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=[slot_r_hand]'>		[r_hand		? r_hand	: "Nothing"]</A>"}
+	<BR><B>Mask:</B> <A href='?src=\ref[src];item=[slot_wear_mask]'>		[(wear_mask && !(wear_mask.flags&ABSTRACT))	? wear_mask	: "Nothing"]</A>
+	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=[slot_l_hand]'>		[(l_hand && !(l_hand.flags&ABSTRACT))		? l_hand	: "Nothing"]</A>
+	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=[slot_r_hand]'>		[(r_hand && !(r_hand.flags&ABSTRACT))		? r_hand	: "Nothing"]</A>"}
 
 	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=[slot_back]'> [back ? back : "Nothing"]</A>"
 

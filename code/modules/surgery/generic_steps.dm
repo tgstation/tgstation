@@ -1,10 +1,12 @@
+
 //make incision
 /datum/surgery_step/incise
 	implements = list(/obj/item/weapon/scalpel = 100, /obj/item/weapon/kitchenknife = 65, /obj/item/weapon/shard = 45)
 	time = 24
 
 /datum/surgery_step/incise/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("<span class='notice'>[user] begins to make an incision in [target]'s [target_zone].</span>")
+	user.visible_message("<span class='notice'>[user] begins to make an incision in [target]'s [parse_zone(target_zone)].</span>")
+
 
 
 //clamp bleeders
@@ -13,7 +15,7 @@
 	time = 48
 
 /datum/surgery_step/clamp_bleeders/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("<span class='notice'>[user] begins to clamp bleeders in [target]'s [target_zone].</span>")
+	user.visible_message("<span class='notice'>[user] begins to clamp bleeders in [target]'s [parse_zone(target_zone)].</span>")
 
 
 //retract skin
@@ -22,7 +24,8 @@
 	time = 32
 
 /datum/surgery_step/retract_skin/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("<span class='notice'>[user] begins to retract the skin in [target]'s [target_zone].</span>")
+	user.visible_message("<span class='notice'>[user] begins to retract the skin in [target]'s [parse_zone(target_zone)].</span>")
+
 
 
 //close incision
@@ -31,7 +34,8 @@
 	time = 32
 
 /datum/surgery_step/close/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("<span class='notice'>[user] begins to mend the incision in [target]'s [target_zone].</span>")
+	user.visible_message("<span class='notice'>[user] begins to mend the incision in [target]'s [parse_zone(target_zone)].</span>")
+
 
 /datum/surgery_step/close/tool_check(mob/user, obj/item/tool)
 	if(istype(tool, /obj/item/weapon/cautery))
@@ -58,4 +62,7 @@
 	time = 64
 
 /datum/surgery_step/saw/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("<span class='notice'>[user] begins to saw through the bone in [target]'s [target_zone].</span>")
+	user.visible_message("<span class='notice'>[user] begins to saw through the bone in [target]'s [parse_zone(target_zone)].</span>")
+
+
+

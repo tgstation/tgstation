@@ -189,15 +189,23 @@
 	. = ..()
 	// All good, turn it on.
 	if(.)
-		user.visible_message("<span class='notice'>[user] activates the flare.</span>", "<span class='notice'>You pull the cord on the flare, activating it!</span>")
+		user.visible_message("<span class='notice'>[user] lights the [src].</span>", "<span class='notice'>You light the [src]!</span>")
 		src.force = on_damage
 		src.damtype = "fire"
 		processing_objects += src
 
-
+/obj/item/device/flashlight/flare/torch
+	name = "torch"
+	desc = "A torch fashioned from some leaves and a log."
+	w_class = 4
+	brightness_on = 7
+	icon_state = "torch"
+	item_state = "torch_off"
+	on_damage = 10
 
 
 /obj/item/device/flashlight/slime
+	gender = PLURAL
 	name = "glowing slime extract"
 	desc = "Extract from a yellow slime. It emits a strong light when squeezed."
 	icon = 'icons/obj/lighting.dmi'

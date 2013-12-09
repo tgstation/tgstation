@@ -31,11 +31,11 @@
 		on = !on
 		if(on)
 			icon_state = "[icon_state]-on"
-//			item_state = "[item_state]-on"
+		//	item_state = "[item_state]-on"
 			ion_trail.start()
 		else
 			icon_state = initial(icon_state)
-//			item_state = initial(item_state)
+		//	item_state = initial(item_state)
 			ion_trail.stop()
 		return
 
@@ -81,6 +81,14 @@
 		..()
 		air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 
+/obj/item/weapon/tank/jetpack/oxygen/harness
+	name = "jet harness (oxygen)"
+	desc = "A lightweight tactical harness, used by those who don't want to be weighed down by traditional jetpacks."
+	icon_state = "jetpack-mini"
+	item_state = "jetpack-mini"
+	volume = 40
+	throw_range = 7
+	w_class = 3
 
 /obj/item/weapon/tank/jetpack/carbondioxide
 	name = "jetpack (carbon dioxide)"
