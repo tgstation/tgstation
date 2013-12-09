@@ -28,7 +28,7 @@
 
 /obj/item/weapon/gun/magic/afterattack()
 	..()
-	if(charges )	charges--
+	if(charges && !in_chamber)	charges--
 
 /obj/item/weapon/gun/magic/New()
 	..()

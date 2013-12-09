@@ -17,7 +17,6 @@
 		var/list/hand_items = list(user.get_active_hand(),user.get_inactive_hand())
 		var/charged_item = null
 		var/burnt_out = 0
-		world << "[user.l_hand] and [user.r_hand]"
 		for(var/obj/item in hand_items)
 			if(istype(item, /obj/item/weapon/grab))
 				var/obj/item/weapon/grab/G = item
