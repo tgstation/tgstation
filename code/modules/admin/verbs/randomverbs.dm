@@ -249,7 +249,7 @@ Ccomp's first proc.
 		return ghosts
 	else
 		return mobs
-/*
+
 
 /client/proc/allow_character_respawn()
 	set category = "Special Verbs"
@@ -339,7 +339,8 @@ Ccomp's first proc.
 
 	log_admin("[key_name(usr)] has [action] on joining the round if they use AntagHUD")
 	message_admins("Admin [key_name_admin(usr)] has [action] on joining the round if they use AntagHUD", 1)
-*/
+
+
 
 
 /*
