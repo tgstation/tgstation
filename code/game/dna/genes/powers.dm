@@ -56,7 +56,7 @@
 	mutation=mMorph
 
 	initialize()
-		block=REMOTETALKBLOCK
+		block=MORPHBLOCK
 
 	activate(var/mob/M)
 		..(M)

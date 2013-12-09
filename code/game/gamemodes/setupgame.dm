@@ -1,5 +1,3 @@
-
-
 /proc/getAssignedBlock(var/name,var/list/blocksLeft, var/activity_bounds=DNA_DEFAULT_BOUNDS)
 	var/assigned = pick(blocksLeft)
 	blocksLeft.Remove(assigned)
@@ -18,6 +16,7 @@
 	//Thanks to nexis for the fancy code
 	// BITCH I AIN'T DONE YET
 
+	// SE blocks to assign.
 	var/list/numsToAssign=new()
 	for(var/i=1;i<STRUCDNASIZE;i++)
 		numsToAssign += i
@@ -53,27 +52,17 @@
 	SHOCKIMMUNITYBLOCK = getAssignedBlock("SHOCKIMMUNITY", numsToAssign)
 	SMALLSIZEBLOCK     = getAssignedBlock("SMALLSIZE",     numsToAssign, DNA_HARD_BOUNDS)
 
-
-	// HIDDEN MUTATIONS / SUPERPOWERS INITIALIZTION
-
-	/*
-	for(var/x in typesof(/datum/mutations) - /datum/mutations)
-		var/datum/mutations/mut = new x
-
-		for(var/i = 1, i <= mut.required, i++)
-			var/datum/mutationreq/require = new/datum/mutationreq
-			require.block = rand(1, 13)
-			require.subblock = rand(1, 3)
-
-			// Create random requirement identification
-			require.reqID = pick("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", \
-							 "B", "C", "D", "E", "F")
-
-			mut.requirements += require
-
-
-		global_mutations += mut// add to global mutations list!
-	*/
+	// And the genes that actually do the work. (domutcheck improvements)
+	var/list/blocks_assigned=list()
+	for(var/gene_type in typesof(/datum/dna/gene)-/datum/dna/gene)
+		var/datum/dna/gene/G = new gene_type
+		if(G.block)
+			if(G.block in blocks_assigned)
+				warning("DNA2: Gene [G.name] trying to use already-assigned block [G.block] (used by [english_list(blocks_assigned[G.block])])")
+			dna_genes += G
+			if(!(G.block in blocks_assigned))
+				blocks_assigned[G.block]=list()
+			blocks_assigned[G.block]+=G.name
 
 // Run AFTER genetics setup and AFTER species setup.
 /proc/setup_species()

@@ -6,7 +6,6 @@
 // Gene is always activated.
 /////////////////////
 
-
 /datum/dna/gene/disability
 	name="DISABILITY"
 
@@ -22,17 +21,31 @@
 	// Activation message
 	var/activation_message=""
 
+	// Yay, you're no longer growing 3 arms
+	var/deactivation_message=""
+
 /datum/dna/gene/disability/can_activate(var/mob/M,var/flags)
 	return 1 // Always set!
 
-/datum/dna/gene/disability/activate(var/mob/living/carbon/M)
-	if(mutation)
+/datum/dna/gene/disability/activate(var/mob/M, var/connected, var/flags)
+	if(mutation && !(mutation in M.mutations))
 		M.mutations.Add(mutation)
 	if(disability)
 		M.disabilities|=disability
 	if(mutation)
 		M.sdisabilities|=sdisability
-	M << "\red [activation_message]"
+	if(activation_message)
+		M << "\red [activation_message]"
+
+/datum/dna/gene/disability/deactivate(var/mob/M, var/connected, var/flags)
+	if(mutation && (mutation in M.mutations))
+		M.mutations.Remove(mutation)
+	if(disability)
+		M.disabilities-=disability
+	if(mutation)
+		M.sdisabilities-=sdisability
+	if(deactivation_message)
+		M << "\red [deactivation_message]"
 
 /datum/dna/gene/disability/hallucinate
 	name="Hallucinate"
