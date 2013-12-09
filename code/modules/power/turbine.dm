@@ -217,75 +217,61 @@
 
 /obj/machinery/power/turbine/attack_ai(mob/user)
 
-	if(stat & (BROKEN|NOPOWER))
-		return
+        if(stat & (BROKEN|NOPOWER))
+                return
 
-	interact(user)
-
-
-// Only non-AI mobs
+        interact(user)
 
 /obj/machinery/power/turbine/attack_hand(mob/user)
 
-	add_fingerprint(user)
+        add_fingerprint(user)
 
-	if ( (get_dist(src, user) > 1 ) || (stat & (NOPOWER|BROKEN)) && (!istype(user, /mob/living/silicon/ai)) )
-		user.machine = null
-		user << browse(null, "window=turbine")
-		return
+        if(stat & (BROKEN|NOPOWER))
+                return
 
-	user.machine = src
+        interact(user)
 
-	var/t = "<TT><B>Gas Turbine Generator</B><HR><PRE>"
+/obj/machinery/power/turbine/proc/interact(mob/user)
 
-	t += "Generated power : [round(lastgen)] W<BR><BR>"
+        if ( (get_dist(src, user) > 1 ) || (stat & (NOPOWER|BROKEN)) && (!istype(user, /mob/living/silicon/ai)) )
+                user.machine = null
+                user << browse(null, "window=turbine")
+                return
 
-	t += "Turbine: [round(compressor.rpm)] RPM<BR>"
+        user.machine = src
 
-	t += "Starter: [ compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]"
+        var/t = "<TT><B>Gas Turbine Generator</B><HR><PRE>"
 
-	t += "</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>"
+        t += "Generated power : [round(lastgen)] W<BR><BR>"
 
-	t += "</TT>"
-	user << browse(t, "window=turbine")
-	onclose(user, "turbine")
+        t += "Turbine: [round(compressor.rpm)] RPM<BR>"
 
-	return
+        t += "Starter: [ compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]"
 
+        t += "</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>"
 
+        t += "</TT>"
+        user << browse(t, "window=turbine")
+        onclose(user, "turbine")
+
+        return
 
 /obj/machinery/power/turbine/Topic(href, href_list)
-	..()
-	if(stat & BROKEN)
-		return
-	if (usr.stat || usr.restrained() )
-		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		if(!istype(usr, /mob/living/silicon/ai))
-			usr << "\red You don't have the dexterity to do this!"
-			return
+        if(..())
+                return
 
-	if (( usr.machine==src && ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
+        if( href_list["close"] )
+                usr << browse(null, "window=turbine")
+                usr.machine = null
+                return
 
+        else if( href_list["str"] )
+                compressor.starter = !compressor.starter
 
-		if( href_list["close"] )
-			usr << browse(null, "window=turbine")
-			usr.machine = null
-			return
-
-		else if( href_list["str"] )
-			compressor.starter = !compressor.starter
-
-		spawn(0)
-			for(var/mob/M in viewers(1, src))
-				if ((M.client && M.machine == src))
-					src.interact(M)
-
-	else
-		usr << browse(null, "window=turbine")
-		usr.machine = null
-
-	return
+        spawn(0)
+                for(var/mob/M in viewers(1, src))
+                        if ((M.client && M.machine == src))
+                                src.interact(M)
 
 
 
