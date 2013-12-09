@@ -90,25 +90,16 @@ datum/controller/vote
 		var/list/winners = get_result()
 		var/text
 		if(winners.len > 0)
-			if(question)	text += "<b>[question]</b>"
-			else			text += "<b>[capitalize(mode)] Vote</b>"
-			for(var/i=1,i<=choices.len,i++)
-				var/votes = choices[choices[i]]
-				if(!votes)	votes = 0
-				text += "\n<b>[choices[i]]:</b> [votes]"
-			if(mode != "custom")
-				if(winners.len > 1)
-					text = "\n<b>Vote Tied Between:</b>"
-					for(var/option in winners)
-						text += "\n\t[option]"
-				. = pick(winners)
-				text += "\n<b>Vote Result: [.]</b>"
-			else
-				text += "\n<b>Did not vote:</b> [clients.len-voted.len]"
+			if(winners.len > 1)
+				text = "<b>Vote Tied Between:</b>\n"
+				for(var/option in winners)
+					text += "\t[option]\n"
+			. = pick(winners)
+			text += "<b>Vote Result: [.]</b>"
 		else
 			text += "<b>Vote Result: Inconclusive - No Votes!</b>"
 		log_vote(text)
-		world << "\n<font color='purple'>[text]</font>"
+		world << "<font color='purple'>[text]</font>"
 		return .
 
 	proc/result()
@@ -176,7 +167,7 @@ datum/controller/vote
 			if(mode == "custom")
 				text += "\n[question]"
 			log_vote(text)
-			world << "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>"
+			world << "<font color='purple'><b>[text]</b>\nType vote to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>"
 			time_remaining = round(config.vote_period/10)
 			return 1
 		return 0

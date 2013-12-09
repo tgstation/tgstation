@@ -320,10 +320,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			item_state = icon_off
 			M.update_inv_wear_mask(0)
 			packeditem = 0
+<<<<<<< HEAD
 			if(istype(src, /obj/item/clothing/mask/cigarette/pipe/cobpipe))
 				name = "empty corn cob pipe"
 			else
 				name = "empty smoking pipe"
+=======
+			name = "empty [initial(name)]"
+>>>>>>> b41be14ec8ee450abbfec0d8a5fec34f98e32667
 		processing_objects.Remove(src)
 		return
 	if(location)
@@ -346,10 +350,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				user << "You stuff [O] into the [src]."
 				smoketime = 400
 				packeditem = 1
+<<<<<<< HEAD
 				if(istype(src, /obj/item/clothing/mask/cigarette/pipe/cobpipe))
 					name = "[O.name]-packed corn cob pipe"
 				else
 					name = "[O.name]-packed smoking pipe"
+=======
+				name = "[O.name]-packed [initial(name)]"
+>>>>>>> b41be14ec8ee450abbfec0d8a5fec34f98e32667
 				if(O.reagents)
 					O.reagents.trans_to(src, O.reagents.total_volume)
 				del(O)
@@ -377,15 +385,23 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		packeditem = 0
 		smoketime = 0
 		reagents.clear_reagents()
+<<<<<<< HEAD
 		if(istype(src, /obj/item/clothing/mask/cigarette/pipe/cobpipe))
 			name = "empty corn cob pipe"
 		else
 			name = "empty smoking pipe"
+=======
+		name = "empty [initial(name)]"
+>>>>>>> b41be14ec8ee450abbfec0d8a5fec34f98e32667
 	return
 
 
 /obj/item/clothing/mask/cigarette/pipe/cobpipe
+<<<<<<< HEAD
 	name = "empty corn cob pipe"
+=======
+	name = "corn cob pipe"
+>>>>>>> b41be14ec8ee450abbfec0d8a5fec34f98e32667
 	desc = "A nicotine delivery system popularized by folksy backwoodsmen and kept popular in the modern age and beyond by space hipsters. Can be loaded with objects."
 	icon_state = "cobpipeoff"
 	item_state = "cobpipeoff"
@@ -550,6 +566,7 @@ obj/item/weapon/rollingpaperpack/attack_self(mob/user)
 		user << "You take the last paper out of the pack, and throw the pack away."
 		del(src)
 
+<<<<<<< HEAD
 /obj/item/weapon/rollingpaperpack/MouseDrop(atom/over_object)
 	var/mob/M = usr
 	if(M.restrained() || M.stat)
@@ -567,6 +584,8 @@ obj/item/weapon/rollingpaperpack/attack_self(mob/user)
 				M.u_equip(src)
 				M.put_in_l_hand(src)
 
+=======
+>>>>>>> b41be14ec8ee450abbfec0d8a5fec34f98e32667
 /obj/item/weapon/rollingpaperpack/examine()
 	..()
 	usr << "There are [src.papers] left"

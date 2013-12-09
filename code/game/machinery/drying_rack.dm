@@ -9,11 +9,15 @@
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 50
+<<<<<<< HEAD
 	var/list/accepted = list()
+=======
+>>>>>>> b41be14ec8ee450abbfec0d8a5fec34f98e32667
 	var/running = 0
 	var/volume = 100
 
 /obj/machinery/drying_rack/New()
+<<<<<<< HEAD
         ..()
         flags |= NOREACT
         create_reagents(volume)
@@ -106,16 +110,53 @@
 				user.u_equip(W)
 				del(W)
 				user << "You add the green grapes to the drying rack."
+=======
+	..()
+	flags |= NOREACT
+	create_reagents(volume)
+
+
+/obj/machinery/drying_rack/attackby(var/obj/item/I as obj, var/mob/user as mob)
+	if(running)
+		user << "\red Please wait until the last item has dried."
+		return
+	if(!istype(I,/obj/item/weapon/reagent_containers/food/snacks))
+		user << "\red You cannot add that to the drying rack."
+		return
+	var/obj/item/weapon/reagent_containers/food/snacks/S = I
+	if(!S.dried_type)
+		user << "\red You cannot add that to the drying rack."
+		return
+	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/grown))
+		var/obj/item/weapon/reagent_containers/food/snacks/grown/plant = I
+		var/resulttype = plant.dried_type
+		if(ispath(resulttype,/obj/item/weapon/reagent_containers/food/snacks/grown))
+			if(plant.dry == 0)
+				plant.reagents.trans_to(src, plant.reagents.total_volume)
+				user.u_equip(I)
+				user << "You add the [I] to the drying rack."
+				del(I)
+>>>>>>> b41be14ec8ee450abbfec0d8a5fec34f98e32667
 				src.running = 1
 				use_power = 2
 				icon_state = "drying_rack_on"
 				sleep(60)
 				icon_state = "drying_rack"
+<<<<<<< HEAD
 				new /obj/item/weapon/reagent_containers/food/snacks/no_raisin(src.loc)
+=======
+				var/obj/item/weapon/reagent_containers/food/snacks/grown/result = new resulttype(src.loc)
+				user << "\blue The [result] has finished drying."
+				result.icon_state = "[result.icon_state]_dry"
+				result.dry = 1
+				result.reagents.clear_reagents()
+				src.reagents.trans_to(result, src.reagents.total_volume)
+>>>>>>> b41be14ec8ee450abbfec0d8a5fec34f98e32667
 				use_power = 1
 				src.running = 0
 				return
 			else
+<<<<<<< HEAD
 				var/obj/item/weapon/reagent_containers/food/snacks/grown/O = W
 				if(O.dry == 0)
 					var/J = W.type
@@ -144,3 +185,19 @@
 			user << "\red Please wait until the last item has dried."
 	else
 		user << "\red You cannot add that to the drying rack."
+=======
+				user << "\red That has already been dried."
+
+	var/snacktype = S.dried_type
+	user.u_equip(I)
+	user << "You add the [I] to the drying rack."
+	del(I)
+	src.running = 1
+	use_power = 2
+	icon_state = "drying_rack_on"
+	sleep(60)
+	icon_state = "drying_rack"
+	new snacktype(src.loc)
+	use_power = 1
+	src.running = 0
+>>>>>>> b41be14ec8ee450abbfec0d8a5fec34f98e32667
