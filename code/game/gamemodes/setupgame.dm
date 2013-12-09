@@ -53,16 +53,19 @@
 	SMALLSIZEBLOCK     = getAssignedBlock("SMALLSIZE",     numsToAssign, DNA_HARD_BOUNDS)
 
 	// And the genes that actually do the work. (domutcheck improvements)
-	var/list/blocks_assigned=list()
-	for(var/gene_type in typesof(/datum/dna/gene)-/datum/dna/gene)
+	var/list/blocks_assigned[STRUCDNASIZE]
+	for(var/gene_type in typesof(/datum/dna/gene))
 		var/datum/dna/gene/G = new gene_type
 		if(G.block)
 			if(G.block in blocks_assigned)
 				warning("DNA2: Gene [G.name] trying to use already-assigned block [G.block] (used by [english_list(blocks_assigned[G.block])])")
-			dna_genes += G
-			if(!(G.block in blocks_assigned))
-				blocks_assigned[G.block]=list()
-			blocks_assigned[G.block]+=G.name
+			dna_genes.Add(G)
+			var/list/assignedToBlock[0]
+			if(blocks_assigned[G.block])
+				assignedToBlock=blocks_assigned[G.block]
+			assignedToBlock.Add(G.name)
+			blocks_assigned[G.block]=assignedToBlock
+			testing("DNA2: Gene [G.name] assigned to block [G.block].")
 
 // Run AFTER genetics setup and AFTER species setup.
 /proc/setup_species()

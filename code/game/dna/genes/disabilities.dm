@@ -52,7 +52,7 @@
 	activation_message="Your mind says 'Hello'."
 	mutation=mHallucination
 
-	initialize()
+	New()
 		block=HALLUCINATIONBLOCK
 
 /datum/dna/gene/disability/epilepsy
@@ -60,7 +60,7 @@
 	activation_message="You get a headache."
 	disability=EPILEPSY
 
-	initialize()
+	New()
 		block=HEADACHEBLOCK
 
 /datum/dna/gene/disability/cough
@@ -68,7 +68,7 @@
 	activation_message="You start coughing."
 	disability=COUGHING
 
-	initialize()
+	New()
 		block=COUGHBLOCK
 
 /datum/dna/gene/disability/clumsy
@@ -76,7 +76,7 @@
 	activation_message="You feel lightheaded."
 	mutation=CLUMSY
 
-	initialize()
+	New()
 		block=CLUMSYBLOCK
 
 /datum/dna/gene/disability/tourettes
@@ -84,7 +84,7 @@
 	activation_message="You twitch."
 	disability=TOURETTES
 
-	initialize()
+	New()
 		block=TWITCHBLOCK
 
 /datum/dna/gene/disability/nervousness
@@ -92,7 +92,7 @@
 	activation_message="You feel nervous."
 	disability=NERVOUS
 
-	initialize()
+	New()
 		block=NERVOUSBLOCK
 
 /datum/dna/gene/disability/blindness
@@ -100,7 +100,7 @@
 	activation_message="You can't seem to see anything."
 	sdisability=BLIND
 
-	initialize()
+	New()
 		block=BLINDBLOCK
 
 /datum/dna/gene/disability/deaf
@@ -108,7 +108,7 @@
 	activation_message="It's kinda quiet."
 	sdisability=DEAF
 
-	initialize()
+	New()
 		block=DEAFBLOCK
 
 	activate(var/mob/M)
@@ -120,5 +120,5 @@
 	activation_message="Your eyes feel weird..."
 	disability=NEARSIGHTED
 
-	initialize()
+	New()
 		block=GLASSESBLOCK

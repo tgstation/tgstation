@@ -23,10 +23,6 @@
 	// Any of a number of GENE_ flags.
 	var/flags=0
 
-// Called when the gene is loaded by the game. Do initial setup here.
-/datum/dna/gene/proc/initialize()
-	return
-
 // Return 1 if we can activate.
 // HANDLE MUTCHK_FORCED HERE!
 /datum/dna/gene/proc/can_activate(var/mob/M, var/flags)

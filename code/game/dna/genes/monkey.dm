@@ -1,7 +1,7 @@
 /datum/dna/gene/monkey
 	name="Monkey"
 
-/datum/dna/gene/monkey/initialize()
+/datum/dna/gene/monkey/New()
 	block=MONKEYBLOCK
 
 /datum/dna/gene/monkey/can_activate(var/mob/M,var/flags)

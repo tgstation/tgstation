@@ -10,7 +10,7 @@
 			continue
 
 		// Sanity checks, don't skip.
-		if(!gene.can_activate(M,connected,flags))
+		if(!gene.can_activate(M,flags))
 			continue
 
 		// Current state
@@ -22,11 +22,13 @@
 		var/gene_prior_status = (gene.type in M.active_genes)
 
 		if((gene_active && !gene_prior_status) || (gene.flags & GENE_ALWAYS_ACTIVATE))
+			testing("[gene.name] activated!")
 			gene.activate(M)
 			if(!(gene.flags & GENE_ALWAYS_ACTIVATE))
 				M.active_genes |= gene.type
 			M.update_icon=1
 		else if(!gene_active && gene_prior_status)
+			testing("[gene.name] deactivated!")
 			gene.deactivate(M)
 			M.active_genes -= gene.type
 			M.update_icon=1
