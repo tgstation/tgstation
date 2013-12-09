@@ -165,6 +165,7 @@
 #include "code\game\area\areas.dm"
 #include "code\game\area\Space Station 13 areas.dm"
 #include "code\game\dna\dna2.dm"
+#include "code\game\dna\dna2_domutcheck.dm"
 #include "code\game\dna\dna2_helpers.dm"
 #include "code\game\dna\dna_modifier.dm"
 #include "code\game\dna\genes\disabilities.dm"

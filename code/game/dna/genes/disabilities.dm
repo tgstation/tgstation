@@ -22,7 +22,7 @@
 	// Activation message
 	var/activation_message=""
 
-/datum/dna/gene/disability/can_activate(var/mob/M,var/list/old_mutations,var/flags)
+/datum/dna/gene/disability/can_activate(var/mob/M,var/flags)
 	return 1 // Always set!
 
 /datum/dna/gene/disability/activate(var/mob/living/carbon/M)

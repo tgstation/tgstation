@@ -20,21 +20,25 @@
 	//  What gene activates this?
 	var/block=0
 
+	// Any of a number of GENE_ flags.
+	var/flags=0
+
 // Called when the gene is loaded by the game. Do initial setup here.
 /datum/dna/gene/proc/initialize()
 	return
 
 // Return 1 if we can activate.
-/datum/dna/gene/proc/can_activate(var/mob/M,var/list/old_mutations,var/flags)
+// HANDLE MUTCHK_FORCED HERE!
+/datum/dna/gene/proc/can_activate(var/mob/M, var/flags)
 	return 0
 
 // Called when the gene activates.  Do your magic here.
-/datum/dna/gene/proc/activate(var/mob/M, var/connected)
+/datum/dna/gene/proc/activate(var/mob/M, var/connected, var/flags)
 	return
 
 // Called when the gene deactivates.  Undo your magic here.
 // Only called when the block is deactivated.
-/datum/dna/gene/proc/deactivate(var/mob/M, var/connected)
+/datum/dna/gene/proc/deactivate(var/mob/M, var/connected, var/flags)
 	return
 
 
@@ -65,16 +69,12 @@
 	// Possible deactivation messages
 	var/list/deactivation_messages=list()
 
-/datum/dna/gene/basic/can_activate(var/mob/M,var/list/old_mutations,var/flags)
+/datum/dna/gene/basic/can_activate(var/mob/M,var/flags)
 	if(mutation==0)
 		return 0
 
-	// Mutation already set?
-	if(mutation in old_mutations)
-		return 1
-
 	// Probability check
-	if(probinj(activation_prob,(flags&MUTCHK_FORCED)))
+	if(flags & MUTCHK_FORCED || probinj(activation_prob,(flags&MUTCHK_FORCED)))
 		return 1
 
 	return 0

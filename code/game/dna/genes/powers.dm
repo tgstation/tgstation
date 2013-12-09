@@ -70,14 +70,10 @@
 	initialize()
 		block=COLDBLOCK
 
-	can_activate(var/mob/M,var/list/old_mutations,var/flags)
-		// Mutation already set?
-		if(mutation in old_mutations)
-			return 1
-
+	can_activate(var/mob/M,var/flags)
 		// Probability check
 		var/_prob = 15
-		if(COLD_RESISTANCE in old_mutations)
+		if(COLD_RESISTANCE in M.mutations)
 			_prob=5
 		if(probinj(_prob,(flags&MUTCHK_FORCED)))
 			return 1
@@ -90,14 +86,11 @@
 	initialize()
 		block=FIREBLOCK
 
-	can_activate(var/mob/M,var/list/old_mutations,var/flags)
-		// Mutation already set?
-		if(mutation in old_mutations)
-			return 1
+	can_activate(var/mob/M,var/flags)
 
 		// Probability check
 		var/_prob=30
-		if(mHeatres in old_mutations)
+		if(mHeatres in M.mutations)
 			_prob=5
 		if(probinj(_prob,(flags&MUTCHK_FORCED)))
 			return 1
@@ -126,11 +119,11 @@
 	initialize()
 		block=SMALLSIZEBLOCK
 
-	can_activate(var/mob/M,var/list/old_mutations,var/flags)
+	can_activate(var/mob/M,var/flags)
 		// Can't be big and small.
-		if(HULK in old_mutations)
+		if(HULK in M.mutations)
 			return 0
-		return ..(M,old_mutations,flags)
+		return ..(M,flags)
 
 	activate(var/mob/M)
 		..(M)
@@ -144,11 +137,11 @@
 	initialize()
 		block=HULKBLOCK
 
-	can_activate(var/mob/M,var/list/old_mutations,var/flags)
+	can_activate(var/mob/M,var/flags)
 		// Can't be big and small.
-		if(mSmallsize in old_mutations)
+		if(mSmallsize in M.mutations)
 			return 0
-		return ..(M,old_mutations,flags)
+		return ..(M,flags)
 
 /datum/dna/gene/basic/xray
 	name="X-Ray Vision"
