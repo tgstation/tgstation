@@ -829,6 +829,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	icon_state = "golem"
 	item_state = "golem"
 	item_color = "golem"
+	flags = ABSTRACT
 	has_sensor = 0
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	canremove = 0
@@ -844,7 +845,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	body_parts_covered = FULL_BODY
 	slowdown = 1.0
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL | STOPSPRESSUREDMAGE
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL | STOPSPRESSUREDMAGE | ABSTRACT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS | HEAD
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS | HEAD
@@ -858,7 +859,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	icon_state = "golem"
 	item_state = null
 	canremove = 0
-	flags = NOSLIP
+	flags = NOSLIP | ABSTRACT
 	slowdown = SHOES_SLOWDOWN+1
 
 
@@ -870,6 +871,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	canremove = 0
 	siemens_coefficient = 0
 	unacidable = 1
+	flags = ABSTRACT
 
 /obj/item/clothing/mask/breath/golem
 	name = "golem's face"
@@ -879,6 +881,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	canremove = 0
 	siemens_coefficient = 0
 	unacidable = 1
+	flags = ABSTRACT
 
 
 /obj/item/clothing/gloves/golem
@@ -888,6 +891,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	item_state = null
 	siemens_coefficient = 0
 	canremove = 0
+	flags = ABSTRACT
 
 
 /obj/item/clothing/head/space/golem
@@ -898,7 +902,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	desc = "a golem's head"
 	canremove = 0
 	unacidable = 1
-	flags = FPRINT | TABLEPASS | STOPSPRESSUREDMAGE
+	flags = FPRINT | TABLEPASS | STOPSPRESSUREDMAGE | ABSTRACT
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	armor = list(melee = 80, bullet = 20, laser = 20, energy = 10, bomb = 0, bio = 0, rad = 0)

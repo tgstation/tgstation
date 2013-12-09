@@ -3,7 +3,7 @@
 
 /obj/item/weapon/grab
 	name = "grab"
-	flags = NOBLUDGEON
+	flags = NOBLUDGEON | ABSTRACT
 	var/obj/screen/grab/hud = null
 	var/mob/affecting = null
 	var/mob/assailant = null
@@ -13,7 +13,6 @@
 	var/last_upgrade = 0
 
 	layer = 21
-	abstract = 1
 	item_state = "nothing"
 	w_class = 5.0
 

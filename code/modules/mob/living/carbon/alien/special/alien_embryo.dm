@@ -13,6 +13,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 /obj/item/alien_embryo/New()
 	if(istype(loc, /mob/living))
 		affected_mob = loc
+		affected_mob.status_flags |= XENO_HOST
 		processing_objects.Add(src)
 		spawn(0)
 			AddInfectionImages(affected_mob)

@@ -3,6 +3,7 @@
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/incise, /datum/surgery_step/extract_appendix, /datum/surgery_step/close)
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	location = "groin"
+	requires_organic_chest = 1
 
 
 //extract appendix

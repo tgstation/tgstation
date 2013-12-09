@@ -1,5 +1,5 @@
 /obj/item/radio/integrated
-	name = "PDA radio module"
+	name = "\improper PDA radio module"
 	desc = "An electronic radio system of nanotrasen origin."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "power_mod"
