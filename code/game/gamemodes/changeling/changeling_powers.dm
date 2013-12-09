@@ -533,6 +533,7 @@ var/list/datum/dna/hivemind_bank = list()
 	//////////
 
 /mob/living/carbon/proc/set_sting(A, icon, dna=null) //setting the sting and ui icon for it
+	src << "<span class='notice'>We prepare our sting, use alt+click on target to sting them.</span>"
 	src.mind.changeling.chosen_sting = A
 	if(dna)
 		src.mind.changeling.chosen_dna = dna
@@ -540,6 +541,7 @@ var/list/datum/dna/hivemind_bank = list()
 	hud_used.lingstingdisplay.invisibility = 0
 
 /mob/living/carbon/proc/unset_sting() //unsetting the previous
+	src << "<span class='warning'>We retract our sting, we can't sting anyone for now.</span>"
 	src.mind.changeling.chosen_sting = null
 	hud_used.lingstingdisplay.icon_state = null
 	hud_used.lingstingdisplay.invisibility = 101
