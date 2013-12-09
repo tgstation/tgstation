@@ -12,8 +12,8 @@
 	attack_verb = list("beaten")
 	var/stunforce = 10
 	var/status = 0
-	var/obj/item/weapon/cell/high/bcell = null
-	var/hitcost = 1000
+	var/obj/item/weapon/cell/bcell = null
+	var/hitcost = 100 // 10 hits on crap cell
 	var/mob/foundmob = "" //Used in throwing proc.
 
 	suicide_act(mob/user)
@@ -22,13 +22,13 @@
 
 /obj/item/weapon/melee/baton/New()
 	..()
-	bcell = new(src) //I'm lazy
 	update_icon()
 	return
 
 /obj/item/weapon/melee/baton/loaded/New() //this one starts with a cell pre-installed.
 	..()
 	bcell = new(src)
+	bcell.charge=bcell.maxcharge // Charge this shit
 	update_icon()
 	return
 

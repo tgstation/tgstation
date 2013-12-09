@@ -26,8 +26,8 @@
 			src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
 			if(src.output) break
 
-		for(var/oredata in typesof(/datum/processable_ore) - /datum/processable_ore)
-			var/datum/processable_ore/ore_datum = new oredata
+		for(var/oredata in typesof(/datum/material) - /datum/material)
+			var/datum/material/ore_datum = new oredata
 			// Only add ores that can be run through the minter.
 			if(ore_datum.cointype)
 				ore[ore_datum.id]=ore_datum
@@ -43,7 +43,7 @@
 		O = locate(/obj/item/stack/sheet, input.loc)
 		if(O)
 			for(var/ore_id in ore)
-				var/datum/processable_ore/po =ore[ore_id]
+				var/datum/material/po =ore[ore_id]
 				if (istype(O,po.sheettype))
 					po.stored += 5 * O.amount // 100/20 = 5 coins per sheet.
 					del(O)
@@ -112,7 +112,7 @@ a.notsmelting {
 
 	var/nloaded=0
 	for(var/ore_id in ore)
-		var/datum/processable_ore/ore_info=ore[ore_id]
+		var/datum/material/ore_info=ore[ore_id]
 		if(ore_info.stored)
 			html += {"
 			<tr>
@@ -172,7 +172,7 @@ a.notsmelting {
 			processing = 1
 			icon_state = "coinpress1"
 			var/obj/item/weapon/moneybag/M
-			var/datum/processable_ore/po=ore[chosen]
+			var/datum/material/po=ore[chosen]
 			if(!po)
 				chosen=null
 				processing=0

@@ -37,6 +37,8 @@
 
 /obj/machinery/iv_drip/MouseDrop(over_object, src_location, over_location)
 	..()
+	if(usr.stat) // Stop interacting with shit while dead pls
+		return
 	if(isanimal(usr))
 		return
 	if(attached)
@@ -52,6 +54,8 @@
 
 
 /obj/machinery/iv_drip/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(user.stat)
+		return
 	if (istype(W, /obj/item/weapon/reagent_containers))
 		if(!isnull(src.beaker))
 			user << "There is already a reagent container loaded!"
@@ -120,6 +124,7 @@
 				update_icon()
 
 /obj/machinery/iv_drip/attack_hand(mob/user as mob)
+	if(user.stat) return
 	if(src.beaker)
 		src.beaker.loc = get_turf(src)
 		src.beaker = null

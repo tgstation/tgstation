@@ -5,8 +5,8 @@
 
 // these define the time taken for the shuttle to get to SS13
 // and the time before it leaves again
-#define SHUTTLEARRIVETIME 600		// 10 minutes = 600 seconds
-#define SHUTTLELEAVETIME 180		// 3 minutes = 180 seconds
+#define SHUTTLEARRIVETIME  600		// 10 minutes = 600 seconds
+#define SHUTTLELEAVETIME   180		// 3 minutes = 180 seconds
 #define SHUTTLETRANSITTIME 120		// 2 minutes = 120 seconds
 
 var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
@@ -268,7 +268,11 @@ datum/shuttle_controller
 							var/turf/D = locate(T.x, throwy - 1, 1)
 							//var/turf/E = get_step(D, SOUTH)
 							for(var/atom/movable/AM as mob|obj in T)
-								AM.Move(D)
+								if(ismob(AM))
+									var/mob/M=AM
+									M.gib()
+								else
+									AM.Move(D)
 								// NOTE: Commenting this out to avoid recreating mass driver glitch
 								/*
 								spawn(0)

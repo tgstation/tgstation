@@ -1048,7 +1048,7 @@ Pressure: [env.return_pressure()]"}
 		magic.output=200000 // AKA rape
 		magic.online=1
 
-	world << "<b>LET THERE BE JUICE</b>"
+	//world << "<b>LET THERE BE JUICE</b>"
 
 
 // Getting tired of doing this shit every fucking round when I'm testing something atmos-related
@@ -1073,7 +1073,7 @@ Pressure: [env.return_pressure()]"}
 	for(var/obj/machinery/atmospherics/trinary/filter/F in world)
 		F.target_pressure=4500
 
-	world << "<b>LET THERE BE AIR</b>"
+	//world << "<b>LET THERE BE AIR</b>"
 
 
 /client/proc/cmd_debug_mob_lists()
@@ -1102,7 +1102,7 @@ Pressure: [env.return_pressure()]"}
 		return
 	if(istype(M, /mob/living/carbon))
 		M.dna.SetSEState(block,!M.dna.GetSEState(block))
-		domutcheck(M,null)
+		domutcheck(M,null,MUTCHK_FORCED)
 		M.update_mutations()
 		var/state="[M.dna.GetSEState(block)?"on":"off"]"
 		var/blockname=assigned_blocks[block]

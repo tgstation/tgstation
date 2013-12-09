@@ -67,7 +67,12 @@ var/list/admin_verbs_admin = list(
 	/client/proc/toggledebuglogs,
 	/datum/admins/proc/show_skills,
 	/client/proc/check_customitem_activity,
-	///client/proc/response_team
+	// /client/proc/man_up,
+	// /client/proc/global_man_up,
+	/client/proc/response_team, // Response Teams admin verb
+	/client/proc/toggle_antagHUD_use,
+	/client/proc/toggle_antagHUD_restrictions,
+	/client/proc/allow_character_respawn    /* Allows a ghost to respawn */	
 )
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -757,3 +762,27 @@ var/list/admin_verbs_mod = list(
 		usr << "You now will get debug log messages"
 	else
 		usr << "You now won't get debug log messages"
+
+
+/client/proc/man_up(mob/T as mob in mob_list)
+	set category = "Fun"
+	set name = "Man Up"
+	set desc = "Tells mob to man up and deal with it."
+
+	T << "<span class='notice'><b><font size=3>Man up and deal with it.</font></b></span>"
+	T << "<span class='notice'>Move on.</span>"
+
+	log_admin("[key_name(usr)] told [key_name(T)] to man up and deal with it.")
+	message_admins("\blue [key_name_admin(usr)] told [key_name(T)] to man up and deal with it.", 1)
+
+/client/proc/global_man_up()
+	set category = "Fun"
+	set name = "Man Up Global"
+	set desc = "Tells everyone to man up and deal with it."
+
+	for (var/mob/T as mob in mob_list)
+		T << "<br><center><span class='notice'><b><font size=4>Man up.<br> Deal with it.</font></b><br>Move on.</span></center><br>"
+		T << 'sound/voice/ManUp1.ogg'
+
+	log_admin("[key_name(usr)] told everyone to man up and deal with it.")
+	message_admins("\blue [key_name_admin(usr)] told everyone to man up and deal with it.", 1)

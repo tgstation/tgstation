@@ -83,6 +83,14 @@ datum
 			on_move(var/mob/M)
 				return
 
+			// Called after add_reagents creates a new reagent.
+			on_new(var/data)
+				return
+
+			// Called when two reagents of the same are mixing.
+			on_merge(var/data)
+				return
+
 			on_update(var/atom/A)
 				return
 
@@ -126,7 +134,7 @@ datum
 					if(method == TOUCH)
 						infect_virus2(M,self.data["virus2"])
 					else
-						infect_virus2(M,self.data["virus2"],1)
+						infect_virus2(M,self.data["virus2"],1) //injected, force infection!
 				if(self.data && self.data["antibodies"] && istype(M, /mob/living/carbon))//... and curing
 					var/mob/living/carbon/C = M
 					C.antibodies |= self.data["antibodies"]

@@ -49,7 +49,7 @@
 				mut_update=1
 	if(mut_update)
 		//src << "TESTING [__FILE__]:[__LINE__]: Forcing domutcheck() and update_mutations()."
-		domutcheck(src)
+		domutcheck(src,null,MUTCHK_FORCED)
 		update_mutations()
 	//testing("SpeciesMut + Mutations = "+english_list(mutations))
 
@@ -93,7 +93,7 @@
 
 		if(check_mutations)
 			testing("Updating [src.real_name]'s mutations: "+english_list(mutations))
-			domutcheck(src,null)
+			domutcheck(src,null,MUTCHK_FORCED)
 			update_mutations()
 			check_mutations=0
 

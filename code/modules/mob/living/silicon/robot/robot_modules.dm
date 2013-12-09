@@ -20,7 +20,6 @@
 		..()
 		return
 
-
 	New()
 		src.modules += new /obj/item/device/flashlight(src)
 		src.modules += new /obj/item/device/flash(src)
@@ -46,13 +45,19 @@
 
 	New()
 		..()
-		src.modules += new /obj/item/weapon/melee/baton(src)
+		src.modules += new /obj/item/weapon/melee/baton/loaded(src)
 		src.modules += new /obj/item/weapon/extinguisher(src)
 		src.modules += new /obj/item/weapon/wrench(src)
 		src.modules += new /obj/item/weapon/crowbar(src)
 		src.modules += new /obj/item/device/healthanalyzer(src)
 		src.emag = new /obj/item/weapon/melee/energy/sword(src)
 		return
+
+	respawn_consumable(var/mob/living/silicon/robot/R)
+		// Recharge baton battery
+		for(var/obj/item/weapon/melee/baton/B in src.modules)
+			if(B && B.bcell)
+				B.bcell.give(175)
 
 
 
@@ -135,12 +140,18 @@
 		..()
 		src.modules += new /obj/item/borg/sight/hud/sec(src)
 		src.modules += new /obj/item/weapon/handcuffs/cyborg(src)
-		src.modules += new /obj/item/weapon/melee/baton(src)
+		src.modules += new /obj/item/weapon/melee/baton/loaded(src)
 		src.modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
 		src.emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
 		return
 
-
+	respawn_consumable(var/mob/living/silicon/robot/R)
+		// Recharge baton battery
+		for(var/obj/item/M in src.modules)
+			if(istype(M,/obj/item/weapon/melee/baton))
+				var/obj/item/weapon/melee/baton/B=M
+				if(B && B.bcell)
+					B.bcell.give(175)
 
 /obj/item/weapon/robot_module/janitor
 	name = "janitorial robot module"

@@ -1,8 +1,11 @@
 /obj/machinery/power/am_control_unit
 	name = "antimatter control unit"
 	desc = "This device injects antimatter into connected shielding units, the more antimatter injected the more power produced.  Wrench the device to set it up."
-	icon = 'icons/obj/machines/antimatter.dmi'
+	//icon = 'icons/obj/machines/antimatter.dmi'
+	icon = 'icons/obj/machines/new_ame.dmi'
 	icon_state = "control"
+	var/icon_mod = "on" // on, critical, or fuck
+	var/old_icon_mod = "on"
 	anchored = 1
 	density = 1
 	use_power = 1
@@ -58,6 +61,8 @@
 		toggle_power()
 		//Angry buzz or such here
 		return
+
+	check_core_stability()
 
 	add_avail(stored_power)
 
@@ -141,7 +146,8 @@
 
 
 /obj/machinery/power/am_control_unit/update_icon()
-	if(active) icon_state = "control_on"
+	if(active)
+		icon_state = "control_[icon_mod]"
 	else icon_state = "control"
 	//No other icons for it atm
 
@@ -253,14 +259,26 @@
 
 
 /obj/machinery/power/am_control_unit/proc/check_core_stability()
-	if(stored_core_stability_delay || linked_cores.len <= 0)	return
-	stored_core_stability_delay = 1
+	//if(stored_core_stability_delay || linked_cores.len <= 0)	return
+	if(linked_cores.len <=0) return
+	//stored_core_stability_delay = 1
 	stored_core_stability = 0
 	for(var/obj/machinery/am_shielding/AMS in linked_cores)
 		stored_core_stability += AMS.stability
 	stored_core_stability/=linked_cores.len
-	spawn(40)
-		stored_core_stability_delay = 0
+	switch(stored_core_stability)
+		if(0 to 24)
+			icon_mod="fuck"
+		if(25 to 49)
+			icon_mod="critical"
+		if(50 to INFINITY)
+			icon_mod="on"
+	if(icon_mod!=old_icon_mod)
+		old_icon_mod=icon_mod
+		update_icon()
+
+	//spawn(40)
+	//	stored_core_stability_delay = 0
 	return
 
 
@@ -270,46 +288,13 @@
 			user.unset_machine()
 			user << browse(null, "window=AMcontrol")
 			return
-	/*user.set_machine(src)
-
-	var/dat = ""
-	dat += "AntiMatter Control Panel<BR>"
-	dat += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-	dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
-	dat += "<A href='?src=\ref[src];refreshicons=1'>Force Shielding Update</A><BR><BR>"
-	dat += "Status: [(active?"Injecting":"Standby")] <BR>"
-	dat += "<A href='?src=\ref[src];togglestatus=1'>Toggle Status</A><BR>"
-
-	dat += "Stability: [stability]%<BR>"
-	dat += "Reactor parts: [linked_shielding.len]<BR>"//TODO: perhaps add some sort of stability check
-	dat += "Cores: [linked_cores.len]<BR><BR>"
-	dat += "-Current Efficiency: [reported_core_efficiency]<BR>"
-	dat += "-Average Stability: [stored_core_stability] <A href='?src=\ref[src];refreshstability=1'>(update)</A><BR>"
-	dat += "Last Produced: [stored_power]<BR>"
-
-	dat += "Fuel: "
-	if(!fueljar)
-		dat += "<BR>No fuel receptacle detected."
-	else
-		dat += "<A href='?src=\ref[src];ejectjar=1'>Eject</A><BR>"
-		dat += "- [fueljar.fuel]/[fueljar.fuel_max] Units<BR>"
-
-		dat += "- Injecting: [fuel_injection] units<BR>"
-		dat += "- <A href='?src=\ref[src];strengthdown=1'>--</A>|<A href='?src=\ref[src];strengthup=1'>++</A><BR><BR>"
-
-
-	user << browse(dat, "window=AMcontrol;size=420x500")
-	onclose(user, "AMcontrol")*/
 	return ui_interact(user)
-	return
 
 
 
 /obj/machinery/power/am_control_unit/ui_interact(mob/user, ui_key = "main")
 	if(!user)
 		return
-
-	check_core_stability()
 
 	var/list/fueljar_data=null
 	if(fueljar)
@@ -321,7 +306,7 @@
 
 	var/list/data = list(
 		"active" = active,
-		"stability" = stability,
+		//"stability" = stability,
 		"linked_shields" = linked_shielding.len,
 		"linked_cores" = linked_cores.len,
 		"efficiency" = reported_core_efficiency,
@@ -362,9 +347,11 @@
 	if(href_list["togglestatus"])
 		toggle_power()
 		message_admins("AME toggled [active?"on":"off"] by [usr.name] at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+		return 1
 
 	if(href_list["refreshicons"])
-		update_shield_icons = 1
+		update_shield_icons = 2 // Fuck it
+		return 1
 
 	if(href_list["ejectjar"])
 		if(fueljar)
@@ -373,6 +360,7 @@
 			fueljar = null
 			//fueljar.control_unit = null currently it does not care where it is
 			//update_icon() when we have the icon for it
+		return 1
 
 	if(href_list["set_strength"])
 		var/newval = input("Enter new injection strength") as num|null
@@ -381,9 +369,11 @@
 		fuel_injection=newval
 		fuel_injection=max(1,fuel_injection)
 		message_admins("AME injection strength set to [fuel_injection] by [usr.name] at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+		return 1
 
 	if(href_list["refreshstability"])
 		check_core_stability()
+		return 1
 
 	updateDialog()
-	return
+	return 1

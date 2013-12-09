@@ -37,6 +37,10 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 			T += M.rating
 		max_material_amount = T * 75000.0
 
+	update_icon()
+		overlays.Cut()
+		if(linked_console)
+			overlays += "circuit_imprinter_link"
 
 	blob_act()
 		if (prob(50))
