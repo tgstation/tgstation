@@ -31,6 +31,39 @@
 	new choice(loc)
 	del(src)
 
+/obj/machinery/computer/arcade/proc/prizevend()
+	if(!contents.len)
+		var/prizeselect = pickweight(prizes)
+		new prizeselect(src.loc)
+
+		if(istype(prizeselect, /obj/item/toy/gun)) //Ammo comes with the gun
+			new /obj/item/toy/ammo/gun(src.loc)
+
+		else if(istype(prizeselect, /obj/item/clothing/suit/syndicatefake)) //Helmet is part of the suit
+			new	/obj/item/clothing/head/syndicatefake(src.loc)
+
+	else
+		var/atom/movable/prize = pick(contents)
+		prize.loc = src.loc
+
+/obj/machinery/computer/arcade/emp_act(severity)
+	if(stat & (NOPOWER|BROKEN))
+		..(severity)
+		return
+	var/empprize = null
+	var/num_of_prizes = 0
+	switch(severity)
+		if(1)
+			num_of_prizes = rand(1,4)
+		if(2)
+			num_of_prizes = rand(0,2)
+	for(num_of_prizes; num_of_prizes > 0; num_of_prizes--)
+		empprize = pickweight(prizes)
+		new empprize(src.loc)
+
+	..(severity)
+
+
 /obj/machinery/computer/arcade/battle
 	name = "arcade machine"
 	desc = "Does not support Pinball."
@@ -45,8 +78,6 @@
 	var/enemy_mp = 20
 	var/gameover = 0
 	var/blocked = 0 //Player cannot attack/heal while set
-
-/obj/machinery/computer/arcade/battle
 	var/turtle = 0
 
 /obj/machinery/computer/arcade/battle/New()
@@ -168,21 +199,9 @@
 				log_game("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 				src.New()
 				emagged = 0
-			else if(!contents.len)
-				feedback_inc("arcade_win_normal")
-				var/prizeselect = pickweight(prizes)
-				new prizeselect(src.loc)
-
-				if(istype(prizeselect, /obj/item/toy/gun)) //Ammo comes with the gun
-					new /obj/item/toy/ammo/gun(src.loc)
-
-				else if(istype(prizeselect, /obj/item/clothing/suit/syndicatefake)) //Helmet is part of the suit
-					new	/obj/item/clothing/head/syndicatefake(src.loc)
-
 			else
 				feedback_inc("arcade_win_normal")
-				var/atom/movable/prize = pick(contents)
-				prize.loc = src.loc
+				prizevend()
 
 	else if (emagged && (turtle >= 4))
 		var/boomamt = rand(5,10)
@@ -249,24 +268,6 @@
 		..()
 	return
 
-/obj/machinery/computer/arcade/battle/emp_act(severity)
-	if(stat & (NOPOWER|BROKEN))
-		..(severity)
-		return
-	var/empprize = null
-	var/num_of_prizes = 0
-	switch(severity)
-		if(1)
-			num_of_prizes = rand(1,4)
-		if(2)
-			num_of_prizes = rand(0,2)
-	for(num_of_prizes; num_of_prizes > 0; num_of_prizes--)
-		empprize = pickweight(prizes)
-		new empprize(src.loc)
-
-	..(severity)
-
-
 
 
 
@@ -317,9 +318,12 @@
 /obj/machinery/computer/arcade/orion_trail/proc/newgame()
 	// Set names of settlers in crew
 	settlers = list()
-	var/list/settlernames = list("Bob","Henry","Joe","Mary","Jill","Mandy")
+	var/choice = null
 	for(var/i = 1; i <= 3; i++)
-		var/choice = pick_n_take(settlernames)
+		if(prob(50))
+			choice = pick(first_names_male)
+		else
+			choice = pick(first_names_female)
 		settlers += choice
 	settlers += "[usr]"
 	// Re-set items to defaults
@@ -351,17 +355,8 @@
 			if(fuel <= 0)
 				dat += "<br>You ran out of fuel, and drift, slowly, into a star."
 		dat += "<br><P ALIGN=Right><a href='byond://?src=\ref[src];menu=1'>OK...</a></P>"
-		var/datum/browser/popup = new(user, "arcade", "The Orion Trail")
-		popup.set_content(dat)
-		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
-		popup.open()
-		return
 	else if(event)
-		var/datum/browser/popup = new(user, "arcade", "The Orion Trail")
-		popup.set_content(eventdat)
-		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
-		popup.open()
-		return
+		dat = eventdat
 	else if(playing)
 		var/title = stops[turns]
 		var/subtext = stopblurbs[turns]
@@ -376,23 +371,20 @@
 		else
 			dat += "<P ALIGN=Right><a href='byond://?src=\ref[src];continue=1'>Continue</a></P>"
 		dat += "<P ALIGN=Right><a href='byond://?src=\ref[src];close=1'>Close</a></P>"
-		var/datum/browser/popup = new(user, "arcade", "The Orion Trail")
-		popup.set_content(dat)
-		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
-		popup.open()
-		return
 	else
 		dat = "<center><h2>The Orion Trail</h2></center>"
 		dat += "<br><center><h3>Experience the journey of your ancestors!</h3></center><br><br>"
 		dat += "<center><b><a href='byond://?src=\ref[src];newgame=1'>New Game</a></b></center>"
 		dat += "<P ALIGN=Right><a href='byond://?src=\ref[src];close=1'>Close</a></P>"
-		var/datum/browser/popup = new(user, "arcade", "The Orion Trail")
-		popup.set_content(dat)
-		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
-		popup.open()
-		return
+	var/datum/browser/popup = new(user, "arcade", "The Orion Trail")
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
+	return
 
 /obj/machinery/computer/arcade/orion_trail/Topic(href, href_list)
+	if(..())
+		return
 	if(href_list["close"])
 		usr.unset_machine()
 		usr << browse(null, "window=arcade")
@@ -553,5 +545,4 @@
 
 /obj/machinery/computer/arcade/orion_trail/proc/win()
 	playing = 0
-	var/prizeselect = pickweight(prizes)
-	new prizeselect(src.loc)
+	prizevend()
