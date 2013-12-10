@@ -121,9 +121,30 @@ obj/structure/ex_act(severity)
 					open_animation()
 
 				else if(icon_state == "open")
-					close_animation()
+					if(pod.contents.len && user.loc != pod && intent_numeric(user.a_intent) > 1)
+						user.visible_message("<span class='warning'>[user] starts emptying [pod]'s contents onto the floor!</span>")
+						if(do_after(user, 40)) //So it doesn't default to close_animation() on fail
+							if(pod.loc == loc)
+								for(var/atom/movable/AM in pod)
+									AM.loc = get_turf(user)
+									if(ismob(AM))
+										var/mob/M = AM
+										M.Weaken(5)
+					else
+						close_animation()
 
 
+/obj/structure/transit_tube/station/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/weapon/grab) && icon_state == "open")
+		var/obj/item/weapon/grab/G = W
+		if(ismob(G.affecting) && G.state >= GRAB_AGGRESSIVE)
+			var/mob/GM = G.affecting
+			for(var/obj/structure/transit_tube_pod/pod in loc)
+				pod.visible_message("<span class='warning'>[user] starts putting [GM] into the [pod]!</span>")
+				if(do_after(user, 60))
+					GM.Weaken(5)
+					src.Bumped(GM)
+					del(G)
 
 /obj/structure/transit_tube/station/proc/open_animation()
 	if(icon_state == "closed")
@@ -146,7 +167,7 @@ obj/structure/ex_act(severity)
 /obj/structure/transit_tube/station/proc/launch_pod()
 	for(var/obj/structure/transit_tube_pod/pod in loc)
 		if(!pod.moving && pod.dir in directions())
-			spawn(5)
+			spawn(35) //To prevent saxing in the pod, should probably change these to sleep if it doesn't break the tubes
 				pod_moving = 1
 				close_animation()
 				sleep(CLOSE_DURATION + 2)
@@ -420,7 +441,6 @@ obj/structure/ex_act(severity)
 					if(tube.has_exit(direction))
 						dir = direction
 						return
-
 
 
 // Parse the icon_state into a list of directions.
