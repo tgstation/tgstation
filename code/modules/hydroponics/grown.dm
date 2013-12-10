@@ -1033,10 +1033,7 @@
 	desc = "Dry them out to make coffee."
 	icon_state = "coffee_arabica"
 	potency = 20
-<<<<<<< HEAD
-=======
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/coffee_arabica
->>>>>>> b41be14ec8ee450abbfec0d8a5fec34f98e32667
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -1048,10 +1045,7 @@
 	desc = "Dry them out to make coffee."
 	icon_state = "coffee_robusta"
 	potency = 20
-<<<<<<< HEAD
-=======
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/coffee_robusta
->>>>>>> b41be14ec8ee450abbfec0d8a5fec34f98e32667
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -1064,10 +1058,7 @@
 	desc = "Dry them out to make some smokes."
 	icon_state = "tobacco_leaves"
 	potency = 20
-<<<<<<< HEAD
-=======
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco
->>>>>>> b41be14ec8ee450abbfec0d8a5fec34f98e32667
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space
@@ -1076,10 +1067,7 @@
 	desc = "Dry them out to make some space-smokes."
 	icon_state = "stobacco_leaves"
 	potency = 20
-<<<<<<< HEAD
-=======
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space
->>>>>>> b41be14ec8ee450abbfec0d8a5fec34f98e32667
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -1092,10 +1080,7 @@
 	desc = "These aromatic tips of the tea plant can be dried to make tea."
 	icon_state = "tea_aspera_leaves"
 	potency = 20
-<<<<<<< HEAD
-=======
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tea_aspera
->>>>>>> b41be14ec8ee450abbfec0d8a5fec34f98e32667
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -1108,10 +1093,7 @@
 	desc = "These aromatic tips of the tea plant can be dried to make tea."
 	icon_state = "tea_astra_leaves"
 	potency = 20
-<<<<<<< HEAD
-=======
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tea_astra
->>>>>>> b41be14ec8ee450abbfec0d8a5fec34f98e32667
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
