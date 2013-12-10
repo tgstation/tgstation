@@ -28,7 +28,12 @@
 		if(xmas.z != 1)	continue
 		for(var/turf/simulated/floor/T in orange(1,xmas))
 			for(var/i=1,i<=rand(1,5),i++)
-				new /obj/item/weapon/a_gift(T)
+				var/be_a_dick_chance = rand(1,30)
+				switch(be_a_dick_chance)
+					if(1 to 29)
+						new /obj/item/weapon/a_gift/present(T)
+					if(30)
+						new /obj/item/weapon/a_gift/endless(T)
 	for(var/mob/living/simple_animal/corgi/Ian/Ian in mob_list)
 		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
 

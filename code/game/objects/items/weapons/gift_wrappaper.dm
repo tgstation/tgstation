@@ -9,11 +9,12 @@
  */
 /obj/item/weapon/a_gift
 	name = "gift"
-	desc = "PRESENTS!!!! eek!"
+	desc = "You shouldn't be seeing this."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "giftcrate3"
 	item_state = "gift1"
-
+	nonplant_seed_type = "/obj/item/seeds/xmastree"
+	var/seed // Needed to stop runtimes
 
 /obj/item/weapon/a_gift/New()
 	..()
@@ -22,60 +23,33 @@
 	icon_state = "giftcrate[rand(1,5)]"
 
 /obj/item/weapon/a_gift/attack_self(mob/M as mob)
-	var/gift_type = pick(/obj/item/weapon/sord,
-		/obj/item/weapon/storage/wallet,
-		/obj/item/weapon/storage/photo_album,
-		/obj/item/weapon/storage/box/snappops,
-		/obj/item/weapon/storage/fancy/crayons,
-		/obj/item/weapon/storage/backpack/holding,
-		/obj/item/weapon/storage/belt/champion,
-		/obj/item/weapon/soap/deluxe,
-		/obj/item/weapon/pickaxe/silver,
-		/obj/item/weapon/pen/invisible,
-		/obj/item/weapon/lipstick/random,
-		/obj/item/weapon/grenade/smokebomb,
-		/obj/item/weapon/corncob,
-		/obj/item/weapon/contraband/poster,
-		/obj/item/weapon/book/manual/barman_recipes,
-		/obj/item/weapon/book/manual/chef_recipes,
-		/obj/item/weapon/bikehorn,
-		/obj/item/weapon/beach_ball,
-		/obj/item/weapon/beach_ball/holoball,
-		/obj/item/weapon/banhammer,
-		/obj/item/toy/balloon,
-		/obj/item/toy/crossbow,
-		/obj/item/toy/gun,
-		/obj/item/toy/katana,
-		/obj/item/toy/prize/deathripley,
-		/obj/item/toy/prize/durand,
-		/obj/item/toy/prize/fireripley,
-		/obj/item/toy/prize/gygax,
-		/obj/item/toy/prize/honk,
-		/obj/item/toy/prize/marauder,
-		/obj/item/toy/prize/mauler,
-		/obj/item/toy/prize/odysseus,
-		/obj/item/toy/prize/phazon,
-		/obj/item/toy/prize/ripley,
-		/obj/item/toy/prize/seraph,
-		/obj/item/toy/spinningtoy,
-		/obj/item/toy/sword,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
-		/obj/item/device/paicard,
-		/obj/item/device/violin,
-		/obj/item/weapon/storage/belt/utility/full,
-		/obj/item/clothing/tie/horrible)
-
+	var/gift_type
+	if(istype(src, /obj/item/weapon/a_gift/endless))
+		gift_type = /obj/item/weapon/a_gift/endless
+	else if(istype(src, /obj/item/weapon/a_gift/traitor))
+		gift_type = /obj/item/weapon/grenade/chem_grenade/incendiary
+	else if(istype(src, /obj/item/weapon/a_gift/present))
+		gift_type = pick(typesof(/obj/item))
+	else
+		gift_type = pick(typesof(/obj/item))
 	if(!ispath(gift_type,/obj/item))	return
 
 	var/obj/item/I = new gift_type(M)
 	M.u_equip(src)
 	M.put_in_hands(I)
 	I.add_fingerprint(M)
+	if(istype(I, /obj/item/weapon/grenade/chem_grenade/incendiary))
+		var/obj/item/weapon/grenade/chem_grenade/incendiary/thenade = I
+		thenade.prime()
 	del(src)
 	return
 
-
+/obj/item/weapon/a_gift/endless
+	desc = "PRESENTS!!! Something feels odd about this one."
+/obj/item/weapon/a_gift/present
+	desc = "PRESENTS!!!! eek!"
+/obj/item/weapon/a_gift/traitor
+	desc = "PRESENTS!!!! eek!"
 /*
  * Wrapping Paper
  */

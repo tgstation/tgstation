@@ -5,7 +5,7 @@
 
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/F = O
-		while(t_amount < t_max)
+		for(t_amount = 0, t_amount < t_max, t_amount++)
 			var/obj/item/seeds/t_prod = new F.seed(O.loc)
 			t_prod.species = F.species
 			t_prod.lifespan = F.lifespan
@@ -20,7 +20,7 @@
 
 	else if(istype(O, /obj/item/weapon/grown/))
 		var/obj/item/weapon/grown/F = O
-		while(t_amount < t_max)
+		for(t_amount = 0, t_amount < t_max, t_amount++)
 			var/obj/item/seeds/t_prod = new F.seed(O.loc)
 			t_prod.species = F.species
 			t_prod.lifespan = F.lifespan
@@ -33,6 +33,14 @@
 		del(O)
 		return 1
 
+
+	if(O.nonplant_seed_type)
+		var/obj/item/F = O
+		for(t_amount = 0, t_amount < t_max, t_amount++)
+			new F.nonplant_seed_type(O.loc)
+		del(O)
+		return 1
+
 	/*else if(istype(O, /obj/item/stack/tile/grass))
 		var/obj/item/stack/tile/grass/S = O
 		new /obj/item/seeds/grassseed(O.loc)
@@ -41,7 +49,6 @@
 
 	else
 		return 0
-
 
 /obj/machinery/seed_extractor
 	name = "seed extractor"

@@ -94,6 +94,12 @@ var/list/uplink_items = list()
 /datum/uplink_item/dangerous
 	category = "Conspicuous and Dangerous Weapons"
 
+/datum/uplink_item/badass/gatfruit
+	name = ".357 Revolver Plant"
+	desc = "Seeds for a Gatfruit plant."
+	item = /obj/item/seeds/gatfruit
+	cost = 11
+
 /datum/uplink_item/dangerous/revolver
 	name = "Full Revolver"
 	desc = "The syndicate revolver is a traditional handgun that fires .357 Magnum cartridges and has 7 chambers."
@@ -236,6 +242,12 @@ var/list/uplink_items = list()
 	The concussive effect from the explosion will knock the recipient out for a short period, and deafen them for longer. It has a chance to detonate your PDA."
 	item = /obj/item/weapon/cartridge/syndicate
 	cost = 3
+
+/datum/uplink_item/stealthy_weapons/trap_present
+	name = "Rigged Present"
+	desc = "A present rigged to explode in flames in the face of the opener."
+	item = /obj/item/weapon/a_gift/traitor
+	cost = 5
 
 /datum/uplink_item/stealthy_weapons/silencer
 	name = "Stetchkin Silencer"
@@ -441,6 +453,7 @@ var/list/uplink_items = list()
 	desc = "A useless red balloon with the syndicate logo on it, which can blow the deepest of covers."
 	item = /obj/item/toy/syndicateballoon
 	cost = 10
+
 
 /datum/uplink_item/badass/random
 	name = "Random Item"
