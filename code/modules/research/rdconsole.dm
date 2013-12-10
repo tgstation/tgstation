@@ -450,10 +450,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	else if(href_list["lathe_ejectsheet"] && linked_lathe) //Causes the protolathe to eject a sheet of material
 		var/desired_num_sheets = text2num(href_list["lathe_ejectsheet_amt"])
-		if (desired_num_sheets <= 0) return
+		if (desired_num_sheets <= 0)
+			return
 		var/matID=href_list["lathe_ejectsheet"]
 		var/datum/material/M=linked_lathe.materials[matID]
-		if(istype(M))
+		if(!istype(M))
+			warning("PROTOLATHE: Unknown material [matID]! ([href])")
+		else
 			var/obj/item/stack/sheet/sheet = new M.sheettype(linked_lathe.output.loc)
 			var/available_num_sheets = round(M.stored/sheet.perunit)
 			if(available_num_sheets>0)
@@ -837,12 +840,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				var/datum/material/M=linked_lathe.materials[matID]
 				dat += "<li>[M.stored] cm<sup>3</sup> of [M.processed_name]"
 				if(M.stored >= M.cc_per_sheet)
-					dat += " - <A href='?src=\ref[src];lathe_ejectsheet=metal;lathe_ejectsheet_amt=1'>(1 Sheet)</A> "
+					dat += " - <A href='?src=\ref[src];lathe_ejectsheet=[matID];lathe_ejectsheet_amt=1'>(1 Sheet)</A> "
 					if(M.stored >= (M.cc_per_sheet*5))
-						dat += "<A href='?src=\ref[src];lathe_ejectsheet=metal;lathe_ejectsheet_amt=5'>(5 Sheets)</A> "
-					dat += "<A href='?src=\ref[src];lathe_ejectsheet=metal;lathe_ejectsheet_amt=50'>(Max Sheets)</A>"
+						dat += "<A href='?src=\ref[src];lathe_ejectsheet=[matID];lathe_ejectsheet_amt=5'>(5 Sheets)</A> "
+					dat += "<A href='?src=\ref[src];lathe_ejectsheet=[matID];lathe_ejectsheet_amt=50'>(Max Sheets)</A>"
 				else
-					dat += "(Empty)"
+					dat += " - <em>(Empty)</em>"
 				dat += "</li>"
 			dat += "</ul>"
 

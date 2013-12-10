@@ -20,7 +20,7 @@ it creates. All the menus and other manipulation commands are in the R&D console
 
 	var/max_material_storage = 100000 //All this could probably be done better with a list but meh.
 	var/list/production_queue = list()
-	var/list/datum/materials = list()
+	var/list/datum/material/materials = list()
 	var/stopped=1
 	var/obj/output=null
 
@@ -217,43 +217,52 @@ it creates. All the menus and other manipulation commands are in the R&D console
 	if (stat)
 		return 1
 	if(istype(O,/obj/item/stack/sheet))
+		var/found=0
+		for(var/matID in materials)
+			var/datum/material/M = materials[matID]
+			if(M.sheettype==O.type)
+				found=1
+		if(!found)
+			user << "\red The protolathe rejects \the [O]."
+			return 1
 		var/obj/item/stack/sheet/S = O
 		if (TotalMaterials() + S.perunit > max_material_storage)
 			user << "\red The protolathe's material bin is full. Please remove material before adding more."
 			return 1
 
-	var/obj/item/stack/sheet/stack = O
-	var/amount = round(input("How many sheets do you want to add?") as num)//No decimals
-	if(!O)
-		return
-	if(amount < 0)//No negative numbers
-		amount = 0
-	if(amount == 0)
-		return
-	if(amount > stack.amount)
-		amount = stack.amount
-	if(max_material_storage - TotalMaterials() < (amount*stack.perunit))//Can't overfill
-		amount = min(stack.amount, round((max_material_storage-TotalMaterials())/stack.perunit))
+		var/obj/item/stack/sheet/stack = O
+		var/amount = round(input("How many sheets do you want to add?") as num)//No decimals
+		if(!O)
+			return
+		if(amount < 0)//No negative numbers
+			amount = 0
+		if(amount == 0)
+			return
+		if(amount > stack.amount)
+			amount = stack.amount
+		if(max_material_storage - TotalMaterials() < (amount*stack.perunit))//Can't overfill
+			amount = min(stack.amount, round((max_material_storage-TotalMaterials())/stack.perunit))
 
-	src.overlays += "protolathe_[stack.name]"
-	sleep(10)
-	src.overlays -= "protolathe_[stack.name]"
+		src.overlays += "protolathe_[stack.name]"
+		sleep(10)
+		src.overlays -= "protolathe_[stack.name]"
 
-	icon_state = "protolathe"
-	busy = 1
-	use_power(max(1000, (3750*amount/10)))
-	var/stacktype = stack.type
-	stack.use(amount)
-	if (do_after(user, 16))
-		user << "\blue You add [amount] sheets to the [src.name]."
 		icon_state = "protolathe"
-		for(var/id in materials)
-			var/datum/material/material=materials[id]
-			if(stacktype == material.sheettype)
-				material.stored += (amount * material.cc_per_sheet)
-				materials[id]=material
-	else
-		new stacktype(src.loc, amount)
-	busy = 0
-	src.updateUsrDialog()
-	return
+		busy = 1
+		use_power(max(1000, (3750*amount/10)))
+		var/stacktype = stack.type
+		stack.use(amount)
+		if (do_after(user, 16))
+			user << "\blue You add [amount] sheets to the [src.name]."
+			icon_state = "protolathe"
+			for(var/id in materials)
+				var/datum/material/material=materials[id]
+				if(stacktype == material.sheettype)
+					material.stored += (amount * material.cc_per_sheet)
+					materials[id]=material
+		else
+			new stacktype(src.loc, amount)
+		busy = 0
+		src.updateUsrDialog()
+		return 1
+	return 0
