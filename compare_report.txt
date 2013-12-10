@@ -1,36 +1,12 @@
 # DMITool Difference Report: C:\Users\Rob\Documents\Projects\Baystation12\icons C:\Users\Rob\Documents\Projects\vgstation13\icons
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\minimap.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\minimap.dmi
- C:\Users\Rob\Documents\Projects\Baystation12\icons\minimap.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 127, in compare
-    theirsDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 165, in loadMetadata
-    self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 179, in load
-    self.img.info['transparency'] = self.img.palette.getcolor((0, 0, 0))
-  File "C:\Python33\lib\site-packages\PIL\ImagePalette.py", line 55, in getcolor
-    raise ValueError("palette contains raw palette data")
-ValueError: palette contains raw palette data
-
- C:\Users\Rob\Documents\Projects\vgstation13\icons\minimap.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 143, in compare
-    mineDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 165, in loadMetadata
-    self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 179, in load
-    self.img.info['transparency'] = self.img.palette.getcolor((0, 0, 0))
-  File "C:\Python33\lib\site-packages\PIL\ImagePalette.py", line 55, in getcolor
-    raise ValueError("palette contains raw palette data")
-ValueError: palette contains raw palette data
-
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\robot_component.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\robot_component.dmi
  C:\Users\Rob\Documents\Projects\Baystation12\icons\robot_component.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 127, in compare
-    theirsDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 165, in loadMetadata
-    self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 171, in load
+  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\DMITool.py", line 133, in compare
+    theirsDMI.loadAll()
+  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\com\byond\DMI\__init__.py", line 182, in loadAll
+    self.load(flags)
+  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\com\byond\DMI\__init__.py", line 185, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
@@ -136,30 +112,6 @@ OSError: cannot identify image file
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\misc\fullscreen_original.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\misc\fullscreen_original.dmi
  + title
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\misc\largeui.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\misc\largeui.dmi
- C:\Users\Rob\Documents\Projects\Baystation12\icons\misc\largeui.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 127, in compare
-    theirsDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 165, in loadMetadata
-    self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 179, in load
-    self.img.info['transparency'] = self.img.palette.getcolor((0, 0, 0))
-  File "C:\Python33\lib\site-packages\PIL\ImagePalette.py", line 55, in getcolor
-    raise ValueError("palette contains raw palette data")
-ValueError: palette contains raw palette data
-
- C:\Users\Rob\Documents\Projects\vgstation13\icons\misc\largeui.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 143, in compare
-    mineDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 165, in loadMetadata
-    self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 179, in load
-    self.img.info['transparency'] = self.img.palette.getcolor((0, 0, 0))
-  File "C:\Python33\lib\site-packages\PIL\ImagePalette.py", line 55, in getcolor
-    raise ValueError("palette contains raw palette data")
-ValueError: palette contains raw palette data
-
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\AI.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\AI.dmi
  - ai-banned
@@ -1598,22 +1550,22 @@ ValueError: palette contains raw palette data
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\gate.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\gate.dmi
  C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\gate.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 127, in compare
-    theirsDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 165, in loadMetadata
-    self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 171, in load
+  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\DMITool.py", line 133, in compare
+    theirsDMI.loadAll()
+  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\com\byond\DMI\__init__.py", line 182, in loadAll
+    self.load(flags)
+  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\com\byond\DMI\__init__.py", line 185, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
  C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\gate.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 143, in compare
+  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\DMITool.py", line 149, in compare
     mineDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 165, in loadMetadata
+  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\com\byond\DMI\__init__.py", line 179, in loadMetadata
     self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 171, in load
+  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\com\byond\DMI\__init__.py", line 185, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
@@ -2026,22 +1978,22 @@ OSError: cannot identify image file
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes\large.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi
  C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 127, in compare
-    theirsDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 165, in loadMetadata
-    self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 171, in load
+  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\DMITool.py", line 133, in compare
+    theirsDMI.loadAll()
+  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\com\byond\DMI\__init__.py", line 182, in loadAll
+    self.load(flags)
+  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\com\byond\DMI\__init__.py", line 185, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
  C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 143, in compare
+  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\DMITool.py", line 149, in compare
     mineDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 165, in loadMetadata
+  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\com\byond\DMI\__init__.py", line 179, in loadMetadata
     self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 171, in load
+  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\com\byond\DMI\__init__.py", line 185, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
