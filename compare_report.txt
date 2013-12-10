@@ -1,28 +1,47 @@
 # DMITool Difference Report: C:\Users\Rob\Documents\Projects\Baystation12\icons C:\Users\Rob\Documents\Projects\vgstation13\icons
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\minimap.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\minimap.dmi
+ C:\Users\Rob\Documents\Projects\Baystation12\icons\minimap.dmi: Received error, continuing: Traceback (most recent call last):
+  File "tools/OpenBYOND/src/DMITool.py", line 127, in compare
+    theirsDMI.loadMetadata()
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 165, in loadMetadata
+    self.load(flags | DMILoadFlags.NoImages)
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 179, in load
+    self.img.info['transparency'] = self.img.palette.getcolor((0, 0, 0))
+  File "C:\Python33\lib\site-packages\PIL\ImagePalette.py", line 55, in getcolor
+    raise ValueError("palette contains raw palette data")
+ValueError: palette contains raw palette data
+
+ C:\Users\Rob\Documents\Projects\vgstation13\icons\minimap.dmi: Received error, continuing: Traceback (most recent call last):
+  File "tools/OpenBYOND/src/DMITool.py", line 143, in compare
+    mineDMI.loadMetadata()
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 165, in loadMetadata
+    self.load(flags | DMILoadFlags.NoImages)
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 179, in load
+    self.img.info['transparency'] = self.img.palette.getcolor((0, 0, 0))
+  File "C:\Python33\lib\site-packages\PIL\ImagePalette.py", line 55, in getcolor
+    raise ValueError("palette contains raw palette data")
+ValueError: palette contains raw palette data
+
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\robot_component.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\robot_component.dmi
  C:\Users\Rob\Documents\Projects\Baystation12\icons\robot_component.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 133, in compare
+  File "tools/OpenBYOND/src/DMITool.py", line 127, in compare
     theirsDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 160, in loadMetadata
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 165, in loadMetadata
     self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 168, in load
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 171, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
- C:\Users\Rob\Documents\Projects\vgstation13\icons\robot_component.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 149, in compare
-    mineDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 160, in loadMetadata
-    self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 168, in load
-    self.img = Image.open(self.filename)
-  File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
-    raise IOError("cannot identify image file")
-OSError: cannot identify image file
-
+ - actuator
+ - armor_plating
+ - binary_translator
+ - camera
+ - diagnosis_unit
+ - radio
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\effects\genetics.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\genetics.dmi
  - cold_l
@@ -117,6 +136,30 @@ OSError: cannot identify image file
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\misc\fullscreen_original.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\misc\fullscreen_original.dmi
  + title
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\misc\largeui.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\misc\largeui.dmi
+ C:\Users\Rob\Documents\Projects\Baystation12\icons\misc\largeui.dmi: Received error, continuing: Traceback (most recent call last):
+  File "tools/OpenBYOND/src/DMITool.py", line 127, in compare
+    theirsDMI.loadMetadata()
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 165, in loadMetadata
+    self.load(flags | DMILoadFlags.NoImages)
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 179, in load
+    self.img.info['transparency'] = self.img.palette.getcolor((0, 0, 0))
+  File "C:\Python33\lib\site-packages\PIL\ImagePalette.py", line 55, in getcolor
+    raise ValueError("palette contains raw palette data")
+ValueError: palette contains raw palette data
+
+ C:\Users\Rob\Documents\Projects\vgstation13\icons\misc\largeui.dmi: Received error, continuing: Traceback (most recent call last):
+  File "tools/OpenBYOND/src/DMITool.py", line 143, in compare
+    mineDMI.loadMetadata()
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 165, in loadMetadata
+    self.load(flags | DMILoadFlags.NoImages)
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 179, in load
+    self.img.info['transparency'] = self.img.palette.getcolor((0, 0, 0))
+  File "C:\Python33\lib\site-packages\PIL\ImagePalette.py", line 55, in getcolor
+    raise ValueError("palette contains raw palette data")
+ValueError: palette contains raw palette data
+
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\AI.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\AI.dmi
  - ai-banned
@@ -233,6 +276,10 @@ OSError: cannot identify image file
  - suspenders2
  - template2
  - utility2
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\belt_mirror.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\belt_mirror.dmi
+ + fluff_rbelt
+ + fluff_rbelt2
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\blob.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\blob.dmi
  - blob_resource
@@ -486,7 +533,8 @@ OSError: cannot identify image file
  - culthood2
  - deathsquad2
  - dermal2
- - detective2
+ - detective2: detective2: 1 frames, 1 directions
+ + detective2: detective2: 1 frames, 4 directions
  + e_beret_badge
  - edvin_telephosphor_12
  - engspace_helmet2
@@ -576,6 +624,10 @@ OSError: cannot identify image file
  - rig0-sec2old
  - rig0-secold
  - rig0-syndi2
+ + rig0-syndie-human
+ + rig0-syndie-skrell
+ + rig0-syndie-taj
+ + rig0-syndie-unathi
  + rig0-taj-helmet
  - rig0-white2
  - rig0-wiz2
@@ -592,6 +644,10 @@ OSError: cannot identify image file
  - rig1-sec2old
  - rig1-secold
  - rig1-syndi2
+ + rig1-syndie-human
+ + rig1-syndie-skrell
+ + rig1-syndie-taj
+ + rig1-syndie-unathi
  + rig1-taj-helmet
  - rig1-white2
  - rig1-wiz2
@@ -664,6 +720,10 @@ OSError: cannot identify image file
  - yellowsoft_flipped2
  - yuki_matsuda_12
  - yuki_matsuda_1up2
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\hud.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\hud.dmi
+ + hudheadrevolutionary
+ + hudsyndicate
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\human.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\human.dmi
  - body_f_l
@@ -749,6 +809,7 @@ OSError: cannot identify image file
  - hair_afro2_l
  - hair_afro_l
  - hair_b_l
+ + hair_bangs_s
  - hair_bedhead_l
  - hair_bedheadv2_l
  - hair_bedheadv3_l
@@ -772,8 +833,10 @@ OSError: cannot identify image file
  - hair_f_l
  - hair_feather_l
  - hair_gelled_l
+ + hair_gentle_s
  - hair_halfbang_alt_l
  - hair_halfbang_l
+ + hair_hbraid_s
  - hair_himecut_l
  - hair_hitop_l
  - hair_jensen_l
@@ -798,8 +861,10 @@ OSError: cannot identify image file
  - hair_shaggy_l
  - hair_skinhead_l
  - hair_spikey_l
+ + hair_stail_s
  - hair_straight_l
  - hair_tajspiky_l
+ + hair_tbraid_s
  - hair_updo_l
  - hair_vlong_l
  - hair_vlongfringe_l
@@ -819,9 +884,11 @@ OSError: cannot identify image file
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\items_lefthand.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_lefthand.dmi
  + eleanorstone
+ + fork
  - hfrequency0
  - hfrequency1
  + konaahirano
+ + mai_yang
  - prod
  - telebaton0
  - telebaton1
@@ -843,6 +910,7 @@ OSError: cannot identify image file
  - hfrequency0
  - hfrequency1
  + konaahirano
+ + mai_yang
  - prod
  - telebaton0
  - telebaton1
@@ -963,11 +1031,22 @@ OSError: cannot identify image file
  - eyes-mommiold
  - eyes-securityrobot
  - keeper
+ - keeper-park
  - marina
  - marina-heavyshading
  - marina-noshading
  - mommi
+ - mommi-park
  - mommiold
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\screen1_Midnight.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\screen1_Midnight.dmi
+ + template
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\screen1_old.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\screen1_old.dmi
+ + template
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\screen1_Orange.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\screen1_Orange.dmi
+ + template
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\screen1_robot.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\screen1_robot.dmi
  - sight
@@ -1041,7 +1120,8 @@ OSError: cannot identify image file
  - cultrobesalt2
  - deathsquad2
  - detective-armor2
- - detective2
+ - detective2: detective2: 1 frames, 1 directions
+ + detective2: detective2: 1 frames, 4 directions
  - deus_blueshield2
  - engspace_suit2
  - ert_commander2
@@ -1123,8 +1203,11 @@ OSError: cannot identify image file
  - rig-sec2TG
  - rig-soghun2
  - rig-syndi2
+ + rig-syndie-human
+ + rig-syndie-skrell
+ + rig-syndie-taj
+ + rig-syndie-unathi
  + rig-taj
- + rig-taj2
  - rig-unathi-cheap2
  - rig-white2
  - rig-wiz2
@@ -1140,9 +1223,7 @@ OSError: cannot identify image file
  - s-ninjasf2
  - santa2
  + skrell_suit_black
- + skrell_suit_black2
  + skrell_suit_white
- + skrell_suit_white2
  - space2
  - straight_jacket2
  - stripper_g_over2
@@ -1169,7 +1250,6 @@ OSError: cannot identify image file
  - tdred2
  - thermal2
  + unathi_breacher
- + unathi_breacher2
  - vest2
  - violetwizard2
  - void2
@@ -1188,6 +1268,7 @@ OSError: cannot identify image file
  - vox-pressure-specops
  - vox-pressure2
  + vox-stealth
+ - warden_jacket2
  - wardenbluejacket2
  - wardendnavyjacket2
  - wardentanjacket2
@@ -1260,6 +1341,7 @@ OSError: cannot identify image file
  - cmo_l
  - darkblue_l
  - darkred_l
+ + detective2_s
  - detective_l
  - director_l
  - dispatch_l
@@ -1358,6 +1440,7 @@ OSError: cannot identify image file
  - retpoluniform_l
  - robotics2_l
  - robotics_l
+ + sakura_hokkaido_kimono_s
  - schoolgirl_l
  - scientist_new_l
  - scratch_l
@@ -1419,6 +1502,10 @@ OSError: cannot identify image file
  + r_leg
  + torso_f
  + torso_m
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\ammo.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\ammo.dmi
+ + 45-7
+ + dart
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\atmos.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmos.dmi
  - aircond0
@@ -1447,6 +1534,12 @@ OSError: cannot identify image file
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\computer.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\computer.dmi
  + syndicam
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\Cryogenic2.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\Cryogenic2.dmi
+ + body_scanner_0-r
+ + body_scanner_1-r
+ + cryo_rear
+ + cryo_rear-r
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\custom_items.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\custom_items.dmi
  + aeneasrinil
@@ -1464,12 +1557,16 @@ OSError: cannot identify image file
  + leamas-reload
  + lid_eleanorstone
  + lilith_uniform
+ + mai_yang
  + matthewriebhardt
  + milohachert
+ + nashi_belt
  + reesemackenzie
+ + sakura_hokkaido_kimono
  + siraj_tongueleaf
  + solara_dress
  + williamhackett
+ + yuri_kornienkovich_flask
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\device.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\device.dmi
  - handtv
@@ -1494,25 +1591,29 @@ OSError: cannot identify image file
  - tea
  + vacuumflask
  + waterbottle
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\food.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\food.dmi
+ + stuffing
+ + tofurkey
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\gate.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\gate.dmi
  C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\gate.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 133, in compare
+  File "tools/OpenBYOND/src/DMITool.py", line 127, in compare
     theirsDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 160, in loadMetadata
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 165, in loadMetadata
     self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 168, in load
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 171, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
  C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\gate.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 149, in compare
+  File "tools/OpenBYOND/src/DMITool.py", line 143, in compare
     mineDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 160, in loadMetadata
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 165, in loadMetadata
     self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 168, in load
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 171, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
@@ -1526,12 +1627,19 @@ OSError: cannot identify image file
  - improvised_grenade_wired
  - syndicate
  - syndicate_active
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\gun.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\gun.dmi
+ + colt
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\harvest.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\harvest.dmi
  - ghostchilipepper
  - koibeans
  - moonflower
+ + mtear
+ + mtearp
  - novaflower
+ + shand
+ + shandp
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\hydroponics.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\hydroponics.dmi
  - chilighost-dead
@@ -1555,13 +1663,23 @@ OSError: cannot identify image file
  - moonflower-grow2
  - moonflower-grow3
  - moonflower-harvest
+ + mtear-grow1
+ + mtear-grow2
+ + mtear-grow3
+ + mtear-grow4
+ + mtear-harvest
  - novaflower-grow1
  - novaflower-grow2
  - novaflower-grow3
  - novaflower-harvest
  - portaseeder
+ + shand-grow1
+ + shand-grow2
+ + shand-grow3
+ + shand-harvest
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\items.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\items.dmi
+ - coin_phazon
  - rpd
  - sheet-phazon
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\janitor.dmi
@@ -1638,7 +1756,9 @@ OSError: cannot identify image file
  - seed-chilighost
  - seed-koibean
  - seed-moonflower
+ + seed-mtear
  - seed-novaflower
+ + seed-shand
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\shards.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\shards.dmi
  + shrapnellarge
@@ -1646,13 +1766,36 @@ OSError: cannot identify image file
  + shrapnelsmall
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\stationobjs.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\stationobjs.dmi
+ + npanel_open
  - recharger3
+ - wooden_tv_broken: wooden_tv_broken: 1 frames, 1 directions
+ + wooden_tv_broken: wooden_tv_broken: 3 frames, 1 directions
  - wrecharger3
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\storage.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\storage.dmi
+ + cashbag
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\structures.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\structures.dmi
+ + rtableflip0
+ + rtableflip1+
+ + rtableflip1-
+ + rtableflip2
+ + tableflip0
+ + tableflip1+
+ + tableflip1-
+ + tableflip2
+ + woodflip0
+ + woodflip1+
+ + woodflip1-
+ + woodflip2
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\tank.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\tank.dmi
  - emergency_nitrogen
  - jetpack-red
  - jetpack-red-on
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\telescience.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\telescience.dmi
+ + bluespace_crystal
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\vehicles.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\vehicles.dmi
  - pussywagon_destroyed
@@ -1757,6 +1900,7 @@ OSError: cannot identify image file
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\hats.dmi
  + corpsoft
  + corpsoft_flipped
+ + detective2
  + e_beret_badge
  - ert_commander
  - ert_engineer
@@ -1767,11 +1911,19 @@ OSError: cannot identify image file
  + rig0-ert_engineer
  + rig0-ert_medical
  + rig0-ert_security
+ + rig0-syndie-human
+ + rig0-syndie-skrell
+ + rig0-syndie-taj
+ + rig0-syndie-unathi
  + rig0-taj-helmet
  + rig1-ert_commander
  + rig1-ert_engineer
  + rig1-ert_medical
  + rig1-ert_security
+ + rig1-syndie-human
+ + rig1-syndie-skrell
+ + rig1-syndie-taj
+ + rig1-syndie-unathi
  + rig1-taj-helmet
  + skrell_helmet_black
  + skrell_helmet_white
@@ -1792,9 +1944,14 @@ OSError: cannot identify image file
  + flipperfeet
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\suits.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\suits.dmi
+ + detective2
  - paramedic-eva
  - paramedic-vest
  - paramedic-vest-old
+ + rig-syndie-human
+ + rig-syndie-skrell
+ + rig-syndie-taj
+ + rig-syndie-unathi
  + rig-taj
  + skrell_suit_black
  + skrell_suit_white
@@ -1809,6 +1966,7 @@ OSError: cannot identify image file
  + vox-stealth
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\uniforms.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\uniforms.dmi
+ + detective2
  + hopwhimsy
  + hos_corporate
  - paramedic
@@ -1830,6 +1988,7 @@ OSError: cannot identify image file
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\machines\antimatter.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\machines\antimatter.dmi
  - control_critical
+ + core
  - core0
  - core1
  - coreshield_1
@@ -1845,7 +2004,6 @@ OSError: cannot identify image file
  - coreshield_7
  - coreshield_8
  - coreshield_9
- - jar-new
  - shield_11
  - shield_12
  - shield_13
@@ -1853,6 +2011,12 @@ OSError: cannot identify image file
  - shield_15
  - shield_3
  - shield_7
+ + shielding
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\machines\research.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\machines\research.dmi
+ - circuit_imprinter_link
+ - d_analyzer_link
+ - protolathe_link
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes\heat.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\heat.dmi
  - intact-f
@@ -1861,42 +2025,28 @@ OSError: cannot identify image file
  - intact-f
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes\large.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi
- C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 149, in compare
-    mineDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 160, in loadMetadata
+ C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
+  File "tools/OpenBYOND/src/DMITool.py", line 127, in compare
+    theirsDMI.loadMetadata()
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 165, in loadMetadata
     self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 168, in load
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 171, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
- + 
- + -10
- + -12
- + -3
- + -5
- + -6
- + -9
- + 1-2
- + 1-4
- + 1-8
- + 10
- + 12
- + 2-1
- + 2-4
- + 2-8
- + 3
- + 4-1
- + 4-2
- + 4-8
- + 5
- + 6
- + 8-1
- + 8-2
- + 8-4
- + 9
+ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
+  File "tools/OpenBYOND/src/DMITool.py", line 143, in compare
+    mineDMI.loadMetadata()
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 165, in loadMetadata
+    self.load(flags | DMILoadFlags.NoImages)
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 171, in load
+    self.img = Image.open(self.filename)
+  File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
+    raise IOError("cannot identify image file")
+OSError: cannot identify image file
+
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\turf\areas.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\areas.dmi
  - honk
