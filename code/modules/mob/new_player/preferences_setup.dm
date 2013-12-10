@@ -131,7 +131,7 @@ datum/preferences
 	proc/update_preview_icon()		//seriously. This is horrendous.
 		del(preview_icon_front)
 		del(preview_icon_side)
-		var/icon/preview_icon = null
+		del(preview_icon)
 
 		var/g = "m"
 		if(gender == FEMALE)	g = "f"
