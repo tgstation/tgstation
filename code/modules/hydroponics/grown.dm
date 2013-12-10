@@ -1,5 +1,3 @@
-
-
 // ***********************************************************
 // Foods that are produced from hydroponics ~~~~~~~~~~
 // Data from the seeds carry over to these grown foods

@@ -8,6 +8,7 @@
 	var/burning = null
 	var/hitsound = null
 	var/w_class = 3.0
+	var/nonplant_seed_type
 	flags = FPRINT | TABLEPASS
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
@@ -195,7 +196,7 @@
 							rejections += I.type	// therefore full bags are still a little spammy
 							failure = 1
 							continue
-							
+
 						success = 1
 						S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
 					if(success && !failure)

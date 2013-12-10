@@ -142,3 +142,53 @@
 		viewers(user) << "\red <b>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</b>"
 		return (BRUTELOSS|TOXLOSS)
 
+/obj/item/weapon/spacecash // Moved here from weapon.dm because this is the only place I know of that you can actually obtain dosh from. -Iamgoofball
+	name = "space cash"
+	desc = "It's worth 1 credit."
+	gender = PLURAL
+	icon = 'icons/obj/economy.dmi'
+	icon_state = "spacecash"
+	opacity = 0
+	density = 0
+	anchored = 0.0
+	force = 0
+	throwforce = 0
+	throw_speed = 1
+	throw_range = 2
+	w_class = 1.0
+	nonplant_seed_type = "/obj/item/seeds/cashseed" // Because we absolutely must be able to grow more dosh.
+
+/obj/item/weapon/spacecash/c10
+	icon_state = "spacecash10"
+	desc = "It's worth 10 credits."
+
+/obj/item/weapon/spacecash/c20
+	icon_state = "spacecash20"
+	desc = "It's worth 20 credits."
+
+/obj/item/weapon/spacecash/c50
+	icon_state = "spacecash50"
+	desc = "It's worth 50 credits."
+
+/obj/item/weapon/spacecash/c100
+	icon_state = "spacecash100"
+	desc = "It's worth 100 credits."
+
+/obj/item/weapon/spacecash/c200
+	icon_state = "spacecash200"
+	desc = "It's worth 200 credits."
+
+/obj/item/weapon/spacecash/c500
+	icon_state = "spacecash500"
+	desc = "It's worth 500 credits."
+
+/obj/item/weapon/spacecash/c1000
+	icon_state = "spacecash1000"
+	desc = "It's worth 1000 credits."
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/present
+	name = "You shouldn't see this~"
+/obj/item/weapon/reagent_containers/food/snacks/grown/present/New()
+	..()
+	new /obj/item/weapon/a_gift/present(src.loc)
+	del(src)

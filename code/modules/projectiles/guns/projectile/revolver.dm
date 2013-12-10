@@ -4,6 +4,7 @@
 	icon_state = "revolver"
 	ammo_type = /obj/item/ammo_casing/a357
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
+	nonplant_seed_type = "/obj/item/seeds/gatfruit"
 
 /obj/item/weapon/gun/projectile/revolver/chamber_round()
 	if (chambered || !magazine)
