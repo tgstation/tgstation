@@ -349,16 +349,13 @@
 		do_after_cooldown()
 		return
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang//Because I am a heartless bastard -Sieve
-	name = "\improper SOP-6 grenade launcher"
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang//Because I am a heartless bastard -Sieve //Heartless? for making the poor man's honkblast? - Kaze
+	name = "\improper SOB-3 grenade launcher"
+	projectiles = 3
 	projectile = /obj/item/weapon/grenade/flashbang/clusterbang
-	construction_cost = list("metal"=20000,"gold"=6000,"uranium"=6000)
-
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang/limited/get_equip_info()//Limited version of the clusterbang launcher that can't reload
-	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[chassis.selected==src?"<b>":"<a href='?src=\ref[chassis];select_equip=\ref[src]'>"][src.name][chassis.selected==src?"</b>":"</a>"]\[[src.projectiles]\]"
-
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang/limited/rearm()
-	return//Extra bit of security
+	projectile_energy_cost = 1600 //getting off cheap seeing as this is 3 times the flashbangs held in the grenade launcher.
+	equip_cooldown = 90
+	construction_cost = list("metal"=20000,"gold"=10000,"uranium"=10000) //now as expensive as a Honkblast.
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar
 	name = "banana mortar"

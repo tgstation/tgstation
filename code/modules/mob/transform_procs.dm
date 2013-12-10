@@ -9,8 +9,7 @@
 		for(var/obj/item/weapon/implant/W in src)
 			implants += W
 
-	//now the rest
-	if (tr_flags & TR_KEEPITEMS)
+	if(tr_flags & TR_KEEPITEMS)
 		for(var/obj/item/W in (src.contents-implants))
 			drop_from_inventory(W)
 
@@ -30,6 +29,8 @@
 	//animation = null
 	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( loc )
 	del(animation)
+
+
 
 	// hash the original name?
 	if	(tr_flags & TR_HASHNAME)
@@ -123,6 +124,8 @@
 	flick("monkey2h", animation)
 	sleep(22)
 	var/mob/living/carbon/human/O = new( loc )
+	for(var/obj/item/C in O.loc)
+		O.equip_to_appropriate_slot(C)
 	del(animation)
 
 

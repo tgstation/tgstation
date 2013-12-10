@@ -90,7 +90,7 @@
 
 		// Signal data
 
-		interpreter.SetVar("$content", 	signal.data["message"])
+		interpreter.SetVar("$content", 	html_decode(signal.data["message"]))
 		interpreter.SetVar("$freq"   , 	signal.frequency)
 		interpreter.SetVar("$source" , 	signal.data["name"])
 		interpreter.SetVar("$job"    , 	signal.data["job"])
@@ -207,7 +207,7 @@
 
 		// Time
 		interpreter.SetProc("time", /proc/time)
-		interpreter.SetProc("timestamp", /proc/timestamp)
+		interpreter.SetProc("timestamp", /proc/gameTimestamp)
 
 		// Run the compiled code
 		interpreter.Run()

@@ -51,16 +51,16 @@
 	return 0
 
 
-/obj/item/weapon/gun/projectile/shotgun/attack_self(mob/living/user as mob)
+/obj/item/weapon/gun/projectile/shotgun/attack_self(mob/living/user)
 	if(recentpump)	return
-	pump()
+	pump(user)
 	recentpump = 1
 	spawn(10)
 		recentpump = 0
 	return
 
 
-/obj/item/weapon/gun/projectile/shotgun/proc/pump(mob/M as mob)
+/obj/item/weapon/gun/projectile/shotgun/proc/pump(mob/M)
 	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
 	pumped = 0
 	if(chambered)//We have a shell in the chamber

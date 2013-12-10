@@ -429,7 +429,7 @@
 
 /obj/item/seeds/reishimycelium
 	name = "pack of reishi mycelium"
-	desc = "This mycelium grows into something relaxing."
+	desc = "This mycelium grows into something medicinal and relaxing."
 	icon_state = "mycelium-reishi"
 	species = "reishi"
 	plantname = "Reishi"
@@ -439,7 +439,7 @@
 	maturation = 10
 	production = 5
 	yield = 4
-	potency = 15 // Sleeping based on potency?
+	potency = 15
 	oneharvest = 1
 	growthstages = 4
 	plant_type = 2
@@ -1050,3 +1050,19 @@
 	potency = 20
 	plant_type = 0
 	growthstages = 6
+
+/obj/item/seeds/gatfruit
+	name = "pack of gatfruit seeds"
+	desc = "These seeds grow into .357 revolvers."
+	icon_state = "seed-gatfruit"
+	species = "gatfruit"
+	plantname = "gatfruit"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit
+	lifespan = 20
+	endurance = 20
+	maturation = 40
+	production = 10
+	yield = 2
+	potency = 60
+	plant_type = 0
+	growthstages = 2
