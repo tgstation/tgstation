@@ -84,7 +84,7 @@ macro "macro"
 		command = ".west"
 		is-disabled = false
 	elem 
-		name = "CTRL+C"
+		name = "SHIFT+C"
 		command = "climb"
 		is-disabled = false
 	elem 
@@ -278,7 +278,7 @@ macro "hotkeymode"
 		command = "climb"
 		is-disabled = false
 	elem 
-		name = "CTRL+C"
+		name = "SHIFT+C"
 		command = "climb"
 		is-disabled = false
 	elem 
