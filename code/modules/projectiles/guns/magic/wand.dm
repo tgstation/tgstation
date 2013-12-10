@@ -29,6 +29,20 @@
 		user << "<span class='warning'>The [name] whizzles quietly.<span>"
 	..()
 
+/obj/item/weapon/gun/magic/wand/attack(atom/target as mob, mob/living/user as mob)
+	if(target == user)
+		return
+	..()
+
+/obj/item/weapon/gun/magic/wand/afterattack(atom/target as mob, mob/living/user as mob)
+	if(target == user)
+		if(charges)
+			zap_self(user)
+		else
+			user << "<span class='warning'>The [name] whizzles quietly.<span>"
+	else
+		..()
+
 /obj/item/weapon/gun/magic/wand/proc/zap_self(mob/living/user as mob)
 	user.visible_message("\blue [user] zaps \himself with [src]!")
 
@@ -71,99 +85,16 @@
 
 /obj/item/weapon/gun/magic/wand/polymorph
 	name = "wand of polymorph"
-	desc = "This wand inflicts is attuned to chaos and will radically alter the victim's form."
+	desc = "This wand is attuned to chaos and will radically alter the victim's form."
 	projectile_type = "/obj/item/projectile/magic/change"
 	icon_state = "wand5"
 	max_charges = 10 //10, 5, 5, 4
 
 /obj/item/weapon/gun/magic/wand/polymorph/zap_self(mob/living/user as mob)
 	if(alert(user, "Your new form might not have arms to zap with... Continue?",, "Yes", "No") == "Yes" && charges && user.get_active_hand() == src && isliving(user))
-		if(user.monkeyizing)	return
-		user.monkeyizing = 1
-		user.canmove = 0
-		user.icon = null
-		user.overlays.Cut()
-		user.invisibility = 101
-		for(var/obj/item/W in user)
-			if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
-				del(W)
-				continue
-			W.layer = initial(W.layer)
-			W.loc = user.loc
-			W.dropped(user)
-
-		var/mob/living/new_mob
-
-		var/randomize = pick("monkey","robot","slime","xeno","human","animal")
-		switch(randomize)
-			if("monkey")
-				new_mob = new /mob/living/carbon/monkey(user.loc)
-				new_mob.universal_speak = 1
-			if("robot")
-				new_mob = new /mob/living/silicon/robot(user.loc)
-				new_mob.gender = user.gender
-				new_mob.invisibility = 0
-				new_mob.job = "Cyborg"
-				var/mob/living/silicon/robot/Robot = new_mob
-				Robot.mmi = new /obj/item/device/mmi(new_mob)
-				Robot.mmi.transfer_identity(user)	//Does not transfer key/client.
-			if("slime")
-				if(prob(50))		new_mob = new /mob/living/carbon/slime/adult(user.loc)
-				else				new_mob = new /mob/living/carbon/slime(user.loc)
-				new_mob.universal_speak = 1
-			if("xeno")
-				if(prob(50))
-					new_mob = new /mob/living/carbon/alien/humanoid/hunter(user.loc)
-				else
-					new_mob = new /mob/living/carbon/alien/humanoid/sentinel(user.loc)
-				new_mob.universal_speak = 1
-			if("animal")
-				var/animal = pick("parrot","corgi","crab","pug","cat","carp","bear","mushroom","tomato","mouse","chicken","cow","lizard","chick")
-				switch(animal)
-					if("parrot")	new_mob = new /mob/living/simple_animal/parrot(user.loc)
-					if("corgi")		new_mob = new /mob/living/simple_animal/corgi(user.loc)
-					if("crab")		new_mob = new /mob/living/simple_animal/crab(user.loc)
-					if("pug")		new_mob = new /mob/living/simple_animal/pug(user.loc)
-					if("cat")		new_mob = new /mob/living/simple_animal/cat(user.loc)
-					if("carp")		new_mob = new /mob/living/simple_animal/hostile/carp(user.loc)
-					if("bear")		new_mob = new /mob/living/simple_animal/hostile/bear(user.loc)
-					if("mushroom")	new_mob = new /mob/living/simple_animal/mushroom(user.loc)
-					if("tomato")	new_mob = new /mob/living/simple_animal/tomato(user.loc)
-					if("mouse")		new_mob = new /mob/living/simple_animal/mouse(user.loc)
-					if("chicken")	new_mob = new /mob/living/simple_animal/chicken(user.loc)
-					if("cow")		new_mob = new /mob/living/simple_animal/cow(user.loc)
-					if("lizard")	new_mob = new /mob/living/simple_animal/lizard(user.loc)
-					else			new_mob = new /mob/living/simple_animal/chick(user.loc)
-					new_mob.universal_speak = 1
-			if("human")
-				new_mob = new /mob/living/carbon/human(user.loc)
-
-				var/datum/preferences/A = new()	//Randomize appearance for the human
-				A.copy_to(new_mob)
-
-				var/mob/living/carbon/human/H = new_mob
-				ready_dna(H)
-				if(H.dna)
-					H.dna.mutantrace = pick("lizard","golem","slime","plant","fly","shadow","adamantine","skeleton",8;"")
-					H.update_body()
-			else
-				return
-
-		for (var/obj/effect/proc_holder/spell/S in user.spell_list)
-			new_mob.spell_list += new S.type
-
-		new_mob.a_intent = "harm"
-		if(user.mind)
-			user.mind.transfer_to(new_mob)
-		else
-			new_mob.key = user.key
-
-		new_mob << "<B>Your form morphs into that of a [randomize].</B>"
-
-		del(user)
-		return new_mob
+		..() //because the user mob ceases to exists by the time wabbajack fully resolves
+		wabbajack(user)
 		charges--
-		..()
 
 /obj/item/weapon/gun/magic/wand/teleport
 	name = "wand of teleportation"
@@ -173,27 +104,10 @@
 	max_charges = 10 //10, 5, 5, 4
 
 /obj/item/weapon/gun/magic/wand/teleport/zap_self(mob/living/user as mob)
-	var/list/turfs = new/list()
-	var/inner_tele_radius = 0
-	var/outer_tele_radius = 6
-	for(var/turf/T in range(user,outer_tele_radius))
-		if(T in range(user,inner_tele_radius)) continue
-		if(T.x>world.maxx-outer_tele_radius || T.x<outer_tele_radius)	continue
-		if(T.y>world.maxy-outer_tele_radius || T.y<outer_tele_radius)	continue
-		turfs += T
-
-	if(!turfs.len)
-		var/list/turfs_to_pick_from = list()
-		for(var/turf/T in orange(user,outer_tele_radius))
-			if(!(T in orange(user,inner_tele_radius)))
-				turfs_to_pick_from += T
-		turfs += pick(/turf in turfs_to_pick_from)
-
-	var/turf/picked = pick(turfs)
-
-	if(!picked || !isturf(picked))
-		return
-	user.loc = picked
+	do_teleport(user, user, 10)
+	var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
+	smoke.set_up(10, 0, user.loc)
+	smoke.start()
 	charges--
 	..()
 

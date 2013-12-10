@@ -5,7 +5,8 @@
 	message_admins("[key_name_admin(usr, 1)] summoned [summon_type ? "magic" : "guns"]!")
 	for(var/mob/living/carbon/human/H in player_list)
 		if(H.stat == 2 || !(H.client)) continue
-		if(is_special_character(H)) continue
+		if(H.mind)
+			if(H.mind.special_role == "Wizard" || H.mind.special_role == "apprentice") continue
 		if(prob(25))
 			ticker.mode.traitors += H.mind
 			H.mind.special_role = "traitor"

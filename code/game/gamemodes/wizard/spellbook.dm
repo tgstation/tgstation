@@ -323,7 +323,7 @@
 	for(var/obj/effect/proc_holder/spell/knownspell in user.spell_list)
 		if(knownspell.type == S.type)
 			if(user.mind)
-				if(user.mind.special_role == "apprentice" || user.mind.special_role == "wizard")
+				if(user.mind.special_role == "apprentice" || user.mind.special_role == "Wizard")
 					user <<"\blue You're already far more versed in this spell than this flimsy how-to book can provide."
 				else
 					user <<"\blue You've already read this one."

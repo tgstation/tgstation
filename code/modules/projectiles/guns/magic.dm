@@ -26,9 +26,9 @@
 		in_chamber = new projectile_type(src)
 		return 1
 
-/obj/item/weapon/gun/magic/afterattack()
+/obj/item/weapon/gun/magic/afterattack(atom/target as mob, mob/living/user as mob, flag)
 	..()
-	if(charges && !in_chamber)	charges--
+	if(charges && !in_chamber && !flag)	charges--
 
 /obj/item/weapon/gun/magic/New()
 	..()
