@@ -1202,7 +1202,7 @@ proc/oview_or_orange(distance = world.view , center = usr , type)
 
 proc/get_mob_with_client_list()
 	var/list/mobs = list()
-	for(var/mob/M in world)
+	for(var/mob/M in mob_list)
 		if (M.client)
 			mobs += M
 	return mobs

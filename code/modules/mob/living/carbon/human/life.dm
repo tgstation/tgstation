@@ -33,25 +33,20 @@
 
 // Doing this during species init breaks shit.
 /mob/living/carbon/human/proc/DeferredSpeciesSetup()
-	//testing("Mutations = "+english_list(mutations))
 	var/mut_update=0
 	if(species.default_mutations.len>0)
 		for(var/mutation in species.default_mutations)
 			if(!(mutation in mutations))
-				//src << "TESTING [__FILE__]:[__LINE__]: Added mutation [mutation]."
 				mutations.Add(mutation)
 				mut_update=1
 	if(species.default_blocks.len>0)
 		for(var/block in species.default_blocks)
 			if(!dna.GetSEState(block))
 				dna.SetSEState(block,1)
-				//src << "TESTING [__FILE__]:[__LINE__]: Set block [block] to on."
 				mut_update=1
 	if(mut_update)
-		//src << "TESTING [__FILE__]:[__LINE__]: Forcing domutcheck() and update_mutations()."
 		domutcheck(src,null,MUTCHK_FORCED)
 		update_mutations()
-	//testing("SpeciesMut + Mutations = "+english_list(mutations))
 
 /mob/living/carbon/human/Life()
 	set invisibility = 0
@@ -409,6 +404,11 @@
 			else if(internals)
 				internals.icon_state = "internal0"
 		return null
+
+	// USED IN DEATHWHISPERS
+	proc/isInCrit()
+		// Health is in deep shit and we're not already dead
+		return health <= 0 && stat != 2
 
 
 	proc/handle_breath(datum/gas_mixture/breath)
