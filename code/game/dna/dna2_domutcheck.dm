@@ -11,7 +11,7 @@
 
 		// Sanity checks, don't skip.
 		if(!gene.can_activate(M,flags))
-			testing("[M] - Failed to activate [gene.name] (can_activate fail).")
+			//testing("[M] - Failed to activate [gene.name] (can_activate fail).")
 			continue
 
 		// Current state
@@ -33,8 +33,8 @@
 			gene.deactivate(M)
 			M.active_genes -= gene.type
 			M.update_icon=1
-		else
-			testing("[M] - Failed to activate [gene.name] - [gene_active?"+":"-"]active, [gene_prior_status?"+":"-"]prior")
+		//else
+		//	testing("[M] - Failed to activate [gene.name] - [gene_active?"+":"-"]active, [gene_prior_status?"+":"-"]prior")
 
 /* Old, inflexibile
 /proc/domutcheck(var/mob/living/M, var/connected, var/flags)
