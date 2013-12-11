@@ -153,7 +153,6 @@
 				for (var/datum/organ/external/C in E.children)
 					C.status |= ORGAN_DEAD
 			H.update_body(1)
-			world << multiplier
 			if(multiplier < 1) multiplier = 1
 			H.adjustToxLoss(15*multiplier)
 
