@@ -130,8 +130,10 @@ obj/structure/ex_act(severity)
 									if(ismob(AM))
 										var/mob/M = AM
 										M.Weaken(5)
+
 					else
 						close_animation()
+			break
 
 
 /obj/structure/transit_tube/station/attackby(obj/item/W, mob/user)
@@ -145,6 +147,7 @@ obj/structure/ex_act(severity)
 					GM.Weaken(5)
 					src.Bumped(GM)
 					del(G)
+				break
 
 /obj/structure/transit_tube/station/proc/open_animation()
 	if(icon_state == "closed")
