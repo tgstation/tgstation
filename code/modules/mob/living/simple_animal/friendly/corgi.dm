@@ -267,8 +267,8 @@
 
 		if(/obj/item/clothing/head/helmet/space/santahat)
 			name = "Santa's Corgi Helper"
-			emote_hear = list("barks christmas songs", "looks for presents", "yaps")
-			speak = list("Merry Dogmas!", "Ho Ho Ho!", "Merry Christmas!")
+			emote_hear = list("barks christmas songs", "yaps merrily")
+			emote_see = list("looks for presents", "checks his list")
 			desc = "He's very fond of milk and cookies."
 			valid = 1
 
