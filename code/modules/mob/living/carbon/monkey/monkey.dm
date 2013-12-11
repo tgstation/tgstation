@@ -13,6 +13,7 @@
 	var/ico = "monkey"                         // Used when updating icons.
 	//var/uni_append = "12C4E2"                // Small appearance modifier for different species.
 	var/list/uni_append = list(0x12C,0x4E2)    // Same as above for DNA2.
+	var/update_muts = 1                        // Monkey gene must be set at start.
 
 /mob/living/carbon/monkey/tajara
 	name = "farwa"
@@ -67,6 +68,8 @@
 			for(var/b=1;b<=uni_append.len;b++)
 				dna.SetUIValue(DNA_UI_LENGTH-(uni_append.len-b),uni_append[b], 1)
 		dna.UpdateUI()
+
+		update_muts=1
 
 	..()
 	update_icons()

@@ -23,7 +23,7 @@
 
 /obj/item/weapon/dnainjector/proc/GetState(var/selblock=0)
 	var/real_block
-	if(!selblock)
+	if(selblock==0)
 		real_block=block
 		selblock=1
 	else
@@ -33,7 +33,7 @@
 
 /obj/item/weapon/dnainjector/proc/SetState(var/on, var/selblock=0)
 	var/real_block
-	if(!selblock)
+	if(selblock==0)
 		real_block=block
 		selblock=1
 	else
@@ -110,7 +110,16 @@
 					inuse = 0
 				M.requests += O
 				if (dnatype == "se")
-					if(!block)
+					if(block)// Isolated injector
+						testing("Isolated block [block] injector with contents: [english_list(dna)]")
+						if (GetState() && block == MONKEYBLOCK && istype(M, /mob/living/carbon/human)  )
+							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] \red(MONKEY)")
+							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name] (MONKEY)")
+							log_game("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] \red(MONKEY)")
+						else
+							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name]")
+					else
+						testing("DNA injector with contents: [english_list(dna)]")
 						if (GetState(MONKEYBLOCK) && istype(M, /mob/living/carbon/human) )
 							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
 							log_attack("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
@@ -118,13 +127,6 @@
 						else
 	//						message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
 							log_attack("[key_name(user)] injected [key_name(M)] with the [name]")
-					else // Isolated injector
-						if (GetState() && block == MONKEYBLOCK && istype(M, /mob/living/carbon/human)  )
-							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] \red(MONKEY)")
-							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name] (MONKEY)")
-							log_game("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] \red(MONKEY)")
-						else
-							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name]")
 				else
 	//				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
 					log_attack("[key_name(user)] injected [key_name(M)] with the [name]")
@@ -142,12 +144,22 @@
 					user << "\red Apparently it didn't work."
 					return
 				if (dnatype == "se")
-					if (GetState(MONKEYBLOCK) && istype(M, /mob/living/carbon/human))
-						message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
-						log_game("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
+					if(block)// Isolated injector
+						testing("Isolated block [block] injector with contents: [english_list(dna)]")
+						if (GetState() && block == MONKEYBLOCK && istype(M, /mob/living/carbon/human)  )
+							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] \red(MONKEY)")
+							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name] (MONKEY)")
+							log_game("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] \red(MONKEY)")
+						else
+							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name]")
 					else
-//						message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
-						log_game("[key_name(user)] injected [key_name(M)] with the [name]")
+						testing("DNA injector with contents: [english_list(dna)]")
+						if (GetState(MONKEYBLOCK) && istype(M, /mob/living/carbon/human))
+							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
+							log_game("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
+						else
+	//						message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
+							log_game("[key_name(user)] injected [key_name(M)] with the [name]")
 				else
 //					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
 					log_game("[key_name(user)] injected [key_name(M)] with the [name]")

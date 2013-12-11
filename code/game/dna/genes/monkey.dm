@@ -5,9 +5,11 @@
 	block=MONKEYBLOCK
 
 /datum/dna/gene/monkey/can_activate(var/mob/M,var/flags)
-	return istype(M, /mob/living/carbon/human)
+	return istype(M, /mob/living/carbon/human) || istype(M,/mob/living/carbon/monkey)
 
 /datum/dna/gene/monkey/activate(var/mob/living/M, var/connected, var/flags)
+	if(!istype(M,/mob/living/carbon/human))
+		return
 	var/mob/living/carbon/human/H = M
 	H.monkeyizing = 1
 	var/list/implants = list() //Try to preserve implants.
@@ -83,6 +85,8 @@
 	return
 
 /datum/dna/gene/monkey/deactivate(var/mob/living/M, var/connected, var/flags)
+	if(!istype(M,/mob/living/carbon/monkey))
+		return
 	var/mob/living/carbon/monkey/Mo = M
 	Mo.monkeyizing = 1
 	var/list/implants = list() //Still preserving implants
