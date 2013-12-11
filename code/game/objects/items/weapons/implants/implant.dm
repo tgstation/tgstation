@@ -178,9 +178,9 @@
 		source.lying = 0
 		source.update_canmove()
 
-		reagents.add_reagent("synaptizine", 10)
-		reagents.add_reagent("tricordrazine", 10)
-		reagents.add_reagent("hyperzine", 10)
+		source.reagents.add_reagent("synaptizine", 10)
+		source.reagents.add_reagent("tricordrazine", 10)
+		source.reagents.add_reagent("hyperzine", 10)
 
 /obj/item/weapon/implant/adrenalin/implanted(mob/source)
 	source.mind.store_memory("An adrenal implant can be activated by using the scream emote, <B>say *scream</B> to attempt to activate.", 0, 0)

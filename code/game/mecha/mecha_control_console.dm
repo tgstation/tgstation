@@ -1,5 +1,5 @@
 /obj/machinery/computer/mecha
-	name = "Exosuit Control"
+	name = "exosuit control console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "mecha"
 	req_access = list(access_robotics)
@@ -60,7 +60,7 @@
 
 
 /obj/item/mecha_parts/mecha_tracking
-	name = "Exosuit tracking beacon"
+	name = "exosuit tracking beacon"
 	desc = "Device used to transmit exosuit data."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "motion2"
@@ -113,7 +113,7 @@
 
 
 /obj/item/weapon/storage/box/mechabeacons
-	name = "Exosuit Tracking Beacons"
+	name = "exosuit tracking beacons"
 	New()
 		..()
 		new /obj/item/mecha_parts/mecha_tracking(src)

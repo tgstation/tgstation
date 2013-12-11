@@ -2,7 +2,7 @@
 
 
 /obj/machinery/computer/robotics
-	name = "Robotics Control"
+	name = "robotics control console"
 	desc = "Used to remotely lockdown or detonate linked Cyborgs."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "robot"
@@ -160,7 +160,7 @@
 
 							else
 								message_admins("\blue [key_name_admin(usr)] detonated [R.name]!")
-								log_game("\blue [key_name_admin(usr)] detonated [R.name]!")
+								log_game("\blue [key_name(usr)] detonated [R.name]!")
 								R.self_destruct()
 			else
 				usr << "\red Access Denied."

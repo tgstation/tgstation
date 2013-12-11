@@ -103,3 +103,5 @@
 
 #define ui_iarrowleft "SOUTH-1,11"
 #define ui_iarrowright "SOUTH-1,13"
+
+#define ui_lingstingdisplay "1,6:15"

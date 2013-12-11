@@ -228,7 +228,7 @@
 
 
 /obj/machinery/door/window/brigdoor
-	name = "Secure Door"
+	name = "secure door"
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "leftsecure"
 	base_state = "leftsecure"

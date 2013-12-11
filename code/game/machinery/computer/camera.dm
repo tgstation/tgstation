@@ -1,5 +1,5 @@
 /obj/machinery/computer/security
-	name = "Security Cameras"
+	name = "security camera console"
 	desc = "Used to access the various cameras on the station."
 	icon_state = "cameras"
 	circuit = /obj/item/weapon/circuitboard/security
@@ -85,7 +85,7 @@
 
 
 /obj/machinery/computer/security/telescreen
-	name = "Telescreen"
+	name = "\improper Telescreen"
 	desc = "Used for watching an empty arena."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "telescreen"
@@ -110,13 +110,13 @@
 
 
 /obj/machinery/computer/security/wooden_tv
-	name = "Security Cameras"
+	name = "security camera monitor"
 	desc = "An old TV hooked into the stations camera network."
 	icon_state = "security_det"
 
 
 /obj/machinery/computer/security/mining
-	name = "Outpost Cameras"
+	name = "outpost camera console"
 	desc = "Used to access the various cameras on the outpost."
 	icon_state = "miningcameras"
 	network = list("MINE")

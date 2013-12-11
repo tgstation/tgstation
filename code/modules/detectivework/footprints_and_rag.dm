@@ -1,11 +1,8 @@
 
 /mob
-
 	var/bloody_hands = 0
 	var/mob/living/carbon/human/bloody_hands_mob
-	var/track_blood
 	var/mob/living/carbon/human/track_blood_mob
-	var/track_blood_type
 
 /obj/item/clothing/gloves
 	var/transfer_blood = 0

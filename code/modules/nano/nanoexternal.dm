@@ -13,7 +13,7 @@
 
 	var/datum/nanoui/ui = locate(uiref)
 
-	if (ui)
+	if (istype(ui))
 		ui.close()
 		
 		if(ui.ref)

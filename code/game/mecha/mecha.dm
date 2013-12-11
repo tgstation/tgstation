@@ -9,7 +9,7 @@
 
 
 /obj/mecha
-	name = "Mecha"
+	name = "mecha"
 	desc = "Exosuit"
 	icon = 'icons/mecha/mecha.dmi'
 	density = 1 //Dense. To raise the heat.
