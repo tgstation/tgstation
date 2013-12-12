@@ -370,7 +370,7 @@ client
 	proc/debug_variable(name, value, level, var/datum/DA = null)
 		var/html = ""
 
-		if(DA & check_rights(R_VAREDIT))
+		if(DA && check_rights(R_VAREDIT))
 			html += "<li style='backgroundColor:white'>(<a href='?_src_=vars;datumedit=\ref[DA];varnameedit=[name]'>E</a>) (<a href='?_src_=vars;datumchange=\ref[DA];varnamechange=[name]'>C</a>) (<a href='?_src_=vars;datummass=\ref[DA];varnamemass=[name]'>M</a>) "
 		else
 			html += "<li>"
