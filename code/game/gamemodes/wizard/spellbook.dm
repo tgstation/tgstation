@@ -309,6 +309,7 @@
 /obj/item/weapon/spellbook/oneuse
 	var/spell = /obj/effect/proc_holder/spell/targeted/projectile/magic_missile //just a placeholder to avoid runtimes if someone spawned the generic
 	var/spellname = "sandbox"
+	var/used = 0
 	name = "spellbook of "
 	uses = 1
 	max_uses = 1
@@ -324,13 +325,23 @@
 		if(knownspell.type == S.type)
 			if(user.mind)
 				if(user.mind.special_role == "apprentice" || user.mind.special_role == "Wizard")
-					user <<"\blue You're already far more versed in this spell than this flimsy how-to book can provide."
+					user <<"<span class='notice'>You're already far more versed in this spell than this flimsy how-to book can provide.</span>"
 				else
-					user <<"\blue You've already read this one."
+					user <<"<span class='notice'>You've already read this one.</span>"
 			return
-	user.spell_list += S
-	user <<"\blue you rapidly read through the arcane book. Suddenly it vanishes and you realize you understand [spellname]!"
-	del (src)
+	if(used)
+		recoil(user)
+	else
+		user.spell_list += S
+		user <<"<span class='notice'>you rapidly read through the arcane book. Suddenly you realize you understand [spellname]!</span>"
+		onlearned(user)
+
+/obj/item/weapon/spellbook/oneuse/proc/recoil(mob/user as mob)
+	user.visible_message("<span class='warning'>[src] glows in a black light!</span>")
+
+/obj/item/weapon/spellbook/oneuse/proc/onlearned(mob/user as mob)
+	used = 1
+	user.visible_message("<span class='caution'>[src] glows dark for a second!</span>")
 
 /obj/item/weapon/spellbook/oneuse/attackby()
 	return
@@ -341,11 +352,24 @@
 	icon_state ="bookfireball"
 	desc = "This book feels warm to the touch."
 
+/obj/item/weapon/spellbook/oneuse/fireball/recoil(mob/user as mob)
+	..()
+	explosion(user.loc, -1, 0, 2, 3, 0, flame_range = 2)
+	del(src)
+
 /obj/item/weapon/spellbook/oneuse/smoke
 	spell = /obj/effect/proc_holder/spell/targeted/smoke
 	spellname = "smoke"
 	icon_state ="booksmoke"
 	desc = "This book is overflowing with the dank arts."
+
+/obj/item/weapon/spellbook/oneuse/smoke/recoil(mob/user as mob)
+	..()
+	user <<"<span class='caution'>Your stomach rumbles...</span>"
+	if(user.nutrition)
+		user.nutrition -= 200
+		if(user.nutrition <= 0)
+			user.nutrition = 0
 
 /obj/item/weapon/spellbook/oneuse/blind
 	spell = /obj/effect/proc_holder/spell/targeted/trigger/blind
@@ -353,11 +377,27 @@
 	icon_state ="bookblind"
 	desc = "This book looks blurry, no matter how you look at it."
 
+/obj/item/weapon/spellbook/oneuse/blind/recoil(mob/user as mob)
+	..()
+	user <<"<span class='warning'>You go blind!</span>"
+	user.eye_blind = 10
+
 /obj/item/weapon/spellbook/oneuse/mindswap
 	spell = /obj/effect/proc_holder/spell/targeted/mind_transfer
 	spellname = "mindswap"
 	icon_state ="bookmindswap"
 	desc = "This book's cover is pristine, though its pages look ragged and torn."
+
+/obj/item/weapon/spellbook/oneuse/mindswap/onlearned()
+	spellname = pick("fireball","smoke","blind","forcewall","knock","horses","charge")
+	icon_state = "book[spellname]"
+	name = "spellbook of [spellname]" //Note, desc doesn't change by design
+	..()
+
+/obj/item/weapon/spellbook/oneuse/mindswap/recoil(mob/user as mob)
+	..()
+	user <<"<span class='warning'>You suddenly don't feel like yourself!</span>"
+	wabbajack(user)
 
 /obj/item/weapon/spellbook/oneuse/forcewall
 	spell = /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall
@@ -365,11 +405,25 @@
 	icon_state ="bookforcewall"
 	desc = "This book has a dedication to mimes everywhere inside the front cover."
 
+/obj/item/weapon/spellbook/oneuse/forcewall/recoil(mob/user as mob)
+	..()
+	user <<"<span class='warning'>You suddenly feel very solid!</span>"
+	var/obj/structure/closet/statue/S = new /obj/structure/closet/statue(user.loc, user)
+	S.timer = 30
+	user.drop_item()
+
+
 /obj/item/weapon/spellbook/oneuse/knock
 	spell = /obj/effect/proc_holder/spell/aoe_turf/knock
 	spellname = "knock"
 	icon_state ="bookknock"
 	desc = "This book is hard to hold closed properly."
+
+/obj/item/weapon/spellbook/oneuse/knock/recoil(mob/user as mob)
+	..()
+	user <<"<span class='warning'>You're knocked down!</span>"
+	user.Stun(20)
+	user.Weaken(20)
 
 /obj/item/weapon/spellbook/oneuse/horsemask
 	spell = /obj/effect/proc_holder/spell/targeted/horsemask
@@ -377,8 +431,26 @@
 	icon_state ="bookhorses"
 	desc = "This book is more horse than your mind has room for."
 
+/obj/item/weapon/spellbook/oneuse/horsemask/recoil(mob/living/carbon/user as mob)
+	if(istype(user, /mob/living/carbon/human))
+		user <<"<font size='15' color='red'><b>HOR-SIE HAS RISEN</b></font>"
+		var/obj/item/clothing/mask/horsehead/magichead = new /obj/item/clothing/mask/horsehead
+		magichead.canremove = 0		//curses!
+		magichead.flags_inv = null	//so you can still see their face
+		magichead.voicechange = 1	//NEEEEIIGHH
+		user.drop_from_inventory(user.wear_mask)
+		user.equip_to_slot_if_possible(magichead, slot_wear_mask, 1, 1)
+		del(src)
+	else
+		user <<"<span class='notice'>I say thee neigh</span>"
+
 /obj/item/weapon/spellbook/oneuse/charge
 	spell = /obj/effect/proc_holder/spell/targeted/charge
 	spellname = "charging"
 	icon_state ="bookcharge"
 	desc = "This book is made of 100% post-consumer wizard."
+
+/obj/item/weapon/spellbook/oneuse/charge/recoil(mob/user as mob)
+	..()
+	user <<"<span class='warning'>[src] suddenly feels very warm!</span>"
+	empulse(src, 1, 1)

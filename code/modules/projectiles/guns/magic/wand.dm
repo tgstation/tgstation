@@ -26,7 +26,7 @@
 	if(charges)
 		zap_self(user)
 	else
-		user << "<span class='warning'>The [name] whizzles quietly.<span>"
+		user << "<span class='caution'>The [name] whizzles quietly.<span>"
 	..()
 
 /obj/item/weapon/gun/magic/wand/attack(atom/target as mob, mob/living/user as mob)
@@ -39,12 +39,12 @@
 		if(charges)
 			zap_self(user)
 		else
-			user << "<span class='warning'>The [name] whizzles quietly.<span>"
+			user << "<span class='caution'>The [name] whizzles quietly.<span>"
 	else
 		..()
 
 /obj/item/weapon/gun/magic/wand/proc/zap_self(mob/living/user as mob)
-	user.visible_message("\blue [user] zaps \himself with [src]!")
+	user.visible_message("<span class='notice'>[user] zaps \himself with [src]!</span>")
 
 /obj/item/weapon/gun/magic/wand/death
 	name = "wand of death"
@@ -55,8 +55,8 @@
 
 /obj/item/weapon/gun/magic/wand/death/zap_self(mob/living/user as mob)
 	if(alert(user, "You really want to zap yourself with the wand of death?",, "Yes", "No") == "Yes" && charges && user.get_active_hand() == src && isliving(user))
-		var/message ="\red You irradiate yourself with pure energy! "
-		message += pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You Die...","Do you want your possessions identified?")
+		var/message ="<span class='warning'>You irradiate yourself with pure energy! "
+		message += pick("Do not pass go. Do not collect 200 zorkmids.</span>","You feel more confident in your spell casting skills.</span>","You Die...</span>","Do you want your possessions identified?</span>")
 		user << message
 		user.adjustOxyLoss(500)
 		charges--

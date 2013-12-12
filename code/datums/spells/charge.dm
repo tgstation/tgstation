@@ -25,11 +25,20 @@
 					if(M.spell_list.len != 0)
 						for(var/obj/effect/proc_holder/spell/S in M.spell_list)
 							S.charge_counter = S.charge_max
-						M <<"\blue you feel raw magic flowing through you, it feels good!"
+						M <<"<span class='notice'>you feel raw magic flowing through you, it feels good!</span>"
 					else
-						M <<"\blue you feel very strange for a moment, but then it passes."
+						M <<"<span class='notice'>you feel very strange for a moment, but then it passes.</span>"
 						burnt_out = 1
 					charged_item = M
+					break
+			else if(istype(item, /obj/item/weapon/spellbook/oneuse))
+				var/obj/item/weapon/spellbook/oneuse/I = item
+				if(prob(80))
+					user.visible_message("<span class='warning'>[I] catches fire!</span>")
+					del(I)
+				else
+					I.used = 0
+					charged_item = I
 					break
 			else if(istype(item, /obj/item/weapon/gun/magic))
 				var/obj/item/weapon/gun/magic/I = item
@@ -66,8 +75,8 @@
 						charged_item = item
 						break
 		if(!charged_item)
-			user << "\blue you feel magical power surging to your hands, but the feeling rapidly fades..."
+			user << "<span class='notice'>you feel magical power surging to your hands, but the feeling rapidly fades...</span>"
 		else if(burnt_out)
-			user << "\red [charged_item] doesn't seem to be reacting to the spell..."
+			user << "<span class='caution'>[charged_item] doesn't seem to be reacting to the spell...</span>"
 		else
-			user << "\blue [charged_item] suddenly feels very warm!"
+			user << "<span class='notice'>[charged_item] suddenly feels very warm!</span>"

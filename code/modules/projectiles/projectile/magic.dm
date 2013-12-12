@@ -74,12 +74,17 @@
 	var/outer_tele_radius = 6
 
 /obj/item/projectile/magic/teleport/on_hit(var/mob/target)
-	if(isturf(target))
-		return
-	do_teleport(target, target, 10)
-	var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
-	smoke.set_up(10, 0, target.loc)
-	smoke.start()
+	var/teleammount = 0
+	var/teleloc = target
+	if(!isturf(target))
+		teleloc = target.loc
+	for(var/atom/movable/stuff in teleloc)
+		if(!stuff.anchored && stuff.loc)
+			teleammount++
+			do_teleport(stuff, stuff, 10)
+			var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
+			smoke.set_up(max(round(10 - teleammount),1), 0, stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
+			smoke.start()
 
 /obj/item/projectile/magic/door
 	name = "bolt of door creation"
