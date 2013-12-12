@@ -53,6 +53,8 @@ datum/mind
 	var/datum/faction/faction 			//associated faction
 	var/datum/changeling/changeling		//changeling holder
 
+	var/datum/vampire/vampire			//vampire holder
+
 	var/rev_cooldown = 0
 
 	// the world.time since the mob has been brigged, or -1 if not at all

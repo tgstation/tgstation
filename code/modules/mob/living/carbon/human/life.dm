@@ -141,6 +141,10 @@
 	for(var/obj/item/weapon/grab/G in src)
 		G.process()
 
+	if(mind && mind.vampire)
+		handle_vampire_cloak()
+
+
 
 /mob/living/carbon/human/calculate_affecting_pressure(var/pressure)
 	..()
@@ -1211,8 +1215,9 @@
 					if("shadow")
 						see_in_dark = 8
 						see_invisible = SEE_INVISIBLE_LEVEL_ONE
-
-			if(XRAY in mutations)
+			if(mind && mind.vampire && (VAMP_VISION in mind.vampire.powers) && !(VAMP_FULL in mind.vampire.powers))
+				sight |= SEE_MOBS
+			if(XRAY in mutations || mind && mind.vampire && (VAMP_FULL in mind.vampire.powers))
 				sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 				see_in_dark = 8
 				if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
