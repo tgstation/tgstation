@@ -167,21 +167,24 @@
 		else
 			attacher_name = "[attacher.name]([attacher.ckey])"
 
-		var/log_str = "Bomb valve opened in <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name]</a> "
-		log_str += "with [attached_device ? attached_device : "no device"] attacher: [attacher_name]"
+		var/log_str1 = "Bomb valve opened in "
+		var/log_str2 = "with [attached_device ? attached_device : "no device"] attacher: [attacher_name]"
 
+		var/log_attacher = ""
 		if(attacher)
-			log_str += "(<A HREF='?_src_=holder;adminmoreinfo=\ref[attacher]'>?</A>)"
+			log_attacher = "(<A HREF='?_src_=holder;adminmoreinfo=\ref[attacher]'>?</A>)"
 
 		var/mob/mob = get_mob_by_key(src.fingerprintslast)
 		var/last_touch_info = ""
+
 		if(mob)
 			last_touch_info = "(<A HREF='?_src_=holder;adminmoreinfo=\ref[mob]'>?</A>)"
 
-		log_str += " Last touched by: [src.fingerprintslast][last_touch_info]"
-		bombers += log_str
-		message_admins(log_str, 0, 1)
-		log_game(log_str)
+		var/log_str3 = " Last touched by: [src.fingerprintslast]"
+		bombers += "[log_str1] <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name]</a>  [log_str2][log_attacher] [log_str3][last_touch_info]"
+
+		message_admins("[log_str1] <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name]</a>  [log_str2][log_attacher] [log_str3][last_touch_info]", 0, 1)
+		log_game("[log_str1] [A.name]([A.x],[A.y],[A.z]) [log_str2] [log_str3]")
 		merge_gases()
 		spawn(20) // In case one tank bursts
 			for (var/i=0,i<5,i++)

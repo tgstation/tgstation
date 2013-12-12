@@ -99,7 +99,7 @@
 	name = "offhand"
 	icon_state = "offhand"
 	w_class = 5.0
-	abstract = 1
+	flags = ABSTRACT
 
 /obj/item/weapon/twohanded/offhand/unwield()
 	del(src)

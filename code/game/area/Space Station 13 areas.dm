@@ -150,10 +150,12 @@ proc/process_ghost_teleport_locs()
 
 /area/shuttle/escape/centcom
 	name = "\improper Emergency Shuttle Centcom"
+	icon_state = "shuttle"
 	destination = /area/shuttle/escape/station
 
 /area/shuttle/escape/transit // the area to pass through for 3 minute transit
 	name = "\improper Emergency Shuttle Transit"
+	icon_state = "shuttle"
 	destination = /area/shuttle/escape/centcom
 
 /area/shuttle/escape_pod1

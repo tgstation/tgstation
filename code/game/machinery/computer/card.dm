@@ -160,21 +160,21 @@
 		var/target_owner
 		var/target_rank
 		if(modify)
-			target_name = modify.name
+			target_name = html_encode(modify.name)
 		else
 			target_name = "--------"
 		if(modify && modify.registered_name)
-			target_owner = modify.registered_name
+			target_owner = html_encode(modify.registered_name)
 		else
 			target_owner = "--------"
 		if(modify && modify.assignment)
-			target_rank = modify.assignment
+			target_rank = html_encode(modify.assignment)
 		else
 			target_rank = "Unassigned"
 
 		var/scan_name
 		if(scan)
-			scan_name = scan.name
+			scan_name = html_encode(scan.name)
 		else
 			scan_name = "--------"
 
@@ -323,9 +323,12 @@
 			if (authenticated)
 				var/t1 = href_list["assign_target"]
 				if(t1 == "Custom")
-					var/temp_t = copytext(sanitize(input("Enter a custom job assignment.","Assignment")),1,MAX_NAME_LEN)
-					if(temp_t)
-						t1 = temp_t
+					var/newJob = reject_bad_name(input("Enter a custom job assignment.", "Assignment", modify ? modify.assignment : "Unassigned"))
+					if(newJob)
+						t1 = newJob
+					else
+						usr << "\red Invalid job name entered."
+						return
 				else
 					var/datum/job/jobdatum
 					for(var/jobtype in typesof(/datum/job))
@@ -345,7 +348,12 @@
 				var/t2 = modify
 				//var/t1 = input(usr, "What name?", "ID computer", null)  as text
 				if ((authenticated && modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
-					modify.registered_name = copytext(sanitize(href_list["reg"]),1,MAX_NAME_LEN)
+					var/newName = reject_bad_name(href_list["reg"])
+					if(newName)
+						modify.registered_name = newName
+					else
+						usr << "\red Invalid name entered."
+						return
 		if ("mode")
 			mode = text2num(href_list["mode_target"])
 
