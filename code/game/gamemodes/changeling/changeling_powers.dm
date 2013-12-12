@@ -532,6 +532,11 @@ var/list/datum/dna/hivemind_bank = list()
 	//STINGS//	//They get a pretty header because there's just so fucking many of them ;_;
 	//////////
 
+/mob/living/carbon/proc/add_sting_logs(mob/T, sting_name, datum/dna/DNA)
+	src.attack_log += "\[[time_stamp()]\]<font color='red'> Stinged [T.name] ([T.ckey]) with [sting_name] sting[!DNA ? "." : ", giving him [DNA.real_name] appearance."]</font>"
+	T.attack_log += "\[[time_stamp()]\]<font color='orange'> Was stung by [src.name] ([src.ckey]) with [sting_name] sting[!DNA ? "." : ", and took [DNA.real_name] appearance."]</font>"
+	log_attack("<font color='red'>[src.name] ([src.ckey]) stinged [T.name] ([T.ckey]) with [sting_name] sting[!DNA ? "." : ", giving him [DNA.real_name] appearance."]</font>" )
+
 /mob/living/carbon/proc/set_sting(A, icon, dna=null) //setting the sting and ui icon for it
 	src << "<span class='notice'>We prepare our sting, use alt+click on target to sting them.</span>"
 	src.mind.changeling.chosen_sting = A
@@ -580,9 +585,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set_sting(/mob/living/carbon/proc/sting_effect_trasnform, "sting_transform", D)
 
 /mob/living/carbon/proc/sting_effect_trasnform(mob/living/carbon/T)
-	src.attack_log += "\[[time_stamp()]\]<font color='red'> Stinged [T.name] ([T.ckey]) with transformation sting, giving him [src.mind.changeling.chosen_dna.real_name] appearance.</font>"
-	T.attack_log += "\[[time_stamp()]\]<font color='orange'> Was stung by [src.name] ([src.ckey]) with transformation sting, and took [src.mind.changeling.chosen_dna.real_name] appearance.</font>"
-	log_attack("<font color='red'>[src.name] ([src.ckey]) stinged [T.name] ([T.ckey]) with transformation sting, giving him [src.mind.changeling.chosen_dna.real_name] appearance.</font>" )
+	add_sting_logs(T, "transformation", src.mind.changeling.chosen_dna)
 	if(!sting_can_reach(T, 40))
 		return 0
 	if((HUSK in T.mutations) || !check_dna_integrity(T))
@@ -604,9 +607,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set_sting(/mob/living/carbon/proc/sting_effect_extract, "sting_extract")
 
 /mob/living/carbon/proc/sting_effect_extract(mob/living/carbon/T)
-	src.attack_log += "\[[time_stamp()]\]<font color='red'> Stinged [T.name] ([T.ckey]) with extract sting.</font>"
-	T.attack_log += "\[[time_stamp()]\]<font color='orange'> Was stung by [src.name] ([src.ckey]) with extract sting.</font>"
-	log_attack("<font color='red'>[src.name] ([src.ckey]) stinged [T.name] ([T.ckey]) with extract sting.</font>" )
+	add_sting_logs(T, "extracting")
 	if(!sting_can_reach(T, 25))
 		return 0
 	if(src.mind.changeling.can_absorb_dna(T, usr))
@@ -625,9 +626,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set_sting(/mob/living/carbon/proc/sting_effect_mute, "sting_mute")
 
 /mob/living/carbon/proc/sting_effect_mute(mob/living/carbon/T)
-	src.attack_log += "\[[time_stamp()]\]<font color='red'> Stinged [T.name] ([T.ckey]) with mute sting.</font>"
-	T.attack_log += "\[[time_stamp()]\]<font color='orange'> Was stung by [src.name] ([src.ckey]) with mute sting.</font>"
-	log_attack("<font color='red'>[src.name] ([src.ckey]) stinged [T.name] ([T.ckey]) with mute sting.</font>" )
+	add_sting_logs(T, "mute")
 	if(!sting_can_reach(T, 20))
 		return 0
 	T.silent += 30
@@ -642,9 +641,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set_sting(/mob/living/carbon/proc/sting_effect_blind, "sting_blind")
 
 /mob/living/carbon/proc/sting_effect_blind(mob/living/carbon/T)
-	src.attack_log += "\[[time_stamp()]\]<font color='red'> Stinged [T.name] ([T.ckey]) with blind sting.</font>"
-	T.attack_log += "\[[time_stamp()]\]<font color='orange'> Was stung by [src.name] ([src.ckey]) with blind sting.</font>"
-	log_attack("<font color='red'>[src.name] ([src.ckey]) stinged [T.name] ([T.ckey]) with blind sting.</font>" )
+	add_sting_logs(T, "blind")
 	if(!sting_can_reach(T, 25))
 		return 0
 	T << "<span class='danger'>Your eyes burn horrifically!</span>"
@@ -662,9 +659,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set_sting(/mob/living/carbon/proc/sting_effect_lsd, "sting_lsd")
 
 /mob/living/carbon/proc/sting_effect_lsd(mob/living/carbon/T)
-	src.attack_log += "\[[time_stamp()]\]<font color='red'> Stinged [T.name] ([T.ckey]) with LSD sting.</font>"
-	T.attack_log += "\[[time_stamp()]\]<font color='orange'> Was stung by [src.name] ([src.ckey]) with LSD sting.</font>"
-	log_attack("<font color='red'>[src.name] ([src.ckey]) stinged [T.name] ([T.ckey]) with LSD sting.</font>" )
+	add_sting_logs(T, "LSD")
 	if(!sting_can_reach(T, 5))
 		return 0
 	spawn(rand(300,600))
@@ -680,9 +675,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set_sting(/mob/living/carbon/proc/sting_effect_cryo, "sting_cryo")
 
 /mob/living/carbon/proc/sting_effect_cryo(mob/living/carbon/T)
-	src.attack_log += "\[[time_stamp()]\]<font color='red'> Stinged [T.name] ([T.ckey]) with cryo sting.</font>"
-	T.attack_log += "\[[time_stamp()]\]<font color='orange'> Was stung by [src.name] ([src.ckey]) with cryo sting.</font>"
-	log_attack("<font color='red'>[src.name] ([src.ckey]) stinged [T.name] ([T.ckey]) with cryo sting.</font>" )
+	add_sting_logs(T, "cryo")
 	if(!sting_can_reach(T, 15))
 		return 0
 	if(T.reagents)
