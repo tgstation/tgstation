@@ -116,6 +116,13 @@
 				special_role_text = lowertext(vampire.special_role)
 			else
 				special_role_text = "antagonist"
+
+			if(traitorwin)
+				text += "<br><font color='green'><B>The [special_role_text] was successful!</B></font>"
+				feedback_add_details("traitor_success","SUCCESS")
+			else
+				text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
+				feedback_add_details("traitor_success","FAIL")
 		world << text
 	return 1
 
@@ -219,6 +226,11 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 	for(var/i = 1; i <= 3; i++) // CHANGE TO 3 RATHER THAN 12 AFTER TESTING IS DONE
 		mind.vampire.powers.Add(i)
 
+/mob/proc/remove_vampire_powers()
+	for(var/handler in typesof(/client/proc))
+		if(findtext("[handler]","vampire_"))
+			verbs -= handler
+
 /mob/proc/handle_bloodsucking(mob/living/carbon/human/H)
 	src.mind.vampire.draining = H
 	var/blood = 0
@@ -227,7 +239,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 	src.attack_log += text("\[[time_stamp()]\] <font color='red'>Bit [src.name] ([src.ckey]) in the neck and draining their blood</font>")
 	H.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been bit in the neck by [src.name] ([src.ckey])</font>")
 	log_attack("[src.name] ([src.ckey]) bit [H.name] ([H.ckey]) in the neck")
-	src.visible_message("\red <b>[src.name] bites [H.name]'s neck!<b>", "\red <b>You bit [H.name]'s neck and begin to drain their blood.", "\blue You hear a soft puncture and a wet sucking noise")
+	src.visible_message("\red <b>[src.name] bites [H.name]'s neck!<b>", "\red <b>You bite [H.name]'s neck and begin to drain their blood.", "\blue You hear a soft puncture and a wet sucking noise")
 	while(do_mob(src, H, 50))
 		if(!mind.vampire || !(mind in ticker.mode.vampires))
 			src << "\red Your fangs have disappeared!"
@@ -237,18 +249,19 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 		if(!H.vessel.get_reagent_amount("blood"))
 			src << "\red They've got no blood left to give."
 			break
-		if(!H.stat) //alive
+		if(H.stat < 2) //alive
 			blood = min(10, H.vessel.get_reagent_amount("blood"))// if they have less than 10 blood, give them the remnant else they get 10 blood
 			src.mind.vampire.bloodtotal += blood
 			src.mind.vampire.bloodusable += blood
-			H.adjustBruteLoss(10) // beep boop 10 damage
+			H.adjustCloneLoss(5) // beep boop 10 damage
 		else
 			blood = min(5, H.vessel.get_reagent_amount("blood"))// The dead only give 5 bloods
 			src.mind.vampire.bloodtotal += blood
 		if(bloodtotal != src.mind.vampire.bloodtotal)
 			src << "\blue <b>You have accumulated [src.mind.vampire.bloodtotal] [src.mind.vampire.bloodtotal > 1 ? "units" : "unit"] of blood[src.mind.vampire.bloodusable != bloodusable ?", and have [src.mind.vampire.bloodusable] left to use" : "."]"
-		H.vessel.remove_reagent("blood",20)
 		check_vampire_upgrade(mind)
+		H.vessel.remove_reagent("blood",25)
+
 	src.mind.vampire.draining = null
 	src << "\blue You stop draining [H.name] of blood."
 	return 1
@@ -257,7 +270,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 	if(!v) return
 	if(!v.vampire) return
 	var/datum/vampire/vamp = v.vampire
-	var/list/old_powers = vamp.powers
+	var/list/old_powers = vamp.powers.Copy()
 	switch(vamp.bloodtotal)
 		if(100)
 			if(!(VAMP_VISION in vamp.powers))
@@ -284,6 +297,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 			if(!(VAMP_FULL in vamp.powers))
 				vamp.powers.Add(VAMP_FULL)
 	announce_new_power(old_powers, vamp.powers)
+
 /mob/proc/announce_new_power(list/old_powers, list/new_powers)
 	for(var/n in new_powers)
 		if(!(n in old_powers))
@@ -366,11 +380,13 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 
 /datum/game_mode/proc/remove_vampire_mind(datum/mind/vampire_mind, datum/mind/head)
 	//var/list/removal
+	if(!istype(head))
+		head = vampire_mind //workaround for removing a thrall's control over the enthralled
 	var/ref = "\ref[head]"
 	if(ref in thralls)
-		implanter[ref] -= vampire_mind
+		thralls[ref] -= vampire_mind
 	enthralled -= vampire_mind
 	vampire_mind.special_role = null
 	update_vampire_icons_removed(vampire_mind)
 	//world << "Removed [vampire_mind.current.name] from vampire shit"
-	vampire_mind.current << "\red <FONT size = 3><B>The fog clouding your mind clears. You remember nothing from the moment you were implanted until now.(You don't remember who implanted you)</B></FONT>"
+	vampire_mind.current << "\red <FONT size = 3><B>The fog clouding your mind clears. You remember nothing from the moment you were enthralled until now.</B></FONT>"
