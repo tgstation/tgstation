@@ -171,7 +171,7 @@
 
 /client/proc/vampire_screech()
 	set category = "Vampire"
-	set name = "Chiroptean Screech"
+	set name = "Chiroptean Screech (30)"
 	set desc = "An extremely loud shriek that stuns nearby humans and breaks windows as well."
 	var/datum/mind/M = usr.mind
 	if(!M) return

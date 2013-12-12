@@ -81,6 +81,62 @@
 	..()
 	return
 
+/datum/game_mode/proc/auto_declare_completion_vampire()
+	if(traitors.len)
+		var/text = "<FONT size = 2><B>The vampires were:</B></FONT>"
+		for(var/datum/mind/vampire in vampires)
+			var/traitorwin = 1
+
+			text += "<br>[vampire.key] was [vampire.name] ("
+			if(vampire.current)
+				if(vampire.current.stat == DEAD)
+					text += "died"
+				else
+					text += "survived"
+				if(vampire.current.real_name != vampire.name)
+					text += " as [vampire.current.real_name]"
+			else
+				text += "body destroyed"
+			text += ")"
+
+			if(vampire.objectives.len)//If the traitor had no objectives, don't need to process this.
+				var/count = 1
+				for(var/datum/objective/objective in vampire.objectives)
+					if(objective.check_completion())
+						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+						feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
+					else
+						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+						feedback_add_details("traitor_objective","[objective.type]|FAIL")
+						traitorwin = 0
+					count++
+
+			var/special_role_text
+			if(vampire.special_role)
+				special_role_text = lowertext(traitor.special_role)
+			else
+				special_role_text = "antagonist"
+		world << text
+	return 1
+
+/datum/game_mode/proc/auto_declare_completion_enthralled()
+	if(traitors.len)
+		var/text = "<FONT size = 2><B>The Enthralled were:</B></FONT>"
+		for(var/datum/mind/enthralled in enthralled)
+			text += "<br>[enthralled.key] was [enthralled.name] ("
+			if(enthralled.current)
+				if(enthralled.current.stat == DEAD)
+					text += "died"
+				else
+					text += "survived"
+				if(enthralled.current.real_name != enthralled.name)
+					text += " as [enthralled.current.real_name]"
+			else
+				text += "body destroyed"
+			text += ")"
+		world << text
+	return 1
+
 /datum/game_mode/proc/forge_vampire_objectives(var/datum/mind/vampire)
 	//Objectives are traitor objectives plus blood objectives
 
@@ -157,10 +213,10 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 	verbs += /client/proc/vampire_hypnotise
 	verbs += /client/proc/vampire_glare
 	//testing purposes REMOVE BEFORE PUSH TO MASTER
-	for(var/handler in typesof(/client/proc))
+	/*for(var/handler in typesof(/client/proc))
 		if(findtext("[handler]","vampire_"))
-			verbs += handler
-	for(var/i = 1; i <= 12; i++) // CHANGE TO 3 RATHER THAN 12 AFTER TESTING IS DONE
+			verbs += handler*/
+	for(var/i = 1; i <= 3; i++) // CHANGE TO 3 RATHER THAN 12 AFTER TESTING IS DONE
 		mind.vampire.powers.Add(i)
 
 /mob/proc/handle_bloodsucking(mob/living/carbon/human/H)
@@ -192,7 +248,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 		if(bloodtotal != src.mind.vampire.bloodtotal)
 			src << "\blue <b>You have accumulated [src.mind.vampire.bloodtotal] [src.mind.vampire.bloodtotal > 1 ? "units" : "unit"] of blood[src.mind.vampire.bloodusable != bloodusable ?", and have [src.mind.vampire.bloodusable] left to use" : "."]"
 		H.vessel.remove_reagent("blood",20)
-
+		check_vampire_upgrade(mind)
 	src.mind.vampire.draining = null
 	src << "\blue You stop draining [H.name] of blood."
 	return 1
