@@ -266,12 +266,13 @@ client
 
 
 		body += "<option value='?_src_=vars;mark_object=\ref[D]'>Mark Object</option>"
+
 		if(ismob(D))
 			body += "<option value='?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</option>"
 			body += "<option value='?_src_=vars;regenerateicons=\ref[D]'>Regenerate Icons</option>"
 			if(check_rights(R_REJUVINATE,0))
 				body += "<option value='?_src_=vars;godmode=\ref[D]'>Toggle Godmode</option>"
-			
+
 
 
 
@@ -284,7 +285,7 @@ client
 				body += "<option value='?_src_=vars;direct_control=\ref[D]'>Assume Direct Control</option>"
 				if(check_rights(R_BUILDMODE,0))
 					body += "<option value='?_src_=vars;build_mode=\ref[D]'>Toggle Build Mode</option>"
-					
+
 				if(check_rights(R_FUN,0))
 					body += "<option value='?_src_=vars;ninja=\ref[D]'>Make Space Ninja</option>"
 					body += "<option value='?_src_=vars;make_skeleton=\ref[D]'>Make 2spooky</option>"
@@ -299,14 +300,14 @@ client
 						body += "<option value='?_src_=vars;makemonkey=\ref[D]'>Make monkey</option>"
 						body += "<option value='?_src_=vars;makealien=\ref[D]'>Make alien</option>"
 						body += "<option value='?_src_=vars;makeslime=\ref[D]'>Make slime</option>"
-						
+
 
 			if(isobj(D) || ismob(D) || isturf(D))
 				if(check_rights(R_FUN,0))
 					body += "<option value>---</option>"
 					body += "<option value='?_src_=vars;explode=\ref[D]'>Trigger explosion</option>"
 					body += "<option value='?_src_=vars;emp=\ref[D]'>Trigger EM pulse</option>"
-					
+
 			if(isobj(D))
 				if(check_rights(R_DEBUG|R_SERVER,0))
 					body += "<option value>---</option>"
@@ -316,6 +317,7 @@ client
 		body += "</select></form>"
 
 		body += "</div></td></tr></table></div><hr>"
+
 		if(check_rights(R_VAREDIT,0))
 			body += "<font size='1'><b>E</b> - Edit, tries to determine the variable type by itself.<br>"
 			body += "<b>C</b> - Change, asks you for the var type first.<br>"
@@ -503,7 +505,7 @@ client
 
 
 	//~CARN: for renaming mobs (updates their name, real_name, mind.name, their ID/PDA and datacore records).
-	
+
 		if(href_list["rename"])
 			if(!check_rights(0))	return
 
