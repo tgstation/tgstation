@@ -146,12 +146,15 @@
 		M.current.verbs -= /client/proc/vampire_glare
 		spawn(300)
 			M.current.verbs += /client/proc/vampire_glare
+		if(istype(M.current:glasses, /obj/item/clothing/glasses/sunglasses/blindfold))
+			M.current << "<span class='warning'>You're blindfolded</span>"
+			return
 		for(var/mob/living/carbon/C in oview(1))
 			if(C.mind && C.mind.vampire) continue
 			if(!M.current.vampire_can_reach(C, 1)) continue
 			C.Stun(8)
 			C.Weaken(8)
-			C.stuttering = 8
+			C.stuttering = 20
 			C << "\red You are blinded by [M.current]'s glare"
 
 /client/proc/vampire_shapeshift()
@@ -179,11 +182,12 @@
 		M.current.visible_message("\red [M.current.name] lets out an ear piercing shriek!", "\red You let out a loud shriek.", "\red You hear a loud painful shriek!")
 		for(var/mob/living/carbon/C in ohearers(4, M.current))
 			if(C == M.current) continue
+			if(ishuman(C) && C:ears && istype(C:ears, /obj/item/clothing/ears/earmuffs)) continue
 			C << "<span class='warning'><font size='3'><b>You hear a ear piercing shriek and your senses dull!</font></b></span>"
-			C.weakened = 8
+			C.Weaken(8)
 			C.ear_deaf = 20
 			C.stuttering = 20
-			C.stunned = 8
+			C.Stun(8)
 			C.make_jittery(150)
 		for(var/obj/structure/window/W in oview(3))
 			new W.shardtype(W.loc)
@@ -247,7 +251,7 @@
 	if(!C.mind)
 		src << "\red [C.name]'s mind is not there for you to enthrall."
 		return 0
-	if(/obj/item/weapon/implant/traitor in C.contents || /obj/item/weapon/implant/loyalty in C.contents || C.mind in ticker.mode.vampires || C.mind in ticker.mode.enthralled)
+	if(/obj/item/weapon/implant/traitor in C.contents || /obj/item/weapon/implant/loyalty in C.contents || C.mind in ticker.mode.vampires || C.mind.vampire || C.mind in ticker.mode.enthralled)
 		C.visible_message("[C] seems to resist the takeover!", "You feel a familiar sensation in your skull that quickly dissipates.")
 		return 0
 	if(!ishuman(C))
