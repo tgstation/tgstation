@@ -407,7 +407,7 @@
 
 /mob/living/proc/getTrail() //silicon and simple_animals don't get blood trails
     return null
-
+    
 /mob/living/verb/resist()
 	set name = "Resist"
 	set category = "IC"

@@ -426,6 +426,29 @@
 	prob_slip = round(prob_slip)
 	return(prob_slip)
 
+var/list/climables = list(/obj/machinery/portable_atmospherics, /obj/machinery/bot/mulebot,
+/obj/structure/closet/crate,/obj/structure/janitorialcart,/obj/structure/rack,/obj/structure/table,/obj/machinery/space_heater,
+/obj/structure/reagent_dispensers/beerkeg,/obj/structure/reagent_dispensers/watertank,/obj/structure/reagent_dispensers/fueltank)
+//var/list/unclimables = list(/obj/machinery/door,/obj/structure/mineral_door,/obj/structure/plasticflaps)
+
+/mob/proc/Can_Climb()
+	if (!canmove || restrained())
+		return
+	var/Ret = 0
+	var/turf/L = get_step(src.loc, src.dir) //dir should be cardinal facing
+	if(!L.Adjacent(src))
+		return 0
+	for(var/obj/C in L.contents)
+		if(istype(C,/obj/machinery/door) && C.density)
+			return 0
+		if(istype(C,/obj/structure/plasticflaps))
+			return 0
+		for(var/item in climables)
+			if(istype(C,item))
+				Ret = C
+	return Ret
+
+
 /mob/proc/Move_Pulled(var/atom/A)
 	if (!canmove || restrained() || !pulling)
 		return
