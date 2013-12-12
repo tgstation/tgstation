@@ -6,6 +6,8 @@
 #define MUTCHK_FORCED        1
 /proc/domutcheck(var/mob/living/M, var/connected, var/flags)
 	for(var/datum/dna/gene/gene in dna_genes)
+		if(!M)
+			return
 		if(!gene.block)
 			continue
 
@@ -25,14 +27,16 @@
 		if((gene_active && !gene_prior_status) || (gene.flags & GENE_ALWAYS_ACTIVATE))
 			testing("[gene.name] activated!")
 			gene.activate(M)
-			if(!(gene.flags & GENE_ALWAYS_ACTIVATE))
-				M.active_genes |= gene.type
-			M.update_icon=1
+			if(M)
+				if(!(gene.flags & GENE_ALWAYS_ACTIVATE))
+					M.active_genes |= gene.type
+				M.update_icon=1
 		else if(!gene_active && gene_prior_status)
 			testing("[gene.name] deactivated!")
 			gene.deactivate(M)
-			M.active_genes -= gene.type
-			M.update_icon=1
+			if(M)
+				M.active_genes -= gene.type
+				M.update_icon=1
 		//else
 		//	testing("[M] - Failed to activate [gene.name] - [gene_active?"+":"-"]active, [gene_prior_status?"+":"-"]prior")
 
