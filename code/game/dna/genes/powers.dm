@@ -18,8 +18,8 @@
 	New()
 		block=REMOTEVIEWBLOCK
 
-	activate(var/mob/M)
-		..(M)
+	activate(var/mob/M, var/connected, var/flags)
+		..(M,connected,flags)
 		M.verbs += /mob/living/carbon/human/proc/remoteobserve
 
 /datum/dna/gene/basic/regenerate
@@ -46,8 +46,8 @@
 	New()
 		block=REMOTETALKBLOCK
 
-	activate(var/mob/M)
-		..(M)
+	activate(var/mob/M, var/connected, var/flags)
+		..(M,connected,flags)
 		M.verbs += /mob/living/carbon/human/proc/remotesay
 
 /datum/dna/gene/basic/morph
@@ -125,8 +125,8 @@
 			return 0
 		return ..(M,flags)
 
-	activate(var/mob/M)
-		..(M)
+	activate(var/mob/M, var/connected, var/flags)
+		..(M,connected,flags)
 		M.pass_flags |= 1
 
 /datum/dna/gene/basic/hulk
