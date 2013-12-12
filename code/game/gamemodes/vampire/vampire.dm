@@ -138,12 +138,13 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 	return
 
 /datum/vampire
-	var/bloodtotal = 5000 // CHANGE TO ZERO WHEN PLAYTESTING HAPPENS
-	var/bloodusable = 5000 // CHANGE TO ZERO WHEN PLAYTESTING HAPPENS
+	var/bloodtotal = 0 // CHANGE TO ZERO WHEN PLAYTESTING HAPPENS
+	var/bloodusable = 0 // CHANGE TO ZERO WHEN PLAYTESTING HAPPENS
 	var/mob/living/owner = null
 	var/gender = FEMALE
 	var/iscloaking = 0 // handles the vampire cloak toggle
 	var/list/powers = list() // list of available powers and passives, see defines in setup.dm
+	var/mob/living/carbon/human/draining // who the vampire is draining of blood
 /datum/vampire/New(gend = FEMALE)
 	gender = gend
 
@@ -162,7 +163,38 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 	for(var/i = 1; i <= 12; i++) // CHANGE TO 3 RATHER THAN 12 AFTER TESTING IS DONE
 		mind.vampire.powers.Add(i)
 
+/mob/proc/handle_bloodsucking(mob/living/carbon/human/H)
+	src.mind.vampire.draining = H
+	var/blood = 0
+	var/bloodtotal = 0 //used to see if we increased our blood total
+	var/bloodusable = 0 //used to see if we increased our blood usable
+	src.attack_log += text("\[[time_stamp()]\] <font color='red'>Bit [src.name] ([src.ckey]) in the neck and draining their blood</font>")
+	H.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been bit in the neck by [src.name] ([src.ckey])</font>")
+	log_attack("[src.name] ([src.ckey]) bit [H.name] ([H.ckey]) in the neck")
+	src.visible_message("\red <b>[src.name] bites [H.name]'s neck!<b>", "\red <b>You bit [H.name]'s neck and begin to drain their blood.", "\blue You hear a soft puncture and a wet sucking noise")
+	while(do_mob(src, H, 50))
+		if(!mind.vampire || !(mind in ticker.mode.vampires))
+			src << "\red Your fangs have disappeared!"
+			return 0
+		bloodtotal = src.mind.vampire.bloodtotal
+		bloodusable = src.mind.vampire.bloodusable
+		if(!H.vessel.get_reagent_amount("blood"))
+			src << "\red They've got no blood left to give."
+			break
+		if(!H.stat) //alive
+			blood = min(10, H.vessel.get_reagent_amount("blood"))// if they have less than 10 blood, give them the remnant else they get 10 blood
+			src.mind.vampire.bloodtotal += blood
+			src.mind.vampire.bloodusable += blood
+			H.adjustBruteLoss(10) // beep boop 10 damage
+		else
+			blood = min(5, H.vessel.get_reagent_amount("blood"))// The dead only give 5 bloods
+			src.mind.vampire.bloodtotal += blood
+		if(bloodtotal != src.mind.vampire.bloodtotal)
+			src << "\blue <b>You have accumulated [src.mind.vampire.bloodtotal] [src.mind.vampire.bloodtotal > 1 ? "units" : "unit"] of blood[src.mind.vampire.bloodusable != bloodusable ?", and have [src.mind.vampire.bloodusable] left to use" : "."]"
+		H.vessel.remove_reagent("blood",20)
 
+	src.mind.vampire.draining = null
+	src << "\blue You stop draining [H.name] of blood."
 	return 1
 
 /mob/proc/check_vampire_upgrade(datum/mind/v)
