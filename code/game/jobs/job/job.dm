@@ -32,6 +32,12 @@
 	//the type of the ID the player will have
 	var/idtype = /obj/item/weapon/card/id
 
+	//Where to put the PDA , Assistants default
+	var/PDA_slot = slot_belt
+	
+	//Where to put the PDA
+	var/PDA_job_path = /obj/item/device/pda
+
 	//If this is set to 1, a text is printed to the player when jobs are assigned, telling him that he should let admins know that he has to disconnect.
 	var/req_admin_notify
 
@@ -39,6 +45,11 @@
 	var/minimal_player_age = 0
 
 /datum/job/proc/equip(var/mob/living/carbon/human/H)
+	if(!H || flag==AI || flag == CYBORG)	return 0	//Do not give borgs PDAs
+	if(H.id2pda)
+		H.equip_to_slot_or_del(new PDA_job_path(H), slot_wear_id)
+	else
+		H.equip_to_slot_or_del(new PDA_job_path(H), PDA_slot)
 	return 1
 
 /datum/job/proc/apply_fingerprints(var/mob/living/carbon/human/H)
