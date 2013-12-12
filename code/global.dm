@@ -81,6 +81,7 @@ var/href_logfile = null
 var/station_name = null
 var/game_version = "adsfasdfasdf"
 var/changelog_hash = ""
+var/game_year = (text2num(time2text(world.realtime, "YYYY")) + 544)
 
 var/datum/air_tunnel/air_tunnel1/SS13_airtunnel = null
 var/going = 1.0
