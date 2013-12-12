@@ -78,21 +78,20 @@
 	M.current.verbs -= /client/proc/vampire_hypnotise
 	spawn(1800)
 		M.current.verbs += /client/proc/vampire_hypnotise
-	spawn(50)
-		if(M.current.vampire_can_reach(C, 1))
-			if(C.mind && C.mind.vampire)
-				M.current << "\red Your piercing gaze fails to knock out [C.name]."
-				C << "\blue [M.current]'s feeble gaze is ineffective."
-				return
-			else
-				M.current << "\red Your piercing gaze knocks out [C.name]."
-				C << "\red You find yourself unable to move and barely able to speak"
-				C.Weaken(20)
-				C.Stun(20)
-				C.stuttering = 20
-		else
-			M.current << "\red You broke your gaze."
+	if(do_mob(M.current, C, 50))
+		if(C.mind && C.mind.vampire)
+			M.current << "\red Your piercing gaze fails to knock out [C.name]."
+			C << "\blue [M.current]'s feeble gaze is ineffective."
 			return
+		else
+			M.current << "\red Your piercing gaze knocks out [C.name]."
+			C << "\red You find yourself unable to move and barely able to speak"
+			C.Weaken(20)
+			C.Stun(20)
+			C.stuttering = 20
+	else
+		M.current << "\red You broke your gaze."
+		return
 
 /client/proc/vampire_disease()
 	set category = "Vampire"
@@ -208,7 +207,7 @@
 	if(!ishuman(C))
 		M.current << "\red You can only enthrall humans"
 		return
-	if(do_mob(M.current, C, 20))
+	if(do_mob(M.current, C, 50))
 		if(M.current.can_enthrall(C)) // recheck
 			M.current.handle_enthrall(C)
 
