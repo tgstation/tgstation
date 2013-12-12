@@ -194,7 +194,7 @@ client
 				else
 					body += "<b>[D]</b>"
 					if(A.dir)
-						body += "<br><font size='1'><<[dir2text(A.dir)]>></font>"
+						body += "<br><font size='1'>[dir2text(A.dir)]</font>"
 					var/mob/living/M = A
 					body += "<br><font size='1'>[M.ckey ? M.ckey : "No ckey"] / [M.real_name ? M.real_name : "No real name"]</font>"
 					body += {"
@@ -219,7 +219,7 @@ client
 				else
 					body += "<b>[D]</b>"
 					if(A.dir)
-						body += "<br><font size='1'><<[dir2text(A.dir)]>></font>"
+						body += "<br><font size='1'>[dir2text(A.dir)]</font>"
 
 
 		else
@@ -449,8 +449,6 @@ client
 	if(href_list["Vars"])
 		debug_variables(locate(href_list["Vars"]))
 
-	//~CARN: for renaming mobs (updates their name, real_name, mind.name, their ID/PDA and datacore records).
-
 	if(href_list["datumrefresh"])
 		var/datum/DAT = locate(href_list["datumrefresh"])
 		if(!istype(DAT, /datum))
@@ -503,6 +501,9 @@ client
 
 	if(check_rights(R_VAREDIT,0))
 
+
+	//~CARN: for renaming mobs (updates their name, real_name, mind.name, their ID/PDA and datacore records).
+	
 		if(href_list["rename"])
 			if(!check_rights(0))	return
 
