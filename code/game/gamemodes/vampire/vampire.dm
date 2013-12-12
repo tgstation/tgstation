@@ -271,31 +271,48 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 	if(!v.vampire) return
 	var/datum/vampire/vamp = v.vampire
 	var/list/old_powers = vamp.powers.Copy()
-	switch(vamp.bloodtotal)
-		if(100)
-			if(!(VAMP_VISION in vamp.powers))
-				vamp.powers.Add(VAMP_VISION)
-			if(!(VAMP_SHAPE in vamp.powers))
-				vamp.powers.Add(VAMP_SHAPE)
-		if(150)
-			if(!(VAMP_CLOAK in vamp.powers))
-				vamp.powers.Add(VAMP_CLOAK)
-			if(!(VAMP_DISEASE in vamp.powers))
-				vamp.powers.Add(VAMP_DISEASE)
-		if(200)
-			if(!(VAMP_BATS in vamp.powers))
-				vamp.powers.Add(VAMP_BATS)
-			if(!(VAMP_SCREAM in vamp.powers))
-				vamp.powers.Add(VAMP_SCREAM)
-			src << "\blue Your rejuvination abilities have improved and will now heal you over time when used."
-		if(300)
-			if(!(VAMP_JAUNT in vamp.powers))
-				vamp.powers.Add(VAMP_JAUNT)
-			if(!(VAMP_SLAVE in vamp.powers))
-				vamp.powers.Add(VAMP_SLAVE)
-		if(500)
-			if(!(VAMP_FULL in vamp.powers))
-				vamp.powers.Add(VAMP_FULL)
+
+	// This used to be a switch statement.
+	// Don't use switch statements for shit like this, since blood can be any random-ass value.
+	// if(100) requires the blood to be at EXACTLY 100 units to trigger.
+	// if(blud >= 100) activates when blood is at or over 100 units.
+	// TODO: Make this modular.
+
+	// TIER 1
+	if(vamp.bloodtotal >= 100)
+		if(!(VAMP_VISION in vamp.powers))
+			vamp.powers.Add(VAMP_VISION)
+		if(!(VAMP_SHAPE in vamp.powers))
+			vamp.powers.Add(VAMP_SHAPE)
+
+	// TIER 2
+	if(vamp.bloodtotal >= 150)
+		if(!(VAMP_CLOAK in vamp.powers))
+			vamp.powers.Add(VAMP_CLOAK)
+		if(!(VAMP_DISEASE in vamp.powers))
+			vamp.powers.Add(VAMP_DISEASE)
+
+	// TIER 3
+	if(vamp.bloodtotal >= 200)
+		if(!(VAMP_BATS in vamp.powers))
+			vamp.powers.Add(VAMP_BATS)
+		if(!(VAMP_SCREAM in vamp.powers))
+			vamp.powers.Add(VAMP_SCREAM)
+		// Commented out until we can figured out a way to stop this from spamming.
+		//src << "\blue Your rejuvination abilities have improved and will now heal you over time when used."
+
+	// TIER 4
+	if(vamp.bloodtotal >= 300)
+		if(!(VAMP_JAUNT in vamp.powers))
+			vamp.powers.Add(VAMP_JAUNT)
+		if(!(VAMP_SLAVE in vamp.powers))
+			vamp.powers.Add(VAMP_SLAVE)
+
+	// TIER 5
+	if(vamp.bloodtotal >= 500)
+		if(!(VAMP_FULL in vamp.powers))
+			vamp.powers.Add(VAMP_FULL)
+
 	announce_new_power(old_powers, vamp.powers)
 
 /mob/proc/announce_new_power(list/old_powers, list/new_powers)
@@ -315,7 +332,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 					src << "\blue You have gained the Cloak of Darkness ability which when toggled makes you near invisible in the shroud of darkness."
 					verbs += /client/proc/vampire_cloak
 				if(VAMP_BATS)
-					src << "\blue You have gained the Summon Bats ability... If pomf made it yet, go yell at him in the thread or something."
+					src << "\blue You have gained the Summon Bats ability... If pomf made it yet. Go yell at him in the thread or something."
 					//verbs += /client/proc/vampire_bats // not yet made
 				if(VAMP_SCREAM)
 					src << "\blue You have gained the Chriopteran Screech ability which stuns anything with ears in a large radius and shatters glass in the process."
