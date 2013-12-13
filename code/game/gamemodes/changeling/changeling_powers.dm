@@ -533,9 +533,9 @@ var/list/datum/dna/hivemind_bank = list()
 	//////////
 
 /mob/living/carbon/proc/add_sting_logs(mob/T, sting_name, datum/dna/DNA)
-	src.attack_log += "\[[time_stamp()]\]<font color='red'> Stinged [T.name] ([T.ckey]) with [sting_name] sting[!DNA ? "." : ", giving him [DNA.real_name] appearance."]</font>"
+	src.attack_log += "\[[time_stamp()]\]<font color='red'> Stung [T.name] ([T.ckey]) with [sting_name] sting[!DNA ? "." : ", giving him [DNA.real_name] appearance."]</font>"
 	T.attack_log += "\[[time_stamp()]\]<font color='orange'> Was stung by [src.name] ([src.ckey]) with [sting_name] sting[!DNA ? "." : ", and took [DNA.real_name] appearance."]</font>"
-	log_attack("<font color='red'>[src.name] ([src.ckey]) stinged [T.name] ([T.ckey]) with [sting_name] sting[!DNA ? "." : ", giving him [DNA.real_name] appearance."]</font>" )
+	log_attack("<font color='red'>[src.name] ([src.ckey]) stung [T.name] ([T.ckey]) with [sting_name] sting[!DNA ? "." : ", giving him [DNA.real_name] appearance."]</font>" )
 
 /mob/living/carbon/proc/set_sting(A, icon, dna=null) //setting the sting and ui icon for it
 	src << "<span class='notice'>We prepare our sting, use alt+click on target to sting them.</span>"
