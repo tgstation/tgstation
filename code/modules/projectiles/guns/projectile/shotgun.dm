@@ -8,7 +8,6 @@
 	flags =  FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BACK
 	origin_tech = "combat=4;materials=2"
-	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	mag_type = /obj/item/ammo_box/magazine/internal/shot
 	var/recentpump = 0 // to prevent spammage
 	var/pumped = 0
@@ -18,10 +17,11 @@
 	if(istype(A, /obj/item/ammo_box))
 		var/obj/item/ammo_box/AM = A
 		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
-			if(magazine.give_round(AC))
+			var/didload = magazine.give_round(AC)
+			if(didload)
 				AM.stored_ammo -= AC
 				num_loaded++
-			else
+			if(!didload || !magazine.multiload)
 				break
 	if(istype(A, /obj/item/ammo_casing))
 		var/obj/item/ammo_casing/AC = A
@@ -83,7 +83,6 @@
 	name = "combat shotgun"
 	icon_state = "cshotgun"
 	origin_tech = "combat=5;materials=2"
-	ammo_type = /obj/item/ammo_casing/shotgun
 	mag_type = /obj/item/ammo_box/magazine/internal/shotcom
 	w_class = 5
 
@@ -97,20 +96,17 @@
 	flags =  FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BACK
 	origin_tech = "combat=3;materials=1"
-	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(var/obj/item/A as obj, mob/user as mob)
 	..()
-	if (istype(A,/obj/item/ammo_box) || istype(A,/obj/item/ammo_casing))
-		chamber_round()
 	if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/melee/energy) || istype(A, /obj/item/weapon/pickaxe/plasmacutter))
 		user << "<span class='notice'>You begin to shorten the barrel of \the [src].</span>"
 		if(get_ammo())
 			afterattack(user, user)	//will this work?
 			afterattack(user, user)	//it will. we call it twice, for twice the FUN
 			playsound(user, fire_sound, 50, 1)
-			user.visible_message("<span class='danger'>The shotgun goes off!</span>", "<span class='danger'>The shotgun goes off in your face!</span>")
+			user.visible_message("<span class='danger'>\The [src] goes off!</span>", "<span class='danger'>\The [src] goes off in your face!</span>")
 			return
 		if(do_after(user, 30))	//SHIT IS STEALTHY EYYYYY
 			icon_state = "sawnshotgun"
@@ -123,15 +119,5 @@
 			desc = "Omar's coming!"
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attack_self(mob/living/user as mob)
-	var/num_unloaded = 0
-	while (get_ammo() > 0)
-		var/obj/item/ammo_casing/CB
-		CB = magazine.get_round(0)
-		chambered = null
-		CB.loc = get_turf(src.loc)
-		CB.update_icon()
-		num_unloaded++
-	if (num_unloaded)
-		user << "<span class = 'notice'>You break open \the [src] and unload [num_unloaded] shell\s.</span>"
-	else
-		user << "<span class='notice'>[src] is empty.</span>"
+	user << "<span class = 'notice'>You break open \the [src].</span>"
+	..()

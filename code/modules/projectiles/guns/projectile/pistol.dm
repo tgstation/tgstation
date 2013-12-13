@@ -1,17 +1,14 @@
-/obj/item/weapon/gun/projectile/automatic/silenced
-	name = "silenced pistol"
-	desc = "A small, quiet,  easily concealable gun. Uses .45 rounds."
-	icon_state = "silenced_pistol"
+/obj/item/weapon/gun/projectile/automatic/m2411
+	name = "M2411"
+	desc = "John Browning's classic updated for the modern day. Uses .45 rounds. Has 'VADS' engraved on the grip."
+	icon_state = "m2411"
 	w_class = 3.0
-	silenced = 1
-	origin_tech = "combat=2;materials=2;syndicate=8"
-	ammo_type = /obj/item/ammo_casing/c45
-	mag_type = /obj/item/ammo_box/magazine/sm45
-	fire_sound = 'sound/weapons/Gunshot_silenced.ogg'
+	origin_tech = "combat=3;materials=2"
+	mag_type = /obj/item/ammo_box/magazine/m45
 
-/obj/item/weapon/gun/projectile/automatic/silenced/update_icon()
+/obj/item/weapon/gun/projectile/automatic/m2411/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]"
+	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 	return
 
 
@@ -20,7 +17,6 @@
 	desc = "A robust handgun that uses .50 AE ammo"
 	icon_state = "deagle"
 	force = 14.0
-	ammo_type = /obj/item/ammo_casing/a50
 	mag_type = /obj/item/ammo_box/magazine/m50
 
 
@@ -56,7 +52,6 @@
 	icon_state = "gyropistol"
 	fire_sound = 'sound/effects/Explosion1.ogg'
 	origin_tech = "combat=3"
-	ammo_type = /obj/item/ammo_casing/a75
 	mag_type = /obj/item/ammo_box/magazine/m75
 
 /obj/item/weapon/gun/projectile/automatic/gyropistol/New()
@@ -85,17 +80,7 @@
 	w_class = 2
 	silenced = 0
 	origin_tech = "combat=2;materials=2;syndicate=2"
-	ammo_type = /obj/item/ammo_casing/c10mm
 	mag_type = /obj/item/ammo_box/magazine/m10mm
-
-/obj/item/weapon/gun/projectile/automatic/pistol/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
-	..()
-	if(magazine)
-		if(!chambered && !magazine.ammo_count())
-			magazine.update_icon()
-			magazine.loc = get_turf(src.loc)
-			magazine = null
-	return
 
 /obj/item/weapon/gun/projectile/automatic/pistol/attack_hand(mob/user as mob)
 	if(loc == user)
