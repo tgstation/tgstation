@@ -45,7 +45,7 @@
 							//Foreach goto(132)
 					dat += text("<HR><A href='?src=\ref[];screen=1'>Back</A>", src)
 				if(3.0)
-					dat += text("<B>Records Maintenance</B><HR>\n<A href='?src=\ref[];back=1'>Backup To Disk</A><BR>\n<A href='?src=\ref[];u_load=1'>Upload From disk</A><BR>\n<A href='?src=\ref[];del_all=1'>Delete All Records</A><BR>\n<BR>\n<A href='?src=\ref[];screen=1'>Back</A>", src, src, src, src)
+					dat += text("<B>Records Maintenance</B><HR>\n<A href='?src=\ref[];back=1'>Backup To Disk</A><BR>\n<A href='?src=\ref[];u_load=1'>Upload From Disk</A><BR>\n<A href='?src=\ref[];del_all=1'>Delete All Records</A><BR>\n<BR>\n<A href='?src=\ref[];screen=1'>Back</A>", src, src, src, src)
 				if(4.0)
 					dat += "<CENTER><B>Medical Record</B></CENTER><BR>"
 					if(active1 in data_core.general)
@@ -344,7 +344,7 @@
 					R.fields["blood_type"] = "Unknown"
 					R.fields["b_dna"] = "Unknown"
 					R.fields["mi_dis"] = "None"
-					R.fields["mi_dis_d"] = "No minor disabilities have been declared."
+					R.fields["mi_dis_d"] = "No minor disabilities have been diagnosed."
 					R.fields["ma_dis"] = "None"
 					R.fields["ma_dis_d"] = "No major disabilities have been diagnosed."
 					R.fields["alg"] = "None"
@@ -451,5 +451,5 @@
 
 /obj/machinery/computer/med_data/laptop
 	name = "medical laptop"
-	desc = "Cheap Nanotrasen Laptop."
+	desc = "A cheap Nanotrasen medical laptop, it functions as a medical records computer. It's bolted to the table."
 	icon_state = "medlaptop"

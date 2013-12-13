@@ -249,7 +249,7 @@
 		if(src.build_path == "/obj/machinery/computer/rdconsole/core")
 			src.name = "circuit board (RD Console - Robotics)"
 			src.build_path = "/obj/machinery/computer/rdconsole/robotics"
-			user << "\blue Access protocols succesfully updated."
+			user << "\blue Access protocols successfully updated."
 		else
 			src.name = "circuit board (RD Console)"
 			src.build_path = "/obj/machinery/computer/rdconsole/core"

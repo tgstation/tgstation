@@ -1,6 +1,6 @@
 /obj/machinery/monkey_recycler
 	name = "monkey recycler"
-	desc = "A machine used for recycling dead monkeys into monkey cubes."
+	desc = "A machine used for recycling dead monkeys into monkey cubes. It requires 4 monkeys per cube."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"
 	layer = 2.9
@@ -29,7 +29,7 @@
 				playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
 				use_power(500)
 				src.grinded++
-				user << "\blue The machine now has [grinded] monkeys worth of material stored."
+				user << "\blue The machine now has [grinded] monkey\s worth of material stored."
 
 		else
 			user << "\red The machine only accepts monkeys!"
@@ -38,12 +38,12 @@
 /obj/machinery/monkey_recycler/attack_hand(var/mob/user as mob)
 	if (src.stat != 0) //NOPOWER etc
 		return
-	if(grinded >=5)
+	if(grinded >=4)
 		user << "\blue The machine hisses loudly as it condenses the grinded monkey meat. After a moment, it dispenses a brand new monkey cube."
 		playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
-		grinded -= 5
+		grinded -= 4
 		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src.loc)
 		user << "\blue The machine's display flashes that it has [grinded] monkeys worth of material left."
 	else
-		user << "\red The machine needs at least 5 monkeys worth of material to produce a monkey cube. It only has [grinded]."
+		user << "\red The machine needs at least 4 monkeys worth of material to produce a monkey cube. It only has [grinded]."
 	return

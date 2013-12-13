@@ -8,7 +8,7 @@
 
 /obj/item/clothing/glasses/science
 	name = "Science Goggles"
-	desc = "nothing"
+	desc = "Ze goggles, zey do nothing!"
 	icon_state = "purple"
 	item_state = "glasses"
 
