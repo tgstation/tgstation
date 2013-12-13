@@ -66,6 +66,7 @@
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/shotgun
 	max_ammo = 8
+	m_amt = 100000
 
 /obj/item/ammo_box/shotgun/buck
 	name = "Ammunition Box (buckshot)"
@@ -74,7 +75,9 @@
 /obj/item/ammo_box/shotgun/stun
 	name = "Ammunition Box (stun shells)"
 	ammo_type = /obj/item/ammo_casing/shotgun/stunshell
+	m_amt = 20000
 
 /obj/item/ammo_box/shotgun/beanbag
 	name = "Ammunition Box (beanbag shells)"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
+	m_amt = 4000

@@ -100,6 +100,13 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/gun/projectile/revolver
 	cost = 6
 
+/datum/uplink_item/dangerous/pistol45
+	name = "M2411 Pistol"
+	desc = "A powerful semiautomatic sidearm built by van Asche Defense Solutions. Fires .45 rounds from an 8-round magazine."
+	item = /obj/item/weapon/gun/projectile/automatic/m2411
+	cost = 5
+	gamemodes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/dangerous/smg
 	name = "C-20r Submachine Gun"
 	desc = "A fully-loaded Scarborough Arms-developed submachine gun that fires 12mm automatic rounds with a 20-round magazine."
@@ -189,6 +196,13 @@ var/list/uplink_items = list()
 	desc = "A box that contains seven additional rounds for the revolver, made using an automatic lathe."
 	item = /obj/item/ammo_box/a357
 	cost = 2
+
+/datum/uplink_item/ammo/pistol45
+	name = "Ammo-45"
+	desc = "An 8-round magazine for use in the M2411 pistol."
+	item = /obj/item/ammo_box/magazine/m45
+	cost = 1
+	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/smg
 	name = "Ammo-12mm"

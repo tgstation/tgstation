@@ -27,8 +27,8 @@
 
 /obj/item/projectile/bullet/midbullet45
 	damage = 25
-	stun = 3
-	weaken = 3
+	stun = 1
+	weaken = 1
 
 
 /obj/item/projectile/bullet/midbullet10 //Only used with the Stechkin Pistol - RobRichards
