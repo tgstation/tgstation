@@ -27,10 +27,10 @@ CONFIGPATH='/home/gmod/byond/config/' # Where is your current list of config fil
 GIT_REMOTE='origin'
 GIT_BRANCH='Bleeding-Edge'
 
-NUDGE_IP='localhost'
-NUDGE_PORT=45678
-NUDGE_ID='Test Watchdog'
-NUDGE_KEY='*(ik23490sdfik23sd'
+NUDGE_IP='localhost'     # IP to nudge
+NUDGE_PORT=45678         # Port to nudge
+NUDGE_ID='Test Watchdog' # ID tag (use the same as the server, looks better)
+NUDGE_KEY=''             # PASSCODE USED ON THE BOT!
 
 def send_nudge(message):
     
