@@ -26,11 +26,11 @@
 	var/datum/reagents/R = src.reagents
 
 	if(!R || !R.total_volume)
-		user << "\red None of [src] left, oh no!"
+		user << "<span class='warning'>None of [src] left, oh no!</span>"
 		return 0
 
 	if(M == user)
-		M << "\blue You swallow some of contents of the [src]."
+		M << "<span class='notice'>You swallow some of contents of the [src].</span>"
 		if(reagents.total_volume)
 			reagents.reaction(M, INGEST)
 			spawn(5)
@@ -41,10 +41,10 @@
 	else if( istype(M, /mob/living/carbon/human) )
 
 		for(var/mob/O in viewers(world.view, user))
-			O.show_message("\red [user] attempts to feed [M] [src].", 1)
+			O.show_message("<span class='warning'>[user] attempts to feed [M] [src].</span>", 1)
 		if(!do_mob(user, M)) return
 		for(var/mob/O in viewers(world.view, user))
-			O.show_message("\red [user] feeds [M] [src].", 1)
+			O.show_message("<span class='warning'>[user] feeds [M] [src].</span>", 1)
 
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
@@ -69,26 +69,26 @@
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
 		if(!target.reagents.total_volume)
-			user << "\red [target] is empty."
+			user << "<span class='warning'>[target] is empty.</span>"
 			return
 
 		if(reagents.total_volume >= reagents.maximum_volume)
-			user << "\red [src] is full."
+			user << "<span class='warning'>[src] is full.</span>"
 			return
 
 		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
-		user << "\blue You fill [src] with [trans] units of the contents of [target]."
+		user << "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>"
 
 	//Something like a glass or a food item. Player probably wants to transfer TO it.
 	else if(target.is_open_container() || istype(target, /obj/item/weapon/reagent_containers/food/snacks))
 		if(!reagents.total_volume)
-			user << "\red [src] is empty."
+			user << "<span class='warning'>[src] is empty.</span>"
 			return
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			user << "\red you can't add anymore to [target]."
+			user << "<span class='warning'>you can't add anymore to [target].</span>"
 			return
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-		user << "\blue You transfer [trans] units of the condiment to [target]."
+		user << "<span class='notice'>You transfer [trans] units of the condiment to [target].</span>"
 
 /obj/item/weapon/reagent_containers/food/condiment/on_reagent_change()
 	if(icon_state == "saltshakersmall" || icon_state == "peppermillsmall")
@@ -102,7 +102,7 @@
 			desc = temp_list[3]
 
 		else
-			name = "Misc Condiment Bottle"
+			name = "misc Condiment Bottle"
 			if (reagents.reagent_list.len==1)
 				desc = "Looks like it is [main_reagent], but you are not sure."
 			else
@@ -110,7 +110,7 @@
 			icon_state = "mixedcondiments"
 	else
 		icon_state = "emptycondiment"
-		name = "Condiment Bottle"
+		name = "condiment Bottle"
 		desc = "An empty condiment bottle."
 		return
 
@@ -160,9 +160,8 @@
 	icon_state = "condi_empty"
 	volume = 10
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = 10
+	possible_transfer_amounts = list(10)
 	flags = FPRINT | TABLEPASS
-	possible_states = list("ketchup" = list("condi_ketchup", "Ketchup", "You feel more American already."), "capsaicin" = list("condi_hotsauce", "Hotsauce", "You can almost TASTE the stomach ulcers now!"), "soysauce" = list("condi_soysauce", "Soy Sauce", "A salty soy-based flavoring"), "frostoil" = list("condi_frostoil", "Coldsauce", "Leaves the tongue numb in it's passage"), "sodiumchloride" = list("condi_salt", "Salt Shaker", "Salt. From space oceans, presumably"), "blackpepper" = list("condi_pepper", "Pepper Mill", "Often used to flavor food or make people sneeze"), "cornoil" = list("condi_cornoil", "Corn Oil", "A delicious oil used in cooking. Made from corn"), "sugar" = list("condi_sugar", "Sugar", "Tasty spacey sugar!"))
 	var/originalname = "condiment" //Can't use initial(name) for this. This stores the name set by condimasters.
 
 /obj/item/weapon/reagent_containers/food/condiment/pack/New()
@@ -170,7 +169,7 @@
 	pixel_x = rand(-7, 7)
 	pixel_y = rand(-7, 7)
 
-/obj/item/weapon/reagent_containers/food/condiment/pack/attack(mob/M as mob, mob/user as mob, def_zone) //Can't feed these to people directly.
+/obj/item/weapon/reagent_containers/food/condiment/pack/attack(mob/M, mob/user, def_zone) //Can't feed these to people directly.
 	return
 
 /obj/item/weapon/reagent_containers/food/condiment/pack/afterattack(obj/target, mob/user , proximity)
@@ -180,7 +179,7 @@
 	if(istype(target, /obj/item/weapon/reagent_containers/food/snacks))
 		if(!reagents.total_volume)
 			user << "<span class='warning'>You tear open [src], but there's nothing in it.</span>"
-			Del()
+			del()
 			return
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			user << "<span class='warning'>You tear open [src], but [target] is stacked so high that it just drips off!</span>" //Not sure if food can ever be full, but better safe than sorry.
@@ -207,8 +206,8 @@
 
 //Ketchup
 /obj/item/weapon/reagent_containers/food/condiment/pack/ketchup
-	name = "Ketchup pack"
-	originalname = "Ketchup"
+	name = "ketchup pack"
+	originalname = "ketchup"
 
 /obj/item/weapon/reagent_containers/food/condiment/pack/ketchup/New()
 		..()
@@ -216,8 +215,8 @@
 
 //Hot sauce
 /obj/item/weapon/reagent_containers/food/condiment/pack/hotsauce
-	name = "Hotsauce pack"
-	originalname = "Hotsauce"
+	name = "hotsauce pack"
+	originalname = "hotsauce"
 
 /obj/item/weapon/reagent_containers/food/condiment/pack/hotsauce/New()
 		..()
