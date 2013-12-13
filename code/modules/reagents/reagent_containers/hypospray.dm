@@ -27,7 +27,7 @@
 	if(!istype(M))
 		return
 
-	if(reagents.total_volume && (M.can_inject(user, 1) || ignore_flags))
+	if(reagents.total_volume && (ignore_flags || M.can_inject(user, 1))) // Ignore flag should be checked first or there will be an error message.
 		M << "<span class='warning'>You feel a tiny prick!</span>"
 		user << "<span class='notice'>You inject [M] with [src].</span>"
 
