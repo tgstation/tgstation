@@ -31,6 +31,8 @@
 				new /obj/item/weapon/a_gift(T)
 	for(var/mob/living/simple_animal/corgi/Ian/Ian in mob_list)
 		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
+	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor in machines)
+		Monitor.icon_state = "entertainment_xmas"
 
 /datum/round_event/presents/announce()
 	command_alert("Ho Ho Ho, Merry Xmas!", "Unknown Transmission")
@@ -42,9 +44,6 @@
 	icon_state = "cracker"
 	desc = "Directions for use: Requires two people, one to pull each end."
 	var/cracked = 0
-
-/obj/item/weapon/toy/xmas_cracker/New()
-	..()
 
 /obj/item/weapon/toy/xmas_cracker/attack(mob/target, mob/user)
 	if( !cracked && istype(target,/mob/living/carbon/human) && (target.stat == CONSCIOUS) && !target.get_active_hand() )

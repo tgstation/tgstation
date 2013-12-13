@@ -23,18 +23,18 @@
 	supply_shuttle.shuttle_loan = src
 	switch(dispatch_type)
 		if(HIJACK_SYNDIE)
-			command_alert("The syndicate are trying to infiltrate your station. If you let them hijack your shuttle, you'll save us a headache.","CentComm Counter Intelligence")
+			command_alert("The syndicate are trying to infiltrate your station. If you let them hijack your shuttle, you'll save us a headache.","Centcom Counter Intelligence")
 		if(RUSKY_PARTY)
-			command_alert("A group of angry russians want to have a party, can you send them your cargo shuttle then make them disappear?","CentComm Russian Outreach Program")
+			command_alert("A group of angry russians want to have a party, can you send them your cargo shuttle then make them disappear?","Centcom Russian Outreach Program")
 		if(SPIDER_GIFT)
-			command_alert("The Spider Clan has sent us a mysterious gift, can we ship it to you to see what's inside?","CentComm Diplomatic Corps")
+			command_alert("The Spider Clan has sent us a mysterious gift, can we ship it to you to see what's inside?","Centcom Diplomatic Corps")
 		if(DEPARTMENT_RESUPPLY)
-			command_alert("Seems we've ordered doubles of our department resupply packages this month. Can we send them to you?","CentComm Supply Department")
+			command_alert("Seems we've ordered doubles of our department resupply packages this month. Can we send them to you?","Centcom Supply Department")
 			thanks_msg = "The shuttle will be returned in 5 minutes."
 			bonus_points = 0
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
-	command_alert(thanks_msg, "Cargo shuttle commandeered by CentComm.")
+	command_alert(thanks_msg, "Cargo shuttle commandeered by Centcom.")
 
 	dispatched = 1
 	supply_shuttle.points += bonus_points
@@ -172,7 +172,7 @@
 				while(crate_types.len > 0)
 					var/datum/supply_order/O = new /datum/supply_order()
 					O.ordernum = supply_shuttle.ordernum
-					O.orderedby = "CentComm"
+					O.orderedby = "Centcom"
 					supply_shuttle.shoppinglist += O
 
 					var/spawn_type = crate_types[crate_types.len]

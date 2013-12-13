@@ -12,7 +12,7 @@ Control functions:
 	If autostart == TRUE, the loop will be started immediately after datum creation.
 
 	start(list/arguments) - starts the loop. Takes arguments(optional) as a list, which is then used
-	by process() proc. Returns null if datum already active, 1 if loop started succesfully and 0 if there's
+	by process() proc. Returns null if datum already active, 1 if loop started successfully and 0 if there's
 	an error in supplied arguments (not list or empty list).
 
 	stop() - stops the loop. Returns null if datum is already inactive and 1 on success.

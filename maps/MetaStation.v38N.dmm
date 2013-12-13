@@ -7505,7 +7505,7 @@
 "cOq" = (/obj/effect/overlay/palmtree_r,/obj/effect/overlay/coconut,/turf/unsimulated/beach/sand,/area/centcom/holding)
 "cOr" = (/obj/effect/overlay/palmtree_l,/turf/unsimulated/beach/sand,/area/centcom/holding)
 "cOs" = (/turf/unsimulated/floor{icon_state = "dark"},/area/centcom/evac)
-"cOt" = (/obj/machinery/door/airlock/glass_security{name = "CentComm Security"; req_access_txt = "2"},/turf/simulated/shuttle/floor,/area/shuttle/escape/centcom)
+"cOt" = (/obj/machinery/door/airlock/glass_security{name = "Centcom Security"; req_access_txt = "2"},/turf/simulated/shuttle/floor,/area/shuttle/escape/centcom)
 "cOu" = (/obj/machinery/door/airlock/medical{name = "Patient Room B"; req_access_txt = "5"},/obj/structure/cable/yellow{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor{icon_state = "white"},/area/medical/exam_room{name = "Patient Room B"})
 "cOv" = (/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/escape/centcom)
 "cOw" = (/turf/unsimulated/floor{icon = 'icons/turf/snow.dmi'; icon_state = "snow"},/turf/simulated/shuttle/wall{dir = 8; icon_state = "diagonalWall3"},/area/syndicate_station/start)
