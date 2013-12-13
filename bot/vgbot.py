@@ -9,7 +9,7 @@ import vgstation.bot as irc
 import logging
 
 def main():
-    logging.basicConfig(format='%(asctime)s [%(levelname)-8s]: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.DEBUG)
+    logging.basicConfig(format='%(asctime)s [%(levelname)-8s]: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
     config.ReadFromDisk()
     for server in config.config['servers']:
         bot = irc.Bot(server,config.config['servers'][server])
