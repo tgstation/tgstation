@@ -201,8 +201,8 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 	return
 
 /datum/vampire
-	var/bloodtotal = 0 // CHANGE TO ZERO WHEN PLAYTESTING HAPPENS
-	var/bloodusable = 0 // CHANGE TO ZERO WHEN PLAYTESTING HAPPENS
+	var/bloodtotal = 500 // CHANGE TO ZERO WHEN PLAYTESTING HAPPENS
+	var/bloodusable = 500 // CHANGE TO ZERO WHEN PLAYTESTING HAPPENS
 	var/mob/living/owner = null
 	var/gender = FEMALE
 	var/iscloaking = 0 // handles the vampire cloak toggle
@@ -332,8 +332,8 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 					src << "\blue You have gained the Cloak of Darkness ability which when toggled makes you near invisible in the shroud of darkness."
 					verbs += /client/proc/vampire_cloak
 				if(VAMP_BATS)
-					src << "\blue You have gained the Summon Bats ability... If pomf made it yet. Go yell at him in the thread or something."
-					//verbs += /client/proc/vampire_bats // not yet made
+					src << "\blue You have gained the Summon Bats ability."
+					verbs += /client/proc/vampire_bats // work in progress
 				if(VAMP_SCREAM)
 					src << "\blue You have gained the Chriopteran Screech ability which stuns anything with ears in a large radius and shatters glass in the process."
 					verbs += /client/proc/vampire_screech

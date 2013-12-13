@@ -209,9 +209,16 @@
 	if(!ishuman(C))
 		M.current << "\red You can only enthrall humans"
 		return
+
 	if(do_mob(M.current, C, 50))
-		if(M.current.can_enthrall(C)) // recheck
+		if(M.current.can_enthrall(C) && M.current.vampire_power(300, 0)) // recheck
 			M.current.handle_enthrall(C)
+			M.vampire.bloodusable -= 300
+		else
+			M.current << "\red You or your target either moved or you dont have enough usable blood."
+			return
+	M.current.verbs -= /client/proc/vampire_enthrall
+	spawn(1800) M.current.verbs += /client/proc/vampire_enthrall
 
 
 /client/proc/vampire_cloak()
@@ -273,16 +280,44 @@
 	ticker.mode.update_vampire_icons_added(src.mind)
 	log_admin("[ckey(src.key)] has mind-slaved [ckey(H.key)].")
 
+/client/proc/vampire_bats()
+	set category = "Vampire"
+	set name = "Summon Bats (75)"
+	set desc = "You summon a pair of space bats who attack nearby targets until they or their target is dead."
+	var/datum/mind/M = usr.mind
+	if(!M) return
+	if(M.current.vampire_power(75, 0))
+		var/list/turf/locs = new
+		var/number = 0
+		for(var/direction in alldirs) //looking for bat spawns
+			if(locs.len == 2) //we found 2 locations and thats all we need
+				break
+			var/turf/T = get_step(M.current,direction) //getting a loc in that direction
+			if(AStar(M.current.loc, T, /turf/proc/AdjacentTurfs, /turf/proc/Distance, 1)) // if a path exists, so no dense objects in the way its valid salid
+				locs += T
+		if(locs.len)
+			for(var/turf/tospawn in locs)
+				number++
+				new /mob/living/simple_animal/hostile/scarybat(tospawn, M.current)
+			if(number != 2) //if we only found one location, spawn one on top of our tile so we dont get stacked bats
+				new /mob/living/simple_animal/hostile/scarybat(M.current.loc, M.current)
+		else // we had no good locations so make two on top of us
+			new /mob/living/simple_animal/hostile/scarybat(M.current.loc, M.current)
+			new /mob/living/simple_animal/hostile/scarybat(M.current.loc, M.current)
+		M.vampire.bloodusable -= 75
+		M.current.verbs -= /client/proc/vampire_bats
+		spawn(1200) M.current.verbs += /client/proc/vampire_bats
+
 /client/proc/vampire_jaunt()
 	//AHOY COPY PASTE INCOMING
 	set category = "Vampire"
-	set name = "Mist Form "
+	set name = "Mist Form (30)"
 	set desc = "You take on the form of mist for a short period of time."
 	var/jaunt_duration = 50 //in deciseconds
 	var/datum/mind/M = usr.mind
 	if(!M) return
 
-	if(M.current.vampire_power(0, 0))
+	if(M.current.vampire_power(30, 0))
 		if(M.current.buckled) M.current.buckled.unbuckle()
 		spawn(0)
 			var/mobloc = get_turf(M.current.loc)
@@ -323,5 +358,6 @@
 			M.current.client.eye = M.current
 			del(animation)
 			del(holder)
+		M.vampire.bloodusable -= 30
 		M.current.verbs -= /client/proc/vampire_jaunt
 		spawn(600) M.current.verbs += /client/proc/vampire_jaunt
