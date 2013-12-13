@@ -52,7 +52,6 @@ class NudgePlugin(IPlugin):
             data = client.recv(size)
             client.close()  # Throw the bum out!
             truedata = pickle.loads(data)
-            print(repr(truedata))
             to = None
             msg = None
             if truedata.get('key', '') != nudgeconfig['key']:

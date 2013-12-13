@@ -16,14 +16,14 @@ ini_set('xdebug.dump.FILES','*');
 /**
  * Web Root
  *
- * Specifies absolute path to Spaceport, without dangling slashes.
+ * Specifies absolute path to /vg/station-web, without dangling slashes.
  */
-define('WEB_ROOT','http://kerbalspaceport2.com');
+define('WEB_ROOT','http://website.tld');
 
 /**
  * Database DSN
  * 
- * Determines how Spaceport will connect to the database.
+ * Determines how /vg/station-web will connect to the database.
  *
  * Format: {driver}://{username}:{urlencoded password}@{hostname}/{schema}[?persist]
  */

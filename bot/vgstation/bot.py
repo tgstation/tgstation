@@ -1,7 +1,4 @@
-
 import irc.bot
-import irc.strings
-from irc.client import ip_numstr_to_quad, ip_quad_to_numstr
 import vgstation.common.config as globalConfig
 import logging
 
@@ -10,6 +7,7 @@ class Bot(irc.bot.SingleServerIRCBot):
         logging.info('Starting up.' + repr(config))
         port = config['port']
         nickname = config['nick']
+        
         irc.bot.SingleServerIRCBot.__init__(self, [(hostname, port)], nickname, nickname)
         
         self.chanconfig = config['channels']
@@ -21,10 +19,9 @@ class Bot(irc.bot.SingleServerIRCBot):
         c.nick(c.get_nickname() + "_")
 
     def on_welcome(self, c, e):
-        logging.info('Received welcome.' + repr(self.chanconfig))
         for channel, channelconfig in self.chanconfig.items():
             password = channelconfig.get('password', None)
-            logging.info('Joining {0}'.format(channel))
+            logging.info('Joining {0}...'.format(channel))
             if password is None:
                 c.join(channel)
             else:

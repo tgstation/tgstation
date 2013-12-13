@@ -45,7 +45,6 @@ def ReadFromDisk():
         
     with open(config_file, 'r') as cr:
         config = yaml.load(cr)
-        print(repr(config))
         
     # if config['database']['username'] == '' or config['database']['password'] == '' or config['database']['schema'] == '': 
     #    print('!!! Default config.yml detected.  Please edit it before continuing.')
