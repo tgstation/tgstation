@@ -172,56 +172,27 @@ client
 		if(istype(D,/atom))
 			var/atom/A = D
 			if(isliving(A))
-				if(check_rights(R_VAREDIT,0))
-					body += "<a href='?_src_=vars;rename=\ref[D]'><b>[D]</b></a>"
-					if(A.dir)
-						body += "<br><font size='1'><a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=left'><<</a> <a href='?_src_=vars;datumedit=\ref[D];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=right'>>></a></font>"
-					var/mob/living/M = A
-					body += "<br><font size='1'><a href='?_src_=vars;datumedit=\ref[D];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='?_src_=vars;datumedit=\ref[D];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>"
-					body += {"
-					<br><font size='1'>
-					BRUTE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brute'>[M.getBruteLoss()]</a>
-					FIRE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=fire'>[M.getFireLoss()]</a>
-					TOXIN:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=toxin'>[M.getToxLoss()]</a>
-					OXY:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=oxygen'>[M.getOxyLoss()]</a>
-					CLONE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=clone'>[M.getCloneLoss()]</a>
-					BRAIN:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brain'>[M.getBrainLoss()]</a>
-					</font>
+				body += "<a href='?_src_=vars;rename=\ref[D]'><b>[D]</b></a>"
+				if(A.dir)
+					body += "<br><font size='1'><a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=left'><<</a> <a href='?_src_=vars;datumedit=\ref[D];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=right'>>></a></font>"
+				var/mob/living/M = A
+				body += "<br><font size='1'><a href='?_src_=vars;datumedit=\ref[D];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='?_src_=vars;datumedit=\ref[D];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>"
+				body += {"
+				<br><font size='1'>
+				BRUTE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brute'>[M.getBruteLoss()]</a>
+				FIRE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=fire'>[M.getFireLoss()]</a>
+				TOXIN:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=toxin'>[M.getToxLoss()]</a>
+				OXY:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=oxygen'>[M.getOxyLoss()]</a>
+				CLONE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=clone'>[M.getCloneLoss()]</a>
+				BRAIN:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brain'>[M.getBrainLoss()]</a>
+				</font>
 
 
-					"}
-
-				else
-					body += "<b>[D]</b>"
-					if(A.dir)
-						body += "<br><font size='1'>[dir2text(A.dir)]</font>"
-					var/mob/living/M = A
-					body += "<br><font size='1'>[M.ckey ? M.ckey : "No ckey"] / [M.real_name ? M.real_name : "No real name"]</font>"
-					body += {"
-					<br><font size='1'>
-					BRUTE:<font size='1'>[M.getBruteLoss()]
-					FIRE:<font size='1'>[M.getFireLoss()]
-					TOXIN:<font size='1'>[M.getToxLoss()]
-					OXY:<font size='1'>[M.getOxyLoss()]
-					CLONE:<font size='1'>[M.getCloneLoss()]
-					BRAIN:<font size='1'>[M.getBrainLoss()]
-					</font>
-
-
-					"}
-
+				"}
 			else
-				if(check_rights(R_VAREDIT,0))
-					body += "<a href='?_src_=vars;datumedit=\ref[D];varnameedit=name'><b>[D]</b></a>"
-					if(A.dir)
-						body += "<br><font size='1'><a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=left'><<</a> <a href='?_src_=vars;datumedit=\ref[D];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=right'>>></a></font>"
-
-				else
-					body += "<b>[D]</b>"
-					if(A.dir)
-						body += "<br><font size='1'>[dir2text(A.dir)]</font>"
-
-
+				body += "<a href='?_src_=vars;datumedit=\ref[D];varnameedit=name'><b>[D]</b></a>"
+				if(A.dir)
+					body += "<br><font size='1'><a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=left'><<</a> <a href='?_src_=vars;datumedit=\ref[D];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=right'>>></a></font>"
 		else
 			body += "<b>[D]</b>"
 
@@ -266,62 +237,44 @@ client
 
 
 		body += "<option value='?_src_=vars;mark_object=\ref[D]'>Mark Object</option>"
-
 		if(ismob(D))
 			body += "<option value='?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</option>"
+
+		body += "<option value>---</option>"
+
+		if(ismob(D))
+			body += "<option value='?_src_=vars;give_spell=\ref[D]'>Give Spell</option>"
+			body += "<option value='?_src_=vars;give_disease=\ref[D]'>Give Disease</option>"
+			body += "<option value='?_src_=vars;ninja=\ref[D]'>Make Space Ninja</option>"
+			body += "<option value='?_src_=vars;godmode=\ref[D]'>Toggle Godmode</option>"
+			body += "<option value='?_src_=vars;build_mode=\ref[D]'>Toggle Build Mode</option>"
+			body += "<option value='?_src_=vars;direct_control=\ref[D]'>Assume Direct Control</option>"
+			body += "<option value='?_src_=vars;make_skeleton=\ref[D]'>Make 2spooky</option>"
+			body += "<option value='?_src_=vars;drop_everything=\ref[D]'>Drop Everything</option>"
 			body += "<option value='?_src_=vars;regenerateicons=\ref[D]'>Regenerate Icons</option>"
-			if(check_rights(R_REJUVINATE,0))
-				body += "<option value='?_src_=vars;godmode=\ref[D]'>Toggle Godmode</option>"
-
-
-
-
-		if(check_rights(R_VAREDIT,0))
-			if(ismob(D))
+			if(ishuman(D))
 				body += "<option value>---</option>"
-				body += "<option value='?_src_=vars;give_spell=\ref[D]'>Give Spell</option>"
-				body += "<option value='?_src_=vars;give_disease=\ref[D]'>Give Disease</option>"
-				body += "<option value='?_src_=vars;drop_everything=\ref[D]'>Drop Everything</option>"
-				body += "<option value='?_src_=vars;direct_control=\ref[D]'>Assume Direct Control</option>"
-				if(check_rights(R_BUILDMODE,0))
-					body += "<option value='?_src_=vars;build_mode=\ref[D]'>Toggle Build Mode</option>"
-
-				if(check_rights(R_FUN,0))
-					body += "<option value='?_src_=vars;ninja=\ref[D]'>Make Space Ninja</option>"
-					body += "<option value='?_src_=vars;make_skeleton=\ref[D]'>Make 2spooky</option>"
-					body += "<option value='?_src_=vars;gib=\ref[D]'>Gib</option>"
-
-				if(ishuman(D))
-					if(check_rights(R_SPAWN,0))
-						body += "<option value>---</option>"
-						body += "<option value='?_src_=vars;setmutantrace=\ref[D]'>Set Mutantrace</option>"
-						body += "<option value='?_src_=vars;makeai=\ref[D]'>Make AI</option>"
-						body += "<option value='?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>"
-						body += "<option value='?_src_=vars;makemonkey=\ref[D]'>Make monkey</option>"
-						body += "<option value='?_src_=vars;makealien=\ref[D]'>Make alien</option>"
-						body += "<option value='?_src_=vars;makeslime=\ref[D]'>Make slime</option>"
-
-
-			if(isobj(D) || ismob(D) || isturf(D))
-				if(check_rights(R_FUN,0))
-					body += "<option value>---</option>"
-					body += "<option value='?_src_=vars;explode=\ref[D]'>Trigger explosion</option>"
-					body += "<option value='?_src_=vars;emp=\ref[D]'>Trigger EM pulse</option>"
-
-			if(isobj(D))
-				if(check_rights(R_DEBUG|R_SERVER,0))
-					body += "<option value>---</option>"
-					body += "<option value='?_src_=vars;delall=\ref[D]'>Delete all of type</option>"
-
+				body += "<option value='?_src_=vars;setmutantrace=\ref[D]'>Set Mutantrace</option>"
+				body += "<option value='?_src_=vars;makeai=\ref[D]'>Make AI</option>"
+				body += "<option value='?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>"
+				body += "<option value='?_src_=vars;makemonkey=\ref[D]'>Make monkey</option>"
+				body += "<option value='?_src_=vars;makealien=\ref[D]'>Make alien</option>"
+				body += "<option value='?_src_=vars;makeslime=\ref[D]'>Make slime</option>"
+			body += "<option value>---</option>"
+			body += "<option value='?_src_=vars;gib=\ref[D]'>Gib</option>"
+		if(isobj(D))
+			body += "<option value='?_src_=vars;delall=\ref[D]'>Delete all of type</option>"
+		if(isobj(D) || ismob(D) || isturf(D))
+			body += "<option value='?_src_=vars;explode=\ref[D]'>Trigger explosion</option>"
+			body += "<option value='?_src_=vars;emp=\ref[D]'>Trigger EM pulse</option>"
 
 		body += "</select></form>"
 
 		body += "</div></td></tr></table></div><hr>"
 
-		if(check_rights(R_VAREDIT,0))
-			body += "<font size='1'><b>E</b> - Edit, tries to determine the variable type by itself.<br>"
-			body += "<b>C</b> - Change, asks you for the var type first.<br>"
-			body += "<b>M</b> - Mass modify: changes this variable for all objects of this type.</font><br>"
+		body += "<font size='1'><b>E</b> - Edit, tries to determine the variable type by itself.<br>"
+		body += "<b>C</b> - Change, asks you for the var type first.<br>"
+		body += "<b>M</b> - Mass modify: changes this variable for all objects of this type.</font><br>"
 
 		body += "<hr><table width='100%'><tr><td width='20%'><div align='center'><b>Search:</b></div></td><td width='80%'><input type='text' id='filter' name='filter_text' value='' style='width:100%;'></td></tr></table><hr>"
 
@@ -372,7 +325,7 @@ client
 	proc/debug_variable(name, value, level, var/datum/DA = null)
 		var/html = ""
 
-		if(DA && check_rights(R_VAREDIT,0))
+		if(DA)
 			html += "<li style='backgroundColor:white'>(<a href='?_src_=vars;datumedit=\ref[DA];varnameedit=[name]'>E</a>) (<a href='?_src_=vars;datumchange=\ref[DA];varnamechange=[name]'>C</a>) (<a href='?_src_=vars;datummass=\ref[DA];varnamemass=[name]'>M</a>) "
 		else
 			html += "<li>"
@@ -501,7 +454,7 @@ client
 
 //Needs +VAREDIT past this point
 
-	if(check_rights(R_VAREDIT,0))
+	else if(check_rights(R_VAREDIT))
 
 
 	//~CARN: for renaming mobs (updates their name, real_name, mind.name, their ID/PDA and datacore records).
