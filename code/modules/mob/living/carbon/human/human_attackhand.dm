@@ -107,7 +107,7 @@
 
 		if("hurt")
 			//Vampire code
-			if(M.zone_sel && M.zone_sel.selecting == "head")
+			if(M.zone_sel && M.zone_sel.selecting == "head" && src != M)
 				if(M.mind && M.mind.vampire && (M.mind in ticker.mode.vampires) && !M.mind.vampire.draining)
 					if((head && (head.flags & HEADCOVERSMOUTH)) || (wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)))
 						M << "\red Remove their mask!"
