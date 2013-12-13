@@ -231,6 +231,7 @@ var/datum/controller/event/events
 			switch(DD)
 				if(10)							holiday = "Human-Rights Day"
 				if(14)							holiday = "Monkey Day"
+				if(21)							holiday = "Mayan Doomsday Anniversary"
 				if(22)							holiday = "Orgasming Day"		//lol. These all actually exist
 				if(24)							holiday = "Xmas"
 				if(25)							holiday = "Xmas"
