@@ -969,7 +969,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 /obj/machinery/computer/rdconsole/mommi
 	name = "MoMMI R&D Console"
-	id = 3
+	id = 2
 	req_access = null
 	req_access_txt = "29"
 
