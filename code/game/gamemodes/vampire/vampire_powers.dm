@@ -116,7 +116,7 @@
 	C.help_shake_act(M.current) // i use da colon
 	var/datum/disease2/disease/shutdown = new /datum/disease2/disease
 	var/datum/disease2/effectholder/holder = new /datum/disease2/effectholder
-	var/datum/disease2/effect/organs/O = new /datum/disease2/effect/organs
+	var/datum/disease2/effect/organs/vampire/O = new /datum/disease2/effect/organs/vampire
 	holder.effect += O
 	holder.chance = 10
 	shutdown.infectionchance = 100
@@ -125,9 +125,7 @@
 	shutdown.spreadtype = "None"
 	shutdown.uniqueID = rand(0,10000)
 	shutdown.effects += holder
-	shutdown.stage = 3
-	/*C.virus2.Add("[shutdown.uniqueID]")
-	C.virus2["[shutdown.uniqueID]"] = shutdown*/
+	shutdown.speed = 10
 	infect_virus2(C,shutdown,0)
 
 	M.vampire.bloodusable = max(0, M.vampire.bloodusable - 100)
