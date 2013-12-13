@@ -55,7 +55,7 @@
 		// Garbage collect the projectiles
 		loc = null
 
-	proc/on_hit(var/atom/target, var/blocked = 0)
+	proc/on_hit(var/atom/target, var/blocked = 0, var/hit_zone)
 		if(blocked >= 2)		return 0//Full block
 		if(!isliving(target))	return 0
 		if(isanimal(target))	return 0
@@ -78,6 +78,12 @@
 				loc = A.loc
 				return 0// nope.avi
 
+			var/reagent_note
+			if(reagents && reagents.reagent_list)
+				reagent_note = " REAGENTS:"
+				for(var/datum/reagent/R in reagents.reagent_list)
+					reagent_note += R.id + " ("
+					reagent_note += num2text(R.volume) + ") "
 			var/distance = get_dist(get_turf(A), starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
 			def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 			if(silenced)
@@ -87,12 +93,12 @@
 									"<span class='userdanger'>[M] is hit by [src] in the [parse_zone(def_zone)]!")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 
 			if(istype(firer, /mob))
-				M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
-				firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
-				log_attack("<font color='red'>[firer] ([firer.ckey]) shot [M] ([M.ckey]) with a [src]</font>")
+				M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>[reagent_note]"
+				firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>[reagent_note]"
+				log_attack("<font color='red'>[firer] ([firer.ckey]) shot [M] ([M.ckey]) with a [src]</font>[reagent_note]")
 			else
-				M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
-				log_attack("<font color='red'>UNKNOWN shot [M] ([M.ckey]) with a [src]</font>")
+				M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>[reagent_note]"
+				log_attack("<font color='red'>UNKNOWN shot [M] ([M.ckey]) with a [src]</font>[reagent_note]")
 
 		spawn(0)
 			if(A)

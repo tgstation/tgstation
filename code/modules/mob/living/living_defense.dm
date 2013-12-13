@@ -50,7 +50,7 @@
 		return 2
 	if(!P.nodamage)
 		apply_damage((P.damage/(absorb+1)), P.damage_type, def_zone)
-	P.on_hit(src, absorb)
+	P.on_hit(src, absorb, def_zone)
 	return absorb
 
 /mob/living/hitby(atom/movable/AM)//Standardization and logging -Sieve

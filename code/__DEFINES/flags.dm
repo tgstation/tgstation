@@ -6,17 +6,16 @@
 //To successfully stop you taking all pressure damage you must have both a suit and head item with this flag.
 
 #define TABLEPASS 2			// can pass by a table or rack ~ apparently actually unused, uses pass_flags instead
-
+#define NOBLUDGEON	4		// when an item has this it produces no "X has been hit by Y with Z" message in the default attackby()
 #define MASKINTERNALS	8	// mask allows internals
 //#define SUITSPACE		8	// suit protects against space
-
 #define USEDELAY 	16		// For adding extra delay to heavy items, not currently used
 #define NOSHIELD	32		// weapon not affected by shield
 #define CONDUCT		64		// conducts electricity (metal etc.)
 #define ABSTRACT    128		// for all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way
 #define FPRINT		256		// takes a fingerprint
 #define ON_BORDER	512		// item has priority to check when entering or leaving
-#define NOBLUDGEON	4		// when an item has this it produces no "X has been hit by Y with Z" message in the default attackby()
+
 
 #define GLASSESCOVERSEYES	1024
 #define MASKCOVERSEYES		1024		// get rid of some of the other retardation in these flags
@@ -24,7 +23,8 @@
 #define MASKCOVERSMOUTH		2048		// on other items, these are just for mask/head
 #define HEADCOVERSMOUTH		2048
 
-#define NOSLIP		1024 		//prevents from slipping on wet floors, in space etc
+#define THICKMATERIAL 1024		//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with NOSLIP for shoes)
+#define NOSLIP		1024 		//prevents from slipping on wet floors, in space etc (NOTE: flag shared with THICKMATERIAL for external suits and helmet)
 
 #define OPENCONTAINER	4096	// is an open container for chemistry purposes
 

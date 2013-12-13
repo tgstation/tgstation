@@ -86,9 +86,9 @@ obj/item/weapon/gun/energy/laser/retro/sc_retro
 			magazine.stored_ammo -= ammo
 
 //Barman's shotgun
-/obj/item/weapon/gun/projectile/shotgun/pump/sc_pump
+/obj/item/weapon/gun/projectile/shotgun/sc_pump
 
-/obj/item/weapon/gun/projectile/shotgun/pump/sc_pump/New()
+/obj/item/weapon/gun/projectile/shotgun/sc_pump/New()
 	..()
 	for(var/ammo in magazine.stored_ammo)
 		if(prob(95)) //95% chance

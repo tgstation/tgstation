@@ -19,15 +19,15 @@
 	reagents.add_reagent("doctorsdelight", 30)
 
 
-/obj/item/weapon/reagent_containers/hypospray/attack(mob/M, mob/user)
+/obj/item/weapon/reagent_containers/hypospray/attack(mob/living/M, mob/user)
 	if(!reagents.total_volume)
 		user << "<span class='notice'>[src] is empty.</span>"
 		return
-	if(!ismob(M))
+	if(!istype(M))
 		return
-	if(reagents.total_volume)
+	M << "<span class='warning'>You feel a tiny prick!</span>"
+	if(reagents.total_volume && M.can_inject(user, 1))
 		user << "<span class='notice'>You inject [M] with [src].</span>"
-		M << "<span class='warning'>You feel a tiny prick!</span>"
 
 		reagents.reaction(M, INGEST)
 		if(M.reagents)
