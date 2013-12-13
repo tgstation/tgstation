@@ -28,7 +28,7 @@
 		src.modules += G
 */
 		// Aurx also sed so
-		var/obj/item/stack/sheet/glass/cyborg/G = new /obj/item/stack/sheet/glass(src)
+		var/obj/item/stack/sheet/glass/cyborg/G = new /obj/item/stack/sheet/glass/cyborg(src)
 		G.amount = 50
 		src.modules += G
 
