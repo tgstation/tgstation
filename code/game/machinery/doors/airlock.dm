@@ -91,7 +91,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/justzap = 0
 	var/safe = 1
 	normalspeed = 1
-	var/obj/item/weapon/airlock_electronics/electronics = null
+	var/obj/item/weapon/circuitboard/airlock/electronics = null
 	var/hasShocked = 0 //Prevents multiple shocks from happening
 
 /obj/machinery/door/airlock/command
@@ -1201,9 +1201,9 @@ About the new airlock wires panel:
 				da.created_name = src.name
 				da.update_state()
 
-				var/obj/item/weapon/airlock_electronics/ae
+				var/obj/item/weapon/circuitboard/airlock/ae
 				if(!electronics)
-					ae = new/obj/item/weapon/airlock_electronics( src.loc )
+					ae = new/obj/item/weapon/circuitboard/airlock( src.loc )
 					if(src.req_access.len)
 						ae.conf_access = src.req_access
 					else if (src.req_one_access.len)

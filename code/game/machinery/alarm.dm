@@ -1413,13 +1413,13 @@ table tr:first-child th:first-child { border: none;}
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				if(do_after(user,20))
 					user << "You pry out the circuit!"
-					var/obj/item/weapon/airalarm_electronics/circuit = new /obj/item/weapon/airalarm_electronics()
+					var/obj/item/weapon/circuitboard/air_alarm/circuit = new /obj/item/weapon/circuitboard/air_alarm()
 					circuit.loc = user.loc
 					buildstage = 0
 					update_icon()
 				return
 		if(0)
-			if(istype(W, /obj/item/weapon/airalarm_electronics))
+			if(istype(W, /obj/item/weapon/circuitboard/air_alarm))
 				user << "You insert the circuit!"
 				del(W)
 				buildstage = 1
@@ -1450,6 +1450,7 @@ table tr:first-child th:first-child { border: none;}
 	if (buildstage < 1)
 		usr << "The circuit is missing."
 /*
+/*
 AIR ALARM CIRCUIT
 Just a object used in constructing air alarms
 */
@@ -1461,7 +1462,7 @@ Just a object used in constructing air alarms
 	w_class = 2.0
 	m_amt = 50
 	g_amt = 50
-
+*/
 
 /*
 AIR ALARM ITEM
@@ -1606,12 +1607,12 @@ FIRE ALARM
 					user << "You pry out the circuit!"
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 					spawn(20)
-						var/obj/item/weapon/firealarm_electronics/circuit = new /obj/item/weapon/firealarm_electronics()
+						var/obj/item/weapon/circuitboard/fire_alarm/circuit = new /obj/item/weapon/circuitboard/fire_alarm()
 						circuit.loc = user.loc
 						buildstage = 0
 						update_icon()
 			if(0)
-				if(istype(W, /obj/item/weapon/firealarm_electronics))
+				if(istype(W, /obj/item/weapon/circuitboard/fire_alarm))
 					user << "You insert the circuit!"
 					del(W)
 					buildstage = 1
@@ -1777,7 +1778,7 @@ FIRE ALARM
 			src.overlays += image('icons/obj/monitors.dmi', "overlay_green")
 
 	update_icon()
-
+/*
 /*
 FIRE ALARM CIRCUIT
 Just a object used in constructing fire alarms
@@ -1790,7 +1791,7 @@ Just a object used in constructing fire alarms
 	w_class = 2.0
 	m_amt = 50
 	g_amt = 50
-
+*/
 
 /*
 FIRE ALARM ITEM

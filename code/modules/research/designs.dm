@@ -1881,6 +1881,33 @@ other types of metals and chemistry for reagents).
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/processor
 
+/datum/design/air_alarm
+	name = "Circuit Design (Air Alarm)"
+	desc = "Allows for the construction of circuit boards used to build an Air Alarm."
+	id = "air_alarm"
+	req_tech = list("programming" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/air_alarm
+
+/datum/design/fire_alarm
+	name = "Circuit Design (Fire Alarm)"
+	desc = "Allows for the construction of circuit boards used to build a Fire Alarm."
+	id = "fire_alarm"
+	req_tech = list("programming" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/fire_alarm
+
+/datum/design/airlock
+	name = "Circuit Design (Airlock)"
+	desc = "Allows for the construction of circuit boards used to build an airlock."
+	id = "airlock"
+	req_tech = list("programming" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/airlock
+
 /*
 /datum/design/hydroseeds
 	name = "Circuit Design (MegaSeed Servitor)"

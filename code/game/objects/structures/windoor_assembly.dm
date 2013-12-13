@@ -19,7 +19,7 @@ obj/structure/windoor_assembly
 	dir = NORTH
 
 	var/ini_dir
-	var/obj/item/weapon/airlock_electronics/electronics = null
+	var/obj/item/weapon/circuitboard/airlock/electronics = null
 
 	//Vars to help with the icon's name
 	var/facing = "l"	//Does the windoor open to the left or right?
@@ -161,7 +161,7 @@ obj/structure/windoor_assembly/Del()
 						src.name = "Wired Windoor Assembly"
 
 			//Adding airlock electronics for access. Step 6 complete.
-			else if(istype(W, /obj/item/weapon/airlock_electronics))
+			else if(istype(W, /obj/item/weapon/circuitboard/airlock))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
 
@@ -185,7 +185,7 @@ obj/structure/windoor_assembly/Del()
 					if(!src) return
 					user << "\blue You've removed the airlock electronics!"
 					src.name = "Wired Windoor Assembly"
-					var/obj/item/weapon/airlock_electronics/ae
+					var/obj/item/weapon/circuitboard/airlock/ae
 					ae = electronics
 					electronics = null
 					ae.loc = src.loc

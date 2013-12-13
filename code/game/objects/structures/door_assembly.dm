@@ -8,7 +8,7 @@ obj/structure/door_assembly
 	var/state = 0
 	var/base_icon_state = ""
 	var/base_name = "Airlock"
-	var/obj/item/weapon/airlock_electronics/electronics = null
+	var/obj/item/weapon/circuitboard/airlock/electronics = null
 	var/airlock_type = "" //the type path of the airlock once completed
 	var/glass_type = "/glass"
 	var/glass = 0 // 0 = glass can be installed. -1 = glass can't be installed. 1 = glass is already installed. Text = mineral plating is installed instead.
@@ -203,7 +203,7 @@ obj/structure/door_assembly
 			new/obj/item/weapon/cable_coil(src.loc, 1)
 			src.state = 0
 
-	else if(istype(W, /obj/item/weapon/airlock_electronics) && state == 1 && W:icon_state != "door_electronics_smoked")
+	else if(istype(W, /obj/item/weapon/circuitboard/airlock) && state == 1 && W:icon_state != "door_electronics_smoked")
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
 		user.drop_item()
@@ -227,9 +227,9 @@ obj/structure/door_assembly
 			user << "\blue You removed the airlock electronics!"
 			src.state = 1
 			src.name = "Wired Airlock Assembly"
-			var/obj/item/weapon/airlock_electronics/ae
+			var/obj/item/weapon/circuitboard/airlock/ae
 			if (!electronics)
-				ae = new/obj/item/weapon/airlock_electronics( src.loc )
+				ae = new/obj/item/weapon/circuitboard/airlock( src.loc )
 			else
 				ae = electronics
 				electronics = null
