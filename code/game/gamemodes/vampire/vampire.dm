@@ -224,8 +224,30 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 		if(findtext("[handler]","vampire_"))
 			verbs += handler*/
 	for(var/i = 1; i <= 3; i++) // CHANGE TO 3 RATHER THAN 12 AFTER TESTING IS DONE
-		mind.vampire.powers.Add(i)
+		if(!(i in mind.vampire.powers))
+			mind.vampire.powers.Add(i)
 
+
+	for(var/n in mind.vampire.powers)
+		switch(n)
+			if(VAMP_SHAPE)
+				verbs += /client/proc/vampire_shapeshift
+			if(VAMP_VISION)
+				continue
+			if(VAMP_DISEASE)
+				verbs += /client/proc/vampire_disease
+			if(VAMP_CLOAK)
+				verbs += /client/proc/vampire_cloak
+			if(VAMP_BATS)
+				verbs += /client/proc/vampire_bats
+			if(VAMP_SCREAM)
+				verbs += /client/proc/vampire_screech
+			if(VAMP_JAUNT)
+				verbs += /client/proc/vampire_jaunt
+			if(VAMP_SLAVE)
+				verbs += /client/proc/vampire_enthrall
+			if(VAMP_FULL)
+				continue
 /mob/proc/remove_vampire_powers()
 	for(var/handler in typesof(/client/proc))
 		if(findtext("[handler]","vampire_"))
@@ -332,8 +354,8 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 					src << "\blue You have gained the Cloak of Darkness ability which when toggled makes you near invisible in the shroud of darkness."
 					verbs += /client/proc/vampire_cloak
 				if(VAMP_BATS)
-					src << "\blue You have gained the Summon Bats ability... If pomf made it yet. Go yell at him in the thread or something."
-					//verbs += /client/proc/vampire_bats // not yet made
+					src << "\blue You have gained the Summon Bats ability."
+					verbs += /client/proc/vampire_bats // work in progress
 				if(VAMP_SCREAM)
 					src << "\blue You have gained the Chriopteran Screech ability which stuns anything with ears in a large radius and shatters glass in the process."
 					verbs += /client/proc/vampire_screech

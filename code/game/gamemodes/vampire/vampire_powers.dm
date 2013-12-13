@@ -44,7 +44,6 @@
 	if(!(T in view(active_range))) return
 	if(!vampire_can_reach(T, active_range)) return
 	if(!vampire_power(required_blood, max_stat)) return
-	vampire.bloodusable -= required_blood
 	return T
 
 /client/proc/vampire_rejuvinate()
@@ -74,7 +73,7 @@
 
 	if(!C) return
 	M.current.visible_message("<span class='warning'>[M]'s eyes flash briefly as he stares into [C.name]'s eyes</span>")
-	M.vampire.bloodusable -= 20
+	M.current.remove_vampire_blood(20)
 	M.current.verbs -= /client/proc/vampire_hypnotise
 	spawn(1800)
 		M.current.verbs += /client/proc/vampire_hypnotise
@@ -127,8 +126,7 @@
 	shutdown.effects += holder
 	shutdown.speed = 10
 	infect_virus2(C,shutdown,0)
-
-	M.vampire.bloodusable = max(0, M.vampire.bloodusable - 100)
+	M.current.remove_vampire_blood(100)
 	M.current.verbs -= /client/proc/vampire_disease
 	spawn(1800) M.current.verbs += /client/proc/vampire_disease
 
@@ -166,7 +164,7 @@
 		M.current.client.prefs.real_name = random_name(M.current.gender)
 		M.current.client.prefs.randomize_appearance_for(M.current)
 		M.current.regenerate_icons()
-		M.vampire.bloodusable -= 50
+		M.current.remove_vampire_blood(50)
 		M.current.verbs -= /client/proc/vampire_shapeshift
 		spawn(1800) M.current.verbs += /client/proc/vampire_shapeshift
 
@@ -192,7 +190,7 @@
 			if(W.reinf) new /obj/item/stack/rods(W.loc)
 			del(W)
 		playsound(M.current.loc, 'sound/effects/creepyshriek.ogg', 100, 1)
-		M.vampire.bloodusable = max(0, (M.vampire.bloodusable - 30))
+		M.current.remove_vampire_blood(30)
 		M.current.verbs -= /client/proc/vampire_screech
 		spawn(1800) M.current.verbs += /client/proc/vampire_screech
 
@@ -209,9 +207,16 @@
 	if(!ishuman(C))
 		M.current << "\red You can only enthrall humans"
 		return
+
 	if(do_mob(M.current, C, 50))
-		if(M.current.can_enthrall(C)) // recheck
+		if(M.current.can_enthrall(C) && M.current.vampire_power(300, 0)) // recheck
 			M.current.handle_enthrall(C)
+			M.current.remove_vampire_blood(300)
+		else
+			M.current << "\red You or your target either moved or you dont have enough usable blood."
+			return
+	M.current.verbs -= /client/proc/vampire_enthrall
+	spawn(1800) M.current.verbs += /client/proc/vampire_enthrall
 
 
 /client/proc/vampire_cloak()
@@ -273,16 +278,44 @@
 	ticker.mode.update_vampire_icons_added(src.mind)
 	log_admin("[ckey(src.key)] has mind-slaved [ckey(H.key)].")
 
+/client/proc/vampire_bats()
+	set category = "Vampire"
+	set name = "Summon Bats (75)"
+	set desc = "You summon a pair of space bats who attack nearby targets until they or their target is dead."
+	var/datum/mind/M = usr.mind
+	if(!M) return
+	if(M.current.vampire_power(75, 0))
+		var/list/turf/locs = new
+		var/number = 0
+		for(var/direction in alldirs) //looking for bat spawns
+			if(locs.len == 2) //we found 2 locations and thats all we need
+				break
+			var/turf/T = get_step(M.current,direction) //getting a loc in that direction
+			if(AStar(M.current.loc, T, /turf/proc/AdjacentTurfs, /turf/proc/Distance, 1)) // if a path exists, so no dense objects in the way its valid salid
+				locs += T
+		if(locs.len)
+			for(var/turf/tospawn in locs)
+				number++
+				new /mob/living/simple_animal/hostile/scarybat(tospawn, M.current)
+			if(number != 2) //if we only found one location, spawn one on top of our tile so we dont get stacked bats
+				new /mob/living/simple_animal/hostile/scarybat(M.current.loc, M.current)
+		else // we had no good locations so make two on top of us
+			new /mob/living/simple_animal/hostile/scarybat(M.current.loc, M.current)
+			new /mob/living/simple_animal/hostile/scarybat(M.current.loc, M.current)
+		M.current.remove_vampire_blood(75)
+		M.current.verbs -= /client/proc/vampire_bats
+		spawn(1200) M.current.verbs += /client/proc/vampire_bats
+
 /client/proc/vampire_jaunt()
 	//AHOY COPY PASTE INCOMING
 	set category = "Vampire"
-	set name = "Mist Form "
+	set name = "Mist Form (30)"
 	set desc = "You take on the form of mist for a short period of time."
 	var/jaunt_duration = 50 //in deciseconds
 	var/datum/mind/M = usr.mind
 	if(!M) return
 
-	if(M.current.vampire_power(0, 0))
+	if(M.current.vampire_power(30, 0))
 		if(M.current.buckled) M.current.buckled.unbuckle()
 		spawn(0)
 			var/mobloc = get_turf(M.current.loc)
@@ -323,5 +356,15 @@
 			M.current.client.eye = M.current
 			del(animation)
 			del(holder)
+		M.current.remove_vampire_blood(30)
 		M.current.verbs -= /client/proc/vampire_jaunt
 		spawn(600) M.current.verbs += /client/proc/vampire_jaunt
+
+/mob/proc/remove_vampire_blood(amount = 0)
+	var/bloodold
+	if(!mind || !mind.vampire)
+		return
+	bloodold = mind.vampire.bloodusable
+	mind.vampire.bloodusable = max(0, (mind.vampire.bloodusable - amount))
+	if(bloodold != mind.vampire.bloodusable)
+		src << "\blue <b>You have [mind.vampire.bloodusable] left to use.</b>"
