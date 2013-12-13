@@ -724,9 +724,10 @@
 
 				//testing("Irradiated SE block [real_SE_block]:[src.selected_se_subblock] ([original_block] now [block]) [(real_SE_block!=selected_se_block) ? "(SHIFTED)":""]!")
 				connected.occupant.dna.SetSESubBlock(real_SE_block,selected_se_subblock,block)
-				domutcheck(src.connected.occupant,src.connected)
 				src.connected.occupant.radiation += (src.radiation_intensity+src.radiation_duration)
+				domutcheck(src.connected.occupant,src.connected)
 			else
+				src.connected.occupant.radiation += ((src.radiation_intensity*2)+src.radiation_duration)
 				if	(prob(80-src.radiation_duration))
 					//testing("Random bad mut!")
 					randmutb(src.connected.occupant)
@@ -735,7 +736,6 @@
 					randmuti(src.connected.occupant)
 					//testing("Random identity mut!")
 					src.connected.occupant.UpdateAppearance()
-				src.connected.occupant.radiation += ((src.radiation_intensity*2)+src.radiation_duration)
 		src.connected.locked = lock_state
 		return 1 // return 1 forces an update to all Nano uis attached to src
 
