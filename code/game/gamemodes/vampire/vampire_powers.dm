@@ -20,7 +20,11 @@
 	if(vampire.bloodusable < required_blood)
 		src << "<span class='warning'>You require at least [required_blood] units of usable blood to do that!</span>"
 		return 0
-
+	//chapel check
+	if(istype(loc.loc, /area/chapel))
+		if(!(VAMP_FULL in vampire.powers))
+			src << "<span class='warning'>Your powers are useless on this holy ground.</span>"
+			return 0
 	return 1
 
 /mob/proc/vampire_can_reach(mob/M as mob, active_range = 1)
@@ -124,7 +128,9 @@
 	shutdown.spreadtype = "None"
 	shutdown.uniqueID = rand(0,10000)
 	shutdown.effects += holder
-	shutdown.speed = 10
+	shutdown.speed = 1
+	shutdown.stage = 2
+	shutdown.clicks = 185
 	infect_virus2(C,shutdown,0)
 	M.current.remove_vampire_blood(100)
 	M.current.verbs -= /client/proc/vampire_disease
@@ -269,6 +275,8 @@
 	var/ref = "\ref[src.mind]"
 	if(!(ref in ticker.mode.thralls))
 		ticker.mode.thralls[ref] = list(H.mind)
+	else
+		ticker.mode.thralls[ref] += H.mind
 	ticker.mode.enthralled.Add(H.mind)
 	ticker.mode.enthralled[H.mind] = src.mind
 	H.mind.special_role = "VampThrall"

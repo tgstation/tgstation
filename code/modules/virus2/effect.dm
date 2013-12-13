@@ -154,7 +154,7 @@
 					C.status |= ORGAN_DEAD
 			H.update_body(1)
 			if(multiplier < 1) multiplier = 1
-			H.adjustToxLoss(10*multiplier)
+			H.adjustToxLoss(15*multiplier)
 	vampire
 		stage = 3
 

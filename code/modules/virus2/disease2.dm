@@ -103,6 +103,7 @@
 	disease.uniqueID = uniqueID
 	disease.speed = speed
 	disease.stage = stage
+	disease.clicks = clicks
 	for(var/datum/disease2/effectholder/holder in effects)
 		var/datum/disease2/effectholder/newholder = new /datum/disease2/effectholder
 		newholder.effect = new holder.effect.type
