@@ -28,27 +28,24 @@ GIT_REMOTE='origin'
 GIT_BRANCH='Bleeding-Edge'
 
 NUDGE_IP='localhost'
+NUDGE_PORT=45678
+NUDGE_ID='Test Watchdog'
+NUDGE_KEY='*(ik23490sdfik23sd'
 
 def send_nudge(message):
-	if NUDGE_IP is None:
-		return
+    
+    data = {}
+    
+    data['key'] = NUDGE_KEY
+    data['id'] = NUDGE_ID
+    data['channel'] = 'nudges'
+    data['data'] = message
 
-	ht = HTMLParser.HTMLParser()
-	blocks = []
-	try:
-		for in_data in message.split(' '): #The rest of the arguments is data
-			blocks += {ht.unescape(in_data)}
-	except:
-		blocks = "NO DATA SPECIFIED"
-	dictionary = {"ip":NUDGE_IP,"data":blocks}
-	data = cPickle.dumps(dictionary)
-	HOST = "localhost"
-	PORT = 45678
-	size = 1024
-	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	s.connect((HOST,PORT))
-	s.send(data)
-	s.close()
+    pickled = cPickle.dumps(data)
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((NUDGE_IP, NUDGE_PORT))
+    s.send(pickled)
+    s.close()
 
 def git_commit():
 	try:
@@ -185,6 +182,7 @@ def checkForUpdate(serverState):
 			log.warn('mv {0} {1}'.format(botConfigSource,botConfigDest))
 	
 		if waiting_for_next_commit:
+			waiting_for_next_commit=False
 			Compile(serverState)
 			return
 			
