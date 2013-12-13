@@ -233,6 +233,13 @@ datum
 				if(!istype(M, /mob/living))
 					return
 
+				// Put out fire
+				if(method == TOUCH)
+					M.adjust_fire_stacks(-(volume / 10))
+					if(M.fire_stacks <= 0)
+						M.ExtinguishMob()
+					return
+
 				// Grays treat water like acid.
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
@@ -305,15 +312,6 @@ datum
 					if(!cube.wrapped)
 						cube.Expand()
 				return
-
-			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with water can help put them out!
-				if(!istype(M, /mob/living))
-					return
-				if(method == TOUCH)
-					M.adjust_fire_stacks(-(volume / 10))
-					if(M.fire_stacks <= 0)
-						M.ExtinguishMob()
-					return
 
 		lube
 			name = "Space Lube"
@@ -610,7 +608,39 @@ datum
 						ticker.mode.remove_cultist(M.mind)
 						for(var/mob/O in viewers(M, null))
 							O.show_message(text("\blue []'s eyes blink and become clearer.", M), 1) // So observers know it worked.
+					// Vamps react to this like acid
+					if((M.mind in ticker.mode.vampires) && prob(10))
+						if(!M) M = holder.my_atom
+						M.adjustToxLoss(1*REM)
+						M.take_organ_damage(0, 1*REM)
 				holder.remove_reagent(src.id, 10 * REAGENTS_METABOLISM) //high metabolism to prevent extended uncult rolls.
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with water can help put them out!
+				// Vamps react to this like acid
+				if(ishuman(M))
+					if((M.mind in ticker.mode.vampires))
+						var/mob/living/carbon/human/H=M
+						if(method == TOUCH)
+							if(H.wear_mask)
+								H << "\red Your mask protects you from the holy water!"
+								return
+
+							if(H.head)
+								H << "\red Your helmet protects you from the holy water!"
+								return
+							if(!M.unacidable)
+								if(prob(15) && volume >= 30)
+									var/datum/organ/external/affecting = H.get_organ("head")
+									if(affecting)
+										if(affecting.take_damage(25, 0))
+											H.UpdateDamageIcon()
+										H.status_flags |= DISFIGURED
+										H.emote("scream")
+								else
+									M.take_organ_damage(min(15, volume * 2)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
+						else
+							if(!M.unacidable)
+								M.take_organ_damage(min(15, volume * 2))
 				return
 
 		serotrotium
