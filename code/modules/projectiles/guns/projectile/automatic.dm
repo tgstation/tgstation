@@ -4,7 +4,6 @@
 	icon_state = "saber"	//ugly
 	w_class = 3.0
 	origin_tech = "combat=4;materials=2"
-	ammo_type = /obj/item/ammo_casing/c9mm
 	mag_type = /obj/item/ammo_box/magazine/msmg9mm
 	var/alarmed = 0
 
@@ -24,7 +23,6 @@
 	icon_state = "mini-uzi"
 	w_class = 3.0
 	origin_tech = "combat=5;materials=2;syndicate=8"
-	ammo_type = /obj/item/ammo_casing/c45
 	mag_type = /obj/item/ammo_box/magazine/uzim45
 
 
@@ -36,22 +34,14 @@
 	item_state = "c20r"
 	w_class = 3.0
 	origin_tech = "combat=5;materials=2;syndicate=8"
-	ammo_type = /obj/item/ammo_casing/a12mm
 	mag_type = /obj/item/ammo_box/magazine/m12mm
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
-
-
-/obj/item/weapon/gun/projectile/automatic/c20r/New()
-	..()
-	update_icon()
-	return
 
 
 /obj/item/weapon/gun/projectile/automatic/c20r/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
 	..()
 	if(!chambered && !get_ammo() && !alarmed)
 		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
-		update_icon()
 		alarmed = 1
 	return
 
@@ -61,17 +51,14 @@
 	icon_state = "c20r[magazine ? "-[round(get_ammo(0),4)]" : ""][chambered ? "" : "-e"]"
 	return
 
-
-
 /obj/item/weapon/gun/projectile/automatic/l6_saw
 	name = "\improper L6 SAW"
-	desc = "A rather traditionally made light machine gun with a pleasantly lacquered wooden pistol grip. Has 'Aussec Armoury- 2531' engraved on the reciever"
+	desc = "A rather traditionally made medium machine gun with a pleasantly lacquered wooden pistol grip. Has 'Aussec Armoury- 2531' engraved on the reciever"
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
 	w_class = 5
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
-	ammo_type = /obj/item/ammo_casing/a762
 	mag_type = /obj/item/ammo_box/magazine/m762
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	var/cover_open = 0
@@ -99,7 +86,7 @@
 	if(loc != user)
 		..()
 		return	//let them pick it up
-	if(!cover_open || (cover_open && !magazine))
+	if(!cover_open || !magazine)
 		..()
 	else if(cover_open && magazine)
 		//drop the mag
@@ -112,7 +99,7 @@
 
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(var/obj/item/A as obj, mob/user as mob)
-	if(!cover_open)
+	if(!cover_open && istype(A, mag_type))
 		user << "<span class='notice'>[src]'s cover is closed! You can't insert a new mag!</span>"
 		return
 	..()

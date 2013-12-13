@@ -20,6 +20,7 @@
 	var/silenced = 0
 	var/recoil = 0
 	var/clumsy_check = 1
+	var/obj/item/ammo_casing/chambered = null // The round (not bullet) that is in the chamber. THIS MISPLACED ITEM BROUGHT TO YOU BY HACKY BUCKSHOT.
 
 	proc/process_chambered()
 		return 0
@@ -98,6 +99,11 @@
 			playsound(user, fire_sound, 50, 1)
 			user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
 
+		if (istype(in_chamber, /obj/item/projectile/bullet/blank)) // A hacky way of making blank shotgun shells work again. Honk.
+			in_chamber.delete()
+			in_chamber = null
+			return
+
 		prepare_shot(in_chamber)				//Set the projectile's properties
 
 
@@ -114,6 +120,31 @@
 		in_chamber.yo = targloc.y - curloc.y
 		in_chamber.xo = targloc.x - curloc.x
 		user.next_move = world.time + 4
+
+
+		if(chambered) // Beep boop buckshot
+			var/target_x = targloc.x
+			var/target_y = targloc.y
+			var/target_z = targloc.z
+			if(in_chamber)
+				in_chamber.process()
+			while(chambered.buck > 0)
+				var/dx = round(gaussian(0,chambered.deviation),1)
+				var/dy = round(gaussian(0,chambered.deviation),1)
+				targloc = locate(target_x+dx, target_y+dy, target_z)
+				if(!targloc || targloc == curloc)
+					break
+				in_chamber = new chambered.projectile_type()
+				prepare_shot(in_chamber)
+				in_chamber.original = target
+				in_chamber.loc = get_turf(user)
+				in_chamber.starting = get_turf(user)
+				in_chamber.current = curloc
+				in_chamber.yo = targloc.y - curloc.y
+				in_chamber.xo = targloc.x - curloc.x
+				if(in_chamber)
+					in_chamber.process()
+				chambered.buck--
 
 		if(params)
 			var/list/mouse_control = params2list(params)

@@ -23,6 +23,7 @@
 	ammo_type = /obj/item/ammo_casing/a357
 	caliber = "357"
 	max_ammo = 6
+	multiload = 0
 
 /obj/item/ammo_box/magazine/internal/cylinder/rus357/New()
 	stored_ammo += new ammo_type(src)
@@ -40,6 +41,7 @@
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	caliber = "shotgun"
 	max_ammo = 4
+	multiload = 0
 
 /obj/item/ammo_box/magazine/internal/shotcom
 	name = "combat shotgun internal magazine"
@@ -47,6 +49,7 @@
 	ammo_type = /obj/item/ammo_casing/shotgun
 	caliber = "shotgun"
 	max_ammo = 8
+	multiload = 0
 
 /obj/item/ammo_box/magazine/internal/cylinder/dualshot
 	name = "double-barrel shotgun internal magazine"
@@ -54,6 +57,7 @@
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	caliber = "shotgun"
 	max_ammo = 2
+	multiload = 0
 
 ///////////EXTERNAL MAGAZINES////////////////
 /obj/item/ammo_box/magazine/m9mm
@@ -97,16 +101,13 @@
 	..()
 	icon_state = "[initial(icon_state)]-[round(ammo_count(),2)]"
 
-/obj/item/ammo_box/magazine/sm45
+/obj/item/ammo_box/magazine/m45
 	name = "magazine (.45)"
-	icon_state = "9x19p"
+	icon_state = "45"
 	ammo_type = /obj/item/ammo_casing/c45
 	caliber = ".45"
-	max_ammo = 12
-
-/obj/item/ammo_box/magazine/sm45/update_icon()
-	..()
-	icon_state = "[initial(icon_state)]-[ammo_count() ? "8" : "0"]"
+	max_ammo = 8
+	multiple_sprites = 1
 
 /obj/item/ammo_box/magazine/uzim45
 	name = "Uzi magazine (.45)"

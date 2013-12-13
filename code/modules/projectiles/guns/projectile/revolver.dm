@@ -2,7 +2,6 @@
 	desc = "A classic revolver. Uses 357 ammo"
 	name = "revolver"
 	icon_state = "revolver"
-	ammo_type = /obj/item/ammo_casing/a357
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
 
 /obj/item/weapon/gun/projectile/revolver/chamber_round()
@@ -31,10 +30,11 @@
 	if(istype(A, /obj/item/ammo_box))
 		var/obj/item/ammo_box/AM = A
 		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
-			if(magazine.give_round(AC))
+			var/didload = magazine.give_round(AC)
+			if(didload)
 				AM.stored_ammo -= AC
 				num_loaded++
-			else
+			if(!didload || !magazine.multiload)
 				break
 	if(istype(A, /obj/item/ammo_casing))
 		var/obj/item/ammo_casing/AC = A
@@ -79,7 +79,6 @@
 	name = "revolver"
 	icon_state = "detective"
 	origin_tech = "combat=2;materials=2"
-	ammo_type = /obj/item/ammo_casing/c38
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
 
 
@@ -87,7 +86,7 @@
 	if(magazine.caliber == initial(magazine.caliber))
 		return 1
 	if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
-		M << "<span class='danger'>[src] blows up in your face.</span>"
+		M << "<span class='danger'>[src] blows up in your face!</span>"
 		M.take_organ_damage(0,20)
 		M.drop_item()
 		del(src)
@@ -140,7 +139,7 @@
 					user << "<span class='notice'>You can't modify it!</span>"
 					return
 				magazine.caliber = "357"
-				desc = "The barrel and chamber assembly seems to have been modified."
+				desc = "[initial(desc)] The barrel and chamber assembly seems to have been modified."
 				user << "<span class='warning'>You reinforce the barrel of [src]! Now it will fire .357 rounds.</span>"
 		else
 			user << "<span class='notice'>You begin to revert the modifications to [src].</span>"
@@ -170,7 +169,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/russian
 	name = "Russian Revolver"
-	desc = "A Russian made revolver. Uses .357 ammo. It has a single slot in its chamber for a bullet."
+	desc = "A Russian made revolver. Uses .357 ammo."
 	origin_tech = "combat=2;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	var/spun = 0
@@ -188,26 +187,8 @@
 	spun = 1
 
 /obj/item/weapon/gun/projectile/revolver/russian/attackby(var/obj/item/A as obj, mob/user as mob)
-	var/num_loaded = 0
-	if(istype(A, /obj/item/ammo_box))
-		var/obj/item/ammo_box/AM = A
-		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
-			if(get_ammo() <= 1)
-				if(magazine.give_round(AC))
-					AM.stored_ammo -= AC
-					num_loaded++
-			break
-	if(istype(A, /obj/item/ammo_casing))
-		var/obj/item/ammo_casing/AC = A
-		if(get_ammo() <= 1)
-			magazine.give_round(AC)
-			user.drop_item()
-			AC.loc = src
-			num_loaded++
-	if(num_loaded)
-		user.visible_message("<span class='warning'>[user] loads a single bullet into the revolver and spins the chamber.</span>", "<span class='warning'>You load a single bullet into the chamber and spin it.</span>")
-	else
-		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
+	..()
+	user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
 	if(get_ammo() > 0)
 		Spin()
 	update_icon()
@@ -219,26 +200,18 @@
 		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
 		Spin()
 	else
-		var/num_unloaded = 0
-		while (get_ammo() > 0)
-			var/obj/item/ammo_casing/CB
-			CB = magazine.get_round()
-			chambered = null
-			CB.loc = get_turf(src.loc)
-			CB.update_icon()
-			num_unloaded++
-		if (num_unloaded)
-			user << "<span class = 'notice'>You unload [num_unloaded] shell\s from [src]!</span>"
-		else
-			user << "<span class='notice'>[src] is empty.</span>"
+		..()
 
 /obj/item/weapon/gun/projectile/revolver/russian/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params)
+	if (!spun)
+		Spin()
+		return
 	..()
 	spun = 0
 
 /obj/item/weapon/gun/projectile/revolver/russian/attack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj)
 
-	if(!chambered)
+	if(!chambered && target == user)
 		user.visible_message("\red *click*", "\red *click*")
 		return
 

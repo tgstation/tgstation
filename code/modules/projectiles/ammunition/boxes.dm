@@ -36,14 +36,14 @@
 	icon_state = "9mm"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c9mm
-	max_ammo = 30
+	max_ammo = 36
 
 /obj/item/ammo_box/c10mm
 	name = "Ammunition Box (10mm)"
 	icon_state = "9mm"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c10mm
-	max_ammo = 30
+	max_ammo = 32
 
 
 /obj/item/ammo_box/c45
@@ -51,11 +51,30 @@
 	icon_state = "9mm"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c45
-	max_ammo = 30
+	max_ammo = 32
 
 /obj/item/ammo_box/a12mm
 	name = "Ammunition Box (12mm)"
 	icon_state = "9mm"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/a12mm
-	max_ammo = 30
+	max_ammo = 40
+
+/obj/item/ammo_box/shotgun
+	name = "Ammunition Box (slug)"
+	icon_state = "9mm"
+	origin_tech = "combat=2"
+	ammo_type = /obj/item/ammo_casing/shotgun
+	max_ammo = 8
+
+/obj/item/ammo_box/shotgun/buck
+	name = "Ammunition Box (buckshot)"
+	ammo_type = /obj/item/ammo_casing/shotgun/buck
+
+/obj/item/ammo_box/shotgun/stun
+	name = "Ammunition Box (stun shells)"
+	ammo_type = /obj/item/ammo_casing/shotgun/stunshell
+
+/obj/item/ammo_box/shotgun/beanbag
+	name = "Ammunition Box (beanbag shells)"
+	ammo_type = /obj/item/ammo_casing/shotgun/beanbag

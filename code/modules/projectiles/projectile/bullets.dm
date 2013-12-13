@@ -6,24 +6,37 @@
 	nodamage = 0
 	flag = "bullet"
 
+/obj/item/projectile/bullet/slug
+	name = "slug"
 
-/obj/item/projectile/bullet/weakbullet
+
+/obj/item/projectile/bullet/rubberbullet
 	damage = 10
 	stun = 5
 	weaken = 5
 
 
-/obj/item/projectile/bullet/midbullet
+/obj/item/projectile/bullet/midbullet12
 	damage = 20
 	stun = 5
 	weaken = 5
 
-/obj/item/projectile/bullet/midbullet2
+/obj/item/projectile/bullet/midbullet9
 	damage = 25
 
 
-/obj/item/projectile/bullet/midbullet3 //Only used with the Stechkin Pistol - RobRichards
+/obj/item/projectile/bullet/midbullet45
+	damage = 25
+	stun = 3
+	weaken = 3
+
+
+/obj/item/projectile/bullet/midbullet10 //Only used with the Stechkin Pistol - RobRichards
 	damage = 30
+
+/obj/item/projectile/bullet/buck
+	name = "pellet"
+	damage = 15
 
 
 
@@ -86,3 +99,7 @@
 	name = "syringe"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "syringeproj"
+
+/obj/item/projectile/bullet/blank
+	name = "blankshot"
+	nodamage = 1
