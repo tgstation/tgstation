@@ -73,6 +73,8 @@ datum/mind
 			if(changeling)
 				current.remove_changeling_powers()
 				current.verbs -= /datum/changeling/proc/EvolutionMenu
+			if(vampire)
+				current.remove_vampire_powers()
 			current.mind = null
 		if(new_character.mind)		//remove any mind currently in our new body's mind variable
 			new_character.mind.current = null
@@ -84,7 +86,8 @@ datum/mind
 
 		if(changeling)
 			new_character.make_changeling()
-
+		if(vampire)
+			new_character.make_vampire()
 		if(active)
 			new_character.key = key		//now transfer the key to link the client to our new body
 
