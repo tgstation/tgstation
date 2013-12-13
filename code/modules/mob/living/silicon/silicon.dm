@@ -111,7 +111,7 @@
 
 /mob/living/silicon/can_inject(var/mob/user, var/error_msg)
 	if(error_msg)
-		user << "<span class='alert'>The outter shell is too tough.</span>"
+		user << "<span class='alert'>Their outer shell is too tough.</span>"
 	return 0
 
 /mob/living/silicon/IsAdvancedToolUser()

@@ -9,6 +9,7 @@
 	possible_transfer_amounts = null
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 	slot_flags = SLOT_BELT
+	var/ignore_flags = 0
 
 /obj/item/weapon/reagent_containers/hypospray/attack_paw(mob/user)
 	return attack_hand(user)
@@ -25,8 +26,9 @@
 		return
 	if(!istype(M))
 		return
-	M << "<span class='warning'>You feel a tiny prick!</span>"
-	if(reagents.total_volume && M.can_inject(user, 1))
+
+	if(reagents.total_volume && (M.can_inject(user, 1) || ignore_flags))
+		M << "<span class='warning'>You feel a tiny prick!</span>"
 		user << "<span class='notice'>You inject [M] with [src].</span>"
 
 		reagents.reaction(M, INGEST)
@@ -51,6 +53,7 @@
 	amount_per_transfer_from_this = 10
 	icon_state = "combat_hypo"
 	volume = 60
+	ignore_flags = 1 // So they can heal their comrades.
 
 /obj/item/weapon/reagent_containers/hypospray/combat/New()
 	..()

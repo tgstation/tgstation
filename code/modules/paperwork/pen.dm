@@ -42,12 +42,14 @@
 	colour = "white"
 
 
-/obj/item/weapon/pen/attack(mob/M, mob/user)
-	if(!ismob(M))
+/obj/item/weapon/pen/attack(mob/living/M, mob/user)
+	if(!istype(M))
 		return
 
-	user << "<span class='warning'>You stab [M] with the pen.</span>"
-	M << "\red You feel a tiny prick!"
+	if(M.can_inject(user, 1))
+		user << "<span class='warning'>You stab [M] with the pen.</span>"
+		M << "\red You feel a tiny prick!"
+		. = 1
 
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stabbed with [name]  by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [name] to stab [M.name] ([M.ckey])</font>")
@@ -64,8 +66,7 @@
 /obj/item/weapon/pen/paralysis/attack(mob/living/M, mob/user)
 	if(!istype(M))	return
 
-	..()
-	if(M.can_inject(user, 1))
+	if(..())
 		if(reagents.total_volume)
 			if(M.reagents)
 				reagents.trans_to(M, 50)
