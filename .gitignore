@@ -19,3 +19,4 @@ info.json
 !/config/*/*
 
 .metadata
+/bot/config.yml

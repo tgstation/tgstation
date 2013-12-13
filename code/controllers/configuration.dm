@@ -126,9 +126,9 @@
 	var/comms_password = ""
 
 	var/use_irc_bot = 0
-	var/irc_bot_host = ""
-	var/main_irc = ""
-	var/admin_irc = ""
+	var/irc_bot_host = "localhost"
+	var/irc_bot_port = 45678
+	var/irc_bot_server_id = 45678
 	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python2" on unix
 
 
@@ -435,11 +435,11 @@
 				if("irc_bot_host")
 					config.irc_bot_host = value
 
-				if("main_irc")
-					config.main_irc = value
+				if("irc_bot_port")
+					config.irc_bot_port = text2num(value)
 
-				if("admin_irc")
-					config.admin_irc = value
+				if("irc_bot_server_id")
+					config.irc_bot_server_id = value
 
 				if("python_path")
 					if(value)

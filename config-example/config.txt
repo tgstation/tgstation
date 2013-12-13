@@ -218,21 +218,17 @@ RESPAWN_AS_MOMMI
 ##Remove the # to let ghosts spin chairs
 #GHOST_INTERACTION
 
-## Password used for authorizing ircbot and other external tools.
-#COMMS_PASSWORD
-
 ## Uncomment to enable sending data to the IRC bot.
 #USE_IRC_BOT
 
-## Host where the IRC bot is hosted.  Port 45678 needs to be open.
+## Password used for authorizing ircbot and other external tools.
+#COMMS_PASSWORD
+
+## Host where the IRC bot is hosted.
 #IRC_BOT_HOST localhost
 
-## IRC channel to send information to.  Leave blank to disable.
-#MAIN_IRC #main
+## Port used for communications. Default: 45678
+#IRC_BOT_PORT 45678
 
-## IRC channel to send adminhelps to.  Leave blank to disable adminhelps-to-irc.
-#ADMIN_IRC #admin
-
-## Path to the python2 executable on the system.  Leave blank for default.
-## Default is "python" on Windows, "/usr/bin/env python2" on UNIX.
-#PYTHON_PATH
+## ID tag used to identify the server in the channel
+#IRC_BOT_SERVER_ID Server 1
