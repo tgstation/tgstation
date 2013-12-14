@@ -426,8 +426,8 @@ var/list/uplink_items = list()
 	
 /datum/uplink_item/implants/explosive
 	name = "Explosive Implants"
-	desc = "A box of explosive implants which activate on the death of the implanted, though they do not work on the already dead."
-	Contains four explosive implants and can be manually activated by faking death.
+	desc = "An explosive implant which activates on the death of the implanted, though it does not work on the already dead."
+	Can be manually activated by faking death.
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_explosive
 	cost = 1
 	excludefrom = list(/datum/game_mode/nuclear)
