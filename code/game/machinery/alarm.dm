@@ -96,7 +96,8 @@
 	var/screen = AALARM_SCREEN_MAIN
 	var/area_uid
 	var/area/alarm_area
-	var/danger_level = 0
+	var/local_danger_level = 0
+	var/alarmActivated = 0 // Manually activated (independent from danger level)
 	var/danger_averted_confidence=0
 	var/buildstage = 2 //2 is built, 1 is building, 0 is frame.
 
@@ -245,15 +246,15 @@
 			visible_message("\The [src] clicks quietly as it stops [environment.temperature > target_temperature ? "cooling" : "heating"] the room.",\
 			"You hear a click as a faint electronic humming stops.")
 
-	var/old_level = danger_level
-	danger_level = overall_danger_level()
-	if(danger_level < old_level)
+	var/old_level = local_danger_level
+	var/new_danger = calculate_local_danger_level()
+	if(new_danger < old_level)
 		danger_averted_confidence++
 	// Only change danger level if:
 	// we're going up a level
-	// OR if we're going down a level and have sufficient confidence (prevents doors smashing open and closed).
-	if (old_level < danger_level || (danger_averted_confidence >= 5 && danger_level < old_level))
-		refresh_danger_level()
+	// OR if we're going down a level and have sufficient confidence (prevents spamming update_icon).
+	if (old_level < new_danger || (danger_averted_confidence >= 5 && new_danger < old_level))
+		setDangerLevel(new_danger)
 		update_icon()
 		danger_averted_confidence=0 // Reset counter.
 
@@ -267,7 +268,7 @@
 		if(RCON_NO)
 			remote_control = 0
 		if(RCON_AUTO)
-			if(danger_level == 2)
+			if(local_danger_level == 2)
 				remote_control = 1
 			else
 				remote_control = 0
@@ -277,7 +278,7 @@
 		updateDialog()
 	return
 
-/obj/machinery/alarm/proc/overall_danger_level()
+/obj/machinery/alarm/proc/calculate_local_danger_level()
 	var/turf/simulated/location = loc
 	if(!istype(location))	return//returns if loc is not simulated
 
@@ -333,7 +334,8 @@
 	if((stat & (NOPOWER|BROKEN)) || shorted)
 		icon_state = "alarmp"
 		return
-	switch(max(danger_level, alarm_area.atmosalm))
+
+	switch(max(local_danger_level, alarm_area.atmosalm-1))
 		if (0)
 			icon_state = "alarm0"
 		if (1)
@@ -455,22 +457,13 @@
 			for(var/device_id in alarm_area.air_vent_names)
 				send_signal(device_id, list("power"= 0) )
 
-/obj/machinery/alarm/proc/apply_danger_level(var/new_danger_level)
-	if (alarm_area.atmosalert(new_danger_level))
+// This sets our danger level, and, if it's changed, forces a new election of danger levels.
+/obj/machinery/alarm/proc/setDangerLevel(var/new_danger_level)
+	if(local_danger_level==new_danger_level)
+		return
+	local_danger_level=new_danger_level
+	if(alarm_area.updateDangerLevel())
 		post_alert(new_danger_level)
-
-	if(danger_level > 1)
-		air_doors_close(0)
-	else
-		air_doors_open(0)
-
-	update_icon()
-
-	for (var/area/A in alarm_area.related)
-		for (var/obj/machinery/alarm/AA in A)
-			if ( !(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted && AA.danger_level != new_danger_level)
-				AA.danger_level=new_danger_level
-				AA.update_icon()
 
 /obj/machinery/alarm/proc/post_alert(alert_level)
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(alarm_frequency)
@@ -491,15 +484,6 @@
 		alert_signal.data["alert"] = "clear"
 
 	frequency.post_signal(src, alert_signal)
-
-/obj/machinery/alarm/proc/refresh_danger_level()
-	var/level = 0
-	for (var/area/A in alarm_area.related)
-		for (var/obj/machinery/alarm/AA in A)
-			if ( !(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
-				if (AA.danger_level > level)
-					level = AA.danger_level
-	apply_danger_level(level)
 
 /obj/machinery/alarm/proc/air_doors_close(manual)
 	var/area/A = get_area(src)
@@ -599,9 +583,8 @@
 			apply_mode()
 
 		if(AALARM_WIRE_AALARM)
-
-			if (alarm_area.atmosalert(2))
-				apply_danger_level(2)
+			alarmActivated=1
+			alarm_area.updateDangerLevel()
 			spawn(1)
 				updateUsrDialog()
 			update_icon()
@@ -663,8 +646,8 @@
 			apply_mode()
 
 		if(AALARM_WIRE_AALARM)
-			if (alarm_area.atmosalert(0))
-				apply_danger_level(0)
+			alarmActivated=0
+			alarm_area.updateDangerLevel()
 			spawn(1)
 				updateUsrDialog()
 			update_icon()
@@ -772,6 +755,7 @@
 
 	var/data[0]
 	data["air"]=ui_air_status()
+	data["alarmActivated"]=alarmActivated || local_danger_level==2
 	data["sensors"]=TLV
 	data["locked"]=fromAtmosConsole || (!(istype(user, /mob/living/silicon)) && locked)
 	data["rcon"]=rcon_setting
@@ -891,288 +875,6 @@
 		ui_interact(user)
 
 	return
-/*
-/obj/machinery/alarm/proc/return_text(mob/user)
-	if(!(istype(user, /mob/living/silicon)) && locked)
-		return "<html><head><title>\The [src]</title></head><body>[return_status()]<hr>[rcon_text()]<hr><i>(Swipe ID card to unlock interface)</i></body></html>"
-	else
-		return "<html><head><title>\The [src]</title></head><body>[return_status()]<hr>[rcon_text()]<hr>[return_controls()]</body></html>"
-
-/obj/machinery/alarm/proc/return_status()
-	var/turf/location = get_turf(src)
-	var/datum/gas_mixture/environment = location.return_air()
-	var/total = environment.oxygen + environment.carbon_dioxide + environment.toxins + environment.nitrogen
-	var/output = "<b>Air Status:</b><br>"
-
-	if(total == 0)
-		output += "<font color='red'><b>Warning: Cannot obtain air sample for analysis.</b></font>"
-		return output
-
-	output += {"
-<style>
-.dl0 { color: green; }
-.dl1 { color: orange; }
-.dl2 { color: red; font-weght: bold;}
-.scrub1 { color: red; font-weight:bold; }
-.scrub0 { color: green; }
-</style>
-"}
-
-	var/partial_pressure = R_IDEAL_GAS_EQUATION*environment.temperature/environment.volume
-
-	var/list/current_settings = TLV["pressure"]
-	var/environment_pressure = environment.return_pressure()
-	var/pressure_dangerlevel = get_danger_level(environment_pressure, current_settings)
-
-	current_settings = TLV["oxygen"]
-	var/oxygen_dangerlevel = get_danger_level(environment.oxygen*partial_pressure, current_settings)
-	var/oxygen_percent = round(environment.oxygen / total * 100, 2)
-
-	current_settings = TLV["carbon_dioxide"]
-	var/co2_dangerlevel = get_danger_level(environment.carbon_dioxide*partial_pressure, current_settings)
-	var/co2_percent = round(environment.carbon_dioxide / total * 100, 2)
-
-	current_settings = TLV["plasma"]
-	var/plasma_dangerlevel = get_danger_level(environment.toxins*partial_pressure, current_settings)
-	var/plasma_percent = round(environment.toxins / total * 100, 2)
-
-	current_settings = TLV["other"]
-	var/other_moles = 0.0
-	for(var/datum/gas/G in environment.trace_gases)
-		other_moles+=G.moles
-	var/other_dangerlevel = get_danger_level(other_moles*partial_pressure, current_settings)
-
-	current_settings = TLV["temperature"]
-	var/temperature_dangerlevel = get_danger_level(environment.temperature, current_settings)
-
-	output += {"
-Pressure: <span class='dl[pressure_dangerlevel]'>[environment_pressure]</span>kPa<br>
-Oxygen: <span class='dl[oxygen_dangerlevel]'>[oxygen_percent]</span>%<br>
-Carbon dioxide: <span class='dl[co2_dangerlevel]'>[co2_percent]</span>%<br>
-Toxins: <span class='dl[plasma_dangerlevel]'>[plasma_percent]</span>%<br>
-"}
-	if (other_dangerlevel==2)
-		output += "Notice: <span class='dl2'>High Concentration of Unknown Particles Detected</span><br>"
-	else if (other_dangerlevel==1)
-		output += "Notice: <span class='dl1'>Low Concentration of Unknown Particles Detected</span><br>"
-
-	output += "Temperature: <span class='dl[temperature_dangerlevel]'>[environment.temperature]</span>K ([round(environment.temperature - T0C, 0.1)]C)<br>"
-
-	//Overall status
-	output += "Local Status: "
-	switch(max(pressure_dangerlevel,oxygen_dangerlevel,co2_dangerlevel,plasma_dangerlevel,other_dangerlevel,temperature_dangerlevel))
-		if(2)
-			output += "<span class='dl2'>DANGER: Internals Required</span>"
-		if(1)
-			output += "<span class='dl1'>Caution</span>"
-		if(0)
-			if(alarm_area.atmosalm)
-				output += {"<span class='dl1'>Caution: Atmos alert in area</span>"}
-			else
-				output += {"<span class='dl0'>Optimal</span>"}
-
-	return output
-
-/obj/machinery/alarm/proc/rcon_text()
-	var/dat = "<table width=\"100%\"><td align=\"center\"><b>Remote Control:</b><br>"
-	if(rcon_setting == RCON_NO)
-		dat += "<b>Off</b>"
-	else
-		dat += "<a href='?src=\ref[src];rcon=[RCON_NO]'>Off</a>"
-	dat += " | "
-	if(rcon_setting == RCON_AUTO)
-		dat += "<b>Auto</b>"
-	else
-		dat += "<a href='?src=\ref[src];rcon=[RCON_AUTO]'>Auto</a>"
-	dat += " | "
-	if(rcon_setting == RCON_YES)
-		dat += "<b>On</b>"
-	else
-		dat += "<a href='?src=\ref[src];rcon=[RCON_YES]'>On</a></td>"
-
-	//Hackish, I know.  I didn't feel like bothering to rework all of this.
-	dat += "<td align=\"center\"><b>Thermostat:</b><br><a href='?src=\ref[src];temperature=1'>[target_temperature - T0C]C</a></td></table>"
-
-	return dat
-
-/obj/machinery/alarm/proc/fmtScrubberGasStatus(var/id_tag,var/code,var/list/data)
-	var/label=replacetext(uppertext(code),"2","<sub>2</sub>")
-	if(code=="tox")
-		label="Plasma"
-	return "<A href='?src=\ref[src];id_tag=[id_tag];command=[code]_scrub;val=[!data["filter_"+code]]' class='scrub[data["filter_"+code]]'>[label]</A>"
-
-/obj/machinery/alarm/proc/return_controls()
-	var/output = ""//"<B>[alarm_zone] Air [name]</B><HR>"
-
-	switch(screen)
-		if (AALARM_SCREEN_MAIN)
-			if(alarm_area.atmosalm)
-				output += "<a href='?src=\ref[src];atmos_reset=1'>Reset - Atmospheric Alarm</a><hr>"
-			else
-				output += "<a href='?src=\ref[src];atmos_alarm=1'>Activate - Atmospheric Alarm</a><hr>"
-
-			output += {"
-<a href='?src=\ref[src];screen=[AALARM_SCREEN_SCRUB]'>Scrubbers Control</a><br>
-<a href='?src=\ref[src];screen=[AALARM_SCREEN_VENT]'>Vents Control</a><br>
-<a href='?src=\ref[src];screen=[AALARM_SCREEN_MODE]'>Set environmentals mode</a><br>
-<a href='?src=\ref[src];screen=[AALARM_SCREEN_SENSORS]'>Sensor Settings</a><br>
-<HR>
-"}
-			if (mode==AALARM_MODE_PANIC)
-				output += "<font color='red'><B>PANIC SYPHON ACTIVE</B></font><br><A href='?src=\ref[src];mode=[AALARM_MODE_SCRUBBING]'>Turn syphoning off</A>"
-			else
-				output += "<A href='?src=\ref[src];mode=[AALARM_MODE_PANIC]'><font color='red'>ACTIVATE PANIC SYPHON IN AREA</font></A>"
-
-
-		if (AALARM_SCREEN_VENT)
-			var/sensor_data = ""
-			if(alarm_area.air_vent_names.len)
-				for(var/id_tag in alarm_area.air_vent_names)
-					var/long_name = alarm_area.air_vent_names[id_tag]
-					var/list/data = alarm_area.air_vent_info[id_tag]
-					if(!data)
-						continue;
-					var/state = ""
-
-					sensor_data += {"
-<B>[long_name]</B>[state]<BR>
-<B>Operating:</B>
-<A href='?src=\ref[src];id_tag=[id_tag];command=power;val=[!data["power"]]'>[data["power"]?"on":"off"]</A>
-<BR>
-<B>Pressure checks:</B>
-<A href='?src=\ref[src];id_tag=[id_tag];command=checks;val=[data["checks"]^1]' [(data["checks"]&1)?"style='font-weight:bold;'":""]>external</A>
-<A href='?src=\ref[src];id_tag=[id_tag];command=checks;val=[data["checks"]^2]' [(data["checks"]&2)?"style='font-weight:bold;'":""]>internal</A>
-<BR>
-<B>External pressure bound:</B>
-<A href='?src=\ref[src];id_tag=[id_tag];command=adjust_external_pressure;val=-1000'>-</A>
-<A href='?src=\ref[src];id_tag=[id_tag];command=adjust_external_pressure;val=-100'>-</A>
-<A href='?src=\ref[src];id_tag=[id_tag];command=adjust_external_pressure;val=-10'>-</A>
-<A href='?src=\ref[src];id_tag=[id_tag];command=adjust_external_pressure;val=-1'>-</A>
-[data["external"]]
-<A href='?src=\ref[src];id_tag=[id_tag];command=adjust_external_pressure;val=+1'>+</A>
-<A href='?src=\ref[src];id_tag=[id_tag];command=adjust_external_pressure;val=+10'>+</A>
-<A href='?src=\ref[src];id_tag=[id_tag];command=adjust_external_pressure;val=+100'>+</A>
-<A href='?src=\ref[src];id_tag=[id_tag];command=adjust_external_pressure;val=+1000'>+</A>
-<A href='?src=\ref[src];id_tag=[id_tag];command=set_external_pressure;val=[ONE_ATMOSPHERE]'> (reset) </A>
-<BR>
-"}
-					if (data["direction"] == "siphon")
-						sensor_data += {"
-<B>Direction:</B>
-siphoning
-<BR>
-"}
-					sensor_data += {"<HR>"}
-			else
-				sensor_data = "No vents connected.<BR>"
-			output = {"<a href='?src=\ref[src];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br>[sensor_data]"}
-		if (AALARM_SCREEN_SCRUB)
-			var/sensor_data = ""
-			if(alarm_area.air_scrub_names.len)
-				for(var/id_tag in alarm_area.air_scrub_names)
-					var/long_name = alarm_area.air_scrub_names[id_tag]
-					var/list/data = alarm_area.air_scrub_info[id_tag]
-					if(!data)
-						continue;
-					var/state = ""
-
-					sensor_data += {"
-<B>[long_name]</B>[state]<BR>
-<B>Operating:</B>
-<A href='?src=\ref[src];id_tag=[id_tag];command=power;val=[!data["power"]]'>[data["power"]?"on":"off"]</A><BR>
-<B>Type:</B>
-<A href='?src=\ref[src];id_tag=[id_tag];command=scrubbing;val=[!data["scrubbing"]]'>[data["scrubbing"]?"scrubbing":"syphoning"]</A><BR>
-"}
-
-					if(data["scrubbing"])
-						sensor_data += {"
-<B>Filtering:</B>
-[fmtScrubberGasStatus(id_tag,"co2",data)],
-[fmtScrubberGasStatus(id_tag,"tox",data)],
-[fmtScrubberGasStatus(id_tag,"n2o",data)],
-[fmtScrubberGasStatus(id_tag,"o2",data)]
-<BR>
-"}
-					sensor_data += {"
-<B>Panic syphon:</B> [data["panic"]?"<font color='red'><B>PANIC SYPHON ACTIVATED</B></font>":""]
-<A href='?src=\ref[src];id_tag=[id_tag];command=panic_siphon;val=[!data["panic"]]'><font color='[(data["panic"]?"blue'>Dea":"red'>A")]ctivate</font></A><BR>
-<HR>
-"}
-			else
-				sensor_data = "No scrubbers connected.<BR>"
-			output = {"<a href='?src=\ref[src];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br>[sensor_data]"}
-
-		if (AALARM_SCREEN_MODE)
-			output += "<a href='?src=\ref[src];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br><b>Air machinery mode for the area:</b><ul>"
-			var/list/modes = list(
-				AALARM_MODE_SCRUBBING   = "Filtering - Scrubs out contaminants",\
-				AALARM_MODE_REPLACEMENT = "<font color='blue'>Replace Air - Siphons out air while replacing</font>",\
-				AALARM_MODE_PANIC       = "<font color='red'>Panic - Siphons air out of the room</font>",\
-				AALARM_MODE_CYCLE       = "<font color='red'>Cycle - Siphons air before replacing</font>",\
-				AALARM_MODE_FILL        = "<font color='green'>Fill - Shuts off scrubbers and opens vents</font>",\
-				AALARM_MODE_OFF         = "<font color='blue'>Off - Shuts off vents and scrubbers</font>",)
-			for (var/m=1,m<=modes.len,m++)
-				if (mode==m)
-					output += "<li><A href='?src=\ref[src];mode=[m]'><b>[modes[m]]</b></A> (selected)</li>"
-				else
-					output += "<li><A href='?src=\ref[src];mode=[m]'>[modes[m]]</A></li>"
-			output += {"</ul>
-<hr><br><b>Sensor presets:</b><br><i>(Note, this only sets sensors, air supplied to vents must still be changed.)</i><ul>"}
-			var/list/presets = list(
-				AALARM_PRESET_HUMAN   = "Human - Checks for Oxygen and Nitrogen",\
-				AALARM_PRESET_VOX 	= "Vox - Checks for Nitrogen only",\
-				AALARM_PRESET_SERVER 	= "Coldroom - For server rooms and freezers")
-			for(var/p=1;p<=presets.len;p++)
-				if (preset==p)
-					output += "<li><A href='?src=\ref[src];preset=[p]'><b>[presets[p]]</b></A> (selected)</li>"
-				else
-					output += "<li><A href='?src=\ref[src];preset=[p]'>[presets[p]]</A></li>"
-			output += "</ul>"
-
-		if (AALARM_SCREEN_SENSORS)
-			output += {"
-<a href='?src=\ref[src];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br>
-<b>Alarm thresholds:</b><br>
-Partial pressure for gases
-<style>/* some CSS woodoo here. Does not work perfect in ie6 but who cares? */
-table td { border-left: 1px solid black; border-top: 1px solid black;}
-table tr:first-child th { border-left: 1px solid black;}
-table th:first-child { border-top: 1px solid black; font-weight: normal;}
-table tr:first-child th:first-child { border: none;}
-.dl0 { color: green; }
-.dl1 { color: orange; }
-.dl2 { color: red; font-weght: bold;}
-</style><table cellspacing=0>
-<TR><th></th><th class=dl2>min2</th><th class=dl1>min1</th><th class=dl1>max1</th><th class=dl2>max2</th></TR>
-"}
-			var/list/gases = list(
-				"oxygen"         = "O<sub>2</sub>",
-				"carbon_dioxide" = "CO<sub>2</sub>",
-				"plasma"         = "Toxin",
-				"other"          = "Other",)
-
-			var/list/selected
-			for (var/g in gases)
-				output += "<TR><th>[gases[g]]</th>"
-				selected = TLV[g]
-				for(var/i = 1, i <= 4, i++)
-					output += "<td><A href='?src=\ref[src];command=set_threshold;env=[g];var=[i]'>[selected[i] >= 0 ? selected[i] :"OFF"]</A></td>"
-				output += "</TR>"
-
-			selected = TLV["pressure"]
-			output += "	<TR><th>Pressure</th>"
-			for(var/i = 1, i <= 4, i++)
-				output += "<td><A href='?src=\ref[src];command=set_threshold;env=pressure;var=[i]'>[selected[i] >= 0 ? selected[i] :"OFF"]</A></td>"
-			output += "</TR>"
-
-			selected = TLV["temperature"]
-			output += "<TR><th>Temperature</th>"
-			for(var/i = 1, i <= 4, i++)
-				output += "<td><A href='?src=\ref[src];command=set_threshold;env=temperature;var=[i]'>[selected[i] >= 0 ? selected[i] :"OFF"]</A></td>"
-			output += "</TR></table>"
-
-	return output
-*/
 
 /obj/machinery/alarm/Topic(href, href_list)
 	var/changed=0
@@ -1228,8 +930,8 @@ table tr:first-child th:first-child { border: none;}
 				var/threshold = text2num(href_list["var"])
 				var/list/selected = TLV[env]
 				var/list/thresholds = list("lower bound", "low warning", "high warning", "upper bound")
-				var/newval = input("Enter [thresholds[threshold]] for [env]", "Alarm triggers", selected[threshold]) as null|num
-				if (isnull(newval) || ..() || (locked && issilicon(usr)))
+				var/newval = input("Enter [thresholds[threshold]] for [env]", "Alarm triggers", selected[threshold]) as num|null
+				if (isnull(newval) || ..() || (locked && !issilicon(usr)))
 					return
 				if (newval<0)
 					selected[threshold] = -1.0
@@ -1290,14 +992,14 @@ table tr:first-child th:first-child { border: none;}
 	*/
 
 	if(href_list["atmos_alarm"])
-		if (alarm_area.atmosalert(2))
-			apply_danger_level(2)
+		alarmActivated=1
+		alarm_area.updateDangerLevel()
 		update_icon()
 		changed=1
 
 	if(href_list["atmos_reset"])
-		if (alarm_area.atmosalert(0))
-			apply_danger_level(0)
+		alarmActivated=0
+		alarm_area.updateDangerLevel()
 		update_icon()
 		changed=1
 

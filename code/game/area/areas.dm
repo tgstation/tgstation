@@ -66,13 +66,31 @@
 						a.triggerAlarm("Power", src, cameras, source)
 	return
 
-/area/proc/atmosalert(danger_level)
+/area/proc/updateDangerLevel()
 //	if(type==/area) //No atmos alarms in space
 //		return 0 //redudant
+
+
+	var/danger_level = 0
+
+	// Determine what the highest DL reported by air alarms is
+	for (var/area/RA in related)
+		for(var/obj/machinery/alarm/AA in RA)
+			if((AA.stat & (NOPOWER|BROKEN)) || AA.shorted || AA.buildstage != 2)
+				continue
+			var/reported_danger_level=AA.local_danger_level
+			if(AA.alarmActivated)
+				reported_danger_level=2
+			if(reported_danger_level>danger_level)
+				danger_level=reported_danger_level
+			testing("Danger level at [AA.name]: [AA.local_danger_level] (reported [reported_danger_level])")
+
+	testing("Danger level decided upon in [name]: [danger_level] (from [atmosalm])")
+
+	// Danger level change?
 	if(danger_level != atmosalm)
-		//updateicon()
-		//mouse_opacity = 0
-		if (danger_level==2)
+		// Going to danger level 2 from something else
+		if (danger_level == 2)
 			var/list/cameras = list()
 			for(var/area/RA in related)
 				//updateicon()
@@ -83,6 +101,8 @@
 				aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
 			for(var/obj/machinery/computer/station_alert/a in machines)
 				a.triggerAlarm("Atmosphere", src, cameras, src)
+			CloseFirelocks()
+		// Dropping from danger level 2.
 		else if (atmosalm == 2)
 			for(var/area/RA in related)
 				for(var/obj/machinery/camera/C in RA)
@@ -91,12 +111,31 @@
 				aiPlayer.cancelAlarm("Atmosphere", src, src)
 			for(var/obj/machinery/computer/station_alert/a in machines)
 				a.cancelAlarm("Atmosphere", src, src)
+			OpenFirelocks()
 		atmosalm = danger_level
 		for (var/obj/machinery/alarm/AA in src)
 			if ( !(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
 				AA.update_icon()
 		return 1
 	return 0
+
+/area/proc/CloseFirelocks()
+	for(var/obj/machinery/door/firedoor/D in all_doors)
+		if(!D.blocked)
+			if(D.operating)
+				D.nextstate = CLOSED
+			else if(!D.density)
+				spawn()
+					D.close()
+
+/area/proc/OpenFirelocks()
+	for(var/obj/machinery/door/firedoor/D in all_doors)
+		if(!D.blocked)
+			if(D.operating)
+				D.nextstate = OPEN
+			else if(D.density)
+				spawn()
+					D.open()
 
 /area/proc/firealert()
 	if(name == "Space") //no fire alarms in space
@@ -105,13 +144,7 @@
 		fire = 1
 		updateicon()
 		mouse_opacity = 0
-		for(var/obj/machinery/door/firedoor/D in all_doors)
-			if(!D.blocked)
-				if(D.operating)
-					D.nextstate = CLOSED
-				else if(!D.density)
-					spawn()
-						D.close()
+		CloseFirelocks()
 		var/list/cameras = list()
 		for(var/area/RA in related)
 			for (var/obj/machinery/camera/C in RA)
@@ -127,13 +160,6 @@
 		fire = 0
 		mouse_opacity = 0
 		updateicon()
-		for(var/obj/machinery/door/firedoor/D in all_doors)
-			if(!D.blocked)
-				if(D.operating)
-					D.nextstate = OPEN
-				else if(D.density)
-					spawn(0)
-					D.open()
 		for(var/area/RA in related)
 			for (var/obj/machinery/camera/C in RA)
 				C.network.Remove("Fire Alarms")
@@ -141,6 +167,7 @@
 			aiPlayer.cancelAlarm("Fire", src, src)
 		for (var/obj/machinery/computer/station_alert/a in machines)
 			a.cancelAlarm("Fire", src, src)
+		OpenFirelocks()
 
 /area/proc/radiation_alert()
 	if(name == "Space")
@@ -186,13 +213,6 @@
 		party = 0
 		mouse_opacity = 0
 		updateicon()
-		for(var/obj/machinery/door/firedoor/D in src)
-			if(!D.blocked)
-				if(D.operating)
-					D.nextstate = OPEN
-				else if(D.density)
-					spawn(0)
-					D.open()
 	return
 
 /area/proc/updateicon()

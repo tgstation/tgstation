@@ -106,7 +106,7 @@
 
 		var/list/alarm_data=list()
 		alarm_data["ID"]="\ref[alarm]"
-		alarm_data["danger"] = max(alarm.danger_level, alarm.alarm_area.atmosalm)
+		alarm_data["danger"] = max(alarm.local_danger_level, alarm.alarm_area.atmosalm-1)
 		alarm_data["name"] = "[alarm]"
 		alarms+=list(alarm_data)
 	data["alarms"]=alarms
@@ -241,15 +241,15 @@
 					current.air_doors_open(1)
 
 		if(href_list["atmos_alarm"])
-			if (current.alarm_area.atmosalert(2))
-				current.apply_danger_level(2)
+			current.alarmActivated=1
+			current.alarm_area.updateDangerLevel()
 			spawn(1)
 				src.updateUsrDialog()
 			current.update_icon()
 			return
 		if(href_list["atmos_reset"])
-			if (current.alarm_area.atmosalert(0))
-				current.apply_danger_level(0)
+			current.alarmActivated=0
+			current.alarm_area.updateDangerLevel()
 			spawn(1)
 				src.updateUsrDialog()
 			current.update_icon()

@@ -54,6 +54,13 @@ Used In File(s): /code/game/machinery/alarm.dm
 		{^{:~displayBar(air.contents.plasma, 0, 100, ~dangerToClass(air.danger.plasma))}}
 		{^{:~string("<div class='statusValue {0}'>{1}%</div>",~dangerToClass(air.danger.plasma),~precisionRound(air.contents.plasma,2))}}
 	</div>
+	{^{if air.danger.other>0}}
+	<div class="line">
+		<div class="statusLabel">Other:</div>
+		{^{:~displayBar(air.contents.other, 0, 100, ~dangerToClass(air.danger.other))}}
+		{^{:~string("<div class='statusValue {0}'>{1}%</div>",~dangerToClass(air.danger.other),~precisionRound(air.contents.other,2))}}
+	</div>
+	{{/if}}
 	<div class="line">
 		<div class="statusLabel">
 			Temperature:
@@ -74,7 +81,7 @@ Used In File(s): /code/game/machinery/alarm.dm
 			<div class="notice">DANGER: Internals Required
 		{{/if}}
 		{^{if !locked}}
-			{^{if atmos_alarm}}
+			{^{if alarmActivated}}
 				{^{:~link('Reset Alarm',null,{'atmos_reset':1},null,'linkOn')}}
 			{{else}}
 				{^{:~link('Activate Alarm',null,{'atmos_alarm':1},null,'red')}}
