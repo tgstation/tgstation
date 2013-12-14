@@ -30,6 +30,8 @@
 	enter_delay = 3
 	var/pod_moving = 0
 	var/automatic_launch_time = 100
+	var/cooldown_delay = 30
+	var/launch_cooldown = 0
 
 	var/const/OPEN_DURATION = 6
 	var/const/CLOSE_DURATION = 6
@@ -170,11 +172,11 @@ obj/structure/ex_act(severity)
 /obj/structure/transit_tube/station/proc/launch_pod()
 	for(var/obj/structure/transit_tube_pod/pod in loc)
 		if(!pod.moving && pod.dir in directions())
-			spawn(35) //To prevent saxing in the pod, should probably change these to sleep if it doesn't break the tubes
+			spawn(5)
 				pod_moving = 1
 				close_animation()
 				sleep(CLOSE_DURATION + 2)
-				if(icon_state == "closed" && pod)
+				if(icon_state == "closed" && pod && launch_cooldown < world.time)
 					pod.follow_tube()
 
 				pod_moving = 0
@@ -203,6 +205,7 @@ obj/structure/ex_act(severity)
 /obj/structure/transit_tube/station/pod_stopped(obj/structure/transit_tube_pod/pod, from_dir)
 	pod_moving = 1
 	spawn(5)
+		launch_cooldown = world.time + min(cooldown_delay, automatic_launch_time)
 		open_animation()
 		sleep(OPEN_DURATION + 2)
 		pod_moving = 0
