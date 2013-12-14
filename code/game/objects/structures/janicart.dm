@@ -41,6 +41,7 @@
 	user << "<span class='notice'>You put [I] into [src].</span>"
 	return I
 
+
 /obj/structure/janitorialcart/attackby(obj/item/I, mob/user)
 	var/fail_msg = "<span class='notice'>There is already one of those in [src].</span>"
 
@@ -48,12 +49,14 @@
 		if(I.reagents.total_volume < I.reagents.maximum_volume)	//if it's not completely soaked we assume they want to wet it, otherwise store it
 			wet_mop(I, user)
 			return
-		if(isrobot(user))
+		if(isrobot(user)) // robots can wet their mop, but not put it in the cart.
 			user << "<span class='notice'>You are a robot. No.</span>"
 			return
 		if(!mymop)
 			mymop=put_in_cart(I,user)
-		else user <<  fail_msg;	return
+		else
+			user << fail_msg
+			return
 
 
 	else if(isrobot(user))
@@ -62,15 +65,21 @@
 	else if(istype(I, /obj/item/weapon/storage/bag/trash))
 		if(!mybag)
 			mybag=put_in_cart(I, user)
-		else user <<  fail_msg;	return
+		else
+			user <<  fail_msg
+			return
 	else if(istype(I, /obj/item/weapon/reagent_containers/spray))
 		if(!myspray)
 			myspray=put_in_cart(I, user)
-		else user << fail_msg;	return
+		else
+			user << fail_msg
+			return
 	else if(istype(I, /obj/item/device/lightreplacer))
 		if(!myreplacer)
 			myreplacer = put_in_cart(I,user)
-		else user << fail_msg;	return
+		else
+			user << fail_msg
+			return
 	else if(istype(I, /obj/item/weapon/caution))
 		if(signs < 4)
 			put_in_cart(I, user)
