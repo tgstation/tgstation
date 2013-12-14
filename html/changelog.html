@@ -75,28 +75,80 @@
 		<!-- To take advantage of the pretty new format (well it was new when I wrote this anyway), open the "add-to-changelog.html" file in any browser and add the stuff and then generate the html code and paste it here -->
 		<!-- Suggestion:  Group changes not merged into master into a single [IN DEVELOPMENT] block, then change the date to today before merging.  Makes the changes from the last release a bit easier to comprehend. -->
 		<div class="commit sansserif">
-			<h2 class="date">[In Development]</h2>
+			<h2 class="date">2013.12.08</h2>
+			<h3 class="author">N3X15 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Circuit imprinters have a processing queue and use the new internal material handling system for easier addition of materials in the future.</li>
+				<li class="rscadd">Circuit imprinters and mechfabs can now have their output location changed with a multitool.</li>
+				<li class="rscadd">Added blast doors to atmos mix tank.</li>
+				<li class="rscadd">RPD added to CE's office.</li>
+				<li class="rscadd">Rewritten mutation handling.  Far more modular and flexible than the old code, will make adding new mutations far easier.</li>
+				<li class="rscadd">Airlock, fire alarm, and air alarm electronics are all made on the circuit imprinter now.</li>
+				<li class="bugfix">Fix monkeys not having their genes set correctly.</li>
+				<li class="bugfix">DNA block injectors fixed.</li>
+				<li class="bugfix">Fix unextinguishable mob fires.</li>
+			</ul>
+			<h3 class="author">Imported from Baystation 12:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">AntagHUD added.</li>
+				<li class="rscadd">Added newer ghost sprites.</li>
+			</ul>
+		</li>
+		<div class="commit sansserif">
+			<h2 class="date">2013.12.07</h2>
+			<h3 class="author">N3X15 updated</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Research devices light up when linked to a console.</li>
+				<li class="rscadd">Added atmos tape, cleaned up the awful sprite.</li>
+				<li class="bugfix">MoMMI Nest RD console now connects to the network properly.</li>
+				<li class="bugfix">Fork in-hand sprite fixed.</li>
+				<li class="bugfix">Fix DNA modifier block injector spam exploit.</li>
+				<li class="bugfix">Human icons now update properly. The same fix should also fix fat people having invisible-man-style floating clothing when lying down.</li>
+				<li class="bugfix">Fix all whispers being last words.</li>
+				<li class="bugfix">Batons now come pre-charged and can be recharged by borgs in a borg charger.</li>
+				<li class="tweak">Telescience made a bit more difficult, high-security areas are now jammed.</li>
+			</ul>
+		</li>
+		<div class="commit sansserif">
+			<h2 class="date">2013.12.04</h2>
 			<h3 class="author">N3X15 updated</h3>
 			<ul class="changes bgimages16">
 				<li class="rscadd">Added Bay's edition of telescience, with some changes.</li>
+				<li class="rscadd">Completely recoded DNA.  Should be the same experience as the old, but more efficient and MUCH less spaghetti. (Admins can also fuck with DNA now.)</li>
 				<li class="rscadd">Re-added cleaned-up engiseer borg to the game.</li>
+				<li class="rscadd">Someone under surgery must be unconscious, dead, or asleep (under anesthesia).</li>
 				<li class="rscadd">Fuel tanks explode when air temperature exceeds 561.15&deg;K.</li>
 				<li class="rscadd">You can now whisper while in crit, but only once and you'll immediately die afterwards.</li>
+				<li class="rscadd">A new MoMMI nest has been added south of Recycling.</li>
 				<li class="rscadd">Added TG's voice analyser.</li>
 				<li class="rscadd">Added Bay's megaphone.</li>
 				<li class="rscadd">Added NanoUI for the antimatter engine.</li>
+				<li class="rscadd">Protolathes now have a queue.</li>
+				<li class="rscadd">MoMMIs now have a parking brake that prevents them from moving or being moved.</li>
 				<li class="rscadd">Added Osaifh's new borg component sprites.</li>
 				<li class="rscadd">Added lokiamis' new robot limb sprites.</li>
+				<li class="rscadd">Replaced detective's office with lokiamis' rework of it.</li>
 				<li class="rscadd">Recoded smelting, recycling, and stacking machines.  Far more flexible now, and recycler can run smelter recipes.</li>
 				<li class="rscadd">Re-added boxing ring from older server code.</li>
 				<li class="rscadd">Paperwork update:  Copying asses, AI cameras, and a couple other things.</li>
+				<li class="rscadd">Mop bucket wheels can now be locked by clicking on it with an empty hand.</li>
+				<li class="rscadd">Protolathe output location can be changed by clicking on one with a multitool.</li>
 				<li class="rscdel">Removed adminghost and ghost interaction.</li>
 				<li class="rscdel">Removed ghost visibility in darkness.</li>
+				<li class="bugfix">Atmos tank and monitoring computers fixed.</li>
+				<li class="bugfix">MoMMIs can no longer speak one character at a time.</li>
+				<li class="bugfix">Fixed IV drips being interacted with in death or crit.</li>
+				<li class="bugfix">Robots and MoMMIs now get asked to set their name on roundstart.</li>
+				<li class="bugfix">Fix magic stunprod powercells.</li>
+				<li class="bugfix">Added strict checking of things put into cigarette packets.</li>
+				<li class="bugfix">Monkeycubes for Farwa, Naera, etc. should be expandable via fire extinguisher, now.</li>
 				<li class="bugfix">Asteroid atmos greatly optimized, also prevents miners getting knocked around during hardcore.</li>
+				<li class="bugfix">RUST fuel compressor construction fixed.</li>
 				<li class="bugfix">Fix DNA scanners not handling grabs correctly.</li>
-				<li class="bugfix">MoMMIs can insert things into boxes, backpacks, and bags.</li>
+				<li class="bugfix">MoMMIs can insert things into boxes, backpacks, lockers, and bags.</li>
 				<li class="bugfix">MoMMIs and mediborgs can dick with chemdispenser beakers.  All robots can repair dispensers (or wreck them).</li>
 				<li class="bugfix">MoMMIs now automatically activate the tool slot after picking up an item or activating it from their modules panel.</li>
+				<li class="bugfix">MoMMIs differentiate between the metal in their inventory (which can't be inserted into machines) and regular metal.</li>
 				<li class="bugfix">Fix heist not counting objects in inventory.</li>
 				<li class="bugfix">Fix slimes not being grabbable.</li>
 				<li class="bugfix">Require consciousness when using emitters.</li>

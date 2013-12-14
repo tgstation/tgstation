@@ -13,8 +13,18 @@
 	var/y_co = 1	// Y coordinate
 	var/z_co = 1	// Z coordinate
 
+	use_power = 0
+	idle_power_usage = 10
+	active_power_usage = 300
+	power_channel = EQUIP
+	var/obj/item/weapon/cell/cell
+	var/teleport_cell_usage=1000 // 100% of a standard cell
+	processing=1
+
 /obj/machinery/computer/telescience/New()
 	..()
+	cell=new/obj/item/weapon/cell()
+	cell.charge=0
 	teles_left = rand(8,12)
 	x_off = rand(-10,10)
 	y_off = rand(-10,10)
@@ -24,6 +34,33 @@
 	..()
 	telepad = locate() in range(src, 7)
 
+/obj/machinery/computer/telescience/process()
+	if(!cell || (stat & (BROKEN|NOPOWER)) || !anchored)
+		return
+	if(cell.give(100))
+		use_power(200)		//this used to use CELLRATE, but CELLRATE is fucking awful. feel free to fix this properly!
+
+/obj/machinery/computer/telescience/attackby(obj/item/weapon/W, mob/user)
+	if(stat & BROKEN)
+		return
+
+	if(istype(W, /obj/item/weapon/cell) && anchored)
+		if(cell)
+			user << "\red There is already a cell in the charger."
+			return
+		else
+			var/area/a = loc.loc // Gets our locations location, like a dream within a dream
+			if(!isarea(a))
+				return
+			if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
+				user << "\red The [name] blinks red as you try to insert the cell!"
+				return
+
+			user.drop_item()
+			W.loc = src
+			cell = W
+			user.visible_message("[user] inserts a cell into the [src].", "You insert a cell into the [src].")
+		update_icon()
 /obj/machinery/computer/telescience/update_icon()
 	if(stat & BROKEN)
 		icon_state = "telescib"
@@ -50,18 +87,26 @@
 	if(user.stat || user.restrained()) return
 
 	// this is the data which will be sent to the ui
+	var/list/cell_data=null
+	if(cell)
+		cell_data = list(
+			"charge" = cell.charge,
+			"maxcharge" = cell.maxcharge
+		)
 	var/list/data=list(
 		"coordx" = x_co,
 		"coordy" = y_co,
 		"coordz" = z_co,
+		"cell" = cell_data
 	)
 
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, ui_key)
 	if (!ui)
 		// the ui does not exist, so we'll create a new one
-		ui = new(user, src, ui_key, "telescience_console.tmpl", name, 380, 110)
+		ui = new(user, src, ui_key, "telescience_console.tmpl", name, 380, 210)
 		// When the UI is first opened this is the data it will use
 		ui.set_initial_data(data)
+		ui.set_auto_update(1) // Charging action
 		ui.open()
 	else
 		// The UI is already open so push the new data to it
@@ -172,12 +217,16 @@
 	return
 
 /obj/machinery/computer/telescience/proc/doteleport(mob/user)
-	var/trueX = (x_co + x_off)
-	var/trueY = (y_co + y_off)
+	var/trueX = (x_co + x_off)+WORLD_X_OFFSET
+	var/trueY = (y_co + y_off)+WORLD_Y_OFFSET
 	trueX = Clamp(trueX, 1, world.maxx)
 	trueY = Clamp(trueY, 1, world.maxy)
 	if(telepad)
 		var/turf/target = locate(trueX, trueY, z_co)
+		var/area/A=target.loc
+		if(A && A.jammed)
+			src.visible_message("\red \icon[src] [src] buzzes.", "\icon[src]\red You hear something buzz.")
+			return
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, telepad)
 		s.start()
@@ -201,6 +250,12 @@
 /obj/machinery/computer/telescience/proc/teleport(mob/user)
 	if(x_co == null || y_co == null || z_co == null)
 		user << "<span class='caution'>Error: coordinates not set.</span>"
+		telefail()
+		return
+	if(cell && cell.charge<teleport_cell_usage)
+		user << "<span class='caution'>Error: not enough energy.</span>"
+		return
+	cell.use(teleport_cell_usage)
 	if(teles_left > 0)
 		teles_left -= 1
 		doteleport(user)
@@ -215,7 +270,7 @@
 
 	if(href_list["setx"])
 		var/new_x = input("Please input desired X coordinate.", name, x_co) as num
-		if(new_x < 1 || new_x > 255)
+		if(new_x+WORLD_X_OFFSET < 1 || new_x+WORLD_X_OFFSET > 255)
 			usr << "<span class='caution'>Error: Invalid X coordinate.</span>"
 		else
 			x_co = new_x
@@ -223,7 +278,7 @@
 
 	if(href_list["sety"])
 		var/new_y = input("Please input desired Y coordinate.", name, y_co) as num
-		if(new_y < 1 || new_y > 255)
+		if(new_y+WORLD_Y_OFFSET < 1 || new_y+WORLD_Y_OFFSET > 255)
 			usr << "<span class='caution'>Error: Invalid Y coordinate.</span>"
 		else
 			y_co = new_y
@@ -238,13 +293,25 @@
 		return 1
 
 	if(href_list["send"])
-		sending = 1
-		teleport(usr)
+		if(cell && cell.charge>=teleport_cell_usage)
+			sending = 1
+			teleport(usr)
 		return 1
 
 	if(href_list["receive"])
-		sending = 0
-		teleport(usr)
+		if(cell && cell.charge>=teleport_cell_usage)
+			sending = 0
+			teleport(usr)
+		return 1
+
+	if(href_list["eject_cell"])
+		if(cell)
+			usr.put_in_hands(cell)
+			cell.add_fingerprint(usr)
+			cell.updateicon()
+			src.cell = null
+			usr.visible_message("[usr] removes the cell from \the [name].", "You remove the cell from \the [name].")
+			update_icon()
 		return 1
 
 	if(href_list["recal"])

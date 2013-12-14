@@ -13,6 +13,9 @@
 	set invisibility = 0
 	set background = 1
 	if (monkeyizing)	return
+	if (update_muts)
+		update_muts=0
+		domutcheck(src,null,MUTCHK_FORCED)
 	..()
 
 	var/datum/gas_mixture/environment // Added to prevent null location errors-- TLE

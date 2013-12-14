@@ -17,6 +17,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"ninja" = "true",									 // 10
 	"vox raider" = IS_MODE_COMPILED("heist"),			 // 11
 	"diona" = 0,                                         // 12
+	"vampire" = IS_MODE_COMPILED("vampire")			 // 13
 )
 
 var/const/MAX_SAVE_SLOTS = 10
@@ -70,6 +71,7 @@ datum/preferences
 	var/language = "None"				//Secondary language
 
 		//Mob preview
+	var/icon/preview_icon = null
 	var/icon/preview_icon_front = null
 	var/icon/preview_icon_side = null
 

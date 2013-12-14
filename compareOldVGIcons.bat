@@ -1,2 +1,2 @@
-python tools/DMITool/DMI.py compare-all ../vg-station/icons/ icons/ compare_report_old.txt
+python tools/OpenBYOND/src/DMITool.py compare-all ../vg-station/icons/ icons/ compare_report_fail.txt
 pause

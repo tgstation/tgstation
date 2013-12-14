@@ -87,44 +87,59 @@
 	throwforce = 0.0
 	w_class = 1.0
 	var/string_attached
+	var/material="iron" // Ore ID, used with coinbags.
 
 /obj/item/weapon/coin/New()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 
 /obj/item/weapon/coin/gold
+	material="gold"
 	name = "Gold coin"
 	icon_state = "coin_gold"
 
 /obj/item/weapon/coin/silver
+	material="silver"
 	name = "Silver coin"
 	icon_state = "coin_silver"
 
 /obj/item/weapon/coin/diamond
+	material="diamond"
 	name = "Diamond coin"
 	icon_state = "coin_diamond"
 
 /obj/item/weapon/coin/iron
+	material="iron"
 	name = "Iron coin"
 	icon_state = "coin_iron"
 
 /obj/item/weapon/coin/plasma
+	material="plasma"
 	name = "Solid plasma coin"
 	icon_state = "coin_plasma"
 
 /obj/item/weapon/coin/uranium
+	material="uranium"
 	name = "Uranium coin"
 	icon_state = "coin_uranium"
 
 /obj/item/weapon/coin/clown
+	material="clown"
 	name = "Bananaium coin"
 	icon_state = "coin_clown"
 
+/obj/item/weapon/coin/phazon
+	material="phazon"
+	name = "Phazon coin"
+	icon_state = "coin_phazon"
+
 /obj/item/weapon/coin/adamantine
+	material="adamantine"
 	name = "Adamantine coin"
 	icon_state = "coin_adamantine"
 
 /obj/item/weapon/coin/mythril
+	material="mythril"
 	name = "Mythril coin"
 	icon_state = "coin_mythril"
 

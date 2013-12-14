@@ -6,8 +6,7 @@
 */
 
 /obj/item/clothing/suit/storage/labcoat/custom/N3X15
-	icon = 'icons/mob/custom/N3X15/suits.dmi'
-	custom = 1
+	icon_override = 'icons/mob/custom/N3X15/suits.dmi'
 
 /obj/item/clothing/suit/storage/labcoat/custom/N3X15/robotics
 	name = "Robotics Research Labcoat"
@@ -17,8 +16,7 @@
 
 
 /obj/item/clothing/under/custom/N3X15
-	icon = 'icons/mob/custom/N3X15/suits.dmi' // Cheating.
-	custom = 1
+	icon_override = 'icons/mob/custom/N3X15/suits.dmi'
 
 /obj/item/clothing/under/custom/N3X15/robotics
 	desc = "It's slimming black with reinforced seams; great for industrial work."

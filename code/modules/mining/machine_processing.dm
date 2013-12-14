@@ -81,7 +81,7 @@ a.notsmelting {
 					<th>Controls</th>
 				</tr>"}
 	for(var/ore_id in machine.ore)
-		var/datum/processable_ore/ore_info=machine.ore[ore_id]
+		var/datum/material/ore_info=machine.ore[ore_id]
 		if(ore_info.stored)
 			// Can't do squat unless we have at least one.
 			if(ore_info.stored<1)
@@ -133,7 +133,7 @@ a.notsmelting {
 		var/ore_id=href_list["toggle_select"]
 		if (!(ore_id in machine.ore))
 			error("Unknown ore ID [ore_id]!")
-		var/datum/processable_ore/ore_info=machine.ore[ore_id]
+		var/datum/material/ore_info=machine.ore[ore_id]
 		ore_info.selected = !ore_info.selected
 		machine.ore[ore_id]=ore_info
 	if(href_list["set_on"])
@@ -146,57 +146,85 @@ a.notsmelting {
 
 /*************************** ORES *********************************/
 
-/datum/processable_ore
+/datum/material
 	var/name=""
+	var/processed_name=""
 	var/id=""
 	var/stored=0
 	var/selected=0
-	var/itemtype=null
+	var/cc_per_sheet=CC_PER_SHEET_MISC
+	var/oretype=null
+	var/sheettype=null
+	var/cointype=null
 
-/datum/processable_ore/iron
+/datum/material/New()
+	if(processed_name=="")
+		processed_name=name
+
+/datum/material/iron
 	name="Iron"
 	id="iron"
-	itemtype=/obj/item/weapon/ore/iron
+	cc_per_sheet=CC_PER_SHEET_METAL
+	oretype=/obj/item/weapon/ore/iron
+	sheettype=/obj/item/stack/sheet/metal
+	cointype=/obj/item/weapon/coin/iron
 
-/datum/processable_ore/glass
+/datum/material/glass
 	name="Sand"
+	processed_name="Glass"
 	id="glass"
-	itemtype=/obj/item/weapon/ore/glass
+	cc_per_sheet=CC_PER_SHEET_GLASS
+	oretype=/obj/item/weapon/ore/glass
+	sheettype=/obj/item/stack/sheet/glass
 
-/datum/processable_ore/diamond
+/datum/material/diamond
 	name="Diamond"
 	id="diamond"
-	itemtype=/obj/item/weapon/ore/diamond
+	oretype=/obj/item/weapon/ore/diamond
+	sheettype=/obj/item/stack/sheet/mineral/diamond
+	cointype=/obj/item/weapon/coin/diamond
 
-/datum/processable_ore/plasma
+/datum/material/plasma
 	name="Plasma"
 	id="plasma"
-	itemtype=/obj/item/weapon/ore/plasma
+	oretype=/obj/item/weapon/ore/plasma
+	sheettype=/obj/item/stack/sheet/mineral/plasma
+	cointype=/obj/item/weapon/coin/plasma
 
-/datum/processable_ore/gold
+/datum/material/gold
 	name="Gold"
 	id="gold"
-	itemtype=/obj/item/weapon/ore/gold
+	oretype=/obj/item/weapon/ore/gold
+	sheettype=/obj/item/stack/sheet/mineral/gold
+	cointype=/obj/item/weapon/coin/gold
 
-/datum/processable_ore/silver
+/datum/material/silver
 	name="Silver"
 	id="silver"
-	itemtype=/obj/item/weapon/ore/silver
+	oretype=/obj/item/weapon/ore/silver
+	sheettype=/obj/item/stack/sheet/mineral/silver
+	cointype=/obj/item/weapon/coin/silver
 
-/datum/processable_ore/uranium
+/datum/material/uranium
 	name="Uranium"
 	id="uranium"
-	itemtype=/obj/item/weapon/ore/uranium
+	oretype=/obj/item/weapon/ore/uranium
+	sheettype=/obj/item/stack/sheet/mineral/uranium
+	cointype=/obj/item/weapon/coin/uranium
 
-/datum/processable_ore/clown
+/datum/material/clown
 	name="Bananium"
 	id="clown"
-	itemtype=/obj/item/weapon/ore/clown
+	oretype=/obj/item/weapon/ore/clown
+	sheettype=/obj/item/stack/sheet/mineral/clown
+	cointype=/obj/item/weapon/coin/clown
 
-/datum/processable_ore/phazon
+/datum/material/phazon
 	name="Phazon"
 	id="phazon"
-	itemtype=/obj/item/weapon/ore/phazon
+	oretype=/obj/item/weapon/ore/phazon
+	sheettype=/obj/item/stack/sheet/mineral/phazon
+	cointype=/obj/item/weapon/coin/phazon
 
 /**********************Mineral processing unit**************************/
 
@@ -225,8 +253,8 @@ a.notsmelting {
 			if(src.output) break
 		processing_objects.Add(src)
 
-		for(var/oredata in typesof(/datum/processable_ore) - /datum/processable_ore)
-			var/datum/processable_ore/ore_datum = new oredata
+		for(var/oredata in typesof(/datum/material) - /datum/material)
+			var/datum/material/ore_datum = new oredata
 			ore[ore_datum.id]=ore_datum
 
 		for(var/recipetype in typesof(/datum/smelting_recipe) - /datum/smelting_recipe)
@@ -244,7 +272,7 @@ a.notsmelting {
 	if(!(ore_id in ore))
 		warning("addMaterial(): Unknown material [ore_id]!")
 		return
-	var/datum/processable_ore/po=ore[ore_id]
+	var/datum/material/po=ore[ore_id]
 	po.stored += amount
 	ore[ore_id]=po
 
@@ -274,7 +302,7 @@ a.notsmelting {
 						// Take ingredients
 						for(var/ore_id in recipe.ingredients)
 							// Oh how I wish ore[ore_id].stored-- worked.
-							var/datum/processable_ore/po=ore[ore_id]
+							var/datum/material/po=ore[ore_id]
 							po.stored--
 							ore[ore_id]=po
 
@@ -294,7 +322,7 @@ a.notsmelting {
 
 					// Take one of every ore selected
 					for(var/ore_id in ore)
-						var/datum/processable_ore/po=ore[ore_id]
+						var/datum/material/po=ore[ore_id]
 						if(po.stored>0 && po.selected)
 							po.stored--
 							ore[ore_id]=po
@@ -308,8 +336,8 @@ a.notsmelting {
 			O = locate(/obj/item, input.loc)
 			if (O)
 				for(var/ore_id in ore)
-					var/datum/processable_ore/po=ore[ore_id]
-					if (istype(O,po.itemtype))
+					var/datum/material/po=ore[ore_id]
+					if (istype(O,po.oretype))
 						po.stored++
 						ore[ore_id]=po
 						O.loc = null
@@ -357,7 +385,7 @@ a.notsmelting {
 						// Take ingredients
 						for(var/ore_id in recipe.ingredients)
 							// Oh how I wish ore[ore_id].stored-- worked.
-							var/datum/processable_ore/po=ore[ore_id]
+							var/datum/material/po=ore[ore_id]
 							po.stored--
 							ore[ore_id]=po
 
@@ -377,7 +405,7 @@ a.notsmelting {
 
 					// Take one of every ore selected
 					for(var/ore_id in ore)
-						var/datum/processable_ore/po=ore[ore_id]
+						var/datum/material/po=ore[ore_id]
 						if(po.stored>0 && po.selected)
 							po.stored--
 							ore[ore_id]=po
@@ -469,7 +497,7 @@ a.notsmelting {
 				<th>Controls</th>
 			</tr>"}
 	for(var/ore_id in machine.ore)
-		var/datum/processable_ore/ore_info=machine.ore[ore_id]
+		var/datum/material/ore_info=machine.ore[ore_id]
 		if(ore_info.stored)
 			// Can't do squat unless we have at least one.
 			if(ore_info.stored<1)

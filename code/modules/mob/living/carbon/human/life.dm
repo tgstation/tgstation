@@ -29,7 +29,24 @@
 	var/prev_gender = null // Debug for plural genders
 	var/temperature_alert = 0
 	var/in_stasis = 0
+	var/do_deferred_species_setup=0
 
+// Doing this during species init breaks shit.
+/mob/living/carbon/human/proc/DeferredSpeciesSetup()
+	var/mut_update=0
+	if(species.default_mutations.len>0)
+		for(var/mutation in species.default_mutations)
+			if(!(mutation in mutations))
+				mutations.Add(mutation)
+				mut_update=1
+	if(species.default_blocks.len>0)
+		for(var/block in species.default_blocks)
+			if(!dna.GetSEState(block))
+				dna.SetSEState(block,1)
+				mut_update=1
+	if(mut_update)
+		domutcheck(src,null,MUTCHK_FORCED)
+		update_mutations()
 
 /mob/living/carbon/human/Life()
 	set invisibility = 0
@@ -39,6 +56,10 @@
 	if(!loc)			return	// Fixing a null error that occurs when the mob isn't found in the world -- TLE
 
 	..()
+
+	if(do_deferred_species_setup)
+		DeferredSpeciesSetup()
+		do_deferred_species_setup=0
 
 	//Apparently, the person who wrote this code designed it so that
 	//blinded get reset each cycle and then get activated later in the
@@ -64,6 +85,12 @@
 			if(istype(loc, /obj/))
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
+
+		if(check_mutations)
+			testing("Updating [src.real_name]'s mutations: "+english_list(mutations))
+			domutcheck(src,null,MUTCHK_FORCED)
+			update_mutations()
+			check_mutations=0
 
 		//Updates the number of stored chemicals for powers
 		handle_changeling()
@@ -113,6 +140,17 @@
 	// Grabbing
 	for(var/obj/item/weapon/grab/G in src)
 		G.process()
+
+	if(mind && mind.vampire)
+		if(hud_used)
+			if(!hud_used.vampire_blood_display)
+				hud_used.vampire_hud()
+				//hud_used.human_hud(hud_used.ui_style)
+			hud_used.vampire_blood_display.maptext_width = 64
+			hud_used.vampire_blood_display.maptext_height = 26
+			hud_used.vampire_blood_display.maptext = "<div align='left' valign='top' style='position:relative; top:0px; left:6px'> U:<font color='#33FF33' size='1'>[mind.vampire.bloodusable]</font><br> T:<font color='#990000' size='1'>[mind.vampire.bloodtotal]</font></div>"
+		handle_vampire_cloak()
+
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(var/pressure)
@@ -377,6 +415,11 @@
 			else if(internals)
 				internals.icon_state = "internal0"
 		return null
+
+	// USED IN DEATHWHISPERS
+	proc/isInCrit()
+		// Health is in deep shit and we're not already dead
+		return health <= 0 && stat != 2
 
 
 	proc/handle_breath(datum/gas_mixture/breath)
@@ -1179,7 +1222,13 @@
 					if("shadow")
 						see_in_dark = 8
 						see_invisible = SEE_INVISIBLE_LEVEL_ONE
-
+			if(mind && mind.vampire)
+				if((VAMP_VISION in mind.vampire.powers) && !(VAMP_FULL in mind.vampire.powers))
+					sight |= SEE_MOBS
+				if((VAMP_FULL in mind.vampire.powers))
+					sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
+					see_in_dark = 8
+					if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
 			if(XRAY in mutations)
 				sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 				see_in_dark = 8

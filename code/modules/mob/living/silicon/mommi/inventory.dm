@@ -9,6 +9,11 @@
 	var/obj/item/found
 	if(istype(W, src.module.emag.type))
 		found = W
+	// Exact matching for stacks (so we can load machines)
+	if(istype(W, /obj/item/stack/sheet))
+		for(var/obj/item/stack/sheet/S in src.module.modules)
+			if(S.type==W.type)
+				return S
 	else
 		found = locate(W) in src.module.modules
 	return found

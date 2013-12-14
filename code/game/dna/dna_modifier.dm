@@ -14,7 +14,7 @@
 	var/locked = 0
 	var/mob/living/carbon/occupant = null
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
-	var/opened = 0.0
+	var/opened = 0
 
 /obj/machinery/dna_scannernew/New()
 	..()
@@ -286,6 +286,7 @@
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 400
+	var/waiting_for_user_input=0 // Fix for #274 (Mash create block injector without answering dialog to make unlimited injectors) - N3X
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver))
@@ -369,19 +370,19 @@
 		return
 	return
 
-/obj/machinery/computer/scan_consolenew/proc/all_dna_blocks(var/buffer)
+/obj/machinery/computer/scan_consolenew/proc/all_dna_blocks(var/list/buffer)
 	var/list/arr = list()
-	for(var/i = 1, i <= length(buffer)/3, i++)
-		arr += "[i]:[copytext(buffer,i*3-2,i*3+1)]"
+	for(var/i = 1, i <= buffer.len, i++)
+		arr += "[i]:[EncodeDNABlock(buffer[i])]"
 	return arr
 
-/obj/machinery/computer/scan_consolenew/proc/setInjectorBlock(var/obj/item/weapon/dnainjector/I, var/blk, var/buffer)
+/obj/machinery/computer/scan_consolenew/proc/setInjectorBlock(var/obj/item/weapon/dnainjector/I, var/blk, var/list/buffer)
 	var/pos = findtext(blk,":")
 	if(!pos) return 0
 	var/id = text2num(copytext(blk,1,pos))
 	if(!id) return 0
 	I.block = id
-	I.dna = copytext(buffer,id*3-2,id*3+1)
+	I.dna = list(buffer[id])
 	return 1
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/W as obj, mob/user as mob)
@@ -639,10 +640,7 @@
 		return 1 // return 1 forces an update to all Nano uis attached to src
 
 	if (href_list["pulseUIRadiation"])
-		var/block
-		var/newblock
-		var/tstructure2
-		block = getblock(getblock(src.connected.occupant.dna.uni_identity,src.selected_ui_block,DNA_BLOCK_SIZE),src.selected_ui_subblock,1)
+		var/block = src.connected.occupant.dna.GetUISubBlock(src.selected_ui_block,src.selected_ui_subblock)
 
 		irradiating = src.radiation_duration
 		var/lock_state = src.connected.locked
@@ -658,13 +656,8 @@
 
 		if (prob((80 + (src.radiation_duration / 2))))
 			block = miniscrambletarget(num2text(selected_ui_target), src.radiation_intensity, src.radiation_duration)
-			newblock = null
-			if (src.selected_ui_subblock == 1) newblock = block + getblock(getblock(src.connected.occupant.dna.uni_identity,src.selected_ui_block,DNA_BLOCK_SIZE),2,1) + getblock(getblock(src.connected.occupant.dna.uni_identity,src.selected_ui_block,DNA_BLOCK_SIZE),3,1)
-			if (src.selected_ui_subblock == 2) newblock = getblock(getblock(src.connected.occupant.dna.uni_identity,src.selected_ui_block,DNA_BLOCK_SIZE),1,1) + block + getblock(getblock(src.connected.occupant.dna.uni_identity,src.selected_ui_block,DNA_BLOCK_SIZE),3,1)
-			if (src.selected_ui_subblock == 3) newblock = getblock(getblock(src.connected.occupant.dna.uni_identity,src.selected_ui_block,DNA_BLOCK_SIZE),1,1) + getblock(getblock(src.connected.occupant.dna.uni_identity,src.selected_ui_block,DNA_BLOCK_SIZE),2,1) + block
-			tstructure2 = setblock(src.connected.occupant.dna.uni_identity, src.selected_ui_block, newblock,DNA_BLOCK_SIZE)
-			src.connected.occupant.dna.uni_identity = tstructure2
-			updateappearance(src.connected.occupant,src.connected.occupant.dna.uni_identity)
+			src.connected.occupant.dna.SetUISubBlock(src.selected_ui_block,src.selected_ui_subblock,block)
+			src.connected.occupant.UpdateAppearance()
 			src.connected.occupant.radiation += (src.radiation_intensity+src.radiation_duration)
 		else
 			if	(prob(20+src.radiation_intensity))
@@ -672,7 +665,7 @@
 				domutcheck(src.connected.occupant,src.connected)
 			else
 				randmuti(src.connected.occupant)
-				updateappearance(src.connected.occupant,src.connected.occupant.dna.uni_identity)
+				src.connected.occupant.UpdateAppearance()
 			src.connected.occupant.radiation += ((src.radiation_intensity*2)+src.radiation_duration)
 		src.connected.locked = lock_state
 		return 1 // return 1 forces an update to all Nano uis attached to src
@@ -700,15 +693,13 @@
 			src.selected_se_block = select_block
 		if ((select_subblock <= DNA_BLOCK_SIZE) && (select_subblock >= 1))
 			src.selected_se_subblock = select_subblock
+		//testing("User selected block [selected_se_block] (sent [select_block]), subblock [selected_se_subblock] (sent [select_block]).")
 		return 1 // return 1 forces an update to all Nano uis attached to src
 
 	if (href_list["pulseSERadiation"])
-		var/block
-		var/newblock
-		var/tstructure2
-		var/oldblock
-
-		block = getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.selected_se_block,DNA_BLOCK_SIZE),src.selected_se_subblock,1)
+		var/block = src.connected.occupant.dna.GetSESubBlock(src.selected_se_block,src.selected_se_subblock)
+		//var/original_block=block
+		//testing("Irradiating SE block [src.selected_se_block]:[src.selected_se_subblock] ([block])...")
 
 		irradiating = src.radiation_duration
 		var/lock_state = src.connected.locked
@@ -721,47 +712,37 @@
 
 		if(src.connected.occupant)
 			if (prob((80 + (src.radiation_duration / 2))))
-				if ((src.selected_se_block != 2 || src.selected_se_block != 12 || src.selected_se_block != 8 || src.selected_se_block || 10) && prob (20))
-					oldblock = src.selected_se_block
-					block = miniscramble(block, src.radiation_intensity, src.radiation_duration)
-					newblock = null
+				// FIXME: Find out what these corresponded to and change them to the WHATEVERBLOCK they need to be.
+				//if ((src.selected_se_block != 2 || src.selected_se_block != 12 || src.selected_se_block != 8 || src.selected_se_block || 10) && prob (20))
+				var/real_SE_block=selected_se_block
+				block = miniscramble(block, src.radiation_intensity, src.radiation_duration)
+				if(prob(20))
 					if (src.selected_se_block > 1 && src.selected_se_block < STRUCDNASIZE/2)
-						src.selected_se_block++
+						real_SE_block++
 					else if (src.selected_se_block > STRUCDNASIZE/2 && src.selected_se_block < STRUCDNASIZE)
-						src.selected_se_block--
-					if (src.selected_se_subblock == 1) newblock = block + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.selected_se_block,DNA_BLOCK_SIZE),2,1) + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.selected_se_block,DNA_BLOCK_SIZE),3,1)
-					if (src.selected_se_subblock == 2) newblock = getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.selected_se_block,DNA_BLOCK_SIZE),1,1) + block + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.selected_se_block,DNA_BLOCK_SIZE),3,1)
-					if (src.selected_se_subblock == 3) newblock = getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.selected_se_block,DNA_BLOCK_SIZE),1,1) + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.selected_se_block,DNA_BLOCK_SIZE),2,1) + block
-					tstructure2 = setblock(src.connected.occupant.dna.struc_enzymes, src.selected_se_block, newblock,DNA_BLOCK_SIZE)
-					src.connected.occupant.dna.struc_enzymes = tstructure2
-					domutcheck(src.connected.occupant,src.connected)
-					src.connected.occupant.radiation += (src.radiation_intensity+src.radiation_duration)
-					src.selected_se_block = oldblock
-				else
-				//
-					block = miniscramble(block, src.radiation_intensity, src.radiation_duration)
-					newblock = null
-					if (src.selected_se_subblock == 1) newblock = block + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.selected_se_block,DNA_BLOCK_SIZE),2,1) + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.selected_se_block,DNA_BLOCK_SIZE),3,1)
-					if (src.selected_se_subblock == 2) newblock = getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.selected_se_block,DNA_BLOCK_SIZE),1,1) + block + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.selected_se_block,DNA_BLOCK_SIZE),3,1)
-					if (src.selected_se_subblock == 3) newblock = getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.selected_se_block,DNA_BLOCK_SIZE),1,1) + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.selected_se_block,DNA_BLOCK_SIZE),2,1) + block
-					tstructure2 = setblock(src.connected.occupant.dna.struc_enzymes, src.selected_se_block, newblock,DNA_BLOCK_SIZE)
-					src.connected.occupant.dna.struc_enzymes = tstructure2
-					domutcheck(src.connected.occupant,src.connected)
-					src.connected.occupant.radiation += (src.radiation_intensity+src.radiation_duration)
+						real_SE_block--
+
+				//testing("Irradiated SE block [real_SE_block]:[src.selected_se_subblock] ([original_block] now [block]) [(real_SE_block!=selected_se_block) ? "(SHIFTED)":""]!")
+				connected.occupant.dna.SetSESubBlock(real_SE_block,selected_se_subblock,block)
+				src.connected.occupant.radiation += (src.radiation_intensity+src.radiation_duration)
+				domutcheck(src.connected.occupant,src.connected)
 			else
+				src.connected.occupant.radiation += ((src.radiation_intensity*2)+src.radiation_duration)
 				if	(prob(80-src.radiation_duration))
+					//testing("Random bad mut!")
 					randmutb(src.connected.occupant)
 					domutcheck(src.connected.occupant,src.connected)
 				else
 					randmuti(src.connected.occupant)
-					updateappearance(src.connected.occupant,src.connected.occupant.dna.uni_identity)
-				src.connected.occupant.radiation += ((src.radiation_intensity*2)+src.radiation_duration)
+					//testing("Random identity mut!")
+					src.connected.occupant.UpdateAppearance()
 		src.connected.locked = lock_state
 		return 1 // return 1 forces an update to all Nano uis attached to src
 
 	if(href_list["ejectBeaker"])
 		if(connected.beaker)
-			connected.beaker.loc = connected.loc
+			var/obj/item/weapon/reagent_containers/glass/B = connected.beaker
+			B.loc = connected.loc
 			connected.beaker = null
 		return 1
 
@@ -806,7 +787,7 @@
 		if (bufferOption == "saveUI")
 			if(src.connected.occupant && src.connected.occupant.dna)
 				src.buffers[bufferId]["ue"] = 0
-				src.buffers[bufferId]["data"] = src.connected.occupant.dna.uni_identity
+				src.buffers[bufferId]["data"] = src.connected.occupant.dna.UI
 				if (!istype(src.connected.occupant,/mob/living/carbon/human))
 					src.buffers[bufferId]["owner"] = src.connected.occupant.name
 				else
@@ -817,7 +798,7 @@
 
 		if (bufferOption == "saveUIAndUE")
 			if(src.connected.occupant && src.connected.occupant.dna)
-				src.buffers[bufferId]["data"] = src.connected.occupant.dna.uni_identity
+				src.buffers[bufferId]["data"] = src.connected.occupant.dna.UI
 				if (!istype(src.connected.occupant,/mob/living/carbon/human))
 					src.buffers[bufferId]["owner"] = src.connected.occupant.name
 				else
@@ -830,7 +811,7 @@
 		if (bufferOption == "saveSE")
 			if(src.connected.occupant && src.connected.occupant.dna)
 				src.buffers[bufferId]["ue"] = 0
-				src.buffers[bufferId]["data"] = src.connected.occupant.dna.struc_enzymes
+				src.buffers[bufferId]["data"] = src.connected.occupant.dna.SE
 				if (!istype(src.connected.occupant,/mob/living/carbon/human))
 					src.buffers[bufferId]["owner"] = src.connected.occupant.name
 				else
@@ -869,28 +850,32 @@
 				if (src.buffers[bufferId]["ue"])
 					src.connected.occupant.real_name = src.buffers[bufferId]["owner"]
 					src.connected.occupant.name = src.buffers[bufferId]["owner"]
-				src.connected.occupant.dna.uni_identity = src.buffers[bufferId]["data"]
-				updateappearance(src.connected.occupant,src.connected.occupant.dna.uni_identity)
+				src.connected.occupant.UpdateAppearance(src.buffers[bufferId]["data"])
 			else if (src.buffers[bufferId]["type"] == "se")
-				src.connected.occupant.dna.struc_enzymes = src.buffers[bufferId]["data"]
+				src.connected.occupant.dna.SE = src.buffers[bufferId]["data"]
+				src.connected.occupant.dna.UpdateSE()
 				domutcheck(src.connected.occupant,src.connected)
 			src.connected.occupant.radiation += rand(20,50)
 			return 1
 
 		if (bufferOption == "createInjector")
-			if (src.injector_ready)
+			if (src.injector_ready || waiting_for_user_input)
+
 				var/success = 1
 				var/obj/item/weapon/dnainjector/I = new /obj/item/weapon/dnainjector
 				I.dnatype = src.buffers[bufferId]["type"]
 				if(href_list["createBlockInjector"])
+					waiting_for_user_input=1
 					var/blk = input(usr,"Select Block","Block") in all_dna_blocks(src.buffers[bufferId]["data"])
 					success = setInjectorBlock(I,blk,src.buffers[bufferId]["data"])
 				else
 					I.dna = src.buffers[bufferId]["data"]
+				waiting_for_user_input=0
 				if(success)
 					I.loc = src.loc
 					I.name += " ([src.buffers[bufferId]["label"]])"
-					if (src.buffers[bufferId]["ue"]) I.ue = src.buffers[bufferId]["owner"] //lazy haw haw
+					if (src.buffers[bufferId]["ue"])
+						I.ue = src.buffers[bufferId]["owner"] //lazy haw haw
 					//src.temphtml = "Injector created."
 					src.injector_ready = 0
 					spawn(300)

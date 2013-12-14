@@ -9,8 +9,12 @@
 	name = "storage"
 	icon = 'icons/obj/storage.dmi'
 	w_class = 3.0
+
+	// These two accept a string containing the type path and the following optional prefixes:
+	//  = - Strict type matching.  Will NOT check for subtypes.
 	var/list/can_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
 	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_hold isn't set)
+
 	var/max_w_class = 2 //Max size of objects that this object can store (in effect only if can_hold isn't set)
 	var/max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
 	var/storage_slots = 7 //The number of storage slots in this container.
@@ -193,16 +197,34 @@
 	if(can_hold.len)
 		var/ok = 0
 		for(var/A in can_hold)
-			if(istype(W, text2path(A) ))
+			if(dd_hasprefix(A,"="))
+				// Force strict matching of type.
+				// No subtypes allowed.
+				if("[W.type]"==copytext(A,2))
+					ok = 1
+					break
+			else if(istype(W, text2path(A) ))
 				ok = 1
 				break
 		if(!ok)
 			if(!stop_messages)
+				if (istype(W, /obj/item/weapon/hand_labeler))
+					return 0
 				usr << "<span class='notice'>[src] cannot hold [W].</span>"
 			return 0
 
 	for(var/A in cant_hold) //Check for specific items which this container can't hold.
-		if(istype(W, text2path(A) ))
+		var/nope=0
+		if(dd_hasprefix(A,"="))
+			// Force strict matching of type.
+			// No subtypes allowed.
+			if("[W.type]"==copytext(A,2))
+				nope = 1
+				break
+		else if(istype(W, text2path(A) ))
+			nope = 1
+			break
+		if(nope)
 			if(!stop_messages)
 				usr << "<span class='notice'>[src] cannot hold [W].</span>"
 			return 0
@@ -235,8 +257,6 @@
 /obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W as obj, prevent_warning = 0)
 	if(!istype(W)) return 0
 	if(usr)
-		// MoMMIs have to drop it, too. - N3X
-		//if(!istype(usr, /mob/living/silicon/robot/mommi))
 		usr.u_equip(W)
 		usr.update_icons()	//update our overlays
 	W.loc = src

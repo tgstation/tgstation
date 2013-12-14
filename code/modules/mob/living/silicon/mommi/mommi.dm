@@ -399,8 +399,12 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	// Put our eyes just on top of the lighting, so it looks emissive in maint tunnels.
 	if(layer==MOB_LAYER)
 		overlays+=image(icon,"eyes-[subtype][emagged?"-emagged":""]",LIGHTING_LAYER+1)
+		if(anchored)
+			overlays+=image(icon,"[subtype]-park", LIGHTING_LAYER+1)
 	else
 		overlays+=image(icon,"eyes-[subtype][emagged?"-emagged":""]",TURF_LAYER+0.2) // Fixes floating eyes
+		if(anchored)
+			overlays+=image(icon,"[subtype]-park", TURF_LAYER+0.2)
 	return
 
 

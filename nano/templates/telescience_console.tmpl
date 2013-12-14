@@ -18,3 +18,15 @@ Used In File(s): \code\modules\telesci\telesci_computer.dm
 		{^{:~link('Recalibrate', 'gear', {'recal': 1})}}
 	</div>
 </div>
+{^{if !cell}}
+	<div class="notice">No power cell detected.</div>
+{{else}}
+	<div class="statusDisplay">
+		<div class="line">
+			<div class="statusLabel">Charge:</div> 
+			{^{:~displayBar(cell.charge,0,cell.maxcharge,(cell.charge<1000)?"bad":"good")}}
+			{^{:cell.charge}}/{^{:cell.maxcharge}}
+			{^{:~link("Eject", "eject", {"eject_cell":1},null)}}
+		</div>
+	</div>
+{{/if}}

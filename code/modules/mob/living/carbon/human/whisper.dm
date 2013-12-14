@@ -89,10 +89,10 @@
 	var/list/heard_b = list() // didn't understand us
 	var/and_passes_on=""
 
-	if(!said_last_words)
+	if(!said_last_words && src.isInCrit())
 		and_passes_on=" - and passes on"
 
-	said_last_words=src.stat
+		said_last_words=src.stat
 
 
 	for (var/mob/M in listening)
@@ -154,6 +154,7 @@
 		if (M.stat > 1 && !(M in heard_a) && (M.client.prefs.toggles & CHAT_GHOSTEARS))
 			M.show_message(rendered, 2)
 	if(said_last_words)
+		// Kill 'em.
 		src.stat = 2
-		src.death()
+		src.death(0)
 		src.regenerate_icons()

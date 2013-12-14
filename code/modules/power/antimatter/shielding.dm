@@ -11,7 +11,8 @@ proc/cardinalrange(var/center)
 	name = "antimatter reactor section"
 	desc = "This device was built using a plasma life-form that seems to increase plasma's natural ability to react with neutrinos while reducing the combustibility."
 
-	icon = 'icons/obj/machines/antimatter.dmi'
+	//icon = 'icons/obj/machines/antimatter.dmi'
+	icon = 'icons/obj/machines/new_ame.dmi'
 	icon_state = "shield"
 	anchored = 1
 	density = 1
@@ -51,7 +52,7 @@ proc/cardinalrange(var/center)
 		if(AMS && AMS.control_unit && link_control(AMS.control_unit))
 			break
 
-	if(!control_unit)//No other guys nearby look for a control unit
+	if(!control_unit)//No other guys nearby, look for a control unit
 		for(var/direction in cardinal)
 		for(var/obj/machinery/power/am_control_unit/AMC in cardinalrange(src))
 			if(AMC.add_shielding(src))
@@ -178,9 +179,15 @@ proc/cardinalrange(var/center)
 //Scans cards for shields or the control unit and if all there it
 /obj/machinery/am_shielding/proc/core_check()
 	for(var/direction in alldirs)
-		var/machine = locate(/obj/machinery, get_step(loc, direction))
-		if(!machine) return 0//Need all for a core
-		if(!istype(machine, /obj/machinery/am_shielding) && !istype(machine, /obj/machinery/power/am_control_unit))	return 0
+		var/found_am_device=0
+		for(var/obj/machinery/machine in get_step(loc, direction))
+			if(!machine)
+				continue
+			if(istype(machine, /obj/machinery/am_shielding) || istype(machine, /obj/machinery/power/am_control_unit))
+				found_am_device=1
+				break
+		if(!found_am_device)
+			return 0
 	return 1
 
 

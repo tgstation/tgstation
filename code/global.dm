@@ -81,6 +81,7 @@ var/href_logfile = null
 var/station_name = null
 var/game_version = "adsfasdfasdf"
 var/changelog_hash = ""
+var/game_year = (text2num(time2text(world.realtime, "YYYY")) + 544)
 
 var/datum/air_tunnel/air_tunnel1/SS13_airtunnel = null
 var/going = 1.0
@@ -115,6 +116,13 @@ var/mouse_respawn_time = 1 //Amount of time that must pass between a player dyin
 
 var/CELLRATE = 0.002  // multiplier for watts per tick <> cell storage (eg: .002 means if there is a load of 1000 watts, 20 units will be taken from a cell per second)
 var/CHARGELEVEL = 0.001 // Cap for how fast cells charge, as a percentage-per-tick (.001 means cellcharge is capped to 1% per second)
+
+// COORDINATE OFFSETS
+// Used for telescience.  Only apply to GPSes and other things that display coordinates to players.
+// The idea is that coordinates given will be entirely different from those displayed on the map in DreamMaker,
+//  while still making it very simple to lock onto someone who is drifting in space.
+var/WORLD_X_OFFSET=0
+var/WORLD_Y_OFFSET=0
 
 var/shuttle_z = 2	//default
 var/airtunnel_start = 68 // default

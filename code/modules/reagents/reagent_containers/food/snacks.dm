@@ -547,6 +547,24 @@
 		reagents.add_reagent("nutriment", 3)
 		src.bitesize = 3
 
+/obj/item/weapon/reagent_containers/food/snacks/tofurkey
+	name = "Tofurkey"
+	desc = "A fake turkey made from tofu."
+	icon_state = "tofurkey"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 12)
+		reagents.add_reagent("stoxin", 3)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/stuffing
+	name = "Stuffing"
+	desc = "Moist, peppery breadcrumbs for filling the body cavities of dead birds. Dig in!"
+	icon_state = "stuffing"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		bitesize = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/carpmeat
 	name = "carp fillet"
@@ -1332,6 +1350,7 @@
 	icon_state = "monkeycube"
 	bitesize = 12
 	var/wrapped = 0
+	var/monkey_type = null
 
 	New()
 		..()
@@ -1339,7 +1358,7 @@
 
 	afterattack(obj/O as obj, mob/user as mob)
 		if(istype(O,/obj/structure/sink) && !wrapped)
-			user << "You place [name] under a stream of water..."
+			user << "You place \the [name] under a stream of water..."
 			loc = get_turf(O)
 			return Expand()
 		..()
@@ -1350,8 +1369,17 @@
 
 	proc/Expand()
 		for(var/mob/M in viewers(src,7))
-			M << "\red The monkey cube expands!"
-		new /mob/living/carbon/monkey(get_turf(src))
+			M << "\red \The [src] expands!"
+		if(monkey_type)
+			switch(monkey_type)
+				if("tajara")
+					new /mob/living/carbon/monkey/tajara(get_turf(src))
+				if("unathi")
+					new /mob/living/carbon/monkey/unathi(get_turf(src))
+				if("skrell")
+					new /mob/living/carbon/monkey/skrell(get_turf(src))
+		else
+			new /mob/living/carbon/monkey(get_turf(src))
 		del(src)
 
 	proc/Unwrap(mob/user as mob)
@@ -1366,125 +1394,29 @@
 	icon_state = "monkeycubewrap"
 	wrapped = 1
 
-/obj/item/weapon/reagent_containers/food/snacks/farwacube
+
+/obj/item/weapon/reagent_containers/food/snacks/monkeycube/farwacube
 	name = "farwa cube"
-	desc = "Just add water!"
-	icon_state = "monkeycube"
-	bitesize = 12
-	var/wrapped = 0
+	monkey_type ="tajara"
+/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/farwacube
+	name = "farwa cube"
+	monkey_type ="tajara"
 
-	New()
-		..()
-		reagents.add_reagent("nutriment",10)
 
-	afterattack(obj/O as obj, mob/user as mob)
-		if(istype(O,/obj/structure/sink) && !wrapped)
-			user << "You place [name] under a stream of water..."
-			loc = get_turf(O)
-			return Expand()
-		..()
-
-	attack_self(mob/user as mob)
-		if(wrapped)
-			Unwrap(user)
-
-	proc/Expand()
-		for(var/mob/M in viewers(src,7))
-			M << "\red The farwa cube expands!"
-		new /mob/living/carbon/monkey/tajara(get_turf(src))
-		del(src)
-
-	proc/Unwrap(mob/user as mob)
-		icon_state = "monkeycube"
-		desc = "Just add water!"
-		user << "You unwrap the cube."
-		wrapped = 0
-		return
-
-/obj/item/weapon/reagent_containers/food/snacks/stokcube
+/obj/item/weapon/reagent_containers/food/snacks/monkeycube/stokcube
 	name = "stok cube"
-	desc = "Just add water!"
-	icon_state = "monkeycube"
-	bitesize = 12
-	var/wrapped = 0
+	monkey_type ="unathi"
+/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/stokcube
+	name = "stok cube"
+	monkey_type ="unathi"
 
-	New()
-		..()
-		reagents.add_reagent("nutriment",10)
 
-	afterattack(obj/O as obj, mob/user as mob)
-		if(istype(O,/obj/structure/sink) && !wrapped)
-			user << "You place [name] under a stream of water..."
-			loc = get_turf(O)
-			return Expand()
-		..()
-
-	attack_self(mob/user as mob)
-		if(wrapped)
-			Unwrap(user)
-
-	proc/Expand()
-		for(var/mob/M in viewers(src,7))
-			M << "\red The stok cube expands!"
-		new /mob/living/carbon/monkey/unathi(get_turf(src))
-		del(src)
-
-	proc/Unwrap(mob/user as mob)
-		icon_state = "monkeycube"
-		desc = "Just add water!"
-		user << "You unwrap the cube."
-		wrapped = 0
-		return
-/obj/item/weapon/reagent_containers/food/snacks/neaeracube
+/obj/item/weapon/reagent_containers/food/snacks/monkeycube/neaeracube
 	name = "neaera cube"
-	desc = "Just add water!"
-	icon_state = "monkeycube"
-	bitesize = 12
-	var/wrapped = 0
-
-	New()
-		..()
-		reagents.add_reagent("nutriment",10)
-
-	afterattack(obj/O as obj, mob/user as mob)
-		if(istype(O,/obj/structure/sink) && !wrapped)
-			user << "You place [name] under a stream of water..."
-			loc = get_turf(O)
-			return Expand()
-		..()
-
-	attack_self(mob/user as mob)
-		if(wrapped)
-			Unwrap(user)
-
-	proc/Expand()
-		for(var/mob/M in viewers(src,7))
-			M << "\red The neaera cube expands!"
-		new /mob/living/carbon/monkey/skrell(get_turf(src))
-		del(src)
-
-	proc/Unwrap(mob/user as mob)
-		icon_state = "monkeycube"
-		desc = "Just add water!"
-		user << "You unwrap the cube."
-		wrapped = 0
-		return
-
-/obj/item/weapon/reagent_containers/food/snacks/neaeracube/wrapped
-	desc = "Still wrapped in some paper."
-	icon_state = "monkeycubewrap"
-	wrapped = 1
-/obj/item/weapon/reagent_containers/food/snacks/stokcube/wrapped
-	desc = "Still wrapped in some paper."
-	icon_state = "monkeycubewrap"
-	wrapped = 1
-
-
-/obj/item/weapon/reagent_containers/food/snacks/farwacube/wrapped
-	desc = "Still wrapped in some paper."
-	icon_state = "monkeycubewrap"
-	wrapped = 1
-
+	monkey_type ="skrell"
+/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/neaeracube
+	name = "neaera cube"
+	monkey_type ="skrell"
 
 
 /obj/item/weapon/reagent_containers/food/snacks/spellburger

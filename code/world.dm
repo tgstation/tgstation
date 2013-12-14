@@ -9,6 +9,10 @@
 
 #define RECOMMENDED_VERSION 500
 /world/New()
+	// Honk honk, fuck you science
+	WORLD_X_OFFSET=rand(-50,50)
+	WORLD_Y_OFFSET=rand(-50,50)
+
 	starticon = rotate_icon('icons/obj/lightning.dmi', "lightningstart")
 	midicon = rotate_icon('icons/obj/lightning.dmi', "lightning")
 	endicon = rotate_icon('icons/obj/lightning.dmi', "lightningend")
@@ -91,6 +95,8 @@
 	master_controller = new /datum/controller/game_controller()
 	spawn(1)
 		master_controller.setup()
+
+		setup_species()
 
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	process_ghost_teleport_locs()	//Sets up ghost teleport locations.

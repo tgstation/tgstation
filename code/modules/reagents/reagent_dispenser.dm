@@ -98,6 +98,10 @@
 		..()
 		reagents.add_reagent("fuel",1000)
 
+	hear_talk(mob/living/M, text)
+		if(rig)
+			rig.hear_talk(M,text)
+
 	examine()
 		set src in view()
 		..()
