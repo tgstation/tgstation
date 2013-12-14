@@ -217,61 +217,56 @@
 
 /obj/machinery/power/turbine/attack_ai(mob/user)
 
-        if(stat & (BROKEN|NOPOWER))
-                return
+	if(stat & (BROKEN|NOPOWER))
+		return
 
-        interact(user)
+	interact(user)
+
+// Only non-AI mobs (This is a way to get over a duplicate declaration error! Thanks Metacide!)
 
 /obj/machinery/power/turbine/attack_hand(mob/user)
 
-        add_fingerprint(user)
+	add_fingerprint(user)
 
-        if(stat & (BROKEN|NOPOWER))
-                return
+	if ( (get_dist(src, user) > 1 ) || (stat & (NOPOWER|BROKEN)) && (!istype(user, /mob/living/silicon/ai)) )
+		user.machine = null
+		user << browse(null, "window=turbine")
+		return
 
-        interact(user)
+	user.machine = src
 
-/obj/machinery/power/turbine/proc/interact(mob/user)
+	var/t = "<TT><B>Gas Turbine Generator</B><HR><PRE>"
 
-        if ( (get_dist(src, user) > 1 ) || (stat & (NOPOWER|BROKEN)) && (!istype(user, /mob/living/silicon/ai)) )
-                user.machine = null
-                user << browse(null, "window=turbine")
-                return
+	t += "Generated power : [round(lastgen)] W<BR><BR>"
 
-        user.machine = src
+	t += "Turbine: [round(compressor.rpm)] RPM<BR>"
 
-        var/t = "<TT><B>Gas Turbine Generator</B><HR><PRE>"
+	t += "Starter: [ compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]"
 
-        t += "Generated power : [round(lastgen)] W<BR><BR>"
+	t += "</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>"
 
-        t += "Turbine: [round(compressor.rpm)] RPM<BR>"
+	t += "</TT>"
+	user << browse(t, "window=turbine")
+	onclose(user, "turbine")
 
-        t += "Starter: [ compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]"
-
-        t += "</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>"
-
-        t += "</TT>"
-        user << browse(t, "window=turbine")
-        onclose(user, "turbine")
-
-        return
+	return
 
 /obj/machinery/power/turbine/Topic(href, href_list)
-        if(..())
-                return
+	if(..())
+		return
 
-        if( href_list["close"] )
-                usr << browse(null, "window=turbine")
-                usr.machine = null
-                return
+	if( href_list["close"] )
+		usr << browse(null, "window=turbine")
+		usr.machine = null
+		return
 
-        else if( href_list["str"] )
-                compressor.starter = !compressor.starter
+	 else if( href_list["str"] )
+		compressor.starter = !compressor.starter
 
-        spawn(0)
-                for(var/mob/M in viewers(1, src))
-                        if ((M.client && M.machine == src))
-                                src.interact(M)
+	spawn(0)
+		for(var/mob/M in viewers(1, src))
+			if ((M.client && M.machine == src))
+				src.interact(M)
 
 
 
