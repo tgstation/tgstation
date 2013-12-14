@@ -256,12 +256,12 @@
 
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (!src.check_access(W))
-			user << "\red Access Denied."
+			user << "<span class='danger'>Access Denied.</span>"
 			return
 		if ((!src.locked) || (isnull(src.occupant)))
 			return
 		if ((src.occupant.health < -20) && (src.occupant.stat != 2))
-			user << "\red Access Refused."
+			user << "<span class='danger'>Access Refused.</span>"
 			return
 		else
 			src.locked = 0
@@ -292,6 +292,8 @@
 	set category = "Object"
 	set src in oview(1)
 
+	if(!usr)
+		return
 	if (usr.stat != 0)
 		return
 	src.go_out()
