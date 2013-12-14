@@ -2,11 +2,11 @@
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\robot_component.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\robot_component.dmi
  C:\Users\Rob\Documents\Projects\Baystation12\icons\robot_component.dmi: Received error, continuing: Traceback (most recent call last):
-  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\DMITool.py", line 133, in compare
+  File "tools/OpenBYOND/src/DMITool.py", line 133, in compare
     theirsDMI.loadAll()
-  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\com\byond\DMI\__init__.py", line 182, in loadAll
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 182, in loadAll
     self.load(flags)
-  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\com\byond\DMI\__init__.py", line 185, in load
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 185, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
@@ -121,6 +121,11 @@ OSError: cannot identify image file
  - ai-searif
  - ai-serithi
  - ai-serithi-crash
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\animal.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\animal.dmi
+ - scarybat
+ - scarybat-dance
+ - scarybat-dead
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\back.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\back.dmi
  - anesthetic2
@@ -676,6 +681,8 @@ OSError: cannot identify image file
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\hud.dmi
  + hudheadrevolutionary
  + hudsyndicate
+ - vampire
+ - vampthrall
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\human.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\human.dmi
  - body_f_l
@@ -925,6 +932,9 @@ OSError: cannot identify image file
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\mob.dmi
  - greytide
  - greytide_head
+ - vampire
+ - vampire2
+ - vampthrall
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\monkey.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\monkey.dmi
  - balaclava2
@@ -1003,6 +1013,111 @@ OSError: cannot identify image file
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\screen1_robot.dmi
  - sight
  - sight+a
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\screen1_White.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\screen1_White.dmi
+ + 
+ + !reinforce
+ + act_drop
+ + act_equip
+ + act_resist
+ + act_throw_off
+ + act_throw_on
+ + arrow
+ + back
+ + belt
+ + black
+ + blackanimate
+ + blank
+ + blocked
+ + blurry
+ + center
+ + dark128
+ + dark32
+ + dark64
+ + disarm
+ + disarm/kill
+ + disarm/kill1
+ + disarm/killf
+ + dither50
+ + druggy
+ + e_flash
+ + ears
+ + equip
+ + filler
+ + fire0
+ + fire1
+ + fire2
+ + flash
+ + glasses
+ + gloves
+ + grab
+ + grabbed
+ + grabbed+1
+ + grabbed1
+ + hair
+ + hand1
+ + hand2
+ + hand_active
+ + hand_inactive
+ + harm
+ + health0
+ + health1
+ + health2
+ + health3
+ + health4
+ + health5
+ + health6
+ + health7
+ + health_numb
+ + help
+ + id
+ + intent_all
+ + intent_disarm
+ + intent_grab
+ + intent_help
+ + intent_hurt
+ + internal0
+ + internal1
+ + internal2
+ + noise
+ + nutrition0
+ + nutrition1
+ + nutrition2
+ + nutrition3
+ + nutrition4
+ + other
+ + otherB
+ + oxy0
+ + oxy1
+ + pocket
+ + pressure-1
+ + pressure-2
+ + pressure0
+ + pressure1
+ + pressure2
+ + pull0
+ + pull1
+ + reinforce
+ + running
+ + selector
+ + shoes
+ + temp-1
+ + temp-2
+ + temp-3
+ + temp-4
+ + temp0
+ + temp1
+ + temp2
+ + temp3
+ + temp4
+ + temp_numb
+ + tox0
+ + tox1
+ + walking
+ + x
+ + x2
+ + x3
+ + zone_sel
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\slimes.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\slimes.dmi
  - bluespace adult slime
@@ -1550,22 +1665,22 @@ OSError: cannot identify image file
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\gate.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\gate.dmi
  C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\gate.dmi: Received error, continuing: Traceback (most recent call last):
-  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\DMITool.py", line 133, in compare
+  File "tools/OpenBYOND/src/DMITool.py", line 133, in compare
     theirsDMI.loadAll()
-  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\com\byond\DMI\__init__.py", line 182, in loadAll
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 182, in loadAll
     self.load(flags)
-  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\com\byond\DMI\__init__.py", line 185, in load
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 185, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
  C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\gate.dmi: Received error, continuing: Traceback (most recent call last):
-  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\DMITool.py", line 149, in compare
+  File "tools/OpenBYOND/src/DMITool.py", line 149, in compare
     mineDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\com\byond\DMI\__init__.py", line 179, in loadMetadata
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 179, in loadMetadata
     self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\com\byond\DMI\__init__.py", line 185, in load
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 185, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
@@ -1978,22 +2093,22 @@ OSError: cannot identify image file
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes\large.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi
  C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
-  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\DMITool.py", line 133, in compare
+  File "tools/OpenBYOND/src/DMITool.py", line 133, in compare
     theirsDMI.loadAll()
-  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\com\byond\DMI\__init__.py", line 182, in loadAll
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 182, in loadAll
     self.load(flags)
-  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\com\byond\DMI\__init__.py", line 185, in load
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 185, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
  C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
-  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\DMITool.py", line 149, in compare
+  File "tools/OpenBYOND/src/DMITool.py", line 149, in compare
     mineDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\com\byond\DMI\__init__.py", line 179, in loadMetadata
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 179, in loadMetadata
     self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Visual Studio 2010\Projects\ChanMan2\ByondTools\src\com\byond\DMI\__init__.py", line 185, in load
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 185, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
