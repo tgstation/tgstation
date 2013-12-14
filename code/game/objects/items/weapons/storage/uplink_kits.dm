@@ -105,7 +105,7 @@
 	return*/
 
 /obj/item/weapon/storage/syndie_kit/imp_explosive
-	name = "Explosive Implants (with injector)"
+	name = "Explosive Implant (with injector)"
 
 /obj/item/weapon/storage/syndie_kit/imp_explosive/New()
 	var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(src)
