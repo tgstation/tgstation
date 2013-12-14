@@ -111,15 +111,6 @@
 	var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(src)
 	O.imp = new /obj/item/weapon/implant/explosive(O)
 	O.update_icon()
-	var/obj/item/weapon/implanter/I = new /obj/item/weapon/implanter(src)
-	I.imp = new /obj/item/weapon/implant/explosive(I)
-	I.update_icon()
-	var/obj/item/weapon/implanter/U = new /obj/item/weapon/implanter(src)
-	U.imp = new /obj/item/weapon/implant/explosive(U)
-	U.update_icon()
-	var/obj/item/weapon/implanter/P = new /obj/item/weapon/implanter(src)
-	P.imp = new /obj/item/weapon/implant/explosive(P)
-	P.update_icon()
 	..()
 	return
 
