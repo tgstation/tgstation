@@ -1057,6 +1057,7 @@
 #include "code\modules\power\switch.dm"
 #include "code\modules\power\terminal.dm"
 #include "code\modules\power\tracker.dm"
+#include "code\modules\power\turbine.dm"
 #include "code\modules\power\antimatter\containment_jar.dm"
 #include "code\modules\power\antimatter\control.dm"
 #include "code\modules\power\antimatter\shielding.dm"
