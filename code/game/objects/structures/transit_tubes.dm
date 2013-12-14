@@ -121,7 +121,7 @@ obj/structure/ex_act(severity)
 					open_animation()
 
 				else if(icon_state == "open")
-					if(pod.contents.len && user.loc != pod && intent_numeric(user.a_intent) > 1)
+					if(pod.contents.len && user.loc != pod)
 						user.visible_message("<span class='warning'>[user] starts emptying [pod]'s contents onto the floor!</span>")
 						if(do_after(user, 40)) //So it doesn't default to close_animation() on fail
 							if(pod.loc == loc)
@@ -143,7 +143,7 @@ obj/structure/ex_act(severity)
 			var/mob/GM = G.affecting
 			for(var/obj/structure/transit_tube_pod/pod in loc)
 				pod.visible_message("<span class='warning'>[user] starts putting [GM] into the [pod]!</span>")
-				if(do_after(user, 60))
+				if(do_after(user, 60) && GM && G && G.affecting == GM)
 					GM.Weaken(5)
 					src.Bumped(GM)
 					del(G)
