@@ -368,6 +368,63 @@
 		M.current.verbs -= /client/proc/vampire_jaunt
 		spawn(600) M.current.verbs += /client/proc/vampire_jaunt
 
+// Blink for vamps
+// Less smoke spam.
+/client/proc/vampire_shadowstep()
+	set category = "Vampire"
+	set name = "Shadowstep (30)"
+	set desc = "Vanish into the shadows."
+	var/datum/mind/M = usr.mind
+	if(!M) return
+
+	// Teleport radii
+	var/inner_tele_radius = 0
+	var/outer_tele_radius = 6
+
+	// Maximum lighting_lumcount.
+	var/max_lum = 1
+
+	if(M.current.vampire_power(30, 0))
+		if(M.current.buckled) M.current.buckled.unbuckle()
+		spawn(0)
+			var/list/turfs = new/list()
+			for(var/turf/T in range(usr,outer_tele_radius))
+				if(T in range(usr,inner_tele_radius)) continue
+				if(istype(T,/turf/space)) continue
+				if(T.density) continue
+				if(T.x>world.maxx-outer_tele_radius || T.x<outer_tele_radius)	continue	//putting them at the edge is dumb
+				if(T.y>world.maxy-outer_tele_radius || T.y<outer_tele_radius)	continue
+
+				// LIGHTING CHECK
+				if(T.lighting_lumcount > max_lum) continue
+				turfs += T
+
+			if(!turfs.len)
+				usr << "\red You cannot find darkness to step to."
+				return
+
+			var/turf/picked = pick(turfs)
+
+			if(!picked || !isturf(picked))
+				return
+			M.current.ExtinguishMob()
+			if(M.current.buckled)
+				M.current.buckled.unbuckle()
+			var/atom/movable/overlay/animation = new /atom/movable/overlay( get_turf(usr) )
+			animation.name = usr.name
+			animation.density = 0
+			animation.anchored = 1
+			animation.icon = usr.icon
+			animation.alpha = 127
+			animation.layer = 5
+			//animation.master = src
+			usr.loc = picked
+			spawn(10)
+				del(animation)
+		M.current.verbs -= /client/proc/vampire_shadowstep
+		spawn(20)
+			M.current.verbs += /client/proc/vampire_shadowstep
+
 /mob/proc/remove_vampire_blood(amount = 0)
 	var/bloodold
 	if(!mind || !mind.vampire)

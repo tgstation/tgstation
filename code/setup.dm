@@ -781,4 +781,5 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define VAMP_SCREAM 9
 #define VAMP_JAUNT 10
 #define VAMP_SLAVE 11
-#define VAMP_FULL 12
+#define VAMP_BLINK 12
+#define VAMP_FULL 13
