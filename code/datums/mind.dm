@@ -250,6 +250,12 @@ datum/mind
 					text += "<br>Objectives are empty! <a href='?src=\ref[src];vampire=autoobjectives'>Randomize!</a>"
 			else
 				text += "<a href='?src=\ref[src];vampire=vampire'>yes</a>|<b>NO</b>"
+			/** Enthralled ***/
+			text += "<br><b>enthralled</b>"
+			if(src in ticker.mode.enthralled)
+				text += " <b><font color='#FF0000'>YES</font></b> | no"
+			else
+				text += " yes | <font color='#00FF00'>NO</font></b>"
 			sections["vampire"] = text
 
 			/** NUCLEAR ***/
