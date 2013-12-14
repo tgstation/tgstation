@@ -260,7 +260,7 @@
 	if(!C.mind)
 		src << "\red [C.name]'s mind is not there for you to enthrall."
 		return 0
-	if(/obj/item/weapon/implant/traitor in C.contents || /obj/item/weapon/implant/loyalty in C.contents || C.mind in ticker.mode.vampires || C.mind.vampire || C.mind in ticker.mode.enthralled)
+	if((/obj/item/weapon/implant/traitor in C.contents) || (/obj/item/weapon/implant/loyalty in C.contents )||( C.mind in ticker.mode.vampires )||( C.mind.vampire )||( C.mind in ticker.mode.enthralled ))
 		C.visible_message("[C] seems to resist the takeover!", "You feel a familiar sensation in your skull that quickly dissipates.")
 		return 0
 	if(!ishuman(C))
