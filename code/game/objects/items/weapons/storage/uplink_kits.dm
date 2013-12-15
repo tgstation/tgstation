@@ -1,7 +1,7 @@
 /obj/item/weapon/storage/box/syndicate/
 	New()
 		..()
-		switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "freedom" = 1, "hacker" = 1, "lordsingulo" = 1, "smoothoperator" = 1, "darklord" = 1)))
+		switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "implant" = 1, "hacker" = 1, "lordsingulo" = 1, "smoothoperator" = 1, "darklord" = 1)))
 			if("bloodyspai")
 				new /obj/item/clothing/under/chameleon(src)
 				new /obj/item/clothing/mask/gas/voice(src)
@@ -37,11 +37,15 @@
 				new /obj/item/clothing/shoes/syndigaloshes(src)
 				return
 
-			if("freedom")
+			if("implant")
 				var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(src)
 				O.imp = new /obj/item/weapon/implant/freedom(O)
 				var/obj/item/weapon/implanter/U = new /obj/item/weapon/implanter(src)
 				U.imp = new /obj/item/weapon/implant/uplink(U)
+				var/obj/item/weapon/implanter/I = new /obj/item/weapon/implanter(src)
+				I.imp = new /obj/item/weapon/implant/explosive(I)
+				var/obj/item/weapon/implanter/P = new /obj/item/weapon/implanter(src)
+				P.imp = new /obj/item/weapon/implant/emp(P)
 				return
 
 			if("hacker")
@@ -98,7 +102,7 @@
 /obj/item/weapon/storage/syndie_kit/imp_compress/New()
 	new /obj/item/weapon/implanter/compressed(src)
 	..()
-	return
+	return*/
 
 /obj/item/weapon/storage/syndie_kit/imp_explosive
 	name = "Explosive Implant (with injector)"
@@ -106,10 +110,9 @@
 /obj/item/weapon/storage/syndie_kit/imp_explosive/New()
 	var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(src)
 	O.imp = new /obj/item/weapon/implant/explosive(O)
-	O.name = "(BIO-HAZARD) BIO-detpack"
 	O.update_icon()
 	..()
-	return*/
+	return
 
 /obj/item/weapon/storage/box/syndie_kit/imp_uplink
 	name = "Uplink Implant (with injector)"
