@@ -34,9 +34,9 @@ proc/random_name(gender, attempts_to_find_unique_name=10)
 	for(var/i=1, i<=attempts_to_find_unique_name, i++)
 		if(gender==FEMALE)	. = capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
 		else				. = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
-		
+
 		if(i != attempts_to_find_unique_name && !findname(.))
-			break		
+			break
 
 proc/random_skin_tone()
 	return pick(skin_tones)
@@ -68,3 +68,19 @@ proc/age2agedescription(age)
 		if(60 to 70)		return "aging"
 		if(70 to INFINITY)	return "elderly"
 		else				return "unknown"
+
+/*
+Proc for attack log creation, because really why not
+1 argument is the actor
+2 argument is the target of action
+3 is the description of action(like punched, throwed, or any other verb)
+4 is the tool with which the action was made(usually item)
+5 is additional information, anything that needs to be added
+*/
+
+proc/add_logs(mob/user, mob/target, what_done, var/object=null, var/addition=null)
+	if(ismob(user))
+		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has [what_done] [target.name][ismob(target) ? "([target.ckey])" : ""][object ? " with [object]" : " "][addition]</font>")
+	if(ismob(target))
+		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [what_done] by [user.name][ismob(user) ? "([user.ckey])" : ""][object ? " with [object]" : " "][addition]</font>")
+	log_attack("<font color='red'>[user.name][ismob(user) ? "([user.ckey])" : ""] [what_done] [target.name][ismob(target) ? "([target.ckey])" : ""][object ? " with [object]" : " "][addition]</font>")

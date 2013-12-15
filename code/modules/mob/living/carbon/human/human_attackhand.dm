@@ -3,6 +3,7 @@
 		return
 
 	if((M != src) && check_shields(0, M.name))
+		add_logs(src, M, "attenmped to touch")
 		visible_message("<span class='warning'>[M] attempted to touch [src]!</span>")
 		return 0
 
@@ -10,6 +11,7 @@
 		if("help")
 			if(health >= 0)
 				help_shake_act(M)
+				add_logs(src, M, "shaked")
 				return 1
 
 			//CPR
@@ -21,6 +23,7 @@
 				return 0
 
 			if(cpr_time < world.time + 30)
+				add_logs(src, M, "CPRed")
 				visible_message("<span class='notice'>[M] is trying to perform CPR on [src]!</span>")
 				if(!do_mob(M, src))
 					return 0
@@ -33,6 +36,8 @@
 					src << "<span class='unconscious'>You feel a breath of fresh air enter your lungs. It feels good.</span>"
 
 		if("grab")
+			add_logs(src, M, "grabbed", addition="passively")
+
 			if(M == src || anchored)
 				return 0
 			if(w_uniform)
@@ -53,10 +58,7 @@
 			return 1
 
 		if("harm")
-			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Punched [src.name] ([src.ckey])</font>")
-			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been punched by [M.name] ([M.ckey])</font>")
-
-			log_attack("<font color='red'>[M.name] ([M.ckey]) punched [src.name] ([src.ckey])</font>")
+			add_logs(src, M, "punched")
 
 			var/attack_verb = "punch"
 			if(lying)
@@ -105,9 +107,7 @@
 				forcesay(hit_appends)
 
 		if("disarm")
-			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
-			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [M.name] ([M.ckey])</font>")
-			log_attack("<font color='red'>[M.name] ([M.ckey]) disarmed [src.name] ([src.ckey])</font>")
+			add_logs(src, M, "disarmed")
 
 			if(w_uniform)
 				w_uniform.add_fingerprint(M)
