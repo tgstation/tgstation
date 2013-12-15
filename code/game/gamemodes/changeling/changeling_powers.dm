@@ -580,7 +580,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set_sting(/mob/living/carbon/proc/sting_effect_trasnform, "sting_transform", D)
 
 /mob/living/carbon/proc/sting_effect_trasnform(mob/living/carbon/T)
-	add_logs(src, T, "stinged", "transformation sting", "new identity is [src.mind.changeling.chosen_dna.real_name]")
+	add_logs(src, T, "stung", "transformation sting", "new identity is [src.mind.changeling.chosen_dna.real_name]")
 	if(!sting_can_reach(T, 40))
 		return 0
 	if((HUSK in T.mutations) || !check_dna_integrity(T))
@@ -602,7 +602,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set_sting(/mob/living/carbon/proc/sting_effect_extract, "sting_extract")
 
 /mob/living/carbon/proc/sting_effect_extract(mob/living/carbon/T)
-	add_logs(src, T, "stinged", "extraction sting")
+	add_logs(src, T, "stung", "extraction sting")
 	if(!sting_can_reach(T, 25))
 		return 0
 	if(src.mind.changeling.can_absorb_dna(T, usr))
@@ -621,7 +621,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set_sting(/mob/living/carbon/proc/sting_effect_mute, "sting_mute")
 
 /mob/living/carbon/proc/sting_effect_mute(mob/living/carbon/T)
-	add_logs(src, T, "stinged", "mute sting")
+	add_logs(src, T, "stung", "mute sting")
 	if(!sting_can_reach(T, 20))
 		return 0
 	T.silent += 30
@@ -636,7 +636,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set_sting(/mob/living/carbon/proc/sting_effect_blind, "sting_blind")
 
 /mob/living/carbon/proc/sting_effect_blind(mob/living/carbon/T)
-	add_logs(src, T, "stinged", "blind sting")
+	add_logs(src, T, "stung", "blind sting")
 	if(!sting_can_reach(T, 25))
 		return 0
 	T << "<span class='danger'>Your eyes burn horrifically!</span>"
@@ -654,7 +654,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set_sting(/mob/living/carbon/proc/sting_effect_lsd, "sting_lsd")
 
 /mob/living/carbon/proc/sting_effect_lsd(mob/living/carbon/T)
-	add_logs(src, T, "stinged", "LSD sting")
+	add_logs(src, T, "stung", "LSD sting")
 	if(!sting_can_reach(T, 5))
 		return 0
 	spawn(rand(300,600))
@@ -670,7 +670,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set_sting(/mob/living/carbon/proc/sting_effect_cryo, "sting_cryo")
 
 /mob/living/carbon/proc/sting_effect_cryo(mob/living/carbon/T)
-	add_logs(src, T, "stinged", "cryo sting")
+	add_logs(src, T, "stung", "cryo sting")
 	if(!sting_can_reach(T, 15))
 		return 0
 	if(T.reagents)
