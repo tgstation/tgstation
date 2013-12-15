@@ -439,3 +439,40 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 	update_vampire_icons_removed(vampire_mind)
 	//world << "Removed [vampire_mind.current.name] from vampire shit"
 	vampire_mind.current << "\red <FONT size = 3><B>The fog clouding your mind clears. You remember nothing from the moment you were enthralled until now.</B></FONT>"
+
+/mob/living/carbon/human/proc/check_sun()
+
+	var/ax = x
+	var/ay = y
+
+	for(var/i = 1 to 20)
+		ax += sun.dx
+		ay += sun.dy
+
+		var/turf/T = locate( round(ax,0.5),round(ay,0.5),z)
+
+		if(T.x == 1 || T.x==world.maxx || T.y==1 || T.y==world.maxy)
+			break
+
+		if(T.density)
+			return
+	if(prob(35))
+		switch(health)
+			if(80 to 100)
+				src << "\red Your skin flakes away..."
+			if(60 to 80)
+				src << "<span class='warning'>Your skin sizzles!</span>"
+			if((-INFINITY) to 60)
+				if(!on_fire)
+					src << "<b>\red Your skin catches fire!</b>"
+				else
+					src << "<b>\red You continue to burn!</b>"
+				fire_stacks += 5
+				IgniteMob()
+		emote("scream")
+	else
+		switch(health)
+			if((-INFINITY) to 60)
+				fire_stacks++
+				IgniteMob()
+	adjustFireLoss(3)

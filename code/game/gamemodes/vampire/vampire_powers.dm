@@ -27,6 +27,16 @@
 			return 0
 	return 1
 
+/mob/proc/vampire_affected(datum/mind/M)
+	//Other vampires aren't affected
+	if(mind && mind.vampire) return 0
+	//Vampires who have reached their full potential can affect nearly everything
+	if(M && M.vampire && (VAMP_FULL in M.vampire.powers))
+		return 1
+	//Chaplains are resistant to vampire powers
+	if(mind && mind.assigned_role == "Chaplain")
+		return 0
+
 /mob/proc/vampire_can_reach(mob/M as mob, active_range = 1)
 	if(M.loc == src.loc) return 1 //target and source are in the same thing
 	if(!isturf(src.loc) || !isturf(M.loc)) return 0 //One is inside, the other is outside something.
@@ -117,6 +127,9 @@
 	M.current.visible_message("\blue [M] shakes [src] trying to wake [t_him] up!" )
 	playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)*/
 	C.help_shake_act(M.current) // i use da colon
+	if(!C.vampire_affected(M))
+		M.current << "\red They seem to be unaffected."
+		return
 	var/datum/disease2/disease/shutdown = new /datum/disease2/disease
 	var/datum/disease2/effectholder/holder = new /datum/disease2/effectholder
 	var/datum/disease2/effect/organs/vampire/O = new /datum/disease2/effect/organs/vampire
@@ -149,10 +162,10 @@
 		spawn(300)
 			M.current.verbs += /client/proc/vampire_glare
 		if(istype(M.current:glasses, /obj/item/clothing/glasses/sunglasses/blindfold))
-			M.current << "<span class='warning'>You're blindfolded</span>"
+			M.current << "<span class='warning'>You're blindfolded!</span>"
 			return
 		for(var/mob/living/carbon/C in oview(1))
-			if(C.mind && C.mind.vampire) continue
+			if(!C.vampire_affected(M)) continue
 			if(!M.current.vampire_can_reach(C, 1)) continue
 			C.Stun(8)
 			C.Weaken(8)
@@ -185,6 +198,7 @@
 		for(var/mob/living/carbon/C in ohearers(4, M.current))
 			if(C == M.current) continue
 			if(ishuman(C) && C:ears && istype(C:ears, /obj/item/clothing/ears/earmuffs)) continue
+			if(!C.vampire_affected(M)) continue
 			C << "<span class='warning'><font size='3'><b>You hear a ear piercing shriek and your senses dull!</font></b></span>"
 			C.Weaken(8)
 			C.ear_deaf = 20
@@ -218,11 +232,12 @@
 		if(M.current.can_enthrall(C) && M.current.vampire_power(300, 0)) // recheck
 			M.current.handle_enthrall(C)
 			M.current.remove_vampire_blood(300)
+			M.current.verbs -= /client/proc/vampire_enthrall
+			spawn(1800) M.current.verbs += /client/proc/vampire_enthrall
 		else
 			M.current << "\red You or your target either moved or you dont have enough usable blood."
 			return
-	M.current.verbs -= /client/proc/vampire_enthrall
-	spawn(1800) M.current.verbs += /client/proc/vampire_enthrall
+
 
 
 /client/proc/vampire_cloak()
@@ -261,8 +276,10 @@
 		src << "\red [C.name]'s mind is not there for you to enthrall."
 		return 0
 	if((/obj/item/weapon/implant/traitor in C.contents) || (/obj/item/weapon/implant/loyalty in C.contents )||( C.mind in ticker.mode.vampires )||( C.mind.vampire )||( C.mind in ticker.mode.enthralled ))
-		C.visible_message("[C] seems to resist the takeover!", "You feel a familiar sensation in your skull that quickly dissipates.")
+		C.visible_message("\red [C] seems to resist the takeover!", "\blue You feel a familiar sensation in your skull that quickly dissipates.")
 		return 0
+	if(!C.vampire_affected(mind))
+		C.visible_message("\red [C] seems to resist the takeover!", "\blue Your faith of [ticker.Bible_deity_name] has kept your mind clear of all evil")
 	if(!ishuman(C))
 		src << "\red You can only enthrall humans!"
 		return 0
