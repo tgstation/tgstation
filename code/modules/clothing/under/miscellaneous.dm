@@ -24,7 +24,7 @@
 	name = "amish suit"
 	icon_state = "sl_suit"
 	item_color = "sl_suit"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/under/roman
 	name = "roman armor"
@@ -40,7 +40,7 @@
 	icon_state = "waiter"
 	item_state = "waiter"
 	item_color = "waiter"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/under/rank/mailman
 	name = "mailman's jumpsuit"
@@ -115,7 +115,7 @@
 	desc = "A jumpsuit with owl wings. Photorealistic owl feathers! Twooooo!"
 	icon_state = "owl"
 	item_color = "owl"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT | TABLEPASS
 	fitted = 0
 
 /obj/item/clothing/under/johnny

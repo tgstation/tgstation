@@ -6,7 +6,7 @@
 	icon_state = "ba_suit"
 	item_state = "ba_suit"
 	item_color = "ba_suit"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT | TABLEPASS
 
 
 /obj/item/clothing/under/rank/captain //Alright, technically not a 'civilian' but its better then giving a .dm file for a single define.
@@ -15,7 +15,7 @@
 	icon_state = "captain"
 	item_state = "caparmor"
 	item_color = "captain"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT | TABLEPASS
 
 
 /obj/item/clothing/under/rank/cargo
@@ -32,7 +32,7 @@
 	icon_state = "cargotech"
 	item_state = "lb_suit"
 	item_color = "cargo"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT | TABLEPASS
 
 
 /obj/item/clothing/under/rank/chaplain
@@ -41,7 +41,7 @@
 	icon_state = "chaplain"
 	item_state = "bl_suit"
 	item_color = "chapblack"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT | TABLEPASS
 
 
 /obj/item/clothing/under/rank/chef
@@ -49,7 +49,7 @@
 	name = "chef's uniform"
 	icon_state = "chef"
 	item_color = "chef"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT | TABLEPASS
 
 
 /obj/item/clothing/under/rank/clown
@@ -58,7 +58,7 @@
 	icon_state = "clown"
 	item_state = "clown"
 	item_color = "clown"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT | TABLEPASS
 	fitted = 0
 
 
@@ -68,7 +68,7 @@
 	icon_state = "hop"
 	item_state = "b_suit"
 	item_color = "hop"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT | TABLEPASS
 
 
 /obj/item/clothing/under/rank/hydroponics
@@ -78,7 +78,7 @@
 	item_state = "g_suit"
 	item_color = "hydroponics"
 	permeability_coefficient = 0.50
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT | TABLEPASS
 
 
 /obj/item/clothing/under/rank/janitor
@@ -87,7 +87,7 @@
 	icon_state = "janitor"
 	item_color = "janitor"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT | TABLEPASS
 
 
 /obj/item/clothing/under/lawyer
@@ -148,7 +148,7 @@
 	icon_state = "mime"
 	item_state = "mime"
 	item_color = "mime"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/under/rank/miner
 	desc = "It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty."

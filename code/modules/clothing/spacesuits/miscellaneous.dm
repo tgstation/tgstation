@@ -67,7 +67,7 @@
 	icon_state = "santa"
 	item_state = "santa"
 	slowdown = 0
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL | STOPSPRESSUREDMAGE
+	flags = FPRINT | TABLEPASS | STOPSPRESSUREDMAGE
 	allowed = list(/obj/item) //for stuffing exta special presents
 
 
