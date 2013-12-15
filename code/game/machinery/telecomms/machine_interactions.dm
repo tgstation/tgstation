@@ -24,26 +24,26 @@
 	switch(construct_op)
 		if(0)
 			if(istype(P, /obj/item/weapon/screwdriver))
-				user << "You unfasten the bolts."
+				user << "<span class='notice'>You unfasten the bolts.</span>"
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				construct_op ++
 		if(1)
 			if(istype(P, /obj/item/weapon/screwdriver))
-				user << "You fasten the bolts."
+				user << "<span class='notice'>You fasten the bolts.</span>"
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				construct_op --
 			if(istype(P, /obj/item/weapon/wrench))
-				user << "You dislodge the external plating."
+				user << "<span class='notice'>You dislodge the external plating.</span>"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				construct_op ++
 		if(2)
 			if(istype(P, /obj/item/weapon/wrench))
-				user << "You secure the external plating."
+				user << "<span class='notice'>You secure the external plating.</span>"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				construct_op --
 			if(istype(P, /obj/item/weapon/wirecutters))
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-				user << "You remove the cables."
+				user << "<span class='notice'>You remove the cables.</span>"
 				construct_op ++
 				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( user.loc )
 				A.amount = 5
@@ -51,21 +51,17 @@
 		if(3)
 			if(istype(P, /obj/item/weapon/cable_coil))
 				var/obj/item/weapon/cable_coil/A = P
-				if(A.amount >= 5)
-					user << "You insert the cables."
-					A.amount -= 5
-					if(A.amount <= 0)
-						user.drop_item()
-						del(A)
+				if(A.use(5))
+					user << "<span class='notice'>You insert the cables.</span>"
 					construct_op --
 					stat &= ~BROKEN // the machine's not borked anymore!
 				else
-					user << "You need more cable"
+					user << "<span class='danger'>You need more cable to do that.</span>"
 			if(istype(P, /obj/item/weapon/crowbar))
-				user << "You begin prying out the circuit board and components..."
+				user << "<span class='notice'>You begin prying out the circuit board and components...</span>"
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				if(do_after(user,60))
-					user << "You finish prying out the components."
+					user << "<span class='notice'>You finish prying out the components.</span>"
 
 					// Drop all the component stuff
 					if(component_parts)

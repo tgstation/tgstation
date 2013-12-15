@@ -302,8 +302,8 @@
 	if(src.amount < used)
 		return 0
 	else if (src.amount == used)
-		//handle mob icon update
-		if(ismob(loc))
+		.=1 //Because del(src) stops the proc, set the default return value to 1
+		if(ismob(loc)) //handle mob icon update
 			var/mob/M = loc
 			M.u_equip(src)
 		del(src)

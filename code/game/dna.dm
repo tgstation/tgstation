@@ -447,13 +447,13 @@
 		panel_open = !panel_open
 		if(panel_open)
 			icon_state = "[icon_state]_maintenance"
-			user << "You open the maintenance panel of [src]."
+			user << "<span class='notice'>You open the maintenance panel of [src].</span>"
 		else
 			if(open)
 				icon_state = "[initial(icon_state)]_open"
 			else
 				icon_state = "[initial(icon_state)]"
-			user << "You close the maintenance panel of [src]."
+			user << "<span class='notice'>You close the maintenance panel of [src].</span>"
 		return
 
 	if(istype(G, /obj/item/weapon/crowbar))
@@ -542,7 +542,7 @@
 			user.drop_item()
 			I.loc = src
 			src.diskette = I
-			user << "You insert [I]."
+			user << "<span class='notice'>You insert [I].</span>"
 			src.updateUsrDialog()
 			return
 	else

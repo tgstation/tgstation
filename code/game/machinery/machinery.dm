@@ -212,7 +212,7 @@ Class Procs:
 	if ( ! (istype(usr, /mob/living/carbon/human) || \
 			istype(usr, /mob/living/silicon) || \
 			istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
-		usr << "\red You don't have the dexterity to do this!"
+		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return 1
 /*
 	//distance checks are made by atom/proc/DblClick
@@ -225,7 +225,7 @@ Class Procs:
 			visible_message("\red [H] stares cluelessly at [src] and drools.")
 			return 1
 		else if(prob(H.getBrainLoss()))
-			user << "\red You momentarily forget how to use [src]."
+			user << "<span class='danger'>You momentarily forget how to use [src].</span>"
 			return 1
 
 	src.add_fingerprint(user)
@@ -254,8 +254,8 @@ Class Procs:
 	if (!panel_open)
 		panel_open = 1
 		icon_state = icon_state_open
-		user << "You open the maintenance hatch of [src]."
+		user << "<span class='notice'>You open the maintenance hatch of [src].</span>"
 	else
 		panel_open = 0
 		icon_state = icon_state_closed
-		user << "You close the maintenance hatch of [src]."
+		user << "<span class='notice'>You close the maintenance hatch of [src].</span>"
