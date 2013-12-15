@@ -209,20 +209,10 @@
 	updateDialog()
 
 
-/obj/machinery/power/turbine/attack_ai(mob/user)
-
-	if(stat & (BROKEN|NOPOWER))
-		return
-
-	interact(user)
-
 /obj/machinery/power/turbine/attack_hand(mob/user)
 
-	add_fingerprint(user)
-
-	if(stat & (BROKEN|NOPOWER))
+	if(..())
 		return
-
 	interact(user)
 
 /obj/machinery/power/turbine/interact(mob/user)
