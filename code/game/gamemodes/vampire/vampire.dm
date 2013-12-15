@@ -56,7 +56,7 @@
 			if(player.assigned_role == job)
 				possible_vampires -= player
 
-	vampire_amount = 1 + round(num_players() / 10)
+	vampire_amount = max(1,round(num_players() / 10)) //1 + round(num_players() / 10)
 
 	if(possible_vampires.len>0)
 		for(var/i = 0, i < vampire_amount, i++)
@@ -208,6 +208,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 	var/iscloaking = 0 // handles the vampire cloak toggle
 	var/list/powers = list() // list of available powers and passives, see defines in setup.dm
 	var/mob/living/carbon/human/draining // who the vampire is draining of blood
+	var/nullified = 0 //Nullrod makes them useless for a short while.
 /datum/vampire/New(gend = FEMALE)
 	gender = gend
 
@@ -476,3 +477,16 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 				fire_stacks++
 				IgniteMob()
 	adjustFireLoss(3)
+
+/mob/living/carbon/human/proc/handle_vampire()
+	if(hud_used)
+		if(!hud_used.vampire_blood_display)
+			hud_used.vampire_hud()
+			//hud_used.human_hud(hud_used.ui_style)
+		hud_used.vampire_blood_display.maptext_width = 64
+		hud_used.vampire_blood_display.maptext_height = 26
+		hud_used.vampire_blood_display.maptext = "<div align='left' valign='top' style='position:relative; top:0px; left:6px'> U:<font color='#33FF33' size='1'>[mind.vampire.bloodusable]</font><br> T:<font color='#FFFF00' size='1'>[mind.vampire.bloodtotal]</font></div>"
+	handle_vampire_cloak()
+	if(istype(loc, /turf/space))
+		check_sun()
+	mind.vampire.nullified = max(0, mind.vampire.nullified - 1)
