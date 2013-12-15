@@ -962,12 +962,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	if (istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
-		var/stun = 8
-		var/weaken = 5
-		if(M.slip(stun, weaken, src))
+		if(M.slip(8, 5, src))
 			if (ishuman(M) && (M.real_name != src.owner))
-				if (istype(src.cartridge, /obj/item/weapon/cartridge/clown) && src.cartridge:honk_charges < 5)
-					src.cartridge:honk_charges++
+				if (istype(src.cartridge, /obj/item/weapon/cartridge/clown))
+					var/obj/item/weapon/cartridge/clown/cart = src.cartridge
+					if(cart.honk_charges < 5)
+						cart.honk_charges++
 
 
 //AI verb and proc for sending PDA messages.

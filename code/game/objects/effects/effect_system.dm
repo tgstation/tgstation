@@ -846,9 +846,7 @@ steam.start() -- spawns the effect
 
 	if (istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
-		var/stun = 5
-		var/weaken = 2
-		M.slip(stun, weaken, src)
+		M.slip(5, 2, src, 1)
 
 
 /datum/effect/effect/system/foam_spread

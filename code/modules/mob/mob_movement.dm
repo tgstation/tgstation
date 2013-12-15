@@ -444,24 +444,30 @@
 		step(pulling, get_dir(pulling.loc, A))
 	return
 
-/mob/proc/slip(var/s_amount, var/w_amount, var/obj/O, var/lube) // used in banana peels, soaps, clown pda
-	if (iscarbon(src) && !lying && canmove) // only carbons slip.
-		if (!(status_flags & CANWEAKEN)) // except not all carbons
-			return 0
-		if (HULK in src.mutations && !lube) // lube wins hulk
-			return 0
-		if (ishuman(src) && (isobj(src:shoes) && src:shoes.flags&NOSLIP) && !lube) //lube wins galoshes
-			return 0
-		if (src.m_intent=="walk" && !lube) // lube wins walking
+/mob/proc/slip(var/s_amount, var/w_amount, var/obj/O, var/lube) // lube=1 slips when walking, lube=2 is for lube
+	if (iscarbon(src)) // only carbons slip.
+		if (ishuman(src))
+			var/mob/living/carbon/human/shoe_wearer = src
+			if(isobj(shoe_wearer.shoes) && shoe_wearer.shoes.flags&NOSLIP && lube!=2) //lube wins galoshes
+				return 0
+		if (src.m_intent=="walk" && lube==0)
 			return 0
 
-		src.stop_pulling()
-		if(O)
-			src << "<span class='danger'>You slipped on the [O.name]!</span>"
-		else
-			src << "<span class='danger'>You slipped!</span>"
-		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
-		src.Stun(s_amount)
-		src.Weaken(w_amount)
+		if((!lying && canmove) || !(src.flags&CANWEAKEN)) //this spams a lot for aliens, hulks and slimes, but how to check if they have been slipped recently?
+			src.stop_pulling()
+			if(O)
+				src << "<span class='danger'>You slipped on the [O.name]!</span>"
+			else
+				src << "<span class='danger'>You slipped!</span>"
+			playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+			src.Stun(s_amount)
+			src.Weaken(w_amount)
+			if(lube)
+				step(src, src.dir)
+		if(lube==2) // Wheeeeeeeeeee!
+			spawn(1) step(src, src.dir)
+			spawn(2) step(src, src.dir)
+			spawn(3) step(src, src.dir)
+			spawn(4) step(src, src.dir)
 		return 1
 	return 0 // no success. Used in clown pda and wet floors

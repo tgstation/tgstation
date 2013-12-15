@@ -55,24 +55,12 @@
 
 		switch (src.wet)
 			if(1) //wet floor
-				var/stun = 8
-				var/weaken = 5
-				if(M.slip(stun, weaken))
-					step(M, M.dir)
-				else
+				if(!M.slip(8, 5))
 					M.inertia_dir = 0
 				return
 
 			if(2) //lube
-				var/stun = 12
-				var/weaken = 10
-				var/lube = 1
-				if(M.slip(stun, weaken, null, lube)) // you drop items in your hands here
-					step(M, M.dir)
-					spawn(1) step(M, M.dir)
-					spawn(2) step(M, M.dir)
-					spawn(3) step(M, M.dir)
-					spawn(4) step(M, M.dir)
+				if(M.slip(12, 10, null, 2)) // not all mobs slip
 					M.take_organ_damage(2) // Was 5 -- TLE
 
 	..()
