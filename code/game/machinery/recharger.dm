@@ -25,8 +25,6 @@
 		if (istype(G, /obj/item/weapon/gun/energy/gun/nuclear) || istype(G, /obj/item/weapon/gun/energy/crossbow))
 			user << "<span class='notice'>Your gun's recharge port was removed to make room for a miniaturized reactor.</span>"
 			return
-		if (istype(G, /obj/item/weapon/gun/energy/staff))
-			return
 		user.drop_item()
 		G.loc = src
 		charging = G
