@@ -38,20 +38,7 @@
 
 	if(istype(target,/mob))
 		var/old_stat = target.stat
-		if(target.stat == DEAD)
-			dead_mob_list -= target
-			living_mob_list += target
-		target.stat = CONSCIOUS
-		target.tod = null
-		target.setToxLoss(0)
-		target.setOxyLoss(0)
-		target.setCloneLoss(0)
-		target.SetParalysis(0)
-		target.SetStunned(0)
-		target.SetWeakened(0)
-		target.radiation = 0
-		target.heal_overall_damage(target.getBruteLoss(), target.getFireLoss())
-		target.reagents.clear_reagents()
+		target.revive()
 		target.suiciding = 0
 		if(!target.ckey)
 			for(var/mob/dead/observer/ghost in player_list)

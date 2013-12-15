@@ -178,7 +178,6 @@
 		return ..()
 
 	var/wizards_alive = 0
-	var/traitors_alive = 0
 	for(var/datum/mind/wizard in wizards)
 		if(!istype(wizard.current,/mob/living/carbon))
 			continue
@@ -186,15 +185,7 @@
 			continue
 		wizards_alive++
 
-	if(!wizards_alive)
-		for(var/datum/mind/traitor in traitors)
-			if(!istype(traitor.current,/mob/living/carbon))
-				continue
-			if(traitor.current.stat==2)
-				continue
-			traitors_alive++
-
-	if (wizards_alive || traitors_alive)
+	if (wizards_alive)
 		return ..()
 	else
 		finished = 1

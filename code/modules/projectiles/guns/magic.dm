@@ -16,9 +16,6 @@
 	origin_tech = null
 	clumsy_check = 0
 
-/obj/item/weapon/gun/magic/emp_act(severity)
-	return
-
 /obj/item/weapon/gun/magic/process_chambered()
 		if(in_chamber)	return 1
 		if(!charges)	return 0

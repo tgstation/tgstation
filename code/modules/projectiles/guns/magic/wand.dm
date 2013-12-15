@@ -22,13 +22,6 @@
 	usr << "Has [charges] charge\s remaining."
 	return
 
-/obj/item/weapon/gun/magic/wand/attack_self(mob/living/user as mob)
-	if(charges)
-		zap_self(user)
-	else
-		user << "<span class='caution'>The [name] whizzles quietly.<span>"
-	..()
-
 /obj/item/weapon/gun/magic/wand/attack(atom/target as mob, mob/living/user as mob)
 	if(target == user)
 		return
@@ -39,12 +32,14 @@
 		if(charges)
 			zap_self(user)
 		else
-			user << "<span class='caution'>The [name] whizzles quietly.<span>"
+			user << "<span class='warning'>The [name] whizzles quietly.<span>"
 	else
 		..()
 
 /obj/item/weapon/gun/magic/wand/proc/zap_self(mob/living/user as mob)
 	user.visible_message("<span class='notice'>[user] zaps \himself with [src]!</span>")
+	playsound(user, fire_sound, 50, 1)
+	user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> zapped \himself with a <b>[src]</b>"
 
 /obj/item/weapon/gun/magic/wand/death
 	name = "wand of death"
@@ -54,13 +49,12 @@
 	max_charges = 3 //3, 2, 2, 1
 
 /obj/item/weapon/gun/magic/wand/death/zap_self(mob/living/user as mob)
-	if(alert(user, "You really want to zap yourself with the wand of death?",, "Yes", "No") == "Yes" && charges && user.get_active_hand() == src && isliving(user))
-		var/message ="<span class='warning'>You irradiate yourself with pure energy! "
-		message += pick("Do not pass go. Do not collect 200 zorkmids.</span>","You feel more confident in your spell casting skills.</span>","You Die...</span>","Do you want your possessions identified?</span>")
-		user << message
-		user.adjustOxyLoss(500)
-		charges--
-		..()
+	var/message ="<span class='warning'>You irradiate yourself with pure energy! "
+	message += pick("Do not pass go. Do not collect 200 zorkmids.</span>","You feel more confident in your spell casting skills.</span>","You Die...</span>","Do you want your possessions identified?</span>")
+	user << message
+	user.adjustOxyLoss(500)
+	charges--
+	..()
 
 /obj/item/weapon/gun/magic/wand/resurrection
 	name = "wand of resurrection"
@@ -70,15 +64,7 @@
 	max_charges = 3 //3, 2, 2, 1
 
 /obj/item/weapon/gun/magic/wand/resurrection/zap_self(mob/living/user as mob)
-	user.setToxLoss(0)
-	user.setOxyLoss(0)
-	user.setCloneLoss(0)
-	user.SetParalysis(0)
-	user.SetStunned(0)
-	user.SetWeakened(0)
-	user.radiation = 0
-	user.heal_overall_damage(user.getBruteLoss(), user.getFireLoss())
-	user.reagents.clear_reagents()
+	user.revive()
 	user << "<span class='notice'>You feel great!</span>"
 	charges--
 	..()
@@ -91,10 +77,9 @@
 	max_charges = 10 //10, 5, 5, 4
 
 /obj/item/weapon/gun/magic/wand/polymorph/zap_self(mob/living/user as mob)
-	if(alert(user, "Your new form might not have arms to zap with... Continue?",, "Yes", "No") == "Yes" && charges && user.get_active_hand() == src && isliving(user))
-		..() //because the user mob ceases to exists by the time wabbajack fully resolves
-		wabbajack(user)
-		charges--
+	..() //because the user mob ceases to exists by the time wabbajack fully resolves
+	wabbajack(user)
+	charges--
 
 /obj/item/weapon/gun/magic/wand/teleport
 	name = "wand of teleportation"
@@ -129,7 +114,6 @@
 	max_charges = 8 //8, 4, 4, 3
 
 /obj/item/weapon/gun/magic/wand/fireball/zap_self(mob/living/user as mob)
-	if(alert(user, "Zapping yourself with a wand of fireball is probably a bad idea, do it anyway?",, "Yes", "No") == "Yes" && charges && user.get_active_hand() == src && isliving(user))
-		explosion(user.loc, -1, 0, 2, 3, 0, flame_range = 2)
-		charges--
-		..()
+	explosion(user.loc, -1, 0, 2, 3, 0, flame_range = 2)
+	charges--
+	..()

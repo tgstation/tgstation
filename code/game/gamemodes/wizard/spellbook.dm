@@ -422,7 +422,6 @@
 /obj/item/weapon/spellbook/oneuse/knock/recoil(mob/user as mob)
 	..()
 	user <<"<span class='warning'>You're knocked down!</span>"
-	user.Stun(20)
 	user.Weaken(20)
 
 /obj/item/weapon/spellbook/oneuse/horsemask
