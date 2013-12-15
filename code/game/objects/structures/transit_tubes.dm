@@ -30,6 +30,8 @@
 	enter_delay = 3
 	var/pod_moving = 0
 	var/automatic_launch_time = 100
+	var/cooldown_delay = 30
+	var/launch_cooldown = 0
 
 	var/const/OPEN_DURATION = 6
 	var/const/CLOSE_DURATION = 6
@@ -121,9 +123,33 @@ obj/structure/ex_act(severity)
 					open_animation()
 
 				else if(icon_state == "open")
-					close_animation()
+					if(pod.contents.len && user.loc != pod)
+						user.visible_message("<span class='warning'>[user] starts emptying [pod]'s contents onto the floor!</span>")
+						if(do_after(user, 40)) //So it doesn't default to close_animation() on fail
+							if(pod.loc == loc)
+								for(var/atom/movable/AM in pod)
+									AM.loc = get_turf(user)
+									if(ismob(AM))
+										var/mob/M = AM
+										M.Weaken(5)
+
+					else
+						close_animation()
+			break
 
 
+/obj/structure/transit_tube/station/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/weapon/grab) && icon_state == "open")
+		var/obj/item/weapon/grab/G = W
+		if(ismob(G.affecting) && G.state >= GRAB_AGGRESSIVE)
+			var/mob/GM = G.affecting
+			for(var/obj/structure/transit_tube_pod/pod in loc)
+				pod.visible_message("<span class='warning'>[user] starts putting [GM] into the [pod]!</span>")
+				if(do_after(user, 60) && GM && G && G.affecting == GM)
+					GM.Weaken(5)
+					src.Bumped(GM)
+					del(G)
+				break
 
 /obj/structure/transit_tube/station/proc/open_animation()
 	if(icon_state == "closed")
@@ -150,7 +176,7 @@ obj/structure/ex_act(severity)
 				pod_moving = 1
 				close_animation()
 				sleep(CLOSE_DURATION + 2)
-				if(icon_state == "closed" && pod)
+				if(icon_state == "closed" && pod && launch_cooldown < world.time)
 					pod.follow_tube()
 
 				pod_moving = 0
@@ -179,6 +205,7 @@ obj/structure/ex_act(severity)
 /obj/structure/transit_tube/station/pod_stopped(obj/structure/transit_tube_pod/pod, from_dir)
 	pod_moving = 1
 	spawn(5)
+		launch_cooldown = world.time + min(cooldown_delay, automatic_launch_time)
 		open_animation()
 		sleep(OPEN_DURATION + 2)
 		pod_moving = 0
@@ -420,7 +447,6 @@ obj/structure/ex_act(severity)
 					if(tube.has_exit(direction))
 						dir = direction
 						return
-
 
 
 // Parse the icon_state into a list of directions.
