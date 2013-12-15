@@ -47,7 +47,7 @@
 		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
 
 	meat2
-		input = /obj/item/weapon/syntiflesh
+		input = /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh
 		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
 /*
 	monkeymeat
