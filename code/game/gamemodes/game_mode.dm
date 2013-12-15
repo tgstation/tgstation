@@ -218,7 +218,7 @@
 	if(escaped_on_pod_5 > 0)
 		feedback_set("escaped_on_pod_5",escaped_on_pod_5)
 
-	send2mainirc("Round just ended.")
+	send2mainirc("A round of [src.name] has ended - [surviving_total] survivors, [ghosts] ghosts.")
 
 	return 0
 
@@ -238,6 +238,8 @@
 	for(var/mob/living/carbon/human/man in player_list) if(man.client && man.mind)
 		// NT relation option
 		var/special_role = man.mind.special_role
+		if (special_role == "Wizard" || special_role == "Ninja" || special_role == "Syndicate")
+			continue	//NT intelligence ruled out possiblity that those are too classy to pretend to be a crew.
 		if(man.client.prefs.nanotrasen_relation == "Opposed" && prob(50) || \
 		   man.client.prefs.nanotrasen_relation == "Skeptical" && prob(20))
 			suspects += man
