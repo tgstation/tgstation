@@ -446,11 +446,13 @@
 
 /mob/proc/slip(var/s_amount, var/w_amount, var/obj/O, var/lube) // used in banana peels, soaps, clown pda
 	if (iscarbon(src) && !lying && canmove) // only carbons slip.
-		if (isslime(src)) // except slimes don't. TODO: reconsider if aliens should slip or not
+		if (!(status_flags & CANWEAKEN)) // except not all carbons
+			return 0
+		if (HULK in src.mutations && !lube) // lube wins hulk
 			return 0
 		if (ishuman(src) && (isobj(src:shoes) && src:shoes.flags&NOSLIP) && !lube) //lube wins galoshes
 			return 0
-		if (src.m_intent=="walk" && !lube)
+		if (src.m_intent=="walk" && !lube) // lube wins walking
 			return 0
 
 		src.stop_pulling()
