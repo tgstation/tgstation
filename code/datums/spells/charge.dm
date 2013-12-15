@@ -48,6 +48,9 @@
 					I.max_charges = 0
 					burnt_out = 1
 				I.charges = I.max_charges
+				if(istype(item,/obj/item/weapon/gun/magic/wand) && I.max_charges != 0)
+					var/obj/item/weapon/gun/magic/W = item
+					W.icon_state = initial(W.icon_state)
 				charged_item = I
 				break
 			else if(istype(item, /obj/item/weapon/cell/))
