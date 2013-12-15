@@ -3,7 +3,7 @@
 		return
 
 	if((M != src) && check_shields(0, M.name))
-		add_logs(M, src, "attenmped to touch")
+		add_logs(M, src, "attempted to touch")
 		visible_message("<span class='warning'>[M] attempted to touch [src]!</span>")
 		return 0
 
@@ -11,7 +11,8 @@
 		if("help")
 			if(health >= 0)
 				help_shake_act(M)
-				add_logs(M, src, "shaked")
+				if(src != M)
+					add_logs(M, src, "shaked")
 				return 1
 
 			//CPR
@@ -36,10 +37,11 @@
 					src << "<span class='unconscious'>You feel a breath of fresh air enter your lungs. It feels good.</span>"
 
 		if("grab")
-			add_logs(M, src, "grabbed", addition="passively")
-
 			if(M == src || anchored)
 				return 0
+
+			add_logs(M, src, "grabbed", addition="passively")
+
 			if(w_uniform)
 				w_uniform.add_fingerprint(M)
 
