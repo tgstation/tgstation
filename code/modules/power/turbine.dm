@@ -6,8 +6,8 @@
 // Not everything is included yet so the turbine can run out of fuel quiet quickly. The best thing about the turbine is that even
 // though something is on fire that passes through it, it won't be on fire as it passes out of it. So the exhaust fumes can still
 // containt unreacted fuel - plasma and oxygen that needs to be filtered out and re-routed back. This of course requires smart piping
-// For a computer to work with the turbine the compressor requires a comp_id matching with the turbine computer's id. This will be 
-// subjected to a change in the near future mind you. Right now this method of generating power is a good backup but don't expect it 
+// For a computer to work with the turbine the compressor requires a comp_id matching with the turbine computer's id. This will be
+// subjected to a change in the near future mind you. Right now this method of generating power is a good backup but don't expect it
 // become a main power source unless some work is done. Have fun. At 50k RPM it generates 60k power. So more than one turbine is needed!
 //
 // - Numbers
@@ -45,7 +45,7 @@
 	icon_state = "turbine"
 	anchored = 1
 	density = 1
-	var/opened = 0	
+	var/opened = 0
 	var/obj/machinery/compressor/compressor
 	directwired = 1
 	var/turf/simulated/outturf
@@ -85,8 +85,8 @@
 // OLD FIX - explanation given down below.
 // /obj/machinery/power/compressor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 // 		return !density
-		
-		
+
+
 /obj/machinery/power/compressor/CanAtmosPass(var/turf/T)
 	return !density
 
@@ -101,9 +101,9 @@
 		return
 	rpm = 0.9* rpm + 0.1 * rpmtarget
 	var/datum/gas_mixture/environment = inturf.return_air()
-	
+
 	// It's a simplified version taking only 1/10 of the moles from the turf nearby. It should be later changed into a better version
-	
+
 	var/transfer_moles = environment.total_moles()/10
 	//var/transfer_moles = rpm/10000*capacity
 	var/datum/gas_mixture/removed = inturf.remove_air(transfer_moles)
@@ -134,8 +134,8 @@
 		overlays += image('icons/obj/pipes.dmi', "comp-o1", FLY_LAYER)
 	 //TODO: DEFERRED
 
-// These are crucial to working of a turbine - the stats modify the power output. TurbGenQ modifies how much raw energy can you get from 
-// rpms, TurbGenG modifies the shape of the curve - the lower the value the less straight the curve is. 
+// These are crucial to working of a turbine - the stats modify the power output. TurbGenQ modifies how much raw energy can you get from
+// rpms, TurbGenG modifies the shape of the curve - the lower the value the less straight the curve is.
 
 #define TURBPRES 9000000
 #define TURBGENQ 100000
@@ -144,7 +144,7 @@
 /obj/machinery/power/turbine/New()
 	..()
 
-// The outlet is pointed at the direction of the turbine component 
+// The outlet is pointed at the direction of the turbine component
 
 	outturf = get_step(src, dir)
 
@@ -179,18 +179,18 @@
 	if(!compressor)
 		stat |= BROKEN
 		return
-		
-	// This is the power generation function. If anything is needed it's good to plot it in EXCEL before modifying	
-	// the TURBGENQ and TURBGENG values 
-	
+
+	// This is the power generation function. If anything is needed it's good to plot it in EXCEL before modifying
+	// the TURBGENQ and TURBGENG values
+
 	lastgen = ((compressor.rpm / TURBGENQ)**TURBGENG) *TURBGENQ
 
 	add_avail(lastgen)
-	
+
 	// Weird function but it works. Should be something else...
-	
+
 	var/newrpm = ((compressor.gas_contained.temperature) * compressor.gas_contained.total_moles())/4
-	
+
 	newrpm = max(0, newrpm)
 
 	if(!compressor.starter || newrpm > 1000)
@@ -206,14 +206,8 @@
 	if(lastgen > 100)
 		overlays += image('icons/obj/pipes.dmi', "turb-o", FLY_LAYER)
 
+	updateDialog()
 
-	for(var/mob/M in viewers(1, src))
-		if ((M.client && M.machine == src))
-			src.interact(M)
-	AutoUpdateAI(src)
-
-
-// AI can't use it!
 
 /obj/machinery/power/turbine/attack_ai(mob/user)
 
@@ -222,34 +216,39 @@
 
 	interact(user)
 
-// Only non-AI mobs (This is a way to get over a duplicate declaration error! Thanks Metacide!)
-
 /obj/machinery/power/turbine/attack_hand(mob/user)
 
 	add_fingerprint(user)
 
-	if ( (get_dist(src, user) > 1 ) || (stat & (NOPOWER|BROKEN)) && (!istype(user, /mob/living/silicon/ai)) )
-		user.machine = null
-		user << browse(null, "window=turbine")
+	if(stat & (BROKEN|NOPOWER))
 		return
 
-	user.machine = src
+	interact(user)
 
-	var/t = "<TT><B>Gas Turbine Generator</B><HR><PRE>"
+/obj/machinery/power/turbine/interact(mob/user)
 
-	t += "Generated power : [round(lastgen)] W<BR><BR>"
+		if ( (get_dist(src, user) > 1 ) || (stat & (NOPOWER|BROKEN)) && (!istype(user, /mob/living/silicon/ai)) )
+				user.machine = null
+				user << browse(null, "window=turbine")
+				return
 
-	t += "Turbine: [round(compressor.rpm)] RPM<BR>"
+		user.set_machine(src)
 
-	t += "Starter: [ compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]"
+		var/t = "<TT><B>Gas Turbine Generator</B><HR><PRE>"
 
-	t += "</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>"
+		t += "Generated power : [round(lastgen)] W<BR><BR>"
 
-	t += "</TT>"
-	user << browse(t, "window=turbine")
-	onclose(user, "turbine")
+		t += "Turbine: [round(compressor.rpm)] RPM<BR>"
 
-	return
+		t += "Starter: [ compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]"
+
+		t += "</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>"
+
+		t += "</TT>"
+		user << browse(t, "window=turbine")
+		onclose(user, "turbine")
+
+		return
 
 /obj/machinery/power/turbine/Topic(href, href_list)
 	if(..())
@@ -260,13 +259,11 @@
 		usr.machine = null
 		return
 
-	 else if( href_list["str"] )
+	else if( href_list["str"] )
 		compressor.starter = !compressor.starter
 
 	spawn(0)
-		for(var/mob/M in viewers(1, src))
-			if ((M.client && M.machine == src))
-				src.interact(M)
+	updateDialog()
 
 
 
@@ -285,7 +282,7 @@
 		for(var/obj/machinery/compressor/C in world)
 			if(id == C.comp_id)
 				compressor = C
-		
+
 
 /obj/machinery/computer/turbine_computer/attackby(I as obj, user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver))
@@ -330,7 +327,7 @@
 		\nTurbine speed: [src.compressor.rpm]rpm<BR>
 		\nPower currently being generated: [src.compressor.turbine.lastgen]W<BR>
 		\nInternal gas temperature: [src.compressor.gas_contained.temperature]K<BR>
-		\n</PRE><HR><A href='?src=\ref[src];view=1'>View</A>		
+		\n</PRE><HR><A href='?src=\ref[src];view=1'>View</A>
 		\n</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>
 		\n<BR>
 		\n"}
