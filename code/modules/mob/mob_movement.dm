@@ -467,7 +467,9 @@
 			step(C, C.dir) //slide to the next wet floor, ad infinitum
 			return 1
 
-		if(!C.recently_slipped)
+
+		// here is where we slip: only if you haven't been recently slipped, and are standing
+		if(!C.recently_slipped && !lying)
 			C.stop_pulling()
 			if(O)
 				C << "<span class='danger'>You slipped on the [O.name]!</span>"
@@ -475,7 +477,9 @@
 				C << "<span class='danger'>You slipped!</span>"
 			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 			C.Stun(s_amount)
-			C.recently_slipped = w_amount
+			C.recently_slipped = 1
+			spawn (w_amount*10)
+				C.recently_slipped = 0
 			if(can_not_weaken || lube==1 || lube==3)
 				step(C, C.dir) //loop back to wet floors
 			if(lube!=3)
@@ -488,7 +492,9 @@
 			spawn(4)
 				step(C, C.dir)
 				C.Weaken(w_amount) //weaken after the last step. Slide may or may not be over yet.
-				C.recently_slipped = w_amount
+				C.recently_slipped = 1
+				spawn (w_amount*10)
+					C.recently_slipped = 0
 			C.take_organ_damage(2) // Was 5 -- TLE
 		return 1
 	return 0 // no success. Used in clown pda and wet floors

@@ -1,11 +1,3 @@
-
-/mob/living/carbon/Life()
-	.=..()
-	if(recently_slipped)
-		recently_slipped=max(0, recently_slipped-1)
-		if(weakened && recently_slipped==0)
-			recently_slipped = 1
-
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()
 	if(.)
