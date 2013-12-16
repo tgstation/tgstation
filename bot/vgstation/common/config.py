@@ -25,8 +25,7 @@ config = {
         {
             'redmine': {
                 'url': '',
-                'username': 'username',
-                'password': 'password'
+                'apikey':''
             },
             'nudge': {
                 'hostname': '',

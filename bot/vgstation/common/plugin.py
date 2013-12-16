@@ -52,3 +52,6 @@ class IPlugin(object):
         
     def OnChannelMessage(self, connection, event):
         return False # Not handled
+        
+    def OnPing(self):
+        return False # Not handled
