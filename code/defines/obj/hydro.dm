@@ -880,6 +880,23 @@
 	plant_type = 0
 	growthstages = 6
 
+/obj/item/seeds/ambrosiavulgarisseed/cruciatus
+	name = "pack of ambrosia vulgaris seeds"
+	desc = "These seeds grow into common ambrosia, a plant grown by and from medicine."
+	icon_state = "seed-ambrosiavulgaris"
+	mypath = "/obj/item/seeds/ambrosiavulgarisseed/cruciatus"
+	species = "ambrosiavulgaris"
+	plantname = "Ambrosia Vulgaris"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/cruciatus"
+	lifespan = 60
+	endurance = 25
+	maturation = 6
+	production = 6
+	yield = 6
+	potency = 5
+	plant_type = 0
+	growthstages = 6
+
 /obj/item/seeds/ambrosiadeusseed
 	name = "pack of ambrosia deus seeds"
 	desc = "These seeds grow into ambrosia deus. Could it be the food of the gods..?"
