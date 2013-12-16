@@ -16,16 +16,17 @@ class Bot(irc.bot.SingleServerIRCBot):
         self.plugins = []
         for i in ["ping"]:
             self.connection.add_global_handler(i, getattr(self, "on_" + i),0)
+        self.welcomeReceived=False
         
     def on_ping(self,c,e):
         for plugin in self.plugins:
             if plugin.OnPing(): break
         
-
     def on_nicknameinuse(self, c, e):
         c.nick(c.get_nickname() + "_")
 
     def on_welcome(self, c, e):
+        self.welcomeReceived=True
         for channel, channelconfig in self.chanconfig.items():
             password = channelconfig.get('password', None)
             logging.info('Joining {0}...'.format(channel))
@@ -86,4 +87,7 @@ class Bot(irc.bot.SingleServerIRCBot):
         for channel, chandata in self.chanconfig.items():
             if chandata.get(flag, False)==True:
                 self.privmsg(channel, msg)
+                
+    def haveJoined(self,channel):
+        return channel in self.channels
         
