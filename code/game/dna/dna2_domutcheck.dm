@@ -36,7 +36,7 @@
 			gene.deactivate(M,connected,flags)
 			if(M)
 				M.active_genes -= gene.type
-				M.update_icon=1
+				M.update_icon = 1
 		//else
 		//	testing("[M] - Failed to activate [gene.name] - [gene_active?"+":"-"]active, [gene_prior_status?"+":"-"]prior")
 
