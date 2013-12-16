@@ -48,24 +48,13 @@
 		user.take_organ_damage(10)
 		user.Paralyse(20)
 		return
-
-	if (M.stat !=2)
-		/*vg edit, handled by the holy book now
-		if((M.mind in ticker.mode.cult) && prob(33))
-			M << "\red The power of [src] clears your mind of the cult's influence!"
-			user << "\red You wave [src] over [M]'s head and see their eyes become clear, their mind returning to normal."
-			ticker.mode.remove_cultist(M.mind)
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red [] waves [] over []'s head.", user, src, M), 1)
-			*/
-		if(prob(10))
-			user << "\red The rod slips in your hand."
-			..()
-		else
-			//user << "\red The rod appears to do nothing."
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red [] waves [] over []'s head.", user, src, M), 1)
-			return
+	if(M.mind)
+		if(M.mind.vampire)
+			if(ishuman(M))
+				if(!(VAMP_FULL in M.mind.vampire.powers))
+					M << "<span class='warning'>The nullrod's power interferes with your own!</span>"
+					M.mind.vampire.nullified = max(5, M.mind.vampire.nullified + 2)
+	..()
 
 /obj/item/weapon/nullrod/afterattack(atom/A, mob/user as mob)
 	if (istype(A, /turf/simulated/floor))

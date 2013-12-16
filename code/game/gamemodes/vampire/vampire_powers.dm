@@ -9,20 +9,27 @@
 		return 0
 
 	var/datum/vampire/vampire = src.mind.vampire
+
 	if(!vampire)
 		world.log << "[src] has vampire verbs but isn't a vampire."
 		return 0
+
+	var/fullpower = (VAMP_FULL in vampire.powers)
 
 	if(src.stat > max_stat)
 		src << "<span class='warning'>You are incapacitated.</span>"
 		return 0
 
+	if(vampire.nullified)
+		if(!fullpower)
+			src << "<span class='warning'>Something is blocking your powers!</span>"
+			return 0
 	if(vampire.bloodusable < required_blood)
 		src << "<span class='warning'>You require at least [required_blood] units of usable blood to do that!</span>"
 		return 0
 	//chapel check
 	if(istype(loc.loc, /area/chapel))
-		if(!(VAMP_FULL in vampire.powers))
+		if(!fullpower)
 			src << "<span class='warning'>Your powers are useless on this holy ground.</span>"
 			return 0
 	return 1
@@ -73,6 +80,14 @@
 		M.current.paralysis = 0
 		//M.vampire.bloodusable -= 10
 		M.current << "\blue You flush your system with clean blood and remove any incapacitating effects."
+		spawn(1)
+			if(M.vampire.bloodtotal >= 200)
+				for(var/i = 0; i < 5; i++)
+					M.current.adjustBruteLoss(-2)
+					M.current.adjustOxyLoss(-5)
+					M.current.adjustToxLoss(-2)
+					M.current.adjustFireLoss(-2)
+					sleep(35)
 		M.current.verbs -= /client/proc/vampire_rejuvinate
 		spawn(200)
 			M.current.verbs += /client/proc/vampire_rejuvinate
@@ -439,6 +454,7 @@
 			usr.loc = picked
 			spawn(10)
 				del(animation)
+		M.current.remove_vampire_blood(30)
 		M.current.verbs -= /client/proc/vampire_shadowstep
 		spawn(20)
 			M.current.verbs += /client/proc/vampire_shadowstep
