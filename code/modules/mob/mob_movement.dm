@@ -444,30 +444,51 @@
 		step(pulling, get_dir(pulling.loc, A))
 	return
 
-/mob/proc/slip(var/s_amount, var/w_amount, var/obj/O, var/lube) // lube=1 slips when walking, lube=2 is for lube
+
+/*
+ * 0)Banana peels, soap and clown pda == no slip when walking, no step unless you can't be weakened. lube=0
+ * 1)Wet floor = no slip when walking, take a step and slide, lube=1
+ * 2)Foam = slips when walking, no step unless you can't be weakened, lube=2
+ * 3)Lube = Always slips, sliding effect, lube=3
+ */
+/mob/proc/slip(var/s_amount, var/w_amount, var/obj/O, var/lube)
 	if (iscarbon(src)) // only carbons slip.
-		if (ishuman(src))
-			var/mob/living/carbon/human/shoe_wearer = src
-			if(isobj(shoe_wearer.shoes) && shoe_wearer.shoes.flags&NOSLIP && lube!=2) //lube wins galoshes
+		var/mob/living/carbon/C=src
+		if (ishuman(C))
+			var/mob/living/carbon/human/shoe_wearer = C
+			if(isobj(shoe_wearer.shoes) && shoe_wearer.shoes.flags&NOSLIP && lube!=3) //lube wins galoshes
 				return 0
-		if (src.m_intent=="walk" && lube==0)
+		if (C.m_intent=="walk" && lube<=1)
 			return 0
 
-		if((!lying && canmove) || !(src.flags&CANWEAKEN)) //this spams a lot for aliens, hulks and slimes, but how to check if they have been slipped recently?
-			src.stop_pulling()
+		var/can_not_weaken = ((HULK in C.mutations) || (!(C.status_flags&CANWEAKEN)))
+
+		if((lube==1 || can_not_weaken) && C.recently_slipped && lube!=3) //sliding on wet floor (already slipped)
+			step(C, C.dir) //slide to the next wet floor, ad infinitum
+			return 1
+
+		if(!C.recently_slipped)
+			C.stop_pulling()
 			if(O)
-				src << "<span class='danger'>You slipped on the [O.name]!</span>"
+				C << "<span class='danger'>You slipped on the [O.name]!</span>"
 			else
-				src << "<span class='danger'>You slipped!</span>"
-			playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
-			src.Stun(s_amount)
-			src.Weaken(w_amount)
-			if(lube)
-				step(src, src.dir)
-		if(lube==2) // Wheeeeeeeeeee!
-			spawn(1) step(src, src.dir)
-			spawn(2) step(src, src.dir)
-			spawn(3) step(src, src.dir)
-			spawn(4) step(src, src.dir)
+				C << "<span class='danger'>You slipped!</span>"
+			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+			C.Stun(s_amount)
+			C.recently_slipped = w_amount
+			if(can_not_weaken || lube==1 || lube==3)
+				step(C, C.dir) //loop back to wet floors
+			if(lube!=3)
+				C.Weaken(w_amount)
+
+		if(lube==3) // Wheeeeeeeeeee!
+			spawn(1) step(C, C.dir)
+			spawn(2) step(C, C.dir)
+			spawn(3) step(C, C.dir)
+			spawn(4)
+				step(C, C.dir)
+				C.Weaken(w_amount) //weaken after the last step. Slide may or may not be over yet.
+				C.recently_slipped = w_amount
+			C.take_organ_damage(2) // Was 5 -- TLE
 		return 1
 	return 0 // no success. Used in clown pda and wet floors

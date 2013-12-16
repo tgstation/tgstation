@@ -55,12 +55,12 @@
 
 		switch (src.wet)
 			if(1) //wet floor
-				if(!M.slip(8, 5))
+				if(!M.slip(8, 5, null, 1))
 					M.inertia_dir = 0
 				return
 
 			if(2) //lube
-				if(M.slip(12, 10, null, 2)) // not all mobs slip
-					M.take_organ_damage(2) // Was 5 -- TLE
+				M.slip(12, 10, null, 3)
+
 
 	..()
