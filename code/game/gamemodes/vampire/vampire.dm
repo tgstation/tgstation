@@ -82,7 +82,7 @@
 	return
 
 /datum/game_mode/proc/auto_declare_completion_vampire()
-	if(traitors.len)
+	if(vampires.len)
 		var/text = "<FONT size = 2><B>The vampires were:</B></FONT>"
 		for(var/datum/mind/vampire in vampires)
 			var/traitorwin = 1
@@ -127,7 +127,7 @@
 	return 1
 
 /datum/game_mode/proc/auto_declare_completion_enthralled()
-	if(traitors.len)
+	if(enthralled.len)
 		var/text = "<FONT size = 2><B>The Enthralled were:</B></FONT>"
 		for(var/datum/mind/enthralled in enthralled)
 			text += "<br>[enthralled.key] was [enthralled.name] ("
