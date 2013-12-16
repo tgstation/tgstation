@@ -54,7 +54,7 @@ class Bot(irc.bot.SingleServerIRCBot):
                 self.do_command(e, args[1].strip())
         else:
             for plugin in self.plugins:
-                if plugin.OnChannelMessage(c, msg): break
+                if plugin.OnChannelMessage(c, e): break
         return
 
     def on_dccmsg(self, c, e):
