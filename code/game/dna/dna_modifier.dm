@@ -81,12 +81,6 @@
 	usr.loc = src
 	src.occupant = usr
 	src.icon_state = "scanner_1"
-	/*
-	for(var/obj/O in src)    // THIS IS P. STUPID -- LOVE, DOOHL
-		//O = null
-		del(O)
-		//Foreach goto(124)
-	*/
 	src.add_fingerprint(usr)
 	return
 
@@ -205,13 +199,6 @@
 /obj/machinery/dna_scannernew/proc/go_out()
 	if ((!( src.occupant ) || src.locked))
 		return
-/*
-//	it's like this was -just- here to break constructed dna scanners -Pete
-//	if that's not the case, slap my shit and uncomment this.
-//	for(var/obj/O in src)
-//		O.loc = src.loc
-*/
-		//Foreach goto(30)
 	if (src.occupant.client)
 		src.occupant.client.eye = src.occupant.client.mob
 		src.occupant.client.perspective = MOB_PERSPECTIVE
