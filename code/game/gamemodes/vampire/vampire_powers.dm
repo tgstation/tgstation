@@ -36,6 +36,7 @@
 	//Chaplains are resistant to vampire powers
 	if(mind && mind.assigned_role == "Chaplain")
 		return 0
+	return 1
 
 /mob/proc/vampire_can_reach(mob/M as mob, active_range = 1)
 	if(M.loc == src.loc) return 1 //target and source are in the same thing
