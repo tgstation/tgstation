@@ -1,3 +1,4 @@
+import string
 import irc.bot
 import vgstation.common.config as globalConfig
 import logging
@@ -36,17 +37,21 @@ class Bot(irc.bot.SingleServerIRCBot):
                 c.join(channel, password)
 
     def on_privmsg(self, c, e):
-        logging.info('PRIVMSG: <{0}> {1}'.format(e.source.nick, e.arguments[0]))
+        msg=e.arguments[0]
+        msg=self.stripUnprintable(msg)
+        logging.info('PRIVMSG: <{0}> {1}'.format(e.source.nick, msg))
         self.do_command(e, e.arguments[0])
 
-    def on_pubmsg(self, c, msg):
+    def on_pubmsg(self, c, e):
         #logging.info(msg.source)
-        logging.info('PUBMSG: <{0}:{1}> {2}'.format(msg.source.nick, msg.target, msg.arguments[0]))
-        if ',' in msg.arguments[0]:
-            args = msg.arguments[0].split(',', 1)
+        msg=e.arguments[0]
+        msg=self.stripUnprintable(msg)
+        logging.info('PUBMSG: <{0}:{1}> {2}'.format(e.source.nick, e.target, msg))
+        if ',' in msg:
+            args = msg.split(',', 1)
             logging.debug(repr(args))
             if len(args) > 1 and args[0] in globalConfig.get('names', []):
-                self.do_command(msg, args[1].strip())
+                self.do_command(e, args[1].strip())
         else:
             for plugin in self.plugins:
                 if plugin.OnChannelMessage(c, msg): break
@@ -58,12 +63,15 @@ class Bot(irc.bot.SingleServerIRCBot):
     def on_dccchat(self, c, e):
         return
     
+    def stripUnprintable(self,msg):
+        return filter(lambda x: x in string.printable, msg)
+    
     def notice(self, nick, message):
-        logging.info('NOTICE -> {0}: {1}'.format(nick, message))
+        logging.info('NOTICE -> {0}: {1}'.format(nick, self.stripUnprintable(message)))
         self.connection.notice(nick, message)
     
     def privmsg(self, nick, message):
-        logging.info('PRIVMSG -> {0}: {1}'.format(nick, message))
+        logging.info('PRIVMSG -> {0}: {1}'.format(nick, self.stripUnprintable(message)))
         self.connection.privmsg(nick, message)
 
     def do_command(self, e, cmd):
