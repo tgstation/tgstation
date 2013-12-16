@@ -38,6 +38,7 @@
 	var/capacity = 1e6
 	var/comp_id = 0
 
+
 /obj/machinery/power/turbine
 	name = "gas turbine generator"
 	desc = "A gas turbine used for backup power generation."
@@ -171,14 +172,15 @@
 
 
 /obj/machinery/power/turbine/process()
-	if(!compressor.starter)
-		return
-	overlays.Cut()
+
 	if(stat & BROKEN)
 		return
 	if(!compressor)
 		stat |= BROKEN
 		return
+	if(!compressor.starter)
+		return
+	overlays.Cut()
 
 	// This is the power generation function. If anything is needed it's good to plot it in EXCEL before modifying
 	// the TURBGENQ and TURBGENG values
@@ -208,47 +210,38 @@
 
 	updateDialog()
 
-
-/obj/machinery/power/turbine/attack_ai(mob/user)
-
-	if(stat & (BROKEN|NOPOWER))
-		return
-
-	interact(user)
-
 /obj/machinery/power/turbine/attack_hand(mob/user)
 
-	add_fingerprint(user)
-
-	if(stat & (BROKEN|NOPOWER))
+	if(..())
 		return
 
 	interact(user)
+
+
 
 /obj/machinery/power/turbine/interact(mob/user)
 
-		if ( (get_dist(src, user) > 1 ) || (stat & (NOPOWER|BROKEN)) && (!istype(user, /mob/living/silicon/ai)) )
-				user.machine = null
-				user << browse(null, "window=turbine")
-				return
-
-		user.set_machine(src)
-
-		var/t = "<TT><B>Gas Turbine Generator</B><HR><PRE>"
-
-		t += "Generated power : [round(lastgen)] W<BR><BR>"
-
-		t += "Turbine: [round(compressor.rpm)] RPM<BR>"
-
-		t += "Starter: [ compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]"
-
-		t += "</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>"
-
-		t += "</TT>"
-		user << browse(t, "window=turbine")
-		onclose(user, "turbine")
-
+	if ( (get_dist(src, user) > 1 ) || (stat & (NOPOWER|BROKEN)) && (!istype(user, /mob/living/silicon/ai)) )
+		user.unset_machine(src)
+		user << browse(null, "window=turbine")
 		return
+
+	var/t = "<TT><B>Gas Turbine Generator</B><HR><PRE>"
+
+	t += "Generated power : [round(lastgen)] W<BR><BR>"
+
+	t += "Turbine: [round(compressor.rpm)] RPM<BR>"
+
+	t += "Starter: [ compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]"
+
+	t += "</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>"
+
+	t += "</TT>"
+	var/datum/browser/popup = new(user, "turbine", name)
+	popup.set_content(t)
+	popup.open()
+
+	return
 
 /obj/machinery/power/turbine/Topic(href, href_list)
 	if(..())
@@ -256,13 +249,13 @@
 
 	if( href_list["close"] )
 		usr << browse(null, "window=turbine")
-		usr.machine = null
+		usr.unset_machine(src)
 		return
 
 	else if( href_list["str"] )
-		compressor.starter = !compressor.starter
+		if(compressor)
+			compressor.starter = !compressor.starter
 
-	spawn(0)
 	updateDialog()
 
 
@@ -283,79 +276,45 @@
 			if(id == C.comp_id)
 				compressor = C
 
-
-/obj/machinery/computer/turbine_computer/attackby(I as obj, user as mob)
-	if(istype(I, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
-			if (src.stat & BROKEN)
-				user << "\blue The broken glass falls out."
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				new /obj/item/weapon/shard( src.loc )
-				var/obj/item/weapon/circuitboard/turbine_control/M = new /obj/item/weapon/circuitboard/turbine_control( A )
-				for (var/obj/C in src)
-					C.loc = src.loc
-				M.id = src.id
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				del(src)
-			else
-				user << "\blue You disconnect the monitor."
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				var/obj/item/weapon/circuitboard/turbine_control/M = new /obj/item/weapon/circuitboard/turbine_control( A )
-				for (var/obj/C in src)
-					C.loc = src.loc
-				M.id = src.id
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				del(src)
-	else
-		src.attack_hand(user)
-	return
-
 /obj/machinery/computer/turbine_computer/attack_hand(var/mob/user as mob)
-	user.machine = src
+	if(..())
+		return
+
+	interact(user)
+
+/obj/machinery/computer/turbine_computer/interact(mob/user)
+
 	var/dat
-	if(src.compressor)
+	if(compressor)
 		dat += {"<BR><B>Gas turbine remote control system</B><HR>
 		\nTurbine status: [ src.compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]
 		\n<BR>
 		\nTurbine speed: [src.compressor.rpm]rpm<BR>
 		\nPower currently being generated: [src.compressor.turbine.lastgen]W<BR>
 		\nInternal gas temperature: [src.compressor.gas_contained.temperature]K<BR>
-		\n</PRE><HR><A href='?src=\ref[src];view=1'>View</A>
 		\n</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>
 		\n<BR>
 		\n"}
 	else
 		dat += "\red<B>No compatible attached compressor found."
 
-	user << browse(dat, "window=computer;size=400x500")
-	onclose(user, "computer")
+	var/datum/browser/popup = new(user, "turbinecomputer", name)
+	popup.set_content(dat)
+	popup.open()
 	return
-
-
 
 /obj/machinery/computer/turbine_computer/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.machine = src
 
-		if( href_list["view"] )
-			usr.client.eye = src.compressor
-		else if( href_list["str"] )
-			src.compressor.starter = !src.compressor.starter
-		else if( href_list["close"] )
-			usr << browse(null, "window=computer")
-			usr.machine = null
-			return
+	else if( href_list["str"] )
+		if(compressor)
+			compressor.starter = !compressor.starter
+	else if( href_list["close"] )
+		usr << browse(null, "window=turbinecomputer")
+		usr.unset_machine(src)
+		return
 
-		src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
 
