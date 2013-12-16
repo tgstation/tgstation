@@ -1869,6 +1869,27 @@ datum
 				..()
 				return
 
+		spiritbreaker
+			name = "Spiritbreaker Toxin"
+			id = "spiritbreaker"
+			description = "An extremely dangerous hallucinogen often used for torture. Extracted from the leaves of the rare Ambrosia Cruciatus plant."
+			reagent_state = LIQUID
+			color = "3B0805" // rgb: 59, 8, 5
+			custom_metabolism = 0.05
+
+			on_mob_life(var/mob/living/M as mob)
+				var/sbreak = rand(150,180)
+				if(!M) M = holder.my_atom
+				if(!data) data = 1
+				if(data >= sbreak)
+					M.adjustToxLoss(0.2)
+					M.adjustBrainLoss(5)
+					M.hallucination += 100
+					M.dizziness += 100
+					M.confused += 2
+				data++
+				return ..()
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
