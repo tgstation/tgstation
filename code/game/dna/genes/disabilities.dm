@@ -37,7 +37,7 @@
 	if(activation_message)
 		M << "\red [activation_message]"
 
-/datum/dna/gene/disability/activate(var/mob/M, var/connected, var/flags)
+/datum/dna/gene/disability/deactivate(var/mob/M, var/connected, var/flags)
 	if(mutation && (mutation in M.mutations))
 		M.mutations.Remove(mutation)
 	if(disability)
