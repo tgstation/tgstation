@@ -8,7 +8,6 @@
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
 
-adrinus = Game Master
 rolan7 = Game Master
 quarxink = Game Master
 tle = Game Master
