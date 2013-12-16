@@ -113,6 +113,14 @@ var/list/uplink_items = list()
 	cost = 6
 	job = list("Detective")
 
+//Botanist
+/datum/uplink_item/jobspecific/ambrosiacruciatus
+	name = "Ambrosia Cruciatus Seeds"
+	desc = "Part of the notorious Ambrosia family, this species is nearly indistinguishable from Ambrosia Vulgaris- but its' branches contain a revolting toxin. Eight units are enough to drive victims insane after a three-minute delay."
+	item = /obj/item/seeds/ambrosiavulgarisseed/cruciatus
+	cost = 2
+	job = list("Botanist")
+
 //Chef
 /datum/uplink_item/jobspecific/specialsauce
 	name = "Chef Excellence's Special Sauce"
@@ -129,7 +137,6 @@ var/list/uplink_items = list()
 	job = list("Chef")
 
 //Janitor
-
 /datum/uplink_item/jobspecific/cautionsign
 	name = "Proximity Mine"
 	desc = "An Anti-Personnel proximity mine cleverly disguised as a wet floor caution sign that is triggered by running past it, activate it to start the 15 second timer and activate again to disarm."
@@ -139,7 +146,6 @@ var/list/uplink_items = list()
 
 
 //Assistant
-
 /datum/uplink_item/jobspecific/pickpocketgloves
 	name = "Pickpocket's Gloves"
 	desc = "A pair of sleek gloves to aid in pickpocketing, while wearing these you can see inside the pockets of any unsuspecting mark, loot the ID, belt, or pockets without them knowing, and pickpocketing puts the item directly into your hand."
@@ -153,8 +159,8 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/box/syndie_kit/greytide
 	cost = 7
 	job = list("Assistant")
-//Bartender
 
+//Bartender
 /datum/uplink_item/jobspecific/drunkbullets
 	name = "Boozey Shotgun Shells"
 	desc = "A box containing 6 shotgun shells that simulate the effects of extreme drunkeness on the target, more effective for each type of alcohol in the target's system."
@@ -162,8 +168,15 @@ var/list/uplink_items = list()
 	cost = 3
 	job = list("Bartender")
 
-//Engineer
+//Chemist
+/datum/uplink_item/jobspecific/chemsprayer
+	name = "Chemical Sprayer"
+	desc = "A powerful industrial spraygun that holds 600 units of any liquid, and can cover area faster than a standard spray bottle."
+	item = /obj/item/weapon/reagent_containers/spray/chemsprayer
+	cost = 4
+	job = list("Chemist")
 
+//Engineer
 /datum/uplink_item/jobspecific/powergloves
 	name = "Power Gloves"
 	desc = "Insulated gloves that can utilize the power of the station to deliver a short arc of electricity at a target. Must be standing on a powered cable to use."
