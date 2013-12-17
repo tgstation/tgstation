@@ -20,7 +20,7 @@
 				H << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
 				obj_count++
 		var/randomizeguns = pick("taser","egun","laser","revolver","detective","smg","nuclear","deagle","gyrojet","pulse","silenced","cannon","doublebarrel","shotgun","combatshotgun","mateba","smg","uzi","crossbow","saw")
-		var/randomizemagic = pick("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge","wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffanimation", "staffhealing", "armor", "scrying")
+		var/randomizemagic = pick("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge","wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying")
 		if(!summon_type)
 			switch (randomizeguns)
 				if("taser")
@@ -96,8 +96,6 @@
 					new /obj/item/weapon/gun/magic/wand/door(get_turf(H))
 				if("staffchange")
 					new /obj/item/weapon/gun/magic/staff/change(get_turf(H))
-				if("staffanimation")
-					new /obj/item/weapon/gun/magic/staff/animate(get_turf(H))
 				if("staffhealing")
 					new /obj/item/weapon/gun/magic/staff/healing(get_turf(H))
 				if("armor")
