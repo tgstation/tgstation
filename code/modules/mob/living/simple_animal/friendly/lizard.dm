@@ -14,6 +14,5 @@
 	response_help  = "pets"
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
-	can_ventcrawl = 1
 	can_hide = 1
 	pass_flags = PASSTABLE

@@ -14,7 +14,6 @@
 	emote_see = list("jiggles", "bounces in place")
 	pass_flags = PASSTABLE
 	var/colour = "grey"
-	can_ventcrawl = 1
 
 /mob/living/simple_animal/slime/Bump(atom/movable/AM as mob|obj, yes)
 	if ((!( yes ) || now_pushing))

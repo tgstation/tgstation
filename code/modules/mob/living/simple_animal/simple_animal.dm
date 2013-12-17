@@ -57,14 +57,11 @@
 
 	var/speed = 0 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
 
-	var/can_ventcrawl 	= 0
 	var/can_hide		= 0
 
 /mob/living/simple_animal/New()
 	..()
 	verbs -= /mob/verb/observe
-	if(!can_ventcrawl)
-		verbs -= /mob/living/simple_animal/verb/ventcrawl
 	if(!can_hide)
 		verbs -= /mob/living/simple_animal/verb/hide
 

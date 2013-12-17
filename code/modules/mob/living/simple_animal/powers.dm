@@ -1,9 +1,3 @@
-/mob/living/simple_animal/verb/ventcrawl()
-	set name = "Crawl through vent"
-	set desc = "Enter an air vent and crawl through the pipe system."
-	set category = "Animal"
-	handle_ventcrawl()
-
 /mob/living/simple_animal/verb/hide()
 	set name = "Hide"
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."

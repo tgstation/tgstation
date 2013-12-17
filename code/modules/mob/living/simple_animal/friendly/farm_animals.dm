@@ -167,7 +167,6 @@
 	health = 1
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE
-	can_ventcrawl = 1
 	can_hide = 1
 
 /mob/living/simple_animal/chick/New()
