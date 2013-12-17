@@ -13,6 +13,7 @@
 	..()
 	sleep(2)
 	new /obj/item/weapon/tank/jetpack/oxygen/harness(src)
+	new /obj/item/device/pda/syndicate(src)
 	new /obj/item/clothing/mask/gas/syndicate(src)
 	new /obj/item/clothing/under/syndicate(src)
 	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
@@ -47,7 +48,6 @@
 	new /obj/item/weapon/pinpointer/nukeop(src)
 	new /obj/item/weapon/pinpointer/nukeop(src)
 	new /obj/item/weapon/pinpointer/nukeop(src)
-	new /obj/item/device/pda/syndicate(src)
 	return
 
 /obj/structure/closet/syndicate/resources/
