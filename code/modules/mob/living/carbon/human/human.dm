@@ -1344,7 +1344,9 @@ mob/living/carbon/human/yank_out_object()
 /mob/living/carbon/human/proc/set_species(var/new_species,var/on_spawn=0)
 
 	if(!new_species)
-		new_species = "Human"
+		new_species = dna.species
+	else
+		dna.species = new_species
 
 	if(species && (species.name && species.name == new_species))
 		return

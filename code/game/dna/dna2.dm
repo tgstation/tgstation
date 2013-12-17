@@ -71,6 +71,9 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	var/b_type = "A+"  // Should probably change to an integer => string map but I'm lazy.
 	var/mutantrace = null  // The type of mutant race the player is, if applicable (i.e. potato-man)
 	var/real_name          // Stores the real name of the person who originally got this dna datum. Used primarily for changelings,
+
+	// New stuff
+	var/species = "Human"
 ///////////////////////////////////////
 // UNIQUE IDENTITY
 ///////////////////////////////////////
