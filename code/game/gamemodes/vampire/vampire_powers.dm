@@ -102,15 +102,14 @@
 	var/mob/living/carbon/C = M.current.vampire_active(20, 0, 1)
 
 	if(!C) return
-	M.current.visible_message("<span class='warning'>[M]'s eyes flash briefly as he stares into [C.name]'s eyes</span>")
-	M.current.remove_vampire_blood(20)
+	M.current.visible_message("<span class='warning'>[M.current.name]'s eyes flash briefly as he stares into [C.name]'s eyes</span>")
 	M.current.verbs -= /client/proc/vampire_hypnotise
 	spawn(1800)
 		M.current.verbs += /client/proc/vampire_hypnotise
 	if(do_mob(M.current, C, 50))
 		if(C.mind && C.mind.vampire)
 			M.current << "\red Your piercing gaze fails to knock out [C.name]."
-			C << "\blue [M.current]'s feeble gaze is ineffective."
+			C << "\blue [M.current.name]'s feeble gaze is ineffective."
 			return
 		else
 			M.current << "\red Your piercing gaze knocks out [C.name]."
@@ -118,6 +117,7 @@
 			C.Weaken(20)
 			C.Stun(20)
 			C.stuttering = 20
+		M.current.remove_vampire_blood(20)
 	else
 		M.current << "\red You broke your gaze."
 		return
@@ -172,7 +172,7 @@
 	var/datum/mind/M = usr.mind
 	if(!M) return
 	if(M.current.vampire_power(0, 1))
-		M.current.visible_message("\red <b>[M.current]'s eyes emit a blinding flash!")
+		M.current.visible_message("\red <b>[M.current.name]'s eyes emit a blinding flash!")
 		//M.vampire.bloodusable -= 10
 		M.current.verbs -= /client/proc/vampire_glare
 		spawn(300)
@@ -186,7 +186,7 @@
 			C.Stun(8)
 			C.Weaken(8)
 			C.stuttering = 20
-			C << "\red You are blinded by [M.current]'s glare"
+			C << "\red You are blinded by [M.current.name]'s glare"
 
 /client/proc/vampire_shapeshift()
 	set category = "Vampire"
@@ -195,7 +195,7 @@
 	var/datum/mind/M = usr.mind
 	if(!M) return
 	if(M.current.vampire_power(50, 0))
-		M.current.visible_message("<span class='warning'>[M.current] transforms!</span>")
+		M.current.visible_message("<span class='warning'>[M.current.name] transforms!</span>")
 		M.current.client.prefs.real_name = random_name(M.current.gender)
 		M.current.client.prefs.randomize_appearance_for(M.current)
 		M.current.regenerate_icons()
