@@ -54,9 +54,7 @@
 				M.updatehealth()
 				occupant_message("\red You squeeze [target] with [src.name]. Something cracks.")
 				chassis.visible_message("\red [chassis] squeezes [target].")
-				chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name] (INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
-				M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [chassis.occupant.name] ([chassis.occupant.ckey]) with [name] (INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
-				log_attack("<font color='red'>[chassis.occupant.name] ([chassis.occupant.ckey]) attacked [M.name] ([M.ckey]) with [name] (INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>" )
+				add_logs(chassis.occupant, M, "attacked", object="[name]", addition="(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
 			else
 				step_away(M,chassis)
 				occupant_message("You push [target] out of the way.")
@@ -115,9 +113,7 @@
 					log_message("Drilled through [target]")
 					if(ismob(target))
 						var/mob/M = target
-						chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name] (INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
-						M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [chassis.occupant.name] ([chassis.occupant.ckey]) with [name] (INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
-						log_attack("<font color='red'>[chassis.occupant.name] ([chassis.occupant.ckey]) attacked [M.name] ([M.ckey]) with [name] (INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>" )
+						add_logs(chassis.occupant, M, "attacked", object="[name]", addition="(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
 					target.ex_act(2)
 		return 1
 
@@ -177,9 +173,7 @@
 					log_message("Drilled through [target]")
 					if(ismob(target))
 						var/mob/M = target
-						chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name] (INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
-						M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [chassis.occupant.name] ([chassis.occupant.ckey]) with [name] (INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
-						log_attack("<font color='red'>[chassis.occupant.name] ([chassis.occupant.ckey]) attacked [M.name] ([M.ckey]) with [name] (INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>" )
+						add_logs(chassis.occupant, M, "attacked", object="[name]", addition="(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
 					target.ex_act(2)
 		return 1
 
