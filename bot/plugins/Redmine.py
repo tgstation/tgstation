@@ -6,7 +6,7 @@ import vgstation.common.config as globalConfig
 import logging, random, re, time
 #import restkit
 from restkit import BasicAuth, Resource, RequestError
-from restkit.errors import RequestFailed
+from restkit.errors import RequestFailed, ResourceNotFound
 import simplejson as json
 
 BUG_CHECK_DELAY = 60  # 60sec
@@ -102,8 +102,9 @@ class RedminePlugin(IPlugin):
                 for msg in bugmsg:
                     strings.append(msg)
                 
-            except RequestError as e:
-                strings.append("An error occured when trying to query Redmine: " + str(e))
+            except ResourceNotFound:
+                #strings.append("Unable to find redmine issue {0}.".format(id))
+                continue
 
         return strings
             
