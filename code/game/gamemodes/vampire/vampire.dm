@@ -82,9 +82,9 @@
 	return
 
 /datum/game_mode/proc/auto_declare_completion_vampire()
-	world << "VAMPIRE GAMEMODE END CALL"
+	testing("VAMPIRE GAMEMODE END CALL")
 	if(vampires.len)
-		world << "VAMP HAS LENGTH"
+		testing("VAMP HAS LENGTH")
 		var/text = "<FONT size = 2><B>The vampires were:</B></FONT>"
 		for(var/datum/mind/vampire in vampires)
 			var/traitorwin = 1
@@ -127,7 +127,7 @@
 				feedback_add_details("traitor_success","FAIL")
 		world << text
 	else
-		world << "VAMP HAS NO LENGTH"
+		testing("VAMP HAS NO LENGTH")
 	return 1
 
 /datum/game_mode/proc/auto_declare_completion_enthralled()
