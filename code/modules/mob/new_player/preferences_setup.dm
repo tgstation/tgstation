@@ -128,7 +128,7 @@ datum/preferences
 		b_eyes = blue
 
 
-	proc/update_preview_icon()		//seriously. This is horrendous.
+	proc/update_preview_icon(var/for_observer=0)		//seriously. This is horrendous.
 		del(preview_icon_front)
 		del(preview_icon_side)
 		del(preview_icon)
@@ -581,6 +581,15 @@ datum/preferences
 
 		if(disabilities & NEARSIGHTED)
 			preview_icon.Blend(new /icon('icons/mob/eyes.dmi', "glasses"), ICON_OVERLAY)
+
+		// Observers get tourist outfit.
+		if(for_observer)
+			clothes_s = new /icon(uniform_dmi, "tourist_s")
+			clothes_s.Blend(new /icon('icons/mob/feet.dmi', "black"), ICON_UNDERLAY)
+			if(backbag == 2)
+				clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)
+			else if(backbag == 3 || backbag == 4)
+				clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
 
 		preview_icon.Blend(eyes_s, ICON_OVERLAY)
 		if(clothes_s)
