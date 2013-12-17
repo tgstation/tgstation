@@ -1,5 +1,5 @@
 /obj/item/weapon/grenade/spawnergrenade
-	desc = "It is set to detonate in 5 seconds. It will unleash unleash an unspecified anomaly into the vicinity."
+	desc = "It will unleash unleash an unspecified anomaly into the vicinity."
 	name = "delivery grenade"
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "delivery"
@@ -31,7 +31,7 @@
 	del(src)
 
 /obj/item/weapon/grenade/spawnergrenade/manhacks
-	name = "manhack delivery grenade"
+	name = "viscerator delivery grenade"
 	spawner_type = /mob/living/simple_animal/hostile/viscerator
 	deliveryamt = 5
 	origin_tech = "materials=3;magnets=4;syndicate=4"

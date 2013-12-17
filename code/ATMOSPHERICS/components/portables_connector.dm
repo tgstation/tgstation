@@ -2,11 +2,13 @@
 	icon = 'icons/obj/atmospherics/portables_connector.dmi'
 	icon_state = "intact"
 
-	name = "Connector Port"
+	name = "connector port"
 	desc = "For connecting portables devices related to atmospherics control."
 
 	dir = SOUTH
 	initialize_directions = SOUTH
+
+	can_unwrench = 1
 
 	var/obj/machinery/portable_atmospherics/connected_device
 
@@ -77,10 +79,7 @@
 		..()
 
 	initialize()
-		if(node)
-			node.disconnect(src)
-			del(network)
-			node = null
+		src.disconnect(src)
 
 		var/node_connect = dir
 
@@ -137,24 +136,4 @@
 		if (connected_device)
 			user << "\red You cannot unwrench this [src], dettach [connected_device] first."
 			return 1
-		if (locate(/obj/machinery/portable_atmospherics, src.loc))
-			return 1
-		var/turf/T = src.loc
-		if (level==1 && isturf(T) && T.intact)
-			user << "\red You must remove the plating first."
-			return 1
-		var/datum/gas_mixture/int_air = return_air()
-		var/datum/gas_mixture/env_air = loc.return_air()
-		if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
-			user << "\red You cannot unwrench this [src], it too exerted due to internal pressure."
-			add_fingerprint(user)
-			return 1
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		user << "\blue You begin to unfasten \the [src]..."
-		if (do_after(user, 40))
-			user.visible_message( \
-				"[user] unfastens \the [src].", \
-				"\blue You have unfastened \the [src].", \
-				"You hear ratchet.")
-			new /obj/item/pipe(loc, make_from=src)
-			del(src)
+		return ..()

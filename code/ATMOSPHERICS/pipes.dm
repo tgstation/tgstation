@@ -9,6 +9,8 @@ obj/machinery/atmospherics/pipe
 	layer = 2.4 //under wires with their 2.44
 	use_power = 0
 
+	can_unwrench = 1
+
 	var/alert_pressure = 80*ONE_ATMOSPHERE
 		//minimum pressure before check_pressure(...) should be called
 
@@ -334,14 +336,16 @@ obj/machinery/atmospherics/pipe
 		icon = 'icons/obj/atmospherics/pipe_tank.dmi'
 		icon_state = "intact"
 
-		name = "Pressure Tank"
+		name = "pressure tank"
 		desc = "A large vessel containing pressurized gas."
 
-		volume = 2000 //in liters, 1 meters by 1 meters by 2 meters
+		volume = 10000 //in liters, 1 meters by 1 meters by 2 meters
 
 		dir = SOUTH
 		initialize_directions = SOUTH
 		density = 1
+
+		can_unwrench = 0
 
 		var/obj/machinery/atmospherics/node1
 
@@ -363,7 +367,7 @@ obj/machinery/atmospherics/pipe
 				nodealert = 0
 */
 		carbon_dioxide
-			name = "Pressure Tank (Carbon Dioxide)"
+			name = "pressure tank (Carbon Dioxide)"
 
 			New()
 				air_temporary = new
@@ -376,7 +380,7 @@ obj/machinery/atmospherics/pipe
 
 		toxins
 			icon = 'icons/obj/atmospherics/orange_pipe_tank.dmi'
-			name = "Pressure Tank (Plasma)"
+			name = "pressure tank (Plasma)"
 
 			New()
 				air_temporary = new
@@ -389,7 +393,7 @@ obj/machinery/atmospherics/pipe
 
 		oxygen_agent_b
 			icon = 'icons/obj/atmospherics/red_orange_pipe_tank.dmi'
-			name = "Pressure Tank (Oxygen + Plasma)"
+			name = "pressure tank (Oxygen + Plasma)"
 
 			New()
 				air_temporary = new
@@ -405,7 +409,7 @@ obj/machinery/atmospherics/pipe
 
 		oxygen
 			icon = 'icons/obj/atmospherics/blue_pipe_tank.dmi'
-			name = "Pressure Tank (Oxygen)"
+			name = "pressure tank (Oxygen)"
 
 			New()
 				air_temporary = new
@@ -418,7 +422,7 @@ obj/machinery/atmospherics/pipe
 
 		nitrogen
 			icon = 'icons/obj/atmospherics/red_pipe_tank.dmi'
-			name = "Pressure Tank (Nitrogen)"
+			name = "pressure tank (Nitrogen)"
 
 			New()
 				air_temporary = new
@@ -431,7 +435,7 @@ obj/machinery/atmospherics/pipe
 
 		air
 			icon = 'icons/obj/atmospherics/red_pipe_tank.dmi'
-			name = "Pressure Tank (Air)"
+			name = "pressure tank (Air)"
 
 			New()
 				air_temporary = new
@@ -490,7 +494,7 @@ obj/machinery/atmospherics/pipe
 		icon = 'icons/obj/atmospherics/pipe_vent.dmi'
 		icon_state = "intact"
 
-		name = "Vent"
+		name = "vent"
 		desc = "A large air vent"
 
 		level = 1
@@ -499,6 +503,8 @@ obj/machinery/atmospherics/pipe
 
 		dir = SOUTH
 		initialize_directions = SOUTH
+
+		can_unwrench = 0
 
 		var/build_killswitch = 1
 
@@ -805,35 +811,7 @@ obj/machinery/atmospherics/pipe
 		icon_state = "manifold-y-f"
 
 obj/machinery/atmospherics/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-	if (istype(src, /obj/machinery/atmospherics/pipe/tank))
-		return ..()
-	else if (istype(src, /obj/machinery/atmospherics/pipe/vent))
-		return ..()
-	else if (istype(W, /obj/item/weapon/wrench))
-		var/turf/T = src.loc
-		if (level==1 && isturf(T) && T.intact)
-			user << "\red You must remove the plating first."
-			return 1
-		var/datum/gas_mixture/int_air = return_air()
-		var/datum/gas_mixture/env_air = loc.return_air()
-		if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
-			user << "\red You cannot unwrench this [src], it too exerted due to internal pressure."
-			add_fingerprint(user)
-			return 1
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		user << "\blue You begin to unfasten \the [src]..."
-		if (do_after(user, 40))
-			user.visible_message( \
-				"[user] unfastens \the [src].", \
-				"\blue You have unfastened \the [src].", \
-				"You hear ratchet.")
-			new /obj/item/pipe(loc, make_from=src)
-			for (var/obj/machinery/meter/meter in T)
-				if (meter.target == src)
-					new /obj/item/pipe_meter(T)
-					del(meter)
-			del(src)
-	else if (istype(W, /obj/item/device/analyzer) && get_dist(user, src) <= 1)
+	if (istype(W, /obj/item/device/analyzer) && get_dist(user, src) <= 1)
 		atmosanalyzer_scan(parent.air, user)
 	else
 		return ..()

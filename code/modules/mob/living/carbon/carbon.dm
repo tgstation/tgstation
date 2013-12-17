@@ -20,8 +20,8 @@
 				if(istype(src, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = src
 					var/organ = H.get_organ("chest")
-					if (istype(organ, /datum/limb))
-						var/datum/limb/temp = organ
+					if (istype(organ, /obj/item/organ/limb))
+						var/obj/item/organ/limb/temp = organ
 						if(temp.take_damage(d, 0))
 							H.update_damage_overlays(0)
 					H.updatehealth()
@@ -45,6 +45,13 @@
 		M.loc = loc
 		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
 	. = ..()
+
+/mob/living/carbon/AltClickOn(var/atom/A)
+	if(!src.stat && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
+		next_click = world.time + 5
+		call(src, src.mind.changeling.chosen_sting)(A)
+	else
+		..()
 
 /mob/living/carbon/attack_hand(mob/user)
 	if(!iscarbon(user)) return
@@ -146,7 +153,7 @@
 				"<span class='notice'>[src] examines \himself.", \
 				"<span class='notice'>You check yourself for injuries.</span>")
 
-			for(var/datum/limb/org in H.organs)
+			for(var/obj/item/organ/limb/org in H.organs)
 				var/status = ""
 				var/brutedamage = org.brute_dam
 				var/burndamage = org.burn_dam
@@ -374,9 +381,9 @@
 	<HR>
 	<B><FONT size=3>[name]</FONT></B>
 	<HR>
-	<BR><B>Mask:</B> <A href='?src=\ref[src];item=[slot_wear_mask]'>		[wear_mask	? wear_mask	: "Nothing"]</A>
-	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=[slot_l_hand]'>		[l_hand		? l_hand	: "Nothing"]</A>
-	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=[slot_r_hand]'>		[r_hand		? r_hand	: "Nothing"]</A>"}
+	<BR><B>Mask:</B> <A href='?src=\ref[src];item=[slot_wear_mask]'>		[(wear_mask && !(wear_mask.flags&ABSTRACT))	? wear_mask	: "Nothing"]</A>
+	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=[slot_l_hand]'>		[(l_hand && !(l_hand.flags&ABSTRACT))		? l_hand	: "Nothing"]</A>
+	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=[slot_r_hand]'>		[(r_hand && !(r_hand.flags&ABSTRACT))		? r_hand	: "Nothing"]</A>"}
 
 	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=[slot_back]'> [back ? back : "Nothing"]</A>"
 

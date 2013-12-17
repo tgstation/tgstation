@@ -1,5 +1,5 @@
 /obj/effect/mine
-	name = "Mine"
+	name = "mine"
 	desc = "I Better stay away from that thing."
 	density = 1
 	anchored = 1
@@ -12,7 +12,7 @@
 /obj/effect/mine/New()
 	icon_state = "uglyminearmed"
 
-/obj/effect/mine/HasEntered(AM as mob|obj)
+/obj/effect/mine/Crossed(AM as mob|obj)
 	Bumped(AM)
 
 /obj/effect/mine/Bumped(mob/M as mob|obj)
@@ -69,26 +69,26 @@
 		del(src)
 
 /obj/effect/mine/dnascramble
-	name = "Radiation Mine"
+	name = "radiation mine"
 	icon_state = "uglymine"
 	triggerproc = "triggerrad"
 
 /obj/effect/mine/plasma
-	name = "Plasma Mine"
+	name = "plasma mine"
 	icon_state = "uglymine"
 	triggerproc = "triggerplasma"
 
 /obj/effect/mine/kick
-	name = "Kick Mine"
+	name = "kick mine"
 	icon_state = "uglymine"
 	triggerproc = "triggerkick"
 
 /obj/effect/mine/n2o
-	name = "N2O Mine"
+	name = "\improper N2O mine"
 	icon_state = "uglymine"
 	triggerproc = "triggern2o"
 
 /obj/effect/mine/stun
-	name = "Stun Mine"
+	name = "stun mine"
 	icon_state = "uglymine"
 	triggerproc = "triggerstun"

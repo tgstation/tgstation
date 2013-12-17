@@ -55,3 +55,17 @@
 	visible_message("\red <b>[src]</b> is hacked into pieces!")
 	new /obj/item/stack/sheet/wood(loc)
 	del(src)
+
+/mob/living/simple_animal/hostile/tree/festivus
+	name = "festivus pole"
+	desc = "serenity now... SERENITY NOW!"
+	icon_state = "festivus_pole"
+	icon_living = "festivus_pole"
+	icon_dead = "festivus_pole"
+	icon_gib = "festivus_pole"
+
+/mob/living/simple_animal/hostile/tree/festivus/Die()
+	..()
+	visible_message("\red <b>[src]</b> is hacked into pieces!")
+	new /obj/item/stack/rods(loc)
+	del(src)

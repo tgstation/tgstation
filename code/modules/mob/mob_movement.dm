@@ -438,7 +438,8 @@
 		var/atom/movable/t = M.pulling
 		M.stop_pulling()
 		step(pulling, get_dir(pulling.loc, A))
-		M.start_pulling(t)
+		if(M)
+			M.start_pulling(t)
 	else
 		step(pulling, get_dir(pulling.loc, A))
 	return

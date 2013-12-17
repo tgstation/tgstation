@@ -104,7 +104,7 @@ var/global/list/uneatable = list(
 
 /obj/machinery/singularity/proc/admin_investigate_setup()
 	last_warning = world.time
-	var/count = locate(/obj/machinery/containment_field) in orange(30, src)
+	var/count = locate(/obj/machinery/field/containment) in orange(30, src)
 	if(!count)	message_admins("A singulo has been created without containment fields active ([x],[y],[z])",1)
 	investigate_log("was created. [count?"":"<font color='red'>No containment fields were active</font>"]","singulo")
 
@@ -376,10 +376,10 @@ var/global/list/uneatable = list(
 /obj/machinery/singularity/proc/can_move(var/turf/T)
 	if(!T)
 		return 0
-	if((locate(/obj/machinery/containment_field) in T)||(locate(/obj/machinery/shieldwall) in T))
+	if((locate(/obj/machinery/field/containment) in T)||(locate(/obj/machinery/shieldwall) in T))
 		return 0
-	else if(locate(/obj/machinery/field_generator) in T)
-		var/obj/machinery/field_generator/G = locate(/obj/machinery/field_generator) in T
+	else if(locate(/obj/machinery/field/generator) in T)
+		var/obj/machinery/field/generator/G = locate(/obj/machinery/field/generator) in T
 		if(G && G.active)
 			return 0
 	else if(locate(/obj/machinery/shieldwallgen) in T)

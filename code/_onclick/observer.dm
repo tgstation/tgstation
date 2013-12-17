@@ -31,6 +31,21 @@
 	if(client.buildmode)
 		build_click(src, client.buildmode, params, A)
 		return
+
+	var/list/modifiers = params2list(params)
+	if(modifiers["middle"])
+		MiddleClickOn(A)
+		return
+	if(modifiers["shift"])
+		ShiftClickOn(A)
+		return
+	if(modifiers["alt"])
+		AltClickOn(A)
+		return
+	if(modifiers["ctrl"])
+		CtrlClickOn(A)
+		return
+
 	if(world.time <= next_move) return
 	next_move = world.time + 8
 	// You are responsible for checking config.ghost_interaction when you override this function
@@ -71,7 +86,7 @@
 /obj/machinery/teleport/hub/attack_ghost(mob/user as mob)
 	var/atom/l = loc
 	var/obj/machinery/computer/teleporter/com = locate(/obj/machinery/computer/teleporter, locate(l.x - 2, l.y, l.z))
-	if(com.locked)
+	if(com && com.locked)
 		user.loc = get_turf(com.locked)
 
 /obj/effect/portal/attack_ghost(mob/user as mob)

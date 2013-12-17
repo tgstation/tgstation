@@ -87,6 +87,27 @@
 		..()
 		reagents.add_reagent("mutagen", 30)
 
+/obj/item/weapon/reagent_containers/glass/bottle/plasma
+	name = "liquid plasma bottle"
+	desc = "A small bottle of liquid plasma. Extremely toxic and reacts with micro-organisms inside blood."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle8"
+
+	New()
+		..()
+		reagents.add_reagent("plasma", 30)
+
+
+/obj/item/weapon/reagent_containers/glass/bottle/synaptizine
+	name = "synaptizine bottle"
+	desc = "A small bottle of synaptizine."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle20"
+
+	New()
+		..()
+		reagents.add_reagent("synaptizine", 30)
+
 /obj/item/weapon/reagent_containers/glass/bottle/ammonia
 	name = "ammonia bottle"
 	desc = "A small bottle."

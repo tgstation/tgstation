@@ -1,5 +1,5 @@
 /obj/item/device/radio/beacon
-	name = "Tracking Beacon"
+	name = "tracking beacon"
 	desc = "A beacon used by a teleporter."
 	icon_state = "beacon"
 	item_state = "signaler"

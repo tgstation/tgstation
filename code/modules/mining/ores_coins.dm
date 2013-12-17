@@ -22,10 +22,12 @@
 
 	attack_self(mob/living/user as mob) //It's magic I ain't gonna explain how instant conversion with no tool works. -- Urist
 		var/location = get_turf(user)
-		for(var/obj/item/weapon/ore/glass/sandToConvert in location)
-			new /obj/item/stack/sheet/mineral/sandstone(location)
+		var/sandAmt = 1 // The sand we're holding
+		for(var/obj/item/weapon/ore/glass/sandToConvert in location) // The sand on the floor
+			sandAmt += 1
 			del(sandToConvert)
-		new /obj/item/stack/sheet/mineral/sandstone(location)
+		var/obj/item/stack/sheet/mineral/newSandstone = new /obj/item/stack/sheet/mineral/sandstone(location)
+		newSandstone.amount = sandAmt
 		del(src)
 
 /obj/item/weapon/ore/plasma

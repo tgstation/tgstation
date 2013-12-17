@@ -28,17 +28,18 @@
 			animation.icon_state = "liquify"
 			animation.layer = 5
 			animation.master = holder
+			target.ExtinguishMob()
 			if(target.buckled)
 				target.buckled.unbuckle()
 			if(phaseshift == 1)
 				animation.dir = target.dir
 				flick("phase_shift",animation)
 				target.loc = holder
-				target.client.eye = holder
 				sleep(jaunt_duration)
 				mobloc = get_turf(target.loc)
 				animation.loc = mobloc
 				target.canmove = 0
+				holder.reappearing = 1
 				sleep(20)
 				animation.dir = target.dir
 				flick("phase_shift2",animation)
@@ -56,7 +57,6 @@
 			else
 				flick("liquify",animation)
 				target.loc = holder
-				target.client.eye = holder
 				var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
 				steam.set_up(10, 0, mobloc)
 				steam.start()
@@ -66,6 +66,7 @@
 				steam.location = mobloc
 				steam.start()
 				target.canmove = 0
+				holder.reappearing = 1
 				sleep(20)
 				flick("reappear",animation)
 				sleep(5)
@@ -85,11 +86,18 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
 	var/canmove = 1
+	var/reappearing = 0
 	density = 0
 	anchored = 1
 
+/obj/effect/dummy/spell_jaunt/Del()
+	// Eject contents if deleted somehow
+	for(var/atom/movable/AM in src)
+		AM.loc = get_turf(src)
+	..()
+
 /obj/effect/dummy/spell_jaunt/relaymove(var/mob/user, direction)
-	if (!src.canmove) return
+	if (!src.canmove || reappearing) return
 	var/turf/newLoc = get_step(src,direction)
 	if(!(newLoc.flags & NOJAUNT))
 		loc = newLoc

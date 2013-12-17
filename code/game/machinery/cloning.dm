@@ -22,7 +22,7 @@
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
 /obj/item/weapon/disk/data
-	name = "Cloning Data Disk"
+	name = "cloning data disk"
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
 	item_state = "card-id"
@@ -191,7 +191,7 @@
 			src.connected_message("Clone Rejected: Deceased.")
 			return
 
-		else if(src.occupant.health < src.heal_level)
+		else if(src.occupant.cloneloss > src.heal_level)
 			src.occupant.Paralyse(4)
 
 			 //Slowly get that clone healed and finished.
@@ -204,13 +204,10 @@
 			if (src.occupant.reagents.get_reagent_amount("inaprovaline") < 30)
 				src.occupant.reagents.add_reagent("inaprovaline", 60)
 
-			//Also heal some oxyloss ourselves because inaprovaline is so bad at preventing it!!
-			src.occupant.adjustOxyLoss(-4)
-
 			use_power(7500) //This might need tweaking.
 			return
 
-		else if((src.occupant.health >= src.heal_level) && (!src.eject_wait))
+		else if((src.occupant.cloneloss <= src.heal_level) && (!src.eject_wait))
 			src.connected_message("Cloning Process Complete.")
 			src.locked = 0
 			src.go_out()
@@ -355,7 +352,7 @@
  */
 
 /obj/item/weapon/storage/box/disks
-	name = "Diskette Box"
+	name = "diskette box"
 	icon_state = "disk_kit"
 
 /obj/item/weapon/storage/box/disks/New()

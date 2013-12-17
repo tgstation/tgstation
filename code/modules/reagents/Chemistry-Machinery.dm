@@ -16,7 +16,7 @@
 	var/beaker = null
 	var/recharged = 0
 	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine",
-	"sodium","aluminum","silicon","phosphorus","sulfur","chlorine","potassium","iron",
+	"sodium","aluminium","silicon","phosphorus","sulfur","chlorine","potassium","iron",
 	"copper","mercury","radium","water","ethanol","sugar","sacid")
 
 /obj/machinery/chem_dispenser/proc/recharge()
@@ -113,7 +113,7 @@
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, ui_key)
 	if (!ui)
 		// the ui does not exist, so we'll create a new one
-		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "Chem Dispenser 5000", 370, 585)
+		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "Chem Dispenser 5000", 370, 590)
 		// When the UI is first opened this is the data it will use
 		ui.set_initial_data(data)
 		ui.open()
@@ -199,6 +199,7 @@
 
 /obj/machinery/chem_master/New()
 	create_reagents(100)
+	overlays += "waitlight"
 
 /obj/machinery/chem_master/ex_act(severity)
 	switch(severity)

@@ -1,5 +1,5 @@
 /obj/item/blueprints
-	name = "station blueprints"
+	name = "\proper the station blueprints"
 	desc = "Blueprints of the station. There's stamp \"Classified\" and several coffee stains on it."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "blueprints"

@@ -80,15 +80,24 @@ datum/light_source
 	proc/add_effect()
 		// only do this if the light is turned on and is on the map
 		if(owner.loc && owner.luminosity > 0)
-			effect = new_effect()						// identify the effects of this light source
-			for(var/turf/T in effect)
-				T.update_lumcount(effect[T])			// apply the effect
+//			effect = new_effect()						// identify the effects of this light source
+//			for(var/turf/T in effect)
+//				T.update_lumcount(effect[T])			// apply the effect
+
+			// why was this looping through all the turfs twice
+			effect = list()
+			for(var/turf/T in view(owner.get_light_range(),owner))
+				var/delta_lumen = lum(T)
+				if(delta_lumen > 0)
+					effect[T] = delta_lumen
+					T.update_lumcount(delta_lumen)
+
 			return 0
 		else
 			owner.light = null
 			return 1	//cause the light to be removed from the lights list and garbage collected once it's no
 						//longer referenced by the queue
-
+/*
 	proc/new_effect()
 		. = list()
 		var/range = owner.get_light_range()
@@ -97,6 +106,7 @@ datum/light_source
 			if(change_in_lumcount > 0)
 				.[T] = change_in_lumcount
 		return .
+*/
 
 
 	proc/lum(turf/A)
@@ -193,46 +203,63 @@ turf/proc/update_lumcount(amount)
 		lighting_controller.changed_turfs += src
 		lighting_changed = 1
 
+turf/proc/lighting_tag(var/level)
+	var/area/A = loc
+	return A.tagbase + "sd_L[level]"
+
+turf/proc/build_lighting_area(var/tag, var/level)
+	var/area/Area = loc
+	var/area/A = new Area.type()    // create area if it wasn't found
+	// replicate vars
+	for(var/V in Area.vars)
+		switch(V)
+			if("contents","lighting_overlay","overlays")	continue
+			else
+				if(issaved(Area.vars[V])) A.vars[V] = Area.vars[V]
+
+	A.tag = tag
+	A.lighting_subarea = 1
+	A.lighting_space = 0 // in case it was copied from a space subarea
+	A.SetLightLevel(level)
+
+	Area.related += A
+	return A
+
 turf/proc/shift_to_subarea()
 	lighting_changed = 0
 	var/area/Area = loc
 
 	if(!istype(Area) || !Area.lighting_use_dynamic) return
 
-	// change the turf's area depending on its brightness
-	// restrict light to valid levels
-	var/light = min(max(round(lighting_lumcount,1),0),lighting_controller.lighting_states)
-
-	var/find = findtextEx(Area.tag, "sd_L")
-	var/new_tag = copytext(Area.tag, 1, find)
-	new_tag += "sd_L[light]"
-
+	var/level = min(max(round(lighting_lumcount,1),0),lighting_controller.lighting_states)
+	var/new_tag = lighting_tag(level)
 	if(Area.tag!=new_tag)	//skip if already in this area
-
 		var/area/A = locate(new_tag)	// find an appropriate area
 
 		if(!A)
-
-			A = new Area.type()    // create area if it wasn't found
-			// replicate vars
-			for(var/V in Area.vars)
-				switch(V)
-					if("contents","lighting_overlay","overlays")	continue
-					else
-						if(issaved(Area.vars[V])) A.vars[V] = Area.vars[V]
-
-			A.tag = new_tag
-			A.lighting_subarea = 1
-			A.SetLightLevel(light)
-
-			Area.related += A
+			A = build_lighting_area(new_tag,level)
 
 		A.contents += src	// move the turf into the area
+
+// Dedicated lighting sublevel for space turfs
+// helps us depower things in space, remove space fire alarms,
+// and evens out space lighting
+turf/space/lighting_tag(var/level)
+	var/area/A = loc
+	return A.tagbase + "sd_L_space"
+turf/space/build_lighting_area(var/tag,var/level)
+	var/area/A = ..(tag,4)
+	A.lighting_space = 1
+	A.SetLightLevel(4)
+	A.icon_state = null
+	return A
 
 area
 	var/lighting_use_dynamic = 1	//Turn this flag off to prevent sd_DynamicAreaLighting from affecting this area
 	var/image/lighting_overlay		//tracks the darkness image of the area for easy removal
 	var/lighting_subarea = 0		//tracks whether we're a lighting sub-area
+	var/lighting_space = 0			// true for space-only lighting subareas
+	var/tagbase
 
 	proc/SetLightLevel(light)
 		if(!src) return
@@ -259,7 +286,8 @@ area
 			T.update_lumcount(0)
 
 	proc/InitializeLighting()	//TODO: could probably improve this bit ~Carn
-		if(!tag) tag = "[type]"
+		tagbase = "[type]"
+		if(!tag) tag = tagbase
 		if(!lighting_use_dynamic)
 			if(!lighting_subarea)	// see if this is a lighting subarea already
 			//show the dark overlay so areas, not yet in a lighting subarea, won't be bright as day and look silly.

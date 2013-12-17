@@ -27,7 +27,7 @@
 
 /*
 /datum/recipe/bananaphone
-	reagents = list("psilocybin" = 5) //Trippin' balls, man.
+	reagents = list("mushroomhallucinogen" = 5) //Trippin' balls, man.
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
 		/obj/item/device/radio
@@ -704,7 +704,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/tomatosoup
 
 /datum/recipe/rofflewaffles
-	reagents = list("psilocybin" = 5, "flour" = 10)
+	reagents = list("mushroomhallucinogen" = 5, "flour" = 10)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
@@ -1093,3 +1093,67 @@
 /datum/recipe/cracker
 	reagents = list("flour" = 5, "sodiumchloride" = 1)
 	result = /obj/item/weapon/reagent_containers/food/snacks/cracker
+
+////////////////////////////FOOD ADDITTIONS///////////////////////////////
+
+/datum/recipe/wrap
+	reagents = list("soysauce" = 10)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/friedegg,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/wrap
+
+/datum/recipe/beans
+	reagents = list("ketchup" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/beans
+
+/datum/recipe/benedict
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/friedegg,
+		/obj/item/weapon/reagent_containers/food/snacks/meatsteak,
+		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/benedict
+
+/datum/recipe/hotdog
+	reagents = list("ketchup" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
+		/obj/item/weapon/reagent_containers/food/snacks/sausage,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/hotdog
+
+/datum/recipe/meatbun
+	reagents = list("soysauce" = 5, "flour" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/faggot,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/meatbun
+
+/datum/recipe/icecreamsandwich
+	reagents = list("ice" = 5, "cream" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/icecream,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/icecreamsandwich
+
+/datum/recipe/notasandwich
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
+		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
+		/obj/item/clothing/mask/fakemoustache,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/notasandwich
+
+/datum/recipe/sugarcookie
+	reagents = list("flour" = 5, "sugar" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sugarcookie

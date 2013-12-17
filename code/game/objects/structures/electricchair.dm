@@ -16,7 +16,7 @@
 		var/obj/structure/stool/bed/chair/C = new /obj/structure/stool/bed/chair(loc)
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		C.dir = dir
-		part.loc = loc
+		part.loc = src.loc
 		part.master = null
 		part = null
 		del(src)

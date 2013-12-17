@@ -60,7 +60,7 @@
 				state = 0
 
 		if(2)
-			if(istype(I, /obj/item/weapon/book))
+			if(istype(I, /obj/item/weapon/book) || istype(I, /obj/item/weapon/spellbook))
 				user.drop_item()
 				I.loc = src
 				update_icon()

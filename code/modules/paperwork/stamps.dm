@@ -17,7 +17,7 @@
 /obj/item/weapon/stamp/qm
 	name = "quartermaster's rubber stamp"
 	icon_state = "stamp-qm"
-	item_color = "cargo"
+	item_color = "qm"
 
 /obj/item/weapon/stamp/law
 	name = "law office's rubber stamp"
@@ -52,7 +52,7 @@
 /obj/item/weapon/stamp/cmo
 	name = "chief medical officer's rubber stamp"
 	icon_state = "stamp-cmo"
-	item_color = "medical"
+	item_color = "cmo"
 
 /obj/item/weapon/stamp/denied
 	name = "\improper DENIED rubber stamp"

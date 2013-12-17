@@ -193,11 +193,17 @@
 /obj/machinery/disposal/alter_health()
 	return get_turf(src)
 
-// attempt to move while inside
 /obj/machinery/disposal/relaymove(mob/user as mob)
-	if(user.stat || src.flushing)
+	attempt_escape(user)
+
+// resist to escape the bin
+/obj/machinery/disposal/container_resist()
+	attempt_escape(usr)
+
+/obj/machinery/disposal/proc/attempt_escape(mob/user as mob)
+	if(src.flushing)
 		return
-	src.go_out(user)
+	go_out(user)
 	return
 
 // leave the disposal
@@ -714,7 +720,7 @@
 			H.active = 0
 			H.loc = src
 			return
-		if(T.intact && istype(T,/turf/simulated/floor)) //intact floor, pop the tile
+		if(istype(T,/turf/simulated/floor && T.intact)) //intact floor, pop the tile
 			var/turf/simulated/floor/F = T
 			//F.health	= 100
 			F.burnt	= 1
@@ -1227,6 +1233,7 @@
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	var/mode = 0
 	var/start_eject = 0
+	var/eject_range = 2
 
 	New()
 		..()
@@ -1256,10 +1263,10 @@
 				AM.loc = src.loc
 				AM.pipe_eject(dir)
 				spawn(5)
-					AM.throw_at(target, 3, 1)
+					if(AM)
+						AM.throw_at(target, eject_range, 1)
 			H.vent_gas(src.loc)
 			del(H)
-
 		return
 
 	attackby(var/obj/item/I, var/mob/user)

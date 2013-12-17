@@ -121,7 +121,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 */
 
 /obj/item/device/uplink/hidden
-	name = "Hidden Uplink."
+	name = "hidden uplink."
 	desc = "There is something wrong if you're examining this."
 
 /obj/item/device/uplink/hidden/Topic(href, href_list)

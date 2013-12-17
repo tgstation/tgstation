@@ -337,7 +337,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Picks a string of symbols to display as the law number for hacked or ion laws
 /proc/ionnum()
-	return "[pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")]"
+	return "[pick("!","@","#","$","%","^","&")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")]"
 
 //Returns a list of unslaved cyborgs
 /proc/active_free_borgs()
@@ -901,11 +901,13 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 
 	if(toupdate.len)
 		for(var/turf/simulated/T1 in toupdate)
+			air_master.remove_from_active(T1)
 			T1.CalculateAdjacentTurfs()
 			air_master.add_to_active(T1,1)
 
 	if(fromupdate.len)
 		for(var/turf/simulated/T2 in fromupdate)
+			air_master.remove_from_active(T2)
 			T2.CalculateAdjacentTurfs()
 			air_master.add_to_active(T2,1)
 
@@ -1254,3 +1256,17 @@ var/list/WALLITEMS = list(
 	else
 		user << "\blue [target] is empty!"
 	return
+
+proc/check_target_facings(mob/living/initator, mob/living/target)
+	/*This can be used to add additional effects on interactions between mobs depending on how the mobs are facing each other, such as adding a crit damage to blows to the back of a guy's head.
+	Given how click code currently works (Nov '13), the initiating mob will be facing the target mob most of the time
+	That said, this proc should not be used if the change facing proc of the click code is overriden at the same time*/
+	if(!ismob(target) || target.lying)
+	//Make sure we are not doing this for things that can't have a logical direction to the players given that the target would be on their side
+		return
+	if(initator.dir == target.dir) //mobs are facing the same direction
+		return 1
+	if(initator.dir + 4 == target.dir || initator.dir - 4 == target.dir) //mobs are facing each other
+		return 2
+	if(initator.dir + 2 == target.dir || initator.dir - 2 == target.dir || initator.dir + 6 == target.dir || initator.dir - 6 == target.dir) //Initating mob is looking at the target, while the target mob is looking in a direction perpendicular to the 1st
+		return 3

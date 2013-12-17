@@ -18,7 +18,7 @@ var/list/ai_list = list()
 	icon_state = "ai"
 	anchored = 1 // -- TLE
 	density = 1
-	status_flags = CANSTUN|CANPARALYSE
+	status_flags = CANSTUN|CANPARALYSE|CANPUSH
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/current = null
 	var/list/connected_robots = list()
@@ -50,6 +50,7 @@ var/list/ai_list = list()
 
 	var/last_paper_seen = null
 	var/can_shunt = 1
+	var/last_announcement = "" // For AI VOX, if enabled
 
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
 	var/list/possibleNames = ai_names
@@ -252,6 +253,19 @@ var/list/ai_list = list()
 
 	return
 
+/mob/living/silicon/ai/verb/toggle_anchor()
+        set category = "AI Commands"
+        set name = "Toggle Floor Bolts"
+        if(!isturf(loc)) // if their location isn't a turf
+                return // stop
+        anchored = !anchored // Toggles the anchor
+
+        src << "[anchored ? "<b>You are now anchored.</b>" : "<b>You are now unanchored.</b>"]"
+        // the message in the [] will change depending whether or not the AI is anchored
+
+/mob/living/silicon/ai/update_canmove() //If the AI dies, mobs won't go through it anymore
+	return 0
+
 /mob/living/silicon/ai/proc/ai_cancel_call()
 	set category = "AI Commands"
 	if(src.stat == 2)
@@ -324,6 +338,11 @@ var/list/ai_list = list()
 		switchCamera(locate(href_list["switchcamera"])) in cameranet.cameras
 	if (href_list["showalerts"])
 		ai_alerts()
+#ifdef AI_VOX
+	if(href_list["say_word"])
+		play_vox_word(href_list["say_word"], null, src)
+		return
+#endif
 	if(href_list["show_paper"])
 		if(last_paper_seen)
 			src << browse(last_paper_seen, "window=show_paper")
@@ -572,7 +591,7 @@ var/list/ai_list = list()
 	if(usr.stat == 2)
 		usr <<"You cannot change your emotional status because you are dead!"
 		return
-	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer")
+	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer", "Dorfy", "Blue Glow", "Red Glow")
 	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
 	for (var/obj/machinery/M in machines) //change status
 		if(istype(M, /obj/machinery/ai_status_display))

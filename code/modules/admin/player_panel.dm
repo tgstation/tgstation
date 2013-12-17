@@ -374,12 +374,11 @@
 			dat += "<a href='?_src_=holder;call_shuttle=1'>Call Shuttle</a><br>"
 		else
 			var/timeleft = emergency_shuttle.timeleft()
-			switch(emergency_shuttle.location)
-				if(0)
-					dat += "ETA: <a href='?_src_=holder;edit_shuttle_time=1'>[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]</a><BR>"
-					dat += "<a href='?_src_=holder;call_shuttle=2'>Send Back</a><br>"
-				if(1)
-					dat += "ETA: <a href='?_src_=holder;edit_shuttle_time=1'>[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]</a><BR>"
+			if(emergency_shuttle.location == 0)
+				dat += "ETA: <a href='?_src_=holder;edit_shuttle_time=1'>[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]</a><BR>"
+				dat += "<a href='?_src_=holder;call_shuttle=2'>Send Back</a><br>"
+			else
+				dat += "ETA: <a href='?_src_=holder;edit_shuttle_time=1'>[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]</a><BR>"
 		dat += "<a href='?_src_=holder;delay_round_end=1'>[ticker.delay_end ? "End Round Normally" : "Delay Round End"]</a><br>"
 		if(ticker.mode.syndicates.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Syndicates</B></td><td></td></tr>"

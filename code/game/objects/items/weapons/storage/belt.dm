@@ -110,7 +110,7 @@
 		"/obj/item/device/flash",
 		"/obj/item/clothing/glasses",
 		"/obj/item/ammo_casing/shotgun",
-		"/obj/item/ammo_magazine",
+		"/obj/item/ammo_box",
 		"/obj/item/weapon/reagent_containers/food/snacks/donut/normal",
 		"/obj/item/weapon/reagent_containers/food/snacks/donut/jelly"
 		)
@@ -144,3 +144,9 @@
 	can_hold = list(
 		"/obj/item/clothing/mask/luchador"
 		)
+
+/obj/item/weapon/storage/belt/military
+	name = "military belt"
+	desc = "A syndicate belt designed to be used by boarding parties.  Its style is modeled after the hardsuits they wear."
+	icon_state = "militarybelt"
+	item_state = "military"

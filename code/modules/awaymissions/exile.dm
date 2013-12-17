@@ -11,7 +11,7 @@
 
 
 /obj/item/weapon/implant/exile
-	name = "exile"
+	name = "exile implant"
 	desc = "Prevents you from returning from away missions"
 
 /obj/item/weapon/implant/exile/get_data()

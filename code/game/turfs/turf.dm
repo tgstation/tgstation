@@ -50,30 +50,25 @@
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
 		usr << "\red Movement is admin-disabled." //This is to identify lag problems
 		return
-	if (!mover || !isturf(mover.loc))
+	if (!mover)
 		return 1
-
-
-	//First, check objects to block exit that are not on the border
-	for(var/obj/obstacle in mover.loc)
-		if(!(obstacle.flags & ON_BORDER) && (mover != obstacle) && (forget != obstacle))
-			if(!obstacle.CheckExit(mover, src))
+	// First, make sure it can leave its square
+	if(isturf(mover.loc))
+		// Nothing but border objects stop you from leaving a tile, only one loop is needed
+		for(var/obj/obstacle in mover.loc)
+			if(!obstacle.CheckExit(mover, src) && obstacle != mover && obstacle != forget)
 				mover.Bump(obstacle, 1)
 				return 0
 
-	//Now, check objects to block exit that are on the border
-	for(var/obj/border_obstacle in mover.loc)
-		if((border_obstacle.flags & ON_BORDER) && (mover != border_obstacle) && (forget != border_obstacle))
-			if(!border_obstacle.CheckExit(mover, src))
-				mover.Bump(border_obstacle, 1)
-				return 0
-
+	var/list/large_dense = list()
 	//Next, check objects to block entry that are on the border
-	for(var/obj/border_obstacle in src)
-		if(border_obstacle.flags & ON_BORDER)
+	for(var/atom/movable/border_obstacle in src)
+		if(border_obstacle.flags&ON_BORDER)
 			if(!border_obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != border_obstacle))
 				mover.Bump(border_obstacle, 1)
 				return 0
+		else
+			large_dense += border_obstacle
 
 	//Then, check the turf itself
 	if (!src.CanPass(mover, src))
@@ -81,13 +76,11 @@
 		return 0
 
 	//Finally, check objects/mobs to block entry that are not on the border
-	for(var/atom/movable/obstacle in src)
-		if(obstacle.flags & ~ON_BORDER)
-			if(!obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != obstacle))
-				mover.Bump(obstacle, 1)
-				return 0
+	for(var/atom/movable/obstacle in large_dense)
+		if(!obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != obstacle))
+			mover.Bump(obstacle, 1)
+			return 0
 	return 1 //Nothing found to block so return success!
-
 
 /turf/Entered(atom/atom as mob|obj)
 	if(movement_disabled)
@@ -128,14 +121,6 @@
 			M:inertia_dir = 0
 	..()
 	var/objects = 0
-	for(var/atom/A as mob|obj|turf|area in src)
-		if(objects > loopsanity)	break
-		objects++
-		spawn( 0 )
-			if ((A && M))
-				A.HasEntered(M, 1)
-			return
-	objects = 0
 	for(var/atom/A as mob|obj|turf|area in range(1))
 		if(objects > loopsanity)	break
 		objects++

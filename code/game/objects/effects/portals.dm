@@ -16,7 +16,7 @@
 		return
 	return
 
-/obj/effect/portal/HasEntered(AM as mob|obj)
+/obj/effect/portal/Crossed(AM as mob|obj)
 	spawn(0)
 		src.teleport(AM)
 		return

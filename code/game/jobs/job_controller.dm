@@ -19,6 +19,7 @@ var/global/datum/controller/occupations/job_master
 			var/datum/job/job = new J()
 			if(!job)	continue
 			if(job.faction != faction)	continue
+			if(!job.config_check()) continue
 			occupations += job
 
 
@@ -143,7 +144,6 @@ var/global/datum/controller/occupations/job_master
 		var/ai_selected = 0
 		var/datum/job/job = GetJob("AI")
 		if(!job)	return 0
-		if((job.title == "AI") && (config) && (!config.allow_ai))	return 0
 		if(ticker.mode.name == "AI malfunction")	// malf. AIs are pre-selected before jobs
 			for (var/datum/mind/mAI in ticker.mode.malf_ai)
 				AssignRole(mAI.current, "AI")

@@ -257,7 +257,7 @@ turf/simulated/floor/proc/update_icon()
 
 /turf/simulated/floor/proc/burn_tile()
 	if(istype(src,/turf/simulated/floor/engine)) return
-	if(istype(src,/turf/simulated/floor/plating/airless/asteroid)) return//Asteroid tiles don't burn
+	if(istype(src,/turf/simulated/floor/plating/asteroid/airless)) return//Asteroid tiles don't burn
 	if(broken || burnt) return
 	if(is_plasteel_floor())
 		src.icon_state = "damaged[pick(1,2,3,4,5)]"
@@ -506,6 +506,10 @@ turf/simulated/floor/proc/update_icon()
 	if(istype(C, /obj/item/weapon/cable_coil))
 		if(is_plating())
 			var/obj/item/weapon/cable_coil/coil = C
+			for(var/obj/structure/cable/LC in src)
+				if((LC.d1==0)||(LC.d2==0))
+					LC.attackby(C,user)
+					return
 			coil.turf_place(src, user)
 		else
 			user << "\red You must remove the plating first."

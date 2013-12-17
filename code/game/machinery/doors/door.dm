@@ -24,7 +24,7 @@
 	else
 		layer = 2.7 //Under all objects if opened. 2.7 due to tables being at 2.6
 		explosion_resistance = 0
-	update_freelok_sight()
+	update_freelook_sight()
 	air_update_turf(1)
 	return
 
@@ -32,7 +32,7 @@
 /obj/machinery/door/Del()
 	density = 0
 	air_update_turf(1)
-	update_freelok_sight()
+	update_freelook_sight()
 	..()
 	return
 
@@ -212,7 +212,7 @@
 	update_icon()
 	SetOpacity(0)
 	air_update_turf(1)
-	update_freelok_sight()
+	update_freelook_sight()
 
 	if(operating)	operating = 0
 
@@ -234,7 +234,7 @@
 		SetOpacity(1)	//caaaaarn!
 	operating = 0
 	air_update_turf(1)
-	update_freelok_sight()
+	update_freelook_sight()
 	return
 
 /obj/machinery/door/proc/crush()

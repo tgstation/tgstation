@@ -3,6 +3,7 @@ var/global/datum/getrev/revdata = new()
 /datum/getrev
 	var/project_href
 	var/revision
+	var/date
 	var/showinfo
 
 	New()
@@ -16,16 +17,23 @@ var/global/datum/getrev/revdata = new()
 				var/list/last_entry = text2list(head_log[line], " ")
 				if(last_entry.len < 2)	continue
 				revision = last_entry[2]
+				// Get date/time
+				if(last_entry.len >= 5)
+					var/unix_time = text2num(last_entry[5])
+					if(unix_time)
+						date = unix2date(unix_time)
 				break
 
 		showinfo = "<b>Server Revision:</b> "
 		if(revision)
-			showinfo += "<a href='[project_href]/commit/[revision]'>[revision]</a>"
+			showinfo += "<a href='[project_href]/commit/[revision]'><BR>[(date ? date : "No Date")]<BR>[revision]</a>"
 		else
 			showinfo += "*unknown*"
-		showinfo += "<p>-<a href='[project_href]/issues/new'>Report Bugs Here-</a><br><i>Please provide as much info as possible<br>Copy/paste the revision hash into your issue report if possible, thanks</i> :)</p>"
+		showinfo += "<p>-<a href='[project_href]/issues/new'>Report Bugs Here-</a><br><i>Please provide as much info as possible<br>Copy/paste the revision date and hash into your issue report if possible, thanks</i> :)</p>"
 
-		world.log << "Running /tg/ revision number: [revision]."
+		world.log << "Running /tg/ revision:"
+		world.log << date
+		world.log << revision
 		return
 
 client/verb/showrevinfo()

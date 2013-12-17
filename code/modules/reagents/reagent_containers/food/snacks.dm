@@ -545,7 +545,6 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
-		reagents.add_reagent("psilocybin", 3)
 		src.bitesize = 6
 
 /obj/item/weapon/reagent_containers/food/snacks/tomatomeat
@@ -873,7 +872,7 @@
 		..()
 		reagents.add_reagent("nutriment", 5)
 		reagents.add_reagent("amatoxin", 3)
-		reagents.add_reagent("psilocybin", 1)
+		reagents.add_reagent("mushroomhallucinogen", 1)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/plump_pie
@@ -997,7 +996,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/spacetwinkie
 	name = "space twinkie"
 	icon_state = "space_twinkie"
-	desc = "Guaranteed to survive longer then you will."
+	desc = "Guaranteed to survive longer than you will."
 	New()
 		..()
 		reagents.add_reagent("sugar", 4)
@@ -1112,7 +1111,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
-		reagents.add_reagent("psilocybin", 6)
+		reagents.add_reagent("mushroomhallucinogen", 6)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/amanitajelly
@@ -1124,7 +1123,7 @@
 		..()
 		reagents.add_reagent("nutriment", 6)
 		reagents.add_reagent("amatoxin", 6)
-		reagents.add_reagent("psilocybin", 3)
+		reagents.add_reagent("mushroomhallucinogen", 3)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/poppypretzel
@@ -1467,7 +1466,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 8)
-		reagents.add_reagent("psilocybin", 8)
+		reagents.add_reagent("mushroomhallucinogen", 8)
 		bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/stew
@@ -2351,3 +2350,81 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1)
+
+
+////////////////////////////////FOOD ADDITIONS////////////////////////////////////////////
+
+/obj/item/weapon/reagent_containers/food/snacks/wrap
+	name = "egg wrap"
+	desc = "The precursor to Pigs in a Blanket."
+	icon_state = "wrap"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 5)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/beans
+	name = "tin of beans"
+	desc = "Musical fruit in a slightly less musical container."
+	icon_state = "beans"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 10)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/benedict
+	name = "eggs benedict"
+	desc = "There is only one egg on this, how rude."
+	icon_state = "benedict"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/hotdog
+	name = "hotdog"
+	desc = "Fresh footlong ready to go down on."
+	icon_state = "hotdog"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("ketchup", 3)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/meatbun
+	name = "meat bun"
+	desc = "Has the potential to not be Dog."
+	icon_state = "meatbun"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		bitesize = 6
+
+/obj/item/weapon/reagent_containers/food/snacks/icecreamsandwich
+	name = "icecream sandwich"
+	desc = "Portable Ice-cream in it's own packaging."
+	icon_state = "icecreamsandwich"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("ice", 2)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/notasandwich
+	name = "not-a-sandwich"
+	desc = "Something seems to be wrong with this, you can't quite figure what. Maybe it's his moustache."
+	icon_state = "notasandwich"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/sugarcookie
+	name = "sugar cookie"
+	desc = "Just like your little sister used to make."
+	icon_state = "sugarcookie"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("sugar", 5)
+		bitesize = 2

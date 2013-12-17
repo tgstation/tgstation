@@ -193,7 +193,7 @@
 		var/dmg = rand(rock_min_dmg,rock_max_dmg)
 		if(istype(victim, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = victim
-			var/datum/limb/affecting = H.organs["head"]
+			var/obj/item/organ/limb/affecting = H.organs["head"]
 			affecting.take_damage(dmg)
 			H.updatehealth()
 		else

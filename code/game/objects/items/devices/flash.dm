@@ -31,6 +31,12 @@
 	last_used = world.time
 	times_used = max(0,round(times_used)) //sanity
 
+/obj/item/device/flash/proc/burn_out(mob/user = null) //Made so you can override it if you want to have an invincible flash from R&D or something.
+	broken = 1
+	icon_state = "flashburnt"
+	if(user)
+		user << "<span class='warning'>The bulb has burnt out!</span>"
+
 
 /obj/item/device/flash/attack(mob/living/M, mob/user)
 	if(!user || !M)	return	//sanity
@@ -53,9 +59,7 @@
 		if(0 to 5)
 			last_used = world.time
 			if(prob(times_used))	//if you use it 5 times in a minute it has a 10% chance to break!
-				broken = 1
-				user << "<span class='warning'>The bulb has burnt out!</span>"
-				icon_state = "flashburnt"
+				burn_out(user)
 				return
 			times_used++
 		else	//can only use it  5 times a minute
@@ -138,9 +142,7 @@
 	switch(times_used)
 		if(0 to 5)
 			if(prob(2*times_used))	//if you use it 5 times in a minute it has a 10% chance to break!
-				broken = 1
-				user << "<span class='warning'>The bulb has burnt out!</span>"
-				icon_state = "flashburnt"
+				burn_out(user)
 				return
 			times_used++
 		else	//can only use it  5 times a minute
@@ -178,8 +180,7 @@
 	switch(times_used)
 		if(0 to 5)
 			if(prob(2*times_used))
-				broken = 1
-				icon_state = "flashburnt"
+				burn_out()
 				return
 			times_used++
 			if(istype(loc, /mob/living/carbon))
@@ -203,13 +204,9 @@
 /obj/item/device/flash/synthetic/attack(mob/living/M, mob/user)
 	..()
 	if(!broken)
-		broken = 1
-		user << "<span class='warning'>The bulb has burnt out!</span>"
-		icon_state = "flashburnt"
+		burn_out(user)
 
 /obj/item/device/flash/synthetic/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	..()
 	if(!broken)
-		broken = 1
-		user << "<span class='warning'>The bulb has burnt out!</span>"
-		icon_state = "flashburnt"
+		burn_out(user)

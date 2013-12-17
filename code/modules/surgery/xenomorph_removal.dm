@@ -3,6 +3,8 @@
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/xenomorph_removal, /datum/surgery_step/close)
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	location = "chest"
+	requires_organic_chest = 1
+
 
 
 //remove xeno from premises
@@ -14,6 +16,13 @@
 	user.visible_message("<span class='notice'>[user] begins to search in [target]'s chest for a xenomorph.</span>")
 
 /datum/surgery_step/xenomorph_removal/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	if(remove_xeno(user, target))
+		user.visible_message("<span class='notice'>[user] successfully extracts the xenomorph from [target]!</span>")
+	else
+		user.visible_message("<span class='notice'>[user] can't find anything in [target]'s chest!</span>")
+	return 1
+
+/datum/surgery_step/xenomorph_removal/proc/remove_xeno(mob/user, mob/living/carbon/target)
 	var/obj/item/alien_embryo/A = locate() in target.contents
 	if(A)
 		user << "<span class='notice'>You found an unknown alien organism in [target]'s chest!</span>"
@@ -25,10 +34,8 @@
 				A.AttemptGrow()
 
 		A.loc = get_turf(target)
-		user.visible_message("<span class='notice'>[user] successfully extracts the xenomorph from [target]!</span>")
-	else
-		user.visible_message("<span class='notice'>[user] can't find anything in [target]'s chest!</span>")
-	return 1
+		return 1
+
 
 /datum/surgery_step/xenomorph_removal/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/obj/item/alien_embryo/A = locate() in target.contents

@@ -3,7 +3,7 @@
 	icon_state = "off"
 	use_power = 1
 
-	name = "Air Injector"
+	name = "air injector"
 	desc = "Has a valve and pump attached to it"
 
 	var/on = 0

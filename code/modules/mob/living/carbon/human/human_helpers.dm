@@ -50,7 +50,7 @@
 		return if_no_face
 	if( head && (head.flags_inv&HIDEFACE) )
 		return if_no_face		//Likewise for hats
-	var/datum/limb/O = get_organ("head")
+	var/obj/item/organ/limb/O = get_organ("head")
 	if( (status_flags&DISFIGURED) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name )	//disfigured. use id-name if possible
 		return if_no_face
 	return real_name
@@ -104,10 +104,10 @@
 	return tinted
 
 /mob/living/carbon/human/abiotic(var/full_body = 0)
-	if(full_body && ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask || src.head || src.shoes || src.w_uniform || src.wear_suit || src.glasses || src.ears || src.gloves)))
+	if(full_body && ((src.l_hand && !( src.l_hand.flags&ABSTRACT )) || (src.r_hand && !( src.r_hand.flags&ABSTRACT )) || (src.back || src.wear_mask || src.head || src.shoes || src.w_uniform || src.wear_suit || src.glasses || src.ears || src.gloves)))
 		return 1
 
-	if( (src.l_hand && !src.l_hand.abstract) || (src.r_hand && !src.r_hand.abstract) )
+	if( (src.l_hand && !(src.l_hand.flags&ABSTRACT)) || (src.r_hand && !(src.r_hand.flags&ABSTRACT)) )
 		return 1
 
 	return 0

@@ -51,3 +51,10 @@
 
 /area/mine/west_outpost
 	name = "West Mining Outpost"
+
+/area/mine/laborcamp
+	name = "Labor Camp"
+
+/area/mine/laborcamp/security
+	name = "Labor Camp Security"
+	icon_state = "security"

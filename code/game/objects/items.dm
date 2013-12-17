@@ -1,7 +1,6 @@
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
-	var/abstract = 0
 	var/item_state = null
 	var/r_speed = 1.0
 	var/health = null
@@ -100,9 +99,18 @@
 			size = "bulky"
 		if(5.0)
 			size = "huge"
+		if(6.0)
+			size = "gigantic"
 		else
 	//if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
-	usr << "This is a [src.blood_DNA ? "bloody " : ""]\icon[src][src.name]. It is a [size] item."
+
+	//This reformat names to get a/an properly working on item descriptions when they are bloody
+	var/f_name = "\a [src]"
+	if(src.blood_DNA)
+		f_name = "a bloody [name]"
+
+	usr << "\icon[src]This is [f_name]. It is a [size] item."
+
 	if(src.desc)
 		usr << src.desc
 	return
@@ -171,19 +179,23 @@
 	if(istype(W,/obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		if(S.use_to_pickup)
-			if(S.collection_mode) //Mode is set to collect all items on a tile and we clicked on a valid one.
+			if(S.collection_mode) //Mode is set to collect multiple items on a tile and we clicked on a valid one.
 				if(isturf(src.loc))
 					var/list/rejections = list()
 					var/success = 0
 					var/failure = 0
 
 					for(var/obj/item/I in src.loc)
+						if(S.collection_mode == 2 && !istype(I,src.type)) // We're only picking up items of the target type
+							failure = 1
+							continue
 						if(I.type in rejections) // To limit bag spamming: any given type only complains once
 							continue
 						if(!S.can_be_inserted(I))	// Note can_be_inserted still makes noise when the answer is no
 							rejections += I.type	// therefore full bags are still a little spammy
 							failure = 1
 							continue
+							
 						success = 1
 						S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
 					if(success && !failure)
@@ -501,9 +513,11 @@
 			"\red You stab yourself in the eyes with [src]!" \
 		)
 	if(istype(M, /mob/living/carbon/human))
-		var/datum/limb/affecting = M:get_organ("head")
+		var/mob/living/carbon/human/U = M
+		var/obj/item/organ/limb/affecting = U.get_organ("head")
 		if(affecting.take_damage(7))
-			M:update_damage_overlays(0)
+			U.update_damage_overlays(0)
+
 	else
 		M.take_organ_damage(7)
 	M.eye_blurry += rand(3,4)

@@ -63,7 +63,7 @@
 			dtype = W.damtype
 		visible_message("<span class='danger'>[src] has been hit by [O].</span>", \
 						"<span class='userdanger'>[src] has been hit by [O].</span>")
-		var/armor = run_armor_check(zone, "melee", "Your armor has protected your [zone].", "Your armor has softened hit to your [zone].")
+		var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].")
 		if(armor < 2)
 			apply_damage(O.throwforce, dtype, zone, armor, O)
 		if(!O.fingerprintslast)

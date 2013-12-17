@@ -12,6 +12,16 @@
 					continue
 				if(S.target_must_be_fat && !(FAT in M.mutations))
 					continue
+
+				if(S.requires_organic_chest && M.getlimb(/obj/item/organ/limb/robot/chest)) //This a seperate case to below, see "***" in surgery.dm - RR
+					continue
+
+				var/mob/living/carbon/human/H = M //So we can use get_organ and not some terriblly long Switch or something worse - RR
+				var/obj/item/organ/limb/affecting = H.get_organ(user.zone_sel.selecting)
+
+				if(affecting.status == ORGAN_ROBOTIC) //Cannot operate on Robotic organs - RR
+					continue
+
 				for(var/path in S.species)
 					if(istype(M, path))
 						available_surgeries[S.name] = S
@@ -23,8 +33,10 @@
 				var/datum/surgery/procedure = new S.type
 				if(procedure)
 					if(get_location_accessible(M, procedure.location))
+						if(procedure.location == "anywhere") // if location == "anywhere" change location to the surgeon's target, otherwise leave location as is.
+							procedure.location = user.zone_sel.selecting
 						M.surgeries += procedure
-						user.visible_message("<span class='notice'>[user] drapes [I] over [M]'s [procedure.location] to prepare for \an [procedure.name].</span>")
+						user.visible_message("<span class='notice'>[user] drapes [I] over [M]'s [parse_zone(procedure.location)] to prepare for \an [procedure.name].</span>")
 
 						user.attack_log += "\[[time_stamp()]\]<font color='red'>Initiated a [procedure.name] on [M.name] ([M.ckey])</font>"
 						M.attack_log += "\[[time_stamp()]\]<font color='red'>[user.name] ([user.ckey]) initiated a [procedure.name]</font>"
@@ -36,6 +48,7 @@
 			else
 				return 1	//once the input menu comes up, cancelling it shouldn't hit the guy with the drapes either.
 	return 0
+
 
 
 proc/get_location_modifier(mob/M)
@@ -109,3 +122,4 @@ proc/get_location_modifier(mob/M)
 				return 0
 
 	return 1
+

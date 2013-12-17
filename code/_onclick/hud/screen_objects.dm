@@ -46,7 +46,7 @@
 		return 1
 	if(usr.next_move >= world.time)
 		return
-	usr.next_move = world.time + 10
+	usr.next_move = world.time + 6
 
 	if(usr.stat || usr.restrained() || usr.stunned || usr.lying)
 		return 1
@@ -84,6 +84,8 @@
 	if(world.time <= usr.next_move)
 		return 1
 	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened)
+		return 1
+	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return 1
 	if(master)
 		var/obj/item/I = usr.get_active_hand()
@@ -171,9 +173,15 @@
 			usr.hud_used.hidden_inventory_update()
 
 		if("equip")
+			if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+				return 1
 			if(ishuman(usr))
 				var/mob/living/carbon/human/H = usr
 				H.quick_equip()
+
+		if("current sting")
+			var/mob/living/carbon/U = usr
+			U.unset_sting()
 
 		if("resist")
 			if(isliving(usr))
@@ -197,26 +205,6 @@
 						usr.hud_used.move_intent.icon_state = "running"
 				if(istype(usr,/mob/living/carbon/alien/humanoid))
 					usr.update_icons()
-		if("m_intent")
-			if(!usr.m_int)
-				switch(usr.m_intent)
-					if("run")
-						usr.m_int = "13,14"
-					if("walk")
-						usr.m_int = "14,14"
-					if("face")
-						usr.m_int = "15,14"
-			else
-				usr.m_int = null
-		if("walk")
-			usr.m_intent = "walk"
-			usr.m_int = "14,14"
-		if("face")
-			usr.m_intent = "face"
-			usr.m_int = "15,14"
-		if("run")
-			usr.m_intent = "run"
-			usr.m_int = "13,14"
 		if("Reset Machine")
 			usr.unset_machine()
 		if("internal")
@@ -313,6 +301,8 @@
 	if(world.time <= usr.next_move)
 		return 1
 	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened)
+		return 1
+	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return 1
 	switch(name)
 		if("r_hand")

@@ -26,6 +26,14 @@
 	item_color = "sl_suit"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
+/obj/item/clothing/under/roman
+	name = "roman armor"
+	desc = "An ancient Roman armor. Made of metallic strips and leather straps."
+	icon_state = "roman"
+	item_color = "roman"
+	item_state = "armor"
+	armor = list(melee = 25, bullet = 0, laser = 25, energy = 10, bomb = 10, bio = 0, rad = 0)
+
 /obj/item/clothing/under/waiter
 	name = "waiter's outfit"
 	desc = "It's a very smart uniform with a special pocket for tip."

@@ -17,9 +17,6 @@
 	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()
 	///Chemistry.
 
-	//Detective Work, used for the duplicate data points kept in the scanners
-	var/list/original_atom
-
 /atom/proc/throw_impact(atom/hit_atom)
 	if(istype(hit_atom,/mob/living))
 		var/mob/living/M = hit_atom
@@ -90,9 +87,6 @@
 
 /atom/proc/CheckExit()
 	return 1
-
-/atom/proc/HasEntered(atom/movable/AM as mob|obj)
-	return
 
 /atom/proc/HasProximity(atom/movable/AM as mob|obj)
 	return
@@ -217,7 +211,7 @@ its easier to just keep the beam vertical.
 
 	if (!( usr ))
 		return
-	usr << "That's \a [src]." //changed to "That's" from "This is" because "This is some metal sheets" sounds dumb compared to "That's some metal sheets" ~Carn
+	usr << "\icon[src]That's \a [src]." //changed to "That's" from "This is" because "This is some metal sheets" sounds dumb compared to "That's some metal sheets" ~Carn
 	if(desc)
 		usr << desc
 	// *****RM
@@ -247,7 +241,8 @@ var/list/blood_splatter_icons = list()
 
 //returns 1 if made bloody, returns 0 otherwise
 /atom/proc/add_blood(mob/living/carbon/M)
-	if(flags & NOBLOODY) return
+	if(rejects_blood())
+		return 0
 	if(!initial(icon) || !initial(icon_state))
 		return 0
 	if(!istype(M))
@@ -299,6 +294,8 @@ var/list/blood_splatter_icons = list()
 	update_inv_gloves()	//handles bloody hands overlays and updating
 	return 1 //we applied blood to the item
 
+/atom/proc/rejects_blood()
+	return 0
 
 /atom/proc/add_vomit_floor(mob/living/carbon/M as mob, var/toxvomit = 0)
 	if( istype(src, /turf/simulated) )
@@ -352,3 +349,9 @@ var/list/blood_splatter_icons = list()
 
 /atom/proc/checkpass(passflag)
 	return pass_flags&passflag
+
+/atom/proc/isinspace()
+	if(istype(get_turf(src), /turf/space))
+		return 1
+	else
+		return 0

@@ -94,7 +94,7 @@ var/datum/controller/event/events
 	/area/shuttle/escape_pod1/station,
 	/area/shuttle/escape_pod2/station,
 	/area/shuttle/escape_pod3/station,
-	/area/shuttle/escape_pod5/station,
+	/area/shuttle/escape_pod4/station,
 	/area/shuttle/mining/station,
 	/area/shuttle/transport1/station,
 	/area/shuttle/specops/station)
@@ -231,6 +231,7 @@ var/datum/controller/event/events
 			switch(DD)
 				if(10)							holiday = "Human-Rights Day"
 				if(14)							holiday = "Monkey Day"
+				if(21)							holiday = "Mayan Doomsday Anniversary"
 				if(22)							holiday = "Orgasming Day"		//lol. These all actually exist
 				if(24)							holiday = "Xmas"
 				if(25)							holiday = "Xmas"

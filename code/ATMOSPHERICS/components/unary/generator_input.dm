@@ -3,7 +3,7 @@
 	icon_state = "intact"
 	density = 1
 
-	name = "Generator Input"
+	name = "generator input"
 	desc = "Placeholder"
 
 	var/update_cycle

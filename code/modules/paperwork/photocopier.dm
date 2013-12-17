@@ -23,6 +23,7 @@
 	var/toner = 40 //how much toner is left! woooooo~
 	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
 	var/greytoggle = "Greyscale"
+	var/mob/living/ass = null
 
 
 /obj/machinery/photocopier/attack_ai(mob/user)
@@ -37,7 +38,7 @@
 	user.set_machine(src)
 
 	var/dat = "Photocopier<BR><BR>"
-	if(copy || photocopy)
+	if(copy || photocopy || (ass && (ass.loc == src.loc)))
 		dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Paper</a><BR>"
 		if(toner)
 			dat += "<a href='byond://?src=\ref[src];copy=1'>Copy</a><BR>"
@@ -73,7 +74,7 @@
 					copied = replacetext(copied, "<font face=\"[c.crayonfont]\" color=", "<font face=\"[c.crayonfont]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
 					c.info += copied
 					c.info += "</font>"
-					c.name = copy.name	//-- Doohl
+					c.name = copy.name
 					c.fields = copy.fields
 					c.updateinfolinks()
 					toner--
@@ -112,7 +113,38 @@
 					sleep(15)
 				else
 					break
-			updateUsrDialog()
+		else if(ass) //ASS COPY. By Miauw
+			for(var/i = 0, i < copies, i++)
+				var/icon/temp_img
+				if(ishuman(ass) && (ass.get_item_by_slot(slot_w_uniform) || ass.get_item_by_slot(slot_wear_suit)))
+					usr << "<span class='notice'>You feel kind of silly copying [ass == usr ? "your" : ass][ass == usr ? "" : "\'s"] ass with [ass == usr ? "your" : "their"] clothes on.</span>"
+				else if(toner >= 5 && check_ass()) //You have to be sitting on the copier and either be a xeno or a human without clothes on.
+					if(isalien(ass) || istype(ass,/mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
+						temp_img = icon("icons/ass/assalien.png")
+					else if(ishuman(ass)) //Suit checks are in check_ass
+						if(ass.gender == MALE)
+							temp_img = icon("icons/ass/assmale.png")
+						else if(ass.gender == FEMALE)
+							temp_img = icon("icons/ass/assfemale.png")
+						else 									//In case anyone ever makes the generic ass. For now I'll be using male asses.
+							temp_img = icon("icons/ass/assmale.png")
+					else
+						break
+					var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
+					p.desc = "You see [ass]'s ass on the photo."
+					p.pixel_x = rand(-10, 10)
+					p.pixel_y = rand(-10, 10)
+					p.img = temp_img
+					var/icon/small_img = icon(temp_img) //Icon() is needed or else temp_img will be rescaled too >.>
+					var/icon/ic = icon('icons/obj/items.dmi',"photo")
+					small_img.Scale(8, 8)
+					ic.Blend(small_img,ICON_OVERLAY, 10, 13)
+					p.icon = ic
+					toner -= 5
+					sleep(15)
+				else
+					break
+		updateUsrDialog()
 	else if(href_list["remove"])
 		if(copy)
 			if(!istype(usr,/mob/living/silicon/ai)) //surprised this check didn't exist before, putting stuff in AI's hand is bad
@@ -132,6 +164,8 @@
 			usr << "<span class='notice'>You take [photocopy] out of [src].</span>"
 			photocopy = null
 			updateUsrDialog()
+		else if(check_ass())
+			ass << "<span class='notice'>You feel a slight pressure on your ass.</span>"
 	else if(href_list["min"])
 		if(copies > 1)
 			copies--
@@ -173,12 +207,12 @@
 		if(greytoggle == "Greyscale")
 			greytoggle = "Color"
 		else
-			greytoggle ="Greyscale"
+			greytoggle = "Greyscale"
 		updateUsrDialog()
 
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/paper))
-		if(!copy && !photocopy)
+		if(copier_empty())
 			user.drop_item()
 			copy = O
 			O.loc = src
@@ -188,7 +222,7 @@
 		else
 			user << "<span class='notice'>There is already something in [src].</span>"
 	else if(istype(O, /obj/item/weapon/photo))
-		if(!copy && !photocopy)
+		if(copier_empty())
 			user.drop_item()
 			photocopy = O
 			O.loc = src
@@ -198,7 +232,7 @@
 		else
 			user << "<span class='notice'>There is already something in [src].</span>"
 	else if(istype(O, /obj/item/device/toner))
-		if(toner == 0)
+		if(toner <= 0)
 			user.drop_item()
 			del(O)
 			toner = 40
@@ -210,7 +244,20 @@
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		anchored = !anchored
 		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] [src].</span>"
-
+	else if(istype(O, /obj/item/weapon/grab)) //For ass-copying.
+		var/obj/item/weapon/grab/G = O
+		if(ismob(G.affecting) && G.affecting != ass)
+			var/mob/GM = G.affecting
+			visible_message("<span class='warning'>[usr] drags [GM.name] onto the photocopier!</span>")
+			GM.loc = get_turf(src)
+			ass = GM
+			if(photocopy)
+				photocopy.loc = src.loc
+				photocopy = null
+			else if(copy)
+				copy.loc = src.loc
+				copy = null
+			updateUsrDialog()
 
 /obj/machinery/photocopier/ex_act(severity)
 	switch(severity)
@@ -237,6 +284,50 @@
 		if(toner > 0)
 			new /obj/effect/decal/cleanable/oil(get_turf(src))
 			toner = 0
+
+/obj/machinery/photocopier/MouseDrop_T(mob/target, mob/user)
+	check_ass() //Just to make sure that you can re-drag somebody onto it after they moved off.
+	if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || istype(user, /mob/living/silicon/ai) || target == ass)
+		return
+	src.add_fingerprint(user)
+	if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
+		visible_message("<span class='warning'>[usr] jumps onto the photocopier!</span>")
+	else if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
+		if(target.anchored) return
+		if(!ishuman(user) && !ismonkey(user)) return
+		visible_message("<span class='warning'>[usr] drags [target.name] onto the photocopier!</span>")
+	target.loc = get_turf(src)
+	ass = target
+	if(photocopy)
+		photocopy.loc = src.loc
+		visible_message("<span class='notice'>[photocopy] is shoved out of the way by [ass]!</span>")
+		photocopy = null
+	else if(copy)
+		copy.loc = src.loc
+		visible_message("<span class='notice'>[copy] is shoved out of the way by [ass]!</span>")
+		copy = null
+	updateUsrDialog()
+
+/obj/machinery/photocopier/proc/check_ass() //I'm not sure wether I made this proc because it's good form or because of the name.
+	if(!ass)
+		return 0
+	if(ass.loc != src.loc)
+		ass = null
+		updateUsrDialog()
+		return 0
+	else if(istype(ass,/mob/living/carbon/human))
+		if(!ass.get_item_by_slot(slot_w_uniform) && !ass.get_item_by_slot(slot_wear_suit))
+			return 1
+		else
+			return 0
+	else
+		return 1
+
+/obj/machinery/photocopier/proc/copier_empty()
+	if(copy || photocopy || check_ass())
+		return 0
+	else
+		return 1
 
 /*
  * Toner cartridge

@@ -254,3 +254,28 @@
 	list += {"<br><br><A href='byond://?src=\ref[src];laws=1'>State Laws</A>"}
 
 	usr << browse(list, "window=laws")
+
+/mob/living/silicon/Bump(atom/movable/AM as mob|obj, yes)  //Allows the AI to bump into mobs if it's itself pushed
+        if ((!( yes ) || now_pushing))
+                return
+        now_pushing = 1
+        if(ismob(AM))
+                var/mob/tmob = AM
+                if(!(tmob.status_flags & CANPUSH))
+                        now_pushing = 0
+                        return
+        now_pushing = 0
+        ..()
+        if (!istype(AM, /atom/movable))
+                return
+        if (!now_pushing)
+                now_pushing = 1
+                if (!AM.anchored)
+                        var/t = get_dir(src, AM)
+                        if (istype(AM, /obj/structure/window))
+                                if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
+                                        for(var/obj/structure/window/win in get_step(AM,t))
+                                                now_pushing = 0
+                                                return
+                        step(AM, t)
+                now_pushing = null

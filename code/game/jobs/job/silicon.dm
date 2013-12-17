@@ -14,6 +14,11 @@
 		if(!H)	return 0
 		return 1
 
+	config_check()
+		if(config && config.allow_ai)
+			return 1
+		return 0
+
 
 
 /datum/job/cyborg

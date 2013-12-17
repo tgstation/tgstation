@@ -15,12 +15,13 @@
 		feedback_set_details("round_end_result","loss - blob took over")
 		world << "<FONT size = 3><B>The blob has taken over the station!</B></FONT>"
 		world << "<B>The entire station was eaten by the Blob</B>"
-		check_quarantine()
+		log_game("Blob mode was lost.")
 
 	else if(station_was_nuked)
 		feedback_set_details("round_end_result","halfwin - nuke")
 		world << "<FONT size = 3><B>Partial Win: The station has been destroyed!</B></FONT>"
 		world << "<B>Directive 7-12 has been successfully carried out preventing the Blob from spreading.</B>"
+		log_game("Blob mode was tie (station destroyed).")
 
 	else if(!blob_cores.len)
 		feedback_set_details("round_end_result","win - blob eliminated")
@@ -43,36 +44,6 @@ datum/game_mode/proc/auto_declare_completion_blob()
 			var/text = "<FONT size = 2><B>The blob[(blob_mode.infected_crew.len > 1 ? "s were" : " was")]:</B></FONT>"
 
 			for(var/datum/mind/blob in blob_mode.infected_crew)
-				text += "<br>[blob.key] was [blob.name]"
+				text += "<br><b>[blob.key]</b> was <b>[blob.name]</b>"
 			world << text
 		return 1
-
-/datum/game_mode/blob/proc/check_quarantine()
-	var/numDead = 0
-	var/numAlive = 0
-	var/numSpace = 0
-	var/numOffStation = 0
-	for (var/mob/living/silicon/ai/aiPlayer in mob_list)
-		for(var/mob/living/carbon/human/M in mob_list)
-			if ((M != aiPlayer && M.client))
-				if (M.stat == 2)
-					numDead += 1
-				else
-					var/T = M.loc
-					if (istype(T, /turf/space))
-						numSpace += 1
-					else if(istype(T, /turf))
-						if (M.z!=1)
-							numOffStation += 1
-						else
-							numAlive += 1
-		if (numSpace==0 && numOffStation==0)
-			world << "<FONT size = 3><B>The AI has won!</B></FONT>"
-			world << "<B>The AI successfully maintained the quarantine - no players were in space or were off-station (as far as we can tell).</B>"
-			log_game("AI won at Blob mode despite overall loss.")
-		else
-			world << "<FONT size = 3><B>The AI has lost!</B></FONT>"
-			world << text("<B>The AI failed to maintain the quarantine - [] were in space and [] were off-station (as far as we can tell).</B>", numSpace, numOffStation)
-			log_game("AI lost at Blob mode.")
-	log_game("Blob mode was lost.")
-	return 1

@@ -198,6 +198,7 @@
 
 
 /obj/item/device/flashlight/slime
+	gender = PLURAL
 	name = "glowing slime extract"
 	desc = "Extract from a yellow slime. It emits a strong light when squeezed."
 	icon = 'icons/obj/lighting.dmi'

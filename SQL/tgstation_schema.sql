@@ -174,6 +174,7 @@ CREATE TABLE `erro_library` (
   `category` varchar(45) NOT NULL,
   `ckey` varchar(45) DEFAULT 'LEGACY',
   `datetime` datetime DEFAULT NULL,
+  `deleted` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

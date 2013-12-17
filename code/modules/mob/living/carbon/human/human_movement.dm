@@ -18,6 +18,9 @@
 
 	if(shoes)
 		tally += shoes.slowdown
+	
+	if(back)
+		tally += back.slowdown
 
 	if(FAT in src.mutations)
 		tally += 1.5

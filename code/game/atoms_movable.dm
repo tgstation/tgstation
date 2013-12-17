@@ -2,7 +2,6 @@
 	layer = 3
 	var/last_move = null
 	var/anchored = 0
-	// var/elevation = 2    - not used anywhere
 	var/move_speed = 10
 	var/l_move_time = 1
 	var/m_flag = 1
@@ -23,6 +22,11 @@
 		src.last_move = get_dir(A, src.loc)
 	return
 
+// Previously known as HasEntered()
+// This is automatically called when something enters your square
+/atom/movable/Crossed(atom/movable/AM)
+	return
+
 /atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes)
 	if(src.throwing)
 		src.throw_impact(A)
@@ -41,6 +45,8 @@
 			loc.Exited(src)
 		loc = destination
 		loc.Entered(src)
+		for(var/atom/movable/AM in loc)
+			AM.Crossed(src)
 		return 1
 	return 0
 
