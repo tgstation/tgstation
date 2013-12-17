@@ -200,12 +200,14 @@ turf/CanPass(atom/movable/mover, turf/target, height=1.5,air_group=0)
 			T.atmos_adjacent_turfs &= ~counterdir
 
 /atom/movable/proc/air_update_turf(var/command = 0)
-	if(istype(loc,/turf))
-		for(var/turf/T in locs) // used by double wide doors and other nonexistant multitile structures
-			if(command)
-				T.CalculateAdjacentTurfs()
-			if(air_master)
-				air_master.add_to_active(T,command)
+	for(var/turf/T in locs) // used by double wide doors and other nonexistant multitile structures
+		T.air_update_turf(command)
+
+/turf/proc/air_update_turf(var/command = 0)
+	if(command)
+		CalculateAdjacentTurfs()
+	if(air_master)
+		air_master.add_to_active(src,command)
 
 
 

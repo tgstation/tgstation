@@ -301,7 +301,9 @@
 
 
 /obj/structure/window/Move()
+	density = 0				//CanAtmosPass while moving
 	air_update_turf(1)
+	density = 1
 	..()
 	dir = ini_dir
 	air_update_turf(1)

@@ -131,6 +131,7 @@
 		else
 			ground_zero.assume_air(air_contents)
 			ground_zero.hotspot_expose(1000, 125)
+			ground_zero.air_update_turf()		//you still want to activate in case it has other contents like N2O
 
 	else if(air_contents.temperature > (T0C + 250))
 		strength = (fuel_moles/20)
@@ -142,6 +143,7 @@
 		else
 			ground_zero.assume_air(air_contents)
 			ground_zero.hotspot_expose(1000, 125)
+			ground_zero.air_update_turf()
 
 	else if(air_contents.temperature > (T0C + 100))
 		strength = (fuel_moles/25)
@@ -151,10 +153,12 @@
 		else
 			ground_zero.assume_air(air_contents)
 			ground_zero.hotspot_expose(1000, 125)
+			ground_zero.air_update_turf()
 
 	else
 		ground_zero.assume_air(air_contents)
 		ground_zero.hotspot_expose(1000, 125)
+		ground_zero.air_update_turf()
 
 	if(master)
 		del(master)
@@ -166,3 +170,4 @@
 	if(!T)
 		return
 	T.assume_air(removed)
+	air_update_turf()
