@@ -55,7 +55,7 @@
 		// Garbage collect the projectiles
 		loc = null
 
-	proc/on_hit(var/atom/target, var/blocked = 0)
+	proc/on_hit(var/atom/target, var/blocked = 0, var/hit_zone)
 		if(blocked >= 2)		return 0//Full block
 		if(!isliving(target))	return 0
 		if(isanimal(target))	return 0
@@ -78,6 +78,12 @@
 				loc = A.loc
 				return 0// nope.avi
 
+			var/reagent_note
+			if(reagents && reagents.reagent_list)
+				reagent_note = " REAGENTS:"
+				for(var/datum/reagent/R in reagents.reagent_list)
+					reagent_note += R.id + " ("
+					reagent_note += num2text(R.volume) + ") "
 			var/distance = get_dist(get_turf(A), starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
 			def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 			if(silenced)
@@ -85,7 +91,8 @@
 			else
 				M.visible_message("<span class='danger'>[M] is hit by [src] in the [parse_zone(def_zone)]!", \
 									"<span class='userdanger'>[M] is hit by [src] in the [parse_zone(def_zone)]!")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
-			add_logs(firer, M, "shot", object="[src]")
+			add_logs(firer, M, "shot", object="[src]", addition=reagent_note)
+
 
 		spawn(0)
 			if(A)

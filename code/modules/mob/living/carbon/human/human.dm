@@ -464,3 +464,20 @@
 		xylophone = 1
 		spawn(1200)
 			xylophone = 0
+
+/mob/living/carbon/human/can_inject(var/mob/user, var/error_msg, var/target_zone)
+	. = 1 // Default to returning true.
+	if(user && !target_zone)
+		target_zone = user.zone_sel.selecting
+	// If targeting the head, see if the head item is thin enough.
+	// If targeting anything else, see if the wear suit is thin enough.
+	switch(target_zone)
+		if("head")
+			if(head && head.flags & THICKMATERIAL)
+				. = 0
+		else
+			if(wear_suit && wear_suit.flags & THICKMATERIAL)
+				. = 0
+	if(!. && error_msg && user)
+		// Might need re-wording.
+		user << "<span class='alert'>There is no exposed flesh or thin material [target_zone == "head" ? "on their head" : "on their body"].</span>"
