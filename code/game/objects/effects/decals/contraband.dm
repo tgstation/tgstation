@@ -24,7 +24,7 @@
 		resulting_poster = new(serial_number)
 	else
 		serial_number = given_serial
-		//We don't give it a resulting_poster because if we called it with a given_serial it means that we're rerolling an already used poster.
+		resulting_poster = new(given_serial)
 	name += " - No. [serial_number]"
 	..(loc)
 
@@ -129,7 +129,7 @@ obj/structure/sign/poster/attackby(obj/item/I, mob/user)
 			del(src)
 		else
 			user << "<span class='notice'>You carefully remove the poster from the wall.</span>"
-			roll_and_drop(user.loc)
+			roll_and_drop(user.loc, serial_number)
 		return
 
 
@@ -153,7 +153,6 @@ obj/structure/sign/poster/attackby(obj/item/I, mob/user)
 
 /obj/structure/sign/poster/proc/roll_and_drop(turf/location)
 	var/obj/item/weapon/contraband/poster/P = new(src, serial_number)
-	P.resulting_poster = src
 	P.loc = location
 	loc = P
 
@@ -189,5 +188,5 @@ obj/structure/sign/poster/attackby(obj/item/I, mob/user)
 	if(istype(src,/turf/simulated/wall) && user && user.loc == temp_loc)	//Let's check if everything is still there
 		user << "<span class='notice'>You place the poster!</span>"
 	else
-		D.roll_and_drop(temp_loc)
+		D.roll_and_drop(temp_loc, D.serial_number)
 	return

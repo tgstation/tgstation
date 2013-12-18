@@ -72,3 +72,11 @@
 	imp = new /obj/item/weapon/implant/emp(src)
 	..()
 	update_icon()
+
+/obj/item/weapon/implanter/embryo
+	name = "implanter-XENO"
+
+/obj/item/weapon/implanter/embryo/New()
+	imp = new /obj/item/weapon/implant/embryo(src)
+	..()
+	update_icon()

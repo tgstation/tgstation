@@ -100,3 +100,13 @@
 /obj/item/weapon/implantcase/loyalty/New()
 	imp = new /obj/item/weapon/implant/loyalty(src)
 	..()
+
+/obj/item/weapon/implantcase/embryo
+	name ="glass case- 'Embryo'"
+	desc ="A case containing an embryonic implant."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "implantcase-b"
+
+/obj/item/weapon/implantcase/embryo/New()
+	imp = new /obj/item/weapon/implant/embryo(src)
+	..()

@@ -211,3 +211,29 @@
 		source.mind.store_memory("EMP implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
 		source << "The implanted EMP implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
 		return 1
+
+/obj/item/weapon/implant/embryo
+	name = "embryo implant"
+	desc = "Biochemically deactivated alien embryo."
+
+/obj/item/weapon/implant/embryo/implanted(mob/living/carbon/source)
+	if(!ishuman(source) && !ismonkey(source))
+		return 0
+	if(!source.getlimb(/obj/item/organ/limb/robot/chest) && !(source.status_flags & XENO_HOST))
+		new /obj/item/alien_embryo(source)
+	return 0
+
+/obj/item/weapon/implant/embryo/get_data()
+	var/dat = {"<b>Implant Specifications:</b><BR>
+				<b>Name:</b> Research implant X3 no.72<BR>
+				<b>Life:</b> One to two hours<BR>
+				<b>Important Notes:</b> <font color='red'>Experimental</font><BR>
+				<HR>
+				<b>Implant Details: </b>Biochemically deactivated alien embryo<BR>
+				<b>Function: </b>X3-series implants are the latest development in artificially grown xenobiological embryos.
+					Used to safely maintain a small alien population in a controlled research environment.
+					Cell growth is reactivated by chemical catalyst on implantation to a host animal.
+					Only available to registered research partners and affiliated institutions of NT-X3 Research Group.<BR>
+				<b>Special Features:</b> Aliens breeded with X3-embryonic-implanters are fertile up to the third generation. <BR>
+				<b>Integrity:</b> Biodegrading implant."}
+	return dat
