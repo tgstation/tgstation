@@ -50,15 +50,20 @@
 
 				var/y_distance = TO.y - FROM.y
 				var/x_distance = TO.x - FROM.x
+				var/list/T_air = list()
 				for (var/atom/movable/A in range(12, FROM )) // iterate thru list of mobs in the area
 					if(istype(A, /obj/item/device/radio/beacon)) continue // don't teleport beacons because that's just insanely stupid
 					if(A.anchored && istype(A, /obj/machinery)) continue
 					if(istype(A, /obj/structure/disposalpipe )) continue
 					if(istype(A, /obj/structure/cable )) continue
+					if(istype(A, /obj/structure/window ))		//if move fails do it manualy
+						if(isturf(A.loc) && !(A.loc in T_air) )
+							T_air += A.loc
 
 					var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
 					if(!A.Move(newloc)) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
 						A.loc = locate(A.x + x_distance, A.y + y_distance, TO.z)
+
 
 					spawn()
 						if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect
@@ -74,4 +79,7 @@
 								sleep(20)
 								M.client.screen -= blueeffect
 								del(blueeffect)
+				for(var/turf/acT in T_air)
+					acT.air_update_turf(1)
+				T_air = null
 			del(newAnomaly)
