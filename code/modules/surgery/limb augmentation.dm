@@ -70,9 +70,7 @@
 			del(tool)
 			H.update_damage_overlays(0)
 			H.update_augments() //Gives them the Cyber limb overlay
-			user.attack_log += "\[[time_stamp()]\]<font color='red'> Augmented [target.name]'s [parse_zone(user.zone_sel.selecting)] ([target.ckey]) INTENT: [uppertext(user.a_intent)])</font>"
-			target.attack_log += "\[[time_stamp()]\]<font color='orange'> Augmented by [user.name] ([user.ckey]) (INTENT: [uppertext(user.a_intent)])</font>"
-			log_attack("<font color='red'>[user.name] ([user.ckey]) augmented [target.name] ([target.ckey]) (INTENT: [uppertext(user.a_intent)])</font>")
+			add_logs(user, target, "augmented", addition="by giving him new [parse_zone(user.zone_sel.selecting)] INTENT: [uppertext(user.a_intent)]")
 	else
 		user.visible_message("<span class='notice'>[user] [target] has no organic [parse_zone(user.zone_sel.selecting)] there!</span>")
 	return 1

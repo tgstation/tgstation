@@ -28,9 +28,7 @@
 			var/mob/living/carbon/human/H = target
 			H.update_hair(0)
 			H.apply_damage(25,"brute","head")
-		user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [target.name] ([target.ckey]) INTENT: [uppertext(user.a_intent)])</font>"
-		target.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) (INTENT: [uppertext(user.a_intent)])</font>"
-		log_attack("<font color='red'>[user.name] ([user.ckey]) debrained [target.name] ([target.ckey]) (INTENT: [uppertext(user.a_intent)])</font>")
+		add_logs(user, target, "debrained", addition="INTENT: [uppertext(user.a_intent)]")
 	else
 		user.visible_message("<span class='notice'>[user] can't find a brain in [target]!</span>")
 	return 1

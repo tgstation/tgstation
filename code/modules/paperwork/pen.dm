@@ -49,10 +49,7 @@
 	user << "<span class='warning'>You stab [M] with the pen.</span>"
 	M << "\red You feel a tiny prick!"
 
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stabbed with [name]  by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [name] to stab [M.name] ([M.ckey])</font>")
-	log_attack("<font color='red'>[user.name] ([user.ckey]) Used the [name] to stab [M.name] ([M.ckey])</font>")
-
+	add_logs(user, M, "stabbed", object="[name]")
 
 /*
  * Sleepy Pens
