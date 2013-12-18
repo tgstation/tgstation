@@ -2,7 +2,7 @@
 /mob/proc/make_changeling()
 	if(!mind)				return
 	if(!mind.changeling)	mind.changeling = new /datum/changeling(gender)
-	if(!iscarbon(src))		return
+	if(!ishuman(src) && !ismonkey(src))		return
 
 	verbs += /datum/changeling/proc/EvolutionMenu
 
@@ -29,7 +29,8 @@
 //removes our changeling verbs
 /mob/proc/remove_changeling_powers()
 	var/mob/living/carbon/C = src
-	C.unset_sting()
+	if(ishuman(C) || ismonkey(C))
+		C.unset_sting()
 	for(var/datum/power/changeling/P in powerinstances)
 		if(P.isVerb)
 			verbs -= P.verbpath
