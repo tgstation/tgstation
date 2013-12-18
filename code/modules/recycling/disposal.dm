@@ -1154,6 +1154,10 @@
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
 
+		if(linked)
+			user << "You need to deconstruct disposal machinery above this pipe."
+			return
+
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 			// check if anything changed over 2 seconds
@@ -1167,7 +1171,7 @@
 			else
 				user << "You must stay still while welding the pipe."
 		else
-			user << "You need more welding fuel to cut the pipe."
+
 			return
 
 	// would transfer to next pipe segment, but we are in a trunk
