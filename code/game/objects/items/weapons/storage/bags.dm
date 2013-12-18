@@ -48,6 +48,14 @@
 		icon_state = "trashbag2"
 	else icon_state = "trashbag3"
 
+/obj/item/weapon/storage/bag/trash/cyborg
+
+/obj/item/weapon/storage/bag/trash/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
+	J.mybag=J.put_in_cart(src, user)
+
+/obj/item/weapon/storage/bag/trash/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
+	return
+
 // -----------------------------
 //        Mining Satchel
 // -----------------------------

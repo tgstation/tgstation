@@ -10,9 +10,10 @@
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
 	var/obj/item/weapon/storage/bag/trash/mybag	= null
 	var/obj/item/weapon/mop/mymop = null
-	var/obj/item/weapon/reagent_containers/spray/myspray = null
+	var/obj/item/weapon/reagent_containers/spray/cleaner/myspray = null
 	var/obj/item/device/lightreplacer/myreplacer = null
-	var/signs = 0	//maximum capacity hardcoded below
+	var/signs = 0
+	var/const/max_signs = 4
 
 
 /obj/structure/janitorialcart/New()
@@ -46,47 +47,38 @@
 	var/fail_msg = "<span class='notice'>There is already one of those in [src].</span>"
 
 	if(istype(I, /obj/item/weapon/mop))
-		if(I.reagents.total_volume < I.reagents.maximum_volume)	//if it's not completely soaked we assume they want to wet it, otherwise store it
-			wet_mop(I, user)
-			return
-		if(isrobot(user)) // robots can wet their mop, but not put it in the cart.
-			user << "<span class='notice'>You are a robot. No.</span>"
+		var/obj/item/weapon/mop/m=I
+		if(m.reagents.total_volume < m.reagents.maximum_volume)
+			wet_mop(m, user)
 			return
 		if(!mymop)
-			mymop=put_in_cart(I,user)
+			m.janicart_insert(user, src)
 		else
 			user << fail_msg
-			return
 
-
-	else if(isrobot(user))
-		user << "<span class='notice'>You are a robot. No.</span>"
-		return
 	else if(istype(I, /obj/item/weapon/storage/bag/trash))
 		if(!mybag)
-			mybag=put_in_cart(I, user)
+			var/obj/item/weapon/storage/bag/trash/t=I
+			t.janicart_insert(user, src)
 		else
 			user <<  fail_msg
-			return
-	else if(istype(I, /obj/item/weapon/reagent_containers/spray))
+	else if(istype(I, /obj/item/weapon/reagent_containers/spray/cleaner))
 		if(!myspray)
 			myspray=put_in_cart(I, user)
 		else
 			user << fail_msg
-			return
 	else if(istype(I, /obj/item/device/lightreplacer))
 		if(!myreplacer)
-			myreplacer = put_in_cart(I,user)
+			var/obj/item/device/lightreplacer/l=I
+			l.janicart_insert(user,src)
 		else
 			user << fail_msg
-			return
 	else if(istype(I, /obj/item/weapon/caution))
-		if(signs < 4)
+		if(signs < max_signs)
 			put_in_cart(I, user)
 			signs++
 		else
 			user << "<span class='notice'>[src] can't hold any more signs.</span>"
-			return
 	else if(mybag)
 		mybag.attackby(I, user)
 

@@ -47,3 +47,14 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 	if(istype(I, /obj/item/weapon/mop) || istype(I, /obj/item/weapon/soap))
 		return
 	..()
+
+
+/obj/item/weapon/mop/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
+	J.mymop=J.put_in_cart(src, user)
+
+/obj/item/weapon/mop/cyborg
+
+/obj/item/weapon/mop/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
+	return
+
+

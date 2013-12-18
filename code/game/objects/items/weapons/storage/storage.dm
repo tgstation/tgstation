@@ -20,7 +20,7 @@
 	var/display_contents_with_number	//Set this to make the storage item group contents of the same type and display them as a number.
 	var/allow_quick_empty	//Set this variable to allow the object to have the 'empty' verb, which dumps all the contents on the floor.
 	var/allow_quick_gather	//Set this variable to allow the object to have the 'toggle mode' verb, which quickly collects all items from a tile.
-	var/collection_mode = 1;  //0 = pick one at a time, 1 = pick all on tile
+	var/collection_mode = 1;  //0 = pick one at a time, 1 = pick all on tile, 2 = pick all of a type
 
 
 /obj/item/weapon/storage/MouseDrop(obj/over_object)
@@ -208,7 +208,7 @@
 
 	if(W.w_class > max_w_class)
 		if(!stop_messages)
-			usr << "<span class='notice'>[W] is too big for [src].</span>"
+			usr << "<span class='notice'>[W] is too big for this [src].</span>"
 		return 0
 
 	var/sum_w_class = W.w_class
@@ -246,7 +246,7 @@
 		if(!prevent_warning && !istype(W, /obj/item/weapon/gun/energy/crossbow))
 			for(var/mob/M in viewers(usr, null))
 				if(M == usr)
-					usr << "<span class='notice'>You put \the [W] into [src].</span>"
+					usr << "<span class='notice'>You put [W] into [src].</span>"
 				else if(in_range(M, usr)) //If someone is standing close enough, they can tell what it is...
 					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>")
 				else if(W && W.w_class >= 3.0) //Otherwise they can only see large or normal items from a distance...
@@ -299,7 +299,6 @@
 	..()
 
 	if(isrobot(user))
-		user << "<span class='notice'>You're a robot. No.</span>"
 		return 1	//Robots can't interact with storage items.
 
 	if(!can_be_inserted(W))
@@ -351,8 +350,10 @@
 	set name = "Switch Gathering Method"
 	set category = "Object"
 
-	collection_mode = !collection_mode
+	collection_mode = (collection_mode+1)%3
 	switch (collection_mode)
+		if(2)
+			usr << "[src] now picks up all items of a single type at once."
 		if(1)
 			usr << "[src] now picks up all items in a tile at once."
 		if(0)
