@@ -141,10 +141,10 @@ obj/structure/sign/poster/New(serial)
 			name += " - Lamarr"
 			desc += " This poster depicts Lamarr. Probably made by the research director."
 		if(20)
-			name += " - Borg Facy"
+			name += " - Borg Fancy"
 			desc += " Being fancy can be for any borg, Just need a suit."
 		if(21)
-			name += " - Borg Facy v2"
+			name += " - Borg Fancy v2"
 			desc += " Borg Fancy, Now only taking the most fancy."
 		else
 			name = "This shit just bugged. Report it to Agouri - polyxenitopalidou@gmail.com"
