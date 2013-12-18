@@ -13,6 +13,7 @@
 	var/singular_name
 	var/amount = 1
 	var/max_amount //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
+	var/list/canCombineWith=list()
 
 /obj/item/stack/New(var/loc, var/amount=null)
 	..()
@@ -176,7 +177,7 @@
 	for (var/obj/item/stack/item in usr.loc)
 		if (item==oldsrc)
 			continue
-		if (!istype(item, oldsrc.type))
+		if (item.type != oldsrc.type || oldsrc.type in item.canCombineWith)
 			continue
 		if (item.amount>=item.max_amount)
 			continue
