@@ -547,3 +547,32 @@
 	else if(prob(50))
 		return "trails_1"
 	return "trails_2"
+
+/*
+ * 0)clown pda == no slip when walking, lube=0
+ * 1)banana peels, soap and foam == slip when walking, lube=1
+ * 2)Wet floor == no slip when walking, take a step, lube=2
+ * 3)Lube == always slips, sliding effect, lube=3
+ */
+/mob/living/carbon/slip(var/s_amount, var/w_amount, var/obj/O, var/lube)
+	if (m_intent=="walk" && (lube==0 || lube==2))
+		return 0
+	if(!lying)
+		stop_pulling()
+		if(lube==2 || lube==3)
+			step(src, src.dir)
+		if(lube==3)
+			for(var/i=1, i<5, i++)
+				spawn (i)
+					if(src)
+						step(src, src.dir)
+			take_organ_damage(2)
+		if(O)
+			src << "<span class='notice'>You slipped on the [O.name]!</span>"
+		else
+			src << "<span class='notice'>You slipped!</span>"
+		playsound(loc, 'sound/misc/slip.ogg', 50, 1, -3)
+		Stun(s_amount)
+		Weaken(w_amount)
+		return 1
+	return 0 // no success. Used in clown pda and wet floors
