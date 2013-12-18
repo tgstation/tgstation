@@ -120,7 +120,7 @@ obj/structure/sign/poster/New(serial)
 			name += " - Ambrosia Vulgaris"
 			desc += " This poster is lookin' pretty trippy man."
 		if(13)
-			name += " - Donut Corp"
+			name += " - Donut Corp."
 			desc += " This poster is an advertisement for Donut Corp."
 		if(14)
 			name += " - EAT"
