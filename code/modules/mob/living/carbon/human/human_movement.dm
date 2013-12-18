@@ -67,6 +67,6 @@
 
 
 /mob/living/carbon/human/slip(var/s_amount, var/w_amount, var/obj/O, var/lube)
-	if(isobj(src.shoes) && src.shoes.flags&NOSLIP && lube!=3)
+	if(isobj(shoes) && (shoes.flags&NOSLIP) && !(lube&GALOSHES_DONT_HELP))
 		return 0
 	.=..()

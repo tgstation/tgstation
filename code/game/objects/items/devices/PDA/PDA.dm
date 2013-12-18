@@ -961,7 +961,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/clown/Crossed(AM as mob|obj) //Clown PDA is slippery.
 	if (istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
-		if(M.slip(8, 5, src))
+		if(M.slip(8, 5, src, NO_SLIP_WHEN_WALKING))
 			if (ishuman(M) && (M.real_name != src.owner))
 				if (istype(src.cartridge, /obj/item/weapon/cartridge/clown))
 					var/obj/item/weapon/cartridge/clown/cart = src.cartridge

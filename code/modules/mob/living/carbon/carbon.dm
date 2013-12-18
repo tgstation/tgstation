@@ -548,24 +548,21 @@
 		return "trails_1"
 	return "trails_2"
 
-/*
- * 0)clown pda == no slip when walking, lube=0
- * 1)banana peels, soap and foam == slip when walking, lube=1
- * 2)Wet floor == no slip when walking, take a step, lube=2
- * 3)Lube == always slips, sliding effect, lube=3
- */
+var/const/NO_SLIP_WHEN_WALKING = 1
+var/const/STEP = 2
+var/const/SLIDE = 4
+var/const/GALOSHES_DONT_HELP = 8
 /mob/living/carbon/slip(var/s_amount, var/w_amount, var/obj/O, var/lube)
-	if (m_intent=="walk" && (lube==0 || lube==2))
+	if (m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
 		return 0
 	if(!lying)
 		stop_pulling()
-		if(lube==2 || lube==3)
+		if(lube&STEP)
 			step(src, src.dir)
-		if(lube==3)
+		if(lube&SLIDE)
 			for(var/i=1, i<5, i++)
 				spawn (i)
-					if(src)
-						step(src, src.dir)
+					step(src, src.dir)
 			take_organ_damage(2)
 		if(O)
 			src << "<span class='notice'>You slipped on the [O.name]!</span>"

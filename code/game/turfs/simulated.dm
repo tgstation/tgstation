@@ -55,12 +55,12 @@
 
 		switch (src.wet)
 			if(1) //wet floor
-				if(!M.slip(8, 5, null, 2))
+				if(!M.slip(8, 5, null, (NO_SLIP_WHEN_WALKING|STEP)))
 					M.inertia_dir = 0
 				return
 
 			if(2) //lube
-				M.slip(0, 10, null, 3)
+				M.slip(0, 10, null, (STEP|SLIDE|GALOSHES_DONT_HELP))
 
 
 	..()
