@@ -57,6 +57,8 @@
 
 	var/speed = 0 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
 
+	var/player_controlled = 0 //Set to true if the simple animal ever had someone behind the steering wheel, even if they aren't currently
+
 /mob/living/simple_animal/New()
 	..()
 	verbs -= /mob/verb/observe
@@ -194,6 +196,10 @@
 	if(!atmos_suitable)
 		adjustBruteLoss(unsuitable_atoms_damage)
 	return 1
+
+	//Player check
+	if(!player_controlled && mind)
+		player_controlled = 1
 
 /mob/living/simple_animal/Bumped(AM as mob|obj)
 	if(!AM) return

@@ -60,11 +60,11 @@
 	..()
 
 /obj/item/weapon/gun/magic/wand/resurrection
-	name = "wand of resurrection"
+	name = "wand of healing"
 	desc = "This wand uses healing magics to heal and revive. They are rarely utilized within the Wizard Federation for some reason."
 	projectile_type = "/obj/item/projectile/magic/resurrection"
 	icon_state = "revivewand"
-	max_charges = 3 //3, 2, 2, 1
+	max_charges = 10 //10, 5, 5, 4
 
 /obj/item/weapon/gun/magic/wand/resurrection/zap_self(mob/living/user as mob)
 	user.revive()
