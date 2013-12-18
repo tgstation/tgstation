@@ -167,6 +167,7 @@
 	health = 1
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE
+	can_hide = 1
 
 /mob/living/simple_animal/chick/New()
 	..()
@@ -208,6 +209,7 @@ var/global/chicken_count = 0
 	var/eggsleft = 0
 	var/body_color
 	pass_flags = PASSTABLE
+	can_hide = 1
 
 /mob/living/simple_animal/chicken/New()
 	..()

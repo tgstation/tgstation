@@ -13,3 +13,5 @@
 	response_disarm = "pushes aside"
 	response_harm   = "smacks"
 	harm_intent_damage = 5
+	pass_flags = PASSTABLE
+	can_hide = 1
