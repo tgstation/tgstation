@@ -73,84 +73,84 @@
 	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/under/psyche
-	name = "psychedelic"
+	name = "psychedelic jumpsuit"
 	desc = "Groovy!"
 	icon_state = "psyche"
 	item_color = "psyche"
 
 /obj/item/clothing/under/lightblue
-	name = "lightblue"
+	name = "lightblue jumpsuit"
 	desc = "lightblue"
 	icon_state = "lightblue"
 	item_color = "lightblue"
 
 /obj/item/clothing/under/aqua
-	name = "aqua"
+	name = "aqua jumpsuit"
 	desc = "aqua"
 	icon_state = "aqua"
 	item_color = "aqua"
 	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/under/purple
-	name = "purple"
+	name = "purple jumpsuit"
 	desc = "purple"
 	icon_state = "purple"
 	item_state = "p_suit"
 	item_color = "purple"
 
 /obj/item/clothing/under/lightpurple
-	name = "lightpurple"
+	name = "lightpurple jumpsuit"
 	desc = "lightpurple"
 	icon_state = "lightpurple"
 	item_color = "lightpurple"
 
 /obj/item/clothing/under/lightgreen
-	name = "lightgreen"
+	name = "lightgreen jumpsuit"
 	desc = "lightgreen"
 	icon_state = "lightgreen"
 	item_color = "lightgreen"
 
 /obj/item/clothing/under/lightblue
-	name = "lightblue"
+	name = "lightblue jumpsuit"
 	desc = "lightblue"
 	icon_state = "lightblue"
 	item_color = "lightblue"
 
 /obj/item/clothing/under/lightbrown
-	name = "lightbrown"
+	name = "lightbrown jumpsuit"
 	desc = "lightbrown"
 	icon_state = "lightbrown"
 	item_color = "lightbrown"
 	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/under/brown
-	name = "brown"
+	name = "brown jumpsuit"
 	desc = "brown"
 	icon_state = "brown"
 	item_color = "brown"
 	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/under/yellowgreen
-	name = "yellowgreen"
+	name = "yellowgreen jumpsuit"
 	desc = "yellowgreen"
 	icon_state = "yellowgreen"
 	item_color = "yellowgreen"
 
 /obj/item/clothing/under/darkblue
-	name = "darkblue"
+	name = "darkblue jumpsuit"
 	desc = "darkblue"
 	icon_state = "darkblue"
 	item_color = "darkblue"
 	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/under/lightred
-	name = "lightred"
+	name = "lightred jumpsuit"
 	desc = "lightred"
 	icon_state = "lightred"
 	item_color = "lightred"
 
 /obj/item/clothing/under/darkred
-	name = "darkred"
+	name = "darkred jumpsuit"
 	desc = "darkred"
 	icon_state = "darkred"
 	item_color = "darkred"

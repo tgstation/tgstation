@@ -53,7 +53,6 @@ display round(lastgen) and plasmatank amount
 
 	var/active = 0
 	var/power_gen = 5000
-	var/open = 0
 	var/recent_fault = 0
 	var/power_output = 1
 
@@ -115,8 +114,8 @@ display round(lastgen) and plasmatank amount
 	component_parts = list()
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
-	component_parts += new /obj/item/weapon/cable_coil(src)
-	component_parts += new /obj/item/weapon/cable_coil(src)
+	component_parts += new /obj/item/weapon/cable_coil(src, 1)
+	component_parts += new /obj/item/weapon/cable_coil(src, 1)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
 	component_parts += new board_path(src)
 	var/obj/sheet = new sheet_path(null)
@@ -231,21 +230,14 @@ display round(lastgen) and plasmatank amount
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 		else if(istype(O, /obj/item/weapon/screwdriver))
-			open = !open
+			panel_open = !panel_open
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			if(open)
+			if(panel_open)
 				user << "\blue You open the access panel."
 			else
 				user << "\blue You close the access panel."
-		else if(istype(O, /obj/item/weapon/crowbar) && !open)
-			var/obj/machinery/constructable_frame/machine_frame/new_frame = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			for(var/obj/item/I in component_parts)
-				if(I.reliability < 100)
-					I.crit_fail = 1
-				I.loc = src.loc
-			new_frame.state = 2
-			new_frame.icon_state = "box_1"
-			del(src)
+		else if(istype(O, /obj/item/weapon/crowbar) && panel_open)
+			default_deconstruction_crowbar()
 
 /obj/machinery/power/port_gen/pacman/attack_hand(mob/user as mob)
 	..()

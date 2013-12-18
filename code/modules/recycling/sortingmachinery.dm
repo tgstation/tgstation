@@ -117,7 +117,6 @@
 
 		user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [name] on \ref[target]</font>")
 
-
 		if(istype(target, /obj/item) && !(istype(target, /obj/item/weapon/storage) && !istype(target,/obj/item/weapon/storage/box)))
 			var/obj/item/O = target
 			if(amount > 1)

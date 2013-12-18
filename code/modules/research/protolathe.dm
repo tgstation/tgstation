@@ -57,30 +57,13 @@ Note: Must be placed west/left of and R&D console to function.
 	if (O.is_open_container())
 		return 1
 	if (istype(O, /obj/item/weapon/screwdriver))
-		if (!opened)
-			opened = 1
-			if(linked_console)
-				linked_console.linked_lathe = null
-				linked_console = null
-			icon_state = "protolathe_t"
-			user << "You open the maintenance hatch of [src]."
-		else
-			opened = 0
-			icon_state = "protolathe"
-			user << "You close the maintenance hatch of [src]."
+		if(linked_console)
+			linked_console.linked_lathe = null
+			linked_console = null
+		default_deconstruction_screwdriver(user, "protolathe_t", "protolathe")
 		return
-	if (opened)
+	if (panel_open)
 		if(istype(O, /obj/item/weapon/crowbar))
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
-			M.icon_state = "box_1"
-			for(var/obj/I in component_parts)
-				if(istype(I, /obj/item/weapon/reagent_containers/glass/beaker))
-					reagents.trans_to(I, reagents.total_volume)
-				if(I.reliability != 100 && crit_fail)
-					I.crit_fail = 1
-				I.loc = src.loc
 			if(m_amount >= 3750)
 				var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src.loc)
 				G.amount = round(m_amount / G.perunit)
@@ -108,7 +91,7 @@ Note: Must be placed west/left of and R&D console to function.
 			if(adamantine_amount >= 2000)
 				var/obj/item/stack/sheet/mineral/adamantine/G = new /obj/item/stack/sheet/mineral/adamantine(src.loc)
 				G.amount = round(adamantine_amount / G.perunit)
-			del(src)
+			default_deconstruction_crowbar()
 			return 1
 		else
 			user << "\red You can't load the [src.name] while it's opened."

@@ -6,6 +6,7 @@ var/admin_notice = null // Admin notice that all clients see when joining the se
 // nanomanager, the manager for Nano UIs
 var/datum/nanomanager/nanomanager = new()
 
+var/timezoneOffset = 0 // The difference betwen midnight (of the host computer) and 0 world.ticks.
 
 	// For FTP requests. (i.e. downloading runtime logs.)
 	// However it'd be ok to use for accessing attack logs and such too, which are even laggier.

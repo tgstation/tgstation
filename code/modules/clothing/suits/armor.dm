@@ -162,7 +162,7 @@
 
 
 /obj/item/clothing/suit/armor/centcom
-	name = "\improper Centcomm armor"
+	name = "\improper Centcom armor"
 	desc = "A suit that protects against some damage."
 	icon_state = "centcom"
 	item_state = "centcom"
