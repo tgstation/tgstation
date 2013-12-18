@@ -1171,6 +1171,7 @@
 			else
 				user << "You must stay still while welding the pipe."
 		else
+			user << "You need more welding fuel to cut the pipe."
 
 			return
 
