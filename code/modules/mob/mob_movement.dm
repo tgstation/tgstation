@@ -443,3 +443,58 @@
 	else
 		step(pulling, get_dir(pulling.loc, A))
 	return
+
+
+/*
+ * 0)Banana peels, soap and clown pda == no slip when walking, no step unless you can't be weakened. lube=0
+ * 1)Wet floor = no slip when walking, take a step and slide, lube=1
+ * 2)Foam = slips when walking, no step unless you can't be weakened, lube=2
+ * 3)Lube = Always slips, sliding effect, lube=3
+ */
+/mob/proc/slip(var/s_amount, var/w_amount, var/obj/O, var/lube)
+	if (iscarbon(src)) // only carbons slip.
+		var/mob/living/carbon/C=src
+		if (ishuman(C))
+			var/mob/living/carbon/human/shoe_wearer = C
+			if(isobj(shoe_wearer.shoes) && shoe_wearer.shoes.flags&NOSLIP && lube!=3) //lube wins galoshes
+				return 0
+		if (C.m_intent=="walk" && lube<=1)
+			return 0
+
+		var/can_not_weaken = ((HULK in C.mutations) || (!(C.status_flags&CANWEAKEN)))
+
+		if((lube==1 || can_not_weaken) && C.recently_slipped && lube!=3) //sliding on wet floor (already slipped)
+			step(C, C.dir) //slide to the next wet floor, ad infinitum
+			return 1
+
+
+		// here is where we slip: only if you haven't been recently slipped, and are standing
+		if(!C.recently_slipped && !lying)
+			C.stop_pulling()
+			if(O)
+				C << "<span class='danger'>You slipped on the [O.name]!</span>"
+			else
+				C << "<span class='danger'>You slipped!</span>"
+			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+			C.Stun(s_amount)
+			C.recently_slipped = 1
+			spawn (w_amount*10)
+				C.recently_slipped = 0
+			if(can_not_weaken || lube==1 || lube==3)
+				step(C, C.dir) //loop back to wet floors
+			if(lube!=3)
+				C.Weaken(w_amount)
+
+		if(lube==3) // Wheeeeeeeeeee!
+			spawn(1) step(C, C.dir)
+			spawn(2) step(C, C.dir)
+			spawn(3) step(C, C.dir)
+			spawn(4)
+				step(C, C.dir)
+				C.Weaken(w_amount) //weaken after the last step. Slide may or may not be over yet.
+				C.recently_slipped = 1
+				spawn (w_amount*10)
+					C.recently_slipped = 0
+			C.take_organ_damage(2) // Was 5 -- TLE
+		return 1
+	return 0 // no success. Used in clown pda and wet floors
