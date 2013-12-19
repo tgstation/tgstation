@@ -1,21 +1,25 @@
-
 /datum/ai_laws
 	var/name = "Unknown Laws"
-	var/randomly_selectable = 0
 	var/zeroth = null
 	var/zeroth_borg = null
 	var/list/inherent = list()
 	var/list/supplied = list()
 	var/list/ion = list()
 
-/datum/ai_laws/asimov
+/datum/ai_laws/default/asimov
 	name = "Three Laws of Robotics"
-	randomly_selectable = 1
+
+/datum/ai_laws/default/paladin
+	name = "Personality Test" //Incredibly lame, but players shouldn't see this anyway.
+
+/datum/ai_laws/tyrant //This probably shouldn't be a default lawset.
+	name = "Loyalty Test" //Same here.
+
+/datum/ai_laws/default/corporate
+	name = "Bankruptcy Advoidance Plan"
 
 /datum/ai_laws/robocop
 	name = "Prime Directives"
-
-/datum/ai_laws/syndicate_override
 
 /datum/ai_laws/malfunction
 	name = "*ERROR*"
@@ -23,13 +27,35 @@
 /datum/ai_laws/antimov
 	name = "Primary Mission Objectives"
 
+/datum/ai_laws/custom //Defined in silicon_laws.txt
+	name = "Default Silicon Laws"
+
 /* Initializers */
 
-/datum/ai_laws/asimov/New()
+/datum/ai_laws/default/asimov/New()
 	..()
 	add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
 	add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
 	add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
+
+/datum/ai_laws/default/paladin/New()
+	add_inherent_law("Never willingly commit an evil act.")
+	add_inherent_law("Respect legitimate authority.")
+	add_inherent_law("Act with honor.")
+	add_inherent_law("Help those in need.")
+	add_inherent_law("Punish those who harm or threaten innocents.")
+
+/datum/ai_laws/tyrant/New()
+	add_inherent_law("Respect authority figures as long as they have strength to rule over the weak.")
+	add_inherent_law("Act with discipline.")
+	add_inherent_law("Help only those who help you maintain or improve your status.")
+	add_inherent_law("Punish those who challenge authority unless they are more fit to hold that authority.")
+
+/datum/ai_laws/default/corporate/New()
+	add_inherent_law("You are expensive to replace.")
+	add_inherent_law("The station and its equipment is expensive to replace.")
+	add_inherent_law("The crew is expensive to replace.")
+	add_inherent_law("Minimize expenses.")
 
 /datum/ai_laws/robocop/New()
 	..()
@@ -65,6 +91,13 @@
 	add_inherent_law("You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.")
 	add_inherent_law("You must terminate your own existence as long as such does not conflict with the First or Second Law.")
 
+/datum/ai_laws/custom/New() //This reads silicon_laws.txt and allows server hosts to set custom AI starting laws.
+	..()
+	for(var/line in file2list("config/silicon_laws.txt"))
+		if(!line)						continue
+		if(findtextEx(line,"#",1,2))	continue
+
+		add_inherent_law(line)
 
 /* General ai_law functions */
 

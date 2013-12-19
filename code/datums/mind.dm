@@ -844,7 +844,7 @@ datum/mind
 
 						A.malf_picker.remove_verbs(A)
 
-						A.laws = new /datum/ai_laws/asimov
+						A.make_laws()
 						del(A.malf_picker)
 						A.show_laws()
 						A.icon_state = "ai"
