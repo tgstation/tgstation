@@ -18,13 +18,13 @@
 	stun = 5
 	weaken = 5
 
+
 /obj/item/projectile/bullet/midbullet2
 	damage = 25
 
 
 /obj/item/projectile/bullet/midbullet3 //Only used with the Stechkin Pistol - RobRichards
 	damage = 30
-
 
 
 /obj/item/projectile/bullet/suffocationbullet//How does this even work?
@@ -51,8 +51,20 @@
 	weaken = 10
 	stutter = 10
 
+
 /obj/item/projectile/bullet/a762
 	damage = 25
+
+
+/obj/item/projectile/bullet/incendiary
+	name = "incendiary bullet"
+	damage = 20
+
+/obj/item/projectile/bullet/incendiary/on_hit(var/atom/target, var/blocked = 0)
+	if(istype(target, /mob/living/carbon))
+		var/mob/living/carbon/M = target
+		M.adjust_fire_stacks(1)
+		M.IgniteMob()
 
 
 /obj/item/projectile/bullet/dart

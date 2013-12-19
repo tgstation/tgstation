@@ -206,5 +206,5 @@
 
 /obj/item/weapon/flamethrower/full/tank/New(var/loc)
 	..()
-	ptank = new /obj/item/weapon/tank/plasma(src)
+	ptank = new /obj/item/weapon/tank/plasma/full(src)
 	update_icon()
