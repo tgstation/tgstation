@@ -142,7 +142,7 @@
 	throwforce = 3
 	w_class = 3.0
 	volume = 600
-	origin_tech = "combat=3;materials=3;engineering=3"
+	origin_tech = "combat=3;materials=3;engineering=3;syndicate=5"
 
 
 //this is a big copypasta clusterfuck, but it's still better than it used to be!
