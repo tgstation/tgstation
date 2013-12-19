@@ -229,8 +229,8 @@
 		H.h_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 
 	H.set_species(R.dna.species)
-	//H.add_language(mrace.language)
-	//H.update_mutantrace()
+	//for(var/datum/language/L in languages)
+	//	H.add_language(L.name)
 	H.suiciding = 0
 	src.attempting = 0
 	return 1

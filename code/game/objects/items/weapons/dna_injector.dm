@@ -55,9 +55,9 @@
 /obj/item/weapon/dnainjector/proc/SetValue(var/val,var/selblock=0)
 	var/real_block=GetRealBlock(selblock)
 	if(buf.types&DNA2_BUF_SE)
-		return buf.dna.SetSEState(real_block,val)
+		return buf.dna.SetSEValue(real_block,val)
 	else
-		return buf.dna.SetUIState(real_block,val)
+		return buf.dna.SetUIValue(real_block,val)
 
 /obj/item/weapon/dnainjector/proc/inject(mob/M as mob, mob/user as mob)
 	if(istype(M,/mob/living))
@@ -98,6 +98,7 @@
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		user << "\red You don't have the dexterity to do this!"
 		return
+
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with [name] by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [name] to inject [M.name] ([M.ckey])</font>")
 	log_attack("[user.name] ([user.ckey]) used the [name] to inject [M.name] ([M.ckey])")
@@ -197,7 +198,6 @@
 	//block = 2
 	New()
 		block = HULKBLOCK
-		..()
 		..()
 
 /obj/item/weapon/dnainjector/antihulk
