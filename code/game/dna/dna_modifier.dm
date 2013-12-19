@@ -465,7 +465,7 @@
 
 	var/list/new_buffers = list()
 	for(var/datum/dna2/record/buf in buffers)
-		new_buffers.Add(buf.GetData())
+		new_buffers.Add(list(buf.GetData()))
 	data["buffers"]=new_buffers
 
 	data["radiationIntensity"] = radiation_intensity
