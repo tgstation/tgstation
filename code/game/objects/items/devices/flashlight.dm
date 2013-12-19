@@ -235,9 +235,7 @@
 											"<span class='userdanger'>[user] blinks \the [src] at \the [A].")
 		if(ismob(A))
 			var/mob/M = A
-			M.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> attacked <b>[M]/[M.ckey]</b> with an <b>EMP-light</b>"
-			user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> attacked <b>[M]/[M.ckey]</b> with an <b>EMP-light</b>"
-			log_attack("<font color='red'>[user] ([user.ckey]) attacked [M] ([M.ckey]) with an EMP-light</font>")
+			add_logs(user, M, "attacked", object="EMP-light")
 		emp_charges -= 1
 	else
 		user << "<span class='warning'>The [src] is out of charges!</span>"

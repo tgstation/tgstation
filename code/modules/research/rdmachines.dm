@@ -17,7 +17,6 @@
 	var/hack_wire
 	var/disable_wire
 	var/shock_wire
-	var/opened = 0
 	var/obj/machinery/computer/rdconsole/linked_console
 
 /obj/machinery/r_n_d/New()
@@ -53,7 +52,7 @@
 /obj/machinery/r_n_d/attack_hand(mob/user as mob)
 	if (shocked)
 		shock(user,50)
-	if(opened)
+	if(panel_open)
 		var/dat as text
 		dat += "[src.name] Wires:<BR>"
 		for(var/wire in src.wires)

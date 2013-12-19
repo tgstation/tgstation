@@ -2,7 +2,7 @@
 /mob/proc/make_changeling()
 	if(!mind)				return
 	if(!mind.changeling)	mind.changeling = new /datum/changeling(gender)
-	if(!iscarbon(src))		return
+	if(!ishuman(src) && !ismonkey(src))		return
 
 	verbs += /datum/changeling/proc/EvolutionMenu
 
@@ -29,7 +29,8 @@
 //removes our changeling verbs
 /mob/proc/remove_changeling_powers()
 	var/mob/living/carbon/C = src
-	C.unset_sting()
+	if(ishuman(C) || ismonkey(C))
+		C.unset_sting()
 	for(var/datum/power/changeling/P in powerinstances)
 		if(P.isVerb)
 			verbs -= P.verbpath
@@ -532,11 +533,6 @@ var/list/datum/dna/hivemind_bank = list()
 	//STINGS//	//They get a pretty header because there's just so fucking many of them ;_;
 	//////////
 
-/mob/living/carbon/proc/add_sting_logs(mob/T, sting_name, datum/dna/DNA)
-	src.attack_log += "\[[time_stamp()]\]<font color='red'> Stung [T.name] ([T.ckey]) with [sting_name] sting[!DNA ? "." : ", giving him [DNA.real_name] appearance."]</font>"
-	T.attack_log += "\[[time_stamp()]\]<font color='orange'> Was stung by [src.name] ([src.ckey]) with [sting_name] sting[!DNA ? "." : ", and took [DNA.real_name] appearance."]</font>"
-	log_attack("<font color='red'>[src.name] ([src.ckey]) stung [T.name] ([T.ckey]) with [sting_name] sting[!DNA ? "." : ", giving him [DNA.real_name] appearance."]</font>" )
-
 /mob/living/carbon/proc/set_sting(A, icon, dna=null) //setting the sting and ui icon for it
 	src << "<span class='notice'>We prepare our sting, use alt+click on target to sting them.</span>"
 	src.mind.changeling.chosen_sting = A
@@ -585,7 +581,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set_sting(/mob/living/carbon/proc/sting_effect_trasnform, "sting_transform", D)
 
 /mob/living/carbon/proc/sting_effect_trasnform(mob/living/carbon/T)
-	add_sting_logs(T, "transformation", src.mind.changeling.chosen_dna)
+	add_logs(src, T, "stung", "transformation sting", "new identity is [src.mind.changeling.chosen_dna.real_name]")
 	if(!sting_can_reach(T, 40))
 		return 0
 	if((HUSK in T.mutations) || !check_dna_integrity(T))
@@ -607,7 +603,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set_sting(/mob/living/carbon/proc/sting_effect_extract, "sting_extract")
 
 /mob/living/carbon/proc/sting_effect_extract(mob/living/carbon/T)
-	add_sting_logs(T, "extracting")
+	add_logs(src, T, "stung", "extraction sting")
 	if(!sting_can_reach(T, 25))
 		return 0
 	if(src.mind.changeling.can_absorb_dna(T, usr))
@@ -626,7 +622,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set_sting(/mob/living/carbon/proc/sting_effect_mute, "sting_mute")
 
 /mob/living/carbon/proc/sting_effect_mute(mob/living/carbon/T)
-	add_sting_logs(T, "mute")
+	add_logs(src, T, "stung", "mute sting")
 	if(!sting_can_reach(T, 20))
 		return 0
 	T.silent += 30
@@ -641,7 +637,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set_sting(/mob/living/carbon/proc/sting_effect_blind, "sting_blind")
 
 /mob/living/carbon/proc/sting_effect_blind(mob/living/carbon/T)
-	add_sting_logs(T, "blind")
+	add_logs(src, T, "stung", "blind sting")
 	if(!sting_can_reach(T, 25))
 		return 0
 	T << "<span class='danger'>Your eyes burn horrifically!</span>"
@@ -659,7 +655,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set_sting(/mob/living/carbon/proc/sting_effect_lsd, "sting_lsd")
 
 /mob/living/carbon/proc/sting_effect_lsd(mob/living/carbon/T)
-	add_sting_logs(T, "LSD")
+	add_logs(src, T, "stung", "LSD sting")
 	if(!sting_can_reach(T, 5))
 		return 0
 	spawn(rand(300,600))
@@ -675,7 +671,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set_sting(/mob/living/carbon/proc/sting_effect_cryo, "sting_cryo")
 
 /mob/living/carbon/proc/sting_effect_cryo(mob/living/carbon/T)
-	add_sting_logs(T, "cryo")
+	add_logs(src, T, "stung", "cryo sting")
 	if(!sting_can_reach(T, 15))
 		return 0
 	if(T.reagents)

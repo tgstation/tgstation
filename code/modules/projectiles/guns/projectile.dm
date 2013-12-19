@@ -11,7 +11,6 @@
 	var/obj/item/ammo_box/magazine/magazine
 	var/obj/item/ammo_casing/chambered = null // The round (not bullet) that is in the chamber.
 
-
 /obj/item/weapon/gun/projectile/New()
 	..()
 	magazine = new mag_type(src)
@@ -19,17 +18,22 @@
 	update_icon()
 	return
 
-/obj/item/weapon/gun/projectile/process_chambered()
+/obj/item/weapon/gun/projectile/process_chambered(var/eject_casing = 1, var/empty_chamber = 1)
 //	if(in_chamber)
 //		return 1
-
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
 	if(isnull(AC) || !istype(AC))
 		return 0
-	AC.loc = get_turf(src) //Eject casing onto ground.
-	chambered = null
+	if(eject_casing)
+		AC.loc = get_turf(src) //Eject casing onto ground.
+	if(empty_chamber)
+		chambered = null
 	chamber_round()
 	if(AC.BB)
+		if(AC.reagents && AC.BB.reagents)
+			var/datum/reagents/casting_reagents = AC.reagents
+			casting_reagents.trans_to(AC.BB, casting_reagents.total_volume) //For chemical darts/bullets
+			casting_reagents.delete()
 		in_chamber = AC.BB //Load projectile into chamber.
 		AC.BB.loc = src //Set projectile loc to gun.
 		AC.BB = null
