@@ -20,13 +20,7 @@
 
 /obj/item/weapon/dnainjector/New()
 	if(datatype && block)
-		buf=new
-		buf.dna=new
-		buf.types = datatype
-		buf.dna.ResetSE()
-		//testing("[name]: DNA2 SE blocks prior to SetValue: [english_list(buf.dna.SE)]")
-		SetValue(src.value)
-		//testing("[name]: DNA2 SE blocks after SetValue: [english_list(buf.dna.SE)]")
+		SetValue(value)
 
 /obj/item/weapon/dnainjector/attack_paw(mob/user as mob)
 	return attack_hand(user)
@@ -72,7 +66,7 @@
 	if (!(NOCLONE in M.mutations)) // prevents drained people from having their DNA changed
 		if (buf.types & DNA2_BUF_UI)
 			if (!block) //isolated block?
-				M.UpdateAppearance(buf.dna)
+				M.UpdateAppearance(buf.dna.UI)
 				if (buf.types & DNA2_BUF_UE) //unique enzymes? yes
 					M.real_name = buf.dna.real_name
 					M.name = buf.dna.real_name
@@ -160,7 +154,7 @@
 
 				if (buf.types & DNA2_BUF_SE)
 					if(block)// Isolated injector
-						testing("Isolated block [block] injector with contents: [GetValue()]")
+						testing("Isolated block [block] injector with contents: [english_list(GetValue())]")
 						if (GetState() && block == MONKEYBLOCK && istype(M, /mob/living/carbon/human)  )
 							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] \red(MONKEY)")
 							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name] (MONKEY)")

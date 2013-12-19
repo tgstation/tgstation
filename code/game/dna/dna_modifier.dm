@@ -871,7 +871,12 @@
 				var/datum/dna2/record/buf = src.buffers[bufferId]
 				if(href_list["createBlockInjector"])
 					waiting_for_user_input=1
-					var/blk = input(usr,"Select Block","Block") in all_dna_blocks(buf.GetData())
+					var/list/selectedbuf
+					if(buf.types & DNA2_BUF_SE)
+						selectedbuf=buf.dna.SE
+					else
+						selectedbuf=buf.dna.UI
+					var/blk = input(usr,"Select Block","Block") in all_dna_blocks(selectedbuf)
 					success = setInjectorBlock(I,blk,buf)
 				else
 					I.buf = buf
