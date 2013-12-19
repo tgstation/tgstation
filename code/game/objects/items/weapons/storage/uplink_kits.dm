@@ -1,7 +1,7 @@
 /obj/item/weapon/storage/box/syndicate/
 	New()
 		..()
-		switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "freedom" = 1, "hacker" = 1, "lordsingulo" = 1, "smoothoperator" = 1, "darklord" = 1)))
+		switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "freedom" = 1, "hacker" = 1, "lordsingulo" = 1, "smoothoperator" = 1, "darklord" = 1, "xeno" = 1)))
 			if("bloodyspai")
 				new /obj/item/clothing/under/chameleon(src)
 				new /obj/item/clothing/mask/gas/voice(src)
@@ -76,6 +76,16 @@
 				new /obj/item/clothing/suit/chaplain_hoodie(src)
 				new /obj/item/weapon/card/id/syndicate(src)
 				return
+
+			if("xeno")
+				new /obj/item/clothing/suit/xenos(src)
+				new /obj/item/clothing/head/xenos(src)
+				new /obj/item/weapon/contraband/poster(src, 4)
+				new /obj/item/clothing/mask/gas/voice(src)
+				new /obj/item/weapon/card/id/syndicate(src)
+				new /obj/item/weapon/implanter/embryo(src)
+				new /obj/item/weapon/implantcase/embryo(src)
+
 
 /obj/item/weapon/storage/box/syndie_kit
 	name = "Box"
