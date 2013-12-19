@@ -1,7 +1,7 @@
 /mob/living/silicon/robot/gib()
 	//robots don't die when gibbed. instead they drop their MMI'd brain
 	var/atom/movable/overlay/animation = null
-	monkeyizing = 1
+	notransform = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
@@ -23,7 +23,7 @@
 /mob/living/silicon/robot/dust()
 	death(1)
 	var/atom/movable/overlay/animation = null
-	monkeyizing = 1
+	notransform = 1
 	canmove = 0
 	icon = null
 	invisibility = 101

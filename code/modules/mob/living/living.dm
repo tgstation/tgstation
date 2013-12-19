@@ -245,6 +245,13 @@
 	src.updatehealth()
 
 /mob/living/proc/revive()
+	if(stat == 2)
+		dead_mob_list -= src
+		living_mob_list += src
+	if(isanimal(src))
+		var/mob/living/simple_animal/A = src
+		A.health = A.maxHealth
+		return
 	setToxLoss(0)
 	setOxyLoss(0)
 	setCloneLoss(0)
@@ -274,9 +281,6 @@
 				C.reagents.clear_reagents()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
-	if(stat == 2)
-		dead_mob_list -= src
-		living_mob_list += src
 	stat = CONSCIOUS
 	update_fire()
 	regenerate_icons()

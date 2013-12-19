@@ -38,26 +38,8 @@
 
 	if(istype(target,/mob))
 		var/old_stat = target.stat
-		if(isanimal(target) && target.stat == DEAD)
-			var/mob/living/simple_animal/O = target
-			var/mob/living/simple_animal/A = new O.type(O.loc)
-			A.real_name = O.real_name
-			A.name = O.name
-			if(iscorgi(O))
-				var/mob/living/simple_animal/corgi/C = O
-				if(C.inventory_head)
-					C.inventory_head.loc = C.loc
-				if(C.inventory_back)
-					C.inventory_back.loc = C.loc
-			if(O.mind)
-				O.mind.transfer_to(A)
-			else
-				A.key = O.key
-			del(O)
-			target = A
-		else
-			target.revive()
-			target.suiciding = 0
+		target.revive()
+		target.suiciding = 0
 		if(!target.ckey)
 			for(var/mob/dead/observer/ghost in player_list)
 				if(target.real_name == ghost.real_name)
@@ -124,8 +106,8 @@
 proc/wabbajack(mob/living/M)
 	if(istype(M))
 		if(istype(M, /mob/living) && M.stat != DEAD)
-			if(M.monkeyizing)	return
-			M.monkeyizing = 1
+			if(M.notransform)	return
+			M.notransform = 1
 			M.canmove = 0
 			M.icon = null
 			M.overlays.Cut()

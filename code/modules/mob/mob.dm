@@ -688,7 +688,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(world.time < client.move_delay)	return 0
 	if(stat==2)							return 0
 	if(anchored)						return 0
-	if(monkeyizing)						return 0
+	if(notransform)						return 0
 	if(restrained())					return 0
 	return 1
 
