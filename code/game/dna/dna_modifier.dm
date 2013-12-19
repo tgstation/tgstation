@@ -19,17 +19,18 @@
 
 /datum/dna2/record/proc/GetData()
 	var/list/ser=list("data" = null, "owner" = null, "label" = null, "type" = null, "ue" = 0)
-	ser["ue"] = (types & DNA2_BUF_UE) == DNA2_BUF_UE
-	if(types & DNA2_BUF_SE)
-		ser["data"] = dna.SE
-	else
-		ser["data"] = dna.UI
-	ser["owner"] = src.dna.real_name
-	ser["label"] = name
-	if(types & DNA2_BUF_UI)
-		ser["type"] = "ui"
-	else
-		ser["type"] = "se"
+	if(dna)
+		ser["ue"] = (types & DNA2_BUF_UE) == DNA2_BUF_UE
+		if(types & DNA2_BUF_SE)
+			ser["data"] = dna.SE
+		else
+			ser["data"] = dna.UI
+		ser["owner"] = src.dna.real_name
+		ser["label"] = name
+		if(types & DNA2_BUF_UI)
+			ser["type"] = "ui"
+		else
+			ser["type"] = "se"
 	return ser
 
 /////////////////////////// DNA MACHINES
@@ -375,6 +376,8 @@
 
 /obj/machinery/computer/scan_consolenew/New()
 	..()
+	for(var/i=0;i<3;i++)
+		buffers[i+1]=new /datum/dna2/record
 	spawn(5)
 		for(dir in list(NORTH,EAST,SOUTH,WEST))
 			connected = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
@@ -464,8 +467,8 @@
 	data["disk"] = diskData
 
 	var/list/new_buffers = list()
-	for(var/datum/dna2/record/buf in buffers)
-		new_buffers.Add(list(buf.GetData()))
+	for(var/datum/dna2/record/buf in src.buffers)
+		new_buffers += list(buf.GetData())
 	data["buffers"]=new_buffers
 
 	data["radiationIntensity"] = radiation_intensity
