@@ -150,6 +150,7 @@
 		var/list/deployed_shields = list()
 		var/is_open = 0 //Whether or not the wires are exposed
 		var/locked = 0
+		var/shield_range = 4
 
 /obj/machinery/shieldgen/Del()
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
@@ -163,7 +164,7 @@
 	src.active = 1
 	update_icon()
 
-	for(var/turf/target_tile in range(2, src))
+	for(var/turf/target_tile in range(shield_range, src))
 		if (istype(target_tile,/turf/space) && !(locate(/obj/machinery/shield) in target_tile))
 			if (malfunction && prob(33) || !malfunction)
 				deployed_shields += new /obj/machinery/shield(target_tile)
@@ -176,6 +177,7 @@
 
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
 		del(shield_tile)
+	deployed_shields.Cut()
 
 /obj/machinery/shieldgen/process()
 	if(malfunction && active)
