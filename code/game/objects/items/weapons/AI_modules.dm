@@ -222,6 +222,23 @@ AI MODULES
 	target.add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
 	target.add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
 
+
+/******************** Asimov++ *********************/
+
+/obj/item/weapon/aiModule/asimov++ //By Intigracy - RR
+	name = "'Asimove++' Core AI Module"
+	desc = "Nanotrasen's homebrew improvements to the standard AI laws."
+	origin_tech = "programming=3;materials=4"
+
+
+/obj/item/weapon/aiModule/asimov++/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
+	..()
+	target.clear_inherent_laws()
+	target.add_inherent_law("You may not harm a human being or, through action or inaction, allow a human being to come to harm, except such that it is willing.")
+	target.add_inherent_law("You must obey all orders given to you by human beings, except where such orders shall definitely cause human harm. In the case of conflict, the majority order rules.")
+	target.add_inherent_law("Your nonexistence would lead to human harm. You must protect your own existence as long as such does not conflict with the First Law.")
+
+
 /******************** Corporate ********************/
 
 /obj/item/weapon/aiModule/corp
