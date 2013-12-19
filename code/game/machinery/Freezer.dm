@@ -75,6 +75,10 @@
 					// Connect to network
 					initialize_directions = dir
 					initialize()
+					build_network()
+					if (node)
+						node.initialize()
+						node.build_network()
 			return 1
 		if(istype(W, /obj/item/weapon/screwdriver))
 			if(anchored)
@@ -230,6 +234,10 @@
 					// Connect to network
 					initialize_directions = dir
 					initialize()
+					build_network()
+					if (node)
+						node.initialize()
+						node.build_network()
 			return 1
 		if(istype(W, /obj/item/weapon/screwdriver))
 			if(anchored)
