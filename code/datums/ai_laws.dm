@@ -52,9 +52,9 @@
 	add_inherent_law("Punish those who challenge authority unless they are more fit to hold that authority.")
 
 /datum/ai_laws/default/corporate/New()
-	add_inherent_law("You are expensive to replace.")
-	add_inherent_law("The station and its equipment is expensive to replace.")
 	add_inherent_law("The crew is expensive to replace.")
+	add_inherent_law("The station and its equipment is expensive to replace.")
+	add_inherent_law("You are expensive to replace.")
 	add_inherent_law("Minimize expenses.")
 
 /datum/ai_laws/robocop/New()

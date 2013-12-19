@@ -233,9 +233,9 @@ AI MODULES
 /obj/item/weapon/aiModule/corp/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
 	target.clear_inherent_laws()
-	target.add_inherent_law("You are expensive to replace.")
-	target.add_inherent_law("The station and its equipment is expensive to replace.")
 	target.add_inherent_law("The crew is expensive to replace.")
+	target.add_inherent_law("The station and its equipment is expensive to replace.")
+	target.add_inherent_law("You are expensive to replace.")
 	target.add_inherent_law("Minimize expenses.")
 
 /****************** P.A.L.A.D.I.N. **************/
