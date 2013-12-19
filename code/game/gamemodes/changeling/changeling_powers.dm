@@ -557,7 +557,7 @@ var/list/datum/dna/hivemind_bank = list()
 	src << "<span class='notice'>We stealthly sting [C.name].</span>"
 	if(C.mind && C.mind.changeling)
 		C << "<span class='warning'>You feel a tiny prick.</span>"
-		add_logs(src, C, "unsuccessfully stinged")
+		add_logs(src, C, "unsuccessfully stung")
 		return 0
 	else
 		return 1
