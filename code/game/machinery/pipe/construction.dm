@@ -25,6 +25,7 @@ Buildable meters
 #define PIPE_MANIFOLD4W			20
 #define PIPE_CAP				21
 #define PIPE_THERMAL_PLATE		22
+#define PIPE_INJECTOR    		23
 
 /obj/item/pipe_spawner
 	name = "Pipe Spawner"
@@ -116,6 +117,8 @@ Buildable meters
 			src.pipe_type = PIPE_CAP
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/thermal_plate))
 			src.pipe_type = PIPE_THERMAL_PLATE
+		else if(istype(make_from, /obj/machinery/atmospherics/unary/outlet_injector))
+			src.pipe_type = PIPE_INJECTOR
 	else
 		src.pipe_type = pipe_type
 		src.dir = dir
@@ -151,6 +154,7 @@ Buildable meters
 		"4-way manifold", \
 		"pipe cap", \
 		"thermal plate", \
+		"injector", \
 	)
 	name = nlist[pipe_type+1] + " fitting"
 	var/list/islist = list( \
@@ -177,6 +181,7 @@ Buildable meters
 		"manifold4w", \
 		"cap", \
 		"thermalplate", \
+		"injector", \
 	)
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = islist[pipe_type + 1]
@@ -241,7 +246,7 @@ Buildable meters
 			return dir|flip
 		if(PIPE_SIMPLE_BENT, PIPE_INSULATED_BENT, PIPE_HE_BENT)
 			return dir //dir|acw
-		if(PIPE_CONNECTOR,PIPE_UVENT,PIPE_SCRUBBER,PIPE_HEAT_EXCHANGE,PIPE_THERMAL_PLATE)
+		if(PIPE_CONNECTOR,PIPE_UVENT,PIPE_SCRUBBER,PIPE_HEAT_EXCHANGE,PIPE_THERMAL_PLATE,PIPE_INJECTOR)
 			return dir
 		if(PIPE_MANIFOLD4W)
 			return dir|flip|cw|acw
@@ -654,6 +659,20 @@ Buildable meters
 
 		if(PIPE_THERMAL_PLATE)		//unary vent
 			var/obj/machinery/atmospherics/unary/thermal_plate/P = new( src.loc )
+			P.dir = dir
+			P.initialize_directions = pipe_dir
+			if (pipename)
+				P.name = pipename
+			var/turf/T = P.loc
+			P.level = T.intact ? 2 : 1
+			P.initialize()
+			P.build_network()
+			if (P.node)
+				P.node.initialize()
+				P.node.build_network()
+
+		if(PIPE_INJECTOR)		//unary vent
+			var/obj/machinery/atmospherics/unary/outlet_injector/P = new( src.loc )
 			P.dir = dir
 			P.initialize_directions = pipe_dir
 			if (pipename)

@@ -38,48 +38,60 @@ RCD
 
 /obj/item/weapon/pipe_dispenser/proc/show_menu(mob/user as mob)
 	if(!user || !src)	return 0
-	var/dat = {"
-<h2>Type</h2>
-<b>Utilities:</b><br />
-<A href='?src=\ref[src];eatpipes=1;type=-1'>Eat Pipes</A><BR>
-<b>Regular pipes:</b><BR>
-<A href='?src=\ref[src];makepipe=0;dir=1;type=0'>Pipe</A><BR>
-<A href='?src=\ref[src];makepipe=1;dir=5;type=1'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];makepipe=5;dir=1;type=2'>Manifold</A><BR>
-<A href='?src=\ref[src];makepipe=8;dir=1;type=0'>Manual Valve</A><BR>
-<A href='?src=\ref[src];makepipe=18;dir=1;type=0'>Digital Valve</A><BR>
-<A href='?src=\ref[src];makepipe=21;dir=1;type=3'>Pipe Cap</A><BR>
-<A href='?src=\ref[src];makepipe=20;dir=-1'>4-Way Manifold</A><BR>
-<A href='?src=\ref[src];makepipe=19;dir=2'>Manual T-Valve</A><BR>
-<b>Devices:</b><BR>
-<A href='?src=\ref[src];makepipe=4;dir=1;type=3'>Connector</A><BR>
-<A href='?src=\ref[src];makepipe=7;dir=1;type=3'>Unary Vent</A><BR>
-<A href='?src=\ref[src];makepipe=9;dir=1;type=3'>Gas Pump</A><BR>
-<A href='?src=\ref[src];makepipe=15;dir=1;type=3'>Passive Gate</A><BR>
-<A href='?src=\ref[src];makepipe=16;dir=1;type=3'>Volume Pump</A><BR>
-<A href='?src=\ref[src];makepipe=10;dir=1;type=3'>Scrubber</A><BR>
-<A href='?src=\ref[src];makemeter=1;type=3'>Meter</A><BR>
-<A href='?src=\ref[src];makepipe=13;dir=1;type=2'>Gas Filter</A><BR>
-<A href='?src=\ref[src];makepipe=14;dir=1;type=2'>Gas Mixer</A><BR>
-<A href='?src=\ref[src];makepipe=[PIPE_THERMAL_PLATE];dir=1;type=3'>Thermal Plate</A><BR>
-<b>Heat exchange:</b><BR>
-<A href='?src=\ref[src];makepipe=2;dir=1;type=0'>Pipe</A><BR>
-<A href='?src=\ref[src];makepipe=3;dir=5;type=1'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];makepipe=6;dir=1;type=0'>Junction</A><BR>
-<A href='?src=\ref[src];makepipe=17;dir=1;type=3'>Heat Exchanger</A><BR>
-<b>Insulated pipes:</b><BR>
-<A href='?src=\ref[src];makepipe=11;dir=1;type=0'>Pipe</A><BR>
-<A href='?src=\ref[src];makepipe=12;dir=5;type=1'>Bent Pipe</A><BR>
-
-<b>Disposal Pipes</b><br><br>
-<A href='?src=\ref[src];dmake=0;type=0'>Pipe</A><BR>
-<A href='?src=\ref[src];dmake=1;type=1'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];dmake=2;type=2'>Junction</A><BR>
-<A href='?src=\ref[src];dmake=3;type=2'>Y-Junction</A><BR>
-<A href='?src=\ref[src];dmake=4;type=2'>Trunk</A><BR>
-<A href='?src=\ref[src];dmake=5;type=3'>Bin</A><BR>
-<A href='?src=\ref[src];dmake=6;type=3'>Outlet</A><BR>
-<A href='?src=\ref[src];dmake=7;type=3'>Chute</A><BR>
+	var/dat = {"<h2>Type</h2>
+<b>Utilities:</b>
+<ul>
+	<li><a href='?src=\ref[src];eatpipes=1;type=-1'>Eat Pipes</a></li>
+	<li><a href='?src=\ref[src];paintpipes=1;type=-1'>Paint Pipes</a></li>
+</ul>
+<b>Regular pipes:</b>
+<ul>
+	<li><a href='?src=\ref[src];makepipe=0;dir=1;type=0'>Pipe</a></li>
+	<li><a href='?src=\ref[src];makepipe=1;dir=5;type=1'>Bent Pipe</a></li>
+	<li><a href='?src=\ref[src];makepipe=5;dir=1;type=2'>Manifold</a></li>
+	<li><a href='?src=\ref[src];makepipe=8;dir=1;type=0'>Manual Valve</a></li>
+	<li><a href='?src=\ref[src];makepipe=18;dir=1;type=0'>Digital Valve</a></li>
+	<li><a href='?src=\ref[src];makepipe=21;dir=1;type=3'>Pipe Cap</a></li>
+	<li><a href='?src=\ref[src];makepipe=20;dir=-1'>4-Way Manifold</a></li>
+	<li><a href='?src=\ref[src];makepipe=19;dir=2'>Manual T-Valve</a></li>
+</ul>
+<b>Devices:</b>
+<ul>
+	<li><a href='?src=\ref[src];makepipe=4;dir=1;type=3'>Connector</a></li>
+	<li><a href='?src=\ref[src];makepipe=7;dir=1;type=3'>Unary Vent</a></li>
+	<li><a href='?src=\ref[src];makepipe=9;dir=1;type=3'>Gas Pump</a></li>
+	<li><a href='?src=\ref[src];makepipe=15;dir=1;type=3'>Passive Gate</a></li>
+	<li><a href='?src=\ref[src];makepipe=16;dir=1;type=3'>Volume Pump</a></li>
+	<li><a href='?src=\ref[src];makepipe=10;dir=1;type=3'>Scrubber</a></li>
+	<li><a href='?src=\ref[src];makemeter=1;type=3'>Meter</a></li>
+	<li><a href='?src=\ref[src];makepipe=13;dir=1;type=2'>Gas Filter</a></li>
+	<li><a href='?src=\ref[src];makepipe=14;dir=1;type=2'>Gas Mixer</a></li>
+	<li><a href='?src=\ref[src];makepipe=[PIPE_THERMAL_PLATE];dir=1;type=3'>Thermal Plate</a></li>
+	<li><a href='?src=\ref[src];makepipe=[PIPE_INJECTOR];dir=1;type=3'>Injector</a></li>
+</ul>
+<b>Heat exchange:</b>
+<ul>
+	<li><a href='?src=\ref[src];makepipe=2;dir=1;type=0'>Pipe</a></li>
+	<li><a href='?src=\ref[src];makepipe=3;dir=5;type=1'>Bent Pipe</a></li>
+	<li><a href='?src=\ref[src];makepipe=6;dir=1;type=0'>Junction</a></li>
+	<li><a href='?src=\ref[src];makepipe=17;dir=1;type=3'>Heat Exchanger</a></li>
+</ul>
+<b>Insulated pipes:</b>
+<ul>
+	<li><a href='?src=\ref[src];makepipe=11;dir=1;type=0'>Pipe</a></li>
+	<li><a href='?src=\ref[src];makepipe=12;dir=5;type=1'>Bent Pipe</a></li>
+</ul>
+<b>Disposal Pipes</b>
+<ul>
+	<li><a href='?src=\ref[src];dmake=0;type=0'>Pipe</a></li>
+	<li><a href='?src=\ref[src];dmake=1;type=1'>Bent Pipe</a></li>
+	<li><a href='?src=\ref[src];dmake=2;type=2'>Junction</a></li>
+	<li><a href='?src=\ref[src];dmake=3;type=2'>Y-Junction</a></li>
+	<li><a href='?src=\ref[src];dmake=4;type=2'>Trunk</a></li>
+	<li><a href='?src=\ref[src];dmake=5;type=3'>Bin</a></li>
+	<li><a href='?src=\ref[src];dmake=6;type=3'>Outlet</a></li>
+	<li><a href='?src=\ref[src];dmake=7;type=3'>Chute</a></li>
+</ul>
 "}
 
 	var/dirsel="<h2>Direction</h2>"
