@@ -26,12 +26,12 @@ class NudgePlugin(IPlugin):
         
         thread.start_new_thread(self.nudge_listener, ())
         
-    def OnShaddap(self, event):
+    def OnShaddap(self, event, args):
         self.dropNudges = True
         self.bot.notice(event.source.nick, 'Now dropping nudges.')
         return True
         
-    def OnSpeak(self, event):
+    def OnSpeak(self, event, args):
         self.dropNudges = False
         self.bot.notice(event.source.nick, 'No longer dropping nudges.')
         return True
@@ -57,7 +57,7 @@ class NudgePlugin(IPlugin):
             if truedata.get('key', '') != nudgeconfig['key']:
                 logging.info('Dropped nudge (BAD KEY): {0}'.format(repr(truedata)))
                 continue
-            if truedata.get("channel",None) is not None:
+            if truedata.get("channel", None) is not None:
                 to = truedata["channel"]
             msg = 'AUTOMATIC ANNOUNCEMENT: [{0}] {1}'.format(truedata['id'], truedata["data"])
                 

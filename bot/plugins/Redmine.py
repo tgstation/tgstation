@@ -4,7 +4,7 @@ Adapted from the Supybot plugin.
 from vgstation.common.plugin import IPlugin, Plugin
 import vgstation.common.config as globalConfig
 import logging, random, re, time
-#import restkit
+# import restkit
 from restkit import BasicAuth, Resource, RequestError
 from restkit.errors import RequestFailed, ResourceNotFound
 import simplejson as json
@@ -59,7 +59,7 @@ class RedminePlugin(IPlugin):
             self.lastCheck = now
             bugs = self.getAllBugs(project_id=self.project_id, sort='created_on:desc')
             if bugs is None: return
-            #print(repr(bugs))
+            # print(repr(bugs))
             lbc = ''
             for bug in bugs['issues']:
                 if bug['created_on'] != self.data['last-bug-created']:
@@ -103,7 +103,7 @@ class RedminePlugin(IPlugin):
                     strings.append(msg)
                 
             except ResourceNotFound:
-                #strings.append("Unable to find redmine issue {0}.".format(id))
+                # strings.append("Unable to find redmine issue {0}.".format(id))
                 continue
 
         return strings

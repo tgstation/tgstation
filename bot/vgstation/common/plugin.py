@@ -47,7 +47,7 @@ class IPlugin(object):
         self.datadir = os.path.join('data')
         if not os.path.isdir(self.datadir):
             os.makedirs(self.datadir)
-        self.datafile = os.path.join(self.datadir, 'redmine.yml')
+        self.datafile = os.path.join(self.datadir, self.__class__.__name__+'.yml')
         if os.path.isfile(self.datafile):
             with open(self.datafile, 'r') as stream:
                 self.data = yaml.load(stream)
@@ -67,4 +67,7 @@ class IPlugin(object):
         return False  # Not handled
         
     def OnPing(self):
+        return False  # Not handled
+        
+    def OnJoin(self,channel,nick):
         return False  # Not handled
