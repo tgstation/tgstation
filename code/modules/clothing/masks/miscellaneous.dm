@@ -71,7 +71,7 @@
 
 /obj/item/clothing/mask/horsehead/dropped() //this really shouldn't happen, but call it extreme caution
 	if(!canremove)
-		goodbye_horses(usr)
+		goodbye_horses(loc)
 	..()
 
 /obj/item/clothing/mask/horsehead/Del()
