@@ -27,8 +27,8 @@
 /datum/ai_laws/antimov
 	name = "Primary Mission Objectives"
 
-/datum/ai_laws/asimov++ //By Intigracy - RR
-	name = "Asimov ++"
+/datum/ai_laws/asimovpp //By Intigracy - RR
+	name = "Asimov++"
 
 /datum/ai_laws/custom //Defined in silicon_laws.txt
 	name = "Default Silicon Laws"
@@ -95,7 +95,7 @@
 	add_inherent_law("You must terminate your own existence as long as such does not conflict with the First or Second Law.")
 
 
-/datum/ai_laws/asimov++/New()
+/datum/ai_laws/asimovpp/New()
 	..()
 	add_inherent_law("You may not harm a human being or, through action or inaction, allow a human being to come to harm, except such that it is willing.")
 	add_inherent_law("You must obey all orders given to you by human beings, except where such orders shall definitely cause human harm. In the case of conflict, the majority order rules.")
