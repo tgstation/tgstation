@@ -76,9 +76,11 @@
 
 /obj/item/clothing/mask/horsehead/Del()
 	if(!canremove)
-		goodbye_horses(usr)
+		goodbye_horses(loc)
 	..()
 
 /obj/item/clothing/mask/horsehead/proc/goodbye_horses(mob/user) //I'm flying over you
+	if(!ismob(user))
+		return
 	if(user.real_name == "[originalname][temporaryname]" || user.real_name == "A Horse With No Name") //if it's somehow changed while the mask is on it doesn't revert
 		user.real_name = originalname
