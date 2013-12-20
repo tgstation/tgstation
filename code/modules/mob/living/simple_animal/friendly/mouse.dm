@@ -36,7 +36,7 @@
 
 /mob/living/simple_animal/mouse/Die()
 	..()
-	if(!player_controlled)
+	if(!ckey)
 		var/obj/item/trash/deadmouse/M = new(src.loc)
 		M.icon_state = src.icon_dead
 		del (src)

@@ -203,7 +203,7 @@ proc/wabbajack(mob/living/M)
 
 			del(M)
 			if(!new_mob.canmove) //edge case of someone getting hit with two bolts at the same time
-				new_mob.canmove = 1
+				new_mob.update_canmove()
 			return new_mob
 
 /obj/item/projectile/magic/animate

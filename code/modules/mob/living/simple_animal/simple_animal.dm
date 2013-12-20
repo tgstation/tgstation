@@ -57,11 +57,11 @@
 
 	var/speed = 0 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
 
-	var/player_controlled = 0 //Set to true if the simple animal ever had someone behind the steering wheel, even if they aren't currently
-
 /mob/living/simple_animal/New()
 	..()
 	verbs -= /mob/verb/observe
+	if(!real_name)
+		real_name = name
 
 /mob/living/simple_animal/Login()
 	if(src && src.client)
@@ -81,6 +81,7 @@
 			living_mob_list += src
 			stat = CONSCIOUS
 			density = 1
+			update_canmove()
 		return 0
 
 
@@ -196,10 +197,6 @@
 	if(!atmos_suitable)
 		adjustBruteLoss(unsuitable_atoms_damage)
 	return 1
-
-	//Player check
-	if(!player_controlled && mind)
-		player_controlled = 1
 
 /mob/living/simple_animal/Bumped(AM as mob|obj)
 	if(!AM) return
@@ -438,7 +435,6 @@
 	stat(null, "Health: [round((health / maxHealth) * 100)]%")
 
 /mob/living/simple_animal/proc/Die()
-	living_mob_list -= src
 	dead_mob_list += src
 	icon_state = icon_dead
 	stat = DEAD
@@ -489,6 +485,4 @@
 
 /mob/living/simple_animal/revive()
 	health = maxHealth
-	if(stat == 2)
-		dead_mob_list -= src
-		living_mob_list += src
+	..()

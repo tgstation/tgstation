@@ -280,7 +280,7 @@
 	if(stat == 2)
 		dead_mob_list -= src
 		living_mob_list += src
-	stat = CONSCIOUS
+	if(!isanimal(src))	stat = CONSCIOUS
 	update_fire()
 	regenerate_icons()
 	..()
