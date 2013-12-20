@@ -301,10 +301,10 @@
 
 
 /obj/structure/window/Move()
-	air_update_turf(1)
+	var/turf/T = loc
 	..()
 	dir = ini_dir
-	air_update_turf(1)
+	move_update_air(T)
 
 /obj/structure/window/CanAtmosPass(turf/T)
 	if(get_dir(loc, T) == dir)
