@@ -277,7 +277,6 @@
 
 			M.put_in_active_hand(G)
 
-			grabbed_by += G
 			G.synch()
 
 			LAssailant = M
@@ -313,7 +312,6 @@
 
 			M.put_in_active_hand(G)
 
-			grabbed_by += G
 			G.synch()
 			LAssailant = M
 
