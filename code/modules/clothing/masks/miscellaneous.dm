@@ -57,3 +57,28 @@
 	flags_inv = HIDEFACE
 	w_class = 2
 	var/voicechange = 0
+	var/temporaryname = " the Horse"
+	var/originalname = ""
+
+/obj/item/clothing/mask/horsehead/equipped(mob/user, slot)
+	if(!canremove)	//cursed masks only
+		originalname = user.real_name
+		if(!user.real_name || user.real_name == "Unknown")
+			user.real_name = "A Horse With No Name" //it felt good to be out of the rain
+		else
+			user.real_name = "[user.name][temporaryname]"
+		..()
+
+/obj/item/clothing/mask/horsehead/dropped() //this really shouldn't happen, but call it extreme caution
+	if(!canremove)
+		goodbye_horses(usr)
+	..()
+
+/obj/item/clothing/mask/horsehead/Del()
+	if(!canremove)
+		goodbye_horses(usr)
+	..()
+
+/obj/item/clothing/mask/horsehead/proc/goodbye_horses(mob/user) //I'm flying over you
+	if(user.real_name == "[originalname][temporaryname]" || user.real_name == "A Horse With No Name") //if it's somehow changed while the mask is on it doesn't revert
+		user.real_name = originalname
