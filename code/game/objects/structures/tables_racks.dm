@@ -377,6 +377,10 @@
 	//if(W && W.loc)	W.loc = src.loc
 	return 1
 
+/obj/structure/table/woodentable/poker //No specialties, Just a mapping object.
+	name = "gambling table"
+	desc = "A seedy table for seedy dealings in seedy places."
+	icon_state = "pokertable"
 
 /*
  * Reinforced tables
