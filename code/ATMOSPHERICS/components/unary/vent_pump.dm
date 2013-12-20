@@ -271,7 +271,68 @@
 			on = 0
 		return
 
-	attackby(obj/item/W, mob/user)
+	examine()
+		set src in oview(1)
+		..()
+		if(welded)
+			usr << "It seems welded shut."
+
+	power_change()
+		if(powered(power_channel))
+			stat &= ~NOPOWER
+		else
+			stat |= NOPOWER
+		update_icon()
+
+	interact(mob/user as mob)
+		var/obj/item/device/multitool/P = get_multitool(user)
+		var/dat = {"<html>
+	<head>
+		<title>[name] Access</title>
+		<style type="text/css">
+html,body {
+	font-family:courier;
+	background:#999999;
+	color:#333333;
+}
+
+a {
+	color:#000000;
+	text-decoration:none;
+	border-bottom:1px solid black;
+}
+		</style>
+	</head>
+	<body>
+		<h3>[name]</h3>
+		<ul>
+			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[1439]">Reset</a>)</li>
+			<li><b>ID Tag:</b> <a href="?src=\ref[src];set_tag=1">[id_tag]</a></li>
+		</ul>
+"}
+		if(P)
+			if(P.buffer)
+				var/id="???"
+				if(istype(P.buffer, /obj/machinery/telecomms))
+					id=P.buffer:id
+				else if(P.buffer.vars.Find("id_tag"))
+					id=P.buffer:id_tag
+				else if(P.buffer.vars.Find("id"))
+					id=P.buffer:id
+				else
+					id="\[???\]"
+				dat += "<p><b>MULTITOOL BUFFER:</b> [P.buffer] ([id])"
+				if(istype(P.buffer, /obj/machinery/embedded_controller/radio))
+					dat += " <a href='?src=\ref[src];link=1'>\[Link\]</a> <a href='?src=\ref[src];flush=1'>\[Flush\]</a>"
+				dat += "</p>"
+			else
+				dat += "<p><b>MULTITOOL BUFFER:</b> <a href='?src=\ref[src];buffer=1'>\[Add Machine\]</a></p>"
+		dat += "</body></html>"
+
+		user << browse(dat, "window=vent_pump")
+		onclose(user, "vent_pump")
+
+	attackby(var/obj/item/W as obj, var/mob/user as mob)
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
 			if (WT.remove_fuel(0,user))
@@ -292,20 +353,9 @@
 			else
 				user << "\blue You need more welding fuel to complete this task."
 				return 1
-	examine()
-		set src in oview(1)
-		..()
-		if(welded)
-			usr << "It seems welded shut."
-
-	power_change()
-		if(powered(power_channel))
-			stat &= ~NOPOWER
-		else
-			stat |= NOPOWER
-		update_icon()
-
-	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+		if(istype(W, /obj/item/device/multitool))
+			interact(user)
+			return 1
 		if (!istype(W, /obj/item/weapon/wrench))
 			return ..()
 		if (!(stat & NOPOWER) && on)
@@ -337,3 +387,45 @@
 		initial_loc.air_vent_names -= id_tag
 	..()
 	return
+
+/obj/machinery/atmospherics/unary/vent_pump/Topic(href, href_list)
+	if(..())
+		return
+
+	if(!issilicon(usr))
+		if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
+			return
+
+	var/obj/item/device/multitool/P = get_multitool(usr)
+
+	if("set_id" in href_list)
+		var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id_tag) as null|text),1,MAX_MESSAGE_LEN)
+		if(newid)
+			id_tag = newid
+	if("set_freq" in href_list)
+		var/newfreq=frequency
+		if(href_list["set_freq"]!="-1")
+			newfreq=text2num(href_list["set_freq"])
+		else
+			newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, network) as null|num
+		if(newfreq)
+			if(findtext(num2text(newfreq), "."))
+				newfreq *= 10 // shift the decimal one place
+			if(newfreq < 10000)
+				frequency = newfreq
+				initialize()
+
+	if(href_list["unlink"])
+		P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
+
+	if(href_list["link"])
+		P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
+
+	if(href_list["buffer"])
+		P.buffer = src
+
+	if(href_list["flush"])
+		P.buffer = null
+
+	usr.set_machine(src)
+	updateUsrDialog()

@@ -14,6 +14,24 @@
 	initialize_directions_he = initialize_directions	// The auto-detection from /pipe is good enough for a simple HE pipe
 	// BubbleWrap END
 
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
+	dir = pipe.dir
+	initialize_directions = 0
+	initialize_directions_he = pipe.get_pipe_dir()
+	//var/turf/T = loc
+	//level = T.intact ? 2 : 1
+	if(!initialize())
+		usr << "Unable to build pipe here;  It must be connected to a machine, or another pipe that has a connection."
+		return 0
+	build_network()
+	if (node1)
+		node1.initialize()
+		node1.build_network()
+	if (node2)
+		node2.initialize()
+		node2.build_network()
+	return 1
+
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/initialize()
 	normalize_dir()
 	var/node1_dir
@@ -85,6 +103,22 @@
 			initialize_directions = EAST
 			initialize_directions_he = WEST
 	// BubbleWrap END
+
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
+	dir = src.dir
+	initialize_directions = pipe.get_pdir()
+	initialize_directions_he = pipe.get_hdir()
+	if (!initialize())
+		usr << "There's nothing to connect this junction to! (with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment)"
+		return 0
+	build_network()
+	if (node1)
+		node1.initialize()
+		node1.build_network()
+	if (node2)
+		node2.initialize()
+		node2.build_network()
+	return 1
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/update_icon()
 	if(node1&&node2)

@@ -489,3 +489,22 @@ proc/is_blind(A)
 		if(C.blinded != null)
 			return 1
 	return 0
+
+/proc/get_multitool(mob/user as mob)
+	var/obj/item/device/multitool/P = null
+
+	// MoMMIs seem to screw up the stuff below, so deal with them early.
+	if(isMoMMI(user) && in_range(user, src))
+		P=user.get_active_hand()
+		if(istype(P))
+			return P
+	// Let's double check
+	if(!issilicon(user) && istype(user.get_active_hand(), /obj/item/device/multitool))
+		P = user.get_active_hand()
+	else if(isAI(user))
+		var/mob/living/silicon/ai/U = user
+		P = U.aiMulti
+	else if(isrobot(user) && in_range(user, src))
+		if(istype(user.get_active_hand(), /obj/item/device/multitool))
+			P = user.get_active_hand()
+	return P
