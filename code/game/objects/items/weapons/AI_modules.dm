@@ -341,11 +341,10 @@ AI MODULES
 	laws[1] = targName
 	desc = "A hacked AI law module:  '[laws[1]]'"
 
-/obj/item/weapon/aiModule/ion/syndicate/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
+/obj/item/weapon/aiModule/syndicate/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 //	..()    //We don't want this module reporting to the AI who dun it. --NEO
 	target << "<span class='warning'>BZZZZT</span>"
 	target.add_ion_law(laws[1])
-	world << laws[1]
 	return laws[1]
 
 
