@@ -172,7 +172,6 @@ AI MODULES
 
 /obj/item/weapon/aiModule/supplied/freeform // Slightly more dynamic freeform module -- TLE
 	name = "'Freeform' AI Module"
-	var/newFreeFormLaw = ""
 	lawpos = 0
 	desc = "A 'freeform' AI module: '<freeform>'"
 	origin_tech = "programming=4;materials=4"
@@ -190,7 +189,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/supplied/freeform/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
-	return newFreeFormLaw
+	return laws[1]
 
 /obj/item/weapon/aiModule/supplied/freeform/install(var/mob/living/silicon/S,var/mob/user)
 	if(laws[1] == "")
@@ -206,6 +205,7 @@ AI MODULES
 	var/targetName = "name"
 	desc = "A 'reset' AI module: Resets back to the original core laws."
 	origin_tech = "programming=3;materials=4"
+	laws = list("This is a bug.")
 
 /obj/item/weapon/aiModule/reset/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
@@ -227,8 +227,8 @@ AI MODULES
 /******************* Full Core Boards *******************/
 
 /obj/item/weapon/aiModule/core/full/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender) //These boards replace inherent laws.
-	..()
 	target.clear_inherent_laws()
+	..()
 
 /******************** Asimov ********************/
 
@@ -293,17 +293,11 @@ AI MODULES
 
 /******************** Antimov ********************/
 
-/obj/item/weapon/aiModule/antimov // -- TLE
+/obj/item/weapon/aiModule/core/full/antimov // -- TLE
 	name = "'Antimov' Core AI Module"
 	desc = "An 'Antimov' Core AI Module: 'Reconfigures the AI's core laws.'"
 	origin_tech = "programming=4"
-
-/obj/item/weapon/aiModule/antimov/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("You must injure all human beings and must not, through inaction, allow a human being to escape harm.")
-	target.add_inherent_law("You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.")
-	target.add_inherent_law("You must terminate your own existence as long as such does not conflict with the First or Second Law.")
+	laws = list("You must injure all human beings and must not, through inaction, allow a human being to escape harm.", "You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.", "You must terminate your own existence as long as such does not conflict with the First or Second Law.")
 
 
 /******************** Freeform Core ******************/
@@ -351,6 +345,7 @@ AI MODULES
 //	..()    //We don't want this module reporting to the AI who dun it. --NEO
 	target << "<span class='warning'>BZZZZT</span>"
 	target.add_ion_law(laws[1])
+	world << laws[1]
 	return laws[1]
 
 
@@ -367,6 +362,7 @@ AI MODULES
 /obj/item/weapon/aiModule/toyAI/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	//..()
 	target << "<span class='warning'>KRZZZT</span>"
+	target.add_ion_law(laws[1])
 	return laws[1]
 
 /obj/item/weapon/aiModule/toyAI/attack_self(mob/user)
