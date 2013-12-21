@@ -147,6 +147,10 @@
 		user.attack_log += "\[[time_stamp()]\]<font color='red'> Stunned [L.name] ([L.ckey]) with [name]</font>"
 		L.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by [user.name] ([user.ckey]) with [name]</font>"
 		log_attack("<font color='red'>[user.name] ([user.ckey]) stunned [L.name] ([L.ckey]) with [name]</font>" )
+		if(!iscarbon(user))
+			M.LAssailant = null
+		else
+			M.LAssailant = user
 
 /obj/item/weapon/melee/baton/throw_impact(atom/hit_atom)
 	if (prob(50))
@@ -177,6 +181,10 @@
 				foundmob.attack_log += "\[[time_stamp()]\]<font color='red'> Stunned [L.name] ([L.ckey]) with [name]</font>"
 				L.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by thrown [src] by [foundmob.name] ([foundmob.ckey])</font>"
 				log_attack("<font color='red'>Flying [src.name], thrown by [foundmob.name] ([foundmob.ckey]) stunned [L.name] ([L.ckey])</font>" )
+				if(!iscarbon(foundmob))
+					L.LAssailant = null
+				else
+					L.LAssailant = foundmob
 
 				return
 	return ..()

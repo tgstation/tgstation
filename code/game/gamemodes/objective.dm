@@ -274,7 +274,6 @@ datum/objective/protect//The opposite of killing a dude.
 
 
 datum/objective/hijack
-	//explanation_text = "Hijack the emergency shuttle by escaping alone."
 	explanation_text = "Hijack the emergency shuttle by escaping without any organic life-forms, other than yourself."
 
 	check_completion()
@@ -761,3 +760,10 @@ datum/objective/absorb
 
 /*-------ENDOF CULTIST------*/
 */
+
+// /vg/; Vox Inviolate for humans :V
+datum/objective/minimize_casualties
+	explanation_text = "Minimise casualties."
+	check_completion()
+		if(owner.kills.len>5) return 0
+		return 1

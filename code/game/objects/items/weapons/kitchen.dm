@@ -237,6 +237,10 @@
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
 
 	log_attack("<font color='red'>[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])</font>")
+	if(!iscarbon(user))
+		M.LAssailant = null
+	else
+		M.LAssailant = user
 
 	var/t = user:zone_sel.selecting
 	if (t == "head")
@@ -335,6 +339,10 @@
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
 
 		log_attack("<font color='red'>[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])</font>")
+		if(!iscarbon(user))
+			M.LAssailant = null
+		else
+			M.LAssailant = user
 
 		if(prob(15))
 			M.Weaken(3)

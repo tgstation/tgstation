@@ -117,6 +117,10 @@
 						M.attack_log +="\[[time_stamp()]\]<font color='orange'> Mech Drilled by [chassis.occupant.name] ([chassis.occupant.ckey]) with [src.name]</font>"
 						chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Mech Drilled [M.name] ([M.ckey]) with [src.name]</font>"
 						log_attack("<font color='red'>[chassis.occupant.name] ([chassis.occupant.ckey]) mech drilled [M.name] ([M.ckey]) with [src.name]</font>" )
+						if(!iscarbon(chassis.occupant))
+							M.LAssailant = null
+						else
+							M.LAssailant = chassis.occupant
 					log_message("Drilled through [target]")
 					target.ex_act(2)
 		return 1
@@ -179,6 +183,10 @@
 						M.attack_log +="\[[time_stamp()]\]<font color='orange'> Mech Drilled by [chassis.occupant.name] ([chassis.occupant.ckey]) with [src.name]</font>"
 						chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Mech Drilled [M.name] ([M.ckey]) with [src.name]</font>"
 						log_attack("<font color='red'>[chassis.occupant.name] ([chassis.occupant.ckey]) mech drilled [M.name] ([M.ckey]) with [src.name]</font>" )
+						if(!iscarbon(chassis.occupant))
+							M.LAssailant = null
+						else
+							M.LAssailant = chassis.occupant
 					log_message("Drilled through [target]")
 					target.ex_act(2)
 		return 1

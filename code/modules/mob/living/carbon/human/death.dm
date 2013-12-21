@@ -81,6 +81,10 @@
 			if (V.dna && (V.dna.mutantrace == "vox"))*/ //Not currently feasible due to terrible LAssailant tracking.
 		//world << "Vox kills: [vox_kills]"
 		vox_kills++ //Bad vox. Shouldn't be killing humans.
+	if(ishuman(LAssailant))
+		var/mob/living/carbon/human/H=LAssailant
+		if(H.mind)
+			H.mind.kills += "[name] ([ckey])"
 
 	if(!gibbed)
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
