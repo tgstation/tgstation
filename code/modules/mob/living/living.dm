@@ -553,3 +553,7 @@
 						CM.legcuffed.loc = usr.loc
 						CM.legcuffed = null
 						CM.update_inv_legcuffed(0)
+
+
+/mob/living/proc/get_visible_name()
+	return name
