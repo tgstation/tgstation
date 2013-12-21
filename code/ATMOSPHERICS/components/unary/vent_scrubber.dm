@@ -19,6 +19,7 @@
 	var/scrub_Toxins = 0
 	var/scrub_N2O = 0
 	var/scrub_O2 = 0
+	var/scrub_N2 = 0
 
 	var/volume_rate = 120
 	var/panic = 0 //is this scrubber panicked?
@@ -80,6 +81,7 @@
 				"filter_tox" = scrub_Toxins,
 				"filter_n2o" = scrub_N2O,
 				"filter_o2" = scrub_O2,
+				"filter_n2" = scrub_N2,
 				"sigtype" = "status"
 			)
 			if(!initial_loc.air_scrub_names[id_tag])
@@ -117,7 +119,8 @@
 				(scrub_Toxins && environment.toxins > 0) ||\
 				(scrub_CO2 && environment.carbon_dioxide > 0) ||\
 				(scrub_N2O && environment.trace_gases.len > 0) ||\
-				(scrub_O2 && environment.oxygen > 0))
+				(scrub_O2 && environment.oxygen > 0) ||\
+				(scrub_N2 && environment.nitrogen > 0))
 				var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
 
 				//Take a gas sample
@@ -140,6 +143,10 @@
 				if(scrub_O2)
 					filtered_out.oxygen = removed.oxygen
 					removed.oxygen = 0
+
+				if(scrub_N2)
+					filtered_out.nitrogen = removed.nitrogen
+					removed.nitrogen = 0
 
 				if(removed.trace_gases.len>0)
 					for(var/datum/gas/trace_gas in removed.trace_gases)
@@ -240,6 +247,11 @@
 			scrub_O2 = text2num(signal.data["o2_scrub"])
 		if(signal.data["toggle_o2_scrub"])
 			scrub_O2 = !scrub_O2
+
+		if(signal.data["n2_scrub"] != null)
+			scrub_N2 = text2num(signal.data["n2_scrub"])
+		if(signal.data["toggle_n2_scrub"])
+			scrub_N2 = !scrub_N2
 
 		if(signal.data["init"] != null)
 			name = signal.data["init"]
