@@ -19,7 +19,7 @@
 	anchored = 1.0
 	layer = 2.8
 	throwpass = 1	//You can throw objects over this, despite it's density.")
-	var/material = "Metal"
+	var/parts = /obj/item/weapon/table_parts
 
 /obj/structure/table/New()
 	..()
@@ -297,7 +297,7 @@
 		return
 
 	if (istype(I, /obj/item/weapon/wrench))
-		table_destroy(2)
+		table_destroy(2, user)
 
 	if(isrobot(user))
 		return
@@ -308,7 +308,7 @@
 		SS.start()
 		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 		playsound(src.loc, "sparks", 50, 1)
-		table_destroy(1)
+		table_destroy(1, user)
 
 /obj/structure/table/proc/table_destroy(var/destroy_type, var/mob/user as mob)
 
@@ -319,58 +319,30 @@ Destroy type values:
 */
 
 	if(destroy_type == 1)
-		if(material == "Metal")
-			for(var/mob/O in viewers(user, 4))
-				O.show_message("\blue The table was sliced apart by [user]!", 1, "\red You hear metal coming apart.", 2)
-			new /obj/item/weapon/table_parts( src.loc )
-			del(src)
-			return
-
-		if(material == "Wood")
-			for(var/mob/O in viewers(user, 4))
-				O.show_message("\blue The table was sliced apart by [user]!", 1, "\red You hear wood coming apart.", 2)
-			new /obj/item/weapon/table_parts/wood( src.loc )
-			del(src)
-			return
-
-		if(material == "Reinforced Metal")
-			for(var/mob/O in viewers(user, 4))
-				O.show_message("\blue The table was sliced apart by [user]!", 1, "\red You hear wood coming apart.", 2)
-			new /obj/item/weapon/table_parts/reinforced( src.loc )
-			del(src)
-			return
-
+		user.visible_message("<span class='notice'>The table was sliced apart by [user]!</span>")
+		new parts( src.loc )
+		del(src)
+		return
 
 	if(destroy_type == 2)
-		if(material == "Metal")
-			user << "\blue Now disassembling table"
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if (do_after(user, 50))
-				new /obj/item/weapon/table_parts( src.loc )
-				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				del(src)
-			return
-
-		if(material == "Wood")
-			user << "\blue Now disassembling the wooden table"
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if (do_after(user, 50))
-				new /obj/item/weapon/table_parts/wood( src.loc )
-				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				del(src)
-			return
-
-		if(material == "Reinforced Metal")
+		if(istype(src, /obj/structure/table/reinforced))
 			var/obj/structure/table/reinforced/RT = src
 			if(RT.status == 1)
-				user << "\blue Now disassembling the reinforced table"
+				user << "<span class='notice'>Now disassembling the reinforced table</span>"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if (do_after(user, 50))
-					new /obj/item/weapon/table_parts/reinforced( src.loc )
+					new parts( src.loc )
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					del(src)
 				return
-
+		else
+			user << "<span class='notice'>Now disassembling table</span>"
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			if (do_after(user, 50))
+				new parts( src.loc )
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				del(src)
+			return
 
 
 
@@ -381,14 +353,14 @@ Destroy type values:
 	name = "wooden table"
 	desc = "Do not apply fire to this. Rumour says it burns easily."
 	icon_state = "woodtable"
-	material = "Wood"
+	parts = /obj/item/weapon/table_parts/wood
 
 
 /obj/structure/table/woodentable/poker //No specialties, Just a mapping object.
 	name = "gambling table"
 	desc = "A seedy table for seedy dealings in seedy places."
 	icon_state = "pokertable"
-
+	parts = /obj/item/weapon/table_parts/wood/poker
 
 /*
  * Reinforced tables
@@ -397,7 +369,7 @@ Destroy type values:
 	name = "reinforced table"
 	desc = "A version of the four legged table. It is stronger."
 	icon_state = "reinftable"
-	material = "Reinforced Metal"
+	parts = /obj/item/weapon/table_parts/reinforced
 	var/status = 2
 
 

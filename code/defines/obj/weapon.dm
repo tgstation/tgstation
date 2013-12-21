@@ -354,7 +354,7 @@
 
 /obj/item/weapon/table_parts/wood/poker
 	name = "poker table parts"
-	desc = "keep away from fire, and keep near seedy dealers"
+	desc = "Keep away from fire, and keep near seedy dealers."
 	icon_state = "poker_tableparts"
 	flags = null
 

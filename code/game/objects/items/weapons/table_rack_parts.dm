@@ -58,8 +58,11 @@
 
 	if (istype(W, /obj/item/stack/tile/grass))
 		var/obj/item/stack/tile/grass/Grass = W
-		Grass.amount -= 1
-		new /obj/item/weapon/table_parts/wood/poker( user.loc )
+		if(Grass.amount > 1)
+			Grass.amount -= 1
+		else
+			del(Grass)
+		new /obj/item/weapon/table_parts/wood/poker( src.loc )
 		visible_message("<span class='notice'>[user] adds grass to the wooden table parts</span>")
 		del(src)
 
