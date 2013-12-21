@@ -490,6 +490,7 @@ var/list/slot_equipment_priority = list( \
 				if(do_mob(usr, src, STRIP_DELAY))
 					if(what && Adjacent(usr))
 						u_equip(what)
+						usr.put_in_hands(what)
 			else
 				what = usr.get_active_hand()
 				if(what && what.mob_can_equip(src, slot, 1))
