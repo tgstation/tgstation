@@ -54,41 +54,13 @@
 					playsound(src, "clownstep", 20, 1)
 
 		switch (src.wet)
-			if(1)
-				if(istype(M, /mob/living/carbon/human)) // Added check since monkeys don't have shoes
-					if ((M.m_intent == "run") && !(istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP))
-						M.stop_pulling()
-						step(M, M.dir)
-						M << "\blue You slipped on the wet floor!"
-						playsound(src, 'sound/misc/slip.ogg', 50, 1, -3)
-						M.Stun(8)
-						M.Weaken(5)
-					else
-						M.inertia_dir = 0
-						return
-				else if(!istype(M, /mob/living/carbon/slime))
-					if (M.m_intent == "run")
-						M.stop_pulling()
-						step(M, M.dir)
-						M << "\blue You slipped on the wet floor!"
-						playsound(src, 'sound/misc/slip.ogg', 50, 1, -3)
-						M.Stun(8)
-						M.Weaken(5)
-					else
-						M.inertia_dir = 0
-						return
+			if(1) //wet floor
+				if(!M.slip(8, 5, null, (NO_SLIP_WHEN_WALKING|STEP)))
+					M.inertia_dir = 0
+				return
 
-			if(2) //lube		//can cause infinite loops - needs work
-				if(!istype(M, /mob/living/carbon/slime))
-					M.stop_pulling()
-					step(M, M.dir)
-					spawn(1) step(M, M.dir)
-					spawn(2) step(M, M.dir)
-					spawn(3) step(M, M.dir)
-					spawn(4) step(M, M.dir)
-					M.take_organ_damage(2) // Was 5 -- TLE
-					M << "\blue You slipped on the floor!"
-					playsound(src, 'sound/misc/slip.ogg', 50, 1, -3)
-					M.Weaken(10)
+			if(2) //lube
+				M.slip(0, 10, null, (STEP|SLIDE|GALOSHES_DONT_HELP))
+
 
 	..()

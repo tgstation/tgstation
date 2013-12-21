@@ -964,6 +964,12 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 /mob/living/carbon/slime/getTrail()
 	return null
 
+/mob/living/carbon/slime/slip(var/s_amount, var/w_amount, var/obj/O, var/lube)
+	if(lube>=2)
+		return 0
+	.=..()
+
+
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 
 /*
