@@ -73,6 +73,7 @@
 							var/cp = text2path(A)
 							var/obj/ct = new cp() // have to quickly instantiate it get name
 							req_component_names[A] = ct.name
+							del(ct)
 						if(circuit.frame_desc)
 							desc = circuit.frame_desc
 						else
@@ -131,7 +132,7 @@
 							new_machine.RefreshParts()
 							del(src)
 					else
-						if(istype(P, /obj/item/weapon))
+						if(istype(P, /obj/item/weapon)||istype(P, /obj/item/stack))
 							for(var/I in req_components)
 								if(istype(P, text2path(I)) && (req_components[I] > 0))
 									playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -144,6 +145,18 @@
 											CC.update_icon()
 											CP.use(camt)
 											components += CC
+											req_components[I] -= camt
+											update_desc()
+											break
+									if(istype(P, /obj/item/stack/rods))
+										var/obj/item/stack/rods/R = P
+										if(R.amount > 1)
+											var/camt = min(R.amount, req_components[I]) // amount of cable to take, idealy amount required, but limited by amount provided
+											var/obj/item/stack/rods/RR = new /obj/item/stack/rods(src)
+											RR.amount = camt
+											RR.update_icon()
+											R.use(camt)
+											components += RR
 											req_components[I] -= camt
 											update_desc()
 											break
@@ -196,6 +209,16 @@ to destroy them and players will be able to make replacements.
 							"/obj/item/weapon/stock_parts/matter_bin" = 2,
 							"/obj/item/weapon/stock_parts/manipulator" = 2,
 							"/obj/item/weapon/reagent_containers/glass/beaker" = 2)
+
+/obj/item/weapon/circuitboard/conveyor
+	name = "Circuit board (Conveyor)"
+	build_path = "/obj/machinery/conveyor"
+	board_type = "machine"
+	origin_tech = "engineering=2;programming=2"
+	frame_desc = "Requires 4 rods and 2 cable pieces."
+	req_components = list(
+							"/obj/item/weapon/cable_coil" = 2,
+							"/obj/item/stack/rods" = 4)
 
 
 /obj/item/weapon/circuitboard/circuit_imprinter
