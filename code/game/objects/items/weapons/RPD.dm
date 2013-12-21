@@ -161,7 +161,6 @@ var/global/list/RPD_recipes=list(
 		var/list/cat=RPD_recipes[category]
 		for(var/label in cat)
 			var/datum/pipe_info/I = cat[label]
-			testing("id=[I.id],type=[I.type],icon_state=[I.icon_state]")
 			var/found=0
 			if(I.id == p_type)
 				if(p_class==0 && I.type==/datum/pipe_info)
@@ -298,7 +297,6 @@ a:hover {
 	if(usr.stat || usr.restrained())
 		usr << browse(null, "window=pipedispenser")
 		return
-	testing(href)
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["setdir"])
