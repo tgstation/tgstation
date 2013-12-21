@@ -230,6 +230,8 @@
 				src.mind.transfer_to(new_slime)
 			else
 				new_slime.key = src.key
+			for (var/obj/effect/proc_holder/spell/S in src.spell_list)
+				new_slime.spell_list += new S.type
 
 			new_slime << "<B>You are now a slime!</B>"
 			del(src)
