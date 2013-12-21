@@ -80,8 +80,9 @@ proc/explosion_rec(turf/epicenter, power)
 		ET.turf.ex_act(severity)
 		if(!ET.turf)
 			ET.turf = locate(x,y,z)
-		for( var/atom/A in ET.turf )
-			A.ex_act(severity)
+		if(!ET.turf.density)    		//turf not destroyed - nothing inside will be affected
+			for( var/atom/A in ET.turf )
+				A.ex_act(severity)
 
 	explosion_in_progress = 0
 
