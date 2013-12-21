@@ -8,7 +8,7 @@
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
-	use_power = 0
+	use_power = 1
 	idle_power_usage = 40
 	var/energy = 50
 	var/max_energy = 50
@@ -78,7 +78,7 @@
   * @return nothing
   */
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main")
-	if(stat & (BROKEN|NOPOWER)) return
+	if(stat & (BROKEN)) return
 	if(user.stat || user.restrained()) return
 
 	// this is the data which will be sent to the ui
@@ -123,7 +123,7 @@
 		return
 
 /obj/machinery/chem_dispenser/Topic(href, href_list)
-	if(stat & (NOPOWER|BROKEN))
+	if(stat & (BROKEN))
 		return 0 // don't update UIs attached to this object
 
 	if(href_list["amount"])
