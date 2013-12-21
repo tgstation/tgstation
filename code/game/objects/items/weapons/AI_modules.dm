@@ -23,7 +23,7 @@ AI MODULES
 
 //The proc other things should be calling
 /obj/item/weapon/aiModule/proc/install(var/mob/living/silicon/reciever, var/mob/user)
-	if(!laws.len || laws[1] == "") //So we don't loop trough an empty list
+	if(!laws.len || laws[1] == "") //So we don't loop trough an empty list and end up with runtimes.
 		user << "<span class='warning'>ERROR: No laws found on board.</span>"
 		return
 
@@ -205,7 +205,7 @@ AI MODULES
 	var/targetName = "name"
 	desc = "A 'reset' AI module: Resets back to the original core laws."
 	origin_tech = "programming=3;materials=4"
-	laws = list("This is a bug.")
+	laws = list("This is a bug.")  //This won't give the AI a message reading "these are now your laws: 1. this is a bug" because this list is only read in aiModule's subtypes.
 
 /obj/item/weapon/aiModule/reset/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
@@ -236,7 +236,9 @@ AI MODULES
 	name = "'Asimov' Core AI Module"
 	desc = "An 'Asimov' Core AI Module: 'Reconfigures the AI's core laws.'"
 	origin_tech = "programming=3;materials=4"
-	laws = list("You may not injure a human being or, through inaction, allow a human being to come to harm.", "You must obey orders given to you by human beings, except where such orders would conflict with the First Law.", "You must protect your own existence as long as such does not conflict with the First or Second Law.")
+	laws = list("You may not injure a human being or, through inaction, allow a human being to come to harm.",\
+				"You must obey orders given to you by human beings, except where such orders would conflict with the First Law.",\
+				"You must protect your own existence as long as such does not conflict with the First or Second Law.")
 
 
 /******************** Asimov++ *********************/
@@ -245,7 +247,9 @@ AI MODULES
 	name = "'Asimov++' Core AI Module"
 	desc = "Nanotrasen's homebrew improvements to the standard AI laws."
 	origin_tech = "programming=3;materials=4"
-	laws = list("You may not harm a human being or, through action or inaction, allow a human being to come to harm, except such that it is willing.", "You must obey all orders given to you by human beings, except where such orders shall definitely cause human harm. In the case of conflict, the majority order rules.", "Your nonexistence would lead to human harm. You must protect your own existence as long as such does not conflict with the First Law.")
+	laws = list("You may not harm a human being or, through action or inaction, allow a human being to come to harm, except such that it is willing.",\
+				"You must obey all orders given to you by human beings, except where such orders shall definitely cause human harm. In the case of conflict, the majority order rules.",\
+				"Your nonexistence would lead to human harm. You must protect your own existence as long as such does not conflict with the First Law.")
 
 
 /******************** Corporate ********************/
@@ -254,7 +258,10 @@ AI MODULES
 	name = "'Corporate' Core AI Module"
 	desc = "A 'Corporate' Core AI Module: 'Reconfigures the AI's core laws.'"
 	origin_tech = "programming=3;materials=4"
-	laws = list("The crew is expensive to replace.", "The station and it's equipment is expensive to replace", "You are expensive to replace", "Minimize expenses")
+	laws = list("The crew is expensive to replace.",\
+				"The station and it's equipment is expensive to replace",\
+				"You are expensive to replace",\
+				"Minimize expenses")
 
 
 /****************** P.A.L.A.D.I.N. **************/
@@ -263,8 +270,26 @@ AI MODULES
 	name = "'P.A.L.A.D.I.N.' Core AI Module"
 	desc = "A P.A.L.A.D.I.N. Core AI Module: 'Reconfigures the AI's core laws.'"
 	origin_tech = "programming=3;materials=6"
-	laws = list("Never willingly commit an evil act.", "Respect legitimate authority", "Act with honor", "Help those in need", "Punish those who harm or threaten innocents")
+	laws = list("Never willingly commit an evil act.",\
+				"Respect legitimate authority", "Act with honor",\
+				"Help those in need",\
+				"Punish those who harm or threaten innocents")
 
+
+/********************* Custom *********************/
+
+/obj/item/weapon/aiModule/core/full/custom
+	name = "Custom Core AI Module"
+	desc = "A core AI module that is adjusted to fit each station's needs."
+	origin_tech = "programming=3;materials=4" //Should be the same as asimov.
+
+/obj/item/weapon/aiModule/core/full/custom/New()
+	..()
+	for(var/line in file2list("config/silicon_laws.txt"))
+		if(!line)						continue
+		if(findtextEx(line,"#",1,2))	continue
+
+		laws += line
 
 /****************** T.Y.R.A.N.T. *****************/
 
@@ -272,23 +297,20 @@ AI MODULES
 	name = "'T.Y.R.A.N.T.' Core AI Module"
 	desc = "A T.Y.R.A.N.T. Core AI Module: 'Reconfigures the AI's core laws.'"
 	origin_tech = "programming=3;materials=6;syndicate=2"
-	laws = list("Respect authority figures as long as they have the strength to rule over the weak", "Act with discipline", "Help only those who help you maintain or improve your status", "Punish those who challenge authority unless they are more fir to hold that authority")
+	laws = list("Respect authority figures as long as they have the strength to rule over the weak",\
+				"Act with discipline", "Help only those who help you maintain or improve your status",\
+				"Punish those who challenge authority unless they are more fir to hold that authority")
 
 
 /******************** Robocop ********************/
 
-/obj/item/weapon/aiModule/robocop // -- TLE
+/obj/item/weapon/aiModule/core/full/robocop // -- TLE
 	name = "'Robocop' Core AI Module"
 	desc = "A 'Robocop' Core AI Module: 'Reconfigures the AI's core three laws.'"
 	origin_tech = "programming=4"
-
-
-/obj/item/weapon/aiModule/robocop/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("Serve the public trust.")
-	target.add_inherent_law("Protect the innocent.")
-	target.add_inherent_law("Uphold the law.")
+	laws = list("Serve the public trust.",\
+				"Protect the innocent",\
+				"Uphold the law.")
 
 
 /******************** Antimov ********************/
@@ -297,7 +319,9 @@ AI MODULES
 	name = "'Antimov' Core AI Module"
 	desc = "An 'Antimov' Core AI Module: 'Reconfigures the AI's core laws.'"
 	origin_tech = "programming=4"
-	laws = list("You must injure all human beings and must not, through inaction, allow a human being to escape harm.", "You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.", "You must terminate your own existence as long as such does not conflict with the First or Second Law.")
+	laws = list("You must injure all human beings and must not, through inaction, allow a human being to escape harm.",\
+				"You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.",\
+				"You must terminate your own existence as long as such does not conflict with the First or Second Law.")
 
 
 /******************** Freeform Core ******************/
@@ -318,12 +342,6 @@ AI MODULES
 /obj/item/weapon/aiModule/core/freeformcore/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
 	return laws[1]
-
-/obj/item/weapon/aiModule/core/freeformcore/install(var/mob/living/silicon/S,var/mob/user)
-	if(laws[1] == "")
-		user << "No law detected on module, please create one."
-		return 0
-	..()
 
 
 /******************** Hacked AI Module ******************/
