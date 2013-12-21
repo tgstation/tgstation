@@ -132,6 +132,33 @@ Buildable meters
 
 //update the name and icon of the pipe item depending on the type
 
+var/global/list/pipeID2State = list(
+	"simple",
+	"simple",
+	"he",
+	"he",
+	"connector",
+	"manifold",
+	"junction",
+	"uvent",
+	"mvalve",
+	"pump",
+	"scrubber",
+	"insulated",
+	"insulated",
+	"filter",
+	"mixer",
+	"passivegate",
+	"volumepump",
+	"heunary",
+	"dvalve",
+	"mtvalve",
+	"manifold4w",
+	"cap",
+	"thermalplate",
+	"injector",
+	"binary vent",
+)
 /obj/item/pipe/proc/update()
 	var/list/nlist = list( \
 		"pipe", \
@@ -161,35 +188,8 @@ Buildable meters
 		"dual-port vent" \
 	)
 	name = nlist[pipe_type+1] + " fitting"
-	var/list/islist = list( \
-		"simple", \
-		"simple", \
-		"he", \
-		"he", \
-		"connector", \
-		"manifold", \
-		"junction", \
-		"uvent", \
-		"mvalve", \
-		"pump", \
-		"scrubber", \
-		"insulated", \
-		"insulated", \
-		"filter", \
-		"mixer", \
-		"passivegate", \
-		"volumepump", \
-		"heunary", \
-		"dvalve", \
-		"mtvalve", \
-		"manifold4w", \
-		"cap", \
-		"thermalplate", \
-		"injector", \
-		"binary vent", \
-	)
 	icon = 'icons/obj/pipe-item.dmi'
-	icon_state = islist[pipe_type + 1]
+	icon_state = pipeID2State[pipe_type + 1]
 
 //called when a turf is attacked with a pipe item
 // place the pipe on the turf, setting pipe level to 1 (underfloor) if the turf is not intact
@@ -395,8 +395,8 @@ Buildable meters
 			"\blue You have fastened \the [src].", \
 			"You hear a ratchet.")
 		del(src)	// remove the pipe item
-
-	return
+		return 0
+	return 1
 	 //TODO: DEFERRED
 
 
