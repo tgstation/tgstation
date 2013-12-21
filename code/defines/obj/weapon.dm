@@ -352,6 +352,12 @@
 	icon_state = "wood_tableparts"
 	flags = null
 
+/obj/item/weapon/table_parts/wood/poker
+	name = "poker table parts"
+	desc = "keep away from fire, and keep near seedy dealers"
+	icon_state = "poker_tableparts"
+	flags = null
+
 /obj/item/weapon/module
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
