@@ -36,7 +36,7 @@ effective or pretty fucking useless.
 		user << "\red The mind batterer has been burnt out!"
 		return
 
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used [src] to knock down people in the area.</font>")
+	add_logs(user, null, "knocked down people in the area", admin=0, object="[src]")
 
 	for(var/mob/living/carbon/human/M in orange(10, user))
 		spawn()

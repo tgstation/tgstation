@@ -83,17 +83,16 @@ Borg Hypospray
 				R.cell.use(charge_cost) 					//Take power from borg...
 				RG.add_reagent(reagent_ids[mode], 5)		//And fill hypo with reagent.
 
-/obj/item/weapon/reagent_containers/borghypo/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/reagent_containers/borghypo/attack(mob/living/M as mob, mob/user as mob)
 	var/datum/reagents/R = reagent_list[mode]
 	if(!R.total_volume)
 		user << "<span class='notice'>The injector is empty.</span>"
 		return
-	if (!( istype(M, /mob) ))
+	if (!( istype(M) ))
 		return
-	if (R.total_volume)
-		user << "<span class='notice'>You inject [M] with the injector.</span>"
+	if (R.total_volume && M.can_inject(user, 1))
 		M << "<span class='warning'>You feel a tiny prick!</span>"
-
+		user << "<span class='notice'>You inject [M] with the injector.</span>"
 		R.reaction(M, INGEST)
 		if(M.reagents)
 			var/trans = R.trans_to(M, amount_per_transfer_from_this)

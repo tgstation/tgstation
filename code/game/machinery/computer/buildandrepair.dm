@@ -105,10 +105,14 @@
 	name = "circuit board (Cloning)"
 	build_path = "/obj/machinery/computer/cloning"
 	origin_tech = "programming=3;biotech=3"
-/obj/item/weapon/circuitboard/arcade
-	name = "circuit board (Arcade)"
-	build_path = "/obj/machinery/computer/arcade"
+/obj/item/weapon/circuitboard/arcade/battle
+	name = "circuit board (Arcade Battle)"
+	build_path = "/obj/machinery/computer/arcade/battle"
 	origin_tech = "programming=1"
+/obj/item/weapon/circuitboard/arcade/orion_trail
+	name = "circuit board (Orion_Trail)"
+	build_path = "/obj/machinery/computer/arcade/orion_trail"
+	origin_tech = "programming=2"
 /obj/item/weapon/circuitboard/turbine_control
 	name = "circuit board (Turbine control)"
 	build_path = "/obj/machinery/computer/turbine_computer"
@@ -245,7 +249,7 @@
 		if(src.build_path == "/obj/machinery/computer/rdconsole/core")
 			src.name = "circuit board (RD Console - Robotics)"
 			src.build_path = "/obj/machinery/computer/rdconsole/robotics"
-			user << "\blue Access protocols succesfully updated."
+			user << "\blue Access protocols successfully updated."
 		else
 			src.name = "circuit board (RD Console)"
 			src.build_path = "/obj/machinery/computer/rdconsole/core"

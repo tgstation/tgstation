@@ -299,10 +299,11 @@
 	..()
 
 	if(isrobot(user))
-		return 1	//Robots can't interact with storage items.
+		user << "<span class='notice'>You're a robot. No.</span>"
+		return 0	//Robots can't interact with storage items.
 
 	if(!can_be_inserted(W))
-		return 1
+		return 0
 
 	if(istype(W, /obj/item/weapon/tray))	//THIS ISN'T HOW OOP WORKS
 		var/obj/item/weapon/tray/T = W

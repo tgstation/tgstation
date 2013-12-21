@@ -42,40 +42,16 @@
 	colour = "white"
 
 
-/obj/item/weapon/pen/attack(mob/M, mob/user)
-	if(!ismob(M))
+/obj/item/weapon/pen/attack(mob/living/M, mob/user)
+	if(!istype(M))
 		return
 
-	user << "<span class='warning'>You stab [M] with the pen.</span>"
-	M << "\red You feel a tiny prick!"
+	if(M.can_inject(user, 1))
+		user << "<span class='warning'>You stab [M] with the pen.</span>"
+		M << "\red You feel a tiny prick!"
+		. = 1
 
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stabbed with [name]  by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [name] to stab [M.name] ([M.ckey])</font>")
-	log_attack("<font color='red'>[user.name] ([user.ckey]) Used the [name] to stab [M.name] ([M.ckey])</font>")
-
-
-/*
- * Sleepy Pens
- */
-/obj/item/weapon/pen/sleepypen
-	desc = "It's a black ink pen with a sharp point and a carefully engraved \"Waffle Co.\""
-	origin_tech = "materials=2;syndicate=5"
-
-
-/obj/item/weapon/pen/sleepypen/New()
-	create_reagents(30)
-	reagents.add_reagent("chloralhydrate", 22)	//Used to be 100 sleep toxin	//30 Chloral seems to be fatal, reducing it to 22.
-	..()
-
-
-/obj/item/weapon/pen/sleepypen/attack(mob/M, mob/user)
-	if(!istype(M))	return
-
-	..()
-	if(reagents.total_volume)
-		if(M.reagents)
-			reagents.trans_to(M, 30) //used to be 150
-
+	add_logs(user, M, "stabbed", object="[name]")
 
 /*
  * Parapens
@@ -84,13 +60,13 @@
 	origin_tech = "materials=2;syndicate=5"
 
 
-/obj/item/weapon/pen/paralysis/attack(mob/M, mob/user)
+/obj/item/weapon/pen/paralysis/attack(mob/living/M, mob/user)
 	if(!istype(M))	return
 
-	..()
-	if(reagents.total_volume)
-		if(M.reagents)
-			reagents.trans_to(M, 50)
+	if(..())
+		if(reagents.total_volume)
+			if(M.reagents)
+				reagents.trans_to(M, 50)
 
 
 /obj/item/weapon/pen/paralysis/New()

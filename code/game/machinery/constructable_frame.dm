@@ -49,7 +49,7 @@
 
 /obj/machinery/constructable_frame/machine_frame/attackby(obj/item/P as obj, mob/user as mob)
 	if(P.crit_fail)
-		user << "\red This part is faulty, you cannot add this to the machine!"
+		user << "<span class='danger'>This part is faulty, you cannot add this to the machine!</span>"
 		return
 	switch(state)
 		if(1)
@@ -57,17 +57,17 @@
 				var/obj/item/weapon/cable_coil/C = P
 				if(C.amount >= 5)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					user << "\blue You start to add cables to the frame."
+					user << "<span class='notice'>You start to add cables to the frame.</span>"
 					if(do_after(user, 20))
 						if(C)
 							C.amount -= 5
 							if(!C.amount) del(C)
-							user << "\blue You add cables to the frame."
+							user << "<span class='notice'>You add cables to the frame.</span>"
 							state = 2
 							icon_state = "box_1"
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				user << "\blue You dismantle the frame"
+				user << "<span class='notice'>You dismantle the frame.</span>"
 				new /obj/item/stack/sheet/metal(src.loc, 5)
 				del(src)
 		if(2)
@@ -75,7 +75,7 @@
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "machine")
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					user << "\blue You add the circuit board to the frame."
+					user << "<span class='notice'>You add the circuit board to the frame.</span>"
 					circuit = P
 					user.drop_item()
 					P.loc = src
@@ -86,10 +86,10 @@
 					update_namelist()
 					update_req_desc()
 				else
-					user << "\red This frame does not accept circuit boards of this type!"
+					user << "<span class='danger'>This frame does not accept circuit boards of this type!</span>"
 			if(istype(P, /obj/item/weapon/wirecutters))
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-				user << "\blue You remove the cables."
+				user << "<span class='notice'>You remove the cables.</span>"
 				state = 1
 				icon_state = "box_0"
 				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( src.loc )
@@ -102,9 +102,9 @@
 				circuit.loc = src.loc
 				circuit = null
 				if(components.len == 0)
-					user << "\blue You remove the circuit board."
+					user << "<span class='notice'>You remove the circuit board.</span>"
 				else
-					user << "\blue You remove the circuit board and other components."
+					user << "<span class='notice'>You remove the circuit board and other components.</span>"
 					for(var/obj/item/weapon/W in components)
 						W.loc = src.loc
 				desc = initial(desc)
@@ -125,32 +125,33 @@
 						del(O)
 					new_machine.component_parts = list()
 					for(var/obj/O in src)
-						O.loc = new_machine
+						O.loc = null
 						new_machine.component_parts += O
-					circuit.loc = new_machine
+					circuit.loc = null
 					new_machine.RefreshParts()
 					del(src)
 
 			if(istype(P, /obj/item/weapon))
+				var/success
 				for(var/I in req_components)
 					if(istype(P, text2path(I)) && (req_components[I] > 0))
+						success=1
 						if(istype(P, /obj/item/weapon/cable_coil))
 							var/obj/item/weapon/cable_coil/CP = P
-							if(CP.amount > 1)
-								var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src)
-								CC.amount = 1
+							var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src, 1, CP.item_color)
+							if(CP.use(1))
 								components += CC
 								req_components[I]--
 								update_req_desc()
-								break
+							break
 						user.drop_item()
 						P.loc = src
 						components += P
 						req_components[I]--
 						update_req_desc()
 						break
-				if(P.loc != src && !istype(P, /obj/item/weapon/cable_coil))
-					user << "\red You cannot add that component to the machine!"
+				if(!success)
+					user << "<span class='danger'>You cannot add that to the machine!</span>"
 
 
 //Machine Frame Circuit Boards

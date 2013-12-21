@@ -915,7 +915,7 @@ steam.start() -- spawns the effect
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
 	gender = PLURAL
-	var/metal = 1		// 1=aluminum, 2=iron
+	var/metal = 1		// 1=aluminium, 2=iron
 
 	New()
 		..()

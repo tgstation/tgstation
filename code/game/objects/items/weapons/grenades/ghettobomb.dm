@@ -16,7 +16,7 @@
 
 /obj/item/weapon/grenade/iedcasing
 	name = "improvised explosive assembly"
-	desc = "An igniter stuffed into an aluminum shell."
+	desc = "An igniter stuffed into an aluminium shell."
 	w_class = 2.0
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "improvised_grenade"

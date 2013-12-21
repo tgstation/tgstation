@@ -20,6 +20,7 @@
 	var/planted = 0			//Is it occupied?
 	var/harvest = 0			//Ready to harvest?
 	var/obj/item/seeds/myseed = null	//The currently planted seed
+	var/unwrenchable = 1
 
 /obj/machinery/hydroponics/bullet_act(var/obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(!planted)
@@ -57,6 +58,18 @@ obj/machinery/hydroponics/process()
 			// Lack of nutrients hurts non-weeds
 			if(nutrilevel <= 0 && myseed.plant_type != 1)
 				adjustHealth(-rand(1,3))
+
+//Photosynthesis/////////////////////////////////////////////////////////
+			// Lack of light hurts non-mushrooms
+			if(isturf(loc))
+				var/turf/currentTurf = loc
+				var/lightAmt = currentTurf.lighting_lumcount
+				if(myseed.plant_type == 2) // Mushroom
+					if(lightAmt < 2)
+						adjustHealth(-1)
+				else // Non-mushroom
+					if(lightAmt < 4)
+						adjustHealth(-2)
 
 //Water//////////////////////////////////////////////////////////////////
 			// Drink random amount of water
@@ -349,7 +362,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			if(istype(reagent_source, /obj/item/weapon/reagent_containers/glass/))
 				playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 
-		// There needs to be a good amount of mutagen to actually work
+		// Requires 5 mutagen to possibly change species.
 		if(S.has_reagent("mutagen", 5))
 			switch(rand(100))
 				if(91  to 100)	plantdies()
@@ -360,6 +373,11 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				if(11	to 20)  mutateweed()
 				if(1   to 10)  mutatepest()
 				else 			user << "Nothing happens..."
+		// 2 or 1 units is enough to change the yield and other stats.
+		else if(S.has_reagent("mutagen", 2))
+			hardmutate()
+		else if(S.has_reagent("mutagen", 1))
+			mutate()
 
 		// Antitoxin binds shit pretty well. So the tox goes significantly down
 		if(S.has_reagent("anti_toxin", 1))
@@ -462,10 +480,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			adjustNutri(round(S.get_reagent_amount("nutriment")*1))
 
 		// Poor man's mutagen.
-		if(S.has_reagent("radium", 1))
-			adjustHealth(-round(S.get_reagent_amount("radium")*1.5))
-			adjustToxic(round(S.get_reagent_amount("radium")*2))
-		if(S.has_reagent("radium", 10))
+		if(S.has_reagent("radium", 10) || S.has_reagent("uranium", 10))
 			switch(rand(100))
 				if(91  to 100)	plantdies()
 				if(81  to 90)  mutatespecie()
@@ -475,6 +490,19 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				if(11	to 20)  mutateweed()
 				if(1   to 10)  mutatepest()
 				else 			user << "Nothing happens..."
+		// Can change the yield and other stats, but requires more than mutagen
+		else if(S.has_reagent("radium", 5) || S.has_reagent("uranium", 5))
+			hardmutate()
+		else if(S.has_reagent("radium", 2) || S.has_reagent("uranium", 2))
+			mutate()
+
+		// After handling the mutating, we now handle the damage from adding crude radioactives...
+		if(S.has_reagent("uranium", 1))
+			adjustHealth(-round(S.get_reagent_amount("uranium")*1))
+			adjustToxic(round(S.get_reagent_amount("uranium")*2))
+		if(S.has_reagent("radium", 1))
+			adjustHealth(-round(S.get_reagent_amount("radium")*1))
+			adjustToxic(round(S.get_reagent_amount("radium")*3)) // Radium is harsher (OOC: also easier to produce)
 
 		// The best stuff there is. For testing/debugging.
 		if(S.has_reagent("adminordrazine", 1))
@@ -575,7 +603,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 		del(O)
 		update_icon()
-	else if(istype(O, /obj/item/weapon/wrench))
+	else if(istype(O, /obj/item/weapon/wrench) && unwrenchable)
 		if(!anchored && !isinspace())
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			anchored = 1
@@ -811,10 +839,12 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 /obj/machinery/hydroponics/proc/update_tray(mob/user = usr)
 	harvest = 0
 	lastproduce = age
-	if((yieldmod * myseed.yield) <= 0)
+	if(istype(myseed,/obj/item/seeds/replicapod/))
+		user << "You harvest from the [myseed.plantname]."
+	else if((yieldmod * myseed.yield) <= 0)
 		user << "\red You fail to harvest anything useful."
 	else
-		user << "You harvest from the [myseed.plantname]."
+		user << "You harvest [yieldmod * myseed.yield] items from the [myseed.plantname]."
 	if(myseed.oneharvest)
 		del(myseed)
 		planted = 0
@@ -892,6 +922,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	icon_state = "soil"
 	density = 0
 	use_power = 0
+	unwrenchable = 0
 
 	update_icon() // Same as normal but with the overlays removed - Cheridan.
 		overlays.Cut()

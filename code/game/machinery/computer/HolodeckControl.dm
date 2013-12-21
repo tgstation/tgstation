@@ -226,7 +226,7 @@
 		if(world.time < (last_change + 15))//To prevent super-spam clicking, reduced process size and annoyance -Sieve
 			return
 		for(var/mob/M in range(3,src))
-			M.show_message("\b ERROR. Recalibrating projetion apparatus.")
+			M.show_message("\b ERROR. Recalibrating projection apparatus.")
 			last_change = world.time
 			return
 
@@ -364,7 +364,7 @@
 	damtype = HALLOSS
 
 /obj/item/weapon/holo/esword
-	desc = "May the force be within you. Sorta"
+	desc = "May the force be with you. Sorta"
 	icon_state = "sword0"
 	force = 3.0
 	throw_speed = 1

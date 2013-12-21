@@ -32,6 +32,14 @@
 	hud.name = "reinforce grab"
 	hud.master = src
 
+	affecting.grabbed_by += src
+
+
+/obj/item/weapon/grab/Del()
+	if(affecting)
+		affecting.grabbed_by -= src
+	del(hud)
+	..()
 
 //Used by throw code to hand over the mob, instead of throwing the grab. The grab is then deleted by the throw code.
 /obj/item/weapon/grab/proc/throw()
@@ -134,9 +142,7 @@
 			icon_state = "grabbed+1"
 			if(!affecting.buckled)
 				affecting.loc = assailant.loc
-			affecting.attack_log += "\[[time_stamp()]\] <font color='orange'>Has had their neck grabbed by [assailant.name] ([assailant.ckey])</font>"
-			assailant.attack_log += "\[[time_stamp()]\] <font color='red'>Grabbed the neck of [affecting.name] ([affecting.ckey])</font>"
-			log_attack("<font color='red'>[assailant.name] ([assailant.ckey]) grabbed the neck of [affecting.name] ([affecting.ckey])</font>")
+			add_logs(assailant, affecting, "neck-grabbed")
 			hud.icon_state = "disarm/kill"
 			hud.name = "disarm/kill"
 		else
@@ -155,9 +161,7 @@
 						return
 					state = GRAB_KILL
 					assailant.visible_message("<span class='danger'>[assailant] has tightened \his grip on [affecting]'s neck!</span>")
-					affecting.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been strangled (kill intent) by [assailant.name] ([assailant.ckey])</font>"
-					assailant.attack_log += "\[[time_stamp()]\] <font color='red'>Strangled (kill intent) [affecting.name] ([affecting.ckey])</font>"
-					log_attack("<font color='red'>[assailant.name] ([assailant.ckey]) Strangled (kill intent) [affecting.name] ([affecting.ckey])</font>")
+					add_logs(assailant, affecting, "strangled")
 
 					assailant.next_move = world.time + 10
 					affecting.losebreath += 1
@@ -206,6 +210,5 @@
 /obj/item/weapon/grab/dropped()
 	del(src)
 
-/obj/item/weapon/grab/Del()
-	del(hud)
-	..()
+#undef UPGRADE_COOLDOWN
+#undef UPGRADE_KILL_TIMER

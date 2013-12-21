@@ -27,6 +27,8 @@
 		dat += "<I>Your apprentice is skilled in offensive magic. They know Magic Missile and Fireball.</I><BR>"
 		dat += "<A href='byond://?src=\ref[src];school=bluespace'>Bluespace Manipulation</A><BR>"
 		dat += "<I>Your apprentice is able to defy physics, melting through solid objects and travelling great distances in the blink of an eye. They know Teleport and Ethereal Jaunt.</I><BR>"
+		dat += "<A href='byond://?src=\ref[src];school=healing'>Healing</A><BR>"
+		dat += "<I>Your apprentice is training to cast spells that will aid your survival. They know Forcewall and Charge and come with a Staff of Healing.</I><BR>"
 		dat += "<A href='byond://?src=\ref[src];school=robeless'>Robeless</A><BR>"
 		dat += "<I>Your apprentice is training to cast spells without their robes. They know Knock and Mindswap.</I><BR>"
 	user << browse(dat, "window=radio")
@@ -66,6 +68,11 @@
 						M.spell_list += new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(M)
 						M.spell_list += new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(M)
 						M << "<B>Your service has not gone unrewarded, however. Studying under [H.real_name], you have learned reality bending mobility spells. You are able to cast teleport and ethereal jaunt."
+					if("healing")
+						M.spell_list += new /obj/effect/proc_holder/spell/targeted/charge(M)
+						M.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall(M)
+						M.equip_to_slot_or_del(new /obj/item/weapon/gun/magic/staff/healing(M), slot_r_hand)
+						M << "<B>Your service has not gone unrewarded, however. Studying under [H.real_name], you have learned livesaving survival spells. You are able to cast charge and forcewall."
 					if("robeless")
 						M.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/knock(M)
 						M.spell_list += new /obj/effect/proc_holder/spell/targeted/mind_transfer(M)

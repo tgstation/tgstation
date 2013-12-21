@@ -53,7 +53,7 @@ datum
 			name = "Silicate"
 			id = "silicate"
 			result = "silicate"
-			required_reagents = list("aluminum" = 1, "silicon" = 1, "oxygen" = 1)
+			required_reagents = list("aluminium" = 1, "silicon" = 1, "oxygen" = 1)
 			result_amount = 3
 */
 		stoxin
@@ -102,7 +102,7 @@ datum
 			name = "Thermite"
 			id = "thermite"
 			result = "thermite"
-			required_reagents = list("aluminum" = 1, "iron" = 1, "oxygen" = 1)
+			required_reagents = list("aluminium" = 1, "iron" = 1, "oxygen" = 1)
 			result_amount = 3
 
 		lexorin
@@ -316,7 +316,7 @@ datum
 			name = "Flash powder"
 			id = "flash_powder"
 			result = null
-			required_reagents = list("aluminum" = 1, "potassium" = 1, "sulfur" = 1 )
+			required_reagents = list("aluminium" = 1, "potassium" = 1, "sulfur" = 1 )
 			result_amount = null
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
@@ -345,7 +345,7 @@ datum
 			name = "Napalm"
 			id = "napalm"
 			result = null
-			required_reagents = list("aluminum" = 1, "plasma" = 1, "sacid" = 1 )
+			required_reagents = list("aluminium" = 1, "plasma" = 1, "sacid" = 1 )
 			result_amount = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/turf/simulated/T = get_turf(holder.my_atom)
@@ -468,7 +468,7 @@ datum
 			id = "mixvirus"
 			result = "blood"
 			required_reagents = list("virusfood" = 5)
-			required_catalysts = list("blood")
+			required_catalysts = list("blood" = 5)
 			var/level_min = 0
 			var/level_max = 2
 
@@ -501,7 +501,8 @@ datum
 
 				name = "Devolve Virus"
 				id = "remvirus"
-				required_reagents = list("synaptizine" = 5)
+				required_reagents = list("synaptizine" = 1)
+				required_catalysts = list("blood" = 1)
 
 				on_reaction(var/datum/reagents/holder, var/created_volume)
 
@@ -558,7 +559,7 @@ datum
 			name = "Metal Foam"
 			id = "metalfoam"
 			result = null
-			required_reagents = list("aluminum" = 3, "foaming_agent" = 1, "pacid" = 1)
+			required_reagents = list("aluminium" = 3, "foaming_agent" = 1, "pacid" = 1)
 			result_amount = 5
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
