@@ -35,10 +35,9 @@
 	return
 
 /obj/structure/alien/resin/Move()
-	air_update_turf(1)
+	var/turf/T = loc
 	..()
-	air_update_turf(1)
-	return
+	move_update_air(T)
 
 /obj/structure/alien/resin/CanAtmosPass()
 	return !density

@@ -923,9 +923,9 @@ steam.start() -- spawns the effect
 		..()
 
 	Move()
-		air_update_turf(1)
+		var/turf/T = loc
 		..()
-		air_update_turf(1)
+		move_update_air(T)
 
 	proc/updateicon()
 		if(metal == 1)

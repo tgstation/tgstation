@@ -22,9 +22,9 @@
 	..()
 
 /obj/machinery/shield/Move()
-	air_update_turf(1)
+	var/turf/T = loc
 	..()
-	air_update_turf(1)
+	move_update_air(T)
 
 /obj/machinery/shield/CanPass(atom/movable/mover, turf/target, height, air_group)
 	if(!height || air_group) return 0
