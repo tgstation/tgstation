@@ -204,7 +204,11 @@
 		if("Cn9")	soundfile = 'sound/piano/Cn9.ogg'
 		else		return
 
-	hearers(15, src) << sound(soundfile)
+//	hearers(15, src) << sound(soundfile)
+	var/turf/source = get_turf(src)
+	for(var/mob/M in hearers(15, source))
+		M.playsound_local(source, file(soundfile), 100, falloff = 5)
+
 
 /obj/structure/device/piano/proc/playsong()
 	do
