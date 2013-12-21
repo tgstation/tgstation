@@ -28,7 +28,7 @@
 		if (node)
 			node.initialize()
 			node.build_network()
-		return TRUE
+		return 1
 
 // Housekeeping and pipe network stuff below
 	network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)

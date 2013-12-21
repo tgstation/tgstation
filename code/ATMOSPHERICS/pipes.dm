@@ -657,7 +657,7 @@ obj/machinery/atmospherics/pipe
 			initialize(1)
 			if(!node1&&!node2&&!node3)
 				usr << "\red There's nothing to connect this manifold to! (with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment)"
-				return 1
+				return 0
 			update_icon() // Skipped in initialize()!
 			build_network()
 			if (node1)
@@ -960,6 +960,7 @@ obj/machinery/atmospherics/pipe
 			if (node4)
 				node4.initialize()
 				node4.build_network()
+			return 1
 
 		hide(var/i)
 			if(level == 1 && istype(loc, /turf/simulated))
@@ -1188,6 +1189,7 @@ obj/machinery/atmospherics/pipe
 			if(node)
 				node.initialize()
 				node.build_network()
+			return 1
 
 		hide(var/i)
 			if(level == 1 && istype(loc, /turf/simulated))

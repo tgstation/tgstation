@@ -47,6 +47,7 @@ obj/machinery/atmospherics/tvalve
 		if (node3)
 			node3.initialize()
 			node3.build_network()
+		return 1
 
 	proc/initialize_directions()
 		switch(dir)

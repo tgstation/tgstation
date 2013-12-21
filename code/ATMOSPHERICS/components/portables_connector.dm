@@ -35,7 +35,7 @@
 		if (node)
 			node.initialize()
 			node.build_network()
-		return TRUE
+		return 1
 
 	update_icon()
 		if(node)

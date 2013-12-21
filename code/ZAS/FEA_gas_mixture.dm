@@ -66,6 +66,8 @@ What are the archived variables for?
 	var/tmp/graphics_archived = 0
 	var/tmp/fuel_burnt = 0
 
+	var/datum/reagents/aerosols
+
 //FOR THE LOVE OF GOD PLEASE USE THIS PROC
 //Call it with negative numbers to remove gases.
 
@@ -89,6 +91,10 @@ What are the archived variables for?
 			trace_gases |= G
 	update_values()
 	return
+
+/datum/gas_mixture/proc/create_reagents(var/max_vol)
+	aerosols = new/datum/reagents(max_vol)
+	aerosols.my_atom = src
 
 //tg seems to like using these a lot
 /datum/gas_mixture/proc/return_temperature()
