@@ -333,7 +333,64 @@
 	icon_state = "woodtable"
 
 
-/obj/structure/table/woodentable/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/table/woodentable/attackby(obj/item/I as obj, mob/user as mob)
+
+	if (istype(I, /obj/item/stack/tile/grass))
+		del(I)
+		new /obj/structure/table/woodentable/poker( src.loc )
+		del(src)
+		visible_message("<span class='notice'>[user] adds the grass to the wooden table</span>")
+
+
+	if (istype(I, /obj/item/weapon/grab))
+		var/obj/item/weapon/grab/G = I
+		if(G.affecting.buckled)
+			user << "<span class='notice'>[G.affecting] is buckled to [G.affecting.buckled]!</span>"
+			return
+		if(G.state < GRAB_AGGRESSIVE)
+			user << "<span class='notice'>You need a better grip to do that!</span>"
+			return
+		if(!G.confirm())
+			return
+		G.affecting.loc = src.loc
+		G.affecting.Weaken(5)
+		visible_message("\red [G.assailant] puts [G.affecting] on the table.")
+		del(I)
+		return
+	if (istype(I, /obj/item/weapon/wrench))
+		user << "\blue Now disassembling the wooden table"
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		sleep(50)
+		new /obj/item/weapon/table_parts/wood( src.loc )
+		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		del(src)
+		return
+
+	if(isrobot(user))
+		return
+	if(istype(I, /obj/item/weapon/melee/energy/blade))
+		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		spark_system.set_up(5, 0, src.loc)
+		spark_system.start()
+		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
+		playsound(src.loc, "sparks", 50, 1)
+		for(var/mob/O in viewers(user, 4))
+			O.show_message("\blue The wooden table was sliced apart by [user]!", 1, "\red You hear wood coming apart.", 2)
+		new /obj/item/weapon/table_parts/wood( src.loc )
+		del(src)
+		return
+
+	user.drop_item(src)
+	//if(W && W.loc)	W.loc = src.loc
+	return 1
+
+/obj/structure/table/woodentable/poker //No specialties, Just a mapping object.
+	name = "gambling table"
+	desc = "A seedy table for seedy dealings in seedy places."
+	icon_state = "pokertable"
+
+
+/obj/structure/table/woodentable/poker/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if (istype(W, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = W
@@ -355,6 +412,7 @@
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		sleep(50)
 		new /obj/item/weapon/table_parts/wood( src.loc )
+		new /obj/item/stack/tile/grass( src.loc)
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		del(src)
 		return
@@ -370,17 +428,13 @@
 		for(var/mob/O in viewers(user, 4))
 			O.show_message("\blue The wooden table was sliced apart by [user]!", 1, "\red You hear wood coming apart.", 2)
 		new /obj/item/weapon/table_parts/wood( src.loc )
+		new /obj/item/stack/tile/grass( src.loc)
 		del(src)
 		return
 
 	user.drop_item(src)
-	//if(W && W.loc)	W.loc = src.loc
 	return 1
 
-/obj/structure/table/woodentable/poker //No specialties, Just a mapping object.
-	name = "gambling table"
-	desc = "A seedy table for seedy dealings in seedy places."
-	icon_state = "pokertable"
 
 /*
  * Reinforced tables
