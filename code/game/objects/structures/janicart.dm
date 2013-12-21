@@ -37,10 +37,9 @@
 /obj/structure/janitorialcart/proc/put_in_cart(obj/item/I, mob/user)
 	user.drop_item()
 	I.loc = src
-	update_icon()
 	updateUsrDialog()
 	user << "<span class='notice'>You put [I] into [src].</span>"
-	return I
+	return
 
 
 /obj/structure/janitorialcart/attackby(obj/item/I, mob/user)
@@ -64,7 +63,9 @@
 			user <<  fail_msg
 	else if(istype(I, /obj/item/weapon/reagent_containers/spray/cleaner))
 		if(!myspray)
-			myspray=put_in_cart(I, user)
+			put_in_cart(I, user)
+			myspray=I
+			update_icon()
 		else
 			user << fail_msg
 	else if(istype(I, /obj/item/device/lightreplacer))
@@ -77,6 +78,7 @@
 		if(signs < max_signs)
 			put_in_cart(I, user)
 			signs++
+			update_icon()
 		else
 			user << "<span class='notice'>[src] can't hold any more signs.</span>"
 	else if(mybag)

@@ -199,7 +199,9 @@
 /obj/item/device/lightreplacer/cyborg
 
 /obj/item/device/lightreplacer/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
-	J.myreplacer=J.put_in_cart(src, user)
+	J.put_in_cart(src, user)
+	J.myreplacer = src
+	J.update_icon()
 
 /obj/item/device/lightreplacer/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	return

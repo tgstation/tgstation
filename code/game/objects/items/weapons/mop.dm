@@ -50,7 +50,9 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 
 
 /obj/item/weapon/mop/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
-	J.mymop=J.put_in_cart(src, user)
+	J.put_in_cart(src, user)
+	J.mymop=src
+	J.update_icon()
 
 /obj/item/weapon/mop/cyborg
 

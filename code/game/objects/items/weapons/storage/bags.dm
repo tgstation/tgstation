@@ -51,7 +51,9 @@
 /obj/item/weapon/storage/bag/trash/cyborg
 
 /obj/item/weapon/storage/bag/trash/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
-	J.mybag=J.put_in_cart(src, user)
+	J.put_in_cart(src, user)
+	J.mybag=src
+	J.update_icon()
 
 /obj/item/weapon/storage/bag/trash/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	return
