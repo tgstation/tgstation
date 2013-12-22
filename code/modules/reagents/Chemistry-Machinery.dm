@@ -338,7 +338,7 @@
 			else
 				P = new/obj/item/weapon/reagent_containers/pill(src.loc)
 
-			if(!name) name = reagents.get_master_reagent_name()
+			if(!name) name = "[reagents.get_master_reagent_name()] ([volume] units)"
 			P.name = "[name] pill"
 			P.pixel_x = rand(-7, 7) //random position
 			P.pixel_y = rand(-7, 7)
