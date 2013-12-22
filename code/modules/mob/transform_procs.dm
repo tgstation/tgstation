@@ -29,7 +29,7 @@
 
 	O = new species.primitive(loc)
 
-	O.dna = dna
+	O.dna = dna.Clone()
 	O.dna.SetSEState(MONKEYBLOCK,1)
 	O.loc = loc
 	O.viruses = viruses
