@@ -726,7 +726,7 @@
 			F.burnt	= 1
 			F.intact	= 0
 			F.levelupdate()
-			new /obj/item/stack/tile(H)	// add to holder so it will be thrown with other stuff
+			new /obj/item/stack/tile/plasteel(H)	// add to holder so it will be thrown with other stuff
 			F.icon_state = "Floor[F.burnt ? "1" : ""]"
 
 		if(direction)		// direction is specified
