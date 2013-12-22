@@ -168,5 +168,13 @@
 
 	mymob.client.screen = null
 
+	using = new /obj/screen()
+	using.name = "resist"
+	using.icon = ui_style
+	using.icon_state = "act_resist"
+	using.screen_loc = ui_pull_resist
+	using.layer = 19
+	adding += using
+
 	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.pullin, mymob.blind, mymob.flash, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += adding + other
