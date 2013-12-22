@@ -551,6 +551,10 @@ OSError: cannot identify image file
  - paper2
  - paramedic-eva-helmet
  - paramedic-eva-helmet2
+ - paramedicsoft
+ - paramedicsoft2
+ - paramedicsoft_flipped
+ - paramedicsoft_flipped2
  - petehat2
  - pirate2
  - plaguedoctor2
@@ -1802,7 +1806,9 @@ OSError: cannot identify image file
  + stamp-intaff
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipe-item.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipe-item.dmi
+ - dual-port vent
  - dvalve
+ - injector
  - insulated_manifold
  - insulated_manifold4w
  - thermalplate
@@ -1841,6 +1847,8 @@ OSError: cannot identify image file
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\storage.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\storage.dmi
  + cashbag
+ - largebox
+ - largebox-deployed
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\structures.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\structures.dmi
  + rtableflip0
@@ -1974,6 +1982,8 @@ OSError: cannot identify image file
  - ert_medical
  - ert_security
  - paramedic-eva-helmet
+ - paramedicsoft
+ - paramedicsoft_flipped
  + rig0-ert_commander
  + rig0-ert_engineer
  + rig0-ert_medical
@@ -2037,6 +2047,7 @@ OSError: cannot identify image file
  + hopwhimsy
  + hos_corporate
  - paramedic
+ - paramedic_old
  + polsuit
  + sec_corporate
  + warden_corporate
