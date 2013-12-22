@@ -140,8 +140,10 @@ VOX HEIST ROUNDTYPE
 
 /datum/game_mode/heist/proc/forge_vox_objectives()
 
-	var/i = 1
-	var/max_objectives = pick(2,2,2,2,3,3,3,4)
+
+	//Commented out for testing.
+	/* var/i = 1
+	var/max_objectives = pick(2,2,2,3,3)
 	var/list/objs = list()
 	while(i<= max_objectives)
 		var/list/goals = list("kidnap","loot","salvage")
@@ -162,7 +164,14 @@ VOX HEIST ROUNDTYPE
 
 	//-All- vox raids have these two objectives. Failing them loses the game.
 	objs += new /datum/objective/heist/inviolate_crew
-	objs += new /datum/objective/heist/inviolate_death
+	objs += new /datum/objective/heist/inviolate_death */
+	
+	if(prob(25))
+		raid_objectives += new /datum/objective/heist/kidnap
+	raid_objectives += new /datum/objective/heist/loot
+	raid_objectives += new /datum/objective/heist/salvage
+	raid_objectives += new /datum/objective/heist/inviolate_crew
+	raid_objectives += new /datum/objective/heist/inviolate_death
 
 	for(var/datum/objective/heist/O in raid_objectives)
 		O.choose_target()
