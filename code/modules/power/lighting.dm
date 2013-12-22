@@ -454,6 +454,13 @@
 	src.flicker(1)
 	return
 
+/obj/machinery/light/attack_robot(mob/user)
+	if(isMoMMI(user))
+		return attack_hand(user)
+	else
+		return attack_ai(user)
+
+
 // Aliens smash the bulb but do not get electrocuted./N
 /obj/machinery/light/attack_alien(mob/living/carbon/alien/humanoid/user)//So larva don't go breaking light bulbs.
 	if(status == LIGHT_EMPTY||status == LIGHT_BROKEN)
@@ -489,10 +496,9 @@
 	// make it burn hands if not wearing fire-insulated gloves
 	if(on)
 		var/prot = 0
-		var/mob/living/carbon/human/H = user
 
-		if(istype(H))
-
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
 			if(H.gloves)
 				var/obj/item/clothing/gloves/G = H.gloves
 				if(G.max_heat_protection_temperature)
