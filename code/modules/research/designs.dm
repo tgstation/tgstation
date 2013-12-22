@@ -1917,6 +1917,15 @@ other types of metals and chemistry for reagents).
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/conveyor
 
+/datum/design/bhangmeter
+	name = "Circuit Design (Bhangmeter)"
+	desc = "Allows for the construction of circuit boards used to build a bhangmeter."
+	id = "bhangmeter"
+	req_tech = list("programming" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/bhangmeter
+
 /*
 /datum/design/hydroseeds
 	name = "Circuit Design (MegaSeed Servitor)"
