@@ -298,7 +298,7 @@ var/list/department_radio_keys = list(
 			var/mob/living/simple_animal/parrot/P = A
 			if(P.speech_buffer.len >= 10)
 				P.speech_buffer.Remove(pick(P.speech_buffer))
-			P.speech_buffer.Add(message)
+			P.speech_buffer.Add(html_decode(message))
 
 		if(istype(A, /obj/)) //radio in pocket could work, radio in backpack wouldn't --rastaf0
 			var/obj/O = A

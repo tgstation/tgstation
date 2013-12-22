@@ -10,3 +10,4 @@
 *.rsc
 *.lk
 *.int
+/data/mode.txt

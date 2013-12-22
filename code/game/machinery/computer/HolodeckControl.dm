@@ -1,5 +1,5 @@
 /obj/machinery/computer/HolodeckControl
-	name = "Holodeck Control Console"
+	name = "holodeck control console"
 	desc = "A computer used to control a nearby holodeck."
 	icon_state = "holocontrol"
 	var/area/linkedholodeck = null
@@ -226,7 +226,7 @@
 		if(world.time < (last_change + 15))//To prevent super-spam clicking, reduced process size and annoyance -Sieve
 			return
 		for(var/mob/M in range(3,src))
-			M.show_message("\b ERROR. Recalibrating projetion apparatus.")
+			M.show_message("\b ERROR. Recalibrating projection apparatus.")
 			last_change = world.time
 			return
 
@@ -252,13 +252,14 @@
 		for(var/obj/effect/landmark/L in linkedholodeck)
 			if(L.name=="Atmospheric Test Start")
 				spawn(20)
-					var/turf/T = get_turf(L)
-					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-					s.set_up(2, 1, T)
-					s.start()
-					if(T)
-						T.temperature = 5000
-						T.hotspot_expose(50000,50000,1)
+					if(istype(target,/area/holodeck/source_burntest))
+						var/turf/T = get_turf(L)
+						var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+						s.set_up(2, 1, T)
+						s.start()
+						if(T)
+							T.temperature = 5000
+							T.hotspot_expose(50000,50000,1)
 			if(L.name=="Holocarp Spawn")
 				new /mob/living/simple_animal/hostile/carp(L.loc)
 
@@ -289,7 +290,8 @@
 	thermal_conductivity = 0
 
 /turf/simulated/floor/holofloor/grass
-	name = "Lush Grass"
+	gender = PLURAL
+	name = "lush grass"
 	icon_state = "grass1"
 	floor_tile = new/obj/item/stack/tile/grass
 
@@ -362,7 +364,7 @@
 	damtype = HALLOSS
 
 /obj/item/weapon/holo/esword
-	desc = "May the force be within you. Sorta"
+	desc = "May the force be with you. Sorta"
 	icon_state = "sword0"
 	force = 3.0
 	throw_speed = 1
@@ -474,7 +476,7 @@
 
 
 /obj/machinery/readybutton
-	name = "Ready Declaration Device"
+	name = "ready declaration device"
 	desc = "This device is used to declare ready. If all devices in an area are ready, the event will begin!"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "auth_off"

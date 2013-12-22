@@ -1,5 +1,5 @@
 /obj/machinery/computer/prisoner
-	name = "Prisoner Management Console"
+	name = "prisoner management console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "explosive"
 	req_access = list(access_brig)

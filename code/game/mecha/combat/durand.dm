@@ -1,6 +1,6 @@
 /obj/mecha/combat/durand
 	desc = "An aging combat exosuit utilized by the Nanotrasen corporation. Originally developed to combat hostile alien lifeforms."
-	name = "Durand"
+	name = "\improper Durand"
 	icon_state = "durand"
 	step_in = 4
 	dir_in = 1 //Facing North.

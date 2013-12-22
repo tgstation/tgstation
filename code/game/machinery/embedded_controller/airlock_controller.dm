@@ -205,7 +205,7 @@ obj/machinery/embedded_controller/radio/airlock_controller
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_control_standby"
 
-	name = "Airlock Console"
+	name = "airlock console"
 	density = 0
 
 	frequency = 1449

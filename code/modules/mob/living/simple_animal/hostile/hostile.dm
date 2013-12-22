@@ -25,16 +25,12 @@
 			T = F
 			break
 
+		if(!CanAttack(A))
+			continue
+
 		if(isliving(A))
-			var/mob/living/L = A
-			if(L.faction == src.faction && !attack_same)
-				continue
-			else if(L in friends)
-				continue
-			else
-				if(!L.stat)
-					T = L
-					break
+			T = A
+			break
 
 		else if(istype(A, /obj/mecha)) // Our line of sight stuff was already done in ListTargets().
 			var/obj/mecha/M = A
@@ -43,6 +39,17 @@
 				break
 
 	return T
+
+/mob/living/simple_animal/hostile/CanAttack(var/atom/the_target)
+	if(!..())
+		return 0
+	if(isliving(the_target))
+		var/mob/living/L = the_target
+		if(L.faction == src.faction && !attack_same)
+			return 0
+		else if(L in friends)
+			return 0
+	return 1
 
 /mob/living/simple_animal/hostile/proc/GiveTarget(var/new_target)
 	target = new_target
@@ -58,7 +65,7 @@
 
 /mob/living/simple_animal/hostile/proc/MoveToTarget()
 	stop_automated_movement = 1
-	if(!target || SA_attackable(target))
+	if(!target || !CanAttack(target))
 		LoseTarget()
 	if(target in ListTargets())
 		if(ranged)
@@ -73,7 +80,7 @@
 /mob/living/simple_animal/hostile/proc/AttackTarget()
 
 	stop_automated_movement = 1
-	if(!target || SA_attackable(target))
+	if(!target || !CanAttack(target))
 		LoseTarget()
 		return 0
 	if(!(target in ListTargets()))

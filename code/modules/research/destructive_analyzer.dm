@@ -44,27 +44,14 @@ Note: Must be placed within 3 tiles of the R&D Console
 	if (shocked)
 		shock(user,50)
 	if (istype(O, /obj/item/weapon/screwdriver))
-		if (!opened)
-			opened = 1
-			if(linked_console)
-				linked_console.linked_destroy = null
-				linked_console = null
-			icon_state = "d_analyzer_t"
-			user << "You open the maintenance hatch of [src]."
-		else
-			opened = 0
-			icon_state = "d_analyzer"
-			user << "You close the maintenance hatch of [src]."
+		if(linked_console)
+			linked_console.linked_destroy = null
+			linked_console = null
+		default_deconstruction_screwdriver(user, "d_analyzer_t", "d_analyzer")
 		return
-	if (opened)
+	if (panel_open)
 		if(istype(O, /obj/item/weapon/crowbar))
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
-			M.icon_state = "box_1"
-			for(var/obj/I in component_parts)
-				I.loc = src.loc
-			del(src)
+			default_deconstruction_crowbar()
 			return 1
 		else
 			user << "\red You can't load the [src.name] while it's opened."

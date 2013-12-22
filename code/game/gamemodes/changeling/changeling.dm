@@ -231,6 +231,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/purchasedpowers = list()
 	var/mimicing = ""
 	var/canrespec = 0
+	var/datum/dna/chosen_dna
+	var/chosen_sting
 
 /datum/changeling/New(var/gender=FEMALE)
 	..()

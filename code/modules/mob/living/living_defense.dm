@@ -50,7 +50,7 @@
 		return 2
 	if(!P.nodamage)
 		apply_damage((P.damage/(absorb+1)), P.damage_type, def_zone)
-	P.on_hit(src, absorb)
+	P.on_hit(src, absorb, def_zone)
 	return absorb
 
 /mob/living/hitby(atom/movable/AM)//Standardization and logging -Sieve
@@ -71,9 +71,7 @@
 		var/client/assailant = directory[ckey(O.fingerprintslast)]
 		if(assailant && assailant.mob && istype(assailant.mob,/mob))
 			var/mob/M = assailant.mob
-			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been hit with [O], last touched by [M.name] ([assailant.ckey])</font>")
-			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Hit [src.name] ([src.ckey]) with [O]</font>")
-			log_attack("<font color='red'>[src.name] ([src.ckey]) was hit by [O], last touched by [M.name] ([assailant.ckey])</font>")
+			add_logs(M, src, "hit", object="[O]")
 
 //Mobs on Fire
 /mob/living/proc/IgniteMob()

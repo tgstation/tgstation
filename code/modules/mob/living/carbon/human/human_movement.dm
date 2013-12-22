@@ -19,6 +19,9 @@
 	if(shoes)
 		tally += shoes.slowdown
 
+	if(back)
+		tally += back.slowdown
+
 	if(FAT in src.mutations)
 		tally += 1.5
 	if (bodytemperature < 283.222)
@@ -61,3 +64,9 @@
 
 	prob_slip = round(prob_slip)
 	return(prob_slip)
+
+
+/mob/living/carbon/human/slip(var/s_amount, var/w_amount, var/obj/O, var/lube)
+	if(isobj(shoes) && (shoes.flags&NOSLIP) && !(lube&GALOSHES_DONT_HELP))
+		return 0
+	.=..()

@@ -60,7 +60,7 @@
 				if(!projectile) // step and step_to sleeps so we'll have to check again.
 					break
 
-				if(!proj_lingering && projectile.loc == current_loc) //if it didn't move since last time
+				if(!target || (!proj_lingering && projectile.loc == current_loc)) //if it didn't move since last time
 					del(projectile)
 					break
 

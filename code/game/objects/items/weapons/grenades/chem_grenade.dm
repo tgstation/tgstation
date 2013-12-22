@@ -22,9 +22,8 @@
 
 /obj/item/weapon/grenade/chem_grenade/examine()
 	set src in usr
+	display_timer = (stage == READY && !nadeassembly)	//show/hide the timer based on assembly state
 	..()
-	if(stage == READY && !nadeassembly)
-		usr << "The timer is set to [det_time/10] second\s."
 
 
 /obj/item/weapon/grenade/chem_grenade/attack_self(mob/user)
@@ -118,6 +117,7 @@
 			for(var/obj/O in beakers)
 				O.loc = get_turf(src)
 			beakers = list()
+
 
 
 //assembly stuff
@@ -263,7 +263,7 @@
 		var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 		var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-		B1.reagents.add_reagent("aluminum", 30)
+		B1.reagents.add_reagent("aluminium", 30)
 		B2.reagents.add_reagent("foaming_agent", 10)
 		B2.reagents.add_reagent("pacid", 10)
 
@@ -282,7 +282,7 @@
 		var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 		var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-		B1.reagents.add_reagent("aluminum", 25)
+		B1.reagents.add_reagent("aluminium", 25)
 		B2.reagents.add_reagent("plasma", 25)
 		B2.reagents.add_reagent("sacid", 25)
 

@@ -349,6 +349,7 @@ nanoui is used to open and update nano browser uis
 		window_size = "size=[width]x[height];"
 	update_status(0)
 	user << browse(get_html(), "window=[window_id];[window_size][window_options]")
+	winset(user, "mapwindow.map", "focus=true") // Return keyboard focus to map.
 	on_close_winset()
 	//onclose(user, window_id)
 	nanomanager.ui_opened(src)
@@ -401,7 +402,7 @@ nanoui is used to open and update nano browser uis
 	if (status != STATUS_INTERACTIVE || user != usr) // If UI is not interactive or usr calling Topic is not the UI user
 		return
 
-	if (src_object.Topic(href, href_list))
+	if (src_object && src_object.Topic(href, href_list))
 		nanomanager.update_uis(src_object) // update all UIs attached to src_object
 
  /**
