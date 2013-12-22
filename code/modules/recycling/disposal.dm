@@ -720,11 +720,10 @@
 			H.active = 0
 			H.loc = src
 			return
-		if(istype(T,/turf/simulated/floor && T.intact)) //intact floor, pop the tile
+		if(istype(T,/turf/simulated/floor)) //intact floor, pop the tile
 			var/turf/simulated/floor/F = T
 			//F.health	= 100
-			F.burnt	= 1
-			F.intact	= 0
+			F.break_tile()
 			F.levelupdate()
 			new /obj/item/stack/tile/plasteel(H)	// add to holder so it will be thrown with other stuff
 			F.icon_state = "Floor[F.burnt ? "1" : ""]"
