@@ -90,6 +90,7 @@ var/global/list/datum/dna/gene/dna_genes[0]
 			new_dna.UI[b]=UI[b]
 	new_dna.UpdateUI()
 	new_dna.UpdateSE()
+	return new_dna
 
 ///////////////////////////////////////
 // UNIQUE IDENTITY
