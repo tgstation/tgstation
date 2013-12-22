@@ -3,7 +3,8 @@
 var/global/list/cached_icons = list()
 
 /obj/item/weapon/paint
-	name = "paint can"
+	gender= PLURAL
+	name = "paint"
 	desc = "Used to recolor floors and walls. Can not be removed by the janitor."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "paint_neutral"
@@ -13,43 +14,36 @@ var/global/list/cached_icons = list()
 	var/paintleft = 10
 
 /obj/item/weapon/paint/red
-	gender= PLURAL
 	name = "red paint"
 	item_color = "C73232" //"FF0000"
 	icon_state = "paint_red"
 
 /obj/item/weapon/paint/green
-	gender= PLURAL
 	name = "green paint"
 	item_color = "2A9C3B" //"00FF00"
 	icon_state = "paint_green"
 
 /obj/item/weapon/paint/blue
-	gender= PLURAL
 	name = "blue paint"
 	item_color = "5998FF" //"0000FF"
 	icon_state = "paint_blue"
 
 /obj/item/weapon/paint/yellow
-	gender= PLURAL
 	name = "yellow paint"
 	item_color = "CFB52B" //"FFFF00"
 	icon_state = "paint_yellow"
 
 /obj/item/weapon/paint/violet
-	gender= PLURAL
 	name = "violet paint"
 	item_color = "AE4CCD" //"FF00FF"
 	icon_state = "paint_violet"
 
 /obj/item/weapon/paint/black
-	gender= PLURAL
 	name = "black paint"
 	item_color = "333333"
 	icon_state = "paint_black"
 
 /obj/item/weapon/paint/white
-	gender= PLURAL
 	name = "white paint"
 	item_color = "FFFFFF"
 	icon_state = "paint_white"
