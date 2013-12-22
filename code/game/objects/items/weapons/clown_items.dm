@@ -10,30 +10,17 @@
  */
 /obj/item/weapon/bananapeel/Crossed(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))
-		var/mob/M =	AM
-		if (istype(M, /mob/living/carbon/human) && (isobj(M:shoes) && M:shoes.flags&NOSLIP))
-			return
+		var/mob/living/carbon/M = AM
+		M.slip(4, 2, src)
 
-		M.stop_pulling()
-		M << "\blue You slipped on the [name]!"
-		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
-		M.Stun(4)
-		M.Weaken(2)
 
 /*
  * Soap
  */
 /obj/item/weapon/soap/Crossed(AM as mob|obj) //EXACTLY the same as bananapeel for now, so it makes sense to put it in the same dm -- Urist
 	if (istype(AM, /mob/living/carbon))
-		var/mob/M =	AM
-		if (istype(M, /mob/living/carbon/human) && (isobj(M:shoes) && M:shoes.flags&NOSLIP))
-			return
-
-		M.stop_pulling()
-		M << "\blue You slipped on the [name]!"
-		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
-		M.Stun(3)
-		M.Weaken(2)
+		var/mob/living/carbon/M = AM
+		M.slip(3, 2, src)
 
 /obj/item/weapon/soap/afterattack(atom/target, mob/user as mob, proximity)
 	if(!proximity) return

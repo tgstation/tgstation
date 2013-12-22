@@ -95,8 +95,8 @@
 				C.auto_turn()
 
 				C.network = tempnetwork
-
-				C.c_tag = "[get_area_name(src)] ([rand(1, 999)]"
+				var/area/A = get_area_master(src)
+				C.c_tag = "[A.name] ([rand(1, 999)]"
 
 				for(var/i = 5; i >= 0; i -= 1)
 					var/direct = input(user, "Direction?", "Assembling Camera", null) in list("LEAVE IT", "NORTH", "EAST", "SOUTH", "WEST" )

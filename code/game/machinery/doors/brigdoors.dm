@@ -14,7 +14,7 @@
 //  Programmer: Veryinky
 /////////////////////////////////////////////////////////////////////////////////////////////////
 /obj/machinery/door_timer
-	name = "Door Timer"
+	name = "door timer"
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
 	desc = "A remote control for a door."

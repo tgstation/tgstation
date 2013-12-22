@@ -11,6 +11,8 @@ var/const/WIRE_ACTIVATE = 16	// Will start a bombs timer if pulsed, will hint if
 
 /datum/wires/syndicatebomb/UpdatePulsed(var/index)
 	var/obj/machinery/syndicatebomb/P = holder
+	if(P.degutted)
+		return
 	switch(index)
 		if(WIRE_BOOM)
 			if (P.active)
@@ -47,6 +49,8 @@ var/const/WIRE_ACTIVATE = 16	// Will start a bombs timer if pulsed, will hint if
 
 /datum/wires/syndicatebomb/UpdateCut(var/index, var/mended)
 	var/obj/machinery/syndicatebomb/P = holder
+	if(P.degutted)
+		return
 	switch(index)
 		if(WIRE_EXPLODE)
 			if(!mended)

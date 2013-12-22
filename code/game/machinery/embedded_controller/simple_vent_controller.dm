@@ -42,7 +42,7 @@
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_control_standby"
 
-	name = "Vent Controller"
+	name = "vent controller"
 	density = 0
 
 	frequency = 1229

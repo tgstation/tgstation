@@ -12,12 +12,16 @@
 	severity = "Medium"
 	longevity = 1000
 	hidden = list(0, 1)
+	requires = 1
+	required_limb = list(/obj/item/organ/limb/chest)
 
 /datum/disease/appendicitis/stage_act()
 	..()
+
 	switch(stage)
 		if(1)
-			if(prob(5)) affected_mob.emote("cough")
+			if(prob(5))
+				affected_mob.emote("cough")
 		if(2)
 			var/obj/item/organ/appendix/A = affected_mob.getorgan(/obj/item/organ/appendix)
 			if(A)
@@ -42,3 +46,4 @@
 					affected_mob << "<span class='warning'>You gag as you want to throw up, but there's nothing in your stomach!</span>"
 					affected_mob.Weaken(10)
 					affected_mob.adjustToxLoss(3)
+

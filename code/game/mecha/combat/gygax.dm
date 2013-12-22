@@ -1,6 +1,6 @@
 /obj/mecha/combat/gygax
 	desc = "A lightweight, security exosuit. Popular among private and corporate security."
-	name = "Gygax"
+	name = "\improper Gygax"
 	icon_state = "gygax"
 	step_in = 3
 	dir_in = 1 //Facing North.
@@ -17,20 +17,21 @@
 
 /obj/mecha/combat/gygax/dark
 	desc = "A lightweight exosuit, painted in a dark scheme. This model appears to have some modifications."
-	name = "Dark Gygax"
+	name = "\improper Dark Gygax"
 	icon_state = "darkgygax"
 	health = 300
 	deflect_chance = 15
 	damage_absorption = list("brute"=0.6,"fire"=0.8,"bullet"=0.6,"laser"=0.5,"energy"=0.65,"bomb"=0.8)
 	max_temperature = 35000
 	overload_coeff = 1
+	operation_req_access = list(access_syndicate)
 	wreckage = /obj/structure/mecha_wreckage/gygax/dark
 	max_equip = 4
 	step_energy_drain = 5
 
 /obj/mecha/combat/gygax/dark/loaded/New()
 	..()
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang
 	ME.attach(src)

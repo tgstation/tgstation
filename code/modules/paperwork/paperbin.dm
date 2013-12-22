@@ -76,11 +76,11 @@
 
 /obj/item/weapon/paper_bin/examine()
 	set src in oview(1)
-
+	..()
 	if(amount)
-		usr << "<span class='notice'>There " + (amount > 1 ? "are [amount] papers" : "is one paper") + " in the bin.</span>"
+		usr << "It contains " + (amount > 1 ? "[amount] papers" : " one paper")+"."
 	else
-		usr << "<span class='notice'>There are no papers in the bin.</span>"
+		usr << "It doesn't contain anything."
 
 
 /obj/item/weapon/paper_bin/update_icon()

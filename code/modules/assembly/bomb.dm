@@ -156,6 +156,7 @@
 		ground_zero.assume_air(air_contents)
 		ground_zero.hotspot_expose(1000, 125)
 
+	air_update_turf()
 	if(master)
 		del(master)
 	del(src)
@@ -166,3 +167,4 @@
 	if(!T)
 		return
 	T.assume_air(removed)
+	air_update_turf()

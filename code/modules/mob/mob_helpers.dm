@@ -264,17 +264,20 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 
 /proc/shake_camera(mob/M, duration, strength=1)
-	if(!M || !M.client || M.shakecamera)
-		return
-	spawn(1)
+	spawn(0)
+		if(!M || !M.client || M.shakecamera)
+			return
 		var/oldeye=M.client.eye
 		var/x
 		M.shakecamera = 1
 		for(x=0; x<duration, x++)
-			M.client.eye = locate(dd_range(1,M.loc.x+rand(-strength,strength),world.maxx),dd_range(1,M.loc.y+rand(-strength,strength),world.maxy),M.loc.z)
-			sleep(1)
-		M.shakecamera = 0
-		M.client.eye=oldeye
+			if(M && M.client)
+				M.client.eye = locate(dd_range(1,M.loc.x+rand(-strength,strength),world.maxx),dd_range(1,M.loc.y+rand(-strength,strength),world.maxy),M.loc.z)
+				sleep(1)
+		if(M)
+			M.shakecamera = 0
+			if(M.client)
+				M.client.eye=oldeye
 
 
 /proc/findname(msg)
@@ -287,7 +290,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 
 /mob/proc/abiotic(full_body = 0)
-	if(l_hand && !l_hand.abstract || r_hand && !r_hand.abstract)
+	if(l_hand && !l_hand.flags&ABSTRACT || r_hand && !r_hand.flags&ABSTRACT)
 		return 1
 	return 0
 

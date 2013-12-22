@@ -32,7 +32,7 @@
 	if(opened)
 		msg += "<span class='warning'>Its cover is open and the power cell is [cell ? "installed" : "missing"].</span>\n"
 	else
-		msg += "Its cover is closed.\n"
+		msg += "Its cover is closed[locked ? "" : ", and looks unlocked"].\n"
 
 	switch(src.stat)
 		if(CONSCIOUS)

@@ -113,8 +113,8 @@
 			if(parent.shoes)
 				parent.shoes.armor[armorvar] = parent.armor[armorvar]
 
-	centcomm
-		name = "CentComm power armor reactive plating"
+	Centcom
+		name = "Centcom power armor reactive plating"
 		desc = "Pretty effective against everything, not perfect though."
 		togglearmor = list(melee = 90, bullet = 70, laser = 60,energy = 40, bomb = 75, bio = 75, rad = 75)
 		slowdown = 2

@@ -258,7 +258,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 */
 
 /obj/machinery/telecomms/receiver
-	name = "Subspace Receiver"
+	name = "subspace receiver"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "broadcast receiver"
 	desc = "This machine has a dish-like shape and green lights. It is designed to detect and process subspace radio activity."
@@ -315,7 +315,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 */
 
 /obj/machinery/telecomms/hub
-	name = "Telecommunication Hub"
+	name = "telecommunication hub"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "hub"
 	desc = "A mighty piece of hardware used to send/receive massive amounts of data."
@@ -350,7 +350,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 */
 
 /obj/machinery/telecomms/relay
-	name = "Telecommunication Relay"
+	name = "telecommunication relay"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "relay"
 	desc = "A mighty piece of hardware used to send massive amounts of data far away."
@@ -402,7 +402,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 */
 
 /obj/machinery/telecomms/bus
-	name = "Bus Mainframe"
+	name = "bus mainframe"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bus"
 	desc = "A mighty piece of hardware used to send massive amounts of data quickly."
@@ -455,7 +455,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 */
 
 /obj/machinery/telecomms/processor
-	name = "Processor Unit"
+	name = "processor unit"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "processor"
 	desc = "This machine is used to process large quantities of information."
@@ -494,7 +494,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 
 /obj/machinery/telecomms/server
-	name = "Telecommunication Server"
+	name = "telecommunication server"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "comm_server"
 	desc = "A machine used to store data and network statistics."

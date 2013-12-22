@@ -16,7 +16,7 @@ obj/machinery/atmospherics/binary/volume_pump
 	icon = 'icons/obj/atmospherics/volume_pump.dmi'
 	icon_state = "intact_off"
 
-	name = "Volumetric gas pump"
+	name = "volumetric gas pump"
 	desc = "A volumetric pump"
 
 	can_unwrench = 1

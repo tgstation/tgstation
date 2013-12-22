@@ -2544,7 +2544,7 @@ ________________________________________________________________________________
 					U.client.images += image(tempHud,target,"hudninja")
 				else//If we don't know what role they have but they have one.
 					U.client.images += image(tempHud,target,"hudunknown1")
-		else//If the silicon mob has no law datum, no inherent laws, or a law zero, add them to the hud.
+		else if(issilicon(target))//If the silicon mob has no law datum, no inherent laws, or a law zero, add them to the hud.
 			var/mob/living/silicon/silicon_target = target
 			if(!silicon_target.laws||(silicon_target.laws&&(silicon_target.laws.zeroth||!silicon_target.laws.inherent.len)))
 				if(isrobot(silicon_target))//Different icons for robutts and AI.

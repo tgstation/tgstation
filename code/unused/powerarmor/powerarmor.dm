@@ -268,7 +268,7 @@ obj/item/clothing/suit/powered/spawnable/regular
 	New()
 		servos = new /obj/item/powerarmor/servos(src)
 		servos.parent = src
-		reactive = new /obj/item/powerarmor/reactive/centcomm(src)
+		reactive = new /obj/item/powerarmor/reactive/centcom(src)
 		reactive.parent = src
 		atmoseal = new /obj/item/powerarmor/atmoseal/optional/adminbus(src)
 		atmoseal.parent = src

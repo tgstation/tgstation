@@ -94,15 +94,21 @@
 			if(href_list["choice"] == "station")
 				var/datum/shuttle_manager/s = shuttles["laborcamp"]
 				if(s.location == /area/shuttle/laborcamp/outpost)
-					if (s.move_shuttle())
-						usr << "\blue Shuttle recieved message and will be sent shortly."
+					if(alone_in_area(get_area(loc), usr))
+						if (s.move_shuttle(0)) // No delay, to stop people from getting on while it is departing.
+							usr << "\blue Shuttle recieved message and will be sent shortly."
+						else
+							usr << "\blue Shuttle is already moving."
 					else
-						usr << "\blue Shuttle is already moving."
+						usr << "\red Prisoners are only allowed to be released while alone."
 				else
 					usr << "\blue Shuttle is already on-station."
 			if(href_list["choice"] == "release")
-				if(release_door.density)
-					release_door.open()
+				if(alone_in_area(get_area(loc), usr))
+					if(release_door.density)
+						release_door.open()
+				else
+					usr << "\red Prisoners are only allowed to be released while alone."
 		src.updateUsrDialog()
 	return
 

@@ -35,14 +35,13 @@
 	return
 
 /obj/structure/alien/resin/Move()
-	air_update_turf(1)
+	var/turf/T = loc
 	..()
-	air_update_turf(1)
-	return
+	move_update_air(T)
 
 /obj/structure/alien/resin/CanAtmosPass()
 	return !density
-	
+
 /obj/structure/alien/resin/wall
 	name = "resin wall"
 	desc = "Purple slime solidified into a wall."
@@ -140,6 +139,7 @@
 #define NODERANGE 3
 
 /obj/structure/alien/weeds
+	gender = PLURAL
 	name = "weeds"
 	desc = "Weird purple weeds."
 	icon_state = "weeds"
@@ -376,6 +376,7 @@
  * Acid
  */
 /obj/effect/acid
+	gender = PLURAL
 	name = "acid"
 	desc = "Burbling corrossive stuff."
 	icon = 'icons/effects/effects.dmi'

@@ -16,6 +16,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	var/canhear_range = 3 // the range which mobs can hear this radio from
 	var/obj/item/device/radio/patch_link = null
 	var/datum/wires/radio/wires = null
+	var/prison_radio = 0
 	var/b_stat = 0
 	var/broadcasting = 0
 	var/listening = 1
@@ -49,6 +50,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/New()
 	wires = new(src)
+	if(prison_radio)
+		wires.CutWireIndex(WIRE_TRANSMIT)
 	secure_radio_connections = new
 	..()
 	if(radio_controller)
