@@ -22,6 +22,7 @@
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user)
 	..()
+	add_fingerprint(user)
 	if(istype(W,/obj/item/weapon/cable_coil))
 		var/obj/item/weapon/cable_coil/CC = W
 		if(CC.amount < 5)
@@ -29,7 +30,8 @@
 			return
 		CC.use(5)
 		user << "\blue You attach wire to the [name]."
-		new /obj/item/stack/light_w(user.loc)
+		var/obj/item/stack/light_w/new_tile = new(user.loc)
+		new_tile.add_fingerprint(user)
 		src.use(1)
 	else if( istype(W, /obj/item/stack/rods) )
 		var/obj/item/stack/rods/V  = W
@@ -89,6 +91,7 @@
 			W.anchored = 0
 			W.air_update_turf(1)
 			src.use(1)
+			W.add_fingerprint(user)
 		if("Full Window")
 			if(!src)	return 1
 			if(src.loc != user)	return 1
@@ -104,6 +107,7 @@
 			W.ini_dir = SOUTHWEST
 			W.anchored = 0
 			W.air_update_turf(1)
+			W.add_fingerprint(user)
 			src.use(2)
 	return 0
 
@@ -172,44 +176,46 @@
 			W.dir = dir_to_set
 			W.ini_dir = W.dir
 			W.anchored = 0
+			W.add_fingerprint(user)
 			src.use(1)
 
 		if("Full Window")
 			if(!src)	return 1
 			if(src.loc != user)	return 1
 			if(src.amount < 2)
-				user << "\red You need more glass to do that."
+				user << "<span class='warning'>You need more glass to do that.</span>"
 				return 1
 			if(locate(/obj/structure/window) in user.loc)
-				user << "\red There is a window in the way."
+				user << "<span class='warning'>There is a window in the way.</span>"
 				return 1
 			var/obj/structure/window/W
-			W = new /obj/structure/window/reinforced( user.loc, 1 )
+			W = new /obj/structure/window/reinforced(user.loc, 1)
 			W.state = 0
 			W.dir = SOUTHWEST
 			W.ini_dir = SOUTHWEST
 			W.anchored = 0
+			W.add_fingerprint(user)
 			src.use(2)
 
 		if("Windoor")
 			if(!src || src.loc != user) return 1
 
 			if(isturf(user.loc) && locate(/obj/structure/windoor_assembly/, user.loc))
-				user << "\red There is already a windoor assembly in that location."
+				user << "<span class='warning'>There is already a windoor assembly in that location.</span>"
 				return 1
 
 			if(isturf(user.loc) && locate(/obj/machinery/door/window/, user.loc))
-				user << "\red There is already a windoor in that location."
+				user << "<span class='warning'>There is already a windoor in that location.</span>"
 				return 1
 
 			if(src.amount < 5)
-				user << "\red You need more glass to do that."
+				user << "<span class='warning'>You need more glass to do that.</span>"
 				return 1
 
-			var/obj/structure/windoor_assembly/WD
-			WD = new /obj/structure/windoor_assembly(user.loc)
+			var/obj/structure/windoor_assembly/WD = new(user.loc)
 			WD.state = "01"
 			WD.anchored = 0
+			WD.add_fingerprint(user)
 			src.use(5)
 			switch(user.dir)
 				if(SOUTH)
@@ -221,7 +227,7 @@
 				if(WEST)
 					WD.dir = WEST
 					WD.ini_dir = WEST
-				else//If the user is facing northeast. northwest, southeast, southwest or north, default to north
+				else //If the user is facing northeast. northwest, southeast, southwest or north, default to north
 					WD.dir = NORTH
 					WD.ini_dir = NORTH
 		else
