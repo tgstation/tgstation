@@ -327,7 +327,10 @@
 				reagents.clear_reagents()
 				icon_state = "mixer0"
 		else if (href_list["createpill"])
-			var/name = reject_bad_text(input(usr,"Name:","Name your pill!",reagents.get_master_reagent_name()))
+			var/volume = reagents.total_volume
+			if (volume > 50)
+				volume = 50
+			var/name = reject_bad_text(input(usr,"Name:","Name your pill!","[reagents.get_master_reagent_name()] ([volume] units)"))
 			var/obj/item/weapon/reagent_containers/pill/P
 
 			if(loaded_pill_bottle && loaded_pill_bottle.contents.len < loaded_pill_bottle.storage_slots)
@@ -335,7 +338,7 @@
 			else
 				P = new/obj/item/weapon/reagent_containers/pill(src.loc)
 
-			if(!name) name = reagents.get_master_reagent_name()
+			if(!name) name = "[reagents.get_master_reagent_name()] ([volume] units)"
 			P.name = "[name] pill"
 			P.pixel_x = rand(-7, 7) //random position
 			P.pixel_y = rand(-7, 7)
