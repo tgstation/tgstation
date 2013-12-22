@@ -3,9 +3,8 @@
 	///////////////////////
 /* Keep these comments up-to-date if you -insist- on hurting my code-baby ;_;
 This system allows you to update individual mob-overlays, without regenerating them all each time.
-When we generate overlays we generate the standing version and then rotate the mob as necessary. This is only done via update_icons().
 
-As of the time of writing there are 20 layers within this list. Please try to keep this from increasing.
+As of the time of writing there are 20 layers within this list. Please try to keep this from increasing. //22 and counting.
 	var/overlays_standing[20]		//For the standing stance
 
 Most of the time we only wish to update one overlay:
@@ -20,8 +19,6 @@ Note: Recent changes by aranclanos+carn:
 	update_icons() no longer needs to be called.
 	This unfortunately means that cloaking is not working properly at time of writing,
 	however the system is easier to use. update_icons() should not be called unless you absolutely -know- you need it.
-	One such example would be when var/lying changes state (because every overlay needs to be updated, but not regenerated). In these
-	very specific cases, update_icons() will be faster than calling each update_X proc individually.
 	IN ALL OTHER CASES it's better to just call the specific update_X procs.
 
 All of this means that this code is more maintainable, faster and still fairly easy to use.
@@ -53,8 +50,13 @@ There are several things that need to be remembered:
 	The idea behind it is icons are regenerated only once, even if multiple events requested it.
 	//NOTE: fairly unused, maybe this could be removed?
 
-If you have any questions/constructive-comments/bugs-to-report
-Please contact me on #coderbus IRC. ~Carnie x
+Dear Carnie,
+	I'm sorry your code was mangled this way. It was really good. The current code is pretty messy, not at all like what you left us with. Still,
+I feel the added features were worth the loss of maintainability. If you never add features, what's the point of making the code "perfect"?
+Might not feel that way in 2016 and this proc is 1000 lines long, but we'll cross that bridge when we come to it.
+	Thanks
+	MrPerson
+
 */
 
 //Human Overlays Indexes/////////
@@ -265,35 +267,23 @@ Please contact me on #coderbus IRC. ~Carnie x
 /mob/living/carbon/human/proc/update_augments()
 	remove_overlay(AUGMENTS_LAYER)
 
-	var/list/lying		= list()
 	var/list/standing	= list()
-
 
 	if(getlimb(/obj/item/organ/limb/robot/r_arm))
 		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="r_arm_s", "layer"=-AUGMENTS_LAYER)
-		lying		+= image("icon"='icons/mob/augments.dmi', "icon_state"="r_arm_l", "layer"=-AUGMENTS_LAYER)
 	if(getlimb(/obj/item/organ/limb/robot/l_arm))
 		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="l_arm_s", "layer"=-AUGMENTS_LAYER)
-		lying		+= image("icon"='icons/mob/augments.dmi', "icon_state"="l_arm_l", "layer"=-AUGMENTS_LAYER)
 
 	if(getlimb(/obj/item/organ/limb/robot/r_leg))
 		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="r_leg_s", "layer"=-AUGMENTS_LAYER)
-		lying		+= image("icon"='icons/mob/augments.dmi', "icon_state"="r_leg_l", "layer"=-AUGMENTS_LAYER)
 	if(getlimb(/obj/item/organ/limb/robot/l_leg))
 		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="l_leg_s", "layer"=-AUGMENTS_LAYER)
-		lying		+= image("icon"='icons/mob/augments.dmi', "icon_state"="l_leg_l", "layer"=-AUGMENTS_LAYER)
 
 	if(getlimb(/obj/item/organ/limb/robot/chest))
 		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="chest_s", "layer"=-AUGMENTS_LAYER)
-		lying		+= image("icon"='icons/mob/augments.dmi', "icon_state"="chest_l", "layer"=-AUGMENTS_LAYER)
 	if(getlimb(/obj/item/organ/limb/robot/head))
 		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="head_s", "layer"=-AUGMENTS_LAYER)
-		lying		+= image("icon"='icons/mob/augments.dmi', "icon_state"="head_l", "layer"=-AUGMENTS_LAYER)
 
-
-
-	if(lying.len)
-		overlays_lying[AUGMENTS_LAYER]		= lying
 	if(standing.len)
 		overlays_standing[AUGMENTS_LAYER]	= standing
 
