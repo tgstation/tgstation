@@ -19,7 +19,7 @@
 		H.equip_to_slot_or_drop(new /obj/item/clothing/shoes/black(H), slot_shoes)
 		H.equip_to_slot_or_drop(new /obj/item/device/pda/medical(H), slot_belt)
 		H.equip_to_slot_or_drop(new /obj/item/clothing/mask/cigarette(H), slot_wear_mask)
-		H.equip_to_slot_or_drop(new /obj/item/clothing/head/soft/blue(H), slot_head)
+		H.equip_to_slot_or_drop(new /obj/item/clothing/head/soft/paramedic(H), slot_head)
 		H.equip_to_slot_or_drop(new /obj/item/device/flashlight/pen(H), slot_s_store)
 		if(H.backbag == 1)
 			H.equip_to_slot_or_drop(new /obj/item/weapon/storage/box/engineer(H), slot_r_hand)
