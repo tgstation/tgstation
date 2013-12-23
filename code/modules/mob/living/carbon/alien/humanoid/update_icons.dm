@@ -6,35 +6,36 @@
 /////////////////////////////////
 
 /mob/living/carbon/alien/humanoid
-	var/list/overlays_lying[X_TOTAL_LAYERS]
 	var/list/overlays_standing[X_TOTAL_LAYERS]
 
 /mob/living/carbon/alien/humanoid/update_icons()
-	lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
 	update_hud()		//TODO: remove the need for this to be here
 	overlays.Cut()
+	for(var/image/I in overlays_standing)
+		overlays += I
+
 	if(stat == DEAD)
 		//If we mostly took damage from fire
 		if(fireloss > 125)
 			icon_state = "alien[caste]_husked"
 		else
 			icon_state = "alien[caste]_dead"
-		for(var/image/I in overlays_lying)
-			overlays += I
-	else if(lying)
-		if(resting)
-			icon_state = "alien[caste]_sleep"
-		else if(stat == UNCONSCIOUS)
-			icon_state = "alien[caste]_unconscious"
-		else
-			icon_state = "alien[caste]_l"
-		for(var/image/I in overlays_lying)
-			overlays += I
+	else if(resting)
+		icon_state = "alien[caste]_sleep"
+	else if(stat == UNCONSCIOUS)
+		icon_state = "alien[caste]_unconscious"
+	else if(m_intent == "run")
+		icon_state = "alien[caste]_running"
 	else
-		if(m_intent == "run")		icon_state = "alien[caste]_running"
-		else						icon_state = "alien[caste]_s"
-		for(var/image/I in overlays_standing)
-			overlays += I
+		icon_state = "alien[caste]_s"
+
+/mob/living/carbon/alien/humanoid/update_transform()
+	var/matrix/M = matrix(transform)
+	var/final_easing = EASE_IN|EASE_OUT
+	if(lying != lying_prev)
+		M.TurnTo(lying_prev,lying)
+		lying_prev = lying	//so we don't try to animate until there's been another change.
+	animate(src,transform = M,time = 5, easing = final_easing)
 
 /mob/living/carbon/alien/humanoid/regenerate_icons()
 	..()
@@ -45,6 +46,7 @@
 	update_inv_pockets(0)
 	update_hud()
 	update_icons()
+	update_transform()
 	update_fire()
 
 /mob/living/carbon/alien/humanoid/update_hud()
@@ -87,18 +89,12 @@
 		update_icons()
 
 /mob/living/carbon/alien/humanoid/update_fire()
-	overlays -= overlays_lying[X_FIRE_LAYER]
 	overlays -= overlays_standing[X_FIRE_LAYER]
 	if(on_fire)
-		overlays_lying[X_FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="Lying", "layer"= -X_FIRE_LAYER)
 		overlays_standing[X_FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing", "layer"= -X_FIRE_LAYER)
-		if(src.lying)
-			overlays += overlays_lying[X_FIRE_LAYER]
-		else
-			overlays += overlays_standing[X_FIRE_LAYER]
+		overlays += overlays_standing[X_FIRE_LAYER]
 		return
 	else
-		overlays_lying[X_FIRE_LAYER] = null
 		overlays_standing[X_FIRE_LAYER] = null
 
 //Xeno Overlays Indexes//////////
