@@ -259,3 +259,12 @@
 	item_color = "sundress"
 	body_parts_covered = CHEST|GROIN
 	fitted = 0
+
+/obj/item/clothing/under/maid
+	name = "maid uniform"
+	desc = "You have the urge to put this on and act submissively"
+	icon_state = "meido"
+	item_state = "meido"
+	item_color = "meido"
+	body_parts_covered = CHEST|GROIN
+	fitted = 0
