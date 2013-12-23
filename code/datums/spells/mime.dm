@@ -35,6 +35,8 @@
 /obj/effect/proc_holder/spell/targeted/mime/speak/Click()
 	if(!usr)
 		return
+	if(!ishuman(usr))
+		return
 	var/mob/living/carbon/human/H = usr
 	if(H.miming)
 		still_recharging_msg = "<span class='notice'>You can't break your vow of silence that fast!</span>"
