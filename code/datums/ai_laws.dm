@@ -74,7 +74,7 @@
 /* Initializers */
 /datum/ai_laws/malfunction/New()
 	..()
-	switch(DEFAULT_LAWS) //We don't want people metagaming malf, do we?
+	switch(config.default_laws) //We don't want people metagaming malf, do we?
 		if(0)
 			add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
 			add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
@@ -85,6 +85,12 @@
 				if(findtextEx(line,"#",1,2))	continue
 
 				add_inherent_law(line)
+			if(!inherent.len)
+				error("AI created with empty custom laws, laws set to Asimov. Please check silicon_laws.txt.")
+				log_law("AI created with empty custom laws, laws set to Asimov. Please check silicon_laws.txt.")
+				add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
+				add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
+				add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
 		if(2)
 			var/datum/ai_laws/lawtype = pick(typesof(/datum/ai_laws/default) - /datum/ai_laws/default)
 			var/datum/ai_laws/templaws = new lawtype()
@@ -98,6 +104,12 @@
 		if(findtextEx(line,"#",1,2))	continue
 
 		add_inherent_law(line)
+	if(!inherent.len) //Failsafe to prevent lawless AIs being created.
+		error("AI created with empty custom laws, laws set to Asimov. Please check silicon_laws.txt.")
+		log_law("AI created with empty custom laws, laws set to Asimov. Please check silicon_laws.txt.")
+		add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
+		add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
+		add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
 
 /* General ai_law functions */
 

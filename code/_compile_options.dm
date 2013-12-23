@@ -38,9 +38,6 @@
 // AI Toggles
 #define AI_CAMERA_LUMINOSITY	5
 #define AI_VOX 1 // Comment out if you don't want VOX to be enabled and have players download the voice sounds.
-#define DEFAULT_LAWS 1 	/*  0 if you just want to use default asimov.
-							1 if you want to use silicon_laws.txt for AI laws.
-							2 if you want to randomly select a lawset from: Asimov, Corporate, Tyrant, Paladin */
 
 
 //Additional code for the above flags.

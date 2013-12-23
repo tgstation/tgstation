@@ -281,7 +281,7 @@ AI MODULES
 /obj/item/weapon/aiModule/core/full/custom
 	name = "Custom Core AI Module"
 	desc = "A core AI module that is adjusted to fit each station's needs."
-	origin_tech = "programming=3;materials=4" //Should be the same as asimov.
+	origin_tech = "programming=3;materials=4" //Should be the same as asimov, considering that this is the "default" lawset.
 
 /obj/item/weapon/aiModule/core/full/custom/New()
 	..()
@@ -290,6 +290,10 @@ AI MODULES
 		if(findtextEx(line,"#",1,2))	continue
 
 		laws += line
+
+	if(!laws.len) //Failsafe if something goes wrong with silicon_laws.txt.
+		warning("ERROR: empty custom board created, empty custom board deleted. Please check silicon_laws.txt.")
+		del(src)
 
 /****************** T.Y.R.A.N.T. *****************/
 

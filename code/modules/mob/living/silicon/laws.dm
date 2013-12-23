@@ -34,7 +34,7 @@
 	laws.clear_ion_laws()
 
 /mob/living/silicon/proc/make_laws()
-	switch(DEFAULT_LAWS)
+	switch(config.default_laws)
 		if(0)	laws = new /datum/ai_laws/default/asimov()
 		if(1)	laws = new /datum/ai_laws/custom()
 		if(2)
