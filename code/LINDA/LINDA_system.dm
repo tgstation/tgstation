@@ -32,15 +32,21 @@ datum/controller/air_system
 	if(kill_air)
 		return 1
 
-	for(var/i=0,i<speed,i++)
-		current_cycle++
-
-		process_active_turfs()
-		process_excited_groups()
-		process_high_pressure_delta()
-		process_hotspots()
-		process_super_conductivity()
+	if(speed > 1)
+		for(var/i=0,i<speed,i++)
+			spawn((10/speed)*i)
+				process_air()
+	else
+		process_air()
 	return 1
+
+/datum/controller/air_system/proc/process_air()
+	current_cycle++
+	process_active_turfs()
+	process_excited_groups()
+	process_high_pressure_delta()
+	process_hotspots()
+	process_super_conductivity()
 
 /datum/controller/air_system/proc/process_hotspots()
 	for(var/obj/effect/hotspot/H in hotspots)
