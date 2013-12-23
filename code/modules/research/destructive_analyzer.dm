@@ -25,8 +25,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 /obj/machinery/r_n_d/destructive_analyzer/RefreshParts()
 	var/T = 0
 	for(var/obj/item/weapon/stock_parts/S in src)
-		T += S.rating * 0.1
-	T = Clamp(T, 0, 1)
+		T += S.rating
 	decon_mod = T
 
 /obj/machinery/r_n_d/destructive_analyzer/meteorhit()
@@ -72,7 +71,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		if (temp_tech.len == 0)
 			user << "\red You cannot deconstruct this item!"
 			return
-		if(O.reliability < 90 && O.crit_fail == 0)
+		if(O.reliability < (99-(decon_mod*3)) && O.crit_fail == 0)
 			usr << "\red Item is neither reliable enough or broken enough to learn from."
 			return
 		busy = 1

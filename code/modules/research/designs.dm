@@ -22,7 +22,7 @@ The currently supporting non-reagent materials:
 Don't add new keyword/IDs if they are made from an existing one (such as rods which are made from metal). Only add raw materials.
 
 Design Guidlines
-- The reliability formula for all R&D built items is reliability_base (a fixed number) + total tech levels required to make it +
+- The reliability formula for all R&D built items is reliability (a fixed number) + total tech levels required to make it +
 reliability_mod (starts at 0, gets improved through experimentation). Example: PACMAN generator. 79 base reliablity + 6 tech
 (3 plasmatech, 3 powerstorage) + 0 (since it's completely new) = 85% reliability. Reliability is the chance it works CORRECTLY.
 - When adding new designs, check rdreadme.dm to see what kind of things have already been made and where new stuff is needed.
@@ -43,9 +43,7 @@ datum/design						//Datum for object designs, used in construction
 	var/name = "Name"					//Name of the created object.
 	var/desc = "Desc"					//Description of the created object.
 	var/id = "id"						//ID of the created object for easy refernece. Alphanumeric, lower-case, no symbols
-	var/list/req_tech = list()			//IDs of that techs the object originated from and the minimum level requirements.
-	var/reliability_mod = 0				//Reliability modifier of the device at it's starting point.
-	var/reliability_base = 100			//Base reliability of a device before modifiers.
+	var/list/req_tech = list()			//IDs of that techs the object originated from and the minimum level requirements.			//Reliability modifier of the device at it's starting point.
 	var/reliability = 100				//Reliability of the device.
 	var/build_type = null				//Flag as to what kind machine the design is built in. See defines.
 	var/list/materials = list()			//List of materials. Format: "id" = amount.
@@ -57,11 +55,11 @@ datum/design						//Datum for object designs, used in construction
 //A proc to calculate the reliability of a design based on tech levels and innate modifiers.
 //Input: A list of /datum/tech; Output: The new reliabilty.
 datum/design/proc/CalcReliability(var/list/temp_techs)
-	var/new_reliability = reliability_mod + reliability_base
+	var/new_reliability
 	for(var/datum/tech/T in temp_techs)
 		if(T.id in req_tech)
 			new_reliability += T.level
-	new_reliability = Clamp(new_reliability, reliability_base, 100)
+	new_reliability = Clamp(new_reliability, reliability, 100)
 	reliability = new_reliability
 	return
 
@@ -996,7 +994,7 @@ datum/design/super_capacitor
 	id = "super_capacitor"
 	req_tech = list("powerstorage" = 5, "materials" = 4)
 	build_type = PROTOLATHE
-	reliability_base = 71
+	reliability = 71
 	materials = list("$metal" = 50, "$glass" = 50, "$gold" = 20)
 	build_path = "/obj/item/weapon/stock_parts/capacitor/super"
 
@@ -1007,7 +1005,7 @@ datum/design/phasic_scanning
 	req_tech = list("magnets" = 5, "materials" = 3)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 20, "$silver" = 10)
-	reliability_base = 72
+	reliability = 72
 	build_path = "/obj/item/weapon/stock_parts/scanning_module/phasic"
 
 datum/design/pico_mani
@@ -1017,7 +1015,7 @@ datum/design/pico_mani
 	req_tech = list("materials" = 5, "programming" = 2)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 30)
-	reliability_base = 73
+	reliability = 73
 	build_path = "/obj/item/weapon/stock_parts/manipulator/pico"
 
 datum/design/ultra_micro_laser
@@ -1027,7 +1025,7 @@ datum/design/ultra_micro_laser
 	req_tech = list("magnets" = 5, "materials" = 5)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 10, "$glass" = 20, "$uranium" = 10)
-	reliability_base = 70
+	reliability = 70
 	build_path = "/obj/item/weapon/stock_parts/micro_laser/ultra"
 
 datum/design/super_matter_bin
@@ -1037,7 +1035,7 @@ datum/design/super_matter_bin
 	req_tech = list("materials" = 5)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 80)
-	reliability_base = 75
+	reliability = 75
 	build_path = "/obj/item/weapon/stock_parts/matter_bin/super"
 
 
@@ -1134,7 +1132,7 @@ datum/design/super_cell
 	desc = "A power cell that holds 20000 units of energy"
 	id = "super_cell"
 	req_tech = list("powerstorage" = 3, "materials" = 2)
-	reliability_base = 75
+	reliability = 75
 	build_type = PROTOLATHE | MECHFAB
 	materials = list("$metal" = 700, "$glass" = 70)
 	build_path = "/obj/item/weapon/cell/super"
@@ -1145,7 +1143,7 @@ datum/design/hyper_cell
 	desc = "A power cell that holds 30000 units of energy"
 	id = "hyper_cell"
 	req_tech = list("powerstorage" = 5, "materials" = 4)
-	reliability_base = 70
+	reliability = 70
 	build_type = PROTOLATHE | MECHFAB
 	materials = list("$metal" = 400, "$gold" = 150, "$silver" = 150, "$glass" = 70)
 	build_path = "/obj/item/weapon/cell/hyper"
@@ -1247,7 +1245,7 @@ datum/design/pacman
 	id = "pacman"
 	req_tech = list("programming" = 3, "plasmatech" = 3, "powerstorage" = 3, "engineering" = 3)
 	build_type = IMPRINTER
-	reliability_base = 79
+	reliability = 79
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/pacman"
 
@@ -1257,7 +1255,7 @@ datum/design/superpacman
 	id = "superpacman"
 	req_tech = list("programming" = 3, "powerstorage" = 4, "engineering" = 4)
 	build_type = IMPRINTER
-	reliability_base = 76
+	reliability = 76
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/pacman/super"
 
@@ -1267,7 +1265,7 @@ datum/design/mrspacman
 	id = "mrspacman"
 	req_tech = list("programming" = 3, "powerstorage" = 5, "engineering" = 5)
 	build_type = IMPRINTER
-	reliability_base = 74
+	reliability = 74
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/pacman/mrs"
 
@@ -1283,7 +1281,7 @@ datum/design/mass_spectrometer
 	req_tech = list("biotech" = 2, "magnets" = 2)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 30, "$glass" = 20)
-	reliability_base = 76
+	reliability = 76
 	build_path = "/obj/item/device/mass_spectrometer"
 
 datum/design/adv_mass_spectrometer
@@ -1293,7 +1291,7 @@ datum/design/adv_mass_spectrometer
 	req_tech = list("biotech" = 2, "magnets" = 4)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 30, "$glass" = 20)
-	reliability_base = 74
+	reliability = 74
 	build_path = "/obj/item/device/mass_spectrometer/adv"
 
 datum/design/mmi
@@ -1303,7 +1301,7 @@ datum/design/mmi
 	req_tech = list("programming" = 2, "biotech" = 3)
 	build_type = PROTOLATHE | MECHFAB
 	materials = list("$metal" = 1000, "$glass" = 500)
-	reliability_base = 76
+	reliability = 76
 	build_path = "/obj/item/device/mmi"
 	category = "Misc"
 
@@ -1314,7 +1312,7 @@ datum/design/mmi_radio
 	req_tech = list("programming" = 2, "biotech" = 4)
 	build_type = PROTOLATHE | MECHFAB
 	materials = list("$metal" = 1200, "$glass" = 500)
-	reliability_base = 74
+	reliability = 74
 	build_path = "/obj/item/device/mmi/radio_enabled"
 	category = "Misc"
 
@@ -1325,7 +1323,7 @@ datum/design/synthetic_flash
 	req_tech = list("magnets" = 3, "combat" = 2)
 	build_type = MECHFAB
 	materials = list("$metal" = 750, "$glass" = 750)
-	reliability_base = 76
+	reliability = 76
 	build_path = "/obj/item/device/flash/synthetic"
 	category = "Misc"
 
@@ -1336,7 +1334,7 @@ datum/design/bluespacebeaker
 	req_tech = list("bluespace" = 2, "materials" = 6)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 3000, "$plasma" = 3000, "$diamond" = 500)
-	reliability_base = 76
+	reliability = 76
 	build_path = "/obj/item/weapon/reagent_containers/glass/beaker/bluespace"
 	category = "Misc"
 
@@ -1347,7 +1345,7 @@ datum/design/noreactbeaker
 	req_tech = list("materials" = 2)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 3000)
-	reliability_base = 76
+	reliability = 76
 	build_path = "/obj/item/weapon/reagent_containers/glass/beaker/noreact"
 	category = "Misc"
 
@@ -1362,7 +1360,7 @@ datum/design/nuclear_gun
 	req_tech = list("combat" = 3, "materials" = 5, "powerstorage" = 3)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 5000, "$glass" = 1000, "$uranium" = 500)
-	reliability_base = 76
+	reliability = 76
 	build_path = "/obj/item/weapon/gun/energy/gun/nuclear"
 	locked = 1
 
@@ -1403,7 +1401,7 @@ datum/design/chemsprayer
 	req_tech = list("combat" = 3, "materials" = 3, "engineering" = 3, "biotech" = 2)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 5000, "$glass" = 1000)
-	reliability_base = 100
+	reliability = 100
 	build_path = "/obj/item/weapon/chemsprayer"
 */
 datum/design/rapidsyringe
@@ -1450,7 +1448,7 @@ datum/design/large_grenade
 	req_tech = list("combat" = 3, "materials" = 2)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 3000)
-	reliability_base = 79
+	reliability = 79
 	build_path = "/obj/item/weapon/grenade/chem_grenade/large"
 
 datum/design/smg
@@ -1529,7 +1527,7 @@ datum/design/plasmacutter
 	req_tech = list("materials" = 4, "plasmatech" = 3, "engineering" = 3)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 1500, "$glass" = 500, "$gold" = 500, "$plasma" = 500)
-	reliability_base = 79
+	reliability = 79
 	build_path = "/obj/item/weapon/pickaxe/plasmacutter"
 
 datum/design/pick_diamond
@@ -1548,7 +1546,7 @@ datum/design/drill_diamond
 	req_tech = list("materials" = 6, "powerstorage" = 4, "engineering" = 4)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 3000, "$glass" = 1000, "$diamond" = 3750) //Yes, a whole diamond is needed.
-	reliability_base = 79
+	reliability = 79
 	build_path = "/obj/item/weapon/pickaxe/diamonddrill"
 
 datum/design/mesons
@@ -1580,7 +1578,7 @@ datum/design/bag_holding
 	req_tech = list("bluespace" = 4, "materials" = 6)
 	build_type = PROTOLATHE
 	materials = list("$gold" = 3000, "$diamond" = 1500, "$uranium" = 250)
-	reliability_base = 80
+	reliability = 80
 	build_path = "/obj/item/weapon/storage/backpack/holding"
 
 datum/design/bluespace_crystal
@@ -1590,7 +1588,7 @@ datum/design/bluespace_crystal
 	req_tech = list("bluespace" = 4, "materials" = 6)
 	build_type = PROTOLATHE
 	materials = list("$diamond" = 1500, "$plasma" = 1500)
-	reliability_base = 100
+	reliability = 100
 	build_path = "/obj/item/bluespace_crystal/artificial"
 
 /////////////////////////////////////////
