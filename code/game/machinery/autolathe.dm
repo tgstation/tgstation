@@ -347,12 +347,12 @@ var/global/list/autolathe_recipes_hidden = list( \
 	New()
 		..()
 		component_parts = list()
-		component_parts += new /obj/item/weapon/circuitboard/autolathe(src)
-		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-		component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-		component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
+		component_parts += new /obj/item/weapon/circuitboard/autolathe(null)
+		component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+		component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+		component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+		component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+		component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 		RefreshParts()
 
 		src.L = autolathe_recipes
