@@ -481,4 +481,4 @@
 /mob/living/simple_animal/revive()
 	..()
 	icon_state = icon_living
-	density = 1
+	density = initial(density)
