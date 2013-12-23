@@ -2818,7 +2818,7 @@
 "bcj" = (/obj/machinery/vending/cigarette,/turf/simulated/floor/wood,/area/bridge/meeting_room)
 "bck" = (/obj/machinery/light,/turf/simulated/floor/bluegrid,/area/turret_protected/ai)
 "bcl" = (/obj/machinery/camera/motion{c_tag = "AI Chamber South"; dir = 1; name = "motion-sensitive security camera"; network = list("RD")},/turf/simulated/floor{icon_state = "dark"},/area/turret_protected/ai)
-"bcm" = (/obj/structure/rack,/obj/item/weapon/tank/jetpack/oxygen,/obj/item/clothing/mask/gas,/obj/item/clothing/suit/armor/captain,/obj/item/clothing/head/helmet/space/capspace,/obj/item/device/radio/intercom{dir = 8; freerange = 1; name = "Station Intercom (Command)"; pixel_x = -28},/turf/simulated/floor/wood,/area/crew_quarters/captain)
+"bcm" = (/obj/structure/rack,/obj/item/weapon/tank/jetpack/oxygen,/obj/item/clothing/mask/gas,/obj/item/clothing/suit/space/captain,/obj/item/clothing/head/helmet/space/capspace,/obj/item/device/radio/intercom{dir = 8; freerange = 1; name = "Station Intercom (Command)"; pixel_x = -28},/turf/simulated/floor/wood,/area/crew_quarters/captain)
 "bcn" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor/wood,/area/crew_quarters/captain)
 "bco" = (/obj/machinery/computer/card,/obj/item/weapon/card/id/captains_spare,/turf/simulated/floor/wood,/area/crew_quarters/captain)
 "bcp" = (/obj/structure/table/woodentable,/obj/machinery/recharger,/obj/item/weapon/melee/chainofcommand,/turf/simulated/floor/wood,/area/crew_quarters/captain)
