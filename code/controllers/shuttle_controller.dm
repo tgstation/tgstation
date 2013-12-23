@@ -158,7 +158,7 @@ datum/shuttle_controller
 					captain_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.")
 				else if(location == TRANSIT)
 					move_shuttles()
-					message_admins("Shuttles have attempted to move to Centcom")
+					//message_admins("Shuttles have attempted to move to Centcom")
 					location = ENDGAME
 					online = 0
 					endtime = null
