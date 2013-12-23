@@ -100,6 +100,8 @@
 			size = "bulky"
 		if(5.0)
 			size = "huge"
+		if(6.0)
+			size = "gigantic"
 		else
 	//if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
 	usr << "This is a [src.blood_DNA ? "bloody " : ""]\icon[src][src.name]. It is a [size] item."

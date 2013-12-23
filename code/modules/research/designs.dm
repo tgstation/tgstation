@@ -900,10 +900,10 @@ datum/design/basic_capacitor
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = "/obj/item/weapon/stock_parts/capacitor"
 
-datum/design/basic_sensor
-	name = "Basic Sensor Module"
+datum/design/basic_scanning
+	name = "Basic Scanning Module"
 	desc = "A stock part used in the construction of various devices."
-	id = "basic_sensor"
+	id = "basic_scanning"
 	req_tech = list("magnets" = 1)
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list("$metal" = 50, "$glass" = 20)
@@ -945,10 +945,10 @@ datum/design/adv_capacitor
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = "/obj/item/weapon/stock_parts/capacitor/adv"
 
-datum/design/adv_sensor
-	name = "Advanced Sensor Module"
+datum/design/adv_scanning
+	name = "Advanced Scanning Module"
 	desc = "A stock part used in the construction of various devices."
-	id = "adv_sensor"
+	id = "adv_scanning"
 	req_tech = list("magnets" = 3)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 20)
@@ -991,10 +991,10 @@ datum/design/super_capacitor
 	materials = list("$metal" = 50, "$glass" = 50, "$gold" = 20)
 	build_path = "/obj/item/weapon/stock_parts/capacitor/super"
 
-datum/design/phasic_sensor
-	name = "Phasic Sensor Module"
+datum/design/phasic_scanning
+	name = "Phasic Scanning Module"
 	desc = "A stock part used in the construction of various devices."
-	id = "phasic_sensor"
+	id = "phasic_scanning"
 	req_tech = list("magnets" = 5, "materials" = 3)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 20, "$silver" = 10)

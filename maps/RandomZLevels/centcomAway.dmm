@@ -664,7 +664,7 @@
 "mN" = (/obj/machinery/door/airlock/centcom,/turf/simulated/floor{icon_state = "floor"},/area/awaymission/centcomAway/hangar)
 "mO" = (/obj/machinery/door/airlock/centcom,/turf/simulated/floor{icon_state = "floor"},/area/awaymission/centcomAway/general)
 "mP" = (/obj/machinery/door/airlock/centcom{name = "Centcom Security"; opacity = 1; req_access_txt = "101"},/turf/simulated/floor{icon_state = "dark"},/area/awaymission/centcomAway/general)
-"mQ" = (/obj/structure/safe/floor,/obj/item/clothing/under/rank/centcom_officer,/obj/item/clothing/suit/det_suit,/obj/item/weapon/gun/projectile/mateba,/turf/simulated/floor{icon_state = "grimy"},/area/awaymission/centcomAway/general)
+"mQ" = (/obj/structure/safe/floor,/obj/item/clothing/under/rank/centcom_officer,/obj/item/clothing/suit/det_suit,/obj/item/weapon/gun/projectile/revolver/mateba,/turf/simulated/floor{icon_state = "grimy"},/area/awaymission/centcomAway/general)
 "mR" = (/obj/machinery/door/airlock/centcom,/turf/simulated/floor{tag = "icon-vault (NORTHEAST)"; icon_state = "vault"; dir = 5},/area/awaymission/centcomAway/hangar)
 "mS" = (/obj/machinery/door/airlock/external,/turf/simulated/floor{tag = "icon-vault (NORTHEAST)"; icon_state = "vault"; dir = 5},/area/awaymission/centcomAway/hangar)
 "mT" = (/obj/machinery/door/airlock/external,/turf/simulated/floor{icon_state = "dark"},/area/awaymission/centcomAway/hangar)

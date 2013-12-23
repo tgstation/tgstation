@@ -257,7 +257,7 @@ turf/simulated/floor/proc/update_icon()
 
 /turf/simulated/floor/proc/burn_tile()
 	if(istype(src,/turf/simulated/floor/engine)) return
-	if(istype(src,/turf/simulated/floor/plating/airless/asteroid)) return//Asteroid tiles don't burn
+	if(istype(src,/turf/simulated/floor/plating/asteroid/airless)) return//Asteroid tiles don't burn
 	if(broken || burnt) return
 	if(is_plasteel_floor())
 		src.icon_state = "damaged[pick(1,2,3,4,5)]"

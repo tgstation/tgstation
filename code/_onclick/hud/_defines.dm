@@ -23,7 +23,8 @@
 //Lower left, persistant menu
 #define ui_inventory "1:6,1:5"
 
-//changeling chem indicator
+//Middle left indicators
+#define ui_alienplasmadisplay "14:28,8:13"
 #define ui_lingchemdisplay "1,7:15"
 
 //Lower center, persistant menu

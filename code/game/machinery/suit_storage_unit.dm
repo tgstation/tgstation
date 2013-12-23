@@ -419,15 +419,26 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/verb/get_out()
-	set name = "Eject Suit Storage Unit"
-	set category = "Object"
-	set src in oview(1)
+/obj/machinery/suit_storage_unit/container_resist()
+	var/mob/living/user = usr
+	if(islocked)
+		user.next_move = world.time + 100
+		user.last_special = world.time + 100
+		var/breakout_time = 2
+		user << "<span class='notice'>You start kicking against the doors to escape! (This will take about [breakout_time] minutes.)</span>"
+		visible_message("You see [user] kicking against the doors of the [src]!")
+		if(do_after(user,(breakout_time*60*10)))
+			if(!user || user.stat != CONSCIOUS || user.loc != src || isopen || !islocked)
+				return
+			else
+				isopen = 1
+				islocked = 0
+				visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
 
-	if (usr.stat != 0)
-		return
-	src.eject_occupant(usr)
-	add_fingerprint(usr)
+		else
+			return
+	src.eject_occupant(user)
+	add_fingerprint(user)
 	src.updateUsrDialog()
 	src.update_icon()
 	return

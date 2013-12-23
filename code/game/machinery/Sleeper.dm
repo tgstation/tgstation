@@ -65,6 +65,8 @@
 
 		dat += "<A href='?src=\ref[src];refresh=1'>Scan</A>"
 
+		dat += "<A href='?src=\ref[src];eject=1'>Eject occupant</A>"
+
 		dat += "<h3>Injector</h3>"
 		if(occupant)
 			dat += "<A href='?src=\ref[src];inap=1'>Inject Inaprovaline</A>"
@@ -92,7 +94,11 @@
 		return
 	usr.set_machine(src)
 	if(connected && connected.occupant)
-		if(connected.occupant.health > 0)
+		if(href_list["eject"])
+			connected.eject()
+			updateUsrDialog()
+			return
+		else if(connected.occupant.health > 0)
 			if(href_list["inap"])
 				connected.inject_inap(usr)
 			if(href_list["stox"])
@@ -294,14 +300,10 @@
 		var/units = round(occupant.reagents.get_reagent_amount("dexalin"))
 		user << "<span class='notice'>Occupant now has [units] unit\s of dexalin in their bloodstream.</span>"
 
+/obj/machinery/sleeper/container_resist()
+	eject()
 
-/obj/machinery/sleeper/verb/eject()
-	set name = "Eject occupant"
-	set category = "Object"
-	set src in oview(1)
-	if(usr.stat || isslime(usr) || ispAI(usr))
-		return
-	icon_state = "sleeper-open"
+/obj/machinery/sleeper/proc/eject()
 	go_out()
 	add_fingerprint(usr)
 

@@ -221,6 +221,14 @@
 		log_game("[key_name(user)] fired Space lube from a chem sprayer.")
 	return
 
+/obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror/New()
+	..()
+	reagents.add_reagent("spore", 150)
+	reagents.add_reagent("cryptobiolin", 150)
+	reagents.add_reagent("mutagen", 150)
+	reagents.add_reagent("chloralhydrate", 150)
+
+
 // Plant-B-Gone
 /obj/item/weapon/reagent_containers/spray/plantbgone // -- Skie
 	name = "Plant-B-Gone"
