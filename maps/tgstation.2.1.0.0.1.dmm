@@ -9569,7 +9569,7 @@
 "dCa" = (/obj/machinery/atmospherics/unary/vent_scrubber{dir = 8; on = 1; scrub_Toxins = 1},/obj/machinery/firealarm{dir = 4; pixel_x = 24},/obj/machinery/alarm/isolation{pixel_y = 24},/turf/simulated/floor,/area/research_outpost/iso3)
 "dCb" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/turf/simulated/floor/plating,/area/research_outpost/maintstore2)
 "dCc" = (/obj/machinery/atmospherics/pipe/simple{_color = "red"; icon_state = "intact-r-f"; level = 1; name = "pipe"},/obj/structure/reagent_dispensers/fueltank,/turf/simulated/floor/plating,/area/research_outpost/maintstore2)
-"dCd" = (/obj/structure/disposalpipe/segment,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/turf/simulated/floor{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/research_outpost/longtermstorage)
+"dCd" = (/obj/structure/disposalpipe/segment,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/obj/machinery/alarm{dir = 4; icon_state = "alarm0"; pixel_x = -22},/turf/simulated/floor{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/research_outpost/longtermstorage)
 "dCe" = (/turf/simulated/wall/r_wall,/area/research_outpost/longtermstorage)
 "dCf" = (/obj/structure/sign/nosmoking_2{pixel_y = -32},/obj/machinery/camera{c_tag = "Research Outpost Exotic Particles Lab"; dir = 4; network = list("RD","SS13")},/turf/simulated/floor{dir = 4; icon_state = "warning"},/area/research_outpost/harvesting)
 "dCg" = (/obj/machinery/alarm{dir = 1; pixel_y = -24},/turf/simulated/floor{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/research_outpost/harvesting)
