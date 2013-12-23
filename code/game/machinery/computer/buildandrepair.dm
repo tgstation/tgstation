@@ -324,12 +324,13 @@
 				src.state = 1
 				src.icon_state = "1"
 			if(istype(P, /obj/item/weapon/cable_coil))
-				if(P:amount >= 5)
+				var/obj/item/weapon/cable_coil/C = P
+				if(C.amount >= 5)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
-						if(P)
-							P:amount -= 5
-							if(!P:amount) del(P)
+						if(C && C.amount >= 5)
+							C.amount -= 5
+							if(C.amount <= 0) del(C)
 							user << "<span class='notice'>You add cables to the frame.</span>"
 							src.state = 3
 							src.icon_state = "3"
