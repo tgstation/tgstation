@@ -32,6 +32,11 @@
 		if(5 to INFINITY) overlays += "plasma-5"
 
 
+/obj/structure/dispenser/attack_robot(mob/user as mob)
+	if(isMoMMI(user))
+		return attack_hand(user)
+	return ..()
+
 /obj/structure/dispenser/attack_hand(mob/user as mob)
 	user.set_machine(src)
 	var/dat = "[src]<br><br>"
