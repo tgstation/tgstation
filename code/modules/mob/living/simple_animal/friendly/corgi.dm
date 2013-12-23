@@ -266,16 +266,24 @@
 			valid = 1
 
 		if(/obj/item/clothing/head/helmet/space/santahat)
-			name = "Rudolph the Red-Nosed Corgi"
-			emote_hear = list("barks christmas songs", "yaps")
-			desc = "He has a very shiny nose."
-			SetLuminosity(4)
+			name = "Santa's Corgi Helper"
+			emote_hear = list("barks christmas songs", "yaps merrily")
+			emote_see = list("looks for presents", "checks his list")
+			desc = "He's very fond of milk and cookies."
 			valid = 1
 
 		if(/obj/item/clothing/head/soft)
 			name = "Corgi Tech [real_name]"
 			desc = "The reason your yellow gloves have chew-marks."
 			valid = 1
+
+		if(/obj/item/clothing/head/hardhat/reindeer)
+			name = "[real_name] the red-nosed Corgi"
+			emote_hear = list("lights the way", "illuminates", "yaps")
+			desc = "He has a very shiny nose."
+			SetLuminosity(1)
+			valid = 1
+
 
 	if(valid)
 		if(usr)
