@@ -515,6 +515,8 @@ obj/machinery/atmospherics/pipe
 			return null
 
 		attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+			if(istype(W, /obj/item/weapon/pipe_dispenser) || istype(W, /obj/item/device/pipe_painter))
+				return // Coloring pipes.
 			if (istype(W, /obj/item/device/analyzer) && get_dist(user, src) <= 1)
 				for (var/mob/O in viewers(user, null))
 					O << "\red [user] has used the analyzer on \icon[icon]"
@@ -1247,6 +1249,8 @@ obj/machinery/atmospherics/pipe
 
 
 obj/machinery/atmospherics/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	if(istype(W, /obj/item/weapon/pipe_dispenser) || istype(W, /obj/item/device/pipe_painter))
+		return // Coloring pipes.
 	if (istype(src, /obj/machinery/atmospherics/pipe/tank))
 		return ..()
 	if (istype(src, /obj/machinery/atmospherics/pipe/vent))

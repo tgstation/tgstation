@@ -1234,6 +1234,7 @@
 #include "code\modules\research\xenoarchaeology\finds\finds_fossils.dm"
 #include "code\modules\research\xenoarchaeology\finds\finds_misc.dm"
 #include "code\modules\research\xenoarchaeology\finds\finds_talkingitem.dm"
+#include "code\modules\research\xenoarchaeology\finds2\finds2.dm"
 #include "code\modules\research\xenoarchaeology\machinery\analysis_accelerator.dm"
 #include "code\modules\research\xenoarchaeology\machinery\analysis_base.dm"
 #include "code\modules\research\xenoarchaeology\machinery\analysis_fourier_transform.dm"

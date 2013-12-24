@@ -76,17 +76,17 @@ var/global/list/RPD_recipes=list(
 		"Manual T-Valve" = new /datum/pipe_info(19, 2, PIPE_TRINARY),
 	),
 	"Devices"=list(
-		"Connector"     = new /datum/pipe_info(4, 1, PIPE_UNARY),
-		"Unary Vent"    = new /datum/pipe_info(7, 1, PIPE_UNARY),
-		"Gas Pump"      = new /datum/pipe_info(9, 1, PIPE_UNARY),
-		"Passive Gate"  = new /datum/pipe_info(15,1, PIPE_UNARY),
-		"Volume Pump"   = new /datum/pipe_info(16,1, PIPE_UNARY),
-		"Scrubber"      = new /datum/pipe_info(10,1, PIPE_UNARY),
-		"Meter"         = new /datum/pipe_info/meter(),
-		"Gas Filter"    = new /datum/pipe_info(13,1, PIPE_TRINARY),
-		"Gas Mixer"     = new /datum/pipe_info(14,1, PIPE_TRINARY),
-		"Thermal Plate" = new /datum/pipe_info(PIPE_THERMAL_PLATE,1, PIPE_UNARY),
-		"Injector"      = new /datum/pipe_info(PIPE_INJECTOR,     1, PIPE_UNARY),
+		"Connector"      = new /datum/pipe_info(4, 1, PIPE_UNARY),
+		"Unary Vent"     = new /datum/pipe_info(7, 1, PIPE_UNARY),
+		"Gas Pump"       = new /datum/pipe_info(9, 1, PIPE_UNARY),
+		"Passive Gate"   = new /datum/pipe_info(15,1, PIPE_UNARY),
+		"Volume Pump"    = new /datum/pipe_info(16,1, PIPE_UNARY),
+		"Scrubber"       = new /datum/pipe_info(10,1, PIPE_UNARY),
+		"Meter"          = new /datum/pipe_info/meter(),
+		"Gas Filter"     = new /datum/pipe_info(13,1, PIPE_TRINARY),
+		"Gas Mixer"      = new /datum/pipe_info(14,1, PIPE_TRINARY),
+		"Thermal Plate"  = new /datum/pipe_info(PIPE_THERMAL_PLATE,1, PIPE_UNARY),
+		"Injector"       = new /datum/pipe_info(PIPE_INJECTOR,     1, PIPE_UNARY),
 	),
 	"Heat Exchange" = list(
 		"Pipe"           = new /datum/pipe_info(2,1, PIPE_BINARY),
@@ -95,8 +95,8 @@ var/global/list/RPD_recipes=list(
 		"Heat Exchanger" = new /datum/pipe_info(17,1, PIPE_UNARY),
 	),
 	"Insulated Pipes" = list(
-		"Pipe"      = new /datum/pipe_info(11,1, PIPE_BINARY),
-		"Bent Pipe" = new /datum/pipe_info(12,5, PIPE_BENT),
+		"Pipe"           = new /datum/pipe_info(11,1, PIPE_BINARY),
+		"Bent Pipe"      = new /datum/pipe_info(12,5, PIPE_BENT),
 	),
 	"Disposal Pipes" = list(
 		"Pipe"       = new /datum/pipe_info/disposal(0, PIPE_BINARY),
@@ -132,6 +132,16 @@ var/global/list/RPD_recipes=list(
 	var/p_dir = 1
 	var/p_class = 0
 	var/p_disposal = 0
+	var/list/paint_colors = list(
+		"grey"   = "#cccccc",
+		"red"    = "#800000",
+		"blue"   = "#000080",
+		"cyan"   = "#1C94C4",
+		"green"  = "#00CC00",
+		"yellow" = "#FFCC00",
+		"purple" = "purple"
+	)
+	var/paint_color="grey"
 
 /obj/item/weapon/pipe_dispenser/New()
 	src.spark_system = new /datum/effect/effect/system/spark_spread
@@ -153,7 +163,7 @@ var/global/list/RPD_recipes=list(
 <b>Utilities:</b>
 <ul>
 	<li><a href='?src=\ref[src];eatpipes=1;type=-1'>Eat Pipes</a></li>
-	<!--<li><a href='?src=\ref[src];paintpipes=1;type=-1'>Paint Pipes</a></li>-->
+	<li><a href='?src=\ref[src];paintpipes=1;type=-1'>Paint Pipes</a></li>
 </ul>"}
 	var/icon/preview=null
 	for(var/category in RPD_recipes)
@@ -171,8 +181,33 @@ var/global/list/RPD_recipes=list(
 				preview=new /icon(I.icon,I.icon_state)
 			dat += I.Render(src,label)
 		dat += "</ul>"
+
+	var/color_css=""
+	var/color_picker=""
+	for(var/color_name in paint_colors)
+		var/color=paint_colors[color_name]
+		color_css += {"
+			a.color.[color_name] {
+				color: [color];
+			}
+			a.color.[color_name]:hover {
+				border:1px solid [color];
+			}
+			a.color.[color_name].selected {
+				background-color: [color];
+			}
+		"}
+		var/selected=""
+		if(color_name==paint_color)
+			selected = " selected"
+		color_picker += {"<a class="color [color_name][selected]" href="?src=\ref[src];set_color=[color_name]">&bull;</a>"}
+
 	var/dirsel="<h2>Direction</h2>"
 	switch(p_conntype)
+		if(-1)
+			if(p_class==-2)
+				dirsel = "<h2>Direction</h2>[color_picker]"
+
 		if(PIPE_BINARY) // Straight, N-S, W-E
 			if(preview)
 				user << browse_rsc(new /icon(preview, dir=NORTH), "vertical.png")
@@ -259,29 +294,38 @@ var/global/list/RPD_recipes=list(
 			<a href="?src=\ref[src];setdir=[WEST]" title="West">&larr;</a>
 		</p>
 					"}
+
 	dat = {"
 <html>
 	<head>
 		<title>[name]</title>
 		<style type="text/css">
-html {
-	font-family:sans-serif;
-	font-size:small;
-}
-a{
-	color:#0066cc;
-	text-decoration:none;
-}
+			html {
+				font-family:sans-serif;
+				font-size:small;
+			}
+			a{
+				color:#0066cc;
+				text-decoration:none;
+			}
 
-a img {
-	border:1px solid #0066cc;
-}
+			a img {
+				border:1px solid #0066cc;
+			}
 
-a.selected img,
-a:hover {
-	background: #0066cc;
-	color: #ffffff;
-}
+			a.color {
+				padding: 5px 10px;
+				font-size: large;
+				font-weight: bold;
+				border:1px solid white;
+			}
+
+			a.selected img,
+			a:hover {
+				background: #0066cc;
+				color: #ffffff;
+			}
+			[color_css]
 		</style>
 	</head>
 	<body>
@@ -307,6 +351,20 @@ a:hover {
 		p_class = -1
 		p_conntype=-1
 		p_dir=1
+		src.spark_system.start()
+		playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
+		show_menu(usr)
+
+	if(href_list["paintpipes"])
+		p_class = -2
+		p_conntype=-1
+		p_dir=1
+		src.spark_system.start()
+		playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
+		show_menu(usr)
+
+	if(href_list["set_color"])
+		paint_color=href_list["set_color"]
 		src.spark_system.start()
 		playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
 		show_menu(usr)
@@ -345,6 +403,17 @@ a:hover {
 		return 0
 
 	switch(p_class)
+		if(-2) // Paint pipes
+			if(!istype(A,/obj/machinery/atmospherics/pipe) || istype(A,/obj/machinery/atmospherics/pipe/tank) || istype(A,/obj/machinery/atmospherics/pipe/vent) || istype(A,/obj/machinery/atmospherics/pipe/simple/heat_exchanging) || istype(A,/obj/machinery/atmospherics/pipe/simple/insulated))
+				// Avoid spewing errors about invalid mode -2 when clicking on stuff that aren't pipes.
+				user << "\The [src]'s error light flickers.  Perhaps you need to only use it on pipes and pipe meters?"
+				return 0
+			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+			var/obj/machinery/atmospherics/pipe/P = A
+			P._color = paint_color
+			user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
+			P.update_icon()
+			return 1
 		if(-1) // Eating pipes
 			// Must click on an actual pipe or meter.
 			if(istype(A,/obj/item/pipe) || istype(A,/obj/item/pipe_meter) || istype(A,/obj/structure/disposalconstruct))
