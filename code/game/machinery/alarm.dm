@@ -1021,7 +1021,7 @@
 		var/input_temperature = input("What temperature would you like the system to maintain? (Capped between [min_temperature]C and [max_temperature]C)", "Thermostat Controls") as num|null
 		if(input_temperature==null)
 			return
-		if(!input_temperature || input_temperature > max_temperature || input_temperature < min_temperature)
+		if(!input_temperature || input_temperature >= max_temperature || input_temperature <= min_temperature)
 			usr << "Temperature must be between [min_temperature]C and [max_temperature]C"
 		else
 			target_temperature = input_temperature + T0C
