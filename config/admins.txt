@@ -50,3 +50,4 @@ ergosavi = Game Master
 vistapowa = Game Master
 miauw62 = Game Master
 kazeespada = Game Master
+rumia29 = Game Master
