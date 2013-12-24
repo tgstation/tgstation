@@ -783,3 +783,9 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define VAMP_SLAVE   11
 #define VAMP_BLINK   12
 #define VAMP_FULL    13
+
+// Moved from machine_interactions.dm
+#define STATION_Z  1
+#define CENTCOMM_Z 2
+#define TELECOMM_Z 3
+#define ASTEROID_Z 5

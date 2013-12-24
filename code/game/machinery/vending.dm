@@ -80,7 +80,8 @@
 
 /obj/machinery/vending/proc/reconnect_database()
 	for(var/obj/machinery/account_database/DB in world)
-		if(DB.z == src.z)
+		// FIXME: If we're on asteroid z-level, use whatever's on the station. - N3X
+		if(DB.z == src.z || (src.z == ASTEROID_Z && DB.z == STATION_Z))
 			linked_db = DB
 			break
 
