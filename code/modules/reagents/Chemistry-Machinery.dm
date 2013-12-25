@@ -196,6 +196,9 @@
 	var/mode = 0
 	var/condi = 0
 	var/useramount = 30 // Last used amount
+	var/bottlesprite = "1" //yes, strings
+	var/pillsprite = "1"
+	var/client/has_sprites = list()
 
 /obj/machinery/chem_master/New()
 	create_reagents(100)
@@ -327,7 +330,10 @@
 				reagents.clear_reagents()
 				icon_state = "mixer0"
 		else if (href_list["createpill"])
-			var/name = reject_bad_text(input(usr,"Name:","Name your pill!",reagents.get_master_reagent_name()))
+			var/volume = reagents.total_volume
+			if (volume > 50)
+				volume = 50
+			var/name = reject_bad_text(input(usr,"Name:","Name your pill!","[reagents.get_master_reagent_name()] ([volume] units)"))
 			var/obj/item/weapon/reagent_containers/pill/P
 
 			if(loaded_pill_bottle && loaded_pill_bottle.contents.len < loaded_pill_bottle.storage_slots)
@@ -335,11 +341,12 @@
 			else
 				P = new/obj/item/weapon/reagent_containers/pill(src.loc)
 
-			if(!name) name = reagents.get_master_reagent_name()
+			if(!name) name = "[reagents.get_master_reagent_name()] ([volume] units)"
 			P.name = "[name] pill"
 			P.pixel_x = rand(-7, 7) //random position
 			P.pixel_y = rand(-7, 7)
 			reagents.trans_to(P,50)
+			P.icon_state = "pill"+pillsprite
 
 		else if (href_list["createbottle"])
 			if(!condi)
@@ -350,9 +357,33 @@
 				P.pixel_x = rand(-7, 7) //random position
 				P.pixel_y = rand(-7, 7)
 				reagents.trans_to(P,30)
+				P.icon_state = "bottle"+bottlesprite
 			else
 				var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
 				reagents.trans_to(P,50)
+
+/////////////////////////////////////////////////////////////////
+		else if(href_list["change_pill"])
+    		#define MAX_PILL_SPRITE 20 //max icon state of the pill sprites
+			var/dat = "<table>"
+			for(var/i = 1 to MAX_PILL_SPRITE)
+				dat += "<tr><td><a href=\"?src=\ref[src]&pill_sprite=[i]\"><img src=\"pill[i].png\" /></a></td></tr>"
+				dat += "</table>"
+				usr << browse(dat, "window=chem_master")
+			return
+		else if(href_list["change_bottle"])
+			#define MAX_BOTTLE_SPRITE 20 //max icon state of the bottle sprites
+			var/dat = "<table>"
+			for(var/i = 1 to MAX_BOTTLE_SPRITE)
+				dat += "<tr><td><a href=\"?src=\ref[src]&bottle_sprite=[i]\"><img src=\"bottle[i].png\" /></a></td></tr>"
+				dat += "</table>"
+				usr << browse(dat, "window=chem_master")
+			return
+		else if(href_list["pill_sprite"])
+			pillsprite = href_list["pill_sprite"]
+		else if(href_list["bottle_sprite"])
+			bottlesprite = href_list["bottle_sprite"]
+///////////////////////////////////////////////////////////////
 
 	src.updateUsrDialog()
 	return
@@ -410,6 +441,8 @@
 		if(!condi)
 			dat += "<HR><BR><A href='?src=\ref[src];createpill=1'>Create pill (50 units max)</A><BR>"
 			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (30 units max)</A>"
+			dat += "<HR><BR><A href='?src=\ref[src];createpill=1'>Create pill (50 units max)</A><a href=\"?src=\ref[src]&change_pill=1\"><img src=\"pill[pillsprite].png\" /></a><BR>"
+			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (30 units max)<a href=\"?src=\ref[src]&change_bottle=1\"><img src=\"bottle[bottlesprite].png\" /></A>"
 		else
 			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (50 units max)</A>"
 	if(!condi)
