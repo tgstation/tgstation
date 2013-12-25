@@ -1926,6 +1926,45 @@ other types of metals and chemistry for reagents).
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/bhangmeter
 
+//////////////////////////////////////////////////////////////////
+// EMBEDDED CONTROLLER BOARDS
+//////////////////////////////////////////////////////////////////
+/datum/design/access_control
+	name = "Circuit Design (Access Control)"
+	desc = "Allows for the construction of ECB used to build an access control panel."
+	id = "access_control"
+	req_tech = list("programming" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/ecb/access_controller
+
+/datum/design/airlock_control
+	name = "Circuit Design (Airlock Control)"
+	desc = "Allows for the construction of ECB used to build an airlock control panel."
+	id = "airlock_control"
+	req_tech = list("programming" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/ecb/airlock_controller
+
+/datum/design/vent_control
+	name = "Circuit Design (Vent Control)"
+	desc = "Allows for the construction of ECB used to build a vent control panel."
+	id = "vent_control"
+	req_tech = list("programming" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/ecb/vent_controller
+
+/datum/design/smart_airlock_control
+	name = "Circuit Design (Smart Airlock Control)"
+	desc = "Allows for the construction of ECB used to build a smart airlock control panel."
+	id = "smart_airlock_control"
+	req_tech = list("programming" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/ecb/smart_airlock_controller
+
 /*
 /datum/design/hydroseeds
 	name = "Circuit Design (MegaSeed Servitor)"

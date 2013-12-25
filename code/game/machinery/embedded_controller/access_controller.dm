@@ -250,6 +250,7 @@ obj/machinery/embedded_controller/radio/access_controller
 
 
 	return_text()
+		boardtype = /obj/item/weapon/circuitboard/ecb/access_controller
 		var/state_options = null
 
 		var/state = 0

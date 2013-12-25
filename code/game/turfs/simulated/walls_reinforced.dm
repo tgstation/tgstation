@@ -271,6 +271,11 @@
 		var/obj/item/apc_frame/AH = W
 		AH.try_build(src)
 
+	else if(istype(W,/obj/item/airlock_controller_frame))
+		var/obj/item/airlock_controller_frame/AH = W
+		AH.try_build(src)
+		return
+
 	else if( istype(W,/obj/item/alarm_frame) )
 		var/obj/item/alarm_frame/AH = W
 		AH.try_build(src)

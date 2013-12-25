@@ -253,7 +253,7 @@
 			src.name = "Circuit Board (RD Console - Robotics)"
 			src.build_path = "/obj/machinery/computer/rdconsole/robotics"
 			user << "\blue Access protocols succesfully updated."
-		if(src.build_path == "/obj/machinery/computer/rdconsole/mommi")
+		else if(src.build_path == "/obj/machinery/computer/rdconsole/mommi")
 			src.name = "Circuit Board (RD Console - MoMMI Nest)"
 			src.build_path = "/obj/machinery/computer/rdconsole/mommi"
 			user << "\blue Access protocols succesfully updated."

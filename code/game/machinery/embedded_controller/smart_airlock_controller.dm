@@ -247,6 +247,8 @@ datum/computer/file/embedded_program/smart_airlock_controller/process()
 
 
 obj/machinery/embedded_controller/radio/smart_airlock_controller
+	boardtype = /obj/item/weapon/circuitboard/ecb/smart_airlock_controller
+
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_control_standby"
 
