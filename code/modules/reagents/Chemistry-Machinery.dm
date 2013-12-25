@@ -361,8 +361,6 @@
 			else
 				var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
 				reagents.trans_to(P,50)
-
-/////////////////////////////////////////////////////////////////
 		else if(href_list["change_pill"])
     		#define MAX_PILL_SPRITE 20 //max icon state of the pill sprites
 			var/dat = "<table>"
@@ -383,8 +381,6 @@
 			pillsprite = href_list["pill_sprite"]
 		else if(href_list["bottle_sprite"])
 			bottlesprite = href_list["bottle_sprite"]
-///////////////////////////////////////////////////////////////
-
 	src.updateUsrDialog()
 	return
 
