@@ -309,6 +309,8 @@
 				var/datum/material/material = materials[c]
 				output += "[i?" | ":null][get_resource_cost_w_coeff(part,c)] [material.processed_name]"
 				i++
+			else
+				testing("Unknown matID [c] in [part.type]!")
 		return output
 	else
 		return 0
