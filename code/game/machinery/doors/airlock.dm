@@ -981,7 +981,6 @@ About the new airlock wires panel:
 				R.airlock_wire = null
 				src.signalers[wirenum] = null
 		else // p_open == false
-			testing("[type]: href=[href]")
 			if(!issilicon(usr))
 				if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
 					testing("Not silicon, not using a multitool.")
@@ -989,11 +988,16 @@ About the new airlock wires panel:
 
 			var/obj/item/device/multitool/P = get_multitool(usr)
 
-			if("set_id" in href_list)
-				var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this door", src, id_tag) as null|text),1,MAX_MESSAGE_LEN)
+			if("set_tag" in href_list)
+				if(!(href_list["set_tag"] in vars))
+					usr << "\red Something went wrong: Unable to find [href_list["set_tag"]] in vars!"
+					return 1
+				var/current_tag = src.vars[href_list["set_tag"]]
+				var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag", src, current_tag) as null|text),1,MAX_MESSAGE_LEN)
 				if(newid)
-					id_tag = newid
+					vars[href_list["set_tag"]] = newid
 					initialize()
+
 			if("set_freq" in href_list)
 				var/newfreq=frequency
 				if(href_list["set_freq"]!="-1")
@@ -1020,7 +1024,7 @@ About the new airlock wires panel:
 				P.buffer = null
 
 			usr.set_machine(src)
-			multitool_menu(P,usr)
+			update_multitool_menu(P,usr)
 
 
 	if(istype(usr, /mob/living/silicon) && src.canAIControl())
@@ -1211,7 +1215,7 @@ About the new airlock wires panel:
 		updateUsrDialog()
 	return
 
-/obj/machinery/door/airlock/proc/multitool_menu(var/obj/item/device/multitool/P,var/mob/user)
+/obj/machinery/door/airlock/update_multitool_menu(var/obj/item/device/multitool/P,var/mob/user)
 	var/dat = {"<html>
 	<head>
 		<title>[name] Access</title>

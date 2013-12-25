@@ -276,6 +276,16 @@
 		AH.try_build(src)
 		return
 
+	else if(istype(W,/obj/item/access_button_frame))
+		var/obj/item/access_button_frame/AH = W
+		AH.try_build(src)
+		return
+
+	else if(istype(W,/obj/item/airlock_sensor_frame))
+		var/obj/item/airlock_sensor_frame/AH = W
+		AH.try_build(src)
+		return
+
 	else if( istype(W,/obj/item/alarm_frame) )
 		var/obj/item/alarm_frame/AH = W
 		AH.try_build(src)
