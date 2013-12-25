@@ -217,6 +217,9 @@
 /obj/machinery/door/airlock/uranium/proc/radiate()
 	for(var/mob/living/L in range (3,src))
 		L.apply_effect(15,IRRADIATE,0)
+	for(var/obj/machinery/power/rad_collector/R in rad_collectors)
+		if(get_dist(R, src) <= 2)
+			R.receive_pulse(100)
 	return
 
 /obj/machinery/door/airlock/plasma
