@@ -22,7 +22,7 @@
 	antag_flag = BE_CULTIST
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	protected_jobs = list()
-	required_players = 15
+	required_players = 20
 	required_enemies = 3
 	recommended_enemies = 4
 
@@ -51,8 +51,11 @@
 
 
 /datum/game_mode/cult/pre_setup()
-	if(prob(50))
-		objectives += "survive"
+	if(prob(60))
+		if(prob(50))
+			objectives += "hijack"
+		else
+			objectives += "survive"
 		objectives += "sacrifice"
 	else
 		objectives += "eldergod"
@@ -115,6 +118,8 @@
 		switch(objectives[obj_count])
 			if("survive")
 				explanation = "Our knowledge must live on. Make sure at least [acolytes_needed] acolytes escape on the shuttle to spread their work on an another station."
+			if("hijack")
+				explanation = "Conquer the station and make sure only your fellow acolytes escape. You need at least [acolytes_needed] acolytes to escape on the shuttle. Do not let anyone else survive."
 			if("sacrifice")
 				if(sacrifice_target)
 					explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. You will need the sacrifice rune (Hell blood join) and three acolytes to do so."
@@ -124,11 +129,11 @@
 				explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
 		cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
 		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
-	cult_mind.current << "The Geometer of Blood grants you the knowledge to convert non-believers. (Join Blood Self)"
-	cult_mind.memory += "The Geometer of Blood grants you the knowledge to convert non-believers. (Join Blood Self)<BR>"
-	grant_runeword(cult_mind.current,"join")
+	cult_mind.current << "The Geometer of Blood grants knowledge for blood, sacrifice to get more knowledge. (Hell Blood Join)"
+	cult_mind.memory += "The Geometer of Blood grants knowledge for blood, sacrifice to get more knowledge. (Hell Blood Join)<BR>"
+	grant_runeword(cult_mind.current,"hell")
 	grant_runeword(cult_mind.current,"blood")
-	grant_runeword(cult_mind.current,"self")
+	grant_runeword(cult_mind.current,"join")
 
 /datum/game_mode/proc/equip_cultist(mob/living/carbon/human/mob)
 	if(!istype(mob))
@@ -296,6 +301,8 @@
 	var/cult_fail = 0
 	if(objectives.Find("survive"))
 		cult_fail += check_survive() //the proc returns 1 if there are not enough cultists on the shuttle, 0 otherwise
+	if(objectives.Find("hijack"))
+		cult_fail += check_hijack()
 	if(objectives.Find("eldergod"))
 		cult_fail += eldergod //1 by default, 0 if the elder god has been summoned at least once
 	if(objectives.Find("sacrifice"))
@@ -316,6 +323,17 @@
 		return 0
 	else
 		return 1
+
+/datum/game_mode/cult/proc/check_hijack()
+	var/area/shuttle = locate(/area/shuttle/escape/centcom)
+	var/list/protected_mobs = list(/mob/living/silicon/ai, /mob/living/silicon/pai)
+	for(var/mob/living/player in player_list)
+		if(player.type in protected_mobs)	continue
+		if (player.mind && (player.mind.special_role != "Cultist"))
+			if(player.stat != DEAD)			//they're not dead!
+				if(get_turf(player) in shuttle)
+					return 1
+	return check_survive()
 
 
 /datum/game_mode/cult/declare_completion()
@@ -343,6 +361,13 @@
 					else
 						explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. <font color='red'>Fail.</font>"
 						feedback_add_details("cult_objective","cult_survive|FAIL|[acolytes_needed]")
+				if("hijack")
+					if(!check_hijack())
+						explanation = "Only acolytes must escape on the shuttle. Make sure at least [acolytes_needed] escape. <font color='green'><B>Success!</B></font>"
+						feedback_add_details("cult_objective","cult_hijack|SUCCESS|[acolytes_needed]")
+					else
+						explanation = "Only acolytes must escape on the shuttle. Make sure at least [acolytes_needed] escape. <font color='red'>Fail.</font>"
+						feedback_add_details("cult_objective","cult_hijack|FAIL|[acolytes_needed]")
 				if("sacrifice")
 					if(sacrifice_target)
 						if(sacrifice_target in sacrificed)

@@ -93,6 +93,36 @@
 
 /obj/item/proc/transfer_soul(var/choice as text, var/target, var/mob/U as mob).
 	switch(choice)
+		if("FORCE")
+			var/mob/living/carbon/human/T = target
+			var/obj/item/device/soulstone/C = src
+			if(T.client != null)
+				if(C.contents.len)
+					return 0
+				new /obj/effect/decal/remains/human(T.loc) //Spawns a skeleton
+				T.invisibility = 101
+				var/atom/movable/overlay/animation = new /atom/movable/overlay( T.loc )
+				animation.icon_state = "blank"
+				animation.icon = 'icons/mob/mob.dmi'
+				animation.master = T
+				flick("dust-h", animation)
+				del(animation)
+				var/mob/living/simple_animal/shade/S = new /mob/living/simple_animal/shade( T.loc )
+				S.loc = C //put shade in stone
+				S.status_flags |= GODMODE //So they won't die inside the stone somehow
+				S.canmove = 0//Can't move out of the soul stone
+				S.name = "Shade of [T.real_name]"
+				S.real_name = "Shade of [T.real_name]"
+				if (T.client)
+					T.client.mob = S
+				S.cancel_camera()
+				C.icon_state = "soulstone2"
+				C.name = "Soul Stone: [S.real_name]"
+				S << "Your soul has been captured! You are now bound to [U.name]'s will, help them suceed in their goals at all costs."
+				C.imprinted = "[S.name]"
+				del T
+				return 1
+			return 0
 		if("VICTIM")
 			var/mob/living/carbon/human/T = target
 			var/obj/item/device/soulstone/C = src
@@ -206,4 +236,4 @@
 						del(C)
 			else
 				U << "\red <b>Creation failed!</b>: \black The soul stone is empty! Go kill someone!"
-	return
+	return 0
