@@ -198,7 +198,6 @@
 	var/useramount = 30 // Last used amount
 	var/bottlesprite = "1" //yes, strings
 	var/pillsprite = "1"
-	var/client/has_sprites = list()
 
 /obj/machinery/chem_master/New()
 	create_reagents(100)
@@ -363,18 +362,16 @@
 				reagents.trans_to(P,50)
 		else if(href_list["change_pill"])
     		#define MAX_PILL_SPRITE 20 //max icon state of the pill sprites
-			var/dat = "<table>"
+			var/dat = ""
 			for(var/i = 1 to MAX_PILL_SPRITE)
-				dat += "<tr><td><a href=\"?src=\ref[src]&pill_sprite=[i]\"><img src=\"pill[i].png\" /></a></td></tr>"
-				dat += "</table>"
+				dat += "<a href=\"?src=\ref[src]&pill_sprite=[i]\"><img src=\"pill[i].png\" /></a>"
 				usr << browse(dat, "window=chem_master")
 			return
 		else if(href_list["change_bottle"])
 			#define MAX_BOTTLE_SPRITE 20 //max icon state of the bottle sprites
-			var/dat = "<table>"
+			var/dat = ""
 			for(var/i = 1 to MAX_BOTTLE_SPRITE)
-				dat += "<tr><td><a href=\"?src=\ref[src]&bottle_sprite=[i]\"><img src=\"bottle[i].png\" /></a></td></tr>"
-				dat += "</table>"
+				dat += "<a href=\"?src=\ref[src]&bottle_sprite=[i]\"><img src=\"bottle[i].png\" /></a>"
 				usr << browse(dat, "window=chem_master")
 			return
 		else if(href_list["pill_sprite"])
