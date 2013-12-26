@@ -182,7 +182,8 @@
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+#define MAX_PILL_SPRITE 20 //max icon state of the pill sprites
+#define MAX_BOTTLE_SPRITE 20 //max icon state of the bottle sprites
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
 	density = 1
@@ -198,6 +199,7 @@
 	var/useramount = 30 // Last used amount
 	var/bottlesprite = "1" //yes, strings
 	var/pillsprite = "1"
+	var/client/has_sprites = list()
 
 /obj/machinery/chem_master/New()
 	create_reagents(100)
@@ -361,14 +363,12 @@
 				var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
 				reagents.trans_to(P,50)
 		else if(href_list["change_pill"])
-    		#define MAX_PILL_SPRITE 20 //max icon state of the pill sprites
 			var/dat = ""
 			for(var/i = 1 to MAX_PILL_SPRITE)
 				dat += "<a href=\"?src=\ref[src]&pill_sprite=[i]\"><img src=\"pill[i].png\" /></a>"
 				usr << browse(dat, "window=chem_master")
 			return
 		else if(href_list["change_bottle"])
-			#define MAX_BOTTLE_SPRITE 20 //max icon state of the bottle sprites
 			var/dat = ""
 			for(var/i = 1 to MAX_BOTTLE_SPRITE)
 				dat += "<a href=\"?src=\ref[src]&bottle_sprite=[i]\"><img src=\"bottle[i].png\" /></a>"
@@ -391,6 +391,13 @@
 	if(stat & BROKEN)
 		return
 	user.set_machine(src)
+	if(!(user.client in has_sprites))
+		spawn()
+			has_sprites += user.client
+			for(var/i = 1 to MAX_PILL_SPRITE)
+				usr << browse_rsc(icon('icons/obj/chemical.dmi', "pill" + num2text(i)), "pill[i].png")
+			for(var/i = 1 to MAX_BOTTLE_SPRITE)
+				usr << browse_rsc(icon('icons/obj/chemical.dmi', "bottle" + num2text(i)), "bottle[i].png")
 	var/dat = ""
 	if(!beaker)
 		dat = "Please insert beaker.<BR>"
@@ -463,6 +470,8 @@
 	name = "CondiMaster 3000"
 	condi = 1
 
+#undef MAX_PILL_SPRITE
+#undef MAX_BOTTLE_SPRITE
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
