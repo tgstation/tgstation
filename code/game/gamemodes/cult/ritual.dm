@@ -615,7 +615,6 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 					if(prob(20))		//Punish blind research, Nar-Sie wants blood
 						user << "<span class='userdanger'>Lord Nar-Sie is furious!</span>"
 						user.gib()
-						return
 					else
 						user.take_overall_damage(60, 0)
 						user << "<span class='danger'>You feel the life draining from you, as if Lord Nar-Sie is displeased with you.</span>"
