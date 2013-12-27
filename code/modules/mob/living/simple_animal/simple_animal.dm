@@ -491,7 +491,7 @@
 	if(gender != FEMALE || stat || !scan_ready || !childtype || !species)
 		return
 	scan_ready = 0
-	spawn(500)
+	spawn(400)
 		scan_ready = 1
 	var/alone = 1
 	var/mob/living/simple_animal/partner
