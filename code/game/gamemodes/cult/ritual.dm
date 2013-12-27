@@ -194,7 +194,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		if(word1 == wordjoin && word2 == wordhide && word3 == wordtech)
 			return runestun()
 		user.take_overall_damage(30, 0)
-		user << "\red You feel the life draining from you, as if Lord Nar-Sie is displeased with you."
+		user << "<span class='danger'>You feel the life draining from you, as if Lord Nar-Sie is displeased with you.</span>"
 		return fizzle()
 
 
@@ -613,12 +613,12 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				R.check_icon()
 				if(R.dummy)
 					if(prob(20))		//Punish blind research, Nar-Sie wants blood
-						user << "\red Lord Nar-Sie is furious!"
+						user << "<span class='userdanger'>Lord Nar-Sie is furious!</span>"
 						user.gib()
 						return
 					else
 						user.take_overall_damage(60, 0)
-						user << "\red You feel the life draining from you, as if Lord Nar-Sie is displeased with you."
+						user << "<span class='danger'>You feel the life draining from you, as if Lord Nar-Sie is displeased with you.</span>"
 				R.blood_DNA = list()
 				R.blood_DNA[H.dna.unique_enzymes] = H.dna.blood_type
 			return

@@ -52,7 +52,7 @@
 
 /datum/game_mode/cult/pre_setup()
 	if(prob(60))
-		if(prob(50))
+		if(prob(60))
 			objectives += "hijack"
 		else
 			objectives += "survive"

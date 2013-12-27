@@ -135,4 +135,4 @@
 
 /obj/item/weapon/paper/talisman/supply
 	imbue = "supply"
-	uses = 5
+	uses = 6

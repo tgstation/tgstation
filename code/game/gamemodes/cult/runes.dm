@@ -177,7 +177,21 @@ var/list/sacrificed = list()
 					M.say("Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
 					cultist_count += 1
 			if(cultist_count >= 9)
-				var/narsie_type = /obj/machinery/singularity/narsie/large
+				if(ticker.mode.name == "cult")
+					var/datum/game_mode/cult/cult_mode = ticker.mode
+					if(cult_mode.objectives.Find("eldergod"))
+						var/narsie_type = /obj/machinery/singularity/narsie/large
+						// Moves narsie if she was already summoned.
+						var/obj/her = locate(narsie_type, machines)
+						if(her)
+							her.loc = get_turf(src)
+							return
+						// Otherwise...
+						new narsie_type(src.loc) // Summon her!
+						cult_mode.eldergod = 0
+						del(src) // Stops cultists from spamming the rune to summon narsie more than once.
+						return
+				var/narsie_type = /obj/machinery/singularity/narsie		//Mini-narsie
 				// Moves narsie if she was already summoned.
 				var/obj/her = locate(narsie_type, machines)
 				if(her)
@@ -185,8 +199,6 @@ var/list/sacrificed = list()
 					return
 				// Otherwise...
 				new narsie_type(src.loc) // Summon her!
-				if(ticker.mode.name == "cult")
-					ticker.mode:eldergod = 0
 				del(src) // Stops cultists from spamming the rune to summon narsie more than once.
 				return
 			else
@@ -402,7 +414,7 @@ var/list/sacrificed = list()
 						L.ajourn=0
 						return
 					else
-						L.take_organ_damage(10, 0)
+						L.take_organ_damage(7, 0)
 					sleep(100)
 			return fizzle()
 
@@ -617,16 +629,18 @@ var/list/sacrificed = list()
 				if (ticker.mode.name == "cult" && H.mind == ticker.mode:sacrifice_target)
 					if(cultsinrange.len >= 3)
 						sacrificed += H.mind
-						if(isrobot(H))
-							H.dust()//To prevent the MMI from remaining
-						else
-							H.gib()
 						usr << "\red The Geometer of Blood accepts this sacrifice, your objective is now complete."
 						usr << "\red He is pleased!"
 						sac_grant_word()
 						sac_grant_word()
 						sac_grant_word()	//Little reward for completing the objective
-						greater_reward()
+						greater_reward(H)
+						if(H)	//in case of stone
+							if(isrobot(H))
+								H.dust()//To prevent the MMI from remaining
+							else
+								H.gib()
+						
 					else if(check_equip())
 						infuse++
 						sacrificed += H.mind
@@ -634,7 +648,12 @@ var/list/sacrificed = list()
 						sac_grant_word()
 						sac_grant_word()
 						sac_grant_word()	//Little reward for completing the objective
-						greater_reward()
+						greater_reward(H)
+						if(H)	//in case of stone
+							if(isrobot(H))
+								H.dust()//To prevent the MMI from remaining
+							else
+								H.gib()
 					else
 						usr << "\red Your target's earthly bonds are too strong. You need more cultists to succeed in this ritual."
 				else
@@ -643,7 +662,7 @@ var/list/sacrificed = list()
 							usr << "\red The Geometer of Blood accepts this sacrifice."
 							sac_grant_word()
 							if(usr.mind.cult_words.len == ticker.mode.allwords.len)		//If they have all words Narsie is pleased
-								greater_reward()
+								greater_reward(H)
 							else lesser_reward(H)
 							if(H)	//in case of stone
 								if(isrobot(H))
@@ -654,7 +673,7 @@ var/list/sacrificed = list()
 							infuse++
 							sac_grant_word()
 							if(usr.mind.cult_words.len == ticker.mode.allwords.len)
-								greater_reward()
+								greater_reward(H)
 							else lesser_reward(H)
 							if(H)	//in case of stone
 								if(isrobot(H))
@@ -684,16 +703,16 @@ var/list/sacrificed = list()
 							usr << "\red He is pleased!"
 							sac_grant_word()
 							sac_grant_word()
-							sac_grant_word()	//Little reward for completing the objective
-							greater_reward()
+							sac_grant_word()
+							greater_reward(M)
 						else if(check_equip())
 							infuse++
 							sacrificed += M.mind
 							target =1
 							sac_grant_word()
 							sac_grant_word()
-							sac_grant_word()	//Little reward for completing the objective
-							greater_reward()
+							sac_grant_word()
+							greater_reward(M)
 						else
 							usr << "\red Your target's earthly bonds are too strong. You need more cultists to succeed in this ritual."
 							continue
@@ -707,8 +726,8 @@ var/list/sacrificed = list()
 				else
 					usr << "\red The Geometer of Blood accepts your meager sacrifice."
 					if(prob(20))
-						ticker.mode.grant_runeword(usr)
-				M.gib()
+						sac_grant_word()
+				if(M)M.gib()  //In case of stone
 			if(infuse)
 				user.visible_message("\red [user] blade shines with a red glow as he plunges it into the helpless [infuse==1 ?"victim":"victims"]!", \
 				"\red You take your blade, infuse it with your blood and plunge it into your [infuse==1 ?"victim":"victims"].", \
@@ -741,14 +760,14 @@ var/list/sacrificed = list()
 				var/pick_list = ticker.mode.allwords - usr.mind.cult_words
 				convert_word = pick(pick_list)
 				ticker.mode.grant_runeword(usr, convert_word)
-		lesser_reward(var/mob/H)
-			if(prob(80))
+		lesser_reward(var/mob/T)
+			if(prob(80))		//TEST
 				var/reward = pick("stone","construct","tome","armor","talisman")
 				switch (reward)
 					if("stone")
 						var/obj/item/device/soulstone/stone = new /obj/item/device/soulstone(get_turf(src))
-						if(ishuman(H) && stone.transfer_soul("FORCE", H, usr))
-							usr << "\blue <b>A shiny new stone appears!</b> It pulses with life."
+						if(ishuman(T) && stone.transfer_soul("FORCE", T, usr))
+							usr << "<span class='notice'> <b>A shiny new stone appears!</b> It pulses with life.</span>"
 					if("construct")
 						new /obj/structure/constructshell(get_turf(src))
 					if("tome")
@@ -762,8 +781,8 @@ var/list/sacrificed = list()
 					if("talisman")		//one use talisman
 						var/obj/item/weapon/paper/talisman/supply/tal = new /obj/item/weapon/paper/talisman/supply(get_turf(src))
 						tal.uses = 1
-		greater_reward()
-			var/reward = pick("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffanimation", "staffhealing", "armor", "space", "scrying","narsie","cowsie","soulbelt")
+		greater_reward(var/mob/T)
+			var/reward = pick("fireball","smoke","blind","mindswap","forcewall","knock","charge", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffhealing", "armor", "space", "scrying","narsie","cowsie","soulbelt")
 			switch (reward)
 				if("fireball")
 					new /obj/item/weapon/spellbook/oneuse/fireball(get_turf(src))
@@ -777,8 +796,6 @@ var/list/sacrificed = list()
 					new /obj/item/weapon/spellbook/oneuse/forcewall(get_turf(src))
 				if("knock")
 					new /obj/item/weapon/spellbook/oneuse/knock(get_turf(src))
-				if("horsemask")
-					new /obj/item/weapon/spellbook/oneuse/horsemask(get_turf(src))
 				if("charge")
 					new /obj/item/weapon/spellbook/oneuse/charge(get_turf(src))
 				if("wanddeath")
@@ -791,10 +808,6 @@ var/list/sacrificed = list()
 					new /obj/item/weapon/gun/magic/wand/teleport(get_turf(src))
 				if("wanddoor")
 					new /obj/item/weapon/gun/magic/wand/door(get_turf(src))
-				if("staffchange")
-					new /obj/item/weapon/gun/magic/staff/change(get_turf(src))
-				if("staffanimation")
-					new /obj/item/weapon/gun/magic/staff/animate(get_turf(src))
 				if("staffhealing")
 					new /obj/item/weapon/gun/magic/staff/healing(get_turf(src))
 				if("armor")
@@ -813,13 +826,16 @@ var/list/sacrificed = list()
 						H.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 						H.see_in_dark = 8
 						H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-						H << "\blue The walls suddenly disappear."
+						H << "<span class='notice'>The walls suddenly disappear.</span>"
 				if("narsie")
 					new /obj/item/weapon/veilrender(get_turf(src))
 				if("cowsie")
 					new /obj/item/weapon/veilrender/vealrender(get_turf(src))
 				if("soulbelt")
-					new /obj/item/weapon/storage/belt/soulstone/full(get_turf(src))
+					var/obj/item/weapon/storage/S  = new /obj/item/weapon/storage/belt/soulstone/full(get_turf(src))
+					var/obj/item/device/soulstone/stone = S.contents[1]
+					if(ishuman(T) && stone.transfer_soul("FORCE", T, usr))
+						usr << "<span class='notice'> The belt has the weight of a soul to it.</span>"
 
 
 /////////////////////////////////////////SIXTEENTH RUNE
@@ -1165,10 +1181,10 @@ var/list/sacrificed = list()
 			usr.visible_message("\red The rune disappears with a flash of red light, and a set of armor appears on [usr]...", \
 			"\red You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.")
 
-			user.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), slot_head)
-			user.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), slot_wear_suit)
-			user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(user), slot_shoes)
-			user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), slot_back)
+			user.equip_to_slot_if_possible(new /obj/item/clothing/head/culthood/alt(get_turf(user)), slot_head,0,1,1)
+			user.equip_to_slot_if_possible(new /obj/item/clothing/suit/cultrobes/alt(get_turf(user)), slot_wear_suit,0,1,1)
+			user.equip_to_slot_if_possible(new /obj/item/clothing/shoes/cult(get_turf(user)), slot_shoes,0,1,1)
+			user.equip_to_slot_if_possible(new /obj/item/weapon/storage/backpack/cultpack(get_turf(user)), slot_back,0,1,1)
 			//the above update their overlay icons cache but do not call update_icons()
 			//the below calls update_icons() at the end, which will update overlay icons by using the (now updated) cache
 			user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))	//put in hands or on floor
