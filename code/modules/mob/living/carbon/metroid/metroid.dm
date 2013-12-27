@@ -210,19 +210,13 @@
 	..()
 
 /mob/living/carbon/slime/ex_act(severity)
-
-	if (stat == 2 && client)
-		return
-
-	else if (stat == 2 && !client)
-		del(src)
-		return
+	..()
 
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
 		if (1.0)
-			b_loss += 500
+			del(src)
 			return
 
 		if (2.0)
