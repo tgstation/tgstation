@@ -463,10 +463,6 @@ var/global/list/uneatable = list(
 	move_self = 1 //Do we move on our own?
 	grav_pull = 5 //How many tiles out do we pull?
 	consume_range = 6 //How many tiles out do we eat
-	
-/obj/machinery/singularity/narsie/New()
-	..()
-	world << "<font size='2' color='red'><b>NAR-SIE HAS RISEN</b></font>"
 
 /obj/machinery/singularity/narsie/large
 	name = "Nar-Sie"
