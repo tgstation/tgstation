@@ -191,67 +191,80 @@
 		if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 			return 0
 
-		if(signal.data["purge"] != null)
+		var/handled=0
+		if("purge" in signal.data)
 			pressure_checks &= ~1
 			pump_direction = 0
+			handled=1
 
-		if(signal.data["stabalize"] != null)
+		if("stabalize" in signal.data)
 			pressure_checks |= 1
 			pump_direction = 1
+			handled=1
 
-		if(signal.data["power"] != null)
+		if("power" in signal.data)
 			on = text2num(signal.data["power"])
+			handled=1
 
-		if(signal.data["power_toggle"] != null)
+		if("power_toggle" in signal.data)
 			on = !on
+			handled=1
 
-		if(signal.data["checks"] != null)
+		if("checks" in signal.data)
 			pressure_checks = text2num(signal.data["checks"])
+			handled=1
 
-		if(signal.data["checks_toggle"] != null)
+		if("checks_toggle" in signal.data)
 			pressure_checks = (pressure_checks?0:3)
+			handled=1
 
-		if(signal.data["direction"] != null)
+		if("direction" in signal.data)
 			pump_direction = text2num(signal.data["direction"])
+			handled=1
 
-		if(signal.data["set_internal_pressure"] != null)
+		if("set_internal_pressure" in signal.data)
 			internal_pressure_bound = between(
 				0,
 				text2num(signal.data["set_internal_pressure"]),
 				ONE_ATMOSPHERE*50
 			)
+			handled=1
 
-		if(signal.data["set_external_pressure"] != null)
+		if("set_external_pressure" in signal.data)
 			external_pressure_bound = between(
 				0,
 				text2num(signal.data["set_external_pressure"]),
 				ONE_ATMOSPHERE*50
 			)
+			handled=1
 
-		if(signal.data["adjust_internal_pressure"] != null)
+		if("adjust_internal_pressure" in signal.data)
 			internal_pressure_bound = between(
 				0,
 				internal_pressure_bound + text2num(signal.data["adjust_internal_pressure"]),
 				ONE_ATMOSPHERE*50
 			)
+			handled=1
 
-		if(signal.data["adjust_external_pressure"] != null)
+		if("adjust_external_pressure" in signal.data)
 			external_pressure_bound = between(
 				0,
 				external_pressure_bound + text2num(signal.data["adjust_external_pressure"]),
 				ONE_ATMOSPHERE*50
 			)
+			handled=1
 
-		if(signal.data["init"] != null)
+		if("init" in signal.data)
 			name = signal.data["init"]
 			return
 
-		if(signal.data["status"] != null)
+		if("status" in signal.data)
 			spawn(2)
 				broadcast_status()
 			return //do not update_icon
 
-			//log_admin("DEBUG \[[world.timeofday]\]: vent_pump/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
+		if(!handled)
+			testing("\[[world.timeofday]\]: vent_pump/receive_signal: unknown command \n[signal.debug_print()]")
 		spawn(2)
 			broadcast_status()
 		update_icon()

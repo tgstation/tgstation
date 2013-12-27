@@ -241,25 +241,33 @@ a {
 
 		if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
 			return 0
+
+		var/handled=0
 		if("power" in signal.data)
 			on = text2num(signal.data["power"])
+			handled=1
 
 		if("power_toggle" in signal.data)
 			on = !on
+			handled=1
 
-		if("set_direction" in signal.data)
-			pump_direction = text2num(signal.data["set_direction"])
+		if("direction" in signal.data)
+			pump_direction = text2num(signal.data["direction"])
+			handled=1
 
 		if("checks" in signal.data)
 			pressure_checks = text2num(signal.data["checks"])
+			handled=1
 
 		if("purge" in signal.data)
 			pressure_checks &= ~1
 			pump_direction = 0
+			handled=1
 
 		if("stabalize" in signal.data)
 			pressure_checks |= 1
 			pump_direction = 1
+			handled=1
 
 		if("set_input_pressure" in signal.data)
 			input_pressure_min = between(
@@ -267,6 +275,7 @@ a {
 				text2num(signal.data["set_input_pressure"]),
 				ONE_ATMOSPHERE*50
 			)
+			handled=1
 
 		if("set_output_pressure" in signal.data)
 			output_pressure_max = between(
@@ -274,6 +283,7 @@ a {
 				text2num(signal.data["set_output_pressure"]),
 				ONE_ATMOSPHERE*50
 			)
+			handled=1
 
 		if("set_external_pressure" in signal.data)
 			external_pressure_bound = between(
@@ -281,12 +291,14 @@ a {
 				text2num(signal.data["set_external_pressure"]),
 				ONE_ATMOSPHERE*50
 			)
+			handled=1
 
 		if("status" in signal.data)
 			spawn(2)
 				broadcast_status()
 			return //do not update_icon
-		//if(signal.data["tag"])
+		if(!handled)
+			testing("\[[world.timeofday]\]: dp_vent_pump/receive_signal: unknown command \n[signal.debug_print()]")
 		spawn(2)
 			broadcast_status()
 		update_icon()

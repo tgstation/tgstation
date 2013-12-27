@@ -19,6 +19,7 @@ datum/computer/file/embedded_program/smart_airlock_controller
 
 	state = AIRLOCK_STATE_WAIT
 	var/target_state = AIRLOCK_TARGET_NONE
+	var/current_state = AIRLOCK_TARGET_NONE
 
 datum/computer/file/embedded_program/smart_airlock_controller/New()
 	..()
@@ -63,28 +64,30 @@ datum/computer/file/embedded_program/smart_airlock_controller/receive_signal(dat
 			if("cycle_exterior")
 				state = AIRLOCK_STATE_WAIT
 				target_state = AIRLOCK_TARGET_OUTOPEN
+				current_state = target_state
 			if("cycle_interior")
 				state = AIRLOCK_STATE_WAIT
 				target_state = AIRLOCK_TARGET_INOPEN
+				current_state = target_state
+			if("cycle")
+				state = AIRLOCK_STATE_WAIT
+				if(current_state == AIRLOCK_TARGET_INOPEN)
+					target_state = AIRLOCK_TARGET_OUTOPEN
+				else
+					target_state = AIRLOCK_TARGET_INOPEN
+				current_state = target_state
 
 	master.updateDialog()
 
 datum/computer/file/embedded_program/smart_airlock_controller/receive_user_command(command)
 	var/shutdown_pump = 0
+	var/close_doors=0
 	switch(command)
 		if("cycle_closed")
 			state = AIRLOCK_STATE_WAIT
 			target_state = AIRLOCK_TARGET_NONE
-			if(memory["interior_status"] != "closed")
-				var/datum/signal/signal = new
-				signal.data["tag"] = tag_interior_door
-				signal.data["command"] = "secure_close"
-				post_signal(signal)
-			if(memory["exterior_status"] != "closed")
-				var/datum/signal/signal = new
-				signal.data["tag"] = tag_exterior_door
-				signal.data["command"] = "secure_close"
-				post_signal(signal)
+			current_state = target_state
+			close_doors = 1
 			shutdown_pump = 1
 		if("open_interior")
 			state = AIRLOCK_STATE_WAIT
@@ -119,9 +122,19 @@ datum/computer/file/embedded_program/smart_airlock_controller/receive_user_comma
 		if("cycle_exterior")
 			state = AIRLOCK_STATE_WAIT
 			target_state = AIRLOCK_TARGET_OUTOPEN
+			close_doors=1
 		if("cycle_interior")
 			state = AIRLOCK_STATE_WAIT
 			target_state = AIRLOCK_TARGET_INOPEN
+			close_doors=1
+		if("cycle") // From sensor/buttons.
+			close_doors=1
+			state = AIRLOCK_STATE_WAIT
+			if(current_state == AIRLOCK_TARGET_INOPEN)
+				target_state = AIRLOCK_TARGET_OUTOPEN
+			else
+				target_state = AIRLOCK_TARGET_INOPEN
+			current_state = target_state
 
 	if(shutdown_pump)
 		//send a signal to stop pressurizing
@@ -132,6 +145,17 @@ datum/computer/file/embedded_program/smart_airlock_controller/receive_user_comma
 				"power" = 0,
 				"sigtype"="command"
 			)
+			post_signal(signal)
+	if(close_doors)
+		if(memory["interior_status"] != "closed")
+			var/datum/signal/signal = new
+			signal.data["tag"] = tag_interior_door
+			signal.data["command"] = "secure_close"
+			post_signal(signal)
+		if(memory["exterior_status"] != "closed")
+			var/datum/signal/signal = new
+			signal.data["tag"] = tag_exterior_door
+			signal.data["command"] = "secure_close"
 			post_signal(signal)
 	master.updateDialog()
 
@@ -151,6 +175,7 @@ datum/computer/file/embedded_program/smart_airlock_controller/process()
 			//work out whether we need to pressurize or depressurize the chamber (5% leeway with target pressure)
 			var/chamber_pressure = memory["chamber_sensor_pressure"]
 			var/target_pressure = memory["target_pressure"]
+			var/close_doors=0
 			if(chamber_pressure <= target_pressure)
 				state = AIRLOCK_STATE_PRESSURIZE
 
@@ -161,9 +186,12 @@ datum/computer/file/embedded_program/smart_airlock_controller/process()
 					"sigtype"="command",
 					"power"=1,
 					"direction"=1,
+					"checks"=1,
 					"set_external_pressure"=target_pressure
 				)
 				post_signal(signal)
+				testing("Pressurizing")
+				close_doors=1
 
 			else if(chamber_pressure > target_pressure)
 				state = AIRLOCK_STATE_DEPRESSURIZE
@@ -176,9 +204,23 @@ datum/computer/file/embedded_program/smart_airlock_controller/process()
 					"sigtype"="command",
 					"power"=1,
 					"direction"=0,
+					"checks"=0,
 					"set_external_pressure"=target_pressure
 				)
 				post_signal(signal)
+				testing("Depressurizing")
+				close_doors=1
+			if(close_doors)
+				if(memory["interior_status"] != "closed")
+					var/datum/signal/signal = new
+					signal.data["tag"] = tag_interior_door
+					signal.data["command"] = "secure_close"
+					post_signal(signal)
+				if(memory["exterior_status"] != "closed")
+					var/datum/signal/signal = new
+					signal.data["tag"] = tag_exterior_door
+					signal.data["command"] = "secure_close"
+					post_signal(signal)
 
 		//actually do stuff
 		//override commands are handled elsewhere, otherwise everything proceeds automatically
