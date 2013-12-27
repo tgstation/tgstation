@@ -57,16 +57,11 @@
 //Puts the item our active hand if possible. Failing that it tries our inactive hand. Returns 1 on success.
 //If both fail it drops it on the floor and returns 0.
 //This is probably the main one you need to know :)
-/mob/proc/put_in_hands(var/obj/item/W)
-	if(!W)		return 0
-	if(put_in_active_hand(W))			return 1
-	else if(put_in_inactive_hand(W))	return 1
-	else
-		W.loc = get_turf(src)
-		W.layer = initial(W.layer)
-		W.dropped()
-		return 0
-
+//Just puts stuff on the floor for most mobs, since all mobs have hands but putting stuff in the AI/corgi/ghost hand is VERY BAD.
+/mob/proc/put_in_hands(obj/item/W)
+	W.loc = get_turf(src)
+	W.layer = initial(W.layer)
+	W.dropped()
 
 
 /mob/proc/drop_item_v()		//this is dumb.
