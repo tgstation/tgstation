@@ -535,3 +535,8 @@ turf/simulated/floor/proc/update_icon()
 					broken = 0
 				else
 					user << "\blue You need more welding fuel to complete this task."
+
+	if(istype(C, /obj/item/weapon/caution))
+		var/obj/temp = new /obj(src)
+		usr.drop_item(temp)
+		temp.loc = null
