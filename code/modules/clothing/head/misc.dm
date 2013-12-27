@@ -179,3 +179,19 @@
 	desc = "A helmet made out of chitinous alien hide."
 	flags = FPRINT | TABLEPASS | BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+
+
+/obj/item/clothing/head/fedora
+	name = "fedora"
+	desc = "Someone wearing this definitely makes them cool"
+	icon_state = "fedora"
+
+/obj/item/clothing/head/whitefedora
+	name = "white fedora"
+	desc = "Someone wearing this definitely makes them cool"
+	icon_state = "wfedora"
+
+/obj/item/clothing/head/brownfedora
+	name = "brown fedora"
+	desc = "Someone wearing this definitely makes them cool"
+	icon_state = "bfedora"

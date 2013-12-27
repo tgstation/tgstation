@@ -42,6 +42,7 @@
 	icon_state = "nun_hood"
 	flags = FPRINT|TABLEPASS|HEADCOVERSEYES|BLOCKHAIR
 
+//Detective
 /obj/item/clothing/head/det_hat
 	name = "hat"
 	desc = "Someone who wears this will look very smart."

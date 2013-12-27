@@ -176,6 +176,20 @@
 	body_parts_covered = CHEST|GROIN
 	flags_inv = HIDEJUMPSUIT
 
+
+/obj/item/clothing/suit/browntrenchcoat
+	name = "brown trench coat"
+	desc = "It makes you stand out. Just the opposite of why it's typically worn. Nice try trying to blend in while wearing it."
+	icon_state = "brtrenchcoat"
+	item_state = "brtrenchcoat"
+
+
+/obj/item/clothing/suit/blacktrenchcoat
+	name = "black trench coat"
+	desc = "That shade of black just makes you look a bit more evil. Good for those mafia types."
+	icon_state = "bltrenchcoat"
+	item_state = "bltrenchcoat"
+
 /*
  * Misc
  */

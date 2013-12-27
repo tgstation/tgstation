@@ -60,3 +60,13 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.forcesay(hit_appends)
+
+/obj/item/weapon/melee/icepick
+	name = "ice pick"
+	desc = "Used for chopping ice. Also excellent for mafia esque murders."
+	icon_state = "icepick"
+	item_state = "icepick"
+	force = 15
+	throwforce = 10
+	w_class = 2
+	attack_verb = list("stabbed", "jabbed", "iced,")

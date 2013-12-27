@@ -188,3 +188,13 @@
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white and green."
 	icon_state = "medgreen"
 	item_color = "medgreen"
+
+/////////////////
+//Miscellaneous//
+/////////////////
+
+/obj/item/clothing/tie/accessory/gunholster
+	name = "gun holster"
+	desc = "When you just HAVE to show off your guns"
+	icon_state = "gunhulster"
+	item_color = "gunhulster"

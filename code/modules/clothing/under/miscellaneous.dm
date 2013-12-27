@@ -259,3 +259,45 @@
 	item_color = "sundress"
 	body_parts_covered = CHEST|GROIN
 	fitted = 0
+
+/obj/item/clothing/under/flappers
+	name = "flappers"
+	desc = "Nothing like the roarin' '20s, flapping the night away on the dance floor."
+	icon_state = "flapper"
+	item_state = "flapper"
+	item_color = "flapper"
+
+/obj/item/clothing/under/mafia
+	name = "mafia outfit"
+	desc = "The business of the mafia is business."
+	icon_state = "mafia"
+	item_state = "mafia"
+	item_color = "mafia"
+
+/obj/item/clothing/under/mafiavest
+	name = "mafia vest"
+	desc = "Extreme problems often require extreme solutions."
+	icon_state = "mafiavest"
+	item_state = "mafiavest"
+	item_color = "mafiavest"
+
+/obj/item/clothing/under/mafiawhite
+	name = "white mafia outfit"
+	desc = "The best defense against the treacherous is treachery."
+	icon_state = "mafiawhite"
+	item_state = "mafiawhite"
+	item_color = "mafiawhite"
+
+/obj/item/clothing/under/mafiasue
+	name = "mafia vest"
+	desc = "The business is born into."
+	icon_state = "suevest"
+	item_state = "suevest"
+	item_color = "suevest"
+
+/obj/item/clothing/under/mafiatan
+	name = "leather mafia outfit"
+	desc = "The big drum sounds good only from a distance."
+	icon_state = "mafiatan"
+	item_state = "mafiatan"
+	item_color = "mafiatan"

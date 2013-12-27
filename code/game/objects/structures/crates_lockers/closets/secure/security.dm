@@ -211,6 +211,7 @@
 		new /obj/item/clothing/gloves/black(src)
 		new /obj/item/clothing/head/det_hat(src)
 		new /obj/item/clothing/shoes/brown(src)
+		new /obj/item/clothing/tie/accessory/gunholster(src)
 		new /obj/item/weapon/storage/box/evidence(src)
 		new /obj/item/weapon/clipboard(src)
 		new /obj/item/device/radio/headset/headset_sec(src)

@@ -162,6 +162,24 @@
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("\red <B>[] fires the [src] at []!</B>", user, target), 1, "\red You hear a gunshot", 2)
 
+
+/obj/item/toy/gun/tommygun
+	name = "tommy gun"
+	desc = "There are 0 caps left. Looks almost like the real thing! Perfect for Drive-bys" //Doesn't stay ingame
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "tommy"
+	item_state = "tommy"
+	flags =  FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
+	w_class = 3.0
+	g_amt = 10
+	m_amt = 10
+	attack_verb = list("struck", "hit", "bashed")
+	bullets = 20.0
+
+
+
+
 /obj/item/toy/ammo/gun
 	name = "ammo-caps"
 	desc = "There are 7 caps left! Make sure to recyle the box in an autolathe when it gets empty."
