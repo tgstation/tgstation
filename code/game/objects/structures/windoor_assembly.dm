@@ -37,9 +37,9 @@ obj/structure/windoor_assembly/Del()
 	..()
 
 /obj/structure/windoor_assembly/Move()
-	air_update_turf(1)
+	var/turf/T = loc
 	..()
-	air_update_turf(1)
+	move_update_air(T)
 
 /obj/structure/windoor_assembly/update_icon()
 	icon_state = "[facing]_[secure]windoor_assembly[state]"
@@ -70,23 +70,26 @@ obj/structure/windoor_assembly/Del()
 
 /obj/structure/windoor_assembly/attackby(obj/item/W as obj, mob/user as mob)
 	//I really should have spread this out across more states but thin little windoors are hard to sprite.
+	add_fingerprint(user)
 	switch(state)
 		if("01")
 			if(istype(W, /obj/item/weapon/weldingtool) && !anchored )
 				var/obj/item/weapon/weldingtool/WT = W
 				if (WT.remove_fuel(0,user))
-					user.visible_message("[user] dissassembles the windoor assembly.", "You start to dissassemble the windoor assembly.")
+					user.visible_message("<span class='warning'>[user] dissassembles the windoor assembly.</span>", "<span class='notice'>You start to dissassemble the windoor assembly.</span>")
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 
 					if(do_after(user, 40))
 						if(!src || !WT.isOn()) return
-						user << "\blue You dissasembled the windoor assembly!"
-						new /obj/item/stack/sheet/rglass(get_turf(src), 5)
+						user << "<span class='notice'>You dissasembled the windoor assembly!</span>"
+						var/obj/item/stack/sheet/rglass/RG = new (get_turf(src), 5)
+						RG.add_fingerprint(user)
 						if(secure)
-							new /obj/item/stack/rods(get_turf(src), 4)
+							var/obj/item/stack/rods/R = new (get_turf(src), 4)
+							R.add_fingerprint(user)
 						del(src)
 				else
-					user << "\blue You need more welding fuel to dissassemble the windoor assembly."
+					user << "<span class='notice'>You need more welding fuel to dissassemble the windoor assembly.</span>"
 					return
 
 			//Wrenching an unsecure assembly anchors it in place. Step 4 complete

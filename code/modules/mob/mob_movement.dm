@@ -443,3 +443,6 @@
 	else
 		step(pulling, get_dir(pulling.loc, A))
 	return
+
+/mob/proc/slip(var/s_amount, var/w_amount, var/obj/O, var/lube)
+	return

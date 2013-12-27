@@ -67,7 +67,7 @@
 		G.process()
 
 	if(!client && stat == CONSCIOUS)
-		if(prob(33) && canmove && isturf(loc))
+		if(prob(33) && canmove && isturf(loc) && !pulledby && !grabbed_by.len)
 			step(src, pick(cardinal))
 		if(prob(1))
 			emote(pick("scratch","jump","roll","tail"))

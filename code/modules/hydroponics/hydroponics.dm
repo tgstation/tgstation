@@ -20,6 +20,7 @@
 	var/planted = 0			//Is it occupied?
 	var/harvest = 0			//Ready to harvest?
 	var/obj/item/seeds/myseed = null	//The currently planted seed
+	var/unwrenchable = 1
 
 /obj/machinery/hydroponics/bullet_act(var/obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(!planted)
@@ -360,7 +361,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			// Beakers, bottles, buckets, etc.  Can't use is_open_container though.
 			if(istype(reagent_source, /obj/item/weapon/reagent_containers/glass/))
 				playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
-		
+
 		// Requires 5 mutagen to possibly change species.
 		if(S.has_reagent("mutagen", 5))
 			switch(rand(100))
@@ -494,7 +495,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			hardmutate()
 		else if(S.has_reagent("radium", 2) || S.has_reagent("uranium", 2))
 			mutate()
-		
+
 		// After handling the mutating, we now handle the damage from adding crude radioactives...
 		if(S.has_reagent("uranium", 1))
 			adjustHealth(-round(S.get_reagent_amount("uranium")*1))
@@ -602,7 +603,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 		del(O)
 		update_icon()
-	else if(istype(O, /obj/item/weapon/wrench))
+	else if(istype(O, /obj/item/weapon/wrench) && unwrenchable)
 		if(!anchored && !isinspace())
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			anchored = 1
@@ -921,6 +922,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	icon_state = "soil"
 	density = 0
 	use_power = 0
+	unwrenchable = 0
 
 	update_icon() // Same as normal but with the overlays removed - Cheridan.
 		overlays.Cut()

@@ -472,177 +472,146 @@
 																				//If he wants it back he can uncomment it
 
 
-/obj/structure/turret/gun_turret
-	name = "gun turret"
+/obj/machinery/gun_turret //related to turrets but work way differentely because of being mounted on a moving ship.
+	name = "machine gun turret"
+	desc = "Syndicate defense turret. It really packs a bunch."
 	density = 1
 	anchored = 1
-	var/cooldown = 20
-	var/projectiles = 100
-	var/projectiles_per_shot = 2
-	var/deviation = 0.3
-	var/list/exclude = list()
-	var/atom/cur_target
-	var/scan_range = 7
-	var/health = 40
-	var/list/scan_for = list("human"=0,"cyborg"=0,"mecha"=0,"alien"=1)
-	var/on = 0
+	var/state = 0 //Like stat on mobs, 0 is alive, 1 is damaged, 2 is dead
+	var/faction = "syndicate"
+	var/atom/cur_target = null
+	var/scan_range = 9 //You will never see them coming
+	var/health = 200 //Because it lacks a cover, and is mostly to keep people from touching the syndie shuttle.
 	icon = 'icons/obj/turrets.dmi'
-	icon_state = "gun_turret"
+	icon_state = "syndieturret0"
+
+/obj/machinery/gun_turret/New()
+	..()
+	take_damage(0) //check your health
+
+/obj/machinery/gun_turret/ex_act(severity)
+	switch(severity)
+		if(1)
+			die()
+		if(2)
+			take_damage(100)
+		if(3)
+			take_damage(50)
+	return
+
+/obj/machinery/gun_turret/emp_act() //Can't emp an mechanical turret.
+	return
+
+/obj/machinery/gun_turret/meteorhit()
+	die()
+	return
+
+/obj/machinery/gun_turret/update_icon()
+	if(state > 2 || state < 0) //someone fucked up the vars so fix them
+		take_damage(0)
+	icon_state = "syndieturret" + "[state]"
+	return
 
 
-	ex_act()
-		del src
-		return
-
-	emp_act()
-		del src
-		return
-
-	meteorhit()
-		del src
-		return
-
-	proc/update_health()
-		if(src.health<=0)
-			del src
-		return
-
-	proc/take_damage(damage)
-		src.health -= damage
-		if(src.health<=0)
-			del src
-		return
-
-
-	bullet_act(var/obj/item/projectile/Proj)
-		src.take_damage(Proj.damage)
-		..()
-		return
-
-
-	attack_hand(mob/user as mob)
-		user.set_machine(src)
-		var/dat = {"<html>
-						<head><title>[src] Control</title></head>
-						<body>
-						<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"on":"off"]</a><br>
-						<b>Scan Range: </b><a href='?src=\ref[src];scan_range=-1'>-</a> [scan_range] <a href='?src=\ref[src];scan_range=1'>+</a><br>
-						<b>Scan for: </b>"}
-		for(var/scan in scan_for)
-			dat += "<div style=\"margin-left: 15px;\">[scan] (<a href='?src=\ref[src];scan_for=[scan]'>[scan_for[scan]?"Yes":"No"]</a>)</div>"
-
-		dat += {"<b>Ammo: </b>[max(0, projectiles)]<br>
-					</body>
-					</html>"}
-		user << browse(dat, "window=turret")
-		onclose(user, "turret")
-		return
-
-	attack_ai(mob/user as mob)
-		return attack_hand(user)
-
-
-	attack_alien(mob/user as mob)
-		user.visible_message("[user] slashes at [src]", "You slash at [src]")
-		src.take_damage(15)
-		return
-
-	Topic(href, href_list)
-		if(href_list["power"])
-			src.on = !src.on
-			if(src.on)
-				spawn(50)
-					if(src)
-						src.process()
-		if(href_list["scan_range"])
-			src.scan_range = Clamp(src.scan_range+text2num(href_list["scan_range"]), 1, 8)
-		if(href_list["scan_for"])
-			if(href_list["scan_for"] in scan_for)
-				scan_for[href_list["scan_for"]] = !scan_for[href_list["scan_for"]]
-		src.updateUsrDialog()
-		return
-
-
-	proc/validate_target(atom/target)
-		if(get_dist(target, src)>scan_range)
-			return 0
-		if(istype(target, /mob))
-			var/mob/M = target
-			if(!M.stat && !M.lying)//ninjas can't catch you if you're lying
-				return 1
-		else if(istype(target, /obj/mecha))
-			return 1
-		return 0
-
-
-	process()
-		spawn while(on)
-			if(projectiles<=0)
-				on = 0
+/obj/machinery/gun_turret/proc/take_damage(damage)
+	health -= damage
+	switch(health)
+		if(101 to INFINITY)
+			state = 0
+		if(1 to 100)
+			state = 1
+		if(-INFINITY to 0)
+			if(state != 2)
+				die()
 				return
-			if(cur_target && !validate_target(cur_target))
-				cur_target = null
-			if(!cur_target)
-				cur_target = get_target()
-			fire(cur_target)
-			sleep(cooldown)
+			state = 2
+	update_icon()
+	return
+
+
+/obj/machinery/gun_turret/bullet_act(var/obj/item/projectile/Proj)
+	take_damage(Proj.damage)
+	return
+
+/obj/machinery/gun_turret/proc/die()
+	state = 2
+	update_icon()
+
+/obj/machinery/gun_turret/attack_hand(mob/user)
+	return
+
+/obj/machinery/gun_turret/attack_ai(mob/user)
+	return attack_hand(user)
+
+
+/obj/machinery/gun_turret/attack_alien(mob/user as mob)
+	user.visible_message("[user] slashes at [src]", "You slash at [src]")
+	take_damage(15)
+	return
+
+/obj/machinery/gun_turret/proc/validate_target(atom/target)
+	if(get_dist(target, src)>scan_range)
+		return 0
+	if(istype(target, /mob))
+		var/mob/M = target
+		if(!M.stat)
+			return 1
+	else if(istype(target, /obj/mecha))
+		var/obj/mecha/M = target
+		if(M.occupant)
+			return 1
+	return 0
+
+
+/obj/machinery/gun_turret/process()
+	if(state == 2)
 		return
-
-	proc/get_target()
-		var/list/pos_targets = list()
-		var/target = null
-		if(scan_for["human"])
-			for(var/mob/living/carbon/human/M in oview(scan_range,src))
-				if(M.stat || M.lying || M in exclude)
-					continue
-				pos_targets += M
-		if(scan_for["cyborg"])
-			for(var/mob/living/silicon/M in oview(scan_range,src))
-				if(M.stat || M.lying || M in exclude)
-					continue
-				pos_targets += M
-		if(scan_for["mecha"])
-			for(var/obj/mecha/M in oview(scan_range, src))
-				if(M in exclude)
-					continue
-				pos_targets += M
-		if(scan_for["alien"])
-			for(var/mob/living/carbon/alien/M in oview(scan_range,src))
-				if(M.stat || M.lying || M in exclude)
-					continue
-				pos_targets += M
-		if(pos_targets.len)
-			target = pick(pos_targets)
-		return target
+	if(cur_target && !validate_target(cur_target))
+		cur_target = null
+	if(!cur_target)
+		cur_target = get_target()
+	if(cur_target)
+		fire(cur_target)
+	return
 
 
-	proc/fire(atom/target)
-		if(!target)
-			cur_target = null
-			return
-		src.dir = get_dir(src,target)
-		var/turf/targloc = get_turf(target)
-		var/target_x = targloc.x
-		var/target_y = targloc.y
-		var/target_z = targloc.z
-		targloc = null
-		spawn(-1)
-			for(var/i=1 to min(projectiles, projectiles_per_shot))
-				if(!src) break
-				var/turf/curloc = get_turf(src)
-				var/dx = round(gaussian(0,deviation),1)
-				var/dy = round(gaussian(0,deviation),1)
-				targloc = locate(target_x+dx, target_y+dy, target_z)
-				if (!targloc || !curloc)
-					continue
-				if (targloc == curloc)
-					continue
-				playsound(src, 'sound/weapons/Gunshot.ogg', 50, 1)
-				var/obj/item/projectile/A = new /obj/item/projectile(curloc)
-				src.projectiles--
-				A.current = curloc
-				A.yo = targloc.y - curloc.y
-				A.xo = targloc.x - curloc.x
-				A.process()
-				sleep(2)
+/obj/machinery/gun_turret/proc/get_target()
+	var/list/pos_targets = list()
+	var/target = null
+	for(var/mob/living/M in view(scan_range,src))
+		if(M.stat || faction == M.faction)
+			continue
+		pos_targets += M
+	for(var/obj/mecha/M in oview(scan_range, src))
+		if(M.occupant)
+			if(faction == M.occupant.faction)
+				continue
+		if(!M.occupant)
+			continue //Don't shoot at empty mechs.
+		pos_targets += M
+	if(pos_targets.len)
+		target = pick(pos_targets)
+	return target
+
+
+/obj/machinery/gun_turret/proc/fire(atom/target)
+	if(!target)
+		cur_target = null
 		return
+	src.dir = get_dir(src,target)
+	var/turf/targloc = get_turf(target)
+	if(!src)
+		return
+	var/turf/curloc = get_turf(src)
+	if (!targloc || !curloc)
+		return
+	if (targloc == curloc)
+		return
+	playsound(src, 'sound/weapons/Gunshot.ogg', 50, 1)
+	var/obj/item/projectile/A = new /obj/item/projectile/bullet(curloc)
+	A.current = curloc
+	A.yo = targloc.y - curloc.y
+	A.xo = targloc.x - curloc.x
+	spawn(0)
+		A.process()
+	return

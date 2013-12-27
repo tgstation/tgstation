@@ -845,15 +845,8 @@ steam.start() -- spawns the effect
 		return
 
 	if (istype(AM, /mob/living/carbon))
-		var/mob/M =	AM
-		if (istype(M, /mob/living/carbon/human) && (istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP))
-			return
-
-		M.stop_pulling()
-		M << "\blue You slipped on the foam!"
-		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
-		M.Stun(5)
-		M.Weaken(2)
+		var/mob/living/carbon/M = AM
+		M.slip(5, 2, src)
 
 
 /datum/effect/effect/system/foam_spread
@@ -930,9 +923,9 @@ steam.start() -- spawns the effect
 		..()
 
 	Move()
-		air_update_turf(1)
+		var/turf/T = loc
 		..()
-		air_update_turf(1)
+		move_update_air(T)
 
 	proc/updateicon()
 		if(metal == 1)

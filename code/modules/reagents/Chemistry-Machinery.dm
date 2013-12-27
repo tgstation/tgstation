@@ -8,7 +8,7 @@
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
-	use_power = 0
+	use_power = 1
 	idle_power_usage = 40
 	var/energy = 50
 	var/max_energy = 50
@@ -78,7 +78,7 @@
   * @return nothing
   */
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main")
-	if(stat & (BROKEN|NOPOWER)) return
+	if(stat & (BROKEN)) return
 	if(user.stat || user.restrained()) return
 
 	// this is the data which will be sent to the ui
@@ -123,7 +123,7 @@
 		return
 
 /obj/machinery/chem_dispenser/Topic(href, href_list)
-	if(stat & (NOPOWER|BROKEN))
+	if(stat & (BROKEN))
 		return 0 // don't update UIs attached to this object
 
 	if(href_list["amount"])
@@ -519,7 +519,8 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		if(!src.wait)
 			var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 			if(B)
-
+				B.pixel_x = rand(-3, 3)
+				B.pixel_y = rand(-3, 3)
 				var/path = GetResistancesByIndex(text2num(href_list["create_vaccine"]))
 				var/vaccine_type = path
 				var/vaccine_name = "Unknown"
@@ -548,6 +549,8 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		if(!wait)
 			var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 			B.icon_state = "bottle3"
+			B.pixel_x = rand(-3, 3)
+			B.pixel_y = rand(-3, 3)
 			var/type = GetVirusTypeByIndex(text2num(href_list["create_virus_culture"]))//the path is received as string - converting
 			var/datum/disease/D = null
 			if(!ispath(type))
@@ -567,7 +570,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 			B.desc = "A small bottle. Contains [D.agent] culture in synthblood medium."
 			B.reagents.add_reagent("blood",20,data)
 			src.updateUsrDialog()
-			replicator_cooldown(1000)
+			replicator_cooldown(50)
 		else
 			src.temp_html = "The replicator is not ready yet."
 		src.updateUsrDialog()

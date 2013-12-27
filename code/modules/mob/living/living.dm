@@ -14,6 +14,9 @@
 		src << "\blue You have given up life and succumbed to death."
 		death()
 
+/mob/living/ex_act(severity)
+	if(client && !blinded)
+		flick("flash", src.flash)
 
 /mob/living/proc/updatehealth()
 	if(status_flags & GODMODE)
