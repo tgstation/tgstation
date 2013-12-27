@@ -986,9 +986,9 @@ FIRE ALARM
 				if (istype(W, /obj/item/device/multitool))
 					src.detecting = !( src.detecting )
 					if (src.detecting)
-						user.visible_message("\red [user] has reconnected [src]'s detecting unit!", "You have reconnected [src]'s detecting unit.")
+						user.visible_message("<span class='warning'>[user] has reconnected [src]'s detecting unit!</span>", "<span class='warning'>You have reconnected [src]'s detecting unit.</span>")
 					else
-						user.visible_message("\red [user] has disconnected [src]'s detecting unit!", "You have disconnected [src]'s detecting unit.")
+						user.visible_message("<span class='warning'>[user] has disconnected [src]'s detecting unit!</span>", "<span class='warning'>You have disconnected [src]'s detecting unit.</span>")
 
 				else if (istype(W, /obj/item/weapon/wirecutters))
 					buildstage = 1
@@ -996,13 +996,13 @@ FIRE ALARM
 					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil()
 					coil.amount = 5
 					coil.loc = user.loc
-					user << "You cut the wires from \the [src]"
+					user << "<span class='notice'>You cut the wires from \the [src]</span>"
 					update_icon()
 			if(1)
 				if(istype(W, /obj/item/weapon/cable_coil))
 					var/obj/item/weapon/cable_coil/coil = W
 					if(coil.amount < 5)
-						user << "You need more cable for this!"
+						user << "<span class='warning'>You need more cable for this!</span>"
 						return
 
 					coil.amount -= 5
@@ -1010,26 +1010,26 @@ FIRE ALARM
 						del(coil)
 
 					buildstage = 2
-					user << "You wire \the [src]!"
+					user << "<span class='notice'>You wire \the [src]!</span>"
 					update_icon()
 
 				else if(istype(W, /obj/item/weapon/crowbar))
-					user << "You pry out the circuit!"
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 					spawn(20)
-						var/obj/item/weapon/firealarm_electronics/circuit = new /obj/item/weapon/firealarm_electronics()
-						circuit.loc = user.loc
-						buildstage = 0
-						update_icon()
+						if(buildstage == 1)
+							user << "<span class='notice'>You pry out the circuit!</span>"
+							new /obj/item/weapon/firealarm_electronics(user.loc)
+							buildstage = 0
+							update_icon()
 			if(0)
 				if(istype(W, /obj/item/weapon/firealarm_electronics))
-					user << "You insert the circuit!"
+					user << "<span class='notice'>You insert the circuit!</span>"
 					del(W)
 					buildstage = 1
 					update_icon()
 
 				else if(istype(W, /obj/item/weapon/wrench))
-					user << "You remove the fire alarm assembly from the wall!"
+					user.visible_message("<span class='warning'>[user] removes the fire alarm assembly from the wall!</span>", "<span class='warning'>You remove the fire alarm assembly from the wall!</span>")
 					var/obj/item/firealarm_frame/frame = new /obj/item/firealarm_frame()
 					frame.loc = user.loc
 					playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
