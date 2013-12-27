@@ -9,6 +9,7 @@
  *		Crayons
  *		Snap pops
  *		Water flower
+ *		Cards
  */
 
 
@@ -572,6 +573,7 @@ obj/item/toy/cards
 	desc = "A deck of space-grade playing cards."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "deck_full"
+	w_class = 2.0
 	var/list/cards = list()
 
 obj/item/toy/cards/New()
@@ -689,6 +691,7 @@ obj/item/toy/cardhand
 	desc = "A number of cards not in a deck, customarily held in ones hand."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "hand2"
+	w_class = 1.0
 	var/list/currenthand = list()
 	var/obj/item/toy/cards/parentdeck = null
 	var/choice = null
@@ -773,6 +776,7 @@ obj/item/toy/singlecard
 	desc = "a card"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "singlecard_down"
+	w_class = 1.0
 	var/cardname = null
 	var/obj/item/toy/cards/parentdeck = null
 	var/flipped = 0
