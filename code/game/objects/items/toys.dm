@@ -163,23 +163,6 @@
 			O.show_message(text("\red <B>[] fires the [src] at []!</B>", user, target), 1, "\red You hear a gunshot", 2)
 
 
-/obj/item/toy/gun/tommygun
-	name = "tommy gun"
-	desc = "There are 0 caps left. Looks almost like the real thing! Perfect for Drive-bys" //Doesn't stay ingame
-	icon = 'icons/obj/gun.dmi'
-	icon_state = "tommy"
-	item_state = "tommy"
-	flags =  FPRINT | TABLEPASS | CONDUCT
-	slot_flags = SLOT_BELT
-	w_class = 3.0
-	g_amt = 10
-	m_amt = 10
-	attack_verb = list("struck", "hit", "bashed")
-	bullets = 20.0
-
-
-
-
 /obj/item/toy/ammo/gun
 	name = "ammo-caps"
 	desc = "There are 7 caps left! Make sure to recyle the box in an autolathe when it gets empty."
@@ -227,75 +210,98 @@
 			else
 				usr << "\red It's already fully loaded."
 
+/obj/item/toy/crossbow/tommygun
+        name = "tommy gun"
+        desc = "Looks almost like the real thing! Perfect for Drive-bys" //Doesn't stay ingame
+        icon = 'icons/obj/gun.dmi'
+        icon_state = "tommy"
+        item_state = "tommy"
+        flags =  FPRINT | TABLEPASS | CONDUCT
+        slot_flags = SLOT_BELT
+        w_class = 3.0
+        g_amt = 10
+        m_amt = 10
+        attack_verb = list("struck", "hit", "bashed")
+        bullets = 20
 
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
-		if(!isturf(target.loc) || target == user) return
-		if(flag) return
+        attackby(obj/item/I as obj, mob/user as mob)
+                if(istype(I, /obj/item/toy/ammo/crossbow))
+                        if(bullets <= 4)
+                                user.drop_item()
+                                del(I)
+                                bullets++
+                                user << "\blue You load the foam dart into the tommy gun."
+                        else
+                                usr << "\red It's already fully loaded."
 
-		if (locate (/obj/structure/table, src.loc))
-			return
-		else if (bullets)
-			var/turf/trg = get_turf(target)
-			var/obj/effect/foam_dart_dummy/D = new/obj/effect/foam_dart_dummy(get_turf(src))
-			bullets--
-			D.icon_state = "foamdart"
-			D.name = "foam dart"
-			playsound(user.loc, 'sound/items/syringeproj.ogg', 50, 1)
+        afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+                if(!isturf(target.loc) || target == user) return
+                if(flag) return
 
-			for(var/i=0, i<6, i++)
-				if (D)
-					if(D.loc == trg) break
-					step_towards(D,trg)
+                if (locate (/obj/structure/table, src.loc))
+                        return
+                else if (bullets)
+                        var/turf/trg = get_turf(target)
+                        var/obj/effect/foam_dart_dummy/D = new/obj/effect/foam_dart_dummy(get_turf(src))
+                        bullets--
+                        D.icon_state = "foamdart"
+                        D.name = "foam dart"
+                        playsound(user.loc, 'sound/items/syringeproj.ogg', 50, 1)
 
-					for(var/mob/living/M in D.loc)
-						if(!istype(M,/mob/living)) continue
-						if(M == user) continue
-						for(var/mob/O in viewers(world.view, D))
-							O.show_message(text("\red [] was hit by the foam dart!", M), 1)
-						new /obj/item/toy/ammo/crossbow(M.loc)
-						del(D)
-						return
+                        for(var/i=0, i<6, i++)
+                                if (D)
+                                        if(D.loc == trg) break
+                                        step_towards(D,trg)
 
-					for(var/atom/A in D.loc)
-						if(A == user) continue
-						if(A.density)
-							new /obj/item/toy/ammo/crossbow(A.loc)
-							del(D)
+                                        for(var/mob/living/M in D.loc)
+                                                if(!istype(M,/mob/living)) continue
+                                                if(M == user) continue
+                                                for(var/mob/O in viewers(world.view, D))
+                                                        O.show_message(text("\red [] was hit by the foam dart!", M), 1)
+                                                new /obj/item/toy/ammo/crossbow(M.loc)
+                                                del(D)
+                                                return
 
-				sleep(1)
+                                        for(var/atom/A in D.loc)
+                                                if(A == user) continue
+                                                if(A.density)
+                                                        new /obj/item/toy/ammo/crossbow(A.loc)
+                                                        del(D)
 
-			spawn(10)
-				if(D)
-					new /obj/item/toy/ammo/crossbow(D.loc)
-					del(D)
+                                sleep(1)
 
-			return
-		else if (bullets == 0)
-			user.Weaken(5)
-			for(var/mob/O in viewers(world.view, user))
-				O.show_message(text("\red [] realized they were out of ammo and starting scrounging for some!", user), 1)
+                        spawn(10)
+                                if(D)
+                                        new /obj/item/toy/ammo/crossbow(D.loc)
+                                        del(D)
+
+                        return
+                else if (bullets == 0)
+                        user.Weaken(5)
+                        for(var/mob/O in viewers(world.view, user))
+                                O.show_message(text("\red [] realized they were out of ammo and starting scrounging for some!", user), 1)
 
 
-	attack(mob/M as mob, mob/user as mob)
-		src.add_fingerprint(user)
+        attack(mob/M as mob, mob/user as mob)
+                src.add_fingerprint(user)
 
 // ******* Check
 
-		if (src.bullets > 0 && M.lying)
+                if (src.bullets > 0 && M.lying)
 
-			for(var/mob/O in viewers(M, null))
-				if(O.client)
-					O.show_message(text("\red <B>[] casually lines up a shot with []'s head and pulls the trigger!</B>", user, M), 1, "\red You hear the sound of foam against skull", 2)
-					O.show_message(text("\red [] was hit in the head by the foam dart!", M), 1)
+                        for(var/mob/O in viewers(M, null))
+                                if(O.client)
+                                        O.show_message(text("\red <B>[] casually lines up a shot with []'s head and pulls the trigger!</B>", user, M), 1, "\red You hear the sound of foam against skull", 2)
+                                        O.show_message(text("\red [] was hit in the head by the foam dart!", M), 1)
 
-			playsound(user.loc, 'sound/items/syringeproj.ogg', 50, 1)
-			new /obj/item/toy/ammo/crossbow(M.loc)
-			src.bullets--
-		else if (M.lying && src.bullets == 0)
-			for(var/mob/O in viewers(M, null))
-				if (O.client)	O.show_message(text("\red <B>[] casually lines up a shot with []'s head, pulls the trigger, then realizes they are out of ammo and drops to the floor in search of some!</B>", user, M), 1, "\red You hear someone fall", 2)
-			user.Weaken(5)
-		return
+                        playsound(user.loc, 'sound/items/syringeproj.ogg', 50, 1)
+                        new /obj/item/toy/ammo/crossbow(M.loc)
+                        src.bullets--
+                else if (M.lying && src.bullets == 0)
+                        for(var/mob/O in viewers(M, null))
+                                if (O.client)   O.show_message(text("\red <B>[] casually lines up a shot with []'s head, pulls the trigger, then realizes they are out of ammo and drops to the floor in search of some!</B>", user, M), 1, "\red You hear someone fall", 2)
+                        user.Weaken(5)
+                return
 
 /obj/item/toy/ammo/crossbow
 	name = "foam dart"

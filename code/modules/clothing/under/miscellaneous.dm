@@ -274,28 +274,28 @@
 	item_state = "mafia"
 	item_color = "mafia"
 
-/obj/item/clothing/under/mafiavest
+/obj/item/clothing/under/mafia/vest
 	name = "mafia vest"
 	desc = "Extreme problems often require extreme solutions."
 	icon_state = "mafiavest"
 	item_state = "mafiavest"
 	item_color = "mafiavest"
 
-/obj/item/clothing/under/mafiawhite
+/obj/item/clothing/under/mafia/white
 	name = "white mafia outfit"
 	desc = "The best defense against the treacherous is treachery."
 	icon_state = "mafiawhite"
 	item_state = "mafiawhite"
 	item_color = "mafiawhite"
 
-/obj/item/clothing/under/mafiasue
+/obj/item/clothing/under/mafia/sue
 	name = "mafia vest"
 	desc = "The business is born into."
 	icon_state = "suevest"
 	item_state = "suevest"
 	item_color = "suevest"
 
-/obj/item/clothing/under/mafiatan
+/obj/item/clothing/under/mafia/tan
 	name = "leather mafia outfit"
 	desc = "The big drum sounds good only from a distance."
 	icon_state = "mafiatan"

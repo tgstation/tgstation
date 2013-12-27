@@ -186,12 +186,12 @@
 	desc = "Someone wearing this definitely makes them cool"
 	icon_state = "fedora"
 
-/obj/item/clothing/head/whitefedora
+/obj/item/clothing/head/fedora/whitefedora
 	name = "white fedora"
 	desc = "Someone wearing this definitely makes them cool"
 	icon_state = "wfedora"
 
-/obj/item/clothing/head/brownfedora
+/obj/item/clothing/head/fedora/brownfedora
 	name = "brown fedora"
 	desc = "Someone wearing this definitely makes them cool"
 	icon_state = "bfedora"

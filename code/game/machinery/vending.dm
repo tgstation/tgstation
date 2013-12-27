@@ -677,9 +677,9 @@
 					/obj/item/clothing/suit/wizrobe/marisa/fake = 1,/obj/item/clothing/under/sundress = 1,/obj/item/clothing/head/witchwig = 1,/obj/item/weapon/staff/broom = 1,
 					/obj/item/clothing/suit/wizrobe/fake = 1,/obj/item/clothing/head/wizard/fake = 1,/obj/item/weapon/staff = 3,/obj/item/clothing/mask/gas/sexyclown = 1,
 					/obj/item/clothing/under/sexyclown = 1,/obj/item/clothing/mask/gas/sexymime = 1,/obj/item/clothing/under/sexymime = 1,/obj/item/clothing/suit/apron/overalls = 1,
-					/obj/item/clothing/head/rabbitears = 1,/obj/item/clothing/suit/browntrenchcoat = 1,/obj/item/clothing/suit/blacktrenchcoat = 1,/obj/item/clothing/head/whitefedora = 1,
-					/obj/item/clothing/head/brownfedora =1,/obj/item/clothing/head/fedora = 1,/obj/item/clothing/under/flappers = 1,/obj/item/clothing/under/mafia = 1,/obj/item/clothing/under/mafiavest = 1,/obj/item/clothing/under/mafiawhite = 1,
-					/obj/item/clothing/under/mafiasue = 1,/obj/item/clothing/under/mafiatan = 1,/obj/item/clothing/tie/accessory/gunholster = 1,/obj/item/toy/gun/tommygun = 1) //Pretty much everything that had a chance to spawn + new stuff
+					/obj/item/clothing/head/rabbitears = 1,/obj/item/clothing/suit/browntrenchcoat = 1,/obj/item/clothing/suit/blacktrenchcoat = 1,/obj/item/clothing/head/fedora/whitefedora = 1,
+					/obj/item/clothing/head/fedora/brownfedora =1,/obj/item/clothing/head/fedora = 1,/obj/item/clothing/under/flappers = 1,/obj/item/clothing/under/mafia = 1,/obj/item/clothing/under/mafia/vest = 1,/obj/item/clothing/under/mafia/white = 1,
+					/obj/item/clothing/under/mafia/sue = 1,/obj/item/clothing/under/mafia/tan = 1,/obj/item/clothing/tie/accessory/gunholster = 1,/obj/item/toy/crossbow/tommygun = 1) //Pretty much everything that had a chance to spawn + new stuff
 	contraband = list(/obj/item/clothing/suit/cardborg = 1,/obj/item/clothing/head/cardborg = 1,/obj/item/clothing/suit/judgerobe = 1,/obj/item/clothing/head/powdered_wig = 1)
 	premium = list(/obj/item/clothing/suit/hgpirate = 1, /obj/item/clothing/head/hgpiratecap = 1, /obj/item/clothing/head/helmet/roman = 1, /obj/item/clothing/head/helmet/roman/legionaire = 1, /obj/item/clothing/under/roman = 1, /obj/item/clothing/shoes/roman = 1, /obj/item/weapon/shield/riot/roman = 1)
 	refill_canister = /obj/item/weapon/vending_refill/autodrobe
