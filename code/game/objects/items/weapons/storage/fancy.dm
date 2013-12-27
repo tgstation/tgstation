@@ -80,7 +80,7 @@
  */
 
 /obj/item/weapon/storage/fancy/candle_box
-	name = "Candle pack"
+	name = "candle pack"
 	desc = "A pack of red candles."
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candlebox5"
