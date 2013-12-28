@@ -676,7 +676,7 @@
 	return ui_interact(user)
 
 /obj/machinery/alarm/attack_robot(mob/user)
-	if(isMoMMI(user) && wiresexposed)
+	if(isMoMMI(user) && !wiresexposed)
 		return interact(user)
 	else
 		return attack_ai(user)
@@ -757,7 +757,7 @@
 	data["air"]=ui_air_status()
 	data["alarmActivated"]=alarmActivated || local_danger_level==2
 	data["sensors"]=TLV
-	data["locked"]=fromAtmosConsole || (!(istype(user, /mob/living/silicon)) && locked)
+	data["locked"]=!fromAtmosConsole && (!(istype(user, /mob/living/silicon)) && locked)
 	data["rcon"]=rcon_setting
 	data["target_temp"] = target_temperature - T0C
 	data["atmos_alarm"] = alarm_area.atmosalm
@@ -847,7 +847,7 @@
 			user << browse(null, "window=air_alarm")
 			return
 
-	if(wiresexposed && (!istype(user, /mob/living/silicon)))
+	if(wiresexposed && (!istype(user, /mob/living/silicon) || isMoMMI(user)))
 		var/t1 = text("<html><head><title>[alarm_area.name] Air Alarm Wires</title></head><body><B>Access Panel</B><br>\n")
 		var/list/wirecolors = list(
 			"Orange" = 1,
@@ -1038,6 +1038,7 @@
 		else
 			cut(t1)
 			if (AAlarmwires == 0)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				usr << "<span class='notice'>You cut last of wires inside [src]</span>"
 				update_icon()
 				buildstage = 1
@@ -1135,6 +1136,7 @@
 				frame.loc = user.loc
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				del(src)
+				return
 
 	return ..()
 
@@ -1291,6 +1293,13 @@ FIRE ALARM
 						user.visible_message("\red [user] has reconnected [src]'s detecting unit!", "You have reconnected [src]'s detecting unit.")
 					else
 						user.visible_message("\red [user] has disconnected [src]'s detecting unit!", "You have disconnected [src]'s detecting unit.")
+				if(istype(W, /obj/item/weapon/wirecutters))
+					if(do_after(user,50))
+						buildstage=1
+						user.visible_message("\red [user] has cut the wiring from \the [src]!", "You have cut the last of the wiring from \the [src].")
+						update_icon()
+						new /obj/item/weapon/cable_coil(user.loc,5)
+						playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 			if(1)
 				if(istype(W, /obj/item/weapon/cable_coil))
 					var/obj/item/weapon/cable_coil/coil = W

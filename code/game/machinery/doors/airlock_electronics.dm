@@ -15,6 +15,13 @@
 	var/last_configurator = null
 	var/locked = 1
 
+	// Allow dicking with it while it's on the floor.
+	attack_robot(mob/user as mob)
+		if(isMoMMI(user))
+			return ..()
+		attack_self(user)
+		return 1
+
 	attack_self(mob/user as mob)
 		if (!ishuman(user) && !isrobot(user))
 			return ..(user)
@@ -25,7 +32,6 @@
 				return
 
 		var/t1 = text("<B>Access control</B><br>\n")
-
 
 		if (last_configurator)
 			t1 += "Operator: [last_configurator]<br>"
