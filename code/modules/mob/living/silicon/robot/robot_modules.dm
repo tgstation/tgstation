@@ -112,6 +112,7 @@
 
 		var/obj/item/weapon/cable_coil/W = new /obj/item/weapon/cable_coil(src)
 		W.amount = 50
+		W.max_amount = 50
 		src.modules += W
 
 		return
@@ -127,6 +128,8 @@
 			if (!(locate(T) in src.modules))
 				src.modules -= null
 				var/O = new T(src)
+				if(istype(O,/obj/item/weapon/cable_coil))
+					O:max_amount = 50
 				src.modules += O
 				O:amount = 1
 		return
