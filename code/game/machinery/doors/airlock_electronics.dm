@@ -16,12 +16,13 @@
 	var/locked = 1
 
 	attack_self(mob/user as mob)
-		if (!ishuman(user))
+		if (!ishuman(user) && !isrobot(user))
 			return ..(user)
 
-		var/mob/living/carbon/human/H = user
-		if(H.getBrainLoss() >= 60)
-			return
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(H.getBrainLoss() >= 60)
+				return
 
 		var/t1 = text("<B>Access control</B><br>\n")
 
@@ -30,7 +31,10 @@
 			t1 += "Operator: [last_configurator]<br>"
 
 		if (locked)
-			t1 += "<a href='?src=\ref[src];login=1'>Swipe ID</a><hr>"
+			if(isrobot(user))
+				t1 += "<a href='?src=\ref[src];login=1'>Log In</a><hr>"
+			else
+				t1 += "<a href='?src=\ref[src];login=1'>Swipe ID</a><hr>"
 		else
 			t1 += "<a href='?src=\ref[src];logout=1'>Block</a><hr>"
 
@@ -66,13 +70,20 @@
 			return
 
 		if (href_list["login"])
-			var/obj/item/I = usr.get_active_hand()
-			if (istype(I, /obj/item/device/pda))
-				var/obj/item/device/pda/pda = I
-				I = pda.id
-			if (I && src.check_access(I))
-				src.locked = 0
-				src.last_configurator = I:registered_name
+			if(ishuman(usr))
+				var/mob/living/carbon/human/H=usr
+				var/obj/item/I = usr.get_active_hand()
+				if(!I && (istype(H.wear_id,/obj/item/weapon/card) || istype(H.wear_id, /obj/item/device/pda)))
+					I = H.wear_id
+				if (istype(I, /obj/item/device/pda))
+					var/obj/item/device/pda/pda = I
+					I = pda.id
+				if (I && src.check_access(I))
+					src.locked = 0
+					src.last_configurator = I:registered_name
+			if(isrobot(usr))
+				src.locked=0
+				src.last_configurator = usr.name
 
 		if (locked)
 			return
