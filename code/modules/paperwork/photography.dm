@@ -243,7 +243,8 @@
 
 /obj/item/device/camera/proc/printpicture(mob/user, icon/temp, mobs, blueprints, flag) //Normal camera proc for creating photos
 	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
-	user.put_in_hands(P)
+	if(Adjacent(user)) user.put_in_hands(P)
+	else P.loc = get_turf(src)
 	var/icon/small_img = icon(temp)
 	var/icon/ic = icon('icons/obj/items.dmi',"photo")
 	small_img.Scale(8, 8)
