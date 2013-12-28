@@ -491,10 +491,23 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.updateUsrDialog()
 
 		else if(href_list["set_new_message"])
-			src.msg = strip_html(input(usr, "Write your Feed story", "Network Channel Handler", ""))
-			while (findtext(src.msg," ") == 1)
-				src.msg = copytext(src.msg,2,lentext(src.msg)+1)
-			src.updateUsrDialog()
+			var/obj/item/weapon/paper/P = usr.get_active_hand()
+			if(istype(P))
+				if(P.info)
+					var/newinfo = "<font color = #FFFFFF>"
+					var/copied = P.info
+					copied = replacetext(copied, "<font face=\"[P.deffont]\" color=", "<font face=\"[P.deffont]\" nocolor=")	//state of the art techniques in action
+					copied = replacetext(copied, "<font face=\"[P.crayonfont]\" color=", "<font face=\"[P.crayonfont]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
+					newinfo += copied
+					newinfo += "</font>"
+					src.msg = newinfo
+					usr << "You scan the paper into the newscaster."
+					src.updateUsrDialog()
+			else
+				src.msg = strip_html(input(usr, "Write your Feed story", "Network Channel Handler", ""))
+				while (findtext(src.msg," ") == 1)
+					src.msg = copytext(src.msg,2,lentext(src.msg)+1)
+				src.updateUsrDialog()
 
 		else if(href_list["set_attachment"])
 			AttachPhoto(usr)
