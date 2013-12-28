@@ -148,18 +148,13 @@ var/list/sacrificed = list()
 		check_equip()
 			if(ishuman(usr))
 				var/mob/living/carbon/human/H = usr
-				if(!istype(H.get_item_by_slot(slot_back),/obj/item/weapon/storage/backpack/cultpack))
-					return 0
-				if(!istype(H.get_item_by_slot(slot_shoes),/obj/item/clothing/shoes/cult))
-					return 0
-					
 				var/obj/item/slot_item = H.get_item_by_slot(slot_head)
 				if(!(slot_item.type in list(/obj/item/clothing/head/culthood,/obj/item/clothing/head/culthood/alt,/obj/item/clothing/head/magus,/obj/item/clothing/head/helmet/space/cult)))
 					return 0
-					
 				slot_item = H.get_item_by_slot(slot_wear_suit)
 				if(!(slot_item.type in list(/obj/item/clothing/suit/cultrobes,/obj/item/clothing/suit/cultrobes/alt,/obj/item/clothing/suit/magusred,/obj/item/clothing/suit/space/cult)))
 					return 0
+					
 				if(istype(H.get_active_hand(),/obj/item/weapon/melee/cultblade))
 					return 1
 				if(istype(H.get_inactive_hand(),/obj/item/weapon/melee/cultblade))
@@ -609,7 +604,7 @@ var/list/sacrificed = list()
 			var/mob/living/user = usr
 			var/infuse = 0
 			var/target = 0
-			var/obj/item/device/soulstone/soul = check_stone(user)
+			//var/obj/item/device/soulstone/soul = check_stone(user)
 			for(var/mob/living/carbon/human/V in src.loc)//Checks for non-cultist humans to sacrifice
 				if(ishuman(V))
 					if(!(iscultist(V)))
@@ -637,16 +632,9 @@ var/list/sacrificed = list()
 						usr << "\red He is pleased!"
 						sac_grant_word()
 						sac_grant_word()
-						sac_grant_word()	//Little reward for completing the objective
-						if(soul && soul.transfer_soul("FORCE", H, user))
-							new /obj/item/weapon/storage/belt/soulstone/full(get_turf(src))		//special reward for objective target
-						else
-							greater_reward(H)
-						if(H)	//in case of soulstone in reward or on user
-							if(isrobot(H))
-								H.dust()//To prevent the MMI from remaining
-							else
-								H.gib()
+						sac_grant_word()
+						greater_reward(H)
+						stone_or_gib(H)
 						
 					else if(check_equip())
 						infuse++
@@ -654,16 +642,9 @@ var/list/sacrificed = list()
 						target =1
 						sac_grant_word()
 						sac_grant_word()
-						sac_grant_word()	//Little reward for completing the objective
-						if(soul && soul.transfer_soul("FORCE", H, user))
-							new /obj/item/weapon/storage/belt/soulstone/full(get_turf(src))
-						else
-							greater_reward(H)
-						if(H)
-							if(isrobot(H))
-								H.dust()//To prevent the MMI from remaining
-							else
-								H.gib()
+						sac_grant_word()
+						greater_reward(H)
+						stone_or_gib(H)
 					else
 						usr << "\red Your target's earthly bonds are too strong. You need more cultists to succeed in this ritual."
 				else
@@ -671,33 +652,17 @@ var/list/sacrificed = list()
 						if(cultsinrange.len >= 3)
 							usr << "\red The Geometer of Blood accepts this sacrifice."
 							sac_grant_word()
-							if(soul && soul.transfer_soul("FORCE", H, user))
-								if(prob(20))
-									new /obj/structure/constructshell(get_turf(src))
-							else
-								if(usr.mind.cult_words.len == ticker.mode.allwords.len)		//If they have all words Narsie is pleased
-									greater_reward(H)
-								else lesser_reward(H)
-							if(H)	//in case of stone
-								if(isrobot(H))
-									H.dust()//To prevent the MMI from remaining
-								else
-									H.gib()
+							if(usr.mind.cult_words.len == ticker.mode.allwords.len)		//If they have all words Narsie is pleased
+								greater_reward(H)
+							else lesser_reward(H)
+							stone_or_gib(H)
 						else if(check_equip())
 							infuse++
 							sac_grant_word()
-							if(soul && soul.transfer_soul("FORCE", H, user))
-								if(prob(20))
-									new /obj/structure/constructshell(get_turf(src))
-							else
-								if(usr.mind.cult_words.len == ticker.mode.allwords.len)		//If they have all words Narsie is pleased
-									greater_reward(H)
-								else lesser_reward(H)
-							if(H)	//in case of stone
-								if(isrobot(H))
-									H.dust()//To prevent the MMI from remaining
-								else
-									H.gib()
+							if(usr.mind.cult_words.len == ticker.mode.allwords.len)		//If they have all words Narsie is pleased
+								greater_reward(H)
+							else lesser_reward(H)
+							stone_or_gib(H)
 						else
 							usr << "\red The victim is still alive, you will need more cultists chanting for the sacrifice to succeed."
 						
@@ -708,13 +673,7 @@ var/list/sacrificed = list()
 						else
 							usr << "\red The Geometer of blood accepts this sacrifice."
 							usr << "\red However, a mere dead body is not enough to satisfy Him."
-						if(soul)
-							soul.transfer_soul("FORCE", H, user)
-						if(H)	//in case of stone
-							if(isrobot(H))
-								H.dust()//To prevent the MMI from remaining
-							else
-								H.gib()
+						stone_or_gib(H)
 			for(var/mob/living/carbon/monkey/H in src.loc)
 				if (ticker.mode.name == "cult")
 					if(H.mind == ticker.mode:sacrifice_target)
@@ -725,10 +684,8 @@ var/list/sacrificed = list()
 							sac_grant_word()
 							sac_grant_word()
 							sac_grant_word()
-							if(soul && soul.transfer_soul("FORCE", H, user))
-								new /obj/item/weapon/storage/belt/soulstone/full(get_turf(src))		//special reward for objective target
-							else
-								greater_reward(H)
+							greater_reward(H)
+							stone_or_gib(H)
 						else if(check_equip())
 							infuse++
 							sacrificed += H.mind
@@ -736,10 +693,8 @@ var/list/sacrificed = list()
 							sac_grant_word()
 							sac_grant_word()
 							sac_grant_word()
-							if(soul && soul.transfer_soul("FORCE", H, user))
-								new /obj/item/weapon/storage/belt/soulstone/full(get_turf(src))		//special reward for objective target
-							else
-								greater_reward(H)
+							greater_reward(H)
+							stone_or_gib(H)
 						else
 							usr << "\red Your target's earthly bonds are too strong. You need more cultists to succeed in this ritual."
 							continue
@@ -750,11 +705,12 @@ var/list/sacrificed = list()
 						else
 							usr << "\red The Geometer of blood accepts this sacrifice."
 							usr << "\red However, a mere monkey is not enough to satisfy Him."
+						stone_or_gib(H)
 				else
 					usr << "\red The Geometer of Blood accepts your meager sacrifice."
 					if(prob(20))
 						sac_grant_word()
-				if(H)H.gib()  //In case of stone
+				if(H)H.gib()
 			if(infuse)
 				user.visible_message("\red [user] blade shines with a red glow as he plunges it into the helpless [infuse==1 ?"victim":"victims"]!", \
 				"\red You take your blade, infuse it with your blood and plunge it into your [infuse==1 ?"victim":"victims"].", \
@@ -780,7 +736,16 @@ var/list/sacrificed = list()
 					usr << "\red The Geometer of Blood accepts your exotic sacrifice."
 				return
 			return fizzle() */
-
+			
+		stone_or_gib(var/mob/T)
+			var/obj/item/device/soulstone/stone = new /obj/item/device/soulstone(get_turf(src))
+			if(!iscarbon(T) && !stone.transfer_soul("FORCE", T, usr))	//if it fails to add soul
+				del stone
+				if(isrobot(T))
+					T.dust()//To prevent the MMI from remaining
+				else
+					T.gib()
+					
 		sac_grant_word()	//The proc that which chooses a word rewarded for a successful sacrifice, sacrifices always give a currently unknown word if the normal checks pass
 			if(usr.mind.cult_words.len != ticker.mode.allwords.len) // No point running if they already know everything
 				var/convert_word
@@ -789,29 +754,19 @@ var/list/sacrificed = list()
 				ticker.mode.grant_runeword(usr, convert_word)
 				
 		lesser_reward(var/mob/T)
-			if(prob(80))		//TEST
-				var/reward = pick("stone","construct","tome","armor","talisman")
+			if(prob(40))		//TEST
+				var/reward = pick("construct","tome","talisman")
 				switch (reward)
-					if("stone")
-						var/obj/item/device/soulstone/stone = new /obj/item/device/soulstone(get_turf(src))
-						if(ishuman(T) && stone.transfer_soul("FORCE", T, usr))
-							usr << "<span class='notice'> <b>A shiny new stone appears!</b> It pulses with life.</span>"
 					if("construct")
 						new /obj/structure/constructshell(get_turf(src))
 					if("tome")
 						new /obj/item/weapon/tome(get_turf(src))
-					if("armor")
-						new /obj/item/clothing/head/culthood/alt(get_turf(src))
-						new /obj/item/clothing/suit/cultrobes/alt(get_turf(src))
-						new /obj/item/clothing/shoes/cult(get_turf(src))
-						new /obj/item/weapon/storage/backpack/cultpack(get_turf(src))
-						new /obj/item/weapon/melee/cultblade(get_turf(src))
 					if("talisman")		//one use talisman
 						var/obj/item/weapon/paper/talisman/supply/tal = new /obj/item/weapon/paper/talisman/supply(get_turf(src))
 						tal.uses = 1
 						
 		greater_reward(var/mob/T)
-			var/reward = pick("fireball","smoke","blind","mindswap","forcewall","knock","charge", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffhealing", "armor", "space", "scrying","soulbelt")
+			var/reward = pick("fireball","smoke","blind","mindswap","forcewall","knock","charge", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffhealing", "armor", "space", "scrying")
 			switch (reward)
 				if("fireball")
 					new /obj/item/weapon/spellbook/oneuse/fireball(get_turf(src))
@@ -856,12 +811,6 @@ var/list/sacrificed = list()
 						H.see_in_dark = 8
 						H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 						H << "<span class='notice'>The walls suddenly disappear.</span>"
-				if("soulbelt")
-					var/obj/item/weapon/storage/S  = new /obj/item/weapon/storage/belt/soulstone/full(get_turf(src))
-					var/obj/item/device/soulstone/stone = S.contents[1]
-					if(ishuman(T) && stone.transfer_soul("FORCE", T, usr))
-						usr << "<span class='notice'> The belt has the weight of a soul to it.</span>"
-						
 		
 		check_stone(var/mob/living/carbon/human/H)		//check to see if user has empty soulstone on himself
 			if(ishuman(H))
@@ -880,6 +829,10 @@ var/list/sacrificed = list()
 						return soul
 				if(istype(H.get_active_hand(),/obj/item/device/soulstone))
 					soul = H.get_active_hand()
+					if(!soul.contents.len)
+						return soul
+				if(istype(H.get_item_by_slot(slot_belt),/obj/item/device/soulstone))
+					soul = H.get_item_by_slot(slot_belt)
 					if(!soul.contents.len)
 						return soul
 				if(istype(H.get_item_by_slot(slot_belt),/obj/item/weapon/storage/belt/soulstone))

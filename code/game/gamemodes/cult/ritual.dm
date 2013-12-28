@@ -133,8 +133,6 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			return
 		else if(istype(I, /obj/item/weapon/melee/cultblade))
 			attack_hand(user)
-		else if(istype(I, /obj/item/device/soulstone))
-			attack_hand(user)
 		return
 
 
