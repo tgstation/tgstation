@@ -201,6 +201,7 @@ var/list/sacrificed = list()
 					return
 				// Otherwise...
 				new narsie_type(src.loc) // Summon her!
+				world << "<font size='2' color='red'><b>NAR-SIE HAS RISEN</b></font>"	//announce mini-narsie
 				del(src) // Stops cultists from spamming the rune to summon narsie more than once.
 				return
 			else
@@ -637,8 +638,7 @@ var/list/sacrificed = list()
 						sac_grant_word()
 						sac_grant_word()
 						sac_grant_word()	//Little reward for completing the objective
-						if(soul)
-							soul.transfer_soul("FORCE", H, user)
+						if(soul && soul.transfer_soul("FORCE", H, user))
 							new /obj/item/weapon/storage/belt/soulstone/full(get_turf(src))		//special reward for objective target
 						else
 							greater_reward(H)
@@ -655,8 +655,7 @@ var/list/sacrificed = list()
 						sac_grant_word()
 						sac_grant_word()
 						sac_grant_word()	//Little reward for completing the objective
-						if(soul)
-							soul.transfer_soul("FORCE", H, user)
+						if(soul && soul.transfer_soul("FORCE", H, user))
 							new /obj/item/weapon/storage/belt/soulstone/full(get_turf(src))
 						else
 							greater_reward(H)
@@ -672,8 +671,7 @@ var/list/sacrificed = list()
 						if(cultsinrange.len >= 3)
 							usr << "\red The Geometer of Blood accepts this sacrifice."
 							sac_grant_word()
-							if(soul)		//No reward if they have soul
-								soul.transfer_soul("FORCE", H, user)
+							if(soul && soul.transfer_soul("FORCE", H, user))
 								if(prob(20))
 									new /obj/structure/constructshell(get_turf(src))
 							else
@@ -688,9 +686,13 @@ var/list/sacrificed = list()
 						else if(check_equip())
 							infuse++
 							sac_grant_word()
-							if(usr.mind.cult_words.len == ticker.mode.allwords.len)
-								greater_reward(H)
-							else lesser_reward(H)
+							if(soul && soul.transfer_soul("FORCE", H, user))
+								if(prob(20))
+									new /obj/structure/constructshell(get_turf(src))
+							else
+								if(usr.mind.cult_words.len == ticker.mode.allwords.len)		//If they have all words Narsie is pleased
+									greater_reward(H)
+								else lesser_reward(H)
 							if(H)	//in case of stone
 								if(isrobot(H))
 									H.dust()//To prevent the MMI from remaining
@@ -708,38 +710,36 @@ var/list/sacrificed = list()
 							usr << "\red However, a mere dead body is not enough to satisfy Him."
 						if(soul)
 							soul.transfer_soul("FORCE", H, user)
-						else
+						if(H)	//in case of stone
 							if(isrobot(H))
 								H.dust()//To prevent the MMI from remaining
 							else
 								H.gib()
-			for(var/mob/living/carbon/monkey/M in src.loc)
+			for(var/mob/living/carbon/monkey/H in src.loc)
 				if (ticker.mode.name == "cult")
-					if(M.mind == ticker.mode:sacrifice_target)
+					if(H.mind == ticker.mode:sacrifice_target)
 						if(cultsinrange.len >= 3)
-							sacrificed += M.mind
+							sacrificed += H.mind
 							usr << "\red The Geometer of Blood accepts this sacrifice, your objective is now complete."
 							usr << "\red He is pleased!"
 							sac_grant_word()
 							sac_grant_word()
 							sac_grant_word()
-							if(soul)
-								soul.transfer_soul("FORCE", M, user)
+							if(soul && soul.transfer_soul("FORCE", H, user))
 								new /obj/item/weapon/storage/belt/soulstone/full(get_turf(src))		//special reward for objective target
 							else
-								greater_reward(M)
+								greater_reward(H)
 						else if(check_equip())
 							infuse++
-							sacrificed += M.mind
+							sacrificed += H.mind
 							target =1
 							sac_grant_word()
 							sac_grant_word()
 							sac_grant_word()
-							if(soul)
-								soul.transfer_soul("FORCE", M, user)
+							if(soul && soul.transfer_soul("FORCE", H, user))
 								new /obj/item/weapon/storage/belt/soulstone/full(get_turf(src))		//special reward for objective target
 							else
-								greater_reward(M)
+								greater_reward(H)
 						else
 							usr << "\red Your target's earthly bonds are too strong. You need more cultists to succeed in this ritual."
 							continue
@@ -754,7 +754,7 @@ var/list/sacrificed = list()
 					usr << "\red The Geometer of Blood accepts your meager sacrifice."
 					if(prob(20))
 						sac_grant_word()
-				if(M)M.gib()  //In case of stone
+				if(H)H.gib()  //In case of stone
 			if(infuse)
 				user.visible_message("\red [user] blade shines with a red glow as he plunges it into the helpless [infuse==1 ?"victim":"victims"]!", \
 				"\red You take your blade, infuse it with your blood and plunge it into your [infuse==1 ?"victim":"victims"].", \

@@ -94,7 +94,9 @@
 /obj/item/proc/transfer_soul(var/choice as text, var/target, var/mob/U as mob).
 	switch(choice)
 		if("FORCE")
-			var/mob/living/carbon/human/T = target
+			if(!iscarbon(target))
+				return 0
+			var/mob/living/carbon/T = target
 			var/obj/item/device/soulstone/C = src
 			if(T.client != null)
 				if(C.contents.len)
