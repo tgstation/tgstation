@@ -159,6 +159,9 @@
 
 
 /obj/item/weapon/paper/proc/parsepencode(t, obj/item/weapon/pen/P, mob/user, iscrayon = 0)
+	if(length(t) < 1)		//No input means nothing needs to be parsed
+		return
+
 //	t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
 	t = replacetext(t, "\[center\]", "<center>")
@@ -249,15 +252,16 @@
 			return
 
 		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
+		
+		if(t != null)	//No input from the user means nothing needs to be added
+			if(id!="end")
+				addtofield(text2num(id), t) // He wants to edit a field, let him.
+			else
+				info += t // Oh, he wants to edit to the end of the file, let him.
+				updateinfolinks()
 
-		if(id!="end")
-			addtofield(text2num(id), t) // He wants to edit a field, let him.
-		else
-			info += t // Oh, he wants to edit to the end of the file, let him.
-			updateinfolinks()
-
-		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>", "window=[name]") // Update the window
-		update_icon()
+			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>", "window=[name]") // Update the window
+			update_icon()
 
 
 /obj/item/weapon/paper/attackby(obj/item/weapon/P, mob/user)
