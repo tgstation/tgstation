@@ -757,22 +757,27 @@
 	data["air"]=ui_air_status()
 	data["alarmActivated"]=alarmActivated || local_danger_level==2
 	data["sensors"]=TLV
+
+	// Locked when:
+	//   Not sent from atmos console AND
+	//   Not silicon AND locked.
 	data["locked"]=!fromAtmosConsole && (!(istype(user, /mob/living/silicon)) && locked)
+
 	data["rcon"]=rcon_setting
 	data["target_temp"] = target_temperature - T0C
 	data["atmos_alarm"] = alarm_area.atmosalm
 	data["modes"] = list(
-		AALARM_MODE_SCRUBBING   = list("name"="Filtering","desc"="Scrubs out contaminants"),\
-		AALARM_MODE_REPLACEMENT = list("name"="Replace Air","desc"="Siphons out air while replacing"),\
-		AALARM_MODE_PANIC       = list("name"="Panic","desc"="Siphons air out of the room"),\
-		AALARM_MODE_CYCLE       = list("name"="Cycle","desc"="Siphons air before replacing"),\
-		AALARM_MODE_FILL        = list("name"="Fill","desc"="Shuts off scrubbers and opens vents"),\
-		AALARM_MODE_OFF         = list("name"="Off","desc"="Shuts off vents and scrubbers"))
+		AALARM_MODE_SCRUBBING   = list("name"="Filtering",   "desc"="Scrubs out contaminants"),\
+		AALARM_MODE_REPLACEMENT = list("name"="Replace Air", "desc"="Siphons out air while replacing"),\
+		AALARM_MODE_PANIC       = list("name"="Panic",       "desc"="Siphons air out of the room"),\
+		AALARM_MODE_CYCLE       = list("name"="Cycle",       "desc"="Siphons air before replacing"),\
+		AALARM_MODE_FILL        = list("name"="Fill",        "desc"="Shuts off scrubbers and opens vents"),\
+		AALARM_MODE_OFF         = list("name"="Off",         "desc"="Shuts off vents and scrubbers"))
 	data["mode"]=mode
 	data["presets"]=list(
-		AALARM_PRESET_HUMAN		= list("name"="Human","desc"="Checks for Oxygen and Nitrogen"),\
-		AALARM_PRESET_VOX 		= list("name"="Vox","desc"="Checks for Nitrogen only"),\
-		AALARM_PRESET_SERVER 	= list("name"="Coldroom","desc"="For server rooms and freezers"))
+		AALARM_PRESET_HUMAN		= list("name"="Human",    "desc"="Checks for Oxygen and Nitrogen"),\
+		AALARM_PRESET_VOX 		= list("name"="Vox",      "desc"="Checks for Nitrogen only"),\
+		AALARM_PRESET_SERVER 	= list("name"="Coldroom", "desc"="For server rooms and freezers"))
 	data["preset"]=preset
 	data["screen"]=screen
 
@@ -975,44 +980,40 @@
 						selected[3] = selected[4]
 
 				apply_mode()
-				changed=1
+				ui_interact(usr)
+				return 1
 
 	if(href_list["screen"])
 		var/prevscreen=screen
 		screen = text2num(href_list["screen"])
-		changed=(prevscreen!=screen)
-
-	/* Unused
-	if(href_list["atmos_unlock"])
-		switch(href_list["atmos_unlock"])
-			if("0")
-				air_doors_close(1)
-			if("1")
-				air_doors_open(1)
-		changed=1
-	*/
+		ui_interact(usr)
+		return 1
 
 	if(href_list["atmos_alarm"])
 		alarmActivated=1
 		alarm_area.updateDangerLevel()
 		update_icon()
-		changed=1
+		ui_interact(usr)
+		return 1
 
 	if(href_list["atmos_reset"])
 		alarmActivated=0
 		alarm_area.updateDangerLevel()
 		update_icon()
-		changed=1
+		ui_interact(usr)
+		return 1
 
 	if(href_list["mode"])
 		mode = text2num(href_list["mode"])
 		apply_mode()
-		changed=1
+		ui_interact(usr)
+		return 1
 
 	if(href_list["preset"])
 		preset = text2num(href_list["preset"])
 		apply_preset()
-		changed=1
+		ui_interact(usr)
+		return 1
 
 	if(href_list["temperature"])
 		var/list/selected = TLV["temperature"]
@@ -1025,7 +1026,8 @@
 			usr << "Temperature must be between [min_temperature]C and [max_temperature]C"
 		else
 			target_temperature = input_temperature + T0C
-		changed=1
+		ui_interact(usr)
+		return 1
 
 	if (href_list["AAlarmwires"])
 		var/t1 = text2num(href_list["AAlarmwires"])
