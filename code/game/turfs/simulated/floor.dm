@@ -455,7 +455,9 @@ turf/simulated/floor/proc/update_icon()
 				new floor_tile.type(src)
 
 		make_plating()
-		playsound(src.loc, 'sound/items/Crowbar.ogg', 80, 1)
+		// Can't play sounds from areas. - N3X
+		//playsound(src.loc, 'sound/items/Crowbar.ogg', 80, 1)
+		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
 
 		return
 
