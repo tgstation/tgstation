@@ -123,7 +123,7 @@
 		return
 
 /obj/machinery/chem_dispenser/Topic(href, href_list)
-	if(stat & (BROKEN))
+	if(..())
 		return 0 // don't update UIs attached to this object
 
 	if(href_list["amount"])
@@ -335,6 +335,10 @@
 			else
 				P = new/obj/item/weapon/reagent_containers/pill(src.loc)
 
+			if(!P.reagents.total_volume)
+				name = "Nothing"
+				P.reagents.add_reagent("nothing", 10)
+
 			if(!name) name = reagents.get_master_reagent_name()
 			P.name = "[name] pill"
 			P.pixel_x = rand(-7, 7) //random position
@@ -345,6 +349,9 @@
 			if(!condi)
 				var/name = reject_bad_text(input(usr,"Name:","Name your bottle!",reagents.get_master_reagent_name()))
 				var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
+				if(!P.reagents.total_volume)
+					name = "Nothing"
+					P.reagents.add_reagent("nothing", 10)
 				if(!name) name = reagents.get_master_reagent_name()
 				P.name = "[name] bottle"
 				P.pixel_x = rand(-7, 7) //random position
@@ -352,6 +359,9 @@
 				reagents.trans_to(P,30)
 			else
 				var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
+				if(!P.reagents.total_volume)
+					name = "Nothing"
+					P.reagents.add_reagent("nothing", 10)
 				reagents.trans_to(P,50)
 
 	src.updateUsrDialog()
