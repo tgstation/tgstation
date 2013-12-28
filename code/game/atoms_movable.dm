@@ -93,14 +93,17 @@
 		tdy = dx;
 
 	var/error = tdist_x/2 - tdist_y
-	while(((dist_x > dist_y) && (src && target &&((((src.x < target.x && dx == EAST) || (src.x > target.x && dx == WEST)) && dist_travelled < range) || (a && a.has_gravity == 0)  || istype(src.loc, /turf/space)) && src.throwing && istype(src.loc, /turf))) || ((dist_x <= dist_y) && (src && target &&((((src.y < target.y && dy == NORTH) || (src.y > target.y && dy == SOUTH)) && dist_travelled < range) || (a.has_gravity == 0)  || istype(src.loc, /turf/space)) && src.throwing && istype(src.loc, /turf))))
+	while(target && (((((dist_x > dist_y) && ((src.x < target.x && dx == EAST) || (src.x > target.x && dx == WEST))) || ((dist_x <= dist_y) && ((src.y < target.y && dy == NORTH) || (src.y > target.y && dy == SOUTH))) || (src.x > target.x && dx == WEST)) && dist_travelled < range) || (a && a.has_gravity == 0)  || istype(src.loc, /turf/space)))
 		// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
+		if(!src.throwing) break
+		if(!istype(src.loc, /turf)) break
+
 		var/atom/step = get_step(src, (error < 0) ? tdy : tdx)
 		if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 			break
 		src.Move(step)
 		hit_check()
-		error += (error < 0) ? tdist_x : -tdist_y; // Also swap the two.
+		error += (error < 0) ? tdist_x : -tdist_y;
 		dist_travelled++
 		dist_since_sleep++
 		if(dist_since_sleep >= speed)
