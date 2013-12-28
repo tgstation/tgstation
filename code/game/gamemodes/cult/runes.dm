@@ -811,7 +811,7 @@ var/list/sacrificed = list()
 						tal.uses = 1
 						
 		greater_reward(var/mob/T)
-			var/reward = pick("fireball","smoke","blind","mindswap","forcewall","knock","charge", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffhealing", "armor", "space", "scrying","narsie","cowsie","soulbelt")
+			var/reward = pick("fireball","smoke","blind","mindswap","forcewall","knock","charge", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffhealing", "armor", "space", "scrying","soulbelt")
 			switch (reward)
 				if("fireball")
 					new /obj/item/weapon/spellbook/oneuse/fireball(get_turf(src))
@@ -856,10 +856,6 @@ var/list/sacrificed = list()
 						H.see_in_dark = 8
 						H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 						H << "<span class='notice'>The walls suddenly disappear.</span>"
-				if("narsie")
-					new /obj/item/weapon/veilrender(get_turf(src))
-				if("cowsie")
-					new /obj/item/weapon/veilrender/vealrender(get_turf(src))
 				if("soulbelt")
 					var/obj/item/weapon/storage/S  = new /obj/item/weapon/storage/belt/soulstone/full(get_turf(src))
 					var/obj/item/device/soulstone/stone = S.contents[1]
