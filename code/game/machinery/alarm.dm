@@ -986,6 +986,7 @@
 	if(href_list["screen"])
 		var/prevscreen=screen
 		screen = text2num(href_list["screen"])
+		if(prevscreen==screen) return 0
 		ui_interact(usr)
 		return 1
 

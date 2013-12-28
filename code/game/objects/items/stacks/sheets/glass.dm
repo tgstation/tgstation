@@ -316,7 +316,7 @@
 	icon_state = "sheet-plasmaglass"
 	//g_amt = 7500
 	g_amt=CC_PER_SHEET_GLASS
-	origin_tech = "materials=3;plasma=2"
+	origin_tech = "materials=3;plasmatech=2"
 	created_window = /obj/structure/window/plasmabasic
 	//canCombineWith=list(/obj/item/stack/sheet/plasmaglass,/obj/item/stack/sheet/plasmaglass/cyborg)
 
@@ -355,7 +355,7 @@
 	icon_state = "sheet-plasmarglass"
 	g_amt=CC_PER_SHEET_GLASS
 	m_amt = 1875
-	origin_tech = "materials=4;plasma=2"
+	origin_tech = "materials=4;plasmatech=2"
 	created_window = /obj/structure/window/plasmareinforced
 	//canCombineWith=list(/obj/item/stack/sheet/plasmareinforced,/obj/item/stack/sheet/plasmareinforced/cyborg)
 

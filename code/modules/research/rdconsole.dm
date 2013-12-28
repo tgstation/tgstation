@@ -50,7 +50,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 
 /obj/machinery/computer/rdconsole/proc/Maximize()
-
 	files.known_tech=files.possible_tech
 	for(var/datum/tech/KT in files.known_tech)
 		if(KT.level < KT.max_level)

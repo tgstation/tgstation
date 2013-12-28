@@ -300,7 +300,7 @@
 	icon_state = "phazon_head"
 	construction_time = 200
 	construction_cost = list("iron"=15000,"glass"=5000,"plasma"=10000, "phazon"=2500)
-	origin_tech = "programming=9;materials=9;magnets=6"
+	origin_tech = "programming=5;materials=9;magnets=6"
 
 /obj/item/mecha_parts/part/phazon_left_arm
 	name="Phazon Left Arm"
