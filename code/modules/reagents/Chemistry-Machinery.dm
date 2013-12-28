@@ -337,7 +337,7 @@
 
 			if(!P.reagents.total_volume)
 				name = "Nothing"
-				P.reagents.add_reagent("nothing", 10)
+				P.reagents.add_reagent("nothing", 3)
 
 			if(!name) name = reagents.get_master_reagent_name()
 			P.name = "[name] pill"
@@ -351,7 +351,7 @@
 				var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 				if(!P.reagents.total_volume)
 					name = "Nothing"
-					P.reagents.add_reagent("nothing", 10)
+					P.reagents.add_reagent("nothing", 1)
 				if(!name) name = reagents.get_master_reagent_name()
 				P.name = "[name] bottle"
 				P.pixel_x = rand(-7, 7) //random position
@@ -361,7 +361,7 @@
 				var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
 				if(!P.reagents.total_volume)
 					name = "Nothing"
-					P.reagents.add_reagent("nothing", 10)
+					P.reagents.add_reagent("nothing", 5)
 				reagents.trans_to(P,50)
 
 	src.updateUsrDialog()
