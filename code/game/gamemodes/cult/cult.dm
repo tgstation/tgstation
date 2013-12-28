@@ -22,7 +22,7 @@
 	antag_flag = BE_CULTIST
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	protected_jobs = list()
-	required_players = 20
+	required_players = 15
 	required_enemies = 3
 	recommended_enemies = 4
 
@@ -51,14 +51,14 @@
 
 
 /datum/game_mode/cult/pre_setup()
-	if(prob(60))
+	if(required_players >= 20 && prob(40))
+		objectives += "eldergod"
+		objectives += "sacrifice"
+	else
 		if(prob(60))
 			objectives += "hijack"
 		else
 			objectives += "survive"
-		objectives += "sacrifice"
-	else
-		objectives += "eldergod"
 		objectives += "sacrifice"
 
 	if(config.protect_roles_from_antagonist)
