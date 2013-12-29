@@ -28,10 +28,9 @@
 		..()
 		if(istype(W, /obj/item/stack/rods))
 			var/obj/item/stack/rods/R = W
-			if(R.amount > 1)
+			if(R.amount >= 1)
 				R.use(1)
 				new /obj/machinery/conveyor_switch(src)
-				del(src)
 
 	activate()
 		if(cooldown > 0)	return 0
