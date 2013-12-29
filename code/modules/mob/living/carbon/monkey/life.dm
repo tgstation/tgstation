@@ -11,7 +11,7 @@
 
 /mob/living/carbon/monkey/Life()
 	set invisibility = 0
-	set background = 1
+	//set background = 1
 	if (monkeyizing)	return
 	..()
 

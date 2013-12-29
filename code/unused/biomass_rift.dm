@@ -22,7 +22,7 @@
 	var/newicon = 1 //DEBUG
 
 /obj/effect/rift/New()
-	set background = 1
+	//set background = 1
 
 	..()
 
@@ -42,7 +42,7 @@
 	..()
 
 /obj/effect/biomass/New()
-	set background = 1
+	//set background = 1
 
 	..()
 	if(!IsValidBiomassLoc(loc,src))
@@ -64,7 +64,7 @@
 		Spread()
 
 /obj/effect/biomass/proc/Spread(var/direction = dir)
-	set background = 1
+	//set background = 1
 	var/possibleDirsInt = 0
 
 	for(var/newDirection in cardinal)
@@ -105,7 +105,7 @@
 //		NewSpread()
 
 /obj/effect/biomass/proc/NewSpread(maxDistance = 15)
-	set background = 1
+	//set background = 1
 	for(var/turf/T in orange(1,src))
 		if(!IsValidBiomassLoc(T,src))
 			continue
@@ -114,7 +114,7 @@
 		starting.maxDistance = maxDistance
 
 /proc/IsValidBiomassLoc(turf/location,obj/effect/biomass/source = null)
-	set background = 1
+	//set background = 1
 	for(var/obj/effect/biomass/biomass in location)
 		if(biomass != source)
 			return 0
