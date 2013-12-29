@@ -102,7 +102,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 	var/datum/objective/absorb/absorb_objective = new
 	absorb_objective.owner = changeling
-	absorb_objective.gen_amount_goal(5, 7)
+	absorb_objective.gen_amount_goal(6, 7)
 	changeling.objectives += absorb_objective
 
 	var/datum/objective/assassinate/kill_objective = new
