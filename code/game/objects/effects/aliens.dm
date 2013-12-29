@@ -164,7 +164,7 @@
 
 
 /obj/structure/alien/weeds/proc/Life()
-	//set background = 1
+	set background = 1
 	var/turf/U = get_turf(src)
 
 	if(istype(U, /turf/space))
