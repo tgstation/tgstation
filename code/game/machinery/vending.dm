@@ -282,7 +282,7 @@
 	if((href_list["vend"]) && (vend_ready))
 		if(panel_open)
 			usr << "<span class='notice'>The vending machine cannot dispense products while its service panel is open!</span>"
-		return
+			return
 
 		if((!allowed(usr)) && !emagged && scan_id)	//For SECURE VENDING MACHINES YEAH
 			usr << "<span class='warning'>Access denied.</span>"	//Unless emagged of course
