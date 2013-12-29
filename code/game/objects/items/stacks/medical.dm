@@ -12,7 +12,7 @@
 
 /obj/item/stack/medical/attack(mob/living/carbon/M as mob, mob/user as mob)
 	var/mob/living/carbon/human/H = M
-	var/obj/item/organ/limb/affecting = H.get_organ("chest")
+	var/obj/item/organ/limb/affecting = H.get_organ(user.zone_sel.selecting)
 
 
 	if(affecting.status == ORGAN_ORGANIC) //Limb must be organic to be healed - RR
