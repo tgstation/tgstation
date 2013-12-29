@@ -19,6 +19,19 @@
 	var/attempting = 0 //One clone attempt at a time thanks
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
 
+/obj/machinery/clonepod/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/clonepod(src)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
+	component_parts += new /obj/item/weapon/cable_coil(src, 1)
+	component_parts += new /obj/item/weapon/cable_coil(src, 1)
+
+
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
 /obj/item/weapon/disk/data
@@ -98,6 +111,8 @@
 
 //Start growing a human clone in the pod!
 /obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/mrace)
+	if(panel_open)
+		return 0
 	if(mess || attempting)
 		return 0
 	var/datum/mind/clonemind = locate(mindref)
@@ -217,7 +232,7 @@
 		src.occupant = null
 		if (src.locked)
 			src.locked = 0
-		if (!src.mess)
+		if (!src.mess && !panel_open)
 			icon_state = "pod_0"
 		use_power(200)
 		return
@@ -226,14 +241,27 @@
 
 //Let's unlock this early I guess.  Might be too early, needs tweaking.
 /obj/machinery/clonepod/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/weapon/screwdriver))
+		if(occupant || mess || locked)
+			user << "<span class='notice'>The maintenance panel is locked.</span>"
+			return
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		default_deconstruction_screwdriver(user, "[icon_state]_maintenance", "[initial(icon_state)]")
+		return
+
+	if(istype(W, /obj/item/weapon/crowbar))
+		if(panel_open)
+			default_deconstruction_crowbar()
+		return
+
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (!src.check_access(W))
-			user << "\red Access Denied."
+			user << "<span class='danger'>Access Denied.</span>"
 			return
 		if ((!src.locked) || (isnull(src.occupant)))
 			return
 		if ((src.occupant.health < -20) && (src.occupant.stat != 2))
-			user << "\red Access Refused."
+			user << "<span class='danger'>Access Refused.</span>"
 			return
 		else
 			src.locked = 0
@@ -264,6 +292,8 @@
 	set category = "Object"
 	set src in oview(1)
 
+	if(!usr)
+		return
 	if (usr.stat != 0)
 		return
 	src.go_out()

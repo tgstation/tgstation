@@ -24,26 +24,26 @@
 	switch(construct_op)
 		if(0)
 			if(istype(P, /obj/item/weapon/screwdriver))
-				user << "You unfasten the bolts."
+				user << "<span class='notice'>You unfasten the bolts.</span>"
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				construct_op ++
 		if(1)
 			if(istype(P, /obj/item/weapon/screwdriver))
-				user << "You fasten the bolts."
+				user << "<span class='notice'>You fasten the bolts.</span>"
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				construct_op --
 			if(istype(P, /obj/item/weapon/wrench))
-				user << "You dislodge the external plating."
+				user << "<span class='notice'>You dislodge the external plating.</span>"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				construct_op ++
 		if(2)
 			if(istype(P, /obj/item/weapon/wrench))
-				user << "You secure the external plating."
+				user << "<span class='notice'>You secure the external plating.</span>"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				construct_op --
 			if(istype(P, /obj/item/weapon/wirecutters))
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-				user << "You remove the cables."
+				user << "<span class='notice'>You remove the cables.</span>"
 				construct_op ++
 				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( user.loc )
 				A.amount = 5
@@ -51,26 +51,25 @@
 		if(3)
 			if(istype(P, /obj/item/weapon/cable_coil))
 				var/obj/item/weapon/cable_coil/A = P
-				if(A.amount >= 5)
-					user << "You insert the cables."
-					A.amount -= 5
-					if(A.amount <= 0)
-						user.drop_item()
-						del(A)
+				if(A.use(5))
+					user << "<span class='notice'>You insert the cables.</span>"
 					construct_op --
 					stat &= ~BROKEN // the machine's not borked anymore!
 				else
-					user << "You need more cable"
+					user << "<span class='danger'>You need more cable to do that.</span>"
 			if(istype(P, /obj/item/weapon/crowbar))
-				user << "You begin prying out the circuit board and components..."
+				user << "<span class='notice'>You begin prying out the circuit board and components...</span>"
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				if(do_after(user,60))
-					user << "You finish prying out the components."
+					user << "<span class='notice'>You finish prying out the components.</span>"
 
 					// Drop all the component stuff
-					if(contents.len > 0)
-						for(var/obj/x in src)
-							x.loc = user.loc
+					if(component_parts)
+						for(var/obj/I in component_parts)
+							if(I.reliability != 100 && crit_fail)
+								I.crit_fail = 1
+							I.loc = src.loc
+
 					else
 
 						// If the machine wasn't made during runtime, probably doesn't have components:
@@ -81,13 +80,14 @@
 							for(var/i = 1, i <= C.req_components[I], i++)
 								newpath = text2path(I)
 								var/obj/item/s = new newpath
-								s.loc = user.loc
-								if(istype(P, /obj/item/weapon/cable_coil))
-									var/obj/item/weapon/cable_coil/A = P
+								s.loc = src.loc
+								if(istype(s, /obj/item/weapon/cable_coil))
+									var/obj/item/weapon/cable_coil/A = s
 									A.amount = 1
+									A.update_icon()
 
 						// Drop a circuit board too
-						C.loc = user.loc
+						C.loc = src.loc
 
 					// Create a machine frame and delete the current machine
 					var/obj/machinery/constructable_frame/machine_frame/F = new

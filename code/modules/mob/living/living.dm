@@ -14,6 +14,9 @@
 		src << "\blue You have given up life and succumbed to death."
 		death()
 
+/mob/living/ex_act(severity)
+	if(client && !blinded)
+		flick("flash", src.flash)
 
 /mob/living/proc/updatehealth()
 	if(status_flags & GODMODE)
@@ -210,6 +213,9 @@
 	for(var/obj/O in L)
 		O.emp_act(severity)
 	..()
+
+/mob/living/proc/can_inject()
+	return 1
 
 /mob/living/proc/get_organ_target()
 	var/mob/shooter = src
@@ -550,3 +556,7 @@
 						CM.legcuffed.loc = usr.loc
 						CM.legcuffed = null
 						CM.update_inv_legcuffed(0)
+
+
+/mob/living/proc/get_visible_name()
+	return name

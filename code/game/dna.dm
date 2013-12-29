@@ -35,7 +35,7 @@
 			var/mob/living/carbon/human/H = character
 			L[DNA_HAIR_STYLE_BLOCK] = construct_block(hair_styles_list.Find(H.hair_style), hair_styles_list.len)
 			L[DNA_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.hair_color)
-			L[DNA_FACIAL_HAIR_STYLE_BLOCK] = construct_block(hair_styles_list.Find(H.facial_hair_style), facial_hair_styles_list.len)
+			L[DNA_FACIAL_HAIR_STYLE_BLOCK] = construct_block(facial_hair_styles_list.Find(H.facial_hair_style), facial_hair_styles_list.len)
 			L[DNA_FACIAL_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.facial_hair_color)
 			L[DNA_SKIN_TONE_BLOCK] = construct_block(skin_tones.Find(H.skin_tone), skin_tones.len)
 			L[DNA_EYE_COLOR_BLOCK] = sanitize_hexcolor(H.eye_color)
@@ -240,54 +240,54 @@
 
 	if(blocks[NEARSIGHTEDBLOCK])
 		M.disabilities |= NEARSIGHTED
-		M << "\red Your eyes feel strange."
+		M << "<span class='danger'>Your eyes feel strange.</span>"
 	if(blocks[EPILEPSYBLOCK])
 		M.disabilities |= EPILEPSY
-		M << "\red You get a headache."
+		M << "<span class='danger'>You get a headache.</span>"
 	if(blocks[STRANGEBLOCK])
-		M << "\red You feel strange."
+		M << "<span class='danger'>You feel strange.</span>"
 		if(prob(95))
 			if(prob(50))	randmutb(M)
 			else			randmuti(M)
 		else				randmutg(M)
 	if(blocks[COUGHBLOCK])
 		M.disabilities |= COUGHING
-		M << "\red You start coughing."
+		M << "<span class='danger'>You start coughing.</span>"
 	if(blocks[CLUMSYBLOCK])
-		M << "\red You feel lightheaded."
+		M << "<span class='danger'>You feel lightheaded.</span>"
 		M.mutations |= CLUMSY
 	if(blocks[TOURETTESBLOCK])
 		M.disabilities |= TOURETTES
-		M << "\red You twitch."
+		M << "<span class='danger'>You twitch.</span>"
 	if(blocks[NERVOUSBLOCK])
 		M.disabilities |= NERVOUS
-		M << "\red You feel nervous."
+		M << "<span class='danger'>You feel nervous.</span>"
 	if(blocks[DEAFBLOCK])
 		M.sdisabilities |= DEAF
 		M.ear_deaf = 1
-		M << "\red You can't seem to hear anything..."
+		M << "<span class='danger'>You can't seem to hear anything.</span>"
 	if(blocks[BLINDBLOCK])
 		M.sdisabilities |= BLIND
-		M << "\red You can't seem to see anything."
+		M << "<span class='danger'>You can't seem to see anything.</span>"
 	if(blocks[HULKBLOCK])
 		if(inj || prob(10))
 			M.mutations |= HULK
-			M << "\blue Your muscles hurt."
+			M << "<span class='notice'>Your muscles hurt.</span>"
 	if(blocks[XRAYBLOCK])
 		if(inj || prob(30))
 			M.mutations |= XRAY
-			M << "\blue The walls suddenly disappear."
+			M << "<span class='notice'>The walls suddenly disappear.</span>"
 			M.sight |= SEE_MOBS|SEE_OBJS|SEE_TURFS
 			M.see_in_dark = 8
 			M.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	if(blocks[FIREBLOCK])
 		if(inj || prob(30))
 			M.mutations |= COLD_RESISTANCE
-			M << "\blue Your body feels warm."
+			M << "<span class='notice'>Your body feels warm.</span>"
 	if(blocks[TELEBLOCK])
 		if(inj || prob(25))
 			M.mutations |= TK
-			M << "\blue You feel smarter."
+			M << "<span class='notice'>You feel smarter.</span>"
 
 
 	/* If you want the new mutations to work, UNCOMMENT THIS.
@@ -339,20 +339,21 @@
 
 /obj/machinery/dna_scannernew/New()
 	..()
-	component_parts = newlist(
-		/obj/item/weapon/circuitboard/clonescanner,
-		/obj/item/weapon/stock_parts/scanning_module,
-		/obj/item/weapon/stock_parts/manipulator,
-		/obj/item/weapon/stock_parts/micro_laser,
-		/obj/item/weapon/stock_parts/console_screen,
-		/obj/item/weapon/cable_coil,
-		/obj/item/weapon/cable_coil
-		)
-	RefreshParts()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/clonescanner(null)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+	component_parts += new /obj/item/weapon/cable_coil(null, 1)
+	component_parts += new /obj/item/weapon/cable_coil(null, 1)
 
-/obj/machinery/dna_scannernew/proc/toggle_open()
-	if(open)	return close()
-	else		return open()
+
+/obj/machinery/dna_scannernew/proc/toggle_open(mob/user=usr)
+	if(!user)
+		return
+	if(open)	return close(user)
+	else		return open(user)
 
 /obj/machinery/dna_scannernew/container_resist()
 	var/mob/living/user = usr
@@ -363,8 +364,7 @@
 	user.next_move = world.time + 100
 	user.last_special = world.time + 100
 	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>"
-	for(var/mob/O in viewers(src))
-		O << "<span class='warning'>You hear a metallic creaking from [src]!</span>"
+	user.visible_message("<span class='warning'>You hear a metallic creaking from [src]!</span>")
 
 	if(do_after(user,(breakout_time*60*10))) //minutes * 60seconds * 10deciseconds
 		if(!user || user.stat != CONSCIOUS || user.loc != src || open || !locked)
@@ -374,10 +374,13 @@
 		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
 		user << "<span class='notice'>You successfully break out of [src]!</span>"
 
-		open()
+		open(user)
 
-/obj/machinery/dna_scannernew/proc/close()
+/obj/machinery/dna_scannernew/proc/close(mob/user)
 	if(open)
+		if(panel_open)
+			user << "<span class='notice'>Close the maintenance panel first.</span>"
+			return 0
 		open = 0
 		density = 1
 		for(var/mob/living/carbon/C in loc)
@@ -407,10 +410,13 @@
 
 		return 1
 
-/obj/machinery/dna_scannernew/proc/open()
+/obj/machinery/dna_scannernew/proc/open(mob/user)
 	if(!open)
+		if(panel_open)
+			user << "<span class='notice'>Close the maintenance panel first.</span>"
+			return
 		if(locked)
-			usr << "<span class='notice'>The bolts are locked down, securing the door shut.</span>"
+			user << "<span class='notice'>The bolts are locked down, securing the door shut.</span>"
 			return
 		var/turf/T = get_turf(src)
 		if(T)
@@ -428,10 +434,35 @@
 /obj/machinery/dna_scannernew/relaymove(mob/user as mob)
 	if(user.stat)
 		return
-	open()
+	open(user)
 	return
 
 /obj/machinery/dna_scannernew/attackby(obj/item/weapon/grab/G, mob/user)
+
+	if(istype(G, /obj/item/weapon/screwdriver))
+		if(occupant)
+			user << "<span class='notice'>The maintenance panel is locked.</span>"
+			return
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		panel_open = !panel_open
+		if(panel_open)
+			icon_state = "[icon_state]_maintenance"
+			user << "<span class='notice'>You open the maintenance panel of [src].</span>"
+		else
+			if(open)
+				icon_state = "[initial(icon_state)]_open"
+			else
+				icon_state = "[initial(icon_state)]"
+			user << "<span class='notice'>You close the maintenance panel of [src].</span>"
+		return
+
+	if(istype(G, /obj/item/weapon/crowbar))
+		if(panel_open)
+			for(var/obj/I in contents) // in case there is something in the scanner
+				I.loc = src.loc
+			default_deconstruction_crowbar()
+		return
+
 	if(!istype(G, /obj/item/weapon/grab) || !ismob(G.affecting))
 		return
 	if(!open)
@@ -443,8 +474,9 @@
 	del(G)
 
 /obj/machinery/dna_scannernew/attack_hand(mob/user)
-	if(..())	return
-	toggle_open()
+	if(..())
+		return
+	toggle_open(user)
 	add_fingerprint(user)
 
 
@@ -482,6 +514,7 @@
 		del(src)
 
 
+//DNA COMPUTER
 /obj/machinery/computer/scan_consolenew
 	name = "\improper DNA scanner access console"
 	desc = "Scan DNA."
@@ -509,7 +542,7 @@
 			user.drop_item()
 			I.loc = src
 			src.diskette = I
-			user << "You insert [I]."
+			user << "<span class='notice'>You insert [I].</span>"
 			src.updateUsrDialog()
 			return
 	else
@@ -749,7 +782,7 @@
 		if("togglelock")
 			if(connected)	connected.locked = !connected.locked
 		if("toggleopen")
-			if(connected)	connected.toggle_open()
+			if(connected)	connected.toggle_open(usr)
 		if("setduration")
 			if(!num)
 				num = round(input(usr, "Choose pulse duration:", "Input an Integer", null) as num|null)

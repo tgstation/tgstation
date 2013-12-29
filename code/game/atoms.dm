@@ -94,8 +94,8 @@
 /atom/proc/emp_act(var/severity)
 	return
 
-/atom/proc/bullet_act(obj/item/projectile/P)
-	P.on_hit(src,0)
+/atom/proc/bullet_act(obj/item/projectile/P, def_zone)
+	P.on_hit(src, 0, def_zone)
 	. = 0
 
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
@@ -241,7 +241,7 @@ var/list/blood_splatter_icons = list()
 
 //returns 1 if made bloody, returns 0 otherwise
 /atom/proc/add_blood(mob/living/carbon/M)
-	if(flags & NOBLOODY)
+	if(rejects_blood())
 		return 0
 	if(!initial(icon) || !initial(icon_state))
 		return 0
@@ -294,6 +294,8 @@ var/list/blood_splatter_icons = list()
 	update_inv_gloves()	//handles bloody hands overlays and updating
 	return 1 //we applied blood to the item
 
+/atom/proc/rejects_blood()
+	return 0
 
 /atom/proc/add_vomit_floor(mob/living/carbon/M as mob, var/toxvomit = 0)
 	if( istype(src, /turf/simulated) )

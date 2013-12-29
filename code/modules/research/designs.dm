@@ -250,14 +250,23 @@ datum/design/clonescanner
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/clonescanner"
 
-datum/design/arcademachine
-	name = "Circuit Design (Arcade Machine)"
+datum/design/arcadebattle
+	name = "Circuit Design (Battle Arcade Machine)"
 	desc = "Allows for the construction of circuit boards used to build a new arcade machine."
 	id = "arcademachine"
 	req_tech = list("programming" = 1)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
-	build_path = "/obj/item/weapon/circuitboard/arcade"
+	build_path = "/obj/item/weapon/circuitboard/arcade/battle"
+
+datum/design/orion_trail
+	name = "Circuit Design (Orion Trail Arcade Machine)"
+	desc = "Allows for the construction of circuit boards used to build a new Orion Trail machine."
+	id = "arcademachine"
+	req_tech = list("programming" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/arcade/orion_trail"
 
 datum/design/powermonitor
 	name = "Circuit Design (Power Monitor)"

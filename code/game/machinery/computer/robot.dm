@@ -160,7 +160,7 @@
 
 							else
 								message_admins("\blue [key_name_admin(usr)] detonated [R.name]!")
-								log_game("\blue [key_name_admin(usr)] detonated [R.name]!")
+								log_game("\blue [key_name(usr)] detonated [R.name]!")
 								R.self_destruct()
 			else
 				usr << "\red Access Denied."

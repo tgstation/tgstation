@@ -65,9 +65,10 @@
 			if(i + 1 > late_joining_list.len)
 				i = 0
 			target_list[traitor] = late_joining_list[i + 1]
+			traitor.special_role = traitor_name
 
 		// Now, give them their targets
-		for(var/datum/mind/traitor in late_joining_list)
+		for(var/datum/mind/traitor in target_list)
 			..(traitor)
 
 		late_joining_list = list()

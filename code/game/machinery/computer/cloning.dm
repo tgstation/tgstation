@@ -325,10 +325,10 @@
 	if (subject.suiciding == 1)
 		scantemp = "<font class='bad'>Subject's brain is not responding to scanning stimuli.</font>"
 		return
-	if ((!subject.ckey) || (!subject.client))
-		scantemp = "<font class='bad'>Mental interface failure.</font>"
-		return
 	if (NOCLONE in subject.mutations)
+		scantemp = "<font class='bad'>Subject no longer contains the fundamental materials required to create a living clone.</font>"
+		return
+	if ((!subject.ckey) || (!subject.client))
 		scantemp = "<font class='bad'>Mental interface failure.</font>"
 		return
 	if (find_record("ckey", subject.ckey, records))

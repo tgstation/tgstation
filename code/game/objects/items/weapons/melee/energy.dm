@@ -1,11 +1,14 @@
 /obj/item/weapon/melee/energy
 	var/active = 0
-	flags = FPRINT | TABLEPASS | NOBLOODY
+	flags = FPRINT | TABLEPASS
 
-	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>", \
-							"\red <b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b>")
-		return (BRUTELOSS|FIRELOSS)
+/obj/item/weapon/melee/energy/suicide_act(mob/user)
+	viewers(user) << pick("\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>", \
+						"\red <b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b>")
+	return (BRUTELOSS|FIRELOSS)
+
+/obj/item/weapon/melee/energy/rejects_blood()
+	return 1
 
 /obj/item/weapon/melee/energy/axe
 	name = "energy axe"
@@ -16,7 +19,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
-	flags = FPRINT | CONDUCT | NOSHIELD | TABLEPASS | NOBLOODY
+	flags = FPRINT | CONDUCT | NOSHIELD | TABLEPASS
 	origin_tech = "combat=3"
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 
@@ -50,7 +53,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS | NOSHIELD | NOBLOODY
+	flags = FPRINT | TABLEPASS | NOSHIELD
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/hacked = 0
@@ -152,7 +155,7 @@
 	throw_speed = 1
 	throw_range = 1
 	w_class = 4.0//So you can't hide it in your pocket or some such.
-	flags = FPRINT | TABLEPASS | NOSHIELD | NOBLOODY
+	flags = FPRINT | TABLEPASS | NOSHIELD
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/datum/effect/effect/system/spark_spread/spark_system
 

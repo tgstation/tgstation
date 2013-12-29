@@ -7,21 +7,22 @@
 		return
 
 	var/frequency = get_rand_frequency() // Same frequency for everybody
+	var/turf/turf_source = get_turf(source)
 
  	// Looping through the player list has the added bonus of working for mobs inside containers
 	for (var/P in player_list)
 		var/mob/M = P
 		if(!M || !M.client)
 			continue
-		var/turf/T = get_turf(M)
-		if(T && T.z == source.z)
-			if(get_dist(T, source) <= world.view + extrarange)
-				M.playsound_local(source, soundin, vol, vary, frequency, falloff)
+		if(get_dist(M, turf_source) <= world.view + extrarange)
+			var/turf/T = get_turf(M)
+			if(T && T.z == turf_source.z)
+				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff)
 
 var/const/FALLOFF_SOUNDS = 1
 var/const/SURROUND_CAP = 7
 
-/mob/proc/playsound_local(var/atom/source, soundin, vol as num, vary, frequency, falloff)
+/mob/proc/playsound_local(var/turf/turf_source, soundin, vol as num, vary, frequency, falloff)
 	if(!src.client || ear_deaf > 0)	return
 	soundin = get_sfx(soundin)
 
@@ -36,7 +37,6 @@ var/const/SURROUND_CAP = 7
 		else
 			S.frequency = get_rand_frequency()
 
-	var/turf/turf_source = get_turf(source)
 	if(isturf(turf_source))
 		// 3D sounds, the technology is here!
 		var/turf/T = get_turf(src)

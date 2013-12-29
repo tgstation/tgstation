@@ -99,7 +99,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
 	for(var/obj/machinery/r_n_d/D in oview(3,src))
-		if(D.linked_console != null || D.disabled || D.opened)
+		if(D.linked_console != null || D.disabled || D.panel_open)
 			continue
 		if(istype(D, /obj/machinery/r_n_d/destructive_analyzer))
 			if(linked_destroy == null)
@@ -342,49 +342,52 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				linked_lathe.busy = 1
 				flick("protolathe_n",linked_lathe)
 				var/key = usr.key	//so we don't lose the info during the spawn delay
-				spawn(16)
-					use_power(power)
-					spawn(16)
-						for(var/M in being_built.materials)
-							if(!check_mat(being_built, M))
-								src.visible_message("<font color='blue'>The [src.name] beeps, \"Not enough materials to complete prototype.\"</font>")
-								g2g = 0
-								break
-							switch(M)
-								if("$metal")
-									linked_lathe.m_amount = max(0, (linked_lathe.m_amount-being_built.materials[M]))
-								if("$glass")
-									linked_lathe.g_amount = max(0, (linked_lathe.g_amount-being_built.materials[M]))
-								if("$gold")
-									linked_lathe.gold_amount = max(0, (linked_lathe.gold_amount-being_built.materials[M]))
-								if("$silver")
-									linked_lathe.silver_amount = max(0, (linked_lathe.silver_amount-being_built.materials[M]))
-								if("$plasma")
-									linked_lathe.plasma_amount = max(0, (linked_lathe.plasma_amount-being_built.materials[M]))
-								if("$uranium")
-									linked_lathe.uranium_amount = max(0, (linked_lathe.uranium_amount-being_built.materials[M]))
-								if("$diamond")
-									linked_lathe.diamond_amount = max(0, (linked_lathe.diamond_amount-being_built.materials[M]))
-								if("$clown")
-									linked_lathe.clown_amount = max(0, (linked_lathe.clown_amount-being_built.materials[M]))
-								else
-									linked_lathe.reagents.remove_reagent(M, being_built.materials[M])
+				use_power(power)
 
-						if(being_built.build_path && g2g)
-							var/obj/new_item = new being_built.build_path(src)
-							if( new_item.type == /obj/item/weapon/storage/backpack/holding )
-								new_item.investigate_log("built by [key]","singulo")
-							new_item.reliability = being_built.reliability
-							if(linked_lathe.hacked) being_built.reliability = max((reliability / 2), 0)
-							if(being_built.locked)
-								var/obj/item/weapon/storage/lockbox/L = new/obj/item/weapon/storage/lockbox(linked_lathe.loc)
-								new_item.loc = L
-								L.name += " ([new_item.name])"
-							else
-								new_item.loc = linked_lathe.loc
-						linked_lathe.busy = 0
-						screen = 3.1
-						updateUsrDialog()
+				for(var/M in being_built.materials)
+					if(!check_mat(being_built, M))
+						src.visible_message("<font color='blue'>The [src.name] beeps, \"Not enough materials to complete prototype.\"</font>")
+						g2g = 0
+						break
+					switch(M)
+						if("$metal")
+							linked_lathe.m_amount = max(0, (linked_lathe.m_amount-being_built.materials[M]))
+						if("$glass")
+							linked_lathe.g_amount = max(0, (linked_lathe.g_amount-being_built.materials[M]))
+						if("$gold")
+							linked_lathe.gold_amount = max(0, (linked_lathe.gold_amount-being_built.materials[M]))
+						if("$silver")
+							linked_lathe.silver_amount = max(0, (linked_lathe.silver_amount-being_built.materials[M]))
+						if("$plasma")
+							linked_lathe.plasma_amount = max(0, (linked_lathe.plasma_amount-being_built.materials[M]))
+						if("$uranium")
+							linked_lathe.uranium_amount = max(0, (linked_lathe.uranium_amount-being_built.materials[M]))
+						if("$diamond")
+							linked_lathe.diamond_amount = max(0, (linked_lathe.diamond_amount-being_built.materials[M]))
+						if("$clown")
+							linked_lathe.clown_amount = max(0, (linked_lathe.clown_amount-being_built.materials[M]))
+						else
+							linked_lathe.reagents.remove_reagent(M, being_built.materials[M])
+
+				var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
+				var/R = being_built.reliability
+				var/O = being_built.locked
+				spawn(32)
+					if(g2g)
+						var/obj/new_item = new P(src)
+						if( new_item.type == /obj/item/weapon/storage/backpack/holding )
+							new_item.investigate_log("built by [key]","singulo")
+						new_item.reliability = R
+						if(linked_lathe.hacked) R = max((reliability / 2), 0)
+						if(O)
+							var/obj/item/weapon/storage/lockbox/L = new/obj/item/weapon/storage/lockbox(linked_lathe.loc)
+							new_item.loc = L
+							L.name += " ([new_item.name])"
+						else
+							new_item.loc = linked_lathe.loc
+					linked_lathe.busy = 0
+					screen = 3.1
+					updateUsrDialog()
 
 	else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.
 		if(linked_imprinter)
@@ -401,21 +404,25 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				screen = 0.4
 				linked_imprinter.busy = 1
 				flick("circuit_imprinter_ani",linked_imprinter)
+				use_power(power)
+
+				for(var/M in being_built.materials)
+					switch(M)
+						if("$glass")
+							linked_imprinter.g_amount = max(0, (linked_imprinter.g_amount-being_built.materials[M]))
+						if("$gold")
+							linked_imprinter.gold_amount = max(0, (linked_imprinter.gold_amount-being_built.materials[M]))
+						if("$diamond")
+							linked_imprinter.diamond_amount = max(0, (linked_imprinter.diamond_amount-being_built.materials[M]))
+						else
+							linked_imprinter.reagents.remove_reagent(M, being_built.materials[M])
+
+				var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
+				var/R = being_built.reliability
 				spawn(16)
-					use_power(power)
-					for(var/M in being_built.materials)
-						switch(M)
-							if("$glass")
-								linked_imprinter.g_amount = max(0, (linked_imprinter.g_amount-being_built.materials[M]))
-							if("$gold")
-								linked_imprinter.gold_amount = max(0, (linked_imprinter.gold_amount-being_built.materials[M]))
-							if("$diamond")
-								linked_imprinter.diamond_amount = max(0, (linked_imprinter.diamond_amount-being_built.materials[M]))
-							else
-								linked_imprinter.reagents.remove_reagent(M, being_built.materials[M])
-					var/obj/new_item = new being_built.build_path(src)
-					new_item.reliability = being_built.reliability
-					if(linked_imprinter.hacked) being_built.reliability = max((reliability / 2), 0)
+					var/obj/new_item = new P(src)
+					new_item.reliability = R
+					if(linked_imprinter.hacked) R = max((reliability / 2), 0)
 					new_item.loc = linked_imprinter.loc
 					linked_imprinter.busy = 0
 					screen = 4.1

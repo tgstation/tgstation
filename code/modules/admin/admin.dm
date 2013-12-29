@@ -537,6 +537,25 @@ var/global/floorIsLava = 0
 		log_admin("Announce: [key_name(usr)] : [message]")
 	feedback_add_details("admin_verb","A") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/datum/admins/proc/set_admin_notice()
+	set category = "Special Verbs"
+	set name = "Set Admin Notice"
+	set desc ="Set an announcement that appears to everyone who joins the server. Only lasts this round"
+	if(!check_rights(0))	return
+
+	admin_notice = input(src,"Set a public notice for this round. Everyone who joins the server will see it.\n(Leaving it blank will delete the current notice):","Set Notice",admin_notice) as null|message
+	switch(admin_notice)
+		if(null)
+			return
+		if("")
+			message_admins("[key_name(usr)] removed the admin notice.")
+			log_admin("[key_name(usr)] removed the admin notice:\n[admin_notice]")
+			return
+	message_admins("[key_name(usr)] set the admin notice.")
+	log_admin("[key_name(usr)] set the admin notice:\n[admin_notice]")
+	world << "\blue <b>Admin Notice:</b>\n \t [admin_notice]"
+	feedback_add_details("admin_verb","SAN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /datum/admins/proc/toggleooc()
 	set category = "Server"
 	set desc="Toggle dis bitch"
