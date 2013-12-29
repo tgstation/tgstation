@@ -44,9 +44,9 @@ Bonus
 
 		for(var/obj/item/organ/limb/L in parts)
 			if(L.status == ORGAN_ROBOTIC)
-				L.heal_robotic_damage(get_damage, get_damage)
+				L.heal_damage(get_damage, get_damage, 1)
 			else
-				L.heal_damage(get_damage, get_damage)
+				L.heal_damage(get_damage, get_damage, 0)
 
 	else
 		if(M.getFireLoss() > 0 || M.getBruteLoss() > 0)
