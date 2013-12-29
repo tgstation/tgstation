@@ -51,7 +51,7 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 		var/datum/disease/v = new virus.type(1, virus, 0)
 		src.viruses += v
 		v.affected_mob = src
-		v.strain_data = v.strain_data.Copy()
+		v.strain_data = virus.strain_data.Copy()
 		v.holder = src
 		if(v.can_carry && prob(5))
 			v.carrier = 1
@@ -166,40 +166,10 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 
 	if(passed)
 		//world << "Infection in the mob [src]. YAY"
-
-
-/*
-	var/score = 0
-	if(istype(src, /mob/living/carbon/human))
-		if(src:gloves) score += 5
-		if(istype(src:wear_suit, /obj/item/clothing/suit/space)) score += 10
-		if(istype(src:wear_suit, /obj/item/clothing/suit/bio_suit)) score += 10
-		if(istype(src:head, /obj/item/clothing/head/helmet/space)) score += 5
-		if(istype(src:head, /obj/item/clothing/head/bio_hood)) score += 5
-	if(wear_mask)
-		score += 5
-		if((istype(src:wear_mask, /obj/item/clothing/mask) || istype(src:wear_mask, /obj/item/clothing/mask/surgical)) && !internal)
-			score += 5
-		if(internal)
-			score += 5
-	if(score > 20)
-		return
-	else if(score == 20 && prob(95))
-		return
-	else if(score >= 15 && prob(75))
-		return
-	else if(score >= 10 && prob(55))
-		return
-	else if(score >= 5 && prob(35))
-		return
-	else if(prob(15))
-		return
-	else*/
-
 		var/datum/disease/v = new virus.type(1, virus, 0)
 		src.viruses += v
 		v.affected_mob = src
-		v.strain_data = v.strain_data.Copy()
+		v.strain_data = virus.strain_data.Copy()
 		v.holder = src
 		if(v.can_carry && prob(5))
 			v.carrier = 1
