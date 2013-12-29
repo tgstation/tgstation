@@ -71,6 +71,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
+	var/mob/M = src
+
 	if(stat != DEAD)
 		succumb()
 	if(stat == DEAD)
@@ -79,9 +81,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you may not play again this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
 		if(response != "Ghost")	return	//didn't want to ghost after-all
 		resting = 1
-		ghostize(0)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
-	return
+		ghostize(0)					//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
 
+	var/obj/structure/morgue/Morgue = locate() in M.loc
+	if(istype(M.loc,/obj/structure/morgue)) Morgue = M.loc
+	if(Morgue) Morgue.update()
+
+	return
+	
 
 /mob/dead/observer/Move(NewLoc, direct)
 	if(NewLoc)
@@ -131,6 +138,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
 	set name = "Re-enter Corpse"
+
 	if(!client)	return
 	if(!(mind && mind.current))
 		src << "<span class='warning'>You have no body.</span>"
@@ -139,16 +147,24 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		src << "<span class='warning'>You cannot re-enter your body.</span>"
 		return
 	if(mind.current.key && copytext(mind.current.key,1,2)!="@")	//makes sure we don't accidentally kick any clients
-		usr << "<span class='warning'>Another consciousness is in your body...It is resisting you.</span>"
+		src << "<span class='warning'>Another consciousness is in your body...It is resisting you.</span>"
 		return
+
 	if(mind.current.ajourn && mind.current.stat != DEAD) 	//check if the corpse is astral-journeying (it's client ghosted using a cultist rune).
 		var/obj/effect/rune/R = locate() in mind.current.loc	//whilst corpse is alive, we can only reenter the body if it's on the rune
 		if(!(R && R.word1 == wordhell && R.word2 == wordtravel && R.word3 == wordself))	//astral journeying rune
 			usr << "<span class='warning'>The astral cord that ties your body and your spirit has been severed. You are likely to wander the realm beyond until your body is finally dead and thus reunited with you.</span>"
 			return
+
 	mind.current.ajourn=0
 	mind.current.key = key
+
+	var/obj/structure/morgue/Morgue = locate() in mind.current.loc
+	if(istype(mind.current.loc,/obj/structure/morgue)) Morgue = mind.current.loc
+	if(Morgue) Morgue.update()
+
 	return 1
+	
 
 /mob/dead/observer/proc/dead_tele()
 	set category = "Ghost"
