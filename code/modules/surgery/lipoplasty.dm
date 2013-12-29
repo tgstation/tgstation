@@ -4,6 +4,8 @@
 	species = list(/mob/living/carbon/human)
 	target_must_be_fat = 1
 	location = "chest"
+	requires_organic_chest = 1
+
 
 //cut fat
 /datum/surgery_step/cut_fat

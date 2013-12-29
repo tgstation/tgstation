@@ -140,6 +140,18 @@
 
 	return .
 
+// will get both marked and unmarked connections
+/obj/structure/cable/proc/get_marked_connections()
+	. = list()	// this will be a list of all connected power objects
+	var/turf/T = loc
+
+	if(d1)	T = get_step(src, d1)
+	if(T)	. += power_list(T, src, d1, 0)
+
+	T = get_step(src, d2)
+	if(T)	. += power_list(T, src, d2, 0)
+
+	return .
 
 /obj/machinery/power/proc/get_connections()
 
@@ -156,6 +168,24 @@
 
 		for(var/obj/structure/cable/C in T)
 			if(C.powernet)	continue
+			if(C.d1 == cdir || C.d2 == cdir)
+				. += C
+	return .
+
+/obj/machinery/power/proc/get_marked_connections()
+
+	. = list()
+
+	if(!directwired)
+		return get_indirect_connections()
+
+	var/cdir
+
+	for(var/card in cardinal)
+		var/turf/T = get_step(loc,card)
+		cdir = get_dir(T,loc)
+
+		for(var/obj/structure/cable/C in T)
 			if(C.d1 == cdir || C.d2 == cdir)
 				. += C
 	return .
@@ -193,6 +223,58 @@
 		for(var/L = 2 to P.len)
 			powernet_nextlink(P[L], PN)
 
+//remove the old powernet and replace it with a new one throughout the network.
+/proc/propagate_network(var/obj/O, var/datum/powernet/PN)
+	//world.log << "propagating new network"
+	var/list/worklist = list()
+	worklist+=O
+	var/index = 1
+	while(index<=worklist.len)
+		var/obj/P = worklist[index++]
+		if( istype(P,/obj/structure/cable))
+			//world.log << "is cable"
+			var/obj/structure/cable/C = P
+			if(C.powernet==PN)
+				//world.log << "already has correct network"
+				continue
+			//world.log << "removing from old powernet[C.powernet]"
+			C.powernet.cables-=C
+			C.powernet = PN
+			PN.cables+=C
+			for(var/obj/newP in C.get_marked_connections())
+				worklist+=newP
+			//world.log << "found [P.len] children"
+		else if(P.anchored && istype(P,/obj/machinery/power))
+			//world.log << "is machine"
+			var/obj/machinery/power/M = P
+			if(M.powernet==PN)
+				//world.log << "already has correct network"
+				continue
+			//world.log << "removing from old powernet[M.powernet]"
+			M.powernet.nodes-=M
+			M.powernet = PN
+			PN.nodes+=M
+			for(var/obj/newP in M.get_marked_connections())
+				worklist+=newP
+			//world.log << "found [P.len] children"
+		else
+			continue
+//should be called after placing a cable which extends another cable, creating a "smooth" cable that no longer terminates in the centre of a turf.
+//needed as this can, unlike other placements, disconnect cables
+/obj/structure/cable/proc/denode()
+	//world.log << "denoding"
+	var/turf/T1 = loc
+	if(!T1) return
+	var/list/powerlist = power_list(T1,src,0,0) //find the other cables that ended in the centre of the turf
+	//world.log << "found [powerlist.len] power items, picking the first"
+	var/datum/powernet/oldPN = powernet
+	var/datum/powernet/PN = new()
+	powernets+=PN
+	if(powerlist.len>0)
+		propagate_network(powerlist[1],PN)
+	if(oldPN.cables.len==0&&oldPN.nodes.len==0)
+		//world.log << "There was a loop, so the old powernet was destroyed, removing it"
+		powernets-=oldPN
 
 // cut a powernet at this cable object
 /datum/powernet/proc/cut_cable(var/obj/structure/cable/C)

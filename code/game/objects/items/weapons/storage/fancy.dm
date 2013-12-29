@@ -26,7 +26,7 @@
 
 /obj/item/weapon/storage/fancy/examine()
 	set src in oview(1)
-
+	..()
 	if(contents.len <= 0)
 		usr << "There are no [src.icon_type]s left in the box."
 	else if(contents.len == 1)
@@ -80,7 +80,7 @@
  */
 
 /obj/item/weapon/storage/fancy/candle_box
-	name = "Candle pack"
+	name = "candle pack"
 	desc = "A pack of red candles."
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candlebox5"

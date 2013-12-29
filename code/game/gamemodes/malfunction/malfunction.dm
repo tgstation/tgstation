@@ -31,7 +31,7 @@
 	//Triumvirate?
 	if (ticker.triai == 1)
 		required_enemies = 3
-	required_players = max(required_enemies+1, required_players) //to prevent issues if players are set too low
+		required_players = max(required_enemies+1, required_players) //to prevent issues if players are set too low
 	return ..()
 
 /datum/game_mode/malfunction/get_players_for_role(var/role = BE_MALF)
@@ -186,6 +186,12 @@
 
 	command_alert("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert")
 	set_security_level("delta")
+
+	for(var/obj/item/weapon/pinpointer/point in world)
+		for(var/datum/mind/AI_mind in ticker.mode.malf_ai)
+			var/mob/living/silicon/ai/A = AI_mind.current // the current mob the mind owns
+			if(A.stat != DEAD)
+				point.the_disk = A //The pinpointer now tracks the AI core.
 
 	ticker.mode:malf_mode_declared = 1
 	for(var/datum/mind/AI_mind in ticker.mode:malf_ai)

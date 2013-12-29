@@ -292,24 +292,12 @@
 
 
 /mob/living/silicon/robot/ex_act(severity)
-	if(!blinded)
-		flick("flash", flash)
-
-	if (stat == 2 && client)
-		gib()
-		return
-
-	else if (stat == 2 && !client)
-		del(src)
-		return
+	..()
 
 	switch(severity)
 		if(1.0)
-			if (stat != 2)
-				adjustBruteLoss(100)
-				adjustFireLoss(100)
-				gib()
-				return
+			gib()
+			return
 		if(2.0)
 			if (stat != 2)
 				adjustBruteLoss(60)
@@ -318,7 +306,7 @@
 			if (stat != 2)
 				adjustBruteLoss(30)
 
-	updatehealth()
+	return
 
 
 /mob/living/silicon/robot/meteorhit(obj/O as obj)
@@ -338,32 +326,6 @@
 	updatehealth()
 	if(prob(75) && Proj.damage > 0) spark_system.start()
 	return 2
-
-
-/mob/living/silicon/robot/Bump(atom/movable/AM as mob|obj, yes)
-	if ((!( yes ) || now_pushing))
-		return
-	now_pushing = 1
-	if(ismob(AM))
-		var/mob/tmob = AM
-		if(!(tmob.status_flags & CANPUSH))
-			now_pushing = 0
-			return
-	now_pushing = 0
-	..()
-	if (!istype(AM, /atom/movable))
-		return
-	if (!now_pushing)
-		now_pushing = 1
-		if (!AM.anchored)
-			var/t = get_dir(src, AM)
-			if (istype(AM, /obj/structure/window))
-				if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-					for(var/obj/structure/window/win in get_step(AM,t))
-						now_pushing = 0
-						return
-			step(AM, t)
-		now_pushing = null
 
 /mob/living/silicon/robot/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
 	if (stat == 2)
@@ -453,7 +415,7 @@
 
 	else if (istype(W, /obj/item/weapon/cell) && opened)	// trying to put a cell inside
 		if(wiresexposed)
-			user << "Close the panel first."
+			user << "Close the cover first."
 		else if(cell)
 			user << "There is a power cell already installed."
 		else
@@ -489,7 +451,7 @@
 			return
 		else
 			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
-			if(do_after(user, 50))
+			if(do_after(user, 50) && !cell)
 				user.visible_message("\red [user] deconstructs [src]!", "\blue You unfasten the securing bolts, and [src] falls to pieces!")
 				deconstruct()
 
@@ -507,7 +469,7 @@
 		else
 			if(allowed(usr))
 				locked = !locked
-				user << "You [ locked ? "lock" : "unlock"] [src]'s interface."
+				user << "You [ locked ? "lock" : "unlock"] [src]'s cover."
 				updateicon()
 			else
 				user << "\red Access denied."
@@ -529,7 +491,7 @@
 		if(opened)//Cover is open
 			if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
 			if(wiresexposed)
-				user << "You must close the panel first"
+				user << "You must close the cover first"
 				return
 			else
 				sleep(6)
@@ -595,16 +557,16 @@
 		spark_system.start()
 		return ..()
 
-/mob/living/silicon/robot/verb/unlock_own_panel()
+/mob/living/silicon/robot/verb/unlock_own_cover()
 	set category = "Robot Commands"
-	set name = "Unlock Panel"
-	set desc = "Unlocks your own panel if it is locked. You can not lock it again. A human will have to lock it for you."
+	set name = "Unlock Cover"
+	set desc = "Unlocks your own cover if it is locked. You can not lock it again. A human will have to lock it for you."
 	if(locked)
-		switch(alert("You can not lock your panel again, are you sure?\n      (You can still ask for a human to lock it)", "Unlock Own Panel", "Yes", "No"))
+		switch(alert("You can not lock your cover again, are you sure?\n      (You can still ask for a human to lock it)", "Unlock Own Cover", "Yes", "No"))
 			if("Yes")
 				locked = 0
 				updateicon()
-				usr << "You unlock your access panel."
+				usr << "You unlock your cover."
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if (!ticker)
@@ -629,7 +591,6 @@
 
 			M.put_in_active_hand(G)
 
-			grabbed_by += G
 			G.synch()
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			for(var/mob/O in viewers(src, null))
@@ -745,8 +706,7 @@
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
-		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
-		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
+		add_logs(M, src, "attacked", admin=0)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
 		updatehealth()
@@ -832,11 +792,11 @@
 
 	if(opened)
 		if(wiresexposed)
-			overlays += "ov-openpanel +w"
+			overlays += "ov-opencover +w"
 		else if(cell)
-			overlays += "ov-openpanel +c"
+			overlays += "ov-opencover +c"
 		else
-			overlays += "ov-openpanel -c"
+			overlays += "ov-opencover -c"
 
 	update_fire()
 	return
@@ -998,6 +958,10 @@
 		return
 
 /mob/living/silicon/robot/proc/self_destruct()
+	if(emagged)
+		explosion(src.loc,1,2,4,flame_range = 2)
+	else
+		explosion(src.loc,-1,0,2)
 	gib()
 	return
 
@@ -1058,13 +1022,13 @@
 
 /mob/living/silicon/robot/proc/deconstruct()
 	var/turf/T = get_turf(src)
-	if(robot_suit)
+	if (robot_suit)
 		robot_suit.loc = T
 		robot_suit.l_leg.loc = T
 		robot_suit.l_leg = null
 		robot_suit.r_leg.loc = T
 		robot_suit.r_leg = null
-		new /obj/item/weapon/cable_coil(T, 1) //The wires break off of the torso from the fall. I'm doing this so that they won't get confused when trying to build another cyborg.
+		new /obj/item/weapon/cable_coil(T, robot_suit.chest.wires)
 		robot_suit.chest.loc = T
 		robot_suit.chest.wires = 0.0
 		robot_suit.chest = null
@@ -1094,4 +1058,7 @@
 		for(b=0, b!=2, b++)
 			var/obj/item/device/flash/F = new /obj/item/device/flash(T)
 			F.burn_out()
+	if (cell) //Sanity check.
+		cell.loc = T
+		cell = null
 	del(src)

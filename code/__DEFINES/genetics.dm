@@ -77,3 +77,7 @@
 #define TR_KEEPSE		32 // changelings shouldn't edit the DNA's SE when turning into a monkey
 #define TR_DEFAULTMSG	64
 #define TR_KEEPSRC		128
+
+//Organ stuff, It's here because "Genetics" is the most relevant file for organs
+#define ORGAN_ORGANIC   1
+#define ORGAN_ROBOTIC   2

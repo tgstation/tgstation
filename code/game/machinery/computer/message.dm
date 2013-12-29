@@ -5,7 +5,7 @@
 
 
 /obj/machinery/computer/message_monitor
-	name = "Message Monitor Console"
+	name = "message monitor console"
 	desc = "Used to Monitor the crew's messages, that are sent via PDA. Can also be used to view Request Console messages."
 	icon_state = "comm_logs"
 	var/hack_icon = "comm_logsc"
@@ -477,7 +477,7 @@
 
 /obj/item/weapon/paper/monitorkey
 	//..()
-	name = "Monitor Decryption Key"
+	name = "monitor decryption key"
 	var/obj/machinery/message_server/server = null
 
 /obj/item/weapon/paper/monitorkey/New()

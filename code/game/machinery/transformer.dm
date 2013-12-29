@@ -1,5 +1,5 @@
 /obj/machinery/transformer
-	name = "Automatic Robotic Factory 5000"
+	name = "\improper Automatic Robotic Factory 5000"
 	desc = "A large metalic machine with an entrance and an exit. A sign on the side reads, 'human go in, robot come out', human must be lying down and alive. Has to cooldown between each use."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "separator-AO1"

@@ -3,7 +3,7 @@ obj/machinery/atmospherics/trinary/filter
 	icon_state = "intact_off"
 	density = 1
 
-	name = "Gas filter"
+	name = "gas filter"
 
 	req_access = list(access_atmospherics)
 

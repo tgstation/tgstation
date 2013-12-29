@@ -150,7 +150,8 @@
 
 /obj/item/weapon/weldingtool/examine()
 	set src in usr
-	usr << "[src] \icon[src] contains [get_fuel()]/[max_fuel] units of fuel!"
+	..()
+	usr << "It contains [get_fuel()]/[max_fuel] units of fuel!"
 
 
 /obj/item/weapon/weldingtool/attackby(obj/item/I, mob/user)

@@ -3,6 +3,8 @@
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/reshape_genitals, /datum/surgery_step/close)
 	species = list(/mob/living/carbon/human)
 	location = "groin"
+	requires_organic_chest = 1
+
 
 //reshape_genitals
 /datum/surgery_step/reshape_genitals

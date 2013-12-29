@@ -128,7 +128,7 @@ LINEN BINS
 	item_color = "cargo"
 
 /obj/item/weapon/bedsheet/centcom
-	name = "centcom bedsheet"
+	name = "\improper Centcom bedsheet"
 	desc = "Woven with advanced nanothread for warmth as well as being very decorated, essential for all officials."
 	icon_state = "sheetcentcom"
 	item_color = "centcom"
@@ -154,7 +154,7 @@ LINEN BINS
 
 /obj/structure/bedsheetbin
 	name = "linen bin"
-	desc = "A linen bin. It looks rather cosy."
+	desc = "It looks rather cosy."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "linenbin-full"
 	anchored = 1
@@ -164,7 +164,7 @@ LINEN BINS
 
 
 /obj/structure/bedsheetbin/examine()
-	usr << desc
+	..()
 	if(amount < 1)
 		usr << "There are no bed sheets in the bin."
 		return

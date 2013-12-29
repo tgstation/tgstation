@@ -31,7 +31,7 @@
 	return 1
 
 /obj/machinery/computer/upload/ai
-	name = "AI Upload"
+	name = "\improper AI upload console"
 	desc = "Used to upload laws to the AI."
 	icon_state = "command"
 	circuit = /obj/item/weapon/circuitboard/aiupload
@@ -56,7 +56,7 @@
 
 
 /obj/machinery/computer/upload/borg
-	name = "Cyborg Upload"
+	name = "cyborg upload console"
 	desc = "Used to upload laws to Cyborgs."
 	icon_state = "command"
 	circuit = /obj/item/weapon/circuitboard/borgupload

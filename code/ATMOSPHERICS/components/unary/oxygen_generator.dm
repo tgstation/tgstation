@@ -3,7 +3,7 @@ obj/machinery/atmospherics/unary/oxygen_generator
 	icon_state = "intact_off"
 	density = 1
 
-	name = "Oxygen Generator"
+	name = "oxygen generator"
 	desc = ""
 
 	dir = SOUTH

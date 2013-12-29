@@ -5,7 +5,7 @@
 	anchored = 1
 	w_class = 4.0
 	canhear_range = 2
-	flags = FPRINT | CONDUCT | TABLEPASS | NOBLOODY
+	flags = FPRINT | CONDUCT | TABLEPASS
 	var/number = 0
 	var/anyai = 1
 	var/mob/living/silicon/ai/ai = list()
@@ -73,3 +73,6 @@
 			icon_state = "intercom-p"
 		else
 			icon_state = "intercom"
+
+/obj/item/device/radio/intercom/rejects_blood()
+	return 1

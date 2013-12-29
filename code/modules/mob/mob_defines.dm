@@ -36,7 +36,6 @@
 	var/lastattacker = null
 	var/lastattacked = null
 	var/attack_log = list( )
-	var/already_placed = 0
 	var/obj/machinery/machine = null
 	var/other_mobs = null
 	var/memory = ""
@@ -57,8 +56,6 @@
 	var/ajourn = 0
 	var/druggy = 0			//Carbon
 	var/confused = 0		//Carbon
-	var/antitoxs = null
-	var/plasma = null
 	var/sleeping = 0		//Carbon
 	var/resting = 0			//Carbon
 	var/lying = 0
@@ -80,7 +77,6 @@
 	var/is_dizzy = 0
 	var/is_jittery = 0
 	var/jitteriness = 0//Carbon
-	var/charges = 0
 	var/nutrition = 400//Carbon
 
 	var/overeatduration = 0		// How long this guy is overeating //Carbon
@@ -88,10 +84,8 @@
 	var/stunned = 0
 	var/weakened = 0
 	var/losebreath = 0//Carbon
-	var/intent = null//Living
 	var/shakecamera = 0
 	var/a_intent = "help"//Living
-	var/m_int = null//Living
 	var/m_intent = "run"//Living
 	var/lastKnownIP = null
 	var/obj/structure/stool/bed/buckled = null//Living

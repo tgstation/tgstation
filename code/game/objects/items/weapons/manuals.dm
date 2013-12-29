@@ -84,6 +84,23 @@
 	</html>
 	"}
 
+/obj/item/weapon/book/manual/telescience
+	name = "Teleportation Science - Bluespace for dummies!"
+	icon_state = "book7"
+	author = "University of Bluespace"
+	title = "Teleportation Science - Bluespace for dummies!"
+
+	dat = {"
+	<html><head>
+	</head>
+
+	<body>
+	<iframe width='100%' height='97%' src="http://wiki.nanotrasen.com/index.php?title=Telescience&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+	</body>
+
+	</html>
+	"}
+
 /obj/item/weapon/book/manual/engineering_hacking
 	name = "Hacking"
 	icon_state ="bookHacking"
@@ -417,6 +434,7 @@
 					<li><a href="#Equipment">Cyborg Related Equipment</a></li>
 					<li><a href="#Modules">Cyborg Modules</a></li>
 					<li><a href="#Construction">Cyborg Construction</a></li>
+					<li><a href="#Deconstruction">Cyborg Deconstruction</a></li>
 					<li><a href="#Maintenance">Cyborg Maintenance</a></li>
 					<li><a href="#Repairs">Cyborg Repairs</a></li>
 					<li><a href="#Emergency">In Case of Emergency</a></li>
@@ -515,6 +533,34 @@
 				  <li>Attach all of the Robot parts to the Robot frame</li>
 				  <li>Insert the Man-Machine Interface (With the Brain inside) Into the Robot Body</li>
 				  <li>Congratulations! You have a new cyborg!</li>
+				</ol>
+
+				<h2><a name="Deconstruction">Cyborg Deconstruction</h2>
+				If you want to deconstruct a cyborg, say to remove its MMI without <a href="#Emergency">blowing the Cyborg to pieces</a>, they come apart very quickly, <b>and</b> very safely, in a few simple steps.
+				<ul>
+				  <li>Crowbar</li>
+				  <li>Wrench</li>
+				  Optional:
+				  <li>Screwdriver</li>
+				  <li>Wirecutters</li>
+				</ul>
+				<ol>
+				  <li>Begin by unlocking the Cyborg's access panel using your ID</li>
+				  <li>Use your crowbar to open the Cyborg's access panel</li>
+				  <li>Using your bare hands, remove the power cell from the Cyborg</li>
+				  <li>Lockdown the Cyborg to disengage safety protocols</li>
+				  <ol>
+				    Option 1: Robotics console
+				    <li>Use the Robotics console in the RD's office</li>
+				    <li>Find the entry for your Cyborg</li>
+				    <li>Press the Lockdown button on the Robotics console</li>
+				  </ol>
+				  <ol>
+				    Option 2: Lockdown wire
+				    <li>Use your screwdriver to expose the Cyborg's wiring</li>
+				    <li>Use your wirecutters to start cutting all of the wires until the lockdown light turns off, cutting all of the wires irregardless of the lockdown light works as well</li>
+				  </ol>
+				  <li>Use your wrench to unfasten the Cyborg's bolts, the Cyborg will then fall apart onto the floor, the MMI will be there as well</li>
 				</ol>
 
 				<h2><a name="Maintenance">Cyborg Maintenance</h2>

@@ -112,5 +112,26 @@
 	for (var/datum/nanoui/ui in user.open_uis)
 		ui.close();
 
+ /**
+  * This is called when a player transfers from one mob to another
+  * Transfers all open UIs to the new mob
+  *
+  * @param oldMob /mob The user's old mob
+  * @param newMob /mob The user's new mob
+  *
+  * @return nothing
+  */
+/datum/nanomanager/proc/user_transferred(var/mob/oldMob, var/mob/newMob)
+	if (isnull(oldMob.open_uis) || !istype(oldMob.open_uis, /list) || open_uis.len == 0)
+		return 0 // has no open uis
+
+	if (isnull(newMob.open_uis) || !istype(newMob.open_uis, /list))
+		newMob.open_uis = list()
+
+	for (var/datum/nanoui/ui in oldMob.open_uis)
+		ui.user = newMob
+		newMob.open_uis.Add(ui)
+
+	oldMob.open_uis.Cut()
 
 

@@ -225,7 +225,8 @@
 
 /turf/simulated/floor/plating/asteroid/airless/cave/proc/SpawnFloor(var/turf/T)
 	var/turf/simulated/floor/t = new /turf/simulated/floor/plating/asteroid/airless(T)
-	t.updateMineralOverlays()
+	spawn(2)
+		t.fullUpdateMineralOverlays()
 
 
 /turf/simulated/mineral/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -414,7 +415,7 @@
 
 	if(istype(W,/obj/item/weapon/storage/bag/ore))
 		var/obj/item/weapon/storage/bag/ore/S = W
-		if(S.collection_mode)
+		if(S.collection_mode == 1)
 			for(var/obj/item/weapon/ore/O in src.contents)
 				O.attackby(W,user)
 				return
@@ -436,7 +437,7 @@
 	icon_state = "asteroid_dug"
 	return
 
-/turf/simulated/floor/proc/updateMineralOverlays()
+/turf/proc/updateMineralOverlays()
 	src.overlays.Cut()
 
 	if(istype(get_step(src, NORTH), /turf/simulated/mineral))
@@ -448,38 +449,14 @@
 	if(istype(get_step(src, WEST), /turf/simulated/mineral))
 		src.overlays += image('icons/turf/walls.dmi', "rock_side_w", layer=6)
 
+/turf/simulated/mineral/updateMineralOverlays()
+	return
 
-/turf/simulated/floor/proc/fullUpdateMineralOverlays()
-//	var/turf/simulated/floor/plating/asteroid/A
-	for (var/turf/simulated/floor/t in range(1,src))
+
+
+/turf/proc/fullUpdateMineralOverlays()
+	for (var/turf/t in range(1,src))
 		t.updateMineralOverlays()
-/*
-	if(istype(get_step(src, WEST), /turf/simulated/floor/plating/asteroid))
-		A = get_step(src, WEST)
-		A.updateMineralOverlays()
-	if(istype(get_step(src, EAST), /turf/simulated/floor/plating/asteroid))
-		A = get_step(src, EAST)
-		A.updateMineralOverlays()
-	if(istype(get_step(src, NORTH), /turf/simulated/floor/plating/asteroid))
-		A = get_step(src, NORTH)
-		A.updateMineralOverlays()
-	if(istype(get_step(src, NORTHWEST), /turf/simulated/floor/plating/asteroid))
-		A = get_step(src, NORTHWEST)
-		A.updateMineralOverlays()
-	if(istype(get_step(src, NORTHEAST), /turf/simulated/floor/plating/asteroid))
-		A = get_step(src, NORTHEAST)
-		A.updateMineralOverlays()
-	if(istype(get_step(src, SOUTHWEST), /turf/simulated/floor/plating/asteroid))
-		A = get_step(src, SOUTHWEST)
-		A.updateMineralOverlays()
-	if(istype(get_step(src, SOUTHEAST), /turf/simulated/floor/plating/asteroid))
-		A = get_step(src, SOUTHEAST)
-		A.updateMineralOverlays()
-	if(istype(get_step(src, SOUTH), /turf/simulated/floor/plating/asteroid))
-		A = get_step(src, SOUTH)
-		A.updateMineralOverlays()
-	src.updateMineralOverlays()
-*/
 
 /turf/simulated/floor/plating/asteroid/Entered(atom/movable/M as mob|obj)
 	..()

@@ -42,7 +42,7 @@ display round(lastgen) and plasmatank amount
 
 //Baseline portable generator. Has all the default handling. Not intended to be used on it's own (since it generates unlimited power).
 /obj/machinery/power/port_gen
-	name = "Portable Generator"
+	name = "portable generator"
 	desc = "A portable generator for emergency backup power"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "portgen0"
@@ -53,7 +53,6 @@ display round(lastgen) and plasmatank amount
 
 	var/active = 0
 	var/power_gen = 5000
-	var/open = 0
 	var/recent_fault = 0
 	var/power_output = 1
 
@@ -88,13 +87,14 @@ display round(lastgen) and plasmatank amount
 
 /obj/machinery/power/port_gen/examine()
 	set src in oview(1)
+	..()
 	if(active)
-		usr << "\blue The generator is on."
+		usr << "It is running."
 	else
-		usr << "\blue The generator is off."
+		usr << "It isn't running."
 
 /obj/machinery/power/port_gen/pacman
-	name = "P.A.C.M.A.N.-type Portable Generator"
+	name = "\improper P.A.C.M.A.N.-type portable generator"
 	var/sheets = 0
 	var/max_sheets = 100
 	var/sheet_name = ""
@@ -114,8 +114,8 @@ display round(lastgen) and plasmatank amount
 	component_parts = list()
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
-	component_parts += new /obj/item/weapon/cable_coil(src)
-	component_parts += new /obj/item/weapon/cable_coil(src)
+	component_parts += new /obj/item/weapon/cable_coil(src, 1)
+	component_parts += new /obj/item/weapon/cable_coil(src, 1)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
 	component_parts += new board_path(src)
 	var/obj/sheet = new sheet_path(null)
@@ -230,21 +230,14 @@ display round(lastgen) and plasmatank amount
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 		else if(istype(O, /obj/item/weapon/screwdriver))
-			open = !open
+			panel_open = !panel_open
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			if(open)
+			if(panel_open)
 				user << "\blue You open the access panel."
 			else
 				user << "\blue You close the access panel."
-		else if(istype(O, /obj/item/weapon/crowbar) && !open)
-			var/obj/machinery/constructable_frame/machine_frame/new_frame = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			for(var/obj/item/I in component_parts)
-				if(I.reliability < 100)
-					I.crit_fail = 1
-				I.loc = src.loc
-			new_frame.state = 2
-			new_frame.icon_state = "box_1"
-			del(src)
+		else if(istype(O, /obj/item/weapon/crowbar) && panel_open)
+			default_deconstruction_crowbar()
 
 /obj/machinery/power/port_gen/pacman/attack_hand(mob/user as mob)
 	..()
@@ -316,7 +309,7 @@ display round(lastgen) and plasmatank amount
 			usr.unset_machine()
 
 /obj/machinery/power/port_gen/pacman/super
-	name = "S.U.P.E.R.P.A.C.M.A.N.-type Portable Generator"
+	name = "\improper S.U.P.E.R.P.A.C.M.A.N.-type portable generator"
 	icon_state = "portgen1"
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
 	power_gen = 15000
@@ -326,7 +319,7 @@ display round(lastgen) and plasmatank amount
 		explosion(src.loc, 3, 3, 3, -1)
 
 /obj/machinery/power/port_gen/pacman/mrs
-	name = "M.R.S.P.A.C.M.A.N.-type Portable Generator"
+	name = "\improper M.R.S.P.A.C.M.A.N.-type portable generator"
 	icon_state = "portgen2"
 	sheet_path = /obj/item/stack/sheet/mineral/diamond
 	power_gen = 40000

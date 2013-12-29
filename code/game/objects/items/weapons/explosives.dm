@@ -60,8 +60,7 @@
 		return
 	user << "Planting explosives..."
 	if(ismob(target))
-		user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] tried planting [name] on [target:real_name] ([target:ckey])</font>"
-		log_attack("<font color='red'> [user.real_name] ([user.ckey]) tried planting [name] on [target:real_name] ([target:ckey])</font>")
+		add_logs(user, target, "tried to plant explosives on", object="[name]")
 		user.visible_message("\red [user.name] is trying to plant some kind of explosive on [target.name]!")
 
 
@@ -71,7 +70,7 @@
 		loc = null
 
 		if (ismob(target))
-			target:attack_log += "\[[time_stamp()]\]<font color='orange'> Had the [name] planted on them by [user.real_name] ([user.ckey])</font>"
+			add_logs(user, target, "planted [name] on")
 			user.visible_message("\red [user.name] finished planting an explosive on [target.name]!")
 
 		target.overlays += image('icons/obj/assemblies.dmi', "plastic-explosive2")

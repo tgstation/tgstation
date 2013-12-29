@@ -161,13 +161,14 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	if(!sterile)
 		//target.contract_disease(new /datum/disease/alien_embryo(0)) //so infection chance is same as virus infection chance
-		new /obj/item/alien_embryo(target)
-		target.status_flags |= XENO_HOST
-
 		target.visible_message("\red \b [src] falls limp after violating [target]'s face!")
 
 		Die()
 		icon_state = "[initial(icon_state)]_impregnated"
+
+		if(!target.getlimb(/obj/item/organ/limb/robot/chest) && !(target.status_flags & XENO_HOST))
+			new /obj/item/alien_embryo(target)
+
 
 		if(iscorgi(target))
 			var/mob/living/simple_animal/corgi/C = target

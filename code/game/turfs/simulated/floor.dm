@@ -506,6 +506,10 @@ turf/simulated/floor/proc/update_icon()
 	if(istype(C, /obj/item/weapon/cable_coil))
 		if(is_plating())
 			var/obj/item/weapon/cable_coil/coil = C
+			for(var/obj/structure/cable/LC in src)
+				if((LC.d1==0)||(LC.d2==0))
+					LC.attackby(C,user)
+					return
 			coil.turf_place(src, user)
 		else
 			user << "\red You must remove the plating first."

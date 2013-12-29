@@ -13,18 +13,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/revolver/process_chambered()
-	var/obj/item/ammo_casing/AC = chambered //Find chambered round
-	if(isnull(AC) || !istype(AC))
-		return 0
-	chambered = null
-	chamber_round()
-	if(AC.BB)
-		in_chamber = AC.BB //Load projectile into chamber.
-		AC.BB.loc = src //Set projectile loc to gun.
-		AC.BB = null
-		AC.update_icon()
-		return 1
-	return 0
+	return ..(0, 1)
 
 /obj/item/weapon/gun/projectile/revolver/attackby(var/obj/item/A as obj, mob/user as mob)
 	var/num_loaded = 0
