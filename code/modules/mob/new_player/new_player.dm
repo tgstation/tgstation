@@ -276,6 +276,15 @@
 		if((job.current_positions >= job.total_positions) && job.total_positions != -1)	return 0
 		if(jobban_isbanned(src,rank))	return 0
 		if(!job.player_old_enough(src.client))	return 0
+		if(config.assistantlimit)
+			if(job.title == "Assistant")
+				var/count = 0
+				var/datum/job/officer = job_master.GetJob("Security Officer")
+				var/datum/job/warden = job_master.GetJob("Warden")
+				var/datum/job/hos = job_master.GetJob("Head of Security")
+				count += (officer.current_positions + warden.current_positions + hos.current_positions)
+				if(job.current_positions > (config.assistantratio * count))
+					return 0
 		return 1
 
 
