@@ -48,8 +48,13 @@ Bonus
 			else
 				L.heal_damage(get_damage, get_damage)
 
-			M.adjustToxLoss(get_damage)
-			return 1
+	else
+		if(M.getFireLoss() > 0 || M.getBruteLoss() > 0)
+			M.adjustFireLoss(-get_damage)
+			M.adjustBruteLoss(-get_damage)
+
+	M.adjustToxLoss(get_damage)
+	return 1
 
 
 
