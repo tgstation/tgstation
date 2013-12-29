@@ -484,7 +484,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			contents += O
 			sight_mode |= sight_state:sight_mode
 
-			inv_sight.icon_state = "sight +a"
+			inv_sight.icon_state = "sight+a"
 			inv_tool.icon_state = "inv1"
 			module_active=sight_state
 		else
