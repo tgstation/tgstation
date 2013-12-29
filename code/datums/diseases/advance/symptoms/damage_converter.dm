@@ -37,19 +37,20 @@ Bonus
 
 	var/get_damage = rand(1, 2)
 
-	if(istype(M, /mob/living/carbon/human)) //is it human? (thus augmentable)
+	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		for(var/obj/item/organ/limb/affecting in H.organs) //Find limb
-			if(affecting.status == ORGAN_ORGANIC) //is it organic?
-				if(affecting.burn_dam > 0 || affecting.brute_dam > 0)// is it damaged?
-					affecting.heal_robotic_damage(get_damage, get_damage) // get_damage brute, get_damage burn
-					M.adjustToxLoss(get_damage)
-					return 1
 
-	else //Usual routine
-		if(M.getFireLoss() > 0 || M.getBruteLoss() > 0)
-			M.adjustFireLoss(-get_damage)
-			M.adjustBruteLoss(-get_damage)
+		var/parts = H.get_damaged_organs(1,1) //1,1 because it needs inputs.
+
+		for(var/obj/item/organ/limb/L in parts)
+			if(L.status == ORGAN_ROBOTIC)
+				L.heal_robotic_damage(get_damage, get_damage)
+			else
+				L.heal_damage(get_damage, get_damage)
+
 			M.adjustToxLoss(get_damage)
 			return 1
+
+
+
 
