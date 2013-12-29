@@ -256,16 +256,21 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 								usr <<"\red The destructive analyzer appears to be empty."
 								screen = 1.0
 								return
-							if(linked_destroy.loaded_item.reliability >= 99 - (linked_destroy.decon_mod * 3))
+							if((linked_destroy.loaded_item.reliability >= 99 - (linked_destroy.decon_mod * 3)) || linked_destroy.loaded_item.crit_fail)
 								var/list/temp_tech = linked_destroy.ConvertReqString2List(linked_destroy.loaded_item.origin_tech)
 								for(var/T in temp_tech)
 									if(prob(linked_destroy.loaded_item.reliability))
 										files.UpdateTech(T, temp_tech[T])
 								files.UpdateDesigns(linked_destroy.loaded_item, temp_tech, src)
+								screen = 1.0
+							else
+								screen = 2.3
 							if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
 								linked_lathe.m_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.m_amt*(linked_destroy.decon_mod/10)))
 								linked_lathe.g_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.g_amt*(linked_destroy.decon_mod/10)))
 							linked_destroy.loaded_item = null
+						else
+							screen = 1.0
 						for(var/obj/I in linked_destroy.contents)
 							for(var/mob/M in I.contents)
 								M.death()
@@ -282,7 +287,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 									del(I)
 									linked_destroy.icon_state = "d_analyzer"
 						use_power(250)
-						screen = 1.0
 						updateUsrDialog()
 
 	else if(href_list["lock"]) //Lock the console from use by anyone without tox access.
@@ -563,7 +567,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	files.RefreshResearch()
 	switch(screen) //A quick check to make sure you get the right screen when a device is disconnected.
 		if(2 to 2.9)
-			if(linked_destroy == null)
+			if(screen == 2.3)
+				;
+			else if(linked_destroy == null)
 				screen = 2.0
 			else if(linked_destroy.loaded_item == null)
 				screen = 2.1
@@ -718,6 +724,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				dat += "* [CallTechName(T)] [temp_tech[T]]<BR>"
 			dat += "<HR><A href='?src=\ref[src];deconstruct=1'>Deconstruct Item</A> || "
 			dat += "<A href='?src=\ref[src];eject_item=1'>Eject Item</A> || "
+		if(2.3)
+			dat += "Item is neither reliable enough or broken enough to learn from.<BR><BR>"
+			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
 
 		/////////////////////PROTOLATHE SCREENS/////////////////////////
 		if(3.0)
