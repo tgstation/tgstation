@@ -1074,7 +1074,8 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/stock_parts/capacitor
 
 /datum/design/basic_sensor
-	name = "Basic Sensor Module"
+	//name = "Basic Sensor Module"
+	name = "Basic Scanning Module" // Fixes #311
 	desc = "A stock part used in the construction of various devices."
 	id = "basic_sensor"
 	req_tech = list("magnets" = 1)
@@ -1119,7 +1120,8 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/stock_parts/capacitor/adv
 
 /datum/design/adv_sensor
-	name = "Advanced Sensor Module"
+	//name = "Advanced Sensor Module"
+	name = "Advanced Scanning Module" // Fixes #311
 	desc = "A stock part used in the construction of various devices."
 	id = "adv_sensor"
 	req_tech = list("magnets" = 3)
@@ -1165,7 +1167,8 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/stock_parts/capacitor/super
 
 /datum/design/phasic_sensor
-	name = "Phasic Sensor Module"
+	//name = "Phasic Sensor Module"
+	name = "Phasic Scanning Module" // Fixes #311
 	desc = "A stock part used in the construction of various devices."
 	id = "phasic_sensor"
 	req_tech = list("magnets" = 5, "materials" = 3)
