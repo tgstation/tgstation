@@ -86,8 +86,11 @@
 /obj/machinery/dna_scannernew/proc/eject_occupant()
 	src.go_out()
 	for(var/obj/O in src)
-		if((!istype(O,/obj/item/weapon/circuitboard/clonescanner)) && (!istype(O,/obj/item/weapon/stock_parts)) && (!istype(O,/obj/item/weapon/cable_coil)))
-			O.loc = get_turf(src)//Ejects items that manage to get in there (exluding the components)
+		if(!istype(O,/obj/item/weapon/circuitboard/clonescanner) && \
+		   !istype(O,/obj/item/weapon/stock_parts) && \
+		   !istype(O,/obj/item/weapon/cable_coil) && \
+		   O != beaker)
+			O.loc = get_turf(src)//Ejects items that manage to get in there (exluding the components and beaker)
 	if(!occupant)
 		for(var/mob/M in src)//Failsafe so you can get mobs out
 			M.loc = get_turf(src)
