@@ -20,7 +20,8 @@
 	anchored = 1.0
 	
 /obj/structure/morgue/proc/update()
-	if(src.connected) src.icon_state = "morgue0"
+	if(src.connected)
+		src.icon_state = "morgue0"
 	else
 		if(src.contents.len)
 
