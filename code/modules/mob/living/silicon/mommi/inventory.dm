@@ -134,9 +134,8 @@
 		TS = tool_state
 		if(!is_in_modules(TS))
 			drop_item()
-
 			if(TS && TS.loc)
-				TS.loc = src.loc
+				TS.loc = get_turf(src)
 		if(istype(tool_state,/obj/item/borg/sight))
 			sight_mode &= ~tool_state:sight_mode
 		if (client)

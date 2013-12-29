@@ -212,6 +212,11 @@
 					affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their neck grabbed by [assailant.name] ([assailant.ckey])</font>")
 					assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Grabbed the neck of [affecting.name] ([affecting.ckey])</font>")
 					msg_admin_attack("[assailant.name] ([assailant.ckey]) grabbed the neck of [affecting.name] ([affecting.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[assailant.x];Y=[assailant.y];Z=[assailant.z]'>JMP</a>)")
+
+					if(!iscarbon(assailant))
+						affecting.LAssailant = null
+					else
+						affecting.LAssailant = assailant
 					hud1.icon_state = "disarm/kill"
 					hud1.name = "disarm/kill"
 				else
@@ -234,6 +239,10 @@
 							affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been strangled (kill intent) by [assailant.name] ([assailant.ckey])</font>")
 							assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Strangled (kill intent) [affecting.name] ([affecting.ckey])</font>")
 							msg_admin_attack("[assailant.name] ([assailant.ckey]) Strangled (kill intent) [affecting.name] ([affecting.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[assailant.x];Y=[assailant.y];Z=[assailant.z]'>JMP</a>)")
+							if(!iscarbon(assailant))
+								affecting.LAssailant = null
+							else
+								affecting.LAssailant = assailant
 
 							assailant.next_move = world.time + 10
 							affecting.losebreath += 1

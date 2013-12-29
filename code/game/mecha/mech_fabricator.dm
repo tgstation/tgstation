@@ -160,7 +160,7 @@
 	// Define initial output.
 	output=src
 	for(var/direction in cardinal)
-		var/O = locate(/obj/machinery/mineral/output) in get_turf(src, direction)
+		var/O = locate(/obj/machinery/mineral/output, get_step(src, dir))
 		if(O)
 			output=O
 			break
@@ -284,30 +284,6 @@
 		if(part_sets[i]==set_name)
 			part_sets.Cut(i,++i)
 	return
-/*
-	proc/sanity_check()
-		for(var/p in resources)
-			var/index = resources.Find(p)
-			index = resources.Find(p, ++index)
-			if(index) //duplicate resource
-				world << "Duplicate resource definition for [src](\ref[src])"
-				return 0
-		for(var/set_name in part_sets)
-			var/index = part_sets.Find(set_name)
-			index = part_sets.Find(set_name, ++index)
-			if(index) //duplicate part set
-				world << "Duplicate part set definition for [src](\ref[src])"
-				return 0
-		return 1
-*/
-/*
-	New()
-		..()
-		src.add_part_to_set("Test",list("result"="/obj/item/mecha_parts/part/gygax_armour","time"=600,"metal"=75000,"diamond"=10000))
-		src.add_part_to_set("Test",list("result"="/obj/item/mecha_parts/part/ripley_left_arm","time"=200,"metal"=25000))
-		src.remove_part_set("Gygax")
-		return
-*/
 
 /obj/machinery/mecha_part_fabricator/proc/output_parts_list(set_name)
 	var/output = ""
@@ -333,6 +309,8 @@
 				var/datum/material/material = materials[c]
 				output += "[i?" | ":null][get_resource_cost_w_coeff(part,c)] [material.processed_name]"
 				i++
+			else
+				testing("Unknown matID [c] in [part.type]!")
 		return output
 	else
 		return 0
@@ -511,12 +489,6 @@
 
 
 /obj/machinery/mecha_part_fabricator/proc/sync(silent=null)
-/*		if(queue.len)
-			if(!silent)
-				temp = "Error.  Please clear processing queue before updating!"
-				src.updateUsrDialog()
-			return
-*/
 	if(!silent)
 		temp = "Updating local R&D database..."
 		src.updateUsrDialog()
@@ -541,8 +513,9 @@
 	return
 
 /obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(var/obj/item/part as obj,var/resource as text, var/roundto=1)
-//Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
 	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
+		if (resource=="iron" && !("iron" in part:construction_cost))
+			resource="metal"
 		return round(part:construction_cost[resource]*resource_coeff, roundto)
 	else
 		return 0

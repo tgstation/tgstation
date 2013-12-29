@@ -24,19 +24,6 @@
 
 		initialize_directions = dir
 
-	initialize()
-		if(node) return
-
-		var/node_connect = dir
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node = target
-				break
-
-		update_icon()
-
-
 	update_icon()
 		if(src.node)
 			if(src.on)
@@ -68,6 +55,13 @@
 						"\blue You have unfastened \the [src]. Now it can be pulled somewhere else.", \
 						"You hear ratchet.")
 					src.anchored = 0
+
+					// From Del()
+					// Disconnect
+					if(node)
+						node.disconnect(src)
+						del(network)
+					node = null
 			else
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				user << "You begin to fasten [src]."
@@ -77,6 +71,14 @@
 						"\blue You have fastened \the [src]. Now it can be pulled somewhere else.", \
 						"You hear ratchet.")
 					src.anchored = 1
+
+					// Connect to network
+					initialize_directions = dir
+					initialize()
+					build_network()
+					if (node)
+						node.initialize()
+						node.build_network()
 			return 1
 		if(istype(W, /obj/item/weapon/screwdriver))
 			if(anchored)
@@ -181,19 +183,6 @@
 
 		initialize_directions = dir
 
-	initialize()
-		if(node) return
-
-		var/node_connect = dir
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node = target
-				break
-
-		update_icon()
-
-
 	update_icon()
 		if(src.node)
 			if(src.on)
@@ -225,6 +214,13 @@
 						"\blue You have unfastened \the [src]. Now it can be pulled somewhere else.", \
 						"You hear ratchet.")
 					src.anchored = 0
+
+					// From Del()
+					// Disconnect
+					if(node)
+						node.disconnect(src)
+						del(network)
+					node = null
 			else
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				user << "You begin to fasten [src]."
@@ -234,6 +230,14 @@
 						"\blue You have fastened \the [src]. Now it can be pulled somewhere else.", \
 						"You hear ratchet.")
 					src.anchored = 1
+
+					// Connect to network
+					initialize_directions = dir
+					initialize()
+					build_network()
+					if (node)
+						node.initialize()
+						node.build_network()
 			return 1
 		if(istype(W, /obj/item/weapon/screwdriver))
 			if(anchored)

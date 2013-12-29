@@ -26,6 +26,10 @@
 					visible_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>")
 					M.attack_log += text("\[[time_stamp()]\] <font color='red'>Stungloved [src.name] ([src.ckey])</font>")
 					src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stungloved by [M.name] ([M.ckey])</font>")
+					if(!iscarbon(M))
+						LAssailant = null
+					else
+						LAssailant = M
 
 					log_attack("<font color='red'>[M.name] ([M.ckey]) stungloved [src.name] ([src.ckey])</font>")
 
@@ -124,6 +128,10 @@
 			//end vampire codes
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>[M.species.attack_verb]ed [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [M.species.attack_verb]ed by [M.name] ([M.ckey])</font>")
+			if(!iscarbon(M))
+				LAssailant = null
+			else
+				LAssailant = M
 
 			log_attack("[M.name] ([M.ckey]) [M.species.attack_verb]ed [src.name] ([src.ckey])")
 
@@ -196,6 +204,10 @@
 				visible_message("\red <B>[M] has pushed [src]!</B>")
 				M.attack_log += text("\[[time_stamp()]\] <font color='red'>Pushed [src.name] ([src.ckey])</font>")
 				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been pushed by [M.name] ([M.ckey])</font>")
+				if(!iscarbon(M))
+					LAssailant = null
+				else
+					LAssailant = M
 
 				log_attack("[M.name] ([M.ckey]) pushed [src.name] ([src.ckey])")
 				return

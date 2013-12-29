@@ -131,6 +131,8 @@
 	var/irc_bot_server_id = 45678
 	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python2" on unix
 
+	var/assistantlimit = 0 //enables assistant limiting
+	var/assistantratio = 2 //how many assistants to security members
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -449,7 +451,10 @@
 							config.python_path = "/usr/bin/env python2"
 						else //probably windows, if not this should work anyway
 							config.python_path = "python"
-
+				if("assistant_limit")
+					config.assistantlimit = 1
+				if("assistant_ratio")
+					config.assistantratio = text2num(value)
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

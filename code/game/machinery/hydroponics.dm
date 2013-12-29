@@ -1020,9 +1020,9 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			podman.dna = new /datum/dna()
 			podman.dna.real_name = podman.real_name
 		if(ui)
-			podman.UpdateAppearance(ui)
+			podman.UpdateAppearance(ui.Copy())
 		if(se)
-			podman.dna.SE = se
+			podman.dna.SE = se.Copy()
 			podman.dna.UpdateSE()
 		if(!prob(potency)) //if it fails, plantman!
 			if(podman)

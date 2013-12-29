@@ -67,6 +67,10 @@
 				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
 				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
 				log_attack("[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
+				if(!iscarbon(user))
+					M.LAssailant = null
+				else
+					M.LAssailant = user
 
 				for(var/mob/O in viewers(world.view, user))
 					O.show_message("\red [user] feeds [M] [src].", 1)
@@ -701,6 +705,15 @@
 		reagents.add_reagent("nutriment", 6)
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/monkeyburger/synth
+	name = "synthetic burger"
+	desc = "It tastes like a normal burger, but it's just not the same."
+	icon_state = "hburger"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		bitesize = 2
+
 /obj/item/weapon/reagent_containers/food/snacks/fishburger
 	name = "Fillet -o- Carp Sandwich"
 	desc = "Almost like a carp is yelling somewhere... Give me back that fillet -o- carp, give me that carp."
@@ -788,10 +801,6 @@
 				return
 			//W.icon = 'icons/obj/kitchen.dmi'
 			W.icon_state = "forkloaded"
-			/*if (herp)
-				world << "[user] takes a piece of omelette with his fork!"*/
-				//Why this unecessary check? Oh I know, because I'm bad >:C
-				// Yes, you are. You griefing my badmin toys. --rastaf0
 			user.visible_message( \
 				"[user] takes a piece of omelette with their fork!", \
 				"\blue You take a piece of omelette with your fork!" \
@@ -976,6 +985,26 @@
 		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/monkeykabob/synth
+	name = "Synth-kabob"
+	icon_state = "kabob"
+	desc = "Synthetic meat, on a stick."
+	trash = /obj/item/stack/rods
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/corgikabob
+	name = "Corgi-kabob"
+	icon_state = "kabob"
+	desc = "Only someone without a heart could make this."
+	trash = /obj/item/stack/rods
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 2
+
 /obj/item/weapon/reagent_containers/food/snacks/tofukabob
 	name = "Tofu-kabob"
 	icon_state = "kabob"
@@ -1135,6 +1164,18 @@
 /obj/item/weapon/reagent_containers/food/snacks/meatsteak
 	name = "Meat steak"
 	desc = "A piece of hot spicy meat."
+	icon_state = "meatstake"
+	trash = /obj/item/trash/plate
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("sodiumchloride", 1)
+		reagents.add_reagent("blackpepper", 1)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/meatsteak/synth
+	name = "Synthmeat steak"
+	desc = "It's still a delicious steak, but it has no soul."
 	icon_state = "meatstake"
 	trash = /obj/item/trash/plate
 	New()
@@ -1885,6 +1926,24 @@
 	trash = /obj/item/trash/plate
 	bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/meatbread/synth
+	name = "synthmeatbread loaf"
+	desc = "A loaf of synthetic meatbread. You can just taste the mass-production."
+	icon_state = "meatbread"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice/synth
+	slices_num = 5
+	New()
+		..()
+		reagents.add_reagent("nutriment", 30)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/meatbreadslice/synth
+	name = "synthmeatbread slice"
+	desc = "A slice of synthetic meatbread."
+	icon_state = "meatbreadslice"
+	trash = /obj/item/trash/plate
+	bitesize = 2
+
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/xenomeatbread
 	name = "xenomeatbread loaf"
 	desc = "The culinary base of every self-respecting eloquen/tg/entleman. Extra Heretical."
@@ -2233,7 +2292,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meatpizza
 	name = "Meatpizza"
-	desc = "" //TODO:
+	desc = "A filling pizza laden with meat; perfect for the manliest of carnivores."
 	icon_state = "meatpizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meatpizzaslice
 	slices_num = 6
@@ -2245,7 +2304,25 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meatpizzaslice
 	name = "Meatpizza slice"
-	desc = "A slice of " //TODO:
+	desc = "A slice of pizza, packed with delicious meat."
+	icon_state = "meatpizzaslice"
+	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meatpizza/synth
+	name = "Synthmeatpizza"
+	desc = "A synthetic pizza laden with artificial meat; perfect for the stingiest of chefs."
+	icon_state = "meatpizza"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meatpizzaslice/synth
+	slices_num = 6
+	New()
+		..()
+		reagents.add_reagent("nutriment", 50)
+		reagents.add_reagent("tomatojuice", 6)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/meatpizzaslice/synth
+	name = "Synthmeatpizza slice"
+	desc = "A slice of pizza, packed with synthetic meat."
 	icon_state = "meatpizzaslice"
 	bitesize = 2
 

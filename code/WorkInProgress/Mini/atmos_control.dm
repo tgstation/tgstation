@@ -153,6 +153,7 @@
 					"tox_scrub",
 					"n2o_scrub",
 					"o2_scrub",
+					"n2_scrub",
 					"panic_siphon",
 					"scrubbing"
 				)

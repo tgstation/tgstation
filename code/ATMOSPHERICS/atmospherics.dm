@@ -55,3 +55,7 @@ obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
 
 obj/machinery/atmospherics/update_icon()
 	return null
+
+/obj/machinery/atmospherics/proc/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
+	error("[src] does not define a buildFrom!")
+	return FALSE

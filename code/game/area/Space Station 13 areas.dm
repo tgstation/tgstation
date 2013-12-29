@@ -972,6 +972,10 @@ proc/process_ghost_teleport_locs()
 		icon_state = "engine_control"
 		jammed=1
 
+	burn_chamber
+		name = "Burn Chamber"
+		icon_state = "engine_control"
+
 
 //Solars
 

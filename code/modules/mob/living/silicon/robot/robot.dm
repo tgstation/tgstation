@@ -449,7 +449,7 @@
 /mob/living/silicon/robot/proc/show_cable_lengths()
 	var/obj/item/weapon/cable_coil/coil = installed_module(/obj/item/weapon/cable_coil)
 	if(coil)
-		stat(null, text("Cable Lengths: [coil.amount][isMoMMI(src) ? "/50" : "/30"]")) // MAXCOIL
+		stat(null, text("Cable Lengths: [coil.amount]/[coil.max_amount]"))
 
 /mob/living/silicon/robot/proc/show_welder_fuel()
 	var/obj/item/weapon/weldingtool/WT = installed_module(/obj/item/weapon/weldingtool)

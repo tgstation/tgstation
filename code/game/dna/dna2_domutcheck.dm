@@ -36,7 +36,7 @@
 			gene.deactivate(M,connected,flags)
 			if(M)
 				M.active_genes -= gene.type
-				M.update_icon=1
+				M.update_icon = 1
 		//else
 		//	testing("[M] - Failed to activate [gene.name] - [gene_active?"+":"-"]active, [gene_prior_status?"+":"-"]prior")
 
@@ -224,7 +224,7 @@
 
 		if(M)
 			if (M.dna)
-				O.dna = M.dna
+				O.dna = M.dna.Clone()
 				M.dna = null
 
 			if (M.suiciding)
@@ -298,7 +298,7 @@
 
 		if (M)
 			if (M.dna)
-				O.dna = M.dna
+				O.dna = M.dna.Clone()
 				M.dna = null
 
 			if (M.suiciding)

@@ -187,6 +187,7 @@ MASS SPECTROMETER
 				user.show_message("\red <b>Warning: Blood Level CRITICAL: [blood_percent]% [blood_volume]cl")
 			else
 				user.show_message("\blue Blood Level Normal: [blood_percent]% [blood_volume]cl")
+		user.show_message("\blue Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font>")
 	src.add_fingerprint(user)
 	return
 
@@ -341,6 +342,64 @@ MASS SPECTROMETER
 
 /obj/item/device/mass_spectrometer/adv
 	name = "advanced mass-spectrometer"
+	icon_state = "adv_spectrometer"
+	details = 1
+	origin_tech = "magnets=4;biotech=2"
+
+/obj/item/device/reagent_scanner
+	name = "reagent scanner"
+	desc = "A hand-held reagent scanner which identifies chemical agents."
+	icon_state = "spectrometer"
+	item_state = "analyzer"
+	w_class = 2.0
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
+	throwforce = 5
+	throw_speed = 4
+	throw_range = 20
+	m_amt = 30
+	g_amt = 20
+	origin_tech = "magnets=2;biotech=2"
+	var/details = 0
+	var/recent_fail = 0
+
+/obj/item/device/reagent_scanner/afterattack(obj/O, mob/user as mob)
+	if (user.stat)
+		return
+	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+		user << "\red You don't have the dexterity to do this!"
+		return
+	if(!istype(O))
+		return
+	if (crit_fail)
+		user << "\red This device has critically failed and is no longer functional!"
+		return
+
+	if(!isnull(O.reagents))
+		var/dat = ""
+		if(O.reagents.reagent_list.len > 0)
+			var/one_percent = O.reagents.total_volume / 100
+			for (var/datum/reagent/R in O.reagents.reagent_list)
+				if(prob(reliability))
+					dat += "\n \t \blue [R][details ? ": [R.volume / one_percent]%" : ""]"
+					recent_fail = 0
+				else if(recent_fail)
+					crit_fail = 1
+					dat = null
+					break
+				else
+					recent_fail = 1
+		if(dat)
+			user << "\blue Chemicals found: [dat]"
+		else
+			user << "\blue No active chemical agents found in [O]."
+	else
+		user << "\blue No significant chemical agents found in [O]."
+
+	return
+
+/obj/item/device/reagent_scanner/adv
+	name = "advanced reagent scanner"
 	icon_state = "adv_spectrometer"
 	details = 1
 	origin_tech = "magnets=4;biotech=2"

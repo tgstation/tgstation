@@ -257,6 +257,8 @@ datum/computer/file/embedded_program/airlock_controller
 
 
 obj/machinery/embedded_controller/radio/airlock_controller
+	boardtype = /obj/item/weapon/circuitboard/ecb/airlock_controller
+
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_control_standby"
 
@@ -291,6 +293,83 @@ obj/machinery/embedded_controller/radio/airlock_controller
 
 		new_prog.master = src
 		program = new_prog
+
+	multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
+		return {"
+		<ul>
+			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[1449]">Reset</a>)</li>
+			<li>[format_tag("ID Tag","id_tag")]</li>
+			<li>[format_tag("Pump ID","airpump_tag")]</li>
+			<li><b>Sanitize:</b> <a href="?src=\ref[src];toggle_sanitize=1">[sanitize_external]</a></li>
+		</ul>
+		<b>Doors:</b>
+		<ul>
+			<li>[format_tag("Exterior","exterior_door_tag")]</li>
+			<li>[format_tag("Interior","interior_door_tag")]</li>
+		</ul>
+		<b>Sensors:</b>
+		<ul>
+			<li>[format_tag("Chamber","sensor_tag")]</li>
+			<li>[format_tag("Interior","sensor_tag_int")]</li>
+		</ul>"}
+
+	Topic(href, href_list)
+		if(..())
+			return
+
+		if(!issilicon(usr))
+			if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
+				return
+
+		var/obj/item/device/multitool/P = get_multitool(usr)
+
+		if("set_id" in href_list)
+			var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id_tag) as null|text),1,MAX_MESSAGE_LEN)
+			if(newid)
+				id_tag = newid
+				initialize()
+
+		if("toggle_sanitize" in href_list)
+			sanitize_external=!sanitize_external
+			initialize()
+
+		if("set_tag" in href_list)
+			if(!(href_list["set_tag"] in vars))
+				usr << "\red Something went wrong: Unable to find [href_list["set_tag"]] in vars!"
+				return 1
+			var/current_tag = src.vars[href_list["set_tag"]]
+			var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag", src, current_tag) as null|text),1,MAX_MESSAGE_LEN)
+			if(newid)
+				vars[href_list["set_tag"]] = newid
+				initialize()
+
+		if("set_freq" in href_list)
+			var/newfreq=frequency
+			if(href_list["set_freq"]!="-1")
+				newfreq=text2num(href_list["set_freq"])
+			else
+				newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, frequency) as null|num
+			if(newfreq)
+				if(findtext(num2text(newfreq), "."))
+					newfreq *= 10 // shift the decimal one place
+				if(newfreq < 10000)
+					frequency = newfreq
+					initialize()
+
+		if(href_list["unlink"])
+			P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
+
+		if(href_list["link"])
+			P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
+
+		if(href_list["buffer"])
+			P.buffer = src
+
+		if(href_list["flush"])
+			P.buffer = null
+
+		usr.set_machine(src)
+		update_multitool_menu(usr,P)
 
 	update_icon()
 		if(on && program)

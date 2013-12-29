@@ -3,26 +3,39 @@ Adapted from the Supybot plugin.
 """
 from vgstation.common.plugin import IPlugin, Plugin
 import vgstation.common.config as globalConfig
-import thread, socket, logging, random, re
+import logging, random, re, time
+# import restkit
 from restkit import BasicAuth, Resource, RequestError
+from restkit.errors import RequestFailed, ResourceNotFound
 import simplejson as json
+
+BUG_CHECK_DELAY = 60  # 60sec
 
 @Plugin
 class RedminePlugin(IPlugin):
     def __init__(self, bot):
-        IPlugin.__init__(self,bot)
-     
-        self.url = globalConfig.get('plugins.redmine.url',None)
+        IPlugin.__init__(self, bot)
+        
+        self.data = {
+            'last-bug-created': 0
+        }
+        
+        self.LoadPluginData()
+        
+        self.url = globalConfig.get('plugins.redmine.url', None)
         if self.url is None:
             logging.error('Redmine: Disabled.') 
             return
-        self.auth = BasicAuth(globalConfig.get('plugins.redmine.apikey',None), str(random.random()))
-        self.bug_msg_format = globalConfig.get('plugins.redmine.response-format','Redmine #{ID} - {AUTHOR} - {STATUS} - {SUBJECT}{CRLF}{URL}')
+        self.auth = BasicAuth(globalConfig.get('plugins.redmine.apikey', None), str(random.random()))
+        self.project_id = globalConfig.get('plugins.redmine.project', None)
+        if self.project_id is None: logging.warning('Redmine: Not going to check for bug updates.')
+        self.bug_info_format = globalConfig.get('plugins.redmine.bug-info-format', 'Redmine #{ID} - {AUTHOR} - {STATUS} - {SUBJECT}{CRLF}{URL}')
+        self.new_bug_format = globalConfig.get('plugins.redmine.new-bug-format', 'NEW ISSUE: {URL} (#{ID}: {SUBJECT})')
         self.resource = Resource(self.url, filters=[self.auth])
         
         self.bug_regex = re.compile(r'#(\d+)\b')
         
-        self.bugs_being_fetched=[]
+        self.lastCheck = 0
         
     def OnChannelMessage(self, connection, event):
         if self.url is None: return
@@ -31,13 +44,38 @@ class RedminePlugin(IPlugin):
         ids = []
         for match in matches:
             ids += [match.group(1)]
-        logging.info('Snarfed ID(s): ' + ', '.join(ids))
 
-        strings = self.getBugs(ids)
+        strings = self.getBugs(ids, self.bug_info_format)
         for s in strings:
-            self.bot.privmsg(channel,s)
+            self.bot.privmsg(channel, s)
+        
+    def OnPing(self):
+        if self.project_id is None: return
+        if not self.bot.welcomeReceived:
+            logging.info('Received PING, but no welcome yet.')
+            return
+        now = time.time()
+        if self.lastCheck + BUG_CHECK_DELAY < now:
+            self.lastCheck = now
+            bugs = self.getAllBugs(project_id=self.project_id, sort='created_on:desc')
+            if bugs is None: return
+            # print(repr(bugs))
+            lbc = ''
+            for bug in bugs['issues']:
+                if bug['created_on'] != self.data['last-bug-created']:
+                    if lbc == '':
+                        lbc = bug['created_on']
+                    strings = self.getBugs([bug['id']], self.new_bug_format)
+                    for s in strings:
+                        self.bot.sendToAllFlagged('redmine-' + self.project_id, s)
+                else:
+                    break
+            if lbc == '':
+                return
+            self.data['last-bug-created'] = lbc
+            self.SavePluginData()
             
-    def getBugs(self, ids):
+    def getBugs(self, ids, fmt):
         if self.url is None: return
         strings = []
         for id in ids:
@@ -46,10 +84,9 @@ class RedminePlugin(IPlugin):
                 response = self.resource.get('/issues/' + str(id) + '.json')
                 data = response.body_string()
                 result = json.loads(data)
-                
                 # Formatting reply
-                #self.log.info("info " + bugmsg);
-                bugmsg = self.bug_msg_format
+                # self.log.info("info " + bugmsg);
+                bugmsg = fmt
                 bugmsg = bugmsg.replace('{ID}', str(id))
                 bugmsg = bugmsg.replace('{AUTHOR}', result['issue']['author']['name'])
                 bugmsg = bugmsg.replace('{SUBJECT}', result['issue']['subject'])
@@ -65,7 +102,20 @@ class RedminePlugin(IPlugin):
                 for msg in bugmsg:
                     strings.append(msg)
                 
-            except RequestError as e:
-                strings.append("An error occured when trying to query Redmine: " + str(e))
+            except ResourceNotFound:
+                # strings.append("Unable to find redmine issue {0}.".format(id))
+                continue
 
         return strings
+            
+    def getAllBugs(self, **kwargs):
+        if self.url is None: return
+        # Getting response
+        try:
+            response = self.resource.get('/issues.json', **kwargs)
+            data = response.body_string()
+            return json.loads(data)
+            
+        except RequestFailed as e:
+            logging.error('HTTP Error {0}: {1}'.format(e.status_int, e.message))
+            return None

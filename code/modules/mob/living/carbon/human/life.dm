@@ -174,6 +174,12 @@
 					O.show_message(text("\red <B>[src] starts having a seizure!"), 1)
 				Paralyse(10)
 				make_jittery(1000)
+
+		// If we have the gene for being crazy, have random events.
+		if(dna.GetSEState(HALLUCINATIONBLOCK))
+			if(prob(1) && hallucination < 1)
+				hallucination += 20
+
 		if (disabilities & COUGHING)
 			if ((prob(5) && paralysis <= 1))
 				drop_item()

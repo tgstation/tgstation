@@ -63,7 +63,7 @@
 		update_icon()
 /obj/machinery/computer/telescience/update_icon()
 	if(stat & BROKEN)
-		icon_state = "telescib"
+		icon_state = "teleportb"
 	else
 		if(stat & NOPOWER)
 			src.icon_state = "teleport0"
@@ -206,7 +206,7 @@
 				/mob/living/simple_animal/hostile/retaliate/clown,
 				/mob/living/simple_animal/hostile/giant_spider/nurse)
 			var/list/hostiles = typesof(/mob/living/simple_animal/hostile) - blocked
-			playsound(L, 'sound/effects/phasein.ogg', 100, 1)
+			playsound(L, 'sound/effects/phasein.ogg', 100, 1, extrarange = 3, falloff = 5)
 			for(var/mob/living/carbon/human/M in viewers(L, null))
 				flick("e_flash", M.flash)
 			var/chosen = pick(hostiles)

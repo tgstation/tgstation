@@ -43,9 +43,10 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		var/datum/material/ore_datum = new oredata
 		materials[ore_datum.id]=ore_datum
 
+	// Define initial output.
 	output=src
 	for(var/direction in cardinal)
-		var/O = locate(/obj/machinery/mineral/output) in get_turf(src, direction)
+		var/O = locate(/obj/machinery/mineral/output, get_step(src, dir))
 		if(O)
 			output=O
 			break

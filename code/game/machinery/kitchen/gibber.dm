@@ -225,6 +225,11 @@ obj/machinery/gibber/New()
 	user.attack_log += "\[[time_stamp()]\] Gibbed <b>[src.occupant]/[src.occupant.ckey]</b>"
 	log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> gibbed <b>[src.occupant]/[src.occupant.ckey]</b>")
 
+	if(!iscarbon(user))
+		src.occupant.LAssailant = null
+	else
+		src.occupant.LAssailant = user
+
 	src.occupant.death(1)
 	src.occupant.ghostize()
 	del(src.occupant)

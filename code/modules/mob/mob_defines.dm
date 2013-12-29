@@ -220,3 +220,5 @@
 	var/turf/listed_turf = null
 
 	var/list/active_genes=list()
+
+	var/kills=0

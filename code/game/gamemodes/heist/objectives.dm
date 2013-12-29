@@ -1,4 +1,3 @@
-
 //Vox heist objectives.
 
 datum/objective/heist

@@ -19,7 +19,6 @@
 /obj/machinery/conveyor/centcom_auto
 	id = "round_end_belt"
 
-
 // Auto conveyour is always on unless unpowered
 
 /obj/machinery/conveyor/auto/New(loc, newdir)
@@ -45,6 +44,13 @@
 	..(loc)
 	if(newdir)
 		dir = newdir
+	component_parts = list()
+	component_parts += new /obj/item/weapon/cable_coil(src,2)
+	component_parts += new /obj/item/stack/rods(src,4)
+	RefreshParts()
+	updateConfig()
+
+/obj/machinery/conveyor/proc/updateConfig()
 	switch(dir)
 		if(NORTH)
 			forwards = NORTH
@@ -110,12 +116,107 @@
 				break
 
 // attack with item, place item on conveyor
-/obj/machinery/conveyor/attackby(var/obj/item/I, mob/user)
+/obj/machinery/conveyor/attackby(var/obj/item/W, mob/user)
+	if(istype(W, /obj/item/device/multitool))
+		interact(user)
+		return 1
+	if(!operating && istype(W, /obj/item/weapon/crowbar))
+		user << "\blue You begin prying apart \the [src]..."
+		if(do_after(user,50))
+			user << "\blue You disassemble \the [src]..."
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+			M.state = 2
+			M.icon_state = "box_1"
+			for(var/obj/I in component_parts)
+				if(I.reliability != 100 && crit_fail)
+					I.crit_fail = 1
+				I.loc = src.loc
+			del(src)
+		return 1
 	if(isrobot(user))	return //Carn: fix for borgs dropping their modules on conveyor belts
 	user.drop_item()
-	if(I && I.loc)	I.loc = src.loc
+	if(W && W.loc)	W.loc = src.loc
 	return
 
+/obj/machinery/conveyor/interact(mob/user as mob)
+	//var/obj/item/device/multitool/P = get_multitool(user)
+	var/dat = {"<html>
+	<head>
+		<title>[name] Access</title>
+		<style type="text/css">
+html,body {
+	font-family:courier;
+	background:#999999;
+	color:#333333;
+}
+
+a {
+	color:#000000;
+	text-decoration:none;
+	border-bottom:1px solid black;
+}
+		</style>
+	</head>
+	<body>
+		<h3>[name]</h3>
+		<ul>
+			<li><b>Direction:</b>
+				<a href="?src=\ref[src];setdir=[NORTH]" title="North">&uarr;</a>
+				<a href="?src=\ref[src];setdir=[EAST]" title="East">&rarr;</a>
+				<a href="?src=\ref[src];setdir=[SOUTH]" title="South">&darr;</a>
+				<a href="?src=\ref[src];setdir=[WEST]" title="West">&larr;</a>
+			</li>
+			<li><b>ID Tag:</b> <a href="?src=\ref[src];set_tag=1">[id]</a></li>
+		</ul>
+"}
+	dat += "</body></html>"
+
+	user << browse(dat, "window=conveyorcfg")
+	onclose(user, "conveyorcfg")
+
+
+/obj/machinery/conveyor/Topic(href, href_list)
+	if(..())
+		return
+
+	if(!issilicon(usr))
+		if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
+			return
+
+	var/obj/item/device/multitool/P = get_multitool(usr)
+
+	if("set_id" in href_list)
+		var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id) as null|text),1,MAX_MESSAGE_LEN)
+		if(newid)
+			for(var/obj/machinery/conveyor_switch/S in world)
+				if(S.id == id)
+					S.conveyors -= src
+			id = newid
+			for(var/obj/machinery/conveyor_switch/S in world)
+				if(S.id == id)
+					S.conveyors += src
+			update()
+
+	if("setdir" in href_list)
+		operating=0
+		dir=text2num(href_list["setdir"])
+		update()
+
+	if(href_list["unlink"])
+		P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
+
+	if(href_list["link"])
+		P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
+
+	if(href_list["buffer"])
+		P.buffer = src
+
+	if(href_list["flush"])
+		P.buffer = null
+
+	usr.set_machine(src)
+	updateUsrDialog()
 // attack with hand, move pulled object onto conveyor
 /obj/machinery/conveyor/attack_hand(mob/user as mob)
 	if ((!( user.canmove ) || user.restrained() || !( user.pulling )))
@@ -197,12 +298,14 @@
 /obj/machinery/conveyor_switch/New()
 	..()
 	update()
-
 	spawn(5)		// allow map load
-		conveyors = list()
-		for(var/obj/machinery/conveyor/C in world)
-			if(C.id == id)
-				conveyors += C
+		updateConfig()
+
+/obj/machinery/conveyor_switch/proc/updateConfig()
+	conveyors = list()
+	for(var/obj/machinery/conveyor/C in world)
+		if(C.id == id)
+			conveyors += C
 
 // update the icon depending on the position
 
@@ -249,6 +352,22 @@
 			S.position = position
 			S.update()
 
+/obj/machinery/conveyor_switch/attackby(var/obj/item/W, mob/user)
+	if(istype(W, /obj/item/device/multitool))
+		interact(user)
+		return 1
+	if(istype(W, /obj/item/weapon/wrench))
+		user << "\blue Deconstructing \the [src]..."
+		if(do_after(user,50))
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			user << "\blue You disassemble \the [src]."
+			var/turf/T=get_turf(src)
+			new /obj/item/device/assembly/signaler(T)
+			new /obj/item/stack/rods(T,1)
+			del(src)
+		return 1
+	return ..()
+
 /obj/machinery/conveyor_switch/oneway
 	var/convdir = 1 //Set to 1 or -1 depending on which way you want the convayor to go. (In other words keep at 1 and set the proper dir on the belts.)
 	desc = "A conveyor control switch. It appears to only go in one direction."
@@ -268,3 +387,66 @@
 		if(S.id == src.id)
 			S.position = position
 			S.update()
+
+
+/obj/machinery/conveyor_switch/interact(mob/user as mob)
+	//var/obj/item/device/multitool/P = get_multitool(user)
+	var/dat = {"<html>
+	<head>
+		<title>[name] Access</title>
+		<style type="text/css">
+html,body {
+	font-family:courier;
+	background:#999999;
+	color:#333333;
+}
+
+a {
+	color:#000000;
+	text-decoration:none;
+	border-bottom:1px solid black;
+}
+		</style>
+	</head>
+	<body>
+		<h3>[name]</h3>
+		<ul>
+			<li><b>ID Tag:</b> <a href="?src=\ref[src];set_tag=1">[id]</a></li>
+		</ul>
+"}
+	dat += "</body></html>"
+
+	user << browse(dat, "window=conveyorcfg")
+	onclose(user, "conveyorcfg")
+
+
+/obj/machinery/conveyor_switch/Topic(href, href_list)
+	if(..())
+		return
+
+	if(!issilicon(usr))
+		if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
+			return
+
+	var/obj/item/device/multitool/P = get_multitool(usr)
+
+	if("set_id" in href_list)
+		var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id) as null|text),1,MAX_MESSAGE_LEN)
+		if(newid)
+			id = newid
+			updateConfig()
+
+	if(href_list["unlink"])
+		P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
+
+	if(href_list["link"])
+		P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
+
+	if(href_list["buffer"])
+		P.buffer = src
+
+	if(href_list["flush"])
+		P.buffer = null
+
+	usr.set_machine(src)
+	updateUsrDialog()

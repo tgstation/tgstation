@@ -101,6 +101,7 @@
 				aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
 			for(var/obj/machinery/computer/station_alert/a in machines)
 				a.triggerAlarm("Atmosphere", src, cameras, src)
+			air_doors_activated=1
 			CloseFirelocks()
 		// Dropping from danger level 2.
 		else if (atmosalm == 2)
@@ -111,6 +112,7 @@
 				aiPlayer.cancelAlarm("Atmosphere", src, src)
 			for(var/obj/machinery/computer/station_alert/a in machines)
 				a.cancelAlarm("Atmosphere", src, src)
+			air_doors_activated=0
 			OpenFirelocks()
 		atmosalm = danger_level
 		for (var/obj/machinery/alarm/AA in src)

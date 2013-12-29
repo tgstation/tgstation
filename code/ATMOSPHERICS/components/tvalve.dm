@@ -29,6 +29,26 @@ obj/machinery/atmospherics/tvalve
 		initialize_directions()
 		..()
 
+	buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
+		dir = pipe.dir
+		initialize_directions = pipe.get_pipe_dir()
+		if (pipe.pipename)
+			name = pipe.pipename
+		var/turf/T = loc
+		level = T.intact ? 2 : 1
+		initialize()
+		build_network()
+		if (node1)
+			node1.initialize()
+			node1.build_network()
+		if (node2)
+			node2.initialize()
+			node2.build_network()
+		if (node3)
+			node3.initialize()
+			node3.build_network()
+		return 1
+
 	proc/initialize_directions()
 		switch(dir)
 			if(NORTH)

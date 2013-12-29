@@ -126,10 +126,16 @@
 					traitor.objectives += escape_objective
 
 			else
-				if (!(locate(/datum/objective/hijack) in traitor.objectives))
-					var/datum/objective/hijack/hijack_objective = new
-					hijack_objective.owner = traitor
-					traitor.objectives += hijack_objective
+				if(prob(50))
+					if (!(locate(/datum/objective/hijack) in traitor.objectives))
+						var/datum/objective/hijack/hijack_objective = new
+						hijack_objective.owner = traitor
+						traitor.objectives += hijack_objective
+				else // Honk
+					if (!(locate(/datum/objective/minimize_casualties) in traitor.objectives))
+						var/datum/objective/minimize_casualties/escape_objective = new
+						escape_objective.owner = traitor
+						traitor.objectives += escape_objective
 	return
 
 

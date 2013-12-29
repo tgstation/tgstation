@@ -97,6 +97,24 @@ obj/machinery/atmospherics/pipe
 				if(SOUTHWEST)
 					initialize_directions = SOUTH|WEST
 
+		buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
+			dir = pipe.dir
+			initialize_directions = pipe.get_pipe_dir()
+			var/turf/T = loc
+			level = T.intact ? 2 : 1
+			initialize(1)
+			if(!node1&&!node2)
+				usr << "\red There's nothing to connect this pipe section to! (with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment)"
+				return 0
+			update_icon()
+			build_network()
+			if (node1)
+				node1.initialize()
+				node1.build_network()
+			if (node2)
+				node2.initialize()
+				node2.build_network()
+			return 1
 
 		hide(var/i)
 			if(level == 1 && istype(loc, /turf/simulated))
@@ -208,7 +226,7 @@ obj/machinery/atmospherics/pipe
 				icon_state = "exposed[have_node1][have_node2][invisibility ? "-f" : "" ]"
 
 
-		initialize()
+		initialize(var/suppress_icon_check=0)
 			normalize_dir()
 			var/node1_dir
 			var/node2_dir
@@ -229,11 +247,10 @@ obj/machinery/atmospherics/pipe
 					node2 = target
 					break
 
-
 			var/turf/T = src.loc			// hide if turf is not intact
 			hide(T.intact)
-			update_icon()
-			//update_icon()
+			if(!suppress_icon_check)
+				update_icon()
 
 		disconnect(obj/machinery/atmospherics/reference)
 			if(reference == node1)
@@ -326,8 +343,6 @@ obj/machinery/atmospherics/pipe
 	simple/filtering/hidden
 		level = 1
 		icon_state = "intact-g-f"
-
-
 
 	simple/insulated
 		name = "Insulated pipe"
@@ -500,6 +515,8 @@ obj/machinery/atmospherics/pipe
 			return null
 
 		attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+			if(istype(W, /obj/item/weapon/pipe_dispenser) || istype(W, /obj/item/device/pipe_painter))
+				return // Coloring pipes.
 			if (istype(W, /obj/item/device/analyzer) && get_dist(user, src) <= 1)
 				for (var/mob/O in viewers(user, null))
 					O << "\red [user] has used the analyzer on \icon[icon]"
@@ -634,6 +651,28 @@ obj/machinery/atmospherics/pipe
 		level = 1
 		layer = 2.4 //under wires with their 2.44
 
+		buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
+			dir = pipe.dir
+			initialize_directions = pipe.get_pipe_dir()
+			var/turf/T = loc
+			level = T.intact ? 2 : 1
+			initialize(1)
+			if(!node1&&!node2&&!node3)
+				usr << "\red There's nothing to connect this manifold to! (with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment)"
+				return 0
+			update_icon() // Skipped in initialize()!
+			build_network()
+			if (node1)
+				node1.initialize()
+				node1.build_network()
+			if (node2)
+				node2.initialize()
+				node2.build_network()
+			if (node3)
+				node3.initialize()
+				node3.build_network()
+			return 1
+
 		New()
 			switch(dir)
 				if(NORTH)
@@ -646,8 +685,6 @@ obj/machinery/atmospherics/pipe
 					initialize_directions = NORTH|EAST|SOUTH
 
 			..()
-
-
 
 		hide(var/i)
 			if(level == 1 && istype(loc, /turf/simulated))
@@ -744,7 +781,7 @@ obj/machinery/atmospherics/pipe
 
 			return
 
-		initialize()
+		initialize(var/skip_icon_update=0)
 			var/connect_directions = (NORTH|SOUTH|EAST|WEST)&(~dir)
 
 			for(var/direction in cardinal)
@@ -781,8 +818,8 @@ obj/machinery/atmospherics/pipe
 
 			var/turf/T = src.loc			// hide if turf is not intact
 			hide(T.intact)
-			//update_icon()
-			update_icon()
+			if(!skip_icon_update)
+				update_icon()
 
 	manifold/scrubbers
 		name="Scrubbers pipe"
@@ -902,6 +939,31 @@ obj/machinery/atmospherics/pipe
 		level = 1
 		layer = 2.4 //under wires with their 2.44
 
+		buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
+			dir = pipe.dir
+			initialize_directions = pipe.get_pipe_dir()
+			var/turf/T = loc
+			level = T.intact ? 2 : 1
+			initialize(1)
+			if(!node1 && !node2 && !node3 && !node4)
+				usr << "\red There's nothing to connect this manifold to! (with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment)"
+				return 0
+			update_icon()
+			build_network()
+			if (node1)
+				node1.initialize()
+				node1.build_network()
+			if (node2)
+				node2.initialize()
+				node2.build_network()
+			if (node3)
+				node3.initialize()
+				node3.build_network()
+			if (node4)
+				node4.initialize()
+				node4.build_network()
+			return 1
+
 		hide(var/i)
 			if(level == 1 && istype(loc, /turf/simulated))
 				invisibility = i ? 101 : 0
@@ -1001,7 +1063,7 @@ obj/machinery/atmospherics/pipe
 					del(src)
 			return
 
-		initialize()
+		initialize(var/skip_update_icon=0)
 
 			for(var/obj/machinery/atmospherics/target in get_step(src,1))
 				if(target.initialize_directions & 2)
@@ -1025,8 +1087,8 @@ obj/machinery/atmospherics/pipe
 
 			var/turf/T = src.loc			// hide if turf is not intact
 			hide(T.intact)
-			//update_icon()
-			update_icon()
+			if(!skip_update_icon)
+				update_icon()
 
 	manifold4w/scrubbers
 		name="Scrubbers pipe"
@@ -1121,6 +1183,16 @@ obj/machinery/atmospherics/pipe
 				if(EAST)
 				 initialize_directions = WEST
 
+		buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
+			dir = pipe.dir
+			initialize_directions = pipe.get_pipe_dir()
+			initialize()
+			build_network()
+			if(node)
+				node.initialize()
+				node.build_network()
+			return 1
+
 		hide(var/i)
 			if(level == 1 && istype(loc, /turf/simulated))
 				invisibility = i ? 101 : 0
@@ -1177,6 +1249,8 @@ obj/machinery/atmospherics/pipe
 
 
 obj/machinery/atmospherics/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	if(istype(W, /obj/item/weapon/pipe_dispenser) || istype(W, /obj/item/device/pipe_painter))
+		return // Coloring pipes.
 	if (istype(src, /obj/machinery/atmospherics/pipe/tank))
 		return ..()
 	if (istype(src, /obj/machinery/atmospherics/pipe/vent))

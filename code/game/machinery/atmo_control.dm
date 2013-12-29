@@ -447,30 +447,47 @@ legend {
 
 		return_text()
 			var/output = ..()
-
-			output += "<B>Fuel Injection System</B><BR>"
+			output += "<fieldset><legend>Fuel Injection System (<A href='?src=\ref[src];refresh_status=1'>Refresh</A>)</legend>"
 			if(device_info)
 				var/power = device_info["power"]
 				var/volume_rate = device_info["volume_rate"]
-				output += {"Status: [power?("Injecting"):("On Hold")] <A href='?src=\ref[src];refresh_status=1'>Refresh</A><BR>
-Rate: [volume_rate] L/sec<BR>"}
+				output += {"<table>
+				<tr>
+					<th>Status:</th>
+					<td>[power?"Injecting":"On Hold"]</td>
+				</tr>
+				<tr>
+					<th>Rate:</th>
+					<td>[volume_rate] L/sec</td>
+				</tr>
+				<tr>
+					<th>Automated Fuel Injection:</th>
+					<td><A href='?src=\ref[src];toggle_automation=1'>[automation?"Engaged":"Disengaged"]</A></td>
+				</tr>"}
 
 				if(automation)
 
 					// AUTOFIXED BY fix_string_idiocy.py
 					// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\atmo_control.dm:372: output += "Automated Fuel Injection: <A href='?src=\ref[src];toggle_automation=1'>Engaged</A><BR>"
-					output += {"Automated Fuel Injection: <A href='?src=\ref[src];toggle_automation=1'>Engaged</A><BR>
-						Injector Controls Locked Out<BR>"}
+					output += {"
+					<tr>
+						<td colspan="2">Injector Controls Locked Out</td>
+					</tr>"}
 					// END AUTOFIX
 				else
 
 					// AUTOFIXED BY fix_string_idiocy.py
 					// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\atmo_control.dm:375: output += "Automated Fuel Injection: <A href='?src=\ref[src];toggle_automation=1'>Disengaged</A><BR>"
-					output += {"Automated Fuel Injection: <A href='?src=\ref[src];toggle_automation=1'>Disengaged</A><BR>
-						Injector: <A href='?src=\ref[src];toggle_injector=1'>Toggle Power</A> <A href='?src=\ref[src];injection=1'>Inject (1 Cycle)</A><BR>"}
+					output += {"
+					<tr>
+						<th>Injector:</th>
+						<td><A href='?src=\ref[src];toggle_injector=1'>Toggle Power</A> <A href='?src=\ref[src];injection=1'>Inject (1 Cycle)</A></td>
+					</td>"}
 					// END AUTOFIX
+				output += "</table>"
 			else
-				output += "<FONT color='red'>ERROR: Can not find device</FONT> <A href='?src=\ref[src];refresh_status=1'>Search</A><BR>"
+				output += {"<p style="color:red"><b>ERROR:</b> Can not find device. <A href='?src=\ref[src];refresh_status=1'>Search</A></p>"}
+			output += "</fieldset>"
 
 			return output
 

@@ -18,6 +18,7 @@
 	g_amt = 3750
 	origin_tech = "materials=1"
 	var/created_window = /obj/structure/window/basic
+	canCombineWith=list(/obj/item/stack/sheet/glass,/obj/item/stack/sheet/glass/cyborg)
 
 /obj/item/stack/sheet/glass/cyborg
 	g_amt = 0
@@ -124,6 +125,7 @@
 	g_amt = 3750
 	m_amt = 1875
 	origin_tech = "materials=2"
+	canCombineWith=list(/obj/item/stack/sheet/rglass,/obj/item/stack/sheet/rglass/cyborg)
 
 /obj/item/stack/sheet/rglass/cyborg
 	name = "reinforced glass"
@@ -290,7 +292,7 @@
 		playsound(src.loc, 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if(!H.shoes && !(H.wear_suit.body_parts_covered & FEET))
+			if( !H.shoes && ( !H.wear_suit || !(H.wear_suit.body_parts_covered & FEET) ) )
 				var/datum/organ/external/affecting = H.get_organ(pick("l_foot", "r_foot"))
 				if(affecting.status & (ORGAN_ROBOT|ORGAN_PEG))
 					return
@@ -314,8 +316,9 @@
 	icon_state = "sheet-plasmaglass"
 	//g_amt = 7500
 	g_amt=CC_PER_SHEET_GLASS
-	origin_tech = "materials=3;plasma=2"
+	origin_tech = "materials=3;plasmatech=2"
 	created_window = /obj/structure/window/plasmabasic
+	//canCombineWith=list(/obj/item/stack/sheet/plasmaglass,/obj/item/stack/sheet/plasmaglass/cyborg)
 
 /obj/item/stack/sheet/glass/plasmaglass/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
 	rec.addMaterial("plasma",1)
@@ -352,8 +355,9 @@
 	icon_state = "sheet-plasmarglass"
 	g_amt=CC_PER_SHEET_GLASS
 	m_amt = 1875
-	origin_tech = "materials=4;plasma=2"
+	origin_tech = "materials=4;plasmatech=2"
 	created_window = /obj/structure/window/plasmareinforced
+	//canCombineWith=list(/obj/item/stack/sheet/plasmareinforced,/obj/item/stack/sheet/plasmareinforced/cyborg)
 
 /obj/item/stack/sheet/glass/plasmaglass/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
 	rec.addMaterial("plasma",1)

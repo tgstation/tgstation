@@ -204,6 +204,24 @@
 	disabilities = 1
 	duration = 300
 
+/obj/effect/proc_holder/spell/targeted/trigger/subjugation
+	name = "Subjugation"
+	desc = "This spell temporarily subjugates a target's mind and does not require wizard garb."
+
+	school = "transmutation"
+	charge_max = 300
+	clothes_req = 0
+	invocation = "DII ODA BAJI"
+	invocation_type = "whisper"
+	message = "\blue You suddenly feel completely overwhelmed!"
+
+	starting_spells = list("/obj/effect/proc_holder/spell/targeted/inflict_handler/subjugation")
+
+/obj/effect/proc_holder/spell/targeted/inflict_handler/subjugation
+	amt_dizziness = 300
+	amt_confused = 300
+	amt_stuttering = 300
+
 /obj/effect/proc_holder/spell/dumbfire/fireball
 	name = "Fireball"
 	desc = "This spell fires a fireball at a target and does not require wizard garb."

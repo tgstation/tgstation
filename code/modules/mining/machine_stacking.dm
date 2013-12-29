@@ -100,8 +100,10 @@
 	if (src.output && src.input)
 		var/obj/item/O
 		var/obj/item/stack/stack
-		while (locate(/obj/item, input.loc))
+		var/limit=10
+		while (locate(/obj/item, input.loc) && limit > 0)
 			O = locate(/obj/item, input.loc)
+			limit--
 			if (istype(O,/obj/item/stack))
 				if(!("[O.type]" in stacks))
 					stack=new O.type

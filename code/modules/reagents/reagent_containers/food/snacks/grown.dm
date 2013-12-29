@@ -346,6 +346,23 @@
 			reagents.add_reagent("toxin", 1+round(potency / 10, 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/cruciatus
+	seed = "/obj/item/seeds/ambrosiavulgaris/cruciatus"
+	name = "ambrosia vulgaris branch"
+	desc = "This is a plant containing various healing chemicals."
+	icon_state = "ambrosiavulgaris"
+	potency = 10
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("nutriment", 1)
+			reagents.add_reagent("space_drugs", 1+round(potency / 8, 1))
+			reagents.add_reagent("kelotane", 1+round(potency / 8, 1))
+			reagents.add_reagent("bicaridine", 1+round(potency / 10, 1))
+			reagents.add_reagent("toxin", 1+round(potency / 10, 1))
+			reagents.add_reagent("spiritbreaker", 10)
+			bitesize = 1+round(reagents.total_volume / 2, 1)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus
 	seed = "/obj/item/seeds/ambrosiadeus"
 	name = "ambrosia deus branch"
@@ -524,7 +541,7 @@
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "<span class='info'>- Capsaicin: <i>[reagents.get_reagent_amount("capsaicin")]%</i></span>"
-		
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli
 	seed = "/obj/item/seeds/chillighost"
 	name = "ghost chili"
@@ -566,7 +583,7 @@
 		spawn(5)	//So potency can be set in the proc that creates these crops
 			reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
-			
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/koibeans
 	seed = "/obj/item/seeds/koiseed"
 	name = "koibean"
@@ -578,7 +595,7 @@
 			reagents.add_reagent("nutriment", 1+round((potency / 30), 1))
 			reagents.add_reagent("carpotoxin", 1+round((potency / 20), 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
-			
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/moonflower
 	seed = "/obj/item/seeds/moonflowerseed"
 	name = "moonflower"

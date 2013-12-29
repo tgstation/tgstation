@@ -26,8 +26,13 @@
 		if (isturf(target)) location = target
 		if (isobj(target)) location = target.loc
 		if (ismob(target))
+			var/mob/M=target
 			target:attack_log += "\[[time_stamp()]\]<font color='orange'> Had the [name] planted on them by [user.real_name] ([user.ckey])</font>"
 			user.visible_message("\red [user.name] finished planting an explosive on [target.name]!")
+			if(!iscarbon(user))
+				M.LAssailant = null
+			else
+				M.LAssailant = user
 		target.overlays += image('icons/obj/assemblies.dmi', "plastic-explosive2")
 		user << "Bomb has been planted. Timer counting down from [timer]."
 		spawn(timer*10)

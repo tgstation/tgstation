@@ -145,3 +145,125 @@
 			icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]exposed"
 			on = 0
 		return
+
+	interact(mob/user as mob)
+		//var/obj/item/device/multitool/P = get_multitool(user)
+		var/dat = {"<html>
+	<head>
+		<title>[name] Access</title>
+		<style type="text/css">
+html,body {
+	font-family:courier;
+	background:#999999;
+	color:#333333;
+}
+
+a {
+	color:#000000;
+	text-decoration:none;
+	border-bottom:1px solid black;
+}
+		</style>
+	</head>
+	<body>
+		<h3>[name]</h3>
+		<ul>
+			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[1439]">Reset</a>)</li>
+			<li><b>ID Tag:</b> <a href="?src=\ref[src];set_tag=1">[id]</a></li>
+		</ul>
+"}
+		/*
+		if(P)
+			if(P.buffer)
+				var/id="???"
+				if(istype(P.buffer, /obj/machinery/telecomms))
+					id=P.buffer:id
+				else if(P.buffer.vars.Find("id_tag"))
+					id=P.buffer:id_tag
+				else if(P.buffer.vars.Find("id"))
+					id=P.buffer:id
+				else
+					id="\[???\]"
+				dat += "<p><b>MULTITOOL BUFFER:</b> [P.buffer] ([id])"
+				if(istype(P.buffer, /obj/machinery/embedded_controller/radio))
+					dat += " <a href='?src=\ref[src];link=1'>\[Link\]</a> <a href='?src=\ref[src];flush=1'>\[Flush\]</a>"
+				dat += "</p>"
+			else
+				dat += "<p><b>MULTITOOL BUFFER:</b> <a href='?src=\ref[src];buffer=1'>\[Add Machine\]</a></p>"
+		dat += "</body></html>"
+		*/
+
+		user << browse(dat, "window=injector")
+		onclose(user, "injector")
+
+	Topic(href, href_list)
+		if(..())
+			return
+
+		if(!issilicon(usr))
+			if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
+				return
+
+		var/obj/item/device/multitool/P = get_multitool(usr)
+
+		if("set_id" in href_list)
+			var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id) as null|text),1,MAX_MESSAGE_LEN)
+			if(newid)
+				id = newid
+				initialize()
+		if("set_freq" in href_list)
+			var/newfreq=frequency
+			if(href_list["set_freq"]!="-1")
+				newfreq=text2num(href_list["set_freq"])
+			else
+				newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, frequency) as null|num
+			if(newfreq)
+				if(findtext(num2text(newfreq), "."))
+					newfreq *= 10 // shift the decimal one place
+				if(newfreq < 10000)
+					frequency = newfreq
+					initialize()
+
+		if(href_list["unlink"])
+			P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
+
+		if(href_list["link"])
+			P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
+
+		if(href_list["buffer"])
+			P.buffer = src
+
+		if(href_list["flush"])
+			P.buffer = null
+
+		usr.set_machine(src)
+		updateUsrDialog()
+
+	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+		if(istype(W, /obj/item/device/multitool))
+			interact(user)
+			return 1
+		if (!istype(W, /obj/item/weapon/wrench))
+			return ..()
+		if (!(stat & NOPOWER) && on)
+			user << "\red You cannot unwrench this [src], turn it off first."
+			return 1
+		var/turf/T = src.loc
+		if (level==1 && isturf(T) && T.intact)
+			user << "\red You must remove the plating first."
+			return 1
+		var/datum/gas_mixture/int_air = return_air()
+		var/datum/gas_mixture/env_air = loc.return_air()
+		if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
+			user << "\red You cannot unwrench this [src], it too exerted due to internal pressure."
+			add_fingerprint(user)
+			return 1
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		user << "\blue You begin to unfasten \the [src]..."
+		if (do_after(user, 40))
+			user.visible_message( \
+				"[user] unfastens \the [src].", \
+				"\blue You have unfastened \the [src].", \
+				"You hear ratchet.")
+			new /obj/item/pipe(loc, make_from=src)
+			del(src)

@@ -45,8 +45,15 @@ plugins:
      port: 45678
      # Access key.  CHANGE THIS OR GET SPAMMED.
      key: password
-   # Stuff for redmine. If you can set up redmine, this is probably easy to figure out. Don't touch if you don't use redmine.
+   # Stuff for redmine. Don't touch if you don't use redmine.
    redmine:
+     # http://your.redmine.tld[/path]
      url: 
-     username:
-     password:
+     # Enable REST API and get an API Key.  Then put it here.
+     apikey:
+     # Project to watch for new bugs.
+     # Note:  For new bugs to be announced on the channel, you'll need to add a redmine-[projectID] tag.
+     project:
+     # Optional message format stuff.  Uncomment to change the defaults.
+     #bug-info-format:'Redmine #{ID} - {AUTHOR} - {STATUS} - {SUBJECT}{CRLF}{URL}'
+     #new-bug-format: 'NEW ISSUE: {URL} (#{ID}: {SUBJECT})'

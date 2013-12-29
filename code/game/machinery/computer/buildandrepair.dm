@@ -219,6 +219,10 @@
 	name = "Circuit board (Prison Shuttle)"
 	build_path = "/obj/machinery/computer/prison_shuttle"
 	origin_tech = "programming=2"
+/obj/item/weapon/circuitboard/bhangmeter
+	name = "Circuit board (Bhangmeter)"
+	build_path = "/obj/machinery/computer/bhangmeter"
+	origin_tech = "programming=2"
 
 
 /obj/item/weapon/circuitboard/supplycomp/attackby(obj/item/I as obj, mob/user as mob)
@@ -249,7 +253,7 @@
 			src.name = "Circuit Board (RD Console - Robotics)"
 			src.build_path = "/obj/machinery/computer/rdconsole/robotics"
 			user << "\blue Access protocols succesfully updated."
-		if(src.build_path == "/obj/machinery/computer/rdconsole/mommi")
+		else if(src.build_path == "/obj/machinery/computer/rdconsole/mommi")
 			src.name = "Circuit Board (RD Console - MoMMI Nest)"
 			src.build_path = "/obj/machinery/computer/rdconsole/mommi"
 			user << "\blue Access protocols succesfully updated."

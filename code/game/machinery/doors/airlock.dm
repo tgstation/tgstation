@@ -748,9 +748,6 @@ About the new airlock wires panel:
 	else
 		t1 += text("Warning.  Door timing circuitry operating abnormally.  <A href='?src=\ref[];aiEnable=9'> Restore?</a><br>\n",src)
 
-
-
-
 	if(src.welded)
 		t1 += text("Door appears to have been welded shut.<br>\n")
 	else if(!src.locked)
@@ -883,8 +880,35 @@ About the new airlock wires panel:
 				else
 					t1 += "<a href='?src=\ref[src];signaler=[wires[wiredesc]]'>Attach signaler</a>"
 			t1 += "<br>"
-
-		t1 += text("<br>\n[]<br>\n[]<br>\n[]<br>\n[]<br>\n[]<br>\n[]", (src.locked ? "The door bolts have fallen!" : "The door bolts look up."), (src.lights ? "The door bolt lights are on." : "The door bolt lights are off!"), ((src.arePowerSystemsOn() && !(stat & NOPOWER)) ? "The test light is on." : "The test light is off!"), (src.aiControlDisabled==0 ? "The 'AI control allowed' light is on." : "The 'AI control allowed' light is off."),  (src.safe==0 ? "The 'Check Wiring' light is on." : "The 'Check Wiring' light is off."), (src.normalspeed==0 ? "The 'Check Timing Mechanism' light is on." : "The 'Check Timing Mechanism' light is off."))
+		if(src.locked)
+			t1 += "The door bolts have fallen!<br />"
+		else
+			t1 += "The door bolts look up."
+		t1 += "<br />"
+		if(src.lights)
+			t1 += "The door bolt lights are on."
+		else
+			t1 += "The door bolt lights are off!"
+		t1 += "<br />"
+		if(src.arePowerSystemsOn() && !(stat & NOPOWER))
+			t1+="The test light is on."
+		else
+			t1+="The test light is off!"
+		t1 += "<br />"
+		if(src.aiControlDisabled==0)
+			t1+="The 'AI control allowed' light is on."
+		else
+			t1+="The 'AI control allowed' light is off."
+		t1 += "<br />"
+		if(src.safe==0)
+			t1 += "The 'Check Wiring' light is on."
+		else
+			t1 += "The 'Check Wiring' light is off."
+		t1 += "<br />"
+		if(src.normalspeed==0)
+			t1 += "The 'Check Timing Mechanism' light is on."
+		else
+			t1 += "The 'Check Timing Mechanism' light is off."
 
 		t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>\n", src)
 
@@ -908,53 +932,99 @@ About the new airlock wires panel:
 			usr.unset_machine()
 			return
 
-	if((in_range(src, usr) && istype(src.loc, /turf)) && src.p_open)
+	if((in_range(src, usr) && istype(src.loc, /turf)))
 		usr.set_machine(src)
-		if(href_list["wires"])
-			var/t1 = text2num(href_list["wires"])
-			if(!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
-				usr << "You need wirecutters!"
-				return
-			if(src.isWireColorCut(t1))
-				src.mend(t1)
-			else
-				src.cut(t1)
-		else if(href_list["pulse"])
-			var/t1 = text2num(href_list["pulse"])
-			if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
-				usr << "You need a multitool!"
-				return
-			if(src.isWireColorCut(t1))
-				usr << "You can't pulse a cut wire."
-				return
-			else
-				src.pulse(t1)
-		else if(href_list["signaler"])
-			var/wirenum = text2num(href_list["signaler"])
-			if(!istype(usr.get_active_hand(), /obj/item/device/assembly/signaler))
-				usr << "You need a signaller!"
-				return
-			if(src.isWireColorCut(wirenum))
-				usr << "You can't attach a signaller to a cut wire."
-				return
-			var/obj/item/device/assembly/signaler/R = usr.get_active_hand()
-			if(R.secured)
-				usr << "This radio can't be attached!"
-				return
-			var/mob/M = usr
-			M.drop_item()
-			R.loc = src
-			R.airlock_wire = wirenum
-			src.signalers[wirenum] = R
-		else if(href_list["remove-signaler"])
-			var/wirenum = text2num(href_list["remove-signaler"])
-			if(!(src.signalers[wirenum]))
-				usr << "There's no signaller attached to that wire!"
-				return
-			var/obj/item/device/assembly/signaler/R = src.signalers[wirenum]
-			R.loc = usr.loc
-			R.airlock_wire = null
-			src.signalers[wirenum] = null
+		if(p_open)
+			if(href_list["wires"])
+				var/t1 = text2num(href_list["wires"])
+				if(!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
+					usr << "You need wirecutters!"
+					return
+				if(src.isWireColorCut(t1))
+					src.mend(t1)
+				else
+					src.cut(t1)
+			else if(href_list["pulse"])
+				var/t1 = text2num(href_list["pulse"])
+				if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
+					usr << "You need a multitool!"
+					return
+				if(src.isWireColorCut(t1))
+					usr << "You can't pulse a cut wire."
+					return
+				else
+					src.pulse(t1)
+			else if(href_list["signaler"])
+				var/wirenum = text2num(href_list["signaler"])
+				if(!istype(usr.get_active_hand(), /obj/item/device/assembly/signaler))
+					usr << "You need a signaller!"
+					return
+				if(src.isWireColorCut(wirenum))
+					usr << "You can't attach a signaller to a cut wire."
+					return
+				var/obj/item/device/assembly/signaler/R = usr.get_active_hand()
+				if(R.secured)
+					usr << "This radio can't be attached!"
+					return
+				var/mob/M = usr
+				M.drop_item()
+				R.loc = src
+				R.airlock_wire = wirenum
+				src.signalers[wirenum] = R
+			else if(href_list["remove-signaler"])
+				var/wirenum = text2num(href_list["remove-signaler"])
+				if(!(src.signalers[wirenum]))
+					usr << "There's no signaller attached to that wire!"
+					return
+				var/obj/item/device/assembly/signaler/R = src.signalers[wirenum]
+				R.loc = usr.loc
+				R.airlock_wire = null
+				src.signalers[wirenum] = null
+		else // p_open == false
+			if(!issilicon(usr))
+				if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
+					testing("Not silicon, not using a multitool.")
+					return
+
+			var/obj/item/device/multitool/P = get_multitool(usr)
+
+			if("set_tag" in href_list)
+				if(!(href_list["set_tag"] in vars))
+					usr << "\red Something went wrong: Unable to find [href_list["set_tag"]] in vars!"
+					return 1
+				var/current_tag = src.vars[href_list["set_tag"]]
+				var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag", src, current_tag) as null|text),1,MAX_MESSAGE_LEN)
+				if(newid)
+					vars[href_list["set_tag"]] = newid
+					initialize()
+
+			if("set_freq" in href_list)
+				var/newfreq=frequency
+				if(href_list["set_freq"]!="-1")
+					newfreq=text2num(href_list["set_freq"])
+				else
+					newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, frequency) as null|num
+				if(newfreq)
+					if(findtext(num2text(newfreq), "."))
+						newfreq *= 10 // shift the decimal one place
+					if(newfreq < 10000)
+						frequency = newfreq
+						initialize()
+
+			if(href_list["unlink"])
+				P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
+
+			if(href_list["link"])
+				P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
+
+			if(href_list["buffer"])
+				P.buffer = src
+
+			if(href_list["flush"])
+				P.buffer = null
+
+			usr.set_machine(src)
+			update_multitool_menu(P,usr)
 
 
 	if(istype(usr, /mob/living/silicon) && src.canAIControl())
@@ -1145,6 +1215,61 @@ About the new airlock wires panel:
 		updateUsrDialog()
 	return
 
+/obj/machinery/door/airlock/update_multitool_menu(var/obj/item/device/multitool/P,var/mob/user)
+	var/dat = {"<html>
+	<head>
+		<title>[name] Access</title>
+		<style type="text/css">
+html,body {
+	font-family:courier;
+	background:#999999;
+	color:#333333;
+}
+
+a {
+	color:#000000;
+	text-decoration:none;
+	border-bottom:1px solid black;
+}
+		</style>
+	</head>
+	<body>
+		<h3>[name]</h3>"}
+	if(src.requiresID() && !allowed(user))
+		dat += {"<b>Access Denied."}
+	else
+		var/dis_id_tag="-----"
+		if(id_tag!=null && id_tag!="")
+			dis_id_tag=id_tag
+		dat += {"
+		<ul>
+			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[0]">Reset</a>)</li>
+			<li><b>ID Tag:</b> <a href="?src=\ref[src];set_id=1">[dis_id_tag]</a></li>
+		</ul>"}
+		/*
+		if(P)
+			if(P.buffer)
+				var/id="???"
+				if(istype(P.buffer, /obj/machinery/telecomms))
+					id=P.buffer:id
+				else if(P.buffer.vars.Find("id_tag"))
+					id=P.buffer:id_tag
+				else if(P.buffer.vars.Find("id"))
+					id=P.buffer:id
+				else
+					id="\[???\]"
+				dat += "<p><b>MULTITOOL BUFFER:</b> [P.buffer] ([id])"
+				if(istype(P.buffer, /obj/machinery/embedded_controller/radio))
+					dat += " <a href='?src=\ref[src];link=1'>\[Link\]</a> <a href='?src=\ref[src];flush=1'>\[Flush\]</a>"
+				dat += "</p>"
+			else
+				dat += "<p><b>MULTITOOL BUFFER:</b> <a href='?src=\ref[src];buffer=1'>\[Add Machine\]</a></p>"
+		*/
+	dat += "</body></html>"
+
+	user << browse(dat, "window=mtairlock")
+	onclose(user, "mtairlock")
+
 /obj/machinery/door/airlock/attackby(C as obj, mob/user as mob)
 	//world << text("airlock attackby src [] obj [] mob []", src, C, user)
 	if(!istype(usr, /mob/living/silicon))
@@ -1172,6 +1297,8 @@ About the new airlock wires panel:
 	else if(istype(C, /obj/item/weapon/wirecutters))
 		return src.attack_hand(user)
 	else if(istype(C, /obj/item/device/multitool))
+		if(!p_open)
+			return multitool_menu(C,user)
 		return src.attack_hand(user)
 	else if(istype(C, /obj/item/device/assembly/signaler))
 		return src.attack_hand(user)
@@ -1327,7 +1454,6 @@ About the new airlock wires panel:
 				if(A.closeOtherId == src.closeOtherId && A != src)
 					src.closeOther = A
 					break
-
 
 /obj/machinery/door/airlock/proc/prison_open()
 	src.locked = 0

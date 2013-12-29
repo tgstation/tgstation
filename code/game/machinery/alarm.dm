@@ -429,7 +429,7 @@
 	switch(mode)
 		if(AALARM_MODE_SCRUBBING)
 			for(var/device_id in alarm_area.air_scrub_names)
-				send_signal(device_id, list("power"= 1, "co2_scrub"= 1, "o2_scrub"=(preset==AALARM_PRESET_VOX), "scrubbing"= 1, "panic_siphon"= 0) )
+				send_signal(device_id, list("power"= 1, "co2_scrub"= 1, "o2_scrub"=(preset==AALARM_PRESET_VOX), "n2_scrub"=0, "scrubbing"= 1, "panic_siphon"= 0) )
 			for(var/device_id in alarm_area.air_vent_names)
 				send_signal(device_id, list("power"= 1, "checks"= 1, "set_external_pressure"= target_pressure) )
 
@@ -676,7 +676,7 @@
 	return ui_interact(user)
 
 /obj/machinery/alarm/attack_robot(mob/user)
-	if(isMoMMI(user) && wiresexposed)
+	if(isMoMMI(user) && !wiresexposed)
 		return interact(user)
 	else
 		return attack_ai(user)
@@ -757,22 +757,27 @@
 	data["air"]=ui_air_status()
 	data["alarmActivated"]=alarmActivated || local_danger_level==2
 	data["sensors"]=TLV
-	data["locked"]=fromAtmosConsole || (!(istype(user, /mob/living/silicon)) && locked)
+
+	// Locked when:
+	//   Not sent from atmos console AND
+	//   Not silicon AND locked.
+	data["locked"]=!fromAtmosConsole && (!(istype(user, /mob/living/silicon)) && locked)
+
 	data["rcon"]=rcon_setting
 	data["target_temp"] = target_temperature - T0C
 	data["atmos_alarm"] = alarm_area.atmosalm
 	data["modes"] = list(
-		AALARM_MODE_SCRUBBING   = list("name"="Filtering","desc"="Scrubs out contaminants"),\
-		AALARM_MODE_REPLACEMENT = list("name"="Replace Air","desc"="Siphons out air while replacing"),\
-		AALARM_MODE_PANIC       = list("name"="Panic","desc"="Siphons air out of the room"),\
-		AALARM_MODE_CYCLE       = list("name"="Cycle","desc"="Siphons air before replacing"),\
-		AALARM_MODE_FILL        = list("name"="Fill","desc"="Shuts off scrubbers and opens vents"),\
-		AALARM_MODE_OFF         = list("name"="Off","desc"="Shuts off vents and scrubbers"))
+		AALARM_MODE_SCRUBBING   = list("name"="Filtering",   "desc"="Scrubs out contaminants"),\
+		AALARM_MODE_REPLACEMENT = list("name"="Replace Air", "desc"="Siphons out air while replacing"),\
+		AALARM_MODE_PANIC       = list("name"="Panic",       "desc"="Siphons air out of the room"),\
+		AALARM_MODE_CYCLE       = list("name"="Cycle",       "desc"="Siphons air before replacing"),\
+		AALARM_MODE_FILL        = list("name"="Fill",        "desc"="Shuts off scrubbers and opens vents"),\
+		AALARM_MODE_OFF         = list("name"="Off",         "desc"="Shuts off vents and scrubbers"))
 	data["mode"]=mode
 	data["presets"]=list(
-		AALARM_PRESET_HUMAN		= list("name"="Human","desc"="Checks for Oxygen and Nitrogen"),\
-		AALARM_PRESET_VOX 		= list("name"="Vox","desc"="Checks for Nitrogen only"),\
-		AALARM_PRESET_SERVER 	= list("name"="Coldroom","desc"="For server rooms and freezers"))
+		AALARM_PRESET_HUMAN		= list("name"="Human",    "desc"="Checks for Oxygen and Nitrogen"),\
+		AALARM_PRESET_VOX 		= list("name"="Vox",      "desc"="Checks for Nitrogen only"),\
+		AALARM_PRESET_SERVER 	= list("name"="Coldroom", "desc"="For server rooms and freezers"))
 	data["preset"]=preset
 	data["screen"]=screen
 
@@ -847,7 +852,7 @@
 			user << browse(null, "window=air_alarm")
 			return
 
-	if(wiresexposed && (!istype(user, /mob/living/silicon)))
+	if(wiresexposed && (!istype(user, /mob/living/silicon) || isMoMMI(user)))
 		var/t1 = text("<html><head><title>[alarm_area.name] Air Alarm Wires</title></head><body><B>Access Panel</B><br>\n")
 		var/list/wirecolors = list(
 			"Orange" = 1,
@@ -905,6 +910,7 @@
 				"tox_scrub",
 				"n2o_scrub",
 				"o2_scrub",
+				"n2_scrub",
 				"panic_siphon",
 				"scrubbing")
 				var/val
@@ -974,44 +980,41 @@
 						selected[3] = selected[4]
 
 				apply_mode()
-				changed=1
+				ui_interact(usr)
+				return 1
 
 	if(href_list["screen"])
 		var/prevscreen=screen
 		screen = text2num(href_list["screen"])
-		changed=(prevscreen!=screen)
-
-	/* Unused
-	if(href_list["atmos_unlock"])
-		switch(href_list["atmos_unlock"])
-			if("0")
-				air_doors_close(1)
-			if("1")
-				air_doors_open(1)
-		changed=1
-	*/
+		if(prevscreen==screen) return 0
+		ui_interact(usr)
+		return 1
 
 	if(href_list["atmos_alarm"])
 		alarmActivated=1
 		alarm_area.updateDangerLevel()
 		update_icon()
-		changed=1
+		ui_interact(usr)
+		return 1
 
 	if(href_list["atmos_reset"])
 		alarmActivated=0
 		alarm_area.updateDangerLevel()
 		update_icon()
-		changed=1
+		ui_interact(usr)
+		return 1
 
 	if(href_list["mode"])
 		mode = text2num(href_list["mode"])
 		apply_mode()
-		changed=1
+		ui_interact(usr)
+		return 1
 
 	if(href_list["preset"])
 		preset = text2num(href_list["preset"])
 		apply_preset()
-		changed=1
+		ui_interact(usr)
+		return 1
 
 	if(href_list["temperature"])
 		var/list/selected = TLV["temperature"]
@@ -1020,11 +1023,12 @@
 		var/input_temperature = input("What temperature would you like the system to maintain? (Capped between [min_temperature]C and [max_temperature]C)", "Thermostat Controls") as num|null
 		if(input_temperature==null)
 			return
-		if(!input_temperature || input_temperature > max_temperature || input_temperature < min_temperature)
+		if(!input_temperature || input_temperature >= max_temperature || input_temperature <= min_temperature)
 			usr << "Temperature must be between [min_temperature]C and [max_temperature]C"
 		else
 			target_temperature = input_temperature + T0C
-		changed=1
+		ui_interact(usr)
+		return 1
 
 	if (href_list["AAlarmwires"])
 		var/t1 = text2num(href_list["AAlarmwires"])
@@ -1037,6 +1041,7 @@
 		else
 			cut(t1)
 			if (AAlarmwires == 0)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				usr << "<span class='notice'>You cut last of wires inside [src]</span>"
 				update_icon()
 				buildstage = 1
@@ -1134,6 +1139,7 @@
 				frame.loc = user.loc
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				del(src)
+				return
 
 	return ..()
 
@@ -1290,6 +1296,13 @@ FIRE ALARM
 						user.visible_message("\red [user] has reconnected [src]'s detecting unit!", "You have reconnected [src]'s detecting unit.")
 					else
 						user.visible_message("\red [user] has disconnected [src]'s detecting unit!", "You have disconnected [src]'s detecting unit.")
+				if(istype(W, /obj/item/weapon/wirecutters))
+					if(do_after(user,50))
+						buildstage=1
+						user.visible_message("\red [user] has cut the wiring from \the [src]!", "You have cut the last of the wiring from \the [src].")
+						update_icon()
+						new /obj/item/weapon/cable_coil(user.loc,5)
+						playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 			if(1)
 				if(istype(W, /obj/item/weapon/cable_coil))
 					var/obj/item/weapon/cable_coil/coil = W

@@ -127,7 +127,7 @@
 				observer.loc = O.loc
 				observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
 
-				client.prefs.update_preview_icon()
+				client.prefs.update_preview_icon(1)
 				observer.icon = client.prefs.preview_icon
 				observer.alpha = 127
 
@@ -276,6 +276,16 @@
 		if((job.current_positions >= job.total_positions) && job.total_positions != -1)	return 0
 		if(jobban_isbanned(src,rank))	return 0
 		if(!job.player_old_enough(src.client))	return 0
+		// assistant limits
+		if(config.assistantlimit)
+			if(job.title == "Assistant")
+				var/count = 0
+				var/datum/job/officer = job_master.GetJob("Security Officer")
+				var/datum/job/warden = job_master.GetJob("Warden")
+				var/datum/job/hos = job_master.GetJob("Head of Security")
+				count += (officer.current_positions + warden.current_positions + hos.current_positions)
+				if(job.current_positions > (config.assistantratio * count))
+					return 0
 		return 1
 
 
@@ -301,8 +311,6 @@
 		character.lastarea = get_area(loc)
 
 		ticker.mode.latespawn(character)
-
-		//ticker.mode.latespawn(character)
 
 		if(character.mind.assigned_role != "Cyborg")
 			data_core.manifest_inject(character)
@@ -375,7 +383,8 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 			chosen_language = all_languages["[client.prefs.language]"]
 		if(chosen_language)
 			if(is_alien_whitelisted(src, client.prefs.language) || !config.usealienwhitelist || !(chosen_language.flags & WHITELISTED))
-				new_character.add_language("client.prefs.language")
+				new_character.add_language(client.prefs.language)
+
 		if(ticker.random_players || appearance_isbanned(src)) //disabling ident bans for now
 			new_character.gender = pick(MALE, FEMALE)
 			client.prefs.real_name = random_name(new_character.gender)
