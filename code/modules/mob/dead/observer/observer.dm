@@ -84,8 +84,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		ghostize(0)					//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
 
 	var/obj/structure/morgue/Morgue = locate() in M.loc
-	if(istype(M.loc,/obj/structure/morgue)) Morgue = M.loc
-	if(Morgue) Morgue.update()
+	if(istype(M.loc,/obj/structure/morgue))
+		Morgue = M.loc
+	if(Morgue)
+		Morgue.update()
 
 	return
 	
@@ -160,8 +162,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	mind.current.key = key
 
 	var/obj/structure/morgue/Morgue = locate() in mind.current.loc
-	if(istype(mind.current.loc,/obj/structure/morgue)) Morgue = mind.current.loc
-	if(Morgue) Morgue.update()
+	if(istype(mind.current.loc,/obj/structure/morgue))
+		Morgue = mind.current.loc
+	if(Morgue)
+		Morgue.update()
 
 	return 1
 	
