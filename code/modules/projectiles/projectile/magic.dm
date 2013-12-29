@@ -202,8 +202,6 @@ proc/wabbajack(mob/living/M)
 			new_mob << "<B>Your form morphs into that of a [randomize].</B>"
 
 			del(M)
-			if(!new_mob.canmove) //edge case of someone getting hit with two bolts at the same time
-				new_mob.update_canmove()
 			return new_mob
 
 /obj/item/projectile/magic/animate
