@@ -1,6 +1,6 @@
 /mob/living/carbon/brain/Life()
 	set invisibility = 0
-	set background = 1
+	//set background = 1
 	..()
 
 	if(stat != DEAD)

@@ -90,7 +90,7 @@ datum/controller/game_controller/proc/setup_objects()
 
 
 datum/controller/game_controller/proc/process()
-	set background = 1
+	//set background = 1
 	processing = 1
 	while(1)	//far more efficient than recursively calling ourself
 		if(!Failsafe)	new /datum/failsafe()
@@ -226,7 +226,7 @@ datum/controller/game_controller/proc/process()
 
 
 /datum/failsafe/proc/spin()
-	set background = 1
+	//set background = 1
 	while(1)	//more efficient than recursivly calling ourself over and over. background = 1 ensures we do not trigger an infinite loop
 		if(master_controller)
 			if(spinning && master_controller.processing)	//only poke if these overrides aren't in effect
