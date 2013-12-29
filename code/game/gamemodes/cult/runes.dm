@@ -754,19 +754,17 @@ var/list/sacrificed = list()
 				ticker.mode.grant_runeword(usr, convert_word)
 				
 		lesser_reward(var/mob/T)
-			if(prob(40))		//TEST
-				var/reward = pick("construct","tome","talisman")
+			if(prob(30))		//TEST
+				var/reward = pick("construct","talisman")
 				switch (reward)
 					if("construct")
 						new /obj/structure/constructshell(get_turf(src))
-					if("tome")
-						new /obj/item/weapon/tome(get_turf(src))
 					if("talisman")		//one use talisman
 						var/obj/item/weapon/paper/talisman/supply/tal = new /obj/item/weapon/paper/talisman/supply(get_turf(src))
 						tal.uses = 1
 						
 		greater_reward(var/mob/T)
-			var/reward = pick("fireball","smoke","blind","mindswap","forcewall","knock","charge", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffhealing", "armor", "space", "scrying")
+			var/reward = pick("fireball","smoke","blind","mindswap","forcewall","knock","charge", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "armor", "space", "scrying")
 			switch (reward)
 				if("fireball")
 					new /obj/item/weapon/spellbook/oneuse/fireball(get_turf(src))
@@ -792,8 +790,6 @@ var/list/sacrificed = list()
 					new /obj/item/weapon/gun/magic/wand/teleport(get_turf(src))
 				if("wanddoor")
 					new /obj/item/weapon/gun/magic/wand/door(get_turf(src))
-				if("staffhealing")
-					new /obj/item/weapon/gun/magic/staff/healing(get_turf(src))
 				if("armor")
 					new /obj/item/clothing/head/magus(get_turf(src))
 					new /obj/item/clothing/suit/magusred(get_turf(src))
