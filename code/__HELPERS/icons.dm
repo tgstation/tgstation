@@ -764,3 +764,8 @@ proc
 		var/image/I = O
 		composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
 	return composite
+
+/proc/get_icon_volume(icon/A)
+	var/Width = A.Width()
+	var/Height = A.Height()
+	return (Width * Height)
