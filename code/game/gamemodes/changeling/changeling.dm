@@ -102,7 +102,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 	var/datum/objective/absorb/absorb_objective = new
 	absorb_objective.owner = changeling
-	absorb_objective.gen_amount_goal(6, 7)
+	absorb_objective.gen_amount_goal(6, 8)
 	changeling.objectives += absorb_objective
 
 	var/datum/objective/assassinate/kill_objective = new
@@ -131,7 +131,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 /datum/game_mode/proc/greet_changeling(var/datum/mind/changeling, var/you_are=1)
 	if (you_are)
-		changeling.current << "<b>\red You are a changeling!</b>"
+		changeling.current << "<b>\red You are a changeling! You have absorbed and taken the form of a human.</b>"
 	changeling.current << "<b>\red Use say \":g message\" to communicate with your fellow changelings.</b>"
 	changeling.current << "<b>You must complete the following tasks:</b>"
 
