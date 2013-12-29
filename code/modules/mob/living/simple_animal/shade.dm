@@ -26,8 +26,17 @@
 	status_flags = 0
 	faction = "cult"
 	status_flags = CANPUSH
+	
+	UnarmedAttack(var/atom/A, var/proximity_flag)
+		..()
+		if(CanAttack(A))
+			src.heal_organ_damage(3,0)		//small heal from drain
+		if(istype(A,/obj/effect/rune))
+			var/obj/effect/rune/R = A
+			R.shade_attack(src)
 
-
+		
+	
 	Life()
 		..()
 		if(stat == 2)

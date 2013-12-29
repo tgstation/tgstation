@@ -209,6 +209,37 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			for (var/mob/V in viewers(src))
 				V.show_message("\red The markings pulse with a small burst of light, then fall dark.", 3, "\red You hear a faint fizzle.", 2)
 			return
+			
+		shade_attack(mob/user as mob)	//shades can now activate some runes
+			if(!is_shade(user))
+				return
+			if(!word1 || !word2 || !word3)
+				return fizzle()
+			if(word1 == wordtravel && word2 == wordself)
+				return teleport(src.word3)
+			if(word1 == worddestr && word2 == wordsee && word3 == wordtech)
+				return emp(src.loc,3)
+			if(word1 == wordsee && word2 == wordhell && word3 == wordjoin)
+				return seer()
+			if(word1 == wordblood && word2 == wordjoin && word3 == wordhell)
+				return raise()
+			if(word1 == wordhide && word2 == wordsee && word3 == wordblood)
+				return obscure(4)
+			if(word1 == wordblood && word2 == wordsee && word3 == wordhide)
+				return revealrunes(src)
+			if(word1 == worddestr && word2 == wordtravel && word3 == wordself)
+				return wall()
+			if(word1 == wordhide && word2 == wordother && word3 == wordsee)
+				return deafen()
+			if(word1 == worddestr && word2 == wordsee && word3 == wordother)
+				return blind()
+			if(word1 == wordself && word2 == wordother && word3 == wordtech)
+				return communicate()
+			if(word1 == wordtravel && word2 == wordother)
+				return itemport(src.word3)
+			if(word1 == wordjoin && word2 == wordhide && word3 == wordtech)
+				return runestun()
+			return fizzle()
 
 		check_icon()
 			if(word1 == wordtravel && word2 == wordself)
@@ -616,7 +647,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				if(R.dummy)
 					if(prob(20))		//Punish blind research, Nar-Sie wants blood
 						user << "<span class='userdanger'>Lord Nar-Sie is furious!</span>"
-						user.gib()
+						user.take_overall_damage(120, 0)
 					else
 						user.take_overall_damage(60, 0)
 						user << "<span class='danger'>You feel the life draining from you, as if Lord Nar-Sie is displeased with you.</span>"

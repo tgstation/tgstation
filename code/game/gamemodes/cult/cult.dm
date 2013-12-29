@@ -7,6 +7,9 @@
 
 /proc/iscultist(mob/living/M as mob)
 	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.cult)
+	
+/proc/is_shade(mob/M as mob)
+	return istype(M,/mob/living/simple_animal/shade) && M.mind && M.mind.special_role == "Cultist"
 
 /proc/is_convertable_to_cult(datum/mind/mind)
 	if(!istype(mind))	return 0
