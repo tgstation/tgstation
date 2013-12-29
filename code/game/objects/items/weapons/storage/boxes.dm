@@ -32,7 +32,8 @@
 	icon_state = "largebox"
 	item_state = "largebox"
 	w_class = 42 // Big, bulky.
-	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
+	foldable = /obj/item/stack/sheet/cardboard
+	foldable_amount = 4 // Takes 4 to make. - N3X
 	storage_slots = 21
 	max_combined_w_class = 42 // 21*2
 
