@@ -159,7 +159,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		src.screwloose = 1
 
 /obj/machinery/bot/cleanbot/process()
-	//set background = 1
+	set background = 1
 
 	if(!src.on)
 		return
