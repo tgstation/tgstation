@@ -30,8 +30,10 @@
 			if(M==null) M = locate() in B
 
 			if(M)
-				if(M.client) src.icon_state = "morgue3"
-				else src.icon_state = "morgue2"
+				if(M.client)
+					src.icon_state = "morgue3"
+				else
+					src.icon_state = "morgue2"
 
 			else src.icon_state = "morgue4"
 		else src.icon_state = "morgue1"
