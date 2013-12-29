@@ -476,3 +476,9 @@
 	return
 /mob/living/simple_animal/ExtinguishMob()
 	return
+/mob/living/simple_animal/revive()
+	..()
+	health = maxHealth
+	icon_state = icon_living
+	density = initial(density)
+	update_canmove()
