@@ -18,16 +18,25 @@
 	density = 1
 	var/obj/structure/m_tray/connected = null
 	anchored = 1.0
-
+	
 /obj/structure/morgue/proc/update()
-	if (src.connected)
-		src.icon_state = "morgue0"
+	if(src.connected) src.icon_state = "morgue0"
 	else
-		if (src.contents.len)
-			src.icon_state = "morgue2"
-		else
-			src.icon_state = "morgue1"
+		if(src.contents.len)
+
+			var/mob/living/M = locate() in contents
+
+			var/obj/structure/closet/body_bag/B = locate() in contents
+			if(M==null) M = locate() in B
+
+			if(M)
+				if(M.client) src.icon_state = "morgue3"
+				else src.icon_state = "morgue2"
+
+			else src.icon_state = "morgue4"
+		else src.icon_state = "morgue1"
 	return
+
 
 /obj/structure/morgue/ex_act(severity)
 	switch(severity)
@@ -310,6 +319,7 @@
 
 		cremating = 1
 		locked = 1
+		icon_state = "cremate_active"
 
 		for(var/mob/living/M in contents)
 			if (M.stat!=2)
@@ -329,6 +339,7 @@
 		sleep(30)
 		cremating = 0
 		locked = 0
+		update()
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	return
 
