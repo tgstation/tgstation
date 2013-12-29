@@ -339,7 +339,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 //For legacy support.
 /mob/living/carbon/human/regenerate_icons()
 	..()
-	if(monkeyizing)		return
+	if(notransform)		return
 	update_body()
 	update_hair()
 	update_mutations()

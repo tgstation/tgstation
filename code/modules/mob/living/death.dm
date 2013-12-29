@@ -41,7 +41,7 @@
 
 /mob/living/proc/setup_animation(var/animation, var/prev_lying)
 	var/atom/movable/overlay/animate = null
-	monkeyizing = 1
+	notransform = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
