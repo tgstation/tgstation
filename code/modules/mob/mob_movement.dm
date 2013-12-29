@@ -143,7 +143,7 @@
 /client/Move(n, direct)
 	if(!mob)
 		return 0
-	if(mob.monkeyizing)
+	if(mob.notransform)
 		return 0	//This is sota the goto stop mobs from moving var
 	if(mob.control_object)
 		return Move_object(direct)

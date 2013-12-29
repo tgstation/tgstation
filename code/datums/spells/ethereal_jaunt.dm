@@ -17,6 +17,7 @@
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets) //magnets, so mostly hardcoded
 	for(var/mob/living/target in targets)
+		target.notransform = 1 //protects the mob from being transformed (replaced) midjaunt and getting stuck in bluespace
 		spawn(0)
 			var/mobloc = get_turf(target.loc)
 			var/obj/effect/dummy/spell_jaunt/holder = new /obj/effect/dummy/spell_jaunt( mobloc )
@@ -51,6 +52,7 @@
 							if(target.Move(T))
 								break
 				target.canmove = 1
+				target.notransform = 0
 				target.client.eye = target
 				del(animation)
 				del(holder)
@@ -77,6 +79,7 @@
 							if(target.Move(T))
 								break
 				target.canmove = 1
+				target.notransform = 0
 				target.client.eye = target
 				del(animation)
 				del(holder)

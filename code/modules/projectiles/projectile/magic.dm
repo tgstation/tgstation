@@ -106,8 +106,8 @@
 proc/wabbajack(mob/living/M)
 	if(istype(M))
 		if(istype(M, /mob/living) && M.stat != DEAD)
-			if(M.monkeyizing)	return
-			M.monkeyizing = 1
+			if(M.notransform)	return
+			M.notransform = 1
 			M.canmove = 0
 			M.icon = null
 			M.overlays.Cut()

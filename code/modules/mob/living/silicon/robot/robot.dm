@@ -292,24 +292,12 @@
 
 
 /mob/living/silicon/robot/ex_act(severity)
-	if(!blinded)
-		flick("flash", flash)
-
-	if (stat == 2 && client)
-		gib()
-		return
-
-	else if (stat == 2 && !client)
-		del(src)
-		return
+	..()
 
 	switch(severity)
 		if(1.0)
-			if (stat != 2)
-				adjustBruteLoss(100)
-				adjustFireLoss(100)
-				gib()
-				return
+			gib()
+			return
 		if(2.0)
 			if (stat != 2)
 				adjustBruteLoss(60)
@@ -318,7 +306,7 @@
 			if (stat != 2)
 				adjustBruteLoss(30)
 
-	updatehealth()
+	return
 
 
 /mob/living/silicon/robot/meteorhit(obj/O as obj)

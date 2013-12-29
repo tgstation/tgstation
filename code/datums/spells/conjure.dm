@@ -14,12 +14,15 @@
 	//should have format of list("emagged" = 1,"name" = "Wizard's Justicebot"), for example
 	var/delay = 1//Go Go Gadget Inheritance
 
+	var/cast_sound = 'sound/items/welder.ogg'
+
 /obj/effect/proc_holder/spell/aoe_turf/conjure/cast(list/targets)
 
 	for(var/turf/T in targets)
 		if(T.density && !summon_ignore_density)
 			targets -= T
-	playsound(src.loc, 'sound/items/welder.ogg', 50, 1)
+
+	playsound(src.loc, cast_sound, 50, 1)
 
 	if(do_after(usr,delay))
 		for(var/i=0,i<summon_amt,i++)
