@@ -32,7 +32,7 @@
 		node2.build_network()
 	return 1
 
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/initialize()
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/initialize(var/suppress_icon_check=0)
 	normalize_dir()
 	var/node1_dir
 	var/node2_dir
@@ -52,8 +52,10 @@
 		if(target.initialize_directions_he & get_dir(target,src))
 			node2 = target
 			break
-	update_icon()
-	return
+
+	if(!suppress_icon_check)
+		update_icon()
+	return (node1&&node2)
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/process()
 	if(!parent)
@@ -130,7 +132,7 @@
 	if(!node1&&!node2)
 		del(src)
 
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/initialize()
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/initialize(var/suppress_icon_check=0)
 	for(var/obj/machinery/atmospherics/target in get_step(src,initialize_directions))
 		if(target.initialize_directions & get_dir(target,src))
 			node1 = target
@@ -140,8 +142,9 @@
 			node2 = target
 			break
 
-	update_icon()
-	return
+	if(!suppress_icon_check)
+		update_icon()
+	return (node1&&node2)
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/hidden
 	level=1
