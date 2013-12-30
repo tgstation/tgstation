@@ -83,9 +83,9 @@
 				reported_danger_level=2
 			if(reported_danger_level>danger_level)
 				danger_level=reported_danger_level
-			testing("Danger level at [AA.name]: [AA.local_danger_level] (reported [reported_danger_level])")
+			//testing("Danger level at [AA.name]: [AA.local_danger_level] (reported [reported_danger_level])")
 
-	testing("Danger level decided upon in [name]: [danger_level] (from [atmosalm])")
+	//testing("Danger level decided upon in [name]: [danger_level] (from [atmosalm])")
 
 	// Danger level change?
 	if(danger_level != atmosalm)
