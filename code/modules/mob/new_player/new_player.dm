@@ -285,6 +285,8 @@
 				var/datum/job/hos = job_master.GetJob("Head of Security")
 				count += (officer.current_positions + warden.current_positions + hos.current_positions)
 				if(job.current_positions > (config.assistantratio * count))
+					if(count >= 5) // if theres more than 5 security on the station just let assistants join regardless, they should be able to handle the tide
+						return 1
 					return 0
 		return 1
 
@@ -311,6 +313,8 @@
 		character.lastarea = get_area(loc)
 
 		ticker.mode.latespawn(character)
+
+		//ticker.mode.latespawn(character)
 
 		if(character.mind.assigned_role != "Cyborg")
 			data_core.manifest_inject(character)
@@ -383,8 +387,7 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 			chosen_language = all_languages["[client.prefs.language]"]
 		if(chosen_language)
 			if(is_alien_whitelisted(src, client.prefs.language) || !config.usealienwhitelist || !(chosen_language.flags & WHITELISTED))
-				new_character.add_language(client.prefs.language)
-
+				new_character.add_language("client.prefs.language")
 		if(ticker.random_players || appearance_isbanned(src)) //disabling ident bans for now
 			new_character.gender = pick(MALE, FEMALE)
 			client.prefs.real_name = random_name(new_character.gender)
