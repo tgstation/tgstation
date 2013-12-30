@@ -20,7 +20,7 @@
 	name = "weed-spray"
 	icon_state = "weedspray"
 	item_state = "spray"
-	flags = TABLEPASS | OPENCONTAINER | FPRINT
+	flags = OPENCONTAINER
 	slot_flags = SLOT_BELT
 	throwforce = 4
 	w_class = 2.0
@@ -39,7 +39,7 @@
 	name = "pest-spray"
 	icon_state = "pestspray"
 	item_state = "spray"
-	flags = TABLEPASS | OPENCONTAINER | FPRINT
+	flags = OPENCONTAINER
 	slot_flags = SLOT_BELT
 	throwforce = 4
 	w_class = 2.0
@@ -58,7 +58,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "hoe"
 	item_state = "hoe"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	force = 5.0
 	throwforce = 7.0
 	w_class = 2.0
@@ -73,7 +73,6 @@
 	name = "bottle of nutrient"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
-	flags = FPRINT |  TABLEPASS
 	w_class = 1.0
 	var/mutmod = 0
 	var/yieldmod = 0
@@ -85,7 +84,6 @@
 	name = "bottle of E-Z-Nutrient"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
-	flags = FPRINT |  TABLEPASS
 	mutmod = 1
 	yieldmod = 1
 	New()
@@ -96,7 +94,6 @@
 	name = "bottle of Left 4 Zed"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle18"
-	flags = FPRINT |  TABLEPASS
 	mutmod = 2
 	yieldmod = 0
 	New()
@@ -107,7 +104,6 @@
 	name = "bottle of Robust Harvest"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
-	flags = FPRINT |  TABLEPASS
 	mutmod = 0
 	yieldmod = 2
 	New()
@@ -122,7 +118,6 @@
 	name = "bottle of pestkiller"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
-	flags = FPRINT |  TABLEPASS
 	var/toxicity = 0
 	var/PestKillStr = 0
 	New()
@@ -133,7 +128,6 @@
 	name = "bottle of carbaryl"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
-	flags = FPRINT |  TABLEPASS
 	toxicity = 4
 	PestKillStr = 2
 	New()
@@ -144,7 +138,6 @@
 	name = "bottle of lindane"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle18"
-	flags = FPRINT |  TABLEPASS
 	toxicity = 6
 	PestKillStr = 4
 	New()
@@ -155,7 +148,6 @@
 	name = "bottle of phosmet"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
-	flags = FPRINT |  TABLEPASS
 	toxicity = 8
 	PestKillStr = 7
 	New()
@@ -170,7 +162,6 @@
 	name = "bottle of weedkiller"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
-	flags = FPRINT |  TABLEPASS
 	var/toxicity = 0
 	var/WeedKillStr = 0
 
@@ -178,7 +169,6 @@
 	name = "bottle of glyphosate"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
-	flags = FPRINT |  TABLEPASS
 	toxicity = 4
 	WeedKillStr = 2
 
@@ -186,7 +176,6 @@
 	name = "bottle of triclopyr"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle18"
-	flags = FPRINT |  TABLEPASS
 	toxicity = 6
 	WeedKillStr = 4
 
@@ -194,6 +183,5 @@
 	name = "bottle of 2,4-D"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
-	flags = FPRINT |  TABLEPASS
 	toxicity = 8
 	WeedKillStr = 7

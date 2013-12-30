@@ -8,7 +8,6 @@
 	throw_speed = 5
 	throw_range = 10
 	w_class = 3.0
-	flags = FPRINT | TABLEPASS
 	attack_verb = list("mopped", "bashed", "bludgeoned", "whacked")
 	var/mopping = 0
 	var/mopcount = 0
