@@ -30,7 +30,7 @@
 			var/obj/item/stack/rods/R = W
 			if(R.amount >= 1)
 				R.use(1)
-				new /obj/machinery/conveyor_switch(src)
+				new /obj/machinery/conveyor_switch(get_turf(src))
 
 	activate()
 		if(cooldown > 0)	return 0
