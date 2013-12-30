@@ -25,9 +25,13 @@ em						{font-style: normal;	font-weight: bold;}
 .say					{}
 .deadsay				{color: #5c00e6;}
 .radio					{color: #008000;}
-.deptradio				{color: #993399;}
+.sciradio				{color: #993399;}
 .comradio				{color: #ACA82D;}
-.secradio				{color: #3182ac;}
+.secradio				{color: #B22222;}
+.medradio				{color: #337296;}
+.engradio				{color: #fb5613;}
+.suppradio				{color: #a8732b;}
+.servradio				{color: #6eaa2c;}
 .syndradio				{color: #6D3F40;}
 
 .alert					{color: #ff0000;}
