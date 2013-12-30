@@ -52,8 +52,10 @@
 		if(target.initialize_directions_he & get_dir(target,src))
 			node2 = target
 			break
-	update_icon()
-	return
+
+	if(!suppress_icon_check)
+		update_icon()
+	return (node1&&node2)
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/process()
 	if(!parent)
@@ -140,8 +142,9 @@
 			node2 = target
 			break
 
-	update_icon()
-	return
+	if(!suppress_icon_check)
+		update_icon()
+	return (node1&&node2)
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/hidden
 	level=1
