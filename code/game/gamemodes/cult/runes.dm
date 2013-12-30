@@ -149,12 +149,13 @@ var/list/sacrificed = list()
 			if(ishuman(usr))
 				var/mob/living/carbon/human/H = usr
 				var/obj/item/slot_item = H.get_item_by_slot(slot_head)
-				if(!(slot_item.type in list(/obj/item/clothing/head/culthood,/obj/item/clothing/head/culthood/alt,/obj/item/clothing/head/magus,/obj/item/clothing/head/helmet/space/cult)))
+				if(slot_item && !(slot_item.type in typesof(/obj/item/clothing/head/culthood,/obj/item/clothing/head/magus,/obj/item/clothing/head/helmet/space/cult)))
 					return 0
 				slot_item = H.get_item_by_slot(slot_wear_suit)
-				if(!(slot_item.type in list(/obj/item/clothing/suit/cultrobes,/obj/item/clothing/suit/cultrobes/alt,/obj/item/clothing/suit/magusred,/obj/item/clothing/suit/space/cult)))
+				if(slot_item && !(slot_item.type in typesof(/obj/item/clothing/suit/cultrobes,/obj/item/clothing/suit/magusred,/obj/item/clothing/suit/space/cult)))
 					return 0
-					
+				if(!istype(H.get_item_by_slot(slot_shoes),/obj/item/clothing/shoes/cult))
+					return 0
 				if(istype(H.get_active_hand(),/obj/item/weapon/melee/cultblade))
 					return 1
 				if(istype(H.get_inactive_hand(),/obj/item/weapon/melee/cultblade))
@@ -739,7 +740,7 @@ var/list/sacrificed = list()
 			
 		stone_or_gib(var/mob/T)
 			var/obj/item/device/soulstone/stone = new /obj/item/device/soulstone(get_turf(src))
-			if(!iscarbon(T) && !stone.transfer_soul("FORCE", T, usr))	//if it fails to add soul
+			if(!stone.transfer_soul("FORCE", T, usr))	//if it fails to add soul
 				del stone
 				if(isrobot(T))
 					T.dust()//To prevent the MMI from remaining
@@ -754,7 +755,7 @@ var/list/sacrificed = list()
 				ticker.mode.grant_runeword(usr, convert_word)
 				
 		lesser_reward(var/mob/T)
-			if(prob(30))		//TEST
+			if(prob(10))		//TEST
 				var/reward = pick("construct","talisman")
 				switch (reward)
 					if("construct")
@@ -1182,11 +1183,45 @@ var/list/sacrificed = list()
 				usr.whisper("N'ath reth sh'yro eth d[pick("'","`")]raggathnor!")
 			usr.visible_message("\red The rune disappears with a flash of red light, and a set of armor appears on [usr]...", \
 			"\red You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.")
-
-			user.equip_to_slot_if_possible(new /obj/item/clothing/head/culthood/alt(get_turf(user)), slot_head,0,1,1)
-			user.equip_to_slot_if_possible(new /obj/item/clothing/suit/cultrobes/alt(get_turf(user)), slot_wear_suit,0,1,1)
-			user.equip_to_slot_if_possible(new /obj/item/clothing/shoes/cult(get_turf(user)), slot_shoes,0,1,1)
-			user.equip_to_slot_if_possible(new /obj/item/weapon/storage/backpack/cultpack(get_turf(user)), slot_back,0,1,1)
+			
+			var/obj/item/slot_item = user.get_item_by_slot(slot_wear_suit)
+			if(slot_item && slot_item.type in typesof(/obj/item/clothing/suit/armor/hos,/obj/item/clothing/suit/armor/vest/capcarapace,/obj/item/clothing/suit/armor/swat,/obj/item/clothing/suit/armor/laserproof))
+				user.u_equip(slot_item)
+				del slot_item
+				user.equip_to_slot_or_del(new /obj/item/clothing/suit/magusred,slot_wear_suit)
+			else if(slot_item && slot_item.type in typesof(/obj/item/clothing/suit/space/rig,/obj/item/clothing/suit/space/captain))
+				user.u_equip(slot_item)
+				del slot_item
+				user.equip_to_slot_or_del(new /obj/item/clothing/suit/space/cult,slot_wear_suit)
+			else
+				user.u_equip(slot_item)
+				user.equip_to_slot_if_possible(new /obj/item/clothing/suit/cultrobes/alt(get_turf(user)), slot_wear_suit,0,1,1)
+				
+			slot_item = user.get_item_by_slot(slot_head)
+			if(slot_item && istype(slot_item,/obj/item/clothing/head/helmet/space))
+				user.u_equip(slot_item)
+				del slot_item
+				user.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/cult,slot_head)
+			else if(slot_item && istype(slot_item,/obj/item/clothing/head/helmet))
+				user.u_equip(slot_item)
+				del slot_item
+				user.equip_to_slot_or_del(new /obj/item/clothing/head/magus,slot_head)
+			else
+				user.u_equip(slot_item)
+				user.equip_to_slot_if_possible(new /obj/item/clothing/head/culthood/alt(get_turf(user)), slot_head,0,1,1)
+				
+			slot_item = user.get_item_by_slot(slot_shoes)
+			if(slot_item && slot_item.type in typesof(/obj/item/clothing/shoes/galoshes,/obj/item/clothing/shoes/syndigaloshes,/obj/item/clothing/shoes/swat,/obj/item/clothing/shoes/space_ninja,/obj/item/clothing/shoes/cult/galoshes))
+				user.u_equip(slot_item)
+				del slot_item
+				user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult/galoshes,slot_shoes)
+			else if(slot_item)
+				user.u_equip(slot_item)
+				user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult,slot_shoes)
+			else
+				user.equip_to_slot_if_possible(new /obj/item/clothing/shoes/cult(get_turf(user)), slot_shoes,0,1,1)
+				
+			user.equip_to_slot_if_possible(new /obj/item/weapon/storage/backpack/cultpack(get_turf(user)), slot_back)
 			//the above update their overlay icons cache but do not call update_icons()
 			//the below calls update_icons() at the end, which will update overlay icons by using the (now updated) cache
 			user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))	//put in hands or on floor

@@ -438,7 +438,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				<h3>Stun</h3>
 				Unlike other runes, this ons is supposed to be used in talisman form. When invoked directly, it simply releases some dark energy, briefly stunning everyone around. When imbued into a talisman, you can force all of its energy into one person, stunning him so hard he cant even speak. However, effect wears off rather fast.<br>
 				<h3>Equip Armor</h3>
-				When this rune is invoked, either from a rune or a talisman, it will equip the user with the armor of the followers of Nar-Sie. To use this rune to its fullest extent, make sure you are not wearing any form of headgear, armor, gloves or shoes, and make sure you are not holding anything in your hands. You need hood,robe and sword to utilize the sacrifice and convert runes freely.<br>
+				When this rune is invoked, either from a rune or a talisman, it will equip the user with the armor of the followers of Nar-Sie. To use this rune to its fullest extent, have helmet, galoshes, armor or rig equipped and it will be transmuted to the cult equivalent, and make sure you are not holding anything in your hands. You need hood,robe,boots and sword to utilize the sacrifice and convert runes freely.<br>
 				<h3>See Invisible</h3>
 				When invoked when standing on it, this rune allows the user to see the the world beyond as long as he does not move.<br>
 				</body>

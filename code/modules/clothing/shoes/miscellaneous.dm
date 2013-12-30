@@ -89,6 +89,11 @@
 	heat_protection = FEET
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 
+/obj/item/clothing/shoes/cult/galoshes
+	desc = "A pair of boots worn by the followers of Nar-Sie. They seem to have extra grip."
+	permeability_coefficient = 0.05
+	flags = NOSLIP
+	
 /obj/item/clothing/shoes/cyborg
 	name = "cyborg boots"
 	desc = "Shoes for a cyborg costume"

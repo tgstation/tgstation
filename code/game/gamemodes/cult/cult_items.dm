@@ -72,17 +72,17 @@
 	desc = "A helm worn by the followers of Nar-Sie."
 	flags_inv = HIDEFACE
 	flags = FPRINT|TABLEPASS|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
-	armor = list(melee = 30, bullet = 30, laser = 30,energy = 20, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 40, bullet = 30, laser = 30,energy = 20, bomb = 25, bio = 10, rad = 0)
 
 /obj/item/clothing/suit/magusred
 	name = "magus robes"
-	desc = "A set of armored robes worn by the followers of Nar-Sie"
+	desc = "A set of armored robes worn by the followers of Nar-Sie. It has a forcefield around it."
 	icon_state = "magusred"
 	item_state = "magusred"
 	flags = FPRINT | TABLEPASS
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
-	armor = list(melee = 50, bullet = 30, laser = 50,energy = 20, bomb = 25, bio = 10, rad = 0)
+	armor = list(melee = 50, bullet = 40, laser = 60,energy = 30, bomb = 25, bio = 10, rad = 0)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	reflect_chance = 40
 
@@ -92,7 +92,7 @@
 	desc = "A space worthy helmet used by the followers of Nar-Sie"
 	icon_state = "cult_helmet"
 	item_state = "cult_helmet"
-	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
+	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 60, rad = 30)
 
 /obj/item/clothing/suit/space/cult
 	name = "cult armour"
@@ -102,4 +102,4 @@
 	w_class = 3
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1
-	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
+	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 60, rad = 30)
