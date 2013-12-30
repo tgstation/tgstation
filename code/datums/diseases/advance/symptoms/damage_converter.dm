@@ -43,10 +43,7 @@ Bonus
 		var/parts = H.get_damaged_organs(1,1) //1,1 because it needs inputs.
 
 		for(var/obj/item/organ/limb/L in parts)
-			if(L.status == ORGAN_ROBOTIC)
-				L.heal_damage(get_damage, get_damage, 1)
-			else
-				L.heal_damage(get_damage, get_damage, 0)
+			L.heal_damage(get_damage, get_damage, 0)
 
 	else
 		if(M.getFireLoss() > 0 || M.getBruteLoss() > 0)
