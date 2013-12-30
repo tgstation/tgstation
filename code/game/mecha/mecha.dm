@@ -950,6 +950,8 @@
 	set name = "Enter Exosuit"
 	set src in oview(1)
 
+	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting) //are you cuffed, dying, lying, stunned or other
+		return
 	if (usr.stat || !ishuman(usr))
 		return
 	src.log_message("[usr] tries to move in.")

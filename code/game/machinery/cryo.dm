@@ -432,6 +432,8 @@
 			return
 	if (usr.stat != 0 || stat & (NOPOWER|BROKEN))
 		return
+	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting) //are you cuffed, dying, lying, stunned or other
+		return
 	put_mob(usr)
 	return
 
