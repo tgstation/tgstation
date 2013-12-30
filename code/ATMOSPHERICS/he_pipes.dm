@@ -144,6 +144,7 @@
 
 	if(!suppress_icon_check)
 		update_icon()
+
 	return (node1&&node2)
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/hidden
