@@ -35,6 +35,21 @@
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space
 	MASK_TYPE = /obj/item/clothing/mask/breath
 
+/obj/machinery/suit_storage_unit/atmos
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/atmos
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/atmos
+	MASK_TYPE = /obj/item/clothing/mask/breath
+
+/obj/machinery/suit_storage_unit/engie
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig
+	MASK_TYPE = /obj/item/clothing/mask/breath
+
+/obj/machinery/suit_storage_unit/elite
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/elite
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/elite
+	MASK_TYPE = /obj/item/clothing/mask/breath
+
 
 /obj/machinery/suit_storage_unit/New()
 	src.update_icon()
