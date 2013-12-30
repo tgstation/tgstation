@@ -10,7 +10,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	flags = FPRINT | TABLEPASS
 
-/obj/item/clothing/under/rank/research_director_alt
+/obj/item/clothing/under/rank/research_director/alt
 	desc = "Maybe you'll engineer your own half-man, half-pig creature some day. Its fabric provides minor protection from biological contaminants."
 	name = "research director's jumpsuit"
 	icon_state = "rdwhimsy"
