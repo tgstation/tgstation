@@ -716,10 +716,6 @@
 
 		var/turf/target
 
-		if(T.density)		// dense ouput turf, so stop holder
-			H.active = 0
-			H.loc = src
-			return
 		if(istype(T,/turf/simulated/floor && T.intact)) //intact floor, pop the tile
 			var/turf/simulated/floor/F = T
 			//F.health	= 100
@@ -743,8 +739,6 @@
 					spawn(1)
 						if(AM)
 							AM.throw_at(target, 100, 1)
-				H.vent_gas(T)
-				del(H)
 
 		else	// no specified direction, so throw in random direction
 
@@ -759,10 +753,11 @@
 						if(AM)
 							AM.throw_at(target, 5, 1)
 
-				H.vent_gas(T)	// all gas vent to turf
-				del(H)
-
-		return
+		var/turf/simulated/S = T
+		if((istype(S, /turf/space)) || istype(S, /turf/simulated) && S.air)          //Why is all this here? Because otherwise it runtimes in machine's process
+			H.vent_gas(S)                                                            //Too little space to write the whole history, in short otherwise it deletes disposal machine's air_contents
+		del(H)                                                                       //Or runtimes on space turfs because space doesnt has air if id use : , so this unelegant check is here
+		return                                                                       //Better way would be to fix air deletion in linda, but >touching linda >not even once
 
 	// call to break the pipe
 	// will expel any holder inside at the time

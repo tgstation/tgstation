@@ -101,6 +101,7 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 
 
 			//------- TURF FIRES -------\\
+
 			if(T)
 				if(flame_dist && prob(40) && !istype(T, /turf/space))
 					new/obj/effect/hotspot(T) //Mostly for ambience!
@@ -110,16 +111,17 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 
 			//------- THINGS IN TURFS FIRES -------\\
 
-				for(var/atom_movable in T.contents)	//bypass type checking since only atom/movable can be contained by turfs anyway
-					var/atom/movable/AM = atom_movable
+				if(!T.density) //if the turf is still strong - it will protect everything under it, its just logical
+					for(var/atom_movable in T.contents)	//bypass type checking since only atom/movable can be contained by turfs anyway
+						var/atom/movable/AM = atom_movable
 
-					if(AM) //Something is inside T (We have already checked T exists above) - RR
-						if(flame_dist) //if it has flame distance, run this - RR
-							if(isliving(AM) && !hotspot_exists && !istype(T, /turf/space))
-								new /obj/effect/hotspot(AM.loc)
+						if(AM) //Something is inside T (We have already checked T exists above) - RR
+							if(flame_dist) //if it has flame distance, run this - RR
+								if(isliving(AM) && !hotspot_exists && !istype(T, /turf/space))
+									new /obj/effect/hotspot(AM.loc)
 								//Just in case we missed a mob while they were in flame_range, but a hotspot didn't spawn on them, otherwise it looks weird when you just burst into flame out of nowhere
-						if(dist) //if no flame_dist, run this - RR
-							AM.ex_act(dist)
+							if(dist)
+								AM.ex_act(dist)
 
 
 
