@@ -385,7 +385,8 @@
 	if(src.occupant)
 		usr << "\blue <B>The sleeper is already occupied!</B>"
 		return
-
+	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting) //are you cuffed, dying, lying, stunned or other
+		return
 	for(var/mob/living/carbon/slime/M in range(1,usr))
 		if(M.Victim == usr)
 			usr << "You're too busy getting your life sucked out of you."
