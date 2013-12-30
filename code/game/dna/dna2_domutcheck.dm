@@ -23,22 +23,24 @@
 
 		// Prior state
 		var/gene_prior_status = (gene.type in M.active_genes)
+		var/changed = gene_active != gene_prior_status || (gene.flags & GENE_ALWAYS_ACTIVATE)
 
-		if((gene_active && !gene_prior_status) || (gene.flags & GENE_ALWAYS_ACTIVATE))
-			testing("[gene.name] activated!")
-			gene.activate(M,connected,flags)
-			if(M)
-				if(!(gene.flags & GENE_ALWAYS_ACTIVATE))
+		// If gene state has changed:
+		if(changed)
+			// Gene active (or ALWAYS ACTIVATE)
+			if(gene_active || (gene.flags & GENE_ALWAYS_ACTIVATE))
+				testing("[gene.name] activated!")
+				gene.activate(M,connected,flags)
+				if(M)
 					M.active_genes |= gene.type
-				M.update_icon=1
-		else if(!gene_active && gene_prior_status)
-			testing("[gene.name] deactivated!")
-			gene.deactivate(M,connected,flags)
-			if(M)
-				M.active_genes -= gene.type
-				M.update_icon = 1
-		//else
-		//	testing("[M] - Failed to activate [gene.name] - [gene_active?"+":"-"]active, [gene_prior_status?"+":"-"]prior")
+					M.update_icon = 1
+			// If Gene is NOT active:
+			else
+				testing("[gene.name] deactivated!")
+				gene.deactivate(M,connected,flags)
+				if(M)
+					M.active_genes -= gene.type
+					M.update_icon = 1
 
 /* Old, inflexibile
 /proc/domutcheck(var/mob/living/M, var/connected, var/flags)
