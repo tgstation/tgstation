@@ -6,10 +6,7 @@
 	var/list/grantwords = list("travel", "see", "hell", "tech", "destroy", "other", "hide")
 
 /proc/iscultist(mob/living/M as mob)
-	if(is_shade(M))
-		return 0
-	else
-		return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.cult)
+	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.cult)
 	
 /proc/is_shade(mob/M as mob)
 	return istype(M,/mob/living/simple_animal/shade) && M.mind && M.mind.special_role == "Cultist"
@@ -227,10 +224,7 @@
 /datum/game_mode/proc/add_cultist(datum/mind/cult_mind) //BASE
 	if (!istype(cult_mind))
 		return 0
-	if(cult_mind in cult)
-		update_cult_icons_added(cult_mind)
-		return 1
-	else if(is_convertable_to_cult(cult_mind))
+	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
 		cult += cult_mind
 		update_cult_icons_added(cult_mind)
 		cult_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the cult!</font>"

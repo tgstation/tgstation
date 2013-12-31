@@ -113,7 +113,6 @@
 				S.loc = C //put shade in stone
 				S.status_flags |= GODMODE //So they won't die inside the stone somehow
 				S.canmove = 0//Can't move out of the soul stone
-				ticker.mode.cult += S.mind		//So that it can communicate
 				S.name = "Shade of [T.real_name]"
 				S.real_name = "Shade of [T.real_name]"
 				if (T.client)
@@ -155,7 +154,6 @@
 							S.loc = C //put shade in stone
 							S.status_flags |= GODMODE //So they won't die inside the stone somehow
 							S.canmove = 0//Can't move out of the soul stone
-							ticker.mode.cult += S.mind
 							S.name = "Shade of [T.real_name]"
 							S.real_name = "Shade of [T.real_name]"
 							if (T.client)
