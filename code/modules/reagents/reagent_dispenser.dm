@@ -114,8 +114,8 @@
 			del(src)
 
 /obj/structure/reagent_dispensers/peppertank
-	name = "Pepper Spray Refiller"
-	desc = "Refill pepper spray canisters."
+	name = "pepper spray refiller"
+	desc = "Refills pepper spray canisters."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "peppertank"
 	anchored = 1
@@ -125,10 +125,21 @@
 		..()
 		reagents.add_reagent("condensedcapsaicin",1000)
 
+/obj/structure/reagent_dispensers/spacecleanertank
+	name = "space cleaner refiller"
+	desc = "Refills space cleaner bottles."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "spacecleanertank"
+	anchored = 1
+	density = 0
+	amount_per_transfer_from_this = 250
+	New()
+		..()
+		reagents.add_reagent("cleaner",1000)
 
 /obj/structure/reagent_dispensers/water_cooler
-	name = "Water-Cooler"
-	desc = "A machine that dispenses water to drink"
+	name = "water cooler"
+	desc = "A machine that cools and dispenses water to drink."
 	amount_per_transfer_from_this = 5
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "water_cooler"
