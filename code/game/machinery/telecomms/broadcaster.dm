@@ -384,6 +384,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			part_a = "<span class='servradio'><span class='name'>"
 		else if (display_freq==SUPP_FREQ)
 			part_a = "<span class='suppradio'><span class='name'>"
+		else if (display_freq==DSQUAD_FREQ)
+			part_a = "<span class='dsquadradio'><span class='name'>"
 
 		// --- Filter the message; place it in quotes apply a verb ---
 
@@ -681,6 +683,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			part_a = "<span class='servradio'><span class='name'>"
 		else if (display_freq==SUPP_FREQ)
 			part_a = "<span class='suppradio'><span class='name'>"
+		else if (display_freq==DSQUAD_FREQ)
+			part_a = "<span class='dsquadradio'><span class='name'>"
 
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
 

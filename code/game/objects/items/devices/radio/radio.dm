@@ -517,6 +517,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				part_a = "<span class='servradio'><span class='name'>"
 			else if (display_freq==SUPP_FREQ)
 				part_a = "<span class='suppradio'><span class='name'>"
+			else if (display_freq==DSQUAD_FREQ)
+				part_a = "<span class='dsquadradio'><span class='name'>"
 
 			var/quotedmsg = M.say_quote(message)
 

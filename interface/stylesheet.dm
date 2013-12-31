@@ -33,6 +33,7 @@ em						{font-style: normal;	font-weight: bold;}
 .suppradio				{color: #a8732b;}
 .servradio				{color: #6eaa2c;}
 .syndradio				{color: #6D3F40;}
+.dsquadradio			{color: #686868;}
 
 .alert					{color: #ff0000;}
 h1.alert, h2.alert		{color: #000000;}
