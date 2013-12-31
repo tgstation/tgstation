@@ -180,7 +180,7 @@
 				var/image/dmgIcon = image('icons/mob/hit_blips.dmi', src, "dmg[rand(1,2)]",MOB_LAYER+1)
 				dmgIcon.pixel_x = (!lying) ? rand(-3,3) : rand(-11,12)
 				dmgIcon.pixel_y = (!lying) ? rand(-11,9) : rand(-10,1)
-				world << "x: [dmgIcon.pixel_x] AND y: [dmgIcon.pixel_y]"
+				//world << "x: [dmgIcon.pixel_x] AND y: [dmgIcon.pixel_y]"
 				flick_overlay(dmgIcon, attack_bubble_recipients, 9)
 		if(BURN)
 			damageoverlaytemp = 20
