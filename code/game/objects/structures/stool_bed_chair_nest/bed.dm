@@ -47,17 +47,19 @@
 /obj/structure/stool/bed/proc/manual_unbuckle(mob/user as mob)
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)
-			if((buckled_mob != user) && (!user.buckled))
-				buckled_mob.visible_message(\
-					"\blue [buckled_mob.name] was unbuckled by [user.name]!",\
-					"You were unbuckled from [src] by [user.name].",\
-					"You hear metal clanking")
+			if(buckled_mob != user)
+				if(!(user.buckled))
+					buckled_mob.visible_message(\
+						"\blue [buckled_mob.name] was unbuckled by [user.name]!",\
+						"You were unbuckled from [src] by [user.name].",\
+						"You hear metal clanking")
+					unbuckle()
 			else
 				buckled_mob.visible_message(\
 					"\blue [buckled_mob.name] unbuckled \himself!",\
 					"You unbuckle yourself from [src].",\
 					"You hear metal clanking")
-			unbuckle()
+					unbuckle()
 			src.add_fingerprint(user)
 	return
 
