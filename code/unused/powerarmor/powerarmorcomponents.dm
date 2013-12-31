@@ -7,6 +7,8 @@
 	desc = "This is the base object, you should never see one."
 	var/obj/item/clothing/suit/space/powered/parent //so the component knows which armor it belongs to.
 	slowdown = 0 //how much the component slows down the wearer
+	icon_state = "power_armour_item"
+
 
 /obj/item/powerarmor/proc/toggle()
 	return
@@ -16,6 +18,7 @@
 /obj/item/powerarmor/power
 	name = "Adminbus power armor power source"
 	desc = "Runs on the rare Badminium molecule."
+	icon_state = "plasma_generator"
 
 /obj/item/powerarmor/process()
 	return
@@ -28,6 +31,7 @@
 	desc = "Runs on plasma."
 	slowdown = 1
 	var/fuel = 0
+
 
 /obj/item/powerarmor/power/plasma/process()
 	if (fuel > 0 && parent.active)
@@ -47,6 +51,7 @@
 	desc = "Boring, but reliable."
 	var/obj/item/weapon/cell/cell
 	slowdown = 0.5
+	icon_state = "powercell_generator"
 
 /obj/item/powerarmor/power/powercell/process()
 	if (cell && cell.charge > 0 && parent.active)
@@ -65,6 +70,7 @@
 	name = "Miniaturized nuclear generator"
 	desc = "For all your radioactive needs."
 	slowdown = 1.5
+	icon_state = "nuclear_generator"
 
 /obj/item/powerarmor/power/nuclear/process()
 	if(!crit_fail)
@@ -95,6 +101,7 @@
 	desc = "Made with the rare Badminium molecule."
 	var/list/togglearmor = list(melee = 250, bullet = 100, laser = 100,energy = 100, bomb = 100, bio = 100, rad = 100)
 	 //Good lord an active energy axe does 150 damage a swing? Anyway, barring var editing, this armor loadout should be impervious to anything. Enjoy, badmins~ --NEO
+	icon_state = "power_armour_plates"
 
 /obj/item/powerarmor/reactive/toggle(sudden = 0)
 	switch(parent.active)
@@ -117,16 +124,16 @@
 			parent.shoes.armor[armorvar] = parent.armor[armorvar]
 
 /obj/item/powerarmor/reactive/Centcom
-	name = "Centcom power armor reactive plating"
+	name = "Power armor reactive plating"
 	desc = "Pretty effective against everything, not perfect though."
 	togglearmor = list(melee = 90, bullet = 70, laser = 60,energy = 40, bomb = 75, bio = 75, rad = 75)
 	slowdown = 2
 
-
 /obj/item/powerarmor/servos
-	name = "Adminbus power armor movement servos"
-	desc = "Made with the rare Badminium molecule."
+	name = "Power armor movement servos"
+	desc = "Designed to allow the user to move in bulky powered armour."
 	var/toggleslowdown = 9
+	icon_state = "servo"
 
 /obj/item/powerarmor/servos/toggle(sudden = 0)
 	switch(parent.active)
@@ -143,6 +150,7 @@
 	desc = "Keeps the bad stuff out."
 	slowdown = 1
 	var/sealed = 0
+	icon_state = "tubes"
 
 /obj/item/powerarmor/atmoseal/toggle(sudden = 0)
 	switch(parent.active)

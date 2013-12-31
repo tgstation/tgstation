@@ -5,8 +5,8 @@
 /obj/item/clothing/suit/space/powered
 	name = "Powered armor"
 	desc = "Not for rookies."
-	icon_state = "swat"
-	item_state = "swat"
+	icon_state = "power_armour"
+	item_state = "power_armour"
 	w_class = 4//bulky item
 
 
@@ -23,12 +23,14 @@
 	var/helmrequired = 1
 	var/obj/item/clothing/head/space/powered/helm
 
-	var/glovesrequired = 0
+	var/glovesrequired = 1
 	var/obj/item/clothing/gloves/powered/gloves
 
-	var/shoesrequired = 0
+	var/shoesrequired = 1
 	var/obj/item/clothing/shoes/powered/shoes
 	//Adding gloves and shoes as possible armor components. --NEO
+
+	var/atmosrequired = 1
 
 	var/obj/item/powerarmor/servos/servos
 	var/obj/item/powerarmor/reactive/reactive
@@ -74,6 +76,19 @@
 	if(!power || !power.checkpower())
 		user << "<span class='danger'>Powersource missing or depleted.</span>"
 		return
+
+	if(!servos)
+		user << "<span class='danger'>Servos missing.</span>"
+		return
+
+	if(!reactive)
+		user << "<span class='danger'>Reactive armour plates missing.</span>"
+		return
+
+	if(atmosrequired && !atmoseal)
+		user << "<span class='danger'>Atmospheric seals missing.</span>"
+		return
+
 
 	verbs -= /obj/item/clothing/suit/space/powered/proc/poweron
 
@@ -201,10 +216,10 @@
 
 /obj/item/clothing/head/space/powered
 	name = "Powered armor"
-	icon_state = "swat"
+	icon_state = "power_armour_helmet"
 	desc = "Not for rookies."
 	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | THICKMATERIAL | BLOCKHAIR
-	item_state = "swat"
+	item_state = "power_armour_helmet"
 	armor = list(melee = 40, bullet = 30, laser = 20,energy = 15, bomb = 25, bio = 10, rad = 10)
 	var/obj/item/clothing/suit/space/powered/parent
 
@@ -237,18 +252,18 @@
 
 /obj/item/clothing/gloves/powered
 	name = "Powered armor"
-	icon_state = "swat"
+	icon_state = "power_armour_gloves"
 	desc = "Not for rookies."
 	flags = FPRINT | TABLEPASS
-	item_state = "swat"
+	item_state = "power_armour_gloves"
 	armor = list(melee = 40, bullet = 30, laser = 20,energy = 15, bomb = 25, bio = 10, rad = 10)
 
 /obj/item/clothing/shoes/powered
 	name = "Powered armor"
-	icon_state = "swat"
+	icon_state = "power_armour_boots"
 	desc = "Not for rookies."
 	flags = FPRINT | TABLEPASS
-	item_state = "swat"
+	item_state = "power_armour_boots"
 	armor = list(melee = 40, bullet = 30, laser = 20,energy = 15, bomb = 25, bio = 10, rad = 10)
 
 
