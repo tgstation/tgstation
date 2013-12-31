@@ -221,8 +221,6 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				return emp(src.loc,3)
 			if(word1 == wordsee && word2 == wordhell && word3 == wordjoin)
 				return seer()
-			if(word1 == wordblood && word2 == wordjoin && word3 == wordhell)
-				return raise()
 			if(word1 == wordhide && word2 == wordsee && word3 == wordblood)
 				return obscure(4)
 			if(word1 == wordblood && word2 == wordsee && word3 == wordhide)

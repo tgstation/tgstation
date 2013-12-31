@@ -184,7 +184,8 @@
 						T.health = T.maxHealth
 						C.icon_state = "soulstone2"
 						T << "Your soul has been recaptured by the soul stone, its arcane energies are reknitting your ethereal form"
-						U << "\blue <b>Capture successful!</b>: \black [T.name]'s has been recaptured and stored within the soul stone."
+						if(U != T)
+							U << "\blue <b>Capture successful!</b>: \black [T.name]'s has been recaptured and stored within the soul stone."
 		if("CONSTRUCT")
 			var/obj/structure/constructshell/T = target
 			var/obj/item/device/soulstone/C = src

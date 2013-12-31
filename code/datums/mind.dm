@@ -1206,6 +1206,7 @@ datum/mind
 /mob/living/simple_animal/shade/mind_initialize()
 	..()
 	mind.assigned_role = "Shade"
+	mind.special_role = "Cultist"
 
 /mob/living/simple_animal/construct/builder/mind_initialize()
 	..()

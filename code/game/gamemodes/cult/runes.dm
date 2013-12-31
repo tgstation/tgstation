@@ -794,9 +794,11 @@ var/list/sacrificed = list()
 				if("armor")
 					new /obj/item/clothing/head/magus(get_turf(src))
 					new /obj/item/clothing/suit/magusred(get_turf(src))
+					new /obj/item/clothing/shoes/cult/galoshes(get_turf(src))
 				if("space")
 					new /obj/item/clothing/head/helmet/space/cult(get_turf(src))
 					new /obj/item/clothing/suit/space/cult(get_turf(src))
+					new /obj/item/clothing/shoes/cult/galoshes(get_turf(src))
 				if("scrying")
 					new /obj/item/weapon/scrying(get_turf(src))
 					var/mob/living/carbon/human/H = null
@@ -1215,10 +1217,8 @@ var/list/sacrificed = list()
 				user.u_equip(slot_item)
 				del slot_item
 				user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult/galoshes,slot_shoes)
-			else if(slot_item)
-				user.u_equip(slot_item)
-				user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult,slot_shoes)
 			else
+				user.u_equip(slot_item)
 				user.equip_to_slot_if_possible(new /obj/item/clothing/shoes/cult(get_turf(user)), slot_shoes,0,1,1)
 				
 			user.equip_to_slot_if_possible(new /obj/item/weapon/storage/backpack/cultpack(get_turf(user)), slot_back)

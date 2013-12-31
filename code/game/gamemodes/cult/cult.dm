@@ -25,8 +25,8 @@
 	antag_flag = BE_CULTIST
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	protected_jobs = list()
-	required_players = 15
-	required_enemies = 3
+	required_players = 1
+	required_enemies = 0
 	recommended_enemies = 4
 
 	uplink_welcome = "Nar-Sie Uplink Console:"
@@ -116,6 +116,9 @@
 
 
 /datum/game_mode/cult/proc/memorize_cult_objectives(var/datum/mind/cult_mind)
+	var/note ={"<font size='2' color=#330099>Note from adrix89:<BR>The cult gamemode has had a bit of a redesign and information is not yet available on the wiki so I am here to give you some starter tips:<BR>Cult now is intended to be played as a team, you need 3 cultists to use sacrifice or convert runes, so get together and plan ahead.<BR>You can find other cultists by just looking around the station or setting up a meeting place with the communication talisman.<BR>You can solo if you utilize your armor talisman it's still a good idea to have at least one cultist around to lure people stealthily.<BR>Sacrificed players now become soulstones, shades can now use teleport,teleport other,emp,seer,hide,reveal,wall,deafen,blind,stun and communicate runes.<BR>It is important to prepare whatever runes you can as fast as you get them, if you get caught always have a means to escape.<BR><BR>This mode is on trial,suggestions,complains and feedback can be given http://www.ss13.eu/phpbb/viewtopic.php?f=5&t=2688 , if you don't like it, it will be removed, so don't worry and just give it your best shot.</font>"}
+	cult_mind.memory += note
+	cult_mind.memory += "<HR><BR>"
 	for(var/obj_count = 1,obj_count <= objectives.len,obj_count++)
 		var/explanation
 		switch(objectives[obj_count])
@@ -137,6 +140,7 @@
 	grant_runeword(cult_mind.current,"hell")
 	grant_runeword(cult_mind.current,"blood")
 	grant_runeword(cult_mind.current,"join")
+	cult_mind.current << note
 
 /datum/game_mode/proc/equip_cultist(mob/living/carbon/human/mob)
 	if(!istype(mob))
@@ -210,7 +214,7 @@
 //			wordexp = "[wordfree] is free..."
 		if("hide")
 			wordexp = "[wordhide] is hide..."
-	cult_mob << "\red [pick("You remember something from the dark teachings of your master","You hear a dark voice on the wind","Black blood oozes into your vision and forms into symbols","You catch a brief glimmer of the otherside")]... [wordexp]"
+	cult_mob << "<span class='warning'> [pick("You remember something from the dark teachings of your master","You hear a dark voice on the wind","Black blood oozes into your vision and forms into symbols","You catch a brief glimmer of the otherside")]... [wordexp]</span>"
 	cult_mob.mind.store_memory("<B>You remember that</B> [wordexp]", 0, 0)
 	cult_mob.mind.cult_words += word
 	if(cult_mob.mind.cult_words.len == allwords.len)
