@@ -21,6 +21,12 @@ obj/machinery/atmospherics/pipe
 
 		return 1
 
+	// Find a connecting /obj/machinery/atmospherics in specified direction.
+	proc/findConnecting(var/direction)
+		for(var/obj/machinery/atmospherics/target in get_step(src,direction))
+			if(target.initialize_directions & get_dir(target,src))
+				return target
+
 	return_air()
 		if(!parent)
 			parent = new /datum/pipeline()
@@ -228,24 +234,17 @@ obj/machinery/atmospherics/pipe
 
 		initialize(var/suppress_icon_check=0)
 			normalize_dir()
-			var/node1_dir
-			var/node2_dir
 
 			for(var/direction in cardinal)
 				if(direction&initialize_directions)
-					if (!node1_dir)
-						node1_dir = direction
-					else if (!node2_dir)
-						node2_dir = direction
-
-			for(var/obj/machinery/atmospherics/target in get_step(src,node1_dir))
-				if(target.initialize_directions & get_dir(target,src))
-					node1 = target
-					break
-			for(var/obj/machinery/atmospherics/target in get_step(src,node2_dir))
-				if(target.initialize_directions & get_dir(target,src))
-					node2 = target
-					break
+					var/obj/machinery/atmospherics/found = findConnecting(direction)
+					if(!found) continue
+					if(!node1)
+						node1 = found
+						continue
+					if(!node2)
+						node2 = found
+						break
 
 			var/turf/T = src.loc			// hide if turf is not intact
 			hide(T.intact)
@@ -786,35 +785,18 @@ obj/machinery/atmospherics/pipe
 
 			for(var/direction in cardinal)
 				if(direction&connect_directions)
-					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-						if(target.initialize_directions & get_dir(target,src))
-							node1 = target
-							connect_directions &= ~direction
-							break
-					if (node1)
-						break
-
-
-			for(var/direction in cardinal)
-				if(direction&connect_directions)
-					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-						if(target.initialize_directions & get_dir(target,src))
-							node2 = target
-							connect_directions &= ~direction
-							break
-					if (node2)
-						break
-
-
-			for(var/direction in cardinal)
-				if(direction&connect_directions)
-					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-						if(target.initialize_directions & get_dir(target,src))
-							node3 = target
-							connect_directions &= ~direction
-							break
-					if (node3)
-						break
+					var/found=findConnecting(direction)
+					if(!found)
+						continue
+					if(!node1)
+						node1 = found
+						continue
+					if(!node2)
+						node2 = found
+						continue
+					if(!node3)
+						node3 = found
+						break // Found what we needed.
 
 			var/turf/T = src.loc			// hide if turf is not intact
 			hide(T.intact)
