@@ -194,17 +194,20 @@
 		return
 
 	if(M == assailant && state >= GRAB_AGGRESSIVE)
-		if( (ishuman(user) && (FAT in user.mutations) && ismonkey(affecting) ) || ( isalien(user) && iscarbon(affecting) ) )
+		if( (ishuman(user) && (FAT in user.mutations) && (ismonkey(affecting) || isanimal(affecting)) ) || ( isalien(user) && iscarbon(affecting) ) )
 			var/mob/living/carbon/attacker = user
-			user.visible_message("<span class='danger'>[user] is attempting to devour [affecting]!</span>")
-			if(istype(user, /mob/living/carbon/alien/humanoid/hunter))
-				if(!do_mob(user, affecting)||!do_after(user, 30)) return
-			else
-				if(!do_mob(user, affecting)||!do_after(user, 100)) return
-			user.visible_message("<span class='danger'>[user] devours [affecting]!</span>")
-			affecting.loc = user
-			attacker.stomach_contents.Add(affecting)
-			del(src)
+			var/user_volume = get_icon_volume(icon(user.icon, user.icon_state))
+			var/affecting_volume = get_icon_volume(icon(affecting.icon, affecting.icon_state))
+			if (affecting_volume <= user_volume)
+				user.visible_message("<span class='danger'>[user] is attempting to devour [affecting]!</span>")
+				if(istype(user, /mob/living/carbon/alien/humanoid/hunter))
+					if(!do_mob(user, affecting)||!do_after(user, 30)) return
+				else
+					if(!do_mob(user, affecting)||!do_after(user, 100)) return
+				user.visible_message("<span class='danger'>[user] devours [affecting]!</span>")
+				affecting.loc = user
+				attacker.stomach_contents.Add(affecting)
+				del(src)
 
 
 /obj/item/weapon/grab/dropped()

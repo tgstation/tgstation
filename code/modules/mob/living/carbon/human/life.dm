@@ -1203,6 +1203,14 @@
 					if (istype(location, /turf/simulated))
 						location.add_vomit_floor(src, 1)
 
+					var/stomach_len = src.stomach_contents.len
+					if (stomach_len)
+						var/content = src.stomach_contents[stomach_len]
+						if (istype(content, /atom/movable))
+							var/atom/movable/AM = content
+							src.stomach_contents.Remove(AM)
+							AM.loc = location
+
 					nutrition -= 20
 					adjustToxLoss(-3)
 
@@ -1215,7 +1223,7 @@
 				if(M.loc != src)
 					stomach_contents.Remove(M)
 					continue
-				if(istype(M, /mob/living/carbon) && stat != 2)
+				if(isliving(M) && stat != 2)
 					if(M.stat == 2)
 						M.death(1)
 						stomach_contents.Remove(M)
