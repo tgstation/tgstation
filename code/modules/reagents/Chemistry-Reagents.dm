@@ -1085,6 +1085,7 @@ datum
 				var/needs_update = M.mutations.len > 0
 
 				M.mutations = list()
+				M.active_genes = list()
 				M.disabilities = 0
 				M.sdisabilities = 0
 
