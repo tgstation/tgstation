@@ -16,7 +16,7 @@
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, explode=0)
 	if(istype(src,/turf/simulated/wall/r_wall))
 		if(!devastated)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			new /obj/structure/girder/reinforced(src)
 			new /obj/item/stack/sheet/plasteel( src )
 		else
@@ -25,7 +25,7 @@
 			new /obj/item/stack/sheet/plasteel( src )
 	else if(istype(src,/turf/simulated/wall/cult))
 		if(!devastated)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			new /obj/effect/decal/cleanable/blood(src)
 			new /obj/structure/cultgirder(src)
 		else
@@ -34,7 +34,7 @@
 
 	else
 		if(!devastated)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			new /obj/structure/girder(src)
 			if (mineral == "metal")
 				new /obj/item/stack/sheet/metal( src )
@@ -138,7 +138,7 @@
 		return
 
 	user << "\blue You push the wall but nothing happens!"
-	playsound(src.loc, 'sound/weapons/Genhit.ogg', 25, 1)
+	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
 	src.add_fingerprint(user)
 	return
 
@@ -156,7 +156,7 @@
 			var/obj/item/weapon/weldingtool/WT = W
 			if( WT.remove_fuel(0,user) )
 				user << "<span class='notice'>You burn away the fungi with \the [WT].</span>"
-				playsound(src.loc, 'sound/items/Welder.ogg', 10, 1)
+				playsound(src, 'sound/items/Welder.ogg', 10, 1)
 				for(var/obj/effect/E in src) if(E.name == "Wallrot")
 					del E
 				rotting = 0
@@ -187,8 +187,8 @@
 
 			EB.spark_system.start()
 			user << "<span class='notice'>You slash \the [src] with \the [EB]; the thermite ignites!</span>"
-			playsound(src.loc, "sparks", 50, 1)
-			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
+			playsound(src, "sparks", 50, 1)
+			playsound(src, 'sound/weapons/blade1.ogg', 50, 1)
 
 			thermitemelt(user)
 			return
@@ -200,7 +200,7 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		if( WT.remove_fuel(0,user) )
 			user << "<span class='notice'>You begin slicing through the outer plating.</span>"
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
 			sleep(100)
 			if( !istype(src, /turf/simulated/wall) || !user || !WT || !WT.isOn() || !T )	return
@@ -219,7 +219,7 @@
 	else if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
 
 		user << "<span class='notice'>You begin slicing through the outer plating.</span>"
-		playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
 		sleep(60)
 		if(mineral == "diamond")//Oh look, it's tougher
@@ -263,7 +263,7 @@
 
 		EB.spark_system.start()
 		user << "<span class='notice'>You stab \the [EB] into the wall and begin to slice it apart.</span>"
-		playsound(src.loc, "sparks", 50, 1)
+		playsound(src, "sparks", 50, 1)
 
 		sleep(70)
 		if(mineral == "diamond")
@@ -272,8 +272,8 @@
 
 		if( user.loc == T && user.get_active_hand() == W )
 			EB.spark_system.start()
-			playsound(src.loc, "sparks", 50, 1)
-			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
+			playsound(src, "sparks", 50, 1)
+			playsound(src, 'sound/weapons/blade1.ogg', 50, 1)
 			dismantle_wall(1)
 			var/pdiff=performWallPressureCheck(src.loc)
 			if(pdiff)
