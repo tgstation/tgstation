@@ -136,12 +136,11 @@ var/list/department_radio_keys = list(
 			message = uppertext(message)
 
 	// General public key. Special message handling
-	/* /vg/: Pomf added this, doesn't seem to do anything.
+	var/mmode
+	var/cprefix = copytext(message, 1, 3)
 	if(length(message) >= 2)
-		var/cprefix = copytext(message, 1, 3)
-		message_mode = department_radio_keys[cprefix]
-	*/
-	if (copytext(message, 1, 2) == ";" || (prob(braindam/2) && message_mode != "changeling"))
+		mmode = department_radio_keys[cprefix]
+	if (copytext(message, 1, 2) == ";" || (prob(braindam/2) && !mmode))
 		if (ishuman(src))
 			message_mode = "headset"
 		else if(ispAI(src) || isrobot(src))
