@@ -64,7 +64,7 @@
 /datum/game_mode/borer/post_setup()
 	// create a borer and enter it
 	for(var/datum/mind/borer in borers)
-		var/mob/living/simple_animal/borer/M = new(null,1) // loc, by_gamemode=0
+		var/mob/living/simple_animal/borer/M = new(borer.current.loc,1) // loc, by_gamemode=0
 		var/mob/original = borer.current
 		borer.transfer_to(M)
 		//M.clearHUD()

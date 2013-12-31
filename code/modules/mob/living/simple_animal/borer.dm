@@ -313,6 +313,9 @@ mob/living/simple_animal/borer/proc/detatch()
 		return
 
 /mob/living/simple_animal/borer/proc/perform_infestation(var/mob/living/carbon/M)
+	if(!M || !istype(M))
+		error("[src]: Unable to perform_infestation on [M]!")
+		return
 	src.host = M
 	src.loc = M
 
