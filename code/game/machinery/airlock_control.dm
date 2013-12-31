@@ -126,7 +126,7 @@ obj/machinery/door/airlock/New()
 	name = "Airlock Sensor frame"
 	desc = "Used for repairing or building airlock sensors"
 	icon = 'icons/obj/airlock_machines.dmi'
-	icon_state = "access_sensor_off"
+	icon_state = "airlock_sensor_off"
 	flags = FPRINT | TABLEPASS | CONDUCT
 
 /obj/item/airlock_sensor_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
