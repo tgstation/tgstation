@@ -41,9 +41,8 @@
 						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						user << "\blue You start to add cables to the frame."
 						if(do_after(user, 20))
-							if(C)
-								C.amount -= 5
-								if(!C.amount) del(C)
+							if(C && C.amount >= 5) // Check again
+								C.use(5)
 								user << "\blue You add cables to the frame."
 								state = 2
 								icon_state = "box_1"
@@ -138,7 +137,7 @@
 									playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 									if(istype(P, /obj/item/weapon/cable_coil))
 										var/obj/item/weapon/cable_coil/CP = P
-										if(CP.amount > 1)
+										if(CP.amount >= req_components[I])
 											var/camt = min(CP.amount, req_components[I]) // amount of cable to take, idealy amount required, but limited by amount provided
 											var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src)
 											CC.amount = camt
@@ -148,9 +147,11 @@
 											req_components[I] -= camt
 											update_desc()
 											break
+										else
+											user << "\red You do not have enough [P]!"
 									if(istype(P, /obj/item/stack/rods))
 										var/obj/item/stack/rods/R = P
-										if(R.amount > 1)
+										if(R.amount >= req_components[I])
 											var/camt = min(R.amount, req_components[I]) // amount of cable to take, idealy amount required, but limited by amount provided
 											var/obj/item/stack/rods/RR = new /obj/item/stack/rods(src)
 											RR.amount = camt
@@ -160,6 +161,8 @@
 											req_components[I] -= camt
 											update_desc()
 											break
+										else
+											user << "\red You do not have enough [P]!"
 									user.drop_item()
 									P.loc = src
 									components += P

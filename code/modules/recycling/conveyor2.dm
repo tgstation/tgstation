@@ -201,6 +201,7 @@ a {
 	if("setdir" in href_list)
 		operating=0
 		dir=text2num(href_list["setdir"])
+		updateConfig()
 		update()
 
 	if(href_list["unlink"])

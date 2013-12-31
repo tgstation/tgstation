@@ -27,7 +27,6 @@
 	construct_window(user)
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user)
-	..()
 	if(istype(W,/obj/item/weapon/cable_coil))
 		var/obj/item/weapon/cable_coil/CC = W
 		if(CC.amount < 5)
@@ -322,21 +321,20 @@
 
 /obj/item/stack/sheet/glass/plasmaglass/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
 	rec.addMaterial("plasma",1)
-	rec.addMaterial("glass",1)
+	rec.addMaterial("glass", 1)
 	return 1
 
 /obj/item/stack/sheet/glass/plasmaglass/attack_self(mob/user as mob)
 	construct_window(user)
 
 /obj/item/stack/sheet/glass/plasmaglass/attackby(obj/item/W, mob/user)
-	..()
 	if( istype(W, /obj/item/stack/rods) )
 		var/obj/item/stack/rods/V  = W
 		var/obj/item/stack/sheet/glass/plasmarglass/RG = new (user.loc)
 		RG.add_fingerprint(user)
 		RG.add_to_stacks(user)
 		V.use(1)
-		var/obj/item/stack/sheet/glass/G = src
+		var/obj/item/stack/sheet/glass/plasmaglass/G = src
 		src = null
 		var/replace = (user.get_inactive_hand()==G)
 		G.use(1)
@@ -361,8 +359,8 @@
 
 /obj/item/stack/sheet/glass/plasmaglass/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
 	rec.addMaterial("plasma",1)
-	rec.addMaterial("glass",1)
-	rec.addMaterial("iron",0.5)
+	rec.addMaterial("glass", 1)
+	rec.addMaterial("iron",  0.5)
 	return 1
 
 /obj/item/stack/sheet/glass/plasmarglass/attack_self(mob/user as mob)
