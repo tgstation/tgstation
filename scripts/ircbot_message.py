@@ -2,7 +2,7 @@
 
 # nudge.py --channel="nudges|ahelps" --id="Server ID" --key="access key" Message! More message!
 
-import sys, cPickle, socket, HTMLParser, argparse
+import sys, pickle, socket, HTMLParser, argparse
 
 def pack(host, port, key, server_id, channel, message):
     ht = HTMLParser.HTMLParser()
@@ -20,7 +20,7 @@ def pack(host, port, key, server_id, channel, message):
         data['data'] = ' '.join(d)
     except:
         data['data'] = "NO DATA SPECIFIED"
-    pickled = cPickle.dumps(data)
+    pickled = pickle.dumps(data)
     nudge(host, port, pickled)
     
 def nudge(hostname, port, data):
