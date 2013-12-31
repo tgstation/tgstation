@@ -458,13 +458,12 @@
 		target_zone = user.zone_sel.selecting
 	// If targeting the head, see if the head item is thin enough.
 	// If targeting anything else, see if the wear suit is thin enough.
-	switch(target_zone)
-		if("head")
-			if(head && head.flags & THICKMATERIAL)
-				. = 0
-		else
-			if(wear_suit && wear_suit.flags & THICKMATERIAL)
-				. = 0
+	if(above_neck(target_zone))
+		if(head && head.flags & THICKMATERIAL)
+			. = 0
+	else
+		if(wear_suit && wear_suit.flags & THICKMATERIAL)
+			. = 0
 	if(!. && error_msg && user)
 		// Might need re-wording.
 		user << "<span class='alert'>There is no exposed flesh or thin material [target_zone == "head" ? "on their head" : "on their body"].</span>"
