@@ -15,7 +15,7 @@
 				boolets++
 		return boolets
 	else
-		return stored_ammo.len
+		..()
 
 /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	name = "russian revolver cylinder"
@@ -23,6 +23,7 @@
 	ammo_type = /obj/item/ammo_casing/a357
 	caliber = "357"
 	max_ammo = 6
+	multiload = 0
 
 /obj/item/ammo_box/magazine/internal/cylinder/rus357/New()
 	stored_ammo += new ammo_type(src)
@@ -40,6 +41,7 @@
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	caliber = "shotgun"
 	max_ammo = 4
+	multiload = 0
 
 /obj/item/ammo_box/magazine/internal/shotcom
 	name = "combat shotgun internal magazine"
@@ -54,6 +56,7 @@
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	caliber = "shotgun"
 	max_ammo = 2
+	multiload = 0
 
 ///////////EXTERNAL MAGAZINES////////////////
 /obj/item/ammo_box/magazine/m9mm

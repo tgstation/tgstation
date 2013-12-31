@@ -3,16 +3,15 @@
 	desc = "a basic weapon designed kill with concentrated energy bolts"
 	icon_state = "laser"
 	item_state = "laser"
-	fire_sound = 'sound/weapons/Laser.ogg'
 	w_class = 3.0
 	m_amt = 2000
 	origin_tech = "combat=3;magnets=2"
-	projectile_type = "/obj/item/projectile/beam"
+	ammo_type = list(/obj/item/ammo_casing/energy/laser)
 
 /obj/item/weapon/gun/energy/laser/practice
 	name = "practice laser gun"
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
-	projectile_type = "/obj/item/projectile/practice"
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = 0
 
 obj/item/weapon/gun/energy/laser/retro
@@ -50,16 +49,14 @@ obj/item/weapon/gun/energy/laser/retro
 
 
 
-/obj/item/weapon/gun/energy/laser/cyborg/process_chambered()
-	if(in_chamber)
-		return 1
+/obj/item/weapon/gun/energy/laser/cyborg/newshot()
 	if(isrobot(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
 		if(R && R.cell)
-			R.cell.use(100)
-			in_chamber = new/obj/item/projectile/beam(src)
-			return 1
-	return 0
+			if(R.cell.use(100))
+				chambered = ammo_type[select]
+				chambered.newshot()
+	return
 
 
 
@@ -67,19 +64,16 @@ obj/item/weapon/gun/energy/laser/retro
 	name = "laser cannon"
 	desc = "With the L.A.S.E.R. cannon, the lasing medium is enclosed in a tube lined with uranium-235 and subjected to high neutron flux in a nuclear reactor core. This incredible technology may help YOU achieve high excitation rates with small laser volumes!"
 	icon_state = "lasercannon"
-	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 	origin_tech = "combat=4;materials=3;powerstorage=3"
-	projectile_type = "/obj/item/projectile/beam/heavylaser"
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/heavy)
 
 
 /obj/item/weapon/gun/energy/xray
 	name = "xray laser gun"
 	desc = "A high-power laser gun capable of expelling concentrated xray blasts."
 	icon_state = "xray"
-	fire_sound = 'sound/weapons/laser3.ogg'
 	origin_tech = "combat=5;materials=3;magnets=2;syndicate=2"
-	projectile_type = "/obj/item/projectile/beam/xray"
-	charge_cost = 50
+	ammo_type = list(/obj/item/ammo_casing/energy/xray)
 
 
 ////////Laser Tag////////////////////
@@ -88,7 +82,7 @@ obj/item/weapon/gun/energy/laser/retro
 	name = "laser tag gun"
 	icon_state = "bluetag"
 	desc = "Standard issue weapon of the Imperial Guard"
-	projectile_type = "/obj/item/projectile/bluetag"
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag)
 	origin_tech = "combat=1;magnets=2"
 	clumsy_check = 0
 	var/charge_tick = 0
@@ -125,7 +119,7 @@ obj/item/weapon/gun/energy/laser/retro
 	name = "laser tag gun"
 	icon_state = "redtag"
 	desc = "Standard issue weapon of the Imperial Guard"
-	projectile_type = "/obj/item/projectile/redtag"
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag)
 	origin_tech = "combat=1;magnets=2"
 	clumsy_check = 0
 	var/charge_tick = 0

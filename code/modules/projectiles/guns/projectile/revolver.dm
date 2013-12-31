@@ -12,25 +12,11 @@
 		chambered = magazine.get_round(1)
 	return
 
-/obj/item/weapon/gun/projectile/revolver/process_chambered()
+/obj/item/weapon/gun/projectile/revolver/process_chamber()
 	return ..(0, 1)
 
 /obj/item/weapon/gun/projectile/revolver/attackby(var/obj/item/A as obj, mob/user as mob)
-	var/num_loaded = 0
-	if(istype(A, /obj/item/ammo_box))
-		var/obj/item/ammo_box/AM = A
-		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
-			if(magazine.give_round(AC))
-				AM.stored_ammo -= AC
-				num_loaded++
-			else
-				break
-	if(istype(A, /obj/item/ammo_casing))
-		var/obj/item/ammo_casing/AC = A
-		if(magazine.give_round(AC))
-			user.drop_item()
-			AC.loc = src
-			num_loaded++
+	var/num_loaded = magazine.attackby(A, user)
 	if(num_loaded)
 		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
 		A.update_icon()
@@ -222,12 +208,19 @@
 			user << "<span class='notice'>[src] is empty.</span>"
 
 /obj/item/weapon/gun/projectile/revolver/russian/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params)
+	if(!spun && get_ammo(0,0))
+		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
+		Spin()
 	..()
 	spun = 0
 
 /obj/item/weapon/gun/projectile/revolver/russian/attack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj)
+	if(!spun && get_ammo(0,0))
+		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
+		Spin()
+		return
 
-	if(!chambered)
+	if(!chambered && target == user)
 		user.visible_message("\red *click*", "\red *click*")
 		return
 
@@ -236,18 +229,13 @@
 			var/obj/item/organ/limb/affecting = user.zone_sel.selecting
 			if(affecting == "head")
 				var/obj/item/ammo_casing/AC = chambered
-				if(!process_chambered())
+				if(AC.fire(user, user))
+					user.apply_damage(300, BRUTE, affecting)
+					playsound(user, fire_sound, 50, 1)
+					user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='danger'>You fire [src] at your head!</span>", "You hear a [istype(AC.BB, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
+					return
+				else
 					user.visible_message("\red *click*", "\red *click*")
 					return
-				if(!in_chamber)
-					return
-				var/obj/item/projectile/P = new AC.projectile_type
-				playsound(user, fire_sound, 50, 1)
-				user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='danger'>You fire [src] at your head!</span>", "You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
-				if(!P.nodamage)
-					user.apply_damage(300, BRUTE, affecting) // You are dead, dead, dead.
-				return
-
-	spun = 0
 	..()
 

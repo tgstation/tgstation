@@ -13,18 +13,18 @@
 	var/list/syringes = list()
 	var/max_syringes = 1
 
-/obj/item/weapon/gun/syringe/process_chambered()
+/obj/item/weapon/gun/syringe/process_chamber()
 	if(!syringes.len) return 0
-	
+
 	var/obj/item/weapon/reagent_containers/syringe/S = syringes[1]
-	
+
 	if(!S) return 0
-	
-	in_chamber = new /obj/item/projectile/bullet/dart/syringe(src)
-	S.reagents.trans_to(in_chamber, S.reagents.total_volume)
-	in_chamber.name = S.name
+
+	chambered.BB = new /obj/item/projectile/bullet/dart/syringe(src)
+	S.reagents.trans_to(chambered.BB, S.reagents.total_volume)
+	chambered.BB.name = S.name
 	syringes.Remove(S)
-	
+
 	del(S)
 	return 1
 
@@ -37,15 +37,15 @@
 	if(!syringes.len)
 		user << "<span class='notice'>[src] is empty.</span>"
 		return 0
-	
+
 	var/obj/item/weapon/reagent_containers/syringe/S = syringes[syringes.len]
-	
+
 	if(!S) return 0
 	S.loc = user.loc
-	
+
 	syringes.Remove(S)
 	user << "<span class = 'notice'>You unload [S] from \the [src]!</span>"
-	
+
 	return 1
 
 /obj/item/weapon/gun/syringe/attackby(var/obj/item/A as obj, mob/user as mob, var/show_msg = 1)

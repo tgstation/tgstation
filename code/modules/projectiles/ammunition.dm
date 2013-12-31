@@ -26,6 +26,52 @@
 	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
 	desc = "[initial(desc)][BB ? "" : " This one is spent"]"
 
+/obj/item/ammo_casing/proc/ready_proj(mob/living/user, var/quiet)
+	if (!BB)
+		return
+	BB.firer = user
+	BB.def_zone = user.zone_sel.selecting
+	BB.silenced = quiet
+	return
+
+/obj/item/ammo_casing/proc/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params)
+	var/turf/curloc = user.loc
+	var/turf/targloc = get_turf(target)
+	if (!istype(targloc) || !istype(curloc) || !BB)
+		return 0
+	if(targloc == curloc)			//Fire the projectile
+		user.bullet_act(BB)
+		del(BB)
+		update_icon()
+		return 1
+	BB.original = target
+	BB.loc = get_turf(user)
+	BB.starting = get_turf(user)
+	BB.current = curloc
+	BB.yo = targloc.y - curloc.y
+	BB.xo = targloc.x - curloc.x
+	user.next_move = world.time + 4
+
+	if(params)
+		var/list/mouse_control = params2list(params)
+		if(mouse_control["icon-x"])
+			BB.p_x = text2num(mouse_control["icon-x"])
+		if(mouse_control["icon-y"])
+			BB.p_y = text2num(mouse_control["icon-y"])
+
+	spawn()
+		if(BB)
+			BB.process()
+	sleep(1)
+	BB = null
+	update_icon()
+	return 1
+
+/obj/item/ammo_casing/proc/newshot() //Mostly for energy weapons and shotgun shells.
+	if (!BB)
+		BB = new projectile_type(src)
+	return
+
 
 
 //Boxes of ammo
@@ -47,6 +93,7 @@
 	var/max_ammo = 7
 	var/multiple_sprites = 0
 	var/caliber
+	var/multiload = 1
 
 
 /obj/item/ammo_box/New()
@@ -73,15 +120,16 @@
 			return 1
 	return 0
 
-/obj/item/ammo_box/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/ammo_box/attackby(var/obj/item/A as obj, mob/user as mob, var/silent = 0)
 	var/num_loaded = 0
 	if(istype(A, /obj/item/ammo_box))
 		var/obj/item/ammo_box/AM = A
 		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
-			if(give_round(AC))
+			var/did_load = give_round(AC)
+			if(did_load)
 				AM.stored_ammo -= AC
 				num_loaded++
-			else
+			if(!did_load || !multiload)
 				break
 	if(istype(A, /obj/item/ammo_casing))
 		var/obj/item/ammo_casing/AC = A
@@ -90,9 +138,12 @@
 			AC.loc = src
 			num_loaded++
 	if(num_loaded)
-		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
+		if (!silent)
+			user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
 		A.update_icon()
 		update_icon()
+		return num_loaded
+	return 0
 
 /obj/item/ammo_box/update_icon()
 	switch(multiple_sprites)

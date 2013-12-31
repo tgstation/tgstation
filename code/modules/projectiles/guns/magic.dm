@@ -5,9 +5,9 @@
 	icon_state = "staffofnothing"
 	item_state = "staff"
 	fire_sound = 'sound/weapons/emitter.ogg'
+	var/ammo_type = /obj/item/ammo_casing/magic
 	flags =  FPRINT | TABLEPASS | CONDUCT
 	w_class = 5
-	var/projectile_type = "/obj/item/projectile/magic"
 	var/max_charges = 6
 	var/charges = 0
 	var/recharge_rate = 4
@@ -16,20 +16,20 @@
 	origin_tech = null
 	clumsy_check = 0
 
-/obj/item/weapon/gun/magic/process_chambered()
-		if(in_chamber)	return 1
-		if(!charges)	return 0
-		if(!projectile_type)	return 0
-		in_chamber = new projectile_type(src)
-		return 1
-
 /obj/item/weapon/gun/magic/afterattack(atom/target as mob, mob/living/user as mob, flag)
+	newshot()
 	..()
-	if(charges && !in_chamber && !flag)	charges--
+
+/obj/item/weapon/gun/magic/proc/newshot()
+	if (charges && chambered)
+		chambered.newshot()
+		charges--
+	return
 
 /obj/item/weapon/gun/magic/New()
 	..()
 	charges = max_charges
+	chambered = new ammo_type(src)
 	if(can_charge)	processing_objects.Add(src)
 
 

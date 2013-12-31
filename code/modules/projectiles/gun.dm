@@ -16,25 +16,35 @@
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"
-	var/obj/item/projectile/in_chamber = null
 	var/silenced = 0
 	var/recoil = 0
 	var/clumsy_check = 1
+	var/obj/item/ammo_casing/chambered = null
 
-	proc/process_chambered()
+	proc/process_chamber()
 		return 0
 
 	proc/special_check(var/mob/M) //Placeholder for any special checks, like detective's revolver.
 		return 1
 
-	proc/prepare_shot(var/obj/item/projectile/proj) //Transfer properties from the gun to the bullet
-		proj.shot_from = src
+/*	proc/prepare_shot(var/obj/item/projectile/proj) //Transfer properties from the gun to the bullet
 		proj.silenced = silenced
-		return
+		return*/
 
 	proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
 		user << "<span class='warning'>*click*</span>"
 		return
+
+	proc/shoot_live_shot(mob/living/user as mob|obj)
+		if(recoil)
+			spawn()
+				shake_camera(user, recoil + 1, recoil)
+
+		if(silenced)
+			playsound(user, fire_sound, 10, 1)
+		else
+			playsound(user, fire_sound, 50, 1)
+			user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
 
 	emp_act(severity)
 		for(var/obj/O in contents)
@@ -71,38 +81,23 @@
 
 		add_fingerprint(user)
 
-		var/turf/curloc = user.loc
-		var/turf/targloc = get_turf(target)
-		if (!istype(targloc) || !istype(curloc))
-			return
-
 		if(!special_check(user))
 			return
-		if(!process_chambered())
-			shoot_with_empty_chamber(user)
-
-		if(!in_chamber)
-			return
-
-		in_chamber.firer = user
-		in_chamber.def_zone = user.zone_sel.selecting
-
-
-		if(recoil)
-			spawn()
-				shake_camera(user, recoil + 1, recoil)
-
-		if(silenced)
-			playsound(user, fire_sound, 10, 1)
+		if(chambered)
+			chambered.ready_proj(user, silenced)
+			if(!chambered.fire(target, user, params))
+				shoot_with_empty_chamber(user)
+			else
+				shoot_live_shot(user)
 		else
-			playsound(user, fire_sound, 50, 1)
-			user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
+			shoot_with_empty_chamber(user)
+		process_chamber()
 
-		prepare_shot(in_chamber)				//Set the projectile's properties
+//		prepare_shot(in_chamber)				//Set the projectile's properties
 
 
 
-		if(targloc == curloc)			//Fire the projectile
+/*		if(targloc == curloc)			//Fire the projectile
 			user.bullet_act(in_chamber)
 			del(in_chamber)
 			update_icon()
@@ -127,7 +122,7 @@
 				in_chamber.process()
 		sleep(1)
 		in_chamber = null
-
+*/
 		update_icon()
 
 		if(user.hand)
