@@ -177,7 +177,7 @@
 	. =..()
 	if(!.)
 		return
-	if(!stat)
+	if(!stat && !ckey)
 		amount_grown += rand(1,2)
 		if(amount_grown >= 100)
 			new /mob/living/simple_animal/chicken(src.loc)

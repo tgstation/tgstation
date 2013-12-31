@@ -2,7 +2,7 @@
 	name = "wand of nothing"
 	desc = "It's not just a stick, it's a MAGIC stick!"
 	ammo_type = /obj/item/ammo_casing/magic
-	icon_state = "wand6"
+	icon_state = "nothingwand"
 	item_state = "wand"
 	w_class = 2
 	can_charge = 0
@@ -28,6 +28,9 @@
 	..()
 
 /obj/item/weapon/gun/magic/wand/afterattack(atom/target as mob, mob/living/user as mob)
+	if(!charges)
+		user << "<span class='warning'>The [name] whizzles quietly.<span>"
+		return
 	if(target == user)
 		if(charges)
 			zap_self(user)
@@ -35,6 +38,9 @@
 			shoot_with_empty_chamber(user)
 	else
 		..()
+	if(!charges)
+		icon_state = "[icon_state]-drained"
+
 
 /obj/item/weapon/gun/magic/wand/proc/zap_self(mob/living/user as mob)
 	user.visible_message("<span class='notice'>[user] zaps \himself with [src]!</span>")
@@ -45,7 +51,7 @@
 	name = "wand of death"
 	desc = "This deadly wand overwhelms the victim's body with pure energy, slaying them without fail."
 	ammo_type = /obj/item/ammo_casing/magic/death
-	icon_state = "wand4"
+	icon_state = "deathwand"
 	max_charges = 3 //3, 2, 2, 1
 
 /obj/item/weapon/gun/magic/wand/death/zap_self(mob/living/user as mob)
@@ -57,11 +63,11 @@
 	..()
 
 /obj/item/weapon/gun/magic/wand/resurrection
-	name = "wand of resurrection"
+	name = "wand of healing"
 	desc = "This wand uses healing magics to heal and revive. They are rarely utilized within the Wizard Federation for some reason."
 	ammo_type = /obj/item/ammo_casing/magic/heal
-	icon_state = "wand1"
-	max_charges = 3 //3, 2, 2, 1
+	icon_state = "revivewand"
+	max_charges = 10 //10, 5, 5, 4
 
 /obj/item/weapon/gun/magic/wand/resurrection/zap_self(mob/living/user as mob)
 	user.revive()
@@ -73,7 +79,7 @@
 	name = "wand of polymorph"
 	desc = "This wand is attuned to chaos and will radically alter the victim's form."
 	ammo_type = /obj/item/ammo_casing/magic/change
-	icon_state = "wand5"
+	icon_state = "polywand"
 	max_charges = 10 //10, 5, 5, 4
 
 /obj/item/weapon/gun/magic/wand/polymorph/zap_self(mob/living/user as mob)
@@ -85,7 +91,7 @@
 	name = "wand of teleportation"
 	desc = "This wand will wrench targets through space and time to move them somewhere else."
 	ammo_type = /obj/item/ammo_casing/magic/teleport
-	icon_state = "wand3"
+	icon_state = "telewand"
 	max_charges = 10 //10, 5, 5, 4
 
 /obj/item/weapon/gun/magic/wand/teleport/zap_self(mob/living/user as mob)
@@ -100,7 +106,7 @@
 	name = "wand of door creation"
 	desc = "This particular wand can create doors in any wall for the unscrupulous wizard who shuns teleportation magics."
 	ammo_type = /obj/item/ammo_casing/magic/door
-	icon_state = "wand0"
+	icon_state = "doorwand"
 	max_charges = 20 //20, 10, 10, 7
 
 /obj/item/weapon/gun/magic/wand/door/zap_self()
@@ -110,7 +116,7 @@
 	name = "wand of fireball"
 	desc = "This wand shoots scorching balls of fire that explode into destructive flames."
 	ammo_type = /obj/item/ammo_casing/magic/fireball
-	icon_state = "wand2"
+	icon_state = "firewand"
 	max_charges = 8 //8, 4, 4, 3
 
 /obj/item/weapon/gun/magic/wand/fireball/zap_self(mob/living/user as mob)

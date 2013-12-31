@@ -151,7 +151,6 @@
 
 				M.put_in_active_hand(G)
 
-				grabbed_by += G
 				G.synch()
 
 				LAssailant = M
@@ -220,7 +219,6 @@
 
 			M.put_in_active_hand(G)
 
-			grabbed_by += G
 			G.synch()
 
 			LAssailant = M
@@ -343,33 +341,18 @@
 /mob/living/carbon/monkey/var/temperature_resistance = T0C+75
 
 /mob/living/carbon/monkey/ex_act(severity)
-	if(!blinded)
-		flick("flash", flash)
-	if (stat == 2 && client)
-		gib()
-		return
-
-	if (stat == 2 && !client)
-		gibs(loc, viruses)
-		del(src)
-		return
+	..()
 	switch(severity)
 		if(1.0)
-			if (stat != 2)
-				adjustBruteLoss(200)
-				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
+			gib()
+			return
 		if(2.0)
-			if (stat != 2)
-				adjustBruteLoss(60)
-				adjustFireLoss(60)
-				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
+			adjustBruteLoss(60)
+			adjustFireLoss(60)
 		if(3.0)
-			if (stat != 2)
-				adjustBruteLoss(30)
-				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
+			adjustBruteLoss(30)
 			if (prob(50))
 				Paralyse(10)
-		else
 	return
 
 /mob/living/carbon/monkey/blob_act()

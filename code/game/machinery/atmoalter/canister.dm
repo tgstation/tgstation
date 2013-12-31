@@ -264,14 +264,14 @@ Release Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?sr
 		if(href_list["toggle"])
 			if (valve_open)
 				if (holding)
-					release_log += "Valve was <b>closed</b> by [usr], stopping the transfer into the [holding]<br>"
+					release_log += "Valve was <b>closed</b> by [usr] ([usr.ckey]), stopping the transfer into the [holding]<br>"
 				else
-					release_log += "Valve was <b>closed</b> by [usr], stopping the transfer into the <font color='red'><b>air</b></font><br>"
+					release_log += "Valve was <b>closed</b> by [usr] ([usr.ckey]), stopping the transfer into the <font color='red'><b>air</b></font><br>"
 			else
 				if (holding)
-					release_log += "Valve was <b>opened</b> by [usr], starting the transfer into the [holding]<br>"
+					release_log += "Valve was <b>opened</b> by [usr] ([usr.ckey]), starting the transfer into the [holding]<br>"
 				else
-					release_log += "Valve was <b>opened</b> by [usr], starting the transfer into the <font color='red'><b>air</b></font><br>"
+					release_log += "Valve was <b>opened</b> by [usr] ([usr.ckey]), starting the transfer into the <font color='red'><b>air</b></font><br>"
 			valve_open = !valve_open
 
 		if (href_list["remove_tank"])

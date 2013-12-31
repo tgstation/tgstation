@@ -10,10 +10,10 @@ datum/shuttle_manager/New(var/area, var/delay) //Create a new shuttle manager fo
 	tickstomove = delay
 
 
-datum/shuttle_manager/proc/move_shuttle()
+datum/shuttle_manager/proc/move_shuttle(var/override_delay)
 	if(moving)	return 0
 	moving = 1
-	spawn(tickstomove*10)
+	spawn(override_delay == null ? tickstomove*10 : override_delay)
 		var/area/shuttle/fromArea
 		var/area/shuttle/toArea
 		fromArea = locate(location) //the location of the shuttle

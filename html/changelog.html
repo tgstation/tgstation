@@ -36,7 +36,7 @@
 			<font size='2'><b>Current Project Maintainers:</b> <a href='https://github.com/tgstation?tab=members'>-Click Here-</a><br></font>
 			<font size='2'><b>Currently Active GitHub contributor list:</b> <a href='https://github.com/tgstation/-tg-station/graphs/contributors'>-Click Here-</a><br></font>
 			<font size='2'><b>Coders:</b> TLE, NEO, Errorage, muskets, veryinky, Skie, Noise, Numbers, Agouri, Noka, Urist McDorf, Uhangi, Darem, Mport, rastaf0, Doohl, Superxpdude, Rockdtben, ConstantA, Petethegoat, Kor, Polymorph, Carn, Nodrak, Donkie, Sieve, Giacom, Ikarrus, trubble_bass, Aranclanos, Cael_Aislinn, Cheridan, Intigracy, Malkevin, SuperSayu, DumpDavidson, Tastyfish, Yvar, Elo001.<br></font> 
-			<font size='2'><b>Spriters:</b> Agouri, Cheridan, Cruazy Guest, Deeaych, Deuryn, Matty406, Microwave, ShiftyEyesShady, Skie, Uhangi, Veyveyr, Petethegoat, Kor, Ricotez, Ausops, TankNut, Pewtershmitz, Firecage<br></font>
+			<font size='2'><b>Spriters:</b> Agouri, Cheridan, Cruazy Guest, Deeaych, Deuryn, Matty406, Microwave, ShiftyEyesShady, Skie, Uhangi, Veyveyr, Petethegoat, Kor, Ricotez, Ausops, TankNut, Pewtershmitz, Firecage, Nienhaus2<br></font>
 			<font size='2'><b>Sounds:</b> Skie, Lasty/Vinyl<br></font>
 			<font size='2'><b>Main Testers:</b> Tenebrosity<br></font>
 			<font size='2'><b>Thanks to:</b> Baystation 12, CDK Station devs, FacepunchStation, GoonStation devs, the original SpaceStation developers and Invisty for the title image.<br> Also a thanks to anybody who has contributed who is not listed here :( Ask to be added here on irc.</font>
@@ -52,7 +52,53 @@ should be listed in the changelog upon commit tho. Thanks. -->
 
 <!-- You can simply add changelogs using AddToChangelog.exe -->
 
-<!-- DO NOT REMOVE OR MOVE THIS COMMENT! THIS MUST BE THE LAST NON-EMPTY LINE BEFORE THE LOGS #ADDTOCHANGELOGMARKER# -->
+<!-- DO NOT REMOVE OR MOVE THIS COMMENT! THIS MUST BE THE LAST NON-EMPTY LINE BEFORE THE LOGS #ADDTOCHANGELOGMARKER# -->
+
+<div class='commit sansserif'>
+	<h2 class='date'>27 December 2013</h2>
+	<h3 class='author'>Giacom updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='tweak'>Light explosions will no longer gib dead bodies anymore. C4 will function the same and gib anything attached.</li>
+		<li class='tweak'>Syringe gun projectiles will now display a message when shots are deflected by space suits, biosuits and etc...</li>
+		<li class='tweak'>You can now move out of sleepers by moving, again.</li>
+	</ul>
+	<h3 class='author'>Miauw updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='tweak'>Monkeys now have a resist button on their HUD.</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>21 December 2013</h2>
+	<h3 class='author'>RobRichards, Validsalad updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Added new sprites for the sec-hailer, SWAT gear and riot armour.</li>
+		</ul>
+	<h3 class='author'>Giacom updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>The Labor Camp has been changed based on feedback. Ore boxes added, internals added, safety pickaxes/shovels (might revert if unliked).</li>
+		<li class='tweak'>Labor Camp prisoners, who have earned enough points for freedom, will now have to be alone in the shuttle to move it and to open the middle door; this is in order to prevent free'd prisoners from releasing their comrades.</li>
+		<li class='tweak'>Monkeys no longer walk away when being pulled or grabbed.</li>
+		<li class='tweak'>Anti-breach shield generators have a greater range, and will cover more exposed space tiles.</li>
+	</ul>
+	<h3 class='author'>Bobylein updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='tweak'>Labcoats can now store bottles, beakers, pills, pill bottles and paper.</li>
+	</ul>
+	<h3 class='author'>Perakp updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='tweak'>You can no longer slip while laying down.</li>
+	</ul>
+	<h3 class='author'>Jordie updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='tweak'>Blowing up borgs from the Robotics Console will now actually make them explode. Emagged Cyborgs will explode even more.</li>
+	</ul>
+	<h3 class='author'>Nienhaus updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Added more poster.</li>
+	</ul>
+</div>
+
 
 <div class='commit sansserif'>
 	<h2 class='date'>18 December 2013</h2>
@@ -60,40 +106,20 @@ should be listed in the changelog upon commit tho. Thanks. -->
 	<ul class='changes bgimages16'>
 		<li class='tweak'>Transit tube tweaks. You can now put someone into a transit tube pod using grabs and you can empty a transit tube pod by clicking on it.</li>
 	</ul>
-</div>
-
-
-<div class='commit sansserif'>
-	<h2 class='date'>18 December 2013</h2>
 	<h3 class='author'>Giacom updated:</h3>
 	<ul class='changes bgimages16'>
 		<li class='rscadd'>THE REALISM: Injectors such as syringes, parapens and hypos will not penetrate coveralls with thick material, this includes space suits, biosuits, bombsuits, and their head slot equivalent. Injectors now also consider where you aim, if you aim for the head it will try to use it through the head slot, otherwise it will aim for the body. To clarify, if you are wearing a space helmet and a doctor tries to inject you while aiming at your head, it will protect you until they aim for the unprotected body; same story for wearing a space suit and not a helmet.</li>
 		<li class='tweak'>The syndicate shuttle has been heavily upgraded with a brand new technology which allows the blast doors to the entrance of the shuttle to AUTOMATICALLY close. Whoa. This brand new technology will help keep out those snoopy crew members.</li>
 		<li class='tweak'>Lowered the cooldown of creating virus cultures to 5 seconds. You now only need to mix one unit of synaptizine, in a blood full of an advance virus, to get it to remove a random symptom.</li>
 	</ul>
-</div>
-
-
-<div class='commit sansserif'>
-	<h2 class='date'>18 December 2013</h2>
 	<h3 class='author'>Adrinus updated:</h3>
 	<ul class='changes bgimages16'>
 		<li class='rscadd''>Playing cards, just like the real thing! Play poker, blackjack, go fish, the limits are limitless! Recommended to use space cash as the poker chips for now</li>
 	</ul>
-</div>
-
-
-<div class='commit sansserif'>
-	<h2 class='date'>18 December 2013</h2>
 	<h3 class='author'>Incoming updated:</h3>
 	<ul class='changes bgimages16'>
 		<li class='tweak'>Rounds will no longer end when the wizard dies and there are still apprentices or traitors/survivors..</li>
 	</ul>
-</div>
-
-
-<div class='commit sansserif'>
-	<h2 class='date'>18 December 2013</h2>
 	<h3 class='author'>Jordie0608 updated:</h3>
 	<ul class='changes bgimages16'>
 		<li class='tweak'>Replaced the digital valves in atmospherics with pumps.</li>
@@ -145,7 +171,8 @@ should be listed in the changelog upon commit tho. Thanks. -->
 		<li class='tweak'>Monkeys have ling chem counter and active sting icons in their UI.</li>
 		<li class='tweak'>Going monkey -> human will try to equip the human with everything on the ground below it.</li>
 	</ul>
-</div>
+</div>
+
 
 <div class='commit sansserif'>
 	<h2 class='date'>2 December 2013</h2>
@@ -224,7 +251,9 @@ should be listed in the changelog upon commit tho. Thanks. -->
 		<li class='rscadd'>The telepad is now more random, along with power, bearing and angle will be randomly offset a bit.</li>
 	</ul>
 </div>
-<div class='commit sansserif'>
+
+
+<div class='commit sansserif'>
 	<h2 class='date'>11 November 2013</h2>
 	<h3 class='author'>Fleure updated:</h3>
 	<ul class='changes bgimages16'>
@@ -237,7 +266,8 @@ should be listed in the changelog upon commit tho. Thanks. -->
 	<ul class='changes bgimages16'>
 		<li class='rscadd'>Added Telescience! I would explain how it works but then it wouldn't be very sciencey! Have fun figuring it out. The room is near Xenobiology.</li>
 	</ul>
-</div>
+</div>
+
 
 <div class='commit sansserif'>
 	<h2 class='date'>9 November 2013</h2>

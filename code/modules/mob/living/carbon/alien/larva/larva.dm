@@ -55,23 +55,12 @@
 
 
 /mob/living/carbon/alien/larva/ex_act(severity)
-	if(!blinded)
-		flick("flash", flash)
-
-	if (stat == 2 && client)
-		gib()
-		return
-
-	else if (stat == 2 && !client)
-		gibs(loc, viruses)
-		del(src)
-		return
+	..()
 
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
 		if (1.0)
-			b_loss += 500
 			gib()
 			return
 
@@ -227,7 +216,6 @@
 
 			M.put_in_active_hand(G)
 
-			grabbed_by += G
 			G.synch()
 
 			LAssailant = M
