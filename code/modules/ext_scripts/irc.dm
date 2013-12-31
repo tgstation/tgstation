@@ -11,7 +11,7 @@
 		if(config.irc_bot_port)
 			a+=" --port=\"[config.irc_bot_port]\""
 			msg=replacetext(msg,"\"","\\\"")
-		ext_python("ircbot_message.py", "\"[msg]\" [a]")
+		ext_python("ircbot_message.py", "[a] [msg]")
 	return
 
 /proc/send2mainirc(var/msg)
