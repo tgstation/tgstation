@@ -57,20 +57,21 @@
 
 
 /obj/item/ammo_casing/shotgun
-	name = "shotgun shell"
-	desc = "A 12 gauge shell."
-	icon_state = "gshell"
+	name = "shotgun slug"
+	desc = "A 12 gauge slug."
+	icon_state = "blshell"
 	caliber = "shotgun"
 	projectile_type = /obj/item/projectile/bullet
 	m_amt = 12500
 
 
-/obj/item/ammo_casing/shotgun/blank
+/obj/item/ammo_casing/shotgun/buckshot
 	name = "shotgun shell"
-	desc = "A blank shell."
-	icon_state = "blshell"
-	projectile_type = null
-	m_amt = 250
+	desc = "A 12 gauge shell."
+	icon_state = "gshell"
+	projectile_type = /obj/item/projectile/bullet/pellet
+	pellets = 5
+	variance = 0.8
 
 
 /obj/item/ammo_casing/shotgun/beanbag

@@ -22,6 +22,9 @@
 	usr << "Has [charges] charge\s remaining."
 	return
 
+/obj/item/weapon/gun/magic/wand/update_icon()
+	icon_state = "[initial(icon_state)][charges ? "" : "-drained"]"
+
 /obj/item/weapon/gun/magic/wand/attack(atom/target as mob, mob/living/user as mob)
 	if(target == user)
 		return
@@ -29,17 +32,13 @@
 
 /obj/item/weapon/gun/magic/wand/afterattack(atom/target as mob, mob/living/user as mob)
 	if(!charges)
-		user << "<span class='warning'>The [name] whizzles quietly.<span>"
+		shoot_with_empty_chamber(user)
 		return
 	if(target == user)
-		if(charges)
-			zap_self(user)
-		else
-			shoot_with_empty_chamber(user)
+		zap_self(user)
 	else
 		..()
-	if(!charges)
-		icon_state = "[icon_state]-drained"
+	update_icon()
 
 
 /obj/item/weapon/gun/magic/wand/proc/zap_self(mob/living/user as mob)

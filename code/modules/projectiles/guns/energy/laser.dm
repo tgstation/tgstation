@@ -8,6 +8,7 @@
 	origin_tech = "combat=3;magnets=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser)
 
+
 /obj/item/weapon/gun/energy/laser/practice
 	name = "practice laser gun"
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
@@ -58,6 +59,15 @@ obj/item/weapon/gun/energy/laser/retro
 				chambered.newshot()
 	return
 
+
+/obj/item/weapon/gun/energy/laser/scatter
+	name = "scatter laser gun"
+	desc = "A laser gun equipped with a refraction kit that spreads bolts."
+	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/laser/scatter)
+
+	attack_self(mob/living/user as mob)
+		select_fire(user)
+		update_icon()
 
 
 /obj/item/weapon/gun/energy/lasercannon

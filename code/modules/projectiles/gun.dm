@@ -27,10 +27,6 @@
 	proc/special_check(var/mob/M) //Placeholder for any special checks, like detective's revolver.
 		return 1
 
-/*	proc/prepare_shot(var/obj/item/projectile/proj) //Transfer properties from the gun to the bullet
-		proj.silenced = silenced
-		return*/
-
 	proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
 		user << "<span class='warning'>*click*</span>"
 		return
@@ -84,7 +80,6 @@
 		if(!special_check(user))
 			return
 		if(chambered)
-			chambered.ready_proj(user, silenced)
 			if(!chambered.fire(target, user, params))
 				shoot_with_empty_chamber(user)
 			else
@@ -92,37 +87,6 @@
 		else
 			shoot_with_empty_chamber(user)
 		process_chamber()
-
-//		prepare_shot(in_chamber)				//Set the projectile's properties
-
-
-
-/*		if(targloc == curloc)			//Fire the projectile
-			user.bullet_act(in_chamber)
-			del(in_chamber)
-			update_icon()
-			return
-		in_chamber.original = target
-		in_chamber.loc = get_turf(user)
-		in_chamber.starting = get_turf(user)
-		in_chamber.current = curloc
-		in_chamber.yo = targloc.y - curloc.y
-		in_chamber.xo = targloc.x - curloc.x
-		user.next_move = world.time + 4
-
-		if(params)
-			var/list/mouse_control = params2list(params)
-			if(mouse_control["icon-x"])
-				in_chamber.p_x = text2num(mouse_control["icon-x"])
-			if(mouse_control["icon-y"])
-				in_chamber.p_y = text2num(mouse_control["icon-y"])
-
-		spawn()
-			if(in_chamber)
-				in_chamber.process()
-		sleep(1)
-		in_chamber = null
-*/
 		update_icon()
 
 		if(user.hand)

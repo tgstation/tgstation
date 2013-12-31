@@ -16,6 +16,12 @@
 	projectile_type = /obj/item/projectile/practice
 	select_name = "practice"
 
+/obj/item/ammo_casing/energy/laser/scatter
+	projectile_type = /obj/item/projectile/beam/scatter
+	pellets = 5
+	variance = 0.8
+	select_name = "scatter"
+
 /obj/item/ammo_casing/energy/laser/heavy
 	projectile_type = /obj/item/projectile/beam/heavylaser
 	select_name = "anti-vehicle"

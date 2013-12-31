@@ -10,6 +10,8 @@
 	var/caliber = null							//Which kind of guns it can be loaded into
 	var/projectile_type = null					//The bullet type to create when New() is called
 	var/obj/item/projectile/BB = null 			//The loaded bullet
+	var/pellets = 0								//Pellets for spreadshot
+	var/variance = 0							//Variance for inaccuracy fundamental to the casing
 
 
 /obj/item/ammo_casing/New()
@@ -26,48 +28,7 @@
 	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
 	desc = "[initial(desc)][BB ? "" : " This one is spent"]"
 
-/obj/item/ammo_casing/proc/ready_proj(mob/living/user, var/quiet)
-	if (!BB)
-		return
-	BB.firer = user
-	BB.def_zone = user.zone_sel.selecting
-	BB.silenced = quiet
-	return
-
-/obj/item/ammo_casing/proc/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params)
-	var/turf/curloc = user.loc
-	var/turf/targloc = get_turf(target)
-	if (!istype(targloc) || !istype(curloc) || !BB)
-		return 0
-	if(targloc == curloc)			//Fire the projectile
-		user.bullet_act(BB)
-		del(BB)
-		update_icon()
-		return 1
-	BB.original = target
-	BB.loc = get_turf(user)
-	BB.starting = get_turf(user)
-	BB.current = curloc
-	BB.yo = targloc.y - curloc.y
-	BB.xo = targloc.x - curloc.x
-	user.next_move = world.time + 4
-
-	if(params)
-		var/list/mouse_control = params2list(params)
-		if(mouse_control["icon-x"])
-			BB.p_x = text2num(mouse_control["icon-x"])
-		if(mouse_control["icon-y"])
-			BB.p_y = text2num(mouse_control["icon-y"])
-
-	spawn()
-		if(BB)
-			BB.process()
-	sleep(1)
-	BB = null
-	update_icon()
-	return 1
-
-/obj/item/ammo_casing/proc/newshot() //Mostly for energy weapons and shotgun shells.
+/obj/item/ammo_casing/proc/newshot() //For energy weapons and shotgun shells.
 	if (!BB)
 		BB = new projectile_type(src)
 	return
@@ -76,8 +37,8 @@
 
 //Boxes of ammo
 /obj/item/ammo_box
-	name = "ammo box (.357)"
-	desc = "A box of ammo"
+	name = "ammo box (null_reference_exception)"
+	desc = "A box of ammo."
 	icon_state = "357"
 	icon = 'icons/obj/ammo.dmi'
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -151,7 +112,7 @@
 			icon_state = "[initial(icon_state)]-[stored_ammo.len]"
 		if(2)
 			icon_state = "[initial(icon_state)]-[stored_ammo.len ? "[max_ammo]" : "0"]"
-	desc = "There are [stored_ammo.len] shell\s left!"
+	desc = "[initial(desc)] There are [stored_ammo.len] shell\s left!"
 
 //Behavior for magazines
 /obj/item/ammo_box/magazine/proc/ammo_count()
