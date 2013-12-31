@@ -693,7 +693,7 @@
 	if( usr.stat || usr.restrained() )//Is not asleep/dead and is not restrained
 		usr << "\red You can't pick things up!"
 		return
-	if(src.anchored) //Object isn't anchored
+	if(src.anchored || !Adjacent(usr)) //Object isn't anchored
 		usr << "\red You can't pick that up!"
 		return
 	if(!usr.hand && usr.r_hand) //Right hand is not full
