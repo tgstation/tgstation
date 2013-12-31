@@ -238,3 +238,19 @@
 	name = "Sheet Snatcher 9000"
 	desc = ""
 	capacity = 500//Borgs get more because >specialization
+
+// -----------------------------
+//          Gadget Bag
+// -----------------------------
+
+/obj/item/weapon/storage/bag/gadgets
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "gadget_bag"
+	slot_flags = SLOT_BELT
+	name = "gadget bag"
+	desc = "This bag can be used to store many machine components."
+	storage_slots = 25;
+	max_combined_w_class = 200
+	max_w_class = 3
+	w_class = 1
+	can_hold = list("/obj/item/weapon/stock_parts")
