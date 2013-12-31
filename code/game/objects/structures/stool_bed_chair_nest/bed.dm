@@ -47,7 +47,7 @@
 /obj/structure/stool/bed/proc/manual_unbuckle(mob/user as mob)
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)
-			if(buckled_mob != user)
+			if((buckled_mob != user) && (!user.buckled))
 				buckled_mob.visible_message(\
 					"\blue [buckled_mob.name] was unbuckled by [user.name]!",\
 					"You were unbuckled from [src] by [user.name].",\

@@ -10,7 +10,7 @@
 /obj/structure/stool/bed/nest/manual_unbuckle(mob/user as mob)
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)
-			if(buckled_mob != user)
+			if((buckled_mob != user) && (!user.buckled))
 				buckled_mob.visible_message(\
 					"<span class='notice'>[user.name] pulls [buckled_mob.name] free from the sticky nest!</span>",\
 					"<span class='notice'>[user.name] pulls you free from the gelatinous resin.</span>",\
