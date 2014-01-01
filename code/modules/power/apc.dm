@@ -735,8 +735,9 @@
 	if(!istype(malf))
 		return
 	if(istype(malf.loc, /obj/machinery/power/apc)) // Already in an APC
-		malf << "<span class='warning'>You must evacuate your current apc first.</span>"
-		return
+		// You need to be able to see the APC in order to hop to it from another APC.
+		if(get_dist(malf.loc, src) < world.view)
+			return
 	if(!malf.can_shunt)
 		malf << "<span class='warning'>You cannot shunt.</span>"
 		return
