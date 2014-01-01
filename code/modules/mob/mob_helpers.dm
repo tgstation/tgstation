@@ -169,6 +169,12 @@ proc/isorgan(A)
 
 	return zone
 
+/proc/above_neck(zone)
+	var/list/zones = list("head", "mouth", "eyes")
+	if(zones.Find(zone))
+		return 1
+	else
+		return 0
 
 /proc/stars(n, pr)
 	if (pr == null)
