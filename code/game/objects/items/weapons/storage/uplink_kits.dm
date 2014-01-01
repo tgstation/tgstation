@@ -78,12 +78,12 @@
 				return
 
 /obj/item/weapon/storage/box/syndie_kit
-	name = "Box"
+	name = "box"
 	desc = "A sleek, sturdy box"
 	icon_state = "box_of_doom"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_freedom
-	name = "Freedom Implant (with injector)"
+	name = "boxed freedom implant (with injector)"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_freedom/New()
 	..()
@@ -112,7 +112,7 @@
 	return*/
 
 /obj/item/weapon/storage/box/syndie_kit/imp_uplink
-	name = "Uplink Implant (with injector)"
+	name = "boxed uplink implant (with injector)"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_uplink/New()
 	..()
@@ -123,7 +123,7 @@
 
 
 /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
-	name = "Adrenal Implant (with injector)"
+	name = "boxed adrenal implant (with injector)"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_adrenal/New()
 	..()
@@ -134,7 +134,7 @@
 
 
 /obj/item/weapon/storage/box/syndie_kit/space
-	name = "Space Suit and Helmet"
+	name = "boxed space suit and helmet"
 
 /obj/item/weapon/storage/box/syndie_kit/space/New()
 	..()
@@ -143,7 +143,7 @@
 	return
 
 /obj/item/weapon/storage/box/syndie_kit/emp
-	name = "EMP kit"
+	name = "boxed EMP kit"
 
 /obj/item/weapon/storage/box/syndie_kit/emp/New()
 	..()

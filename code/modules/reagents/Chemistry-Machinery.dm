@@ -330,21 +330,31 @@
 				beaker = null
 				reagents.clear_reagents()
 				icon_state = "mixer0"
-		else if (href_list["createpill"])
-			var/volume = min(reagents.total_volume, 50)
-			var/name = reject_bad_text(input(usr,"Name:","Name your pill!","[reagents.get_master_reagent_name()] ([volume] units)"))
-			var/obj/item/weapon/reagent_containers/pill/P
+		else if (href_list["createpill"]) //Also used for condiment packs.
+			if(!condi)
+				var/volume = min(reagents.total_volume, 50)
+				var/name = reject_bad_text(input(usr,"Name:","Name your pill!","[reagents.get_master_reagent_name()] ([volume] units)"))
+				var/obj/item/weapon/reagent_containers/pill/P
 
-			if(loaded_pill_bottle && loaded_pill_bottle.contents.len < loaded_pill_bottle.storage_slots)
-				P = new/obj/item/weapon/reagent_containers/pill(loaded_pill_bottle)
+				if(loaded_pill_bottle && loaded_pill_bottle.contents.len < loaded_pill_bottle.storage_slots)
+					P = new/obj/item/weapon/reagent_containers/pill(loaded_pill_bottle)
+				else
+					P = new/obj/item/weapon/reagent_containers/pill(src.loc)
+
+				if(!name) name = "[reagents.get_master_reagent_name()] ([volume] units)"
+				P.name = "[name] pill"
+				P.pixel_x = rand(-7, 7) //random position
+				P.pixel_y = rand(-7, 7)
+				reagents.trans_to(P,50)
 			else
-				P = new/obj/item/weapon/reagent_containers/pill(src.loc)
+				var/name = reject_bad_text(input(usr,"Name:","Name your bag!",reagents.get_master_reagent_name()))
+				var/obj/item/weapon/reagent_containers/food/condiment/pack/P = new/obj/item/weapon/reagent_containers/food/condiment/pack(src.loc)
 
-			if(!name) name = "[reagents.get_master_reagent_name()] ([volume] units)"
-			P.name = "[name] pill"
-			P.pixel_x = rand(-7, 7) //random position
-			P.pixel_y = rand(-7, 7)
-			reagents.trans_to(P,50)
+				if(!name) name = reagents.get_master_reagent_name()
+				P.originalname = name
+				P.name = "[name] pack"
+				P.desc = "A small condiment pack. The label says it contains [name]."
+				reagents.trans_to(P,10)
 			P.icon_state = "pill"+pillsprite
 
 		else if (href_list["createbottle"])
@@ -443,6 +453,7 @@
 			dat += "<HR><BR><A href='?src=\ref[src];createpill=1'>Create pill (50 units max)</A><a href=\"?src=\ref[src]&change_pill=1\"><img src=\"pill[pillsprite].png\" /></a><BR>"
 			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (30 units max)<a href=\"?src=\ref[src]&change_bottle=1\"><img src=\"bottle[bottlesprite].png\" /></A>"
 		else
+			dat += "<HR><BR><A href='?src=\ref[src];createpill=1'>Create pack (10 units max)</A><BR>"
 			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (50 units max)</A>"
 	if(!condi)
 		user << browse("<TITLE>Chemmaster 3000</TITLE>Chemmaster menu:<BR><BR>[dat]", "window=chem_master;size=575x400")

@@ -80,7 +80,7 @@
 	on_hit(var/atom/target, var/blocked = 0, var/hit_zone)
 		if(istype(target, /mob/living/carbon))
 			var/mob/living/carbon/M = target
-			if(M.can_inject(target_zone = hit_zone)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
+			if(M.can_inject(null,0,hit_zone)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
 				reagents.trans_to(M, reagents.total_volume)
 				return 1
 			else

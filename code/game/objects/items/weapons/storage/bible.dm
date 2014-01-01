@@ -28,7 +28,7 @@
 		var/heal_amt = 10
 		for(var/obj/item/organ/limb/affecting in H.organs)
 			if(affecting.status == ORGAN_ORGANIC) //No Bible can heal a robotic arm!
-				if(affecting.heal_damage(heal_amt, heal_amt))
+				if(affecting.heal_damage(heal_amt, heal_amt, 0))
 					H.update_damage_overlays(0)
 	return
 

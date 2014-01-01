@@ -19,28 +19,10 @@
 
 	return ..(gibbed)
 
-/mob/living/carbon/brain/gib()
-	death(1)
-	var/atom/movable/overlay/animation = null
-	monkeyizing = 1
-	canmove = 0
-	icon = null
-	invisibility = 101
-
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
-
-//	flick("gibbed-m", animation)
-	gibs(loc, viruses, dna)
-
-	dead_mob_list -= src
+/mob/living/carbon/brain/gib(var/animation = 0)
 	if(container && istype(container, /obj/item/device/mmi))
 		del(container)//Gets rid of the MMI if there is one
 	if(loc)
 		if(istype(loc,/obj/item/organ/brain))
 			del(loc)//Gets rid of the brain item
-	spawn(15)
-		if(animation)	del(animation)
-		if(src)			del(src)
+	..()

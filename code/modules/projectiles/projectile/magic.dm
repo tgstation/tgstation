@@ -106,8 +106,8 @@
 proc/wabbajack(mob/living/M)
 	if(istype(M))
 		if(istype(M, /mob/living) && M.stat != DEAD)
-			if(M.monkeyizing)	return
-			M.monkeyizing = 1
+			if(M.notransform)	return
+			M.notransform = 1
 			M.canmove = 0
 			M.icon = null
 			M.overlays.Cut()
@@ -192,6 +192,9 @@ proc/wabbajack(mob/living/M)
 
 			for (var/obj/effect/proc_holder/spell/S in M.spell_list)
 				new_mob.spell_list += new S.type
+
+			new_mob.attack_log = M.attack_log
+			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
 
 			new_mob.a_intent = "harm"
 			if(M.mind)

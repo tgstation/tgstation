@@ -288,7 +288,7 @@ var/list/sacrificed = list()
 				return fizzle()
 
 			for(var/obj/item/organ/limb/affecting in corpse_to_raise.organs)
-				affecting.heal_damage(1000, 1000)
+				affecting.heal_damage(1000, 1000, 0)
 			corpse_to_raise.setToxLoss(0)
 			corpse_to_raise.setOxyLoss(0)
 			corpse_to_raise.SetParalysis(0)
