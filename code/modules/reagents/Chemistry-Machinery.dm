@@ -331,9 +331,7 @@
 				reagents.clear_reagents()
 				icon_state = "mixer0"
 		else if (href_list["createpill"])
-			var/volume = reagents.total_volume
-			if (volume > 50)
-				volume = 50
+			var/volume = min(reagents.total_volume, 50)
 			var/name = reject_bad_text(input(usr,"Name:","Name your pill!","[reagents.get_master_reagent_name()] ([volume] units)"))
 			var/obj/item/weapon/reagent_containers/pill/P
 
@@ -366,13 +364,13 @@
 			var/dat = ""
 			for(var/i = 1 to MAX_PILL_SPRITE)
 				dat += "<a href=\"?src=\ref[src]&pill_sprite=[i]\"><img src=\"pill[i].png\" /></a>"
-				usr << browse(dat, "window=chem_master")
+			usr << browse(dat, "window=chem_master")
 			return
 		else if(href_list["change_bottle"])
 			var/dat = ""
 			for(var/i = 1 to MAX_BOTTLE_SPRITE)
 				dat += "<a href=\"?src=\ref[src]&bottle_sprite=[i]\"><img src=\"bottle[i].png\" /></a>"
-				usr << browse(dat, "window=chem_master")
+			usr << browse(dat, "window=chem_master")
 			return
 		else if(href_list["pill_sprite"])
 			pillsprite = href_list["pill_sprite"]
