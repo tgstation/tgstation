@@ -2,6 +2,7 @@
 
 /datum/game_mode
 	var/list/datum/mind/cult = list()
+	var/list/datum/mind/shades = list()
 	var/list/allwords = list("travel","self","see","hell","blood","join","tech","destroy", "other", "hide")
 	var/list/grantwords = list("travel", "see", "hell", "tech", "destroy", "other", "hide")
 

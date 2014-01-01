@@ -113,6 +113,7 @@
 				S.loc = C //put shade in stone
 				S.status_flags |= GODMODE //So they won't die inside the stone somehow
 				S.canmove = 0//Can't move out of the soul stone
+				ticker.mode.shades += S.mind
 				S.name = "Shade of [T.real_name]"
 				S.real_name = "Shade of [T.real_name]"
 				if (T.client)
@@ -154,6 +155,7 @@
 							S.loc = C //put shade in stone
 							S.status_flags |= GODMODE //So they won't die inside the stone somehow
 							S.canmove = 0//Can't move out of the soul stone
+							ticker.mode.shades += S.mind
 							S.name = "Shade of [T.real_name]"
 							S.real_name = "Shade of [T.real_name]"
 							if (T.client)
@@ -196,6 +198,7 @@
 					if("Juggernaut")
 						var/mob/living/simple_animal/construct/armoured/Z = new /mob/living/simple_animal/construct/armoured (get_turf(T.loc))
 						Z.key = A.key
+						ticker.mode.shades -= Z.mind
 						if(iscultist(U))
 							if(ticker.mode.name == "cult")
 								ticker.mode:add_cultist(Z.mind)
@@ -211,6 +214,7 @@
 					if("Wraith")
 						var/mob/living/simple_animal/construct/wraith/Z = new /mob/living/simple_animal/construct/wraith (get_turf(T.loc))
 						Z.key = A.key
+						ticker.mode.shades -= Z.mind
 						if(iscultist(U))
 							if(ticker.mode.name == "cult")
 								ticker.mode:add_cultist(Z.mind)
@@ -226,6 +230,7 @@
 					if("Artificer")
 						var/mob/living/simple_animal/construct/builder/Z = new /mob/living/simple_animal/construct/builder (get_turf(T.loc))
 						Z.key = A.key
+						ticker.mode.shades -= Z.mind
 						if(iscultist(U))
 							if(ticker.mode.name == "cult")
 								ticker.mode:add_cultist(Z.mind)
