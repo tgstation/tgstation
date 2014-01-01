@@ -737,6 +737,7 @@
 	if(istype(malf.loc, /obj/machinery/power/apc)) // Already in an APC
 		// You need to be able to see the APC in order to hop to it from another APC.
 		if(get_dist(malf.loc, src) < world.view)
+			malf << "<span class='warning'>Target APC out of range of current APC, unable to shunt core processes.</span>"
 			return
 	if(!malf.can_shunt)
 		malf << "<span class='warning'>You cannot shunt.</span>"
