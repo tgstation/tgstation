@@ -142,7 +142,7 @@ obj/machinery/embedded_controller
 			return ..()
 
 		if(istype(W,/obj/item/device/multitool))
-			update_multitool_menu(user,W)
+			update_multitool_menu(user)
 		else
 			..()
 

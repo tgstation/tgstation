@@ -287,7 +287,7 @@ obj/machinery/airlock_sensor/Topic(href,href_list)
 		P.buffer = null
 
 	usr.set_machine(src)
-	update_multitool_menu(P,usr)
+	update_multitool_menu(usr)
 
 
 obj/machinery/airlock_sensor/attackby(var/obj/item/W, var/mob/user)
@@ -461,4 +461,4 @@ obj/machinery/access_button/Topic(href,href_list)
 		P.buffer = null
 
 	usr.set_machine(src)
-	update_multitool_menu(P,usr)
+	update_multitool_menu(usr)

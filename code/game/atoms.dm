@@ -1,5 +1,9 @@
 /atom
 	layer = 2
+
+	var/ghost_read=1 // All ghosts can read
+	var/ghost_write=0 // Only aghosts can write
+
 	var/level = 2
 	var/flags = FPRINT
 	var/list/fingerprints
@@ -274,7 +278,13 @@ its easier to just keep the beam vertical.
 	return
 
 /atom/proc/attack_ghost(mob/user as mob)
-	src.examine()
+	var/ghost_flags = 0
+	if(!ghost_read)
+		ghost_flags |= PERMIT_AGHOST_ONLY
+	if(canGhostRead(user,ghost_flags))
+		src.attack_ai(user)
+	else
+		src.examine()
 	return
 
 /atom/proc/attack_admin(mob/user as mob)
@@ -939,7 +949,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		return
 
 	// ------- PARALYSIS, STUN, WEAKENED, DEAD, (And not AI/AGhost) -------
-	if ((((usr.paralysis || usr.stunned || usr.weakened) && !istype(usr, /mob/living/silicon/ai)) || usr.stat != 0)/* && !isobserver(usr)*/)
+	if ((((usr.paralysis || usr.stunned || usr.weakened) && !istype(usr, /mob/living/silicon/ai)) || usr.stat != 0) && !isobserver(usr))
 		return
 
 	// ------- CLICKING STUFF IN CONTAINERS -------
@@ -1088,7 +1098,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				return 0
 
 		if (!( usr.restrained() || (usr.lying && usr.buckled!=src) ))
-			// ------- YOU ARE NOT REASTRAINED -------
+			// ------- YOU ARE NOT RESTRAINED -------
 
 			if (W)
 				// ------- YOU HAVE AN ITEM IN YOUR HAND - HANDLE ATTACKBY AND AFTERATTACK -------
@@ -1106,6 +1116,8 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 					// ------- YOU ARE NOT HUMAN. WHAT ARE YOU - DETERMINED HERE AND PROPER ATTACK_MOBTYPE CALLED -------
 					if (istype(usr, /mob/living/carbon/monkey))
 						src.attack_paw(usr, usr.hand)
+					else if (isobserver(usr))
+						src.attack_ghost(usr)
 					else if (istype(usr, /mob/living/carbon/alien/humanoid))
 						if(usr.m_intent == "walk" && istype(usr, /mob/living/carbon/alien/humanoid/hunter))
 							usr.m_intent = "run"

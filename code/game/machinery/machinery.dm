@@ -94,6 +94,7 @@ Class Procs:
 /obj/machinery
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
+
 	var/stat = 0
 	var/emagged = 0
 	var/use_power = 1
@@ -169,7 +170,10 @@ Class Procs:
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return 1
-	if(!isAdminGhost(usr))
+	var/ghost_flags=0
+	if(!ghost_write)
+		ghost_flags |= PERMIT_AGHOST_ONLY
+	if(!canGhostWrite(usr,ghost_flags))
 		if(usr.restrained() || usr.lying || usr.stat)
 			return 1
 		if ( ! (istype(usr, /mob/living/carbon/human) || \
@@ -215,7 +219,8 @@ Class Procs:
 /obj/machinery/attack_hand(mob/user as mob)
 	if(stat & (NOPOWER|BROKEN|MAINT))
 		return 1
-	if(user.lying || (user.stat && !isobserver(user))) // Ghost read-only
+
+	if(user.lying || (user.stat && !canGhostRead(user))) // Ghost read-only
 		return 1
 
 	if(istype(usr,/mob/dead/observer))

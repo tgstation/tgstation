@@ -82,7 +82,6 @@
 	real_name = name
 	..()
 
-
 /mob/dead/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/tome))
 		var/mob/dead/M = src
@@ -97,6 +96,10 @@
 				"\red [user] just tried to smash his book into that ghost!  It's not very effective", \
 				"\red You get the feeling that the ghost can't become any more visible." \
 			)
+
+
+/mob/dead/observer/get_multitool(var/active_only=0)
+	return ghostMulti
 
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -529,7 +532,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			found_spawners.Add(s)
 	if(found_spawners.len)
 		spawner = pick(found_spawners)
-		//host = new /mob/living/silicon/robot/mommi(spawner.loc)
 		spawner.attack_ghost(src)
 	else
 		src << "<span class='warning'>Unable to find any powered MoMMI Spawners on this z-level.</span>"

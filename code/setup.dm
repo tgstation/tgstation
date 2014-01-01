@@ -789,3 +789,5 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define CENTCOMM_Z 2
 #define TELECOMM_Z 3
 #define ASTEROID_Z 5
+
+#define PERMIT_AGHOST_ONLY 1

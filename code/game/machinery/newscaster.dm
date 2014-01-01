@@ -54,6 +54,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	desc = "A standard Nanotrasen-licensed newsfeed handler for use in commercial space stations. All the news you absolutely have no use for, in one place!"
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "newscaster_normal"
+
+	// Allow ghosts to send Topic()s.
+	ghost_write=1
+
 	var/isbroken = 0  //1 if someone banged it with something heavy
 	var/ispowered = 1 //starts powered, changes with power_change()
 	//var/list/datum/feed_channel/channel_list = list() //This list will contain the names of the feed channels. Each name will refer to a data region where the messages of the feed channels are stored.
@@ -525,8 +529,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 
 /obj/machinery/newscaster/Topic(href, href_list)
-	//if(..())
-	//	return
+	if(..())
+		return
 	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon) || isobserver(usr)))
 		usr.set_machine(src)
 		if(href_list["set_channel_name"])
@@ -654,21 +658,21 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.updateUsrDialog()
 
 		else if(href_list["create_channel"])
-			if(isobserver(usr) && !isAdminGhost(usr))
+			if(!canGhostWrite(usr))
 				usr << "\red You can't do that."
 				return
 			src.screen=2
 			src.updateUsrDialog()
 
 		else if(href_list["create_feed_story"])
-			if(isobserver(usr) && !isAdminGhost(usr))
+			if(!canGhostWrite(usr))
 				usr << "\red You can't do that."
 				return
 			src.screen=3
 			src.updateUsrDialog()
 
 		else if(href_list["menu_paper"])
-			if(isobserver(usr) && !isAdminGhost(usr))
+			if(!canGhostWrite(usr))
 				usr << "\red You can't do that."
 				return
 			src.screen=8
@@ -688,21 +692,21 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.updateUsrDialog()
 
 		else if(href_list["menu_censor_story"])
-			if(isobserver(usr) && !isAdminGhost(usr))
+			if(!canGhostWrite(usr))
 				usr << "\red You can't do that."
 				return
 			src.screen=10
 			src.updateUsrDialog()
 
 		else if(href_list["menu_censor_channel"])
-			if(isobserver(usr) && !isAdminGhost(usr))
+			if(!canGhostWrite(usr))
 				usr << "\red You can't do that."
 				return
 			src.screen=11
 			src.updateUsrDialog()
 
 		else if(href_list["menu_wanted"])
-			if(isobserver(usr) && !isAdminGhost(usr))
+			if(!canGhostWrite(usr))
 				usr << "\red You can't do that."
 				return
 			var/already_wanted = 0
@@ -1161,9 +1165,10 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	else if (isAI(user))
 		var/mob/living/silicon/ai_user = user
 		src.scanned_user = "[ai_user.name] ([ai_user.job])"
+	else if (isAdminGhost(user))
+		src.scanned_user = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
 	else if (isobserver(user))
-		var/mob/dead/observer/dead_guy = user
-		src.scanned_user = "Ghost of [dead_guy.name]"
+		src.scanned_user = "Anomaly"
 
 
 /obj/machinery/newscaster/proc/print_paper()
