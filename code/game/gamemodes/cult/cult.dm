@@ -2,11 +2,15 @@
 
 /datum/game_mode
 	var/list/datum/mind/cult = list()
+	var/list/datum/mind/shades = list()
 	var/list/allwords = list("travel","self","see","hell","blood","join","tech","destroy", "other", "hide")
 	var/list/grantwords = list("travel", "see", "hell", "tech", "destroy", "other", "hide")
 
 /proc/iscultist(mob/living/M as mob)
 	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.cult)
+	
+/proc/is_shade(mob/M as mob)
+	return istype(M,/mob/living/simple_animal/shade) && M.mind && M.mind.special_role == "Cultist"
 
 /proc/is_convertable_to_cult(datum/mind/mind)
 	if(!istype(mind))	return 0
@@ -51,11 +55,14 @@
 
 
 /datum/game_mode/cult/pre_setup()
-	if(prob(50))
-		objectives += "survive"
+	if(required_players >= 20 && prob(40))
+		objectives += "eldergod"
 		objectives += "sacrifice"
 	else
-		objectives += "eldergod"
+		if(prob(60))
+			objectives += "hijack"
+		else
+			objectives += "survive"
 		objectives += "sacrifice"
 
 	if(config.protect_roles_from_antagonist)
@@ -110,11 +117,16 @@
 
 
 /datum/game_mode/cult/proc/memorize_cult_objectives(var/datum/mind/cult_mind)
+	var/note ={"<font size='2' color=#330099>Note from adrix89:<BR>The cult gamemode has had a bit of a redesign and information is not yet available on the wiki so I am here to give you some starter tips:<BR>Cult now is intended to be played as a team, you need 3 cultists to use sacrifice or convert runes, so get together and plan ahead.<BR>You can find other cultists by just looking around the station or setting up a meeting place with the communication talisman.<BR>You can solo if you utilize your armor talisman it's still a good idea to have at least one cultist around to lure people stealthily.<BR>Sacrificed players now become soulstones, shades can now use teleport,teleport other,emp,seer,hide,reveal,wall,deafen,blind,stun and communicate runes.<BR>It is important to prepare whatever runes you can as fast as you get them, if you get caught always have a means to escape.<BR><BR>This mode is on trial,suggestions,complains and feedback can be given http://www.ss13.eu/phpbb/viewtopic.php?f=5&t=2688 , if you don't like it, it will be removed, so don't worry and just give it your best shot.</font>"}
+	cult_mind.memory += note
+	cult_mind.memory += "<HR><BR>"
 	for(var/obj_count = 1,obj_count <= objectives.len,obj_count++)
 		var/explanation
 		switch(objectives[obj_count])
 			if("survive")
 				explanation = "Our knowledge must live on. Make sure at least [acolytes_needed] acolytes escape on the shuttle to spread their work on an another station."
+			if("hijack")
+				explanation = "Conquer the station and make sure only your fellow acolytes escape. You need at least [acolytes_needed] acolytes to escape on the shuttle. Do not let anyone else survive."
 			if("sacrifice")
 				if(sacrifice_target)
 					explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. You will need the sacrifice rune (Hell blood join) and three acolytes to do so."
@@ -124,11 +136,12 @@
 				explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
 		cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
 		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
-	cult_mind.current << "The Geometer of Blood grants you the knowledge to convert non-believers. (Join Blood Self)"
-	cult_mind.memory += "The Geometer of Blood grants you the knowledge to convert non-believers. (Join Blood Self)<BR>"
-	grant_runeword(cult_mind.current,"join")
+	cult_mind.current << "The Geometer of Blood grants knowledge for blood, sacrifice to get more knowledge. (Hell Blood Join)"
+	cult_mind.memory += "The Geometer of Blood grants knowledge for blood, sacrifice to get more knowledge. (Hell Blood Join)<BR>"
+	grant_runeword(cult_mind.current,"hell")
 	grant_runeword(cult_mind.current,"blood")
-	grant_runeword(cult_mind.current,"self")
+	grant_runeword(cult_mind.current,"join")
+	cult_mind.current << note
 
 /datum/game_mode/proc/equip_cultist(mob/living/carbon/human/mob)
 	if(!istype(mob))
@@ -202,7 +215,7 @@
 //			wordexp = "[wordfree] is free..."
 		if("hide")
 			wordexp = "[wordhide] is hide..."
-	cult_mob << "\red [pick("You remember something from the dark teachings of your master","You hear a dark voice on the wind","Black blood oozes into your vision and forms into symbols","You catch a brief glimmer of the otherside")]... [wordexp]"
+	cult_mob << "<span class='warning'> [pick("You remember something from the dark teachings of your master","You hear a dark voice on the wind","Black blood oozes into your vision and forms into symbols","You catch a brief glimmer of the otherside")]... [wordexp]</span>"
 	cult_mob.mind.store_memory("<B>You remember that</B> [wordexp]", 0, 0)
 	cult_mob.mind.cult_words += word
 	if(cult_mob.mind.cult_words.len == allwords.len)
@@ -296,6 +309,8 @@
 	var/cult_fail = 0
 	if(objectives.Find("survive"))
 		cult_fail += check_survive() //the proc returns 1 if there are not enough cultists on the shuttle, 0 otherwise
+	if(objectives.Find("hijack"))
+		cult_fail += check_hijack()
 	if(objectives.Find("eldergod"))
 		cult_fail += eldergod //1 by default, 0 if the elder god has been summoned at least once
 	if(objectives.Find("sacrifice"))
@@ -316,6 +331,17 @@
 		return 0
 	else
 		return 1
+
+/datum/game_mode/cult/proc/check_hijack()
+	var/area/shuttle = locate(/area/shuttle/escape/centcom)
+	var/list/protected_mobs = list(/mob/living/silicon/ai, /mob/living/silicon/pai)
+	for(var/mob/living/player in player_list)
+		if(player.type in protected_mobs)	continue
+		if (player.mind && (player.mind.special_role != "Cultist"))
+			if(player.stat != DEAD)			//they're not dead!
+				if(get_turf(player) in shuttle)
+					return 1
+	return check_survive()
 
 
 /datum/game_mode/cult/declare_completion()
@@ -343,6 +369,13 @@
 					else
 						explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. <font color='red'>Fail.</font>"
 						feedback_add_details("cult_objective","cult_survive|FAIL|[acolytes_needed]")
+				if("hijack")
+					if(!check_hijack())
+						explanation = "Only acolytes must escape on the shuttle. Make sure at least [acolytes_needed] escape. <font color='green'><B>Success!</B></font>"
+						feedback_add_details("cult_objective","cult_hijack|SUCCESS|[acolytes_needed]")
+					else
+						explanation = "Only acolytes must escape on the shuttle. Make sure at least [acolytes_needed] escape. <font color='red'>Fail.</font>"
+						feedback_add_details("cult_objective","cult_hijack|FAIL|[acolytes_needed]")
 				if("sacrifice")
 					if(sacrifice_target)
 						if(sacrifice_target in sacrificed)

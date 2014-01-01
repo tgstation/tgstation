@@ -342,6 +342,10 @@
 					anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,L.dir)
 				L.loc = get_step(L, direct)
 			L.dir = direct
+		if(3)
+			if(isturf(L.loc))
+				L.loc = get_step(L, direct)
+				
 	return 1
 
 

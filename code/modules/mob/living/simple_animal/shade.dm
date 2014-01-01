@@ -14,20 +14,36 @@
 	response_disarm = "flails at"
 	response_harm   = "punches"
 	melee_damage_lower = 5
-	melee_damage_upper = 15
+	melee_damage_upper = 10
 	attacktext = "drains the life from"
 	minbodytemp = 0
 	maxbodytemp = 4000
 	min_oxy = 0
 	max_co2 = 0
 	max_tox = 0
-	speed = -1
+	speed = 1
+	luminosity = 2
 	stop_automated_movement = 1
 	status_flags = 0
 	faction = "cult"
+	incorporeal_move = 3 //shade move
 	status_flags = CANPUSH
+	
+	UnarmedAttack(var/atom/A, var/proximity_flag)
+		if(A == src)
+			return
+		..()
+		if(CanAttack(A))
+			src.heal_organ_damage(5,0)		//small heal from drain
+		if(istype(A,/obj/effect/rune))
+			var/obj/effect/rune/R = A
+			R.shade_attack(src)
+		if(istype(A,/obj/item/device/soulstone))
+			var/obj/item/device/soulstone/S = A
+			S.transfer_soul("SHADE", src, src)
 
-
+		
+	
 	Life()
 		..()
 		if(stat == 2)

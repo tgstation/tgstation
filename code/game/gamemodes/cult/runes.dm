@@ -99,12 +99,19 @@ var/list/sacrificed = list()
 /////////////////////////////////////////THIRD RUNE
 
 		convert()
+			var/culcount = 0
+			for(var/mob/living/carbon/C in orange(1,src))
+				if(iscultist(C) && !C.stat)
+					culcount++
+					C.say("Mah[pick("'","`")]weyh pleggh at e'ntrath!")
+					
+			if(culcount<3 && !check_equip())	//Needs 3 cultists around or have armor to convert
+				return fizzle()
 			for(var/mob/living/carbon/M in src.loc)
 				if(iscultist(M))
 					continue
 				if(M.stat==2)
 					continue
-				usr.say("Mah[pick("'","`")]weyh pleggh at e'ntrath!")
 				M.visible_message("\red [M] writhes in pain as the markings below him glow a bloody red.", \
 				"\red AAAAAAHHHH!.", \
 				"\red You hear an anguished scream.")
@@ -113,6 +120,8 @@ var/list/sacrificed = list()
 					M.mind.special_role = "Cultist"
 					M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
 					M << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
+					return 1
+					/*No words on conversion
 					//picking which word to use
 					if(usr.mind.cult_words.len != ticker.mode.allwords.len) // No point running if they already know everything
 						var/convert_word
@@ -128,12 +137,32 @@ var/list/sacrificed = list()
 							usr << "\red The Geometer of Blood is pleased to see his followers grow in numbers."
 							ticker.mode.grant_runeword(usr, convert_word)
 						return 1
+					*/
 				else
 					M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
 					M << "<font color=\"red\"><b>And not a single fuck was given, exterminate the cult at all costs.</b></font>"
 					return 0
 
 			return fizzle()
+			
+		check_equip()
+			if(ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				var/obj/item/slot_item = H.get_item_by_slot(slot_head)
+				if(slot_item && !(slot_item.type in typesof(/obj/item/clothing/head/culthood,/obj/item/clothing/head/magus,/obj/item/clothing/head/helmet/space/cult)))
+					return 0
+				slot_item = H.get_item_by_slot(slot_wear_suit)
+				if(slot_item && !(slot_item.type in typesof(/obj/item/clothing/suit/cultrobes,/obj/item/clothing/suit/magusred,/obj/item/clothing/suit/space/cult)))
+					return 0
+				if(!istype(H.get_item_by_slot(slot_shoes),/obj/item/clothing/shoes/cult))
+					return 0
+				if(istype(H.get_active_hand(),/obj/item/weapon/melee/cultblade))
+					return 1
+				if(istype(H.get_inactive_hand(),/obj/item/weapon/melee/cultblade))
+					return 1
+				if(istype(H.get_item_by_slot(slot_s_store),/obj/item/weapon/melee/cultblade))
+					return 1
+			else return 0
 
 
 
@@ -146,7 +175,21 @@ var/list/sacrificed = list()
 					M.say("Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
 					cultist_count += 1
 			if(cultist_count >= 9)
-				var/narsie_type = /obj/machinery/singularity/narsie/large
+				if(ticker.mode.name == "cult")
+					var/datum/game_mode/cult/cult_mode = ticker.mode
+					if(cult_mode.objectives.Find("eldergod"))
+						var/narsie_type = /obj/machinery/singularity/narsie/large
+						// Moves narsie if she was already summoned.
+						var/obj/her = locate(narsie_type, machines)
+						if(her)
+							her.loc = get_turf(src)
+							return
+						// Otherwise...
+						new narsie_type(src.loc) // Summon her!
+						cult_mode.eldergod = 0
+						del(src) // Stops cultists from spamming the rune to summon narsie more than once.
+						return
+				var/narsie_type = /obj/machinery/singularity/narsie		//Mini-narsie
 				// Moves narsie if she was already summoned.
 				var/obj/her = locate(narsie_type, machines)
 				if(her)
@@ -154,8 +197,7 @@ var/list/sacrificed = list()
 					return
 				// Otherwise...
 				new narsie_type(src.loc) // Summon her!
-				if(ticker.mode.name == "cult")
-					ticker.mode:eldergod = 0
+				world << "<font size='2' color='red'><b>NAR-SIE HAS RISEN</b></font>"	//announce mini-narsie
 				del(src) // Stops cultists from spamming the rune to summon narsie more than once.
 				return
 			else
@@ -371,7 +413,7 @@ var/list/sacrificed = list()
 						L.ajourn=0
 						return
 					else
-						L.take_organ_damage(10, 0)
+						L.take_organ_damage(7, 0)
 					sleep(100)
 			return fizzle()
 
@@ -496,7 +538,7 @@ var/list/sacrificed = list()
 					T.imbue = "communicate"
 					imbued_from = R
 					break
-				if(R.word1==wordjoin && R.word2==wordhide && R.word3==wordtech) //communicat
+				if(R.word1==wordjoin && R.word2==wordhide && R.word3==wordtech) //stun
 					T = new(src.loc)
 					T.imbue = "runestun"
 					imbued_from = R
@@ -553,13 +595,20 @@ var/list/sacrificed = list()
 			for(var/datum/mind/H in ticker.mode.cult)
 				if (H.current)
 					H.current << "\red \b [input]"
+			for(var/datum/mind/H in ticker.mode.shades)		//now shades can hear messages without messing other stuff.
+				if (H.current)
+					H.current << "\red \b [input]"
 			return 1
 
 /////////////////////////////////////////FIFTEENTH RUNE
-
+	
 		sacrifice()
 			var/list/mob/living/carbon/human/cultsinrange = list()
 			var/list/mob/living/carbon/human/victims = list()
+			var/mob/living/user = usr
+			var/infuse = 0
+			var/target = 0
+			//var/obj/item/device/soulstone/soul = check_stone(user)
 			for(var/mob/living/carbon/human/V in src.loc)//Checks for non-cultist humans to sacrifice
 				if(ishuman(V))
 					if(!(iscultist(V)))
@@ -578,115 +627,104 @@ var/list/sacrificed = list()
 				if(iscultist(C) && !C.stat)
 					cultsinrange += C
 					C.say("Barhah hra zar[pick("'","`")]garis!")
+			
 			for(var/mob/H in victims)
+				if (ticker.mode.name == "cult" && H.mind == ticker.mode:sacrifice_target)
+					if(cultsinrange.len >= 3)
+						sacrificed += H.mind
+						usr << "\red The Geometer of Blood accepts this sacrifice, your objective is now complete."
+						usr << "\red He is pleased!"
+						sac_grant_word()
+						sac_grant_word()
+						sac_grant_word()
+						greater_reward(H)
+						stone_or_gib(H)
+						
+					else if(check_equip())
+						infuse++
+						sacrificed += H.mind
+						target =1
+						sac_grant_word()
+						sac_grant_word()
+						sac_grant_word()
+						greater_reward(H)
+						stone_or_gib(H)
+					else
+						usr << "\red Your target's earthly bonds are too strong. You need more cultists to succeed in this ritual."
+				else
+					if(H.stat !=2)
+						if(cultsinrange.len >= 3)
+							usr << "\red The Geometer of Blood accepts this sacrifice."
+							sac_grant_word()
+							if(usr.mind.cult_words.len == ticker.mode.allwords.len)		//If they have all words Narsie is pleased
+								greater_reward(H)
+							else lesser_reward(H)
+							stone_or_gib(H)
+						else if(check_equip())
+							infuse++
+							sac_grant_word()
+							if(usr.mind.cult_words.len == ticker.mode.allwords.len)		//If they have all words Narsie is pleased
+								greater_reward(H)
+							else lesser_reward(H)
+							stone_or_gib(H)
+						else
+							usr << "\red The victim is still alive, you will need more cultists chanting for the sacrifice to succeed."
+						
+					else
+						if(prob(60))
+							usr << "\red The Geometer of blood accepts this sacrifice."
+							sac_grant_word()
+						else
+							usr << "\red The Geometer of blood accepts this sacrifice."
+							usr << "\red However, a mere dead body is not enough to satisfy Him."
+						stone_or_gib(H)
+			for(var/mob/living/carbon/monkey/H in src.loc)
 				if (ticker.mode.name == "cult")
 					if(H.mind == ticker.mode:sacrifice_target)
 						if(cultsinrange.len >= 3)
 							sacrificed += H.mind
-							if(isrobot(H))
-								H.dust()//To prevent the MMI from remaining
-							else
-								H.gib()
 							usr << "\red The Geometer of Blood accepts this sacrifice, your objective is now complete."
 							usr << "\red He is pleased!"
 							sac_grant_word()
 							sac_grant_word()
-							sac_grant_word()	//Little reward for completing the objective
-						else
-							usr << "\red Your target's earthly bonds are too strong. You need more cultists to succeed in this ritual."
-					else
-						if(cultsinrange.len >= 3)
-							if(H.stat !=2)
-								usr << "\red The Geometer of Blood accepts this sacrifice."
-								sac_grant_word()
-								if(isrobot(H))
-									H.dust()//To prevent the MMI from remaining
-								else
-									H.gib()
-							else
-								if(prob(60))
-									usr << "\red The Geometer of blood accepts this sacrifice."
-									sac_grant_word()
-								else
-									usr << "\red The Geometer of blood accepts this sacrifice."
-									usr << "\red However, a mere dead body is not enough to satisfy Him."
-								if(isrobot(H))
-									H.dust()//To prevent the MMI from remaining
-								else
-									H.gib()
-						else
-							if(H.stat !=2)
-								usr << "\red The victim is still alive, you will need more cultists chanting for the sacrifice to succeed."
-							else
-								if(prob(60))
-									usr << "\red The Geometer of blood accepts this sacrifice."
-									sac_grant_word()
-								else
-									usr << "\red The Geometer of blood accepts this sacrifice."
-									usr << "\red However, a mere dead body is not enough to satisfy Him."
-								if(isrobot(H))
-									H.dust()//To prevent the MMI from remaining
-								else
-									H.gib()
-				else
-					if(cultsinrange.len >= 3)
-						if(H.stat !=2)
-							usr << "\red The Geometer of Blood accepts this sacrifice."
 							sac_grant_word()
-							if(isrobot(H))
-								H.dust()//To prevent the MMI from remaining
-							else
-								H.gib()
-						else
-							if(prob(60))
-								usr << "\red The Geometer of blood accepts this sacrifice."
-								sac_grant_word()
-							else
-								usr << "\red The Geometer of blood accepts this sacrifice."
-								usr << "\red However, a mere dead body is not enough to satisfy Him."
-							if(isrobot(H))
-								H.dust()//To prevent the MMI from remaining
-							else
-								H.gib()
-					else
-						if(H.stat !=2)
-							usr << "\red The victim is still alive, you will need more cultists chanting for the sacrifice to succeed."
-						else
-							if(prob(60))
-								usr << "\red The Geometer of blood accepts this sacrifice."
-								sac_grant_word()
-							else
-								usr << "\red The Geometer of blood accepts this sacrifice."
-								usr << "\red However, a mere dead body is not enough to satisfy Him."
-							if(isrobot(H))
-								H.dust()//To prevent the MMI from remaining
-							else
-								H.gib()
-			for(var/mob/living/carbon/monkey/M in src.loc)
-				if (ticker.mode.name == "cult")
-					if(M.mind == ticker.mode:sacrifice_target)
-						if(cultsinrange.len >= 3)
-							sacrificed += M.mind
-							usr << "\red The Geometer of Blood accepts this sacrifice, your objective is now complete."
-							usr << "\red He is pleased!"
+							greater_reward(H)
+							stone_or_gib(H)
+						else if(check_equip())
+							infuse++
+							sacrificed += H.mind
+							target =1
 							sac_grant_word()
 							sac_grant_word()
-							sac_grant_word()	//Little reward for completing the objective
+							sac_grant_word()
+							greater_reward(H)
+							stone_or_gib(H)
 						else
 							usr << "\red Your target's earthly bonds are too strong. You need more cultists to succeed in this ritual."
 							continue
 					else
-						if(prob(30))
+						if(prob(20))
 							usr << "\red The Geometer of Blood accepts your meager sacrifice."
 							sac_grant_word()
 						else
 							usr << "\red The Geometer of blood accepts this sacrifice."
 							usr << "\red However, a mere monkey is not enough to satisfy Him."
+						stone_or_gib(H)
 				else
 					usr << "\red The Geometer of Blood accepts your meager sacrifice."
-					if(prob(30))
-						ticker.mode.grant_runeword(usr)
-				M.gib()
+					if(prob(20))
+						sac_grant_word()
+				if(H)H.gib()
+			if(infuse)
+				user.visible_message("\red [user] blade shines with a red glow as he plunges it into the helpless [infuse==1 ?"victim":"victims"]!", \
+				"\red You take your blade, infuse it with your blood and plunge it into your [infuse==1 ?"victim":"victims"].", \
+				"\red A sense of dread assails you.")
+				user.take_overall_damage(30, 0)
+				if(target)
+					usr << "\red The Geometer of Blood accepts this sacrifice, your objective is now complete."
+					usr << "\red He is pleased!"
+				else
+					usr << "\red The Geometer of Blood accepts this sacrifice."
 /*			for(var/mob/living/carbon/alien/A)
 				for(var/mob/K in cultsinrange)
 					K.say("Barhah hra zar'garis!")
@@ -702,13 +740,110 @@ var/list/sacrificed = list()
 					usr << "\red The Geometer of Blood accepts your exotic sacrifice."
 				return
 			return fizzle() */
-
+			
+		stone_or_gib(var/mob/T)
+			var/obj/item/device/soulstone/stone = new /obj/item/device/soulstone(get_turf(src))
+			if(!stone.transfer_soul("FORCE", T, usr))	//if it fails to add soul
+				del stone
+				if(isrobot(T))
+					T.dust()//To prevent the MMI from remaining
+				else
+					T.gib()
+					
 		sac_grant_word()	//The proc that which chooses a word rewarded for a successful sacrifice, sacrifices always give a currently unknown word if the normal checks pass
 			if(usr.mind.cult_words.len != ticker.mode.allwords.len) // No point running if they already know everything
 				var/convert_word
 				var/pick_list = ticker.mode.allwords - usr.mind.cult_words
 				convert_word = pick(pick_list)
 				ticker.mode.grant_runeword(usr, convert_word)
+				
+		lesser_reward(var/mob/T)
+			if(prob(10))		//TEST
+				var/reward = pick("construct","talisman")
+				switch (reward)
+					if("construct")
+						new /obj/structure/constructshell(get_turf(src))
+					if("talisman")		//one use talisman
+						var/obj/item/weapon/paper/talisman/supply/tal = new /obj/item/weapon/paper/talisman/supply(get_turf(src))
+						tal.uses = 1
+						
+		greater_reward(var/mob/T)
+			var/reward = pick("fireball","smoke","blind","mindswap","forcewall","knock","charge", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "armor", "space", "scrying")
+			switch (reward)
+				if("fireball")
+					new /obj/item/weapon/spellbook/oneuse/fireball(get_turf(src))
+				if("smoke")
+					new /obj/item/weapon/spellbook/oneuse/smoke(get_turf(src))
+				if("blind")
+					new /obj/item/weapon/spellbook/oneuse/blind(get_turf(src))
+				if("mindswap")
+					new /obj/item/weapon/spellbook/oneuse/mindswap(get_turf(src))
+				if("forcewall")
+					new /obj/item/weapon/spellbook/oneuse/forcewall(get_turf(src))
+				if("knock")
+					new /obj/item/weapon/spellbook/oneuse/knock(get_turf(src))
+				if("charge")
+					new /obj/item/weapon/spellbook/oneuse/charge(get_turf(src))
+				if("wanddeath")
+					new /obj/item/weapon/gun/magic/wand/death(get_turf(src))
+				if("wandresurrection")
+					new /obj/item/weapon/gun/magic/wand/resurrection(get_turf(src))
+				if("wandpolymorph")
+					new /obj/item/weapon/gun/magic/wand/polymorph(get_turf(src))
+				if("wandteleport")
+					new /obj/item/weapon/gun/magic/wand/teleport(get_turf(src))
+				if("wanddoor")
+					new /obj/item/weapon/gun/magic/wand/door(get_turf(src))
+				if("armor")
+					new /obj/item/clothing/head/magus(get_turf(src))
+					new /obj/item/clothing/suit/magusred(get_turf(src))
+					new /obj/item/clothing/shoes/cult/galoshes(get_turf(src))
+				if("space")
+					new /obj/item/clothing/head/helmet/space/cult(get_turf(src))
+					new /obj/item/clothing/suit/space/cult(get_turf(src))
+					new /obj/item/clothing/shoes/cult/galoshes(get_turf(src))
+				if("scrying")
+					new /obj/item/weapon/scrying(get_turf(src))
+					var/mob/living/carbon/human/H = null
+					if(ishuman(usr))
+						H = usr
+					if (H && !(XRAY in H.mutations))
+						H.mutations.Add(XRAY)
+						H.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
+						H.see_in_dark = 8
+						H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+						H << "<span class='notice'>The walls suddenly disappear.</span>"
+		
+		check_stone(var/mob/living/carbon/human/H)		//check to see if user has empty soulstone on himself
+			if(ishuman(H))
+				var/obj/item/device/soulstone/soul
+				if(istype(H.get_item_by_slot(slot_l_store),/obj/item/device/soulstone))
+					soul = H.get_item_by_slot(slot_l_store)
+					if(!soul.contents.len)		//no shades
+						return soul
+				if(istype(H.get_item_by_slot(slot_r_store),/obj/item/device/soulstone))
+					soul = H.get_item_by_slot(slot_r_store)
+					if(!soul.contents.len)
+						return soul
+				if(istype(H.get_inactive_hand(),/obj/item/device/soulstone))
+					soul = H.get_inactive_hand()
+					if(!soul.contents.len)
+						return soul
+				if(istype(H.get_active_hand(),/obj/item/device/soulstone))
+					soul = H.get_active_hand()
+					if(!soul.contents.len)
+						return soul
+				if(istype(H.get_item_by_slot(slot_belt),/obj/item/device/soulstone))
+					soul = H.get_item_by_slot(slot_belt)
+					if(!soul.contents.len)
+						return soul
+				if(istype(H.get_item_by_slot(slot_belt),/obj/item/weapon/storage/belt/soulstone))
+					var/obj/item/weapon/storage/belt = H.get_item_by_slot(slot_belt)
+					for(var/obj/item/device/soulstone/stone in belt.contents)
+						if(!stone.contents.len)
+							return stone
+			else
+				return
 
 
 /////////////////////////////////////////SIXTEENTH RUNE
@@ -1053,11 +1188,43 @@ var/list/sacrificed = list()
 				usr.whisper("N'ath reth sh'yro eth d[pick("'","`")]raggathnor!")
 			usr.visible_message("\red The rune disappears with a flash of red light, and a set of armor appears on [usr]...", \
 			"\red You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.")
-
-			user.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), slot_head)
-			user.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), slot_wear_suit)
-			user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(user), slot_shoes)
-			user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), slot_back)
+			
+			var/obj/item/slot_item = user.get_item_by_slot(slot_wear_suit)
+			if(slot_item && slot_item.type in typesof(/obj/item/clothing/suit/armor/hos,/obj/item/clothing/suit/armor/vest/capcarapace,/obj/item/clothing/suit/armor/swat,/obj/item/clothing/suit/armor/laserproof))
+				user.u_equip(slot_item)
+				del slot_item
+				user.equip_to_slot_or_del(new /obj/item/clothing/suit/magusred,slot_wear_suit)
+			else if(slot_item && slot_item.type in typesof(/obj/item/clothing/suit/space/rig,/obj/item/clothing/suit/space/captain))
+				user.u_equip(slot_item)
+				del slot_item
+				user.equip_to_slot_or_del(new /obj/item/clothing/suit/space/cult,slot_wear_suit)
+			else
+				user.u_equip(slot_item)
+				user.equip_to_slot_if_possible(new /obj/item/clothing/suit/cultrobes/alt(get_turf(user)), slot_wear_suit,0,1,1)
+				
+			slot_item = user.get_item_by_slot(slot_head)
+			if(slot_item && istype(slot_item,/obj/item/clothing/head/helmet/space))
+				user.u_equip(slot_item)
+				del slot_item
+				user.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/cult,slot_head)
+			else if(slot_item && istype(slot_item,/obj/item/clothing/head/helmet))
+				user.u_equip(slot_item)
+				del slot_item
+				user.equip_to_slot_or_del(new /obj/item/clothing/head/magus,slot_head)
+			else
+				user.u_equip(slot_item)
+				user.equip_to_slot_if_possible(new /obj/item/clothing/head/culthood/alt(get_turf(user)), slot_head,0,1,1)
+				
+			slot_item = user.get_item_by_slot(slot_shoes)
+			if(slot_item && slot_item.type in typesof(/obj/item/clothing/shoes/galoshes,/obj/item/clothing/shoes/syndigaloshes,/obj/item/clothing/shoes/swat,/obj/item/clothing/shoes/space_ninja,/obj/item/clothing/shoes/cult/galoshes))
+				user.u_equip(slot_item)
+				del slot_item
+				user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult/galoshes,slot_shoes)
+			else
+				user.u_equip(slot_item)
+				user.equip_to_slot_if_possible(new /obj/item/clothing/shoes/cult(get_turf(user)), slot_shoes,0,1,1)
+				
+			user.equip_to_slot_if_possible(new /obj/item/weapon/storage/backpack/cultpack(get_turf(user)), slot_back)
 			//the above update their overlay icons cache but do not call update_icons()
 			//the below calls update_icons() at the end, which will update overlay icons by using the (now updated) cache
 			user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))	//put in hands or on floor
