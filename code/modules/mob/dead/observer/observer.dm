@@ -162,12 +162,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	mind.current.ajourn=0
 	mind.current.key = key
-
-	if(istype(M.loc,/obj/structure/closet/body_bag/)) M=M.loc //swaps "M" with src if src is in a bag
-	var/obj/structure/morgue/Morgue = null//locate() in M.loc//Sets Morgue as something one range of one a.k.a. their location
-	//Actually now that I think of it it being in it's location doesn't really matter
-	if(istype(M.loc,/obj/structure/morgue))
-		Morgue = M.loc//check if a morgue slab is the M's location itself a.k.a inside
+	
+	var/obj/structure/morgue/Morgue = locate() in mind.current.loc
 	if(Morgue)
 		Morgue.update()
 
