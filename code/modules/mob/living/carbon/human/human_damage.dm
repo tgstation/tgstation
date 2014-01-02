@@ -79,7 +79,7 @@
 	var/list/obj/item/organ/limb/parts = get_damaged_organs(brute,burn)
 	if(!parts.len)	return
 	var/obj/item/organ/limb/picked = pick(parts)
-	if(picked.heal_damage(brute,burn))
+	if(picked.heal_damage(brute,burn,0))
 		update_damage_overlays(0)
 	updatehealth()
 
@@ -106,7 +106,7 @@
 		var/brute_was = picked.brute_dam
 		var/burn_was = picked.burn_dam
 
-		update |= picked.heal_damage(brute,burn)
+		update |= picked.heal_damage(brute,burn,0)
 
 		brute -= (brute_was-picked.brute_dam)
 		burn -= (burn_was-picked.burn_dam)

@@ -12,7 +12,7 @@
 
 /obj/item/stack/medical/attack(mob/living/carbon/M as mob, mob/user as mob)
 	var/mob/living/carbon/human/H = M
-	var/obj/item/organ/limb/affecting = H.get_organ("chest")
+	var/obj/item/organ/limb/affecting = H.get_organ(user.zone_sel.selecting)
 
 
 	if(affecting.status == ORGAN_ORGANIC) //Limb must be organic to be healed - RR
@@ -63,12 +63,11 @@
 				if(!istype(affecting, /obj/item/organ/limb) || affecting:burn_dam <= 0)
 					affecting = H.get_organ("head")
 
-			if(affecting.status == ORGAN_ORGANIC) // Just in case a robotic limb SOMEHOW got down to this point of the proc all you get is a message - RR
 
-				if (affecting.heal_damage(src.heal_brute, src.heal_burn))
-					H.update_damage_overlays(0)
+			if (affecting.heal_damage(src.heal_brute, src.heal_burn, 0))
+				H.update_damage_overlays(0)
 
-				M.updatehealth()
+			M.updatehealth()
 		else
 			M.heal_organ_damage((src.heal_brute/2), (src.heal_burn/2))
 

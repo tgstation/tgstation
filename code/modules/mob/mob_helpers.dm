@@ -169,6 +169,12 @@ proc/isorgan(A)
 
 	return zone
 
+/proc/above_neck(zone)
+	var/list/zones = list("head", "mouth", "eyes")
+	if(zones.Find(zone))
+		return 1
+	else
+		return 0
 
 /proc/stars(n, pr)
 	if (pr == null)
@@ -214,6 +220,23 @@ proc/isorgan(A)
 		t = text("[t][n_letter]")//since the above is ran through for each letter, the text just adds up back to the original word.
 		p++//for each letter p is increased to find where the next letter will be.
 	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
+
+/proc/derpspeech(message, stuttering)
+	message = replacetext(message, " am ", " ")
+	message = replacetext(message, " is ", " ")
+	message = replacetext(message, " are ", " ")
+	message = replacetext(message, "you", "u")
+	message = replacetext(message, "help", "halp")
+	message = replacetext(message, "grief", "grife")
+	message = replacetext(message, "space", "spess")
+	message = replacetext(message, "carp", "crap")
+	message = replacetext(message, "reason", "raisin")
+	if(prob(50))
+		message = uppertext(message)
+		message += "[stutter(pick("!", "!!", "!!!"))]"
+	if(!stuttering && prob(15))
+		message = stutter(message)
+	return message
 
 
 proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
