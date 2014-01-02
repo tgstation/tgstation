@@ -252,7 +252,7 @@
 							max_uses--
 							temp = "You have cast summon guns."
 						if("summonmagic")
-							feedback_add_details("wizard_spell_learned","SM") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							feedback_add_details("wizard_spell_learned","SU") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							H.rightandwrong(1)
 							max_uses--
 							temp = "You have cast summon magic."

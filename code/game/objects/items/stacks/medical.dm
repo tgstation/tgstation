@@ -64,10 +64,10 @@
 					affecting = H.get_organ("head")
 
 
-				if (affecting.heal_damage(src.heal_brute, src.heal_burn, 0))
-					H.update_damage_overlays(0)
+			if (affecting.heal_damage(src.heal_brute, src.heal_burn, 0))
+				H.update_damage_overlays(0)
 
-				M.updatehealth()
+			M.updatehealth()
 		else
 			M.heal_organ_damage((src.heal_brute/2), (src.heal_burn/2))
 

@@ -56,3 +56,9 @@
 	flags_inv = HIDEFACE
 	w_class = 2
 	var/voicechange = 0
+
+/obj/item/clothing/mask/horsehead/speechModification(message)
+	if(voicechange)
+		if(!(copytext(message, 1, 2) == "*" || (usr.mind && usr.mind.changeling && (copytext(message, 1, 3) == ":g" || copytext(message, 1, 3) == ":G" || copytext(message, 1, 3) == ":ï"))))
+			message = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
+	return message

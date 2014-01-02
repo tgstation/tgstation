@@ -72,6 +72,11 @@ BLIND     // can't see anything
 	body_parts_covered = HEAD
 	slot_flags = SLOT_MASK
 
+
+//Override this to modify speech like luchador masks.
+/obj/item/clothing/mask/proc/speechModification(message)
+	return message
+
 //Shoes
 /obj/item/clothing/shoes
 	name = "shoes"
