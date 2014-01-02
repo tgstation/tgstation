@@ -111,7 +111,7 @@ Headcoders, which are elected by the maintainers and members of the project, hav
 
 **Specification**
 
-As BYOND is an object oriented language, code must be object oriented when possible in order to be more flexible when adding content to it.
+As BYOND's Dream Maker is an object oriented language, code must be object oriented when possible in order to be more flexible when adding content to it.
 
 You must write BYOND code with absolute pathing, like so:
 
@@ -161,7 +161,7 @@ If your pull request is accepted, the code you add is no longer yours but everyo
 
 We have a [list of guides on the wiki](http://wiki.ss13.eu/index.php/Guides#Development_and_Contribution_Guides) which will help you get started contributing to /tg/station with git and Dream Maker.
 
-For beginners it is recommended you work on small projects, at first. There is an easy list of issues which are [contributor friendly, here](https://github.com/tgstation/-tg-station/issues?labels=Contributor+Friendly&page=1&state=open).
+For beginners, it is recommended you work on small projects, at first. There is an easy list of issues which are [contributor friendly, here](https://github.com/tgstation/-tg-station/issues?labels=Contributor+Friendly&page=1&state=open).
 
 #LICENSE
 
