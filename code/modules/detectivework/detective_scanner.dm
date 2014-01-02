@@ -77,7 +77,6 @@
 		if(A.blood_DNA)
 			for(var/blood in A.blood_DNA)
 				extracted_blood[blood]=A.blood_DNA[blood]
-				testing("Located blood: [blood] = [extracted_blood[blood]]")
 		return extracted_blood
 
 	proc/extract_fibers(var/atom/A)
@@ -289,12 +288,12 @@
 			var/turf/T=A
 			for(var/atom/O in T)
 				// Blood splatters, runes.
-				if (istype(A, /obj/effect/decal/cleanable/blood) || istype(A, /obj/effect/rune))
-					blood_DNA_found    |= extract_blood(O)
-					//fingerprints_found |= extract_fingerprints(O)
-					//fibers_found       |= extract_fibers(O)
+				if (istype(O, /obj/effect/decal/cleanable/blood) || istype(O, /obj/effect/rune))
+					blood_DNA_found    += extract_blood(O)
+					//fingerprints_found += extract_fingerprints(O)
+					//fibers_found       += extract_fibers(O)
 		//General
-		if (fingerprints_found.len == 0 && blood_DNA_found == 0 && fibers_found.len == 0)
+		if (fingerprints_found.len == 0 && blood_DNA_found.len == 0 && fibers_found.len == 0)
 			if(!custom_finger.len && !custom_fiber.len && !custom_blood.len)
 				user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
 				"\blue Unable to locate any fingerprints, materials, fibers, or blood on [A]!",\
@@ -336,7 +335,7 @@
 		//FIBERS
 		if(custom_fiber.len)
 			user << "\blue Forged Fibers/Materials Data Found: Scan with Hi-Res Forensic Scanner to retrieve."
-		else if(A.suit_fibers)
+		else if(fibers_found.len)
 			user << "\blue Fibers/Materials Data Stored: Scan with Hi-Res Forensic Scanner to retrieve."
 
 
@@ -346,14 +345,14 @@
 			spawn(15)
 				for(var/blood in custom_blood)
 					user << "Blood type: \red [custom_blood[blood]] \t \black DNA: \red [blood]"
-		else if (A.blood_DNA)
+		else if (blood_DNA_found.len)
 			user << "\blue Blood found on [A]. Analysing..."
 			spawn(15)
-				for(var/blood in A.blood_DNA)
-					user << "Blood type: \red [A.blood_DNA[blood]] \t \black DNA: \red [blood]"
+				for(var/blood in blood_DNA_found)
+					user << "Blood type: \red [blood_DNA_found[blood]] \t \black DNA: \red [blood]"
 		return
 
-	add_data(atom/A as mob|obj|turf|area)
+	add_data(var/atom/A, var/list/blood_DNA_found,var/list/fingerprints_found,var/list/fibers_found)
 		//I love associative lists.
 		var/list/data_entry = stored["\ref [A]"]
 		var/list/custom_finger = list()
@@ -376,12 +375,12 @@
 					else
 						data_prints[print] = stringmerge(data_prints[print],custom_finger[print])
 			else
-				for(var/print in A.fingerprints)
+				for(var/print in fingerprints_found)
 					var/merged_print = data_prints[print]
 					if(!merged_print)
-						data_prints[print] = A.fingerprints[print]
+						data_prints[print] = fingerprints_found[print]
 					else
-						data_prints[print] = stringmerge(data_prints[print],A.fingerprints[print])
+						data_prints[print] = stringmerge(data_prints[print],fingerprints_found[print])
 
 			//Now the fibers
 			var/list/fibers = data_entry[2]
@@ -392,10 +391,12 @@
 					if(!fibers.Find(custom_fiber[j]))	//It isn't!  Add!
 						fibers += custom_fiber[j]
 
-			else if(A.suit_fibers && A.suit_fibers.len)
-				for(var/j = 1, j <= A.suit_fibers.len, j++)	//Fibers~~~
-					if(!fibers.Find(A.suit_fibers[j]))	//It isn't!  Add!
-						fibers += A.suit_fibers[j]
+			else if(fibers_found && fibers_found.len)
+				for(var/j = 1, j <= fibers_found.len, j++)	//Fibers~~~
+					if(!fibers.Find(fibers_found[j]))	//It isn't!  Add!
+						fibers += fibers_found[j]
+
+			// Blud
 			var/list/blood = data_entry[3]
 			if(!blood)
 				blood = list()
@@ -403,10 +404,10 @@
 				for(var/main_blood in custom_blood)
 					if(!blood[main_blood])
 						blood[main_blood] = custom_blood[blood]
-			else if(A.blood_DNA && A.blood_DNA.len)
-				for(var/main_blood in A.blood_DNA)
+			else if(blood_DNA_found && blood_DNA_found.len)
+				for(var/main_blood in blood_DNA_found)
 					if(!blood[main_blood])
-						blood[main_blood] = A.blood_DNA[blood]
+						blood[main_blood] = blood_DNA_found[blood]
 			return 1
 		var/list/sum_list[4]	//Pack it back up!
 		if(custom_finger.len || custom_fiber.len || custom_blood.len)
@@ -414,9 +415,9 @@
 			sum_list[2] = custom_fiber ? custom_fiber.Copy() : null
 			sum_list[3] = custom_blood ? custom_blood.Copy() : null
 		else
-			sum_list[1] = A.fingerprints ? A.fingerprints.Copy() : null
-			sum_list[2] = A.suit_fibers ? A.suit_fibers.Copy() : null
-			sum_list[3] = A.blood_DNA ? A.blood_DNA.Copy() : null
+			sum_list[1] = fingerprints_found.Copy()
+			sum_list[2] = fibers_found.Copy()
+			sum_list[3] = blood_DNA_found.Copy()
 		sum_list[4] = "\The [A] in \the [get_area(A)]"
 		stored["\ref [A]"] = sum_list
 		clear_forgery()
