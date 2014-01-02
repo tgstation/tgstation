@@ -3,6 +3,9 @@
 
 //Potential replacement for genetics revives or something I dunno (?)
 
+#define CLONE_INITIAL_DAMAGE     190    //Clones in clonepods start with 190 cloneloss damage and 190 brainloss damage, thats just logical
+
+
 /obj/machinery/clonepod
 	anchored = 1
 	name = "cloning pod"
@@ -159,8 +162,8 @@
 
 	src.icon_state = "pod_1"
 	//Get the clone body ready
-	H.adjustCloneLoss(190) //new damage var so you can't eject a clone early then stab them to abuse the current damage system --NeoFite
-	H.adjustBrainLoss(190)
+	H.adjustCloneLoss(CLONE_INITIAL_DAMAGE )     //Yeah, clones start with very low health, not with random, because why would they start with random health
+	H.adjustBrainLoss(CLONE_INITIAL_DAMAGE )
 	H.Paralyse(4)
 
 	//Here let's calculate their health so the pod doesn't immediately eject them!!!
@@ -222,7 +225,6 @@
 			return
 
 		else if(src.occupant.cloneloss > (100 - src.heal_level))
-			world.log << "This works"
 			src.occupant.Paralyse(4)
 
 			 //Slowly get that clone healed and finished.
@@ -444,3 +446,5 @@
 		if(istype(A, /obj/machinery/clonepod))
 			A:malfunction()
 */
+
+#undef CLONE_INITIAL_DAMAGE
