@@ -38,9 +38,10 @@ Open tgstation.dme by double-clicking it, open the Build menu, and click
 compile.  This'll take a little while, and if everything's done right you'll get
 a message like this:
 
+```
 saving tgstation.dmb (DEBUG mode)
-
 tgstation.dmb - 0 errors, 0 warnings
+```
 
 If you see any errors or warnings, something has gone wrong - possibly a corrupt
 download or the files extracted wrong. If problems persist, ask for assistance
