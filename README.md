@@ -1,7 +1,9 @@
 /tg/station 13 v1.0 - 6 October 2010
 
 Website: http://ss13.eu
+
 Code: https://github.com/tgstation/-tg-station
+
 IRC: irc://irc.rizon.net/coderbus
 
 # DOWNLOADING
@@ -115,16 +117,16 @@ You must write BYOND code with absolute pathing, like so:
 
 ```DM
 
-/obj/item/weapon/baseball
-    name = "baseball"
-    desc = "A baseball."
+/obj/item/weapon/baseball_bat
+    name = "baseball bat"
+    desc = "A baseball bat."
     var/wooden = 1
 
-/obj/item/weapon/baseball/examine()
+/obj/item/weapon/baseball_bat/examine()
     if(wooden)
-        desc = "A wooden baseball."
+        desc = "A wooden baseball bat."
     else
-        desc = "A metal baseball."
+        desc = "A metal baseball bat."
     ..()
 
 ```
@@ -154,6 +156,12 @@ You are expected to document all your changes in the pull request, failing to do
 If you are proposing multiple changes, which change many different aspects of the code, you are to section them off into different pull requests in order to easily review them and to deny/accept the changes that are deemed acceptable.
 
 If your pull request is accepted, the code you add is no longer yours but everyones, everyone is free to work on it but you are also free to object to any changes being made, which will be noted by a headcoder.
+
+**Getting Started**
+
+We have a [list of guides on the wiki](http://wiki.ss13.eu/index.php/Guides#Development_and_Contribution_Guides) which will help you get started contributing to /tg/station with git and Dream Maker.
+
+For beginners it is recommended you work on small projects, at first. There is an easy list of issues which are [contributor friendly, here](https://github.com/tgstation/-tg-station/issues?labels=Contributor+Friendly&page=1&state=open).
 
 #LICENSE
 
