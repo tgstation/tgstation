@@ -14,7 +14,7 @@
 	var/open_panel = 0 	//are the wires exposed?
 	var/active = 0		//is the bomb counting down?
 	var/defused = 0		//is the bomb capable of exploding?
-	var/obj/item/weapon/syndicatebombcore/payload = new /obj/item/weapon/syndicatebombcore
+	var/obj/item/weapon/syndicatebombcore/payload
 
 /obj/machinery/syndicatebomb/process()
 	if(active && !defused && (timer > 0)) 	//Tick Tock
@@ -33,8 +33,8 @@
 		return
 
 /obj/machinery/syndicatebomb/New()
-	wires = new(src)
-	payload.loc = src
+	wires 	= new(src)
+	payload = new(src)
 	..()
 
 
