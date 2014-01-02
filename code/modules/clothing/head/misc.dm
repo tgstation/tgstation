@@ -164,6 +164,7 @@
 	icon_state = "chickenhead"
 	item_state = "chickensuit"
 	flags = FPRINT | TABLEPASS | BLOCKHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 
 /obj/item/clothing/head/bearpelt
 	name = "bear pelt hat"
