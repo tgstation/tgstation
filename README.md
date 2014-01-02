@@ -62,7 +62,9 @@ config/admin_ranks.txt
 
 The format is
 
+```
 byondkey = Rank
+```
 
 where the admin rank must be properly capitalised.
 
