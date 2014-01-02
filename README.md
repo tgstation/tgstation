@@ -134,7 +134,7 @@ You must write BYOND code with absolute pathing, like so:
 
 ```
 
-You must not use semi-colons to override safety checks, instead of using proper type casting.
+You must not use colons to override safety checks on an object's variable/function, instead of using proper type casting.
 
 It is rarely allowed to put type paths in a text format, as they is no compile errors if the type path no longer exists.
 
