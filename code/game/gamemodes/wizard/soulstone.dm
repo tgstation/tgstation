@@ -5,7 +5,6 @@
 	item_state = "electronic"
 	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefacts power."
 	w_class = 1.0
-	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
 	origin_tech = "bluespace=4;materials=4"
 	var/imprinted = "empty"
@@ -81,7 +80,6 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "construct"
 	desc = "A wicked machine used by those skilled in magical arts. It is inactive"
-	flags = FPRINT | TABLEPASS
 
 /obj/structure/constructshell/attackby(obj/item/O as obj, mob/user as mob)
 	if(istype(O, /obj/item/device/soulstone))

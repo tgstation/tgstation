@@ -14,7 +14,6 @@ var/bomb_set
 	var/yes_code = 0.0
 	var/safety = 1.0
 	var/obj/item/weapon/disk/nuclear/auth = null
-	flags = FPRINT
 	use_power = 0
 
 /obj/machinery/nuclearbomb/New()

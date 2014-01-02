@@ -10,7 +10,6 @@
 	icon_state = "switch-dbl-up"
 	var/icon_state_on = "switch-dbl-down"
 	var/icon_state_off = "switch-dbl-up"
-	flags = FPRINT
 	density = 0
 	anchored = 1
 	var/on = 0  //up is off, down is on

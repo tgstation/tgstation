@@ -3,7 +3,6 @@
 	desc = "A board for pinning important notices upon."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nboard00"
-	flags = FPRINT
 	density = 0
 	anchored = 1
 	var/notices = 0

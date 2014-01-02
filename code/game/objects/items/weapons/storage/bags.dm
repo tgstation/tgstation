@@ -20,7 +20,6 @@
 	display_contents_with_number = 1 // should work fine now
 	use_to_pickup = 1
 	slot_flags = SLOT_BELT
-	flags = FPRINT | TABLEPASS
 
 // -----------------------------
 //          Trash bag
