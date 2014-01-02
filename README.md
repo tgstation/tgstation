@@ -4,9 +4,8 @@ Website: http://ss13.eu
 Code: https://github.com/tgstation/-tg-station
 IRC: irc://irc.rizon.net/coderbus
 
-================================================================================
-DOWNLOADING
-================================================================================
+# DOWNLOADING
+
 There are a number of ways to download the source code. Some are described here, an alternative all-inclusive guide is also located at http://wiki.ss13.eu/index.php/Downloading_the_source_code
 
 Option 1: Download the source code as a zip by clicking the ZIP button in the
@@ -27,9 +26,7 @@ Follow this: http://wiki.ss13.eu/index.php/Setting_up_git
 (It's recommended that you use git-scm, as above, rather than the git CLI
 suggested by the guide)
 
-================================================================================
-INSTALLATION
-================================================================================
+#INSTALLATION
 
 First-time installation should be fairly straightforward.  First, you'll need
 BYOND installed.  You can get it from http://www.byond.com/.  Once you've done 
@@ -71,9 +68,7 @@ compiled tgstation.dmb file.  Make sure to set the port to the one you
 specified in the config.txt, and set the Security box to 'Safe'.  Then press GO
 and the server should start up and be ready to join.
 
-================================================================================
-UPDATING
-================================================================================
+#UPDATING
 
 To update an existing installation, first back up your /config and /data folders
 as these store your server configuration, player preferences and banlist.
@@ -84,27 +79,83 @@ install, overwriting when prompted except if we've specified otherwise, and
 recompile the game.  Once you start the server up again, you should be running
 the new version.
 
-================================================================================
-SQL SETUP
-================================================================================
+#SQL SETUP
 
 The SQL backend for the library and stats tracking requires a 
 MySQL server.  Your server details go in /config/dbconfig.txt, and the SQL 
 schema is in /SQL/tgstation_schema.sql.  More detailed setup instructions are located here: http://wiki.ss13.eu/index.php/Downloading_the_source_code#Setting_up_the_database
 
-================================================================================
-IRC BOT SETUP
-================================================================================
+#IRC BOT SETUP
 
 Included in the SVN is an IRC bot capable of relaying adminhelps to a specified
 IRC channel/server (thanks to Skibiliano).
 Instructions for bot setup are included in the /bot folder along with the script
 itself
 
+#CONTRIBUTING
+Everyone is free to contribute to this project as long as they follow these simple guidelines and specifications.
 
-================================================================================
-LICENSE
-================================================================================
+**Introduction**
+
+As a goal to increase code maintainability we are going to be requiring all pull requests to hold up to the standards mentioned below. This is in order for all of us to benefit, instead of having to fix the same bug more than once because of duplicated code.
+
+But first we want to make it clear over what powers the maintainers have over your pull request, so you do not get any surprises when submitting pull requests and it is closed for a reason you did not suspect.
+
+Maintainers are quality control. If a proposed pull request does not meet the mentioned quality specifications then it can be closed if you fail to satisfy them. Maintainers are required to give a reason for closing the pull request.
+
+Maintainers can revert your changes if they feel they are not worth maintaining or if they did not live up to the quality specifications.
+
+Headcoders, which are elected by the maintainers and members of the project, have complete control over what goes through and what is reverted. They are encouraged to take control in what features are added to the game. It is encouraged that if you do not want to waste time working on a feature, that might be denied, that you ask a head coder first.
+
+**Specification**
+
+As BYOND is an object oriented language, code must be object oriented when possible in order to be more flexible when adding content to it.
+
+You must write BYOND code with absolute pathing, like so:
+
+```DM
+
+/obj/item/weapon/baseball
+    name = "baseball"
+    desc = "A baseball."
+    var/wooden = 1
+
+/obj/item/weapon/baseball/examine()
+    if(wooden)
+        desc = "A wooden baseball."
+    else
+        desc = "A metal baseball."
+    ..()
+
+```
+
+You must not use semi-colons to override safety checks, instead of using proper type casting.
+
+It is rarely allowed to put type paths in a text format, as they is no compile errors if the type path no longer exists.
+
+You must use tabs to indent your code.
+
+Hacky code, such as adding specific checks, is highly discouraged and only allowed when there is no other option. You can avoid hacky code by using object oriented methodologies, such as overriding a function or sectioning code into functions and then overriding them as required.
+
+Duplicated code is 99% of the time never allowed. Copying code from one place to another maybe suitable for small short time projects but /tg/station focuses on the long term and thus discourages this. Instead you can use object orientation, or simply placing repeated code in a function, to obey this specification easily.
+
+Code should be modular where possible, if you are working on a new class then it is best if you put it in a new file.
+
+Bloated code may be necessary to add a certain feature, which means there has to be a judgement over whether the feature is worth having or not. You can help make this decision easier by making sure your code is modular.
+
+You are expected to help maintain the code that you add, meaning if there is a problem then you are likely to be approached in order to fix any issues, runtimes or bugs.
+
+**Other Requirements/Information**
+
+Pull requests will sometimes take a while before they are looked at by a maintainer, the bigger the change the more time it will take before they are accepted into the code.
+
+You are expected to document all your changes in the pull request, failing to do so will risk delaying it. On the other hand you can speed up the process by making the pull request readable and easy to understand, with diagrams or before/after data.
+
+If you are proposing multiple changes, which change many different aspects of the code, you are to section them off into different pull requests in order to easily review them and to deny/accept the changes that are deemed acceptable.
+
+If your pull request is accepted, the code you add is no longer yours but everyones, everyone is free to work on it but you are also free to object to any changes being made, which will be noted by a headcoder.
+
+#LICENSE
 
 All code is under a GNU GPL v3 license (http://www.gnu.org/licenses/gpl.html),
 including tools unless their readme specifies otherwise.
