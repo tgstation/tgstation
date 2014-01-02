@@ -184,6 +184,10 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #define MAX_PILL_SPRITE 20 //max icon state of the pill sprites
 #define MAX_BOTTLE_SPRITE 20 //max icon state of the bottle sprites
+var/list/has_sprites = list()
+var/list/pill_icon_list = list()
+var/list/bottle_icon_list = list()
+
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
 	density = 1
@@ -199,11 +203,17 @@
 	var/useramount = 30 // Last used amount
 	var/bottlesprite = "1" //yes, strings
 	var/pillsprite = "1"
-	var/client/has_sprites = list()
 
 /obj/machinery/chem_master/New()
 	create_reagents(100)
 	overlays += "waitlight"
+
+	if (!pill_icon_list.len)
+		for(var/i = 1 to MAX_PILL_SPRITE)
+			pill_icon_list += icon('icons/obj/chemical.dmi', "pill" + num2text(i))
+	if (!bottle_icon_list.len)
+		for(var/i = 1 to MAX_BOTTLE_SPRITE)
+			bottle_icon_list += icon('icons/obj/chemical.dmi', "bottle" + num2text(i))
 
 /obj/machinery/chem_master/ex_act(severity)
 	switch(severity)
@@ -346,6 +356,7 @@
 				P.pixel_x = rand(-7, 7) //random position
 				P.pixel_y = rand(-7, 7)
 				reagents.trans_to(P,50)
+				P.icon_state = "pill"+pillsprite
 			else
 				var/name = reject_bad_text(input(usr,"Name:","Name your bag!",reagents.get_master_reagent_name()))
 				var/obj/item/weapon/reagent_containers/food/condiment/pack/P = new/obj/item/weapon/reagent_containers/food/condiment/pack(src.loc)
@@ -355,7 +366,6 @@
 				P.name = "[name] pack"
 				P.desc = "A small condiment pack. The label says it contains [name]."
 				reagents.trans_to(P,10)
-			P.icon_state = "pill"+pillsprite
 
 		else if (href_list["createbottle"])
 			if(!condi)
@@ -403,9 +413,9 @@
 		spawn()
 			has_sprites += user.client
 			for(var/i = 1 to MAX_PILL_SPRITE)
-				usr << browse_rsc(icon('icons/obj/chemical.dmi', "pill" + num2text(i)), "pill[i].png")
+				usr << browse_rsc(pill_icon_list[i], "pill[i].png")
 			for(var/i = 1 to MAX_BOTTLE_SPRITE)
-				usr << browse_rsc(icon('icons/obj/chemical.dmi', "bottle" + num2text(i)), "bottle[i].png")
+				usr << browse_rsc(bottle_icon_list[i], "bottle[i].png")
 			src.updateUsrDialog()
 	var/dat = ""
 	if(!beaker)
