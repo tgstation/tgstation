@@ -71,7 +71,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
-	var/mob/M = src
+	var/mob/M = src//old body
 
 	if(stat != DEAD)
 		succumb()
@@ -83,13 +83,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		resting = 1
 		ghostize(0)					//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
 
-	if(istype(M.loc,/obj/structure/closet/body_bag/)) M=M.loc //swaps "M" with src if src is in a bag
-	var/obj/structure/morgue/Morgue = null//locate() in M.loc//Sets Morgue as something one range of one a.k.a. their location
-	//Actually now that I think of it it being in it's location doesn't really matter
-	if(istype(M.loc,/obj/structure/morgue))
-		Morgue = M.loc//check if a morgue slab is the M's location itself a.k.a inside
-	if(Morgue)
-		Morgue.update()
+	
+	if(istype(M.loc,/obj/structure/closet/body_bag/)) M=M.loc //swaps "M" with bag if src/M is in a bag
+	if(istype(M.loc,/obj/structure/morgue))// if M/Bag/src is in a morgue slab
+		var/obj/structure/morgue/Morgue = M.loc
+		Morgue.update()//update
 
 	return
 	
@@ -163,10 +161,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	mind.current.ajourn=0
 	mind.current.key = key
 	
-	var/obj/structure/morgue/Morgue = locate() in mind.current.loc
-	if(Morgue)
-		Morgue.update()
-
+	
+	var/mob/M = mind.current//current body right?
+	if(istype(M.loc,/obj/structure/closet/body_bag/)) M=M.loc //swaps "M" with bag if src/M is in a bag
+	if(istype(M.loc,/obj/structure/morgue))// if M/Bag/src is in a morgue slab
+		var/obj/structure/morgue/Morgue = M.loc
+		Morgue.update()//update	
+	
 	return
 	
 
