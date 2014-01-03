@@ -10,7 +10,10 @@
 
 /mob/living/carbon/alien/humanoid/Life()
 	set invisibility = 0
+
+	#ifdef SET_BACKGROUND
 	set background = 1
+	#endif
 
 	if (monkeyizing)
 		return

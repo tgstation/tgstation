@@ -108,7 +108,9 @@ datum/controller/game_controller/proc/setup_objects()
 datum/controller/game_controller/proc/process()
 	processing = 1
 	spawn(0)
+		#ifdef SET_BACKGROUND
 		set background = 1
+		#endif
 		while(1)	//far more efficient than recursively calling ourself
 			if(!Failsafe)	new /datum/controller/failsafe()
 

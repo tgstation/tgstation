@@ -68,7 +68,9 @@
 
 /datum/camerachunk/proc/update()
 
+	#ifdef SET_BACKGROUND
 	set background = 1
+	#endif
 
 	var/list/newVisibleTurfs = list()
 

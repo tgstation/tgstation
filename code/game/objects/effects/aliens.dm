@@ -164,7 +164,10 @@
 
 
 /obj/structure/alien/weeds/proc/Life()
+	#ifdef SET_BACKGROUND
 	set background = 1
+	#endif
+
 	var/turf/U = get_turf(src)
 
 	if(istype(U, /turf/space))

@@ -36,7 +36,9 @@
 
 /mob/living/carbon/human/Life()
 	set invisibility = 0
+	#ifdef SET_BACKGROUND
 	set background = 1
+	#endif
 
 	if (monkeyizing)	return
 	if(!loc)			return	// Fixing a null error that occurs when the mob isn't found in the world -- TLE
