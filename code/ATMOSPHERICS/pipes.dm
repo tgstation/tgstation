@@ -27,6 +27,12 @@ obj/machinery/atmospherics/pipe
 			if(target.initialize_directions & get_dir(target,src))
 				return target
 
+	// Ditto, but for heat-exchanging pipes.
+	proc/findConnectingHE(var/direction)
+		for(var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/target in get_step(src,direction))
+			if(target.initialize_directions_he & get_dir(target,src))
+				return target
+
 	return_air()
 		if(!parent)
 			parent = new /datum/pipeline()
@@ -236,7 +242,7 @@ obj/machinery/atmospherics/pipe
 			normalize_dir()
 
 			for(var/direction in cardinal)
-				if(direction&initialize_directions)
+				if(initialize_directions & direction)
 					var/obj/machinery/atmospherics/found = findConnecting(direction)
 					if(!found) continue
 					if(!node1)
@@ -346,7 +352,6 @@ obj/machinery/atmospherics/pipe
 	simple/insulated
 		name = "Insulated pipe"
 		icon = 'icons/obj/atmospherics/red_pipe.dmi'
-		icon_state = "intact"
 
 		minimum_temperature_difference = 10000
 		thermal_conductivity = 0
@@ -354,11 +359,13 @@ obj/machinery/atmospherics/pipe
 		fatigue_pressure = 900*ONE_ATMOSPHERE
 		alert_pressure = 900*ONE_ATMOSPHERE
 
+	simple/insulated/visible
+		icon_state = "intact"
 		level = 2
 
-		hidden
-			level=1
-			icon_state="intact-f"
+	simple/insulated/hidden
+		icon_state = "intact-f"
+		level = 1
 
 
 	tank
@@ -785,7 +792,7 @@ obj/machinery/atmospherics/pipe
 
 			for(var/direction in cardinal)
 				if(direction&connect_directions)
-					var/found=findConnecting(direction)
+					var/obj/machinery/atmospherics/found=findConnecting(direction)
 					if(!found)
 						continue
 					if(!node1)
@@ -1046,25 +1053,20 @@ obj/machinery/atmospherics/pipe
 			return
 
 		initialize(var/skip_update_icon=0)
-
-			for(var/obj/machinery/atmospherics/target in get_step(src,1))
-				if(target.initialize_directions & 2)
-					node1 = target
-					break
-
-			for(var/obj/machinery/atmospherics/target in get_step(src,2))
-				if(target.initialize_directions & 1)
-					node2 = target
-					break
-
-			for(var/obj/machinery/atmospherics/target in get_step(src,4))
-				if(target.initialize_directions & 8)
-					node3 = target
-					break
-
-			for(var/obj/machinery/atmospherics/target in get_step(src,8))
-				if(target.initialize_directions & 4)
-					node4 = target
+			for(var/direction in cardinal)
+				var/obj/machinery/atmospherics/found = findConnecting(direction)
+				if(!found) continue
+				if(!node1)
+					node1 = found
+					continue
+				if(!node2)
+					node2 = found
+					continue
+				if(!node3)
+					node3 = found
+					continue
+				if(!node4)
+					node4 = found
 					break
 
 			var/turf/T = src.loc			// hide if turf is not intact
@@ -1210,16 +1212,19 @@ obj/machinery/atmospherics/pipe
 			icon_state = "cap[invisibility ? "-f" : ""]"
 			return
 
-		initialize()
-			for(var/obj/machinery/atmospherics/target in get_step(src, dir))
-				if(target.initialize_directions & get_dir(target,src))
-					node = target
-					break
+		initialize(var/skip_update_icon=0)
+			for(var/direction in cardinal)
+				if(initialize_directions & direction)
+					var/obj/machinery/atmospherics/found = findConnecting(direction)
+					if(!found) continue
+					if(!node)
+						node = found
+						break
 
 			var/turf/T = src.loc			// hide if turf is not intact
 			hide(T.intact)
-			//update_icon()
-			update_icon()
+			if(!skip_update_icon)
+				update_icon()
 
 		visible
 			level = 2
