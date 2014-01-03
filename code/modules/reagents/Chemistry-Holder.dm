@@ -533,6 +533,16 @@ datum
 
 				return res
 
+			// Admin logging.
+			get_reagent_ids(var/and_amount=0)
+				var/list/stuff = list()
+				for(var/datum/reagent/A in reagent_list)
+					if(and_amount)
+						stuff += "[get_reagent_amount(A.id)]U of [A.id]"
+					else
+						stuff += A.id
+				return english_list(stuff)
+
 			remove_all_type(var/reagent_type, var/amount, var/strict = 0, var/safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
 				if(!isnum(amount)) return 1
 

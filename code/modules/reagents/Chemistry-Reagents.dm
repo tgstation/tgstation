@@ -1875,7 +1875,7 @@ datum
 			id = "spiritbreaker"
 			description = "An extremely dangerous hallucinogen often used for torture. Extracted from the leaves of the rare Ambrosia Cruciatus plant."
 			reagent_state = LIQUID
-			color = "3B0805" // rgb: 59, 8, 5
+			color = "#3B0805" // rgb: 59, 8, 5
 			custom_metabolism = 0.05
 
 			on_mob_life(var/mob/living/M as mob)
@@ -1894,12 +1894,14 @@ datum
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+		/* Dupe - N3X
 		holywater
 			name = "Holy Water"
 			id = "holywater"
 			description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
 			reagent_state = LIQUID
 			color = "#535E66" // rgb: 83, 94, 102
+	    */
 
 		nanites
 			name = "Nanomachines"
