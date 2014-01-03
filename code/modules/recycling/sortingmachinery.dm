@@ -4,7 +4,6 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverycloset"
 	density = 1
-	flags = FPRINT
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/obj/wrapped = null
 	var/sortTag = 0
@@ -55,7 +54,6 @@
 	desc = "A small wrapped package."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverycrateSmall"
-	flags = FPRINT
 	var/obj/item/wrapped = null
 	var/sortTag = 0
 
@@ -98,7 +96,7 @@
 	name = "package wrapper"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "deliveryPaper"
-	flags = FPRINT | NOBLUDGEON
+	flags = NOBLUDGEON
 	w_class = 3.0
 	var/amount = 25.0
 
@@ -116,7 +114,6 @@
 			return
 
 		user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [name] on \ref[target]</font>")
-
 
 		if(istype(target, /obj/item) && !(istype(target, /obj/item/weapon/storage) && !istype(target,/obj/item/weapon/storage/box)))
 			var/obj/item/O = target
@@ -184,7 +181,7 @@
 
 	w_class = 1
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 
 	proc/openwindow(mob/user as mob)

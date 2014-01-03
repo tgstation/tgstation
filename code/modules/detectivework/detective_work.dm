@@ -50,8 +50,6 @@ atom/proc/add_fibers(mob/living/carbon/human/M)
 /atom/proc/add_hiddenprint(mob/living/M as mob)
 	if(isnull(M)) return
 	if(isnull(M.key)) return
-	if(!( flags ) & FPRINT)
-		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(!istype(H.dna, /datum/dna))
@@ -76,8 +74,6 @@ atom/proc/add_fibers(mob/living/carbon/human/M)
 /atom/proc/add_fingerprint(mob/living/M as mob, ignoregloves = 0)
 	if(isnull(M)) return
 	if(isnull(M.key)) return
-	if(!(flags & FPRINT))
-		return
 	if(ishuman(M))
 		//Add the list if it does not exist.
 		if(!fingerprintshidden)

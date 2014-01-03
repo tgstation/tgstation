@@ -142,20 +142,7 @@ var/list/department_radio_keys = list(
 
 	// :downs:
 	if (getBrainLoss() >= 60)
-		message = replacetext(message, " am ", " ")
-		message = replacetext(message, " is ", " ")
-		message = replacetext(message, " are ", " ")
-		message = replacetext(message, "you", "u")
-		message = replacetext(message, "help", "halp")
-		message = replacetext(message, "grief", "grife")
-		message = replacetext(message, "space", "spess")
-		message = replacetext(message, "carp", "crap")
-		message = replacetext(message, "reason", "raisin")
-		if(prob(50))
-			message = uppertext(message)
-			message += "[stutter(pick("!", "!!", "!!!"))]"
-		if(!stuttering && prob(15))
-			message = stutter(message)
+		message = derpspeech(message, stuttering)
 
 	if (stuttering)
 		message = stutter(message)
@@ -298,7 +285,7 @@ var/list/department_radio_keys = list(
 			var/mob/living/simple_animal/parrot/P = A
 			if(P.speech_buffer.len >= 10)
 				P.speech_buffer.Remove(pick(P.speech_buffer))
-			P.speech_buffer.Add(message)
+			P.speech_buffer.Add(html_decode(message))
 
 		if(istype(A, /obj/)) //radio in pocket could work, radio in backpack wouldn't --rastaf0
 			var/obj/O = A

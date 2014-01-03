@@ -63,9 +63,7 @@
 					for(var/datum/reagent/A in src.reagents.reagent_list)
 						R += A.id + " ("
 						R += num2text(A.volume) + "),"
-				user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> squirted <b>[M]/[M.ckey]</b> with ([R])"
-				M.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> squirted <b>[M]/[M.ckey]</b> with ([R])"
-				log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> squirted <b>[M]/[M.ckey]</b> with ([R])")
+				add_logs(user, M, "squirted", object="[R]")
 
 			trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 			user << "<span class='notice'>You transfer [trans] unit\s of the solution.</span>"

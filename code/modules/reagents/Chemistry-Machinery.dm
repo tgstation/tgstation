@@ -8,7 +8,7 @@
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
-	use_power = 0
+	use_power = 1
 	idle_power_usage = 40
 	var/energy = 50
 	var/max_energy = 50
@@ -16,7 +16,7 @@
 	var/beaker = null
 	var/recharged = 0
 	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine",
-	"sodium","aluminum","silicon","phosphorus","sulfur","chlorine","potassium","iron",
+	"sodium","aluminium","silicon","phosphorus","sulfur","chlorine","potassium","iron",
 	"copper","mercury","radium","water","ethanol","sugar","sacid")
 
 /obj/machinery/chem_dispenser/proc/recharge()
@@ -78,7 +78,7 @@
   * @return nothing
   */
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main")
-	if(stat & (BROKEN|NOPOWER)) return
+	if(stat & (BROKEN)) return
 	if(user.stat || user.restrained()) return
 
 	// this is the data which will be sent to the ui
@@ -113,7 +113,7 @@
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, ui_key)
 	if (!ui)
 		// the ui does not exist, so we'll create a new one
-		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "Chem Dispenser 5000", 370, 585)
+		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "Chem Dispenser 5000", 370, 590)
 		// When the UI is first opened this is the data it will use
 		ui.set_initial_data(data)
 		ui.open()
@@ -123,7 +123,7 @@
 		return
 
 /obj/machinery/chem_dispenser/Topic(href, href_list)
-	if(stat & (NOPOWER|BROKEN))
+	if(stat & (BROKEN))
 		return 0 // don't update UIs attached to this object
 
 	if(href_list["amount"])
@@ -199,6 +199,7 @@
 
 /obj/machinery/chem_master/New()
 	create_reagents(100)
+	overlays += "waitlight"
 
 /obj/machinery/chem_master/ex_act(severity)
 	switch(severity)
@@ -325,20 +326,30 @@
 				beaker = null
 				reagents.clear_reagents()
 				icon_state = "mixer0"
-		else if (href_list["createpill"])
-			var/name = reject_bad_text(input(usr,"Name:","Name your pill!",reagents.get_master_reagent_name()))
-			var/obj/item/weapon/reagent_containers/pill/P
+		else if (href_list["createpill"]) //Also used for condiment packs.
+			if(!condi)
+				var/name = reject_bad_text(input(usr,"Name:","Name your pill!",reagents.get_master_reagent_name()))
+				var/obj/item/weapon/reagent_containers/pill/P
 
-			if(loaded_pill_bottle && loaded_pill_bottle.contents.len < loaded_pill_bottle.storage_slots)
-				P = new/obj/item/weapon/reagent_containers/pill(loaded_pill_bottle)
+				if(loaded_pill_bottle && loaded_pill_bottle.contents.len < loaded_pill_bottle.storage_slots)
+					P = new/obj/item/weapon/reagent_containers/pill(loaded_pill_bottle)
+				else
+					P = new/obj/item/weapon/reagent_containers/pill(src.loc)
+
+				if(!name) name = reagents.get_master_reagent_name()
+				P.name = "[name] pill"
+				P.pixel_x = rand(-7, 7) //random position
+				P.pixel_y = rand(-7, 7)
+				reagents.trans_to(P,50)
 			else
-				P = new/obj/item/weapon/reagent_containers/pill(src.loc)
+				var/name = reject_bad_text(input(usr,"Name:","Name your bag!",reagents.get_master_reagent_name()))
+				var/obj/item/weapon/reagent_containers/food/condiment/pack/P = new/obj/item/weapon/reagent_containers/food/condiment/pack(src.loc)
 
-			if(!name) name = reagents.get_master_reagent_name()
-			P.name = "[name] pill"
-			P.pixel_x = rand(-7, 7) //random position
-			P.pixel_y = rand(-7, 7)
-			reagents.trans_to(P,50)
+				if(!name) name = reagents.get_master_reagent_name()
+				P.originalname = name
+				P.name = "[name] pack"
+				P.desc = "A small condiment pack. The label says it contains [name]."
+				reagents.trans_to(P,10)
 
 		else if (href_list["createbottle"])
 			if(!condi)
@@ -410,6 +421,7 @@
 			dat += "<HR><BR><A href='?src=\ref[src];createpill=1'>Create pill (50 units max)</A><BR>"
 			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (30 units max)</A>"
 		else
+			dat += "<HR><BR><A href='?src=\ref[src];createpill=1'>Create pack (10 units max)</A><BR>"
 			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (50 units max)</A>"
 	if(!condi)
 		user << browse("<TITLE>Chemmaster 3000</TITLE>Chemmaster menu:<BR><BR>[dat]", "window=chem_master;size=575x400")
@@ -518,7 +530,8 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		if(!src.wait)
 			var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 			if(B)
-
+				B.pixel_x = rand(-3, 3)
+				B.pixel_y = rand(-3, 3)
 				var/path = GetResistancesByIndex(text2num(href_list["create_vaccine"]))
 				var/vaccine_type = path
 				var/vaccine_name = "Unknown"
@@ -547,6 +560,8 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		if(!wait)
 			var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 			B.icon_state = "bottle3"
+			B.pixel_x = rand(-3, 3)
+			B.pixel_y = rand(-3, 3)
 			var/type = GetVirusTypeByIndex(text2num(href_list["create_virus_culture"]))//the path is received as string - converting
 			var/datum/disease/D = null
 			if(!ispath(type))
@@ -566,7 +581,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 			B.desc = "A small bottle. Contains [D.agent] culture in synthblood medium."
 			B.reagents.add_reagent("blood",20,data)
 			src.updateUsrDialog()
-			replicator_cooldown(1000)
+			replicator_cooldown(50)
 		else
 			src.temp_html = "The replicator is not ready yet."
 		src.updateUsrDialog()

@@ -1,43 +1,11 @@
-/mob/living/carbon/monkey/gib()
-	death(1)
-	var/atom/movable/overlay/animation = null
-	monkeyizing = 1
-	canmove = 0
-	icon = null
-	invisibility = 101
+/mob/living/carbon/monkey/gib_animation(var/animate)
+	..(animate, "gibbed-m")
 
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
+/mob/living/carbon/monkey/dust_animation(var/animate)
+	..(animate, "dust-m")
 
-	flick("gibbed-m", animation)
-	gibs(loc, viruses, dna)
-
-	spawn(15)
-		if(animation)	del(animation)
-		if(src)			del(src)
-
-/mob/living/carbon/monkey/dust()
-	death(1)
-	var/atom/movable/overlay/animation = null
-	monkeyizing = 1
-	canmove = 0
-	icon = null
-	invisibility = 101
-
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
-
-	flick("dust-m", animation)
-	new /obj/effect/decal/cleanable/ash(loc)
-
-	spawn(15)
-		if(animation)	del(animation)
-		if(src)			del(src)
-
+/mob/living/carbon/monkey/dust(var/animation = 1)
+	..()
 
 /mob/living/carbon/monkey/death(gibbed)
 	if(stat == DEAD)	return

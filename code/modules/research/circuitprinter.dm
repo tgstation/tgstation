@@ -13,6 +13,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	var/gold_amount = 0
 	var/diamond_amount = 0
 	var/max_material_amount = 75000.0
+	var/efficiency_coeff
 
 	New()
 		..()
@@ -35,7 +36,10 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 			T += M.rating
 		max_material_amount = T * 75000.0
-
+		T = 0
+		for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+			T += M.rating
+		efficiency_coeff = T-1
 
 	blob_act()
 		if (prob(50))
@@ -52,19 +56,12 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		if (shocked)
 			shock(user,50)
 		if (istype(O, /obj/item/weapon/screwdriver))
-			if (!opened)
-				opened = 1
-				if(linked_console)
-					linked_console.linked_imprinter = null
-					linked_console = null
-				icon_state = "circuit_imprinter_t"
-				user << "You open the maintenance hatch of [src]."
-			else
-				opened = 0
-				icon_state = "circuit_imprinter"
-				user << "You close the maintenance hatch of [src]."
+			if(linked_console)
+				linked_console.linked_imprinter = null
+				linked_console = null
+			default_deconstruction_screwdriver(user, "circuit_imprinter_t", "circuit_imprinter")
 			return
-		if (opened)
+		if (panel_open)
 			if(istype(O, /obj/item/weapon/crowbar))
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)

@@ -49,7 +49,7 @@
 
 /obj/machinery/constructable_frame/machine_frame/attackby(obj/item/P as obj, mob/user as mob)
 	if(P.crit_fail)
-		user << "\red This part is faulty, you cannot add this to the machine!"
+		user << "<span class='danger'>This part is faulty, you cannot add this to the machine!</span>"
 		return
 	switch(state)
 		if(1)
@@ -57,17 +57,17 @@
 				var/obj/item/weapon/cable_coil/C = P
 				if(C.amount >= 5)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					user << "\blue You start to add cables to the frame."
+					user << "<span class='notice'>You start to add cables to the frame.</span>"
 					if(do_after(user, 20))
 						if(C)
 							C.amount -= 5
 							if(!C.amount) del(C)
-							user << "\blue You add cables to the frame."
+							user << "<span class='notice'>You add cables to the frame.</span>"
 							state = 2
 							icon_state = "box_1"
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				user << "\blue You dismantle the frame"
+				user << "<span class='notice'>You dismantle the frame.</span>"
 				new /obj/item/stack/sheet/metal(src.loc, 5)
 				del(src)
 		if(2)
@@ -75,7 +75,7 @@
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "machine")
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					user << "\blue You add the circuit board to the frame."
+					user << "<span class='notice'>You add the circuit board to the frame.</span>"
 					circuit = P
 					user.drop_item()
 					P.loc = src
@@ -86,10 +86,10 @@
 					update_namelist()
 					update_req_desc()
 				else
-					user << "\red This frame does not accept circuit boards of this type!"
+					user << "<span class='danger'>This frame does not accept circuit boards of this type!</span>"
 			if(istype(P, /obj/item/weapon/wirecutters))
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-				user << "\blue You remove the cables."
+				user << "<span class='notice'>You remove the cables.</span>"
 				state = 1
 				icon_state = "box_0"
 				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( src.loc )
@@ -102,9 +102,9 @@
 				circuit.loc = src.loc
 				circuit = null
 				if(components.len == 0)
-					user << "\blue You remove the circuit board."
+					user << "<span class='notice'>You remove the circuit board.</span>"
 				else
-					user << "\blue You remove the circuit board and other components."
+					user << "<span class='notice'>You remove the circuit board and other components.</span>"
 					for(var/obj/item/weapon/W in components)
 						W.loc = src.loc
 				desc = initial(desc)
@@ -125,32 +125,33 @@
 						del(O)
 					new_machine.component_parts = list()
 					for(var/obj/O in src)
-						O.loc = new_machine
+						O.loc = null
 						new_machine.component_parts += O
-					circuit.loc = new_machine
+					circuit.loc = null
 					new_machine.RefreshParts()
 					del(src)
 
 			if(istype(P, /obj/item/weapon))
+				var/success
 				for(var/I in req_components)
 					if(istype(P, text2path(I)) && (req_components[I] > 0))
+						success=1
 						if(istype(P, /obj/item/weapon/cable_coil))
 							var/obj/item/weapon/cable_coil/CP = P
-							if(CP.amount > 1)
-								var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src)
-								CC.amount = 1
+							var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src, 1, CP.item_color)
+							if(CP.use(1))
 								components += CC
 								req_components[I]--
 								update_req_desc()
-								break
+							break
 						user.drop_item()
 						P.loc = src
 						components += P
 						req_components[I]--
 						update_req_desc()
 						break
-				if(P.loc != src && !istype(P, /obj/item/weapon/cable_coil))
-					user << "\red You cannot add that component to the machine!"
+				if(!success)
+					user << "<span class='danger'>You cannot add that to the machine!</span>"
 
 
 //Machine Frame Circuit Boards
@@ -161,7 +162,7 @@ to destroy them and players will be able to make replacements.
 */
 /obj/item/weapon/circuitboard/destructive_analyzer
 	name = "circuit board (Destructive Analyzer)"
-	build_path = "/obj/machinery/r_n_d/destructive_analyzer"
+	build_path = /obj/machinery/r_n_d/destructive_analyzer
 	board_type = "machine"
 	origin_tech = "magnets=2;engineering=2;programming=2"
 	req_components = list(
@@ -171,7 +172,7 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/autolathe
 	name = "circuit board (Autolathe)"
-	build_path = "/obj/machinery/autolathe"
+	build_path = /obj/machinery/autolathe
 	board_type = "machine"
 	origin_tech = "engineering=2;programming=2"
 	req_components = list(
@@ -181,7 +182,7 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/protolathe
 	name = "circuit board (Protolathe)"
-	build_path = "/obj/machinery/r_n_d/protolathe"
+	build_path = /obj/machinery/r_n_d/protolathe
 	board_type = "machine"
 	origin_tech = "engineering=2;programming=2"
 	req_components = list(
@@ -192,7 +193,7 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/circuit_imprinter
 	name = "circuit board (Circuit Imprinter)"
-	build_path = "/obj/machinery/r_n_d/circuit_imprinter"
+	build_path = /obj/machinery/r_n_d/circuit_imprinter
 	board_type = "machine"
 	origin_tech = "engineering=2;programming=2"
 	req_components = list(
@@ -202,7 +203,7 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/pacman
 	name = "circuit board (PACMAN-type Generator)"
-	build_path = "/obj/machinery/power/port_gen/pacman"
+	build_path = /obj/machinery/power/port_gen/pacman
 	board_type = "machine"
 	origin_tech = "programming=3:powerstorage=3;plasmatech=3;engineering=3"
 	req_components = list(
@@ -213,7 +214,7 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/pacman/super
 	name = "circuit board (SUPERPACMAN-type Generator)"
-	build_path = "/obj/machinery/power/port_gen/pacman/super"
+	build_path = /obj/machinery/power/port_gen/pacman/super
 	origin_tech = "programming=3;powerstorage=4;engineering=4"
 
 /obj/item/weapon/circuitboard/pacman/mrs
@@ -223,7 +224,7 @@ to destroy them and players will be able to make replacements.
 
 obj/item/weapon/circuitboard/rdserver
 	name = "circuit board (R&D Server)"
-	build_path = "/obj/machinery/r_n_d/server"
+	build_path = /obj/machinery/r_n_d/server
 	board_type = "machine"
 	origin_tech = "programming=3"
 	req_components = list(
@@ -232,7 +233,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/mechfab
 	name = "circuit board (Exosuit Fabricator)"
-	build_path = "/obj/machinery/mecha_part_fabricator"
+	build_path = /obj/machinery/mecha_part_fabricator
 	board_type = "machine"
 	origin_tech = "programming=3;engineering=3"
 	req_components = list(
@@ -243,7 +244,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/clonepod
 	name = "circuit board (Clone Pod)"
-	build_path = "/obj/machinery/clonepod"
+	build_path = /obj/machinery/clonepod
 	board_type = "machine"
 	origin_tech = "programming=3;biotech=3"
 	req_components = list(
@@ -254,7 +255,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/clonescanner
 	name = "circuit board (Cloning Scanner)"
-	build_path = "/obj/machinery/dna_scannernew"
+	build_path = /obj/machinery/dna_scannernew
 	board_type = "machine"
 	origin_tech = "programming=2;biotech=2"
 	req_components = list(
@@ -266,7 +267,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/cyborgrecharger
 	name = "circuit board (Cyborg Recharger)"
-	build_path = "/obj/machinery/recharge_station"
+	build_path = /obj/machinery/recharge_station
 	board_type = "machine"
 	origin_tech = "powerstorage=3;engineering=3"
 	req_components = list(
@@ -278,7 +279,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/telecomms/receiver
 	name = "circuit board (Subspace Receiver)"
-	build_path = "/obj/machinery/telecomms/receiver"
+	build_path = /obj/machinery/telecomms/receiver
 	board_type = "machine"
 	origin_tech = "programming=2;engineering=2;bluespace=1"
 	req_components = list(
@@ -289,7 +290,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/telecomms/hub
 	name = "circuit board (Hub Mainframe)"
-	build_path = "/obj/machinery/telecomms/hub"
+	build_path = /obj/machinery/telecomms/hub
 	board_type = "machine"
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(
@@ -299,7 +300,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/telecomms/relay
 	name = "circuit board (Relay Mainframe)"
-	build_path = "/obj/machinery/telecomms/relay"
+	build_path = /obj/machinery/telecomms/relay
 	board_type = "machine"
 	origin_tech = "programming=2;engineering=2;bluespace=2"
 	req_components = list(
@@ -309,7 +310,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/telecomms/bus
 	name = "circuit board (Bus Mainframe)"
-	build_path = "/obj/machinery/telecomms/bus"
+	build_path = /obj/machinery/telecomms/bus
 	board_type = "machine"
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(
@@ -319,7 +320,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/telecomms/processor
 	name = "circuit board (Processor Unit)"
-	build_path = "/obj/machinery/telecomms/processor"
+	build_path = /obj/machinery/telecomms/processor
 	board_type = "machine"
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(
@@ -332,7 +333,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/telecomms/server
 	name = "circuit board (Telecommunication Server)"
-	build_path = "/obj/machinery/telecomms/server"
+	build_path = /obj/machinery/telecomms/server
 	board_type = "machine"
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(
@@ -342,7 +343,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/telecomms/broadcaster
 	name = "circuit board (Subspace Broadcaster)"
-	build_path = "/obj/machinery/telecomms/broadcaster"
+	build_path = /obj/machinery/telecomms/broadcaster
 	board_type = "machine"
 	origin_tech = "programming=2;engineering=2;bluespace=1"
 	req_components = list(

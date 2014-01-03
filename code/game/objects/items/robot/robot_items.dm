@@ -5,15 +5,11 @@
 ***********************************************************************/
 //Might want to move this into several files later but for now it works here
 /obj/item/borg/stun
-	name = "Electrified Arm"
+	name = "electrified arm"
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "shock"
 
 	attack(mob/M as mob, mob/living/silicon/robot/user as mob)
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
-
-		log_attack(" <font color='red'>[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])</font>")
 
 		user.cell.charge -= 30
 
@@ -27,7 +23,7 @@
 				O.show_message("\red <B>[user] has prodded [M] with an electrically-charged arm!</B>", 1, "\red You hear someone fall", 2)
 
 /obj/item/borg/overdrive
-	name = "Overdrive"
+	name = "overdrive"
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "shock"
 
@@ -41,27 +37,27 @@
 
 
 /obj/item/borg/sight/xray
-	name = "X-ray Vision"
+	name = "\proper x-ray Vision"
 	sight_mode = BORGXRAY
 
 
 /obj/item/borg/sight/thermal
-	name = "Thermal Vision"
+	name = "\proper thermal vision"
 	sight_mode = BORGTHERM
 
 
 /obj/item/borg/sight/meson
-	name = "Meson Vision"
+	name = "\proper meson vision"
 	sight_mode = BORGMESON
 
 
 /obj/item/borg/sight/hud
-	name = "Hud"
+	name = "hud"
 	var/obj/item/clothing/glasses/hud/hud = null
 
 
 /obj/item/borg/sight/hud/med
-	name = "Medical Hud"
+	name = "medical hud"
 
 
 	New()
@@ -71,7 +67,7 @@
 
 
 /obj/item/borg/sight/hud/sec
-	name = "Security Hud"
+	name = "security hud"
 
 
 	New()

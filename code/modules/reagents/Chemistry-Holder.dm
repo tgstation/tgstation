@@ -271,9 +271,9 @@ datum
 									feedback_add_details("chemical_reaction","[C.result]|[C.result_amount*multiplier]")
 									multiplier = max(multiplier, 1) //this shouldnt happen ...
 									add_reagent(C.result, C.result_amount*multiplier)
-								
+
 								var/list/seen = viewers(4, get_turf(my_atom))
-								
+
 								if(!istype(my_atom, /mob)) // No bubbling mobs
 									for(var/mob/M in seen)
 										M << "\blue \icon[my_atom] The solution begins to bubble."
@@ -284,7 +284,7 @@ datum
 									if(ME2.Uses <= 0) // give the notification that the slime core is dead
 										for(var/mob/M in seen)
 											M << "\blue \icon[my_atom] The [my_atom]'s power is consumed in the reaction."
-											ME2.name = "used slime extract"
+											ME2.name = "\improper used slime extract"
 											ME2.desc = "This extract has been used up."
 
 								playsound(get_turf(my_atom), 'sound/effects/bubbles.ogg', 80, 1)

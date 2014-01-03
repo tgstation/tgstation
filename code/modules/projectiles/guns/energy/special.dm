@@ -5,7 +5,7 @@
 	fire_sound = 'sound/weapons/Laser.ogg'
 	origin_tech = "combat=2;magnets=4"
 	w_class = 5
-	flags =  FPRINT | TABLEPASS | CONDUCT
+	flags =  CONDUCT
 	slot_flags = SLOT_BACK
 	charge_cost = 100
 	projectile_type = "/obj/item/projectile/ion"
@@ -25,55 +25,6 @@
 	origin_tech = "combat=5;materials=4;powerstorage=3"
 	charge_cost = 100
 	projectile_type = "/obj/item/projectile/energy/declone"
-
-obj/item/weapon/gun/energy/staff
-	name = "staff of change"
-	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself"
-	icon = 'icons/obj/gun.dmi'
-	icon_state = "staffofchange"
-	item_state = "staffofchange"
-	fire_sound = 'sound/weapons/emitter.ogg'
-	flags =  FPRINT | TABLEPASS | CONDUCT
-	slot_flags = SLOT_BACK
-	w_class = 5
-	charge_cost = 200
-	projectile_type = "/obj/item/projectile/change"
-	origin_tech = null
-	clumsy_check = 0
-	var/charge_tick = 0
-
-
-	New()
-		..()
-		processing_objects.Add(src)
-
-
-	Del()
-		processing_objects.Remove(src)
-		..()
-
-
-	process()
-		charge_tick++
-		if(charge_tick < 4) return 0
-		charge_tick = 0
-		if(!power_supply) return 0
-		power_supply.give(200)
-		return 1
-
-	update_icon()
-		return
-
-	shoot_with_empty_chamber(mob/living/user as mob|obj)
-		user << "<span class='warning'>The [name] whizzles quietly.<span>"
-		return
-
-/obj/item/weapon/gun/energy/staff/animate
-	name = "staff of animation"
-	desc = "An artefact that spits bolts of life-force which causes objects which are hit by it to animate and come to life! This magic doesn't affect machines."
-	projectile_type = "/obj/item/projectile/animate"
-	icon_state = "staffofanimation"
-	item_state = "staffofanimation"
 
 /obj/item/weapon/gun/energy/floragun
 	name = "floral somatoray"

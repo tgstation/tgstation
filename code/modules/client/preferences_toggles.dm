@@ -129,7 +129,10 @@
 	prefs.save_preferences()
 	src << "Others can[(prefs.toggles & MEMBER_PUBLIC) ? "" : "not"] see whether you are a byond member."
 
-var/list/ghost_forms = list("ghost","ghostking","ghostian2")
+var/list/ghost_forms = list("ghost","ghostking","ghostian2","ghost_red","ghost_black", \
+							"ghost_blue","ghost_yellow","ghost_green","ghost_pink", \
+							"ghost_cyan","ghost_dblue","ghost_dred","ghost_dgreen", \
+							"ghost_dcyan","ghost_grey","ghost_dyellow","ghost_dpink")
 /client/verb/pick_form()
 	set name = "Choose Ghost Form"
 	set category = "Preferences"

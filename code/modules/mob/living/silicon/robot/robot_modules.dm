@@ -4,7 +4,7 @@
 	icon_state = "std_module"
 	w_class = 100.0
 	item_state = "electronic"
-	flags = FPRINT|TABLEPASS | CONDUCT
+	flags = CONDUCT
 
 	var/list/modules = list()
 	var/obj/item/emag = null
@@ -147,9 +147,9 @@
 	New()
 		..()
 		modules += new /obj/item/weapon/soap/nanotrasen(src)
-		modules += new /obj/item/weapon/storage/bag/trash(src)
-		modules += new /obj/item/weapon/mop(src)
-		modules += new /obj/item/device/lightreplacer(src)
+		modules += new /obj/item/weapon/storage/bag/trash/cyborg(src)
+		modules += new /obj/item/weapon/mop/cyborg(src)
+		modules += new /obj/item/device/lightreplacer/cyborg(src)
 		emag = new /obj/item/weapon/reagent_containers/spray(src)
 
 		emag.reagents.add_reagent("lube", 250)

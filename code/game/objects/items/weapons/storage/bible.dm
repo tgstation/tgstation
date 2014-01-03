@@ -5,7 +5,6 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
-	flags = FPRINT | TABLEPASS
 	var/mob/affecting = null
 	var/deity_name = "Christ"
 
@@ -28,7 +27,7 @@
 		var/heal_amt = 10
 		for(var/obj/item/organ/limb/affecting in H.organs)
 			if(affecting.status == ORGAN_ORGANIC) //No Bible can heal a robotic arm!
-				if(affecting.heal_damage(heal_amt, heal_amt))
+				if(affecting.heal_damage(heal_amt, heal_amt, 0))
 					H.update_damage_overlays(0)
 	return
 
@@ -38,11 +37,7 @@
 	if(user.mind && (user.mind.assigned_role == "Chaplain"))
 		chaplain = 1
 
-
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
-
-	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+	add_logs(user, M, "attacked", object="[src.name]")
 
 	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		user << "\red You don't have the dexterity to do this!"

@@ -621,7 +621,7 @@ datum
 		virus_food
 			name = "Virus Food"
 			id = "virusfood"
-			description = "A mixture of water, milk, and oxygen. Virus cells can use this mixture to reproduce."
+			description = "A mixture of water and milk. Virus cells can use this mixture to reproduce."
 			reagent_state = LIQUID
 			nutriment_factor = 2 * REAGENTS_METABOLISM
 			color = "#899613" // rgb: 137, 150, 19
@@ -695,9 +695,9 @@ datum
 					if(!istype(T, /turf/space))
 						new /obj/effect/decal/cleanable/greenglow(T)
 
-		aluminum
-			name = "Aluminum"
-			id = "aluminum"
+		aluminium
+			name = "Aluminium"
+			id = "aluminium"
 			description = "A silvery white and ductile member of the boron group of chemical elements."
 			reagent_state = SOLID
 			color = "#A8A8A8" // rgb: 168, 168, 168
@@ -1946,10 +1946,10 @@ datum
 				..()
 				return
 
-		psilocybin
-			name = "Psilocybin"
-			id = "psilocybin"
-			description = "A strong psycotropic derived from certain species of mushroom."
+		mushroomhallucinogen
+			name = "Mushroom Hallucinogen"
+			id = "mushroomhallucinogen"
+			description = "A strong hallucinogenic drug derived from certain species of mushroom."
 			color = "#E700E7" // rgb: 231, 0, 231
 
 			on_mob_life(var/mob/living/M as mob)

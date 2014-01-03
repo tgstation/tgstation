@@ -208,7 +208,7 @@
 	throw_range = 5
 	m_amt = 50
 	g_amt = 20
-	flags = TABLEPASS | FPRINT | CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 
@@ -302,8 +302,8 @@
 	if(src.amount < used)
 		return 0
 	else if (src.amount == used)
-		//handle mob icon update
-		if(ismob(loc))
+		.=1 //Because del(src) stops the proc, set the default return value to 1
+		if(ismob(loc)) //handle mob icon update
 			var/mob/M = loc
 			M.u_equip(src)
 		del(src)

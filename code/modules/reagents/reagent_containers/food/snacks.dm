@@ -71,12 +71,7 @@
 					return 0
 
 				if(!do_mob(user, M)) return
-
-				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
-				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
-
-				log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
-
+				add_logs(user, M, "fed", object="[reagentlist(src)]")
 				M.visible_message("<span class='danger'>[user] forces [M] to eat [src].</span>", \
 									"<span class='userdanger'>[user] feeds [M] to eat [src].</span>")
 
@@ -545,7 +540,6 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
-		reagents.add_reagent("psilocybin", 3)
 		src.bitesize = 6
 
 /obj/item/weapon/reagent_containers/food/snacks/tomatomeat
@@ -873,7 +867,7 @@
 		..()
 		reagents.add_reagent("nutriment", 5)
 		reagents.add_reagent("amatoxin", 3)
-		reagents.add_reagent("psilocybin", 1)
+		reagents.add_reagent("mushroomhallucinogen", 1)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/plump_pie
@@ -997,7 +991,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/spacetwinkie
 	name = "space twinkie"
 	icon_state = "space_twinkie"
-	desc = "Guaranteed to survive longer then you will."
+	desc = "Guaranteed to survive longer than you will."
 	New()
 		..()
 		reagents.add_reagent("sugar", 4)
@@ -1112,7 +1106,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
-		reagents.add_reagent("psilocybin", 6)
+		reagents.add_reagent("mushroomhallucinogen", 6)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/amanitajelly
@@ -1124,7 +1118,7 @@
 		..()
 		reagents.add_reagent("nutriment", 6)
 		reagents.add_reagent("amatoxin", 6)
-		reagents.add_reagent("psilocybin", 3)
+		reagents.add_reagent("mushroomhallucinogen", 3)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/poppypretzel
@@ -1467,7 +1461,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 8)
-		reagents.add_reagent("psilocybin", 8)
+		reagents.add_reagent("mushroomhallucinogen", 8)
 		bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/stew
