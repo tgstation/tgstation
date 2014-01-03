@@ -8,7 +8,6 @@
 	flags =  FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BACK
 	origin_tech = "combat=4;materials=2"
-	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	mag_type = /obj/item/ammo_box/magazine/internal/shot
 	var/recentpump = 0 // to prevent spammage
 	var/pumped = 0
@@ -56,7 +55,6 @@
 	name = "combat shotgun"
 	icon_state = "cshotgun"
 	origin_tech = "combat=5;materials=2"
-	ammo_type = /obj/item/ammo_casing/shotgun
 	mag_type = /obj/item/ammo_box/magazine/internal/shotcom
 	w_class = 5
 
@@ -70,7 +68,6 @@
 	flags =  FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BACK
 	origin_tech = "combat=3;materials=1"
-	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(var/obj/item/A as obj, mob/user as mob)

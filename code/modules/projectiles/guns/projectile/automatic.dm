@@ -4,7 +4,6 @@
 	icon_state = "saber"	//ugly
 	w_class = 3.0
 	origin_tech = "combat=4;materials=2"
-	ammo_type = /obj/item/ammo_casing/c9mm
 	mag_type = /obj/item/ammo_box/magazine/msmg9mm
 	var/alarmed = 0
 
@@ -24,7 +23,6 @@
 	icon_state = "mini-uzi"
 	w_class = 3.0
 	origin_tech = "combat=5;materials=2;syndicate=8"
-	ammo_type = /obj/item/ammo_casing/c45
 	mag_type = /obj/item/ammo_box/magazine/uzim45
 
 
@@ -36,7 +34,6 @@
 	item_state = "c20r"
 	w_class = 3.0
 	origin_tech = "combat=5;materials=2;syndicate=8"
-	ammo_type = /obj/item/ammo_casing/a12mm
 	mag_type = /obj/item/ammo_box/magazine/m12mm
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 
@@ -71,7 +68,6 @@
 	w_class = 5
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
-	ammo_type = /obj/item/ammo_casing/a762
 	mag_type = /obj/item/ammo_box/magazine/m762
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	var/cover_open = 0

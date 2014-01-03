@@ -14,12 +14,6 @@
 	projectile_type = /obj/item/projectile/bullet/suffocationbullet
 
 
-/obj/item/ammo_casing/a75
-	desc = "A .75 bullet casing."
-	caliber = "75"
-	projectile_type = /obj/item/projectile/bullet/gyro
-
-
 /obj/item/ammo_casing/a666
 	desc = "A .666 bullet casing."
 	caliber = "357"
@@ -107,6 +101,24 @@
 	return
 
 /obj/item/ammo_casing/a762
-	desc = "A 7.62 bullet casing."
+	desc = "A 7.62mm bullet casing."
 	caliber = "a762"
 	projectile_type = /obj/item/projectile/bullet
+
+
+/obj/item/ammo_casing/caseless
+	desc = "A caseless bullet casing."
+
+
+/obj/item/ammo_casing/caseless/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, var/distro, var/quiet)
+	if (..())
+		loc = null
+		return 1
+	else
+		return 0
+
+
+/obj/item/ammo_casing/caseless/a75
+	desc = "A .75 bullet casing."
+	caliber = "75"
+	projectile_type = /obj/item/projectile/bullet/gyro

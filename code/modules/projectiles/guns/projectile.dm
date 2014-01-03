@@ -6,7 +6,6 @@
 	w_class = 3.0
 	m_amt = 1000
 
-	var/ammo_type = /obj/item/ammo_casing/c10mm
 	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info
 	var/obj/item/ammo_box/magazine/magazine
 

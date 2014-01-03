@@ -80,7 +80,7 @@
 		if(!special_check(user))
 			return
 		if(chambered)
-			if(!chambered.fire(target, user, params))
+			if(!chambered.fire(target, user, params, , silenced))
 				shoot_with_empty_chamber(user)
 			else
 				shoot_live_shot(user)

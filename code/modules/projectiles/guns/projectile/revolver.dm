@@ -2,7 +2,6 @@
 	desc = "A classic revolver. Uses 357 ammo"
 	name = "revolver"
 	icon_state = "revolver"
-	ammo_type = /obj/item/ammo_casing/a357
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
 
 /obj/item/weapon/gun/projectile/revolver/chamber_round()
@@ -18,7 +17,7 @@
 /obj/item/weapon/gun/projectile/revolver/attackby(var/obj/item/A as obj, mob/user as mob)
 	var/num_loaded = magazine.attackby(A, user)
 	if(num_loaded)
-		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
+		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src].</span>"
 		A.update_icon()
 		update_icon()
 		chamber_round()
@@ -33,7 +32,7 @@
 		CB.update_icon()
 		num_unloaded++
 	if (num_unloaded)
-		user << "<span class = 'notice'>You unload [num_unloaded] shell\s from [src]!</span>"
+		user << "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>"
 	else
 		user << "<span class='notice'>[src] is empty.</span>"
 
@@ -54,7 +53,6 @@
 	name = "revolver"
 	icon_state = "detective"
 	origin_tech = "combat=2;materials=2"
-	ammo_type = /obj/item/ammo_casing/c38
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
 
 
@@ -62,7 +60,7 @@
 	if(magazine.caliber == initial(magazine.caliber))
 		return 1
 	if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
-		M << "<span class='danger'>[src] blows up in your face.</span>"
+		M << "<span class='danger'>[src] blows up in your face!</span>"
 		M.take_organ_damage(0,20)
 		M.drop_item()
 		del(src)
@@ -163,22 +161,7 @@
 	spun = 1
 
 /obj/item/weapon/gun/projectile/revolver/russian/attackby(var/obj/item/A as obj, mob/user as mob)
-	var/num_loaded = 0
-	if(istype(A, /obj/item/ammo_box))
-		var/obj/item/ammo_box/AM = A
-		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
-			if(get_ammo() <= 1)
-				if(magazine.give_round(AC))
-					AM.stored_ammo -= AC
-					num_loaded++
-			break
-	if(istype(A, /obj/item/ammo_casing))
-		var/obj/item/ammo_casing/AC = A
-		if(get_ammo() <= 1)
-			magazine.give_round(AC)
-			user.drop_item()
-			AC.loc = src
-			num_loaded++
+	var/num_loaded = magazine.attackby(A, user)
 	if(num_loaded)
 		user.visible_message("<span class='warning'>[user] loads a single bullet into the revolver and spins the chamber.</span>", "<span class='warning'>You load a single bullet into the chamber and spin it.</span>")
 	else
@@ -220,12 +203,13 @@
 		Spin()
 		return
 
-	if(!chambered && target == user)
-		user.visible_message("\red *click*", "\red *click*")
-		return
 
-	if(isliving(target) && isliving(user))
-		if(target == user)
+	if(target == user)
+		if(!chambered)
+			user.visible_message("\red *click*", "\red *click*")
+			return
+
+		if(isliving(target) && isliving(user))
 			var/obj/item/organ/limb/affecting = user.zone_sel.selecting
 			if(affecting == "head")
 				var/obj/item/ammo_casing/AC = chambered

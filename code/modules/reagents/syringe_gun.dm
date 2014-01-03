@@ -13,12 +13,16 @@
 	var/list/syringes = list()
 	var/max_syringes = 1
 
-/obj/item/weapon/gun/syringe/process_chamber()
-	if(!syringes.len) return 0
+/obj/item/weapon/gun/syringe/New()
+	..()
+	chambered = new /obj/item/ammo_casing/syringegun(src)
+
+/obj/item/weapon/gun/syringe/proc/newshot()
+	if(!syringes.len) return
 
 	var/obj/item/weapon/reagent_containers/syringe/S = syringes[1]
 
-	if(!S) return 0
+	if(!S) return
 
 	chambered.BB = new /obj/item/projectile/bullet/dart/syringe(src)
 	S.reagents.trans_to(chambered.BB, S.reagents.total_volume)
@@ -26,7 +30,14 @@
 	syringes.Remove(S)
 
 	del(S)
-	return 1
+	return
+
+/obj/item/weapon/gun/syringe/process_chamber()
+	return
+
+/obj/item/weapon/gun/syringe/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, params)
+	newshot()
+	..()
 
 /obj/item/weapon/gun/syringe/examine()
 	..()
@@ -52,7 +63,7 @@
 	if(istype(A, /obj/item/weapon/reagent_containers/syringe))
 		if(syringes.len < max_syringes)
 			user.drop_item()
-			user << "<span class='notice'>You load [A] into \the [src]!</span>"
+			user << "<span class='notice'>You load [A] into \the [src].</span>"
 			syringes.Add(A)
 			A.loc = src
 			return 1
