@@ -15,7 +15,6 @@
 	icon_state = "backpack"
 	item_state = "backpack"
 	w_class = 4.0
-	flags = FPRINT|TABLEPASS
 	slot_flags = SLOT_BACK	//ERROOOOO
 	max_w_class = 3
 	max_combined_w_class = 21

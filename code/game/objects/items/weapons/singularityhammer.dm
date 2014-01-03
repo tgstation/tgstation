@@ -3,7 +3,7 @@
 	name = "singularity hammer"
 	desc = "The pinnacle of close combat technology, the hammer harnesses the power of a miniaturized singularity to deal crushing blows."
 	icon_state = "mjollnir0"
-	flags = FPRINT | TABLEPASS
+	flags = CONDUCT
 	slot_flags = SLOT_BACK
 	force = 5
 	force_unwielded = 5
@@ -75,7 +75,7 @@
 	name = "Mjollnir"
 	desc = "A weapon worthy of a god, able to strike with the force of a lightning bolt. It crackles with barely contained energy."
 	icon_state = "mjollnir0"
-	flags = FPRINT | TABLEPASS
+	flags = CONDUCT
 	slot_flags = SLOT_BACK
 	force = 5
 	force_unwielded = 5

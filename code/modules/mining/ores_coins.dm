@@ -71,7 +71,7 @@
 	icon = 'icons/obj/economy.dmi'
 	name = "coin"
 	icon_state = "coin"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	force = 1
 	throwforce = 3
 	w_class = 1.0
