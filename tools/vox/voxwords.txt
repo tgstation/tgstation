@@ -640,9 +640,18 @@ array
 asimov
 atmospherics
 bar
+bomb
+bombs
+borer
+borers
 botanist
 botanists
+brain
+brains
+brawl
+bridge
 brig
+cage
 cargo
 catbeast
 centcomm
@@ -662,7 +671,11 @@ contraband
 court
 cyborg
 cyborgs
+dead
 dorms
+engineer
+engineering
+engineers
 every
 execution
 fire
@@ -703,12 +716,16 @@ port
 qm = quartermaster
 quarters
 queen
+rage
 raider
 raiders
 removal
 requested
 respond
 rest
+roboticist
+robotics
+rogue
 sarah
 sensors
 shirt
@@ -717,6 +734,7 @@ shitcurity
 shitlord = shit lord
 shuttle
 singularity
+skipjack
 smoke
 solar
 solars
@@ -791,4 +809,4 @@ vox_420 = Smoke weed every day.
 #sound/AI/newroundsexy = You want to put a banging donk on it.
 #sound/AI/outbreak5 = Confirmed outbreak of level 5 biohazard aboard the station.  All personnel must contain the outbreak.
 #sound/AI/radiation = High levels of radiation detected near the station. Please evacuate into one of the shielded maintenance tunnels.
-#sound/AI/outbreak7 = Confirmed outbreak of level 7 viral biohazard about this station. All personnel must bontain the outbreak.
+sound/AI/outbreak7 = Confirmed outbreak of level 7 viral biohazard aboard this station. All personnel must contain the outbreak.

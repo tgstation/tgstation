@@ -64,13 +64,17 @@ var/const/VOX_DELAY = 600
 	set name = "Announcement"
 	set desc = "Create a vocal announcement by typing in the available words to create a sentence."
 	set category = "AI Commands"
+	if(src.stat == 2)
+		src << "You can't call the shuttle because you are dead!"
+		return
+	if(istype(usr,/mob/living/silicon/ai))
+		var/mob/living/silicon/ai/AI = src
+		if(AI.control_disabled)
+			usr << "Wireless control is disabled!"
+			return
 
 	if(announcing_vox > world.time)
 		src << "<span class='notice'>Please wait [round((announcing_vox - world.time) / 10)] seconds.</span>"
-		return
-
-	if(control_disabled)
-		src << "<span class='notice'>Wireless interface disabled, unable to interact with announcement PA.</span>"
 		return
 
 	var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text
