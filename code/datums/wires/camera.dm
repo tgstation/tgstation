@@ -38,7 +38,9 @@ var/const/CAMERA_WIRE_NOTHING2 = 32
 
 		if(CAMERA_WIRE_POWER)
 			if(C.status && !mended || !C.status && mended)
-				C.deactivate(usr, 1)
+				C.pulsed=0
+				playsound(C.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+				C.update_status(usr)
 
 		if(CAMERA_WIRE_LIGHT)
 			C.light_disabled = !mended
@@ -60,7 +62,9 @@ var/const/CAMERA_WIRE_NOTHING2 = 32
 			C.setViewRange(new_range)
 
 		if(CAMERA_WIRE_POWER)
-			C.deactivate(null) // Deactivate the camera
+			C.pulsed=!(C.pulsed)
+			playsound(C.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+			C.update_status(usr)
 
 		if(CAMERA_WIRE_LIGHT)
 			C.light_disabled = !C.light_disabled
