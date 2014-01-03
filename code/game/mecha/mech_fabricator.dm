@@ -133,12 +133,12 @@
 /obj/machinery/mecha_part_fabricator/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/mechfab(src)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
+	component_parts += new /obj/item/weapon/circuitboard/mechfab(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	RefreshParts()
 
 	//	part_sets["Cyborg Upgrade Modules"] = typesof(/obj/item/borg/upgrade/) - /obj/item/borg/upgrade/  // Eh.  This does it dymaically, but to support having the items referenced otherwhere in the code but not being constructable, going to do it manaully.
@@ -162,18 +162,16 @@
 	T = 0
 	for(var/obj/item/weapon/stock_parts/micro_laser/Ma in component_parts)
 		T += Ma.rating
-	if(T >= 1)
-		T -= 1
+	T -= 1
 	var/diff
-	diff = round(initial(resource_coeff) - (initial(resource_coeff)*(T))/25,0.01)
+	diff = round(initial(resource_coeff) - (initial(resource_coeff)*(T))/6,0.01)
 	if(resource_coeff!=diff)
 		resource_coeff = diff
 	T = 0
 	for(var/obj/item/weapon/stock_parts/manipulator/Ml in component_parts)
 		T += Ml.rating
-	if(T>= 2)
-		T -= 2
-	diff = round(initial(time_coeff) - (initial(time_coeff)*(T))/25,0.01)
+	T -= 1
+	diff = round(initial(time_coeff) - (initial(time_coeff)*(T))/4,0.01)
 	if(time_coeff!=diff)
 		time_coeff = diff
 
@@ -358,6 +356,8 @@
 	src.being_built = new part.type(src)
 	src.desc = "It's building [src.being_built]."
 	src.remove_resources(part)
+	part.m_amt = get_resource_cost_w_coeff(part,"metal")
+	part.g_amt = get_resource_cost_w_coeff(part,"glass")
 	src.overlays += "fab-active"
 	src.use_power = 2
 	src.updateUsrDialog()
@@ -581,10 +581,10 @@
 				<body>
 				<table style='width: 100%;'>
 				<tr>
-				<td style='width: 70%; padding-right: 10px;'>
+				<td style='width: 65%; padding-right: 10px;'>
 				[left_part]
 				</td>
-				<td style='width: 30%; background: #ccc;' id='queue'>
+				<td style='width: 35%; background: #ccc;' id='queue'>
 				[list_queue()]
 				</td>
 				<tr>
