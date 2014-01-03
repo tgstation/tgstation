@@ -206,7 +206,7 @@
 			if (selected_glass == 1 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
 				if (ore_glass > 0)
 					ore_glass--;
-					generate_mineral("/obj/item/stack/sheet/glass")
+					generate_mineral(/obj/item/stack/sheet/glass)
 				else
 					on = 0
 				continue
@@ -214,49 +214,49 @@
 				if (ore_glass > 0 && ore_iron > 0)
 					ore_glass--;
 					ore_iron--;
-					generate_mineral("/obj/item/stack/sheet/rglass")
+					generate_mineral(/obj/item/stack/sheet/rglass)
 				else
 					on = 0
 				continue
 			if (selected_glass == 0 && selected_gold == 1 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
 				if (ore_gold > 0)
 					ore_gold--;
-					generate_mineral("/obj/item/stack/sheet/mineral/gold")
+					generate_mineral(/obj/item/stack/sheet/mineral/gold)
 				else
 					on = 0
 				continue
 			if (selected_glass == 0 && selected_gold == 0 && selected_silver == 1 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
 				if (ore_silver > 0)
 					ore_silver--;
-					generate_mineral("/obj/item/stack/sheet/mineral/silver")
+					generate_mineral(/obj/item/stack/sheet/mineral/silver)
 				else
 					on = 0
 				continue
 			if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 1 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
 				if (ore_diamond > 0)
 					ore_diamond--;
-					generate_mineral("/obj/item/stack/sheet/mineral/diamond")
+					generate_mineral(/obj/item/stack/sheet/mineral/diamond)
 				else
 					on = 0
 				continue
 			if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
 				if (ore_plasma > 0)
 					ore_plasma--;
-					generate_mineral("/obj/item/stack/sheet/mineral/plasma")
+					generate_mineral(/obj/item/stack/sheet/mineral/plasma)
 				else
 					on = 0
 				continue
 			if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 1 && selected_iron == 0 && selected_clown == 0)
 				if (ore_uranium > 0)
 					ore_uranium--;
-					generate_mineral("/obj/item/stack/sheet/mineral/uranium")
+					generate_mineral(/obj/item/stack/sheet/mineral/uranium)
 				else
 					on = 0
 				continue
 			if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0)
 				if (ore_iron > 0)
 					ore_iron--;
-					generate_mineral("/obj/item/stack/sheet/metal")
+					generate_mineral(/obj/item/stack/sheet/metal)
 				else
 					on = 0
 				continue
@@ -264,14 +264,14 @@
 				if (ore_iron > 0 && ore_plasma > 0)
 					ore_iron--;
 					ore_plasma--;
-					generate_mineral("/obj/item/stack/sheet/plasteel")
+					generate_mineral(/obj/item/stack/sheet/plasteel)
 				else
 					on = 0
 				continue
 			if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 1)
 				if (ore_clown > 0)
 					ore_clown--;
-					generate_mineral("/obj/item/stack/sheet/mineral/clown")
+					generate_mineral(/obj/item/stack/sheet/mineral/clown)
 				else
 					on = 0
 				continue
@@ -281,7 +281,7 @@
 				if (ore_uranium >= 2 && ore_diamond >= 1)
 					ore_uranium -= 2
 					ore_diamond -= 1
-					generate_mineral("/obj/item/stack/sheet/mineral/adamantine")
+					generate_mineral(/obj/item/stack/sheet/mineral/adamantine)
 				else
 					on = 0
 				continue
@@ -289,7 +289,7 @@
 				if (ore_silver >= 1 && ore_plasma >= 3)
 					ore_silver -= 1
 					ore_plasma -= 3
-					generate_mineral("/obj/item/stack/sheet/mineral/mythril")
+					generate_mineral(/obj/item/stack/sheet/mineral/mythril)
 				else
 					on = 0
 				continue*/
@@ -342,7 +342,7 @@
 					ore_iron--
 				if (selected_clown == 1)
 					ore_clown--
-				generate_mineral("/obj/item/weapon/ore/slag")
+				generate_mineral(/obj/item/weapon/ore/slag)
 				on = 0
 			else
 				on = 0
@@ -392,7 +392,6 @@
 			unload_mineral(O)
 
 
-/obj/machinery/mineral/processing_unit/proc/generate_mineral(var/S)
-	var/P = text2path(S)
+/obj/machinery/mineral/processing_unit/proc/generate_mineral(var/P)
 	var/O = new P(src)
 	unload_mineral(O)

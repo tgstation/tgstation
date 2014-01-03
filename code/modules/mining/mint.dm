@@ -130,7 +130,7 @@
 		switch(chosen)
 			if("metal")
 				while(amt_iron > 0 && coinsToProduce > 0)
-					create_coins("obj/item/weapon/coin/iron")
+					create_coins(/obj/item/weapon/coin/iron)
 					amt_iron -= 20
 					coinsToProduce--
 					newCoins++
@@ -138,7 +138,7 @@
 					sleep(5);
 			if("gold")
 				while(amt_gold > 0 && coinsToProduce > 0)
-					create_coins("/obj/item/weapon/coin/gold")
+					create_coins(/obj/item/weapon/coin/gold)
 					amt_gold -= 20
 					coinsToProduce--
 					newCoins++
@@ -146,7 +146,7 @@
 					sleep(5);
 			if("silver")
 				while(amt_silver > 0 && coinsToProduce > 0)
-					create_coins("/obj/item/weapon/coin/silver")
+					create_coins(/obj/item/weapon/coin/silver)
 					amt_silver -= 20
 					coinsToProduce--
 					newCoins++
@@ -154,7 +154,7 @@
 					sleep(5);
 			if("diamond")
 				while(amt_diamond > 0 && coinsToProduce > 0)
-					create_coins("/obj/item/weapon/coin/diamond")
+					create_coins(/obj/item/weapon/coin/diamond)
 					amt_diamond -= 20
 					coinsToProduce--
 					newCoins++
@@ -162,7 +162,7 @@
 					sleep(5);
 			if("plasma")
 				while(amt_plasma > 0 && coinsToProduce > 0)
-					create_coins("/obj/item/weapon/coin/plasma")
+					create_coins(/obj/item/weapon/coin/plasma)
 					amt_plasma -= 20
 					coinsToProduce--
 					newCoins++
@@ -170,7 +170,7 @@
 					sleep(5);
 			if("uranium")
 				while(amt_uranium > 0 && coinsToProduce > 0)
-					create_coins("/obj/item/weapon/coin/uranium")
+					create_coins(/obj/item/weapon/coin/uranium)
 					amt_uranium -= 20
 					coinsToProduce--
 					newCoins++
@@ -178,7 +178,7 @@
 					sleep(5)
 			if("clown")
 				while(amt_clown > 0 && coinsToProduce > 0)
-					create_coins("/obj/item/weapon/coin/clown")
+					create_coins(/obj/item/weapon/coin/clown)
 					amt_clown -= 20
 					coinsToProduce--
 					newCoins++
@@ -186,7 +186,7 @@
 					sleep(5);
 			if("adamantine")
 				while(amt_adamantine > 0 && coinsToProduce > 0)
-					create_coins("/obj/item/weapon/coin/adamantine")
+					create_coins(/obj/item/weapon/coin/adamantine)
 					amt_adamantine -= 20
 					coinsToProduce--
 					newCoins++
@@ -194,7 +194,7 @@
 					sleep(5);
 			if("mythril")
 				while(amt_adamantine > 0 && coinsToProduce > 0)
-					create_coins("/obj/item/weapon/coin/mythril")
+					create_coins(/obj/item/weapon/coin/mythril)
 					amt_mythril -= 20
 					coinsToProduce--
 					newCoins++
@@ -206,10 +206,9 @@
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/mineral/mint/proc/create_coins(var/S)
+/obj/machinery/mineral/mint/proc/create_coins(var/P)
 	var/turf/T = get_step(src,output_dir)
 	if(T)
-		var/P = text2path(S)
 		var/obj/item/O = new P(src)
 		var/obj/item/weapon/moneybag/M = locate(/obj/item/weapon/moneybag/, T)
 		if(!M)
