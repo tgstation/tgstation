@@ -609,7 +609,7 @@ datum
 						for(var/mob/O in viewers(M, null))
 							O.show_message(text("\blue []'s eyes blink and become clearer.", M), 1) // So observers know it worked.
 					// Vamps react to this like acid
-					if((M.mind in ticker.mode.vampires) && prob(10))
+					if(((M.mind in ticker.mode.vampires) || M.mind.vampire) && prob(10))
 						if(!M) M = holder.my_atom
 						M.adjustToxLoss(1*REM)
 						M.take_organ_damage(0, 1*REM)
@@ -1086,6 +1086,7 @@ datum
 
 				M.mutations = list()
 				M.active_genes = list()
+
 				M.disabilities = 0
 				M.sdisabilities = 0
 
@@ -1875,7 +1876,7 @@ datum
 			id = "spiritbreaker"
 			description = "An extremely dangerous hallucinogen often used for torture. Extracted from the leaves of the rare Ambrosia Cruciatus plant."
 			reagent_state = LIQUID
-			color = "#3B0805" // rgb: 59, 8, 5
+			color = "3B0805" // rgb: 59, 8, 5
 			custom_metabolism = 0.05
 
 			on_mob_life(var/mob/living/M as mob)
@@ -1894,14 +1895,12 @@ datum
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		/* Dupe - N3X
 		holywater
 			name = "Holy Water"
 			id = "holywater"
 			description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
 			reagent_state = LIQUID
 			color = "#535E66" // rgb: 83, 94, 102
-	    */
 
 		nanites
 			name = "Nanomachines"
