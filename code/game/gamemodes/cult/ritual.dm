@@ -195,8 +195,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			return itemport(src.word3)
 		if(word1 == wordjoin && word2 == wordhide && word3 == wordtech)
 			return runestun()
-		user.take_overall_damage(30, 0)
-		user << "<span class='danger'>You feel the life draining from you, as if Lord Nar-Sie is displeased with you.</span>"
+		user.take_overall_damage(20, 0)
+		user << "<span class='danger'>You feel the life draining from you, as if Lord Nar-Sie is displeased with you. Better not mess with it again.</span>"
 		return fizzle()
 
 
@@ -237,7 +237,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				return itemport(src.word3)
 			if(word1 == wordjoin && word2 == wordhide && word3 == wordtech)
 				return runestun()
-			return fizzle()
+			return
 
 		check_icon()
 			if(word1 == wordtravel && word2 == wordself)
@@ -494,6 +494,11 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 //					"}
 //		usr << "whatev"
 //		usr << browse(null, "window=tank")
+	New()
+		..()
+		for(var/W in ticker.mode.globalwords)
+			var/list/unkword = list("travel" = wordtravel, "blood" = wordblood, "join" = wordjoin, "hell" = wordhell, "destroy" = worddestr, "technology" = wordtech, "self" = wordself, "see" = wordsee, "other" = wordother, "hide" = wordhide)
+			words[unkword[W]] = W
 
 	attack(mob/living/M as mob, mob/living/user as mob)
 		add_logs(user, M, "smacked", object=src)
@@ -643,12 +648,12 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				R.word3 = english[required[3]]
 				R.check_icon()
 				if(R.dummy)
-					if(prob(20))		//Punish blind research, Nar-Sie wants blood
+					if(prob(15))		//Punish blind research, Nar-Sie wants blood
 						user << "<span class='userdanger'>Lord Nar-Sie is furious!</span>"
 						user.take_overall_damage(120, 0)
 					else
-						user.take_overall_damage(60, 0)
-						user << "<span class='danger'>You feel the life draining from you, as if Lord Nar-Sie is displeased with you.</span>"
+						user.take_overall_damage(30, 0)
+						user << "<span class='danger'>You feel the life draining from you, as if Lord Nar-Sie is displeased with you.</span><span class='userdanger'>You dread what could have happened to you.</span>"
 				R.blood_DNA = list()
 				R.blood_DNA[H.dna.unique_enzymes] = H.dna.blood_type
 			return

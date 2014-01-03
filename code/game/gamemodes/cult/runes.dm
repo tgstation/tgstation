@@ -656,14 +656,14 @@ var/list/sacrificed = list()
 						if(cultsinrange.len >= 3)
 							usr << "\red The Geometer of Blood accepts this sacrifice."
 							sac_grant_word()
-							if(usr.mind.cult_words.len == ticker.mode.allwords.len)		//If they have all words Narsie is pleased
+							if(ticker.mode.globalwords.len == ticker.mode.allwords.len)		//If they have all words Narsie is pleased
 								greater_reward(H)
 							else lesser_reward(H)
 							stone_or_gib(H)
 						else if(check_equip())
 							infuse++
 							sac_grant_word()
-							if(usr.mind.cult_words.len == ticker.mode.allwords.len)		//If they have all words Narsie is pleased
+							if(ticker.mode.globalwords.len == ticker.mode.allwords.len)		//If they have all words Narsie is pleased
 								greater_reward(H)
 							else lesser_reward(H)
 							stone_or_gib(H)
@@ -725,6 +725,7 @@ var/list/sacrificed = list()
 					usr << "\red He is pleased!"
 				else
 					usr << "\red The Geometer of Blood accepts this sacrifice."
+			transmit_words()	//transmit to others
 /*			for(var/mob/living/carbon/alien/A)
 				for(var/mob/K in cultsinrange)
 					K.say("Barhah hra zar'garis!")
@@ -751,11 +752,18 @@ var/list/sacrificed = list()
 					T.gib()
 					
 		sac_grant_word()	//The proc that which chooses a word rewarded for a successful sacrifice, sacrifices always give a currently unknown word if the normal checks pass
-			if(usr.mind.cult_words.len != ticker.mode.allwords.len) // No point running if they already know everything
+			if(ticker.mode.globalwords.len != ticker.mode.allwords.len) // No point running if they already know everything
 				var/convert_word
-				var/pick_list = ticker.mode.allwords - usr.mind.cult_words
+				var/pick_list = ticker.mode.allwords - ticker.mode.globalwords
 				convert_word = pick(pick_list)
 				ticker.mode.grant_runeword(usr, convert_word)
+				
+		transmit_words()	//transmits words to all cultists memory
+			for(var/datum/mind/cult_mind in ticker.mode.cult)
+				if(cult_mind.cult_words.len != ticker.mode.globalwords.len)
+					cult_mind.current << "<span class='warning'>You hear a distant scream, and your blood rages for a moment and then it subsides..</span>"
+					ticker.mode.learn_words(cult_mind.current,1)
+			
 				
 		lesser_reward(var/mob/T)
 			if(prob(10))		//TEST

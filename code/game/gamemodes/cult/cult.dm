@@ -3,8 +3,9 @@
 /datum/game_mode
 	var/list/datum/mind/cult = list()
 	var/list/datum/mind/shades = list()
-	var/list/allwords = list("travel","self","see","hell","blood","join","tech","destroy", "other", "hide")
-	var/list/grantwords = list("travel", "see", "hell", "tech", "destroy", "other", "hide")
+	var/list/allwords = list("travel","self","see","hell","blood","join","technology","destroy", "other", "hide")
+	var/list/grantwords =list("travel","self","see","technology","destroy", "other", "hide")
+	var/list/globalwords = list("hell","blood","join")
 
 /proc/iscultist(mob/living/M as mob)
 	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.cult)
@@ -37,9 +38,8 @@
 	var/finished = 0
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
-
-	var/list/startwords = list("blood","join","self","hell")
-	var/list/secondwords = list("travel", "see", "tech", "destroy", "other", "hide")
+	//var/list/startwords = list("hell","blood","join")
+	//var/list/secondwords = list("travel", "see", "technology", "destroy", "other", "hide")
 
 	var/list/objectives = list()
 
@@ -101,7 +101,8 @@
 				message_admins("Cult Sacrifice: ERROR -  Null target chosen!")
 		else
 			message_admins("Cult Sacrifice: Could not find unconvertable or convertable target. WELP!")
-
+			
+	//globalwords = startwords		//Give Hell Blood Join at start
 	for(var/datum/mind/cult_mind in cult)
 		equip_cultist(cult_mind.current)
 //		grant_runeword(cult_mind.current)
@@ -138,9 +139,7 @@
 		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
 	cult_mind.current << "The Geometer of Blood grants knowledge for blood, sacrifice to get more knowledge. (Hell Blood Join)"
 	cult_mind.memory += "The Geometer of Blood grants knowledge for blood, sacrifice to get more knowledge. (Hell Blood Join)<BR>"
-	grant_runeword(cult_mind.current,"hell")
-	grant_runeword(cult_mind.current,"blood")
-	grant_runeword(cult_mind.current,"join")
+	learn_words(cult_mind.current)
 	cult_mind.current << note
 
 /datum/game_mode/proc/equip_cultist(mob/living/carbon/human/mob)
@@ -184,7 +183,7 @@
 //			startwords -= word
 //	return ..(cult_mob,word)
 
-/datum/game_mode/proc/grant_runeword(mob/living/carbon/human/cult_mob, var/word)
+/datum/game_mode/proc/grant_runeword(mob/living/carbon/human/cult_mob, var/word, var/trans = 0)
 	if(!wordtravel)
 		runerandom()
 	if (!word)
@@ -203,7 +202,7 @@
 			wordexp = "[wordself] is self..."
 		if("see")
 			wordexp = "[wordsee] is see..."
-		if("tech")
+		if("technology")
 			wordexp = "[wordtech] is technology..."
 		if("destroy")
 			wordexp = "[worddestr] is destroy..."
@@ -215,11 +214,26 @@
 //			wordexp = "[wordfree] is free..."
 		if("hide")
 			wordexp = "[wordhide] is hide..."
-	cult_mob << "<span class='warning'> [pick("You remember something from the dark teachings of your master","You hear a dark voice on the wind","Black blood oozes into your vision and forms into symbols","You catch a brief glimmer of the otherside")]... [wordexp]</span>"
+	if(!(word in globalwords))
+		globalwords += word
+	if(trans)
+		cult_mob << "<span class='warning'>Knowledge seeps into your mind... [wordexp]</span>"
+	else
+		cult_mob << "<span class='warning'> [pick("You remember something from the dark teachings of your master","You hear a dark voice on the wind","Black blood oozes into your vision and forms into symbols","You catch a brief glimmer of the otherside")]... [wordexp]</span>"
+	if(word in cult_mob.mind.cult_words)		//don't store repeats in memory
+		return
 	cult_mob.mind.store_memory("<B>You remember that</B> [wordexp]", 0, 0)
 	cult_mob.mind.cult_words += word
 	if(cult_mob.mind.cult_words.len == allwords.len)
 		cult_mob << "\green You feel enlightened, as if you have gained all the secrets of the other side."
+	
+				
+/datum/game_mode/proc/learn_words(mob/living/carbon/human/cultist,var/trans = 0)
+	if(!istype(cultist))
+		return
+	var/list/words = globalwords - cultist.mind.cult_words
+	for(var/word in words)
+		grant_runeword(cultist,word,trans)
 
 
 /datum/game_mode/proc/add_cultist(datum/mind/cult_mind) //BASE
@@ -227,6 +241,7 @@
 		return 0
 	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
 		cult += cult_mind
+		learn_words(cult_mind.current,1)
 		update_cult_icons_added(cult_mind)
 		cult_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the cult!</font>"
 		return 1

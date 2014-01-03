@@ -113,11 +113,10 @@
 				S.loc = C //put shade in stone
 				S.status_flags |= GODMODE //So they won't die inside the stone somehow
 				S.canmove = 0//Can't move out of the soul stone
-				ticker.mode.shades += S.mind
 				S.name = "Shade of [T.real_name]"
 				S.real_name = "Shade of [T.real_name]"
-				if (T.client)
-					T.client.mob = S
+				S.key = T.key
+				ticker.mode.shades += S.mind
 				S.cancel_camera()
 				C.icon_state = "soulstone2"
 				C.name = "Soul Stone: [S.real_name]"
@@ -155,11 +154,10 @@
 							S.loc = C //put shade in stone
 							S.status_flags |= GODMODE //So they won't die inside the stone somehow
 							S.canmove = 0//Can't move out of the soul stone
-							ticker.mode.shades += S.mind
 							S.name = "Shade of [T.real_name]"
 							S.real_name = "Shade of [T.real_name]"
-							if (T.client)
-								T.client.mob = S
+							S.key = T.key
+							ticker.mode.shades += S.mind
 							S.cancel_camera()
 							C.icon_state = "soulstone2"
 							C.name = "Soul Stone: [S.real_name]"
