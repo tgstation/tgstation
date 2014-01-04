@@ -7,6 +7,19 @@
 	else		return dy + (0.5*dx)
 
 
+proc/trange(var/Dist=0,var/turf/Center=null)//alternative to range (ONLY processes turfs and thus less intensive)
+	if(Center==null) return
+
+	//var/x1=((Center.x-Dist)<1 ? 1 : Center.x-Dist)
+	//var/y1=((Center.y-Dist)<1 ? 1 : Center.y-Dist)
+	//var/x2=((Center.x+Dist)>world.maxx ? world.maxx : Center.x+Dist)
+	//var/y2=((Center.y+Dist)>world.maxy ? world.maxy : Center.y+Dist)
+
+	var/turf/x1y1 = locate(((Center.x-Dist)<1 ? 1 : Center.x-Dist),((Center.y-Dist)<1 ? 1 : Center.y-Dist),Center.z)
+	var/turf/x2y2 = locate(((Center.x+Dist)>world.maxx ? world.maxx : Center.x+Dist),((Center.y+Dist)>world.maxy ? world.maxy : Center.y+Dist),Center.z)
+	return block(x1y1,x2y2)
+
+
 proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, ignorecap = 0, flame_range = 0)
 	src = null	//so we don't abort once src is deleted
 	epicenter = get_turf(epicenter)
@@ -86,7 +99,8 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 		var/y0 = epicenter.y
 		var/z0 = epicenter.z
 
-		for(var/turf/T in range(epicenter, max_range))
+		for(var/turf/T in trange(max_range, epicenter))
+
 			var/dist = cheap_pythag(T.x - x0,T.y - y0)
 			var/flame_dist = 0
 			var/hotspot_exists
@@ -145,5 +159,5 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 
 
 proc/secondaryexplosion(turf/epicenter, range)
-	for(var/turf/tile in range(range, epicenter))
+	for(var/turf/tile in trange(range, epicenter))
 		tile.ex_act(2)
