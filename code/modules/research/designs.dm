@@ -412,13 +412,23 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/mech_bay_power_console
 
 /datum/design/rdconsole
-	name = "Circuit Design (R&D Console)"
+	name = "Circuit Design (Core R&D Console)"
 	desc = "Allows for the construction of circuit boards used to build a new R&D console."
-	id = "rdconsole"
+	id = "rdconsole_core"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/rdconsole
+
+/datum/design/rdconsole/robotics
+	name = "Circuit Design (Robotics R&D Console)"
+	id = "rdconsole_robotics"
+	build_path = /obj/item/weapon/circuitboard/rdconsole/robotics
+
+/datum/design/rdconsole/mommi
+	name = "Circuit Design (MoMMI R&D Console)"
+	id = "rdconsole_mommi"
+	build_path = /obj/item/weapon/circuitboard/rdconsole/mommi
 
 /datum/design/ordercomp
 	name = "Circuit Design (Supply ordering console)"

@@ -34,6 +34,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole
 	name = "R&D Console"
 	icon_state = "rdcomp"
+	circuit = "/obj/item/weapon/circuitboard/rdconsole"
 	var/datum/research/files							//Stores all the collected research data.
 	var/obj/item/weapon/disk/tech_disk/t_disk = null	//Stores the technology disk.
 	var/obj/item/weapon/disk/design_disk/d_disk = null	//Stores the design disk.
@@ -150,6 +151,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 */
 
 /obj/machinery/computer/rdconsole/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
+	/*
 	//The construction/deconstruction of the console code.
 	if(istype(D, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
@@ -161,6 +163,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				var/obj/item/weapon/circuitboard/rdconsole/M = new /obj/item/weapon/circuitboard/rdconsole( A )
 				for (var/obj/C in src)
 					C.loc = src.loc
+				M.build_path = "[src.type]"
 				A.circuit = M
 				A.state = 3
 				A.icon_state = "3"
@@ -172,13 +175,16 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				var/obj/item/weapon/circuitboard/rdconsole/M = new /obj/item/weapon/circuitboard/rdconsole( A )
 				for (var/obj/C in src)
 					C.loc = src.loc
+				M.build_path = "[src.type]"
 				A.circuit = M
 				A.state = 4
 				A.icon_state = "4"
 				A.anchored = 1
 				del(src)
 	//Loading a disk into it.
-	else if(istype(D, /obj/item/weapon/disk))
+	else
+	*/
+	if(istype(D, /obj/item/weapon/disk))
 		if(t_disk || d_disk)
 			user << "A disk is already loaded into the machine."
 			return
@@ -969,15 +975,17 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole/mommi
 	name = "MoMMI R&D Console"
 	id = 2
-	req_access = null
-	req_access_txt = "29"
+	req_access = list(access_tox)
+	circuit = "/obj/item/weapon/circuitboard/rdconsole/mommi"
 
 /obj/machinery/computer/rdconsole/robotics
 	name = "Robotics R&D Console"
 	id = 2
-	req_access = null
-	req_access_txt = "29"
+	req_access = list(access_robotics,access_tox)
+	circuit = "/obj/item/weapon/circuitboard/rdconsole/robotics"
 
 /obj/machinery/computer/rdconsole/core
 	name = "Core R&D Console"
 	id = 1
+	req_access = list(access_tox)
+	circuit = "/obj/item/weapon/circuitboard/rdconsole"

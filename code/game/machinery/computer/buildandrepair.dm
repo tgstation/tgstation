@@ -137,9 +137,17 @@
 /obj/item/weapon/circuitboard/prisoner
 	name = "Circuit board (Prisoner Management)"
 	build_path = "/obj/machinery/computer/prisoner"
+
 /obj/item/weapon/circuitboard/rdconsole
-	name = "Circuit Board (RD Console)"
+	name = "Circuit Board (R&D Console)"
 	build_path = "/obj/machinery/computer/rdconsole/core"
+/obj/item/weapon/circuitboard/rdconsole/mommi
+	name = "Circuit Board (MoMMI R&D Console)"
+	build_path = "/obj/machinery/computer/rdconsole/core"
+/obj/item/weapon/circuitboard/rdconsole/robotics
+	name = "Circuit Board (Robotics R&D Console)"
+	build_path = "/obj/machinery/computer/rdconsole/core"
+
 /obj/item/weapon/circuitboard/mecha_control
 	name = "Circuit Board (Exosuit Control Console)"
 	build_path = "/obj/machinery/computer/mecha"
@@ -245,22 +253,6 @@
 				return
 			else
 				user << "DERP! BUG! Report this (And what you were doing to cause it) to Agouri"
-	return
-
-/obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I as obj, mob/user as mob)
-	if(istype(I,/obj/item/weapon/screwdriver))
-		if(src.build_path == "/obj/machinery/computer/rdconsole/core")
-			src.name = "Circuit Board (RD Console - Robotics)"
-			src.build_path = "/obj/machinery/computer/rdconsole/robotics"
-			user << "\blue Access protocols succesfully updated."
-		else if(src.build_path == "/obj/machinery/computer/rdconsole/mommi")
-			src.name = "Circuit Board (RD Console - MoMMI Nest)"
-			src.build_path = "/obj/machinery/computer/rdconsole/mommi"
-			user << "\blue Access protocols succesfully updated."
-		else
-			src.name = "Circuit Board (RD Console)"
-			src.build_path = "/obj/machinery/computer/rdconsole/core"
-			user << "\blue Defaulting access protocols."
 	return
 
 /obj/structure/computerframe/attackby(obj/item/P as obj, mob/user as mob)
