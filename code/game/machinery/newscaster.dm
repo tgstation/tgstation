@@ -531,6 +531,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 /obj/machinery/newscaster/Topic(href, href_list)
 	if(..())
 		return
+	testing("[src.type]: "+href)
 	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon) || isobserver(usr)))
 		usr.set_machine(src)
 		if(href_list["set_channel_name"])
@@ -616,7 +617,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				if(isobserver(usr))
 					usr << "\red You can't do that."
 					return
-			src.msg = strip_html(input(usr, "Write your Feed story", "Network Channel Handler", ""))
+			if(isnull(src.msg))
+				src.msg = ""
+			src.msg = strip_html(input(usr, "Write your Feed story", "Network Channel Handler", src.msg))
 			while (findtext(src.msg," ") == 1)
 				src.msg = copytext(src.msg,2,lentext(src.msg)+1)
 			src.updateUsrDialog()
@@ -658,21 +661,21 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.updateUsrDialog()
 
 		else if(href_list["create_channel"])
-			if(!canGhostWrite(usr))
+			if(isobserver(usr) && !canGhostWrite(usr))
 				usr << "\red You can't do that."
 				return
 			src.screen=2
 			src.updateUsrDialog()
 
 		else if(href_list["create_feed_story"])
-			if(!canGhostWrite(usr))
+			if(isobserver(usr) && !canGhostWrite(usr))
 				usr << "\red You can't do that."
 				return
 			src.screen=3
 			src.updateUsrDialog()
 
 		else if(href_list["menu_paper"])
-			if(!canGhostWrite(usr))
+			if(isobserver(usr) && !canGhostWrite(usr))
 				usr << "\red You can't do that."
 				return
 			src.screen=8
@@ -692,21 +695,21 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.updateUsrDialog()
 
 		else if(href_list["menu_censor_story"])
-			if(!canGhostWrite(usr))
+			if(isobserver(usr) && !canGhostWrite(usr))
 				usr << "\red You can't do that."
 				return
 			src.screen=10
 			src.updateUsrDialog()
 
 		else if(href_list["menu_censor_channel"])
-			if(!canGhostWrite(usr))
+			if(isobserver(usr) && !canGhostWrite(usr))
 				usr << "\red You can't do that."
 				return
 			src.screen=11
 			src.updateUsrDialog()
 
 		else if(href_list["menu_wanted"])
-			if(!canGhostWrite(usr))
+			if(isobserver(usr) && !canGhostWrite(usr))
 				usr << "\red You can't do that."
 				return
 			var/already_wanted = 0
