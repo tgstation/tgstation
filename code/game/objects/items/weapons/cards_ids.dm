@@ -68,7 +68,7 @@
 	icon_state = "id"
 	item_state = "card-id"
 	var/access = list()
-	var/registered_name = null // The name registered_name on the card
+	var/registered_name = "Unknown" // The name registered_name on the card
 	slot_flags = SLOT_ID
 
 	var/blood_type = "\[UNSET\]"
@@ -141,6 +141,16 @@
 	name = "agent card"
 	access = list(access_maint_tunnels, access_syndicate, access_external_airlocks)
 	origin_tech = "syndicate=3"
+	var/registered_user=null
+	
+/obj/item/weapon/card/id/syndicate/New(mob/user as mob)
+	..()
+	if(!isnull(user)) // Runtime prevention on laggy starts or where users log out because of lag at round start.
+		registered_name = ishuman(user) ? user.real_name : user.name
+	else
+		registered_name = "Agent Card"
+	assignment = "Agent"
+	name = "[registered_name]'s ID Card ([assignment])"		
 
 /obj/item/weapon/card/id/syndicate/afterattack(var/obj/item/weapon/O as obj, mob/user as mob)
 	if(istype(O, /obj/item/weapon/card/id))
@@ -149,7 +159,6 @@
 		if(istype(user, /mob/living) && user.mind)
 			if(user.mind.special_role)
 				usr << "\blue The card's microscanners activate as you pass it over the ID, copying its access."
-
 
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user as mob)
 	if(!src.registered_name)
@@ -160,7 +169,7 @@
 			return
 		src.registered_name = t
 
-		var u = copytext(sanitize(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant")),1,MAX_MESSAGE_LEN)
+		var u = copytext(sanitize(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Agent")),1,MAX_MESSAGE_LEN)
 		if(!u)
 			alert("Invalid assignment.")
 			src.registered_name = ""
@@ -168,6 +177,29 @@
 		src.assignment = u
 		src.name = "[src.registered_name]'s ID Card ([src.assignment])"
 		user << "\blue You successfully forge the ID card."
+		registered_user = user
+	else if(!registered_user || registered_user == user)
+
+		if(!registered_user) registered_user = user  // 
+
+		switch(alert("Would you like to display the ID, or retitle it?","Choose.","Rename","Show"))
+			if("Rename")
+				var t = copytext(sanitize(input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name)),1,26)
+				if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/new_player/prefrences.dm
+					alert("Invalid name.")
+					return
+				src.registered_name = t
+
+				var u = copytext(sanitize(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant")),1,MAX_MESSAGE_LEN)
+				if(!u)
+					alert("Invalid assignment.")
+					return
+				src.assignment = u
+				src.name = "[src.registered_name]'s ID Card ([src.assignment])"
+				user << "\blue You successfully forge the ID card."
+				return
+			if("Show")
+				..()
 	else
 		..()
 
