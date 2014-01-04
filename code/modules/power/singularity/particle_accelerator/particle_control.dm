@@ -255,3 +255,13 @@
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 	return
+
+/obj/machinery/particle_accelerator/control_box/proc/part_del()
+	spawn(1)
+		for(var/obj/structure/particle_accelerator/part in connected_parts)
+			part.strength = null
+			part.powered = 0
+			part.update_icon()
+		update_state()
+		process()
+		update_icon()

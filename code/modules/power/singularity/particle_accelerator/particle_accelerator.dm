@@ -253,6 +253,10 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 		return 1
 	return 0
 
+obj/structure/particle_accelerator/Del()
+	if(src.master)
+		src.master.part_del()
+	..()
 
 
 /obj/machinery/particle_accelerator
