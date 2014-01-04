@@ -36,6 +36,8 @@
 	icon_living = "brainslug"
 	icon_dead = "brainslug_dead"
 	speed = 5
+	small = 1
+	density = 0
 	a_intent = "harm"
 	stop_automated_movement = 1
 	status_flags = CANPUSH
