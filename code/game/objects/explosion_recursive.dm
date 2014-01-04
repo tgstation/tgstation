@@ -9,12 +9,31 @@
 /obj
 	var/explosion_resistance
 
+/datum/explosion_turf
+	var/turf/turf //The turf which will get ex_act called on it
+	var/max_power //The largest amount of power the turf sustained
 
+	New()
+		..()
+		max_power = 0
 
-var/list/explosion_turfs = list()
+	proc/save_power_if_larger(power)
+		if(power > max_power)
+			max_power = power
+			return 1
+		return 0
 
+var/list/datum/explosion_turf/explosion_turfs = list()
 var/explosion_in_progress = 0
 
+proc/get_explosion_turf(var/turf/T)
+	for( var/datum/explosion_turf/ET in explosion_turfs )
+		if( T == ET.turf )
+			return ET
+	var/datum/explosion_turf/ET = new()
+	ET.turf = T
+	explosion_turfs += ET
+	return ET
 
 proc/explosion_rec(turf/epicenter, power)
 
@@ -36,8 +55,9 @@ proc/explosion_rec(turf/epicenter, power)
 
 	explosion_in_progress = 1
 	explosion_turfs = list()
-	
-	explosion_turfs[epicenter] = power
+	var/datum/explosion_turf/ETE = get_explosion_turf()
+	ETE.turf = epicenter
+	ETE.max_power = power
 
 	//This steap handles the gathering of turfs which will be ex_act() -ed in the next step. It also ensures each turf gets the maximum possible amount of power dealt to it.
 	for(var/direction in cardinal)
@@ -45,21 +65,22 @@ proc/explosion_rec(turf/epicenter, power)
 		T.explosion_spread(power - epicenter.explosion_resistance, direction)
 
 	//This step applies the ex_act effects for the explosion, as planned in the previous step.
-	for(var/turf/T in explosion_turfs)
-		if(explosion_turfs[T] <= 0) continue
-		if(!T) continue
-		
+	for( var/datum/explosion_turf/ET in explosion_turfs )
+		if(ET.max_power <= 0) continue
+		if(!ET.turf) continue
+
 		//Wow severity looks confusing to calculate... Fret not, I didn't leave you with any additional instructions or help. (just kidding, see the line under the calculation)
-		var/severity = 4 - round(max(min( 3, ((explosion_turfs[T] - T.explosion_resistance) / (max(3,(power/3)))) ) ,1), 1)								//sanity			effective power on tile				divided by either 3 or one third the total explosion power
+		var/severity = 4 - round(max(min( 3, ((ET.max_power - ET.turf.explosion_resistance) / (max(3,(power/3)))) ) ,1), 1)
+								//sanity			effective power on tile				divided by either 3 or one third the total explosion power
 								//															One third because there are three power levels and I
 								//															want each one to take up a third of the crater
-		var/x = T.x
-		var/y = T.y
-		var/z = T.z
-		T.ex_act(severity)
-		if(!T)
-			T = locate(x,y,z)
-		for(var/atom/A in T)
+		var/x = ET.turf.x
+		var/y = ET.turf.y
+		var/z = ET.turf.z
+		ET.turf.ex_act(severity)
+		if(!ET.turf)
+			ET.turf = locate(x,y,z)
+		for( var/atom/A in ET.turf )
 			A.ex_act(severity)
 
 	explosion_in_progress = 0
@@ -105,9 +126,10 @@ proc/explosion_rec(turf/epicenter, power)
 	new/obj/effect/debugging/marker(src)
 	*/
 
-	if(explosion_turfs[src] >= power)
+	var/datum/explosion_turf/ET = get_explosion_turf(src)
+	if(ET.max_power >= power)
 		return //The turf already sustained and spread a power greated than what we are dealing with. No point spreading again.
-	explosion_turfs[src] = power
+	ET.max_power = power
 
 	var/spread_power = power - src.explosion_resistance //This is the amount of power that will be spread to the tile in the direction of the blast
 	var/side_spread_power = power - 2 * src.explosion_resistance //This is the amount of power that will be spread to the side tiles
