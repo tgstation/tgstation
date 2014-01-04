@@ -6,6 +6,17 @@
 	if(dx>=dy)	return dx + (0.5*dy)	//The longest side add half the shortest side approximates the hypotenuse
 	else		return dy + (0.5*dx)
 
+proc/trange(var/Dist=0,var/turf/Center=null)//alternative to range (ONLY processes turfs and thus less intensive)
+	if(Center==null) return
+
+	//var/x1=((Center.x-Dist)<1 ? 1 : Center.x-Dist)
+	//var/y1=((Center.y-Dist)<1 ? 1 : Center.y-Dist)
+	//var/x2=((Center.x+Dist)>world.maxx ? world.maxx : Center.x+Dist)
+	//var/y2=((Center.y+Dist)>world.maxy ? world.maxy : Center.y+Dist)
+
+	var/turf/x1y1 = locate(((Center.x-Dist)<1 ? 1 : Center.x-Dist),((Center.y-Dist)<1 ? 1 : Center.y-Dist),Center.z)
+	var/turf/x2y2 = locate(((Center.x+Dist)>world.maxx ? world.maxx : Center.x+Dist),((Center.y+Dist)>world.maxy ? world.maxy : Center.y+Dist),Center.z)
+	return block(x1y1,x2y2)
 
 proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, squelch = 0)
 	src = null	//so we don't abort once src is deleted
@@ -52,7 +63,7 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 						far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
 						M.playsound_local(epicenter, 'sound/effects/explosionfar.ogg', far_volume, 1, frequency, falloff = 5)
 
-		var/close = range(world.view+round(devastation_range,1), epicenter)
+		var/close = trange(world.view+round(devastation_range,1), epicenter)
 		// to all distanced mobs play a different sound
 		for(var/mob/M in world) if(M.z == epicenter.z) if(!(M in close))
 			// check if the mob can hear
@@ -77,7 +88,7 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 		var/y0 = epicenter.y
 		var/z0 = epicenter.z
 
-		for(var/turf/T in range(epicenter, max_range))
+		for(var/turf/T in trange(max_range, epicenter))
 			var/dist = cheap_pythag(T.x - x0,T.y - y0)
 
 			if(dist < devastation_range)		dist = 1
@@ -85,11 +96,11 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 			else if(dist < light_impact_range)	dist = 3
 			else								continue
 
-			T.ex_act(dist)
 			if(T)
+				spawn(dist) T.ex_act(dist)
 				for(var/atom_movable in T.contents)	//bypass type checking since only atom/movable can be contained by turfs anyway
 					var/atom/movable/AM = atom_movable
-					if(AM)	AM.ex_act(dist)
+					spawn(dist) if(AM)	AM.ex_act(dist)
 
 		var/took = (world.timeofday-start)/10
 		//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes  to explosion code using this please so we can compare
@@ -113,5 +124,5 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 
 
 proc/secondaryexplosion(turf/epicenter, range)
-	for(var/turf/tile in range(range, epicenter))
+	for(var/turf/tile in trange(range, epicenter))
 		tile.ex_act(2)
