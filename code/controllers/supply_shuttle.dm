@@ -148,7 +148,9 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	proc/process()
 
 		spawn(0)
+			#ifdef SET_BACKGROUND
 			set background = 1
+			#endif
 			while(1)
 				if(processing)
 					iteration++

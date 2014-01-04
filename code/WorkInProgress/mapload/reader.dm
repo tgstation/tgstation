@@ -46,7 +46,9 @@ dmm_suite/load_map(var/dmm_file as file, var/z_offset as num)
 
 
 dmm_suite/proc/parse_grid(var/model as text,var/xcrd as num,var/ycrd as num,var/zcrd as num)
+	#ifdef SET_BACKGROUND
 	set background = 1
+	#endif
 
 	/*Method parse_grid()
 		- Accepts a text string containing a comma separated list of type paths of the

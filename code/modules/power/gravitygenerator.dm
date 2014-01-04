@@ -113,7 +113,9 @@
 
 
 /obj/machinery/computer/gravity_control_computer/Topic(href, href_list)
+	#ifdef SET_BACKGROUND
 	set background = 1
+	#endif
 
 	if(..())
 		return

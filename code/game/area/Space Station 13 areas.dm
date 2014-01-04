@@ -1507,7 +1507,9 @@ proc/process_ghost_teleport_locs()
 				Obj << mysound
 
 	proc/process()
+		#ifdef SET_BACKGROUND
 		set background = 1
+		#endif
 
 		var/sound/S = null
 		var/sound_delay = 0

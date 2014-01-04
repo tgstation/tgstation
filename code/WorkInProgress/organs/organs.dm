@@ -49,7 +49,9 @@
 		return
 
 	proc/ProcessOrgans()
+		#ifdef SET_BACKGROUND
 		set background = 1
+		#endif
 
 		var/list/organs = GetAllContents()
 		for(var/obj/effect/organ/organ in organs)

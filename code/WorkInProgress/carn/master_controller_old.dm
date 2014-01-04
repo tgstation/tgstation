@@ -93,7 +93,9 @@ datum/controller/game_controller
 	proc/process()
 		processing = 1
 		spawn(0)
+			#ifdef SET_BACKGROUND
 			set background = 1
+			#endif
 			while(1)
 				var/currenttime = world.timeofday
 				var/diff = (currenttime - last_tick_timeofday) / 10
