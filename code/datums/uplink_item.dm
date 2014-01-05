@@ -176,7 +176,7 @@ var/list/uplink_items = list()
 	item = /obj/mecha/combat/marauder/mauler/loaded
 	cost = 70
 	gamemodes = list(/datum/game_mode/nuclear)
-
+//If the TC amount of this is changed, please also change it in code/game/gamemodes/antag_spawner.dm @ var/TC_cost
 /datum/uplink_item/dangerous/syndieborg
 	name = "Syndicate Cyborg"
 	desc = "A cyborg designed and programmed for systematic extermination of non-Syndicate personnel."

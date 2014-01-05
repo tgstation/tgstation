@@ -4,6 +4,12 @@
 	w_class = 1.0
 	var/used = 0
 
+/obj/item/weapon/antag_spawner/proc/spawn_antag(var/client/C, var/turf/T, var/type = "")
+	return
+
+/obj/item/weapon/antag_spawner/proc/equip_antag(mob/target as mob)
+	return
+
 /obj/item/weapon/antag_spawner/contract
 	name = "contract"
 	desc = "A magic contract previously signed by an apprentice. In exchange for instruction in the magical arts, they are bound to answer your call for aid."
@@ -55,28 +61,6 @@
 			else
 				H << "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later."
 
-/obj/item/weapon/antag_spawner/borg_tele
-	name = "Syndicate Cyborg Teleporter"
-	desc = "A single-use teleporter used to deploy a Syndicate Cyborg on the field."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "locator"
-	var/TC_cost = 25
-
-/obj/item/weapon/antag_spawner/borg_tele/attack_self(mob/user as mob)
-	if(used)
-		user << "The teleporter is out of power."
-		return
-	var/list/borg_candicates = get_candidates(BE_OPERATIVE)
-	if(borg_candicates.len > 0)
-		used = 1
-		var/client/C = pick(borg_candicates)
-		spawn_antag(C, get_turf(src.loc), "syndieborg")
-	else
-		user << "<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>"
-
-/obj/item/weapon/antag_spawner/proc/spawn_antag(var/client/C, var/turf/T, var/type = "")
-	return
-
 /obj/item/weapon/antag_spawner/contract/spawn_antag(var/client/C, var/turf/T, var/type = "")
 	new /obj/effect/effect/harmless_smoke(T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
@@ -119,18 +103,6 @@
 	ticker.mode.traitors += M.mind
 	M.mind.special_role = "apprentice"
 
-/obj/item/weapon/antag_spawner/borg_tele/spawn_antag(var/client/C, var/turf/T, var/type = "")
-			var/datum/effect/effect/system/spark_spread/S = new /datum/effect/effect/system/spark_spread
-			S.set_up(4, 1, src)
-			S.start()
-			var/mob/living/silicon/robot/R = new /mob/living/silicon/robot/syndicate(T)
-			R.key = C.key
-			ticker.mode.traitors += R.mind
-			R.mind.special_role = "syndicate"
-
-/obj/item/weapon/antag_spawner/proc/equip_antag(mob/target as mob)
-	return
-
 /obj/item/weapon/antag_spawner/contract/equip_antag(mob/target as mob)
 	target.equip_to_slot_or_del(new /obj/item/device/radio/headset(target), slot_ears)
 	target.equip_to_slot_or_del(new /obj/item/clothing/under/lightpurple(target), slot_w_uniform)
@@ -140,3 +112,31 @@
 	target.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(target), slot_back)
 	target.equip_to_slot_or_del(new /obj/item/weapon/storage/box(target), slot_in_backpack)
 	target.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll/apprentice(target), slot_r_store)
+
+/obj/item/weapon/antag_spawner/borg_tele
+	name = "Syndicate Cyborg Teleporter"
+	desc = "A single-use teleporter used to deploy a Syndicate Cyborg on the field."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "locator"
+	var/TC_cost = 25
+
+/obj/item/weapon/antag_spawner/borg_tele/attack_self(mob/user as mob)
+	if(used)
+		user << "The teleporter is out of power."
+		return
+	var/list/borg_candicates = get_candidates(BE_OPERATIVE)
+	if(borg_candicates.len > 0)
+		used = 1
+		var/client/C = pick(borg_candicates)
+		spawn_antag(C, get_turf(src.loc), "syndieborg")
+	else
+		user << "<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>"
+
+/obj/item/weapon/antag_spawner/borg_tele/spawn_antag(var/client/C, var/turf/T, var/type = "")
+			var/datum/effect/effect/system/spark_spread/S = new /datum/effect/effect/system/spark_spread
+			S.set_up(4, 1, src)
+			S.start()
+			var/mob/living/silicon/robot/R = new /mob/living/silicon/robot/syndicate(T)
+			R.key = C.key
+			ticker.mode.traitors += R.mind
+			R.mind.special_role = "syndicate"
