@@ -151,39 +151,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 */
 
 /obj/machinery/computer/rdconsole/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
-	/*
-	//The construction/deconstruction of the console code.
-	if(istype(D, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
-			if (src.stat & BROKEN)
-				user << "\blue The broken glass falls out."
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				new /obj/item/weapon/shard( src.loc )
-				var/obj/item/weapon/circuitboard/rdconsole/M = new /obj/item/weapon/circuitboard/rdconsole( A )
-				for (var/obj/C in src)
-					C.loc = src.loc
-				M.build_path = "[src.type]"
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				del(src)
-			else
-				user << "\blue You disconnect the monitor."
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				var/obj/item/weapon/circuitboard/rdconsole/M = new /obj/item/weapon/circuitboard/rdconsole( A )
-				for (var/obj/C in src)
-					C.loc = src.loc
-				M.build_path = "[src.type]"
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				del(src)
-	//Loading a disk into it.
-	else
-	*/
+	if(..())
+		return
 	if(istype(D, /obj/item/weapon/disk))
 		if(t_disk || d_disk)
 			user << "A disk is already loaded into the machine."
@@ -988,4 +957,4 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	name = "Core R&D Console"
 	id = 1
 	req_access = list(access_tox)
-	circuit = "/obj/item/weapon/circuitboard/rdconsole"
+	circuit = "/obj/item/weapon/circuitboard/rdconsole/core"
