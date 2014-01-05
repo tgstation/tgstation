@@ -66,7 +66,7 @@ var/const/VOX_DELAY = 600
 	set category = "AI Commands"
 	if(parent && istype(parent) && parent.stat != 2)
 		if(istype(usr,/mob/living/silicon/ai))
-			var/mob/living/silicon/ai/AI = src
+			var/mob/living/silicon/ai/AI = parent
 			if(AI.control_disabled)
 				usr << "Wireless control is disabled!"
 				return
