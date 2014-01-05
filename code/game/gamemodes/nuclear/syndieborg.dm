@@ -7,10 +7,12 @@
 	throw_range = 5
 	w_class = 1.0
 	var/used = 0
+	var/TC_cost = 25
 
 /obj/item/weapon/syndieborg_teleport/attack_self(mob/user as mob)
 	if(used)
 		user << "The teleporter is out of power."
+		return
 	var/list/borg_candicates = get_candidates(BE_OPERATIVE)
 	if(borg_candicates.len > 0)
 		used = 1
@@ -23,4 +25,4 @@
 		ticker.mode.traitors += R.mind
 		R.mind.special_role = "syndicate"
 	else
-		user << "Unable to connect to Syndicate Command. Please wait and try again later."
+		user << "<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>"

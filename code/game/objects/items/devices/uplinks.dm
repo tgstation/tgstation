@@ -161,6 +161,16 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			src.hidden_uplink.trigger(user)
 			return 1
 	return 0
+//Refund proc for the borg teleporter (later I'll make a general refund proc if there is demand for it)
+/obj/item/device/radio/uplink/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/syndieborg_teleport))
+		var/obj/item/weapon/syndieborg_teleport/S = W
+		if(!S.used)
+			hidden_uplink.uses += S.TC_cost
+			del(S)
+			user << "<span class='notice'>Teleporter refunded.</span>"
+		else
+			user << "<span class='notice'>This teleporter is already used.</span>"
 
 // PRESET UPLINKS
 // A collection of preset uplinks.
