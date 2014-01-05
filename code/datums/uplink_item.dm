@@ -177,6 +177,12 @@ var/list/uplink_items = list()
 	cost = 70
 	gamemodes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/dangerous/syndieborg
+	name = "Syndicate Cyborg"
+	desc = "A cyborg designed and programmed for systematic extermination of non-Syndicate personnel."
+	item = /obj/item/weapon/syndieborg_teleport
+	cost = 20
+	gamemodes = list(/datum/game_mode/nuclear)
 
 
 // AMMUNITION
@@ -373,17 +379,10 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/device_tools/syndicate_bomb
 	name = "Syndicate Bomb"
-	desc = "The Syndicate Bomb has an adjustable timer with a minimum setting of 60 seconds. Ordering the bomb sends you a small beacon, which will teleport the explosive to your location when you activate it. \
-	You can wrench the bomb down to prevent removal. The crew may attempt to defuse the bomb."
+	desc = "The Syndicate Bomb has an adjustable timer with a minimum setting of 30 seconds. Ordering the bomb sends you a small beacon, which will teleport the explosive to your location when you activate it. \
+	You can wrench the bomb down to prevent removal. The crew may defuse the bomb."
 	item = /obj/item/device/sbeacondrop/bomb
 	cost = 5
-
-/datum/uplink_item/device_tools/syndicate_detonator
-	name = "Syndicate Detonator"
-	desc = "The Syndicate Detonator is a companion device to the Syndicate Bomb. Simply press the included button and an encrypted radio frequency will instruct all live syndicate bombs to detonate. \
-	Useful for when speed matters or you wish to synchronize multiple bomb blasts. Be sure to stand clear of the blast radius before using the detonator."
-	item = /obj/item/device/syndicatedetonator
-	cost = 1
 
 /datum/uplink_item/device_tools/teleporter
 	name = "Teleporter Circuit Board"
