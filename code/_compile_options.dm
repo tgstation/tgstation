@@ -60,3 +60,5 @@ var/list/del_counter = list()
 #define USE_DYNAMIC_LIGHTING	//Enables the dynamic lighting system
 #define USE_DYNAMIC_ATMOS		//Enables the dynamic atmos system
 */
+
+#define SET_BACKGROUND	0

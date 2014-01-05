@@ -145,7 +145,9 @@ datum
 						active_singletons += T
 
 			setup()
+				#ifdef SET_BACKGROUND
 				set background = 1
+				#endif
 				world << "\red \b Processing Geometry..."
 				sleep(1)
 

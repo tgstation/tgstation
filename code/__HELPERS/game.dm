@@ -195,7 +195,9 @@
 
 /proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios)
 
+	#ifdef SET_BACKGROUND
 	set background = 1
+	#endif
 
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
