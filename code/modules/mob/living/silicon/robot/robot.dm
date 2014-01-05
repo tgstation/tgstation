@@ -39,6 +39,8 @@
 
 	var/obj/item/device/pda/ai/rbPDA = null
 
+	var/datum/wires/robot/wires = null
+
 	var/opened = 0
 	var/emagged = 0
 	var/wiresexposed = 0
@@ -54,7 +56,7 @@
 	var/datum/effect/effect/system/ion_trail_follow/ion_trail = null
 	var/datum/effect/effect/system/spark_spread/spark_system//So they can initialize sparks whenever/N
 	var/jeton = 0
-	var/borgwires = 31 // 0b11111
+
 	var/killswitch = 0
 	var/killswitch_time = 60
 	var/weapon_lock = 0
@@ -73,6 +75,8 @@
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
+
+	wires = new(src)
 
 	ident = rand(1, 999)
 	updatename("Default")
@@ -106,7 +110,7 @@
 		camera = new /obj/machinery/camera(src)
 		camera.c_tag = real_name
 		camera.network = list("SS13","Robots")
-		if(isWireCut(5)) // 5 = BORG CAMERA
+		if(wires.IsCameraCut()) // 5 = BORG CAMERA
 			camera.status = 0
 
 	initialize_components()
@@ -660,7 +664,7 @@
 				user << "You close the cover."
 				opened = 0
 				updateicon()
-			else if(mmi && wiresexposed && isWireCut(1) && isWireCut(2) && isWireCut(3) && isWireCut(4) && isWireCut(5))
+			else if(mmi && wiresexposed && wires.IsAllCut())
 				//Cell is out, wires are exposed, remove MMI, produce damaged chassis, baleet original mob.
 				user << "You jam the crowbar into the robot and begin levering [mmi]."
 				sleep(30)
@@ -720,7 +724,7 @@
 
 	else if (istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool))
 		if (wiresexposed)
-			interact(user)
+			wires.Interact(user)
 		else
 			user << "You can't reach the wiring."
 
@@ -837,6 +841,17 @@
 	else
 		spark_system.start()
 		return ..()
+
+/mob/living/silicon/robot/verb/unlock_own_cover()
+	set category = "Robot Commands"
+	set name = "Unlock Cover"
+	set desc = "Unlocks your own cover if it is locked. You can not lock it again. A human will have to lock it for you."
+	if(locked)
+		switch(alert("You can not lock your cover again, are you sure?\n      (You can still ask for a human to lock it)", "Unlock Own Cover", "Yes", "No"))
+			if("Yes")
+				locked = 0
+				updateicon()
+				usr << "You unlock your cover."
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if (!ticker)
@@ -1307,6 +1322,13 @@
 		W.attack_self(src)
 
 	return
+
+/mob/living/silicon/robot/proc/SetLockdown(var/state = 1)
+	// They stay locked down if their wire is cut.
+	if(wires.LockedCut())
+		state = 1
+	lockcharge = state
+	update_canmove()
 
 /mob/living/silicon/robot/verb/pose()
 	set name = "Set Pose"
