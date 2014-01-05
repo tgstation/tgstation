@@ -12,8 +12,8 @@
 	var/op = 1
 
 /obj/item/weapon/spellbook/attackby(obj/item/O as obj, mob/user as mob)
-	if(istype(O, /obj/item/weapon/contract))
-		var/obj/item/weapon/contract/contract = O
+	if(istype(O, /obj/item/weapon/antag_spawner/contract))
+		var/obj/item/weapon/antag_spawner/contract/contract = O
 		if(contract.used)
 			user << "The contract has been used, you can't get your points back now."
 		else
@@ -282,7 +282,7 @@
 							max_uses--
 						if("contract")
 							feedback_add_details("wizard_spell_learned","CT") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							new /obj/item/weapon/contract(get_turf(H))
+							new /obj/item/weapon/antag_spawner/contract(get_turf(H))
 							temp = "You have purchased a contract of apprenticeship."
 							max_uses--
 						if("scrying")
