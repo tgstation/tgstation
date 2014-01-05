@@ -711,6 +711,7 @@ nanotrasen
 ninja
 ninjas
 obtain
+or
 plasma
 port
 qm = quartermaster
@@ -756,6 +757,8 @@ update
 updated
 updating
 upload
+vampire
+vampires
 virology
 vox
 wanker
