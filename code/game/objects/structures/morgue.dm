@@ -15,15 +15,21 @@
 
 obj/proc/on_login()
 	..()
-	if(isobj(loc)) loc:on_login()
+	if(isobj(loc))
+		var/obj/Loc
+		Loc.on_login()
 
 mob/Living/Login() //re-enter
 	..()
-	if(isobj(loc)) loc:on_login()
+	if(isobj(loc))
+		var/obj/Loc
+		Loc.on_login()
 
 mob/Living/Logout() //exit body
 	..()
-	if(isobj(loc)) loc:on_login()
+	if(isobj(loc))
+		var/obj/Loc
+		Loc.on_login()
 
 
 
