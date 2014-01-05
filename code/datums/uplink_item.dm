@@ -181,7 +181,7 @@ var/list/uplink_items = list()
 	name = "Syndicate Cyborg"
 	desc = "A cyborg designed and programmed for systematic extermination of non-Syndicate personnel."
 	item = /obj/item/weapon/syndieborg_teleport
-	cost = 20
+	cost = 25
 	gamemodes = list(/datum/game_mode/nuclear)
 
 
@@ -383,6 +383,7 @@ var/list/uplink_items = list()
 	You can wrench the bomb down to prevent removal. The crew may attempt to defuse the bomb."
 	item = /obj/item/device/sbeacondrop/bomb
 	cost = 5
+
 /datum/uplink_item/device_tools/syndicate_detonator
 	name = "Syndicate Detonator"
 	desc = "The Syndicate Detonator is a companion device to the Syndicate Bomb. Simply press the included button and an encrypted radio frequency will instruct all live syndicate bombs to detonate. \
