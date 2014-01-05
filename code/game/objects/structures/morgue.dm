@@ -16,19 +16,19 @@
 obj/proc/on_login()
 	..()
 	if(isobj(loc))
-		var/obj/Loc
+		var/obj/Loc=loc
 		Loc.on_login()
 
 mob/Living/Login() //re-enter
 	..()
 	if(isobj(loc))
-		var/obj/Loc
+		var/obj/Loc=loc
 		Loc.on_login()
 
 mob/Living/Logout() //exit body
 	..()
 	if(isobj(loc))
-		var/obj/Loc
+		var/obj/Loc=loc
 		Loc.on_login()
 
 
