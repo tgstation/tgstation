@@ -243,7 +243,8 @@ obj/machinery/airlock_sensor/multitool_menu(var/obj/item/device/multitool/P, var
 		</ul>"}
 
 obj/machinery/airlock_sensor/Topic(href,href_list)
-	if(..()) return 0
+	if(..())
+		return 0
 
 	if(!issilicon(usr))
 		if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
@@ -297,8 +298,6 @@ obj/machinery/airlock_sensor/attackby(var/obj/item/W, var/mob/user)
 			user << "You successfully pry \the [src] off the wall."
 			new /obj/item/airlock_sensor_frame(get_turf(src))
 			del(src)
-
-
 
 
 /obj/item/access_button_frame

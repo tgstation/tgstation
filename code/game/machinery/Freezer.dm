@@ -138,9 +138,13 @@
 		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
 			usr.set_machine(src)
 			if (href_list["start"])
+				if(isobserver(usr) && !canGhostWrite(usr,src,"turned [on?"off":"on"]"))
+					return
 				src.on = !src.on
 				update_icon()
 			if(href_list["temp"])
+				if(isobserver(usr) && !canGhostWrite(usr,src,"set temperature of"))
+					return
 				var/amount = text2num(href_list["temp"])
 				if(amount > 0)
 					src.current_temperature = min(T20C, src.current_temperature+amount)
@@ -294,9 +298,13 @@
 		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
 			usr.set_machine(src)
 			if (href_list["start"])
+				if(isobserver(usr) && !canGhostWrite(usr,src,"turned [on?"off":"on"]"))
+					return
 				src.on = !src.on
 				update_icon()
 			if(href_list["temp"])
+				if(isobserver(usr) && !canGhostWrite(usr,src,"set temperature of"))
+					return
 				var/amount = text2num(href_list["temp"])
 				if(amount > 0)
 					src.current_temperature = min((T20C+280), src.current_temperature+amount)

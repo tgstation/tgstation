@@ -172,9 +172,9 @@ Class Procs:
 	if(stat & (NOPOWER|BROKEN))
 		return 1
 	var/ghost_flags=0
-	if(!ghost_write)
-		ghost_flags |= PERMIT_AGHOST_ONLY
-	if(!canGhostWrite(usr,ghost_flags))
+	if(ghost_write)
+		ghost_flags |= PERMIT_ALL
+	if(!canGhostWrite(usr,src,"fucked with",ghost_flags))
 		if(usr.restrained() || usr.lying || usr.stat)
 			return 1
 		if ( ! (istype(usr, /mob/living/carbon/human) || \

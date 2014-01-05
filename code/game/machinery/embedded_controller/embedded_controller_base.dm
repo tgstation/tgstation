@@ -165,6 +165,10 @@ obj/machinery/embedded_controller
 		if(..())
 			return 0
 
+		if(isobserver(usr) && !canGhostWrite(usr,src,"fucked with"))
+			usr << "\red Nope."
+			return 0
+
 		var/processed=0
 		if(program)
 			processed=program.receive_user_command(href_list["command"])

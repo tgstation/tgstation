@@ -378,6 +378,9 @@
 
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/attack_hand(mob/user)
+	if(isobserver(usr) && !canGhostWrite(user,src,"toggled"))
+		usr << "\red Nope."
+		return 0
 	if(position == 0)
 		if(last_pos < 0)
 			position = 1
@@ -428,6 +431,9 @@
 
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/oneway/attack_hand(mob/user)
+	if(isobserver(usr) && !canGhostWrite(user,src,"toggled"))
+		usr << "\red Nope."
+		return 0
 	if(position == 0)
 		position = convdir
 		send_command(convdir==1?"forward":"reverse")

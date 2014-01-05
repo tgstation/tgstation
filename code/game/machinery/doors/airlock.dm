@@ -440,12 +440,13 @@ About the new airlock wires panel:
 
 /obj/machinery/door/airlock/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
-	if(!src.canAIControl())
-		if(src.canAIHack())
-			src.hack(user)
-			return
-		else
-			user << "Airlock AI control has been blocked with a firewall. Unable to hack."
+	if(isAI(user))
+		if(!src.canAIControl())
+			if(src.canAIHack())
+				src.hack(user)
+				return
+			else
+				user << "Airlock AI control has been blocked with a firewall. Unable to hack."
 
 	//Separate interface for the AI.
 	user.set_machine(src)
@@ -640,8 +641,9 @@ About the new airlock wires panel:
 	// Otherwise it will runtime with this kind of error: null.Topic()
 	if(!nowindow)
 		..()
-	if(usr.stat || usr.restrained()|| usr.small)
-		return
+	if(!isAdminGhost(usr))
+		if(usr.stat || usr.restrained()|| usr.small)
+			return
 	add_fingerprint(usr)
 	if(href_list["close"])
 		usr << browse(null, "window=airlock")
@@ -698,7 +700,7 @@ About the new airlock wires panel:
 			update_multitool_menu(usr)
 
 
-	if(istype(usr, /mob/living/silicon) && src.canAIControl())
+	if(isAdminGhost(usr) || (istype(usr, /mob/living/silicon) && src.canAIControl()))
 		//AI
 		//aiDisable - 1 idscan, 2 disrupt main power, 3 disrupt backup power, 4 drop door bolts, 5 un-electrify door, 7 close door, 8 door safties, 9 door speed
 		//aiEnable - 1 idscan, 4 raise door bolts, 5 electrify door for 30 seconds, 6 electrify door indefinitely, 7 open door,  8 door safties, 9 door speed
@@ -712,16 +714,25 @@ About the new airlock wires panel:
 					else if(src.aiDisabledIdScanner)
 						usr << "You've already disabled the IdScan feature."
 					else
+						if(isobserver(usr) && !canGhostWrite(usr,src,"disabled IDScan on"))
+							usr << "\red Nope."
+							return 0
 						src.aiDisabledIdScanner = 1
 				if(2)
 					//disrupt main power
 					if(src.secondsMainPowerLost == 0)
+						if(isobserver(usr) && !canGhostWrite(usr,src,"disrupted main power on"))
+							usr << "\red Nope."
+							return 0
 						src.loseMainPower()
 					else
 						usr << "Main power is already offline."
 				if(3)
 					//disrupt backup power
 					if(src.secondsBackupPowerLost == 0)
+						if(isobserver(usr) && !canGhostWrite(usr,src,"disrupted backup power on"))
+							usr << "\red Nope."
+							return 0
 						src.loseBackupPower()
 					else
 						usr << "Backup power is already offline."
@@ -730,6 +741,9 @@ About the new airlock wires panel:
 					if(src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
 						usr << "You can't drop the door bolts - The door bolt dropping wire has been cut."
 					else if(src.locked!=1)
+						if(isobserver(usr) && !canGhostWrite(usr,src,"dropped bolts on"))
+							usr << "\red Nope."
+							return 0
 						src.locked = 1
 						update_icon()
 				if(5)
@@ -737,8 +751,14 @@ About the new airlock wires panel:
 					if(src.isWireCut(AIRLOCK_WIRE_ELECTRIFY))
 						usr << text("Can't un-electrify the airlock - The electrification wire is cut.")
 					else if(src.secondsElectrified==-1)
+						if(isobserver(usr) && !canGhostWrite(usr,src,"electrified"))
+							usr << "\red Nope."
+							return 0
 						src.secondsElectrified = 0
 					else if(src.secondsElectrified>0)
+						if(isobserver(usr) && !canGhostWrite(usr,src,"electrified"))
+							usr << "\red Nope."
+							return 0
 						src.secondsElectrified = 0
 
 				if(8)
@@ -746,6 +766,9 @@ About the new airlock wires panel:
 					if (src.isWireCut(AIRLOCK_WIRE_SAFETY))
 						usr << text("Control to door sensors is disabled.")
 					else if (src.safe)
+						if(isobserver(usr) && !canGhostWrite(usr,src,"disabled safeties on"))
+							usr << "\red Nope."
+							return 0
 						safe = 0
 					else
 						usr << text("Firmware reports safeties already overriden.")
@@ -757,6 +780,9 @@ About the new airlock wires panel:
 					if(src.isWireCut(AIRLOCK_WIRE_SPEED))
 						usr << text("Control to door timing circuitry has been severed.")
 					else if (src.normalspeed)
+						if(isobserver(usr) && !canGhostWrite(usr,src,"disrupted timing on"))
+							usr << "\red Nope."
+							return 0
 						normalspeed = 0
 					else
 						usr << text("Door timing circurity already accellerated.")
@@ -768,8 +794,14 @@ About the new airlock wires panel:
 					else if(src.locked)
 						usr << text("The door bolts are down!")
 					else if(!src.density)
+						if(isobserver(usr) && !canGhostWrite(usr,src,"closed"))
+							usr << "\red Nope."
+							return 0
 						close()
 					else
+						if(isobserver(usr) && !canGhostWrite(usr,src,"opened"))
+							usr << "\red Nope."
+							return 0
 						open()
 
 				if(10)
@@ -777,6 +809,9 @@ About the new airlock wires panel:
 					if(src.isWireCut(AIRLOCK_WIRE_LIGHT))
 						usr << text("Control to door bolt lights has been severed.</a>")
 					else if (src.lights)
+						if(isobserver(usr) && !canGhostWrite(usr,src,"disabled door bolt lights on"))
+							usr << "\red Nope."
+							return 0
 						lights = 0
 					else
 						usr << text("Door bolt lights are already disabled!")
@@ -791,6 +826,9 @@ About the new airlock wires panel:
 					if(src.isWireCut(AIRLOCK_WIRE_IDSCAN))
 						usr << "You can't enable IdScan - The IdScan wire has been cut."
 					else if(src.aiDisabledIdScanner)
+						if(isobserver(usr) && !canGhostWrite(usr,src,"enabled ID Scan on"))
+							usr << "\red Nope."
+							return 0
 						src.aiDisabledIdScanner = 0
 					else
 						usr << "The IdScan feature is not disabled."
@@ -802,6 +840,9 @@ About the new airlock wires panel:
 						usr << text("The door bolts are already up.<br>\n")
 					else
 						if(src.arePowerSystemsOn())
+							if(isobserver(usr) && !canGhostWrite(usr,src,"raised bolts on"))
+								usr << "\red Nope."
+								return 0
 							src.locked = 0
 							update_icon()
 						else
@@ -818,6 +859,9 @@ About the new airlock wires panel:
 					else
 						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
 						usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Electrified the [name] at [x] [y] [z]</font>")
+						if(isobserver(usr) && !canGhostWrite(usr,src,"electrified (30sec)"))
+							usr << "\red Nope."
+							return 0
 						src.secondsElectrified = 30
 						spawn(10)
 							while (src.secondsElectrified>0)
@@ -837,6 +881,9 @@ About the new airlock wires panel:
 					else
 						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
 						usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Electrified the [name] at [x] [y] [z]</font>")
+						if(isobserver(usr) && !canGhostWrite(usr,src,"electrified (permanent)"))
+							usr << "\red Nope."
+							return 0
 						src.secondsElectrified = -1
 
 				if (8) // Not in order >.>
@@ -844,6 +891,9 @@ About the new airlock wires panel:
 					if (src.isWireCut(AIRLOCK_WIRE_SAFETY))
 						usr << text("Control to door sensors is disabled.")
 					else if (!src.safe)
+						if(isobserver(usr) && !canGhostWrite(usr,src,"enabled safeties on"))
+							usr << "\red Nope."
+							return 0
 						safe = 1
 						src.updateUsrDialog()
 					else
@@ -854,6 +904,9 @@ About the new airlock wires panel:
 					if(src.isWireCut(AIRLOCK_WIRE_SPEED))
 						usr << text("Control to door timing circuitry has been severed.")
 					else if (!src.normalspeed)
+						if(isobserver(usr) && !canGhostWrite(usr,src,"set speed to normal on"))
+							usr << "\red Nope."
+							return 0
 						normalspeed = 1
 						src.updateUsrDialog()
 					else
@@ -866,8 +919,14 @@ About the new airlock wires panel:
 					else if(src.locked)
 						usr << text("The door bolts are down!")
 					else if(src.density)
+						if(isobserver(usr) && !canGhostWrite(usr,src,"opened"))
+							usr << "\red Nope."
+							return 0
 						open()
 					else
+						if(isobserver(usr) && !canGhostWrite(usr,src,"closed"))
+							usr << "\red Nope."
+							return 0
 						close()
 
 				if(10)
@@ -875,6 +934,9 @@ About the new airlock wires panel:
 					if(src.isWireCut(AIRLOCK_WIRE_LIGHT))
 						usr << text("Control to door bolt lights has been severed.</a>")
 					else if (!src.lights)
+						if(isobserver(usr) && !canGhostWrite(usr,src,"enabled bolt lights on"))
+							usr << "\red Nope."
+							return 0
 						lights = 1
 						src.updateUsrDialog()
 					else

@@ -279,9 +279,9 @@ its easier to just keep the beam vertical.
 
 /atom/proc/attack_ghost(mob/user as mob)
 	var/ghost_flags = 0
-	if(!ghost_read)
-		ghost_flags |= PERMIT_AGHOST_ONLY
-	if(canGhostRead(user,ghost_flags))
+	if(ghost_read)
+		ghost_flags |= PERMIT_ALL
+	if(canGhostRead(user,src,ghost_flags))
 		src.attack_ai(user)
 	else
 		src.examine()

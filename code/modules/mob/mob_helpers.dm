@@ -123,17 +123,19 @@
 	return 0
 
 
-/proc/canGhostRead(A,flags=0)
-	if(flags & PERMIT_AGHOST_ONLY)
-		return isAdminGhost(A)
+/proc/canGhostRead(var/mob/A, var/obj/target, var/flags=PERMIT_ALL)
+	var/res=isAdminGhost(A)
+	if(flags & PERMIT_ALL)
+		res = 1
+	return res
 
-	return isobserver(A)
-
-/proc/canGhostWrite(A,flags=PERMIT_AGHOST_ONLY)
-	if(flags & PERMIT_AGHOST_ONLY)
-		return isAdminGhost(A)
-
-	return isobserver(A)
+/proc/canGhostWrite(var/mob/A, var/obj/target, var/desc="fucked with", var/flags=0)
+	var/res=isAdminGhost(A)
+	if(flags & PERMIT_ALL)
+		res = 1
+	if(res && desc!="")
+		add_ghostlogs(A, target, desc, !(flags & PERMIT_ALL) && isAdminGhost(A))
+	return res
 
 /proc/isliving(A)
 	if(istype(A, /mob/living))

@@ -486,6 +486,8 @@
 // if hands aren't protected and the light is on, burn the player
 
 /obj/machinery/light/attack_hand(mob/user)
+	if(isobserver(user))
+		return
 
 	add_fingerprint(user)
 
