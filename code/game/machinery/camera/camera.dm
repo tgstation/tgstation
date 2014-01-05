@@ -17,7 +17,6 @@
 	var/invuln = null
 	var/obj/item/device/camera_bug/bug = null
 	var/obj/item/weapon/camera_assembly/assembly = null
-	var/obj/item/clothing/mask/bubblegum/gum = null
 
 	//OTHER
 
@@ -102,18 +101,6 @@
 		return
 	user.electrocute_act(10, src)
 
-/obj/machinery/camera/attack_hand(mob/user as mob)
-	..()
-	if(ishuman(user))
-		if(gum)
-			gum.attack_hand(user)
-			user.visible_message("<span class='notice'>[user] removes [gum] from [src].</span>","<span class='notice'>You remove [gum] from [src].</span>")
-			gum=null
-			update_status(null)
-			desc=initial(desc)
-			add_hiddenprint(user)
-			return
-
 /obj/machinery/camera/attack_paw(mob/living/carbon/alien/humanoid/user as mob)
 	if(!istype(user))
 		return
@@ -196,17 +183,6 @@
 	else if(istype(W, /obj/item/device/laser_pointer))
 		var/obj/item/device/laser_pointer/L = W
 		L.laser_act(src, user)
-	else if(istype(W, /obj/item/clothing/mask/bubblegum))
-		var/obj/item/clothing/mask/bubblegum/G = W
-		if(!gum)
-			user.u_equip(G)
-			G.loc=src
-			gum=G
-			user.visible_message("<span class='warning'>[user] pushes [G] over [src]'s lens!</span>", "<span class='notice'>You push [G] over [src]'s lens.</span>")
-			update_status(null)
-			desc = desc+" There is a bubblegum over it's lens."
-		else
-			user<<"<span class='notice'>There is already a gum over the camera's lens.</span>"
 	else
 		..()
 	return
@@ -214,7 +190,7 @@
 
 /obj/machinery/camera/proc/update_status(user as mob)
 
-	if(!gum && !(wires.IsIndexCut(CAMERA_WIRE_POWER)) && !pulsed)
+	if(!(wires.IsIndexCut(CAMERA_WIRE_POWER)) && !pulsed)
 		if(!status)
 			status=1
 			if(user)
@@ -236,10 +212,6 @@
 		disconnect_viewers()
 
 /obj/machinery/camera/proc/reactivate()
-	if(gum)
-		gum.loc=loc
-		gum=null
-		desc=initial(desc)
 	if(wires.IsIndexCut(CAMERA_WIRE_POWER))
 		wires.CutWireIndex(CAMERA_WIRE_POWER)
 	if(pulsed)
