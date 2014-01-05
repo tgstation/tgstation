@@ -71,9 +71,9 @@ NanoUpdate = function ()
 		// We store initialData and templateData in the body tag, it's as good a place as any
 		var body = $('body'); 		
 		var templateData = body.data('templateData');
-		_data = body.data('initialData');		
+		var initialData = body.data('initialData');		
 		
-		if (!templateData || !_data)
+		if (!templateData || !initialData)
 		{
 			alert('Error: Initial data did not load correctly.');
 		}		
@@ -88,36 +88,40 @@ NanoUpdate = function ()
 			}
 		}
 		
-		// load each template file and render it using _data
+		// load markup for each template and register it
 		for (var key in templateData)
 		{
 			if (templateData.hasOwnProperty(key))
 			{
 				$.when($.get(templateData[key]))
-					.done(function(templateData) {
+					.done(function(templateMarkup) {
 						if (_templates == null)
 						{
 							_templates = {};
 						}
 						
-						templateData += '<div class="clearBoth"></div>'
+						templateMarkup = templateMarkup.replace(/ +\) *\}\}/g, ')}}');
+						
+						templateMarkup += '<div class="clearBoth"></div>'
 					
 						try
 						{
-							_templates[key] = $.templates(templateData);
-							_templates[key].link( "#mainTemplate", _data ); // initial data gets applied first, before any updates
+							_templates[key] = $.templates(key, templateMarkup);							
 							
 							templateCount--;
 							
 							if (templateCount <= 0)
 							{
+								if (_earlyUpdateData !== null) // Newer data has already arrived, so update
+								{
+									renderTemplates(_earlyUpdateData);
+								}
+								else
+								{
+									renderTemplates(initialData);
+								}
 								_isInitialised = true;
 							}
-							
-							if (_earlyUpdateData !== null) // Newer data has already arrived, so update
-							{
-								observedDataUpdateRecursive(_earlyUpdateData, _data);
-							}	
 			
 							executeCallbacks(_afterUpdateCallbacks, _data);
 							
@@ -149,50 +153,29 @@ NanoUpdate = function ()
 		}
 		
 		
-		if (_isInitialised) // templates have been loaded and are observing the data. We need to update it recursively
+		if (_isInitialised) // all templates have been registered, so render them
 		{
 			executeCallbacks(_beforeUpdateCallbacks, updateData);
 		
-			observedDataUpdateRecursive(updateData, _data);
+			renderTemplates(updateData);
 			
 			executeCallbacks(_afterUpdateCallbacks, updateData);
 		}
 		else
 		{
-			_earlyUpdateData = updateData; // templates have not been loaded, therefor they are not observing the data. We set _earlyUpdateData which will be applied after the template is loaded with the initial data
+			_earlyUpdateData = updateData; // all templates have not been registered. We set _earlyUpdateData which will be applied after the template is loaded with the initial data
 		}	
 	}
 
-	// This function updates the observed data recursively
+	// This function renders the template with the latest data
 	// It has to be done recursively as each piece of data is observed individually and needs to be updated individually
-	var observedDataUpdateRecursive = function (updateData, data, path)
+	var renderTemplates = function (data)
 	{
-		if (path === null || typeof path === 'undefined')
-		{
-			path = '';
-		}
-		else
-		{
-			path += '.';        
-		}
-		for (var key in updateData)
-		{
-			if (updateData.hasOwnProperty(key))
-			{
-				var currentPath = path + key;
-				if (updateData[key] != null && typeof updateData[key] === 'object' && !$.isArray(updateData[key]))
-				{
-					observedDataUpdateRecursive(updateData[key], data, currentPath)
-				}
-				else
-				{
-					$.observable(data).setProperty(currentPath, updateData[key]);
-				}
-			}
-		}       
+		_data = data;
+		$("#mainTemplate").html(_templates["main"].render(_data));		
 	}
 	
-	// execute all callbacks in the callbacks array/object provided, updateData is passed to them for processing
+	// Execute all callbacks in the callbacks array/object provided, updateData is passed to them for processing
 	var executeCallbacks = function (callbacks, updateData)
 	{
 		for (var index in callbacks)

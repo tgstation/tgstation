@@ -23,7 +23,9 @@ hr {
 	padding: 0px 4px 4px 4px;
 	margin: 0 2px 2px 0;
 	cursor: default;
+	white-space: nowrap;
 }
+
 .hasIcon {
 	padding: 0px 4px 4px 0px;
 }
@@ -138,6 +140,12 @@ h4 {
 	clear: both;
 	padding: 8px;
 }
+
+.white {
+	color: white;
+	font-weight: bold;
+}
+
 .good {
 	color: #79B33F; /*#4f7529;*/
 	font-weight: bold;
@@ -158,7 +166,7 @@ h4 {
 }
 .notice {
 	position: relative;
-	background: url(uiNoticeBackground.jpg) 50% 50% repeat;
+	background: url(uiNoticeBackground.jpg) 50% 50%;
 	color: #15345A;
 	font-size: 12px;
 	font-style: italic;
@@ -176,6 +184,7 @@ h4 {
 	width: 16px;
 	height: 16px;
 }
+
 div.notice {
 	clear: both;
 }
@@ -190,6 +199,7 @@ div.notice {
 	margin: 4px 0 0 0;
 	clear: both;
 }
+
 .itemLabel {
 	float: left;
 	width: 30%;
@@ -199,22 +209,30 @@ div.notice {
 	float: left;
 	width: 69%;
 }
-.itemContentFull {
-	float: left;
-}
 .itemLabelNarrow {
 	float: left;
 	width: 20%;
 	color: #e9c183;
 }
+.itemLabelWide {
+	float: left;
+	width: 45%;
+	color: #e9c183;
+}
+
 .itemContentWide {
 	float: left;
 	width: 79%;
 }
 .itemContentSmall {
 	float: left;
-	width: 30%;
+	width: 33%;
 }
+.itemContentMedium {
+	float: left;
+	width: 55%;
+}
+
 .statusDisplay {
 	background: #000000;
 	color: #ffffff;
@@ -222,6 +240,16 @@ div.notice {
 	padding: 4px;
 	margin: 3px 0;
 }
+.statusDisplayRecords {
+	background: #000000;
+	color: #ffffff;
+	border: 1px solid #40628a;
+	padding: 4px;
+	margin: 3px 0;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
 .statusLabel {
 	width: 138px;
 	float: left;
@@ -307,8 +335,37 @@ div.notice {
 	width: 110px;
 	float: left;
 }
+.fixedLeftWide {
+	width: 165px;
+	float: left;
+}
+
+.fixedLeftWider {
+	width: 220px;
+	float: left;
+}
+
+.fixedLeftWidest {
+	width: 250px;
+	float: left;
+}
+
 .floatRight {
 	float: right;
+}
+
+/* Used in PDA */
+
+.wholeScreen {
+	position: absolute color : #517087;
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.pdalink {
+	float: left;
+	white-space: nowrap;
 }
 
 /* DNA Modifier UI (dna_modifier.tmpl) */
@@ -371,3 +428,54 @@ div.notice {
 	color: #ffffff;
 	background: #FF6060;
 }
+
+
+/* Table stuffs for power monitor */
+table.pmon {
+	border: 2px solid RoyalBlue;
+}
+
+table.pmon td, table.pmon th {
+	border-bottom: 1px dotted black;
+	padding: 0px 5px 0px 5px;
+}
+
+/* Table Stuffs for manifest*/
+
+th.command {
+	background: #3333FF;
+	font-weight: bold;
+	color: #ffffff;
+}
+
+th.sec {
+	background: #8e0000;
+	font-weight: bold;
+	color: #ffffff;
+}
+th.med {
+	background: #006600;
+	font-weight: bold;
+	color: #ffffff;
+}
+th.eng {
+	background: #b27300;
+	font-weight: bold;
+	color: #ffffff;
+}
+th.sci {
+	background: #a65ba6;
+	font-weight: bold;
+	color: #ffffff;
+}
+th.civ {
+	background: #a32800;
+	font-weight: bold;
+	color: #ffffff;
+}
+th.misc {
+	background: #666666;
+	font-weight: bold;
+	color: #ffffff;
+}
+
