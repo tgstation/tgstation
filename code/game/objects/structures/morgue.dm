@@ -10,6 +10,24 @@
  * Morgue
  */
 
+
+//Should Probably be Moved
+
+obj/proc/on_login()
+	..()
+	if(isobj(loc)) loc:on_login()
+
+mob/Living/Login() //re-enter
+	..()
+	if(isobj(loc)) loc:on_login()
+
+mob/Living/Logout() //exit body
+	..()
+	if(isobj(loc)) loc:on_login()
+
+
+
+
 /obj/structure/morgue
 	name = "morgue"
 	desc = "Used to keep bodies in untill someone fetches them."
@@ -19,14 +37,28 @@
 	var/obj/structure/m_tray/connected = null
 	anchored = 1.0
 
+/obj/structure/morgue/on_login()
+	update()
+
 /obj/structure/morgue/proc/update()
 	if (src.connected)
 		src.icon_state = "morgue0"
 	else
-		if (src.contents.len)
-			src.icon_state = "morgue2"
-		else
+		if(!src.contents.len)
 			src.icon_state = "morgue1"
+		else
+
+			src.icon_state = "morgue2"//default dead no-client mob
+
+			var/compiled = recursive_mob_check(src)//run through contents
+
+			if(!locate(/mob/Living) in compiled)//no mobs at all, but objects inside
+				src.icon_state = "morgue3"
+
+			for(var/mob/Living/M in compiled)
+				if(M.client)
+					src.icon_state = "morgue4"//clone that mofo
+
 	return
 
 /obj/structure/morgue/ex_act(severity)
