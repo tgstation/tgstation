@@ -192,7 +192,9 @@ Auto Patrol: []"},
 		mode = SECBOT_IDLE
 
 /obj/machinery/bot/secbot/process()
+	#ifdef SET_BACKGROUND
 	set background = 1
+	#endif
 
 	if(!src.on)
 		return

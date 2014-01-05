@@ -378,7 +378,9 @@
 /obj/machinery/porta_turret/process()
 	//the main machinery process
 
+	#ifdef SET_BACKGROUND
 	set background = 1
+	#endif
 
 	if(cover == null && anchored)	//if it has no cover and is anchored
 		if(stat & BROKEN)	//if the turret is borked

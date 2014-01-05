@@ -10,6 +10,23 @@
  * Morgue
  */
 
+//Probably has to be moved some-where
+mob/living/Login()//re-enter body
+	..()
+	if(isobj(loc))
+		loc:on_login()
+
+mob/living/Logout()
+	..()
+	if(isobj(loc))
+		loc:on_login()
+
+/obj/proc/on_login()
+	..()
+	if(isobj(loc))
+		loc:on_login()
+
+
 /obj/structure/morgue
 	name = "morgue"
 	desc = "Used to keep bodies in untill someone fetches them."
@@ -19,15 +36,34 @@
 	var/obj/structure/m_tray/connected = null
 	anchored = 1.0
 
+
+/obj/structure/morgue/on_login()
+	update()
+	..()
+
 /obj/structure/morgue/proc/update()
-	if (src.connected)
+	if(src.connected)
 		src.icon_state = "morgue0"
 	else
-		if (src.contents.len)
-			src.icon_state = "morgue2"
-		else
-			src.icon_state = "morgue1"
+
+		if(src.contents.len)
+
+			src.icon_state = "morgue2"//by default no client
+
+			var/compiledcontents = recursive_mob_check(src)
+
+			if(!locate(/mob/living/) in compiledcontents)//no mob/living at all
+				src.icon_state = "morgue4"
+
+			for(var/mob/living/L in compiledcontents)
+				if(L.client)
+					src.icon_state = "morgue3"
+
+
+		else src.icon_state = "morgue1"
+
 	return
+
 
 /obj/structure/morgue/ex_act(severity)
 	switch(severity)
@@ -310,6 +346,7 @@
 
 		cremating = 1
 		locked = 1
+		icon_state = "cremate_active"
 
 		for(var/mob/living/M in contents)
 			if (M.stat!=2)
@@ -329,6 +366,7 @@
 		sleep(30)
 		cremating = 0
 		locked = 0
+		update()
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	return
 
@@ -388,4 +426,3 @@
 	else
 		usr << "\red Access denied."
 	return
-

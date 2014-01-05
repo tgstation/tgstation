@@ -16,7 +16,9 @@ datum/controller/air_system
 
 
 /datum/controller/air_system/proc/setup()
+	#ifdef SET_BACKGROUND
 	set background = 1
+	#endif
 	world << "\red \b Processing Geometry..."
 	sleep(1)
 
