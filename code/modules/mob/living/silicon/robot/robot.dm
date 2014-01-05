@@ -695,7 +695,7 @@
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
-		add_logs((M, src, "attacked", admin=0)
+		add_logs(M, src, "attacked", admin=0)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
 		updatehealth()
