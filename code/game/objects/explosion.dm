@@ -135,7 +135,8 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 						if(flame_dist) //if it has flame distance, run this - RR
 							if(isliving(AM) && !hotspot_exists && !istype(T, /turf/space))
 								spawn()
-									new /obj/effect/hotspot(AM.loc)
+									if(AM && AM.loc!=null)
+										new /obj/effect/hotspot(AM.loc)
 								//Just in case we missed a mob while they were in flame_range, but a hotspot didn't spawn on them, otherwise it looks weird when you just burst into flame out of nowhere
 						if(dist) //if no flame_dist, run this - RR
 							spawn()
