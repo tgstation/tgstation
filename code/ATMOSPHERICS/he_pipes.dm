@@ -20,7 +20,7 @@
 	initialize_directions_he = pipe.get_pipe_dir()
 	//var/turf/T = loc
 	//level = T.intact ? 2 : 1
-	if(!initialize())
+	if(!initialize(1))
 		usr << "Unable to build pipe here;  It must be connected to a machine, or another pipe that has a connection."
 		return 0
 	build_network()
@@ -103,7 +103,7 @@
 	dir = src.dir
 	initialize_directions = pipe.get_pdir()
 	initialize_directions_he = pipe.get_hdir()
-	if (!initialize())
+	if (!initialize(1))
 		usr << "There's nothing to connect this junction to! (with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment)"
 		return 0
 	build_network()
@@ -126,14 +126,8 @@
 		del(src)
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/initialize(var/suppress_icon_check=0)
-	for(var/obj/machinery/atmospherics/target in get_step(src,initialize_directions))
-		if(target.initialize_directions & get_dir(target,src))
-			node1 = target
-			break
-	for(var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/target in get_step(src,initialize_directions_he))
-		if(target.initialize_directions_he & get_dir(target,src))
-			node2 = target
-			break
+	node1 = findConnecting(initialize_directions)
+	node2 = findConnectingHE(initialize_directions_he)
 
 	if(!suppress_icon_check)
 		update_icon()
