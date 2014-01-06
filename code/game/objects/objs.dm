@@ -133,20 +133,20 @@
 
 
 
-//If a mob logout in side of an object you can use this proc
-obj/proc/on_log()
+//If a mob logouts/logins in side of an object you can use this proc
+/obj/proc/on_log()
 	..()
 	if(isobj(loc))
 		var/obj/Loc=loc
 		Loc.on_log()
 
-mob/Living/Login() //re-enter
+/mob/living/Login() //re-enter
 	..()
 	if(isobj(loc))
 		var/obj/Loc=loc
 		Loc.on_log()
 
-mob/Living/Logout() //exit body
+/mob/living/Logout() //exit body
 	..()
 	if(isobj(loc))
 		var/obj/Loc=loc

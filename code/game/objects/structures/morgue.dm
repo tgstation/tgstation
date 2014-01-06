@@ -35,10 +35,10 @@
 
 			var/compiled = recursive_mob_check(src)//run through contents
 
-			if(!locate(/mob/Living) in compiled)//no mobs at all, but objects inside
+			if(!locate(/mob/living/) in compiled)//no mobs at all, but objects inside
 				src.icon_state = "morgue3"
 
-			for(var/mob/Living/M in compiled)
+			for(var/mob/living/M in compiled)
 				if(M.client)
 					src.icon_state = "morgue4"//clone that mofo
 
