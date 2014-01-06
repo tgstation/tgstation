@@ -209,3 +209,5 @@
 		modules += new /obj/item/weapon/card/emag(src)
 		modules += new /obj/item/weapon/gun/energy/laser/cyborg(src)
 		modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
+		modules += new /obj/item/weapon/crowbar(src)
+		modules += new /obj/item/device/flash(src)

@@ -118,7 +118,7 @@
 	desc = "A single-use teleporter used to deploy a Syndicate Cyborg on the field."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
-	var/TC_cost = 25
+	var/TC_cost = 0
 
 /obj/item/weapon/antag_spawner/borg_tele/attack_self(mob/user as mob)
 	if(used)
