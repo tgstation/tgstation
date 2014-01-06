@@ -127,9 +127,6 @@
 			if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
 				src << "Unable to locate an airlock"
 				return
-			if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
-				src << "Unable to locate an airlock"
-				return
 			if(istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja) && !H.head.canremove)
 				src << "Unable to locate an airlock"
 				return
