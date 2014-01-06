@@ -15,13 +15,36 @@
 	return
 
  /**
+  * Get an open /nanoui ui for the current user, src_object and ui_key and try to update it with data
+  *
+  * @param user /mob The mob who opened/owns the ui
+  * @param src_object /obj|/mob The obj or mob which the ui belongs to
+  * @param ui_key string A string key used for the ui
+  * @param ui /datum/nanoui An existing instance of the ui (can be null)
+  * @param data list The data to be passed to the ui, if it exists
+  *
+  * @return /nanoui Returns the found ui, for null if none exists
+  */
+/datum/nanomanager/proc/try_update_ui(var/mob/user, src_object, ui_key, var/datum/nanoui/ui, data)
+	if (!ui) // no ui has been passed, so we'll search for one
+	{
+		ui = get_open_ui(user, src, ui_key)
+	}
+	if (ui)		
+		// The UI is already open so push the data to it
+		ui.push_data(data)
+		return ui
+		
+	return null
+
+ /**
   * Get an open /nanoui ui for the current user, src_object and ui_key
   *
   * @param user /mob The mob who opened/owns the ui
   * @param src_object /obj|/mob The obj or mob which the ui belongs to
   * @param ui_key string A string key used for the ui
   *
-  * @return /nanoui Returns the found ui, for null if none exists
+  * @return /nanoui Returns the found ui, or null if none exists
   */
 /datum/nanomanager/proc/get_open_ui(var/mob/user, src_object, ui_key)
 	var/src_object_key = "\ref[src_object]"
