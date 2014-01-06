@@ -81,7 +81,7 @@
 				flags &= ~OPENCONTAINER
 		return
 
-	if (istype(W, /obj/item))
+	if (istype(W, /obj/item) && !is_open_container())
 		if(W.w_class>1)
 			user << "\The [W] won't fit into the nozzle!"
 			return
