@@ -153,7 +153,7 @@
 				else
 					//world << "[D.name] not close enough | [get_dist(D, target)] | [dist]"
 		if(tobeopened)
-			switch(alert(G, "Do you want to open \the [tobeopened] for [target]?","Doorknob_v2a.exe","Yes","No"))
+			switch(alert(src, "Do you want to open \the [tobeopened] for [target]?","Doorknob_v2a.exe","Yes","No"))
 				if("Yes")
 					var/nhref = "src=\ref[tobeopened];aiEnable=7"
 					tobeopened.Topic(nhref, params2list(nhref), tobeopened, 1)
