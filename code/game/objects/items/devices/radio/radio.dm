@@ -127,6 +127,13 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		usr << browse(null, "window=radio")
 		return
 	usr.set_machine(src)
+	if (href_list["open"])
+		var/mob/target = locate(href_list["open"])
+		var/mob/living/silicon/ai/A = locate(href_list["open2"])
+		if(A && target)
+			A.open_nearest_door(target)
+		return
+
 	if (href_list["track"])
 		var/mob/target = locate(href_list["track"])
 		var/mob/living/silicon/ai/A = locate(href_list["track2"])
@@ -553,7 +560,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				var/rendered = "[part_a][N][part_b][quotedmsg][part_c]"
 				for (var/mob/R in heard_masked)
 					if(istype(R, /mob/living/silicon/ai))
-						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[N] ([J]) </a>[part_b][quotedmsg][part_c]", 2)
+						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[N] ([J]) </a><a href='byond://?src=\ref[src];open2=\ref[R];open=\ref[M]'>\[OPEN\] </a> [part_b][quotedmsg][part_c]", 2)
 					else
 						R.show_message(rendered, 2)
 
@@ -562,7 +569,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 				for (var/mob/R in heard_normal)
 					if(istype(R, /mob/living/silicon/ai))
-						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.real_name] ([eqjobname]) </a>[part_b][quotedmsg][part_c]", 2)
+						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.real_name] ([eqjobname]) </a><a href='byond://?src=\ref[src];open2=\ref[R];open=\ref[M]'>\[OPEN\] </a>[part_b][quotedmsg][part_c]", 2)
 					else
 						R.show_message(rendered, 2)
 
@@ -571,7 +578,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 				for (var/mob/R in heard_voice)
 					if(istype(R, /mob/living/silicon/ai))
-						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.voice_name] ([eqjobname]) </a>[part_b][pick(M.speak_emote)][part_c]", 2)
+						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.voice_name] ([eqjobname]) </a><a href='byond://?src=\ref[src];open2=\ref[R];open=\ref[M]'>\[OPEN\] </a>[part_b][pick(M.speak_emote)][part_c]", 2)
 					else
 						R.show_message(rendered, 2)
 
@@ -581,7 +588,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 				for (var/mob/R in heard_voice)
 					if(istype(R, /mob/living/silicon/ai))
-						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.voice_name]</a>[part_b][quotedmsg][part_c]", 2)
+						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.voice_name]</a><a href='byond://?src=\ref[src];open2=\ref[R];open=\ref[M]'>\[OPEN\] </a>[part_b][quotedmsg][part_c]", 2)
 					else
 						R.show_message(rendered, 2)
 
