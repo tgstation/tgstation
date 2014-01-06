@@ -851,7 +851,23 @@ obj/item/toy/singlecard/attack_self(mob/user)
 	Flip()
 
 
+/obj/item/toy/nuke
+	name = "\improper Nuclear Fission Explosive toy"
+	desc = "A plastic model of a Nuclear Fission Explosive."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "nuketoyidle"
+	w_class = 2.0
+	var/cooldown = 0
 
+/obj/item/toy/nuke/attack_self(mob/user)
+	if (cooldown < world.time)
+		cooldown = world.time + 3000 //5 minutes
+		icon_state = "nuketoy"
+		for (var/mob/M in hearers(world.view, user)) //I'm doing this because playsound's dampening/stereo ruins the effect
+			if (M.client && !M.ear_deaf)
+				M << 'sound/machines/Alarm.ogg'
+		sleep(135)
+		icon_state = "nuketoyidle"
 
 
 
