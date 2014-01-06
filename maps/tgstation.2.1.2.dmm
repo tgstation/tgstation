@@ -2714,7 +2714,7 @@
 "baj" = (/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/disposalpipe/segment,/turf/simulated/floor/plating,/area/maintenance/asmaint2)
 "bak" = (/turf/simulated/wall,/area/maintenance/asmaint2)
 "bal" = (/obj/machinery/conveyor{dir = 1; id = "garbage"},/turf/simulated/floor/plating,/area/maintenance/disposal)
-"bam" = (/obj/machinery/mineral/stacking_machine,/turf/simulated/floor/plating,/area/maintenance/disposal)
+"bam" = (/obj/machinery/mineral/stacking_machine{stack_amt = 10},/turf/simulated/floor/plating,/area/maintenance/disposal)
 "ban" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/plating,/area/maintenance/disposal)
 "bao" = (/obj/machinery/mineral/stacking_unit_console{dir = 2; machinedir = 8},/turf/simulated/wall,/area/maintenance/disposal)
 "bap" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor/plating,/area/maintenance/port)
