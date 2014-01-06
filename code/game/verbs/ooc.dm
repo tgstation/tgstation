@@ -140,7 +140,10 @@ var/global/normal_ooc_colour = "#002eb8"
 		var/client/C = M.client
 		if (C in admins)
 			continue //they are handled after that
-
+		if(isAIEye(M))
+			var/mob/camera/aiEye/E = M
+			if(E.ai)
+				C = E.ai.client
 		if(C.prefs.toggles & CHAT_LOOC)
 			var/display_name = src.key
 			if(holder)
@@ -150,6 +153,7 @@ var/global/normal_ooc_colour = "#002eb8"
 					else
 						display_name = holder.fakekey
 			C << "<font color='#6699CC'><span class='ooc'><span class='prefix'>LOOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>"
+
 	for(var/client/C in admins)
 		if(C.prefs.toggles & CHAT_LOOC)
 			var/prefix = "(R)LOOC"
