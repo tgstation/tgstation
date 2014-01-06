@@ -217,11 +217,18 @@ mob/Living/Logout() //exit body
 	if (src.connected)
 		src.icon_state = "crema0"
 	else
-		if (src.contents.len)
+
+		if(src.contents.len)
 			src.icon_state = "crema2"
 		else
 			src.icon_state = "crema1"
+
+		if(cremating)
+			src.icon_state = "crema_active"
+
 	return
+
+
 
 /obj/structure/crematorium/ex_act(severity)
 	switch(severity)
@@ -342,6 +349,7 @@ mob/Living/Logout() //exit body
 
 		cremating = 1
 		locked = 1
+		update()
 
 		for(var/mob/living/M in contents)
 			if (M.stat!=2)
@@ -361,6 +369,7 @@ mob/Living/Logout() //exit body
 		sleep(30)
 		cremating = 0
 		locked = 0
+		update()
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	return
 
