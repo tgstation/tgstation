@@ -36,10 +36,7 @@ var/const/WIRE_ACTIVATE = 16	// Will start a bombs timer if pulsed, will hint if
 				playsound(P.loc, 'sound/machines/click.ogg', 30, 1)
 				P.loc.visible_message("\red \icon[holder] You hear the bomb start ticking!")
 				P.active = 1
-				if(!P.open_panel) //Needs to exist in case the wire is pulsed with a signaler while the panel is closed
-					P.icon_state = "syndicate-bomb-active"
-				else
-					P.icon_state = "syndicate-bomb-active-wires"
+				P.icon_state = "[initial(P.icon_state)]-active[P.open_panel ? "-wires" : ""]"
 				processing_objects.Add(P)
 			else
 				P.loc.visible_message("\blue \icon[holder] The bomb seems to hesitate for a moment.")
@@ -69,6 +66,6 @@ var/const/WIRE_ACTIVATE = 16	// Will start a bombs timer if pulsed, will hint if
 		if(WIRE_ACTIVATE)
 			if (!mended && P.active)
 				P.loc.visible_message("\blue \icon[holder] The timer stops! The bomb has been defused!")
-				P.icon_state = "syndicate-bomb-inactive-wires" //no cutting possible with the panel closed
+				P.icon_state = "[initial(P.icon_state)]-inactive[P.open_panel ? "-wires" : ""]"
 				P.active = 0
 				P.defused = 1
