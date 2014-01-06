@@ -242,10 +242,10 @@
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
 	getFiles(
-		//'nano/js/libraries.min.js',
-		'nano/js/libraries/1-jquery.js',
-		'nano/js/libraries/2-jsviews.js',
-		'nano/js/libraries/3-jquery.timers.js',
+		'nano/js/libraries.min.js',
+		//'nano/js/libraries/1-jquery.js',
+		//'nano/js/libraries/2-jsviews.js',
+		//'nano/js/libraries/3-jquery.timers.js',
 		'nano/js/nano_update.js',
 		'nano/js/nano_config.js',
 		'nano/js/nano_base_helpers.js',
