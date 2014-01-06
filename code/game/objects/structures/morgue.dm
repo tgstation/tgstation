@@ -11,29 +11,6 @@
  */
 
 
-//Should Probably be Moved
-
-obj/proc/on_login()
-	..()
-	if(isobj(loc))
-		var/obj/Loc=loc
-		Loc.on_login()
-
-mob/Living/Login() //re-enter
-	..()
-	if(isobj(loc))
-		var/obj/Loc=loc
-		Loc.on_login()
-
-mob/Living/Logout() //exit body
-	..()
-	if(isobj(loc))
-		var/obj/Loc=loc
-		Loc.on_login()
-
-
-
-
 /obj/structure/morgue
 	name = "morgue"
 	desc = "Used to keep bodies in untill someone fetches them."
@@ -43,7 +20,7 @@ mob/Living/Logout() //exit body
 	var/obj/structure/m_tray/connected = null
 	anchored = 1.0
 
-/obj/structure/morgue/on_login()
+/obj/structure/morgue/on_log()
 	update()
 
 /obj/structure/morgue/proc/update()

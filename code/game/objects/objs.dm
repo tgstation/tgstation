@@ -130,3 +130,24 @@
 		mo.show_message(rendered, 2)
 		*/
 	return
+
+
+
+//If a mob logout in side of an object you can use this proc
+obj/proc/on_log()
+	..()
+	if(isobj(loc))
+		var/obj/Loc=loc
+		Loc.on_log()
+
+mob/Living/Login() //re-enter
+	..()
+	if(isobj(loc))
+		var/obj/Loc=loc
+		Loc.on_log()
+
+mob/Living/Logout() //exit body
+	..()
+	if(isobj(loc))
+		var/obj/Loc=loc
+		Loc.on_log()
