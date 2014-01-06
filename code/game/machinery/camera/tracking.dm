@@ -153,9 +153,13 @@
 				else
 					//world << "[D.name] not close enough | [get_dist(D, target)] | [dist]"
 		if(tobeopened)
-			var/nhref = "src=\ref[tobeopened];aiEnable=7"
-			tobeopened.Topic(nhref, params2list(nhref), tobeopened, 1)
-			src << "\blue You've opened the nearest airlock to [target]"
+			switch(alert(G, "Do you want to open \the [tobeopened] for [target]?","Doorknob_v2a.exe","Yes","No"))
+				if("Yes")
+					var/nhref = "src=\ref[tobeopened];aiEnable=7"
+					tobeopened.Topic(nhref, params2list(nhref), tobeopened, 1)
+					src << "\blue You've opened \the [tobeopened] for [target]."
+				if("No")
+					src << "\red You deny the request."
 		else
 			src << "\red You've failed to open an airlock for [target]"
 		return
