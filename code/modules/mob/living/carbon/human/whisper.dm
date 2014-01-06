@@ -38,8 +38,14 @@
 
 	var/whispers = "whispers"
 
-	// If whispering your last words, limit the whisper based on how close you are to death.
+
 	var/critical = InCritical()
+
+	// We are unconscious but not in critical, so don't allow them to whisper.
+	if(stat == UNCONSCIOUS && !critical)
+		return
+
+	// If whispering your last words, limit the whisper based on how close you are to death.
 	if(critical)
 		var/health_diff = round(-config.health_threshold_dead + health)
 		// If we cut our message short, abruptly end it with a-..
