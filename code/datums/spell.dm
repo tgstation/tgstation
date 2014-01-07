@@ -184,11 +184,11 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(smoke_spread)
 			if(smoke_spread == 1)
 				var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
-				smoke.set_up(smoke_amt, 0, location) //no idea what the 0 is
+				smoke.set_up(smoke_amt, 0, location, smoke_amt == 1 ? 15 : 0) // if more than one smoke, spread it around
 				smoke.start()
 			else if(smoke_spread == 2)
 				var/datum/effect/effect/system/bad_smoke_spread/smoke = new /datum/effect/effect/system/bad_smoke_spread()
-				smoke.set_up(smoke_amt, 0, location) //no idea what the 0 is
+				smoke.set_up(smoke_amt, 0, location, smoke_amt == 1 ? 15 : 0) // same here
 				smoke.start()
 
 /obj/effect/proc_holder/spell/proc/cast(list/targets)
@@ -258,7 +258,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				//Adds a safety check post-input to make sure those targets are actually in range.
 				var/mob/M = input("Choose the target for the spell.", "Targeting") as mob in possible_targets
 				if(M in view_or_range(range, user, selection_type)) targets += M
-		
+
 		else
 			var/list/possible_targets = list()
 			for(var/mob/living/target in view_or_range(range, user, selection_type))

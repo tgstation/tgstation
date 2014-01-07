@@ -20,7 +20,7 @@
 						continue
 
 
-					var/obj/item/organ/limb/affecting = H.get_organ(user.zone_sel.selecting)
+					var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
 
 					if(affecting.status == ORGAN_ROBOTIC) //Cannot operate on Robotic organs - RR
 						continue
