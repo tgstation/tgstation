@@ -988,7 +988,7 @@
 		H.forceMove(src)
 		if(H.hud_used)
 			last_user_hud = H.hud_used.hud_shown
-			H.hud_used.hide_hud()
+			H.hud_used.show_hud(1)
 
 		src.occupant = H
 		src.add_fingerprint(H)

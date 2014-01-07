@@ -6,6 +6,7 @@
 	icon_state = "corgi"
 	icon_living = "corgi"
 	icon_dead = "corgi_dead"
+	gender = MALE
 	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU")
 	speak_emote = list("barks", "woofs")
 	emote_hear = list("barks", "woofs", "yaps","pants")
@@ -18,6 +19,8 @@
 	response_disarm = "bops"
 	response_harm   = "kicks"
 	see_in_dark = 5
+	childtype = /mob/living/simple_animal/corgi/puppy
+	species = /mob/living/simple_animal/corgi
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
 	var/facehugger
@@ -482,28 +485,9 @@
 /mob/living/simple_animal/corgi/Lisa/Life()
 	..()
 
+	make_babies()
+
 	if(!stat && !resting && !buckled)
-		turns_since_scan++
-		if(turns_since_scan > 15)
-			turns_since_scan = 0
-			var/alone = 1
-			var/ian = 0
-			for(var/mob/M in oviewers(7, src))
-				if(istype(M, /mob/living/simple_animal/corgi/Ian))
-					if(M.client)
-						alone = 0
-						break
-					else
-						ian = M
-				else
-					alone = 0
-					break
-			if(alone && ian && puppies < 4)
-				if(near_camera(src) || near_camera(ian))
-					return
-				new /mob/living/simple_animal/corgi/puppy(loc)
-
-
 		if(prob(1))
 			emote(pick("dances around","chases her tail"))
 			spawn(0)

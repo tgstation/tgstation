@@ -22,6 +22,7 @@ Note: Must be placed west/left of and R&D console to function.
 	var/diamond_amount = 0.0
 	var/clown_amount = 0.0
 	var/adamantine_amount = 0.0
+	var/efficiency_coeff
 
 
 /obj/machinery/r_n_d/protolathe/New()
@@ -50,6 +51,10 @@ Note: Must be placed west/left of and R&D console to function.
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
 	max_material_storage = T * 75000
+	T = 0
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		T += M.rating
+	efficiency_coeff = T-1
 
 /obj/machinery/r_n_d/protolathe/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (shocked)
