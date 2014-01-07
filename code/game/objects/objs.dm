@@ -140,13 +140,13 @@
 		var/obj/Loc=loc
 		Loc.on_log()
 
-/mob/living/Login() //re-enter
+/mob/Login() //re-enter
 	..()
 	if(isobj(loc))
 		var/obj/Loc=loc
 		Loc.on_log()
 
-/mob/living/Logout() //exit body
+/mob/Logout() //exit body
 	..()
 	if(isobj(loc))
 		var/obj/Loc=loc
