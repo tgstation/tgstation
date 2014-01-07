@@ -27,8 +27,6 @@
 	var/alarm_on = 0
 	var/busy = 0
 	var/emped = 0  //Number of consecutive EMP's on this camera
-	var/pulsed = 0
-
 
 /obj/machinery/camera/New()
 	wires = new(src)
@@ -48,8 +46,7 @@
 
 /obj/machinery/camera/initialize()
 	if(z == 1 && prob(3))
-		pulsed=1
-		update_status(null)
+		deactivate()
 
 /obj/machinery/camera/Del()
 	if(istype(bug))
@@ -77,7 +74,11 @@
 					if(can_use())
 						cameranet.addCamera(src)
 					emped = 0 //Resets the consecutive EMP count
-			disconnect_viewers()
+			for(var/mob/O in mob_list)
+				if (O.client && O.client.eye == src)
+					O.unset_machine()
+					O.reset_view(null)
+					O << "The screen bursts into static."
 			..()
 
 
@@ -109,7 +110,7 @@
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 	icon_state = "[initial(icon_state)]1"
 	add_hiddenprint(user)
-	disconnect_viewers()
+	deactivate(user,0)
 
 /obj/machinery/camera/attackby(W as obj, mob/living/user as mob)
 
@@ -172,13 +173,13 @@
 			src.bug = W
 			src.bug.bugged_cameras[src.c_tag] = src
 	else if(istype(W, /obj/item/weapon/melee/energy/blade))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
-		disconnect_viewers()
+		deactivate(user,2)//Here so that you can disconnect anyone viewing the camera, regardless if it's on or off.
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, loc)
 		spark_system.start()
 		playsound(loc, 'sound/weapons/blade1.ogg', 50, 1)
 		playsound(loc, "sparks", 50, 1)
-		visible_message("<span class='warning'>The camera has been sliced apart by [user] with an energy blade!</span>")
+		visible_message("\blue The camera has been sliced apart by [] with an energy blade!")
 		del(src)
 	else if(istype(W, /obj/item/device/laser_pointer))
 		var/obj/item/device/laser_pointer/L = W
@@ -187,38 +188,30 @@
 		..()
 	return
 
-
-/obj/machinery/camera/proc/update_status(user as mob)
-
-	if(!(wires.IsIndexCut(CAMERA_WIRE_POWER)) && !pulsed)
-		if(!status)
-			status=1
+/obj/machinery/camera/proc/deactivate(user as mob, var/choice = 1)
+	if(choice==1)
+		status = !( src.status )
+		if (!(src.status))
 			if(user)
-				visible_message("<span class='warning'>[user] has reactivated [src]!</span>")
+				visible_message("\red [user] has deactivated [src]!")
 				add_hiddenprint(user)
 			else
-				visible_message("<span class='warning'>\the [src] reactivates!</span>")
-			icon_state = initial(icon_state)
-	else
-		if(status)
-			status=0
-			if(user)
-				visible_message("<span class='warning'>[user] has deactivated [src]!</span>")
-				add_hiddenprint(user)
-			else
-				visible_message("<span class='warning'>\The [src] deactivates!</span>")
+				visible_message("\red \The [src] deactivates!")
+			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			icon_state = "[initial(icon_state)]1"
-	if(!status)
-		disconnect_viewers()
 
-/obj/machinery/camera/proc/reactivate()
-	if(wires.IsIndexCut(CAMERA_WIRE_POWER))
-		wires.CutWireIndex(CAMERA_WIRE_POWER)
-	if(pulsed)
-		pulsed=0
-	update_status()
+		else
+			if(user)
+				visible_message("\red [user] has reactivated [src]!")
+				add_hiddenprint(user)
+			else
+				visible_message("\red \the [src] reactivates!")
+			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+			icon_state = initial(icon_state)
 
-/obj/machinery/camera/proc/disconnect_viewers()
+	// now disconnect anyone using the camera
+	//Apparently, this will disconnect anyone even if the camera was re-activated.
+	//I guess that doesn't matter since they can't use it anyway?
 	for(var/mob/O in player_list)
 		if (O.client && O.client.eye == src)
 			O.unset_machine()

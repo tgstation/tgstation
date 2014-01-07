@@ -240,7 +240,7 @@
 		for(var/datum/AI_Module/small/reactivate_camera/camera in current_modules)
 			if(camera.uses > 0)
 				if(!C.status)
-					C.reactivate()
+					C.deactivate(src)
 					camera.uses --
 				else
 					src << "This camera is either active, or not repairable."
