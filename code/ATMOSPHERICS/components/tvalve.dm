@@ -205,26 +205,10 @@ obj/machinery/atmospherics/tvalve
 		return
 
 	initialize()
-		var/node1_dir
-		var/node2_dir
-		var/node3_dir
 
-		node1_dir = turn(dir, 180)
-		node2_dir = turn(dir, -90)
-		node3_dir = dir
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node1_dir))
-			if(target.initialize_directions & get_dir(target,src))
-				node1 = target
-				break
-		for(var/obj/machinery/atmospherics/target in get_step(src,node2_dir))
-			if(target.initialize_directions & get_dir(target,src))
-				node2 = target
-				break
-		for(var/obj/machinery/atmospherics/target in get_step(src,node3_dir))
-			if(target.initialize_directions & get_dir(target,src))
-				node3 = target
-				break
+		node1 = findConnecting(turn(dir, 180))
+		node2 = findConnecting(turn(dir, -90))
+		node3 = findConnecting(dir)
 
 	build_network()
 		if(!network_node1 && node1)

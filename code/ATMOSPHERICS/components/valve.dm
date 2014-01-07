@@ -174,12 +174,7 @@ obj/machinery/atmospherics/valve
 	initialize()
 		normalize_dir()
 
-		for(var/direction in cardinal)
-			if(direction&initialize_directions)
-				if (!node1)
-					node1 = findConnecting(direction)
-				else if (!node2)
-					node2 = findConnecting(direction)
+		findAllConnections(initialize_directions)
 
 		build_network()
 

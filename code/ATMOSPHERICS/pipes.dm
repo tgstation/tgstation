@@ -225,16 +225,7 @@
 /obj/machinery/atmospherics/pipe/simple/initialize(var/suppress_icon_check=0)
 	normalize_dir()
 
-	for(var/direction in cardinal)
-		if(initialize_directions & direction)
-			var/obj/machinery/atmospherics/found = findConnecting(direction)
-			if(!found) continue
-			if(!node1)
-				node1 = found
-				continue
-			if(!node2)
-				node2 = found
-				break
+	findAllConnections(initialize_directions)
 
 	var/turf/T = src.loc			// hide if turf is not intact
 	hide(T.intact)
@@ -467,10 +458,7 @@
 
 	var/connect_direction = dir
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,connect_direction))
-		if(target.initialize_directions & get_dir(target,src))
-			node1 = target
-			break
+	node1=findConnecting(connect_direction)
 
 	update_icon()
 
@@ -580,10 +568,7 @@
 /obj/machinery/atmospherics/pipe/vent/initialize()
 	var/connect_direction = dir
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,connect_direction))
-		if(target.initialize_directions & get_dir(target,src))
-			node1 = target
-			break
+	node1=findConnecting(connect_direction)
 
 	update_icon()
 
@@ -762,20 +747,7 @@
 /obj/machinery/atmospherics/pipe/manifold/initialize(var/skip_icon_update=0)
 	var/connect_directions = (NORTH|SOUTH|EAST|WEST)&(~dir)
 
-	for(var/direction in cardinal)
-		if(direction&connect_directions)
-			var/obj/machinery/atmospherics/found=findConnecting(direction)
-			if(!found)
-				continue
-			if(!node1)
-				node1 = found
-				continue
-			if(!node2)
-				node2 = found
-				continue
-			if(!node3)
-				node3 = found
-				break // Found what we needed.
+	findAllConnections(connect_directions)
 
 	var/turf/T = src.loc			// hide if turf is not intact
 	hide(T.intact)
@@ -1003,21 +975,8 @@
 
 
 /obj/machinery/atmospherics/pipe/manifold4w/initialize(var/skip_update_icon=0)
-	for(var/direction in cardinal)
-		var/obj/machinery/atmospherics/found = findConnecting(direction)
-		if(!found) continue
-		if(!node1)
-			node1 = found
-			continue
-		if(!node2)
-			node2 = found
-			continue
-		if(!node3)
-			node3 = found
-			continue
-		if(!node4)
-			node4 = found
-			break
+
+	findAllConnections(initialize_directions)
 
 	var/turf/T = src.loc			// hide if turf is not intact
 	hide(T.intact)
@@ -1152,13 +1111,7 @@
 
 
 /obj/machinery/atmospherics/pipe/cap/initialize(var/skip_update_icon=0)
-	for(var/direction in cardinal)
-		if(initialize_directions & direction)
-			var/obj/machinery/atmospherics/found = findConnecting(direction)
-			if(!found) continue
-			if(!node)
-				node = found
-				break
+	node = findConnecting(initialize_directions)
 
 	var/turf/T = src.loc			// hide if turf is not intact
 	hide(T.intact)
