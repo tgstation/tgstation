@@ -313,3 +313,11 @@
 						S.reagents.add_reagent("pacid", 2 * coeff)
 					else if(S.name == "lube spray")
 						S.reagents.add_reagent("lube", 2 * coeff)
+
+/obj/machinery/recharge_station/Crossed(atom/movable/AM as mob|obj)
+	if (isrobot(AM))
+		var/mob/living/silicon/robot/R = AM
+		if (R.stat == 1 && R.cell && !(src.stat & (NOPOWER|BROKEN)) && src.construct_op == 0)
+			toggle_open()
+			add_fingerprint(R)
+	..()
