@@ -15,7 +15,7 @@
 				boolets++
 		return boolets
 	else
-		..()
+		return ..()
 
 /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	name = "russian revolver cylinder"
