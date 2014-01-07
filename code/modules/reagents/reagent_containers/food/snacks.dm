@@ -10,6 +10,7 @@
 	var/slices_num
 	var/eatverb
 	var/wrapped = 0
+	var/dried_type = null
 
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
