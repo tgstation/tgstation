@@ -30,8 +30,8 @@
 				send2irc("Server", "[cheesy_message]")
 	..()
 
-	return 1
-
 	if(isobj(loc))
 		var/obj/Loc=loc
 		Loc.on_log()
+
+	return 1
