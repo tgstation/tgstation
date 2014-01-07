@@ -12,8 +12,10 @@
 	var/recharge_rate = 4
 	var/charge_tick = 0
 	var/can_charge = 1
+	var/ammo_type
 	origin_tech = null
 	clumsy_check = 0
+
 /obj/item/weapon/gun/magic/afterattack(atom/target as mob, mob/living/user as mob, flag)
 	newshot()
 	..()
