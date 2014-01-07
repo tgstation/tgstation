@@ -79,8 +79,8 @@ obj/machinery/atmospherics/binary
 	initialize()
 		if(node1 && node2) return
 
-		var/node1 = findConnecting(turn(dir, 180))
-		var/node2 = findConnecting(dir)
+		node1 = findConnecting(turn(dir, 180))
+		node2 = findConnecting(dir)
 
 		update_icon()
 
