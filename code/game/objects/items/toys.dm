@@ -862,14 +862,13 @@ obj/item/toy/singlecard/attack_self(mob/user)
 /obj/item/toy/nuke/attack_self(mob/user)
 	if (cooldown < world.time)
 		cooldown = world.time + 3000 //5 minutes
-		user.visible_message("<span class='warning'>[user] presses a button on [src]</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='notice'>You hear the click of a button.</span>")
-		sleep(5)
-		icon_state = "nuketoy"
-		for (var/mob/M in hearers(world.view, user)) //I'm doing this because playsound's dampening/stereo ruins the effect
-			if (M.client && !M.ear_deaf)
-				M << 'sound/machines/Alarm.ogg'
-		sleep(135)
-		icon_state = "nuketoyidle"
+		spawn() //gia said so
+			user.visible_message("<span class='warning'>[user] presses a button on [src]</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='notice'>You hear the click of a button.</span>")
+			sleep(5)
+			icon_state = "nuketoy"
+			playsound(src, 'sound/machines/Alarm.ogg', 100, 0, surround = 0)
+			sleep(135)
+			icon_state = "nuketoyidle"
 
 
 
