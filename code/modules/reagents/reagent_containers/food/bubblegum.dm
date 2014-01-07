@@ -13,7 +13,13 @@
 
 /obj/item/clothing/mask/bubblegum/attack(mob/M, mob/user, def_zone) //try to be like a snack
 	if(M==user)
-		M.u_equip(src)
+		if(!mob_can_equip(M, slot_wear_mask, 1))
+			if(iscarbon(M))
+				var/mob/living/carbon/H=M
+				H<<"<span class='notice'>Remove your [H.wear_mask.name] first!</span>"
+			else
+				M<<"<span class='notice'>You are unable to chew the bubblegum right now.</span>"
+			return
 		M.equip_to_slot_if_possible(src, slot_wear_mask, 0, 1, 1)
 	else
 		M.visible_message("<span class='danger'>[user] attempts to feed [M] [src].</span>", \
@@ -24,6 +30,8 @@
 				M.equip_to_slot(src, slot_wear_mask)
 				M.visible_message("<span class='danger'>[user] forces [M] to eat [src].</span>", \
 						"<span class='userdanger'>[user] forces [M] to eat [src].</span>")
+			else
+				user<<"<span class='notice'>You are unable to feed the bubblegum to [M].</span>"
 
 
 /obj/item/clothing/mask/bubblegum/equipped(mob/user, slot)
