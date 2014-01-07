@@ -43,7 +43,7 @@
 	if(!(locate(O) in src.module.modules) && O != src.module.emag)
 		return
 	if(activated(O))
-		src << "Already activated"
+		src << "<span class='notice'>Already activated</span>"
 		return
 	if(!module_state_1)
 		module_state_1 = O
@@ -67,7 +67,7 @@
 		if(istype(module_state_3,/obj/item/borg/sight))
 			sight_mode |= module_state_3:sight_mode
 	else
-		src << "You need to disable a module first!"
+		src << "<span class='notice'>You need to disable a module first!</span>"
 
 /mob/living/silicon/robot/proc/uneq_active()
 	uneq_module(module_active)
