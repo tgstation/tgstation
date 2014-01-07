@@ -14,7 +14,7 @@
 	var/open_panel = 0 	//are the wires exposed?
 	var/active = 0		//is the bomb counting down?
 	var/defused = 0		//is the bomb capable of exploding?
-	var/degutted = 0	//is the bomb even a bomb anymore?
+	var/obj/item/weapon/syndicatebombcore/payload
 
 /obj/machinery/syndicatebomb/process()
 	if(active && !defused && (timer > 0)) 	//Tick Tock
@@ -24,15 +24,17 @@
 		active = 0
 		timer = 60
 		processing_objects.Remove(src)
-		explosion(src.loc,2,5,11, flame_range = 11)
-		del(src)
+		icon_state = "syndicate-bomb-inactive[open_panel ? "-wires" : ""]"
+		if(payload in src)
+			payload.detonate()
 		return
 	if(!active || defused)					//Counter terrorists win
 		processing_objects.Remove(src)
 		return
 
 /obj/machinery/syndicatebomb/New()
-	wires = new(src)
+	wires 	= new(src)
+	payload = new(src)
 	..()
 
 
@@ -69,37 +71,34 @@
 		user << "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>"
 
 	else if(istype(I, /obj/item/weapon/wirecutters) || istype(I, /obj/item/device/multitool) || istype(I, /obj/item/device/assembly/signaler ))
-		if(degutted)
-			user << "<span class='notice'>The wires aren't connected to anything!<span>"
-		else if(open_panel)
+		if(open_panel)
 			wires.Interact(user)
 
 	else if(istype(I, /obj/item/weapon/crowbar))
-		if(open_panel && !degutted && isWireCut(WIRE_BOOM) && isWireCut(WIRE_UNBOLT) && isWireCut(WIRE_DELAY) && isWireCut(WIRE_PROCEED) && isWireCut(WIRE_ACTIVATE))
-			user << "<span class='notice'>You carefully pry out the bomb's payload.</span>"
-			degutted = 1
-			new /obj/item/weapon/syndicatebombcore(user.loc)
+		if(open_panel && isWireCut(WIRE_BOOM) && isWireCut(WIRE_UNBOLT) && isWireCut(WIRE_DELAY) && isWireCut(WIRE_PROCEED) && isWireCut(WIRE_ACTIVATE))
+			if(payload)
+				user << "<span class='notice'>You carefully pry out [payload].</span>"
+				payload.loc = user.loc
+				payload = null
+			else
+				user << "<span class='notice'>There isn't anything in here to remove!</span>"
 		else if (open_panel)
 			user << "<span class='notice'>The wires conneting the shell to the explosives are holding it down!</span>"
-		else if (degutted)
-			user << "<span class='notice'>The explosives have already been removed.</span>"
 		else
 			user << "<span class='notice'>The cover is screwed on, it won't pry off!</span>"
 	else if(istype(I, /obj/item/weapon/syndicatebombcore))
-		if(degutted)
-			user << "<span class='notice'>You place the payload into the shell.</span>"
-			degutted = 0
+		if(!payload)
+			payload = I
+			user << "<span class='notice'>You place [payload] into [src].</span>"
 			user.drop_item()
-			del(I)
+			payload.loc = src
 		else
-			user << "<span class='notice'>While a double strength bomb would surely be a thing of terrible beauty, there's just no room for it.</span>"
+			user << "<span class='notice'>[payload] is already loaded into [src], you'll have to remove it first.</span>"
 	else
 		..()
 
 /obj/machinery/syndicatebomb/attack_hand(var/mob/user)
-	if(degutted)
-		user << "<span class='notice'>The bomb's explosives have been removed, the [open_panel ? "wires" : "buttons"] are useless now.</span>"
-	else if(anchored)
+	if(anchored)
 		if(open_panel)
 			wires.Interact(user)
 		else if(!active)
@@ -116,10 +115,8 @@
 		timer = newtime
 		src.loc.visible_message("\blue \icon[src] timer set for [timer] seconds.")
 	if(alert(usr,"Would you like to start the countdown now?",,"Yes","No") == "Yes" && in_range(src, usr) && isliving(usr))
-		if(defused || active || degutted)
-			if(degutted)
-				src.loc.visible_message("\blue \icon[src] Device error: Payload missing")
-			else if(defused)
+		if(defused || active)
+			if(defused)
 				src.loc.visible_message("\blue \icon[src] Device error: User intervention required")
 			return
 		else
@@ -147,12 +144,14 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bombcore"
 	item_state = "eshield0"
-	flags = FPRINT | TABLEPASS
 	w_class = 3.0
 	origin_tech = "syndicate=6;combat=5"
 
 /obj/item/weapon/syndicatebombcore/ex_act(severity) //Little boom can chain a big boom
-	explosion(src.loc,2,5,11, flame_range = 11)
+	src.detonate()
+
+/obj/item/weapon/syndicatebombcore/proc/detonate()
+	explosion(get_turf(src),2,5,11, flame_range = 11)
 	del(src)
 
 /obj/item/device/syndicatedetonator
@@ -161,7 +160,6 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bigred"
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS
 	w_class = 1.0
 	origin_tech = "syndicate=2"
 	var/cooldown = 0

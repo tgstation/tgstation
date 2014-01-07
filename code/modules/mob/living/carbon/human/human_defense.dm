@@ -129,7 +129,7 @@ emp_act
 		if(affecting.status == ORGAN_ROBOTIC)
 			if (WT.remove_fuel(0))
 				if(affecting.brute_dam > 0)
-					affecting.heal_robotic_damage(30,0) //Repair Brute
+					affecting.heal_damage(30,0,1) //Repair Brute
 					update_damage_overlays(0)
 					updatehealth()
 					for(var/mob/O in viewers(user, null))
@@ -147,7 +147,7 @@ emp_act
 		var/obj/item/weapon/cable_coil/coil = I
 		if(affecting.status == ORGAN_ROBOTIC)
 			if(affecting.burn_dam > 0)
-				affecting.heal_robotic_damage(0,30) //Repair Burn
+				affecting.heal_damage(0,30,1) //Repair Burn
 				updatehealth()
 				coil.use(1)
 				for(var/mob/O in viewers(user, null))

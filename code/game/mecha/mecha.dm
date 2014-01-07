@@ -236,7 +236,7 @@
 		target = safepick(view(3,target))
 		if(!target)
 			return
-	if(get_dist(src, target)>1)
+	if(!target.Adjacent(src))
 		if(selected && selected.is_ranged())
 			selected.action(target)
 	else if(selected && selected.is_melee())
@@ -988,7 +988,7 @@
 		H.forceMove(src)
 		if(H.hud_used)
 			last_user_hud = H.hud_used.hud_shown
-			H.hud_used.hide_hud()
+			H.hud_used.show_hud(1)
 
 		src.occupant = H
 		src.add_fingerprint(H)

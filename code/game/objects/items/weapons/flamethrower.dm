@@ -4,7 +4,7 @@
 	icon = 'icons/obj/flamethrower.dmi'
 	icon_state = "flamethrowerbase"
 	item_state = "flamethrower_0"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	force = 3.0
 	throwforce = 10.0
 	throw_speed = 1
@@ -16,7 +16,6 @@
 	var/throw_amount = 100
 	var/lit = 0	//on or off
 	var/operating = 0//cooldown
-	var/turf/previousturf = null
 	var/obj/item/weapon/weldingtool/weldtool = null
 	var/obj/item/device/assembly/igniter/igniter = null
 	var/obj/item/weapon/tank/plasma/ptank = null
@@ -164,17 +163,17 @@
 /obj/item/weapon/flamethrower/proc/flame_turf(turflist)
 	if(!lit || operating)	return
 	operating = 1
+	var/turf/previousturf = get_turf(src)
 	for(var/turf/simulated/T in turflist)
 		if(!T.air)
 			break
-		if(!previousturf && length(turflist)>1)
-			previousturf = get_turf(src)
+		if(T == previousturf)
 			continue	//so we don't burn the tile we be standin on
-		if(previousturf && LinkBlocked(previousturf, T))
+		if(!T.CanAtmosPass(previousturf))
 			break
 		ignite_turf(T)
 		sleep(1)
-	previousturf = null
+		previousturf = T
 	operating = 0
 	for(var/mob/M in viewers(1, loc))
 		if((M.client && M.machine == src))
@@ -206,5 +205,5 @@
 
 /obj/item/weapon/flamethrower/full/tank/New(var/loc)
 	..()
-	ptank = new /obj/item/weapon/tank/plasma(src)
+	ptank = new /obj/item/weapon/tank/plasma/full(src)
 	update_icon()

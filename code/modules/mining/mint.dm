@@ -7,8 +7,6 @@
 	icon_state = "coinpress0"
 	density = 1
 	anchored = 1.0
-	var/obj/machinery/mineral/input = null
-	var/obj/machinery/mineral/output = null
 	var/amt_silver = 0 //amount of silver
 	var/amt_gold = 0   //amount of gold
 	var/amt_diamond = 0
@@ -23,62 +21,40 @@
 	var/chosen = "metal" //which material will be used to make coins
 	var/coinsToProduce = 10
 
-
-/obj/machinery/mineral/mint/New()
-	..()
-	spawn( 5 )
-		for (var/dir in cardinal)
-			src.input = locate(/obj/machinery/mineral/input, get_step(src, dir))
-			if(src.input) break
-		for (var/dir in cardinal)
-			src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
-			if(src.output) break
-		processing_objects.Add(src)
-		return
-	return
-
-
 /obj/machinery/mineral/mint/process()
-	if ( src.input)
-		var/obj/item/stack/sheet/O
-		O = locate(/obj/item/stack/sheet, input.loc)
-		if(O)
+	var/turf/T = get_step(src,input_dir)
+	if(T)
+		for(var/obj/item/stack/sheet/O in T)
 			if (istype(O,/obj/item/stack/sheet/mineral/gold))
 				amt_gold += 100 * O.amount
-				del(O)
+				O.loc = null
 			if (istype(O,/obj/item/stack/sheet/mineral/silver))
 				amt_silver += 100 * O.amount
-				del(O)
+				O.loc = null
 			if (istype(O,/obj/item/stack/sheet/mineral/diamond))
 				amt_diamond += 100 * O.amount
-				del(O)
+				O.loc = null
 			if (istype(O,/obj/item/stack/sheet/mineral/plasma))
 				amt_plasma += 100 * O.amount
-				del(O)
+				O.loc = null
 			if (istype(O,/obj/item/stack/sheet/mineral/uranium))
 				amt_uranium += 100 * O.amount
-				del(O)
+				O.loc = null
 			if (istype(O,/obj/item/stack/sheet/metal))
 				amt_iron += 100 * O.amount
-				del(O)
+				O.loc = null
 			if (istype(O,/obj/item/stack/sheet/mineral/clown))
 				amt_clown += 100 * O.amount
-				del(O)
+				O.loc = null
 			if (istype(O,/obj/item/stack/sheet/mineral/adamantine))
 				amt_adamantine += 100 * O.amount
-				del(O) //Commented out for now. -Durandan
+				O.loc = null //Commented out for now. -Durandan
+			return
 
 
 /obj/machinery/mineral/mint/attack_hand(user as mob) //TODO: Adamantine coins! -Durandan
 
 	var/dat = "<b>Coin Press</b><br>"
-
-	if (!input)
-		dat += text("input connection status: ")
-		dat += text("<b><font color='red'>NOT CONNECTED</font></b><br>")
-	if (!output)
-		dat += text("<br>output connection status: ")
-		dat += text("<b><font color='red'>NOT CONNECTED</font></b><br>")
 
 	dat += text("<br><font color='#ffcc00'><b>Gold inserted: </b>[amt_gold]</font> ")
 	if (chosen == "gold")
@@ -149,121 +125,93 @@
 		coinsToProduce = Clamp(coinsToProduce + text2num(href_list["chooseAmt"]), 0, 1000)
 	if(href_list["makeCoins"])
 		var/temp_coins = coinsToProduce
-		if (src.output)
-			processing = 1;
-			icon_state = "coinpress1"
-			var/obj/item/weapon/moneybag/M
-			switch(chosen)
-				if("metal")
-					while(amt_iron > 0 && coinsToProduce > 0)
-						if (locate(/obj/item/weapon/moneybag,output.loc))
-							M = locate(/obj/item/weapon/moneybag,output.loc)
-						else
-							M = new/obj/item/weapon/moneybag(output.loc)
-						new/obj/item/weapon/coin/iron(M)
-						amt_iron -= 20
-						coinsToProduce--
-						newCoins++
-						src.updateUsrDialog()
-						sleep(5);
-				if("gold")
-					while(amt_gold > 0 && coinsToProduce > 0)
-						if (locate(/obj/item/weapon/moneybag,output.loc))
-							M = locate(/obj/item/weapon/moneybag,output.loc)
-						else
-							M = new/obj/item/weapon/moneybag(output.loc)
-						new /obj/item/weapon/coin/gold(M)
-						amt_gold -= 20
-						coinsToProduce--
-						newCoins++
-						src.updateUsrDialog()
-						sleep(5);
-				if("silver")
-					while(amt_silver > 0 && coinsToProduce > 0)
-						if (locate(/obj/item/weapon/moneybag,output.loc))
-							M = locate(/obj/item/weapon/moneybag,output.loc)
-						else
-							M = new/obj/item/weapon/moneybag(output.loc)
-						new /obj/item/weapon/coin/silver(M)
-						amt_silver -= 20
-						coinsToProduce--
-						newCoins++
-						src.updateUsrDialog()
-						sleep(5);
-				if("diamond")
-					while(amt_diamond > 0 && coinsToProduce > 0)
-						if (locate(/obj/item/weapon/moneybag,output.loc))
-							M = locate(/obj/item/weapon/moneybag,output.loc)
-						else
-							M = new/obj/item/weapon/moneybag(output.loc)
-						new /obj/item/weapon/coin/diamond(M)
-						amt_diamond -= 20
-						coinsToProduce--
-						newCoins++
-						src.updateUsrDialog()
-						sleep(5);
-				if("plasma")
-					while(amt_plasma > 0 && coinsToProduce > 0)
-						if (locate(/obj/item/weapon/moneybag,output.loc))
-							M = locate(/obj/item/weapon/moneybag,output.loc)
-						else
-							M = new/obj/item/weapon/moneybag(output.loc)
-						new /obj/item/weapon/coin/plasma(M)
-						amt_plasma -= 20
-						coinsToProduce--
-						newCoins++
-						src.updateUsrDialog()
-						sleep(5);
-				if("uranium")
-					while(amt_uranium > 0 && coinsToProduce > 0)
-						if (locate(/obj/item/weapon/moneybag,output.loc))
-							M = locate(/obj/item/weapon/moneybag,output.loc)
-						else
-							M = new/obj/item/weapon/moneybag(output.loc)
-						new /obj/item/weapon/coin/uranium(M)
-						amt_uranium -= 20
-						coinsToProduce--
-						newCoins++
-						src.updateUsrDialog()
-						sleep(5)
-				if("clown")
-					while(amt_clown > 0 && coinsToProduce > 0)
-						if (locate(/obj/item/weapon/moneybag,output.loc))
-							M = locate(/obj/item/weapon/moneybag,output.loc)
-						else
-							M = new/obj/item/weapon/moneybag(output.loc)
-						new /obj/item/weapon/coin/clown(M)
-						amt_clown -= 20
-						coinsToProduce--
-						newCoins++
-						src.updateUsrDialog()
-						sleep(5);
-				if("adamantine")
-					while(amt_adamantine > 0 && coinsToProduce > 0)
-						if (locate(/obj/item/weapon/moneybag,output.loc))
-							M = locate(/obj/item/weapon/moneybag,output.loc)
-						else
-							M = new/obj/item/weapon/moneybag(output.loc)
-						new /obj/item/weapon/coin/adamantine(M)
-						amt_adamantine -= 20
-						coinsToProduce--
-						newCoins++
-						src.updateUsrDialog()
-						sleep(5);
-				if("mythril")
-					while(amt_adamantine > 0 && coinsToProduce > 0)
-						if (locate(/obj/item/weapon/moneybag,output.loc))
-							M = locate(/obj/item/weapon/moneybag,output.loc)
-						else
-							M = new/obj/item/weapon/moneybag(output.loc)
-						new /obj/item/weapon/coin/mythril(M)
-						amt_mythril -= 20
-						coinsToProduce--
-						newCoins++
-						src.updateUsrDialog()
-						sleep(5);
-			icon_state = "coinpress0"
-			processing = 0;
-			coinsToProduce = temp_coins
+		processing = 1;
+		icon_state = "coinpress1"
+		switch(chosen)
+			if("metal")
+				while(amt_iron > 0 && coinsToProduce > 0)
+					create_coins(/obj/item/weapon/coin/iron)
+					amt_iron -= 20
+					coinsToProduce--
+					newCoins++
+					src.updateUsrDialog()
+					sleep(5);
+			if("gold")
+				while(amt_gold > 0 && coinsToProduce > 0)
+					create_coins(/obj/item/weapon/coin/gold)
+					amt_gold -= 20
+					coinsToProduce--
+					newCoins++
+					src.updateUsrDialog()
+					sleep(5);
+			if("silver")
+				while(amt_silver > 0 && coinsToProduce > 0)
+					create_coins(/obj/item/weapon/coin/silver)
+					amt_silver -= 20
+					coinsToProduce--
+					newCoins++
+					src.updateUsrDialog()
+					sleep(5);
+			if("diamond")
+				while(amt_diamond > 0 && coinsToProduce > 0)
+					create_coins(/obj/item/weapon/coin/diamond)
+					amt_diamond -= 20
+					coinsToProduce--
+					newCoins++
+					src.updateUsrDialog()
+					sleep(5);
+			if("plasma")
+				while(amt_plasma > 0 && coinsToProduce > 0)
+					create_coins(/obj/item/weapon/coin/plasma)
+					amt_plasma -= 20
+					coinsToProduce--
+					newCoins++
+					src.updateUsrDialog()
+					sleep(5);
+			if("uranium")
+				while(amt_uranium > 0 && coinsToProduce > 0)
+					create_coins(/obj/item/weapon/coin/uranium)
+					amt_uranium -= 20
+					coinsToProduce--
+					newCoins++
+					src.updateUsrDialog()
+					sleep(5)
+			if("clown")
+				while(amt_clown > 0 && coinsToProduce > 0)
+					create_coins(/obj/item/weapon/coin/clown)
+					amt_clown -= 20
+					coinsToProduce--
+					newCoins++
+					src.updateUsrDialog()
+					sleep(5);
+			if("adamantine")
+				while(amt_adamantine > 0 && coinsToProduce > 0)
+					create_coins(/obj/item/weapon/coin/adamantine)
+					amt_adamantine -= 20
+					coinsToProduce--
+					newCoins++
+					src.updateUsrDialog()
+					sleep(5);
+			if("mythril")
+				while(amt_adamantine > 0 && coinsToProduce > 0)
+					create_coins(/obj/item/weapon/coin/mythril)
+					amt_mythril -= 20
+					coinsToProduce--
+					newCoins++
+					src.updateUsrDialog()
+					sleep(5);
+		icon_state = "coinpress0"
+		processing = 0;
+		coinsToProduce = temp_coins
 	src.updateUsrDialog()
 	return
+
+/obj/machinery/mineral/mint/proc/create_coins(var/P)
+	var/turf/T = get_step(src,output_dir)
+	if(T)
+		var/obj/item/O = new P(src)
+		var/obj/item/weapon/moneybag/M = locate(/obj/item/weapon/moneybag/, T)
+		if(!M)
+			M = new /obj/item/weapon/moneybag(src)
+			unload_mineral(M)
+		O.loc = M

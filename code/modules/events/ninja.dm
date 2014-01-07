@@ -377,6 +377,10 @@ ________________________________________________________________________________
 	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_l_store)
 	equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen(src), slot_s_store)
 	equip_to_slot_or_del(new /obj/item/weapon/tank/jetpack/carbondioxide(src), slot_back)
+
+	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(src)
+	E.imp_in = src
+	E.implanted = 1
 	return 1
 
 //=======//HELPER PROCS//=======//

@@ -3,7 +3,6 @@
 	desc = "A piece of juicy meat found in a person's head."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "brain"
-	flags = TABLEPASS
 	force = 1.0
 	w_class = 2.0
 	throwforce = 1.0

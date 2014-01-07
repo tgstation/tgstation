@@ -292,24 +292,12 @@
 
 
 /mob/living/silicon/robot/ex_act(severity)
-	if(!blinded)
-		flick("flash", flash)
-
-	if (stat == 2 && client)
-		gib()
-		return
-
-	else if (stat == 2 && !client)
-		del(src)
-		return
+	..()
 
 	switch(severity)
 		if(1.0)
-			if (stat != 2)
-				adjustBruteLoss(100)
-				adjustFireLoss(100)
-				gib()
-				return
+			gib()
+			return
 		if(2.0)
 			if (stat != 2)
 				adjustBruteLoss(60)
@@ -318,7 +306,7 @@
 			if (stat != 2)
 				adjustBruteLoss(30)
 
-	updatehealth()
+	return
 
 
 /mob/living/silicon/robot/meteorhit(obj/O as obj)
@@ -603,7 +591,6 @@
 
 			M.put_in_active_hand(G)
 
-			grabbed_by += G
 			G.synch()
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			for(var/mob/O in viewers(src, null))
@@ -971,6 +958,10 @@
 		return
 
 /mob/living/silicon/robot/proc/self_destruct()
+	if(emagged)
+		explosion(src.loc,1,2,4,flame_range = 2)
+	else
+		explosion(src.loc,-1,0,2)
 	gib()
 	return
 

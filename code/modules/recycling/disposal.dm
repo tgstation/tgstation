@@ -720,13 +720,12 @@
 			H.active = 0
 			H.loc = src
 			return
-		if(istype(T,/turf/simulated/floor && T.intact)) //intact floor, pop the tile
+		if(istype(T,/turf/simulated/floor)) //intact floor, pop the tile
 			var/turf/simulated/floor/F = T
 			//F.health	= 100
-			F.burnt	= 1
-			F.intact	= 0
+			F.break_tile()
 			F.levelupdate()
-			new /obj/item/stack/tile(H)	// add to holder so it will be thrown with other stuff
+			new /obj/item/stack/tile/plasteel(H)	// add to holder so it will be thrown with other stuff
 			F.icon_state = "Floor[F.burnt ? "1" : ""]"
 
 		if(direction)		// direction is specified
@@ -1154,6 +1153,10 @@
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
 
+		if(linked)
+			user << "You need to deconstruct disposal machinery above this pipe."
+			return
+
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 			// check if anything changed over 2 seconds
@@ -1168,6 +1171,7 @@
 				user << "You must stay still while welding the pipe."
 		else
 			user << "You need more welding fuel to cut the pipe."
+
 			return
 
 	// would transfer to next pipe segment, but we are in a trunk

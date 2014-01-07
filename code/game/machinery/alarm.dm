@@ -874,7 +874,7 @@ Code shamelessly copied from apc_frame
 	desc = "Used for building Air Alarms"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarm_bitem"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 
 /obj/item/alarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
@@ -986,9 +986,9 @@ FIRE ALARM
 				if (istype(W, /obj/item/device/multitool))
 					src.detecting = !( src.detecting )
 					if (src.detecting)
-						user.visible_message("\red [user] has reconnected [src]'s detecting unit!", "You have reconnected [src]'s detecting unit.")
+						user.visible_message("<span class='warning'>[user] has reconnected [src]'s detecting unit!</span>", "<span class='warning'>You have reconnected [src]'s detecting unit.</span>")
 					else
-						user.visible_message("\red [user] has disconnected [src]'s detecting unit!", "You have disconnected [src]'s detecting unit.")
+						user.visible_message("<span class='warning'>[user] has disconnected [src]'s detecting unit!</span>", "<span class='warning'>You have disconnected [src]'s detecting unit.</span>")
 
 				else if (istype(W, /obj/item/weapon/wirecutters))
 					buildstage = 1
@@ -996,13 +996,13 @@ FIRE ALARM
 					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil()
 					coil.amount = 5
 					coil.loc = user.loc
-					user << "You cut the wires from \the [src]"
+					user << "<span class='notice'>You cut the wires from \the [src]</span>"
 					update_icon()
 			if(1)
 				if(istype(W, /obj/item/weapon/cable_coil))
 					var/obj/item/weapon/cable_coil/coil = W
 					if(coil.amount < 5)
-						user << "You need more cable for this!"
+						user << "<span class='warning'>You need more cable for this!</span>"
 						return
 
 					coil.amount -= 5
@@ -1010,26 +1010,26 @@ FIRE ALARM
 						del(coil)
 
 					buildstage = 2
-					user << "You wire \the [src]!"
+					user << "<span class='notice'>You wire \the [src]!</span>"
 					update_icon()
 
 				else if(istype(W, /obj/item/weapon/crowbar))
-					user << "You pry out the circuit!"
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 					spawn(20)
-						var/obj/item/weapon/firealarm_electronics/circuit = new /obj/item/weapon/firealarm_electronics()
-						circuit.loc = user.loc
-						buildstage = 0
-						update_icon()
+						if(buildstage == 1)
+							user << "<span class='notice'>You pry out the circuit!</span>"
+							new /obj/item/weapon/firealarm_electronics(user.loc)
+							buildstage = 0
+							update_icon()
 			if(0)
 				if(istype(W, /obj/item/weapon/firealarm_electronics))
-					user << "You insert the circuit!"
+					user << "<span class='notice'>You insert the circuit!</span>"
 					del(W)
 					buildstage = 1
 					update_icon()
 
 				else if(istype(W, /obj/item/weapon/wrench))
-					user << "You remove the fire alarm assembly from the wall!"
+					user.visible_message("<span class='warning'>[user] removes the fire alarm assembly from the wall!</span>", "<span class='warning'>You remove the fire alarm assembly from the wall!</span>")
 					var/obj/item/firealarm_frame/frame = new /obj/item/firealarm_frame()
 					frame.loc = user.loc
 					playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
@@ -1208,27 +1208,8 @@ Code shamelessly copied from apc_frame
 	desc = "Used for building Fire Alarms"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire_bitem"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 
-
-/*
- * Party button
- */
-
-/obj/machinery/partyalarm
-	name = "\improper PARTY BUTTON"
-	desc = "Cuban Pete is in the house!"
-	icon = 'icons/obj/monitors.dmi'
-	icon_state = "fire0"
-	var/detecting = 1.0
-	var/working = 1.0
-	var/time = 10.0
-	var/timing = 0.0
-	var/lockdownbyai = 0
-	anchored = 1.0
-	use_power = 1
-	idle_power_usage = 2
-	active_power_usage = 6
 
 /obj/item/firealarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
@@ -1262,16 +1243,22 @@ Code shamelessly copied from apc_frame
 
 	del(src)
 
-/obj/machinery/partyalarm/attack_paw(mob/user as mob)
-	return src.attack_hand(user)
-/obj/machinery/partyalarm/attack_hand(mob/user as mob)
+/*
+ * Party button
+ */
+
+/obj/machinery/firealarm/partyalarm
+	name = "\improper PARTY BUTTON"
+	desc = "Cuban Pete is in the house!"
+
+/obj/machinery/firealarm/partyalarm/attack_hand(mob/user as mob)
 	if(user.stat || stat & (NOPOWER|BROKEN))
 		return
 
 	user.set_machine(src)
 	var/area/A = src.loc
 	var/d1
-	var/d2
+	var/dat
 	if (istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon/ai))
 		A = A.loc
 
@@ -1279,76 +1266,40 @@ Code shamelessly copied from apc_frame
 			d1 = text("<A href='?src=\ref[];reset=1'>No Party :(</A>", src)
 		else
 			d1 = text("<A href='?src=\ref[];alarm=1'>PARTY!!!</A>", src)
-		if (src.timing)
-			d2 = text("<A href='?src=\ref[];time=0'>Stop Time Lock</A>", src)
-		else
-			d2 = text("<A href='?src=\ref[];time=1'>Initiate Time Lock</A>", src)
-		var/second = src.time % 60
-		var/minute = (src.time - second) / 60
-		var/dat = text("<HTML><HEAD></HEAD><BODY><TT><B>Party Button</B> []\n<HR>\nTimer System: []<br />\nTime Left: [][] <A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A>\n</TT></BODY></HTML>", d1, d2, (minute ? text("[]:", minute) : null), second, src, src, src, src)
-		user << browse(dat, "window=partyalarm")
-		onclose(user, "partyalarm")
+		dat = text("<HTML><HEAD></HEAD><BODY><TT><B>Party Button</B> []</BODY></HTML>", d1)
+
 	else
 		A = A.loc
 		if (A.fire)
 			d1 = text("<A href='?src=\ref[];reset=1'>[]</A>", src, stars("No Party :("))
 		else
 			d1 = text("<A href='?src=\ref[];alarm=1'>[]</A>", src, stars("PARTY!!!"))
-		if (src.timing)
-			d2 = text("<A href='?src=\ref[];time=0'>[]</A>", src, stars("Stop Time Lock"))
-		else
-			d2 = text("<A href='?src=\ref[];time=1'>[]</A>", src, stars("Initiate Time Lock"))
-		var/second = src.time % 60
-		var/minute = (src.time - second) / 60
-		var/dat = text("<HTML><HEAD></HEAD><BODY><TT><B>[]</B> []\n<HR>\nTimer System: []<br />\nTime Left: [][] <A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A>\n</TT></BODY></HTML>", stars("Party Button"), d1, d2, (minute ? text("[]:", minute) : null), second, src, src, src, src)
-		user << browse(dat, "window=partyalarm")
-		onclose(user, "partyalarm")
+		dat = text("<HTML><HEAD></HEAD><BODY><TT><B>[]</B> []", stars("Party Button"), d1)
+
+	var/datum/browser/popup = new(user, "firealarm", "Party Alarm")
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 	return
 
-/obj/machinery/partyalarm/proc/reset()
+/obj/machinery/firealarm/partyalarm/reset()
 	if (!( src.working ))
 		return
 	var/area/A = src.loc
 	A = A.loc
 	if (!( istype(A, /area) ))
 		return
-	A.partyreset()
+	for(var/area/RA in A.related)
+		RA.partyreset()
 	return
 
-/obj/machinery/partyalarm/proc/alarm()
+/obj/machinery/firealarm/partyalarm/alarm()
 	if (!( src.working ))
 		return
 	var/area/A = src.loc
 	A = A.loc
 	if (!( istype(A, /area) ))
 		return
-	A.partyalert()
-	return
-
-/obj/machinery/partyalarm/Topic(href, href_list)
-	if(..())
-		return
-	if (usr.stat || stat & (BROKEN|NOPOWER))
-		return
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
-		usr.set_machine(src)
-		if (href_list["reset"])
-			src.reset()
-		else
-			if (href_list["alarm"])
-				src.alarm()
-			else
-				if (href_list["time"])
-					src.timing = text2num(href_list["time"])
-				else
-					if (href_list["tp"])
-						var/tp = text2num(href_list["tp"])
-						src.time += tp
-						src.time = min(max(round(src.time), 0), 120)
-		src.updateUsrDialog()
-
-		src.add_fingerprint(usr)
-	else
-		usr << browse(null, "window=partyalarm")
-		return
+	for(var/area/RA in A.related)
+		RA.partyalert()
 	return

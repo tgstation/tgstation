@@ -424,7 +424,7 @@
 	..()
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/twohanded/fireaxe) || istype(W, /obj/item/weapon/kitchen/utensil/knife) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/melee/energy))
 		user.show_message("<span class='notice'>You carve a face into [src]!</span>", 1)
-		new /obj/item/clothing/head/pumpkinhead (user.loc)
+		new /obj/item/clothing/head/hardhat/pumpkinhead (user.loc)
 		del(src)
 		return
 

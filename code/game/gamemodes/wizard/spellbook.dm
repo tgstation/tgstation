@@ -6,7 +6,6 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 1.0
-	flags = FPRINT | TABLEPASS
 	var/uses = 5
 	var/temp = null
 	var/max_uses = 5
@@ -253,7 +252,7 @@
 							max_uses--
 							temp = "You have cast summon guns."
 						if("summonmagic")
-							feedback_add_details("wizard_spell_learned","SM") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							feedback_add_details("wizard_spell_learned","SU") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							H.rightandwrong(1)
 							max_uses--
 							temp = "You have cast summon magic."
@@ -334,6 +333,7 @@
 	else
 		user.spell_list += S
 		user <<"<span class='notice'>you rapidly read through the arcane book. Suddenly you realize you understand [spellname]!</span>"
+		user.attack_log += text("\[[time_stamp()]\] <font color='orange'>[user.real_name] ([user.ckey]) learned the spell [spellname] ([S]).</font>")
 		onlearned(user)
 
 /obj/item/weapon/spellbook/oneuse/proc/recoil(mob/user as mob)
@@ -387,6 +387,7 @@
 	spellname = "mindswap"
 	icon_state ="bookmindswap"
 	desc = "This book's cover is pristine, though its pages look ragged and torn."
+	var/mob/stored_swap = null //Used in used book recoils to store an identity for mindswaps
 
 /obj/item/weapon/spellbook/oneuse/mindswap/onlearned()
 	spellname = pick("fireball","smoke","blind","forcewall","knock","horses","charge")
@@ -396,8 +397,45 @@
 
 /obj/item/weapon/spellbook/oneuse/mindswap/recoil(mob/user as mob)
 	..()
-	user <<"<span class='warning'>You suddenly don't feel like yourself!</span>"
-	wabbajack(user)
+	if(stored_swap in dead_mob_list)
+		stored_swap = null
+	if(!stored_swap)
+		stored_swap = user
+		user <<"<span class='warning'>For a moment you feel like you don't even know who you are anymore.</span>"
+		return
+	if(stored_swap == user)
+		user <<"<span class='notice'>You stare at the book some more, but there doesn't seem to be anything else to learn...</span>"
+		return
+
+	if(user.mind.special_verbs.len)
+		for(var/V in user.mind.special_verbs)
+			user.verbs -= V
+
+	if(stored_swap.mind.special_verbs.len)
+		for(var/V in stored_swap.mind.special_verbs)
+			stored_swap.verbs -= V
+
+	var/mob/dead/observer/ghost = stored_swap.ghostize(0)
+	ghost.spell_list = stored_swap.spell_list
+
+	user.mind.transfer_to(stored_swap)
+	stored_swap.spell_list = user.spell_list
+
+	if(stored_swap.mind.special_verbs.len)
+		for(var/V in user.mind.special_verbs)
+			user.verbs += V
+
+	ghost.mind.transfer_to(user)
+	user.key = ghost.key
+	user.spell_list = ghost.spell_list
+
+	if(user.mind.special_verbs.len)
+		for(var/V in user.mind.special_verbs)
+			user.verbs += V
+
+	stored_swap <<"<span class='warning'>You're suddenly somewhere else... and someone else?!</span>"
+	user <<"<span class='warning'>Suddenly you're staring at [src] again... where are you, who are you?!</span>"
+	stored_swap = null
 
 /obj/item/weapon/spellbook/oneuse/forcewall
 	spell = /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall

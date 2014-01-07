@@ -57,9 +57,16 @@
 
 	var/speed = 0 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
 
+	//Hot simple_animal baby making vars
+	var/childtype = null
+	var/scan_ready = 1
+	var/species //Sorry, no spider+corgi buttbabies.
+
 /mob/living/simple_animal/New()
 	..()
 	verbs -= /mob/verb/observe
+	if(!real_name)
+		real_name = name
 
 /mob/living/simple_animal/Login()
 	if(src && src.client)
@@ -79,6 +86,7 @@
 			living_mob_list += src
 			stat = CONSCIOUS
 			density = 1
+			update_canmove()
 		return 0
 
 
@@ -209,7 +217,7 @@
 		else
 			..()
 
-/mob/living/simple_animal/gib()
+/mob/living/simple_animal/gib(var/animation = 0)
 	if(icon_gib)
 		flick(icon_gib, src)
 	if(meat_amount && meat_type)
@@ -277,7 +285,6 @@
 
 			M.put_in_active_hand(G)
 
-			grabbed_by += G
 			G.synch()
 
 			LAssailant = M
@@ -313,7 +320,6 @@
 
 			M.put_in_active_hand(G)
 
-			grabbed_by += G
 			G.synch()
 			LAssailant = M
 
@@ -432,7 +438,6 @@
 	stat(null, "Health: [round((health / maxHealth) * 100)]%")
 
 /mob/living/simple_animal/proc/Die()
-	living_mob_list -= src
 	dead_mob_list += src
 	icon_state = icon_dead
 	stat = DEAD
@@ -440,11 +445,9 @@
 	return
 
 /mob/living/simple_animal/ex_act(severity)
-	if(!blinded)
-		flick("flash", flash)
+	..()
 	switch (severity)
 		if (1.0)
-			adjustBruteLoss(500)
 			gib()
 			return
 
@@ -480,3 +483,30 @@
 	return
 /mob/living/simple_animal/ExtinguishMob()
 	return
+
+/mob/living/simple_animal/revive()
+	health = maxHealth
+	..()
+
+/mob/living/simple_animal/proc/make_babies() // <3 <3 <3
+	if(gender != FEMALE || stat || !scan_ready || !childtype || !species)
+		return
+	scan_ready = 0
+	spawn(400)
+		scan_ready = 1
+	var/alone = 1
+	var/mob/living/simple_animal/partner
+	var/children = 0
+	for(var/mob/M in oview(7, src))
+		if(istype(M, childtype)) //Check for children FIRST.
+			children++
+		else if(istype(M, species))
+			if(M.client)
+				continue
+			else if(!istype(M, childtype) && M.gender == MALE) //Better safe than sorry ;_;
+				partner = M
+		else if(istype(M, /mob/))
+			alone = 0
+			continue
+	if(alone && partner && children < 3)
+		new childtype(loc)

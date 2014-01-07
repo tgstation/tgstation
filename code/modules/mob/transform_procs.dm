@@ -1,5 +1,5 @@
 /mob/living/carbon/proc/monkeyize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG), newname = null)
-	if (monkeyizing)
+	if (notransform)
 		return
 	//Handle items on mob
 
@@ -15,7 +15,7 @@
 
 	//Make mob invisible and spawn animation
 	regenerate_icons()
-	monkeyizing = 1
+	notransform = 1
 	canmove = 0
 	stunned = 1
 	icon = null
@@ -86,7 +86,7 @@
 //Could probably be merged with monkeyize but other transformations got their own procs, too
 
 /mob/living/carbon/proc/humanize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG), newname = null)
-	if (monkeyizing)
+	if (notransform)
 		return
 	//Handle items on mob
 
@@ -112,7 +112,7 @@
 
 	//Make mob invisible and spawn animation
 	regenerate_icons()
-	monkeyizing = 1
+	notransform = 1
 	canmove = 0
 	stunned = 1
 	icon = null
@@ -184,7 +184,7 @@
 	return ..()
 
 /mob/living/carbon/human/AIize()
-	if (monkeyizing)
+	if (notransform)
 		return
 	for(var/t in organs)
 		del(t)
@@ -192,12 +192,12 @@
 	return ..()
 
 /mob/living/carbon/AIize()
-	if (monkeyizing)
+	if (notransform)
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
 	regenerate_icons()
-	monkeyizing = 1
+	notransform = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
@@ -265,7 +265,7 @@
 
 //human -> robot
 /mob/living/carbon/human/proc/Robotize(var/delete_items = 0)
-	if (monkeyizing)
+	if (notransform)
 		return
 	for(var/obj/item/W in src)
 		if(delete_items)
@@ -273,7 +273,7 @@
 		else
 			drop_from_inventory(W)
 	regenerate_icons()
-	monkeyizing = 1
+	notransform = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
@@ -310,12 +310,12 @@
 
 //human -> alien
 /mob/living/carbon/human/proc/Alienize()
-	if (monkeyizing)
+	if (notransform)
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
 	regenerate_icons()
-	monkeyizing = 1
+	notransform = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
@@ -340,12 +340,12 @@
 	del(src)
 
 /mob/living/carbon/human/proc/slimeize(adult as num, reproduce as num)
-	if (monkeyizing)
+	if (notransform)
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
 	regenerate_icons()
-	monkeyizing = 1
+	notransform = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
@@ -375,12 +375,12 @@
 	del(src)
 
 /mob/living/carbon/human/proc/corgize()
-	if (monkeyizing)
+	if (notransform)
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
 	regenerate_icons()
-	monkeyizing = 1
+	notransform = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
@@ -404,13 +404,13 @@
 		usr << "\red Sorry but this mob type is currently unavailable."
 		return
 
-	if(monkeyizing)
+	if(notransform)
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
 
 	regenerate_icons()
-	monkeyizing = 1
+	notransform = 1
 	canmove = 0
 	icon = null
 	invisibility = 101

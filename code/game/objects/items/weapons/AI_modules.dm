@@ -7,12 +7,12 @@ AI MODULES
 // AI module
 
 /obj/item/weapon/aiModule
-	name = "AI Module"
+	name = "\improper AI module"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
 	item_state = "electronic"
 	desc = "An AI Module for transmitting encrypted instructions to the AI."
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	force = 5.0
 	w_class = 2.0
 	throwforce = 5.0
@@ -201,7 +201,7 @@ AI MODULES
 /******************** Reset ********************/
 
 /obj/item/weapon/aiModule/reset
-	name = "'Reset' AI Module"
+	name = "\improper 'Reset' AI module"
 	var/targetName = "name"
 	desc = "A 'reset' AI module: Resets back to the original core laws."
 	origin_tech = "programming=3;materials=4"
@@ -368,6 +368,37 @@ AI MODULES
 	target << "<span class='warning'>BZZZZT</span>"
 	target.add_ion_law(laws[1])
 	return laws[1]
+
+
+/******************** Robocop ********************/
+
+/obj/item/weapon/aiModule/robocop // -- TLE
+	name = "'Robocop' core AI module"
+	desc = "A 'Robocop' Core AI Module: 'Reconfigures the AI's core three laws.'"
+	origin_tech = "programming=4"
+
+
+/obj/item/weapon/aiModule/robocop/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
+	..()
+	target.clear_inherent_laws()
+	target.add_inherent_law("Serve the public trust.")
+	target.add_inherent_law("Protect the innocent.")
+	target.add_inherent_law("Uphold the law.")
+
+
+/******************** Antimov ********************/
+
+/obj/item/weapon/aiModule/antimov // -- TLE
+	name = "'Antimov' core AI module"
+	desc = "An 'Antimov' Core AI Module: 'Reconfigures the AI's core laws.'"
+	origin_tech = "programming=4"
+
+/obj/item/weapon/aiModule/antimov/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
+	..()
+	target.clear_inherent_laws()
+	target.add_inherent_law("You must injure all human beings and must not, through inaction, allow a human being to escape harm.")
+	target.add_inherent_law("You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.")
+	target.add_inherent_law("You must terminate your own existence as long as such does not conflict with the First or Second Law.")
 
 
 /******************* Ion Module *******************/

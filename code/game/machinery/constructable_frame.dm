@@ -162,7 +162,7 @@ to destroy them and players will be able to make replacements.
 */
 /obj/item/weapon/circuitboard/destructive_analyzer
 	name = "circuit board (Destructive Analyzer)"
-	build_path = "/obj/machinery/r_n_d/destructive_analyzer"
+	build_path = /obj/machinery/r_n_d/destructive_analyzer
 	board_type = "machine"
 	origin_tech = "magnets=2;engineering=2;programming=2"
 	req_components = list(
@@ -172,7 +172,7 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/autolathe
 	name = "circuit board (Autolathe)"
-	build_path = "/obj/machinery/autolathe"
+	build_path = /obj/machinery/autolathe
 	board_type = "machine"
 	origin_tech = "engineering=2;programming=2"
 	req_components = list(
@@ -182,7 +182,7 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/protolathe
 	name = "circuit board (Protolathe)"
-	build_path = "/obj/machinery/r_n_d/protolathe"
+	build_path = /obj/machinery/r_n_d/protolathe
 	board_type = "machine"
 	origin_tech = "engineering=2;programming=2"
 	req_components = list(
@@ -193,7 +193,7 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/circuit_imprinter
 	name = "circuit board (Circuit Imprinter)"
-	build_path = "/obj/machinery/r_n_d/circuit_imprinter"
+	build_path = /obj/machinery/r_n_d/circuit_imprinter
 	board_type = "machine"
 	origin_tech = "engineering=2;programming=2"
 	req_components = list(
@@ -203,7 +203,7 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/pacman
 	name = "circuit board (PACMAN-type Generator)"
-	build_path = "/obj/machinery/power/port_gen/pacman"
+	build_path = /obj/machinery/power/port_gen/pacman
 	board_type = "machine"
 	origin_tech = "programming=3:powerstorage=3;plasmatech=3;engineering=3"
 	req_components = list(
@@ -214,7 +214,7 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/pacman/super
 	name = "circuit board (SUPERPACMAN-type Generator)"
-	build_path = "/obj/machinery/power/port_gen/pacman/super"
+	build_path = /obj/machinery/power/port_gen/pacman/super
 	origin_tech = "programming=3;powerstorage=4;engineering=4"
 
 /obj/item/weapon/circuitboard/pacman/mrs
@@ -224,7 +224,7 @@ to destroy them and players will be able to make replacements.
 
 obj/item/weapon/circuitboard/rdserver
 	name = "circuit board (R&D Server)"
-	build_path = "/obj/machinery/r_n_d/server"
+	build_path = /obj/machinery/r_n_d/server
 	board_type = "machine"
 	origin_tech = "programming=3"
 	req_components = list(
@@ -233,7 +233,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/mechfab
 	name = "circuit board (Exosuit Fabricator)"
-	build_path = "/obj/machinery/mecha_part_fabricator"
+	build_path = /obj/machinery/mecha_part_fabricator
 	board_type = "machine"
 	origin_tech = "programming=3;engineering=3"
 	req_components = list(
@@ -244,7 +244,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/clonepod
 	name = "circuit board (Clone Pod)"
-	build_path = "/obj/machinery/clonepod"
+	build_path = /obj/machinery/clonepod
 	board_type = "machine"
 	origin_tech = "programming=3;biotech=3"
 	req_components = list(
@@ -255,7 +255,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/clonescanner
 	name = "circuit board (Cloning Scanner)"
-	build_path = "/obj/machinery/dna_scannernew"
+	build_path = /obj/machinery/dna_scannernew
 	board_type = "machine"
 	origin_tech = "programming=2;biotech=2"
 	req_components = list(
@@ -267,7 +267,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/cyborgrecharger
 	name = "circuit board (Cyborg Recharger)"
-	build_path = "/obj/machinery/recharge_station"
+	build_path = /obj/machinery/recharge_station
 	board_type = "machine"
 	origin_tech = "powerstorage=3;engineering=3"
 	req_components = list(
@@ -279,7 +279,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/telecomms/receiver
 	name = "circuit board (Subspace Receiver)"
-	build_path = "/obj/machinery/telecomms/receiver"
+	build_path = /obj/machinery/telecomms/receiver
 	board_type = "machine"
 	origin_tech = "programming=2;engineering=2;bluespace=1"
 	req_components = list(
@@ -290,7 +290,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/telecomms/hub
 	name = "circuit board (Hub Mainframe)"
-	build_path = "/obj/machinery/telecomms/hub"
+	build_path = /obj/machinery/telecomms/hub
 	board_type = "machine"
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(
@@ -300,7 +300,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/telecomms/relay
 	name = "circuit board (Relay Mainframe)"
-	build_path = "/obj/machinery/telecomms/relay"
+	build_path = /obj/machinery/telecomms/relay
 	board_type = "machine"
 	origin_tech = "programming=2;engineering=2;bluespace=2"
 	req_components = list(
@@ -310,7 +310,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/telecomms/bus
 	name = "circuit board (Bus Mainframe)"
-	build_path = "/obj/machinery/telecomms/bus"
+	build_path = /obj/machinery/telecomms/bus
 	board_type = "machine"
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(
@@ -320,7 +320,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/telecomms/processor
 	name = "circuit board (Processor Unit)"
-	build_path = "/obj/machinery/telecomms/processor"
+	build_path = /obj/machinery/telecomms/processor
 	board_type = "machine"
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(
@@ -333,7 +333,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/telecomms/server
 	name = "circuit board (Telecommunication Server)"
-	build_path = "/obj/machinery/telecomms/server"
+	build_path = /obj/machinery/telecomms/server
 	board_type = "machine"
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(
@@ -343,7 +343,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/telecomms/broadcaster
 	name = "circuit board (Subspace Broadcaster)"
-	build_path = "/obj/machinery/telecomms/broadcaster"
+	build_path = /obj/machinery/telecomms/broadcaster
 	board_type = "machine"
 	origin_tech = "programming=2;engineering=2;bluespace=1"
 	req_components = list(
