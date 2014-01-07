@@ -35,15 +35,15 @@ obj/machinery/atmospherics/proc/findConnectingHE(var/direction)
 			return target
 
 obj/machinery/atmospherics/proc/findAllConnections(var/connect_dirs)
-	var/node_id=1
+	var/node_id=0
 	for(var/direction in cardinal)
 		if(connect_dirs & direction)
+			node_id++
 			var/obj/machinery/atmospherics/found = findConnecting(direction)
 			if(!found) continue
 			var/node_var="node[node_id]"
 			if(node_var in vars && !vars[node_var])
 				vars[node_var] = found
-			node_id++
 
 obj/machinery/atmospherics/process()
 	build_network()
