@@ -31,3 +31,7 @@
 	..()
 
 	return 1
+
+	if(isobj(loc))
+		var/obj/Loc=loc
+		Loc.on_log()
