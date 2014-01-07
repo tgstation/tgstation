@@ -173,6 +173,9 @@ obj/machinery/atmospherics/tvalve
 		return attack_hand(user)
 
 	attack_hand(mob/user as mob)
+		if(isobserver(user) && !canGhostWrite(user,src,"toggles"))
+			user << "\red Nope."
+			return
 		src.add_fingerprint(usr)
 		update_icon(1)
 		sleep(10)

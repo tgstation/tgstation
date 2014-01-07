@@ -18,20 +18,7 @@ obj/machinery/atmospherics/pipe
 	proc/check_pressure(pressure)
 		//Return 1 if parent should continue checking other pipes
 		//Return null if parent should stop checking other pipes. Recall: del(src) will by default return null
-
 		return 1
-
-	// Find a connecting /obj/machinery/atmospherics in specified direction.
-	proc/findConnecting(var/direction)
-		for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-			if(target.initialize_directions & get_dir(target,src))
-				return target
-
-	// Ditto, but for heat-exchanging pipes.
-	proc/findConnectingHE(var/direction)
-		for(var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/target in get_step(src,direction))
-			if(target.initialize_directions_he & get_dir(target,src))
-				return target
 
 	return_air()
 		if(!parent)

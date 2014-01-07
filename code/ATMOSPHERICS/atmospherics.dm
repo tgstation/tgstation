@@ -22,6 +22,18 @@ obj/machinery/atmospherics
 obj/machinery/atmospherics/var/initialize_directions = 0
 obj/machinery/atmospherics/var/_color
 
+	// Find a connecting /obj/machinery/atmospherics in specified direction.
+obj/machinery/atmospherics/proc/findConnecting(var/direction)
+	for(var/obj/machinery/atmospherics/target in get_step(src,direction))
+		if(target.initialize_directions & get_dir(target,src))
+			return target
+
+	// Ditto, but for heat-exchanging pipes.
+obj/machinery/atmospherics/proc/findConnectingHE(var/direction)
+	for(var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/target in get_step(src,direction))
+		if(target.initialize_directions_he & get_dir(target,src))
+			return target
+
 obj/machinery/atmospherics/process()
 	build_network()
 
