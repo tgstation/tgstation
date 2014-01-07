@@ -139,9 +139,10 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		sleep(1)
 		charge_counter++
 
-/obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1) //if recharge is started is important for the trigger spells
+/obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1, mob/user = usr) //if recharge is started is important for the trigger spells
 	before_cast(targets)
 	invocation()
+	user.attack_log += text("\[[time_stamp()]\] <font color='red'>[user.real_name] ([user.ckey]) cast the spell [name].</font>")
 	spawn(0)
 		if(charge_type == "recharge" && recharge)
 			start_recharge()
@@ -253,7 +254,11 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 						continue
 					possible_targets += M
 
-				targets += input("Choose the target for the spell.", "Targeting") as mob in possible_targets
+				//targets += input("Choose the target for the spell.", "Targeting") as mob in possible_targets
+				//Adds a safety check post-input to make sure those targets are actually in range.
+				var/mob/M = input("Choose the target for the spell.", "Targeting") as mob in possible_targets
+				if(M in view_or_range(range, user, selection_type)) targets += M
+		
 		else
 			var/list/possible_targets = list()
 			for(var/mob/living/target in view_or_range(range, user, selection_type))

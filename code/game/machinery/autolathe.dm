@@ -89,6 +89,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	idle_power_usage = 10
 	active_power_usage = 100
 	var/busy = 0
+	var/prod_coeff
 
 	proc
 		wires_win(mob/user as mob)
@@ -104,6 +105,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 			onclose(user, "autolathe_hack")
 
 		regular_win(mob/user as mob)
+			var/coeff = 2 ** prod_coeff
 			var/dat as text
 			dat = text("<B>Metal Amount:</B> [src.m_amount] cm<sup>3</sup> (MAX: [max_m_amount])<BR>\n<FONT color=blue><B>Glass Amount:</B></FONT> [src.g_amount] cm<sup>3</sup> (MAX: [max_g_amount])<HR>")
 			var/list/objs = list()
@@ -111,12 +113,13 @@ var/global/list/autolathe_recipes_hidden = list( \
 			if (src.hacked)
 				objs += src.LL
 			for(var/obj/t in objs)
-				var/title = "[t.name] ([t.m_amt] m /[t.g_amt] g)"
-				if (m_amount<t.m_amt || g_amount<t.g_amt)
-					dat += title + "<br>"
-					continue
-				dat += "<A href='?src=\ref[src];make=\ref[t]'>[title]</A>"
 				if (istype(t, /obj/item/stack))
+					var/title = "[t.name] ([t.m_amt] m /[t.g_amt] g)"
+					if (m_amount<t.m_amt || g_amount<t.g_amt)
+						dat += title + "<br>"
+						continue
+					dat += "<A href='?src=\ref[src];make=\ref[t]'>[title]</A>"
+
 					var/obj/item/stack/S = t
 					var/max_multiplier = min(S.max_amount, S.m_amt?round(m_amount/S.m_amt):INFINITY, S.g_amt?round(g_amount/S.g_amt):INFINITY)
 					if (max_multiplier>1)
@@ -127,6 +130,12 @@ var/global/list/autolathe_recipes_hidden = list( \
 						dat += " <A href='?src=\ref[src];make=\ref[t];multiplier=[25]'>x[25]</A>"
 					if (max_multiplier>1)
 						dat += " <A href='?src=\ref[src];make=\ref[t];multiplier=[max_multiplier]'>x[max_multiplier]</A>"
+				else
+					var/title = "[t.name] ([t.m_amt/coeff] m /[t.g_amt/coeff] g)"
+					if (m_amount<t.m_amt/coeff || g_amount<t.g_amt/coeff)
+						dat += title + "<br>"
+						continue
+					dat += "<A href='?src=\ref[src];make=\ref[t]'>[title]</A>"
 				dat += "<br>"
 			user << browse("<HTML><HEAD><TITLE>Autolathe Control Panel</TITLE></HEAD><BODY><TT>[dat]</TT></BODY></HTML>", "window=autolathe_regular")
 			onclose(user, "autolathe_regular")
@@ -250,6 +259,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 		src.add_fingerprint(usr)
 		if (!busy)
 			if(href_list["make"])
+				var/coeff = 2 ** prod_coeff
 				var/turf/T = get_step(src.loc, get_dir(src,usr))
 				var/obj/template = locate(href_list["make"])
 				var/multiplier = text2num(href_list["multiplier"])
@@ -260,21 +270,27 @@ var/global/list/autolathe_recipes_hidden = list( \
 					use_power(power)
 					icon_state = "autolathe"
 					flick("autolathe_n",src)
-					spawn(16)
+					spawn(16/coeff)
 						use_power(power)
-						spawn(16)
+						spawn(16/coeff)
 							use_power(power)
-							spawn(16)
-								src.m_amount -= template.m_amt*multiplier
-								src.g_amount -= template.g_amt*multiplier
+							spawn(16/coeff)
+								if(template.type == /obj/item/stack)
+									src.m_amount -= template.m_amt*multiplier
+									src.g_amount -= template.g_amt*multiplier
+									var/obj/new_item = new template.type(T)
+									var/obj/item/stack/S = new_item
+									S.amount = multiplier
+								else
+									src.m_amount -= template.m_amt/coeff
+									src.g_amount -= template.g_amt/coeff
+									var/obj/new_item = new template.type(T)
+									new_item.m_amt /= coeff
+									new_item.g_amt /= coeff
 								if(src.m_amount < 0)
 									src.m_amount = 0
 								if(src.g_amount < 0)
 									src.g_amount = 0
-								var/obj/new_item = new template.type(T)
-								if (multiplier>1)
-									var/obj/item/stack/S = new_item
-									S.amount = multiplier
 								busy = 0
 								src.updateUsrDialog()
 			if(href_list["act"])
@@ -319,21 +335,24 @@ var/global/list/autolathe_recipes_hidden = list( \
 	RefreshParts()
 		..()
 		var/tot_rating = 0
+		prod_coeff = 0
 		for(var/obj/item/weapon/stock_parts/matter_bin/MB in component_parts)
 			tot_rating += MB.rating
 		tot_rating *= 25000
 		max_m_amount = tot_rating * 2
 		max_g_amount = tot_rating
+		for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+			prod_coeff += M.rating - 1
 
 	New()
 		..()
 		component_parts = list()
-		component_parts += new /obj/item/weapon/circuitboard/autolathe(src)
-		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-		component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-		component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
+		component_parts += new /obj/item/weapon/circuitboard/autolathe(null)
+		component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+		component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+		component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+		component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+		component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 		RefreshParts()
 
 		src.L = autolathe_recipes

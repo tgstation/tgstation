@@ -2,7 +2,7 @@
 	name = "gas mask"
 	desc = "A face-covering mask that can be connected to an air supply."
 	icon_state = "gas_alt"
-	flags = FPRINT | TABLEPASS | MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
 	w_class = 3.0
 	item_state = "gas_alt"
@@ -198,6 +198,28 @@
 	icon_state = "s-ninja"
 	item_state = "s-ninja_mask"
 	vchange = 1
+
+/obj/item/clothing/mask/gas/voice/space_ninja/speechModification(message)
+	if(voice == "Unknown")
+		if(copytext(message, 1, 2) != "*")
+			var/list/temp_message = text2list(message, " ")
+			var/list/pick_list = list()
+			for(var/i = 1, i <= temp_message.len, i++)
+				pick_list += i
+			for(var/i=1, i <= abs(temp_message.len/3), i++)
+				var/H = pick(pick_list)
+				if(findtext(temp_message[H], "*") || findtext(temp_message[H], ";") || findtext(temp_message[H], ":")) continue
+				temp_message[H] = ninjaspeak(temp_message[H])
+				pick_list -= H
+			message = dd_list2text(temp_message, " ")
+			message = replacetext(message, "o", "¤")
+			message = replacetext(message, "p", "þ")
+			message = replacetext(message, "l", "£")
+			message = replacetext(message, "s", "§")
+			message = replacetext(message, "u", "µ")
+			message = replacetext(message, "b", "ß")
+	return message
+
 
 /obj/item/clothing/mask/gas/clown_hat
 	name = "clown wig and mask"

@@ -1,5 +1,5 @@
 /obj/structure/closet/secure_closet/personal
-	desc = "It's a secure locker for personell. The first card swiped gains control."
+	desc = "It's a secure locker for personnel. The first card swiped gains control."
 	name = "personal closet"
 	req_access = list(access_all_personal_lockers)
 	var/registered_name = null

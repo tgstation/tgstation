@@ -27,7 +27,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	var/maxf = 1499
 	var/emped = 0	//Highjacked to track the number of consecutive EMPs on the radio, allowing consecutive EMP's to stack properly.
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
-	flags = FPRINT | CONDUCT | TABLEPASS
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throw_speed = 2
 	throw_range = 9
@@ -481,17 +481,17 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 					freq_text = "#unkn"
 				if(COMM_FREQ)
 					freq_text = "Command"
-				if(1351)
+				if(SCI_FREQ)
 					freq_text = "Science"
-				if(1355)
+				if(MED_FREQ)
 					freq_text = "Medical"
-				if(1357)
+				if(ENG_FREQ)
 					freq_text = "Engineering"
 				if(SEC_FREQ)
 					freq_text = "Security"
-				if(1349)
+				if(SERV_FREQ)
 					freq_text = "Service"
-				if(1347)
+				if(SUPP_FREQ)
 					freq_text = "Supply"
 			//There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
 
@@ -505,10 +505,20 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				part_a = "<span class='syndradio'><span class='name'>"
 			else if (display_freq==COMM_FREQ)
 				part_a = "<span class='comradio'><span class='name'>"
+			else if (display_freq==SCI_FREQ)
+				part_a = "<span class='sciradio'><span class='name'>"
+			else if (display_freq==MED_FREQ)
+				part_a = "<span class='medradio'><span class='name'>"
+			else if (display_freq==ENG_FREQ)
+				part_a = "<span class='engradio'><span class='name'>"
 			else if (display_freq==SEC_FREQ)
 				part_a = "<span class='secradio'><span class='name'>"
-			else if (display_freq in DEPT_FREQS)
-				part_a = "<span class='deptradio'><span class='name'>"
+			else if (display_freq==SERV_FREQ)
+				part_a = "<span class='servradio'><span class='name'>"
+			else if (display_freq==SUPP_FREQ)
+				part_a = "<span class='suppradio'><span class='name'>"
+			else if (display_freq==DSQUAD_FREQ)
+				part_a = "<span class='dsquadradio'><span class='name'>"
 
 			var/quotedmsg = M.say_quote(message)
 
