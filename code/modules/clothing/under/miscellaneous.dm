@@ -371,3 +371,11 @@
 	item_state = "sundress"
 	_color = "sundress"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+
+/obj/item/clothing/under/roman
+	name = "roman armor"
+	desc = "An ancient Roman armor. Made of metallic strips and leather straps."
+	icon_state = "roman"
+	_color = "roman"
+	item_state = "armor"
+	armor = list(melee = 25, bullet = 0, laser = 25, energy = 10, bomb = 10, bio = 0, rad = 0)
