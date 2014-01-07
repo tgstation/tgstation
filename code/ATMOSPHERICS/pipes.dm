@@ -854,6 +854,7 @@
 /obj/machinery/atmospherics/pipe/manifold/filtering/hidden
 	level = 1
 	icon_state = "manifold-g-f"
+
 /obj/machinery/atmospherics/pipe/manifold4w
 	icon = 'icons/obj/atmospherics/pipe_manifold.dmi'
 	icon_state = "manifold4w-f"
