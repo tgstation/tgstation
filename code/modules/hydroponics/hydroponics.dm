@@ -36,11 +36,8 @@
 
 		for(var/step_dir in cardinal)
 			var/obj/machinery/hydroponics/h = get_step(src, step_dir)
-			if(h)
-				if(h.anchored==2)
-					if(!h in connected)
-						if(!h in processing_atoms)
-							processing_atoms += h
+			if(h && h.anchored==2 && !h in connected && !h in processing_atoms)
+				processing_atoms += h
 
 		processing_atoms -= a
 		connected += a
@@ -375,7 +372,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			return 1
 
 		var/list/trays = list(src)//makes the list just this in cases of syringes and compost etc
-		var/obj/target = myseed ? myseed.plantname : src
+		var/target = myseed ? myseed.plantname : src
 		var/visi_msg = ""
 
 		if(istype(reagent_source, /obj/item/weapon/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/weapon/reagent_containers/pill))
@@ -400,7 +397,8 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			trays=FindConnected()
 			visi_msg+=" setting off the irrigation system"
 
-		if(visi_msg) visible_message("<span class='notice'>[visi_msg].</span>")
+		if(visi_msg)
+			visible_message("<span class='notice'>[visi_msg].</span>")
 
 		var/split = round(reagent_source.amount_per_transfer_from_this/trays.len)
 
@@ -687,7 +685,9 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				anchored = 2
 				user << "You screw in the [src]'s hoses."
 
-			for(var/obj/machinery/hydroponics/h in range(1,src)) spawn() h.update_icon()
+			for(var/obj/machinery/hydroponics/h in range(1,src))
+				spawn()
+					h.update_icon()
 
 	else if(istype(O, /obj/item/weapon/shovel))
 		if(istype(src, /obj/machinery/hydroponics/soil))
