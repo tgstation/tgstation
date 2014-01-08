@@ -266,9 +266,9 @@
 	desc = "Twoooo!"
 	icon_state = "owl"
 
-// **** Doctor 'gas mask' **** (This is mostly a edit of the Security gas mask since I can't into originality -Maneater)
+// **** Doctor 'gas mask' ****
 
 /obj/item/clothing/mask/gas/medhailer
 	name = "medical gas mask"
-	desc = "A standard issue Medical gas mask."
+	desc = "Medical gas mask."
 	icon_state = "medhailer"
