@@ -94,7 +94,7 @@
 		frustration = 0
 
 	proc/process()
-		set background = 1
+		//set background = 1
 		var/quick_move = 1
 		var/slow_move = 0
 
@@ -273,7 +273,7 @@
 
 
 	proc/idle()
-		set background = 1
+		//set background = 1
 		var/quick_move = 0
 
 		if(state != 2 || src.stat == 2 || target) return

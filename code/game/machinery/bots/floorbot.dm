@@ -209,7 +209,7 @@ var/global/list/floorbot_targets=list()
 	return (src.target != null)
 
 /obj/machinery/bot/floorbot/process()
-	set background = 1
+	//set background = 1
 
 	if(!src.on)
 		return

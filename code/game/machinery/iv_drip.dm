@@ -72,7 +72,7 @@
 
 
 /obj/machinery/iv_drip/process()
-	set background = 1
+	//set background = 1
 
 	if(src.attached)
 		if(!(get_dist(src, src.attached) <= 1 && isturf(src.attached.loc)))
