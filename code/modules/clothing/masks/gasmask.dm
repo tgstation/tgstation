@@ -271,4 +271,4 @@
 /obj/item/clothing/mask/gas/medical
 	name = "medical gas mask"
 	desc = "Medical gas mask."
-	icon_state = "medhailer"
+	icon_state = "gasmed"
