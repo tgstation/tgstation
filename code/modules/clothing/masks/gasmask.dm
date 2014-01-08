@@ -268,7 +268,7 @@
 
 // **** Doctor 'gas mask' ****
 
-/obj/item/clothing/mask/gas/medhailer
+/obj/item/clothing/mask/gas/medical
 	name = "medical gas mask"
 	desc = "Medical gas mask."
 	icon_state = "medhailer"
