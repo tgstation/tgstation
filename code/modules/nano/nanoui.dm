@@ -100,8 +100,8 @@ nanoui is used to open and update nano browser uis
 	//add_script("2-jsrender.js")
 	//add_script("3-jquery.timers.js")
 
-	add_script("nano_update.js") // The NanoUpdate JS, this is used to receive updates and apply them.
 	add_script("nano_config.js") // The NanoConfig JS, this is used to store configuration values.
+	add_script("nano_update.js") // The NanoUpdate JS, this is used to receive updates and apply them.
 	add_script("nano_base_helpers.js") // The NanoBaseHelpers JS, this is used to set up template helpers which are common to all templates
 	add_stylesheet("shared.css") // this CSS sheet is common to all UIs
 	add_stylesheet("icons.css") // this CSS sheet is common to all UIs
@@ -291,32 +291,20 @@ nanoui is used to open and update nano browser uis
 <html>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<head>
-		[head_content]
-	</head>
-	<body scroll=auto data-url-parameters='[url_parameters_json]' data-template-data='[template_data_json]' data-initial-data='[initial_data_json]'>
 		<script type='text/javascript'>
 			function receiveUpdateData(jsonString)
 			{
 				// We need both jQuery and NanoUpdate to be able to recieve data
+				// At the moment any data received before those libraries are loaded will be lost
 				if (typeof NanoUpdate != 'undefined' && typeof jQuery != 'undefined')
 				{
 					NanoUpdate.receiveUpdateData(jsonString);
 				}
-				else
-				{
-					alert('receiveUpdateData ERROR: something is not defined!');
-					if (typeof NanoUpdate == 'undefined')
-					{
-						alert('NanoUpdate not defined!');
-					}
-					if (typeof jQuery == 'undefined')
-					{
-						alert('jQuery not defined!');
-					}
-				}
-				// At the moment any data received before those libraries are loaded will be lost
 			}
 		</script>
+		[head_content]
+	</head>
+	<body scroll=auto data-url-parameters='[url_parameters_json]' data-template-data='[template_data_json]' data-initial-data='[initial_data_json]'>		
 		<div id='uiWrapper'>
 			[title ? "<div id='uiTitleWrapper'><div id='uiStatusIcon' class='icon24 uiStatusGood'></div><div id='uiTitle'>[title]</div><div id='uiTitleFluff'></div></div>" : ""]
 			<div id='uiContent'>
