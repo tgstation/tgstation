@@ -30,7 +30,7 @@ Bonus
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(1, 2, 3, 4)
-				M << "<span class='notice'>[pick("Your lungs feel great.", "You are now breathing manually.", "You don't feel the need to breath.")]</span>"
+				M << "<span class='notice'>[pick("Your lungs feel great.", "You are now breathing manually.", "You don't feel the need to breathe.")]</span>"
 			else
 				if (M.reagents.get_reagent_amount("dexalin") < 40)
 					M.reagents.add_reagent("dexalin", 20)
