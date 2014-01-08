@@ -33,14 +33,18 @@
 
 			src.icon_state = "morgue2"//default dead no-client mob
 
-			var/compiled = recursive_mob_check(src)//run through contents
+			var/list/compiled = recursive_mob_check(src)//run through contents
 
-			if(!locate(/mob/living/) in compiled)//no mobs at all, but objects inside
+			if(!length(compiled))//no mobs at all, but objects inside
 				src.icon_state = "morgue3"
+				return
 
 			for(var/mob/living/M in compiled)
 				if(M.client)
 					src.icon_state = "morgue4"//clone that mofo
+					break
+
+
 
 	return
 
