@@ -266,7 +266,7 @@
 	desc = "Twoooo!"
 	icon_state = "owl"
 
-// **** Doctor gas mask **** (This is mostly a edit of the Security gas mask since I can't into originality -Maneater)
+// **** Doctor 'gas mask' **** (This is mostly a edit of the Security gas mask since I can't into originality -Maneater)
 
 /obj/item/clothing/mask/gas/medhailer
 	name = "medical gas mask"
@@ -274,24 +274,6 @@
 	action_button_name = "I'm a doctor!"
 	icon_state = "medhailer" //The sprite was done quickly, and is a resprite of the welding mask.
 	var/cooldown = 0
-	var/aggressiveness = 1
-
-/obj/item/clothing/mask/gas/medhailer/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/screwdriver))
-		switch(aggressiveness)
-			if(1)
-				user << "\blue You set the restrictor to the middle position."
-				aggressiveness = 2
-			if(2)
-				user << "\blue You set the restrictor to the last position."
-				aggressiveness = 3
-			if(3)
-				user << "\blue You set the restrictor to the first position."
-				aggressiveness = 1
-	else if(istype(W, /obj/item/weapon/wirecutters))
-		user << "\red You can't find anything to use the wirecutters on..." //As a joke, because you don't need to use the wirecutters to force Bad Docs phrases like the sec gas mask.
-	else
-		..()
 
 /obj/item/clothing/mask/gas/medhailer/attack_self()
 	stop()
@@ -303,60 +285,7 @@
 	if(!istype(usr, /mob/living)) return
 	if(usr.stat) return
 
-	var/phrase = 0	//selects which phrase to use
-	var/phrase_text = null
-	var/phrase_sound = null
-
-
 	if(cooldown < world.time - 35) // A cooldown, to stop people being jerks
-		switch(aggressiveness)		// checks if the user has unlocked the restricted phrases
-			if(1)
-				phrase = rand(1,10)	// Default setting, set the upper limit as the phrase above the first 'bad doctor' phrase, the mask will only play 'nice' phrases
-			if(2)
-				phrase = rand(1,20)	// set upper limit to last 'bad doc' phrase. Mask will play good doc and bad doc phrases
-			if(3)
-				phrase = rand(10,20)	// "I'M A DOCTOR, TRUST ME! tier of responses. Only use the Bad Doc phrases, not recommended."
-
-		switch(phrase)	//sets the properties of the chosen phrase
-			if(1)				// good doc
-				phrase_text = "Stop running, I'm a doctor!"
-			if(2)
-				phrase_text = "I got a degree, come back!"
-			if(3)
-				phrase_text = "I just want to help you!"
-			if(4)
-				phrase_text = "Can't you just let me do my job?"
-			if(5)
-				phrase_text = "I will heal you even if you don't want me to!"
-			if(6)
-				phrase_text = "Don't worry, we got anesthesics!"
-			if(7)
-				phrase_text = "I can heal you!"
-			if(8)
-				phrase_text = "Look, you're hurt, so stop moving and I'll help you!"
-			if(9)
-				phrase_text = "Seriously, I'm better than the medibots!"
-			if(10)
-				phrase_text = "VEEOO VEEOO VEEO"
-			if(11)				// bad doc
-				phrase_text = "Stop being hurt, asshole!"
-			if(12)
-				phrase_text = "STOP RIGHT HERE INJURED SCUM!"
-			if(13)
-				phrase_text = "STOP, I NEED TO HEAL YOU ASSHOLE!"
-			if(14)
-				phrase_text = "Go ahead, don't get healed, if you die I'll feed you to Runtime."
-			if(15)
-				phrase_text = "I don't use Chloral anymore, I swear!"
-			if(16)
-				phrase_text = "Keep running, and when I get you, I'll shove this medkit up your ass!"
-			if(17)
-				phrase_text = "STOP RUNNING, GOD DAMNIT I CAN'T DO MY FUCKING JOB!"
-			if(18)
-				phrase_text = "Why are you such a retard? Come back god damnit!"
-			if(19)
-				phrase_text = "Do you have brain damage? No? THEN STOP MOVING!"
-			if(20)
-				phrase_text = "Come back or I'll take your brain out and give it to the Roboticist!"
-		usr.visible_message("[usr]'s Doct-O: <font color='blue' size='4'><b>[phrase_text]</b></font>")
+		usr.visible_message("[usr]'s Doct-O <font color=blue><b>buzz</b>.</font>")
+		playsound(src.loc, "sound/machines/buzz-two.ogg", 100, 0, 4)
 		cooldown = world.time
