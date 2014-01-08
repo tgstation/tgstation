@@ -34,8 +34,13 @@
 
 		var/atom/a = processing_atoms[1]
 
-		for(var/obj/machinery/hydroponics/h in range(1,a))
-			if(h.anchored==2 && !(h in connected) && !(h in processing_atoms)) processing_atoms += h
+		for(var/step_dir in cardinal)
+			var/obj/machinery/hydroponics/h = get_step(src, step_dir)
+			if(h)
+				if(h.anchored==2)
+					if(!h in connected)
+						if(!h in processing_atoms)
+							processing_atoms += h
 
 		processing_atoms -= a
 		connected += a
@@ -179,18 +184,10 @@ obj/machinery/hydroponics/update_icon()
 
 	var/n = 0
 
-	var/obj/machinery/hydroponics/t = locate() in locate(x,y+1,z)
-	if(t && t.anchored==2 && src.anchored==2)
-		n += 1
-	t = locate() in locate(x+1,y,z)
-	if(t && t.anchored==2 && src.anchored==2)
-		n += 2
-	t = locate() in locate(x,y-1,z)
-	if(t && t.anchored==2 && src.anchored==2)
-		n += 4
-	t = locate() in locate(x-1,y,z)
-	if(t && t.anchored==2 && src.anchored==2)
-		n += 8
+	for(var/step_dir in cardinal)
+	    var/obj/machinery/hydroponics/t = get_step(src, step_dir)
+	    if(t && t.anchored && src.anchored == 2)
+	        n += step_dir
 
 	icon_state = "hoses-[n]"
 
@@ -379,8 +376,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 		var/list/trays = list(src)//makes the list just this in cases of syringes and compost etc
 		var/obj/target = myseed ? myseed.plantname : src
-
-
 		var/visi_msg = ""
 
 		if(istype(reagent_source, /obj/item/weapon/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/weapon/reagent_containers/pill))
@@ -678,19 +673,21 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			anchored = 0
 			user << "You unwrench [src]."
 
-	else if(istype(O, /obj/item/weapon/screwdriver) && anchored)
+	else if(istype(O, /obj/item/weapon/screwdriver))
 
-		if(anchored==2)
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			anchored = 1
-			user << "You unscrew the [src]'s hoses."
+		if(anchored)
 
-		else if(anchored==1)
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			anchored = 2
-			user << "You screw in the [src]'s hoses."
+			if(anchored==2)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				anchored = 1
+				user << "You unscrew the [src]'s hoses."
 
-		for(var/obj/machinery/hydroponics/h in range(1,src)) spawn() h.update_icon()
+			else if(anchored==1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				anchored = 2
+				user << "You screw in the [src]'s hoses."
+
+			for(var/obj/machinery/hydroponics/h in range(1,src)) spawn() h.update_icon()
 
 	else if(istype(O, /obj/item/weapon/shovel))
 		if(istype(src, /obj/machinery/hydroponics/soil))
