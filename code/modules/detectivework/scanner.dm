@@ -24,7 +24,7 @@
 			var/obj/item/weapon/paper/P = new(get_turf(src))
 			P.name = "paper- 'Scanner Report'"
 			P.info = "<center><font size='6'><B>Scanner Report</B></font></center><HR><BR>"
-			P.info += dd_list2text(log, "<BR>")
+			P.info += list2text(log, "<BR>")
 			P.info += "<HR><B>Notes:</B><BR>"
 			P.info_links = P.info
 
