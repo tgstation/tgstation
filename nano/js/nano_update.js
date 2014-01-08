@@ -23,6 +23,8 @@ NanoUpdate = function ()
 	// this function sets up the templates and base functionality
 	var init = function () 
 	{
+		$('#uiNoJavaScript').html('Loading...');
+		
 		// this callback is triggered after new data is processed
 		// it updates the status/visibility icon and adds click event handling to buttons/links
 		NanoUpdate.addAfterUpdateCallback(function (updateData) {
@@ -73,7 +75,7 @@ NanoUpdate = function ()
 		var templateData = body.data('templateData');
 		var initialData = body.data('initialData');		
 		
-		if (!templateData || !initialData)
+		if (templateData == null || !initialData == null)
 		{
 			alert('Error: Initial data did not load correctly.');
 		}		
@@ -86,6 +88,11 @@ NanoUpdate = function ()
 			{
 				templateCount++;
 			}
+		}
+		
+		if (!templateCount)
+		{
+			alert('ERROR: No templates listed!');
 		}
 		
 		// load markup for each template and register it
@@ -121,15 +128,14 @@ NanoUpdate = function ()
 									renderTemplates(initialData);
 								}
 								_isInitialised = true;
+								$('#uiNoJavaScript').hide();
 							}
 			
 							executeCallbacks(_afterUpdateCallbacks, _data);
-							
-							//alert($("#mainTemplate").html());
 						}
 						catch(error)
 						{
-							alert('An error occurred while loading the UI: ' + error.message);
+							alert('ERROR: An error occurred while loading the UI: ' + error.message);
 							return;
 						}
 					});    
@@ -165,15 +171,29 @@ NanoUpdate = function ()
 		{
 			_earlyUpdateData = updateData; // all templates have not been registered. We set _earlyUpdateData which will be applied after the template is loaded with the initial data
 		}	
-	}
+	};
 
 	// This function renders the template with the latest data
 	// It has to be done recursively as each piece of data is observed individually and needs to be updated individually
 	var renderTemplates = function (data)
 	{
-		_data = data;
-		$("#mainTemplate").html(_templates["main"].render(_data));		
-	}
+		if (!_templates.hasOwnProperty("main"))
+		{
+			alert('Error: Main template not found.');
+		}
+		
+		_data = data;		
+		
+		try
+		{
+			$("#mainTemplate").html(_templates["main"].render(_data));
+		}
+		catch(error)
+		{
+			alert('ERROR: An error occurred while rendering the UI: ' + error.message);
+			return;
+		}
+	};
 	
 	// Execute all callbacks in the callbacks array/object provided, updateData is passed to them for processing
 	var executeCallbacks = function (callbacks, updateData)
@@ -184,7 +204,7 @@ NanoUpdate = function ()
 		}
 		
 		return updateData;
-	}
+	};
 
 	return {
         init: function () 

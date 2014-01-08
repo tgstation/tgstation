@@ -22,7 +22,7 @@ hr {
 	border: 1px solid #161616;
 	padding: 0px 4px 4px 4px;
 	margin: 0 2px 2px 0;
-	cursor: default;
+    cursor:default;
 	white-space: nowrap;
 }
 
@@ -44,7 +44,7 @@ a.white, a.white:link, a.white:visited, a.white:active {
 	border: 1px solid #161616;
 	padding: 1px 4px 1px 4px;
 	margin: 0 2px 0 0;
-	cursor: default;
+    cursor:default;
 }
 a.white:hover {
 	color: #ffffff;
@@ -79,7 +79,7 @@ li {
 	padding: 0 0 2px 0;
 }
 img, a img {
-	border-style: none;
+    border-style:none;
 }
 h1, h2, h3, h4, h5, h6 {
 	margin: 0;
@@ -140,6 +140,16 @@ h4 {
 	clear: both;
 	padding: 8px;
 }
+#uiNoJavaScript {
+    position: relative;
+    background: url(uiNoticeBackground.jpg) 50% 50%;
+    color: #000000;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: bold;
+    padding: 3px 4px 3px 4px;
+    margin: 4px 0 4px 0;
+}
 
 .white {
 	color: white;
@@ -167,7 +177,7 @@ h4 {
 .notice {
 	position: relative;
 	background: url(uiNoticeBackground.jpg) 50% 50%;
-	color: #15345A;
+    color: #000000;
 	font-size: 12px;
 	font-style: italic;
 	font-weight: bold;
@@ -185,6 +195,7 @@ h4 {
 	height: 16px;
 }
 
+
 div.notice {
 	clear: both;
 }
@@ -199,6 +210,7 @@ div.notice {
 	margin: 4px 0 0 0;
 	clear: both;
 }
+
 
 .itemLabel {
 	float: left;
@@ -219,6 +231,7 @@ div.notice {
 	width: 45%;
 	color: #e9c183;
 }
+
 
 .itemContentWide {
 	float: left;
@@ -249,6 +262,7 @@ div.notice {
 	overflow-x: hidden;
 	overflow-y: auto;
 }
+
 
 .statusLabel {
 	width: 138px;
@@ -340,12 +354,12 @@ div.notice {
 	float: left;
 }
 
-.fixedLeftWider {
+.fixedLeftWider{
 	width: 220px;
 	float: left;
 }
 
-.fixedLeftWidest {
+.fixedLeftWidest{
 	width: 250px;
 	float: left;
 }
@@ -356,27 +370,33 @@ div.notice {
 
 /* Used in PDA */
 
-.wholeScreen {
-	position: absolute color : #517087;
+
+.wholeScreen
+{
+  position: absolute
+  color: #517087;
 	font-size: 16px;
 	font-weight: bold;
-	text-align: center;
+  text-align:center;
 }
 
-.pdalink {
+.pdalink
+{
 	float: left;
-	white-space: nowrap;
+    white-space:nowrap;
 }
 
 /* DNA Modifier UI (dna_modifier.tmpl) */
 
-.dnaBlock {
+.dnaBlock
+{
 	float: left;
 	width: 90px;
 	padding: 0 0 5px 0;
 }
 
-.dnaBlockNumber {
+.dnaBlockNumber
+{
 	font-family: Fixed, monospace;
 	float: left;
 	color: #ffffff;
@@ -387,7 +407,8 @@ div.notice {
 	text-align: center;
 }
 
-.dnaSubBlock {
+.dnaSubBlock
+{
 	font-family: Fixed, monospace;
 	float: left;
 	padding: 0;
@@ -396,7 +417,8 @@ div.notice {
 	text-align: center;
 }
 
-.mask {
+.mask
+{
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -405,7 +427,8 @@ div.notice {
 	background: url(uiMaskBackground.png);
 }
 
-.maskContent {
+.maskContent
+{
 	width: 100%;
 	height: 200px;
 	margin: 200px 0;
@@ -431,49 +454,60 @@ div.notice {
 
 
 /* Table stuffs for power monitor */
-table.pmon {
-	border: 2px solid RoyalBlue;
+table.pmon 
+{ 
+border:2px solid RoyalBlue;
 }
 
-table.pmon td, table.pmon th {
-	border-bottom: 1px dotted black;
-	padding: 0px 5px 0px 5px;
+table.pmon td, table.pmon th 
+{ 
+border-bottom:1px dotted black;
+padding:0px 5px 0px 5px; 
 }
+
+
 
 /* Table Stuffs for manifest*/
 
-th.command {
+th.command
+{
 	background: #3333FF;
 	font-weight: bold;
 	color: #ffffff;
 }
 
-th.sec {
+th.sec
+{
 	background: #8e0000;
 	font-weight: bold;
 	color: #ffffff;
 }
-th.med {
+th.med
+{
 	background: #006600;
 	font-weight: bold;
 	color: #ffffff;
 }
-th.eng {
+th.eng
+{
 	background: #b27300;
 	font-weight: bold;
 	color: #ffffff;
 }
-th.sci {
+th.sci
+{
 	background: #a65ba6;
 	font-weight: bold;
 	color: #ffffff;
 }
-th.civ {
+th.civ
+{
 	background: #a32800;
 	font-weight: bold;
 	color: #ffffff;
 }
-th.misc {
+th.misc
+{
 	background: #666666;
 	font-weight: bold;
 	color: #ffffff;
