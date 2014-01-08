@@ -187,12 +187,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(location)
 		location.hotspot_expose(700, 5)
 	if(reagents && reagents.total_volume)	//	check if it has any reagents at all
-		if(iscarbon(loc) && (src == loc:wear_mask)) // if it's in the human/monkey mouth, transfer reagents to the mob
+		if(iscarbon(loc))
 			var/mob/living/carbon/C = loc
-			if(prob(15)) // so it's not an instarape in case of acid
-				reagents.reaction(C, INGEST)
-			reagents.trans_to(C, REAGENTS_METABOLISM)
-		else // else just remove some of the reagents
+			if (src == C.wear_mask) // if it's in the human/monkey mouth, transfer reagents to the mob
+				if(prob(15)) // so it's not an instarape in case of acid
+					reagents.reaction(C, INGEST)
+				reagents.trans_to(C, REAGENTS_METABOLISM)
+			else
+				reagents.remove_any(REAGENTS_METABOLISM)
+		else
 			reagents.remove_any(REAGENTS_METABOLISM)
 	return
 
@@ -320,20 +323,20 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			item_state = icon_off
 			M.update_inv_wear_mask(0)
 			packeditem = 0
-			if(istype(src, /obj/item/clothing/mask/cigarette/pipe/cobpipe))
-				name = "empty corn cob pipe"
-			else
-				name = "empty smoking pipe"
+			name = "empty [initial(name)]"
 		processing_objects.Remove(src)
 		return
 	if(location)
 		location.hotspot_expose(700, 5)
 	if(reagents && reagents.total_volume)	//	check if it has any reagents at all
-		if(iscarbon(loc) && (src == loc:wear_mask)) // if it's in the human/monkey mouth, transfer reagents to the mob
+		if(iscarbon(loc))
 			var/mob/living/carbon/C = loc
-			if(prob(15)) // so it's not an instarape in case of acid
-				reagents.reaction(C, INGEST)
-			reagents.trans_to(C, REAGENTS_METABOLISM)
+			if (src == C.wear_mask) // if it's in the human/monkey mouth, transfer reagents to the mob
+				if(prob(15)) // so it's not an instarape in case of acid
+					reagents.reaction(C, INGEST)
+				reagents.trans_to(C, REAGENTS_METABOLISM)
+			else
+				reagents.remove_any(REAGENTS_METABOLISM)
 		else // else just remove some of the reagents
 			reagents.remove_any(REAGENTS_METABOLISM)
 	return
@@ -347,19 +350,16 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				user << "You stuff [O] into the [src]."
 				smoketime = 400
 				packeditem = 1
-				if(istype(src, /obj/item/clothing/mask/cigarette/pipe/cobpipe))
-					name = "[O.name]-packed corn cob pipe"
-				else
-					name = "[O.name]-packed smoking pipe"
+				name = "[O.name]-packed [initial(name)]"
 				if(O.reagents)
 					O.reagents.trans_to(src, O.reagents.total_volume)
 				del(O)
 			else
-				user << "\red It has to be dried first."
+				user << "<span class='warning'>It has to be dried first.</span>"
 		else
-			user << "\red It is already packed."
+			user << "<span class='warning'>It is already packed.</span>"
 	else
-		user << "\red You can't put that in the pipe."
+		user << "<span class='warning'>You can't put that in the pipe.</span>"
 	..()
 
 
@@ -378,20 +378,21 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		packeditem = 0
 		smoketime = 0
 		reagents.clear_reagents()
-		if(istype(src, /obj/item/clothing/mask/cigarette/pipe/cobpipe))
-			name = "empty corn cob pipe"
-		else
-			name = "empty smoking pipe"
+		name = "empty [initial(name)]"
 	return
 
 /obj/item/clothing/mask/cigarette/pipe/cobpipe
-	name = "empty corn cob pipe"
+	name = "corn cob pipe"
 	desc = "A nicotine delivery system popularized by folksy backwoodsmen and kept popular in the modern age and beyond by space hipsters. Can be loaded with objects."
 	icon_state = "cobpipeoff"
 	item_state = "cobpipeoff"
 	icon_on = "cobpipeon"  //Note - these are in masks.dmi
 	icon_off = "cobpipeoff"
 	smoketime = 0
+
+/obj/item/clothing/mask/cigarette/pipe/cobpipe/New()
+	..()
+	name = "empty [initial(name)]"
 
 
 /////////
@@ -521,12 +522,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			R.chem_volume = target.reagents.total_volume
 			target.reagents.trans_to(R, R.chem_volume)
 			user.put_in_active_hand(R)
-			user << "\blue You roll the [target.name] into a rolling paper."
+			user << "<span class='notice'>You roll the [target.name] into a rolling paper.</span>"
 			R.desc = "Dried [target.name] rolled up in a thin piece of paper."
 			del(target)
 			del(src)
 		else
-			user << "\red You need to dry this first."
+			user << "<span class='warning'>You need to dry this first.</span>"
 	else
 		..()
 

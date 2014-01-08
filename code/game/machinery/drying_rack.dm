@@ -21,14 +21,14 @@
 
 /obj/machinery/drying_rack/attackby(var/obj/item/I as obj, var/mob/user as mob)
 	if(running)
-		user << "\red Please wait until the last item has dried."
+		user << "<span class='warning>Please wait until the last item has dried.</span>"
 		return
 	if(!istype(I,/obj/item/weapon/reagent_containers/food/snacks))
-		user << "\red You cannot add that to the drying rack."
+		user << "<span class='warning'>You cannot add that to the drying rack.</span>"
 		return
 	var/obj/item/weapon/reagent_containers/food/snacks/S = I
 	if(!S.dried_type)
-		user << "\red You cannot add that to the drying rack."
+		user << "<span class='warning'>You cannot add that to the drying rack.</span>"
 		return
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/grown))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/P = I
@@ -44,17 +44,17 @@
 				icon_state = "drying_rack_on"
 				sleep(60)
 				icon_state = "drying_rack"
-				var/obj/item/weapon/reagent_containers/food/snacks/grown/D = new T(src.loc)
-				user << "\blue The [D] has finished drying."
-				D.icon_state = "[D.icon_state]_dry"
-				D.dry = 1
-				D.reagents.clear_reagents()
-				src.reagents.trans_to(D, src.reagents.total_volume)
+				var/obj/item/weapon/reagent_containers/food/snacks/grown/Dried = new T(src.loc)
+				user << "<span class='notice'>The [Dried] has finished drying.</span>"
+				Dried.icon_state = "[Dried.icon_state]_dry"
+				Dried.dry = 1
+				Dried.reagents.clear_reagents()
+				src.reagents.trans_to(Dried, src.reagents.total_volume)
 				use_power = 1
 				src.running = 0
 				return
 			else
-				user << "\red That has already been dried."
+				user << "<span class='warning'>That has already been dried.</span>"
 		else
 			user.u_equip(I)
 			user << "You add the [I] to the drying rack."

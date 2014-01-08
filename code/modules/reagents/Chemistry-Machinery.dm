@@ -852,9 +852,11 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 						return 0
 
 		if(is_type_in_list(O, dried_items))
-				if(!O:dry)
-						user << "You must dry that first!"
-						return 1
+				if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
+						var/obj/item/weapon/reagent_containers/food/snacks/grown/G = O
+						if(!G.dry)
+								user << "<span class='notice'>You must dry that first!</span>"
+								return 1
 
 		if(holdingitems && holdingitems.len >= limit)
 				usr << "The machine cannot hold anymore items."
