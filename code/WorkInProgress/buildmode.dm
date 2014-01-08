@@ -120,7 +120,7 @@
 	screen_loc = "NORTH,WEST+2"
 	var/varholder = "name"
 	var/valueholder = "derp"
-	var/objholder = "/obj/structure/closet"
+	var/objholder = /obj/structure/closet
 
 	Click(location, control, params)
 		var/list/pa = params2list(params)
@@ -145,14 +145,13 @@
 				if(1)
 					return 1
 				if(2)
-					objholder = input(usr,"Enter typepath:" ,"Typepath","/obj/structure/closet")
-					var/P = text2path(objholder)
-					var/list/removed_paths = list("/obj/effect/bhole")
-					if((objholder in removed_paths) || !ispath(P))
-						objholder = "/obj/structure/closet"
+					objholder = text2path(input(usr,"Enter typepath:" ,"Typepath","/obj/structure/closet"))
+					if(!ispath(objholder))
+						objholder = /obj/structure/closet
 						alert("That path is not allowed.")
-					else if (dd_hasprefix(objholder, "/mob") && !check_rights(R_DEBUG,0))
-						objholder = "/obj/structure/closet"
+					else
+						if(ispath(objholder,/mob) && !check_rights(R_DEBUG,0))
+							objholder = /obj/structure/closet
 				if(3)
 					var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "viruses", "cuffed", "ka", "last_eaten", "urine")
 
@@ -236,8 +235,12 @@
 						WIN.dir = NORTHWEST
 		if(2)
 			if(pa.Find("left"))
-				var/obj/A = new holder.buildmode.objholder (get_turf(object))
-				A.dir = holder.builddir.dir
+				if(ispath(holder.buildmode.objholder,/turf))
+					var/turf/T = get_turf(object)
+					T.ChangeTurf(holder.buildmode.objholder)
+				else
+					var/obj/A = new holder.buildmode.objholder (get_turf(object))
+					A.dir = holder.builddir.dir
 			else if(pa.Find("right"))
 				if(isobj(object)) del(object)
 
