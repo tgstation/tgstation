@@ -12,6 +12,10 @@
 		else
 			icon_state = icon_opened
 
+/obj/structure/closet/secure_closet/freezer/ex_act()
+	// IF INDIANA JONES CAN DO IT SO CAN YOU
+	return
+
 /obj/structure/closet/secure_closet/freezer/kitchen
 	name = "Kitchen Cabinet"
 	req_access = list(access_kitchen)
