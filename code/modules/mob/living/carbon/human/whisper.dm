@@ -51,6 +51,7 @@
 		// If we cut our message short, abruptly end it with a-..
 		var/message_len = length(message)
 		message = copytext(message, 1, health_diff) + "[message_len > health_diff ? "-.." : "..."]"
+		message = Ellipsis(message, 10, 1)
 		whispers = "whispers in their final breath"
 
 	var/italics = 1
