@@ -270,22 +270,5 @@
 
 /obj/item/clothing/mask/gas/medhailer
 	name = "medical gas mask"
-	desc = "A standard issue Medical gas mask with integrated 'Doct-O 3000' device, plays over a dozen pre-recorded compliance phrases designed to get the clown to stand still while you heal him. Do not tamper with the device."
-	action_button_name = "I'm a doctor!"
-	icon_state = "medhailer" //The sprite was done quickly, and is a resprite of the welding mask.
-	var/cooldown = 0
-
-/obj/item/clothing/mask/gas/medhailer/attack_self()
-	stop()
-
-/obj/item/clothing/mask/gas/medhailer/verb/stop()
-	set category = "Object"
-	set name = "STOP"
-	set src in usr
-	if(!istype(usr, /mob/living)) return
-	if(usr.stat) return
-
-	if(cooldown < world.time - 35) // A cooldown, to stop people being jerks
-		usr.visible_message("[usr]'s Doct-O <font color=blue><b>buzz</b>.</font>")
-		playsound(src.loc, "sound/machines/buzz-two.ogg", 100, 0, 4)
-		cooldown = world.time
+	desc = "A standard issue Medical gas mask."
+	icon_state = "medhailer"
