@@ -226,7 +226,7 @@
 	return
 
 /obj/machinery/bot/farmbot/process()
-	set background = 1
+	//set background = 1
 
 	if(!src.on)
 		return
