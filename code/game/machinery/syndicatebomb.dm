@@ -154,6 +154,9 @@
 	payload = /obj/item/weapon/bombcore/badmin/summon/clown
 	beepsound = 'sound/items/bikehorn.ogg'
 
+/obj/machinery/syndicatebomb/badmin/varplosion
+	payload = /obj/item/weapon/bombcore/badmin/explosion/
+
 ///Bomb Cores///
 
 /obj/item/weapon/bombcore
@@ -191,7 +194,8 @@
 	if(istype(holder, /obj/machinery/syndicatebomb/))
 		attempts++
 		holder.loc.visible_message("\red \icon[holder] Alert: Bomb has detonated. Your score is now [defusals] for [attempts]. Resetting wires...")
-		if(holder.wires)	holder.wires = new(holder)
+		if(holder.wires)
+			holder.wires.Shuffle()
 	else
 		del(src)
 
@@ -201,7 +205,8 @@
 		attempts++
 		defusals++
 		holder.loc.visible_message("\blue \icon[holder] Alert: Bomb has been defused. Your score is now [defusals] for [attempts]! Resetting wires...")
-		if(holder.wires)	holder.wires = new(holder)
+		if(holder.wires)
+			holder.wires.Shuffle()
 		holder.defused = 0
 
 /obj/item/weapon/bombcore/badmin/
@@ -234,6 +239,14 @@
 	playsound(src.loc, 'sound/misc/sadtrombone.ogg', 50)
 	..()
 
+/obj/item/weapon/bombcore/badmin/explosion/
+	var/HeavyExplosion = 2
+	var/MediumExplosion = 5
+	var/LightExplosion = 11
+	var/Flames = 11
+
+/obj/item/weapon/bombcore/badmin/explosion/detonate()
+	explosion(get_turf(src),HeavyExplosion,MediumExplosion,LightExplosion, flame_range = Flames)
 
 ///Syndicate Detonator (aka the big red button)///
 

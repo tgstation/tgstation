@@ -279,3 +279,11 @@ var/const/POWER = 8
 	if(wires_status == (1 << wire_count) - 1)
 		return 1
 	return 0
+
+//
+//Shuffle and Mend
+//
+
+/datum/wires/proc/Shuffle()
+	wires_status = 0
+	GenerateWires()
