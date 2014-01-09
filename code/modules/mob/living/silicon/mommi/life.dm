@@ -37,7 +37,6 @@
 
 
 /mob/living/silicon/robot/mommi/use_power()
-
 	if (src.cell)
 		if(src.cell.charge <= 0)
 			uneq_all()

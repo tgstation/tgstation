@@ -172,9 +172,11 @@
 
 /mob/living/silicon/robot/mommi/proc/unequip_tool()
 	if(tool_state)
-		//var/obj/item/found = locate(tool_state) in src.module.modules
-		if(!is_in_modules(tool_state))
+		var/obj/item/TS=tool_state
+		if(!is_in_modules(TS))
 			drop_item()
+			if(TS && TS.loc)
+				TS.loc = get_turf(src)
 		if(istype(tool_state,/obj/item/borg/sight))
 			sight_mode &= ~tool_state:sight_mode
 		if (client)
@@ -182,6 +184,8 @@
 		contents -= tool_state
 		tool_state = null
 		inv_tool.icon_state = "inv1"
+		if(is_in_modules(TS))
+			TS.loc = src.module
 
 
 /mob/living/silicon/robot/mommi/activated(obj/item/O)
