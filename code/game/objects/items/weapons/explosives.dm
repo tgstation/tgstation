@@ -48,7 +48,7 @@
 
 /obj/item/weapon/plastique/attack_self(mob/user as mob)
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
-	if(newtime < 60000)
+	if(newtime > 60000)
 		newtime = 60000
 	timer = newtime
 	user << "Timer set for [timer] seconds."
