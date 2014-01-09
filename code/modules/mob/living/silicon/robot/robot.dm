@@ -76,7 +76,10 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
-	wires = new(src)
+	if(isMoMMI(src))
+		wires = new /datum/wires/robot/mommi(src)
+	else
+		wires = new(src)
 
 	ident = rand(1, 999)
 	updatename("Default")
