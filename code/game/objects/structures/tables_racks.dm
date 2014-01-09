@@ -310,6 +310,8 @@
 		playsound(src.loc, "sparks", 50, 1)
 		table_destroy(1, user)
 
+	user.drop_item(src)
+
 /obj/structure/table/proc/table_destroy(var/destroy_type, var/mob/user as mob)
 
 /*
@@ -374,9 +376,6 @@ Destroy type values:
 
 
 /obj/structure/table/reinforced/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
-	..()
-
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
@@ -395,6 +394,7 @@ Destroy type values:
 					user << "\blue Table strengthened"
 					src.status = 2
 			return
+	..()
 
 /*
  * Racks
