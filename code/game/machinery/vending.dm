@@ -336,7 +336,7 @@
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
 		if ((href_list["vend"]) && (src.vend_ready) && (!currently_vending))
 
-			if (src.allowed(usr) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
+			if (!allowed(usr) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
 				usr << "\red Access denied." //Unless emagged of course
 				flick(src.icon_deny,src)
 				return
@@ -808,7 +808,7 @@
 	desc = "A vending machine for costumes."
 	icon_state = "theater"
 	icon_deny = "theater-deny"
-	req_access_txt = "11"
+	req_access = list(access_theatre)
 	product_slogans = "Dress for success!;Suited and booted!;It's show time!;Why leave style up to fate? Use AutoDrobe!"
 	vend_delay = 15
 	vend_reply = "Thank you for using AutoDrobe!"
