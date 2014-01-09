@@ -181,10 +181,11 @@ obj/machinery/hydroponics/update_icon()
 
 	var/n = 0
 
-	for(var/step_dir in cardinal)
-	    var/obj/machinery/hydroponics/t = locate() in get_step(src, step_dir)
-	    if(t && t.anchored && src.anchored == 2)
-	        n += step_dir
+	for(var/dir in cardinal)
+
+		var/obj/machinery/hydroponics/t = locate() in get_step(src,dir)
+		if(t && t.anchored && src.anchored == 2)
+			n += dir
 
 	icon_state = "hoses-[n]"
 
