@@ -13,7 +13,7 @@
 	var/pumped = 0
 
 /obj/item/weapon/gun/projectile/shotgun/attackby(var/obj/item/A as obj, mob/user as mob)
-	var/num_loaded = magazine.attackby(A, user)
+	var/num_loaded = magazine.attackby(A, user, 1)
 	if(num_loaded)
 		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
 		A.update_icon()

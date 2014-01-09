@@ -73,7 +73,7 @@
 				overlays += "nucgun-whee"
 				return
 			var/ratio = power_supply.charge / power_supply.maxcharge
-			ratio = round(ratio, 0.25) * 100
+			ratio = Ceiling(ratio*4) * 25
 			overlays += "nucgun-[ratio]"
 
 

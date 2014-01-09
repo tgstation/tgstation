@@ -15,7 +15,7 @@
 	return ..(0, 1)
 
 /obj/item/weapon/gun/projectile/revolver/attackby(var/obj/item/A as obj, mob/user as mob)
-	var/num_loaded = magazine.attackby(A, user)
+	var/num_loaded = magazine.attackby(A, user, 1)
 	if(num_loaded)
 		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src].</span>"
 		A.update_icon()
@@ -161,7 +161,7 @@
 	spun = 1
 
 /obj/item/weapon/gun/projectile/revolver/russian/attackby(var/obj/item/A as obj, mob/user as mob)
-	var/num_loaded = magazine.attackby(A, user)
+	var/num_loaded = ..()
 	if(num_loaded)
 		user.visible_message("<span class='warning'>[user] loads a single bullet into the revolver and spins the chamber.</span>", "<span class='warning'>You load a single bullet into the chamber and spin it.</span>")
 	else
