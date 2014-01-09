@@ -25,6 +25,11 @@
 				if(I.density || I.anchored || I == src) continue
 				I.loc = src
 
+// Fix for #383 - C4 deleting fridges with corpses
+/obj/structure/closet/Del()
+	dump_contents()
+	..()
+
 /obj/structure/closet/alter_health()
 	return get_turf(src)
 
