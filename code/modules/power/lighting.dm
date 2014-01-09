@@ -4,8 +4,8 @@
 
 
 // status values shared between lighting fixtures and items
-#define LIGHT_OK 0
-#define LIGHT_EMPTY 1
+#define LIGHT_OK     0
+#define LIGHT_EMPTY  1
 #define LIGHT_BROKEN 2
 #define LIGHT_BURNED 3
 
@@ -450,6 +450,9 @@
 // ai attack - make lights flicker, because why not
 
 /obj/machinery/light/attack_ai(mob/user)
+	// attack_robot is flaky.
+	if(isMoMMI(user))
+		return attack_hand(user)
 	src.add_hiddenprint(user)
 	src.flicker(1)
 	return
