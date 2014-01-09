@@ -139,7 +139,7 @@
 				return
 			step_towards(src, current)
 			sleep(1)
-			if(!bumped && !isturf(original))
+			if(!bumped && (ismob(original) || istype(original, /obj/machinery/bot)))
 				if(loc == get_turf(original))
 					if(!(original in permutated))
 						Bump(original)
