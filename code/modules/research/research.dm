@@ -153,7 +153,7 @@ research holder datum.
 		if(temp_tech[T] - 1 >= known_tech[T])
 			for(var/datum/design/D in known_designs)
 				if(D.req_tech[T])
-					D.reliability = min(100, D.reliability + prob(35))
+					D.reliability = min(100, D.reliability + 1)
 					if(D.build_path == I.type)
 						D.reliability = min(100, D.reliability + rand(1,3))
 						if(I.crit_fail)
