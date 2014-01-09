@@ -8,7 +8,8 @@
 	Returns
 	standard 0 if fail
 */
-/mob/living/proc/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 1)
+/mob/living/proc/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0)
+	blocked = (100-blocked)/100
 	if(!damage || (blocked <= 0))	return 0
 	switch(damagetype)
 		if(BRUTE)
@@ -29,7 +30,7 @@
 
 
 /mob/living/proc/apply_damages(var/brute = 0, var/burn = 0, var/tox = 0, var/oxy = 0, var/clone = 0, var/def_zone = null, var/blocked = 0, var/halloss = 0)
-	if(blocked <= 0)	return 0
+	if(blocked >= 100)	return 0
 	if(brute)	apply_damage(brute, BRUTE, def_zone, blocked)
 	if(burn)	apply_damage(burn, BURN, def_zone, blocked)
 	if(tox)		apply_damage(tox, TOX, def_zone, blocked)
@@ -41,6 +42,7 @@
 
 
 /mob/living/proc/apply_effect(var/effect = 0,var/effecttype = STUN, var/blocked = 0)
+	blocked = (100-blocked)/100
 	if(!effect || (blocked <= 0))	return 0
 	switch(effecttype)
 		if(STUN)
@@ -50,7 +52,7 @@
 		if(PARALYZE)
 			Paralyse(effect * blocked)
 		if(IRRADIATE)
-			radiation += max((((effect - (effect*(getarmor(null, "rad")/100))))* blocked),0)//Rads auto check armor
+			radiation += max(effect * ((100-run_armor_check(null, "rad", "Your clothes feel warm", "Your clothes feel warm"))/100),0)//Rads auto check armor
 		if(STUTTER)
 			if(status_flags & CANSTUN) // stun is usually associated with stutter
 				stuttering = max(stuttering,(effect * blocked))
@@ -63,7 +65,7 @@
 
 
 /mob/living/proc/apply_effects(var/stun = 0, var/weaken = 0, var/paralyze = 0, var/irradiate = 0, var/stutter = 0, var/eyeblur = 0, var/drowsy = 0, var/blocked = 0)
-	if(blocked <= 0)	return 0
+	if(blocked >= 100)	return 0
 	if(stun)		apply_effect(stun, STUN, blocked)
 	if(weaken)		apply_effect(weaken, WEAKEN, blocked)
 	if(paralyze)	apply_effect(paralyze, PARALYZE, blocked)

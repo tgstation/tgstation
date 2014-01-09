@@ -1,11 +1,11 @@
 /mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null)
-	var/armor = (100-getarmor(def_zone, attack_flag))/100
-	if(armor <= 0)
+	var/armor = getarmor(def_zone, attack_flag)
+	if(armor >= 100)
 		if(absorb_text)
 			src << "<span class='userdanger'>[absorb_text]</span>"
 		else
 			src << "<span class='userdanger'>Your armor absorbs the blow!</span>"
-	else if(armor < 1)
+	else if(armor > 0)
 		if(soften_text)
 			src << "<span class='userdanger'>[soften_text]</span>"
 		else

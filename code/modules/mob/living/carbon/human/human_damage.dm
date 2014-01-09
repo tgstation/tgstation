@@ -153,6 +153,7 @@
 		..(damage, damagetype, def_zone, blocked)
 		return 1
 
+	blocked = (100-blocked)/100
 	if(blocked <= 0)	return 0
 
 	var/obj/item/organ/limb/organ = null
