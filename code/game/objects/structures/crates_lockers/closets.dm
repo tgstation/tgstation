@@ -9,6 +9,7 @@
 	var/icon_opened = "open"
 	var/opened = 0
 	var/welded = 0
+	var/pick_up_stuff = 1 // Pick up things that spawn at this location.
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	var/health = 100
 	var/lastbang
@@ -19,7 +20,7 @@
 /obj/structure/closet/New()
 	..()
 	spawn(1)
-		if(!opened)		// if closed, any item at the crate's loc is put in the contents
+		if(!opened && pick_up_stuff)		// if closed, any item at the crate's loc is put in the contents
 			for(var/obj/item/I in src.loc)
 				if(I.density || I.anchored || I == src) continue
 				I.loc = src

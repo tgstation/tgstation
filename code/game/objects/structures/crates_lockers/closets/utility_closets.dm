@@ -225,6 +225,7 @@
 	anchored = 1
 	density = 0
 	wall_mounted = 1
+	pick_up_stuff = 0 // #367 - Picks up stuff at src.loc, rather than the offset location.
 
 /obj/structure/closet/hydrant/New()
 	..()
@@ -247,6 +248,7 @@
 	anchored = 1
 	density = 0
 	wall_mounted = 1
+	pick_up_stuff = 0 // #367 - Picks up stuff at src.loc, rather than the offset location.
 
 /obj/structure/closet/medical_wall/update_icon()
 	if(!opened)
