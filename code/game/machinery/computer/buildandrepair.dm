@@ -143,10 +143,10 @@
 	build_path = "/obj/machinery/computer/rdconsole/core"
 /obj/item/weapon/circuitboard/rdconsole/mommi
 	name = "Circuit Board (MoMMI R&D Console)"
-	build_path = "/obj/machinery/computer/rdconsole/core"
+	build_path = "/obj/machinery/computer/rdconsole/mommi"
 /obj/item/weapon/circuitboard/rdconsole/robotics
 	name = "Circuit Board (Robotics R&D Console)"
-	build_path = "/obj/machinery/computer/rdconsole/core"
+	build_path = "/obj/machinery/computer/rdconsole/robotics"
 
 /obj/item/weapon/circuitboard/mecha_control
 	name = "Circuit Board (Exosuit Control Console)"
