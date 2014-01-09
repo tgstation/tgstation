@@ -17,7 +17,8 @@
 	health = 200
 
 /obj/structure/closet/secure_closet/can_open()
-	..()
+	if(!..())
+		return 0
 	if(src.locked)
 		return 0
 	return 1
