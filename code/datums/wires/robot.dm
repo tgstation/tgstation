@@ -54,7 +54,7 @@ var/const/BORG_WIRE_CAMERA      = 16
 	var/mob/living/silicon/robot/R = holder
 	switch(index)
 		if (BORG_WIRE_AI_CONTROL) //pulse the AI wire to make the borg reselect an AI
-			if(!R.emagged)
+			if(!R.emagged && !isMoMMI(R))
 				R.connected_ai = select_active_ai()
 
 		if (BORG_WIRE_CAMERA)
