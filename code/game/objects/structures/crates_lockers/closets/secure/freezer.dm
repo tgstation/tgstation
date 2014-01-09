@@ -9,6 +9,8 @@
 				icon_state = icon_locked
 			else
 				icon_state = icon_closed
+			if(welded)
+				overlays += "welded"
 		else
 			icon_state = icon_opened
 
