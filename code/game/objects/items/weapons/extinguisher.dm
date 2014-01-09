@@ -94,29 +94,30 @@
 		message_admins("[user]/[user.ckey] has crammed \a [W] into a [src].")
 
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
-	if((istype(target, /obj/structure/reagent_dispensers)) && get_dist(src,target) <= 1)
-		var/obj/o = target
-		var/list/badshit=list()
-		for(var/bad_reagent in src.reagents_to_log)
-			if(o.reagents.has_reagent(bad_reagent))
-				badshit += reagents_to_log[bad_reagent]
-		if(badshit.len)
-			var/hl="\red <b>([english_list(badshit)])</b> \black"
-			message_admins("[user.name] ([user.ckey]) filled \a [src] with [o.reagents.get_reagent_ids()] [hl]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-			log_game("[user.name] ([user.ckey]) filled \a [src] with [o.reagents.get_reagent_ids()] [hl]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-		o.reagents.trans_to(src, 50)
-		user << "\blue \The [src] is now refilled"
-		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
-		return
+	if(Adjacent(target))
+		if((istype(target, /obj/structure/reagent_dispensers)))
+			var/obj/o = target
+			var/list/badshit=list()
+			for(var/bad_reagent in src.reagents_to_log)
+				if(o.reagents.has_reagent(bad_reagent))
+					badshit += reagents_to_log[bad_reagent]
+			if(badshit.len)
+				var/hl="\red <b>([english_list(badshit)])</b> \black"
+				message_admins("[user.name] ([user.ckey]) filled \a [src] with [o.reagents.get_reagent_ids()] [hl]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+				log_game("[user.name] ([user.ckey]) filled \a [src] with [o.reagents.get_reagent_ids()] [hl]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+			o.reagents.trans_to(src, 50)
+			user << "\blue \The [src] is now refilled"
+			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
+			return
 
-	if(is_open_container() && reagents.total_volume)
-		user << "\blue You empty \the [src] onto [target]."
-		if(reagents.has_reagent("fuel"))
-			message_admins("[user.name] ([user.ckey]) poured Welder Fuel onto [target]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-			log_game("[user.name] ([user.ckey]) poured Welder Fuel onto [target]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-		src.reagents.reaction(target, TOUCH)
-		spawn(5) src.reagents.clear_reagents()
-		return
+		if(is_open_container() && reagents.total_volume)
+			user << "\blue You empty \the [src] onto [target]."
+			if(reagents.has_reagent("fuel"))
+				message_admins("[user.name] ([user.ckey]) poured Welder Fuel onto [target]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+				log_game("[user.name] ([user.ckey]) poured Welder Fuel onto [target]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+			src.reagents.reaction(target, TOUCH)
+			spawn(5) src.reagents.clear_reagents()
+			return
 	if (!safety && !is_open_container())
 		if (src.reagents.total_volume < 1)
 			usr << "\red \The [src] is empty."
