@@ -94,7 +94,7 @@
 		message_admins("[user]/[user.ckey] has crammed \a [W] into a [src].")
 
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
-	if(Adjacent(target))
+	if(get_dist(src,target) <= 1)
 		if((istype(target, /obj/structure/reagent_dispensers)))
 			var/obj/o = target
 			var/list/badshit=list()
