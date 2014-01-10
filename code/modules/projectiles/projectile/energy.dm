@@ -60,9 +60,9 @@
 	weaken = 5
 
 /obj/item/projectile/energy/neurotoxin/on_hit(var/atom/target, var/blocked = 0)
-    if(isalien(target))
-        return 0
-    ..() // Execute the rest of the code.
+	if(isalien(target))
+		return 0
+	..() // Execute the rest of the code.
 
 
 
