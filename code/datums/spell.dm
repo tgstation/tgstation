@@ -22,7 +22,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
 
 	var/clothes_req = 1 //see if it requires clothes
-	var/human_req = 1 //spell can only be cast by humans
+	var/human_req = 0 //spell can only be cast by humans
 	var/stat_allowed = 0 //see if it requires being conscious/alive, need to set to 1 for ghostpells
 	var/invocation = "HURP DURP" //what is uttered when the wizard casts the spell
 	var/invocation_emote_self = null

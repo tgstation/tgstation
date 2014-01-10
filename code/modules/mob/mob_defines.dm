@@ -132,7 +132,7 @@
 	var/mob/living/carbon/LAssailant = null
 
 
-	var/list/mob_spell_list = list() //only construct spells at the moment.
+	var/list/mob_spell_list = list() //construct spells and mime spells. Spells that do not transfer from one mob to another and can not be lost in mindswap.
 
 //Changlings, but can be used in other modes
 //	var/obj/effect/proc_holder/changpower/list/power_list = list()
