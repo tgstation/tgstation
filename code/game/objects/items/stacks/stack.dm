@@ -177,7 +177,7 @@
 	for (var/obj/item/stack/item in usr.loc)
 		if (item==oldsrc)
 			continue
-		if (!istype(oldsrc, item.type))
+		if(oldsrc.type != item.type)
 			continue
 		if (item.amount>=item.max_amount)
 			continue
