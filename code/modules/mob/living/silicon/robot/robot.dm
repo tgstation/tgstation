@@ -1062,3 +1062,11 @@
 		cell.loc = T
 		cell = null
 	del(src)
+
+/mob/living/silicon/robot/Bump(atom/movable/AM as mob|obj, yes)
+	if (istype(AM, /obj/machinery/recharge_station))
+		var/obj/machinery/recharge_station/CHRG = AM //Need to do this to be able to check it's variables.
+		if (!(CHRG.stat & (NOPOWER|BROKEN)) && CHRG.construct_op == 0)
+			CHRG.toggle_open()
+			CHRG.add_fingerprint(usr)
+	..()
