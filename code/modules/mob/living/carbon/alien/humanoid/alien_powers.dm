@@ -123,7 +123,7 @@ Doesn't work on other aliens/AI.*/
 			var/turf/U = get_step(src, dir) // Get the tile infront of the move, based on their direction
 			if(!isturf(U) || !isturf(T))
 				return
-			var/obj/item/projectile/energy/neurotoxin/A = new /obj/item/projectile/energy/neurotoxin(usr.loc)
+			var/obj/item/projectile/bullet/neurotoxin/A = new /obj/item/projectile/bullet/neurotoxin(usr.loc)
 			A.current = U
 			A.yo = U.y - T.y
 			A.xo = U.x - T.x
