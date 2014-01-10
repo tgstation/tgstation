@@ -149,4 +149,4 @@
 	// since it might have been cut off and it would be annoying not being able to know.
 	if(critical)
 		src << rendered
-		death()
+		succumb(1)
