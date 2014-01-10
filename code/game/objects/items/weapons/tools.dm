@@ -414,3 +414,49 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "red_crowbar"
 	item_state = "crowbar_red"
+
+
+/*
+ * Hacking Tool
+ */
+
+/obj/item/weapon/hackingtool //Makeshift item used to hack doors and vending machines. Count as both a multitool and a screwdriver.
+        name = "hacking tool"
+        desc = "A devious device, hastily patched together, used to hack doors and vending machines, using magnets. It seems to lack an Enhance function."
+        icon = 'icons/obj/items.dmi'
+        icon_state = "hackingtool"
+        force = 3.0
+        w_class = 2.0
+        throwforce = 5.0
+        throw_range = 15
+        throw_speed = 3
+        m_amt = 50
+        g_amt = 20
+        origin_tech = "magnets=2;engineering=2;materials=1"
+
+
+/obj/item/weapon/multimanipulator
+        name = "multitool and manipulator patchwork"
+        desc = "Truly a work of art. No seriously, how do you use this thing?"
+        icon = 'icons/obj/items.dmi'
+        icon_state = "halfhacktool"
+        force = 3.0
+        w_class = 2.0
+        throwforce = 5.0
+        throw_range = 15
+        throw_speed = 3
+        m_amt = 50
+        g_amt = 20
+
+
+obj/item/weapon/multimanipulator/attackby(var/obj/item/I, mob/user as mob)
+        ..()
+        if(istype(I, /obj/item/device/analyzer))
+                var/obj/item/weapon/hackingtool/S = new /obj/item/weapon/hackingtool
+                user.before_take_item(I)
+                user.before_take_item(src)
+
+                user.put_in_hands(S)
+                user << "<span class='notice'>You somehow jam the Analyzer in the strange item in your hand, and connect it to to wire. It seems to work!</span>"
+                del(I)
+                del(src)
