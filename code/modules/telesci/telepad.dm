@@ -8,6 +8,40 @@
 	use_power = 1
 	idle_power_usage = 200
 	active_power_usage = 5000
+	var/efficiency
+
+/obj/machinery/telepad/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/telesci_pad(null)
+	component_parts += new /obj/item/bluespace_crystal/artificial(null)
+	component_parts += new /obj/item/bluespace_crystal/artificial(null)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+	component_parts += new /obj/item/weapon/cable_coil(null)
+	RefreshParts()
+
+/obj/machinery/telepad/RefreshParts()
+	var/E
+	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+		E += C.rating
+	efficiency = E
+
+/obj/machinery/telepad/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/screwdriver))
+		default_deconstruction_screwdriver(user, "pad-idle-o", "pad-idle")
+
+	if(panel_open)
+		if(istype(I, /obj/item/weapon/crowbar))
+			default_deconstruction_crowbar()
+			return 1
+
+		if(istype(I, /obj/item/device/multitool))
+			var/obj/item/device/multitool/M = I
+			M.buffer = src
+			user << "<span class = 'caution'>You save the data in the [I.name]'s buffer.</span>"
+
+
 //CARGO TELEPAD//
 /obj/machinery/telepad_cargo
 	name = "cargo telepad"

@@ -1020,6 +1020,15 @@ datum/design/super_matter_bin
 
 
 
+datum/design/telesci_gps
+	name = "GPS Device"
+	desc = "Little thingie that can track its position at all times."
+	id = "telesci_gps"
+	req_tech = list("materials" = 2, "magnets" = 3, "bluespace" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 500, "$glass" = 1000)
+	build_path = /obj/item/device/gps
+
 datum/design/subspace_ansible
 	name = "Subspace Ansible"
 	desc = "A compact module capable of sensing extradimensional activity."
@@ -1141,6 +1150,96 @@ datum/design/light_replacer
 ////////////////////////////////////////
 //////////////MISC Boards///////////////
 ////////////////////////////////////////
+
+datum/design/teleport_station
+	name = "Teleportation Station"
+	desc = "The circuit board for a teleportation station."
+	id = "tele_hub"
+	req_tech = list("programming" = 4, "bluespace" = 4, "engineering" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/teleporter_station
+
+datum/design/teleport_hub
+	name = "Teleportation Hub"
+	desc = "The circuit board for a teleportation hub."
+	id = "tele_hub"
+	req_tech = list("programming" = 3, "bluespace" = 5, "materials" = 4, "engineering" = 5)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/teleporter_hub
+
+datum/design/telepad
+	name = "Telepad"
+	desc = "The circuit board for a telescience telepad."
+	id = "telepad"
+	req_tech = list("programming" = 4, "bluespace" = 4, "materials" = 3, "engineering" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/telesci_pad
+
+datum/design/sleeper
+	name = "Sleeper Board"
+	desc = "The circuit board for a sleeper."
+	id = "sleeper"
+	req_tech = list("programming" = 3, "biotech" = 2, "materials" = 3, "engineering" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/sleeper
+
+datum/design/cryotube
+	name = "Cryotube board"
+	desc = "The circuit board for a cryotube."
+	id = "cryotube"
+	req_tech = list("programming" = 4, "biotech" = 3, "engineering" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/cryo_tube
+/*
+datum/design/thermomachine
+	name = "Freezer/Heater Board"
+	desc = "The circuit board for a freezer/heater."
+	id = "thermomachine"
+	req_tech = list("programming" = 3, "plasmatech" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/thermomachine
+
+datum/design/biogenerator
+	name = "Biogenerator Board"
+	desc = "The circuit board for a biogenerator."
+	id = "biogenerator"
+	req_tech = list("programming" = 3, "biotech" = 2, "materials" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/biogenerator
+
+datum/design/hydroponics
+	name = "Hydroponics Tray Board"
+	desc = "The circuit board for a hydroponics tray."
+	id = "hydro_tray"
+	req_tech = list("programming" = 1, "biotech" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/hydroponics
+
+datum/design/microwave
+	name = "Microwave Board"
+	desc = "The circuit board for a microwave."
+	id = "microwave"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/microwave
+*/
+datum/design/chem_dispenser
+	name = "Portable Chem Dispenser Board"
+	desc = "The circuit board for a portable chem dispenser."
+	id = "chem_dispenser"
+	req_tech = list("programming" = 4, "biotech" = 3, "engineering" = 4, "materials" = 4, "plasmatech" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/chem_dispenser
 
 datum/design/destructive_analyzer
 	name = "Destructive Analyzer Board"
