@@ -1195,7 +1195,7 @@ datum/design/cryotube
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/cryo_tube
-/*
+
 datum/design/thermomachine
 	name = "Freezer/Heater Board"
 	desc = "The circuit board for a freezer/heater."
@@ -1204,7 +1204,7 @@ datum/design/thermomachine
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/thermomachine
-
+/*
 datum/design/biogenerator
 	name = "Biogenerator Board"
 	desc = "The circuit board for a biogenerator."

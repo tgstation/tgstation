@@ -12,8 +12,7 @@
 	density = 0
 	anchored = 1
 	var/efficiency
-	var/open = 1
-	var/mob/living/occupant = null
+	state_open = 1
 	var/min_health = 25
 	var/list/injection_chems = list() //list of injectable chems except inaprovaline, coz inaprovaline is always avalible
 	var/list/possible_chems = list(list("stoxin", "dexalin", "bicaridine", "kelotane"),
@@ -54,7 +53,7 @@
 		del(src)
 
 /obj/machinery/sleeper/attackby(obj/item/I, mob/user)
-	if(!open && !occupant)
+	if(!state_open && !occupant)
 		if(istype(I, /obj/item/weapon/screwdriver))
 			default_deconstruction_screwdriver(user, "sleeper-o", "sleeper")
 	if(panel_open)
@@ -104,11 +103,11 @@
 	icon_state = "sleeper-open"
 
 /obj/machinery/sleeper/container_resist()
-	open()
+	open_machine()
 
 /obj/machinery/sleeper/relaymove(var/mob/user)
 	..()
-	open()
+	open_machine()
 
 /obj/machinery/sleeper/Del()
 	var/turf/T = loc
@@ -150,7 +149,7 @@
 
 	dat += "<A href='?src=\ref[src];refresh=1'>Scan</A>"
 
-	dat += "<A href='?src=\ref[src];[open ? "close=1'>Close</A>" : "open=1'>Open</A>"]"
+	dat += "<A href='?src=\ref[src];[state_open ? "close=1'>Close</A>" : "open=1'>Open</A>"]"
 
 	dat += "<h3>Injector</h3>"
 	if(occupant)
@@ -181,10 +180,10 @@
 		updateUsrDialog()
 		return
 	if(href_list["open"])
-		open()
+		open_machine()
 		return
 	if(href_list["close"])
-		close(usr)
+		close_machine()
 		return
 	if(occupant && occupant.stat != DEAD)
 		if(href_list["inject"] == "inaprovaline" || occupant.health > min_health)
@@ -202,38 +201,13 @@
 /obj/machinery/sleeper/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/sleeper/proc/open()
-	if(!open && !panel_open)
-		var/turf/T = get_turf(src)
-		if(T)
-			open = 1
-			density = 0
-			T.contents += contents
-			if(occupant)
-				if(occupant.client)
-					occupant.client.eye = occupant
-					occupant.client.perspective = MOB_PERSPECTIVE
-				occupant = null
-		update_icon()
-		updateUsrDialog()
+/obj/machinery/sleeper/open_machine()
+	if(!state_open && !panel_open)
+		..()
 
-/obj/machinery/sleeper/proc/close()
-	if(open && !panel_open)
-		open = 0
-		density = 1
-		for(var/mob/living/carbon/C in loc)
-			if(C.buckled)
-				continue
-			if(C.client)
-				C.client.perspective = EYE_PERSPECTIVE
-				C.client.eye = src
-			occupant = C
-			C.loc = src
-			C.stop_pulling()
-			break
-		updateUsrDialog()
-		update_icon()
-	return 0
+/obj/machinery/sleeper/close_machine()
+	if(state_open && !panel_open)
+		..()
 
 /obj/machinery/sleeper/proc/inject_chem(mob/user, chem)
 	if(occupant && occupant.reagents)
@@ -243,7 +217,7 @@
 		user << "<span class='notice'>Occupant now has [units] unit\s of [chem] in their bloodstream.</span>"
 
 /obj/machinery/sleeper/update_icon()
-	if(open)
+	if(state_open)
 		icon_state = "sleeper-open"
 	else
 		icon_state = "sleeper"

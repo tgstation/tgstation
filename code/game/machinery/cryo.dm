@@ -8,11 +8,10 @@
 
 	var/on = 0
 	var/temperature_archived
-	var/mob/living/carbon/occupant = null
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/next_trans = 0
 	var/current_heat_capacity = 50
-	var/open = 0
+	state_open = 0
 	var/efficiency
 
 /obj/machinery/atmospherics/unary/cryo_cell/New()
@@ -74,13 +73,13 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/relaymove(var/mob/user)
 	..()
-	open()
+	open_machine()
 
 /obj/machinery/atmospherics/unary/cryo_cell/container_resist()
 	if(stat & DEAD)
 		return
 	sleep(usr.stat * 1200)
-	open()
+	open_machine()
 	return
 
 /obj/machinery/atmospherics/unary/cryo_cell/examine()
@@ -145,7 +144,7 @@
 		occupantData["bodyTemperature"] = occupant.bodytemperature
 	data["occupant"] = occupantData;
 
-	data["isOpen"] = open
+	data["isOpen"] = state_open
 	data["cellTemperature"] = round(air_contents.temperature)
 	data["cellTemperatureStatus"] = "good"
 	if(air_contents.temperature > T0C) // if greater than 273.15 kelvin (0 celcius)
@@ -183,14 +182,16 @@
 		return 0 // don't update UIs attached to this object
 
 	if(href_list["switchOn"])
-		on = 1
-		update_icon()
+		if(!state_open)
+			on = 1
+			update_icon()
 
 	if(href_list["open"])
-		open()
+		on = 0
+		open_machine()
 
 	if(href_list["close"])
-		if(close(usr))
+		if(close_machine())
 			var/datum/nanoui/ui = nanomanager.get_open_ui(usr, src, "main")
 			ui.close()
 	if(href_list["switchOff"])
@@ -218,7 +219,7 @@
 		user.visible_message("<span class='notice'>[user] places [I] in [src].</span>", \
 							"<span class='notice'>You place [I] in [src].</span>")
 	if(istype(I, /obj/item/weapon/screwdriver))
-		if(!on && !occupant && !open)
+		if(!on && !occupant && !state_open)
 			default_deconstruction_screwdriver(user, "cell-o", "cell-off")
 
 	if(istype(I, /obj/item/weapon/wrench))
@@ -232,55 +233,19 @@
 		if(panel_open)
 			default_deconstruction_crowbar()
 
-/obj/machinery/atmospherics/unary/cryo_cell/proc/open()
-	if(!open)
-		if(panel_open)
-			return
-		on = 0
-		var/turf/T = get_turf(src)
-		if(T)
-			open = 1
-			density = 0
-			T.contents += contents
-			if(occupant)
-				if(occupant.client)
-					occupant.client.eye = occupant
-					occupant.client.perspective = MOB_PERSPECTIVE
-					if(occupant.bodytemperature < 261 && occupant.bodytemperature > 140)
-						occupant.bodytemperature = 261
-				occupant = null
-		update_icon()
-		nanomanager.update_uis(src)
-		return 1
+/obj/machinery/atmospherics/unary/cryo_cell/open_machine()
+	if(!state_open && !panel_open)
+		..()
 
-/obj/machinery/atmospherics/unary/cryo_cell/proc/close(mob/living/carbon/M)
-	if(open && !panel_open)
-		open = 0
-		density = 1
-		for(var/mob/living/carbon/C in loc)
-			if(C.buckled)
-				continue
-			if(C.client)
-				C.client.perspective = EYE_PERSPECTIVE
-				C.client.eye = src
-			occupant = C
-			C.loc = src
-			C.stop_pulling()
-			if(C == M)
-				on = 1
-				update_icon()
-				nanomanager.update_uis(src)
-				return 1
-			break
-		update_icon()
-		nanomanager.update_uis(src)
-	return 0
+/obj/machinery/atmospherics/unary/cryo_cell/close_machine(mob/living/carbon/M)
+	if(state_open && !panel_open)
+		..()
 
 /obj/machinery/atmospherics/unary/cryo_cell/update_icon()
 	if(panel_open)
 		icon_state = "cell-off"
 		return
-	if(open)
+	if(state_open)
 		icon_state = "cell-open"
 		return
 	if(on)

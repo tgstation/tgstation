@@ -7,7 +7,6 @@
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 1000
-	var/mob/living/silicon/robot/occupant = null
 	var/open = 1
 	var/construct_op = 0
 	var/circuitboard = "/obj/item/weapon/circuitboard/cyborgrecharger"
@@ -15,6 +14,7 @@
 	req_access = list(access_robotics)
 	var/recharge_speed
 	var/repairs
+	var/mob/living/silicon/robot/occupier
 
 
 /obj/machinery/recharge_station/New()
@@ -43,8 +43,8 @@
 	if(!(NOPOWER|BROKEN))
 		return
 
-	if(src.occupant)
-		process_occupant()
+	if(src.occupier)
+		process_occupier()
 	return 1
 
 
@@ -61,8 +61,8 @@
 	if(stat & (BROKEN|NOPOWER))
 		..(severity)
 		return
-	if(occupant)
-		occupant.emp_act(severity)
+	if(occupier)
+		occupier.emp_act(severity)
 	open()
 	..(severity)
 
@@ -209,12 +209,12 @@
 		open()
 
 /obj/machinery/recharge_station/proc/open()
-	if(occupant)
-		if (occupant.client)
-			occupant.client.eye = occupant
-			occupant.client.perspective = MOB_PERSPECTIVE
-		occupant.loc = loc
-		occupant = null
+	if(occupier)
+		if (occupier.client)
+			occupier.client.eye = occupier
+			occupier.client.perspective = MOB_PERSPECTIVE
+		occupier.loc = loc
+		occupier = null
 		use_power = 1
 	open = 1
 	density = 0
@@ -227,7 +227,7 @@
 			R.client.eye = src
 			R.client.perspective = EYE_PERSPECTIVE
 		R.loc = src
-		occupant = R
+		occupier = R
 		use_power = 2
 		add_fingerprint(R)
 		break
@@ -240,29 +240,29 @@
 		if(open)
 			icon_state = "borgcharger0"
 		else
-			if(occupant)
+			if(occupier)
 				icon_state = "borgcharger1"
 			else
 				icon_state = "borgcharger2"
 	else
 		icon_state = "borgcharger0"
 
-/obj/machinery/recharge_station/proc/process_occupant()
-	if(occupant)
+/obj/machinery/recharge_station/proc/process_occupier()
+	if(occupier)
 		restock_modules()
 		if(repairs)
-			occupant.heal_organ_damage(repairs, repairs - 1)
-		if(occupant.cell)
-			if(occupant.cell.charge >= occupant.cell.maxcharge)
-				occupant.cell.charge = occupant.cell.maxcharge
+			occupier.heal_organ_damage(repairs, repairs - 1)
+		if(occupier.cell)
+			if(occupier.cell.charge >= occupier.cell.maxcharge)
+				occupier.cell.charge = occupier.cell.maxcharge
 			else
-				occupant.cell.charge = min(occupant.cell.charge + recharge_speed, occupant.cell.maxcharge)
+				occupier.cell.charge = min(occupier.cell.charge + recharge_speed, occupier.cell.maxcharge)
 
 /obj/machinery/recharge_station/proc/restock_modules()
-	if(occupant)
-		if(occupant.module && occupant.module.modules)
-			var/list/um = occupant.contents|occupant.module.modules
-			// ^ makes sinle list of active (occupant.contents) and inactive modules (occupant.module.modules)
+	if(occupier)
+		if(occupier.module && occupier.module.modules)
+			var/list/um = occupier.contents|occupier.module.modules
+			// ^ makes sinle list of active (occupier.contents) and inactive modules (occupier.module.modules)
 			var/coeff = recharge_speed / 200
 			for(var/obj/O in um)
 				// Engineering
@@ -299,16 +299,16 @@
 					var/obj/item/device/lightreplacer/LR = O
 					var/i = 1
 					for(1, i < coeff, i++)
-						LR.Charge(occupant)
+						LR.Charge(occupier)
 
-			if(occupant)
-				if(occupant.module)
-					occupant.module.respawn_consumable(occupant)
+			if(occupier)
+				if(occupier.module)
+					occupier.module.respawn_consumable(occupier)
 
 			//Emagged items for janitor and medical borg
-			if(occupant.module.emag)
-				if(istype(occupant.module.emag, /obj/item/weapon/reagent_containers/spray))
-					var/obj/item/weapon/reagent_containers/spray/S = occupant.module.emag
+			if(occupier.module.emag)
+				if(istype(occupier.module.emag, /obj/item/weapon/reagent_containers/spray))
+					var/obj/item/weapon/reagent_containers/spray/S = occupier.module.emag
 					if(S.name == "polyacid spray")
 						S.reagents.add_reagent("pacid", 2 * coeff)
 					else if(S.name == "lube spray")

@@ -331,7 +331,6 @@
 	density = 1
 	var/locked = 0
 	var/open = 0
-	var/mob/occupant = null
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 50

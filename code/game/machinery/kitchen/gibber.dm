@@ -9,7 +9,6 @@
 	var/operating = 0 //Is it on?
 	var/dirty = 0 // Does it need cleaning?
 	var/gibtime = 40 // Time from starting until meat appears
-	var/mob/living/occupant // Mob who has been put inside
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 500

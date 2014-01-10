@@ -286,7 +286,7 @@
 		var/new_power = input("Please input desired power.", name, power) as num
 		if(..())
 			return
-		power = min((crystals.len + telepad.efficiency) * 10 , new_power)
+		power = round(min((crystals.len + telepad.efficiency) * 10 , new_power),5)
 
 	if(href_list["setz"])
 		var/new_z = input("Please input desired sector.", name, z_co) as num

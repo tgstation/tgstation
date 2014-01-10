@@ -234,10 +234,10 @@ to destroy them and players will be able to make replacements.
 			build_path = /obj/machinery/atmospherics/unary/cold_sink/freezer
 			name = "circuit board (Cooler)"
 			user << "<span class='notice'>You set the board to cooling.</span>"
-/*
+
 /obj/item/weapon/circuitboard/biogenerator
 	name = "circuit board (Biogenerator)"
-	build_path = /obj/machinery/hydroponics/constructable
+	build_path = /obj/machinery/biogenerator
 	board_type = "machine"
 	origin_tech = "programming=3;biotech=2;materials=3"
 	req_components = list(
@@ -245,7 +245,7 @@ to destroy them and players will be able to make replacements.
 							"/obj/item/weapon/stock_parts/manipulator" = 1,
 							"/obj/item/weapon/cable_coil" = 1,
 							"/obj/item/weapon/stock_parts/console_screen" = 1)
-
+/*
 /obj/item/weapon/circuitboard/hydroponics
 	name = "circuit board (Hydroponics Tray)"
 	build_path = /obj/machinery/hydroponics/constructable

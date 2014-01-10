@@ -109,6 +109,8 @@ Class Procs:
 	var/manual = 0
 	var/global/gl_uid = 1
 	var/panel_open = 0
+	var/state_open = 0
+	var/mob/living/occupant = null
 
 /obj/machinery/New()
 	..()
@@ -134,6 +136,37 @@ Class Procs:
 		spawn(10)
 			pulse2.delete()
 	..()
+
+/obj/machinery/proc/open_machine()
+	var/turf/T = get_turf(src)
+	if(T)
+		state_open = 1
+		density = 0
+		T.contents += contents
+		if(occupant)
+			if(occupant.client)
+				occupant.client.eye = occupant
+				occupant.client.perspective = MOB_PERSPECTIVE
+			occupant = null
+	update_icon()
+	updateUsrDialog()
+
+/obj/machinery/proc/close_machine()
+	state_open = 0
+	density = 1
+	for(var/mob/living/carbon/C in loc)
+		if(C.buckled)
+			continue
+		if(C.client)
+			C.client.perspective = EYE_PERSPECTIVE
+			C.client.eye = src
+		occupant = C
+		C.loc = src
+		C.stop_pulling()
+		break
+	updateUsrDialog()
+	update_icon()
+	return 0
 
 /obj/machinery/ex_act(severity)
 	switch(severity)
