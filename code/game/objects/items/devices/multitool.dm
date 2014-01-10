@@ -18,6 +18,18 @@
 	origin_tech = "magnets=1;engineering=1"
 	var/obj/machinery/telecomms/buffer // simple machine buffer for device linkage
 
+obj/item/device/multitool/attackby(var/obj/item/I, mob/user as mob) //Used in the construction of the Hacking Tool.
+        ..()
+        if(istype(I, /obj/item/weapon/stock_parts/manipulator))
+                var/obj/item/weapon/multimanipulator/S = new /obj/item/weapon/multimanipulator
+                user.before_take_item(I)
+                user.before_take_item(src)
+
+                user.put_in_hands(S)
+                user << "<span class='notice'>You take off the Multitool's cover, and connect the manipulator's wiring to the end of it.</span>"
+                del(I)
+                del(src)
+
 
 // Syndicate device disguised as a multitool; it will turn red when an AI camera is nearby.
 
