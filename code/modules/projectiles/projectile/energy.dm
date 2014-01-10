@@ -53,11 +53,17 @@
 
 
 /obj/item/projectile/energy/neurotoxin
-	name = "neuro"
+	name = "neurotoxin spit"
 	icon_state = "neurotoxin"
 	damage = 5
 	damage_type = TOX
 	weaken = 5
+
+/obj/item/projectile/energy/neurotoxin/on_hit(var/atom/target, var/blocked = 0)
+    if(isalien(target))
+        return 0
+    ..() // Execute the rest of the code.
+
 
 
 
