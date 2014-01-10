@@ -31,7 +31,7 @@
 	name = text("[initial(name)] ([rand(1, 1000)])")
 	real_name = name
 	for(var/spell in construct_spells)
-		spell_list += new spell(src)
+		mob_spell_list += new spell(src)
 
 /mob/living/simple_animal/construct/Die()
 	..()

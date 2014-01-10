@@ -154,7 +154,7 @@
 			*/
 				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", smoke = "Smoke", blind = "Blind", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", fleshtostone = "Flesh to Stone", summonguns = "Summon Guns", summonmagic = "Summon Magic", staffchange = "Staff of Change", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation")
 				var/already_knows = 0
-				for(var/obj/effect/proc_holder/spell/aspell in H.spell_list)
+				for(var/obj/effect/proc_holder/spell/aspell in H.mind.spell_list)
 					if(available_spells[href_list["spell_choice"]] == initial(aspell.name))
 						already_knows = 1
 						if(aspell.spell_level >= aspell.level_max)
@@ -188,63 +188,63 @@
 					switch(href_list["spell_choice"])
 						if("magicmissile")
 							feedback_add_details("wizard_spell_learned","MM") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(H)
+							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(H)
 							temp = "You have learned magic missile."
 						if("fireball")
 							feedback_add_details("wizard_spell_learned","FB") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /obj/effect/proc_holder/spell/dumbfire/fireball(H)
+							H.mind.spell_list += new /obj/effect/proc_holder/spell/dumbfire/fireball(H)
 							temp = "You have learned fireball."
 						if("disintegrate")
 							feedback_add_details("wizard_spell_learned","DG") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /obj/effect/proc_holder/spell/targeted/inflict_handler/disintegrate(H)
+							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/inflict_handler/disintegrate(H)
 							temp = "You have learned disintegrate."
 						if("disabletech")
 							feedback_add_details("wizard_spell_learned","DT") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech(H)
+							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech(H)
 							temp = "You have learned disable technology."
 						if("smoke")
 							feedback_add_details("wizard_spell_learned","SM") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /obj/effect/proc_holder/spell/targeted/smoke(H)
+							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/smoke(H)
 							temp = "You have learned smoke."
 						if("blind")
 							feedback_add_details("wizard_spell_learned","BD") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /obj/effect/proc_holder/spell/targeted/trigger/blind(H)
+							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/trigger/blind(H)
 							temp = "You have learned blind."
 						if("mindswap")
 							feedback_add_details("wizard_spell_learned","MT") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /obj/effect/proc_holder/spell/targeted/mind_transfer(H)
+							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/mind_transfer(H)
 							temp = "You have learned mindswap."
 						if("forcewall")
 							feedback_add_details("wizard_spell_learned","FW") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall(H)
+							H.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall(H)
 							temp = "You have learned forcewall."
 						if("blink")
 							feedback_add_details("wizard_spell_learned","BL") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /obj/effect/proc_holder/spell/targeted/turf_teleport/blink(H)
+							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/turf_teleport/blink(H)
 							temp = "You have learned blink."
 						if("teleport")
 							feedback_add_details("wizard_spell_learned","TP") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(H)
+							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(H)
 							temp = "You have learned teleport."
 						if("mutate")
 							feedback_add_details("wizard_spell_learned","MU") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /obj/effect/proc_holder/spell/targeted/genetic/mutate(H)
+							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/genetic/mutate(H)
 							temp = "You have learned mutate."
 						if("etherealjaunt")
 							feedback_add_details("wizard_spell_learned","EJ") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(H)
+							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(H)
 							temp = "You have learned ethereal jaunt."
 						if("knock")
 							feedback_add_details("wizard_spell_learned","KN") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/knock(H)
+							H.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/knock(H)
 							temp = "You have learned knock."
 						if("horseman")
 							feedback_add_details("wizard_spell_learned","HH") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /obj/effect/proc_holder/spell/targeted/horsemask(H)
+							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/horsemask(H)
 							temp = "You have learned curse of the horseman."
 						if("fleshtostone")
 							feedback_add_details("wizard_spell_learned","FS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /obj/effect/proc_holder/spell/targeted/inflict_handler/flesh_to_stone(H)
+							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/inflict_handler/flesh_to_stone(H)
 							temp = "You have learned flesh to stone."
 						if("summonguns")
 							feedback_add_details("wizard_spell_learned","SG") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
@@ -264,7 +264,7 @@
 						if("soulstone")
 							feedback_add_details("wizard_spell_learned","SS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							new /obj/item/weapon/storage/belt/soulstone/full(get_turf(H))
-							H.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/construct(H)
+							H.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/construct(H)
 							temp = "You have purchased a belt full of soulstones and have learned the artificer spell."
 							max_uses--
 						if("armor")
@@ -320,7 +320,7 @@
 
 /obj/item/weapon/spellbook/oneuse/attack_self(mob/user as mob)
 	var/obj/effect/proc_holder/spell/S = new spell
-	for(var/obj/effect/proc_holder/spell/knownspell in user.spell_list)
+	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
 		if(knownspell.type == S.type)
 			if(user.mind)
 				if(user.mind.special_role == "apprentice" || user.mind.special_role == "Wizard")
@@ -331,7 +331,7 @@
 	if(used)
 		recoil(user)
 	else
-		user.spell_list += S
+		user.mind.spell_list += S
 		user <<"<span class='notice'>you rapidly read through the arcane book. Suddenly you realize you understand [spellname]!</span>"
 		user.attack_log += text("\[[time_stamp()]\] <font color='orange'>[user.real_name] ([user.ckey]) learned the spell [spellname] ([S]).</font>")
 		onlearned(user)
@@ -416,10 +416,8 @@
 			stored_swap.verbs -= V
 
 	var/mob/dead/observer/ghost = stored_swap.ghostize(0)
-	ghost.spell_list = stored_swap.spell_list
 
 	user.mind.transfer_to(stored_swap)
-	stored_swap.spell_list = user.spell_list
 
 	if(stored_swap.mind.special_verbs.len)
 		for(var/V in user.mind.special_verbs)
@@ -427,7 +425,6 @@
 
 	ghost.mind.transfer_to(user)
 	user.key = ghost.key
-	user.spell_list = ghost.spell_list
 
 	if(user.mind.special_verbs.len)
 		for(var/V in user.mind.special_verbs)

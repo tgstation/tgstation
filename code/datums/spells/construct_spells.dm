@@ -10,6 +10,7 @@
 	school = "conjuration"
 	charge_max = 20
 	clothes_req = 0
+	human_req = 0
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
@@ -23,6 +24,7 @@
 	school = "conjuration"
 	charge_max = 100
 	clothes_req = 0
+	human_req = 0
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
@@ -51,6 +53,7 @@
 	school = "conjuration"
 	charge_max = 3000
 	clothes_req = 0
+	human_req = 0
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
@@ -65,6 +68,7 @@
 	school = "transmutation"
 	charge_max = 300
 	clothes_req = 0
+	human_req = 0
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
@@ -79,6 +83,7 @@
 	school = "transmutation"
 	charge_max = 200
 	clothes_req = 0
+	human_req = 0
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
@@ -106,6 +111,7 @@
 	school = "evocation"
 	charge_max = 400
 	clothes_req = 0
+	human_req = 0
 	invocation = "none"
 	invocation_type = "none"
 	proj_lifespan = 10

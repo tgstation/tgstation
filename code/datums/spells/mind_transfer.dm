@@ -54,11 +54,11 @@ Also, you never added distance checking after target is selected. I've went ahea
 
 	//SPELL LOSS BEGIN
 	//NOTE: The caster must ALWAYS keep mind transfer, even when other spells are lost.
-	var/obj/effect/proc_holder/spell/targeted/mind_transfer/m_transfer = locate() in user.spell_list//Find mind transfer directly.
-	var/list/checked_spells = user.spell_list
+	var/obj/effect/proc_holder/spell/targeted/mind_transfer/m_transfer = locate() in user.mind.spell_list//Find mind transfer directly.
+	var/list/checked_spells = user.mind.spell_list
 	checked_spells -= m_transfer //Remove Mind Transfer from the list.
 
-	if(caster.spell_list.len)//If they have any spells left over after mind transfer is taken out. If they don't, we don't need this.
+	if(caster.mind.spell_list.len)//If they have any spells left over after mind transfer is taken out. If they don't, we don't need this.
 		for(var/i=spell_loss_amount,(i>0&&checked_spells.len),i--)//While spell loss amount is greater than zero and checked_spells has spells in it, run this proc.
 			for(var/j=checked_spells.len,(j>0&&checked_spells.len),j--)//While the spell list to check is greater than zero and has spells in it, run this proc.
 				if(prob(base_spell_loss_chance))
@@ -70,7 +70,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 					base_spell_loss_chance += spell_loss_chance_modifier
 
 	checked_spells += m_transfer//Add back Mind Transfer.
-	user.spell_list = checked_spells//Set user spell list to whatever the new list is.
+	user.mind.spell_list = checked_spells//Set user spell list to whatever the new list is.
 	//SPELL LOSS END
 
 	//MIND TRANSFER BEGIN
@@ -83,10 +83,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 			victim.verbs -= V
 
 	var/mob/dead/observer/ghost = victim.ghostize(0)
-	ghost.spell_list = victim.spell_list//If they have spells, transfer them. Now we basically have a backup mob.
-
 	caster.mind.transfer_to(victim)
-	victim.spell_list = caster.spell_list//Now they are inside the victim's body.
 
 	if(victim.mind.special_verbs.len)//To add all the special verbs for the original caster.
 		for(var/V in caster.mind.special_verbs)//Not too important but could come into play.
@@ -94,7 +91,6 @@ Also, you never added distance checking after target is selected. I've went ahea
 
 	ghost.mind.transfer_to(caster)
 	caster.key = ghost.key	//have to transfer the key since the mind was not active
-	caster.spell_list = ghost.spell_list
 
 	if(caster.mind.special_verbs.len)//If they had any special verbs, we add them here.
 		for(var/V in caster.mind.special_verbs)
