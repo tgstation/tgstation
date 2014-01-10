@@ -125,6 +125,8 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	desc = "There is something wrong if you're examining this."
 
 /obj/item/device/uplink/hidden/Topic(href, href_list)
+	if(usr.stat || usr.restrained() || usr.paralysis || usr.stunned || usr.weakened)
+		return 0		// To stop people using their uplink when they shouldn't be able to
 	..()
 	if(href_list["lock"])
 		toggle()

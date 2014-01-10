@@ -700,6 +700,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 		canmove = 0
 		if( istype(buckled,/obj/structure/stool/bed/chair) )
 			lying = 0
+			if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH) )
+				drop_r_hand()
+				drop_l_hand()
 		else
 			lying = 1
 	else if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH) )

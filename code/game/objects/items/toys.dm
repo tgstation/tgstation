@@ -571,6 +571,7 @@ obj/item/toy/cards
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "deck_full"
 	w_class = 2.0
+	var/cooldown = 0
 	var/list/cards = list()
 
 obj/item/toy/cards/New()
@@ -620,9 +621,11 @@ obj/item/toy/cards/attack_hand(mob/user as mob)
 		src.icon_state = "deck_low"
 
 obj/item/toy/cards/attack_self(mob/user as mob)
-	cards = shuffle(cards)
-	playsound(user, 'sound/items/cardshuffle.ogg', 50, 1)
-	user.visible_message("<span class='notice'>[user] shuffles the deck.</span>", "<span class='notice'>You shuffle the deck.</span>")
+	if(cooldown < world.time - 50)
+		cards = shuffle(cards)
+		playsound(user, 'sound/items/cardshuffle.ogg', 50, 1)
+		user.visible_message("<span class='notice'>[user] shuffles the deck.</span>", "<span class='notice'>You shuffle the deck.</span>")
+		cooldown = world.time
 
 obj/item/toy/cards/attackby(obj/item/toy/singlecard/C, mob/living/user)
 	..()
