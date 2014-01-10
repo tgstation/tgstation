@@ -177,7 +177,7 @@
 	for (var/obj/item/stack/item in usr.loc)
 		if (item==oldsrc)
 			continue
-		if (item.type != oldsrc.type || oldsrc.type in item.canCombineWith)
+		if (!istype(oldsrc, item.type))
 			continue
 		if (item.amount>=item.max_amount)
 			continue

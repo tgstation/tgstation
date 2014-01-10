@@ -18,7 +18,6 @@
 	g_amt = 3750
 	origin_tech = "materials=1"
 	var/created_window = /obj/structure/window/basic
-	canCombineWith=list(/obj/item/stack/sheet/glass,/obj/item/stack/sheet/glass/cyborg)
 
 /obj/item/stack/sheet/glass/cyborg
 	g_amt = 0
@@ -124,7 +123,6 @@
 	g_amt = 3750
 	m_amt = 1875
 	origin_tech = "materials=2"
-	canCombineWith=list(/obj/item/stack/sheet/rglass,/obj/item/stack/sheet/rglass/cyborg)
 
 /obj/item/stack/sheet/rglass/cyborg
 	name = "reinforced glass"
@@ -317,7 +315,6 @@
 	g_amt=CC_PER_SHEET_GLASS
 	origin_tech = "materials=3;plasmatech=2"
 	created_window = /obj/structure/window/plasmabasic
-	//canCombineWith=list(/obj/item/stack/sheet/plasmaglass,/obj/item/stack/sheet/plasmaglass/cyborg)
 
 /obj/item/stack/sheet/glass/plasmaglass/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
 	rec.addMaterial("plasma",1)
@@ -355,7 +352,6 @@
 	m_amt = 1875
 	origin_tech = "materials=4;plasmatech=2"
 	created_window = /obj/structure/window/plasmareinforced
-	//canCombineWith=list(/obj/item/stack/sheet/plasmareinforced,/obj/item/stack/sheet/plasmareinforced/cyborg)
 
 /obj/item/stack/sheet/glass/plasmaglass/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
 	rec.addMaterial("plasma",1)
