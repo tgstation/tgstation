@@ -195,7 +195,7 @@
 #define INACTIVITY_KICK	6000	//10 minutes in ticks (approx.)
 /world/proc/KickInactiveClients()
 	spawn(-1)
-		set background = 1
+		set background = BACKGROUND_ENABLED
 		while(1)
 			sleep(INACTIVITY_KICK)
 			for(var/client/C in clients)
