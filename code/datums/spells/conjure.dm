@@ -67,4 +67,4 @@
 	summon_type = list(/obj/machinery/bot/ed209)
 	summon_amt = 10
 	range = 3
-	newVars = list("emagged" = 1,"name" = "Wizard's Justicebot")
+	newVars = list("emagged" = 2,"name" = "Wizard's Justicebot")

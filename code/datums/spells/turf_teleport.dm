@@ -31,4 +31,5 @@
 		if(!picked || !isturf(picked))
 			return
 
-		target.loc = picked
+		if(!target.Move(picked))
+			target.loc = picked
