@@ -136,7 +136,7 @@ emp_act
 						O.show_message(text("\blue [user] has fixed some of the dents on [src]'s [affecting.getDisplayName()]!"), 1) //Tell everyone [src]'s limb (by its real name) has been repaired
 					return //So we don't attack them as well
 				else
-					user << "<span class='notice'>[src]'s [affecting.getDisplayName()] is already in good condidtion</span>"
+					user << "<span class='notice'>[src]'s [affecting.getDisplayName()] is already in good condition</span>"
 					return
 			else
 				user << "<span class='warning'>Need more welding fuel!</span>"
@@ -154,7 +154,7 @@ emp_act
 					O.show_message(text("\blue [user] has fixed some of the burnt wires on [src]'s [affecting.getDisplayName()]!"), 1)
 				return //So we don't attack them as well
 			else
-				user << "<span class='notice'>[src]'s [affecting.getDisplayName()] is already in good condidtion</span>"
+				user << "<span class='notice'>[src]'s [affecting.getDisplayName()] is already in good condition</span>"
 				return
 
 //-------------------- End of Cyber limb stuff ---------------------\\
