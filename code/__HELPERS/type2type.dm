@@ -69,7 +69,7 @@
 	var/l = ls.len // Made local for sanic speed.
 	var/i = 0 // Incremented every time a list index is accessed.
 
-	if(sep <> null)
+	if(sep != null)
 		// Macros expand to long argument lists like so: sep, ls[++i], sep, ls[++i], sep, ls[++i], etc...
 		#define S1    sep, ls[++i]
 		#define S4    S1,  S1,  S1,  S1
