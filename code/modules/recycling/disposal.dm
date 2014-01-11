@@ -716,13 +716,19 @@
 
 		var/turf/target
 
-		if(istype(T,/turf/simulated/floor)) //intact floor, pop the tile
+		if(istype(T, /turf/simulated/floor)) //intact floor, pop the tile
 			var/turf/simulated/floor/F = T
-			//F.health	= 100
-			F.break_tile()
-			F.levelupdate()
-			new /obj/item/stack/tile/plasteel(H)	// add to holder so it will be thrown with other stuff
-			F.icon_state = "Floor[F.burnt ? "1" : ""]"
+			if(F.is_carpet_floor())
+				new /obj/item/stack/tile/carpet(H)
+			else if(F.is_grass_floor())
+				new /obj/item/stack/tile/grass(H) // //
+			else if(F.is_light_floor())
+				new /obj/item/stack/tile/light(H)
+			//Apparently you need to use istypes for some turfs and helpers for others. ¯\_(;_;)_/¯
+			else if(!F.is_plating() && !F.is_wood_floor() && !istype(T, /turf/simulated/floor/engine) && !istype(F, /turf/simulated/floor/mech_bay_recharge_floor) /* <-- this is probably neccesary -->*/ && !istype(T, /turf/simulated/floor/beach) && !istype(T, /turf/simulated/floor/holofloor))
+				new /obj/item/stack/tile/plasteel(H)
+
+			F.make_plating()
 
 		if(direction)		// direction is specified
 			if(istype(T, /turf/space)) // if ended in space, then range is unlimited
