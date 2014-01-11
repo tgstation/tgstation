@@ -218,17 +218,15 @@
 	var/charge_tick = 0
 
 
-	New()
+/obj/item/device/flashlight/emp/New()
 		..()
 		processing_objects.Add(src)
 
-
-	Del()
+/obj/item/device/flashlight/emp/Del()
 		processing_objects.Remove(src)
 		..()
 
-
-	process()
+/obj/item/device/flashlight/emp/process()
 		charge_tick++
 		if(charge_tick < 10) return 0
 		charge_tick = 0
@@ -248,13 +246,13 @@
 	if(!proximity) return
 	if (emp_cur_charges > 0)
 		emp_cur_charges -= 1
-		A.emp_act(1)
 		A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].", \
 											"<span class='userdanger'>[user] blinks \the [src] at \the [A].")
 		if(ismob(A))
 			var/mob/M = A
 			add_logs(user, M, "attacked", object="EMP-light")
 		user << "\The [src] now has [emp_cur_charges] charge\s."
+		A.emp_act(1)
 	else
-		user << "<span class='warning'>The [src] needs time to recharge!</span>"
+		user << "<span class='warning'>\The [src] needs time to recharge!</span>"
 	return
