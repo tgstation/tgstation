@@ -15,53 +15,15 @@
 	desc = "The poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface."
 	icon_state = "rolled_poster"
 	var/serial_number = 0
-	var/obj/structure/sign/poster/resulting_poster = null //The poster that will be created is initialised and stored through contraband/poster's constructor
 
 
 /obj/item/weapon/contraband/poster/New(turf/loc, var/given_serial = 0)
 	if(given_serial == 0)
 		serial_number = rand(1, NUM_OF_POSTER_DESIGNS)
-		resulting_poster = new(serial_number)
 	else
 		serial_number = given_serial
-		//We don't give it a resulting_poster because if we called it with a given_serial it means that we're rerolling an already used poster.
 	name += " - No. [serial_number]"
 	..(loc)
-
-
-/*/obj/item/weapon/contraband/poster/attack(mob/M as mob, mob/user as mob)
-	src.add_fingerprint(user)
-	if(resulting_poster)
-		resulting_poster.add_fingerprint(user)
-	..()*/
-
-/*/obj/item/weapon/contraband/poster/attack(atom/A, mob/user as mob) //This shit is handled through the wall's attackby()
-	if(istype(A, /turf/simulated/wall))
-		if(resulting_poster == null)
-			return
-		else
-			var/turf/simulated/wall/W = A
-			var/check = 0
-			var/stuff_on_wall = 0
-			for(var/obj/O in W.contents) //Let's see if it already has a poster on it or too much stuff
-				if(istype(O,/obj/structure/sign/poster))
-					check = 1
-					break
-				stuff_on_wall++
-				if(stuff_on_wall == 3)
-					check = 1
-					break
-
-			if(check)
-				user << "<span class='notice'>The wall is far too cluttered to place a poster!</span>"
-				return
-
-			resulting_poster.loc = W //Looks like it's uncluttered enough. Place the poster
-			W.contents += resulting_poster
-
-			del(src)*/
-
-
 
 //############################## THE ACTUAL DECALS ###########################
 
@@ -124,10 +86,10 @@ obj/structure/sign/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 		playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		if(ruined)
 			user << "<span class='notice'>You remove the remnants of the poster.</span>"
+			del(src)
 		else
 			user << "<span class='notice'>You carefully remove the poster from the wall.</span>"
 			roll_and_drop(user.loc)
-		del(src)
 		return
 
 
@@ -151,14 +113,17 @@ obj/structure/sign/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 /obj/structure/sign/poster/proc/roll_and_drop(turf/newloc)
 	var/obj/item/weapon/contraband/poster/P = new(src, serial_number)
-	P.resulting_poster = src
 	P.loc = newloc
 	src.loc = P
+	del(src)
 
 
 //seperated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
 /turf/simulated/wall/proc/place_poster(var/obj/item/weapon/contraband/poster/P, var/mob/user)
-	if(!P.resulting_poster)	return
+
+	if(!istype(src,/turf/simulated/wall))
+		user << "\red You can't place this here!"
+		return
 
 	var/stuff_on_wall = 0
 	for(var/obj/O in contents) //Let's see if it already has a poster on it or too much stuff
@@ -173,7 +138,7 @@ obj/structure/sign/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	user << "<span class='notice'>You start placing the poster on the wall...</span>" //Looks like it's uncluttered enough. Place the poster.
 
 	//declaring D because otherwise if P gets 'deconstructed' we lose our reference to P.resulting_poster
-	var/obj/structure/sign/poster/D = P.resulting_poster
+	var/obj/structure/sign/poster/D = new(P.serial_number)
 
 	var/temp_loc = user.loc
 	flick("poster_being_set",D)
