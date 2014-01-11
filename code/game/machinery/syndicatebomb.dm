@@ -19,12 +19,13 @@
 
 /obj/machinery/syndicatebomb/process()
 	if(active && !defused && (timer > 0)) 	//Tick Tock
-		playsound(loc, beepsound, 5, 0)
+		var/volume = (timer <= 10 ? 30 : 5) // Tick louder when the bomb is closer to being detonated.
+		playsound(loc, beepsound, volume, 0)
 		timer--
 	if(active && !defused && (timer <= 0))	//Boom
 		active = 0
 		timer = 60
-		icon_state = "[initial(icon_state)]-inactive[open_panel ? "-wires" : ""]"
+		update_icon()
 		if(payload in src)
 			payload.detonate()
 		return
@@ -36,7 +37,7 @@
 /obj/machinery/syndicatebomb/New()
 	wires 	= new(src)
 	payload = new payload(src)
-	icon_state = "[initial(icon_state)]-inactive"
+	update_icon()
 	..()
 
 
@@ -44,6 +45,8 @@
 	..()
 	usr << "A digital display on it reads \"[timer]\"."
 
+/obj/machinery/syndicatebomb/update_icon()
+	icon_state = "[initial(icon_state)][active ? "-active" : "-inactive"][open_panel ? "-wires" : ""]"
 
 /obj/machinery/syndicatebomb/attackby(var/obj/item/I, var/mob/user)
 	if(istype(I, /obj/item/weapon/wrench))
@@ -66,7 +69,7 @@
 
 	else if(istype(I, /obj/item/weapon/screwdriver))
 		open_panel = !open_panel
-		icon_state = "[initial(icon_state)][active ? "-active" : "-inactive"][open_panel ? "-wires" : ""]"
+		update_icon()
 		user << "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>"
 
 	else if(istype(I, /obj/item/weapon/wirecutters) || istype(I, /obj/item/device/multitool) || istype(I, /obj/item/device/assembly/signaler ))
@@ -97,23 +100,26 @@
 		..()
 
 /obj/machinery/syndicatebomb/attack_hand(var/mob/user)
-	if(anchored)
-		if(open_panel)
-			wires.Interact(user)
-		else if(!active)
-			settings()
-		else
+	interact(user)
+
+/obj/machinery/syndicatebomb/interact(var/mob/user)
+	if(wires)
+		wires.Interact(user)
+	if(!open_panel)
+		if(!active)
+			settings(user)
+			return
+		else if(anchored)
 			user << "<span class='notice'>The bomb is bolted to the floor!</span>"
-	else if(!active)
-		settings()
+			return
 
 /obj/machinery/syndicatebomb/proc/settings(var/mob/user)
-	var/newtime = input(usr, "Please set the timer.", "Timer", "[timer]") as num
+	var/newtime = input(user, "Please set the timer.", "Timer", "[timer]") as num
 	newtime = Clamp(newtime, 60, 60000)
-	if(in_range(src, usr) && isliving(usr)) //No running off and setting bombs from across the station
+	if(in_range(src, user) && isliving(user)) //No running off and setting bombs from across the station
 		timer = newtime
 		src.loc.visible_message("\blue \icon[src] timer set for [timer] seconds.")
-	if(alert(usr,"Would you like to start the countdown now?",,"Yes","No") == "Yes" && in_range(src, usr) && isliving(usr))
+	if(alert(user,"Would you like to start the countdown now?",,"Yes","No") == "Yes" && in_range(src, user) && isliving(user))
 		if(defused || active)
 			if(defused)
 				src.loc.visible_message("\blue \icon[src] Device error: User intervention required")
@@ -121,15 +127,15 @@
 		else
 			src.loc.visible_message("\red \icon[src] [timer] seconds until detonation, please clear the area.")
 			playsound(loc, 'sound/machines/click.ogg', 30, 1)
-			icon_state = "[initial(icon_state)]-active[open_panel ? "-wires" : ""]"
 			active = 1
+			update_icon()
 			add_fingerprint(user)
 
 			var/turf/bombturf = get_turf(src)
 			var/area/A = get_area(bombturf)
 			if(payload && !istype(payload, /obj/item/weapon/bombcore/training))
-				message_admins("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has primed a [name] ([payload]) for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
-				log_game("[key_name(usr)] has primed a [name] ([payload]) for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
+				message_admins("[key_name(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has primed a [name] ([payload]) for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+				log_game("[key_name(user)] has primed a [name] ([payload]) for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
 
 /obj/machinery/syndicatebomb/proc/isWireCut(var/index)
 	return wires.IsIndexCut(index)
@@ -189,27 +195,34 @@
 	var/defusals = 0
 	var/attempts = 0
 
-/obj/item/weapon/bombcore/training/detonate()
+/obj/item/weapon/bombcore/training/proc/reset()
 	var/obj/machinery/syndicatebomb/holder = src.loc
-	if(istype(holder, /obj/machinery/syndicatebomb/))
-		attempts++
-		holder.loc.visible_message("\red \icon[holder] Alert: Bomb has detonated. Your score is now [defusals] for [attempts]. Resetting wires...")
+	if(istype(holder))
+		holder.open_panel = 0
 		if(holder.wires)
 			holder.wires.Shuffle()
+		holder.defused = 0
+		holder.update_icon()
+		holder.updateDialog()
+
+/obj/item/weapon/bombcore/training/detonate()
+	var/obj/machinery/syndicatebomb/holder = src.loc
+	if(istype(holder))
+		attempts++
+		holder.loc.visible_message("\red \icon[holder] Alert: Bomb has detonated. Your score is now [defusals] for [attempts]. Resetting wires...")
+		reset()
 	else
 		del(src)
 
 /obj/item/weapon/bombcore/training/defuse()
 	var/obj/machinery/syndicatebomb/holder = src.loc
-	if(istype(holder, /obj/machinery/syndicatebomb/))
+	if(istype(holder))
 		attempts++
 		defusals++
 		holder.loc.visible_message("\blue \icon[holder] Alert: Bomb has been defused. Your score is now [defusals] for [attempts]! Resetting wires...")
-		if(holder.wires)
-			holder.wires.Shuffle()
-		holder.defused = 0
+		reset()
 
-/obj/item/weapon/bombcore/badmin/
+/obj/item/weapon/bombcore/badmin
 	name = "badmin payload"
 	desc = "If you're seeing this someone has either made a mistake or gotten dangerously savvy with var editing!"
 	origin_tech = null
@@ -276,10 +289,10 @@
 			var/turf/T = get_turf(src)
 			var/area/A = get_area(T)
 			detonated--
-			var/log_str = "[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has remotely detonated [detonated ? "syndicate bombs" : "a syndicate bomb"] using a [name] at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[A.name] (JMP)</a>."
+			var/log_str = "[key_name(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has remotely detonated [detonated ? "syndicate bombs" : "a syndicate bomb"] using a [name] at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[A.name] (JMP)</a>."
 			bombers += log_str
 			message_admins(log_str)
-			log_game("[key_name(usr)] has remotely detonated [detonated ? "syndicate bombs" : "a syndicate bomb"] using a [name] at [A.name]([T.x],[T.y],[T.z])")
+			log_game("[key_name(user)] has remotely detonated [detonated ? "syndicate bombs" : "a syndicate bomb"] using a [name] at [A.name]([T.x],[T.y],[T.z])")
 		detonated =	0
 		existant =	0
 		cooldown = 1

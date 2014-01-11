@@ -9,6 +9,13 @@ var/const/WIRE_DELAY = 4		// Raises the timer on pulse, does nothing on cut
 var/const/WIRE_PROCEED = 8		// Lowers the timer, explodes if cut while the bomb is active
 var/const/WIRE_ACTIVATE = 16	// Will start a bombs timer if pulsed, will hint if pulsed while already active, will stop a timer a bomb on cut
 
+
+/datum/wires/syndicatebomb/CanUse(var/mob/living/L)
+	var/obj/machinery/syndicatebomb/P = holder
+	if(P.open_panel)
+		return 1
+	return 0
+
 /datum/wires/syndicatebomb/UpdatePulsed(var/index)
 	var/obj/machinery/syndicatebomb/P = holder
 	switch(index)
