@@ -6,7 +6,7 @@ Used In File(s): /code/game/machinery/alarm.dm
 #define AALARM_MODE_SCRUBBING	1
 #define AALARM_MODE_REPLACEMENT	2 //like scrubbing, but faster.
 #define AALARM_MODE_PANIC		3 //constantly sucks all air
-#define AALARM_MODE_CYCLE		4 //sucks off all air, then refill and switches to scrubbing
+#define AALARM_MODE_CYCLE		4 //sucks out all air, then refill and switches to scrubbing
 #define AALARM_MODE_FILL		5 //emergency fill
 #define AALARM_MODE_OFF			6 //Shuts it all down.
 
@@ -39,9 +39,9 @@ Used In File(s): /code/game/machinery/alarm.dm
 			<div class="statusValue" style="margin-left:5px;">
 			{{if !locked}}
 				{{if mode == 3}}
-					{{:~link("DEACTIVATE PANIC SYPHON",null,{"alarm":alarm,"mode" : 1},null,'linkOn')}}
+					{{:~link("DEACTIVATE PANIC SYPHON",null,{"mode" : 1},null,'linkOn')}}
 				{{else}}
-					{{:~link("ACTIVATE PANIC SYPHON",null,{"alarm":alarm,"mode" : 3},null,'red')}}
+					{{:~link("ACTIVATE PANIC SYPHON",null,{"mode" : 3},null,'red')}}
 				{{/if}}
 			{{/if}}
 			</div>
@@ -66,6 +66,13 @@ Used In File(s): /code/game/machinery/alarm.dm
 			{{:~displayBar(air.contents.plasma, 0, 100, ~dangerToClass(air.danger.plasma))}}
 			{{:~string("<div class='statusValue {0}'>{1}%</div>",~dangerToClass(air.danger.plasma),~precisionRound(air.contents.plasma,2))}}
 		</div>
+		{{if air.danger.other>0}}
+		<div class="line">
+			<div class="statusLabel">Other:</div>
+			{{:~displayBar(air.contents.other, 0, 100, ~dangerToClass(air.danger.other))}}
+			{{:~string("<div class='statusValue {0}'>{1}%</div>",~dangerToClass(air.danger.other),~precisionRound(air.contents.other,2))}}
+		</div>
+		{{/if}}
 		<div class="line">
 			<div class="statusLabel">
 				Temperature:
@@ -87,9 +94,9 @@ Used In File(s): /code/game/machinery/alarm.dm
 			{{/if}}
 			{{if !locked}}
 				{{if atmos_alarm}}
-					{{:~link('Reset Alarm',null,{"alarm":alarm,'atmos_reset':1},null,'linkOn floatRight')}}
+					{{:~link('Reset Alarm',null,{'atmos_reset':1},null,'linkOn floatRight')}}
 				{{else}}
-					{{:~link('Activate Alarm',null,{"alarm":alarm,'atmos_alarm':1},null,'red floatRight')}}
+					{{:~link('Activate Alarm',null,{'atmos_alarm':1},null,'red floatRight')}}
 				{{/if}}
 			{{/if}}
 			</div>
@@ -101,13 +108,13 @@ Used In File(s): /code/game/machinery/alarm.dm
 			#define RCON_YES	3
 			-->
 			<div class="statusLabel">Remote Control:</div>
-			{{:~link('Off',  null, {"alarm":alarm,'rcon' : 1}, (rcon != 1) ? null : 'disabled')}}
-			{{:~link('Auto', null, {"alarm":alarm,'rcon' : 2}, (rcon != 2) ? null : 'disabled')}}
-			{{:~link('On',   null, {"alarm":alarm,'rcon' : 3}, (rcon != 3) ? null : 'disabled')}}
+			{{:~link('Off',  null, {'rcon' : 1}, (rcon != 1) ? null : 'disabled')}}
+			{{:~link('Auto', null, {'rcon' : 2}, (rcon != 2) ? null : 'disabled')}}
+			{{:~link('On',   null, {'rcon' : 3}, (rcon != 3) ? null : 'disabled')}}
 		</div>
 		<div class="line">
 			<div class="statusLabel">Thermostat:</div>
-			{{:~link(target_temp+" C", 'carat-2-n-s', {"alarm":alarm,'temperature': 1})}}
+			{{:~link(target_temp+" C", 'carat-2-n-s', {'temperature': 1})}}
 		</div>
 	</div>
 	{{/if}}
@@ -119,11 +126,11 @@ Used In File(s): /code/game/machinery/alarm.dm
 		<div class="item">
 			<div class="itemLabel">Screen:</div>
 			<div class="itemContents">
-				{{:~link('Main',      'gear',{"alarm":alarm,'screen':1},(screen==1)?'linkOn':'')}}
-				{{:~link('Vents',     'gear',{"alarm":alarm,'screen':2},(screen==2)?'linkOn':'')}}
-				{{:~link('Scrubbers', 'gear',{"alarm":alarm,'screen':3},(screen==3)?'linkOn':'')}}
-				{{:~link('Mode',      'gear',{"alarm":alarm,'screen':4},(screen==4)?'linkOn':'')}}
-				{{:~link('Thresholds','gear',{"alarm":alarm,'screen':5},(screen==5)?'linkOn':'')}}
+				{{:~link('Main',      'gear',{'screen':1},(screen==1)?'linkOn':'')}}
+				{{:~link('Vents',     'gear',{'screen':2},(screen==2)?'linkOn':'')}}
+				{{:~link('Scrubbers', 'gear',{'screen':3},(screen==3)?'linkOn':'')}}
+				{{:~link('Mode',      'gear',{'screen':4},(screen==4)?'linkOn':'')}}
+				{{:~link('Thresholds','gear',{'screen':5},(screen==5)?'linkOn':'')}}
 			</div>
 		</div>
 		{{!-- VENTS --}}
@@ -137,19 +144,19 @@ Used In File(s): /code/game/machinery/alarm.dm
 					<div class="line">
 						<div class="statusLabel">Operating:</div>
 						<div class="statusValue">
-							{{:~link(power ? 'On':'Off','power',{"alarm":alarm,'id_tag':id_tag,'command':'power','val':power?0:1},null,(power?'linkOn':'red'))}}
+							{{:~link(power ? 'On':'Off','power',{'id_tag':id_tag,'command':'power','val':power?0:1},null,(power?'linkOn':'red'))}}
 							{{if direction=="siphon"}}
-								{{:~link('Siphoning','arrowthickstop-1-s',{"alarm":alarm,'id_tag':id_tag,'command':'set_dir','dir':'release'})}}
+								{{:~link('Siphoning','arrowthickstop-1-s',{'id_tag':id_tag,'command':'set_dir','dir':'release'})}}
 							{{else}}
-								{{:~link('Blowing','arrowthick-1-n',{"alarm":alarm,'id_tag':id_tag,'command':'set_dir','dir':'siphon'})}}
+								{{:~link('Blowing','arrowthick-1-n',{'id_tag':id_tag,'command':'set_dir','dir':'siphon'})}}
 							{{/if}}
 						</div>
 					</div>
 					<div class="line">
 						<div class="statusLabel">Pressure checks:</div>
 						<div class="statusValue">
-							{{:~link('External','power',{"alarm":alarm,'id_tag':id_tag,'command':'checks','val':~xor(checks,1)},null,(checks & 1 ?'linkOn':'red'))}}
-							{{:~link('Internal','power',{"alarm":alarm,'id_tag':id_tag,'command':'checks','val':~xor(checks,2)},null,(checks & 2 ?'linkOn':'red'))}}
+							{{:~link('External','power',{'id_tag':id_tag,'command':'checks','val':~xor(checks,1)},null,(checks & 1 ?'linkOn':'red'))}}
+							{{:~link('Internal','power',{'id_tag':id_tag,'command':'checks','val':~xor(checks,2)},null,(checks & 2 ?'linkOn':'red'))}}
 						</div>
 					</div>
 					<div class="line">
@@ -157,8 +164,8 @@ Used In File(s): /code/game/machinery/alarm.dm
 						<div class="statusValue">
 							{{:~precisionRound(external,4)}} kPa
 						</div>
-						{{:~link('Set','gear',{"alarm":alarm,'id_tag':id_tag,'command':'set_external_pressure'})}}
-						{{:~link('Reset','arrowrefresh-1-n',{"alarm":alarm,'id_tag':id_tag,'command':'set_external_pressure','val':101.325},null,'linkOn')}}
+						{{:~link('Set','gear',{'id_tag':id_tag,'command':'set_external_pressure'})}}
+						{{:~link('Reset','arrowrefresh-1-n',{'id_tag':id_tag,'command':'set_external_pressure','val':101.325},null,'linkOn')}}
 					</div>
 				</div>
 			{{else}}
@@ -175,16 +182,16 @@ Used In File(s): /code/game/machinery/alarm.dm
 					<div class="line">
 						<div class="statusLabel">Operating:</div>
 						<div class="statusValue">
-							{{:~link(power ? 'On':'Off','power',{"alarm":alarm,'id_tag':id_tag,'command':'power','val':power?0:1},null,(power?'linkOn':'red'))}}
+							{{:~link(power ? 'On':'Off','power',{'id_tag':id_tag,'command':'power','val':power?0:1},null,(power?'linkOn':'red'))}}
 						</div>
 					</div>
 					<div class="line">
 						<div class="statusLabel">Type:</div>
 						<div class="statusValue">
 							{{if scrubbing==0}}
-								{{:~link('Siphoning','arrowthickstop-1-s',{"alarm":alarm,'id_tag':id_tag,'command':'scrubbing','val':1},null,'red')}}
+								{{:~link('Siphoning','arrowthickstop-1-s',{'id_tag':id_tag,'command':'scrubbing','val':1},null,'red')}}
 							{{else}}
-								{{:~link('Scrubbing','transferthick-e-w',{"alarm":alarm,'id_tag':id_tag,'command':'scrubbing','val':0},null,'linkOn')}}
+								{{:~link('Scrubbing','transferthick-e-w',{'id_tag':id_tag,'command':'scrubbing','val':0},null,'linkOn')}}
 							{{/if}}
 						</div>
 					</div>
@@ -192,10 +199,10 @@ Used In File(s): /code/game/machinery/alarm.dm
 					<div class="line">
 						<div class="statusLabel">Filtering:</div>
 						<div class="statusValue">
-							{{:~link('CO<sub>2</sub>',null,{"alarm":alarm,'id_tag':id_tag,'command':'co2_scrub','val':(filter_co2==0?1:0)},null,(filter_co2?'linkOn':''))}}
-							{{:~link('Plasma',        null,{"alarm":alarm,'id_tag':id_tag,'command':'tox_scrub','val':(filter_tox==0?1:0)},null,(filter_tox?'linkOn':''))}}
-							{{:~link('N<sub>2</sub>O',null,{"alarm":alarm,'id_tag':id_tag,'command':'n2o_scrub','val':(filter_n2o==0?1:0)},null,(filter_n2o?'linkOn':''))}}
-							{{:~link('O<sub>2</sub>', null,{"alarm":alarm,'id_tag':id_tag,'command':'o2_scrub', 'val':(filter_o2 ==0?1:0)},null,(filter_o2 ?'linkOn':''))}}
+							{{:~link('CO<sub>2</sub>',null,{'id_tag':id_tag,'command':'co2_scrub','val':(filter_co2==0?1:0)},null,(filter_co2?'linkOn':''))}}
+							{{:~link('Plasma',        null,{'id_tag':id_tag,'command':'tox_scrub','val':(filter_tox==0?1:0)},null,(filter_tox?'linkOn':''))}}
+							{{:~link('N<sub>2</sub>O',null,{'id_tag':id_tag,'command':'n2o_scrub','val':(filter_n2o==0?1:0)},null,(filter_n2o?'linkOn':''))}}
+							{{:~link('O<sub>2</sub>', null,{'id_tag':id_tag,'command':'o2_scrub', 'val':(filter_o2 ==0?1:0)},null,(filter_o2 ?'linkOn':''))}}
 						</div>
 					</div>
 					{{/if}}
@@ -209,7 +216,7 @@ Used In File(s): /code/game/machinery/alarm.dm
 			<div class="statusDisplay">
 				{{for modes}}
 				<div class="line">
-					<div class="statusLabel">{{:~link(name,'gear',{"alarm":alarm,'mode':#index+1},null,(#index+1==~root.mode?'linkOn':''))}}</div>
+					<div class="statusLabel">{{:~link(name,'gear',{'mode':#index+1},null,(#index+1==~root.mode?'linkOn':''))}}</div>
 					<div class="statusValue">
 						{{:desc}}
 					</div>
@@ -221,7 +228,7 @@ Used In File(s): /code/game/machinery/alarm.dm
 			<div class="statusDisplay">
 				{{for presets}}
 				<div class="line">
-					<div class="statusLabel">{{:~link(name,'gear',{"alarm":alarm,'preset':#index+1},null,(#index+1==~root.preset?'linkOn':''))}}</div>
+					<div class="statusLabel">{{:~link(name,'gear',{'preset':#index+1},null,(#index+1==~root.preset?'linkOn':''))}}</div>
 					<div class="statusValue">
 						{{:desc}}
 					</div>
@@ -244,37 +251,37 @@ Used In File(s): /code/game/machinery/alarm.dm
 						<tr>
 							<th>O<sub>2</sub></th>
 							{{for sensors.oxygen}}
-								<td>{{:~link(#data >= 0 ? ~precisionRound(#data,4) : "OFF",null,{"alarm":alarm,'command':'set_threshold','env':'oxygen','var':#index+1})}}</td>
+								<td>{{:~link(#data >= 0 ? ~precisionRound(#data,4) : "OFF",null,{'command':'set_threshold','env':'oxygen','var':#index+1})}}</td>
 							{{/for}}
 						</tr>
 						<tr>
 							<th>N<sub>2</sub></th>
 							{{for sensors.nitrogen}}
-								<td>{{:~link(#data >= 0 ? ~precisionRound(#data,4) : "OFF",null,{"alarm":alarm,'command':'set_threshold','env':'nitrogen','var':#index+1})}}</td>
+								<td>{{:~link(#data >= 0 ? ~precisionRound(#data,4) : "OFF",null,{'command':'set_threshold','env':'nitrogen','var':#index+1})}}</td>
 							{{/for}}
 						</tr>
 						<tr>
 							<th>CO<sub>2</sub></th>
 							{{for sensors.carbon_dioxide}}
-								<td>{{:~link(#data >= 0 ? ~precisionRound(#data,4) : "OFF",null,{"alarm":alarm,'command':'set_threshold','env':'carbon_dioxide','var':#index+1})}}</td>
+								<td>{{:~link(#data >= 0 ? ~precisionRound(#data,4) : "OFF",null,{'command':'set_threshold','env':'carbon_dioxide','var':#index+1})}}</td>
 							{{/for}}
 						</tr>
 						<tr>
 							<th>Toxins</th>
 							{{for sensors.plasma}}
-								<td>{{:~link(#data >= 0 ? ~precisionRound(#data,4) : "OFF",null,{"alarm":alarm,'command':'set_threshold','env':'plasma','var':#index+1})}}</td>
+								<td>{{:~link(#data >= 0 ? ~precisionRound(#data,4) : "OFF",null,{'command':'set_threshold','env':'plasma','var':#index+1})}}</td>
 							{{/for}}
 						</tr>
 						<tr>
 							<th>Pressure</th>
 							{{for sensors.pressure}}
-								<td>{{:~link(#data >= 0 ? ~precisionRound(#data,4) : "OFF",null,{"alarm":alarm,'command':'set_threshold','env':'pressure','var':#index+1})}}</td>
+								<td>{{:~link(#data >= 0 ? ~precisionRound(#data,4) : "OFF",null,{'command':'set_threshold','env':'pressure','var':#index+1})}}</td>
 							{{/for}}
 						</tr>
 						<tr>
 							<th>Temperature (K)</th>
 							{{for sensors.temperature}}
-								<td>{{:~link(#data >= 0 ? ~precisionRound(#data,4) : "OFF",null,{"alarm":alarm,'command':'set_threshold','env':'temperature','var':#index+1})}}</td>
+								<td>{{:~link(#data >= 0 ? ~precisionRound(#data,4) : "OFF",null,{'command':'set_threshold','env':'temperature','var':#index+1})}}</td>
 							{{/for}}
 						</tr>
 					</tbody>
