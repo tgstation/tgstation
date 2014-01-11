@@ -19,13 +19,12 @@
 /turf/simulated/mineral/ex_act(severity)
 	switch(severity)
 		if(3.0)
-			return
+			if (prob(75))
+				src.gets_drilled()
 		if(2.0)
-			if (prob(70))
-				src.mineralAmt -= 1 //some of the stuff gets blown up
+			if (prob(90))
 				src.gets_drilled()
 		if(1.0)
-			src.mineralAmt -= 2 //some of the stuff gets blown up
 			src.gets_drilled()
 	return
 
@@ -63,7 +62,7 @@
 
 /turf/simulated/mineral/random
 	name = "Mineral deposit"
-	var/mineralSpawnChanceList = list("Uranium" = 5, "Iron" = 50, "Diamond" = 1, "Gold" = 5, "Silver" = 5, "Plasma" = 25/*, "Adamantine" =5*/, "Cave" = 1)//Currently, Adamantine won't spawn as it has no uses. -Durandan
+	var/mineralSpawnChanceList = list("Uranium" = 5, "Iron" = 50, "Diamond" = 1, "Gold" = 5, "Silver" = 5, "Plasma" = 25, "Gibtonite" = 5/*, "Adamantine" =5*/, "Cave" = 1)//Currently, Adamantine won't spawn as it has no uses. -Durandan
 	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
 
 /turf/simulated/mineral/random/New()
@@ -88,7 +87,8 @@
 					M = new/turf/simulated/mineral/plasma(src)
 				if("Cave")
 					new/turf/simulated/floor/plating/asteroid/airless/cave(src)
-
+				if("Gibtonite")
+					M = new/turf/simulated/mineral/gibtonite(src)
 				/*if("Adamantine")
 					M = new/turf/simulated/mineral/adamantine(src)*/
 			if(M)
@@ -98,7 +98,7 @@
 
 /turf/simulated/mineral/random/high_chance
 	mineralChance = 25
-	mineralSpawnChanceList = list("Uranium" = 10, "Iron" = 30, "Diamond" = 2, "Gold" = 10, "Silver" = 10, "Plasma" = 25)
+	mineralSpawnChanceList = list("Uranium" = 10, "Iron" = 30, "Diamond" = 2, "Gold" = 10, "Silver" = 10, "Plasma" = 25, "Gibtonite" = 8)
 
 /turf/simulated/mineral/uranium
 	name = "Uranium deposit"
@@ -162,6 +162,87 @@
 	mineralAmt = 3
 	spreadChance = 0
 	spread = 0
+
+////////////////////////////////Gibtonite
+/turf/simulated/mineral/gibtonite
+	name = "Diamond deposit" //honk
+	icon_state = "rock_Diamond"
+	mineralName = "Gibtonite"
+	mineralAmt = 1
+	spreadChance = 0
+	spread = 1
+	var/det_time = 8 //Countdown till explosion, but also rewards the player for how close you were to detonation when you defuse it
+	var/stage = 0 //How far into the lifecycle of gibtonite we are, 0 is untouched, 1 is active and attempting to detonate, 2 is benign and ready for extraction
+	var/activated_ckey = null //These are to track who triggered the gibtonite deposit for logging purposes
+	var/activated_name = null
+
+/turf/simulated/mineral/gibtonite/New()
+	det_time = rand(8,10) //So you don't know exactly when the hot potato will explode
+	..()
+
+/turf/simulated/mineral/gibtonite/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/device/analyzer) && stage == 1)
+		user.visible_message("<span class='notice'>You use the analyzer to locate where to cut off the chain reaction and attempt to stop it...</span>")
+		defuse()
+	if(istype(I, /obj/item/weapon/pickaxe))
+		src.activated_ckey = "[user.ckey]"
+		src.activated_name = "[user.name]"
+	..()
+
+/turf/simulated/mineral/gibtonite/proc/explosive_reaction()
+	if(stage == 0)
+		icon_state = "rock_Gibtonite_active"
+		name = "Gibtonite deposit"
+		desc = "An active gibtonite reserve. Run!"
+		stage = 1
+		visible_message("<span class='warning'>There was gibtonite inside! It's going to explode!</span>")
+		var/turf/bombturf = get_turf(src)
+		var/area/A = get_area(bombturf)
+		var/log_str = "[src.activated_ckey]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> [src.activated_name] has triggered a gibtonite deposit reaction <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>."
+		log_game(log_str)
+		countdown()
+
+/turf/simulated/mineral/gibtonite/proc/countdown()
+	spawn(0)
+		while(stage == 1 && det_time > 0 && mineralAmt >= 1)
+			det_time--
+			sleep(5)
+		if(stage == 1 && det_time <= 0 && mineralAmt >= 1)
+			var/turf/bombturf = get_turf(src)
+			mineralAmt = 0
+			explosion(bombturf,1,3,5, adminlog = 0)
+		if(stage == 0 || stage == 2)
+			return
+
+/turf/simulated/mineral/gibtonite/proc/defuse()
+	if(stage == 1)
+		icon_state = "rock_Gibtonite"
+		desc = "An inactive gibtonite reserve. The ore can be extracted."
+		stage = 2
+		if(det_time < 0)
+			det_time = 0
+		visible_message("<span class='notice'>The chain reaction was stopped! The gibtonite had [src.det_time] reactions left till the explosion!</span>")
+
+/turf/simulated/mineral/gibtonite/gets_drilled()
+	if(stage == 0 && mineralAmt >= 1) //Gibtonite deposit is activated
+		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,1)
+		explosive_reaction()
+		return
+	if(stage == 1 && mineralAmt >= 1) //Gibtonite deposit goes kaboom
+		var/turf/bombturf = get_turf(src)
+		mineralAmt = 0
+		explosion(bombturf,1,2,5, adminlog = 0)
+	if(stage == 2) //Gibtonite deposit is now benign and extractable. Depending on how close you were to it blowing up before defusing, you get better quality ore.
+		var/obj/item/weapon/twohanded/required/gibtonite/G = new /obj/item/weapon/twohanded/required/gibtonite/(src)
+		if(det_time <= 0)
+			G.quality = 3
+			G.icon_state = "Gibtonite ore 3"
+		if(det_time >= 1 && det_time <= 2)
+			G.quality = 2
+			G.icon_state = "Gibtonite ore 2"
+	..()
+
+////////////////////////////////End Gibtonite
 
 /turf/simulated/floor/plating/asteroid/airless/cave
 	var/length = 100
@@ -350,7 +431,7 @@
 		if(3.0)
 			return
 		if(2.0)
-			if (prob(70))
+			if (prob(20))
 				src.gets_dug()
 		if(1.0)
 			src.gets_dug()
@@ -435,6 +516,9 @@
 	dug = 1
 	icon_plating = "asteroid_dug"
 	icon_state = "asteroid_dug"
+	return
+
+/turf/simulated/floor/plating/asteroid/proc/countdown()//This is here to stop runtimes in the event that changeturf() causes asteroid plating to take gibtonite procs
 	return
 
 /turf/proc/updateMineralOverlays()
