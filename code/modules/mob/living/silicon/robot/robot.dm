@@ -49,10 +49,6 @@
 	var/datum/effect/effect/system/spark_spread/spark_system//So they can initialize sparks whenever/N
 	var/jeton = 0
 
-	var/killswitch = 0
-	var/killswitch_time = 60
-	var/weapon_lock = 0
-	var/weaponlock_time = 120
 	var/lawupdate = 1 //Cyborgs will sync their laws with their AI by default
 	var/lockcharge //Boolean of whether the borg is locked down or not
 	var/speed = 0 //Cause sec borgs gotta go fast //No they dont!
@@ -811,10 +807,6 @@
 
 
 /mob/living/silicon/robot/proc/installed_modules()
-	if(weapon_lock)
-		src << "\red Weapon lock active, unable to use modules! Count:[weaponlock_time]"
-		return
-
 	if(!module)
 		pick_module()
 		return
