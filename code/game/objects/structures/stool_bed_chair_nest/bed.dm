@@ -48,18 +48,29 @@
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)
 			if(buckled_mob != user)
-				buckled_mob.visible_message(\
-					"\blue [buckled_mob.name] was unbuckled by [user.name]!",\
-					"You were unbuckled from [src] by [user.name].",\
-					"You hear metal clanking")
+				if(!(user.buckled))
+					unbuckle_other(user)
+				else
+					user << "<span class='notice'>You can't reach [src]!</span>"
 			else
-				buckled_mob.visible_message(\
-					"\blue [buckled_mob.name] unbuckled \himself!",\
-					"You unbuckle yourself from [src].",\
-					"You hear metal clanking")
-			unbuckle()
+				unbuckle_myself(user)
 			src.add_fingerprint(user)
 	return
+
+/obj/structure/stool/bed/proc/unbuckle_other(mob/user as mob)
+	buckled_mob.visible_message(\
+		"<span class='notice'>[buckled_mob.name] was unbuckled by [user.name]!</span>",\
+		"You were unbuckled from [src] by [user.name].",\
+		"You hear metal clanking.")
+	unbuckle()
+
+
+/obj/structure/stool/bed/proc/unbuckle_myself(mob/user as mob)
+	buckled_mob.visible_message(\
+		"<span class='notice'>[buckled_mob.name] unbuckled \himself!</span>",\
+		"You unbuckle yourself from [src].",\
+		"You hear metal clanking.")
+	unbuckle()
 
 /obj/structure/stool/bed/proc/buckle_mob(mob/M as mob, mob/user as mob)
 	if (!ticker)
