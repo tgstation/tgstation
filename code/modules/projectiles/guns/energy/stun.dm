@@ -93,9 +93,7 @@
 
 	update_icon()
 		return
-/obj/item/weapon/gun/energy/crossbow/cyborg/process()
-	..()
-	return
+
 /obj/item/weapon/gun/energy/crossbow/cyborg/process_chambered()
 	if(in_chamber)
 		return 1

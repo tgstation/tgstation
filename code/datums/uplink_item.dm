@@ -185,7 +185,7 @@ var/list/uplink_items = list()
 //for refunding the syndieborg teleporter
 /datum/uplink_item/dangerous/syndieborg/spawn_item()
 	var/obj/item/weapon/antag_spawner/borg_tele/T = ..()
-	if(T)
+	if(istype(T))
 		T.TC_cost = cost
 
 // AMMUNITION
