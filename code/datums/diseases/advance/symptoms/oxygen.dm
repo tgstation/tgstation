@@ -10,7 +10,7 @@ Self-Respiration
 	Fatal Level.
 
 Bonus
-	The body generates Inaprovaline.
+	The body generates Dexalin Plus.
 
 //////////////////////////////////////
 */
@@ -26,12 +26,13 @@ Bonus
 
 /datum/symptom/oxygen/Activate(var/datum/disease/advance/A)
 	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB))
+	if(prob(SYMPTOM_ACTIVATION_PROB * 5))
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
-			if(1, 2, 3, 4)
-				M << "<span class='notice'>[pick("Your lungs feel great.", "You are now breathing manually.", "You don't feel the need to breathe.")]</span>"
+			if(4, 5)
+				if (M.reagents.get_reagent_amount("dexalinp") < 20)
+					M.reagents.add_reagent("dexalinp", 20)
 			else
-				if (M.reagents.get_reagent_amount("dexalin") < 40)
-					M.reagents.add_reagent("dexalin", 20)
+				if(prob(SYMPTOM_ACTIVATION_PROB * 5))
+					M << "<span class='notice'>[pick("Your lungs feel great.", "You are now breathing manually.", "You don't feel the need to breathe.")]</span>"
 	return
