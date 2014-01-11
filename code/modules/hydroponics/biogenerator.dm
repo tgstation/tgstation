@@ -2,7 +2,7 @@
 	name = "Biogenerator"
 	desc = ""
 	icon = 'icons/obj/biogenerator.dmi'
-	icon_state = "biogen-stand"
+	icon_state = "biogen-empty"
 	density = 1
 	anchored = 1
 	use_power = 1
@@ -22,7 +22,7 @@
 		component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 		component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 		component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-		component_parts += new /obj/item/weapon/cable_coil(null)
+		component_parts += new /obj/item/weapon/cable_coil(null, 1)
 		RefreshParts()
 
 /obj/machinery/biogenerator/RefreshParts()

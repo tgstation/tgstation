@@ -29,7 +29,7 @@
 	var/frame_desc = null
 
 /obj/item/weapon/circuitboard/telesci_console
-	name = "circuit board (Message Monitor)"
+	name = "circuit board (Telescience Console)"
 	build_path = /obj/machinery/computer/telescience
 	origin_tech = "programming=3;bluespace=2"
 /obj/item/weapon/circuitboard/message_monitor

@@ -22,8 +22,9 @@
 
 	// Based on the power used
 	var/teleport_cooldown = 0 // every index requires a bluespace crystal
+	var/list/power_options = list(5, 10, 20, 25, 30, 40, 50, 80, 100)
 	var/teleporting = 0
-	var/starting_crystals = 1
+	var/starting_crystals = 3
 	var/max_crystals = 4
 	var/list/crystals = list()
 	var/obj/item/device/gps/inserted_gps
@@ -34,8 +35,9 @@
 
 /obj/machinery/computer/telescience/Del()
 	eject()
-	inserted_gps.loc = loc
-	inserted_gps = null
+	if(inserted_gps)
+		inserted_gps.loc = loc
+		inserted_gps = null
 	..()
 
 /obj/machinery/computer/telescience/examine()
@@ -96,35 +98,50 @@
 
 /obj/machinery/computer/telescience/interact(mob/user)
 	var/t
-	if(inserted_gps)
-		t += "<A href='?src=\ref[src];ejectGPS=1'>Eject GPS</A>"
-		t += "<A href='?src=\ref[src];setMemory=1'>Set GPS memory</A>"
+	if(!telepad)
+		in_use = 0     //Yeah so if you deconstruct teleporter while its in the process of shooting it wont disable the console
+		t += "<div class='statusDisplay'>No telepad located. <BR>Please add telepad data.</div><BR>"
 	else
-		t += "<span class='linkOff'>Eject GPS</span>"
-		t += "<span class='linkOff'>Set GPS memory</span>"
-	t += "<div class='statusDisplay'>[temp_msg]</div><BR>"
-	t += "<A href='?src=\ref[src];setrotation=1'>Set Bearing</A>"
-	t += "<div class='statusDisplay'>[rotation]°</div>"
-	t += "<A href='?src=\ref[src];setangle=1'>Set Elevation</A>"
-	t += "<div class='statusDisplay'>[angle]°</div>"
-	t += "<A href='?src=\ref[src];setpower=1'>Set Power</A>"
-	t += "<div class='statusDisplay'>[power]</div>"
-	t += "<A href='?src=\ref[src];setz=1'>Set Sector</A>"
-	t += "<div class='statusDisplay'>[z_co ? z_co : "NULL"]</div>"
+		if(inserted_gps)
+			t += "<A href='?src=\ref[src];ejectGPS=1'>Eject GPS</A>"
+			t += "<A href='?src=\ref[src];setMemory=1'>Set GPS memory</A>"
+		else
+			t += "<span class='linkOff'>Eject GPS</span>"
+			t += "<span class='linkOff'>Set GPS memory</span>"
+		t += "<div class='statusDisplay'>[temp_msg]</div><BR>"
+		t += "<A href='?src=\ref[src];setrotation=1'>Set Bearing</A>"
+		t += "<div class='statusDisplay'>[rotation]°</div>"
+		t += "<A href='?src=\ref[src];setangle=1'>Set Elevation</A>"
+		t += "<div class='statusDisplay'>[angle]°</div>"
+		t += "<span class='linkOn'>Set Power</span>"
+		t += "<div class='statusDisplay'>"
 
-	t += "<BR><A href='?src=\ref[src];send=1'>Send</A>"
-	t += " <A href='?src=\ref[src];receive=1'>Receive</A>"
-	t += "<BR><A href='?src=\ref[src];recal=1'>Recalibrate Crystals</A> <A href='?src=\ref[src];eject=1'>Eject Crystals</A>"
+		for(var/i = 1; i <= power_options.len; i++)
+			if(crystals.len + telepad.efficiency  < i)
+				t += "<span class='linkOff'>[power_options[i]]</span>"
+				continue
+			if(power == power_options[i])
+				t += "<span class='linkOn'>[power_options[i]]</span>"
+				continue
+			t += "<A href='?src=\ref[src];setpower=[i]'>[power_options[i]]</A>"
+		t += "</div>"
 
-	// Information about the last teleport
-	t += "<BR><div class='statusDisplay'>"
-	if(!last_tele_data)
-		t += "No teleport data found."
-	else
-		t += "Source Location: ([last_tele_data.src_x], [last_tele_data.src_y])<BR>"
-		//t += "Distance: [round(last_tele_data.distance, 0.1)]m<BR>"
-		t += "Time: [round(last_tele_data.time, 0.1)] secs<BR>"
-	t += "</div>"
+		t += "<A href='?src=\ref[src];setz=1'>Set Sector</A>"
+		t += "<div class='statusDisplay'>[z_co ? z_co : "NULL"]</div>"
+
+		t += "<BR><A href='?src=\ref[src];send=1'>Send</A>"
+		t += " <A href='?src=\ref[src];receive=1'>Receive</A>"
+		t += "<BR><A href='?src=\ref[src];recal=1'>Recalibrate Crystals</A> <A href='?src=\ref[src];eject=1'>Eject Crystals</A>"
+
+		// Information about the last teleport
+		t += "<BR><div class='statusDisplay'>"
+		if(!last_tele_data)
+			t += "No teleport data found."
+		else
+			t += "Source Location: ([last_tele_data.src_x], [last_tele_data.src_y])<BR>"
+			//t += "Distance: [round(last_tele_data.distance, 0.1)]m<BR>"
+			t += "Time: [round(last_tele_data.time, 0.1)] secs<BR>"
+		t += "</div>"
 
 	var/datum/browser/popup = new(user, "telesci", name, 300, 500)
 	popup.set_content(t)
@@ -265,9 +282,10 @@
 	if(..())
 		return
 	if(!telepad)
-		temp_msg = "ERROR!<BR>No telepad linked."
 		updateDialog()
 		return
+	if(telepad.panel_open)
+		temp_msg = "Telepad undergoing physical maintenance operations."
 
 	if(href_list["setrotation"])
 		var/new_rot = input("Please input desired bearing in degrees.", name, rotation) as num
@@ -283,10 +301,11 @@
 		angle = Clamp(round(new_angle, 0.1), 1, 9999)
 
 	if(href_list["setpower"])
-		var/new_power = input("Please input desired power.", name, power) as num
-		if(..())
-			return
-		power = round(min((crystals.len + telepad.efficiency) * 10 , new_power),5)
+		var/index = href_list["setpower"]
+		index = text2num(index)
+		if(index != null && power_options[index])
+			if(crystals.len + telepad.efficiency >= index)
+				power = power_options[index]
 
 	if(href_list["setz"])
 		var/new_z = input("Please input desired sector.", name, z_co) as num
