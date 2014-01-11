@@ -503,7 +503,7 @@
 		return 0 // 0 = User is not a Malf AI
 
 
-/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main")
+/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(!user)
 		return
 
@@ -552,20 +552,19 @@
 			)
 		)
 	)
-
-	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, ui_key)
+	
+	// update the ui if it exists, returns null if no ui is passed/found
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)	
 	if (!ui)
-		// the ui does not exist, so we'll create a new one
-		ui = new(user, src, ui_key, "apc.tmpl", "[area.name] - APC", 500, data["siliconUser"] ? 465 : 390)
-		// When the UI is first opened this is the data it will use
-		ui.set_initial_data(data)
+		// the ui does not exist, so we'll create a new() one
+        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
+		ui = new(user, src, ui_key, "apc.tmpl", "[area.name] - APC", 520, data["siliconUser"] ? 465 : 420)
+		// when the ui is first opened this is the data it will use
+		ui.set_initial_data(data)		
+		// open the new ui window
 		ui.open()
-		// Auto update every Master Controller tick
+		// auto update every Master Controller tick
 		ui.set_auto_update(1)
-	else
-		// The UI is already open so push the new data to it
-		ui.push_data(data)
-		return
 
 /obj/machinery/power/apc/proc/report()
 	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_equip+lastused_light+lastused_environ]) : [cell? cell.percent() : "N/C"] ([charging])"

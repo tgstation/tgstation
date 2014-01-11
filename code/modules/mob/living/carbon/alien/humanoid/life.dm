@@ -10,7 +10,7 @@
 
 /mob/living/carbon/alien/humanoid/Life()
 	set invisibility = 0
-	set background = 1
+	set background = BACKGROUND_ENABLED
 
 	if (notransform)
 		return
