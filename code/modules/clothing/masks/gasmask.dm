@@ -265,3 +265,10 @@
 	name = "owl mask"
 	desc = "Twoooo!"
 	icon_state = "owl"
+
+// **** Doctor 'gas mask' ****
+
+/obj/item/clothing/mask/gas/medical
+	name = "medical gas mask"
+	desc = "Medical gas mask."
+	icon_state = "gasmed"
