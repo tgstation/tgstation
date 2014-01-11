@@ -112,7 +112,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "revolver"
 	item_state = "gun"
-	flags =  FPRINT | TABLEPASS | CONDUCT
+	flags =  CONDUCT
 	slot_flags = SLOT_BELT
 	w_class = 3.0
 	g_amt = 10
@@ -168,7 +168,6 @@
 	desc = "There are 7 caps left! Make sure to recyle the box in an autolathe when it gets empty."
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "357-7"
-	flags = FPRINT | TABLEPASS| CONDUCT
 	w_class = 1.0
 	g_amt = 10
 	m_amt = 10
@@ -189,7 +188,6 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "crossbow"
 	item_state = "crossbow"
-	flags = FPRINT | TABLEPASS
 	w_class = 2.0
 	attack_verb = list("attacked", "struck", "hit")
 	var/bullets = 5
@@ -285,7 +283,6 @@
 	desc = "Its nerf or nothing! Ages 8 and up."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "foamdart"
-	flags = FPRINT | TABLEPASS
 	w_class = 1.0
 
 /obj/effect/foam_dart_dummy
@@ -308,7 +305,7 @@
 	item_state = "sword0"
 	var/active = 0.0
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = NOSHIELD
 	attack_verb = list("attacked", "struck", "hit")
 	var/hacked = 0
 
@@ -395,7 +392,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "katana"
 	item_state = "katana"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 5
 	throwforce = 5
@@ -854,7 +851,23 @@ obj/item/toy/singlecard/attack_self(mob/user)
 	Flip()
 
 
+/obj/item/toy/nuke
+	name = "\improper Nuclear Fission Explosive toy"
+	desc = "A plastic model of a Nuclear Fission Explosive."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "nuketoyidle"
+	w_class = 2.0
+	var/cooldown = 0
 
+/obj/item/toy/nuke/attack_self(mob/user)
+	if (cooldown < world.time)
+		cooldown = world.time + 3000 //5 minutes
+		user.visible_message("<span class='warning'>[user] presses a button on [src]</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='notice'>You hear the click of a button.</span>")
+		spawn(5) //gia said so
+			icon_state = "nuketoy"
+			playsound(src, 'sound/machines/Alarm.ogg', 100, 0, surround = 0)
+			sleep(135)
+			icon_state = "nuketoyidle"
 
 
 

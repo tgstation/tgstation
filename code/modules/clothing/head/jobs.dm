@@ -6,14 +6,12 @@
 	icon_state = "chef"
 	item_state = "chef"
 	desc = "The commander in chef's head wear."
-	flags = FPRINT | TABLEPASS
 
-//Captain: This probably shouldn't be space-worthy
+//Captain
 /obj/item/clothing/head/caphat
 	name = "captain's hat"
 	icon_state = "captain"
 	desc = "It's good being the king."
-	flags = FPRINT|TABLEPASS
 	item_state = "that"
 
 //Captain: This probably shouldn't be space-worthy
@@ -21,7 +19,6 @@
 	name = "captain's cap"
 	desc = "You fear to wear it for the negligence it brings."
 	icon_state = "capcap"
-	flags = FPRINT|TABLEPASS
 	flags_inv = 0
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
@@ -33,14 +30,14 @@
 	name = "chaplain's hood"
 	desc = "It's hood that covers the head. It keeps you warm during the space winters."
 	icon_state = "chaplain_hood"
-	flags = FPRINT|TABLEPASS|HEADCOVERSEYES|BLOCKHAIR
+	flags = HEADCOVERSEYES|BLOCKHAIR
 
 //Chaplain
 /obj/item/clothing/head/nun_hood
 	name = "nun hood"
 	desc = "Maximum piety in this star system."
 	icon_state = "nun_hood"
-	flags = FPRINT|TABLEPASS|HEADCOVERSEYES|BLOCKHAIR
+	flags = HEADCOVERSEYES|BLOCKHAIR
 
 /obj/item/clothing/head/det_hat
 	name = "hat"
@@ -54,7 +51,6 @@
 	name = "beret"
 	desc = "A beret, a mime's favorite headwear."
 	icon_state = "beret"
-	flags = FPRINT | TABLEPASS
 
 //Security
 /obj/item/clothing/head/beret/sec

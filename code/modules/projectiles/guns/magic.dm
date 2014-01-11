@@ -5,7 +5,7 @@
 	icon_state = "staffofnothing"
 	item_state = "staff"
 	fire_sound = 'sound/weapons/emitter.ogg'
-	flags =  FPRINT | TABLEPASS | CONDUCT
+	flags =  CONDUCT
 	w_class = 5
 	var/projectile_type = "/obj/item/projectile/magic"
 	var/max_charges = 6

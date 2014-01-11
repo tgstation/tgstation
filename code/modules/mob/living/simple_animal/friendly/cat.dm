@@ -2,16 +2,19 @@
 /mob/living/simple_animal/cat
 	name = "cat"
 	desc = "Kitty!!"
-	icon_state = "cat"
-	icon_living = "cat"
-	icon_dead = "cat_dead"
-	speak = list("Meow!","Esp!","Purr!","HSSSSS")
+	icon_state = "cat2"
+	icon_living = "cat2"
+	icon_dead = "cat2_dead"
+	gender = MALE
+	speak = list("Meow!", "Esp!", "Purr!", "HSSSSS")
 	speak_emote = list("purrs", "meows")
-	emote_hear = list("meows","mews")
+	emote_hear = list("meows", "mews")
 	emote_see = list("shakes its head", "shivers")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
+	species = /mob/living/simple_animal/cat
+	childtype = /mob/living/simple_animal/cat/kitten
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
@@ -21,6 +24,10 @@
 /mob/living/simple_animal/cat/Runtime
 	name = "Runtime"
 	desc = "GCAT"
+	icon_state = "cat"
+	icon_living = "cat"
+	icon_dead = "cat_dead"
+	gender = FEMALE
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
 
@@ -37,6 +44,8 @@
 					break
 
 	..()
+
+	make_babies()
 
 	if(!stat && !resting && !buckled)
 		turns_since_scan++
@@ -56,3 +65,14 @@
 			if(movement_target)
 				stop_automated_movement = 1
 				walk_to(src,movement_target,0,3)
+
+/mob/living/simple_animal/cat/Proc
+	name = "Proc"
+
+/mob/living/simple_animal/cat/kitten
+	name = "kitten"
+	desc = "D'aaawwww"
+	icon_state = "kitten"
+	icon_living = "kitten"
+	icon_dead = "kitten_dead"
+	gender = NEUTER

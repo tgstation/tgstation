@@ -88,7 +88,6 @@
 	item_state = "candlebox5"
 	storage_slots = 5
 	throwforce = 2
-	flags = TABLEPASS
 	slot_flags = SLOT_BELT
 
 
@@ -152,7 +151,6 @@
 	item_state = "cigpacket"
 	w_class = 1
 	throwforce = 2
-	flags = TABLEPASS
 	slot_flags = SLOT_BELT
 	storage_slots = 6
 	can_hold = list("/obj/item/clothing/mask/cigarette")

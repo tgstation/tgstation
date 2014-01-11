@@ -6,7 +6,6 @@
 	name = "pack of seeds"
 	icon = 'icons/obj/seeds.dmi'
 	icon_state = "seed" // unknown plant seed - these shouldn't exist in-game
-	flags = FPRINT | TABLEPASS
 	w_class = 1.0 // Makes them pocketable
 	var/plantname = "Plants"
 	var/product	//a type path

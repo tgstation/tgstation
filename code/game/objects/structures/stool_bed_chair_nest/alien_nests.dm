@@ -7,27 +7,23 @@
 	icon_state = "nest"
 	var/health = 100
 
-/obj/structure/stool/bed/nest/manual_unbuckle(mob/user as mob)
-	if(buckled_mob)
-		if(buckled_mob.buckled == src)
-			if(buckled_mob != user)
-				buckled_mob.visible_message(\
-					"<span class='notice'>[user.name] pulls [buckled_mob.name] free from the sticky nest!</span>",\
-					"<span class='notice'>[user.name] pulls you free from the gelatinous resin.</span>",\
-					"<span class='notice'>You hear squelching...</span>")
-				buckled_mob.pixel_y = 0
-				unbuckle()
-			else
-				buckled_mob.visible_message(\
-					"<span class='warning'>[buckled_mob.name] struggles to break free of the gelatinous resin...</span>",\
-					"<span class='warning'>You struggle to break free from the gelatinous resin...</span>",\
-					"<span class='notice'>You hear squelching...</span>")
-				spawn(1200)
-					if(user && buckled_mob && user.buckled == src)
-						buckled_mob.pixel_y = 0
-						unbuckle()
-			src.add_fingerprint(user)
-	return
+/obj/structure/stool/bed/nest/unbuckle_other(mob/user as mob)
+	buckled_mob.visible_message(\
+		"<span class='notice'>[user.name] pulls [buckled_mob.name] free from the sticky nest!</span>",\
+		"[user.name] pulls you free from the gelatinous resin.",\
+		"You hear squelching...")
+	buckled_mob.pixel_y = 0
+	unbuckle()
+
+/obj/structure/stool/bed/nest/unbuckle_myself(mob/user as mob)
+	buckled_mob.visible_message(\
+		"<span class='warning'>[buckled_mob.name] struggles to break free of the gelatinous resin...</span>",\
+		"<span class='warning'>You struggle to break free from the gelatinous resin...</span>",\
+		"You hear squelching...")
+	spawn(1200)
+		if(user && buckled_mob && user.buckled == src)
+			buckled_mob.pixel_y = 0
+			unbuckle()
 
 /obj/structure/stool/bed/nest/buckle_mob(mob/M as mob, mob/user as mob)
 	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || usr.stat || M.buckled || istype(user, /mob/living/silicon/pai) )

@@ -171,7 +171,6 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bombcore"
 	item_state = "eshield0"
-	flags = FPRINT | TABLEPASS
 	w_class = 3.0
 	origin_tech = "syndicate=6;combat=5"
 
@@ -269,7 +268,6 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bigred"
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS
 	w_class = 1.0
 	origin_tech = "syndicate=2"
 	var/cooldown = 0
