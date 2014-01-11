@@ -1,4 +1,4 @@
-/tg/station 13 v1.0 - 6 October 2010
+/tg/station 13 v1.0 - 6 October 2010 [![Build Status](http://hibernia.fallemmc.com:8090/job/tgstation/badge/icon)](http://hibernia.fallemmc.com:8090/job/tgstation/)
 
 Website: http://ss13.eu
 
