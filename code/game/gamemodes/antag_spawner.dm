@@ -138,5 +138,6 @@
 	S.start()
 	var/mob/living/silicon/robot/R = new /mob/living/silicon/robot/syndicate(T)
 	R.key = C.key
-	ticker.mode.traitors += R.mind
+	ticker.mode.syndicates += R.mind
+	ticker.mode.update_synd_icons_added(R.mind)
 	R.mind.special_role = "syndicate"

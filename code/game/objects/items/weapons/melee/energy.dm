@@ -136,10 +136,9 @@
 	if(R.cell)
 		var/obj/item/weapon/cell/C = R.cell
 		if(active && !(C.use(hitcost)))
-			attack_self()
+			attack_self(R)
 			R << "<span class='notice'>It's out of charge!</span>"
 			return
-		C.use(hitcost)
 		..()
 	return
 
