@@ -2869,7 +2869,7 @@
 "bdi" = (/obj/machinery/power/apc{dir = 8; name = "Disposal APC"; pixel_x = -24; pixel_y = 0},/obj/structure/cable{icon_state = "0-4"; d2 = 4},/turf/simulated/floor/plating,/area/maintenance/disposal)
 "bdj" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/turf/simulated/floor/plating,/area/maintenance/port)
 "bdk" = (/obj/machinery/light/small,/turf/simulated/floor/plating,/area/maintenance/disposal)
-"bdl" = (/obj/structure/showcase{desc = "A historical figure of great importance to the wizard federation. He spent his long life learning magic, stealing artifacts, and harrassing idiots with swords. May he rest forever, Rodney."; icon = 'icons/mob/mob.dmi'; icon_state = "nim"; name = "wizard of yendor showcase"},/turf/unsimulated/floor{dir = 1; icon_state = "chapel"},/area/wizard_station)
+"bdl" = (/obj/structure/showcase{desc = "A historical figure of great importance to the wizard federation. He spent his long life learning magic, stealing artifacts, and harassing idiots with swords. May he rest forever, Rodney."; icon = 'icons/mob/mob.dmi'; icon_state = "nim"; name = "wizard of yendor showcase"},/turf/unsimulated/floor{dir = 1; icon_state = "chapel"},/area/wizard_station)
 "bdm" = (/obj/machinery/conveyor{dir = 9; id = "garbage"; verted = -1},/turf/simulated/floor/plating,/area/maintenance/disposal)
 "bdn" = (/obj/structure/closet/crate,/obj/item/weapon/coin/twoheaded,/turf/simulated/floor/plating,/area/maintenance/port)
 "bdo" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 5},/obj/structure/disposalpipe/segment{dir = 1; icon_state = "pipe-c"},/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor/plating,/area/maintenance/port)
