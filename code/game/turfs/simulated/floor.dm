@@ -245,8 +245,11 @@ turf/simulated/floor/proc/update_icon()
 	else
 		return 0
 
+/turf/simulated/floor/is_catwalk()
+	return 0
+
 /turf/simulated/floor/is_plating()
-	if(!floor_tile)
+	if(!floor_tile && !is_catwalk())
 		return 1
 	return 0
 
@@ -301,6 +304,7 @@ turf/simulated/floor/proc/update_icon()
 //This proc auto corrects the grass tiles' siding.
 /turf/simulated/floor/proc/make_plating()
 	if(istype(src,/turf/simulated/floor/engine)) return
+	if(is_catwalk()) return
 
 	if(is_grass_floor())
 		for(var/direction in cardinal)
@@ -456,22 +460,25 @@ turf/simulated/floor/proc/update_icon()
 
 		make_plating()
 		// Can't play sounds from areas. - N3X
-		//playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
 		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
 
 		return
 
-	if(istype(C, /obj/item/weapon/screwdriver) && is_wood_floor())
-		if(broken || burnt)
-			return
-		else
-			if(is_wood_floor())
-				user << "\red You unscrew the planks."
-				new floor_tile.type(src)
+	if(istype(C, /obj/item/weapon/screwdriver))
+		if(is_wood_floor())
+			if(broken || burnt)
+				return
+			else
+				if(is_wood_floor())
+					user << "\red You unscrew the planks."
+					new floor_tile.type(src)
 
-		make_plating()
-		playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
-
+			make_plating()
+			playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
+		if(is_catwalk())
+			if(broken) return
+			ReplaceWithLattice()
+			playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
 		return
 
 	if(istype(C, /obj/item/stack/rods))
@@ -486,11 +493,15 @@ turf/simulated/floor/proc/update_icon()
 					return
 			else
 				user << "\red You need more rods."
+		else if (is_catwalk())
+			user << "\red The entire thing is 100% rods already, it doesn't need any more."
 		else
 			user << "\red You must remove the plating first."
 		return
 
 	if(istype(C, /obj/item/stack/tile))
+		if (is_catwalk())
+			user << "\red The catwalk is too primitive to support tiling."
 		if(is_plating())
 			if(!broken && !burnt)
 				var/obj/item/stack/tile/T = C
@@ -520,7 +531,7 @@ turf/simulated/floor/proc/update_icon()
 
 
 	if(istype(C, /obj/item/weapon/cable_coil))
-		if(is_plating())
+		if(is_plating() || is_catwalk())
 			var/obj/item/weapon/cable_coil/coil = C
 			coil.turf_place(src, user)
 		else
