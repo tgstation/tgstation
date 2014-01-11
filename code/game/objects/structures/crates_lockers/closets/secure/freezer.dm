@@ -1,6 +1,7 @@
 /obj/structure/closet/secure_closet/freezer
 
 /obj/structure/closet/secure_closet/freezer/update_icon()
+	overlays.Cut()
 	if(broken)
 		icon_state = icon_broken
 	else
@@ -21,6 +22,7 @@
 	var/list/bombs = search_contents_for(/obj/item/device/transfer_valve)
 	if(!isemptylist(bombs)) // You're fucked.
 		..(severity)
+
 	return
 
 /obj/structure/closet/secure_closet/freezer/kitchen
