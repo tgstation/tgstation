@@ -679,6 +679,11 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		if (ai.control_disabled)
 			return
 
+		if(usr:aicamera.in_camera_mode)
+			usr:aicamera.camera_mode_off()
+			usr:aicamera.captureimage(src, usr)
+			return
+
 		if( !ai.restrained() )
 			attack_ai(ai)
 		else
