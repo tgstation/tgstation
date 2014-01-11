@@ -65,7 +65,7 @@
 
 /obj/effect/blob/proc/Pulse(var/pulse = 0, var/origin_dir = 0)//Todo: Fix spaceblob expand
 
-	set background = 1
+	set background = BACKGROUND_ENABLED
 
 	PulseAnimation()
 

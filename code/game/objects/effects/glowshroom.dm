@@ -41,7 +41,7 @@
 		Spread()
 
 /obj/effect/glowshroom/proc/Spread()
-	set background = 1
+	set background = BACKGROUND_ENABLED
 
 	for(var/i=1,i<=yield,i++)
 		if(prob(1/(generation * generation) * 100))//This formula gives you diminishing returns based on generation. 100% with 1st gen, decreasing to 25%, 11%, 6, 4, 2...
@@ -80,7 +80,7 @@
 			child.desc = "This is a [child.generation]\th generation glowshroom!"//I added this for testing, but I figure I'll leave it in.
 
 /obj/effect/glowshroom/proc/CalcDir(turf/location = loc)
-	set background = 1
+	set background = BACKGROUND_ENABLED
 	var/direction = 16
 
 	for(var/wallDir in cardinal)
