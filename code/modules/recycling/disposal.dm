@@ -725,10 +725,11 @@
 			else if(F.is_light_floor())
 				new /obj/item/stack/tile/light(H)
 			//Apparently you need to use istypes for some turfs and helpers for others. ¯\_(;_;)_/¯
-			else if(!F.is_plating() && !F.is_wood_floor() && !istype(T, /turf/simulated/floor/engine) && !istype(F, /turf/simulated/floor/mech_bay_recharge_floor) /* <-- this is probably neccesary -->*/ && !istype(T, /turf/simulated/floor/beach) && !istype(T, /turf/simulated/floor/holofloor))
+			else if(!F.is_wood_floor())
 				new /obj/item/stack/tile/plasteel(H)
 
-			F.make_plating()
+			if(!T.is_plating() && !istype(T, /turf/simulated/floor/engine))
+				F.make_plating()
 
 		if(direction)		// direction is specified
 			if(istype(T, /turf/space)) // if ended in space, then range is unlimited
