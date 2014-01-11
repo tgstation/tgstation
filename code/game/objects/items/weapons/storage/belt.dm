@@ -50,7 +50,7 @@
 		"/obj/item/device/flashlight",
 		"/obj/item/weapon/cable_coil",
 		"/obj/item/device/t_scanner",
-		"/obj/item/device/analyzer"
+		"/obj/item/device/analyzer",
 		"/obj/item/weapon/hackingtool")
 
 
