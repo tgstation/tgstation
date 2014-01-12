@@ -63,7 +63,7 @@
 
 
 
-/mob/living/silicon/robot/New(loc,var/syndie = 0)
+/mob/living/silicon/robot/New(loc)
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -83,17 +83,6 @@
 		cell.maxcharge = 7500
 		cell.charge = 7500
 
-	if(syndie)
-		laws = new /datum/ai_laws/antimov()
-		lawupdate = 0
-		scrambledcodes = 1
-		cell.maxcharge = 25000
-		cell.charge = 25000
-		module = new /obj/item/weapon/robot_module/syndicate(src)
-		hands.icon_state = "standard"
-		icon_state = "secborg"
-		modtype = "Synd"
-	else
 		laws = new /datum/ai_laws/asimov()
 		connected_ai = select_active_ai_with_fewest_borgs()
 		if(connected_ai)
@@ -794,6 +783,9 @@
 		if(icon_state =="Miner" || icon_state =="Miner+j")
 			overlays.Cut()
 			overlays += "eyes-Miner"
+		if(icon_state =="syndie_bloodhound")
+			overlays.Cut()
+			overlays+= "eyes-syndie_bloodhound"
 	else
 		overlays -= "eyes"
 
@@ -1045,3 +1037,18 @@
 		cell.loc = T
 		cell = null
 	del(src)
+
+/mob/living/silicon/robot/syndicate
+	icon_state = "syndie_bloodhound"
+	lawupdate = 0
+	scrambledcodes = 1
+	modtype = "Synd"
+
+/mob/living/silicon/robot/syndicate/New(loc)
+	..()
+	cell.maxcharge = 25000
+	cell.charge = 25000
+	updatename("Syndicate")
+	radio = new /obj/item/device/radio/borg/syndicate(src)
+	module = new /obj/item/weapon/robot_module/syndicate(src)
+	laws = new /datum/ai_laws/syndicate_override()
