@@ -718,18 +718,9 @@
 
 		if(istype(T, /turf/simulated/floor)) //intact floor, pop the tile
 			var/turf/simulated/floor/F = T
-			if(F.is_carpet_floor())
-				new /obj/item/stack/tile/carpet(H)
-			else if(F.is_grass_floor())
-				new /obj/item/stack/tile/grass(H) // //
-			else if(F.is_light_floor())
-				new /obj/item/stack/tile/light(H)
-			//Apparently you need to use istypes for some turfs and helpers for others. ¯\_(;_;)_/¯
-			else if(!F.is_wood_floor())
-				new /obj/item/stack/tile/plasteel(H)
-
-			if(!T.is_plating() && !istype(T, /turf/simulated/floor/engine))
-				F.make_plating()
+			F.floor_tile.loc = H //It took me a day to figure out this was the right way to do it. ¯\_(;_;)_/¯
+			F.floor_tile = null //So it doesn't get deleted in make_plating()
+			F.make_plating()
 
 		if(direction)		// direction is specified
 			if(istype(T, /turf/space)) // if ended in space, then range is unlimited
