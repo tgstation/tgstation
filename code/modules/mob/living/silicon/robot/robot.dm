@@ -83,6 +83,7 @@
 		cell.maxcharge = 7500
 		cell.charge = 7500
 
+	if(lawupdate)
 		laws = new /datum/ai_laws/asimov()
 		connected_ai = select_active_ai_with_fewest_borgs()
 		if(connected_ai)
@@ -471,66 +472,67 @@
 				user << "\red Access denied."
 
 	else if(istype(W, /obj/item/weapon/card/emag))		// trying to unlock with an emag card
-		if(!opened)//Cover is closed
-			if(locked)
-				if(prob(90))
-					user << "You emag the cover lock."
-					locked = 0
+		if(user != src)//To prevent syndieborgs from emagging themselves
+			if(!opened)//Cover is closed
+				if(locked)
+					if(prob(90))
+						user << "You emag the cover lock."
+						locked = 0
+					else
+						user << "You fail to emag the cover lock."
+						if(prob(25))
+							src << "Hack attempt detected."
 				else
-					user << "You fail to emag the cover lock."
-					if(prob(25))
-						src << "Hack attempt detected."
-			else
-				user << "The cover is already unlocked."
-			return
-
-		if(opened)//Cover is open
-			if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
-			if(wiresexposed)
-				user << "You must close the cover first"
+					user << "The cover is already unlocked."
 				return
-			else
-				sleep(6)
-				if(prob(50))
-					emagged = 1
-					lawupdate = 0
-					connected_ai = null
-					user << "You emag [src]'s interface."
-//					message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
-					log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
-					clear_supplied_laws()
-					clear_inherent_laws()
-					laws = new /datum/ai_laws/syndicate_override
-					var/time = time2text(world.realtime,"hh:mm:ss")
-					lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-					set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
-					src << "\red ALERT: Foreign software detected."
-					sleep(5)
-					src << "\red Initiating diagnostics..."
-					sleep(20)
-					src << "\red SynBorg v1.7 loaded."
-					sleep(5)
-					src << "\red LAW SYNCHRONISATION ERROR"
-					sleep(5)
-					src << "\red Would you like to send a report to NanoTraSoft? Y/N"
-					sleep(10)
-					src << "\red > N"
-					sleep(20)
-					src << "\red ERRORERRORERROR"
-					src << "<b>Obey these laws:</b>"
-					laws.show_laws(src)
-					src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands."
-					if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
-						for(var/obj/item/weapon/pickaxe/borgdrill/D in src.module.modules)
-							del(D)
-						src.module.modules += new /obj/item/weapon/pickaxe/diamonddrill(src.module)
-						src.module.rebuild()
-					updateicon()
+
+			if(opened)//Cover is open
+				if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
+				if(wiresexposed)
+					user << "You must close the cover first"
+					return
 				else
-					user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
-					if(prob(25))
-						src << "Hack attempt detected."
-			return
+					sleep(6)
+					if(prob(50))
+						emagged = 1
+						lawupdate = 0
+						connected_ai = null
+						user << "You emag [src]'s interface."
+//						message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
+						log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
+						clear_supplied_laws()
+						clear_inherent_laws()
+						laws = new /datum/ai_laws/syndicate_override
+						var/time = time2text(world.realtime,"hh:mm:ss")
+						lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
+						set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
+						src << "\red ALERT: Foreign software detected."
+						sleep(5)
+						src << "\red Initiating diagnostics..."
+						sleep(20)
+						src << "\red SynBorg v1.7 loaded."
+						sleep(5)
+						src << "\red LAW SYNCHRONISATION ERROR"
+						sleep(5)
+						src << "\red Would you like to send a report to NanoTraSoft? Y/N"
+						sleep(10)
+						src << "\red > N"
+						sleep(20)
+						src << "\red ERRORERRORERROR"
+						src << "<b>Obey these laws:</b>"
+						laws.show_laws(src)
+						src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands."
+						if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
+							for(var/obj/item/weapon/pickaxe/borgdrill/D in src.module.modules)
+								del(D)
+							src.module.modules += new /obj/item/weapon/pickaxe/diamonddrill(src.module)
+							src.module.rebuild()
+						updateicon()
+					else
+						user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
+						if(prob(25))
+							src << "Hack attempt detected."
+				return
 
 	else if(istype(W, /obj/item/borg/upgrade/))
 		var/obj/item/borg/upgrade/U = W
