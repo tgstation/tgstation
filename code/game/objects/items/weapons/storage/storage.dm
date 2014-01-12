@@ -321,6 +321,10 @@
 /obj/item/weapon/storage/attackby(obj/item/W as obj, mob/user as mob)
 	..()
 
+	// /vg/ #11: Recursion.
+	if(istype(W,/obj/item/weapon/implanter/compressed))
+		return
+
 	if(isrobot(user) && !isMoMMI(user))
 		user << "\blue You're a robot. No."
 		return //Robots can't interact with storage items.
