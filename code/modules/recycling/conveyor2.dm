@@ -84,8 +84,6 @@
 	if(newdir)
 		dir = newdir
 	component_parts = list()
-	component_parts += new /obj/item/weapon/cable_coil(src,2)
-	component_parts += new /obj/item/stack/rods(src,4)
 	RefreshParts()
 	updateConfig(!building)
 

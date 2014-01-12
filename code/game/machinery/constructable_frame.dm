@@ -218,10 +218,8 @@ to destroy them and players will be able to make replacements.
 	build_path = "/obj/machinery/conveyor"
 	board_type = "machine"
 	origin_tech = "engineering=2;programming=2"
-	frame_desc = "Requires 4 rods and 2 cable pieces."
-	req_components = list(
-							"/obj/item/weapon/cable_coil" = 2,
-							"/obj/item/stack/rods" = 4)
+	frame_desc = "Requires nothing."
+	req_components = list()
 
 
 /obj/item/weapon/circuitboard/circuit_imprinter
