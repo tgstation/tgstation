@@ -460,6 +460,8 @@
 #include "code\game\objects\effects\decals\Cleanable\misc.dm"
 #include "code\game\objects\effects\decals\Cleanable\robots.dm"
 #include "code\game\objects\effects\decals\Cleanable\trails.dm"
+#include "code\game\objects\effects\decals\posters\bs12.dm"
+#include "code\game\objects\effects\decals\posters\tgposters.dm"
 #include "code\game\objects\effects\spawners\bombspawner.dm"
 #include "code\game\objects\effects\spawners\gibspawner.dm"
 #include "code\game\objects\effects\spawners\vaultspawner.dm"

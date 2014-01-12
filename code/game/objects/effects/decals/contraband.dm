@@ -1,8 +1,6 @@
 
 //########################## CONTRABAND ;3333333333333333333 -Agouri ###################################################
 
-#define NUM_OF_POSTER_DESIGNS 10
-
 /obj/item/weapon/contraband
 	name = "contraband item"
 	desc = "You probably shouldn't be holding this."
@@ -19,7 +17,7 @@
 
 /obj/item/weapon/contraband/poster/New(turf/loc, var/given_serial = 0)
 	if(given_serial == 0)
-		serial_number = rand(1, NUM_OF_POSTER_DESIGNS)
+		serial_number = rand(1, poster_designs.len)
 	else
 		serial_number = given_serial
 	name += " - No. [serial_number]"
@@ -41,44 +39,13 @@ obj/structure/sign/poster/New(var/serial)
 	serial_number = serial
 
 	if(serial_number == loc)
-		serial_number = rand(1, NUM_OF_POSTER_DESIGNS)	//This is for the mappers that want individual posters without having to use rolled posters.
+		serial_number = rand(1, poster_designs.len)	//This is for the mappers that want individual posters without having to use rolled posters.
 
-	icon_state = "poster[serial_number]"
-
-	switch(serial_number)
-		if(1)
-			name += " - Free Tonto"
-			desc += " A framed shred of a much larger flag, colors bled together and faded from age."
-		if(2)
-			name += " - Atmosia Declaration of Independence"
-			desc += " A relic of a failed rebellion"
-		if(3)
-			name += " - Fun Police"
-			desc += " A poster condemning the station's security forces."
-		if(4)
-			name += " - Lusty Xeno"
-			desc += " A heretical poster depicting the titular star of an equally heretical book."
-		if(5)
-			name += " - Syndicate Recruitment Poster"
-			desc += " See the galaxy! Shatter corrupt megacorporations! Join today!"
-		if(6)
-			name += " - Clown"
-			desc += " Honk."
-		if(7)
-			name += " - Smoke"
-			desc += " A poster depicting a carton of cigarettes."
-		if(8)
-			name += " - Grey Tide"
-			desc += " A rebellious poster symbolizing assistant solidarity."
-		if(9)
-			name += " - Missing Gloves"
-			desc += " This poster is about the uproar that followed Nanotrasen's financial cuts towards insulated-glove purchases."
-		if(10)
-			name += " - Hacking Guide"
-			desc += " This poster details the internal workings of the common Nanotrasen airlock."
-		else
-			name = "This shit just bugged. Report it to Agouri - polyxenitopalidou@gmail.com"
-			desc = "Why are you still here?"
+	var/designtype = poster_designs[serial_number]
+	var/datum/poster/design=new designtype
+	name += " - [design.name]"
+	desc += " [design.desc]"
+	icon_state = design.icon_state // poster[serial_number]
 	..()
 
 obj/structure/sign/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -154,3 +121,10 @@ obj/structure/sign/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	else
 		D.roll_and_drop(temp_loc)
 	return
+
+/datum/poster
+	// Name suffix. Poster - [name]
+	var/name=""
+	// Description suffix
+	var/desc=""
+	var/icon_state=""
