@@ -933,6 +933,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			user << "The rune fizzles uselessly. There is no spirit nearby."
 			return
 		var/mob/living/carbon/human/G = new /mob/living/carbon/human
+		if(prob(50))	G.gender = "female"
 		hardset_dna(G, null, null, null, "adamantine")
 		G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
 		G.equip_to_slot_or_del(new /obj/item/clothing/under/golem(G), slot_w_uniform)

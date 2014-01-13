@@ -49,10 +49,6 @@
 	var/datum/effect/effect/system/spark_spread/spark_system//So they can initialize sparks whenever/N
 	var/jeton = 0
 
-	var/killswitch = 0
-	var/killswitch_time = 60
-	var/weapon_lock = 0
-	var/weaponlock_time = 120
 	var/lawupdate = 1 //Cyborgs will sync their laws with their AI by default
 	var/lockcharge //Boolean of whether the borg is locked down or not
 	var/speed = 0 //Cause sec borgs gotta go fast //No they dont!
@@ -63,7 +59,7 @@
 
 
 
-/mob/living/silicon/robot/New(loc,var/syndie = 0)
+/mob/living/silicon/robot/New(loc)
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -83,17 +79,7 @@
 		cell.maxcharge = 7500
 		cell.charge = 7500
 
-	if(syndie)
-		laws = new /datum/ai_laws/antimov()
-		lawupdate = 0
-		scrambledcodes = 1
-		cell.maxcharge = 25000
-		cell.charge = 25000
-		module = new /obj/item/weapon/robot_module/syndicate(src)
-		hands.icon_state = "standard"
-		icon_state = "secborg"
-		modtype = "Synd"
-	else
+	if(lawupdate)
 		laws = new /datum/ai_laws/asimov()
 		connected_ai = select_active_ai_with_fewest_borgs()
 		if(connected_ai)
@@ -482,66 +468,67 @@
 				user << "\red Access denied."
 
 	else if(istype(W, /obj/item/weapon/card/emag))		// trying to unlock with an emag card
-		if(!opened)//Cover is closed
-			if(locked)
-				if(prob(90))
-					user << "You emag the cover lock."
-					locked = 0
+		if(user != src)//To prevent syndieborgs from emagging themselves
+			if(!opened)//Cover is closed
+				if(locked)
+					if(prob(90))
+						user << "You emag the cover lock."
+						locked = 0
+					else
+						user << "You fail to emag the cover lock."
+						if(prob(25))
+							src << "Hack attempt detected."
 				else
-					user << "You fail to emag the cover lock."
-					if(prob(25))
-						src << "Hack attempt detected."
-			else
-				user << "The cover is already unlocked."
-			return
-
-		if(opened)//Cover is open
-			if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
-			if(wiresexposed)
-				user << "You must close the cover first"
+					user << "The cover is already unlocked."
 				return
-			else
-				sleep(6)
-				if(prob(50))
-					emagged = 1
-					lawupdate = 0
-					connected_ai = null
-					user << "You emag [src]'s interface."
-//					message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
-					log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
-					clear_supplied_laws()
-					clear_inherent_laws()
-					laws = new /datum/ai_laws/syndicate_override
-					var/time = time2text(world.realtime,"hh:mm:ss")
-					lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-					set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
-					src << "\red ALERT: Foreign software detected."
-					sleep(5)
-					src << "\red Initiating diagnostics..."
-					sleep(20)
-					src << "\red SynBorg v1.7 loaded."
-					sleep(5)
-					src << "\red LAW SYNCHRONISATION ERROR"
-					sleep(5)
-					src << "\red Would you like to send a report to NanoTraSoft? Y/N"
-					sleep(10)
-					src << "\red > N"
-					sleep(20)
-					src << "\red ERRORERRORERROR"
-					src << "<b>Obey these laws:</b>"
-					laws.show_laws(src)
-					src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands."
-					if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
-						for(var/obj/item/weapon/pickaxe/borgdrill/D in src.module.modules)
-							del(D)
-						src.module.modules += new /obj/item/weapon/pickaxe/diamonddrill(src.module)
-						src.module.rebuild()
-					updateicon()
+
+			if(opened)//Cover is open
+				if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
+				if(wiresexposed)
+					user << "You must close the cover first"
+					return
 				else
-					user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
-					if(prob(25))
-						src << "Hack attempt detected."
-			return
+					sleep(6)
+					if(prob(50))
+						emagged = 1
+						lawupdate = 0
+						connected_ai = null
+						user << "You emag [src]'s interface."
+//						message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
+						log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
+						clear_supplied_laws()
+						clear_inherent_laws()
+						laws = new /datum/ai_laws/syndicate_override
+						var/time = time2text(world.realtime,"hh:mm:ss")
+						lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
+						set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
+						src << "\red ALERT: Foreign software detected."
+						sleep(5)
+						src << "\red Initiating diagnostics..."
+						sleep(20)
+						src << "\red SynBorg v1.7 loaded."
+						sleep(5)
+						src << "\red LAW SYNCHRONISATION ERROR"
+						sleep(5)
+						src << "\red Would you like to send a report to NanoTraSoft? Y/N"
+						sleep(10)
+						src << "\red > N"
+						sleep(20)
+						src << "\red ERRORERRORERROR"
+						src << "<b>Obey these laws:</b>"
+						laws.show_laws(src)
+						src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands."
+						if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
+							for(var/obj/item/weapon/pickaxe/borgdrill/D in src.module.modules)
+								del(D)
+							src.module.modules += new /obj/item/weapon/pickaxe/diamonddrill(src.module)
+							src.module.rebuild()
+						updateicon()
+					else
+						user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
+						if(prob(25))
+							src << "Hack attempt detected."
+				return
 
 	else if(istype(W, /obj/item/borg/upgrade/))
 		var/obj/item/borg/upgrade/U = W
@@ -794,6 +781,9 @@
 		if(icon_state =="Miner" || icon_state =="Miner+j")
 			overlays.Cut()
 			overlays += "eyes-Miner"
+		if(icon_state =="syndie_bloodhound")
+			overlays.Cut()
+			overlays+= "eyes-syndie_bloodhound"
 	else
 		overlays -= "eyes"
 
@@ -811,10 +801,6 @@
 
 
 /mob/living/silicon/robot/proc/installed_modules()
-	if(weapon_lock)
-		src << "\red Weapon lock active, unable to use modules! Count:[weaponlock_time]"
-		return
-
 	if(!module)
 		pick_module()
 		return
@@ -1045,3 +1031,18 @@
 		cell.loc = T
 		cell = null
 	del(src)
+
+/mob/living/silicon/robot/syndicate
+	icon_state = "syndie_bloodhound"
+	lawupdate = 0
+	scrambledcodes = 1
+	modtype = "Synd"
+
+/mob/living/silicon/robot/syndicate/New(loc)
+	..()
+	cell.maxcharge = 25000
+	cell.charge = 25000
+	updatename("Syndicate")
+	radio = new /obj/item/device/radio/borg/syndicate(src)
+	module = new /obj/item/weapon/robot_module/syndicate(src)
+	laws = new /datum/ai_laws/syndicate_override()
