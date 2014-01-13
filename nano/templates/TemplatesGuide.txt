@@ -7,7 +7,4 @@ to easily add conditionals (if statements), loops (for loops) and custom formatt
 
 Templates are stored in the /nano/templates folder and the file extension is .tmpl.
 
-This guide is a work in progress. However the templating system is "JSRender", and documentation for it's
-markup syntax can be found here: http://www.jsviews.com/#jsrtags
-
-
+This guide is being replaced with a wiki entry, found here: http://baystation12.net/wiki/index.php?title=NanoUI

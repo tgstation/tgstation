@@ -81,6 +81,7 @@ var/href_logfile = null
 var/station_name = null
 var/game_version = "adsfasdfasdf"
 var/changelog_hash = ""
+var/game_year = (text2num(time2text(world.realtime, "YYYY")) + 544)
 
 var/datum/air_tunnel/air_tunnel1/SS13_airtunnel = null
 var/going = 1.0
@@ -115,6 +116,13 @@ var/mouse_respawn_time = 1 //Amount of time that must pass between a player dyin
 
 var/CELLRATE = 0.002  // multiplier for watts per tick <> cell storage (eg: .002 means if there is a load of 1000 watts, 20 units will be taken from a cell per second)
 var/CHARGELEVEL = 0.001 // Cap for how fast cells charge, as a percentage-per-tick (.001 means cellcharge is capped to 1% per second)
+
+// COORDINATE OFFSETS
+// Used for telescience.  Only apply to GPSes and other things that display coordinates to players.
+// The idea is that coordinates given will be entirely different from those displayed on the map in DreamMaker,
+//  while still making it very simple to lock onto someone who is drifting in space.
+var/WORLD_X_OFFSET=0
+var/WORLD_Y_OFFSET=0
 
 var/shuttle_z = 2	//default
 var/airtunnel_start = 68 // default
@@ -169,26 +177,6 @@ var/forceblob = 0
 
 // nanomanager, the manager for Nano UIs
 var/datum/nanomanager/nanomanager = new()
-
-	//airlockWireColorToIndex takes a number representing the wire color, e.g. the orange wire is always 1, the dark red wire is always 2, etc. It returns the index for whatever that wire does.
-	//airlockIndexToWireColor does the opposite thing - it takes the index for what the wire does, for example AIRLOCK_WIRE_IDSCAN is 1, AIRLOCK_WIRE_POWER1 is 2, etc. It returns the wire color number.
-	//airlockWireColorToFlag takes the wire color number and returns the flag for it (1, 2, 4, 8, 16, etc)
-var/list/airlockWireColorToFlag = RandomAirlockWires()
-var/list/airlockIndexToFlag
-var/list/airlockIndexToWireColor
-var/list/airlockWireColorToIndex
-var/list/APCWireColorToFlag = RandomAPCWires()
-var/list/APCIndexToFlag
-var/list/APCIndexToWireColor
-var/list/APCWireColorToIndex
-var/list/BorgWireColorToFlag = RandomBorgWires()
-var/list/BorgIndexToFlag
-var/list/BorgIndexToWireColor
-var/list/BorgWireColorToIndex
-var/list/AAlarmWireColorToFlag = RandomAAlarmWires()
-var/list/AAlarmIndexToFlag
-var/list/AAlarmIndexToWireColor
-var/list/AAlarmWireColorToIndex
 
 #define SPEED_OF_LIGHT 3e8 //not exact but hey!
 #define SPEED_OF_LIGHT_SQ 9e+16

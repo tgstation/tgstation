@@ -115,6 +115,28 @@
 		return 1
 	return 0
 
+/proc/isAdminGhost(A)
+	if(isobserver(A))
+		var/mob/dead/observer/O = A
+		if(O.check_rights(R_ADMIN|R_FUN))
+			return 1
+	return 0
+
+
+/proc/canGhostRead(var/mob/A, var/obj/target, var/flags=PERMIT_ALL)
+	var/res=isAdminGhost(A)
+	if(flags & PERMIT_ALL)
+		res = 1
+	return res
+
+/proc/canGhostWrite(var/mob/A, var/obj/target, var/desc="fucked with", var/flags=0)
+	var/res=isAdminGhost(A)
+	if(flags & PERMIT_ALL)
+		res = 1
+	if(res && desc!="")
+		add_ghostlogs(A, target, desc, !(flags & PERMIT_ALL) && isAdminGhost(A))
+	return res
+
 /proc/isliving(A)
 	if(istype(A, /mob/living))
 		return 1
@@ -133,6 +155,12 @@ proc/isovermind(A)
 proc/isorgan(A)
 	if(istype(A, /datum/organ/external))
 		return 1
+	return 0
+
+/proc/isloyal(A) //Checks to see if the person contains a loyalty implant, then checks that the implant is actually inside of them
+	for(var/obj/item/weapon/implant/loyalty/L in A)
+		if(L && L.implanted)
+			return 1
 	return 0
 
 proc/hasorgans(A)
@@ -358,9 +386,11 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 
 /proc/findname(msg)
+	if(!istext(msg))
+		msg = "[msg]"
 	for(var/mob/M in mob_list)
-		if (M.real_name == text("[msg]"))
-			return 1
+		if(M.real_name == msg)
+			return M
 	return 0
 
 
@@ -469,3 +499,21 @@ var/list/intents = list("help","disarm","grab","hurt")
 				hud_used.action_intent.icon_state = "harm"
 			else
 				hud_used.action_intent.icon_state = "help"
+proc/is_blind(A)
+	if(istype(A, /mob/living/carbon))
+		var/mob/living/carbon/C = A
+		if(C.blinded != null)
+			return 1
+	return 0
+
+/proc/get_multitool(mob/user as mob)
+	// Check distance for those that need it.
+	if(!isAI(user) && !isAdminGhost(user))
+		if(!in_range(user, src))
+			return null
+
+	// Get tool
+	var/obj/item/device/multitool/P = user.get_multitool()
+	if(!istype(P))
+		return null
+	return P

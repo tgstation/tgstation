@@ -54,6 +54,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	desc = "A standard Nanotrasen-licensed newsfeed handler for use in commercial space stations. All the news you absolutely have no use for, in one place!"
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "newscaster_normal"
+
+	// Allow ghosts to send Topic()s.
+	ghost_write=1
+
 	var/isbroken = 0  //1 if someone banged it with something heavy
 	var/ispowered = 1 //starts powered, changes with power_change()
 	//var/list/datum/feed_channel/channel_list = list() //This list will contain the names of the feed channels. Each name will refer to a data region where the messages of the feed channels are stored.
@@ -175,12 +179,12 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 /obj/machinery/newscaster/attack_hand(mob/user as mob)            //########### THE MAIN BEEF IS HERE! And in the proc below this...############
 	if(!src.ispowered || src.isbroken)
 		return
-	if(istype(user, /mob/living/carbon/human) || istype(user,/mob/living/silicon) )
-		var/mob/living/human_or_robot_user = user
+	if(istype(user, /mob/living/carbon/human) || istype(user,/mob/living/silicon) || isobserver(user))
+		var/mob/M = user
 		var/dat
 		dat = text("<HEAD><TITLE>Newscaster</TITLE></HEAD><H3>Newscaster Unit #[src.unit_no]</H3>")
 
-		src.scan_user(human_or_robot_user) //Newscaster scans you
+		src.scan_user(M) //Newscaster scans you
 
 		switch(screen)
 			if(0)
@@ -200,7 +204,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					<BR><A href='?src=\ref[src];create_feed_story=1'>Submit new Feed story</A>
 					<BR><A href='?src=\ref[src];menu_paper=1'>Print newspaper</A>
 					<BR><A href='?src=\ref[src];refresh=1'>Re-scan User</A>
-					<BR><BR><A href='?src=\ref[human_or_robot_user];mach_close=newscaster_main'>Exit</A>"}
+					<BR><BR><A href='?src=\ref[M];mach_close=newscaster_main'>Exit</A>"}
 				// END AUTOFIX
 				if(src.securityCaster)
 					var/wanted_already = 0
@@ -513,8 +517,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com"
 
 
-		human_or_robot_user << browse(dat, "window=newscaster_main;size=400x600")
-		onclose(human_or_robot_user, "newscaster_main")
+		M << browse(dat, "window=newscaster_main;size=400x600")
+		onclose(M, "newscaster_main")
 
 	/*if(src.isbroken) //debugging shit
 		return
@@ -527,9 +531,12 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 /obj/machinery/newscaster/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
+	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon) || isobserver(usr)))
 		usr.set_machine(src)
 		if(href_list["set_channel_name"])
+			if(isobserver(usr) && !canGhostWrite(usr,src,"set a channel's name"))
+				usr << "\red You can't do that."
+				return
 			src.channel_name = strip_html_simple(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", ""))
 			while (findtext(src.channel_name," ") == 1)
 				src.channel_name = copytext(src.channel_name,2,lentext(src.channel_name)+1)
@@ -537,11 +544,17 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			//src.update_icon()
 
 		else if(href_list["set_channel_lock"])
+			if(isobserver(usr) && !canGhostWrite(usr,src,"locked a channel"))
+				usr << "\red You can't do that."
+				return
 			src.c_locked = !src.c_locked
 			src.updateUsrDialog()
 			//src.update_icon()
 
 		else if(href_list["submit_new_channel"])
+			if(isobserver(usr) && !canGhostWrite(usr,src,"created a new channel"))
+				usr << "\red You can't do that."
+				return
 			//var/list/existing_channels = list() //OBSOLETE
 			var/list/existing_authors = list()
 			for(var/datum/feed_channel/FC in news_network.network_channels)
@@ -573,6 +586,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			//src.update_icon()
 
 		else if(href_list["set_channel_receiving"])
+			if(isobserver(usr) && !canGhostWrite(usr,src,"tried to set the receiving channel"))
+				usr << "\red You can't do that."
+				return
 			//var/list/datum/feed_channel/available_channels = list()
 			var/list/available_channels = list()
 			for(var/datum/feed_channel/F in news_network.network_channels)
@@ -582,16 +598,27 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.updateUsrDialog()
 
 		else if(href_list["set_new_message"])
-			src.msg = strip_html(input(usr, "Write your Feed story", "Network Channel Handler", ""))
+			if(isobserver(usr) && !canGhostWrite(usr,src,"set the message of a new feed story"))
+				usr << "\red You can't do that."
+				return
+			if(isnull(src.msg))
+				src.msg = ""
+			src.msg = strip_html(input(usr, "Write your Feed story", "Network Channel Handler", src.msg))
 			while (findtext(src.msg," ") == 1)
 				src.msg = copytext(src.msg,2,lentext(src.msg)+1)
 			src.updateUsrDialog()
 
 		else if(href_list["set_attachment"])
+			if(isobserver(usr))
+				usr << "\red You can't do that."
+				return
 			AttachPhoto(usr)
 			src.updateUsrDialog()
 
 		else if(href_list["submit_new_message"])
+			if(isobserver(usr) && !canGhostWrite(usr,src,"added a new story"))
+				usr << "\red You can't do that."
+				return
 			if(src.msg =="" || src.msg=="\[REDACTED\]" || src.scanned_user == "Unknown" || src.channel_name == "" )
 				src.screen=6
 			else
@@ -612,17 +639,29 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.updateUsrDialog()
 
 		else if(href_list["create_channel"])
+			if(isobserver(usr) && !canGhostWrite(usr,src,"created a channel"))
+				usr << "\red You can't do that."
+				return
 			src.screen=2
 			src.updateUsrDialog()
 
 		else if(href_list["create_feed_story"])
+			if(isobserver(usr) && !canGhostWrite(usr,src,"created a feed story"))
+				usr << "\red You can't do that."
+				return
 			src.screen=3
 			src.updateUsrDialog()
 
 		else if(href_list["menu_paper"])
+			if(isobserver(usr) && !canGhostWrite(usr,src,""))
+				usr << "\red You can't do that."
+				return
 			src.screen=8
 			src.updateUsrDialog()
 		else if(href_list["print_paper"])
+			if(isobserver(usr) && !canGhostWrite(usr,src,"printed a paper"))
+				usr << "\red You can't do that."
+				return
 			if(!src.paper_remaining)
 				src.screen=21
 			else
@@ -631,14 +670,23 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.updateUsrDialog()
 
 		else if(href_list["menu_censor_story"])
+			if(isobserver(usr) && !canGhostWrite(usr,src,"censored a story"))
+				usr << "\red You can't do that."
+				return
 			src.screen=10
 			src.updateUsrDialog()
 
 		else if(href_list["menu_censor_channel"])
+			if(isobserver(usr) && !canGhostWrite(usr,src,"censored a channel"))
+				usr << "\red You can't do that."
+				return
 			src.screen=11
 			src.updateUsrDialog()
 
 		else if(href_list["menu_wanted"])
+			if(isobserver(usr) && !canGhostWrite(usr,src,""))
+				usr << "\red You can't do that."
+				return
 			var/already_wanted = 0
 			if(news_network.wanted_issue)
 				already_wanted = 1
@@ -650,18 +698,27 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.updateUsrDialog()
 
 		else if(href_list["set_wanted_name"])
+			if(isobserver(usr) && !canGhostWrite(usr,src,"tried to set the name of a wanted person"))
+				usr << "\red You can't do that."
+				return
 			src.channel_name = strip_html(input(usr, "Provide the name of the Wanted person", "Network Security Handler", ""))
 			while (findtext(src.channel_name," ") == 1)
 				src.channel_name = copytext(src.channel_name,2,lentext(src.channel_name)+1)
 			src.updateUsrDialog()
 
 		else if(href_list["set_wanted_desc"])
+			if(isobserver(usr) && !canGhostWrite(usr,src,"tried to set the description of a wanted person"))
+				usr << "\red You can't do that."
+				return
 			src.msg = strip_html(input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler", ""))
 			while (findtext(src.msg," ") == 1)
 				src.msg = copytext(src.msg,2,lentext(src.msg)+1)
 			src.updateUsrDialog()
 
 		else if(href_list["submit_wanted"])
+			if(isobserver(usr) && !canGhostWrite(usr,src,"submitted a wanted poster"))
+				usr << "\red You can't do that."
+				return
 			var/input_param = text2num(href_list["submit_wanted"])
 			if(src.msg == "" || src.channel_name == "" || src.scanned_user == "Unknown")
 				src.screen = 16
@@ -709,6 +766,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.screen=18
 			src.updateUsrDialog()
 		else if(href_list["censor_channel_author"])
+			if(isobserver(usr) && !canGhostWrite(usr,src,"tried to censor an author"))
+				usr << "\red You can't do that."
+				return
 			var/datum/feed_channel/FC = locate(href_list["censor_channel_author"])
 			if(FC.is_admin_channel)
 				alert("This channel was created by a Nanotrasen Officer. You cannot censor it.","Ok")
@@ -721,6 +781,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.updateUsrDialog()
 
 		else if(href_list["censor_channel_story_author"])
+			if(isobserver(usr) && !canGhostWrite(usr,src,"tried to censor a story's author"))
+				usr << "\red You can't do that."
+				return
 			var/datum/feed_message/MSG = locate(href_list["censor_channel_story_author"])
 			if(MSG.is_admin_message)
 				alert("This message was created by a Nanotrasen Officer. You cannot censor its author.","Ok")
@@ -733,6 +796,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.updateUsrDialog()
 
 		else if(href_list["censor_channel_story_body"])
+			if(isobserver(usr) && !canGhostWrite(usr,src,"tried to censor a story"))
+				usr << "\red You can't do that."
+				return
 			var/datum/feed_message/MSG = locate(href_list["censor_channel_story_body"])
 			if(MSG.is_admin_message)
 				alert("This channel was created by a Nanotrasen Officer. You cannot censor it.","Ok")
@@ -750,12 +816,18 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.updateUsrDialog()
 
 		else if(href_list["pick_d_notice"])
+			if(isobserver(usr) && !canGhostWrite(usr,src,""))
+				usr << "\red You can't do that."
+				return
 			var/datum/feed_channel/FC = locate(href_list["pick_d_notice"])
 			src.viewing_channel = FC
 			src.screen=13
 			src.updateUsrDialog()
 
 		else if(href_list["toggle_d_notice"])
+			if(isobserver(usr) && !canGhostWrite(usr,src,"tried to set a D-notice"))
+				usr << "\red You can't do that."
+				return
 			var/datum/feed_channel/FC = locate(href_list["toggle_d_notice"])
 			if(FC.is_admin_channel)
 				alert("This channel was created by a Nanotrasen Officer. You cannot place a D-Notice upon it.","Ok")
@@ -892,7 +964,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 obj/item/weapon/newspaper/attack_self(mob/user as mob)
 	if(ishuman(user))
-		var/mob/living/carbon/human/human_user = user
+		//var/mob/living/carbon/human/human_user = user
 		var/dat
 		src.pages = 0
 		switch(screen)
@@ -921,7 +993,7 @@ obj/item/weapon/newspaper/attack_self(mob/user as mob)
 					dat+="</ul>"
 				if(scribble_page==curr_page)
 					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[src.scribble]\"</I>"
-				dat+= "<HR><DIV STYLE='float:right;'><A href='?src=\ref[src];next_page=1'>Next Page</A></DIV> <div style='float:left;'><A href='?src=\ref[human_user];mach_close=newspaper_main'>Done reading</A></DIV>"
+				dat+= "<HR><DIV STYLE='float:right;'><A href='?src=\ref[src];next_page=1'>Next Page</A></DIV> <div style='float:left;'><A href='?src=\ref[usr];mach_close=newspaper_main'>Done reading</A></DIV>"
 			if(1) // X channel pages inbetween.
 				for(var/datum/feed_channel/NP in src.news_content)
 					src.pages++ //Let's get it right again.
@@ -972,15 +1044,15 @@ obj/item/weapon/newspaper/attack_self(mob/user as mob)
 				dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com"
 
 		dat+="<BR><HR><div align='center'>[src.curr_page+1]</div>"
-		human_user << browse(dat, "window=newspaper_main;size=300x400")
-		onclose(human_user, "newspaper_main")
+		usr << browse(dat, "window=newspaper_main;size=300x400")
+		onclose(usr, "newspaper_main")
 	else
 		user << "The paper is full of intelligible symbols!"
 
 
 obj/item/weapon/newspaper/Topic(href, href_list)
-	var/mob/living/U = usr
-	..()
+	var/mob/U = usr
+	//..() // Allow ghosts to do pretty much everything except add shit
 	if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ))
 		U.set_machine(src)
 		if(href_list["next_page"])
@@ -1030,7 +1102,7 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 ////////////////////////////////////helper procs
 
 
-/obj/machinery/newscaster/proc/scan_user(mob/living/user as mob)
+/obj/machinery/newscaster/proc/scan_user(mob/user)
 	if(istype(user,/mob/living/carbon/human))                       //User is a human
 		var/mob/living/carbon/human/human_user = user
 		if(human_user.wear_id)                                      //Newscaster scans you
@@ -1047,9 +1119,13 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 				src.scanned_user ="Unknown"
 		else
 			src.scanned_user ="Unknown"
-	else
+	else if (isAI(user))
 		var/mob/living/silicon/ai_user = user
 		src.scanned_user = "[ai_user.name] ([ai_user.job])"
+	else if (isAdminGhost(user))
+		src.scanned_user = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
+	else if (isobserver(user))
+		src.scanned_user = "Anomaly"
 
 
 /obj/machinery/newscaster/proc/print_paper()

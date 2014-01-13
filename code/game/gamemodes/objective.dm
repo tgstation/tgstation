@@ -274,7 +274,7 @@ datum/objective/protect//The opposite of killing a dude.
 
 
 datum/objective/hijack
-	explanation_text = "Hijack the emergency shuttle by escaping alone."
+	explanation_text = "Hijack the emergency shuttle by escaping without any organic life-forms, other than yourself."
 
 	check_completion()
 		if(!owner.current || owner.current.stat)
@@ -285,6 +285,10 @@ datum/objective/hijack
 			return 0
 		var/area/shuttle = locate(/area/shuttle/escape/centcom)
 		var/list/protected_mobs = list(/mob/living/silicon/ai, /mob/living/silicon/pai)
+		// Implemented in response to 21/12/2013 player vote,  .
+		// Comment this if you want Borgs and MoMMIs counted.
+		// TODO: Check if borgs are subverted. Best I can think of is a fuzzy check for strings used in syndie laws. BYOND can't do regex, sadly. - N3X
+		protected_mobs += list(/mob/living/silicon/robot, /mob/living/silicon/robot/mommi)
 		for(var/mob/living/player in player_list)
 			if(player.type in protected_mobs)	continue
 			if (player.mind && (player.mind != owner))
@@ -477,6 +481,7 @@ datum/objective/steal
 		"the captain's antique laser gun" = /obj/item/weapon/gun/energy/laser/captain,
 		"a hand teleporter" = /obj/item/weapon/hand_tele,
 		"an RCD" = /obj/item/weapon/rcd,
+		"an RPD" = /obj/item/weapon/pipe_dispenser,
 		"a jetpack" = /obj/item/weapon/tank/jetpack,
 		"a captain's jumpsuit" = /obj/item/clothing/under/rank/captain,
 		"a functional AI" = /obj/item/device/aicard,
@@ -661,8 +666,18 @@ datum/objective/capture
 			return 0
 		return 1
 
+datum/objective/blood
+	proc/gen_amount_goal(low = 150, high = 400)
+		target_amount = rand(low,high)
+		target_amount = round(round(target_amount/5)*5)
+		explanation_text = "Accumulate atleast [target_amount] units of blood in total."
+		return target_amount
 
-
+	check_completion()
+		if(owner && owner.vampire && owner.vampire.bloodtotal && owner.vampire.bloodtotal >= target_amount)
+			return 1
+		else
+			return 0
 datum/objective/absorb
 	proc/gen_amount_goal(var/lowbound = 4, var/highbound = 6)
 		target_amount = rand (lowbound,highbound)
@@ -745,3 +760,10 @@ datum/objective/absorb
 
 /*-------ENDOF CULTIST------*/
 */
+
+// /vg/; Vox Inviolate for humans :V
+datum/objective/minimize_casualties
+	explanation_text = "Minimise casualties."
+	check_completion()
+		if(owner.kills.len>5) return 0
+		return 1

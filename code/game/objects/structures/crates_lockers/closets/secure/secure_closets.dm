@@ -17,7 +17,8 @@
 	health = 200
 
 /obj/structure/closet/secure_closet/can_open()
-	..()
+	if(!..())
+		return 0
 	if(src.locked)
 		return 0
 	return 1
@@ -115,6 +116,8 @@
 				M.client.perspective = MOB_PERSPECTIVE
 		src.icon_state = src.icon_opened
 		src.opened = 1
+		src.density = 0
+		playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
 	else
 		user << "<span class='notice'>The locker is locked!</span>"
 		if(world.time > lastbang+5)

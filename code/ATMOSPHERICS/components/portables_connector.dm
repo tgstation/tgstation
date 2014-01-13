@@ -23,6 +23,20 @@
 		initialize_directions = dir
 		..()
 
+	buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
+		dir = pipe.dir
+		initialize_directions = pipe.get_pipe_dir()
+		if (pipe.pipename)
+			name = pipe.pipename
+		var/turf/T = loc
+		level = T.intact ? 2 : 1
+		initialize()
+		build_network()
+		if (node)
+			node.initialize()
+			node.build_network()
+		return 1
+
 	update_icon()
 		if(node)
 			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]intact"

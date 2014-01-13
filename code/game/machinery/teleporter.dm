@@ -42,6 +42,7 @@
 			user.drop_item()
 			del(I)
 
+			/* FUCK YOU
 			if(C.data == "Clown Land")
 				//whoops
 				for(var/mob/O in hearers(src, null))
@@ -53,10 +54,11 @@
 						new /mob/living/simple_animal/hostile/carp(get_turf(H))
 				//
 			else
-				for(var/mob/O in hearers(src, null))
-					O.show_message("\blue Locked In", 2)
-				src.locked = L
-				one_time_use = 1
+			*/
+			for(var/mob/O in hearers(src, null))
+				O.show_message("\blue Locked In", 2)
+			src.locked = L
+			one_time_use = 1
 
 			src.add_fingerprint(usr)
 	else

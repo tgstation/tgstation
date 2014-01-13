@@ -4,7 +4,7 @@
 #define XENOARCH_SPREAD_CHANCE 15
 #define ARTIFACT_SPAWN_CHANCE 20
 
-/turf/simulated/mineral //wall piece
+/turf/unsimulated/mineral //wall piece
 	name = "Rock"
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "rock"
@@ -13,7 +13,7 @@
 	opacity = 1
 	density = 1
 	blocks_air = 1
-	temperature = TCMB
+	//temperature = TCMB
 	var/mineralName = ""
 	var/mineralAmt = 0
 	var/spread = 0 //will the seam spread?
@@ -30,10 +30,10 @@
 	var/obj/item/weapon/last_find
 	var/datum/artifact_find/artifact_find
 
-/turf/simulated/mineral/Del()
+/turf/unsimulated/mineral/Del()
 	return
 
-/turf/simulated/mineral/ex_act(severity)
+/turf/unsimulated/mineral/ex_act(severity)
 	switch(severity)
 		if(3.0)
 			return
@@ -46,7 +46,7 @@
 			src.gets_drilled()
 	return
 
-/turf/simulated/mineral/New()
+/turf/unsimulated/mineral/New()
 
 	spawn(1)
 		var/turf/T
@@ -70,9 +70,9 @@
 	if (mineralName && mineralAmt && spread && spreadChance)
 		for(var/trydir in list(1,2,4,8))
 			if(prob(spreadChance))
-				if(istype(get_step(src, trydir), /turf/simulated/mineral/random))
-					var/turf/simulated/mineral/T = get_step(src, trydir)
-					var/turf/simulated/mineral/M = new src.type(T)
+				if(istype(get_step(src, trydir), /turf/unsimulated/mineral/random))
+					var/turf/unsimulated/mineral/T = get_step(src, trydir)
+					var/turf/unsimulated/mineral/M = new src.type(T)
 					//keep any digsite data as constant as possible
 					if(T.finds.len && !M.finds.len)
 						M.finds = T.finds
@@ -96,8 +96,8 @@
 			var/list/turfs_to_process = list(src)
 			var/list/processed_turfs = list()
 			while(turfs_to_process.len)
-				var/turf/simulated/mineral/M = turfs_to_process[1]
-				for(var/turf/simulated/mineral/T in orange(1, M))
+				var/turf/unsimulated/mineral/M = turfs_to_process[1]
+				for(var/turf/unsimulated/mineral/T in orange(1, M))
 					if(T.finds.len)
 						continue
 					if(T in processed_turfs)
@@ -147,38 +147,38 @@
 
 	return
 
-/turf/simulated/mineral/random
+/turf/unsimulated/mineral/random
 	name = "Mineral deposit"
 	var/mineralAmtList = list("Uranium" = 5, "Iron" = 5, "Diamond" = 5, "Gold" = 5, "Silver" = 5, "Plasma" = 5, "Phazite"=1/*, "Adamantine" = 5*/)
 	var/mineralSpawnChanceList = list("Uranium" = 5, "Iron" = 50, "Diamond" = 1, "Gold" = 5, "Silver" = 5, "Plasma" = 25/*, "Adamantine" =5*/)//Currently, Adamantine won't spawn as it has no uses. -Durandan
 	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
 
-/turf/simulated/mineral/random/New()
+/turf/unsimulated/mineral/random/New()
 	..()
 	if (prob(mineralChance))
 		var/mName = pickweight(mineralSpawnChanceList) //temp mineral name
 
 		if (mName)
-			var/turf/simulated/mineral/M
+			var/turf/unsimulated/mineral/M
 			switch(mName)
 				if("Uranium")
-					M = new/turf/simulated/mineral/uranium(src)
+					M = new/turf/unsimulated/mineral/uranium(src)
 				if("Iron")
-					M = new/turf/simulated/mineral/iron(src)
+					M = new/turf/unsimulated/mineral/iron(src)
 				if("Diamond")
-					M = new/turf/simulated/mineral/diamond(src)
+					M = new/turf/unsimulated/mineral/diamond(src)
 				if("Gold")
-					M = new/turf/simulated/mineral/gold(src)
+					M = new/turf/unsimulated/mineral/gold(src)
 				if("Silver")
-					M = new/turf/simulated/mineral/silver(src)
+					M = new/turf/unsimulated/mineral/silver(src)
 				if("Plasma")
-					M = new/turf/simulated/mineral/plasma(src)
+					M = new/turf/unsimulated/mineral/plasma(src)
 				if("Clown")
-					M = new/turf/simulated/mineral/clown(src)
+					M = new/turf/unsimulated/mineral/clown(src)
 				if("Phazite")
-					M = new/turf/simulated/mineral/phazon(src)
+					M = new/turf/unsimulated/mineral/phazon(src)
 				/*if("Adamantine")
-					M = new/turf/simulated/mineral/adamantine(src)*/
+					M = new/turf/unsimulated/mineral/adamantine(src)*/
 			if(M)
 				src = M
 				M.levelupdate()
@@ -195,19 +195,19 @@
 		new/obj/machinery/artifact(src)*/
 	return
 
-/turf/simulated/mineral/random/high_chance
+/turf/unsimulated/mineral/random/high_chance
 	mineralChance = 25
 	mineralSpawnChanceList = list("Uranium" = 10, "Iron" = 30, "Diamond" = 2, "Gold" = 10, "Silver" = 10, "Plasma" = 25, "Archaeo" = 2)
 
-/turf/simulated/mineral/random/high_chance_clown
+/turf/unsimulated/mineral/random/high_chance_clown
 	//icon_state="rock_Phazon"
 	mineralChance = 40
 	mineralSpawnChanceList = list("Uranium" = 10, "Iron" = 10, "Diamond" = 2, "Gold" = 5, "Silver" = 5, "Plasma" = 25, "Archaeo" = 2, "Clown"=15, "Phazite"=10)
 
-/turf/simulated/mineral/random/Del()
+/turf/unsimulated/mineral/random/Del()
 	return
 
-/turf/simulated/mineral/uranium
+/turf/unsimulated/mineral/uranium
 	name = "Uranium deposit"
 	icon_state = "rock_Uranium"
 	mineralName = "Uranium"
@@ -217,7 +217,7 @@
 
 
 
-/turf/simulated/mineral/iron
+/turf/unsimulated/mineral/iron
 	name = "Iron deposit"
 	icon_state = "rock_Iron"
 	mineralName = "Iron"
@@ -226,7 +226,7 @@
 	spread = 1
 
 
-/turf/simulated/mineral/diamond
+/turf/unsimulated/mineral/diamond
 	name = "Diamond deposit"
 	icon_state = "rock_Diamond"
 	mineralName = "Diamond"
@@ -235,7 +235,7 @@
 	spread = 1
 
 
-/turf/simulated/mineral/gold
+/turf/unsimulated/mineral/gold
 	name = "Gold deposit"
 	icon_state = "rock_Gold"
 	mineralName = "Gold"
@@ -244,7 +244,7 @@
 	spread = 1
 
 
-/turf/simulated/mineral/silver
+/turf/unsimulated/mineral/silver
 	name = "Silver deposit"
 	icon_state = "rock_Silver"
 	mineralName = "Silver"
@@ -253,7 +253,7 @@
 	spread = 1
 
 
-/turf/simulated/mineral/plasma
+/turf/unsimulated/mineral/plasma
 	name = "Plasma deposit"
 	icon_state = "rock_Plasma"
 	mineralName = "Plasma"
@@ -262,7 +262,7 @@
 	spread = 1
 
 
-/turf/simulated/mineral/clown
+/turf/unsimulated/mineral/clown
 	name = "Bananium deposit"
 	icon_state = "rock_Clown"
 	mineralName = "Clown"
@@ -271,7 +271,7 @@
 	spread = 0
 
 
-/turf/simulated/mineral/phazon
+/turf/unsimulated/mineral/phazon
 	name = "Phazite deposit"
 	icon_state = "rock_Phazon"
 	mineralName = "Phazite"
@@ -282,9 +282,9 @@
 /*
 commented out in r5061, I left it because of the shroom thingies
 
-/turf/simulated/mineral/ReplaceWithFloor()
+/turf/unsimulated/mineral/ReplaceWithFloor()
 	if(!icon_old) icon_old = icon_state
-	var/turf/simulated/floor/plating/airless/asteroid/W
+	var/turf/unsimulated/floor/asteroid/W
 	var/old_dir = dir
 
 	for(var/direction in cardinal)
@@ -296,7 +296,7 @@ commented out in r5061, I left it because of the shroom thingies
 				shroom.pixel_y = 0
 
 	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
-	W = new /turf/simulated/floor/plating/airless/asteroid(src)
+	W = new /turf/unsimulated/floor/asteroid(src)
 	W.lighting_lumcount += old_lumcount
 	if(old_lumcount != W.lighting_lumcount)
 		W.lighting_changed = 1
@@ -309,7 +309,7 @@ commented out in r5061, I left it because of the shroom thingies
 	return W
 */
 
-/turf/simulated/mineral/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/turf/unsimulated/mineral/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		usr << "\red You don't have the dexterity to do this!"
@@ -457,7 +457,7 @@ commented out in r5061, I left it because of the shroom thingies
 		return attack_hand(user)
 	return
 
-/turf/simulated/mineral/proc/drop_mineral()
+/turf/unsimulated/mineral/proc/drop_mineral()
 	var/obj/item/weapon/ore/O
 	if (src.mineralName == "Uranium")
 		O = new /obj/item/weapon/ore/uranium(src)
@@ -480,7 +480,7 @@ commented out in r5061, I left it because of the shroom thingies
 		O.geological_data = src.geological_data
 	return O
 
-/turf/simulated/mineral/proc/gets_drilled(var/artifact_fail = 0)
+/turf/unsimulated/mineral/proc/gets_drilled(var/artifact_fail = 0)
 	//var/destroyed = 0 //used for breaking strange rocks
 	if ((src.mineralName != "") && (src.mineralAmt > 0) && (src.mineralAmt < 11))
 
@@ -506,12 +506,12 @@ commented out in r5061, I left it because of the shroom thingies
 					M.Stun(5)
 			M.apply_effect(25, IRRADIATE)
 
-	var/turf/simulated/floor/plating/airless/asteroid/N = ChangeTurf(/turf/simulated/floor/plating/airless/asteroid)
+	var/turf/unsimulated/floor/asteroid/N = ChangeTurf(/turf/unsimulated/floor/asteroid)
 	N.fullUpdateMineralOverlays()
 
 	return
 
-/turf/simulated/mineral/proc/excavate_find(var/prob_clean = 0, var/datum/find/F)
+/turf/unsimulated/mineral/proc/excavate_find(var/prob_clean = 0, var/datum/find/F)
 	//with skill and luck, players can cleanly extract finds
 	//otherwise, they come out inside a chunk of rock
 	var/obj/item/weapon/X
@@ -540,7 +540,7 @@ commented out in r5061, I left it because of the shroom thingies
 
 	src.finds.Remove(F)
 
-/turf/simulated/mineral/proc/artifact_debris(var/severity = 0)
+/turf/unsimulated/mineral/proc/artifact_debris(var/severity = 0)
 	//cael's patented random limited drop componentized loot system!
 	severity = max(min(severity,1),0)
 	var/materials = 0
@@ -591,20 +591,20 @@ commented out in r5061, I left it because of the shroom thingies
 		R.amount = rand(1,5)
 
 /*
-/turf/simulated/mineral/proc/setRandomMinerals()
+/turf/unsimulated/mineral/proc/setRandomMinerals()
 	var/s = pickweight(list("uranium" = 5, "iron" = 50, "gold" = 5, "silver" = 5, "plasma" = 50, "diamond" = 1))
 	if (s)
 		mineralName = s
 
-	var/N = text2path("/turf/simulated/mineral/[s]")
+	var/N = text2path("/turf/unsimulated/mineral/[s]")
 	if (N)
-		var/turf/simulated/mineral/M = new N
+		var/turf/unsimulated/mineral/M = new N
 		src = M
 		if (src.mineralName)
 			mineralAmt = 5
 	return*/
 
-/turf/simulated/mineral/Bumped(AM as mob|obj)
+/turf/unsimulated/mineral/Bumped(AM as mob|obj)
 	..()
 	if(istype(AM,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = AM
@@ -629,17 +629,22 @@ commented out in r5061, I left it because of the shroom thingies
 
 /**********************Asteroid**************************/
 
-/turf/simulated/floor/plating/airless/asteroid //floor piece
+/turf/unsimulated/floor/airless //floor piece
+	oxygen = 0.01
+	nitrogen = 0.01
+	temperature = TCMB
+
+/turf/unsimulated/floor/asteroid //floor piece
 	name = "Asteroid"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"
 	oxygen = 0.01
 	nitrogen = 0.01
 	temperature = TCMB
-	icon_plating = "asteroid"
+	//icon_plating = "asteroid"
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
 
-/turf/simulated/floor/plating/airless/asteroid/New()
+/turf/unsimulated/floor/asteroid/New()
 	var/proper_name = name
 	..()
 	name = proper_name
@@ -651,7 +656,7 @@ commented out in r5061, I left it because of the shroom thingies
 	spawn(2)
 		updateMineralOverlays()
 
-/turf/simulated/floor/plating/airless/asteroid/ex_act(severity)
+/turf/unsimulated/floor/asteroid/ex_act(severity)
 	switch(severity)
 		if(3.0)
 			return
@@ -662,7 +667,7 @@ commented out in r5061, I left it because of the shroom thingies
 			src.gets_dug()
 	return
 
-/turf/simulated/floor/plating/airless/asteroid/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/turf/unsimulated/floor/asteroid/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if(!W || !user)
 		return 0
@@ -729,7 +734,7 @@ commented out in r5061, I left it because of the shroom thingies
 		..(W,user)
 	return
 
-/turf/simulated/floor/plating/airless/asteroid/proc/gets_dug()
+/turf/unsimulated/floor/asteroid/proc/gets_dug()
 	if(dug)
 		return
 	new/obj/item/weapon/ore/glass(src)
@@ -738,52 +743,52 @@ commented out in r5061, I left it because of the shroom thingies
 	new/obj/item/weapon/ore/glass(src)
 	new/obj/item/weapon/ore/glass(src)
 	dug = 1
-	icon_plating = "asteroid_dug"
+	//icon_plating = "asteroid_dug"
 	icon_state = "asteroid_dug"
 	return
 
-/turf/simulated/floor/plating/airless/asteroid/proc/updateMineralOverlays()
+/turf/unsimulated/floor/asteroid/proc/updateMineralOverlays()
 
 	src.overlays.Cut()
 
-	if(istype(get_step(src, NORTH), /turf/simulated/mineral))
+	if(istype(get_step(src, NORTH), /turf/unsimulated/mineral))
 		src.overlays += image('icons/turf/walls.dmi', "rock_side_n")
-	if(istype(get_step(src, SOUTH), /turf/simulated/mineral))
+	if(istype(get_step(src, SOUTH), /turf/unsimulated/mineral))
 		src.overlays += image('icons/turf/walls.dmi', "rock_side_s", layer=6)
-	if(istype(get_step(src, EAST), /turf/simulated/mineral))
+	if(istype(get_step(src, EAST), /turf/unsimulated/mineral))
 		src.overlays += image('icons/turf/walls.dmi', "rock_side_e", layer=6)
-	if(istype(get_step(src, WEST), /turf/simulated/mineral))
+	if(istype(get_step(src, WEST), /turf/unsimulated/mineral))
 		src.overlays += image('icons/turf/walls.dmi', "rock_side_w", layer=6)
 
-/turf/simulated/floor/plating/airless/asteroid/proc/fullUpdateMineralOverlays()
-	var/turf/simulated/floor/plating/airless/asteroid/A
-	if(istype(get_step(src, WEST), /turf/simulated/floor/plating/airless/asteroid))
+/turf/unsimulated/floor/asteroid/proc/fullUpdateMineralOverlays()
+	var/turf/unsimulated/floor/asteroid/A
+	if(istype(get_step(src, WEST), /turf/unsimulated/floor/asteroid))
 		A = get_step(src, WEST)
 		A.updateMineralOverlays()
-	if(istype(get_step(src, EAST), /turf/simulated/floor/plating/airless/asteroid))
+	if(istype(get_step(src, EAST), /turf/unsimulated/floor/asteroid))
 		A = get_step(src, EAST)
 		A.updateMineralOverlays()
-	if(istype(get_step(src, NORTH), /turf/simulated/floor/plating/airless/asteroid))
+	if(istype(get_step(src, NORTH), /turf/unsimulated/floor/asteroid))
 		A = get_step(src, NORTH)
 		A.updateMineralOverlays()
-	if(istype(get_step(src, NORTHWEST), /turf/simulated/floor/plating/airless/asteroid))
+	if(istype(get_step(src, NORTHWEST), /turf/unsimulated/floor/asteroid))
 		A = get_step(src, NORTHWEST)
 		A.updateMineralOverlays()
-	if(istype(get_step(src, NORTHEAST), /turf/simulated/floor/plating/airless/asteroid))
+	if(istype(get_step(src, NORTHEAST), /turf/unsimulated/floor/asteroid))
 		A = get_step(src, NORTHEAST)
 		A.updateMineralOverlays()
-	if(istype(get_step(src, SOUTHWEST), /turf/simulated/floor/plating/airless/asteroid))
+	if(istype(get_step(src, SOUTHWEST), /turf/unsimulated/floor/asteroid))
 		A = get_step(src, SOUTHWEST)
 		A.updateMineralOverlays()
-	if(istype(get_step(src, SOUTHEAST), /turf/simulated/floor/plating/airless/asteroid))
+	if(istype(get_step(src, SOUTHEAST), /turf/unsimulated/floor/asteroid))
 		A = get_step(src, SOUTHEAST)
 		A.updateMineralOverlays()
-	if(istype(get_step(src, SOUTH), /turf/simulated/floor/plating/airless/asteroid))
+	if(istype(get_step(src, SOUTH), /turf/unsimulated/floor/asteroid))
 		A = get_step(src, SOUTH)
 		A.updateMineralOverlays()
 	src.updateMineralOverlays()
 
-/turf/simulated/floor/plating/airless/asteroid/Entered(atom/movable/M as mob|obj)
+/turf/unsimulated/floor/asteroid/Entered(atom/movable/M as mob|obj)
 	..()
 	if(istype(M,/mob/living/silicon/robot))
 		var/mob/living/silicon/robot/R = M

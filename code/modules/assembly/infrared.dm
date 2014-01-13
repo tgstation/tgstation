@@ -20,6 +20,8 @@
 	proc
 		trigger_beam()
 
+	//describe()
+	//	return "The infrared trigger is [on?"on":"off"]."
 
 	activate()
 		if(!..())	return 0//Cooldown check
@@ -57,9 +59,19 @@
 			if(first)
 				del(first)
 				return
-
-		if((!(first) && (secured && (istype(loc, /turf) || (holder && istype(holder.loc, /turf))))))
-			var/obj/effect/beam/i_beam/I = new /obj/effect/beam/i_beam((holder ? holder.loc : loc) )
+		if(first || !secured) return
+		var/turf/T = null
+		if(istype(loc,/turf))
+			T = loc
+		else if (holder)
+			if (istype(holder.loc,/turf))
+				T = holder.loc
+			else if (istype(holder.loc.loc,/turf)) //for onetankbombs and other tertiary builds with assemblies
+				T = holder.loc.loc
+		else if(istype(loc,/obj/item/weapon/grenade) && istype(loc.loc,/turf))
+			T = loc.loc
+		if(T)
+			var/obj/effect/beam/i_beam/I = new /obj/effect/beam/i_beam(T)
 			I.master = src
 			I.density = 1
 			I.dir = dir

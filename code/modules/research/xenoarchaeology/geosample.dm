@@ -21,7 +21,7 @@
 	icon_state = "sliver1"	//0-4
 	w_class = 1
 	//item_state = "electronic"
-	var/source_rock = "/turf/simulated/mineral/"
+	var/source_rock = "/turf/unsimulated/mineral/"
 	var/datum/geosample/geological_data
 
 /obj/item/weapon/rocksliver/New()
@@ -70,12 +70,12 @@ var/list/artifact_spawning_turfs = list()
 	//all potential finds are initialised to null, so nullcheck before you access them
 	var/list/find_presence = list()
 
-/datum/geosample/New(var/turf/simulated/mineral/container)
+/datum/geosample/New(var/turf/unsimulated/mineral/container)
 
 	UpdateTurf(container)
 
 //this should only need to be called once
-/datum/geosample/proc/UpdateTurf(var/turf/simulated/mineral/container)
+/datum/geosample/proc/UpdateTurf(var/turf/unsimulated/mineral/container)
 	if(!container || !istype(container))
 		return
 
@@ -136,7 +136,7 @@ var/list/artifact_spawning_turfs = list()
 		total_spread += find_presence[entry]
 
 //have this separate from UpdateTurf() so that we dont have a billion turfs being updated (redundantly) every time an artifact spawns
-/datum/geosample/proc/UpdateNearbyArtifactInfo(var/turf/simulated/mineral/container)
+/datum/geosample/proc/UpdateNearbyArtifactInfo(var/turf/unsimulated/mineral/container)
 	if(!container || !istype(container))
 		return
 
@@ -144,7 +144,7 @@ var/list/artifact_spawning_turfs = list()
 		artifact_distance = rand()
 		artifact_id = container.artifact_find.artifact_id
 	else
-		for(var/turf/simulated/mineral/holder in artifact_spawning_turfs)
+		for(var/turf/unsimulated/mineral/holder in artifact_spawning_turfs)
 			if(holder.artifact_find)
 				var/dist = get_dist(container, holder)
 				if(dist < holder.artifact_find.artifact_detect_range && dist < src.artifact_distance)

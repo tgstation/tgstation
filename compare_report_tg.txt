@@ -287,6 +287,8 @@
  + staffofanimation
  + staffofanimation2
  - toddler
+ + waterbackpack
+ + waterbackpack2
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\belt.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\belt.dmi
  - holobadge
@@ -477,6 +479,10 @@
  - alice_mccrea_12
  - alice_mccrea_1up
  - alice_mccrea_1up2
+ + ambrosiadeus
+ + ambrosiadeus2
+ + ambrosiavulgaris
+ + ambrosiavulgaris2
  - amp
  - amp2
  - centcomcaptain
@@ -848,6 +854,7 @@
  - kobskull
  - medibottle
  + mimesuit
+ + mister
  + mjollnir0
  + mjollnir1
  - muzzle
@@ -934,6 +941,7 @@
  + hypo
  - kobskull
  - medibottle
+ + mister
  + mjollnir0
  + mjollnir1
  - muzzle
@@ -1031,6 +1039,8 @@
  - tajkey1
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\robots.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\robots.dmi
+ - Engiseer
+ - Engiseer-old
  - droid
  - droid-combat
  - droid-combat-roll
@@ -1040,6 +1050,7 @@
  - engineerrobot
  - eyes-Brobot
  - eyes-Engineering
+ - eyes-Engiseer
  - eyes-Hydrobot
  - eyes-Miner_old
  - eyes-Security
@@ -1076,6 +1087,12 @@
  - medicalrobot
  - mommi
  - mommiold
+ + ov-opencover +c
+ + ov-opencover +w
+ + ov-opencover -c
+ - ov-openpanel +c
+ - ov-openpanel +w
+ - ov-openpanel -c
  - rowtree-engineering
  - rowtree-lucy
  - rowtree-medical
@@ -1264,6 +1281,7 @@
  + nutrition4
  + oxy1
  + power_display
+ + power_display2
  + pressure-1
  + pressure-2
  + pressure1
@@ -1485,6 +1503,8 @@
  - labcoat_burnt_openZ
  - mantle-unathi
  - mantle-unathi2
+ - officebluejacket
+ + officerbluejacket
  - paramedic-eva
  - paramedic-eva2
  - paramedic-vest
@@ -1967,6 +1987,7 @@
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\device.dmi
  - bunsen0
  - bunsen1
+ - dest_tagger
  - eftpos
  - forensic0-old
  - forensic1-old
@@ -1975,6 +1996,8 @@
  - implant
  - implant_evil
  - implant_melted
+ - megaphone
+ - modkit
  + multitool_red
  + pointer
  + pointer_blue_laser
@@ -1982,6 +2005,7 @@
  + pointer_purple_laser
  + pointer_red_laser
  + ribbonoverlay
+ - robotanalyzer
  - sampler0
  - sampler1
  - solution_tray
@@ -2116,6 +2140,8 @@
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\food.dmi
  + appendixburger
  - bacon
+ + beans
+ + benedict
  + berrymuffin
  - boiledrice
  + booberrymuffin
@@ -2123,12 +2149,18 @@
  + copypasta
  - enchiladasold
  - honeycomb
+ + hotdog
+ + icecreamsandwich
+ + meatbun
  - meatstake
  + meatsteak
  - monkiesdelightold
+ + notasandwich
  - rice
  - rpudding
  - spellburgerold
+ + sugarcookie
+ + wrap
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\grenade.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\grenade.dmi
  - chemg_primed
@@ -2189,6 +2221,7 @@
  - koibean-grow5
  - koibean-grow6
  - koibean-harvest
+ + mister
  + novaflower-dead
  - plastellium-dead
  - plastellium-grow1
@@ -2203,6 +2236,7 @@
  - seedbag
  - soybean-grow5
  - soybean-grow6
+ + waterbackpack
  + xpod-dead
  + xpod-grow1
  + xpod-grow2
@@ -2553,7 +2587,9 @@
  - ai_beer
  - ai_dwarf
  - ai_fishtank
+ + ai_hal
  - ai_plump
+ + ai_sal
  - ai_tribunal
  - ai_tribunal_malf
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\storage.dmi
@@ -2679,11 +2715,15 @@
  - autoinjector0
  - autoinjector1
  - broken
+ + combat_hypo
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\tank.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\tank.dmi
  - emergency_nitrogen
  - jetpack-red
  - jetpack-red-on
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\telescience.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\telescience.dmi
+ + bluespace_crystal
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\terminals.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\terminals.dmi
  - atm
@@ -2712,6 +2752,9 @@
  - nutrimat-panel
  - robotics-deny: robotics-deny: 7 frames, 1 directions
  + robotics-deny: robotics-deny: 4 frames, 1 directions
+ + sustenance
+ + sustenance-broken
+ + sustenance-off
  + theater
  + theater-broken
  + theater-deny
@@ -2770,6 +2813,10 @@
  + roman_shield
  + spearglass0
  + spearglass1
+ - stun baton
+ - stun baton_active
+ - stun baton_nocell
+ + stunbaton
  + stunbaton_nocell
  + swordrainbow
  - telebaton_0
@@ -2780,14 +2827,6 @@
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\wizard.dmi
  - focus
  + scroll2
---- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\assemblies\new_assemblies.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\assemblies\new_assemblies.dmi
- + anomaly core
- + anomaly core_left
- + anomaly core_right
- + voice
- + voice_left
- + voice_right
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\atmospherics\cold_sink.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\cold_sink.dmi
  + exposed
@@ -3088,6 +3127,32 @@
  + plant-23
  + plant-24
  + plant-25
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\machines\antimatter.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\machines\antimatter.dmi
+ - control_critical
+ - core0
+ - core1
+ - coreshield_1
+ - coreshield_10
+ - coreshield_11
+ - coreshield_13
+ - coreshield_14
+ - coreshield_15
+ - coreshield_2
+ - coreshield_4
+ - coreshield_5
+ - coreshield_6
+ - coreshield_7
+ - coreshield_8
+ - coreshield_9
+ - jar-new
+ - shield_11
+ - shield_12
+ - shield_13
+ - shield_14
+ - shield_15
+ - shield_3
+ - shield_7
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\machines\particle_accelerator.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\machines\particle_accelerator.dmi
  + control_boxp3
@@ -3111,19 +3176,23 @@
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\pipes\large.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi
  C:\Users\Rob\Documents\Projects\tgstation\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/DMITool/DMI.py", line 133, in compare
-    theirsDMI.parse()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\DMITool\DMI\__init__.py", line 157, in parse
-    img = Image.open(self.filename)
+  File "tools/OpenBYOND/src/DMITool.py", line 133, in compare
+    theirsDMI.loadMetadata()
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 165, in loadMetadata
+    self.load(flags | DMILoadFlags.NoImages)
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 173, in load
+    self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
  C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/DMITool/DMI.py", line 149, in compare
-    mineDMI.parse()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\DMITool\DMI\__init__.py", line 157, in parse
-    img = Image.open(self.filename)
+  File "tools/OpenBYOND/src/DMITool.py", line 149, in compare
+    mineDMI.loadMetadata()
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 165, in loadMetadata
+    self.load(flags | DMILoadFlags.NoImages)
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 173, in load
+    self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
@@ -3787,6 +3856,7 @@ OSError: cannot identify image file
  - iso3
  + meeting
  - radiation
+ + telesci
  - xenocell1
  - xenocell2
  - xenocell3

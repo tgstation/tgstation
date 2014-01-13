@@ -52,6 +52,7 @@
 
 	if(!dna)
 		dna = new /datum/dna(null)
+		dna.species=species.name
 
 	for(var/i=0;i<7;i++) // 2 for medHUDs and 5 for secHUDs
 		hud_list += image('icons/mob/hud.dmi', src, "hudunknown")
@@ -533,7 +534,7 @@
 
 /mob/living/carbon/human/Topic(href, href_list)
 	var/pickpocket = 0
-	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr))
+	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr) && Adjacent(usr))
 		if(href_list["pockets"])
 			if(isanimal(usr)) return //Animals can't do that
 			if(ishuman(usr) && (usr:gloves))
@@ -1154,7 +1155,7 @@
 /*
 /mob/living/carbon/human/verb/simulate()
 	set name = "sim"
-	set background = 1
+	//set background = 1
 
 	var/damage = input("Wound damage","Wound damage") as num
 
@@ -1343,8 +1344,14 @@ mob/living/carbon/human/yank_out_object()
 
 /mob/living/carbon/human/proc/set_species(var/new_species,var/on_spawn=0)
 
-	if(!new_species)
-		new_species = "Human"
+	if(!dna)
+		if(!new_species)
+			new_species = "Human"
+	else
+		if(!new_species)
+			new_species = dna.species
+		else
+			dna.species = new_species
 
 	if(species && (species.name && species.name == new_species))
 		return
@@ -1357,9 +1364,8 @@ mob/living/carbon/human/yank_out_object()
 	else
 		see_invisible = SEE_INVISIBLE_LIVING
 
-	//testing("Mutations = "+english_list(mutations))
-	mutations+=species.default_mutations
-	//testing("SpeciesMut + Mutations = "+english_list(mutations))
+	if(species.default_mutations.len>0 || species.default_blocks.len>0)
+		do_deferred_species_setup=1
 
 	spawn(0)
 		update_icons()
@@ -1368,3 +1374,4 @@ mob/living/carbon/human/yank_out_object()
 		return 1
 	else
 		return 0
+

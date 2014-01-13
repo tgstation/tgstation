@@ -36,8 +36,12 @@ THE SOFTWARE.
 ##Voice you want to use 
 # This is the nitech-made ARCTIC voice, tut on how to install: 
 # http://ubuntuforums.org/showthread.php?t=751169 ("Installing the enhanced CMU Arctic voices" section)
-VOICE='nitech_us_clb_arctic_hts'
-#VOICE='nitech_us_slt_arctic_hts'
+#VOICE='nitech_us_bdl_arctic_hts'
+#VOICE='nitech_us_jmk_arctic_hts'
+#VOICE='nitech_us_awb_arctic_hts'
+#VOICE='nitech_us_slt_arctic_hts' # less bored US female
+VOICE='nitech_us_clb_arctic_hts' # DEFAULT, bored US female (occasionally comes up with british pronunciations?!)
+#VOICE='nitech_us_rms_arctic_hts'
 
 # What we do with SoX:
 SOX_ARGS  = 'stretch 1.1'
@@ -68,6 +72,7 @@ preexisting=[
 REGEX_SEARCH_STRINGS = re.compile(r'(\'|")(.*?)(?:\1)')
 
 wordlist=[]+preexisting
+othersounds=[]
 
 known_phonemes={}
 
@@ -173,13 +178,15 @@ class Pronunciation:
 		logging.info('Parsed {0} as {1}.'.format(pronunciation,repr(self.syllables)))
 	
 def GenerateForWord(word,wordfile):
-	global wordlist, preexisting, SOX_ARGS, known_phonemes
+	global wordlist, preexisting, SOX_ARGS, known_phonemes, othersounds
 	my_phonemes={}
 	if wordfile in preexisting:
 		logging.info('Skipping {0}.ogg (Marked as PRE_EXISTING)'.format(wordfile))
 		return
 	if '/' not in wordfile:
 		wordlist += [wordfile]
+	else:
+		othersounds += [wordfile]
 	md5=hashlib.md5(word).hexdigest()
 	for w in word.split(' '):
 		w=w.lower()
@@ -278,6 +285,8 @@ ProcessLexicon('lexicon.txt')
 for arg in sys.argv[1:]:
 	ProcessWordList(arg)
 soundsToKeep=set()
+for sound in othersounds:
+	soundsToKeep.add(sound+'.ogg')
 with open(os.path.join(CODE_BASE,'vox_sounds.dm'),'w') as w:
 	w.write("// List is required to compile the resources into the game when it loads.\n")
 	w.write("// Dynamically loading it has bad results with sounds overtaking each other, even with the wait variable.\n")

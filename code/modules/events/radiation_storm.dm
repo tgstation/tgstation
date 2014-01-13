@@ -54,10 +54,10 @@
 						H.apply_effect((rand(40,70)),IRRADIATE,0)
 						if (prob(75))
 							randmutb(H) // Applies bad mutation
-							domutcheck(H,null,1)
+							domutcheck(H,null,MUTCHK_FORCED)
 						else
 							randmutg(H) // Applies good mutation
-							domutcheck(H,null,1)
+							domutcheck(H,null,MUTCHK_FORCED)
 
 
 			for(var/mob/living/carbon/monkey/M in living_mob_list)

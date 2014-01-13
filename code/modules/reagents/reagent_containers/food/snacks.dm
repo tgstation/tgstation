@@ -39,6 +39,9 @@
 		return 0
 	if(istype(M, /mob/living/carbon))
 		if(M == user)								//If you're eating it yourself.
+			if(!M:hasmouth)
+				user << "\red Oh god where's your mouth?!"
+				return 0
 			var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
 			if (fullness <= 50)
 				M << "\red You hungrily chew out a piece of [src] and gobble it!"
@@ -52,28 +55,30 @@
 				M << "\red You cannot force any more of [src] to go down your throat."
 				return 0
 		else
-			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
-				var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
-				if (fullness <= (550 * (1 + M.overeatduration / 1000)))
-					for(var/mob/O in viewers(world.view, user))
-						O.show_message("\red [user] attempts to feed [M] [src].", 1)
-				else
-					for(var/mob/O in viewers(world.view, user))
-						O.show_message("\red [user] cannot force anymore of [src] down [M]'s throat.", 1)
-						return 0
-
-				if(!do_mob(user, M)) return
-
-				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
-				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
-				log_attack("[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
-
+			if(!M:hasmouth)
+				user << "\red Oh god where's its mouth?!"
+				return 0
+			var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
+			if (fullness <= (550 * (1 + M.overeatduration / 1000)))
 				for(var/mob/O in viewers(world.view, user))
-					O.show_message("\red [user] feeds [M] [src].", 1)
-
+					O.show_message("\red [user] attempts to feed [M] [src].", 1)
 			else
-				user << "This creature does not seem to have a mouth!"
-				return
+				for(var/mob/O in viewers(world.view, user))
+					O.show_message("\red [user] cannot force anymore of [src] down [M]'s throat.", 1)
+					return 0
+
+			if(!do_mob(user, M)) return
+
+			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
+			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
+			log_attack("[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
+			if(!iscarbon(user))
+				M.LAssailant = null
+			else
+				M.LAssailant = user
+
+			for(var/mob/O in viewers(world.view, user))
+				O.show_message("\red [user] feeds [M] [src].", 1)
 
 		if(reagents)								//Handle ingestion of the reagent.
 			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
@@ -547,6 +552,24 @@
 		reagents.add_reagent("nutriment", 3)
 		src.bitesize = 3
 
+/obj/item/weapon/reagent_containers/food/snacks/tofurkey
+	name = "Tofurkey"
+	desc = "A fake turkey made from tofu."
+	icon_state = "tofurkey"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 12)
+		reagents.add_reagent("stoxin", 3)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/stuffing
+	name = "Stuffing"
+	desc = "Moist, peppery breadcrumbs for filling the body cavities of dead birds. Dig in!"
+	icon_state = "stuffing"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		bitesize = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/carpmeat
 	name = "carp fillet"
@@ -683,6 +706,15 @@
 		reagents.add_reagent("nutriment", 6)
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/monkeyburger/synth
+	name = "synthetic burger"
+	desc = "It tastes like a normal burger, but it's just not the same."
+	icon_state = "hburger"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		bitesize = 2
+
 /obj/item/weapon/reagent_containers/food/snacks/fishburger
 	name = "Fillet -o- Carp Sandwich"
 	desc = "Almost like a carp is yelling somewhere... Give me back that fillet -o- carp, give me that carp."
@@ -770,10 +802,6 @@
 				return
 			//W.icon = 'icons/obj/kitchen.dmi'
 			W.icon_state = "forkloaded"
-			/*if (herp)
-				world << "[user] takes a piece of omelette with his fork!"*/
-				//Why this unecessary check? Oh I know, because I'm bad >:C
-				// Yes, you are. You griefing my badmin toys. --rastaf0
 			user.visible_message( \
 				"[user] takes a piece of omelette with their fork!", \
 				"\blue You take a piece of omelette with your fork!" \
@@ -958,6 +986,26 @@
 		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/monkeykabob/synth
+	name = "Synth-kabob"
+	icon_state = "kabob"
+	desc = "Synthetic meat, on a stick."
+	trash = /obj/item/stack/rods
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/corgikabob
+	name = "Corgi-kabob"
+	icon_state = "kabob"
+	desc = "Only someone without a heart could make this."
+	trash = /obj/item/stack/rods
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 2
+
 /obj/item/weapon/reagent_containers/food/snacks/tofukabob
 	name = "Tofu-kabob"
 	icon_state = "kabob"
@@ -1117,6 +1165,18 @@
 /obj/item/weapon/reagent_containers/food/snacks/meatsteak
 	name = "Meat steak"
 	desc = "A piece of hot spicy meat."
+	icon_state = "meatstake"
+	trash = /obj/item/trash/plate
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("sodiumchloride", 1)
+		reagents.add_reagent("blackpepper", 1)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/meatsteak/synth
+	name = "Synthmeat steak"
+	desc = "It's still a delicious steak, but it has no soul."
 	icon_state = "meatstake"
 	trash = /obj/item/trash/plate
 	New()
@@ -1332,6 +1392,7 @@
 	icon_state = "monkeycube"
 	bitesize = 12
 	var/wrapped = 0
+	var/monkey_type = null
 
 	New()
 		..()
@@ -1339,7 +1400,7 @@
 
 	afterattack(obj/O as obj, mob/user as mob)
 		if(istype(O,/obj/structure/sink) && !wrapped)
-			user << "You place [name] under a stream of water..."
+			user << "You place \the [name] under a stream of water..."
 			loc = get_turf(O)
 			return Expand()
 		..()
@@ -1350,8 +1411,17 @@
 
 	proc/Expand()
 		for(var/mob/M in viewers(src,7))
-			M << "\red The monkey cube expands!"
-		new /mob/living/carbon/monkey(get_turf(src))
+			M << "\red \The [src] expands!"
+		if(monkey_type)
+			switch(monkey_type)
+				if("tajara")
+					new /mob/living/carbon/monkey/tajara(get_turf(src))
+				if("unathi")
+					new /mob/living/carbon/monkey/unathi(get_turf(src))
+				if("skrell")
+					new /mob/living/carbon/monkey/skrell(get_turf(src))
+		else
+			new /mob/living/carbon/monkey(get_turf(src))
 		del(src)
 
 	proc/Unwrap(mob/user as mob)
@@ -1366,125 +1436,29 @@
 	icon_state = "monkeycubewrap"
 	wrapped = 1
 
-/obj/item/weapon/reagent_containers/food/snacks/farwacube
+
+/obj/item/weapon/reagent_containers/food/snacks/monkeycube/farwacube
 	name = "farwa cube"
-	desc = "Just add water!"
-	icon_state = "monkeycube"
-	bitesize = 12
-	var/wrapped = 0
+	monkey_type ="tajara"
+/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/farwacube
+	name = "farwa cube"
+	monkey_type ="tajara"
 
-	New()
-		..()
-		reagents.add_reagent("nutriment",10)
 
-	afterattack(obj/O as obj, mob/user as mob)
-		if(istype(O,/obj/structure/sink) && !wrapped)
-			user << "You place [name] under a stream of water..."
-			loc = get_turf(O)
-			return Expand()
-		..()
-
-	attack_self(mob/user as mob)
-		if(wrapped)
-			Unwrap(user)
-
-	proc/Expand()
-		for(var/mob/M in viewers(src,7))
-			M << "\red The farwa cube expands!"
-		new /mob/living/carbon/monkey/tajara(get_turf(src))
-		del(src)
-
-	proc/Unwrap(mob/user as mob)
-		icon_state = "monkeycube"
-		desc = "Just add water!"
-		user << "You unwrap the cube."
-		wrapped = 0
-		return
-
-/obj/item/weapon/reagent_containers/food/snacks/stokcube
+/obj/item/weapon/reagent_containers/food/snacks/monkeycube/stokcube
 	name = "stok cube"
-	desc = "Just add water!"
-	icon_state = "monkeycube"
-	bitesize = 12
-	var/wrapped = 0
+	monkey_type ="unathi"
+/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/stokcube
+	name = "stok cube"
+	monkey_type ="unathi"
 
-	New()
-		..()
-		reagents.add_reagent("nutriment",10)
 
-	afterattack(obj/O as obj, mob/user as mob)
-		if(istype(O,/obj/structure/sink) && !wrapped)
-			user << "You place [name] under a stream of water..."
-			loc = get_turf(O)
-			return Expand()
-		..()
-
-	attack_self(mob/user as mob)
-		if(wrapped)
-			Unwrap(user)
-
-	proc/Expand()
-		for(var/mob/M in viewers(src,7))
-			M << "\red The stok cube expands!"
-		new /mob/living/carbon/monkey/unathi(get_turf(src))
-		del(src)
-
-	proc/Unwrap(mob/user as mob)
-		icon_state = "monkeycube"
-		desc = "Just add water!"
-		user << "You unwrap the cube."
-		wrapped = 0
-		return
-/obj/item/weapon/reagent_containers/food/snacks/neaeracube
+/obj/item/weapon/reagent_containers/food/snacks/monkeycube/neaeracube
 	name = "neaera cube"
-	desc = "Just add water!"
-	icon_state = "monkeycube"
-	bitesize = 12
-	var/wrapped = 0
-
-	New()
-		..()
-		reagents.add_reagent("nutriment",10)
-
-	afterattack(obj/O as obj, mob/user as mob)
-		if(istype(O,/obj/structure/sink) && !wrapped)
-			user << "You place [name] under a stream of water..."
-			loc = get_turf(O)
-			return Expand()
-		..()
-
-	attack_self(mob/user as mob)
-		if(wrapped)
-			Unwrap(user)
-
-	proc/Expand()
-		for(var/mob/M in viewers(src,7))
-			M << "\red The neaera cube expands!"
-		new /mob/living/carbon/monkey/skrell(get_turf(src))
-		del(src)
-
-	proc/Unwrap(mob/user as mob)
-		icon_state = "monkeycube"
-		desc = "Just add water!"
-		user << "You unwrap the cube."
-		wrapped = 0
-		return
-
-/obj/item/weapon/reagent_containers/food/snacks/neaeracube/wrapped
-	desc = "Still wrapped in some paper."
-	icon_state = "monkeycubewrap"
-	wrapped = 1
-/obj/item/weapon/reagent_containers/food/snacks/stokcube/wrapped
-	desc = "Still wrapped in some paper."
-	icon_state = "monkeycubewrap"
-	wrapped = 1
-
-
-/obj/item/weapon/reagent_containers/food/snacks/farwacube/wrapped
-	desc = "Still wrapped in some paper."
-	icon_state = "monkeycubewrap"
-	wrapped = 1
-
+	monkey_type ="skrell"
+/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/neaeracube
+	name = "neaera cube"
+	monkey_type ="skrell"
 
 
 /obj/item/weapon/reagent_containers/food/snacks/spellburger
@@ -1953,6 +1927,24 @@
 	trash = /obj/item/trash/plate
 	bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/meatbread/synth
+	name = "synthmeatbread loaf"
+	desc = "A loaf of synthetic meatbread. You can just taste the mass-production."
+	icon_state = "meatbread"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice/synth
+	slices_num = 5
+	New()
+		..()
+		reagents.add_reagent("nutriment", 30)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/meatbreadslice/synth
+	name = "synthmeatbread slice"
+	desc = "A slice of synthetic meatbread."
+	icon_state = "meatbreadslice"
+	trash = /obj/item/trash/plate
+	bitesize = 2
+
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/xenomeatbread
 	name = "xenomeatbread loaf"
 	desc = "The culinary base of every self-respecting eloquen/tg/entleman. Extra Heretical."
@@ -2301,7 +2293,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meatpizza
 	name = "Meatpizza"
-	desc = "" //TODO:
+	desc = "A filling pizza laden with meat; perfect for the manliest of carnivores."
 	icon_state = "meatpizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meatpizzaslice
 	slices_num = 6
@@ -2313,7 +2305,25 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meatpizzaslice
 	name = "Meatpizza slice"
-	desc = "A slice of " //TODO:
+	desc = "A slice of pizza, packed with delicious meat."
+	icon_state = "meatpizzaslice"
+	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meatpizza/synth
+	name = "Synthmeatpizza"
+	desc = "A synthetic pizza laden with artificial meat; perfect for the stingiest of chefs."
+	icon_state = "meatpizza"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meatpizzaslice/synth
+	slices_num = 6
+	New()
+		..()
+		reagents.add_reagent("nutriment", 50)
+		reagents.add_reagent("tomatojuice", 6)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/meatpizzaslice/synth
+	name = "Synthmeatpizza slice"
+	desc = "A slice of pizza, packed with synthetic meat."
 	icon_state = "meatpizzaslice"
 	bitesize = 2
 

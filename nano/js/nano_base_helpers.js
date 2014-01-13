@@ -34,6 +34,20 @@ NanoBaseHelpers = function ()
             dump: function( arr1 ) {
                 return JSON.stringify(arr1);
             },
+
+			syndicateMode: function() {
+				$('body').css("background-color","#8f1414");
+				$('body').css("background-image","url('uiBackground-Syndicate.png')");
+				$('body').css("background-position","50% 0");
+				$('body').css("background-repeat","repeat-x");
+
+				$('#uiTitleFluff').css("background-image","url('uiTitleFluff-Syndicate.png')");
+				$('#uiTitleFluff').css("background-position","50% 50%");
+				$('#uiTitleFluff').css("background-repeat", "no-repeat");
+
+			return '';
+			},
+
 			// Generate a Byond link
 			link: function( text, icon, parameters, status, elementClass, elementId) {
 	

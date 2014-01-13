@@ -4,6 +4,7 @@
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mopbucket"
 	density = 1
+	var/lockedby=""
 	pressure_resistance = 5
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
@@ -16,8 +17,20 @@
 
 /obj/structure/mopbucket/examine()
 	set src in usr
-	usr << text("\icon[] [] contains [] units of water left!", src, src.name, src.reagents.total_volume)
+	usr << "\icon[src] [name] contains [reagents.total_volume] units of water left!"
+	if(anchored)
+		usr << "\icon[src] \The [name]'s wheels are locked!"
 	..()
+
+/obj/structure/mopbucket/attack_hand(mob/user as mob)
+	..()
+	anchored=!anchored
+	if(anchored)
+		usr << "\icon[src] You lock the \the [name]'s wheels!"
+		lockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey]) - locked<br />"
+	else
+		usr << "\icon[src] You unlock the \the [name]'s wheels!"
+		lockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey]) - unlocked<br />"
 
 /obj/structure/mopbucket/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/mop))

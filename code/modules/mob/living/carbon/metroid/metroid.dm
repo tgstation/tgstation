@@ -17,6 +17,8 @@
 	see_in_dark = 8
 	update_slimes = 0
 
+	hasmouth = 0
+
 	// canstun and canweaken don't affect slimes because they ignore stun and weakened variables
 	// for the sake of cleanliness, though, here they are.
 	status_flags = CANPARALYSE|CANPUSH
@@ -435,7 +437,7 @@
 		if ("grab")
 			if (M == src || anchored)
 				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, M, src )
 
 			M.put_in_active_hand(G)
 

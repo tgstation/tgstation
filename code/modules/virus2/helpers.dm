@@ -48,7 +48,8 @@ proc/airborne_can_reach(turf/source, turf/target)
 	for(var/i=0, i<5, i++) if(!step_towards(dummy, target)) break
 
 	var/rval = (dummy.loc in range(1,target))
-	del dummy
+	dummy.loc = null
+	dummy = null
 	return rval
 
 //Attemptes to infect mob M with virus. Set forced to 1 to ignore protective clothing.  Returns 1 if successful.

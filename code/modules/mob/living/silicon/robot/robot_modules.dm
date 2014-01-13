@@ -20,7 +20,6 @@
 		..()
 		return
 
-
 	New()
 		src.modules += new /obj/item/device/flashlight(src)
 		src.modules += new /obj/item/device/flash(src)
@@ -44,16 +43,21 @@
 /obj/item/weapon/robot_module/standard
 	name = "standard robot module"
 
-
 	New()
 		..()
-		src.modules += new /obj/item/weapon/melee/baton(src)
+		src.modules += new /obj/item/weapon/melee/baton/loaded(src)
 		src.modules += new /obj/item/weapon/extinguisher(src)
 		src.modules += new /obj/item/weapon/wrench(src)
 		src.modules += new /obj/item/weapon/crowbar(src)
 		src.modules += new /obj/item/device/healthanalyzer(src)
 		src.emag = new /obj/item/weapon/melee/energy/sword(src)
 		return
+
+	respawn_consumable(var/mob/living/silicon/robot/R)
+		// Recharge baton battery
+		for(var/obj/item/weapon/melee/baton/B in src.modules)
+			if(B && B.bcell)
+				B.bcell.give(175)
 
 
 
@@ -108,6 +112,7 @@
 
 		var/obj/item/weapon/cable_coil/W = new /obj/item/weapon/cable_coil(src)
 		W.amount = 50
+		W.max_amount = 50
 		src.modules += W
 
 		return
@@ -123,6 +128,8 @@
 			if (!(locate(T) in src.modules))
 				src.modules -= null
 				var/O = new T(src)
+				if(istype(O,/obj/item/weapon/cable_coil))
+					O:max_amount = 50
 				src.modules += O
 				O:amount = 1
 		return
@@ -132,17 +139,22 @@
 /obj/item/weapon/robot_module/security
 	name = "security robot module"
 
-
 	New()
 		..()
 		src.modules += new /obj/item/borg/sight/hud/sec(src)
 		src.modules += new /obj/item/weapon/handcuffs/cyborg(src)
-		src.modules += new /obj/item/weapon/melee/baton(src)
+		src.modules += new /obj/item/weapon/melee/baton/loaded(src)
 		src.modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
 		src.emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
 		return
 
-
+	respawn_consumable(var/mob/living/silicon/robot/R)
+		// Recharge baton battery
+		for(var/obj/item/M in src.modules)
+			if(istype(M,/obj/item/weapon/melee/baton))
+				var/obj/item/weapon/melee/baton/B=M
+				if(B && B.bcell)
+					B.bcell.give(175)
 
 /obj/item/weapon/robot_module/janitor
 	name = "janitorial robot module"

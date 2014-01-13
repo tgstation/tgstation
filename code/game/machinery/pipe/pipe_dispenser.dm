@@ -31,35 +31,43 @@
 	if(..())
 		return
 	var/dat = {"
-<b>Regular pipes:</b><BR>
-<A href='?src=\ref[src];make=0;dir=1'>Pipe</A><BR>
-<A href='?src=\ref[src];make=1;dir=5'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];make=5;dir=1'>Manifold</A><BR>
-<A href='?src=\ref[src];make=8;dir=1'>Manual Valve</A><BR>
-<A href='?src=\ref[src];make=18;dir=1'>Digital Valve</A><BR>
-<A href='?src=\ref[src];make=21;dir=1'>Pipe Cap</A><BR>
-<A href='?src=\ref[src];make=20;dir=1'>4-Way Manifold</A><BR>
-<A href='?src=\ref[src];make=19;dir=1'>Manual T-Valve</A><BR>
-<b>Devices:</b><BR>
-<A href='?src=\ref[src];make=4;dir=1'>Connector</A><BR>
-<A href='?src=\ref[src];make=7;dir=1'>Unary Vent</A><BR>
-<A href='?src=\ref[src];make=9;dir=1'>Gas Pump</A><BR>
-<A href='?src=\ref[src];make=15;dir=1'>Passive Gate</A><BR>
-<A href='?src=\ref[src];make=16;dir=1'>Volume Pump</A><BR>
-<A href='?src=\ref[src];make=10;dir=1'>Scrubber</A><BR>
-<A href='?src=\ref[src];makemeter=1'>Meter</A><BR>
-<A href='?src=\ref[src];make=13;dir=1'>Gas Filter</A><BR>
-<A href='?src=\ref[src];make=14;dir=1'>Gas Mixer</A><BR>
-<A href='?src=\ref[src];make=[PIPE_THERMAL_PLATE];dir=1'>Thermal Plate</A><BR>
-<b>Heat exchange:</b><BR>
-<A href='?src=\ref[src];make=2;dir=1'>Pipe</A><BR>
-<A href='?src=\ref[src];make=3;dir=5'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];make=6;dir=1'>Junction</A><BR>
-<A href='?src=\ref[src];make=17;dir=1'>Heat Exchanger</A><BR>
-<b>Insulated pipes:</b><BR>
-<A href='?src=\ref[src];make=11;dir=1'>Pipe</A><BR>
-<A href='?src=\ref[src];make=12;dir=5'>Bent Pipe</A><BR>
-
+<b>Regular pipes:</b>
+<ul>
+	<li><a href='?src=\ref[src];make=0;dir=1'>Pipe</a></li>
+	<li><a href='?src=\ref[src];make=1;dir=5'>Bent Pipe</a></li>
+	<li><a href='?src=\ref[src];make=5;dir=1'>Manifold</a></li>
+	<li><a href='?src=\ref[src];make=8;dir=1'>Manual Valve</a></li>
+	<li><a href='?src=\ref[src];make=18;dir=1'>Digital Valve</a></li>
+	<li><a href='?src=\ref[src];make=21;dir=1'>Pipe Cap</a></li>
+	<li><a href='?src=\ref[src];make=20;dir=1'>4-Way Manifold</a></li>
+	<li><a href='?src=\ref[src];make=19;dir=1'>Manual T-Valve</a></li>
+</ul>
+<b>Devices:</b>
+<ul>
+	<li><a href='?src=\ref[src];make=4;dir=1'>Connector</a></li>
+	<li><a href='?src=\ref[src];make=7;dir=1'>Unary Vent</a></li>
+	<li><a href='?src=\ref[src];make=9;dir=1'>Gas Pump</a></li>
+	<li><a href='?src=\ref[src];make=15;dir=1'>Passive Gate</a></li>
+	<li><a href='?src=\ref[src];make=16;dir=1'>Volume Pump</a></li>
+	<li><a href='?src=\ref[src];make=10;dir=1'>Scrubber</a></li>
+	<li><a href='?src=\ref[src];makemeter=1'>Meter</a></li>
+	<li><a href='?src=\ref[src];make=13;dir=1'>Gas Filter</a></li>
+	<li><a href='?src=\ref[src];make=14;dir=1'>Gas Mixer</a></li>
+	<li><a href='?src=\ref[src];make=[PIPE_THERMAL_PLATE];dir=1'>Thermal Plate</a></li>
+	<li><a href='?src=\ref[src];make=[PIPE_INJECTOR];dir=1'>Injector</a></li>
+</ul>
+<b>Heat exchange:</b>
+<ul>
+	<li><a href='?src=\ref[src];make=2;dir=1'>Pipe</a></li>
+	<li><a href='?src=\ref[src];make=3;dir=5'>Bent Pipe</a></li>
+	<li><a href='?src=\ref[src];make=6;dir=1'>Junction</a></li>
+	<li><a href='?src=\ref[src];make=17;dir=1'>Heat Exchanger</a></li>
+</ul>
+<b>Insulated pipes:</b>
+<ul>
+	<li><a href='?src=\ref[src];make=11;dir=1'>Pipe</a></li>
+	<li><a href='?src=\ref[src];make=12;dir=5'>Bent Pipe</a></li>
+</ul>
 "}
 //What number the make points to is in the define # at the top of construction.dm in same folder
 

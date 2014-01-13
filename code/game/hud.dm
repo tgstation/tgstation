@@ -190,6 +190,7 @@ var/datum/global_hud/global_hud = new()
 
 	var/obj/screen/blobpwrdisplay
 	var/obj/screen/blobhealthdisplay
+	var/obj/screen/vampire_blood_display
 	var/obj/screen/r_hand_hud_object
 	var/obj/screen/l_hand_hud_object
 	var/obj/screen/action_intent
@@ -292,4 +293,8 @@ datum/hud/New(mob/owner)
 
 	else if(isovermind(mymob))
 		blob_hud()
+
+	else if(mymob.mind)
+		if(mymob.mind.vampire)
+			vampire_hud()
 	return

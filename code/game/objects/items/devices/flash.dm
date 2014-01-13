@@ -39,6 +39,11 @@
 
 	log_attack("<font color='red'>[user.name] ([user.ckey]) Used the [src.name] to flash [M.name] ([M.ckey])</font>")
 
+	if(!iscarbon(user))
+		M.LAssailant = null
+	else
+		M.LAssailant = user
+
 	if(!clown_check(user))	return
 	if(broken)
 		user << "<span class='warning'>\The [src] is broken.</span>"

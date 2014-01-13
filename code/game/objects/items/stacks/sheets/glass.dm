@@ -19,12 +19,13 @@
 	origin_tech = "materials=1"
 	var/created_window = /obj/structure/window/basic
 
+/obj/item/stack/sheet/glass/cyborg
+	g_amt = 0
 
 /obj/item/stack/sheet/glass/attack_self(mob/user as mob)
 	construct_window(user)
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user)
-	..()
 	if(istype(W,/obj/item/weapon/cable_coil))
 		var/obj/item/weapon/cable_coil/CC = W
 		if(CC.amount < 5)
@@ -288,7 +289,7 @@
 		playsound(src.loc, 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if(!H.shoes && !(H.wear_suit.body_parts_covered & FEET))
+			if( !H.shoes && ( !H.wear_suit || !(H.wear_suit.body_parts_covered & FEET) ) )
 				var/datum/organ/external/affecting = H.get_organ(pick("l_foot", "r_foot"))
 				if(affecting.status & (ORGAN_ROBOT|ORGAN_PEG))
 					return
@@ -310,22 +311,27 @@
 	desc = "A very strong and very resistant sheet of a plasma-glass alloy."
 	singular_name = "glass sheet"
 	icon_state = "sheet-plasmaglass"
-	g_amt = 7500
-	origin_tech = "materials=3;plasma=2"
+	//g_amt = 7500
+	g_amt=CC_PER_SHEET_GLASS
+	origin_tech = "materials=3;plasmatech=2"
 	created_window = /obj/structure/window/plasmabasic
+
+/obj/item/stack/sheet/glass/plasmaglass/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
+	rec.addMaterial("plasma",1)
+	rec.addMaterial("glass", 1)
+	return 1
 
 /obj/item/stack/sheet/glass/plasmaglass/attack_self(mob/user as mob)
 	construct_window(user)
 
 /obj/item/stack/sheet/glass/plasmaglass/attackby(obj/item/W, mob/user)
-	..()
 	if( istype(W, /obj/item/stack/rods) )
 		var/obj/item/stack/rods/V  = W
 		var/obj/item/stack/sheet/glass/plasmarglass/RG = new (user.loc)
 		RG.add_fingerprint(user)
 		RG.add_to_stacks(user)
 		V.use(1)
-		var/obj/item/stack/sheet/glass/G = src
+		var/obj/item/stack/sheet/glass/plasmaglass/G = src
 		src = null
 		var/replace = (user.get_inactive_hand()==G)
 		G.use(1)
@@ -342,10 +348,16 @@
 	desc = "Plasma glass which seems to have rods or something stuck in them."
 	singular_name = "reinforced plasma glass sheet"
 	icon_state = "sheet-plasmarglass"
-	g_amt = 7500
+	g_amt=CC_PER_SHEET_GLASS
 	m_amt = 1875
-	origin_tech = "materials=4;plasma=2"
+	origin_tech = "materials=4;plasmatech=2"
 	created_window = /obj/structure/window/plasmareinforced
+
+/obj/item/stack/sheet/glass/plasmaglass/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
+	rec.addMaterial("plasma",1)
+	rec.addMaterial("glass", 1)
+	rec.addMaterial("iron",  0.5)
+	return 1
 
 /obj/item/stack/sheet/glass/plasmarglass/attack_self(mob/user as mob)
 	construct_window(user)

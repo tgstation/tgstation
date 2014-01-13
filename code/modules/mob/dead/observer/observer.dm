@@ -1,6 +1,7 @@
-#define GHOST_DARK_ALPHA 10
-#define GHOST_LIGHT_ALPHA 255
-#define GHOST_DARK_CUTOFF 1
+
+
+#define GHOST_CAN_REENTER 1
+#define GHOST_IS_OBSERVER 2
 /mob/dead/observer
 	name = "ghost"
 	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
@@ -13,26 +14,51 @@
 	blinded = 0
 	anchored = 1	//  don't get pushed around
 	invisibility = INVISIBILITY_OBSERVER
+
+	// For Aghosts dicking with telecoms equipment.
+	var/obj/item/device/multitool/ghostMulti = null
+
 	var/can_reenter_corpse
 	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
 							//If you died in the game and are a ghsot - this will remain as null.
 							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
+	var/has_enabled_antagHUD = 0
+	var/medHUD = 0
+	var/antagHUD = 0
 	universal_speak = 1
 	var/atom/movable/following = null
 
-/mob/dead/observer/New(mob/body)
+/mob/dead/observer/New(var/mob/body=null, var/flags=1)
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
 	verbs += /mob/dead/observer/proc/dead_tele
+
+	can_reenter_corpse = flags & GHOST_CAN_REENTER
+	started_as_observer = flags & GHOST_IS_OBSERVER
+
 	stat = DEAD
 
 	var/turf/T
 	if(ismob(body))
 		T = get_turf(body)				//Where is the body located?
 		attack_log = body.attack_log	//preserve our attack logs by copying them to our ghost
+
+		// NEW SPOOKY BAY GHOST ICONS
+		//////////////
+		if (ishuman(body))
+			var/mob/living/carbon/human/H = body
+			icon = H.stand_icon
+			overlays = H.overlays_standing
+		else
+			icon = body.icon
+			icon_state = body.icon_state
+			overlays = body.overlays
+
+		alpha = 127
+		// END BAY SPOOKY GHOST SPRITES
 
 		gender = body.gender
 		if(body.mind && body.mind.name)
@@ -56,6 +82,26 @@
 	real_name = name
 	..()
 
+/mob/dead/attackby(obj/item/W, mob/user)
+	if(istype(W,/obj/item/weapon/tome))
+		var/mob/dead/M = src
+		if(src.invisibility != 0)
+			M.invisibility = 0
+			user.visible_message( \
+				"\red [user] drags ghost, [M], to our plan of reality!", \
+				"\red You drag [M] to our plan of reality!" \
+			)
+		else
+			user.visible_message ( \
+				"\red [user] just tried to smash his book into that ghost!  It's not very effective", \
+				"\red You get the feeling that the ghost can't become any more visible." \
+			)
+
+
+/mob/dead/observer/get_multitool(var/active_only=0)
+	return ghostMulti
+
+
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	return 1
 /*
@@ -63,12 +109,125 @@ Transfer_mind is there to check if mob is being deleted/not going to have a body
 Works together with spawning an observer, noted above.
 */
 
-/mob/proc/ghostize(var/can_reenter_corpse = 1)
+/mob/dead/observer/Life()
+	..()
+	if(!loc) return
+	if(!client) return 0
+
+
+	if(client.images.len)
+		for(var/image/hud in client.images)
+			if(copytext(hud.icon_state,1,4) == "hud")
+				client.images.Remove(hud)
+	if(antagHUD)
+		var/list/target_list = list()
+		for(var/mob/living/target in oview(src))
+			if( target.mind&&(target.mind.special_role||issilicon(target)) )
+				target_list += target
+		if(target_list.len)
+			assess_targets(target_list, src)
+	if(medHUD)
+		process_medHUD(src)
+
+
+// Direct copied from medical HUD glasses proc, used to determine what health bar to put over the targets head.
+/mob/dead/proc/RoundHealth(var/health)
+	switch(health)
+		if(100 to INFINITY)
+			return "health100"
+		if(70 to 100)
+			return "health80"
+		if(50 to 70)
+			return "health60"
+		if(30 to 50)
+			return "health40"
+		if(18 to 30)
+			return "health25"
+		if(5 to 18)
+			return "health10"
+		if(1 to 5)
+			return "health1"
+		if(-99 to 0)
+			return "health0"
+		else
+			return "health-100"
+	return "0"
+
+
+// Pretty much a direct copy of Medical HUD stuff, except will show ill if they are ill instead of also checking for known illnesses.
+
+/mob/dead/proc/process_medHUD(var/mob/M)
+	var/client/C = M.client
+	var/image/holder
+	for(var/mob/living/carbon/human/patient in oview(M))
+		var/foundVirus = 0
+		if(patient.virus2.len)
+			foundVirus = 1
+		if(!C) return
+		holder = patient.hud_list[HEALTH_HUD]
+		if(patient.stat == 2)
+			holder.icon_state = "hudhealth-100"
+		else
+			holder.icon_state = "hud[RoundHealth(patient.health)]"
+		C.images += holder
+
+		holder = patient.hud_list[STATUS_HUD]
+		if(patient.stat == 2)
+			holder.icon_state = "huddead"
+		else if(patient.status_flags & XENO_HOST)
+			holder.icon_state = "hudxeno"
+		else if(foundVirus)
+			holder.icon_state = "hudill"
+		else
+			holder.icon_state = "hudhealthy"
+		C.images += holder
+
+
+/mob/dead/proc/assess_targets(list/target_list, mob/dead/observer/U)
+	var/icon/tempHud = 'icons/mob/hud.dmi'
+	for(var/mob/living/target in target_list)
+		if(iscarbon(target))
+			switch(target.mind.special_role)
+				if("traitor","Syndicate")
+					U.client.images += image(tempHud,target,"hudsyndicate")
+				if("Revolutionary")
+					U.client.images += image(tempHud,target,"hudrevolutionary")
+				if("Head Revolutionary")
+					U.client.images += image(tempHud,target,"hudheadrevolutionary")
+				if("Cultist")
+					U.client.images += image(tempHud,target,"hudcultist")
+				if("Changeling")
+					U.client.images += image(tempHud,target,"hudchangeling")
+				if("Wizard","Fake Wizard")
+					U.client.images += image(tempHud,target,"hudwizard")
+				if("Hunter","Sentinel","Drone","Queen")
+					U.client.images += image(tempHud,target,"hudalien")
+				if("Death Commando")
+					U.client.images += image(tempHud,target,"huddeathsquad")
+				if("Ninja")
+					U.client.images += image(tempHud,target,"hudninja")
+				if("Vampire")
+					U.client.images += image(tempHud,target,"vampire")
+				if("VampThrall")
+					U.client.images += image(tempHud,target,"vampire")
+				else//If we don't know what role they have but they have one.
+					U.client.images += image(tempHud,target,"hudunknown1")
+		else//If the silicon mob has no law datum, no inherent laws, or a law zero, add them to the hud.
+			var/mob/living/silicon/silicon_target = target
+			if(!silicon_target.laws||(silicon_target.laws&&(silicon_target.laws.zeroth||!silicon_target.laws.inherent.len))||silicon_target.mind.special_role=="traitor")
+				if(isrobot(silicon_target))//Different icons for robutts and AI.
+					U.client.images += image(tempHud,silicon_target,"hudmalborg")
+				else
+					U.client.images += image(tempHud,silicon_target,"hudmalai")
+	return 1
+
+/mob/proc/ghostize(var/flags = GHOST_CAN_REENTER)
 	if(key)
-		var/mob/dead/observer/ghost = new(src)	//Transfer safety to observer spawning proc.
-		ghost.can_reenter_corpse = can_reenter_corpse
-		ghost.timeofdeath = timeofdeath //BS12 EDIT
+		var/mob/dead/observer/ghost = new(src, flags)	//Transfer safety to observer spawning proc.
+		ghost.timeofdeath = src.timeofdeath //BS12 EDIT
 		ghost.key = key
+		if(!ghost.client.holder && !config.antag_hud_allowed)		// For new ghosts we remove the verb from even showing up if it's not allowed.
+			ghost.verbs -= /mob/dead/observer/verb/toggle_antagHUD	// Poor guys, don't know what they are missing!
 		return ghost
 
 /*
@@ -82,40 +241,21 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(stat == DEAD)
 		ghostize(1)
 	else
-		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you may not play again this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
+		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?","Ghost","Stay in body")
 		if(response != "Ghost")	return	//didn't want to ghost after-all
 		resting = 1
-		ghostize(0)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
+		var/mob/dead/observer/ghost = ghostize(0)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
+		ghost.timeofdeath = world.time // Because the living mob won't have a time of death and we want the respawn timer to work properly.
 	return
 
 
-// In darkness over a certain threshold, ghosts become slightly visible for the spooky value.
-/mob/dead/observer/proc/amInDarkPlace()
-	var/turf/simulated/T = get_turf(src)
-	if(!istype(T))
-		return 0
-	if(T.lighting_lumcount <= GHOST_DARK_CUTOFF)
-		return 1
-	return 0
-
-/mob/dead/observer/proc/updateSpookyAlpha()
-	if(amInDarkPlace())
-		alpha=GHOST_DARK_ALPHA
-		invisibility=0
-	else
-		alpha=GHOST_LIGHT_ALPHA
-		invisibility=INVISIBILITY_OBSERVER
-
-///mob/dead/observer/SetLuminosity(new_luminosity, max_luminosity)
-//	..()
-//	updateSpookyAlpha()
-
 /mob/dead/observer/Move(NewLoc, direct)
+	dir = direct
 	if(NewLoc)
 		loc = NewLoc
 		for(var/obj/effect/step_trigger/S in NewLoc)
 			S.HasEntered(src)
-		updateSpookyAlpha() // Added SetLuminosity above, probably not worth it.
+
 		return
 	loc = get_turf(src) //Get out of closets and such as a ghost
 	if((direct & NORTH) && y < world.maxy)
@@ -129,7 +269,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	for(var/obj/effect/step_trigger/S in locate(x, y, z))	//<-- this is dumb
 		S.HasEntered(src)
-	updateSpookyAlpha()
 
 /mob/dead/observer/examine()
 	if(usr)
@@ -174,6 +313,45 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	mind.current.ajourn=0
 	mind.current.key = key
 	return 1
+
+/mob/dead/observer/verb/toggle_medHUD()
+	set category = "Ghost"
+	set name = "Toggle MedicHUD"
+	set desc = "Toggles Medical HUD allowing you to see how everyone is doing"
+	if(!client)
+		return
+	if(medHUD)
+		medHUD = 0
+		src << "\blue <B>Medical HUD Disabled</B>"
+	else
+		medHUD = 1
+		src << "\blue <B>Medical HUD Enabled</B>"
+
+/mob/dead/observer/verb/toggle_antagHUD()
+	set category = "Ghost"
+	set name = "Toggle AntagHUD"
+	set desc = "Toggles AntagHUD allowing you to see who is the antagonist"
+	if(!config.antag_hud_allowed && !client.holder)
+		src << "\red Admins have disabled this for this round."
+		return
+	if(!client)
+		return
+	var/mob/dead/observer/M = src
+	if(jobban_isbanned(M, "AntagHUD"))
+		src << "\red <B>You have been banned from using this feature</B>"
+		return
+	if(config.antag_hud_restricted && !M.has_enabled_antagHUD &&!client.holder)
+		var/response = alert(src, "If you turn this on, you will not be able to take any part in the round.","Are you sure you want to turn this feature on?","Yes","No")
+		if(response == "No") return
+		M.can_reenter_corpse = 0
+	if(!M.has_enabled_antagHUD && !client.holder)
+		M.has_enabled_antagHUD = 1
+	if(M.antagHUD)
+		M.antagHUD = 0
+		src << "\blue <B>AntagHUD Disabled</B>"
+	else
+		M.antagHUD = 1
+		src << "\blue <B>AntagHUD Enabled</B>"
 
 /mob/dead/observer/proc/dead_tele()
 	set category = "Ghost"
@@ -299,6 +477,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		src << "<span class='warning'>You may only spawn again as a mouse more than [mouse_respawn_time] minutes after your death. You have [timedifference_text] left.</span>"
 		return
 
+	var/response = alert(src, "Are you -sure- you want to become a mouse?","Are you sure you want to squeek?","Squeek!","Nope!")
+	if(response != "Squeek!") return  //Hit the wrong key...again.
+
+
 	//find a viable mouse candidate
 	var/mob/living/simple_animal/mouse/host
 	var/obj/machinery/atmospherics/unary/vent_pump/vent_found
@@ -350,10 +532,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			found_spawners.Add(s)
 	if(found_spawners.len)
 		spawner = pick(found_spawners)
-		//host = new /mob/living/silicon/robot/mommi(spawner.loc)
 		spawner.attack_ghost(src)
 	else
-		src << "<span class='warning'>Unable to find any powered MoMMI Spawners on this z-level to spawn MoMMIs at.</span>"
+		src << "<span class='warning'>Unable to find any powered MoMMI Spawners on this z-level.</span>"
 
 	//if(host)
 	//	host.ckey = src.ckey

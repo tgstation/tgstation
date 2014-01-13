@@ -94,6 +94,7 @@ Class Procs:
 /obj/machinery
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
+
 	var/stat = 0
 	var/emagged = 0
 	var/use_power = 1
@@ -108,6 +109,8 @@ Class Procs:
 	var/uid
 	var/manual = 0
 	var/global/gl_uid = 1
+	var/custom_aghost_alerts=0
+	var/panel_open = 0
 
 /obj/machinery/New()
 	..()
@@ -168,25 +171,31 @@ Class Procs:
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return 1
-	if(usr.restrained() || usr.lying || usr.stat)
-		return 1
-	if ( ! (istype(usr, /mob/living/carbon/human) || \
-			istype(usr, /mob/living/silicon) || \
-			istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
-		usr << "\red You don't have the dexterity to do this!"
-		return 1
-
-	var/norange = 0
-	if(istype(usr, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = usr
-		if(istype(H.l_hand, /obj/item/tk_grab))
-			norange = 1
-		else if(istype(H.r_hand, /obj/item/tk_grab))
-			norange = 1
-
-	if(!norange)
-		if ((!in_range(src, usr) || !istype(src.loc, /turf)) && !istype(usr, /mob/living/silicon))
+	var/ghost_flags=0
+	if(ghost_write)
+		ghost_flags |= PERMIT_ALL
+	if(!canGhostWrite(usr,src,"fucked with",ghost_flags))
+		if(usr.restrained() || usr.lying || usr.stat)
 			return 1
+		if ( ! (istype(usr, /mob/living/carbon/human) || \
+				istype(usr, /mob/living/silicon) || \
+				istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
+			usr << "\red You don't have the dexterity to do this!"
+			return 1
+
+		var/norange = 0
+		if(istype(usr, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = usr
+			if(istype(H.l_hand, /obj/item/tk_grab))
+				norange = 1
+			else if(istype(H.r_hand, /obj/item/tk_grab))
+				norange = 1
+
+		if(!norange)
+			if ((!in_range(src, usr) || !istype(src.loc, /turf)) && !istype(usr, /mob/living/silicon))
+				return 1
+	else if(!custom_aghost_alerts)
+		log_adminghost("[key_name(usr)] screwed with [src] ([href])!")
 
 	src.add_fingerprint(usr)
 	return 0
@@ -201,14 +210,27 @@ Class Procs:
 	else
 		return src.attack_hand(user)
 
+/obj/machinery/attack_ghost(mob/user as mob)
+	src.add_hiddenprint(user)
+	var/ghost_flags=0
+	if(ghost_read)
+		ghost_flags |= PERMIT_ALL
+	if(!canGhostRead(usr,src,ghost_flags))
+		return src.attack_ai(user)
+
 /obj/machinery/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
 /obj/machinery/attack_hand(mob/user as mob)
 	if(stat & (NOPOWER|BROKEN|MAINT))
 		return 1
-	if(user.lying || user.stat)
+
+	if(user.lying || (user.stat && !canGhostRead(user))) // Ghost read-only
 		return 1
+
+	if(istype(usr,/mob/dead/observer))
+		return 0
+
 	if ( ! (istype(usr, /mob/living/carbon/human) || \
 			istype(usr, /mob/living/silicon) || \
 			istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
@@ -239,3 +261,23 @@ Class Procs:
 	uid = gl_uid
 	gl_uid++
 
+/obj/machinery/proc/default_deconstruction_crowbar()
+	playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+	var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+	M.state = 2
+	M.icon_state = "box_1"
+	for(var/obj/I in component_parts)
+		if(I.reliability != 100 && crit_fail)
+			I.crit_fail = 1
+		I.loc = src.loc
+	del(src)
+
+/obj/machinery/proc/default_deconstruction_screwdriver(var/mob/user, var/icon_state_open, var/icon_state_closed)
+	if (!panel_open)
+		panel_open = 1
+		icon_state = icon_state_open
+		user << "<span class='notice'>You open the maintenance hatch of [src].</span>"
+	else
+		panel_open = 0
+		icon_state = icon_state_closed
+		user << "<span class='notice'>You close the maintenance hatch of [src].</span>"

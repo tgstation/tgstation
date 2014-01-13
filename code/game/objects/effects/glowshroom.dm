@@ -45,7 +45,7 @@
 		Spread()
 
 /obj/effect/glowshroom/proc/Spread()
-	set background = 1
+	//set background = 1
 	var/spreaded = 1
 
 	while(spreaded)
@@ -59,7 +59,7 @@
 				if(prob(spreadIntoAdjacentChance))
 					spreadsIntoAdjacent = 1
 
-				for(var/turf/simulated/floor/plating/airless/asteroid/earth in view(3,src))
+				for(var/turf/unsimulated/floor/asteroid/earth in view(3,src))
 					if(spreadsIntoAdjacent || !locate(/obj/effect/glowshroom) in view(1,earth))
 						possibleLocs += earth
 
@@ -93,7 +93,7 @@
 		sleep(delay)
 
 /obj/effect/glowshroom/proc/CalcDir(turf/location = loc)
-	set background = 1
+	//set background = 1
 	var/direction = 16
 
 	for(var/wallDir in cardinal)

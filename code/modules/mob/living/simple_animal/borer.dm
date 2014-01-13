@@ -16,6 +16,10 @@
 		src << "You whisper silently, \"[message]\""
 		B.host << "The captive mind of [src] whispers, \"[message]\""
 
+		for(var/mob/M in mob_list)
+			if(M.mind && (istype(M, /mob/dead/observer)))
+				M << "<i>Thought-speech, <b>[src]</b> -> <b>[B.truename]:</b> [message]</i>"
+
 /mob/living/captive_brain/emote(var/message)
 	return
 
@@ -32,6 +36,8 @@
 	icon_living = "brainslug"
 	icon_dead = "brainslug_dead"
 	speed = 5
+	small = 1
+	density = 0
 	a_intent = "harm"
 	stop_automated_movement = 1
 	status_flags = CANPUSH
@@ -62,12 +68,14 @@
 
 				//if(host.brainloss > 100)
 
-/mob/living/simple_animal/borer/New()
+/mob/living/simple_animal/borer/New(var/by_gamemode=0)
 	..()
 	truename = "[pick("Primary","Secondary","Tertiary","Quaternary")] [rand(1000,9999)]"
 	host_brain = new/mob/living/captive_brain(src)
 
-	request_player()
+	// Admin spawn.  Request a player.
+	if(!by_gamemode)
+		request_player()
 
 
 /mob/living/simple_animal/borer/say(var/message)
@@ -103,6 +111,10 @@
 
 	src << "You drop words into [host]'s mind: \"[message]\""
 	host << "Your own thoughts speak: \"[message]\""
+
+	for(var/mob/M in mob_list)
+		if(M.mind && (istype(M, /mob/dead/observer)))
+			M << "<i>Thought-speech, <b>[truename]</b> -> <b>[host]:</b> [copytext(message, 2)]</i>"
 
 /mob/living/simple_animal/borer/Stat()
 	..()
@@ -295,21 +307,27 @@ mob/living/simple_animal/borer/proc/detatch()
 		if(!M.stat)
 			M << "Something disgusting and slimy wiggles into your ear!"
 
-		src.host = M
-		src.loc = M
-
-		if(istype(M,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
-			var/datum/organ/external/head = H.get_organ("head")
-			head.implants += src
-
-		host_brain.name = M.name
-		host_brain.real_name = M.real_name
+			src.perform_infestation(M)
 
 		return
 	else
 		src << "They are no longer in range!"
 		return
+
+/mob/living/simple_animal/borer/proc/perform_infestation(var/mob/living/carbon/M)
+	if(!M || !istype(M))
+		error("[src]: Unable to perform_infestation on [M]!")
+		return
+	src.host = M
+	src.loc = M
+
+	if(istype(M,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+		var/datum/organ/external/head = H.get_organ("head")
+		head.implants += src
+
+	host_brain.name = M.name
+	host_brain.real_name = M.real_name
 
 /mob/living/simple_animal/borer/verb/ventcrawl()
 	set name = "Crawl through Vent"

@@ -14,6 +14,12 @@
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
 		msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
+
+		if(!iscarbon(user))
+			M.LAssailant = null
+		else
+			M.LAssailant = user
+
 		user.cell.charge -= 30
 
 		M.Weaken(5)

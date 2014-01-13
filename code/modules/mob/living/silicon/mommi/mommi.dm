@@ -67,7 +67,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		camera = new /obj/machinery/camera(src)
 		camera.c_tag = real_name
 		camera.network = list("SS13")
-		if(isWireCut(5)) // 5 = BORG CAMERA
+		if(wires.IsCameraCut()) // 5 = BORG CAMERA
 			camera.status = 0
 
 	// Sanity check
@@ -205,7 +205,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 	else if (istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool))
 		if (wiresexposed)
-			interact(user)
+			wires.Interact()
 		else
 			user << "You can't reach the wiring."
 
@@ -399,8 +399,12 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	// Put our eyes just on top of the lighting, so it looks emissive in maint tunnels.
 	if(layer==MOB_LAYER)
 		overlays+=image(icon,"eyes-[subtype][emagged?"-emagged":""]",LIGHTING_LAYER+1)
+		if(anchored)
+			overlays+=image(icon,"[subtype]-park", LIGHTING_LAYER+1)
 	else
 		overlays+=image(icon,"eyes-[subtype][emagged?"-emagged":""]",TURF_LAYER+0.2) // Fixes floating eyes
+		if(anchored)
+			overlays+=image(icon,"[subtype]-park", TURF_LAYER+0.2)
 	return
 
 
@@ -479,7 +483,10 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			O.layer = 20
 			contents += O
 			sight_mode |= sight_state:sight_mode
-			inv_sight.icon_state = "sight"
+
+			inv_sight.icon_state = "sight+a"
+			inv_tool.icon_state = "inv1"
+			module_active=sight_state
 		else
 			TS = tool_state
 			if(tool_state)
@@ -489,7 +496,10 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			tool_state = O
 			O.layer = 20
 			contents += O
-			inv_tool.icon_state = "inv1"
+
+			inv_sight.icon_state = "sight"
+			inv_tool.icon_state = "inv1 +a"
+			module_active=tool_state
 		if(TS && istype(TS))
 			if(src.is_in_modules(TS))
 				TS.loc = src.module

@@ -18,14 +18,14 @@
 			if(!src.hanging)
 				src.hanging = !src.hanging
 				gas_transfer_coefficient = 1 //gas is now escaping to the turf and vice versa
-				flags_inv |= MASKCOVERSMOUTH | MASKINTERNALS
+				flags &= ~(MASKCOVERSMOUTH | MASKINTERNALS)
 				icon_state = "breathdown"
 				usr << "Your mask is now hanging on your neck."
 
 			else
 				src.hanging = !src.hanging
 				gas_transfer_coefficient = 0.10
-				flags_inv &= ~(MASKCOVERSMOUTH | MASKINTERNALS)
+				flags |= MASKCOVERSMOUTH | MASKINTERNALS
 				icon_state = "breath"
 				usr << "You pull the mask up to cover your face."
 			usr.update_inv_wear_mask()

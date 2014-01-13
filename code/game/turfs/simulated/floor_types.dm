@@ -238,6 +238,11 @@
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
 
+/turf/simulated/floor/plating/snow/concrete
+	name = "concrete"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "concrete"
+
 /turf/simulated/floor/plating/snow/ex_act(severity)
 	return
 
@@ -251,3 +256,87 @@
 	oxygen=0 // BIRDS HATE OXYGEN FOR SOME REASON
 	nitrogen = MOLES_O2STANDARD+MOLES_N2STANDARD // So it totals to the same pressure
 	//icon = 'icons/turf/shuttle-debug.dmi'
+
+
+// CATWALKS
+// Space and plating, all in one buggy fucking turf!
+/turf/simulated/floor/plating/airless/catwalk
+	icon = 'icons/turf/catwalks.dmi'
+	icon_state = "catwalk0"
+	name = "catwalk"
+	desc = "Cats really don't like these things."
+
+	temperature = TCMB
+	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
+	heat_capacity = 700000
+
+	lighting_lumcount = 4		//starlight
+	accepts_lighting=0 			// Don't apply overlays
+
+	New()
+		..()
+		// Fucking cockshit dickfuck shitslut
+		name = "catwalk"
+		update_icon(1)
+
+	update_icon(var/propogate=1)
+		underlays.Cut()
+		underlays += new /icon('icons/turf/space.dmi',"[((x + y) ^ ~(x * y) + z) % 25]")
+
+		var/dirs = 0
+		for(var/direction in cardinal)
+			var/turf/T = get_step(src,direction)
+			if(T.is_catwalk())
+				var/turf/simulated/floor/plating/airless/catwalk/C=T
+				dirs |= direction
+				if(propogate)
+					C.update_icon(0)
+		icon_state="catwalk[dirs]"
+
+	is_catwalk()
+		return 1
+
+	/** ACT UNSIMULATED! **/
+/*
+	assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
+		del(giver)
+		return 0
+
+	return_air()
+		//Create gas mixture to hold data for passing
+		var/datum/gas_mixture/GM = new
+
+		GM.oxygen = oxygen
+		GM.carbon_dioxide = carbon_dioxide
+		GM.nitrogen = nitrogen
+		GM.toxins = toxins
+
+		GM.temperature = temperature
+		GM.update_values()
+
+		return GM
+
+	// For new turfs
+	copy_air_from(var/turf/T)
+		oxygen = T.oxygen
+		carbon_dioxide = T.carbon_dioxide
+		nitrogen = T.nitrogen
+		toxins = T.toxins
+
+		temperature = T.temperature
+
+	remove_air(amount as num)
+		var/datum/gas_mixture/GM = new
+
+		var/sum = oxygen + carbon_dioxide + nitrogen + toxins
+		if(sum>0)
+			GM.oxygen = (oxygen/sum)*amount
+			GM.carbon_dioxide = (carbon_dioxide/sum)*amount
+			GM.nitrogen = (nitrogen/sum)*amount
+			GM.toxins = (toxins/sum)*amount
+
+		GM.temperature = temperature
+		GM.update_values()
+
+		return GM
+*/

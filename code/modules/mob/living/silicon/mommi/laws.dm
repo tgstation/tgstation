@@ -5,7 +5,6 @@
 	if (!laws)
 		laws = new mommi_base_law_type
 
-
 // And this.
 /mob/living/silicon/robot/mommi/statelaws() // -- TLE
 	var/prefix=";"
@@ -48,3 +47,8 @@
 					src.say("[prefix][number]. [law]")
 					sleep(10)
 				number++
+
+// Disable this.
+/mob/living/silicon/robot/mommi/lawsync()
+	laws_sanity_check()
+	return

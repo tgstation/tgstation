@@ -6,7 +6,7 @@
 	w_amt = 10
 	origin_tech = "combat=1"
 	var/armed = 0
-
+	wires = WIRE_PULSE
 
 	examine()
 		..()

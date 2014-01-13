@@ -40,6 +40,11 @@ Note: Must be placed within 3 tiles of the R&D Console
 	return temp_list
 
 
+/obj/machinery/r_n_d/destructive_analyzer/update_icon()
+	overlays.Cut()
+	if(linked_console)
+		overlays += "d_analyzer_link"
+
 /obj/machinery/r_n_d/destructive_analyzer/attackby(var/obj/O as obj, var/mob/user as mob)
 	if (shocked)
 		shock(user,50)

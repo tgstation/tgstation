@@ -103,7 +103,6 @@
 		return
 	var/dat
 	dat += "<TT><B>Automatic Hydroponic Assisting Unit v1.0</B></TT><BR><BR>"
-/*	dat += "<TT>WARNING: Due to experimental programming this model is inefficient at attempting more than one Water/Fertilize/Weed task at a time.</TT><BR><BR>"*/
 	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
 
 	dat += "Water Tank: "
@@ -227,7 +226,7 @@
 	return
 
 /obj/machinery/bot/farmbot/process()
-	set background = 1
+	//set background = 1
 
 	if(!src.on)
 		return

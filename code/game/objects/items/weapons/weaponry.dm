@@ -36,6 +36,10 @@
 
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
+	if(!iscarbon(user))
+		M.LAssailant = null
+	else
+		M.LAssailant = user
 
 	msg_admin_attack("[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
@@ -48,24 +52,13 @@
 		user.take_organ_damage(10)
 		user.Paralyse(20)
 		return
-
-	if (M.stat !=2)
-		/*vg edit, handled by the holy book now
-		if((M.mind in ticker.mode.cult) && prob(33))
-			M << "\red The power of [src] clears your mind of the cult's influence!"
-			user << "\red You wave [src] over [M]'s head and see their eyes become clear, their mind returning to normal."
-			ticker.mode.remove_cultist(M.mind)
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red [] waves [] over []'s head.", user, src, M), 1)
-			*/
-		if(prob(10))
-			user << "\red The rod slips in your hand."
-			..()
-		else
-			//user << "\red The rod appears to do nothing."
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red [] waves [] over []'s head.", user, src, M), 1)
-			return
+	if(M.mind)
+		if(M.mind.vampire)
+			if(ishuman(M))
+				if(!(VAMP_FULL in M.mind.vampire.powers))
+					M << "<span class='warning'>The nullrod's power interferes with your own!</span>"
+					M.mind.vampire.nullified = max(5, M.mind.vampire.nullified + 2)
+	..()
 
 /obj/item/weapon/nullrod/afterattack(atom/A, mob/user as mob)
 	if (istype(A, /turf/simulated/floor))
@@ -164,7 +157,18 @@ obj/item/weapon/wirerod
 
 obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 	..()
-	if(istype(I, /obj/item/weapon/wirecutters))
+	if(istype(I, /obj/item/weapon/shard))
+		var/obj/item/weapon/twohanded/spear/S = new /obj/item/weapon/twohanded/spear
+
+		user.before_take_item(I)
+		user.before_take_item(src)
+
+		user.put_in_hands(S)
+		user << "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>"
+		del(I)
+		del(src)
+
+	else if(istype(I, /obj/item/weapon/wirecutters))
 		var/obj/item/weapon/melee/baton/cattleprod/P = new /obj/item/weapon/melee/baton/cattleprod
 
 		user.before_take_item(I)

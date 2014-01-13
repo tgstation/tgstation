@@ -552,6 +552,14 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/key_name_admin(var/whom, var/include_name = 1)
 	return key_name(whom, 1, include_name)
 
+// Returns the atom sitting on the turf.
+// For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
+/proc/get_atom_on_turf(var/atom/movable/M)
+	var/atom/loc = M
+	while(loc && loc.loc && !istype(loc.loc, /turf/))
+		loc = loc.loc
+	return loc
+
 
 // Registers the on-close verb for a browse window (client/verb/.windowclose)
 // this will be called when the close-button of a window is pressed.
@@ -1202,7 +1210,7 @@ proc/oview_or_orange(distance = world.view , center = usr , type)
 
 proc/get_mob_with_client_list()
 	var/list/mobs = list()
-	for(var/mob/M in world)
+	for(var/mob/M in mob_list)
 		if (M.client)
 			mobs += M
 	return mobs

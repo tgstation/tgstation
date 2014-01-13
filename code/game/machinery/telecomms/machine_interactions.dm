@@ -7,9 +7,6 @@
 
 */
 
-#define STATION_Z 1
-#define TELECOMM_Z 3
-
 /obj/machinery/telecomms
 	var/temp = "" // output message
 	var/construct_op = 0
@@ -170,12 +167,19 @@
 		// END AUTOFIX
 		if(P)
 			if(P.buffer)
-				dat += "<br><br>MULTITOOL BUFFER: [P.buffer] ([P.buffer.id]) <a href='?src=\ref[src];link=1'>\[Link\]</a> <a href='?src=\ref[src];flush=1'>\[Flush\]"
+				var/id="???"
+				if(istype(P.buffer, /obj/machinery/telecomms))
+					id=P.buffer:id
+				else
+					id=P.buffer:id_tag
+				dat += "<p><b>MULTITOOL BUFFER:</b> [P.buffer] ([id])"
+				if(istype(P.buffer, /obj/machinery/telecomms))
+					dat += " <a href='?src=\ref[src];link=1'>\[Link\]</a> <a href='?src=\ref[src];flush=1'>\[Flush\]</a>"
+				dat += "</p>"
 			else
-				dat += "<br><br>MULTITOOL BUFFER: <a href='?src=\ref[src];buffer=1'>\[Add Machine\]</a>"
+				dat += "<p><b>MULTITOOL BUFFER:</b> <a href='?src=\ref[src];buffer=1'>\[Add Machine\]</a></p>"
 
 	dat += "</font>"
-	temp = ""
 	user << browse(dat, "window=tcommachine;size=520x500;can_resize=0")
 	onclose(user, "dormitory")
 
@@ -198,22 +202,6 @@
 		src.listening_level = STATION_Z
 		return 1
 	return 0
-
-// Returns a multitool from a user depending on their mobtype.
-
-/obj/machinery/telecomms/proc/get_multitool(mob/user as mob)
-
-	var/obj/item/device/multitool/P = null
-	// Let's double check
-	if(!issilicon(user) && istype(user.get_active_hand(), /obj/item/device/multitool))
-		P = user.get_active_hand()
-	else if(isAI(user))
-		var/mob/living/silicon/ai/U = user
-		P = U.aiMulti
-	else if(isrobot(user) && in_range(user, src))
-		if(istype(user.get_active_hand(), /obj/item/device/multitool))
-			P = user.get_active_hand()
-	return P
 
 // Additional Options for certain machines. Use this when you want to add an option to a specific machine.
 // Example of how to use below.
@@ -377,12 +365,13 @@
 	if(href_list["link"])
 
 		if(P)
-			if(P.buffer && P.buffer != src)
-				if(!(src in P.buffer.links))
-					P.buffer.links.Add(src)
+			if(P.buffer && P.buffer != src && istype(P.buffer, /obj/machinery/telecomms))
+				var/obj/machinery/telecomms/T=P.buffer
+				if(!(src in T.links))
+					T.links.Add(src)
 
-				if(!(P.buffer in src.links))
-					src.links.Add(P.buffer)
+				if(!(T in src.links))
+					src.links.Add(T)
 
 				temp = "<font color = #666633>-% Successfully linked with \ref[P.buffer] [P.buffer.name] %-</font color>"
 
@@ -410,6 +399,3 @@
 	if(issilicon(user) || in_range(user, src))
 		return 1
 	return 0
-
-#undef TELECOMM_Z
-#undef STATION_Z

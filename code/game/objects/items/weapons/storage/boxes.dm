@@ -26,6 +26,17 @@
 	item_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
+/obj/item/weapon/storage/box/large
+	name = "large box"
+	desc = "You could build a fort with this."
+	icon_state = "largebox"
+	item_state = "largebox"
+	w_class = 42 // Big, bulky.
+	foldable = /obj/item/stack/sheet/cardboard
+	foldable_amount = 4 // Takes 4 to make. - N3X
+	storage_slots = 21
+	max_combined_w_class = 42 // 21*2
+
 /obj/item/weapon/storage/box/surveillance/
 	name = "\improper DromedaryCo packet"
 	desc = "A packet of six imported DromedaryCo cancer sticks. A label on the packaging reads, \"Wouldn't a slow death make a change?\""
@@ -313,43 +324,33 @@
 	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/monkeycube")
 	New()
 		..()
-		for(var/i = 1; i <= 5; i++)
-			new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src)
-/obj/item/weapon/storage/box/farwacubes
+		if(src.type == /obj/item/weapon/storage/box/monkeycubes)
+			for(var/i = 1; i <= 5; i++)
+				new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src)
+
+/obj/item/weapon/storage/box/monkeycubes/farwacubes
 	name = "farwa cube box"
-	desc = "Drymate brand farwa cubes. Just add water!"
-	icon = 'icons/obj/food.dmi'
-	icon_state = "monkeycubebox"
-	storage_slots = 7
-	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/farwacube")
+	desc = "Drymate brand farwa cubes, shipped from Ahdomai. Just add water!"
 	New()
 		..()
 		for(var/i = 1; i <= 5; i++)
-			new /obj/item/weapon/reagent_containers/food/snacks/farwacube/wrapped(src)
+			new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/farwacube(src)
 
-/obj/item/weapon/storage/box/stokcubes
+/obj/item/weapon/storage/box/monkeycubes/stokcubes
 	name = "stok cube box"
-	desc = "Drymate brand stok cubes. Just add water!"
-	icon = 'icons/obj/food.dmi'
-	icon_state = "monkeycubebox"
-	storage_slots = 7
-	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/stokcube")
+	desc = "Drymate brand stok cubes, shipped from Moghes. Just add water!"
 	New()
 		..()
 		for(var/i = 1; i <= 5; i++)
-			new /obj/item/weapon/reagent_containers/food/snacks/stokcube/wrapped(src)
+			new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/stokcube(src)
 
-/obj/item/weapon/storage/box/neaeracubes
+/obj/item/weapon/storage/box/monkeycubes/neaeracubes
 	name = "neaera cube box"
-	desc = "Drymate brand neaera cubes. Just add water!"
-	icon = 'icons/obj/food.dmi'
-	icon_state = "monkeycubebox"
-	storage_slots = 7
-	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/stokcube")
+	desc = "Drymate brand neaera cubes, shipped from Jargon 4. Just add water!"
 	New()
 		..()
 		for(var/i = 1; i <= 5; i++)
-			new /obj/item/weapon/reagent_containers/food/snacks/neaeracube/wrapped(src)
+			new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/neaeracube(src)
 
 /obj/item/weapon/storage/box/ids
 	name = "spare IDs"
@@ -471,6 +472,7 @@
 		for (var/i; i < storage_slots; i++)
 			new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
 
+// TODO Change this to a box/large. - N3X
 /obj/item/weapon/storage/box/lights
 	name = "replacement bulbs"
 	icon = 'icons/obj/storage.dmi'

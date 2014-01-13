@@ -1,7 +1,7 @@
 /obj/item/weapon/melee/baton
 	name = "stun baton"
 	desc = "A stun baton for incapacitating people with."
-	icon_state = "stunbaton"
+	icon_state = "stun baton"
 	item_state = "baton"
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
@@ -12,8 +12,8 @@
 	attack_verb = list("beaten")
 	var/stunforce = 10
 	var/status = 0
-	var/obj/item/weapon/cell/high/bcell = null
-	var/hitcost = 1000
+	var/obj/item/weapon/cell/bcell = null
+	var/hitcost = 100 // 10 hits on crap cell
 	var/mob/foundmob = "" //Used in throwing proc.
 
 	suicide_act(mob/user)
@@ -28,6 +28,7 @@
 /obj/item/weapon/melee/baton/loaded/New() //this one starts with a cell pre-installed.
 	..()
 	bcell = new(src)
+	bcell.charge=bcell.maxcharge // Charge this shit
 	update_icon()
 	return
 
@@ -113,7 +114,7 @@
 
 	var/mob/living/L = M
 
-	if(user.a_intent == "harm")
+	if(user.a_intent == "hurt")
 		..()
 		playsound(loc, "swing_hit", 50, 1, -1)
 
@@ -146,6 +147,10 @@
 		user.attack_log += "\[[time_stamp()]\]<font color='red'> Stunned [L.name] ([L.ckey]) with [name]</font>"
 		L.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by [user.name] ([user.ckey]) with [name]</font>"
 		log_attack("<font color='red'>[user.name] ([user.ckey]) stunned [L.name] ([L.ckey]) with [name]</font>" )
+		if(!iscarbon(user))
+			M.LAssailant = null
+		else
+			M.LAssailant = user
 
 /obj/item/weapon/melee/baton/throw_impact(atom/hit_atom)
 	if (prob(50))
@@ -176,6 +181,10 @@
 				foundmob.attack_log += "\[[time_stamp()]\]<font color='red'> Stunned [L.name] ([L.ckey]) with [name]</font>"
 				L.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by thrown [src] by [foundmob.name] ([foundmob.ckey])</font>"
 				log_attack("<font color='red'>Flying [src.name], thrown by [foundmob.name] ([foundmob.ckey]) stunned [L.name] ([L.ckey])</font>" )
+				if(!iscarbon(foundmob))
+					L.LAssailant = null
+				else
+					L.LAssailant = foundmob
 
 				return
 	return ..()

@@ -126,11 +126,17 @@
 	var/amount = 20.0
 
 /obj/item/weapon/wrapping_paper/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(isMoMMI(user))
+		user << "\red You need two hands for this."
+		return
 	..()
 	if (!( locate(/obj/structure/table, src.loc) ))
 		user << "\blue You MUST put the paper on a table!"
 	if (W.w_class < 4)
-		if ((istype(user.l_hand, /obj/item/weapon/wirecutters) || istype(user.r_hand, /obj/item/weapon/wirecutters)))
+		if (istype(user.get_inactive_hand(), /obj/item/weapon/wirecutters))
+			var/obj/item/weapon/wirecutters/C = user.get_inactive_hand()
+			if(W==C)
+				return
 			var/a_used = 2 ** (src.w_class - 1)
 			if (src.amount < a_used)
 				user << "\blue You need more paper!"
@@ -155,7 +161,7 @@
 				del(src)
 				return
 		else
-			user << "\blue You need scissors!"
+			user << "\blue You need wirecutters in your other hand!"
 	else
 		user << "\blue The object is FAR too large!"
 	return
@@ -184,6 +190,10 @@
 			H.loc = present
 			H.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been wrapped with [src.name]  by [user.name] ([user.ckey])</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to wrap [H.name] ([H.ckey])</font>")
+			if(!iscarbon(user))
+				H.LAssailant = null
+			else
+				H.LAssailant = user
 
 			log_attack("<font color='red'>[user.name] ([user.ckey]) used the [src.name] to wrap [H.name] ([H.ckey])</font>")
 

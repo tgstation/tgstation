@@ -9,7 +9,7 @@
 	flags = ON_BORDER
 	var/health = 14.0
 	var/ini_dir = null
-	var/state = 0
+	var/state = 2
 	var/reinf = 0
 	var/basestate
 	var/shardtype = /obj/item/weapon/shard

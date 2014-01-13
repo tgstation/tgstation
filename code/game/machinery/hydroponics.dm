@@ -1020,10 +1020,10 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			podman.dna = new /datum/dna()
 			podman.dna.real_name = podman.real_name
 		if(ui)
-			podman.dna.uni_identity = ui
-			updateappearance(podman, ui)
+			podman.UpdateAppearance(ui.Copy())
 		if(se)
-			podman.dna.struc_enzymes = se
+			podman.dna.SE = se.Copy()
+			podman.dna.UpdateSE()
 		if(!prob(potency)) //if it fails, plantman!
 			if(podman)
 //				podman.dna.mutantrace = "plant"
@@ -1054,9 +1054,8 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			var/mob/living/carbon/human/source = bloodSample.data["donor"] //hacky, since it gets the CURRENT condition of the mob, not how it was when the blood sample was taken
 			if (!istype(source))
 				continue
-			//ui = bloodSample.data["blood_dna"] doesn't work for whatever reason
-			ui = source.dna.uni_identity
-			se = source.dna.struc_enzymes
+			ui = source.dna.UI
+			se = source.dna.SE
 			if(source.ckey)
 				ckey = source.ckey
 			else if(source.mind)

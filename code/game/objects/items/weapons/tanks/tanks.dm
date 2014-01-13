@@ -240,10 +240,9 @@
 
 		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5), 1, cap)
 		if(cap)
-			for(var/i,i<=doppler_arrays.len,i++)
-				var/obj/machinery/doppler_array/Array = doppler_arrays[i]
-				if(Array)
-					Array.sense_explosion(epicenter.x,epicenter.y,epicenter.z,round(uncapped*0.25), round(uncapped*0.5), round(uncapped),"???", cap)
+			for(var/obj/machinery/computer/bhangmeter/bhangmeter in doppler_arrays)
+				if(bhangmeter)
+					bhangmeter.sense_explosion(epicenter.x,epicenter.y,epicenter.z,round(uncapped*0.25), round(uncapped*0.5), round(uncapped),"???", cap)
 		del(src)
 
 	else if(pressure > TANK_RUPTURE_PRESSURE)

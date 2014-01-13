@@ -204,7 +204,10 @@
 		L += src.contents
 		for(var/obj/item/weapon/storage/S in src.contents)	//Check for storage items
 			L += get_contents(S)
-
+		for(var/obj/item/clothing/suit/storage/S in src.contents)//Check for labcoats and jackets
+			L += get_contents(S)
+		for(var/obj/item/clothing/tie/storage/S in src.contents)//Check for holsters
+			L += get_contents(S)
 		for(var/obj/item/weapon/gift/G in src.contents) //Check for gift-wrapped items
 			L += G.gift
 			if(istype(G.gift, /obj/item/weapon/storage))

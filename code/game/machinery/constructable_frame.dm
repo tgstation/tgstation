@@ -41,9 +41,8 @@
 						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						user << "\blue You start to add cables to the frame."
 						if(do_after(user, 20))
-							if(C)
-								C.amount -= 5
-								if(!C.amount) del(C)
+							if(C && C.amount >= 5) // Check again
+								C.use(5)
 								user << "\blue You add cables to the frame."
 								state = 2
 								icon_state = "box_1"
@@ -73,6 +72,7 @@
 							var/cp = text2path(A)
 							var/obj/ct = new cp() // have to quickly instantiate it get name
 							req_component_names[A] = ct.name
+							del(ct)
 						if(circuit.frame_desc)
 							desc = circuit.frame_desc
 						else
@@ -131,13 +131,13 @@
 							new_machine.RefreshParts()
 							del(src)
 					else
-						if(istype(P, /obj/item/weapon))
+						if(istype(P, /obj/item/weapon)||istype(P, /obj/item/stack))
 							for(var/I in req_components)
 								if(istype(P, text2path(I)) && (req_components[I] > 0))
 									playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 									if(istype(P, /obj/item/weapon/cable_coil))
 										var/obj/item/weapon/cable_coil/CP = P
-										if(CP.amount > 1)
+										if(CP.amount >= req_components[I])
 											var/camt = min(CP.amount, req_components[I]) // amount of cable to take, idealy amount required, but limited by amount provided
 											var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src)
 											CC.amount = camt
@@ -147,6 +147,22 @@
 											req_components[I] -= camt
 											update_desc()
 											break
+										else
+											user << "\red You do not have enough [P]!"
+									if(istype(P, /obj/item/stack/rods))
+										var/obj/item/stack/rods/R = P
+										if(R.amount >= req_components[I])
+											var/camt = min(R.amount, req_components[I]) // amount of cable to take, idealy amount required, but limited by amount provided
+											var/obj/item/stack/rods/RR = new /obj/item/stack/rods(src)
+											RR.amount = camt
+											RR.update_icon()
+											R.use(camt)
+											components += RR
+											req_components[I] -= camt
+											update_desc()
+											break
+										else
+											user << "\red You do not have enough [P]!"
 									user.drop_item()
 									P.loc = src
 									components += P
@@ -197,6 +213,14 @@ to destroy them and players will be able to make replacements.
 							"/obj/item/weapon/stock_parts/manipulator" = 2,
 							"/obj/item/weapon/reagent_containers/glass/beaker" = 2)
 
+/obj/item/weapon/circuitboard/conveyor
+	name = "Circuit board (Conveyor)"
+	build_path = "/obj/machinery/conveyor"
+	board_type = "machine"
+	origin_tech = "engineering=2;programming=2"
+	frame_desc = "Requires nothing."
+	req_components = list()
+
 
 /obj/item/weapon/circuitboard/circuit_imprinter
 	name = "Circuit board (Circuit Imprinter)"
@@ -230,6 +254,27 @@ to destroy them and players will be able to make replacements.
 	build_path = "/obj/machinery/power/port_gen/pacman/mrs"
 	origin_tech = "programming=3;powerstorage=5;engineering=5"
 
+/obj/item/weapon/circuitboard/air_alarm
+	name = "Circuit board (Air Alarm)"
+	board_type="other"
+	icon = 'icons/obj/doors/door_assembly.dmi'
+	icon_state = "door_electronics"
+	//origin_tech = "programming=2"
+
+/obj/item/weapon/circuitboard/fire_alarm
+	name = "Circuit board (Fire Alarm)"
+	board_type="other"
+	icon = 'icons/obj/doors/door_assembly.dmi'
+	icon_state = "door_electronics"
+	//origin_tech = "programming=2"
+
+/obj/item/weapon/circuitboard/airlock
+	name = "Circuit board (Airlock)"
+	board_type="other"
+	icon = 'icons/obj/doors/door_assembly.dmi'
+	icon_state = "door_electronics"
+	//origin_tech = "programming=2"
+
 obj/item/weapon/circuitboard/rdserver
 	name = "Circuit Board (R&D Server)"
 	build_path = "/obj/machinery/r_n_d/server"
@@ -256,7 +301,7 @@ obj/item/weapon/circuitboard/rdserver
 	name = "Circuit Board (Defib Recharger)"
 	build_path = "/obj/machinery/recharger/defibcharger/wallcharger"
 	board_type = "machine"
-	origin_tech = "programming=3;biotech=4;engineering=2;power=2"
+	origin_tech = "programming=3;biotech=4;engineering=2;powerstorage=2"
 	frame_desc = "Requires 1 micro-laser, 2 matter bins, 2 manipulator, 1 console screen."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/matter_bin" = 2,
@@ -268,7 +313,7 @@ obj/item/weapon/circuitboard/rdserver
 	name = "Circuit Board (SMES)"
 	build_path = "/obj/machinery/power/smes"
 	board_type = "machine"
-	origin_tech = "power=4;engineering=4;programming=4"
+	origin_tech = "powerstorage=4;engineering=4;programming=4"
 	frame_desc = "Requires 4 matter bins, 3 manipulators, 3 micro-lasers, and 2 console screens."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/matter_bin" = 4,
@@ -316,7 +361,7 @@ obj/item/weapon/circuitboard/rdserver
 	name = "Circuit Board (Cyborg Recharging Station)"
 	build_path = "/obj/machinery/recharge_station"
 	board_type = "machine"
-	origin_tech = "power=4;programming=3"
+	origin_tech = "powerstorage=4;programming=3"
 	frame_desc = "Requires 2 manipulators, and 2 matter bins."
 	req_components = list (
 							"/obj/item/weapon/stock_parts/manipulator" = 2,
@@ -326,7 +371,7 @@ obj/item/weapon/circuitboard/rdserver
 	name = "Circuit Board (Heater)"
 	build_path = "/obj/machinery/atmospherics/unary/heat_reservoir/heater"
 	board_type = "machine"
-	origin_tech = "power=3;engineering=5;biotech=4"
+	origin_tech = "powerstorage=3;engineering=5;biotech=4"
 	frame_desc = "Requires 3 manipulators, 2 scanning modules, 1 micro-laser, and 1 console screen."
 	req_components = list (
 							"/obj/item/weapon/stock_parts/manipulator" = 3,
@@ -338,7 +383,7 @@ obj/item/weapon/circuitboard/rdserver
 	name = "Circuit Board (Freezer)"
 	build_path = "/obj/machinery/atmospherics/unary/cold_sink/freezer"
 	board_type = "machine"
-	origin_tech = "power=3;engineering=4;biotech=4"
+	origin_tech = "powerstorage=3;engineering=4;biotech=4"
 	frame_desc = "Requires 3 manipulators, 2 scanning modules, 1 micro-laser, and 1 console screen."
 	req_components = list (
 							"/obj/item/weapon/stock_parts/manipulator" = 3,
@@ -350,7 +395,7 @@ obj/item/weapon/circuitboard/rdserver
 	name = "Circuit Board (Photocopier)"
 	build_path = "/obj/machinery/photocopier"
 	board_type = "machine"
-	origin_tech = "power=2;engineering=2;programming=4"
+	origin_tech = "powerstorage=2;engineering=2;programming=4"
 	frame_desc = "Requires 2 manipulators, 2 scanning modules, 2 micro-lasers, and 2 console screens."
 	req_components = list (
 							"/obj/item/weapon/stock_parts/manipulator" = 2,

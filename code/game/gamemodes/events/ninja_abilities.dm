@@ -279,6 +279,8 @@ Movement impairing would indicate drugs and the like.*/
 	Life.dm will kick the player back into unconsciosness the next process loop.
 	*/
 		U.stat = 0//At least now you should be able to teleport away or shoot ninja stars.
+		if(U.said_last_words)
+			U.said_last_words=0
 		spawn(30)//Slight delay so the enemy does not immedietly know the ability was used. Due to lag, this often came before waking up.
 			U.say(pick("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!","HURT ME MOOORRREEE!","IMPRESSIVE!"))
 		spawn(70)

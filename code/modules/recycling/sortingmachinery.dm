@@ -366,9 +366,6 @@
 			/obj/item/device/flashlight,
 			/obj/item/device/multitool,
 			/obj/item/device/t_scanner,
-			/obj/item/weapon/airlock_electronics,
-			/obj/item/weapon/airalarm_electronics,
-			/obj/item/weapon/firealarm_electronics,
 			/obj/item/device/taperecorder,
 			/obj/item/device/assembly/igniter,
 			/obj/item/device/assembly/signaler,
@@ -490,7 +487,7 @@ table {
 				</style>
 			</head>
 			<body>
-				<h1>SortMaster 5000</h1><br>
+				<h1>MinerX SortMaster 5000</h1><br>
 				<p>Select the desired items to sort from the line.</p>"}
 	dat += "<ul>"
 	for (var/n in types)

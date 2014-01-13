@@ -11,6 +11,9 @@
 	idle_power_usage = 2
 	active_power_usage = 4
 
+	ghost_read = 0 // Deactivate ghost touching.
+	ghost_write = 0
+
 /obj/machinery/igniter/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
 	return src.attack_hand(user)
@@ -84,6 +87,9 @@
 	var/last_spark = 0
 	var/base_state = "migniter"
 	anchored = 1
+
+	ghost_read = 0 // Deactivate ghost touching.
+	ghost_write = 0
 
 /obj/machinery/sparker/New()
 	..()
