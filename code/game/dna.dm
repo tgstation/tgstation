@@ -336,6 +336,9 @@
 	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 300
+	var/damage_coeff
+	var/scan_level
+	var/precision_coeff
 
 /obj/machinery/dna_scannernew/New()
 	..()
@@ -347,7 +350,19 @@
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/weapon/cable_coil(null, 1)
 	component_parts += new /obj/item/weapon/cable_coil(null, 1)
+	RefreshParts()
 
+
+/obj/machinery/dna_scannernew/RefreshParts()
+	scan_level = 0
+	damage_coeff = 0
+	precision_coeff = 0
+	for(var/obj/item/weapon/stock_parts/scanning_module/P in component_parts)
+		scan_level += P.rating
+	for(var/obj/item/weapon/stock_parts/manipulator/P in component_parts)
+		precision_coeff = P.rating
+	for(var/obj/item/weapon/stock_parts/micro_laser/P in component_parts)
+		damage_coeff = P.rating
 
 /obj/machinery/dna_scannernew/proc/toggle_open(mob/user=usr)
 	if(!user)
@@ -582,7 +597,7 @@
 	if(connected)
 		if(connected.occupant)	//set occupant_status message
 			viable_occupant = connected.occupant
-			if(check_dna_integrity(viable_occupant) && !(NOCLONE in viable_occupant.mutations))	//occupent is viable for dna modification
+			if(check_dna_integrity(viable_occupant) && (!(NOCLONE in viable_occupant.mutations) || (connected.scan_level == 3)))	//occupent is viable for dna modification
 				occupant_status += "[viable_occupant.name] => "
 				switch(viable_occupant.stat)
 					if(CONSCIOUS)	occupant_status += "<span class='good'>Conscious</span>"
@@ -624,7 +639,7 @@
 	var/stddev = radstrength*RADIATION_STRENGTH_MULTIPLIER
 	status += "<div class='line'><div class='statusLabel'>Output Level:</div><div class='statusValue'>[radstrength]</div></div>"
 	status += "<div class='line'><div class='statusLabel'>&nbsp;&nbsp;\> Mutation:</div><div class='statusValue'>(-[stddev] to +[stddev] = 68%) (-[2*stddev] to +[2*stddev] = 95%)</div></div>"
-	stddev = RADIATION_ACCURACY_MULTIPLIER/radduration
+	stddev = RADIATION_ACCURACY_MULTIPLIER/(radduration + (connected.precision_coeff ** 2))
 	var/chance_to_hit
 	switch(stddev)	//hardcoded values from a z-table for a normal distribution
 		if(0 to 0.25)			chance_to_hit = ">95%"
@@ -828,9 +843,9 @@
 			if(num && viable_occupant)
 				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
 				var/list/buffer_slot = buffer[num]
-				if(istype(buffer_slot))
-					viable_occupant.radiation += rand(15,40)
-					switch(href_list["text"])
+				if(istype(buffer_slot))                                                                                  //15 and 40 are just magic numbers that were here before so i didnt touch them, they are initial boundaries of damage
+					viable_occupant.radiation += rand(15/(connected.damage_coeff ** 2),40/(connected.damage_coeff ** 2)) //Each laser level reduces damage by lvl^2, so no effect on 1 lvl, 4 times less damage on 2 and 9 times less damage on 3
+					switch(href_list["text"])                                                                            //Numbers are this high because other way upgrading laser is just not worth the hassle, and i cant think of anything better to inmrove
 						if("se")
 							if(buffer_slot["SE"])
 								viable_occupant.dna.struc_enzymes = buffer_slot["SE"]
@@ -899,13 +914,13 @@
 				current_screen = "mainmenu"
 
 				if(viable_occupant && connected && connected.occupant==viable_occupant)
-					viable_occupant.radiation += RADIATION_IRRADIATION_MULTIPLIER*radduration*radstrength
-					switch(href_list["task"])
+					viable_occupant.radiation += (RADIATION_IRRADIATION_MULTIPLIER*radduration*radstrength)/(connected.damage_coeff ** 2) //Read comment in "transferbuffer" section above for explanation
+					switch(href_list["task"])                                                                                             //Same thing as there but values are even lower, on best part they are about 0.0*, effectively no damage
 						if("pulseui")
 							var/len = length(viable_occupant.dna.uni_identity)
 							num = Wrap(num, 1, len+1)
-							num = randomize_radiation_accuracy(num, radduration, len)
-
+							num = randomize_radiation_accuracy(num, radduration + (connected.precision_coeff ** 2), len) //Each manipulator level above 1 makes randomization as accurate as selected time + manipulator lvl^2
+                                                                                                                         //Value is this high for the same reason as with laser - not worth the hassle of upgrading if the bonus is low
 							var/block = round((num-1)/DNA_BLOCK_SIZE)+1
 							var/subblock = num - block*DNA_BLOCK_SIZE
 							last_change = "UI #[block]-[subblock]; "

@@ -606,12 +606,12 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 /obj/machinery/telecomms/server/proc/admin_log(var/mob/mob)
 
-	var/msg="[mob.name] has compiled a script to server [src]:"
+	var/msg="[mob.real_name]/([mob.key]) has compiled a script to server [src]:"
 	diary << msg
 	diary << rawcode
 	src.investigate_log("[msg]<br>[rawcode]", "ntsl")
 	if(length(rawcode)) // Let's not bother the admins for empty code.
-		message_admins("[mob.real_name] ([mob.key]) has compiled and uploaded a NTLS script to [src.id] ([mob.x],[mob.y],[mob.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[mob.x];Y=[mob.y];Z=[mob.z]'>JMP</a>)",0,1)
+		message_admins("[mob.real_name]/([mob.key]) has compiled and uploaded a NTSL script to [src.id] ([mob.x],[mob.y],[mob.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[mob.x];Y=[mob.y];Z=[mob.z]'>JMP</a>)",0,1)
 
 /obj/machinery/telecomms/server/proc/compile(var/mob/user)
 

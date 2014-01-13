@@ -4,7 +4,7 @@
 	icon_state = "std_module"
 	w_class = 100.0
 	item_state = "electronic"
-	flags = FPRINT|TABLEPASS | CONDUCT
+	flags = CONDUCT
 
 	var/list/modules = list()
 	var/obj/item/emag = null
@@ -204,6 +204,10 @@
 	name = "syndicate robot module"
 
 	New()
-		modules += new /obj/item/weapon/melee/energy/sword(src)
-		modules += new /obj/item/weapon/gun/energy/pulse_rifle/destroyer(src)
+		modules += new /obj/item/weapon/melee/energy/sword/cyborg(src)
+		modules += new /obj/item/weapon/gun/energy/crossbow/cyborg(src)
 		modules += new /obj/item/weapon/card/emag(src)
+		modules += new /obj/item/weapon/gun/energy/laser/cyborg(src)
+		modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
+		modules += new /obj/item/weapon/crowbar(src)
+		modules += new /obj/item/device/flash(src)

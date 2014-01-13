@@ -5,7 +5,6 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
-	flags = FPRINT | TABLEPASS
 	var/mob/affecting = null
 	var/deity_name = "Christ"
 

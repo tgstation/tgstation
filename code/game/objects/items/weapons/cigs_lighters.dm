@@ -330,7 +330,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/icon_off = "lighter-g"
 	w_class = 1
 	throwforce = 4
-	flags = TABLEPASS | CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	attack_verb = list("burnt", "singed")
 	var/lit = 0

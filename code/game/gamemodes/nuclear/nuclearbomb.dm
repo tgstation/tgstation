@@ -14,7 +14,6 @@ var/bomb_set
 	var/yes_code = 0.0
 	var/safety = 1.0
 	var/obj/item/weapon/disk/nuclear/auth = null
-	flags = FPRINT
 	use_power = 0
 
 /obj/machinery/nuclearbomb/New()
@@ -28,7 +27,8 @@ var/bomb_set
 		if (src.timeleft <= 0)
 			explode()
 		else
-			playsound(loc, 'sound/items/timer.ogg', 5, 0)
+			var/volume = (timeleft <= 20 ? 30 : 5)
+			playsound(loc, 'sound/items/timer.ogg', volume, 0)
 		for(var/mob/M in viewers(1, src))
 			if ((M.client && M.machine == src))
 				src.attack_hand(M)

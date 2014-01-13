@@ -33,7 +33,7 @@
 	desc = "An armored beret commonly used by special operations officers. Uses forcefield technology to protect the head from space."
 	icon_state = "beret_badge"
 	armor = list(melee = 65, bullet = 55, laser = 35,energy = 20, bomb = 30, bio = 30, rad = 30)
-	flags = FPRINT | TABLEPASS | STOPSPRESSUREDMAGE
+	flags = STOPSPRESSUREDMAGE
 	flags_inv = 0
 
 
@@ -58,7 +58,7 @@
 	name = "Santa's hat"
 	desc = "Ho ho ho. Merrry X-mas!"
 	icon_state = "santahat"
-	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | BLOCKHAIR | STOPSPRESSUREDMAGE
+	flags = HEADCOVERSEYES | BLOCKHAIR | STOPSPRESSUREDMAGE
 
 /obj/item/clothing/suit/space/santa
 	name = "Santa's suit"
@@ -66,7 +66,7 @@
 	icon_state = "santa"
 	item_state = "santa"
 	slowdown = 0
-	flags = FPRINT | TABLEPASS | STOPSPRESSUREDMAGE
+	flags = STOPSPRESSUREDMAGE
 	allowed = list(/obj/item) //for stuffing exta special presents
 
 
@@ -77,7 +77,7 @@
 	icon_state = "pirate"
 	item_state = "pirate"
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
-	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | BLOCKHAIR | STOPSPRESSUREDMAGE
+	flags = HEADCOVERSEYES | BLOCKHAIR | STOPSPRESSUREDMAGE
 
 /obj/item/clothing/suit/space/pirate
 	name = "pirate coat"

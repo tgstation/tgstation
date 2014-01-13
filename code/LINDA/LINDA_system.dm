@@ -16,7 +16,7 @@ datum/controller/air_system
 
 
 /datum/controller/air_system/proc/setup()
-	set background = 1
+	set background = BACKGROUND_ENABLED
 	world << "\red \b Processing Geometry..."
 	sleep(1)
 

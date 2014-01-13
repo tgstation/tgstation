@@ -121,14 +121,14 @@
 	mymob.blind.icon = 'icons/mob/screen_full.dmi'
 	mymob.blind.icon_state = "blackimageoverlay"
 	mymob.blind.name = " "
-	mymob.blind.screen_loc = "1,1"
+	mymob.blind.screen_loc = "CENTER-7,CENTER-7"
 	mymob.blind.layer = 0
 
 	mymob.flash = new /obj/screen()
 	mymob.flash.icon = 'icons/mob/screen_cyborg.dmi'
 	mymob.flash.icon_state = "blank"
 	mymob.flash.name = "flash"
-	mymob.flash.screen_loc = "1,1 to 15,15"
+	mymob.flash.screen_loc = "WEST,SOUTH to EAST,NORTH"
 	mymob.flash.layer = 17
 
 	mymob.zone_sel = new /obj/screen/zone_sel()
@@ -137,7 +137,69 @@
 
 	mymob.client.screen = null
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.fire, mymob.hands, mymob.healths, mymob:cells, mymob.pullin, mymob.blind, mymob.flash) //, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list(mymob.zone_sel, mymob.oxygen, mymob.fire, mymob.hands, mymob.healths, mymob:cells, mymob.pullin, mymob.blind, mymob.flash) //, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += adding + other
 
 	return
+
+
+/datum/hud/proc/toggle_show_robot_modules()
+	if(!isrobot(mymob)) return
+
+	var/mob/living/silicon/robot/r = mymob
+
+	r.shown_robot_modules = !r.shown_robot_modules
+	update_robot_modules_display()
+
+/datum/hud/proc/update_robot_modules_display()
+	if(!isrobot(mymob)) return
+
+	var/mob/living/silicon/robot/r = mymob
+
+	if(r.shown_robot_modules)
+		//Modules display is shown
+		r.client.screen += r.throw_icon	//"store" icon
+
+		if(!r.module)
+			usr << "<span class='danger'>No module selected</span>"
+			return
+
+		if(!r.module.modules)
+			usr << "<span class='danger'>Selected module has no modules to select</span>"
+			return
+
+		if(!r.robot_modules_background)
+			return
+
+		var/display_rows = round((r.module.modules.len) / 8) +1 //+1 because round() returns floor of number
+		r.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
+		r.client.screen += r.robot_modules_background
+
+		var/x = -4	//Start at CENTER-4,SOUTH+1
+		var/y = 1
+
+		for(var/atom/movable/A in r.module.modules)
+			if( (A != r.module_state_1) && (A != r.module_state_2) && (A != r.module_state_3) )
+				//Module is not currently active
+				r.client.screen += A
+				if(x < 0)
+					A.screen_loc = "CENTER[x]:16,SOUTH+[y]:7"
+				else
+					A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
+				A.layer = 20
+
+				x++
+				if(x == 4)
+					x = -4
+					y++
+
+	else
+		//Modules display is hidden
+		r.client.screen -= r.throw_icon	//"store" icon
+
+		for(var/atom/A in r.module.modules)
+			if( (A != r.module_state_1) && (A != r.module_state_2) && (A != r.module_state_3) )
+				//Module is not currently active
+				r.client.screen -= A
+		r.shown_robot_modules = 0
+		r.client.screen -= r.robot_modules_background

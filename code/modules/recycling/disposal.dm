@@ -716,17 +716,12 @@
 
 		var/turf/target
 
-		if(T.density)		// dense ouput turf, so stop holder
-			H.active = 0
-			H.loc = src
-			return
-		if(istype(T,/turf/simulated/floor && T.intact)) //intact floor, pop the tile
+		if(istype(T,/turf/simulated/floor)) //intact floor, pop the tile
 			var/turf/simulated/floor/F = T
 			//F.health	= 100
-			F.burnt	= 1
-			F.intact	= 0
+			F.break_tile()
 			F.levelupdate()
-			new /obj/item/stack/tile(H)	// add to holder so it will be thrown with other stuff
+			new /obj/item/stack/tile/plasteel(H)	// add to holder so it will be thrown with other stuff
 			F.icon_state = "Floor[F.burnt ? "1" : ""]"
 
 		if(direction)		// direction is specified
@@ -743,8 +738,6 @@
 					spawn(1)
 						if(AM)
 							AM.throw_at(target, 100, 1)
-				H.vent_gas(T)
-				del(H)
 
 		else	// no specified direction, so throw in random direction
 
@@ -758,10 +751,8 @@
 					spawn(1)
 						if(AM)
 							AM.throw_at(target, 5, 1)
-
-				H.vent_gas(T)	// all gas vent to turf
-				del(H)
-
+		H.vent_gas(T)
+		del(H)
 		return
 
 	// call to break the pipe

@@ -110,10 +110,15 @@ var/list/radiochannels = list(
 	"Service" = 1349,
 )
 //depenging helpers
-var/list/DEPT_FREQS = list(1351,1355,1357,1213,1441,1347,1349)
-var/const/SEC_FREQ = 1359 //security, colored cyan in chat window
+var/const/SYND_FREQ = 1213 //nuke op frequency, coloured dark brown in chat window
+var/const/SUPP_FREQ = 1347 //supply, coloured light brown in chat window
+var/const/SERV_FREQ = 1349 //service, coloured green in chat window
+var/const/SCI_FREQ = 1351 //science, coloured plum in chat window
 var/const/COMM_FREQ = 1353 //command, colored gold in chat window
-var/const/SYND_FREQ = 1213
+var/const/MED_FREQ = 1355 //medical, coloured blue in chat window
+var/const/ENG_FREQ = 1357 //engineering, coloured orange in chat window
+var/const/SEC_FREQ = 1359 //security, coloured red in chat window
+var/const/DSQUAD_FREQ = 1441 //death squad frequency, coloured grey in chat window
 
 #define TRANSMISSION_WIRE	0
 #define TRANSMISSION_RADIO	1
