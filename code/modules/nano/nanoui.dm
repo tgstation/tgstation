@@ -19,7 +19,7 @@ nanoui is used to open and update nano browser uis
 	// the title of this ui
 	var/title
 	// /vg/ - Whether to write debug information to nano/debug.html
-	var/writeDebug=TRUE
+	var/writeDebug=FALSE
 	// the key of this ui, this is to allow multiple (different) uis for each src_object
 	var/ui_key
 	// window_id is used as the window name/identifier for browse and onclose
