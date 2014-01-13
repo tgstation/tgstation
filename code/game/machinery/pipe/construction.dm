@@ -396,6 +396,10 @@ var/global/list/pipeID2State = list(
 			"You hear a ratchet.")
 		del(src)	// remove the pipe item
 		return 0
+	else
+		// If the pipe's still around, nuke it.
+		if(P)
+			del(P)
 	return 1
 	 //TODO: DEFERRED
 

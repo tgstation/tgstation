@@ -89,9 +89,9 @@ var/global/list/RPD_recipes=list(
 		"Injector"       = new /datum/pipe_info(PIPE_INJECTOR,     1, PIPE_UNARY),
 	),
 	"Heat Exchange" = list(
-		"Pipe"           = new /datum/pipe_info(2,1, PIPE_BINARY),
-		"Bent Pipe"      = new /datum/pipe_info(3,5, PIPE_BENT),
-		"Junction"       = new /datum/pipe_info(6,1, PIPE_BINARY),
+		"Pipe"           = new /datum/pipe_info(2, 1, PIPE_BINARY),
+		"Bent Pipe"      = new /datum/pipe_info(3, 5, PIPE_BENT),
+		"Junction"       = new /datum/pipe_info(6, 1, PIPE_UNARY),
 		"Heat Exchanger" = new /datum/pipe_info(17,1, PIPE_UNARY),
 	),
 	"Insulated Pipes" = list(
