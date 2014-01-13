@@ -718,7 +718,8 @@
 
 		if(istype(T, /turf/simulated/floor)) //intact floor, pop the tile
 			var/turf/simulated/floor/F = T
-			F.floor_tile.loc = H //It took me a day to figure out this was the right way to do it. ¯\_(;_;)_/¯
+			if(F.floor_tile)
+				F.floor_tile.loc = H //It took me a day to figure out this was the right way to do it. ¯\_(;_;)_/¯
 			F.floor_tile = null //So it doesn't get deleted in make_plating()
 			F.make_plating()
 
