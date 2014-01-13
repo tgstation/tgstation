@@ -74,7 +74,7 @@
 							"You jump out from the processor", \
 							"You hear chimpering")
 					return
-				var/obj/item/weapon/reagent_containers/glass/bucket/bucket_of_blood = new(loc)
+				var/obj/item/weapon/reagent_containers/bucket/bucket_of_blood = new(loc)
 				var/datum/reagent/blood/B = new()
 				B.holder = bucket_of_blood
 				B.volume = 70

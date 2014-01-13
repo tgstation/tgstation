@@ -314,7 +314,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	src.visible_message("\red <B>[src] blows apart!</B>", 1)
 	var/turf/Tsec = get_turf(src)
 
-	new /obj/item/weapon/reagent_containers/glass/bucket(Tsec)
+	new /obj/item/weapon/reagent_containers/bucket(Tsec)
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
