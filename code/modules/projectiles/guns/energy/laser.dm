@@ -54,8 +54,9 @@ obj/item/weapon/gun/energy/laser/retro
 	if(isrobot(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
 		if(R && R.cell)
-			if(R.cell.use(100))
-				chambered = ammo_type[select]
+			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
+			if(R.cell.use(shot.e_cost))
+				chambered = shot
 				chambered.newshot()
 	return
 
