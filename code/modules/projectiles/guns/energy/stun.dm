@@ -88,16 +88,15 @@
 	update_icon()
 		return
 
-/obj/item/weapon/gun/energy/crossbow/cyborg/process_chambered()
-	if(in_chamber)
-		return 1
+/obj/item/weapon/gun/energy/crossbow/cyborg/newshot()
 	if(isrobot(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
 		if(R && R.cell)
-			R.cell.use(100)
-			in_chamber = new /obj/item/projectile/energy/bolt(src)
-			return 1
-	return 0
+			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
+			if(R.cell.use(shot.e_cost))
+				chambered = shot
+				chambered.newshot()
+	return
 
 /obj/item/weapon/gun/energy/crossbow/largecrossbow
 	name = "Energy Crossbow"
