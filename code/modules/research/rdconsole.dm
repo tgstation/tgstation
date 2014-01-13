@@ -561,6 +561,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole/attack_hand(mob/user as mob)
 	if(..())
 		return
+	interact(user)
+
+/obj/machinery/computer/rdconsole/interact(mob/user)
 
 	user.set_machine(src)
 	var/dat = ""

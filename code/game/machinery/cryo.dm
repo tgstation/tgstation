@@ -184,26 +184,25 @@
 	if(href_list["switchOn"])
 		if(!state_open)
 			on = 1
-			update_icon()
 
 	if(href_list["open"])
 		on = 0
 		open_machine()
 
 	if(href_list["close"])
-		if(close_machine())
+		if(close_machine() == usr)
 			var/datum/nanoui/ui = nanomanager.get_open_ui(usr, src, "main")
 			ui.close()
+			on = 1
 	if(href_list["switchOff"])
 		on = 0
-		update_icon()
 
 	if(href_list["ejectBeaker"])
 		if(beaker)
 			var/obj/item/weapon/reagent_containers/glass/B = beaker
 			B.loc = get_step(loc, SOUTH)
 			beaker = null
-
+	update_icon()
 	add_fingerprint(usr)
 	return 1 // update UIs attached to this object
 
@@ -218,20 +217,18 @@
 		I.loc = src
 		user.visible_message("<span class='notice'>[user] places [I] in [src].</span>", \
 							"<span class='notice'>You place [I] in [src].</span>")
-	if(istype(I, /obj/item/weapon/screwdriver))
-		if(!on && !occupant && !state_open)
-			default_deconstruction_screwdriver(user, "cell-o", "cell-off")
 
-	if(istype(I, /obj/item/weapon/wrench))
-		if(panel_open)
+	if(!(on || occupant || state_open))
+		if(default_deconstruction_screwdriver(user, "cell-o", "cell-off", I))
+			return
+
+	if(default_change_direction_wrench(user, I))
+		if(node)
 			disconnect(node)
-			dir = pick(NORTH,EAST,SOUTH,WEST)
-			user.visible_message("<span class='notice'>[src.name] now faces [dir].</span>")
-			initialize()
+		initialize()
+		return
 
-	if(istype(I, /obj/item/weapon/crowbar))
-		if(panel_open)
-			default_deconstruction_crowbar()
+	default_deconstruction_crowbar()
 
 /obj/machinery/atmospherics/unary/cryo_cell/open_machine()
 	if(!state_open && !panel_open)
@@ -240,10 +237,11 @@
 /obj/machinery/atmospherics/unary/cryo_cell/close_machine(mob/living/carbon/M)
 	if(state_open && !panel_open)
 		..()
+		return occupant
 
 /obj/machinery/atmospherics/unary/cryo_cell/update_icon()
 	if(panel_open)
-		icon_state = "cell-off"
+		icon_state = "cell-o"
 		return
 	if(state_open)
 		icon_state = "cell-open"

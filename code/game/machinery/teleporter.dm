@@ -195,8 +195,9 @@
 	return
 
 /obj/machinery/teleport/hub/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/screwdriver))
-		default_deconstruction_screwdriver(user, "tele-o", "tele0")
+	if(default_deconstruction_screwdriver(user, "tele-o", "tele0", W))
+		return
+
 	if(panel_open)
 		if(istype(W, /obj/item/weapon/crowbar))
 			default_deconstruction_crowbar()
@@ -291,18 +292,21 @@
 				user << "<span class = 'caution'>You upload the data from the [W.name]'s buffer.</span>"
 			else
 				user << "<span class = 'alert'>This station cant hold more information, try to use better parts.</span>"
-	if(istype(W, /obj/item/weapon/screwdriver))
-		default_deconstruction_screwdriver(user, "controller-o", "controller")
+	if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
+		return
+
+	default_deconstruction_crowbar()
+
 	if(panel_open)
-		if(istype(W, /obj/item/weapon/crowbar))
-			default_deconstruction_crowbar()
 		if(istype(W, /obj/item/device/multitool))
 			var/obj/item/device/multitool/M = W
 			M.buffer = src
 			user << "<span class = 'caution'>You download the data to the [W.name]'s buffer.</span>"
+			return
 		if(istype(W, /obj/item/weapon/wirecutters))
 			link_console_and_hub()
 			user << "<span class = 'caution'>You reconnect the station to nearby machinery.</span>"
+			return
 
 /obj/machinery/teleport/station/attack_paw()
 	src.attack_hand()

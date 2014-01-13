@@ -17,6 +17,7 @@
 	var/global/list/acceptable_items // List of the items you can put in
 	var/global/list/acceptable_reagents // List of the reagents you can put in
 	var/global/max_n_of_items = 0
+	var/efficiency = 0
 
 
 // see code/modules/food/recipes_microwave.dm for recipes
@@ -41,13 +42,33 @@
 			if(recipe.items)
 				max_n_of_items = max(max_n_of_items, recipe.items.len)
 
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/microwave(null)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+	component_parts += new /obj/item/weapon/cable_coil(null)
+	component_parts += new /obj/item/weapon/cable_coil(null)
+	RefreshParts()
+
+/obj/machinery/microwave/RefreshParts()
+	var/E
+	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
+		E += M.rating
+	efficiency = E
+
 /*******************
 *   Item Adding
 ********************/
 
 /obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if(!broken && !dirty && !operating)
+		if(default_deconstruction_screwdriver(user, "mw-o", "mw", O))
+			return
+
+	default_deconstruction_crowbar(O)
+
 	if(src.broken > 0)
-		if(src.broken == 2 && istype(O, /obj/item/weapon/screwdriver)) // If it's broken and they're using a screwdriver
+		if(src.broken == 2 && istype(O, /obj/item/weapon/wirecutters)) // If it's broken and they're using a screwdriver
 			user.visible_message( \
 				"\blue [user] starts to fix part of the microwave.", \
 				"\blue You start to fix part of the microwave." \
@@ -58,7 +79,7 @@
 					"\blue You have fixed part of the microwave." \
 				)
 				src.broken = 1 // Fix it a bit
-		else if(src.broken == 1 && istype(O, /obj/item/weapon/wrench)) // If it's broken and they're doing the wrench
+		else if(src.broken == 1 && istype(O, /obj/item/weapon/weldingtool)) // If it's broken and they're doing the wrench
 			user.visible_message( \
 				"\blue [user] starts to fix part of the microwave.", \
 				"\blue You start to fix part of the microwave." \
@@ -72,6 +93,7 @@
 				src.broken = 0 // Fix it!
 				src.dirty = 0 // just to be sure
 				src.flags = OPENCONTAINER
+				return 0 //to use some fuel
 		else
 			user << "\red It's broken!"
 			return 1
@@ -163,6 +185,8 @@
 ********************/
 
 /obj/machinery/microwave/interact(mob/user as mob) // The microwave Menu
+	if(panel_open)
+		return
 	var/dat = ""
 	if(src.broken > 0)
 		dat = {"<TT>Bzzzzttttt</TT>"}
@@ -285,6 +309,8 @@
 		stop()
 		if(cooked)
 			cooked.loc = src.loc
+		for(var/i=1,i<efficiency,i++)
+			cooked = new cooked.type(loc)
 		return
 
 /obj/machinery/microwave/proc/wzhzhzh(var/seconds as num)
@@ -370,7 +396,7 @@
 	return ffuu
 
 /obj/machinery/microwave/Topic(href, href_list)
-	if(..())
+	if(..() || panel_open)
 		return
 
 	usr.set_machine(src)

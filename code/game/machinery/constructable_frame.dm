@@ -161,6 +161,15 @@ Note: Once everything is added to the public areas, will add m_amt and g_amt to 
 to destroy them and players will be able to make replacements.
 */
 
+/obj/item/weapon/circuitboard/mech_recharger
+	name = "circuit board (Mechbay Recharger)"
+	build_path = /obj/machinery/mech_bay_recharge_port
+	board_type = "machine"
+	origin_tech = "programming=3;power=4;engineering=4"
+	req_components = list(
+							"/obj/item/weapon/cable_coil" = 1,
+							"/obj/item/weapon/stock_parts/capacitor" = 5)
+
 /obj/item/weapon/circuitboard/teleporter_hub
 	name = "circuit board (Teleporter Hub)"
 	build_path = /obj/machinery/teleport/hub
@@ -254,7 +263,7 @@ to destroy them and players will be able to make replacements.
 	req_components = list(
 							"/obj/item/weapon/reagent_containers/glass/beaker" = 2,
 							"/obj/item/weapon/stock_parts/console_screen" = 1)
-
+*/
 /obj/item/weapon/circuitboard/microwave
 	name = "circuit board (Microwave)"
 	build_path = /obj/machinery/microwave
@@ -264,7 +273,7 @@ to destroy them and players will be able to make replacements.
 							"/obj/item/weapon/stock_parts/micro_laser" = 1,
 							"/obj/item/weapon/cable_coil" = 2,
 							"/obj/item/weapon/stock_parts/console_screen" = 1)
-*/
+
 /obj/item/weapon/circuitboard/chem_dispenser
 	name = "circuit board (Portable Chem Dispenser)"
 	build_path = /obj/machinery/chem_dispenser/constructable

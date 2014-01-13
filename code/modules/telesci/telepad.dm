@@ -28,18 +28,16 @@
 	efficiency = E
 
 /obj/machinery/telepad/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/screwdriver))
-		default_deconstruction_screwdriver(user, "pad-idle-o", "pad-idle")
+	if(default_deconstruction_screwdriver(user, "pad-idle-o", "pad-idle", I))
+		return
 
 	if(panel_open)
-		if(istype(I, /obj/item/weapon/crowbar))
-			default_deconstruction_crowbar()
-			return 1
-
 		if(istype(I, /obj/item/device/multitool))
 			var/obj/item/device/multitool/M = I
 			M.buffer = src
 			user << "<span class = 'caution'>You save the data in the [I.name]'s buffer.</span>"
+
+	default_deconstruction_crowbar()
 
 
 //CARGO TELEPAD//

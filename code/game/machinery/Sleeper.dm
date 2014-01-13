@@ -54,11 +54,13 @@
 
 /obj/machinery/sleeper/attackby(obj/item/I, mob/user)
 	if(!state_open && !occupant)
-		if(istype(I, /obj/item/weapon/screwdriver))
-			default_deconstruction_screwdriver(user, "sleeper-o", "sleeper")
-	if(panel_open)
-		if(istype(I, /obj/item/weapon/crowbar))
-			default_deconstruction_crowbar()
+		if(default_deconstruction_screwdriver(user, "sleeper-o", "sleeper", I))
+			return
+
+	if(default_change_direction_wrench(user, I))
+		return
+
+	default_deconstruction_crowbar()
 
 /obj/machinery/sleeper/ex_act(severity)
 	switch(severity)

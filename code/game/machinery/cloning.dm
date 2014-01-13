@@ -258,18 +258,11 @@
 
 //Let's unlock this early I guess.  Might be too early, needs tweaking.
 /obj/machinery/clonepod/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/screwdriver))
-		if(occupant || mess || locked)
-			user << "<span class='notice'>The maintenance panel is locked.</span>"
+	if(!(occupant || mess || locked))
+		if(default_deconstruction_screwdriver(user, "[icon_state]_maintenance", "[initial(icon_state)]",W))
 			return
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		default_deconstruction_screwdriver(user, "[icon_state]_maintenance", "[initial(icon_state)]")
-		return
 
-	if(istype(W, /obj/item/weapon/crowbar))
-		if(panel_open)
-			default_deconstruction_crowbar()
-		return
+	default_deconstruction_crowbar(W)
 
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (!src.check_access(W))

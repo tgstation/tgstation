@@ -110,15 +110,15 @@
 		if(temp)
 			chemicals.Add(list(list("title" = temp.name, "id" = temp.id, "commands" = list("dispense" = temp.id)))) // list in a list because Byond merges the first list...
 	data["chemicals"] = chemicals
-	
+
 	// update the ui if it exists, returns null if no ui is passed/found
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)	
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "Chem Dispenser 5000", 390, 610)
 		// when the ui is first opened this is the data it will use
-		ui.set_initial_data(data)		
+		ui.set_initial_data(data)
 		// open the new ui window
 		ui.open()
 
@@ -226,8 +226,8 @@
 
 /obj/machinery/chem_dispenser/constructable/attackby(var/obj/item/I, var/mob/user)
 	..()
-	if(istype(I, /obj/item/weapon/screwdriver))
-		default_deconstruction_screwdriver(user, "minidispenser-o", "minidispenser")
+	if(default_deconstruction_screwdriver(user, "minidispenser-o", "minidispenser", I))
+		return
 
 	if(panel_open)
 		if(istype(I, /obj/item/weapon/crowbar))
@@ -235,7 +235,7 @@
 				var/obj/item/weapon/reagent_containers/glass/B = beaker
 				B.loc = loc
 				beaker = null
-			default_deconstruction_crowbar()
+			default_deconstruction_crowbar(I)
 			return 1
 
 

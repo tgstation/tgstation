@@ -32,23 +32,18 @@
 	current_heat_capacity = 1000 * ((H - 1) ** 2)
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(default_deconstruction_screwdriver(user, "freezer-o", "freezer", I))
 		on = 0
-		default_deconstruction_screwdriver(user, "freezer-o", "freezer")
 		update_icon()
 		return
 
-	if(panel_open)
-		if(istype(I, /obj/item/weapon/crowbar))
-			default_deconstruction_crowbar()
-			return 1
+	default_deconstruction_crowbar()
 
-		if(istype(I, /obj/item/weapon/crowbar))
-			if(node)
-				disconnect(node)
-			dir = pick(WEST, EAST, SOUTH, NORTH)
-			update_icon()
-			initialize()
+	if(default_change_direction_wrench(user, I))
+		if(node)
+			disconnect(node)
+		initialize()
+		return
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/update_icon()
 	if(panel_open)
@@ -60,22 +55,25 @@
 	return
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return interact(user)
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/attack_paw(mob/user as mob)
-	return src.attack_hand(user)
+	return interact(user)
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/attack_hand(mob/user as mob)
+	return interact(user)
+
+/obj/machinery/atmospherics/unary/cold_sink/freezer/interact(mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	user.set_machine(src)
 	var/temp_text = ""
 	if(air_contents.temperature > (T0C - 20))
-		temp_text = "<span class='good'>[air_contents.temperature]</span>"
+		temp_text = "<span class='bad'>[air_contents.temperature]</span>"
 	else if(air_contents.temperature < (T0C - 20) && air_contents.temperature > (T0C - 100))
 		temp_text = "<span class='average'>[air_contents.temperature]</span>"
 	else
-		temp_text = "<span class='bad'>[air_contents.temperature]</span>"
+		temp_text = "<span class='good'>[air_contents.temperature]</span>"
 
 	var/dat = {"
 	Current Status: [ on ? "<A href='?src=\ref[src];start=1'>Off</A> <span class='linkOn'>On</span>" : "<span class='linkOn'>Off</span> <A href='?src=\ref[src];start=1'>On</A>"]<BR>
@@ -151,23 +149,18 @@
 	current_heat_capacity = 1000 * ((H - 1) ** 2)
 
 /obj/machinery/atmospherics/unary/heat_reservoir/heater/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(default_deconstruction_screwdriver(user, "heater-o", "heater", I))
 		on = 0
-		default_deconstruction_screwdriver(user, "heater-o", "heater")
 		update_icon()
 		return
 
-	if(panel_open)
-		if(istype(I, /obj/item/weapon/crowbar))
-			default_deconstruction_crowbar()
-			return 1
+	default_deconstruction_crowbar()
 
-		if(istype(I, /obj/item/weapon/crowbar))
-			if(node)
-				disconnect(node)
-			dir = pick(WEST, EAST, SOUTH, NORTH)
-			update_icon()
-			initialize()
+	if(default_change_direction_wrench(user, I))
+		if(node)
+			disconnect(node)
+		initialize()
+		return
 
 /obj/machinery/atmospherics/unary/heat_reservoir/heater/update_icon()
 	if(panel_open)
@@ -185,16 +178,19 @@
 	return src.attack_hand(user)
 
 /obj/machinery/atmospherics/unary/heat_reservoir/heater/attack_hand(mob/user as mob)
+	return interact(user)
+
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/interact(mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	user.set_machine(src)
 	var/temp_text = ""
 	if(air_contents.temperature < (T20C + 80))
-		temp_text = "<span class='bad'>[air_contents.temperature]</span>"
+		temp_text = "<span class='good'>[air_contents.temperature]</span>"
 	else if(air_contents.temperature > (T20C + 80) && air_contents.temperature < (T20C + 180))
 		temp_text = "<span class='average'>[air_contents.temperature]</span>"
 	else
-		temp_text = "<span class='good'>[air_contents.temperature]</span>"
+		temp_text = "<span class='bad'>[air_contents.temperature]</span>"
 
 	var/dat = {"
 	Current Status: [ on ? "<A href='?src=\ref[src];start=1'>Off</A> <span class='linkOn'>On</span>" : "<span class='linkOn'>Off</span> <A href='?src=\ref[src];start=1'>On</A>"]<BR>

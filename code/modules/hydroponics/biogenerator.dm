@@ -90,18 +90,14 @@
 			O.loc = src
 			user << "\blue You put [O.name] in [src.name]"
 
-	if(istype(O, /obj/item/weapon/screwdriver) && !processing)
-		if(beaker)
-			var/obj/item/weapon/reagent_containers/glass/B = beaker
-			B.loc = loc
-			beaker = null
-		default_deconstruction_screwdriver(user, "biogen-empty-o", "biogen-empty")
+	if(!processing)
+		if(default_deconstruction_screwdriver(user, "biogen-empty-o", "biogen-empty", O))
+			if(beaker)
+				var/obj/item/weapon/reagent_containers/glass/B = beaker
+				B.loc = loc
+				beaker = null
 
-	if(panel_open)
-		if(istype(O, /obj/item/weapon/crowbar))
-			default_deconstruction_crowbar()
-			return 1
-
+	default_deconstruction_crowbar(O)
 
 	update_icon()
 	return

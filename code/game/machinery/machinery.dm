@@ -111,6 +111,7 @@ Class Procs:
 	var/panel_open = 0
 	var/state_open = 0
 	var/mob/living/occupant = null
+	var/unsecuring_tool = /obj/item/weapon/wrench
 
 /obj/machinery/New()
 	..()
@@ -166,7 +167,6 @@ Class Procs:
 		break
 	updateUsrDialog()
 	update_icon()
-	return 0
 
 /obj/machinery/ex_act(severity)
 	switch(severity)
@@ -272,23 +272,36 @@ Class Procs:
 	uid = gl_uid
 	gl_uid++
 
-/obj/machinery/proc/default_deconstruction_crowbar()
-	playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-	var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-	M.state = 2
-	M.icon_state = "box_1"
-	for(var/obj/I in component_parts)
-		if(I.reliability != 100 && crit_fail)
-			I.crit_fail = 1
-		I.loc = src.loc
-	del(src)
+/obj/machinery/proc/default_deconstruction_crowbar(var/obj/item/weapon/crowbar/C)
+	if(istype(C) && panel_open)
+		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+		M.state = 2
+		M.icon_state = "box_1"
+		for(var/obj/I in component_parts)
+			if(I.reliability != 100 && crit_fail)
+				I.crit_fail = 1
+			I.loc = src.loc
+		del(src)
 
-/obj/machinery/proc/default_deconstruction_screwdriver(var/mob/user, var/icon_state_open, var/icon_state_closed)
-	if (!panel_open)
-		panel_open = 1
-		icon_state = icon_state_open
-		user << "<span class='notice'>You open the maintenance hatch of [src].</span>"
-	else
-		panel_open = 0
-		icon_state = icon_state_closed
-		user << "<span class='notice'>You close the maintenance hatch of [src].</span>"
+/obj/machinery/proc/default_deconstruction_screwdriver(var/mob/user, var/icon_state_open, var/icon_state_closed, var/obj/item/weapon/screwdriver/S)
+	if(istype(S))
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		if(!panel_open)
+			panel_open = 1
+			icon_state = icon_state_open
+			user << "<span class='notice'>You open the maintenance hatch of [src].</span>"
+		else
+			panel_open = 0
+			icon_state = icon_state_closed
+			user << "<span class='notice'>You close the maintenance hatch of [src].</span>"
+		return 1
+	return 0
+
+/obj/machinery/proc/default_change_direction_wrench(var/mob/user, var/obj/item/weapon/wrench/W)
+	if(panel_open && istype(W))
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		dir = pick(WEST,EAST,SOUTH,NORTH)
+		user << "<span class='notice'>You clumsily rotate [name].</span>"
+		return 1
+	return 0
