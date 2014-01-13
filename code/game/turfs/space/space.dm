@@ -39,6 +39,7 @@
 		if(L)
 			if(R.amount < 2)
 				user << "\red You don't have enough rods to do that."
+				return
 			user << "\blue You begin to build a catwalk."
 			if(do_after(user,30))
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)

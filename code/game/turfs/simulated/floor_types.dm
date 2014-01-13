@@ -259,11 +259,19 @@
 
 
 // CATWALKS
+// Space and plating, all in one buggy fucking turf!
 /turf/simulated/floor/plating/airless/catwalk
 	icon = 'icons/turf/catwalks.dmi'
 	icon_state = "catwalk0"
 	name = "catwalk"
 	desc = "Cats really don't like these things."
+
+	temperature = TCMB
+	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
+	heat_capacity = 700000
+
+	lighting_lumcount = 4		//starlight
+	accepts_lighting=0 			// Don't apply overlays
 
 	New()
 		..()
@@ -287,3 +295,48 @@
 
 	is_catwalk()
 		return 1
+
+	/** ACT UNSIMULATED! **/
+/*
+	assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
+		del(giver)
+		return 0
+
+	return_air()
+		//Create gas mixture to hold data for passing
+		var/datum/gas_mixture/GM = new
+
+		GM.oxygen = oxygen
+		GM.carbon_dioxide = carbon_dioxide
+		GM.nitrogen = nitrogen
+		GM.toxins = toxins
+
+		GM.temperature = temperature
+		GM.update_values()
+
+		return GM
+
+	// For new turfs
+	copy_air_from(var/turf/T)
+		oxygen = T.oxygen
+		carbon_dioxide = T.carbon_dioxide
+		nitrogen = T.nitrogen
+		toxins = T.toxins
+
+		temperature = T.temperature
+
+	remove_air(amount as num)
+		var/datum/gas_mixture/GM = new
+
+		var/sum = oxygen + carbon_dioxide + nitrogen + toxins
+		if(sum>0)
+			GM.oxygen = (oxygen/sum)*amount
+			GM.carbon_dioxide = (carbon_dioxide/sum)*amount
+			GM.nitrogen = (nitrogen/sum)*amount
+			GM.toxins = (toxins/sum)*amount
+
+		GM.temperature = temperature
+		GM.update_values()
+
+		return GM
+*/
