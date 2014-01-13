@@ -17,8 +17,6 @@
 		update_items()
 	if (src.stat != DEAD) //still using power
 		use_power()
-		process_killswitch()
-		process_locks()
 	update_canmove()
 	handle_fire()
 
@@ -285,26 +283,6 @@
 	if(src.module_state_3)
 		src.module_state_3:screen_loc = ui_inv3
 
-
-/mob/living/silicon/robot/proc/process_killswitch()
-	if(killswitch)
-		killswitch_time --
-		if(killswitch_time <= 0)
-			if(src.client)
-				src << "\red <B>Killswitch Activated"
-			killswitch = 0
-			spawn(5)
-				gib()
-
-/mob/living/silicon/robot/proc/process_locks()
-	if(weapon_lock)
-		uneq_all()
-		weaponlock_time --
-		if(weaponlock_time <= 0)
-			if(src.client)
-				src << "\red <B>Weapon Lock Timed Out!"
-			weapon_lock = 0
-			weaponlock_time = 120
 
 //Robots on fire
 /mob/living/silicon/robot/handle_fire()
