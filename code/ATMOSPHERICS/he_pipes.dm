@@ -8,6 +8,10 @@
 	minimum_temperature_difference = 20
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 
+
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/getNodeType(var/node_id)
+	return PIPE_TYPE_HE
+
 	// BubbleWrap
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/New()
 	..()
@@ -35,20 +39,11 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/initialize(var/suppress_icon_check=0)
 	normalize_dir()
 
-	for(var/direction in cardinal)
-		if(direction&initialize_directions_he)
-			var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/found = findConnectingHE(direction)
-			if(!found) continue
-			if(!node1)
-				node1 = found
-				continue
-			if(!node2)
-				node2 = found
-				break
+	findAllConnections(initialize_directions_he)
 
 	if(!suppress_icon_check)
 		update_icon()
-	return (node1&&node2)
+	return node1 || node2
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/process()
 	if(!parent)
@@ -100,7 +95,7 @@
 	// BubbleWrap END
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
-	dir = src.dir
+	dir = pipe.dir
 	initialize_directions = pipe.get_pdir()
 	initialize_directions_he = pipe.get_hdir()
 	if (!initialize(1))
@@ -122,6 +117,7 @@
 		var/have_node1 = node1?1:0
 		var/have_node2 = node2?1:0
 		icon_state = "exposed[have_node1][have_node2]"
+
 	if(!node1&&!node2)
 		del(src)
 
@@ -132,7 +128,7 @@
 	if(!suppress_icon_check)
 		update_icon()
 
-	return (node1&&node2)
+	return node1 || node2
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/hidden
 	level=1
