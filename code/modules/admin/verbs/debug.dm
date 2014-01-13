@@ -714,7 +714,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 			M.equip_to_slot_or_del(backpack, slot_back)
 
 			M.equip_to_slot_or_del(new /obj/item/weapon/mop(M), slot_r_hand)
-			var/obj/item/weapon/reagent_containers/glass/bucket/bucket = new(M)
+			var/obj/item/weapon/reagent_containers/bucket/bucket = new(M)
 			bucket.reagents.add_reagent("water", 70)
 			M.equip_to_slot_or_del(bucket, slot_l_hand)
 
