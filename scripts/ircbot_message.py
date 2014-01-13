@@ -18,6 +18,10 @@ def pack(host, port, key, server_id, channel, message):
         for in_data in message:  # The rest of the arguments is data
             d += [ht.unescape(in_data)]
         data['data'] = ' '.join(d)
+        
+        # Buffer overflow prevention.
+        if len(data['data']) > 400:
+            data['data'] = data['data'][:400] 
     except:
         data['data'] = "NO DATA SPECIFIED"
     pickled = pickle.dumps(data)
