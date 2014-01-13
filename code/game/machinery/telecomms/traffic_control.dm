@@ -33,6 +33,12 @@
 		editingcode.unset_machine()
 		editingcode = null
 
+/obj/machinery/computer/telecomms/traffic/proc/client_check()
+	if(!editingcode.client)
+		stop_editing()
+		return 0
+	return 1
+
 /obj/machinery/computer/telecomms/traffic/process()
 
 	if(stat & (NOPOWER|BROKEN))
@@ -53,14 +59,19 @@
 	if(!process)
 		return
 
-	// loop if there's someone manning the keyboard
-	if(!editingcode.client)
-		stop_editing()
+	if(!client_check())
 		return
 
 	// For the typer, the input is enabled. Buffer the typed text
 	storedcode = "[winget(editingcode, "tcscode", "text")]"
+
+	if(!client_check())
+		return
+
 	winset(editingcode, "tcscode", "is-disabled=false")
+
+	if(!client_check())
+		return
 
 	// If the player's not manning the keyboard anymore, adjust everything
 	if(!in_range(editingcode, src) && !issilicon(editingcode) || editingcode.machine != src)
@@ -78,12 +89,13 @@
 
 		for(var/mob/M in viewingcode)
 
-			if( (M.machine == src && in_range(M, src) ) || issilicon(M))
+			if( (M.client && M.machine == src && in_range(M, src) ) || issilicon(M))
 				winset(M, "tcscode", "is-disabled=true")
 				winset(M, "tcscode", "text=\"[showcode]\"")
 			else
 				viewingcode.Remove(M)
-				winshow(M, "Telecomms IDE", 0) // hide the windows
+				if(M.client)
+					winshow(M, "Telecomms IDE", 0) // hide the windows
 
 
 /obj/machinery/computer/telecomms/traffic/attack_hand(mob/user as mob)
