@@ -91,32 +91,3 @@
 	..()
 	if(assembled == 3)
 		usr << "You can't tell when it will explode!"
-
-
-//iedcasing assembly crafting//
-/obj/item/weapon/reagent_containers/food/drinks/bottle/attackby(var/obj/item/I, mob/user as mob)
-        if(istype(I, /obj/item/weapon/paper))
-                var/obj/item/weapon/paper/G = I
-                var/obj/item/weapon/grenade/molotov/W = new /obj/item/weapon/grenade/molotov
-                user.before_take_item(G)
-                user.before_take_item(src)
-                user.put_in_hands(W)
-                user << "<span  class='notice'>You stuff the [I] in the [src], emptying the contents beforehand.</span>"
-                W.underlays += image(src.icon, icon_state = src.icon_state)
-                del(I)
-                del(src)
-
-/obj/item/weapon/grenade/molotov
-	name = "molotov cocktail"
-	desc = "A bottle stuffed with paper"
-	w_class = 2.0
-	icon = 'icons/obj/grenade.dmi'
-	icon_state = "improvised_grenade"
-	item_state = "flashbang"
-	throw_speed = 4
-	throw_range = 20
-	flags = CONDUCT
-	slot_flags = SLOT_BELT
-	active = 1
-	det_time = 50
-	display_timer = 0
