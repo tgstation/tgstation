@@ -223,7 +223,7 @@
 
 /obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror/New()
 	..()
-	reagents.add_reagent("pacid", 150)
+	reagents.add_reagent("spore", 150)
 	reagents.add_reagent("cryptobiolin", 150)
 	reagents.add_reagent("mutagen", 150)
 	reagents.add_reagent("chloralhydrate", 150)
