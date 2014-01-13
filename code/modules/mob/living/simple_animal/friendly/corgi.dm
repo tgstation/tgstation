@@ -7,7 +7,7 @@
 	icon_living = "corgi"
 	icon_dead = "corgi_dead"
 	gender = MALE
-	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU")
+	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "Roro Ro!")
 	speak_emote = list("barks", "woofs")
 	emote_hear = list("barks", "woofs", "yaps","pants")
 	emote_see = list("shakes its head", "shivers")
@@ -77,7 +77,7 @@
 				if(inventory_head)
 					name = real_name
 					desc = initial(desc)
-					speak = list("YAP", "Woof!", "Bark!", "AUUUUUU")
+					speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "Roro Ro!")
 					speak_emote = list("barks", "woofs")
 					emote_hear = list("barks", "woofs", "yaps","pants")
 					emote_see = list("shakes its head", "shivers")
