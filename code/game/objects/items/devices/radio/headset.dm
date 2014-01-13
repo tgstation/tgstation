@@ -149,7 +149,7 @@
 
 /obj/item/device/radio/headset/headset_srv
 	name = "service radio headset"
-	desc = "Headset used by the foodservice staff, tasked with keeping the station full and happy. To access the service channel, use :v."
+	desc = "Headset used by the service staff, tasked with keeping the station full, happy and clean. To access the service channel, use :v."
 	icon_state = "srv_headset"
 	item_state = "headset"
 	keyslot2 = new /obj/item/device/encryptionkey/headset_service
