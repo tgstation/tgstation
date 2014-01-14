@@ -8,9 +8,20 @@
 
 
 /obj/item/projectile/bullet/weakbullet
-	damage = 10
+	damage = 5
 	stun = 5
 	weaken = 5
+
+
+/obj/item/projectile/bullet/weakbullet2
+	damage = 15
+	stun = 5
+	weaken = 5
+
+
+/obj/item/projectile/bullet/pellet
+	name = "pellet"
+	damage = 15
 
 
 /obj/item/projectile/bullet/midbullet

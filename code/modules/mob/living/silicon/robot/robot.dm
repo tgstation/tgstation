@@ -928,6 +928,8 @@
 
 /mob/living/silicon/robot/proc/self_destruct()
 	if(emagged)
+		if(mmi)
+			del(mmi)
 		explosion(src.loc,1,2,4,flame_range = 2)
 	else
 		explosion(src.loc,-1,0,2)
