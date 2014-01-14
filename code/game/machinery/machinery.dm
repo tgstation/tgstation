@@ -215,7 +215,7 @@ Class Procs:
 	var/ghost_flags=0
 	if(ghost_read)
 		ghost_flags |= PERMIT_ALL
-	if(!canGhostRead(usr,src,ghost_flags))
+	if(canGhostRead(usr,src,ghost_flags))
 		return src.attack_ai(user)
 
 /obj/machinery/attack_paw(mob/user as mob)
