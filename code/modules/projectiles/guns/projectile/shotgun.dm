@@ -8,33 +8,18 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
 	origin_tech = "combat=4;materials=2"
-	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	mag_type = /obj/item/ammo_box/magazine/internal/shot
 	var/recentpump = 0 // to prevent spammage
 	var/pumped = 0
 
 /obj/item/weapon/gun/projectile/shotgun/attackby(var/obj/item/A as obj, mob/user as mob)
-	var/num_loaded = 0
-	if(istype(A, /obj/item/ammo_box))
-		var/obj/item/ammo_box/AM = A
-		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
-			if(magazine.give_round(AC))
-				AM.stored_ammo -= AC
-				num_loaded++
-			else
-				break
-	if(istype(A, /obj/item/ammo_casing))
-		var/obj/item/ammo_casing/AC = A
-		if(magazine.give_round(AC))
-			user.drop_item()
-			AC.loc = src
-			num_loaded++
+	var/num_loaded = magazine.attackby(A, user, 1)
 	if(num_loaded)
 		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
 		A.update_icon()
 		update_icon()
 
-/obj/item/weapon/gun/projectile/shotgun/process_chambered()
+/obj/item/weapon/gun/projectile/shotgun/process_chamber()
 	return ..(0, 0)
 
 /obj/item/weapon/gun/projectile/shotgun/chamber_round()
@@ -55,8 +40,6 @@
 	if(chambered)//We have a shell in the chamber
 		chambered.loc = get_turf(src)//Eject casing
 		chambered = null
-		if(in_chamber)
-			in_chamber = null
 	if(!magazine.ammo_count())	return 0
 	var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
 	chambered = AC
@@ -72,7 +55,6 @@
 	name = "combat shotgun"
 	icon_state = "cshotgun"
 	origin_tech = "combat=5;materials=2"
-	ammo_type = /obj/item/ammo_casing/shotgun
 	mag_type = /obj/item/ammo_box/magazine/internal/shotcom
 	w_class = 5
 
@@ -86,7 +68,6 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
 	origin_tech = "combat=3;materials=1"
-	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(var/obj/item/A as obj, mob/user as mob)

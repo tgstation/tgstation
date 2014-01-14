@@ -4,9 +4,7 @@
 	desc = "A small, low capacity gun used for non-lethal takedowns."
 	icon_state = "taser"
 	item_state = null	//so the human update icon uses the icon_state instead.
-	fire_sound = 'sound/weapons/Taser.ogg'
-	charge_cost = 100
-	projectile_type = "/obj/item/projectile/energy/electrode"
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode)
 	cell_type = "/obj/item/weapon/cell/crap"
 
 /obj/item/weapon/gun/energy/taser/cyborg
@@ -14,8 +12,6 @@
 	desc = "A small, low capacity gun used for non-lethal takedowns."
 	icon_state = "taser"
 	fire_sound = 'sound/weapons/Taser.ogg'
-	charge_cost = 100
-	projectile_type = "/obj/item/projectile/energy/electrode"
 	cell_type = "/obj/item/weapon/cell/secborg"
 	var/charge_tick = 0
 	var/recharge_time = 10 //Time it takes for shots to recharge (in ticks)
@@ -38,8 +34,9 @@
 		if(isrobot(src.loc))
 			var/mob/living/silicon/robot/R = src.loc
 			if(R && R.cell)
-				R.cell.use(charge_cost) 		//Take power from the borg...
-				power_supply.give(charge_cost)	//... to recharge the shot
+				var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
+				if(R.cell.use(shot.e_cost)) 		//Take power from the borg...
+					power_supply.give(shot.e_cost)	//... to recharge the shot
 
 		update_icon()
 		return 1
@@ -49,10 +46,8 @@
 	name = "stun revolver"
 	desc = "A high-tech revolver that fires stun cartridges. The stun cartridges can be recharged using a conventional energy weapon recharger."
 	icon_state = "stunrevolver"
-	fire_sound = 'sound/weapons/Gunshot.ogg'
 	origin_tech = "combat=3;materials=3;powerstorage=2"
-	charge_cost = 125
-	projectile_type = "/obj/item/projectile/energy/electrode"
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode/gun)
 	cell_type = "/obj/item/weapon/cell"
 
 
@@ -66,8 +61,7 @@
 	m_amt = 2000
 	origin_tech = "combat=2;magnets=2;syndicate=5"
 	silenced = 1
-	fire_sound = 'sound/weapons/Genhit.ogg'
-	projectile_type = "/obj/item/projectile/energy/bolt"
+	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	cell_type = "/obj/item/weapon/cell/crap"
 	var/charge_tick = 0
 
@@ -94,16 +88,15 @@
 	update_icon()
 		return
 
-/obj/item/weapon/gun/energy/crossbow/cyborg/process_chambered()
-	if(in_chamber)
-		return 1
+/obj/item/weapon/gun/energy/crossbow/cyborg/newshot()
 	if(isrobot(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
 		if(R && R.cell)
-			R.cell.use(100)
-			in_chamber = new /obj/item/projectile/energy/bolt(src)
-			return 1
-	return 0
+			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
+			if(R.cell.use(shot.e_cost))
+				chambered = shot
+				chambered.newshot()
+	return
 
 /obj/item/weapon/gun/energy/crossbow/largecrossbow
 	name = "Energy Crossbow"
@@ -111,6 +104,3 @@
 	w_class = 4.0
 	force = 10
 	m_amt = 200000
-	projectile_type = "/obj/item/projectile/energy/bolt/large"
-
-
