@@ -141,8 +141,10 @@ proc/wabbajack(mob/living/M)
 					Robot.mmi = new /obj/item/device/mmi(new_mob)
 					Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
 				if("slime")
-					if(prob(50))		new_mob = new /mob/living/carbon/slime/adult(M.loc)
-					else				new_mob = new /mob/living/carbon/slime(M.loc)
+					new_mob = new /mob/living/carbon/slime(M.loc)
+					if(prob(50))
+						var/mob/living/carbon/slime/Slime = new_mob
+						Slime.is_adult = 1
 					new_mob.universal_speak = 1
 				if("xeno")
 					if(prob(50))
