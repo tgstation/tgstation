@@ -72,8 +72,8 @@ proc/mutation_table(var/colour)
 			slime_mutation[4] = "black"
 		// Tier 5
 		else
-			slime_mutation[1] = "[colour]"
-			slime_mutation[2] = "[colour]"
-			slime_mutation[3] = "[colour]"
-			slime_mutation[4] = "[colour]"
+			slime_mutation[1] = colour
+			slime_mutation[2] = colour
+			slime_mutation[3] = colour
+			slime_mutation[4] = colour
 	return(slime_mutation)

@@ -682,6 +682,9 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	name = "sepia slime extract"
 	icon_state = "sepia slime extract"
 
+/obj/item/slime_extract/rainbow
+	name = "rainbow slime extract"
+	icon_state = "rainbow slime extract"
 
 ////Pet Slime Creation///
 
