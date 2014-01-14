@@ -222,8 +222,8 @@
 
 //Weed nodes
 /obj/structure/alien/weeds/node
-	name = "purple sac"
-	desc = "Weird purple octopus-like thing."
+	name = "glowing nodes"
+	desc = "Softly glowing bulbs."
 	icon_state = "weednode"
 	luminosity = NODERANGE
 	var/node_range = NODERANGE
