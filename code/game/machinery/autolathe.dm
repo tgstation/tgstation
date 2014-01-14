@@ -2,7 +2,7 @@
 
 var/global/list/autolathe_recipes = list( \
 		/* screwdriver removed*/ \
-		new /obj/item/weapon/reagent_containers/glass/bucket(), \
+		new /obj/item/weapon/reagent_containers/bucket(), \
 		new /obj/item/weapon/crowbar(), \
 		new /obj/item/device/flashlight(), \
 		new /obj/item/weapon/extinguisher(), \

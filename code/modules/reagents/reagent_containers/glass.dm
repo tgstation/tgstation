@@ -186,27 +186,6 @@
 		reagents.add_reagent("slimejelly", 50)
 		update_icon()
 
-/obj/item/weapon/reagent_containers/glass/bucket
-	name = "bucket"
-	desc = "It's a bucket."
-	icon = 'icons/obj/janitor.dmi'
-	icon_state = "bucket"
-	item_state = "bucket"
-	m_amt = 200
-	g_amt = 0
-	w_class = 3.0
-	amount_per_transfer_from_this = 20
-	possible_transfer_amounts = list(10,20,30,50,70)
-	volume = 70
-	flags = OPENCONTAINER
-
-	attackby(var/obj/D, mob/user as mob)
-		if(isprox(D))
-			user << "<span class='notice'>You add [D] to [src].</span>"
-			del(D)
-			user.put_in_hands(new /obj/item/weapon/bucket_sensor)
-			user.drop_from_inventory(src)
-			del(src)
 
 /*
 /obj/item/weapon/reagent_containers/glass/blender_jug

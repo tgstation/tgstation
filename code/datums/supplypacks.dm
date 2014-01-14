@@ -886,9 +886,9 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/misc/janitor
 	name = "Janitorial supplies"
-	contains = list(/obj/item/weapon/reagent_containers/glass/bucket,
-					/obj/item/weapon/reagent_containers/glass/bucket,
-					/obj/item/weapon/reagent_containers/glass/bucket,
+	contains = list(/obj/item/weapon/reagent_containers/bucket,
+					/obj/item/weapon/reagent_containers/bucket,
+					/obj/item/weapon/reagent_containers/bucket,
 					/obj/item/weapon/mop,
 					/obj/item/weapon/caution,
 					/obj/item/weapon/caution,
