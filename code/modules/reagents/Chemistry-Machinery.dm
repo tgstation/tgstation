@@ -286,6 +286,9 @@
 
 /obj/machinery/chem_master/attackby(var/obj/item/weapon/B as obj, var/mob/user as mob)
 
+	if(default_unfasten_wrench(user, B))
+		return
+
 	if(istype(B, /obj/item/weapon/reagent_containers/glass))
 
 		if(src.beaker)
@@ -880,6 +883,9 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 
 
 /obj/machinery/reagentgrinder/attackby(var/obj/item/O as obj, var/mob/user as mob)
+
+		if(default_unfasten_wrench(user, O))
+				return
 
 		if (istype(O,/obj/item/weapon/reagent_containers/glass) || \
 				istype(O,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass) || \

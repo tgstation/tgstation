@@ -305,3 +305,13 @@ Class Procs:
 		user << "<span class='notice'>You clumsily rotate [name].</span>"
 		return 1
 	return 0
+
+/obj/machinery/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W)
+	if(istype(W))
+		user << "<span class='notice'>Now [anchored ? "un" : ""]securing table</span>"
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		if(do_after(user, 20))
+			anchored = !anchored
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		return 1
+	return 0

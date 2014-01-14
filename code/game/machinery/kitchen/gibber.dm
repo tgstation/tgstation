@@ -81,6 +81,9 @@
 	if(src.occupant)
 		user << "\red The gibber is full, empty it first!"
 		return
+	if(default_unfasten_wrench(user, G))
+		return
+
 	if (!( istype(G, /obj/item/weapon/grab)) || !(istype(G.affecting, /mob/living/carbon/human)))
 		user << "\red This item is not suitable for the gibber!"
 		return
@@ -100,6 +103,7 @@
 		src.occupant = M
 		del(G)
 		update_icon()
+
 
 /obj/machinery/gibber/verb/eject()
 	set category = "Object"

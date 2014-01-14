@@ -106,43 +106,48 @@
 	if(stat & BROKEN || panel_open)
 		return
 	user.set_machine(src)
-	var/dat = "<TITLE>Biogenerator</TITLE>Biogenerator:<BR>"
-	if (processing)
-		dat += "<FONT COLOR=red>Biogenerator is processing! Please wait...</FONT>"
+	var/dat
+	if(processing)
+		dat += "<div class='statusDisplay'>Biogenerator is processing! Please wait...</div><BR>"
 	else
-		dat += "Biomass: [points] points.<HR>"
 		switch(menustat)
 			if("menu")
-				if (beaker)
-					dat += "<A href='?src=\ref[src];action=activate'>Activate Biogenerator!</A><BR>"
-					dat += "<A href='?src=\ref[src];action=detach'>Detach Container</A><BR><BR>"
-					dat += "Food<BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=milk'>10 milk</A> <FONT COLOR=blue>([20/efficiency])</FONT><BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=meat'>Slab of meat</A> <FONT COLOR=blue>([50/efficiency])</FONT><BR>"
-					dat += "Nutrient<BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=ez'>E-Z-Nutrient</A> <FONT COLOR=blue>([10/efficiency])</FONT> | <A href='?src=\ref[src];action=create;item=ez5'>x5</A><BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=l4z'>Left 4 Zed</A> <FONT COLOR=blue>([20/efficiency])</FONT> | <A href='?src=\ref[src];action=create;item=l4z5'>x5</A><BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=rh'>Robust Harvest</A> <FONT COLOR=blue>([25/efficiency])</FONT> | <A href='?src=\ref[src];action=create;item=rh5'>x5</A><BR>"
-					dat += "Leather<BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=wallet'>Wallet</A> <FONT COLOR=blue>([100/efficiency])</FONT><BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=gloves'>Botanical gloves</A> <FONT COLOR=blue>([250/efficiency])</FONT><BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=tbelt'>Utility belt</A> <FONT COLOR=blue>([300/efficiency])</FONT><BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=satchel'>Leather Satchel</A> <FONT COLOR=blue>([400/efficiency])</FONT><BR>"
-					//dat += "Other<BR>"
-					//dat += "<A href='?src=\ref[src];action=create;item=monkey'>Monkey</A> <FONT COLOR=blue>(500)</FONT><BR>"
+				if(beaker)
+					dat += "<div class='statusDisplay'>Biomass: [points] units.</div><BR>"
+					dat += "<A href='?src=\ref[src];action=activate'>Activate</A><A href='?src=\ref[src];action=detach'>Detach Container</A>"
+					dat += "<h3>Food:</h3>"
+					dat += "<div class='statusDisplay'>"
+					dat += "10 milk: <A href='?src=\ref[src];action=create;item=milk'>Make</A> ([20/efficiency])<BR>"
+					dat += "Monkey cube: <A href='?src=\ref[src];action=create;item=meat'>Make</A> ([250/efficiency])"
+					dat += "</div>"
+					dat += "<h3>Nutrients:</h3>"
+					dat += "<div class='statusDisplay'>"
+					dat += "E-Z-Nutrient: <A href='?src=\ref[src];action=create;item=ez'>Make</A><A href='?src=\ref[src];action=create;item=ez5'>x5</A> ([10/efficiency])<BR>"
+					dat += "Left 4 Zed: <A href='?src=\ref[src];action=create;item=l4z'>Make</A><A href='?src=\ref[src];action=create;item=l4z5'>x5</A> ([20/efficiency])<BR>"
+					dat += "Robust Harvest: <A href='?src=\ref[src];action=create;item=rh'>Make</A><A href='?src=\ref[src];action=create;item=rh5'>x5</A> ([25/efficiency])<BR>"
+					dat += "</div>"
+					dat += "<h3>Leather:</h3>"
+					dat += "<div class='statusDisplay'>"
+					dat += "Wallet: <A href='?src=\ref[src];action=create;item=wallet'>Make</A> ([100/efficiency])<BR>"
+					dat += "Botanical gloves: <A href='?src=\ref[src];action=create;item=gloves'>Make</A> ([250/efficiency])<BR>"
+					dat += "Utility belt: <A href='?src=\ref[src];action=create;item=tbelt'>Make</A> ([300/efficiency])<BR>"
+					dat += "Leather Satchel: <A href='?src=\ref[src];action=create;item=satchel'>Make</A> ([400/efficiency])<BR>"
+					dat += "</div>"
 				else
-					dat += "<BR><FONT COLOR=red>No beaker inside. Please insert a beaker.</FONT><BR>"
+					dat += "<div class='statusDisplay'>No beaker inside, please insert beaker.</div>"
 			if("nopoints")
-				dat += "You do not have biomass to create products.<BR>Please, put growns into reactor and activate it.<BR>"
+				dat += "<div class='statusDisplay'>You do not have biomass to create products.<BR>Please, put growns into reactor and activate it.</div>"
 				dat += "<A href='?src=\ref[src];action=menu'>Return to menu</A>"
 			if("complete")
-				dat += "Operation complete.<BR>"
+				dat += "<div class='statusDisplay'>Operation complete.</div>"
 				dat += "<A href='?src=\ref[src];action=menu'>Return to menu</A>"
 			if("void")
-				dat += "<FONT COLOR=red>Error: No growns inside.</FONT><BR>Please, put growns into reactor.<BR>"
+				dat += "<div class='statusDisplay'>Error: No growns inside.<BR>Please, put growns into reactor.</div>"
 				dat += "<A href='?src=\ref[src];action=menu'>Return to menu</A>"
-	user << browse(dat, "window=biogenerator")
-	onclose(user, "biogenerator")
+
+	var/datum/browser/popup = new(user, "biogen", name, 350, 520)
+	popup.set_content(dat)
+	popup.open()
 	return
 
 /obj/machinery/biogenerator/attack_hand(mob/user as mob)
@@ -194,8 +199,8 @@
 			if (check_cost(20/efficiency)) return 0
 			else beaker.reagents.add_reagent("milk",10)
 		if("meat")
-			if (check_cost(50/efficiency)) return 0
-			else new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
+			if (check_cost(250/efficiency)) return 0
+			else new/obj/item/weapon/reagent_containers/food/snacks/monkeycube(src.loc)
 		if("ez")
 			if (check_cost(10/efficiency)) return 0
 			else new/obj/item/nutrient/ez(src.loc)

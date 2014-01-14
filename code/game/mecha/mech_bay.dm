@@ -43,7 +43,7 @@
 	max_charge = MC - 4 * 50
 
 /obj/machinery/mech_bay_recharge_port/process()
-	if(stat & NOPOWER)
+	if(stat & NOPOWER || !recharge_console)
 		return
 	if(!recharging_mech)
 		recharging_mech = locate(/obj/mecha) in get_step(loc, dir)
@@ -52,6 +52,7 @@
 			var/delta = min(max_charge, recharging_mech.cell.maxcharge - recharging_mech.cell.charge)
 			recharging_mech.give_power(delta)
 			use_power(delta*150)
+
 
 /obj/machinery/mech_bay_recharge_port/attackby(obj/item/I, mob/user)
 	if(default_deconstruction_screwdriver(user, "recharge_port-o", "recharge_port", I))
@@ -62,6 +63,14 @@
 
 	default_deconstruction_crowbar(I)
 
+	if(panel_open)
+		if(istype(I, /obj/item/device/multitool))
+			var/obj/item/device/multitool/MT = I
+			if(istype(MT.buffer, /obj/machinery/computer/mech_bay_power_console))
+				recharge_console = MT.buffer
+				MT.buffer = 0
+				recharge_console.recharge_port = src
+
 /obj/machinery/computer/mech_bay_power_console
 	name = "mech bay power control console"
 	density = 1
@@ -70,6 +79,13 @@
 	icon_state = "recharge_comp"
 	circuit = /obj/item/weapon/circuitboard/mech_bay_power_console
 	var/obj/machinery/mech_bay_recharge_port/recharge_port
+
+/obj/machinery/computer/mech_bay_power_console/attack_ai(obj/item/I, mob/user)
+	..()
+	if(istype(I, /obj/item/device/multitool))
+		var/obj/item/device/multitool/MT = I
+		MT.buffer = src
+
 
 /obj/machinery/computer/mech_bay_power_console/attack_ai(mob/user)
 	return interact(user)
