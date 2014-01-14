@@ -35,7 +35,7 @@
 		var/atom/a = processing_atoms[1]
 
 		for(var/step_dir in cardinal)
-			var/obj/machinery/hydroponics/h = get_step(src, step_dir)
+			var/obj/machinery/hydroponics/h = locate() in get_step(src, step_dir)
 			if(h && h.anchored==2 && !h in connected && !h in processing_atoms)
 				processing_atoms += h
 
