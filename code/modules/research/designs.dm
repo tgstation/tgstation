@@ -560,7 +560,6 @@ datum/design/subspace_broadcaster
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/telecomms/broadcaster
 
-
 ///////////////////////////////////
 /////Non-Board Computer Stuff//////
 ///////////////////////////////////
@@ -717,6 +716,24 @@ datum/design/mech_scattershot
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
 	category = "Exosuit Equipment"
 
+datum/design/mech_carbine
+	name = "Exosuit Weapon Design (FNX-66 Carbine)"
+	desc = "Allows for the construction of FNX-66 Carbine."
+	id = "mech_carbine"
+	build_type = MECHFAB
+	req_tech = list("combat" = 5, "materials" = 4)
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
+	category = "Exosuit Equipment"
+
+datum/design/mech_ion
+	name = "Exosuit Weapon Design (MKIV Ion Heavy Cannon)"
+	desc = "Allows for the construction of MKIV Ion Heavy Cannon."
+	id = "mech_ion"
+	build_type = MECHFAB
+	req_tech = list("combat" = 6, "magnets" = 5, "materials" = 5)
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
+	category = "Exosuit Equipment"
+
 datum/design/mech_laser
 	name = "Exosuit Weapon Design (CH-PS \"Immolator\" Laser)"
 	desc = "Allows for the construction of CH-PS Laser."
@@ -742,6 +759,15 @@ datum/design/mech_grenade_launcher
 	build_type = MECHFAB
 	req_tech = list("combat" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang
+	category = "Exosuit Equipment"
+
+datum/design/mech_missile_rack
+	name = "Exosuit Weapon Design (SRM-8 Missile Rack)"
+	desc = "Allows for the construction of SRM-8 Missile Rack."
+	id = "mech_missile_rack"
+	build_type = MECHFAB
+	req_tech = list("combat" = 6, "materials" = 6)
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
 	category = "Exosuit Equipment"
 
 datum/design/clusterbang_launcher
@@ -1449,6 +1475,16 @@ datum/design/xray
 	build_type = PROTOLATHE
 	materials = list("$gold" = 5000,"$uranium" = 10000, "$metal" = 4000)
 	build_path = /obj/item/weapon/gun/energy/xray
+	locked = 1
+
+datum/design/ionrifle
+	name = "Ion Rifle"
+	desc = "How to dismantle a cyborg : The gun."
+	id = "ionrifle"
+	req_tech = list("combat" = 5, "materials" = 4, "magnets" = 4)
+	build_type = PROTOLATHE
+	materials = list("$silver" = 4000, "$metal" = 6000, "$uranium" = 1000)
+	build_path = /obj/item/weapon/gun/energy/ionrifle
 	locked = 1
 
 datum/design/ammo_9mm
