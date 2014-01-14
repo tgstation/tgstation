@@ -86,10 +86,7 @@
 		M.equip_to_slot_or_del(W, slot_wear_id)
 	del(src)
 
-/obj/effect/landmark/AICorpse/initialize()
-	createCorpse()
-
-/obj/effect/landmark/AICorpse/proc/createCorpse() //Creates an AI corpse, amazingly
+/obj/effect/landmark/corpse/AICorpse/createCorpse() //Creates a corrupted AI
 	var/A = locate(/mob/living/silicon/ai) in loc //stops multiple dead ais spawning, apparently hacky, ¯\_(?)_/¯ (who's that pokemon?)
 	if(A)
 		return
@@ -100,28 +97,18 @@
 	M.name = src.name //name is that of the landmark that spawned it
 	M.real_name = M.name
 
-/obj/effect/landmark/slimeCorpse/initialize()
-	createCorpse()
-
-/obj/effect/landmark/slimeCorpse/proc/createCorpse()
+/obj/effect/landmark/corpse/slimeCorpse/createCorpse() //Creates a dead slime
 	var/mob/living/carbon/slime/M = new /mob/living/carbon/slime/ (src.loc)
 	M.death(1)
+	M.name = src.name
 
-/obj/effect/landmark/facehugCorpse/initialize()
-	createCorpse()
-
-/obj/effect/landmark/facehugCorpse/proc/createCorpse()
+/obj/effect/landmark/corpse/facehugCorpse/createCorpse() //Creates a squashed facehugger
 	var/obj/item/clothing/mask/facehugger/O = new /obj/item/clothing/mask/facehugger (src.loc)
 	O.Die()
 	O.name = src.name
 
 
-
 // I'll work on making a list of corpses people request for maps, or that I think will be commonly used. Syndicate operatives for example.
-
-
-
-
 
 /obj/effect/landmark/corpse/syndicatesoldier
 	name = "Syndicate Operative"
