@@ -22,6 +22,7 @@
 	update_canmove()
 	if(blind)	blind.layer = 0
 
-	ticker.mode.check_win()
+	if(ticker && ticker.mode)
+		ticker.mode.check_win()
 
 	return ..(gibbed)
