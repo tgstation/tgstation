@@ -5,6 +5,7 @@
 	pass_flags = PASSTABLE
 	voice_message = "skree!"
 	say_message = "hums"
+	var/is_adult = 0
 
 	layer = 5
 
@@ -44,40 +45,22 @@
 	///////////TIME FOR SUBSPECIES
 
 	var/colour = "grey"
-	var/primarytype = /mob/living/carbon/slime
-	var/adulttype = /mob/living/carbon/slime/adult
 	var/coretype = /obj/item/slime_extract/grey
 	var/list/slime_mutation[4]
 
-/mob/living/carbon/slime/adult
-	name = "adult slime"
-	icon = 'icons/mob/slimes.dmi'
-	icon_state = "grey adult slime"
-
-	health = 200
-	gender = NEUTER
-
-	update_icon = 0
-	nutrition = 800 // 1200 = max
-
-
 /mob/living/carbon/slime/New()
 	create_reagents(100)
-	name = text("[colour] baby slime ([rand(1, 1000)])")
-	real_name = name
-	spawn (1)
-		regenerate_icons()
-		src << "\blue Your icons have been generated!"
+	spawn (0)
+		name = "[colour] [is_adult ? "adult" : "baby"] slime ([rand(1, 1000)])"
+		icon_state = "[colour] [is_adult ? "adult" : "baby"] slime"
+		real_name = name
+		slime_mutation = mutation_table(colour)
+		coretype = text2path("/obj/item/slime_extract/[colour]")
 	..()
 
-/mob/living/carbon/slime/adult/New()
-	//verbs.Remove(/mob/living/carbon/slime/verb/ventcrawl)
+/mob/living/carbon/slime/regenerate_icons()
+	icon_state = "[colour] [is_adult ? "adult" : "baby"] slime"
 	..()
-	name = text("[colour] adult slime ([rand(1,1000)])")
-	slime_mutation[1] = /mob/living/carbon/slime/orange
-	slime_mutation[2] = /mob/living/carbon/slime/metal
-	slime_mutation[3] = /mob/living/carbon/slime/blue
-	slime_mutation[4] = /mob/living/carbon/slime/purple
 
 /mob/living/carbon/slime/movement_delay()
 	var/tally = 0
@@ -123,7 +106,7 @@
 
 
 				if(istype(AM, /obj/structure/window) || istype(AM, /obj/structure/grille))
-					if(istype(src, /mob/living/carbon/slime/adult))
+					if(is_adult)
 						if(nutrition <= 600 && !Atkcool)
 							AM.attack_slime(src)
 							spawn()
@@ -142,7 +125,7 @@
 	if(ismob(AM))
 		var/mob/tmob = AM
 
-		if(istype(src, /mob/living/carbon/slime/adult))
+		if(is_adult)
 			if(istype(tmob, /mob/living/carbon/human))
 				if(prob(90))
 					now_pushing = 0
@@ -176,14 +159,14 @@
 	..()
 
 	statpanel("Status")
-	if(istype(src, /mob/living/carbon/slime/adult))
+	if(is_adult)
 		stat(null, "Health: [round((health / 200) * 100)]%")
 	else
 		stat(null, "Health: [round((health / 150) * 100)]%")
 
 
 	if (client.statpanel == "Status")
-		if(istype(src,/mob/living/carbon/slime/adult))
+		if(is_adult)
 			stat(null, "Nutrition: [nutrition]/1200")
 			if(amount_grown >= 10)
 				stat(null, "You can reproduce!")
@@ -291,7 +274,7 @@
 		var/damage = rand(1, 3)
 		attacked += 5
 
-		if(istype(src, /mob/living/carbon/slime/adult))
+		if(is_adult)
 			damage = rand(1, 6)
 		else
 			damage = rand(1, 3)
@@ -403,7 +386,7 @@
 				if(prob(80) && !client)
 					Discipline++
 
-					if(!istype(src, /mob/living/carbon/slime/adult))
+					if(!is_adult)
 						if(Discipline == 1)
 							attacked = 0
 
@@ -712,7 +695,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
 			user << "\red The potion only works on baby slimes!"
 			return ..()
-		if(istype(M, /mob/living/carbon/slime/adult)) //Can't tame adults
+		if(M.is_adult) //Can't tame adults
 			user << "\red Only baby slimes can be tamed!"
 			return..()
 		if(M.stat)
@@ -742,9 +725,9 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
 
-	attack(mob/living/carbon/slime/adult/M as mob, mob/user as mob)
-		if(!istype(M, /mob/living/carbon/slime/adult))//If target is not a slime.
-			user << "\red The potion only works on adult slimes!"
+	attack(mob/living/carbon/slime/M as mob, mob/user as mob)
+		if(!istype(M, /mob/living/carbon/slime/))//If target is not a slime.
+			user << "\red The potion only works on slimes!"
 			return ..()
 		if(M.stat)
 			user << "\red The slime is dead!"
@@ -778,7 +761,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
 			user << "\red The steroid only works on baby slimes!"
 			return ..()
-		if(istype(M, /mob/living/carbon/slime/adult)) //Can't tame adults
+		if(M.is_adult) //Can't tame adults
 			user << "\red Only baby slimes can use the steroid!"
 			return..()
 		if(M.stat)
