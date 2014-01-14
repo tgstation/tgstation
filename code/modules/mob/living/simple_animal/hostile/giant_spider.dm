@@ -9,6 +9,7 @@
 	name = "giant spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has deep red eyes."
 	icon_state = "guard"
+	var/butcher_state = 8 // Icon state for dead spider icons
 	icon_living = "guard"
 	icon_dead = "guard_dead"
 	speak_emote = list("chitters")
@@ -16,7 +17,7 @@
 	speak_chance = 5
 	turns_per_move = 5
 	see_in_dark = 10
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/bearmeat
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/spidermeat
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "hits"
@@ -40,6 +41,7 @@
 	icon_state = "nurse"
 	icon_living = "nurse"
 	icon_dead = "nurse_dead"
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/spidereggs
 	maxHealth = 40
 	health = 40
 	melee_damage_lower = 5
@@ -86,6 +88,19 @@
 				spawn(50)
 					stop_automated_movement = 0
 					walk(src,0)
+
+// Chops off each leg with a 50/50 chance of harvesting one, until finally calling
+// default harvest action
+/mob/living/simple_animal/hostile/giant_spider/harvest()
+	if(butcher_state > 0)
+		butcher_state--
+		icon_state = icon_dead + "[butcher_state]"
+
+		if(prob(50))
+			new /obj/item/weapon/reagent_containers/food/snacks/spiderleg(src.loc)
+		return
+	else
+		return ..()
 
 /mob/living/simple_animal/hostile/giant_spider/nurse/proc/GiveUp(var/C)
 	spawn(100)

@@ -118,7 +118,7 @@ As BYOND's Dream Maker is an object oriented language, code must be object orien
 
 You must write BYOND code with absolute pathing, like so:
 
-```DM
+```C++
 
 /obj/item/weapon/baseball_bat
     name = "baseball bat"

@@ -407,6 +407,7 @@
 				return
 			gib()
 			return
+			harvest()
 	else
 		if(O.force)
 			var/damage = O.force
@@ -510,3 +511,12 @@
 			continue
 	if(alone && partner && children < 3)
 		new childtype(loc)
+
+// Harvest an animal's delicious byproducts
+/mob/living/simple_animal/proc/harvest()
+	new meat_type (get_turf(src))
+	if(prob(95))
+		del(src)
+		return
+	gib()
+	return
