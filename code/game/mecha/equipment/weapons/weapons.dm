@@ -64,7 +64,7 @@
 	energy_drain = 120
 	projectile = /obj/item/projectile/ion
 	fire_sound = 'sound/weapons/Laser.ogg'
-
+	construction_cost = list("silver" = 6000, "metal" = 20000, "uranium" = 2000)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
 	equip_cooldown = 30
@@ -300,6 +300,7 @@
 	equip_cooldown = 60
 	var/missile_speed = 2
 	var/missile_range = 30
+	construction_cost = list("silver" = 8000, "metal" = 22000, "gold" = 6000)
 
 	action(target)
 		if(!action_checks(target)) return

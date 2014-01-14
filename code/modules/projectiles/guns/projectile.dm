@@ -6,10 +6,8 @@
 	w_class = 3.0
 	m_amt = 1000
 
-	var/ammo_type = /obj/item/ammo_casing/c10mm
 	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info
 	var/obj/item/ammo_box/magazine/magazine
-	var/obj/item/ammo_casing/chambered = null // The round (not bullet) that is in the chamber.
 
 /obj/item/weapon/gun/projectile/New()
 	..()
@@ -18,28 +16,19 @@
 	update_icon()
 	return
 
-/obj/item/weapon/gun/projectile/process_chambered(var/eject_casing = 1, var/empty_chamber = 1)
+/obj/item/weapon/gun/projectile/process_chamber(var/eject_casing = 1, var/empty_chamber = 1)
 //	if(in_chamber)
 //		return 1
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
 	if(isnull(AC) || !istype(AC))
-		return 0
+		chamber_round()
+		return
 	if(eject_casing)
 		AC.loc = get_turf(src) //Eject casing onto ground.
 	if(empty_chamber)
 		chambered = null
 	chamber_round()
-	if(AC.BB)
-		if(AC.reagents && AC.BB.reagents)
-			var/datum/reagents/casting_reagents = AC.reagents
-			casting_reagents.trans_to(AC.BB, casting_reagents.total_volume) //For chemical darts/bullets
-			casting_reagents.delete()
-		in_chamber = AC.BB //Load projectile into chamber.
-		AC.BB.loc = src //Set projectile loc to gun.
-		AC.BB = null
-		AC.update_icon()
-		return 1
-	return 0
+	return
 
 /obj/item/weapon/gun/projectile/proc/chamber_round()
 	if (chambered || !magazine)
@@ -47,6 +36,11 @@
 	else if (magazine.ammo_count())
 		chambered = magazine.get_round()
 		chambered.loc = src
+		if(chambered.BB)
+			if(chambered.reagents && chambered.BB.reagents)
+				var/datum/reagents/casting_reagents = chambered.reagents
+				casting_reagents.trans_to(chambered.BB, casting_reagents.total_volume) //For chemical darts/bullets
+				casting_reagents.delete()
 	return
 
 /obj/item/weapon/gun/projectile/attackby(var/obj/item/A as obj, mob/user as mob)
@@ -56,7 +50,7 @@
 			user.remove_from_mob(AM)
 			magazine = AM
 			magazine.loc = src
-			user << "<span class='notice'>You load a new magazine into \the [src]!</span>"
+			user << "<span class='notice'>You load a new magazine into \the [src].</span>"
 			chamber_round()
 			A.update_icon()
 			update_icon()
@@ -71,7 +65,7 @@
 		user.put_in_hands(magazine)
 		magazine.update_icon()
 		magazine = null
-		user << "<span class='notice'>You pull the magazine out of \the [src]!</span>"
+		user << "<span class='notice'>You pull the magazine out of \the [src].</span>"
 	else
 		user << "<span class='notice'>There's no magazine in \the [src].</span>"
 	update_icon()

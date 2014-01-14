@@ -114,3 +114,6 @@
 
 /mob/living/carbon/human/IsAdvancedToolUser()
 	return 1//Humans can use guns and such
+
+/mob/living/carbon/human/InCritical()
+	return (health <= config.health_threshold_crit && stat == UNCONSCIOUS)

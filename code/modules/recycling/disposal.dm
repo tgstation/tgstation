@@ -716,10 +716,6 @@
 
 		var/turf/target
 
-		if(T.density)		// dense ouput turf, so stop holder
-			H.active = 0
-			H.loc = src
-			return
 		if(istype(T,/turf/simulated/floor)) //intact floor, pop the tile
 			var/turf/simulated/floor/F = T
 			//F.health	= 100
@@ -742,8 +738,6 @@
 					spawn(1)
 						if(AM)
 							AM.throw_at(target, 100, 1)
-				H.vent_gas(T)
-				del(H)
 
 		else	// no specified direction, so throw in random direction
 
@@ -757,10 +751,8 @@
 					spawn(1)
 						if(AM)
 							AM.throw_at(target, 5, 1)
-
-				H.vent_gas(T)	// all gas vent to turf
-				del(H)
-
+		H.vent_gas(T)
+		del(H)
 		return
 
 	// call to break the pipe

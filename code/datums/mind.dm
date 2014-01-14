@@ -53,6 +53,8 @@ datum/mind
 	var/datum/faction/faction 			//associated faction
 	var/datum/changeling/changeling		//changeling holder
 
+	var/miming = 0 // Mime's vow of silence
+
 	New(var/key)
 		src.key = key
 

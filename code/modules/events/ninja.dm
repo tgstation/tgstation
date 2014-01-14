@@ -344,7 +344,7 @@ ________________________________________________________________________________
 
 /proc/create_space_ninja(spawn_loc)
 	var/mob/living/carbon/human/new_ninja = new(spawn_loc)
-
+	if(prob(50)) new_ninja.gender = "female"
 	var/datum/preferences/A = new()//Randomize appearance for the ninja.
 	A.real_name = "[pick(ninja_titles)] [pick(ninja_names)]"
 	A.copy_to(new_ninja)
@@ -1451,7 +1451,7 @@ ________________________________________________________________________________
 //=======//PROCESS PROCS//=======//
 
 /obj/item/clothing/suit/space/space_ninja/proc/ntick(mob/living/carbon/human/U = affecting)
-	set background = 1
+	set background = BACKGROUND_ENABLED
 
 	//Runs in the background while the suit is initialized.
 	spawn while(cell.charge>=0)
@@ -2075,7 +2075,7 @@ ________________________________________________________________________________
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_process()
-	set background = 1
+	set background = BACKGROUND_ENABLED
 
 	spawn while(hologram&&s_initialized&&AI)//Suit on and there is an AI present.
 		if(!s_initialized||get_dist(affecting,hologram.loc)>3)//Once suit is de-initialized or hologram reaches out of bounds.

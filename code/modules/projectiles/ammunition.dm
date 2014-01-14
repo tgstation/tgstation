@@ -10,6 +10,8 @@
 	var/caliber = null							//Which kind of guns it can be loaded into
 	var/projectile_type = null					//The bullet type to create when New() is called
 	var/obj/item/projectile/BB = null 			//The loaded bullet
+	var/pellets = 0								//Pellets for spreadshot
+	var/variance = 0							//Variance for inaccuracy fundamental to the casing
 
 
 /obj/item/ammo_casing/New()
@@ -26,12 +28,17 @@
 	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
 	desc = "[initial(desc)][BB ? "" : " This one is spent"]"
 
+/obj/item/ammo_casing/proc/newshot() //For energy weapons and shotgun shells.
+	if (!BB)
+		BB = new projectile_type(src)
+	return
+
 
 
 //Boxes of ammo
 /obj/item/ammo_box
-	name = "ammo box (.357)"
-	desc = "A box of ammo"
+	name = "ammo box (null_reference_exception)"
+	desc = "A box of ammo."
 	icon_state = "357"
 	icon = 'icons/obj/ammo.dmi'
 	flags = CONDUCT
@@ -47,6 +54,7 @@
 	var/max_ammo = 7
 	var/multiple_sprites = 0
 	var/caliber
+	var/multiload = 1
 
 
 /obj/item/ammo_box/New()
@@ -73,15 +81,16 @@
 			return 1
 	return 0
 
-/obj/item/ammo_box/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/ammo_box/attackby(var/obj/item/A as obj, mob/user as mob, var/silent = 0)
 	var/num_loaded = 0
 	if(istype(A, /obj/item/ammo_box))
 		var/obj/item/ammo_box/AM = A
 		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
-			if(give_round(AC))
+			var/did_load = give_round(AC)
+			if(did_load)
 				AM.stored_ammo -= AC
 				num_loaded++
-			else
+			if(!did_load || !multiload)
 				break
 	if(istype(A, /obj/item/ammo_casing))
 		var/obj/item/ammo_casing/AC = A
@@ -90,9 +99,12 @@
 			AC.loc = src
 			num_loaded++
 	if(num_loaded)
-		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
+		if (!silent)
+			user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
 		A.update_icon()
 		update_icon()
+		return num_loaded
+	return 0
 
 /obj/item/ammo_box/update_icon()
 	switch(multiple_sprites)
@@ -100,7 +112,7 @@
 			icon_state = "[initial(icon_state)]-[stored_ammo.len]"
 		if(2)
 			icon_state = "[initial(icon_state)]-[stored_ammo.len ? "[max_ammo]" : "0"]"
-	desc = "There are [stored_ammo.len] shell\s left!"
+	desc = "[initial(desc)] There are [stored_ammo.len] shell\s left!"
 
 //Behavior for magazines
 /obj/item/ammo_box/magazine/proc/ammo_count()

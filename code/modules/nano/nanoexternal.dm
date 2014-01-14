@@ -31,11 +31,12 @@
   * ui_interact is currently defined for /atom/movable
   *
   * @param user /mob The mob who is interacting with this ui
-  * @param ui_key string A string key to use for this ui. Allows for multiple unique uis on one obj/mob (defaut value "main")
+  * @param ui_key string A string key to use for this ui. Allows for multiple unique uis on one obj/mob (defaut value "main")  
+  * @param ui /datum/nanoui This parameter is passed by the nanoui process() proc when updating an open ui
   *
   * @return nothing
   */
-/atom/movable/proc/ui_interact(mob/user, ui_key = "main")
+/atom/movable/proc/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	return
 	
 // Used by the Nano UI Manager (/datum/nanomanager) to track UIs opened by this mob

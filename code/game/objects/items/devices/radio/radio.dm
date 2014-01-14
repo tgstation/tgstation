@@ -707,6 +707,13 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/borg
 	var/obj/item/device/encryptionkey/keyslot = null//Borg radios can handle a single encryption key
 
+/obj/item/device/radio/borg/syndicate
+	syndie = 1
+	keyslot = new /obj/item/device/encryptionkey/syndicate
+/obj/item/device/radio/borg/syndicate/New()
+	..()
+	set_frequency(SYND_FREQ)
+
 /obj/item/device/radio/borg/attackby(obj/item/weapon/W as obj, mob/user as mob)
 //	..()
 	user.set_machine(src)
