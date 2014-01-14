@@ -7,7 +7,7 @@
 /obj/effect/landmark/corpse
 	name = "Unknown"
 	var/mobname = "Unknown"  //Unused now but it'd fuck up maps to remove it now
-	var/mobgender = "male" //Set to male by default due to the patriarchy
+	var/mobgender = MALE //Set to male by default due to the patriarchy. Other options include FEMALE and NEUTER
 	var/corpseuniform = null //Set this to an object path to have the slot filled with said object on the corpse.
 	var/corpsesuit = null
 	var/corpseshoes = null
@@ -86,12 +86,10 @@
 		M.equip_to_slot_or_del(W, slot_wear_id)
 	del(src)
 
-/obj/effect/landmark/AICorpse
-
 /obj/effect/landmark/AICorpse/initialize()
-	createAICorpse()
+	createCorpse()
 
-/obj/effect/landmark/AICorpse/proc/createAICorpse() //Creates an AI corpse, amazingly
+/obj/effect/landmark/AICorpse/proc/createCorpse() //Creates an AI corpse, amazingly
 	var/A = locate(/mob/living/silicon/ai) in loc //stops multiple dead ais spawning, apparently hacky, ¯\_(?)_/¯ (who's that pokemon?)
 	if(A)
 		return
@@ -101,26 +99,20 @@
 	M.death()
 	M.name = src.name //name is that of the landmark that spawned it
 	M.real_name = M.name
-	del(src) //delete the landmark now that we're done with it
-
-/obj/effect/landmark/slimeCorpse
 
 /obj/effect/landmark/slimeCorpse/initialize()
-	createSlimeCorpse()
+	createCorpse()
 
-/obj/effect/landmark/slimeCorpse/proc/createSlimeCorpse() //Creates a mob
+/obj/effect/landmark/slimeCorpse/proc/createCorpse()
 	var/mob/living/carbon/slime/M = new /mob/living/carbon/slime/ (src.loc)
 	M.death(1)
 
-obj/effect/landmark/facehugCorpse
-
 /obj/effect/landmark/facehugCorpse/initialize()
-	createfacehugCorpse()
+	createCorpse()
 
-/obj/effect/landmark/facehugCorpse/proc/createfacehugCorpse() //Creates a facehugger
+/obj/effect/landmark/facehugCorpse/proc/createCorpse()
 	var/obj/item/clothing/mask/facehugger/O = new /obj/item/clothing/mask/facehugger (src.loc)
 	O.Die()
-
 	O.name = src.name
 
 
