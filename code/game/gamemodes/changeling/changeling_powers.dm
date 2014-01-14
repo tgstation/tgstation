@@ -184,10 +184,10 @@
 	changeling.chem_charges -= 5
 	src.visible_message("<span class='warning'>[src] transforms!</span>")
 	changeling.geneticdamage = 30
-	src.dna = chosen_dna
+	src.dna = chosen_dna.Clone()
 	src.real_name = chosen_dna.real_name
 	src.flavor_text = ""
-	updateappearance(src, src.dna.uni_identity)
+	src.UpdateAppearance()
 	domutcheck(src, null)
 
 	src.verbs -= /mob/proc/changeling_transform
@@ -232,7 +232,7 @@
 	del(animation)
 
 	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey(src)
-	O.dna = C.dna
+	O.dna = C.dna.Clone()
 	C.dna = null
 
 	for(var/obj/item/W in C)
@@ -285,7 +285,7 @@
 	changeling.chem_charges--
 	C.remove_changeling_powers()
 	C.visible_message("<span class='warning'>[C] transforms!</span>")
-	C.dna = chosen_dna
+	C.dna = chosen_dna.Clone()
 
 	var/list/implants = list()
 	for (var/obj/item/weapon/implant/I in C) //Still preserving implants
@@ -314,11 +314,11 @@
 			W.layer = initial(W.layer)
 
 	var/mob/living/carbon/human/O = new /mob/living/carbon/human( src )
-	if (isblockon(getblock(C.dna.uni_identity, 11,3),11))
+	if (C.dna.GetUIState(DNA_UI_GENDER))
 		O.gender = FEMALE
 	else
 		O.gender = MALE
-	O.dna = C.dna
+	O.dna = C.dna.Clone()
 	C.dna = null
 	O.real_name = chosen_dna.real_name
 
@@ -327,7 +327,7 @@
 
 	O.loc = C.loc
 
-	updateappearance(O,O.dna.uni_identity)
+	O.UpdateAppearance()
 	domutcheck(O, null)
 	O.setToxLoss(C.getToxLoss())
 	O.adjustBruteLoss(C.getBruteLoss())
@@ -458,6 +458,10 @@
 	changeling.chem_charges -= 45
 
 	var/mob/living/carbon/human/C = src
+	if(ishuman(src))
+		var/mob/living/carbon/human/H=src
+		if(H.said_last_words)
+			H.said_last_words=0
 	C.stat = 0
 	C.SetParalysis(0)
 	C.SetStunned(0)
@@ -755,9 +759,9 @@ var/list/datum/dna/hivemind_bank = list()
 		src << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
 		return 0
 	T.visible_message("<span class='warning'>[T] transforms!</span>")
-	T.dna = chosen_dna
+	T.dna = chosen_dna.Clone()
 	T.real_name = chosen_dna.real_name
-	updateappearance(T, T.dna.uni_identity)
+	T.UpdateAppearance()
 	domutcheck(T, null)
 	feedback_add_details("changeling_powers","TS")
 	return 1

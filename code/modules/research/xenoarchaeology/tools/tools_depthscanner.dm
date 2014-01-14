@@ -26,13 +26,13 @@
 
 /obj/item/device/depth_scanner/proc/scan_atom(var/mob/user, var/atom/A)
 	user.visible_message("\blue [user] scans [A], the air around them humming gently.")
-	if(istype(A,/turf/simulated/mineral))
-		var/turf/simulated/mineral/M = A
+	if(istype(A,/turf/unsimulated/mineral))
+		var/turf/unsimulated/mineral/M = A
 		if(M.excavation_minerals.len || M.finds.len || M.artifact_find)
 
 			//create a new scanlog entry
 			var/datum/depth_scan/D = new()
-			D.coords = "[M.x].[rand(0,9)]:[M.y].[rand(0,9)]:[10 * M.z].[rand(0,9)]"
+			D.coords = "[M.x+WORLD_X_OFFSET].[rand(0,9)]:[M.y+WORLD_Y_OFFSET].[rand(0,9)]:[10 * M.z].[rand(0,9)]"
 			D.time = worldtime2text()
 			D.record_index = positive_locations.len + 1
 			D.material = M.mineralName
@@ -59,7 +59,7 @@
 		if(B.artifact_find)
 			//create a new scanlog entry
 			var/datum/depth_scan/D = new()
-			D.coords = "[10 * B.x].[rand(0,9)]:[10 * B.y].[rand(0,9)]:[10 * B.z].[rand(0,9)]"
+			D.coords = "[10 * (B.x+WORLD_X_OFFSET)].[rand(0,9)]:[10 * (B.y+WORLD_Y_OFFSET)].[rand(0,9)]:[10 * B.z].[rand(0,9)]"
 			D.time = worldtime2text()
 			D.record_index = positive_locations.len + 1
 

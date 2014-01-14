@@ -115,3 +115,13 @@
 		new /obj/item/taperoll/engineering(src)
 		new /obj/item/taperoll/engineering(src)
 		return
+
+/obj/structure/closet/secure_closet/engineering_general
+	name = "Engineering Locker"
+	req_access = list(access_engine_equip)
+	icon_state = "secureeng1"
+	icon_closed = "secureeng"
+	icon_locked = "secureeng1"
+	icon_opened = "secureengopen"
+	icon_broken = "secureengbroken"
+	icon_off = "secureengoff"

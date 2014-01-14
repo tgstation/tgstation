@@ -68,6 +68,23 @@
 	plant_type = 0
 	growthstages = 6
 
+/obj/item/seeds/chillighost
+	name = "pack of ghost chilli seeds"
+	desc = "These seeds grow into a chili said to be the hottest in the galaxy."
+	icon_state = "seed-chilighost"
+	mypath = "/obj/item/seeds/chillighost"
+	species = "chilighost"
+	plantname = "Ghost Chili Plants"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli"
+	lifespan = 20
+	endurance = 10
+	maturation = 10
+	production = 10
+	yield = 3
+	potency = 20
+	plant_type = 0
+	growthstages = 6
+
 /obj/item/seeds/plastiseed
 	name = "plastellium mycelium"
 	desc = "This mycelium grows into Plastellium"
@@ -103,8 +120,8 @@
 	potency = 30
 	plant_type = 0
 	growthstages = 6
-	var/ui = null //for storing the guy
-	var/se = null
+	var/list/ui = null //for storing the guy
+	var/list/se = null
 	var/ckey = null
 	var/realName = null
 	var/datum/mind/mind = null
@@ -418,6 +435,23 @@
 	plant_type = 0
 	growthstages = 6
 
+/obj/item/seeds/koiseed
+	name = "pack of koibean seeds"
+	desc = "These seeds grow into koibean plants."
+	icon_state = "seed-koibean"
+	mypath = "/obj/item/seeds/koiseed"
+	species = "koibean"
+	plantname = "Koibean Plants"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/koibeans"
+	lifespan = 25
+	endurance = 15
+	maturation = 4
+	production = 4
+	yield = 3
+	potency = 10
+	plant_type = 0
+	growthstages = 4
+
 /obj/item/seeds/wheatseed
 	name = "pack of wheat seeds"
 	desc = "These may, or may not, grow into weed."
@@ -724,6 +758,42 @@
 	growthstages = 3
 	plant_type = 1
 
+/obj/item/seeds/moonflowerseed
+	name = "pack of moonflower seeds"
+	desc = "These seeds grow into moonflowers."
+	icon_state = "seed-moonflower"
+	mypath = "/obj/item/seeds/moonflowerseed"
+	species = "moonflower"
+	plantname = "Moonflowers"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/moonflower"
+	lifespan = 25
+	endurance = 20
+	maturation = 6
+	production = 2
+	yield = 2
+	potency = 15
+	oneharvest = 1
+	growthstages = 3
+	plant_type = 0
+
+/obj/item/seeds/novaflowerseed
+	name = "pack of novaflower seeds"
+	desc = "These seeds grow into novaflowers."
+	icon_state = "seed-novaflower"
+	mypath = "/obj/item/seeds/novaflowerseed"
+	species = "novaflower"
+	plantname = "Novaflowers"
+	productname = "/obj/item/weapon/grown/novaflower"
+	lifespan = 25
+	endurance = 20
+	maturation = 6
+	production = 2
+	yield = 2
+	potency = 20
+	oneharvest = 1
+	growthstages = 3
+	plant_type = 0
+
 /obj/item/seeds/brownmold
 	name = "pack of brown mold"
 	desc = "Eww.. moldy."
@@ -801,6 +871,23 @@
 	species = "ambrosiavulgaris"
 	plantname = "Ambrosia Vulgaris"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris"
+	lifespan = 60
+	endurance = 25
+	maturation = 6
+	production = 6
+	yield = 6
+	potency = 5
+	plant_type = 0
+	growthstages = 6
+
+/obj/item/seeds/ambrosiavulgarisseed/cruciatus
+	name = "pack of ambrosia vulgaris seeds"
+	desc = "These seeds grow into common ambrosia, a plant grown by and from medicine."
+	icon_state = "seed-ambrosiavulgaris"
+	mypath = "/obj/item/seeds/ambrosiavulgarisseed/cruciatus"
+	species = "ambrosiavulgaris"
+	plantname = "Ambrosia Vulgaris"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/cruciatus"
 	lifespan = 60
 	endurance = 25
 	maturation = 6
@@ -1190,6 +1277,30 @@
 	throw_range = 3
 	plant_type = 1
 	seed = "/obj/item/seeds/sunflower"
+
+/obj/item/weapon/grown/novaflower
+	name = "novaflower"
+	desc = "These beautiful flowers have a crisp smokey scent, like a summer bonfire."
+	icon = 'icons/obj/harvest.dmi'
+	icon_state = "novaflower"
+	damtype = "fire"
+	force = 0
+	flags = TABLEPASS
+	slot_flags = SLOT_HEAD
+	throwforce = 1
+	w_class = 1.0
+	throw_speed = 1
+	throw_range = 3
+	plant_type = 0
+	seed = "/obj/item/seeds/novaflower"
+	attack_verb = list("seared", "heated", "whacked", "steamed")
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("nutriment", 1)
+			reagents.add_reagent("capsaicin", round(potency, 1))
+			force = round((5+potency/5), 1)
+
 /*
 /obj/item/weapon/grown/gibtomato
 	desc = "A plump tomato."

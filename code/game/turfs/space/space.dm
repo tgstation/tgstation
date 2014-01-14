@@ -34,10 +34,21 @@
 /turf/space/attackby(obj/item/C as obj, mob/user as mob)
 
 	if (istype(C, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
-			return
-		var/obj/item/stack/rods/R = C
+			if(R.amount < 2)
+				user << "\red You don't have enough rods to do that."
+				return
+			user << "\blue You begin to build a catwalk."
+			if(do_after(user,30))
+				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+				user << "\blue You build a catwalk!"
+				R.use(2)
+				ChangeTurf(/turf/simulated/floor/plating/airless/catwalk)
+				del(L)
+				return
+
 		user << "\blue Constructing support lattice ..."
 		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
 		ReplaceWithLattice()
@@ -106,6 +117,27 @@
 				return
 
 			var/move_to_z = src.z
+
+			// Prevent MoMMIs from leaving the derelict.
+			if(istype(A, /mob/living))
+				var/mob/living/MM = A
+				if(MM.client && !MM.stat)
+					if(MM.locked_to_z!=0)
+						if(src.z == MM.locked_to_z)
+							MM << "\red You cannot leave this area."
+							if(MM.x <= TRANSITIONEDGE)
+								MM.inertia_dir = 4
+							else if(MM.x >= world.maxx -TRANSITIONEDGE)
+								MM.inertia_dir = 8
+							else if(MM.y <= TRANSITIONEDGE)
+								MM.inertia_dir = 1
+							else if(MM.y >= world.maxy -TRANSITIONEDGE)
+								MM.inertia_dir = 2
+							return
+						else
+							MM << "\red You find your way back."
+							move_to_z=MM.locked_to_z
+
 			var/safety = 1
 
 			while(move_to_z == src.z)

@@ -7,6 +7,7 @@
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 40
+	var/opened = 0.0
 	var/processing = 0
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/points = 0
@@ -18,6 +19,21 @@
 		reagents = R
 		R.my_atom = src
 		beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+		component_parts = list()
+		component_parts += new /obj/item/weapon/circuitboard/biogenerator
+		component_parts += new /obj/item/weapon/stock_parts/manipulator
+		component_parts += new /obj/item/weapon/stock_parts/manipulator
+		component_parts += new /obj/item/weapon/stock_parts/matter_bin
+		component_parts += new /obj/item/weapon/stock_parts/matter_bin
+		component_parts += new /obj/item/weapon/stock_parts/micro_laser
+		component_parts += new /obj/item/weapon/stock_parts/micro_laser
+		component_parts += new /obj/item/weapon/stock_parts/micro_laser
+		component_parts += new /obj/item/weapon/stock_parts/scanning_module
+		component_parts += new /obj/item/weapon/stock_parts/scanning_module
+		component_parts += new /obj/item/weapon/stock_parts/console_screen
+		component_parts += new /obj/item/weapon/stock_parts/console_screen
+		RefreshParts()
+
 
 	on_reagent_change()			//When the reagents change, change the icon as well.
 		update_icon()
@@ -30,6 +46,7 @@
 		else
 			icon_state = "biogen-work"
 		return
+
 
 /obj/machinery/biogenerator/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/reagent_containers/glass))
@@ -57,7 +74,31 @@
 					break
 			if(i<10)
 				user << "\blue You empty the plant bag into the biogenerator."
-
+	else if (istype(O, /obj/item/weapon/screwdriver))
+		if (!opened)
+			src.opened = 1
+			user << "You open the maintenance hatch of [src]."
+			//src.icon_state = "autolathe_t"
+		else
+			src.opened = 0
+			user << "You close the maintenance hatch of [src]."
+			//src.icon_state = "autolathe"
+			return 1
+	else if(istype(O, /obj/item/weapon/crowbar))
+		if (opened)
+			if(beaker)
+				user << "\red A beaker is loaded, you cannot deconstruct [src]."
+				return 1
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+			M.state = 2
+			M.icon_state = "box_1"
+			for(var/obj/I in component_parts)
+				if(I.reliability != 100 && crit_fail)
+					I.crit_fail = 1
+				I.loc = src.loc
+			del(src)
+			return 1
 
 	else if(!istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
 		user << "\red You cannot put this in [src.name]"
@@ -102,10 +143,17 @@
 						<A href='?src=\ref[src];action=create;item=wallet'>Wallet</A> <FONT COLOR=blue>(100)</FONT><BR>
 						<A href='?src=\ref[src];action=create;item=gloves'>Botanical gloves</A> <FONT COLOR=blue>(250)</FONT><BR>
 						<A href='?src=\ref[src];action=create;item=tbelt'>Utility belt</A> <FONT COLOR=blue>(300)</FONT><BR>
-						<A href='?src=\ref[src];action=create;item=satchel'>Leather Satchel</A> <FONT COLOR=blue>(400)</FONT><BR>"}
+						<A href='?src=\ref[src];action=create;item=plants'>Plant Bag</A> <FONT COLOR=blue>(350)</FONT><BR>
+						<A href='?src=\ref[src];action=create;item=satchel'>Leather Satchel</A> <FONT COLOR=blue>(400)</FONT><BR>
+						Misc<BR>
+						<A href='?src=\ref[src];action=create;item=pest'>Pest Spray</A> <FONT COLOR=blue>(40)</FONT> | <A href='?src=\ref[src];action=create;item=pest5'>x5</A><BR>
+						<A href='?src=\ref[src];action=create;item=beez'>BeezEez</A> <FONT COLOR=blue>(40)</FONT> | <A href='?src=\ref[src];action=create;item=beez5'>x5</A><BR>
+						<A href='?src=\ref[src];action=create;item=cardboard'>Cardboard Sheet</A> <FONT COLOR=blue>(200)</FONT> | <A href='?src=\ref[src];action=create;item=cardboard5'>x5</A><BR>"}
+/*						<A href='?src=\ref[src];action=create;item=portaseed'>Portable Seed Extractor</A> <FONT COLOR=blue>(700)</FONT><BR>*/
 					// END AUTOFIX
 					//dat += "Other<BR>"
 					//dat += "<A href='?src=\ref[src];action=create;item=monkey'>Monkey</A> <FONT COLOR=blue>(500)</FONT><BR>"
+
 				else
 					dat += "<BR><FONT COLOR=red>No beaker inside. Please insert a beaker.</FONT><BR>"
 			if("nopoints")
@@ -228,21 +276,62 @@
 				new/obj/item/nutrient/rh(src.loc)
 				new/obj/item/nutrient/rh(src.loc)
 				new/obj/item/nutrient/rh(src.loc)
+		if("pest")
+			if (check_cost(40)) return 0
+			else
+				new/obj/item/weapon/pestspray(src.loc)
+		if("pest5")
+			if (check_cost(200)) return 0
+			else
+				new/obj/item/weapon/pestspray(src.loc)
+				new/obj/item/weapon/pestspray(src.loc)
+				new/obj/item/weapon/pestspray(src.loc)
+				new/obj/item/weapon/pestspray(src.loc)
+				new/obj/item/weapon/pestspray(src.loc)
+		if("beez")
+			if (check_cost(40)) return 0
+			else
+				new/obj/item/beezeez(src.loc)
+		if("beez5")
+			if (check_cost(200)) return 0
+			else
+				new/obj/item/beezeez(src.loc)
+				new/obj/item/beezeez(src.loc)
+				new/obj/item/beezeez(src.loc)
+				new/obj/item/beezeez(src.loc)
+				new/obj/item/beezeez(src.loc)
 		if("wallet")
 			if (check_cost(100)) return 0
 			else new/obj/item/weapon/storage/wallet(src.loc)
+		if("cardboard")
+			if (check_cost(200)) return 0
+			else new /obj/item/stack/sheet/cardboard(src.loc)
+		if("cardboard5")
+			if (check_cost(1000)) return 0
+			else
+				new /obj/item/stack/sheet/cardboard(src.loc)
+				new /obj/item/stack/sheet/cardboard(src.loc)
+				new /obj/item/stack/sheet/cardboard(src.loc)
+				new /obj/item/stack/sheet/cardboard(src.loc)
+				new /obj/item/stack/sheet/cardboard(src.loc)
 		if("gloves")
 			if (check_cost(250)) return 0
 			else new/obj/item/clothing/gloves/botanic_leather(src.loc)
 		if("tbelt")
 			if (check_cost(300)) return 0
 			else new/obj/item/weapon/storage/belt/utility(src.loc)
+		if("plants")
+			if (check_cost(350))return 0
+			else new/obj/item/weapon/storage/bag/plants(src.loc)
 		if("satchel")
 			if (check_cost(400)) return 0
 			else new/obj/item/weapon/storage/backpack/satchel(src.loc)
 		//if("monkey")
 		//	if (check_cost(500)) return 0
 		//	else new/mob/living/carbon/monkey(src.loc)
+		//if("portaseed")
+		//	if (check_cost(700)) return 0
+		//	else new/obj/item/weapon/storage/bag/plants/portaseeder(src.loc) - Borked the sextractor. commenting out until its fixed.
 	processing = 0
 	menustat = "complete"
 	update_icon()

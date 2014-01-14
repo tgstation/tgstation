@@ -30,6 +30,8 @@
 
 		if(isliving(A))
 			var/mob/living/L = A
+			if(istype(src, /mob/living/simple_animal/hostile/scarybat))
+				if(src:owner == L) continue
 			if(L.faction == src.faction && !attack_same)
 				continue
 			else if(L in friends)

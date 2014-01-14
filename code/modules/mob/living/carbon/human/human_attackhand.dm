@@ -26,6 +26,10 @@
 					visible_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>")
 					M.attack_log += text("\[[time_stamp()]\] <font color='red'>Stungloved [src.name] ([src.ckey])</font>")
 					src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stungloved by [M.name] ([M.ckey])</font>")
+					if(!iscarbon(M))
+						LAssailant = null
+					else
+						LAssailant = M
 
 					log_attack("<font color='red'>[M.name] ([M.ckey]) stungloved [src.name] ([src.ckey])</font>")
 
@@ -106,13 +110,32 @@
 			return 1
 
 		if("hurt")
-
+			//Vampire code
+			if(M.zone_sel && M.zone_sel.selecting == "head" && src != M)
+				if(M.mind && M.mind.vampire && (M.mind in ticker.mode.vampires) && !M.mind.vampire.draining)
+					if((head && (head.flags & HEADCOVERSMOUTH)) || (wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)))
+						M << "\red Remove their mask!"
+						return 0
+					if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
+						M << "\red Remove your mask!"
+						return 0
+					if(mind && mind.vampire && (mind in ticker.mode.vampires))
+						M << "\red Your fangs fail to pierce [src.name]'s cold flesh"
+						return 0
+					//we're good to suck the blood, blaah
+					M.handle_bloodsucking(src)
+					return
+			//end vampire codes
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>[M.species.attack_verb]ed [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [M.species.attack_verb]ed by [M.name] ([M.ckey])</font>")
+			if(!iscarbon(M))
+				LAssailant = null
+			else
+				LAssailant = M
 
 			log_attack("[M.name] ([M.ckey]) [M.species.attack_verb]ed [src.name] ([src.ckey])")
 
-			var/damage = rand(0, 5)//BS12 EDIT
+			var/damage = rand(0, M.species.max_hurt_damage)//BS12 EDIT
 			if(!damage)
 				if(M.species.attack_verb == "punch")
 					playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
@@ -181,6 +204,10 @@
 				visible_message("\red <B>[M] has pushed [src]!</B>")
 				M.attack_log += text("\[[time_stamp()]\] <font color='red'>Pushed [src.name] ([src.ckey])</font>")
 				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been pushed by [M.name] ([M.ckey])</font>")
+				if(!iscarbon(M))
+					LAssailant = null
+				else
+					LAssailant = M
 
 				log_attack("[M.name] ([M.ckey]) pushed [src.name] ([src.ckey])")
 				return

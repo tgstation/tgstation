@@ -9,8 +9,10 @@
 	flags = ON_BORDER
 	var/health = 14.0
 	var/ini_dir = null
-	var/state = 0
+	var/state = 2
 	var/reinf = 0
+	var/basestate
+	var/shardtype = /obj/item/weapon/shard
 //	var/silicate = 0 // number of units of silicate
 //	var/icon/silicateIcon = null // the silicated icon
 
@@ -259,11 +261,11 @@
 			var/index = null
 			index = 0
 			while(index < 2)
-				new /obj/item/weapon/shard(loc)
+				new shardtype(loc)
 				if(reinf) new /obj/item/stack/rods(loc)
 				index++
 		else
-			new /obj/item/weapon/shard(loc)
+			new shardtype(loc)
 			if(reinf) new /obj/item/stack/rods(loc)
 		var/pdiff=performWallPressureCheck(src.loc)
 		if(pdiff>0)
@@ -325,19 +327,9 @@
 /obj/structure/window/New(Loc,re=0)
 	..()
 
-	if(re)	reinf = re
+//	if(re)	reinf = re
 
 	ini_dir = dir
-	if(reinf)
-		icon_state = "rwindow"
-		desc = "A reinforced window."
-		name = "reinforced window"
-		state = 2*anchored
-		health = 40
-		if(opacity)
-			icon_state = "twindow"
-	else
-		icon_state = "window"
 
 	update_nearby_tiles(need_rebuild=1)
 	update_nearby_icons()
@@ -409,12 +401,12 @@
 					if(abs(x-W.x)-abs(y-W.y) ) 		//doesn't count windows, placed diagonally to src
 						junction |= get_dir(src,W)
 		if(opacity)
-			icon_state = "twindow[junction]"
+			icon_state = "[basestate][junction]"
 		else
 			if(reinf)
-				icon_state = "rwindow[junction]"
+				icon_state = "[basestate][junction]"
 			else
-				icon_state = "window[junction]"
+				icon_state = "[basestate][junction]"
 
 		return
 
@@ -426,18 +418,53 @@
 
 
 /obj/structure/window/basic
+	desc = "It looks thin and flimsy. A few knocks with... anything, really should shatter it."
 	icon_state = "window"
+	basestate = "window"
+
+/obj/structure/window/plasmabasic
+	name = "plasma window"
+	desc = "A plasma-glass alloy window. It looks insanely tough to break. It appears it's also insanely tough to burn through."
+	basestate = "plasmawindow"
+	icon_state = "plasmawindow"
+	shardtype = /obj/item/weapon/shard/plasma
+	health = 120
+
+/obj/structure/window/plasmabasic/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if(exposed_temperature > T0C + 32000)
+		hit(round(exposed_volume / 1000), 0)
+	..()
+
+/obj/structure/window/plasmareinforced
+	name = "reinforced plasma window"
+	desc = "A plasma-glass alloy window, with rods supporting it. It looks hopelessly tough to break. It also looks completely fireproof, considering how basic plasma windows are insanely fireproof."
+	basestate = "plasmarwindow"
+	icon_state = "plasmarwindow"
+	shardtype = /obj/item/weapon/shard/plasma
+	reinf = 1
+	health = 160
+
+/obj/structure/window/plasmareinforced/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	return
 
 /obj/structure/window/reinforced
 	name = "reinforced window"
+	desc = "It looks rather strong. Might take a few good hits to shatter it."
 	icon_state = "rwindow"
+	basestate = "rwindow"
+	health = 40
 	reinf = 1
 
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
+	desc = "It looks rather strong and opaque. Might take a few good hits to shatter it."
 	icon_state = "twindow"
+	basestate = "twindow"
 	opacity = 1
 
 /obj/structure/window/reinforced/tinted/frosted
 	name = "frosted window"
+	desc = "It looks rather strong and frosted over. Looks like it might take a few less hits then a normal reinforced window."
 	icon_state = "fwindow"
+	basestate = "fwindow"
+	health = 30

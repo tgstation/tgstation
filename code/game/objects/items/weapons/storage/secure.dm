@@ -237,6 +237,14 @@
 	attack_hand(mob/user as mob)
 		return attack_self(user)
 
+// Clown planet WMD storage
+/obj/item/weapon/storage/secure/safe/clown
+	name="WMD Storage"
+
+/obj/item/weapon/storage/secure/safe/clown/New()
+	for(var/i=0;i<10;i++)
+		new /obj/item/weapon/reagent_containers/food/snacks/pie(src)
+
 /obj/item/weapon/storage/secure/safe/HoS/New()
 	..()
 	//new /obj/item/weapon/storage/lockbox/clusterbang(src) This item is currently broken... and probably shouldnt exist to begin with (even though it's cool)

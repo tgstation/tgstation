@@ -1,0 +1,292 @@
+<!-- 
+Title: Atmos Control UI
+Used In File(s): /code/game/machinery/alarm.dm
+-->
+{{!--
+#define AALARM_MODE_SCRUBBING	1
+#define AALARM_MODE_REPLACEMENT	2 //like scrubbing, but faster.
+#define AALARM_MODE_PANIC		3 //constantly sucks all air
+#define AALARM_MODE_CYCLE		4 //sucks out all air, then refill and switches to scrubbing
+#define AALARM_MODE_FILL		5 //emergency fill
+#define AALARM_MODE_OFF			6 //Shuts it all down.
+
+#define AALARM_SCREEN_MAIN		1
+#define AALARM_SCREEN_VENT		2
+#define AALARM_SCREEN_SCRUB		3
+#define AALARM_SCREEN_MODE		4
+#define AALARM_SCREEN_SENSORS	5
+ --}}
+{{if !alarm}}
+	<h3>Atmospherics Control</h3>
+	<div class="statusDisplay">
+	{{for alarms}}
+		<div class="line">
+			{{:~string("<div class='statusValue {0}'>{1}</div>",~dangerToClass(danger),name)}}
+			{{:~link("Access","gear",{"alarm":ID},null,"floatRight")}}
+		</div>
+	{{/for}}
+	</div>
+{{else}}
+	{{:~link("Main Menu","gear",{"reset":1},null,null)}}
+	<h3>{{:name}}</h3>
+	{{if !air}}
+	<div class="notice">Unable to acquire air sample.</div>
+	{{else}}
+	<div class="statusDisplay">
+		<div class="line">
+			<div class="statusLabel">Pressure:</div>
+			{{:~string("<div class='statusValue {0}'>{1} kPa</div>",~dangerToClass(air.danger.pressure),~precisionRound(air.pressure,4))}}
+			<div class="statusValue" style="margin-left:5px;">
+			{{if !locked}}
+				{{if mode == 3}}
+					{{:~link("DEACTIVATE PANIC SYPHON",null,{"mode" : 1},null,'linkOn')}}
+				{{else}}
+					{{:~link("ACTIVATE PANIC SYPHON",null,{"mode" : 3},null,'red')}}
+				{{/if}}
+			{{/if}}
+			</div>
+		</div>
+		<div class="line">
+			<div class="statusLabel">Oxygen:</div>
+			{{:~displayBar(air.contents.oxygen, 0, 100, ~dangerToClass(air.danger.oxygen))}}
+			{{:~string("<div class='statusValue {0}'>{1}%</div>",~dangerToClass(air.danger.oxygen),~precisionRound(air.contents.oxygen,2))}}
+		</div>
+		<div class="line">
+			<div class="statusLabel">Nitrogen:</div>
+			{{:~displayBar(air.contents.nitrogen, 0, 100, ~dangerToClass(air.danger.nitrogen))}}
+			{{:~string("<div class='statusValue {0}'>{1}%</div>",~dangerToClass(air.danger.nitrogen),~precisionRound(air.contents.nitrogen,2))}}
+		</div>
+		<div class="line">
+			<div class="statusLabel">Carbon Dioxide:</div>
+			{{:~displayBar(air.contents.co2, 0, 100, ~dangerToClass(air.danger.co2))}}
+			{{:~string("<div class='statusValue {0}'>{1}%</div>",~dangerToClass(air.danger.co2),~precisionRound(air.contents.co2,2))}}
+		</div>
+		<div class="line">
+			<div class="statusLabel">Toxins:</div>
+			{{:~displayBar(air.contents.plasma, 0, 100, ~dangerToClass(air.danger.plasma))}}
+			{{:~string("<div class='statusValue {0}'>{1}%</div>",~dangerToClass(air.danger.plasma),~precisionRound(air.contents.plasma,2))}}
+		</div>
+		{{if air.danger.other>0}}
+		<div class="line">
+			<div class="statusLabel">Other:</div>
+			{{:~displayBar(air.contents.other, 0, 100, ~dangerToClass(air.danger.other))}}
+			{{:~string("<div class='statusValue {0}'>{1}%</div>",~dangerToClass(air.danger.other),~precisionRound(air.contents.other,2))}}
+		</div>
+		{{/if}}
+		<div class="line">
+			<div class="statusLabel">
+				Temperature:
+			</div>
+			{{:~string("<div class='statusValue {0}'>{1}&deg;K ({2}&deg;C)</div>",~dangerToClass(air.danger.temperature),~precisionRound(air.temperature,2),~precisionRound(air.temperature_c,2))}}
+		</div>
+		<div class="line">
+			<div class="statusLabel">Local Status:</div>
+			{{if air.danger.overall == 0}}
+				{{if atmos_alarm}}
+					<div class="average">Caution: Atmos alert in area
+				{{else}}
+					<div class="good">Optimal
+				{{/if}}
+			{{else air.danger.overall == 1}}
+				<div class="average">Caution
+			{{else}}
+				<div class="notice">DANGER: Internals Required
+			{{/if}}
+			{{if !locked}}
+				{{if atmos_alarm}}
+					{{:~link('Reset Alarm',null,{'atmos_reset':1},null,'linkOn floatRight')}}
+				{{else}}
+					{{:~link('Activate Alarm',null,{'atmos_alarm':1},null,'red floatRight')}}
+				{{/if}}
+			{{/if}}
+			</div>
+		</div>
+		<div class="line">
+			<!--
+			#define RCON_NO		1
+			#define RCON_AUTO	2
+			#define RCON_YES	3
+			-->
+			<div class="statusLabel">Remote Control:</div>
+			{{:~link('Off',  null, {'rcon' : 1}, (rcon != 1) ? null : 'disabled')}}
+			{{:~link('Auto', null, {'rcon' : 2}, (rcon != 2) ? null : 'disabled')}}
+			{{:~link('On',   null, {'rcon' : 3}, (rcon != 3) ? null : 'disabled')}}
+		</div>
+		<div class="line">
+			<div class="statusLabel">Thermostat:</div>
+			{{:~link(target_temp+" C", 'carat-2-n-s', {'temperature': 1})}}
+		</div>
+	</div>
+	{{/if}}
+	
+	{{if locked}}
+		<div class="notice">Swipe card to unlock.</div>
+	{{else}}
+		<div class="notice">Remember to lock with ID card after use.</div>
+		<div class="item">
+			<div class="itemLabel">Screen:</div>
+			<div class="itemContents">
+				{{:~link('Main',      'gear',{'screen':1},(screen==1)?'linkOn':'')}}
+				{{:~link('Vents',     'gear',{'screen':2},(screen==2)?'linkOn':'')}}
+				{{:~link('Scrubbers', 'gear',{'screen':3},(screen==3)?'linkOn':'')}}
+				{{:~link('Mode',      'gear',{'screen':4},(screen==4)?'linkOn':'')}}
+				{{:~link('Thresholds','gear',{'screen':5},(screen==5)?'linkOn':'')}}
+			</div>
+		</div>
+		{{!-- VENTS --}}
+		{{if screen == 2}}
+			<h3>Vent Pump Settings</h3>
+			{{for vents}}
+				<div class="statusDisplay">
+					<div class="line">
+						<b>{{>name}}:</b> {{:state}}
+					</div>
+					<div class="line">
+						<div class="statusLabel">Operating:</div>
+						<div class="statusValue">
+							{{:~link(power ? 'On':'Off','power',{'id_tag':id_tag,'command':'power','val':power?0:1},null,(power?'linkOn':'red'))}}
+							{{if direction=="siphon"}}
+								{{:~link('Siphoning','arrowthickstop-1-s',{'id_tag':id_tag,'command':'set_dir','dir':'release'})}}
+							{{else}}
+								{{:~link('Blowing','arrowthick-1-n',{'id_tag':id_tag,'command':'set_dir','dir':'siphon'})}}
+							{{/if}}
+						</div>
+					</div>
+					<div class="line">
+						<div class="statusLabel">Pressure checks:</div>
+						<div class="statusValue">
+							{{:~link('External','power',{'id_tag':id_tag,'command':'checks','val':~xor(checks,1)},null,(checks & 1 ?'linkOn':'red'))}}
+							{{:~link('Internal','power',{'id_tag':id_tag,'command':'checks','val':~xor(checks,2)},null,(checks & 2 ?'linkOn':'red'))}}
+						</div>
+					</div>
+					<div class="line">
+						<div class="statusLabel">External pressure target:</div>
+						<div class="statusValue">
+							{{:~precisionRound(external,4)}} kPa
+						</div>
+						{{:~link('Set','gear',{'id_tag':id_tag,'command':'set_external_pressure'})}}
+						{{:~link('Reset','arrowrefresh-1-n',{'id_tag':id_tag,'command':'set_external_pressure','val':101.325},null,'linkOn')}}
+					</div>
+				</div>
+			{{else}}
+				<i>No vent pumps located in this area.</i>
+			{{/for}}
+		{{!-- SCRUBBERS --}}
+		{{else screen == 3}}
+			<h3>Scrubbers</h3>
+			{{for scrubbers}}
+				<div class="statusDisplay">
+					<div class="line">
+						<b>{{>name}}:</b> {{:state}}
+					</div>
+					<div class="line">
+						<div class="statusLabel">Operating:</div>
+						<div class="statusValue">
+							{{:~link(power ? 'On':'Off','power',{'id_tag':id_tag,'command':'power','val':power?0:1},null,(power?'linkOn':'red'))}}
+						</div>
+					</div>
+					<div class="line">
+						<div class="statusLabel">Type:</div>
+						<div class="statusValue">
+							{{if scrubbing==0}}
+								{{:~link('Siphoning','arrowthickstop-1-s',{'id_tag':id_tag,'command':'scrubbing','val':1},null,'red')}}
+							{{else}}
+								{{:~link('Scrubbing','transferthick-e-w',{'id_tag':id_tag,'command':'scrubbing','val':0},null,'linkOn')}}
+							{{/if}}
+						</div>
+					</div>
+					{{if scrubbing==1}}
+					<div class="line">
+						<div class="statusLabel">Filtering:</div>
+						<div class="statusValue">
+							{{:~link('CO<sub>2</sub>',null,{'id_tag':id_tag,'command':'co2_scrub','val':(filter_co2==0?1:0)},null,(filter_co2?'linkOn':''))}}
+							{{:~link('Plasma',        null,{'id_tag':id_tag,'command':'tox_scrub','val':(filter_tox==0?1:0)},null,(filter_tox?'linkOn':''))}}
+							{{:~link('N<sub>2</sub>O',null,{'id_tag':id_tag,'command':'n2o_scrub','val':(filter_n2o==0?1:0)},null,(filter_n2o?'linkOn':''))}}
+							{{:~link('O<sub>2</sub>', null,{'id_tag':id_tag,'command':'o2_scrub', 'val':(filter_o2 ==0?1:0)},null,(filter_o2 ?'linkOn':''))}}
+						</div>
+					</div>
+					{{/if}}
+				</div>
+			{{else}}
+				<i>No scrubbers located in this area.</i>
+			{{/for}}
+		{{!-- MODES --}}
+		{{else screen == 4}}
+			<h3>System Mode</h3>
+			<div class="statusDisplay">
+				{{for modes}}
+				<div class="line">
+					<div class="statusLabel">{{:~link(name,'gear',{'mode':#index+1},null,(#index+1==~root.mode?'linkOn':''))}}</div>
+					<div class="statusValue">
+						{{:desc}}
+					</div>
+				</div>
+				{{/for}}
+			</div>
+			<h3>System Preset</h3>
+			<div class="notice">After making a selection, the system will automatically cycle in order to remove contaminants.</div>
+			<div class="statusDisplay">
+				{{for presets}}
+				<div class="line">
+					<div class="statusLabel">{{:~link(name,'gear',{'preset':#index+1},null,(#index+1==~root.preset?'linkOn':''))}}</div>
+					<div class="statusValue">
+						{{:desc}}
+					</div>
+				</div>
+				{{/for}}
+			</div>
+		{{!-- SENSORS --}}
+		{{else screen == 5}}
+			<h3>Sensor Thresholds</h3>
+			<div class="statusDisplay">
+				<table>
+					<thead>
+						<th>&nbsp;</th>
+						<th class="bad">min2</th>
+						<th class="average">min1</th>
+						<th class="average">max1</th>
+						<th class="bad">max2</th>
+					</thead>
+					<tbody>
+						<tr>
+							<th>O<sub>2</sub></th>
+							{{for sensors.oxygen}}
+								<td>{{:~link(#data >= 0 ? ~precisionRound(#data,4) : "OFF",null,{'command':'set_threshold','env':'oxygen','var':#index+1})}}</td>
+							{{/for}}
+						</tr>
+						<tr>
+							<th>N<sub>2</sub></th>
+							{{for sensors.nitrogen}}
+								<td>{{:~link(#data >= 0 ? ~precisionRound(#data,4) : "OFF",null,{'command':'set_threshold','env':'nitrogen','var':#index+1})}}</td>
+							{{/for}}
+						</tr>
+						<tr>
+							<th>CO<sub>2</sub></th>
+							{{for sensors.carbon_dioxide}}
+								<td>{{:~link(#data >= 0 ? ~precisionRound(#data,4) : "OFF",null,{'command':'set_threshold','env':'carbon_dioxide','var':#index+1})}}</td>
+							{{/for}}
+						</tr>
+						<tr>
+							<th>Toxins</th>
+							{{for sensors.plasma}}
+								<td>{{:~link(#data >= 0 ? ~precisionRound(#data,4) : "OFF",null,{'command':'set_threshold','env':'plasma','var':#index+1})}}</td>
+							{{/for}}
+						</tr>
+						<tr>
+							<th>Pressure</th>
+							{{for sensors.pressure}}
+								<td>{{:~link(#data >= 0 ? ~precisionRound(#data,4) : "OFF",null,{'command':'set_threshold','env':'pressure','var':#index+1})}}</td>
+							{{/for}}
+						</tr>
+						<tr>
+							<th>Temperature (K)</th>
+							{{for sensors.temperature}}
+								<td>{{:~link(#data >= 0 ? ~precisionRound(#data,4) : "OFF",null,{'command':'set_threshold','env':'temperature','var':#index+1})}}</td>
+							{{/for}}
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		{{/if}}
+	{{/if}}
+{{/if}}

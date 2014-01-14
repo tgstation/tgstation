@@ -1,5 +1,4 @@
 
-
 // ***********************************************************
 // Foods that are produced from hydroponics ~~~~~~~~~~
 // Data from the seeds carry over to these grown foods
@@ -158,7 +157,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell
 	seed = "obj/item/seeds/harebellseed"
 	name = "harebell"
-	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweeten’d not thy breath.\""
+	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweetenï¿½d not thy breath.\""
 	icon_state = "harebell"
 	potency = 1
 	New()
@@ -347,6 +346,23 @@
 			reagents.add_reagent("toxin", 1+round(potency / 10, 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/cruciatus
+	seed = "/obj/item/seeds/ambrosiavulgaris/cruciatus"
+	name = "ambrosia vulgaris branch"
+	desc = "This is a plant containing various healing chemicals."
+	icon_state = "ambrosiavulgaris"
+	potency = 10
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("nutriment", 1)
+			reagents.add_reagent("space_drugs", 1+round(potency / 8, 1))
+			reagents.add_reagent("kelotane", 1+round(potency / 8, 1))
+			reagents.add_reagent("bicaridine", 1+round(potency / 10, 1))
+			reagents.add_reagent("toxin", 1+round(potency / 10, 1))
+			reagents.add_reagent("spiritbreaker", 10)
+			bitesize = 1+round(reagents.total_volume / 2, 1)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus
 	seed = "/obj/item/seeds/ambrosiadeus"
 	name = "ambrosia deus branch"
@@ -526,6 +542,25 @@
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "<span class='info'>- Capsaicin: <i>[reagents.get_reagent_amount("capsaicin")]%</i></span>"
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli
+	seed = "/obj/item/seeds/chillighost"
+	name = "ghost chili"
+	desc = "It seems to be vibrating gently."
+	icon_state = "ghostchilipepper"
+	var/mob/held_mob
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("nutriment", 1+round((potency / 25), 1))
+			reagents.add_reagent("capsaicin", 8+round(potency / 2, 1))
+			reagents.add_reagent("condensedcapsaicin", 4+round(potency / 4, 1))
+			bitesize = 1+round(reagents.total_volume / 4, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	. = ..()
+	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+		user << "<span class='info'>- Capsaicin: <i>[reagents.get_reagent_amount("capsaicin")]%</i></span>"
+		user << "<span class='info'>- Condensed Capsaicin: <i>[reagents.get_reagent_amount("condensedcapsaicin")]%</i></span>"
 /obj/item/weapon/reagent_containers/food/snacks/grown/eggplant
 	seed = "/obj/item/seeds/eggplantseed"
 	name = "eggplant"
@@ -547,6 +582,31 @@
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
 			reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
+			bitesize = 1+round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/koibeans
+	seed = "/obj/item/seeds/koiseed"
+	name = "koibean"
+	desc = "Something about these seems fishy."
+	icon_state = "koibeans"
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("nutriment", 1+round((potency / 30), 1))
+			reagents.add_reagent("carpotoxin", 1+round((potency / 20), 1))
+			bitesize = 1+round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/moonflower
+	seed = "/obj/item/seeds/moonflowerseed"
+	name = "moonflower"
+	desc = "Store in a location at least 50 yards away from werewolves."
+	icon_state = "moonflower"
+	slot_flags = SLOT_HEAD
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("nutriment", 1+round((potency / 50), 1))
+			reagents.add_reagent("moonshine", 1+round((potency / 10), 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato

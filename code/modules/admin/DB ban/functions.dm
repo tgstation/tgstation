@@ -1,5 +1,5 @@
 
-datum/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = -1, var/reason, var/job = "", var/rounds = 0, var/banckey = null)
+/datum/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = -1, var/reason, var/job = "", var/rounds = 0, var/banckey = null)
 
 	if(!check_rights(R_BAN))	return
 
@@ -318,7 +318,7 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 		</td>
 		</tr>
 		</table>
-		<form method='GET' action='?src=\ref[src]'><b>Search:</b> 
+		<form method='GET' action='?src=\ref[src]'><b>Search:</b>
 		<input type='hidden' name='src' value='\ref[src]'>
 		<b>Ckey:</b> <input type='text' name='dbsearchckey' value='[playerckey]'>
 		<b>Admin ckey:</b> <input type='text' name='dbsearchadmin' value='[adminckey]'>

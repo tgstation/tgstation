@@ -7,7 +7,7 @@ var/list
 					"hsbmetal" = "Spawn 50 Metal",
 					"hsbglass" = "Spawn 50 Glass",
 					"hsbplasma" = "Spawn 50 Plasma",
-					"hsbairlock" = "Spawn Airlock",
+					"phazon" = "Spawn 50 Phazon",
 					"hsbregulator" = "Spawn Air Regulator",
 					"hsbfilter" = "Spawn Air Filter",
 					"hsbcanister" = "Spawn Canister",
@@ -35,17 +35,24 @@ var/list
 		sandbox.update()
 
 var/global/list/banned_sandbox_types=list(
-	/obj/item/weapon/gun,
-	/obj/item/assembly,
-	/obj/item/device/camera,
-	/obj/item/weapon/cloaking_device,
-	/obj/item/weapon/dummy,
-	/obj/item/weapon/melee/energy/sword,
+	// /obj/item/weapon/gun,
+	// /obj/item/assembly,
+	// /obj/item/device/camera,
+	// /obj/item/weapon/cloaking_device,
+	// /obj/item/weapon/dummy,
+	// /obj/item/weapon/melee/energy/sword,
 	/obj/item/weapon/veilrender,
 	/obj/item/weapon/reagent_containers/glass/bottle/wizarditis,
-	/obj/item/weapon/spellbook,
+	// /obj/item/weapon/spellbook,
 	/obj/machinery/singularity,
-	/obj/item/weapon/gun/energy/staff)
+	// /obj/item/weapon/gun/energy/staff
+	)
+
+proc/is_banned_type(typepath)
+	for(var/btype in banned_sandbox_types)
+		if(findtext("[typepath]", "[btype]")!=0)
+			return 1
+	return 0
 
 /mob/proc/sandbox_spawn_atom(var/object as text)
 	set category = "Sandbox"
@@ -54,15 +61,14 @@ var/global/list/banned_sandbox_types=list(
 
 	var/list/types = typesof(/obj/item) + typesof(/obj/machinery)
 	for(var/type in types)
-		for(var/btype in banned_sandbox_types)
-			if(findtext("[btype]", "[type]"))
-				types -= type
+		if(is_banned_type(type))
+			types -= type
 	var/list/matches = new()
 
 	for(var/path in types)
-		if(is_type_in_list(path, banned_sandbox_types))
+		if(is_banned_type(path))
 			continue
-		if(findtext("[path]", object))
+		if(findtext("[path]", object)!=0)
 			matches += path
 
 	if(matches.len==0)
@@ -75,12 +81,13 @@ var/global/list/banned_sandbox_types=list(
 		chosen = input("Select an atom type", "Spawn Atom", matches[1]) as null|anything in matches
 		if(!chosen)
 			return
-	if(is_type_in_list(chosen, banned_sandbox_types))
+	if(is_banned_type(chosen))
 		src << "\red Denied."
 		return
 	new chosen(usr.loc)
 
 	message_admins("\[SANDBOX\] [key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
+	//send2adminirc("\[SANDBOX\] [key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
 	feedback_add_details("admin_verb","hSBSA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 datum/hSB
@@ -160,20 +167,10 @@ datum/hSB
 					var/obj/item/stack/sheet/hsb = new/obj/item/stack/sheet/mineral/plasma
 					hsb.amount = 50
 					hsb.loc = usr.loc
-				if("hsbairlock")
-					var/obj/machinery/door/hsb = new/obj/machinery/door/airlock
-
-					//TODO: DEFERRED make this better, with an HTML window or something instead of 15 popups
-					hsb.req_access = list()
-					/*
-					var/accesses = get_all_accesses()
-					for(var/A in accesses)
-						if(alert(usr, "Will this airlock require [get_access_desc(A)] access?", "Sandbox:", "Yes", "No") == "Yes")
-							hsb.req_access += A
-					*/
-
+				if("phazon")
+					var/obj/item/stack/sheet/hsb = new/obj/item/stack/sheet/mineral/phazon
+					hsb.amount = 50
 					hsb.loc = usr.loc
-					usr << "<b>Sandbox:  Created an airlock."
 				if("hsbcanister")
 					var/list/hsbcanisters = typesof(/obj/machinery/portable_atmospherics/canister/) - /obj/machinery/portable_atmospherics/canister/
 //					hsbcanisters -= /obj/machinery/portable_atmospherics/canister/sleeping

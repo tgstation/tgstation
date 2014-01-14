@@ -38,6 +38,7 @@
 	var/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/list/allowed = null //suit storage stuff.
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
+	var/icon_override = null  //Used to override hardcoded clothing dmis in human clothing proc.
 
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
@@ -122,9 +123,10 @@
 		var/datum/organ/external/temp = user:organs_by_name["r_hand"]
 		if (user.hand)
 			temp = user:organs_by_name["l_hand"]
-		if(temp && temp.status & ORGAN_DESTROYED)
-			user << "<span class = 'warning'> Yo- wait a minute."
+		if(temp && !temp.is_usable())
+			user << "<span class='notice'>You try to move your [temp.display_name], but cannot!"
 			return
+
 	if (istype(src.loc, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = src.loc
 		S.remove_from_storage(src)
@@ -236,6 +238,10 @@
 	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>"
 	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>" )
 	msg_admin_attack("ATTACK: [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])") //BS12 EDIT ALG
+	if(!iscarbon(user))
+		M.LAssailant = null
+	else
+		M.LAssailant = user
 
 	//spawn(1800)			// this wont work right
 	//	M.lastattacker = null
@@ -687,7 +693,7 @@
 	if( usr.stat || usr.restrained() )//Is not asleep/dead and is not restrained
 		usr << "\red You can't pick things up!"
 		return
-	if(src.anchored) //Object isn't anchored
+	if(src.anchored || !Adjacent(usr)) //Object isn't anchored
 		usr << "\red You can't pick that up!"
 		return
 	if(!usr.hand && usr.r_hand) //Right hand is not full
@@ -755,6 +761,10 @@
 	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
 	msg_admin_attack("ATTACK: [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])") //BS12 EDIT ALG
 	log_attack("<font color='red'> [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+	if(!iscarbon(user))
+		M.LAssailant = null
+	else
+		M.LAssailant = user
 
 	src.add_fingerprint(user)
 	//if((CLUMSY in user.mutations) && prob(50))

@@ -1,0 +1,1 @@
+python tools/cleanLogs.py data/logs/ data/cleaned_logs/

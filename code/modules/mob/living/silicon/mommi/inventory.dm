@@ -9,6 +9,11 @@
 	var/obj/item/found
 	if(istype(W, src.module.emag.type))
 		found = W
+	// Exact matching for stacks (so we can load machines)
+	if(istype(W, /obj/item/stack/sheet))
+		for(var/obj/item/stack/sheet/S in src.module.modules)
+			if(S.type==W.type)
+				return S
 	else
 		found = locate(W) in src.module.modules
 	return found
@@ -37,7 +42,12 @@
 	tool_state = W
 	W.layer = 20
 	contents += W
-	inv_tool.icon_state = "inv1"
+
+	// Make crap we pick up active so there's less clicking and carpal. - N3X
+	module_active=tool_state
+	inv_tool.icon_state = "inv1 +a"
+	inv_sight.icon_state = "sight"
+
 	update_items()
 	return 1
 
@@ -68,6 +78,13 @@
 	if(get_active_hand())
 		uneq_active()
 	return put_in_hands(W)
+
+/mob/living/silicon/robot/mommi/get_multitool(var/active_only=0)
+	if(istype(get_active_hand(),/obj/item/device/multitool))
+		return get_active_hand()
+	if(active_only && istype(tool_state,/obj/item/device/multitool))
+		return tool_state
+	return null
 
 /mob/living/silicon/robot/mommi/drop_item_v()		//this is dumb.
 	if(stat == CONSCIOUS && isturf(loc))
@@ -124,9 +141,8 @@
 		TS = tool_state
 		if(!is_in_modules(TS))
 			drop_item()
-
 			if(TS && TS.loc)
-				TS.loc = src.loc
+				TS.loc = get_turf(src)
 		if(istype(tool_state,/obj/item/borg/sight))
 			sight_mode &= ~tool_state:sight_mode
 		if (client)
@@ -156,9 +172,11 @@
 
 /mob/living/silicon/robot/mommi/proc/unequip_tool()
 	if(tool_state)
-		//var/obj/item/found = locate(tool_state) in src.module.modules
-		if(!is_in_modules(tool_state))
+		var/obj/item/TS=tool_state
+		if(!is_in_modules(TS))
 			drop_item()
+			if(TS && TS.loc)
+				TS.loc = get_turf(src)
 		if(istype(tool_state,/obj/item/borg/sight))
 			sight_mode &= ~tool_state:sight_mode
 		if (client)
@@ -166,6 +184,8 @@
 		contents -= tool_state
 		tool_state = null
 		inv_tool.icon_state = "inv1"
+		if(is_in_modules(TS))
+			TS.loc = src.module
 
 
 /mob/living/silicon/robot/mommi/activated(obj/item/O)

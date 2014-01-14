@@ -83,6 +83,14 @@ datum
 			on_move(var/mob/M)
 				return
 
+			// Called after add_reagents creates a new reagent.
+			on_new(var/data)
+				return
+
+			// Called when two reagents of the same are mixing.
+			on_merge(var/data)
+				return
+
 			on_update(var/atom/A)
 				return
 
@@ -126,7 +134,7 @@ datum
 					if(method == TOUCH)
 						infect_virus2(M,self.data["virus2"])
 					else
-						infect_virus2(M,self.data["virus2"],1)
+						infect_virus2(M,self.data["virus2"],1) //injected, force infection!
 				if(self.data && self.data["antibodies"] && istype(M, /mob/living/carbon))//... and curing
 					var/mob/living/carbon/C = M
 					C.antibodies |= self.data["antibodies"]
@@ -212,6 +220,51 @@ datum
 			reagent_state = LIQUID
 			color = "#0064C8" // rgb: 0, 100, 200
 			custom_metabolism = 0.01
+
+			on_mob_life(var/mob/living/M as mob)
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if(H.species.name=="Grey")
+						if(!M) M = holder.my_atom
+						M.adjustToxLoss(1*REM)
+						M.take_organ_damage(0, 1*REM)
+				..()
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+				if(!istype(M, /mob/living))
+					return
+
+				// Put out fire
+				if(method == TOUCH)
+					M.adjust_fire_stacks(-(volume / 10))
+					if(M.fire_stacks <= 0)
+						M.ExtinguishMob()
+					return
+
+				// Grays treat water like acid.
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if(H.species.name=="Grey")
+						if(method == TOUCH)
+							if(H.wear_mask)
+								H << "\red Your mask protects you from the water!"
+								return
+
+							if(H.head)
+								H << "\red Your helmet protects you from the water!"
+								return
+							if(!M.unacidable)
+								if(prob(15) && volume >= 30)
+									var/datum/organ/external/affecting = H.get_organ("head")
+									if(affecting)
+										if(affecting.take_damage(25, 0))
+											H.UpdateDamageIcon()
+										H.status_flags |= DISFIGURED
+										H.emote("scream")
+								else
+									M.take_organ_damage(min(15, volume * 2)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
+						else
+							if(!M.unacidable)
+								M.take_organ_damage(min(15, volume * 2))
 
 			reaction_turf(var/turf/simulated/T, var/volume)
 				if (!istype(T)) return
@@ -555,7 +608,39 @@ datum
 						ticker.mode.remove_cultist(M.mind)
 						for(var/mob/O in viewers(M, null))
 							O.show_message(text("\blue []'s eyes blink and become clearer.", M), 1) // So observers know it worked.
+					// Vamps react to this like acid
+					if(((M.mind in ticker.mode.vampires) || M.mind.vampire) && (!(VAMP_FULL in M.mind.vampire.powers)) && prob(10))
+						if(!M) M = holder.my_atom
+						M.adjustToxLoss(1*REM)
+						M.take_organ_damage(0, 1*REM)
 				holder.remove_reagent(src.id, 10 * REAGENTS_METABOLISM) //high metabolism to prevent extended uncult rolls.
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with water can help put them out!
+				// Vamps react to this like acid
+				if(ishuman(M))
+					if((M.mind in ticker.mode.vampires))
+						var/mob/living/carbon/human/H=M
+						if(method == TOUCH)
+							if(H.wear_mask)
+								H << "\red Your mask protects you from the holy water!"
+								return
+
+							if(H.head)
+								H << "\red Your helmet protects you from the holy water!"
+								return
+							if(!M.unacidable)
+								if(prob(15) && volume >= 30)
+									var/datum/organ/external/affecting = H.get_organ("head")
+									if(affecting)
+										if(affecting.take_damage(25, 0))
+											H.UpdateDamageIcon()
+										H.status_flags |= DISFIGURED
+										H.emote("scream")
+								else
+									M.take_organ_damage(min(15, volume * 2)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
+						else
+							if(!M.unacidable)
+								M.take_organ_damage(min(15, volume * 2))
 				return
 
 		serotrotium
@@ -778,6 +863,13 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
+
+				if(ishuman(M))
+					var/mob/living/carbon/human/H=M
+					if(H.species.name=="Grey")
+						..()
+						return // Greys lurve dem some sacid
+
 				M.adjustToxLoss(1*REM)
 				M.take_organ_damage(0, 1*REM)
 				..()
@@ -821,6 +913,9 @@ datum
 					if(!M.unacidable)
 						if(prob(15) && istype(M, /mob/living/carbon/human) && volume >= 30)
 							var/mob/living/carbon/human/H = M
+							if(H.species.name=="Grey")
+								..()
+								return // Greys lurve dem some sacid
 							var/datum/organ/external/affecting = H.get_organ("head")
 							if(affecting)
 								if(affecting.take_damage(25, 0))
@@ -831,6 +926,11 @@ datum
 							M.take_organ_damage(min(15, volume * 2)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
 				else
 					if(!M.unacidable)
+						if(ishuman(M))
+							var/mob/living/carbon/human/H = M
+							if(H.species.name=="Grey")
+								..()
+								return // Greys lurve dem some sacid
 						M.take_organ_damage(min(15, volume * 2))
 
 			reaction_obj(var/obj/O, var/volume)
@@ -985,6 +1085,8 @@ datum
 				var/needs_update = M.mutations.len > 0
 
 				M.mutations = list()
+				M.active_genes = list()
+
 				M.disabilities = 0
 				M.sdisabilities = 0
 
@@ -1036,7 +1138,7 @@ datum
 					else
 						randmutg(M)
 					domutcheck(M, null)
-					updateappearance(M,M.dna.uni_identity)
+					M.UpdateAppearance()
 				return
 			on_mob_life(var/mob/living/M as mob)
 				if(!M.dna) return //No robots, AIs, aliens, Ians or other mobs should be affected by this.
@@ -1769,6 +1871,27 @@ datum
 				..()
 				return
 
+		spiritbreaker
+			name = "Spiritbreaker Toxin"
+			id = "spiritbreaker"
+			description = "An extremely dangerous hallucinogen often used for torture. Extracted from the leaves of the rare Ambrosia Cruciatus plant."
+			reagent_state = LIQUID
+			color = "3B0805" // rgb: 59, 8, 5
+			custom_metabolism = 0.05
+
+			on_mob_life(var/mob/living/M as mob)
+				var/sbreak = rand(150,180)
+				if(!M) M = holder.my_atom
+				if(!data) data = 1
+				if(data >= sbreak)
+					M.adjustToxLoss(0.2)
+					M.adjustBrainLoss(5)
+					M.hallucination += 100
+					M.dizziness += 100
+					M.confused += 2
+				data++
+				return ..()
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -2100,6 +2223,11 @@ datum
 							victim.eye_blind = max(M.eye_blind, 10)
 							victim.Paralyse(1)
 							victim.drop_item()
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				if(prob(5))
+					M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
+				return
 
 		frostoil
 			name = "Frost Oil"

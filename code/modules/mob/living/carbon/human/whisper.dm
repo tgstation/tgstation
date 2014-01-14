@@ -23,7 +23,7 @@
 	if (src.stat == 2)
 		return src.say_dead(message)
 
-	if (src.stat)
+	if (src.stat && said_last_words) // TIME TO WHISPER WHILE IN CRIT
 		return
 
 	var/alt_name = ""
@@ -87,6 +87,13 @@
 
 	var/list/heard_a = list() // understood us
 	var/list/heard_b = list() // didn't understand us
+	var/and_passes_on=""
+
+	if(!said_last_words && src.isInCrit())
+		and_passes_on=" - and passes on"
+
+		said_last_words=src.stat
+
 
 	for (var/mob/M in listening)
 		if (M.say_understands(src))
@@ -98,9 +105,9 @@
 
 	for (var/mob/M in watching)
 		if (M.say_understands(src))
-			rendered = "<span class='game say'><span class='name'>[src.name]</span> whispers something.</span>"
+			rendered = "<span class='game say'><span class='name'>[src.name]</span> whispers something[and_passes_on].</span>"
 		else
-			rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> whispers something.</span>"
+			rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> whispers something[and_passes_on].</span>"
 		M.show_message(rendered, 2)
 
 	if (length(heard_a))
@@ -109,7 +116,7 @@
 		if (italics)
 			message_a = "<i>[message_a]</i>"
 		//This appears copied from carbon/living say.dm so the istype check for mob is probably not needed. Appending for src is also not needed as the game will check that automatically.
-		rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] whispers, <span class='message'>\"[message_a]\"</span></span>"
+		rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] whispers, <span class='message'>\"[message_a]\"</span>[and_passes_on]</span>"
 
 		for (var/mob/M in heard_a)
 			M.show_message(rendered, 2)
@@ -122,7 +129,7 @@
 		if (italics)
 			message_b = "<i>[message_b]</i>"
 
-		rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> whispers, <span class='message'>\"[message_b]\"</span></span>"
+		rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> whispers, <span class='message'>\"[message_b]\"</span>[and_passes_on]</span>"
 
 		for (var/mob/M in heard_b)
 			M.show_message(rendered, 2)
@@ -131,18 +138,23 @@
 		if (M.say_understands(src))
 			var/message_c
 			message_c = stars(message)
-			rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] whispers, <span class='message'>\"[message_c]\"</span></span>"
+			rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] whispers, <span class='message'>\"[message_c]\"</span>[and_passes_on]</span>"
 			M.show_message(rendered, 2)
 		else
-			rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> whispers something.</span>"
+			rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> whispers something[and_passes_on].</span>"
 			M.show_message(rendered, 2)
 
 	if (italics)
 		message = "<i>[message]</i>"
-	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] whispers, <span class='message'>\"[message]\"</span></span>"
+	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] whispers, <span class='message'>\"[message]\"</span>[and_passes_on]</span>"
 
 	for (var/mob/M in dead_mob_list)
 		if (!(M.client))
 			continue
 		if (M.stat > 1 && !(M in heard_a) && (M.client.prefs.toggles & CHAT_GHOSTEARS))
 			M.show_message(rendered, 2)
+	if(said_last_words)
+		// Kill 'em.
+		src.stat = 2
+		src.death(0)
+		src.regenerate_icons()

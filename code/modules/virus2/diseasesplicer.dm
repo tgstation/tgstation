@@ -58,12 +58,9 @@
 				dat += "[memorybank.effect.name] ([5-memorybank.effect.stage])"
 			else
 				dat += "Unknown DNA strand ([5-memorybank.effect.stage])"
+			dat += "</a>"
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\virus2\diseasesplicer.dm:61: dat += "</a>"
-			dat += {"</a>
-<BR><A href='?src=\ref[src];disk=1'>Burn DNA Sequence to data storage disk</a>"}
-			// END AUTOFIX
+			dat += "<BR><A href='?src=\ref[src];disk=1'>Burn DNA Sequence to data storage disk</a>"
 		else
 			dat += "Empty."
 

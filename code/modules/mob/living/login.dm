@@ -8,20 +8,22 @@
 	//Round specific stuff like hud updates
 	if(ticker && ticker.mode)
 		switch(ticker.mode.name)
-			if("revolution")
-				if((mind in ticker.mode.revolutionaries) || (src.mind in ticker.mode:head_revolutionaries))
-					ticker.mode.update_rev_icons_added(src.mind)
-			if("cult")
-				if(mind in ticker.mode:cult)
-					ticker.mode.update_cult_icons_added(src.mind)
-			if("nuclear emergency")
-				if(mind in ticker.mode:syndicates)
-					ticker.mode.update_all_synd_icons()
+			if("sandbox")
+				CanBuild()
+		if((mind in ticker.mode.revolutionaries) || (src.mind in ticker.mode:head_revolutionaries))
+			ticker.mode.update_rev_icons_added(src.mind)
+		if(mind in ticker.mode:cult)
+			ticker.mode.update_cult_icons_added(src.mind)
+		if(mind in ticker.mode:syndicates)
+			ticker.mode.update_all_synd_icons()
 		var/ref = "\ref[mind]"
 		if(ref in ticker.mode.implanter)
 			ticker.mode.update_traitor_icons_added(mind)
 		if(mind in ticker.mode.implanted)
 			ticker.mode.update_traitor_icons_added(mind)
+		if((ref in ticker.mode.thralls) || (mind in ticker.mode.enthralled))
+			ticker.mode.update_vampire_icons_added(mind)
+		return
 	return .
 
 //This stuff needs to be merged from cloning.dm but I'm not in the mood to be shouted at for breaking all the things :< ~Carn

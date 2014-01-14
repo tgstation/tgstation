@@ -1,3 +1,7 @@
+/mob/living/carbon/Login()
+	..()
+	update_hud()
+	return
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()
 	if(.)
@@ -388,6 +392,10 @@
 				usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]</font>")
 
 				log_attack("<font color='red'>[usr.name] ([usr.ckey]) Has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]</font>")
+				if(!iscarbon(usr))
+					M.LAssailant = null
+				else
+					M.LAssailant = usr
 
 	if(!item) return //Grab processing has a chance of returning null
 

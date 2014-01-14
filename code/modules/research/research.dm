@@ -133,12 +133,25 @@ research holder datum.
 //Refreshes known_tech and known_designs list. Then updates the reliability vars of the designs in the known_designs list.
 //Input/Output: n/a
 /datum/research/proc/RefreshResearch()
+	var/list/CMTLs=list() // Calculated Max Tech Levels
 	for(var/datum/tech/PT in possible_tech)
+		if(!(PT.id in CMTLs))
+			CMTLs[PT.id]=0
 		if(TechHasReqs(PT))
 			AddTech2Known(PT)
 	for(var/datum/design/PD in possible_designs)
+		for(var/id in PD.req_tech)
+			// If calculated max_level is less than the required tech level of this design,
+			// Update calculated max techlevel
+			if(CMTLs[id] < PD.req_tech[id])
+				CMTLs[id] = PD.req_tech[id]
 		if(DesignHasReqs(PD))
 			AddDesign2Known(PD)
+	//testing("--- CMTLs calculated.")
+	//for(var/datum/tech/T in possible_tech)
+	//	// If CMTL != MTL, bitch.
+	//	if(CMTLs[T.id] != T.max_level)
+	//		testing("CMTL != MTL for [T.id]: [CMTLs[T.id]] != [T.max_level]")
 	for(var/datum/tech/T in known_tech)
 		T = between(1,T.level,20)
 	for(var/datum/design/D in known_designs)
@@ -169,9 +182,15 @@ datum/tech	//Datum of individual technologies.
 	var/name = "name"					//Name of the technology.
 	var/desc = "description"			//General description of what it does and what it makes.
 	var/id = "id"						//An easily referenced ID. Must be alphanumeric, lower-case, and no symbols.
-	var/level = 1						//A simple number scale of the research level. Level 0 = Secret tech.
-	var/max_level = 1					// Maximum level this can be at (for job objectives)
+	var/level      = 1					//A simple number scale of the research level. Level 0 = Secret tech.
+	var/max_level  = 1					// Maximum level this can be at (for admin hax)
+	var/goal_level =-1					// Used for job objectives.  Set to max_level unless max_level is unobtainable.
 	var/list/req_tech = list()			//List of ids associated values of techs required to research this tech. "id" = #
+
+/datum/tech/New()
+	if(goal_level==-1)
+		goal_level=max_level
+	..()
 
 //Trunk Technologies (don't require any other techs and you start knowning them).
 
@@ -179,7 +198,8 @@ datum/tech/materials
 	name = "Materials Research"
 	desc = "Development of new and improved materials."
 	id = "materials"
-	max_level=6
+	max_level=9
+	goal_level=8 // 9 is Phazon.
 
 datum/tech/engineering
 	name = "Engineering Research"
@@ -191,7 +211,7 @@ datum/tech/plasmatech
 	name = "Plasma Research"
 	desc = "Research into the mysterious substance colloqually known as 'plasma'."
 	id = "plasmatech"
-	max_level=3
+	max_level=4
 
 datum/tech/powerstorage
 	name = "Power Manipulation Technology"
@@ -203,37 +223,41 @@ datum/tech/bluespace
 	name = "'Blue-space' Research"
 	desc = "Research into the sub-reality known as 'blue-space'"
 	id = "bluespace"
-	max_level=10
+	max_level =10
+	goal_level=4 // Without phazon.
 
 datum/tech/biotech
 	name = "Biological Technology"
 	desc = "Research into the deeper mysteries of life and organic substances."
 	id = "biotech"
-	max_level=7
+	max_level=5 // Max USABLE level.
 
 datum/tech/combat
 	name = "Combat Systems Research"
 	desc = "The development of offensive and defensive systems."
 	id = "combat"
+	goal_level=5 // Pulse rifles don't count.
 	max_level=6
 
 datum/tech/magnets
 	name = "Electromagnetic Spectrum Research"
 	desc = "Research into the electromagnetic spectrum. No clue how they actually work, though."
 	id = "magnets"
-	max_level=5
+	goal_level=5 // No phazon
+	max_level=8
 
 datum/tech/programming
 	name = "Data Theory Research"
 	desc = "The development of new computer and artificial intelligence and data storage systems."
 	id = "programming"
-	max_level=4
+	max_level=5
 
 datum/tech/syndicate
 	name = "Illegal Technologies Research"
 	desc = "The study of technologies that violate standard Nanotrasen regulations."
 	id = "syndicate"
-	max_level=0 // Don't count towards maxed research, since it's illegal.
+	goal_level=0 // Don't count towards maxed research, since it's illegal.
+	max_level=8
 
 /*
 datum/tech/arcane

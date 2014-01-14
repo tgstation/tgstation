@@ -57,10 +57,10 @@
 	//Handle brain slugs.
 	var/datum/organ/external/head = get_organ("head")
 	var/mob/living/simple_animal/borer/B
-
-	for(var/I in head.implants)
-		if(istype(I,/mob/living/simple_animal/borer))
-			B = I
+	if(head && istype(head))
+		for(var/I in head.implants)
+			if(istype(I,/mob/living/simple_animal/borer))
+				B = I
 	if(B)
 		if(!B.ckey && ckey && B.controlling)
 			B.ckey = ckey
@@ -74,8 +74,6 @@
 		verbs -= /mob/living/carbon/proc/release_control
 
 	//Check for heist mode kill count.
-	// REMOVED as requested.
-	/*
 	if(ticker.mode && ( istype( ticker.mode,/datum/game_mode/heist) ) )
 		//Check for last assailant's mutantrace.
 		/*if( LAssailant && ( istype( LAssailant,/mob/living/carbon/human ) ) )
@@ -83,7 +81,11 @@
 			if (V.dna && (V.dna.mutantrace == "vox"))*/ //Not currently feasible due to terrible LAssailant tracking.
 		//world << "Vox kills: [vox_kills]"
 		vox_kills++ //Bad vox. Shouldn't be killing humans.
-	*/
+	if(ishuman(LAssailant))
+		var/mob/living/carbon/human/H=LAssailant
+		if(H.mind)
+			H.mind.kills += "[name] ([ckey])"
+
 	if(!gibbed)
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
 

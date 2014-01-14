@@ -10,36 +10,38 @@
 
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/greaterform = "Human"                  // Used when humanizing a monkey.
-	var/ico = "monkey"                         // Used when updating icons.
-	var/uni_append = "12C4E2"                  // Small appearance modifier for different species.
+	icon_state = "monkey1"
+	//var/uni_append = "12C4E2"                // Small appearance modifier for different species.
+	var/list/uni_append = list(0x12C,0x4E2)    // Same as above for DNA2.
+	var/update_muts = 1                        // Monkey gene must be set at start.
 
 /mob/living/carbon/monkey/tajara
 	name = "farwa"
 	voice_name = "farwa"
 	speak_emote = list("mews")
-	ico = "tajkey"
-	uni_append = "0A0E00"
+	icon_state = "tajkey1"
+	uni_append = list(0x0A0,0xE00) // 0A0E00
 
 /mob/living/carbon/monkey/skrell
 	name = "neaera"
 	voice_name = "neaera"
 	speak_emote = list("squicks")
-	ico = "skrellkey"
-	uni_append = "01CC92"
+	icon_state = "skrellkey1"
+	uni_append = list(0x01C,0xC92) // 01CC92
 
 /mob/living/carbon/monkey/unathi
 	name = "stok"
 	voice_name = "stok"
 	speak_emote = list("hisses")
-	ico = "stokkey"
-	uni_append = "044C5D"
+	icon_state = "stokkey1"
+	uni_append = list(0x044,0xC5D) // 044C5D
 
 /mob/living/carbon/monkey/New()
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
 	R.my_atom = src
 
-	if(name == "monkey" || name == "farwa" || name == "stok" || name == "neara" || name == "diona nymph") //Hideous but necessary to stop Pun-Pun becoming generic.
+	if(name == initial(name)) //To stop Pun-Pun becoming generic.
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
 
@@ -48,16 +50,27 @@
 			gender = pick(MALE, FEMALE)
 		dna = new /datum/dna( null )
 		dna.real_name = real_name
-		dna.uni_identity = "00600200A00E0110148FC01300B009"
-		dna.struc_enzymes = "43359156756131E13763334D1C369012032164D4FE4CD61544B6C03F251B6C60A42821D26BA3B0FD6"
+		dna.ResetSE()
+		dna.ResetUI()
+		//dna.uni_identity = "00600200A00E0110148FC01300B009"
+		//dna.SetUI(list(0x006,0x002,0x00A,0x00E,0x011,0x014,0x8FC,0x013,0x00B,0x009))
+		//dna.struc_enzymes = "43359156756131E13763334D1C369012032164D4FE4CD61544B6C03F251B6C60A42821D26BA3B0FD6"
+		//dna.SetSE(list(0x433,0x591,0x567,0x561,0x31E,0x137,0x633,0x34D,0x1C3,0x690,0x120,0x321,0x64D,0x4FE,0x4CD,0x615,0x44B,0x6C0,0x3F2,0x51B,0x6C6,0x0A4,0x282,0x1D2,0x6BA,0x3B0,0xFD6))
 		dna.unique_enzymes = md5(name)
-				//////////blah
-		var/gendervar
-		if (gender == MALE)
-			gendervar = add_zero2(num2hex((rand(1,2049)),1), 3)
-		else
-			gendervar = add_zero2(num2hex((rand(2051,4094)),1), 3)
-		dna.uni_identity += "[gendervar][uni_append]"
+
+		// We're a monkey
+		dna.SetSEState(MONKEYBLOCK,   1)
+		// Fix gender
+		dna.SetUIState(DNA_UI_GENDER, gender != MALE, 1)
+
+		// Set the blocks to uni_append, if needed.
+		if(uni_append.len>0)
+			for(var/b=1;b<=uni_append.len;b++)
+				dna.SetUIValue(DNA_UI_LENGTH-(uni_append.len-b),uni_append[b], 1)
+		dna.UpdateUI()
+
+		update_muts=1
+
 	..()
 	update_icons()
 	return

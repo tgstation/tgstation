@@ -675,6 +675,7 @@ var/list/TAGGERLOCATIONS = list(
 #define BE_NINJA		1024
 #define BE_RAIDER		2048
 #define BE_PLANT		4096
+#define BE_VAMPIRE		8192
 
 var/list/be_special_flags = list(
 	"Traitor" = BE_TRAITOR,
@@ -689,7 +690,8 @@ var/list/be_special_flags = list(
 	"Monkey" = BE_MONKEY,
 	"Ninja" = BE_NINJA,
 	"Raider" = BE_RAIDER,
-	"Diona" = BE_PLANT
+	"Diona" = BE_PLANT,
+	"Vampire" = BE_VAMPIRE
 	)
 
 #define AGE_MIN 17			//youngest a character can be
@@ -766,3 +768,27 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define EQUIP_FAILACTION_NOTHING 0
 #define EQUIP_FAILACTION_DELETE 1
 #define EQUIP_FAILACTION_DROP 2
+
+// Vampire power defines
+#define VAMP_REJUV   1
+#define VAMP_GLARE   2
+#define VAMP_HYPNO   3
+#define VAMP_SHAPE   4
+#define VAMP_VISION  5
+#define VAMP_DISEASE 6
+#define VAMP_CLOAK   7
+#define VAMP_BATS    8
+#define VAMP_SCREAM  9
+#define VAMP_JAUNT   10
+#define VAMP_SLAVE   11
+#define VAMP_BLINK   12
+#define VAMP_FULL    13
+
+// Moved from machine_interactions.dm
+#define STATION_Z  1
+#define CENTCOMM_Z 2
+#define TELECOMM_Z 3
+#define ASTEROID_Z 5
+
+// canGhost(Read|Write) flags
+#define PERMIT_ALL 1

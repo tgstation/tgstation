@@ -32,6 +32,7 @@ var/list/ai_list = list()
 	var/obj/item/device/pda/ai/aiPDA = null
 	var/obj/item/device/multitool/aiMulti = null
 	var/custom_sprite = 0 //For our custom sprites
+	var/obj/item/device/camera/ai_camera/aicamera = null
 //Hud stuff
 
 	//MALFUNCTION
@@ -50,6 +51,8 @@ var/list/ai_list = list()
 
 	var/camera_light_on = 0	//Defines if the AI toggled the light on the camera it's looking through.
 	var/datum/trackable/track = null
+
+	var/last_paper_seen = null
 	var/can_shunt = 1
 	var/last_announcement = ""
 
@@ -89,6 +92,7 @@ var/list/ai_list = list()
 	aiPDA.name = name + " (" + aiPDA.ownjob + ")"
 
 	aiMulti = new(src)
+	aicamera = new/obj/item/device/camera/ai_camera(src)
 
 	if (istype(loc, /turf))
 		verbs.Add(/mob/living/silicon/ai/proc/ai_call_shuttle,/mob/living/silicon/ai/proc/ai_camera_track, \
@@ -331,6 +335,10 @@ var/list/ai_list = list()
 		switchCamera(locate(href_list["switchcamera"])) in cameranet.cameras
 	if (href_list["showalerts"])
 		ai_alerts()
+
+	if(href_list["show_paper"])
+		if(last_paper_seen)
+			src << browse(last_paper_seen, "window=show_paper")
 	//Carn: holopad requests
 	if (href_list["jumptoholopad"])
 		var/obj/machinery/hologram/holopad/H = locate(href_list["jumptoholopad"])
@@ -734,3 +742,7 @@ var/list/ai_list = list()
 			return
 	else
 		return ..()
+
+
+/mob/living/silicon/ai/get_multitool(var/active_only=0)
+	return aiMulti

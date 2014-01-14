@@ -1,4 +1,3 @@
-
 //Vox heist objectives.
 
 datum/objective/heist
@@ -90,6 +89,8 @@ datum/objective/heist/loot
 
 		for(var/obj/O in locate(/area/shuttle/vox/station))
 			if(istype(O,target)) total_amount++
+			for(var/obj/I in O.contents)
+				if(istype(I,target)) total_amount++
 			if(total_amount >= target_amount) return 1
 
 		var/datum/game_mode/heist/H = ticker.mode
@@ -137,10 +138,17 @@ datum/objective/heist/salvage
 		var/total_amount = 0
 
 		for(var/obj/item/O in locate(/area/shuttle/vox/station))
+
+			var/obj/item/stack/sheet/S
 			if(istype(O,/obj/item/stack/sheet))
 				if(O.name == target)
-					var/obj/item/stack/sheet/S = O
+					S = O
 					total_amount += S.amount
+			for(var/obj/I in O.contents)
+				if(istype(I,/obj/item/stack/sheet))
+					if(I.name == target)
+						S = I
+						total_amount += S.amount
 
 		var/datum/game_mode/heist/H = ticker.mode
 		for(var/datum/mind/raider in H.raiders)

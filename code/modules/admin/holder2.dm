@@ -67,6 +67,18 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 					usr << "<font color='red'>Error: You are not an admin.</font>"
 	return 0
 
+// Making this a bit less of a roaring asspain. - N3X
+/mob/proc/check_rights(rights_required)
+	if(src && src.client)
+		if(rights_required)
+			if(src.client.holder)
+				if(rights_required & src.client.holder.rights)
+					return 1
+		else
+			if(src.client.holder)
+				return 1
+	return 0
+
 //probably a bit iffy - will hopefully figure out a better solution
 /proc/check_if_greater_rights_than(client/other)
 	if(usr && usr.client)

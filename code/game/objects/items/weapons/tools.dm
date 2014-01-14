@@ -35,7 +35,7 @@
  */
 /obj/item/weapon/screwdriver
 	name = "screwdriver"
-	desc = "You can be totally screwwy with this."
+	desc = "You can be totally screwy with this."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "screwdriver"
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -118,6 +118,7 @@
 		usr.visible_message("\The [usr] cuts \the [C]'s restraints with \the [src]!",\
 		"You cut \the [C]'s restraints with \the [src]!",\
 		"You hear cable being cut.")
+		C.handcuffed.loc = null	//garbage collector awaaaaay
 		C.handcuffed = null
 		C.update_inv_handcuffed()
 		return
@@ -262,12 +263,14 @@
 		var/turf/location = get_turf(user)
 		if (istype(location, /turf))
 			location.hotspot_expose(700, 50, 1)
+			if(isliving(O))
+				var/mob/living/L = O
+				L.IgniteMob()
 	return
 
+/obj/item/weapon/weldingtool/attack_self(mob/user)
+	toggle(user)
 
-/obj/item/weapon/weldingtool/attack_self(mob/user as mob)
-	toggle()
-	return
 
 //Returns the amount of fuel in the welder
 /obj/item/weapon/weldingtool/proc/get_fuel()
@@ -405,7 +408,7 @@
 	w_class = 3.0
 	m_amt = 70
 	g_amt = 120
-	origin_tech = "engineering=4;plasma=3"
+	origin_tech = "engineering=4;plasmatech=3"
 	icon_state = "ewelder"
 	var/last_gen = 0
 

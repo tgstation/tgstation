@@ -192,7 +192,7 @@ Auto Patrol: []"},
 		mode = SECBOT_IDLE
 
 /obj/machinery/bot/secbot/process()
-	set background = 1
+	//set background = 1
 
 	if(!src.on)
 		return
@@ -585,8 +585,10 @@ Auto Patrol: []"},
 // calculates a path to the current destination
 // given an optional turf to avoid
 /obj/machinery/bot/secbot/proc/calc_path(var/turf/avoid = null)
-	src.path = AStar(src.loc, patrol_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 120, id=botcard, exclude=avoid)
-	if (!path) path = list()
+	src.path = AStar(src.loc, patrol_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 120, id=botcard, exclude=avoid)
+	if(!src.path)
+		src.path = list()
+
 
 // look for a criminal in view of the bot
 
@@ -718,9 +720,7 @@ Auto Patrol: []"},
 	Sa.overlays += image('icons/obj/aibots.dmi', "hs_hole")
 	Sa.created_name = src.name
 	new /obj/item/device/assembly/prox_sensor(Tsec)
-
-	var/obj/item/weapon/melee/baton/B = new /obj/item/weapon/melee/baton(Tsec)
-	B.charges = 0
+	new /obj/item/weapon/melee/baton/loaded(Tsec)
 
 	if(prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)

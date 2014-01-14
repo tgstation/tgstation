@@ -9,7 +9,7 @@
 	use_power = 0
 	flags = ON_BORDER
 	opacity = 0
-	var/obj/item/weapon/airlock_electronics/electronics = null
+	var/obj/item/weapon/circuitboard/airlock/electronics = null
 	explosion_resistance = 5
 	air_properties_vary_with_direction = 1
 

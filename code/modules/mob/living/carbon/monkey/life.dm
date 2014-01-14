@@ -11,8 +11,11 @@
 
 /mob/living/carbon/monkey/Life()
 	set invisibility = 0
-	set background = 1
+	//set background = 1
 	if (monkeyizing)	return
+	if (update_muts)
+		update_muts=0
+		domutcheck(src,null,MUTCHK_FORCED)
 	..()
 
 	var/datum/gas_mixture/environment // Added to prevent null location errors-- TLE
@@ -54,6 +57,9 @@
 	//Handle temperature/pressure differences between body and environment
 	if(environment)	// More error checking -- TLE
 		handle_environment(environment)
+
+	//Check if we're on fire
+	handle_fire()
 
 	//Status updates, death etc.
 	handle_regular_status_updates()
@@ -383,10 +389,11 @@
 			var/turf/heat_turf = get_turf(src)
 			environment_heat_capacity = heat_turf.heat_capacity
 
-		if((environment.temperature > (T0C + 50)) || (environment.temperature < (T0C + 10)))
-			var/transfer_coefficient = 1
+		if(!on_fire)
+			if((environment.temperature > (T0C + 50)) || (environment.temperature < (T0C + 10)))
+				var/transfer_coefficient = 1
 
-			handle_temperature_damage(HEAD, environment.temperature, environment_heat_capacity*transfer_coefficient)
+				handle_temperature_damage(HEAD, environment.temperature, environment_heat_capacity*transfer_coefficient)
 
 		if(stat==2)
 			bodytemperature += 0.1*(environment.temperature - bodytemperature)*environment_heat_capacity/(environment_heat_capacity + 270000)
@@ -660,3 +667,11 @@
 	proc/handle_changeling()
 		if(mind && mind.changeling)
 			mind.changeling.regenerate()
+
+///FIRE CODE
+	handle_fire()
+		if(..())
+			return
+		adjustFireLoss(6)
+		return
+//END FIRE CODE

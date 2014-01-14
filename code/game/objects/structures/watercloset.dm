@@ -16,9 +16,10 @@
 	open = round(rand(0, 1))
 	update_icon()
 
-/obj/structure/toilet/attack_hand(mob/living/user as mob)
+
+/obj/structure/toilet/attack_hand(mob/living/user)
 	if(swirlie)
-		usr.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie.name]'s head!</span>", "<span class='notice'>You slam the toilet seat onto [swirlie.name]'s head!</span>", "You hear reverberating porcelain.")
+		user.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie]'s head!</span>", "<span class='notice'>You slam the toilet seat onto [swirlie]'s head!</span>", "You hear reverberating porcelain.")
 		swirlie.adjustBruteLoss(8)
 		return
 
@@ -42,7 +43,8 @@
 /obj/structure/toilet/update_icon()
 	icon_state = "toilet[open][cistern]"
 
-/obj/structure/toilet/attackby(obj/item/I as obj, mob/living/user as mob)
+
+/obj/structure/toilet/attackby(obj/item/I, mob/living/user)
 	if(istype(I, /obj/item/weapon/crowbar))
 		user << "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>"
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
@@ -349,25 +351,26 @@
 	if (istype(O, /obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RG = O
 		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
-		user.visible_message("\blue [user] fills the [RG] using \the [src].","\blue You fill the [RG] using \the [src].")
+		user << "<span class='notice'>You fill [RG] from [src].</span>"
 		return
 
-	else if (istype(O, /obj/item/weapon/melee/baton))
+	else if(istype(O, /obj/item/weapon/melee/baton))
 		var/obj/item/weapon/melee/baton/B = O
-		if (B.charges > 0 && B.status == 1)
-			flick("baton_active", src)
-			user.Stun(10)
-			user.stuttering = 10
-			user.Weaken(10)
-			if(isrobot(user))
-				var/mob/living/silicon/robot/R = user
-				R.cell.charge -= 20
-			else
-				B.charges--
-			user.visible_message( \
-				"[user] was stunned by his wet [O].", \
-				"\red You have wet \the [O], it shocks you!")
-			return
+		if(B.bcell)
+			if(B.bcell.charge > 0 && B.status == 1)
+				flick("baton_active", src)
+				user.Stun(10)
+				user.stuttering = 10
+				user.Weaken(10)
+				if(isrobot(user))
+					var/mob/living/silicon/robot/R = user
+					R.cell.charge -= 20
+				else
+					B.deductcharge(B.hitcost)
+				user.visible_message( \
+					"<span class='danger'>[user] was stunned by \his wet [O]!</span>", \
+					"<span class='userdanger'>[user] was stunned by \his wet [O]!</span>")
+				return
 
 	var/turf/location = user.loc
 	if(!isturf(location)) return

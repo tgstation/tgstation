@@ -9,6 +9,7 @@
 	var/icon_opened = "open"
 	var/opened = 0
 	var/welded = 0
+	var/pick_up_stuff = 1 // Pick up things that spawn at this location.
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	var/health = 100
 	var/lastbang
@@ -19,10 +20,15 @@
 /obj/structure/closet/New()
 	..()
 	spawn(1)
-		if(!opened)		// if closed, any item at the crate's loc is put in the contents
+		if(!opened && pick_up_stuff)		// if closed, any item at the crate's loc is put in the contents
 			for(var/obj/item/I in src.loc)
 				if(I.density || I.anchored || I == src) continue
 				I.loc = src
+
+// Fix for #383 - C4 deleting fridges with corpses
+/obj/structure/closet/Del()
+	dump_contents()
+	..()
 
 /obj/structure/closet/alter_health()
 	return get_turf(src)
@@ -156,8 +162,18 @@
 
 	return
 
+// This is broken, see attack_ai.
 /obj/structure/closet/attack_robot(mob/living/silicon/robot/user as mob)
-	if(istype(user,/mob/living/silicon/robot/mommi))
+	if(isMoMMI(user))
+		src.add_hiddenprint(user)
+		add_fingerprint(user)
+		return src.attack_hand(user)
+	..(user)
+
+/obj/machinery/closet/attack_ai(mob/user as mob)
+	if(isMoMMI(user))
+		src.add_hiddenprint(user)
+		add_fingerprint(user)
 		return src.attack_hand(user)
 	..(user)
 
@@ -275,7 +291,10 @@
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return
 
-	if(ishuman(usr))
+	if(ishuman(usr) || isMoMMI(usr))
+		if(isMoMMI(usr))
+			src.add_hiddenprint(usr)
+			add_fingerprint(usr)
 		src.attack_hand(usr)
 	else
 		usr << "<span class='warning'>This mob type can't use this verb.</span>"

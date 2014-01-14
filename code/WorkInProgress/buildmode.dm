@@ -57,7 +57,7 @@
 				dir = NORTHWEST
 			if(NORTHWEST)
 				dir = NORTH
-		return
+		return 1
 
 /obj/effect/bmode/buildhelp
 	icon = 'icons/misc/buildmode.dmi'
@@ -95,7 +95,7 @@
 				usr << "\blue Left Mouse Button on turf/obj/mob      = Select"
 				usr << "\blue Right Mouse Button on turf/obj/mob     = Throw"
 				usr << "\blue ***********************************************************"
-		return
+		return 1
 
 /obj/effect/bmode/buildquit
 	icon_state = "buildquit"
@@ -103,6 +103,7 @@
 
 	Click()
 		togglebuildmode(master.cl.mob)
+		return 1
 
 /obj/effect/bmode/buildholder
 	density = 0
@@ -142,7 +143,7 @@
 		else if(pa.Find("right"))
 			switch(master.cl.buildmode)
 				if(1)
-					return
+					return 1
 				if(2)
 					objholder = input(usr,"Enter typepath:" ,"Typepath","/obj/structure/closet")
 					var/list/removed_paths = list("/obj/effect/bhole")

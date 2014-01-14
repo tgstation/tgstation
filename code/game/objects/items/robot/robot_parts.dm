@@ -11,10 +11,15 @@
 	var/sabotaged = 0 //Emagging limbs can have repercussions when installed as prosthetics.
 
 /obj/item/robot_parts/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-	if("metal" in construction_cost)
-		rec.iron += construction_cost["metal"]/CC_PER_SHEET_METAL
-	if("glass" in construction_cost)
-		rec.glass += construction_cost["glass"]/CC_PER_SHEET_GLASS
+	for(var/material in construction_cost)
+		var/rec_mat=material
+		var/CCPS=CC_PER_SHEET_MISC
+		if(rec_mat=="metal")
+			rec_mat="iron"
+			CCPS=CC_PER_SHEET_METAL
+		if(rec_mat=="glass")
+			CCPS=CC_PER_SHEET_GLASS
+		rec.addMaterial(material,construction_cost[material]/CCPS)
 	return 1
 
 /obj/item/robot_parts/l_arm

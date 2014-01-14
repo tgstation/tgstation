@@ -131,6 +131,25 @@ var/global/floorIsLava = 0
 			else
 				body += "<A href='?src=\ref[src];makeanimal=\ref[M]'>Animalize</A> | "
 
+			// MUTATIONS
+			if(iscarbon(M))
+				body += "<br><br>"
+				body += "<b>DNA Blocks:</b><br><table border='0'><tr><th>&nbsp;</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>"
+				var/bname
+				for(var/block=1;block<STRUCDNASIZE;block++)
+					if(((block-1)%5)==0)
+						body += "</tr><tr><th>[block-1]</th>"
+					bname = assigned_blocks[block]
+					body += "<td>"
+					if(bname)
+						var/bstate=M.dna.GetSEState(block)
+						var/bcolor="[(bstate)?"#006600":"#ff0000"]"
+						body += "<A href='?src=\ref[src];togmutate=\ref[M];block=[block]' style='color:[bcolor];'>[bname]</A><sub>[block]</sub>"
+					else
+						body += "[block]"
+					body+="</td>"
+				body += "</tr></table>"
+
 			body += {"<br><br>
 				<b>Rudimentary transformation:</b><font size=2><br>These transformations only create a new mob type and copy stuff over. They do not take into account MMIs and similar mob-specific things. The buttons in 'Transformations' are preferred, when possible.</font><br>
 				<A href='?src=\ref[src];simplemake=observer;mob=\ref[M]'>Observer</A> |

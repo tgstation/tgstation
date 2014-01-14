@@ -36,7 +36,7 @@
 	if (href_list["isolate"])
 		var/datum/reagent/blood/Blood
 		for(var/datum/reagent/blood/B in R.reagent_list)
-			if(B)
+			if(B && B.data["virus2"])
 				Blood = B
 				break
 		// /vg/: Try to fix isolators
@@ -45,7 +45,7 @@
 			testing("Unable to locate blood in [beaker]!")
 			return
 		var/list/virus = virus_copylist(Blood.data["virus2"])
-		var/choice = text2num(href_list["isolate"]);
+		var/choice = text2num(href_list["isolate"])
 		for (var/datum/disease2/disease/V in virus)
 			if (V.uniqueID == choice)
 				virus2 = virus
@@ -84,15 +84,15 @@
 		if(!R.total_volume)
 			dat += "[beaker] is empty."
 		else
-			dat += "Contained reagents:<BR>"
+			dat += "Contained reagents:<ul>"
 			for(var/datum/reagent/blood/G in R.reagent_list)
 				if(G.data["virus2"])
 					var/list/virus = G.data["virus2"]
 					for (var/datum/disease2/disease/V in virus)
-						dat += " <br>  [G.name]: <A href='?src=\ref[src];isolate=[V.uniqueID]'>Isolate pathogen #[V.uniqueID]</a>"
+						dat += "<li>[G.name]: <A href='?src=\ref[src];isolate=[V.uniqueID]'>Isolate pathogen #[V.uniqueID]</a></li>"
 				else
-					dat += "    <b>No pathogen</b>"
-	user << browse("<TITLE>Pathogenic Isolator</TITLE>Isolator menu:<BR><BR>[dat]", "window=isolator;size=575x400")
+					dat += "<li><em>No pathogen</em></li>"
+	user << browse("<TITLE>Pathogenic Isolator</TITLE>Isolator menu:<BR><BR>[dat]</ul>", "window=isolator;size=575x400")
 	onclose(user, "isolator")
 	return
 

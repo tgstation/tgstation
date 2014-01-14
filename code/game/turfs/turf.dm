@@ -170,6 +170,8 @@
 	return 0
 /turf/proc/is_carpet_floor()
 	return 0
+/turf/proc/is_catwalk()
+	return 0
 /turf/proc/return_siding_icon_state()		//used for grass floors, which have siding.
 	return 0
 
@@ -343,6 +345,14 @@
 			if(!LinkBlocked(src, t) && !TurfBlockedNonWindow(t))
 				L.Add(t)
 	return L
+
+// This Distance proc assumes that only cardinal movement is
+//  possible. It results in more efficient (CPU-wise) pathing
+//  for bots and anything else that only moves in cardinal dirs.
+/turf/proc/Distance_cardinal(turf/t)
+	if(!src || !t) return 0
+	return abs(src.x - t.x) + abs(src.y - t.y)
+
 /turf/proc/Distance(turf/t)
 	if(get_dist(src,t) == 1)
 		var/cost = (src.x - t.x) * (src.x - t.x) + (src.y - t.y) * (src.y - t.y)

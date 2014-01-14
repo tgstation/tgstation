@@ -11,6 +11,9 @@
 	var/flags = 0                    // Various language flags.
 	var/native                       // If set, non-native speakers will have trouble speaking.
 
+/datum/language/proc/say_misunderstood(mob/M, message)
+	return stars(message)
+
 /datum/language/unathi
 	name = "Sinta'unathi"
 	desc = "The common language of Moghes, composed of sibilant hisses and rattles. Spoken natively by Unathi."
@@ -69,6 +72,23 @@
 	desc = "Much like Standard, this crude pidgin tongue descended from numerous languages and serves as Tradeband for criminal elements."
 	speech_verb = "growls"
 	key = "3"
+
+/datum/language/grey
+	name = "Grey"
+	desc = "Sounds more like quacking than anything else."
+	key = "x"
+	speech_verb = "quacks"
+	colour = "soghun"
+	native=1
+	flags = RESTRICTED
+
+/datum/language/grey/say_misunderstood(mob/M, message)
+	message="ACK"
+	var/len = max(1,Ceiling(length(message)/3))
+	if(len > 1)
+		for(var/i=0,i<len,i++)
+			message += " ACK"
+	return message+"!"
 
 // Language handling.
 /mob/proc/add_language(var/language)

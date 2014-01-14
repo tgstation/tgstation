@@ -10,6 +10,47 @@
 	return null
 
 
+// Return the item currently in the slot ID
+/mob/living/carbon/human/get_item_by_slot(slot_id)
+	switch(slot_id)
+		if(slot_back)
+			return back
+		if(slot_wear_mask)
+			return wear_mask
+		if(slot_handcuffed)
+			return handcuffed
+		if(slot_legcuffed)
+			return legcuffed
+		if(slot_l_hand)
+			return l_hand
+		if(slot_r_hand)
+			return r_hand
+		if(slot_belt)
+			return belt
+		if(slot_wear_id)
+			return wear_id
+		if(slot_ears)
+			return ears
+		if(slot_glasses)
+			return glasses
+		if(slot_gloves)
+			return gloves
+		if(slot_head)
+			return head
+		if(slot_shoes)
+			return shoes
+		if(slot_wear_suit)
+			return wear_suit
+		if(slot_w_uniform)
+			return w_uniform
+		if(slot_l_store)
+			return l_store
+		if(slot_r_store)
+			return r_store
+		if(slot_s_store)
+			return s_store
+	return null
+
 /mob/living/carbon/human/proc/has_organ(name)
 	var/datum/organ/external/O = organs_by_name[name]
 
@@ -687,3 +728,10 @@ It can still be worn/put on as normal.
 		if(source.machine == target)
 			target.show_inv(source)
 	del(src)
+
+/mob/living/carbon/human/get_multitool(var/active_only=0)
+	if(istype(get_active_hand(),/obj/item/device/multitool))
+		return get_active_hand()
+	if(active_only && istype(get_inactive_hand(),/obj/item/device/multitool))
+		return get_inactive_hand()
+	return null

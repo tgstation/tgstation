@@ -51,7 +51,7 @@
 
 	proc/Pulse(var/pulse = 0, var/origin_dir = 0)//Todo: Fix spaceblob expand
 
-		set background = 1
+		//set background = 1
 
 		if(run_action())//If we can do something here then we dont need to pulse more
 			return

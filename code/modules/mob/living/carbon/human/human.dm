@@ -52,6 +52,7 @@
 
 	if(!dna)
 		dna = new /datum/dna(null)
+		dna.species=species.name
 
 	for(var/i=0;i<7;i++) // 2 for medHUDs and 5 for secHUDs
 		hud_list += image('icons/mob/hud.dmi', src, "hudunknown")
@@ -533,7 +534,7 @@
 
 /mob/living/carbon/human/Topic(href, href_list)
 	var/pickpocket = 0
-	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr))
+	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr) && Adjacent(usr))
 		if(href_list["pockets"])
 			if(isanimal(usr)) return //Animals can't do that
 			if(ishuman(usr) && (usr:gloves))
@@ -912,7 +913,7 @@
 			xylophone=0
 	return
 
-/mob/living/carbon/human/proc/vomit()
+/mob/living/carbon/human/proc/vomit(hairball=0)
 	if(!lastpuke)
 		lastpuke = 1
 		src << "<spawn class='warning'>You feel nauseous..."
@@ -921,15 +922,19 @@
 			spawn(100)	//and you have 10 more for mad dash to the bucket
 				Stun(5)
 
-				src.visible_message("<spawn class='warning'>[src] throws up!","<spawn class='warning'>You throw up!")
+				if(hairball)
+					src.visible_message("<span class='warning'>[src] hacks up a hairball!</span>","<span class='warning'>You hack up a hairball!</span>")
+				else
+					src.visible_message("<span class='warning'>[src] throws up!</span>","<span class='warning'>You throw up!</span>")
 				playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
 				var/turf/location = loc
 				if (istype(location, /turf/simulated))
 					location.add_vomit_floor(src, 1)
 
-				nutrition -= 40
-				adjustToxLoss(-3)
+				if(!hairball)
+					nutrition -= 40
+					adjustToxLoss(-3)
 				spawn(350)	//wait 35 seconds before next volley
 					lastpuke = 0
 
@@ -1150,7 +1155,7 @@
 /*
 /mob/living/carbon/human/verb/simulate()
 	set name = "sim"
-	set background = 1
+	//set background = 1
 
 	var/damage = input("Wound damage","Wound damage") as num
 
@@ -1337,10 +1342,16 @@ mob/living/carbon/human/yank_out_object()
 	else
 		usr << "\blue [self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)]."
 
-/mob/living/carbon/human/proc/set_species(var/new_species)
+/mob/living/carbon/human/proc/set_species(var/new_species,var/on_spawn=0)
 
-	if(!new_species)
-		new_species = "Human"
+	if(!dna)
+		if(!new_species)
+			new_species = "Human"
+	else
+		if(!new_species)
+			new_species = dna.species
+		else
+			dna.species = new_species
 
 	if(species && (species.name && species.name == new_species))
 		return
@@ -1353,6 +1364,9 @@ mob/living/carbon/human/yank_out_object()
 	else
 		see_invisible = SEE_INVISIBLE_LIVING
 
+	if(species.default_mutations.len>0 || species.default_blocks.len>0)
+		do_deferred_species_setup=1
+
 	spawn(0)
 		update_icons()
 
@@ -1360,3 +1374,4 @@ mob/living/carbon/human/yank_out_object()
 		return 1
 	else
 		return 0
+

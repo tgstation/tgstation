@@ -357,7 +357,7 @@
 	m_amt = 3750
 
 	recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-		rec.iron++
+		rec.addMaterial("iron",1)
 		return 1
 
 /obj/item/weapon/shard
@@ -379,7 +379,7 @@
 		return (BRUTELOSS)
 
 /obj/item/weapon/shard/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-	rec.glass++
+	rec.addMaterial("glass",1)
 	return 1
 
 /obj/item/weapon/shard/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
@@ -490,7 +490,7 @@
 	attack_verb = list("slammed", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
 	recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-		rec.iron+=2
+		rec.addMaterial("iron",2)
 		return 1
 
 /obj/item/weapon/table_parts/reinforced
@@ -503,7 +503,7 @@
 
 	recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
 		// 2 metal + 4 rods (0.5 metal ea)
-		rec.iron+=4
+		rec.addMaterial("iron",4)
 		return 1
 
 /obj/item/weapon/table_parts/wood
@@ -613,7 +613,7 @@
 	icon_state = "hatchet"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 12.0
-	w_class = 1.0
+	w_class = 2.0
 	throwforce = 15.0
 	throw_speed = 4
 	throw_range = 4
@@ -672,19 +672,6 @@
 	icon_state = "wire1"
 
 	var/obj/machinery/machine
-
-/obj/item/weapon/plastique
-	name = "plastic explosives"
-	desc = "Used to put holes in specific areas without too much extra hole."
-	gender = PLURAL
-	icon = 'icons/obj/assemblies.dmi'
-	icon_state = "plastic-explosive0"
-	item_state = "plasticx"
-	flags = FPRINT | TABLEPASS | USEDELAY
-	w_class = 2.0
-	origin_tech = "syndicate=2"
-	var/timer = 10
-	var/atom/target = null
 
 ///////////////////////////////////////Stock Parts /////////////////////////////////
 
@@ -769,7 +756,7 @@
 	name = "nano-manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "nano_mani"
-	origin_tech = "materials=3,programming=2"
+	origin_tech = "materials=3;programming=2"
 	rating = 2
 	m_amt = 30
 
@@ -812,7 +799,7 @@
 	name = "pico-manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "pico_mani"
-	origin_tech = "materials=5,programming=2"
+	origin_tech = "materials=5;programming=2"
 	rating = 3
 	m_amt = 30
 
@@ -896,12 +883,14 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "ectoplasm"
 
+/*
 /obj/item/weapon/research//Makes testing much less of a pain -Sieve
 	name = "research"
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "capacitor"
 	desc = "A debug item for research."
 	origin_tech = "materials=8;programming=8;magnets=8;powerstorage=8;bluespace=8;combat=8;biotech=8;syndicate=8"
+*/
 
 /////////Random shit////////
 

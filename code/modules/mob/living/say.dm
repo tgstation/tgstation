@@ -73,6 +73,7 @@ var/list/department_radio_keys = list(
 		if(!istype(dongle)) return
 		if(dongle.translate_hive) return 1
 
+
 // /vg/edit: Added forced_by for handling braindamage messages and meme stuff
 /mob/living/say(var/message, var/forced_by=null)
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
@@ -99,6 +100,12 @@ var/list/department_radio_keys = list(
 	// stat == 2 is handled above, so this stops transmission of uncontious messages
 	if (stat)
 		return
+
+	// undo last word status.
+	if(ishuman(src))
+		var/mob/living/carbon/human/H=src
+		if(H.said_last_words)
+			H.said_last_words=0
 
 	// Mute disability
 	if (sdisabilities & MUTE)
@@ -129,7 +136,13 @@ var/list/department_radio_keys = list(
 			message = uppertext(message)
 
 	// General public key. Special message handling
-	else if (copytext(message, 1, 2) == ";" || prob(braindam/2))
+	var/mmode
+	var/cprefix = ""
+	if(length(message) >= 2)
+		cprefix = copytext(message, 1, 3)
+		if(cprefix in department_radio_keys)
+			mmode = department_radio_keys[cprefix]
+	if (copytext(message, 1, 2) == ";" || (prob(braindam/2) && !mmode))
 		if (ishuman(src))
 			message_mode = "headset"
 		else if(ispAI(src) || isrobot(src))
@@ -167,7 +180,12 @@ var/list/department_radio_keys = list(
 		message = replacetext(message, " are ", " ")
 		message = replacetext(message, "you", "u")
 		message = replacetext(message, "help", "halp")
-		message = replacetext(message, "grief", "grife")
+		message = replacetext(message, "grief", "griff")
+		message = replacetext(message, "murder", "griff")
+		message = replacetext(message, "slipping", "griffing")
+		message = replacetext(message, "slipped", "griffed")
+		message = replacetext(message, "slip", "griff")
+		message = replacetext(message, "sec", "shit")
 		message = replacetext(message, "space", "spess")
 		message = replacetext(message, "carp", "crap")
 		message = replacetext(message, "reason", "raisin")
@@ -175,6 +193,8 @@ var/list/department_radio_keys = list(
 		message = replacetext(message, "spider", "spidurr")
 		message = replacetext(message, "skitterbot", "spidurbutt")
 		message = replacetext(message, "skitter", "spider sound")
+		// /vg/: LOUDER
+		message = uppertext(message)
 		if(prob(50))
 			message = uppertext(message)
 			message += "[stutter(pick("!", "!!", "!!!"))]"
@@ -282,10 +302,13 @@ var/list/department_radio_keys = list(
 
 		if("changeling")
 			if(mind && mind.changeling)
+				log_say("[key_name(src)] ([mind.changeling.changelingID]): [message]")
 				for(var/mob/Changeling in mob_list)
 					if(istype(Changeling, /mob/living/silicon)) continue //WHY IS THIS NEEDED?
 					if((Changeling.mind && Changeling.mind.changeling) || istype(Changeling, /mob/dead/observer))
 						Changeling << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
+					else if(istype(Changeling,/mob/dead/observer)  && (Changeling.client && Changeling.client.prefs.toggles & CHAT_GHOSTEARS))
+						Changeling << "<i><font color=#800080><b>[mind.changeling.changelingID] (:</b> <a href='byond://?src=\ref[Changeling];follow2=\ref[Changeling];follow=\ref[src]'>(Follow)</a> [message]</font></i>"
 				return
 ////SPECIAL HEADSETS START
 		else
@@ -385,7 +408,11 @@ var/list/department_radio_keys = list(
 
 	var/rendered = null
 	if (length(heard_a))
-		var/message_a = say_quote(message,speaking)
+		var/message_a=message
+		if(ishuman(src))
+			var/mob/living/carbon/human/H=src
+			message_a=H.species.say_filter(src,message_a)
+		message_a = say_quote(message,speaking)
 
 		if (italics)
 			message_a = "<i>[message_a]</i>"
@@ -417,7 +444,10 @@ var/list/department_radio_keys = list(
 
 	if (length(heard_b))
 		var/message_b
-		message_b = stars(message)
+		if(speaking)
+			message_b = speaking.say_misunderstood(src,message)
+		else
+			message_b = stars(message)
 		message_b = say_quote(message_b,speaking)
 
 		if (italics)

@@ -9,6 +9,22 @@ obj/machinery/recharger/defibcharger/wallcharger
 	active_power_usage = 150
 	var/opened = 0
 
+/********************************************************************
+**   Adding Stock Parts to VV so preconstructed shit has its candy **
+********************************************************************/
+obj/machinery/recharger/defibcharger/wallcharger/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/defib_recharger
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser
+	component_parts += new /obj/item/weapon/stock_parts/console_screen
+	RefreshParts()
+
+
 obj/machinery/recharger/defibcharger/wallcharger/attack_hand(mob/user as mob)
 	add_fingerprint(user)
 

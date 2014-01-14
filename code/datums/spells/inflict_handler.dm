@@ -6,6 +6,10 @@
 	var/amt_paralysis = 0
 	var/amt_stunned = 0
 
+	var/amt_dizziness = 0
+	var/amt_confused = 0
+	var/amt_stuttering = 0
+
 	//set to negatives for healing
 	var/amt_dam_fire = 0
 	var/amt_dam_brute = 0
@@ -58,3 +62,6 @@
 				target.buckled.unbuckle()
 		target.eye_blind += amt_eye_blind
 		target.eye_blurry += amt_eye_blurry
+		target.dizziness += amt_dizziness
+		target.confused += amt_confused
+		target.stuttering += amt_stuttering

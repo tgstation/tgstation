@@ -329,7 +329,7 @@
 			/obj/item/weapon/gun/energy/xray;50,\
 			/obj/item/weapon/gun/energy/laser/captain;25,\
 			)
-			if(isnull(spawn_type))
+			if(isnull(spawn_type) || !spawn_type)
 				spawn_type = /obj/item/weapon/gun/energy/laser
 			var/obj/item/weapon/gun/energy/new_gun = new spawn_type(src.loc)
 			new_item = new_gun
@@ -528,7 +528,7 @@
 				new_item.speaking_to_players = 1
 				processing_objects.Add(src)
 		var/turf/T = get_turf(src)
-		if(istype(T, /turf/simulated/mineral))
+		if(istype(T, /turf/unsimulated/mineral))
 			T:last_find = new_item
 		del(src)
 

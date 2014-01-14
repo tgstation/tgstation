@@ -68,7 +68,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_packs/farwa
 	name = "Farwa crate"
-	contains = list (/obj/item/weapon/storage/box/farwacubes)
+	contains = list (/obj/item/weapon/storage/box/monkeycubes/farwacubes)
 	cost = 30
 	containertype = /obj/structure/closet/crate/freezer
 	containername = "Farwa crate"
@@ -76,7 +76,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_packs/skrell
 	name = "Neaera crate"
-	contains = list (/obj/item/weapon/storage/box/neaeracubes)
+	contains = list (/obj/item/weapon/storage/box/monkeycubes/neaeracubes)
 	cost = 30
 	containertype = /obj/structure/closet/crate/freezer
 	containername = "Neaera crate"
@@ -84,7 +84,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_packs/stok
 	name = "Stok crate"
-	contains = list (/obj/item/weapon/storage/box/stokcubes)
+	contains = list (/obj/item/weapon/storage/box/monkeycubes/stokcubes)
 	cost = 30
 	containertype = /obj/structure/closet/crate/freezer
 	containername = "Stok crate"
@@ -598,8 +598,8 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_packs/weapons
 	name = "Weapons crate"
-	contains = list(/obj/item/weapon/melee/baton,
-					/obj/item/weapon/melee/baton,
+	contains = list(/obj/item/weapon/melee/baton/loaded,
+					/obj/item/weapon/melee/baton/loaded,
 					/obj/item/weapon/gun/energy/laser,
 					/obj/item/weapon/gun/energy/laser,
 					/obj/item/weapon/gun/energy/taser,
@@ -641,9 +641,9 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_packs/riot
 	name = "Riot gear crate"
-	contains = list(/obj/item/weapon/melee/baton,
-					/obj/item/weapon/melee/baton,
-					/obj/item/weapon/melee/baton,
+	contains = list(/obj/item/weapon/melee/baton/loaded,
+					/obj/item/weapon/melee/baton/loaded,
+					/obj/item/weapon/melee/baton/loaded,
 					/obj/item/weapon/shield/riot,
 					/obj/item/weapon/shield/riot,
 					/obj/item/weapon/shield/riot,
@@ -839,6 +839,46 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containername = "Empty Box crate"
 	group = "Operations"
 
+/datum/supply_packs/engine/amrcontrol
+	name = "Antimatter control unit crate"
+	contains = list(/obj/machinery/power/am_control_unit)
+	cost = 30
+	containertype = /obj/structure/closet/crate/secure
+	containername = "Antimatter Control Unit crate"
+	access = access_engine
+	group = "Engineering"
+
+/datum/supply_packs/engine/amrparts
+	name = "AMR Parts crate"
+	contains  = list(/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container)
+	cost = 20
+	containertype = /obj/structure/closet/crate/secure
+	containername = "packaged antimatter reactor crate"
+	access = access_engine
+	group = "Engineering"
+
+/datum/supply_packs/engine/amrcontainment
+	name = "Antimatter containment jar crate"
+	contains = list(/obj/item/weapon/am_containment,
+					/obj/item/weapon/am_containment,
+					/obj/item/weapon/am_containment)
+	cost = 25
+	containertype = /obj/structure/closet/crate/secure
+	containername = "Antimatter containment jar crate"
+	access = access_engine
+	group = "Engineering"
+
 /datum/supply_packs/surgery
 	name = "Surgery crate"
 	contains = list(/obj/item/weapon/cautery,
@@ -993,3 +1033,29 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containername = "Beekeeping crate"
 	access = access_hydroponics
 	group = "Hydroponics"
+
+/datum/supply_packs/Hydroponics_Trays
+	name = "Hydroponic Trays Components Crate"
+	contains = list(
+					/obj/item/weapon/circuitboard/hydroponics,
+					/obj/item/weapon/stock_parts/matter_bin,
+					/obj/item/weapon/stock_parts/matter_bin,
+					/obj/item/weapon/stock_parts/scanning_module,
+					/obj/item/weapon/stock_parts/capacitor,
+					/obj/item/weapon/reagent_containers/glass/beaker,
+					/obj/item/weapon/reagent_containers/glass/beaker,
+					/obj/item/weapon/stock_parts/console_screen,
+					/obj/item/weapon/circuitboard/hydroponics,
+					/obj/item/weapon/stock_parts/matter_bin,
+					/obj/item/weapon/stock_parts/matter_bin,
+					/obj/item/weapon/stock_parts/scanning_module,
+					/obj/item/weapon/stock_parts/capacitor,
+					/obj/item/weapon/reagent_containers/glass/beaker,
+					/obj/item/weapon/reagent_containers/glass/beaker,
+					/obj/item/weapon/stock_parts/console_screen)
+	cost = 12
+	containertype = /obj/structure/closet/crate/hydroponics
+	containername = "Hydroponic Trays Components Crate"
+	access = access_hydroponics
+	group = "Hydroponics"
+

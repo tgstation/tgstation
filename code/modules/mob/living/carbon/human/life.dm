@@ -29,25 +29,38 @@
 	var/prev_gender = null // Debug for plural genders
 	var/temperature_alert = 0
 	var/in_stasis = 0
+	var/do_deferred_species_setup=0
 
+// Doing this during species init breaks shit.
+/mob/living/carbon/human/proc/DeferredSpeciesSetup()
+	var/mut_update=0
+	if(species.default_mutations.len>0)
+		for(var/mutation in species.default_mutations)
+			if(!(mutation in mutations))
+				mutations.Add(mutation)
+				mut_update=1
+	if(species.default_blocks.len>0)
+		for(var/block in species.default_blocks)
+			if(!dna.GetSEState(block))
+				dna.SetSEState(block,1)
+				mut_update=1
+	if(mut_update)
+		domutcheck(src,null,MUTCHK_FORCED)
+		update_mutations()
 
 /mob/living/carbon/human/Life()
 	set invisibility = 0
-	set background = 1
+	//set background = 1
 
 	if (monkeyizing)	return
 	if(!loc)			return	// Fixing a null error that occurs when the mob isn't found in the world -- TLE
 
 	..()
 
-	/*
-	//This code is here to try to determine what causes the gender switch to plural error. Once the error is tracked down and fixed, this code should be deleted
-	//Also delete var/prev_gender once this is removed.
-	if(prev_gender != gender)
-		prev_gender = gender
-		if(gender in list(PLURAL, NEUTER))
-			message_admins("[src] ([ckey]) gender has been changed to plural or neuter. Please record what has happened recently to the person and then notify coders. (<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>)  (<A HREF='?_src_=vars;Vars=\ref[src]'>VV</A>) (<A HREF='?priv_msg=\ref[src]'>PM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[src]'>JMP</A>)")
-	*/
+	if(do_deferred_species_setup)
+		DeferredSpeciesSetup()
+		do_deferred_species_setup=0
+
 	//Apparently, the person who wrote this code designed it so that
 	//blinded get reset each cycle and then get activated later in the
 	//code. Very ugly. I dont care. Moving this stuff here so its easy
@@ -72,6 +85,12 @@
 			if(istype(loc, /obj/))
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
+
+		if(check_mutations)
+			testing("Updating [src.real_name]'s mutations: "+english_list(mutations))
+			domutcheck(src,null,MUTCHK_FORCED)
+			update_mutations()
+			check_mutations=0
 
 		//Updates the number of stored chemicals for powers
 		handle_changeling()
@@ -104,6 +123,9 @@
 	//Handle temperature/pressure differences between body and environment
 	handle_environment(environment)
 
+	//Check if we're on fire
+	handle_fire()
+
 	//Status updates, death etc.
 	handle_regular_status_updates()		//TODO: optimise ~Carn
 	update_canmove()
@@ -118,6 +140,10 @@
 	// Grabbing
 	for(var/obj/item/weapon/grab/G in src)
 		G.process()
+
+	if(mind && mind.vampire)
+		handle_vampire()
+
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(var/pressure)
@@ -148,6 +174,12 @@
 					O.show_message(text("\red <B>[src] starts having a seizure!"), 1)
 				Paralyse(10)
 				make_jittery(1000)
+
+		// If we have the gene for being crazy, have random events.
+		if(dna.GetSEState(HALLUCINATIONBLOCK))
+			if(prob(1) && hallucination < 1)
+				hallucination += 20
+
 		if (disabilities & COUGHING)
 			if ((prob(5) && paralysis <= 1))
 				drop_item()
@@ -180,9 +212,13 @@
 					if(1)
 						say(pick("IM A PONY NEEEEEEIIIIIIIIIGH", "without oxigen blob don't evoluate?", "CAPTAINS A COMDOM", "[pick("", "that faggot traitor")] [pick("joerge", "george", "gorge", "gdoruge")] [pick("mellens", "melons", "mwrlins")] is grifing me HAL;P!!!", "can u give me [pick("telikesis","halk","eppilapse")]?", "THe saiyans screwed", "Bi is THE BEST OF BOTH WORLDS>", "I WANNA PET TEH monkeyS", "stop grifing me!!!!", "SOTP IT#"))
 					if(2)
-						say(pick("FUS RO DAH", "pomf upDATE ur sirvur", "fucking 4rries!", "stat me", ">my face", "roll it easy!", "waaaaaagh!!!", "red wonz go fasta", "FOR TEH EMPRAH", "lol2cat", "dem dwarfs man, dem dwarfs", "SPESS MAHREENS", "hwee did eet fhor khayosss", "lifelike texture ;_;", "luv can bloooom", "PACKETS!!!"))
+						say(pick("FUS RO DAH","fucking 4rries!", "stat me", ">my face", "roll it easy!", "waaaaaagh!!!", "red wonz go fasta", "FOR TEH EMPRAH", "lol2cat", "dem dwarfs man, dem dwarfs", "SPESS MAHREENS", "hwee did eet fhor khayosss", "lifelike texture ;_;", "luv can bloooom", "PACKETS!!!"))
 					if(3)
 						emote("drool")
+
+		if(species.name == "Tajaran")
+			if(prob(3))
+				vomit(1) // Hairball
 
 		if(stat != 2)
 			var/rn = rand(0, 200)
@@ -379,6 +415,11 @@
 				internals.icon_state = "internal0"
 		return null
 
+	// USED IN DEATHWHISPERS
+	proc/isInCrit()
+		// Health is in deep shit and we're not already dead
+		return health <= 0 && stat != 2
+
 
 	proc/handle_breath(datum/gas_mixture/breath)
 		if(status_flags & GODMODE)
@@ -500,7 +541,7 @@
 				if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 					Paralyse(3) // 3 gives them one second to wake up and run away a bit!
 					if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
-						sleeping = max(sleeping+2, 10)
+						sleeping = min(sleeping+2, 10)
 				else if(SA_pp > 0.15)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 					if(prob(20))
 						spawn(0) emote(pick("giggle", "laugh"))
@@ -560,18 +601,17 @@
 
 //		log_debug("Adjusting to atmosphere.")
 		//After then, it reacts to the surrounding atmosphere based on your thermal protection
-		if(loc_temp < BODYTEMP_COLD_DAMAGE_LIMIT)			//Place is colder than we are
-			var/thermal_protection = get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-			if(thermal_protection < 1)
-				var/amt = min((1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR), BODYTEMP_COOLING_MAX)
-//				log_debug("[loc_temp] is Cold. Cooling by [amt]")
-				bodytemperature += amt
-		else if (loc_temp > BODYTEMP_HEAT_DAMAGE_LIMIT)			//Place is hotter than we are
-			var/thermal_protection = get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-			if(thermal_protection < 1)
-				var/amt = min((1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
-//				log_debug("[loc_temp] is Heat. Heating up by [amt]")
-				bodytemperature += amt
+		if(!on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
+			if(loc_temp < bodytemperature)
+				//Place is colder than we are
+				var/thermal_protection = get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
+				if(thermal_protection < 1)
+					bodytemperature += min((1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR), BODYTEMP_COOLING_MAX)
+			else
+				//Place is hotter than we are
+				var/thermal_protection = get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
+				if(thermal_protection < 1)
+					bodytemperature += min((1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
 
 		// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 		if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
@@ -631,6 +671,16 @@
 		if(environment.toxins > MOLES_PLASMA_VISIBLE)
 			pl_effects()
 		return
+
+///FIRE CODE
+	handle_fire()
+		if(..())
+			return
+		var/thermal_protection = get_heat_protection(30000) //If you don't have fire suit level protection, you get a temperature increase
+		if((1 - thermal_protection) > 0.0001)
+			bodytemperature += BODYTEMP_HEATING_MAX
+		return
+//END FIRE CODE
 
 	/*
 	proc/adjust_body_temperature(current, loc_temp, boost)
@@ -1016,6 +1066,12 @@
 				if( prob(2) && health && !hal_crit )
 					spawn(0)
 						emote("snore")
+				if(mind)
+					if(mind.vampire)
+						if(istype(loc, /obj/structure/closet/coffin))
+							adjustBruteLoss(-1)
+							adjustFireLoss(-1)
+							adjustToxLoss(-1)
 			else if(resting)
 				if(halloss > 0)
 					adjustHalLoss(-3)
@@ -1161,6 +1217,8 @@
 			if(healths)		healths.icon_state = "health7"	//DEAD healthmeter
 		else
 			sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
+			see_in_dark = species.darksight
+			see_invisible = see_in_dark>2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
 			if(dna)
 				switch(dna.mutantrace)
 					if("slime")
@@ -1169,7 +1227,13 @@
 					if("shadow")
 						see_in_dark = 8
 						see_invisible = SEE_INVISIBLE_LEVEL_ONE
-
+			if(mind && mind.vampire)
+				if((VAMP_VISION in mind.vampire.powers) && !(VAMP_FULL in mind.vampire.powers))
+					sight |= SEE_MOBS
+				if((VAMP_FULL in mind.vampire.powers))
+					sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
+					see_in_dark = 8
+					if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
 			if(XRAY in mutations)
 				sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 				see_in_dark = 8

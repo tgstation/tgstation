@@ -20,7 +20,7 @@
 	..()
 
 /obj/machinery/suspension_gen/process()
-	set background = 1
+	//set background = 1
 
 	if (suspension_field)
 		cell.charge -= power_use
@@ -308,7 +308,7 @@
 		suspension_field.overlays += "shield2"
 		src.visible_message("\blue \icon[suspension_field] [suspension_field] gently absconds [collected > 1 ? "something" : "several things"].")
 	else
-		if(istype(T,/turf/simulated/mineral) || istype(T,/turf/simulated/wall))
+		if(istype(T,/turf/unsimulated/mineral) || istype(T,/turf/simulated/wall))
 			suspension_field.icon_state = "shieldsparkles"
 		else
 			suspension_field.icon_state = "shield2"

@@ -24,6 +24,7 @@
 /mob/living/verb/succumb()
 	set hidden = 1
 	if ((src.health < 0 && src.health > -95.0))
+		src.attack_log += "[src] has succumbed to death with [health] points of health!"
 		src.adjustOxyLoss(src.health + 200)
 		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss()
 		src << "\blue You have given up life and succumbed to death."
@@ -31,7 +32,7 @@
 
 /mob/living/proc/updatehealth()
 	if(status_flags & GODMODE)
-		health = 100
+		health = maxHealth
 		stat = CONSCIOUS
 	else
 		health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss() - halloss
@@ -203,7 +204,10 @@
 		L += src.contents
 		for(var/obj/item/weapon/storage/S in src.contents)	//Check for storage items
 			L += get_contents(S)
-
+		for(var/obj/item/clothing/suit/storage/S in src.contents)//Check for labcoats and jackets
+			L += get_contents(S)
+		for(var/obj/item/clothing/tie/storage/S in src.contents)//Check for holsters
+			L += get_contents(S)
 		for(var/obj/item/weapon/gift/G in src.contents) //Check for gift-wrapped items
 			L += G.gift
 			if(istype(G.gift, /obj/item/weapon/storage))
@@ -291,6 +295,8 @@
 	ear_damage = 0
 	reagents.clear_reagents()
 	heal_overall_damage(1000, 1000)
+	ExtinguishMob()
+	fire_stacks = 0
 	if(buckled)
 		buckled.unbuckle()
 	buckled = initial(src.buckled)

@@ -136,3 +136,8 @@
 	icon_state = "mucus"
 	random_icon_states = list("mucus")
 	var/list/datum/disease2/disease/virus2 = list()
+	var/dry=0 // Keeps the lag down
+
+/obj/effect/decal/cleanable/mucus/New()
+	spawn(DRYING_TIME * 2)
+		dry=1

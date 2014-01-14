@@ -22,6 +22,20 @@
 	var/planted = 0 // Is it occupied?
 	var/harvest = 0 //Ready to harvest?
 	var/obj/item/seeds/myseed = null // The currently planted seed
+	var/opened = 0.0
+
+/obj/machinery/hydroponics/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/hydroponics
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/capacitor
+	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker
+	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker
+	component_parts += new /obj/item/weapon/stock_parts/console_screen
+	RefreshParts()
 
 /obj/machinery/hydroponics/bullet_act(var/obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(istype(Proj ,/obj/item/projectile/energy/floramut))
@@ -337,7 +351,11 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 
 	else if ( istype(myseed, /obj/item/seeds/chiliseed ))
 		del(myseed)
-		myseed = new /obj/item/seeds/icepepperseed
+		switch(rand(1,100))
+			if(1 to 60)
+				myseed = new /obj/item/seeds/icepepperseed
+			if(61 to 100)
+				myseed = new /obj/item/seeds/chillighost
 
 	else if ( istype(myseed, /obj/item/seeds/appleseed ))
 		del(myseed)
@@ -380,8 +398,18 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 	else if ( istype(myseed, /obj/item/seeds/eggplantseed ))
 		del(myseed)
 		myseed = new /obj/item/seeds/eggyseed
+	else if ( istype(myseed, /obj/item/seeds/soyaseed ))
+		del(myseed)
+		myseed = new /obj/item/seeds/koiseed
 
-	else
+	else if ( istype(myseed, /obj/item/seeds/sunflowerseed ))
+		del(myseed)
+		switch(rand(1,100))
+			if(1 to 60)
+				myseed = new /obj/item/seeds/moonflowerseed
+			if(61 to 100)
+				myseed = new /obj/item/seeds/novaflowerseed
+
 		return
 
 	dead = 0
@@ -781,6 +809,31 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			A.icon_state = src.icon_state
 			A.hydrotray_type = src.type
 			del(src)
+	else if(istype(O, /obj/item/weapon/screwdriver))
+		if(anchored)
+			user << "You have to unanchor the [src] first!"
+			return
+		if(!opened)
+			src.opened = 1
+			//src.icon_state = "chem_dispenser_t"
+			user << "You open the maintenance hatch of [src]"
+		else
+			src.opened = 0
+			//src.icon_state = "chem_dispenser"
+			user << "You close the maintenance hatch of [src]"
+			return 1
+	else if(opened)
+		if(istype(O, /obj/item/weapon/crowbar))
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+			M.state = 2
+			M.icon_state = "box_1"
+			for(var/obj/I in component_parts)
+				if(I.reliability != 100 && crit_fail)
+					I.crit_fail = 1
+				I.loc = src.loc
+			del(src)
+		return 1
 	return
 
 
@@ -967,10 +1020,10 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			podman.dna = new /datum/dna()
 			podman.dna.real_name = podman.real_name
 		if(ui)
-			podman.dna.uni_identity = ui
-			updateappearance(podman, ui)
+			podman.UpdateAppearance(ui.Copy())
 		if(se)
-			podman.dna.struc_enzymes = se
+			podman.dna.SE = se.Copy()
+			podman.dna.UpdateSE()
 		if(!prob(potency)) //if it fails, plantman!
 			if(podman)
 //				podman.dna.mutantrace = "plant"
@@ -1001,9 +1054,8 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			var/mob/living/carbon/human/source = bloodSample.data["donor"] //hacky, since it gets the CURRENT condition of the mob, not how it was when the blood sample was taken
 			if (!istype(source))
 				continue
-			//ui = bloodSample.data["blood_dna"] doesn't work for whatever reason
-			ui = source.dna.uni_identity
-			se = source.dna.struc_enzymes
+			ui = source.dna.UI
+			se = source.dna.SE
 			if(source.ckey)
 				ckey = source.ckey
 			else if(source.mind)

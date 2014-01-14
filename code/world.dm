@@ -7,14 +7,17 @@
 
 
 
-#define RECOMMENDED_VERSION 495
+#define RECOMMENDED_VERSION 500
 /world/New()
+	// Honk honk, fuck you science
+	WORLD_X_OFFSET=rand(-50,50)
+	WORLD_Y_OFFSET=rand(-50,50)
+
 	starticon = rotate_icon('icons/obj/lightning.dmi', "lightningstart")
 	midicon = rotate_icon('icons/obj/lightning.dmi', "lightning")
 	endicon = rotate_icon('icons/obj/lightning.dmi', "lightningend")
 	//logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
-	log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM")].log")		//funtimelog
 	href_logfile = file("data/logs/[date_string] hrefs.htm")
 	diary = file("data/logs/[date_string].log")
 	diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
@@ -24,6 +27,9 @@
 
 	if(byond_version < RECOMMENDED_VERSION)
 		world.log << "Your server's byond version does not meet the recommended requirements for TGstation code. Please update BYOND"
+
+	if(config && config.log_runtimes)
+		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM-DD-(hh-mm-ss)")]-runtime.log")
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
@@ -91,6 +97,8 @@
 	master_controller = new /datum/controller/game_controller()
 	spawn(1)
 		master_controller.setup()
+
+		setup_species()
 
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
@@ -176,7 +184,7 @@
 #define INACTIVITY_KICK	6000	//10 minutes in ticks (approx.)
 /world/proc/KickInactiveClients()
 	spawn(-1)
-		set background = 1
+		//set background = 1
 		while(1)
 			sleep(INACTIVITY_KICK)
 			for(var/client/C in clients)

@@ -133,26 +133,26 @@
 	construction_time = 200
 	construction_cost = list("metal"=5000)
 
-
-// TODO: actual icons ;)
 /obj/item/robot_parts/robot_component/binary_communication_device
 	name = "binary communication device"
+	icon_state = "binary_translator"
 
 /obj/item/robot_parts/robot_component/actuator
 	name = "actuator"
+	icon_state = "actuator"
 
 /obj/item/robot_parts/robot_component/armour
 	name = "armour plating"
-	icon = 'icons/obj/clothing/suits.dmi'
-	icon_state = "bulletproof"
+	icon_state = "armor_plating"
 
 /obj/item/robot_parts/robot_component/camera
 	name = "camera"
-	icon = 'icons/obj/monitors.dmi'
-	icon_state = "cameracase"
+	icon_state = "camera"
 
 /obj/item/robot_parts/robot_component/diagnosis_unit
 	name = "diagnosis unit"
+	icon_state = "diagnosis_unit"
 
 /obj/item/robot_parts/robot_component/radio
 	name = "radio"
+	icon_state = "radio"

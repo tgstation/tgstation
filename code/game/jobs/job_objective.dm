@@ -36,7 +36,7 @@
 	return completed
 
 /datum/job_objective/proc/check_for_completion()
-	return 0
+	return per_unit && units_completed > 0
 
 /datum/game_mode/proc/declare_job_completion()
 	var/text = "<FONT size = 2><B>Job Completion:</B></FONT>"

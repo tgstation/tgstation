@@ -117,6 +117,10 @@
 					M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
 					firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
 					msg_admin_attack("[firer] ([firer.ckey]) shot [M] ([M.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
+					if(!iscarbon(firer))
+						M.LAssailant = null
+					else
+						M.LAssailant = firer
 				else
 					M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
 					msg_admin_attack("UNKNOWN shot [M] ([M.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
@@ -134,6 +138,10 @@
 							firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[BM]/[BM.ckey]</b> with a <b>[src.type]</b>"
 							log_attack("<font color='red'>[firer] ([firer.ckey]) shot [BM] ([BM.ckey]) with a [src.type]</font>")
 							msg_admin_attack("ATTACK: [firer] ([firer.ckey]) shot [BM] ([BM.ckey]) with a [src]") //BS12 EDIT ALG
+							if(!iscarbon(firer))
+								BM.LAssailant = null
+							else
+								BM.LAssailant = firer
 						else
 							BM.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[BM]/[BM.ckey]</b> with a <b>[src]</b>"
 							log_attack("<font color='red'>UNKNOWN shot [BM] ([BM.ckey]) with a [src.type]</font>")

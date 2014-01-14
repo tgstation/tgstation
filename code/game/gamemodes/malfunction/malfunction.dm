@@ -110,8 +110,8 @@
 
 
 /datum/game_mode/malfunction/proc/capture_the_station()
-	world << {"<FONT size = 3><B>The AI has won!</B></FONT><br />
-		<B>It has fully taken control of all of [station_name()]'s systems.</B>"}
+	world << {"<FONT size = 3><B>The AI has won!</B></FONT>
+<B>It has fully taken control of all of [station_name()]'s systems.</B>"}
 
 	to_nuke_or_not_to_nuke = 1
 	for(var/datum/mind/AI_mind in malf_ai)

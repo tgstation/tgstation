@@ -93,8 +93,12 @@
 						wet_overlay = null
 	if(model.graphics & GRAPHICS_PLASMA)
 		overlays.Add(plmaster)
+	else
+		overlays -= plmaster
 	if(model.graphics & GRAPHICS_N2O)
 		overlays.Add(slmaster)
+	else
+		overlays -= slmaster
 	//if(model.graphics & GRAPHICS_REAGENTS)
 	//	overlays.Add(slmaster/*rlmaster*/)
 

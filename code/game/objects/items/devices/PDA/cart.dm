@@ -506,8 +506,8 @@ Code:
 
 						// AUTOFIXED BY fix_string_idiocy.py
 						// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\cart.dm:481: menu += "<BR>\[<A href='byond://?src=\ref[SC];op=stop'>Stop Patrol</A>\] "
-						menu += {"<BR>\[<A href='byond://?src=\ref[SC];op=stop'>Stop Patrol</A>\] 
-							\[<A href='byond://?src=\ref[SC];op=go'>Start Patrol</A>\] 
+						menu += {"<BR>\[<A href='byond://?src=\ref[SC];op=stop'>Stop Patrol</A>\]
+							\[<A href='byond://?src=\ref[SC];op=go'>Start Patrol</A>\]
 							\[<A href='byond://?src=\ref[SC];op=summon'>Summon Bot</A>\]<BR>
 							<HR><A href='byond://?src=\ref[SC];op=botlist'><img src=pda_back.png>Return to bot list</A>"}
 						// END AUTOFIX
@@ -591,8 +591,8 @@ Code:
 							Home: [!QC.botstatus["home"] ? "<i>none</i>" : QC.botstatus["home"] ]<BR>
 							Auto Return Home: [QC.botstatus["retn"] ? "<B>On</B> <A href='byond://?src=\ref[QC];op=retoff'>Off</A>" : "(<A href='byond://?src=\ref[QC];op=reton'><i>On</i></A>) <B>Off</B>"]<BR>
 							Auto Pickup Crate: [QC.botstatus["pick"] ? "<B>On</B> <A href='byond://?src=\ref[QC];op=pickoff'>Off</A>" : "(<A href='byond://?src=\ref[QC];op=pickon'><i>On</i></A>) <B>Off</B>"]<BR><BR>
-							\[<A href='byond://?src=\ref[QC];op=stop'>Stop</A>\] 
-							\[<A href='byond://?src=\ref[QC];op=go'>Proceed</A>\] 
+							\[<A href='byond://?src=\ref[QC];op=stop'>Stop</A>\]
+							\[<A href='byond://?src=\ref[QC];op=go'>Proceed</A>\]
 							\[<A href='byond://?src=\ref[QC];op=home'>Return Home</A>\]<BR>
 							<HR><A href='byond://?src=\ref[QC];op=botlist'><img src=pda_back.png>Return to bot list</A>"}
 						// END AUTOFIX
@@ -604,7 +604,7 @@ Code:
 
 					// AUTOFIXED BY fix_string_idiocy.py
 					// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\cart.dm:565: menu += "Current Orbital Location: <b>\[[cl.x],[cl.y]\]</b>"
-					menu += {"Current Orbital Location: <b>\[[cl.x],[cl.y]\]</b>
+					menu += {"Current Orbital Location: <b>\[[cl.x+WORLD_X_OFFSET],[cl.y+WORLD_Y_OFFSET]\]</b>
 						<h4>Located Mops:</h4>"}
 					// END AUTOFIX
 					var/ldat
@@ -615,7 +615,7 @@ Code:
 							if (ml.z != cl.z)
 								continue
 							var/direction = get_dir(src, M)
-							ldat += "Mop - <b>\[[ml.x],[ml.y] ([uppertext(dir2text(direction))])\]</b> - [M.reagents.total_volume ? "Wet" : "Dry"]<br>"
+							ldat += "Mop - <b>\[[ml.x+WORLD_X_OFFSET],[ml.y+WORLD_Y_OFFSET] ([uppertext(dir2text(direction))])\]</b> - [M.reagents.total_volume ? "Wet" : "Dry"]<br>"
 
 					if (!ldat)
 						menu += "None"
@@ -632,7 +632,7 @@ Code:
 							if (bl.z != cl.z)
 								continue
 							var/direction = get_dir(src, B)
-							ldat += "Bucket - <b>\[[bl.x],[bl.y] ([uppertext(dir2text(direction))])\]</b> - Water level: [B.reagents.total_volume]/100<br>"
+							ldat += "Bucket - <b>\[[bl.x+WORLD_X_OFFSET],[bl.y+WORLD_Y_OFFSET] ([uppertext(dir2text(direction))])\]</b> - Water level: [B.reagents.total_volume]/100<br>"
 
 					if (!ldat)
 						menu += "None"
@@ -649,7 +649,7 @@ Code:
 							if (bl.z != cl.z)
 								continue
 							var/direction = get_dir(src, B)
-							ldat += "Cleanbot - <b>\[[bl.x],[bl.y] ([uppertext(dir2text(direction))])\]</b> - [B.on ? "Online" : "Offline"]<br>"
+							ldat += "Cleanbot - <b>\[[bl.x+WORLD_X_OFFSET],[bl.y+WORLD_Y_OFFSET] ([uppertext(dir2text(direction))])\]</b> - [B.on ? "Online" : "Offline"]<br>"
 
 					if (!ldat)
 						menu += "None"
