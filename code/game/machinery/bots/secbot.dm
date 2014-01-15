@@ -1,5 +1,5 @@
 /obj/machinery/bot/secbot
-	name = "Securitron"
+	name = "\improper Securitron"
 	desc = "A little security robot.  He looks less than thrilled."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "secbot0"
@@ -192,7 +192,7 @@ Auto Patrol: []"},
 		mode = SECBOT_IDLE
 
 /obj/machinery/bot/secbot/process()
-	set background = 1
+	set background = BACKGROUND_ENABLED
 
 	if(!src.on)
 		return
@@ -219,7 +219,7 @@ Auto Patrol: []"},
 				walk_to(src,0)
 
 			if(target)		// make sure target exists
-				if(get_dist(src, src.target) <= 1)		// if right next to perp
+				if(get_dist(src, src.target) <= 1 && isturf(src.target.loc))		// if right next to perp
 					playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 					src.icon_state = "secbot-c"
 					spawn(2)

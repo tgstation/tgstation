@@ -5,7 +5,7 @@
 	icon_state = "fire_extinguisher0"
 	item_state = "fire_extinguisher"
 	hitsound = 'sound/weapons/smash.ogg'
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	throwforce = 10
 	w_class = 3.0
 	throw_speed = 2
@@ -24,7 +24,7 @@
 	icon_state = "miniFE0"
 	item_state = "miniFE"
 	hitsound = null	//it is much lighter, after all.
-	flags = FPRINT | TABLEPASS
+	flags = null //doesn't CONDUCT
 	throwforce = 2
 	w_class = 2.0
 	force = 3.0
@@ -38,9 +38,8 @@
 
 /obj/item/weapon/extinguisher/examine()
 	set src in usr
-
-	usr << text("\icon[] [] contains [] units of water left!", src, src.name, src.reagents.total_volume)
 	..()
+	usr << "It contains [src.reagents.total_volume] units of water!"
 	return
 
 /obj/item/weapon/extinguisher/attack_self(mob/user as mob)

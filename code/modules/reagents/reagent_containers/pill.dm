@@ -41,12 +41,7 @@
 			M.visible_message("<span class='danger'>[user] forces [M] to swallow [src].</span>", \
 								"<span class='userdanger'>[user] forces [M] to swallow [src].</span>")
 
-
-			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] to [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
-
-
-			log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+			add_logs(user, M, "fed", object="[reagentlist(src)]")
 
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST)
@@ -126,6 +121,14 @@
 	New()
 		..()
 		reagents.add_reagent("kelotane", 30)
+
+/obj/item/weapon/reagent_containers/pill/dermaline
+	name = "dermaline pill"
+	desc = "Used to treat severe burns."
+	icon_state = "pill12"
+	New()
+		..()
+		reagents.add_reagent("dermaline", 30)
 
 /obj/item/weapon/reagent_containers/pill/inaprovaline
 	name = "inaprovaline pill"

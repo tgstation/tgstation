@@ -118,8 +118,8 @@ research holder datum.
 /datum/research/proc/AddDesign2Known(var/datum/design/D)
 	for(var/datum/design/known in known_designs)
 		if(D.id == known.id)
-			if(D.reliability_mod > known.reliability_mod)
-				known.reliability_mod = D.reliability_mod
+			if(D.reliability > known.reliability)
+				known.reliability = D.reliability
 			return
 	known_designs += D
 	return
@@ -144,17 +144,20 @@ research holder datum.
 /datum/research/proc/UpdateTech(var/ID, var/level)
 	for(var/datum/tech/KT in known_tech)
 		if(KT.id == ID)
-			if(KT.level <= level) KT.level = max((KT.level + 1), (level - 1))
+			if(KT.level <= level)
+				KT.level = max((KT.level + 1), (level - 1))
 	return
 
-/datum/research/proc/UpdateDesign(var/path)
-	for(var/datum/design/KD in known_designs)
-		if(KD.build_path == path)
-			KD.reliability_mod += rand(1,2)
-			break
-	return
-
-
+/datum/research/proc/UpdateDesigns(var/obj/item/I, var/list/temp_tech)
+	for(var/T in temp_tech)
+		if(temp_tech[T] - 1 >= known_tech[T])
+			for(var/datum/design/D in known_designs)
+				if(D.req_tech[T])
+					D.reliability = min(100, D.reliability + 1)
+					if(D.build_path == I.type)
+						D.reliability = min(100, D.reliability + rand(1,3))
+						if(I.crit_fail)
+							D.reliability = min(100, D.reliability + rand(3, 5))
 
 
 /***************************************************************

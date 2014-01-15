@@ -4,7 +4,6 @@
 	icon_state = "saber"	//ugly
 	w_class = 3.0
 	origin_tech = "combat=4;materials=2"
-	ammo_type = /obj/item/ammo_casing/c9mm
 	mag_type = /obj/item/ammo_box/magazine/msmg9mm
 	var/alarmed = 0
 
@@ -24,7 +23,6 @@
 	icon_state = "mini-uzi"
 	w_class = 3.0
 	origin_tech = "combat=5;materials=2;syndicate=8"
-	ammo_type = /obj/item/ammo_casing/c45
 	mag_type = /obj/item/ammo_box/magazine/uzim45
 
 
@@ -36,7 +34,6 @@
 	item_state = "c20r"
 	w_class = 3.0
 	origin_tech = "combat=5;materials=2;syndicate=8"
-	ammo_type = /obj/item/ammo_casing/a12mm
 	mag_type = /obj/item/ammo_box/magazine/m12mm
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 
@@ -58,7 +55,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/c20r/update_icon()
 	..()
-	icon_state = "c20r[magazine ? "-[round(get_ammo(0),4)]" : ""][chambered ? "" : "-e"]"
+	icon_state = "c20r[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""][chambered ? "" : "-e"]"
 	return
 
 
@@ -71,7 +68,6 @@
 	w_class = 5
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
-	ammo_type = /obj/item/ammo_casing/a762
 	mag_type = /obj/item/ammo_box/magazine/m762
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	var/cover_open = 0
@@ -84,7 +80,7 @@
 
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
-	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? round(magazine.ammo_count() * 2, 25) : "-empty"]"
+	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? Ceiling(get_ammo(0)/12.5)*25 : "-empty"]"
 
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays

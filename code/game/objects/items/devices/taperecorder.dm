@@ -7,7 +7,6 @@
 	slot_flags = SLOT_BELT
 	m_amt = 60
 	g_amt = 30
-	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 2
 	throwforce = 2
 	var/recording = 0
@@ -265,7 +264,6 @@
 	w_class = 1
 	m_amt = 20
 	g_amt = 5
-	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 1
 	throwforce = 1
 	var/max_capacity = 600

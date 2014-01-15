@@ -6,7 +6,7 @@
 	desc = "yummy"
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = null
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	flags = OPENCONTAINER
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,25)
 	volume = 50
@@ -42,13 +42,7 @@
 			if(!do_mob(user, M)) return
 			for(var/mob/O in viewers(world.view, user))
 				O.show_message("\red [user] feeds [M] [src].", 1)
-
-			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
-
-			log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
-
-
+			add_logs(user, M, "fed", object="[reagentlist(src)]")
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST)
 				spawn(5)
@@ -134,7 +128,7 @@
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = null
 	volume = 150
-	flags = FPRINT | CONDUCT | TABLEPASS | OPENCONTAINER
+	flags = CONDUCT | OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/food/drinks/golden_cup/tournament_26_06_2011
 	desc = "A golden cup. It will be presented to a winner of tournament 26 june and name of the winner will be graved on it."

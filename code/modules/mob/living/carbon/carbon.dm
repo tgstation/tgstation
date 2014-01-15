@@ -38,13 +38,20 @@
 						stomach_contents.Remove(A)
 					src.gib()
 
-/mob/living/carbon/gib()
+/mob/living/carbon/gib(var/animation = 1)
 	for(var/mob/M in src)
 		if(M in stomach_contents)
 			stomach_contents.Remove(M)
 		M.loc = loc
 		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
 	. = ..()
+
+/mob/living/carbon/AltClickOn(var/atom/A)
+	if(!src.stat && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
+		next_click = world.time + 5
+		call(src, src.mind.changeling.chosen_sting)(A)
+	else
+		..()
 
 /mob/living/carbon/attack_hand(mob/user)
 	if(!iscarbon(user)) return
@@ -358,8 +365,7 @@
 				var/start_T_descriptor = "<font color='#6b5d00'>tile at [start_T.x], [start_T.y], [start_T.z] in area [get_area(start_T)]</font>"
 				var/end_T_descriptor = "<font color='#6b4400'>tile at [end_T.x], [end_T.y], [end_T.z] in area [get_area(end_T)]</font>"
 
-				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been thrown by [usr.name] ([usr.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]</font>")
-				usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]</font>")
+				add_logs(usr, M, "thrown", admin=0, addition="from [start_T_descriptor] with the target [end_T_descriptor]")
 
 	if(!item) return //Grab processing has a chance of returning null
 
@@ -466,9 +472,9 @@
 	<HR>
 	<B><FONT size=3>[name]</FONT></B>
 	<HR>
-	<BR><B>Mask:</B> <A href='?src=\ref[src];item=[slot_wear_mask]'>		[wear_mask	? wear_mask	: "Nothing"]</A>
-	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=[slot_l_hand]'>		[l_hand		? l_hand	: "Nothing"]</A>
-	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=[slot_r_hand]'>		[r_hand		? r_hand	: "Nothing"]</A>"}
+	<BR><B>Mask:</B> <A href='?src=\ref[src];item=[slot_wear_mask]'>		[(wear_mask && !(wear_mask.flags&ABSTRACT))	? wear_mask	: "Nothing"]</A>
+	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=[slot_l_hand]'>		[(l_hand && !(l_hand.flags&ABSTRACT))		? l_hand	: "Nothing"]</A>
+	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=[slot_r_hand]'>		[(r_hand && !(r_hand.flags&ABSTRACT))		? r_hand	: "Nothing"]</A>"}
 
 	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=[slot_back]'> [back ? back : "Nothing"]</A>"
 
@@ -541,3 +547,29 @@
 	else if(prob(50))
 		return "trails_1"
 	return "trails_2"
+
+var/const/NO_SLIP_WHEN_WALKING = 1
+var/const/STEP = 2
+var/const/SLIDE = 4
+var/const/GALOSHES_DONT_HELP = 8
+/mob/living/carbon/slip(var/s_amount, var/w_amount, var/obj/O, var/lube)
+	if (m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
+		return 0
+	if(!lying)
+		stop_pulling()
+		if(lube&STEP)
+			step(src, src.dir)
+		if(lube&SLIDE)
+			for(var/i=1, i<5, i++)
+				spawn (i)
+					step(src, src.dir)
+			take_organ_damage(2)
+		if(O)
+			src << "<span class='notice'>You slipped on the [O.name]!</span>"
+		else
+			src << "<span class='notice'>You slipped!</span>"
+		playsound(loc, 'sound/misc/slip.ogg', 50, 1, -3)
+		Stun(s_amount)
+		Weaken(w_amount)
+		return 1
+	return 0 // no success. Used in clown pda and wet floors

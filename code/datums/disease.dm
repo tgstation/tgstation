@@ -49,6 +49,8 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	var/can_carry = 1 // If the disease allows "carriers".
 	// if hidden[1] is true, then virus is hidden from medical scanners
 	// if hidden[2] is true, then virus is hidden from PANDEMIC machine
+	var/requires = 0
+	var/list/required_limb = list()
 
 
 /datum/disease/proc/stage_act()
@@ -141,6 +143,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 
 
 /datum/disease/proc/process()
+
 	if(!holder)
 		active_diseases -= src
 		return
@@ -181,6 +184,13 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 
 
 /datum/disease/New(var/process=1, var/datum/disease/D)//process = 1 - adding the object to global list. List is processed by master controller.
+	if(requires == 1)
+		if(ishuman(affected_mob))
+			var/mob/living/carbon/human/H = affected_mob
+			if(!H.getlimb(required_limb))
+				cure(1)
+				return
+
 	cure_list = list(cure_id) // to add more cures, add more vars to this list in the actual disease's New()
 	if(process)				 // Viruses in list are considered active.
 		active_diseases += src

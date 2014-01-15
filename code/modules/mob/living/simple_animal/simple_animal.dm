@@ -57,9 +57,16 @@
 
 	var/speed = 0 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
 
+	//Hot simple_animal baby making vars
+	var/childtype = null
+	var/scan_ready = 1
+	var/species //Sorry, no spider+corgi buttbabies.
+
 /mob/living/simple_animal/New()
 	..()
 	verbs -= /mob/verb/observe
+	if(!real_name)
+		real_name = name
 
 /mob/living/simple_animal/Login()
 	if(src && src.client)
@@ -79,6 +86,7 @@
 			living_mob_list += src
 			stat = CONSCIOUS
 			density = 1
+			update_canmove()
 		return 0
 
 
@@ -209,7 +217,7 @@
 		else
 			..()
 
-/mob/living/simple_animal/gib()
+/mob/living/simple_animal/gib(var/animation = 0)
 	if(icon_gib)
 		flick(icon_gib, src)
 	if(meat_amount && meat_type)
@@ -246,8 +254,7 @@
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red <B>\The [M]</B> [M.attacktext] [src]!", 1)
-		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
-		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
+		add_logs(M, src, "attacked", admin=0)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
 
@@ -278,7 +285,6 @@
 
 			M.put_in_active_hand(G)
 
-			grabbed_by += G
 			G.synch()
 
 			LAssailant = M
@@ -314,7 +320,6 @@
 
 			M.put_in_active_hand(G)
 
-			grabbed_by += G
 			G.synch()
 			LAssailant = M
 
@@ -396,12 +401,7 @@
 			return
 	else if(meat_type && (stat == DEAD))	//if the animal has a meat, and if it is dead.
 		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
-			new meat_type (get_turf(src))
-			if(prob(95))
-				del(src)
-				return
-			gib()
-			return
+			harvest()
 	else
 		if(O.force)
 			var/damage = O.force
@@ -433,7 +433,6 @@
 	stat(null, "Health: [round((health / maxHealth) * 100)]%")
 
 /mob/living/simple_animal/proc/Die()
-	living_mob_list -= src
 	dead_mob_list += src
 	icon_state = icon_dead
 	stat = DEAD
@@ -441,11 +440,9 @@
 	return
 
 /mob/living/simple_animal/ex_act(severity)
-	if(!blinded)
-		flick("flash", flash)
+	..()
 	switch (severity)
 		if (1.0)
-			adjustBruteLoss(500)
 			gib()
 			return
 
@@ -461,13 +458,15 @@
 	if(health < 1 && stat != DEAD)
 		Die()
 
-/mob/living/simple_animal/proc/SA_attackable(target)
-	if (isliving(target))
-		var/mob/living/L = target
-		if(!L.stat)
+/mob/living/simple_animal/proc/CanAttack(var/atom/the_target)
+	if(see_invisible < the_target.invisibility)
+		return 0
+	if (isliving(the_target))
+		var/mob/living/L = the_target
+		if(L.stat != CONSCIOUS)
 			return 0
-	if (istype(target,/obj/mecha))
-		var/obj/mecha/M = target
+	if (istype(the_target, /obj/mecha))
+		var/obj/mecha/M = the_target
 		if (M.occupant)
 			return 0
 	return 1
@@ -478,4 +477,40 @@
 /mob/living/simple_animal/IgniteMob()
 	return
 /mob/living/simple_animal/ExtinguishMob()
+	return
+
+/mob/living/simple_animal/revive()
+	health = maxHealth
+	..()
+
+/mob/living/simple_animal/proc/make_babies() // <3 <3 <3
+	if(gender != FEMALE || stat || !scan_ready || !childtype || !species)
+		return
+	scan_ready = 0
+	spawn(400)
+		scan_ready = 1
+	var/alone = 1
+	var/mob/living/simple_animal/partner
+	var/children = 0
+	for(var/mob/M in oview(7, src))
+		if(istype(M, childtype)) //Check for children FIRST.
+			children++
+		else if(istype(M, species))
+			if(M.client)
+				continue
+			else if(!istype(M, childtype) && M.gender == MALE) //Better safe than sorry ;_;
+				partner = M
+		else if(istype(M, /mob/))
+			alone = 0
+			continue
+	if(alone && partner && children < 3)
+		new childtype(loc)
+
+// Harvest an animal's delicious byproducts
+/mob/living/simple_animal/proc/harvest()
+	new meat_type (get_turf(src))
+	if(prob(95))
+		del(src)
+		return
+	gib()
 	return

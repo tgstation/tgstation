@@ -93,6 +93,25 @@
 		new /obj/item/device/healthanalyzer( src )
 		return
 
+/obj/item/weapon/storage/firstaid/tactical
+	name = "first-aid kit"
+	icon_state = "bezerk"
+	desc = "I hope you've got insurance."
+	max_w_class = 3
+
+	New()
+		..()
+		if (empty) return
+		new /obj/item/clothing/tie/stethoscope( src )
+		new /obj/item/weapon/surgicaldrill ( src )
+		new /obj/item/weapon/reagent_containers/hypospray/combat( src )
+		new /obj/item/weapon/reagent_containers/pill/bicaridine( src )
+		new /obj/item/weapon/reagent_containers/pill/dermaline( src )
+		new /obj/item/weapon/reagent_containers/syringe/lethal/choral( src )
+		new /obj/item/clothing/glasses/hud/health( src )
+		return
+
+
 /*
  * Pill Bottles
  */
@@ -131,7 +150,7 @@
 	return
 
 /obj/item/weapon/storage/pill_bottle/kelotane
-	name = "Pill bottle (kelotane)"
+	name = "bottle of kelotane pills"
 	desc = "Contains pills used to treat burns."
 
 	New()
@@ -145,7 +164,7 @@
 		new /obj/item/weapon/reagent_containers/pill/kelotane( src )
 
 /obj/item/weapon/storage/pill_bottle/antitox
-	name = "Pill bottle (Anti-toxin)"
+	name = "bottle of anti-toxin pills"
 	desc = "Contains pills used to counter toxins."
 
 	New()
@@ -159,7 +178,7 @@
 		new /obj/item/weapon/reagent_containers/pill/antitox( src )
 
 /obj/item/weapon/storage/pill_bottle/inaprovaline
-	name = "Pill bottle (inaprovaline)"
+	name = "bottle of inaprovaline pills"
 	desc = "Contains pills used to stabilize patients."
 
 	New()

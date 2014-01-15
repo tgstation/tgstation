@@ -1,10 +1,9 @@
 /obj/machinery/pipedispenser
-	name = "Pipe Dispenser"
+	name = "pipe dispenser"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
 	density = 1
 	anchored = 1
-	var/unwrenched = 0
 	var/wait = 0
 
 /obj/machinery/pipedispenser/attack_paw(user as mob)
@@ -19,9 +18,10 @@
 <A href='?src=\ref[src];make=1;dir=5'>Bent Pipe</A><BR>
 <A href='?src=\ref[src];make=5;dir=1'>Manifold</A><BR>
 <A href='?src=\ref[src];make=8;dir=1'>Manual Valve</A><BR>
+<A href='?src=\ref[src];make=18;dir=1'>Digital Valve</A><BR>
 <b>Devices:</b><BR>
 <A href='?src=\ref[src];make=4;dir=1'>Connector</A><BR>
-<A href='?src=\ref[src];make=7;dir=1'>Unary Vent</A><BR>
+<A href='?src=\ref[src];make=7;dir=1'>Vent</A><BR>
 <A href='?src=\ref[src];make=9;dir=1'>Gas Pump</A><BR>
 <A href='?src=\ref[src];make=15;dir=1'>Passive Gate</A><BR>
 <A href='?src=\ref[src];make=16;dir=1'>Volume Pump</A><BR>
@@ -47,7 +47,7 @@
 /obj/machinery/pipedispenser/Topic(href, href_list)
 	if(..())
 		return
-	if(unwrenched || !usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+	if(!anchored|| !usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
 		usr << browse(null, "window=pipedispenser")
 		return
 	usr.set_machine(src)
@@ -71,44 +71,42 @@
 	return
 
 /obj/machinery/pipedispenser/attackby(var/obj/item/W as obj, var/mob/user as mob)
-	src.add_fingerprint(usr)
+	add_fingerprint(user)
 	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
-		usr << "\blue You put [W] back to [src]."
+		usr << "<span class='notice'>You put [W] back into [src].</span>"
 		user.drop_item()
 		del(W)
 		return
 	else if (istype(W, /obj/item/weapon/wrench))
-		if (unwrenched==0)
+		if (!anchored && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			user << "\blue You begin to unfasten \the [src] from the floor..."
+			user << "<span class='notice'>You begin to fasten \the [src] to the floor...</span>"
 			if (do_after(user, 40))
 				user.visible_message( \
-					"[user] unfastens \the [src].", \
-					"\blue You have unfastened \the [src]. Now it can be pulled somewhere else.", \
+					"[user] fastens \the [src].", \
+					"<span class='notice'>You have fastened \the [src]. Now it can dispense pipes.</span>", \
 					"You hear ratchet.")
-				src.anchored = 0
-				src.stat |= MAINT
-				src.unwrenched = 1
+				anchored = 1
+				stat &= MAINT
 				if (usr.machine==src)
 					usr << browse(null, "window=pipedispenser")
-		else /*if (unwrenched==1)*/
+		else if(anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			user << "\blue You begin to fasten \the [src] to the floor..."
+			user << "<span class='notice'>You begin to unfasten \the [src] from the floor...</span>"
 			if (do_after(user, 20))
 				user.visible_message( \
-					"[user] fastens \the [src].", \
-					"\blue You have fastened \the [src]. Now it can dispense pipes.", \
+					"[user] unfastens \the [src].", \
+					"<span class='notice'>You have unfastened \the [src]. Now it can be pulled somewhere else.</span>", \
 					"You hear ratchet.")
-				src.anchored = 1
-				src.stat &= ~MAINT
-				src.unwrenched = 0
+				anchored = 0
+				stat |= ~MAINT
 				power_change()
 	else
 		return ..()
 
 
 /obj/machinery/pipedispenser/disposal
-	name = "Disposal Pipe Dispenser"
+	name = "disposal pipe dispenser"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
 	density = 1
@@ -163,7 +161,7 @@ Nah
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["dmake"])
-		if(unwrenched || !usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+		if(!anchored || !usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
 			usr << browse(null, "window=pipedispenser")
 			return
 		if(!wait)

@@ -105,8 +105,8 @@ datum/shuttle_controller
 				callshuttle = 0 //if there's an alive AI or a communication console on the station z level, we don't call the shuttle
 				break
 
-		if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction")
-			callshuttle = 0
+			if(ticker && ticker.mode && (ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction"))
+				callshuttle = 0
 
 		if(callshuttle)
 			if(!online && direction == 1) //we don't call the shuttle if it's already coming
@@ -138,10 +138,10 @@ datum/shuttle_controller
 						direction = 1
 						endtime = null
 						return 0
-					else if(fake_recall && (timeleft <= fake_recall))
-						recall()
-						fake_recall = 0
-						return 0
+				else if(fake_recall && (timeleft <= fake_recall))
+					recall()
+					fake_recall = 0
+					return 0
 				else if(timeleft <= 0)
 					var/datum/shuttle_manager/s = shuttles["escape"]
 					s.move_shuttle()
@@ -158,7 +158,7 @@ datum/shuttle_controller
 					captain_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.")
 				else if(location == TRANSIT)
 					move_shuttles()
-					message_admins("Shuttles have attempted to move to Centcom")
+					//message_admins("Shuttles have attempted to move to Centcom")
 					location = ENDGAME
 					online = 0
 					endtime = null

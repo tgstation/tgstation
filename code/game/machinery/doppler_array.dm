@@ -22,10 +22,15 @@ var/list/doppler_arrays = list()
 
 /obj/machinery/doppler_array/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/wrench))
+		if(!anchored && !isinspace())
+			anchored = 1
+			power_change()
+			user << "<span class='notice'>You fasten [src].</span>"
+		else if(anchored)
+			anchored = 0
+			power_change()
+			user << "<span class='notice'>You unfasten [src].</span>"
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		anchored = !anchored
-		power_change()
-		user << "You [anchored ? "wrench" : "unwrench"] [src]."
 
 /obj/machinery/doppler_array/verb/rotate()
 	set name = "Rotate Tachyon-doppler Dish"

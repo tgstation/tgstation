@@ -1,7 +1,7 @@
 obj/structure/door_assembly
 	icon = 'icons/obj/doors/door_assembly.dmi'
 
-	name = "Airlock Assembly"
+	name = "airlock assembly"
 	icon_state = "door_as_0"
 	anchored = 0
 	density = 1
@@ -20,7 +20,7 @@ obj/structure/door_assembly
 		base_icon_state = copytext(icon_state,1,lentext(icon_state))
 
 	door_assembly_0
-		name = "Airlock Assembly"
+		name = "airlock assembly"
 		icon_state = "door_as_1"
 		airlock_type = /obj/machinery/door/airlock
 		anchored = 1
@@ -28,7 +28,7 @@ obj/structure/door_assembly
 		state = 1
 
 	door_assembly_com
-		name = "Command Airlock Assembly"
+		name = "command airlock assembly"
 		icon_state = "door_as_com1"
 		glass_base_icon_state = "door_as_gcom"
 		typetext = "command"
@@ -44,7 +44,7 @@ obj/structure/door_assembly
 			icon_state = "door_as_gcom1"
 
 	door_assembly_sec
-		name = "Security Airlock Assembly"
+		name = "security airlock assembly"
 		icon_state = "door_as_sec1"
 		glass_base_icon_state = "door_as_gsec"
 		typetext = "security"

@@ -1,7 +1,7 @@
 // It is a gizmo that flashes a small area
 
 /obj/machinery/flasher
-	name = "Mounted flash"
+	name = "mounted flash"
 	desc = "A wall-mounted flashbulb device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"
@@ -26,7 +26,7 @@
 	bulb = new /obj/item/device/flash(src)
 
 /obj/machinery/flasher/power_change()
-	if (powered() && bulb && anchored)
+	if (powered() && anchored && bulb)
 		stat &= ~NOPOWER
 		if(bulb.broken)
 			icon_state = "[base_state]1-p"
@@ -128,17 +128,18 @@
 /obj/machinery/flasher/portable/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-		anchored = !anchored
 
-		if (!anchored)
-			user.show_message(text("\red [src] can now be moved."))
-			overlays.Cut()
-			power_change()
-
-		else if (anchored)
-			user.show_message(text("\red [src] is now secured."))
+		if (!anchored && !isinspace())
+			user << "<span class='notice'>[src] is now secured.</span>"
 			overlays += "[base_state]-s"
+			anchored = 1
 			power_change()
+		else
+			user << "<span class='notice'>[src] can now be moved.</span>"
+			overlays.Cut()
+			anchored = 0
+			power_change()
+
 	else
 		..()
 

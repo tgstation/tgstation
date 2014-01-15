@@ -208,7 +208,7 @@
 	throw_range = 5
 	m_amt = 50
 	g_amt = 20
-	flags = TABLEPASS | FPRINT | CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 
@@ -302,8 +302,8 @@
 	if(src.amount < used)
 		return 0
 	else if (src.amount == used)
-		//handle mob icon update
-		if(ismob(loc))
+		.=1 //Because del(src) stops the proc, set the default return value to 1
+		if(ismob(loc)) //handle mob icon update
 			var/mob/M = loc
 			M.u_equip(src)
 		del(src)
@@ -468,7 +468,9 @@
 			if (prob(50)) //fail
 				new/obj/item/weapon/cable_coil(C.loc, 2, C.cable_color)
 				del(C)
+				return
 
+		C.denode()// this call may have disconnected some cables that terminated on the centre of the turf, if so split the powernets.
 		return
 
 /obj/structure/cable/proc/mergeConnectedNetworks(var/direction)
@@ -512,12 +514,13 @@
 	for(var/AM in loc)
 		if(istype(AM,/obj/structure/cable))
 			var/obj/structure/cable/C = AM
-			if(C.powernet == powernet)	continue
-			if(C.powernet)
-				merge_powernets(powernet, C.powernet)
-			else
-				C.powernet = powernet
-				powernet.cables += C
+			if(C.d1 == 0 && d1==0) //only connected if they are both "nodes"
+				if(C.powernet == powernet)	continue
+				if(C.powernet)
+					merge_powernets(powernet, C.powernet)
+				else
+					C.powernet = powernet
+					powernet.cables += C
 
 		else if(istype(AM,/obj/machinery/power/apc))
 			var/obj/machinery/power/apc/N = AM

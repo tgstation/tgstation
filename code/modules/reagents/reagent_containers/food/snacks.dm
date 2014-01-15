@@ -71,12 +71,7 @@
 					return 0
 
 				if(!do_mob(user, M)) return
-
-				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
-				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
-
-				log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
-
+				add_logs(user, M, "fed", object="[reagentlist(src)]")
 				M.visible_message("<span class='danger'>[user] forces [M] to eat [src].</span>", \
 									"<span class='userdanger'>[user] feeds [M] to eat [src].</span>")
 
@@ -545,7 +540,6 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
-		reagents.add_reagent("psilocybin", 3)
 		src.bitesize = 6
 
 /obj/item/weapon/reagent_containers/food/snacks/tomatomeat
@@ -575,6 +569,26 @@
 		..()
 		reagents.add_reagent("nutriment", 3)
 		src.bitesize = 6
+
+/obj/item/weapon/reagent_containers/food/snacks/spidermeat
+	name = "spider meat"
+	desc = "A slab of spider meat."
+	icon_state = "spidermeat"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("toxin", 3)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/spiderleg
+	name = "spider leg"
+	desc = "A still twitching leg of a giant spider... you don't really want to eat this, do you?"
+	icon_state = "spiderleg"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("toxin", 2)
+		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/faggot
 	name = "faggot"
@@ -873,7 +887,7 @@
 		..()
 		reagents.add_reagent("nutriment", 5)
 		reagents.add_reagent("amatoxin", 3)
-		reagents.add_reagent("psilocybin", 1)
+		reagents.add_reagent("mushroomhallucinogen", 1)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/plump_pie
@@ -997,7 +1011,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/spacetwinkie
 	name = "space twinkie"
 	icon_state = "space_twinkie"
-	desc = "Guaranteed to survive longer then you will."
+	desc = "Guaranteed to survive longer than you will."
 	New()
 		..()
 		reagents.add_reagent("sugar", 4)
@@ -1112,7 +1126,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
-		reagents.add_reagent("psilocybin", 6)
+		reagents.add_reagent("mushroomhallucinogen", 6)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/amanitajelly
@@ -1124,7 +1138,7 @@
 		..()
 		reagents.add_reagent("nutriment", 6)
 		reagents.add_reagent("amatoxin", 6)
-		reagents.add_reagent("psilocybin", 3)
+		reagents.add_reagent("mushroomhallucinogen", 3)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/poppypretzel
@@ -1467,7 +1481,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 8)
-		reagents.add_reagent("psilocybin", 8)
+		reagents.add_reagent("mushroomhallucinogen", 8)
 		bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/stew
@@ -1813,6 +1827,28 @@
 	icon_state = "xenobreadslice"
 	trash = /obj/item/trash/plate
 	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/spidermeatbread
+	name = "spider meat loaf"
+	desc = "Reassuringly green meatloaf made from spider meat."
+	icon_state = "spidermeatbread"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/spidermeatbreadslice
+	slices_num = 5
+	New()
+		..()
+		reagents.add_reagent("nutriment", 30)
+		reagents.add_reagent("toxin", 15)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/spidermeatbreadslice
+	name = "spider meat bread slice"
+	desc = "A slice of meatloaf made from an animal that most likely still wants you dead."
+	icon_state = "xenobreadslice"
+	trash = /obj/item/trash/plate
+	bitesize = 2
+	New()
+		..()
+		reagents.add_reagent("toxin", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/bananabread
 	name = "banana-nut bread"
@@ -2351,3 +2387,124 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1)
+
+
+////////////////////////////////FOOD ADDITIONS////////////////////////////////////////////
+
+/obj/item/weapon/reagent_containers/food/snacks/wrap
+	name = "egg wrap"
+	desc = "The precursor to Pigs in a Blanket."
+	icon_state = "wrap"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 5)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/beans
+	name = "tin of beans"
+	desc = "Musical fruit in a slightly less musical container."
+	icon_state = "beans"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 10)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/benedict
+	name = "eggs benedict"
+	desc = "There is only one egg on this, how rude."
+	icon_state = "benedict"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/hotdog
+	name = "hotdog"
+	desc = "Fresh footlong ready to go down on."
+	icon_state = "hotdog"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("ketchup", 3)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/meatbun
+	name = "meat bun"
+	desc = "Has the potential to not be Dog."
+	icon_state = "meatbun"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		bitesize = 6
+
+/obj/item/weapon/reagent_containers/food/snacks/icecreamsandwich
+	name = "icecream sandwich"
+	desc = "Portable Ice-cream in it's own packaging."
+	icon_state = "icecreamsandwich"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("ice", 2)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/notasandwich
+	name = "not-a-sandwich"
+	desc = "Something seems to be wrong with this, you can't quite figure what. Maybe it's his moustache."
+	icon_state = "notasandwich"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/sugarcookie
+	name = "sugar cookie"
+	desc = "Just like your little sister used to make."
+	icon_state = "sugarcookie"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("sugar", 5)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledspiderleg
+	name = "boiled spider leg"
+	desc = "A giant spider's leg that's still twitching after being cooked. Gross!"
+	icon_state = "spiderlegcooked"
+	trash = /obj/item/trash/plate
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("toxin", 2)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/spidereggs
+	name = "spider eggs"
+	desc = "A cluster of juicy spider eggs. A great side dish for when you care not for your health."
+	icon_state = "spidereggs"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("toxin", 3)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/spidereggsham
+	name = "green eggs and ham"
+	desc = "Would you eat them on a train? Would you eat them on a plane? Would you eat them on a state of the art corporate deathtrap floating through space?"
+	icon_state = "spidereggsham"
+	trash = /obj/item/trash/plate
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("sodiumchloride", 1)
+		reagents.add_reagent("toxin", 3)
+		bitesize = 4
+
+/obj/item/weapon/reagent_containers/food/snacks/sashimi
+	name = "carp sashimi"
+	desc = "Celebrate surviving attack from hostile alien lifeforms by hospitalising yourself."
+	icon_state = "sashimi"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("toxin", 5)
+		bitesize = 3

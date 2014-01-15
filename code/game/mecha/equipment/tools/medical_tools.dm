@@ -1,5 +1,5 @@
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper
-	name = "Mounted Sleeper"
+	name = "mounted sleeper"
 	desc = "Mounted Sleeper. (Can be attached to: Medical Exosuits)"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
@@ -195,9 +195,7 @@
 		if(to_inject && occupant.reagents.get_reagent_amount(R.id) + to_inject <= inject_amount*2)
 			occupant_message("Injecting [occupant] with [to_inject] units of [R.name].")
 			log_message("Injecting [occupant] with [to_inject] units of [R.name].")
-			occupant.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been injected with [name] ([R] - [to_inject] units) by [chassis.occupant.name] ([chassis.occupant.ckey])</font>"
-			chassis.occupant.attack_log += "\[[time_stamp()]\] <font color='red'>Used the [name] ([R] - [to_inject] units) to inject [occupant.name] ([occupant.ckey])</font>"
-			log_attack("<font color='red'>[chassis.occupant.name] ([chassis.occupant.ckey]) used the [name] ([R] - [to_inject] units) to inject [occupant.name] ([occupant.ckey])</font>")
+			add_logs(chassis.occupant, occupant, "injected", object="[name] ([R] - [to_inject] units)")
 			SG.reagents.trans_id_to(occupant,R.id,to_inject)
 			update_equip_info()
 		return
@@ -209,6 +207,9 @@
 			send_byjax(chassis.occupant,"msleeper.browser","injectwith",get_available_reagents())
 			return 1
 		return
+
+	container_resist()
+		go_out()
 
 /datum/global_iterator/mech_sleeper
 
@@ -241,7 +242,7 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/tool/cable_layer
-	name = "Cable Layer"
+	name = "cable layer"
 	icon_state = "mecha_wire"
 	var/datum/event/event
 	var/turf/old_turf
@@ -388,7 +389,7 @@
 		return 1
 
 /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun
-	name = "Syringe Gun"
+	name = "syringe gun"
 	desc = "Exosuit-mounted chem synthesizer with syringe gun. Reagents inside are held in stasis, so no reactions will occur. (Can be attached to: Medical Exosuits)"
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "syringegun"
@@ -465,8 +466,6 @@
 		S.icon_state = "syringeproj"
 		playsound(chassis, 'sound/items/syringeproj.ogg', 50, 1)
 		log_message("Launched [S] from [src], targeting [target].")
-		var/O = "[chassis.occupant]"
-		var/C = "[chassis.occupant.ckey]"
 		var/mob/originaloccupant = chassis.occupant
 		spawn(-1)
 			src = null //if src is deleted, still process the syringe
@@ -489,10 +488,7 @@
 						S.reagents.trans_to(M, S.reagents.total_volume)
 						M.take_organ_damage(2)
 						S.visible_message("<span class=\"attack\"> [M] was hit by the syringe!</span>")
-						M.attack_log += "\[[time_stamp()]\] <b>[O]/[C]</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"
-						if(originaloccupant)
-							originaloccupant.attack_log += "\[[time_stamp()]\] <b>[originaloccupant]/[originaloccupant.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"
-						log_attack("<font color='red'>[O] ([C]) shot [M] ([M.ckey]) with a syringegun ([R])</font>")
+						add_logs(originaloccupant, M, "shot", object="syringegun")
 						break
 					else if(S.loc == trg)
 						S.icon_state = initial(S.icon_state)

@@ -73,7 +73,7 @@
 			stop_automated_movement = 1
 			var/found_mob = 0
 			if(target && target in ListTargets())
-				if(!(SA_attackable(target)))
+				if(CanAttack(target))
 					stance_step = max(0, stance_step) //If we have not seen a mob in a while, the stance_step will be negative, we need to reset it to 0 as soon as we see a mob again.
 					stance_step++
 					found_mob = 1

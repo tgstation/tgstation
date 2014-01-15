@@ -54,7 +54,7 @@
 	var/datum/trackable/TB = new()
 	for(var/mob/living/M in mob_list)
 		// Easy checks first.
-		// Don't detect mobs on Centcom. Since the wizard den is on Centcomm, we only need this.
+		// Don't detect mobs on Centcom. Since the wizard den is on Centcom, we only need this.
 		var/turf/T = get_turf(M)
 		if(!T)
 			continue
@@ -125,7 +125,7 @@
 	//U << text("Now tracking [] on camera.", target.name)
 	//if (U.machine == null)
 	//	U.machine = U
-	U << "Now tracking [target.name] on camera."
+	U << "Now tracking [target.get_visible_name()] on camera."
 
 	spawn (0)
 		while (U.cameraFollow == target)

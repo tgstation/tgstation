@@ -7,6 +7,7 @@ body
 	line-height: 170%;
 	font-family: Verdana, Geneva, sans-serif;	
     background: #272727 url(uiBackground.png) 50% 0 repeat-x;
+	overflow-x: hidden;
 }
 
 hr
@@ -188,10 +189,20 @@ h4
 	clear: both;
 	padding: 8px;
 }
+#uiNoJavaScript {
+    position: relative;
+    background: url(uiNoticeBackground.jpg) 50% 50%;
+    color: #000000;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: bold;
+    padding: 3px 4px 3px 4px;
+    margin: 4px 0 4px 0;
+}
 
 .good
 {
-	color: #4f7529;
+	color: #79B33F; /*#4f7529;*/
 	font-weight: bold;
 }
 
@@ -219,8 +230,7 @@ h4
 
 .notice
 {
-	position: relative;
-	background: url(uiNoticeBackground.jpg) 50% 50% no-repeat;
+	background: url(uiNoticeBackground.jpg) 0 0 repeat;
 	color: #15345A;
 	font-size: 12px;
 	font-style: italic;
@@ -251,6 +261,7 @@ div.notice
 .item
 {
 	width: 100%;
+	min-height: 22px;
 	clear: both;
 }
 
@@ -261,6 +272,10 @@ div.notice
 	color: #e9c183;
 }
 
+.itemContentFull
+{
+	float: left;
+}
 .itemContent
 {
 	float: left;
@@ -269,7 +284,7 @@ div.notice
 .itemContentSmall
 {
 	float: left;
-	width: 33%;
+	width: 30%;
 }
 
 .statusDisplay

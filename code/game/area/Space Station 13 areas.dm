@@ -150,10 +150,12 @@ proc/process_ghost_teleport_locs()
 
 /area/shuttle/escape/centcom
 	name = "\improper Emergency Shuttle Centcom"
+	icon_state = "shuttle"
 	destination = /area/shuttle/escape/station
 
 /area/shuttle/escape/transit // the area to pass through for 3 minute transit
 	name = "\improper Emergency Shuttle Transit"
+	icon_state = "shuttle"
 	destination = /area/shuttle/escape/centcom
 
 /area/shuttle/escape_pod1
@@ -362,6 +364,11 @@ proc/process_ghost_teleport_locs()
 /area/planet/clown
 	name = "\improper Clown Planet"
 	icon_state = "honk"
+	requires_power = 0
+
+/area/telesciareas
+	name = "\improper Cosmic Anomaly"
+	icon_state = "telesci"
 	requires_power = 0
 
 /area/tdome
@@ -1134,6 +1141,10 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Server Room"
 	icon_state = "server"
 
+/area/toxins/telesci
+	name = "\improper Telescience Lab"
+	icon_state = "toxtest"
+
 //Storage
 
 /area/storage/tools
@@ -1496,7 +1507,7 @@ proc/process_ghost_teleport_locs()
 				Obj << mysound
 
 	proc/process()
-		set background = 1
+		set background = BACKGROUND_ENABLED
 
 		var/sound/S = null
 		var/sound_delay = 0

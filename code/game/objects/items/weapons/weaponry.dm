@@ -3,7 +3,6 @@
 	name = "banhammer"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "toyhammer"
-	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
 	throwforce = 0
 	w_class = 1.0
@@ -11,16 +10,20 @@
 	throw_range = 15
 	attack_verb = list("banned")
 
-	suicide_act(mob/user)
+/obj/item/weapon/banhammer/suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is hitting \himself with the [src.name]! It looks like \he's trying to ban \himself from life.</b>"
 		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
+
+/obj/item/weapon/banhammer/attack(mob/M, mob/user)
+	M << "<font color='red'><b> You have been banned FOR NO REISIN by [user]<b></font>"
+	user << "<font color='red'> You have <b>BANNED</b> [M]</font>"
+
 
 /obj/item/weapon/nullrod
 	name = "null rod"
 	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of Nar-Sie's followers."
 	icon_state = "nullrod"
 	item_state = "nullrod"
-	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
 	force = 15
 	throw_speed = 1
@@ -37,7 +40,6 @@
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
 	icon_state = "sord"
 	item_state = "sord"
-	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
 	force = 2
 	throwforce = 1
@@ -54,7 +56,7 @@
 	desc = "What are you standing around staring at this for? Get to killing!"
 	icon_state = "claymore"
 	item_state = "claymore"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 40
 	throwforce = 10
@@ -77,7 +79,7 @@
 	desc = "Woefully underpowered in D20"
 	icon_state = "katana"
 	item_state = "katana"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
 	throwforce = 10
@@ -93,11 +95,11 @@
 		return 1
 
 obj/item/weapon/wirerod
-	name = "Wired rod"
+	name = "wired rod"
 	desc = "A rod with some wire wrapped around the top. It'd be easy to attach something to the top bit."
 	icon_state = "wiredrod"
 	item_state = "rods"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	force = 9
 	throwforce = 10
 	w_class = 3

@@ -141,18 +141,24 @@
 	mymob.healths.name = "health"
 	mymob.healths.screen_loc = ui_alien_health
 
+	alien_plasma_display = new /obj/screen()
+	alien_plasma_display.icon = 'icons/mob/screen_gen.dmi'
+	alien_plasma_display.icon_state = "power_display2"
+	alien_plasma_display.name = "plasma stored"
+	alien_plasma_display.screen_loc = ui_alienplasmadisplay
+
 	mymob.blind = new /obj/screen()
 	mymob.blind.icon = 'icons/mob/screen_full.dmi'
 	mymob.blind.icon_state = "blackimageoverlay"
 	mymob.blind.name = " "
-	mymob.blind.screen_loc = "1,1"
+	mymob.blind.screen_loc = "CENTER-7,CENTER-7"
 	mymob.blind.layer = 0
 
 	mymob.flash = new /obj/screen()
 	mymob.flash.icon = 'icons/mob/screen_alien.dmi'
 	mymob.flash.icon_state = "blank"
 	mymob.flash.name = "flash"
-	mymob.flash.screen_loc = "1,1 to 15,15"
+	mymob.flash.screen_loc = "WEST,SOUTH to EAST,NORTH"
 	mymob.flash.layer = 17
 
 	mymob.zone_sel = new /obj/screen/zone_sel/alien()
@@ -161,6 +167,6 @@
 
 	mymob.client.screen = null
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.toxin, mymob.fire, mymob.healths, mymob.pullin, mymob.blind, mymob.flash) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.toxin, mymob.fire, mymob.healths, alien_plasma_display, mymob.pullin, mymob.blind, mymob.flash) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += adding + other
 

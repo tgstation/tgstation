@@ -1,6 +1,6 @@
 
 /obj/machinery/gibber
-	name = "Gibber"
+	name = "gibber"
 	desc = "The name isn't descriptive enough?"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"
@@ -65,7 +65,7 @@
 /obj/machinery/gibber/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
-/obj/machinery/gibber/relaymove(mob/user as mob)
+/obj/machinery/gibber/container_resist()
 	src.go_out()
 	return
 
@@ -104,7 +104,7 @@
 
 /obj/machinery/gibber/verb/eject()
 	set category = "Object"
-	set name = "Empty Gibber"
+	set name = "empty gibber"
 	set src in oview(1)
 
 	if (usr.stat != 0)
@@ -153,9 +153,7 @@
 		src.occupant.reagents.trans_to (newmeat, round (sourcetotalreagents / totalslabs, 1)) // Transfer all the reagents from the
 		allmeat[i] = newmeat
 
-	src.occupant.attack_log += "\[[time_stamp()]\] Was gibbed by <b>[user]/[user.ckey]</b>" //One shall not simply gib a mob unnoticed!
-	user.attack_log += "\[[time_stamp()]\] Gibbed <b>[src.occupant]/[src.occupant.ckey]</b>"
-	log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> gibbed <b>[src.occupant]/[src.occupant.ckey]</b>")
+	add_logs(user, occupant, "gibbed")
 	src.occupant.death(1)
 	src.occupant.ghostize()
 	del(src.occupant)

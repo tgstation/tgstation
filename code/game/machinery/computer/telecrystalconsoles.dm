@@ -1,13 +1,16 @@
+#define NUKESCALINGMODIFIER 0.5
+
 var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","Foxtrot","Zero", "Niner")
 
+
 /obj/machinery/computer/telecrystals
-	name = "Telecrystal Assignment Machinery"
+	name = "\improper Telecrystal assignment station"
 	desc = "A device used to manage telecrystals during group operations. You shouldn't be looking at this particular one..."
 	icon_state = "tcstation"
 
 /////////////////////////////////////////////
 /obj/machinery/computer/telecrystals/uplinker
-	name = "Telecrystal Upload/Recieve Station"
+	name = "\improper Telecrystal upload/recieve station"
 	desc = "A device used to manage telecrystals during group operations. To use, simply insert your uplink. With your uplink installed \
 	you can upload your telecrystals to the group's pool using the console, or be assigned additional telecrystals by your lieutenant."
 	icon_state = "tcstation"
@@ -28,6 +31,11 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 
 /obj/machinery/computer/telecrystals/uplinker/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item))
+
+		if(uplinkholder)
+			user << "<span class='notice'>The [src] already has an uplink in it.</span>"
+			return
+
 		if(O.hidden_uplink)
 			var/obj/item/P = user.get_active_hand()
 			user.drop_item()
@@ -38,6 +46,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 			updateUsrDialog()
 		else
 			user << "<span class='notice'>The [O] doesn't appear to be an uplink...</span>"
+
 
 
 /obj/machinery/computer/telecrystals/uplinker/update_icon()
@@ -52,17 +61,21 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		uplinkholder = null
 		update_icon()
 
-/obj/machinery/computer/telecrystals/uplinker/proc/donateTC(var/amt)
+/obj/machinery/computer/telecrystals/uplinker/proc/donateTC(var/amt, var/addLog = 1)
 	if(uplinkholder && linkedboss)
 		if(amt <= uplinkholder.hidden_uplink.uses)
 			uplinkholder.hidden_uplink.uses -= amt
 			linkedboss.storedcrystals += amt
+			if(addLog)
+				linkedboss.logTransfer("[src] donated [amt] telecrystals to [linkedboss].")
 
-/obj/machinery/computer/telecrystals/uplinker/proc/giveTC(var/amt)
+/obj/machinery/computer/telecrystals/uplinker/proc/giveTC(var/amt, var/addLog = 1)
 	if(uplinkholder && linkedboss)
 		if(amt <= linkedboss.storedcrystals)
 			uplinkholder.hidden_uplink.uses += amt
 			linkedboss.storedcrystals -= amt
+			if(addLog)
+				linkedboss.logTransfer("[src] recieved [amt] telecrystals from [linkedboss].")
 
 ///////
 
@@ -109,7 +122,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 
 /////////////////////////////////////////
 /obj/machinery/computer/telecrystals/boss
-	name = "Team Telecrystal Management Console"
+	name = "team Telecrystal management console"
 	desc = "A device used to manage telecrystals during group operations. To use, simply initialize the machine by scanning for nearby uplink stations. \
 	Once the consoles are linked up, you can assign any telecrystals amongst your operatives; be they donated by your agents or rationed to the squad \
 	based on the danger rating of the mission."
@@ -118,6 +131,10 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	var/scanrange = 10
 	var/storedcrystals = 0
 	var/list/TCstations = list()
+	var/list/transferlog = list()
+
+/obj/machinery/computer/telecrystals/boss/proc/logTransfer(var/logmessage)
+	transferlog += ("<b>[worldtime2text()]</b> [logmessage]")
 
 /obj/machinery/computer/telecrystals/boss/proc/scanUplinkers()
 	for(var/obj/machinery/computer/telecrystals/uplinker/A in range(scanrange, src.loc))
@@ -136,7 +153,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	scaleTC(danger)
 
 /obj/machinery/computer/telecrystals/boss/proc/scaleTC(var/amt)//Its own proc, since it'll probably need a lot of tweaks for balance, use a fancier algorhithm, etc.
-	storedcrystals += amt
+	storedcrystals += amt * NUKESCALINGMODIFIER
 
 /////////
 
@@ -162,9 +179,14 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		dat += "<BR>"
 
 	if(TCstations.len)
-		dat += "<BR><BR><a href='byond://?src=\ref[src];distrib=1'>Evenly distribute remaining TC.</a>"
+		dat += "<BR><BR><a href='byond://?src=\ref[src];distrib=1'>Evenly distribute remaining TC.</a><BR><BR>"
 
-	var/datum/browser/popup = new(user, "computer", "Team Telecrystal Management Console", 700, 500)//400,500
+
+	for(var/entry in transferlog)
+		dat += "<small>[entry]</small><BR>"
+
+
+	var/datum/browser/popup = new(user, "computer", "Team Telecrystal Management Console", 700, 500)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -189,8 +211,11 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		var/sanity = 0
 		while(storedcrystals && sanity < 100)
 			for(var/obj/machinery/computer/telecrystals/uplinker/A in TCstations)
-				A.giveTC(1)
+				A.giveTC(1,0)
 			sanity++
+		logTransfer("[src] evenly distributed telecrystals.")
 
 	src.updateUsrDialog()
 	return
+
+#undef NUKESCALINGMODIFIER

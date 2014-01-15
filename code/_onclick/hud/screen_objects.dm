@@ -179,6 +179,10 @@
 				var/mob/living/carbon/human/H = usr
 				H.quick_equip()
 
+		if("current sting")
+			var/mob/living/carbon/U = usr
+			U.unset_sting()
+
 		if("resist")
 			if(isliving(usr))
 				var/mob/living/L = usr
@@ -201,26 +205,6 @@
 						usr.hud_used.move_intent.icon_state = "running"
 				if(istype(usr,/mob/living/carbon/alien/humanoid))
 					usr.update_icons()
-		if("m_intent")
-			if(!usr.m_int)
-				switch(usr.m_intent)
-					if("run")
-						usr.m_int = "13,14"
-					if("walk")
-						usr.m_int = "14,14"
-					if("face")
-						usr.m_int = "15,14"
-			else
-				usr.m_int = null
-		if("walk")
-			usr.m_intent = "walk"
-			usr.m_int = "14,14"
-		if("face")
-			usr.m_intent = "face"
-			usr.m_int = "15,14"
-		if("run")
-			usr.m_intent = "run"
-			usr.m_int = "13,14"
 		if("Reset Machine")
 			usr.unset_machine()
 		if("internal")
@@ -279,10 +263,12 @@
 			usr.drop_item_v()
 
 		if("module")
-			if(issilicon(usr))
-				if(usr:module)
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				if(R.module)
+					R.hud_used.toggle_show_robot_modules()
 					return 1
-				usr:pick_module()
+				R.pick_module()
 
 		if("radio")
 			if(issilicon(usr))
@@ -292,8 +278,10 @@
 				usr:installed_modules()
 
 		if("store")
-			if(issilicon(usr))
-				usr:uneq_active()
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				R.uneq_active()
+				R.hud_used.update_robot_modules_display()
 
 		if("module1")
 			if(istype(usr, /mob/living/silicon/robot))

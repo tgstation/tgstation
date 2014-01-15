@@ -64,7 +64,7 @@ obj/item/weapon/gun/energy/laser/retro/sc_retro
 	name ="retro laser"
 	icon_state = "retro"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces."
-	projectile_type = "/obj/item/projectile/practice"
+//	projectile_type = "/obj/item/projectile/practice"
 	clumsy_check = 0 //No sense in having a harmless gun blow up in the clowns face
 
 //Syndicate silenced pistol. This definition is not necessary, it's just habit.
@@ -86,9 +86,9 @@ obj/item/weapon/gun/energy/laser/retro/sc_retro
 			magazine.stored_ammo -= ammo
 
 //Barman's shotgun
-/obj/item/weapon/gun/projectile/shotgun/pump/sc_pump
+/obj/item/weapon/gun/projectile/shotgun/sc_pump
 
-/obj/item/weapon/gun/projectile/shotgun/pump/sc_pump/New()
+/obj/item/weapon/gun/projectile/shotgun/sc_pump/New()
 	..()
 	for(var/ammo in magazine.stored_ammo)
 		if(prob(95)) //95% chance

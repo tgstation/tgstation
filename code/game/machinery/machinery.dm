@@ -108,6 +108,7 @@ Class Procs:
 	var/uid
 	var/manual = 0
 	var/global/gl_uid = 1
+	var/panel_open = 0
 
 /obj/machinery/New()
 	..()
@@ -211,7 +212,7 @@ Class Procs:
 	if ( ! (istype(usr, /mob/living/carbon/human) || \
 			istype(usr, /mob/living/silicon) || \
 			istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
-		usr << "\red You don't have the dexterity to do this!"
+		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return 1
 /*
 	//distance checks are made by atom/proc/DblClick
@@ -224,7 +225,7 @@ Class Procs:
 			visible_message("\red [H] stares cluelessly at [src] and drools.")
 			return 1
 		else if(prob(H.getBrainLoss()))
-			user << "\red You momentarily forget how to use [src]."
+			user << "<span class='danger'>You momentarily forget how to use [src].</span>"
 			return 1
 
 	src.add_fingerprint(user)
@@ -238,3 +239,23 @@ Class Procs:
 	uid = gl_uid
 	gl_uid++
 
+/obj/machinery/proc/default_deconstruction_crowbar()
+	playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+	var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+	M.state = 2
+	M.icon_state = "box_1"
+	for(var/obj/I in component_parts)
+		if(I.reliability != 100 && crit_fail)
+			I.crit_fail = 1
+		I.loc = src.loc
+	del(src)
+
+/obj/machinery/proc/default_deconstruction_screwdriver(var/mob/user, var/icon_state_open, var/icon_state_closed)
+	if (!panel_open)
+		panel_open = 1
+		icon_state = icon_state_open
+		user << "<span class='notice'>You open the maintenance hatch of [src].</span>"
+	else
+		panel_open = 0
+		icon_state = icon_state_closed
+		user << "<span class='notice'>You close the maintenance hatch of [src].</span>"

@@ -4,7 +4,7 @@
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "cleaner"
 	item_state = "cleaner"
-	flags = TABLEPASS|OPENCONTAINER|FPRINT|NOBLUDGEON
+	flags = OPENCONTAINER | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 2.0
@@ -220,6 +220,14 @@
 		message_admins("[key_name_admin(user)] fired Space lube from a chem sprayer.")
 		log_game("[key_name(user)] fired Space lube from a chem sprayer.")
 	return
+
+/obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror/New()
+	..()
+	reagents.add_reagent("spore", 150)
+	reagents.add_reagent("cryptobiolin", 150)
+	reagents.add_reagent("mutagen", 150)
+	reagents.add_reagent("chloralhydrate", 150)
+
 
 // Plant-B-Gone
 /obj/item/weapon/reagent_containers/spray/plantbgone // -- Skie

@@ -93,6 +93,9 @@
 /obj/proc/interact(mob/user)
 	return
 
+/obj/proc/container_resist()
+	return
+
 /obj/proc/update_icon()
 	return
 
@@ -127,3 +130,13 @@
 		mo.show_message(rendered, 2)
 		*/
 	return
+
+
+
+//If a mob logouts/logins in side of an object you can use this proc
+/obj/proc/on_log()
+	..()
+	if(isobj(loc))
+		var/obj/Loc=loc
+		Loc.on_log()
+

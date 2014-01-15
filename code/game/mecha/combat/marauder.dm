@@ -1,6 +1,6 @@
 /obj/mecha/combat/marauder
 	desc = "Heavy-duty, combat exosuit, developed after the Durand model. Rarely found among civilian populations."
-	name = "Marauder"
+	name = "\improper Marauder"
 	icon_state = "marauder"
 	step_in = 5
 	health = 500
@@ -23,7 +23,7 @@
 
 /obj/mecha/combat/marauder/seraph
 	desc = "Heavy-duty, command-type exosuit. This is a custom model, utilized only by high-ranking military personnel."
-	name = "Seraph"
+	name = "\improper Seraph"
 	icon_state = "seraph"
 	operation_req_access = list(access_cent_creed)
 	step_in = 3
@@ -35,16 +35,32 @@
 
 /obj/mecha/combat/marauder/mauler
 	desc = "Heavy-duty, combat exosuit, developed off of the existing Marauder model."
-	name = "Mauler"
+	name = "\improper Mauler"
 	icon_state = "mauler"
 	operation_req_access = list(access_syndicate)
 	wreckage = /obj/structure/mecha_wreckage/mauler
 
-/obj/mecha/combat/marauder/New()
+/obj/mecha/combat/marauder/mauler/loaded/New()
 	..()
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg(src)
 	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster(src)
+	ME.attach(src)
+	src.smoke_system.set_up(3, 0, src)
+	src.smoke_system.attach(src)
+	return
+
+/obj/mecha/combat/marauder/loaded/New()
+	..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack(src)
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay(src)
 	ME.attach(src)

@@ -191,8 +191,22 @@
 	icon_state = "cocoon1"
 	health = 60
 
-	New()
+/obj/effect/spider/cocoon/New()
 		icon_state = pick("cocoon1","cocoon2","cocoon3")
+
+/obj/effect/spider/cocoon/container_resist()
+	var/mob/living/user = usr
+	var/breakout_time = 2
+	user.next_move = world.time + 100
+	user.last_special = world.time + 100
+	user << "<span class='notice'>You struggle against the tight bonds! (This will take about [breakout_time] minutes.)</span>"
+	visible_message("You see something struggling and writhing in the [src]!")
+	if(do_after(user,(breakout_time*60*10)))
+		if(!user || user.stat != CONSCIOUS || user.loc != src)
+			return
+		Del()
+
+
 
 /obj/effect/spider/cocoon/Del()
 	src.visible_message("\red \The [src] splits open.")

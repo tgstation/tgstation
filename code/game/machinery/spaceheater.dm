@@ -11,8 +11,6 @@
 	var/set_temperature = 50		// in celcius, add T0C for kelvin
 	var/heating_power = 40000
 
-	flags = FPRINT
-
 
 	New()
 		..()
@@ -33,8 +31,7 @@
 		set src in oview(12)
 		if (!( usr ))
 			return
-		usr << "This is \icon[src] \an [src.name]."
-		usr << src.desc
+		..()
 
 		usr << "The heater is [on ? "on" : "off"] and the hatch is [open ? "open" : "closed"]."
 		if(open)

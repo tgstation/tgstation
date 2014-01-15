@@ -26,10 +26,7 @@
 		if(T && (M == user || do_after(user, 50)))
 			if(user && M && (get_turf(M) == T) && src && imp)
 				M.visible_message("<span class='warning'>[M] has been implanted by [user].</span>")
-				M.attack_log += text("\[[time_stamp()]\] <font color='orange'> Implanted with [name] ([imp.name])  by [user.name] ([user.ckey])</font>")
-				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [name] ([imp.name]) to implant [M.name] ([M.ckey])</font>")
-				log_attack("<font color='red'>[user.name] ([user.ckey]) implanted [M.name] ([M.ckey]) with [name] (INTENT: [uppertext(user.a_intent)])</font>")
-
+				add_logs(user, M, "implanted", object="[name]")
 				user << "<span class='notice'>You implanted the implant into [M].</span>"
 				if(imp.implanted(M))
 					imp.loc = M

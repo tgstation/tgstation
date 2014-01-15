@@ -4,7 +4,6 @@
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "utilitybelt"
 	item_state = "utility"
-	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
 
@@ -147,6 +146,6 @@
 
 /obj/item/weapon/storage/belt/military
 	name = "military belt"
-	desc = "A syndicate belt designed to be used by boarding parties.  It's style is modeled after the hardsuits they wear."
+	desc = "A syndicate belt designed to be used by boarding parties.  Its style is modeled after the hardsuits they wear."
 	icon_state = "militarybelt"
 	item_state = "military"

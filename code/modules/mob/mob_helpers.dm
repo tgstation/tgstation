@@ -169,6 +169,12 @@ proc/isorgan(A)
 
 	return zone
 
+/proc/above_neck(zone)
+	var/list/zones = list("head", "mouth", "eyes")
+	if(zones.Find(zone))
+		return 1
+	else
+		return 0
 
 /proc/stars(n, pr)
 	if (pr == null)
@@ -214,6 +220,23 @@ proc/isorgan(A)
 		t = text("[t][n_letter]")//since the above is ran through for each letter, the text just adds up back to the original word.
 		p++//for each letter p is increased to find where the next letter will be.
 	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
+
+/proc/derpspeech(message, stuttering)
+	message = replacetext(message, " am ", " ")
+	message = replacetext(message, " is ", " ")
+	message = replacetext(message, " are ", " ")
+	message = replacetext(message, "you", "u")
+	message = replacetext(message, "help", "halp")
+	message = replacetext(message, "grief", "grife")
+	message = replacetext(message, "space", "spess")
+	message = replacetext(message, "carp", "crap")
+	message = replacetext(message, "reason", "raisin")
+	if(prob(50))
+		message = uppertext(message)
+		message += "[stutter(pick("!", "!!", "!!!"))]"
+	if(!stuttering && prob(15))
+		message = stutter(message)
+	return message
 
 
 proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
@@ -264,17 +287,20 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 
 /proc/shake_camera(mob/M, duration, strength=1)
-	if(!M || !M.client || M.shakecamera)
-		return
-	spawn(1)
+	spawn(0)
+		if(!M || !M.client || M.shakecamera)
+			return
 		var/oldeye=M.client.eye
 		var/x
 		M.shakecamera = 1
 		for(x=0; x<duration, x++)
-			M.client.eye = locate(dd_range(1,M.loc.x+rand(-strength,strength),world.maxx),dd_range(1,M.loc.y+rand(-strength,strength),world.maxy),M.loc.z)
-			sleep(1)
-		M.shakecamera = 0
-		M.client.eye=oldeye
+			if(M && M.client)
+				M.client.eye = locate(dd_range(1,M.loc.x+rand(-strength,strength),world.maxx),dd_range(1,M.loc.y+rand(-strength,strength),world.maxy),M.loc.z)
+				sleep(1)
+		if(M)
+			M.shakecamera = 0
+			if(M.client)
+				M.client.eye=oldeye
 
 
 /proc/findname(msg)
@@ -287,7 +313,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 
 /mob/proc/abiotic(full_body = 0)
-	if(l_hand && !l_hand.abstract || r_hand && !r_hand.abstract)
+	if(l_hand && !l_hand.flags&ABSTRACT || r_hand && !r_hand.flags&ABSTRACT)
 		return 1
 	return 0
 

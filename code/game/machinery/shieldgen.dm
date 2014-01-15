@@ -1,5 +1,5 @@
 /obj/machinery/shield
-		name = "Emergency energy shield"
+		name = "emergency energy shield"
 		desc = "An energy shield used to contain hull breaches."
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "shield-old"
@@ -22,9 +22,9 @@
 	..()
 
 /obj/machinery/shield/Move()
-	air_update_turf(1)
+	var/turf/T = loc
 	..()
-	air_update_turf(1)
+	move_update_air(T)
 
 /obj/machinery/shield/CanPass(atom/movable/mover, turf/target, height, air_group)
 	if(!height || air_group) return 0
@@ -134,7 +134,7 @@
 
 
 /obj/machinery/shieldgen
-		name = "Anti-breach shielding projector"
+		name = "anti-breach shielding projector"
 		desc = "Used to seal minor hull breaches."
 		icon = 'icons/obj/objects.dmi'
 		icon_state = "shieldoff"
@@ -150,6 +150,7 @@
 		var/list/deployed_shields = list()
 		var/is_open = 0 //Whether or not the wires are exposed
 		var/locked = 0
+		var/shield_range = 4
 
 /obj/machinery/shieldgen/Del()
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
@@ -163,7 +164,7 @@
 	src.active = 1
 	update_icon()
 
-	for(var/turf/target_tile in range(2, src))
+	for(var/turf/target_tile in range(shield_range, src))
 		if (istype(target_tile,/turf/space) && !(locate(/obj/machinery/shield) in target_tile))
 			if (malfunction && prob(33) || !malfunction)
 				deployed_shields += new /obj/machinery/shield(target_tile)
@@ -176,6 +177,7 @@
 
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
 		del(shield_tile)
+	deployed_shields.Cut()
 
 /obj/machinery/shieldgen/process()
 	if(malfunction && active)
@@ -279,18 +281,17 @@
 		if(locked)
 			user << "The bolts are covered, unlocking this would retract the covers."
 			return
-		if(anchored)
+		if(!anchored && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-			user << "\blue You unsecure the [src] from the floor!"
+			user << "<span class='notice'> You secure the [src] to the floor!</span>"
+			anchored = 1
+		else if(anchored)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			user << "<span class='notice'> You unsecure the [src] from the floor!</span>"
 			if(active)
-				user << "\blue The [src] shuts off!"
+				user << "<span class='notice'> The [src] shuts off!</span>"
 				src.shields_down()
 			anchored = 0
-		else
-			if(istype(get_turf(src), /turf/space)) return //No wrenching these in space!
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-			user << "\blue You secure the [src] to the floor!"
-			anchored = 1
 
 
 	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
@@ -314,7 +315,7 @@
 ////FIELD GEN START //shameless copypasta from fieldgen, powersink, and grille
 #define maxstoredpower 500
 /obj/machinery/shieldwallgen
-		name = "Shield Generator"
+		name = "shield generator"
 		desc = "A shield generator."
 		icon = 'icons/obj/stationobjs.dmi'
 		icon_state = "Shield_Gen"
@@ -323,7 +324,6 @@
 		req_access = list(access_teleporter)
 		var/active = 0
 		var/power = 0
-		var/state = 0
 		var/steps = 0
 		var/last_check = 0
 		var/check_delay = 10
@@ -334,7 +334,7 @@
 //		var/maxshieldload = 200
 		var/obj/structure/cable/attached		// the attached cable
 		var/storedpower = 0
-		flags = FPRINT | CONDUCT
+		flags = CONDUCT
 		use_power = 0
 
 /obj/machinery/shieldwallgen/proc/power()
@@ -365,10 +365,10 @@
 //		use_power(250) //uses APC power
 
 /obj/machinery/shieldwallgen/attack_hand(mob/user as mob)
-	if(state != 1)
+	if(!anchored)
 		user << "\red The shield generator needs to be firmly secured to the floor first."
 		return 1
-	if(src.locked && !istype(user, /mob/living/silicon))
+	if(locked && !istype(user, /mob/living/silicon))
 		user << "\red The controls are locked!"
 		return 1
 	if(power != 1)
@@ -404,7 +404,7 @@
 //		shieldload = maxshieldload
 
 	if(src.active == 1)
-		if(!src.state == 1)
+		if(!anchored)
 			src.active = 0
 			return
 		spawn(1)
@@ -482,18 +482,16 @@
 			user << "Turn off the field generator first."
 			return
 
-		else if(state == 0)
-			state = 1
+		else if(!anchored && !isinspace()) //Can't fasten this thing in space
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-			user << "You secure the external reinforcing bolts to the floor."
-			src.anchored = 1
+			user << "<span class='notice'>You secure the external reinforcing bolts to the floor.</span>"
+			anchored = 1
 			return
 
-		else if(state == 1)
-			state = 0
+		else //You can unfasten it tough, if you somehow manage to fasten it.
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-			user << "You undo the external reinforcing bolts."
-			src.anchored = 0
+			user << "<span class='notice'>You undo the external reinforcing bolts.</span>"
+			anchored = 0
 			return
 
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
@@ -540,7 +538,7 @@
 
 //////////////Containment Field START
 /obj/machinery/shieldwall
-		name = "Shield"
+		name = "shield"
 		desc = "An energy shield."
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "shieldwall"

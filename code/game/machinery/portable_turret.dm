@@ -67,7 +67,8 @@
 		sound = 1
 	else
 		var/obj/item/weapon/gun/energy/E=new installation	//All energy-based weapons are applicable
-		projectile = E.projectile_type
+		var/obj/item/ammo_casing/shottype = E.ammo_type[1]
+		projectile = shottype.projectile_type
 		eprojectile = projectile
 
 		switch(E.type)
@@ -272,14 +273,14 @@
 	else if((istype(I, /obj/item/weapon/wrench)) && (!on))
 		if(raised) return
 		//This code handles moving the turret around. After all, it's a portable turret!
-		if(!anchored)
+		if(!anchored && !isinspace())
 			anchored = 1
 			invisibility = INVISIBILITY_LEVEL_TWO
 			icon_state = "[lasercolor]grey_target_prism"
 			user << "<span class='notice'>You secure the exterior bolts on the turret.</span>"
 			cover = new /obj/machinery/porta_turret_cover(loc) //create a new turret. While this is handled in process(), this is to workaround a bug where the turret becomes invisible for a split second
 			cover.Parent_Turret = src //make the cover's parent src
-		else
+		else if(anchored)
 			anchored = 0
 			user << "<span class='notice'>You unsecure the exterior bolts on the turret.</span>"
 			icon_state = "turretCover"
@@ -378,7 +379,7 @@
 /obj/machinery/porta_turret/process()
 	//the main machinery process
 
-	set background = 1
+	set background = BACKGROUND_ENABLED
 
 	if(cover == null && anchored)	//if it has no cover and is anchored
 		if(stat & BROKEN)	//if the turret is borked

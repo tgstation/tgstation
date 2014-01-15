@@ -42,7 +42,7 @@ display round(lastgen) and plasmatank amount
 
 //Baseline portable generator. Has all the default handling. Not intended to be used on it's own (since it generates unlimited power).
 /obj/machinery/power/port_gen
-	name = "Portable Generator"
+	name = "portable generator"
 	desc = "A portable generator for emergency backup power"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "portgen0"
@@ -53,9 +53,9 @@ display round(lastgen) and plasmatank amount
 
 	var/active = 0
 	var/power_gen = 5000
-	var/open = 0
 	var/recent_fault = 0
 	var/power_output = 1
+	var/consumption = 0
 
 /obj/machinery/power/port_gen/proc/HasFuel() //Placeholder for fuel check.
 	return 1
@@ -88,13 +88,14 @@ display round(lastgen) and plasmatank amount
 
 /obj/machinery/power/port_gen/examine()
 	set src in oview(1)
+	..()
 	if(active)
-		usr << "\blue The generator is on."
+		usr << "It is running."
 	else
-		usr << "\blue The generator is off."
+		usr << "It isn't running."
 
 /obj/machinery/power/port_gen/pacman
-	name = "P.A.C.M.A.N.-type Portable Generator"
+	name = "\improper P.A.C.M.A.N.-type portable generator"
 	var/sheets = 0
 	var/max_sheets = 100
 	var/sheet_name = ""
@@ -114,8 +115,8 @@ display round(lastgen) and plasmatank amount
 	component_parts = list()
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
-	component_parts += new /obj/item/weapon/cable_coil(src)
-	component_parts += new /obj/item/weapon/cable_coil(src)
+	component_parts += new /obj/item/weapon/cable_coil(src, 1)
+	component_parts += new /obj/item/weapon/cable_coil(src, 1)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
 	component_parts += new board_path(src)
 	var/obj/sheet = new sheet_path(null)
@@ -129,15 +130,19 @@ display round(lastgen) and plasmatank amount
 /obj/machinery/power/port_gen/pacman/RefreshParts()
 	var/temp_rating = 0
 	var/temp_reliability = 0
+	var/consumption_coeff = 0
 	for(var/obj/item/weapon/stock_parts/SP in component_parts)
 		if(istype(SP, /obj/item/weapon/stock_parts/matter_bin))
 			max_sheets = SP.rating * SP.rating * 50
-		else if(istype(SP, /obj/item/weapon/stock_parts/micro_laser) || istype(SP, /obj/item/weapon/stock_parts/capacitor))
+		else if(istype(SP, /obj/item/weapon/stock_parts/capacitor))
 			temp_rating += SP.rating
+		else
+			consumption_coeff += SP.rating
 	for(var/obj/item/weapon/CP in component_parts)
 		temp_reliability += CP.reliability
 	reliability = min(round(temp_reliability / 4), 100)
-	power_gen = round(initial(power_gen) * (max(2, temp_rating) / 2))
+	power_gen = round(initial(power_gen) * temp_rating * 2)
+	consumption = consumption_coeff
 
 /obj/machinery/power/port_gen/pacman/examine()
 	..()
@@ -160,7 +165,7 @@ display round(lastgen) and plasmatank amount
 			sheets -= amount
 
 /obj/machinery/power/port_gen/pacman/UseFuel()
-	var/needed_sheets = 1 / (time_per_sheet / power_output)
+	var/needed_sheets = 1 / (time_per_sheet * consumption / power_output)
 	var/temp = min(needed_sheets, sheet_left)
 	needed_sheets -= temp
 	sheet_left -= temp
@@ -175,9 +180,9 @@ display round(lastgen) and plasmatank amount
 	var/bias = 0
 	if (power_output > 4)
 		upper_limit = 400
-		bias = power_output * 3
+		bias = power_output - consumption * (4 - consumption)
 	if (heat < lower_limit)
-		heat += 3
+		heat += 4 - consumption
 	else
 		heat += rand(-7 + bias, 7 + bias)
 		if (heat < lower_limit)
@@ -218,32 +223,26 @@ display round(lastgen) and plasmatank amount
 
 		if(istype(O, /obj/item/weapon/wrench))
 
-			if(!anchored)
+			if(!anchored && !isinspace())
 				connect_to_network()
 				user << "\blue You secure the generator to the floor."
-			else
+				anchored = 1
+			else if(anchored)
 				disconnect_from_network()
 				user << "\blue You unsecure the generator from the floor."
+				anchored = 0
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			anchored = !anchored
 
 		else if(istype(O, /obj/item/weapon/screwdriver))
-			open = !open
+			panel_open = !panel_open
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			if(open)
+			if(panel_open)
 				user << "\blue You open the access panel."
 			else
 				user << "\blue You close the access panel."
-		else if(istype(O, /obj/item/weapon/crowbar) && !open)
-			var/obj/machinery/constructable_frame/machine_frame/new_frame = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			for(var/obj/item/I in component_parts)
-				if(I.reliability < 100)
-					I.crit_fail = 1
-				I.loc = src.loc
-			new_frame.state = 2
-			new_frame.icon_state = "box_1"
-			del(src)
+		else if(istype(O, /obj/item/weapon/crowbar) && panel_open)
+			default_deconstruction_crowbar()
 
 /obj/machinery/power/port_gen/pacman/attack_hand(mob/user as mob)
 	..()
@@ -315,7 +314,7 @@ display round(lastgen) and plasmatank amount
 			usr.unset_machine()
 
 /obj/machinery/power/port_gen/pacman/super
-	name = "S.U.P.E.R.P.A.C.M.A.N.-type Portable Generator"
+	name = "\improper S.U.P.E.R.P.A.C.M.A.N.-type portable generator"
 	icon_state = "portgen1"
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
 	power_gen = 15000
@@ -325,7 +324,7 @@ display round(lastgen) and plasmatank amount
 		explosion(src.loc, 3, 3, 3, -1)
 
 /obj/machinery/power/port_gen/pacman/mrs
-	name = "M.R.S.P.A.C.M.A.N.-type Portable Generator"
+	name = "\improper M.R.S.P.A.C.M.A.N.-type portable generator"
 	icon_state = "portgen2"
 	sheet_path = /obj/item/stack/sheet/mineral/diamond
 	power_gen = 40000

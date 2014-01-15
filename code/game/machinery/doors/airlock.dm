@@ -86,7 +86,7 @@
 	doortype = 8
 
 /obj/machinery/door/airlock/vault
-	name = "vault"
+	name = "vault door"
 	icon = 'icons/obj/doors/vault.dmi'
 	opacity = 1
 	doortype = 9
@@ -764,7 +764,7 @@ About the new airlock wires panel:
 						usr << text("The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
 					else
 						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
-						usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Electrified the [name] at [x] [y] [z]</font>")
+						add_logs(usr, src, "electrified", admin=0, addition="at [x],[y],[z]")
 						src.secondsElectrified = 30
 						spawn(10)
 							while (src.secondsElectrified>0)
@@ -783,7 +783,7 @@ About the new airlock wires panel:
 						usr << text("The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
 					else
 						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
-						usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Electrified the [name] at [x] [y] [z]</font>")
+						add_logs(usr, src, "electrified", admin=0, addition="at [x],[y],[z]")
 						src.secondsElectrified = -1
 
 				if (8) // Not in order >.>

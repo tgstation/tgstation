@@ -7,7 +7,7 @@
 	var/obj/item/device/radio/electropack/part2 = null
 	var/status = 0
 	w_class = 5.0
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 
 /obj/item/assembly/shock_kit/Del()
 	del(part1)

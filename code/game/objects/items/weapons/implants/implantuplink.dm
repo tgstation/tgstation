@@ -1,5 +1,5 @@
 /obj/item/weapon/implant/uplink
-	name = "uplink"
+	name = "uplink implant"
 	desc = "Summon things."
 	var/activation_emote = "chuckle"
 

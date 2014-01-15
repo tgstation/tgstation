@@ -112,38 +112,21 @@ Doesn't work on other aliens/AI.*/
 	return
 
 
-/mob/living/carbon/alien/humanoid/proc/neurotoxin(mob/target as mob in oview())
+/mob/living/carbon/alien/humanoid/proc/neurotoxin() // ok
 	set name = "Spit Neurotoxin (50)"
 	set desc = "Spits neurotoxin at someone, paralyzing them for a short time."
 	set category = "Alien"
 
 	if(powerc(50))
-		if(isalien(target))
-			src << "\green Your allies are not a valid target."
-			return
 		adjustToxLoss(-50)
-		src << "\green You spit neurotoxin at [target]."
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				O << "\red [src] spits neurotoxin at [target]!"
-		//I'm not motivated enough to revise this. Prjectile code in general needs update.
+		src.visible_message("\red [src] spits neurotoxin!", "\green You spit neurotoxin.")
+
 		var/turf/T = loc
-		var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
-
-		if(!U || !T)
-			return
-		while(U && !istype(U,/turf))
-			U = U.loc
-		if(!istype(T, /turf))
-			return
-		if (U == T)
-			usr.bullet_act(src, get_organ_target())
-			return
-		if(!istype(U, /turf))
+		var/turf/U = get_step(src, dir) // Get the tile infront of the move, based on their direction
+		if(!isturf(U) || !isturf(T))
 			return
 
-		var/obj/item/projectile/energy/neurotoxin/A = new /obj/item/projectile/energy/neurotoxin(usr.loc)
-
+		var/obj/item/projectile/bullet/neurotoxin/A = new /obj/item/projectile/bullet/neurotoxin(usr.loc)
 		A.current = U
 		A.yo = U.y - T.y
 		A.xo = U.x - T.x
