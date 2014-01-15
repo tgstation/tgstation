@@ -569,12 +569,20 @@ obj/item/toy/cards
 	name = "deck of cards"
 	desc = "A deck of space-grade playing cards."
 	icon = 'icons/obj/toy.dmi'
-	icon_state = "deck_full"
+	icon_state = "deck_nanotrasen_full"
+	var/deckstyle = "nanotrasen"
+	var/card_name = "card"
+	var/card_force = 0
+	var/card_throwforce = 0
+	var/card_throw_speed = 4
+	var/card_throw_range = 20
+	var/list/card_attack_verb = list("attacked")
 	w_class = 2.0
 	var/list/cards = list()
 
 obj/item/toy/cards/New()
 	..()
+	icon_state = "deck_[deckstyle]_full"
 	for(var/i = 2; i <= 10; i++)
 		cards += "[i] of Hearts"
 		cards += "[i] of Spades"
@@ -601,23 +609,32 @@ obj/item/toy/cards/New()
 obj/item/toy/cards/attack_hand(mob/user as mob)
 	var/choice = null
 	if(cards.len == 0)
-		src.icon_state = "deck_empty"
+		src.icon_state = "deck_[deckstyle]_empty"
 		user << "<span class='notice'>There are no more cards to draw.</span>"
 		return
 	var/obj/item/toy/singlecard/H = new/obj/item/toy/singlecard(user.loc)
 	choice = cards[1]
 	H.cardname = choice
 	H.parentdeck = src
+	H.deckstyle = src.deckstyle
+	H.icon_state = "singlecard_down_[deckstyle]" // Without this the card is invisible until flipped. It's an ugly hack, but it works.
+	H.card_name = src.card_name
+	H.card_force = src.card_force
+	H.card_throwforce = src.card_throwforce
+	H.card_throw_speed = src.card_throw_speed
+	H.card_throw_range = src.card_throw_range
+	H.attack_verb = src.card_attack_verb
+	H.attack_verb = src.card_attack_verb
 	src.cards -= choice
 	H.pickup(user)
 	user.put_in_active_hand(H)
 	src.visible_message("<span class='notice'>[user] draws a card from the deck.</span>", "<span class='notice'>You draw a card from the deck.</span>")
 	if(cards.len > 26)
-		src.icon_state = "deck_full"
+		src.icon_state = "deck_[deckstyle]_full"
 	else if(cards.len > 10)
-		src.icon_state = "deck_half"
+		src.icon_state = "deck_[deckstyle]_half"
 	else if(cards.len > 1)
-		src.icon_state = "deck_low"
+		src.icon_state = "deck_[deckstyle]_low"
 
 obj/item/toy/cards/attack_self(mob/user as mob)
 	cards = shuffle(cards)
@@ -635,11 +652,11 @@ obj/item/toy/cards/attackby(obj/item/toy/singlecard/C, mob/living/user)
 		else
 			user << "<span class='notice'>You can't mix cards from other decks.</span>"
 		if(cards.len > 26)
-			src.icon_state = "deck_full"
+			src.icon_state = "deck_[deckstyle]_full"
 		else if(cards.len > 10)
-			src.icon_state = "deck_half"
+			src.icon_state = "deck_[deckstyle]_half"
 		else if(cards.len > 1)
-			src.icon_state = "deck_low"
+			src.icon_state = "deck_[deckstyle]_low"
 
 
 obj/item/toy/cards/attackby(obj/item/toy/cardhand/C, mob/living/user)
@@ -653,11 +670,11 @@ obj/item/toy/cards/attackby(obj/item/toy/cardhand/C, mob/living/user)
 		else
 			user << "<span class='notice'>You can't mix cards from other decks.</span>"
 		if(cards.len > 26)
-			src.icon_state = "deck_full"
+			src.icon_state = "deck_[deckstyle]_full"
 		else if(cards.len > 10)
-			src.icon_state = "deck_half"
+			src.icon_state = "deck_[deckstyle]_half"
 		else if(cards.len > 1)
-			src.icon_state = "deck_low"
+			src.icon_state = "deck_[deckstyle]_low"
 
 obj/item/toy/cards/MouseDrop(atom/over_object)
 	var/mob/M = usr
@@ -687,11 +704,18 @@ obj/item/toy/cardhand
 	name = "hand of cards"
 	desc = "A number of cards not in a deck, customarily held in ones hand."
 	icon = 'icons/obj/toy.dmi'
-	icon_state = "hand2"
+	icon_state = "nanotrasen_hand2"
 	w_class = 1.0
 	var/list/currenthand = list()
 	var/obj/item/toy/cards/parentdeck = null
 	var/choice = null
+	var/deckstyle = "nanotrasen"
+	var/card_name = "card"
+	var/card_force = 0
+	var/card_throwforce = 0
+	var/card_throw_speed = 4
+	var/card_throw_range = 20
+	var/list/card_attack_verb = list("attacked")
 
 
 obj/item/toy/cardhand/attack_self(mob/user as mob)
@@ -722,6 +746,15 @@ obj/item/toy/cardhand/Topic(href, href_list)
 			src.currenthand -= choice
 			C.parentdeck = src.parentdeck
 			C.cardname = choice
+			C.deckstyle = src.deckstyle
+			C.icon_state = "singlecard_down_[deckstyle]"
+			C.card_name = src.card_name
+			C.card_force = src.card_force
+			C.card_throwforce = src.card_throwforce
+			C.card_throw_speed = src.card_throw_speed
+			C.card_throw_range = src.card_throw_range
+			C.attack_verb = src.card_attack_verb
+			C.card_attack_verb = src.card_attack_verb
 			C.pickup(cardUser)
 			cardUser.put_in_any_hand_if_possible(C)
 			cardUser.visible_message("<span class='notice'>[cardUser] draws a card from \his hand.</span>", "<span class='notice'>You take the [C.cardname] from your hand.</span>")
@@ -729,16 +762,25 @@ obj/item/toy/cardhand/Topic(href, href_list)
 			interact(cardUser)
 
 			if(src.currenthand.len < 3)
-				src.icon_state = "hand2"
+				src.icon_state = "[deckstyle]_hand2"
 			else if(src.currenthand.len < 4)
-				src.icon_state = "hand3"
+				src.icon_state = "[deckstyle]_hand3"
 			else if(src.currenthand.len < 5)
-				src.icon_state = "hand4"
+				src.icon_state = "[deckstyle]_hand4"
 
 			if(src.currenthand.len == 1)
 				var/obj/item/toy/singlecard/N = new/obj/item/toy/singlecard(src.loc)
 				N.parentdeck = src.parentdeck
 				N.cardname = src.currenthand[1]
+				N.deckstyle = src.deckstyle
+				N.icon_state = "singlecard_down_[deckstyle]"
+				N.card_name = src.card_name
+				N.card_force = src.card_force
+				N.card_throwforce = src.card_throwforce
+				N.card_throw_speed = src.card_throw_speed
+				N.card_throw_range = src.card_throw_range
+				N.attack_verb = src.card_attack_verb
+				N.card_attack_verb = src.card_attack_verb
 				cardUser.u_equip(src)
 				N.pickup(cardUser)
 				cardUser.put_in_any_hand_if_possible(N)
@@ -755,11 +797,11 @@ obj/item/toy/cardhand/attackby(obj/item/toy/singlecard/C, mob/living/user)
 			user.visible_message("<span class='notice'>[user] adds a card to their hand.</span>", "<span class='notice'>You add the [C.cardname] to your hand.</span>")
 			interact(user)
 			if(currenthand.len > 4)
-				src.icon_state = "hand5"
+				src.icon_state = "[deckstyle]_hand5"
 			else if(currenthand.len > 3)
-				src.icon_state = "hand4"
+				src.icon_state = "[deckstyle]_hand4"
 			else if(currenthand.len > 2)
-				src.icon_state = "hand3"
+				src.icon_state = "[deckstyle]_hand3"
 			del(C)
 		else
 			user << "<span class='notice'>You can't mix cards from other decks.</span>"
@@ -772,12 +814,20 @@ obj/item/toy/singlecard
 	name = "card"
 	desc = "a card"
 	icon = 'icons/obj/toy.dmi'
-	icon_state = "singlecard_down"
+	icon_state = "singlecard_nanotrasen_down"
 	w_class = 1.0
 	var/cardname = null
 	var/obj/item/toy/cards/parentdeck = null
 	var/flipped = 0
+	var/deckstyle = "nanotrasen"
+	var/card_name = "card"
+	var/card_force = 0
+	var/card_throwforce = 0
+	var/card_throw_speed = 4
+	var/card_throw_range = 20
+	var/list/card_attack_verb = list("attacked")
 	pixel_x = -5
+
 
 obj/item/toy/singlecard/examine()
 	set src in usr.contents
@@ -798,15 +848,15 @@ obj/item/toy/singlecard/verb/Flip()
 	if(!flipped)
 		src.flipped = 1
 		if (cardname)
-			src.icon_state = "sc_[cardname]"
+			src.icon_state = "sc_[cardname]_[deckstyle]"
 			src.name = src.cardname
 		else
-			src.icon_state = "sc_Ace of Spades"
+			src.icon_state = "sc_Ace of Spades_[deckstyle]"
 			src.name = "What Card"
 		src.pixel_x = 5
 	else if(flipped)
 		src.flipped = 0
-		src.icon_state = "singlecard_down"
+		src.icon_state = "singlecard_down_[deckstyle]"
 		src.name = "card"
 		src.pixel_x = -5
 
@@ -818,6 +868,13 @@ obj/item/toy/singlecard/attackby(obj/item/I, mob/living/user)
 			H.currenthand += C.cardname
 			H.currenthand += src.cardname
 			H.parentdeck = C.parentdeck
+			H.deckstyle = C.deckstyle
+			H.card_name = C.card_name
+			H.card_force = C.card_force
+			H.card_throwforce = C.card_throwforce
+			H.card_throw_speed = C.card_throw_speed
+			H.card_throw_range = C.card_throw_range
+			H.card_attack_verb = C.card_attack_verb
 			user.u_equip(C)
 			H.pickup(user)
 			user.put_in_active_hand(H)
@@ -835,11 +892,11 @@ obj/item/toy/singlecard/attackby(obj/item/I, mob/living/user)
 			user.visible_message("<span class='notice'>[user] adds a card to \his hand.</span>", "<span class='notice'>You add the [cardname] to your hand.</span>")
 			H.interact(user)
 			if(H.currenthand.len > 4)
-				H.icon_state = "hand5"
+				H.icon_state = "[deckstyle]_hand5"
 			else if(H.currenthand.len > 3)
-				H.icon_state = "hand4"
+				H.icon_state = "[deckstyle]_hand4"
 			else if(H.currenthand.len > 2)
-				H.icon_state = "hand3"
+				H.icon_state = "[deckstyle]_hand3"
 			del(src)
 		else
 			user << "<span class='notice'>You can't mix cards from other decks.</span>"
@@ -850,9 +907,25 @@ obj/item/toy/singlecard/attack_self(mob/user)
 		return
 	Flip()
 
+/*
+|| Syndicate playing cards, for pretending you're Gambit and playing poker for the nuke disk. ||
+*/
 
+obj/item/toy/cards/syndicate
+	name = "suspicious looking deck of cards"
+	desc = "A deck of space-grade playing cards. They seem unusually rigid."
+	deckstyle = "syndicate"
+	card_name = "suspicious looking card"
+	card_force = 15
+	card_throwforce = 15
+	card_throw_speed = 6
+	card_throw_range = 20
+	card_attack_verb = list("attacked", "sliced", "diced", "slashed", "cut")
 
-
+/obj/item/toy/singlecard/attack(mob/M, mob/user)
+	if(src.deckstyle == "syndicate")
+		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	..()
 
 
 
