@@ -123,6 +123,8 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	var/points_per_crate = 5
 	var/plasma_per_point = 5 // 2 plasma for 1 point
 	var/centcom_message = "" // Remarks from Centcom on how well you checked the last order.
+	var/list/discoveredPlants = list() // Unique typepaths for unusual things we've already sent CentComm
+	var/list/discoveredPlantsPotencies = list() // Their potencies, in the same order
 	//control
 	var/ordernum
 	var/list/shoppinglist = list()
@@ -229,7 +231,9 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 		var/crate_count = 0
 
 		centcom_message = ""
-
+		
+		var/list/shippedSeeds = list()
+		
 		for(var/atom/movable/MA in shuttle)
 			if(MA.anchored)	continue
 
@@ -284,7 +288,32 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 					if(istype(A, /obj/item/stack/sheet/mineral/plasma))
 						var/obj/item/stack/sheet/mineral/plasma/P = A
 						plasma_count += P.amount
+					
+					if(istype(A, /obj/item/seeds))
+						var/obj/item/seeds/S = A
+						shippedSeeds += S
+						S.loc = MA.loc // Setting the seeds aside before the crate is deleted
+						world << "Found a seed..."
 			del(MA)
+		
+		for(var/obj/item/seeds/S in shippedSeeds)
+			var/seedID = discoveredPlants.Find(S.type)
+			world << "Here's a seed"
+			if(seedID) // This species has already been sent to CentComm
+				world << "It's already been discovered"
+				var/potDiff = S.potency - discoveredPlantsPotencies[seedID] // Compare it to the previous best
+				if(potDiff > 0) // This sample is better
+					discoveredPlantsPotencies[seedID] = S.potency
+					centcom_message += "<font color=green>+[potDiff]</font>: New sample of [S.name] is superior.  Good work.<BR>"
+					points += potDiff
+				else // This sample is worthless
+					centcom_message += "<font color=red>+0</font>: New sample of [S.name] is not more potent than existing sample ([discoveredPlantsPotencies[seedID]]).<BR>"
+			else // This is a new discovery!
+				world << "It's a new one!"
+				discoveredPlants += (S.type)
+				discoveredPlantsPotencies += (S.potency)
+				centcom_message += "<font color=green>+[S.rarity]</font>: New species discovered: \"[S.name]\".  Excellent work.<BR>"
+				points += S.rarity // That's right, no bonus for potency.  Send a crappy sample first to "show improvement" later
 
 		if(plasma_count)
 			centcom_message += "<font color=green>+[round(plasma_count/plasma_per_point)]</font>: Received [plasma_count] units of exotic material.<BR>"
