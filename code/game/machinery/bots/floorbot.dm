@@ -163,7 +163,7 @@
 			src.updateUsrDialog()
 
 /obj/machinery/bot/floorbot/process()
-	set background = 1
+	set background = BACKGROUND_ENABLED
 
 	if(!src.on)
 		return

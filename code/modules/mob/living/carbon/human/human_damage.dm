@@ -153,7 +153,8 @@
 		..(damage, damagetype, def_zone, blocked)
 		return 1
 
-	if(blocked >= 2)	return 0
+	blocked = (100-blocked)/100
+	if(blocked <= 0)	return 0
 
 	var/obj/item/organ/limb/organ = null
 	if(isorgan(def_zone))
@@ -163,8 +164,7 @@
 		organ = get_organ(check_zone(def_zone))
 	if(!organ)	return 0
 
-	if(blocked)
-		damage = (damage/(blocked+1))
+	damage = (damage * blocked)
 
 	switch(damagetype)
 		if(BRUTE)

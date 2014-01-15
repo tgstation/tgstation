@@ -26,7 +26,7 @@
 	desc = "GCAT"
 	icon_state = "cat"
 	icon_living = "cat"
-	icon_dead = "cat2_dead"
+	icon_dead = "cat_dead"
 	gender = FEMALE
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target

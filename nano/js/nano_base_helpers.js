@@ -14,14 +14,17 @@ NanoBaseHelpers = function ()
 	
 	var initHelpers = function ()
 	{
-		$.views.helpers({
+		$.views.helpers({			
+
 			// Generate a Byond link
 			link: function( text, icon, parameters, status, elementClass, elementId) {
 	
 				var iconHtml = '';
+				var iconClass = 'noIcon';
 				if (typeof icon != 'undefined' && icon)
 				{
-					iconHtml = '<div class="uiLinkPendingIcon"></div><div class="uiIcon16 ' + icon + '"></div>';
+					iconHtml = '<div class="uiLinkPendingIcon"></div><div class="uiIcon16 icon-' + icon + '"></div>';
+					iconClass = 'hasIcon';
 				}
 				
 				if (typeof elementClass == 'undefined' || !elementClass)
@@ -37,10 +40,10 @@ NanoBaseHelpers = function ()
 				
 				if (typeof status != 'undefined' && status)
 				{
-					return '<div class="link ' + elementClass + ' ' + status + '" ' + elementIdHtml + '>' + iconHtml + text + '</div>';
+					return '<div unselectable="on" class="link ' + iconClass + ' ' + elementClass + ' ' + status + '" ' + elementIdHtml + '>' + iconHtml + text + '</div>';
 				}
 				
-				return '<div class="link linkActive ' + elementClass + '" data-href="' + generateHref(parameters) + '" ' + elementIdHtml + '>' + iconHtml + text + '</div>';
+				return '<div unselectable="on" class="link linkActive ' + iconClass + ' ' + elementClass + '" data-href="' + generateHref(parameters) + '" ' + elementIdHtml + '>' + iconHtml + text + '</div>';
 			},
 			// Round a number to the nearest integer
 			round: function(number) {								
@@ -114,9 +117,63 @@ NanoBaseHelpers = function ()
 				var percentage = Math.round((value - rangeMin) / (rangeMax - rangeMin) * 100);
 				
 				return '<div class="displayBar ' + styleClass + '"><div class="displayBarFill ' + styleClass + '" style="width: ' + percentage + '%;"></div><div class="displayBarText ' + styleClass + '">' + showText + '</div></div>';
+			},
+			// Display DNA Blocks (for the DNA Modifier UI)
+			displayDNABlocks: function(dnaString, selectedBlock, selectedSubblock, blockSize, paramKey) {		
+			    if (!dnaString)
+				{
+					return '<div class="notice">Please place a valid subject into the DNA modifier.</div>';
+				}
+				
+				var characters = dnaString.split('');
+				
+                var html = '<div class="dnaBlock"><div class="link dnaBlockNumber">1</div>';
+                var block = 1;
+                var subblock = 1;
+                for (index in characters)
+                {
+					if (!characters.hasOwnProperty(index) || typeof characters[index] === 'object')
+					{
+						continue;
+					}
+					
+					var parameters;
+					if (paramKey.toUpperCase() == 'UI')
+					{
+						parameters = { 'selectUIBlock' : block, 'selectUISubblock' : subblock };
+					}
+					else
+					{
+						parameters = { 'selectSEBlock' : block, 'selectSESubblock' : subblock };
+					}                    
+                    
+                    var status = 'linkActive';
+                    if (block == selectedBlock && subblock == selectedSubblock)
+                    {
+                        status = 'selected';
+                    }
+                    
+                    html += '<div class="link ' + status + ' dnaSubBlock" data-href="' + generateHref(parameters) + '" id="dnaBlock' + index + '">' + characters[index] + '</div>'
+                    
+                    index++;
+                    if (index % blockSize == 0 && index < characters.length)
+                    {
+						block++;
+                        subblock = 1;
+                        html += '</div><div class="dnaBlock"><div class="link dnaBlockNumber">' + block + '</div>';                        
+                    }
+                    else
+                    {
+                        subblock++;
+                    }
+                }
+                
+                html += '</div>';
+				
+				return html;
 			}
 		});
-	}
+	};
 	
 	// generate a Byond href, combines _urlParameters with parameters
 	var generateHref = function (parameters)
@@ -147,7 +204,7 @@ NanoBaseHelpers = function ()
 			}
 		}
 		return queryString;
-	}
+	};
 
 	return {
         init: function () 

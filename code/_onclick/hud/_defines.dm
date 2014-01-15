@@ -47,7 +47,8 @@
 #define ui_inv1 "CENTER-2:16,SOUTH:5"			//borgs
 #define ui_inv2 "CENTER-1  :16,SOUTH:5"			//borgs
 #define ui_inv3 "CENTER  :16,SOUTH:5"			//borgs
-#define ui_borg_store "CENTER+1:16,SOUTH:5"		//borgs
+#define ui_borg_module "CENTER+1:16,SOUTH:5"
+#define ui_borg_store "CENTER+2:16,SOUTH:5"		//borgs
 
 #define ui_monkey_mask "CENTER-3:14,SOUTH:5"	//monkey
 #define ui_monkey_back "CENTER-2:15,SOUTH:5"	//monkey
@@ -63,8 +64,7 @@
 #define ui_zonesel "EAST-1:28,SOUTH:5"
 #define ui_acti_alt "EAST-1:28,SOUTH:5"	//alternative intent switcher for when the interface is hidden (F12)
 
-#define ui_borg_pull "EAST-3:24,SOUTH+1:7"
-#define ui_borg_module "EAST-2:26,SOUTH+1:7"
+#define ui_borg_pull "EAST-2:26,SOUTH+1:7"
 #define ui_borg_panel "EAST-1:28,SOUTH+1:7"
 
 //Upper-middle right (damage indicators)
