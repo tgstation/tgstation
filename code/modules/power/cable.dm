@@ -229,9 +229,9 @@
 			if(affecting.burn_dam > 0)
 				affecting.heal_damage(0,30,1)
 				H.updatehealth()
-				src.use(1)
 				for(var/mob/O in viewers(user, null))
 					O.show_message(text("<span class='notice'>[user] has fixed some of the burnt wires on [H]'s [affecting.getDisplayName()]!</span>"), 1)
+				src.use(1)
 				return
 			else
 				user << "<span class='notice'>[H]'s [affecting.getDisplayName()] is already in good condition</span>"
