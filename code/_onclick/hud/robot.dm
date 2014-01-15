@@ -10,7 +10,7 @@
 	using.name = "radio"
 	using.icon = 'icons/mob/screen_cyborg.dmi'
 	using.icon_state = "radio"
-	using.screen_loc = ui_movi
+	using.screen_loc = ui_borg_radio
 	using.layer = 20
 	adding += using
 
@@ -50,7 +50,7 @@
 	using.name = "act_intent"
 	using.icon = 'icons/mob/screen_cyborg.dmi'
 	using.icon_state = mymob.a_intent
-	using.screen_loc = ui_acti
+	using.screen_loc = ui_borg_intents
 	using.layer = 20
 	adding += using
 	action_intent = using
@@ -75,15 +75,6 @@
 	mymob.hands.icon_state = "nomod"
 	mymob.hands.name = "module"
 	mymob.hands.screen_loc = ui_borg_module
-
-//Module Panel
-	using = new /obj/screen()
-	using.name = "panel"
-	using.icon = 'icons/mob/screen_cyborg.dmi'
-	using.icon_state = "panel"
-	using.screen_loc = ui_borg_panel
-	using.layer = 19
-	adding += using
 
 //Store
 	mymob.throw_icon = new /obj/screen()
@@ -177,6 +168,16 @@
 
 		var/x = -4	//Start at CENTER-4,SOUTH+1
 		var/y = 1
+
+		//Unfortunately adding the emag module to the list of modules has to be here. This is because a borg can
+		//be emagged before they actually select a module. - or some situation can cause them to get a new module
+		// - or some situation might cause them to get de-emagged or something.
+		if(r.emagged)
+			if(!(r.module.emag in r.module.modules))
+				r.module.modules.Add(r.module.emag)
+		else
+			if(r.module.emag in r.module.modules)
+				r.module.modules.Remove(r.module.emag)
 
 		for(var/atom/movable/A in r.module.modules)
 			if( (A != r.module_state_1) && (A != r.module_state_2) && (A != r.module_state_3) )
