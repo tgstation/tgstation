@@ -1729,6 +1729,16 @@ other types of metals and chemistry for reagents).
 	reliability_base = 80
 	build_path = /obj/item/weapon/storage/backpack/holding
 
+/datum/design/bluespace_crystal
+	name = "Artificial Bluespace Crystal"
+	desc = "A small blue crystal with mystical properties."
+	id = "bluespace_crystal"
+	req_tech = list("bluespace" = 4, "materials" = 6)
+	build_type = PROTOLATHE
+	materials = list("$diamond" = 1500, "$plasma" = 1500)
+	reliability = 100
+	build_path = /obj/item/bluespace_crystal/artificial
+
 /////////////////////////////////////////
 /////////////////HUDs////////////////////
 /////////////////////////////////////////

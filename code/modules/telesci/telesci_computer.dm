@@ -225,8 +225,11 @@
 		var/turf/target = locate(trueX, trueY, z_co)
 		var/area/A=target.loc
 		if(A && A.jammed)
-			src.visible_message("\red \icon[src] [src] buzzes.", "\icon[src]\red You hear something buzz.")
-			return
+			if(!telepad.amplifier || A.jammed==SUPER_JAMMED)
+				src.visible_message("\red \icon[src] [src] turns on and the lights dim.  You can see a faint shape, but it loses focus and the telepad shuts off with a buzz.  Perhaps you need more signal strength?", "\icon[src]\red You hear something buzz.")
+				return
+			del(telepad.amplifier)
+			src.visible_message("\icon[src]\blue You hear something shatter.","\icon[src]\blue You hear something shatter.")
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, telepad)
 		s.start()
