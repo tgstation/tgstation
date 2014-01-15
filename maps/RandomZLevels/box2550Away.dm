@@ -195,42 +195,6 @@
 	name = "rotten mess"
 	desc = "Yum."
 
-/datum/reagent/space_cola/box2550away/space_cola/
-	name = "Flat Cola"
-	id = "flat cola"
-	description = "Tastes awful."
-
-/datum/reagent/ethanol/beer/box2550away/space_cola/
-	name = "Warm Beer"
-	id = "warm beer"
-	description = "It's nice and warm, just the way you like it."
-
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/box2550away/cola
-	name = "Space Cola"
-	desc = "Cola. in space."
-	icon_state = "cola"
-	New()
-		..()
-		reagents.add_reagent("flat cola", 30)
-		src.pixel_x = rand(-10.0, 10)
-		src.pixel_y = rand(-10.0, 10)
-
-/obj/structure/reagent_dispensers/box2550away/beerkeg
-	name = "beer keg"
-	desc = "A beer keg"
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "beertankTEMP"
-	amount_per_transfer_from_this = 10
-	New()
-		..()
-		reagents.add_reagent("warm beer",1000)
-
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/on_reagent_change()
-	if("warm beer")
-		icon_state = "beerglass"
-		name = "Beer glass"
-		desc = "A warm pint of beer"
-
 /obj/structure/closet/box2550away/lawcloset
 	name = "\improper Legal Closet"
 	desc = "A bulky (yet mobile) closet. Comes with lawyer apparel and items."
@@ -349,7 +313,7 @@
 	name = "PDA-Jon Riker"
 	owner = "Jon Riker"
 	ownjob = "Captain"
-	toff = 1 //so players don't see the PDA on the messenger until it's found
+	toff = 1 //so players don't see the PDA on their messenger until it's found
 	ttone = "hiss" //did he play a lizard in 2010 who knows
 	note = "Congratulations, your station has chosen the Thinktronic 5100 Personal Data Assistant!"
 
