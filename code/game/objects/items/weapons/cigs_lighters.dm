@@ -347,7 +347,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/G = O
 		if(!packeditem)
 			if(G.dry == 1)
-				user << "You stuff [O] into the [src]."
+				user << "You stuff [O] into [src]."
 				smoketime = 400
 				packeditem = 1
 				name = "[O.name]-packed [initial(name)]"
@@ -366,14 +366,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/pipe/attack_self(mob/user as mob)
 	var/turf/location = get_turf(user)
 	if(lit)
-		user.visible_message("<span class='notice'>[user] puts out the [src].</span>")
+		user.visible_message("<span class='notice'>[user] puts out [src].</span>")
 		lit = 0
 		icon_state = icon_off
 		item_state = icon_off
 		processing_objects.Remove(src)
 		return
 	if(!lit && smoketime > 0)
-		user << "<span class='notice'>You empty the [src] onto the [location].</span>"
+		user << "<span class='notice'>You empty [src] onto [location].</span>"
 		new /obj/effect/decal/cleanable/ash(location)
 		packeditem = 0
 		smoketime = 0
@@ -438,11 +438,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				user.visible_message("<span class='rose'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
 			else
 				if(prob(75))
-					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src].</span>")
+					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light [src].</span>")
 				else
 					user << "<span class='warning'>You burn yourself while lighting the lighter.</span>"
 					user.adjustFireLoss(5)
-					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src], they however burn their finger in the process.</span>")
+					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light [src], they however burn their finger in the process.</span>")
 
 			user.SetLuminosity(user.luminosity + 1)
 			processing_objects.Add(src)
@@ -453,7 +453,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
 				user.visible_message("<span class='rose'>You hear a quiet click, as [user] shuts off [src] without even looking at what they're doing. Wow.")
 			else
-				user.visible_message("<span class='notice'>[user] quietly shuts off the [src].")
+				user.visible_message("<span class='notice'>[user] quietly shuts off [src].")
 
 			user.SetLuminosity(user.luminosity - 1)
 			processing_objects.Remove(src)
@@ -550,23 +550,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		user.put_in_inactive_hand(P)
 		user << "You take the last paper out of the pack, and throw the pack away."
 		del(src)
-
-/obj/item/weapon/rollingpaperpack/MouseDrop(atom/over_object)
-	var/mob/M = usr
-	if(M.restrained() || M.stat)
-		return
-
-	if(over_object == M)
-		M.put_in_hands(src)
-
-	else if(istype(over_object, /obj/screen))
-		switch(over_object.name)
-			if("r_hand")
-				M.u_equip(src)
-				M.put_in_r_hand(src)
-			if("l_hand")
-				M.u_equip(src)
-				M.put_in_l_hand(src)
 
 /obj/item/weapon/rollingpaperpack/examine()
 	..()

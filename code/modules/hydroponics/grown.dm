@@ -744,7 +744,6 @@
 	name = "grass"
 	desc = "Green and lush."
 	icon_state = "grassclump"
-	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/grass
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops

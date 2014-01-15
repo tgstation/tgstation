@@ -45,7 +45,7 @@
 				sleep(60)
 				icon_state = "drying_rack"
 				var/obj/item/weapon/reagent_containers/food/snacks/grown/Dried = new T(src.loc)
-				user << "<span class='notice'>The [Dried] has finished drying.</span>"
+				user << "<span class='notice'>[Dried] has finished drying.</span>"
 				Dried.icon_state = "[Dried.icon_state]_dry"
 				Dried.dry = 1
 				Dried.reagents.clear_reagents()
@@ -57,7 +57,7 @@
 				user << "<span class='warning'>That has already been dried.</span>"
 		else
 			user.u_equip(I)
-			user << "You add the [I] to the drying rack."
+			user << "You add [I] to the drying rack."
 			del(I)
 			src.running = 1
 			use_power = 2
@@ -70,7 +70,7 @@
 	else
 		var/N = S.dried_type
 		user.u_equip(I)
-		user << "You add the [I] to the drying rack."
+		user << "You add [I] to the drying rack."
 		del(I)
 		src.running = 1
 		use_power = 2
