@@ -131,6 +131,9 @@
 	var/watertemp = "normal"	//freezing, normal, or boiling
 	var/mobpresent = 0		//true if there is a mob on the shower's loc, this is to ease process()
 
+	ghost_read=0
+	ghost_write=0
+
 //add heat controls? when emagged, you can freeze to death in it?
 
 /obj/effect/mist

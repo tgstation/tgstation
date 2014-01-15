@@ -209,6 +209,10 @@
 
 	var/rigged = 0				// true if rigged to explode
 
+	// No ghost interaction.
+	ghost_read=0
+	ghost_write=0
+
 // the smaller bulb light fixture
 
 /obj/machinery/light/small

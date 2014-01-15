@@ -31,6 +31,9 @@
 	idle_power_usage = 2
 	active_power_usage = 4
 
+	ghost_read=0
+	ghost_write=0
+
 /obj/machinery/door_control/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
 	if(wires & 2)
