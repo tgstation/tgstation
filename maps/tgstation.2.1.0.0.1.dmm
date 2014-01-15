@@ -4877,7 +4877,7 @@
 "bPO" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/wall,/area/medical/medbay)
 "bPP" = (/obj/structure/sign/nosmoking_2{pixel_x = -28},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor{icon_state = "white"},/area/medical/medbay)
 "bPQ" = (/obj/machinery/atmospherics/unary/vent_pump{on = 1},/obj/structure/sink{dir = 4; icon_state = "sink"; pixel_x = 11; pixel_y = 0},/turf/simulated/floor{icon_state = "white"},/area/medical/medbay)
-"bPR" = (/obj/machinery/door/poddoor{density = 0; icon_state = "pdoor0"; id = "medpriv4"; name = "Privacy Shutters"; opacity = 0},/obj/structure/grille,/obj/structure/grille,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area/medical/medbay)
+"bPR" = (/obj/structure/grille,/obj/structure/grille,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area/medical/medbay)
 "bPS" = (/obj/structure/stool/bed/roller,/obj/machinery/alarm{pixel_y = 24},/turf/simulated/floor,/area/medical/medbay)
 "bPT" = (/obj/machinery/vending/wallmed1{pixel_y = 28},/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/floor,/area/medical/medbay)
 "bPU" = (/obj/structure/noticeboard{pixel_y = 28},/obj/structure/table,/obj/item/weapon/storage/fancy/cigarettes/dromedaryco{icon_state = "Dpacket5"},/obj/item/weapon/lighter/random{pixel_x = 3; pixel_y = 3},/turf/simulated/floor,/area/medical/medbay)
