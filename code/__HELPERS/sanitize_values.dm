@@ -30,6 +30,11 @@
 			else		return default
 	return default
 
+/proc/unsanitize_hexcolor(color)
+	. = ""
+	for(var/i = 1; i <= length(color); i++)
+		. += text("[copytext(color, i, i + 1)]0")
+	return .
 
 /proc/sanitize_hexcolor(color, desired_format=3, include_crunch=0, default)
 	var/crunch = include_crunch ? "#" : ""
