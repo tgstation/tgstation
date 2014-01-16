@@ -571,7 +571,7 @@ obj/item/toy/cards
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "deck_nanotrasen_full"
 	var/deckstyle = "nanotrasen"
-	var/card_name = "card"
+	var/card_hitsound = null
 	var/card_force = 0
 	var/card_throwforce = 0
 	var/card_throw_speed = 4
@@ -618,7 +618,8 @@ obj/item/toy/cards/attack_hand(mob/user as mob)
 	H.parentdeck = src
 	H.deckstyle = src.deckstyle
 	H.icon_state = "singlecard_down_[deckstyle]" // Without this the card is invisible until flipped. It's an ugly hack, but it works.
-	H.card_name = src.card_name
+	H.card_hitsound = src.card_hitsound
+	H.hitsound = H.card_hitsound
 	H.card_force = src.card_force
 	H.card_throwforce = src.card_throwforce
 	H.card_throw_speed = src.card_throw_speed
@@ -710,7 +711,7 @@ obj/item/toy/cardhand
 	var/obj/item/toy/cards/parentdeck = null
 	var/choice = null
 	var/deckstyle = "nanotrasen"
-	var/card_name = "card"
+	var/card_hitsound = null
 	var/card_force = 0
 	var/card_throwforce = 0
 	var/card_throw_speed = 4
@@ -748,7 +749,8 @@ obj/item/toy/cardhand/Topic(href, href_list)
 			C.cardname = choice
 			C.deckstyle = src.deckstyle
 			C.icon_state = "singlecard_down_[deckstyle]"
-			C.card_name = src.card_name
+			C.card_hitsound = src.card_hitsound
+			C.hitsound = C.card_hitsound
 			C.card_force = src.card_force
 			C.card_throwforce = src.card_throwforce
 			C.card_throw_speed = src.card_throw_speed
@@ -774,7 +776,8 @@ obj/item/toy/cardhand/Topic(href, href_list)
 				N.cardname = src.currenthand[1]
 				N.deckstyle = src.deckstyle
 				N.icon_state = "singlecard_down_[deckstyle]"
-				N.card_name = src.card_name
+				N.card_hitsound = src.card_hitsound
+				N.hitsound = src.card_hitsound
 				N.card_force = src.card_force
 				N.card_throwforce = src.card_throwforce
 				N.card_throw_speed = src.card_throw_speed
@@ -820,7 +823,7 @@ obj/item/toy/singlecard
 	var/obj/item/toy/cards/parentdeck = null
 	var/flipped = 0
 	var/deckstyle = "nanotrasen"
-	var/card_name = "card"
+	var/card_hitsound = null
 	var/card_force = 0
 	var/card_throwforce = 0
 	var/card_throw_speed = 4
@@ -869,7 +872,7 @@ obj/item/toy/singlecard/attackby(obj/item/I, mob/living/user)
 			H.currenthand += src.cardname
 			H.parentdeck = C.parentdeck
 			H.deckstyle = C.deckstyle
-			H.card_name = C.card_name
+			H.card_hitsound = C.card_hitsound
 			H.card_force = C.card_force
 			H.card_throwforce = C.card_throwforce
 			H.card_throw_speed = C.card_throw_speed
@@ -915,17 +918,12 @@ obj/item/toy/cards/syndicate
 	name = "suspicious looking deck of cards"
 	desc = "A deck of space-grade playing cards. They seem unusually rigid."
 	deckstyle = "syndicate"
-	card_name = "suspicious looking card"
+	card_hitsound = 'sound/weapons/bladeslice.ogg'
 	card_force = 15
 	card_throwforce = 15
 	card_throw_speed = 6
 	card_throw_range = 20
 	card_attack_verb = list("attacked", "sliced", "diced", "slashed", "cut")
-
-/obj/item/toy/singlecard/attack(mob/M, mob/user)
-	if(src.deckstyle == "syndicate")
-		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
-	..()
 
 
 
