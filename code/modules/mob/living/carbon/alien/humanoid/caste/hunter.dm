@@ -6,6 +6,7 @@
 	storedPlasma = 100
 	max_plasma = 150
 	icon_state = "alienh_s"
+	see_in_dark = 10
 	plasma_rate = 5
 
 /mob/living/carbon/alien/humanoid/hunter/New()

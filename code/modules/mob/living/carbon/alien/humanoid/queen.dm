@@ -5,6 +5,7 @@
 	health = 250
 	icon_state = "alienq_s"
 	status_flags = CANPARALYSE
+	see_in_dark = 4
 	heal_rate = 5
 	plasma_rate = 20
 

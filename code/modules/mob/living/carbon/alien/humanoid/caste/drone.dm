@@ -5,6 +5,7 @@
 	health = 100
 	icon_state = "aliend_s"
 	plasma_rate = 15
+	see_in_dark = 4
 
 /mob/living/carbon/alien/humanoid/drone/New()
 	create_reagents(100)

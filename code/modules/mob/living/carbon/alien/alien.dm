@@ -10,6 +10,8 @@
 	icon = 'icons/mob/alien.dmi'
 	gender = NEUTER
 	dna = null
+	see_invisible = SEE_INVISIBLE_MINIMUM
+	see_in_dark = 2
 
 	var/storedPlasma = 250
 	var/max_plasma = 500
