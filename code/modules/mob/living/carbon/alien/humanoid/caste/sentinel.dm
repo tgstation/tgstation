@@ -7,6 +7,7 @@
 	max_plasma = 250
 	icon_state = "aliens_s"
 	plasma_rate = 10
+	see_in_dark = 7
 
 /mob/living/carbon/alien/humanoid/sentinel/New()
 	create_reagents(100)
