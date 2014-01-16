@@ -138,10 +138,10 @@ datum/shuttle_controller
 						direction = 1
 						endtime = null
 						return 0
-					else if(fake_recall && (timeleft <= fake_recall))
-						recall()
-						fake_recall = 0
-						return 0
+				else if(fake_recall && (timeleft <= fake_recall))
+					recall()
+					fake_recall = 0
+					return 0
 				else if(timeleft <= 0)
 					var/datum/shuttle_manager/s = shuttles["escape"]
 					s.move_shuttle()

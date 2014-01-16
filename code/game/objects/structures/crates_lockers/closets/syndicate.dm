@@ -17,11 +17,10 @@
 	new /obj/item/clothing/under/syndicate(src)
 	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
 	new /obj/item/clothing/suit/space/rig/syndi(src)
+	new /obj/item/weapon/storage/belt/military(src)
 	new /obj/item/weapon/crowbar/red(src)
 	new /obj/item/weapon/cell/high(src)
-	new /obj/item/weapon/card/id/syndicate(src)
 	new /obj/item/device/multitool(src)
-	new /obj/item/weapon/shield/energy(src)
 
 
 /obj/structure/closet/syndicate/nuclear
@@ -30,13 +29,14 @@
 /obj/structure/closet/syndicate/nuclear/New()
 	..()
 	sleep(2)
-	new /obj/item/ammo_box/magazine/m12mm(src)
-	new /obj/item/ammo_box/magazine/m12mm(src)
-	new /obj/item/ammo_box/magazine/m12mm(src)
-	new /obj/item/ammo_box/magazine/m12mm(src)
-	new /obj/item/ammo_box/magazine/m12mm(src)
+	new /obj/item/ammo_box/magazine/m10mm(src)
+	new /obj/item/ammo_box/magazine/m10mm(src)
+	new /obj/item/ammo_box/magazine/m10mm(src)
+	new /obj/item/ammo_box/magazine/m10mm(src)
+	new /obj/item/ammo_box/magazine/m10mm(src)
 	new /obj/item/weapon/storage/box/handcuffs(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
+	new /obj/item/weapon/storage/box/teargas(src)
 	new /obj/item/weapon/gun/energy/gun(src)
 	new /obj/item/weapon/gun/energy/gun(src)
 	new /obj/item/weapon/gun/energy/gun(src)
@@ -48,8 +48,6 @@
 	new /obj/item/weapon/pinpointer/nukeop(src)
 	new /obj/item/weapon/pinpointer/nukeop(src)
 	new /obj/item/device/pda/syndicate(src)
-	var/obj/item/device/radio/uplink/U = new(src)
-	U.hidden_uplink.uses = 40
 	return
 
 /obj/structure/closet/syndicate/resources/

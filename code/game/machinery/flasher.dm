@@ -130,13 +130,13 @@
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 		anchored = !anchored
 
-		if (!anchored)
-			user.show_message(text("\red [src] can now be moved."))
+		if (!anchored && !isinspace())
+			user << "<span class='notice'>[src] can now be moved.</span>"
 			overlays.Cut()
 			power_change()
 
 		else if (anchored)
-			user.show_message(text("\red [src] is now secured."))
+			user << "<span class='notice'>[src] is now secured.</span>"
 			overlays += "[base_state]-s"
 			power_change()
 	else

@@ -34,7 +34,13 @@
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 		Delete()
 		return
+	// update_icon is called when health changes so... call update_health in the overmind
+	if(overmind)
+		overmind.update_health()
 	return
+
+/obj/effect/blob/core/RegenHealth()
+	return // Don't regen, we handle it in Life()
 
 /obj/effect/blob/core/Life()
 	if(!overmind)
@@ -44,6 +50,8 @@
 			resource_delay = world.time + 10 // 1 second
 			overmind.add_points(point_rate)
 	health = min(initial(health), health + 1)
+	if(overmind)
+		overmind.update_health()
 	for(var/i = 1; i < 8; i += i)
 		Pulse(0, i)
 	for(var/b_dir in alldirs)

@@ -1,4 +1,7 @@
+#define NUKESCALINGMODIFIER 0.5
+
 var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","Foxtrot","Zero", "Niner")
+
 
 /obj/machinery/computer/telecrystals
 	name = "Telecrystal Assignment Machinery"
@@ -136,7 +139,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	scaleTC(danger)
 
 /obj/machinery/computer/telecrystals/boss/proc/scaleTC(var/amt)//Its own proc, since it'll probably need a lot of tweaks for balance, use a fancier algorhithm, etc.
-	storedcrystals += amt
+	storedcrystals += amt * NUKESCALINGMODIFIER
 
 /////////
 
@@ -194,3 +197,5 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 
 	src.updateUsrDialog()
 	return
+
+#undef NUKESCALINGMODIFIER

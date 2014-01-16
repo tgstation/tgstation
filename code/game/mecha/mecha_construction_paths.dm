@@ -350,11 +350,11 @@
 					 //10
 					 list("key"=/obj/item/weapon/stock_parts/scanning_module/adv,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Targeting module is secured"),
+					 		"desc"="Scanning module is secured"),
 					 //11
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
-					 		"desc"="Targeting module is installed"),
+					 		"desc"="Scanning module is installed"),
 					 //12
 					 list("key"=/obj/item/weapon/circuitboard/mecha/gygax/targeting,
 					 		"backkey"=/obj/item/weapon/screwdriver,
@@ -931,11 +931,11 @@
 					 //10
 					 list("key"=/obj/item/weapon/stock_parts/scanning_module/adv,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Targeting module is secured"),
+					 		"desc"="Scanning module is secured"),
 					 //11
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
-					 		"desc"="Targeting module is installed"),
+					 		"desc"="Scanning module is installed"),
 					 //12
 					 list("key"=/obj/item/weapon/circuitboard/mecha/durand/targeting,
 					 		"backkey"=/obj/item/weapon/screwdriver,

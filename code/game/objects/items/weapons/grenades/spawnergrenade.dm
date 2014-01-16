@@ -31,7 +31,7 @@
 	del(src)
 
 /obj/item/weapon/grenade/spawnergrenade/manhacks
-	name = "manhack delivery grenade"
+	name = "viscerator delivery grenade"
 	spawner_type = /mob/living/simple_animal/hostile/viscerator
 	deliveryamt = 5
 	origin_tech = "materials=3;magnets=4;syndicate=4"

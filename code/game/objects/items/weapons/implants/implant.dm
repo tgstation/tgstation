@@ -1,5 +1,7 @@
 /obj/item/weapon/implant
 	name = "implant"
+	icon = 'icons/obj/stock_parts.dmi'
+	icon_state = "rom"//Normally, you shouldn't see these. However, they can show up in the game via certain sources, like soul-stoning.
 	var/implanted = null
 	var/mob/imp_in = null
 	item_color = "b"
@@ -30,7 +32,7 @@
 	return .
 
 /obj/item/weapon/implant/tracking
-	name = "tracking"
+	name = "tracking implant"
 	desc = "Track with this."
 	var/id = 1.0
 
@@ -54,7 +56,7 @@
 
 
 /obj/item/weapon/implant/explosive
-	name = "explosive"
+	name = "explosive implant"
 	desc = "And boom goes the weasel."
 
 /obj/item/weapon/implant/explosive/get_data()
@@ -81,7 +83,7 @@
 
 
 /obj/item/weapon/implant/chem
-	name = "chem"
+	name = "chem implant"
 	desc = "Injects things."
 	allow_reagents = 1
 
@@ -121,7 +123,7 @@
 
 
 /obj/item/weapon/implant/loyalty
-	name = "loyalty"
+	name = "loyalty implant"
 	desc = "Makes you loyal or such."
 
 /obj/item/weapon/implant/loyalty/get_data()
@@ -150,39 +152,44 @@
 
 
 /obj/item/weapon/implant/adrenalin
-	name = "adrenalin"
+	name = "adrenal implant"
 	desc = "Removes all stuns and knockdowns."
 	var/uses = 3
 
 /obj/item/weapon/implant/adrenalin/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Cybersun Industries Adrenalin Implant<BR>
+				<b>Name:</b> Cybersun Industries Adrenaline Implant<BR>
 				<b>Life:</b> Five days.<BR>
 				<b>Important Notes:</b> <font color='red'>Illegal</font><BR>
 				<HR>
-				<b>Implant Details:</b> Subjects injected with implant can activate a massive injection of adrenalin.<BR>
-				<b>Function:</b> Contains nanobots to stimulate body to mass-produce Adrenalin.<BR>
-				<b>Special Features:</b> Will prevent and cure most forms of brainwashing.<BR>
-				<b>Integrity:</b> Implant can only be used three times before the nanobots are depleted."}
+				<b>Implant Details:</b> Subjects injected with implant can activate an injection of medical cocktails.<BR>
+				<b>Function:</b> Removes stuns, increases speed, and has a mild healing effect.<BR>
+				<b>Integrity:</b> Implant can only be used three times before reserves are depleted."}
 	return dat
 
 /obj/item/weapon/implant/adrenalin/trigger(emote, mob/source)
 	if(uses < 1)	return 0
-	if(emote == "pale")
+	if(emote == "scream")
 		uses--
 		source << "<span class='notice'>You feel a sudden surge of energy!</span>"
 		source.SetStunned(0)
 		source.SetWeakened(0)
 		source.SetParalysis(0)
+		source.lying = 0
+		source.update_canmove()
+
+		reagents.add_reagent("synaptizine", 10)
+		reagents.add_reagent("tricordrazine", 10)
+		reagents.add_reagent("hyperzine", 10)
 
 /obj/item/weapon/implant/adrenalin/implanted(mob/source)
-	source.mind.store_memory("An adrenalin implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.", 0, 0)
-	source << "<span class='notice'>The implanted adrenalin implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.</span>"
+	source.mind.store_memory("An adrenal implant can be activated by using the scream emote, <B>say *scream</B> to attempt to activate.", 0, 0)
+	source << "<span class='notice'>The implanted adrenaline implant can be activated by using the scream emote, <B>say *scream</B> to attempt to activate.</span>"
 	return 1
 
 
 /obj/item/weapon/implant/emp
-	name = "emp"
+	name = "emp implant"
 	desc = "Triggers an EMP."
 
 	var/activation_emote = "chuckle"

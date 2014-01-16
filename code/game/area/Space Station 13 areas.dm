@@ -364,6 +364,11 @@ proc/process_ghost_teleport_locs()
 	icon_state = "honk"
 	requires_power = 0
 
+/area/telesciareas
+	name = "\improper Cosmic Anomaly"
+	icon_state = "telesci"
+	requires_power = 0
+
 /area/tdome
 	name = "\improper Thunderdome"
 	icon_state = "thunder"
@@ -1133,6 +1138,10 @@ proc/process_ghost_teleport_locs()
 /area/toxins/server
 	name = "\improper Server Room"
 	icon_state = "server"
+
+/area/toxins/telesci
+	name = "\improper Telescience Lab"
+	icon_state = "toxtest"
 
 //Storage
 
