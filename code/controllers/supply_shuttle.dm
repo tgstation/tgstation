@@ -293,27 +293,26 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 						var/obj/item/seeds/S = A
 						shippedSeeds += S
 						S.loc = MA.loc // Setting the seeds aside before the crate is deleted
-						world << "Found a seed..."
 			del(MA)
 		
 		for(var/obj/item/seeds/S in shippedSeeds)
 			var/seedID = discoveredPlants.Find(S.type)
-			world << "Here's a seed"
-			if(seedID) // This species has already been sent to CentComm
-				world << "It's already been discovered"
+			if(S.rarity == 0) // Mundane species
+				centcom_message += "<font color=red>+0</font>: We don't need samples of mundane species \"[capitalize(S.species)]\".<BR>"
+			else if(seedID) // This species has already been sent to CentComm
 				var/potDiff = S.potency - discoveredPlantsPotencies[seedID] // Compare it to the previous best
 				if(potDiff > 0) // This sample is better
 					discoveredPlantsPotencies[seedID] = S.potency
-					centcom_message += "<font color=green>+[potDiff]</font>: New sample of [S.name] is superior.  Good work.<BR>"
+					centcom_message += "<font color=green>+[potDiff]</font>: New sample of \"[capitalize(S.species)]\" is superior.  Good work.<BR>"
 					points += potDiff
 				else // This sample is worthless
-					centcom_message += "<font color=red>+0</font>: New sample of [S.name] is not more potent than existing sample ([discoveredPlantsPotencies[seedID]]).<BR>"
+					centcom_message += "<font color=red>+0</font>: New sample of \"[capitalize(S.species)]\" is not more potent than existing sample ([discoveredPlantsPotencies[seedID]] potency).<BR>"
 			else // This is a new discovery!
-				world << "It's a new one!"
 				discoveredPlants += (S.type)
 				discoveredPlantsPotencies += (S.potency)
-				centcom_message += "<font color=green>+[S.rarity]</font>: New species discovered: \"[S.name]\".  Excellent work.<BR>"
+				centcom_message += "<font color=green>+[S.rarity]</font>: New species discovered: \"[capitalize(S.species)]\".  Excellent work.<BR>"
 				points += S.rarity // That's right, no bonus for potency.  Send a crappy sample first to "show improvement" later
+			del(S)
 
 		if(plasma_count)
 			centcom_message += "<font color=green>+[round(plasma_count/plasma_per_point)]</font>: Received [plasma_count] units of exotic material.<BR>"
