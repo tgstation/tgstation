@@ -6415,7 +6415,7 @@
 "cts" = (/turf/unsimulated/wall/fakeglass{icon_state = "fakewindows"; dir = 9},/area/syndicate_mothership)
 "ctt" = (/turf/unsimulated/wall/fakeglass{icon_state = "fakewindows2"; dir = 8},/area/syndicate_mothership)
 "ctu" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/snacks/mushroompizzaslice,/turf/unsimulated/floor{icon_state = "bar"; dir = 2},/area/syndicate_mothership)
-"ctv" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/drinks/beer{pixel_x = 3},/turf/unsimulated/floor{icon_state = "bar"; dir = 2},/area/syndicate_mothership)
+"ctv" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/drinks/beer{pixel_x = 5; pixel_y = -2; step_x = 0},/obj/item/toy/cards/syndicate{icon_state = "deck_syndicate_full"; pixel_x = -6; pixel_y = 6},/turf/unsimulated/floor{icon_state = "bar"; dir = 2},/area/syndicate_mothership)
 "ctw" = (/obj/machinery/computer/telecrystals/uplinker,/turf/unsimulated/floor{tag = "icon-podhatch (WEST)"; icon_state = "podhatch"; dir = 8},/area/syndicate_mothership)
 "ctx" = (/turf/unsimulated/wall/fakeglass{icon_state = "fakewindows2"; dir = 1},/area/syndicate_mothership)
 "cty" = (/turf/unsimulated/floor,/area/syndicate_mothership)
