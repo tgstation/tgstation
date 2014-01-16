@@ -246,7 +246,7 @@
 				protected = 1
 
 	if(!protected)
-		playsound(src.loc, "sparks", 75, 1, -1)
+		playsound(get_turf(src), "sparks", 75, 1, -1)
 		user << "<font color='red'>You try to touch the controls but you get zapped. There must be a short circuit somewhere.</font>"
 		return*/
 	else  //welp, the guy is protected, we can continue
@@ -272,7 +272,7 @@
 				protected = 1
 
 	if(!protected)
-		playsound(src.loc, "sparks", 75, 1, -1)
+		playsound(get_turf(src), "sparks", 75, 1, -1)
 		user << "<font color='red'>You try to touch the controls but you get zapped. There must be a short circuit somewhere.</font>"
 		return*/
 	else
@@ -510,7 +510,7 @@
 		return
 	if(istype(I, /obj/item/weapon/screwdriver))
 		src.panelopen = !src.panelopen
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
+		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 100, 1)
 		user << text("<font color='blue'>You [] the unit's maintenance panel.</font>",(src.panelopen ? "open up" : "close") )
 		src.updateUsrDialog()
 		return

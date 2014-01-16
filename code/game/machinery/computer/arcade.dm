@@ -77,8 +77,8 @@
 
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\arcade.dm:75: dat += "<center><b><a href='byond://?src=\ref[src];attack=1'>Attack</a> | "
-		dat += {"<center><b><a href='byond://?src=\ref[src];attack=1'>Attack</a> | 
-			<a href='byond://?src=\ref[src];heal=1'>Heal</a> | 
+		dat += {"<center><b><a href='byond://?src=\ref[src];attack=1'>Attack</a> |
+			<a href='byond://?src=\ref[src];heal=1'>Heal</a> |
 			<a href='byond://?src=\ref[src];charge=1'>Recharge Power</a>"}
 	// END AUTOFIX
 
@@ -245,7 +245,7 @@
 
 		src.updateUsrDialog()
 	else if(istype(I, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
 			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 			var/obj/item/weapon/circuitboard/arcade/M = new /obj/item/weapon/circuitboard/arcade( A )

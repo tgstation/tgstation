@@ -67,7 +67,7 @@
 		unwield()
 		user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
 		if (src.unwieldsound)
-			playsound(src.loc, unwieldsound, 50, 1)
+			playsound(get_turf(src), unwieldsound, 50, 1)
 
 		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
 		if(O && istype(O))
@@ -81,7 +81,7 @@
 		wield()
 		user << "<span class='notice'>You grab the [initial(name)] with both hands.</span>"
 		if (src.wieldsound)
-			playsound(src.loc, wieldsound, 50, 1)
+			playsound(get_turf(src), wieldsound, 50, 1)
 
 		var/obj/item/weapon/twohanded/offhand/O = new(user) ////Let's reserve his other hand~
 		O.name = "[initial(name)] - offhand"

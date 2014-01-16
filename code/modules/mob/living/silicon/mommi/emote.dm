@@ -164,7 +164,7 @@
 				message = "<B>[src]</B> beeps at [param]."
 			else
 				message = "<B>[src]</B> beeps."
-			playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 0)
+			playsound(get_turf(src), 'sound/machines/twobeep.ogg', 50, 0)
 			m_type = 1
 
 		if("ping")
@@ -181,7 +181,7 @@
 				message = "<B>[src]</B> pings at [param]."
 			else
 				message = "<B>[src]</B> pings."
-			playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+			playsound(get_turf(src), 'sound/machines/ping.ogg', 50, 0)
 			m_type = 1
 
 		if("buzz")
@@ -198,7 +198,7 @@
 				message = "<B>[src]</B> buzzes at [param]."
 			else
 				message = "<B>[src]</B> buzzes."
-			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+			playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 0)
 			m_type = 1
 
 		else

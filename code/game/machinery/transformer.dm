@@ -57,10 +57,10 @@
 		return
 
 	if(!transform_dead && H.stat == DEAD)
-		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 0)
 		return
 
-	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
 	H.emote("scream") // It is painful
 	H.adjustBruteLoss(max(0, 80 - H.getBruteLoss())) // Hurt the human, don't try to kill them though.
 	H.handle_regular_hud_updates() // Make sure they see the pain.
@@ -76,7 +76,7 @@
 	 	// So he can't jump out the gate right away.
 		R.weakened = 5
 	spawn(50)
-		playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+		playsound(get_turf(src), 'sound/machines/ping.ogg', 50, 0)
 		if(R)
 			R.weakened = 0
 

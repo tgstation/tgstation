@@ -53,7 +53,7 @@
 		src.health -= aforce
 
 	//Play a fitting sound
-	playsound(src.loc, 'sound/effects/EMPulse.ogg', 75, 1)
+	playsound(get_turf(src), 'sound/effects/EMPulse.ogg', 75, 1)
 
 
 	if (src.health <= 0)
@@ -127,7 +127,7 @@
 	src.health -= tforce
 
 	//This seemed to be the best sound for hitting a force field.
-	playsound(src.loc, 'sound/effects/EMPulse.ogg', 100, 1)
+	playsound(get_turf(src), 'sound/effects/EMPulse.ogg', 100, 1)
 
 	//Handle the destruction of the shield
 	if (src.health <= 0)
@@ -266,7 +266,7 @@
 		update_icon()
 
 	else if(istype(W, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
+		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 100, 1)
 		if(is_open)
 			user << "\blue You close the panel."
 			is_open = 0
@@ -291,7 +291,7 @@
 			user << "The bolts are covered, unlocking this would retract the covers."
 			return
 		if(anchored)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
 			user << "\blue You unsecure the [src] from the floor!"
 			if(active)
 				user << "\blue The [src] shuts off!"
@@ -299,7 +299,7 @@
 			anchored = 0
 		else
 			if(istype(get_turf(src), /turf/space)) return //No wrenching these in space!
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
 			user << "\blue You secure the [src] to the floor!"
 			anchored = 1
 
@@ -495,14 +495,14 @@
 
 		else if(state == 0)
 			state = 1
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
 			user << "You secure the external reinforcing bolts to the floor."
 			src.anchored = 1
 			return
 
 		else if(state == 1)
 			state = 0
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
 			user << "You undo the external reinforcing bolts."
 			src.anchored = 0
 			return

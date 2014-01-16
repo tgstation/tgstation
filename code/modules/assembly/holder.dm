@@ -175,7 +175,7 @@
 				return
 			var/obj/item/weapon/weldingtool/WT = W
 			if (WT.remove_fuel(0,user))
-				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
 				user << "\blue You begin to weld \the [src] to the floor..."
 				if (do_after(user, 40))
 					var/obj/machinery/igniter/igniter=new(src.loc)
