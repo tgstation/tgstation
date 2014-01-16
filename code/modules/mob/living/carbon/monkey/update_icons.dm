@@ -32,14 +32,6 @@
 	for(var/image/I in overlays_standing)
 		overlays += I
 
-/mob/living/carbon/monkey/update_transform()
-	var/matrix/M = matrix(transform)
-	var/final_easing = EASE_IN|EASE_OUT
-	if(lying != lying_prev)
-		M.TurnTo(lying_prev,lying)
-		lying_prev = lying	//so we don't try to animate until there's been another change.
-	animate(src,transform = M,time = 5, easing = final_easing)
-
 ////////
 /mob/living/carbon/monkey/update_inv_wear_mask(var/update_icons=1)
 	if(wear_mask && istype(wear_mask, /obj/item/clothing/mask) )

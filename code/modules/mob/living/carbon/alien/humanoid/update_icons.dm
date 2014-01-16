@@ -29,14 +29,6 @@
 	else
 		icon_state = "alien[caste]_s"
 
-/mob/living/carbon/alien/humanoid/update_transform()
-	var/matrix/M = matrix(transform)
-	var/final_easing = EASE_IN|EASE_OUT
-	if(lying != lying_prev)
-		M.TurnTo(lying_prev,lying)
-		lying_prev = lying	//so we don't try to animate until there's been another change.
-	animate(src,transform = M,time = 5, easing = final_easing)
-
 /mob/living/carbon/alien/humanoid/regenerate_icons()
 	..()
 	if (monkeyizing)	return

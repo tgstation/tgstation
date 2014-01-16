@@ -20,3 +20,6 @@
 		icon_state = "larva[state]_sleep"
 	else
 		icon_state = "larva[state]"
+
+/mob/living/carbon/alien/larva/update_transform() //All this is handled in update_icons()
+	return

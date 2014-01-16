@@ -50,7 +50,7 @@
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
 
-/obj/item/weapon/cloaking_device
+/obj/item/weapon/cloaking_device //Why the fuck is this in shields.dm?
 	name = "cloaking device"
 	desc = "Use this to become invisible to the human eyesocket."
 	icon = 'icons/obj/device.dmi'
@@ -64,22 +64,36 @@
 	w_class = 2.0
 	origin_tech = "magnets=3;syndicate=4"
 
-
-/obj/item/weapon/cloaking_device/attack_self(mob/user as mob)
+/obj/item/weapon/cloaking_device/proc/toggle()
 	active = !active
-	if(active)
-		user << "\blue The cloaking device is now active."
-		icon_state = "shield1"
-	else
-		user << "\blue The cloaking device is now inactive."
-		icon_state = "shield0"
-	user.update_transform()
+	icon_state = "shield[active]"
+	if(isliving(loc))
+		var/mob/living/livingloc = loc
+		if(active)
+			livingloc.cloak_stacks += src
+		else
+			livingloc.cloak_stacks -= src
+		livingloc.update_transform()
+
+/obj/item/weapon/cloaking_device/attack_self(mob/user)
+	toggle()
 	add_fingerprint(user)
+	user << "\blue The cloaking device is now [!active ? "in" : ""]active."
+	return ..()
 
 /obj/item/weapon/cloaking_device/emp_act(severity)
-	active = 0
-	icon_state = "shield0"
-	if(ismob(loc))
-		var/mob/M = loc
-		M.update_transform()
-	..()
+	if(active)
+		toggle()
+	return ..()
+
+/obj/item/weapon/cloaking_device/dropped(mob/living/user)
+	if(istype(user) && active)
+		user.cloak_stacks -= src
+		user.update_transform()
+	return ..()
+
+/obj/item/weapon/cloaking_device/pickup(mob/living/user)
+	if(istype(user) && active)
+		user.cloak_stacks[src] = src //Won't add the same thing more than once
+		user.update_transform()
+	return ..()

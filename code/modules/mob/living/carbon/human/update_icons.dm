@@ -123,29 +123,6 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	update_transform()
 
-#define STEALTH_ALPHA 15
-/mob/living/carbon/human/update_transform()
-	var/matrix/M = matrix(transform) //aka transform.Copy()
-	var/final_easing = EASE_IN|EASE_OUT
-	if(lying != lying_prev)
-		M.TurnTo(lying_prev,lying)
-		lying_prev = lying	//so we don't try to animate until there's been another change.
-
-//Shitty cloaking code is here.
-	var/final_alpha = 255
-	if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja))
-		var/obj/item/clothing/suit/space/space_ninja/ninjasuit = wear_suit
-		if(ninjasuit.s_active)
-			final_alpha = STEALTH_ALPHA
-	if(final_alpha != STEALTH_ALPHA)
-		//cloaking devices. //TODO: get rid of this :<
-		for(var/obj/item/weapon/cloaking_device/S in list(l_hand,r_hand,belt,l_store,r_store))
-			if(S.active)
-				final_alpha = STEALTH_ALPHA
-				break
-
-	animate(src,transform = M, alpha = final_alpha, time = 5, easing = final_easing)
-#undef STEALTH_ALPHA
 
 //DAMAGE OVERLAYS
 //constructs damage icon for each organ from mask * damage field and saves it in our overlays_ lists
