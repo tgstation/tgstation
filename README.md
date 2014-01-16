@@ -1,4 +1,4 @@
-/tg/station 13 v1.0 - 6 October 2010
+/tg/station 13 v1.0 - 6 October 2010 [![Build Status](http://hibernia.fallemmc.com:8090/job/tgstation/badge/icon)](http://hibernia.fallemmc.com:8090/job/tgstation/)
 
 Website: http://ss13.eu
 
@@ -118,7 +118,7 @@ As BYOND's Dream Maker is an object oriented language, code must be object orien
 
 You must write BYOND code with absolute pathing, like so:
 
-```DM
+```C++
 
 /obj/item/weapon/baseball_bat
     name = "baseball bat"

@@ -339,7 +339,7 @@
 	. = new_xeno
 	del(src)
 
-/mob/living/carbon/human/proc/slimeize(adult as num, reproduce as num)
+/mob/living/carbon/human/proc/slimeize(reproduce as num)
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
@@ -363,10 +363,7 @@
 			babies += M
 		new_slime = pick(babies)
 	else
-		if(adult)
-			new_slime = new /mob/living/carbon/slime/adult(loc)
-		else
-			new_slime = new /mob/living/carbon/slime(loc)
+		new_slime = new /mob/living/carbon/slime(loc)
 	new_slime.a_intent = "harm"
 	new_slime.key = key
 

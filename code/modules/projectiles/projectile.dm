@@ -25,7 +25,6 @@
 	var/yo = null
 	var/xo = null
 	var/current = null
-	var/obj/shot_from = null // the object which shot us
 	var/atom/original = null // the original target clicked
 	var/turf/starting = null // the projectile's starting turf
 	var/list/permutated = list() // we've passed through these atoms, don't try to hit them again
@@ -55,12 +54,10 @@
 		loc = null
 
 	proc/on_hit(var/atom/target, var/blocked = 0, var/hit_zone)
-		if(blocked >= 2)		return 0//Full block
 		if(!isliving(target))	return 0
 		if(isanimal(target))	return 0
 		var/mob/living/L = target
-		L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, blocked)
-		return 1
+		return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, blocked)
 
 
 	Bump(atom/A as mob|obj|turf|area)

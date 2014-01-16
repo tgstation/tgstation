@@ -49,7 +49,7 @@
 	anchored = 1
 	var/lastnut = nutrition
 	//if(M.client) M << "\red You legs become paralyzed!"
-	if(istype(src, /mob/living/carbon/slime/adult))
+	if(is_adult)
 		icon_state = "[colour] adult slime eat"
 	else
 		icon_state = "[colour] baby slime eat"
@@ -96,7 +96,7 @@
 						if(powerlevel > 10)
 							powerlevel = 10
 
-				if(istype(src, /mob/living/carbon/slime/adult))
+				if(is_adult)
 					if(nutrition > 1200)
 						nutrition = 1200
 				else
@@ -119,11 +119,11 @@
 			break
 
 	if(stat == 2)
-		if(!istype(src, /mob/living/carbon/slime/adult))
+		if(!is_adult)
 			icon_state = "[colour] baby slime dead"
 
 	else
-		if(istype(src, /mob/living/carbon/slime/adult))
+		if(is_adult)
 			icon_state = "[colour] adult slime"
 		else
 			icon_state = "[colour] baby slime"
@@ -173,19 +173,13 @@
 	if(stat)
 		src << "<i>I must be conscious to do this...</i>"
 		return
-	if(!istype(src, /mob/living/carbon/slime/adult))
+	if(!is_adult)
 		if(amount_grown >= 10)
-			var/mob/living/carbon/slime/adult/new_slime = new adulttype(loc)
-			new_slime.nutrition = nutrition
-			new_slime.powerlevel = max(0, powerlevel-1)
-			new_slime.a_intent = "harm"
-			if(src.mind)
-				src.mind.transfer_to(new_slime)
-			else
-				new_slime.key = src.key
-			new_slime.universal_speak = universal_speak
-			new_slime << "<B>You are now an adult slime.</B>"
-			del(src)
+			is_adult = 1
+			maxHealth = 200
+			amount_grown = 0
+			regenerate_icons()
+			name = text("[colour] [is_adult ? "adult" : "baby"] slime ([rand(1, 1000)])")
 		else
 			src << "<i>I am not ready to evolve yet...</i>"
 	else
@@ -193,15 +187,14 @@
 
 /mob/living/carbon/slime/verb/Reproduce()
 	set category = "Slime"
-	set desc = "This will make you split into four Slimes. NOTE: this will KILL you, but you will be transferred into one of the babies."
+	set desc = "This will make you split into four Slimes."
 
 	if(stat)
 		src << "<i>I must be conscious to do this...</i>"
 		return
 
-	if(istype(src, /mob/living/carbon/slime/adult))
+	if(is_adult)
 		if(amount_grown >= 10)
-			//if(input("Are you absolutely sure you want to reproduce? Your current body will cease to be, but your consciousness will be transferred into a produced slime.") in list("Yes","No")=="Yes")
 			if(stat)
 				src << "<i>I must be conscious to do this...</i>"
 				return
@@ -210,13 +203,11 @@
 			var/new_nutrition = round(nutrition * 0.9)
 			var/new_powerlevel = round(powerlevel / 4)
 			for(var/i=1,i<=4,i++)
-				var/newslime
+				var/mob/living/carbon/slime/M = new /mob/living/carbon/slime/(loc)
 				if(prob(70))
-					newslime = primarytype
+					M.colour = colour
 				else
-					newslime = slime_mutation[rand(1,4)]
-
-				var/mob/living/carbon/slime/M = new newslime(loc)
+					M.colour = slime_mutation[rand(1,4)]
 				M.nutrition = new_nutrition
 				M.powerlevel = new_powerlevel
 				if(i != 1) step_away(M,src)
@@ -230,8 +221,6 @@
 				src.mind.transfer_to(new_slime)
 			else
 				new_slime.key = src.key
-
-			new_slime << "<B>You are now a slime!</B>"
 			del(src)
 		else
 			src << "<i>I am not ready to reproduce yet...</i>"

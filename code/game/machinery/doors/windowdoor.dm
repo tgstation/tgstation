@@ -153,7 +153,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/door/window/attack_paw(mob/user as mob)
-	if(istype(user, /mob/living/carbon/alien/humanoid) || istype(user, /mob/living/carbon/slime/adult))
+	if(istype(user, /mob/living/carbon/alien/humanoid) || istype(user, /mob/living/carbon/slime/))
 		if(src.operating)
 			return
 		src.health = max(0, src.health - 25)

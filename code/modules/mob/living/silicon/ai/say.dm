@@ -87,7 +87,7 @@ var/const/VOX_DELAY = 600
 		src << "<span class='notice'>Wireless interface disabled, unable to interact with announcement PA.</span>"
 		return
 
-	var/list/words = stringsplit(trim(message), " ")
+	var/list/words = text2list(trim(message), " ")
 	var/list/incorrect_words = list()
 
 	if(words.len > 30)
