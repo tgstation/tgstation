@@ -30,14 +30,14 @@
 /obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "*** <B>[plantname]</B> ***"
-		user << "-Plant Endurance: \blue [endurance]"
-		user << "-Plant Lifespan: \blue [lifespan]"
-		user << "-Species Discovery Value: \blue [rarity]"
+		user << "-Plant Endurance: <span class='notice'> [endurance]</span>"
+		user << "-Plant Lifespan: <span class='notice'> [lifespan]</span>"
+		user << "-Species Discovery Value: <span class='notice'> [rarity]</span>"
 		if(yield != -1)
-			user << "-Plant Yield: \blue [yield]"
-		user << "-Plant Production: \blue [production]"
+			user << "-Plant Yield: <span class='notice'> [yield]</span>"
+		user << "-Plant Production: <span class='notice'> [production]</span>"
 		if(potency != -1)
-			user << "-Plant Potency: \blue [potency]"
+			user << "-Plant Potency: <span class='notice'> [potency]</span>"
 		return
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
 

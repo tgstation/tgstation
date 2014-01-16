@@ -545,27 +545,27 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	else if(istype(O, /obj/item/device/analyzer/plant_analyzer))
 		if(planted && myseed)
 			user << "*** <B>[myseed.plantname]</B> ***" //Carn: now reports the plants growing, not the seeds.
-			user << "-Plant Age: \blue [age]"
-			user << "-Plant Endurance: \blue [myseed.endurance]"
-			user << "-Plant Lifespan: \blue [myseed.lifespan]"
+			user << "-Plant Age: <span class='notice'> [age]</span>"
+			user << "-Plant Endurance: <span class='notice'> [myseed.endurance]</span>"
+			user << "-Plant Lifespan: <span class='notice'> [myseed.lifespan]</span>"
 			if(myseed.yield != -1)
-				user << "-Plant Yield: \blue [myseed.yield]"
-			user << "-Plant Production: \blue [myseed.production]"
+				user << "-Plant Yield: <span class='notice'> [myseed.yield]</span>"
+			user << "-Plant Production: <span class='notice'> [myseed.production]</span>"
 			if(myseed.potency != -1)
-				user << "-Plant Potency: \blue [myseed.potency]"
-			user << "-Weed level: \blue [weedlevel]/10"
-			user << "-Pest level: \blue [pestlevel]/10"
-			user << "-Toxicity level: \blue [toxic]/100"
-			user << "-Water level: \blue [waterlevel]/100"
-			user << "-Nutrition level: \blue [nutrilevel]/10"
+				user << "-Plant Potency: <span class='notice'> [myseed.potency]</span>"
+			user << "-Weed level: <span class='notice'> [weedlevel]/10</span>"
+			user << "-Pest level: <span class='notice'> [pestlevel]/10</span>"
+			user << "-Toxicity level: <span class='notice'> [toxic]/100</span>"
+			user << "-Water level: <span class='notice'> [waterlevel]/100</span>"
+			user << "-Nutrition level: <span class='notice'> [nutrilevel]/10</span>"
 			user << ""
 		else
 			user << "<B>No plant found.</B>"
-			user << "-Weed level: \blue [weedlevel]/10"
-			user << "-Pest level: \blue [pestlevel]/10"
-			user << "-Toxicity level: \blue [toxic]/100"
-			user << "-Water level: \blue [waterlevel]/100"
-			user << "-Nutrition level: \blue [nutrilevel]/10"
+			user << "-Weed level: <span class='notice'> [weedlevel]/10</span>"
+			user << "-Pest level: <span class='notice'> [pestlevel]/10</span>"
+			user << "-Toxicity level: <span class='notice'> [toxic]/100</span>"
+			user << "-Water level: <span class='notice'> [waterlevel]/100</span>"
+			user << "-Nutrition level: <span class='notice'> [nutrilevel]/10</span>"
 			user << ""
 
 	else if(istype(O, /obj/item/weapon/minihoe))
