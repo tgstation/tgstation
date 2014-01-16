@@ -123,8 +123,8 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	var/points_per_crate = 5
 	var/plasma_per_point = 5 // 2 plasma for 1 point
 	var/centcom_message = "" // Remarks from Centcom on how well you checked the last order.
-	var/list/discoveredPlants = list() // Unique typepaths for unusual things we've already sent CentComm
-	var/list/discoveredPlantsPotencies = list() // Their potencies, in the same order
+	// Unique typepaths for unusual things we've already sent CentComm, associated with their potencies
+	var/list/discoveredPlants = list()
 	//control
 	var/ordernum
 	var/list/shoppinglist = list()
@@ -296,20 +296,18 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 			del(MA)
 		
 		for(var/obj/item/seeds/S in shippedSeeds)
-			var/seedID = discoveredPlants.Find(S.type)
 			if(S.rarity == 0) // Mundane species
 				centcom_message += "<font color=red>+0</font>: We don't need samples of mundane species \"[capitalize(S.species)]\".<BR>"
-			else if(seedID) // This species has already been sent to CentComm
-				var/potDiff = S.potency - discoveredPlantsPotencies[seedID] // Compare it to the previous best
+			else if(discoveredPlants[S.type]) // This species has already been sent to CentComm
+				var/potDiff = S.potency - discoveredPlants[S.type] // Compare it to the previous best
 				if(potDiff > 0) // This sample is better
-					discoveredPlantsPotencies[seedID] = S.potency
+					discoveredPlants[S.type] = S.potency
 					centcom_message += "<font color=green>+[potDiff]</font>: New sample of \"[capitalize(S.species)]\" is superior.  Good work.<BR>"
 					points += potDiff
 				else // This sample is worthless
-					centcom_message += "<font color=red>+0</font>: New sample of \"[capitalize(S.species)]\" is not more potent than existing sample ([discoveredPlantsPotencies[seedID]] potency).<BR>"
+					centcom_message += "<font color=red>+0</font>: New sample of \"[capitalize(S.species)]\" is not more potent than existing sample ([discoveredPlants[S.type]] potency).<BR>"
 			else // This is a new discovery!
-				discoveredPlants += (S.type)
-				discoveredPlantsPotencies += (S.potency)
+				discoveredPlants[S.type] = S.potency
 				centcom_message += "<font color=green>+[S.rarity]</font>: New species discovered: \"[capitalize(S.species)]\".  Excellent work.<BR>"
 				points += S.rarity // That's right, no bonus for potency.  Send a crappy sample first to "show improvement" later
 			del(S)
