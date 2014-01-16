@@ -229,7 +229,7 @@
 	if (istype(M,/mob/living/carbon/brain))
 		messagesource = M:container
 	if (src.hitsound)
-		playsound(src.loc, hitsound, 50, 1, -1)
+		playsound(get_turf(src), hitsound, 50, 1, -1)
 	/////////////////////////
 	user.lastattacked = M
 	M.lastattacker = user

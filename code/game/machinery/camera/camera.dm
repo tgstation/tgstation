@@ -100,7 +100,7 @@
 		return
 	status = 0
 	visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
-	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
+	playsound(get_turf(src), 'sound/weapons/slash.ogg', 100, 1)
 	icon_state = "[initial(icon_state)]1"
 	add_hiddenprint(user)
 	deactivate(user,0)
@@ -114,7 +114,7 @@
 		panel_open = !panel_open
 		user.visible_message("<span class='warning'>[user] screws the camera's panel [panel_open ? "open" : "closed"]!</span>",
 		"<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 
 	else if((istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool)) && panel_open)
 		wires.Interact(user)
@@ -205,7 +205,7 @@
 				add_hiddenprint(user)
 			else
 				visible_message("\red \The [src] deactivates!")
-			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+			playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 100, 1)
 			icon_state = "[initial(icon_state)]1"
 			add_hiddenprint(user)
 		else
@@ -214,7 +214,7 @@
 				add_hiddenprint(user)
 			else
 				visible_message("\red \the [src] reactivates!")
-			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+			playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 100, 1)
 			icon_state = initial(icon_state)
 			add_hiddenprint(user)
 	// now disconnect anyone using the camera
@@ -300,7 +300,7 @@
 
 	// Do after stuff here
 	user << "<span class='notice'>You start to weld the [src]..</span>"
-	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
 	WT.eyecheck(user)
 	busy = 1
 	if(do_after(user, 100))

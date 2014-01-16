@@ -15,7 +15,7 @@
 
 	prime()
 		..()
-		playsound(src.loc, 'sound/items/bikehorn.ogg', 25, -3)
+		playsound(get_turf(src), 'sound/items/bikehorn.ogg', 25, -3)
 		/*
 		for(var/turf/simulated/floor/T in view(affected_area, src.loc))
 			if(prob(75))
@@ -84,7 +84,7 @@
 				spawn(4) step(M, M.dir)
 				M.take_organ_damage(2) // Was 5 -- TLE
 				M << "\blue You slipped on \the [name]!"
-				playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+				playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
 				M.Weaken(10)
 				M.take_overall_damage(0, burned)
 

@@ -163,7 +163,7 @@
 		user << "\blue You begin prying apart \the [src]..."
 		if(do_after(user,50))
 			user << "\blue You disassemble \the [src]..."
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 			M.state = 2
 			M.icon_state = "box_1"
@@ -414,7 +414,7 @@
 	if(istype(W, /obj/item/weapon/wrench))
 		user << "\blue Deconstructing \the [src]..."
 		if(do_after(user,50))
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
 			user << "\blue You disassemble \the [src]."
 			var/turf/T=get_turf(src)
 			new /obj/item/device/assembly/signaler(T)

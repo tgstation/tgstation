@@ -26,7 +26,7 @@
 				user.drop_item()
 				del(target)
 				user << "\blue You stuff the monkey in the machine."
-				playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/machines/juicer.ogg', 50, 1)
 				use_power(500)
 				src.grinded++
 				user << "\blue The machine now has [grinded] monkeys worth of material stored."
@@ -40,7 +40,7 @@
 		return
 	if(grinded >=3)
 		user << "\blue The machine hisses loudly as it condenses the grinded monkey meat. After a moment, it dispenses a brand new monkey cube."
-		playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/machines/hiss.ogg', 50, 1)
 		grinded -= 3
 		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src.loc)
 		user << "\blue The machine's display flashes that it has [grinded] monkeys worth of material left."

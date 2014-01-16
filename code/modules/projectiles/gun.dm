@@ -175,7 +175,7 @@
 		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	else
 		src.visible_message("*click click*")
-		playsound(src.loc, 'sound/weapons/empty.ogg', 100, 1)
+		playsound(get_turf(src), 'sound/weapons/empty.ogg', 100, 1)
 
 /obj/item/weapon/gun/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
 	//Suicide handling.

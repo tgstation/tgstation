@@ -89,7 +89,7 @@
 			if(beaker)
 				user << "\red A beaker is loaded, you cannot deconstruct [src]."
 				return 1
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 			M.state = 2
 			M.icon_state = "box_1"
@@ -203,7 +203,7 @@
 		processing = 1
 		update_icon()
 		updateUsrDialog()
-		playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/machines/blender.ogg', 50, 1)
 		use_power(S*30)
 		sleep(S+15)
 		processing = 0

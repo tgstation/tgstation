@@ -285,7 +285,7 @@
 	if(ismob(AM))
 		var/mob/M = AM
 		M << "\red <B>You step in the broken glass!</B>"
-		playsound(src.loc, 'sound/effects/glass_step.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if( !H.shoes && ( !H.wear_suit || !(H.wear_suit.body_parts_covered & FEET) ) )

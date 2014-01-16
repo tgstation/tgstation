@@ -54,7 +54,7 @@
 /obj/machinery/bot/attack_alien(var/mob/living/carbon/alien/user as mob)
 	src.health -= rand(15,30)*brute_dam_coeff
 	src.visible_message("\red <B>[user] has slashed [src]!</B>")
-	playsound(src.loc, 'sound/weapons/slice.ogg', 25, 1, -1)
+	playsound(get_turf(src), 'sound/weapons/slice.ogg', 25, 1, -1)
 	if(prob(10))
 		new /obj/effect/decal/cleanable/blood/oil(src.loc)
 	healthcheck()
