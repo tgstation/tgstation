@@ -104,7 +104,7 @@ obj/machinery/air_sensor
 
 	attackby(I as obj, user as mob)
 		if(istype(I, /obj/item/weapon/screwdriver))
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 			if(do_after(user, 20))
 				if (src.stat & BROKEN)
 					user << "\blue The broken glass falls out."
@@ -385,7 +385,7 @@ legend {
 
 		attackby(I as obj, user as mob)
 			if(istype(I, /obj/item/weapon/screwdriver))
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 				if(do_after(user, 20))
 					if (src.stat & BROKEN)
 						user << "\blue The broken glass falls out."

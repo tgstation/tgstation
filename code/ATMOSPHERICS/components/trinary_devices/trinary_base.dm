@@ -94,24 +94,9 @@ obj/machinery/atmospherics/trinary
 	initialize()
 		if(node1 && node2 && node3) return
 
-		var/node1_connect = turn(dir, -180)
-		var/node2_connect = turn(dir, -90)
-		var/node3_connect = dir
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node1 = target
-				break
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node2 = target
-				break
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node3_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node3 = target
-				break
+		node1 = findConnecting(turn(dir, -180))
+		node2 = findConnecting(turn(dir, -90))
+		node3 = findConnecting(dir)
 
 		update_icon()
 

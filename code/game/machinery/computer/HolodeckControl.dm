@@ -174,7 +174,7 @@
 //Warning, uncommenting this can have concequences. For example, deconstructing the computer may cause holographic eswords to never derez
 
 /*		if(istype(D, /obj/item/weapon/screwdriver))
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 			if(do_after(user, 20))
 				if (src.stat & BROKEN)
 					user << "\blue The broken glass falls out."
@@ -202,7 +202,7 @@
 
 */
 	if(istype(D, /obj/item/weapon/card/emag) && !emagged)
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
+		playsound(get_turf(src), 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
 		user << "\blue You vastly increase projector power and override the safety and security protocols."
 		user << "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator."

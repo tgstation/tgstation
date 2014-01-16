@@ -177,7 +177,7 @@
 			user << "\red You cannot disassemble this [src], it's occupado."
 			return 1
 		if (opened)
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 			M.state = 2
 			M.icon_state = "box_1"
@@ -311,7 +311,7 @@
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
@@ -524,22 +524,18 @@
 			for(var/datum/reagent/R in connected.beaker.reagents.reagent_list)
 				data["beakerVolume"] += R.volume
 
-	if (!ui) // no ui has been passed, so we'll search for one
-	{
-		ui = nanomanager.get_open_ui(user, src, ui_key)
-	}
+	// update the ui if it exists, returns null if no ui is passed/found
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)
-		// the ui does not exist, so we'll create a new one
+		// the ui does not exist, so we'll create a new() one
+        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "dna_modifier.tmpl", "DNA Modifier Console", 660, 700)
-		// When the UI is first opened this is the data it will use
+		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
+		// open the new ui window
 		ui.open()
-		// Auto update every Master Controller tick
+		// auto update every Master Controller tick
 		ui.set_auto_update(1)
-	else
-		// The UI is already open so push the new data to it
-		ui.push_data(data)
-		return
 
 /obj/machinery/computer/scan_consolenew/Topic(href, href_list)
 	if(..())

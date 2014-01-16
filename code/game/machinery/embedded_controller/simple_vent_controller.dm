@@ -133,4 +133,4 @@
 			P.buffer = null
 
 		usr.set_machine(src)
-		update_multitool_menu()
+		update_multitool_menu(usr)

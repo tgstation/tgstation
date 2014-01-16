@@ -126,7 +126,7 @@ var/datum/controller/air_system/air_master
 	//Inputs: None.
 	//Outputs: None.
 
-	set background = 1
+	//set background = 1
 	world << "\red \b Processing Geometry..."
 	sleep(-1)
 
@@ -157,7 +157,7 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 	//Outputs: None.
 
 
-	set background = 1
+	//set background = 1
 
 	while(1)
 		if(!kill_air)

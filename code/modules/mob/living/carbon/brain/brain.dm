@@ -7,6 +7,7 @@
 	var/alert = null
 	immune_to_ssd = 1
 	use_me = 0 //Can't use the me verb, it's a freaking immobile brain
+	hasmouth=0 // Can't feed it.
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "brain1"
 

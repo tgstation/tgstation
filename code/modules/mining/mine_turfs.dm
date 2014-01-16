@@ -682,7 +682,7 @@ commented out in r5061, I left it because of the shroom thingies
 			return
 
 		user << "\red You start digging."
-		playsound(src.loc, 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
+		playsound(get_turf(src), 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
 
 		sleep(40)
 		if ((user.loc == T && user.get_active_hand() == W))
@@ -699,7 +699,7 @@ commented out in r5061, I left it because of the shroom thingies
 			return
 
 		user << "\red You start digging."
-		playsound(src.loc, 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
+		playsound(get_turf(src), 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
 
 		sleep(30)
 		if ((user.loc == T && user.get_active_hand() == W))
@@ -716,7 +716,7 @@ commented out in r5061, I left it because of the shroom thingies
 			return
 
 		user << "\red You start digging."
-		playsound(src.loc, 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
+		playsound(get_turf(src), 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
 
 		sleep(0)
 		if ((user.loc == T && user.get_active_hand() == W))

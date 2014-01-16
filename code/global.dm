@@ -178,26 +178,6 @@ var/forceblob = 0
 // nanomanager, the manager for Nano UIs
 var/datum/nanomanager/nanomanager = new()
 
-	//airlockWireColorToIndex takes a number representing the wire color, e.g. the orange wire is always 1, the dark red wire is always 2, etc. It returns the index for whatever that wire does.
-	//airlockIndexToWireColor does the opposite thing - it takes the index for what the wire does, for example AIRLOCK_WIRE_IDSCAN is 1, AIRLOCK_WIRE_POWER1 is 2, etc. It returns the wire color number.
-	//airlockWireColorToFlag takes the wire color number and returns the flag for it (1, 2, 4, 8, 16, etc)
-var/list/airlockWireColorToFlag = RandomAirlockWires()
-var/list/airlockIndexToFlag
-var/list/airlockIndexToWireColor
-var/list/airlockWireColorToIndex
-var/list/APCWireColorToFlag = RandomAPCWires()
-var/list/APCIndexToFlag
-var/list/APCIndexToWireColor
-var/list/APCWireColorToIndex
-var/list/BorgWireColorToFlag = RandomBorgWires()
-var/list/BorgIndexToFlag
-var/list/BorgIndexToWireColor
-var/list/BorgWireColorToIndex
-var/list/AAlarmWireColorToFlag = RandomAAlarmWires()
-var/list/AAlarmIndexToFlag
-var/list/AAlarmIndexToWireColor
-var/list/AAlarmWireColorToIndex
-
 #define SPEED_OF_LIGHT 3e8 //not exact but hey!
 #define SPEED_OF_LIGHT_SQ 9e+16
 #define FIRE_DAMAGE_MODIFIER 0.0215 //Higher values result in more external fire damage to the skin (default 0.0215)

@@ -99,7 +99,7 @@
 		location.assume_air(air_contents)
 
 		src.destroyed = 1
-		playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
+		playsound(get_turf(src), 'sound/effects/spray.ogg', 10, 1, -3)
 		src.density = 0
 		update_icon()
 
@@ -398,7 +398,7 @@ Release Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?sr
 
 	// Do after stuff here
 	user << "<span class='notice'>You start to slice away at \the [src]...</span>"
-	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
 	WT.eyecheck(user)
 	busy = 1
 	if(do_after(user, 50))

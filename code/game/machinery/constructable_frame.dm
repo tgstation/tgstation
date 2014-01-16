@@ -38,18 +38,17 @@
 				if(istype(P, /obj/item/weapon/cable_coil))
 					var/obj/item/weapon/cable_coil/C = P
 					if(C.amount >= 5)
-						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+						playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 						user << "\blue You start to add cables to the frame."
 						if(do_after(user, 20))
-							if(C)
-								C.amount -= 5
-								if(!C.amount) del(C)
+							if(C && C.amount >= 5) // Check again
+								C.use(5)
 								user << "\blue You add cables to the frame."
 								state = 2
 								icon_state = "box_1"
 				else
 					if(istype(P, /obj/item/weapon/wrench))
-						playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+						playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
 						user << "\blue You dismantle the frame"
 						new /obj/item/stack/sheet/metal(src.loc, 5)
 						del(src)
@@ -57,7 +56,7 @@
 				if(istype(P, /obj/item/weapon/circuitboard))
 					var/obj/item/weapon/circuitboard/B = P
 					if(B.board_type == "machine")
-						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+						playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 						user << "\blue You add the circuit board to the frame."
 						circuit = P
 						user.drop_item()
@@ -83,7 +82,7 @@
 						user << "\red This frame does not accept circuit boards of this type!"
 				else
 					if(istype(P, /obj/item/weapon/wirecutters))
-						playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+						playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
 						user << "\blue You remove the cables."
 						state = 1
 						icon_state = "box_0"
@@ -92,7 +91,7 @@
 
 			if(3)
 				if(istype(P, /obj/item/weapon/crowbar))
-					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+					playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 					state = 2
 					circuit.loc = src.loc
 					circuit = null
@@ -114,7 +113,7 @@
 								component_check = 0
 								break
 						if(component_check)
-							playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+							playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 							var/obj/machinery/new_machine = new src.circuit.build_path(src.loc)
 							for(var/obj/O in new_machine.component_parts)
 								del(O)
@@ -135,10 +134,10 @@
 						if(istype(P, /obj/item/weapon)||istype(P, /obj/item/stack))
 							for(var/I in req_components)
 								if(istype(P, text2path(I)) && (req_components[I] > 0))
-									playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+									playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 									if(istype(P, /obj/item/weapon/cable_coil))
 										var/obj/item/weapon/cable_coil/CP = P
-										if(CP.amount > 1)
+										if(CP.amount >= req_components[I])
 											var/camt = min(CP.amount, req_components[I]) // amount of cable to take, idealy amount required, but limited by amount provided
 											var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src)
 											CC.amount = camt
@@ -148,9 +147,11 @@
 											req_components[I] -= camt
 											update_desc()
 											break
+										else
+											user << "\red You do not have enough [P]!"
 									if(istype(P, /obj/item/stack/rods))
 										var/obj/item/stack/rods/R = P
-										if(R.amount > 1)
+										if(R.amount >= req_components[I])
 											var/camt = min(R.amount, req_components[I]) // amount of cable to take, idealy amount required, but limited by amount provided
 											var/obj/item/stack/rods/RR = new /obj/item/stack/rods(src)
 											RR.amount = camt
@@ -160,6 +161,8 @@
 											req_components[I] -= camt
 											update_desc()
 											break
+										else
+											user << "\red You do not have enough [P]!"
 									user.drop_item()
 									P.loc = src
 									components += P
@@ -215,10 +218,8 @@ to destroy them and players will be able to make replacements.
 	build_path = "/obj/machinery/conveyor"
 	board_type = "machine"
 	origin_tech = "engineering=2;programming=2"
-	frame_desc = "Requires 4 rods and 2 cable pieces."
-	req_components = list(
-							"/obj/item/weapon/cable_coil" = 2,
-							"/obj/item/stack/rods" = 4)
+	frame_desc = "Requires nothing."
+	req_components = list()
 
 
 /obj/item/weapon/circuitboard/circuit_imprinter

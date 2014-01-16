@@ -11,6 +11,9 @@
 	idle_power_usage = 2
 	active_power_usage = 4
 
+	ghost_read = 0 // Deactivate ghost touching.
+	ghost_write = 0
+
 /obj/machinery/igniter/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
 	return src.attack_hand(user)
@@ -57,7 +60,7 @@
 	if(istype(W, /obj/item/weapon/weldingtool) && src.assembly)
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0,user))
-			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
 			user << "\blue You begin to cut \the [src] off the floor..."
 			if (do_after(user, 40))
 				user.visible_message( \
@@ -84,6 +87,9 @@
 	var/last_spark = 0
 	var/base_state = "migniter"
 	anchored = 1
+
+	ghost_read = 0 // Deactivate ghost touching.
+	ghost_write = 0
 
 /obj/machinery/sparker/New()
 	..()

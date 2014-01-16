@@ -728,3 +728,10 @@ It can still be worn/put on as normal.
 		if(source.machine == target)
 			target.show_inv(source)
 	del(src)
+
+/mob/living/carbon/human/get_multitool(var/active_only=0)
+	if(istype(get_active_hand(),/obj/item/device/multitool))
+		return get_active_hand()
+	if(active_only && istype(get_inactive_hand(),/obj/item/device/multitool))
+		return get_inactive_hand()
+	return null

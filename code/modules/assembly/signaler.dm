@@ -14,7 +14,7 @@
 	var/code = 30
 	var/frequency = 1457
 	var/delay = 0
-	var/airlock_wire = null
+	var/datum/wires/connected = null
 	var/datum/radio_frequency/radio_connection
 	var/deadman = 0
 
@@ -30,7 +30,9 @@
 			var/obj/item/stack/rods/R = W
 			if(R.amount >= 1)
 				R.use(1)
-				new /obj/machinery/conveyor_switch(src)
+				new /obj/machinery/conveyor_switch(get_turf(src.loc))
+				user.u_equip(src)
+				src.loc = null // garbage collect
 
 	activate()
 		if(cooldown > 0)	return 0
@@ -115,6 +117,7 @@
 		signal.encryption = code
 		signal.data["message"] = "ACTIVATE"
 		radio_connection.post_signal(src, signal)
+
 		var/time = time2text(world.realtime,"hh:mm:ss")
 		var/turf/T = get_turf(src)
 		if(usr)
@@ -133,14 +136,10 @@
 
 
 	pulse(var/radio = 0)
-		if(istype(src.loc, /obj/machinery/door/airlock) && src.airlock_wire && src.wires)
-			var/obj/machinery/door/airlock/A = src.loc
-			A.pulse(src.airlock_wire)
-		else if(holder)
-			holder.process_activation(src, 1, 0)
+		if(src.connected && src.wires)
+			connected.Pulse(src)
 		else
-			..(radio)
-		return 1
+			return ..(radio)
 
 
 	receive_signal(datum/signal/signal)

@@ -9,6 +9,7 @@
 	var/icon_opened = "open"
 	var/opened = 0
 	var/welded = 0
+	var/pick_up_stuff = 1 // Pick up things that spawn at this location.
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	var/health = 100
 	var/lastbang
@@ -19,10 +20,15 @@
 /obj/structure/closet/New()
 	..()
 	spawn(1)
-		if(!opened)		// if closed, any item at the crate's loc is put in the contents
+		if(!opened && pick_up_stuff)		// if closed, any item at the crate's loc is put in the contents
 			for(var/obj/item/I in src.loc)
 				if(I.density || I.anchored || I == src) continue
 				I.loc = src
+
+// Fix for #383 - C4 deleting fridges with corpses
+/obj/structure/closet/Del()
+	dump_contents()
+	..()
 
 /obj/structure/closet/alter_health()
 	return get_turf(src)
@@ -68,9 +74,9 @@
 	src.icon_state = src.icon_opened
 	src.opened = 1
 	if(istype(src, /obj/structure/closet/body_bag))
-		playsound(src.loc, 'sound/items/zip.ogg', 15, 1, -3)
+		playsound(get_turf(src), 'sound/items/zip.ogg', 15, 1, -3)
 	else
-		playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
+		playsound(get_turf(src), 'sound/machines/click.ogg', 15, 1, -3)
 	density = 0
 	return 1
 
@@ -114,9 +120,9 @@
 	src.icon_state = src.icon_closed
 	src.opened = 0
 	if(istype(src, /obj/structure/closet/body_bag))
-		playsound(src.loc, 'sound/items/zip.ogg', 15, 1, -3)
+		playsound(get_turf(src), 'sound/items/zip.ogg', 15, 1, -3)
 	else
-		playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
+		playsound(get_turf(src), 'sound/machines/click.ogg', 15, 1, -3)
 	density = 1
 	return 1
 

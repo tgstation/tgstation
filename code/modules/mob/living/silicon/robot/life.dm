@@ -1,6 +1,6 @@
 /mob/living/silicon/robot/Life()
 	set invisibility = 0
-	set background = 1
+	//set background = 1
 
 	if (src.monkeyizing)
 		return
@@ -64,7 +64,7 @@
 /mob/living/silicon/robot/proc/handle_regular_status_updates()
 
 	if(src.camera && !scrambledcodes)
-		if(src.stat == 2 || isWireCut(5))
+		if(src.stat == 2 || wires.IsCameraCut())
 			src.camera.status = 0
 		else
 			src.camera.status = 1

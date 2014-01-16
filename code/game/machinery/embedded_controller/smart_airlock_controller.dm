@@ -404,7 +404,7 @@ obj/machinery/embedded_controller/radio/smart_airlock_controller
 			P.buffer = null
 
 		usr.set_machine(src)
-		update_multitool_menu(usr,P)
+		update_multitool_menu(usr)
 
 
 	return_text()

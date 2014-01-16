@@ -64,6 +64,9 @@ LOG_PDA
 ## log admin warning messages
 ##LOG_ADMINWARN  ## Also duplicates a bunch of other messages.
 
+## log world.log and runtime errors to a file
+# LOG_RUNTIME
+
 ## sql switching
 # SQL_ENABLED
 

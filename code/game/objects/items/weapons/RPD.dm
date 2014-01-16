@@ -89,9 +89,9 @@ var/global/list/RPD_recipes=list(
 		"Injector"       = new /datum/pipe_info(PIPE_INJECTOR,     1, PIPE_UNARY),
 	),
 	"Heat Exchange" = list(
-		"Pipe"           = new /datum/pipe_info(2,1, PIPE_BINARY),
-		"Bent Pipe"      = new /datum/pipe_info(3,5, PIPE_BENT),
-		"Junction"       = new /datum/pipe_info(6,1, PIPE_BINARY),
+		"Pipe"           = new /datum/pipe_info(2, 1, PIPE_BINARY),
+		"Bent Pipe"      = new /datum/pipe_info(3, 5, PIPE_BENT),
+		"Junction"       = new /datum/pipe_info(6, 1, PIPE_UNARY),
 		"Heat Exchanger" = new /datum/pipe_info(17,1, PIPE_UNARY),
 	),
 	"Insulated Pipes" = list(
@@ -352,7 +352,7 @@ var/global/list/RPD_recipes=list(
 		p_conntype=-1
 		p_dir=1
 		src.spark_system.start()
-		playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
+		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 		show_menu(usr)
 
 	if(href_list["paintpipes"])
@@ -360,13 +360,13 @@ var/global/list/RPD_recipes=list(
 		p_conntype=-1
 		p_dir=1
 		src.spark_system.start()
-		playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
+		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 		show_menu(usr)
 
 	if(href_list["set_color"])
 		paint_color=href_list["set_color"]
 		src.spark_system.start()
-		playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
+		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 		show_menu(usr)
 
 	if(href_list["makepipe"])
@@ -375,7 +375,7 @@ var/global/list/RPD_recipes=list(
 		p_conntype = text2num(href_list["type"])
 		p_class = 0
 		src.spark_system.start()
-		playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
+		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 		show_menu(usr)
 
 	if(href_list["makemeter"])
@@ -383,7 +383,7 @@ var/global/list/RPD_recipes=list(
 		p_conntype=-1
 		p_dir=1
 		src.spark_system.start()
-		playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
+		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 		show_menu(usr)
 
 	if(href_list["dmake"])
@@ -392,7 +392,7 @@ var/global/list/RPD_recipes=list(
 		p_dir = 1
 		p_class = 2
 		src.spark_system.start()
-		playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
+		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 		show_menu(usr)
 
 
@@ -408,7 +408,7 @@ var/global/list/RPD_recipes=list(
 				// Avoid spewing errors about invalid mode -2 when clicking on stuff that aren't pipes.
 				user << "\The [src]'s error light flickers.  Perhaps you need to only use it on pipes and pipe meters?"
 				return 0
-			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			var/obj/machinery/atmospherics/pipe/P = A
 			P._color = paint_color
 			user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
@@ -418,7 +418,7 @@ var/global/list/RPD_recipes=list(
 			// Must click on an actual pipe or meter.
 			if(istype(A,/obj/item/pipe) || istype(A,/obj/item/pipe_meter) || istype(A,/obj/structure/disposalconstruct))
 				user << "Destroying Pipe..."
-				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 				if(do_after(user, 5))
 					activate()
 					del(A)
@@ -432,7 +432,7 @@ var/global/list/RPD_recipes=list(
 			if(!(istype(A, /turf)))
 				return 0
 			user << "Building Pipes ..."
-			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 20))
 				activate()
 				var/obj/item/pipe/P = new (A, pipe_type=p_type, dir=p_dir)
@@ -445,7 +445,7 @@ var/global/list/RPD_recipes=list(
 			if(!(istype(A, /turf)))
 				return 0
 			user << "Building Meter..."
-			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 20))
 				activate()
 				new /obj/item/pipe_meter(A)
@@ -456,7 +456,7 @@ var/global/list/RPD_recipes=list(
 			if(!(istype(A, /turf)))
 				return 0
 			user << "Building Pipes..."
-			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 20))
 				activate()
 				var/obj/structure/disposalconstruct/C = new (A)
@@ -493,5 +493,5 @@ var/global/list/RPD_recipes=list(
 
 
 /obj/item/weapon/pipe_dispenser/proc/activate()
-	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 

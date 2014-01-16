@@ -617,6 +617,8 @@
 		H.equip_to_appropriate_slot(I)
 		H.update_inv_l_hand(0)
 		H.update_inv_r_hand()
+		if(I == H.head)
+			H.update_hair()
 
 /mob/living/verb/resist()
 	set name = "Resist"

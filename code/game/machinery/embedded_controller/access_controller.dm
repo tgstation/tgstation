@@ -237,7 +237,7 @@ obj/machinery/embedded_controller/radio/access_controller
 			P.buffer = null
 
 		usr.set_machine(src)
-		update_multitool_menu(usr,P)
+		update_multitool_menu(usr)
 
 	update_icon()
 		if(on && program)

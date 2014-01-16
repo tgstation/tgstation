@@ -288,7 +288,7 @@ datum/objective/hijack
 		// Implemented in response to 21/12/2013 player vote,  .
 		// Comment this if you want Borgs and MoMMIs counted.
 		// TODO: Check if borgs are subverted. Best I can think of is a fuzzy check for strings used in syndie laws. BYOND can't do regex, sadly. - N3X
-		protected_mobs += list(/mob/living/silicon/robot)
+		protected_mobs += list(/mob/living/silicon/robot, /mob/living/silicon/robot/mommi)
 		for(var/mob/living/player in player_list)
 			if(player.type in protected_mobs)	continue
 			if (player.mind && (player.mind != owner))

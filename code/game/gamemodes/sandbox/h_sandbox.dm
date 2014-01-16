@@ -35,17 +35,18 @@ var/list
 		sandbox.update()
 
 var/global/list/banned_sandbox_types=list(
-	/obj/item/weapon/gun,
-	/obj/item/assembly,
-	/obj/item/device/camera,
-	/obj/item/weapon/cloaking_device,
-	/obj/item/weapon/dummy,
-	/obj/item/weapon/melee/energy/sword,
+	// /obj/item/weapon/gun,
+	// /obj/item/assembly,
+	// /obj/item/device/camera,
+	// /obj/item/weapon/cloaking_device,
+	// /obj/item/weapon/dummy,
+	// /obj/item/weapon/melee/energy/sword,
 	/obj/item/weapon/veilrender,
 	/obj/item/weapon/reagent_containers/glass/bottle/wizarditis,
-	/obj/item/weapon/spellbook,
+	// /obj/item/weapon/spellbook,
 	/obj/machinery/singularity,
-	/obj/item/weapon/gun/energy/staff)
+	// /obj/item/weapon/gun/energy/staff
+	)
 
 proc/is_banned_type(typepath)
 	for(var/btype in banned_sandbox_types)
@@ -86,6 +87,7 @@ proc/is_banned_type(typepath)
 	new chosen(usr.loc)
 
 	message_admins("\[SANDBOX\] [key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
+	//send2adminirc("\[SANDBOX\] [key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
 	feedback_add_details("admin_verb","hSBSA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 datum/hSB

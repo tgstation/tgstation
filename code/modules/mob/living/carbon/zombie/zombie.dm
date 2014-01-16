@@ -94,7 +94,7 @@
 		frustration = 0
 
 	proc/process()
-		set background = 1
+		//set background = 1
 		var/quick_move = 1
 		var/slow_move = 0
 
@@ -152,7 +152,7 @@
 						var/datum/organ/external/affecting
 						if(T.organs["head"]) affecting = T.organs["head"]
 						affecting.take_damage(rand(1,7), 0)
-						playsound(src.loc, 'sound/items/eatfood.ogg', 50, 1)
+						playsound(get_turf(src), 'sound/items/eatfood.ogg', 50, 1)
 						if(prob(25))
 							target.contract_disease(new/datum/disease/z_virus)
 						src.add_blood(src.target)
@@ -273,7 +273,7 @@
 
 
 	proc/idle()
-		set background = 1
+		//set background = 1
 		var/quick_move = 0
 
 		if(state != 2 || src.stat == 2 || target) return

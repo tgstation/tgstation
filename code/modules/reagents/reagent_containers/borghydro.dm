@@ -80,7 +80,7 @@
 	return
 
 /obj/item/weapon/reagent_containers/borghypo/attack_self(mob/user as mob)
-	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)		//Change the mode
+	playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)		//Change the mode
 	mode++
 	if(mode > reagent_list.len)
 		mode = 1

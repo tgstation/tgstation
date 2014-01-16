@@ -67,7 +67,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		camera = new /obj/machinery/camera(src)
 		camera.c_tag = real_name
 		camera.network = list("SS13")
-		if(isWireCut(5)) // 5 = BORG CAMERA
+		if(wires.IsCameraCut()) // 5 = BORG CAMERA
 			camera.status = 0
 
 	// Sanity check
@@ -205,7 +205,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 	else if (istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool))
 		if (wiresexposed)
-			interact(user)
+			wires.Interact()
 		else
 			user << "You can't reach the wiring."
 

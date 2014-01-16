@@ -95,6 +95,10 @@
 	name = "implanter (C)"
 	icon_state = "cimplanter1"
 
+	var/list/forbidden_types=list(
+		// /obj/item/weapon/storage/bible // VG #11 - Recursion.
+	)
+
 /obj/item/weapon/implanter/compressed/New()
 	imp = new /obj/item/weapon/implant/compressed( src )
 	..()
@@ -121,6 +125,9 @@
 	..()
 
 /obj/item/weapon/implanter/compressed/afterattack(atom/A, mob/user as mob)
+	if(is_type_in_list(A,forbidden_types))
+		user << "\red A red light flickers on the implanter."
+		return
 	if(istype(A,/obj/item) && imp)
 		var/obj/item/weapon/implant/compressed/c = imp
 		if (c.scanned)

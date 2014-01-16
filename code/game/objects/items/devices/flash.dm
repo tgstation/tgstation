@@ -2,7 +2,7 @@
 	name = "flash"
 	desc = "Used for blinding and being an asshole."
 	icon_state = "flash"
-	item_state = "flashbang"	//looks exactly like a flash (and nothing like a flashbang)
+	item_state = "flash"
 	throwforce = 5
 	w_class = 1.0
 	throw_speed = 4
@@ -65,7 +65,7 @@
 		else	//can only use it  5 times a minute
 			user << "<span class='warning'>*click* *click*</span>"
 			return
-	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
+	playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1)
 	var/flashfail = 0
 
 	if(iscarbon(M))
@@ -150,7 +150,7 @@
 		else	//can only use it  5 times a minute
 			user.show_message("<span class='warning'>*click* *click*</span>", 2)
 			return
-	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
+	playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1)
 	flick("flash2", src)
 	if(user && isrobot(user))
 		spawn(0)

@@ -609,7 +609,7 @@ datum
 						for(var/mob/O in viewers(M, null))
 							O.show_message(text("\blue []'s eyes blink and become clearer.", M), 1) // So observers know it worked.
 					// Vamps react to this like acid
-					if((M.mind in ticker.mode.vampires) && prob(10))
+					if(((M.mind in ticker.mode.vampires) || M.mind.vampire) && (!(VAMP_FULL in M.mind.vampire.powers)) && prob(10))
 						if(!M) M = holder.my_atom
 						M.adjustToxLoss(1*REM)
 						M.take_organ_damage(0, 1*REM)
@@ -1085,6 +1085,8 @@ datum
 				var/needs_update = M.mutations.len > 0
 
 				M.mutations = list()
+				M.active_genes = list()
+
 				M.disabilities = 0
 				M.sdisabilities = 0
 

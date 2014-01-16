@@ -94,6 +94,7 @@ Class Procs:
 /obj/machinery
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
+
 	var/stat = 0
 	var/emagged = 0
 	var/use_power = 1
@@ -109,6 +110,7 @@ Class Procs:
 	var/manual = 0
 	var/global/gl_uid = 1
 	var/custom_aghost_alerts=0
+	var/panel_open = 0
 
 /obj/machinery/New()
 	..()
@@ -169,7 +171,10 @@ Class Procs:
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return 1
-	if(!isAdminGhost(usr))
+	var/ghost_flags=0
+	if(ghost_write)
+		ghost_flags |= PERMIT_ALL
+	if(!canGhostWrite(usr,src,"fucked with",ghost_flags))
 		if(usr.restrained() || usr.lying || usr.stat)
 			return 1
 		if ( ! (istype(usr, /mob/living/carbon/human) || \
@@ -207,7 +212,11 @@ Class Procs:
 
 /obj/machinery/attack_ghost(mob/user as mob)
 	src.add_hiddenprint(user)
-	return src.attack_hand(user)
+	var/ghost_flags=0
+	if(ghost_read)
+		ghost_flags |= PERMIT_ALL
+	if(canGhostRead(usr,src,ghost_flags))
+		return src.attack_ai(user)
 
 /obj/machinery/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
@@ -215,7 +224,8 @@ Class Procs:
 /obj/machinery/attack_hand(mob/user as mob)
 	if(stat & (NOPOWER|BROKEN|MAINT))
 		return 1
-	if(user.lying || (user.stat && !isobserver(user))) // Ghost read-only
+
+	if(user.lying || (user.stat && !canGhostRead(user))) // Ghost read-only
 		return 1
 
 	if(istype(usr,/mob/dead/observer))
@@ -251,3 +261,23 @@ Class Procs:
 	uid = gl_uid
 	gl_uid++
 
+/obj/machinery/proc/default_deconstruction_crowbar()
+	playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
+	var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+	M.state = 2
+	M.icon_state = "box_1"
+	for(var/obj/I in component_parts)
+		if(I.reliability != 100 && crit_fail)
+			I.crit_fail = 1
+		I.loc = src.loc
+	del(src)
+
+/obj/machinery/proc/default_deconstruction_screwdriver(var/mob/user, var/icon_state_open, var/icon_state_closed)
+	if (!panel_open)
+		panel_open = 1
+		icon_state = icon_state_open
+		user << "<span class='notice'>You open the maintenance hatch of [src].</span>"
+	else
+		panel_open = 0
+		icon_state = icon_state_closed
+		user << "<span class='notice'>You close the maintenance hatch of [src].</span>"

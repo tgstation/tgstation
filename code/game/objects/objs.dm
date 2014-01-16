@@ -111,7 +111,20 @@
 		value="-----"
 	return "<b>[label]:</b> <a href=\"?src=\ref[src];set_tag=[varname]\">[value]</a>"
 
-/obj/proc/update_multitool_menu(mob/user as mob,var/obj/item/device/multitool/P)
+/obj/proc/update_multitool_menu(mob/user as mob)
+	var/obj/item/device/multitool/P
+	if(isrobot(user) || ishuman(user))
+		P=user.get_active_hand()
+	else if(isAI(user))
+		var/mob/living/silicon/ai/AI=user
+		P = AI.aiMulti
+	else if(isAdminGhost(user))
+		var/mob/living/silicon/ai/AI=user
+		P = AI.aiMulti
+
+	if(!istype(P))
+		return 0
+
 	var/dat = {"<html>
 	<head>
 		<title>[name] Configuration</title>

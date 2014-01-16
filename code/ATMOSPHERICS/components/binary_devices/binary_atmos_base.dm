@@ -79,18 +79,8 @@ obj/machinery/atmospherics/binary
 	initialize()
 		if(node1 && node2) return
 
-		var/node2_connect = dir
-		var/node1_connect = turn(dir, 180)
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node1 = target
-				break
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node2 = target
-				break
+		node1 = findConnecting(turn(dir, 180))
+		node2 = findConnecting(dir)
 
 		update_icon()
 

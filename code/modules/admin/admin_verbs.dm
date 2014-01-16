@@ -72,7 +72,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/response_team, // Response Teams admin verb
 	/client/proc/toggle_antagHUD_use,
 	/client/proc/toggle_antagHUD_restrictions,
-	/client/proc/allow_character_respawn    /* Allows a ghost to respawn */	
+	/client/proc/allow_character_respawn    /* Allows a ghost to respawn */
 )
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -605,15 +605,6 @@ var/list/admin_verbs_mod = list(
 	feedback_add_details("admin_verb","KA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] used 'kill air'.")
 	message_admins("\blue [key_name_admin(usr)] used 'kill air'.", 1)
-
-/client/proc/toggle_clickproc() //TODO ERRORAGE (This is a temporary verb here while I test the new clicking proc)
-	set name = "Toggle NewClickProc"
-	set category = "Debug"
-
-	if(!holder) return
-	using_new_click_proc = !using_new_click_proc
-	world << "Testing of new click proc [using_new_click_proc ? "enabled" : "disabled"]"
-	feedback_add_details("admin_verb","TNCP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/deadmin_self()
 	set name = "De-admin self"

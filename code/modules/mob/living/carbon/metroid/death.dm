@@ -8,6 +8,7 @@
 			//ghostize() - Messes up making momma slime a baby
 			var/mob/living/carbon/slime/M1 = new primarytype(loc)
 			M1.rabid = 1
+			M1.universal_speak = universal_speak
 			if(src.mind)
 				src.mind.transfer_to(M1)
 			else
@@ -20,7 +21,8 @@
 				O.show_message("<b>The [name]</b> seizes up and falls limp...", 1) //ded -- Urist
 
 	update_canmove()
-	if(blind)	blind.layer = 0
+	if(blind)
+		blind.layer = 0
 
 	ticker.mode.check_win()
 

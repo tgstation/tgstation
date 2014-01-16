@@ -412,13 +412,23 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/mech_bay_power_console
 
 /datum/design/rdconsole
-	name = "Circuit Design (R&D Console)"
+	name = "Circuit Design (Core R&D Console)"
 	desc = "Allows for the construction of circuit boards used to build a new R&D console."
-	id = "rdconsole"
+	id = "rdconsole_core"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/rdconsole
+
+/datum/design/rdconsole/robotics
+	name = "Circuit Design (Robotics R&D Console)"
+	id = "rdconsole_robotics"
+	build_path = /obj/item/weapon/circuitboard/rdconsole/robotics
+
+/datum/design/rdconsole/mommi
+	name = "Circuit Design (MoMMI R&D Console)"
+	id = "rdconsole_mommi"
+	build_path = /obj/item/weapon/circuitboard/rdconsole/mommi
 
 /datum/design/ordercomp
 	name = "Circuit Design (Supply ordering console)"
@@ -1718,6 +1728,16 @@ other types of metals and chemistry for reagents).
 	materials = list("$gold" = 3000, "$diamond" = 1500, "$uranium" = 250)
 	reliability_base = 80
 	build_path = /obj/item/weapon/storage/backpack/holding
+
+/datum/design/bluespace_crystal
+	name = "Artificial Bluespace Crystal"
+	desc = "A small blue crystal with mystical properties."
+	id = "bluespace_crystal"
+	req_tech = list("bluespace" = 4, "materials" = 6)
+	build_type = PROTOLATHE
+	materials = list("$diamond" = 1500, "$plasma" = 1500)
+	reliability = 100
+	build_path = /obj/item/bluespace_crystal/artificial
 
 /////////////////////////////////////////
 /////////////////HUDs////////////////////

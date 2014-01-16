@@ -389,13 +389,17 @@ var/global/list/pipeID2State = list(
 			P=new /obj/machinery/atmospherics/binary/dp_vent_pump(src.loc)
 
 	if(P.buildFrom(usr,src))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		user.visible_message( \
 			"[user] fastens \the [src].", \
 			"\blue You have fastened \the [src].", \
 			"You hear a ratchet.")
 		del(src)	// remove the pipe item
 		return 0
+	else
+		// If the pipe's still around, nuke it.
+		if(P)
+			del(P)
 	return 1
 	 //TODO: DEFERRED
 
@@ -418,6 +422,6 @@ var/global/list/pipeID2State = list(
 		user << "\red You need to fasten it to a pipe"
 		return 1
 	new/obj/machinery/meter( src.loc )
-	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 	user << "\blue You have fastened the meter to the pipe"
 	del(src)

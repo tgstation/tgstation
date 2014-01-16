@@ -20,7 +20,7 @@
 	..()
 
 /obj/machinery/suspension_gen/process()
-	set background = 1
+	//set background = 1
 
 	if (suspension_field)
 		cell.charge -= power_use

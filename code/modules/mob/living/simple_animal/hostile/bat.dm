@@ -1,10 +1,11 @@
 /mob/living/simple_animal/hostile/scarybat
-	name = "space bat"
-	desc = "A cute little blood sucking bat that looks pretty pissed."
-	icon_state = "scarybat"
-	icon_living = "scarybat"
-	icon_dead = "scarybat-dead"
-	icon_gib = "scarybat-dead"
+	name = "space bats"
+	desc = "A swarm of cute little blood sucking bats that looks pretty pissed."
+	icon = 'icons/mob/bats.dmi'
+	icon_state = "bat"
+	icon_living = "bat"
+	icon_dead = "bat_dead"
+	icon_gib = "bat_dead"
 	speak_chance = 0
 	turns_per_move = 3
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat

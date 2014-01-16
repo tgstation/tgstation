@@ -41,7 +41,7 @@
 			F.reagents.remove_reagent("fuel", 50, 1)//Deleting 50 fuel from the welding fuel tank,
 			assembled = 1
 			user << "<span  class='notice'>You've filled the makeshift explosive with welding fuel.</span>"
-			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
+			playsound(get_turf(src), 'sound/effects/refill.ogg', 50, 1, -6)
 			desc = "An improvised explosive assembly. Filled to the brim with 'Explosive flavor'"
 			overlays += image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled")
 			return

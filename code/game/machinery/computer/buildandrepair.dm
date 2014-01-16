@@ -137,9 +137,17 @@
 /obj/item/weapon/circuitboard/prisoner
 	name = "Circuit board (Prisoner Management)"
 	build_path = "/obj/machinery/computer/prisoner"
+
 /obj/item/weapon/circuitboard/rdconsole
-	name = "Circuit Board (RD Console)"
+	name = "Circuit Board (R&D Console)"
 	build_path = "/obj/machinery/computer/rdconsole/core"
+/obj/item/weapon/circuitboard/rdconsole/mommi
+	name = "Circuit Board (MoMMI R&D Console)"
+	build_path = "/obj/machinery/computer/rdconsole/mommi"
+/obj/item/weapon/circuitboard/rdconsole/robotics
+	name = "Circuit Board (Robotics R&D Console)"
+	build_path = "/obj/machinery/computer/rdconsole/robotics"
+
 /obj/item/weapon/circuitboard/mecha_control
 	name = "Circuit Board (Exosuit Control Console)"
 	build_path = "/obj/machinery/computer/mecha"
@@ -247,53 +255,40 @@
 				user << "DERP! BUG! Report this (And what you were doing to cause it) to Agouri"
 	return
 
-/obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I as obj, mob/user as mob)
-	if(istype(I,/obj/item/weapon/screwdriver))
-		if(src.build_path == "/obj/machinery/computer/rdconsole/core")
-			src.name = "Circuit Board (RD Console - Robotics)"
-			src.build_path = "/obj/machinery/computer/rdconsole/robotics"
-			user << "\blue Access protocols succesfully updated."
-		else if(src.build_path == "/obj/machinery/computer/rdconsole/mommi")
-			src.name = "Circuit Board (RD Console - MoMMI Nest)"
-			src.build_path = "/obj/machinery/computer/rdconsole/mommi"
-			user << "\blue Access protocols succesfully updated."
-		else
-			src.name = "Circuit Board (RD Console)"
-			src.build_path = "/obj/machinery/computer/rdconsole/core"
-			user << "\blue Defaulting access protocols."
-	return
-
 /obj/structure/computerframe/attackby(obj/item/P as obj, mob/user as mob)
 	switch(state)
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20))
 					user << "\blue You wrench the frame into place."
 					src.anchored = 1
 					src.state = 1
+				return 1
 			if(istype(P, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = P
 				if(!WT.remove_fuel(0, user))
 					user << "The welding tool must be on to complete this task."
-					return
-				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+					return 1
+				playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
 				if(do_after(user, 20))
 					if(!src || !WT.isOn()) return
 					user << "\blue You deconstruct the frame."
 					new /obj/item/stack/sheet/metal( src.loc, 5 )
 					del(src)
+				return 1
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20))
 					user << "\blue You unfasten the frame."
 					src.anchored = 0
 					src.state = 0
+				return 1
 			if(istype(P, /obj/item/weapon/circuitboard) && !circuit)
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "computer")
-					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "\blue You place the circuit board inside the frame."
 					src.icon_state = "1"
 					src.circuit = P
@@ -301,27 +296,31 @@
 					P.loc = src
 				else
 					user << "\red This frame does not accept circuit boards of this type!"
+				return 1
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "\blue You screw the circuit board into place."
 				src.state = 2
 				src.icon_state = "2"
+				return 1
 			if(istype(P, /obj/item/weapon/crowbar) && circuit)
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 				user << "\blue You remove the circuit board."
 				src.state = 1
 				src.icon_state = "0"
 				circuit.loc = src.loc
 				src.circuit = null
+				return 1
 		if(2)
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "\blue You unfasten the circuit board."
 				src.state = 1
 				src.icon_state = "1"
+				return 1
 			if(istype(P, /obj/item/weapon/cable_coil))
 				if(P:amount >= 5)
-					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
 						if(P)
 							P:amount -= 5
@@ -329,33 +328,37 @@
 							user << "\blue You add cables to the frame."
 							src.state = 3
 							src.icon_state = "3"
+				return 1
 		if(3)
 			if(istype(P, /obj/item/weapon/wirecutters))
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
 				user << "\blue You remove the cables."
 				src.state = 2
 				src.icon_state = "2"
 				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( src.loc )
 				A.amount = 5
+				return 1
 
 			if(istype(P, /obj/item/stack/sheet/glass))
 				if(P:amount >= 2)
-					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
 						if(P)
 							P:use(2)
 							user << "\blue You put in the glass panel."
 							src.state = 4
 							src.icon_state = "4"
+				return 1
 		if(4)
 			if(istype(P, /obj/item/weapon/crowbar))
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 				user << "\blue You remove the glass panel."
 				src.state = 3
 				src.icon_state = "3"
 				new /obj/item/stack/sheet/glass( src.loc, 2 )
+				return 1
 			if(istype(P, /obj/item/weapon/screwdriver))
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "\blue You connect the monitor."
 				var/B = new src.circuit.build_path ( src.loc )
 				if(circuit.powernet) B:powernet = circuit.powernet
@@ -367,3 +370,5 @@
 					var/obj/item/weapon/circuitboard/supplycomp/C = circuit
 					SC.can_order_contraband = C.contraband_enabled
 				del(src)
+				return 1
+	return 0

@@ -613,7 +613,7 @@
 	icon_state = "hatchet"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 12.0
-	w_class = 1.0
+	w_class = 2.0
 	throwforce = 15.0
 	throw_speed = 4
 	throw_range = 4
@@ -672,19 +672,6 @@
 	icon_state = "wire1"
 
 	var/obj/machinery/machine
-
-/obj/item/weapon/plastique
-	name = "plastic explosives"
-	desc = "Used to put holes in specific areas without too much extra hole."
-	gender = PLURAL
-	icon = 'icons/obj/assemblies.dmi'
-	icon_state = "plastic-explosive0"
-	item_state = "plasticx"
-	flags = FPRINT | TABLEPASS | USEDELAY
-	w_class = 2.0
-	origin_tech = "syndicate=2"
-	var/timer = 10
-	var/atom/target = null
 
 ///////////////////////////////////////Stock Parts /////////////////////////////////
 

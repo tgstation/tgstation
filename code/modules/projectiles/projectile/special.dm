@@ -59,7 +59,7 @@
 			if(A)
 
 				A.meteorhit(src)
-				playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
+				playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 40, 1)
 
 				for(var/mob/M in range(10, src))
 					if(!M.stat && !istype(M, /mob/living/silicon/ai))\
