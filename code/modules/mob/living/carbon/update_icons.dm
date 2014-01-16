@@ -5,12 +5,15 @@
 /mob/living/carbon/update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
 	var/final_alpha = 255
+	var/final_pixel_y = 0
 
 	if(lying != lying_prev)
 		ntransform.TurnTo(lying_prev,lying)
 		lying_prev = lying	//so we don't try to animate until there's been another change.
+		if(lying != 0)
+			final_pixel_y = -6
 
 	if(cloak_stacks.len > 0)
 		final_alpha = 15
 
-	animate(src, transform = ntransform, alpha = final_alpha, time = 5, easing = EASE_IN|EASE_OUT)
+	animate(src, transform = ntransform, alpha = final_alpha, time = 2, pixel_y = final_pixel_y, easing = EASE_IN|EASE_OUT)
