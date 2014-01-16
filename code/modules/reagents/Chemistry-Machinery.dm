@@ -374,9 +374,9 @@
 	return
 
 /obj/machinery/chem_master/Topic(href, href_list)
-	if(stat & (BROKEN|NOPOWER)) return
-	if(usr.stat || usr.restrained()) return
-	if(!in_range(src, usr)) return
+	if(stat & (BROKEN|NOPOWER)) 		return
+	if(usr.stat || usr.restrained())	return
+	if(!in_range(src, usr)) 			return
 
 	src.add_fingerprint(usr)
 	usr.set_machine(src)
@@ -495,7 +495,14 @@
 			#define MAX_PILL_SPRITE 20 //max icon state of the pill sprites
 			var/dat = "<table>"
 			for(var/i = 1 to MAX_PILL_SPRITE)
-				dat += "<tr><td><a href=\"?src=\ref[src]&pill_sprite=[i]\"><img src=\"pill[i].png\" /></a></td></tr>"
+				if ( i%4==1 )
+					dat += "<tr>"
+
+				dat += "<td><a href=\"?src=\ref[src]&pill_sprite=[i]\"><img src=\"pill[i].png\" /></a></td>"
+
+				if ( i%4==0 )
+					dat +="</tr>"
+
 			dat += "</table>"
 			usr << browse(dat, "window=chem_master")
 			return
@@ -503,7 +510,14 @@
 			#define MAX_BOTTLE_SPRITE 20 //max icon state of the bottle sprites
 			var/dat = "<table>"
 			for(var/i = 1 to MAX_BOTTLE_SPRITE)
-				dat += "<tr><td><a href=\"?src=\ref[src]&bottle_sprite=[i]\"><img src=\"bottle[i].png\" /></a></td></tr>"
+				if ( i%4==1 )
+					dat += "<tr>"
+
+				dat += "<td><a href=\"?src=\ref[src]&bottle_sprite=[i]\"><img src=\"bottle[i].png\" /></a></td>"
+
+				if ( i%4==0 )
+					dat +="</tr>"
+
 			dat += "</table>"
 			usr << browse(dat, "window=chem_master")
 			return
