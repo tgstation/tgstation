@@ -56,6 +56,7 @@
 	potency = 20
 	plant_type = 0
 	growthstages = 6
+	rarity = 0 // CentComm knows about this species already, it's in exotic seeds crates.
 	mutatelist = list(/obj/item/seeds/icepepperseed, /obj/item/seeds/chillighost)
 
 
@@ -212,7 +213,7 @@
 	yield = 2
 	plant_type = 0
 	growthstages = 6
-	rarity = 20
+	rarity = 0 // CentComm ships these to us in the exotic seeds crate.
 
 /obj/item/seeds/bloodtomatoseed
 	name = "pack of blood-tomato seeds"
