@@ -85,9 +85,14 @@
 		kill_objective.find_target()
 		traitor.objectives += kill_objective
 
-		var/datum/objective/survive/survive_objective = new
-		survive_objective.owner = traitor
-		traitor.objectives += survive_objective
+		if(prob(25))
+			var/datum/objective/die/die_objective = new
+			die_objective.owner = traitor
+			traitor.objectives += die_objective
+		else
+			var/datum/objective/survive/survive_objective = new
+			survive_objective.owner = traitor
+			traitor.objectives += survive_objective
 
 		if(prob(10))
 			var/datum/objective/block/block_objective = new

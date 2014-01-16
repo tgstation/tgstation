@@ -301,7 +301,6 @@ datum/objective/hijack
 datum/objective/block
 	explanation_text = "Do not allow any organic lifeforms to escape on the shuttle alive."
 
-
 	check_completion()
 		if(!istype(owner.current, /mob/living/silicon))
 			return 0
@@ -342,7 +341,6 @@ datum/objective/silence
 datum/objective/escape
 	explanation_text = "Escape on the shuttle or an escape pod alive and free."
 
-
 	check_completion()
 		if(issilicon(owner.current))
 			return 0
@@ -376,6 +374,16 @@ datum/objective/escape
 			return 1
 		else
 			return 0
+
+datum/objective/die
+	explanation_text = "Die a glorious death."
+
+	check_completion()
+		if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current))
+			return 1		//Brains no longer win survive objectives. --NEO
+		if(issilicon(owner.current) && owner.current != owner.original)
+			return 1
+		return 0
 
 
 
