@@ -5,14 +5,18 @@
 		cur_area.mob_activate(src)
 
 
-/mob/living/verb/succumb()
+/mob/living/verb/succumb(var/whispered as null)
 	set hidden = 1
-	if ((src.health < 0 && src.health > -95.0))
-		src.attack_log += "[src] has succumbed to death with [health] points of health!"
+	if (InCritical())
+		src.attack_log += "[src] has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!"
 		src.adjustOxyLoss(src.health + 200)
 		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss()
-		src << "\blue You have given up life and succumbed to death."
+		if(!whispered)
+			src << "\blue You have given up life and succumbed to death."
 		death()
+
+/mob/living/proc/InCritical()
+	return (src.health < 0 && src.health > -95.0 && stat == UNCONSCIOUS)
 
 /mob/living/ex_act(severity)
 	if(client && !blinded)
@@ -271,6 +275,7 @@
 	heal_overall_damage(1000, 1000)
 	ExtinguishMob()
 	fire_stacks = 0
+	suiciding = 0
 	buckled = initial(src.buckled)
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src

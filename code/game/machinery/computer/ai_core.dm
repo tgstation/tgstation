@@ -207,6 +207,9 @@ That prevents a few funky behaviors.
 		switch(choice)
 			if("AICORE")//AI mob.
 				var/mob/living/silicon/ai/T = target
+				if(!T.mind)
+					U << "<span class='warning'>No intelligence patterns detected.</span>"    //No more magical carding of empty cores, AI RETURN TO BODY!!!11
+					return
 				switch(interaction)
 					if("AICARD")
 						var/obj/item/device/aicard/C = src

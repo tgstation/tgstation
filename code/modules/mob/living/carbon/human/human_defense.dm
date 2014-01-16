@@ -136,7 +136,7 @@ emp_act
 						O.show_message(text("\blue [user] has fixed some of the dents on [src]'s [affecting.getDisplayName()]!"), 1) //Tell everyone [src]'s limb (by its real name) has been repaired
 					return //So we don't attack them as well
 				else
-					user << "<span class='notice'>[src]'s [affecting.getDisplayName()] is already in good condidtion</span>"
+					user << "<span class='notice'>[src]'s [affecting.getDisplayName()] is already in good condition</span>"
 					return
 			else
 				user << "<span class='warning'>Need more welding fuel!</span>"
@@ -154,7 +154,7 @@ emp_act
 					O.show_message(text("\blue [user] has fixed some of the burnt wires on [src]'s [affecting.getDisplayName()]!"), 1)
 				return //So we don't attack them as well
 			else
-				user << "<span class='notice'>[src]'s [affecting.getDisplayName()] is already in good condidtion</span>"
+				user << "<span class='notice'>[src]'s [affecting.getDisplayName()] is already in good condition</span>"
 				return
 
 //-------------------- End of Cyber limb stuff ---------------------\\
@@ -172,7 +172,7 @@ emp_act
 						"<span class='userdanger'>[src] has been attacked in the [hit_area] with [I] by [user]!</span>")
 
 	var/armor = run_armor_check(affecting, "melee", "<span class='warning'>Your armour has protected your [hit_area].</span>", "<span class='warning'>Your armour has softened a hit to your [hit_area].</span>")
-	if(armor >= 2)	return 0
+	if(armor >= 100)	return 0
 	if(!I.force)	return 0
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
@@ -261,4 +261,4 @@ emp_act
 
 
 			src << "<span class='danger'>Error, electormagnetic pulse detected in cyber limb!</span>"
-			..()
+	..()

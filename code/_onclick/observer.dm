@@ -52,27 +52,6 @@
 	// Not all of them require checking, see below
 	A.attack_ghost(src)
 
-// This is the ghost's follow verb with an argument
-/mob/dead/observer/proc/ManualFollow(var/atom/target)
-	following = target
-	if(target)
-		src << "\blue Now following [target]"
-		spawn(0)
-			var/turf/pos = get_turf(src)
-			while(loc == pos && target && following == target)
-
-				var/turf/T = get_turf(target)
-				if(!T)
-					break
-				if(following != target)
-					break
-				if(!client)
-					break
-				loc = T
-				pos = loc
-				sleep(15)
-			following = null
-
 // Oh by the way this didn't work with old click code which is why clicking shit didn't spam you
 /atom/proc/attack_ghost(mob/dead/observer/user as mob)
 	if(user.client && user.client.inquisitive_ghost)
