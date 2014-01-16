@@ -5,7 +5,6 @@
 	icon_state = "cell"
 	item_state = "cell"
 	origin_tech = "powerstorage=1"
-	flags = FPRINT|TABLEPASS
 	force = 5.0
 	throwforce = 5.0
 	throw_speed = 3
@@ -36,7 +35,7 @@
 	charge = 0
 
 /obj/item/weapon/cell/secborg
-	name = "\improper Security borg rechargable D battery"
+	name = "security borg rechargable D battery"
 	origin_tech = "powerstorage=0"
 	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
 	g_amt = 40

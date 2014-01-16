@@ -9,7 +9,6 @@
 	throw_range = 10
 	var/obj/item/weapon/pen/haspen		//The stored pen.
 	var/obj/item/weapon/paper/toppaper	//The topmost piece of paper.
-	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
 
 

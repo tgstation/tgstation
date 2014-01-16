@@ -5,7 +5,7 @@
 	icon_state = "retractor"
 	m_amt = 10000
 	g_amt = 5000
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
 
@@ -17,7 +17,7 @@
 	icon_state = "hemostat"
 	m_amt = 5000
 	g_amt = 2500
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "pinched")
@@ -30,7 +30,7 @@
 	icon_state = "cautery"
 	m_amt = 5000
 	g_amt = 2500
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("burnt")
@@ -44,7 +44,7 @@
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	m_amt = 15000
 	g_amt = 10000
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	force = 15.0
 	w_class = 3.0
 	origin_tech = "materials=1;biotech=1"
@@ -61,7 +61,7 @@
 	desc = "Cut, cut, and once more cut."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "scalpel"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	force = 10.0
 	w_class = 1.0
 	throwforce = 5.0
@@ -85,7 +85,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "saw"
 	hitsound = 'sound/weapons/circsawhit.ogg'
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	force = 15.0
 	w_class = 3.0
 	throwforce = 9.0

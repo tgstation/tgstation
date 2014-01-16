@@ -193,11 +193,17 @@
 /obj/machinery/disposal/alter_health()
 	return get_turf(src)
 
+/obj/machinery/disposal/relaymove(mob/user as mob)
+	attempt_escape(user)
+
 // resist to escape the bin
 /obj/machinery/disposal/container_resist()
+	attempt_escape(usr)
+
+/obj/machinery/disposal/proc/attempt_escape(mob/user as mob)
 	if(src.flushing)
 		return
-	go_out(usr)
+	go_out(user)
 	return
 
 // leave the disposal
@@ -710,18 +716,12 @@
 
 		var/turf/target
 
-		if(T.density)		// dense ouput turf, so stop holder
-			H.active = 0
-			H.loc = src
-			return
-		if(T.intact && istype(T,/turf/simulated/floor)) //intact floor, pop the tile
+		if(istype(T, /turf/simulated/floor)) //intact floor, pop the tile
 			var/turf/simulated/floor/F = T
-			//F.health	= 100
-			F.burnt	= 1
-			F.intact	= 0
-			F.levelupdate()
-			new /obj/item/stack/tile(H)	// add to holder so it will be thrown with other stuff
-			F.icon_state = "Floor[F.burnt ? "1" : ""]"
+			if(F.floor_tile)
+				F.floor_tile.loc = H //It took me a day to figure out this was the right way to do it. ¯\_(;_;)_/¯
+			F.floor_tile = null //So it doesn't get deleted in make_plating()
+			F.make_plating()
 
 		if(direction)		// direction is specified
 			if(istype(T, /turf/space)) // if ended in space, then range is unlimited
@@ -737,8 +737,6 @@
 					spawn(1)
 						if(AM)
 							AM.throw_at(target, 100, 1)
-				H.vent_gas(T)
-				del(H)
 
 		else	// no specified direction, so throw in random direction
 
@@ -752,10 +750,8 @@
 					spawn(1)
 						if(AM)
 							AM.throw_at(target, 5, 1)
-
-				H.vent_gas(T)	// all gas vent to turf
-				del(H)
-
+		H.vent_gas(T)
+		del(H)
 		return
 
 	// call to break the pipe
@@ -1148,6 +1144,10 @@
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
 
+		if(linked)
+			user << "You need to deconstruct disposal machinery above this pipe."
+			return
+
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 			// check if anything changed over 2 seconds
@@ -1162,6 +1162,7 @@
 				user << "You must stay still while welding the pipe."
 		else
 			user << "You need more welding fuel to cut the pipe."
+
 			return
 
 	// would transfer to next pipe segment, but we are in a trunk
@@ -1227,6 +1228,7 @@
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	var/mode = 0
 	var/start_eject = 0
+	var/eject_range = 2
 
 	New()
 		..()
@@ -1256,10 +1258,10 @@
 				AM.loc = src.loc
 				AM.pipe_eject(dir)
 				spawn(5)
-					AM.throw_at(target, 3, 1)
+					if(AM)
+						AM.throw_at(target, eject_range, 1)
 			H.vent_gas(src.loc)
 			del(H)
-
 		return
 
 	attackby(var/obj/item/I, var/mob/user)

@@ -146,9 +146,17 @@ var/list/sacrificed = list()
 					M.say("Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
 					cultist_count += 1
 			if(cultist_count >= 9)
-				new /obj/machinery/singularity/narsie/large(src.loc)
+				var/narsie_type = /obj/machinery/singularity/narsie/large
+				// Moves narsie if she was already summoned.
+				var/obj/her = locate(narsie_type, machines)
+				if(her)
+					her.loc = get_turf(src)
+					return
+				// Otherwise...
+				new narsie_type(src.loc) // Summon her!
 				if(ticker.mode.name == "cult")
 					ticker.mode:eldergod = 0
+				del(src) // Stops cultists from spamming the rune to summon narsie more than once.
 				return
 			else
 				return fizzle()
@@ -280,7 +288,7 @@ var/list/sacrificed = list()
 				return fizzle()
 
 			for(var/obj/item/organ/limb/affecting in corpse_to_raise.organs)
-				affecting.heal_damage(1000, 1000)
+				affecting.heal_damage(1000, 1000, 0)
 			corpse_to_raise.setToxLoss(0)
 			corpse_to_raise.setOxyLoss(0)
 			corpse_to_raise.SetParalysis(0)

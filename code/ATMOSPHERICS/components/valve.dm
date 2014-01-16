@@ -312,11 +312,3 @@ obj/machinery/atmospherics/valve
 						close()
 					else
 						open()
-
-	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-		if (!istype(W, /obj/item/weapon/wrench))
-			return ..()
-		if (istype(src, /obj/machinery/atmospherics/valve/digital))
-			user << "\red You cannot unwrench this [src], it's too complicated."
-			return 1
-		return ..()

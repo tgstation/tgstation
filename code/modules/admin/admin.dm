@@ -403,6 +403,7 @@ var/global/floorIsLava = 0
 			<BR>
 			<A href='?src=\ref[src];secretsgeneral=list_job_debug'>Show Job Debug</A><BR>
 			<A href='?src=\ref[src];secretsgeneral=spawn_objects'>Admin Log</A><BR>
+			<A href='?src=\ref[src];secretsgeneral=show_admins'>Show Admin List</A><BR>
 			<BR>
 			"}
 
@@ -463,6 +464,8 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=quickpower'>Power all SMES</A><BR>
 			<A href='?src=\ref[src];secretsfun=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
 			<A href='?src=\ref[src];secretsfun=traitor_all'>Everyone is the traitor</A><BR>
+			<A href='?src=\ref[src];secretsfun=guns'>Summon Guns</A><BR>
+			<A href='?src=\ref[src];secretsfun=magic'>Summon Magic</A><BR>
 			<A href='?src=\ref[src];secretsfun=onlyone'>There can only be one!</A><BR>
 			<A href='?src=\ref[src];secretsfun=retardify'>Make all players retarded</A><BR>
 			<A href='?src=\ref[src];secretsfun=eagles'>Egalitarian Station Mode</A><BR>
@@ -535,6 +538,25 @@ var/global/floorIsLava = 0
 		world << "\blue <b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n \t [message]"
 		log_admin("Announce: [key_name(usr)] : [message]")
 	feedback_add_details("admin_verb","A") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/datum/admins/proc/set_admin_notice()
+	set category = "Special Verbs"
+	set name = "Set Admin Notice"
+	set desc ="Set an announcement that appears to everyone who joins the server. Only lasts this round"
+	if(!check_rights(0))	return
+
+	admin_notice = input(src,"Set a public notice for this round. Everyone who joins the server will see it.\n(Leaving it blank will delete the current notice):","Set Notice",admin_notice) as null|message
+	switch(admin_notice)
+		if(null)
+			return
+		if("")
+			message_admins("[key_name(usr)] removed the admin notice.")
+			log_admin("[key_name(usr)] removed the admin notice:\n[admin_notice]")
+			return
+	message_admins("[key_name(usr)] set the admin notice.")
+	log_admin("[key_name(usr)] set the admin notice:\n[admin_notice]")
+	world << "\blue <b>Admin Notice:</b>\n \t [admin_notice]"
+	feedback_add_details("admin_verb","SAN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggleooc()
 	set category = "Server"
@@ -740,7 +762,11 @@ var/global/floorIsLava = 0
 			return
 	chosen = matches[chosen]
 
-	new chosen(usr.loc)
+	if(ispath(chosen,/turf))
+		var/turf/T = get_turf(usr.loc)
+		T.ChangeTurf(chosen)
+	else
+		new chosen(usr.loc)
 
 	log_admin("[key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
 	feedback_add_details("admin_verb","SA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

@@ -49,7 +49,7 @@
 		del(src)
 
 /obj/item/weapon/grown/nettle/changePotency(newValue) //-QualityVan
-	potency = newValue
+	..()
 	force = round((5+potency/5), 1)
 
 //Deathnettle
@@ -70,10 +70,7 @@
 	if(!..()) return
 	if(istype(M, /mob/living))
 		M << "\red You are stunned by the powerful acid of the Deathnettle!"
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Had the [src.name] used on them by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] on [M.name] ([M.ckey])</font>")
-
-		log_attack("<font color='red'> [user.name] ([user.ckey]) used the [src.name] on [M.name] ([M.ckey])</font>")
+		add_logs(user, M, "attacked", object="[src.name]")
 
 		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 
@@ -93,7 +90,7 @@
 		del(src)
 
 /obj/item/weapon/grown/deathnettle/changePotency(newValue) //-QualityVan
-	potency = newValue
+	..()
 	force = round((5+potency/2.5), 1)
 
 

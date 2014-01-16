@@ -26,12 +26,13 @@ Bonus
 
 /datum/symptom/stimulant/Activate(var/datum/disease/advance/A)
 	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB))
+	if(prob(SYMPTOM_ACTIVATION_PROB * 10))
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
-			if(1, 2, 3, 4)
-				M << "<span class='notice'>[pick("You feel restless.", "You feel like running laps around the station.")]</span>"
-			else
+			if(5)
 				if (M.reagents.get_reagent_amount("hyperzine") < 30)
 					M.reagents.add_reagent("hyperzine", 10)
+			else
+				if(prob(SYMPTOM_ACTIVATION_PROB * 5))
+					M << "<span class='notice'>[pick("You feel restless.", "You feel like running laps around the station.")]</span>"
 	return

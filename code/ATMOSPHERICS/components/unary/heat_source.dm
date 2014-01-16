@@ -6,7 +6,7 @@
 	density = 1
 	use_power = 1
 
-	name = "Heat Reservoir"
+	name = "heat reservoir"
 	desc = "Heats gas when connected to pipe network"
 
 	var/on = 0

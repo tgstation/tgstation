@@ -58,8 +58,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 */
 
 //Human Overlays Indexes/////////
-#define BODY_LAYER				21		//underwear, eyes, lips(makeup)
-#define MUTATIONS_LAYER			20		//Tk headglows etc.
+#define BODY_LAYER				22		//underwear, eyes, lips(makeup)
+#define MUTATIONS_LAYER			21		//Tk headglows etc.
+#define AUGMENTS_LAYER			20
 #define DAMAGE_LAYER			19		//damage indicators (cuts and burns)
 #define UNIFORM_LAYER			18
 #define ID_LAYER				17
@@ -79,7 +80,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 #define L_HAND_LAYER			3
 #define R_HAND_LAYER			2		//Having the two hands seperate seems rather silly, merge them together? It'll allow for code to be reused on mobs with arbitarily many hands
 #define FIRE_LAYER				1		//If you're on fire
-#define TOTAL_LAYERS			21		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+#define TOTAL_LAYERS			22		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 //////////////////////////////////
 /mob/living/carbon/human
 	var/list/overlays_standing[TOTAL_LAYERS]
@@ -217,11 +218,12 @@ Please contact me on #coderbus IRC. ~Carnie x
 		eyes_s.Blend("#[eye_color]", ICON_ADD)
 		standing	+= image("icon"=eyes_s, "layer"=-BODY_LAYER)
 
-		//Underwear
-		if(underwear)
-			var/datum/sprite_accessory/underwear/U = underwear_all[underwear]
-			if(U)
-				standing	+= image("icon"=U.icon, "icon_state"="[U.icon_state]_s", "layer"=-BODY_LAYER)
+	//Underwear
+	if(underwear)
+		var/datum/sprite_accessory/underwear/U = underwear_all[underwear]
+		if(U)
+			standing	+= image("icon"=U.icon, "icon_state"="[U.icon_state]_s", "layer"=-BODY_LAYER)
+
 
 	if(standing.len)
 		overlays_standing[BODY_LAYER]	= standing
@@ -238,11 +240,50 @@ Please contact me on #coderbus IRC. ~Carnie x
 	apply_overlay(FIRE_LAYER)
 
 
+/mob/living/carbon/human/proc/update_augments()
+	remove_overlay(AUGMENTS_LAYER)
+
+	var/list/lying		= list()
+	var/list/standing	= list()
+
+
+	if(getlimb(/obj/item/organ/limb/robot/r_arm))
+		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="r_arm_s", "layer"=-AUGMENTS_LAYER)
+		lying		+= image("icon"='icons/mob/augments.dmi', "icon_state"="r_arm_l", "layer"=-AUGMENTS_LAYER)
+	if(getlimb(/obj/item/organ/limb/robot/l_arm))
+		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="l_arm_s", "layer"=-AUGMENTS_LAYER)
+		lying		+= image("icon"='icons/mob/augments.dmi', "icon_state"="l_arm_l", "layer"=-AUGMENTS_LAYER)
+
+	if(getlimb(/obj/item/organ/limb/robot/r_leg))
+		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="r_leg_s", "layer"=-AUGMENTS_LAYER)
+		lying		+= image("icon"='icons/mob/augments.dmi', "icon_state"="r_leg_l", "layer"=-AUGMENTS_LAYER)
+	if(getlimb(/obj/item/organ/limb/robot/l_leg))
+		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="l_leg_s", "layer"=-AUGMENTS_LAYER)
+		lying		+= image("icon"='icons/mob/augments.dmi', "icon_state"="l_leg_l", "layer"=-AUGMENTS_LAYER)
+
+	if(getlimb(/obj/item/organ/limb/robot/chest))
+		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="chest_s", "layer"=-AUGMENTS_LAYER)
+		lying		+= image("icon"='icons/mob/augments.dmi', "icon_state"="chest_l", "layer"=-AUGMENTS_LAYER)
+	if(getlimb(/obj/item/organ/limb/robot/head))
+		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="head_s", "layer"=-AUGMENTS_LAYER)
+		lying		+= image("icon"='icons/mob/augments.dmi', "icon_state"="head_l", "layer"=-AUGMENTS_LAYER)
+
+
+
+	if(lying.len)
+		overlays_lying[AUGMENTS_LAYER]		= lying
+	if(standing.len)
+		overlays_standing[AUGMENTS_LAYER]	= standing
+
+	apply_overlay(AUGMENTS_LAYER)
+
+
+
 /* --------------------------------------- */
 //For legacy support.
 /mob/living/carbon/human/regenerate_icons()
 	..()
-	if(monkeyizing)		return
+	if(notransform)		return
 	update_body()
 	update_hair()
 	update_mutations()

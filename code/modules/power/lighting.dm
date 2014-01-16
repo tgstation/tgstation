@@ -16,7 +16,7 @@
 	desc = "Used for building lights."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-construct-item"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	var/fixture_type = "tube"
 	var/obj/machinery/light/newlight = null
 	var/sheets_refunded = 2
@@ -63,7 +63,7 @@
 	desc = "Used for building small lights."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "bulb-construct-item"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	fixture_type = "bulb"
 	sheets_refunded = 1
 
@@ -311,16 +311,17 @@
 // examine verb
 /obj/machinery/light/examine()
 	set src in oview(1)
+	..()
 	if(usr && !usr.stat)
 		switch(status)
 			if(LIGHT_OK)
-				usr << "[desc] It is turned [on? "on" : "off"]."
+				usr << "It is turned [on? "on" : "off"]."
 			if(LIGHT_EMPTY)
-				usr << "[desc] The [fitting] has been removed."
+				usr << "The [fitting] has been removed."
 			if(LIGHT_BURNED)
-				usr << "[desc] The [fitting] is burnt out."
+				usr << "The [fitting] is burnt out."
 			if(LIGHT_BROKEN)
-				usr << "[desc] The [fitting] has been smashed."
+				usr << "The [fitting] has been smashed."
 
 
 
@@ -497,7 +498,6 @@
 			user << "You try to remove the light [fitting], but you burn your hand on it!"
 
 			var/obj/item/organ/limb/affecting = H.get_organ("[user.hand ? "l" : "r" ]_arm")
-
 			if(affecting.take_damage( 0, 5 ))		// 5 burn damage
 				H.update_damage_overlays(0)
 			H.updatehealth()
@@ -632,7 +632,6 @@
 
 /obj/item/weapon/light
 	icon = 'icons/obj/lighting.dmi'
-	flags = FPRINT | TABLEPASS
 	force = 2
 	throwforce = 5
 	w_class = 1

@@ -27,7 +27,7 @@
 
 /*
 /datum/recipe/bananaphone
-	reagents = list("psilocybin" = 5) //Trippin' balls, man.
+	reagents = list("mushroomhallucinogen" = 5) //Trippin' balls, man.
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
 		/obj/item/device/radio
@@ -218,6 +218,18 @@
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/xenomeatbread
+
+/datum/recipe/spidermeatbread
+	reagents = list("flour" = 15)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/spidermeat,
+		/obj/item/weapon/reagent_containers/food/snacks/spidermeat,
+		/obj/item/weapon/reagent_containers/food/snacks/spidermeat,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/spidermeatbread
 
 /datum/recipe/bananabread
 	reagents = list("milk" = 5, "flour" = 15)
@@ -704,7 +716,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/tomatosoup
 
 /datum/recipe/rofflewaffles
-	reagents = list("psilocybin" = 5, "flour" = 10)
+	reagents = list("mushroomhallucinogen" = 5, "flour" = 10)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
@@ -1157,3 +1169,26 @@
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sugarcookie
+
+/datum/recipe/boiledspiderleg
+	reagents = list("water" = 10)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/spiderleg,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/boiledspiderleg
+
+/datum/recipe/spidereggsham
+	reagents = list("sodiumchloride" = 1)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/spidereggs,
+		/obj/item/weapon/reagent_containers/food/snacks/spidermeat,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/spidereggsham
+
+/datum/recipe/sashimi
+	reagents = list("soysauce" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/spidereggs,
+		/obj/item/weapon/reagent_containers/food/snacks/carpmeat,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sashimi

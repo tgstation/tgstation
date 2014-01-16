@@ -1,7 +1,7 @@
 /obj/item/device/chameleon
 	name = "chameleon-projector"
 	icon_state = "shield0"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	item_state = "electronic"
 	throwforce = 5.0
@@ -12,6 +12,9 @@
 	var/can_use = 1
 	var/obj/effect/dummy/chameleon/active_dummy = null
 	var/saved_item = /obj/item/weapon/cigbutt
+	var/saved_icon = 'icons/obj/clothing/masks.dmi'
+	var/saved_icon_state = "cigbutt"
+	var/saved_overlays
 
 /obj/item/device/chameleon/dropped()
 	disrupt()
@@ -29,6 +32,9 @@
 			playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
 			user << "\blue Scanned [target]."
 			saved_item = target.type
+			saved_icon = target.icon
+			saved_icon_state = target.icon_state
+			saved_overlays = target.overlays
 
 /obj/item/device/chameleon/proc/toggle()
 	if(!can_use || !saved_item) return
@@ -47,7 +53,7 @@
 		var/obj/O = new saved_item(src)
 		if(!O) return
 		var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(usr.loc)
-		C.activate(O, usr, src)
+		C.activate(O, usr, saved_icon, saved_icon_state, saved_overlays, src)
 		del(O)
 		usr << "\blue You activate the [src]."
 		var/obj/effect/overlay/T = new/obj/effect/overlay(get_turf(src))
@@ -83,11 +89,12 @@
 	var/can_move = 1
 	var/obj/item/device/chameleon/master = null
 
-/obj/effect/dummy/chameleon/proc/activate(var/obj/item/O, var/mob/M, var/obj/item/device/chameleon/C)
+/obj/effect/dummy/chameleon/proc/activate(var/obj/O, var/mob/M, new_icon, new_iconstate, new_overlays, var/obj/item/device/chameleon/C)
 	name = O.name
 	desc = O.desc
-	icon = O.icon
-	icon_state = O.icon_state
+	icon = new_icon
+	icon_state = new_iconstate
+	overlays = new_overlays
 	dir = O.dir
 	M.loc = src
 	master = C

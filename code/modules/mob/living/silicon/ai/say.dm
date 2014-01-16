@@ -73,10 +73,6 @@ var/const/VOX_DELAY = 600
 		src << "<span class='notice'>Please wait [round((announcing_vox - world.time) / 10)] seconds.</span>"
 		return
 
-	if(control_disabled)
-		src << "<span class='notice'>Wireless interface disabled, unable to interact with announcement PA.</span>"
-		return
-
 	var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text
 
 	last_announcement = message
@@ -84,7 +80,14 @@ var/const/VOX_DELAY = 600
 	if(!message || announcing_vox > world.time)
 		return
 
-	var/list/words = stringsplit(trim(message), " ")
+	if(stat != CONSCIOUS)
+		return
+
+	if(control_disabled)
+		src << "<span class='notice'>Wireless interface disabled, unable to interact with announcement PA.</span>"
+		return
+
+	var/list/words = text2list(trim(message), " ")
 	var/list/incorrect_words = list()
 
 	if(words.len > 30)
@@ -104,7 +107,7 @@ var/const/VOX_DELAY = 600
 
 	announcing_vox = world.time + VOX_DELAY
 
-	log_game("[key_name_admin(src)] made a vocal announcement with the following message: [message].")
+	log_game("[key_name(src)] made a vocal announcement with the following message: [message].")
 
 	for(var/word in words)
 		play_vox_word(word, src.z, null)

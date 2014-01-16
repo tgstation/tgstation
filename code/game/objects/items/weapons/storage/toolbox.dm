@@ -4,7 +4,7 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "red"
 	item_state = "toolbox_red"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	force = 10.0
 	throwforce = 15.0
 	throw_speed = 1
@@ -15,9 +15,6 @@
 
 	New()
 		..()
-		if (src.type == /obj/item/weapon/storage/toolbox)
-			world << "BAD: [src] ([src.type]) spawned at [src.x] [src.y] [src.z]"
-			del(src)
 
 /obj/item/weapon/storage/toolbox/emergency
 	name = "emergency toolbox"

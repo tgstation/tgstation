@@ -19,6 +19,7 @@
 	anchored = 1.0
 	layer = 2.8
 	throwpass = 1	//You can throw objects over this, despite it's density.")
+	var/parts = /obj/item/weapon/table_parts
 
 /obj/structure/table/New()
 	..()
@@ -277,9 +278,9 @@
 	return
 
 
-/obj/structure/table/attackby(obj/item/W, mob/user)
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src, user) < 2)
-		var/obj/item/weapon/grab/G = W
+/obj/structure/table/attackby(obj/item/I, mob/user)
+	if (istype(I, /obj/item/weapon/grab) && get_dist(src, user) < 2)
+		var/obj/item/weapon/grab/G = I
 		if(G.affecting.buckled)
 			user << "<span class='notice'>[G.affecting] is buckled to [G.affecting.buckled]!</span>"
 			return
@@ -292,36 +293,59 @@
 		G.affecting.Weaken(5)
 		G.affecting.visible_message("<span class='danger'>[G.assailant] pushes [G.affecting] onto [src].</span>", \
 									"<span class='userdanger'>[G.assailant] pushes [G.affecting] onto [src].</span>")
-		del(W)
+		del(I)
 		return
 
-	if (istype(W, /obj/item/weapon/wrench))
-		user << "\blue Now disassembling table"
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user,50))
-			new /obj/item/weapon/table_parts( src.loc )
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			//SN src = null
-			del(src)
-		return
+	if (istype(I, /obj/item/weapon/wrench))
+		table_destroy(2, user)
 
 	if(isrobot(user))
 		return
 
-	if(istype(W, /obj/item/weapon/melee/energy/blade))
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-		spark_system.set_up(5, 0, src.loc)
-		spark_system.start()
+	if(istype(I, /obj/item/weapon/melee/energy/blade))
+		var/datum/effect/effect/system/spark_spread/SS = new /datum/effect/effect/system/spark_spread()
+		SS.set_up(5, 0, src.loc)
+		SS.start()
 		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 		playsound(src.loc, "sparks", 50, 1)
-		for(var/mob/O in viewers(user, 4))
-			O.show_message("\blue The table was sliced apart by [user]!", 1, "\red You hear metal coming apart.", 2)
-		new /obj/item/weapon/table_parts( src.loc )
+		table_destroy(1, user)
+
+	user.drop_item(src)
+
+/obj/structure/table/proc/table_destroy(var/destroy_type, var/mob/user as mob)
+
+/*
+Destroy type values:
+1 = Destruction, Actually destroyed
+2 = Deconstruction.
+*/
+
+	if(destroy_type == 1)
+		user.visible_message("<span class='notice'>The table was sliced apart by [user]!</span>")
+		new parts( src.loc )
 		del(src)
 		return
 
-	user.drop_item(src)
-	return 1
+	if(destroy_type == 2)
+		if(istype(src, /obj/structure/table/reinforced))
+			var/obj/structure/table/reinforced/RT = src
+			if(RT.status == 1)
+				user << "<span class='notice'>Now disassembling the reinforced table</span>"
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				if (do_after(user, 50))
+					new parts( src.loc )
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					del(src)
+				return
+		else
+			user << "<span class='notice'>Now disassembling table</span>"
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			if (do_after(user, 50))
+				new parts( src.loc )
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				del(src)
+			return
+
 
 
 /*
@@ -331,52 +355,14 @@
 	name = "wooden table"
 	desc = "Do not apply fire to this. Rumour says it burns easily."
 	icon_state = "woodtable"
+	parts = /obj/item/weapon/table_parts/wood
 
 
-/obj/structure/table/woodentable/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
-	if (istype(W, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = W
-		if(G.affecting.buckled)
-			user << "<span class='notice'>[G.affecting] is buckled to [G.affecting.buckled]!</span>"
-			return
-		if(G.state < GRAB_AGGRESSIVE)
-			user << "<span class='notice'>You need a better grip to do that!</span>"
-			return
-		if(!G.confirm())
-			return
-		G.affecting.loc = src.loc
-		G.affecting.Weaken(5)
-		visible_message("\red [G.assailant] puts [G.affecting] on the table.")
-		del(W)
-		return
-	if (istype(W, /obj/item/weapon/wrench))
-		user << "\blue Now disassembling the wooden table"
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		sleep(50)
-		new /obj/item/weapon/table_parts/wood( src.loc )
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		del(src)
-		return
-
-	if(isrobot(user))
-		return
-	if(istype(W, /obj/item/weapon/melee/energy/blade))
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-		spark_system.set_up(5, 0, src.loc)
-		spark_system.start()
-		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-		playsound(src.loc, "sparks", 50, 1)
-		for(var/mob/O in viewers(user, 4))
-			O.show_message("\blue The wooden table was sliced apart by [user]!", 1, "\red You hear wood coming apart.", 2)
-		new /obj/item/weapon/table_parts/wood( src.loc )
-		del(src)
-		return
-
-	user.drop_item(src)
-	//if(W && W.loc)	W.loc = src.loc
-	return 1
-
+/obj/structure/table/woodentable/poker //No specialties, Just a mapping object.
+	name = "gambling table"
+	desc = "A seedy table for seedy dealings in seedy places."
+	icon_state = "pokertable"
+	parts = /obj/item/weapon/table_parts/wood/poker
 
 /*
  * Reinforced tables
@@ -385,27 +371,11 @@
 	name = "reinforced table"
 	desc = "A version of the four legged table. It is stronger."
 	icon_state = "reinftable"
+	parts = /obj/item/weapon/table_parts/reinforced
 	var/status = 2
 
 
 /obj/structure/table/reinforced/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
-	if (istype(W, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = W
-		if(G.affecting.buckled)
-			user << "<span class='notice'>[G.affecting] is buckled to [G.affecting.buckled]!</span>"
-			return
-		if(G.state < GRAB_AGGRESSIVE)
-			user << "<span class='notice'>You need a better grip to do that!</span>"
-			return
-		if(!G.confirm())
-			return
-		G.affecting.loc = src.loc
-		G.affecting.Weaken(5)
-		visible_message("\red [G.assailant] puts [G.affecting] on the table.")
-		del(W)
-		return
-
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
@@ -424,40 +394,7 @@
 					user << "\blue Table strengthened"
 					src.status = 2
 			return
-		if(isrobot(user))
-			return
-		user.drop_item(src)
-		//if(W && W.loc)	W.loc = src.loc
-		return
-
-	if (istype(W, /obj/item/weapon/wrench))
-		if(src.status == 1)
-			user << "\blue Now disassembling the reinforced table"
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if (do_after(user, 50))
-				new /obj/item/weapon/table_parts/reinforced( src.loc )
-				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				del(src)
-			return
-	if(isrobot(user))
-		return
-
-	if(istype(W, /obj/item/weapon/melee/energy/blade))
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-		spark_system.set_up(5, 0, src.loc)
-		spark_system.start()
-		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-		playsound(src.loc, "sparks", 50, 1)
-		for(var/mob/O in viewers(user, 4))
-			O.show_message("\blue The reinforced table was sliced apart by [user]!", 1, "\red You hear metal coming apart.", 2)
-		new /obj/item/weapon/table_parts/reinforced( src.loc )
-		del(src)
-		return
-
-	user.drop_item(src)
-	//if(W && W.loc)	W.loc = src.loc
-	return 1
-
+	..()
 
 /*
  * Racks
@@ -468,7 +405,6 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
 	density = 1
-	flags = FPRINT
 	anchored = 1.0
 	throwpass = 1	//You can throw objects over this, despite it's density.
 
@@ -563,3 +499,4 @@
 		del(src)
 /obj/structure/rack/attack_tk() // no telehulk sorry
 	return
+

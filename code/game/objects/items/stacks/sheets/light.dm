@@ -1,5 +1,5 @@
 /obj/item/stack/light_w
-	name = "wired glass tiles"
+	name = "wired glass tile"
 	singular_name = "wired glass floor tile"
 	desc = "A glass tile, which is wired, somehow."
 	icon_state = "glass_wire"
@@ -8,16 +8,18 @@
 	throwforce = 5.0
 	throw_speed = 5
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	max_amount = 60
 
 /obj/item/stack/light_w/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	..()
 	if(istype(O,/obj/item/weapon/wirecutters))
-		var/obj/item/weapon/cable_coil/CC = new/obj/item/weapon/cable_coil(user.loc)
+		var/obj/item/weapon/cable_coil/CC = new (user.loc)
 		CC.amount = 5
+		CC.add_fingerprint(user)
 		amount--
-		new/obj/item/stack/sheet/glass(user.loc)
+		var/obj/item/stack/sheet/glass/G = new (user.loc)
+		G.add_fingerprint(user)
 		if(amount <= 0)
 			user.drop_from_inventory(src)
 			del(src)
@@ -29,7 +31,8 @@
 			user.drop_from_inventory(M)
 			del(M)
 		amount--
-		new/obj/item/stack/tile/light(user.loc)
+		var/obj/item/stack/tile/light/L = new (user.loc)
+		L.add_fingerprint(user)
 		if(amount <= 0)
 			user.drop_from_inventory(src)
 			del(src)

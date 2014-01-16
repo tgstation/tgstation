@@ -5,7 +5,6 @@ var/list/GPS_list = list()
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "gps-c"
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
 	origin_tech = "programming=2;engineering=2"
 	var/gpstag = "COM0"
@@ -57,15 +56,11 @@ var/list/GPS_list = list()
 	..()
 	if(href_list["tag"] )
 		var/a = input("Please enter desired tag.", name, gpstag) as text
-		a = copytext(sanitize(a), 1, 20)
+		a = uppertext(copytext(sanitize(a), 1, 5))
 		if(src.loc == usr)
-			if(length(a) != 4)
-				usr << "<span class = 'caution'> The tag must be four letters long!</span>"
-				return
-			else
-				gpstag = a
-				name = "global positioning system ([gpstag])"
-				attack_self(usr)
+			gpstag = a
+			name = "global positioning system ([gpstag])"
+			attack_self(usr)
 
 /obj/item/device/gps/science
 	icon_state = "gps-s"

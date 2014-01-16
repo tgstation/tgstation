@@ -52,55 +52,10 @@
 						if(findtext(temp_message[H], "*") || findtext(temp_message[H], ";") || findtext(temp_message[H], ":")) continue
 						temp_message[H] = "HONK"
 						pick_list -= H //Make sure that you dont HONK the same word twice
-					message = dd_list2text(temp_message, " ")
+					message = list2text(temp_message, " ")
 
 		if(wear_mask)
-			if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja) && wear_mask:voice == "Unknown")
-				if(copytext(message, 1, 2) != "*")
-					var/list/temp_message = text2list(message, " ")
-					var/list/pick_list = list()
-					for(var/i = 1, i <= temp_message.len, i++)
-						pick_list += i
-					for(var/i=1, i <= abs(temp_message.len/3), i++)
-						var/H = pick(pick_list)
-						if(findtext(temp_message[H], "*") || findtext(temp_message[H], ";") || findtext(temp_message[H], ":")) continue
-						temp_message[H] = ninjaspeak(temp_message[H])
-						pick_list -= H
-					message = dd_list2text(temp_message, " ")
-					message = replacetext(message, "o", "¤")
-					message = replacetext(message, "p", "þ")
-					message = replacetext(message, "l", "£")
-					message = replacetext(message, "s", "§")
-					message = replacetext(message, "u", "µ")
-					message = replacetext(message, "b", "ß")
-
-			else if(istype(wear_mask, /obj/item/clothing/mask/luchador))
-				if(copytext(message, 1, 2) != "*")
-					message = replacetext(message, "captain", "CAPITÁN")
-					message = replacetext(message, "station", "ESTACIÓN")
-					message = replacetext(message, "sir", "SEÑOR")
-					message = replacetext(message, "the ", "el ")
-					message = replacetext(message, "my ", "mi ")
-					message = replacetext(message, "is ", "es ")
-					message = replacetext(message, "it's", "es")
-					message = replacetext(message, "friend", "amigo")
-					message = replacetext(message, "buddy", "amigo")
-					message = replacetext(message, "hello", "hola")
-					message = replacetext(message, " hot", " caliente")
-					message = replacetext(message, " very ", " muy ")
-					message = replacetext(message, "sword", "espada")
-					message = replacetext(message, "library", "biblioteca")
-					message = replacetext(message, "traitor", "traidor")
-					message = replacetext(message, "wizard", "mago")
-					message = uppertext(message)	//Things end up looking better this way (no mixed cases), and it fits the macho wrestler image.
-					if(prob(25))
-						message += " OLE!"
-
-			else if(istype(wear_mask, /obj/item/clothing/mask/horsehead))
-				var/obj/item/clothing/mask/horsehead/hoers = wear_mask
-				if(hoers.voicechange)
-					if(!(copytext(message, 1, 2) == "*" || (mind && mind.changeling && (copytext(message, 1, 3) == ":g" || copytext(message, 1, 3) == ":G" || copytext(message, 1, 3) == ":ï"))))
-						message = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
+			message = wear_mask.speechModification(message)
 
 		if ((HULK in mutations) && health >= 25 && length(message))
 			if(copytext(message, 1, 2) != "*")

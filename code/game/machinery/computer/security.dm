@@ -1,7 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj/machinery/computer/secure_data//TODO:SANITY
-	name = "Security Records Console"
+	name = "security records console"
 	desc = "Used to view and edit personnel's security records"
 	icon_state = "security"
 	req_one_access = list(access_security, access_forensics_lockers)

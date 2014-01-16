@@ -12,6 +12,12 @@
 			return null
 	return 0
 
+/proc/get_area_master(O)
+	var/area/A = get_area(O)
+	if(A && A.master)
+		A = A.master
+	return A
+
 /proc/get_area_name(N) //get area by its name
 	for(var/area/A in world)
 		if(A.name == N)
@@ -36,7 +42,16 @@
 
 	return heard
 
-
+/proc/alone_in_area(var/area/the_area, var/mob/must_be_alone, var/check_type = /mob/living/carbon)
+	var/area/our_area = get_area_master(the_area)
+	for(var/C in living_mob_list)
+		if(!istype(C, check_type))
+			continue
+		if(C == must_be_alone)
+			continue
+		if(our_area == get_area_master(C))
+			return 0
+	return 1
 
 
 //Magic constants obtained by using linear regression on right-angled triangles of sides 0<x<1, 0<y<1
@@ -180,7 +195,7 @@
 
 /proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios)
 
-	set background = 1
+	set background = BACKGROUND_ENABLED
 
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
@@ -285,9 +300,10 @@ proc/isInSight(var/atom/A, var/atom/B)
 	// Keep looping until we find a non-afk candidate within the time bracket (we limit the bracket to 10 minutes (6000))
 	while(!candidates.len && afk_bracket < 6000)
 		for(var/mob/dead/observer/G in player_list)
-			if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-				if(!G.client.is_afk(afk_bracket) && (G.client.prefs.be_special & be_special_flag))
-					candidates += G.client
+			if(G.client != null)
+				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
+					if(!G.client.is_afk(afk_bracket) && (G.client.prefs.be_special & be_special_flag))
+						candidates += G.client
 		afk_bracket += 600 // Add a minute to the bracket, for every attempt
 	return candidates
 
@@ -330,3 +346,41 @@ proc/isInSight(var/atom/A, var/atom/B)
 					continue
 			active_players++
 	return active_players
+
+/datum/projectile_data
+	var/src_x
+	var/src_y
+	var/time
+	var/distance
+	var/power_x
+	var/power_y
+	var/dest_x
+	var/dest_y
+
+/datum/projectile_data/New(var/src_x, var/src_y, var/time, var/distance, \
+						   var/power_x, var/power_y, var/dest_x, var/dest_y)
+	src.src_x = src_x
+	src.src_y = src_y
+	src.time = time
+	src.distance = distance
+	src.power_x = power_x
+	src.power_y = power_y
+	src.dest_x = dest_x
+	src.dest_y = dest_y
+
+/proc/projectile_trajectory(var/src_x, var/src_y, var/rotation, var/angle, var/power)
+
+	// returns the destination (Vx,y) that a projectile shot at [src_x], [src_y], with an angle of [angle],
+	// rotated at [rotation] and with the power of [power]
+	// Thanks to VistaPOWA for this function
+
+	var/power_x = power * cos(angle)
+	var/power_y = power * sin(angle)
+	var/time = 2* power_y / 10 //10 = g
+
+	var/distance = time * power_x
+
+	var/dest_x = src_x + distance*sin(rotation);
+	var/dest_y = src_y + distance*cos(rotation);
+
+	return new /datum/projectile_data(src_x, src_y, time, distance, power_x, power_y, dest_x, dest_y)

@@ -88,7 +88,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 
 /obj/machinery/computer/ordercomp
-	name = "Supply Ordering Console"
+	name = "supply ordering console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "request"
 	circuit = /obj/item/weapon/circuitboard/ordercomp
@@ -148,7 +148,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	proc/process()
 
 		spawn(0)
-			set background = 1
+			set background = BACKGROUND_ENABLED
 			while(1)
 				if(processing)
 					iteration++
@@ -378,7 +378,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 		return
 
 /obj/item/weapon/paper/manifest
-	name = "Supply Manifest"
+	name = "supply manifest"
 	var/erroneous = 0
 	var/points = 0
 	var/ordernumber = 0
@@ -464,7 +464,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 		supply_shuttle.ordernum++
 		var/obj/item/weapon/paper/reqform = new /obj/item/weapon/paper(loc)
-		reqform.name = "Requisition Form - [P.name]"
+		reqform.name = "requisition form - [P.name]"
 		reqform.info += "<h3>[station_name] Supply Requisition Form</h3><hr>"
 		reqform.info += "INDEX: #[supply_shuttle.ordernum]<br>"
 		reqform.info += "REQUESTED BY: [idname]<br>"
@@ -529,7 +529,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 		<HR>\nSupply Points: [supply_shuttle.points]<BR>\n<BR>
 		[supply_shuttle.moving ? "\n*Must be away to order items*<BR>\n<BR>":supply_shuttle.at_station ? "\n*Must be away to order items*<BR>\n<BR>":"\n<A href='?src=\ref[src];order=categories'>Order items</A><BR>\n<BR>"]
 		[supply_shuttle.moving ? "\n*Shuttle already called*<BR>\n<BR>":supply_shuttle.at_station ? "\n<A href='?src=\ref[src];send=1'>Send away</A><BR>\n<BR>":"\n<A href='?src=\ref[src];send=1'>Send to station</A><BR>\n<BR>"]
-		[supply_shuttle.shuttle_loan ? (supply_shuttle.shuttle_loan.dispatched ? "\n*Shuttle loaned to CentComm*<BR>\n<BR>" : "\n<A href='?src=\ref[src];send=1;loan=1'>Loan shuttle to CentComm (5 mins duration)</A><BR>\n<BR>") : "\n*No pending external shuttle requests*<BR>\n<BR>"]
+		[supply_shuttle.shuttle_loan ? (supply_shuttle.shuttle_loan.dispatched ? "\n*Shuttle loaned to Centcom*<BR>\n<BR>" : "\n<A href='?src=\ref[src];send=1;loan=1'>Loan shuttle to Centcom (5 mins duration)</A><BR>\n<BR>") : "\n*No pending external shuttle requests*<BR>\n<BR>"]
 		\n<A href='?src=\ref[src];viewrequests=1'>View requests</A><BR>\n<BR>
 		\n<A href='?src=\ref[src];vieworders=1'>View orders</A><BR>\n<BR>
 		\n<A href='?src=\ref[user];mach_close=computer'>Close</A><BR>
@@ -572,7 +572,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 					supply_shuttle.sell()
 					supply_shuttle.send()
 					supply_shuttle.shuttle_loan.loan_shuttle()
-					temp = "The supply shuttle has been loaned to CentComm.<BR><BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+					temp = "The supply shuttle has been loaned to Centcom.<BR><BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 					post_signal("supply")
 				else
 					temp = "You can not loan the supply shuttle at this time.<BR><BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
@@ -586,7 +586,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 			if(href_list["loan"] && supply_shuttle.shuttle_loan)
 				if(!supply_shuttle.shuttle_loan.dispatched)
 					supply_shuttle.shuttle_loan.loan_shuttle()
-					temp = "The supply shuttle has been loaned to CentComm.<BR><BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+					temp = "The supply shuttle has been loaned to Centcom.<BR><BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 					post_signal("supply")
 				else
 					temp = "You can not loan the supply shuttle at this time.<BR><BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
@@ -654,7 +654,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 		supply_shuttle.ordernum++
 		var/obj/item/weapon/paper/reqform = new /obj/item/weapon/paper(loc)
-		reqform.name = "Requisition Form - [P.name]"
+		reqform.name = "requisition form - [P.name]"
 		reqform.info += "<h3>[station_name] Supply Requisition Form</h3><hr>"
 		reqform.info += "INDEX: #[supply_shuttle.ordernum]<br>"
 		reqform.info += "REQUESTED BY: [idname]<br>"

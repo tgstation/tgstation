@@ -1,6 +1,6 @@
 
 /obj/machinery/juicer
-	name = "Juicer"
+	name = "juicer"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "juicer1"
 	layer = 2.9

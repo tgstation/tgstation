@@ -60,14 +60,7 @@ obj/machinery/atmospherics/binary
 		..()
 
 	initialize()
-		if(node1)
-			node1.disconnect(src)
-			del(network1)
-			node1 = null
-		if(node2)
-			node2.disconnect(src)
-			del(network2)
-			node2 = null
+		src.disconnect(src)
 
 		var/node2_connect = dir
 		var/node1_connect = turn(dir, 180)

@@ -16,18 +16,19 @@
 
 /obj/item/weapon/grenade/iedcasing
 	name = "improvised explosive assembly"
-	desc = "An igniter stuffed into an aluminum shell."
+	desc = "An igniter stuffed into an aluminium shell."
 	w_class = 2.0
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "improvised_grenade"
 	item_state = "flashbang"
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	var/assembled = 0
 	active = 1
 	det_time = 50
+	display_timer = 0
 
 
 
@@ -87,7 +88,6 @@
 
 /obj/item/weapon/grenade/iedcasing/examine()
 	set src in usr
-	usr << desc
+	..()
 	if(assembled == 3)
-		usr << "You can't tell when it will explode!" //Stops you from checking the time to detonation unlike regular grenades
-		return
+		usr << "You can't tell when it will explode!"

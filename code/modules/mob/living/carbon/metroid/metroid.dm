@@ -210,19 +210,13 @@
 	..()
 
 /mob/living/carbon/slime/ex_act(severity)
-
-	if (stat == 2 && client)
-		return
-
-	else if (stat == 2 && !client)
-		del(src)
-		return
+	..()
 
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
 		if (1.0)
-			b_loss += 500
+			del(src)
 			return
 
 		if (2.0)
@@ -318,8 +312,7 @@
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
-		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
-		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
+		add_logs(M, src, "attacked", admin=0)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
 		updatehealth()
@@ -438,7 +431,6 @@
 
 			M.put_in_active_hand(G)
 
-			grabbed_by += G
 			G.synch()
 
 			LAssailant = M
@@ -529,7 +521,6 @@
 
 			M.put_in_active_hand(G)
 
-			grabbed_by += G
 			G.synch()
 
 			LAssailant = M
@@ -598,7 +589,6 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	desc = "Goo extracted from a slime. Legends claim these to have \"magical powers\"."
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey slime extract"
-	flags = TABLEPASS | FPRINT
 	force = 1.0
 	w_class = 1.0
 	throwforce = 1.0
@@ -829,6 +819,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	icon_state = "golem"
 	item_state = "golem"
 	item_color = "golem"
+	flags = ABSTRACT
 	has_sensor = 0
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	canremove = 0
@@ -844,7 +835,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	body_parts_covered = FULL_BODY
 	slowdown = 1.0
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL | STOPSPRESSUREDMAGE
+	flags = STOPSPRESSUREDMAGE | ABSTRACT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS | HEAD
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS | HEAD
@@ -858,7 +849,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	icon_state = "golem"
 	item_state = null
 	canremove = 0
-	flags = NOSLIP
+	flags = NOSLIP | ABSTRACT
 	slowdown = SHOES_SLOWDOWN+1
 
 
@@ -870,6 +861,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	canremove = 0
 	siemens_coefficient = 0
 	unacidable = 1
+	flags = ABSTRACT
 
 /obj/item/clothing/mask/breath/golem
 	name = "golem's face"
@@ -879,6 +871,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	canremove = 0
 	siemens_coefficient = 0
 	unacidable = 1
+	flags = ABSTRACT
 
 
 /obj/item/clothing/gloves/golem
@@ -888,6 +881,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	item_state = null
 	siemens_coefficient = 0
 	canremove = 0
+	flags = ABSTRACT
 
 
 /obj/item/clothing/head/space/golem
@@ -898,7 +892,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	desc = "a golem's head"
 	canremove = 0
 	unacidable = 1
-	flags = FPRINT | TABLEPASS | STOPSPRESSUREDMAGE
+	flags = STOPSPRESSUREDMAGE | ABSTRACT
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	armor = list(melee = 80, bullet = 20, laser = 20, energy = 10, bomb = 0, bio = 0, rad = 0)
@@ -939,6 +933,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			user << "The rune fizzles uselessly. There is no spirit nearby."
 			return
 		var/mob/living/carbon/human/G = new /mob/living/carbon/human
+		if(prob(50))	G.gender = "female"
 		hardset_dna(G, null, null, null, "adamantine")
 		G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
 		G.equip_to_slot_or_del(new /obj/item/clothing/under/golem(G), slot_w_uniform)
@@ -963,6 +958,12 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 /mob/living/carbon/slime/getTrail()
 	return null
 
+/mob/living/carbon/slime/slip(var/s_amount, var/w_amount, var/obj/O, var/lube)
+	if(lube>=2)
+		return 0
+	.=..()
+
+
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 
 /*
@@ -972,7 +973,6 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	desc = "Goo extracted from a slime. Legends claim these to have \"magical powers\"."
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "slime extract"
-	flags = TABLEPASS
 	force = 1.0
 	w_class = 1.0
 	throwforce = 1.0

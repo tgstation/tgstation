@@ -684,11 +684,13 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 50
 	containertype = /obj/structure/closet/critter/corgi
 	containername = "corgi crate"
+
 /datum/supply_packs/organic/cat
 	name = "Cat crate"
-	cost = 40
+	cost = 50 //Cats are worth as much as corgis.
 	containertype = /obj/structure/closet/critter/cat
 	containername = "cat crate"
+
 /datum/supply_packs/organic/pug
 	name = "Pug crate"
 	cost = 50
@@ -744,6 +746,33 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 15
 	containername = "exotic seeds crate"
 
+/datum/supply_packs/organic/vending
+	name = "Bartending Supply Crate"
+	contains = list(/obj/item/weapon/vending_refill/boozeomat,
+					/obj/item/weapon/vending_refill/coffee)
+	cost = 15
+	containername = "bartending supply crate"
+
+/datum/supply_packs/organic/vending/snack
+	name = "Snack Supply Crate"
+	contains = list(/obj/item/weapon/vending_refill/snack,
+					/obj/item/weapon/vending_refill/snack,
+					/obj/item/weapon/vending_refill/snack)
+	cost = 15
+	containername = "snacks supply crate"
+
+/datum/supply_packs/organic/vending/cola
+	name = "Softdrinks Supply Crate"
+	contains = list(/obj/item/weapon/vending_refill/cola,
+					/obj/item/weapon/vending_refill/cola)
+	cost = 15
+	containername = "softdrinks supply crate"
+
+/datum/supply_packs/organic/vending/cigarette
+	name = "Cigarette Supply Crate"
+	contains = list(/obj/item/weapon/vending_refill/cigarette)
+	cost = 15
+	containername = "cigarette supply crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Materials ///////////////////////////////////////
@@ -960,3 +989,10 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 30
 	containername = "crate"	//let's keep it subtle, eh?
 	contraband = 1
+
+/datum/supply_packs/misc/autodrobe
+	name = "Autodrobe Supply crate"
+	contains = list(/obj/item/weapon/vending_refill/autodrobe,
+					/obj/item/weapon/vending_refill/autodrobe)
+	cost = 15
+	containername = "autodrobe supply crate"

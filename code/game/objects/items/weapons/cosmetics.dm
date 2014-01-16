@@ -1,9 +1,9 @@
 /obj/item/weapon/lipstick
+	gender = PLURAL
 	name = "red lipstick"
 	desc = "A generic brand of lipstick."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "lipstick"
-	flags = FPRINT | TABLEPASS
 	w_class = 1
 	var/colour = "red"
 	var/open = 0
@@ -93,7 +93,7 @@
 	desc = "The latest and greatest power razor born from the science of shaving."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "razor"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	w_class = 1
 
 
