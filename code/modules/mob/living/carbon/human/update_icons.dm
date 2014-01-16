@@ -243,35 +243,24 @@ Please contact me on #coderbus IRC. ~Carnie x
 /mob/living/carbon/human/proc/update_augments()
 	remove_overlay(AUGMENTS_LAYER)
 
-	var/list/lying		= list()
 	var/list/standing	= list()
 
 
 	if(getlimb(/obj/item/organ/limb/robot/r_arm))
 		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="r_arm_s", "layer"=-AUGMENTS_LAYER)
-		lying		+= image("icon"='icons/mob/augments.dmi', "icon_state"="r_arm_l", "layer"=-AUGMENTS_LAYER)
 	if(getlimb(/obj/item/organ/limb/robot/l_arm))
 		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="l_arm_s", "layer"=-AUGMENTS_LAYER)
-		lying		+= image("icon"='icons/mob/augments.dmi', "icon_state"="l_arm_l", "layer"=-AUGMENTS_LAYER)
 
 	if(getlimb(/obj/item/organ/limb/robot/r_leg))
 		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="r_leg_s", "layer"=-AUGMENTS_LAYER)
-		lying		+= image("icon"='icons/mob/augments.dmi', "icon_state"="r_leg_l", "layer"=-AUGMENTS_LAYER)
 	if(getlimb(/obj/item/organ/limb/robot/l_leg))
 		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="l_leg_s", "layer"=-AUGMENTS_LAYER)
-		lying		+= image("icon"='icons/mob/augments.dmi', "icon_state"="l_leg_l", "layer"=-AUGMENTS_LAYER)
 
 	if(getlimb(/obj/item/organ/limb/robot/chest))
 		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="chest_s", "layer"=-AUGMENTS_LAYER)
-		lying		+= image("icon"='icons/mob/augments.dmi', "icon_state"="chest_l", "layer"=-AUGMENTS_LAYER)
 	if(getlimb(/obj/item/organ/limb/robot/head))
 		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="head_s", "layer"=-AUGMENTS_LAYER)
-		lying		+= image("icon"='icons/mob/augments.dmi', "icon_state"="head_l", "layer"=-AUGMENTS_LAYER)
 
-
-
-	if(lying.len)
-		overlays_lying[AUGMENTS_LAYER]		= lying
 	if(standing.len)
 		overlays_standing[AUGMENTS_LAYER]	= standing
 
