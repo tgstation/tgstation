@@ -28,7 +28,6 @@
 	operation_req_access = list(access_syndicate)
 	wreckage = /obj/structure/mecha_wreckage/gygax/dark
 	max_equip = 4
-	step_energy_drain = 1
 
 /obj/mecha/combat/gygax/dark/loaded/New()
 	..()
