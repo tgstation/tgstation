@@ -18,3 +18,4 @@
 #maps/RandomZLevels/listeningpost.dmm
 #maps/RandomZLevels/spacehotel.dmm
 #maps/RandomZLevels/centcomAway.dmm
+#maps/RandomZLevels/box2550Away.dmm
