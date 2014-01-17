@@ -734,8 +734,8 @@ datum/design/mech_scattershot
 	category = "Exosuit Equipment"
 
 datum/design/mech_carbine
-	name = "Exosuit Weapon Design (FNX-66 Carbine)"
-	desc = "Allows for the construction of FNX-66 Carbine."
+	name = "Exosuit Weapon Design (FNX-99 \"Hades\" Carbine)"
+	desc = "Allows for the construction of FNX-99 \"Hades\" Carbine."
 	id = "mech_carbine"
 	build_type = MECHFAB
 	req_tech = list("combat" = 5, "materials" = 4)
