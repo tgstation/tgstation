@@ -19,6 +19,8 @@
 	item_state = "jackboots"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
 	flags = NOSLIP
+	walk_noise = "bootwalk"
+	run_noise = "bootrun"
 
 /obj/item/clothing/shoes/swat/combat
 	name = "combat boots"
@@ -68,7 +70,8 @@
 	item_state = "clown_shoes"
 	slowdown = SHOES_SLOWDOWN+1
 	item_color = "clown"
-	var/footstep = 1	//used for squeeks whilst walking
+	walk_noise = "clownstep"
+	run_noise = "clownstep"
 
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
@@ -76,6 +79,8 @@
 	icon_state = "jackboots"
 	item_state = "jackboots"
 	item_color = "hosred"
+	walk_noise = "bootwalk"
+	run_noise = "bootrun"
 
 /obj/item/clothing/shoes/cult
 	name = "boots"

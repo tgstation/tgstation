@@ -84,12 +84,23 @@ BLIND     // can't see anything
 	desc = "Comfortable-looking shoes."
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 	var/chained = 0
+	var/footstep = 1 //tells the shoes when to play the walk sound
+	var/walk_noise = "shoewalk" //defines the sound made when the player walks
+	var/run_noise = "shoerun" //defines the sound made when the player runs
 
 	body_parts_covered = FEET
 	slot_flags = SLOT_FEET
 
 	permeability_coefficient = 0.50
 	slowdown = SHOES_SLOWDOWN
+
+/obj/item/clothing/shoes/proc/walk_noise(range) //the proc that makes the walk sound
+	playsound(src, walk_noise, range, 1)
+	return
+
+/obj/item/clothing/shoes/proc/run_noise(range) //the proc that makes the run sound
+	playsound(src, run_noise, range, 1)
+	return
 
 //Suit
 /obj/item/clothing/suit
