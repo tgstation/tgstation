@@ -437,6 +437,10 @@
 	if(facehugger)
 		if(istype(src, /mob/living/simple_animal/corgi/puppy))
 			overlays += image('icons/mob/mask.dmi',"facehugger_corgipuppy")
+		else if(istype(src, /mob/living/simple_animal/corgi/cyberian))
+			emote("catches the facehugger in its mechanical jaws and destroys it, eyes aglow")
+			del(facehugger)
+			facehugger = null
 		else
 			overlays += image('icons/mob/mask.dmi',"facehugger_corgi")
 
@@ -508,3 +512,24 @@
 			emote("yaps happily")
 		else
 			emote("growls")
+
+/mob/living/simple_animal/corgi/cyberian
+	name = "Cyberian"
+	real_name = "Cyberian"
+	gender = NEUTER // Prevents puppy-making
+	desc = "It's an automaton made of iron and cuteness."
+	icon_state = "cyberian"
+	icon_living = "cyberian"
+	icon_dead = "cyberian_dead"
+	response_help  = "pets"
+	response_disarm = "bops"
+	response_harm   = "kicks"
+	health = 100
+	maxHealth = 100 // Ian has 20
+	heat_damage_per_tick = 0
+	cold_damage_per_tick = 0
+	meat_amount = 0
+	var/reliability = 100
+	var/origin_tech = list("programming" = 5, "powerstorage" = 4, "materials" = 3, "biotech" = 2)
+	var/m_amt = 0
+	var/g_amt = 2000
