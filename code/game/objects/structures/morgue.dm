@@ -10,6 +10,7 @@
  * Morgue
  */
 
+
 /obj/structure/morgue
 	name = "morgue"
 	desc = "Used to keep bodies in untill someone fetches them."
@@ -19,14 +20,32 @@
 	var/obj/structure/m_tray/connected = null
 	anchored = 1.0
 
+/obj/structure/morgue/on_log()
+	update()
+
 /obj/structure/morgue/proc/update()
 	if (src.connected)
 		src.icon_state = "morgue0"
 	else
-		if (src.contents.len)
-			src.icon_state = "morgue2"
-		else
+		if(!src.contents.len)
 			src.icon_state = "morgue1"
+		else
+
+			src.icon_state = "morgue2"//default dead no-client mob
+
+			var/list/compiled = recursive_mob_check(src)//run through contents
+
+			if(!length(compiled))//no mobs at all, but objects inside
+				src.icon_state = "morgue3"
+				return
+
+			for(var/mob/living/M in compiled)
+				if(M.client)
+					src.icon_state = "morgue4"//clone that mofo
+					break
+
+
+
 	return
 
 /obj/structure/morgue/ex_act(severity)
@@ -155,6 +174,8 @@
 		return
 	if (!ismob(O) && !istype(O, /obj/structure/closet/body_bag))
 		return
+	if (!ismob(user) || user.stat || user.lying || user.stunned)
+		return
 	O.loc = src.loc
 	if (user != O)
 		for(var/mob/B in viewers(user, 3))
@@ -183,11 +204,18 @@
 	if (src.connected)
 		src.icon_state = "crema0"
 	else
-		if (src.contents.len)
+
+		if(src.contents.len)
 			src.icon_state = "crema2"
 		else
 			src.icon_state = "crema1"
+
+		if(cremating)
+			src.icon_state = "crema_active"
+
 	return
+
+
 
 /obj/structure/crematorium/ex_act(severity)
 	switch(severity)
@@ -308,6 +336,7 @@
 
 		cremating = 1
 		locked = 1
+		update()
 
 		for(var/mob/living/M in contents)
 			if (M.stat!=2)
@@ -327,6 +356,7 @@
 		sleep(30)
 		cremating = 0
 		locked = 0
+		update()
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	return
 
@@ -366,6 +396,8 @@
 	if ((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src) || user.contents.Find(O)))
 		return
 	if (!ismob(O) && !istype(O, /obj/structure/closet/body_bag))
+		return
+	if (!ismob(user) || user.stat || user.lying || user.stunned)
 		return
 	O.loc = src.loc
 	if (user != O)

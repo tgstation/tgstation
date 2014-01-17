@@ -242,10 +242,8 @@
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 			H.equip_to_slot_or_del(new /obj/item/toy/crayon/mime(H), slot_in_backpack)
 			H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(H), slot_in_backpack)
-		H.verbs += /client/proc/mimespeak
-		H.verbs += /client/proc/mimewall
-		H.mind.special_verbs += /client/proc/mimespeak
-		H.mind.special_verbs += /client/proc/mimewall
+		H.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall(H)
+		H.spell_list += new /obj/effect/proc_holder/spell/targeted/mime/speak(H)
 		H.miming = 1
 		H.rename_self("mime")
 		return 1
@@ -268,6 +266,7 @@
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/janitor(H), slot_w_uniform)
+		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_srv(H), slot_ears)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
 		H.equip_to_slot_or_del(new /obj/item/device/pda/janitor(H), slot_belt)
 		return 1

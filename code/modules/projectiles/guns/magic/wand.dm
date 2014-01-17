@@ -1,8 +1,8 @@
 /obj/item/weapon/gun/magic/wand/
 	name = "wand of nothing"
 	desc = "It's not just a stick, it's a MAGIC stick!"
-	projectile_type = "/obj/item/projectile/magic"
-	icon_state = "wand6"
+	ammo_type = /obj/item/ammo_casing/magic
+	icon_state = "nothingwand"
 	item_state = "wand"
 	w_class = 2
 	can_charge = 0
@@ -22,19 +22,24 @@
 	usr << "Has [charges] charge\s remaining."
 	return
 
+/obj/item/weapon/gun/magic/wand/update_icon()
+	icon_state = "[initial(icon_state)][charges ? "" : "-drained"]"
+
 /obj/item/weapon/gun/magic/wand/attack(atom/target as mob, mob/living/user as mob)
 	if(target == user)
 		return
 	..()
 
 /obj/item/weapon/gun/magic/wand/afterattack(atom/target as mob, mob/living/user as mob)
+	if(!charges)
+		shoot_with_empty_chamber(user)
+		return
 	if(target == user)
-		if(charges)
-			zap_self(user)
-		else
-			user << "<span class='warning'>The [name] whizzles quietly.<span>"
+		zap_self(user)
 	else
 		..()
+	update_icon()
+
 
 /obj/item/weapon/gun/magic/wand/proc/zap_self(mob/living/user as mob)
 	user.visible_message("<span class='notice'>[user] zaps \himself with [src]!</span>")
@@ -44,8 +49,8 @@
 /obj/item/weapon/gun/magic/wand/death
 	name = "wand of death"
 	desc = "This deadly wand overwhelms the victim's body with pure energy, slaying them without fail."
-	projectile_type = "/obj/item/projectile/magic/death"
-	icon_state = "wand4"
+	ammo_type = /obj/item/ammo_casing/magic/death
+	icon_state = "deathwand"
 	max_charges = 3 //3, 2, 2, 1
 
 /obj/item/weapon/gun/magic/wand/death/zap_self(mob/living/user as mob)
@@ -57,11 +62,11 @@
 	..()
 
 /obj/item/weapon/gun/magic/wand/resurrection
-	name = "wand of resurrection"
+	name = "wand of healing"
 	desc = "This wand uses healing magics to heal and revive. They are rarely utilized within the Wizard Federation for some reason."
-	projectile_type = "/obj/item/projectile/magic/resurrection"
-	icon_state = "wand1"
-	max_charges = 3 //3, 2, 2, 1
+	ammo_type = /obj/item/ammo_casing/magic/heal
+	icon_state = "revivewand"
+	max_charges = 10 //10, 5, 5, 4
 
 /obj/item/weapon/gun/magic/wand/resurrection/zap_self(mob/living/user as mob)
 	user.revive()
@@ -72,8 +77,8 @@
 /obj/item/weapon/gun/magic/wand/polymorph
 	name = "wand of polymorph"
 	desc = "This wand is attuned to chaos and will radically alter the victim's form."
-	projectile_type = "/obj/item/projectile/magic/change"
-	icon_state = "wand5"
+	ammo_type = /obj/item/ammo_casing/magic/change
+	icon_state = "polywand"
 	max_charges = 10 //10, 5, 5, 4
 
 /obj/item/weapon/gun/magic/wand/polymorph/zap_self(mob/living/user as mob)
@@ -84,8 +89,8 @@
 /obj/item/weapon/gun/magic/wand/teleport
 	name = "wand of teleportation"
 	desc = "This wand will wrench targets through space and time to move them somewhere else."
-	projectile_type = "/obj/item/projectile/magic/teleport"
-	icon_state = "wand3"
+	ammo_type = /obj/item/ammo_casing/magic/teleport
+	icon_state = "telewand"
 	max_charges = 10 //10, 5, 5, 4
 
 /obj/item/weapon/gun/magic/wand/teleport/zap_self(mob/living/user as mob)
@@ -99,8 +104,8 @@
 /obj/item/weapon/gun/magic/wand/door
 	name = "wand of door creation"
 	desc = "This particular wand can create doors in any wall for the unscrupulous wizard who shuns teleportation magics."
-	projectile_type = "/obj/item/projectile/magic/door"
-	icon_state = "wand0"
+	ammo_type = /obj/item/ammo_casing/magic/door
+	icon_state = "doorwand"
 	max_charges = 20 //20, 10, 10, 7
 
 /obj/item/weapon/gun/magic/wand/door/zap_self()
@@ -109,8 +114,8 @@
 /obj/item/weapon/gun/magic/wand/fireball
 	name = "wand of fireball"
 	desc = "This wand shoots scorching balls of fire that explode into destructive flames."
-	projectile_type = "/obj/item/projectile/magic/fireball"
-	icon_state = "wand2"
+	ammo_type = /obj/item/ammo_casing/magic/fireball
+	icon_state = "firewand"
 	max_charges = 8 //8, 4, 4, 3
 
 /obj/item/weapon/gun/magic/wand/fireball/zap_self(mob/living/user as mob)

@@ -133,7 +133,8 @@
 				var/turf/T = get_turf(M)
 				if(!T || T.z != src.z)
 					continue
-				shake_camera(M, 3, get_dist(M.loc, src.loc) > 20 ? 1 : 3)
+				var/dist = get_dist(M.loc, src.loc)
+				shake_camera(M, dist > 20 ? 3 : 5, dist > 20 ? 1 : 3)
 				M.playsound_local(src.loc, 'sound/effects/meteorimpact.ogg', 50, 1, get_rand_frequency(), 10)
 			explosion(src.loc, 0, 1, 2, 3, 0)
 

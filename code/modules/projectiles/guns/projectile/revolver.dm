@@ -2,7 +2,6 @@
 	desc = "A classic revolver. Uses 357 ammo"
 	name = "revolver"
 	icon_state = "revolver"
-	ammo_type = /obj/item/ammo_casing/a357
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
 
 /obj/item/weapon/gun/projectile/revolver/chamber_round()
@@ -12,27 +11,13 @@
 		chambered = magazine.get_round(1)
 	return
 
-/obj/item/weapon/gun/projectile/revolver/process_chambered()
+/obj/item/weapon/gun/projectile/revolver/process_chamber()
 	return ..(0, 1)
 
 /obj/item/weapon/gun/projectile/revolver/attackby(var/obj/item/A as obj, mob/user as mob)
-	var/num_loaded = 0
-	if(istype(A, /obj/item/ammo_box))
-		var/obj/item/ammo_box/AM = A
-		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
-			if(magazine.give_round(AC))
-				AM.stored_ammo -= AC
-				num_loaded++
-			else
-				break
-	if(istype(A, /obj/item/ammo_casing))
-		var/obj/item/ammo_casing/AC = A
-		if(magazine.give_round(AC))
-			user.drop_item()
-			AC.loc = src
-			num_loaded++
+	var/num_loaded = magazine.attackby(A, user, 1)
 	if(num_loaded)
-		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
+		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src].</span>"
 		A.update_icon()
 		update_icon()
 		chamber_round()
@@ -47,7 +32,7 @@
 		CB.update_icon()
 		num_unloaded++
 	if (num_unloaded)
-		user << "<span class = 'notice'>You unload [num_unloaded] shell\s from [src]!</span>"
+		user << "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>"
 	else
 		user << "<span class='notice'>[src] is empty.</span>"
 
@@ -68,7 +53,6 @@
 	name = "revolver"
 	icon_state = "detective"
 	origin_tech = "combat=2;materials=2"
-	ammo_type = /obj/item/ammo_casing/c38
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
 
 
@@ -76,7 +60,7 @@
 	if(magazine.caliber == initial(magazine.caliber))
 		return 1
 	if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
-		M << "<span class='danger'>[src] blows up in your face.</span>"
+		M << "<span class='danger'>[src] blows up in your face!</span>"
 		M.take_organ_damage(0,20)
 		M.drop_item()
 		del(src)
@@ -177,22 +161,7 @@
 	spun = 1
 
 /obj/item/weapon/gun/projectile/revolver/russian/attackby(var/obj/item/A as obj, mob/user as mob)
-	var/num_loaded = 0
-	if(istype(A, /obj/item/ammo_box))
-		var/obj/item/ammo_box/AM = A
-		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
-			if(get_ammo() <= 1)
-				if(magazine.give_round(AC))
-					AM.stored_ammo -= AC
-					num_loaded++
-			break
-	if(istype(A, /obj/item/ammo_casing))
-		var/obj/item/ammo_casing/AC = A
-		if(get_ammo() <= 1)
-			magazine.give_round(AC)
-			user.drop_item()
-			AC.loc = src
-			num_loaded++
+	var/num_loaded = ..()
 	if(num_loaded)
 		user.visible_message("<span class='warning'>[user] loads a single bullet into the revolver and spins the chamber.</span>", "<span class='warning'>You load a single bullet into the chamber and spin it.</span>")
 	else
@@ -222,32 +191,35 @@
 			user << "<span class='notice'>[src] is empty.</span>"
 
 /obj/item/weapon/gun/projectile/revolver/russian/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params)
+	if(!spun && get_ammo(0,0))
+		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
+		Spin()
 	..()
 	spun = 0
 
 /obj/item/weapon/gun/projectile/revolver/russian/attack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj)
-
-	if(!chambered)
-		user.visible_message("\red *click*", "\red *click*")
+	if(!spun && get_ammo(0,0))
+		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
+		Spin()
 		return
 
-	if(isliving(target) && isliving(user))
-		if(target == user)
+
+	if(target == user)
+		if(!chambered)
+			user.visible_message("\red *click*", "\red *click*")
+			return
+
+		if(isliving(target) && isliving(user))
 			var/obj/item/organ/limb/affecting = user.zone_sel.selecting
 			if(affecting == "head")
 				var/obj/item/ammo_casing/AC = chambered
-				if(!process_chambered())
+				if(AC.fire(user, user))
+					user.apply_damage(300, BRUTE, affecting)
+					playsound(user, fire_sound, 50, 1)
+					user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='danger'>You fire [src] at your head!</span>", "You hear a [istype(AC.BB, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
+					return
+				else
 					user.visible_message("\red *click*", "\red *click*")
 					return
-				if(!in_chamber)
-					return
-				var/obj/item/projectile/P = new AC.projectile_type
-				playsound(user, fire_sound, 50, 1)
-				user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='danger'>You fire [src] at your head!</span>", "You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
-				if(!P.nodamage)
-					user.apply_damage(300, BRUTE, affecting) // You are dead, dead, dead.
-				return
-
-	spun = 0
 	..()
 

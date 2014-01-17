@@ -42,7 +42,16 @@
 
 	return heard
 
-
+/proc/alone_in_area(var/area/the_area, var/mob/must_be_alone, var/check_type = /mob/living/carbon)
+	var/area/our_area = get_area_master(the_area)
+	for(var/C in living_mob_list)
+		if(!istype(C, check_type))
+			continue
+		if(C == must_be_alone)
+			continue
+		if(our_area == get_area_master(C))
+			return 0
+	return 1
 
 
 //Magic constants obtained by using linear regression on right-angled triangles of sides 0<x<1, 0<y<1
@@ -186,7 +195,7 @@
 
 /proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios)
 
-	set background = 1
+	set background = BACKGROUND_ENABLED
 
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
@@ -291,9 +300,10 @@ proc/isInSight(var/atom/A, var/atom/B)
 	// Keep looping until we find a non-afk candidate within the time bracket (we limit the bracket to 10 minutes (6000))
 	while(!candidates.len && afk_bracket < 6000)
 		for(var/mob/dead/observer/G in player_list)
-			if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-				if(!G.client.is_afk(afk_bracket) && (G.client.prefs.be_special & be_special_flag))
-					candidates += G.client
+			if(G.client != null)
+				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
+					if(!G.client.is_afk(afk_bracket) && (G.client.prefs.be_special & be_special_flag))
+						candidates += G.client
 		afk_bracket += 600 // Add a minute to the bracket, for every attempt
 	return candidates
 

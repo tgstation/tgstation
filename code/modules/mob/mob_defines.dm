@@ -43,7 +43,7 @@
 	var/disabilities = 0	//Carbon
 	var/atom/movable/pulling = null
 	var/next_move = null
-	var/monkeyizing = null	//Carbon
+	var/notransform = null	//Carbon
 	var/hand = null
 	var/eye_blind = null	//Carbon
 	var/eye_blurry = null	//Carbon

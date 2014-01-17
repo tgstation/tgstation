@@ -15,6 +15,7 @@
 	var/datum/data/record/active_record = null
 	var/obj/item/weapon/disk/data/diskette = null //Mostly so the geneticist can steal everything.
 	var/loading = 0 // Nice loading text
+	var/autoprocess = 0
 
 /obj/machinery/computer/cloning/New()
 	..()
@@ -22,6 +23,19 @@
 		updatemodules()
 		return
 	return
+
+/obj/machinery/computer/cloning/process()
+	if(!(scanner && pod1 && autoprocess))
+		return
+
+	if(scanner.occupant && (scanner.scan_level > 2))
+		scan_mob(scanner.occupant)
+
+	if(!(pod1.occupant || pod1.mess) && (pod1.efficiency > 5))
+		for(var/datum/data/record/R in records)
+			if(!(pod1.occupant || pod1.mess))
+				if(pod1.growclone(R.fields["ckey"], R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mind"], R.fields["mrace"]))
+					records -= R
 
 /obj/machinery/computer/cloning/proc/updatemodules()
 	src.scanner = findscanner()
@@ -82,7 +96,13 @@
 
 	var/dat = ""
 	dat += "<a href='byond://?src=\ref[src];refresh=1'>Refresh</a>"
-
+	if(scanner && pod1 && ((scanner.scan_level > 2) || (pod1.efficiency > 5)))
+		if(!autoprocess)
+			dat += "<a href='byond://?src=\ref[src];task=autoprocess'>Autoprocess</a>"
+		else
+			dat += "<a href='byond://?src=\ref[src];task=stopautoprocess'>Stop autoprocess</a>"
+	else
+		dat += "<span class='linkOff'>Autoprocess</span>"
 	dat += "<h3>Cloning Pod Status</h3>"
 	dat += "<div class='statusDisplay'>[temp]&nbsp;</div>"
 
@@ -200,7 +220,14 @@
 	if(loading)
 		return
 
-	if ((href_list["scan"]) && (!isnull(src.scanner)))
+	if(href_list["task"])
+		switch(href_list["task"])
+			if("autoprocess")
+				autoprocess = 1
+			if("stopautoprocess")
+				autoprocess = 0
+
+	else if ((href_list["scan"]) && (!isnull(src.scanner)))
 		scantemp = ""
 
 		loading = 1
@@ -325,7 +352,7 @@
 	if (subject.suiciding == 1)
 		scantemp = "<font class='bad'>Subject's brain is not responding to scanning stimuli.</font>"
 		return
-	if (NOCLONE in subject.mutations)
+	if (NOCLONE in subject.mutations && src.scanner.scan_level < 2)
 		scantemp = "<font class='bad'>Subject no longer contains the fundamental materials required to create a living clone.</font>"
 		return
 	if ((!subject.ckey) || (!subject.client))

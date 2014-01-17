@@ -303,6 +303,14 @@
 /obj/machinery/sleeper/container_resist()
 	eject()
 
+/obj/machinery/sleeper/relaymove(var/mob/user)
+	..()
+	eject()
+
+/obj/machinery/sleeper/Del()
+	go_out()
+	..()
+
 /obj/machinery/sleeper/proc/eject()
 	go_out()
 	add_fingerprint(usr)

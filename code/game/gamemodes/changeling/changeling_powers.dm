@@ -558,6 +558,7 @@ var/list/datum/dna/hivemind_bank = list()
 	src << "<span class='notice'>We stealthly sting [C.name].</span>"
 	if(C.mind && C.mind.changeling)
 		C << "<span class='warning'>You feel a tiny prick.</span>"
+		add_logs(src, C, "unsuccessfully stung")
 		return 0
 	else
 		return 1
@@ -581,9 +582,9 @@ var/list/datum/dna/hivemind_bank = list()
 	set_sting(/mob/living/carbon/proc/sting_effect_trasnform, "sting_transform", D)
 
 /mob/living/carbon/proc/sting_effect_trasnform(mob/living/carbon/T)
-	add_logs(src, T, "stung", "transformation sting", "new identity is [src.mind.changeling.chosen_dna.real_name]")
 	if(!sting_can_reach(T, 40))
 		return 0
+	add_logs(src, T, "stung", object="transformation sting", addition="new identity is [src.mind.changeling.chosen_dna.real_name]")
 	if((HUSK in T.mutations) || !check_dna_integrity(T))
 		src << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
 		return 0
@@ -603,9 +604,9 @@ var/list/datum/dna/hivemind_bank = list()
 	set_sting(/mob/living/carbon/proc/sting_effect_extract, "sting_extract")
 
 /mob/living/carbon/proc/sting_effect_extract(mob/living/carbon/T)
-	add_logs(src, T, "stung", "extraction sting")
 	if(!sting_can_reach(T, 25))
 		return 0
+	add_logs(src, T, "stung", object="extraction sting")
 	if(src.mind.changeling.can_absorb_dna(T, usr))
 		src.mind.changeling.absorb_dna(T, usr)
 	else//If the sting fails, give the guy most of his chems back.
@@ -622,9 +623,9 @@ var/list/datum/dna/hivemind_bank = list()
 	set_sting(/mob/living/carbon/proc/sting_effect_mute, "sting_mute")
 
 /mob/living/carbon/proc/sting_effect_mute(mob/living/carbon/T)
-	add_logs(src, T, "stung", "mute sting")
 	if(!sting_can_reach(T, 20))
 		return 0
+	add_logs(src, T, "stung", object="mute sting")
 	T.silent += 30
 	feedback_add_details("changeling_powers","MS")
 	return 1
@@ -637,9 +638,9 @@ var/list/datum/dna/hivemind_bank = list()
 	set_sting(/mob/living/carbon/proc/sting_effect_blind, "sting_blind")
 
 /mob/living/carbon/proc/sting_effect_blind(mob/living/carbon/T)
-	add_logs(src, T, "stung", "blind sting")
 	if(!sting_can_reach(T, 25))
 		return 0
+	add_logs(src, T, "stung", object="blind sting")
 	T << "<span class='danger'>Your eyes burn horrifically!</span>"
 	T.disabilities |= NEARSIGHTED
 	T.eye_blind = 20
@@ -655,9 +656,9 @@ var/list/datum/dna/hivemind_bank = list()
 	set_sting(/mob/living/carbon/proc/sting_effect_lsd, "sting_lsd")
 
 /mob/living/carbon/proc/sting_effect_lsd(mob/living/carbon/T)
-	add_logs(src, T, "stung", "LSD sting")
 	if(!sting_can_reach(T, 5))
 		return 0
+	add_logs(src, T, "stung", object="LSD sting")
 	spawn(rand(300,600))
 		if(T)	T.hallucination += 400
 	feedback_add_details("changeling_powers","HS")
@@ -671,9 +672,9 @@ var/list/datum/dna/hivemind_bank = list()
 	set_sting(/mob/living/carbon/proc/sting_effect_cryo, "sting_cryo")
 
 /mob/living/carbon/proc/sting_effect_cryo(mob/living/carbon/T)
-	add_logs(src, T, "stung", "cryo sting")
 	if(!sting_can_reach(T, 15))
 		return 0
+	add_logs(src, T, "stung", object="cryo sting")
 	if(T.reagents)
 		T.reagents.add_reagent("frostoil", 30)
 		T.reagents.add_reagent("ice", 30)

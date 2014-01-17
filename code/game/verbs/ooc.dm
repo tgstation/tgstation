@@ -71,7 +71,7 @@ var/global/normal_ooc_colour = "#002eb8"
 	if(!holder || check_rights_for(src, R_ADMIN))
 		if(!is_content_unlocked())	return
 
-	var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
+	var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour", prefs.ooccolor) as color|null
 	if(new_ooccolor)
 		prefs.ooccolor = sanitize_ooccolor(new_ooccolor)
 		prefs.save_preferences()

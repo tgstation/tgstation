@@ -51,7 +51,6 @@
 			if(!G)	//the grab will delete itself in New if affecting is anchored
 				return
 			M.put_in_active_hand(G)
-			grabbed_by += G
 			G.synch()
 			LAssailant = M
 

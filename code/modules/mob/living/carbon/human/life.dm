@@ -36,9 +36,9 @@
 
 /mob/living/carbon/human/Life()
 	set invisibility = 0
-	set background = 1
+	set background = BACKGROUND_ENABLED
 
-	if (monkeyizing)	return
+	if (notransform)	return
 	if(!loc)			return	// Fixing a null error that occurs when the mob isn't found in the world -- TLE
 
 	..()
@@ -996,15 +996,15 @@
 			if(hurtdamage)
 				var/image/I
 				switch(hurtdamage)
-					if(10 to 25)
+					if(35 to 45)
 						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay1")
-					if(25 to 40)
+					if(45 to 55)
 						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay2")
-					if(40 to 55)
+					if(55 to 65)
 						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay3")
-					if(55 to 70)
+					if(65 to 75)
 						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay4")
-					if(70 to 85)
+					if(75 to 85)
 						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay5")
 					if(85 to INFINITY)
 						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay6")

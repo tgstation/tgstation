@@ -35,7 +35,7 @@
 	user.lastattacked = M
 	M.lastattacker = user
 
-	add_logs(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])")
+	add_logs(user, M, "attacked", object=src.name, addition="(INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])")
 
 	//spawn(1800)            // this wont work right
 	//	M.lastattacker = null
@@ -59,7 +59,7 @@
 				slime.Discipline = 0
 
 			if(power >= 3)
-				if(istype(slime, /mob/living/carbon/slime/adult))
+				if(slime.is_adult)
 					if(prob(5 + round(power/2)))
 
 						if(slime.Victim)

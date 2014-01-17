@@ -20,12 +20,16 @@
 	var/potency = -1
 	var/plant_type = 0
 	icon = 'icons/obj/harvest.dmi'
-	New(newloc,newpotency)
-		if (!isnull(newpotency))
-			potency = newpotency
-		..()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/New(newloc,newpotency)
+	if (!isnull(newpotency))
+		potency = newpotency
+	..()
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
+
+	transform *= TransformUsingVariable(potency, 100, 0.5) //Makes the resulting produce's sprite larger or smaller based on potency!
+
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	..()
@@ -424,7 +428,7 @@
 	..()
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/twohanded/fireaxe) || istype(W, /obj/item/weapon/kitchen/utensil/knife) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/melee/energy))
 		user.show_message("<span class='notice'>You carve a face into [src]!</span>", 1)
-		new /obj/item/clothing/head/pumpkinhead (user.loc)
+		new /obj/item/clothing/head/hardhat/pumpkinhead (user.loc)
 		del(src)
 		return
 

@@ -107,7 +107,7 @@
 
 
 	smoke_spread = 1
-	smoke_amt = 10
+	smoke_amt = 1
 
 	inner_tele_radius = 0
 	outer_tele_radius = 6

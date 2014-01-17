@@ -125,7 +125,7 @@
 	//U << text("Now tracking [] on camera.", target.name)
 	//if (U.machine == null)
 	//	U.machine = U
-	U << "Now tracking [target.name] on camera."
+	U << "Now tracking [target.get_visible_name()] on camera."
 
 	spawn (0)
 		while (U.cameraFollow == target)

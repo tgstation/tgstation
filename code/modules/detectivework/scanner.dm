@@ -3,12 +3,12 @@
 // TODO: Split everything into easy to manage procs.
 
 /obj/item/device/detective_scanner
-	name = "scanner"
-	desc = "Used to scan objects for DNA and fingerprints. Can print a report of the findings."
+	name = "forensic scanner"
+	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can print a report of the findings."
 	icon_state = "forensic1"
 	w_class = 3.0
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS | CONDUCT | NOBLUDGEON
+	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	var/scanning = 0
 	var/list/log = list()
@@ -24,7 +24,7 @@
 			var/obj/item/weapon/paper/P = new(get_turf(src))
 			P.name = "paper- 'Scanner Report'"
 			P.info = "<center><font size='6'><B>Scanner Report</B></font></center><HR><BR>"
-			P.info += dd_list2text(log, "<BR>")
+			P.info += list2text(log, "<BR>")
 			P.info += "<HR><B>Notes:</B><BR>"
 			P.info_links = P.info
 
@@ -40,25 +40,25 @@
 		user << "<span class='notice'>The scanner has no logs or is in use.</span>"
 
 /obj/item/device/detective_scanner/attack(mob/living/M as mob, mob/user as mob)
-	scan(M, user)
+	return
 
 
-/obj/item/device/detective_scanner/afterattack(atom/A as obj|turf|area, mob/user as mob,proximity)
-	if(!proximity)
-		return
-	if(!isturf(A) && !isobj(A))
-		return
-	if(loc != user)
-		return
+/obj/item/device/detective_scanner/afterattack(atom/A, mob/user as mob, proximity)
 	scan(A, user)
 
 /obj/item/device/detective_scanner/proc/scan(var/atom/A, var/mob/user)
 
 	if(!scanning)
+		// Can remotely scan objects and mobs.
+		if(!in_range(A, user) && !(A in view(world.view, user)))
+			return
+		if(loc != user)
+			return
+
 		scanning = 1
 
-		user.visible_message("\The [user] scans \the [A] with \the [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]")
-		user << "<span class='notice'>You scan [A]. The scanner is analysing the results...</span>"
+		user.visible_message("\The [user] points the [src.name] at \the [A] and performs a forensic scan.")
+		user << "<span class='notice'>You scan \the [A]. The scanner is now analysing the results...</span>"
 
 
 		// GATHER INFORMATION
@@ -151,7 +151,7 @@
 			if(!found_something)
 				add_log("<I># No forensic traces found #</I>", 0) // Don't display this to the holder user
 				if(holder)
-					holder << "<span class='notice'>Unable to locate any fingerprints, materials, fibers, or blood on [target_name]!</span>"
+					holder << "<span class='notice'>Unable to locate any fingerprints, materials, fibers, or blood on \the [target_name]!</span>"
 			else
 				if(holder)
 					holder << "<span class='notice'>You finish scanning \the [target_name].</span>"

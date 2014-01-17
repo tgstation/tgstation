@@ -32,6 +32,14 @@
 	hud.name = "reinforce grab"
 	hud.master = src
 
+	affecting.grabbed_by += src
+
+
+/obj/item/weapon/grab/Del()
+	if(affecting)
+		affecting.grabbed_by -= src
+	del(hud)
+	..()
 
 //Used by throw code to hand over the mob, instead of throwing the grab. The grab is then deleted by the throw code.
 /obj/item/weapon/grab/proc/throw()
@@ -202,6 +210,5 @@
 /obj/item/weapon/grab/dropped()
 	del(src)
 
-/obj/item/weapon/grab/Del()
-	del(hud)
-	..()
+#undef UPGRADE_COOLDOWN
+#undef UPGRADE_KILL_TIMER

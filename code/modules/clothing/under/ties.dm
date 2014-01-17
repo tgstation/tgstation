@@ -5,7 +5,6 @@
 	icon_state = "bluetie"
 	item_state = ""	//no inhands
 	item_color = "bluetie"
-	flags = FPRINT | TABLEPASS
 	slot_flags = 0
 	w_class = 2.0
 

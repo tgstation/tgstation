@@ -6,6 +6,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 /obj/effect/proc_holder/spell
 	name = "Spell"
 	desc = "A wizard spell"
+	panel = "Spells"
 	density = 0
 	opacity = 0
 
@@ -15,14 +16,17 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 	var/charge_max = 100 //recharge time in deciseconds if charge_type = "recharge" or starting charges if charge_type = "charges"
 	var/charge_counter = 0 //can only cast spells if it equals recharge, ++ each decisecond if charge_type = "recharge" or -- each cast if charge_type = "charges"
+	var/still_recharging_msg = "<span class='notice'>The spell is still recharging.</span>"
 
 	var/holder_var_type = "bruteloss" //only used if charge_type equals to "holder_var"
 	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
 
 	var/clothes_req = 1 //see if it requires clothes
+	var/human_req = 0 //spell can only be cast by humans
 	var/stat_allowed = 0 //see if it requires being conscious/alive, need to set to 1 for ghostpells
 	var/invocation = "HURP DURP" //what is uttered when the wizard casts the spell
-	var/invocation_type = "none" //can be none, whisper and shout
+	var/invocation_emote_self = null
+	var/invocation_type = "none" //can be none, whisper, emote and shout
 	var/range = 7 //the range of the spell; outer radius for aoe spells
 	var/message = "" //whatever it says to the guy affected by it
 	var/selection_type = "view" //can be "range" or "view"
@@ -56,7 +60,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		switch(charge_type)
 			if("recharge")
 				if(charge_counter < charge_max)
-					user << "<span class='notice'>[name] is still recharging.</span>"
+					user << still_recharging_msg
 					return 0
 			if("charges")
 				if(!charge_counter)
@@ -86,7 +90,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				H << "<span class='notice'>I don't feel strong enough without my hat.</span>"
 				return 0
 	else
-		if(clothes_req)
+		if(clothes_req || human_req)
 			user << "<span class='notice'>This spell can only be casted by humans!</span>"
 			return 0
 
@@ -113,10 +117,13 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				user.whisper(invocation)
 			else
 				user.whisper(replacetext(invocation," ","`"))
+		if("emote")
+			user.visible_message(invocation, invocation_emote_self) //same style as in mob/living/emote.dm
 
 /obj/effect/proc_holder/spell/New()
 	..()
 
+	still_recharging_msg = "<span class='notice'>[name] is still recharging.</span>"
 	charge_counter = charge_max
 
 /obj/effect/proc_holder/spell/Click()
@@ -132,9 +139,10 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		sleep(1)
 		charge_counter++
 
-/obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1) //if recharge is started is important for the trigger spells
+/obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1, mob/user = usr) //if recharge is started is important for the trigger spells
 	before_cast(targets)
 	invocation()
+	user.attack_log += text("\[[time_stamp()]\] <font color='red'>[user.real_name] ([user.ckey]) cast the spell [name].</font>")
 	spawn(0)
 		if(charge_type == "recharge" && recharge)
 			start_recharge()
@@ -176,11 +184,11 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(smoke_spread)
 			if(smoke_spread == 1)
 				var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
-				smoke.set_up(smoke_amt, 0, location) //no idea what the 0 is
+				smoke.set_up(smoke_amt, 0, location, smoke_amt == 1 ? 15 : 0) // if more than one smoke, spread it around
 				smoke.start()
 			else if(smoke_spread == 2)
 				var/datum/effect/effect/system/bad_smoke_spread/smoke = new /datum/effect/effect/system/bad_smoke_spread()
-				smoke.set_up(smoke_amt, 0, location) //no idea what the 0 is
+				smoke.set_up(smoke_amt, 0, location, smoke_amt == 1 ? 15 : 0) // same here
 				smoke.start()
 
 /obj/effect/proc_holder/spell/proc/cast(list/targets)
@@ -246,7 +254,11 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 						continue
 					possible_targets += M
 
-				targets += input("Choose the target for the spell.", "Targeting") as mob in possible_targets
+				//targets += input("Choose the target for the spell.", "Targeting") as mob in possible_targets
+				//Adds a safety check post-input to make sure those targets are actually in range.
+				var/mob/M = input("Choose the target for the spell.", "Targeting") as mob in possible_targets
+				if(M in view_or_range(range, user, selection_type)) targets += M
+
 		else
 			var/list/possible_targets = list()
 			for(var/mob/living/target in view_or_range(range, user, selection_type))

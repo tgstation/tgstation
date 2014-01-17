@@ -296,13 +296,13 @@ turf/simulated/floor/proc/update_icon()
 						var/turf/simulated/floor/FF = get_step(src,direction)
 						FF.update_icon() //so siding get updated properly
 
-	if(!floor_tile) return
 	if (icon_plating)
 		icon_state = icon_plating
 	else
 		icon_state = "plating" //Nothing is defined, so just make it plating
 		icon_plating = "plating"
-	del(floor_tile)
+	if(floor_tile)
+		del(floor_tile)
 
 	SetLuminosity(0)
 	floor_tile = null

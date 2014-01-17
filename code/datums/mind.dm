@@ -783,7 +783,7 @@ datum/mind
 
 		else if (href_list["monkey"])
 			var/mob/living/L = current
-			if (L.monkeyizing)
+			if (L.notransform)
 				return
 			switch(href_list["monkey"])
 				if("healthy")
@@ -844,7 +844,7 @@ datum/mind
 
 						A.malf_picker.remove_verbs(A)
 
-						A.laws = new /datum/ai_laws/asimov
+						A.make_laws()
 						del(A.malf_picker)
 						A.show_laws()
 						A.icon_state = "ai"

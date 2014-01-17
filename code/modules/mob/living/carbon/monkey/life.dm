@@ -11,8 +11,8 @@
 
 /mob/living/carbon/monkey/Life()
 	set invisibility = 0
-	set background = 1
-	if (monkeyizing)	return
+	set background = BACKGROUND_ENABLED
+	if (notransform)	return
 	..()
 
 	var/datum/gas_mixture/environment // Added to prevent null location errors-- TLE
@@ -67,7 +67,7 @@
 		G.process()
 
 	if(!client && stat == CONSCIOUS)
-		if(prob(33) && canmove && isturf(loc))
+		if(prob(33) && canmove && isturf(loc) && !pulledby && !grabbed_by.len)
 			step(src, pick(cardinal))
 		if(prob(1))
 			emote(pick("scratch","jump","roll","tail"))

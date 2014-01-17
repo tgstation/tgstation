@@ -1,11 +1,11 @@
 /obj/item/weapon/vending_refill
-	name = "Resupply canister"
+	name = "resupply canister"
 	var/machine_name = "Generic"
 
 	icon = 'icons/obj/vending_restock.dmi'
 	icon_state = "refill_snack"
 	item_state = "restock_unit"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	force = 7.0
 	throwforce = 15.0
 	throw_speed = 1
