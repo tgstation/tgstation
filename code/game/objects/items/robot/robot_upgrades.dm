@@ -178,9 +178,9 @@
 	if(!color) return 0
 
 	icon = 'icons/mob/robots.dmi'
-	icon_state = "[R.icon_state] plating"
-
-	R.vanity = image(src)
+	icon_state = "bloodhound plating" //TEMPORARY: FIX THIS BEFORE COMMIT
+	color = "[color]99"
+	R.vanity = image(src, "layer" = 5)
 
 	return 1
 
