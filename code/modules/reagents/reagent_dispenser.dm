@@ -11,6 +11,26 @@
 	var/amount_per_transfer_from_this = 10
 	var/possible_transfer_amounts = list(10,25,50,100)
 
+/obj/structure/reagent_dispensers/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			del(src)
+			return
+		if(2.0)
+			if (prob(50))
+				del(src)
+				return
+		if(3.0)
+			if (prob(5))
+				del(src)
+				return
+		else
+	return
+
+/obj/structure/reagent_dispensers/blob_act()
+	if(prob(50))
+		del(src)
+
 /obj/structure/reagent_dispensers/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	return
 
@@ -126,6 +146,7 @@
 	icon_state = "water_cooler"
 	possible_transfer_amounts = null
 	anchored = 1
+	var/cups = 50
 	New()
 		..()
 		reagents.add_reagent("water",500)
@@ -133,10 +154,21 @@
 /obj/structure/reagent_dispensers/water_cooler/attack_hand(var/mob/living/carbon/human/user)
 	if((!istype(user)) || (user.stat))
 		return
+	if(cups <= 0)
+		user << "<span class='danger'>What? No cups?"
+		return
+	cups--
 	user.put_in_hands(new /obj/item/weapon/reagent_containers/food/drinks/sillycup)
 	user.visible_message("<span class='notice'>[user] gets a cup from [src].","<span class='notice'>You get a cup from [src].")
 
-
+/obj/structure/reagent_dispensers/water_cooler/attackby(var/obj/item/I, var/mob/user)
+	if(istype(I, /obj/item/weapon/reagent_containers/food/drinks/sillycup))
+		user.drop_item()
+		del I
+		cups++
+		return
+	else
+		..()
 /obj/structure/reagent_dispensers/beerkeg
 	name = "beer keg"
 	desc = "A beer keg"
