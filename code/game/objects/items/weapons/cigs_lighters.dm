@@ -87,7 +87,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else if(istype(W, /obj/item/weapon/lighter/zippo))
 		var/obj/item/weapon/lighter/zippo/Z = W
 		if(Z.lit)
-			light("<span class='rose'>With a single flick of their wrist, [user] smoothly lights their [name] with their [W]. Damn they're cool.</span>")
+			light("<span class='rose'>With a single flick of their wrist, [user] smoothly lights their [name] with [W]. Damn they're cool.</span>")
 
 	else if(istype(W, /obj/item/weapon/lighter))
 		var/obj/item/weapon/lighter/L = W
@@ -97,7 +97,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else if(istype(W, /obj/item/weapon/match))
 		var/obj/item/weapon/match/M = W
 		if(M.lit)
-			light("<span class='notice'>[user] lights their [name] with their [W].</span>")
+			light("<span class='notice'>[user] lights their [name] with [W].</span>")
 
 	else if(istype(W, /obj/item/weapon/melee/energy/sword))
 		var/obj/item/weapon/melee/energy/sword/S = W
@@ -110,11 +110,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else if(istype(W, /obj/item/clothing/mask/cigarette))
 		var/obj/item/clothing/mask/cigarette/M = W
 		if(M.lit)
-			light("<span class='notice'>[user] lights their [name] with their [W].</span>")
+			light("<span class='notice'>[user] lights their [name] with [W].</span>")
 	else if(istype(W, /obj/item/candle))
 		var/obj/item/candle/C = W
 		if(C.lit)
-			light("<span class='notice'>[user] lights their [name] with the [W].</span>")
+			light("<span class='notice'>[user] lights their [name] with [W].</span>")
 	return
 
 
@@ -168,6 +168,17 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			M.update_inv_l_hand(0)
 			M.update_inv_r_hand(0)
 
+/obj/item/clothing/mask/cigarette/proc/handle_reagents()
+	if(iscarbon(loc))
+		var/mob/living/carbon/C = loc
+		if (src == C.wear_mask) // if it's in the human/monkey mouth, transfer reagents to the mob
+			if(prob(15)) // so it's not an instarape in case of acid
+				reagents.reaction(C, INGEST)
+			reagents.trans_to(C, REAGENTS_METABOLISM)
+		else
+			reagents.remove_any(REAGENTS_METABOLISM)
+	else
+		reagents.remove_any(REAGENTS_METABOLISM)
 
 /obj/item/clothing/mask/cigarette/process()
 	var/turf/location = get_turf(src)
@@ -187,16 +198,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(location)
 		location.hotspot_expose(700, 5)
 	if(reagents && reagents.total_volume)	//	check if it has any reagents at all
-		if(iscarbon(loc))
-			var/mob/living/carbon/C = loc
-			if (src == C.wear_mask) // if it's in the human/monkey mouth, transfer reagents to the mob
-				if(prob(15)) // so it's not an instarape in case of acid
-					reagents.reaction(C, INGEST)
-				reagents.trans_to(C, REAGENTS_METABOLISM)
-			else
-				reagents.remove_any(REAGENTS_METABOLISM)
-		else
-			reagents.remove_any(REAGENTS_METABOLISM)
+		handle_reagents()
 	return
 
 
@@ -329,16 +331,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(location)
 		location.hotspot_expose(700, 5)
 	if(reagents && reagents.total_volume)	//	check if it has any reagents at all
-		if(iscarbon(loc))
-			var/mob/living/carbon/C = loc
-			if (src == C.wear_mask) // if it's in the human/monkey mouth, transfer reagents to the mob
-				if(prob(15)) // so it's not an instarape in case of acid
-					reagents.reaction(C, INGEST)
-				reagents.trans_to(C, REAGENTS_METABOLISM)
-			else
-				reagents.remove_any(REAGENTS_METABOLISM)
-		else // else just remove some of the reagents
-			reagents.remove_any(REAGENTS_METABOLISM)
+		handle_reagents()
 	return
 
 

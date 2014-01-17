@@ -421,7 +421,6 @@
 	potency = 10
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/watermelonslice
 	slices_num = 5
-	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/watermelon
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops

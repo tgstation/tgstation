@@ -46,7 +46,7 @@
 				icon_state = "drying_rack"
 				var/obj/item/weapon/reagent_containers/food/snacks/grown/Dried = new T(src.loc)
 				user << "<span class='notice'>[Dried] has finished drying.</span>"
-				Dried.icon_state = "[Dried.icon_state]_dry"
+				Dried.color = "#ad7257"
 				Dried.dry = 1
 				Dried.reagents.clear_reagents()
 				src.reagents.trans_to(Dried, src.reagents.total_volume)
