@@ -122,6 +122,7 @@
 
 	var/sandbox_autoclose = 0 // close the sandbox panel after spawning an item, potentially reducing griff
 
+	var/default_laws = 0 //Controls what laws the AI spawns with.
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -368,6 +369,8 @@
 					config.silent_borg				= 1
 				if("sandbox_autoclose")
 					config.sandbox_autoclose		= 1
+				if("default_laws")
+					config.default_laws				= text2num(value)
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
