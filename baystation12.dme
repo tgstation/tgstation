@@ -849,6 +849,7 @@
 #include "code\modules\mining\machine_processing.dm"
 #include "code\modules\mining\machine_stacking.dm"
 #include "code\modules\mining\machine_unloading.dm"
+#include "code\modules\mining\materials.dm"
 #include "code\modules\mining\mine_areas.dm"
 #include "code\modules\mining\mine_items.dm"
 #include "code\modules\mining\mine_turfs.dm"
