@@ -68,7 +68,7 @@
 	item_state = "clown_shoes"
 	slowdown = SHOES_SLOWDOWN+1
 	item_color = "clown"
-	var/footstep = 1	//used for squeeks whilst walking
+	noise = "clownstep"
 
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
