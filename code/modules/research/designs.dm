@@ -599,6 +599,15 @@ datum/design/paicard
 	materials = list("$glass" = 500, "$metal" = 500)
 	build_path = /obj/item/device/paicard
 
+datum/design/cyberian
+	name = "Cybernetic Corgi"
+	desc = "A robotic corgi custom-crafted for the rigors of space."
+	id = "cyberian"
+	req_tech = list("programming" = 5, "powerstorage" = 4, "materials" = 3, "biotech" = 2)
+	build_type = PROTOLATHE
+	materials = list("$glass" = 2000, "$silver" = 500)
+	build_path = /mob/living/simple_animal/corgi/cyberian
+
 ///////////////////////////////////
 //////////Mecha Module Disks///////
 ///////////////////////////////////
