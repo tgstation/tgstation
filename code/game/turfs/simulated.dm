@@ -47,11 +47,11 @@
 				if(H.m_intent == "run")
 					if(O.footstep >= 2)
 						O.footstep = 0
-						O.footstep_noise(50)
+						O.run_noise(50)
 					else
 						O.footstep++
 				else
-					O.footstep_noise(20)
+					O.walk_noise(20)
 
 		switch (src.wet)
 			if(1) //wet floor
