@@ -38,13 +38,20 @@
 		desc = "Groovy!"
 		icon_state = "psyche"
 		item_color = "psyche"
-		usr.update_inv_w_uniform()
+		if(ismob(loc))
+			var/mob/M = loc
+			M.update_inv_w_uniform()
+			M << "<span class='notice'>Your jumpsuit malfunctions!</span>"
 		spawn(200)
 			name = "Black Jumpsuit"
-			icon_state = "bl_suit"
+			icon_state = "black"
+			item_state = "bl_suit"
 			item_color = "black"
 			desc = null
-			usr.update_inv_w_uniform()
+			if(ismob(loc))
+				var/mob/M = loc
+				M.update_inv_w_uniform()
+				M << "<span class='notice'>Your jumpsuit is functioning normally again.</span>"
 		..()
 
 
