@@ -7,7 +7,7 @@
 
 
 
-#define RECOMMENDED_VERSION 500
+#define RECOMMENDED_VERSION 501
 /world/New()
 	// Honk honk, fuck you science
 	WORLD_X_OFFSET=rand(-50,50)
@@ -26,7 +26,7 @@
 	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
 	if(byond_version < RECOMMENDED_VERSION)
-		world.log << "Your server's byond version does not meet the recommended requirements for TGstation code. Please update BYOND"
+		world.log << "Your server's byond version does not meet the recommended requirements for this code. Please update BYOND"
 
 	if(config && config.log_runtimes)
 		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM-DD-(hh-mm-ss)")]-runtime.log")

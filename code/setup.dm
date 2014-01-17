@@ -658,6 +658,7 @@ var/list/TAGGERLOCATIONS = list(
 #define CHAT_ATTACKLOGS	1024
 #define CHAT_DEBUGLOGS	2048
 #define CHAT_LOOC		4096
+#define CHAT_GHOSTRADIO 8192
 
 
 #define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_ATTACKLOGS|CHAT_LOOC)
@@ -729,6 +730,8 @@ var/list/be_special_flags = list(
 //feel free to add shit to lists below
 var/list/tachycardics = list("coffee", "inaprovaline", "hyperzine", "nitroglycerin", "thirteenloko", "nicotine")	//increase heart rate
 var/list/bradycardics = list("neurotoxin", "cryoxadone", "clonexadone", "space_drugs", "stoxin")					//decrease heart rate
+var/list/heartstopper = list("potassium_phorochloride", "zombie_powder") //this stops the heart
+var/list/cheartstopper = list("potassium_chloride") //this stops the heart when overdose is met -- c = conditional
 
 //proc/get_pulse methods
 #define GETPULSE_HAND	0	//less accurate (hand)
