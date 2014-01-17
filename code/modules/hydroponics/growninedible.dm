@@ -8,7 +8,6 @@
 	var/seed = ""
 	var/plantname = ""
 	var/product	//a type path
-	var/species = ""
 	var/lifespan = 20
 	var/endurance = 15
 	var/maturation = 7
