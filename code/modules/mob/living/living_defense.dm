@@ -1,35 +1,16 @@
-
-/*
-	run_armor_check(a,b)
-	args
-	a:def_zone - What part is getting hit, if null will check entire body
-	b:attack_flag - What type of attack, bullet, laser, energy, melee
-
-	Returns
-	0 - no block
-	1 - halfblock
-	2 - fullblock
-*/
 /mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null)
 	var/armor = getarmor(def_zone, attack_flag)
-	var/absorb = 0
-	if(prob(armor))
-		absorb += 1
-	if(prob(armor))
-		absorb += 1
-	if(absorb >= 2)
+	if(armor >= 100)
 		if(absorb_text)
 			src << "<span class='userdanger'>[absorb_text]</span>"
 		else
 			src << "<span class='userdanger'>Your armor absorbs the blow!</span>"
-		return 2
-	if(absorb == 1)
-		if(absorb_text)
-			show_message("[soften_text]",4)
+	else if(armor > 0)
+		if(soften_text)
+			src << "<span class='userdanger'>[soften_text]</span>"
 		else
 			src << "<span class='userdanger'>Your armor softens the blow!</span>"
-		return 1
-	return 0
+	return armor
 
 
 /mob/living/proc/getarmor(var/def_zone, var/type)
@@ -44,14 +25,10 @@
 		src << "<span class='notice'>Your [C] was disrupted!</span>"
 		Stun(2)
 
-	var/absorb = run_armor_check(def_zone, P.flag)
-	if(absorb >= 2)
-		P.on_hit(src,2)
-		return 2
+	var/armor = run_armor_check(def_zone, P.flag)
 	if(!P.nodamage)
-		apply_damage((P.damage/(absorb+1)), P.damage_type, def_zone)
-	P.on_hit(src, absorb, def_zone)
-	return absorb
+		apply_damage(P.damage, P.damage_type, def_zone, armor)
+	return P.on_hit(src, armor, def_zone)
 
 /mob/living/hitby(atom/movable/AM)//Standardization and logging -Sieve
 	if(istype(AM, /obj/))
@@ -64,8 +41,7 @@
 		visible_message("<span class='danger'>[src] has been hit by [O].</span>", \
 						"<span class='userdanger'>[src] has been hit by [O].</span>")
 		var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].")
-		if(armor < 2)
-			apply_damage(O.throwforce, dtype, zone, armor, O)
+		apply_damage(O.throwforce, dtype, zone, armor, O)
 		if(!O.fingerprintslast)
 			return
 		var/client/assailant = directory[ckey(O.fingerprintslast)]

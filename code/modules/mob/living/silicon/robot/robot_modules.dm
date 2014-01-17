@@ -204,6 +204,11 @@
 	name = "syndicate robot module"
 
 	New()
-		modules += new /obj/item/weapon/melee/energy/sword(src)
-		modules += new /obj/item/weapon/gun/energy/pulse_rifle/destroyer(src)
+		..()
+		modules += new /obj/item/weapon/melee/energy/sword/cyborg(src)
+		modules += new /obj/item/weapon/gun/energy/crossbow/cyborg(src)
 		modules += new /obj/item/weapon/card/emag(src)
+		modules += new /obj/item/weapon/gun/energy/laser/cyborg(src)
+		modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
+		modules += new /obj/item/weapon/crowbar(src)
+		emag = null

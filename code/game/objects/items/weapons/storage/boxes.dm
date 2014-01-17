@@ -145,7 +145,7 @@
 		new /obj/item/weapon/dnainjector/m2h(src)
 		new /obj/item/weapon/dnainjector/m2h(src)
 
-/obj/item/weapon/storage/box/blanks
+/*/obj/item/weapon/storage/box/blanks	//Blanks removed, go home
 	name = "box of blank shells"
 	desc = "It has a picture of a gun and several warning symbols on the front."
 
@@ -157,7 +157,7 @@
 		new /obj/item/ammo_casing/shotgun/blank(src)
 		new /obj/item/ammo_casing/shotgun/blank(src)
 		new /obj/item/ammo_casing/shotgun/blank(src)
-		new /obj/item/ammo_casing/shotgun/blank(src)
+		new /obj/item/ammo_casing/shotgun/blank(src)*/
 
 /obj/item/weapon/storage/box/flashbangs
 	name = "box of flashbangs (WARNING)"
