@@ -517,7 +517,7 @@
 	name = "Cyberian"
 	real_name = "Cyberian"
 	gender = NEUTER // Prevents puppy-making
-	desc = "It's an automaton made of iron and cuteness."
+	desc = "It's an automaton made of science and cuteness."
 	icon_state = "cyberian"
 	icon_living = "cyberian"
 	icon_dead = "cyberian_dead"
@@ -529,6 +529,15 @@
 	heat_damage_per_tick = 0
 	cold_damage_per_tick = 0
 	meat_amount = 0
+	meat_type = null
+	min_oxy = 0
+	max_oxy = 0
+	min_tox = 0
+	max_tox = 0
+	min_co2 = 0
+	max_co2 = 0
+	min_n2 = 0
+	max_n2 = 0
 	var/reliability = 100
 	var/origin_tech = list("programming" = 5, "powerstorage" = 4, "materials" = 3, "biotech" = 2)
 	var/m_amt = 0
