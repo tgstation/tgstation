@@ -44,7 +44,7 @@
 			icon_state = "bl_suit"
 			item_color = "black"
 			desc = null
-		usr.update_inv_w_uniform()
+			usr.update_inv_w_uniform()
 		..()
 
 
