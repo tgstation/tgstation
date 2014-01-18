@@ -131,7 +131,8 @@
 // being unable to hear people due to being in a box within a bag.
 
 #ifndef USE_BROKEN_RECURSIVE_MOBCHECK
-// /tg/'s broken edition.
+#warning Using laggy recursive_mob_check
+// Bay's fixed edition (LAGGY)
 /proc/recursive_mob_check(var/atom/O,  var/list/L = list(), var/recursion_limit = 3, var/client_check = 1, var/sight_check = 1, var/include_radio = 1)
 
 	//debug_mob += O.contents.len
@@ -158,7 +159,8 @@
 			L |= recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
 	return L
 #else
-// Bay's fixed edition (LAGGY)
+#warning Using broken recursive_mob_check
+// /tg/'s broken edition.
 /proc/recursive_mob_check(var/atom/O,  var/list/L = list(), var/recursion_limit = 3, var/client_check = 1, var/sight_check = 1, var/include_radio = 1)
 
 	//debug_mob += O.contents.len
