@@ -1,7 +1,7 @@
 // Code taken from /bay/station.
 
 /client/proc/SDQL2_query(query_text as message)
-	set category = "Admin"
+	set category = "Debug"
 	if(!check_rights(R_DEBUG))  //Shouldn't happen... but just to be safe.
 		message_admins("\red ERROR: Non-admin [usr.key] attempted to execute a SDQL query!")
 		log_admin("Non-admin [usr.key] attempted to execute a SDQL query!")
@@ -63,6 +63,19 @@
 	message_admins("[usr] executed SDQL query: \"[query_text]\".")
 
 	switch(query_tree[1])
+		if("call")
+			var/list/call_list = query_tree["call"]
+			var/list/args_list = query_tree["args"]
+
+			for(var/datum/d in objs)
+				for(var/v in call_list)
+					// To stop any procs which sleep from executing slowly.
+					if(d)
+						if(hascall(d, v))
+							// Replace _ with a space because BYOND doesn't like it in call, hascall loves it though! (Really I can't believe this myself)
+							var/sanitized_v = replacetext(v, "_", " ")
+							spawn() call(d, sanitized_v)(arglist(args_list)) // Spawn in case the function sleeps.
+
 		if("delete")
 			for(var/datum/d in objs)
 				del d
@@ -70,20 +83,21 @@
 		if("select")
 			var/text = ""
 			for(var/datum/t in objs)
+				text += "<A HREF='?_src_=vars;Vars=\ref[t]'>\ref[t]</A>"
 				if(istype(t, /atom))
 					var/atom/a = t
 
 					if(a.x)
-						text += "<a href='?src=\ref[t];SDQL_select=\ref[t]'>\ref[t]</a>: [t] at ([a.x], [a.y], [a.z])<br>"
+						text += ": [t] at ([a.x], [a.y], [a.z])<br>"
 
 					else if(a.loc && a.loc.x)
-						text += "<a href='?src=\ref[t];SDQL_select=\ref[t]'>\ref[t]</a>: [t] in [a.loc] at ([a.loc.x], [a.loc.y], [a.loc.z])<br>"
+						text += ": [t] in [a.loc] at ([a.loc.x], [a.loc.y], [a.loc.z])<br>"
 
 					else
-						text += "<a href='?src=\ref[t];SDQL_select=\ref[t]'>\ref[t]</a>: [t]<br>"
+						text += ": [t]<br>"
 
 				else
-					text += "<a href='?src=\ref[t];SDQL_select=\ref[t]'>\ref[t]</a>: [t]<br>"
+					text += ": [t]<br>"
 
 			usr << browse(text, "window=SDQL-result")
 
@@ -129,22 +143,22 @@
 
 	for(var/item in query_tree)
 		if(istype(item, /list))
-			world << "[spaces]("
+			usr << "[spaces]("
 			SDQL_testout(item, indent + 1)
-			world << "[spaces])"
+			usr << "[spaces])"
 
 		else
-			world << "[spaces][item]"
+			usr << "[spaces][item]"
 
 		if(!isnum(item) && query_tree[item])
 
 			if(istype(query_tree[item], /list))
-				world << "[spaces]    ("
+				usr << "[spaces]    ("
 				SDQL_testout(query_tree[item], indent + 2)
-				world << "[spaces]    )"
+				usr << "[spaces]    )"
 
 			else
-				world << "[spaces]    [query_tree[item]]"
+				usr << "[spaces]    [query_tree[item]]"
 
 
 
@@ -422,5 +436,4 @@
 
 	if(word != "")
 		query_list += word
-
 	return query_list
