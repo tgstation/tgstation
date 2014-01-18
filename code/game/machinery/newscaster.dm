@@ -57,6 +57,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 	// Allow ghosts to send Topic()s.
 	ghost_write=1
+	custom_aghost_alerts=1 // We handle our own logging.
 
 	var/isbroken = 0  //1 if someone banged it with something heavy
 	var/ispowered = 1 //starts powered, changes with power_change()
