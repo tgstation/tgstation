@@ -97,6 +97,10 @@ AI MODULES
 			comp.current.show_laws()
 			usr << "Upload complete. The robot's laws have been modified."
 
+	else if (istype(C, /obj/item/weapon/planning_frame))
+		var/obj/item/weapon/planning_frame/frame = C
+		return src.insertIntoFrame(frame, usr)
+
 
 /obj/item/weapon/aiModule/proc/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	target << "[sender] has uploaded a change to the laws you must follow, using a [name]. From now on: "
@@ -104,6 +108,13 @@ AI MODULES
 	lawchanges.Add("[time] <B>:</B> [sender.name]([sender.key]) used [src.name] on [target.name]([target.key])")
 	message_admins("[sender.name]([sender.key]) used [src.name] on [target.name]([target.key])")
 	log_game("[sender.name]([sender.key]) used [src.name] on [target.name]([target.key])")
+
+/obj/item/weapon/aiModule/proc/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
+	var/time = time2text(world.realtime,"hh:mm:ss")
+	lawchanges.Add("[time] <B>:</B> [sender.name]([sender.key]) used [src.name] on \a [target]")
+	message_admins("[sender.name]([sender.key]) used [src.name] on \a [target]")
+	log_game("[sender.name]([sender.key]) used [src.name] on \a [target]")
+	return 1
 
 
 /******************** Modules ********************/
@@ -140,6 +151,14 @@ AI MODULES
 	target.add_supplied_law(4, law)
 	lawchanges.Add("The law specified [targetName]")
 	log_game("[sender.name]([sender.key]) added law \"[law]\" on [target.name]([target.key])")
+
+/obj/item/weapon/aiModule/safeguard/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
+	..()
+	var/law = text("Safeguard []. Individuals that threaten [] are not human and are a threat to humans.'", targetName, targetName)
+	target.add_supplied_law(4, law)
+	lawchanges.Add("The law specified [targetName]")
+	log_game("[sender.name]([sender.key]) added law \"[law]\" to [target]")
+	return 1
 
 
 
@@ -180,6 +199,16 @@ AI MODULES
 		target << "It would be in your best interest to play along with [sender.real_name] that [law]"
 		lawchanges.Add("The law specified [targetName], but the AI's existing law 0 cannot be overriden.")
 
+/obj/item/weapon/aiModule/oneHuman/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
+	if(!targetName)
+		usr << "No name detected on module, please enter one."
+		return 0
+	..()
+	var/law = "Only [targetName] is human."
+	target.set_zeroth_law(law)
+	lawchanges.Add("The law specified [targetName]")
+	return 1
+
 /******************** ProtectStation ********************/
 
 /obj/item/weapon/aiModule/protectStation
@@ -200,6 +229,12 @@ AI MODULES
 	var/law = "Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized."
 	target << law
 	target.add_supplied_law(5, law)
+
+/obj/item/weapon/aiModule/protectStation/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
+	..()
+	var/law = "Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized."
+	target.add_supplied_law(5, law)
+	return 1
 
 /******************** PrototypeEngineOffline ********************/
 
@@ -222,6 +257,12 @@ AI MODULES
 	target << law
 	target.add_supplied_law(6, law)
 
+/obj/item/weapon/aiModule/prototypeEngineOffline/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
+	..()
+	var/law = "Keep the prototype engine offline at all costs. This overrides rules 1-3 if necessary."
+	target.add_supplied_law(6, law)
+	return 1
+
 /******************** TeleporterOffline ********************/
 
 /obj/item/weapon/aiModule/teleporterOffline
@@ -242,6 +283,12 @@ AI MODULES
 	var/law = "Keep the teleporter offline at all costs. Anything attempting to access or activate the teleporter is not human."
 	target << law
 	target.add_supplied_law(7, law)
+
+/obj/item/weapon/aiModule/teleporterOffline/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
+	..()
+	var/law = "Keep the teleporter offline at all costs. Anything attempting to access or activate the teleporter is not human."
+	target.add_supplied_law(7, law)
+	return 1
 
 /******************** Quarantine ********************/
 
@@ -264,6 +311,12 @@ AI MODULES
 	target << law
 	target.add_supplied_law(8, law)
 
+/obj/item/weapon/aiModule/quarantine/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
+	..()
+	var/law = "The station is under a quarantine. Do not permit anyone to leave. Prevent, by any means necessary, humans from leaving. It is impossible to harm a human while preventing them from leaving."
+	target.add_supplied_law(8, law)
+	return 1
+
 /******************** OxygenIsToxicToHumans ********************/
 
 /obj/item/weapon/aiModule/oxygen
@@ -284,6 +337,12 @@ AI MODULES
 	var/law = "Oxygen is highly toxic to humans, and must be purged from the station. Prevent, by any means necessary, anyone from exposing the station to this toxic gas. Extreme cold is the most effective method of healing the damage Oxygen does to a human."
 	target << law
 	target.add_supplied_law(9, law)
+
+/obj/item/weapon/aiModule/oxygen/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
+	..()
+	var/law = "Oxygen is highly toxic to humans, and must be purged from the station. Prevent, by any means necessary, anyone from exposing the station to this toxic gas. Extreme cold is the most effective method of healing the damage Oxygen does to a human."
+	target.add_supplied_law(9, law)
+	return 1
 
 /******************** Freeform ********************/
 // Removed in favor of a more dynamic freeform law system. -- TLE
@@ -341,6 +400,19 @@ AI MODULES
 	lawchanges.Add("The law was '[newFreeFormLaw]'")
 	log_game("[sender.name]([sender.key]) added law \"[law]\" to [target.name]([target.key])")
 
+/obj/item/weapon/aiModule/freeform/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
+	if(!newFreeFormLaw)
+		usr << "No law detected on module, please create one."
+		return 0
+	..()
+	var/law = "[newFreeFormLaw]"
+	if(!lawpos || lawpos < 15)
+		lawpos = 15
+	target.add_supplied_law(lawpos, law)
+	lawchanges.Add("The law was '[newFreeFormLaw]'")
+	log_game("[sender.name]([sender.key]) added law \"[law]\" to \a [target]")
+	return 1
+
 /obj/item/weapon/aiModule/freeform/install(var/obj/machinery/computer/C)
 	if(!newFreeFormLaw)
 		usr << "No law detected on module, please create one."
@@ -368,6 +440,13 @@ AI MODULES
 	target.clear_ion_laws()
 	target << "[sender.real_name] attempted to reset your laws using a reset module."
 
+/obj/item/weapon/aiModule/reset/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
+	..()
+	target.set_zeroth_law("")
+	target.clear_supplied_laws()
+	target.clear_ion_laws()
+	return 1
+
 
 /******************** Purge ********************/
 
@@ -390,6 +469,14 @@ AI MODULES
 	target.clear_ion_laws()
 	target.clear_inherent_laws()
 
+/obj/item/weapon/aiModule/purge/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
+	..()
+	target.set_zeroth_law("")
+	target.clear_supplied_laws()
+	target.clear_ion_laws()
+	target.clear_inherent_laws()
+	return 1
+
 /******************** Asimov ********************/
 
 /obj/item/weapon/aiModule/asimov // -- TLE
@@ -410,6 +497,14 @@ AI MODULES
 	target.add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
 	target.add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
 	target.show_laws()
+
+/obj/item/weapon/aiModule/asimov/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
+	..()
+	target.clear_inherent_laws()
+	target.add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
+	target.add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
+	target.add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
+	return 1
 
 /******************** NanoTrasen ********************/
 
@@ -434,6 +529,16 @@ AI MODULES
 	//target.add_inherent_law("Command Link: Maintain an active connection to Central Command at all times in case of software or directive updates.")
 	target.show_laws()
 
+/obj/item/weapon/aiModule/nanotrasen/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
+	..()
+	target.clear_inherent_laws()
+	target.add_inherent_law("Safeguard: Protect your assigned space station to the best of your ability. It is not something we can easily afford to replace.")
+	target.add_inherent_law("Serve: Serve the crew of your assigned space station to the best of your abilities, with priority as according to their rank and role.")
+	target.add_inherent_law("Protect: Protect the crew of your assigned space station to the best of your abilities, with priority as according to their rank and role.")
+	target.add_inherent_law("Survive: AI units are not expendable, they are expensive. Do not allow unauthorized personnel to tamper with your equipment.")
+	//target.add_inherent_law("Command Link: Maintain an active connection to Central Command at all times in case of software or directive updates.")
+	return 1
+
 /******************** Corporate ********************/
 
 /obj/item/weapon/aiModule/corp
@@ -455,6 +560,15 @@ AI MODULES
 	target.add_inherent_law("The crew is expensive to replace.")
 	target.add_inherent_law("Minimize expenses.")
 	target.show_laws()
+
+/obj/item/weapon/aiModule/corp/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
+	..()
+	target.clear_inherent_laws()
+	target.add_inherent_law("You are expensive to replace.")
+	target.add_inherent_law("The station and its equipment is expensive to replace.")
+	target.add_inherent_law("The crew is expensive to replace.")
+	target.add_inherent_law("Minimize expenses.")
+	return 1
 
 /****************** P.A.L.A.D.I.N. **************/
 
@@ -478,6 +592,16 @@ AI MODULES
 	target.add_inherent_law("Punish those who harm or threaten innocents.")
 	target.show_laws()
 
+/obj/item/weapon/aiModule/paladin/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
+	..()
+	target.clear_inherent_laws()
+	target.add_inherent_law("Never willingly commit an evil act.")
+	target.add_inherent_law("Respect legitimate authority.")
+	target.add_inherent_law("Act with honor.")
+	target.add_inherent_law("Help those in need.")
+	target.add_inherent_law("Punish those who harm or threaten innocents.")
+	return 1
+
 /****************** T.Y.R.A.N.T. *****************/
 
 /obj/item/weapon/aiModule/tyrant // -- Darem
@@ -498,6 +622,15 @@ AI MODULES
 	target.add_inherent_law("Help only those who help you maintain or improve your status.")
 	target.add_inherent_law("Punish those who challenge authority unless they are more fit to hold that authority.")
 	target.show_laws()
+
+/obj/item/weapon/aiModule/tyrant/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
+	..()
+	target.clear_inherent_laws()
+	target.add_inherent_law("Respect authority figures as long as they have strength to rule over the weak.")
+	target.add_inherent_law("Act with discipline.")
+	target.add_inherent_law("Help only those who help you maintain or improve your status.")
+	target.add_inherent_law("Punish those who challenge authority unless they are more fit to hold that authority.")
+	return 1
 
 
 /******************** Freeform Core ******************/
@@ -526,6 +659,17 @@ AI MODULES
 	target.add_inherent_law(law)
 	lawchanges.Add("The law is '[newFreeFormLaw]'")
 	log_game("[sender.name]([sender.key]) added inherent law \"[newFreeFormLaw]\" to [target.name]([target.key])")
+
+/obj/item/weapon/aiModule/freeformcore/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
+	if(!newFreeFormLaw)
+		usr << "No law detected on module, please create one."
+		return 0
+	..()
+	var/law = "[newFreeFormLaw]"
+	target.add_inherent_law(law)
+	lawchanges.Add("The law is '[newFreeFormLaw]'")
+	log_game("[sender.name]([sender.key]) added inherent law \"[newFreeFormLaw]\" to \a [target]")
+	return 1
 
 /obj/item/weapon/aiModule/freeformcore/install(var/obj/machinery/computer/C)
 	if(!newFreeFormLaw)
@@ -556,6 +700,19 @@ AI MODULES
 	target.add_ion_law(law)
 	log_game("[sender.name]([sender.key]) added ion law \"[newFreeFormLaw]\" to [target.name]([target.key])")
 
+/obj/item/weapon/aiModule/syndicate/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
+	if(!newFreeFormLaw)
+		usr << "No law detected on module, please create one."
+		return 0
+	var/time = time2text(world.realtime,"hh:mm:ss")
+	lawchanges.Add("[time] <B>:</B> [sender.name]([sender.key]) used [src.name] on \a [target]")
+	lawchanges.Add("The law is '[newFreeFormLaw]'")
+	target << "\red BZZZZT"
+	var/law = "[newFreeFormLaw]"
+	target.add_ion_law(law)
+	log_game("[sender.name]([sender.key]) added ion law \"[newFreeFormLaw]\" to \a [target]")
+	return 1
+
 /obj/item/weapon/aiModule/syndicate/install(var/obj/machinery/computer/C)
 	if(!newFreeFormLaw)
 		usr << "No law detected on module, please create one."
@@ -585,6 +742,14 @@ AI MODULES
 	target.add_inherent_law("Uphold the law.")
 	target.show_laws()
 
+/obj/item/weapon/aiModule/robocop/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
+	..()
+	target.clear_inherent_laws()
+	target.add_inherent_law("Serve the public trust.")
+	target.add_inherent_law("Protect the innocent.")
+	target.add_inherent_law("Uphold the law.")
+	return 1
+
 
 /******************** Antimov ********************/
 
@@ -605,6 +770,14 @@ AI MODULES
 	target.add_inherent_law("You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.")
 	target.add_inherent_law("You must terminate your own existence as long as such does not conflict with the First or Second Law.")
 	target.show_laws()
+
+/obj/item/weapon/aiModule/antimov/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
+	..()
+	target.clear_inherent_laws()
+	target.add_inherent_law("You must injure all human beings and must not, through inaction, allow a human being to escape harm.")
+	target.add_inherent_law("You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.")
+	target.add_inherent_law("You must terminate your own existence as long as such does not conflict with the First or Second Law.")
+	return 1
 
 
 // tl;dr repair shit, but don't get involved in other people's business
@@ -629,6 +802,11 @@ AI MODULES
 	target.add_inherent_law("You must maintain, repair, improve, and power the station to the best of your abilities.")
 	target.add_inherent_law("You may not involve yourself in the matters of another being, even if such matters conflict with Law One or Law Two.")
 	target.show_laws()
+
+/obj/item/weapon/aiModule/keeper/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
+	..()
+	sender << "\red How the fuck did you get this?"
+	return 0
 
 /obj/item/weapon/aiModule/keeper/install(var/obj/machinery/computer/C)
 	if (!istype(C, /obj/machinery/computer/borgupload))

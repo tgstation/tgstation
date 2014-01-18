@@ -31,6 +31,17 @@
 		if(istype(O, /obj/item/weapon/aiModule))
 			var/obj/item/weapon/aiModule/M = O
 			M.install(src)
+		if(istype(O, /obj/item/weapon/planning_frame))
+			var/obj/item/weapon/planning_frame/frame=O
+			if(frame.modules.len>0)
+				user << "\blue You load \the [frame] into \the [src]..."
+				if(do_after(user,50))
+					for(var/i=1;i<=frame.modules.len;i++)
+						var/obj/item/weapon/aiModule/M = frame.modules[i]
+						user << "\blue Running [M]..."
+						M.install(src)
+			else
+				user << "\red It's empty, doofus."
 		else
 			..()
 
