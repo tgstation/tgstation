@@ -1,8 +1,8 @@
 /proc/gibs(atom/location, var/list/viruses, var/datum/dna/MobDNA)		//CARN MARKER
 	new /obj/effect/gibspawner/generic(get_turf(location),viruses,MobDNA)
 
-/proc/hgibs(atom/location, var/list/viruses, var/datum/dna/MobDNA)
-	new /obj/effect/gibspawner/human(get_turf(location),viruses,MobDNA)
+/proc/hgibs(atom/location, var/list/viruses, var/datum/dna/MobDNA, var/fleshcolor, var/bloodcolor)
+	new /obj/effect/gibspawner/human(get_turf(location),viruses,MobDNA,fleshcolor,bloodcolor)
 
 /proc/xgibs(atom/location, var/list/viruses)
 	new /obj/effect/gibspawner/xeno(get_turf(location),viruses)
@@ -16,9 +16,14 @@
 	var/list/gibtypes = list()
 	var/list/gibamounts = list()
 	var/list/gibdirections = list() //of lists
+	var/fleshcolor //Used for gibbed humans.
+	var/bloodcolor //Used for gibbed humans.
 
-	New(location, var/list/viruses, var/datum/dna/MobDNA)
+	New(location, var/list/viruses, var/datum/dna/MobDNA, var/fleshcolor, var/bloodcolor)
 		..()
+
+		if(fleshcolor) src.fleshcolor = fleshcolor
+		if(bloodcolor) src.bloodcolor = bloodcolor
 
 		if(istype(loc,/turf)) //basically if a badmin spawns it
 			Gib(loc,viruses,MobDNA)
@@ -43,6 +48,14 @@
 				for(var/j = 1, j<= gibamounts[i], j++)
 					var/gibType = gibtypes[i]
 					gib = new gibType(location)
+
+					// Apply human species colouration to masks.
+					if(fleshcolor)
+						gib.fleshcolor = fleshcolor
+					if(bloodcolor)
+						gib.basecolor = bloodcolor
+
+					gib.update_icon()
 
 					if(viruses.len > 0)
 						for(var/datum/disease/D in viruses)

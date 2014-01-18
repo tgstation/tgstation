@@ -78,6 +78,7 @@
 			if(M.stat == DEAD || M.sdisabilities & BLIND)	//mob is dead or fully blind
 				user << "<span class='notice'>[M] pupils does not react to the light!</span>"
 			else if(XRAY in M.mutations)	//mob has X-RAY vision
+				flick("flash", M.flash) //Yes, you can still get flashed wit X-Ray.
 				user << "<span class='notice'>[M] pupils give an eerie glow!</span>"
 			else	//they're okay!
 				if(!M.blinded)

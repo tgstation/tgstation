@@ -41,11 +41,6 @@
 	if(!species)
 		set_species()
 
-	if(species.language)
-		var/datum/language/L = all_languages[species.language]
-		if(L)
-			languages += L
-
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
 	R.my_atom = src
@@ -202,7 +197,7 @@
 				b_loss = b_loss/1.5
 				f_loss = f_loss/1.5
 
-			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
+			if (!istype(l_ear, /obj/item/clothing/ears/earmuffs) && !istype(r_ear, /obj/item/clothing/ears/earmuffs))
 				ear_damage += 30
 				ear_deaf += 120
 			if (prob(70) && !shielded)
@@ -212,7 +207,7 @@
 			b_loss += 30
 			if (prob(getarmor(null, "bomb")))
 				b_loss = b_loss/2
-			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
+			if (!istype(l_ear, /obj/item/clothing/ears/earmuffs) && !istype(r_ear, /obj/item/clothing/ears/earmuffs))
 				ear_damage += 15
 				ear_deaf += 60
 			if (prob(50) && !shielded)
@@ -280,23 +275,6 @@
 	return
 
 
-/mob/living/carbon/human/hand_p(mob/M as mob)
-	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-	var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
-	var/armor = run_armor_check(affecting, "melee")
-	apply_damage(rand(1,2), BRUTE, affecting, armor)
-	if(armor >= 2)	return
-
-	for(var/datum/disease/D in M.viruses)
-		if(istype(D, /datum/disease/jungle_fever))
-			var/mob/living/carbon/human/H = src
-			src = null
-			src = H.monkeyize()
-			contract_disease(D,1,0)
-	return
-
-
-
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
@@ -314,6 +292,14 @@
 		apply_damage(damage, BRUTE, affecting, armor)
 		if(armor >= 2)	return
 
+
+/mob/living/carbon/human/proc/is_loyalty_implanted(mob/living/carbon/human/M)
+	for(var/L in M.contents)
+		if(istype(L, /obj/item/weapon/implant/loyalty))
+			for(var/datum/organ/external/O in M.organs)
+				if(L in O.implants)
+					return 1
+	return 0
 
 /mob/living/carbon/human/attack_slime(mob/living/carbon/slime/M as mob)
 	if(M.Victim) return // can't attack while eating!
@@ -407,7 +393,8 @@
 	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>[(r_hand ? r_hand : "Nothing")]</A>
 	<BR><B>Gloves:</B> <A href='?src=\ref[src];item=gloves'>[(gloves ? gloves : "Nothing")]</A>
 	<BR><B>Eyes:</B> <A href='?src=\ref[src];item=eyes'>[(glasses ? glasses : "Nothing")]</A>
-	<BR><B>Ears:</B> <A href='?src=\ref[src];item=ears'>[(ears ? ears : "Nothing")]</A>
+	<BR><B>Left Ear:</B> <A href='?src=\ref[src];item=l_ear'>[(l_ear ? l_ear : "Nothing")]</A>
+	<BR><B>Right Ear:</B> <A href='?src=\ref[src];item=r_ear'>[(r_ear ? r_ear : "Nothing")]</A>
 	<BR><B>Head:</B> <A href='?src=\ref[src];item=head'>[(head ? head : "Nothing")]</A>
 	<BR><B>Shoes:</B> <A href='?src=\ref[src];item=shoes'>[(shoes ? shoes : "Nothing")]</A>
 	<BR><B>Belt:</B> <A href='?src=\ref[src];item=belt'>[(belt ? belt : "Nothing")]</A>
@@ -434,7 +421,7 @@
 /mob/living/carbon/human/HasEntered(var/atom/movable/AM)
 	var/obj/machinery/bot/mulebot/MB = AM
 	if(istype(MB))
-		MB.RunOverCreature(src,"#A10808")
+		MB.RunOverCreature(src,species.blood_color)
 
 		var/damage = rand(5,15)
 		apply_damage(2*damage, BRUTE, "head")
@@ -880,7 +867,7 @@
 
 
 /mob/living/carbon/human/abiotic(var/full_body = 0)
-	if(full_body && ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask || src.head || src.shoes || src.w_uniform || src.wear_suit || src.glasses || src.ears || src.gloves)))
+	if(full_body && ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask || src.head || src.shoes || src.w_uniform || src.wear_suit || src.glasses || src.l_ear || src.r_ear || src.gloves)))
 		return 1
 
 	if( (src.l_hand && !src.l_hand.abstract) || (src.r_hand && !src.r_hand.abstract) )
@@ -1120,8 +1107,10 @@
 	var/datum/organ/external/head/h = organs_by_name["head"]
 	h.disfigured = 0
 
-	vessel.add_reagent("blood",560-vessel.total_volume)
-	fixblood()
+	if(species && !(species.flags & NO_BLOOD))
+		vessel.add_reagent("blood",560-vessel.total_volume)
+		fixblood()
+
 	for (var/obj/item/weapon/organ/head/H in world)
 		if(H.brainmob)
 			if(H.brainmob.real_name == src.real_name)
@@ -1192,6 +1181,7 @@
 		return 0 //already bloodied with this blood. Cannot add more.
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 	src.update_inv_gloves()	//handles bloody hands overlays and updating
+	verbs += /mob/living/carbon/human/proc/bloody_doodle
 	return 1 //we applied blood to the item
 
 /mob/living/carbon/human/clean_blood()
@@ -1356,7 +1346,13 @@ mob/living/carbon/human/yank_out_object()
 	if(species && (species.name && species.name == new_species))
 		return
 
+	if(species && species.language)
+		remove_language(species.language)
+
 	species = all_species[new_species]
+
+	if(species.language)
+		add_language(species.language)
 
 	see_in_dark = species.darksight
 	if(see_in_dark > 2)
@@ -1375,3 +1371,57 @@ mob/living/carbon/human/yank_out_object()
 	else
 		return 0
 
+/mob/living/carbon/human/proc/bloody_doodle()
+	set category = "IC"
+	set name = "Write in blood"
+	set desc = "Use blood on your hands to write a short message on the floor or a wall, murder mystery style."
+
+	if (src.stat)
+		return
+
+	if (usr != src)
+		return 0 //something is terribly wrong
+
+	if (!bloody_hands)
+		verbs -= /mob/living/carbon/human/proc/bloody_doodle
+
+	if (src.gloves)
+		src << "<span class='warning'>Your [src.gloves] are getting in the way.</span>"
+		return
+
+	var/turf/simulated/T = src.loc
+	if (!istype(T)) //to prevent doodling out of mechs and lockers
+		src << "<span class='warning'>You cannot reach the floor.</span>"
+		return
+
+	var/direction = input(src,"Which way?","Tile selection") as anything in list("Here","North","South","East","West")
+	if (direction != "Here")
+		T = get_step(T,text2dir(direction))
+	if (!istype(T))
+		src << "<span class='warning'>You cannot doodle there.</span>"
+		return
+
+	var/num_doodles = 0
+	for (var/obj/effect/decal/cleanable/blood/writing/W in T)
+		num_doodles++
+	if (num_doodles > 4)
+		src << "<span class='warning'>There is no space to write on!</span>"
+		return
+
+	var/max_length = bloody_hands * 30 //tweeter style
+
+	var/message = stripped_input(src,"Write a message. It cannot be longer than [max_length] characters.","Blood writing", "")
+
+	if (message)
+		var/used_blood_amount = round(length(message) / 30, 1)
+		bloody_hands = max(0, bloody_hands - used_blood_amount) //use up some blood
+
+		if (length(message) > max_length)
+			message += "-"
+			src << "<span class='warning'>You ran out of blood to write with!</span>"
+
+		var/obj/effect/decal/cleanable/blood/writing/W = new(T)
+		W.basecolor = (hand_blood_color) ? hand_blood_color : "#A10808"
+		W.update_icon()
+		W.message = message
+		W.add_fingerprint(src)

@@ -217,7 +217,7 @@
 						emote("drool")
 
 		if(species.name == "Tajaran")
-			if(prob(3))
+			if(prob(1)) // WAS: 3
 				vomit(1) // Hairball
 
 		if(stat != 2)
@@ -236,7 +236,7 @@
 			if(getBrainLoss() >= 50)
 				if(10 <= rn && rn <= 12) if(!lying)
 					src << "\red Your legs won't respond properly, you fall down."
-					lying = 1
+					resting = 1
 
 	proc/handle_stasis_bag()
 		// Handle side effects from stasis bag
@@ -328,7 +328,7 @@
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/datum/gas_mixture/breath
 		// HACK NEED CHANGING LATER
-		if(health < 0)
+		if(health < config.health_threshold_crit)
 			losebreath++
 		if(losebreath>0) //Suffocating so do not take a breath
 			losebreath--
@@ -363,7 +363,7 @@
 							if(prob(5))
 								rupture_lung()
 
-					// Handle chem smoke effect  -- Doohl
+					// Handle filtering
 					var/block = 0
 					if(wear_mask)
 						if(wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)
@@ -377,7 +377,7 @@
 
 					if(!block)
 
-						for(var/obj/effect/effect/chem_smoke/smoke in view(1, src))
+						for(var/obj/effect/effect/smoke/chem/smoke in view(1, src))
 							if(smoke.reagents.total_volume)
 								smoke.reagents.reaction(src, INGEST)
 								spawn(5)
@@ -418,7 +418,7 @@
 	// USED IN DEATHWHISPERS
 	proc/isInCrit()
 		// Health is in deep shit and we're not already dead
-		return health <= 0 && stat != 2
+		return health <= config.health_threshold_crit && stat != 2
 
 
 	proc/handle_breath(datum/gas_mixture/breath)
@@ -433,7 +433,7 @@
 				failed_last_breath = 1
 				oxygen_alert = max(oxygen_alert, 1)
 				return 0
-			if(health > 0)
+			if(health > config.health_threshold_crit)
 				adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 				failed_last_breath = 1
 			else
@@ -900,7 +900,15 @@
 	*/
 
 	proc/handle_chemicals_in_body()
-		if(reagents) reagents.metabolize(src)
+		if(reagents)
+
+			var/alien = 0 //Not the best way to handle it, but neater than checking this for every single reagent proc.
+			if(species && species.name == "Diona")
+				alien = 1
+			else if(species && species.name == "Vox")
+				alien = 2
+			reagents.metabolize(src,alien)
+
 		var/total_plasmaloss = 0
 		for(var/obj/item/I in src)
 			if(I.contaminated)
@@ -917,12 +925,17 @@
 					if(A.lighting_use_dynamic)	light_amount = min(10,T.lighting_lumcount) - 5 //hardcapped so it's not abused by having a ton of flashlights
 					else						light_amount =  5
 			nutrition += light_amount
-			if(nutrition > 500)
-				nutrition = 500
-			if(light_amount > 2) //if there's enough light, heal
-				heal_overall_damage(1,1)
-				adjustToxLoss(-1)
-				adjustOxyLoss(-1)
+			traumatic_shock -= light_amount
+
+			if(species.flags & IS_PLANT)
+				if(nutrition > 500)
+					nutrition = 500
+				if(light_amount >= 3) //if there's enough light, heal
+					adjustBruteLoss(-(light_amount))
+					adjustToxLoss(-(light_amount))
+					adjustOxyLoss(-(light_amount))
+					//TODO: heal wounds, heal broken limbs.
+
 		if(dna && dna.mutantrace == "shadow")
 			var/light_amount = 0
 			if(isturf(loc))
@@ -969,6 +982,7 @@
 		if(species.flags & REQUIRE_LIGHT)
 			if(nutrition < 200)
 				take_overall_damage(2,0)
+				traumatic_shock++
 
 		if (drowsyness)
 			drowsyness--
@@ -990,6 +1004,9 @@
 
 		var/datum/organ/internal/liver/liver = internal_organs["liver"]
 		liver.process()
+
+		var/datum/organ/internal/eyes/eyes = internal_organs["eyes"]
+		eyes.process()
 
 		updatehealth()
 
@@ -1098,7 +1115,7 @@
 				ear_deaf = max(ear_deaf, 1)
 			else if(ear_deaf)			//deafness, heals slowly over time
 				ear_deaf = max(ear_deaf-1, 0)
-			else if(istype(ears, /obj/item/clothing/ears/earmuffs))	//resting your ears with earmuffs heals ear damage faster
+			else if(is_on_ears(/obj/item/clothing/ears/earmuffs))	//resting your ears with earmuffs heals ear damage faster
 				ear_damage = max(ear_damage-0.15, 0)
 				ear_deaf = max(ear_deaf, 1)
 			else if(ear_damage < 25)	//ear damage heals slowly under this threshold. otherwise you'll need earmuffs
@@ -1269,56 +1286,47 @@
 						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
 
 			if(glasses)
-				if(istype(glasses, /obj/item/clothing/glasses/meson))
-					sight |= SEE_TURFS
-					if(!druggy)
-						see_invisible = SEE_INVISIBLE_MINIMUM
-				else if(istype(glasses, /obj/item/clothing/glasses/night))
-					see_in_dark = 5
-					if(!druggy)
-						see_invisible = SEE_INVISIBLE_MINIMUM
-				else if(istype(glasses, /obj/item/clothing/glasses/thermal))
-					sight |= SEE_MOBS
-					if(!druggy)
-						see_invisible = SEE_INVISIBLE_MINIMUM
-				else if(istype(glasses, /obj/item/clothing/glasses/material))
-					sight |= SEE_OBJS
-					if(!druggy)
-						see_invisible = SEE_INVISIBLE_MINIMUM
+				var/obj/item/clothing/glasses/G = glasses
+				if(istype(G))
+					see_in_dark += G.darkness_view
+					if(G.vision_flags)
+						sight |= G.vision_flags
+						if(!druggy)
+							see_invisible = SEE_INVISIBLE_MINIMUM
 
 	/* HUD shit goes here, as long as it doesn't modify sight flags */
 	// The purpose of this is to stop xray and w/e from preventing you from using huds -- Love, Doohl
 
-				else if(istype(glasses, /obj/item/clothing/glasses/sunglasses))
-					see_in_dark = 1
-					if(istype(glasses, /obj/item/clothing/glasses/sunglasses/sechud))
-						var/obj/item/clothing/glasses/sunglasses/sechud/O = glasses
-						if(O.hud)		O.hud.process_hud(src)
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
-
+				if(istype(glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+					var/obj/item/clothing/glasses/sunglasses/sechud/O = glasses
+					if(O.hud)		O.hud.process_hud(src)
+					if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
 				else if(istype(glasses, /obj/item/clothing/glasses/hud))
 					var/obj/item/clothing/glasses/hud/O = glasses
 					O.process_hud(src)
 					if(!druggy)
 						see_invisible = SEE_INVISIBLE_LIVING
-				else
-					see_invisible = SEE_INVISIBLE_LIVING
+
 			else if(!seer)
 				see_invisible = SEE_INVISIBLE_LIVING
 
 			if(healths)
-				switch(hal_screwyhud)
-					if(1)  healths.icon_state = "health6"
-					if(2)  healths.icon_state = "health7"
-					else
-						switch(health - halloss)
-							if(100 to INFINITY)    healths.icon_state = "health0"
-							if(80 to 100)      healths.icon_state = "health1"
-							if(60 to 80)      healths.icon_state = "health2"
-							if(40 to 60)      healths.icon_state = "health3"
-							if(20 to 40)      healths.icon_state = "health4"
-							if(0 to 20)        healths.icon_state = "health5"
-							else          healths.icon_state = "health6"
+				if (analgesic)
+					healths.icon_state = "health_health_numb"
+				else
+					switch(hal_screwyhud)
+						if(1)	healths.icon_state = "health6"
+						if(2)	healths.icon_state = "health7"
+						else
+							//switch(health - halloss)
+							switch(100 - ((species && species.flags & NO_PAIN) ? 0 : traumatic_shock))
+								if(100 to INFINITY)		healths.icon_state = "health0"
+								if(80 to 100)			healths.icon_state = "health1"
+								if(60 to 80)			healths.icon_state = "health2"
+								if(40 to 60)			healths.icon_state = "health3"
+								if(20 to 40)			healths.icon_state = "health4"
+								if(0 to 20)				healths.icon_state = "health5"
+								else					healths.icon_state = "health6"
 
 			if(nutrition_icon)
 				switch(nutrition)
@@ -1386,10 +1394,6 @@
 				var/obj/item/clothing/glasses/welding/O = glasses
 				if(!O.up && tinted_weldhelh)
 					client.screen += global_hud.darkMask
-
-			if(eye_stat > 20)
-				if(eye_stat > 30)	client.screen += global_hud.darkMask
-				else				client.screen += global_hud.vimpaired
 
 			if(machine)
 				if(!machine.check_eye(src))		reset_view(null)
@@ -1481,16 +1485,17 @@
 	handle_shock()
 		..()
 		if(status_flags & GODMODE)	return 0	//godmode
-		if(analgesic) return // analgesic avoids all traumatic shock temporarily
+		if(analgesic || (species && species.flags & NO_PAIN)) return // analgesic avoids all traumatic shock temporarily
 
-		if(health < 0)// health 0 makes you immediately collapse
+		if(health < config.health_threshold_softcrit)// health 0 makes you immediately collapse
 			shock_stage = max(shock_stage, 61)
 
 		if(traumatic_shock >= 80)
-			if(prob(50))
-				shock_stage += 1
+			shock_stage += 1
+		else if(health < config.health_threshold_softcrit)
+			shock_stage = max(shock_stage, 61)
 		else
-			shock_stage = min(shock_stage, 100)
+			shock_stage = min(shock_stage, 160)
 			shock_stage = max(shock_stage-1, 0)
 			return
 
@@ -1507,18 +1512,32 @@
 
 		if (shock_stage >= 60)
 			if(shock_stage == 60) emote("me",1,"'s body becomes limp.")
-			if (prob(5) && health <= 20)
-				Stun(20)
-				lying = 1
+			if (prob(2))
+				src << "<font color='red'><b>"+pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")
+				Weaken(20)
 
-		if(shock_stage == 80)
-			src << "<font color='red'><b>"+pick("You see a light at the end of the tunnel!", "You feel like you could die any moment now.", "You're about to lose consciousness.")
+		if(shock_stage >= 80)
+			if (prob(5))
+				src << "<font color='red'><b>"+pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")
+				Weaken(20)
 
-		if (shock_stage > 100 && health <= 20)
-			Paralyse(rand(15,28))
+		if(shock_stage >= 120)
+			if (prob(2))
+				src << "<font color='red'><b>"+pick("You black out!", "You feel like you could die any moment now.", "You're about to lose consciousness.")
+				Paralyse(5)
+
+		if(shock_stage == 150)
+			emote("me",1,"can no longer stand, collapsing!")
+			Weaken(20)
+
+		if(shock_stage >= 150)
+			Weaken(20)
 
 	proc/handle_pulse()
+
 		if(life_tick % 5) return pulse	//update pulse every 5 life ticks (~1 tick/sec, depending on server load)
+
+		if(species && species.flags & NO_BLOOD) return PULSE_NONE //No blood, no pulse.
 
 		if(stat == DEAD)
 			return PULSE_NONE	//that's it, you're dead, nothing can influence your pulse
@@ -1541,6 +1560,15 @@
 			if(R.id in tachycardics)
 				if(temp <= PULSE_FAST && temp >= PULSE_NONE)
 					temp++
+					break
+		for(var/datum/reagent/R in reagents.reagent_list) //To avoid using fakedeath
+			if(R.id in heartstopper)
+				temp = PULSE_NONE
+				break
+		for(var/datum/reagent/R in reagents.reagent_list) //Conditional heart-stoppage
+			if(R.id in cheartstopper)
+				if(R.volume >= R.overdose)
+					temp = PULSE_NONE
 					break
 
 		return temp

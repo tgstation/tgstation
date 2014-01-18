@@ -13,6 +13,7 @@
 	var/tail                     // Name of tail image in species effects icon file.
 	var/language                 // Default racial language, if any.
 	var/attack_verb = "punch"    // Empty hand hurt intent verb.
+	var/punch_damage = 0		 // Extra empty hand attack damage.
 	var/mutantrace               // Safeguard due to old code.
 
 	var/breath_type = "oxygen"   // Non-oxygen gas breathed, if any.
@@ -44,6 +45,11 @@
 
 	var/flags = 0       // Various specific features.
 
+	var/list/abilities = list()	// For species-derived or admin-given powers
+
+	var/blood_color = "#A10808" //Red.
+	var/flesh_color = "#FFC896" //Pink.
+
 /datum/species/proc/say_filter(mob/M, message, datum/language/speaking)
 	return message
 
@@ -51,6 +57,7 @@
 
 /datum/species/human
 	name = "Human"
+	language = "Sol Common"
 	primitive = /mob/living/carbon/monkey
 
 	flags = HAS_SKIN_TONE | HAS_LIPS | HAS_UNDERWEAR | CAN_BE_FAT
@@ -62,10 +69,21 @@
 	language = "Sinta'unathi"
 	tail = "sogtail"
 	attack_verb = "scratch"
+	punch_damage = 5
 	primitive = /mob/living/carbon/monkey/unathi
 	darksight = 3
 
-	flags = WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL
+	cold_level_1 = 280 //Default 260 - Lower is better
+	cold_level_2 = 220 //Default 200
+	cold_level_3 = 130 //Default 120
+
+	heat_level_1 = 420 //Default 360 - Higher is better
+	heat_level_2 = 480 //Default 400
+	heat_level_3 = 1100 //Default 1000
+
+	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL
+
+	flesh_color = "#34AF10"
 
 /datum/species/unathi/say_filter(mob/M, message, datum/language/speaking)
 	if(copytext(message, 1, 2) != "*")
@@ -79,7 +97,7 @@
 	language = "Clatter"
 	attack_verb = "punch"
 
-	flags = WHITELISTED | HAS_LIPS | HAS_TAIL | NO_EAT | NO_BREATHE | NON_GENDERED
+	flags = IS_WHITELISTED | HAS_LIPS | HAS_TAIL /*| NO_EAT*/ | NO_BREATHE /*| NON_GENDERED*/
 
 
 /datum/species/tajaran
@@ -89,19 +107,22 @@
 	language = "Siik'tajr"
 	tail = "tajtail"
 	attack_verb = "scratch"
+	punch_damage = 5
 	darksight = 8
 
-	cold_level_1 = 200
-	cold_level_2 = 140
-	cold_level_3 = 80
+	cold_level_1 = 200 //Default 260
+	cold_level_2 = 140 //Default 200
+	cold_level_3 = 80 //Default 120
 
-	heat_level_1 = 330
-	heat_level_2 = 380
-	heat_level_3 = 800
+	heat_level_1 = 330 //Default 360
+	heat_level_2 = 380 //Default 400
+	heat_level_3 = 800 //Default 1000
 
 	primitive = /mob/living/carbon/monkey/tajara
 
-	flags = WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL
+	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL
+
+	flesh_color = "#AFA59E"
 
 /datum/species/grey // /vg/
 	name = "Grey"
@@ -129,7 +150,9 @@
 	language = "Skrellian"
 	primitive = /mob/living/carbon/monkey/skrell
 
-	flags = WHITELISTED | HAS_LIPS | HAS_UNDERWEAR
+	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR
+
+	flesh_color = "#8CD7A3"
 
 /datum/species/vox
 	name = "Vox"
@@ -147,7 +170,10 @@
 	eyes = "vox_eyes_s"
 	breath_type = "nitrogen"
 
-	flags = WHITELISTED | NO_SCAN
+	flags = WHITELISTED | NO_SCAN | NO_BLOOD
+
+	blood_color = "#2299FC"
+	flesh_color = "#808D11"
 
 	equip(var/mob/living/carbon/human/H)
 		// Unequip existing suits and hats.
@@ -185,6 +211,7 @@
 	deform = 'icons/mob/human_races/r_def_plant.dmi'
 	language = "Rootspeak"
 	attack_verb = "slash"
+	punch_damage = 5
 	primitive = /mob/living/carbon/monkey/diona
 
 	warning_low_pressure = 50
@@ -198,4 +225,8 @@
 	heat_level_2 = 3000
 	heat_level_3 = 4000
 
-	flags = WHITELISTED | NO_BREATHE | REQUIRE_LIGHT | NON_GENDERED | NO_SCAN | IS_PLANT | RAD_ABSORB
+	flags = IS_WHITELISTED | NO_BREATHE | REQUIRE_LIGHT | NO_SCAN | IS_PLANT | RAD_ABSORB | NO_BLOOD | IS_SLOW | NO_PAIN
+
+	blood_color = "#004400"
+	flesh_color = "#907E4A"
+

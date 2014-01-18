@@ -86,7 +86,7 @@
 		src << "<span class='warning'>This creature's DNA is ruined beyond useability!</span>"
 		return
 
-	if(!G.killing)
+	if(!G.state == GRAB_KILL)
 		src << "<span class='warning'>We must have a tighter grip to absorb this creature.</span>"
 		return
 
@@ -204,6 +204,10 @@
 
 	var/datum/changeling/changeling = changeling_power(1,0,0)
 	if(!changeling)	return
+
+	if(src.has_brain_worms())
+		src << "<span class='warning'>We cannot perform this ability at the present time!</span>"
+		return
 
 	var/mob/living/carbon/C = src
 	changeling.chem_charges--

@@ -140,28 +140,6 @@
 	return
 
 
-/mob/living/carbon/alien/larva/hand_p(mob/M as mob)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
-		return
-
-	if (M.a_intent == "hurt")
-		if (istype(M.wear_mask, /obj/item/clothing/mask/muzzle))
-			return
-		if (health > 0)
-
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
-			var/damage = rand(1, 3)
-
-			adjustBruteLoss(damage)
-
-			updatehealth()
-
-	return
-
-
 /mob/living/carbon/alien/larva/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
@@ -248,7 +226,7 @@
 		if(G.cell)
 			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
-					G.cell.charge -= 2500
+					G.cell.use(2500)
 
 					Weaken(5)
 					if (stuttering < 5)

@@ -6,7 +6,7 @@ HEALTH ANALYZER
 GAS ANALYZER
 PLANT ANALYZER
 MASS SPECTROMETER
-
+REAGENT SCANNER
 */
 /obj/item/device/t_scanner
 	name = "T-ray scanner"
@@ -143,7 +143,12 @@ MASS SPECTROMETER
 		if(M:reagents.total_volume > 0)
 			user.show_message(text("\red Warning: Unknown substance detected in subject's blood."))
 		if(M:virus2.len)
-			user.show_message(text("\red Warning: Unknown pathogen detected in subject's blood."))
+			var/mob/living/carbon/C = M
+			for (var/ID in C.virus2)
+				if (ID in virusDB)
+					var/datum/data/record/V = virusDB[ID]
+					user.show_message(text("\red Warning: Pathogen [V.fields["name"]] detected in subject's blood. Known antigen : [V.fields["antigen"]]"))
+//			user.show_message(text("\red Warning: Unknown pathogen detected in subject's blood."))
 	if (M.getCloneLoss())
 		user.show_message("\red Subject appears to have been imperfectly cloned.")
 	for(var/datum/disease/D in M.viruses)
@@ -151,7 +156,9 @@ MASS SPECTROMETER
 			user.show_message(text("\red <b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]"))
 	if (M.reagents && M.reagents.get_reagent_amount("inaprovaline"))
 		user.show_message("\blue Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals.")
-	if (M.getBrainLoss() >= 100 || istype(M, /mob/living/carbon/human) && M:brain_op_stage == 4.0)
+	if (M.has_brain_worms())
+		user.show_message("\red Subject suffering from aberrant brain activity. Recommend further scanning.")
+	else if (M.getBrainLoss() >= 100 || istype(M, /mob/living/carbon/human) && M:brain_op_stage == 4.0)
 		user.show_message("\red Subject is brain dead.")
 	else if (M.getBrainLoss() >= 60)
 		user.show_message("\red Severe brain damage detected. Subject likely to have mental retardation.")

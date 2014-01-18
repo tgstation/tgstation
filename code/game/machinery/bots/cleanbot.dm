@@ -55,6 +55,8 @@
 	var/datum/job/janitor/J = new/datum/job/janitor
 	src.botcard.access = J.get_access()
 
+	src.locked = 0 // Start unlocked so roboticist can set them to patrol.
+
 	if(radio_controller)
 		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
 
@@ -300,33 +302,30 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 
 	target_types += /obj/effect/decal/cleanable/blood/oil
 	target_types += /obj/effect/decal/cleanable/vomit
-	target_types += /obj/effect/decal/cleanable/blood/robot
 	target_types += /obj/effect/decal/cleanable/crayon
 	target_types += /obj/effect/decal/cleanable/liquid_fuel
 	target_types += /obj/effect/decal/cleanable/mucus
 
 	if(src.blood)
-		target_types += /obj/effect/decal/cleanable/blood/xeno/
-		target_types += /obj/effect/decal/cleanable/blood/xeno/xgibs
 		target_types += /obj/effect/decal/cleanable/blood/
 		target_types += /obj/effect/decal/cleanable/blood/tracks
 		target_types += /obj/effect/decal/cleanable/blood/gibs/
 		target_types += /obj/effect/decal/cleanable/dirt
 
 /obj/machinery/bot/cleanbot/proc/clean(var/obj/effect/decal/cleanable/target)
-	src.anchored = 1
-	src.icon_state = "cleanbot-c"
+	anchored = 1
+	icon_state = "cleanbot-c"
 	visible_message("\red [src] begins to clean up the [target]")
-	src.cleaning = 1
+	cleaning = 1
 	var/cleantime = 50
 	if(istype(target,/obj/effect/decal/cleanable/dirt))		// Clean Dirt much faster
 		cleantime = 10
 	spawn(cleantime)
 		src.cleaning = 0
 		del(target)
-		src.icon_state = "cleanbot[src.on]"
-		src.anchored = 0
-		src.target = null
+		icon_state = "cleanbot[on]"
+		anchored = 0
+		target = null
 
 /obj/machinery/bot/cleanbot/explode()
 	src.on = 0

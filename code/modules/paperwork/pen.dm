@@ -16,7 +16,7 @@
 	icon_state = "pen"
 	item_state = "pen"
 	flags = FPRINT | TABLEPASS
-	slot_flags = SLOT_BELT | SLOT_EARS
+	slot_flags = SLOT_BELT | slot_l_ear
 	throwforce = 0
 	w_class = 1.0
 	throw_speed = 7

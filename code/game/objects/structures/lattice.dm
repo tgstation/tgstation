@@ -51,6 +51,7 @@
 
 /obj/structure/lattice/attackby(obj/item/C as obj, mob/user as mob)
 
+	// /vg/ - Rods for catwalks - N3X
 	if (istype(C, /obj/item/stack/tile/plasteel) || istype(C, /obj/item/stack/rods))
 		var/turf/T = get_turf(src)
 		T.attackby(C, user) //BubbleWrap - hand this off to the underlying turf instead

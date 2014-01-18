@@ -181,7 +181,7 @@
 			M << sound('sound/items/AirHorn.ogg')
 			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
-				if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
+				if(H.is_on_ears(/obj/item/clothing/ears/earmuffs))
 					continue
 			M << "<font color='red' size='7'>HONK</font>"
 			M.sleeping = 0

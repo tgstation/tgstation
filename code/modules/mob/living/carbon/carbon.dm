@@ -139,10 +139,10 @@
 	if(istext(selhand))
 		selhand = lowertext(selhand)
 
-	if(selhand == "right" || selhand == "r")
-		selhand = 0
-	if(selhand == "left" || selhand == "l")
-		selhand = 1
+		if(selhand == "right" || selhand == "r")
+			selhand = 0
+		if(selhand == "left" || selhand == "l")
+			selhand = 1
 
 	if(selhand != src.hand)
 		swap_hand()
@@ -335,24 +335,6 @@
 //Throwing stuff
 
 /mob/living/carbon/proc/toggle_throw_mode()
-	var/obj/item/W = get_active_hand()
-	if( !W )//Not holding anything
-		if( client && (TK in mutations) )
-			if(ishuman(src))
-				var/mob/living/carbon/human/H = src
-				if(H.remoteview_target)
-					H << "\red Your mind is too busy remote viewing."
-					return
-			var/obj/item/tk_grab/O = new(src)
-			put_in_active_hand(O)
-			O.host = src
-		return
-
-	if( istype(W,/obj/item/tk_grab) )
-		if(hand)	del(l_hand)
-		else		del(r_hand)
-		return
-
 	if (src.in_throw_mode)
 		throw_mode_off()
 	else
@@ -366,7 +348,10 @@
 	src.in_throw_mode = 1
 	src.throw_icon.icon_state = "act_throw_on"
 
-/mob/living/carbon/proc/throw_item(atom/target)
+/mob/proc/throw_item(atom/target)
+	return
+
+/mob/living/carbon/throw_item(atom/target)
 	src.throw_mode_off()
 	if(usr.stat || !target)
 		return
@@ -379,7 +364,6 @@
 	if (istype(item, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = item
 		item = G.throw() //throw the person instead of the grab
-		del(G)
 		if(ismob(item))
 			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 			var/turf/end_T = get_turf(target)
@@ -504,6 +488,15 @@
 			return method ? ">250" : "extremely weak and fast, patient's artery feels like a thread"
 //			output for machines^	^^^^^^^output for people^^^^^^^^^
 
+/mob/living/carbon/verb/mob_sleep()
+	set name = "Sleep"
+	set category = "IC"
+
+	if(usr.sleeping)
+		usr << "\red You are already sleeping"
+		return
+	if(alert(src,"You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
+		usr.sleeping = 20 //Short nap
 
 //Brain slug proc for voluntary removal of control.
 /mob/living/carbon/proc/release_control()
@@ -548,7 +541,7 @@
 		B.host_brain << "\red <B><FONT size=3>Horrific, burning agony lances through you, ripping a soundless scream from your trapped mind!</FONT></B>"
 
 //Check for brain worms in head.
-/mob/living/carbon/proc/has_brain_worms()
+/mob/proc/has_brain_worms()
 
 	for(var/I in contents)
 		if(istype(I,/mob/living/simple_animal/borer))

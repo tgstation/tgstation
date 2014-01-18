@@ -96,6 +96,8 @@
 		return 1
 
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
+	if(!Adjacent(target_mob))
+		return
 	if(isliving(target_mob))
 		var/mob/living/L = target_mob
 		L.attack_animal(src)

@@ -44,11 +44,6 @@
 	if(prob(75))
 		del(src)
 
-/obj/machinery/optable/hand_p(mob/user as mob)
-
-	return src.attack_paw(user)
-	return
-
 /obj/machinery/optable/attack_paw(mob/user as mob)
 	if ((HULK in usr.mutations))
 		usr << text("\blue You destroy the operating table.")
@@ -137,22 +132,44 @@
 /obj/machinery/optable/process()
 	check_victim()
 
-/obj/machinery/optable/attackby(obj/item/weapon/W as obj, mob/living/carbon/user as mob)
+/obj/machinery/optable/proc/take_victim(mob/living/carbon/C, mob/living/carbon/user as mob)
+	if (C == user)
+		user.visible_message("[user] climbs on the operating table.","You climb on the operating table.")
+	else
+		visible_message("\red [C] has been laid on the operating table by [user].", 3)
+	if (C.client)
+		C.client.perspective = EYE_PERSPECTIVE
+		C.client.eye = src
+	C.resting = 1
+	C.loc = src.loc
+	for(var/obj/O in src)
+		O.loc = src.loc
+	src.add_fingerprint(user)
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		src.victim = H
+		icon_state = H.pulse ? "table2-active" : "table2-idle"
+	else
+		icon_state = "table2-idle"
 
+/obj/machinery/optable/verb/climb_on()
+	set name = "Climb On Table"
+	set category = "Object"
+	set src in oview(1)
+
+	if(usr.stat || !ishuman(usr) || usr.buckled || usr.restrained())
+		return
+
+	if(src.victim)
+		usr << "\blue <B>The table is already occupied!</B>"
+		return
+
+	take_victim(usr,usr)
+
+/obj/machinery/optable/attackby(obj/item/weapon/W as obj, mob/living/carbon/user as mob)
 	if (istype(W, /obj/item/weapon/grab))
-		if(ismob(W:affecting))
-			var/mob/M = W:affecting
-			if (M.client)
-				M.client.perspective = EYE_PERSPECTIVE
-				M.client.eye = src
-			M.resting = 1
-			M.loc = src.loc
-			visible_message("\red [M] has been laid on the operating table by [user].", 3)
-			for(var/obj/O in src)
-				O.loc = src.loc
-			src.add_fingerprint(user)
-			icon_state = "table2-active"
-			src.victim = M
+		if(iscarbon(W:affecting))
+			take_victim(W:affecting,usr)
 			del(W)
 			return
 	if(isrobot(user)) return

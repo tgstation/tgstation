@@ -17,7 +17,7 @@
 /datum/poster/bay_4
 	icon_state="bsposter4"
 	name = "Keep Calm"
-	desc = "This particular one is of a famous New Earth design, although a bit modified."
+	desc = "This particular one is of a famous New Earth design, although a bit modified. Someone has scribbled an O over the A on the poster."
 
 /datum/poster/bay_5
 	icon_state="bsposter5"
@@ -52,7 +52,7 @@
 /datum/poster/bay_11
 	icon_state="bsposter11"
 	name = "Underwater Laboratory"
-	desc = "This particular one is of the fabled last crew of Nanotrasen's previous project before going big on Asteroid mining, Sealab."
+	desc = "This particular one is of the fabled last crew of Nanotrasen's previous project before going big on plasma research."
 
 /datum/poster/bay_12
 	icon_state="bsposter12"
@@ -62,12 +62,12 @@
 /datum/poster/bay_13
 	icon_state="bsposter13"
 	name = "User of the Arcane Arts"
-	desc = "This particular one depicts a wizard, casting a spell. You can't really make out if it's an actial photograph or a computer-generated image."
+	desc = "This particular one depicts a wizard, casting a spell. You can't really make out if it's an actual photograph or a computer-generated image."
 
 /datum/poster/bay_14
 	icon_state="bsposter14"
 	name = "Levitating Skull"
-	desc = "This particular one is the portrait of a certain flying, friendly and somewhat sex-crazed enchanted skull. Its adventures along with its fabled companion are now fading through history..."
+	desc = "This particular one is the portrait of a flying enchanted skull. Its adventures along with its fabled companion are now fading through history..."
 
 /datum/poster/bay_15
 	icon_state="bsposter15"
@@ -77,7 +77,7 @@
 /datum/poster/bay_16
 	icon_state="bsposter16"
 	name = "Dangerous Static"
-	desc = "This particular one depicts nothing remarkable other than a rather mesmerising pattern of monitor static. There's a tag on the sides of the poster, urging you to \"tear this poster in half to receive your free sample\"."
+	desc = "This particular one depicts nothing remarkable other than a rather mesmerising pattern of monitor static. There's a tag on the sides of the poster, but it's ripped off."
 
 /datum/poster/bay_17
 	icon_state="bsposter17"
@@ -142,4 +142,4 @@
 /datum/poster/bay_29
 	icon_state="bsposter29"
 	name = "Winter Is Coming"
-	desc = "On the poster is a frighteningly large wolf, the message on the poster seems ominous."
+	desc = "On the poster is a frighteningly large wolf, he warns: \"Only YOU can keep the station from freezing during planetary occultation!\""

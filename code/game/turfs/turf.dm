@@ -274,7 +274,13 @@
 		W.levelupdate()
 		return W
 
+
+//Commented out by SkyMarshal 5/10/13 - If you are patching up space, it should be vacuum.
+//  If you are replacing a wall, you have increased the volume of the room without increasing the amount of gas in it.
+//  As such, this will no longer be used.
+
 //////Assimilate Air//////
+/*
 /turf/simulated/proc/Assimilate_Air()
 	var/aoxy = 0//Holders to assimilate air from nearby turfs
 	var/anitro = 0
@@ -318,6 +324,7 @@
 				S.air.toxins = air.toxins
 				S.air.temperature = air.temperature
 				S.air.update_values()
+*/
 
 /turf/proc/ReplaceWithLattice()
 	src.ChangeTurf(/turf/space)

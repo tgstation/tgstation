@@ -84,39 +84,6 @@
 		M.show_message( message, 1, blind_message, 2)
 
 
-//This is awful
-/mob/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
-	//Holding a balloon will shield you from an item that is_sharp() ... cause that makes sense
-	if (user.intent != "harm")
-		if (istype(src.l_hand,/obj/item/latexballon) && src.l_hand:air_contents && is_sharp(W))
-			return src.l_hand.attackby(W)
-		if (istype(src.r_hand,/obj/item/latexballon) && src.r_hand:air_contents && is_sharp(W))
-			return src.r_hand.attackby(W)
-
-	//If src is grabbing someone and facing the attacker, the src will use the grabbed person as a shield
-	var/shielded = 0
-	if (locate(/obj/item/weapon/grab, src))
-		var/mob/safe = null
-		if (istype(src.l_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = src.l_hand
-			if ((G.state == 3 && get_dir(src, user) == src.dir))
-				safe = G.affecting
-		if (istype(src.r_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = src.r_hand
-			if ((G.state == 3 && get_dir(src, user) == src.dir))
-				safe = G.affecting
-		if (safe)
-			return safe.attackby(W, user)
-
-	//If the mob is not wearing a shield or otherwise is not shielded
-	if ((!( shielded ) || !( W.flags ) & NOSHIELD))
-		spawn( 0 )
-			if (W && istype(W, /obj/item)) //The istype is necessary for things like bodybags which are structures that do not have an attack() proc.
-				W.attack(src, user)
-				return
-	return
-
 /mob/proc/findname(msg)
 	for(var/mob/M in mob_list)
 		if (M.real_name == text("[]", msg))
@@ -146,7 +113,6 @@
 //This proc is called whenever someone clicks an inventory ui slot.
 /mob/proc/attack_ui(slot)
 	var/obj/item/W = get_active_hand()
-
 	if(istype(W))
 		equip_to_slot_if_possible(W, slot)
 	if(ishuman(src) && W == src:head)
@@ -303,8 +269,24 @@
 								u_equip(W)
 								del(W)
 								equip_to_slot(wearing, slot, redraw_mob)
-					if(slot_ears)
-						wearing = H.ears
+					// oh god what am I doing - N3X
+					if(slot_l_ear)
+						wearing = H.l_ear
+						equip_to_slot(W, slot, redraw_mob)
+						if(wearing)
+							if(hand)
+								r_hand = wearing
+								update_inv_r_hand()
+							else if(hand == 0)
+								l_hand = wearing
+								update_inv_l_hand()
+							else
+								u_equip(W)
+								del(W)
+								equip_to_slot(wearing, slot, redraw_mob)
+					// aaaaaaaaa
+					if(slot_r_ear)
+						wearing = H.r_ear
 						equip_to_slot(W, slot, redraw_mob)
 						if(wearing)
 							if(hand)
@@ -439,7 +421,8 @@ var/list/slot_equipment_priority = list( \
 		slot_head,\
 		slot_shoes,\
 		slot_gloves,\
-		slot_ears,\
+		slot_l_ear,\
+		slot_r_ear,\
 		slot_glasses,\
 		slot_belt,\
 		slot_s_store,\
@@ -556,11 +539,20 @@ var/list/slot_equipment_priority = list( \
 					else
 						return 0
 				return 1
-			if(slot_ears)
-				if( !(slot_flags & SLOT_EARS) )
+			if(slot_l_ear)
+				if( !(slot_flags & slot_l_ear) )
 					return 0
-				if(H.ears)
-					if(H.ears.canremove)
+				if(H.l_ear)
+					if(H.l_ear.canremove)
+						return 2
+					else
+						return 0
+				return 1
+			if(slot_r_ear)
+				if( !(slot_flags & slot_r_ear) )
+					return 0
+				if(H.r_ear)
+					if(H.r_ear.canremove)
 						return 2
 					else
 						return 0
@@ -736,6 +728,8 @@ var/list/slot_equipment_priority = list( \
 		if (W)
 			W.attack_self(src)
 			update_inv_r_hand()
+	if(next_move < world.time)
+		next_move = world.time + 2
 	return
 
 /*
@@ -830,10 +824,11 @@ var/list/slot_equipment_priority = list( \
 		return
 	else
 		var/deathtime = world.time - src.timeofdeath
-		var/mob/dead/observer/G = src
-		if(G.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
-			usr << "\blue <B>Upon using the antagHUD you forfeighted the ability to join the round.</B>"
-			return
+		if(istype(src,/mob/dead/observer))
+			var/mob/dead/observer/G = src
+			if(G.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
+				usr << "\blue <B>Upon using the antagHUD you forfeighted the ability to join the round.</B>"
+				return
 		var/deathtimeminutes = round(deathtime / 600)
 		var/pluralcheck = "minute"
 		if(deathtimeminutes == 0)
@@ -1012,21 +1007,21 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/pull_damage()
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
-		if(H.health - H.halloss <= config.health_threshold_crit)
+		if(H.health - H.halloss <= config.health_threshold_softcrit)
 			for(var/name in H.organs_by_name)
 				var/datum/organ/external/e = H.organs_by_name[name]
-				if((H.lying) && ((e.status & ORGAN_BROKEN && !(e.status & ORGAN_SPLINTED)) || e.status & ORGAN_BLEEDING) && (H.getBruteLoss() + H.getFireLoss() >= 100))
-					return 1
-					break
+				if(H.lying)
+					if(((e.status & ORGAN_BROKEN && !(e.status & ORGAN_SPLINTED)) || e.status & ORGAN_BLEEDING) && (H.getBruteLoss() + H.getFireLoss() >= 100))
+						return 1
+						break
 		return 0
 
 /mob/MouseDrop(mob/M as mob)
 	..()
 	if(M != usr) return
 	if(usr == src) return
-	if(get_dist(usr,src) > 1) return
+	if(!Adjacent(usr)) return
 	if(istype(M,/mob/living/silicon/ai)) return
-	if(LinkBlocked(usr.loc,loc)) return
 	show_inv(usr)
 
 
@@ -1040,6 +1035,7 @@ var/list/slot_equipment_priority = list( \
 		pulling = null
 
 /mob/proc/start_pulling(var/atom/movable/AM)
+
 	if ( !AM || !usr || src==AM || !isturf(src.loc) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
 		return
 
@@ -1062,6 +1058,11 @@ var/list/slot_equipment_priority = list( \
 
 	src.pulling = AM
 	AM.pulledby = src
+
+	if(ishuman(AM))
+		var/mob/living/carbon/human/H = AM
+		if(H.pull_damage())
+			src << "\red <B>Pulling \the [H] in their current condition would probably be a bad idea.</B>"
 
 	//Attempted fix for people flying away through space when cuffed and dragged.
 	if(ismob(AM))
@@ -1180,6 +1181,15 @@ note dizziness decrements automatically in the mob's Life() proc.
 			else
 				stat(null,"MasterController-ERROR")
 
+	if(listed_turf && client)
+		if(get_dist(listed_turf,src) > 1)
+			listed_turf = null
+		else
+			statpanel(listed_turf.name, null, listed_turf)
+			for(var/atom/A in listed_turf)
+				if(A.invisibility > see_invisible)
+					continue
+				statpanel(listed_turf.name, null, A)
 
 	if(spell_list && spell_list.len)
 		for(var/obj/effect/proc_holder/spell/S in spell_list)
@@ -1193,15 +1203,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 				if("holdervar")
 					statpanel("Spells","[S.holder_var_type] [S.holder_var_amount]",S)
 
-	if(listed_turf)
-		if(get_dist(listed_turf,src) > 1)
-			listed_turf = null
-		else
-			statpanel(listed_turf.name,listed_turf.name,listed_turf)
-			for(var/atom/A in listed_turf)
-				if(A.invisibility > see_invisible)
-					continue
-				statpanel(listed_turf.name,A.name,A)
 
 
 // facing verbs
@@ -1230,6 +1231,10 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else if( stunned )
 //		lying = 0
 		canmove = 0
+	else if(captured)
+		anchored = 1
+		canmove = 0
+		lying = 0
 	else
 		lying = !can_stand
 		canmove = has_limbs

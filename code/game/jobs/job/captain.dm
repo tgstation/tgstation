@@ -14,7 +14,7 @@
 	minimal_player_age = 14
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
-		H.equip_to_slot_or_drop(new /obj/item/device/radio/headset/heads/captain(H), slot_ears)
+		H.equip_to_slot_or_drop(new /obj/item/device/radio/headset/heads/captain(H), slot_l_ear)
 		switch(H.backbag)
 			if(2) H.equip_to_slot_or_drop(new /obj/item/weapon/storage/backpack/captain(H), slot_back)
 			if(3) H.equip_to_slot_or_drop(new /obj/item/weapon/storage/backpack/satchel_cap(H), slot_back)
@@ -35,6 +35,9 @@
 		L.imp_in = H
 		L.implanted = 1
 		world << "<b>[H.real_name] is the captain!</b>"
+		var/datum/organ/external/affected = H.organs_by_name["head"]
+		affected.implants += L
+		L.part = affected
 		return 1
 
 	get_access()
@@ -70,7 +73,7 @@
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
-		H.equip_to_slot_or_drop(new /obj/item/device/radio/headset/heads/hop(H), slot_ears)
+		H.equip_to_slot_or_drop(new /obj/item/device/radio/headset/heads/hop(H), slot_l_ear)
 		switch(H.backbag)
 			if(2) H.equip_to_slot_or_drop(new /obj/item/weapon/storage/backpack(H), slot_back)
 			if(3) H.equip_to_slot_or_drop(new /obj/item/weapon/storage/backpack/satchel_norm(H), slot_back)

@@ -22,7 +22,7 @@
 	if(loc)
 		environment = loc.return_air()
 
-	if (stat != DEAD) //still breathing
+	if (stat != DEAD && !istype(src,/mob/living/carbon/monkey/diona)) //still breathing
 		//First, resolve location and get a breath
 		if(air_master.current_cycle%4==2)
 			//Only try to take a breath every 4 seconds, unless suffocating
@@ -73,8 +73,11 @@
 		G.process()
 
 	if(!client && stat == CONSCIOUS)
-		if(prob(33) && canmove && isturf(loc))
+
+		if(prob(33) && canmove && isturf(loc) && !pulledby) //won't move if being pulled
+
 			step(src, pick(cardinal))
+
 		if(prob(1))
 			emote(pick("scratch","jump","roll","tail"))
 
@@ -248,8 +251,7 @@
 							block = 1
 
 					if(!block)
-
-						for(var/obj/effect/effect/chem_smoke/smoke in view(1, src))
+						for(var/obj/effect/effect/smoke/chem/smoke in view(1, src))
 							if(smoke.reagents.total_volume)
 								smoke.reagents.reaction(src, INGEST)
 								spawn(5)
@@ -434,7 +436,7 @@
 
 	proc/handle_chemicals_in_body()
 
-		if(istype(src,/mob/living/carbon/monkey/diona)) //Filthy check. Dionaea nymphs need light or they get sad.
+		if(alien) //Diona nymphs are the only alien monkey currently.
 			var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 			if(isturf(loc)) //else, there's considered to be no light
 				var/turf/T = loc
@@ -449,11 +451,11 @@
 			if(nutrition > 500)
 				nutrition = 500
 			if(light_amount > 2) //if there's enough light, heal
-				heal_overall_damage(1,1)
+				adjustBruteLoss(-1)
 				adjustToxLoss(-1)
 				adjustOxyLoss(-1)
 
-		if(reagents) reagents.metabolize(src)
+		if(reagents) reagents.metabolize(src,alien)
 
 		if (drowsyness)
 			drowsyness--

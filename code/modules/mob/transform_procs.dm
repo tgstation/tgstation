@@ -46,6 +46,8 @@
 
 	spawn(0)//To prevent the proc from returning null.
 		del(src)
+	del(animation)
+
 	return O
 
 /mob/new_player/AIize()

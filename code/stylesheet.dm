@@ -19,6 +19,7 @@ em						{font-style: normal;	font-weight: bold;}
 
 .adminobserver			{color: #996600;	font-weight: bold;}
 .admin					{color: #386aff;	font-weight: bold;}
+.adminsay				{color: #9611D4;	font-weight: bold;}
 
 .name					{					font-weight: bold;}
 
@@ -65,6 +66,7 @@ h1.alert, h2.alert		{color: #000000;}
 .skrell					{color: #00CED1;}
 .soghun					{color: #228B22;}
 .vox					{color: #AA00AA;}
+.rough					{font-family: "Trebuchet MS", cursive, sans-serif;}
 .say_quote				{font-family: Georgia, Verdana, sans-serif;}
 
 .interface				{color: #330033;}

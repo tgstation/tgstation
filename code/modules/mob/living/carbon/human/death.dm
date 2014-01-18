@@ -20,7 +20,10 @@
 			E.droplimb(1,1)
 
 	flick("gibbed-h", animation)
-	hgibs(loc, viruses, dna)
+	if(species)
+		hgibs(loc, viruses, dna, species.flesh_color, species.blood_color)
+	else
+		hgibs(loc, viruses, dna)
 
 	spawn(15)
 		if(animation)	del(animation)

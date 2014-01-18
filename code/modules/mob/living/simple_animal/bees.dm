@@ -92,7 +92,7 @@
 
 		//smoke, water and steam calms us down
 		var/calming = 0
-		var/list/calmers = list(/obj/effect/effect/chem_smoke, \
+		var/list/calmers = list(/obj/effect/effect/smoke/chem, \
 		/obj/effect/effect/water, \
 		/obj/effect/effect/foam, \
 		/obj/effect/effect/steam, \

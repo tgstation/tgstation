@@ -14,6 +14,7 @@
 	//var/uni_append = "12C4E2"                // Small appearance modifier for different species.
 	var/list/uni_append = list(0x12C,0x4E2)    // Same as above for DNA2.
 	var/update_muts = 1                        // Monkey gene must be set at start.
+	var/alien = 0								//Used for reagent metabolism.
 
 /mob/living/carbon/monkey/tajara
 	name = "farwa"
@@ -99,6 +100,7 @@
 /mob/living/carbon/monkey/diona/New()
 
 	..()
+	alien = 1
 	gender = NEUTER
 	dna.mutantrace = "plant"
 	greaterform = "Diona"
@@ -188,23 +190,6 @@
 
 //mob/living/carbon/monkey/bullet_act(var/obj/item/projectile/Proj)taken care of in living
 
-/mob/living/carbon/monkey/hand_p(mob/M as mob)
-	if ((M.a_intent == "hurt" && !( istype(wear_mask, /obj/item/clothing/mask/muzzle) )))
-		if ((prob(75) && health > 0))
-			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
-			var/damage = rand(1, 5)
-			if (HULK in mutations) damage += 10
-			adjustBruteLoss(damage)
-			updatehealth()
-
-			for(var/datum/disease/D in M.viruses)
-				if(istype(D, /datum/disease/jungle_fever))
-					contract_disease(D,1,0)
-		else
-			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\red <B>[M.name] has attempted to bite []!</B>", src), 1)
-	return
 
 /mob/living/carbon/monkey/attack_paw(mob/M as mob)
 	..()
@@ -242,7 +227,7 @@
 		if(G.cell)
 			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
-					G.cell.charge -= 2500
+					G.cell.use(2500)
 					Weaken(5)
 					if (stuttering < 5)
 						stuttering = 5
@@ -285,10 +270,10 @@
 						O.show_message(text("\red <B>[] has attempted to punch [name]!</B>", M), 1)
 		else
 			if (M.a_intent == "grab")
-				if (M == src)
+				if (M == src || anchored)
 					return
 
-				var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
+				var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
 
 				M.put_in_active_hand(G)
 

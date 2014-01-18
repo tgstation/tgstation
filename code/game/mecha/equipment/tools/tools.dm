@@ -20,6 +20,11 @@
 	action(atom/target)
 		if(!action_checks(target)) return
 		if(!cargo_holder) return
+		if(istype(target, /obj/structure/stool)) return
+		for(var/M in target.contents)
+			if(istype(M, /mob/living))
+				return
+
 		if(istype(target,/obj))
 			var/obj/O = target
 			if(!O.anchored)
@@ -455,8 +460,18 @@
 	var/atom/movable/locked
 	var/mode = 1 //1 - gravsling 2 - gravpush
 
+	var/last_fired = 0  //Concept stolen from guns.
+	var/fire_delay = 10 //Used to prevent spam-brute against humans.
 
 	action(atom/movable/target)
+
+		if(world.time >= last_fired + fire_delay)
+			last_fired = world.time
+		else
+			if (world.time % 3)
+				occupant_message("<span class='warning'>[src] is not ready to fire again!")
+			return 0
+
 		switch(mode)
 			if(1)
 				if(!action_checks(target) && !locked) return
@@ -503,6 +518,7 @@
 		return "[..()] [mode==1?"([locked||"Nothing"])":null] \[<a href='?src=\ref[src];mode=1'>S</a>|<a href='?src=\ref[src];mode=2'>P</a>\]"
 
 	Topic(href, href_list)
+		..()
 		if(href_list["mode"])
 			mode = text2num(href_list["mode"])
 			send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())

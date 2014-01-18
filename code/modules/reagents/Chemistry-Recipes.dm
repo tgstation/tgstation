@@ -119,6 +119,13 @@ datum
 		//	required_reagents = list("hydrogen" = 1, "carbon" = 1, "nitrogen" = 1)
 		//	result_amount = 1
 
+		water //I can't believe we never had this.
+			name = "Water"
+			id = "water"
+			result = null
+			required_reagents = list("oxygen" = 2, "hydrogen" = 1)
+			result_amount = 1
+
 		thermite
 			name = "Thermite"
 			id = "thermite"
@@ -385,9 +392,9 @@ datum
 				for(var/turf/simulated/floor/target_tile in range(0,location))
 
 					var/datum/gas_mixture/napalm = new
-					//var/datum/gas/volatile_fuel/fuel = new
-					//fuel.moles = created_volume
-					napalm.toxins = (created_volume / 2)
+					var/datum/gas/volatile_fuel/fuel = new
+					fuel.moles = created_volume
+					napalm.trace_gases += fuel
 
 					napalm.temperature = 400+T0C
 					napalm.update_values()
@@ -433,7 +440,7 @@ datum
 			secondary = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
-				var/datum/effect/effect/system/chem_smoke_spread/S = new /datum/effect/effect/system/chem_smoke_spread
+				var/datum/effect/effect/system/smoke_spread/chem/S = new /datum/effect/effect/system/smoke_spread/chem
 				S.attach(location)
 				S.set_up(holder, 10, 0, location)
 				playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
@@ -497,9 +504,7 @@ datum
 			required_reagents = list("pacid" = 10, "plasticide" = 20)
 			result_amount = 1
 			on_reaction(var/datum/reagents/holder)
-				var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/mineral/plastic
-				M.amount = 10
-				M.loc = get_turf_loc(holder.my_atom)
+				new /obj/item/stack/sheet/mineral/plastic(get_turf(holder.my_atom),10)
 				return
 
 		virus_food
@@ -1062,6 +1067,9 @@ datum
 					/mob/living/simple_animal/hostile/syndicate/ranged,
 					/mob/living/simple_animal/hostile/syndicate/ranged/space,
 					/mob/living/simple_animal/hostile/alien/queen/large,
+					/mob/living/simple_animal/hostile/faithless,
+					// /mob/living/simple_animal/hostile/panther,
+					// /mob/living/simple_animal/hostile/snake,
 					/mob/living/simple_animal/hostile/retaliate,
 					/mob/living/simple_animal/hostile/retaliate/clown
 					)//exclusion list for things you don't want the reaction to create.

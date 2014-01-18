@@ -276,7 +276,7 @@ proc/trigger_armed_response_team(var/force = 0)
 /mob/living/carbon/human/proc/equip_strike_team(leader_selected = 0)
 
 	//Special radio setup
-	equip_to_slot_or_del(new /obj/item/device/radio/headset/ert(src), slot_ears)
+	equip_to_slot_or_del(new /obj/item/device/radio/headset/ert(src), slot_l_ear)
 
 	//Adding Camera Network
 	var/obj/machinery/camera/camera = new /obj/machinery/camera(src) //Gives all the commandos internals cameras.
