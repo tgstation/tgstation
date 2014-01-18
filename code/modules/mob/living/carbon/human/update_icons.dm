@@ -179,7 +179,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 			var/image/img_facial_s = image("icon"=facial_s, "layer"=-HAIR_LAYER)
 			var/image/img_facial_l = image("icon"=facial_l, "layer"=-HAIR_LAYER)
 
-			var/new_color = "#" + unsanitize_hexcolor(facial_hair_color)
+			var/new_color = "#" + facial_hair_color
 			img_facial_l.color = new_color
 			img_facial_s.color = new_color
 
@@ -199,7 +199,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 			var/image/img_hair_s = image("icon"=hair_s, "layer"=-HAIR_LAYER)
 			var/image/img_hair_l = image("icon"=hair_l, "layer"=-HAIR_LAYER)
 
-			var/new_color = "#" + unsanitize_hexcolor(hair_color)
+			var/new_color = "#" + hair_color
 			img_hair_s.color = new_color
 			img_hair_l.color = new_color
 
@@ -265,7 +265,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 		var/image/img_eyes_s = image("icon"=eyes_s, "layer"=-BODY_LAYER)
 		var/image/img_eyes_l = image("icon"=eyes_l, "layer"=-BODY_LAYER)
 
-		var/new_color = "#" + unsanitize_hexcolor(eye_color)
+		var/new_color = "#" + eye_color
 
 		img_eyes_s.color = new_color
 		img_eyes_l.color = new_color
