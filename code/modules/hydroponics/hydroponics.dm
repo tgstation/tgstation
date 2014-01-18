@@ -35,7 +35,7 @@
 		var/atom/a = processing_atoms[1]
 
 		for(var/step_dir in cardinal)
-			var/obj/machinery/hydroponics/h = locate() in get_step(src, step_dir)
+			var/obj/machinery/hydroponics/h = locate() in get_step(a, step_dir)
 			if(h && h.anchored==2 && !(h in connected) && !(h in processing_atoms))
 				processing_atoms += h
 
@@ -181,11 +181,11 @@ obj/machinery/hydroponics/update_icon()
 
 	var/n = 0
 
-	for(var/dir in cardinal)
+	for(var/Dir in cardinal)
 
-		var/obj/machinery/hydroponics/t = locate() in get_step(src,dir)
+		var/obj/machinery/hydroponics/t = locate() in get_step(src,Dir)
 		if(t && t.anchored==2 && src.anchored==2)
-			n += dir
+			n += Dir
 
 	icon_state = "hoses-[n]"
 
