@@ -716,13 +716,12 @@
 
 		var/turf/target
 
-		if(istype(T,/turf/simulated/floor)) //intact floor, pop the tile
+		if(istype(T, /turf/simulated/floor)) //intact floor, pop the tile
 			var/turf/simulated/floor/F = T
-			//F.health	= 100
-			F.break_tile()
-			F.levelupdate()
-			new /obj/item/stack/tile/plasteel(H)	// add to holder so it will be thrown with other stuff
-			F.icon_state = "Floor[F.burnt ? "1" : ""]"
+			if(F.floor_tile)
+				F.floor_tile.loc = H //It took me a day to figure out this was the right way to do it. ¯\_(;_;)_/¯
+			F.floor_tile = null //So it doesn't get deleted in make_plating()
+			F.make_plating()
 
 		if(direction)		// direction is specified
 			if(istype(T, /turf/space)) // if ended in space, then range is unlimited

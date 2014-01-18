@@ -1,5 +1,3 @@
-
-
 /obj/structure/reagent_dispensers
 	name = "Dispenser"
 	desc = "..."
@@ -12,62 +10,53 @@
 	var/amount_per_transfer_from_this = 10
 	var/possible_transfer_amounts = list(10,25,50,100)
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		return
-
-	New()
-		create_reagents(1000)
-		if (!possible_transfer_amounts)
-			src.verbs -= /obj/structure/reagent_dispensers/verb/set_APTFT
-		..()
-
-	examine()
-		set src in view()
-		..()
-		if (!(usr in view(2)) && usr!=src.loc) return
-		usr << "\blue It contains:"
-		if(reagents && reagents.reagent_list.len)
-			for(var/datum/reagent/R in reagents.reagent_list)
-				usr << "\blue [R.volume] units of [R.name]"
-		else
-			usr << "\blue Nothing."
-
-	verb/set_APTFT() //set amount_per_transfer_from_this
-		set name = "Set transfer amount"
-		set category = "Object"
-		set src in view(1)
-		var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
-		if (N)
-			amount_per_transfer_from_this = N
-
-	ex_act(severity)
-		switch(severity)
-			if(1.0)
+/obj/structure/reagent_dispensers/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			del(src)
+			return
+		if(2.0)
+			if (prob(50))
 				del(src)
 				return
-			if(2.0)
-				if (prob(50))
-					new /obj/effect/effect/water(src.loc)
-					del(src)
-					return
-			if(3.0)
-				if (prob(5))
-					new /obj/effect/effect/water(src.loc)
-					del(src)
-					return
-			else
-		return
+		if(3.0)
+			if (prob(5))
+				del(src)
+				return
+		else
+	return
 
-	blob_act()
-		if(prob(50))
-			new /obj/effect/effect/water(src.loc)
-			del(src)
+/obj/structure/reagent_dispensers/blob_act()
+	if(prob(50))
+		del(src)
 
+/obj/structure/reagent_dispensers/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	return
 
+/obj/structure/reagent_dispensers/New()
+	create_reagents(1000)
+	if (!possible_transfer_amounts)
+		src.verbs -= /obj/structure/reagent_dispensers/verb/set_APTFT
+	..()
 
+/obj/structure/reagent_dispensers/examine()
+	set src in view()
+	..()
+	if (!(usr in view(2)) && usr!=src.loc) return
+	usr << "\blue It contains:"
+	if(reagents && reagents.reagent_list.len)
+		for(var/datum/reagent/R in reagents.reagent_list)
+			usr << "\blue [R.volume] units of [R.name]"
+	else
+		usr << "\blue Nothing."
 
-
-
+/obj/structure/reagent_dispensers/verb/set_APTFT() //set amount_per_transfer_from_this
+	set name = "Set transfer amount"
+	set category = "Object"
+	set src in view(1)
+	var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
+	if (N)
+		amount_per_transfer_from_this = N
 
 //Dispensers
 /obj/structure/reagent_dispensers/watertank
@@ -80,6 +69,29 @@
 		..()
 		reagents.add_reagent("water",1000)
 
+/obj/structure/reagent_dispensers/watertank/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			del(src)
+			return
+		if(2.0)
+			if (prob(50))
+				new /obj/effect/effect/water(src.loc)
+				del(src)
+				return
+		if(3.0)
+			if (prob(5))
+				new /obj/effect/effect/water(src.loc)
+				del(src)
+				return
+		else
+	return
+
+/obj/structure/reagent_dispensers/watertank/blob_act()
+	if(prob(50))
+		new /obj/effect/effect/water(src.loc)
+		del(src)
+
 /obj/structure/reagent_dispensers/fueltank
 	name = "fueltank"
 	desc = "A fueltank"
@@ -91,26 +103,26 @@
 		reagents.add_reagent("fuel",1000)
 
 
-	bullet_act(var/obj/item/projectile/Proj)
-		..()
-		if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
-			message_admins("[key_name_admin(Proj.firer)] triggered a fueltank explosion.")
-			log_game("[key_name(Proj.firer)] triggered a fueltank explosion.")
-			explosion(src.loc,-1,0,2, flame_range = 2)
-			if(src)
-				del(src)
-
-
-
-	blob_act()
-		explosion(src.loc,0,1,5,7,10, flame_range = 5)
-		if(src)
-			del(src)
-
-	ex_act()
+/obj/structure/reagent_dispensers/fueltank/bullet_act(var/obj/item/projectile/Proj)
+	..()
+	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
+		message_admins("[key_name_admin(Proj.firer)] triggered a fueltank explosion.")
+		log_game("[key_name(Proj.firer)] triggered a fueltank explosion.")
 		explosion(src.loc,-1,0,2, flame_range = 2)
 		if(src)
 			del(src)
+
+
+
+/obj/structure/reagent_dispensers/fueltank/blob_act()
+	explosion(src.loc,0,1,5,7,10, flame_range = 5)
+	if(src)
+		del(src)
+
+/obj/structure/reagent_dispensers/fueltank/ex_act()
+	explosion(src.loc,-1,0,2, flame_range = 2)
+	if(src)
+		del(src)
 
 /obj/structure/reagent_dispensers/peppertank
 	name = "Pepper Spray Refiller"
@@ -133,11 +145,29 @@
 	icon_state = "water_cooler"
 	possible_transfer_amounts = null
 	anchored = 1
+	var/cups = 50
 	New()
 		..()
 		reagents.add_reagent("water",500)
 
+/obj/structure/reagent_dispensers/water_cooler/attack_hand(var/mob/living/carbon/human/user)
+	if((!istype(user)) || (user.stat))
+		return
+	if(cups <= 0)
+		user << "<span class='danger'>What? No cups?"
+		return
+	cups--
+	user.put_in_hands(new /obj/item/weapon/reagent_containers/food/drinks/sillycup)
+	user.visible_message("<span class='notice'>[user] gets a cup from [src].","<span class='notice'>You get a cup from [src].")
 
+/obj/structure/reagent_dispensers/water_cooler/attackby(var/obj/item/I, var/mob/user)
+	if(istype(I, /obj/item/weapon/paper))
+		user.drop_item()
+		del I
+		cups++
+		return
+	else
+		..()
 /obj/structure/reagent_dispensers/beerkeg
 	name = "beer keg"
 	desc = "A beer keg"

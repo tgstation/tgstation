@@ -147,8 +147,8 @@
 	attack_generic(M, M.melee_damage_upper)
 
 
-/obj/structure/window/attack_slime(mob/user as mob)
-	if(!isslimeadult(user)) return
+/obj/structure/window/attack_slime(mob/living/carbon/slime/user as mob)
+	if(!user.is_adult) return
 	attack_generic(user, rand(10, 15))
 
 

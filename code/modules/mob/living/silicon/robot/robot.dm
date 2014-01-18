@@ -80,7 +80,7 @@
 		cell.charge = 7500
 
 	if(lawupdate)
-		laws = new /datum/ai_laws/asimov()
+		make_laws()
 		connected_ai = select_active_ai_with_fewest_borgs()
 		if(connected_ai)
 			connected_ai.connected_robots += src
@@ -649,7 +649,7 @@
 
 		var/damage = rand(1, 3)
 
-		if(istype(src, /mob/living/carbon/slime/adult))
+		if(M.is_adult)
 			damage = rand(20, 40)
 		else
 			damage = rand(5, 35)
