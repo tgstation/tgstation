@@ -94,6 +94,7 @@
 	var/obj/item/weapon/storage/s_active = null//Carbon
 
 	var/seer = 0 //for cult//Carbon, probably Human
+	var/see_override = 0 //0 for no override number for see_invisible level for example see_override = SEE_INVISIBLE_OBSERVER
 
 	var/datum/hud/hud_used = null
 

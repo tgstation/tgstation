@@ -226,12 +226,14 @@ var/list/sacrificed = list()
 		seer()
 			if(usr.loc==src.loc)
 				usr.say("Rash'tla sektath mal[pick("'","`")]zua. Zasan therium vivira. Itonis al'ra matum!")
-				if(usr.see_invisible!=0 && usr.see_invisible!=15)
-					usr << "\red The world beyond flashes your eyes but disappears quickly, as if something is disrupting your vision."
-				else
-					usr << "\red The world beyond opens to your eyes."
+				usr << "\red The world beyond opens to your eyes."
+				var/see_temp = usr.see_invisible
 				usr.see_invisible = SEE_INVISIBLE_OBSERVER
 				usr.seer = 1
+				while(usr.loc==src.loc)
+					sleep(30)
+				usr.seer = 0
+				usr.see_invisible = see_temp
 				return
 			return fizzle()
 

@@ -482,6 +482,8 @@
 			sight &= ~SEE_OBJS
 			see_in_dark = 2
 			see_invisible = SEE_INVISIBLE_LIVING
+			if(see_override)
+				see_invisible = see_override
 
 		if (healths)
 			if (stat != 2)
