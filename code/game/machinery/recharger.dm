@@ -6,6 +6,10 @@
 	use_power = 1
 	idle_power_usage = 4
 	active_power_usage = 250
+
+	ghost_read = 0 // Deactivate ghost touching.
+	ghost_write = 0
+
 	var/obj/item/weapon/charging = null
 
 

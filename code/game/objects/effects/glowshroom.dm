@@ -45,7 +45,7 @@
 		Spread()
 
 /obj/effect/glowshroom/proc/Spread()
-	set background = 1
+	//set background = 1
 	var/spreaded = 1
 
 	while(spreaded)
@@ -93,7 +93,7 @@
 		sleep(delay)
 
 /obj/effect/glowshroom/proc/CalcDir(turf/location = loc)
-	set background = 1
+	//set background = 1
 	var/direction = 16
 
 	for(var/wallDir in cardinal)

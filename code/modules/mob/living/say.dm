@@ -136,7 +136,13 @@ var/list/department_radio_keys = list(
 			message = uppertext(message)
 
 	// General public key. Special message handling
-	else if (copytext(message, 1, 2) == ";" || prob(braindam/2))
+	var/mmode
+	var/cprefix = ""
+	if(length(message) >= 2)
+		cprefix = copytext(message, 1, 3)
+		if(cprefix in department_radio_keys)
+			mmode = department_radio_keys[cprefix]
+	if (copytext(message, 1, 2) == ";" || (prob(braindam/2) && !mmode))
 		if (ishuman(src))
 			message_mode = "headset"
 		else if(ispAI(src) || isrobot(src))
@@ -174,7 +180,12 @@ var/list/department_radio_keys = list(
 		message = replacetext(message, " are ", " ")
 		message = replacetext(message, "you", "u")
 		message = replacetext(message, "help", "halp")
-		message = replacetext(message, "grief", "grife")
+		message = replacetext(message, "grief", "griff")
+		message = replacetext(message, "murder", "griff")
+		message = replacetext(message, "slipping", "griffing")
+		message = replacetext(message, "slipped", "griffed")
+		message = replacetext(message, "slip", "griff")
+		message = replacetext(message, "sec", "shit")
 		message = replacetext(message, "space", "spess")
 		message = replacetext(message, "carp", "crap")
 		message = replacetext(message, "reason", "raisin")
@@ -182,6 +193,8 @@ var/list/department_radio_keys = list(
 		message = replacetext(message, "spider", "spidurr")
 		message = replacetext(message, "skitterbot", "spidurbutt")
 		message = replacetext(message, "skitter", "spider sound")
+		// /vg/: LOUDER
+		message = uppertext(message)
 		if(prob(50))
 			message = uppertext(message)
 			message += "[stutter(pick("!", "!!", "!!!"))]"

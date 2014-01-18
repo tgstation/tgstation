@@ -126,7 +126,7 @@ obj/machinery/door/airlock/New()
 	name = "Airlock Sensor frame"
 	desc = "Used for repairing or building airlock sensors"
 	icon = 'icons/obj/airlock_machines.dmi'
-	icon_state = "access_sensor_off"
+	icon_state = "airlock_sensor_off"
 	flags = FPRINT | TABLEPASS | CONDUCT
 
 /obj/item/airlock_sensor_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -165,6 +165,9 @@ obj/machinery/airlock_sensor
 	var/on = 1
 	var/alert = 0
 
+	ghost_read = 0 // Deactivate ghost touching.
+	ghost_write = 0
+
 
 obj/machinery/airlock_sensor/update_icon()
 	if(on)
@@ -176,6 +179,8 @@ obj/machinery/airlock_sensor/update_icon()
 		icon_state = "airlock_sensor_off"
 
 obj/machinery/airlock_sensor/attack_hand(mob/user)
+	if(..())
+		return
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 //radio signal
 	signal.data["tag"] = master_tag
@@ -243,7 +248,8 @@ obj/machinery/airlock_sensor/multitool_menu(var/obj/item/device/multitool/P, var
 		</ul>"}
 
 obj/machinery/airlock_sensor/Topic(href,href_list)
-	if(..()) return 0
+	if(..())
+		return 0
 
 	if(!issilicon(usr))
 		if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
@@ -287,7 +293,7 @@ obj/machinery/airlock_sensor/Topic(href,href_list)
 		P.buffer = null
 
 	usr.set_machine(src)
-	update_multitool_menu(P,usr)
+	update_multitool_menu(usr)
 
 
 obj/machinery/airlock_sensor/attackby(var/obj/item/W, var/mob/user)
@@ -297,8 +303,6 @@ obj/machinery/airlock_sensor/attackby(var/obj/item/W, var/mob/user)
 			user << "You successfully pry \the [src] off the wall."
 			new /obj/item/airlock_sensor_frame(get_turf(src))
 			del(src)
-
-
 
 
 /obj/item/access_button_frame
@@ -342,6 +346,9 @@ obj/machinery/access_button
 	var/datum/radio_frequency/radio_connection
 
 	var/on = 1
+
+	ghost_read = 0 // Deactivate ghost touching.
+	ghost_write = 0
 
 /obj/machinery/access_button/New(turf/loc, var/ndir, var/building=0)
 	..()
@@ -461,4 +468,4 @@ obj/machinery/access_button/Topic(href,href_list)
 		P.buffer = null
 
 	usr.set_machine(src)
-	update_multitool_menu(P,usr)
+	update_multitool_menu(usr)

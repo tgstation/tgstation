@@ -54,7 +54,7 @@ effective or pretty fucking useless.
 			else
 				M << "\red <b>You feel a sudden, electric jolt travel through your head.</b>"
 
-	playsound(src.loc, 'sound/misc/interference.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/misc/interference.ogg', 50, 1)
 	user << "\blue You trigger [src]."
 	times_used += 1
 	if(times_used >= max_uses)

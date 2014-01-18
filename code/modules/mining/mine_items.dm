@@ -151,7 +151,7 @@ proc/move_mining_shuttle()
 		usr << "You fried the consoles ID checking system. It's now available to everyone!"
 
 	else if(istype(W, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
 			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 			var/obj/item/weapon/circuitboard/mining_shuttle/M = new /obj/item/weapon/circuitboard/mining_shuttle( A )

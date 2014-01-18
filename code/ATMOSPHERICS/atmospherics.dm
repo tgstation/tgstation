@@ -10,6 +10,9 @@ Pipelines + Other Objects -> Pipe network
 
 */
 
+#define PIPE_TYPE_STANDARD 0
+#define PIPE_TYPE_HE       1
+
 obj/machinery/atmospherics
 	anchored = 1
 	idle_power_usage = 0
@@ -21,6 +24,62 @@ obj/machinery/atmospherics
 
 obj/machinery/atmospherics/var/initialize_directions = 0
 obj/machinery/atmospherics/var/_color
+
+	// Find a connecting /obj/machinery/atmospherics in specified direction.
+obj/machinery/atmospherics/proc/findConnecting(var/direction)
+	for(var/obj/machinery/atmospherics/target in get_step(src,direction))
+		if(target.initialize_directions & get_dir(target,src))
+			return target
+
+	// Ditto, but for heat-exchanging pipes.
+obj/machinery/atmospherics/proc/findConnectingHE(var/direction)
+	for(var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/target in get_step(src,direction))
+		if(target.initialize_directions_he & get_dir(target,src))
+			return target
+
+/*
+obj/machinery/atmospherics/proc/findAllConnections(var/connect_dirs)
+	var/node_id=0
+	for(var/direction in cardinal)
+		if(connect_dirs & direction)
+			node_id++
+			var/obj/machinery/atmospherics/found = findConnecting(direction)
+			if(!found) continue
+			var/node_var="node[node_id]"
+			if(!(node_var in vars))
+				testing("[node_var] not in vars.")
+				return
+			if(!vars[node_var])
+				vars[node_var] = found
+*/
+
+obj/machinery/atmospherics/proc/getNodeType(var/node_id)
+	return PIPE_TYPE_STANDARD
+
+// A bit more flexible.
+// @param connect_dirs integer Directions at which we should check for connections.
+obj/machinery/atmospherics/proc/findAllConnections(var/connect_dirs)
+	var/node_id=0
+	for(var/direction in cardinal)
+		if(connect_dirs & direction)
+			node_id++
+			var/obj/machinery/atmospherics/found
+			var/node_type=getNodeType(node_id)
+			switch(node_type)
+				if(PIPE_TYPE_STANDARD)
+					found = findConnecting(direction)
+				if(PIPE_TYPE_HE)
+					found = findConnectingHE(direction)
+				else
+					error("UNKNOWN RESPONSE FROM [src.type]/getNodeType([node_id]): [node_type]")
+					return
+			if(!found) continue
+			var/node_var="node[node_id]"
+			if(!(node_var in vars))
+				testing("[node_var] not in vars.")
+				return
+			if(!vars[node_var])
+				vars[node_var] = found
 
 obj/machinery/atmospherics/process()
 	build_network()

@@ -39,6 +39,9 @@
 		return 0
 	if(istype(M, /mob/living/carbon))
 		if(M == user)								//If you're eating it yourself.
+			if(!M:hasmouth)
+				user << "\red Oh god where's your mouth?!"
+				return 0
 			var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
 			if (fullness <= 50)
 				M << "\red You hungrily chew out a piece of [src] and gobble it!"
@@ -52,32 +55,30 @@
 				M << "\red You cannot force any more of [src] to go down your throat."
 				return 0
 		else
-			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
-				var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
-				if (fullness <= (550 * (1 + M.overeatduration / 1000)))
-					for(var/mob/O in viewers(world.view, user))
-						O.show_message("\red [user] attempts to feed [M] [src].", 1)
-				else
-					for(var/mob/O in viewers(world.view, user))
-						O.show_message("\red [user] cannot force anymore of [src] down [M]'s throat.", 1)
-						return 0
-
-				if(!do_mob(user, M)) return
-
-				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
-				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
-				log_attack("[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
-				if(!iscarbon(user))
-					M.LAssailant = null
-				else
-					M.LAssailant = user
-
+			if(!M:hasmouth)
+				user << "\red Oh god where's its mouth?!"
+				return 0
+			var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
+			if (fullness <= (550 * (1 + M.overeatduration / 1000)))
 				for(var/mob/O in viewers(world.view, user))
-					O.show_message("\red [user] feeds [M] [src].", 1)
-
+					O.show_message("\red [user] attempts to feed [M] [src].", 1)
 			else
-				user << "This creature does not seem to have a mouth!"
-				return
+				for(var/mob/O in viewers(world.view, user))
+					O.show_message("\red [user] cannot force anymore of [src] down [M]'s throat.", 1)
+					return 0
+
+			if(!do_mob(user, M)) return
+
+			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
+			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
+			log_attack("[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
+			if(!iscarbon(user))
+				M.LAssailant = null
+			else
+				M.LAssailant = user
+
+			for(var/mob/O in viewers(world.view, user))
+				O.show_message("\red [user] feeds [M] [src].", 1)
 
 		if(reagents)								//Handle ingestion of the reagent.
 			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)

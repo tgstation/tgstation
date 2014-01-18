@@ -18,6 +18,8 @@
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
+	var/list/found_vents = list()
+
 /datum/game_mode/borer/announce()
 	world << "<B>The current game mode is - Cortical Borer!</B>"
 	world << "<B>An unknown creature has infested the mind of a crew member. Find and destroy it by any means necessary.</B>"
@@ -35,6 +37,10 @@
 	if(possible_borers.len < 2)
 		log_admin("MODE FAILURE: BORER. NOT ENOUGH BORER CANDIDATES.")
 		return 0 // not enough candidates for borer
+
+	for(var/obj/machinery/atmospherics/unary/vent_pump/v in world)
+		if(!v.welded && v.z == STATION_Z && v.canSpawnMice==1) // No more spawning in atmos.  Assuming the mappers did their jobs, anyway.
+			found_vents.Add(v)
 
 	// for each 2 possible borers, add one borer and one host
 	while(possible_borers.len >= 2)
@@ -64,7 +70,16 @@
 /datum/game_mode/borer/post_setup()
 	// create a borer and enter it
 	for(var/datum/mind/borer in borers)
-		var/mob/living/simple_animal/borer/M = new(null,1) // loc, by_gamemode=0
+		// Pick a backup location to spawn at if we can't infest.
+		var/spawn_loc
+		if(found_vents.len)
+			var/vent = pick(found_vents)
+			found_vents.Remove(vent)
+			spawn_loc=get_turf(vent)
+		else
+			spawn_loc=pick(xeno_spawn)
+
+		var/mob/living/simple_animal/borer/M = new(spawn_loc,1) // loc, by_gamemode=0
 		var/mob/original = borer.current
 		borer.transfer_to(M)
 		//M.clearHUD()

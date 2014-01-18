@@ -126,7 +126,7 @@
 			return 1
 	else if(istype(O, /obj/item/weapon/crowbar))
 		if (opened)
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 			M.state = 2
 			M.icon_state = "box_1"
@@ -368,7 +368,7 @@
 	src.updateUsrDialog()
 
 /obj/machinery/microwave/proc/stop()
-	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/machines/ding.ogg', 50, 1)
 	src.operating = 0 // Turn it off again aferwards
 	src.icon_state = "mw"
 	src.updateUsrDialog()
@@ -383,11 +383,11 @@
 	src.updateUsrDialog()
 
 /obj/machinery/microwave/proc/muck_start()
-	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) // Play a splat sound
+	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1) // Play a splat sound
 	src.icon_state = "mwbloody1" // Make it look dirty!!
 
 /obj/machinery/microwave/proc/muck_finish()
-	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/machines/ding.ogg', 50, 1)
 	src.visible_message("\red The microwave gets covered in muck!")
 	src.dirty = 100 // Make it dirty so it can't be used util cleaned
 	src.flags = null //So you can't add condiments

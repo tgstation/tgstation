@@ -6,7 +6,6 @@
 	var/display_color = "blue"
 
 
-
 /obj/machinery/vending
 	name = "Vendomat"
 	desc = "A generic vending machine."
@@ -15,48 +14,45 @@
 	layer = 2.9
 	anchored = 1
 	density = 1
-	var/active = 1 //No sales pitches if off!
-	var/vend_ready = 1 //Are we ready to vend?? Is it time??
-	var/vend_delay = 10 //How long does it take to vend?
+	var/active = 1		//No sales pitches if off!
+	var/vend_ready = 1	//Are we ready to vend?? Is it time??
+	var/vend_delay = 10	//How long does it take to vend?
 	var/datum/data/vending_product/currently_vending = null // A /datum/data/vending_product instance of what we're paying for right now.
 
 	// To be filled out at compile time
-	var/list/products	= list() // For each, use the following pattern:
-	var/list/contraband	= list() // list(/type/path = amount,/type/path2 = amount2)
-	var/list/premium 	= list() // No specified amount = only one in stock
-	var/list/prices     = list() // Prices for each item, list(/type/path = price), items not in the list don't have a price.
+	var/list/products	= list()	// For each, use the following pattern:
+	var/list/contraband	= list()	// list(/type/path = amount,/type/path2 = amount2)
+	var/list/premium 	= list()	// No specified amount = only one in stock
+	var/list/prices     = list()	// Prices for each item, list(/type/path = price), items not in the list don't have a price.
 
-	var/product_slogans = "" //String of slogans separated by semicolons, optional
-	var/product_ads = "" //String of small ad messages in the vending screen - random chance
+	var/product_slogans = ""	//String of slogans separated by semicolons, optional
+	var/product_ads = ""		//String of small ad messages in the vending screen - random chance
 	var/list/product_records = list()
 	var/list/hidden_records = list()
 	var/list/coin_records = list()
 	var/list/slogan_list = list()
-	var/list/small_ads = list() // small ad messages in the vending screen - random chance of popping up whenever you open it
-	var/vend_reply //Thank you for shopping!
+	var/list/small_ads = list()	//Small ad messages in the vending screen - random chance of popping up whenever you open it
+	var/vend_reply				//Thank you for shopping!
 	var/last_reply = 0
-	var/last_slogan = 0 //When did we last pitch?
-	var/slogan_delay = 6000 //How long until we can pitch again?
-	var/icon_vend //Icon_state when vending!
-	var/icon_deny //Icon_state when vending!
-	//var/emagged = 0 //Ignores if somebody doesn't have card access to that machine.
-	var/seconds_electrified = 0 //Shock customers like an airlock.
-	var/shoot_inventory = 0 //Fire items at customers! We're broken!
-	var/shut_up = 1 //Stop spouting those godawful pitches!
-	var/extended_inventory = 0 //can we access the hidden inventory?
-	var/panel_open = 0 //Hacking that vending machine. Gonna get a free candy bar.
-	var/wires = 15
+	var/last_slogan = 0			//When did we last pitch?
+	var/slogan_delay = 6000		//How long until we can pitch again?
+	var/icon_vend				//Icon_state when vending!
+	var/icon_deny				//Icon_state when vending!
+	//var/emagged = 0			//Ignores if somebody doesn't have card access to that machine.
+	var/seconds_electrified = 0	//Shock customers like an airlock.
+	var/shoot_inventory = 0		//Fire items at customers! We're broken!
+	var/shut_up = 0				//Stop spouting those godawful pitches!
+	var/extended_inventory = 0	//can we access the hidden inventory?
+	var/scan_id = 1
 	var/obj/item/weapon/coin/coin
-	var/const/WIRE_EXTEND = 1
-	var/const/WIRE_SCANID = 2
-	var/const/WIRE_SHOCK = 3
-	var/const/WIRE_SHOOTINV = 4
+	var/datum/wires/vending/wires = null
 
 	var/obj/machinery/account_database/linked_db
 	var/datum/money_account/linked_account
 
 /obj/machinery/vending/New()
 	..()
+	wires = new(src)
 	spawn(4)
 		src.slogan_list = text2list(src.product_slogans, ";")
 
@@ -95,22 +91,16 @@
 				del(src)
 				return
 		if(3.0)
-			if (prob(25))
-				spawn(0)
-					src.malfunction()
-					return
-				return
-		else
-	return
+			if(prob(25))
+				malfunction()
+
 
 /obj/machinery/vending/blob_act()
-	if (prob(50))
-		spawn(0)
-			src.malfunction()
-			del(src)
-		return
+	if(prob(75))
+		malfunction()
+	else
+		del(src)
 
-	return
 
 /obj/machinery/vending/proc/build_inventory(var/list/productlist,hidden=0,req_coin=0)
 	for(var/typepath in productlist)
@@ -133,30 +123,29 @@
 		else
 			product_records += R
 //		world << "Added: [R.product_name]] - [R.amount] - [R.product_path]"
-	return
 
-/obj/machinery/vending/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/card/emag))
-		src.emagged = 1
+/obj/machinery/vending/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/card/emag))
+		emagged = 1
 		user << "You short out the product lock on [src]"
 		return
 	else if(istype(W, /obj/item/weapon/screwdriver))
-		src.panel_open = !src.panel_open
-		user << "You [src.panel_open ? "open" : "close"] the maintenance panel."
-		src.overlays.Cut()
-		if(src.panel_open)
-			src.overlays += image(src.icon, "[initial(icon_state)]-panel")
-		src.updateUsrDialog()
+		panel_open = !panel_open
+		user << "You [panel_open ? "open" : "close"] the maintenance panel."
+		overlays.Cut()
+		if(panel_open)
+			overlays += image(icon, "[initial(icon_state)]-panel")
+		updateUsrDialog()
 		return
 	else if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters))
-		if(src.panel_open)
+		if(panel_open)
 			attack_hand(user)
 		return
 	else if(istype(W, /obj/item/weapon/coin) && premium.len > 0)
 		user.drop_item()
 		W.loc = src
 		coin = W
-		user << "\blue You insert the [W] into the [src]"
+		user << "<span class='notice'>You insert [W] into [src].</span>"
 		return
 	/*else if(istype(W, /obj/item/weapon/card) && currently_vending)
 		//attempt to connect to a new db, and if that doesn't work then fail
@@ -247,11 +236,10 @@
 /obj/machinery/vending/attack_hand(mob/user as mob)
 	if(stat & (BROKEN|NOPOWER))
 		return
-
 	user.set_machine(src)
 
-	if(src.seconds_electrified != 0)
-		if(src.shock(user, 100))
+	if(seconds_electrified != 0)
+		if(shock(user, 100))
 			return
 
 	var/vendorname = (src.name)  //import the machine's name
@@ -304,47 +292,22 @@
 		dat += "</TT>"
 
 	if(panel_open)
-		var/list/vendwires = list(
-			"Violet" = 1,
-			"Orange" = 2,
-			"Goldenrod" = 3,
-			"Green" = 4,
-		)
-		dat += "<br><hr><br><B>Access Panel</B><br>"
-		for(var/wiredesc in vendwires)
-			var/is_uncut = src.wires & APCWireColorToFlag[vendwires[wiredesc]]
-			dat += "[wiredesc] wire: "
-			if(!is_uncut)
-				dat += "<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Mend</a>"
-			else
+		dat += wires()
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\vending.dm:311: dat += "<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Cut</a> "
-				dat += {"<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Cut</a>
-					<a href='?src=\ref[src];pulsewire=[vendwires[wiredesc]]'>Pulse</a> "}
-				// END AUTOFIX
-			dat += "<br>"
-
-
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\vending.dm:315: dat += "<br>"
-		dat += {"<br>
-			The orange light is [(src.seconds_electrified == 0) ? "off" : "on"].<BR>
-			The red light is [src.shoot_inventory ? "off" : "blinking"].<BR>
-			The green light is [src.extended_inventory ? "on" : "off"].<BR>
-			The [(src.wires & WIRE_SCANID) ? "purple" : "yellow"] light is on.<BR>"}
-		// END AUTOFIX
-		if (product_slogans != "")
-			dat += "The speaker switch is [src.shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
+		if(product_slogans != "")
+			dat += "The speaker switch is [shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
 
 	user << browse(dat, "window=vending")
 	onclose(user, "")
 	return
 
+
+// returns the wire panel text
+/obj/machinery/vending/proc/wires()
+	return wires.GetInteractWindow()
+
 /obj/machinery/vending/Topic(href, href_list)
-	if(stat & (BROKEN|NOPOWER))
-		return
-	if(usr.stat || usr.restrained())
+	if(..())
 		return
 
 	if(istype(usr,/mob/living/silicon))
@@ -367,13 +330,13 @@
 			usr.put_in_hands(coin)
 		usr << "\blue You remove the [coin] from the [src]"
 		coin = null
+	usr.set_machine(src)
 
 
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		usr.set_machine(src)
 		if ((href_list["vend"]) && (src.vend_ready) && (!currently_vending))
 
-			if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID)) //For SECURE VENDING MACHINES YEAH
+			if (!allowed(usr) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
 				usr << "\red Access denied." //Unless emagged of course
 				flick(src.icon_deny,src)
 				return
@@ -407,27 +370,6 @@
 					connect_account(card)
 			return
 
-		else if ((href_list["cutwire"]) && (src.panel_open))
-			var/twire = text2num(href_list["cutwire"])
-			if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
-				usr << "You need wirecutters!"
-				return
-			if (src.isWireColorCut(twire))
-				src.mend(twire)
-			else
-				src.cut(twire)
-
-		else if ((href_list["pulsewire"]) && (src.panel_open))
-			var/twire = text2num(href_list["pulsewire"])
-			if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
-				usr << "You need a multitool!"
-				return
-			if (src.isWireColorCut(twire))
-				usr << "You can't pulse a cut wire."
-				return
-			else
-				src.pulse(twire)
-
 		else if ((href_list["togglevoice"]) && (src.panel_open))
 			src.shut_up = !src.shut_up
 
@@ -439,7 +381,7 @@
 	return
 
 /obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user)
-	if ((!src.allowed(user)) && (!src.emagged) && (src.wires & WIRE_SCANID)) //For SECURE VENDING MACHINES YEAH
+	if (!allowed(user) && !emagged && wires.IsIndexCut(VENDING_WIRE_IDSCAN)) //For SECURE VENDING MACHINES YEAH
 		user << "\red Access denied." //Unless emagged of course
 		flick(src.icon_deny,src)
 		return
@@ -561,50 +503,6 @@
 	src.visible_message("\red <b>[src] launches [throw_item.name] at [target.name]!</b>")
 	return 1
 
-/obj/machinery/vending/proc/isWireColorCut(var/wireColor)
-	var/wireFlag = APCWireColorToFlag[wireColor]
-	return ((src.wires & wireFlag) == 0)
-
-/obj/machinery/vending/proc/isWireCut(var/wireIndex)
-	var/wireFlag = APCIndexToFlag[wireIndex]
-	return ((src.wires & wireFlag) == 0)
-
-/obj/machinery/vending/proc/cut(var/wireColor)
-	var/wireFlag = APCWireColorToFlag[wireColor]
-	var/wireIndex = APCWireColorToIndex[wireColor]
-	src.wires &= ~wireFlag
-	switch(wireIndex)
-		if(WIRE_EXTEND)
-			src.extended_inventory = 0
-		if(WIRE_SHOCK)
-			src.seconds_electrified = -1
-		if (WIRE_SHOOTINV)
-			if(!src.shoot_inventory)
-				src.shoot_inventory = 1
-
-
-/obj/machinery/vending/proc/mend(var/wireColor)
-	var/wireFlag = APCWireColorToFlag[wireColor]
-	var/wireIndex = APCWireColorToIndex[wireColor] //not used in this function
-	src.wires |= wireFlag
-	switch(wireIndex)
-//		if(WIRE_SCANID)
-		if(WIRE_SHOCK)
-			src.seconds_electrified = 0
-		if (WIRE_SHOOTINV)
-			src.shoot_inventory = 0
-
-/obj/machinery/vending/proc/pulse(var/wireColor)
-	var/wireIndex = APCWireColorToIndex[wireColor]
-	switch(wireIndex)
-		if(WIRE_EXTEND)
-			src.extended_inventory = !src.extended_inventory
-//		if (WIRE_SCANID)
-		if (WIRE_SHOCK)
-			src.seconds_electrified = 30
-		if (WIRE_SHOOTINV)
-			src.shoot_inventory = !src.shoot_inventory
-
 
 /obj/machinery/vending/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
@@ -614,7 +512,7 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	if (electrocute_mob(user, get_area(src), src, 0.7))
+	if(electrocute_mob(user, get_area(src), src, 0.7))
 		return 1
 	else
 		return 0
@@ -904,3 +802,30 @@
 					/obj/item/weapon/scalpel = 2,/obj/item/weapon/circular_saw = 2,/obj/item/weapon/tank/anesthetic = 2,/obj/item/clothing/mask/breath/medical = 5,
 					/obj/item/weapon/screwdriver = 5,/obj/item/weapon/crowbar = 5)
 	//everything after the power cell had no amounts, I improvised.  -Sayu
+
+/obj/machinery/vending/autodrobe
+	name = "\improper AutoDrobe"
+	desc = "A vending machine for costumes."
+	icon_state = "theater"
+	icon_deny = "theater-deny"
+	req_access = list(access_theatre)
+	product_slogans = "Dress for success!;Suited and booted!;It's show time!;Why leave style up to fate? Use AutoDrobe!"
+	vend_delay = 15
+	vend_reply = "Thank you for using AutoDrobe!"
+	products = list(/obj/item/clothing/suit/chickensuit = 3,/obj/item/clothing/head/chicken = 3,/obj/item/clothing/under/gladiator = 3,
+					/obj/item/clothing/head/helmet/gladiator = 3,/obj/item/clothing/under/gimmick/rank/captain/suit = 3,/obj/item/clothing/head/flatcap = 3,/obj/item/clothing/glasses/gglasses = 3,/obj/item/clothing/shoes/jackboots = 3,
+					/obj/item/clothing/under/schoolgirl = 3,/obj/item/clothing/head/kitty = 3,/obj/item/clothing/under/blackskirt = 3,/obj/item/clothing/head/beret = 3,
+					/obj/item/clothing/suit/wcoat = 3,/obj/item/clothing/under/suit_jacket = 3,/obj/item/clothing/head/that = 3,/obj/item/clothing/head/cueball = 3,
+					/obj/item/clothing/under/scratch = 3,/obj/item/clothing/under/kilt = 3,/obj/item/clothing/head/beret = 3,/obj/item/clothing/suit/wcoat = 3,
+					/obj/item/clothing/glasses/monocle =3,/obj/item/clothing/head/bowler = 3,/obj/item/weapon/cane = 3,/obj/item/clothing/under/sl_suit = 3,
+					/obj/item/clothing/mask/fakemoustache = 3,/obj/item/clothing/suit/bio_suit/plaguedoctorsuit = 3,/obj/item/clothing/head/plaguedoctorhat = 3,
+					/obj/item/clothing/under/owl = 3,/obj/item/clothing/mask/gas/owl_mask = 3,/obj/item/clothing/suit/apron = 3,/obj/item/clothing/under/waiter = 3,
+					/obj/item/clothing/under/pirate = 3,/obj/item/clothing/suit/pirate = 3,/obj/item/clothing/head/pirate = 3,/obj/item/clothing/head/bandana = 3,
+					/obj/item/clothing/head/bandana = 3,/obj/item/clothing/under/soviet = 3,/obj/item/clothing/head/ushanka = 3,/obj/item/clothing/suit/imperium_monk = 3,
+					/obj/item/clothing/mask/gas/cyborg = 3,/obj/item/clothing/suit/holidaypriest = 3,/obj/item/clothing/head/wizard/marisa/fake = 3,
+					/obj/item/clothing/suit/wizrobe/marisa/fake = 3,/obj/item/clothing/under/sundress = 3,/obj/item/clothing/head/witchwig = 3,/obj/item/weapon/staff/broom = 3,
+					/obj/item/clothing/suit/wizrobe/fake = 3,/obj/item/clothing/head/wizard/fake = 3,/obj/item/weapon/staff = 3,/obj/item/clothing/mask/gas/sexyclown = 3,
+					/obj/item/clothing/under/sexyclown = 3,/obj/item/clothing/mask/gas/sexymime = 3,/obj/item/clothing/under/sexymime = 3,/obj/item/clothing/suit/apron/overalls = 3,
+					/obj/item/clothing/head/rabbitears =3) //Pretty much everything that had a chance to spawn.
+	contraband = list(/obj/item/clothing/suit/cardborg = 3,/obj/item/clothing/head/cardborg = 3,/obj/item/clothing/suit/judgerobe = 3,/obj/item/clothing/head/powdered_wig = 3)
+	premium = list(/obj/item/clothing/suit/hgpirate = 3, /obj/item/clothing/head/hgpiratecap = 3, /obj/item/clothing/head/helmet/roman = 3, /obj/item/clothing/head/helmet/roman/legionaire = 3, /obj/item/clothing/under/roman = 3, /obj/item/clothing/shoes/roman = 3, /obj/item/weapon/shield/riot/roman = 3)

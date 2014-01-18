@@ -58,7 +58,7 @@
 				return
 			path = 1
 			user << "\blue You add [W] to the metal casing."
-			playsound(src.loc, 'sound/items/Screwdriver2.ogg', 25, -3)
+			playsound(get_turf(src), 'sound/items/Screwdriver2.ogg', 25, -3)
 			user.remove_from_mob(det)
 			det.loc = src
 			detonator = det
@@ -75,7 +75,7 @@
 //					user << "\red You need to add at least one beaker before locking the assembly."
 					user << "\blue You lock the empty assembly."
 					name = "fake grenade"
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 25, -3)
+				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 25, -3)
 				icon_state = initial(icon_state) +"_locked"
 				stage = 2
 			else if(stage == 2)
@@ -85,7 +85,7 @@
 					return
 				else
 					user << "\blue You unlock the assembly."
-					playsound(src.loc, 'sound/items/Screwdriver.ogg', 25, -3)
+					playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 25, -3)
 					name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 					icon_state = initial(icon_state) + (detonator?"_ass":"")
 					stage = 1
@@ -147,10 +147,10 @@
 		active = 0
 		if(!has_reagents)
 			icon_state = initial(icon_state) +"_locked"
-			playsound(src.loc, 'sound/items/Screwdriver2.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Screwdriver2.ogg', 50, 1)
 			return
 
-		playsound(src.loc, 'sound/effects/bamf.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/effects/bamf.ogg', 50, 1)
 
 		for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
 			G.reagents.trans_to(src, G.reagents.total_volume)

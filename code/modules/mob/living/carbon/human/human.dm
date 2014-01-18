@@ -534,7 +534,7 @@
 
 /mob/living/carbon/human/Topic(href, href_list)
 	var/pickpocket = 0
-	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr))
+	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr) && Adjacent(usr))
 		if(href_list["pockets"])
 			if(isanimal(usr)) return //Animals can't do that
 			if(ishuman(usr) && (usr:gloves))
@@ -1155,7 +1155,7 @@
 /*
 /mob/living/carbon/human/verb/simulate()
 	set name = "sim"
-	set background = 1
+	//set background = 1
 
 	var/damage = input("Wound damage","Wound damage") as num
 

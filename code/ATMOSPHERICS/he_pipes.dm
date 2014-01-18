@@ -8,6 +8,10 @@
 	minimum_temperature_difference = 20
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 
+
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/getNodeType(var/node_id)
+	return PIPE_TYPE_HE
+
 	// BubbleWrap
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/New()
 	..()
@@ -20,7 +24,7 @@
 	initialize_directions_he = pipe.get_pipe_dir()
 	//var/turf/T = loc
 	//level = T.intact ? 2 : 1
-	if(!initialize())
+	if(!initialize(1))
 		usr << "Unable to build pipe here;  It must be connected to a machine, or another pipe that has a connection."
 		return 0
 	build_network()
@@ -32,28 +36,14 @@
 		node2.build_network()
 	return 1
 
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/initialize()
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/initialize(var/suppress_icon_check=0)
 	normalize_dir()
-	var/node1_dir
-	var/node2_dir
 
-	for(var/direction in cardinal)
-		if(direction&initialize_directions_he)
-			if (!node1_dir)
-				node1_dir = direction
-			else if (!node2_dir)
-				node2_dir = direction
+	findAllConnections(initialize_directions_he)
 
-	for(var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/target in get_step(src,node1_dir))
-		if(target.initialize_directions_he & get_dir(target,src))
-			node1 = target
-			break
-	for(var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/target in get_step(src,node2_dir))
-		if(target.initialize_directions_he & get_dir(target,src))
-			node2 = target
-			break
-	update_icon()
-	return
+	if(!suppress_icon_check)
+		update_icon()
+	return node1 || node2
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/process()
 	if(!parent)
@@ -105,10 +95,10 @@
 	// BubbleWrap END
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
-	dir = src.dir
+	dir = pipe.dir
 	initialize_directions = pipe.get_pdir()
 	initialize_directions_he = pipe.get_hdir()
-	if (!initialize())
+	if (!initialize(1))
 		usr << "There's nothing to connect this junction to! (with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment)"
 		return 0
 	build_network()
@@ -127,21 +117,18 @@
 		var/have_node1 = node1?1:0
 		var/have_node2 = node2?1:0
 		icon_state = "exposed[have_node1][have_node2]"
+
 	if(!node1&&!node2)
 		del(src)
 
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/initialize()
-	for(var/obj/machinery/atmospherics/target in get_step(src,initialize_directions))
-		if(target.initialize_directions & get_dir(target,src))
-			node1 = target
-			break
-	for(var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/target in get_step(src,initialize_directions_he))
-		if(target.initialize_directions_he & get_dir(target,src))
-			node2 = target
-			break
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/initialize(var/suppress_icon_check=0)
+	node1 = findConnecting(initialize_directions)
+	node2 = findConnectingHE(initialize_directions_he)
 
-	update_icon()
-	return
+	if(!suppress_icon_check)
+		update_icon()
+
+	return node1 || node2
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/hidden
 	level=1

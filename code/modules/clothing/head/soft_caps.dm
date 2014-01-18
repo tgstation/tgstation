@@ -91,4 +91,4 @@
 	name = "paramedic cap"
 	desc = "It's a baseball hat in a tasteful blue colour."
 	icon_state = "paramedicsoft"
-	_color = "blue"
+	_color = "paramedic"

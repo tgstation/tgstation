@@ -252,7 +252,7 @@
 			if(!T)
 				return
 			T.assume_air(air_contents)
-			playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
+			playsound(get_turf(src), 'sound/effects/spray.ogg', 10, 1, -3)
 			del(src)
 		else
 			integrity--

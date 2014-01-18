@@ -742,3 +742,7 @@ var/list/ai_list = list()
 			return
 	else
 		return ..()
+
+
+/mob/living/silicon/ai/get_multitool(var/active_only=0)
+	return aiMulti

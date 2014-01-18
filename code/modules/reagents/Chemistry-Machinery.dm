@@ -131,20 +131,16 @@
 			chemicals.Add(list(list("title" = temp.name, "id" = temp.id, "commands" = list("dispense" = temp.id)))) // list in a list because Byond merges the first list...
 	data["chemicals"] = chemicals
 
-	if (!ui) // no ui has been passed, so we'll search for one
-	{
-		ui = nanomanager.get_open_ui(user, src, ui_key)
-	}
+	// update the ui if it exists, returns null if no ui is passed/found
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)
-		// the ui does not exist, so we'll create a new one
-		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "Chem Dispenser 5000", 374, 640)
-		// When the UI is first opened this is the data it will use
+		// the ui does not exist, so we'll create a new() one
+        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
+		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "Chem Dispenser 5000", 370, 605)
+		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
+		// open the new ui window
 		ui.open()
-	else
-		// The UI is already open so push the new data to it
-		ui.push_data(data)
-		return
 
 /obj/machinery/chem_dispenser/Topic(href, href_list)
 	if(stat & (NOPOWER|BROKEN))
@@ -198,7 +194,7 @@
 			return 1
 		if(opened)
 			if(istype(D, /obj/item/weapon/crowbar))
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 				var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 				M.state = 2
 				M.icon_state = "box_1"
@@ -364,7 +360,7 @@
 				user << "\red A pill bottle is loaded in [src]."
 				return
 			user << "You begin to remove the circuits from the [src]."
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 			if(do_after(user, 50))
 				var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 				M.state = 2
@@ -879,7 +875,7 @@
 
 /obj/machinery/computer/pandemic/attackby(var/obj/I as obj, var/mob/user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
@@ -1059,7 +1055,7 @@
 			if(beaker)
 				user << "\red A beaker is loaded, you cannot deconstruct [src]."
 				return 1
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 			M.state = 2
 			M.icon_state = "box_1"
@@ -1225,7 +1221,7 @@
 		return
 	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
-	playsound(src.loc, 'sound/machines/juicer.ogg', 20, 1)
+	playsound(get_turf(src), 'sound/machines/juicer.ogg', 20, 1)
 	inuse = 1
 	spawn(50)
 		inuse = 0
@@ -1258,7 +1254,7 @@
 		return
 	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
-	playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/machines/blender.ogg', 50, 1)
 	inuse = 1
 	spawn(60)
 		inuse = 0

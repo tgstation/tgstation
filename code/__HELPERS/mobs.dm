@@ -75,3 +75,52 @@ proc/age2agedescription(age)
 		if(60 to 70)		return "aging"
 		if(70 to INFINITY)	return "elderly"
 		else				return "unknown"
+
+/*
+Proc for attack log creation, because really why not
+1 argument is the actor
+2 argument is the target of action
+3 is the description of action(like punched, throwed, or any other verb)
+4 should it make adminlog note or not
+5 is the tool with which the action was made(usually item)					5 and 6 are very similar(5 have "by " before it, that it) and are separated just to keep things in a bit more in order
+6 is additional information, anything that needs to be added
+*/
+
+proc/add_logs(mob/user, mob/target, what_done, var/admin=1, var/object=null, var/addition=null)
+	if(user && ismob(user))
+		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has [what_done] [target ? "[target.name][(ismob(target) && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition]</font>")
+	if(target && ismob(target))
+		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [what_done] by [user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition]</font>")
+		if(!iscarbon(user))
+			target.LAssailant = null
+		else
+			target.LAssailant = user
+	if(admin)
+		log_attack("<font color='red'>[user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] [what_done] [target ? "[target.name][(ismob(target) && target.ckey)? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition]</font>")
+
+proc/add_ghostlogs(var/mob/user, var/obj/target, var/what_done, var/admin=1, var/addition=null)
+	var/target_text = "NON-EXISTENT TARGET"
+	var/subject_text = "NON-EXISTENT SUBJECT"
+	if(target)
+		target_text=target.name
+		if(ismob(target))
+			var/mob/M=target
+			if(M.ckey)
+				target_text += "([M.ckey])"
+	if(user)
+		subject_text=user.name
+		if(ismob(user))
+			var/mob/M=user
+			if(M.ckey)
+				subject_text += "([M.ckey])"
+	if(user && ismob(user))
+		user.attack_log += "\[[time_stamp()]\] GHOST: <font color='red'>Has [what_done] [target_text] [addition]</font>"
+	if(target && ismob(target))
+		var/mob/M=target
+		M.attack_log += "\[[time_stamp()]\] GHOST: <font color='orange'>Has been [what_done] by [subject_text] [addition]</font>"
+	if(admin)
+		message_admins("GHOST: [subject_text] [what_done] [target_text] [addition]")
+		if(isAdminGhost(user))
+			log_adminghost("[subject_text] [what_done] [target_text] [addition]")
+		else
+			log_ghost("[subject_text] [what_done] [target_text] [addition]")

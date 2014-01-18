@@ -1,5 +1,9 @@
 /atom
 	layer = 2
+
+	var/ghost_read=1 // All ghosts can read
+	var/ghost_write=0 // Only aghosts can write
+
 	var/level = 2
 	var/flags = FPRINT
 	var/list/fingerprints
@@ -274,7 +278,13 @@ its easier to just keep the beam vertical.
 	return
 
 /atom/proc/attack_ghost(mob/user as mob)
-	src.examine()
+	var/ghost_flags = 0
+	if(ghost_read)
+		ghost_flags |= PERMIT_ALL
+	if(canGhostRead(user,src,ghost_flags))
+		src.attack_ai(user)
+	else
+		src.examine()
 	return
 
 /atom/proc/attack_admin(mob/user as mob)
@@ -502,315 +512,7 @@ its easier to just keep the beam vertical.
 	if(usr.client.buildmode)
 		build_click(usr, usr.client.buildmode, location, control, params, src)
 		return
-//	if(using_new_click_proc)  //TODO ERRORAGE (see message below)
-//		return DblClickNew()
 	return DblClick(location, control, params)
-
-var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblClickNew() proc is being tested)
-
-/atom/proc/DblClickNew()
-	if(!usr)	return
-// TODO DOOHL: Intergrate params to new proc. Saved for another time because var/valid_place is a fucking brainfuck
-
-	//Spamclick server-overloading prevention delay... THING
-	if (world.time <= usr:lastDblClick+1)
-		return
-	else
-		usr:lastDblClick = world.time
-
-	//paralysis and critical condition
-	if(usr.stat == 1)	//Death is handled in attack_ghost()
-		return
-
-	if(!istype(usr, /mob/living/silicon/ai))
-		if (usr.paralysis || usr.stunned || usr.weakened)
-			return
-
-	//handle the hud separately
-	if(istype(src,/obj/screen))
-		if( usr.restrained() )
-			if(ishuman(usr))
-				src.attack_hand(usr)
-			else if(isAI(usr))
-				src.attack_ai(usr)
-			else if(isrobot(usr))
-				src.attack_ai(usr)
-			else if(isobserver(usr))
-				src.attack_ghost(usr)
-			else if(ismonkey(usr))
-				src.attack_paw(usr)
-			else if(isalienadult(usr))
-				src.attack_alien(usr)
-			else if(isslime(usr))
-				src.attack_slime(usr)
-			else if(isanimal(usr))
-				src.attack_animal(usr)
-			else
-				usr << "This mob type does not support clicks to the HUD. Contact a coder."
-		else
-			if(ishuman(usr))
-				src.hand_h(usr, usr.hand)
-			else if(isAI(usr))
-				src.hand_a(usr, usr.hand)
-			else if(isrobot(usr))
-				src.hand_a(usr, usr.hand)
-			else if(isobserver(usr))
-				return
-			else if(ismonkey(usr))
-				src.hand_p(usr, usr.hand)
-			else if(isalienadult(usr))
-				src.hand_al(usr, usr.hand)
-			else if(isslime(usr))
-				return
-			else if(isanimal(usr))
-				return
-			else
-				usr << "This mob type does not support restrained clicks to the HUD. Contact a coder."
-		return
-
-	//Gets equipped item or used module of robots
-	var/obj/item/W = usr.get_active_hand()
-
-	//Attack self
-	if (W == src && usr.stat == 0)
-//		spawn (0)		//causes runtimes under heavy lag
-		W.attack_self(usr)
-		return
-
-	//Attackby, attack_hand, afterattack, etc. can only be done once every 1 second, unless an object has the NODELAY or USEDELAY flags set
-	//This segment of code determins this.
-	if(W)
-		if( !( (src.loc && src.loc == usr) || (src.loc.loc && src.loc.loc == usr) ) )
-			//The check above checks that you are not targeting an item which you are holding.
-			//If you are, (example clicking a backpack), the delays are ignored.
-			if(W.flags & USEDELAY)
-				//Objects that use the USEDELAY flag can only attack once every 2 seconds
-				if (usr.next_move < world.time)
-					usr.prev_move = usr.next_move
-					usr.next_move = world.time + 20
-				else
-					return	//A click has recently been handled already, you need to wait until the anti-spam delay between clicks passes
-			else if(!(W.flags & NODELAY))
-				//Objects with NODELAY don't have a delay between uses, while most objects have the standard 1 second delay.
-				if (usr.next_move < world.time)
-					usr.prev_move = usr.next_move
-					usr.next_move = world.time + 10
-				else
-					return	//A click has recently been handled already, you need to wait until the anti-spam delay between clicks passes
-	else
-		//Empty hand
-		if (usr.next_move < world.time)
-			usr.prev_move = usr.next_move
-			usr.next_move = world.time + 10
-		else
-			return	//A click has recently been handled already, you need to wait until the anti-spam delay between clicks passes
-
-	//Is the object in a valid place?
-	var/valid_place = 0
-	if ( isturf(src) || ( src.loc && isturf(src.loc) ) || ( src.loc.loc && isturf(src.loc.loc) ) )
-		//Object is either a turf of placed on a turf, thus valid.
-		//The third one is that it is in a container, which is on a turf, like a box,
-		//which you mouse-drag opened. Also a valid location.
-		valid_place = 1
-
-	if ( ( src.loc && (src.loc == usr) ) || ( src.loc.loc && (src.loc.loc == usr) ) )
-		//User has the object on them (in their inventory) and it is thus valid
-		valid_place = 1
-
-	//Afterattack gets performed every time you click, no matter if it's in range or not. It's used when
-	//clicking targets for guns and such. If you are clicking on a target that's not in range
-	//with an item in your hands only afterattack() needs to be performed.
-	//If the range is valid, afterattack() will be handled in the separate mob-type
-	//sections below, however only after attackby(). Attack_hand and simmilar procs are handled
-	//in the mob-type sections below, as some require you to be in range to work (human, monkey..) while others don't (ai, cyborg)
-	//Also note that afterattack does not differentiate between the holder/attacker's mob-type.
-	if( W && !valid_place)
-		W.afterattack(src, usr, (valid_place ? 1 : 0))
-		return
-
-	if(ishuman(usr))
-		var/mob/living/carbon/human/human = usr
-		//-human stuff-
-
-		if(human.stat)
-			return
-
-		if(human.in_throw_mode)
-			return human.throw_item(src)
-
-		var/in_range = in_range(src, human) || src.loc == human
-
-		if (in_range)
-			if (!( human.restrained() || human.lying ))
-				if (W)
-					var/was_used = 0
-					if(W)
-						was_used = W.is_used_on(src, human)
-					if(!was_used)
-						attackby(W,human)
-					if (W)
-						W.afterattack(src, human)
-				else
-					attack_hand(human)
-			else
-				hand_h(human, human.hand)
-		else
-			if ( (W) && !human.restrained() )
-				W.afterattack(src, human)
-
-
-	else if(isAI(usr))
-		var/mob/living/silicon/ai/ai = usr
-		//-ai stuff-
-
-		if(ai.stat)
-			return
-
-		if (ai.control_disabled)
-			return
-
-		if( !ai.restrained() )
-			attack_ai(ai)
-		else
-			hand_a(ai, ai.hand)
-
-	else if(isrobot(usr))
-		var/mob/living/silicon/robot/robot = usr
-		//-cyborg stuff-
-
-		if(robot.stat)
-			return
-
-		if (robot.lockcharge)
-			return
-
-
-
-		if(W)
-			var/in_range = in_range(src, robot) || src.loc == robot
-			if(in_range)
-				attackby(W,robot)
-			if (W)
-				W.afterattack(src, robot)
-		else
-			if( !robot.restrained() )
-				attack_robot(robot)
-			else
-				hand_r(robot, robot.hand)
-
-	else if(isobserver(usr))
-		var/mob/dead/observer/ghost = usr
-		//-ghost stuff-
-
-		if(ghost)
-			if(W)
-				if(usr.client && usr.client.holder)
-					src.attackby(W, ghost)				//This is so admins can interact with things ingame.
-				else
-					src.attack_ghost(ghost)				//Something's gone wrong, non-admin ghosts shouldn't be able to hold things.
-			else
-				if(usr.client && usr.client.holder)
-					src.attack_admin(ghost)				//This is so admins can interact with things ingame.
-				else
-					src.attack_ghost(ghost)				//Standard click as ghost
-
-
-	else if(ismonkey(usr))
-		var/mob/living/carbon/monkey/monkey = usr
-		//-monkey stuff-
-
-		if(monkey.stat)
-			return
-
-		if(monkey.in_throw_mode)
-			return monkey.throw_item(src)
-
-		var/in_range = in_range(src, monkey) || src.loc == monkey
-
-		if (in_range)
-			if ( !monkey.restrained() )
-				if (W)
-					attackby(W,monkey)
-					if (W)
-						W.afterattack(src, monkey)
-				else
-					attack_paw(monkey)
-			else
-				hand_p(monkey, monkey.hand)
-		else
-			if ( (W) && !monkey.restrained() )
-				W.afterattack(src, monkey)
-
-	else if(isalienadult(usr))
-		var/mob/living/carbon/alien/humanoid/alien = usr
-		//-alien stuff-
-
-		if(alien.stat)
-			return
-
-		var/in_range = in_range(src, alien) || src.loc == alien
-
-		if (in_range)
-			if ( !alien.restrained() )
-				if (W)
-					attackby(W,alien)
-					if (W)
-						W.afterattack(src, alien)
-				else
-					attack_alien(alien)
-			else
-				hand_al(alien, alien.hand)
-		else
-			if ( (W) && !alien.restrained() )
-				W.afterattack(src, alien)
-
-	else if(islarva(usr))
-		var/mob/living/carbon/alien/larva/alien = usr
-		if(alien.stat)
-			return
-
-		var/in_range = in_range(src, alien) || src.loc == alien
-
-		if (in_range)
-			if ( !alien.restrained() )
-				attack_larva(alien)
-
-	else if(isslime(usr))
-		var/mob/living/carbon/slime/slime = usr
-		//-slime stuff-
-
-		if(slime.stat)
-			return
-
-		var/in_range = in_range(src, slime) || src.loc == slime
-
-		if (in_range)
-			if ( !slime.restrained() )
-				if (W)
-					attackby(W,slime)
-					if (W)
-						W.afterattack(src, slime)
-				else
-					attack_slime(slime)
-			else
-				hand_m(slime, slime.hand)
-		else
-			if ( (W) && !slime.restrained() )
-				W.afterattack(src, slime)
-
-
-	else if(isanimal(usr))
-		var/mob/living/simple_animal/animal = usr
-		//-simple animal stuff-
-
-		if(animal.stat)
-			return
-
-		var/in_range = in_range(src, animal) || src.loc == animal
-
-		if (in_range)
-			if ( !animal.restrained() )
-				attack_animal(animal)
 
 /atom/DblClick(location, control, params) //TODO: DEFERRED: REWRITE
 	if(!usr)	return
@@ -822,6 +524,13 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 	else
 //		world << "atom.DblClick() on [src] by [usr] : src.type is [src.type]"
 		usr:lastDblClick = world.time
+
+	// AI camera shit
+	if(isAI(usr))
+		if(usr:aicamera.in_camera_mode)
+			usr:aicamera.camera_mode_off()
+			usr:aicamera.captureimage(src, usr)
+			return
 
 	//Putting it here for now. It diverts stuff to the mech clicking procs. Putting it here stops us drilling items in our inventory Carn
 	if(istype(usr.loc,/obj/mecha))
@@ -939,7 +648,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		return
 
 	// ------- PARALYSIS, STUN, WEAKENED, DEAD, (And not AI/AGhost) -------
-	if ((((usr.paralysis || usr.stunned || usr.weakened) && !istype(usr, /mob/living/silicon/ai)) || usr.stat != 0)/* && !isobserver(usr)*/)
+	if ((((usr.paralysis || usr.stunned || usr.weakened) && !istype(usr, /mob/living/silicon/ai)) || usr.stat != 0) && !isobserver(usr))
 		return
 
 	// ------- CLICKING STUFF IN CONTAINERS -------
@@ -1088,7 +797,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				return 0
 
 		if (!( usr.restrained() || (usr.lying && usr.buckled!=src) ))
-			// ------- YOU ARE NOT REASTRAINED -------
+			// ------- YOU ARE NOT RESTRAINED -------
 
 			if (W)
 				// ------- YOU HAVE AN ITEM IN YOUR HAND - HANDLE ATTACKBY AND AFTERATTACK -------
@@ -1106,6 +815,8 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 					// ------- YOU ARE NOT HUMAN. WHAT ARE YOU - DETERMINED HERE AND PROPER ATTACK_MOBTYPE CALLED -------
 					if (istype(usr, /mob/living/carbon/monkey))
 						src.attack_paw(usr, usr.hand)
+					else if (isobserver(usr))
+						src.attack_ghost(usr)
 					else if (istype(usr, /mob/living/carbon/alien/humanoid))
 						if(usr.m_intent == "walk" && istype(usr, /mob/living/carbon/alien/humanoid/hunter))
 							usr.m_intent = "run"

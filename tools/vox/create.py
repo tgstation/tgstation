@@ -72,6 +72,7 @@ preexisting=[
 REGEX_SEARCH_STRINGS = re.compile(r'(\'|")(.*?)(?:\1)')
 
 wordlist=[]+preexisting
+othersounds=[]
 
 known_phonemes={}
 
@@ -177,13 +178,15 @@ class Pronunciation:
 		logging.info('Parsed {0} as {1}.'.format(pronunciation,repr(self.syllables)))
 	
 def GenerateForWord(word,wordfile):
-	global wordlist, preexisting, SOX_ARGS, known_phonemes
+	global wordlist, preexisting, SOX_ARGS, known_phonemes, othersounds
 	my_phonemes={}
 	if wordfile in preexisting:
 		logging.info('Skipping {0}.ogg (Marked as PRE_EXISTING)'.format(wordfile))
 		return
 	if '/' not in wordfile:
 		wordlist += [wordfile]
+	else:
+		othersounds += [wordfile]
 	md5=hashlib.md5(word).hexdigest()
 	for w in word.split(' '):
 		w=w.lower()
@@ -282,6 +285,8 @@ ProcessLexicon('lexicon.txt')
 for arg in sys.argv[1:]:
 	ProcessWordList(arg)
 soundsToKeep=set()
+for sound in othersounds:
+	soundsToKeep.add(sound+'.ogg')
 with open(os.path.join(CODE_BASE,'vox_sounds.dm'),'w') as w:
 	w.write("// List is required to compile the resources into the game when it loads.\n")
 	w.write("// Dynamically loading it has bad results with sounds overtaking each other, even with the wait variable.\n")

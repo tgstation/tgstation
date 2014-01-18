@@ -35,7 +35,7 @@
 			return ..()
 		if (!(src.loc == usr) || (src.loc && src.loc.loc == usr))
 			return
-		playsound(src.loc, "rustle", 50, 1, -5)
+		playsound(get_turf(src), "rustle", 50, 1, -5)
 		if (!( M.restrained() ) && !( M.stat ))
 			switch(over_object.name)
 				if("r_hand")
@@ -321,6 +321,10 @@
 /obj/item/weapon/storage/attackby(obj/item/W as obj, mob/user as mob)
 	..()
 
+	// /vg/ #11: Recursion.
+	if(istype(W,/obj/item/weapon/implanter/compressed))
+		return
+
 	if(isrobot(user) && !isMoMMI(user))
 		user << "\blue You're a robot. No."
 		return //Robots can't interact with storage items.
@@ -357,7 +361,7 @@
 	return
 
 /obj/item/weapon/storage/attack_hand(mob/user as mob)
-	playsound(src.loc, "rustle", 50, 1, -5)
+	playsound(get_turf(src), "rustle", 50, 1, -5)
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user

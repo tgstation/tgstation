@@ -11,6 +11,9 @@
 	var/set_temperature = 50		// in celcius, add T0C for kelvin
 	var/heating_power = 40000
 
+	ghost_read=0
+	ghost_write=0
+
 	flags = FPRINT
 
 
@@ -100,9 +103,9 @@
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\spaceheater.dm:99: dat += "Power Level: [cell ? round(cell.percent(),1) : 0]%<BR><BR>"
 			dat += {"Power Level: [cell ? round(cell.percent(),1) : 0]%<BR><BR>
-				Set Temperature: 
+				Set Temperature:
 				<A href='?src=\ref[src];op=temp;val=-5'>-</A>
-				[set_temperature]&deg;C 
+				[set_temperature]&deg;C
 				<A href='?src=\ref[src];op=temp;val=5'>+</A><BR>"}
 			// END AUTOFIX
 			user.set_machine(src)

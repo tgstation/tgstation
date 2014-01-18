@@ -29,5 +29,11 @@
 	new_player_panel()
 	spawn(40)
 		if(client)
+			//If the changelog has changed, show it to them
+			if(client.prefs.lastchangelog != changelog_hash)
+				src << browse('html/changelog.html', "window=changes;size=675x650")
+				client.prefs.lastchangelog = changelog_hash
+				client.prefs.save_preferences()
+				winset(client, "rpane.changelog", "background-color=none;font-style=;")
 			handle_privacy_poll()
 			client.playtitlemusic()

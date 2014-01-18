@@ -1,6 +1,6 @@
 /mob/living/silicon/robot/mommi/Life()
 	set invisibility = 0
-	set background = 1
+	//set background = 1
 
 	if (src.monkeyizing)
 		return
@@ -37,7 +37,6 @@
 
 
 /mob/living/silicon/robot/mommi/use_power()
-
 	if (src.cell)
 		if(src.cell.charge <= 0)
 			uneq_all()
@@ -64,7 +63,7 @@
 /mob/living/silicon/robot/mommi/handle_regular_status_updates()
 
 	if(src.camera && !scrambledcodes)
-		if(src.stat == 2 || isWireCut(5))
+		if(src.stat == 2 || wires.IsCameraCut())
 			src.camera.status = 0
 		else
 			src.camera.status = 1

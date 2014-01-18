@@ -87,7 +87,7 @@
 		return
 	if(istype(C, /obj/item/weapon/wrench))
 		user << "\blue Removing rods..."
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 80, 1)
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 80, 1)
 		if(do_after(user, 30))
 			new /obj/item/stack/rods(src, 2)
 			ChangeTurf(/turf/simulated/floor)
@@ -256,3 +256,57 @@
 	oxygen=0 // BIRDS HATE OXYGEN FOR SOME REASON
 	nitrogen = MOLES_O2STANDARD+MOLES_N2STANDARD // So it totals to the same pressure
 	//icon = 'icons/turf/shuttle-debug.dmi'
+
+
+// CATWALKS
+// Space and plating, all in one buggy fucking turf!
+/turf/unsimulated/floor/airless/catwalk
+	icon = 'icons/turf/catwalks.dmi'
+	icon_state = "catwalk0"
+	name = "catwalk"
+	desc = "Cats really don't like these things."
+
+	temperature = TCMB
+	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
+	heat_capacity = 700000
+
+	lighting_lumcount = 4		//starlight
+	accepts_lighting=0 			// Don't apply overlays
+
+	intact = 0
+
+	New()
+		..()
+		// Fucking cockshit dickfuck shitslut
+		name = "catwalk"
+		update_icon(1)
+
+	proc/update_icon(var/propogate=1)
+		underlays.Cut()
+		underlays += new /icon('icons/turf/space.dmi',"[((x + y) ^ ~(x * y) + z) % 25]")
+
+		var/dirs = 0
+		for(var/direction in cardinal)
+			var/turf/T = get_step(src,direction)
+			if(T.is_catwalk())
+				var/turf/unsimulated/floor/airless/catwalk/C=T
+				dirs |= direction
+				if(propogate)
+					C.update_icon(0)
+		icon_state="catwalk[dirs]"
+
+
+	attackby(obj/item/C as obj, mob/user as mob)
+		if(!C || !user)
+			return 0
+		if(istype(C, /obj/item/weapon/screwdriver))
+			ReplaceWithLattice()
+			playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
+			return
+
+		if(istype(C, /obj/item/weapon/cable_coil))
+			var/obj/item/weapon/cable_coil/coil = C
+			coil.turf_place(src, user)
+
+	is_catwalk()
+		return 1
