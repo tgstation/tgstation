@@ -163,3 +163,10 @@ GATEWAY_DELAY 18000
 ## without preventing people from using it properly.
 ## Only functions in sandbox game mode.
 #SANDBOX_AUTOCLOSE
+
+### ROUNDSTART SILICON LAWS ###
+## This controls what the AI's laws are at the start of the round.
+## Set to 0/commented for "off", silicons will just start with Asimov.
+## Set to 1 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
+## Set to 2 for "random", silicons will start with a random lawset picked from (at the time of writing): P.A.L.A.D.I.N., Corporate, Asimov. More can be added by changing the law datum paths in ai_laws.dm.
+DEFAULT_LAWS 1
