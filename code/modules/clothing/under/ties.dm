@@ -63,6 +63,13 @@
 				return
 	return ..(M,user)
 
+/obj/item/clothing/tie/wcoat
+	name = "waistcoat"
+	desc = "For some classy, murderous fun."
+	icon_state = "vest"
+	item_color = "vest"
+	item_state = "vest"
+
 //////////
 //Medals//
 //////////
