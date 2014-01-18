@@ -97,7 +97,7 @@
 	item_state = "syringe_kit"
 	w_class = 3
 	max_w_class = 2
-	storage_slots = 5
+	storage_slots = 6
 	req_access = list(access_captain)
 	icon_locked = "medalbox+l"
 	icon_closed = "medalbox"
@@ -110,3 +110,4 @@
 		new /obj/item/clothing/tie/medal/conduct(src)
 		new /obj/item/clothing/tie/medal/conduct(src)
 		new /obj/item/clothing/tie/medal/conduct(src)
+		new /obj/item/clothing/tie/medal/gold/captain(src)
