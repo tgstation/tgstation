@@ -20,10 +20,8 @@
 			icon_state = "alien[caste]_husked"
 		else
 			icon_state = "alien[caste]_dead"
-	else if(resting)
+	else if(stat == UNCONSCIOUS || lying || resting)
 		icon_state = "alien[caste]_sleep"
-	else if(stat == UNCONSCIOUS)
-		icon_state = "alien[caste]_unconscious"
 	else if(m_intent == "run")
 		icon_state = "alien[caste]_running"
 	else
@@ -37,9 +35,16 @@
 	update_inv_l_hand(0)
 	update_inv_pockets(0)
 	update_hud()
-	update_icons()
-	update_transform()
+//	update_icons() //Handled in update_transform(), leaving this here as a reminder
 	update_fire()
+	update_transform()
+
+/mob/living/carbon/alien/humanoid/update_transform() //The old method of updating lying/standing was update_icons(). Aliens still expect that.
+	if(lying > 0)
+		lying = 90 //Anything else looks retarded
+	update_icons()
+	..()
+
 
 /mob/living/carbon/alien/humanoid/update_hud()
 	if(client)

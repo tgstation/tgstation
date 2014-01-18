@@ -78,10 +78,10 @@
 /mob/living/carbon/alien/humanoid/queen/large/update_icons()
 	update_hud()		//TODO: remove the need for this to be here
 	overlays.Cut()
-	if(resting)
+	if(stat == DEAD)
+		icon_state = "queen_dead"
+	else if(stat == UNCONSCIOUS || lying || resting)
 		icon_state = "queen_sleep"
-	else if(lying)
-		icon_state = "queen_l"
 	else
 		icon_state = "queen_s"
 	for(var/image/I in overlays_standing)
