@@ -20,7 +20,7 @@
 	origin_tech = "programming=3"
 
 	icon = 'icons/obj/module.dmi'
-	icon_state = "mainboard"
+	icon_state = "planning frame"
 	item_state = "electronic"
 
 	//Recycling
