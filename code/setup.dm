@@ -811,3 +811,8 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 
 // canGhost(Read|Write) flags
 #define PERMIT_ALL 1
+
+// Bay fixed recursive_mob_check (so shit can hear things from inside a container)
+// Unfortunately, it created incredible amounts of lag.
+// Comment the following line if you want it anyway.
+#define USE_BROKEN_RECURSIVE_MOBCHECK
