@@ -161,7 +161,7 @@
 	user.visible_message("<span class='notice'>[user] gets a cup from [src].","<span class='notice'>You get a cup from [src].")
 
 /obj/structure/reagent_dispensers/water_cooler/attackby(var/obj/item/I, var/mob/user)
-	if(istype(I, /obj/item/weapon/reagent_containers/food/drinks/sillycup))
+	if(istype(I, /obj/item/weapon/paper))
 		user.drop_item()
 		del I
 		cups++
