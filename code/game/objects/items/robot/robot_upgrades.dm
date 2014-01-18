@@ -154,7 +154,7 @@
 	name = "vanity plating"
 	desc = "A series of porous plates that can draw colors from injected chemicals. They can be placed on borgs to increase ascetic appeal."
 	construction_cost = list("metal"=1000)
-	icon_state = "cyborg_upgrade3"
+	icon_state = "plating_mod"
 	require_module = 1
 	var/chem_volume = 15
 
@@ -175,10 +175,13 @@
 /obj/item/borg/upgrade/vanity/action(var/mob/living/silicon/robot/R)
 	if(..()) return 0
 
-	if(!color) return 0
+	if(!color)
+		usr << "You haven't added any coloring!"
+		return 0
 
 	icon = 'icons/mob/robots.dmi'
-	icon_state = "bloodhound plating" //TEMPORARY: FIX THIS BEFORE COMMIT
+	icon_state = R.icon_state
+	icon_state += " plating"
 	color = "[color]99"
 	R.vanity = image(src, "layer" = 5)
 
