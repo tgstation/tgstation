@@ -485,7 +485,7 @@
 	if(!user)
 		return
 
-	if(wiresexposed /*&& (!istype(user, /mob/living/silicon))*/) //Commented out the typecheck to allow engiborgs to repair damaged apcs.
+	if(wiresexposed)
 		wires.Interact(user)
 
 	return ui_interact(user)
@@ -504,7 +504,7 @@
 			return 1 // 1 = APC not hacked.
 	else
 		return 0 // 0 = User is not a Malf AI
-	
+
 /obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(!user)
 		return
@@ -518,7 +518,7 @@
 		"chargingStatus" = charging,
 		"totalLoad" = lastused_equip + lastused_light + lastused_environ,
 		"coverLocked" = coverlocked,
-		"siliconUser" = istype(user, /mob/living/silicon),
+		"siliconUser" = istype(user, /mob/living/silicon) || isAdminGhost(user), // Allow aghosts to fuck with APCs
 		"malfStatus" = get_malf_status(user),
 
 		"powerChannels" = list(
@@ -554,15 +554,15 @@
 			)
 		)
 	)
-	
+
 	// update the ui if it exists, returns null if no ui is passed/found
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)	
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "apc.tmpl", "[area.name] - APC", 520, data["siliconUser"] ? 465 : 440)
 		// when the ui is first opened this is the data it will use
-		ui.set_initial_data(data)		
+		ui.set_initial_data(data)
 		// open the new ui window
 		ui.open()
 		// auto update every Master Controller tick
@@ -599,10 +599,11 @@
 		return 0
 	if ( ! (istype(user, /mob/living/carbon/human) || \
 			istype(user, /mob/living/silicon) || \
+			istype(user, /mob/dead/observer) || \
 			istype(user, /mob/living/carbon/monkey) /*&& ticker && ticker.mode.name == "monkey"*/) )
 		user << "\red You don't have the dexterity to use this [src]!"
 		nanomanager.close_user_uis(user, src)
-		
+
 		return 0
 	if(user.restrained())
 		user << "\red You must have free hands to use this [src]"
@@ -624,12 +625,18 @@
 			if(!loud)
 				user << "\red \The [src] have AI control disabled!"
 				nanomanager.close_user_uis(user, src)
-				
+
+			return 0
+	else if(isobserver(user))
+		if(malfhack && istype(malfai) && !isAdminGhost(user))
+			if(!loud)
+				user << "\red \The [src] have AI control disabled!"
+				nanomanager.close_user_uis(user, src)
 			return 0
 	else
 		if ((!in_range(src, user) || !istype(src.loc, /turf)))
 			nanomanager.close_user_uis(user, src)
-			
+
 			return 0
 
 	var/mob/living/carbon/human/H = user
