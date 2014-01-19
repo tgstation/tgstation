@@ -244,6 +244,7 @@
 #include "code\game\gamemodes\blob\blobs\resource.dm"
 #include "code\game\gamemodes\blob\blobs\shield.dm"
 #include "code\game\gamemodes\changeling\changeling.dm"
+#include "code\game\gamemodes\changeling\changeling_mutations.dm"
 #include "code\game\gamemodes\changeling\changeling_powers.dm"
 #include "code\game\gamemodes\changeling\modularchangling.dm"
 #include "code\game\gamemodes\changeling\traitor_chan.dm"
