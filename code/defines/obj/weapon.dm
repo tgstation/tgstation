@@ -183,6 +183,7 @@
 	throwforce = 0
 	w_class = 3.0
 	origin_tech = "materials=1"
+	slowdown = 7
 	var/breakouttime = 300	//Deciseconds = 30s = 0.5 minute
 
 /obj/item/weapon/legcuffs/beartrap
