@@ -127,6 +127,8 @@
 					if(A.operating && A.cell)
 						A.cell.charge = max(0, A.cell.charge - 50)
 						power_drained += 50
+						if(A.charging == 2) // If the cell was full
+							A.charging = 1 // It's no longer full
 
 	if(power_drained > max_power * 0.95)
 		playsound(src, 'sound/effects/screech.ogg', 100, 1, 1)
