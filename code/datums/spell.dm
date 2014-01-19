@@ -102,10 +102,13 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				usr.say(invocation)
 			else
 				usr.say(replacetext(invocation," ","`"))
+			// Why the fuck...? - N3X
+			/*
 			if(usr.gender==MALE)
 				playsound(usr.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
 			else
 				playsound(usr.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
+			*/
 		if("whisper")
 			if(prob(50))
 				usr.whisper(invocation)
@@ -114,7 +117,6 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 /obj/effect/proc_holder/spell/New()
 	..()
-
 	charge_counter = charge_max
 
 /obj/effect/proc_holder/spell/Click()
@@ -134,7 +136,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		charge_counter++
 
 /obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1) //if recharge is started is important for the trigger spells
-	before_cast(targets)
+	targets=before_cast(targets)
 	invocation()
 	spawn(0)
 		if(charge_type == "recharge" && recharge)
@@ -146,8 +148,15 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	after_cast(targets)
 
 /obj/effect/proc_holder/spell/proc/before_cast(list/targets)
-	if(overlay)
-		for(var/atom/target in targets)
+	var/valid_targets[0]
+	for(var/atom/target in targets)
+		// Check range again (fixes long-range EI NATH)
+		if(!(target in view_or_range(range,usr,selection_type)))
+			continue
+
+		valid_targets += target
+
+		if(overlay)
 			var/location
 			if(istype(target,/mob/living))
 				location = target.loc
@@ -160,6 +169,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			spell.density = 0
 			spawn(overlay_lifespan)
 				del(spell)
+	return valid_targets
 
 /obj/effect/proc_holder/spell/proc/after_cast(list/targets)
 	for(var/atom/target in targets)
