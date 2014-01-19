@@ -36,6 +36,9 @@
 	see_in_dark = 100
 	verbs += /mob/dead/observer/proc/dead_tele
 
+	// Our new boo spell.
+	spell_list += new /obj/effect/proc_holder/spell/aoe_turf/boo(src)
+
 	can_reenter_corpse = flags & GHOST_CAN_REENTER
 	started_as_observer = flags & GHOST_IS_OBSERVER
 
@@ -441,19 +444,20 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			else
 				A << "This mob is not located in the game world."
 
+/* Now a spell.  See spells.dm
 /mob/dead/observer/verb/boo()
 	set category = "Ghost"
 	set name = "Boo!"
 	set desc= "Scare your crew members because of boredom!"
 
 	if(bootime > world.time) return
+	bootime = world.time + 600
 	var/obj/machinery/light/L = locate(/obj/machinery/light) in view(1, src)
 	if(L)
 		L.flicker()
-		bootime = world.time + 600
-		return
 	//Maybe in the future we can add more <i>spooky</i> code here!
 	return
+*/
 
 /mob/dead/observer/memory()
 	set hidden = 1
@@ -466,9 +470,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/verb/analyze_air()
 	set name = "Analyze Air"
 	set category = "Ghost"
-	
+
 	if(!istype(usr, /mob/dead/observer)) return
-	
+
 	// Shamelessly copied from the Gas Analyzers
 	if (!( istype(usr.loc, /turf) ))
 		return

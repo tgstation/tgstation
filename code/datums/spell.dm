@@ -19,6 +19,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/holder_var_type = "bruteloss" //only used if charge_type equals to "holder_var"
 	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
 
+	var/ghost = 0 // Skip life check.
 	var/clothes_req = 1 //see if it requires clothes
 	var/stat_allowed = 0 //see if it requires being conscious/alive, need to set to 1 for ghostpells
 	var/invocation = "HURP DURP" //what is uttered when the wizard casts the spell
@@ -59,15 +60,15 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				if(!charge_counter)
 					usr << "[name] has no charges left."
 					return 0
-
-	if(usr.stat && !stat_allowed)
-		usr << "Not when you're incapacitated."
-		return 0
-
-	if(ishuman(usr) || ismonkey(usr))
-		if(istype(usr.wear_mask, /obj/item/clothing/mask/muzzle))
-			usr << "Mmmf mrrfff!"
+	if(!ghost)
+		if(usr.stat && !stat_allowed)
+			usr << "Not when you're incapacitated."
 			return 0
+
+		if(ishuman(usr) || ismonkey(usr))
+			if(istype(usr.wear_mask, /obj/item/clothing/mask/muzzle))
+				usr << "Mmmf mrrfff!"
+				return 0
 	var/obj/effect/proc_holder/spell/noclothes/spell = locate() in user.spell_list
 	if(clothes_req && !(spell && istype(spell)))//clothes check
 		if(!istype(usr, /mob/living/carbon/human))

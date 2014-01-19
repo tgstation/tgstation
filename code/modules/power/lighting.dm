@@ -451,8 +451,13 @@
 			update(0)
 		flickering = 0
 
-// ai attack - make lights flicker, because why not
+/obj/machinery/light/attack_ghost(mob/user)
+	if(blessed) return
+	src.add_hiddenprint(user)
+	src.flicker(1)
+	return
 
+// ai attack - make lights flicker, because why not
 /obj/machinery/light/attack_ai(mob/user)
 	// attack_robot is flaky.
 	if(isMoMMI(user))
