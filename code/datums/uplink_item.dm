@@ -451,7 +451,7 @@ var/list/uplink_items = list()
 	name = "Syndicate Playing Cards"
 	desc = "A special deck of space-grade playing cards with a mono-molecular edge and metal reinforcement, making them lethal weapons both when wielded as a blade and when thrown. \
 	You can also play card games with them."
-	item = /obj/item/toy/cards/syndicate
+	item = /obj/item/toy/cards/deck/syndicate
 	cost = 1
 	excludefrom = list(/datum/game_mode/nuclear)
 
