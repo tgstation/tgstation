@@ -265,7 +265,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 				var/multiplier = text2num(href_list["multiplier"])
 				if (!multiplier) multiplier = 1
 				var/power = max(2000, (template.m_amt+template.g_amt)*multiplier/5)
-				if(src.m_amount >= template.m_amt*multiplier && src.g_amount >= template.g_amt*multiplier)
+				if(src.m_amount >= template.m_amt*multiplier/coeff && src.g_amount >= template.g_amt*multiplier/coeff)
 					busy = 1
 					use_power(power)
 					icon_state = "autolathe"
