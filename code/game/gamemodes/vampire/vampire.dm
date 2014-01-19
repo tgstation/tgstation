@@ -11,7 +11,7 @@
 	protected_jobs = list()
 	required_players = 1
 	required_players_secret = 15
-	required_enemies = 1
+	required_enemies = 2
 	recommended_enemies = 4
 
 	uplink_welcome = "Syndicate Uplink Console:"
@@ -45,7 +45,10 @@
 	world << "<B>There are Vampires from Space Transylvania on the station, keep your blood close and neck safe!</B>"
 
 /datum/game_mode/vampire/pre_setup()
-
+	// mixed mode scaling
+	if(mixed)
+		recommended_enemies = 2
+		required_enemies = 1
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
@@ -56,13 +59,14 @@
 			if(player.assigned_role == job)
 				possible_vampires -= player
 
-	vampire_amount = max(1,round(num_players() / 10)) //1 + round(num_players() / 10)
+	vampire_amount = min(recommended_enemies, max(required_enemies,round(num_players() / 10))) //1 + round(num_players() / 10)
 
 	if(possible_vampires.len>0)
 		for(var/i = 0, i < vampire_amount, i++)
 			if(!possible_vampires.len) break
 			var/datum/mind/vampire = pick(possible_vampires)
 			possible_vampires -= vampire
+			if(vampire.special_role) continue
 			vampires += vampire
 			modePlayer += vampires
 		return 1
@@ -75,9 +79,9 @@
 		vampire.special_role = "Vampire"
 		forge_vampire_objectives(vampire)
 		greet_vampire(vampire)
-
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
+	if(!mixed)
+		spawn (rand(waittime_l, waittime_h))
+			send_intercept()
 	..()
 	return
 
