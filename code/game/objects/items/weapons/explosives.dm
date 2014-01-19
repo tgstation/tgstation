@@ -100,7 +100,7 @@
 		else
 			target.ex_act(1)
 		if (isobj(target))
-			if (target && !istype(target, /obj/structure/safe) && !istype(target, /obj/machinery/nuclearbomb)) //Nope!
+			if (target)
 				del(target)
 	del(src)
 
