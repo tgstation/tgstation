@@ -612,6 +612,11 @@ datum
 			reagent_state = LIQUID
 			color = "#0064C8" // rgb: 0, 100, 200
 
+
+			reaction_obj(var/obj/O, var/volume)
+				if(volume>=1)
+					O.blessed=1
+
 			on_mob_life(var/mob/living/M as mob,var/alien)
 				if(ishuman(M))
 					if((M.mind in ticker.mode.cult) && prob(10))

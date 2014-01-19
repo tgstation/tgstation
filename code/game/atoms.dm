@@ -1,8 +1,9 @@
 /atom
 	layer = 2
 
-	var/ghost_read=1 // All ghosts can read
-	var/ghost_write=0 // Only aghosts can write
+	var/ghost_read  = 1 // All ghosts can read
+	var/ghost_write = 0 // Only aghosts can write
+	var/blessed=0 // Chaplain did his thing. (set by holywater)
 
 	var/level = 2
 	var/flags = FPRINT

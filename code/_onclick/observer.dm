@@ -37,11 +37,22 @@
 	// Not all of them require checking, see below
 	A.attack_ghost(src)
 
+/atom/proc/attack_ghost(mob/user as mob)
+	var/ghost_flags = 0
+	if(ghost_read)
+		ghost_flags |= PERMIT_ALL
+	if(canGhostRead(user,src,ghost_flags))
+		src.attack_ai(user)
+	else
+		src.examine()
+
+/* Bay edition
 // Oh by the way this didn't work with old click code which is why clicking shit didn't spam you
 /atom/proc/attack_ghost(mob/dead/observer/user as mob)
 	if(user.client && user.client.inquisitive_ghost)
 		examine()
 	return
+*/
 
 // ---------------------------------------
 // And here are some good things for free:
