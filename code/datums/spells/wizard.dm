@@ -40,6 +40,7 @@
 	message = "\blue You feel strong! You feel a pressure building behind your eyes!"
 	range = -1
 	include_user = 1
+	centcom_cancast = 0
 
 	mutations = list(LASER, HULK)
 	duration = 300
