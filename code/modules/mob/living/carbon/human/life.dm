@@ -1093,6 +1093,8 @@
 					var/obj/item/clothing/glasses/hud/O = glasses
 					O.process_hud(src)
 					see_invisible = SEE_INVISIBLE_LIVING
+				else
+					see_invisible = SEE_INVISIBLE_LIVING
 					
 			if(druggy)	//Override for druggy
 				see_invisible = see_temp
