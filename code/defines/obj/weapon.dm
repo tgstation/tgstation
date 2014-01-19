@@ -194,7 +194,7 @@
 	var/armed = 0
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='suicide'>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</span>"
 		return (BRUTELOSS)
 
 /obj/item/weapon/legcuffs/beartrap/attack_self(mob/user as mob)

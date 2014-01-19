@@ -11,7 +11,7 @@
 	attack_verb = list("banned")
 
 /obj/item/weapon/banhammer/suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is hitting \himself with the [src.name]! It looks like \he's trying to ban \himself from life.</b>"
+		viewers(user) << "<span class='suicide'>[user] is hitting \himself with the [src.name]! It looks like \he's trying to ban \himself from life.</span>"
 		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
 
 /obj/item/weapon/banhammer/attack(mob/M, mob/user)
@@ -32,7 +32,7 @@
 	w_class = 1
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='suicide'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>"
 		return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/sord
@@ -48,7 +48,7 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='suicide'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>"
 		return(BRUTELOSS)
 
 /obj/item/weapon/claymore
@@ -67,7 +67,7 @@
 		return 1
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='suicide'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>"
 		return(BRUTELOSS)
 
 /obj/item/weapon/claymore/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
@@ -88,7 +88,7 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>"
+		viewers(user) << "<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>"
 		return(BRUTELOSS)
 
 /obj/item/weapon/katana/IsShield()
