@@ -12,6 +12,8 @@
 	var/strength = 10 //How weakened targets are when flashed.
 	var/base_state = "mflash"
 	anchored = 1
+	ghost_read=0
+	ghost_write=0
 
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
 	name = "portable flasher"
@@ -67,6 +69,7 @@
 	use_power(1000)
 
 	for (var/mob/O in viewers(src, null))
+		if(isobserver(O)) continue
 		if (get_dist(src, O) > src.range)
 			continue
 
