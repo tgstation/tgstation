@@ -151,6 +151,9 @@ var/global/list/all_money_accounts = list()
 	var/creating_new_account = 0
 	var/activated = 1
 
+	ghost_read=0
+	ghost_write=0
+
 /obj/machinery/account_database/New()
 	..()
 	if(!station_account)
