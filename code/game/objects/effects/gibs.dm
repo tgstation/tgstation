@@ -42,6 +42,9 @@
 				for(var/j = 1, j<= gibamounts[i], j++)
 					var/gibType = gibtypes[i]
 					gib = new gibType(location)
+					if(istype(location,/mob/living/carbon))
+						var/mob/living/carbon/digester = location
+						digester.stomach_contents += gib
 
 					if(viruses.len > 0)
 						for(var/datum/disease/D in viruses)
