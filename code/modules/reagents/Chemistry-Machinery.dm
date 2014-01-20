@@ -483,7 +483,8 @@
 				var/name = reject_bad_text(input(usr,"Name:","Name your bottle!",reagents.get_master_reagent_name()))
 				if(!name) name = reagents.get_master_reagent_name()
 				var/count = 1
-				if (href_list["createbottle_multiple"]) count = isgoodnumber(input("Select the number of bottles to make.", 10, bottleamount) as num)
+				if (href_list["createbottle_multiple"])
+					count = isgoodnumber(input("Select the number of bottles to make.", 10, count) as num)
 				if (count > 4) count = 4
 				var/amount_per_bottle = reagents.total_volume/count
 				if (amount_per_bottle > 30) amount_per_bottle = 30
