@@ -19,10 +19,3 @@
 	new /obj/item/weapon/paper(src)
 	new /obj/item/weapon/paper(src)
 	new /obj/item/weapon/pen(src)
-
-/obj/item/weapon/storage/briefcase/attack(mob/living/M as mob, mob/living/user as mob)
-	if ((CLUMSY in user.mutations) && prob(50))
-		user << "\red The [src] slips out of your hand and hits your head."
-		user.take_organ_damage(10)
-		user.Paralyse(2)
-		return

@@ -159,13 +159,6 @@
 	w_class = 3.0
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked") //I think the rollingpin attackby will end up ignoring this anyway.
 
-/obj/item/weapon/kitchen/rollingpin/attack(mob/living/M as mob, mob/living/user as mob)
-	if ((CLUMSY in user.mutations) && prob(50))
-		user << "\red The [src] slips out of your hand and hits your head."
-		user.take_organ_damage(10)
-		user.Paralyse(2)
-		return
-
 /*
  * Trays - Agouri
  */
