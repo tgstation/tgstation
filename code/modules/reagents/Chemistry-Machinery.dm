@@ -485,13 +485,15 @@
 				var/count = 1
 				if (href_list["createbottle_multiple"]) count = isgoodnumber(input("Select the number of bottles to make.", 10, bottleamount) as num)
 				if (count > 4) count = 4
+				var/amount_per_bottle = reagents.total_volume/count
+				if (amount_per_bottle > 30) amount_per_bottle = 30
 				while (count--)
 					var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 					P.name = "[name] bottle"
 					P.pixel_x = rand(-7, 7) //random position
 					P.pixel_y = rand(-7, 7)
 					P.icon_state = "bottle"+bottlesprite
-					reagents.trans_to(P,30)
+					reagents.trans_to(P,amount_per_bottle)
 			else
 				var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
 				reagents.trans_to(P,50)
