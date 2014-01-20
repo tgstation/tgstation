@@ -124,25 +124,7 @@
 	name = "kitty ears"
 	desc = "A pair of kitty ears. Meow!"
 	icon_state = "kitty"
-	var/icon/mob
-	var/icon/mob2
 
-/obj/item/clothing/head/kitty/equipped(mob/user, slot)
-	if(user && slot == slot_head)
-		update_icon(user)
-
-//ffffuck you kitty ears. this proc is a) retarded and b) seems to fail around fifty percent of the time. idgaf tbh
-/obj/item/clothing/head/kitty/update_icon(mob/living/carbon/human/user)
-	if(!istype(user)) return
-	mob = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kitty")
-	mob2 = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kitty2")
-	mob.Blend("#[user.hair_color]", ICON_ADD)
-	mob2.Blend("#[user.hair_color]", ICON_ADD)
-
-	var/icon/earbit = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kittyinner")
-	var/icon/earbit2 = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kittyinner2")
-	mob.Blend(earbit, ICON_OVERLAY)
-	mob2.Blend(earbit2, ICON_OVERLAY)
 
 /obj/item/clothing/head/hardhat/reindeer
 	name = "novelty reindeer hat"

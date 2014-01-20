@@ -136,6 +136,7 @@
 			if(payload && !istype(payload, /obj/item/weapon/bombcore/training))
 				message_admins("[key_name(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has primed a [name] ([payload]) for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
 				log_game("[key_name(user)] has primed a [name] ([payload]) for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
+				payload.adminlog = "The [src.name] that [key_name(user)] had primed detonated!"
 
 /obj/machinery/syndicatebomb/proc/isWireCut(var/index)
 	return wires.IsIndexCut(index)
@@ -173,11 +174,15 @@
 	item_state = "eshield0"
 	w_class = 3.0
 	origin_tech = "syndicate=6;combat=5"
+	var/adminlog = null
 
 /obj/item/weapon/bombcore/ex_act(severity) //Little boom can chain a big boom
 	src.detonate()
 
 /obj/item/weapon/bombcore/proc/detonate()
+	if(adminlog)
+		message_admins(adminlog)
+		log_game(adminlog)
 	explosion(get_turf(src),2,5,11, flame_range = 11)
 	del(src)
 

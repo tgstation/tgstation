@@ -548,7 +548,8 @@
 
 
 	else
-		spark_system.start()
+		if(W.force)
+			spark_system.start()
 		return ..()
 
 /mob/living/silicon/robot/verb/unlock_own_cover()
