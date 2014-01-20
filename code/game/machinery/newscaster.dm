@@ -1109,6 +1109,7 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 /obj/machinery/newscaster/proc/scan_user(mob/user)
 	if(masterController)
+		if(masterController == user) return // Don't log in twice.
 		if(get_dist(masterController,src)<=1)
 			if(!isobserver(masterController))
 				user << "\red Wait for [masterController] to finish and move away."
