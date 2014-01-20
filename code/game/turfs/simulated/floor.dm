@@ -431,14 +431,18 @@ turf/simulated/floor/proc/update_icon()
 				user << "\blue The lightbulb seems fine, no need to replace it."
 
 	if(istype(C, /obj/item/weapon/crowbar) && (!(is_plating())))
-		if(broken || burnt)
-			user << "\red You remove the broken plating."
-		else
-			if(is_wood_floor())
-				user << "\red You forcefully pry off the planks, destroying them in the process."
+		user << "<span class='notice'>Now removing the [floor_tile.name]...</span>"
+		if(do_after(user,40))
+			if(!src) return
+			if(is_plating()) return
+			if(broken || burnt)
+				user << "\red You remove the broken plating."
 			else
-				user << "\red You remove the [floor_tile.name]."
-				new floor_tile.type(src)
+				if(is_wood_floor())
+					user << "\red You forcefully pry off the planks, destroying them in the process."
+				else
+					user << "\red You remove the [floor_tile.name]."
+					new floor_tile.type(src)
 
 		make_plating()
 		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
