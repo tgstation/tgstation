@@ -8,6 +8,7 @@
 	icon_state = "alienh_s"
 	plasma_rate = 5
 
+
 /mob/living/carbon/alien/humanoid/hunter/New()
 	create_reagents(100)
 	if(name == "alien hunter")
@@ -15,37 +16,37 @@
 	real_name = name
 	..()
 
-/mob/living/carbon/alien/humanoid/hunter
+/mob/living/carbon/alien/humanoid/hunter/handle_regular_hud_updates()
+	..() //-Yvarov
 
-
-	handle_regular_hud_updates()
-
-		..() //-Yvarov
-
-		if (healths)
-			if (stat != 2)
-				switch(health)
-					if(150 to INFINITY)
-						healths.icon_state = "health0"
-					if(100 to 150)
-						healths.icon_state = "health1"
-					if(50 to 100)
-						healths.icon_state = "health2"
-					if(25 to 50)
-						healths.icon_state = "health3"
-					if(0 to 25)
-						healths.icon_state = "health4"
-					else
-						healths.icon_state = "health5"
-			else
-				healths.icon_state = "health6"
-
-
-	handle_environment()
-		if(m_intent == "run" || resting)
-			..()
+	if (healths)
+		if (stat != 2)
+			switch(health)
+				if(150 to INFINITY)
+					healths.icon_state = "health0"
+				if(100 to 150)
+					healths.icon_state = "health1"
+				if(50 to 100)
+					healths.icon_state = "health2"
+				if(25 to 50)
+					healths.icon_state = "health3"
+				if(0 to 25)
+					healths.icon_state = "health4"
+				else
+					healths.icon_state = "health5"
 		else
-			adjustToxLoss(-heal_rate)
+			healths.icon_state = "health6"
+
+
+/mob/living/carbon/alien/humanoid/hunter/handle_environment()
+	if(m_intent == "run" || resting)
+		..()
+	else
+		adjustToxLoss(-heal_rate)
+
+/mob/living/carbon/alien/humanoid/hunter/movement_delay()
+	. = -1		//hunters are sanic
+	. += ..()	//but they still need to slow down on stun
 
 
 //Hunter verbs

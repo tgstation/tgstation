@@ -663,11 +663,6 @@ Please contact me on #coderbus IRC. ~Carnie x
 	remove_overlay(LEGCUFF_LAYER)
 
 	if(legcuffed)
-		if(src.m_intent != "walk")
-			src.m_intent = "walk"
-			if(src.hud_used && src.hud_used.move_intent)
-				src.hud_used.move_intent.icon_state = "walking"
-
 		overlays_lying[LEGCUFF_LAYER]		= image("icon"='icons/mob/mob.dmi', "icon_state"="legcuff2", "layer"=-LEGCUFF_LAYER)
 		overlays_standing[LEGCUFF_LAYER]	= image("icon"='icons/mob/mob.dmi', "icon_state"="legcuff1", "layer"=-LEGCUFF_LAYER)
 
