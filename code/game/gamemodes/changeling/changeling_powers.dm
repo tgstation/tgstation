@@ -534,17 +534,17 @@ var/list/datum/dna/hivemind_bank = list()
 	set category = "Changeling"
 	set name = "Arm Blade (20)"
 
+	if(istype(l_hand, /obj/item/weapon/melee/arm_blade)) //Not the nicest way to do it, but eh
+		u_equip(l_hand)
+		return
+
+	if(istype(r_hand, /obj/item/weapon/melee/arm_blade))
+		u_equip(r_hand)
+		return
+
 	var/datum/changeling/changeling = changeling_power(20)
 	if(!changeling)
 		return
-
-	if(istype(get_active_hand(), /obj/item/weapon/melee/arm_blade)) //Not the nicest way to do it, but eh
-		var/obj/item/weapon/melee/arm_blade/B = get_active_hand()
-		B.dropped()
-
-	if(istype(get_inactive_hand(), /obj/item/weapon/melee/arm_blade))
-		var/obj/item/weapon/melee/arm_blade/B = get_inactive_hand()
-		B.dropped()
 
 	drop_item(get_active_hand())
 
