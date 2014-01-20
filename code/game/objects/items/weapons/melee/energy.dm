@@ -1,10 +1,9 @@
 /obj/item/weapon/melee/energy
 	var/active = 0
-	flags = FPRINT | TABLEPASS
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
-	viewers(user) << pick("\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>", \
-						"\red <b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b>")
+	viewers(user) << pick("<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>", \
+						"<span class='suicide'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/rejects_blood()
@@ -19,12 +18,12 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
-	flags = FPRINT | CONDUCT | NOSHIELD | TABLEPASS
+	flags = CONDUCT | NOSHIELD
 	origin_tech = "combat=3"
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 
 /obj/item/weapon/melee/energy/axe/suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='suicide'>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</span>"
 		return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/axe/attack_self(mob/user)
@@ -53,7 +52,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = NOSHIELD
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/hacked = 0
@@ -130,6 +129,18 @@
 		else
 			user << "<span class='warning'>It's already fabulous!</span>"
 
+/obj/item/weapon/melee/energy/sword/cyborg
+	var/hitcost = 500
+
+/obj/item/weapon/melee/energy/sword/cyborg/attack(mob/M, var/mob/living/silicon/robot/R)
+	if(R.cell)
+		var/obj/item/weapon/cell/C = R.cell
+		if(active && !(C.use(hitcost)))
+			attack_self(R)
+			R << "<span class='notice'>It's out of charge!</span>"
+			return
+		..()
+	return
 
 /obj/item/weapon/melee/energy/sword/pirate
 	name = "energy cutlass"
@@ -144,8 +155,6 @@
 	New()
 		item_color = "red"
 
-
-
 /obj/item/weapon/melee/energy/blade
 	name = "energy blade"
 	desc = "A concentrated beam of energy in the shape of a blade. Very stylish... and lethal."
@@ -155,7 +164,7 @@
 	throw_speed = 1
 	throw_range = 1
 	w_class = 4.0//So you can't hide it in your pocket or some such.
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = NOSHIELD
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/datum/effect/effect/system/spark_spread/spark_system
 

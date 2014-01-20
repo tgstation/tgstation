@@ -189,22 +189,15 @@
 				L.resist()
 
 		if("mov_intent")
-			if(iscarbon(usr))
-				var/mob/living/carbon/C = usr
-				if(C.legcuffed)
-					C << "<span class='notice'>You are legcuffed! You cannot run until you get [C.legcuffed] removed!</span>"
-					C.m_intent = "walk"	//Just incase
-					C.hud_used.move_intent.icon_state = "walking"
-					return 1
-				switch(usr.m_intent)
-					if("run")
-						usr.m_intent = "walk"
-						usr.hud_used.move_intent.icon_state = "walking"
-					if("walk")
-						usr.m_intent = "run"
-						usr.hud_used.move_intent.icon_state = "running"
-				if(istype(usr,/mob/living/carbon/alien/humanoid))
-					usr.update_icons()
+			switch(usr.m_intent)
+				if("run")
+					usr.m_intent = "walk"
+					usr.hud_used.move_intent.icon_state = "walking"
+				if("walk")
+					usr.m_intent = "run"
+					usr.hud_used.move_intent.icon_state = "running"
+			if(istype(usr,/mob/living/carbon/alien/humanoid))
+				usr.update_icons()
 		if("Reset Machine")
 			usr.unset_machine()
 		if("internal")
@@ -263,10 +256,12 @@
 			usr.drop_item_v()
 
 		if("module")
-			if(issilicon(usr))
-				if(usr:module)
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				if(R.module)
+					R.hud_used.toggle_show_robot_modules()
 					return 1
-				usr:pick_module()
+				R.pick_module()
 
 		if("radio")
 			if(issilicon(usr))
@@ -276,8 +271,10 @@
 				usr:installed_modules()
 
 		if("store")
-			if(issilicon(usr))
-				usr:uneq_active()
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				R.uneq_active()
+				R.hud_used.update_robot_modules_display()
 
 		if("module1")
 			if(istype(usr, /mob/living/silicon/robot))

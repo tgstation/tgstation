@@ -11,22 +11,21 @@ Note: Must be placed within 3 tiles of the R&D Console
 	name = "Destructive Analyzer"
 	icon_state = "d_analyzer"
 	var/obj/item/weapon/loaded_item = null
-	var/decon_mod = 1
+	var/decon_mod = 0
 
 /obj/machinery/r_n_d/destructive_analyzer/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/destructive_analyzer(src)
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
+	component_parts += new /obj/item/weapon/circuitboard/destructive_analyzer(null)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	RefreshParts()
 
 /obj/machinery/r_n_d/destructive_analyzer/RefreshParts()
 	var/T = 0
-	for(var/obj/item/weapon/stock_parts/S in src)
-		T += S.rating * 0.1
-	T = Clamp(T, 0, 1)
+	for(var/obj/item/weapon/stock_parts/S in component_parts)
+		T += S.rating
 	decon_mod = T
 
 /obj/machinery/r_n_d/destructive_analyzer/meteorhit()
@@ -54,32 +53,29 @@ Note: Must be placed within 3 tiles of the R&D Console
 			default_deconstruction_crowbar()
 			return 1
 		else
-			user << "\red You can't load the [src.name] while it's opened."
+			user << "<span class='warning'>You can't load the [src.name] while it's opened.</span>"
 			return 1
 	if (disabled)
 		return
 	if (!linked_console)
-		user << "\red The protolathe must be linked to an R&D console first!"
+		user << "<span class='warning'>The protolathe must be linked to an R&D console first!</span>"
 		return
 	if (busy)
-		user << "\red The protolathe is busy right now."
+		user << "<span class='warning'> The protolathe is busy right now.</span>"
 		return
 	if (istype(O, /obj/item) && !loaded_item)
 		if(!O.origin_tech)
-			user << "\red This doesn't seem to have a tech origin!"
+			user << "<span class='warning'> This doesn't seem to have a tech origin!</span>"
 			return
 		var/list/temp_tech = ConvertReqString2List(O.origin_tech)
 		if (temp_tech.len == 0)
-			user << "\red You cannot deconstruct this item!"
-			return
-		if(O.reliability < 90 && O.crit_fail == 0)
-			usr << "\red Item is neither reliable enough or broken enough to learn from."
+			user << "<span class='warning'> You cannot deconstruct this item!</span>"
 			return
 		busy = 1
 		loaded_item = O
 		user.drop_item()
 		O.loc = src
-		user << "\blue You add the [O.name] to the machine!"
+		user << "<span class='notice'>You add the [O.name] to the machine!</span>"
 		flick("d_analyzer_la", src)
 		spawn(10)
 			icon_state = "d_analyzer_l"

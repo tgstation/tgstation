@@ -10,7 +10,6 @@
 	range = 1
 	cooldown_min = 200 //100 deciseconds reduction per rank
 	var/list/protected_roles = list("Wizard","Changeling","Cultist") //which roles are immune to the spell
-	var/list/compatible_mobs = list(/mob/living/carbon/human,/mob/living/carbon/monkey) //which types of mobs are affected by the spell. NOTE: change at your own risk
 	var/base_spell_loss_chance = 20 //base probability of the wizard losing a spell in the process
 	var/spell_loss_chance_modifier = 7 //amount of probability of losing a spell added per spell (mind_transfer included)
 	var/spell_loss_amount = 1 //the maximum amount of spells possible to lose during a single transfer
@@ -38,12 +37,8 @@ Also, you never added distance checking after target is selected. I've went ahea
 		user << "They are too far away!"
 		return
 
-	if(!(target.type in compatible_mobs))
-		user << "Their mind isn't compatible with yours."
-		return
-
 	if(target.stat == DEAD)
-		user << "You didn't study necromancy back at the Space Wizard Federation academy."
+		user << "You don't particularly want to be dead."
 		return
 
 	if(!target.key || !target.mind)

@@ -40,16 +40,8 @@
 		now_pushing = null
 
 /mob/living/carbon/alien/humanoid/movement_delay()
-	var/tally = 0
-	if (istype(src, /mob/living/carbon/alien/humanoid/queen))
-		tally += 5
-	if (istype(src, /mob/living/carbon/alien/humanoid/drone))
-		tally += 2
-	if (istype(src, /mob/living/carbon/alien/humanoid/sentinel))
-		tally += 1
-	if (istype(src, /mob/living/carbon/alien/humanoid/hunter))
-		tally = -1 // hunters go supersuperfast
-	return (tally + move_delay_add + config.alien_delay)
+	. = ..()
+	. += move_delay_add + config.alien_delay	//move_delay_add is used to slow aliens with stuns
 
 ///mob/living/carbon/alien/humanoid/bullet_act(var/obj/item/projectile/Proj) taken care of in living
 
@@ -59,17 +51,7 @@
 	..()
 
 /mob/living/carbon/alien/humanoid/ex_act(severity)
-	if(!blinded)
-		flick("flash", flash)
-
-	if (stat == 2 && client)
-		gib()
-		return
-
-	else if (stat == 2 && !client)
-		xgibs(loc, viruses)
-		del(src)
-		return
+	..()
 
 	var/shielded = 0
 
@@ -77,7 +59,6 @@
 	var/f_loss = null
 	switch (severity)
 		if (1.0)
-			b_loss += 500
 			gib()
 			return
 
@@ -176,7 +157,7 @@
 
 		var/damage = rand(1, 3)
 
-		if(istype(M, /mob/living/carbon/slime/adult))
+		if(M.is_adult)
 			damage = rand(10, 40)
 		else
 			damage = rand(5, 35)
@@ -257,7 +238,6 @@
 
 			M.put_in_active_hand(G)
 
-			grabbed_by += G
 			G.synch()
 
 			LAssailant = M

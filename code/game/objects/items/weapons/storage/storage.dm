@@ -24,7 +24,7 @@
 
 
 /obj/item/weapon/storage/MouseDrop(obj/over_object)
-	if(ishuman(usr) || ismonkey(usr)) //so monkeys can take off their backpacks -- Urist
+	if(ismob(usr)) //all the check for item manipulation are in other places, you can safely open any storages as anything and its not buggy, i checked
 		var/mob/M = usr
 
 		if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
@@ -300,10 +300,10 @@
 
 	if(isrobot(user))
 		user << "<span class='notice'>You're a robot. No.</span>"
-		return 1	//Robots can't interact with storage items.
+		return 0	//Robots can't interact with storage items.
 
 	if(!can_be_inserted(W))
-		return 1
+		return 0
 
 	if(istype(W, /obj/item/weapon/tray))	//THIS ISN'T HOW OOP WORKS
 		var/obj/item/weapon/tray/T = W

@@ -76,7 +76,7 @@ var/list/ai_list = list()
 		if (istype(L, /datum/ai_laws))
 			laws = L
 	else
-		laws = new /datum/ai_laws/asimov
+		make_laws()
 
 	verbs += /mob/living/silicon/ai/proc/show_laws_verb
 
@@ -305,14 +305,11 @@ var/list/ai_list = list()
 	..()
 
 /mob/living/silicon/ai/ex_act(severity)
-	if(!blinded)
-		flick("flash", flash)
+	..()
 
 	switch(severity)
 		if(1.0)
-			if (stat != 2)
-				adjustBruteLoss(100)
-				adjustFireLoss(100)
+			gib()
 		if(2.0)
 			if (stat != 2)
 				adjustBruteLoss(60)
@@ -321,7 +318,7 @@ var/list/ai_list = list()
 			if (stat != 2)
 				adjustBruteLoss(30)
 
-	updatehealth()
+	return
 
 
 /mob/living/silicon/ai/Topic(href, href_list)

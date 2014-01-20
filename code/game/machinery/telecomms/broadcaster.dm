@@ -340,17 +340,17 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 				freq_text = "#unkn"
 			if(COMM_FREQ)
 				freq_text = "Command"
-			if(1351)
+			if(SCI_FREQ)
 				freq_text = "Science"
-			if(1355)
+			if(MED_FREQ)
 				freq_text = "Medical"
-			if(1357)
+			if(ENG_FREQ)
 				freq_text = "Engineering"
 			if(SEC_FREQ)
 				freq_text = "Security"
-			if(1349)
+			if(SERV_FREQ)
 				freq_text = "Service"
-			if(1347)
+			if(SUPP_FREQ)
 				freq_text = "Supply"
 		//There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
 
@@ -372,11 +372,20 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			part_a = "<span class='syndradio'><span class='name'>"
 		else if (display_freq==COMM_FREQ)
 			part_a = "<span class='comradio'><span class='name'>"
+		else if (display_freq==SCI_FREQ)
+			part_a = "<span class='sciradio'><span class='name'>"
+		else if (display_freq==MED_FREQ)
+			part_a = "<span class='medradio'><span class='name'>"
+		else if (display_freq==ENG_FREQ)
+			part_a = "<span class='engradio'><span class='name'>"
 		else if (display_freq==SEC_FREQ)
 			part_a = "<span class='secradio'><span class='name'>"
-		else if (display_freq in DEPT_FREQS)
-			part_a = "<span class='deptradio'><span class='name'>"
-
+		else if (display_freq==SERV_FREQ)
+			part_a = "<span class='servradio'><span class='name'>"
+		else if (display_freq==SUPP_FREQ)
+			part_a = "<span class='suppradio'><span class='name'>"
+		else if (display_freq==DSQUAD_FREQ)
+			part_a = "<span class='dsquadradio'><span class='name'>"
 
 		// --- Filter the message; place it in quotes apply a verb ---
 
@@ -626,17 +635,17 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 				freq_text = "#unkn"
 			if(COMM_FREQ)
 				freq_text = "Command"
-			if(1351)
+			if(SCI_FREQ)
 				freq_text = "Science"
-			if(1355)
+			if(MED_FREQ)
 				freq_text = "Medical"
-			if(1357)
+			if(ENG_FREQ)
 				freq_text = "Engineering"
 			if(SEC_FREQ)
 				freq_text = "Security"
-			if(1349)
+			if(SERV_FREQ)
 				freq_text = "Service"
-			if(1347)
+			if(SUPP_FREQ)
 				freq_text = "Supply"
 		//There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
 
@@ -662,10 +671,20 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			part_a = "<span class='syndradio'><span class='name'>"
 		else if (display_freq==COMM_FREQ)
 			part_a = "<span class='comradio'><span class='name'>"
+		else if (display_freq==SCI_FREQ)
+			part_a = "<span class='sciradio'><span class='name'>"
+		else if (display_freq==MED_FREQ)
+			part_a = "<span class='medradio'><span class='name'>"
+		else if (display_freq==ENG_FREQ)
+			part_a = "<span class='engradio'><span class='name'>"
 		else if (display_freq==SEC_FREQ)
 			part_a = "<span class='secradio'><span class='name'>"
-		else if (display_freq in DEPT_FREQS)
-			part_a = "<span class='deptradio'><span class='name'>"
+		else if (display_freq==SERV_FREQ)
+			part_a = "<span class='servradio'><span class='name'>"
+		else if (display_freq==SUPP_FREQ)
+			part_a = "<span class='suppradio'><span class='name'>"
+		else if (display_freq==DSQUAD_FREQ)
+			part_a = "<span class='dsquadradio'><span class='name'>"
 
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
 

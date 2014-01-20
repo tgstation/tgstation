@@ -20,6 +20,7 @@ Buildable meters
 #define PIPE_PASSIVE_GATE       15
 #define PIPE_VOLUME_PUMP        16
 #define PIPE_HEAT_EXCHANGE      17
+#define PIPE_DVALVE             18
 
 /obj/item/pipe
 	name = "pipe"
@@ -31,7 +32,6 @@ Buildable meters
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "simple"
 	item_state = "buildpipe"
-	flags = TABLEPASS|FPRINT
 	w_class = 3
 	level = 2
 
@@ -59,6 +59,8 @@ Buildable meters
 			src.pipe_type = PIPE_MANIFOLD
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/vent_pump))
 			src.pipe_type = PIPE_UVENT
+		else if(istype(make_from, /obj/machinery/atmospherics/valve/digital))
+			src.pipe_type = PIPE_DVALVE
 		else if(istype(make_from, /obj/machinery/atmospherics/valve))
 			src.pipe_type = PIPE_MVALVE
 		else if(istype(make_from, /obj/machinery/atmospherics/binary/pump))
@@ -94,8 +96,8 @@ Buildable meters
 		"connector", \
 		"manifold", \
 		"junction", \
-		"uvent", \
-		"mvalve", \
+		"vent", \
+		"manual valve", \
 		"pump", \
 		"scrubber", \
 		"insulated pipe", \
@@ -105,6 +107,7 @@ Buildable meters
 		"passive gate", \
 		"volume pump", \
 		"heat exchanger", \
+		"digital valve", \
 	)
 	name = nlist[pipe_type+1] + " fitting"
 	var/list/islist = list( \
@@ -126,6 +129,7 @@ Buildable meters
 		"passivegate", \
 		"volumepump", \
 		"heunary", \
+		"dvalve", \
 	)
 	icon_state = islist[pipe_type + 1]
 
@@ -144,7 +148,7 @@ Buildable meters
 
 	src.dir = turn(src.dir, -90)
 
-	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE))
+	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE))
 		if(dir==2)
 			dir = 1
 		else if(dir==8)
@@ -157,7 +161,7 @@ Buildable meters
 	if ((pipe_type in list (PIPE_SIMPLE_BENT, PIPE_HE_BENT, PIPE_INSULATED_BENT)) \
 		&& (src.dir in cardinal))
 		src.dir = src.dir|turn(src.dir, 90)
-	else if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE))
+	else if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE))
 		if(dir==2)
 			dir = 1
 		else if(dir==8)
@@ -177,11 +181,12 @@ Buildable meters
 		if(	PIPE_SIMPLE_STRAIGHT, \
 			PIPE_INSULATED_STRAIGHT, \
 			PIPE_HE_STRAIGHT, \
-			PIPE_JUNCTION ,\
-			PIPE_PUMP ,\
-			PIPE_VOLUME_PUMP ,\
-			PIPE_PASSIVE_GATE ,\
-			PIPE_MVALVE \
+			PIPE_JUNCTION, \
+			PIPE_PUMP, \
+			PIPE_VOLUME_PUMP, \
+			PIPE_PASSIVE_GATE, \
+			PIPE_MVALVE, \
+			PIPE_DVALVE \
 		)
 			return dir|flip
 		if(PIPE_SIMPLE_BENT, PIPE_INSULATED_BENT, PIPE_HE_BENT)
@@ -236,7 +241,7 @@ Buildable meters
 		return ..()
 	if (!isturf(src.loc))
 		return 1
-	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE))
+	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE))
 		if(dir==2)
 			dir = 1
 		else if(dir==8)
@@ -361,7 +366,7 @@ Buildable meters
 
 
 		if(PIPE_MVALVE)		//manual valve
-			var/obj/machinery/atmospherics/valve/V = new( src.loc)
+			var/obj/machinery/atmospherics/valve/V = new(src.loc)
 			V.dir = dir
 			V.initialize_directions = pipe_dir
 			if (pipename)
@@ -376,6 +381,23 @@ Buildable meters
 				V.node1.build_network()
 			if (V.node2)
 //					world << "[V.node2.name] is connected to valve, forcing it to update its nodes."
+				V.node2.initialize()
+				V.node2.build_network()
+
+		if(PIPE_DVALVE) //Digital valves. Shameless copypaste from manual valves because I don't into atmos code.
+			var/obj/machinery/atmospherics/valve/digital/V = new(src.loc)
+			V.dir = dir
+			V.initialize_directions = pipe_dir
+			if (pipename)
+				V.name = pipename
+			var/turf/T = V.loc
+			V.level = T.intact ? 2 : 1
+			V.initialize()
+			V.build_network()
+			if (V.node1)
+				V.node1.initialize()
+				V.node1.build_network()
+			if (V.node2)
 				V.node2.initialize()
 				V.node2.build_network()
 
@@ -536,7 +558,6 @@ Buildable meters
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "meter"
 	item_state = "buildpipe"
-	flags = TABLEPASS|FPRINT
 	w_class = 4
 
 /obj/item/pipe_meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
@@ -570,3 +591,4 @@ Buildable meters
 #undef PIPE_PASSIVE_GATE
 #undef PIPE_VOLUME_PUMP
 #undef PIPE_OUTLET_INJECT
+#undef PIPE_DVALVE

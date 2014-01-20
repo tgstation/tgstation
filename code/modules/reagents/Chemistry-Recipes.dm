@@ -468,7 +468,7 @@ datum
 			id = "mixvirus"
 			result = "blood"
 			required_reagents = list("virusfood" = 5)
-			required_catalysts = list("blood")
+			required_catalysts = list("blood" = 5)
 			var/level_min = 0
 			var/level_max = 2
 
@@ -501,7 +501,8 @@ datum
 
 				name = "Devolve Virus"
 				id = "remvirus"
-				required_reagents = list("synaptizine" = 5)
+				required_reagents = list("synaptizine" = 1)
+				required_catalysts = list("blood" = 1)
 
 				on_reaction(var/datum/reagents/holder, var/created_volume)
 
@@ -2144,5 +2145,5 @@ datum
 			name = "Thirteen Loko"
 			id = "thirteenloko"
 			result = "thirteenloko"
-			required_reagents = list("vodka" = 1, "coffee" = 1, "orangejuice" = 1)
+			required_reagents = list("vodka" = 1, "coffee" = 1, "limejuice" = 1)
 			result_amount = 3

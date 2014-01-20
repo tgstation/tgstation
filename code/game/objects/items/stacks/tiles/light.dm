@@ -1,14 +1,14 @@
 /obj/item/stack/tile/light
-	name = "light tiles"
+	name = "light tile"
 	singular_name = "light floor tile"
-	desc = "A floor tile, made out off glass. It produces light."
+	desc = "A floor tile, made out of glass. It produces light."
 	icon_state = "tile_e"
 	w_class = 3.0
 	force = 3.0
 	throwforce = 5.0
 	throw_speed = 5
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	max_amount = 60
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "smashed")
 	var/on = 1

@@ -14,12 +14,6 @@
 	projectile_type = /obj/item/projectile/bullet/suffocationbullet
 
 
-/obj/item/ammo_casing/a75
-	desc = "A .75 bullet casing."
-	caliber = "75"
-	projectile_type = /obj/item/projectile/bullet/gyro
-
-
 /obj/item/ammo_casing/a666
 	desc = "A .666 bullet casing."
 	caliber = "357"
@@ -29,7 +23,7 @@
 /obj/item/ammo_casing/c38
 	desc = "A .38 bullet casing."
 	caliber = "38"
-	projectile_type = /obj/item/projectile/bullet/weakbullet
+	projectile_type = /obj/item/projectile/bullet/weakbullet2
 
 
 /obj/item/ammo_casing/c10mm
@@ -57,20 +51,21 @@
 
 
 /obj/item/ammo_casing/shotgun
-	name = "shotgun shell"
-	desc = "A 12 gauge shell."
-	icon_state = "gshell"
+	name = "shotgun slug"
+	desc = "A 12 gauge slug."
+	icon_state = "blshell"
 	caliber = "shotgun"
 	projectile_type = /obj/item/projectile/bullet
 	m_amt = 12500
 
 
-/obj/item/ammo_casing/shotgun/blank
+/obj/item/ammo_casing/shotgun/buckshot
 	name = "shotgun shell"
-	desc = "A blank shell."
-	icon_state = "blshell"
-	projectile_type = null
-	m_amt = 250
+	desc = "A 12 gauge shell."
+	icon_state = "gshell"
+	projectile_type = /obj/item/projectile/bullet/pellet
+	pellets = 5
+	variance = 0.8
 
 
 /obj/item/ammo_casing/shotgun/beanbag
@@ -106,6 +101,24 @@
 	return
 
 /obj/item/ammo_casing/a762
-	desc = "A 7.62 bullet casing."
+	desc = "A 7.62mm bullet casing."
 	caliber = "a762"
 	projectile_type = /obj/item/projectile/bullet
+
+
+/obj/item/ammo_casing/caseless
+	desc = "A caseless bullet casing."
+
+
+/obj/item/ammo_casing/caseless/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, var/distro, var/quiet)
+	if (..())
+		loc = null
+		return 1
+	else
+		return 0
+
+
+/obj/item/ammo_casing/caseless/a75
+	desc = "A .75 bullet casing."
+	caliber = "75"
+	projectile_type = /obj/item/projectile/bullet/gyro

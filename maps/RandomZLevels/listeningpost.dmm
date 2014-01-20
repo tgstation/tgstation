@@ -9,7 +9,7 @@
 "i" = (/obj/structure/table,/turf/simulated/floor,/area/awaymission/listeningpost)
 "j" = (/turf/simulated/floor,/area/awaymission/listeningpost)
 "k" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/plating,/area/awaymission/listeningpost)
-"l" = (/turf/simulated/floor/plating/airless/asteroid,/area/mine/explored)
+"l" = (/turf/simulated/floor/plating/asteroid/airless,/area/mine/explored)
 "m" = (/obj/machinery/computer/message_monitor,/turf/simulated/floor,/area/awaymission/listeningpost)
 "n" = (/obj/structure/stool/bed/chair{dir = 4},/mob/living/simple_animal/hostile/syndicate{desc = "A weary looking syndicate operative."; faction = "syndicate"},/turf/simulated/floor,/area/awaymission/listeningpost)
 "o" = (/obj/structure/table,/obj/item/weapon/paper{info = "Nothing of interest to report."; name = "november report"},/obj/item/weapon/pen,/turf/simulated/floor,/area/awaymission/listeningpost)

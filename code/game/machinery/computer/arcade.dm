@@ -23,7 +23,8 @@
 							/obj/item/toy/prize/mauler						= 1,
 							/obj/item/toy/prize/odysseus					= 1,
 							/obj/item/toy/prize/phazon						= 1,
-							/obj/item/toy/cards								= 2
+							/obj/item/toy/cards								= 2,
+							/obj/item/toy/nuke								= 2
 							)
 
 /obj/machinery/computer/arcade/New()
@@ -70,7 +71,7 @@
 	desc = "Does not support Pinball."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "arcade"
-	circuit = /obj/item/weapon/circuitboard/arcade
+	circuit = /obj/item/weapon/circuitboard/arcade/battle
 	var/enemy_name = "Space Villian"
 	var/temp = "Winners Don't Use Spacedrugs" //Temporary message, for attack messages, etc
 	var/player_hp = 30 //Player health/attack points

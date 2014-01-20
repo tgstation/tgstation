@@ -52,6 +52,8 @@
 	if(check_auth())
 		dat += text("<A href='?src=\ref[src];choice=station'>Proceed to Station.</A><br>")
 		dat += text("<A href='?src=\ref[src];choice=release'>Open release door.</A><br>")
+	if(machine)
+		dat += text("<HR><b>Mineral Value List:</b><BR>[machine.get_ore_values()]")
 
 
 	user << browse("[dat]", "window=console_stacking_machine")
@@ -94,15 +96,21 @@
 			if(href_list["choice"] == "station")
 				var/datum/shuttle_manager/s = shuttles["laborcamp"]
 				if(s.location == /area/shuttle/laborcamp/outpost)
-					if (s.move_shuttle())
-						usr << "\blue Shuttle recieved message and will be sent shortly."
+					if(alone_in_area(get_area(loc), usr))
+						if (s.move_shuttle(0)) // No delay, to stop people from getting on while it is departing.
+							usr << "\blue Shuttle recieved message and will be sent shortly."
+						else
+							usr << "\blue Shuttle is already moving."
 					else
-						usr << "\blue Shuttle is already moving."
+						usr << "\red Prisoners are only allowed to be released while alone."
 				else
 					usr << "\blue Shuttle is already on-station."
 			if(href_list["choice"] == "release")
-				if(release_door.density)
-					release_door.open()
+				if(alone_in_area(get_area(loc), usr))
+					if(release_door.density)
+						release_door.open()
+				else
+					usr << "\red Prisoners are only allowed to be released while alone."
 		src.updateUsrDialog()
 	return
 
@@ -111,8 +119,16 @@
 
 
 /obj/machinery/mineral/stacking_machine/laborstacker
-	var/points = 0 //The unclaimed value of ore stacked.  Value for each ore loosely relative to its rarity.  Iron = 1; Diamond = 25.
-	var/list/ore_values = list(("metal" = 1), ("diamond" = 25), ("solid plasma" = 2), ("gold" = 5), ("silver" = 5), ("bananium" = 9999), ("uranium" = 5), ("glass" = 1), ("reinforced glass" = 2), ("plasteel" = 3))
+	var/points = 0 //The unclaimed value of ore stacked.  Value for each ore loosely relative to its rarity.
+	var/list/ore_values = list(("glass" = 1), ("metal" = 2), ("solid plasma" = 2), ("plasteel" = 4), ("reinforced glass" = 4), ("gold" = 5), ("silver" = 5), ("uranium" = 5), ("diamond" = 15), ("bananium" = 50))
+
+/obj/machinery/mineral/stacking_machine/laborstacker/proc/get_ore_values()
+	var/dat = "<table border='0' width='200'>"
+	for(var/ore in ore_values)
+		var/value = ore_values[ore]
+		dat += "<tr><td>[capitalize(ore)]</td><td>[value]</td></tr>"
+	dat += "</table>"
+	return dat
 
 /obj/machinery/mineral/stacking_machine/laborstacker/process_sheet(obj/item/stack/sheet/inp)
 	if(istype(inp))

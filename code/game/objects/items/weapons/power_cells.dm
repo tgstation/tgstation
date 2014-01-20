@@ -5,7 +5,6 @@
 	icon_state = "cell"
 	item_state = "cell"
 	origin_tech = "powerstorage=1"
-	flags = FPRINT|TABLEPASS
 	force = 5.0
 	throwforce = 5.0
 	throw_speed = 3
@@ -21,7 +20,7 @@
 	var/construction_time=100
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is licking the electrodes of the [src.name]! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='suicide'>[user] is licking the electrodes of the [src.name]! It looks like \he's trying to commit suicide.</span>"
 		return (FIRELOSS)
 
 /obj/item/weapon/cell/crap
@@ -36,7 +35,7 @@
 	charge = 0
 
 /obj/item/weapon/cell/secborg
-	name = "\improper Security borg rechargable D battery"
+	name = "security borg rechargable D battery"
 	origin_tech = "powerstorage=0"
 	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
 	g_amt = 40

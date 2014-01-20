@@ -5,7 +5,6 @@
 	icon_state = "bluetie"
 	item_state = ""	//no inhands
 	item_color = "bluetie"
-	flags = FPRINT | TABLEPASS
 	slot_flags = 0
 	w_class = 2.0
 
@@ -24,6 +23,13 @@
 	desc = "A neosilk clip-on tie. This one is disgusting."
 	icon_state = "horribletie"
 	item_color = "horribletie"
+
+/obj/item/clothing/tie/waistcoat
+	name = "waistcoat"
+	desc = "For some classy, murderous fun."
+	icon_state = "waistcoat"
+	item_state = "waistcoat"
+	item_color = "waistcoat"
 
 /obj/item/clothing/tie/stethoscope
 	name = "stethoscope"

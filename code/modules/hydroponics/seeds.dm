@@ -6,7 +6,6 @@
 	name = "pack of seeds"
 	icon = 'icons/obj/seeds.dmi'
 	icon_state = "seed" // unknown plant seed - these shouldn't exist in-game
-	flags = FPRINT | TABLEPASS
 	w_class = 1.0 // Makes them pocketable
 	var/plantname = "Plants"
 	var/product	//a type path
@@ -20,6 +19,7 @@
 	var/potency = -1
 	var/growthstages = 0
 	var/plant_type = 0 // 0 = 'normal plant'; 1 = weed; 2 = shroom
+	var/rarity = 0
 	var/list/mutatelist = list()
 
 /obj/item/seeds/New()
@@ -30,13 +30,14 @@
 /obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "*** <B>[plantname]</B> ***"
-		user << "-Plant Endurance: \blue [endurance]"
-		user << "-Plant Lifespan: \blue [lifespan]"
+		user << "-Plant Endurance: <span class='notice'> [endurance]</span>"
+		user << "-Plant Lifespan: <span class='notice'> [lifespan]</span>"
+		user << "-Species Discovery Value: <span class='notice'> [rarity]</span>"
 		if(yield != -1)
-			user << "-Plant Yield: \blue [yield]"
-		user << "-Plant Production: \blue [production]"
+			user << "-Plant Yield: <span class='notice'> [yield]</span>"
+		user << "-Plant Production: <span class='notice'> [production]</span>"
 		if(potency != -1)
-			user << "-Plant Potency: \blue [potency]"
+			user << "-Plant Potency: <span class='notice'> [potency]</span>"
 		return
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
 
@@ -55,6 +56,7 @@
 	potency = 20
 	plant_type = 0
 	growthstages = 6
+	rarity = 0 // CentComm knows about this species already, it's in exotic seeds crates.
 	mutatelist = list(/obj/item/seeds/icepepperseed, /obj/item/seeds/chillighost)
 
 
@@ -113,6 +115,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 2
+	rarity = 0 // Technically it's a beneficial mutant, but it's not exactly "new"...
 
 /obj/item/seeds/cabbageseed
 	name = "pack of cabbage seeds"
@@ -162,6 +165,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
+	rarity = 20
 
 /obj/item/seeds/bananaseed
 	name = "pack of banana seeds"
@@ -209,6 +213,7 @@
 	yield = 2
 	plant_type = 0
 	growthstages = 6
+	rarity = 0 // CentComm ships these to us in the exotic seeds crate.
 
 /obj/item/seeds/bloodtomatoseed
 	name = "pack of blood-tomato seeds"
@@ -225,6 +230,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
+	rarity = 20
 
 /obj/item/seeds/tomatoseed
 	name = "pack of tomato seeds"
@@ -259,6 +265,7 @@
 	plant_type = 0
 	oneharvest = 1
 	growthstages = 2
+	rarity = 30
 
 /obj/item/seeds/bluetomatoseed
 	name = "pack of blue-tomato seeds"
@@ -276,6 +283,7 @@
 	plant_type = 0
 	growthstages = 6
 	mutatelist = list(/obj/item/seeds/bluespacetomatoseed)
+	rarity = 20
 
 /obj/item/seeds/bluespacetomatoseed
 	name = "pack of blue-space tomato seeds"
@@ -292,6 +300,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
+	rarity = 50
 
 /obj/item/seeds/cornseed
 	name = "pack of corn seeds"
@@ -359,6 +368,7 @@
 	potency = 20
 	plant_type = 0
 	growthstages = 6
+	rarity = 20
 
 /obj/item/seeds/soyaseed
 	name = "pack of soybean seeds"
@@ -392,6 +402,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 4
+	rarity = 20
 
 /obj/item/seeds/wheatseed
 	name = "pack of wheat seeds"
@@ -478,6 +489,7 @@
 	oneharvest = 1
 	growthstages = 3
 	plant_type = 2
+	rarity = 30
 
 /obj/item/seeds/libertymycelium
 	name = "pack of liberty-cap mycelium"
@@ -546,6 +558,7 @@
 	oneharvest = 1
 	growthstages = 4
 	plant_type = 2
+	rarity = 20
 
 /obj/item/seeds/plumpmycelium
 	name = "pack of plump-helmet mycelium"
@@ -581,6 +594,7 @@
 	oneharvest = 1
 	growthstages = 3
 	plant_type = 2
+	rarity = 30
 
 /obj/item/seeds/nettleseed
 	name = "pack of nettle seeds"
@@ -616,6 +630,7 @@
 	oneharvest = 0
 	growthstages = 5
 	plant_type = 1
+	rarity = 10
 
 /obj/item/seeds/weeds
 	name = "pack of weed seeds"
@@ -684,6 +699,7 @@
 	oneharvest = 1
 	growthstages = 3
 	plant_type = 0
+	rarity = 10
 
 /obj/item/seeds/novaflowerseed
 	name = "pack of novaflower seeds"
@@ -751,6 +767,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
+	rarity = 50 // Source of cyanide, and impossible obtain normally.
 
 /obj/item/seeds/goldappleseed
 	name = "pack of golden apple seeds"
@@ -767,6 +784,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
+	rarity = 40 // Alchemy!
 
 /obj/item/seeds/ambrosiavulgarisseed
 	name = "pack of ambrosia vulgaris seeds"
@@ -800,6 +818,7 @@
 	potency = 5
 	plant_type = 0
 	growthstages = 6
+	rarity = 40
 
 /obj/item/seeds/whitebeetseed
 	name = "pack of white-beet seeds"
@@ -914,6 +933,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
+	rarity = 50  // Nanotrasen approves... but are these seeds even attainable?  Drag the tray to the shuttle?
 
 /obj/item/seeds/orangeseed
 	name = "pack of orange seed"
@@ -947,6 +967,7 @@
 	plant_type = 0
 	growthstages = 6
 	mutatelist = list(/obj/item/seeds/deathberryseed)
+	rarity = 10 // Mildly poisonous berries are common in reality
 
 /obj/item/seeds/deathberryseed
 	name = "pack of death-berry seeds"
@@ -963,6 +984,7 @@
 	potency = 50
 	plant_type = 0
 	growthstages = 6
+	rarity = 30
 
 /obj/item/seeds/grassseed
 	name = "pack of grass seeds"
@@ -1027,6 +1049,7 @@
 	potency = 10
 	growthstages = 4
 	plant_type = 1
+	rarity = 30
 
 /obj/item/seeds/kudzuseed/attack_self(mob/user as mob)
 	if(istype(user.loc,/turf/space))
@@ -1050,6 +1073,7 @@
 	potency = 20
 	plant_type = 0
 	growthstages = 6
+	rarity = 20
 
 /obj/item/seeds/gatfruit
 	name = "pack of gatfruit seeds"
@@ -1066,3 +1090,4 @@
 	potency = 60
 	plant_type = 0
 	growthstages = 2
+	rarity = 50 // Seems admin-only.
