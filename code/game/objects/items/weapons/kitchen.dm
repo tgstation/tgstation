@@ -166,31 +166,6 @@
 		user.Paralyse(2)
 		return
 
-	add_logs(user, M, "attacked", object="[src.name]")
-
-	var/t = user:zone_sel.selecting
-	if (t == "head")
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if (H.stat < 2 && H.health < 50 && prob(90))
-				// ******* Check
-				if (istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80))
-					H << "\red The helmet protects you from being hit hard in the head!"
-					return
-				var/time = rand(2, 6)
-				if (prob(75))
-					H.Paralyse(time)
-				else
-					H.Stun(time)
-				if(H.stat != 2)	H.stat = 1
-				for(var/mob/O in viewers(H, null))
-					O.show_message(text("\red <B>[] has been knocked unconscious!</B>", H), 1, "\red You hear someone fall.", 2)
-			else
-				H << text("\red [] tried to knock you unconscious!",user)
-				H.eye_blurry += 3
-
-	return
-
 /*
  * Trays - Agouri
  */
