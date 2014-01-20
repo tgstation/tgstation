@@ -200,7 +200,7 @@
 		H.equip_or_collect(new suit(H), slot_wear_suit)
 		H.equip_or_collect(new helm(H), slot_head)
 		H.equip_or_collect(new/obj/item/weapon/tank/nitrogen(H), slot_s_store)
-		H << "\blue You are now running on nitrogen internals from the [H.s_store] in your suit storage. Your species finds oxygen toxic, so you must breathe nitrogen only."
+		H << "\blue You are now running on nitrogen internals from the [H.s_store] in your suit storage. Your species finds oxygen toxic, so you must breathe nitrogen (AKA N<sub>2</sub>) only."
 		H.internal = H.s_store
 		if (H.internals)
 			H.internals.icon_state = "internal1"
