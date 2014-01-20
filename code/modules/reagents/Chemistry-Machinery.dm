@@ -478,16 +478,22 @@
 					if(loaded_pill_bottle.contents.len < loaded_pill_bottle.storage_slots)
 						P.loc = loaded_pill_bottle
 						src.updateUsrDialog()
-		else if (href_list["createbottle"])
+		else if (href_list["createbottle"] || href_list["createbottle_multiple"])
 			if(!condi)
 				var/name = reject_bad_text(input(usr,"Name:","Name your bottle!",reagents.get_master_reagent_name()))
-				var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 				if(!name) name = reagents.get_master_reagent_name()
-				P.name = "[name] bottle"
-				P.pixel_x = rand(-7, 7) //random position
-				P.pixel_y = rand(-7, 7)
-				P.icon_state = "bottle"+bottlesprite
-				reagents.trans_to(P,30)
+				var/count = 1
+				if (href_list["createbottle_multiple"]) count = isgoodnumber(input("Select the number of bottles to make.", 10, bottleamount) as num)
+				if (count > 4) count = 4
+				var/amount_per_bottle = reagents.total_volume/count
+				if (amount_per_bottle > 30) amount_per_bottle = 30
+				while (count--)
+					var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
+					P.name = "[name] bottle"
+					P.pixel_x = rand(-7, 7) //random position
+					P.pixel_y = rand(-7, 7)
+					P.icon_state = "bottle"+bottlesprite
+					reagents.trans_to(P,amount_per_bottle)
 			else
 				var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
 				reagents.trans_to(P,50)
@@ -601,7 +607,7 @@
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\Chemistry-Machinery.dm:539: dat += "<HR><BR><A href='?src=\ref[src];createpill=1'>Create pill (50 units max)</A><a href=\"?src=\ref[src]&change_pill=1\"><img src=\"pill[pillsprite].png\" /></a><BR>"
 			dat += {"<a href=\"?src=\ref[src]&change_pill=1\"><img src=\"pill[pillsprite].png\" /></a><a href=\"?src=\ref[src]&change_bottle=1\"><img src=\"bottle[bottlesprite].png\" /></a><BR>"}
 			dat += {"<HR><BR><A href='?src=\ref[src];createpill=1'>Create single pill (50 units max)</A><BR><A href='?src=\ref[src];createpill_multiple=1'>Create multiple pills (50 units max each; 20 max)</A><BR>
-				<A href='?src=\ref[src];createbottle=1'>Create bottle (30 units max)</A>"}
+				<A href='?src=\ref[src];createbottle=1'>Create bottle (30 units max)</A><BR><A href='?src=\ref[src];createbottle_multiple=1'>Create multiple bottles (30 units max each; 4 max)</A><BR>"}
 			// END AUTOFIX
 		else
 			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (50 units max)</A>"
