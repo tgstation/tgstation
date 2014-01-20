@@ -375,8 +375,12 @@
 						return 0
 				return 1
 			if(slot_l_ear)
-				if( !(slot_flags & slot_l_ear) )
+				if( !(slot_flags & SLOT_EARS) )
 					return 0
+				if( (slot_flags & SLOT_TWOEARS) && H.r_ear )
+					return 0
+				if( w_class < 2	)
+					return 1
 				if(H.l_ear)
 					if(automatic)
 						if(H.check_for_open_slot(src))
@@ -387,8 +391,12 @@
 						return 0
 				return 1
 			if(slot_r_ear)
-				if( !(slot_flags & slot_r_ear) )
+				if( !(slot_flags & SLOT_EARS) )
 					return 0
+				if( (slot_flags & SLOT_TWOEARS) && H.l_ear )
+					return 0
+				if( w_class < 2 )
+					return 1
 				if(H.r_ear)
 					if(automatic)
 						if(H.check_for_open_slot(src))
