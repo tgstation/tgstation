@@ -200,6 +200,8 @@
 #include "code\game\dna\dna_modifier.dm"
 #include "code\game\dna\genes\disabilities.dm"
 #include "code\game\dna\genes\gene.dm"
+#include "code\game\dna\genes\goon_disabilities.dm"
+#include "code\game\dna\genes\goon_powers.dm"
 #include "code\game\dna\genes\monkey.dm"
 #include "code\game\dna\genes\powers.dm"
 #include "code\game\gamemodes\events.dm"

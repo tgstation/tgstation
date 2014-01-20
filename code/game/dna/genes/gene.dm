@@ -23,6 +23,12 @@
 	// Any of a number of GENE_ flags.
 	var/flags=0
 
+/**
+* Is the gene active in this mob's DNA?
+*/
+/datum/dna/gene/proc/is_active(var/mob/M)
+	return M.active_genes && type in M.active_genes
+
 // Return 1 if we can activate.
 // HANDLE MUTCHK_FORCED HERE!
 /datum/dna/gene/proc/can_activate(var/mob/M, var/flags)
@@ -32,10 +38,42 @@
 /datum/dna/gene/proc/activate(var/mob/M, var/connected, var/flags)
 	return
 
-// Called when the gene deactivates.  Undo your magic here.
-// Only called when the block is deactivated.
+/**
+* Called when the gene deactivates.  Undo your magic here.
+* Only called when the block is deactivated.
+*/
 /datum/dna/gene/proc/deactivate(var/mob/M, var/connected, var/flags)
 	return
+
+// This section inspired by goone's bioEffects.
+
+/**
+* Called in each life() tick.
+*/
+/datum/dna/gene/proc/OnMobLife(var/mob/M)
+	return
+
+/**
+* Called when the mob dies
+*/
+/datum/dna/gene/proc/OnMobDeath(var/mob/M)
+	return
+
+/**
+* Called when the mob says shit
+*/
+/datum/dna/gene/proc/OnSay(var/mob/M, var/message)
+	return message
+
+/**
+* Called after the mob runs update_icons.
+*
+* @params M The subject.
+* @params g Gender (m or f)
+* @params fat Fat? (0 or 1)
+*/
+/datum/dna/gene/proc/OnDrawUnderlays(var/mob/M, var/g, var/fat)
+	return 0
 
 
 /////////////////////

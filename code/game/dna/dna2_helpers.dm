@@ -38,7 +38,7 @@
 /proc/randmuti(var/mob/living/M)
 	if(!M) return
 	M.dna.check_integrity()
-	M.dna.SetUIValue(rand(1,UNIDNASIZE),rand(1,4095))
+	M.dna.SetUIValue(rand(1,DNA_UI_LENGTH),rand(1,4095))
 
 // Scramble UI or SE.
 /proc/scramble(var/UI, var/mob/M, var/prob)
@@ -52,7 +52,7 @@
 		M.UpdateAppearance()
 
 	else
-		for(var/i = 1, i <= STRUCDNASIZE-1, i++)
+		for(var/i = 1, i <= DNA_SE_LENGTH-1, i++)
 			if(prob(prob))
 				M.dna.SetSEValue(i,rand(1,4095),1)
 		M.dna.UpdateSE()

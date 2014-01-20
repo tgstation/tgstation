@@ -126,3 +126,17 @@
 
 	New()
 		block=GLASSESBLOCK
+
+
+/datum/dna/gene/disability/lisp
+	name = "Lisp"
+	desc = "I wonder wath thith doeth."
+	activation_message = "Thomething doethn't feel right."
+	deactivation_message = "You now feel able to pronounce consonants."
+
+	New()
+		..()
+		block=LISPBLOCK
+
+	OnSay(var/mob/M, var/message)
+		return replacetext(replacetext(message,"S","TH"),"s","th")

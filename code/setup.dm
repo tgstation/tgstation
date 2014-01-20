@@ -308,9 +308,6 @@ var/MAX_EXPLOSION_RANGE = 14
 
 // mob/var/list/mutations
 
-#define STRUCDNASIZE 27
-#define UNIDNASIZE 13
-
 // Used in preferences.
 #define DISABILITY_FLAG_NEARSIGHTED 1
 #define DISABILITY_FLAG_FAT         2
@@ -358,6 +355,13 @@ var/MAX_EXPLOSION_RANGE = 14
 #define mFingerprints	108 	// no fingerprints
 #define mShock			109 	// insulated hands
 #define mSmallsize		110 	// table climbing
+
+// Goon muts
+#define M_OBESITY       200
+#define M_TOXIC_FARTS   201
+#define M_STRONG        202
+#define M_SOBER         203
+#define M_PSY_RESIST    204
 
 //disabilities
 #define NEARSIGHTED		1

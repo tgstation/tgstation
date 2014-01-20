@@ -154,6 +154,8 @@
 	//..() //Does this really need to be here twice? The parent proc doesn't even do anything yet. - Nodrak
 	return
 
+/obj/machinery/door/window/attack_ghost(mob/user as mob)
+	return
 
 /obj/machinery/door/window/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)

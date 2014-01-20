@@ -18,7 +18,7 @@
 
 	// SE blocks to assign.
 	var/list/numsToAssign=new()
-	for(var/i=1;i<STRUCDNASIZE;i++)
+	for(var/i=1;i<DNA_SE_LENGTH;i++)
 		numsToAssign += i
 
 	//testing("Assigning DNA blocks:")
@@ -52,8 +52,31 @@
 	SHOCKIMMUNITYBLOCK = getAssignedBlock("SHOCKIMMUNITY", numsToAssign)
 	SMALLSIZEBLOCK     = getAssignedBlock("SMALLSIZE",     numsToAssign, DNA_HARD_BOUNDS)
 
+	//
+	// Goon muts
+	/////////////////////////////////////////////
+
+	// Disabilities
+	LISPBLOCK      = getAssignedBlock("LISP",       numsToAssign)
+	MUTEBLOCK      = getAssignedBlock("MUTE",       numsToAssign)
+	RADBLOCK       = getAssignedBlock("RAD",        numsToAssign)
+	FATBLOCK       = getAssignedBlock("FAT",        numsToAssign)
+	STUTTERBLOCK   = getAssignedBlock("STUTTER",    numsToAssign)
+	CHAVBLOCK      = getAssignedBlock("CHAV",       numsToAssign)
+	SWEDEBLOCK     = getAssignedBlock("SWEDE",      numsToAssign)
+	SCRAMBLEBLOCK  = getAssignedBlock("SCRAMBLE",   numsToAssign)
+	TOXICFARTBLOCK = getAssignedBlock("TOXICFART",  numsToAssign)
+	STRONGBLOCK    = getAssignedBlock("STRONG",     numsToAssign)
+	HORNSBLOCK     = getAssignedBlock("HORNS",      numsToAssign)
+
+	// Powers
+	SOBERBLOCK     = getAssignedBlock("SOBER",      numsToAssign)
+	PSYRESISTBLOCK = getAssignedBlock("PSYRESIST",  numsToAssign, DNA_HARD_BOUNDS)
+	SHADOWBLOCK    = getAssignedBlock("SHADOW",     numsToAssign, DNA_HARDER_BOUNDS)
+	CHAMELEONBLOCK = getAssignedBlock("CHAMELEON",  numsToAssign, DNA_HARDER_BOUNDS)
+
 	// And the genes that actually do the work. (domutcheck improvements)
-	var/list/blocks_assigned[STRUCDNASIZE]
+	var/list/blocks_assigned[DNA_SE_LENGTH]
 	for(var/gene_type in typesof(/datum/dna/gene))
 		var/datum/dna/gene/G = new gene_type
 		if(G.block)
@@ -76,7 +99,7 @@
 		if(species.default_block_names.len>0)
 			testing("Setting up genetics for [species.name] (needs [english_list(species.default_block_names)])")
 			species.default_blocks.Cut()
-			for(var/block=1;block<STRUCDNASIZE;block++)
+			for(var/block=1;block<DNA_SE_LENGTH;block++)
 				if(assigned_blocks[block] in species.default_block_names)
 					testing("  Found [assigned_blocks[block]] ([block])")
 					species.default_blocks.Add(block)

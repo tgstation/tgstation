@@ -253,12 +253,12 @@
 			if((mHeatres in mutations) || (prob(1)))
 				heal_organ_damage(0,1)
 
-		if ((HULK in mutations) && health <= 25)
-			mutations.Remove(HULK)
-			update_mutations()		//update our mutation overlays
-			src << "\red You suddenly feel very weak."
-			Weaken(3)
-			emote("collapse")
+
+		for(var/datum/dna/gene/gene in dna_genes)
+			if(!gene.block)
+				continue
+			if(gene.is_active(src))
+				gene.OnMobLife(src)
 
 		if (radiation)
 			if (radiation > 100)
@@ -977,7 +977,10 @@
 				overeatduration++
 		else
 			if(overeatduration > 1)
-				overeatduration -= 2 //doubled the unfat rate
+				if(M_OBESITY in mutations)
+					overeatduration -= 1 // Those with obesity gene take twice as long to unfat
+				else
+					overeatduration -= 2
 
 		if(species.flags & REQUIRE_LIGHT)
 			if(nutrition < 200)

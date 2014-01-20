@@ -136,7 +136,7 @@ var/global/floorIsLava = 0
 				body += "<br><br>"
 				body += "<b>DNA Blocks:</b><br><table border='0'><tr><th>&nbsp;</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>"
 				var/bname
-				for(var/block=1;block<STRUCDNASIZE;block++)
+				for(var/block=1;block<DNA_SE_LENGTH;block++)
 					if(((block-1)%5)==0)
 						body += "</tr><tr><th>[block-1]</th>"
 					bname = assigned_blocks[block]

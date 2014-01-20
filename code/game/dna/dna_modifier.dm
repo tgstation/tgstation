@@ -707,7 +707,7 @@
 	if (href_list["selectSEBlock"] && href_list["selectSESubblock"]) // This chunk of code updates selected block / sub-block based on click (se stands for strutural enzymes)
 		var/select_block = text2num(href_list["selectSEBlock"])
 		var/select_subblock = text2num(href_list["selectSESubblock"])
-		if ((select_block <= STRUCDNASIZE) && (select_block >= 1))
+		if ((select_block <= DNA_SE_LENGTH) && (select_block >= 1))
 			src.selected_se_block = select_block
 		if ((select_subblock <= DNA_BLOCK_SIZE) && (select_subblock >= 1))
 			src.selected_se_subblock = select_subblock
@@ -735,9 +735,9 @@
 				var/real_SE_block=selected_se_block
 				block = miniscramble(block, src.radiation_intensity, src.radiation_duration)
 				if(prob(20))
-					if (src.selected_se_block > 1 && src.selected_se_block < STRUCDNASIZE/2)
+					if (src.selected_se_block > 1 && src.selected_se_block < DNA_SE_LENGTH/2)
 						real_SE_block++
-					else if (src.selected_se_block > STRUCDNASIZE/2 && src.selected_se_block < STRUCDNASIZE)
+					else if (src.selected_se_block > DNA_SE_LENGTH/2 && src.selected_se_block < DNA_SE_LENGTH)
 						real_SE_block--
 
 				//testing("Irradiated SE block [real_SE_block]:[src.selected_se_subblock] ([original_block] now [block]) [(real_SE_block!=selected_se_block) ? "(SHIFTED)":""]!")
