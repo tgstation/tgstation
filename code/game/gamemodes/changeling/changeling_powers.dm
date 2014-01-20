@@ -538,10 +538,18 @@ var/list/datum/dna/hivemind_bank = list()
 	if(!changeling)
 		return
 
+	if(istype(get_active_hand(), /obj/item/weapon/melee/arm_blade)) //Not the nicest way to do it, but eh
+		var/obj/item/weapon/melee/arm_blade/B = get_active_hand()
+		B.dropped()
+
+	if(istype(get_inactive_hand(), /obj/item/weapon/melee/arm_blade))
+		var/obj/item/weapon/melee/arm_blade/B = get_inactive_hand()
+		B.dropped()
+
 	drop_item(get_active_hand())
 
 	put_in_hands(new /obj/item/weapon/melee/arm_blade(src))
-	changeling.geneticdamage += 4
+	changeling.geneticdamage += 6
 
 	changeling.chem_charges -= 20
 

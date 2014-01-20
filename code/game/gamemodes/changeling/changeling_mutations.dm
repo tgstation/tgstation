@@ -14,10 +14,10 @@
 
 /obj/item/weapon/melee/arm_blade/New()
 	..()
-	loc.visible_message("<span class='warning'>A grotesque blade forms around [name]\'s arm!</span>", "<span class='warning'>Your arm twists and mutates, transforming it into a deadly blade.</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
+	loc.visible_message("<span class='warning'>A grotesque blade forms around [name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 
 /obj/item/weapon/melee/arm_blade/dropped(mob/user)
-	visible_message("<span class='warning'>With a sickening crunch, [user] reforms his blade into an arm!</span>", "<span class='notice'>You assimilate your blade into your body</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
+	visible_message("<span class='warning'>With a sickening crunch, [user] reforms his blade into an arm!</span>", "<span class='notice'>We assimilate our blade into our body</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
 	del src
 
 /obj/item/weapon/melee/arm_blade/afterattack(atom/target, mob/user, proximity)
@@ -25,6 +25,25 @@
 		var/obj/structure/table/T = target
 		T.table_destroy(1, user)
 
-	if(istype(target, /obj/machinery/computer))
+	else if(istype(target, /obj/machinery/computer))
 		var/obj/machinery/computer/C = target
-		C.attack_alien(user)
+		C.attack_alien(user) //muh copypasta
+
+	else if(istype(target, /obj/machinery/door/airlock))
+		var/obj/machinery/door/airlock/A = target
+
+		if(!A.requiresID() || A.allowed(user)) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message.
+			return
+
+		if(A.arePowerSystemsOn() && !(A.stat & NOPOWER))
+			user << "<span class='notice'>The airlock's motors resist our efforts to force it.</span>"
+			return
+
+		else if(A.locked)
+			user << "<span class='notice'>The airlock's bolts prevent it from being forced.</span>"
+			return
+
+		else
+			//user.say("Heeeeeeeeeerrre's Johnny!")
+			user.visible_message("<span class='warning'>[user] forces the door to open with \his [src]!</span>", "<span class='warning'>We force the door to open.</span>", "<span class='warning'>You hear a metal screeching sound.</span>")
+			A.open(1)
