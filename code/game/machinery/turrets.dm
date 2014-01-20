@@ -324,6 +324,8 @@
 	var/ailock = 0 // AI cannot use this
 	req_access = list(access_ai_upload)
 
+	ghost_read=0
+
 /obj/machinery/turretid/New()
 	..()
 	if(!control_area)
