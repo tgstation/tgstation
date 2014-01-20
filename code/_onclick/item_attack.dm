@@ -21,9 +21,10 @@
 	return
 
 // Overrides the weapon attack so it can attack any atoms like when we want to have an effect on an object independent of attackby
-// It is a powerfull proc but it should be used wisely, if there is other alternatives instead use those, this has no context
+// It is a powerfull proc but it should be used wisely, if there is other alternatives instead use those
+// WARNING! It has no proximity_flag! you have to make your own Adjacent() check!
 // If it returns 1 it exits click code. Always . = 1 at start of the function if you delete src.
-/obj/item/proc/preattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/proc/preattack(atom/target, mob/user, click_parameters)
 	return
 
 /obj/item/proc/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
