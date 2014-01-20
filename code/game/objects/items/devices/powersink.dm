@@ -94,6 +94,8 @@
 				"[user] activates \the [src]!", \
 				"You activate \the [src]!",
 				"You hear a click.")
+			message_admins("Power sink activated by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
+			log_game("Power sink activated by [key_name(user)] at ([x],[y],[z])")
 			set_mode(OPERATING)
 
 		if(OPERATING)
@@ -131,7 +133,9 @@
 							A.charging = 1 // It's no longer full
 
 	if(power_drained > max_power * 0.95)
+		message_admins("Power sink at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) is about to explode")
 		playsound(src, 'sound/effects/screech.ogg', 100, 1, 1)
+
 	if(power_drained >= max_power)
 		processing_objects.Remove(src)
 		explosion(src.loc, 3,6,9,12)
