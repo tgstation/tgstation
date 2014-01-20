@@ -18,7 +18,15 @@
 			if (copytext(message, 1, 2) != "*")
 				return
 
-	/*if(dna)
+	if(dna)
+		if(length(message) >= 2)
+			if (copytext(message, 1, 2) != "*" && department_radio_keys[copytext(message, 1, 3)] != "changeling")
+				for(var/datum/dna/gene/gene in dna_genes)
+					if(!gene.block)
+						continue
+					if(gene.is_active(src))
+						message = gene.OnSay(src,message)
+	/*
 		if(dna.mutantrace == "lizard")
 			if(copytext(message, 1, 2) != "*")
 				message = replacetext(message, "s", stutter("ss"))

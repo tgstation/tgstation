@@ -640,9 +640,18 @@ array
 asimov
 atmospherics
 bar
+bomb
+bombs
+borer
+borers
 botanist
 botanists
+brain
+brains
+brawl
+bridge
 brig
+cage
 cargo
 catbeast
 centcomm
@@ -662,7 +671,11 @@ contraband
 court
 cyborg
 cyborgs
+dead
 dorms
+engineer
+engineering
+engineers
 every
 execution
 fire
@@ -698,17 +711,22 @@ nanotrasen
 ninja
 ninjas
 obtain
+or
 plasma
 port
 qm = quartermaster
 quarters
 queen
+rage
 raider
 raiders
 removal
 requested
 respond
 rest
+roboticist
+robotics
+rogue
 sarah
 sensors
 shirt
@@ -717,6 +735,7 @@ shitcurity
 shitlord = shit lord
 shuttle
 singularity
+skipjack
 smoke
 solar
 solars
@@ -738,6 +757,8 @@ update
 updated
 updating
 upload
+vampire
+vampires
 virology
 vox
 wanker
@@ -775,7 +796,7 @@ voxtest = Ass Blast U.S.A.
 voxtest2 = Fuck your cunt you shit eating cocksucker. Man, eat a dong, fucking ass-ramming shit-fuck. Eat penises in your fuck face, and shit out abortions of fuck, and do shit in your ass, you cockfuck shit monkey ass-wanker from the depths of shit!
 # Out with the old, in with the new:
 #vox_login = Hello! The automatic diagnostic and announcement system welcomes you to the Black Mesa research facility.  Remember: Have a secure day.
-vox_login = Hello! The automatic diagnostic and announcement system welcomes you to the Space Station 13 plasma research facility.  Remember: Have a secure day.
+vox_login = Hello! The automatic diagnostic and announcement system welcomes you to the station.  Remember: Have a secure day.
 vox_420 = Smoke weed every day.
 
 ########################
@@ -791,4 +812,4 @@ vox_420 = Smoke weed every day.
 #sound/AI/newroundsexy = You want to put a banging donk on it.
 #sound/AI/outbreak5 = Confirmed outbreak of level 5 biohazard aboard the station.  All personnel must contain the outbreak.
 #sound/AI/radiation = High levels of radiation detected near the station. Please evacuate into one of the shielded maintenance tunnels.
-#sound/AI/outbreak7 = Confirmed outbreak of level 7 viral biohazard about this station. All personnel must bontain the outbreak.
+#sound/AI/outbreak7 = Confirmed outbreak of level 7 viral biohazard aboard this station. All personnel must contain the outbreak.

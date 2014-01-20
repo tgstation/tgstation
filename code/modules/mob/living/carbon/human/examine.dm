@@ -163,9 +163,13 @@
 		else
 			msg += "[t_He] [t_has] \icon[glasses] \a [glasses] covering [t_his] eyes.\n"
 
-	//ears
-	if(ears && !skipears)
-		msg += "[t_He] [t_has] \icon[ears] \a [ears] on [t_his] ears.\n"
+	//left ear
+	if(l_ear && !skipears)
+		msg += "[t_He] [t_has] \icon[l_ear] \a [l_ear] on [t_his] left ear.\n"
+
+	//right ear
+	if(r_ear && !skipears)
+		msg += "[t_He] [t_has] \icon[r_ear] \a [r_ear] on [t_his] right ear.\n"
 
 	//ID
 	if(wear_id)
@@ -194,12 +198,13 @@
 	for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
 		var/datum/organ/external/o = get_organ(organ)
 		if(o && o.status & ORGAN_SPLINTED)
-			msg += "<span class='warning'>[t_He] [t_has] a splint on his [o.display_name]!</span>\n"
+			msg += "<span class='warning'>[t_He] [t_has] a splint on [t_his] [o.display_name]!</span>\n"
+
 	if(suiciding)
 		msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
 
 	if(mSmallsize in mutations)
-		msg += "[t_He] [t_is] small halfling!\n"
+		msg += "[t_He] [t_is] a halfling!\n"
 
 	var/distance = get_dist(usr,src)
 	if(istype(usr, /mob/dead/observer) || usr.stat == 2) // ghosts can see anything

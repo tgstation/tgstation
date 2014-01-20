@@ -10,6 +10,9 @@ var/global/const/mommi_base_law_type = /datum/ai_laws/keeper // /datum/ai_laws/a
 	var/list/supplied = list()
 	var/list/ion = list()
 
+	// Used in planning frames.
+	var/inherent_cleared = 0
+
 /datum/ai_laws/asimov
 	name = "Three Laws of Robotics"
 
@@ -113,6 +116,7 @@ var/global/const/mommi_base_law_type = /datum/ai_laws/keeper // /datum/ai_laws/a
 /datum/ai_laws/proc/clear_inherent_laws()
 	del(src.inherent)
 	src.inherent = list()
+	inherent_cleared = 1
 
 /datum/ai_laws/proc/add_supplied_law(var/number, var/law)
 	while (src.supplied.len < number + 1)

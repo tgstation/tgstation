@@ -171,7 +171,8 @@ var/MAX_EXPLOSION_RANGE = 14
 #define SLOT_BACK 1024
 #define SLOT_POCKET 2048		//this is to allow items with a w_class of 3 or 4 to fit in pockets.
 #define SLOT_DENYPOCKET 4096	//this is to deny items with a w_class of 2 or 1 to fit in pockets.
-
+#define SLOT_TWOEARS 8192
+#define SLOT_LEGS = 16384
 
 //FLAGS BITMASK
 #define STOPSPRESSUREDMAGE 1	//This flag is used on the flags variable for SUIT and HEAD items which stop pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & SLOT_BACK) if you see it anywhere
@@ -187,6 +188,8 @@ var/MAX_EXPLOSION_RANGE = 14
 #define CONDUCT		64		// conducts electricity (metal etc.)
 #define FPRINT		256		// takes a fingerprint
 #define ON_BORDER	512		// item has priority to check when entering or leaving
+#define NOBLUDGEON  4  // when an item has this it produces no "X has been hit by Y with Z" message with the default handler
+#define NOBLOODY	2048	// used to items if they don't want to get a blood overlay
 
 #define GLASSESCOVERSEYES	1024
 #define MASKCOVERSEYES		1024		// get rid of some of the other retardation in these flags
@@ -235,7 +238,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define slot_r_hand 5
 #define slot_belt 6
 #define slot_wear_id 7
-#define slot_ears 8
+#define slot_l_ear 8
 #define slot_glasses 9
 #define slot_gloves 10
 #define slot_head 11
@@ -247,6 +250,8 @@ var/MAX_EXPLOSION_RANGE = 14
 #define slot_s_store 17
 #define slot_in_backpack 18
 #define slot_legcuffed 19
+#define slot_r_ear 20
+#define slot_legs 21
 
 //Cant seem to find a mob bitflags area other than the powers one
 
@@ -303,9 +308,6 @@ var/MAX_EXPLOSION_RANGE = 14
 
 // mob/var/list/mutations
 
-#define STRUCDNASIZE 27
-#define UNIDNASIZE 13
-
 // Used in preferences.
 #define DISABILITY_FLAG_NEARSIGHTED 1
 #define DISABILITY_FLAG_FAT         2
@@ -353,6 +355,13 @@ var/MAX_EXPLOSION_RANGE = 14
 #define mFingerprints	108 	// no fingerprints
 #define mShock			109 	// insulated hands
 #define mSmallsize		110 	// table climbing
+
+// Goon muts
+#define M_OBESITY       200
+#define M_TOXIC_FARTS   201
+#define M_STRONG        202
+#define M_SOBER         203
+#define M_PSY_RESIST    204
 
 //disabilities
 #define NEARSIGHTED		1
@@ -461,6 +470,13 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define XENO_HOST	32768	//Tracks whether we're gonna be a baby alien's mummy.
 
 var/static/list/scarySounds = list('sound/weapons/thudswoosh.ogg','sound/weapons/Taser.ogg','sound/weapons/armbomb.ogg','sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg','sound/voice/hiss5.ogg','sound/voice/hiss6.ogg','sound/effects/Glassbr1.ogg','sound/effects/Glassbr2.ogg','sound/effects/Glassbr3.ogg','sound/items/Welder.ogg','sound/items/Welder2.ogg','sound/machines/airlock.ogg','sound/effects/clownstep1.ogg','sound/effects/clownstep2.ogg')
+
+//Grab levels
+#define GRAB_PASSIVE	1
+#define GRAB_AGGRESSIVE	2
+#define GRAB_NECK		3
+#define GRAB_UPGRADING	4
+#define GRAB_KILL		5
 
 //Security levels
 #define SEC_LEVEL_GREEN	0
@@ -658,6 +674,7 @@ var/list/TAGGERLOCATIONS = list(
 #define CHAT_ATTACKLOGS	1024
 #define CHAT_DEBUGLOGS	2048
 #define CHAT_LOOC		4096
+#define CHAT_GHOSTRADIO 8192
 
 
 #define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_ATTACKLOGS|CHAT_LOOC)
@@ -675,6 +692,7 @@ var/list/TAGGERLOCATIONS = list(
 #define BE_NINJA		1024
 #define BE_RAIDER		2048
 #define BE_PLANT		4096
+#define BE_VAMPIRE		8192
 
 var/list/be_special_flags = list(
 	"Traitor" = BE_TRAITOR,
@@ -689,7 +707,8 @@ var/list/be_special_flags = list(
 	"Monkey" = BE_MONKEY,
 	"Ninja" = BE_NINJA,
 	"Raider" = BE_RAIDER,
-	"Diona" = BE_PLANT
+	"Diona" = BE_PLANT,
+	"Vampire" = BE_VAMPIRE
 	)
 
 #define AGE_MIN 17			//youngest a character can be
@@ -727,6 +746,8 @@ var/list/be_special_flags = list(
 //feel free to add shit to lists below
 var/list/tachycardics = list("coffee", "inaprovaline", "hyperzine", "nitroglycerin", "thirteenloko", "nicotine")	//increase heart rate
 var/list/bradycardics = list("neurotoxin", "cryoxadone", "clonexadone", "space_drugs", "stoxin")					//decrease heart rate
+var/list/heartstopper = list("potassium_phorochloride", "zombie_powder") //this stops the heart
+var/list/cheartstopper = list("potassium_chloride") //this stops the heart when overdose is met -- c = conditional
 
 //proc/get_pulse methods
 #define GETPULSE_HAND	0	//less accurate (hand)
@@ -740,19 +761,23 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 	)
 
 //Species flags.
-#define NO_EAT 1
+#define NO_BLOOD 1
 #define NO_BREATHE 2
-#define NO_SLEEP 4
-#define RAD_ABSORB 8
-#define NO_SCAN 16
-#define NON_GENDERED 32
-#define REQUIRE_LIGHT 64
-#define WHITELISTED 128
-#define HAS_SKIN_TONE 256
-#define HAS_LIPS 512
-#define HAS_UNDERWEAR 1024
-#define HAS_TAIL 2048
-#define IS_PLANT 4096
+#define NO_SCAN 4
+#define NO_PAIN 8
+
+#define HAS_SKIN_TONE 16
+#define HAS_LIPS 32
+#define HAS_UNDERWEAR 64
+#define HAS_TAIL 128
+
+#define IS_SLOW 256
+#define IS_PLANT 512
+#define IS_WHITELISTED 1024
+
+#define RAD_ABSORB 2048
+#define REQUIRE_LIGHT 4096
+
 #define CAN_BE_FAT 8192 // /vg/
 
 //Language flags.
@@ -766,3 +791,32 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define EQUIP_FAILACTION_NOTHING 0
 #define EQUIP_FAILACTION_DELETE 1
 #define EQUIP_FAILACTION_DROP 2
+
+// Vampire power defines
+#define VAMP_REJUV   1
+#define VAMP_GLARE   2
+#define VAMP_HYPNO   3
+#define VAMP_SHAPE   4
+#define VAMP_VISION  5
+#define VAMP_DISEASE 6
+#define VAMP_CLOAK   7
+#define VAMP_BATS    8
+#define VAMP_SCREAM  9
+#define VAMP_JAUNT   10
+#define VAMP_SLAVE   11
+#define VAMP_BLINK   12
+#define VAMP_FULL    13
+
+// Moved from machine_interactions.dm
+#define STATION_Z  1
+#define CENTCOMM_Z 2
+#define TELECOMM_Z 3
+#define ASTEROID_Z 5
+
+// canGhost(Read|Write) flags
+#define PERMIT_ALL 1
+
+// Bay fixed recursive_mob_check (so shit can hear things from inside a container)
+// Unfortunately, it created incredible amounts of lag.
+// Comment the following line if you want it anyway.
+#define USE_BROKEN_RECURSIVE_MOBCHECK

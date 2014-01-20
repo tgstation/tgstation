@@ -72,8 +72,9 @@
 			finalize_traitor(traitor)
 			greet_traitor(traitor)
 	modePlayer += traitors
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
+	if(!mixed)
+		spawn (rand(waittime_l, waittime_h))
+			send_intercept()
 	..()
 	return 1
 
@@ -85,9 +86,14 @@
 		kill_objective.find_target()
 		traitor.objectives += kill_objective
 
-		var/datum/objective/survive/survive_objective = new
-		survive_objective.owner = traitor
-		traitor.objectives += survive_objective
+		if(prob(25))
+			var/datum/objective/die/die_objective = new
+			die_objective.owner = traitor
+			traitor.objectives += die_objective
+		else
+			var/datum/objective/survive/survive_objective = new
+			survive_objective.owner = traitor
+			traitor.objectives += survive_objective
 
 		if(prob(10))
 			var/datum/objective/block/block_objective = new
@@ -126,10 +132,16 @@
 					traitor.objectives += escape_objective
 
 			else
-				if (!(locate(/datum/objective/hijack) in traitor.objectives))
-					var/datum/objective/hijack/hijack_objective = new
-					hijack_objective.owner = traitor
-					traitor.objectives += hijack_objective
+				if(prob(50))
+					if (!(locate(/datum/objective/hijack) in traitor.objectives))
+						var/datum/objective/hijack/hijack_objective = new
+						hijack_objective.owner = traitor
+						traitor.objectives += hijack_objective
+				else // Honk
+					if (!(locate(/datum/objective/minimize_casualties) in traitor.objectives))
+						var/datum/objective/minimize_casualties/escape_objective = new
+						escape_objective.owner = traitor
+						traitor.objectives += escape_objective
 	return
 
 

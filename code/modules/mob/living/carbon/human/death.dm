@@ -20,7 +20,10 @@
 			E.droplimb(1,1)
 
 	flick("gibbed-h", animation)
-	hgibs(loc, viruses, dna)
+	if(species)
+		hgibs(loc, viruses, dna, species.flesh_color, species.blood_color)
+	else
+		hgibs(loc, viruses, dna)
 
 	spawn(15)
 		if(animation)	del(animation)
@@ -81,6 +84,10 @@
 			if (V.dna && (V.dna.mutantrace == "vox"))*/ //Not currently feasible due to terrible LAssailant tracking.
 		//world << "Vox kills: [vox_kills]"
 		vox_kills++ //Bad vox. Shouldn't be killing humans.
+	if(ishuman(LAssailant))
+		var/mob/living/carbon/human/H=LAssailant
+		if(H.mind)
+			H.mind.kills += "[name] ([ckey])"
 
 	if(!gibbed)
 		emote("deathgasp") //let the world KNOW WE ARE DEAD

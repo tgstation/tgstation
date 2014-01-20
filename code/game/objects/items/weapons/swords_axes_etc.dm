@@ -97,7 +97,7 @@
 */
 	if (user.a_intent == "hurt")
 		if(!..()) return
-		playsound(src.loc, "swing_hit", 50, 1, -1)
+		playsound(get_turf(src), "swing_hit", 50, 1, -1)
 		if (M.stuttering < 8 && (!(HULK in M.mutations))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 			M.stuttering = 8
 		M.Stun(8)
@@ -105,12 +105,16 @@
 		for(var/mob/O in viewers(M))
 			if (O.client)	O.show_message("\red <B>[M] has been beaten with \the [src] by [user]!</B>", 1, "\red You hear someone fall", 2)
 	else
-		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1, -1)
+		playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1, -1)
 		M.Stun(5)
 		M.Weaken(5)
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
 		log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+		if(!iscarbon(user))
+			M.LAssailant = null
+		else
+			M.LAssailant = user
 		src.add_fingerprint(user)
 
 		for(var/mob/O in viewers(M))
@@ -150,7 +154,7 @@
 		w_class = 2
 		force = 3//not so robust now
 		attack_verb = list("hit", "punched")
-	playsound(src.loc, 'sound/weapons/empty.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/weapons/empty.ogg', 50, 1)
 	add_fingerprint(user)
 
 	if(blood_overlay)							//updates blood overlay, if any
@@ -179,17 +183,21 @@
 		if (user.a_intent == "hurt")
 			if(!..()) return
 			if(!isrobot(target))
-				playsound(src.loc, "swing_hit", 50, 1, -1)
+				playsound(get_turf(src), "swing_hit", 50, 1, -1)
 				//target.Stun(4)	//naaah
 				target.Weaken(4)
 		else
-			playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1, -1)
+			playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1, -1)
 			target.Weaken(2)
 			target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [target.name] ([target.ckey])</font>")
 			log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [target.name] ([target.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 			src.add_fingerprint(user)
 			target.visible_message("\red <B>[target] has been stunned with \the [src] by [user]!</B>")
+			if(!iscarbon(user))
+				target.LAssailant = null
+			else
+				target.LAssailant = user
 		return
 	else
 		return ..()

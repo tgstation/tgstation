@@ -30,7 +30,18 @@
 	var/list/datum/mind/possible_wizards = get_players_for_role(BE_WIZARD)
 	if(possible_wizards.len==0)
 		return 0
-	var/datum/mind/wizard = pick(possible_wizards)
+	var/datum/mind/wizard
+	while(possible_wizards.len)
+		wizard = pick(possible_wizards)
+		if(wizard.special_role)
+			possible_wizards -= wizard
+			wizard = null
+			continue
+		else
+			break
+	if(isnull(wizard))
+		log_admin("COULD NOT MAKE A WIZARD, Mixed mode is [mixed ? "enabled" : "disabled"]")
+		return 0
 	wizards += wizard
 	modePlayer += wizard
 	wizard.assigned_role = "MODE" //So they aren't chosen for other jobs.
@@ -56,9 +67,9 @@
 		equip_wizard(wizard.current)
 		name_wizard(wizard.current)
 		greet_wizard(wizard)
-
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
+	if(!mixed)
+		spawn (rand(waittime_l, waittime_h))
+			send_intercept()
 	..()
 	return
 
@@ -163,7 +174,7 @@
 	del(wizard_mob.r_store)
 	del(wizard_mob.l_store)
 
-	wizard_mob.equip_to_slot_or_del(new /obj/item/device/radio/headset(wizard_mob), slot_ears)
+	wizard_mob.equip_to_slot_or_del(new /obj/item/device/radio/headset(wizard_mob), slot_l_ear)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/under/lightpurple(wizard_mob), slot_w_uniform)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(wizard_mob), slot_shoes)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(wizard_mob), slot_wear_suit)

@@ -204,7 +204,11 @@
 		if("Cn9")	soundfile = 'sound/piano/Cn9.ogg'
 		else		return
 
-	hearers(15, src) << sound(soundfile)
+//	hearers(15, src) << sound(soundfile)
+	var/turf/source = get_turf(src)
+	for(var/mob/M in hearers(15, source))
+		M.playsound_local(source, file(soundfile), 100, falloff = 5)
+
 
 /obj/structure/device/piano/proc/playsong()
 	do
@@ -422,7 +426,7 @@
 /obj/structure/device/piano/attackby(obj/item/O as obj, mob/user as mob)
 	if (istype(O, /obj/item/weapon/wrench))
 		if (anchored)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 			user << "\blue You begin to loosen \the [src]'s casters..."
 			if (do_after(user, 40))
 				user.visible_message( \
@@ -431,7 +435,7 @@
 					"You hear ratchet.")
 				src.anchored = 0
 		else
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 			user << "\blue You begin to tighten \the [src] to the floor..."
 			if (do_after(user, 20))
 				user.visible_message( \

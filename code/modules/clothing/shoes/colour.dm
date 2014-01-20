@@ -89,17 +89,19 @@
 	if (src.chained)
 		src.chained = null
 		src.slowdown = SHOES_SLOWDOWN
-		new /obj/item/weapon/handcuffs( user.loc )
+		new chaintype( user.loc )
 		src.icon_state = "orange"
 	return
 
-/obj/item/clothing/shoes/orange/attackby(H as obj, loc)
+/obj/item/clothing/shoes/orange/attackby(var/obj/O, loc)
 	..()
-	if ((istype(H, /obj/item/weapon/handcuffs) && !( src.chained )))
+	if ((istype(O, /obj/item/weapon/handcuffs) && !( src.chained )))
+		var/obj/item/weapon/handcuffs/H=O
 		//H = null
 		if (src.icon_state != "orange") return
-		del(H)
 		src.chained = 1
+		src.chaintype = H.type
 		src.slowdown = 15
 		src.icon_state = "orange1"
+		del(H)
 	return

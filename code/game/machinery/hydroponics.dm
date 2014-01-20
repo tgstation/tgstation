@@ -824,7 +824,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			return 1
 	else if(opened)
 		if(istype(O, /obj/item/weapon/crowbar))
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 			M.state = 2
 			M.icon_state = "box_1"
@@ -1020,9 +1020,9 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			podman.dna = new /datum/dna()
 			podman.dna.real_name = podman.real_name
 		if(ui)
-			podman.UpdateAppearance(ui)
+			podman.UpdateAppearance(ui.Copy())
 		if(se)
-			podman.dna.SE = se
+			podman.dna.SE = se.Copy()
 			podman.dna.UpdateSE()
 		if(!prob(potency)) //if it fails, plantman!
 			if(podman)

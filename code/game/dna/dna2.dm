@@ -16,15 +16,6 @@
 #define DNA_HARDER_BOUNDS  list(1,3049,3050,4095)
 #define DNA_HARD_BOUNDS    list(1,3490,3500,4095)
 
-// Defines which values mean "on" or "off".
-//  This is to make some of the more OP superpowers a larger PITA to activate,
-//  and to tell our new DNA datum which values to set in order to turn something
-//  on or off.
-var/global/list/dna_activity_bounds[STRUCDNASIZE]
-
-// Used to determine what each block means (admin hax and species stuff on /vg/, mostly)
-var/global/list/assigned_blocks[STRUCDNASIZE]
-
 // UI Indices (can change to mutblock style, if desired)
 #define DNA_UI_HAIR_R      1
 #define DNA_UI_HAIR_G      2
@@ -41,6 +32,27 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 #define DNA_UI_HAIR_STYLE  13
 #define DNA_UI_LENGTH      13 // Update this when you add something, or you WILL break shit.
 
+#define DNA_SE_LENGTH 50 // Was STRUCDNASIZE, size 27. 15 new blocks added = 42, plus room to grow.
+
+// Defines which values mean "on" or "off".
+//  This is to make some of the more OP superpowers a larger PITA to activate,
+//  and to tell our new DNA datum which values to set in order to turn something
+//  on or off.
+var/global/list/dna_activity_bounds[DNA_SE_LENGTH]
+
+// Used to determine what each block means (admin hax and species stuff on /vg/, mostly)
+var/global/list/assigned_blocks[DNA_SE_LENGTH]
+
+var/global/list/datum/dna/gene/dna_genes[0]
+
+/////////////////
+// GENE DEFINES
+/////////////////
+
+// Skip checking if it's already active.
+// Used for genes that check for value rather than a binary on/off.
+#define GENE_ALWAYS_ACTIVATE 1
+
 /datum/dna
 	// READ-ONLY, GETS OVERWRITTEN
 	// DO NOT FUCK WITH THESE OR BYOND WILL EAT YOUR FACE
@@ -54,13 +66,34 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 
 	// Okay to read, but you're an idiot if you do.
 	// BLOCK = VALUE
-	var/list/SE[STRUCDNASIZE]
+	var/list/SE[DNA_SE_LENGTH]
 	var/list/UI[DNA_UI_LENGTH]
 
 	// From old dna.
 	var/b_type = "A+"  // Should probably change to an integer => string map but I'm lazy.
 	var/mutantrace = null  // The type of mutant race the player is, if applicable (i.e. potato-man)
 	var/real_name          // Stores the real name of the person who originally got this dna datum. Used primarily for changelings,
+
+	// New stuff
+	var/species = "Human"
+
+// Make a copy of this strand.
+// USE THIS WHEN COPYING STUFF OR YOU'LL GET CORRUPTION!
+/datum/dna/proc/Clone()
+	var/datum/dna/new_dna = new()
+	new_dna.unique_enzymes=unique_enzymes
+	new_dna.b_type=b_type
+	new_dna.mutantrace=mutantrace
+	new_dna.real_name=real_name
+	new_dna.species=species
+	for(var/b=1;b<=DNA_SE_LENGTH;b++)
+		new_dna.SE[b]=SE[b]
+		if(b<=DNA_UI_LENGTH)
+			new_dna.UI[b]=UI[b]
+	new_dna.UpdateUI()
+	new_dna.UpdateSE()
+	return new_dna
+
 ///////////////////////////////////////
 // UNIQUE IDENTITY
 ///////////////////////////////////////
@@ -98,13 +131,13 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 	SetUIValueRange(DNA_UI_BEARD_G,   character.g_facial,  255,    1)
 	SetUIValueRange(DNA_UI_BEARD_B,   character.b_facial,  255,    1)
 
-	SetUIValueRange(DNA_UI_BEARD_R,   character.r_eyes,    255,    1)
-	SetUIValueRange(DNA_UI_BEARD_G,   character.g_eyes,    255,    1)
-	SetUIValueRange(DNA_UI_BEARD_B,   character.b_eyes,    255,    1)
+	SetUIValueRange(DNA_UI_EYES_R,    character.r_eyes,    255,    1)
+	SetUIValueRange(DNA_UI_EYES_G,    character.g_eyes,    255,    1)
+	SetUIValueRange(DNA_UI_EYES_B,    character.b_eyes,    255,    1)
 
 	SetUIValueRange(DNA_UI_SKIN_TONE, 35-character.s_tone, 220,    1) // Value can be negative.
 
-	SetUIState(DNA_UI_GENDER,         character.gender!=MALE,      1)
+	SetUIState(DNA_UI_GENDER,         character.gender!=MALE,        1)
 
 	SetUIValueRange(DNA_UI_HAIR_STYLE,  hair,  hair_styles_list.len,       1)
 	SetUIValueRange(DNA_UI_BEARD_STYLE, beard, facial_hair_styles_list.len,1)
@@ -128,12 +161,12 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 
 // Set a DNA UI block's value, given a value and a max possible value.
 // Used in hair and facial styles (value being the index and maxvalue being the len of the hairstyle list)
-/datum/dna/proc/SetUIValueRange(var/block,var/value,var/maxvalue)
+/datum/dna/proc/SetUIValueRange(var/block,var/value,var/maxvalue,var/defer=0)
 	if (block<=0) return
 	ASSERT(maxvalue<=4095)
-	var/range = round(4095 / maxvalue)
+	var/range = (4095 / maxvalue)
 	if(value)
-		SetUIValue(block,value * range - rand(1,range-1))
+		SetUIValue(block,round(value * range),defer)
 
 // Getter version of above.
 /datum/dna/proc/GetUIValueRange(var/block,var/maxvalue)
@@ -193,7 +226,7 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 
 // "Zeroes out" all of the blocks.
 /datum/dna/proc/ResetSE()
-	for(var/i = 1, i <= STRUCDNASIZE, i++)
+	for(var/i = 1, i <= DNA_SE_LENGTH, i++)
 		SetSEValue(i,rand(1,1024),1)
 	UpdateSE()
 
@@ -222,6 +255,12 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 	if(value)
 		SetSEValue(block, value * range - rand(1,range-1))
 
+// Getter version of above.
+/datum/dna/proc/GetSEValueRange(var/block,var/maxvalue)
+	if (block<=0) return 0
+	var/value = GetSEValue(block)
+	return round(1 +(value / 4096)*maxvalue)
+
 // Is the block "on" (1) or "off" (0)? (Un-assigned genes are always off.)
 /datum/dna/proc/GetSEState(var/block)
 	if (block<=0) return 0
@@ -237,7 +276,7 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 	if(on)
 		val=rand(BOUNDS[DNA_ON_LOWERBOUND],BOUNDS[DNA_ON_UPPERBOUND])
 	else
-		val=rand(BOUNDS[DNA_OFF_LOWERBOUND],BOUNDS[DNA_OFF_UPPERBOUND])
+		val=rand(1,BOUNDS[DNA_OFF_UPPERBOUND])
 	SetSEValue(block,val,defer)
 
 // Get hex-encoded SE block.
@@ -298,7 +337,7 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 		if(UI.len != DNA_UI_LENGTH)
 			ResetUIFrom(character)
 
-		if(length(struc_enzymes)!= 3*STRUCDNASIZE)
+		if(length(struc_enzymes)!= 3*DNA_SE_LENGTH)
 			ResetSE()
 
 		if(length(unique_enzymes) != 32)
@@ -306,7 +345,7 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 	else
 		if(length(uni_identity) != 3*DNA_UI_LENGTH)
 			uni_identity = "00600200A00E0110148FC01300B0095BD7FD3F4"
-		if(length(struc_enzymes)!= 3*STRUCDNASIZE)
+		if(length(struc_enzymes)!= 3*DNA_SE_LENGTH)
 			struc_enzymes = "43359156756131E13763334D1C369012032164D4FE4CD61544B6C03F251B6C60A42821D26BA3B0FD6"
 
 // BACK-COMPAT!
@@ -318,4 +357,3 @@ var/global/list/assigned_blocks[STRUCDNASIZE]
 
 	unique_enzymes = md5(character.real_name)
 	reg_dna[unique_enzymes] = character.real_name
-

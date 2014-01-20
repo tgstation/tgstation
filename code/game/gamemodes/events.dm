@@ -233,10 +233,10 @@
 			if (prob(25))
 				if (prob(75))
 					randmutb(H)
-					domutcheck(H,null,MUTCHK_FROM_INJECTOR)
+					domutcheck(H,null,MUTCHK_FORCED)
 				else
 					randmutg(H)
-					domutcheck(H,null,MUTCHK_FROM_INJECTOR)
+					domutcheck(H,null,MUTCHK_FORCED)
 	for(var/mob/living/carbon/monkey/M in living_mob_list)
 		var/turf/T = get_turf(M)
 		if(!T)

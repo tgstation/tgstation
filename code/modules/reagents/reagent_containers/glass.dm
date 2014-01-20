@@ -25,6 +25,7 @@
 		/obj/structure/sink,
 		/obj/item/weapon/storage,
 		/obj/machinery/atmospherics/unary/cryo_cell,
+		/obj/machinery/dna_scannernew,
 		/obj/item/weapon/grenade/chem_grenade,
 		/obj/machinery/bot/medbot,
 		/obj/machinery/computer/pandemic,
@@ -35,7 +36,8 @@
 		/obj/machinery/apiary,
 		/mob/living/simple_animal/cow,
 		/mob/living/simple_animal/hostile/retaliate/goat,
-		/obj/machinery/computer/centrifuge	)
+		/obj/machinery/computer/centrifuge,
+		/obj/machinery/sleeper	)
 
 	New()
 		..()
@@ -65,7 +67,8 @@
 		update_icon()
 
 	afterattack(obj/target, mob/user , flag)
-		if (!is_open_container())
+
+		if (!is_open_container() || !flag)
 			return
 
 		for(var/type in src.can_be_placed_into)
@@ -83,6 +86,10 @@
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been splashed with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to splash [M.name] ([M.key]). Reagents: [contained]</font>")
 			msg_admin_attack("[user.name] ([user.ckey]) splashed [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+			if(!iscarbon(user))
+				M.LAssailant = null
+			else
+				M.LAssailant = user
 
 			for(var/mob/O in viewers(world.view, user))
 				O.show_message(text("\red [] has been splashed with something by []!", target, user), 1)
@@ -206,6 +213,26 @@
 	possible_transfer_amounts = list(5,10,15,25,30,50,100)
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
+/obj/item/weapon/reagent_containers/glass/beaker/noreact
+	name = "cryostasis beaker"
+	desc = "A cryostasis beaker that allows for chemical storage without reactions. Can hold up to 50 units."
+	icon_state = "beakernoreact"
+	g_amt = 500
+	volume = 50
+	amount_per_transfer_from_this = 10
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOREACT
+
+/obj/item/weapon/reagent_containers/glass/beaker/bluespace
+	name = "bluespace beaker"
+	desc = "A bluespace beaker, powered by experimental bluespace technology. Can hold up to 300 units."
+	icon_state = "beakerbluespace"
+	g_amt = 5000
+	volume = 300
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5,10,15,25,30,50,100,300)
+	flags = FPRINT | TABLEPASS | OPENCONTAINER
+
+
 /obj/item/weapon/reagent_containers/glass/beaker/vial
 	name = "vial"
 	desc = "A small glass vial. Can hold up to 25 units."
@@ -256,6 +283,8 @@
 			user.drop_from_inventory(src)
 			del(src)
 
+// vials are defined twice, what?
+/*
 /obj/item/weapon/reagent_containers/glass/beaker/vial
 	name = "vial"
 	desc = "Small glass vial. Looks fragile."
@@ -264,7 +293,7 @@
 	volume = 15
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(1,5,15)
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	flags = FPRINT | TABLEPASS | OPENCONTAINER */
 
 /*
 /obj/item/weapon/reagent_containers/glass/blender_jug

@@ -26,6 +26,17 @@
 	item_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
+/obj/item/weapon/storage/box/large
+	name = "large box"
+	desc = "You could build a fort with this."
+	icon_state = "largebox"
+	item_state = "largebox"
+	w_class = 42 // Big, bulky.
+	foldable = /obj/item/stack/sheet/cardboard
+	foldable_amount = 4 // Takes 4 to make. - N3X
+	storage_slots = 21
+	max_combined_w_class = 42 // 21*2
+
 /obj/item/weapon/storage/box/surveillance/
 	name = "\improper DromedaryCo packet"
 	desc = "A packet of six imported DromedaryCo cancer sticks. A label on the packaging reads, \"Wouldn't a slow death make a change?\""
@@ -461,6 +472,7 @@
 		for (var/i; i < storage_slots; i++)
 			new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
 
+// TODO Change this to a box/large. - N3X
 /obj/item/weapon/storage/box/lights
 	name = "replacement bulbs"
 	icon = 'icons/obj/storage.dmi'

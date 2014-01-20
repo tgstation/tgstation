@@ -8,6 +8,7 @@
 	allowed = list(/obj/item/device/flashlight)
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
+	var/no_light=0 // Disable the light on the atmos suit
 	_color = "engineering" //Determines used sprites: rig[on]-[_color] and rig[on]-[_color]2 (lying down sprite)
 	icon_action_button = "action_hardhat"
 	heat_protection = HEAD
@@ -16,6 +17,8 @@
 	attack_self(mob/user)
 		if(!isturf(user.loc))
 			user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
+			return
+		if(no_light)
 			return
 		on = !on
 		icon_state = "rig[on]-[_color]"
@@ -194,3 +197,27 @@
 	item_state = "atmos_hardsuit"
 	armor = list(melee = 40, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 0)
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECITON_TEMPERATURE
+
+//Firefighting/Atmos RIG (old /vg/)
+/obj/item/clothing/head/helmet/space/rig/atmos/gold
+	desc = "A special suit that protects against hazardous, low pressure environments, and extremely high heat.  In other words, perfect for atmos."
+	heat_protection = HEAD
+	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE*2
+	name = "atmos hardsuit helmet"
+	icon_state = "rig0-atmos_gold"
+	item_state = "atmos_gold_helm"
+	_color = "atmos"
+	no_light=1
+
+/obj/item/clothing/suit/space/rig/atmos/gold
+	desc = "A special suit that protects against hazardous, low pressure environments, and extremely high heat.  In other words, perfect for atmos."
+	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECITON_TEMPERATURE*4
+	gas_transfer_coefficient = 0.80
+	permeability_coefficient = 0.25
+	icon_state = "rig-atmos_gold"
+	name = "atmos hardsuit"
+	item_state = "atmos_gold_hardsuit"
+	slowdown = 2
+	armor = list(melee = 30, bullet = 5, laser = 40,energy = 5, bomb = 35, bio = 100, rad = 60)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/backpack/satchel_norm,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd, /obj/item/weapon/extinguisher, /obj/item/weapon/)

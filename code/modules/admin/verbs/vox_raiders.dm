@@ -4,7 +4,7 @@ var/global/vox_tick = 1
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate(src)
 	R.set_frequency(SYND_FREQ) //Same frequency as the syndicate team in Nuke mode.
-	equip_to_slot_or_del(R, slot_ears)
+	equip_to_slot_or_del(R, slot_l_ear)
 
 	equip_to_slot_or_del(new /obj/item/clothing/under/vox/vox_robes(src), slot_w_uniform)
 	equip_to_slot_or_del(new /obj/item/clothing/shoes/magboots/vox(src), slot_shoes) // REPLACE THESE WITH CODED VOX ALTERNATIVES.
@@ -57,12 +57,16 @@ var/global/vox_tick = 1
 	equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), slot_back)
 	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_r_store)
 
-	var/obj/item/weapon/card/id/syndicate/W = new(src)
-	W.name = "[real_name]'s Legitimate Human ID Card"
-	W.icon_state = "id"
-	W.access = list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage, access_syndicate)
-	W.assignment = "Trader"
-	W.registered_name = real_name
+	var/obj/item/weapon/card/id/syndicate/C = new(src)
+	C.name = "[real_name]'s Legitimate Human ID Card"
+	C.icon_state = "id"
+	C.access = list(access_syndicate)
+	C.assignment = "Trader"
+	C.registered_name = real_name
+	//C.registered_user = src
+	var/obj/item/weapon/storage/wallet/W = new(src)
+	W.handle_item_insertion(C)
+	// NO. /vg/ spawn_money(rand(50,150)*10,W)
 	equip_to_slot_or_del(W, slot_wear_id)
 
 	var/obj/item/weapon/implant/cortical/I = new(src)

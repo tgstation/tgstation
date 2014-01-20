@@ -109,31 +109,61 @@ var/global/normal_ooc_colour = "#002eb8"
 
 	if(!holder)
 		if(!ooc_allowed)
-			src << "\red OOC is globally muted"
+			src << "\red LOOC is globally muted"
 			return
 		if(!dooc_allowed && (mob.stat == DEAD))
-			usr << "\red OOC for dead mobs has been turned off."
+			usr << "\red LOOC for dead mobs has been turned off."
 			return
 		if(prefs.muted & MUTE_OOC)
-			src << "\red You cannot use OOC (muted)."
+			src << "\red You cannot use LOOC (muted)."
 			return
 		if(handle_spam_prevention(msg,MUTE_OOC))
 			return
 		if(findtext(msg, "byond://"))
 			src << "<B>Advertising other servers is not allowed.</B>"
-			log_admin("[key_name(src)] has attempted to advertise in OOC: [msg]")
-			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
+			log_admin("[key_name(src)] has attempted to advertise in LOOC: [msg]")
+			message_admins("[key_name_admin(src)] has attempted to advertise in LOOC: [msg]")
 			return
 
 	log_ooc("(LOCAL) [mob.name]/[key] : [msg]")
-
-	var/list/heard = get_mobs_in_view(7, src.mob)
+	var/list/heard
+	var/mob/living/silicon/ai/AI
+	if(!isAI(src.mob))
+		heard = get_mobs_in_view(7, src.mob)
+	else
+		AI = src.mob
+		heard = get_mobs_in_view(7, (istype(AI.eyeobj) ? AI.eyeobj : AI)) //if it doesn't have an eye somehow give it just the AI mob itself
 	for(var/mob/M in heard)
+		if(AI == M) continue
 		if(!M.client)
 			continue
 		var/client/C = M.client
 		if (C in admins)
 			continue //they are handled after that
+		if(isAIEye(M))
+			var/mob/camera/aiEye/E = M
+			if(E.ai)
+				C = E.ai.client
+		if(C.prefs.toggles & CHAT_LOOC)
+			var/display_name = src.key
+			if(holder)
+				if(holder.fakekey)
+					if(C.holder)
+						display_name = "[holder.fakekey]/([src.key])"
+					else
+						display_name = holder.fakekey
+			C << "<font color='#6699CC'><span class='ooc'><span class='prefix'>LOOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>"
+
+	for(var/client/C in admins)
+		if(C.prefs.toggles & CHAT_LOOC)
+			var/prefix = "(R)LOOC"
+			if (C.mob in heard)
+				prefix = "LOOC"
+			C << "<font color='#6699CC'><span class='ooc'><span class='prefix'>[prefix]:</span> <EM>[src.key]:</EM> <span class='message'>[msg]</span></span></font>"
+	if(istype(AI))
+		var/client/C = AI.client
+		if (C in admins)
+			return //already been handled
 
 		if(C.prefs.toggles & CHAT_LOOC)
 			var/display_name = src.key
@@ -144,9 +174,3 @@ var/global/normal_ooc_colour = "#002eb8"
 					else
 						display_name = holder.fakekey
 			C << "<font color='#6699CC'><span class='ooc'><span class='prefix'>LOOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>"
-	for(var/client/C in admins)
-		if(C.prefs.toggles & CHAT_LOOC)
-			var/prefix = "(R)LOOC"
-			if (C.mob in heard)
-				prefix = "LOOC"
-			C << "<font color='#6699CC'><span class='ooc'><span class='prefix'>[prefix]:</span> <EM>[src.key]:</EM> <span class='message'>[msg]</span></span></font>"

@@ -174,6 +174,21 @@
 
 ////////////////////////////////////////////
 
+/*
+This function restores the subjects blood to max.
+*/
+/mob/living/carbon/human/proc/restore_blood()
+	var/blood_volume = vessel.get_reagent_amount("blood")
+	vessel.add_reagent("blood",560.0-blood_volume)
+
+
+/*
+This function restores all organs.
+*/
+/mob/living/carbon/human/restore_all_organs()
+	for(var/datum/organ/external/current_organ in organs)
+		current_organ.rejuvenate()
+
 /mob/living/carbon/human/proc/HealDamage(zone, brute, burn)
 	var/datum/organ/external/E = get_organ(zone)
 	if(istype(E, /datum/organ/external))

@@ -9,7 +9,7 @@
 	flags = ON_BORDER
 	var/health = 14.0
 	var/ini_dir = null
-	var/state = 0
+	var/state = 2
 	var/reinf = 0
 	var/basestate
 	var/shardtype = /obj/item/weapon/shard
@@ -133,12 +133,12 @@
 			message_admins("Window destroyed by hulk [user.real_name] ([formatPlayerPanel(user,user.ckey)]) with pdiff [pdiff] at [formatJumpTo(loc)]!")
 			log_admin("Window destroyed by hulk [user.real_name] ([user.ckey]) with pdiff [pdiff] at [loc]!")
 	else if (usr.a_intent == "hurt")
-		playsound(src.loc, 'sound/effects/glassknock.ogg', 80, 1)
+		playsound(get_turf(src), 'sound/effects/glassknock.ogg', 80, 1)
 		usr.visible_message("\red [usr.name] bangs against the [src.name]!", \
 							"\red You bang against the [src.name]!", \
 							"You hear a banging sound.")
 	else
-		playsound(src.loc, 'sound/effects/glassknock.ogg', 80, 1)
+		playsound(get_turf(src), 'sound/effects/glassknock.ogg', 80, 1)
 		usr.visible_message("[usr.name] knocks on the [src.name].", \
 							"You knock on the [src.name].", \
 							"You hear a knocking sound.")

@@ -22,13 +22,31 @@
 
 		//handle facial hair (if necessary)
 		if(H.gender == MALE)
-			var/new_style = input(user, "Select a facial hair style", "Grooming")  as null|anything in facial_hair_styles_list
+			var/list/species_facial_hair = list()
+			if(H.species)
+				for(var/i in facial_hair_styles_list)
+					var/datum/sprite_accessory/facial_hair/tmp_facial = facial_hair_styles_list[i]
+					if(H.species.name in tmp_facial.species_allowed)
+						species_facial_hair += i
+			else
+				species_facial_hair = facial_hair_styles_list
+
+			var/new_style = input(user, "Select a facial hair style", "Grooming")  as null|anything in species_facial_hair
 			if(userloc != H.loc) return	//no tele-grooming
 			if(new_style)
 				H.f_style = new_style
 
 		//handle normal hair
-		var/new_style = input(user, "Select a hair style", "Grooming")  as null|anything in hair_styles_list
+		var/list/species_hair = list()
+		if(H.species)
+			for(var/i in hair_styles_list)
+				var/datum/sprite_accessory/hair/tmp_hair = hair_styles_list[i]
+				if(H.species.name in tmp_hair.species_allowed)
+					species_hair += i
+		else
+			species_hair = hair_styles_list
+
+		var/new_style = input(user, "Select a hair style", "Grooming")  as null|anything in species_hair
 		if(userloc != H.loc) return	//no tele-grooming
 		if(new_style)
 			H.h_style = new_style
@@ -62,10 +80,10 @@
 			stack.use(2)
 			shattered = 0
 			icon_state = "mirror"
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 80, 1)
+			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 80, 1)
 
 	else if(shattered)
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+		playsound(get_turf(src), 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		return
 
 	else if(prob(I.force * 2))
@@ -73,13 +91,13 @@
 		shatter()
 	else
 		visible_message("<span class='warning'>[user] hits [src] with [I]!</span>")
-		playsound(src.loc, 'sound/effects/Glasshit.ogg', 70, 1)
+		playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 70, 1)
 
 
 /obj/structure/mirror/attack_alien(mob/user as mob)
 	if(islarva(user)) return
 	if(shattered)
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+		playsound(get_turf(src), 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		return
 	user.visible_message("<span class='danger'>[user] smashes [src]!</span>")
 	shatter()
@@ -90,7 +108,7 @@
 	var/mob/living/simple_animal/M = user
 	if(M.melee_damage_upper <= 0) return
 	if(shattered)
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+		playsound(get_turf(src), 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		return
 	user.visible_message("<span class='danger'>[user] smashes [src]!</span>")
 	shatter()
@@ -99,7 +117,7 @@
 /obj/structure/mirror/attack_slime(mob/user as mob)
 	if(!isslimeadult(user)) return
 	if(shattered)
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+		playsound(get_turf(src), 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		return
 	user.visible_message("<span class='danger'>[user] smashes [src]!</span>")
 	shatter()

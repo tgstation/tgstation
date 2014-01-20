@@ -46,14 +46,14 @@
 
 	if(istype(W, /obj/item/weapon/cell) && anchored)
 		if(cell)
-			user << "\red There is already a cell in the charger."
+			user << "\red There is already a cell in \the [name]."
 			return
 		else
 			var/area/a = loc.loc // Gets our locations location, like a dream within a dream
 			if(!isarea(a))
 				return
 			if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-				user << "\red The [name] blinks red as you try to insert the cell!"
+				user << "\red \The [name] blinks red as you try to insert the cell!"
 				return
 
 			user.drop_item()
@@ -63,7 +63,7 @@
 		update_icon()
 /obj/machinery/computer/telescience/update_icon()
 	if(stat & BROKEN)
-		icon_state = "telescib"
+		icon_state = "teleportb"
 	else
 		if(stat & NOPOWER)
 			src.icon_state = "teleport0"
@@ -181,7 +181,7 @@
 			M << sound('sound/items/AirHorn.ogg')
 			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
-				if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
+				if(H.is_on_ears(/obj/item/clothing/ears/earmuffs))
 					continue
 			M << "<font color='red' size='7'>HONK</font>"
 			M.sleeping = 0
@@ -206,7 +206,7 @@
 				/mob/living/simple_animal/hostile/retaliate/clown,
 				/mob/living/simple_animal/hostile/giant_spider/nurse)
 			var/list/hostiles = typesof(/mob/living/simple_animal/hostile) - blocked
-			playsound(L, 'sound/effects/phasein.ogg', 100, 1)
+			playsound(L, 'sound/effects/phasein.ogg', 100, 1, extrarange = 3, falloff = 5)
 			for(var/mob/living/carbon/human/M in viewers(L, null))
 				flick("e_flash", M.flash)
 			var/chosen = pick(hostiles)
@@ -225,8 +225,11 @@
 		var/turf/target = locate(trueX, trueY, z_co)
 		var/area/A=target.loc
 		if(A && A.jammed)
-			src.visible_message("\red \icon[src] [src] buzzes.", "\icon[src]\red You hear something buzz.")
-			return
+			if(!telepad.amplifier || A.jammed==SUPER_JAMMED)
+				src.visible_message("\red \icon[src] [src] turns on and the lights dim.  You can see a faint shape, but it loses focus and the telepad shuts off with a buzz.  Perhaps you need more signal strength?", "\icon[src]\red You hear something buzz.")
+				return
+			del(telepad.amplifier)
+			src.visible_message("\icon[src]\blue You hear something shatter.","\icon[src]\blue You hear something shatter.")
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, telepad)
 		s.start()
@@ -241,9 +244,11 @@
 		if(sending)
 			source = dest
 			dest = target
+		var/things=0
 		for(var/atom/movable/ROI in source)
-			if(ROI.anchored) continue
+			if(ROI.anchored || things>=10) continue
 			do_teleport(ROI, dest, 0)
+			things++
 		return
 	return
 

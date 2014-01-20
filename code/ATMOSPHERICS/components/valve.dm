@@ -35,9 +35,24 @@ obj/machinery/atmospherics/valve
 				initialize_directions = EAST|WEST
 		..()
 
+	buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
+		dir = pipe.dir
+		initialize_directions = pipe.get_pipe_dir()
+		if (pipe.pipename)
+			name = pipe.pipename
+		var/turf/T = loc
+		level = T.intact ? 2 : 1
+		initialize()
+		build_network()
+		if (node1)
+			node1.initialize()
+			node1.build_network()
+		if (node2)
+			node2.initialize()
+			node2.build_network()
+		return 1
+
 	network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
-
-
 		if(reference == node1)
 			network_node1 = new_network
 			if(open)
@@ -125,6 +140,9 @@ obj/machinery/atmospherics/valve
 		return attack_hand(user)
 
 	attack_hand(mob/user as mob)
+		if(isobserver(user) && !canGhostWrite(user,src,"toggles"))
+			user << "\red Nope."
+			return
 		src.add_fingerprint(usr)
 		update_icon(1)
 		sleep(10)
@@ -156,24 +174,7 @@ obj/machinery/atmospherics/valve
 	initialize()
 		normalize_dir()
 
-		var/node1_dir
-		var/node2_dir
-
-		for(var/direction in cardinal)
-			if(direction&initialize_directions)
-				if (!node1_dir)
-					node1_dir = direction
-				else if (!node2_dir)
-					node2_dir = direction
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node1_dir))
-			if(target.initialize_directions & get_dir(target,src))
-				node1 = target
-				break
-		for(var/obj/machinery/atmospherics/target in get_step(src,node2_dir))
-			if(target.initialize_directions & get_dir(target,src))
-				node2 = target
-				break
+		findAllConnections(initialize_directions)
 
 		build_network()
 
@@ -182,39 +183,6 @@ obj/machinery/atmospherics/valve
 			open()
 			openDuringInit = 0
 
-/*
-		var/connect_directions
-		switch(dir)
-			if(NORTH)
-				connect_directions = NORTH|SOUTH
-			if(SOUTH)
-				connect_directions = NORTH|SOUTH
-			if(EAST)
-				connect_directions = EAST|WEST
-			if(WEST)
-				connect_directions = EAST|WEST
-			else
-				connect_directions = dir
-
-		for(var/direction in cardinal)
-			if(direction&connect_directions)
-				for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-					if(target.initialize_directions & get_dir(target,src))
-						connect_directions &= ~direction
-						node1 = target
-						break
-				if(node1)
-					break
-
-		for(var/direction in cardinal)
-			if(direction&connect_directions)
-				for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-					if(target.initialize_directions & get_dir(target,src))
-						node2 = target
-						break
-				if(node1)
-					break
-*/
 	build_network()
 		if(!network_node1 && node1)
 			network_node1 = new /datum/pipe_network()
@@ -328,7 +296,7 @@ obj/machinery/atmospherics/valve
 			user << "\red You cannot unwrench this [src], it too exerted due to internal pressure."
 			add_fingerprint(user)
 			return 1
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		user << "\blue You begin to unfasten \the [src]..."
 		if (do_after(user, 40))
 			user.visible_message( \

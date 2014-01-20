@@ -66,7 +66,7 @@
 			sleep(3)
 		del(D)
 
-	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+	playsound(get_turf(src), 'sound/effects/spray2.ogg', 50, 1, -6)
 
 	if(reagents.has_reagent("sacid"))
 		message_admins("[key_name_admin(user)] fired sulphuric acid from a spray bottle.")
@@ -142,7 +142,7 @@
 	throwforce = 3
 	w_class = 3.0
 	volume = 600
-	origin_tech = "combat=3;materials=3;engineering=3"
+	origin_tech = "combat=3;materials=3;engineering=3;syndicate=5"
 
 
 //this is a big copypasta clusterfuck, but it's still better than it used to be!
@@ -207,7 +207,7 @@
 				sleep(2)
 			del(D)
 
-	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+	playsound(get_turf(src), 'sound/effects/spray2.ogg', 50, 1, -6)
 
 	if(reagents.has_reagent("sacid"))
 		message_admins("[key_name_admin(user)] fired sulphuric acid from a chem sprayer.")

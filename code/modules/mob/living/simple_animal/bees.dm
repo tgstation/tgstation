@@ -15,6 +15,18 @@
 	turns_per_move = 6
 	var/obj/machinery/hydroponics/my_hydrotray
 
+	// Allow final solutions.
+	min_oxy = 5
+	max_oxy = 0
+	min_tox = 0
+	max_tox = 1
+	min_co2 = 0
+	max_co2 = 5
+	min_n2 = 0
+	max_n2 = 0
+	minbodytemp = 0
+	maxbodytemp = 360
+
 /mob/living/simple_animal/bee/New(loc, var/obj/machinery/apiary/new_parent)
 	..()
 	parent = new_parent
@@ -80,7 +92,7 @@
 
 		//smoke, water and steam calms us down
 		var/calming = 0
-		var/list/calmers = list(/obj/effect/effect/chem_smoke, \
+		var/list/calmers = list(/obj/effect/effect/smoke/chem, \
 		/obj/effect/effect/water, \
 		/obj/effect/effect/foam, \
 		/obj/effect/effect/steam, \

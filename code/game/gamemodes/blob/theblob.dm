@@ -51,7 +51,7 @@
 
 	proc/Pulse(var/pulse = 0, var/origin_dir = 0)//Todo: Fix spaceblob expand
 
-		set background = 1
+		//set background = 1
 
 		if(run_action())//If we can do something here then we dont need to pulse more
 			return
@@ -127,14 +127,14 @@
 
 
 	attackby(var/obj/item/weapon/W, var/mob/user)
-		playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/effects/attackblob.ogg', 50, 1)
 		src.visible_message("\red <B>The [src.name] has been attacked with \the [W][(user ? " by [user]." : ".")]")
 		var/damage = 0
 		switch(W.damtype)
 			if("fire")
 				damage = (W.force / max(src.fire_resist,1))
 				if(istype(W, /obj/item/weapon/weldingtool))
-					playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+					playsound(get_turf(src), 'sound/items/Welder.ogg', 100, 1)
 			if("brute")
 				damage = (W.force / max(src.brute_resist,1))
 
@@ -166,7 +166,7 @@
 
 	update_icon()
 		if(health <= 0)
-			playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 			Delete()
 			return
 		if(health <= 15)

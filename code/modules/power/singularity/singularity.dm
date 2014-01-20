@@ -209,7 +209,7 @@ var/global/list/uneatable = list(
 
 
 /obj/machinery/singularity/proc/eat()
-	set background = 1
+	//set background = 1
 	if(defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 1
 	// Let's just make this one loop.
@@ -566,7 +566,7 @@ var/global/list/uneatable = list(
 	grav_pull = 0
 
 /obj/machinery/singularity/narsie/wizard/eat()
-	set background = 1
+	//set background = 1
 	if(defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 1
 	for(var/atom/X in orange(consume_range,src))

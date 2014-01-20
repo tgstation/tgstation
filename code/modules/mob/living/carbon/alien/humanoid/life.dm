@@ -10,7 +10,7 @@
 
 /mob/living/carbon/alien/humanoid/Life()
 	set invisibility = 0
-	set background = 1
+	//set background = 1
 
 	if (monkeyizing)
 		return
@@ -128,7 +128,7 @@
 					breath = loc.remove_air(breath_moles)
 
 					// Handle chem smoke effect  -- Doohl
-					for(var/obj/effect/effect/chem_smoke/smoke in view(1, src))
+					for(var/obj/effect/effect/smoke/chem/smoke in view(1, src))
 						if(smoke.reagents.total_volume)
 							smoke.reagents.reaction(src, INGEST)
 							spawn(5)

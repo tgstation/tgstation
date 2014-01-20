@@ -30,6 +30,8 @@
 
 		if(isliving(A))
 			var/mob/living/L = A
+			if(istype(src, /mob/living/simple_animal/hostile/scarybat))
+				if(src:owner == L) continue
 			if(L.faction == src.faction && !attack_same)
 				continue
 			else if(L in friends)
@@ -94,6 +96,8 @@
 		return 1
 
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
+	if(!Adjacent(target_mob))
+		return
 	if(isliving(target_mob))
 		var/mob/living/L = target_mob
 		L.attack_animal(src)

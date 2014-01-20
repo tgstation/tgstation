@@ -203,9 +203,9 @@
 
 	if(camera)
 		camera.status = 0
-
-	held_item.loc = src.loc
-	held_item = null
+	if(held_item && !isnull(held_item))
+		held_item.loc = src.loc
+		held_item = null
 
 	robogibs(src.loc, viruses)
 	src.Del()

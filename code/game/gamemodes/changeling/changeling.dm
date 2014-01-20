@@ -57,10 +57,17 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 	changeling_amount = 1 + round(num_players() / 10)
 
+// mixed mode scaling
+	if(mixed)
+		changeling_amount = min(2, changeling_amount)
+
 	if(possible_changelings.len>0)
 		for(var/i = 0, i < changeling_amount, i++)
 			if(!possible_changelings.len) break
 			var/datum/mind/changeling = pick(possible_changelings)
+			if(changeling.special_role)
+				possible_changelings.Remove(changeling)
+				continue
 			possible_changelings -= changeling
 			changelings += changeling
 			modePlayer += changelings
@@ -74,9 +81,9 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		changeling.special_role = "Changeling"
 		forge_changeling_objectives(changeling)
 		greet_changeling(changeling)
-
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
+	if(!mixed)
+		spawn (rand(waittime_l, waittime_h))
+			send_intercept()
 	..()
 	return
 

@@ -25,6 +25,10 @@
 	if(hand)	return r_hand
 	else		return l_hand
 
+// Because there's several different places it's stored.
+/mob/proc/get_multitool(var/if_active=0)
+	return null
+
 //Puts the item into your l_hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_l_hand(var/obj/item/W)
 	if(lying)			return 0
@@ -98,6 +102,7 @@
 	if(W)
 		if(client)	client.screen -= W
 		u_equip(W)
+		if(!W) return 1 // self destroying objects (tk, grabs)
 		W.layer = initial(W.layer)
 		W.loc = loc
 
@@ -203,7 +208,8 @@
 
 	if(hasvar(src,"back")) if(src:back) items += src:back
 	if(hasvar(src,"belt")) if(src:belt) items += src:belt
-	if(hasvar(src,"ears")) if(src:ears) items += src:ears
+	if(hasvar(src,"l_ear")) if(src:l_ear) items += src:l_ear
+	if(hasvar(src,"r_ear")) if(src:r_ear) items += src:r_ear
 	if(hasvar(src,"glasses")) if(src:glasses) items += src:glasses
 	if(hasvar(src,"gloves")) if(src:gloves) items += src:gloves
 	if(hasvar(src,"head")) if(src:head) items += src:head
@@ -264,9 +270,13 @@
 			if(!src.wear_id && src.w_uniform)
 				src.wear_id = W
 				equipped = 1
-		if(slot_ears)
-			if(!src.ears)
-				src.ears = W
+		if(slot_l_ear)
+			if(!src.l_ear)
+				src.l_ear = W
+				equipped = 1
+		if(slot_r_ear)
+			if(!src.r_ear)
+				src.r_ear = W
 				equipped = 1
 		if(slot_glasses)
 			if(!src.glasses)

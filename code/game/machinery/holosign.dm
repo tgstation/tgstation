@@ -5,6 +5,9 @@
 	icon = 'icons/obj/holosign.dmi'
 	icon_state = "sign_off"
 	layer = 4
+
+	ghost_read = 0 // Deactivate ghost touching.
+	ghost_write = 0
 	var/lit = 0
 	var/id = null
 	var/on_icon = "sign_on"

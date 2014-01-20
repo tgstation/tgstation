@@ -103,7 +103,6 @@
 		return
 	var/dat
 	dat += "<TT><B>Automatic Hydroponic Assisting Unit v1.0</B></TT><BR><BR>"
-/*	dat += "<TT>WARNING: Due to experimental programming this model is inefficient at attempting more than one Water/Fertilize/Weed task at a time.</TT><BR><BR>"*/
 	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
 
 	dat += "Water Tank: "
@@ -227,7 +226,7 @@
 	return
 
 /obj/machinery/bot/farmbot/process()
-	set background = 1
+	//set background = 1
 
 	if(!src.on)
 		return
@@ -468,7 +467,7 @@
 	if ( emagged ) // warning, humans are thirsty!
 		var splashAmount = min(70,tank.reagents.total_volume)
 		src.visible_message("\red [src] splashes [target] with a bucket of water!")
-		playsound(src.loc, 'sound/effects/slosh.ogg', 25, 1)
+		playsound(get_turf(src), 'sound/effects/slosh.ogg', 25, 1)
 		if ( prob(50) )
 			tank.reagents.reaction(target, TOUCH) //splash the human!
 		else
@@ -487,7 +486,7 @@
 				b_amount = 100 - tray.waterlevel
 			tank.reagents.remove_reagent("water", b_amount)
 			tray.waterlevel += b_amount
-			playsound(src.loc, 'sound/effects/slosh.ogg', 25, 1)
+			playsound(get_turf(src), 'sound/effects/slosh.ogg', 25, 1)
 
 	//		Toxicity dilutation code. The more water you put in, the lesser the toxin concentration.
 			tray.toxic -= round(b_amount/4)
@@ -506,13 +505,13 @@
 		return
 
 	mode = FARMBOT_MODE_WAITING
-	playsound(src.loc, 'sound/effects/slosh.ogg', 25, 1)
+	playsound(get_turf(src), 'sound/effects/slosh.ogg', 25, 1)
 	src.visible_message("\blue [src] starts filling it's tank from [target].")
 	spawn(300)
 		src.visible_message("\blue [src] finishes filling it's tank.")
 		src.mode = 0
 		tank.reagents.add_reagent("water", tank.reagents.maximum_volume - tank.reagents.total_volume )
-		playsound(src.loc, 'sound/effects/slosh.ogg', 25, 1)
+		playsound(get_turf(src), 'sound/effects/slosh.ogg', 25, 1)
 
 
 /obj/item/weapon/farmbot_arm_assembly

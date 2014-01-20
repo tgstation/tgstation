@@ -50,7 +50,7 @@ obj/machinery/gibber/New()
 		return 1
 	else if(istype(O, /obj/item/weapon/crowbar))
 		if (opened)
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 			M.state = 2
 			M.icon_state = "box_1"
@@ -225,11 +225,16 @@ obj/machinery/gibber/New()
 	user.attack_log += "\[[time_stamp()]\] Gibbed <b>[src.occupant]/[src.occupant.ckey]</b>"
 	log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> gibbed <b>[src.occupant]/[src.occupant.ckey]</b>")
 
+	if(!iscarbon(user))
+		src.occupant.LAssailant = null
+	else
+		src.occupant.LAssailant = user
+
 	src.occupant.death(1)
 	src.occupant.ghostize()
 	del(src.occupant)
 	spawn(src.gibtime)
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 		operating = 0
 		for (var/i=1 to totalslabs)
 			var/obj/item/meatslab = allmeat[i]
@@ -289,12 +294,12 @@ obj/machinery/gibber/New()
 		B.loc = src.loc
 		B.throw_at(Tx,2,3)
 		if(isalien(victim))
-			new /obj/effect/decal/cleanable/blood/xeno/xgibs(Tx,2)
+			new /obj/effect/decal/cleanable/blood/gibs/xeno(Tx,2)
 		else
 			new /obj/effect/decal/cleanable/blood/gibs(Tx,2)
 	del(victim)
 	spawn(src.gibtime)
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 		operating = 0
 		for (var/i=1 to totalslabs)
 			var/obj/item/meatslab = allmeat[i]

@@ -7,10 +7,11 @@
 		if ("help")
 			visible_message(text("\blue [M] caresses [src] with its scythe like arm."))
 		if ("grab")
-			if(M == src)	return
+			if(M == src || anchored)
+				return
 			if (w_uniform)
 				w_uniform.add_fingerprint(M)
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, M, src)
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 
 			M.put_in_active_hand(G)
 
@@ -44,7 +45,7 @@
 		if("disarm")
 			if (prob(80))
 				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-				Weaken(rand(3,5))
+				Weaken(rand(0.5,3))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has tackled down []!</B>", M, src), 1)

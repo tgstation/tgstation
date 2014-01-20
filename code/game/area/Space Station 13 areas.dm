@@ -13,6 +13,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 */
 
+#define SUPER_JAMMED 2
 
 /area
 	var/fire = null
@@ -53,7 +54,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/list/all_doors = list()		//Added by Strumpetplaya - Alarm Change - Contains a list of doors adjacent to this area
 	var/air_doors_activated = 0
 
-	var/jammed = 0 // No teleporting for you.
+	var/jammed = 0 // No teleporting for you. 2 = SUPER JAMMED, inaccessible even to telecrystals.
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
@@ -886,60 +887,60 @@ proc/process_ghost_teleport_locs()
 /area/holodeck/source_plating
 	name = "\improper Holodeck - Off"
 	icon_state = "Holodeck"
-	jammed=1
+	jammed=SUPER_JAMMED
 
 /area/holodeck/source_emptycourt
 	name = "\improper Holodeck - Empty Court"
-	jammed=1
+	jammed=SUPER_JAMMED
 
 /area/holodeck/source_boxingcourt
 	name = "\improper Holodeck - Boxing Court"
-	jammed=1
+	jammed=SUPER_JAMMED
 
 /area/holodeck/source_basketball
 	name = "\improper Holodeck - Basketball Court"
-	jammed=1
+	jammed=SUPER_JAMMED
 
 /area/holodeck/source_thunderdomecourt
 	name = "\improper Holodeck - Thunderdome Court"
-	jammed=1
+	jammed=SUPER_JAMMED
 
 /area/holodeck/source_beach
 	name = "\improper Holodeck - Beach"
 	icon_state = "Holodeck" // Lazy.
-	jammed=1
+	jammed=SUPER_JAMMED
 
 /area/holodeck/source_burntest
 	name = "\improper Holodeck - Atmospheric Burn Test"
-	jammed=1
+	jammed=SUPER_JAMMED
 
 /area/holodeck/source_wildlife
 	name = "\improper Holodeck - Wildlife Simulation"
-	jammed=1
+	jammed=SUPER_JAMMED
 
 /area/holodeck/source_meetinghall
 	name = "\improper Holodeck - Meeting Hall"
-	jammed=1
+	jammed=SUPER_JAMMED
 
 /area/holodeck/source_theatre
 	name = "\improper Holodeck - Theatre"
-	jammed=1
+	jammed=SUPER_JAMMED
 
 /area/holodeck/source_picnicarea
 	name = "\improper Holodeck - Picnic Area"
-	jammed=1
+	jammed=SUPER_JAMMED
 
 /area/holodeck/source_snowfield
 	name = "\improper Holodeck - Snow Field"
-	jammed=1
+	jammed=SUPER_JAMMED
 
 /area/holodeck/source_desert
 	name = "\improper Holodeck - Desert"
-	jammed=1
+	jammed=SUPER_JAMMED
 
 /area/holodeck/source_space
 	name = "\improper Holodeck - Space"
-	jammed=1
+	jammed=SUPER_JAMMED
 
 
 
@@ -971,6 +972,10 @@ proc/process_ghost_teleport_locs()
 		name = "\improper Chief Engineer's office"
 		icon_state = "engine_control"
 		jammed=1
+
+	burn_chamber
+		name = "Burn Chamber"
+		icon_state = "engine_control"
 
 
 //Solars
@@ -1851,7 +1856,7 @@ proc/process_ghost_teleport_locs()
 				Obj << mysound
 
 	proc/process()
-		set background = 1
+		//set background = 1
 
 		var/sound/S = null
 		var/sound_delay = 0
@@ -1975,7 +1980,7 @@ var/list/the_station_areas = list (
 				Obj << mysound
 
 	proc/process()
-		set background = 1
+		//set background = 1
 
 		var/sound/S = null
 		var/sound_delay = 0

@@ -38,7 +38,7 @@
 			scan_ticks++
 			if(prob(scan_ticks * 10))
 				spawn(0)
-					set background = 1
+					//set background = 1
 					if(processing_objects.Find(src))
 						//scan radios in the world to try and find one
 						var/cur_dist = 999

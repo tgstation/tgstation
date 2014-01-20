@@ -26,7 +26,7 @@
 
 	attack_self(mob/living/user as mob)
 		if(recentpump)	return
-		pump()
+		pump(user)
 		recentpump = 1
 		spawn(10)
 			recentpump = 0

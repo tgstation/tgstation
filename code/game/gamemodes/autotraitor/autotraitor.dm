@@ -43,6 +43,9 @@
 
 	if(config.traitor_scaling)
 		num_traitors = max_traitors - 1 + prob(traitor_prob)
+		// mixed mode scaling
+		if(mixed)
+			num_traitors = min(3, num_traitors)
 		log_game("Number of traitors: [num_traitors]")
 		message_admins("Players counted: [num_players]  Number of traitors chosen: [num_traitors]")
 	else
@@ -51,6 +54,9 @@
 
 	for(var/i = 0, i < num_traitors, i++)
 		var/datum/mind/traitor = pick(possible_traitors)
+		if(traitor.special_role)
+			possible_traitors.Remove(traitor)
+			continue
 		traitors += traitor
 		possible_traitors.Remove(traitor)
 

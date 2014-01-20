@@ -34,12 +34,23 @@
 /turf/space/attackby(obj/item/C as obj, mob/user as mob)
 
 	if (istype(C, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
-			return
-		var/obj/item/stack/rods/R = C
+			if(R.amount < 2)
+				user << "\red You don't have enough rods to do that."
+				return
+			user << "\blue You begin to build a catwalk."
+			if(do_after(user,30))
+				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+				user << "\blue You build a catwalk!"
+				R.use(2)
+				ChangeTurf(/turf/unsimulated/floor/airless/catwalk)
+				del(L)
+				return
+
 		user << "\blue Constructing support lattice ..."
-		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1)
 		ReplaceWithLattice()
 		R.use(1)
 		return
@@ -49,7 +60,7 @@
 		if(L)
 			var/obj/item/stack/tile/plasteel/S = C
 			del(L)
-			playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1)
 			S.build(src)
 			S.use(1)
 			return

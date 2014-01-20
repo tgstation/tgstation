@@ -31,6 +31,36 @@
 		if(istype(O, /obj/item/weapon/aiModule))
 			var/obj/item/weapon/aiModule/M = O
 			M.install(src)
+		if(istype(O, /obj/item/weapon/planning_frame))
+			if(stat & NOPOWER)
+				usr << "The upload computer has no power!"
+				return
+			if(stat & BROKEN)
+				usr << "The upload computer is broken!"
+				return
+			if (!current)
+				usr << "You haven't selected an AI to transmit laws to!"
+				return
+
+			if(ticker && ticker.mode && ticker.mode.name == "blob")
+				usr << "Law uploads have been disabled by NanoTrasen!"
+				return
+
+			if (current.stat == 2 || current.control_disabled == 1)
+				usr << "Upload failed. No signal is being detected from the AI."
+			else if (current.see_in_dark == 0)
+				usr << "Upload failed. Only a faint signal is being detected from the AI, and it is not responding to our requests. It may be low on power."
+			else
+				var/obj/item/weapon/planning_frame/frame=O
+				if(frame.modules.len>0)
+					user << "\blue You load \the [frame] into \the [src]..."
+					if(do_after(user,50))
+						for(var/i=1;i<=frame.modules.len;i++)
+							var/obj/item/weapon/aiModule/M = frame.modules[i]
+							user << "\blue Running [M]..."
+							M.install(src)
+				else
+					user << "\red It's empty, doofus."
 		else
 			..()
 
@@ -61,14 +91,46 @@
 	var/mob/living/silicon/robot/current = null
 
 
-	attackby(obj/item/weapon/aiModule/module as obj, mob/user as mob)
-		if(istype(module, /obj/item/weapon/aiModule))
+	attackby(var/obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/weapon/aiModule))
+			var/obj/item/weapon/aiModule/module=W
 			if(isMoMMI(src.current))
 				var/mob/living/silicon/robot/mommi/mommi = src.current
 				if(mommi.keeper)
 					user << "\red [src.current] is operating in KEEPER mode and cannot be accessed via control signals."
 					return ..()
 			module.install(src)
+		else if(istype(W, /obj/item/weapon/planning_frame))
+			if(stat & NOPOWER)
+				usr << "The upload computer has no power!"
+				return
+			if(stat & BROKEN)
+				usr << "The upload computer is broken!"
+				return
+			if (!current)
+				usr << "You haven't selected a robot to transmit laws to!"
+				return
+
+			if (current.stat == 2 || current.emagged)
+				usr << "Upload failed. No signal is being detected from the robot."
+			if (istype(current, /mob/living/silicon/robot/mommi))
+				var/mob/living/silicon/robot/mommi/mommi = current
+				if(mommi.keeper)
+					usr << "Upload failed. No signal is being detected from the cyborg."
+					return
+			else if (current.connected_ai)
+				usr << "Upload failed. The robot is slaved to an AI."
+			else
+				var/obj/item/weapon/planning_frame/frame=W
+				if(frame.modules.len>0)
+					user << "\blue You load \the [frame] into \the [src]..."
+					if(do_after(user,50))
+						for(var/i=1;i<=frame.modules.len;i++)
+							var/obj/item/weapon/aiModule/M = frame.modules[i]
+							user << "\blue Running [M]..."
+							M.install(src)
+				else
+					user << "\red It's empty, doofus."
 		else
 			return ..()
 

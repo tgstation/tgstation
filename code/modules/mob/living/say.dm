@@ -1,7 +1,7 @@
 #define SAY_MINIMUM_PRESSURE 10
 var/list/department_radio_keys = list(
-	  ":r" = "right hand",	"#r" = "right hand",	".r" = "right hand",
-	  ":l" = "left hand",	"#l" = "left hand",		".l" = "left hand",
+	  ":r" = "right ear",	"#r" = "right ear",		".r" = "right ear",
+	  ":l" = "left ear",	"#l" = "left ear",		".l" = "left ear",
 	  ":i" = "intercom",	"#i" = "intercom",		".i" = "intercom",
 	  ":h" = "department",	"#h" = "department",	".h" = "department",
 	  ":c" = "Command",		"#c" = "Command",		".c" = "Command",
@@ -16,8 +16,8 @@ var/list/department_radio_keys = list(
 	  ":u" = "Supply",		"#u" = "Supply",		".u" = "Supply",
 	  ":g" = "changeling",	"#g" = "changeling",	".g" = "changeling",
 
-	  ":R" = "right hand",	"#R" = "right hand",	".R" = "right hand",
-	  ":L" = "left hand",	"#L" = "left hand",		".L" = "left hand",
+	  ":R" = "right ear",	"#R" = "right ear",		".R" = "right ear",
+	  ":L" = "left ear",	"#L" = "left ear",		".L" = "left ear",
 	  ":I" = "intercom",	"#I" = "intercom",		".I" = "intercom",
 	  ":H" = "department",	"#H" = "department",	".H" = "department",
 	  ":C" = "Command",		"#C" = "Command",		".C" = "Command",
@@ -34,8 +34,8 @@ var/list/department_radio_keys = list(
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
-	  ":ê" = "right hand",	"#ê" = "right hand",	".ê" = "right hand",
-	  ":ä" = "left hand",	"#ä" = "left hand",		".ä" = "left hand",
+	  ":ê" = "right ear",	"#ê" = "right ear",		".ê" = "right ear",
+	  ":ä" = "left ear",	"#ä" = "left ear",		".ä" = "left ear",
 	  ":ø" = "intercom",	"#ø" = "intercom",		".ø" = "intercom",
 	  ":ð" = "department",	"#ð" = "department",	".ð" = "department",
 	  ":ñ" = "Command",		"#ñ" = "Command",		".ñ" = "Command",
@@ -59,8 +59,12 @@ var/list/department_radio_keys = list(
 	if (!ishuman(src))
 		return
 	var/mob/living/carbon/human/H = src
-	if (H.ears)
-		var/obj/item/device/radio/headset/dongle = H.ears
+	if (H.l_ear || H.r_ear)
+		var/obj/item/device/radio/headset/dongle
+		if(istype(H.l_ear,/obj/item/device/radio/headset))
+			dongle = H.l_ear
+		else
+			dongle = H.r_ear
 		if(!istype(dongle)) return
 		if(dongle.translate_binary) return 1
 
@@ -68,8 +72,12 @@ var/list/department_radio_keys = list(
 	if (isalien(src)) return 1
 	if (!ishuman(src)) return
 	var/mob/living/carbon/human/H = src
-	if (H.ears)
-		var/obj/item/device/radio/headset/dongle = H.ears
+	if (H.l_ear || H.r_ear)
+		var/obj/item/device/radio/headset/dongle
+		if(istype(H.l_ear,/obj/item/device/radio/headset))
+			dongle = H.l_ear
+		else
+			dongle = H.r_ear
 		if(!istype(dongle)) return
 		if(dongle.translate_hive) return 1
 
@@ -94,7 +102,7 @@ var/list/department_radio_keys = list(
 		if(client.prefs.muted & MUTE_IC)
 			src << "\red You cannot speak in IC (muted)."
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (src.client.handle_spam_prevention(message, MUTE_IC))
 			return
 
 	// stat == 2 is handled above, so this stops transmission of uncontious messages
@@ -115,14 +123,22 @@ var/list/department_radio_keys = list(
 	if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
 		return
 
-	// emotes
+	// Emotes.
 	if (copytext(message, 1, 2) == "*" && !stat)
 		return emote(copytext(message, 2))
 
+	/*
+		Identity hiding.
+	*/
 	var/alt_name = ""
 	if (istype(src, /mob/living/carbon/human) && name != GetVoice())
 		var/mob/living/carbon/human/H = src
 		alt_name = " (as [H.get_id_name("Unknown")])"
+
+	/*
+		Now we get into the real meat of the say processing. Determining the message mode.
+	*/
+
 	var/italics = 0
 	var/message_range = null
 	var/message_mode = null
@@ -136,7 +152,13 @@ var/list/department_radio_keys = list(
 			message = uppertext(message)
 
 	// General public key. Special message handling
-	else if (copytext(message, 1, 2) == ";" || prob(braindam/2))
+	var/mmode
+	var/cprefix = ""
+	if(length(message) >= 2)
+		cprefix = copytext(message, 1, 3)
+		if(cprefix in department_radio_keys)
+			mmode = department_radio_keys[cprefix]
+	if (copytext(message, 1, 2) == ";" || (prob(braindam/2) && !mmode))
 		if (ishuman(src))
 			message_mode = "headset"
 		else if(ispAI(src) || isrobot(src))
@@ -174,7 +196,12 @@ var/list/department_radio_keys = list(
 		message = replacetext(message, " are ", " ")
 		message = replacetext(message, "you", "u")
 		message = replacetext(message, "help", "halp")
-		message = replacetext(message, "grief", "grife")
+		message = replacetext(message, "grief", "griff")
+		message = replacetext(message, "murder", "griff")
+		message = replacetext(message, "slipping", "griffing")
+		message = replacetext(message, "slipped", "griffed")
+		message = replacetext(message, "slip", "griff")
+		message = replacetext(message, "sec", "shit")
 		message = replacetext(message, "space", "spess")
 		message = replacetext(message, "carp", "crap")
 		message = replacetext(message, "reason", "raisin")
@@ -182,6 +209,8 @@ var/list/department_radio_keys = list(
 		message = replacetext(message, "spider", "spidurr")
 		message = replacetext(message, "skitterbot", "spidurbutt")
 		message = replacetext(message, "skitter", "spider sound")
+		// /vg/: LOUDER
+		message = uppertext(message)
 		if(prob(50))
 			message = uppertext(message)
 			message += "[stutter(pick("!", "!!", "!!!"))]"
@@ -191,51 +220,36 @@ var/list/department_radio_keys = list(
 	if (stuttering)
 		message = stutter(message)
 
-/* //qw do not have beesease atm.
-	if(virus)
-		if(virus.name=="beesease" && virus.stage>=2)
-			if(prob(virus.stage*10))
-				var/bzz = length(message)
-				message = "B"
-				for(var/i=0,i<bzz,i++)
-					message += "Z"
-*/
 	var/list/obj/item/used_radios = new
 	var/is_speaking_radio = 0
 
 	switch (message_mode)
 		if ("headset")
-			if (src:ears)
-				src:ears.talk_into(src, message)
-				used_radios += src:ears
+			if (src:l_ear && istype(src:l_ear,/obj/item/device/radio))
+				src:l_ear.talk_into(src, message)
+				used_radios += src:l_ear
+				is_speaking_radio = 1
+			else if (src:r_ear)
+				src:r_ear.talk_into(src, message)
+				used_radios += src:r_ear
 				is_speaking_radio = 1
 
 			message_range = 1
 			italics = 1
 
-
-		if ("secure headset")
-			if (src:ears)
-				src:ears.talk_into(src, message, 1)
-				used_radios += src:ears
+		if ("right ear")
+			if (src:r_ear)
+				src:r_ear.talk_into(src, message)
+				used_radios += src:r_ear
 				is_speaking_radio = 1
 
 			message_range = 1
 			italics = 1
 
-		if ("right hand")
-			if (r_hand)
-				r_hand.talk_into(src, message)
-				used_radios += src:r_hand
-				is_speaking_radio = 1
-
-			message_range = 1
-			italics = 1
-
-		if ("left hand")
-			if (l_hand)
-				l_hand.talk_into(src, message)
-				used_radios += src:l_hand
+		if ("left ear")
+			if (src:l_ear)
+				src:l_ear.talk_into(src, message)
+				used_radios += src:l_ear
 				is_speaking_radio = 1
 
 			message_range = 1
@@ -269,9 +283,13 @@ var/list/department_radio_keys = list(
 
 		if ("department")
 			if(istype(src, /mob/living/carbon))
-				if (src:ears)
-					src:ears.talk_into(src, message, message_mode)
-					used_radios += src:ears
+				if (src:l_ear && istype(src:l_ear,/obj/item/device/radio))
+					src:l_ear.talk_into(src, message, message_mode)
+					used_radios += src:l_ear
+					is_speaking_radio = 1
+				if (src:r_ear)
+					src:r_ear.talk_into(src, message, message_mode)
+					used_radios += src:r_ear
 					is_speaking_radio = 1
 			else if(istype(src, /mob/living/silicon/robot))
 				if (src:radio)
@@ -307,9 +325,12 @@ var/list/department_radio_keys = list(
 						R.radio.talk_into(src, message, message_mode)
 						used_radios += R.radio
 				else
-					if (src:ears)
-						src:ears.talk_into(src, message, message_mode)
-						used_radios += src:ears
+					if (src:l_ear && istype(src:l_ear,/obj/item/device/radio))
+						src:l_ear.talk_into(src, message, message_mode)
+						used_radios += src:l_ear
+					else if (src:r_ear)
+						src:r_ear.talk_into(src, message, message_mode)
+						used_radios += src:r_ear
 				message_range = 1
 				italics = 1
 /////SPECIAL HEADSETS END
@@ -324,6 +345,7 @@ var/list/department_radio_keys = list(
 	var/list/listening
 
 	listening = get_mobs_in_view(message_range, src)
+	//var/list/onscreen = get_mobs_in_view(7, src)
 	for(var/mob/M in player_list)
 		if (!M.client)
 			continue //skip monkeys and leavers

@@ -230,7 +230,7 @@
 
 	attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
 		if(istype(D, /obj/item/weapon/screwdriver))
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 			if(do_after(user, 20))
 				if (src.stat & BROKEN)
 					user << "\blue The broken glass falls out."
@@ -256,7 +256,7 @@
 					A.anchored = 1
 					del(src)
 		else if(istype(D, /obj/item/weapon/card/emag) && !emagged)
-			playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
+			playsound(get_turf(src), 'sound/effects/sparks4.ogg', 75, 1)
 			emagged = 1
 			user << "\blue You you disable the security protocols"
 		src.updateUsrDialog()

@@ -34,6 +34,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole
 	name = "R&D Console"
 	icon_state = "rdcomp"
+	circuit = "/obj/item/weapon/circuitboard/rdconsole"
 	var/datum/research/files							//Stores all the collected research data.
 	var/obj/item/weapon/disk/tech_disk/t_disk = null	//Stores the technology disk.
 	var/obj/item/weapon/disk/design_disk/d_disk = null	//Stores the design disk.
@@ -50,7 +51,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 
 /obj/machinery/computer/rdconsole/proc/Maximize()
-
 	files.known_tech=files.possible_tech
 	for(var/datum/tech/KT in files.known_tech)
 		if(KT.level < KT.max_level)
@@ -151,35 +151,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 */
 
 /obj/machinery/computer/rdconsole/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
-	//The construction/deconstruction of the console code.
-	if(istype(D, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
-			if (src.stat & BROKEN)
-				user << "\blue The broken glass falls out."
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				new /obj/item/weapon/shard( src.loc )
-				var/obj/item/weapon/circuitboard/rdconsole/M = new /obj/item/weapon/circuitboard/rdconsole( A )
-				for (var/obj/C in src)
-					C.loc = src.loc
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				del(src)
-			else
-				user << "\blue You disconnect the monitor."
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				var/obj/item/weapon/circuitboard/rdconsole/M = new /obj/item/weapon/circuitboard/rdconsole( A )
-				for (var/obj/C in src)
-					C.loc = src.loc
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				del(src)
-	//Loading a disk into it.
-	else if(istype(D, /obj/item/weapon/disk))
+	if(..())
+		return
+	if(istype(D, /obj/item/weapon/disk))
 		if(t_disk || d_disk)
 			user << "A disk is already loaded into the machine."
 			return
@@ -193,7 +167,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		D.loc = src
 		user << "\blue You add the disk to the machine!"
 	else if(istype(D, /obj/item/weapon/card/emag) && !emagged)
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
+		playsound(get_turf(src), 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
 		user << "\blue You you disable the security protocols"
 	src.updateUsrDialog()
@@ -401,30 +375,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				for(var/M in being_built.materials)
 					power += round(being_built.materials[M] / 5)
 				power = max(2000, power)
-				screen = 0.4
-				linked_imprinter.busy = 1
-				flick("circuit_imprinter_ani",linked_imprinter)
-				spawn(16)
+				for(var/i=1;i<=text2num(href_list["n"]);i++)
 					use_power(power)
-					for(var/M in being_built.materials)
-						switch(M)
-							if("$glass")
-								linked_imprinter.g_amount = max(0, (linked_imprinter.g_amount-being_built.materials[M]))
-							if("$gold")
-								linked_imprinter.gold_amount = max(0, (linked_imprinter.gold_amount-being_built.materials[M]))
-							if("$diamond")
-								linked_imprinter.diamond_amount = max(0, (linked_imprinter.diamond_amount-being_built.materials[M]))
-							if("$uranium")
-								linked_imprinter.uranium_amount = max(0, (linked_imprinter.uranium_amount-being_built.materials[M]))
-							else
-								linked_imprinter.reagents.remove_reagent(M, being_built.materials[M])
-					var/obj/new_item = new being_built.build_path(src)
-					new_item.reliability = being_built.reliability
-					if(linked_imprinter.hacked) being_built.reliability = max((reliability / 2), 0)
-					new_item.loc = linked_imprinter.loc
-					linked_imprinter.busy = 0
-					screen = 4.1
-					updateUsrDialog()
+					linked_imprinter.enqueue(usr.key,being_built)
+				updateUsrDialog()
 
 	else if(href_list["disposeI"] && linked_imprinter)  //Causes the circuit imprinter to dispose of a single reagent (all of it)
 		linked_imprinter.reagents.del_reagent(href_list["dispose"])
@@ -438,22 +392,40 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else if(href_list["disposeallP"] && linked_lathe) //Causes the protolathe to dispose of all it's reagents.
 		linked_lathe.reagents.clear_reagents()
 
-	else if(href_list["removeQItem"] && linked_lathe) //Causes the protolathe to dispose of all it's reagents.
+	else if(href_list["removeQItem"]) //Causes the protolathe to dispose of all it's reagents.
 		var/i=text2num(href_list["removeQItem"])
-		linked_lathe.production_queue.Cut(i,i+1)
+		switch(href_list["device"])
+			if("protolathe")
+				if(linked_lathe)
+					linked_lathe.production_queue.Cut(i,i+1)
+			if("imprinter")
+				if(linked_imprinter)
+					linked_imprinter.production_queue.Cut(i,i+1)
 
-	else if(href_list["clearQ"] && linked_lathe) //Causes the protolathe to dispose of all it's reagents.
-		linked_lathe.production_queue.Cut()
+	else if(href_list["clearQ"]) //Causes the protolathe to dispose of all it's reagents.
+		switch(href_list["device"])
+			if("protolathe")
+				if(linked_lathe)
+					linked_lathe.production_queue.Cut()
+			if("imprinter")
+				if(linked_imprinter)
+					linked_imprinter.production_queue.Cut()
 
 	else if(href_list["setProtolatheStopped"] && linked_lathe) //Causes the protolathe to dispose of all it's reagents.
 		linked_lathe.stopped=(href_list["setProtolatheStopped"]=="1")
 
+	else if(href_list["setImprinterStopped"] && linked_imprinter) //Causes the protolathe to dispose of all it's reagents.
+		linked_imprinter.stopped=(href_list["setImprinterStopped"]=="1")
+
 	else if(href_list["lathe_ejectsheet"] && linked_lathe) //Causes the protolathe to eject a sheet of material
 		var/desired_num_sheets = text2num(href_list["lathe_ejectsheet_amt"])
-		if (desired_num_sheets <= 0) return
+		if (desired_num_sheets <= 0)
+			return
 		var/matID=href_list["lathe_ejectsheet"]
 		var/datum/material/M=linked_lathe.materials[matID]
-		if(istype(M))
+		if(!istype(M))
+			warning("PROTOLATHE: Unknown material [matID]! ([href])")
+		else
 			var/obj/item/stack/sheet/sheet = new M.sheettype(linked_lathe.output.loc)
 			var/available_num_sheets = round(M.stored/sheet.perunit)
 			if(available_num_sheets>0)
@@ -465,27 +437,17 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else if(href_list["imprinter_ejectsheet"] && linked_imprinter) //Causes the protolathe to eject a sheet of material
 		var/desired_num_sheets = text2num(href_list["imprinter_ejectsheet_amt"])
 		if (desired_num_sheets <= 0) return
-
-		var/res_amount, type
-		switch(href_list["imprinter_ejectsheet"])
-			if("glass")
-				type = /obj/item/stack/sheet/glass
-				res_amount = "g_amount"
-			if("gold")
-				type = /obj/item/stack/sheet/mineral/gold
-				res_amount = "gold_amount"
-			if("diamond")
-				type = /obj/item/stack/sheet/mineral/diamond
-				res_amount = "diamond_amount"
-			if("uranium")
-				type = /obj/item/stack/sheet/mineral/uranium
-				res_amount = "uranium_amount"
-		if(ispath(type) && hasvar(linked_imprinter, res_amount))
-			var/obj/item/stack/sheet/sheet = new type(linked_imprinter.loc)
-			var/available_num_sheets = round(linked_imprinter.vars[res_amount]/sheet.perunit)
+		var/matID=href_list["imprinter_ejectsheet"]
+		var/datum/material/M=linked_imprinter.materials[matID]
+		if(!istype(M))
+			warning("IMPRINTER: Unknown material [matID]! ([href])")
+		else
+			var/obj/item/stack/sheet/sheet = new M.sheettype(linked_imprinter.output.loc)
+			var/available_num_sheets = round(M.stored/sheet.perunit)
 			if(available_num_sheets>0)
 				sheet.amount = min(available_num_sheets, desired_num_sheets)
-				linked_imprinter.vars[res_amount] = max(0, (linked_imprinter.vars[res_amount]-sheet.amount * sheet.perunit))
+				M.stored = max(0, (M.stored-sheet.amount * sheet.perunit))
+				linked_imprinter.materials[M.id]=M
 			else
 				del sheet
 
@@ -534,10 +496,21 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		options += "<A href='?src=\ref[src];menu=3.3'>Chemical Storage</A>"
 	if(screen!=3.4)
 		options += "<A href='?src=\ref[src];menu=3.4'>Production Queue</A> ([linked_lathe.production_queue.len])"
-	var/dat = "\[<A href='?src=\ref[src];menu=1.0'>Main Menu</A>\]<div class=\"header\">"
-	dat += dd_list2text(options," || ")
-	dat += "</div><hr />"
-	return dat
+	return {"\[<A href='?src=\ref[src];menu=1.0'>Main Menu</A>\]
+	<div class="header">[dd_list2text(options," || ")]</div><hr />"}
+
+/obj/machinery/computer/rdconsole/proc/CircuitImprinterHeader()
+	var/list/options=list()
+	if(screen!=4.1)
+		options += "<A href='?src=\ref[src];menu=4.1'>Design Selection</A>"
+	if(screen!=4.3)
+		options += "<A href='?src=\ref[src];menu=4.3'>Material Storage</A>"
+	if(screen!=4.2)
+		options += "<A href='?src=\ref[src];menu=4.2'>Chemical Storage</A>"
+	if(screen!=4.4)
+		options += "<A href='?src=\ref[src];menu=4.4'>Production Queue</A> ([linked_imprinter.production_queue.len])"
+	return {"\[<A href='?src=\ref[src];menu=1.0'>Main Menu</A>\]
+	<div class=\"header\">[dd_list2text(options," || ")]</div><hr />"}
 
 /obj/machinery/computer/rdconsole/attack_hand(mob/user as mob)
 	if(stat & (BROKEN|NOPOWER))
@@ -837,12 +810,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				var/datum/material/M=linked_lathe.materials[matID]
 				dat += "<li>[M.stored] cm<sup>3</sup> of [M.processed_name]"
 				if(M.stored >= M.cc_per_sheet)
-					dat += " - <A href='?src=\ref[src];lathe_ejectsheet=metal;lathe_ejectsheet_amt=1'>(1 Sheet)</A> "
+					dat += " - <A href='?src=\ref[src];lathe_ejectsheet=[matID];lathe_ejectsheet_amt=1'>(1 Sheet)</A> "
 					if(M.stored >= (M.cc_per_sheet*5))
-						dat += "<A href='?src=\ref[src];lathe_ejectsheet=metal;lathe_ejectsheet_amt=5'>(5 Sheets)</A> "
-					dat += "<A href='?src=\ref[src];lathe_ejectsheet=metal;lathe_ejectsheet_amt=50'>(Max Sheets)</A>"
+						dat += "<A href='?src=\ref[src];lathe_ejectsheet=[matID];lathe_ejectsheet_amt=5'>(5 Sheets)</A> "
+					dat += "<A href='?src=\ref[src];lathe_ejectsheet=[matID];lathe_ejectsheet_amt=50'>(Max Sheets)</A>"
 				else
-					dat += "(Empty)"
+					dat += " - <em>(Empty)</em>"
 				dat += "</li>"
 			dat += "</ul>"
 
@@ -867,8 +840,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				var/datum/protolathe_queue_item/I=linked_lathe.production_queue[i]
 				dat += "<li>Name: [I.thing.name]"
 				if(linked_lathe.stopped)
-					dat += "<A href='?src=\ref[src];removeQItem=[i]'>(Remove)</A></li>"
-			dat += "</ul><A href='?src=\ref[src];clearQ=1'>Remove All Queued Items</A><br />"
+					dat += "<A href='?src=\ref[src];removeQItem=[i];device=protolathe'>(Remove)</A></li>"
+			dat += "</ul><A href='?src=\ref[src];clearQ=1;device=protolathe'>Remove All Queued Items</A><br />"
 			if(linked_lathe.stopped)
 				dat += "<A href='?src=\ref[src];setProtolatheStopped=0' style='color:green'>Start Production</A>"
 			else
@@ -886,44 +859,40 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:837: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
-			dat += {"<A href='?src=\ref[src];menu=1.0'>Main Menu</A> ||
-				<A href='?src=\ref[src];menu=4.3'>Material Storage</A> ||
-				<A href='?src=\ref[src];menu=4.2'>Chemical Storage</A><HR>
-				Circuit Imprinter Menu:<BR><BR>
-				Material Amount: [linked_imprinter.TotalMaterials()] cm<sup>3</sup><BR>
-				Chemical Volume: [linked_imprinter.reagents.total_volume]<HR>"}
+			dat += {"[CircuitImprinterHeader()]
+				Circuit Imprinter Menu:<BR>
+				<b>Material Amount:</b> [linked_imprinter.TotalMaterials()] cm<sup>3</sup><BR>
+				<b>Chemical Volume:</b> [linked_imprinter.reagents.total_volume]<ul>"}
 			// END AUTOFIX
 			for(var/datum/design/D in files.known_designs)
 				if(!(D.build_type & IMPRINTER))
 					continue
 				var/temp_dat = "[D.name]"
-				var/check_materials = 1
+				var/upTo=10
 				for(var/M in D.materials)
 					temp_dat += " [D.materials[M]] [CallMaterialName(M)]"
-					if(copytext(M, 1, 2) == "$")
-						switch(M)
-							if("$glass")
-								if(D.materials[M] > linked_imprinter.g_amount) check_materials = 0
-							if("$gold")
-								if(D.materials[M] > linked_imprinter.gold_amount) check_materials = 0
-							if("$diamond")
-								if(D.materials[M] > linked_imprinter.diamond_amount) check_materials = 0
-							if("$uranium")
-								if(D.materials[M] > linked_imprinter.uranium_amount) check_materials = 0
-					else if (!linked_imprinter.reagents.has_reagent(M, D.materials[M]))
-						check_materials = 0
-				if (check_materials)
-					dat += "* <A href='?src=\ref[src];imprint=[D.id]'>[temp_dat]</A><BR>"
+					var/num_units_avail=linked_imprinter.check_mat(D,M,upTo)
+					if(num_units_avail<upTo)
+						upTo=num_units_avail
+						if(!upTo)
+							break
+				if (upTo)
+					dat += "<li><A href='?src=\ref[src];imprint=[D.id];n=1'>[temp_dat]</A> "
+					if(upTo>=5)
+						dat += "<A href='?src=\ref[src];imprint=[D.id];n=5'>(&times;5)</A>"
+					if(upTo>=10)
+						dat += "<A href='?src=\ref[src];imprint=[D.id];n=10'>(&times;10)</A>"
+					dat += "</li>"
 				else
-					dat += "* [temp_dat]<BR>"
+					dat += "<li>[temp_dat]</li>"
+			dat += "</ul>"
 
 		if(4.2)
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:869: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
-			dat += {"<A href='?src=\ref[src];menu=1.0'>Main Menu</A> ||
-				<A href='?src=\ref[src];menu=4.1'>Imprinter Menu</A><HR>
-				Chemical Storage<BR><HR>"}
+			dat += {"[CircuitImprinterHeader()]
+				Chemical Storage<HR>"}
 			// END AUTOFIX
 			for(var/datum/reagent/R in linked_imprinter.reagents.reagent_list)
 
@@ -937,69 +906,55 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:878: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
-			dat += {"<A href='?src=\ref[src];menu=1.0'>Main Menu</A> ||
-				<A href='?src=\ref[src];menu=4.1'>Circuit Imprinter Menu</A><HR>
-				Material Storage<BR><HR>"}
-			// END AUTOFIX
-			//Glass
+			dat += {"[CircuitImprinterHeader()]
+				Material Storage<HR><ul>"}
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:882: dat += "* [linked_imprinter.g_amount] cm<sup>3</sup> of Glass || "
-			dat += {"* [linked_imprinter.g_amount] cm<sup>3</sup> of Glass ||
-				Eject: "}
-			// END AUTOFIX
-			if(linked_imprinter.g_amount >= 3750) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=glass;imprinter_ejectsheet_amt=1'>(1 Sheet)</A> "
-			if(linked_imprinter.g_amount >= 18750) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=glass;imprinter_ejectsheet_amt=5'>(5 Sheets)</A> "
-			if(linked_imprinter.g_amount >= 3750) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=glass;imprinter_ejectsheet_amt=50'>(Max Sheets)</A>"
-			dat += "<BR>"
-			//Gold
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:889: dat += "* [linked_imprinter.gold_amount] cm<sup>3</sup> of Gold || "
-			dat += {"* [linked_imprinter.gold_amount] cm<sup>3</sup> of Gold ||
-				Eject: "}
-			// END AUTOFIX
-			if(linked_imprinter.gold_amount >= 2000) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=gold;imprinter_ejectsheet_amt=1'>(1 Sheet)</A> "
-			if(linked_imprinter.gold_amount >= 10000) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=gold;imprinter_ejectsheet_amt=5'>(5 Sheets)</A> "
-			if(linked_imprinter.gold_amount >= 2000) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=gold;imprinter_ejectsheet_amt=50'>(Max Sheets)</A>"
-			dat += "<BR>"
-			//Diamond
+			for(var/matID in linked_imprinter.materials)
+				var/datum/material/M=linked_imprinter.materials[matID]
+				if(!(M.sheettype in linked_imprinter.allowed_materials))
+					continue
+				dat += "<li>[M.stored] cm<sup>3</sup> of [M.processed_name]"
+				if(M.stored >= M.cc_per_sheet)
+					dat += " - <A href='?src=\ref[src];imprinter_ejectsheet=[matID];imprinter_ejectsheet_amt=1'>(1 Sheet)</A> "
+					if(M.stored >= (M.cc_per_sheet*5))
+						dat += "<A href='?src=\ref[src];imprinter_ejectsheet=[matID];imprinter_ejectsheet_amt=5'>(5 Sheets)</A> "
+					dat += "<A href='?src=\ref[src];imprinter_ejectsheet=[matID];imprinter_ejectsheet_amt=50'>(Max Sheets)</A>"
+				else
+					dat += " - <em>(Empty)</em>"
+				dat += "</li>"
+			dat += "</ul>"
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:896: dat += "* [linked_imprinter.diamond_amount] cm<sup>3</sup> of Diamond || "
-			dat += {"* [linked_imprinter.diamond_amount] cm<sup>3</sup> of Diamond ||
-				Eject: "}
-			// END AUTOFIX
-			if(linked_imprinter.diamond_amount >= 2000) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=diamond;imprinter_ejectsheet_amt=1'>(1 Sheet)</A> "
-			if(linked_imprinter.diamond_amount >= 10000) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=diamond;imprinter_ejectsheet_amt=5'>(5 Sheets)</A> "
-			if(linked_imprinter.diamond_amount >= 2000) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=diamond;imprinter_ejectsheet_amt=50'>(Max Sheets)</A>"
-			dat += "<BR>"
-			//Uranium
-
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:903: dat += "* [linked_imprinter.uranium_amount] cm<sup>3</sup> of Uranium || "
-			dat += {"* [linked_imprinter.uranium_amount] cm<sup>3</sup> of Uranium ||
-				Eject: "}
-			// END AUTOFIX
-			if(linked_imprinter.uranium_amount >= 2000) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=uranium;imprinter_ejectsheet_amt=1'>(1 Sheet)</A> "
-			if(linked_imprinter.uranium_amount >= 10000) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=uranium;imprinter_ejectsheet_amt=5'>(5 Sheets)</A> "
-			if(linked_imprinter.uranium_amount >= 2000) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=uranium;imprinter_ejectsheet_amt=50'>(Max Sheets)</A>"
+		if(4.4) //Imprinter Queue Management
+			dat += CircuitImprinterHeader()+"Production Queue<BR><HR><ul>"
+			for(var/i=1;i<=linked_imprinter.production_queue.len;i++)
+				var/datum/circuitimprinter_queue_item/I=linked_imprinter.production_queue[i]
+				dat += "<li>Name: [I.thing.name]"
+				if(linked_imprinter.stopped)
+					dat += "<A href='?src=\ref[src];removeQItem=[i];device=imprinter'>(Remove)</A></li>"
+			dat += "</ul><A href='?src=\ref[src];clearQ=1;device=imprinter'>Remove All Queued Items</A><br />"
+			if(linked_imprinter.stopped)
+				dat += "<A href='?src=\ref[src];setImprinterStopped=0' style='color:green'>Start Production</A>"
+			else
+				dat += "<A href='?src=\ref[src];setImprinterStopped=1' style='color:red'>Stop Production</A>"
 
 	user << browse("<TITLE>Research and Development Console</TITLE><HR>[dat]", "window=rdconsole;size=575x400")
 	onclose(user, "rdconsole")
 
 /obj/machinery/computer/rdconsole/mommi
 	name = "MoMMI R&D Console"
-	id = 3
-	req_access = null
-	req_access_txt = "29"
+	id = 2
+	req_access = list(access_tox)
+	circuit = "/obj/item/weapon/circuitboard/rdconsole/mommi"
 
 /obj/machinery/computer/rdconsole/robotics
 	name = "Robotics R&D Console"
 	id = 2
-	req_access = null
-	req_access_txt = "29"
+	req_access = list(access_robotics,access_tox)
+	circuit = "/obj/item/weapon/circuitboard/rdconsole/robotics"
 
 /obj/machinery/computer/rdconsole/core
 	name = "Core R&D Console"
 	id = 1
+	req_access = list(access_tox)
+	circuit = "/obj/item/weapon/circuitboard/rdconsole/core"

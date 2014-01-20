@@ -16,7 +16,7 @@
 	icon_state = "pen"
 	item_state = "pen"
 	flags = FPRINT | TABLEPASS
-	slot_flags = SLOT_BELT | SLOT_EARS
+	slot_flags = SLOT_BELT | slot_l_ear
 	throwforce = 0
 	w_class = 1.0
 	throw_speed = 7
@@ -50,6 +50,10 @@
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stabbed with [name]  by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [name] to stab [M.name] ([M.ckey])</font>")
 	msg_admin_attack("[user.name] ([user.ckey]) Used the [name] to stab [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+	if(!iscarbon(user))
+		M.LAssailant = null
+	else
+		M.LAssailant = user
 	return
 
 

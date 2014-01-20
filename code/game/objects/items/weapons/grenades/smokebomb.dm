@@ -7,15 +7,15 @@
 	item_state = "flashbang"
 	flags = FPRINT | TABLEPASS | USEDELAY
 	slot_flags = SLOT_BELT
-	var/datum/effect/effect/system/bad_smoke_spread/smoke
+	var/datum/effect/effect/system/smoke_spread/bad/smoke
 
 	New()
 		..()
-		src.smoke = new /datum/effect/effect/system/bad_smoke_spread
+		src.smoke = new /datum/effect/effect/system/smoke_spread/bad
 		src.smoke.attach(src)
 
 	prime()
-		playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
+		playsound(get_turf(src), 'sound/effects/smoke.ogg', 50, 1, -3)
 		src.smoke.set_up(10, 0, usr.loc)
 		spawn(0)
 			src.smoke.start()

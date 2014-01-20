@@ -86,7 +86,7 @@
 		src << "<span class='warning'>This creature's DNA is ruined beyond useability!</span>"
 		return
 
-	if(!G.killing)
+	if(!G.state == GRAB_KILL)
 		src << "<span class='warning'>We must have a tighter grip to absorb this creature.</span>"
 		return
 
@@ -184,7 +184,7 @@
 	changeling.chem_charges -= 5
 	src.visible_message("<span class='warning'>[src] transforms!</span>")
 	changeling.geneticdamage = 30
-	src.dna = chosen_dna
+	src.dna = chosen_dna.Clone()
 	src.real_name = chosen_dna.real_name
 	src.flavor_text = ""
 	src.UpdateAppearance()
@@ -204,6 +204,10 @@
 
 	var/datum/changeling/changeling = changeling_power(1,0,0)
 	if(!changeling)	return
+
+	if(src.has_brain_worms())
+		src << "<span class='warning'>We cannot perform this ability at the present time!</span>"
+		return
 
 	var/mob/living/carbon/C = src
 	changeling.chem_charges--
@@ -232,7 +236,7 @@
 	del(animation)
 
 	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey(src)
-	O.dna = C.dna
+	O.dna = C.dna.Clone()
 	C.dna = null
 
 	for(var/obj/item/W in C)
@@ -285,7 +289,7 @@
 	changeling.chem_charges--
 	C.remove_changeling_powers()
 	C.visible_message("<span class='warning'>[C] transforms!</span>")
-	C.dna = chosen_dna
+	C.dna = chosen_dna.Clone()
 
 	var/list/implants = list()
 	for (var/obj/item/weapon/implant/I in C) //Still preserving implants
@@ -318,7 +322,7 @@
 		O.gender = FEMALE
 	else
 		O.gender = MALE
-	O.dna = C.dna
+	O.dna = C.dna.Clone()
 	C.dna = null
 	O.real_name = chosen_dna.real_name
 
@@ -759,7 +763,7 @@ var/list/datum/dna/hivemind_bank = list()
 		src << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
 		return 0
 	T.visible_message("<span class='warning'>[T] transforms!</span>")
-	T.dna = chosen_dna
+	T.dna = chosen_dna.Clone()
 	T.real_name = chosen_dna.real_name
 	T.UpdateAppearance()
 	domutcheck(T, null)

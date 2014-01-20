@@ -6,7 +6,6 @@
 // Gene is always activated.
 /////////////////////
 
-
 /datum/dna/gene/disability
 	name="DISABILITY"
 
@@ -22,24 +21,42 @@
 	// Activation message
 	var/activation_message=""
 
-/datum/dna/gene/disability/can_activate(var/mob/M,var/list/old_mutations,var/flags)
+	// Yay, you're no longer growing 3 arms
+	var/deactivation_message=""
+
+/datum/dna/gene/disability/can_activate(var/mob/M,var/flags)
 	return 1 // Always set!
 
-/datum/dna/gene/disability/activate(var/mob/living/carbon/M)
-	if(mutation)
+/datum/dna/gene/disability/activate(var/mob/M, var/connected, var/flags)
+	if(mutation && !(mutation in M.mutations))
 		M.mutations.Add(mutation)
 	if(disability)
 		M.disabilities|=disability
-	if(mutation)
+	if(sdisability)
 		M.sdisabilities|=sdisability
-	M << "\red [activation_message]"
+	if(activation_message)
+		M << "\red [activation_message]"
+	else
+		testing("[name] has no activation message.")
+
+/datum/dna/gene/disability/deactivate(var/mob/M, var/connected, var/flags)
+	if(mutation && (mutation in M.mutations))
+		M.mutations.Remove(mutation)
+	if(disability)
+		M.disabilities &= ~disability
+	if(sdisability)
+		M.sdisabilities &= ~sdisability
+	if(deactivation_message)
+		M << "\red [deactivation_message]"
+	else
+		testing("[name] has no deactivation message.")
 
 /datum/dna/gene/disability/hallucinate
 	name="Hallucinate"
 	activation_message="Your mind says 'Hello'."
 	mutation=mHallucination
 
-	initialize()
+	New()
 		block=HALLUCINATIONBLOCK
 
 /datum/dna/gene/disability/epilepsy
@@ -47,7 +64,7 @@
 	activation_message="You get a headache."
 	disability=EPILEPSY
 
-	initialize()
+	New()
 		block=HEADACHEBLOCK
 
 /datum/dna/gene/disability/cough
@@ -55,7 +72,7 @@
 	activation_message="You start coughing."
 	disability=COUGHING
 
-	initialize()
+	New()
 		block=COUGHBLOCK
 
 /datum/dna/gene/disability/clumsy
@@ -63,7 +80,7 @@
 	activation_message="You feel lightheaded."
 	mutation=CLUMSY
 
-	initialize()
+	New()
 		block=CLUMSYBLOCK
 
 /datum/dna/gene/disability/tourettes
@@ -71,7 +88,7 @@
 	activation_message="You twitch."
 	disability=TOURETTES
 
-	initialize()
+	New()
 		block=TWITCHBLOCK
 
 /datum/dna/gene/disability/nervousness
@@ -79,7 +96,7 @@
 	activation_message="You feel nervous."
 	disability=NERVOUS
 
-	initialize()
+	New()
 		block=NERVOUSBLOCK
 
 /datum/dna/gene/disability/blindness
@@ -87,7 +104,7 @@
 	activation_message="You can't seem to see anything."
 	sdisability=BLIND
 
-	initialize()
+	New()
 		block=BLINDBLOCK
 
 /datum/dna/gene/disability/deaf
@@ -95,11 +112,11 @@
 	activation_message="It's kinda quiet."
 	sdisability=DEAF
 
-	initialize()
+	New()
 		block=DEAFBLOCK
 
-	activate(var/mob/M)
-		..(M)
+	activate(var/mob/M, var/connected, var/flags)
+		..(M,connected,flags)
 		M.ear_deaf = 1
 
 /datum/dna/gene/disability/nearsighted
@@ -107,5 +124,19 @@
 	activation_message="Your eyes feel weird..."
 	disability=NEARSIGHTED
 
-	initialize()
+	New()
 		block=GLASSESBLOCK
+
+
+/datum/dna/gene/disability/lisp
+	name = "Lisp"
+	desc = "I wonder wath thith doeth."
+	activation_message = "Thomething doethn't feel right."
+	deactivation_message = "You now feel able to pronounce consonants."
+
+	New()
+		..()
+		block=LISPBLOCK
+
+	OnSay(var/mob/M, var/message)
+		return replacetext(replacetext(message,"S","TH"),"s","th")

@@ -65,6 +65,28 @@ var/NOPRINTSBLOCK = 0
 var/SHOCKIMMUNITYBLOCK = 0
 var/SMALLSIZEBLOCK = 0
 
+///////////////////////////////
+// Goon Stuff
+///////////////////////////////
+// Disabilities
+var/LISPBLOCK = 0
+var/MUTEBLOCK = 0
+var/RADBLOCK = 0
+var/FATBLOCK = 0
+var/STUTTERBLOCK = 0
+var/CHAVBLOCK = 0
+var/SWEDEBLOCK = 0
+var/SCRAMBLEBLOCK = 0
+var/TOXICFARTBLOCK = 0
+var/STRONGBLOCK = 0
+var/HORNSBLOCK = 0
+
+// Powers
+var/SOBERBLOCK = 0
+var/PSYRESISTBLOCK = 0
+var/SHADOWBLOCK = 0
+var/CHAMELEONBLOCK = 0
+
 var/skipupdate = 0
 	///////////////
 var/eventchance = 10 //% per 5 mins
@@ -81,6 +103,7 @@ var/href_logfile = null
 var/station_name = null
 var/game_version = "adsfasdfasdf"
 var/changelog_hash = ""
+var/game_year = (text2num(time2text(world.realtime, "YYYY")) + 544)
 
 var/datum/air_tunnel/air_tunnel1/SS13_airtunnel = null
 var/going = 1.0
@@ -176,26 +199,6 @@ var/forceblob = 0
 
 // nanomanager, the manager for Nano UIs
 var/datum/nanomanager/nanomanager = new()
-
-	//airlockWireColorToIndex takes a number representing the wire color, e.g. the orange wire is always 1, the dark red wire is always 2, etc. It returns the index for whatever that wire does.
-	//airlockIndexToWireColor does the opposite thing - it takes the index for what the wire does, for example AIRLOCK_WIRE_IDSCAN is 1, AIRLOCK_WIRE_POWER1 is 2, etc. It returns the wire color number.
-	//airlockWireColorToFlag takes the wire color number and returns the flag for it (1, 2, 4, 8, 16, etc)
-var/list/airlockWireColorToFlag = RandomAirlockWires()
-var/list/airlockIndexToFlag
-var/list/airlockIndexToWireColor
-var/list/airlockWireColorToIndex
-var/list/APCWireColorToFlag = RandomAPCWires()
-var/list/APCIndexToFlag
-var/list/APCIndexToWireColor
-var/list/APCWireColorToIndex
-var/list/BorgWireColorToFlag = RandomBorgWires()
-var/list/BorgIndexToFlag
-var/list/BorgIndexToWireColor
-var/list/BorgWireColorToIndex
-var/list/AAlarmWireColorToFlag = RandomAAlarmWires()
-var/list/AAlarmIndexToFlag
-var/list/AAlarmIndexToWireColor
-var/list/AAlarmWireColorToIndex
 
 #define SPEED_OF_LIGHT 3e8 //not exact but hey!
 #define SPEED_OF_LIGHT_SQ 9e+16

@@ -147,7 +147,7 @@ td.cost.toomuch {
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/computer/cloning/update_icon()
+/obj/machinery/computer/merch/update_icon()
 
 	if(stat & BROKEN)
 		icon_state = "comm_logs0"

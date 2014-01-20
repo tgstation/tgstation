@@ -121,6 +121,31 @@ datum
 				src.handle_reactions()
 				return amount
 
+			trans_to_atmos(var/datum/gas_mixture/target, var/amount=1, var/multiplier=1, var/preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
+				if (!target )
+					return
+				if (!target.aerosols || src.total_volume<=0)
+					return
+				var/datum/reagents/R = target.aerosols
+				amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
+				var/part = amount / src.total_volume
+				var/trans_data = null
+				for (var/datum/reagent/current_reagent in src.reagent_list)
+					if (!current_reagent)
+						continue
+					var/current_reagent_transfer = current_reagent.volume * part
+					if(preserve_data)
+						trans_data = current_reagent.data
+
+					R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data)
+					src.remove_reagent(current_reagent.id, current_reagent_transfer)
+
+				src.update_total()
+				R.update_total()
+				R.handle_reactions()
+				src.handle_reactions()
+				return amount
+
 			copy_to(var/obj/target, var/amount=1, var/multiplier=1, var/preserve_data=1)
 				if(!target)
 					return
@@ -200,6 +225,13 @@ datum
 */
 
 			metabolize(var/mob/M)
+				for(var/A in reagent_list)
+					var/datum/reagent/R = A
+					if(M && R)
+						R.on_mob_life(M)
+				update_total()
+
+			update_aerosol(var/mob/M)
 				for(var/A in reagent_list)
 					var/datum/reagent/R = A
 					if(M && R)
@@ -303,13 +335,6 @@ datum
 								for(var/mob/M in seen)
 									M << "\blue \icon[my_atom] The solution begins to bubble."
 
-							/*	if(istype(my_atom, /obj/item/slime_core))
-									var/obj/item/slime_core/ME = my_atom
-									ME.Uses--
-									if(ME.Uses <= 0) // give the notification that the slime core is dead
-										for(var/mob/M in viewers(4, get_turf(my_atom)) )
-											M << "\blue \icon[my_atom] The innards begin to boil!"
-								*/
 								if(istype(my_atom, /obj/item/slime_extract))
 									var/obj/item/slime_extract/ME2 = my_atom
 									ME2.Uses--
@@ -507,6 +532,16 @@ datum
 					res += A.name
 
 				return res
+
+			// Admin logging.
+			get_reagent_ids(var/and_amount=0)
+				var/list/stuff = list()
+				for(var/datum/reagent/A in reagent_list)
+					if(and_amount)
+						stuff += "[get_reagent_amount(A.id)]U of [A.id]"
+					else
+						stuff += A.id
+				return english_list(stuff)
 
 			remove_all_type(var/reagent_type, var/amount, var/strict = 0, var/safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
 				if(!isnum(amount)) return 1

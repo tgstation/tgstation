@@ -1,4 +1,4 @@
-/obj/structure/sign/barsign
+/obj/structure/sign/double/barsign
 	icon = 'icons/obj/barsigns.dmi'
 	icon_state = "empty"
 	anchored = 1

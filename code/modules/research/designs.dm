@@ -412,13 +412,23 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/mech_bay_power_console
 
 /datum/design/rdconsole
-	name = "Circuit Design (R&D Console)"
+	name = "Circuit Design (Core R&D Console)"
 	desc = "Allows for the construction of circuit boards used to build a new R&D console."
-	id = "rdconsole"
+	id = "rdconsole_core"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/rdconsole
+
+/datum/design/rdconsole/robotics
+	name = "Circuit Design (Robotics R&D Console)"
+	id = "rdconsole_robotics"
+	build_path = /obj/item/weapon/circuitboard/rdconsole/robotics
+
+/datum/design/rdconsole/mommi
+	name = "Circuit Design (MoMMI R&D Console)"
+	id = "rdconsole_mommi"
+	build_path = /obj/item/weapon/circuitboard/rdconsole/mommi
 
 /datum/design/ordercomp
 	name = "Circuit Design (Supply ordering console)"
@@ -1074,7 +1084,8 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/stock_parts/capacitor
 
 /datum/design/basic_sensor
-	name = "Basic Sensor Module"
+	//name = "Basic Sensor Module"
+	name = "Basic Scanning Module" // Fixes #311
 	desc = "A stock part used in the construction of various devices."
 	id = "basic_sensor"
 	req_tech = list("magnets" = 1)
@@ -1119,7 +1130,8 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/stock_parts/capacitor/adv
 
 /datum/design/adv_sensor
-	name = "Advanced Sensor Module"
+	//name = "Advanced Sensor Module"
+	name = "Advanced Scanning Module" // Fixes #311
 	desc = "A stock part used in the construction of various devices."
 	id = "adv_sensor"
 	req_tech = list("magnets" = 3)
@@ -1165,7 +1177,8 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/stock_parts/capacitor/super
 
 /datum/design/phasic_sensor
-	name = "Phasic Sensor Module"
+	//name = "Phasic Sensor Module"
+	name = "Phasic Scanning Module" // Fixes #311
 	desc = "A stock part used in the construction of various devices."
 	id = "phasic_sensor"
 	req_tech = list("magnets" = 5, "materials" = 3)
@@ -1547,17 +1560,17 @@ other types of metals and chemistry for reagents).
 	materials = list("$gold" = 5000,"$uranium" = 10000, "mutagen" = 40)
 	build_path = /obj/item/weapon/gun/energy/decloner
 	locked = 1
-/*
+
 /datum/design/chemsprayer
 	name = "Chem Sprayer"
 	desc = "An advanced chem spraying device."
 	id = "chemsprayer"
-	req_tech = list("combat" = 3, "materials" = 3, "engineering" = 3, "biotech" = 2)
+	req_tech = list("combat" = 3, "materials" = 3, "engineering" = 3, "biotech" = 2, "syndicate" = 3)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 5000, "$glass" = 1000)
 	reliability_base = 100
-	build_path = /obj/item/weapon/chemsprayer
-*/
+	build_path = /obj/item/weapon/reagent_containers/spray/chemsprayer
+
 /datum/design/rapidsyringe
 	name = "Rapid Syringe Gun"
 	desc = "A gun that fires many syringes."
@@ -1715,6 +1728,16 @@ other types of metals and chemistry for reagents).
 	materials = list("$gold" = 3000, "$diamond" = 1500, "$uranium" = 250)
 	reliability_base = 80
 	build_path = /obj/item/weapon/storage/backpack/holding
+
+/datum/design/bluespace_crystal
+	name = "Artificial Bluespace Crystal"
+	desc = "A small blue crystal with mystical properties."
+	id = "bluespace_crystal"
+	req_tech = list("bluespace" = 4, "materials" = 6)
+	build_type = PROTOLATHE
+	materials = list("$diamond" = 1500, "$plasma" = 1500)
+	reliability = 100
+	build_path = /obj/item/bluespace_crystal/artificial
 
 /////////////////////////////////////////
 /////////////////HUDs////////////////////
@@ -1880,6 +1903,90 @@ other types of metals and chemistry for reagents).
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/processor
+
+/datum/design/air_alarm
+	name = "Circuit Design (Air Alarm)"
+	desc = "Allows for the construction of circuit boards used to build an Air Alarm."
+	id = "air_alarm"
+	req_tech = list("programming" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/air_alarm
+
+/datum/design/fire_alarm
+	name = "Circuit Design (Fire Alarm)"
+	desc = "Allows for the construction of circuit boards used to build a Fire Alarm."
+	id = "fire_alarm"
+	req_tech = list("programming" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/fire_alarm
+
+/datum/design/airlock
+	name = "Circuit Design (Airlock)"
+	desc = "Allows for the construction of circuit boards used to build an airlock."
+	id = "airlock"
+	req_tech = list("programming" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/airlock
+
+/datum/design/conveyor
+	name = "Circuit Design (Conveyor)"
+	desc = "Allows for the construction of circuit boards used to build a conveyor belt."
+	id = "conveyor"
+	req_tech = list("programming" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/conveyor
+
+/datum/design/bhangmeter
+	name = "Circuit Design (Bhangmeter)"
+	desc = "Allows for the construction of circuit boards used to build a bhangmeter."
+	id = "bhangmeter"
+	req_tech = list("programming" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/bhangmeter
+
+//////////////////////////////////////////////////////////////////
+// EMBEDDED CONTROLLER BOARDS
+//////////////////////////////////////////////////////////////////
+/datum/design/access_control
+	name = "Circuit Design (Access Control)"
+	desc = "Allows for the construction of ECB used to build an access control panel."
+	id = "access_control"
+	req_tech = list("programming" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/ecb/access_controller
+
+/datum/design/airlock_control
+	name = "Circuit Design (Airlock Control)"
+	desc = "Allows for the construction of ECB used to build an airlock control panel."
+	id = "airlock_control"
+	req_tech = list("programming" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/ecb/airlock_controller
+
+/datum/design/vent_control
+	name = "Circuit Design (Vent Control)"
+	desc = "Allows for the construction of ECB used to build a vent control panel."
+	id = "vent_control"
+	req_tech = list("programming" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/ecb/vent_controller
+
+/datum/design/smart_airlock_control
+	name = "Circuit Design (Smart Airlock Control)"
+	desc = "Allows for the construction of ECB used to build a smart airlock control panel."
+	id = "smart_airlock_control"
+	req_tech = list("programming" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/ecb/smart_airlock_controller
 
 /*
 /datum/design/hydroseeds

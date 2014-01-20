@@ -67,10 +67,7 @@
 /obj/structure/cable/proc/get_powernet()			//TODO: remove this as it is obsolete
 	return powernet
 
-/obj/structure/cable/attack_hand(mob/user)
-	if(ishuman(user))
-		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("WIRE",src,user:wear_suit)
+/obj/structure/cable/attack_tk(mob/user)
 	return
 
 /obj/structure/cable/attackby(obj/item/W, mob/user)
@@ -174,6 +171,7 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil_red"
 	var/amount = MAXCOIL
+	var/max_amount = MAXCOIL
 	_color = "red"
 	desc = "A coil of power cable."
 	throwforce = 10
@@ -253,11 +251,11 @@
 
 	else if( istype(W, /obj/item/weapon/cable_coil) )
 		var/obj/item/weapon/cable_coil/C = W
-		if(C.amount == MAXCOIL)
+		if(C.amount == max_amount)
 			user << "The coil is too long, you cannot add any more cable to it."
 			return
 
-		if( (C.amount + src.amount <= MAXCOIL) )
+		if( (C.amount + src.amount <= max_amount) )
 			C.amount += src.amount
 			user << "You join the cable coils together."
 			C.updateicon()
@@ -265,10 +263,10 @@
 			return
 
 		else
-			user << "You transfer [MAXCOIL - src.amount ] length\s of cable from one coil to the other."
-			src.amount -= (MAXCOIL-C.amount)
+			user << "You transfer [max_amount - src.amount] length\s of cable from one coil to the other."
+			src.amount -= (max_amount-C.amount)
 			src.updateicon()
-			C.amount = MAXCOIL
+			C.amount = max_amount
 			C.updateicon()
 			return
 

@@ -19,6 +19,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/holder_var_type = "bruteloss" //only used if charge_type equals to "holder_var"
 	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
 
+	var/ghost = 0 // Skip life check.
 	var/clothes_req = 1 //see if it requires clothes
 	var/stat_allowed = 0 //see if it requires being conscious/alive, need to set to 1 for ghostpells
 	var/invocation = "HURP DURP" //what is uttered when the wizard casts the spell
@@ -59,15 +60,15 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				if(!charge_counter)
 					usr << "[name] has no charges left."
 					return 0
-
-	if(usr.stat && !stat_allowed)
-		usr << "Not when you're incapacitated."
-		return 0
-
-	if(ishuman(usr) || ismonkey(usr))
-		if(istype(usr.wear_mask, /obj/item/clothing/mask/muzzle))
-			usr << "Mmmf mrrfff!"
+	if(!ghost)
+		if(usr.stat && !stat_allowed)
+			usr << "Not when you're incapacitated."
 			return 0
+
+		if(ishuman(usr) || ismonkey(usr))
+			if(istype(usr.wear_mask, /obj/item/clothing/mask/muzzle))
+				usr << "Mmmf mrrfff!"
+				return 0
 	var/obj/effect/proc_holder/spell/noclothes/spell = locate() in user.spell_list
 	if(clothes_req && !(spell && istype(spell)))//clothes check
 		if(!istype(usr, /mob/living/carbon/human))
@@ -102,10 +103,13 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				usr.say(invocation)
 			else
 				usr.say(replacetext(invocation," ","`"))
+			// Why the fuck...? - N3X
+			/*
 			if(usr.gender==MALE)
 				playsound(usr.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
 			else
 				playsound(usr.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
+			*/
 		if("whisper")
 			if(prob(50))
 				usr.whisper(invocation)
@@ -114,7 +118,6 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 /obj/effect/proc_holder/spell/New()
 	..()
-
 	charge_counter = charge_max
 
 /obj/effect/proc_holder/spell/Click()
@@ -134,7 +137,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		charge_counter++
 
 /obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1) //if recharge is started is important for the trigger spells
-	before_cast(targets)
+	targets=before_cast(targets)
 	invocation()
 	spawn(0)
 		if(charge_type == "recharge" && recharge)
@@ -146,8 +149,15 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	after_cast(targets)
 
 /obj/effect/proc_holder/spell/proc/before_cast(list/targets)
-	if(overlay)
-		for(var/atom/target in targets)
+	var/valid_targets[0]
+	for(var/atom/target in targets)
+		// Check range again (fixes long-range EI NATH)
+		if(!(target in view_or_range(range,usr,selection_type)))
+			continue
+
+		valid_targets += target
+
+		if(overlay)
 			var/location
 			if(istype(target,/mob/living))
 				location = target.loc
@@ -160,6 +170,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			spell.density = 0
 			spawn(overlay_lifespan)
 				del(spell)
+	return valid_targets
 
 /obj/effect/proc_holder/spell/proc/after_cast(list/targets)
 	for(var/atom/target in targets)
@@ -176,11 +187,11 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			sparks.start()
 		if(smoke_spread)
 			if(smoke_spread == 1)
-				var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
+				var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 				smoke.set_up(smoke_amt, 0, location) //no idea what the 0 is
 				smoke.start()
 			else if(smoke_spread == 2)
-				var/datum/effect/effect/system/bad_smoke_spread/smoke = new /datum/effect/effect/system/bad_smoke_spread()
+				var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
 				smoke.set_up(smoke_amt, 0, location) //no idea what the 0 is
 				smoke.start()
 

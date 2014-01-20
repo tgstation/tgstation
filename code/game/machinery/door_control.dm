@@ -31,6 +31,9 @@
 	idle_power_usage = 2
 	active_power_usage = 4
 
+	ghost_read=0
+	ghost_write=0
+
 /obj/machinery/door_control/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
 	if(wires & 2)
@@ -61,7 +64,7 @@
 	if(istype(W, /obj/item/weapon/card/emag))
 		req_access = list()
 		req_one_access = list()
-		playsound(src.loc, "sparks", 100, 1)
+		playsound(get_turf(src), "sparks", 100, 1)
 	return src.attack_hand(user)
 
 /obj/machinery/door_control/attack_hand(mob/user as mob)

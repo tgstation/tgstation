@@ -110,6 +110,11 @@
 		for(var/mob/O in oviewers(src))
 			O.show_message("\red [usr] destroys the [name]!", 1)
 		health = 0
+	else
+		usr << "\blue You claw at the [name]."
+		for(var/mob/O in oviewers(src))
+			O.show_message("\red [usr] claws at the [name]!", 1)
+		health -= rand(5,10)
 	healthcheck()
 	return
 
@@ -206,7 +211,7 @@
 	return
 
 /obj/effect/alien/weeds/proc/Life()
-	set background = 1
+	//set background = 1
 	var/turf/U = get_turf(src)
 /*
 	if (locate(/obj/movable, U))
@@ -456,7 +461,7 @@ Alien plants should do something if theres a lot of poison
 
 		if(WT.remove_fuel(0, user))
 			damage = 15
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(get_turf(src), 'sound/items/Welder.ogg', 100, 1)
 
 	src.health -= damage
 	src.healthcheck()

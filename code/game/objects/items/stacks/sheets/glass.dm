@@ -26,7 +26,6 @@
 	construct_window(user)
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user)
-	..()
 	if(istype(W,/obj/item/weapon/cable_coil))
 		var/obj/item/weapon/cable_coil/CC = W
 		if(CC.amount < 5)
@@ -266,7 +265,6 @@
 	return
 
 /obj/item/weapon/shard/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
 	if ( istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
@@ -287,10 +285,10 @@
 	if(ismob(AM))
 		var/mob/M = AM
 		M << "\red <B>You step in the broken glass!</B>"
-		playsound(src.loc, 'sound/effects/glass_step.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if(!H.shoes && !(H.wear_suit.body_parts_covered & FEET))
+			if( !H.shoes && ( !H.wear_suit || !(H.wear_suit.body_parts_covered & FEET) ) )
 				var/datum/organ/external/affecting = H.get_organ(pick("l_foot", "r_foot"))
 				if(affecting.status & (ORGAN_ROBOT|ORGAN_PEG))
 					return
@@ -314,26 +312,25 @@
 	icon_state = "sheet-plasmaglass"
 	//g_amt = 7500
 	g_amt=CC_PER_SHEET_GLASS
-	origin_tech = "materials=3;plasma=2"
+	origin_tech = "materials=3;plasmatech=2"
 	created_window = /obj/structure/window/plasmabasic
 
 /obj/item/stack/sheet/glass/plasmaglass/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
 	rec.addMaterial("plasma",1)
-	rec.addMaterial("glass",1)
+	rec.addMaterial("glass", 1)
 	return 1
 
 /obj/item/stack/sheet/glass/plasmaglass/attack_self(mob/user as mob)
 	construct_window(user)
 
 /obj/item/stack/sheet/glass/plasmaglass/attackby(obj/item/W, mob/user)
-	..()
 	if( istype(W, /obj/item/stack/rods) )
 		var/obj/item/stack/rods/V  = W
 		var/obj/item/stack/sheet/glass/plasmarglass/RG = new (user.loc)
 		RG.add_fingerprint(user)
 		RG.add_to_stacks(user)
 		V.use(1)
-		var/obj/item/stack/sheet/glass/G = src
+		var/obj/item/stack/sheet/glass/plasmaglass/G = src
 		src = null
 		var/replace = (user.get_inactive_hand()==G)
 		G.use(1)
@@ -352,13 +349,13 @@
 	icon_state = "sheet-plasmarglass"
 	g_amt=CC_PER_SHEET_GLASS
 	m_amt = 1875
-	origin_tech = "materials=4;plasma=2"
+	origin_tech = "materials=4;plasmatech=2"
 	created_window = /obj/structure/window/plasmareinforced
 
 /obj/item/stack/sheet/glass/plasmaglass/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
 	rec.addMaterial("plasma",1)
-	rec.addMaterial("glass",1)
-	rec.addMaterial("iron",0.5)
+	rec.addMaterial("glass", 1)
+	rec.addMaterial("iron",  0.5)
 	return 1
 
 /obj/item/stack/sheet/glass/plasmarglass/attack_self(mob/user as mob)
