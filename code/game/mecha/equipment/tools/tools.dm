@@ -97,7 +97,7 @@
 				else if(istype(target, /turf/unsimulated/mineral))
 					for(var/turf/unsimulated/mineral/M in range(chassis,1))
 						if(get_dir(chassis,M)&chassis.dir)
-							M.gets_drilled()
+							M.GetDrilled()
 					log_message("Drilled through [target]")
 					if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
 						var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
@@ -165,7 +165,7 @@
 				else if(istype(target, /turf/unsimulated/mineral))
 					for(var/turf/unsimulated/mineral/M in range(chassis,1))
 						if(get_dir(chassis,M)&chassis.dir)
-							M.gets_drilled()
+							M.GetDrilled()
 					log_message("Drilled through [target]")
 					if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
 						var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo

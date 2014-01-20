@@ -1,8 +1,7 @@
 /**********************Mineral deposits**************************/
 
-#define XENOARCH_SPAWN_CHANCE 0.5
-#define XENOARCH_SPREAD_CHANCE 15
-#define ARTIFACT_SPAWN_CHANCE 20
+/datum/controller/game_controller/var/list/artifact_spawning_turfs = list()
+var/list/artifact_spawn = list() // Runtime fix for geometry loading before controller is instantiated.
 
 /turf/unsimulated/mineral //wall piece
 	name = "Rock"
@@ -14,16 +13,12 @@
 	density = 1
 	blocks_air = 1
 	//temperature = TCMB
-	var/mineralName = ""
-	var/mineralAmt = 0
-	var/spread = 0 //will the seam spread?
-	var/spreadChance = 0 //the percentual chance of an ore spreading to the neighbouring tiles
+	var/mineral/mineral
+	var/mined_ore = 0
 	var/last_act = 0
-
-	var/datum/geosample/geological_data
+	var/datum/geosample/geologic_data
 	var/excavation_level = 0
-	var/list/finds = list()
-	var/list/excavation_minerals = list()
+	var/list/finds
 	var/next_rock = 0
 	var/archaeo_overlay = ""
 	var/excav_overlay = ""
@@ -33,20 +28,9 @@
 /turf/unsimulated/mineral/Del()
 	return
 
-/turf/unsimulated/mineral/ex_act(severity)
-	switch(severity)
-		if(3.0)
-			return
-		if(2.0)
-			if (prob(70))
-				src.mineralAmt -= 1 //some of the stuff gets blown up
-				src.gets_drilled()
-		if(1.0)
-			src.mineralAmt -= 2 //some of the stuff gets blown up
-			src.gets_drilled()
-	return
-
 /turf/unsimulated/mineral/New()
+	. = ..()
+	MineralSpread()
 
 	spawn(1)
 		var/turf/T
@@ -66,7 +50,7 @@
 			T = get_step(src, WEST)
 			if (T)
 				T.overlays += image('icons/turf/walls.dmi', "rock_side_e", layer=6)
-
+	/*
 	if (mineralName && mineralAmt && spread && spreadChance)
 		for(var/trydir in list(1,2,4,8))
 			if(prob(spreadChance))
@@ -146,168 +130,57 @@
 			desc = "It appears to be partially excavated."*/
 
 	return
+	*/
 
-/turf/unsimulated/mineral/random
-	name = "Mineral deposit"
-	var/mineralAmtList = list("Uranium" = 5, "Iron" = 5, "Diamond" = 5, "Gold" = 5, "Silver" = 5, "Plasma" = 5, "Phazite"=1/*, "Adamantine" = 5*/)
-	var/mineralSpawnChanceList = list("Uranium" = 5, "Iron" = 50, "Diamond" = 1, "Gold" = 5, "Silver" = 5, "Plasma" = 25/*, "Adamantine" =5*/)//Currently, Adamantine won't spawn as it has no uses. -Durandan
-	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
-
-/turf/unsimulated/mineral/random/New()
-	..()
-	if (prob(mineralChance))
-		var/mName = pickweight(mineralSpawnChanceList) //temp mineral name
-
-		if (mName)
-			var/turf/unsimulated/mineral/M
-			switch(mName)
-				if("Uranium")
-					M = new/turf/unsimulated/mineral/uranium(src)
-				if("Iron")
-					M = new/turf/unsimulated/mineral/iron(src)
-				if("Diamond")
-					M = new/turf/unsimulated/mineral/diamond(src)
-				if("Gold")
-					M = new/turf/unsimulated/mineral/gold(src)
-				if("Silver")
-					M = new/turf/unsimulated/mineral/silver(src)
-				if("Plasma")
-					M = new/turf/unsimulated/mineral/plasma(src)
-				if("Clown")
-					M = new/turf/unsimulated/mineral/clown(src)
-				if("Phazite")
-					M = new/turf/unsimulated/mineral/phazon(src)
-				/*if("Adamantine")
-					M = new/turf/unsimulated/mineral/adamantine(src)*/
-			if(M)
-				src = M
-				M.levelupdate()
-
-				//preserve archaeo data
-				M.geological_data = src.geological_data
-				M.excavation_minerals = src.excavation_minerals
-				M.overlays = src.overlays
-				M.artifact_find = src.artifact_find
-				M.archaeo_overlay = src.archaeo_overlay
-				M.excav_overlay = src.excav_overlay
-
-	/*else if (prob(artifactChance))
-		new/obj/machinery/artifact(src)*/
-	return
-
-/turf/unsimulated/mineral/random/high_chance
-	mineralChance = 25
-	mineralSpawnChanceList = list("Uranium" = 10, "Iron" = 30, "Diamond" = 2, "Gold" = 10, "Silver" = 10, "Plasma" = 25, "Archaeo" = 2)
-
-/turf/unsimulated/mineral/random/high_chance_clown
-	//icon_state="rock_Phazon"
-	mineralChance = 40
-	mineralSpawnChanceList = list("Uranium" = 10, "Iron" = 10, "Diamond" = 2, "Gold" = 5, "Silver" = 5, "Plasma" = 25, "Archaeo" = 2, "Clown"=15, "Phazite"=10)
-
-/turf/unsimulated/mineral/random/Del()
-	return
-
-/turf/unsimulated/mineral/uranium
-	name = "Uranium deposit"
-	icon_state = "rock_Uranium"
-	mineralName = "Uranium"
-	mineralAmt = 5
-	spreadChance = 10
-	spread = 1
+/turf/unsimulated/mineral/ex_act(severity)
+	switch(severity)
+		if(3.0)
+			return
+		if(2.0)
+			if (prob(70))
+				mined_ore = 1 //some of the stuff gets blown up
+				GetDrilled()
+		if(1.0)
+			mined_ore = 2 //some of the stuff gets blown up
+			GetDrilled()
 
 
+/turf/unsimulated/mineral/Bumped(AM)
+	. = ..()
+	if(istype(AM,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = AM
+		if((istype(H.l_hand,/obj/item/weapon/pickaxe)) && (!H.hand))
+			attackby(H.l_hand,H)
+		else if((istype(H.r_hand,/obj/item/weapon/pickaxe)) && H.hand)
+			attackby(H.r_hand,H)
 
-/turf/unsimulated/mineral/iron
-	name = "Iron deposit"
-	icon_state = "rock_Iron"
-	mineralName = "Iron"
-	mineralAmt = 5
-	spreadChance = 25
-	spread = 1
+	else if(istype(AM,/mob/living/silicon/robot))
+		var/mob/living/silicon/robot/R = AM
+		if(istype(R.module_active,/obj/item/weapon/pickaxe))
+			attackby(R.module_active,R)
 
+	else if(istype(AM,/obj/mecha))
+		var/obj/mecha/M = AM
+		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/tool/drill))
+			M.selected.action(src)
 
-/turf/unsimulated/mineral/diamond
-	name = "Diamond deposit"
-	icon_state = "rock_Diamond"
-	mineralName = "Diamond"
-	mineralAmt = 5
-	spreadChance = 10
-	spread = 1
+/turf/unsimulated/mineral/proc/MineralSpread()
+	if(mineral && mineral.spread)
+		for(var/trydir in cardinal)
+			if(prob(mineral.spread_chance))
+				var/turf/unsimulated/mineral/random/target_turf = get_step(src, trydir)
+				if(istype(target_turf) && !target_turf.mineral)
+					target_turf.mineral = mineral
+					target_turf.UpdateMineral()
+					target_turf.MineralSpread()
 
-
-/turf/unsimulated/mineral/gold
-	name = "Gold deposit"
-	icon_state = "rock_Gold"
-	mineralName = "Gold"
-	mineralAmt = 5
-	spreadChance = 10
-	spread = 1
-
-
-/turf/unsimulated/mineral/silver
-	name = "Silver deposit"
-	icon_state = "rock_Silver"
-	mineralName = "Silver"
-	mineralAmt = 5
-	spreadChance = 10
-	spread = 1
-
-
-/turf/unsimulated/mineral/plasma
-	name = "Plasma deposit"
-	icon_state = "rock_Plasma"
-	mineralName = "Plasma"
-	mineralAmt = 5
-	spreadChance = 25
-	spread = 1
-
-
-/turf/unsimulated/mineral/clown
-	name = "Bananium deposit"
-	icon_state = "rock_Clown"
-	mineralName = "Clown"
-	mineralAmt = 3
-	spreadChance = 0
-	spread = 0
-
-
-/turf/unsimulated/mineral/phazon
-	name = "Phazite deposit"
-	icon_state = "rock_Phazon"
-	mineralName = "Phazite"
-	mineralAmt = 1
-	spreadChance = 0
-	spread = 0
-
-/*
-commented out in r5061, I left it because of the shroom thingies
-
-/turf/unsimulated/mineral/ReplaceWithFloor()
-	if(!icon_old) icon_old = icon_state
-	var/turf/unsimulated/floor/asteroid/W
-	var/old_dir = dir
-
-	for(var/direction in cardinal)
-		for(var/obj/effect/glowshroom/shroom in get_step(src,direction))
-			if(!shroom.floor) //shrooms drop to the floor
-				shroom.floor = 1
-				shroom.icon_state = "glowshroomf"
-				shroom.pixel_x = 0
-				shroom.pixel_y = 0
-
-	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
-	W = new /turf/unsimulated/floor/asteroid(src)
-	W.lighting_lumcount += old_lumcount
-	if(old_lumcount != W.lighting_lumcount)
-		W.lighting_changed = 1
-		lighting_controller.changed_turfs += W
-
-	W.dir = old_dir
-
-	W.fullUpdateMineralOverlays()
-	W.levelupdate()
-	return W
-*/
+/turf/unsimulated/mineral/proc/UpdateMineral()
+	if(!mineral)
+		name = "\improper Rock"
+		icon_state = "rock"
+		return
+	name = "\improper [mineral.display_name] deposit"
+	icon_state = "rock_[mineral.name]"
 
 /turf/unsimulated/mineral/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
@@ -316,7 +189,7 @@ commented out in r5061, I left it because of the shroom thingies
 		return
 
 	if (istype(W, /obj/item/device/core_sampler))
-		src.geological_data.UpdateNearbyArtifactInfo(src)
+		geologic_data.UpdateNearbyArtifactInfo(src)
 		var/obj/item/device/core_sampler/C = W
 		C.sample_item(src, user)
 		return
@@ -330,23 +203,23 @@ commented out in r5061, I left it because of the shroom thingies
 		var/obj/item/device/measuring_tape/P = W
 		user.visible_message("\blue[user] extends [P] towards [src].","\blue You extend [P] towards [src].")
 		if(do_after(user,25))
-			user << "\blue \icon[P] [src] has been excavated to a depth of [2*src.excavation_level]cm."
+			user << "\blue \icon[P] [src] has been excavated to a depth of [2*excavation_level]cm."
 		return
 
 	if (istype(W, /obj/item/weapon/pickaxe))
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
-/*
-	if (istype(W, /obj/item/weapon/pickaxe/radius))
-		var/turf/T = user.loc
-		if (!( istype(T, /turf) ))
-			return
-*/
-//Watch your tabbing, microwave. --NEO
+	/*
+		if (istype(W, /obj/item/weapon/pickaxe/radius))
+			var/turf/T = user.loc
+			if (!( istype(T, /turf) ))
+				return
+	*/
+	//Watch your tabbing, microwave. --NEO
 
 		var/obj/item/weapon/pickaxe/P = W
-		if(last_act+P.digspeed > world.time)//prevents message spam
+		if(last_act + P.digspeed > world.time)//prevents message spam
 			return
 		last_act = world.time
 
@@ -354,83 +227,78 @@ commented out in r5061, I left it because of the shroom thingies
 
 		//handle any archaeological finds we might uncover
 		var/fail_message
-		if(src.finds.len)
-			var/datum/find/F = src.finds[1]
-			if(src.excavation_level + P.excavation_amount > F.excavation_required)
-				//Chance to destroy / extract any finds here
+		if(finds && finds.len)
+			var/datum/find/F = finds[1]
+			if(excavation_level + P.excavation_amount > F.excavation_required)
+
 				fail_message = ", <b>[pick("there is a crunching noise","[W] collides with some different rock","part of the rock face crumbles away","something breaks under [W]")]</b>"
 
 		user << "\red You start [P.drill_verb][fail_message ? fail_message : ""]."
 
 		if(fail_message && prob(90))
 			if(prob(25))
-				excavate_find(5, src.finds[1])
+				excavate_find(5, finds[1])
 			else if(prob(50))
-				src.finds.Remove(src.finds[1])
+				finds.Remove(finds[1])
 				if(prob(50))
 					artifact_debris()
 
 		if(do_after(user,P.digspeed))
 			user << "\blue You finish [P.drill_verb] the rock."
 
-			if(finds.len)
-				var/datum/find/F = src.finds[1]
-				if(round(src.excavation_level + P.excavation_amount) == F.excavation_required)
-					//Chance to extract any items here perfectly, otherwise just pull them out along with the rock surrounding them
-					if(src.excavation_level + P.excavation_amount > F.excavation_required)
-						//if you can get slightly over, perfect extraction
+			if(finds && finds.len)
+				var/datum/find/F = finds[1]
+				if(round(excavation_level + P.excavation_amount) == F.excavation_required)
+
+					if(excavation_level + P.excavation_amount > F.excavation_required)
+
 						excavate_find(100, F)
 					else
 						excavate_find(80, F)
 
-				else if(src.excavation_level + P.excavation_amount > F.excavation_required - F.clearance_range)
-					//just pull the surrounding rock out
+				else if(excavation_level + P.excavation_amount > F.excavation_required - F.clearance_range)
+
 					excavate_find(0, F)
 
-			if( src.excavation_level + P.excavation_amount >= 100 || (!finds.len && !excavation_minerals.len) )
-				//if players have been excavating this turf, have a chance to leave some rocky debris behind
-				var/boulder_prob = 0
+			if( excavation_level + P.excavation_amount >= 100 )
+
 				var/obj/structure/boulder/B
-
-				if(src.excavation_level > 15)
-					boulder_prob = 10
 				if(artifact_find)
-					boulder_prob += 25
-					if(src.excavation_level >= 100)
-						boulder_prob += 40
-					else if(src.excavation_level > 95)
-						boulder_prob += 25
-					else if(src.excavation_level > 90)
-						boulder_prob += 10
-				if(prob(boulder_prob))
+					if( excavation_level > 0 || prob(15) )
+
+						B = new(src)
+						if(artifact_find)
+							B.artifact_find = artifact_find
+					else
+						artifact_debris(1)
+				else if(prob(15))
+
 					B = new(src)
-					if(artifact_find)
-						B.artifact_find = artifact_find
-				else if(artifact_find && src.excavation_level + P.excavation_amount >= 100)
-					artifact_debris(1)
 
-				gets_drilled(B ? 0 : 1)
+				if(B)
+					GetDrilled(0)
+				else
+					GetDrilled(1)
 				return
-			else
-				src.excavation_level += P.excavation_amount
 
-				//archaeo overlays
-				if(!archaeo_overlay && finds.len)
-					var/datum/find/F = src.finds[1]
-					if(F.excavation_required <= src.excavation_level + F.view_range)
-						archaeo_overlay = "overlay_archaeo[rand(1,3)]"
-						overlays += archaeo_overlay
+			excavation_level += P.excavation_amount
+
+			if(!archaeo_overlay && finds && finds.len)
+				var/datum/find/F = finds[1]
+				if(F.excavation_required <= excavation_level + F.view_range)
+					archaeo_overlay = "overlay_archaeo[rand(1,3)]"
+					overlays += archaeo_overlay
 
 			//there's got to be a better way to do this
 			var/update_excav_overlay = 0
-			if(src.excavation_level >= 75)
-				if(src.excavation_level - P.excavation_amount < 75)
+			if(excavation_level >= 75)
+				if(excavation_level - P.excavation_amount < 75)
 					update_excav_overlay = 1
-			else if(src.excavation_level >= 50)
-				if(src.excavation_level - P.excavation_amount < 50)
+			else if(excavation_level >= 50)
+				if(excavation_level - P.excavation_amount < 50)
 					update_excav_overlay = 1
-			else if(src.excavation_level >= 25)
-				if(src.excavation_level - P.excavation_amount < 25)
+			else if(excavation_level >= 25)
+				if(excavation_level - P.excavation_amount < 25)
 					update_excav_overlay = 1
 
 			//update overlays displaying excavation level
@@ -439,54 +307,40 @@ commented out in r5061, I left it because of the shroom thingies
 				excav_overlay = "overlay_excv[excav_quadrant]_[rand(1,3)]"
 				overlays += excav_overlay
 
+			/*
 			//extract pesky minerals while we're excavating
-			while(excavation_minerals.len && src.excavation_level > excavation_minerals[excavation_minerals.len])
-				drop_mineral()
+			while(excavation_minerals.len && excavation_level > excavation_minerals[excavation_minerals.len])
+				DropMineral()
 				pop(excavation_minerals)
 				mineralAmt--
+			*/
 
 			//drop some rocks
 			next_rock += P.excavation_amount * 10
 			while(next_rock > 100)
 				next_rock -= 100
 				var/obj/item/weapon/ore/O = new(src)
-				src.geological_data.UpdateNearbyArtifactInfo(src)
-				O.geological_data = src.geological_data
+				geologic_data.UpdateNearbyArtifactInfo(src)
+				O.geologic_data = geologic_data
 
 	else
 		return attack_hand(user)
-	return
 
-/turf/unsimulated/mineral/proc/drop_mineral()
-	var/obj/item/weapon/ore/O
-	if (src.mineralName == "Uranium")
-		O = new /obj/item/weapon/ore/uranium(src)
-	if (src.mineralName == "Iron")
-		O = new /obj/item/weapon/ore/iron(src)
-	if (src.mineralName == "Gold")
-		O = new /obj/item/weapon/ore/gold(src)
-	if (src.mineralName == "Silver")
-		O = new /obj/item/weapon/ore/silver(src)
-	if (src.mineralName == "Plasma")
-		O = new /obj/item/weapon/ore/plasma(src)
-	if (src.mineralName == "Diamond")
-		O = new /obj/item/weapon/ore/diamond(src)
-	if (src.mineralName == "Clown")
-		O = new /obj/item/weapon/ore/clown(src)
-	if (src.mineralName == "Phazite")
-		O = new /obj/item/weapon/ore/phazon(src)
-	if(O)
-		src.geological_data.UpdateNearbyArtifactInfo(src)
-		O.geological_data = src.geological_data
+
+/turf/unsimulated/mineral/proc/DropMineral()
+	if(!mineral)
+		return
+
+	var/obj/item/weapon/ore/O = new mineral.ore (src)
+	if(istype(O))
+		geologic_data.UpdateNearbyArtifactInfo(src)
+		O.geologic_data = geologic_data
 	return O
 
-/turf/unsimulated/mineral/proc/gets_drilled(var/artifact_fail = 0)
-	//var/destroyed = 0 //used for breaking strange rocks
-	if ((src.mineralName != "") && (src.mineralAmt > 0) && (src.mineralAmt < 11))
-
-		//if the turf has already been excavated, some of it's ore has been removed
-		for (var/i=0;i<mineralAmt;i++)
-			drop_mineral()
+/turf/unsimulated/mineral/proc/GetDrilled(var/artifact_fail = 0)
+	if (mineral && mineral.result_amount)
+		for (var/i = 1 to mineral.result_amount - mined_ore)
+			DropMineral()
 
 	//destroyed artifacts have weird, unpleasant effects
 	//make sure to destroy them before changing the turf though
@@ -509,18 +363,28 @@ commented out in r5061, I left it because of the shroom thingies
 	var/turf/unsimulated/floor/asteroid/N = ChangeTurf(/turf/unsimulated/floor/asteroid)
 	N.fullUpdateMineralOverlays()
 
-	return
+	if(rand(1,500) == 1)
+		visible_message("<span class='notice'>An old dusty crate was buried within!</span>")
+		DropAbandonedCrate()
+
+/turf/unsimulated/mineral/proc/DropAbandonedCrate()
+	// 50% chance of being empty.
+	if(prob(50))
+		new /obj/structure/closet/crate/secure/loot(src)
+	else
+		var/crate_type = pick(valid_abandoned_crate_types)
+		new crate_type(src)
 
 /turf/unsimulated/mineral/proc/excavate_find(var/prob_clean = 0, var/datum/find/F)
 	//with skill and luck, players can cleanly extract finds
 	//otherwise, they come out inside a chunk of rock
 	var/obj/item/weapon/X
 	if(prob_clean)
-		X = new/obj/item/weapon/archaeological_find(src, new_item_type = F.find_type)
+		X = new /obj/item/weapon/archaeological_find(src, new_item_type = F.find_type)
 	else
-		X = new/obj/item/weapon/ore/strangerock(src, inside_item_type = F.find_type)
-		src.geological_data.UpdateNearbyArtifactInfo(src)
-		X:geological_data = src.geological_data
+		X = new /obj/item/weapon/ore/strangerock(src, inside_item_type = F.find_type)
+		geologic_data.UpdateNearbyArtifactInfo(src)
+		X:geologic_data = geologic_data
 
 	//some find types delete the /obj/item/weapon/archaeological_find and replace it with something else, this handles when that happens
 	//yuck
@@ -535,97 +399,44 @@ commented out in r5061, I left it because of the shroom thingies
 		var/obj/effect/suspension_field/S = locate() in src
 		if(!S || S.field_type != get_responsive_reagent(F.find_type))
 			if(X)
-				src.visible_message("\red<b>[pick("[display_name] crumbles away into dust","[display_name] breaks apart")].</b>")
+				visible_message("\red<b>[pick("[display_name] crumbles away into dust","[display_name] breaks apart")].</b>")
 				del(X)
 
-	src.finds.Remove(F)
+	finds.Remove(F)
 
 /turf/unsimulated/mineral/proc/artifact_debris(var/severity = 0)
-	//cael's patented random limited drop componentized loot system!
-	severity = max(min(severity,1),0)
-	var/materials = 0
-	var/list/viable_materials = list(1,2,4,8,16,32,64,128,256)
+	for(var/j in 1 to rand(1, 3 + max(min(severity, 1), 0) * 2))
+		switch(rand(1,7))
+			if(1)
+				var/obj/item/stack/rods/R = new(src)
+				R.amount = rand(5,25)
 
-	var/num_materials = rand(1,3 + severity*2)
-	for(var/i=0, i<num_materials, i++)
-		var/chosen = pick(viable_materials)
-		materials |= chosen
-		viable_materials.Remove(chosen)
+			if(2)
+				var/obj/item/stack/tile/R = new(src)
+				R.amount = rand(1,5)
 
-	if(materials & 1)
-		var/obj/item/stack/rods/R = new(src)
-		R.amount = rand(5,25)
+			if(3)
+				var/obj/item/stack/sheet/metal/R = new(src)
+				R.amount = rand(5,25)
 
-	if(materials & 2)
-		var/obj/item/stack/tile/R = new(src)
-		R.amount = rand(1,5)
+			if(4)
+				var/obj/item/stack/sheet/plasteel/R = new(src)
+				R.amount = rand(5,25)
 
-	if(materials & 4)
-		var/obj/item/stack/sheet/metal/R = new(src)
-		R.amount = rand(5,25)
+			if(5)
+				var/quantity = rand(1,3)
+				for(var/i=0, i<quantity, i++)
+					new /obj/item/weapon/shard(src)
 
-	if(materials & 8)
-		var/obj/item/stack/sheet/plasteel/R = new(src)
-		R.amount = rand(5,25)
+			if(6)
+				var/quantity = rand(1,3)
+				for(var/i=0, i<quantity, i++)
+					new /obj/item/weapon/shard/plasma(src)
 
-	if(materials & 16)
-		var/quantity = rand(1,3)
-		for(var/i=0, i<quantity, i++)
-			new /obj/item/weapon/shard(src)
+			if(7)
+				var/obj/item/stack/sheet/mineral/uranium/R = new(src)
+				R.amount = rand(5,25)
 
-	if(materials & 32)
-		var/quantity = rand(1,3)
-		for(var/i=0, i<quantity, i++)
-			new /obj/item/weapon/shard/plasma(src)
-
-	if(materials & 64)
-		var/obj/item/stack/sheet/mineral/uranium/R = new(src)
-		R.amount = rand(5,25)
-
-	if(materials & 128)
-		var/obj/item/stack/sheet/mineral/mythril/R = new(src)
-		R.amount = rand(1,5)
-
-	if(materials & 256)
-		var/obj/item/stack/sheet/mineral/adamantine/R = new(src)
-		R.amount = rand(1,5)
-
-/*
-/turf/unsimulated/mineral/proc/setRandomMinerals()
-	var/s = pickweight(list("uranium" = 5, "iron" = 50, "gold" = 5, "silver" = 5, "plasma" = 50, "diamond" = 1))
-	if (s)
-		mineralName = s
-
-	var/N = text2path("/turf/unsimulated/mineral/[s]")
-	if (N)
-		var/turf/unsimulated/mineral/M = new N
-		src = M
-		if (src.mineralName)
-			mineralAmt = 5
-	return*/
-
-/turf/unsimulated/mineral/Bumped(AM as mob|obj)
-	..()
-	if(istype(AM,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = AM
-		if((istype(H.l_hand,/obj/item/weapon/pickaxe)) && (!H.hand))
-			src.attackby(H.l_hand,H)
-		else if((istype(H.r_hand,/obj/item/weapon/pickaxe)) && H.hand)
-			src.attackby(H.r_hand,H)
-		return
-	else if(istype(AM,/mob/living/silicon/robot))
-		var/mob/living/silicon/robot/R = AM
-		if(istype(R.module_active,/obj/item/weapon/pickaxe))
-			src.attackby(R.module_active,R)
-			return
-/*	else if(istype(AM,/obj/mecha))
-		var/obj/mecha/M = AM
-		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/tool/drill))
-			src.attackby(M.selected,M)
-			return*/
-//Aparantly mechs are just TOO COOL to call Bump(), so fuck em (for now)
-	else
-		return
 
 /**********************Asteroid**************************/
 
@@ -662,9 +473,9 @@ commented out in r5061, I left it because of the shroom thingies
 			return
 		if(2.0)
 			if (prob(70))
-				src.gets_dug()
+				gets_dug()
 		if(1.0)
-			src.gets_dug()
+			gets_dug()
 	return
 
 /turf/unsimulated/floor/asteroid/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -726,7 +537,7 @@ commented out in r5061, I left it because of the shroom thingies
 	if(istype(W,/obj/item/weapon/storage/bag/ore))
 		var/obj/item/weapon/storage/bag/ore/S = W
 		if(S.collection_mode)
-			for(var/obj/item/weapon/ore/O in src.contents)
+			for(var/obj/item/weapon/ore/O in contents)
 				O.attackby(W,user)
 				return
 
@@ -794,10 +605,116 @@ commented out in r5061, I left it because of the shroom thingies
 		var/mob/living/silicon/robot/R = M
 		if(istype(R.module, /obj/item/weapon/robot_module/miner))
 			if(istype(R.module_state_1,/obj/item/weapon/storage/bag/ore))
-				src.attackby(R.module_state_1,R)
+				attackby(R.module_state_1,R)
 			else if(istype(R.module_state_2,/obj/item/weapon/storage/bag/ore))
-				src.attackby(R.module_state_2,R)
+				attackby(R.module_state_2,R)
 			else if(istype(R.module_state_3,/obj/item/weapon/storage/bag/ore))
-				src.attackby(R.module_state_3,R)
+				attackby(R.module_state_3,R)
 			else
 				return
+
+/turf/unsimulated/mineral/random
+	name = "Mineral deposit"
+	var/mineralSpawnChanceList = list("Uranium" = 5, "Iron" = 50, "Diamond" = 1, "Gold" = 5, "Silver" = 5, "Plasma" = 25)//Currently, Adamantine won't spawn as it has no uses. -Durandan
+	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
+
+/turf/unsimulated/mineral/random/New()
+	if (prob(mineralChance) && !mineral)
+		var/mineral_name = pickweight(mineralSpawnChanceList) //temp mineral name
+
+		if(!name_to_mineral)
+			SetupMinerals()
+
+		if (mineral_name && mineral_name in name_to_mineral)
+			mineral = name_to_mineral[mineral_name]
+			UpdateMineral()
+
+	. = ..()
+
+/turf/unsimulated/mineral/random/high_chance
+	mineralChance = 25
+	mineralSpawnChanceList = list("Uranium" = 10, "Iron" = 30, "Diamond" = 2, "Gold" = 10, "Silver" = 10, "Plasma" = 25)
+
+/turf/unsimulated/mineral/random/high_chance_clown
+	mineralChance = 40
+	mineralSpawnChanceList = list("Uranium" = 10, "Iron" = 10, "Diamond" = 2, "Gold" = 5, "Silver" = 5, "Plasma" = 25, "Clown"=15, "Phazite"=10)
+
+/turf/unsimulated/mineral/random/Del()
+	return
+
+/turf/unsimulated/mineral/uranium
+	name = "Uranium deposit"
+	icon_state = "rock_Uranium"
+	mineral = new /mineral/uranium
+
+
+/turf/unsimulated/mineral/iron
+	name = "Iron deposit"
+	icon_state = "rock_Iron"
+	mineral = new /mineral/iron
+
+
+/turf/unsimulated/mineral/diamond
+	name = "Diamond deposit"
+	icon_state = "rock_Diamond"
+	mineral = new /mineral/diamond
+
+
+/turf/unsimulated/mineral/gold
+	name = "Gold deposit"
+	icon_state = "rock_Gold"
+	mineral = new /mineral/gold
+
+
+/turf/unsimulated/mineral/silver
+	name = "Silver deposit"
+	icon_state = "rock_Silver"
+	mineral = new /mineral/silver
+
+
+/turf/unsimulated/mineral/plasma
+	name = "Plasma deposit"
+	icon_state = "rock_Plasma"
+	mineral = new /mineral/plasma
+
+
+/turf/unsimulated/mineral/clown
+	name = "Bananium deposit"
+	icon_state = "rock_Clown"
+	mineral = new /mineral/clown
+
+
+/turf/unsimulated/mineral/phazon
+	name = "Phazite deposit"
+	icon_state = "rock_Phazon"
+	mineral = new /mineral/phazon
+
+/*
+commented out in r5061, I left it because of the shroom thingies
+
+/turf/unsimulated/mineral/ReplaceWithFloor()
+	if(!icon_old) icon_old = icon_state
+	var/turf/unsimulated/floor/asteroid/W
+	var/old_dir = dir
+
+	for(var/direction in cardinal)
+		for(var/obj/effect/glowshroom/shroom in get_step(src,direction))
+			if(!shroom.floor) //shrooms drop to the floor
+				shroom.floor = 1
+				shroom.icon_state = "glowshroomf"
+				shroom.pixel_x = 0
+				shroom.pixel_y = 0
+
+	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
+	W = new /turf/unsimulated/floor/asteroid(src)
+	W.lighting_lumcount += old_lumcount
+	if(old_lumcount != W.lighting_lumcount)
+		W.lighting_changed = 1
+		lighting_controller.changed_turfs += W
+
+	W.dir = old_dir
+
+	W.fullUpdateMineralOverlays()
+	W.levelupdate()
+	return W
+*/

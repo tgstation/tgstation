@@ -1,3 +1,8 @@
+var/global/list/valid_abandoned_crate_types=list()
+
+/proc/SetupAbandonedCrates()
+	valid_abandoned_crate_types = typesof(/obj/structure/closet/crate/secure/loot)-/obj/structure/closet/crate/secure/loot
+
 /obj/structure/closet/crate/secure/loot
 	name = "abandoned crate"
 	desc = "What could be inside?"
@@ -14,56 +19,6 @@
 /obj/structure/closet/crate/secure/loot/New()
 	..()
 	code = rand(min,max)
-	var/loot = rand(1,30)
-	switch(loot)
-		if(1)
-			new/obj/item/weapon/reagent_containers/food/drinks/bottle/rum(src)
-			new/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus(src)
-			new/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey(src)
-			new/obj/item/weapon/lighter/zippo(src)
-		if(2)
-			new/obj/item/weapon/pickaxe/drill(src)
-			new/obj/item/device/taperecorder(src)
-			new/obj/item/clothing/suit/space(src)
-			new/obj/item/clothing/head/helmet/space(src)
-		if(3)
-			return
-		if(4)
-			new/obj/item/weapon/reagent_containers/glass/beaker/bluespace(src)
-		if(5 to 6)
-			for(var/i = 0, i < 10, i++)
-				new/obj/item/weapon/ore/diamond(src)
-		if(7)
-			return
-		if(8)
-			return
-		if(9)
-			for(var/i = 0, i < 3, i++)
-				new/obj/machinery/hydroponics(src)
-		if(10)
-			for(var/i = 0, i < 3, i++)
-				new/obj/item/weapon/reagent_containers/glass/beaker/noreact(src)
-		if(11 to 12)
-			for(var/i = 0, i < 9, i++)
-				new/obj/item/bluespace_crystal(src)
-		if(13)
-			new/obj/item/weapon/melee/classic_baton(src)
-		if(14)
-			return
-		if(15)
-			new/obj/item/clothing/under/chameleon(src)
-			for(var/i = 0, i < 7, i++)
-				new/obj/item/clothing/tie/horrible(src)
-		if(16)
-			new/obj/item/clothing/under/shorts(src)
-			new/obj/item/clothing/under/shorts/red(src)
-			new/obj/item/clothing/under/shorts/blue(src)
-		//Dummy crates start here.
-		if(17 to 29)
-			return
-		//Dummy crates end here.
-		if(30)
-			new/obj/item/weapon/melee/baton(src)
 
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user as mob)
 	if(locked)

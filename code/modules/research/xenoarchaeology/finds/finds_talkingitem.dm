@@ -30,7 +30,7 @@
 			/*var/l = lentext(msg)
 			if(findtext(msg," ",l,l+1)==0)
 				msg+=" "*/
-			seperate = stringsplit(msg, " ")
+			seperate = text2list(msg, " ")
 
 		for(var/Xa = 1,Xa<seperate.len,Xa++)
 			var/next = Xa + 1
@@ -65,7 +65,7 @@
 	if(!word)
 		text = "[pick(heard_words)]"
 	else
-		text = pick(stringsplit(word, " "))
+		text = pick(text2list(word, " "))
 	if(lentext(text)==1)
 		text=uppertext(text)
 	else

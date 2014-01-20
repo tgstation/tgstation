@@ -114,6 +114,11 @@ var/list/valid_secondary_effect_types = list(\
 #define TRIGGER_NITRO 12
 
 /obj/machinery/artifact/process()
+
+	var/turf/L = loc
+	if(isnull(L) || !istype(L)) 	// We're inside a container or on null turf, either way stop processing effects
+		return
+
 	if(my_effect)
 		my_effect.process()
 	if(secondary_effect)

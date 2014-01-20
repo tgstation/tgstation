@@ -143,6 +143,8 @@ proc/move_mining_shuttle()
 		else
 			usr << "\blue Shuttle is already moving."
 
+	updateUsrDialog()
+
 /obj/machinery/computer/mining_shuttle/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if (istype(W, /obj/item/weapon/card/emag))

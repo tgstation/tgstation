@@ -1510,6 +1510,10 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Derelict Singularity Engine"
 	icon_state = "engine"
 
+/area/derelict/research
+	name = "\improper Derelict Research"
+	icon_state = "toxmisc"
+
 //Construction
 
 /area/construction
