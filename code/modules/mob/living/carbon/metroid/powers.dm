@@ -208,7 +208,7 @@
 					M.colour = colour
 				else
 					M.colour = slime_mutation[rand(1,4)]
-				M.nutrition = new_nutrition
+				if(ckey)	M.nutrition = new_nutrition //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
 				M.powerlevel = new_powerlevel
 				if(i != 1) step_away(M,src)
 				babies += M
