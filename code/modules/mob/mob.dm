@@ -411,6 +411,19 @@
 /mob/proc/equip_to_slot_or_drop(obj/item/W as obj, slot)
 	return equip_to_slot_if_possible(W, slot, EQUIP_FAILACTION_DROP, 1, 0)
 
+// Convinience proc.  Collects crap that fails to equip either onto the mob's back, or drops it.
+// Used in job equipping so shit doesn't pile up at the start loc.
+/mob/living/carbon/human/proc/equip_or_collect(var/obj/item/W, var/slot)
+	if(!equip_to_slot_or_drop(W, slot))
+		// Do I have a bag?
+		var/obj/item/weapon/storage/bag/plasticbag/B = is_in_hands(/obj/item/weapon/storage/bag/plasticbag)
+		if(!B)
+			// Gimme one.
+			B=new(null) // Null in case of failed equip.
+			if(!put_in_hands(B,slot_back))
+				return // Fuck it
+		B.handle_item_insertion(W,1)
+
 //The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
 var/list/slot_equipment_priority = list( \
 		slot_back,\
@@ -559,6 +572,8 @@ var/list/slot_equipment_priority = list( \
 				return 1
 			if(slot_w_uniform)
 				if( !(slot_flags & SLOT_ICLOTHING) )
+					return 0
+				if((FAT in H.mutations) && !(flags & ONESIZEFITSALL))
 					return 0
 				if(H.w_uniform)
 					if(H.w_uniform.canremove)

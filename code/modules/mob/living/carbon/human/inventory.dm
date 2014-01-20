@@ -30,6 +30,13 @@
 /mob/living/carbon/human/proc/is_on_ears(var/typepath)
 	return istype(l_ear,typepath) || istype(r_ear,typepath)
 
+/mob/living/carbon/human/proc/is_in_hands(var/typepath)
+	if(istype(l_hand,typepath))
+		return l_hand
+	if(istype(r_hand,typepath))
+		return r_hand
+	return 0
+
 // Return the item currently in the slot ID
 /mob/living/carbon/human/get_item_by_slot(slot_id)
 	switch(slot_id)
