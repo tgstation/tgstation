@@ -21,6 +21,8 @@
 	if(!(mat_id in storage))
 		warning("addAmount(): Unknown material [mat_id]!")
 		return
+	// I HATE BYOND
+	// storage[mat_id].stored++
 	var/datum/material/mat=storage[mat_id]
 	mat.stored += amount
 	storage[mat_id]=mat
@@ -31,7 +33,7 @@
 		return
 	addAmount(mat_id,-amount)
 
-/datum/materials/proc/getAmount(var/mat_id,var/amount)
+/datum/materials/proc/getAmount(var/mat_id)
 	if(!(mat_id in storage))
 		warning("getAmount(): Unknown material [mat_id]!")
 		return 0
