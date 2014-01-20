@@ -165,7 +165,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		user << "\The [name] must be linked to an R&D console first!"
 		return 1
 	if (O.is_open_container())
-		return 1
+		return 0
 	if (!(O.type in allowed_materials))
 		user << "\red You cannot insert this item into the [name]!"
 		return 1
