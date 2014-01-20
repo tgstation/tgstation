@@ -118,8 +118,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 		overlays_standing[cache_index] = null
 
 //UPDATES OVERLAYS FROM OVERLAYS_LYING/OVERLAYS_STANDING
-//this proc is messy as I was forced to include some old laggy cloaking code to it so that I don't break cloakers
-//I'll work on removing that stuff by rewriting some of the cloaking stuff at a later date.
+
 /mob/living/carbon/human/update_icons()
 	lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
 	update_hud()		//TODO: remove the need for this
@@ -130,25 +129,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 		for(var/thing in overlays_lying)
 			if(thing)	overlays += thing
 	else
-		var/stealth = 0
-		if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja) && wear_suit:s_active)
-			stealth = 1
-		else
-			//cloaking devices. //TODO: get rid of this :<
-			for(var/obj/item/weapon/cloaking_device/S in list(l_hand,r_hand,belt,l_store,r_store))
-				if(S.active)
-					stealth = 1
-					break
-		if(stealth)
-			icon_state = "body_cloaked"
-			if(overlays_standing[L_HAND_LAYER])
-				overlays += overlays_standing[L_HAND_LAYER]
-			if(overlays_standing[R_HAND_LAYER])
-				overlays += overlays_standing[R_HAND_LAYER]
-		else
-			icon_state = "[base_icon_state]_s"
-			for(var/thing in overlays_standing)
-				if(thing)	overlays += thing
+		icon_state = "[base_icon_state]_s"
+		for(var/thing in overlays_standing)
+			if(thing)	overlays += thing
 
 
 
@@ -192,10 +175,16 @@ Please contact me on #coderbus IRC. ~Carnie x
 		if(S)
 			var/icon/facial_s = icon("icon"=S.icon, "icon_state"="[S.icon_state]_s")
 			var/icon/facial_l = icon("icon"=S.icon, "icon_state"="[S.icon_state]_l")
-			facial_s.Blend("#[facial_hair_color]", ICON_ADD)
-			facial_l.Blend("#[facial_hair_color]", ICON_ADD)
-			standing	+= image("icon"=facial_s, "layer"=-HAIR_LAYER)
-			lying		+= image("icon"=facial_l, "layer"=-HAIR_LAYER)
+
+			var/image/img_facial_s = image("icon"=facial_s, "layer"=-HAIR_LAYER)
+			var/image/img_facial_l = image("icon"=facial_l, "layer"=-HAIR_LAYER)
+
+			var/new_color = "#" + facial_hair_color
+			img_facial_l.color = new_color
+			img_facial_s.color = new_color
+
+			standing	+= img_facial_s
+			lying		+= img_facial_l
 
 	//Applies the debrained overlay if there is no brain
 	if(!getorgan(/obj/item/organ/brain))
@@ -206,10 +195,16 @@ Please contact me on #coderbus IRC. ~Carnie x
 		if(S)
 			var/icon/hair_s = icon("icon"=S.icon, "icon_state"="[S.icon_state]_s")
 			var/icon/hair_l = icon("icon"=S.icon, "icon_state"="[S.icon_state]_l")
-			hair_s.Blend("#[hair_color]", ICON_ADD)
-			hair_l.Blend("#[hair_color]", ICON_ADD)
-			standing	+= image("icon"=hair_s, "layer"=-HAIR_LAYER)
-			lying		+= image("icon"=hair_l, "layer"=-HAIR_LAYER)
+
+			var/image/img_hair_s = image("icon"=hair_s, "layer"=-HAIR_LAYER)
+			var/image/img_hair_l = image("icon"=hair_l, "layer"=-HAIR_LAYER)
+
+			var/new_color = "#" + hair_color
+			img_hair_s.color = new_color
+			img_hair_l.color = new_color
+
+			standing	+= img_hair_s
+			lying		+= img_hair_l
 
 	if(lying.len)
 		overlays_lying[HAIR_LAYER]		= lying
@@ -266,10 +261,17 @@ Please contact me on #coderbus IRC. ~Carnie x
 	if(!dna || dna.mutantrace != "skeleton")
 		var/icon/eyes_s = icon('icons/mob/human_face.dmi', "eyes_s")
 		var/icon/eyes_l = icon('icons/mob/human_face.dmi', "eyes_l")
-		eyes_s.Blend("#[eye_color]", ICON_ADD)
-		eyes_l.Blend("#[eye_color]", ICON_ADD)
-		standing	+= image("icon"=eyes_s, "layer"=-BODY_LAYER)
-		lying		+= image("icon"=eyes_l, "layer"=-BODY_LAYER)
+
+		var/image/img_eyes_s = image("icon"=eyes_s, "layer"=-BODY_LAYER)
+		var/image/img_eyes_l = image("icon"=eyes_l, "layer"=-BODY_LAYER)
+
+		var/new_color = "#" + eye_color
+
+		img_eyes_s.color = new_color
+		img_eyes_l.color = new_color
+
+		standing	+= img_eyes_s
+		lying		+= img_eyes_l
 
 	//Underwear
 	if(underwear)
@@ -522,15 +524,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 			head.screen_loc = ui_head		//TODO
 			client.screen += head
 
-		var/image/lying
-		var/image/standing
-		if(istype(head,/obj/item/clothing/head/kitty))
-			var/obj/item/clothing/head/kitty/K = head
-			lying		= image("icon"=K.mob2, "layer"=-HEAD_LAYER)
-			standing	= image("icon"=K.mob, "layer"=-HEAD_LAYER)
-		else
-			lying		= image("icon"='icons/mob/head.dmi', "icon_state"="[head.icon_state]2", "layer"=-HEAD_LAYER)
-			standing	= image("icon"='icons/mob/head.dmi', "icon_state"="[head.icon_state]", "layer"=-HEAD_LAYER)
+		var/image/lying = image("icon"='icons/mob/head.dmi', "icon_state"="[head.icon_state]2", "layer"=-HEAD_LAYER)
+		var/image/standing = image("icon"='icons/mob/head.dmi', "icon_state"="[head.icon_state]", "layer"=-HEAD_LAYER)
+
 		overlays_lying[HEAD_LAYER]		= lying
 		overlays_standing[HEAD_LAYER]	= standing
 
