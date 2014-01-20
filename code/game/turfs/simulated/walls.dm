@@ -102,7 +102,7 @@
 	return src.attack_hand(user)
 
 
-/turf/simulated/wall/attack_animal(mob/living/simple_animal/M as mob)
+/*/turf/simulated/wall/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.wall_smash)
 		if (istype(src, /turf/simulated/wall/r_wall))
 			M << text("\blue This wall is far too strong for you to destroy.")
@@ -117,7 +117,17 @@
 				return
 
 	M << "\blue You push the wall but nothing happens!"
-	return
+	return*/
+
+/turf/simulated/wall/attack_animal(var/mob/living/simple_animal/M)
+	if(M.wall_smash)
+		if (istype(src, /turf/simulated/wall/r_wall))
+			M << text("\blue This wall is far too strong for you to destroy.")
+			return
+		else
+			M << text("\blue You smash through the wall.")
+			dismantle_wall(1)
+			return
 
 /turf/simulated/wall/attack_hand(mob/user as mob)
 	if (HULK in user.mutations)

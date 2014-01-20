@@ -16,156 +16,20 @@
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "strikes"
-	var/aggro_vision_range = 8
-	var/idle_vision_range = null
-	var/icon_aggro = null
-	var/ranged_message = "fires"
+	status_flags = 0
+	a_intent = "harm"
 	var/throw_message = "bounces off of"
 
-/mob/living/simple_animal/hostile/asteroid/New()
-	idle_vision_range = vision_range
-	..()
-
-/mob/living/simple_animal/hostile/asteroid/GiveTarget(var/new_target)
-	target = new_target
-	if(target != null)
-		Aggro()
-		stance = HOSTILE_STANCE_ATTACK
-	return
-
-/mob/living/simple_animal/hostile/asteroid/LoseTarget()
-	..()
-	LoseAggro()
-
-/mob/living/simple_animal/hostile/asteroid/LostTarget()
-	..()
-	LoseAggro()
-
-/mob/living/simple_animal/hostile/asteroid/proc/Aggro()
-	vision_range = aggro_vision_range
-	icon_state = icon_aggro
-
-/mob/living/simple_animal/hostile/asteroid/proc/LoseAggro()
-	vision_range = idle_vision_range
-	icon_state = icon_living
-
-/mob/living/simple_animal/hostile/asteroid/adjustBruteLoss(var/damage)
-	..(damage)
-	if(stance == HOSTILE_STANCE_IDLE)
-		Aggro()
-		var/new_target = FindTarget()
-		GiveTarget(new_target)
-	if(stance == HOSTILE_STANCE_ATTACK)//No more pulling a mob forever and having a second player attack it, it can switch targets now
-		if(target != null && prob(25))
-			world << "We're calling FindTarget due to being damaged"
-			var/new_target = FindTarget()
-			GiveTarget(new_target)
-
-/mob/living/simple_animal/hostile/asteroid/bullet_act(var/obj/item/projectile/P)
+/mob/living/simple_animal/hostile/asteroid/bullet_act(var/obj/item/projectile/P)//Limits the weapons available to kill them at range
 	if(P.damage < 30)
 		visible_message("<span class='danger'>The [P.name] had no effect on [src.name]!</span>")
 		return
 	..()
 
-//ALL THIS SHIT IS FOR TRACKING PEOPLE AND TARGETTING//
-
-/mob/living/simple_animal/hostile/asteroid/FindTarget()
-	var/list/Targets = list()
-	var/Target
-	world << "We're about to run FindTarget"
-	stop_automated_movement = 0
-	for(var/atom/A in ListTargets())
-		if(Found(A))//Just in case people want to override targetting IE: Mouse sees cheese
-			Target = A
-			break
-		if(CanAttack(A))//Can we attack it?
-			Targets.Add(A)
-			continue
-	world << "We're about to run PickTarget"
-	Target = PickTarget(Targets)
-	return Target //We now have a target
-
-/mob/living/simple_animal/hostile/asteroid/proc/PickTarget(var/list/Targets)
-	if(target != null)
-		world << "There IS a target in PickTarget"
-		for(var/atom/A in Targets)
-			var/target_dist = get_dist(src, target)
-			var/possible_target_distance = get_dist(src, A)
-			world << "Distance to current target [target.name] [target_dist], Distance to possible target [A.name] [possible_target_distance]"
-			if(target_dist < possible_target_distance)
-				Targets -= A
-	for(var/A in Targets)
-		world << "[A]"
-	if(!Targets.len)
-		return
-	var/chosen_target = pick(Targets)
-	world << "IIIII We chose [chosen_target]"
-	return chosen_target
-
-/mob/living/simple_animal/hostile/asteroid/CanAttack(var/atom/the_target)
-	if(see_invisible < the_target.invisibility)
-		return 0
-	if(isliving(the_target))
-		var/mob/living/L = the_target
-		if(L.stat != CONSCIOUS || L.faction == src.faction && !attack_same)
-			return 0
-		if(L in friends)
-			return 0
-		return 1
-	if(istype(the_target, /obj/mecha))
-		var/obj/mecha/M = the_target
-		if(M.occupant)
-			return 1
-	return 0
-
-//END SHIT FOR TRACKING PEOPLE AND TARGETTING//
-
-/mob/living/simple_animal/hostile/asteroid/Die()
-	LoseAggro()
-	..()
-
-/mob/living/simple_animal/hostile/asteroid/MoveToTarget()
-	stop_automated_movement = 1
-	if(!target || !CanAttack(target))
-		LoseTarget()
-	if(target in ListTargets())
-		if(get_dist(src, target) >= 2 && ranged)
-			OpenFire(target)
-		Goto(target, move_to_delay)
-		if(isturf(loc) && target.Adjacent(src))	//Attacking
-			AttackingTarget()
-		return
-	LostTarget()
-
-/mob/living/simple_animal/hostile/asteroid/OpenFire(var/the_target)
-
-	var/target = the_target
-	visible_message("\red <b>[src]</b> [ranged_message] at [target]!", 1)
-
-	var/tturf = get_turf(target)
-	if(rapid)
-		spawn(1)
-			Shoot(tturf, src.loc, src)
-			if(casingtype)
-				new casingtype(get_turf(src))
-		spawn(4)
-			Shoot(tturf, src.loc, src)
-			if(casingtype)
-				new casingtype(get_turf(src))
-		spawn(6)
-			Shoot(tturf, src.loc, src)
-			if(casingtype)
-				new casingtype(get_turf(src))
-	else
-		Shoot(tturf, src.loc, src)
-		if(casingtype)
-			new casingtype
-	return
-
-/mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM)
+/mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM)//No floor tiling them to death, wiseguy
 	if(istype(AM, /obj/item))
 		var/obj/item/T = AM
-		if(T.throwforce <= 15)//No floor tiling them to death, wiseguy
+		if(T.throwforce <= 15)
 			visible_message("<span class='notice'>The [T.name] [src.throw_message] [src.name]!</span>")
 			Aggro()
 			return
@@ -185,17 +49,20 @@
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = 1
 	ranged_message = "stares"
-	throw_message = "rebounds off its hard shell to no effect"
+	ranged_cooldown_cap = 8
+	throw_message = "does nothing against the hard shell of"
 	vision_range = 2
 	speed = 3
-	maxHealth = 100
-	health = 100
+	maxHealth = 200
+	health = 200
 	harm_intent_damage = 5
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attacktext = "bites into "
 	a_intent = "harm"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+
+	ranged_cooldown_cap = 4
 
 /obj/item/projectile/temp/basilisk
 	name = "freezing blast"
@@ -227,9 +94,8 @@
 	icon_aggro = "Goldgrub_alert"
 	icon_dead = "Goldgrub_dead"
 	icon_gib = "syndicate_gib"
-	move_to_delay = 0
+	move_to_delay = 3
 	friendly = "harmlessly rolls into"
-	vision_range = 2
 	maxHealth = 45
 	health = 45
 	harm_intent_damage = 5
@@ -237,36 +103,49 @@
 	melee_damage_upper = 0
 	attacktext = "barrels into"
 	a_intent = "help"
-	throw_message = "hits, but just bounces off its fat"
+	throw_message = "sinks in slowly, before being pushed out of "
+	status_flags = CANPUSH
+	search_objects = 2
+	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver, /obj/item/weapon/ore/plasma,
+						  /obj/item/weapon/ore/uranium, /obj/item/weapon/ore/iron, /obj/item/weapon/ore/clown)
 	var/alerted = 0
 
-/mob/living/simple_animal/hostile/asteroid/Goldgrub/MoveToTarget()
-	stop_automated_movement = 1
-	if(!target || !CanAttack(target))
-		LoseTarget()
-	if(target in ListTargets())
-		walk_away(src,target,10)
-		if(isturf(loc) && target.Adjacent(src))	//Attacking
-			AttackingTarget()
-		return
-	LostTarget()
+/mob/living/simple_animal/hostile/asteroid/Goldgrub/Found(var/new_target)
+	if(istype(new_target, /obj/item/weapon/ore) && stance == HOSTILE_STANCE_IDLE)
+		return 1
+	return 0
 
 /mob/living/simple_animal/hostile/asteroid/Goldgrub/GiveTarget(var/new_target)
 	target = new_target
 	if(target != null)
-		Aggro()
-		stance = HOSTILE_STANCE_ATTACK
-		visible_message("<span class='danger'>The [src.name] tries to flee from [target.name]!</span>")
-		Burrow()
+		if(istype(target, /obj/item/weapon/ore))
+			visible_message("<span class='notice'>The [src.name] looks at [target.name] with hungry eyes.</span>")
+			stance = HOSTILE_STANCE_ATTACK
+		if(isliving(target) && !search_objects)
+			Aggro()
+			stance = HOSTILE_STANCE_ATTACK
+			visible_message("<span class='danger'>The [src.name] tries to flee from [target.name]!</span>")
+			retreat_distance = 10
+			Burrow()
 	return
 
-/mob/living/simple_animal/hostile/asteroid/Goldgrub/proc/Burrow()
+/obj/item/weapon/ore/attack_animal(var/mob/living/L)
+	if(istype(L, /mob/living/simple_animal/hostile/asteroid/Goldgrub))
+		L.visible_message("<span class='notice'>The [src.name] was swallowed whole!</span>")
+		del(src)
+	..()
+
+/mob/living/simple_animal/hostile/asteroid/Goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
 	if(!alerted)
 		alerted = 1
 		spawn(100)
 			if(alerted)
 				visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
 				del(src)
+
+/mob/living/simple_animal/hostile/asteroid/Goldgrub/adjustBruteLoss(var/damage)
+	search_objects = 0 //Stop looking for items if we've been hurt by someone, so we can run!
+	..()
 
 /mob/living/simple_animal/hostile/asteroid/Goldgrub/bullet_act(var/obj/item/projectile/P)
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
@@ -286,7 +165,7 @@
 	icon_dead = "Hivelord_dead"
 	icon_gib = "syndicate_gib"
 	mouse_opacity = 2
-	move_to_delay = 0
+	move_to_delay = 12
 	ranged = 1
 	vision_range = 4
 	speed = 3
@@ -295,32 +174,26 @@
 	harm_intent_damage = 5
 	melee_damage_lower = 2
 	melee_damage_upper = 2
-	attacktext = "lashes out"
-	throw_message = "seems to have no effect on"
+	attacktext = "lashes out at"
+	throw_message = "falls right through the strange body of the "
+	ranged_cooldown = 0
+	ranged_cooldown_cap = 0
 
-/mob/living/simple_animal/hostile/asteroid/Hivelord/MoveToTarget()
-	stop_automated_movement = 1
-	if(!target || !CanAttack(target))
-		LoseTarget()
-	if(target in ListTargets())
-		OpenFire(target)
-		var/mob/living/simple_animal/hostile/asteroid/Hivelord/D = get_dist(src, target)
-		if(D <= 5)
-			step_away(src, target)
-		return
-	LostTarget()
+	retreat_distance = 5
+	minimum_distance = 5
 
 /mob/living/simple_animal/hostile/asteroid/Hivelord/OpenFire(var/the_target)
-	var/target = the_target
-	var/tturf = get_turf(target)
-	var/mob/living/simple_animal/hostile/asteroid/Hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/Hivelordbrood(tturf)
+	var/mob/living/simple_animal/hostile/asteroid/Hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/Hivelordbrood(src.loc)
 	A.GiveTarget(target)
-	step_away(A, target)
 	return
+
+/mob/living/simple_animal/hostile/asteroid/Hivelord/AttackingTarget()
+	OpenFire()
+	..()
 
 /mob/living/simple_animal/hostile/asteroid/Hivelordbrood
 	name = "Hivelord brood"
-	desc = "A small hivelord brood, called to rally behind its parent. One isn't much of a threat, but..."
+	desc = "A fragment of the original Hivelord, rallying behind its original. One isn't much of a threat, but..."
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "Hivelordbrood"
 	icon_living = "Hivelordbrood"
@@ -338,6 +211,7 @@
 	melee_damage_lower = 2
 	melee_damage_upper = 2
 	attacktext = "slashes"
+	throw_message = "falls right through the strange body of the "
 
 /mob/living/simple_animal/hostile/asteroid/Hivelordbrood/New()
 	..()
@@ -359,21 +233,29 @@
 	mouse_opacity = 2
 	move_to_delay = 40
 	ranged = 1
+	ranged_cooldown_cap = 8
 	friendly = "wails at"
 	vision_range = 5
 	speed = 3
-	maxHealth = 200
-	health = 200
+	maxHealth = 300
+	health = 300
 	harm_intent_damage = 0
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	attacktext = "pulverizes"
-	var/tentacle_recharge = 0
+	throw_message = "does nothing to the rocky hide of the "
 
 /obj/effect/goliath_tentacle/
 	name = "Goliath tentacle"
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "Goliath_tentacle"
+
+/obj/effect/goliath_tentacle/New()
+	var/turftype = get_turf(src)
+	if(istype(turftype, /turf/simulated/mineral))
+		var/turf/simulated/mineral/M = turftype
+		M.gets_drilled()
+	..()
 
 /obj/effect/goliath_tentacle/original
 
@@ -404,14 +286,12 @@
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/Goliath/OpenFire()
-	tentacle_recharge--
-	if(tentacle_recharge <= 0)
-		visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
-		var/tturf = get_turf(target)
-		new /obj/effect/goliath_tentacle/original(tturf)
-		tentacle_recharge = 6
-		return
+	visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
+	var/tturf = get_turf(target)
+	new /obj/effect/goliath_tentacle/original(tturf)
+	ranged_cooldown = ranged_cooldown_cap
+	return
 
 /mob/living/simple_animal/hostile/asteroid/Goliath/adjustBruteLoss(var/damage)
-	tentacle_recharge--
+	ranged_cooldown--
 	..()
