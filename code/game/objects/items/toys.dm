@@ -10,6 +10,7 @@
  *		Snap pops
  *		Water flower
  *		Cards
+ *		Toy nuke
  */
 
 
@@ -858,17 +859,35 @@ obj/item/toy/singlecard/attack_self(mob/user)
 	icon_state = "nuketoyidle"
 	w_class = 2.0
 	var/cooldown = 0
+	var/processdelay = 0
 
 /obj/item/toy/nuke/attack_self(mob/user)
 	if (cooldown < world.time)
-		cooldown = world.time + 3000 //5 minutes
+		cooldown = world.time + 1800 //3 minutes
 		user.visible_message("<span class='warning'>[user] presses a button on [src]</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='notice'>You hear the click of a button.</span>")
 		spawn(5) //gia said so
 			icon_state = "nuketoy"
 			playsound(src, 'sound/machines/Alarm.ogg', 100, 0, surround = 0)
 			sleep(135)
-			icon_state = "nuketoyidle"
+			icon_state = "nuketoycool"
+			processing_objects.Add(src)
+	else
+		var/timeleft = (cooldown - world.time)
+		user << "<span class='alert'>Nothing happens, and '</span>[round(timeleft/10)]<span class='alert'>' appears on a small display.</span>"
 
+/obj/item/toy/nuke/process()
+	if (processdelay >= 15)
+		processdelay = 0
+		if (cooldown < world.time)
+			icon_state = "nuketoyidle"
+			processing_objects.Remove(src)
+	else
+		processdelay++
+
+/obj/item/toy/nuke/Del()
+	if (processing_objects.Find(src))
+		processing_objects.Remove(src)
+	..()
 
 
 
