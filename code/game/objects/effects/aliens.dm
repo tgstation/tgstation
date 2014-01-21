@@ -105,7 +105,7 @@
 	return
 
 /obj/effect/alien/resin/attack_hand()
-	if (HULK in usr.mutations)
+	if (M_HULK in usr.mutations)
 		usr << "\blue You easily destroy the [name]."
 		for(var/mob/O in oviewers(src))
 			O.show_message("\red [usr] destroys the [name]!", 1)

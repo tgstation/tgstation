@@ -126,7 +126,7 @@
 
 	can_activate(var/mob/M,var/flags)
 		// Can't be big and small.
-		if(HULK in M.mutations)
+		if(M_HULK in M.mutations)
 			return 0
 		return ..(M,flags)
 
@@ -137,7 +137,7 @@
 /datum/dna/gene/basic/hulk
 	name="Hulk"
 	activation_messages=list("Your muscles hurt.")
-	mutation=HULK
+	mutation=M_HULK
 
 	New()
 		block=HULKBLOCK
@@ -158,7 +158,7 @@
 	OnMobLife(var/mob/living/carbon/human/M)
 		if(!istype(M)) return
 		if(M.health <= 25)
-			M.mutations.Remove(HULK)
+			M.mutations.Remove(M_HULK)
 			M.update_mutations()		//update our mutation overlays
 			M << "\red You suddenly feel very weak."
 			M.Weaken(3)

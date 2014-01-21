@@ -119,8 +119,8 @@
 					if(51 to 100)
 						adjustFireLoss(-5)
 
-		if ((HULK in mutations) && health <= 25)
-			mutations.Remove(HULK)
+		if ((M_HULK in mutations) && health <= 25)
+			mutations.Remove(M_HULK)
 			src << "\red You suddenly feel very weak."
 			Weaken(3)
 			emote("collapse")

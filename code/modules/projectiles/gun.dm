@@ -78,7 +78,7 @@
 		return
 	if(istype(user, /mob/living))
 		var/mob/living/M = user
-		if (HULK in M.mutations)
+		if (M_HULK in M.mutations)
 			M << "\red Your meaty finger is much too large for the trigger guard!"
 			return
 	if(ishuman(user))

@@ -45,7 +45,7 @@
 		del(src)
 
 /obj/machinery/optable/attack_paw(mob/user as mob)
-	if ((HULK in usr.mutations))
+	if ((M_HULK in usr.mutations))
 		usr << text("\blue You destroy the operating table.")
 		visible_message("\red [usr] destroys the operating table!")
 		src.density = 0
@@ -58,7 +58,7 @@
 	return
 
 /obj/machinery/optable/attack_hand(mob/user as mob)
-	if (HULK in usr.mutations)
+	if (M_HULK in usr.mutations)
 		usr << text("\blue You destroy the table.")
 		visible_message("\red [usr] destroys the operating table!")
 		src.density = 0

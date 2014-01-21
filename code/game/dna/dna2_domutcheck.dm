@@ -125,9 +125,9 @@
 
 
 	if (M.dna.GetSEState(HULKBLOCK))
-		if(forced || probinj(5,inj) || (HULK in old_mutations))
+		if(forced || probinj(5,inj) || (M_HULK in old_mutations))
 			M << "\blue Your muscles hurt."
-			M.mutations.Add(HULK)
+			M.mutations.Add(M_HULK)
 	if (M.dna.GetSEState(HEADACHEBLOCK))
 		M.disabilities |= EPILEPSY
 		M << "\red You get a headache."

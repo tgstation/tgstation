@@ -44,7 +44,7 @@
 	range = -1
 	include_user = 1
 
-	mutations = list(LASER, HULK)
+	mutations = list(LASER, M_HULK)
 	duration = 300
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/disintegrate

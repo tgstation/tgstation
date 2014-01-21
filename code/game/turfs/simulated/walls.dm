@@ -91,7 +91,7 @@
 		dismantle_wall()
 
 /turf/simulated/wall/attack_paw(mob/user as mob)
-	if ((HULK in user.mutations))
+	if ((M_HULK in user.mutations))
 		if (prob(40))
 			usr << text("\blue You smash through the wall.")
 			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
@@ -122,7 +122,7 @@
 	return
 
 /turf/simulated/wall/attack_hand(mob/user as mob)
-	if (HULK in user.mutations)
+	if (M_HULK in user.mutations)
 		if (prob(40) || rotting)
 			usr << text("\blue You smash through the wall.")
 			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))

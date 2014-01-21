@@ -221,7 +221,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 	var/husk = (HUSK in src.mutations)  //100% unnecessary -Agouri	//nope, do you really want to iterate through src.mutations repeatedly? -Pete
 	var/fat = (FAT in src.mutations)
-	var/hulk = (HULK in src.mutations)
+	var/hulk = (M_HULK in src.mutations)
 	var/skeleton = (SKELETON in src.mutations)
 
 	var/g = "m"
@@ -377,7 +377,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 	for(var/mut in mutations)
 		switch(mut)
 			/*
-			if(HULK)
+			if(M_HULK)
 				if(fat)
 					standing.underlays	+= "hulk_[fat]_s"
 				else
