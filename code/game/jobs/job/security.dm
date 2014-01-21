@@ -133,6 +133,9 @@
 		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 		L.imp_in = H
 		L.implanted = 1
+
+		H.dna.SetSEState(SOBERBLOCK,1)
+		H.mutations += M_SOBER
 		return 1
 
 
