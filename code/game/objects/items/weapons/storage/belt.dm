@@ -48,7 +48,7 @@
 		"/obj/item/weapon/wrench",
 		"/obj/item/device/multitool",
 		"/obj/item/device/flashlight",
-		"/obj/item/weapon/cable_coil",
+		"/obj/item/stack/cable_coil",
 		"/obj/item/device/t_scanner",
 		"/obj/item/device/analyzer")
 
@@ -60,7 +60,7 @@
 	new /obj/item/weapon/weldingtool(src)
 	new /obj/item/weapon/crowbar(src)
 	new /obj/item/weapon/wirecutters(src)
-	new /obj/item/weapon/cable_coil(src,30,pick("red","yellow","orange"))
+	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
 
 
 /obj/item/weapon/storage/belt/utility/atmostech/New()

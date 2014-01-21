@@ -1,4 +1,4 @@
-/obj/item/weapon/cable_coil/heavyduty
+/obj/item/stack/cable_coil/heavyduty
 	name = "heavy cable coil"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "wire"
@@ -18,7 +18,7 @@
 	if(istype(W, /obj/item/weapon/wirecutters))
 		usr << "\blue These cables are too tough to be cut with those [W.name]."
 		return
-	else if(istype(W, /obj/item/weapon/cable_coil))
+	else if(istype(W, /obj/item/stack/cable_coil))
 		usr << "\blue You will need heavier cables to connect to these."
 		return
 	else
