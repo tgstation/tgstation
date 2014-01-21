@@ -60,7 +60,6 @@
 	var/datum/wires/alarm/wires = null
 	var/wiresexposed = 0 // If it's been screwdrivered open.
 	var/aidisabled = 0
-	var/AAlarmwires = 31
 	var/shorted = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
 
@@ -658,7 +657,7 @@ table tr:first-child th:first-child { border: none;}
 	if(wiresexposed)
 		switch(buildstage)
 			if(2)
-				if(src.AAlarmwires == 0) // All wires cut
+				if(wires.wires_status == (2 ** wires.wire_count) - 1) // All wires cut
 					icon_state = "alarm_b2"
 				else
 					icon_state = "alarmx"
@@ -767,7 +766,7 @@ table tr:first-child th:first-child { border: none;}
 /obj/machinery/alarm/attackby(obj/item/W as obj, mob/user as mob)
 	switch(buildstage)
 		if(2)
-			if(istype(W, /obj/item/weapon/wirecutters) && AAlarmwires == 0)
+			if(istype(W, /obj/item/weapon/wirecutters) && wires.wires_status == (2 ** wires.wire_count) - 1)   //this checks for all wires to be cut, disregard the ammount of wires, binary fuckery with the wires_status
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				user << "You cut the final wires."
 				var/obj/item/weapon/cable_coil/cable = new /obj/item/weapon/cable_coil( src.loc )
@@ -797,7 +796,7 @@ table tr:first-child th:first-child { border: none;}
 						user << "\red Access denied."
 				return
 		if(1)
-			if(istype(W, /obj/item/weapon/crowbar) && AAlarmwires == 0)
+			if(istype(W, /obj/item/weapon/crowbar) && wires.wires_status == (2 ** wires.wire_count) - 1)
 				user << "You pry out the circuit."
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				spawn(20)
@@ -820,7 +819,7 @@ table tr:first-child th:first-child { border: none;}
 						del(cable)
 
 					user << "You wire the air alarm!"
-					src.AAlarmwires = 31
+					wires.wires_status = 0
 					buildstage = 2
 					update_icon()
 				return

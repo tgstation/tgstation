@@ -164,6 +164,10 @@ datum/objective/hijack
 		if(issilicon(owner.current))
 			return 0
 		var/area/shuttle = locate(/area/shuttle/escape/centcom)
+
+		if(!(get_turf(owner.current) in shuttle))
+			return 0
+
 		var/list/protected_mobs = list(/mob/living/silicon/ai, /mob/living/silicon/pai)
 		for(var/mob/living/player in player_list)
 			if(player.type in protected_mobs)	continue

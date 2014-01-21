@@ -22,7 +22,7 @@
 
 					var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
 
-					if(affecting.status == ORGAN_ROBOTIC) //Cannot operate on Robotic organs - RR
+					if(affecting.status == ORGAN_ROBOTIC && affecting.body_part != HEAD) //Cannot operate on Robotic organs except for the head. - RR
 						continue
 
 				for(var/path in S.species)

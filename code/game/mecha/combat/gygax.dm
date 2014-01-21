@@ -2,10 +2,10 @@
 	desc = "A lightweight, security exosuit. Popular among private and corporate security."
 	name = "\improper Gygax"
 	icon_state = "gygax"
-	step_in = 3
+	step_in = 2
 	dir_in = 1 //Facing North.
-	health = 300
-	deflect_chance = 15
+	health = 250
+	deflect_chance = 5
 	damage_absorption = list("brute"=0.75,"fire"=1,"bullet"=0.8,"laser"=0.7,"energy"=0.85,"bomb"=1)
 	max_temperature = 25000
 	infra_luminosity = 6
@@ -14,6 +14,7 @@
 	wreckage = /obj/structure/mecha_wreckage/gygax
 	internal_damage_threshold = 35
 	max_equip = 3
+	step_energy_drain = 3
 
 /obj/mecha/combat/gygax/dark
 	desc = "A lightweight exosuit, painted in a dark scheme. This model appears to have some modifications."
@@ -27,7 +28,6 @@
 	operation_req_access = list(access_syndicate)
 	wreckage = /obj/structure/mecha_wreckage/gygax/dark
 	max_equip = 4
-	step_energy_drain = 5
 
 /obj/mecha/combat/gygax/dark/loaded/New()
 	..()

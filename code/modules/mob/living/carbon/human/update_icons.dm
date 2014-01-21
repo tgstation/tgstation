@@ -3,9 +3,9 @@
 	///////////////////////
 /* Keep these comments up-to-date if you -insist- on hurting my code-baby ;_;
 This system allows you to update individual mob-overlays, without regenerating them all each time.
-When we generate overlays we generate the standing version and then rotate the mob as necessary. This is only done via update_icons().
+When we generate overlays we generate the standing version and then rotate the mob as necessary..
 
-As of the time of writing there are 20 layers within this list. Please try to keep this from increasing.
+As of the time of writing there are 20 layers within this list. Please try to keep this from increasing. //22 and counting, good job guys
 	var/overlays_standing[20]		//For the standing stance
 
 Most of the time we only wish to update one overlay:
@@ -18,10 +18,7 @@ the appropriate update_X proc.
 
 Note: Recent changes by aranclanos+carn:
 	update_icons() no longer needs to be called.
-	This unfortunately means that cloaking is not working properly at time of writing,
-	however the system is easier to use. update_icons() should not be called unless you absolutely -know- you need it.
-	One such example would be when var/lying changes state (because every overlay needs to be updated, but not regenerated). In these
-	very specific cases, update_icons() will be faster than calling each update_X proc individually.
+	the system is easier to use. update_icons() should not be called unless you absolutely -know- you need it.
 	IN ALL OTHER CASES it's better to just call the specific update_X procs.
 
 All of this means that this code is more maintainable, faster and still fairly easy to use.
@@ -55,6 +52,7 @@ There are several things that need to be remembered:
 
 If you have any questions/constructive-comments/bugs-to-report
 Please contact me on #coderbus IRC. ~Carnie x
+//Carn can sometimes be hard to reach now. However IRC is still your best bet for getting help.
 */
 
 //Human Overlays Indexes/////////
@@ -158,19 +156,25 @@ Please contact me on #coderbus IRC. ~Carnie x
 	if(facial_hair_style)
 		S = facial_hair_styles_list[facial_hair_style]
 		if(S)
-			var/icon/facial_s = icon("icon"=S.icon, "icon_state"="[S.icon_state]_s")
-			facial_s.Blend("#[facial_hair_color]", ICON_ADD)
-			standing	+= image("icon"=facial_s, "layer"=-HAIR_LAYER)
+			var/image/img_facial_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
+
+			var/new_color = "#" + facial_hair_color
+			img_facial_s.color = new_color
+
+			standing	+= img_facial_s
 
 	//Applies the debrained overlay if there is no brain
 	if(!getorgan(/obj/item/organ/brain))
-		standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state"="debrained_s", "layer"=-HAIR_LAYER)
+		standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained_s", "layer" = -HAIR_LAYER)
 	else if(hair_style)
 		S = hair_styles_list[hair_style]
 		if(S)
-			var/icon/hair_s = icon("icon"=S.icon, "icon_state"="[S.icon_state]_s")
-			hair_s.Blend("#[hair_color]", ICON_ADD)
-			standing	+= image("icon"=hair_s, "layer"=-HAIR_LAYER)
+			var/image/img_hair_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
+
+			var/new_color = "#" + hair_color
+			img_hair_s.color = new_color
+
+			standing	+= img_hair_s
 
 	if(standing.len)
 		overlays_standing[HAIR_LAYER]	= standing
@@ -210,13 +214,17 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	//Mouth	(lipstick!)
 	if(lip_style)
-		standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[lip_style]_s", "layer"=-BODY_LAYER)
+		standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[lip_style]_s", "layer" = -BODY_LAYER)
 
 	//Eyes
 	if(!dna || dna.mutantrace != "skeleton")
-		var/icon/eyes_s = icon('icons/mob/human_face.dmi', "eyes_s")
-		eyes_s.Blend("#[eye_color]", ICON_ADD)
-		standing	+= image("icon"=eyes_s, "layer"=-BODY_LAYER)
+		var/image/img_eyes_s = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes_s", "layer" = -BODY_LAYER)
+
+		var/new_color = "#" + eye_color
+
+		img_eyes_s.color = new_color
+
+		standing	+= img_eyes_s
 
 	//Underwear
 	if(underwear)
@@ -440,12 +448,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 			head.screen_loc = ui_head		//TODO
 			client.screen += head
 
-		var/image/standing
-		if(istype(head,/obj/item/clothing/head/kitty))
-			var/obj/item/clothing/head/kitty/K = head
-			standing	= image("icon"=K.mob, "layer"=-HEAD_LAYER)
-		else
-			standing	= image("icon"='icons/mob/head.dmi', "icon_state"="[head.icon_state]", "layer"=-HEAD_LAYER)
+		var/image/standing = image("icon"='icons/mob/head.dmi', "icon_state"="[head.icon_state]", "layer"=-HEAD_LAYER)
+
 		overlays_standing[HEAD_LAYER]	= standing
 
 		if(head.blood_DNA)
@@ -572,11 +576,6 @@ Please contact me on #coderbus IRC. ~Carnie x
 	remove_overlay(LEGCUFF_LAYER)
 
 	if(legcuffed)
-		if(src.m_intent != "walk")
-			src.m_intent = "walk"
-			if(src.hud_used && src.hud_used.move_intent)
-				src.hud_used.move_intent.icon_state = "walking"
-
 		overlays_standing[LEGCUFF_LAYER]	= image("icon"='icons/mob/mob.dmi', "icon_state"="legcuff1", "layer"=-LEGCUFF_LAYER)
 
 	apply_overlay(LEGCUFF_LAYER)

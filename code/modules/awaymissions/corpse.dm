@@ -90,7 +90,7 @@
 	var/A = locate(/mob/living/silicon/ai) in loc //stops multiple dead ais spawning, apparently hacky, ¯\_(?)_/¯ (who's that pokemon?)
 	if(A)
 		return
-	var/L = new /datum/ai_laws/asimov //avoid runtimes
+	var/L = new /datum/ai_laws/default/asimov //avoid runtimes
 	var/B = new /obj/item/device/mmi/ //avoid runtimes
 	var/mob/living/silicon/ai/M = new(src.loc, L, B, 1)
 	M.death()

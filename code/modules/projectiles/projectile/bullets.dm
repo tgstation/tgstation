@@ -67,15 +67,14 @@
 	damage = 25
 
 
-/obj/item/projectile/bullet/incendiary
-	name = "incendiary bullet"
-	damage = 20
+/obj/item/projectile/bullet/mechincendiary
+	damage = 5
 
-/obj/item/projectile/bullet/incendiary/on_hit(var/atom/target, var/blocked = 0)
-	if(istype(target, /mob/living/carbon))
-		var/mob/living/carbon/M = target
-		M.adjust_fire_stacks(1)
-		M.IgniteMob()
+/obj/item/projectile/bullet/mechincendiary/on_hit(var/atom/target, var/blocked = 0)
+		if(istype(target, /mob/living/carbon))
+				var/mob/living/carbon/M = target
+				M.adjust_fire_stacks(1)
+				M.IgniteMob()
 
 
 /obj/item/projectile/bullet/dart

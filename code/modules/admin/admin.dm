@@ -545,18 +545,21 @@ var/global/floorIsLava = 0
 	set desc ="Set an announcement that appears to everyone who joins the server. Only lasts this round"
 	if(!check_rights(0))	return
 
-	admin_notice = input(src,"Set a public notice for this round. Everyone who joins the server will see it.\n(Leaving it blank will delete the current notice):","Set Notice",admin_notice) as null|message
-	switch(admin_notice)
-		if(null)
-			return
-		if("")
-			message_admins("[key_name(usr)] removed the admin notice.")
-			log_admin("[key_name(usr)] removed the admin notice:\n[admin_notice]")
-			return
-	message_admins("[key_name(usr)] set the admin notice.")
-	log_admin("[key_name(usr)] set the admin notice:\n[admin_notice]")
-	world << "\blue <b>Admin Notice:</b>\n \t [admin_notice]"
+	var/new_admin_notice = input(src,"Set a public notice for this round. Everyone who joins the server will see it.\n(Leaving it blank will delete the current notice):","Set Notice",admin_notice) as message|null
+	if(new_admin_notice == null)
+		return
+	if(new_admin_notice == admin_notice)
+		return
+	if(new_admin_notice == "")
+		message_admins("[key_name(usr)] removed the admin notice.")
+		log_admin("[key_name(usr)] removed the admin notice:\n[admin_notice]")
+	else
+		message_admins("[key_name(usr)] set the admin notice.")
+		log_admin("[key_name(usr)] set the admin notice:\n[new_admin_notice]")
+		world << "<span class ='notice'><b>Admin Notice:</b>\n \t [new_admin_notice]</span>"
 	feedback_add_details("admin_verb","SAN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	admin_notice = new_admin_notice
+	return
 
 /datum/admins/proc/toggleooc()
 	set category = "Server"
