@@ -11,12 +11,12 @@
 
 	var/list/choices = list()
 	for(var/mob/living/C in view(1,src))
-		if(C!=src && !istype(C,/mob/living/carbon/slime))
+		if(C!=src && !istype(C,/mob/living/carbon/slime) && Adjacent(C))
 			choices += C
 
 	var/mob/living/carbon/M = input(src,"Who do you wish to feed on?") in null|choices
 	if(!M) return
-	if(M in view(1, src))
+	if(Adjacent(M))
 
 		if(!istype(src, /mob/living/carbon/brain))
 			if(!istype(M, /mob/living/carbon/slime))
@@ -58,7 +58,7 @@
 		// M.canmove = 0
 		canmove = 0
 
-		if(M in view(1, src))
+		if(Adjacent(M))
 			loc = M.loc
 
 			if(prob(15) && M.client && istype(M, /mob/living/carbon))
