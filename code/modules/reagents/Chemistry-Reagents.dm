@@ -449,7 +449,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob,var/alien)
 				if(!M) M = holder.my_atom
-				if (FAT in M.mutations)
+				if (M_FAT in M.mutations)
 					M.gib()
 				..()
 				return

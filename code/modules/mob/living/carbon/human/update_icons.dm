@@ -220,7 +220,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 	var/necrosis_color_mod = rgb(10,50,0)
 
 	var/husk = (HUSK in src.mutations)  //100% unnecessary -Agouri	//nope, do you really want to iterate through src.mutations repeatedly? -Pete
-	var/fat = (FAT in src.mutations)
+	var/fat = (M_FAT in src.mutations)
 	var/hulk = (M_HULK in src.mutations)
 	var/skeleton = (SKELETON in src.mutations)
 
@@ -359,7 +359,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 /mob/living/carbon/human/update_mutations(var/update_icons=1)
 	var/fat
-	if(FAT in mutations)
+	if(M_FAT in mutations)
 		fat = "fat"
 
 	var/image/standing	= image("icon" = 'icons/effects/genetics.dmi')
@@ -409,7 +409,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 /mob/living/carbon/human/proc/update_mutantrace(var/update_icons=1)
 	var/fat
-	if( FAT in mutations )
+	if( M_FAT in mutations )
 		fat = "fat"
 //	var/g = "m"
 //	if (gender == FEMALE)	g = "f"
@@ -493,7 +493,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 		if(!t_color)		t_color = icon_state
 		var/image/standing	= image("icon_state" = "[t_color]_s")
 
-		if(FAT in mutations)
+		if(M_FAT in mutations)
 			if(w_uniform.flags&ONESIZEFITSALL)
 				standing.icon	= 'icons/mob/uniform_fat.dmi'
 			else

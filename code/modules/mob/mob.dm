@@ -573,7 +573,7 @@ var/list/slot_equipment_priority = list( \
 			if(slot_w_uniform)
 				if( !(slot_flags & SLOT_ICLOTHING) )
 					return 0
-				if((FAT in H.mutations) && !(flags & ONESIZEFITSALL))
+				if((M_FAT in H.mutations) && !(flags & ONESIZEFITSALL))
 					return 0
 				if(H.w_uniform)
 					if(H.w_uniform.canremove)

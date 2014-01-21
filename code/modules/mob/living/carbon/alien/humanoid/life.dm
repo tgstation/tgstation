@@ -262,16 +262,16 @@
 
 		if(reagents) reagents.metabolize(src)
 
-		if(FAT in mutations)
+		if(M_FAT in mutations)
 			if(nutrition < 100)
 				if(prob(round((50 - nutrition) / 100)))
 					src << "\blue You feel fit again!"
-					mutations.Remove(FAT)
+					mutations.Remove(M_FAT)
 		else
 			if(nutrition > 500)
 				if(prob(5 + round((nutrition - 200) / 2)))
 					src << "\red You suddenly feel blubbery!"
-					mutations.Add(FAT)
+					mutations.Add(M_FAT)
 
 		if (nutrition > 0)
 			nutrition -= HUNGER_FACTOR

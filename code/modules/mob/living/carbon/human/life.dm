@@ -949,12 +949,12 @@
 			else if (light_amount < 2) //heal in the dark
 				heal_overall_damage(1,1)
 
-		//The fucking FAT mutation is the greatest shit ever. It makes everyone so hot and bothered.
+		//The fucking M_FAT mutation is the greatest shit ever. It makes everyone so hot and bothered.
 		if(species.flags & CAN_BE_FAT)
-			if(FAT in mutations)
+			if(M_FAT in mutations)
 				if(overeatduration < 100)
 					src << "\blue You feel fit again!"
-					mutations.Remove(FAT)
+					mutations.Remove(M_FAT)
 					update_mutantrace(0)
 					update_mutations(0)
 					update_inv_w_uniform(0)
@@ -962,7 +962,7 @@
 			else
 				if(overeatduration > 500)
 					src << "\red You suddenly feel blubbery!"
-					mutations.Add(FAT)
+					mutations.Add(M_FAT)
 					update_mutantrace(0)
 					update_mutations(0)
 					update_inv_w_uniform(0)

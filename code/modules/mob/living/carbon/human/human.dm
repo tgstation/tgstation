@@ -97,8 +97,8 @@
 					slime.UpdateFeed()
 			return
 
-		if(istype(tmob, /mob/living/carbon/human) && (FAT in tmob.mutations))
-			if(prob(40) && !(FAT in src.mutations))
+		if(istype(tmob, /mob/living/carbon/human) && (M_FAT in tmob.mutations))
+			if(prob(40) && !(M_FAT in src.mutations))
 				src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 				now_pushing = 0
 				return

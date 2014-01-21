@@ -60,8 +60,8 @@
 		M.mutations.Add(PLANT)
 	if(SKELETON in old_mutations)
 		M.mutations.Add(SKELETON)
-	if(FAT in old_mutations)
-		M.mutations.Add(FAT)
+	if(M_FAT in old_mutations)
+		M.mutations.Add(M_FAT)
 	if(HUSK in old_mutations)
 		M.mutations.Add(HUSK)
 
