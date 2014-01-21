@@ -363,7 +363,7 @@
 
 	var/damage = rand(1, 3)
 
-	if(istype(src, /mob/living/carbon/slime/adult))
+	if(M.is_adult)
 		damage = rand(20, 40)
 	else
 		damage = rand(5, 35)
@@ -493,7 +493,9 @@
 	var/mob/living/simple_animal/partner
 	var/children = 0
 	for(var/mob/M in oview(7, src))
-		if(istype(M, childtype)) //Check for children FIRST.
+		if(M.stat != CONSCIOUS) //Check if it's concious FIRSTER.
+			continue
+		else if(istype(M, childtype)) //Check for children FIRST.
 			children++
 		else if(istype(M, species))
 			if(M.client)

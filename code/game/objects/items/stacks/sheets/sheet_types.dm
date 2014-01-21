@@ -45,7 +45,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 
 /obj/item/stack/sheet/metal
 	name = "metal"
-	desc = "Sheets made out off metal. It has been dubbed Metal Sheets."
+	desc = "Sheets made out of metal. They have been dubbed Metal Sheets."
 	singular_name = "metal sheet"
 	icon_state = "sheet-metal"
 	m_amt = 3750
@@ -54,13 +54,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	origin_tech = "materials=1"
 
 /obj/item/stack/sheet/metal/cyborg
-	name = "metal"
-	desc = "Sheets made out off metal. It has been dubbed Metal Sheets."
-	singular_name = "metal sheet"
-	icon_state = "sheet-metal"
 	m_amt = 0
-	throwforce = 14.0
-	flags = CONDUCT
 
 /obj/item/stack/sheet/metal/New(var/loc, var/amount=null)
 	recipes = metal_recipes
