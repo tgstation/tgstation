@@ -1403,8 +1403,22 @@
 			else
 				var/isRemoteObserve = 0
 				if((mRemote in mutations) && remoteview_target)
-					if(remoteview_target.stat==CONSCIOUS)
-						isRemoteObserve = 1
+					isRemoteObserve = 1
+					// Is he unconscious or dead?
+					if(remoteview_target.stat!=CONSCIOUS)
+						src << "\red Your psy-connection grows too faint to maintain!"
+						isRemoteObserve = 0
+
+					// Does he have psy resist?
+					if(M_PSY_RESIST in remoteview_target.mutations)
+						src << "\red Your mind is shut out!"
+						isRemoteObserve = 0
+
+					// Not on the station or mining?
+					var/turf/temp_turf = get_turf(remoteview_target)
+					if((temp_turf.z != 1 && temp_turf.z != 5) || remoteview_target.stat!=CONSCIOUS)
+						src << "\red Your psy-connection grows too faint to maintain!"
+						isRemoteObserve = 0
 				if(!isRemoteObserve && client && !client.adminobs)
 					remoteview_target = null
 					reset_view(null)

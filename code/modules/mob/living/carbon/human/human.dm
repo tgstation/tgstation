@@ -1065,6 +1065,8 @@
 		var/turf/temp_turf = get_turf(h)
 		if((temp_turf.z != 1 && temp_turf.z != 5) || h.stat!=CONSCIOUS) //Not on mining or the station. Or dead
 			continue
+		if(M_PSY_RESIST in h.mutations)
+			continue
 		creatures += h
 
 	var/mob/target = input ("Who do you want to project your mind to ?") as mob in creatures
