@@ -539,6 +539,32 @@
 					message = "<B>[src]</B> makes a very loud noise."
 					m_type = 2
 
+		// Needed for M_TOXIC_FART
+		if("fart")
+			if(world.time-lastFart >= 600)
+				message = "<b>[src]</b> [pick("passes wind","farts")]."
+				m_type = 2
+				var/location = get_turf(src)
+				playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
+				if(M_TOXIC_FARTS in mutations)
+					if(wear_suit && wear_suit.body_parts_covered & LOWER_TORSO)
+						if (internal != null && wear_mask && (wear_mask.flags & MASKINTERNALS))
+							return
+						src << "\red You gas yourself!"
+						reagents.add_reagent("mercury", rand(10,20))
+						return
+					var/datum/effect/effect/system/smoke_spread/chem/fart/S = new /datum/effect/effect/system/smoke_spread/chem/fart
+					S.attach(location)
+					S.set_up(src, 10, 0, location)
+					spawn(0)
+						S.start()
+						sleep(10)
+						S.start()
+				lastFart=world.time
+			else
+				message = "<b>[src]</b> strains, and nothing happens."
+				m_type = 1
+
 		if ("help")
 			src << "blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough,\ncry, custom, deathgasp, drool, eyebrow, frown, gasp, giggle, groan, grumble, handshake, hug-(none)/mob, glare-(none)/mob,\ngrin, laugh, look-(none)/mob, moan, mumble, nod, pale, point-atom, raise, salute, shake, shiver, shrug,\nsigh, signal-#1-10, smile, sneeze, sniff, snore, stare-(none)/mob, tremble, twitch, twitch_s, whimper,\nwink, yawn"
 

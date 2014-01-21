@@ -491,6 +491,34 @@ steam.start() -- spawns the effect
 					if(smoke) smoke.delete()
 					src.total_smoke--
 
+// Goon compat.
+/datum/effect/effect/system/smoke_spread/chem/fart
+	set_up(var/mob/M, n = 5, c = 0, loca, direct)
+		if(n > 20)
+			n = 20
+		number = n
+		cardinals = c
+
+		chemholder.reagents.add_reagent("mercury", 50)
+
+		if(istype(loca, /turf/))
+			location = loca
+		else
+			location = get_turf(loca)
+		if(direct)
+			direction = direct
+
+		var/contained = "\[[chemholder.reagents.get_reagent_ids()]\]"
+		var/area/A = get_area(location)
+
+		var/where = "[A.name] | [location.x], [location.y]"
+		var/whereLink=formatJumpTo(location,where)
+
+		var/more = "(<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</a>)"
+		message_admins("[M][more] produced a toxic fart in ([whereLink])[contained].", 0, 1)
+		log_game("[M][more] produced a toxic fart in ([where])[contained].")
+
+
 /////////////////////////////////////////////
 //////// Attach an Ion trail to any object, that spawns when it moves (like for the jetpack)
 /// just pass in the object to attach it to in set_up
