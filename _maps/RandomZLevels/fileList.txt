@@ -17,4 +17,5 @@
 #_maps/RandomZLevels/challenge.dmm
 #_maps/RandomZLevels/listeningpost.dmm
 #_maps/RandomZLevels/spacehotel.dmm
-#_maps/RandomZLevels/centcomAway.dmm#_maps/RandomZLevels/box2550Away.dmm
+#_maps/RandomZLevels/centcomAway.dmm
+#_maps/RandomZLevels/box2550Away.dmm
