@@ -141,7 +141,7 @@
 	else if (src.gender == FEMALE)
 		t_him = "her"
 	M.current.visible_message("\blue [M] shakes [src] trying to wake [t_him] up!" )
-	playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)*/
+	playsound(get_turf(src), 'sound/weapons/thudswoosh.ogg', 50, 1, -1)*/
 	C.help_shake_act(M.current) // i use da colon
 	if(!C.vampire_affected(M))
 		M.current << "\red They seem to be unaffected."

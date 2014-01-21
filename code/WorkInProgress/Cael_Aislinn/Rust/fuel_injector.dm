@@ -42,14 +42,14 @@
 		switch(state)
 			if(0)
 				state = 1
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
 				user.visible_message("[user.name] secures [src.name] to the floor.", \
 					"You secure the external reinforcing bolts to the floor.", \
 					"You hear a ratchet")
 				src.anchored = 1
 			if(1)
 				state = 0
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
 				user.visible_message("[user.name] unsecures [src.name] reinforcing bolts from the floor.", \
 					"You undo the external reinforcing bolts.", \
 					"You hear a ratchet")
@@ -68,7 +68,7 @@
 				user << "\red The [src.name] needs to be wrenched to the floor."
 			if(1)
 				if (WT.remove_fuel(0,user))
-					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+					playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
 						"You start to weld the [src] to the floor.", \
 						"You hear welding")
@@ -82,7 +82,7 @@
 					user << "\red You need more welding fuel to complete this task."
 			if(2)
 				if (WT.remove_fuel(0,user))
-					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+					playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
 						"You start to cut the [src] free from the floor.", \
 						"You hear welding")

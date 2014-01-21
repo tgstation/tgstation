@@ -207,7 +207,7 @@
 			if (terminal)
 				user << "\red Disconnect wires first."
 				return
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 			user << "You are trying to remove the power control board..." //lpeters - fixed grammar issues
 			if(do_after(user, 50))
 				has_electronics = 0
@@ -257,12 +257,12 @@
 				if (has_electronics==1 && terminal)
 					has_electronics = 2
 					stat &= ~MAINT
-					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+					playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 					user << "You screw the circuit electronics into place."
 				else if (has_electronics==2)
 					has_electronics = 1
 					stat |= MAINT
-					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+					playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 					user << "You unfasten the electronics."
 				else /* has_electronics==0 */
 					user << "\red There is nothing to secure."
@@ -317,7 +317,7 @@
 			user << "\red You need more wires."
 			return
 		user << "You start adding cables to the APC frame..."
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 20) && C.amount >= 10)
 			var/turf/T = get_turf_loc(src)
 			var/obj/structure/cable/N = T.get_cable_node()
@@ -337,7 +337,7 @@
 			user << "\red You must remove the floor plating in front of the APC first."
 			return
 		user << "You begin to cut the cables..."
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 50))
 			if (prob(50) && electrocute_mob(usr, terminal.powernet, terminal))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -351,7 +351,7 @@
 			del(terminal)
 	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && !((stat & BROKEN) || malfhack))
 		user << "You trying to insert the power control board into the frame..."
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 10))
 			has_electronics = 1
 			user << "You place the power control board inside the frame."
@@ -365,7 +365,7 @@
 			user << "\blue You need more welding fuel to complete this task."
 			return
 		user << "You start welding the APC frame..."
-		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
 		if(do_after(user, 50))
 			if(!src || !WT.remove_fuel(3, user)) return
 			if (emagged || malfhack || (stat & BROKEN) || opened==2)
@@ -471,7 +471,7 @@
 	if(!user)
 		return
 	user.visible_message("\red [user.name] slashes at the [src.name]!", "\blue You slash at the [src.name]!")
-	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
+	playsound(get_turf(src), 'sound/weapons/slash.ogg', 100, 1)
 
 	var/allcut = wires.IsAllCut()
 

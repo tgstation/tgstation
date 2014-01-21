@@ -617,7 +617,7 @@ About the new airlock wires panel:
 	if(ishuman(user) && prob(40) && src.density)
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
-			playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
+			playsound(get_turf(src), 'sound/effects/bang.ogg', 25, 1)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				visible_message("\red [user] headbutts the airlock.")
 				var/datum/organ/external/affecting = H.get_organ("head")
@@ -1006,7 +1006,7 @@ About the new airlock wires panel:
 		else
 			beingcrowbarred = 0
 		if( beingcrowbarred && (density && welded && !operating && src.p_open && (!src.arePowerSystemsOn() || stat & NOPOWER) && !src.locked) )
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
+			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 100, 1)
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
 			if(do_after(user,40))
 				user << "\blue You removed the airlock electronics!"
@@ -1080,11 +1080,11 @@ About the new airlock wires panel:
 			return 0
 	use_power(50)
 	if(istype(src, /obj/machinery/door/airlock/glass))
-		playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
+		playsound(get_turf(src), 'sound/machines/windowdoor.ogg', 100, 1)
 	if(istype(src, /obj/machinery/door/airlock/clown))
-		playsound(src.loc, 'sound/items/bikehorn.ogg', 30, 1)
+		playsound(get_turf(src), 'sound/items/bikehorn.ogg', 30, 1)
 	else
-		playsound(src.loc, 'sound/machines/airlock.ogg', 30, 1)
+		playsound(get_turf(src), 'sound/machines/airlock.ogg', 30, 1)
 	if(src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
 		src.closeOther.close()
 	// This worries me - N3X
@@ -1109,7 +1109,7 @@ About the new airlock wires panel:
 			if(locate(/obj/effect/spider/stickyweb) in turf)
 				return
 			if(locate(/mob/living) in turf)
-			//	playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)	//THE BUZZING IT NEVER STOPS	-Pete
+			//	playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 0)	//THE BUZZING IT NEVER STOPS	-Pete
 				spawn (60)
 					close()
 				return
@@ -1135,11 +1135,11 @@ About the new airlock wires panel:
 
 	use_power(50)
 	if(istype(src, /obj/machinery/door/airlock/glass))
-		playsound(src.loc, 'sound/machines/windowdoor.ogg', 30, 1)
+		playsound(get_turf(src), 'sound/machines/windowdoor.ogg', 30, 1)
 	if(istype(src, /obj/machinery/door/airlock/clown))
-		playsound(src.loc, 'sound/items/bikehorn.ogg', 30, 1)
+		playsound(get_turf(src), 'sound/items/bikehorn.ogg', 30, 1)
 	else
-		playsound(src.loc, 'sound/machines/airlock.ogg', 30, 1)
+		playsound(get_turf(src), 'sound/machines/airlock.ogg', 30, 1)
 	for(var/turf/turf in locs)
 		var/obj/structure/window/killthis = (locate(/obj/structure/window) in turf)
 		if(killthis)

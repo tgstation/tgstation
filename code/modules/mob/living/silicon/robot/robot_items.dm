@@ -95,7 +95,7 @@
 	var/mode = 1
 
 /obj/item/weapon/pen/robopen/attack_self(mob/user as mob)
-	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
+	playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 	if (mode == 1)
 		mode = 2
 		user << "Changed printing mode to 'Rename Paper'"

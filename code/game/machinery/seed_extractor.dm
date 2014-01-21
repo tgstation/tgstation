@@ -79,7 +79,7 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 			return 1
 	else if(istype(O, /obj/item/weapon/crowbar))
 		if (opened)
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 			M.state = 2
 			M.icon_state = "box_1"

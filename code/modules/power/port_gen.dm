@@ -225,12 +225,12 @@ display round(lastgen) and plasmatank amount
 				disconnect_from_network()
 				user << "\blue You unsecure the generator from the floor."
 
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 			anchored = !anchored
 
 		else if(istype(O, /obj/item/weapon/screwdriver))
 			open = !open
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 			if(open)
 				user << "\blue You open the access panel."
 			else

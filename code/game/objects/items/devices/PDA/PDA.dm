@@ -1188,7 +1188,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 		M.stop_pulling()
 		M << "\blue You slipped on the PDA!"
-		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+		playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
 		M.Stun(8)
 		M.Weaken(5)
 

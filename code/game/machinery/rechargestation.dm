@@ -50,7 +50,7 @@
 			if (occupant)
 				user << "\red You cannot unwrench this [src], it's occupado."
 				return 1
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 			if(anchored)
 				user << "\blue You begin to unfasten \the [src]..."
 				if (do_after(user, 40))
@@ -77,7 +77,7 @@
 			if (!anchored)
 				user << "\red \The [src] is too unstable to weld!  The anchoring bolts need to be tightened."
 				return 1
-			playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
 			user << "\blue You begin to cut \the [src] into pieces..."
 			if (do_after(user, 40))
 				user.visible_message( \
@@ -115,7 +115,7 @@
 				user << "You have to unanchor the [src] first!"
 				return
 			if (opened)
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 				var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 				M.state = 2
 				M.icon_state = "box_1"

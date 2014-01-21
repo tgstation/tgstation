@@ -82,7 +82,7 @@
 			user << "You close the maintenance hatch of [src]"
 	if(opened)
 		if(istype(W, /obj/item/weapon/crowbar))
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 			M.state = 2
 			M.icon_state = "box_1"
@@ -105,7 +105,7 @@
 				user << "\red You must remove the floor plating in front of the SMES first."
 				return
 			user << "You begin to cut the cables..."
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 			if(do_after(user, 50))
 				if (prob(50) && electrocute_mob(usr, terminal.powernet, terminal))
 					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread

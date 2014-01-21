@@ -35,7 +35,7 @@
 		if (src.reagents.total_volume >= 2)
 			src.reagents.trans_to(W, 2)
 			user << "\blue You wet the mop"
-			playsound(src.loc, 'sound/effects/slosh.ogg', 25, 1)
+			playsound(get_turf(src), 'sound/effects/slosh.ogg', 25, 1)
 		if (src.reagents.total_volume < 1)
 			user << "\blue Out of water!"
 	return
