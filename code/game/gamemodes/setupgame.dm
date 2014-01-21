@@ -60,7 +60,7 @@
 	LISPBLOCK      = getAssignedBlock("LISP",       numsToAssign)
 	MUTEBLOCK      = getAssignedBlock("MUTE",       numsToAssign)
 	RADBLOCK       = getAssignedBlock("RAD",        numsToAssign)
-	FATBLOCK       = getAssignedBlock("M_FAT",        numsToAssign)
+	FATBLOCK       = getAssignedBlock("FAT",        numsToAssign)
 	STUTTERBLOCK   = getAssignedBlock("STUTTER",    numsToAssign)
 	CHAVBLOCK      = getAssignedBlock("CHAV",       numsToAssign)
 	SWEDEBLOCK     = getAssignedBlock("SWEDE",      numsToAssign)
