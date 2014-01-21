@@ -24,6 +24,13 @@
 	icon_state = "horribletie"
 	item_color = "horribletie"
 
+/obj/item/clothing/tie/waistcoat
+	name = "waistcoat"
+	desc = "For some classy, murderous fun."
+	icon_state = "waistcoat"
+	item_state = "waistcoat"
+	item_color = "waistcoat"
+
 /obj/item/clothing/tie/stethoscope
 	name = "stethoscope"
 	desc = "An outdated medical apparatus for listening to the sounds of the human body. It also makes you look like you know what you're doing."

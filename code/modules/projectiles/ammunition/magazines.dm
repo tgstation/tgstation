@@ -15,7 +15,7 @@
 				boolets++
 		return boolets
 	else
-		return stored_ammo.len
+		return ..()
 
 /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	name = "russian revolver cylinder"
@@ -23,6 +23,7 @@
 	ammo_type = /obj/item/ammo_casing/a357
 	caliber = "357"
 	max_ammo = 6
+	multiload = 0
 
 /obj/item/ammo_box/magazine/internal/cylinder/rus357/New()
 	stored_ammo += new ammo_type(src)
@@ -40,13 +41,15 @@
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	caliber = "shotgun"
 	max_ammo = 4
+	multiload = 0
 
 /obj/item/ammo_box/magazine/internal/shotcom
 	name = "combat shotgun internal magazine"
 	desc = "Oh god, this shouldn't be here"
-	ammo_type = /obj/item/ammo_casing/shotgun
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 	caliber = "shotgun"
 	max_ammo = 8
+	multiload = 0
 
 /obj/item/ammo_box/magazine/internal/cylinder/dualshot
 	name = "double-barrel shotgun internal magazine"
@@ -54,6 +57,7 @@
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	caliber = "shotgun"
 	max_ammo = 2
+	multiload = 0
 
 ///////////EXTERNAL MAGAZINES////////////////
 /obj/item/ammo_box/magazine/m9mm
@@ -131,7 +135,7 @@
 /obj/item/ammo_box/magazine/m75
 	name = "magazine (.75)"
 	icon_state = "75"
-	ammo_type = /obj/item/ammo_casing/a75
+	ammo_type = /obj/item/ammo_casing/caseless/a75
 	caliber = "75"
 	multiple_sprites = 2
 	max_ammo = 8

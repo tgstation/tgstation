@@ -8,19 +8,20 @@
 	var/seed = ""
 	var/plantname = ""
 	var/product	//a type path
-	var/species = ""
 	var/lifespan = 20
 	var/endurance = 15
 	var/maturation = 7
 	var/production = 7
 	var/yield = 2
-	var/potency = 1
+	var/potency = 20
 	var/plant_type = 0
-	New()
-		create_reagents(50)
+
+/obj/item/weapon/grown/New()
+	create_reagents(50)
 
 /obj/item/weapon/grown/proc/changePotency(newValue) //-QualityVan
 	potency = newValue
+	transform *= TransformUsingVariable(potency, 100, 0.5) //Makes the resulting produce's sprite larger or smaller based on potency!
 
 /obj/item/weapon/grown/log
 	name = "tower-cap log"
@@ -134,6 +135,6 @@
 			force = round((5+potency/2.5), 1)
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='suicide'>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</span>"
 		return (BRUTELOSS|TOXLOSS)
 

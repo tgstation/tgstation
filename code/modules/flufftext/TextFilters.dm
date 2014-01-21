@@ -57,7 +57,7 @@ proc/NewStutter(phrase,stunned)
 
 		split_phrase[index] = word
 
-	return sanitize(dd_list2text(split_phrase," "))
+	return sanitize(list2text(split_phrase," "))
 
 proc/Stagger(mob/M,d) //Technically not a filter, but it relates to drunkenness.
 	step(M, pick(d,turn(d,90),turn(d,-90)))
@@ -79,6 +79,6 @@ proc/Ellipsis(original_msg, chance = 50, keep_words)
 				continue
 		new_words += w
 
-	new_msg = dd_list2text(new_words," ")
+	new_msg = list2text(new_words," ")
 
 	return new_msg

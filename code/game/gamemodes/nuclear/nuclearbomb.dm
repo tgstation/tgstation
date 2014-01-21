@@ -27,7 +27,8 @@ var/bomb_set
 		if (src.timeleft <= 0)
 			explode()
 		else
-			playsound(loc, 'sound/items/timer.ogg', 5, 0)
+			var/volume = (timeleft <= 20 ? 30 : 5)
+			playsound(loc, 'sound/items/timer.ogg', volume, 0)
 		for(var/mob/M in viewers(1, src))
 			if ((M.client && M.machine == src))
 				src.attack_hand(M)

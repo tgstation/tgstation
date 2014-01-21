@@ -67,7 +67,8 @@
 		sound = 1
 	else
 		var/obj/item/weapon/gun/energy/E=new installation	//All energy-based weapons are applicable
-		projectile = E.projectile_type
+		var/obj/item/ammo_casing/shottype = E.ammo_type[1]
+		projectile = shottype.projectile_type
 		eprojectile = projectile
 
 		switch(E.type)
@@ -378,7 +379,7 @@
 /obj/machinery/porta_turret/process()
 	//the main machinery process
 
-	set background = 1
+	set background = BACKGROUND_ENABLED
 
 	if(cover == null && anchored)	//if it has no cover and is anchored
 		if(stat & BROKEN)	//if the turret is borked

@@ -59,8 +59,8 @@
 		healthcheck()
 		return
 
-/obj/structure/grille/attack_slime(mob/user as mob)
-	if(!istype(user, /mob/living/carbon/slime/adult))	return
+/obj/structure/grille/attack_slime(mob/living/carbon/slime/user as mob)
+	if(!user.is_adult)	return
 
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] smashes against [src].</span>", \

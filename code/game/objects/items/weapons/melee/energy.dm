@@ -2,8 +2,8 @@
 	var/active = 0
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
-	viewers(user) << pick("\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>", \
-						"\red <b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b>")
+	viewers(user) << pick("<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>", \
+						"<span class='suicide'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/rejects_blood()
@@ -23,7 +23,7 @@
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 
 /obj/item/weapon/melee/energy/axe/suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='suicide'>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</span>"
 		return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/axe/attack_self(mob/user)
@@ -129,6 +129,18 @@
 		else
 			user << "<span class='warning'>It's already fabulous!</span>"
 
+/obj/item/weapon/melee/energy/sword/cyborg
+	var/hitcost = 500
+
+/obj/item/weapon/melee/energy/sword/cyborg/attack(mob/M, var/mob/living/silicon/robot/R)
+	if(R.cell)
+		var/obj/item/weapon/cell/C = R.cell
+		if(active && !(C.use(hitcost)))
+			attack_self(R)
+			R << "<span class='notice'>It's out of charge!</span>"
+			return
+		..()
+	return
 
 /obj/item/weapon/melee/energy/sword/pirate
 	name = "energy cutlass"
@@ -142,8 +154,6 @@
 /obj/item/weapon/melee/energy/sword/red
 	New()
 		item_color = "red"
-
-
 
 /obj/item/weapon/melee/energy/blade
 	name = "energy blade"

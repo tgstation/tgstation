@@ -2145,5 +2145,5 @@ datum
 			name = "Thirteen Loko"
 			id = "thirteenloko"
 			result = "thirteenloko"
-			required_reagents = list("vodka" = 1, "coffee" = 1, "orangejuice" = 1)
+			required_reagents = list("vodka" = 1, "coffee" = 1, "limejuice" = 1)
 			result_amount = 3

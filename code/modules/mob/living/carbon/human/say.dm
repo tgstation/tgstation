@@ -52,7 +52,7 @@
 						if(findtext(temp_message[H], "*") || findtext(temp_message[H], ";") || findtext(temp_message[H], ":")) continue
 						temp_message[H] = "HONK"
 						pick_list -= H //Make sure that you dont HONK the same word twice
-					message = dd_list2text(temp_message, " ")
+					message = list2text(temp_message, " ")
 
 		if(wear_mask)
 			message = wear_mask.speechModification(message)

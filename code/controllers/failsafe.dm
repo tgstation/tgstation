@@ -22,7 +22,7 @@ var/datum/controller/failsafe/Failsafe
 /datum/controller/failsafe/proc/process()
 	processing = 1
 	spawn(0)
-		set background = 1
+		set background = BACKGROUND_ENABLED
 		while(1)	//more efficient than recursivly calling ourself over and over. background = 1 ensures we do not trigger an infinite loop
 			if(!master_controller)		new /datum/controller/game_controller()	//replace the missing master_controller! This should never happen.
 			if(!lighting_controller)	new /datum/controller/lighting()		//replace the missing lighting_controller

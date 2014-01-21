@@ -105,8 +105,8 @@ datum/shuttle_controller
 				callshuttle = 0 //if there's an alive AI or a communication console on the station z level, we don't call the shuttle
 				break
 
-		if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction")
-			callshuttle = 0
+			if(ticker && ticker.mode && (ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction"))
+				callshuttle = 0
 
 		if(callshuttle)
 			if(!online && direction == 1) //we don't call the shuttle if it's already coming

@@ -363,7 +363,7 @@
 
 	var/damage = rand(1, 3)
 
-	if(istype(src, /mob/living/carbon/slime/adult))
+	if(M.is_adult)
 		damage = rand(20, 40)
 	else
 		damage = rand(5, 35)
@@ -401,12 +401,7 @@
 			return
 	else if(meat_type && (stat == DEAD))	//if the animal has a meat, and if it is dead.
 		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
-			new meat_type (get_turf(src))
-			if(prob(95))
-				del(src)
-				return
-			gib()
-			return
+			harvest()
 	else
 		if(O.force)
 			var/damage = O.force
@@ -498,7 +493,9 @@
 	var/mob/living/simple_animal/partner
 	var/children = 0
 	for(var/mob/M in oview(7, src))
-		if(istype(M, childtype)) //Check for children FIRST.
+		if(M.stat != CONSCIOUS) //Check if it's concious FIRSTER.
+			continue
+		else if(istype(M, childtype)) //Check for children FIRST.
 			children++
 		else if(istype(M, species))
 			if(M.client)
@@ -510,3 +507,12 @@
 			continue
 	if(alone && partner && children < 3)
 		new childtype(loc)
+
+// Harvest an animal's delicious byproducts
+/mob/living/simple_animal/proc/harvest()
+	new meat_type (get_turf(src))
+	if(prob(95))
+		del(src)
+		return
+	gib()
+	return
