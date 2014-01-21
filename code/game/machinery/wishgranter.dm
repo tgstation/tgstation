@@ -48,17 +48,19 @@
 			user.see_in_dark = 8
 			user.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
-		if (!(COLD_RESISTANCE in user.mutations))
-			user.mutations.Add(COLD_RESISTANCE)
+		if (!(M_RESIST_COLD in user.mutations))
+			user.mutations.Add(M_RESIST_COLD)
 
-		if (!(mHeatres in user.mutations))
-			user.mutations.Add(mHeatres)
+		if (!(M_RESIST_HEAT in user.mutations))
+			user.mutations.Add(M_RESIST_HEAT)
 
-		if (!(TK in user.mutations))
-			user.mutations.Add(TK)
+		if (!(M_TK in user.mutations))
+			user.mutations.Add(M_TK)
 
+		/* Not used
 		if(!(HEAL in user.mutations))
 			user.mutations.Add(HEAL)
+		*/
 
 		user.update_mutations()
 

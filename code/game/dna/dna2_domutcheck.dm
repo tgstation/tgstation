@@ -69,57 +69,57 @@
 	var/forced = (flags & MUTCHK_FORCED)        == MUTCHK_FORCED
 
 	if(M.dna.GetSEState(NOBREATHBLOCK))
-		if(forced || probinj(45,inj) || (mNobreath in old_mutations))
+		if(forced || probinj(45,inj) || (M_NO_BREATH in old_mutations))
 			M << "\blue You feel no need to breathe."
-			M.mutations.Add(mNobreath)
+			M.mutations.Add(M_NO_BREATH)
 	if(M.dna.GetSEState(REMOTEVIEWBLOCK))
-		if(forced || probinj(45,inj) || (mRemote in old_mutations))
+		if(forced || probinj(45,inj) || (M_REMOTE_VIEW in old_mutations))
 			M << "\blue Your mind expands"
-			M.mutations.Add(mRemote)
+			M.mutations.Add(M_REMOTE_VIEW)
 			M.verbs += /mob/living/carbon/human/proc/remoteobserve
 	if(M.dna.GetSEState(REGENERATEBLOCK))
-		if(forced || probinj(45,inj) || (mRegen in old_mutations))
+		if(forced || probinj(45,inj) || (M_REGEN in old_mutations))
 			M << "\blue You feel better"
-			M.mutations.Add(mRegen)
+			M.mutations.Add(M_REGEN)
 	if(M.dna.GetSEState(INCREASERUNBLOCK))
-		if(forced || probinj(45,inj) || (mRun in old_mutations))
+		if(forced || probinj(45,inj) || (M_RUN in old_mutations))
 			M << "\blue Your leg muscles pulsate."
-			M.mutations.Add(mRun)
+			M.mutations.Add(M_RUN)
 	if(M.dna.GetSEState(REMOTETALKBLOCK))
-		if(forced || probinj(45,inj) || (mRemotetalk in old_mutations))
+		if(forced || probinj(45,inj) || (M_REMOTE_TALK in old_mutations))
 			M << "\blue You expand your mind outwards"
-			M.mutations.Add(mRemotetalk)
+			M.mutations.Add(M_REMOTE_TALK)
 			M.verbs += /mob/living/carbon/human/proc/remotesay
 	if(M.dna.GetSEState(MORPHBLOCK))
-		if(forced || probinj(45,inj) || (mMorph in old_mutations))
-			M.mutations.Add(mMorph)
+		if(forced || probinj(45,inj) || (M_MORPH in old_mutations))
+			M.mutations.Add(M_MORPH)
 			M << "\blue Your skin feels strange"
 			M.verbs += /mob/living/carbon/human/proc/morph
 	if(M.dna.GetSEState(COLDBLOCK))
-		if(!(COLD_RESISTANCE in old_mutations))
-			if(forced || probinj(15,inj) || (mHeatres in old_mutations))
-				M.mutations.Add(mHeatres)
+		if(!(M_RESIST_COLD in old_mutations))
+			if(forced || probinj(15,inj) || (M_RESIST_HEAT in old_mutations))
+				M.mutations.Add(M_RESIST_HEAT)
 				M << "\blue Your skin is icy to the touch"
 		else
-			if(forced || probinj(5,inj) || (mHeatres in old_mutations))
-				M.mutations.Add(mHeatres)
+			if(forced || probinj(5,inj) || (M_RESIST_HEAT in old_mutations))
+				M.mutations.Add(M_RESIST_HEAT)
 				M << "\blue Your skin is icy to the touch"
 	if(M.dna.GetSEState(HALLUCINATIONBLOCK))
-		if(forced || probinj(45,inj) || (mHallucination in old_mutations))
-			M.mutations.Add(mHallucination)
+		if(forced || probinj(45,inj) || (M_HALLUCINATE in old_mutations))
+			M.mutations.Add(M_HALLUCINATE)
 			M << "\red Your mind says 'Hello'"
 	if(M.dna.GetSEState(NOPRINTSBLOCK))
-		if(forced || probinj(45,inj) || (mFingerprints in old_mutations))
-			M.mutations.Add(mFingerprints)
+		if(forced || probinj(45,inj) || (M_FINGERPRINTS in old_mutations))
+			M.mutations.Add(M_FINGERPRINTS)
 			M << "\blue Your fingers feel numb"
 	if(M.dna.GetSEState(SHOCKIMMUNITYBLOCK))
-		if(forced || probinj(45,inj) || (mShock in old_mutations))
-			M.mutations.Add(mShock)
+		if(forced || probinj(45,inj) || (M_NO_SHOCK in old_mutations))
+			M.mutations.Add(M_NO_SHOCK)
 			M << "\blue Your skin feels strange"
 	if(M.dna.GetSEState(SMALLSIZEBLOCK))
-		if(forced || probinj(45,inj) || (mSmallsize in old_mutations))
+		if(forced || probinj(45,inj) || (M_DWARF in old_mutations))
 			M << "\blue Your skin feels rubbery"
-			M.mutations.Add(mSmallsize)
+			M.mutations.Add(M_DWARF)
 			M.pass_flags |= 1
 
 
@@ -160,21 +160,21 @@
 		M.disabilities |= NERVOUS
 		M << "\red You feel nervous."
 	if (M.dna.GetSEState(FIREBLOCK))
-		if(!(mHeatres in old_mutations))
-			if(forced || probinj(30,inj) || (COLD_RESISTANCE in old_mutations))
+		if(!(M_RESIST_HEAT in old_mutations))
+			if(forced || probinj(30,inj) || (M_RESIST_COLD in old_mutations))
 				M << "\blue Your body feels warm."
-				M.mutations.Add(COLD_RESISTANCE)
+				M.mutations.Add(M_RESIST_COLD)
 		else
-			if(forced || probinj(5,inj) || (COLD_RESISTANCE in old_mutations))
+			if(forced || probinj(5,inj) || (M_RESIST_COLD in old_mutations))
 				M << "\blue Your body feels warm."
-				M.mutations.Add(COLD_RESISTANCE)
+				M.mutations.Add(M_RESIST_COLD)
 	if (M.dna.GetSEState(BLINDBLOCK))
 		M.sdisabilities |= BLIND
 		M << "\red You can't seem to see anything."
 	if (M.dna.GetSEState(TELEBLOCK))
-		if(forced || probinj(15,inj) || (TK in old_mutations))
+		if(forced || probinj(15,inj) || (M_TK in old_mutations))
 			M << "\blue You feel smarter."
-			M.mutations.Add(TK)
+			M.mutations.Add(M_TK)
 	if (M.dna.GetSEState(DEAFBLOCK))
 		M.sdisabilities |= DEAF
 		M.ear_deaf = 1

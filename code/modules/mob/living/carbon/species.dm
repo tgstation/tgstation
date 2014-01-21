@@ -140,7 +140,7 @@
 	flags = WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | CAN_BE_FAT
 
 	// Both must be set or it's only a 45% chance of manifesting.
-	default_mutations=list(mRemotetalk)
+	default_mutations=list(M_REMOTE_TALK)
 	default_block_names=list("REMOTETALK")
 
 /datum/species/skrell

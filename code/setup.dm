@@ -128,7 +128,7 @@
 #define PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO	20
 #define PLASMA_OXYGEN_FULLBURN				10
 
-#define T0C 273.15					// 0degC
+#define T0C  273.15					// 0degC
 #define T20C 293.15					// 20degC
 #define TCMB 2.7					// -270.3degC
 
@@ -314,9 +314,13 @@ var/MAX_EXPLOSION_RANGE = 14
 #define DISABILITY_FLAG_EPILEPTIC   4
 #define DISABILITY_FLAG_DEAF        8
 
-	// Generic mutations:
-#define	TK				1
-#define COLD_RESISTANCE	2
+///////////////////////////////////////
+// MUTATIONS
+///////////////////////////////////////
+
+// Generic mutations:
+#define	M_TK			1
+#define M_RESIST_COLD	2
 #define XRAY			3
 #define HULK			4
 #define CLUMSY			5
@@ -325,43 +329,43 @@ var/MAX_EXPLOSION_RANGE = 14
 #define NOCLONE			8
 
 
-	// Extra powers:
+// Extra powers:
 #define LASER			9 	// harm intent - click anywhere to shoot lasers from eyes
-#define HEAL			10 	// healing people with hands
-#define SHADOW			11 	// shadow teleportation (create in/out portals anywhere) (25%)
-#define SCREAM			12 	// supersonic screaming (25%)
-#define EXPLOSIVE		13 	// exploding on-demand (15%)
-#define REGENERATION	14 	// superhuman regeneration (30%)
-#define REPROCESSOR		15 	// eat anything (50%)
-#define SHAPESHIFTING	16 	// take on the appearance of anything (40%)
-#define PHASING			17 	// ability to phase through walls (40%)
-#define SHIELD			18 	// shielding from all projectile attacks (30%)
-#define SHOCKWAVE		19 	// attack a nearby tile and cause a massive shockwave, knocking most people on their asses (25%)
-#define ELECTRICITY		20 	// ability to shoot electric attacks (15%)
+//#define HEAL			10 	// (Not implemented) healing people with hands
+//#define SHADOW		11 	// (Not implemented) shadow teleportation (create in/out portals anywhere) (25%)
+//#define SCREAM		12 	// (Not implemented) supersonic screaming (25%)
+//#define EXPLOSIVE		13 	// (Not implemented) exploding on-demand (15%)
+//#define REGENERATION	14 	// (Not implemented) superhuman regeneration (30%)
+//#define REPROCESSOR	15 	// (Not implemented) eat anything (50%)
+//#define SHAPESHIFTING	16 	// (Not implemented) take on the appearance of anything (40%)
+//#define PHASING		17 	// (Not implemented) ability to phase through walls (40%)
+//#define SHIELD		18 	// (Not implemented) shielding from all projectile attacks (30%)
+//#define SHOCKWAVE		19 	// (Not implemented) attack a nearby tile and cause a massive shockwave, knocking most people on their asses (25%)
+//#define ELECTRICITY	20 	// (Not implemented) ability to shoot electric attacks (15%)
 
 	//2spooky
 #define SKELETON 29
 #define PLANT 30
 
 // Other Mutations:
-#define mNobreath		100 	// no need to breathe
-#define mRemote			101 	// remote viewing
-#define mRegen			102 	// health regen
-#define mRun			103 	// no slowdown
-#define mRemotetalk		104 	// remote talking
-#define mMorph			105 	// changing appearance
-#define mHeatres		106 	// nothing (seriously nothing)
-#define mHallucination	107 	// hallucinations
-#define mFingerprints	108 	// no fingerprints
-#define mShock			109 	// insulated hands
-#define mSmallsize		110 	// table climbing
+#define M_NO_BREATH		100 	// no need to breathe
+#define M_REMOTE_VIEW	101 	// remote viewing
+#define M_REGEN			102 	// health regen
+#define M_RUN			103 	// no slowdown
+#define M_REMOTE_TALK	104 	// remote talking
+#define M_MORPH			105 	// changing appearance
+#define M_RESIST_HEAT	106 	// heat resistance
+#define M_HALLUCINATE	107 	// hallucinations
+#define M_FINGERPRINTS	108 	// no fingerprints
+#define M_NO_SHOCK		109 	// insulated hands
+#define M_DWARF			110 	// table climbing
 
 // Goon muts
-#define M_OBESITY       200
-#define M_TOXIC_FARTS   201
-#define M_STRONG        202
-#define M_SOBER         203
-#define M_PSY_RESIST    204
+#define M_OBESITY       200		// Decreased metabolism
+#define M_TOXIC_FARTS   201		// Duh
+#define M_STRONG        202		// (Nothing)
+#define M_SOBER         203		// Increased alcohol metabolism
+#define M_PSY_RESIST    204		// Block remoteview
 
 //disabilities
 #define NEARSIGHTED		1

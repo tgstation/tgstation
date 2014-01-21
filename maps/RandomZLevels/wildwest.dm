@@ -49,11 +49,11 @@
 				if (!(LASER in user.mutations))
 					user.mutations.Add(LASER)
 					user << "\blue You feel pressure building behind your eyes."
-				if (!(COLD_RESISTANCE in user.mutations))
-					user.mutations.Add(COLD_RESISTANCE)
+				if (!(M_RESIST_COLD in user.mutations))
+					user.mutations.Add(M_RESIST_COLD)
 					user << "\blue Your body feels warm."
-				if (!(mHeatres in user.mutations))
-					user.mutations.Add(mHeatres)
+				if (!(M_RESIST_HEAT in user.mutations))
+					user.mutations.Add(M_RESIST_HEAT)
 					user << "\blue Your skin feels icy to the touch."
 				if (!(XRAY in user.mutations))
 					user.mutations.Add(XRAY)

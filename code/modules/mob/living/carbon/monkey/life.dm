@@ -112,7 +112,7 @@
 	proc/handle_mutations_and_radiation()
 
 		if(getFireLoss())
-			if((mHeatres in mutations) || prob(50))
+			if((M_RESIST_HEAT in mutations) || prob(50))
 				switch(getFireLoss())
 					if(1 to 50)
 						adjustFireLoss(-1)
@@ -415,7 +415,7 @@
 			if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
 				pressure_alert = -1
 			else
-				if( !(COLD_RESISTANCE in mutations) )
+				if( !(M_RESIST_COLD in mutations) )
 					adjustBruteLoss( LOW_PRESSURE_DAMAGE )
 					pressure_alert = -2
 				else

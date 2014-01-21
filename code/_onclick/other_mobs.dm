@@ -29,7 +29,7 @@
 	else if(istype(G) && G.Touch(A,0)) // for magic gloves
 		return
 
-	else if(TK in mutations)
+	else if(M_TK in mutations)
 		switch(get_dist(src,A))
 			if(1 to 5) // not adjacent may mean blocked by window
 				next_move += 2

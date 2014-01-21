@@ -383,10 +383,10 @@ proc/get_damage_icon_part(damage_state, body_part)
 				else
 					standing.underlays	+= "hulk_[g]_s"
 				add_image = 1
-			if(COLD_RESISTANCE)
+			if(M_RESIST_COLD)
 				standing.underlays	+= "fire[fat]_s"
 				add_image = 1
-			if(mHeatres)
+			if(M_RESIST_HEAT)
 				standing.underlays	+= "cold[fat]_s"
 				add_image = 1
 			if(TK)
@@ -396,7 +396,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 			if(LASER)
 				standing.overlays	+= "lasereyes_s"
 				add_image = 1
-	if((COLD_RESISTANCE in mutations) && (mHeatres in mutations))
+	if((M_RESIST_COLD in mutations) && (M_RESIST_HEAT in mutations))
 		standing.underlays	-= "cold[fat]_s"
 		standing.underlays	-= "fire[fat]_s"
 		standing.underlays	+= "coldfire[fat]_s"
