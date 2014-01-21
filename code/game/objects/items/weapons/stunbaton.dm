@@ -81,7 +81,7 @@
 	return
 
 /obj/item/weapon/melee/baton/attack_self(mob/user)
-	if(status && (CLUMSY in user.mutations) && prob(50))
+	if(status && (M_CLUMSY in user.mutations) && prob(50))
 		user << "\red You grab the [src] on the wrong side."
 		user.Weaken(stunforce*3)
 		deductcharge(hitcost)
@@ -100,7 +100,7 @@
 	add_fingerprint(user)
 
 /obj/item/weapon/melee/baton/attack(mob/M, mob/user)
-	if(status && (CLUMSY in user.mutations) && prob(50))
+	if(status && (M_CLUMSY in user.mutations) && prob(50))
 		user << "<span class='danger'>You accidentally hit yourself with [src]!</span>"
 		user.Weaken(stunforce*3)
 		deductcharge(hitcost)

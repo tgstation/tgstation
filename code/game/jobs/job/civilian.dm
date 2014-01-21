@@ -224,7 +224,7 @@
 		H.equip_or_collect(new /obj/item/toy/crayon/rainbow(H), slot_in_backpack)
 		H.equip_or_collect(new /obj/item/weapon/storage/fancy/crayons(H), slot_in_backpack)
 		H.equip_or_collect(new /obj/item/toy/waterflower(H), slot_in_backpack)
-		H.mutations.Add(CLUMSY)
+		H.mutations.Add(M_CLUMSY)
 		return 1
 
 

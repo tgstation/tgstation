@@ -323,7 +323,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define M_RESIST_COLD	2
 #define M_XRAY			3
 #define M_HULK			4
-#define CLUMSY			5
+#define M_CLUMSY			5
 #define FAT				6
 #define HUSK			7
 #define NOCLONE			8

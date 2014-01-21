@@ -73,7 +73,7 @@
 		src.icon_state = "fork"
 		return
 	else
-		if((CLUMSY in user.mutations) && prob(50))
+		if((M_CLUMSY in user.mutations) && prob(50))
 			M = user
 		return eyestab(M,user)
 
@@ -101,7 +101,7 @@
 		src.icon_state = "fork"
 		return
 	else
-		if((CLUMSY in user.mutations) && prob(50))
+		if((M_CLUMSY in user.mutations) && prob(50))
 			M = user
 		return eyestab(M,user)
 
@@ -122,7 +122,7 @@
 		return (BRUTELOSS)
 
 /obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if ((M_CLUMSY in user.mutations) && prob(50))
 		user << "\red You accidentally cut yourself with the [src]."
 		user.take_organ_damage(20)
 		return
@@ -137,7 +137,7 @@
 	throwforce = 10.0
 
 /obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if ((M_CLUMSY in user.mutations) && prob(50))
 		user << "\red You somehow managed to cut yourself with the [src]."
 		user.take_organ_damage(20)
 		return
@@ -228,7 +228,7 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked") //I think the rollingpin attackby will end up ignoring this anyway.
 
 /obj/item/weapon/kitchen/rollingpin/attack(mob/living/M as mob, mob/living/user as mob)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if ((M_CLUMSY in user.mutations) && prob(50))
 		user << "\red The [src] slips out of your hand and hits your head."
 		user.take_organ_damage(10)
 		user.Paralyse(2)
@@ -314,7 +314,7 @@
 						sleep(rand(2,4))
 
 
-	if((CLUMSY in user.mutations) && prob(50))              //What if he's a clown?
+	if((M_CLUMSY in user.mutations) && prob(50))              //What if he's a clown?
 		M << "\red You accidentally slam yourself with the [src]!"
 		M.Weaken(1)
 		user.take_organ_damage(2)

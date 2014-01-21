@@ -132,7 +132,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	if (changeling.current.mind)
 		if (changeling.current.mind.assigned_role == "Clown")
 			changeling.current << "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself."
-			changeling.current.mutations.Remove(CLUMSY)
+			changeling.current.mutations.Remove(M_CLUMSY)
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in changeling.objectives)

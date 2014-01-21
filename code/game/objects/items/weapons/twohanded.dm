@@ -164,7 +164,7 @@
 
 /obj/item/weapon/twohanded/dualsaber/attack(target as mob, mob/living/user as mob)
 	..()
-	if((CLUMSY in user.mutations) && (wielded) &&prob(40))
+	if((M_CLUMSY in user.mutations) && (wielded) &&prob(40))
 		user << "\red You twirl around a bit before losing your balance and impaling yourself on the [src]."
 		user.take_organ_damage(20,25)
 		return

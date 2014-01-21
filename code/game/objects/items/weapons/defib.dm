@@ -37,7 +37,7 @@
 			icon_state = "defibpaddleout_low"
 
 /obj/item/weapon/melee/defibrilator/attack_self(mob/user as mob)
-	if(status && (CLUMSY in user.mutations) && prob(50))
+	if(status && (M_CLUMSY in user.mutations) && prob(50))
 		spark_system.attach(user)
 		spark_system.set_up(5, 0, src)
 		spark_system.start()

@@ -145,7 +145,7 @@
 		M << "\red You start coughing."
 	if (M.dna.GetSEState(CLUMSYBLOCK))
 		M << "\red You feel lightheaded."
-		M.mutations.Add(CLUMSY)
+		M.mutations.Add(M_CLUMSY)
 	if (M.dna.GetSEState(TWITCHBLOCK))
 		M.disabilities |= TOURETTES
 		M << "\red You twitch."

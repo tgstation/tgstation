@@ -200,7 +200,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 	if (vampire.current.mind)
 		if (vampire.current.mind.assigned_role == "Clown")
 			vampire.current << "Your lust for blood has allowed you to overcome your clumsy nature allowing you to wield weapons without harming yourself."
-			vampire.current.mutations.Remove(CLUMSY)
+			vampire.current.mutations.Remove(M_CLUMSY)
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in vampire.objectives)

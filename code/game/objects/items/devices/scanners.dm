@@ -77,7 +77,7 @@ REAGENT SCANNER
 
 
 /obj/item/device/healthanalyzer/attack(mob/living/M as mob, mob/living/user as mob)
-	if (( (CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
+	if (( (M_CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
 		user << text("\red You try to analyze the floor's vitals!")
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red [user] has analyzed the floor's vitals!"), 1)

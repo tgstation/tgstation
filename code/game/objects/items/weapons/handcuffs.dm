@@ -30,7 +30,7 @@
 					C.update_inv_handcuffed()
 
 	else
-		if ((CLUMSY in usr.mutations) && prob(50))
+		if ((M_CLUMSY in usr.mutations) && prob(50))
 			usr << "\red Uh ... how do those things work?!"
 			if (istype(C, /mob/living/carbon/human))
 				if(!C.handcuffed)
