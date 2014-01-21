@@ -15,13 +15,17 @@
 	var/name = ""
 	var/reqs[]
 	var/result_path
+	var/tools[]
+	var/time = 0
 
 /datum/table_recipe/flame_thrower
 	name = "Flamethrower"
 	result_path = /obj/item/weapon/flamethrower
-	reqs = list("/obj/item/weapon/weldingtool" = 1,
-				"/obj/item/device/assembly/igniter" = 1,
-				"/obj/item/stack/rods" = 2)
+	reqs = list(/obj/item/weapon/weldingtool = 1,
+				/obj/item/device/assembly/igniter = 1,
+				/obj/item/stack/rods = 2)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 20
 
 /obj/structure/table
 	name = "table"
@@ -34,6 +38,7 @@
 	throwpass = 1	//You can throw objects over this, despite it's density.")
 	var/parts = /obj/item/weapon/table_parts
 	var/list/table_contents = list()
+	var/busy = 0
 
 /obj/structure/table/New()
 	..()
@@ -54,12 +59,10 @@
 	..()
 
 /obj/structure/table/proc/check_contents(datum/table_recipe/TR)
+	check_table()
 	var/datum/table_recipe/R = TR
-	world.log << "Here comes the [TR]"
 	var/i = R.reqs.len
-	world.log << "Its req.length is [i]"
 	for(var/A in R.reqs)
-		world.log << "It needs [R.reqs[A]] [A], and there is only [table_contents[A]]"
 		if(table_contents[A] < R.reqs[A])
 			break
 		else
@@ -69,37 +72,71 @@
 	else
 		return 0
 
+/obj/structure/table/proc/check_table()
+	table_contents = list()
+	for(var/obj/item/I in loc)
+		if(istype(I, /obj/item/stack))
+			var/obj/item/stack/S = I
+			table_contents[I.type] += S.amount
+		else
+			table_contents[I.type] += 1
+
+/obj/structure/table/proc/check_tools(mob/user, datum/table_recipe/TR)
+	if(!TR.tools.len)
+		return 1
+	var/list/hands_content = list()
+	if(user.l_hand)
+		hands_content.Add(user.l_hand.type)
+	if(user.r_hand)
+		hands_content.Add(user.r_hand.type)
+	var/i = TR.tools.len
+	for(var/A in TR.tools)
+		if(hands_content.Find(A))
+			hands_content.Remove(A)
+			i--
+		else
+			break
+	if(i>0)
+		return 0
+	return 1
+
+/obj/structure/table/proc/construct_item(mob/user, datum/table_recipe/TR)
+	check_table()
+	if(check_contents(TR) && check_tools(user, TR))
+		if(do_after(user, TR.time))
+			if(!check_contents(TR) || !check_tools(user, TR))
+				return 0
+			del_reqs(TR)
+			var/obj/item/I = new TR.result_path
+			I.loc = loc
+			return 1
+	return 0
+
 /obj/structure/table/proc/del_reqs(datum/table_recipe/TR)
 	var/datum/table_recipe/R = TR
 	for(var/A in R.reqs)
-		var/obj/item/I = locate(text2path(A)) in loc
+		var/obj/item/I = locate(A) in loc
 		if(istype(I, /obj/item/stack))
 			var/obj/item/stack/S = I
 			S.amount -= R.reqs[A]
 		else
 			for(var/i=R.reqs[A],i>=0,i--)
-				I = locate(text2path(A)) in loc
+				I = locate(A) in loc
 				del(I)
 
 /obj/structure/table/interact(mob/user)
-	for(var/A in table_recipes)
-		world.log << "[A]"
-	table_contents = list()
-	for(var/obj/item/I in loc)
-		if(istype(I, /obj/item/stack))
-			var/obj/item/stack/S = I
-			table_contents["[I.type]"] += S.amount
-		else
-			table_contents["[I.type]"] += 1
+	check_table()
 	if(!table_contents.len)
 		return
 	var/dat = "<h3>Construction menu</h3>"
 	dat += "<div class='statusDisplay'>"
-	for(var/datum/table_recipe/R in table_recipes)
-		if(check_contents(R))
-			dat += "<A href='?src=\ref[src];make=\ref[R]'>[R.name]</A><BR>"
-
-	dat += "</div>"
+	if(busy)
+		dat += "Construction inprogress...</div>"
+	else
+		for(var/datum/table_recipe/R in table_recipes)
+			if(check_contents(R))
+				dat += "<A href='?src=\ref[src];make=\ref[R]'>[R.name]</A><BR>"
+		dat += "</div>"
 
 	var/datum/browser/popup = new(user, "table", "Table", 300, 300)
 	popup.set_content(dat)
@@ -111,11 +148,13 @@
 		return
 	if(href_list["make"])
 		var/datum/table_recipe/TR = locate(href_list["make"])
-		if(check_contents(TR))
-			del_reqs(TR)
-			var/obj/item/I = new TR.result_path
-			I.loc = loc
-			usr << "<span class='notice'>You crafted [I.name].</span>"
+		busy = 1
+		interact(usr)
+		if(construct_item(usr, TR))
+			usr << "<span class='notice'>[TR.name] constructed.</span>"
+		else
+			usr << "<span class ='warning'>Construction failed.</span>"
+		busy = 0
 	attack_hand(usr)
 
 /obj/structure/table/update_icon()
