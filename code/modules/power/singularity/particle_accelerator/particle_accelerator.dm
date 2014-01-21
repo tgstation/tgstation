@@ -224,7 +224,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 				user.visible_message("[user.name] detaches the [src.name] from the floor.", \
 					"You remove the external bolts.")
 				temp_state--
-			else if(istype(O, /obj/item/weapon/cable_coil))
+			else if(istype(O, /obj/item/stack/cable_coil))
 				if(O:use(1,user))
 					user.visible_message("[user.name] adds wires to the [src.name].", \
 						"You add some wires.")
@@ -375,7 +375,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 				user.visible_message("[user.name] detaches the [src.name] from the floor.", \
 					"You remove the external bolts.")
 				temp_state--
-			else if(istype(O, /obj/item/weapon/cable_coil))
+			else if(istype(O, /obj/item/stack/cable_coil))
 				if(O:use(1))
 					user.visible_message("[user.name] adds wires to the [src.name].", \
 						"You add some wires.")

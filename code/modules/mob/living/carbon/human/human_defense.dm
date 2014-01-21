@@ -143,8 +143,8 @@ emp_act
 				return
 
 
-	if(istype(I, /obj/item/weapon/cable_coil))
-		var/obj/item/weapon/cable_coil/coil = I
+	if(istype(I, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/coil = I
 		if(affecting.status == ORGAN_ROBOTIC)
 			if(affecting.burn_dam > 0)
 				affecting.heal_damage(0,30,1) //Repair Burn

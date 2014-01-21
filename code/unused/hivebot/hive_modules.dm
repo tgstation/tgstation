@@ -52,6 +52,6 @@
 	G.amount = 50
 	src.modules += G
 
-	var/obj/item/weapon/cable_coil/W = new /obj/item/weapon/cable_coil(src)
+	var/obj/item/stack/cable_coil/W = new /obj/item/stack/cable_coil(src)
 	W.amount = 50
 	src.modules += W
