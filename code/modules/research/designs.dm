@@ -1618,6 +1618,16 @@ other types of metals and chemistry for reagents).
 	reliability_base = 79
 	build_path = /obj/item/weapon/grenade/chem_grenade/large
 
+/datum/design/ex_grenade
+	name = "EX Grenade"
+	desc = "A large grenade that is designed to hold three containers."
+	id = "ex_Grenade"
+	req_tech = list("combat" = 4, "materials" = 2, "engineering" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 3000)
+	reliability_base = 79
+	build_path = /obj/item/weapon/grenade/chem_grenade/exgrenade
+
 /datum/design/smg
 	name = "Submachine Gun"
 	desc = "A lightweight, fast firing gun."
