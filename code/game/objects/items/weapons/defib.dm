@@ -51,7 +51,7 @@
 	if(charges > 0)
 		status = !status
 		user << "<span class='notice'>\The [src] is now [status ? "on" : "off"].</span>"
-		playsound(get_turf(src), "sparks", 75, 1, -1)
+		playsound(src.loc, "sparks", 75, 1, -1)
 		update_icon()
 	else
 		status = 0
@@ -97,7 +97,7 @@
 			if(!charges)
 				status = 0
 			update_icon()
-			playsound(get_turf(src), 'sound/weapons/Egloves.ogg', 50, 1, -1)
+			playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 			user.attack_log += "\[[time_stamp()]\]<font color='red'> Defibrilated [H.name] ([H.ckey]) with [src.name]</font>"
 			H.attack_log += "\[[time_stamp()]\]<font color='orange'> Defibrilated by [user.name] ([user.ckey]) with [src.name]</font>"
 			log_attack("<font color='red'>[user.name] ([user.ckey]) defibrilated [H.name] ([H.ckey]) with [src.name]</font>" )

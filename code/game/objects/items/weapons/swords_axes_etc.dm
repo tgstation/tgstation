@@ -97,7 +97,7 @@
 */
 	if (user.a_intent == "hurt")
 		if(!..()) return
-		playsound(get_turf(src), "swing_hit", 50, 1, -1)
+		playsound(src.loc, "swing_hit", 50, 1, -1)
 		if (M.stuttering < 8 && (!(HULK in M.mutations))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 			M.stuttering = 8
 		M.Stun(8)
@@ -105,7 +105,7 @@
 		for(var/mob/O in viewers(M))
 			if (O.client)	O.show_message("\red <B>[M] has been beaten with \the [src] by [user]!</B>", 1, "\red You hear someone fall", 2)
 	else
-		playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1, -1)
+		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1, -1)
 		M.Stun(5)
 		M.Weaken(5)
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
@@ -154,7 +154,7 @@
 		w_class = 2
 		force = 3//not so robust now
 		attack_verb = list("hit", "punched")
-	playsound(get_turf(src), 'sound/weapons/empty.ogg', 50, 1)
+	playsound(src.loc, 'sound/weapons/empty.ogg', 50, 1)
 	add_fingerprint(user)
 
 	if(blood_overlay)							//updates blood overlay, if any
@@ -183,11 +183,11 @@
 		if (user.a_intent == "hurt")
 			if(!..()) return
 			if(!isrobot(target))
-				playsound(get_turf(src), "swing_hit", 50, 1, -1)
+				playsound(src.loc, "swing_hit", 50, 1, -1)
 				//target.Stun(4)	//naaah
 				target.Weaken(4)
 		else
-			playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1, -1)
+			playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1, -1)
 			target.Weaken(2)
 			target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [target.name] ([target.ckey])</font>")

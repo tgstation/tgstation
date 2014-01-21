@@ -58,7 +58,7 @@
 				return
 			path = 1
 			user << "\blue You add [W] to the metal casing."
-			playsound(src.loc, 'sound/items/Screwdriver2.ogg', 25, -3)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 25, -3)
 			user.remove_from_mob(det)
 			det.loc = src
 			detonator = det
@@ -204,7 +204,7 @@ obj/item/weapon/grenade/chem_grenade/exgrenade
 				return
 			path = 1
 			user << "\blue You insert [W] into the grenade."
-			playsound(src.loc, 'sound/items/Screwdriver2.ogg', 25, -3)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 25, -3)
 			user.remove_from_mob(det)
 			det.loc = src
 			detonator = det

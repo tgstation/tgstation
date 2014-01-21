@@ -15,7 +15,7 @@
 		src.smoke.attach(src)
 
 	prime()
-		playsound(get_turf(src), 'sound/effects/smoke.ogg', 50, 1, -3)
+		playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
 		src.smoke.set_up(10, 0, usr.loc)
 		spawn(0)
 			src.smoke.start()

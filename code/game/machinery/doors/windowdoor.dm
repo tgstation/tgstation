@@ -92,7 +92,7 @@
 	if(!src.operating) //in case of emag
 		src.operating = 1
 	flick(text("[]opening", src.base_state), src)
-	playsound(get_turf(src), 'sound/machines/windowdoor.ogg', 100, 1)
+	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
 	src.icon_state = text("[]open", src.base_state)
 	sleep(10)
 
@@ -110,7 +110,7 @@
 		return 0
 	src.operating = 1
 	flick(text("[]closing", src.base_state), src)
-	playsound(get_turf(src), 'sound/machines/windowdoor.ogg', 100, 1)
+	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
 	src.icon_state = src.base_state
 
 	src.density = 1
@@ -149,7 +149,7 @@
 		tforce = 40
 	else
 		tforce = AM:throwforce
-	playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 100, 1)
+	playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 	take_damage(tforce)
 	//..() //Does this really need to be here twice? The parent proc doesn't even do anything yet. - Nodrak
 	return
@@ -166,7 +166,7 @@
 		if(src.operating)
 			return
 		src.health = max(0, src.health - 25)
-		playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 75, 1)
+		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		visible_message("\red <B>[user] smashes against the [src.name].</B>", 1)
 		if (src.health <= 0)
 			new /obj/item/weapon/shard(src.loc)
@@ -194,8 +194,8 @@
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
-			playsound(get_turf(src), "sparks", 50, 1)
-			playsound(get_turf(src), 'sound/weapons/blade1.ogg', 50, 1)
+			playsound(src.loc, "sparks", 50, 1)
+			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 			visible_message("\blue The glass door was sliced open by [user]!")
 		flick("[src.base_state]spark", src)
 		sleep(6)
@@ -207,7 +207,7 @@
 		var/aforce = I.force
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			src.health = max(0, src.health - aforce)
-		playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 75, 1)
+		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		visible_message("\red <B>[src] was hit by [I].</B>")
 		if (src.health <= 0)
 			new /obj/item/weapon/shard(src.loc)

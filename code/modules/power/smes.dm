@@ -82,7 +82,7 @@
 			user << "You close the maintenance hatch of [src]"
 	if(opened)
 		if(istype(W, /obj/item/weapon/crowbar))
-			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 			M.state = 2
 			M.icon_state = "box_1"
@@ -105,7 +105,7 @@
 				user << "\red You must remove the floor plating in front of the SMES first."
 				return
 			user << "You begin to cut the cables..."
-			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			if(do_after(user, 50))
 				if (prob(50) && electrocute_mob(usr, terminal.powernet, terminal))
 					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -248,11 +248,11 @@
 /obj/machinery/power/smes/attack_hand(mob/user)
 	add_fingerprint(user)
 	ui_interact(user)
-	
-	
+
+
 /obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 
-	if(stat & BROKEN) 
+	if(stat & BROKEN)
 		return
 
 	// this is the data which will be sent to the ui
@@ -269,18 +269,18 @@
 	data["outputLoad"] = round(loaddemand)
 
 	// update the ui if it exists, returns null if no ui is passed/found
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)	
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "smes.tmpl", "SMES Power Storage Unit", 540, 380)
 		// when the ui is first opened this is the data it will use
-		ui.set_initial_data(data)		
+		ui.set_initial_data(data)
 		// open the new ui window
 		ui.open()
 		// auto update every Master Controller tick
 		ui.set_auto_update(1)
-		
+
 
 /obj/machinery/power/smes/Topic(href, href_list)
 	..()
@@ -327,9 +327,9 @@
 		output = max(0, min(SMESMAXOUTPUT, output))	// clamp to range
 
 	investigate_log("input/output; [chargelevel>output?"<font color='green'>":"<font color='red'>"][chargelevel]/[output]</font> | Output-mode: [online?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [chargemode?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [usr.key]","singulo")
-	
+
 	return 1
-	
+
 
 /obj/machinery/power/smes/proc/ion_act()
 	if(src.z == 1)

@@ -55,7 +55,7 @@
 				return
 
 			anchored = !anchored
-			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "\blue You [anchored ? "wrench" : "unwrench"] \the [src]."
 
 			return

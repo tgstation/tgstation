@@ -363,7 +363,7 @@
 					if (prob(15))	M.Weaken(5)
 					M.apply_damage(8,def_zone = "head")
 					visible_message("\red [G.assailant] slams [G.affecting]'s face against \the [src]!")
-					playsound(get_turf(src), 'sound/weapons/tablehit1.ogg', 50, 1)
+					playsound(src.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
 				else
 					user << "\red You need a better grip to do that!"
 					return
@@ -376,7 +376,7 @@
 
 	if (istype(W, /obj/item/weapon/wrench))
 		user << "\blue Now disassembling table"
-		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user,50))
 			destroy()
 		return
@@ -388,8 +388,8 @@
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, src.loc)
 		spark_system.start()
-		playsound(get_turf(src), 'sound/weapons/blade1.ogg', 50, 1)
-		playsound(get_turf(src), "sparks", 50, 1)
+		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
+		playsound(src.loc, "sparks", 50, 1)
 		for(var/mob/O in viewers(user, 4))
 			O.show_message("\blue The [src] was sliced apart by [user]!", 1, "\red You hear [src] coming apart.", 2)
 		destroy()
@@ -543,14 +543,14 @@
 		if(WT.remove_fuel(0, user))
 			if(src.status == 2)
 				user << "\blue Now weakening the reinforced table"
-				playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				if (do_after(user, 50))
 					if(!src || !WT.isOn()) return
 					user << "\blue Table weakened"
 					src.status = 1
 			else
 				user << "\blue Now strengthening the reinforced table"
-				playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				if (do_after(user, 50))
 					if(!src || !WT.isOn()) return
 					user << "\blue Table strengthened"
@@ -622,7 +622,7 @@
 /obj/structure/rack/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/weapon/rack_parts( src.loc )
-		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		del(src)
 		return
 	if(isrobot(user))

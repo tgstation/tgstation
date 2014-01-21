@@ -50,7 +50,7 @@ obj/machinery/gibber/New()
 		return 1
 	else if(istype(O, /obj/item/weapon/crowbar))
 		if (opened)
-			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 			M.state = 2
 			M.icon_state = "box_1"
@@ -234,7 +234,7 @@ obj/machinery/gibber/New()
 	src.occupant.ghostize()
 	del(src.occupant)
 	spawn(src.gibtime)
-		playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
+		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 		operating = 0
 		for (var/i=1 to totalslabs)
 			var/obj/item/meatslab = allmeat[i]
@@ -299,7 +299,7 @@ obj/machinery/gibber/New()
 			new /obj/effect/decal/cleanable/blood/gibs(Tx,2)
 	del(victim)
 	spawn(src.gibtime)
-		playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
+		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 		operating = 0
 		for (var/i=1 to totalslabs)
 			var/obj/item/meatslab = allmeat[i]

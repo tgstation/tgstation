@@ -71,13 +71,13 @@
 			user.visible_message("[user] begins to unwrench the fill cap on \the [src].","\blue You begin to unwrench the fill cap on \the [src].")
 			if(do_after(user, 25))
 				user.visible_message("[user] removes the fill cap on \the [src].","\blue You remove the fill cap on \the [src].")
-				playsound(get_turf(src),'sound/items/Ratchet.ogg', 100, 1)
+				playsound(src.loc,'sound/items/Ratchet.ogg', 100, 1)
 				flags |= OPENCONTAINER
 		else
 			user.visible_message("[user] begins to seal the fill cap on \the [src].","\blue You begin to seal the fill cap on \the [src].")
 			if(do_after(user, 25))
 				user.visible_message("[user] fastens the fill cap on \the [src].","\blue You fasten the fill cap on \the [src].")
-				playsound(get_turf(src),'sound/items/Ratchet.ogg', 100, 1)
+				playsound(src.loc,'sound/items/Ratchet.ogg', 100, 1)
 				flags &= ~OPENCONTAINER
 		return
 
@@ -107,7 +107,7 @@
 				log_game("[user.name] ([user.ckey]) filled \a [src] with [o.reagents.get_reagent_ids()] [hl]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 			o.reagents.trans_to(src, 50)
 			user << "\blue \The [src] is now refilled"
-			playsound(get_turf(src), 'sound/effects/refill.ogg', 50, 1, -6)
+			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
 			return
 
 		if(is_open_container() && reagents.total_volume)
@@ -137,7 +137,7 @@
 
 		src.last_use = world.time
 
-		playsound(get_turf(src), 'sound/effects/extinguish.ogg', 75, 1, -3)
+		playsound(src.loc, 'sound/effects/extinguish.ogg', 75, 1, -3)
 
 		var/direction = get_dir(src,target)
 

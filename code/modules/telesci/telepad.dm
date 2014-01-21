@@ -138,11 +138,11 @@
 	if(emagged)
 		if(mode == 0)
 			mode = 1
-			playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
+			playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
 			user << "<span class = 'caution'> The telepad locator has become uncalibrated.</span>"
 		else
 			mode = 0
-			playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
+			playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
 			user << "<span class = 'caution'> You calibrate the telepad locator.</span>"
 
 /obj/item/weapon/rcs/attackby(obj/item/W, mob/user)

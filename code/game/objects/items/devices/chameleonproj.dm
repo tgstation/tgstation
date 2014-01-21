@@ -29,7 +29,7 @@
 	if(!proximity) return
 	if(!active_dummy)
 		if(istype(target,/obj/item) && !istype(target, /obj/item/weapon/disk/nuclear))
-			playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
+			playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1, -6)
 			user << "\blue Scanned [target]."
 			saved_item = target.type
 			saved_icon = target.icon
@@ -40,7 +40,7 @@
 	if(!can_use || !saved_item) return
 	if(active_dummy)
 		eject_all()
-		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
+		playsound(src.loc, 'sound/effects/pop.ogg', 100, 1, -6)
 		del(active_dummy)
 		active_dummy = null
 		usr << "\blue You deactivate the [src]."
@@ -49,7 +49,7 @@
 		flick("emppulse",T)
 		spawn(8) T.delete()
 	else
-		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
+		playsound(src.loc, 'sound/effects/pop.ogg', 100, 1, -6)
 		var/obj/O = new saved_item(src)
 		if(!O) return
 		var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(usr.loc)

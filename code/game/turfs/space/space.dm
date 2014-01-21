@@ -50,7 +50,7 @@
 				return
 
 		user << "\blue Constructing support lattice ..."
-		playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1)
+		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
 		ReplaceWithLattice()
 		R.use(1)
 		return
@@ -60,7 +60,7 @@
 		if(L)
 			var/obj/item/stack/tile/plasteel/S = C
 			del(L)
-			playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1)
+			playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
 			S.build(src)
 			S.use(1)
 			return

@@ -256,7 +256,7 @@
 			return
 		if(istype(G, /obj/item/weapon/crowbar)) //beakers are destroyed in the process of destroying the cryo cell
 			user << "You begin to remove the circuits from [src]."
-			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			if(do_after(user, 50))
 				var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 				M.state = 2
