@@ -82,12 +82,16 @@ proc/move_mining_shuttle()
 
 			if(istype(T, /turf/simulated))
 				del(T)
-
-		for(var/mob/living/carbon/bug in toArea) // If someone somehow is still in the shuttle's docking area...
-			bug.gib()
-
-		for(var/mob/living/simple_animal/pest in toArea) // And for the other kind of bug...
-			pest.gib()
+		//Do I really need to explain this loop?
+		for(var/atom/A in toArea)
+			if(istype(A,/mob/living))
+				var/mob/living/unlucky_person = A
+				unlucky_person.gib()
+			// Weird things happen when this shit gets in the way.
+			if(istype(A,/obj/structure/lattice) \
+				|| istype(A, /obj/structure/window) \
+				|| istype(A, /obj/structure/grille))
+				del(A)
 
 		fromArea.move_contents_to(toArea)
 		if (mining_shuttle_location)
