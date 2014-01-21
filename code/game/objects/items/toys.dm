@@ -859,7 +859,6 @@ obj/item/toy/singlecard/attack_self(mob/user)
 	icon_state = "nuketoyidle"
 	w_class = 2.0
 	var/cooldown = 0
-	var/processdelay = 0
 
 /obj/item/toy/nuke/attack_self(mob/user)
 	if (cooldown < world.time)
@@ -870,24 +869,11 @@ obj/item/toy/singlecard/attack_self(mob/user)
 			playsound(src, 'sound/machines/Alarm.ogg', 100, 0, surround = 0)
 			sleep(135)
 			icon_state = "nuketoycool"
-			processing_objects.Add(src)
+			sleep(cooldown - world.time)
+			icon_state = "nuketoyidle"
 	else
 		var/timeleft = (cooldown - world.time)
 		user << "<span class='alert'>Nothing happens, and '</span>[round(timeleft/10)]<span class='alert'>' appears on a small display.</span>"
-
-/obj/item/toy/nuke/process()
-	if (processdelay >= 15)
-		processdelay = 0
-		if (cooldown < world.time)
-			icon_state = "nuketoyidle"
-			processing_objects.Remove(src)
-	else
-		processdelay++
-
-/obj/item/toy/nuke/Del()
-	if (processing_objects.Find(src))
-		processing_objects.Remove(src)
-	..()
 
 
 
