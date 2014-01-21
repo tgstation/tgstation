@@ -10,6 +10,19 @@
 /*
  * Tables
  */
+
+/datum/table_recipe
+	var/name = ""
+	var/reqs[]
+	var/result_path
+
+/datum/table_recipe/flame_thrower
+	name = "Flamethrower"
+	result_path = /obj/item/weapon/flamethrower
+	reqs = list("/obj/item/weapon/weldingtool" = 1,
+				"/obj/item/device/assembly/igniter" = 1,
+				"/obj/item/stack/rods" = 2)
+
 /obj/structure/table
 	name = "table"
 	desc = "A square piece of metal standing on four metal legs. It can not move."
@@ -20,6 +33,7 @@
 	layer = 2.8
 	throwpass = 1	//You can throw objects over this, despite it's density.")
 	var/parts = /obj/item/weapon/table_parts
+	var/list/table_contents = list()
 
 /obj/structure/table/New()
 	..()
@@ -38,6 +52,71 @@
 			var/obj/structure/table/T = locate(/obj/structure/table,get_step(src,direction))
 			T.update_icon()
 	..()
+
+/obj/structure/table/proc/check_contents(datum/table_recipe/TR)
+	var/datum/table_recipe/R = TR
+	world.log << "Here comes the [TR]"
+	var/i = R.reqs.len
+	world.log << "Its req.length is [i]"
+	for(var/A in R.reqs)
+		world.log << "It needs [R.reqs[A]] [A], and there is only [table_contents[A]]"
+		if(table_contents[A] < R.reqs[A])
+			break
+		else
+			i--
+	if(i<=0)
+		return 1
+	else
+		return 0
+
+/obj/structure/table/proc/del_reqs(datum/table_recipe/TR)
+	var/datum/table_recipe/R = TR
+	for(var/A in R.reqs)
+		var/obj/item/I = locate(text2path(A)) in loc
+		if(istype(I, /obj/item/stack))
+			var/obj/item/stack/S = I
+			S.amount -= R.reqs[A]
+		else
+			for(var/i=R.reqs[A],i>=0,i--)
+				I = locate(text2path(A)) in loc
+				del(I)
+
+/obj/structure/table/interact(mob/user)
+	for(var/A in table_recipes)
+		world.log << "[A]"
+	table_contents = list()
+	for(var/obj/item/I in loc)
+		if(istype(I, /obj/item/stack))
+			var/obj/item/stack/S = I
+			table_contents["[I.type]"] += S.amount
+		else
+			table_contents["[I.type]"] += 1
+	if(!table_contents.len)
+		return
+	var/dat = "<h3>Construction menu</h3>"
+	dat += "<div class='statusDisplay'>"
+	for(var/datum/table_recipe/R in table_recipes)
+		if(check_contents(R))
+			dat += "<A href='?src=\ref[src];make=\ref[R]'>[R.name]</A><BR>"
+
+	dat += "</div>"
+
+	var/datum/browser/popup = new(user, "table", "Table", 300, 300)
+	popup.set_content(dat)
+	popup.open()
+	return
+
+/obj/structure/table/Topic(href, href_list)
+	if(usr.stat || !Adjacent(usr) || usr.lying)
+		return
+	if(href_list["make"])
+		var/datum/table_recipe/TR = locate(href_list["make"])
+		if(check_contents(TR))
+			del_reqs(TR)
+			var/obj/item/I = new TR.result_path
+			I.loc = loc
+			usr << "<span class='notice'>You crafted [I.name].</span>"
+	attack_hand(usr)
 
 /obj/structure/table/update_icon()
 	spawn(2) //So it properly updates when deleting
@@ -254,6 +333,8 @@
 			new /obj/item/weapon/table_parts(loc)
 		density = 0
 		del(src)
+	else
+		interact(user)
 
 /obj/structure/table/attack_tk() // no telehulk sorry
 	return
