@@ -1020,6 +1020,11 @@
 			blinded = 1
 			silent = 0
 		else				//ALIVE. LIGHTS ARE ON
+
+			// Sobering multiplier.
+			// Sober block grants quadruple the alcohol metabolism.
+			var/sober_str=(M_SOBER in mutations)?1:4
+
 			updatehealth()	//TODO
 			if(!in_stasis)
 				handle_organs()
@@ -1134,7 +1139,7 @@
 			if(stuttering)
 				stuttering = max(stuttering-1, 0)
 			if (src.slurring)
-				slurring = max(slurring-1, 0)
+				slurring = max(slurring-(1*sober_str), 0)
 			if(silent)
 				silent = max(silent-1, 0)
 

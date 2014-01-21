@@ -3031,6 +3031,10 @@ datum
 			var/pass_out = 325	//amount absorbed after which mob starts passing out
 
 			on_mob_life(var/mob/living/M as mob)
+				// Sobering multiplier.
+				// Sober block makes it more difficult to get drunk
+				var/sober_str=(M_SOBER in M.mutations)?1:2
+
 				M:nutrition += nutriment_factor
 				holder.remove_reagent(src.id, FOOD_METABOLISM)
 				if(!src.data) data = 1
@@ -3042,19 +3046,21 @@ datum
 				for(var/datum/reagent/ethanol/A in holder.reagent_list)
 					if(isnum(A.data)) d += A.data
 
+				d/=sober_str
+
 				M.dizziness +=dizzy_adj.
 				if(d >= slur_start && d < pass_out)
 					if (!M:slurring) M:slurring = 1
-					M:slurring += slurr_adj
+					M:slurring += slurr_adj/sober_str
 				if(d >= confused_start && prob(33))
 					if (!M:confused) M:confused = 1
-					M.confused = max(M:confused+confused_adj,0)
+					M.confused = max(M:confused+(confused_adj/sober_str),0)
 				if(d >= blur_start)
-					M.eye_blurry = max(M.eye_blurry, 10)
+					M.eye_blurry = max(M.eye_blurry, 10/sober_str)
 					M:drowsyness  = max(M:drowsyness, 0)
 				if(d >= pass_out)
-					M:paralysis = max(M:paralysis, 20)
-					M:drowsyness  = max(M:drowsyness, 30)
+					M:paralysis = max(M:paralysis, 20/sober_str)
+					M:drowsyness  = max(M:drowsyness, 30/sober_str)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
 						var/datum/organ/internal/liver/L = H.internal_organs["liver"]
