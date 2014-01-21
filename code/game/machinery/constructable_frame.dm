@@ -53,8 +53,8 @@
 		return
 	switch(state)
 		if(1)
-			if(istype(P, /obj/item/weapon/cable_coil))
-				var/obj/item/weapon/cable_coil/C = P
+			if(istype(P, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/C = P
 				if(C.amount >= 5)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "<span class='notice'>You start to add cables to the frame.</span>"
@@ -92,7 +92,7 @@
 				user << "<span class='notice'>You remove the cables.</span>"
 				state = 1
 				icon_state = "box_0"
-				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( src.loc )
+				var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( src.loc )
 				A.amount = 5
 
 		if(3)
@@ -136,9 +136,9 @@
 				for(var/I in req_components)
 					if(istype(P, text2path(I)) && (req_components[I] > 0))
 						success=1
-						if(istype(P, /obj/item/weapon/cable_coil))
-							var/obj/item/weapon/cable_coil/CP = P
-							var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src, 1, CP.item_color)
+						if(istype(P, /obj/item/stack/cable_coil))
+							var/obj/item/stack/cable_coil/CP = P
+							var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src, 1, CP.item_color)
 							if(CP.use(1))
 								components += CC
 								req_components[I]--
@@ -209,7 +209,7 @@ to destroy them and players will be able to make replacements.
 	req_components = list(
 							"/obj/item/weapon/stock_parts/matter_bin" = 1,
 							"/obj/item/weapon/stock_parts/micro_laser" = 1,
-							"/obj/item/weapon/cable_coil" = 2,
+							"/obj/item/stack/cable_coil" = 2,
 							"/obj/item/weapon/stock_parts/capacitor" = 1)
 
 /obj/item/weapon/circuitboard/pacman/super
@@ -228,7 +228,7 @@ obj/item/weapon/circuitboard/rdserver
 	board_type = "machine"
 	origin_tech = "programming=3"
 	req_components = list(
-							"/obj/item/weapon/cable_coil" = 2,
+							"/obj/item/stack/cable_coil" = 2,
 							"/obj/item/weapon/stock_parts/scanning_module" = 1)
 
 /obj/item/weapon/circuitboard/mechfab
@@ -248,7 +248,7 @@ obj/item/weapon/circuitboard/rdserver
 	board_type = "machine"
 	origin_tech = "programming=3;biotech=3"
 	req_components = list(
-							"/obj/item/weapon/cable_coil" = 2,
+							"/obj/item/stack/cable_coil" = 2,
 							"/obj/item/weapon/stock_parts/scanning_module" = 2,
 							"/obj/item/weapon/stock_parts/manipulator" = 2,
 							"/obj/item/weapon/stock_parts/console_screen" = 1)
@@ -263,7 +263,7 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/manipulator" = 1,
 							"/obj/item/weapon/stock_parts/micro_laser" = 1,
 							"/obj/item/weapon/stock_parts/console_screen" = 1,
-							"/obj/item/weapon/cable_coil" = 2,)
+							"/obj/item/stack/cable_coil" = 2,)
 
 /obj/item/weapon/circuitboard/cyborgrecharger
 	name = "circuit board (Cyborg Recharger)"
@@ -295,7 +295,7 @@ obj/item/weapon/circuitboard/rdserver
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(
 							"/obj/item/weapon/stock_parts/manipulator" = 2,
-							"/obj/item/weapon/cable_coil" = 2,
+							"/obj/item/stack/cable_coil" = 2,
 							"/obj/item/weapon/stock_parts/subspace/filter" = 2)
 
 /obj/item/weapon/circuitboard/telecomms/relay
@@ -305,7 +305,7 @@ obj/item/weapon/circuitboard/rdserver
 	origin_tech = "programming=2;engineering=2;bluespace=2"
 	req_components = list(
 							"/obj/item/weapon/stock_parts/manipulator" = 2,
-							"/obj/item/weapon/cable_coil" = 2,
+							"/obj/item/stack/cable_coil" = 2,
 							"/obj/item/weapon/stock_parts/subspace/filter" = 2)
 
 /obj/item/weapon/circuitboard/telecomms/bus
@@ -315,7 +315,7 @@ obj/item/weapon/circuitboard/rdserver
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(
 							"/obj/item/weapon/stock_parts/manipulator" = 2,
-							"/obj/item/weapon/cable_coil" = 1,
+							"/obj/item/stack/cable_coil" = 1,
 							"/obj/item/weapon/stock_parts/subspace/filter" = 1)
 
 /obj/item/weapon/circuitboard/telecomms/processor
@@ -328,7 +328,7 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/subspace/filter" = 1,
 							"/obj/item/weapon/stock_parts/subspace/treatment" = 2,
 							"/obj/item/weapon/stock_parts/subspace/analyzer" = 1,
-							"/obj/item/weapon/cable_coil" = 2,
+							"/obj/item/stack/cable_coil" = 2,
 							"/obj/item/weapon/stock_parts/subspace/amplifier" = 1)
 
 /obj/item/weapon/circuitboard/telecomms/server
@@ -338,7 +338,7 @@ obj/item/weapon/circuitboard/rdserver
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(
 							"/obj/item/weapon/stock_parts/manipulator" = 2,
-							"/obj/item/weapon/cable_coil" = 1,
+							"/obj/item/stack/cable_coil" = 1,
 							"/obj/item/weapon/stock_parts/subspace/filter" = 1)
 
 /obj/item/weapon/circuitboard/telecomms/broadcaster
@@ -348,7 +348,7 @@ obj/item/weapon/circuitboard/rdserver
 	origin_tech = "programming=2;engineering=2;bluespace=1"
 	req_components = list(
 							"/obj/item/weapon/stock_parts/manipulator" = 2,
-							"/obj/item/weapon/cable_coil" = 1,
+							"/obj/item/stack/cable_coil" = 1,
 							"/obj/item/weapon/stock_parts/subspace/filter" = 1,
 							"/obj/item/weapon/stock_parts/subspace/crystal" = 1,
 							"/obj/item/weapon/stock_parts/micro_laser/high" = 2)
