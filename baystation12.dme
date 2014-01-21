@@ -1286,6 +1286,7 @@
 #include "code\modules\research\xenoarchaeology\tools\gearbelt.dm"
 #include "code\modules\research\xenoarchaeology\tools\suspension_generator.dm"
 #include "code\modules\research\xenoarchaeology\tools\tools.dm"
+#include "code\modules\research\xenoarchaeology\tools\tools_anoscanner.dm"
 #include "code\modules\research\xenoarchaeology\tools\tools_coresampler.dm"
 #include "code\modules\research\xenoarchaeology\tools\tools_depthscanner.dm"
 #include "code\modules\research\xenoarchaeology\tools\tools_locater.dm"

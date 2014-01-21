@@ -124,10 +124,11 @@
 	return
 
 
-// /vg/: Alt-click to open shit
+// /vg/: Alt-click.
 /atom/proc/RobotAltClick()
 	return
 
+// /vg/: Alt-click to open shit
 /obj/machinery/door/airlock/RobotAltClick() // Opens doors
 	if(density)
 		Topic("aiEnable=7", list("aiEnable"="7"), 1) // 1 meaning no window (consistency!)
