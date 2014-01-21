@@ -163,26 +163,19 @@
 
 
 /obj/item/weapon/weldingtool/attack(mob/living/carbon/human/H, mob/user)
+	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
 
 	if(istype(H))
-		var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
 		if(affecting.status == ORGAN_ROBOTIC)
 			if(src.remove_fuel(0))
-				if(affecting.brute_dam > 0)
-					affecting.heal_damage(30,0,1)
-					H.update_damage_overlays(0)
-					H.updatehealth()
-					for(var/mob/O in viewers(user, null))
-						O.show_message(text("<span class='notice'>[user] has fixed some of the dents on [H]'s [affecting.getDisplayName()]!</span>"), 1)
-					return
-				else
-					user << "<span class='notice'>[H]'s [affecting.getDisplayName()] is already in good condition</span>"
-					return
+				src.item_heal_robotic(H, user, 30, 0)
+				return
 			else
 				user << "<span class='warning'>Need more welding fuel!</span>"
 				return
 		else
 			return ..()
+
 	else
 		return ..()
 

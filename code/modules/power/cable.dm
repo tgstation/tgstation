@@ -221,21 +221,12 @@
 
 
 /obj/item/weapon/cable_coil/attack(mob/living/carbon/human/H, mob/user)
-
+	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
 	if(istype(H))
-		var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
-
 		if(affecting.status == ORGAN_ROBOTIC)
-			if(affecting.burn_dam > 0)
-				affecting.heal_damage(0,30,1)
-				H.updatehealth()
-				for(var/mob/O in viewers(user, null))
-					O.show_message(text("<span class='notice'>[user] has fixed some of the burnt wires on [H]'s [affecting.getDisplayName()]!</span>"), 1)
-				src.use(1)
-				return
-			else
-				user << "<span class='notice'>[H]'s [affecting.getDisplayName()] is already in good condition</span>"
-				return
+			src.item_heal_robotic(H, user, 0, 30)
+			src.use(1)
+			return
 		else
 			return ..()
 	else
