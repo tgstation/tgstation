@@ -167,7 +167,7 @@
 /datum/dna/gene/basic/xray
 	name="X-Ray Vision"
 	activation_messages=list("The walls suddenly disappear.")
-	mutation=XRAY
+	mutation=M_XRAY
 
 	New()
 		block=XRAYBLOCK

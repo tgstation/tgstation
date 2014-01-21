@@ -150,12 +150,12 @@
 		M.disabilities |= TOURETTES
 		M << "\red You twitch."
 	if (M.dna.GetSEState(XRAYBLOCK))
-		if(forced || probinj(30,inj) || (XRAY in old_mutations))
+		if(forced || probinj(30,inj) || (M_XRAY in old_mutations))
 			M << "\blue The walls suddenly disappear."
 //			M.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 //			M.see_in_dark = 8
 //			M.see_invisible = 2
-			M.mutations.Add(XRAY)
+			M.mutations.Add(M_XRAY)
 	if (M.dna.GetSEState(NERVOUSBLOCK))
 		M.disabilities |= NERVOUS
 		M << "\red You feel nervous."

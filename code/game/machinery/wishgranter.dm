@@ -42,8 +42,8 @@
 		if (!(LASER in user.mutations))
 			user.mutations.Add(LASER)
 
-		if (!(XRAY in user.mutations))
-			user.mutations.Add(XRAY)
+		if (!(M_XRAY in user.mutations))
+			user.mutations.Add(M_XRAY)
 			user.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 			user.see_in_dark = 8
 			user.see_invisible = SEE_INVISIBLE_LEVEL_TWO

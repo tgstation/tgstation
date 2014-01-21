@@ -321,7 +321,7 @@ var/MAX_EXPLOSION_RANGE = 14
 // Generic mutations:
 #define	M_TK			1
 #define M_RESIST_COLD	2
-#define XRAY			3
+#define M_XRAY			3
 #define HULK			4
 #define CLUMSY			5
 #define FAT				6
