@@ -46,8 +46,8 @@
 			if("Power")
 				user << "<B>Your wish is granted, but at a terrible cost...</B>"
 				user << "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart."
-				if (!(LASER in user.mutations))
-					user.mutations.Add(LASER)
+				if (!(M_LASER in user.mutations))
+					user.mutations.Add(M_LASER)
 					user << "\blue You feel pressure building behind your eyes."
 				if (!(M_RESIST_COLD in user.mutations))
 					user.mutations.Add(M_RESIST_COLD)

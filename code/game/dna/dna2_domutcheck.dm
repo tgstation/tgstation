@@ -62,8 +62,8 @@
 		M.mutations.Add(SKELETON)
 	if(M_FAT in old_mutations)
 		M.mutations.Add(M_FAT)
-	if(HUSK in old_mutations)
-		M.mutations.Add(HUSK)
+	if(M_HUSK in old_mutations)
+		M.mutations.Add(M_HUSK)
 
 	var/inj    = (flags & MUTCHK_FROM_INJECTOR) == MUTCHK_FROM_INJECTOR
 	var/forced = (flags & MUTCHK_FORCED)        == MUTCHK_FORCED

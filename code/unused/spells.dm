@@ -502,10 +502,10 @@
 	usr << text("\blue You feel strong! You feel pressure building behind your eyes!")
 	if (!(M_HULK in usr.mutations))
 		usr.mutations.Add(M_HULK)
-	if (!(LASER in usr.mutations))
-		usr.mutations.Add(LASER)
+	if (!(M_LASER in usr.mutations))
+		usr.mutations.Add(M_LASER)
 	spawn (300)
-		if (LASER in usr.mutations) usr.mutations.Remove(LASER)
+		if (M_LASER in usr.mutations) usr.mutations.Remove(M_LASER)
 		if (M_HULK in usr.mutations)  usr.mutations.Remove(M_HULK)
 	return
 

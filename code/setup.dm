@@ -325,12 +325,12 @@ var/MAX_EXPLOSION_RANGE = 14
 #define M_HULK			4
 #define M_CLUMSY			5
 #define M_FAT				6
-#define HUSK			7
-#define NOCLONE			8
+#define M_HUSK			7
+#define M_NOCLONE			8
 
 
 // Extra powers:
-#define LASER			9 	// harm intent - click anywhere to shoot lasers from eyes
+#define M_LASER			9 	// harm intent - click anywhere to shoot lasers from eyes
 //#define HEAL			10 	// (Not implemented) healing people with hands
 //#define SHADOW		11 	// (Not implemented) shadow teleportation (create in/out portals anywhere) (25%)
 //#define SCREAM		12 	// (Not implemented) supersonic screaming (25%)

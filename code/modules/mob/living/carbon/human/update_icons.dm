@@ -219,7 +219,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 	var/hulk_color_mod = rgb(48,224,40)
 	var/necrosis_color_mod = rgb(10,50,0)
 
-	var/husk = (HUSK in src.mutations)  //100% unnecessary -Agouri	//nope, do you really want to iterate through src.mutations repeatedly? -Pete
+	var/husk = (M_HUSK in src.mutations)  //100% unnecessary -Agouri	//nope, do you really want to iterate through src.mutations repeatedly? -Pete
 	var/fat = (M_FAT in src.mutations)
 	var/hulk = (M_HULK in src.mutations)
 	var/skeleton = (SKELETON in src.mutations)
@@ -393,7 +393,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 				standing.underlays	+= "telekinesishead[fat]_s"
 				add_image = 1
 			*/
-			if(LASER)
+			if(M_LASER)
 				standing.overlays	+= "lasereyes_s"
 				add_image = 1
 	if((M_RESIST_COLD in mutations) && (M_RESIST_HEAT in mutations))

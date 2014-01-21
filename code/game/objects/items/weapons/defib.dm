@@ -141,7 +141,7 @@
 				H.updatehealth() //forces a health update, otherwise the oxyloss adjustment wouldnt do anything
 				M.visible_message("\red [M]'s body convulses a bit.")
 				var/datum/organ/external/temp = H.get_organ("head")
-				if(H.health > -100 && !(temp.status & ORGAN_DESTROYED) && !(NOCLONE in H.mutations) && !H.suiciding)
+				if(H.health > -100 && !(temp.status & ORGAN_DESTROYED) && !(M_NOCLONE in H.mutations) && !H.suiciding)
 					viewers(M) << "\blue [src] beeps: Resuscitation successful."
 					spawn(0)
 						H.stat = 1

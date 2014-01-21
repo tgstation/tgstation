@@ -399,7 +399,7 @@ LOOK FOR SURGERY.DM*/
 	if(!istype(M))
 		return ..()
 
-	//if(M.mutations & HUSK)	return ..()
+	//if(M.mutations & M_HUSK)	return ..()
 
 	if((M_CLUMSY in user.mutations) && prob(50))
 		M = user

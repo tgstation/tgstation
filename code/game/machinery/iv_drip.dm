@@ -107,7 +107,7 @@
 			if(!istype(T)) return
 			if(!T.dna)
 				return
-			if(NOCLONE in T.mutations)
+			if(M_NOCLONE in T.mutations)
 				return
 
 			// If the human is losing too much blood, beep.
