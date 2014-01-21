@@ -361,6 +361,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				for(var/i=1;i<=text2num(href_list["n"]);i++)
 					use_power(power)
 					linked_lathe.enqueue(usr.key,being_built)
+				if(href_list["now"]=="1")
+					linked_lathe.stopped=0
 				updateUsrDialog()
 
 	else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.
@@ -378,6 +380,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				for(var/i=1;i<=text2num(href_list["n"]);i++)
 					use_power(power)
 					linked_imprinter.enqueue(usr.key,being_built)
+				if(href_list["now"]=="1")
+					linked_imprinter.stopped=0
 				updateUsrDialog()
 
 	else if(href_list["disposeI"] && linked_imprinter)  //Causes the circuit imprinter to dispose of a single reagent (all of it)
@@ -788,7 +792,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						if(!upTo)
 							break
 				if (upTo)
-					dat += "<li><A href='?src=\ref[src];build=[D.id];n=1'>[temp_dat]</A> "
+					dat += {"<li>
+						<A href='?src=\ref[src];build=[D.id];n=1;now=1'>[temp_dat]</A>
+						<A href='?src=\ref[src];build=[D.id];n=1'>(Queue &times;1)</A>"}
 					if(upTo>=5)
 						dat += "<A href='?src=\ref[src];build=[D.id];n=5'>(&times;5)</A>"
 					if(upTo>=10)
@@ -877,7 +883,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						if(!upTo)
 							break
 				if (upTo)
-					dat += "<li><A href='?src=\ref[src];imprint=[D.id];n=1'>[temp_dat]</A> "
+					dat += {"<li><A href='?src=\ref[src];imprint=[D.id];n=1;now=1'>[temp_dat]</A>
+						<A href='?src=\ref[src];imprint=[D.id];n=1'>(Queue &times;1)</A>"}
 					if(upTo>=5)
 						dat += "<A href='?src=\ref[src];imprint=[D.id];n=5'>(&times;5)</A>"
 					if(upTo>=10)
