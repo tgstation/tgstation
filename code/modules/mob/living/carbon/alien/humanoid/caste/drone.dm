@@ -6,6 +6,7 @@
 	icon_state = "aliend_s"
 	plasma_rate = 15
 
+
 /mob/living/carbon/alien/humanoid/drone/New()
 	create_reagents(100)
 	if(src.name == "alien drone")
@@ -14,8 +15,13 @@
 	verbs.Add(/mob/living/carbon/alien/humanoid/proc/resin,/mob/living/carbon/alien/humanoid/proc/corrosive_acid)
 	..()
 //Drones use the same base as generic humanoids.
-//Drone verbs
 
+/mob/living/carbon/alien/humanoid/drone/movement_delay()
+	. = ..()
+	. += 1
+
+
+//Drone verbs
 /mob/living/carbon/alien/humanoid/drone/verb/evolve() // -- TLE
 	set name = "Evolve (500)"
 	set desc = "Produce an interal egg sac capable of spawning children. Only one queen can exist at a time."

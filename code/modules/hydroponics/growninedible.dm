@@ -37,6 +37,15 @@
 	origin_tech = "materials=1"
 	seed = "/obj/item/seeds/towermycelium"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
+	var/list/accepted = list(/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/tea_aspera,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/tea_astra,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/wheat)
+
 
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -53,6 +62,18 @@
 				usr << "You add the newly-formed wood to the stack. It now contains [NG.amount] planks."
 		del(src)
 		return
+	if(is_type_in_list(W,accepted))
+		var/obj/item/weapon/reagent_containers/food/snacks/grown/leaf = W
+		if(leaf.dry)
+			user.show_message("<span class='notice'>You wrap the [W] around the log, turning it into a torch!</span>")
+			var/obj/item/device/flashlight/flare/torch/T = new /obj/item/device/flashlight/flare/torch(user.loc)
+			usr.u_equip(W)
+			usr.put_in_active_hand(T)
+			del(leaf)
+			del(src)
+			return
+		else
+			usr << "\red You must dry this first."
 
 /obj/item/weapon/grown/sunflower // FLOWER POWER!
 	name = "sunflower"
@@ -135,6 +156,6 @@
 			force = round((5+potency/2.5), 1)
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='suicide'>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</span>"
 		return (BRUTELOSS|TOXLOSS)
 
