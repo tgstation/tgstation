@@ -491,6 +491,8 @@
 					sleep(6)
 					if(prob(50))
 						emagged = 1
+						if(user.hud_used)
+							user.hud_used.update_robot_modules_display()	//Shows/hides the emag item if the inventory screen is already open.
 						lawupdate = 0
 						connected_ai = null
 						user << "You emag [src]'s interface."
