@@ -4,7 +4,7 @@ proc/createRandomZlevel()
 
 	var/list/potentialRandomZlevels = list()
 	world << "\red \b Searching for away missions..."
-	var/list/Lines = file2list("maps/RandomZLevels/fileList.txt")
+	var/list/Lines = file2list("_maps/RandomZLevels/fileList.txt")
 	if(!Lines.len)	return
 	for (var/t in Lines)
 		if (!t)

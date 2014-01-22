@@ -1091,3 +1091,107 @@
 	plant_type = 0
 	growthstages = 2
 	rarity = 50 // Seems admin-only.
+
+/obj/item/seeds/coffee_arabica_seed
+	name = "pack of coffee arabica seeds"
+	desc = "These seeds grow into coffee arabica bushes."
+	icon_state = "seed-coffeea"
+	species = "coffeea"
+	plantname = "Coffee Arabica Bush"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/coffee_arabica
+	lifespan = 30
+	endurance = 20
+	maturation = 5
+	production = 5
+	yield = 5
+	potency = 10
+	plant_type = 0
+	growthstages = 5
+	mutatelist = list(/obj/item/seeds/coffee_robusta_seed)
+
+/obj/item/seeds/coffee_robusta_seed
+	name = "pack of coffee robusta seeds"
+	desc = "These seeds grow into coffee robusta bushes."
+	icon_state = "seed-coffeer"
+	species = "coffeer"
+	plantname = "Coffee Robusta Bush"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/coffee_robusta
+	lifespan = 20
+	endurance = 15
+	maturation = 5
+	production = 5
+	yield = 5
+	potency = 10
+	plant_type = 0
+	growthstages = 5
+	rarity = 20
+
+/obj/item/seeds/tobacco_seed
+	name = "pack of tobacco seeds"
+	desc = "These seeds grow into tobacco plants."
+	icon_state = "seed-tobacco"
+	species = "tobacco"
+	plantname = "Tobacco Plant"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco
+	lifespan = 20
+	endurance = 15
+	maturation = 5
+	production = 5
+	oneharvest = 1
+	yield = 10
+	potency = 10
+	plant_type = 0
+	growthstages = 3
+	mutatelist = list(/obj/item/seeds/tobacco_space_seed)
+
+/obj/item/seeds/tobacco_space_seed
+	name = "pack of space tobacco seeds"
+	desc = "These seeds grow into space tobacco plants."
+	icon_state = "seed-stobacco"
+	species = "stobacco"
+	plantname = "Space Tobacco Plant"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space
+	lifespan = 20
+	endurance = 15
+	maturation = 5
+	production = 5
+	oneharvest = 1
+	yield = 10
+	potency = 10
+	plant_type = 0
+	growthstages = 3
+	rarity = 20
+
+/obj/item/seeds/tea_aspera_seed
+	name = "pack of tea aspera seeds"
+	desc = "These seeds grow into tea plants."
+	icon_state = "seed-teaaspera"
+	species = "teaaspera"
+	plantname = "Tea Aspera Plant"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tea_aspera
+	lifespan = 20
+	endurance = 15
+	maturation = 5
+	production = 5
+	yield = 5
+	potency = 10
+	plant_type = 0
+	growthstages = 5
+	mutatelist = list(/obj/item/seeds/tea_astra_seed)
+
+/obj/item/seeds/tea_astra_seed
+	name = "pack of tea astra seeds"
+	desc = "These seeds grow into tea plants."
+	icon_state = "seed-teaastra"
+	species = "teaastra"
+	plantname = "Tea Astra Plant"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tea_astra
+	lifespan = 20
+	endurance = 15
+	maturation = 5
+	production = 5
+	yield = 5
+	potency = 10
+	plant_type = 0
+	growthstages = 5
+	rarity = 20

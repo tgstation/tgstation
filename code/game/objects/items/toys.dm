@@ -10,6 +10,7 @@
  *		Snap pops
  *		Water flower
  *		Cards
+ *		Toy nuke
  */
 
 
@@ -411,12 +412,11 @@
 	w_class = 1.0
 	attack_verb = list("attacked", "coloured")
 	var/colour = "#FF0000" //RGB
-	var/shadeColour = "#220000" //RGB
 	var/uses = 30 //0 for unlimited uses
 	var/instant = 0
 	var/colourName = "red" //for updateIcon purposes
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='suicide'>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</span>"
 		return (BRUTELOSS|OXYLOSS)
 	New()
 		..()
@@ -861,14 +861,18 @@ obj/item/toy/singlecard/attack_self(mob/user)
 
 /obj/item/toy/nuke/attack_self(mob/user)
 	if (cooldown < world.time)
-		cooldown = world.time + 3000 //5 minutes
+		cooldown = world.time + 1800 //3 minutes
 		user.visible_message("<span class='warning'>[user] presses a button on [src]</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='notice'>You hear the click of a button.</span>")
 		spawn(5) //gia said so
 			icon_state = "nuketoy"
 			playsound(src, 'sound/machines/Alarm.ogg', 100, 0, surround = 0)
 			sleep(135)
+			icon_state = "nuketoycool"
+			sleep(cooldown - world.time)
 			icon_state = "nuketoyidle"
-
+	else
+		var/timeleft = (cooldown - world.time)
+		user << "<span class='alert'>Nothing happens, and '</span>[round(timeleft/10)]<span class='alert'>' appears on a small display.</span>"
 
 
 
