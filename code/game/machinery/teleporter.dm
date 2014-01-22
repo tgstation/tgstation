@@ -13,7 +13,6 @@
 /obj/machinery/computer/teleporter/New()
 	src.id = "[rand(1000, 9999)]"
 	..()
-	link_power_station()
 	return
 
 /obj/machinery/computer/teleporter/proc/link_power_station()
@@ -49,6 +48,8 @@
 	var/data = "<h3>Teleporter Status</h3>"
 	if(!power_station)
 		data += "<div class='statusDisplay'>No power station linked.</div>"
+	else if(!power_station.teleporter_hub)
+		data += "<div class='statusDisplay'>No hub linked.</div>"
 	else
 		data += "<div class='statusDisplay'>Current regime: [regime_set]<BR>Current target: [(!target) ? "None" : "[get_area(target)] [(regime_set != "Gate") ? "" : "Teleporter"]"]</div><BR>"
 		data += "<A href='?src=\ref[src];regimeset=1'>Change regime</A><BR>"
@@ -247,7 +248,6 @@
 
 /obj/machinery/teleport/station/New()
 	..()
-	link_console_and_hub()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/teleporter_station(null)
 	component_parts += new /obj/item/bluespace_crystal/artificial(null)
