@@ -42,6 +42,11 @@
 		updateicon()
 	return
 
+/obj/machinery/power/smes/Del()
+	message_admins("SMES deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
+	log_game("SMES deleted at ([x],[y],[z])")
+	investigate_log("<font color='red'>deleted</font> at ([x],[y],[z])","singulo")
+	..()
 
 /obj/machinery/power/smes/proc/updateicon()
 	overlays.Cut()
@@ -114,6 +119,7 @@
 
 		if(charge < 0.0001)
 			online = 0					// stop output if charge falls to zero
+			investigate_log("lost power and turned <font color='red'>off</font>","singulo")
 
 	// only update icon if state changed
 	if(last_disp != chargedisplay() || last_chrg != charging || last_onln != online)
@@ -219,11 +225,14 @@
 		chargemode = !chargemode
 		if(!chargemode)
 			charging = 0
+		investigate_log("input/output; [chargelevel>output?"<font color='green'>":"<font color='red'>"][chargelevel]/[output]</font> | Output-mode: [online?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [chargemode?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [usr.key]","singulo")
 		updateicon()
 
 	else if( href_list["online"] )
 		online = !online
+		investigate_log("input/output; [chargelevel>output?"<font color='green'>":"<font color='red'>"][chargelevel]/[output]</font> | Output-mode: [online?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [chargemode?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [usr.key]","singulo")
 		updateicon()
+
 	else if( href_list["input"] )
 
 		var/i = text2num(href_list["input"])
@@ -250,6 +259,8 @@
 
 		chargelevel += d
 		chargelevel = max(0, min(SMESMAXCHARGELEVEL, chargelevel))	// clamp to range
+		investigate_log("input/output; [chargelevel>output?"<font color='green'>":"<font color='red'>"][chargelevel]/[output]</font> | Output-mode: [online?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [chargemode?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [usr.key]","singulo")
+		src.updateUsrDialog()
 
 	else if( href_list["output"] )
 

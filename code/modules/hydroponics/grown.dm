@@ -11,7 +11,6 @@
 	var/seed = ""
 	var/plantname = ""
 	var/product	//a type path
-	var/species = ""
 	var/lifespan = 0
 	var/endurance = 0
 	var/maturation = 0
@@ -19,13 +18,18 @@
 	var/yield = 0
 	var/potency = -1
 	var/plant_type = 0
+	var/dry = 0
 	icon = 'icons/obj/harvest.dmi'
-	New(newloc,newpotency)
-		if (!isnull(newpotency))
-			potency = newpotency
-		..()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/New(newloc,newpotency)
+	if (!isnull(newpotency))
+		potency = newpotency
+	..()
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
+
+	transform *= TransformUsingVariable(potency, 100, 0.5) //Makes the resulting produce's sprite larger or smaller based on potency!
+
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	..()
@@ -36,55 +40,20 @@
 			if(0)
 				msg += "- Plant type: <i>Normal plant</i>\n"
 			if(1)
-				msg += "- Plant type: <i>Weed</i>\n"
+				msg += "- Plant type: <i>Weed</i>.  Can grow in nutrient-poor soil.\n"
 			if(2)
-				msg += "- Plant type: <i>Mushroom</i>\n"
+				msg += "- Plant type: <i>Mushroom</i>.  Can grow in dry soil.\n"
 		msg += "- Potency: <i>[potency]</i>\n"
 		msg += "- Yield: <i>[yield]</i>\n"
 		msg += "- Maturation speed: <i>[maturation]</i>\n"
 		msg += "- Production speed: <i>[production]</i>\n"
 		msg += "- Endurance: <i>[endurance]</i>\n"
-		msg += "- Healing properties: <i>[reagents.get_reagent_amount("nutriment")]</i>\n"
+		msg += "- Nutritional value: <i>[reagents.get_reagent_amount("nutriment")]</i>\n"
+		msg += "- Other substances: <i>[reagents.total_volume-reagents.get_reagent_amount("nutriment")]</i>\n"
 		msg += "*---------*</span>"
 		usr << msg
 		return
-
-	/*if (istype(O, /obj/item/weapon/storage/bag/plants))
-		var/obj/item/weapon/plantbag/S = O
-		if (S.mode == 1)
-			for(var/obj/item/G in get_turf(src))
-				if(istype(G, /obj/item/seeds) || istype(G, /obj/item/weapon/reagent_containers/food/snacks/grown))
-					if (S.contents.len < S.capacity)
-						S.contents += G
-					else
-						user << "\blue The plant bag is full."
-						return
-			user << "\blue You pick up all the plants and seeds."
-		else
-			if (S.contents.len < S.capacity)
-				S.contents += src;
-			else
-				user << "\blue The plant bag is full."*/
 	return
-
-/*/obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if (istype(O, /obj/item/weapon/storage/bag/plants))
-		var/obj/item/weapon/plantbag/S = O
-		if (S.mode == 1)
-			for(var/obj/item/G in get_turf(src))
-				if(istype(G, /obj/item/seeds) || istype(G, /obj/item/weapon/reagent_containers/food/snacks/grown))
-					if (S.contents.len < S.capacity)
-						S.contents += G
-					else
-						user << "\blue The plant bag is full."
-						return
-			user << "\blue You pick up all the plants and seeds."
-		else
-			if (S.contents.len < S.capacity)
-				S.contents += src;
-			else
-				user << "\blue The plant bag is full."
-	return*/
 
 /obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	..()
@@ -95,9 +64,9 @@
 			if(0)
 				msg += "- Plant type: <i>Normal plant</i>\n"
 			if(1)
-				msg += "- Plant type: <i>Weed</i>\n"
+				msg += "- Plant type: <i>Weed</i>.  Can grow in nutrient-poor soil.\n"
 			if(2)
-				msg += "- Plant type: <i>Mushroom</i>\n"
+				msg += "- Plant type: <i>Mushroom</i>.  Can grow in dry soil.\n"
 		msg += "- Potency: <i>[potency]</i>\n"
 		msg += "- Yield: <i>[yield]</i>\n"
 		msg += "- Maturation speed: <i>[maturation]</i>\n"
@@ -114,6 +83,7 @@
 	icon_state = "corn"
 	potency = 40
 	trash = /obj/item/weapon/corncob
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/corn
 
 	New()
 		..()
@@ -127,6 +97,7 @@
 	desc = "Great for toppings!"
 	icon_state = "cherry"
 	gender = PLURAL
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/cherries
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -141,6 +112,7 @@
 	icon_state = "poppy"
 	slot_flags = SLOT_HEAD
 	potency = 30
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/poppy
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -155,6 +127,7 @@
 	icon_state = "harebell"
 	slot_flags = SLOT_HEAD
 	potency = 1
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/harebell
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -167,6 +140,7 @@
 	desc = "Boil 'em! Mash 'em! Stick 'em in a stew!"
 	icon_state = "potato"
 	potency = 25
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/potato
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
@@ -191,6 +165,7 @@
 	name = "bunch of grapes"
 	desc = "Nutritious!"
 	icon_state = "grapes"
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/no_raisin
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -204,6 +179,7 @@
 	desc = "Nutritious!"
 	icon_state = "greengrapes"
 	potency = 25
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/no_raisin
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -217,6 +193,7 @@
 	desc = "Ewwwwwwwwww. Cabbage."
 	icon_state = "cabbage"
 	potency = 25
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/cabbage
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -228,6 +205,7 @@
 	name = "bunch of berries"
 	desc = "Nutritious!"
 	icon_state = "berrypile"
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/berries
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -241,6 +219,7 @@
 	var/on = 1
 	var/brightness_on = 2 //luminosity when on
 	icon_state = "glowberrypile"
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -267,6 +246,7 @@
 	desc = "Fattening... Mmmmm... chucklate."
 	icon_state = "cocoapod"
 	potency = 50
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -280,6 +260,7 @@
 	desc = "Sickly sweet."
 	icon_state = "sugarcane"
 	potency = 50
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -292,6 +273,7 @@
 	icon_state = "poisonberrypile"
 	gender = PLURAL
 	potency = 15
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -306,6 +288,7 @@
 	icon_state = "deathberrypile"
 	gender = PLURAL
 	potency = 50
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/deathberries
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -321,6 +304,7 @@
 	icon_state = "ambrosiavulgaris"
 	slot_flags = SLOT_HEAD
 	potency = 10
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -338,6 +322,7 @@
 	icon_state = "ambrosiadeus"
 	slot_flags = SLOT_HEAD
 	potency = 10
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -354,6 +339,7 @@
 	desc = "It's a little piece of Eden."
 	icon_state = "apple"
 	potency = 15
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/apple
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -367,6 +353,7 @@
 	desc = "It's a little piece of Eden."
 	icon_state = "apple"
 	potency = 15
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/apple/poisoned
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -380,6 +367,7 @@
 	desc = "Emblazoned upon the apple is the word 'Kallisti'."
 	icon_state = "goldapple"
 	potency = 15
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/goldapple
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -413,6 +401,7 @@
 	desc = "It's large and scary."
 	icon_state = "pumpkin"
 	potency = 10
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -434,6 +423,7 @@
 	desc = "It's so sour, your face will twist."
 	icon_state = "lime"
 	potency = 20
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/lime
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -446,6 +436,7 @@
 	desc = "When life gives you lemons, be grateful they aren't limes."
 	icon_state = "lemon"
 	potency = 20
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/lemon
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -458,6 +449,7 @@
 	desc = "It's an tangy fruit."
 	icon_state = "orange"
 	potency = 20
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/orange
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -470,6 +462,7 @@
 	desc = "You can't beat white-beet."
 	icon_state = "whitebeet"
 	potency = 15
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -485,6 +478,7 @@
 	icon_state = "banana"
 	item_state = "banana"
 	trash = /obj/item/weapon/bananapeel
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/banana
 
 	New()
 		..()
@@ -497,6 +491,7 @@
 	name = "chili"
 	desc = "It's spicy! Wait... IT'S BURNING ME!!"
 	icon_state = "chilipepper"
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/chili
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -515,6 +510,7 @@
 	desc = "It seems to be vibrating gently."
 	icon_state = "ghostchilipepper"
 	var/mob/held_mob
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -551,6 +547,7 @@
 	name = "eggplant"
 	desc = "Maybe there's a chicken inside?"
 	icon_state = "eggplant"
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/eggplant
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -563,6 +560,7 @@
 	desc = "It's pretty bland, but oh the possibilities..."
 	gender = PLURAL
 	icon_state = "soybeans"
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -574,6 +572,7 @@
 	name = "koibean"
 	desc = "Something about these seems fishy."
 	icon_state = "koibeans"
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/koibeans
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -600,6 +599,7 @@
 	desc = "I say to-mah-to, you say tom-mae-to."
 	icon_state = "tomato"
 	potency = 10
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -639,6 +639,7 @@
 	desc = "So bloody...so...very...bloody....AHHHH!!!!"
 	icon_state = "bloodtomato"
 	potency = 10
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -662,6 +663,7 @@
 	desc = "I say blue-mah-to, you say blue-mae-to."
 	icon_state = "bluetomato"
 	potency = 10
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -697,6 +699,7 @@
 	desc = "Sigh... wheat... a-grain?"
 	gender = PLURAL
 	icon_state = "wheat"
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -743,6 +746,7 @@
 	desc = "It's a mutant strain of chili"
 	icon_state = "icepepper"
 	potency = 20
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -761,6 +765,7 @@
 	desc = "It's good for the eyes!"
 	icon_state = "carrot"
 	potency = 10
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/carrot
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -774,6 +779,7 @@
 	desc = "<I>Ganoderma lucidum</I>: A special fungus known for its medicinal and stress relieving properties."
 	icon_state = "reishi"
 	potency = 10
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -794,6 +800,7 @@
 	desc = "<I>Amanita Muscaria</I>: Learn poisonous mushrooms by heart. Only pick mushrooms you know."
 	icon_state = "amanita"
 	potency = 10
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -814,6 +821,7 @@
 	desc = "<I>Amanita Virosa</I>: Deadly poisonous basidiomycete fungus filled with alpha amatoxins."
 	icon_state = "angel"
 	potency = 35
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -834,6 +842,7 @@
 	desc = "<I>Psilocybe Semilanceata</I>: Liberate yourself!"
 	icon_state = "libertycap"
 	potency = 15
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -851,6 +860,7 @@
 	name = "plump-helmet"
 	desc = "<I>Plumus Hellmus</I>: Plump, soft and s-so inviting~"
 	icon_state = "plumphelmet"
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -881,6 +891,7 @@
 	name = "chanterelle cluster"
 	desc = "<I>Cantharellus Cibarius</I>: These jolly yellow little shrooms sure look tasty!"
 	icon_state = "chanterelle"
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -892,6 +903,7 @@
 	name = "glowshroom cluster"
 	desc = "<I>Mycena Bregprox</I>: This species of mushroom glows in the dark."
 	icon_state = "glowshroom"
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom
 	New()
 		..()
 		if(lifespan == 0) //basically, if you're spawning these via admin or on the map, then set up some default stats.
@@ -971,6 +983,7 @@
 	icon_state = "bluespacetomato"
 	potency = 20
 	origin_tech = "bluespace=3"
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -995,3 +1008,76 @@
 			reagents.add_reagent("potassium", 1+round((potency / 20), 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/coffee_arabica
+	seed = "/obj/item/seeds/coffee_arabica_seed"
+	name = "coffee arabica beans"
+	desc = "Dry them out to make coffee."
+	icon_state = "coffee_arabica"
+	potency = 20
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/coffee_arabica
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("coffeepowder", 1+round((potency / 10), 2))
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/coffee_robusta
+	seed = "/obj/item/seeds/coffee_robusta_seed"
+	name = "coffee robusta beans"
+	desc = "Dry them out to make coffee."
+	icon_state = "coffee_robusta"
+	potency = 20
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/coffee_robusta
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("coffeepowder", 1+round((potency / 10), 2))
+			reagents.add_reagent("hyperzine", 1+round((potency / 20), 1))
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco
+	seed = "/obj/item/seeds/tobacco_seed"
+	name = "tobacco leaves"
+	desc = "Dry them out to make some smokes."
+	icon_state = "tobacco_leaves"
+	potency = 20
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco
+
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space
+	seed = "/obj/item/seeds/tobacco_space_seed"
+	name = "space tobacco leaves"
+	desc = "Dry them out to make some space-smokes."
+	icon_state = "stobacco_leaves"
+	potency = 20
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("dexalin", 1+round((potency / 20), 1))
+
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/tea_aspera
+	seed = "/obj/item/seeds/tea_aspera_seed"
+	name = "Tea Aspera tips"
+	desc = "These aromatic tips of the tea plant can be dried to make tea."
+	icon_state = "tea_aspera_leaves"
+	potency = 20
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tea_aspera
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("teapowder", 1+round((potency / 10), 2))
+
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/tea_astra
+	seed = "/obj/item/seeds/tea_astra_seed"
+	name = "Tea Astra tips"
+	desc = "These aromatic tips of the tea plant can be dried to make tea."
+	icon_state = "tea_astra_leaves"
+	potency = 20
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tea_astra
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("teapowder", 1+round((potency / 10), 2))
+			reagents.add_reagent("kelotane", 1+round((potency / 20), 1))

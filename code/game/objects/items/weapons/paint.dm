@@ -1,6 +1,5 @@
 //NEVER USE THIS IT SUX	-PETETHEGOAT
-
-var/global/list/cached_icons = list()
+//IT SUCKS A BIT LESS -GIACOM
 
 /obj/item/weapon/paint
 	gender= PLURAL
@@ -85,17 +84,7 @@ var/global/list/cached_icons = list()
 		return
 	if(!istype(target) || istype(target, /turf/space))
 		return
-	var/ind = "[initial(target.icon)][item_color]"
-	if(!cached_icons[ind])
-		var/icon/overlay = new/icon(initial(target.icon))
-		overlay.Blend("#[item_color]",ICON_MULTIPLY)
-		overlay.SetIntensity(1.4)
-		target.icon = overlay
-		cached_icons[ind] = target.icon
-		paintleft--
-	else
-		target.icon = cached_icons[ind]
-		paintleft--
+	target.color = "#" + item_color
 	return
 
 /obj/item/weapon/paint/paint_remover
@@ -105,6 +94,6 @@ var/global/list/cached_icons = list()
 
 	afterattack(turf/target, mob/user as mob,proximity)
 		if(!proximity) return
-		if(istype(target) && target.icon != initial(target.icon))
-			target.icon = initial(target.icon)
+		if(istype(target) && target.color != initial(target.color))
+			target.color = initial(target.color)
 		return
