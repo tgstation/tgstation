@@ -122,10 +122,13 @@
 /turf/simulated/wall/attack_animal(var/mob/living/simple_animal/M)
 	if(M.wall_smash)
 		if (istype(src, /turf/simulated/wall/r_wall))
-			M << text("\blue This wall is far too strong for you to destroy.")
-			return
+			if(M.wall_smash == 2)
+				dismantle_wall(1)
+				M << "<span class='info'>You smash through the wall.</span>"
+			else
+				M << "<span class='info'>This wall is far too strong for you to destroy.</span>"
 		else
-			M << text("\blue You smash through the wall.")
+			M << "<span class='info'>You smash through the wall.</span>"
 			dismantle_wall(1)
 			return
 

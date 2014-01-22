@@ -32,7 +32,6 @@
 	unsuitable_atoms_damage = 15
 	faction = "russian"
 	status_flags = CANPUSH
-	idle_env_destroyer = 0
 
 
 /mob/living/simple_animal/hostile/russian/ranged

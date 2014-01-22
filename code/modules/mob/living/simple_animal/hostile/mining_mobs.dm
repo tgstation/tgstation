@@ -19,6 +19,15 @@
 	status_flags = 0
 	a_intent = "harm"
 	var/throw_message = "bounces off of"
+	var/icon_aggro = null // for swapping to when we get aggressive
+
+/mob/living/simple_animal/hostile/asteroid/Aggro()
+	..()
+	icon_state = icon_aggro
+
+/mob/living/simple_animal/hostile/asteroid/LoseAggro()
+	..()
+	icon_state = icon_living
 
 /mob/living/simple_animal/hostile/asteroid/bullet_act(var/obj/item/projectile/P)//Limits the weapons available to kill them at range
 	if(P.damage < 30)
@@ -36,7 +45,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/basilisk
-	name = "Basilisk"
+	name = "basilisk"
 	desc = "A territorial beast, covered in a thick shell that absorbs energy. Its stare causes victims to freeze from the inside."
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "Basilisk"
@@ -86,7 +95,7 @@
 	return
 
 /mob/living/simple_animal/hostile/asteroid/Goldgrub
-	name = "Goldgrub"
+	name = "goldgrub"
 	desc = "A worm that grows fat from eating everything in its sight. Seems to enjoy precious metals and other shiny things, hence the name."
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "Goldgrub"
@@ -94,6 +103,7 @@
 	icon_aggro = "Goldgrub_alert"
 	icon_dead = "Goldgrub_dead"
 	icon_gib = "syndicate_gib"
+	vision_range = 6
 	move_to_delay = 3
 	friendly = "harmlessly rolls into"
 	maxHealth = 45
@@ -109,11 +119,6 @@
 	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver, /obj/item/weapon/ore/plasma,
 						  /obj/item/weapon/ore/uranium, /obj/item/weapon/ore/iron, /obj/item/weapon/ore/clown)
 	var/alerted = 0
-
-/mob/living/simple_animal/hostile/asteroid/Goldgrub/Found(var/new_target)
-	if(istype(new_target, /obj/item/weapon/ore) && stance == HOSTILE_STANCE_IDLE)
-		return 1
-	return 0
 
 /mob/living/simple_animal/hostile/asteroid/Goldgrub/GiveTarget(var/new_target)
 	target = new_target
@@ -143,10 +148,6 @@
 				visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
 				del(src)
 
-/mob/living/simple_animal/hostile/asteroid/Goldgrub/adjustBruteLoss(var/damage)
-	search_objects = 0 //Stop looking for items if we've been hurt by someone, so we can run!
-	..()
-
 /mob/living/simple_animal/hostile/asteroid/Goldgrub/bullet_act(var/obj/item/projectile/P)
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
 	return
@@ -156,7 +157,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/Hivelord
-	name = "Hivelord"
+	name = "hivelord"
 	desc = "A truly alien creature, it is a mass of unknown organic material, constantly fluctuating. When attacking, pieces of it split off and attack in tandem with the original."
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "Hivelord"
@@ -192,7 +193,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/Hivelordbrood
-	name = "Hivelord brood"
+	name = "hivelord brood"
 	desc = "A fragment of the original Hivelord, rallying behind its original. One isn't much of a threat, but..."
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "Hivelordbrood"
@@ -222,7 +223,7 @@
 	del(src)
 
 /mob/living/simple_animal/hostile/asteroid/Goliath
-	name = "Goliath"
+	name = "goliath"
 	desc = "A massive beast that uses long tentacles to ensare its prey, threatening them is not advised under any conditions."
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "Goliath"
@@ -245,6 +246,17 @@
 	attacktext = "pulverizes"
 	throw_message = "does nothing to the rocky hide of the "
 
+/mob/living/simple_animal/hostile/asteroid/Goliath/OpenFire()
+	visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
+	var/tturf = get_turf(target)
+	new /obj/effect/goliath_tentacle/original(tturf)
+	ranged_cooldown = ranged_cooldown_cap
+	return
+
+/mob/living/simple_animal/hostile/asteroid/Goliath/adjustBruteLoss(var/damage)
+	ranged_cooldown--
+	..()
+
 /obj/effect/goliath_tentacle/
 	name = "Goliath tentacle"
 	icon = 'icons/mob/animal.dmi'
@@ -255,7 +267,8 @@
 	if(istype(turftype, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = turftype
 		M.gets_drilled()
-	..()
+	spawn(20)
+		Trip()
 
 /obj/effect/goliath_tentacle/original
 
@@ -269,10 +282,6 @@
 		new /obj/effect/goliath_tentacle(T)
 	..()
 
-/obj/effect/goliath_tentacle/New()
-	spawn(20)
-		Trip()
-
 /obj/effect/goliath_tentacle/proc/Trip()
 	for(var/mob/living/M in src.loc)
 		M.Weaken(5)
@@ -285,13 +294,3 @@
 		return
 	..()
 
-/mob/living/simple_animal/hostile/asteroid/Goliath/OpenFire()
-	visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
-	var/tturf = get_turf(target)
-	new /obj/effect/goliath_tentacle/original(tturf)
-	ranged_cooldown = ranged_cooldown_cap
-	return
-
-/mob/living/simple_animal/hostile/asteroid/Goliath/adjustBruteLoss(var/damage)
-	ranged_cooldown--
-	..()
