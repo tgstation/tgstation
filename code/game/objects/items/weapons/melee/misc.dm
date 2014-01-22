@@ -10,6 +10,7 @@
 	w_class = 3
 	origin_tech = "combat=4"
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
+	hitsound = 'sound/weapons/slash.ogg' //pls replace
 
 /obj/item/weapon/melee/chainofcommand/suicide_act(mob/user)
 		viewers(user) << "<span class='suicide'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>"
@@ -42,7 +43,6 @@
 
 	if(user.a_intent == "harm")
 		if(!..()) return
-		playsound(loc, "swing_hit", 50, 1, -1)
 		if(M.stuttering < 8 && !(HULK in M.mutations))
 			M.stuttering = 8
 		M.Stun(8)
