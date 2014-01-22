@@ -199,12 +199,8 @@ emp_act
 						if (H.gloves)
 							var/obj/item/clothing/gloves/G = H.gloves
 							G.add_blood(H)
-							G.transfer_blood = 2
-							G.bloody_hands_mob = H
 						else
 							H.add_blood(H)
-							H.bloody_hands = 2
-							H.bloody_hands_mob = H
 						H.update_inv_gloves()	//updates on-mob overlays for bloody hands and/or bloody gloves
 
 
