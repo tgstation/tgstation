@@ -1640,6 +1640,22 @@ datum
 			toxpwr = 2
 			meltprob = 30
 
+		toxin/coffeepowder
+			name = "Coffee Grounds"
+			id = "coffeepowder"
+			description = "Finely ground coffee beans, used to make coffee."
+			reagent_state = SOLID
+			color = "#5B2E0D" // rgb: 91, 46, 13
+			toxpwr = 0.5
+
+		toxin/teapowder
+			name = "Ground Tea Leaves"
+			id = "teapowder"
+			description = "Finely shredded tea leaves, used for making tea."
+			reagent_state = SOLID
+			color = "#7F8400" // rgb: 127, 132, 0
+			toxpwr = 0.5
+
 /////////////////////////Coloured Crayon Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
 
