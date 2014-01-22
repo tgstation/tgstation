@@ -16,6 +16,28 @@
 		else
 			H << "\red You are unable to equip that."
 
+/mob/living/carbon/human/proc/get_all_slots()
+	return list(
+		back,
+		wear_mask,
+		handcuffed,
+		legcuffed,
+		l_hand,
+		r_hand,
+		belt,
+		wear_id,
+		l_ear,
+		r_ear,
+		glasses,
+		gloves,
+		head,
+		shoes,
+		wear_suit,
+		w_uniform,
+		l_store,
+		r_store,
+		s_store)
+
 /mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/W, list/slots, act_on_fail = 1)
 	for (var/slot in slots)
 		if (equip_to_slot_if_possible(W, slots[slot], 0))

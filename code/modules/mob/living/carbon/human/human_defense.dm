@@ -70,15 +70,20 @@ emp_act
 				protection += C.armor[type]
 	return protection
 
-/mob/living/carbon/human/proc/check_head_coverage()
+/mob/living/carbon/human/proc/check_head_coverage(var/hidemask=0)
+	for(var/obj/item/clothing/C in get_all_slots())
+		if(!C) continue
+		if(C.body_parts_covered & HEAD && (hidemask==0 || C.flags_inv & hidemask))
+			return 1
 
-	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform)
-	for(var/bp in body_parts)
-		if(!bp)	continue
-		if(bp && istype(bp ,/obj/item/clothing))
-			var/obj/item/clothing/C = bp
-			if(C.body_parts_covered & HEAD)
-				return 1
+
+/mob/living/carbon/human/proc/check_body_part_coverage(var/body_part_flags=0)
+	if(!body_part_flags)
+		return 0
+	for(var/obj/item/clothing/C in get_all_slots())
+		if(!C) continue
+		if(C.body_parts_covered & body_part_flags)
+			return 1
 	return 0
 
 /mob/living/carbon/human/proc/check_shields(var/damage = 0, var/attack_text = "the attack")
