@@ -102,6 +102,13 @@
 
 	var/list/turf/synd_spawn = list()
 
+
+	for(var/obj/effect/landmark/A in landmarks_list) //Add commander spawn places first, really should only be one though.
+		if(A.name == "Syndicate-Commander")
+			synd_spawn += get_turf(A)
+			del(A)
+			continue
+
 	for(var/obj/effect/landmark/A in landmarks_list)
 		if(A.name == "Syndicate-Spawn")
 			synd_spawn += get_turf(A)
@@ -123,13 +130,6 @@
 			spawnpos = 1
 		synd_mind.current.loc = synd_spawn[spawnpos]
 		forge_syndicate_objectives(synd_mind)
-		equip_syndicate(synd_mind.current)
-
-		if (nuke_code)
-			synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
-			synd_mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>"
-		else
-			nuke_code = "code will be provided later"
 
 		if(!leader_selected)
 			equip_syndicate(synd_mind.current,1)
@@ -146,6 +146,11 @@
 			C.name = "[C.registered_name]'s ID Card ([C.assignment])"
 			greet_syndicate(synd_mind)
 			agent_number++
+		if (nuke_code)
+			synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
+			synd_mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>"
+		else
+			nuke_code = "code will be provided later"
 		spawnpos++
 		update_synd_icons_added(synd_mind)
 
@@ -181,9 +186,9 @@
 
 /datum/game_mode/proc/greet_syndicate(var/datum/mind/syndicate, var/you_are=1, var/boss=0)
 	if (you_are)
-		syndicate.current << "spanclass='notice' You are a [syndicate_name()] agent!"
+		syndicate.current << "<spanclass='notice'> You are a [syndicate_name(1)] Operative!"
 		if(boss)
-			syndicate.current <<"spanclass='notice' You are the [syndicate_name()] Commander!"
+			syndicate.current <<"<spanclass='notice'> You are the [syndicate_name(1)] Commander!"
 	var/obj_count = 1
 	for(var/datum/objective/objective in syndicate.objectives)
 		syndicate.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"

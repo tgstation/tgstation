@@ -152,6 +152,7 @@
 	name = "syndicate commander ID card"
 	assignment = "Syndicate Commander"
 	icon_state = "centcomgold"
+	access = list(access_maint_tunnels, access_syndicate, access_syndicate_commander)
 
 /obj/item/weapon/card/id/captains_spare
 	name = "captain's spare ID"

@@ -122,7 +122,7 @@ var/religion_name = null
 var/syndicate_name = null
 var/syndicate_short = null
 /proc/syndicate_name(var/shortname=0) //only picks from syndicate companies that actually field operatives
-	if (syndicate_name)
+	if (syndicate_name && !shortname)
 		return syndicate_name
 	if (shortname)
 		if(syndicate_short)
@@ -130,7 +130,7 @@ var/syndicate_short = null
 
 	syndicate_name = pick("Cybersun Industries","Gorlex Mauraders","Aussec Armory")//will use factions.dm soon
 
-	var/list/shortnamelist = stringsplit(syndicate_name," ") //creates a short name so that operatives, etc.
+	var/list/shortnamelist = text2list(syndicate_name," ") //creates a short name so that operatives, etc.
 	syndicate_short = shortnamelist[1] //do not have to use the full company name in their title
 	if(shortname) //this will return Gorlex rather than Gorlex Mauraders or Cybersun instead of Cybersun industries.
 		return syndicate_short
