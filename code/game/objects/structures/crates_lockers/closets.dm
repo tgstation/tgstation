@@ -143,8 +143,9 @@
 	if(health <= 0)
 		for(var/atom/movable/A as mob|obj in src)
 			A.loc = src.loc
+			if(prob(75))
+				del(A)
 		del(src)
-
 	return
 
 /obj/structure/closet/attack_animal(mob/living/simple_animal/user as mob)

@@ -376,6 +376,3 @@
 			src.req_access = list()
 			src.req_access += pick(get_all_accesses())
 	..()
-
-/obj/structure/closet/crate/bullet_act()
-	return
