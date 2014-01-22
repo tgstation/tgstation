@@ -784,6 +784,12 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				/obj/item/weapon/reagent_containers/food/snacks/grown/wheat = list("flour" = -5),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
 
+				//Grinder stuff, but only if dry
+				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee_arabica = list("coffeepowder" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee_robusta = list("coffeepowder" = 0, "hyperzine" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/tea_aspera = list("teapowder" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/tea_astra = list("teapowder" = 0, "kelotane" = 0),
+
 
 
 				//All types that you can put into the grinder to transfer the reagents to the beaker. !Put all recipes above this.!
@@ -806,6 +812,14 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				/obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries = list("poisonberryjuice" = 0),
 		)
 
+		var/list/dried_items = list(
+
+				//Grinder stuff, but only if dry
+				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee_arabica = list("coffeepowder" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee_robusta = list("coffeepowder" = 0, "hyperzine" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/tea_aspera = list("teapowder" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/tea_astra = list("teapowder" = 0, "kelotane" = 0),
+		)
 
 		var/list/holdingitems = list()
 
@@ -835,6 +849,13 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 						update_icon()
 						src.updateUsrDialog()
 						return 0
+
+		if(is_type_in_list(O, dried_items))
+				if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
+						var/obj/item/weapon/reagent_containers/food/snacks/grown/G = O
+						if(!G.dry)
+								user << "<span class='notice'>You must dry that first!</span>"
+								return 1
 
 		if(holdingitems && holdingitems.len >= limit)
 				usr << "The machine cannot hold anymore items."

@@ -5,7 +5,7 @@
 	icon = 'icons/mob/AI.dmi'
 	icon_state = "0"
 	var/state = 0
-	var/datum/ai_laws/laws = new /datum/ai_laws/asimov
+	var/datum/ai_laws/laws = new()
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/obj/item/device/mmi/brain = null
 
@@ -16,42 +16,42 @@
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20))
-					user << "\blue You wrench the frame into place."
+					user << "<span class='notice'>You wrench the frame into place.</span>"
 					anchored = 1
 					state = 1
 			if(istype(P, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = P
 				if(!WT.isOn())
-					user << "The welder must be on for this task."
+					user << "<span class='warning'>The welder must be on for this task.</span>"
 					return
 				playsound(loc, 'sound/items/Welder.ogg', 50, 1)
 				if(do_after(user, 20))
 					if(!src || !WT.remove_fuel(0, user)) return
-					user << "\blue You deconstruct the frame."
+					user << "<span class='notice'>You deconstruct the frame.</span>"
 					new /obj/item/stack/sheet/plasteel( loc, 4)
 					del(src)
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20))
-					user << "\blue You unfasten the frame."
+					user << "<span class='notice'>You unfasten the frame.</span>"
 					anchored = 0
 					state = 0
 			if(istype(P, /obj/item/weapon/circuitboard/aicore) && !circuit)
 				playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				user << "\blue You place the circuit board inside the frame."
+				user << "<span class='notice'>You place the circuit board inside the frame.</span>"
 				icon_state = "1"
 				circuit = P
 				user.drop_item()
 				P.loc = src
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				user << "\blue You screw the circuit board into place."
+				user << "<span class='notice'>You screw the circuit board into place.</span>"
 				state = 2
 				icon_state = "2"
 			if(istype(P, /obj/item/weapon/crowbar) && circuit)
 				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-				user << "\blue You remove the circuit board."
+				user << "<span class='notice'>You remove the circuit board.</span>"
 				state = 1
 				icon_state = "0"
 				circuit.loc = loc
@@ -59,7 +59,7 @@
 		if(2)
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				user << "\blue You unfasten the circuit board."
+				user << "<span class='notice'>You unfasten the circuit board.</span>"
 				state = 1
 				icon_state = "1"
 			if(istype(P, /obj/item/weapon/cable_coil))
@@ -68,16 +68,16 @@
 					if(do_after(user, 20))
 						P:amount -= 5
 						if(!P:amount) del(P)
-						user << "\blue You add cables to the frame."
+						user << "<span class='notice'>You add cables to the frame.</span>"
 						state = 3
 						icon_state = "3"
 		if(3)
 			if(istype(P, /obj/item/weapon/wirecutters))
 				if (brain)
-					user << "Get that brain out of there first"
+					user << "<span class='warning'>Get that brain out of there first.</span>"
 				else
 					playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1)
-					user << "\blue You remove the cables."
+					user << "<span class='notice'>You remove the cables.</span>"
 					state = 2
 					icon_state = "2"
 					var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( loc )
@@ -90,45 +90,48 @@
 						if (P)
 							P:amount -= 2
 							if(!P:amount) del(P)
-							user << "\blue You put in the glass panel."
+							user << "<span class='notice'>You put in the glass panel.</span>"
 							state = 4
 							icon_state = "4"
 
-			if(istype(P, /obj/item/weapon/aiModule/asimov))
-				laws.add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
-				laws.add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
-				laws.add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
-				usr << "Law module applied."
-
-			if(istype(P, /obj/item/weapon/aiModule/purge))
+			if(istype(P, /obj/item/weapon/aiModule/core/full)) //Allows any full core boards to be applied to AI cores.
+				var/obj/item/weapon/aiModule/core/M = P
 				laws.clear_inherent_laws()
-				usr << "Law module applied."
+				for(var/templaw in M.laws)
+					laws.add_inherent_law(templaw)
+				usr << "<span class='notice'>Law module applied.</span>"
+
+			if(istype(P, /obj/item/weapon/aiModule/reset/purge))
+				laws.clear_inherent_laws()
+				usr << "<span class='notice'>Laws cleared applied.</span>"
 
 
-			if(istype(P, /obj/item/weapon/aiModule/freeform))
-				var/obj/item/weapon/aiModule/freeform/M = P
-				laws.add_inherent_law(M.newFreeFormLaw)
-				usr << "Added a freeform law."
+			if(istype(P, /obj/item/weapon/aiModule/supplied/freeform) || istype(P, /obj/item/weapon/aiModule/core/freeformcore))
+				var/obj/item/weapon/aiModule/supplied/freeform/M = P
+				if(M.laws[1] == "")
+					return
+				laws.add_inherent_law(M.laws[1])
+				usr << "<span class='notice'>Added a freeform law.</span>"
 
 			if(istype(P, /obj/item/device/mmi))
 				var/obj/item/device/mmi/M = P
 				if(!M.brainmob)
-					user << "\red Sticking an empty MMI into the frame would sort of defeat the purpose."
+					user << "<span class='warning'>Sticking an empty MMI into the frame would sort of defeat the purpose.</span>"
 					return
 				if(M.brainmob.stat == 2)
-					user << "\red Sticking a dead brain into the frame would sort of defeat the purpose."
+					user << "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose.</span>"
 					return
 
 				if((config) && (!config.allow_ai))
-					user << "\red This MMI does not seem to fit."
+					user << "<span class='warning'>This MMI does not seem to fit.</span>"
 					return
 
 				if(jobban_isbanned(M.brainmob, "AI"))
-					user << "\red This MMI does not seem to fit."
+					user << "<span class='warning'>This MMI does not seem to fit.</span>"
 					return
 
 				if(!M.brainmob.mind)
-					user << "\red This MMI is mindless."
+					user << "<span class='warning'>This MMI is mindless.</span>"
 					return
 
 				ticker.mode.remove_cultist(M.brainmob.mind, 1)
@@ -137,12 +140,12 @@
 				user.drop_item()
 				M.loc = src
 				brain = M
-				usr << "Added a brain."
+				usr << "<span class='notice'>Added a brain.</span>"
 				icon_state = "3b"
 
 			if(istype(P, /obj/item/weapon/crowbar) && brain)
 				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-				user << "\blue You remove the brain."
+				user << "<span class='notice'>You remove the brain.</span>"
 				brain.loc = loc
 				brain = null
 				icon_state = "3"
@@ -150,19 +153,21 @@
 		if(4)
 			if(istype(P, /obj/item/weapon/crowbar))
 				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-				user << "\blue You remove the glass panel."
+				user << "<span class='notice'>You remove the glass panel.</span>"
 				state = 3
 				if (brain)
 					icon_state = "3b"
 				else
 					icon_state = "3"
-				new /obj/item/stack/sheet/rglass( loc, 2 )
+				new /obj/item/stack/sheet/rglass(loc, 2)
 				return
 
 			if(istype(P, /obj/item/weapon/screwdriver))
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				user << "\blue You connect the monitor."
-				var/mob/living/silicon/ai/A = new /mob/living/silicon/ai ( loc, laws, brain )
+				user << "<span class='notice'>You connect the monitor.</span>"
+				if(!laws.inherent.len) //If laws isn't set to null but nobody supplied a board, the AI would normally be created lawless. We don't want that.
+					laws = null
+				var/mob/living/silicon/ai/A = new /mob/living/silicon/ai (loc, laws, brain)
 				if(A) //if there's no brain, the mob is deleted and a structure/AIcore is created
 					A.rename_self("ai", 1)
 				feedback_inc("cyborg_ais_created",1)

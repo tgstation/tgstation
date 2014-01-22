@@ -123,6 +123,8 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	var/points_per_crate = 5
 	var/plasma_per_point = 5 // 2 plasma for 1 point
 	var/centcom_message = "" // Remarks from Centcom on how well you checked the last order.
+	// Unique typepaths for unusual things we've already sent CentComm, associated with their potencies
+	var/list/discoveredPlants = list()
 	//control
 	var/ordernum
 	var/list/shoppinglist = list()
@@ -229,7 +231,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 		var/crate_count = 0
 
 		centcom_message = ""
-
+		
 		for(var/atom/movable/MA in shuttle)
 			if(MA.anchored)	continue
 
@@ -284,8 +286,25 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 					if(istype(A, /obj/item/stack/sheet/mineral/plasma))
 						var/obj/item/stack/sheet/mineral/plasma/P = A
 						plasma_count += P.amount
+					
+					if(istype(A, /obj/item/seeds))
+						var/obj/item/seeds/S = A
+						if(S.rarity == 0) // Mundane species
+							centcom_message += "<font color=red>+0</font>: We don't need samples of mundane species \"[capitalize(S.species)]\".<BR>"
+						else if(discoveredPlants[S.type]) // This species has already been sent to CentComm
+							var/potDiff = S.potency - discoveredPlants[S.type] // Compare it to the previous best
+							if(potDiff > 0) // This sample is better
+								discoveredPlants[S.type] = S.potency
+								centcom_message += "<font color=green>+[potDiff]</font>: New sample of \"[capitalize(S.species)]\" is superior.  Good work.<BR>"
+								points += potDiff
+							else // This sample is worthless
+								centcom_message += "<font color=red>+0</font>: New sample of \"[capitalize(S.species)]\" is not more potent than existing sample ([discoveredPlants[S.type]] potency).<BR>"
+						else // This is a new discovery!
+							discoveredPlants[S.type] = S.potency
+							centcom_message += "<font color=green>+[S.rarity]</font>: New species discovered: \"[capitalize(S.species)]\".  Excellent work.<BR>"
+							points += S.rarity // That's right, no bonus for potency.  Send a crappy sample first to "show improvement" later
 			del(MA)
-
+		
 		if(plasma_count)
 			centcom_message += "<font color=green>+[round(plasma_count/plasma_per_point)]</font>: Received [plasma_count] units of exotic material.<BR>"
 			points += round(plasma_count / plasma_per_point)
@@ -513,7 +532,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 /obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
 	if(!allowed(user))
-		user << "\red Access Denied."
+		user << "<span class='warning'> Access Denied.</span>"
 		return
 
 	if(..())
@@ -541,7 +560,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 /obj/machinery/computer/supplycomp/attackby(I as obj, user as mob)
 	if(istype(I,/obj/item/weapon/card/emag) && !hacked)
-		user << "\blue Special supplies unlocked."
+		user << "<span class='notice'> Special supplies unlocked.</span>"
 		hacked = 1
 		return
 	else

@@ -65,7 +65,7 @@
 			loc = A.loc
 			return 0 //cannot shoot yourself
 
-		if(bumped)	return 0
+		if(bumped && original)	return 0
 
 		bumped = 1
 		if(ismob(A))

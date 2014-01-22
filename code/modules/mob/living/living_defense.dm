@@ -18,13 +18,6 @@
 
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
-	var/obj/item/weapon/cloaking_device/C = locate((/obj/item/weapon/cloaking_device) in src)
-	if(C && C.active)
-		C.attack_self(src)//Should shut it off
-		update_icons()
-		src << "<span class='notice'>Your [C] was disrupted!</span>"
-		Stun(2)
-
 	var/armor = run_armor_check(def_zone, P.flag)
 	if(!P.nodamage)
 		apply_damage(P.damage, P.damage_type, def_zone, armor)

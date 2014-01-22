@@ -72,8 +72,8 @@
 		else
 			icon_state = base_state
 
-		if(invisibility)				// if invisible, fade icon
-			icon -= rgb(0,0,0,128)
+		// if invisible, fade icon
+		alpha = (invisibility ? 0 : 255)
 
 	// hide called by levelupdate if turf intact status changes
 	// change visibility status and force update of icon
