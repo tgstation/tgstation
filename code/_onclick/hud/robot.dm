@@ -147,40 +147,30 @@
 
 	var/mob/living/silicon/robot/r = mymob
 
-	if(r.shown_robot_modules)
-		//Modules display is shown
-		r.client.screen += r.throw_icon	//"store" icon
+	if(r.client)
+		if(r.shown_robot_modules)
+			//Modules display is shown
+			r.client.screen += r.throw_icon	//"store" icon
 
-		if(!r.module)
-			usr << "<span class='danger'>No module selected</span>"
-			return
+			if(!r.module)
+				usr << "<span class='danger'>No module selected</span>"
+				return
 
-		if(!r.module.modules)
-			usr << "<span class='danger'>Selected module has no modules to select</span>"
-			return
+			if(!r.module.modules)
+				usr << "<span class='danger'>Selected module has no modules to select</span>"
+				return
 
-		if(!r.robot_modules_background)
-			return
+			if(!r.robot_modules_background)
+				return
 
-		var/display_rows = round((r.module.modules.len) / 8) +1 //+1 because round() returns floor of number
-		r.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
-		r.client.screen += r.robot_modules_background
+			var/display_rows = Ceiling(length(r.module.get_inactive_modules()) / 8)
+			r.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
+			r.client.screen += r.robot_modules_background
 
-		var/x = -4	//Start at CENTER-4,SOUTH+1
-		var/y = 1
+			var/x = -4	//Start at CENTER-4,SOUTH+1
+			var/y = 1
 
-		//Unfortunately adding the emag module to the list of modules has to be here. This is because a borg can
-		//be emagged before they actually select a module. - or some situation can cause them to get a new module
-		// - or some situation might cause them to get de-emagged or something.
-		if(r.emagged)
-			if(!(r.module.emag in r.module.modules))
-				r.module.modules.Add(r.module.emag)
-		else
-			if(r.module.emag in r.module.modules)
-				r.module.modules.Remove(r.module.emag)
-
-		for(var/atom/movable/A in r.module.modules)
-			if( (A != r.module_state_1) && (A != r.module_state_2) && (A != r.module_state_3) )
+			for(var/atom/movable/A in r.module.get_inactive_modules())
 				//Module is not currently active
 				r.client.screen += A
 				if(x < 0)
@@ -194,13 +184,12 @@
 					x = -4
 					y++
 
-	else
-		//Modules display is hidden
-		r.client.screen -= r.throw_icon	//"store" icon
+		else
+			//Modules display is hidden
+			r.client.screen -= r.throw_icon	//"store" icon
 
-		for(var/atom/A in r.module.modules)
-			if( (A != r.module_state_1) && (A != r.module_state_2) && (A != r.module_state_3) )
+			for(var/atom/A in r.module.get_inactive_modules())
 				//Module is not currently active
 				r.client.screen -= A
-		r.shown_robot_modules = 0
-		r.client.screen -= r.robot_modules_background
+			r.shown_robot_modules = 0
+			r.client.screen -= r.robot_modules_background
