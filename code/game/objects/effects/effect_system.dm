@@ -544,7 +544,7 @@ steam.start() -- spawns the effect
 					chemholder.reagents.copy_to(smoke, chemholder.reagents.total_volume / number) // copy reagents to each smoke, divide evenly
 
 				if(color)
-					smoke.icon += color // give the smoke color, if it has any to begin with
+					smoke.color = color // give the smoke color, if it has any to begin with
 				else
 					// if no color, just use the old smoke icon
 					smoke.icon = 'icons/effects/96x96.dmi'

@@ -411,12 +411,11 @@
 	w_class = 1.0
 	attack_verb = list("attacked", "coloured")
 	var/colour = "#FF0000" //RGB
-	var/shadeColour = "#220000" //RGB
 	var/uses = 30 //0 for unlimited uses
 	var/instant = 0
 	var/colourName = "red" //for updateIcon purposes
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='suicide'>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</span>"
 		return (BRUTELOSS|OXYLOSS)
 	New()
 		..()

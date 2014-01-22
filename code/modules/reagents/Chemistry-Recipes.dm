@@ -1594,6 +1594,20 @@ datum
 			required_reagents = list("water" = 5, "coco" = 1)
 			result_amount = 5
 
+		coffee
+			name = "Coffee"
+			id = "coffee"
+			result = "coffee"
+			required_reagents = list("coffeepowder" = 1, "water" = 5)
+			result_amount = 5
+
+		tea
+			name = "Tea"
+			id = "tea"
+			result = "tea"
+			required_reagents = list("teapowder" = 1, "water" = 5)
+			result_amount = 5
+
 		soysauce
 			name = "Soy Sauce"
 			id = "soysauce"
@@ -2145,5 +2159,5 @@ datum
 			name = "Thirteen Loko"
 			id = "thirteenloko"
 			result = "thirteenloko"
-			required_reagents = list("vodka" = 1, "coffee" = 1, "orangejuice" = 1)
+			required_reagents = list("vodka" = 1, "coffee" = 1, "limejuice" = 1)
 			result_amount = 3

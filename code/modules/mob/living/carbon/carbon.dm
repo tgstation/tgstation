@@ -8,6 +8,11 @@
 		if((FAT in src.mutations) && src.m_intent == "run" && src.bodytemperature <= 360)
 			src.bodytemperature += 2
 
+/mob/living/carbon/movement_delay()
+	. = 0
+	if(legcuffed)
+		. += legcuffed.slowdown
+
 /mob/living/carbon/relaymove(var/mob/user, direction)
 	if(user in src.stomach_contents)
 		if(prob(40))

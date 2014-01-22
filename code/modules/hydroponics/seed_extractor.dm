@@ -7,7 +7,6 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/F = O
 		while(t_amount < t_max)
 			var/obj/item/seeds/t_prod = new F.seed(O.loc)
-			t_prod.species = F.species
 			t_prod.lifespan = F.lifespan
 			t_prod.endurance = F.endurance
 			t_prod.maturation = F.maturation
@@ -22,7 +21,6 @@
 		var/obj/item/weapon/grown/F = O
 		while(t_amount < t_max)
 			var/obj/item/seeds/t_prod = new F.seed(O.loc)
-			t_prod.species = F.species
 			t_prod.lifespan = F.lifespan
 			t_prod.endurance = F.endurance
 			t_prod.maturation = F.maturation
