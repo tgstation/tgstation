@@ -13,19 +13,29 @@
 
 /datum/table_recipe
 	var/name = ""
-	var/reqs[]
+	var/reqs[] = list()
 	var/result_path
-	var/tools[]
+	var/tools[] = list()
 	var/time = 0
 
-/datum/table_recipe/flame_thrower
+/datum/table_recipe/medbot
+	name = "Medbot"
+	result_path = /obj/machinery/bot/medbot
+	reqs = list("/obj/item/device/healthanalyzer" = 1,
+				"/obj/item/weapon/storage/firstaid" = 1,
+				"/obj/item/device/assembly/prox_sensor" = 1,
+				"/obj/item/robot_parts/r_arm" = 1)
+	time = 80
+
+/datum/table_recipe/flamethrower
 	name = "Flamethrower"
 	result_path = /obj/item/weapon/flamethrower
-	reqs = list(/obj/item/weapon/weldingtool = 1,
-				/obj/item/device/assembly/igniter = 1,
-				/obj/item/stack/rods = 2)
+	reqs = list("/obj/item/weapon/weldingtool" = 1,
+				"/obj/item/device/assembly/igniter" = 1,
+				"/obj/item/stack/rods" = 2)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 20
+
 
 /obj/structure/table
 	name = "table"
@@ -61,38 +71,51 @@
 /obj/structure/table/proc/check_contents(datum/table_recipe/TR)
 	check_table()
 	var/datum/table_recipe/R = TR
+	var/I = R.reqs.len
 	var/i = R.reqs.len
+	world.log << "[i]"
 	for(var/A in R.reqs)
-		if(table_contents[A] < R.reqs[A])
-			break
-		else
-			i--
-	if(i<=0)
-		return 1
-	else
-		return 0
+		var/AP = text2path(A)
+		for(var/B in table_contents)
+			var/BP = text2path(B)
+			world.log << "[AP] - [BP]"
+			if(ispath(BP, AP))
+				world.log << "[i]"
+				if(table_contents[B] >= R.reqs[A])
+					i--
+					break
+		I--
+		if(i > I)
+			return 0
+	world.log << "[i]"
+	return !i
 
 /obj/structure/table/proc/check_table()
 	table_contents = list()
 	for(var/obj/item/I in loc)
 		if(istype(I, /obj/item/stack))
 			var/obj/item/stack/S = I
-			table_contents[I.type] += S.amount
+			table_contents["[I.type]"] = (table_contents[I.type] ? (table_contents[I.type] + S.amount) : S.amount)
 		else
-			table_contents[I.type] += 1
+			table_contents["[I.type]"] = (table_contents[I.type] ? (table_contents[I.type] + 1) : 1)
 
 /obj/structure/table/proc/check_tools(mob/user, datum/table_recipe/TR)
+	world.log << "Tools checking"
 	if(!TR.tools.len)
 		return 1
-	var/list/hands_content = list()
-	if(user.l_hand)
-		hands_content.Add(user.l_hand.type)
-	if(user.r_hand)
-		hands_content.Add(user.r_hand.type)
+	var/list/possible_tools = list()
+	for(var/obj/item/I in user.contents)
+		if(istype(I, /obj/item/weapon/storage))
+			for(var/obj/item/SI in I.contents)
+				possible_tools |= (SI.type)
+		else
+			possible_tools |= (I.type)
+	for(var/obj/item/TI in loc)
+		possible_tools |= (TI.type)
 	var/i = TR.tools.len
 	for(var/A in TR.tools)
-		if(hands_content.Find(A))
-			hands_content.Remove(A)
+		if(possible_tools.Find(A))
+			possible_tools.Remove(A)
 			i--
 		else
 			break
@@ -103,11 +126,12 @@
 /obj/structure/table/proc/construct_item(mob/user, datum/table_recipe/TR)
 	check_table()
 	if(check_contents(TR) && check_tools(user, TR))
+		world.log << "Tools checked"
 		if(do_after(user, TR.time))
 			if(!check_contents(TR) || !check_tools(user, TR))
 				return 0
 			del_reqs(TR)
-			var/obj/item/I = new TR.result_path
+			var/atom/movable/I = new TR.result_path
 			I.loc = loc
 			return 1
 	return 0
@@ -115,14 +139,27 @@
 /obj/structure/table/proc/del_reqs(datum/table_recipe/TR)
 	var/datum/table_recipe/R = TR
 	for(var/A in R.reqs)
-		var/obj/item/I = locate(A) in loc
-		if(istype(I, /obj/item/stack))
-			var/obj/item/stack/S = I
-			S.amount -= R.reqs[A]
+		var/AP = text2path(A)
+		var/BP
+		world.log << "[A]"
+		if(ispath(AP, /obj/item/stack))
+			var/obj/item/stack/S
+			for(var/B in table_contents)
+				BP = text2path(B)
+				if(ispath(BP, AP))
+					S = locate(BP) in loc
+					if(S.amount >= R.reqs[A])
+						S.use(R.reqs[A])
+						break
 		else
-			for(var/i=R.reqs[A],i>=0,i--)
-				I = locate(A) in loc
-				del(I)
+			var/obj/item/I
+			for(var/B in table_contents)
+				BP = text2path(B)
+				if(ispath(BP, AP))
+					I = locate(BP) in loc
+					if(I)
+						del(I)
+						break
 
 /obj/structure/table/interact(mob/user)
 	check_table()
