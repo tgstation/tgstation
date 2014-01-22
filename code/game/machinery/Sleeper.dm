@@ -45,6 +45,19 @@
 /obj/machinery/sleeper/allow_drop()
 	return 0
 
+/obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
+	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user))
+		return
+	if(state_open)
+		close_machine()
+	if(target.client)
+		target.client.perspective = EYE_PERSPECTIVE
+		target.client.eye = src
+	occupant = target
+	target.loc = src
+	target.stop_pulling()
+	update_icon()
+
 /obj/machinery/sleeper/blob_act()
 	if(prob(75))
 		for(var/atom/movable/A in src)

@@ -67,6 +67,20 @@
 	updateDialog()
 	return 1
 
+/obj/machinery/atmospherics/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
+	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user))
+		return
+	target.Move(loc)
+	if(state_open)
+		close_machine()
+	if(target.client)
+		target.client.perspective = EYE_PERSPECTIVE
+		target.client.eye = src
+	occupant = target
+	target.loc = src
+	target.stop_pulling()
+	on = 1
+	update_icon()
 
 /obj/machinery/atmospherics/unary/cryo_cell/allow_drop()
 	return 0
