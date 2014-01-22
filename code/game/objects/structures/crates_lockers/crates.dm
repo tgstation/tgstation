@@ -376,3 +376,16 @@
 			src.req_access = list()
 			src.req_access += pick(get_all_accesses())
 	..()
+
+/obj/structure/closet/crate/bullet_act(var/obj/item/projectile/Proj)
+	health -= Proj.damage
+	..()
+	if(health <= 0)
+		for(var/obj/item/I in src)
+			I.loc = src.loc
+			if(prob(75))
+				del(I)
+		for(var/mob/M in src)
+			M.loc = src.loc
+		del(src)
+	return

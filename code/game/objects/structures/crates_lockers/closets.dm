@@ -141,13 +141,10 @@
 	health -= Proj.damage
 	..()
 	if(health <= 0)
-		for(var/obj/item/I in src)
-			I.loc = src.loc
-			if(prob(75))
-				del(I)
-		for(var/mob/M in src)
-			M.loc = src.loc
+		for(var/atom/movable/A as mob|obj in src)
+			A.loc = src.loc
 		del(src)
+
 	return
 
 /obj/structure/closet/attack_animal(mob/living/simple_animal/user as mob)
