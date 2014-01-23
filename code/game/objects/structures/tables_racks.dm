@@ -18,6 +18,17 @@
 	var/tools[] = list()
 	var/time = 0
 	var/parts[] = list()
+	var/chem_catalists[] = list()
+
+/datum/table_recipe/IED
+	name = "IED"
+	result_path = /obj/item/weapon/grenade/iedcasing
+	reqs = list("/obj/item/weapon/handcuffs/cable" = 1,
+				"/obj/item/stack/cable_coil" = 1,
+				"/obj/item/device/assembly/igniter" = 1,
+				"/obj/item/weapon/reagent_containers/food/drinks/soda_cans" = 1,
+				"/datum/reagent/fuel" = 10)
+	time = 80
 
 /datum/table_recipe/stunprod
 	name = "Stunprod"
@@ -124,26 +135,40 @@
 			T.update_icon()
 	..()
 
-/obj/structure/table/proc/check_contents(datum/table_recipe/TR)
+/obj/structure/table/MouseDrop(atom/over)
+	if(usr.stat || usr.lying || !Adjacent(usr) || (over != usr))
+		return
+	interact(usr)
+
+/obj/structure/table/proc/check_contents(datum/table_recipe/R)
 	check_table()
-	var/datum/table_recipe/R = TR
 	var/I = R.reqs.len
 	var/i = R.reqs.len
-	world.log << "[i]"
 	for(var/A in R.reqs)
 		var/AP = text2path(A)
+		if(!ispath(AP))
+			for(var/B in table_contents)
+				if(!ispath(B))
+					if(table_contents[B] >= R.reqs[A])
+						i--
+						break
+			I--
+			if(i > I)
+				return 0
+			else
+				continue
 		for(var/B in table_contents)
 			var/BP = text2path(B)
-			world.log << "[AP] - [BP]"
 			if(ispath(BP, AP))
-				world.log << "[i]"
 				if(table_contents[B] >= R.reqs[A])
 					i--
 					break
 		I--
 		if(i > I)
 			return 0
-	world.log << "[i]"
+	for(var/A in R.chem_catalists)
+		if(table_contents[A] < R.chem_catalists[A])
+			return 0
 	return !i
 
 /obj/structure/table/proc/check_table()
@@ -151,52 +176,59 @@
 	for(var/obj/item/I in loc)
 		if(istype(I, /obj/item/stack))
 			var/obj/item/stack/S = I
-			table_contents["[I.type]"] = (table_contents[I.type] ? (table_contents[I.type] + S.amount) : S.amount)
+			table_contents["[I.type]"] += S.amount   //(table_contents[I.type] ? (table_contents[I.type] + S.amount) : S.amount)
 		else
-			table_contents["[I.type]"] = (table_contents[I.type] ? (table_contents[I.type] + 1) : 1)
+			if(istype(I, /obj/item/weapon/reagent_containers))
+				for(var/datum/reagent/R in I.reagents.reagent_list)
+					table_contents["[R.type]"] += R.volume
+
+			table_contents["[I.type]"] += 1 //(table_contents[I.type] ? (table_contents[I.type] + 1) : 1)
 
 /obj/structure/table/proc/check_tools(mob/user, datum/table_recipe/TR)
-	world.log << "Tools checking"
 	if(!TR.tools.len)
 		return 1
 	var/list/possible_tools = list()
 	for(var/obj/item/I in user.contents)
 		if(istype(I, /obj/item/weapon/storage))
 			for(var/obj/item/SI in I.contents)
-				possible_tools |= (SI.type)
+				possible_tools += (SI.type)
 		else
-			possible_tools |= (I.type)
+			possible_tools += (I.type)
 	for(var/obj/item/TI in loc)
 		possible_tools |= (TI.type)
 	var/i = TR.tools.len
+	var/I
 	for(var/A in TR.tools)
-		if(possible_tools.Find(A))
-			possible_tools.Remove(A)
+		I = possible_tools.Find(A)
+		if(I)
+			possible_tools.Cut(I, I+1)
 			i--
 		else
 			break
-	if(i>0)
-		return 0
-	return 1
+	return !i
 
 /obj/structure/table/proc/construct_item(mob/user, datum/table_recipe/TR)
 	check_table()
 	if(check_contents(TR) && check_tools(user, TR))
-		world.log << "Tools checked"
 		if(do_after(user, TR.time))
 			if(!check_contents(TR) || !check_tools(user, TR))
-				world.log << "Afterconstruction check fails"
 				return 0
 			var/list/parts = del_reqs(TR)
 			var/atom/movable/I = new TR.result_path
-			for(var/atom/movable/A in parts)
-				A.loc = I
+			for(var/A in parts)
+				if(istype(A, /obj/item))
+					var/atom/movable/B = A
+					B.loc = I
+				else
+					if(!I.reagents)
+						I.reagents = new /datum/reagents()
+					I.reagents.reagent_list.Add(A)
+			I.CheckParts()
 			I.loc = loc
 			return 1
 	return 0
 
-/obj/structure/table/proc/del_reqs(datum/table_recipe/TR)
-	var/datum/table_recipe/R = TR
+/obj/structure/table/proc/del_reqs(datum/table_recipe/R)
 	var/list/Deletion = list()
 	var/AP
 	var/BP
@@ -204,7 +236,6 @@
 	for(var/A in R.reqs)
 		amt = R.reqs[A]
 		AP = text2path(A)
-		world.log << "[A]"
 		if(ispath(AP, /obj/item/stack))
 			var/obj/item/stack/S
 			stack_loop:
@@ -219,7 +250,7 @@
 							else
 								amt -= S.amount
 								del(S)
-		else
+		else if(ispath(AP, /obj/item))
 			var/obj/item/I
 			item_loop:
 				for(var/B in table_contents)
@@ -230,6 +261,24 @@
 							Deletion.Add(I)
 							amt--
 						break item_loop
+		else
+			var/datum/reagent/RG = new AP
+			reagent_loop:
+				for(var/B in table_contents)
+					BP = text2path(B)
+					if(ispath(BP, /obj/item/weapon/reagent_containers))
+						var/obj/item/RC = locate(BP) in loc
+						if(RC.reagents.has_reagent(RG.id, amt))
+							RC.reagents.remove_reagent(RG.id, amt)
+							RG.volume = amt
+							Deletion.Add(RG)
+							break reagent_loop
+						else if(RC.reagents.has_reagent(RG.id))
+							Deletion.Add(RG)
+							RG.volume += RC.reagents.get_reagent_amount(RG.id)
+							amt -= RC.reagents.get_reagent_amount(RG.id)
+							RC.reagents.del_reagent(RG.id)
+
 	for(var/A in R.parts)
 		AP = text2path(A)
 		for(var/B in Deletion)
@@ -237,7 +286,6 @@
 				Deletion.Remove(B)
 				del(B)
 	return Deletion
-
 
 /obj/structure/table/interact(mob/user)
 	check_table()
@@ -488,7 +536,7 @@
 		density = 0
 		del(src)
 	else
-		interact(user)
+		..()
 
 /obj/structure/table/attack_tk() // no telehulk sorry
 	return
