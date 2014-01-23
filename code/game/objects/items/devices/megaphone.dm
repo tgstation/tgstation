@@ -19,7 +19,8 @@
 	if(!ishuman(user))
 		user << "\red You don't know how to use this!"
 		return
-	if(user.silent)
+	if(user.mind.assigned_role == "Mime")
+		user << "\red Being a mime, you really shouldn't use this."
 		return
 	if(spamcheck)
 		user << "\red \The [src] needs to recharge!"
