@@ -19,7 +19,9 @@
 	if(!ishuman(user))
 		user << "\red You don't know how to use this!"
 		return
-	if(user.silent)
+	if(user.mind.assigned_role == "Mime")
+		if(!user.silent)
+			user << "\red You feel that breaking your vow of silence is enough."
 		return
 	if(spamcheck)
 		user << "\red \The [src] needs to recharge!"
