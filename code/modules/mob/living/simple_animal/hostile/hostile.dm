@@ -2,6 +2,7 @@
 	faction = "hostile"
 	mouse_opacity = 2 //This makes it easier to hit hostile mobs, you only need to click on their tile, and is set back to 1 when they die
 	stop_automated_movement_when_pulled = 0
+	environment_smash = 1 //Set to 1 to break closets,tables,racks, etc; 2 for walls; 3 for rwalls
 	var/stance = HOSTILE_STANCE_IDLE	//Used to determine behavior
 	var/atom/target
 	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction, or 2, to only ever attack our own faction
@@ -25,7 +26,6 @@
 	var/list/wanted_objects = list() //A list of objects that will be checked against to attack, should we have search_objects enabled
 	var/stat_attack = 0 //Mobs with stat_attack to 1 will attempt to attack things that are unconscious, Mobs with stat_attack set to 2 will attempt to attack the dead.
 	var/stat_exclusive = 0 //Mobs with this set to 1 will exclusively attack things defined by stat_attack, stat_attack 2 means they will only attack corpses
-	var/environment_smash = 1 //Mobs with this set to 1 will attempt to break things in the environment to pursue targets, on by default for original simple mobs
 	var/attack_faction = null //Put a faction string here to have a mob only ever attack a specific faction
 
 /mob/living/simple_animal/hostile/Life()
@@ -258,12 +258,14 @@
 
 /mob/living/simple_animal/hostile/proc/DestroySurroundings()
 	if(environment_smash)
+		if(buckled)//Beds and chairs are no longer hostile mob kryptonite
+			buckled.attack_animal(src)
 		var/list/directions = cardinal.Copy()
 		for(var/dir in directions)
 			var/turf/T = get_step(src, dir)
-			if(istype(T, /turf/simulated/wall) && wall_smash)
+			if(istype(T, /turf/simulated/wall))
 				T.attack_animal(src)
 			for(var/atom/A in T)
 				if(istype(A, /obj/structure/window) || istype(A, /obj/structure/closet) || istype(A, /obj/structure/table) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/rack))
 					A.attack_animal(src)
-	else return
+	return

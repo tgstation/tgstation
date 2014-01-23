@@ -53,7 +53,7 @@
 	var/attacktext = "attacks"
 	var/attack_sound = null
 	var/friendly = "nuzzles" //If the mob does no damage with it's attack
-	var/wall_smash = 0 //if they can smash walls
+	var/environment_smash = 0 //Set to 1 to allow breaking of crates,lockers,racks,tables; 2 for walls; 3 for Rwalls
 
 	var/speed = 0 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
 

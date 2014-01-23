@@ -10,7 +10,7 @@
 	max_n2 = 0
 	unsuitable_atoms_damage = 15
 	faction = "mining"
-	wall_smash = 1
+	environment_smash = 2
 	minbodytemp = 0
 	heat_damage_per_tick = 20
 	response_help = "pokes"
