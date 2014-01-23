@@ -75,6 +75,13 @@
 	SHADOWBLOCK    = getAssignedBlock("SHADOW",     numsToAssign, DNA_HARDER_BOUNDS)
 	CHAMELEONBLOCK = getAssignedBlock("CHAMELEON",  numsToAssign, DNA_HARDER_BOUNDS)
 
+	//
+	// Static Blocks
+	/////////////////////////////////////////////.
+
+	// Monkeyblock is always last.
+	MONKEYBLOCK = DNA_SE_LENGTH
+
 	// And the genes that actually do the work. (domutcheck improvements)
 	var/list/blocks_assigned[DNA_SE_LENGTH]
 	for(var/gene_type in typesof(/datum/dna/gene))
