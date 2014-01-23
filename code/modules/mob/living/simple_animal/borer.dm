@@ -306,7 +306,7 @@ mob/living/simple_animal/borer/proc/detatch()
 
 	if(M in view(1, src))
 		src << "You wiggle into [M]'s ear."
-			src.perform_infestation(M)
+		src.perform_infestation(M)
 
 		return
 	else
