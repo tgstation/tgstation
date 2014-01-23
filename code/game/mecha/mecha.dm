@@ -944,6 +944,10 @@
 	src.log_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].")
 	return
 
+/obj/mecha/MouseDrop_T(mob/M as mob, mob/user as mob)
+	if(M != user)
+		return
+	move_inside(M, user)
 
 /obj/mecha/verb/move_inside()
 	set category = "Object"
