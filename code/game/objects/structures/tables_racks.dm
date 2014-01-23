@@ -17,6 +17,62 @@
 	var/result_path
 	var/tools[] = list()
 	var/time = 0
+	var/parts[] = list()
+
+/datum/table_recipe/stunprod
+	name = "Stunprod"
+	result_path = /obj/item/weapon/melee/baton/cattleprod
+	reqs = list("/obj/item/weapon/handcuffs/cable" = 1,
+				"/obj/item/stack/rods" = 1,
+				"/obj/item/weapon/wirecutters" = 1,
+				"/obj/item/weapon/cell" = 1)
+	time = 80
+	parts = list("/obj/item/weapon/cell" = 1)
+
+/datum/table_recipe/ed209
+	name = "ED209"
+	result_path = /obj/machinery/bot/ed209
+	reqs = list("/obj/item/robot_parts/robot_suit" = 1,
+				"/obj/item/clothing/head/helmet" = 1,
+				"/obj/item/clothing/suit/armor/vest" = 1,
+				"/obj/item/robot_parts/l_leg" = 1,
+				"/obj/item/robot_parts/r_leg" = 1,
+				"/obj/item/stack/sheet/metal" = 5,
+				"/obj/item/stack/cable_coil" = 5,
+				"/obj/item/weapon/gun/energy/taser" = 1,
+				"/obj/item/weapon/cell" = 1,
+				"/obj/item/device/assembly/prox_sensor" = 1,
+				"/obj/item/robot_parts/r_arm" = 1)
+	tools = list(/obj/item/weapon/weldingtool, /obj/item/weapon/screwdriver)
+	time = 120
+
+/datum/table_recipe/secbot
+	name = "Secbot"
+	result_path = /obj/machinery/bot/secbot
+	reqs = list("/obj/item/device/assembly/signaler" = 1,
+				"/obj/item/clothing/head/helmet" = 1,
+				"/obj/item/weapon/melee/baton" = 1,
+				"/obj/item/device/assembly/prox_sensor" = 1,
+				"/obj/item/robot_parts/r_arm" = 1)
+	tools = list(/obj/item/weapon/weldingtool)
+	time = 120
+
+/datum/table_recipe/cleanbot
+	name = "Cleanbot"
+	result_path = /obj/machinery/bot/cleanbot
+	reqs = list("/obj/item/weapon/reagent_containers/glass/bucket" = 1,
+				"/obj/item/device/assembly/prox_sensor" = 1,
+				"/obj/item/robot_parts/r_arm" = 1)
+	time = 80
+
+/datum/table_recipe/floorbot
+	name = "Floorbot"
+	result_path = /obj/machinery/bot/floorbot
+	reqs = list("/obj/item/weapon/storage/toolbox/mechanical" = 1,
+				"/obj/item/stack/tile/plasteel" = 1,
+				"/obj/item/device/assembly/prox_sensor" = 1,
+				"/obj/item/robot_parts/r_arm" = 1)
+	time = 80
 
 /datum/table_recipe/medbot
 	name = "Medbot"
@@ -129,37 +185,59 @@
 		world.log << "Tools checked"
 		if(do_after(user, TR.time))
 			if(!check_contents(TR) || !check_tools(user, TR))
+				world.log << "Afterconstruction check fails"
 				return 0
-			del_reqs(TR)
+			var/list/parts = del_reqs(TR)
 			var/atom/movable/I = new TR.result_path
+			for(var/atom/movable/A in parts)
+				A.loc = I
 			I.loc = loc
 			return 1
 	return 0
 
 /obj/structure/table/proc/del_reqs(datum/table_recipe/TR)
 	var/datum/table_recipe/R = TR
+	var/list/Deletion = list()
+	var/AP
+	var/BP
+	var/amt
 	for(var/A in R.reqs)
-		var/AP = text2path(A)
-		var/BP
+		amt = R.reqs[A]
+		AP = text2path(A)
 		world.log << "[A]"
 		if(ispath(AP, /obj/item/stack))
 			var/obj/item/stack/S
-			for(var/B in table_contents)
-				BP = text2path(B)
-				if(ispath(BP, AP))
-					S = locate(BP) in loc
-					if(S.amount >= R.reqs[A])
-						S.use(R.reqs[A])
-						break
+			stack_loop:
+				for(var/B in table_contents)
+					BP = text2path(B)
+					if(ispath(BP, AP))
+						while(amt > 0)
+							S = locate(BP) in loc
+							if(S.amount >= amt)
+								S.use(amt)
+								break stack_loop
+							else
+								amt -= S.amount
+								del(S)
 		else
 			var/obj/item/I
-			for(var/B in table_contents)
-				BP = text2path(B)
-				if(ispath(BP, AP))
-					I = locate(BP) in loc
-					if(I)
-						del(I)
-						break
+			item_loop:
+				for(var/B in table_contents)
+					BP = text2path(B)
+					if(ispath(BP, AP))
+						while(amt > 0)
+							I = locate(BP) in loc
+							Deletion.Add(I)
+							amt--
+						break item_loop
+	for(var/A in R.parts)
+		AP = text2path(A)
+		for(var/B in Deletion)
+			if(!istype(B, AP))
+				Deletion.Remove(B)
+				del(B)
+	return Deletion
+
 
 /obj/structure/table/interact(mob/user)
 	check_table()
