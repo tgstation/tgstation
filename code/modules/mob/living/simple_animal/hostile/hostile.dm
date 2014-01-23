@@ -23,7 +23,10 @@
 	var/minimum_distance = 1 //Minimum approach distance, so ranged mobs chase targets down, but still keep their distance set in tiles to the target, set higher to make mobs keep distance
 	var/search_objects = 0 //If we want to consider objects when searching around, set this to 1. If you want to search for objects while also ignoring mobs until hurt, set it to 2. To completely ignore mobs, even when attacked, set it to 3
 	var/list/wanted_objects = list() //A list of objects that will be checked against to attack, should we have search_objects enabled
-	var/execute = 0 //Mobs with execute set to 1 will attempt to attack things that are unconscious, Mobs with execute set to 2 will attempt to attack the dead.
+	var/stat_attack = 0 //Mobs with stat_attack to 1 will attempt to attack things that are unconscious, Mobs with stat_attack set to 2 will attempt to attack the dead.
+	var/stat_exclusive = 0 //Mobs with this set to 1 will exclusively attack things defined by stat_attack, stat_attack 2 means they will only attack corpses
+	var/environment_smash = 1 //Mobs with this set to 1 will attempt to break things in the environment to pursue targets, on by default for original simple mobs
+	var/attack_faction = null //Put a faction string here to have a mob only ever attack a specific faction
 
 /mob/living/simple_animal/hostile/Life()
 
@@ -108,9 +111,9 @@
 			return 1
 	if(isliving(the_target) && search_objects < 2)
 		var/mob/living/L = the_target
-		if(L.stat > execute)
+		if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive == 1)
 			return 0
-		if(L.faction == src.faction && !attack_same || L.faction != src.faction && attack_same == 2)
+		if(L.faction == src.faction && !attack_same || L.faction != src.faction && attack_same == 2 || L.faction != attack_faction && attack_faction)
 			return 0
 		if(L in friends)
 			return 0
@@ -254,11 +257,13 @@
 	return
 
 /mob/living/simple_animal/hostile/proc/DestroySurroundings()
-	var/list/directions = cardinal.Copy()
-	for(var/dir in directions)
-		var/turf/T = get_step(src, dir)
-		if(istype(T, /turf/simulated/wall) && wall_smash)
-			T.attack_animal(src)
-		for(var/atom/A in T)
-			if(istype(A, /obj/structure/window) || istype(A, /obj/structure/closet) || istype(A, /obj/structure/table) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/rack))
-				A.attack_animal(src)
+	if(environment_smash)
+		var/list/directions = cardinal.Copy()
+		for(var/dir in directions)
+			var/turf/T = get_step(src, dir)
+			if(istype(T, /turf/simulated/wall) && wall_smash)
+				T.attack_animal(src)
+			for(var/atom/A in T)
+				if(istype(A, /obj/structure/window) || istype(A, /obj/structure/closet) || istype(A, /obj/structure/table) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/rack))
+					A.attack_animal(src)
+	else return

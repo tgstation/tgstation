@@ -32,6 +32,7 @@
 /mob/living/simple_animal/hostile/asteroid/bullet_act(var/obj/item/projectile/P)//Limits the weapons available to kill them at range
 	if(P.damage < 30)
 		visible_message("<span class='danger'>The [P.name] had no effect on [src.name]!</span>")
+		Aggro()
 		return
 	..()
 
@@ -67,10 +68,9 @@
 	harm_intent_damage = 5
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	attacktext = "bites into "
+	attacktext = "bites into"
 	a_intent = "harm"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-
 	ranged_cooldown_cap = 4
 
 /obj/item/projectile/temp/basilisk
@@ -176,12 +176,13 @@
 	melee_damage_lower = 2
 	melee_damage_upper = 2
 	attacktext = "lashes out at"
-	throw_message = "falls right through the strange body of the "
+	throw_message = "falls right through the strange body of the"
 	ranged_cooldown = 0
 	ranged_cooldown_cap = 0
-
+	environment_smash = 0
 	retreat_distance = 5
 	minimum_distance = 5
+	pass_flags = PASSTABLE
 
 /mob/living/simple_animal/hostile/asteroid/Hivelord/OpenFire(var/the_target)
 	var/mob/living/simple_animal/hostile/asteroid/Hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/Hivelordbrood(src.loc)
@@ -212,7 +213,9 @@
 	melee_damage_lower = 2
 	melee_damage_upper = 2
 	attacktext = "slashes"
-	throw_message = "falls right through the strange body of the "
+	throw_message = "falls right through the strange body of the"
+	environment_smash = 0
+	pass_flags = PASSTABLE
 
 /mob/living/simple_animal/hostile/asteroid/Hivelordbrood/New()
 	..()
@@ -244,7 +247,7 @@
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	attacktext = "pulverizes"
-	throw_message = "does nothing to the rocky hide of the "
+	throw_message = "does nothing to the rocky hide of the"
 
 /mob/living/simple_animal/hostile/asteroid/Goliath/OpenFire()
 	visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")

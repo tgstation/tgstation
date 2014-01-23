@@ -163,6 +163,9 @@ obj/item/projectile/kinetic/New()
 
 /obj/item/projectile/kinetic/on_hit(var/atom/target)
 	var/turf/target_turf= get_turf(target)
+	if(istype(target_turf, /turf/simulated/mineral))
+		var/turf/simulated/mineral/M = target_turf
+		M.gets_drilled()
 	new /obj/item/effect/kinetic_blast(target_turf)
 	..()
 
