@@ -55,7 +55,8 @@
 		icon_state = "[colour] [is_adult ? "adult" : "baby"] slime"
 		real_name = name
 		slime_mutation = mutation_table(colour)
-		coretype = text2path("/obj/item/slime_extract/[colour]")
+		var/sanitizedcolour = replacetext(colour, " ", "")
+		coretype = text2path("/obj/item/slime_extract/[sanitizedcolour]")
 	..()
 
 /mob/living/carbon/slime/regenerate_icons()
