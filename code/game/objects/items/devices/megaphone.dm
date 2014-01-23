@@ -20,8 +20,7 @@
 		user << "\red You don't know how to use this!"
 		return
 	if(user.mind.assigned_role == "Mime")
-		if(!user.silent)
-			user << "\red You feel that breaking your vow of silence is enough."
+		user << "\red Being a mime, you really shouldn't use this."
 		return
 	if(spamcheck)
 		user << "\red \The [src] needs to recharge!"
