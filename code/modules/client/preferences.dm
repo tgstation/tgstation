@@ -16,7 +16,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"infested monkey" = IS_MODE_COMPILED("monkey"),      // 9
 	"ninja" = "true",									 // 10
 	"vox raider" = IS_MODE_COMPILED("heist"),			 // 11
-	"diona" = 0,                                         // 12
+	"diona" = 1,                                         // 12
 	"vampire" = IS_MODE_COMPILED("vampire")			 // 13
 )
 
@@ -275,8 +275,8 @@ datum/preferences
 			<b>Gender:</b> <a href='?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a><br>
 			<b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a>
 			<br>
-			<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'><b>[UI_style]</b></a><br>"
-			<b>Custom UI</b>(recommended for White UI):<br>"
+			<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'><b>[UI_style]</b></a><br>
+			<b>Custom UI</b>(recommended for White UI):<br>
 			-Color: <a href='?_src_=prefs;preference=UIcolor'><b>[UI_style_color]</b></a> <table style='display:inline;' bgcolor='[UI_style_color]'><tr><td>__</td></tr></table><br>
 			-Alpha(transparency): <a href='?_src_=prefs;preference=UIalpha'><b>[UI_style_alpha]</b></a><br>
 			<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'><b>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</b></a><br>
