@@ -139,4 +139,4 @@
 		block=LISPBLOCK
 
 	OnSay(var/mob/M, var/message)
-		return replacetext(replacetext(message,"S","TH"),"s","th")
+		return replacetext(message,"s","th")
