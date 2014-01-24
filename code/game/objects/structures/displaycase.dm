@@ -119,7 +119,7 @@
 			user << "\red It's locked, you can't put anything into it."
 			return
 		if(!occupant)
-			user << "\blue You insert \the [src] into \the [src], and it floats as the hoverfield activates."
+			user << "\blue You insert \the [W] into \the [src], and it floats as the hoverfield activates."
 			user.drop_item()
 			W.loc=src
 			occupant=W
