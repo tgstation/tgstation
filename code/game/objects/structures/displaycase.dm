@@ -104,7 +104,7 @@
 			user << "\red Access denied."
 			return
 		locked = !locked
-		if(locked)
+		if(!locked)
 			user << "\icon[src] \blue \The [src] clicks as locks release, and it slowly opens for you."
 		else
 			user << "\icon[src] \blue You close \the [src] and swipe your card, locking it."
