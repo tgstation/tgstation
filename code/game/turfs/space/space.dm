@@ -45,7 +45,7 @@
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 				user << "\blue You build a catwalk!"
 				R.use(2)
-				ChangeTurf(/turf/unsimulated/floor/airless/catwalk)
+				ChangeTurf(/turf/simulated/floor/plating/airless/catwalk)
 				del(L)
 				return
 

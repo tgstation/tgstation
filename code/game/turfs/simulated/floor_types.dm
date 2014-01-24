@@ -260,7 +260,7 @@
 
 // CATWALKS
 // Space and plating, all in one buggy fucking turf!
-/turf/unsimulated/floor/airless/catwalk
+/turf/simulated/floor/plating/airless/catwalk
 	icon = 'icons/turf/catwalks.dmi'
 	icon_state = "catwalk0"
 	name = "catwalk"
@@ -281,7 +281,7 @@
 		name = "catwalk"
 		update_icon(1)
 
-	proc/update_icon(var/propogate=1)
+	update_icon(var/propogate=1)
 		underlays.Cut()
 		underlays += new /icon('icons/turf/space.dmi',"[((x + y) ^ ~(x * y) + z) % 25]")
 
@@ -289,7 +289,7 @@
 		for(var/direction in cardinal)
 			var/turf/T = get_step(src,direction)
 			if(T.is_catwalk())
-				var/turf/unsimulated/floor/airless/catwalk/C=T
+				var/turf/simulated/floor/plating/airless/catwalk/C=T
 				dirs |= direction
 				if(propogate)
 					C.update_icon(0)
