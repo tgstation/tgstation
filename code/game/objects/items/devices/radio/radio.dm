@@ -38,6 +38,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	var/const/FREQ_LISTENING = 1
 		//FREQ_BROADCASTING = 2
 
+	var/always_talk=0 // ALWAYS catch signals. Useful for covert listening devices.
+
 /obj/item/device/radio
 	var/datum/radio_frequency/radio_connection
 	var/list/datum/radio_frequency/secure_radio_connections

@@ -5,7 +5,7 @@
 	icon_state = "power_mod"
 	var/obj/item/device/pda/hostpda = null
 
-	var/on = 0 //Are we currently active??
+	var/on = 0 //Are we currently active?
 	var/menu_message = ""
 
 	New()

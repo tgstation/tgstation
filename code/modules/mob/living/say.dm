@@ -1,7 +1,7 @@
 #define SAY_MINIMUM_PRESSURE 10
 var/list/department_radio_keys = list(
-	  ":r" = "right ear",	"#r" = "right ear",		".r" = "right ear",
-	  ":l" = "left ear",	"#l" = "left ear",		".l" = "left ear",
+	  ":r" = "right ear",	"#r" = "right ear",		".r" = "right ear", "!r" = "fake right ear",
+	  ":l" = "left ear",	"#l" = "left ear",		".l" = "left ear",  "!l" = "fake left ear",
 	  ":i" = "intercom",	"#i" = "intercom",		".i" = "intercom",
 	  ":h" = "department",	"#h" = "department",	".h" = "department",
 	  ":c" = "Command",		"#c" = "Command",		".c" = "Command",
@@ -16,8 +16,8 @@ var/list/department_radio_keys = list(
 	  ":u" = "Supply",		"#u" = "Supply",		".u" = "Supply",
 	  ":g" = "changeling",	"#g" = "changeling",	".g" = "changeling",
 
-	  ":R" = "right ear",	"#R" = "right ear",		".R" = "right ear",
-	  ":L" = "left ear",	"#L" = "left ear",		".L" = "left ear",
+	  ":R" = "right ear",	"#R" = "right ear",		".R" = "right ear", "!R" = "fake right ear",
+	  ":L" = "left ear",	"#L" = "left ear",		".L" = "left ear",  "!L" = "fake left ear",
 	  ":I" = "intercom",	"#I" = "intercom",		".I" = "intercom",
 	  ":H" = "department",	"#H" = "department",	".H" = "department",
 	  ":C" = "Command",		"#C" = "Command",		".C" = "Command",
@@ -220,120 +220,129 @@ var/list/department_radio_keys = list(
 	if (stuttering)
 		message = stutter(message)
 
+	///////////////////////////////////////////////////////////
+	// VIDEO KILLED THE RADIO STAR V2.0
+	//
+	// EXPERIMENTAL CODE BY YOUR PALS AT /vg/
+	///////////////////////////////////////////////////////////
+
 	var/list/obj/item/used_radios = new
+
+	// Actually speaking on the radio?
 	var/is_speaking_radio = 0
 
-	switch (message_mode)
-		if ("headset")
-			if (src:l_ear && istype(src:l_ear,/obj/item/device/radio))
-				src:l_ear.talk_into(src, message)
-				used_radios += src:l_ear
-				is_speaking_radio = 1
-			else if (src:r_ear)
-				src:r_ear.talk_into(src, message)
-				used_radios += src:r_ear
-				is_speaking_radio = 1
+	// Devices selected
+	var/list/devices=list()
 
-			message_range = 1
-			italics = 1
+	// Select all always_talk devices
+	//  Carbon lifeforms
+	if(istype(src, /mob/living/carbon))
+		for(var/obj/item/device/radio/R in contents)
+			if(R.always_talk)
+				devices += R
 
-		if ("right ear")
-			if (src:r_ear)
-				src:r_ear.talk_into(src, message)
-				used_radios += src:r_ear
-				is_speaking_radio = 1
-
-			message_range = 1
-			italics = 1
-
-		if ("left ear")
-			if (src:l_ear)
-				src:l_ear.talk_into(src, message)
-				used_radios += src:l_ear
-				is_speaking_radio = 1
-
-			message_range = 1
-			italics = 1
-
-		if ("intercom")
-			for (var/obj/item/device/radio/intercom/I in view(1, null))
-				I.talk_into(src, message)
-				used_radios += I
-				is_speaking_radio = 1
-
-			message_range = 1
-			italics = 1
-
-		//I see no reason to restrict such way of whispering
-		if ("whisper")
-			whisper(message)
-			return
-
-		if ("binary")
-			if(robot_talk_understand || binarycheck())
-			//message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)) //seems redundant
-				robot_talk(message)
-			return
-
-		if ("alientalk")
-			if(alien_talk_understand || hivecheck())
-			//message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)) //seems redundant
-				alien_talk(message)
-			return
-
-		if ("department")
-			if(istype(src, /mob/living/carbon))
-				if (src:l_ear && istype(src:l_ear,/obj/item/device/radio))
-					src:l_ear.talk_into(src, message, message_mode)
-					used_radios += src:l_ear
-					is_speaking_radio = 1
-				if (src:r_ear)
-					src:r_ear.talk_into(src, message, message_mode)
-					used_radios += src:r_ear
-					is_speaking_radio = 1
-			else if(istype(src, /mob/living/silicon/robot))
-				if (src:radio)
-					src:radio.talk_into(src, message, message_mode)
-					used_radios += src:radio
-			message_range = 1
-			italics = 1
-
-		if ("pAI")
-			if (src:radio)
-				src:radio.talk_into(src, message)
-				used_radios += src:radio
-			message_range = 1
-			italics = 1
-
-		if("changeling")
-			if(mind && mind.changeling)
-				log_say("[key_name(src)] ([mind.changeling.changelingID]): [message]")
-				for(var/mob/Changeling in mob_list)
-					if(istype(Changeling, /mob/living/silicon)) continue //WHY IS THIS NEEDED?
-					if((Changeling.mind && Changeling.mind.changeling) || istype(Changeling, /mob/dead/observer))
-						Changeling << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
-					else if(istype(Changeling,/mob/dead/observer)  && (Changeling.client && Changeling.client.prefs.toggles & CHAT_GHOSTEARS))
-						Changeling << "<i><font color=#800080><b>[mind.changeling.changelingID] (:</b> <a href='byond://?src=\ref[Changeling];follow2=\ref[Changeling];follow=\ref[src]'>(Follow)</a> [message]</font></i>"
-				return
-////SPECIAL HEADSETS START
-		else
-			//world << "SPECIAL HEADSETS"
-			if (message_mode in radiochannels)
-				if(isrobot(src))//Seperates robots to prevent runtimes from the ear stuff
-					var/mob/living/silicon/robot/R = src
-					if(R.radio)//Sanityyyy
-						R.radio.talk_into(src, message, message_mode)
-						used_radios += R.radio
-				else
-					if (src:l_ear && istype(src:l_ear,/obj/item/device/radio))
-						src:l_ear.talk_into(src, message, message_mode)
-						used_radios += src:l_ear
-					else if (src:r_ear)
-						src:r_ear.talk_into(src, message, message_mode)
-						used_radios += src:r_ear
+	//src << "Speaking on [message_mode]: [message]"
+	if(message_mode)
+		switch (message_mode)
+			if ("right ear")
+				if(iscarbon(src))
+					var/mob/living/carbon/C=src
+					if(C:r_ear) devices += C:r_ear
+				message_mode="headset"
 				message_range = 1
 				italics = 1
-/////SPECIAL HEADSETS END
+
+			if ("left ear")
+				if(iscarbon(src))
+					var/mob/living/carbon/C=src
+					if(C:l_ear) devices += C:l_ear
+				message_mode="headset"
+				message_range = 1
+				italics = 1
+
+			// Select a headset and speak into it without actually sending a message
+			if ("fake")
+				if(iscarbon(src))
+					var/mob/living/carbon/C=src
+					if(C:l_ear) used_radios += C:l_ear
+					if(C:r_ear) used_radios += C:r_ear
+				message_range = 1
+				italics = 1
+			if ("fake left ear")
+				if(iscarbon(src))
+					var/mob/living/carbon/C=src
+					if(C:l_ear) used_radios += C:l_ear
+				message_range = 1
+				italics = 1
+			if ("fake right ear")
+				if(iscarbon(src))
+					var/mob/living/carbon/C=src
+					if(C:r_ear) used_radios += C:r_ear
+				message_range = 1
+				italics = 1
+
+			if ("intercom")
+				for (var/obj/item/device/radio/intercom/I in view(1, null))
+					devices += I
+				message_mode=null
+				message_range = 1
+				italics = 1
+
+			//I see no reason to restrict such way of whispering
+			if ("whisper")
+				whisper(message)
+				return
+
+			if ("binary")
+				if(robot_talk_understand || binarycheck())
+				//message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)) //seems redundant
+					robot_talk(message)
+				return
+
+			if ("alientalk")
+				if(alien_talk_understand || hivecheck())
+				//message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)) //seems redundant
+					alien_talk(message)
+				return
+
+			if ("department")
+				message_range = 1
+				italics = 1
+
+			if ("pAI")
+				message_range = 1
+				italics = 1
+
+			if("changeling")
+				if(mind && mind.changeling)
+					log_say("[key_name(src)] ([mind.changeling.changelingID]): [message]")
+					for(var/mob/Changeling in mob_list)
+						if(istype(Changeling, /mob/living/silicon)) continue //WHY IS THIS NEEDED?
+						if((Changeling.mind && Changeling.mind.changeling) || istype(Changeling, /mob/dead/observer))
+							Changeling << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
+						else if(istype(Changeling,/mob/dead/observer)  && (Changeling.client && Changeling.client.prefs.toggles & CHAT_GHOSTEARS))
+							Changeling << "<i><font color=#800080><b>[mind.changeling.changelingID] (:</b> <a href='byond://?src=\ref[Changeling];follow2=\ref[Changeling];follow=\ref[src]'>(Follow)</a> [message]</font></i>"
+					return
+			else // headset, department channels.
+				if(iscarbon(src))
+					var/mob/living/carbon/C=src
+					if(C:l_ear) devices += C:l_ear
+					if(C:r_ear) devices += C:r_ear
+				if(issilicon(src))
+					var/mob/living/silicon/Ro=src
+					if(Ro:radio) devices += Ro:radio
+				message_range = 1
+				italics = 1
+	if(devices.len>0)
+		for(var/obj/item/device/radio/R in devices)
+			if(istype(R))
+				R.talk_into(src, message, message_mode)
+				used_radios += R
+				is_speaking_radio = 1
+
+	/////////////////////////////////////////////////////////////////
+	// </NEW RADIO CODE>
+	/////////////////////////////////////////////////////////////////
 
 	var/datum/gas_mixture/environment = loc.return_air()
 	if(environment)
@@ -378,21 +387,6 @@ var/list/department_radio_keys = list(
 			spawn (0)
 				if(O && !istype(O.loc, /obj/item/weapon/storage))
 					O.hear_talk(src, message)
-
-
-/*			Commented out as replaced by code above from BS12
-	for (var/obj/O in ((V | contents)-used_radios)) //radio in pocket could work, radio in backpack wouldn't --rastaf0
-		spawn (0)
-			if (O)
-				O.hear_talk(src, message)
-*/
-
-/*	if(isbrain(src))//For brains to properly talk if they are in an MMI..or in a brain. Could be extended to other mobs I guess.
-		for(var/obj/O in loc)//Kinda ugly but whatever.
-			if(O)
-				spawn(0)
-					O.hear_talk(src, message)
-*/
 
 
 	var/list/heard_a = list() // understood us
