@@ -46,17 +46,9 @@
 	return 0
 
 /obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user))
+	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user)|| !iscarbon(target))
 		return
-	if(state_open)
-		close_machine()
-	if(target.client)
-		target.client.perspective = EYE_PERSPECTIVE
-		target.client.eye = src
-	occupant = target
-	target.loc = src
-	target.stop_pulling()
-	update_icon()
+	close_machine(target)
 
 /obj/machinery/sleeper/blob_act()
 	if(prob(75))
@@ -220,9 +212,9 @@
 	if(!state_open && !panel_open)
 		..()
 
-/obj/machinery/sleeper/close_machine()
+/obj/machinery/sleeper/close_machine(mob/target)
 	if(state_open && !panel_open)
-		..()
+		..(target)
 
 /obj/machinery/sleeper/proc/inject_chem(mob/user, chem)
 	if(occupant && occupant.reagents)

@@ -152,19 +152,22 @@ Class Procs:
 	update_icon()
 	updateUsrDialog()
 
-/obj/machinery/proc/close_machine()
+/obj/machinery/proc/close_machine(mob/living/target = null)
 	state_open = 0
 	density = 1
-	for(var/mob/living/carbon/C in loc)
-		if(C.buckled)
-			continue
-		if(C.client)
-			C.client.perspective = EYE_PERSPECTIVE
-			C.client.eye = src
-		occupant = C
-		C.loc = src
-		C.stop_pulling()
-		break
+	if(!target)
+		for(var/mob/living/carbon/C in loc)
+			if(C.buckled)
+				continue
+			else
+				target = C
+	if(target)
+		if(target.client)
+			target.client.perspective = EYE_PERSPECTIVE
+			target.client.eye = src
+		occupant = target
+		target.loc = src
+		target.stop_pulling()
 	updateUsrDialog()
 	update_icon()
 

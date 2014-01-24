@@ -70,6 +70,7 @@
 				recharge_console = MT.buffer
 				MT.buffer = 0
 				recharge_console.recharge_port = src
+				user << "span class='notice'>You upload the data from the buffer to [src.name].</span>"
 
 /obj/machinery/computer/mech_bay_power_console
 	name = "mech bay power control console"
@@ -80,11 +81,12 @@
 	circuit = /obj/item/weapon/circuitboard/mech_bay_power_console
 	var/obj/machinery/mech_bay_recharge_port/recharge_port
 
-/obj/machinery/computer/mech_bay_power_console/attack_ai(obj/item/I, mob/user)
+/obj/machinery/computer/mech_bay_power_console/attackby(obj/item/I, mob/user)
 	..()
 	if(istype(I, /obj/item/device/multitool))
 		var/obj/item/device/multitool/MT = I
 		MT.buffer = src
+		user << "<span class='notice'>You download data to the buffer.</span>"
 
 
 /obj/machinery/computer/mech_bay_power_console/attack_ai(mob/user)

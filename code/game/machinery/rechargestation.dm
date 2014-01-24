@@ -55,7 +55,7 @@
 /obj/machinery/recharge_station/relaymove(mob/user as mob)
 	if(user.stat)
 		return
-	open()
+	open_machine()
 
 /obj/machinery/recharge_station/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
@@ -63,7 +63,7 @@
 		return
 	if(occupier)
 		occupier.emp_act(severity)
-	open()
+	open_machine()
 	..(severity)
 
 /obj/machinery/recharge_station/attack_paw(user as mob)
@@ -204,11 +204,11 @@
 
 /obj/machinery/recharge_station/proc/toggle_open()
 	if(open)
-		close()
+		close_machine()
 	else
-		open()
+		open_machine()
 
-/obj/machinery/recharge_station/proc/open()
+/obj/machinery/recharge_station/open_machine()
 	if(occupier)
 		if (occupier.client)
 			occupier.client.eye = occupier
@@ -220,7 +220,7 @@
 	density = 0
 	build_icon()
 
-/obj/machinery/recharge_station/proc/close()
+/obj/machinery/recharge_station/close_machine()
 	for(var/mob/living/silicon/robot/R in loc)
 		R.stop_pulling()
 		if(R.client)

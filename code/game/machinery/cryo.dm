@@ -68,19 +68,9 @@
 	return 1
 
 /obj/machinery/atmospherics/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user))
+	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user) || !iscarbon(target))
 		return
-	target.Move(loc)
-	if(state_open)
-		close_machine()
-	if(target.client)
-		target.client.perspective = EYE_PERSPECTIVE
-		target.client.eye = src
-	occupant = target
-	target.loc = src
-	target.stop_pulling()
-	on = 1
-	update_icon()
+	close_machine(target)
 
 /obj/machinery/atmospherics/unary/cryo_cell/allow_drop()
 	return 0
@@ -250,7 +240,7 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/close_machine(mob/living/carbon/M)
 	if(state_open && !panel_open)
-		..()
+		..(M)
 		return occupant
 
 /obj/machinery/atmospherics/unary/cryo_cell/update_icon()
