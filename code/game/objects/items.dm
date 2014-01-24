@@ -557,3 +557,4 @@
 	. = ..()
 	if(.)
 		transfer_blood = 0
+		bloody_hands_mob = null
