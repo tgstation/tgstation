@@ -39,6 +39,8 @@
 	if(!stat)
 		switch(stance)
 			if(HOSTILE_STANCE_IDLE)
+				if(environment_smash)
+					EscapeConfinement()
 				var/new_target = FindTarget()
 				GiveTarget(new_target)
 
@@ -59,14 +61,11 @@
 /mob/living/simple_animal/hostile/proc/ListTargets()//Step 1, find out what we can see
 	var/list/L = list()
 	if(search_objects < 2)
-		var/list/Mobs = hearers(src, vision_range)
-		for(var/mob/living/G in Mobs)
-			L.Add(G)
-	L.Remove(src)//So we don't suicide because we listed ourselves as a target!
+		var/list/Mobs = hearers(vision_range, src) - src
+		L += Mobs
 	if(search_objects)
 		var/list/Objects = oview(vision_range, src)
-		for(var/obj/O in Objects)
-			L.Add(O)
+		L += Objects
 	else
 		for(var/obj/mecha/M in mechas_list)
 			if(get_dist(M, src) <= vision_range && can_see(src, M, vision_range))
@@ -79,11 +78,11 @@
 	for(var/atom/A in ListTargets())
 		if(Found(A))//Just in case people want to override targetting
 			var/list/FoundTarget = list()
-			FoundTarget.Add(A)
+			FoundTarget += A
 			Targets = FoundTarget
 			break
 		if(CanAttack(A))//Can we attack it?
-			Targets.Add(A)
+			Targets += A
 			continue
 	Target = PickTarget(Targets)
 	return Target //We now have a target
@@ -135,13 +134,14 @@
 	stop_automated_movement = 1
 	if(!target || !CanAttack(target))
 		LoseTarget()
+		return
 	if(target in ListTargets())
-		var/TargetDistance = get_dist(src,target)
+		var/target_distance = get_dist(src,target)
 		if(ranged)//We ranged? Shoot at em
-			if(TargetDistance >= 2 && ranged_cooldown <= 0)//But make sure they're a tile away at least, and our range attack is off cooldown
+			if(target_distance >= 2 && ranged_cooldown <= 0)//But make sure they're a tile away at least, and our range attack is off cooldown
 				OpenFire(target)
 		if(retreat_distance != null)//If we have a retreat distance, check if we need to run from our target
-			if(TargetDistance <= retreat_distance)//If target's closer than our retreat distance, run
+			if(target_distance <= retreat_distance)//If target's closer than our retreat distance, run
 				walk_away(src,target,retreat_distance,move_to_delay)
 			else
 				Goto(target,move_to_delay,minimum_distance)//Otherwise, get to our minimum distance so we chase them
@@ -150,6 +150,15 @@
 		if(isturf(loc) && target.Adjacent(src))	//If they're next to us, attack
 			AttackingTarget()
 		return
+	if(target.loc != null && get_dist(src, target.loc) <= vision_range)//We can't see our target, but he's in our vision range still
+		if(FindHidden(target) && environment_smash)//Check if he tried to hide in something to lose us
+			var/atom/A = target.loc
+			Goto(A,move_to_delay,minimum_distance)
+			if(A.Adjacent(src))
+				A.attack_animal(src)
+			return
+		else
+			LostTarget()
 	LostTarget()
 
 /mob/living/simple_animal/hostile/proc/Goto(var/target, var/delay, var/minimum_distance)
@@ -258,8 +267,7 @@
 
 /mob/living/simple_animal/hostile/proc/DestroySurroundings()
 	if(environment_smash)
-		if(buckled)//Beds and chairs are no longer hostile mob kryptonite
-			buckled.attack_animal(src)
+		EscapeConfinement()
 		var/list/directions = cardinal.Copy()
 		for(var/dir in directions)
 			var/turf/T = get_step(src, dir)
@@ -269,3 +277,17 @@
 				if(istype(A, /obj/structure/window) || istype(A, /obj/structure/closet) || istype(A, /obj/structure/table) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/rack))
 					A.attack_animal(src)
 	return
+
+/mob/living/simple_animal/hostile/proc/EscapeConfinement()
+	if(buckled)
+		buckled.attack_animal(src)
+	if(!isturf(src.loc) && src.loc != null)//Did someone put us in something?
+		var/atom/A = src.loc
+		A.attack_animal(src)//Bang on it till we get out
+	return
+
+/mob/living/simple_animal/hostile/proc/FindHidden(var/atom/hidden_target)
+	if(istype(target.loc, /obj/structure/closet) || istype(target.loc, /obj/machinery/disposal) || istype(target.loc, /obj/machinery/sleeper))
+		return 1
+	else
+		return 0

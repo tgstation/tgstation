@@ -72,6 +72,8 @@
 	a_intent = "harm"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	ranged_cooldown_cap = 4
+	aggro_vision_range = 9
+	idle_vision_range = 2
 
 /obj/item/projectile/temp/basilisk
 	name = "freezing blast"
@@ -94,7 +96,7 @@
 				visible_message("<span class='danger'>The [src.name]'s stare chills [L.name] to the bone!</span>")
 	return
 
-/mob/living/simple_animal/hostile/asteroid/Goldgrub
+/mob/living/simple_animal/hostile/asteroid/goldgrub
 	name = "goldgrub"
 	desc = "A worm that grows fat from eating everything in its sight. Seems to enjoy precious metals and other shiny things, hence the name."
 	icon = 'icons/mob/animal.dmi'
@@ -104,6 +106,8 @@
 	icon_dead = "Goldgrub_dead"
 	icon_gib = "syndicate_gib"
 	vision_range = 6
+	aggro_vision_range = 9
+	idle_vision_range = 6
 	move_to_delay = 3
 	friendly = "harmlessly rolls into"
 	maxHealth = 45
@@ -120,7 +124,7 @@
 						  /obj/item/weapon/ore/uranium, /obj/item/weapon/ore/iron, /obj/item/weapon/ore/clown)
 	var/alerted = 0
 
-/mob/living/simple_animal/hostile/asteroid/Goldgrub/GiveTarget(var/new_target)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/GiveTarget(var/new_target)
 	target = new_target
 	if(target != null)
 		if(istype(target, /obj/item/weapon/ore))
@@ -135,12 +139,12 @@
 	return
 
 /obj/item/weapon/ore/attack_animal(var/mob/living/L)
-	if(istype(L, /mob/living/simple_animal/hostile/asteroid/Goldgrub))
+	if(istype(L, /mob/living/simple_animal/hostile/asteroid/goldgrub))
 		L.visible_message("<span class='notice'>The [src.name] was swallowed whole!</span>")
 		del(src)
 	..()
 
-/mob/living/simple_animal/hostile/asteroid/Goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
+/mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
 	if(!alerted)
 		alerted = 1
 		spawn(100)
@@ -148,15 +152,15 @@
 				visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
 				del(src)
 
-/mob/living/simple_animal/hostile/asteroid/Goldgrub/bullet_act(var/obj/item/projectile/P)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(var/obj/item/projectile/P)
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
 	return
 
-/mob/living/simple_animal/hostile/asteroid/Goldgrub/Die()
+/mob/living/simple_animal/hostile/asteroid/goldgrub/Die()
 	alerted = 0
 	..()
 
-/mob/living/simple_animal/hostile/asteroid/Hivelord
+/mob/living/simple_animal/hostile/asteroid/hivelord
 	name = "hivelord"
 	desc = "A truly alien creature, it is a mass of unknown organic material, constantly fluctuating. When attacking, pieces of it split off and attack in tandem with the original."
 	icon = 'icons/mob/animal.dmi'
@@ -168,7 +172,9 @@
 	mouse_opacity = 2
 	move_to_delay = 12
 	ranged = 1
-	vision_range = 4
+	vision_range = 5
+	aggro_vision_range = 9
+	idle_vision_range = 5
 	speed = 3
 	maxHealth = 75
 	health = 75
@@ -184,16 +190,16 @@
 	minimum_distance = 5
 	pass_flags = PASSTABLE
 
-/mob/living/simple_animal/hostile/asteroid/Hivelord/OpenFire(var/the_target)
-	var/mob/living/simple_animal/hostile/asteroid/Hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/Hivelordbrood(src.loc)
+/mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(var/the_target)
+	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
 	A.GiveTarget(target)
 	return
 
-/mob/living/simple_animal/hostile/asteroid/Hivelord/AttackingTarget()
+/mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
 	OpenFire()
 	..()
 
-/mob/living/simple_animal/hostile/asteroid/Hivelordbrood
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood
 	name = "hivelord brood"
 	desc = "A fragment of the original Hivelord, rallying behind its original. One isn't much of a threat, but..."
 	icon = 'icons/mob/animal.dmi'
@@ -217,15 +223,15 @@
 	environment_smash = 0
 	pass_flags = PASSTABLE
 
-/mob/living/simple_animal/hostile/asteroid/Hivelordbrood/New()
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/New()
 	..()
 	spawn(100)
 		del(src)
 
-/mob/living/simple_animal/hostile/asteroid/Hivelordbrood/Die()
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/Die()
 	del(src)
 
-/mob/living/simple_animal/hostile/asteroid/Goliath
+/mob/living/simple_animal/hostile/asteroid/goliath
 	name = "goliath"
 	desc = "A massive beast that uses long tentacles to ensare its prey, threatening them is not advised under any conditions."
 	icon = 'icons/mob/animal.dmi'
@@ -234,6 +240,7 @@
 	icon_aggro = "Goliath_alert"
 	icon_dead = "Goliath_dead"
 	icon_gib = "syndicate_gib"
+	attack_sound = 'sound/weapons/punch4.ogg'
 	mouse_opacity = 2
 	move_to_delay = 40
 	ranged = 1
@@ -248,15 +255,17 @@
 	melee_damage_upper = 25
 	attacktext = "pulverizes"
 	throw_message = "does nothing to the rocky hide of the"
+	aggro_vision_range = 9
+	idle_vision_range = 5
 
-/mob/living/simple_animal/hostile/asteroid/Goliath/OpenFire()
+/mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
 	visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
 	var/tturf = get_turf(target)
 	new /obj/effect/goliath_tentacle/original(tturf)
 	ranged_cooldown = ranged_cooldown_cap
 	return
 
-/mob/living/simple_animal/hostile/asteroid/Goliath/adjustBruteLoss(var/damage)
+/mob/living/simple_animal/hostile/asteroid/goliath/adjustBruteLoss(var/damage)
 	ranged_cooldown--
 	..()
 
