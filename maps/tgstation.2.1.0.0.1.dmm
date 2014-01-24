@@ -3512,7 +3512,7 @@
 "bpB" = (/turf/simulated/floor{icon_state = "dark-markings"; dir = 8},/area/turret_protected/ai_upload)
 "bpC" = (/obj/machinery/turret{dir = 8},/turf/simulated/floor/bluegrid,/area/turret_protected/ai_upload)
 "bpD" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/wall,/area/crew_quarters/captain)
-"bpE" = (/obj/structure/displaycase,/obj/machinery/light/small{dir = 1},/turf/simulated/floor/carpet,/area/crew_quarters/captain)
+"bpE" = (/obj/machinery/light/small{dir = 1},/obj/structure/displaycase/captains_laser,/turf/simulated/floor/carpet,/area/crew_quarters/captain)
 "bpF" = (/obj/machinery/light_switch{pixel_y = 28},/obj/machinery/atmospherics/unary/vent_pump{dir = 4; on = 1},/turf/simulated/floor/carpet,/area/crew_quarters/captain)
 "bpG" = (/obj/machinery/door/airlock{name = "Private Restroom"; req_access_txt = "0"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor{icon_state = "freezerfloor"},/area/crew_quarters/captain)
 "bpH" = (/obj/structure/sink{dir = 4; icon_state = "sink"; pixel_x = 11; pixel_y = 0},/obj/structure/mirror{pixel_x = 28},/obj/machinery/light{dir = 1},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor{icon_state = "freezerfloor"},/area/crew_quarters/captain)
