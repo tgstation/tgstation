@@ -10,6 +10,7 @@
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
+	loose = 4 // generally well seated
 
 /obj/item/clothing/head/helmet/HoS
 	name = "head of security hat"
@@ -44,6 +45,7 @@
 	desc = "It's a special helmet issued to the Warden of a securiy force. Protects the head from impacts."
 	icon_state = "policehelm"
 	flags_inv = 0
+	loose = 12 // no really, you are here beacuse of your exemplary behavior in past jobs.  truly.
 
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
@@ -86,3 +88,4 @@
 	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	item_state = "gladiator"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	loose = 0 // full head, won't fall off

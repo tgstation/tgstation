@@ -27,6 +27,7 @@
 	action_button_name = "Toggle Welding Helmet"
 	visor_flags = HEADCOVERSEYES | HEADCOVERSMOUTH
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	loose = 4
 
 /obj/item/clothing/head/welding/attack_self()
 	toggle()
@@ -52,6 +53,7 @@
 	var/status = 0
 	var/fire_resist = T0C+1300	//this is the max temp it can stand before you start to cook. although it might not burn away, you take damage
 	var/processing = 0 //I dont think this is used anywhere.
+	loose = 60
 
 /obj/item/clothing/head/cakehat/process()
 	if(!onfire)
@@ -91,6 +93,7 @@
 	icon_state = "ushankadown"
 	item_state = "ushankadown"
 	flags_inv = HIDEEARS
+	loose = 1 // too warm, your head doesn't want to leave
 
 /obj/item/clothing/head/ushanka/attack_self(mob/user as mob)
 	if(src.icon_state == "ushankadown")
@@ -116,6 +119,7 @@
 	action_button_name = "Toggle Pumpkin Light"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	brightness_on = 2 //luminosity when on
+	loose = 80
 
 /*
  * Kitty ears
@@ -124,6 +128,7 @@
 	name = "kitty ears"
 	desc = "A pair of kitty ears. Meow!"
 	icon_state = "kitty"
+	loose = 4 // meow
 
 
 /obj/item/clothing/head/hardhat/reindeer
@@ -136,3 +141,4 @@
 	action_button_name = "Toggle Nose Light"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	brightness_on = 1 //luminosity when on
+	loose = 33

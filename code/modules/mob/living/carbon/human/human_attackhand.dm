@@ -121,6 +121,15 @@
 								"<span class='userdanger'>[M] has pushed [src]!</span>")
 				forcesay(hit_appends)
 				return
+			if(randn <= 45 && !lying)
+				if(head)
+					var/obj/item/clothing/head/H = head
+					if(!istype(H) || prob(H.loose))
+						drop_from_inventory(H)
+						if(prob(60))
+							step_away(H,M)
+						visible_message("<span class='warning'>[M] has knocked [src]'s [H] off!</span>",
+										"<span class='warning'>[M] knocked \the [H] clean off your head!</span>")
 
 			var/talked = 0	// BubbleWrap
 
