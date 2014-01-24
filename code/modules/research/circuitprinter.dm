@@ -193,7 +193,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		for(var/id in materials.storage)
 			var/datum/material/material=materials.getMaterial(id)
 			if(stacktype == material.sheettype)
-				materials.addAmount(amount * material.cc_per_sheet)
+				materials.addAmount(id, amount * material.cc_per_sheet)
 	else
 		new stacktype(src.loc, amount)
 	busy = 0
