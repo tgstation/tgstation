@@ -31,6 +31,7 @@
 
 	O.dna = dna.Clone()
 	O.dna.SetSEState(MONKEYBLOCK,1)
+	O.dna.SetSEValue(MONKEYBLOCK,0xFFF)
 	O.loc = loc
 	O.viruses = viruses
 	viruses = list()
