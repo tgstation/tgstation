@@ -61,7 +61,7 @@
 
 		// We're a monkey
 		dna.SetSEState(MONKEYBLOCK,   1)
-		dna.SetSEValue(MONKEYBLOCK,0xFFF)
+		dna.SetSEValueRange(MONKEYBLOCK,0xDAC, 0xFFF)
 		// Fix gender
 		dna.SetUIState(DNA_UI_GENDER, gender != MALE, 1)
 
