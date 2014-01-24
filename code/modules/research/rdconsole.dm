@@ -964,4 +964,4 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	name = "Core R&D Console"
 	id = 1
 	req_access = list(access_tox)
-	circuit = "/obj/item/weapon/circuitboard/rdconsole/core"
+	circuit = "/obj/item/weapon/circuitboard/rdconsole"
