@@ -46,6 +46,17 @@
 								user << "\blue You add cables to the frame."
 								state = 2
 								icon_state = "box_1"
+				if(istype(P, /obj/item/stack/sheet/glass))
+					var/obj/item/stack/sheet/glass/G=P
+					if(G.amount<1)
+						user << "\red How...?"
+						return
+					G.use(1)
+					user << "\blue You add the glass to the frame."
+					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+					new /obj/structure/displaycase_frame(src.loc)
+					del(src)
+					return
 				else
 					if(istype(P, /obj/item/weapon/wrench))
 						playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
