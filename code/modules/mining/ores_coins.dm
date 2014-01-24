@@ -88,6 +88,7 @@
 	w_class = 1.0
 	var/string_attached
 	var/material="iron" // Ore ID, used with coinbags.
+	var/credits = 0 // How many credits is this coin worth?
 
 /obj/item/weapon/coin/New()
 	pixel_x = rand(0,16)-8
@@ -97,41 +98,49 @@
 	material="gold"
 	name = "Gold coin"
 	icon_state = "coin_gold"
+	credits = 10
 
 /obj/item/weapon/coin/silver
 	material="silver"
 	name = "Silver coin"
 	icon_state = "coin_silver"
+	credits = 5
 
 /obj/item/weapon/coin/diamond
 	material="diamond"
 	name = "Diamond coin"
 	icon_state = "coin_diamond"
+	credits = 25
 
 /obj/item/weapon/coin/iron
 	material="iron"
 	name = "Iron coin"
 	icon_state = "coin_iron"
+	credits = 1
 
 /obj/item/weapon/coin/plasma
 	material="plasma"
 	name = "Solid plasma coin"
 	icon_state = "coin_plasma"
+	credits = 5
 
 /obj/item/weapon/coin/uranium
 	material="uranium"
 	name = "Uranium coin"
 	icon_state = "coin_uranium"
+	credits = 25
 
 /obj/item/weapon/coin/clown
 	material="clown"
 	name = "Bananaium coin"
 	icon_state = "coin_clown"
+	credits = 1000
 
 /obj/item/weapon/coin/phazon
 	material="phazon"
 	name = "Phazon coin"
 	icon_state = "coin_phazon"
+	credits = 2000
 
 /obj/item/weapon/coin/adamantine
 	material="adamantine"
