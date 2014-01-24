@@ -85,6 +85,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "saw"
 	hitsound = 'sound/weapons/circsawhit.ogg'
+	throwhitsound =  'sound/weapons/pierce.ogg'
 	flags = CONDUCT
 	force = 15.0
 	w_class = 3.0

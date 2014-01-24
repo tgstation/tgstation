@@ -24,23 +24,31 @@
 	return P.on_hit(src, armor, def_zone)
 
 /mob/living/hitby(atom/movable/AM)//Standardization and logging -Sieve
-	if(istype(AM, /obj/))
-		var/obj/O = AM
+	if(istype(AM, /obj/item))
+		var/obj/item/I = AM
 		var/zone = ran_zone("chest", 65)//Hits a random part of the body, geared towards the chest
 		var/dtype = BRUTE
-		if(istype(O,/obj/item/weapon))
-			var/obj/item/weapon/W = O
+		if(istype(I,/obj/item/weapon))
+			var/obj/item/weapon/W = I
 			dtype = W.damtype
-		visible_message("<span class='danger'>[src] has been hit by [O].</span>", \
-						"<span class='userdanger'>[src] has been hit by [O].</span>")
+			if (W.throwhitsound && W.throwforce > 0)
+				playsound(loc, W.throwhitsound, 30, 1, -1)
+			else if(W.throwtapsound && W.throwforce == 0)
+				playsound(loc, W.throwtapsound, 30, 1, -1)
+			else if(W.hitsound && W.throwforce > 0)
+				playsound(loc, W.hitsound, 30, 1, -1)
+		else
+			playsound(loc, I.throwtapsound, 30, 1, -1)
+		visible_message("<span class='danger'>[src] has been hit by [I].</span>", \
+						"<span class='userdanger'>[src] has been hit by [I].</span>")
 		var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].")
-		apply_damage(O.throwforce, dtype, zone, armor, O)
-		if(!O.fingerprintslast)
+		apply_damage(I.throwforce, dtype, zone, armor, I)
+		if(!I.fingerprintslast)
 			return
-		var/client/assailant = directory[ckey(O.fingerprintslast)]
+		var/client/assailant = directory[ckey(I.fingerprintslast)]
 		if(assailant && assailant.mob && istype(assailant.mob,/mob))
 			var/mob/M = assailant.mob
-			add_logs(M, src, "hit", object="[O]")
+			add_logs(M, src, "hit", object="[I]")
 
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
