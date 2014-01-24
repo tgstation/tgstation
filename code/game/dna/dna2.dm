@@ -232,7 +232,7 @@ var/global/list/datum/dna/gene/dna_genes[0]
 
 // Set a DNA SE block's raw value.
 /datum/dna/proc/SetSEValue(var/block,var/value,var/defer=0)
-	//testing("SetSEBlock([block],[value],[defer]): [value] -> [nval]")
+
 	if (block<=0) return
 	ASSERT(value>=0)
 	ASSERT(value<=4095)
@@ -240,6 +240,7 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	dirtySE=1
 	if(!defer)
 		UpdateSE()
+	//testing("SetSEBlock([block],[value],[defer]): [value] -> [GetSEValue(block)]")
 
 // Get a DNA SE block's raw value.
 /datum/dna/proc/GetSEValue(var/block)
