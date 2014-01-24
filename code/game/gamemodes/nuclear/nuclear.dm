@@ -1,5 +1,6 @@
 /datum/game_mode
 	var/list/datum/mind/syndicates = list()
+	var/operationname = "Overlord"
 
 
 /datum/game_mode/nuclear
@@ -21,6 +22,7 @@
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
 	var/nuke_off_station = 0 //Used for tracking if the syndies actually haul the nuke to the station
 	var/syndies_didnt_escape = 0 //Used for tracking if the syndies got the shuttle off of the z-level
+
 //code name lists. List of all lists is at line 114.
 	var/list/natonames = list("Alpha","Bravo","Charlie","Delta","Echo")
 	var/list/oldmilitarynames = list("Able","Baker","Charlie","Dog","Easy")
@@ -118,7 +120,7 @@
 	var/obj/effect/landmark/uplinklocker = locate("landmark*Syndicate-Uplink")	//i will be rewriting this shortly
 	var/obj/effect/landmark/nuke_spawn = locate("landmark*Nuclear-Bomb")
 
-	var/list/codenames = list(natonames,oldmilitarynames,possible_changeling_IDs)
+	var/list/codenames = list(natoalphabet,oldmilitaryalphabet,greekalphabet)
 	var/list/pickedcodenamelist = pick(codenames)
 	var/nuke_code = "[rand(10000, 99999)]"
 	var/leader_selected = 0
@@ -138,11 +140,11 @@
 			leader_selected = 1
 		else
 			equip_syndicate(synd_mind.current)
-			synd_mind.current.real_name = pickedcodenamelist[agent_number]
+			synd_mind.current.real_name = operationname + pickedcodenamelist[agent_number]
 			var/mob/living/carbon/human/H = synd_mind.current
 			var/obj/item/weapon/card/id/C = H.wear_id
 			C.registered_name = synd_mind.current.real_name
-			C.assignment = "[syndicate_name(1)] Operative"
+			C.assignment = "[syndicate_name(1)] [operationname] Operative"
 			C.name = "[C.registered_name]'s ID Card ([C.assignment])"
 			greet_syndicate(synd_mind)
 			agent_number++
@@ -169,11 +171,13 @@
 
 
 /datum/game_mode/proc/prepare_syndicate_leader(var/datum/mind/synd_mind, var/nuke_code, var/pickedcodenamelist)
+	spawn(1)
+		operationname = nukeoperationname(synd_mind.current)
 	synd_mind.current.real_name = pickedcodenamelist[1]
 	var/mob/living/carbon/human/H = synd_mind.current
 	var/obj/item/weapon/card/id/C = H.wear_id
 	C.registered_name = synd_mind.current.real_name
-	C.assignment = "[syndicate_name(1)] Commander"
+	C.assignment = "[syndicate_name(1)] [operationname] Commander"
 	C.name = "[C.registered_name]'s ID Card ([C.assignment])"
 	return
 
@@ -334,22 +338,16 @@
 		world << text
 	return 1
 
-/* //Old nuke op naming procs. May George FUCKADMINSANDNUKESTATIONS rest in peace
-/proc/nukelastname(var/mob/M as mob) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.
-	var/randomname = pick(last_names)
-	var/newname = copytext(sanitize(input(M,"You are the nuke operative [pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")]. Please choose a last name for your family.", "Name change",randomname)),1,MAX_NAME_LEN)
+/proc/nukeoperationname(var/mob/M) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho. And Kaze Espada was the one to destroy it.
+	var/defaultname = "Overlord"
+	var/newname = reject_bad_name(input(M,"You are the [syndicate_name(1)] Commander. Please choose a operation name to identify this operartion.", "Name Operation",defaultname))
 
 	if (!newname)
-		newname = randomname
-
-	else
-		if (newname == "Unknown" || newname == "floor" || newname == "wall" || newname == "rwall" || newname == "_")
-			M << "That name is reserved."
-			return nukelastname(M)
+		return nukeoperationname(M)
 
 	return newname
 
-
+/*
 /proc/NukeNameAssign(var/lastname,var/list/syndicates)
 	for(var/datum/mind/synd_mind in syndicates)
 		switch(synd_mind.current.gender)

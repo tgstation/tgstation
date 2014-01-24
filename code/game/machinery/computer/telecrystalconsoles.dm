@@ -1,6 +1,6 @@
 #define NUKESCALINGMODIFIER 0.5
 
-var/list/possible_uplinker_IDs = list("Alpha","Bravo","Charlie","Delta","Echo","Foxtrot","Zero", "Niner")
+var/list/possible_uplinker_IDs = natoalphabet.Copy()
 
 
 /obj/machinery/computer/telecrystals
