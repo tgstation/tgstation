@@ -91,7 +91,7 @@ var/list/CounterDoorDirections = list(SOUTH,EAST) //Which directions doors turfs
 //ZONE MANAGEMENT FUNCTIONS
 /zone/proc/AddTurf(turf/T)
 	//Adds the turf to contents, increases the size of the zone, and sets the zone var.
-	if(istype(T, /turf/simulated))
+	if(istype(T, /turf/simulated) && !istype(T, /turf/simulated/floor/plating/airless/catwalk))
 		if(T in contents)
 			return
 		if(T.zone)
