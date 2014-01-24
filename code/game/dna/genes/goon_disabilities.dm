@@ -239,7 +239,7 @@
 		block=STRONGBLOCK
 
 // WAS: /datum/bioEffect/horns
-/datum/dna/gene/disability/strong
+/datum/dna/gene/disability/horns
 	name = "Horns"
 	desc = "Enables the growth of a compacted keratin formation on the subject's head."
 	activation_message = "A pair of horns erupt from your head."
