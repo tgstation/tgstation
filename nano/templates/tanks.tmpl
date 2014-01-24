@@ -1,0 +1,47 @@
+{{if maskConnected}}
+	<div class="noticePlaceholder">This tank is connected to a mask.</div>
+{{else}}
+	<div class="notice">This tank is NOT connected to a mask.</div>
+{{/if}}	
+
+<div class="item">
+	<div class="itemLabel">
+		Tank Pressure:
+	</div>
+	<div class="itemContent">
+		{{:~displayBar(tankPressure, 0, 1013, (tankPressure > 200) ? 'good' : (tankPressure > 100) ? 'average' : 'bad'))}}
+		<div class="statusValue">
+			{{:tankPressure}} kPa
+		</div>
+	</div>
+</div>
+
+<div class="item">&nbsp;</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Mask Release Pressure:
+	</div>
+	<div class="itemContent">
+		{{:~displayBar(releasePressure, 0, maxReleasePressure, (releasePressure >= 23) ? null : ((releasePressure >= 17) ? 'average' : 'bad'))}}			
+		<div style="clear: both; padding-top: 4px;">
+			{{:~link('-', null, {'dist_p' : -10}, (releasePressure > 0) ? null : 'disabled')}}
+			{{:~link('-', null, {'dist_p' : -1}, (releasePressure > 0) ? null : 'disabled')}}				
+			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:releasePressure}} kPa&nbsp;</div>
+			{{:~link('+', null, {'dist_p' : 1}, (releasePressure < maxReleasePressure) ? null : 'disabled')}}
+			{{:~link('+', null, {'dist_p' : 10}, (releasePressure < maxReleasePressure) ? null : 'disabled')}}		
+			{{:~link('Max', null, {'dist_p' : 'max'}, (releasePressure < maxReleasePressure) ? null : 'disabled')}}
+			{{:~link('Reset', null, {'dist_p' : 'reset'}, (releasePressure != defaultReleasePressure) ? null : 'disabled')}}
+		</div>
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Mask Release Valve:
+	</div>
+	<div class="itemContent">
+		{{:~link('Open', 'unlocked', {'stat' : 1}, (!maskConnected) ? 'disabled' : (valveOpen ? 'selected' : null))}}{{:~link('Close', 'locked', {'stat' : 1}, valveOpen ? null : 'selected')}}
+	</div>
+</div>
+

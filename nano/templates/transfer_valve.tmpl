@@ -1,0 +1,53 @@
+<div class="item">
+	<div class="itemLabel">
+		Attachment One:
+	</div>
+	<div class="itemContent">
+		{{if attachmentOne}}
+			{{:attachmentOne}}
+		{{else}}
+			<i>None</i>
+		{{/if}}
+		{{:~link('Remove', 'eject', {'tankone' : 1}, attachmentOne ? null : 'disabled')}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Attachment Two:
+	</div>
+	<div class="itemContent">
+		{{if attachmentTwo}}
+			{{:attachmentTwo}}
+		{{else}}
+			<i>None</i>
+		{{/if}}
+		{{:~link('Remove', 'eject', {'tanktwo' : 1}, attachmentTwo ? null : 'disabled')}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Valve Attachment:
+	</div>
+	<div class="itemContent">
+		{{if valveAttachment}}
+			{{:valveAttachment}}
+		{{else}}
+			<i>None</i>
+		{{/if}}		
+		{{:~link('Remove', 'eject', {'rem_device' : 1}, valveAttachment ? null : 'disabled')}}
+	</div>
+</div>
+
+<div class="item">&nbsp;</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Valve Status:
+	</div>
+	<div class="itemContent">
+		{{:~link('Open', 'unlocked', {'open' : 1}, (!attachmentOne || !attachmentTwo) ? 'disabled' : (valveOpen ? 'selected' : null))}}{{:~link('Close', 'locked', {'open' : 1}, (!attachmentOne || !attachmentTwo) ? 'disabled' : (valveOpen ? null : 'selected'))}}
+	</div>
+</div>
+
