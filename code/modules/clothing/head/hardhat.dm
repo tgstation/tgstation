@@ -9,6 +9,7 @@
 	armor = list(melee = 30, bullet = 5, laser = 20,energy = 10, bomb = 20, bio = 10, rad = 20)
 	flags_inv = 0
 	action_button_name = "Toggle Helmet Light"
+	loose = 4
 
 	attack_self(mob/user)
 		if(!isturf(user.loc))

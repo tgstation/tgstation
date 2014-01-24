@@ -64,6 +64,7 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/hats.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_HEAD
+	var/loose = 10 // probability (0..100) of coming off your head when you fall over or lay down
 
 //Mask
 /obj/item/clothing/mask
@@ -118,6 +119,7 @@ BLIND     // can't see anything
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	flash_protect = 2
+	loose = 1 // very rarely falls off
 
 /obj/item/clothing/suit/space
 	name = "space suit"

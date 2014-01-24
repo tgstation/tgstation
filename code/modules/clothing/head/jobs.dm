@@ -6,6 +6,7 @@
 	icon_state = "chef"
 	item_state = "chef"
 	desc = "The commander in chef's head wear."
+	loose = 35 // why-a do people always push-a me over
 
 //Captain
 /obj/item/clothing/head/caphat
@@ -13,6 +14,7 @@
 	icon_state = "captain"
 	desc = "It's good being the king."
 	item_state = "that"
+	loose = 43 // not the answer
 
 //Captain: This probably shouldn't be space-worthy
 /obj/item/clothing/head/helmet/cap
@@ -24,6 +26,7 @@
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
+	loose = 17
 
 //Chaplain
 /obj/item/clothing/head/chaplain_hood
@@ -31,6 +34,7 @@
 	desc = "It's hood that covers the head. It keeps you warm during the space winters."
 	icon_state = "chaplain_hood"
 	flags = HEADCOVERSEYES|BLOCKHAIR
+	loose = 2
 
 //Chaplain
 /obj/item/clothing/head/nun_hood
@@ -38,6 +42,7 @@
 	desc = "Maximum piety in this star system."
 	icon_state = "nun_hood"
 	flags = HEADCOVERSEYES|BLOCKHAIR
+	loose = 2
 
 /obj/item/clothing/head/det_hat
 	name = "hat"
@@ -51,13 +56,14 @@
 	name = "beret"
 	desc = "A beret, a mime's favorite headwear."
 	icon_state = "beret"
+	loose = 16
 
 //Security
 /obj/item/clothing/head/beret/sec
 	name = "security beret"
 	desc = "A beret with the security insignia emblazoned on it. For officers that are more inclined towards style than safety."
 	icon_state = "beret_badge"
-
+	loose = 13
 
 /obj/item/clothing/head/beret/sec/navyhos
 	name = "head of security's beret"

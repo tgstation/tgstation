@@ -180,3 +180,20 @@
 
 	updatehealth()
 	return 1
+
+// incredibly important stuff follows
+/mob/living/carbon/human/fall(var/forced)
+	..()
+	if(forced)
+		playsound(loc, "bodyfall", 50, 1, -1)
+	if(head)
+		var/multiplier = 1
+		if(stat || (status_flags & FAKEDEATH))
+			multiplier = 2
+		var/obj/item/clothing/head/H = head
+		if(!istype(H) || prob(H.loose * multiplier))
+			drop_from_inventory(H)
+			if(prob(60))
+				step_rand(H)
+			if(!stat)
+				src << "<span class='warning'>Your [H] fell off!</span>"
