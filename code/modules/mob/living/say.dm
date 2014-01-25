@@ -305,10 +305,6 @@ var/list/department_radio_keys = list(
 					alien_talk(message)
 				return
 
-			if ("department")
-				message_range = 1
-				italics = 1
-
 			if ("pAI")
 				message_range = 1
 				italics = 1
