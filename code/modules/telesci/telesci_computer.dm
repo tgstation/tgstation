@@ -217,8 +217,8 @@
 	return
 
 /obj/machinery/computer/telescience/proc/doteleport(mob/user)
-	var/trueX = (x_co + x_off)+WORLD_X_OFFSET
-	var/trueY = (y_co + y_off)+WORLD_Y_OFFSET
+	var/trueX = x_co + x_off + WORLD_X_OFFSET
+	var/trueY = y_co + y_off + WORLD_Y_OFFSET
 	trueX = Clamp(trueX, 1, world.maxx)
 	trueY = Clamp(trueY, 1, world.maxy)
 	if(telepad)
@@ -275,16 +275,20 @@
 
 	if(href_list["setx"])
 		var/new_x = input("Please input desired X coordinate.", name, x_co) as num
-		if(new_x+WORLD_X_OFFSET < 1 || new_x+WORLD_X_OFFSET > 255)
+		var/x_validate=new_x+x_off+WORLD_X_OFFSET
+		if(x_validate < 1 || x_validate > 255)
 			usr << "<span class='caution'>Error: Invalid X coordinate.</span>"
+			testing("new_x=[new_x] -> NOT 1 < [x_validate] < 255")
 		else
 			x_co = new_x
 		return 1
 
 	if(href_list["sety"])
 		var/new_y = input("Please input desired Y coordinate.", name, y_co) as num
-		if(new_y+WORLD_Y_OFFSET < 1 || new_y+WORLD_Y_OFFSET > 255)
+		var/y_validate=new_y+y_off+WORLD_Y_OFFSET
+		if(y_validate < 1 || y_validate > 255)
 			usr << "<span class='caution'>Error: Invalid Y coordinate.</span>"
+			testing("new_y=[new_y] -> NOT 1 < [y_validate] < 255")
 		else
 			y_co = new_y
 		return 1
