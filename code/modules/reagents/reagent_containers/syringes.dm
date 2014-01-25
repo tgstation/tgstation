@@ -165,6 +165,19 @@
 					src.reagents.reaction(target, INGEST)
 				if(ismob(target) && target == user)
 					src.reagents.reaction(target, INGEST)
+
+				if(isobj(target))
+					// /vg/: Logging transfers of bad things
+					if(target.reagents_to_log.len)
+						var/list/badshit=list()
+						for(var/bad_reagent in target.reagents_to_log)
+							if(reagents.has_reagent(bad_reagent))
+								badshit += reagents_to_log[bad_reagent]
+						if(badshit.len)
+							var/hl="\red <b>([english_list(badshit)])</b> \black"
+							message_admins("[user.name] ([user.ckey]) added [reagents.get_reagent_ids(1)] to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+							log_game("[user.name] ([user.ckey]) added [reagents.get_reagent_ids(1)] to \a [target] with [src].")
+
 				spawn(5)
 					var/datum/reagent/blood/B
 					for(var/datum/reagent/blood/d in src.reagents.reagent_list)

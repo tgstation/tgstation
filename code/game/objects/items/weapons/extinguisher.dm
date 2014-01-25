@@ -1,3 +1,4 @@
+
 /obj/item/weapon/extinguisher
 	name = "fire extinguisher"
 	desc = "A traditional red fire extinguisher."
@@ -13,16 +14,17 @@
 	force = 10.0
 	m_amt = 90
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
-	var/list/reagents_to_log=list(
-		"fuel"=    "welder fuel",
-		"plasma"=  "plasma",
-		"pacid"=   "polytrinic acid",
-		"sacid"=   "sulphuric acid"
-	)
 	var/max_water = 50
 	var/last_use = 1.0
 	var/safety = 1
 	var/sprite_name = "fire_extinguisher"
+
+	reagents_to_log=list(
+		"fuel"  =  "welder fuel",
+		"plasma"=  "plasma",
+		"pacid" =  "polytrinic acid",
+		"sacid" =  "sulphuric acid"
+	)
 
 /obj/item/weapon/extinguisher/mini
 	name = "fire extinguisher"

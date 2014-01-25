@@ -78,6 +78,18 @@
 				else
 					M.LAssailant = user
 
+			// /vg/: Logging transfers of bad things
+			if(isobj(target))
+				if(target.reagents_to_log.len)
+					var/list/badshit=list()
+					for(var/bad_reagent in target.reagents_to_log)
+						if(reagents.has_reagent(bad_reagent))
+							badshit += reagents_to_log[bad_reagent]
+					if(badshit.len)
+						var/hl="\red <b>([english_list(badshit)])</b> \black"
+						message_admins("[user.name] ([user.ckey]) added [reagents.get_reagent_ids(1)] to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+						log_game("[user.name] ([user.ckey]) added [reagents.get_reagent_ids(1)] to \a [target] with [src].")
+
 			trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 			user << "\blue You transfer [trans] units of the solution."
 			if (src.reagents.total_volume<=0)

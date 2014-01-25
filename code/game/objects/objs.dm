@@ -16,6 +16,10 @@
 	var/damtype = "brute"
 	var/force = 0
 
+	// What reagents should be logged when transferred TO this object?
+	// Reagent ID => friendly name
+	var/list/reagents_to_log=list()
+
 /obj/item/proc/is_used_on(obj/O, mob/user)
 
 
