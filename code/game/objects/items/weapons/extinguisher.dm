@@ -193,7 +193,7 @@
 				for(var/b=0, b<5, b++)
 					step_towards(W,my_target)
 					if(!W || !W.reagents) return
-					W.reagents.reaction(get_turf(W))
+					W.reagents.reaction(get_turf(W), TOUCH)
 					for(var/atom/atm in get_turf(W))
 						if(!W) return
 						W.reagents.reaction(atm, TOUCH)                      // Touch, since we sprayed it.
