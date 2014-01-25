@@ -80,7 +80,7 @@
 
 	if(!is_zombie)
 		for(var/mob/living/carbon/human/H in ListTargets(0)) //Only for people in the same tile
-			if(H in dead_mob_list)
+			if(H.stat == DEAD)
 				Zombify(H)
 				break
 	..()
@@ -88,7 +88,8 @@
 /mob/living/simple_animal/hostile/blobspore/proc/Zombify(var/mob/living/carbon/human/H)
 	if(H.wear_suit)
 		var/obj/item/clothing/suit/armor/A = H.wear_suit
-		maxHealth += A.armor["melee"] //That zombie's got armor, I want armor!
+		if(A.armor && A.armor["melee"])
+			maxHealth += A.armor["melee"] //That zombie's got armor, I want armor!
 	maxHealth += 40
 	health = maxHealth
 	name = "blob zombie"
