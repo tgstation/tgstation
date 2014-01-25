@@ -115,6 +115,32 @@
 	if(!I) return 0
 	return I.IsShield()
 
+///////////Two hand required objects///////////////
+//This is for objects that require two hands to even pick up
+/obj/item/weapon/twohanded/required/
+	w_class = 5.0
+
+/obj/item/weapon/twohanded/required/attack_self()
+	return
+
+/obj/item/weapon/twohanded/required/mob_can_equip(M as mob, slot)
+	if(wielded)
+		M << "<span class='warning'>[src.name] is too cumbersome to carry with anything but your hands!</span>"
+		return 0
+	return ..()
+
+/obj/item/weapon/twohanded/required/attack_hand(mob/user)//Can't even pick it up without both hands empty
+	var/obj/item/weapon/twohanded/required/H = user.get_inactive_hand()
+	if(H != null)
+		user.visible_message("<span class='notice'>[src.name] is too cumbersome to carry in one hand!</span>")
+		return
+	var/obj/item/weapon/twohanded/offhand/O = new(user)
+	user.put_in_inactive_hand(O)
+	..()
+	wielded = 1
+
+
+obj/item/weapon/twohanded/
 
 /*
  * Fireaxe

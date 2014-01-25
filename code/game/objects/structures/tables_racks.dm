@@ -310,7 +310,8 @@
 		playsound(src.loc, "sparks", 50, 1)
 		table_destroy(1, user)
 
-	user.drop_item(src)
+	if(!(((I.flags & ABSTRACT)))) //WE NEED MORE PAREMS
+		user.drop_item(src)
 
 /obj/structure/table/proc/table_destroy(var/destroy_type, var/mob/user as mob)
 

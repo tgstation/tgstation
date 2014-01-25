@@ -280,6 +280,12 @@ var/list/blood_splatter_icons = list()
 		overlays += blood_splatter_icon
 	return 1 //we applied blood to the item
 
+/obj/item/clothing/gloves/add_blood(mob/living/carbon/M)
+	if(..() == 0) return 0
+	transfer_blood = rand(2, 4)
+	bloody_hands_mob = M
+	return 1
+
 /turf/simulated/add_blood(mob/living/carbon/M)
 	if(..() == 0)	return 0
 
@@ -291,6 +297,8 @@ var/list/blood_splatter_icons = list()
 /mob/living/carbon/human/add_blood(mob/living/carbon/M)
 	if(..() == 0)	return 0
 	add_blood_list(M)
+	bloody_hands = rand(2, 4)
+	bloody_hands_mob = M
 	update_inv_gloves()	//handles bloody hands overlays and updating
 	return 1 //we applied blood to the item
 

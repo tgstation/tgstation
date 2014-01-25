@@ -10,7 +10,7 @@
 	using.name = "radio"
 	using.icon = 'icons/mob/screen_cyborg.dmi'
 	using.icon_state = "radio"
-	using.screen_loc = ui_movi
+	using.screen_loc = ui_borg_radio
 	using.layer = 20
 	adding += using
 
@@ -50,7 +50,7 @@
 	using.name = "act_intent"
 	using.icon = 'icons/mob/screen_cyborg.dmi'
 	using.icon_state = mymob.a_intent
-	using.screen_loc = ui_acti
+	using.screen_loc = ui_borg_intents
 	using.layer = 20
 	adding += using
 	action_intent = using
@@ -75,15 +75,6 @@
 	mymob.hands.icon_state = "nomod"
 	mymob.hands.name = "module"
 	mymob.hands.screen_loc = ui_borg_module
-
-//Module Panel
-	using = new /obj/screen()
-	using.name = "panel"
-	using.icon = 'icons/mob/screen_cyborg.dmi'
-	using.icon_state = "panel"
-	using.screen_loc = ui_borg_panel
-	using.layer = 19
-	adding += using
 
 //Store
 	mymob.throw_icon = new /obj/screen()
@@ -156,30 +147,30 @@
 
 	var/mob/living/silicon/robot/r = mymob
 
-	if(r.shown_robot_modules)
-		//Modules display is shown
-		r.client.screen += r.throw_icon	//"store" icon
+	if(r.client)
+		if(r.shown_robot_modules)
+			//Modules display is shown
+			r.client.screen += r.throw_icon	//"store" icon
 
-		if(!r.module)
-			usr << "<span class='danger'>No module selected</span>"
-			return
+			if(!r.module)
+				usr << "<span class='danger'>No module selected</span>"
+				return
 
-		if(!r.module.modules)
-			usr << "<span class='danger'>Selected module has no modules to select</span>"
-			return
+			if(!r.module.modules)
+				usr << "<span class='danger'>Selected module has no modules to select</span>"
+				return
 
-		if(!r.robot_modules_background)
-			return
+			if(!r.robot_modules_background)
+				return
 
-		var/display_rows = round((r.module.modules.len) / 8) +1 //+1 because round() returns floor of number
-		r.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
-		r.client.screen += r.robot_modules_background
+			var/display_rows = Ceiling(length(r.module.get_inactive_modules()) / 8)
+			r.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
+			r.client.screen += r.robot_modules_background
 
-		var/x = -4	//Start at CENTER-4,SOUTH+1
-		var/y = 1
+			var/x = -4	//Start at CENTER-4,SOUTH+1
+			var/y = 1
 
-		for(var/atom/movable/A in r.module.modules)
-			if( (A != r.module_state_1) && (A != r.module_state_2) && (A != r.module_state_3) )
+			for(var/atom/movable/A in r.module.get_inactive_modules())
 				//Module is not currently active
 				r.client.screen += A
 				if(x < 0)
@@ -193,13 +184,12 @@
 					x = -4
 					y++
 
-	else
-		//Modules display is hidden
-		r.client.screen -= r.throw_icon	//"store" icon
+		else
+			//Modules display is hidden
+			r.client.screen -= r.throw_icon	//"store" icon
 
-		for(var/atom/A in r.module.modules)
-			if( (A != r.module_state_1) && (A != r.module_state_2) && (A != r.module_state_3) )
+			for(var/atom/A in r.module.get_inactive_modules())
 				//Module is not currently active
 				r.client.screen -= A
-		r.shown_robot_modules = 0
-		r.client.screen -= r.robot_modules_background
+			r.shown_robot_modules = 0
+			r.client.screen -= r.robot_modules_background
