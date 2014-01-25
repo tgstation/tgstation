@@ -60,16 +60,15 @@
 
 /mob/living/simple_animal/hostile/proc/ListTargets()//Step 1, find out what we can see
 	var/list/L = list()
-	if(search_objects < 2)
-		var/list/Mobs = hearers(vision_range, src) - src
+	if(!search_objects)
+		var/list/Mobs = hearers(vision_range, src) - src //Remove self, so we don't suicide
 		L += Mobs
-	if(search_objects)
-		var/list/Objects = oview(vision_range, src)
-		L += Objects
-	else
 		for(var/obj/mecha/M in mechas_list)
 			if(get_dist(M, src) <= vision_range && can_see(src, M, vision_range))
 				L += M
+	else
+		var/list/Objects = oview(vision_range, src)
+		L += Objects
 	return L
 
 /mob/living/simple_animal/hostile/proc/FindTarget()//Step 2, filter down possible targets to things we actually care about
@@ -105,9 +104,6 @@
 /mob/living/simple_animal/hostile/CanAttack(var/atom/the_target)//Can we actually attack a possible target?
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
 		return 0
-	if(isobj(the_target) && search_objects)
-		if(the_target.type in wanted_objects)
-			return 1
 	if(isliving(the_target) && search_objects < 2)
 		var/mob/living/L = the_target
 		if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive == 1)
@@ -117,10 +113,13 @@
 		if(L in friends)
 			return 0
 		return 1
-	if(istype(the_target, /obj/mecha))
-		var/obj/mecha/M = the_target
-		if(M.occupant)//Just so we don't attack empty mechs
+	if(isobj(the_target))
+		if(the_target.type in wanted_objects)
 			return 1
+		if(istype(the_target, /obj/mecha) && search_objects < 2)
+			var/obj/mecha/M = the_target
+			if(M.occupant)//Just so we don't attack empty mechs
+				return 1
 	return 0
 
 /mob/living/simple_animal/hostile/proc/GiveTarget(var/new_target)//Step 4, give us our selected target
@@ -268,8 +267,7 @@
 /mob/living/simple_animal/hostile/proc/DestroySurroundings()
 	if(environment_smash)
 		EscapeConfinement()
-		var/list/directions = cardinal.Copy()
-		for(var/dir in directions)
+		for(var/dir in cardinal)
 			var/turf/T = get_step(src, dir)
 			if(istype(T, /turf/simulated/wall))
 				T.attack_animal(src)

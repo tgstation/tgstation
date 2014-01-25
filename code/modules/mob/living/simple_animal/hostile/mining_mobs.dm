@@ -30,18 +30,20 @@
 	icon_state = icon_living
 
 /mob/living/simple_animal/hostile/asteroid/bullet_act(var/obj/item/projectile/P)//Limits the weapons available to kill them at range
+	if(!stat)
+		Aggro()
 	if(P.damage < 30)
 		visible_message("<span class='danger'>The [P.name] had no effect on [src.name]!</span>")
-		Aggro()
 		return
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM)//No floor tiling them to death, wiseguy
 	if(istype(AM, /obj/item))
 		var/obj/item/T = AM
+		if(!stat)
+			Aggro()
 		if(T.throwforce <= 15)
 			visible_message("<span class='notice'>The [T.name] [src.throw_message] [src.name]!</span>")
-			Aggro()
 			return
 	..()
 
