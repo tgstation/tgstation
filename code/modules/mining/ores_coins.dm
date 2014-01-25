@@ -60,10 +60,51 @@
 	desc = "Completely useless"
 	icon_state = "slag"
 
+/obj/item/weapon/twohanded/required/gibtonite
+	name = "Gibtonite ore"
+	desc = "Extremely explosive if struck with mining equipment, Gibtonite is often used by miners to speed up their work by using it as a mining charge. This material is illegal to possess by unauthorized personnel under space law."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "Gibtonite ore"
+	item_state = "Gibtonite ore"
+	w_class = 4
+	throw_range = 0
+	anchored = 1 //Forces people to carry it by hand, no pulling!
+	var/primed = 0
+	var/det_time = 100
+	var/quality = 1 //How pure this gibtonite is, determines the explosion produced by it and is derived from the det_time of the rock wall it was taken from, higher value = better
+
+/obj/item/weapon/twohanded/required/gibtonite/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/pickaxe) && !primed)
+		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,1)
+		primed = 1
+		icon_state = "Gibtonite active"
+		user.visible_message("<span class='warning'>[user] strikes the [src], causing a chain reaction!</span>")
+		var/turf/bombturf = get_turf(src)
+		var/area/A = get_area(bombturf)
+		message_admins("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+		log_game("[key_name(usr)] has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
+		spawn(det_time)
+		if(primed)
+			if(quality == 3)
+				explosion(src.loc,2,4,9)
+			if(quality == 2)
+				explosion(src.loc,1,2,5)
+			if(quality == 1)
+				explosion(src.loc,-1,1,3)
+			del(src)
+	if(istype(I, /obj/item/device/analyzer) && primed)
+		primed = 0
+		user.visible_message("<span class='notice'>The chain reaction was stopped! ...The ore's quality went down.</span>")
+		icon_state = "Gibtonite ore"
+		quality = 1
+	..()
+
 /obj/item/weapon/ore/New()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 
+/obj/item/weapon/ore/ex_act()
+	return
 
 /*****************************Coin********************************/
 
