@@ -19,7 +19,7 @@
 	if(!ishuman(user))
 		user << "\red You don't know how to use this!"
 		return
-	if(user.miming || user.silent)
+	if(user:miming || user.silent)
 		user << "\red You find yourself unable to speak at all."
 		return
 	if(spamcheck)
