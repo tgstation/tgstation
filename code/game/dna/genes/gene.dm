@@ -104,9 +104,6 @@
 	var/list/deactivation_messages=list()
 
 /datum/dna/gene/basic/can_activate(var/mob/M,var/flags)
-	if(mutation==0)
-		return 0
-
 	// Probability check
 	if(flags & MUTCHK_FORCED || probinj(activation_prob,(flags&MUTCHK_FORCED)))
 		return 1

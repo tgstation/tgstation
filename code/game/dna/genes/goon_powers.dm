@@ -30,9 +30,14 @@
 /datum/dna/gene/basic/stealth
 	can_activate(var/mob/M, var/flags)
 		// Can only activate one of these at a time.
-		if(is_type_in_list(/datum/dna/gene/basic/stealth,M.mutations))
+		if(is_type_in_list(/datum/dna/gene/basic/stealth,M.active_genes))
+			testing("Cannot activate [type]: /datum/dna/gene/basic/stealth in M.active_genes.")
 			return 0
 		return ..(M,flags)
+
+	deactivate(var/mob/M)
+		..(M)
+		M.alpha=255
 
 // WAS: /datum/bioEffect/darkcloak
 /datum/dna/gene/basic/stealth/darkcloak
@@ -49,9 +54,9 @@
 		if(!istype(T))
 			return
 		if(T.lighting_lumcount <= 2)
-			M.alpha = round((255 * 0.15))
+			M.alpha = round(255 * 0.05)
 		else
-			M.alpha = round((255 * 0.80))
+			M.alpha = round(255 * 0.80)
 
 //WAS: /datum/bioEffect/chameleon
 /datum/dna/gene/basic/stealth/chameleon
@@ -64,8 +69,7 @@
 		block=CHAMELEONBLOCK
 
 	OnMobLife(var/mob/M)
-		if((world.timeofday - M.last_move_intent) >= 30 && !M.stat && M.canmove && !M.restrained())
-			M.alpha = round((255 * 0.15))
+		if((world.time - M.last_movement) >= 30 && !M.stat && M.canmove && !M.restrained())
+			M.alpha = round(255 * 0.10)
 		else
-			M.alpha = round((255 * 0.80))
-		return
+			M.alpha = round(255 * 0.80)
