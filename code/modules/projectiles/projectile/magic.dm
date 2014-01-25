@@ -9,10 +9,14 @@
 /obj/item/projectile/magic/death
 	name = "bolt of death"
 	icon_state = "pulse1_bl"
-	damage = 9001
-	damage_type = OXY
-	nodamage = 0
-	flag = "magic"
+
+/obj/item/projectile/magic/death/on_hit(var/target)
+	if(ismob(target))
+		var/mob/M = target
+		M.death()
+	if(isanimal(target))
+		var/mob/living/simple_animal/SA = target
+		SA.Die()
 
 /obj/item/projectile/magic/fireball
 	name = "bolt of fireball"

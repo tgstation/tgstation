@@ -433,6 +433,7 @@
 	stat(null, "Health: [round((health / maxHealth) * 100)]%")
 
 /mob/living/simple_animal/proc/Die()
+	health = 0 // so /mob/living/simple_animal/Life() doesn't magically revive them - RR
 	dead_mob_list += src
 	icon_state = icon_dead
 	stat = DEAD
