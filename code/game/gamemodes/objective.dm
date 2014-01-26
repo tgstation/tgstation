@@ -4,7 +4,6 @@ datum/objective
 	var/datum/mind/target = null		//If they are focused on a particular person.
 	var/target_amount = 0				//If they are focused on a particular number. Steal objectives have their own counter.
 	var/completed = 0					//currently only used for custom objectives.
-	var/list/excludefromjob = list()	//If you don't want a certain job to get this objective (captain stealing his own medal, etcetc)
 	var/dangerrating = 0				//How hard the objective is, essentially. Used for dishing out objectives and checking overall victory.
 
 datum/objective/New(var/text)
@@ -38,10 +37,7 @@ datum/objective/proc/update_explanation_text()
 
 datum/objective/assassinate
 	var/target_role_type=0
-
-//datum/objective/assassinate/find_target()
-//	..()
-//	return target
+	dangerrating = 10
 
 datum/objective/assassinate/find_target_by_role(role, role_type=0)
 	target_role_type = role_type
@@ -66,10 +62,6 @@ datum/objective/assassinate/update_explanation_text()
 
 datum/objective/mutiny
 	var/target_role_type=0
-
-//datum/objective/mutiny/find_target()
-//	..()
-//	return target
 
 datum/objective/mutiny/find_target_by_role(role, role_type=0)
 	target_role_type = role_type
@@ -97,10 +89,7 @@ datum/objective/mutiny/update_explanation_text()
 
 datum/objective/debrain//I want braaaainssss
 	var/target_role_type=0
-
-//datum/objective/debrain/find_target()
-//	..()
-//	return target
+	dangerrating = 20
 
 datum/objective/debrain/find_target_by_role(role, role_type=0)
 	target_role_type = role_type
@@ -132,10 +121,7 @@ datum/objective/debrain/update_explanation_text()
 
 datum/objective/protect//The opposite of killing a dude.
 	var/target_role_type=0
-
-//datum/objective/protect/find_target()
-//	..()
-//	return target
+	dangerrating = 10
 
 datum/objective/protect/find_target_by_role(role, role_type=0)
 	target_role_type = role_type
@@ -162,6 +148,7 @@ datum/objective/protect/update_explanation_text()
 
 datum/objective/hijack
 	explanation_text = "Hijack the emergency shuttle by escaping alone."
+	dangerrating = 25
 
 datum/objective/hijack/check_completion()
 	if(!owner.current || owner.current.stat)
@@ -187,6 +174,7 @@ datum/objective/hijack/check_completion()
 
 datum/objective/block
 	explanation_text = "Do not allow any organic lifeforms to escape on the shuttle alive."
+	dangerrating = 25
 
 datum/objective/block/check_completion()
 	if(!istype(owner.current, /mob/living/silicon))
@@ -209,6 +197,7 @@ datum/objective/block/check_completion()
 
 datum/objective/escape
 	explanation_text = "Escape on the shuttle or an escape pod alive."
+	dangerrating = 5
 
 datum/objective/escape/check_completion()
 	if(issilicon(owner.current))
@@ -244,6 +233,7 @@ datum/objective/escape/check_completion()
 
 datum/objective/survive
 	explanation_text = "Stay alive until the end."
+	dangerrating = 3
 
 datum/objective/survive/check_completion()
 	if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current))
@@ -260,55 +250,31 @@ datum/objective/nuclear
 
 
 datum/objective/steal
-	var/obj/item/steal_target
-	var/target_name
+	var/datum/objective_item/targetinfo = null //Save the chosen item datum so we can access it later.
+	var/obj/item/steal_target = null //Needed for custom objectives (they're just items, not datums).
+	var/list/possible_items = list()
+	dangerrating = 5 //Overridden by the individual item's difficulty, but defaults to 5 for custom objectives.
 
-	var/global/possible_items[] = list(
-		"the captain's antique laser gun" = /obj/item/weapon/gun/energy/laser/captain,
-		"a hand teleporter" = /obj/item/weapon/hand_tele,
-		"an RCD" = /obj/item/weapon/rcd,
-		"a jetpack" = /obj/item/weapon/tank/jetpack,
-		"a functional AI" = /obj/item/device/aicard,
-		"a pair of magboots" = /obj/item/clothing/shoes/magboots,
-		"the station blueprints" = /obj/item/blueprints,
-		"28 moles of plasma (full tank)" = /obj/item/weapon/tank,
-		"an unused sample of slime extract" = /obj/item/slime_extract,
-		"a piece of corgi meat" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
-		"the medal of captaincy" = /obj/item/clothing/tie/medal/gold/captain,
-		"the hypospray" = /obj/item/weapon/reagent_containers/hypospray,
-		"the nuclear authentication disk" = /obj/item/weapon/disk/nuclear,
-		"an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,
-		"the reactive teleport armor" = /obj/item/clothing/suit/armor/reactive,
-	)
-
-	var/global/possible_items_special[] = list(
-		"the captain's pinpointer" = /obj/item/weapon/pinpointer,
-		"an advanced energy gun" = /obj/item/weapon/gun/energy/gun/nuclear,
-		"a diamond drill" = /obj/item/weapon/pickaxe/diamonddrill,
-		"a bag of holding" = /obj/item/weapon/storage/backpack/holding,
-		"a hyper-capacity cell" = /obj/item/weapon/cell/hyper,
-		"10 diamonds" = /obj/item/stack/sheet/mineral/diamond,
-		"50 gold bars" = /obj/item/stack/sheet/mineral/gold,
-		"25 refined uranium bars" = /obj/item/stack/sheet/mineral/uranium,
-		"a laser pointer" = /obj/item/device/laser_pointer,
-	)
-
-datum/objective/steal/proc/set_target(item_name)
-	target_name = item_name
-	steal_target = possible_items[target_name]
-	if (!steal_target )
-		steal_target = possible_items_special[target_name]
-	explanation_text = "Steal [target_name]."
-	return steal_target
+datum/objective/steal/New()
+	possible_items = init_subtypes(/datum/objective_item)
 
 datum/objective/steal/find_target()
 	return set_target(pick(possible_items))
 
-datum/objective/steal/proc/select_target()
-	var/list/possible_items_all = possible_items+possible_items_special+"custom"
+datum/objective/steal/proc/set_target(var/datum/objective_item/item)
+	targetinfo = item
+
+	steal_target = targetinfo.targetitem
+	explanation_text = "Steal [targetinfo.name]."
+	dangerrating = targetinfo.difficulty
+	return steal_target
+
+datum/objective/steal/proc/select_target() //For admins setting objectives manually.
+	var/list/possible_items_all = possible_items+"custom"
 	var/new_target = input("Select target:", "Objective target", steal_target) as null|anything in possible_items_all
 	if (!new_target) return
-	if (new_target == "custom")
+
+	if (new_target == "custom") //Can set custom items.
 		var/obj/item/custom_target = input("Select type:","Type") as null|anything in typesof(/obj/item)
 		if (!custom_target) return
 		var/tmp_obj = new custom_target
@@ -316,9 +282,9 @@ datum/objective/steal/proc/select_target()
 		del(tmp_obj)
 		custom_name = copytext(sanitize(input("Enter target name:", "Objective target", custom_name) as text|null),1,MAX_MESSAGE_LEN)
 		if (!custom_name) return
-		target_name = custom_name
 		steal_target = custom_target
-		explanation_text = "Steal [target_name]."
+		explanation_text = "Steal [custom_name]."
+
 	else
 		set_target(new_target)
 	return steal_target
@@ -327,45 +293,19 @@ datum/objective/steal/check_completion()
 	if(!steal_target || !owner.current)	return 0
 	if(!isliving(owner.current))	return 0
 	var/list/all_items = owner.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
-	switch(target_name)
-		if("28 moles of plasma (full tank)","10 diamonds","50 gold bars","25 refined uranium bars")
-			var/target_amount = text2num(target_name)//Non-numbers are ignored.
-			var/found_amount = 0.0//Always starts as zero.
 
-			for(var/obj/item/I in all_items) //Check for plasma tanks
-				if(istype(I, steal_target))
-					found_amount += (target_name=="28 moles of plasma (full tank)" ? (I:air_contents:toxins) : (I:amount))
-			return found_amount>=target_amount
-
-		if("a functional AI")
-			for(var/obj/item/device/aicard/C in all_items) //Check for ai card
-				for(var/mob/living/silicon/ai/M in C)
-					if(istype(M, /mob/living/silicon/ai) && M.stat != 2) //See if any AI's are alive inside that card.
-						return 1
-
-		if("the station blueprints")
-			for(var/obj/item/I in all_items)	//the actual blueprints are good too!
-				if(istype(I, /obj/item/blueprints))
-					return 1
-				if(istype(I, /obj/item/weapon/photo))
-					var/obj/item/weapon/photo/P = I
-					if(P.blueprints)	//if the blueprints are in frame
-						return 1
-
-		if("an unused sample of slime extract")
-			for(var/obj/item/slime_extract/E in all_items)
-				if(E.Uses > 0)
-					return 1
-
-		else
-			for(var/obj/I in all_items) //Check for items
-				if(istype(I, steal_target))
-					return 1
+	for(var/obj/I in all_items) //Check for items
+		if(istype(I, steal_target))
+			if(targetinfo)
+				return targetinfo.check_special_completion(steal_target) //Returns 1 by default. Items with special checks will return 1 if the conditions are fulfilled.
+			else //If there's no targetinfo, then that means it was a custom objective. At this point, we know you have the item, so return 1.
+				return 1
 	return 0
 
 
 
 datum/objective/download
+	dangerrating = 10
 
 datum/objective/download/proc/gen_amount_goal()
 	target_amount = rand(10,20)
@@ -392,6 +332,7 @@ datum/objective/download/check_completion()
 
 
 datum/objective/capture
+	dangerrating = 10
 
 datum/objective/capture/proc/gen_amount_goal()
 		target_amount = rand(5,10)
@@ -431,6 +372,7 @@ datum/objective/capture/check_completion()//Basically runs through all the mobs 
 
 
 datum/objective/absorb
+	dangerrating = 10
 
 datum/objective/absorb/proc/gen_amount_goal(var/lowbound = 4, var/highbound = 6)
 	target_amount = rand (lowbound,highbound)
