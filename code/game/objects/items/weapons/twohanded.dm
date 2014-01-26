@@ -150,6 +150,7 @@ obj/item/weapon/twohanded/
 	name = "fire axe"
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
 	force = 5
+	throwforce = 15
 	w_class = 4.0
 	slot_flags = SLOT_BACK
 	force_unwielded = 5
