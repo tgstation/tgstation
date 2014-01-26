@@ -118,12 +118,17 @@
 	changeling.absorb_dna(T)
 
 	if(src.nutrition < 400) src.nutrition = min((src.nutrition + T.nutrition), 400)
-	if(T.mind && T.mind.changeling)//If the target was a changeling, suck out their extra juice and objective points!
-		changeling.chem_charges += min(T.mind.changeling.chem_charges, changeling.chem_storage)
-		changeling.absorbedcount += T.mind.changeling.absorbedcount
 
-		T.mind.changeling.absorbed_dna.len = 1
-		T.mind.changeling.absorbedcount = 0
+	if(T.mind)//if the victim has got a mind
+
+		T.mind.show_memory(src, 0) //I can read your mind, kekeke. Output all their notes.
+
+		if(T.mind.changeling)//If the target was a changeling, suck out their extra juice and objective points!
+			changeling.chem_charges += min(T.mind.changeling.chem_charges, changeling.chem_storage)
+			changeling.absorbedcount += T.mind.changeling.absorbedcount
+
+			T.mind.changeling.absorbed_dna.len = 1
+			T.mind.changeling.absorbedcount = 0
 	else
 		changeling.chem_charges += 10
 
