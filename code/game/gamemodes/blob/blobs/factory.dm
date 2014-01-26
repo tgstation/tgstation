@@ -45,6 +45,7 @@
 	attacktext = "hits"
 	attack_sound = 'sound/weapons/genhit1.ogg'
 	var/obj/effect/blob/factory/factory = null
+	var/is_zombie = 0
 	faction = "blob"
 	min_oxy = 0
 	max_oxy = 0
@@ -75,6 +76,36 @@
 		factory.spores += src
 	..()
 
+/mob/living/simple_animal/hostile/blobspore/Life()
+
+	if(!is_zombie)
+		for(var/mob/living/carbon/human/H in ListTargets(0)) //Only for people in the same tile
+			if(H.stat == DEAD)
+				Zombify(H)
+				break
+	..()
+
+/mob/living/simple_animal/hostile/blobspore/proc/Zombify(var/mob/living/carbon/human/H)
+	if(H.wear_suit)
+		var/obj/item/clothing/suit/armor/A = H.wear_suit
+		if(A.armor && A.armor["melee"])
+			maxHealth += A.armor["melee"] //That zombie's got armor, I want armor!
+	maxHealth += 40
+	health = maxHealth
+	name = "blob zombie"
+	desc = "A shambling corpse animated by the blob."
+	melee_damage_lower = 10
+	melee_damage_upper = 15
+	icon = H.icon
+	icon_state = "husk_s"
+	H.hair_style = null
+	H.update_hair()
+	overlays = H.overlays
+	overlays += image('icons/mob/blob.dmi', icon_state = "blob_head")
+	H.loc = src
+	is_zombie = 1
+	loc.visible_message("<span class='warning'> The corpse of [H.name] suddenly rises!</span>")
+
 /mob/living/simple_animal/hostile/blobspore/Die()
 	// On death, create a small smoke of harmful gas (s-Acid)
 	var/datum/effect/effect/system/chem_smoke_spread/S = new
@@ -94,4 +125,7 @@
 /mob/living/simple_animal/hostile/blobspore/Del()
 	if(factory)
 		factory.spores -= src
+	if(contents)
+		for(var/mob/M in contents)
+			M.loc = src.loc
 	..()
