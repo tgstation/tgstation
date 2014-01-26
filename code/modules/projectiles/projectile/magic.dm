@@ -13,10 +13,7 @@
 /obj/item/projectile/magic/death/on_hit(var/target)
 	if(ismob(target))
 		var/mob/M = target
-		M.death()
-	if(isanimal(target))
-		var/mob/living/simple_animal/SA = target
-		SA.Die()
+		M.death(0)
 
 /obj/item/projectile/magic/fireball
 	name = "bolt of fireball"
