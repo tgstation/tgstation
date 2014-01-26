@@ -578,6 +578,10 @@ obj/item/toy/cards
 obj/item/toy/cards/New()
 	..()
 
+obj/item/toy/cards/proc/apply_card_vars(obj/item/toy/cards/newobj, obj/item/toy/cards/sourceobj) // Applies variables for supporting multiple types of card deck
+	if(!istype(sourceobj))
+		return
+
 obj/item/toy/cards/deck
 	name = "deck of cards"
 	desc = "A deck of space-grade playing cards."
@@ -624,7 +628,7 @@ obj/item/toy/cards/deck/attack_hand(mob/user as mob)
 	H.cardname = choice
 	H.parentdeck = src
 	var/O = src
-	apply_card_vars(H,O)
+	H.apply_card_vars(H,O)
 	src.cards -= choice
 	H.pickup(user)
 	user.put_in_active_hand(H)
@@ -739,7 +743,7 @@ obj/item/toy/cards/cardhand/Topic(href, href_list)
 			src.currenthand -= choice
 			C.parentdeck = src.parentdeck
 			C.cardname = choice
-			apply_card_vars(C,O)
+			C.apply_card_vars(C,O)
 			C.pickup(cardUser)
 			cardUser.put_in_any_hand_if_possible(C)
 			cardUser.visible_message("<span class='notice'>[cardUser] draws a card from \his hand.</span>", "<span class='notice'>You take the [C.cardname] from your hand.</span>")
@@ -755,7 +759,7 @@ obj/item/toy/cards/cardhand/Topic(href, href_list)
 				var/obj/item/toy/cards/singlecard/N = new/obj/item/toy/cards/singlecard(src.loc)
 				N.parentdeck = src.parentdeck
 				N.cardname = src.currenthand[1]
-				apply_card_vars(N,O)
+				N.apply_card_vars(N,O)
 				cardUser.u_equip(src)
 				N.pickup(cardUser)
 				cardUser.put_in_any_hand_if_possible(N)
@@ -781,8 +785,16 @@ obj/item/toy/cards/cardhand/attackby(obj/item/toy/cards/singlecard/C, mob/living
 		else
 			user << "<span class='notice'>You can't mix cards from other decks.</span>"
 
-
-
+obj/item/toy/cards/cardhand/apply_card_vars(obj/item/toy/cards/newobj,obj/item/toy/cards/sourceobj)
+	..()
+	newobj.deckstyle = sourceobj.deckstyle
+	newobj.icon_state = "[deckstyle]_hand2" // Another dumb hack, without this the hand is invisible (or has the default deckstyle) until another card is added.
+	newobj.card_hitsound = sourceobj.card_hitsound
+	newobj.card_force = sourceobj.card_force
+	newobj.card_throwforce = sourceobj.card_throwforce
+	newobj.card_throw_speed = sourceobj.card_throw_speed
+	newobj.card_throw_range = sourceobj.card_throw_range
+	newobj.card_attack_verb = sourceobj.card_attack_verb
 
 
 obj/item/toy/cards/singlecard
@@ -835,7 +847,7 @@ obj/item/toy/cards/singlecard/attackby(obj/item/I, mob/living/user)
 			H.currenthand += C.cardname
 			H.currenthand += src.cardname
 			H.parentdeck = C.parentdeck
-			apply_card_vars(H,C)
+			H.apply_card_vars(H,C)
 			user.u_equip(C)
 			H.pickup(user)
 			user.put_in_active_hand(H)
@@ -868,36 +880,22 @@ obj/item/toy/cards/singlecard/attack_self(mob/user)
 		return
 	Flip()
 
-obj/item/toy/cards/proc/apply_card_vars(obj/item/toy/cards/newobj, obj/item/toy/cards/sourceobj) // Applies variables for supporting multiple types of card deck
-	if(!istype(sourceobj))
-		return
-	if(istype(newobj,/obj/item/toy/cards/singlecard))
-		newobj.deckstyle = sourceobj.deckstyle
-		newobj.icon_state = "singlecard_down_[deckstyle]" // Without this the card is invisible until flipped. It's an ugly hack, but it works.
-		newobj.card_hitsound = sourceobj.card_hitsound
-		newobj.hitsound = newobj.card_hitsound
-		newobj.card_force = sourceobj.card_force
-		newobj.force = newobj.card_force
-		newobj.card_throwforce = sourceobj.card_throwforce
-		newobj.throwforce = newobj.card_throwforce
-		newobj.card_throw_speed = sourceobj.card_throw_speed
-		newobj.throw_speed = newobj.card_throw_speed
-		newobj.card_throw_range = sourceobj.card_throw_range
-		newobj.throw_range = newobj.card_throw_range
-		newobj.card_attack_verb = sourceobj.card_attack_verb
-		newobj.attack_verb = newobj.card_attack_verb
-	else if(istype(newobj,/obj/item/toy/cards/cardhand))
-		newobj.deckstyle = sourceobj.deckstyle
-		newobj.icon_state = "[deckstyle]_hand2" // Another dumb hack, without this the hand is invisible (or has the default deckstyle) until another card is added.
-		newobj.card_hitsound = sourceobj.card_hitsound
-		newobj.card_force = sourceobj.card_force
-		newobj.card_throwforce = sourceobj.card_throwforce
-		newobj.card_throw_speed = sourceobj.card_throw_speed
-		newobj.card_throw_range = sourceobj.card_throw_range
-		newobj.card_attack_verb = sourceobj.card_attack_verb
-	else
-		return
-
+obj/item/toy/cards/singlecard/apply_card_vars(obj/item/toy/cards/singlecard/newobj,obj/item/toy/cards/sourceobj)
+	..()
+	newobj.deckstyle = sourceobj.deckstyle
+	newobj.icon_state = "singlecard_down_[deckstyle]" // Without this the card is invisible until flipped. It's an ugly hack, but it works.
+	newobj.card_hitsound = sourceobj.card_hitsound
+	newobj.hitsound = newobj.card_hitsound
+	newobj.card_force = sourceobj.card_force
+	newobj.force = newobj.card_force
+	newobj.card_throwforce = sourceobj.card_throwforce
+	newobj.throwforce = newobj.card_throwforce
+	newobj.card_throw_speed = sourceobj.card_throw_speed
+	newobj.throw_speed = newobj.card_throw_speed
+	newobj.card_throw_range = sourceobj.card_throw_range
+	newobj.throw_range = newobj.card_throw_range
+	newobj.card_attack_verb = sourceobj.card_attack_verb
+	newobj.attack_verb = newobj.card_attack_verb
 
 
 /*
