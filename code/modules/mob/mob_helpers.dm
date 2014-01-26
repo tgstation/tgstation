@@ -459,13 +459,18 @@ proc/is_blind(A)
 	return 0
 
 /proc/get_multitool(mob/user as mob)
-	// Check distance for those that need it.
-	if(!isAI(user) && !isAdminGhost(user))
-		if(!in_range(user, src))
-			return null
-
 	// Get tool
-	var/obj/item/device/multitool/P = user.get_multitool()
+	var/obj/item/device/multitool/P
+	if(isrobot(user) || ishuman(user))
+		P = user.get_active_hand()
+		testing("user.get_active_hand() returned [P].")
+	else if(isAI(user))
+		var/mob/living/silicon/ai/AI=user
+		P = AI.aiMulti
+	else if(isAdminGhost(user))
+		var/mob/dead/observer/G=user
+		P = G.ghostMulti
+
 	if(!istype(P))
 		return null
 	return P
