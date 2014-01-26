@@ -7,6 +7,8 @@
 	var/burn_point = null
 	var/burning = null
 	var/hitsound = null
+	var/throwhitsound = null
+	var/throwtapsound = 'sound/weapons/throwtap.ogg'
 	var/w_class = 3.0
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
@@ -557,3 +559,4 @@
 	. = ..()
 	if(.)
 		transfer_blood = 0
+		bloody_hands_mob = null

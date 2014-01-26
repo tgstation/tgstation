@@ -946,68 +946,69 @@
 		if(stat == UNCONSCIOUS)
 			//Critical damage passage overlay
 			if(health <= config.health_threshold_crit)
-				var/image/I
+				var/image/I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage0")
+				I.blend_mode = BLEND_OVERLAY //damageoverlay is BLEND_MULTIPLY
 				switch(health)
 					if(-20 to -10)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage1")
+						I.icon_state = "passage1"
 					if(-30 to -20)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage2")
+						I.icon_state = "passage2"
 					if(-40 to -30)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage3")
+						I.icon_state = "passage3"
 					if(-50 to -40)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage4")
+						I.icon_state = "passage4"
 					if(-60 to -50)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage5")
+						I.icon_state = "passage5"
 					if(-70 to -60)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage6")
+						I.icon_state = "passage6"
 					if(-80 to -70)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage7")
+						I.icon_state = "passage7"
 					if(-90 to -80)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage8")
+						I.icon_state = "passage8"
 					if(-95 to -90)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage9")
+						I.icon_state = "passage9"
 					if(-INFINITY to -95)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage10")
+						I.icon_state = "passage10"
 				damageoverlay.overlays += I
 		else
 			//Oxygen damage overlay
 			if(oxyloss)
-				var/image/I
+				var/image/I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "oxydamageoverlay0")
 				switch(oxyloss)
 					if(10 to 20)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "oxydamageoverlay1")
+						I.icon_state = "oxydamageoverlay1"
 					if(20 to 25)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "oxydamageoverlay2")
+						I.icon_state = "oxydamageoverlay2"
 					if(25 to 30)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "oxydamageoverlay3")
+						I.icon_state = "oxydamageoverlay3"
 					if(30 to 35)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "oxydamageoverlay4")
+						I.icon_state = "oxydamageoverlay4"
 					if(35 to 40)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "oxydamageoverlay5")
+						I.icon_state = "oxydamageoverlay5"
 					if(40 to 45)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "oxydamageoverlay6")
+						I.icon_state = "oxydamageoverlay6"
 					if(45 to INFINITY)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "oxydamageoverlay7")
+						I.icon_state = "oxydamageoverlay7"
 				damageoverlay.overlays += I
 
 			//Fire and Brute damage overlay (BSSR)
 			var/hurtdamage = src.getBruteLoss() + src.getFireLoss() + damageoverlaytemp
 			damageoverlaytemp = 0 // We do this so we can detect if someone hits us or not.
 			if(hurtdamage)
-				var/image/I
+				var/image/I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay0")
 				switch(hurtdamage)
 					if(35 to 45)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay1")
+						I.icon_state = "brutedamageoverlay1"
 					if(45 to 55)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay2")
+						I.icon_state = "brutedamageoverlay2"
+					if(40 to 55)
+						I.icon_state = "brutedamageoverlay3"
 					if(55 to 65)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay3")
+						I.icon_state = "brutedamageoverlay4"
 					if(65 to 75)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay4")
-					if(75 to 85)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay5")
+						I.icon_state = "brutedamageoverlay5"
 					if(85 to INFINITY)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay6")
+						I.icon_state = "brutedamageoverlay6"
 				damageoverlay.overlays += I
 
 		if( stat == DEAD )
@@ -1017,6 +1018,8 @@
 			if(healths)		healths.icon_state = "health7"	//DEAD healthmeter
 		else
 			sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
+			var/see_temp = see_invisible
+			see_invisible = SEE_INVISIBLE_LIVING
 			if(dna)
 				switch(dna.mutantrace)
 					if("lizard","slime")
@@ -1030,15 +1033,10 @@
 			if(XRAY in mutations)
 				sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 				see_in_dark = 8
-				if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
+				see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
 			if(seer)
-				var/obj/effect/rune/R = locate() in loc
-				if(R && R.word1 == wordsee && R.word2 == wordhell && R.word3 == wordjoin)
-					see_invisible = SEE_INVISIBLE_OBSERVER
-				else
-					see_invisible = SEE_INVISIBLE_LIVING
-					seer = 0
+				see_invisible = SEE_INVISIBLE_OBSERVER
 
 			if(mind && mind.changeling)
 				hud_used.lingchemdisplay.invisibility = 0
@@ -1056,34 +1054,30 @@
 								target_list += target
 						if(target_list.len)//Everything else is handled by the ninja mask proc.
 							O.assess_targets(target_list, src)
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
+						see_invisible = SEE_INVISIBLE_LIVING
 					if(1)
 						see_in_dark = 5
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
+						see_invisible = SEE_INVISIBLE_LIVING
 					if(2)
 						sight |= SEE_MOBS
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
+						see_invisible = SEE_INVISIBLE_LEVEL_TWO
 					if(3)
 						sight |= SEE_TURFS
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
+						see_invisible = SEE_INVISIBLE_LIVING
 
 			if(glasses)
 				if(istype(glasses, /obj/item/clothing/glasses/meson))
 					sight |= SEE_TURFS
-					if(!druggy)
-						see_invisible = SEE_INVISIBLE_MINIMUM
+					see_invisible = SEE_INVISIBLE_MINIMUM
 				else if(istype(glasses, /obj/item/clothing/glasses/night))
 					see_in_dark = 5
-					if(!druggy)
-						see_invisible = SEE_INVISIBLE_MINIMUM
+					see_invisible = SEE_INVISIBLE_MINIMUM
 				else if(istype(glasses, /obj/item/clothing/glasses/thermal))
 					sight |= SEE_MOBS
-					if(!druggy)
-						see_invisible = SEE_INVISIBLE_MINIMUM
+					see_invisible = SEE_INVISIBLE_MINIMUM
 				else if(istype(glasses, /obj/item/clothing/glasses/material))
 					sight |= SEE_OBJS
-					if(!druggy)
-						see_invisible = SEE_INVISIBLE_MINIMUM
+					see_invisible = SEE_INVISIBLE_MINIMUM
 
 	/* HUD shit goes here, as long as it doesn't modify sight flags */
 	// The purpose of this is to stop xray and w/e from preventing you from using huds -- Love, Doohl
@@ -1093,17 +1087,20 @@
 					if(istype(glasses, /obj/item/clothing/glasses/sunglasses/sechud))
 						var/obj/item/clothing/glasses/sunglasses/sechud/O = glasses
 						if(O.hud)		O.hud.process_hud(src)
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
+						see_invisible = SEE_INVISIBLE_LIVING
 
 				else if(istype(glasses, /obj/item/clothing/glasses/hud))
 					var/obj/item/clothing/glasses/hud/O = glasses
 					O.process_hud(src)
-					if(!druggy)
-						see_invisible = SEE_INVISIBLE_LIVING
+					see_invisible = SEE_INVISIBLE_LIVING
 				else
 					see_invisible = SEE_INVISIBLE_LIVING
-			else
-				see_invisible = SEE_INVISIBLE_LIVING
+					
+			if(druggy)	//Override for druggy
+				see_invisible = see_temp
+				
+			if(see_override)	//Override all
+				see_invisible = see_override
 
 			if(healths)
 				switch(hal_screwyhud)

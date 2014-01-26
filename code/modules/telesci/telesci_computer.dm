@@ -193,7 +193,6 @@
 				temp_msg += "<BR>Calibration required soon."
 			else
 				temp_msg += "Data printed below."
-			investigate_log("[key_name(usr)]/[user] has teleported with Telescience at [trueX],[trueY],[z_co], in [A ? A.name : "null area"].","telesci")
 
 			var/sparks = get_turf(target)
 			var/datum/effect/effect/system/spark_spread/y = new /datum/effect/effect/system/spark_spread
@@ -202,6 +201,9 @@
 
 			var/turf/source = target
 			var/turf/dest = get_turf(telepad)
+			var/log_msg = ""
+			log_msg += ": [key_name(user)] has teleported "
+
 			if(sending)
 				source = dest
 				dest = target
@@ -217,11 +219,39 @@
 							// TP people on office chairs
 							if(L.buckled.anchored)
 								continue
+
+							log_msg += "[key_name(L)] (on a chair), "
 						else
 							continue
 					else if(!isobserver(ROI))
 						continue
+				if(ismob(ROI))
+					var/mob/T = ROI
+					log_msg += "[key_name(T)], "
+				else
+					log_msg += "[ROI.name]"
+					if (istype(ROI, /obj/structure/closet))
+						var/obj/structure/closet/C = ROI
+						log_msg += " ("
+						for(var/atom/movable/Q as mob|obj in C)
+							if(ismob(Q))
+								log_msg += "[key_name(Q)], "
+							else
+								log_msg += "[Q.name], "
+						if (dd_hassuffix(log_msg, "("))
+							log_msg += "empty)"
+						else
+							log_msg = dd_limittext(log_msg, length(log_msg) - 2)
+							log_msg += ")"
+					log_msg += ", "
 				do_teleport(ROI, dest)
+
+			if (dd_hassuffix(log_msg, ", "))
+				log_msg = dd_limittext(log_msg, length(log_msg) - 2)
+			else
+				log_msg += "nothing"
+			log_msg += " [sending ? "to" : "from"] [trueX], [trueY], [z_co] ([A ? A.name : "null area"])"
+			investigate_log(log_msg, "telesci")
 			updateDialog()
 
 /obj/machinery/computer/telescience/proc/teleport(mob/user)

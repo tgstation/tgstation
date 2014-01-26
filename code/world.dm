@@ -90,19 +90,11 @@
 	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
 	sleep_offline = 1
 
-	var/list/lines = file2list(file('tgstation.dme'))
-	for(var/l in lines)
-		if( dd_hassuffix(l, ".dmm\"") )
-			var/firstquote = findtext(l, "\"")
-			var/lastslash = 0
-			for(var/j = 1; j < length(l); j++)
-				var/lastslashtest = findtext(l, "\\", -j)
-				if(lastslashtest > 0)
-					lastslash = lastslashtest
-					break
-			map_name = copytext(l, max(firstquote+1,lastslash+1), length(l)-4)
-	if(!map_name)
-		map_name = "Unknown"
+	#ifdef MAP_NAME
+	map_name = "[MAP_NAME]"
+	#else
+	map_name = "Unknown"
+	#endif
 
 	spawn(3000)		//so we aren't adding to the round-start lag
 		if(config.kick_inactive)

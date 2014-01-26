@@ -25,30 +25,30 @@
 	verbs -= /mob/living/carbon/alien/verb/ventcrawl
 	..()
 
+/mob/living/carbon/alien/humanoid/queen/handle_regular_hud_updates()
+	..() //-Yvarov
 
-/mob/living/carbon/alien/humanoid/queen
+	if (src.healths)
+		if (src.stat != 2)
+			switch(health)
+				if(250 to INFINITY)
+					src.healths.icon_state = "health0"
+				if(175 to 250)
+					src.healths.icon_state = "health1"
+				if(100 to 175)
+					src.healths.icon_state = "health2"
+				if(50 to 100)
+					src.healths.icon_state = "health3"
+				if(0 to 50)
+					src.healths.icon_state = "health4"
+				else
+					src.healths.icon_state = "health5"
+		else
+			src.healths.icon_state = "health6"
 
-	handle_regular_hud_updates()
-
-		..() //-Yvarov
-
-		if (src.healths)
-			if (src.stat != 2)
-				switch(health)
-					if(250 to INFINITY)
-						src.healths.icon_state = "health0"
-					if(175 to 250)
-						src.healths.icon_state = "health1"
-					if(100 to 175)
-						src.healths.icon_state = "health2"
-					if(50 to 100)
-						src.healths.icon_state = "health3"
-					if(0 to 50)
-						src.healths.icon_state = "health4"
-					else
-						src.healths.icon_state = "health5"
-			else
-				src.healths.icon_state = "health6"
+/mob/living/carbon/alien/humanoid/queen/movement_delay()
+	. = ..()
+	. += 5
 
 
 //Queen verbs
@@ -76,15 +76,13 @@
 	pixel_x = -16
 
 /mob/living/carbon/alien/humanoid/queen/large/update_icons()
-	lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
 	update_hud()		//TODO: remove the need for this to be here
 	overlays.Cut()
-	if(lying)
-		if(resting)					icon_state = "queen_sleep"
-		else						icon_state = "queen_l"
-		for(var/image/I in overlays_lying)
-			overlays += I
+	if(stat == DEAD)
+		icon_state = "queen_dead"
+	else if(stat == UNCONSCIOUS || lying || resting)
+		icon_state = "queen_sleep"
 	else
 		icon_state = "queen_s"
-		for(var/image/I in overlays_standing)
-			overlays += I
+	for(var/image/I in overlays_standing)
+		overlays += I

@@ -16,6 +16,7 @@ var/datum/global_hud/global_hud = new()
 	druggy = new /obj/screen()
 	druggy.screen_loc = "WEST,SOUTH to EAST,NORTH"
 	druggy.icon_state = "druggy"
+	druggy.blend_mode = BLEND_MULTIPLY
 	druggy.layer = 17
 	druggy.mouse_opacity = 0
 
@@ -58,20 +59,24 @@ var/datum/global_hud/global_hud = new()
 	O = darkMask[8]
 	O.screen_loc = "WEST,CENTER+5 to EAST,NORTH"	//North black
 
+
 	for(i = 1, i <= 4, i++)
 		O = vimpaired[i]
 		O.icon_state = "dither50"
+		O.blend_mode = BLEND_MULTIPLY
 		O.layer = 17
 		O.mouse_opacity = 0
 
 		O = darkMask[i]
 		O.icon_state = "dither50"
+		O.blend_mode = BLEND_MULTIPLY
 		O.layer = 17
 		O.mouse_opacity = 0
 
 	for(i = 5, i <= 8, i++)
 		O = darkMask[i]
 		O.icon_state = "black"
+		O.blend_mode = BLEND_MULTIPLY
 		O.layer = 17
 		O.mouse_opacity = 0
 

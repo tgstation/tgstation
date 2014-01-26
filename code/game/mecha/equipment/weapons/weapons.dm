@@ -58,7 +58,7 @@
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
-	equip_cooldown = 40
+	equip_cooldown = 20
 	name = "\improper MKIV ion heavy cannon"
 	icon_state = "mecha_ion"
 	energy_drain = 120
@@ -198,10 +198,10 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
-	name = "\improper FNX-66 Carbine"
+	name = "\improper FNX-99 \"Hades\" Carbine"
 	icon_state = "mecha_carbine"
 	equip_cooldown = 5
-	projectile = /obj/item/projectile/bullet/incendiary
+	projectile = /obj/item/projectile/bullet/mechincendiary
 	projectiles = 24
 	projectile_energy_cost = 15
 

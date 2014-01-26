@@ -118,12 +118,17 @@
 	changeling.absorb_dna(T)
 
 	if(src.nutrition < 400) src.nutrition = min((src.nutrition + T.nutrition), 400)
-	if(T.mind && T.mind.changeling)//If the target was a changeling, suck out their extra juice and objective points!
-		changeling.chem_charges += min(T.mind.changeling.chem_charges, changeling.chem_storage)
-		changeling.absorbedcount += T.mind.changeling.absorbedcount
 
-		T.mind.changeling.absorbed_dna.len = 1
-		T.mind.changeling.absorbedcount = 0
+	if(T.mind)//if the victim has got a mind
+
+		T.mind.show_memory(src, 0) //I can read your mind, kekeke. Output all their notes.
+
+		if(T.mind.changeling)//If the target was a changeling, suck out their extra juice and objective points!
+			changeling.chem_charges += min(T.mind.changeling.chem_charges, changeling.chem_storage)
+			changeling.absorbedcount += T.mind.changeling.absorbedcount
+
+			T.mind.changeling.absorbed_dna.len = 1
+			T.mind.changeling.absorbedcount = 0
 	else
 		changeling.chem_charges += 10
 
@@ -529,9 +534,34 @@ var/list/datum/dna/hivemind_bank = list()
 		if(src && src.mind && src.mind.changeling)
 			src.mind.changeling.mimicing = ""
 
-	//////////
-	//STINGS//	//They get a pretty header because there's just so fucking many of them ;_;
-	//////////
+
+/mob/living/carbon/proc/changeling_arm_blade()
+	set category = "Changeling"
+	set name = "Arm Blade (20)"
+
+	if(istype(l_hand, /obj/item/weapon/melee/arm_blade)) //Not the nicest way to do it, but eh
+		u_equip(l_hand)
+		return
+
+	if(istype(r_hand, /obj/item/weapon/melee/arm_blade))
+		u_equip(r_hand)
+		return
+
+	var/datum/changeling/changeling = changeling_power(20)
+	if(!changeling)
+		return
+
+	drop_item(get_active_hand())
+
+	put_in_hands(new /obj/item/weapon/melee/arm_blade(src))
+	changeling.geneticdamage += 6
+
+	changeling.chem_charges -= 20
+
+
+//////////
+//STINGS//	//They get a pretty header because there's just so fucking many of them ;_;
+//////////
 
 /mob/living/carbon/proc/set_sting(A, icon, dna=null) //setting the sting and ui icon for it
 	src << "<span class='notice'>We prepare our sting, use alt+click on target to sting them.</span>"
