@@ -161,8 +161,7 @@
 
 	changeling.chem_charges -= 5
 	changeling.geneticdamage = 3
-	src.dna = chosen_dna
-	src.real_name = chosen_dna.real_name
+	hardset_dna(src, chosen_dna.uni_identity, chosen_dna.struc_enzymes, chosen_dna.real_name, chosen_dna.mutantrace, chosen_dna.blood_type)
 	updateappearance(src)
 	domutcheck(src, null)
 
@@ -217,7 +216,7 @@
 	changeling.chem_charges -= 5
 	remove_changeling_powers()
 	src << "<span class='notice'>We transform our appearance.</span>"
-	dna = chosen_dna
+	hardset_dna(src, chosen_dna.uni_identity, chosen_dna.struc_enzymes, chosen_dna.real_name, chosen_dna.mutantrace, chosen_dna.blood_type)
 
 	var/mob/living/carbon/human/O = humanize((TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPSRC),chosen_dna.real_name)
 
@@ -614,15 +613,13 @@ var/list/datum/dna/hivemind_bank = list()
 /mob/living/carbon/proc/sting_effect_trasnform(mob/living/carbon/T)
 	if(!sting_can_reach(T, 40))
 		return 0
-	add_logs(src, T, "stung", object="transformation sting", addition="new identity is [src.mind.changeling.chosen_dna.real_name]")
+	add_logs(src, T, "stung", object="transformation sting", addition=" new identity is [src.mind.changeling.chosen_dna.real_name]")
 	if((HUSK in T.mutations) || !check_dna_integrity(T))
 		src << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
 		return 0
-
-	T.dna = src.mind.changeling.chosen_dna
-	T.real_name = src.mind.changeling.chosen_dna.real_name
+	var/datum/dna/NewDNA = src.mind.changeling.chosen_dna
+	hardset_dna(T, NewDNA.uni_identity, NewDNA.struc_enzymes, NewDNA.real_name, NewDNA.mutantrace, NewDNA.blood_type)
 	updateappearance(T)
-	domutcheck(T, null)
 	feedback_add_details("changeling_powers","TS")
 	return 1
 
