@@ -86,6 +86,14 @@ var/SOBERBLOCK = 0
 var/PSYRESISTBLOCK = 0
 var/SHADOWBLOCK = 0
 var/CHAMELEONBLOCK = 0
+var/CRYOBLOCK = 0
+var/EATBLOCK = 0
+var/JUMPBLOCK = 0
+var/MELTBLOCK = 0
+var/EMPATHBLOCK = 0
+var/SUPERFARTBLOCK = 0
+var/IMMOLATEBLOCK = 0
+var/POLYMORPHBLOCK = 0
 
 var/skipupdate = 0
 	///////////////

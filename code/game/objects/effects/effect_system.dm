@@ -499,7 +499,7 @@ steam.start() -- spawns the effect
 		number = n
 		cardinals = c
 
-		chemholder.reagents.add_reagent("mercury", 50)
+		chemholder.reagents.add_reagent("space_drugs", rand(1,10))
 
 		if(istype(loca, /turf/))
 			location = loca

@@ -32,6 +32,11 @@
 	set_species("Vox")
 	..()
 
+/mob/living/carbon/human/skellington/New()
+	h_style = "Bald"
+	set_species("Skellington")
+	..()
+
 /mob/living/carbon/human/diona/New()
 	species = new /datum/species/diona(src)
 	..()

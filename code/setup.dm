@@ -366,6 +366,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define M_STRONG        202		// (Nothing)
 #define M_SOBER         203		// Increased alcohol metabolism
 #define M_PSY_RESIST    204		// Block remoteview
+#define M_SUPER_FART    205		// Duh
 
 //disabilities
 #define NEARSIGHTED		1

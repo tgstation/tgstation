@@ -9,7 +9,7 @@
 // WAS: /datum/bioEffect/mute
 /datum/dna/gene/disability/mute
 	name = "Mute"
-	desc = "Completley shuts down the speech center of the subject's brain."
+	desc = "Completely shuts down the speech center of the subject's brain."
 	activation_message   = "You feel unable to express yourself at all."
 	deactivation_message = "You feel able to speak freely again."
 
@@ -279,3 +279,84 @@
 				else
 					C << "\red [stinkString()]"
 */
+
+
+////////////////////////////////////////////////////////////////////////
+// WAS: /datum/bioEffect/immolate
+/datum/dna/gene/basic/grant_spell/immolate
+	name = "Incendiary Mitochondria"
+	desc = "The subject becomes able to convert excess cellular energy into thermal energy."
+	activation_messages = list("You suddenly feel rather hot.")
+	deactivation_messages = list("You no longer feel uncomfortably hot.")
+
+	spelltype=/obj/effect/proc_holder/spell/targeted/immolate
+
+	New()
+		..()
+		block = IMMOLATEBLOCK
+
+/obj/effect/proc_holder/spell/targeted/immolate
+	name = "Incendiary Mitochondria"
+	desc = "The subject becomes able to convert excess cellular energy into thermal energy."
+	panel = "Mutant Powers"
+
+	charge_type = "recharge"
+	charge_max = 600
+
+	clothes_req = 0
+	stat_allowed = 0
+	invocation_type = "none"
+	range = -1
+	selection_type = "range"
+
+/obj/effect/proc_holder/spell/targeted/immolate/cast(list/targets)
+	if (istype(usr,/mob/living/))
+		var/mob/living/L = usr
+
+		L.adjust_fire_stacks(0.5) // Same as walking into fire. Was 100 (goon fire)
+		L.visible_message("\red <b>[L.name]</b> suddenly bursts into flames!")
+		//playsound(L.loc, 'mag_fireballlaunch.ogg', 50, 0)
+
+	return
+
+////////////////////////////////////////////////////////////////////////
+
+// WAS: /datum/bioEffect/melt
+/datum/dna/gene/basic/grant_verb/melt
+	name = "Self Biomass Manipulation"
+	desc = "The subject becomes able to transform the matter of their cells into a liquid state."
+	activation_messages = list("You feel strange and jiggly.")
+	deactivation_messages = list("You feel more solid.")
+
+	verbtype=/proc/bioproc_melt
+
+	New()
+		..()
+		block = MELTBLOCK
+
+/proc/bioproc_melt()
+	set name = "Dissolve"
+	set desc = "Transform yourself into a liquified state."
+	set category = "Mutant Abilities"
+
+	if (istype(usr,/mob/living/carbon/human/))
+		var/mob/living/carbon/human/H = usr
+
+		H.visible_message("\red <b>[H.name]'s flesh melts right off! Holy shit!</b>")
+		//if (H.gender == "female")
+		//	playsound(H.loc, 'female_fallscream.ogg', 50, 0)
+		//else
+		//	playsound(H.loc, 'male_fallscream.ogg', 50, 0)
+		//playsound(H.loc, 'bubbles.ogg', 50, 0)
+		//playsound(H.loc, 'loudcrunch2.ogg', 50, 0)
+		var/mob/living/carbon/human/skellington/nH = new /mob/living/carbon/human/skellington(H.loc)
+		nH.real_name = H.real_name
+		nH.name = "[H.name]'s skeleton"
+		//H.decomp_stage = 4
+		nH.brain_op_stage = 4
+		H.gib(1)
+	else
+		usr.visible_message("\red <b>[usr.name] melts into a pile of bloody viscera!</b>")
+		usr.gib(1)
+
+	return

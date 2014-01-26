@@ -544,22 +544,66 @@
 			if(world.time-lastFart >= 600)
 				message = "<b>[src]</b> [pick("passes wind","farts")]."
 				m_type = 2
-				var/location = get_turf(src)
-				playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
+
+				var/turf/location = get_turf(src)
+				var/aoe_range=2 // Default
+				if(M_SUPER_FART in mutations)
+					aoe_range+=5
+
+				// If we're wearing a suit, don't blast or gas those around us.
+				var/wearing_suit=0
+				var/wearing_mask=0
+				if(wear_suit && wear_suit.body_parts_covered & LOWER_TORSO)
+					wearing_suit=1
+					if (internal != null && wear_mask && (wear_mask.flags & MASKINTERNALS))
+						wearing_mask=1
+
+				// Process toxic farts first.
 				if(M_TOXIC_FARTS in mutations)
-					if(wear_suit && wear_suit.body_parts_covered & LOWER_TORSO)
-						if (internal != null && wear_mask && (wear_mask.flags & MASKINTERNALS))
-							return
-						src << "\red You gas yourself!"
-						reagents.add_reagent("mercury", rand(10,20))
-						return
-					var/datum/effect/effect/system/smoke_spread/chem/fart/S = new /datum/effect/effect/system/smoke_spread/chem/fart
-					S.attach(location)
-					S.set_up(src, 10, 0, location)
-					spawn(0)
-						S.start()
-						sleep(10)
-						S.start()
+					message=""
+					if(wearing_suit)
+						if(!wearing_mask)
+							src << "\red You gas yourself!"
+							reagents.add_reagent("space_drugs", rand(10,20))
+					else
+						// Was /turf/, now /mob/
+						for(var/mob/M in view(location,2))
+							// Now, we don't have this:
+							//new /obj/effects/fart_cloud(T,L)
+							// But:
+							// <[REDACTED]> so, what it does is...imagine a 3x3 grid with the person in the center. When someone uses the emote *fart (it's not a spell style ability and has no cooldown), then anyone in the 8 tiles AROUND the person who uses it
+							// <[REDACTED]> gets between 1 and 10 units of jenkem added to them...we obviously don't have Jenkem, but Space Drugs do literally the same exact thing as Jenkem
+							// <[REDACTED]> the user, of course, isn't impacted because it's not an actual smoke cloud
+							// So, let's give 'em space drugs.
+							M.reagents.add_reagent("space_drugs",rand(1,10))
+						/*
+						var/datum/effect/effect/system/smoke_spread/chem/fart/S = new /datum/effect/effect/system/smoke_spread/chem/fart
+						S.attach(location)
+						S.set_up(src, 10, 0, location)
+						spawn(0)
+							S.start()
+							sleep(10)
+							S.start()
+						*/
+				if(M_SUPER_FART in mutations)
+					message=""
+					playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
+					visible_message("\red <b>[name]</b> hunches down and grits their teeth!")
+					if(do_after(usr,30))
+						visible_message("\red <b>[name]</b> unleashes a [pick("tremendous","gigantic","colossal")] fart!","You hear a [pick("tremendous","gigantic","colossal")] fart.")
+						//playsound(L.loc, 'superfart.ogg', 50, 0)
+						if(wearing_suit)
+							for(var/mob/living/V in view(src,aoe_range))
+								shake_camera(V,10,5)
+								if (V == src)
+									continue
+								V << "\red You are sent flying!"
+								V.Weaken(5) // why the hell was this set to 12 christ
+								step_away(V,location,15)
+								step_away(V,location,15)
+								step_away(V,location,15)
+					else
+						usr << "\red You were interrupted and couldn't fart! Rude!"
 				lastFart=world.time
 			else
 				message = "<b>[src]</b> strains, and nothing happens."
