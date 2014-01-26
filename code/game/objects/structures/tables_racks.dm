@@ -23,83 +23,83 @@
 /datum/table_recipe/IED
 	name = "IED"
 	result_path = /obj/item/weapon/grenade/iedcasing
-	reqs = list("/obj/item/weapon/handcuffs/cable" = 1,
-				"/obj/item/stack/cable_coil" = 1,
-				"/obj/item/device/assembly/igniter" = 1,
-				"/obj/item/weapon/reagent_containers/food/drinks/soda_cans" = 1,
-				"/datum/reagent/fuel" = 10)
+	reqs = list(/obj/item/weapon/handcuffs/cable = 1,
+				/obj/item/stack/cable_coil = 1,
+				/obj/item/device/assembly/igniter = 1,
+				/obj/item/weapon/reagent_containers/food/drinks/soda_cans = 1,
+				/datum/reagent/fuel = 10)
 	time = 80
 
 /datum/table_recipe/stunprod
 	name = "Stunprod"
 	result_path = /obj/item/weapon/melee/baton/cattleprod
-	reqs = list("/obj/item/weapon/handcuffs/cable" = 1,
-				"/obj/item/stack/rods" = 1,
-				"/obj/item/weapon/wirecutters" = 1,
-				"/obj/item/weapon/cell" = 1)
+	reqs = list(/obj/item/weapon/handcuffs/cable = 1,
+				/obj/item/stack/rods = 1,
+				/obj/item/weapon/wirecutters = 1,
+				/obj/item/weapon/cell = 1)
 	time = 80
-	parts = list("/obj/item/weapon/cell" = 1)
+	parts = list(/obj/item/weapon/cell = 1)
 
 /datum/table_recipe/ed209
 	name = "ED209"
 	result_path = /obj/machinery/bot/ed209
-	reqs = list("/obj/item/robot_parts/robot_suit" = 1,
-				"/obj/item/clothing/head/helmet" = 1,
-				"/obj/item/clothing/suit/armor/vest" = 1,
-				"/obj/item/robot_parts/l_leg" = 1,
-				"/obj/item/robot_parts/r_leg" = 1,
-				"/obj/item/stack/sheet/metal" = 5,
-				"/obj/item/stack/cable_coil" = 5,
-				"/obj/item/weapon/gun/energy/taser" = 1,
-				"/obj/item/weapon/cell" = 1,
-				"/obj/item/device/assembly/prox_sensor" = 1,
-				"/obj/item/robot_parts/r_arm" = 1)
+	reqs = list(/obj/item/robot_parts/robot_suit = 1,
+				/obj/item/clothing/head/helmet = 1,
+				/obj/item/clothing/suit/armor/vest = 1,
+				/obj/item/robot_parts/l_leg = 1,
+				/obj/item/robot_parts/r_leg = 1,
+				/obj/item/stack/sheet/metal = 5,
+				/obj/item/stack/cable_coil = 5,
+				/obj/item/weapon/gun/energy/taser = 1,
+				/obj/item/weapon/cell = 1,
+				/obj/item/device/assembly/prox_sensor = 1,
+				/obj/item/robot_parts/r_arm = 1)
 	tools = list(/obj/item/weapon/weldingtool, /obj/item/weapon/screwdriver)
 	time = 120
 
 /datum/table_recipe/secbot
 	name = "Secbot"
 	result_path = /obj/machinery/bot/secbot
-	reqs = list("/obj/item/device/assembly/signaler" = 1,
-				"/obj/item/clothing/head/helmet" = 1,
-				"/obj/item/weapon/melee/baton" = 1,
-				"/obj/item/device/assembly/prox_sensor" = 1,
-				"/obj/item/robot_parts/r_arm" = 1)
+	reqs = list(/obj/item/device/assembly/signaler = 1,
+				/obj/item/clothing/head/helmet = 1,
+				/obj/item/weapon/melee/baton = 1,
+				/obj/item/device/assembly/prox_sensor = 1,
+				/obj/item/robot_parts/r_arm = 1)
 	tools = list(/obj/item/weapon/weldingtool)
 	time = 120
 
 /datum/table_recipe/cleanbot
 	name = "Cleanbot"
 	result_path = /obj/machinery/bot/cleanbot
-	reqs = list("/obj/item/weapon/reagent_containers/glass/bucket" = 1,
-				"/obj/item/device/assembly/prox_sensor" = 1,
-				"/obj/item/robot_parts/r_arm" = 1)
+	reqs = list(/obj/item/weapon/reagent_containers/glass/bucket = 1,
+				/obj/item/device/assembly/prox_sensor = 1,
+				/obj/item/robot_parts/r_arm = 1)
 	time = 80
 
 /datum/table_recipe/floorbot
 	name = "Floorbot"
 	result_path = /obj/machinery/bot/floorbot
-	reqs = list("/obj/item/weapon/storage/toolbox/mechanical" = 1,
-				"/obj/item/stack/tile/plasteel" = 1,
-				"/obj/item/device/assembly/prox_sensor" = 1,
-				"/obj/item/robot_parts/r_arm" = 1)
+	reqs = list(/obj/item/weapon/storage/toolbox/mechanical = 1,
+				/obj/item/stack/tile/plasteel = 1,
+				/obj/item/device/assembly/prox_sensor = 1,
+				/obj/item/robot_parts/r_arm = 1)
 	time = 80
 
 /datum/table_recipe/medbot
 	name = "Medbot"
 	result_path = /obj/machinery/bot/medbot
-	reqs = list("/obj/item/device/healthanalyzer" = 1,
-				"/obj/item/weapon/storage/firstaid" = 1,
-				"/obj/item/device/assembly/prox_sensor" = 1,
-				"/obj/item/robot_parts/r_arm" = 1)
+	reqs = list(/obj/item/device/healthanalyzer = 1,
+				/obj/item/weapon/storage/firstaid = 1,
+				/obj/item/device/assembly/prox_sensor = 1,
+				/obj/item/robot_parts/r_arm = 1)
 	time = 80
 
 /datum/table_recipe/flamethrower
 	name = "Flamethrower"
 	result_path = /obj/item/weapon/flamethrower
-	reqs = list("/obj/item/weapon/weldingtool" = 1,
-				"/obj/item/device/assembly/igniter" = 1,
-				"/obj/item/stack/rods" = 2)
+	reqs = list(/obj/item/weapon/weldingtool = 1,
+				/obj/item/device/assembly/igniter = 1,
+				/obj/item/stack/rods = 2)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 20
 
@@ -142,63 +142,45 @@
 
 /obj/structure/table/proc/check_contents(datum/table_recipe/R)
 	check_table()
-	var/I = R.reqs.len
-	var/i = R.reqs.len
-	for(var/A in R.reqs)
-		var/AP = text2path(A)
-		if(!ispath(AP))
+	main_loop:
+		for(var/A in R.reqs)
 			for(var/B in table_contents)
-				if(!ispath(B))
+				if(ispath(B, A))
 					if(table_contents[B] >= R.reqs[A])
-						i--
-						break
-			I--
-			if(i > I)
-				return 0
-			else
-				continue
-		for(var/B in table_contents)
-			var/BP = text2path(B)
-			if(ispath(BP, AP))
-				if(table_contents[B] >= R.reqs[A])
-					i--
-					break
-		I--
-		if(i > I)
+						continue main_loop
 			return 0
 	for(var/A in R.chem_catalists)
 		if(table_contents[A] < R.chem_catalists[A])
 			return 0
-	return !i
+	return 1
 
 /obj/structure/table/proc/check_table()
 	table_contents = list()
 	for(var/obj/item/I in loc)
 		if(istype(I, /obj/item/stack))
 			var/obj/item/stack/S = I
-			table_contents["[I.type]"] += S.amount   //(table_contents[I.type] ? (table_contents[I.type] + S.amount) : S.amount)
+			table_contents[I.type] += S.amount
 		else
 			if(istype(I, /obj/item/weapon/reagent_containers))
 				for(var/datum/reagent/R in I.reagents.reagent_list)
-					table_contents["[R.type]"] += R.volume
+					table_contents[R.type] += R.volume
 
-			table_contents["[I.type]"] += 1 //(table_contents[I.type] ? (table_contents[I.type] + 1) : 1)
+			table_contents[I.type] += 1
 
-/obj/structure/table/proc/check_tools(mob/user, datum/table_recipe/TR)
-	if(!TR.tools.len)
+/obj/structure/table/proc/check_tools(mob/user, datum/table_recipe/R)
+	if(!R.tools.len)
 		return 1
 	var/list/possible_tools = list()
 	for(var/obj/item/I in user.contents)
 		if(istype(I, /obj/item/weapon/storage))
 			for(var/obj/item/SI in I.contents)
-				possible_tools += (SI.type)
+				possible_tools += SI.type
 		else
-			possible_tools += (I.type)
-	for(var/obj/item/TI in loc)
-		possible_tools |= (TI.type)
-	var/i = TR.tools.len
+			possible_tools += I.type
+	possible_tools += table_contents
+	var/i = R.tools.len
 	var/I
-	for(var/A in TR.tools)
+	for(var/A in R.tools)
 		I = possible_tools.Find(A)
 		if(I)
 			possible_tools.Cut(I, I+1)
@@ -207,14 +189,14 @@
 			break
 	return !i
 
-/obj/structure/table/proc/construct_item(mob/user, datum/table_recipe/TR)
+/obj/structure/table/proc/construct_item(mob/user, datum/table_recipe/R)
 	check_table()
-	if(check_contents(TR) && check_tools(user, TR))
-		if(do_after(user, TR.time))
-			if(!check_contents(TR) || !check_tools(user, TR))
+	if(check_contents(R) && check_tools(user, R))
+		if(do_after(user, R.time))
+			if(!check_contents(R) || !check_tools(user, R))
 				return 0
-			var/list/parts = del_reqs(TR)
-			var/atom/movable/I = new TR.result_path
+			var/list/parts = del_reqs(R)
+			var/atom/movable/I = new R.result_path
 			for(var/A in parts)
 				if(istype(A, /obj/item))
 					var/atom/movable/B = A
@@ -230,44 +212,38 @@
 
 /obj/structure/table/proc/del_reqs(datum/table_recipe/R)
 	var/list/Deletion = list()
-	var/AP
-	var/BP
 	var/amt
 	for(var/A in R.reqs)
 		amt = R.reqs[A]
-		AP = text2path(A)
-		if(ispath(AP, /obj/item/stack))
+		if(ispath(A, /obj/item/stack))
 			var/obj/item/stack/S
 			stack_loop:
 				for(var/B in table_contents)
-					BP = text2path(B)
-					if(ispath(BP, AP))
+					if(ispath(B, A))
 						while(amt > 0)
-							S = locate(BP) in loc
+							S = locate(B) in loc
 							if(S.amount >= amt)
 								S.use(amt)
 								break stack_loop
 							else
 								amt -= S.amount
 								del(S)
-		else if(ispath(AP, /obj/item))
+		else if(ispath(A, /obj/item))
 			var/obj/item/I
 			item_loop:
 				for(var/B in table_contents)
-					BP = text2path(B)
-					if(ispath(BP, AP))
+					if(ispath(B, A))
 						while(amt > 0)
-							I = locate(BP) in loc
+							I = locate(B) in loc
 							Deletion.Add(I)
 							amt--
 						break item_loop
 		else
-			var/datum/reagent/RG = new AP
+			var/datum/reagent/RG = new A
 			reagent_loop:
 				for(var/B in table_contents)
-					BP = text2path(B)
-					if(ispath(BP, /obj/item/weapon/reagent_containers))
-						var/obj/item/RC = locate(BP) in loc
+					if(ispath(B, /obj/item/weapon/reagent_containers))
+						var/obj/item/RC = locate(B) in loc
 						if(RC.reagents.has_reagent(RG.id, amt))
 							RC.reagents.remove_reagent(RG.id, amt)
 							RG.volume = amt
@@ -280,9 +256,8 @@
 							RC.reagents.del_reagent(RG.id)
 
 	for(var/A in R.parts)
-		AP = text2path(A)
 		for(var/B in Deletion)
-			if(!istype(B, AP))
+			if(!istype(B, A))
 				Deletion.Remove(B)
 				del(B)
 	return Deletion
