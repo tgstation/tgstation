@@ -666,6 +666,7 @@ var/global/floorIsLava = 0
 		log_admin("[key_name(usr)] removed the delay.")
 	feedback_add_details("admin_verb","DELAY") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/* //How could this be useful anywhere ever? - Jordie
 /datum/admins/proc/adjump()
 	set category = "Server"
 	set desc="Toggle admin jumping"
@@ -673,6 +674,7 @@ var/global/floorIsLava = 0
 	config.allow_admin_jump = !(config.allow_admin_jump)
 	message_admins("\blue Toggled admin jumping to [config.allow_admin_jump].")
 	feedback_add_details("admin_verb","TJ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+*/
 
 /datum/admins/proc/adspawn()
 	set category = "Server"
