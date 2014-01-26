@@ -7,7 +7,7 @@
 /atom/proc/attackby(obj/item/W, mob/user)
 	return
 /atom/movable/attackby(obj/item/W, mob/user)
-	if(!(W.flags&NOBLUDGEON))
+	if(W && !(W.flags&NOBLUDGEON))
 		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
 
 /mob/living/attackby(obj/item/I, mob/user)
@@ -59,7 +59,7 @@
 				slime.Discipline = 0
 
 			if(power >= 3)
-				if(istype(slime, /mob/living/carbon/slime/adult))
+				if(slime.is_adult)
 					if(prob(5 + round(power/2)))
 
 						if(slime.Victim)

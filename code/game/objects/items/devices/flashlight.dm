@@ -189,12 +189,19 @@
 	. = ..()
 	// All good, turn it on.
 	if(.)
-		user.visible_message("<span class='notice'>[user] activates the flare.</span>", "<span class='notice'>You pull the cord on the flare, activating it!</span>")
+		user.visible_message("<span class='notice'>[user] lights the [src].</span>", "<span class='notice'>You light the [src]!</span>")
 		src.force = on_damage
 		src.damtype = "fire"
 		processing_objects += src
 
-
+/obj/item/device/flashlight/flare/torch
+	name = "torch"
+	desc = "A torch fashioned from some leaves and a log."
+	w_class = 4
+	brightness_on = 7
+	icon_state = "torch"
+	item_state = "torch_off"
+	on_damage = 10
 
 
 /obj/item/device/flashlight/slime
@@ -211,14 +218,30 @@
 	brightness_on = 6 //luminosity when on
 
 /obj/item/device/flashlight/emp
-	desc = "A hand-held emergency light modified to inflict EMP at short range."
 	origin_tech = "magnets=4;syndicate=5"
 
-	var/emp_charges = 5
+	var/emp_max_charges = 4
+	var/emp_cur_charges = 4
+	var/charge_tick = 0
+
+
+/obj/item/device/flashlight/emp/New()
+		..()
+		processing_objects.Add(src)
+
+/obj/item/device/flashlight/emp/Del()
+		processing_objects.Remove(src)
+		..()
+
+/obj/item/device/flashlight/emp/process()
+		charge_tick++
+		if(charge_tick < 10) return 0
+		charge_tick = 0
+		emp_cur_charges = min(emp_cur_charges+1, emp_max_charges)
+		return 1
 
 /obj/item/device/flashlight/emp/examine()
 	..()
-	usr << "Has [emp_charges] charge\s remaining."
 	return
 
 /obj/item/device/flashlight/emp/attack(mob/living/M as mob, mob/living/user as mob)
@@ -228,14 +251,15 @@
 
 /obj/item/device/flashlight/emp/afterattack(atom/A as mob|obj, mob/user, proximity)
 	if(!proximity) return
-	if (emp_charges > 0)
-		A.emp_act(1)
+	if (emp_cur_charges > 0)
+		emp_cur_charges -= 1
 		A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].", \
 											"<span class='userdanger'>[user] blinks \the [src] at \the [A].")
 		if(ismob(A))
 			var/mob/M = A
 			add_logs(user, M, "attacked", object="EMP-light")
-		emp_charges -= 1
+		user << "\The [src] now has [emp_cur_charges] charge\s."
+		A.emp_act(1)
 	else
-		user << "<span class='warning'>The [src] is out of charges!</span>"
+		user << "<span class='warning'>\The [src] needs time to recharge!</span>"
 	return

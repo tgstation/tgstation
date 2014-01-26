@@ -988,7 +988,7 @@
 		H.forceMove(src)
 		if(H.hud_used)
 			last_user_hud = H.hud_used.hud_shown
-			H.hud_used.show_hud(1)
+			H.hud_used.show_hud(HUD_STYLE_REDUCED)
 
 		src.occupant = H
 		src.add_fingerprint(H)
@@ -1139,7 +1139,7 @@
 		*/
 		src.occupant << browse(null, "window=exosuit")
 		if(src.occupant.hud_used && src.last_user_hud)
-			src.occupant.hud_used.show_hud()
+			src.occupant.hud_used.show_hud(HUD_STYLE_STANDARD)
 
 		if(istype(mob_container, /obj/item/device/mmi))
 			var/obj/item/device/mmi/mmi = mob_container

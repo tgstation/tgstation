@@ -1,35 +1,16 @@
-
-/*
-	run_armor_check(a,b)
-	args
-	a:def_zone - What part is getting hit, if null will check entire body
-	b:attack_flag - What type of attack, bullet, laser, energy, melee
-
-	Returns
-	0 - no block
-	1 - halfblock
-	2 - fullblock
-*/
 /mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null)
 	var/armor = getarmor(def_zone, attack_flag)
-	var/absorb = 0
-	if(prob(armor))
-		absorb += 1
-	if(prob(armor))
-		absorb += 1
-	if(absorb >= 2)
+	if(armor >= 100)
 		if(absorb_text)
 			src << "<span class='userdanger'>[absorb_text]</span>"
 		else
 			src << "<span class='userdanger'>Your armor absorbs the blow!</span>"
-		return 2
-	if(absorb == 1)
-		if(absorb_text)
-			show_message("[soften_text]",4)
+	else if(armor > 0)
+		if(soften_text)
+			src << "<span class='userdanger'>[soften_text]</span>"
 		else
 			src << "<span class='userdanger'>Your armor softens the blow!</span>"
-		return 1
-	return 0
+	return armor
 
 
 /mob/living/proc/getarmor(var/def_zone, var/type)
@@ -37,41 +18,37 @@
 
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
-	var/obj/item/weapon/cloaking_device/C = locate((/obj/item/weapon/cloaking_device) in src)
-	if(C && C.active)
-		C.attack_self(src)//Should shut it off
-		update_icons()
-		src << "<span class='notice'>Your [C] was disrupted!</span>"
-		Stun(2)
-
-	var/absorb = run_armor_check(def_zone, P.flag)
-	if(absorb >= 2)
-		P.on_hit(src,2)
-		return 2
+	var/armor = run_armor_check(def_zone, P.flag)
 	if(!P.nodamage)
-		apply_damage((P.damage/(absorb+1)), P.damage_type, def_zone)
-	P.on_hit(src, absorb, def_zone)
-	return absorb
+		apply_damage(P.damage, P.damage_type, def_zone, armor)
+	return P.on_hit(src, armor, def_zone)
 
 /mob/living/hitby(atom/movable/AM)//Standardization and logging -Sieve
-	if(istype(AM, /obj/))
-		var/obj/O = AM
+	if(istype(AM, /obj/item))
+		var/obj/item/I = AM
 		var/zone = ran_zone("chest", 65)//Hits a random part of the body, geared towards the chest
 		var/dtype = BRUTE
-		if(istype(O,/obj/item/weapon))
-			var/obj/item/weapon/W = O
+		if(istype(I,/obj/item/weapon))
+			var/obj/item/weapon/W = I
 			dtype = W.damtype
-		visible_message("<span class='danger'>[src] has been hit by [O].</span>", \
-						"<span class='userdanger'>[src] has been hit by [O].</span>")
+			if (W.throwhitsound && W.throwforce > 0)
+				playsound(loc, W.throwhitsound, 30, 1, -1)
+			else if(W.throwtapsound && W.throwforce == 0)
+				playsound(loc, W.throwtapsound, 30, 1, -1)
+			else if(W.hitsound && W.throwforce > 0)
+				playsound(loc, W.hitsound, 30, 1, -1)
+		else
+			playsound(loc, I.throwtapsound, 30, 1, -1)
+		visible_message("<span class='danger'>[src] has been hit by [I].</span>", \
+						"<span class='userdanger'>[src] has been hit by [I].</span>")
 		var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].")
-		if(armor < 2)
-			apply_damage(O.throwforce, dtype, zone, armor, O)
-		if(!O.fingerprintslast)
+		apply_damage(I.throwforce, dtype, zone, armor, I)
+		if(!I.fingerprintslast)
 			return
-		var/client/assailant = directory[ckey(O.fingerprintslast)]
+		var/client/assailant = directory[ckey(I.fingerprintslast)]
 		if(assailant && assailant.mob && istype(assailant.mob,/mob))
 			var/mob/M = assailant.mob
-			add_logs(M, src, "hit", object="[O]")
+			add_logs(M, src, "hit", object="[I]")
 
 //Mobs on Fire
 /mob/living/proc/IgniteMob()

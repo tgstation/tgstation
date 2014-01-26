@@ -7,6 +7,8 @@
 	var/burn_point = null
 	var/burning = null
 	var/hitsound = null
+	var/throwhitsound = null
+	var/throwtapsound = 'sound/weapons/throwtap.ogg'
 	var/w_class = 3.0
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
@@ -117,6 +119,7 @@
 /obj/item/attack_hand(mob/user as mob)
 	if (!user) return
 	if (istype(src.loc, /obj/item/weapon/storage))
+		//If the item is in a storage item, take it out
 		var/obj/item/weapon/storage/S = src.loc
 		S.remove_from_storage(src)
 
@@ -171,6 +174,13 @@
 		return
 	attack_paw(A)
 
+/obj/item/attack_ai(mob/user as mob)
+	if (istype(src.loc, /obj/item/weapon/robot_module))
+		//If the item is part of a cyborg module, equip it
+		if(!isrobot(user)) return
+		var/mob/living/silicon/robot/R = user
+		R.activate_module(src)
+		R.hud_used.update_robot_modules_display()
 
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
@@ -549,3 +559,4 @@
 	. = ..()
 	if(.)
 		transfer_blood = 0
+		bloody_hands_mob = null

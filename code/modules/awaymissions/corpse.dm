@@ -7,6 +7,7 @@
 /obj/effect/landmark/corpse
 	name = "Unknown"
 	var/mobname = "Unknown"  //Unused now but it'd fuck up maps to remove it now
+	var/mobgender = MALE //Set to male by default due to the patriarchy. Other options include FEMALE and NEUTER
 	var/corpseuniform = null //Set this to an object path to have the slot filled with said object on the corpse.
 	var/corpsesuit = null
 	var/corpseshoes = null
@@ -23,6 +24,9 @@
 	var/corpseidjob = null // Needs to be in quotes, such as "Clown" or "Chef." This just determines what the ID reads as, not their access
 	var/corpseidaccess = null //This is for access. See access.dm for which jobs give what access. Again, put in quotes. Use "Captain" if you want it to be all access.
 	var/corpseidicon = null //For setting it to be a gold, silver, centcom etc ID
+	var/corpsehusk = null
+	var/corpsebrute = null //set brute damage on the corpse
+	var/corpseoxy = null //set suffocation damage on the corpse
 
 /obj/effect/landmark/corpse/initialize()
 	createCorpse()
@@ -30,7 +34,12 @@
 /obj/effect/landmark/corpse/proc/createCorpse() //Creates a mob and checks for gear in each slot before attempting to equip it.
 	var/mob/living/carbon/human/M = new /mob/living/carbon/human (src.loc)
 	M.real_name = src.name
+	M.gender = src.mobgender
 	M.death(1) //Kills the new mob
+	if(src.corpsehusk)
+		M.Drain()
+	M.adjustBruteLoss(src.corpsebrute)
+	M.adjustOxyLoss(src.corpseoxy)
 	if(src.corpseuniform)
 		M.equip_to_slot_or_del(new src.corpseuniform(M), slot_w_uniform)
 	if(src.corpsesuit)
@@ -57,7 +66,7 @@
 		M.equip_to_slot_or_del(new src.corpseback(M), slot_back)
 	if(src.corpseid == 1)
 		var/obj/item/weapon/card/id/W = new(M)
-		W.name = "[M.real_name]'s ID Card"
+		W.name = "[M.real_name]'s ID Card ([corpseidjob])"
 		var/datum/job/jobdatum
 		for(var/jobtype in typesof(/datum/job))
 			var/datum/job/J = new jobtype
@@ -77,13 +86,29 @@
 		M.equip_to_slot_or_del(W, slot_wear_id)
 	del(src)
 
+/obj/effect/landmark/corpse/AICorpse/createCorpse() //Creates a corrupted AI
+	var/A = locate(/mob/living/silicon/ai) in loc //stops multiple dead ais spawning, apparently hacky, ¯\_(?)_/¯ (who's that pokemon?)
+	if(A)
+		return
+	var/L = new /datum/ai_laws/default/asimov //avoid runtimes
+	var/B = new /obj/item/device/mmi/ //avoid runtimes
+	var/mob/living/silicon/ai/M = new(src.loc, L, B, 1)
+	M.death()
+	M.name = src.name //name is that of the landmark that spawned it
+	M.real_name = M.name
+
+/obj/effect/landmark/corpse/slimeCorpse/createCorpse() //Creates a dead slime
+	var/mob/living/carbon/slime/M = new /mob/living/carbon/slime/ (src.loc)
+	M.death(1)
+	M.name = src.name
+
+/obj/effect/landmark/corpse/facehugCorpse/createCorpse() //Creates a squashed facehugger
+	var/obj/item/clothing/mask/facehugger/O = new /obj/item/clothing/mask/facehugger (src.loc)
+	O.Die()
+	O.name = src.name
 
 
 // I'll work on making a list of corpses people request for maps, or that I think will be commonly used. Syndicate operatives for example.
-
-
-
-
 
 /obj/effect/landmark/corpse/syndicatesoldier
 	name = "Syndicate Operative"

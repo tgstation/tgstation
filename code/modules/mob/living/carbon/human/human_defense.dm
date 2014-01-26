@@ -122,43 +122,6 @@ emp_act
 
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(user.zone_sel.selecting))
 
-//--------------------- Cyber limb stuff ---------------------\\
-
-	if(istype(I, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = I
-		if(affecting.status == ORGAN_ROBOTIC)
-			if (WT.remove_fuel(0))
-				if(affecting.brute_dam > 0)
-					affecting.heal_damage(30,0,1) //Repair Brute
-					update_damage_overlays(0)
-					updatehealth()
-					for(var/mob/O in viewers(user, null))
-						O.show_message(text("\blue [user] has fixed some of the dents on [src]'s [affecting.getDisplayName()]!"), 1) //Tell everyone [src]'s limb (by its real name) has been repaired
-					return //So we don't attack them as well
-				else
-					user << "<span class='notice'>[src]'s [affecting.getDisplayName()] is already in good condition</span>"
-					return
-			else
-				user << "<span class='warning'>Need more welding fuel!</span>"
-				return
-
-
-	if(istype(I, /obj/item/weapon/cable_coil))
-		var/obj/item/weapon/cable_coil/coil = I
-		if(affecting.status == ORGAN_ROBOTIC)
-			if(affecting.burn_dam > 0)
-				affecting.heal_damage(0,30,1) //Repair Burn
-				updatehealth()
-				coil.use(1)
-				for(var/mob/O in viewers(user, null))
-					O.show_message(text("\blue [user] has fixed some of the burnt wires on [src]'s [affecting.getDisplayName()]!"), 1)
-				return //So we don't attack them as well
-			else
-				user << "<span class='notice'>[src]'s [affecting.getDisplayName()] is already in good condition</span>"
-				return
-
-//-------------------- End of Cyber limb stuff ---------------------\\
-
 	var/hit_area = parse_zone(affecting.name)
 
 	if((user != src) && check_shields(I.force, "the [I.name]"))
@@ -172,7 +135,7 @@ emp_act
 						"<span class='userdanger'>[src] has been attacked in the [hit_area] with [I] by [user]!</span>")
 
 	var/armor = run_armor_check(affecting, "melee", "<span class='warning'>Your armour has protected your [hit_area].</span>", "<span class='warning'>Your armour has softened a hit to your [hit_area].</span>")
-	if(armor >= 2)	return 0
+	if(armor >= 100)	return 0
 	if(!I.force)	return 0
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
@@ -199,12 +162,8 @@ emp_act
 						if (H.gloves)
 							var/obj/item/clothing/gloves/G = H.gloves
 							G.add_blood(H)
-							G.transfer_blood = 2
-							G.bloody_hands_mob = H
 						else
 							H.add_blood(H)
-							H.bloody_hands = 2
-							H.bloody_hands_mob = H
 						H.update_inv_gloves()	//updates on-mob overlays for bloody hands and/or bloody gloves
 
 
@@ -261,4 +220,4 @@ emp_act
 
 
 			src << "<span class='danger'>Error, electormagnetic pulse detected in cyber limb!</span>"
-			..()
+	..()

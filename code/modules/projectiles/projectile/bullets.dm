@@ -8,9 +8,20 @@
 
 
 /obj/item/projectile/bullet/weakbullet
-	damage = 10
+	damage = 5
 	stun = 5
 	weaken = 5
+
+
+/obj/item/projectile/bullet/weakbullet2
+	damage = 15
+	stun = 5
+	weaken = 5
+
+
+/obj/item/projectile/bullet/pellet
+	name = "pellet"
+	damage = 15
 
 
 /obj/item/projectile/bullet/midbullet
@@ -56,15 +67,14 @@
 	damage = 25
 
 
-/obj/item/projectile/bullet/incendiary
-	name = "incendiary bullet"
-	damage = 20
+/obj/item/projectile/bullet/mechincendiary
+	damage = 5
 
-/obj/item/projectile/bullet/incendiary/on_hit(var/atom/target, var/blocked = 0)
-	if(istype(target, /mob/living/carbon))
-		var/mob/living/carbon/M = target
-		M.adjust_fire_stacks(1)
-		M.IgniteMob()
+/obj/item/projectile/bullet/mechincendiary/on_hit(var/atom/target, var/blocked = 0)
+		if(istype(target, /mob/living/carbon))
+				var/mob/living/carbon/M = target
+				M.adjust_fire_stacks(1)
+				M.IgniteMob()
 
 
 /obj/item/projectile/bullet/dart
@@ -102,3 +112,15 @@
 	name = "syringe"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "syringeproj"
+
+/obj/item/projectile/bullet/neurotoxin
+	name = "neurotoxin spit"
+	icon_state = "neurotoxin"
+	damage = 5
+	damage_type = TOX
+	weaken = 5
+
+/obj/item/projectile/bullet/neurotoxin/on_hit(var/atom/target, var/blocked = 0)
+	if(isalien(target))
+		return 0
+	..() // Execute the rest of the code.

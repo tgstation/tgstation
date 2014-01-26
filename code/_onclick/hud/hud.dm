@@ -3,11 +3,6 @@
 	Uses the same visual objects for all players.
 */
 
-#define HUD_VERSIONS 3	//used in show_hud()
-//1 = standard hud
-//2 = reduced hud (just hands and intent switcher)
-//3 = no hud (for screenshots)
-
 var/datum/global_hud/global_hud = new()
 
 /datum/global_hud
@@ -21,6 +16,7 @@ var/datum/global_hud/global_hud = new()
 	druggy = new /obj/screen()
 	druggy.screen_loc = "WEST,SOUTH to EAST,NORTH"
 	druggy.icon_state = "druggy"
+	druggy.blend_mode = BLEND_MULTIPLY
 	druggy.layer = 17
 	druggy.mouse_opacity = 0
 
@@ -63,20 +59,24 @@ var/datum/global_hud/global_hud = new()
 	O = darkMask[8]
 	O.screen_loc = "WEST,CENTER+5 to EAST,NORTH"	//North black
 
+
 	for(i = 1, i <= 4, i++)
 		O = vimpaired[i]
 		O.icon_state = "dither50"
+		O.blend_mode = BLEND_MULTIPLY
 		O.layer = 17
 		O.mouse_opacity = 0
 
 		O = darkMask[i]
 		O.icon_state = "dither50"
+		O.blend_mode = BLEND_MULTIPLY
 		O.layer = 17
 		O.mouse_opacity = 0
 
 	for(i = 5, i <= 8, i++)
 		O = darkMask[i]
 		O.icon_state = "black"
+		O.blend_mode = BLEND_MULTIPLY
 		O.layer = 17
 		O.mouse_opacity = 0
 
@@ -196,7 +196,7 @@ datum/hud/New(mob/owner)
 		blob_hud()
 
 	if(istype(mymob.loc,/obj/mecha))
-		show_hud(1)
+		show_hud(HUD_STYLE_REDUCED)
 
 //Version denotes which style should be displayed. blank or 0 means "next version"
 /datum/hud/proc/show_hud(var/version = 0)
@@ -211,7 +211,7 @@ datum/hud/New(mob/owner)
 		display_hud_version = 1
 
 	switch(display_hud_version)
-		if(1)	//Default HUD
+		if(HUD_STYLE_STANDARD)	//Default HUD
 			hud_shown = 1	//Governs behavior of other procs
 			if(adding)
 				mymob.client.screen += adding
@@ -236,7 +236,7 @@ datum/hud/New(mob/owner)
 			hidden_inventory_update()
 			persistant_inventory_update()
 			mymob.update_action_buttons()
-		if(2)	//Reduced HUD
+		if(HUD_STYLE_REDUCED)	//Reduced HUD
 			hud_shown = 0	//Governs behavior of other procs
 			if(adding)
 				mymob.client.screen -= adding
@@ -261,7 +261,7 @@ datum/hud/New(mob/owner)
 			hidden_inventory_update()
 			persistant_inventory_update()
 			mymob.update_action_buttons()
-		if(3)	//No HUD
+		if(HUD_STYLE_NOHUD)	//No HUD
 			hud_shown = 0	//Governs behavior of other procs
 			if(adding)
 				mymob.client.screen -= adding
@@ -297,8 +297,9 @@ datum/hud/New(mob/owner)
 
 	if(hud_used && client)
 		if(ishuman(src))
-			hud_used.show_hud()	//Shows the next hud preset
+			hud_used.show_hud() //Shows the next hud preset
+			usr << "<span class ='info'>Switched HUD mode.</span>"
 		else
-			usr << "\red Inventory hiding is currently only supported for human mobs, sorry."
+			usr << "<span class ='warning'>Inventory hiding is currently only supported for human mobs, sorry.</span>"
 	else
-		usr << "\red This mob type does not use a HUD."
+		usr << "<span class ='warning'>This mob type does not use a HUD.</span>"

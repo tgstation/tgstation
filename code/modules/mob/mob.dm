@@ -694,42 +694,48 @@ note dizziness decrements automatically in the mob's Life() proc.
 	return 1
 
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
+//Robots and brains have their own version so don't worry about them
 /mob/proc/update_canmove()
-	if(buckled)
-		anchored = 1
+
+	if(stat || weakened || paralysis || resting || (status_flags & FAKEDEATH))
 		canmove = 0
-		if( istype(buckled,/obj/structure/stool/bed/chair) )
-			lying = 0
-			if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH) )
-				drop_r_hand()
-				drop_l_hand()
-		else
-			lying = 1
-	else if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH) )
-		lying = 1
-		canmove = 0
-	else if( stunned )
-//		lying = 0
+		drop_r_hand()	//makes mobs drop items in hands when incapacitated
+		drop_l_hand()
+		if(!lying)
+			if(resting) //Presuming that you're resting on a bed, which would look goofy lying the wrong way
+				lying = 90
+			else
+				lying = pick(90, 270) //180 looks like shit since BYOND inverts rather than turns in that case
+	else if(stunned)
 		canmove = 0
 	else
 		lying = 0
 		canmove = 1
 
+	if(buckled)
+		anchored = 1
+		canmove = 0
+		if(istype(buckled, /obj/structure/stool/bed/chair))
+			lying = 0
+		else
+			lying = 90 //Everything else faces right. TODO: Allow left-facing beds
+			drop_r_hand()	// so people drop stuff when buckled to a bed
+			drop_l_hand()
+
 	if(lying)
 		density = 0
-		drop_r_hand()
-		drop_l_hand()
 	else
 		density = 1
 
 	//Temporarily moved here from the various life() procs
 	//I'm fixing stuff incrementally so this will likely find a better home.
 	//It just makes sense for now. ~Carn
-	if( update_icon )	//forces a full overlay update
+
+	if(lying != lying_prev)
+		update_transform()
+	if(update_icon)	//forces a full overlay update
 		update_icon = 0
 		regenerate_icons()
-	else if( lying != lying_prev )
-		update_icons()
 
 	return canmove
 
@@ -773,16 +779,19 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/Stun(amount)
 	if(status_flags & CANSTUN)
 		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
+		update_canmove()
 	return
 
 /mob/proc/SetStunned(amount) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
 	if(status_flags & CANSTUN)
 		stunned = max(amount,0)
+		update_canmove()
 	return
 
 /mob/proc/AdjustStunned(amount)
 	if(status_flags & CANSTUN)
 		stunned = max(stunned + amount,0)
+		update_canmove()
 	return
 
 /mob/proc/Weaken(amount)
@@ -806,38 +815,47 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/Paralyse(amount)
 	if(status_flags & CANPARALYSE)
 		paralysis = max(max(paralysis,amount),0)
+		update_canmove()
 	return
 
 /mob/proc/SetParalysis(amount)
 	if(status_flags & CANPARALYSE)
 		paralysis = max(amount,0)
+		update_canmove()
 	return
 
 /mob/proc/AdjustParalysis(amount)
 	if(status_flags & CANPARALYSE)
 		paralysis = max(paralysis + amount,0)
+		update_canmove()
 	return
 
 /mob/proc/Sleeping(amount)
 	sleeping = max(max(sleeping,amount),0)
+	update_canmove()
 	return
 
 /mob/proc/SetSleeping(amount)
 	sleeping = max(amount,0)
+	update_canmove()
 	return
 
 /mob/proc/AdjustSleeping(amount)
 	sleeping = max(sleeping + amount,0)
+	update_canmove()
 	return
 
 /mob/proc/Resting(amount)
 	resting = max(max(resting,amount),0)
+	update_canmove()
 	return
 
 /mob/proc/SetResting(amount)
 	resting = max(amount,0)
+	update_canmove()
 	return
 
 /mob/proc/AdjustResting(amount)
 	resting = max(resting + amount,0)
+	update_canmove()
 	return

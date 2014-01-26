@@ -49,8 +49,8 @@
 	attack_verb = list("stabbed")
 
 	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</b>")
+		viewers(user) << pick("<span class='suicide'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
+							"<span class='suicide'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>")
 		return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/New()
@@ -160,6 +160,24 @@
 	if(istype(I, /obj/item/stack/rods))
 		flamethrower_rods(I, user)
 	..()
+
+
+/obj/item/weapon/weldingtool/attack(mob/living/carbon/human/H, mob/user)
+	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+
+	if(istype(H))
+		if(affecting.status == ORGAN_ROBOTIC)
+			if(src.remove_fuel(0))
+				src.item_heal_robotic(H, user, 30, 0)
+				return
+			else
+				user << "<span class='warning'>Need more welding fuel!</span>"
+				return
+		else
+			return ..()
+
+	else
+		return ..()
 
 
 /obj/item/weapon/weldingtool/process()

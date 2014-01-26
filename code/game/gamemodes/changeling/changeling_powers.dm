@@ -529,9 +529,34 @@ var/list/datum/dna/hivemind_bank = list()
 		if(src && src.mind && src.mind.changeling)
 			src.mind.changeling.mimicing = ""
 
-	//////////
-	//STINGS//	//They get a pretty header because there's just so fucking many of them ;_;
-	//////////
+
+/mob/living/carbon/proc/changeling_arm_blade()
+	set category = "Changeling"
+	set name = "Arm Blade (20)"
+
+	if(istype(l_hand, /obj/item/weapon/melee/arm_blade)) //Not the nicest way to do it, but eh
+		u_equip(l_hand)
+		return
+
+	if(istype(r_hand, /obj/item/weapon/melee/arm_blade))
+		u_equip(r_hand)
+		return
+
+	var/datum/changeling/changeling = changeling_power(20)
+	if(!changeling)
+		return
+
+	drop_item(get_active_hand())
+
+	put_in_hands(new /obj/item/weapon/melee/arm_blade(src))
+	changeling.geneticdamage += 6
+
+	changeling.chem_charges -= 20
+
+
+//////////
+//STINGS//	//They get a pretty header because there's just so fucking many of them ;_;
+//////////
 
 /mob/living/carbon/proc/set_sting(A, icon, dna=null) //setting the sting and ui icon for it
 	src << "<span class='notice'>We prepare our sting, use alt+click on target to sting them.</span>"

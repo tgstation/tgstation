@@ -277,7 +277,9 @@
 						O:icon_state = "flash"
 				if(istype(O,/obj/item/weapon/gun/energy/taser/cyborg))
 					if(O:power_supply.charge < O:power_supply.maxcharge)
-						O:power_supply.give(O:charge_cost * coeff)
+						var/obj/item/weapon/gun/energy/G = O
+						var/obj/item/ammo_casing/energy/S = G.ammo_type[G.select]
+						O:power_supply.give(S.e_cost * coeff)
 						O:update_icon()
 					else
 						O:charge_tick = 0

@@ -689,8 +689,6 @@ var/global/list/g_fancy_list_of_safe_types = null
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/monocle(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/det_hat(M), slot_head)
 
-			M.equip_to_slot_or_del(new /obj/item/weapon/cloaking_device(M), slot_r_store)
-
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile(M), slot_r_hand)
 			M.equip_to_slot_or_del(new /obj/item/ammo_box/a357(M), slot_l_store)
 
@@ -798,9 +796,8 @@ var/global/list/g_fancy_list_of_safe_types = null
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(M), slot_glasses)
-			M.equip_to_slot_or_del(new /obj/item/clothing/suit/wcoat(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/tie/waistcoat(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword(M), slot_l_store)
-			M.equip_to_slot_or_del(new /obj/item/weapon/cloaking_device(M), slot_r_store)
 
 			var/obj/item/weapon/storage/secure/briefcase/sec_briefcase = new(M)
 			for(var/obj/item/briefcase_item in sec_briefcase)
@@ -1066,16 +1063,16 @@ var/global/list/g_fancy_list_of_safe_types = null
 
 	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients"))
 		if("Players")
-			usr << dd_list2text(player_list,",")
+			usr << list2text(player_list,",")
 		if("Admins")
-			usr << dd_list2text(admins,",")
+			usr << list2text(admins,",")
 		if("Mobs")
-			usr << dd_list2text(mob_list,",")
+			usr << list2text(mob_list,",")
 		if("Living Mobs")
-			usr << dd_list2text(living_mob_list,",")
+			usr << list2text(living_mob_list,",")
 		if("Dead Mobs")
-			usr << dd_list2text(dead_mob_list,",")
+			usr << list2text(dead_mob_list,",")
 		if("Clients")
-			usr << dd_list2text(clients,",")
+			usr << list2text(clients,",")
 		if("Joined Clients")
-			usr << dd_list2text(joined_player_list,",")
+			usr << list2text(joined_player_list,",")
