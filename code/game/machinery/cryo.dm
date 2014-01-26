@@ -232,7 +232,7 @@
 		initialize()
 		return
 
-	default_deconstruction_crowbar()
+	default_deconstruction_crowbar(I)
 
 /obj/machinery/atmospherics/unary/cryo_cell/open_machine()
 	if(!state_open && !panel_open)

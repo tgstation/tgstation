@@ -221,28 +221,13 @@ display round(lastgen) and plasmatank amount
 		emp_act(1)
 	else if(!active)
 
-		if(istype(O, /obj/item/weapon/wrench))
+		if(!isinspace() && default_unfasten_wrench(user, O))
+			return
 
-			if(!anchored && !isinspace())
-				connect_to_network()
-				user << "\blue You secure the generator to the floor."
-				anchored = 1
-			else if(anchored)
-				disconnect_from_network()
-				user << "\blue You unsecure the generator from the floor."
-				anchored = 0
+		if(default_deconstruction_screwdriver(user, "portgen0", "portgen0", O))
+			return
 
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-
-		else if(istype(O, /obj/item/weapon/screwdriver))
-			panel_open = !panel_open
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			if(panel_open)
-				user << "\blue You open the access panel."
-			else
-				user << "\blue You close the access panel."
-		else if(istype(O, /obj/item/weapon/crowbar) && panel_open)
-			default_deconstruction_crowbar()
+		default_deconstruction_crowbar(O)
 
 /obj/machinery/power/port_gen/pacman/attack_hand(mob/user as mob)
 	..()

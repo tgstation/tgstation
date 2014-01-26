@@ -894,7 +894,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				if (check_materials)
 					dat += "* <A href='?src=\ref[src];imprint=[D.id]'>[temp_dat]</A>[temp_materials]<BR>"
 				else
-					dat += "* <span class='linkOff'>[temp_dat]</span><BR>"
+					dat += "* <span class='linkOff'>[temp_dat]</span>[temp_materials]<BR>"
 			dat += "</div>"
 
 		if(4.2)

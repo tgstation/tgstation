@@ -199,9 +199,7 @@
 	if(default_deconstruction_screwdriver(user, "tele-o", "tele0", W))
 		return
 
-	if(panel_open)
-		if(istype(W, /obj/item/weapon/crowbar))
-			default_deconstruction_crowbar()
+	default_deconstruction_crowbar(W)
 
 /obj/machinery/teleport/hub/proc/teleport(atom/movable/M as mob|obj, turf/T)
 	var/obj/machinery/computer/teleporter/com = power_station.teleporter_console
@@ -295,7 +293,7 @@
 	if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
 		return
 
-	default_deconstruction_crowbar()
+	default_deconstruction_crowbar(W)
 
 	if(panel_open)
 		if(istype(W, /obj/item/device/multitool))

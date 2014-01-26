@@ -1195,16 +1195,16 @@ datum/design/light_replacer
 ////////////////////////////////////////
 
 datum/design/teleport_station
-	name = "Teleportation Station"
+	name = "Teleportation Station Board"
 	desc = "The circuit board for a teleportation station."
-	id = "tele_hub"
+	id = "tele_station"
 	req_tech = list("programming" = 4, "bluespace" = 4, "engineering" = 4)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/teleporter_station
 
 datum/design/teleport_hub
-	name = "Teleportation Hub"
+	name = "Teleportation Hub Board"
 	desc = "The circuit board for a teleportation hub."
 	id = "tele_hub"
 	req_tech = list("programming" = 3, "bluespace" = 5, "materials" = 4, "engineering" = 5)
@@ -1213,7 +1213,7 @@ datum/design/teleport_hub
 	build_path = /obj/item/weapon/circuitboard/teleporter_hub
 
 datum/design/telepad
-	name = "Telepad"
+	name = "Telepad Board"
 	desc = "The circuit board for a telescience telepad."
 	id = "telepad"
 	req_tech = list("programming" = 4, "bluespace" = 4, "materials" = 3, "engineering" = 3)
@@ -1231,7 +1231,7 @@ datum/design/sleeper
 	build_path = /obj/item/weapon/circuitboard/sleeper
 
 datum/design/cryotube
-	name = "Cryotube board"
+	name = "Cryotube Board"
 	desc = "The circuit board for a cryotube."
 	id = "cryotube"
 	req_tech = list("programming" = 4, "biotech" = 3, "engineering" = 4)

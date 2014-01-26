@@ -37,7 +37,7 @@
 		update_icon()
 		return
 
-	default_deconstruction_crowbar()
+	default_deconstruction_crowbar(I)
 
 	if(default_change_direction_wrench(user, I))
 		if(node)
@@ -154,7 +154,7 @@
 		update_icon()
 		return
 
-	default_deconstruction_crowbar()
+	default_deconstruction_crowbar(I)
 
 	if(default_change_direction_wrench(user, I))
 		if(node)

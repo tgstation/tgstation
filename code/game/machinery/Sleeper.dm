@@ -65,7 +65,7 @@
 	if(default_change_direction_wrench(user, I))
 		return
 
-	default_deconstruction_crowbar()
+	default_deconstruction_crowbar(I)
 
 /obj/machinery/sleeper/ex_act(severity)
 	switch(severity)

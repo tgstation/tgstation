@@ -37,7 +37,7 @@
 			M.buffer = src
 			user << "<span class = 'caution'>You save the data in the [I.name]'s buffer.</span>"
 
-	default_deconstruction_crowbar()
+	default_deconstruction_crowbar(I)
 
 
 //CARGO TELEPAD//

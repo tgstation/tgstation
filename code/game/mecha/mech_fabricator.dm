@@ -708,7 +708,7 @@
 	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
 		return
 
-	default_deconstruction_crowbar()
+	default_deconstruction_crowbar(W)
 
 	if (panel_open)
 		if(istype(W, /obj/item/weapon/crowbar))
