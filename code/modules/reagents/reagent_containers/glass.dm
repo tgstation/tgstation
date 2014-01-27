@@ -225,22 +225,41 @@
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/glass/beaker/noreact
-	name = "cryostasis beaker"
-	desc = "A cryostasis beaker that allows for chemical storage without reactions. Can hold up to 50 units."
+	name = "stasis beaker"
+	desc = "A beaker powered by experimental bluespace technology. Chemicals are held in stasis and do not react inside of it. Can hold up to 50 units."
 	icon_state = "beakernoreact"
 	g_amt = 500
 	volume = 50
 	amount_per_transfer_from_this = 10
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOREACT
 
+/obj/item/weapon/reagent_containers/glass/beaker/noreactlarge
+	name = "large stasis beaker"
+	desc = "A beaker powered by experimental bluespace technology. Chemicals are held in stasis and do not react inside of it. Can hold up to 100 units."
+	icon_state = "beakernoreactlarge"
+	g_amt = 5000
+	volume = 100
+	amount_per_transfer_from_this = 10
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOREACT
+
 /obj/item/weapon/reagent_containers/glass/beaker/bluespace
 	name = "bluespace beaker"
-	desc = "A bluespace beaker, powered by experimental bluespace technology. Can hold up to 300 units."
+	desc = "A newly-developed high-capacity beaker, courtesy of bluespace research. Can hold up to 200 units."
 	icon_state = "beakerbluespace"
+	g_amt = 5000
+	volume = 200
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5,10,15,25,30,50,100,200)
+	flags = FPRINT | TABLEPASS | OPENCONTAINER
+
+/obj/item/weapon/reagent_containers/glass/beaker/bluespacelarge
+	name = "large bluespace beaker"
+	desc = "A prototype ultra-capacity beaker, courtesy of bluespace research. Can hold up to 300 units."
+	icon_state = "beakerbluespacelarge"
 	g_amt = 5000
 	volume = 300
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,25,30,50,100,300)
+	possible_transfer_amounts = list(5,10,15,25,30,50,100,150,200,300)
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
 
