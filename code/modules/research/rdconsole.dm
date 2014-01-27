@@ -358,7 +358,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					power += round(being_built.materials[M] / 5)
 				power = max(2000, power)
 				//screen = 0.3
-				for(var/i=1;i<=text2num(href_list["n"]);i++)
+				var/n=text2num(href_list["n"])
+				if(n>10)
+					n=10
+				if(n<1)
+					n=1
+				for(var/i=1;i<=n;i++)
 					use_power(power)
 					linked_lathe.enqueue(usr.key,being_built)
 				if(href_list["now"]=="1")
@@ -377,7 +382,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				for(var/M in being_built.materials)
 					power += round(being_built.materials[M] / 5)
 				power = max(2000, power)
-				for(var/i=1;i<=text2num(href_list["n"]);i++)
+				var/n=text2num(href_list["n"])
+				if(n>10)
+					n=10
+				if(n<1)
+					n=1
+				for(var/i=1;i<=n;i++)
 					use_power(power)
 					linked_imprinter.enqueue(usr.key,being_built)
 				if(href_list["now"]=="1")
