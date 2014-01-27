@@ -1278,7 +1278,7 @@
 "ayD" = (/obj/structure/closet/lasertag/red,/turf/simulated/floor/plating,/area/hallway/primary/central)
 "ayE" = (/obj/structure/rack{dir = 8; layer = 2.9},/obj/item/weapon/tank/emergency_oxygen,/turf/simulated/floor/plating,/area/hallway/primary/central)
 "ayF" = (/turf/simulated/wall,/area/crew_quarters/heads{name = "\improper Job Assignment"})
-"ayG" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/structure/closet,/turf/simulated/floor/plating,/area/hallway/primary/central)
+"ayG" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/structure/closet,/obj/item/weapon/crowbar/red,/turf/simulated/floor/plating,/area/hallway/primary/central)
 "ayH" = (/obj/machinery/light/small{dir = 1},/obj/structure/closet,/turf/simulated/floor/plating,/area/hallway/primary/central)
 "ayI" = (/turf/simulated/floor{dir = 8; icon_state = "cautioncorner"},/area/hallway/primary/central)
 "ayJ" = (/turf/simulated/floor{dir = 2; icon_state = "yellowcorner"},/area/hallway/primary/central)

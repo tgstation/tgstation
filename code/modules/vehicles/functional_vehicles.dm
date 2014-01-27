@@ -5,7 +5,7 @@
 /obj/structure/stool/bed/chair/vehicle/bike
 	name = "bike"
 	icon_state = "bike"
-	desc = "A Nanotrasen bike"
+	desc = "Prof. Oak would be disappointed to see you ride this indoors."
 	spaceworthy = 0
 	cannot_move_txt = "Your bike's wheels have nothing to spin against!"
 	position = 1
