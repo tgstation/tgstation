@@ -4,6 +4,7 @@ obj/machinery/air_sensor
 	name = "Gas Sensor"
 
 	anchored = 1
+
 	var/state = 0
 
 	var/id_tag
@@ -35,7 +36,9 @@ obj/machinery/air_sensor
 			var/datum/gas_mixture/air_sample = return_air()
 
 			if(output&1)
-				signal.data["pressure"] = num2text(round(air_sample.return_pressure(),0.1),)
+				// Fucking why do we need num2text
+				//signal.data["pressure"] = num2text(round(air_sample.return_pressure(),0.1),)
+				signal.data["pressure"] =round(air_sample.return_pressure(),0.1)
 			if(output&2)
 				signal.data["temperature"] = round(air_sample.temperature,0.1)
 
@@ -81,6 +84,7 @@ obj/machinery/air_sensor
 	name = "Computer"
 
 	var/frequency = 1439
+	var/show_sensors=1
 	var/list/sensors = list()
 
 	var/list/sensor_information = list()
@@ -90,10 +94,12 @@ obj/machinery/air_sensor
 		if(..(user))
 			return
 		var/html=return_text()+"</body></html>"
-		//testing("Remember to remove [__FILE__]:[__LINE__]!")
-		//var/f = file("data/gac_debug.html")
-		//fdel(f)
-		//f << html
+		/*
+		#warning Remember to remove atmo_control.dm:94-96!
+		var/f = file("data/gac_debug.html")
+		fdel(f)
+		f << html
+		*/
 		user << browse(html,"window=gac")
 		user.set_machine(src)
 		onclose(user, "gac")
@@ -153,7 +159,7 @@ obj/machinery/air_sensor
 
 				if(data)
 					sensor_part += "<table>"
-					if(data["pressure"])
+					if("pressure" in data)
 						sensor_part += "<tr><th>Pressure:</th><td>[data["pressure"]] kPa</td></tr>"
 					if(data["temperature"])
 						sensor_part += "<tr><th>Temperature:</th><td>[data["temperature"]] K</td></tr>"
@@ -217,7 +223,9 @@ legend {
 		</style>
 	</head>
 	<body>
-		<h1>[name]</h1>
+		<h1>[name]</h1>"}
+		if(show_sensors)
+			output += {"
 		<h2>Sensor Data:</h2>
 		[sensor_data]"}
 

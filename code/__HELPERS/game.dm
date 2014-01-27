@@ -320,7 +320,7 @@ proc/check_can_reach(atom/user, atom/target)
 //dummy caching, used to speed up reach checks
 var/list/DummyCache = list()
 
-/proc/CanReachThrough(turf/srcturf, turf/targetturf, atom/target)
+/proc/CanReachThrough(turf/srcturf, turf/targetturf, atom/target, var/pass_flags=0)
 
 	var/obj/item/weapon/dummy/D = locate() in DummyCache
 	if(!D)
@@ -328,6 +328,12 @@ var/list/DummyCache = list()
 	else
 		DummyCache.Remove(D)
 		D.loc = srcturf
+
+	D.flags=initial(D.flags)
+	D.pass_flags=initial(D.pass_flags)
+	if(pass_flags&PASSTABLE)
+		D.flags      |= TABLEPASS
+		D.pass_flags |= PASSTABLE
 
 	if(targetturf.density && targetturf != get_turf(target))
 		return 0

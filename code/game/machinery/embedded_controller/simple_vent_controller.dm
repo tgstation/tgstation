@@ -19,7 +19,7 @@
 					"tag" = airpump_tag,
 					"sigtype"="command"
 				)
-				signal.data["stabalize"] = 1
+				signal.data["stabilize"] = 1
 				signal.data["power"] = 1
 				post_signal(signal)
 

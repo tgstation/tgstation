@@ -201,7 +201,7 @@ obj/machinery/airlock_sensor/process()
 		var/pressure = round(air_sample.return_pressure(),0.1)
 		alert = (pressure < ONE_ATMOSPHERE*0.8)
 
-		signal.data["pressure"] = num2text(pressure)
+		signal.data["pressure"] = pressure
 
 		radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
 

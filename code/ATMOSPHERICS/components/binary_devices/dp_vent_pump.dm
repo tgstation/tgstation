@@ -264,7 +264,7 @@ a {
 			pump_direction = 0
 			handled=1
 
-		if("stabalize" in signal.data)
+		if("stabilize" in signal.data)
 			pressure_checks |= 1
 			pump_direction = 1
 			handled=1

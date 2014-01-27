@@ -301,6 +301,14 @@
 			new /obj/item/pipe(loc, make_from=src)
 			del(src)
 
+	multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
+		return {"
+		<ul>
+			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[1439]">Reset</a>)</li>
+			<li><b>ID Tag:</b> <a href="?src=\ref[src];set_tag=1">[format_tag(id_tag)]</a></li>
+		</ul>
+		"}
+
 /obj/machinery/atmospherics/unary/vent_scrubber/Del()
 	if(initial_loc)
 		initial_loc.air_scrub_info -= id_tag

@@ -123,7 +123,7 @@
 						spark_system.start()
 					if(prob(30))
 						tobehealed = health + threshhold
-						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabalizers
+						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabilizers
 						H.adjustOxyLoss(tobehealed)
 				else if(uni || armor)
 					if(prob(30))
@@ -131,12 +131,12 @@
 						spark_system.start()
 					if(prob(60))
 						tobehealed = health + threshhold
-						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabalizers
+						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabilizers
 						H.adjustOxyLoss(tobehealed)
 				else
 					if(prob(90))
 						tobehealed = health + threshhold
-						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabalizers
+						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabilizers
 						H.adjustOxyLoss(tobehealed)
 				H.updatehealth() //forces a health update, otherwise the oxyloss adjustment wouldnt do anything
 				M.visible_message("\red [M]'s body convulses a bit.")

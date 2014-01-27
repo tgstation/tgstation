@@ -36,16 +36,16 @@ datum/computer/file/embedded_program/smart_airlock_controller/receive_signal(dat
 	if(!receive_tag) return
 
 	if(receive_tag==tag_chamber_sensor)
-		if(signal.data["pressure"])
-			memory["chamber_sensor_pressure"] = text2num(signal.data["pressure"])
+		if("pressure" in signal.data)
+			memory["chamber_sensor_pressure"] = signal.data["pressure"]
 
 	else if(receive_tag==tag_exterior_sensor)
-		if(signal.data["pressure"])
-			memory["external_sensor_pressure"] = text2num(signal.data["pressure"])
+		if("pressure" in signal.data)
+			memory["external_sensor_pressure"] = signal.data["pressure"]
 
 	else if(receive_tag==tag_interior_sensor)
-		if(signal.data["pressure"])
-			memory["internal_sensor_pressure"] = text2num(signal.data["pressure"])
+		if("pressure" in signal.data)
+			memory["internal_sensor_pressure"] = signal.data["pressure"]
 
 	else if(receive_tag==tag_exterior_door)
 		memory["exterior_status"] = signal.data["door_status"]
