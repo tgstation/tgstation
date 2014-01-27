@@ -254,3 +254,16 @@
 	item_color = "sundress"
 	body_parts_covered = CHEST|GROIN
 	fitted = 0
+
+// Custom Roleplay Items, For valued FREESTATION Members \\
+
+//Simply create the item and add a signature to the item's definition
+
+/obj/item/clothing/under/mute_kimono //RR
+	name = "Mute's kimono"
+	desc = "Mute's kimono, stylish black and red"
+	icon_state = "mute"
+	item_state = "mute"
+	item_color = "mute"
+	body_parts_covered = CHEST|GROIN|ARMS
+	fitted = 0

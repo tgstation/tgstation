@@ -215,3 +215,7 @@
 
 /turf/simulated/floor/plating/snow/ex_act(severity)
 	return
+
+/turf/simulated/floor/catwalk
+	name = "catwalk"
+	icon_state = "catwalk-N-S"

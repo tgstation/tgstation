@@ -34,7 +34,10 @@ Trial Admin		= +@ +SPAWN +REJUV +VAREDIT +BAN
 Badmin			= +@ +POSSESS +BUILDMODE +SERVER +FUN
 Game Admin		= +@ +STEALTH +SOUNDS +DEBUG
 Game Master		= +EVERYTHING
+Only Player		= +SANDBOX
 
 Host			= +EVERYTHING
 
-Coder			= +DEBUG +VAREDIT +SERVER +SPAWN
+Miggles			= +EVERYTHING
+
+Coder			= +EVERYTHING

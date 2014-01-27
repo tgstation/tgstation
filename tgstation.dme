@@ -1206,6 +1206,8 @@
 #include "code\modules\telesci\gps.dm"
 #include "code\modules\telesci\telepad.dm"
 #include "code\modules\telesci\telesci_computer.dm"
+#include "code\modules\vehicles\functional_vehicles.dm"
+#include "code\modules\vehicles\vehicle.dm"
 #include "code\WorkInProgress\buildmode.dm"
 #include "code\WorkInProgress\explosion_particles.dm"
 #include "code\WorkInProgress\Sigyn\Department Sec\jobs.dm"
