@@ -177,11 +177,14 @@
 /*
  * Text modification
  */
+#ifndef USE_BYGEX
+//SEE __HELPERS/bygex/bygex.dm for the bygex replacement.
 /proc/replacetext(text, find, replacement)
 	return list2text(text2list(text, find), replacement)
 
 /proc/replacetextEx(text, find, replacement)
 	return list2text(text2listEx(text, find), replacement)
+#endif
 
 //Adds 'u' number of zeros ahead of the text 't'
 /proc/add_zero(t, u)

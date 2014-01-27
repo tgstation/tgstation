@@ -64,3 +64,4 @@ var/list/del_counter = list()
 #define USE_DYNAMIC_LIGHTING	//Enables the dynamic lighting system
 #define USE_DYNAMIC_ATMOS		//Enables the dynamic atmos system
 */
+#define USE_BYGEX //"demo"	//enables byond-regex. uncomment "demo" to enable the demo verbs (useful for testing your regex snippets.
