@@ -29,9 +29,6 @@
 	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
 	var/allow_vote_restart = 0 			// allow votes to restart
 	var/allow_vote_mode = 0				// allow votes to change mode
-	var/allow_admin_jump = 1			// allows admin jumping
-	var/allow_admin_spawning = 1		// allows admin item spawning
-	var/allow_admin_rev = 1				// allows admin revives
 	var/vote_delay = 6000				// minimum time between voting sessions (deciseconds, 10 minute default)
 	var/vote_period = 600				// length of voting period (deciseconds, default 1 minute)
 	var/vote_no_default = 0				// vote does not default to nochange/norestart (tbi)
@@ -213,12 +210,6 @@
 					config.allow_vote_restart = 1
 				if("allow_vote_mode")
 					config.allow_vote_mode = 1
-				if("allow_admin_jump")
-					config.allow_admin_jump = 1
-				if("allow_admin_rev")
-					config.allow_admin_rev = 1
-				if("allow_admin_spawning")
-					config.allow_admin_spawning = 1
 				if("no_dead_vote")
 					config.vote_no_dead = 1
 				if("default_no_vote")
