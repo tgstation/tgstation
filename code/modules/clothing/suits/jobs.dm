@@ -82,6 +82,39 @@
 	item_state = "hazard"
 	blood_overlay_type = "armor"
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/device/t_scanner,)
+	cold_protection = CHEST|GROIN
+	heat_protection = CHEST|GROIN
+
+/obj/item/clothing/suit/hazardvest/ce
+	name = "chief engineer hazard vest"
+	desc = "A high-visibility vest used in work zones, this one is grey and green. It's made of a fireproof material."
+	icon_state = "cevest"
+	item_state = "cevest"
+	armor = list(melee = 5, bullet = 0, laser = 5, energy = 0, bomb = 0, bio = 0, rad = 15)
+	allowed = list(/obj/item/blueprints,)
+
+
+/obj/item/clothing/suit/hazardvest/atmos
+	name = "atmos hazard vest"
+	desc = "A high-visibility vest used in work zones, this one is light yellow with cyan highlights. It's made of a simple fireproof material."
+	icon_state = "atmosvest"
+	item_state = "atmosvest"
+	armor = list(melee = 0, bullet = 0, laser = 5, energy = 0, bomb = 0, bio = 0, rad = 0)
+	allowed = list(/obj/item/device/analyzer,)
+
+
+/obj/item/clothing/suit/hazardvest/cargo
+	name = "cargo hazard vest"
+	desc = "A high-visibility vest used in work zones, this one is brown and yellow. It's made of a stain-resistant material."
+	icon_state = "cargovest"
+	item_state = "cargovest"
+	allowed = list(/obj/item/weapon/clipboard,/obj/item/weapon/pen,)
+
+/obj/item/clothing/suit/hazardvest/cargo/qm
+	name = "quartermaster hazard vest"
+	desc = "A high-visibility vest used in work zones, this one is dark brown and yellow. It's made of a stain-resistant material. It has shoulder pads."
+	icon_state = "qmvest"
+	item_state = "qmvest"
 
 //Lawyer
 /obj/item/clothing/suit/lawyer/bluejacket
