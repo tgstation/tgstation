@@ -1194,6 +1194,33 @@ datum/design/light_replacer
 //////////////MISC Boards///////////////
 ////////////////////////////////////////
 
+datum/design/turbine_computer
+	name = "Power Turbine Console Board"
+	desc = "The circuit board for a power turbine console."
+	id = "power_turbine_console"
+	req_tech = list("programming" = 4, "power" = 4, "engineering" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/turbine_computer
+
+datum/design/power_compressor
+	name = "Power Compressor Board"
+	desc = "The circuit board for a power compressor."
+	id = "power_compressor"
+	req_tech = list("programming" = 4, "power" = 5, "engineering" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/power_compressor
+
+datum/design/power_turbine
+	name = "Power Turbine Board"
+	desc = "The circuit board for a power turbine."
+	id = "power_turbine"
+	req_tech = list("programming" = 4, "power" = 4, "engineering" = 5)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/power_turbine
+
 datum/design/teleport_station
 	name = "Teleportation Station Board"
 	desc = "The circuit board for a teleportation station."

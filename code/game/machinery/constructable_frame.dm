@@ -161,6 +161,24 @@ Note: Once everything is added to the public areas, will add m_amt and g_amt to 
 to destroy them and players will be able to make replacements.
 */
 
+/obj/item/weapon/circuitboard/power_compressor
+	name = "circuit board (Power Compressor)"
+	build_path = /obj/machinery/compressor
+	board_type = "machine"
+	origin_tech = "programming=4;power=5;engineering=4"
+	req_components = list(
+							"/obj/item/weapon/cable_coil" = 5,
+							"/obj/item/weapon/stock_parts/manipulator" = 6)
+
+/obj/item/weapon/circuitboard/power_turbine
+	name = "circuit board (Power Turbine)"
+	build_path = /obj/machinery/power/turbine
+	board_type = "machine"
+	origin_tech = "programming=4;power=4;engineering=5"
+	req_components = list(
+							"/obj/item/weapon/cable_coil" = 5,
+							"/obj/item/weapon/stock_parts/capacitor" = 6)
+
 /obj/item/weapon/circuitboard/mech_recharger
 	name = "circuit board (Mechbay Recharger)"
 	build_path = /obj/machinery/mech_bay_recharge_port

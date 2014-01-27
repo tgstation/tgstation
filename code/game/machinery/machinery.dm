@@ -311,7 +311,7 @@ Class Procs:
 
 /obj/machinery/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W)
 	if(istype(W))
-		user << "<span class='notice'>Now [anchored ? "un" : ""]securing table</span>"
+		user << "<span class='notice'>Now [anchored ? "un" : ""]securing [name]</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 20))
 			anchored = !anchored
