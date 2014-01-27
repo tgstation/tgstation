@@ -1,4 +1,7 @@
 /proc/getAssignedBlock(var/name,var/list/blocksLeft, var/activity_bounds=DNA_DEFAULT_BOUNDS)
+	if(blocksLeft.len==0)
+		warning("[name]: No more blocks left to assign!")
+		return 0
 	var/assigned = pick(blocksLeft)
 	blocksLeft.Remove(assigned)
 	assigned_blocks[assigned]=name
@@ -103,7 +106,9 @@
 				assignedToBlock=blocks_assigned[G.block]
 			assignedToBlock.Add(G.name)
 			blocks_assigned[G.block]=assignedToBlock
-			testing("DNA2: Gene [G.name] assigned to block [G.block].")
+			//testing("DNA2: Gene [G.name] assigned to block [G.block].")
+
+	testing("DNA2: [numsToAssign.len] blocks are unused: [english_list(numsToAssign)]")
 
 // Run AFTER genetics setup and AFTER species setup.
 /proc/setup_species()
