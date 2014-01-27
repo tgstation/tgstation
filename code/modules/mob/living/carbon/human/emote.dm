@@ -548,7 +548,7 @@
 				var/turf/location = get_turf(src)
 				var/aoe_range=2 // Default
 				if(M_SUPER_FART in mutations)
-					aoe_range+=5
+					aoe_range+=3 //Was 5
 
 				// If we're wearing a suit, don't blast or gas those around us.
 				var/wearing_suit=0
@@ -567,7 +567,11 @@
 							reagents.add_reagent("space_drugs", rand(10,20))
 					else
 						// Was /turf/, now /mob/
-						for(var/mob/M in view(location,2))
+						for(var/mob/M in view(location,aoe_range))
+							if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
+								continue
+							if(!airborne_can_reach(location,M,aoe_range))
+								continue
 							// Now, we don't have this:
 							//new /obj/effects/fart_cloud(T,L)
 							// But:
