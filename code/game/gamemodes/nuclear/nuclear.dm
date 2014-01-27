@@ -140,11 +140,11 @@
 			leader_selected = 1
 		else
 			equip_syndicate(synd_mind.current)
-			synd_mind.current.real_name = operationname + pickedcodenamelist[agent_number]
+			synd_mind.current.real_name = pickedcodenamelist[agent_number] + operationname
 			var/mob/living/carbon/human/H = synd_mind.current
 			var/obj/item/weapon/card/id/C = H.wear_id
 			C.registered_name = synd_mind.current.real_name
-			C.assignment = "[syndicate_name(1)] [operationname] Operative"
+			C.assignment = "[syndicate_name(1)] Operative"
 			C.name = "[C.registered_name]'s ID Card ([C.assignment])"
 			greet_syndicate(synd_mind)
 			agent_number++
@@ -173,11 +173,11 @@
 /datum/game_mode/proc/prepare_syndicate_leader(var/datum/mind/synd_mind, var/nuke_code, var/pickedcodenamelist)
 	spawn(1)
 		operationname = nukeoperationname(synd_mind.current)
-	synd_mind.current.real_name = pickedcodenamelist[1]
+	synd_mind.current.real_name = pickedcodenamelist[1] + operationname
 	var/mob/living/carbon/human/H = synd_mind.current
 	var/obj/item/weapon/card/id/C = H.wear_id
 	C.registered_name = synd_mind.current.real_name
-	C.assignment = "[syndicate_name(1)] [operationname] Commander"
+	C.assignment = "[syndicate_name(1)] Commander"
 	C.name = "[C.registered_name]'s ID Card ([C.assignment])"
 	return
 
