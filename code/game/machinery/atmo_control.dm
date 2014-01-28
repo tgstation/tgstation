@@ -279,7 +279,7 @@ legend {
 		</tr>
 		<tr>
 			<th>Rate:</th>
-			<td>[volume_rate] L/sec</td>
+			<td><a href="?src=\ref[src];in_set_rate=1">[volume_rate]</a> L/sec</td>
 		</tr>
 	</table>
 </fieldset>
@@ -359,6 +359,13 @@ legend {
 			else if(href_list["in_toggle_injector"])
 				input_info = null
 				signal.data = list ("tag" = input_tag, "power_toggle")
+
+			else if(href_list["in_set_rate"])
+				input_info = null
+				var/new_rate=input("Enter the new volume rate of the injector:","Injector Rate") as num
+				new_rate = text2num(new_rate)
+				new_rate = between(0, new_rate, 300)
+				signal.data = list ("tag" = input_tag, "set_volume_rate"=new_rate)
 
 			else if(href_list["out_refresh_status"])
 				output_info = null
