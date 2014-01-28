@@ -261,6 +261,59 @@ obj/machinery/atmospherics/valve
 			if(frequency)
 				set_frequency(frequency)
 
+
+
+		multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
+			return {"
+			<ul>
+				<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[1439]">Reset</a>)</li>
+				<li><b>ID Tag:</b> <a href="?src=\ref[src];set_tag=1">[id]</a></li>
+			</ul>
+			"}
+
+		Topic(href, href_list)
+			if(..())
+				return
+
+			if(!issilicon(usr))
+				if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
+					return
+
+			var/obj/item/device/multitool/P = get_multitool(usr)
+
+			if("set_id" in href_list)
+				var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id) as null|text),1,MAX_MESSAGE_LEN)
+				if(newid)
+					id = newid
+					initialize()
+			if("set_freq" in href_list)
+				var/newfreq=frequency
+				if(href_list["set_freq"]!="-1")
+					newfreq=text2num(href_list["set_freq"])
+				else
+					newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, frequency) as null|num
+				if(newfreq)
+					if(findtext(num2text(newfreq), "."))
+						newfreq *= 10 // shift the decimal one place
+					if(newfreq < 10000)
+						frequency = newfreq
+						initialize()
+
+			if(href_list["unlink"])
+				P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
+
+			if(href_list["link"])
+				P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
+
+			if(href_list["buffer"])
+				P.buffer = src
+
+			if(href_list["flush"])
+				P.buffer = null
+
+			usr.set_machine(src)
+			updateUsrDialog()
+
 		receive_signal(datum/signal/signal)
 			if(!signal.data["tag"] || (signal.data["tag"] != id))
 				return 0
@@ -273,6 +326,14 @@ obj/machinery/atmospherics/valve
 				if("valve_close")
 					if(open)
 						close()
+
+				if("valve_set")
+					if(signal.data["state"])
+						if(!open)
+							open()
+					else
+						if(open)
+							close()
 
 				if("valve_toggle")
 					if(open)

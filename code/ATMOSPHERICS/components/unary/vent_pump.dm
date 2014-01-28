@@ -298,6 +298,7 @@
 		update_icon()
 
 	interact(mob/user as mob)
+		update_multitool_menu()
 
 	multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
 		return {"
