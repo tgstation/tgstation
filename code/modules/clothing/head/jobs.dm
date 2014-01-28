@@ -39,9 +39,9 @@
 	icon_state = "nun_hood"
 	flags = HEADCOVERSEYES|BLOCKHAIR
 
-/obj/item/clothing/head/det_hat
-	name = "hat"
-	desc = "Someone who wears this will look very smart."
+/obj/item/weapon/storage/det_hat
+	name = "detective hat"
+	desc = "Not to be thrown down in disgust. That would soil it."
 	icon_state = "detective"
 	allowed = list(/obj/item/weapon/reagent_containers/food/snacks/candy_corn, /obj/item/weapon/pen)
 	armor = list(melee = 50, bullet = 5, laser = 25,energy = 10, bomb = 0, bio = 0, rad = 0)
