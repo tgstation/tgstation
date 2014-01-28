@@ -3,7 +3,7 @@
         #include "map_files\tgstation.2.1.2.dmm"
 
         #define MAP_FILE "tgstation.2.1.2.dmm"
-        #define MAP_NAME "/tg/station 2"
+        #define MAP_NAME "TGstation 2"
 
 #elif !defined(MAP_OVERRIDE)
 
