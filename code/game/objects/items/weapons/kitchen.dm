@@ -133,7 +133,8 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "butch"
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products."
-	flags = CONDUCT
+	flags = CONDUCT | SHARP
+	sharp_power = 20
 	force = 15.0
 	w_class = 2.0
 	throwforce = 8.0

@@ -122,6 +122,13 @@ emp_act
 
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(user.zone_sel.selecting))
 
+	if(affecting.status == ORGAN_REMOVED && !istype(I, /obj/item/augment)) //No arm, and were not Augmenting
+		return 0
+
+	if(istype(I, /obj/item/augment))
+		augmentation(affecting, user, I)
+		return //Not attacking
+
 	var/hit_area = parse_zone(affecting.name)
 
 	if((user != src) && check_shields(I.force, "the [I.name]"))
@@ -139,7 +146,11 @@ emp_act
 	if(!I.force)	return 0
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
-	apply_damage(I.force, I.damtype, affecting, armor , I)
+	if(I.flags & SHARP)
+		affecting.dismember(I, MELEE_DISM) //DISMEMBERMENT - It's about time - RR
+
+	if(affecting && affecting.status != ORGAN_REMOVED)
+		apply_damage(I.force, I.damtype, affecting, armor , I)
 
 	var/bloody = 0
 	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (I.force * 2)))
