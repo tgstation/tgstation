@@ -154,7 +154,13 @@
 
 		// On State
 		// Pretty much this:
-		//set_injector_state(injector_tag,1,get_sensor_data(sensor_tag,"temperature") < temperature)
+		/*
+			if(get_sensor("inc_sensor","temperature") < 200)
+				set_injector_state("inc_in",1)
+				set_vent_pump_power("inc_out",0)
+			else
+				set_vent_pump_power("inc_out",1
+		*/
 
 		var/datum/automation/get_sensor_data/sensor=new(src)
 		sensor.sensor=sensor_tag
@@ -190,6 +196,10 @@
 		automations += i
 
 		// Off state
+		/*
+			if(get_sensor("inc_sensor","temperature") > 1000)
+				set_injector_state("inc_in",0)
+		*/
 		sensor=new(src)
 		sensor.sensor=sensor_tag
 		sensor.field="temperature"
