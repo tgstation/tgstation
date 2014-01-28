@@ -253,27 +253,14 @@ Please contact me on #coderbus IRC. ~Carnie x
 	var/race = dna ? dna.mutantrace : null
 
 	if(!(HUSK in mutations) && !(HULK in mutations))
-		switch(race)
-			if("lizard")
-				mutant_type = "lizard"
-			if("slime")
-				mutant_type = "slime"
-			if("shadow")
-				mutant_type = "shadow"
-			if("golem")
-				mutant_type = "adamantine"
-			if("fly")
-				mutant_type = "fly"
-			if("plant")
-				mutant_type = "plant"
-			if("skeleton")
-				mutant_type = "skeleton"
-			if("zombie")
-				mutant_type = "zombie"
-			if("jelly")
-				mutant_type = "jelly"
+		if(race)
+			if(race == "adamantine")
+				mutant_type = "golem"
 			else
-				mutant_type = "normal"
+				mutant_type = race
+		else
+			mutant_type = "normal"
+
 	else
 		if(HUSK in mutations)
 			mutant_type = "husk"
