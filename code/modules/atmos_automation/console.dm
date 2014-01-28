@@ -47,9 +47,10 @@
 		if (choices.len==0)
 			testing("Unable to find automations with returntype in [english_list(valid_returntypes)]!")
 			return 0
-		var/datum/automation/A=input(user, "Select new automation:", "Automations", "Cancel") as null|anything in choices
-		if(!A) return 1
-		return A
+		var/label=input(user, "Select new automation:", "Automations", "Cancel") as null|anything in choices
+		if(!label)
+			return 0
+		return choices[label]
 
 	return_text()
 		var/out=..()
@@ -144,6 +145,7 @@
 
 /obj/machinery/computer/general_air_control/atmos_automation/burnchamber
 	var/injector_tag="inc_in"
+	var/output_tag="inc_out"
 	var/sensor_tag="inc_sensor"
 	frequency=1449
 	var/temperature=1000
@@ -169,10 +171,23 @@
 		var/datum/automation/set_injector_power/inj_on=new(src)
 		inj_on.injector=injector_tag
 		inj_on.state=1
-		inj_on.children[1] = compare
-		inj_on.label = "Fuel Injector On"
 
-		automations += inj_on
+		var/datum/automation/set_vent_pump_power/vp_on=new(src)
+		vp_on.vent_pump=output_tag
+		vp_on.state=1
+
+		var/datum/automation/set_vent_pump_power/vp_off=new(src)
+		vp_off.vent_pump=output_tag
+		vp_off.state=0
+
+		var/datum/automation/if_statement/i = new (src)
+		i.label = "Fuel Injector On"
+		i.condition = compare
+		i.children_then.Add(inj_on)
+		i.children_then.Add(vp_off)
+		i.children_else.Add(vp_on)
+
+		automations += i
 
 		// Off state
 		sensor=new(src)
@@ -190,7 +205,10 @@
 		var/datum/automation/set_injector_power/inj_off=new(src)
 		inj_off.injector=injector_tag
 		inj_off.state=0
-		inj_off.children[1] = compare
-		inj_off.label = "Fuel Injector Off"
 
-		automations += inj_off
+		i = new (src)
+		i.label = "Fuel Injector Off"
+		i.condition = compare
+		i.children_then.Add(inj_off)
+
+		automations += i

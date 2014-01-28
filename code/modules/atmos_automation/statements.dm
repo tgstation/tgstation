@@ -15,7 +15,7 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 	var/list/valid_child_returntypes=list()
 	var/list/datum/automation/children=list()
 
-	var/returntype=null
+	var/returntype=AUTOM_RT_NULL
 
 /datum/automation/New(var/obj/machinery/computer/general_air_control/atmos_automation/aa)
 	parent=aa
@@ -76,7 +76,7 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 	return 0 // 1 if handled
 
 /datum/automation/proc/selectValidChildFor(var/mob/user, var/list/returntypes=valid_child_returntypes)
-	parent.selectValidChildFor(src, user, returntypes)
+	return parent.selectValidChildFor(src, user, returntypes)
 
 ///////////////////////////////////////////
 // AND
@@ -94,7 +94,7 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 		return 1
 
 	GetText()
-		var/out="AND (<a href=\"?src=\ref[src];add=1\">Add</a>) {"
+		var/out="AND (<a href=\"?src=\ref[src];add=1\">Add</a>)"
 		if(children.len>0)
 			out += "<ul>"
 			for(var/datum/automation/stmt in children)
@@ -104,7 +104,9 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 							[stmt.GetText()]
 						</li>"}
 			out += "</ul>"
-		return out + "}"
+		else
+			out += "<blockquote><i>No statements to evaluate.</i></blockquote>"
+		return out
 
 ///////////////////////////////////////////
 // OR
@@ -123,7 +125,7 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 		return 0
 
 	GetText()
-		var/out="OR (<a href=\"?src=\ref[src];add=1\">Add</a>) {"
+		var/out="OR (<a href=\"?src=\ref[src];add=1\">Add</a>)"
 		if(children.len>0)
 			out += "<ul>"
 			for(var/datum/automation/stmt in children)
@@ -133,7 +135,9 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 							[stmt.GetText()]
 						</li>"}
 			out += "</ul>"
-		return out + "}"
+		else
+			out += "<blockquote><i>No statements to evaluate.</i></blockquote>"
+		return out
 
 ///////////////////////////////////////////
 // if .. then
@@ -145,22 +149,93 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 	valid_child_returntypes=list(AUTOM_RT_NULL)
 	var/list/valid_conditions=list(AUTOM_RT_NUM)
 
+	var/list/children_then=list()
+	var/list/children_else=list()
 	GetText()
 		var/out="<b>IF</b> (<a href=\"?src=\ref[src];set_condition=1\">SET</a>):<blockquote>"
 		if(condition)
 			out += condition.GetText()
-		out += "</blockquote><b>THEN:</b> (<a href=\"?src=\ref[src];add=1\">Add</a>) <ul>"
-		for(var/datum/automation/stmt in children)
-			out += {"<li>
-						\[<a href="?src=\ref[src];reset=\ref[stmt]">Reset</a> |
-						<a href="?src=\ref[src];remove=\ref[stmt]">&times;</a>\]
-						[stmt.GetText()]
-					</li>"}
-		return "[out]</ul>"
+		else
+			out += "<i>Not set</i>"
+		out += "</blockquote>"
+		out += "<b>THEN:</b> (<a href=\"?src=\ref[src];add=then\">Add</a>)"
+		if(children_then.len>0)
+			out += "<ul>"
+			for(var/datum/automation/stmt in children_then)
+				out += {"<li>
+							\[<a href="?src=\ref[src];reset=\ref[stmt];context=then">Reset</a> |
+							<a href="?src=\ref[src];remove=\ref[stmt];context=then">&times;</a>\]
+							[stmt.GetText()]
+						</li>"}
+			out += "</ul>"
+		else
+			out += "<blockquote><i>(No statements to run)</i></blockquote>"
+		out += "<b>ELSE:</b> (<a href=\"?src=\ref[src];add=else\">Add</a>)"
+		if(children_then.len>0)
+			out += "<ul>"
+			for(var/datum/automation/stmt in children_else)
+				out += {"<li>
+							\[<a href="?src=\ref[src];reset=\ref[stmt];context=then">Reset</a> |
+							<a href="?src=\ref[src];remove=\ref[stmt];context=then">&times;</a>\]
+							[stmt.GetText()]
+						</li>"}
+			out += "</ul>"
+		else
+			out += "<blockquote><i>(No statements to run)</i></blockquote>"
+		return out
 
 	Topic(href,href_list)
+		if(href_list["add"])
+			var/new_child=selectValidChildFor(usr)
+			if(!new_child) return 1
+			switch(href_list["add"])
+				if("then")
+					children_then += new_child
+				if("else")
+					children_else += new_child
+				else
+					warning("Unknown add value given to [type]/Topic():[__LINE__]: [href]")
+					return 1
+			parent.updateUsrDialog()
+			return 1
+		if(href_list["remove"])
+			if(href_list["remove"]=="*")
+				var/confirm=input("Are you sure you want to remove ALL automations?","Automations","No") in list("Yes","No")
+				if(confirm == "No") return 0
+				for(var/datum/automation/A in children_then)
+					A.OnRemove()
+					children_then.Remove(A)
+				for(var/datum/automation/A in children_else)
+					A.OnRemove()
+					children_else.Remove(A)
+			else
+				var/datum/automation/A=locate(href_list["remove"])
+				if(!A) return 1
+				var/confirm=input("Are you sure you want to remove this automation?","Automations","No") in list("Yes","No")
+				if(confirm == "No") return 0
+				A.OnRemove()
+				switch(href_list["context"])
+					if("then")
+						children_then.Remove(A)
+					if("else")
+						children_else.Remove(A)
+			parent.updateUsrDialog()
+			return 1
+		if(href_list["reset"])
+			if(href_list["remove"]=="*")
+				for(var/datum/automation/A in children_then)
+					A.OnReset()
+				for(var/datum/automation/A in children_else)
+					A.OnReset()
+			else
+				var/datum/automation/A=locate(href_list["remove"])
+				if(!A) return 1
+				A.OnReset()
+			parent.updateUsrDialog()
+			return 1
 		if(href_list["set_condition"])
 			var/new_condition = selectValidChildFor(usr,valid_conditions)
+			testing("Selected condition: [new_condition]")
 			if(!new_condition)
 				return 1
 			condition = new_condition
@@ -168,9 +243,13 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 			return 1
 
 	process()
-		if(condition && condition.Evaluate())
-			for(var/datum/automation/stmt in children)
-				stmt.process()
+		if(condition)
+			if(condition.Evaluate())
+				for(var/datum/automation/stmt in children_then)
+					stmt.process()
+			else
+				for(var/datum/automation/stmt in children_else)
+					stmt.process()
 
 ///////////////////////////////////////////
 // compare
@@ -249,6 +328,8 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 ///////////////////////////////////////////
 
 /datum/automation/static_value
+	name = "Number"
+
 	var/value=0
 
 	returntype=AUTOM_RT_NUM
