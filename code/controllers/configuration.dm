@@ -487,6 +487,8 @@
 			value = text2num(value)
 
 			switch(name)
+				if("max_explosion_range")
+					MAX_EXPLOSION_RANGE = value
 				if("health_threshold_crit")
 					config.health_threshold_crit = value
 				if("health_threshold_softcrit")
