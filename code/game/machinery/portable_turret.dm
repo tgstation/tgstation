@@ -407,7 +407,7 @@ Status: []<BR>"},
 
 /obj/machinery/porta_turret/ex_act(severity)
 	if(severity >= 3) // turret dies if an explosion touches it!
-		del(src)
+		qdel(src)
 	else
 		src.die()
 
@@ -419,7 +419,7 @@ Status: []<BR>"},
 	invisibility=0
 	src.spark_system.start() // creates some sparks because they look cool
 	src.density=1
-	del(cover) // deletes the cover - no need on keeping it there!
+	qdel(cover) // deletes the cover - no need on keeping it there!
 
 
 

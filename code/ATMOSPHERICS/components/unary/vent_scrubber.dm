@@ -109,6 +109,8 @@
 		//broadcast_status()
 		if(!on)
 			return 0
+		// New GC does this sometimes
+		if(!loc) return
 
 
 		var/datum/gas_mixture/environment = loc.return_air()

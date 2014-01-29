@@ -66,7 +66,7 @@ var/global/list/uneatable = list(
 	switch(severity)
 		if(1.0)
 			if(prob(25))
-				del(src)
+				qdel(src)
 				return
 			else
 				energy += 50

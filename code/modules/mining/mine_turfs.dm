@@ -135,7 +135,7 @@ var/list/artifact_spawn = list() // Runtime fix for geometry loading before cont
 /turf/unsimulated/mineral/ex_act(severity)
 	switch(severity)
 		if(3.0)
-			return
+			GetDrilled()
 		if(2.0)
 			if (prob(70))
 				mined_ore = 1 //some of the stuff gets blown up

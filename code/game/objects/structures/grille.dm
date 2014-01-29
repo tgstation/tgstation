@@ -22,13 +22,13 @@
 	icon='icons/fence-ns.dmi'
 
 /obj/structure/grille/ex_act(severity)
-	del(src)
+	qdel(src)
 
 /obj/structure/grille/blob_act()
-	del(src)
+	qdel(src)
 
 /obj/structure/grille/meteorhit(var/obj/M)
-	del(src)
+	qdel(src)
 
 
 /obj/structure/grille/Bumped(atom/user)

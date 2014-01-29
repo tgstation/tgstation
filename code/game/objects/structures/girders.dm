@@ -184,19 +184,19 @@
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				del(src)
+				qdel(src)
 				return
 			if(2.0)
 				if (prob(30))
 					var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
 					new remains(loc)
-					del(src)
+					qdel(src)
 				return
 			if(3.0)
 				if (prob(5))
 					var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
 					new remains(loc)
-					del(src)
+					qdel(src)
 				return
 			else
 		return
@@ -245,17 +245,17 @@
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				del(src)
+				qdel(src)
 				return
 			if(2.0)
 				if (prob(30))
 					new /obj/effect/decal/remains/human(loc)
-					del(src)
+					qdel(src)
 				return
 			if(3.0)
 				if (prob(5))
 					new /obj/effect/decal/remains/human(loc)
-					del(src)
+					qdel(src)
 				return
 			else
 		return

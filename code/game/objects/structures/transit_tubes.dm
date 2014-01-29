@@ -61,9 +61,10 @@ obj/structure/ex_act(severity)
 		if(1.0)
 			for(var/atom/movable/AM in contents)
 				AM.loc = loc
+				// TODO: What the fuck are you doing
 				AM.ex_act(severity++)
 
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if(prob(50))
@@ -71,7 +72,7 @@ obj/structure/ex_act(severity)
 					AM.loc = loc
 					AM.ex_act(severity++)
 
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			return

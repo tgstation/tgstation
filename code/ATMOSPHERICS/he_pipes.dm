@@ -119,7 +119,7 @@
 		icon_state = "exposed[have_node1][have_node2]"
 
 	if(!node1&&!node2)
-		del(src)
+		qdel(src)
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/initialize(var/suppress_icon_check=0)
 	node1 = findConnecting(initialize_directions)

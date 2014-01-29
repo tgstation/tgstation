@@ -118,5 +118,5 @@ The "dust" will damage the hull of the station causin minor hull breaches.
 
 
 	ex_act(severity)
-		del(src)
+		qdel(src)
 		return

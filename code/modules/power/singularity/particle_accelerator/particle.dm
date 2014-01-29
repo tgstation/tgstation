@@ -67,7 +67,7 @@
 
 
 /obj/effect/accelerated_particle/ex_act(severity)
-	del(src)
+	qdel(src)
 	return
 
 

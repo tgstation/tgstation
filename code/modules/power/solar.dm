@@ -157,14 +157,14 @@ var/list/solars_list = list()
 /obj/machinery/power/solar/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			if(prob(15))
 				new /obj/item/weapon/shard( src.loc )
 			return
 		if(2.0)
 			if (prob(25))
 				new /obj/item/weapon/shard( src.loc )
-				del(src)
+				qdel(src)
 				return
 			if (prob(50))
 				broken()
@@ -520,7 +520,7 @@ Manual Tracking Direction:"}
 	switch(severity)
 		if(1.0)
 			//SN src = null
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))

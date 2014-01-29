@@ -92,13 +92,13 @@
 	switch(severity)
 		if(1.0)
 			if (prob(75))
-				del(src)
+				qdel(src)
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 		if(3.0)
 			if (prob(25))
-				del(src)
+				qdel(src)
 	return
 
 /obj/machinery/shield/emp_act(severity)
@@ -164,7 +164,7 @@
 
 /obj/machinery/shieldgen/Del()
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
-		del(shield_tile)
+		qdel(shield_tile)
 	..()
 
 

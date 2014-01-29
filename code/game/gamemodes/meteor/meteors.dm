@@ -127,7 +127,7 @@
 /obj/effect/meteor/ex_act(severity)
 
 	if (severity < 4)
-		del(src)
+		qdel(src)
 	return
 
 /obj/effect/meteor/big

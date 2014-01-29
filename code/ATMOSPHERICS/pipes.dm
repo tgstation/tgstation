@@ -179,7 +179,7 @@
 	var/datum/effect/effect/system/smoke_spread/smoke = new
 	smoke.set_up(1,0, src.loc, 0)
 	smoke.start()
-	del(src)
+	qdel(src)
 
 
 /obj/machinery/atmospherics/pipe/simple/proc/normalize_dir()
@@ -216,7 +216,7 @@
 
 	else
 		if(!node1&&!node2)
-			del(src) //TODO: silent deleting looks weird
+			qdel(src) //TODO: silent deleting looks weird
 		var/have_node1 = node1?1:0
 		var/have_node2 = node2?1:0
 		icon_state = "exposed[have_node1][have_node2][invisibility ? "-f" : "" ]"
@@ -739,7 +739,7 @@
 		icon_state = "manifold_[connected]_[unconnected]"
 
 		if(!connected)
-			del(src)
+			qdel(src)
 
 	return
 
@@ -970,7 +970,7 @@
 			overlays += new/image(con,dir=8)
 
 		if(!node1 && !node2 && !node3 && !node4)
-			del(src)
+			qdel(src)
 	return
 
 
@@ -1178,5 +1178,5 @@
 			if (meter.target == src)
 				new /obj/item/pipe_meter(T)
 				del(meter)
-		del(src)
+		qdel(src)
 

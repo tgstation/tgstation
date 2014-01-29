@@ -44,12 +44,12 @@
 /obj/structure/table/proc/destroy()
 	new parts(loc)
 	density = 0
-	del(src)
+	qdel(src)
 
 /obj/structure/rack/proc/destroy()
 	new parts(loc)
 	density = 0
-	del(src)
+	qdel(src)
 
 /obj/structure/table/update_icon()
 	spawn(2) //So it properly updates when deleting
@@ -248,11 +248,11 @@
 /obj/structure/table/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(25))
@@ -581,14 +581,14 @@
 /obj/structure/rack/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 		if(2.0)
-			del(src)
+			qdel(src)
 			if(prob(50))
 				new /obj/item/weapon/rack_parts(src.loc)
 		if(3.0)
 			if(prob(25))
-				del(src)
+				qdel(src)
 				new /obj/item/weapon/rack_parts(src.loc)
 
 /obj/structure/rack/blob_act()
