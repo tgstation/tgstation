@@ -881,7 +881,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom/attack_self(mob/user as mob)
 	if(istype(user.loc,/turf/space))
 		return
-	new /mob/living/simple_animal/mushroom(user.loc)
+	new /mob/living/simple_animal/hostile/mushroom(user.loc)
 	del(src)
 
 	user << "<span class='notice'>You plant the walking mushroom.</span>"
