@@ -2,10 +2,6 @@
 	name = "item"
 	icon = 'icons/obj/items.dmi'
 	var/item_state = null
-	var/r_speed = 1.0
-	var/health = null
-	var/burn_point = null
-	var/burning = null
 	var/hitsound = null
 	var/throwhitsound = null
 	var/throwtapsound = 'sound/weapons/throwtap.ogg'
