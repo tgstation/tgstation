@@ -271,9 +271,19 @@
 								equip_to_slot(wearing, slot, redraw_mob)
 					// oh god what am I doing - N3X
 					if(slot_l_ear)
+						//testing("SLOT l_ear: Adding [W], replacing [isnull(H.l_ear)?"Nothing":"[H.l_ear]"]")
 						wearing = H.l_ear
 						equip_to_slot(W, slot, redraw_mob)
 						if(wearing)
+							// Check for other ear.
+							if(wearing.slot_flags & SLOT_TWOEARS)
+								var/obj/item/clothing/ears/O = H.r_ear
+								if(istype(O,/obj/item/clothing/ears/offear))
+									u_equip(O)
+									del(O)
+								else
+									del(wearing)
+									wearing=O
 							if(hand)
 								r_hand = wearing
 								update_inv_r_hand()
@@ -286,9 +296,19 @@
 								equip_to_slot(wearing, slot, redraw_mob)
 					// aaaaaaaaa
 					if(slot_r_ear)
+						//testing("SLOT l_ear: Adding [W], replacing [isnull(H.r_ear)?"Nothing":"[H.r_ear]"]")
 						wearing = H.r_ear
 						equip_to_slot(W, slot, redraw_mob)
 						if(wearing)
+							// Check for other ear.
+							if(wearing.slot_flags & SLOT_TWOEARS)
+								var/obj/item/clothing/ears/O = H.l_ear
+								if(istype(O,/obj/item/clothing/ears/offear))
+									u_equip(O)
+									del(O)
+								else
+									del(wearing)
+									wearing=O
 							if(hand)
 								r_hand = wearing
 								update_inv_r_hand()
