@@ -231,7 +231,7 @@
 
 	if(affecting.brute_dam >= (affecting.max_damage / 2) && affecting.state != ORGAN_REMOVED) //if it has taken significant enough damage
 		if(prob(dismember_chance))
-			var/Loc = get_turf(owner)
+			var/turf/T = get_turf(owner)
 
 			if(affecting.body_part == HEAD)
 				return
@@ -240,17 +240,17 @@
 				for(var/obj/item/organ/O in owner.internal_organs)
 					if(!istype(O, /obj/item/organ/brain))
 						owner.internal_organs -= O
-						O.loc = Loc
+						O.loc = T
 
 			if(affecting.body_part == ARM_RIGHT || affecting.body_part == ARM_LEFT)
 				if(owner.handcuffed)
-					owner.handcuffed.loc = Loc
+					owner.handcuffed.loc = T
 					owner.handcuffed = null
 					owner.update_inv_handcuffed(0)
 
 			if(affecting.body_part == LEG_RIGHT || affecting.body_part == LEG_LEFT)
 				if(owner.legcuffed)
-					owner.legcuffed.loc = Loc
+					owner.legcuffed.loc = T
 					owner.legcuffed = null
 					owner.update_inv_legcuffed(0)
 
