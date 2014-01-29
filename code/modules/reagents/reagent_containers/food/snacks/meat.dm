@@ -2,7 +2,6 @@
 	name = "meat"
 	desc = "A slab of meat"
 	icon_state = "meat"
-	health = 180
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
