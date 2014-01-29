@@ -16,6 +16,7 @@ var/global/list/uncollectable_vars=list(
 	"parent_type",
 	"step_x",
 	"step_y",
+	"step_z",
 	"tag",
 	"type",
 	"vars",
