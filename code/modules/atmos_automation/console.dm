@@ -1,6 +1,6 @@
 /obj/machinery/computer/general_air_control/atmos_automation
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "atmos"
+	icon_state = "aac"
 
 	show_sensors=0
 
@@ -23,6 +23,19 @@
 		if(on)
 			for(var/datum/automation/A in automations)
 				A.process()
+
+	update_icon()
+		icon_state = initial(icon_state)
+		// Broken
+		if(stat & BROKEN)
+			icon_state += "b"
+
+		// Powered
+		else if(stat & NOPOWER)
+			icon_state = initial(icon_state)
+			icon_state += "0"
+		else if(on)
+			icon_state += "_active"
 
 	proc/request_device_refresh(var/device)
 		send_signal(list("tag"=device, "status"))
@@ -95,6 +108,7 @@
 		if(href_list["on"])
 			on = !on
 			updateUsrDialog()
+			update_icon()
 			return 1
 
 		if(href_list["add"])
@@ -121,7 +135,7 @@
 					if(!A) continue
 					A.OnReset()
 			else
-				var/datum/automation/A=locate(href_list["label"])
+				var/datum/automation/A=locate(href_list["reset"])
 				if(!A) return 1
 				A.OnReset()
 			updateUsrDialog()
@@ -136,12 +150,30 @@
 					A.OnRemove()
 					automations.Remove(A)
 			else
-				var/datum/automation/A=locate(href_list["label"])
+				var/datum/automation/A=locate(href_list["remove"])
 				if(!A) return 1
 				A.OnRemove()
 				automations.Remove()
 			updateUsrDialog()
 			return 1
+
+	proc/MakeCompare(var/datum/automation/a, var/datum/automation/b, var/comparetype)
+		var/datum/automation/compare/compare=new(src)
+		compare.comparator = comparetype
+		compare.children[1] = a
+		compare.children[2] = b
+		return compare
+
+	proc/MakeNumber(var/value)
+		var/datum/automation/static_value/val = new(src)
+		val.value=value
+		return val
+
+	proc/MakeGetSensorData(var/sns_tag,var/field)
+		var/datum/automation/get_sensor_data/sensor=new(src)
+		sensor.sensor=sns_tag
+		sensor.field=field
+		return sensor
 
 /obj/machinery/computer/general_air_control/atmos_automation/burnchamber
 	var/injector_tag="inc_in"
@@ -222,3 +254,150 @@
 		i.children_then.Add(inj_off)
 
 		automations += i
+
+/obj/machinery/computer/general_air_control/atmos_automation/air_mixing
+	var/n2_injector_tag="air_n2_in"
+	var/o2_injector_tag="air_o2_in"
+	var/output_tag="air_out"
+	var/sensor_tag="air_sensor"
+	frequency=1443
+	var/temperature=1000
+	New()
+		..()
+		buildO2()
+		buildN2()
+		buildOutletVent()
+
+	proc/buildO2()
+		///////////////////////////////////////////////////////////////
+		// Oxygen Injection
+		///////////////////////////////////////////////////////////////
+
+		var/datum/automation/set_injector_power/inj_on=new(src)
+		inj_on.injector=o2_injector_tag
+		inj_on.state=1
+
+		var/datum/automation/set_injector_power/inj_off=new(src)
+		inj_off.injector=o2_injector_tag
+		inj_off.state=0
+
+		var/datum/automation/if_statement/i = new (src)
+		i.label = "Oxygen Injection"
+		i.condition = MakeCompare(
+			MakeGetSensorData(sensor_tag,"oxygen"),
+			MakeNumber(20),
+			"Less Than or Equal to"
+		)
+		i.children_then.Add(inj_on)
+		i.children_else.Add(inj_off)
+
+		automations += i
+
+	proc/buildN2()
+		///////////////////////////////////////////////////////////////
+		// Nitrogen Injection
+		///////////////////////////////////////////////////////////////
+		/*
+		if(get_sensor_data("pressure") < 100)
+			injector_on()
+		else
+			if(get_sensor_data("pressure") > 5000)
+				injector_off()
+		*/
+
+		var/datum/automation/set_injector_power/inj_on=new(src)
+		inj_on.injector=n2_injector_tag
+		inj_on.state=1
+
+		var/datum/automation/set_injector_power/inj_off=new(src)
+		inj_off.injector=n2_injector_tag
+		inj_off.state=0
+
+		var/datum/automation/if_statement/if_on = new (src)
+		if_on.label = "Nitrogen Injection"
+		if_on.condition = MakeCompare(
+			MakeGetSensorData(sensor_tag,"pressure"),
+			MakeNumber(100),
+			"Less Than"
+		)
+		if_on.children_then.Add(inj_on)
+
+
+		var/datum/automation/if_statement/if_off=new(src)
+		if_off.condition=MakeCompare(
+			MakeGetSensorData(sensor_tag,"pressure"),
+			MakeNumber(5000),
+			"Greater Than"
+		)
+		if_off.children_then.Add(inj_off)
+
+		if_on.children_else.Add(if_off)
+
+		automations += if_on
+
+	proc/buildOutletVent()
+		///////////////////////////////////////////////////////////////
+		// Outlet Management
+		///////////////////////////////////////////////////////////////
+		/*
+			if(get_sensor_data("pressure") >= 5000 && get_sensor_data("oxygen") >= 20)
+				vent_on()
+			else
+				if(get_sensor_data("oxygen") < 20 || get_sensor_data("pressure") < 100)
+					vent_off()
+		*/
+
+		var/datum/automation/set_vent_pump_power/vp_on=new(src)
+		vp_on.vent_pump=output_tag
+		vp_on.state=1
+
+		var/datum/automation/set_vent_pump_power/vp_off=new(src)
+		vp_off.vent_pump=output_tag
+		vp_off.state=0
+
+		var/datum/automation/if_statement/if_on=new(src)
+		if_on.label="Air Output"
+
+		var/datum/automation/and/and_on=new(src)
+		and_on.children.Add(
+			MakeCompare(
+				MakeGetSensorData(sensor_tag,"pressure"),
+				MakeNumber(5000),
+				"Greater Than or Equal to"
+			)
+		)
+		and_on.children.Add(
+			MakeCompare(
+				MakeGetSensorData(sensor_tag,"oxygen"),
+				MakeNumber(20),
+				"Greater Than or Equal to"
+			)
+		)
+		if_on.condition=and_on
+		if_on.children_then.Add(vp_on)
+
+		//////////////////////////////
+
+		var/datum/automation/if_statement/if_off=new(src)
+
+		var/datum/automation/or/or_off=new(src)
+		or_off.children.Add(
+			MakeCompare(
+				MakeGetSensorData(sensor_tag,"pressure"),
+				MakeNumber(100),
+				"Less Than"
+			)
+		)
+		or_off.children.Add(
+			MakeCompare(
+				MakeGetSensorData(sensor_tag,"oxygen"),
+				MakeNumber(20),
+				"Less Than"
+			)
+		)
+		if_off.condition=or_off
+		if_off.children_then.Add(vp_off)
+
+		if_on.children_else.Add(if_off)
+
+		automations += if_on

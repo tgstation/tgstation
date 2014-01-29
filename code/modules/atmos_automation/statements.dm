@@ -64,11 +64,11 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 		parent.updateUsrDialog()
 		return 1
 	if(href_list["reset"])
-		if(href_list["remove"]=="*")
+		if(href_list["reset"]=="*")
 			for(var/datum/automation/A in children)
 				A.OnReset()
 		else
-			var/datum/automation/A=locate(href_list["remove"])
+			var/datum/automation/A=locate(href_list["reset"])
 			if(!A) return 1
 			A.OnReset()
 		parent.updateUsrDialog()
@@ -175,8 +175,8 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 			out += "<ul>"
 			for(var/datum/automation/stmt in children_else)
 				out += {"<li>
-							\[<a href="?src=\ref[src];reset=\ref[stmt];context=then">Reset</a> |
-							<a href="?src=\ref[src];remove=\ref[stmt];context=then">&times;</a>\]
+							\[<a href="?src=\ref[src];reset=\ref[stmt];context=else">Reset</a> |
+							<a href="?src=\ref[src];remove=\ref[stmt];context=else">&times;</a>\]
 							[stmt.GetText()]
 						</li>"}
 			out += "</ul>"
@@ -222,13 +222,13 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 			parent.updateUsrDialog()
 			return 1
 		if(href_list["reset"])
-			if(href_list["remove"]=="*")
+			if(href_list["reset"]=="*")
 				for(var/datum/automation/A in children_then)
 					A.OnReset()
 				for(var/datum/automation/A in children_else)
 					A.OnReset()
 			else
-				var/datum/automation/A=locate(href_list["remove"])
+				var/datum/automation/A=locate(href_list["reset"])
 				if(!A) return 1
 				A.OnReset()
 			parent.updateUsrDialog()
