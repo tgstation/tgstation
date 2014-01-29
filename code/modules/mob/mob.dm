@@ -866,3 +866,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 	resting = max(resting + amount,0)
 	update_canmove()
 	return
+
+/mob/proc/has_arms() //checks that whomever is using this has arms - RR
+	return 1

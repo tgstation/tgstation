@@ -405,7 +405,7 @@
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 
-		if(!has_hands(H))
+		if(!H.has_arms())
 			return 0
 
 	if(handcuffed)

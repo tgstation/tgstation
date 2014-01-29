@@ -418,7 +418,7 @@
 /obj/mecha/attack_hand(mob/user as mob)
 	src.log_message("Attack by hand/paw. Attacker - [user].",1)
 
-	if(!has_hands(user))
+	if(!user.has_arms())
 		return
 
 	if ((HULK in user.mutations) && !prob(src.deflect_chance))

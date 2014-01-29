@@ -124,7 +124,7 @@
 		var/obj/item/weapon/storage/S = src.loc
 		S.remove_from_storage(src)
 
-	if(!has_hands(user))
+	if(!user.has_arms())
 		return
 
 	src.throwing = 0

@@ -169,6 +169,14 @@ var/list/powerinstances
 	allowduringlesserform = 0
 	verbpath = /mob/living/carbon/proc/changeling_arm_blade
 
+/datum/power/changeling/regrow_limbs
+	name = "Regrow Limbs"
+	desc = "We regrow our limbs if they are missing"
+	helptext = "Cannot be used while in lesser form, each limb regrown causes genetic damage."
+	genomecost = 1
+	allowduringlesserform = 0
+	verbpath = /mob/living/carbon/proc/changeling_limb_regrowth
+
 // Modularchangling, totally stolen from the new player panel.  YAYY
 /datum/changeling/proc/EvolutionMenu()//The new one
 	set name = "-Evolution Menu-"//Dashes are so it's listed before all the other abilities.

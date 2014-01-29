@@ -538,6 +538,11 @@ var/list/datum/dna/hivemind_bank = list()
 	set category = "Changeling"
 	set name = "Arm Blade (20)"
 
+	if(!ishuman(src))
+		return
+
+	var/mob/living/carbon/human/H = src
+
 	if(istype(l_hand, /obj/item/weapon/melee/arm_blade)) //Not the nicest way to do it, but eh
 		u_equip(l_hand)
 		return
@@ -550,13 +555,42 @@ var/list/datum/dna/hivemind_bank = list()
 	if(!changeling)
 		return
 
-	drop_item(get_active_hand())
+	if(H.has_arms()) //if the active hand exists
+		drop_item(get_active_hand())
+		put_in_hands(new /obj/item/weapon/melee/arm_blade(src))
+		changeling.geneticdamage += 6 //Only charge if you actually get the blades
+		changeling.chem_charges -= 20
+	else
+		H <<"<span class='warning'>You cannot form your arm into a blade if it isn't attached!</span>"
+		return
 
-	put_in_hands(new /obj/item/weapon/melee/arm_blade(src))
-	changeling.geneticdamage += 6
 
-	changeling.chem_charges -= 20
+/mob/living/carbon/proc/changeling_limb_regrowth()
+	set category = "Changeling"
+	set name = "Regrow Limbs (40)"
+	set desc = "Regrows your limbs, if you lost them"
 
+	if(!ishuman(src))
+		return
+
+	var/datum/changeling/changeling = changeling_power(40)
+	if(!changeling)
+		return
+
+	var/mob/living/carbon/human/H = src
+
+	for(var/obj/item/organ/limb/L in H.organs)
+		if(L.state == ORGAN_REMOVED)
+			L.state = ORGAN_FINE
+			L.burn_dam = 0
+			L.brute_dam = 0
+			changeling.geneticdamage += 3
+			H.visible_message("<span class='danger'>[src] has regrown their [L.getDisplayName()]!</span>")
+
+	changeling.chem_charges -= 40
+
+	H.updatehealth()
+	H.update_body()
 
 //////////
 //STINGS//	//They get a pretty header because there's just so fucking many of them ;_;
@@ -708,3 +742,5 @@ var/list/datum/dna/hivemind_bank = list()
 
 	feedback_add_details("changeling_powers","CS")
 	return 1
+
+

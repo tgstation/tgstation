@@ -117,3 +117,20 @@
 
 /mob/living/carbon/human/InCritical()
 	return (health <= config.health_threshold_crit && stat == UNCONSCIOUS)
+
+/mob/living/carbon/human/has_arms()  //checks that whomever is using this has arms - RR
+	if(!ishuman(src))
+		return
+
+	var/obj/item/organ/limb/L
+
+	if(hand)
+		L = get_organ("l_arm")
+	else
+		L = get_organ("r_arm")
+	if(L)
+		if(L.state == ORGAN_REMOVED)
+			src << "<span class='notice'>You look at your stump.</span>"
+			return 0
+		else
+			return 1

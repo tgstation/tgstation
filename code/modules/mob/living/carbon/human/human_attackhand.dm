@@ -2,7 +2,7 @@
 	if(..())	//to allow surgery to return properly.
 		return
 
-	if(!has_hands(M))
+	if(!M.has_arms())
 		return
 
 	if((M != src) && check_shields(0, M.name))

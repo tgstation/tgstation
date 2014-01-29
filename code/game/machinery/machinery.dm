@@ -210,7 +210,7 @@ Class Procs:
 	if(user.lying || user.stat)
 		return 1
 
-	if(!has_hands(user))
+	if(!user.has_arms())
 		return 1
 
 	if ( ! (istype(usr, /mob/living/carbon/human) || \
