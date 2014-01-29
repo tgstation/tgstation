@@ -418,20 +418,41 @@
 //Starts healing you every second for 10 seconds. Can be used whilst unconscious.
 /mob/living/carbon/proc/changeling_fleshmend()
 	set category = "Changeling"
-	set name = "Fleshmend (30)"
+	set name = "Fleshmend (40)"
 	set desc = "Begins rapidly regenerating.  Does not effect stuns or chemicals."
 
-	var/datum/changeling/changeling = changeling_power(30,0,100,UNCONSCIOUS)
-	if(!changeling)	return 0
-	src.mind.changeling.chem_charges -= 30
+	var/datum/changeling/changeling = changeling_power(40,0,100,UNCONSCIOUS)
+	if(!changeling)
+		return 0
 
-	src << "<span class='notice'>We begin to heal rapidly.</span>"
+	if(!ishuman(src))
+		return
+
+	var/mob/living/carbon/human/H = src
+
+	H << "<span class='notice'>We begin to heal rapidly.</span>"
+
+	for(var/obj/item/organ/limb/L in H.organs)
+		if(L.state == ORGAN_REMOVED)
+			L.state = ORGAN_FINE
+			L.burn_dam = 0
+			L.brute_dam = 0
+			L.brutestate = 0
+			L.burnstate = 0
+			changeling.geneticdamage += 3
+			H.visible_message("<span class='danger'>[src] has regrown their [L.getDisplayName()]!</span>")
+
 	spawn(0)
 		for(var/i = 0, i<10,i++)
 			adjustBruteLoss(-10)
 			adjustOxyLoss(-10)
 			adjustFireLoss(-10)
 			sleep(10)
+
+	changeling.chem_charges -= 40
+
+	H.updatehealth()
+	H.update_body()
 
 	feedback_add_details("changeling_powers","RR")
 	return 1
@@ -563,34 +584,6 @@ var/list/datum/dna/hivemind_bank = list()
 	else
 		H <<"<span class='warning'>You cannot form your arm into a blade if it isn't attached!</span>"
 		return
-
-
-/mob/living/carbon/proc/changeling_limb_regrowth()
-	set category = "Changeling"
-	set name = "Regrow Limbs (40)"
-	set desc = "Regrows your limbs, if you lost them"
-
-	if(!ishuman(src))
-		return
-
-	var/datum/changeling/changeling = changeling_power(40)
-	if(!changeling)
-		return
-
-	var/mob/living/carbon/human/H = src
-
-	for(var/obj/item/organ/limb/L in H.organs)
-		if(L.state == ORGAN_REMOVED)
-			L.state = ORGAN_FINE
-			L.burn_dam = 0
-			L.brute_dam = 0
-			changeling.geneticdamage += 3
-			H.visible_message("<span class='danger'>[src] has regrown their [L.getDisplayName()]!</span>")
-
-	changeling.chem_charges -= 40
-
-	H.updatehealth()
-	H.update_body()
 
 //////////
 //STINGS//	//They get a pretty header because there's just so fucking many of them ;_;

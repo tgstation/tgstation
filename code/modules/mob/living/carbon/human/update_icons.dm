@@ -316,6 +316,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 	apply_overlay(BODYPARTS_LAYER)
 
 	update_damage_overlays() //No limb no damage overlay
+	update_inv_gloves() //No arms no blood on your hands
 	update_hair() //No head no hair
 
 
@@ -423,10 +424,12 @@ Please contact me on #coderbus IRC. ~Carnie x
 		overlays_standing[GLOVES_LAYER]	= standing
 
 		if(gloves.blood_DNA)
-			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
+			if(has_arms())
+				standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
 	else
 		if(blood_DNA)
-			overlays_standing[GLOVES_LAYER]	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
+			if(has_arms())
+				overlays_standing[GLOVES_LAYER]	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
 
 	apply_overlay(GLOVES_LAYER)
 

@@ -103,8 +103,8 @@ var/list/powerinstances
 
 /datum/power/changeling/fleshmend
 	name = "Fleshmend"
-	desc = "We evolve the ability to rapidly regenerate, restoring the health of the body we use."
-	helptext = "Heals a moderate amount of damage every tick. Can be used while unconscious."
+	desc = "We evolve the ability to rapidly regenerate, restoring the health and limbs of the body we use."
+	helptext = "Heals a moderate amount of damage every tick, Regrows limbs. Can be used while unconscious."
 	genomecost = 1
 	verbpath = /mob/living/carbon/proc/changeling_fleshmend
 
@@ -168,14 +168,6 @@ var/list/powerinstances
 	genomecost = 1
 	allowduringlesserform = 0
 	verbpath = /mob/living/carbon/proc/changeling_arm_blade
-
-/datum/power/changeling/regrow_limbs
-	name = "Regrow Limbs"
-	desc = "We regrow our limbs if they are missing"
-	helptext = "Cannot be used while in lesser form, each limb regrown causes genetic damage."
-	genomecost = 1
-	allowduringlesserform = 0
-	verbpath = /mob/living/carbon/proc/changeling_limb_regrowth
 
 // Modularchangling, totally stolen from the new player panel.  YAYY
 /datum/changeling/proc/EvolutionMenu()//The new one

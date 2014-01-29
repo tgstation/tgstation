@@ -260,6 +260,9 @@
 
 			affecting.drop_limb(owner)
 
+			affecting.brutestate = 0
+			affecting.burnstate = 0
+
 			if(affecting.body_part != CHEST)
 				owner.visible_message("<span class='danger'><B>[owner]'s [affecting.getDisplayName()] has been violently dismembered!</B></span>")
 			else
@@ -339,6 +342,8 @@
 		var/obj/item/organ/limb/L = src
 		L.burn_dam = 0
 		L.brute_dam = 0
+		L.brutestate = 0
+		L.burnstate = 0
 		if(L.owner)
 			var/mob/living/carbon/human/H = L.owner
 			H.update_body()
