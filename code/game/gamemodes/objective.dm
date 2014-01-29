@@ -249,14 +249,16 @@ datum/objective/nuclear
 
 
 
+var/global/list/possible_items = list()
 datum/objective/steal
 	var/datum/objective_item/targetinfo = null //Save the chosen item datum so we can access it later.
 	var/obj/item/steal_target = null //Needed for custom objectives (they're just items, not datums).
-	var/list/possible_items = list()
 	dangerrating = 5 //Overridden by the individual item's difficulty, but defaults to 5 for custom objectives.
 
 datum/objective/steal/New()
-	possible_items = init_subtypes(/datum/objective_item)
+	..()
+	if(!possible_items.len)//Only need to fill the list when it's needed.
+		init_subtypes(/datum/objective_item/steal,possible_items)
 
 datum/objective/steal/find_target()
 	return set_target(pick(possible_items))
@@ -296,11 +298,29 @@ datum/objective/steal/check_completion()
 
 	for(var/obj/I in all_items) //Check for items
 		if(istype(I, steal_target))
-			if(targetinfo)
-				return targetinfo.check_special_completion(steal_target) //Returns 1 by default. Items with special checks will return 1 if the conditions are fulfilled.
+			if(targetinfo && targetinfo.check_special_completion(I))//Returns 1 by default. Items with special checks will return 1 if the conditions are fulfilled.
+				return 1
 			else //If there's no targetinfo, then that means it was a custom objective. At this point, we know you have the item, so return 1.
 				return 1
+
+		if(targetinfo && I.type in targetinfo.altitems) //Ok, so you don't have the item. Do you have an alternative, at least?
+			if(targetinfo.check_special_completion(I))//Yeah, we do! Don't return 0 if we don't though - then you could fail if you had 1 item that didn't pass and got checked first!
+				return 1
 	return 0
+
+
+
+var/global/list/possible_items_special = list()
+datum/objective/steal/special //ninjas are so special they get their own subtype good for them
+
+datum/objective/steal/special/New()
+	..()
+	if(!possible_items_special.len)
+		init_subtypes(/datum/objective_item/special,possible_items)
+		init_subtypes(/datum/objective_item/stack,possible_items)
+
+datum/objective/steal/special/find_target()
+	return set_target(pick(possible_items_special))
 
 
 

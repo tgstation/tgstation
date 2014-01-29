@@ -100,7 +100,9 @@
 						Mind.objectives += O
 
 					if(2)	//steal
-						world << "Honk!"
+						var/datum/objective/steal/special/O = new /datum/objective/steal/special()
+						O.owner = Mind
+						Mind.objectives += O
 
 					if(3)	//protect/kill
 						if(!possible_targets.len)	continue
