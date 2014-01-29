@@ -26,7 +26,7 @@ var/global/datum/controller/garbage_collector/garbage
 			return
 		for(var/vname in A.vars)
 			switch(vname)
-				if("tag","bestF","type","parent_type","vars","type","loc","locs","vars", "parent", "parent_type","verbs","ckey","key","x","y","z","contents", "luminosity", "gender", "alpha", "color")
+				if("tag","bestF","type","parent_type","vars","type","loc","locs","vars", "parent", "parent_type","verbs","ckey","key","x","y","z","contents", "luminosity", "gender", "alpha", "color", "step_x", "step_y")
 					continue
 				else
 					A.vars[vname]=null
