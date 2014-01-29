@@ -305,10 +305,8 @@
 			if(affecting.state == ORGAN_FINE)
 				num_of_arms += 1
 
-	if(num_of_arms >= 1)
-		return num_of_arms
-	else
-		return 0
+	return num_of_arms
+
 
 //Informs us if the user has atleast 1 functional Leg.
 /mob/living/carbon/human/proc/leg_ok()
@@ -319,10 +317,7 @@
 			if(affecting.state == ORGAN_FINE)
 				num_of_legs += 1
 
-	if(num_of_legs >= 1)
-		return num_of_legs
-	else
-		return 0
+	return num_of_legs
 
 //////////////// QUICK ORGAN CHANGE PROCS \\\\\\\\\\\\\\\\
 
@@ -352,34 +347,34 @@
 
 /obj/item/organ/limb/proc/drop_limb(var/location) //Dummy limbs.
 	var/obj/item/organ/limb/LIMB
-	var/Loc
+	var/turf/T
 
 	if(location)
-		Loc = get_turf(location)
+		T = get_turf(location)
 	else
-		Loc = get_turf(src)
+		T = get_turf(src)
 
 	if(status == ORGAN_ORGANIC)	//No chests, heads, they can't be removed
 		switch(body_part)
 			if(ARM_RIGHT)
-				LIMB = new /obj/item/organ/limb/r_arm (Loc)
+				LIMB = new /obj/item/organ/limb/r_arm (T)
 			if(ARM_LEFT)
-				LIMB = new /obj/item/organ/limb/l_arm (Loc)
+				LIMB = new /obj/item/organ/limb/l_arm (T)
 			if(LEG_RIGHT)
-				LIMB = new /obj/item/organ/limb/r_leg (Loc)
+				LIMB = new /obj/item/organ/limb/r_leg (T)
 			if(LEG_LEFT)
-				LIMB = new /obj/item/organ/limb/l_leg (Loc)
+				LIMB = new /obj/item/organ/limb/l_leg (T)
 
 	else if(status == ORGAN_ROBOTIC)
 		switch(body_part)
 			if(ARM_RIGHT)
-				LIMB = new /obj/item/augment/r_arm (Loc)
+				LIMB = new /obj/item/augment/r_arm (T)
 			if(ARM_LEFT)
-				LIMB = new /obj/item/augment/l_arm (Loc)
+				LIMB = new /obj/item/augment/l_arm (T)
 			if(LEG_RIGHT)
-				LIMB = new /obj/item/augment/r_leg (Loc)
+				LIMB = new /obj/item/augment/r_leg (T)
 			if(LEG_LEFT)
-				LIMB = new /obj/item/augment/l_leg (Loc)
+				LIMB = new /obj/item/augment/l_leg (T)
 
 	var/direction = pick(cardinal)
 	step(LIMB,direction) //Make the limb fly off
