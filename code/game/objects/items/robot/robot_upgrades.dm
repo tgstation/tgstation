@@ -150,6 +150,42 @@
 		R.icon_state="Miner+j"
 		return 1
 
+/obj/item/borg/upgrade/vanity
+	name = "vanity plating"
+	desc = "A series of porous plates that can draw colors from injected chemicals. They can be placed on borgs to increase ascetic appeal."
+	construction_cost = list("metal"=1000)
+	icon_state = "plating_mod"
+	require_module = 1
+	var/chem_volume = 15
+
+/obj/item/borg/upgrade/vanity/New()
+	create_reagents(chem_volume)
+	..()
+
+/obj/item/borg/upgrade/vanity/attackby(obj/item/weapon/W as obj)
+	if(istype(W,/obj/item/weapon/reagent_containers/syringe))
+		var/obj/item/weapon/reagent_containers/syringe/S = W
+		if(S.reagents.total_volume != 0)
+			S.reagents.trans_to(src.reagents, chem_volume)
+
+/obj/item/borg/upgrade/vanity/on_reagent_change()
+	if(reagents)
+		color = mix_color_from_reagents(reagents.reagent_list)
+
+/obj/item/borg/upgrade/vanity/action(var/mob/living/silicon/robot/R)
+	if(..()) return 0
+
+	if(!color)
+		usr << "You haven't added any coloring!"
+		return 0
+
+	icon = 'icons/mob/robots.dmi'
+	icon_state = R.icon_state
+	icon_state += " plating"
+	color = "[color]99"
+	R.vanity = image(src, "layer" = 5)
+
+	return 1
 
 /obj/item/borg/upgrade/syndicate/
 	name = "illegal equipment module"
