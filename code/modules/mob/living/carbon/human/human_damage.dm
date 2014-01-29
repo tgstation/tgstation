@@ -43,15 +43,20 @@
 		heal_overall_damage(0, -amount)
 
 /mob/living/carbon/human/Stun(amount)
-	if(HULK in mutations)	return
+	if(HULK in mutations)
+		Weaken(amount)//Stun weakens hulks
+		return
 	..()
 
 /mob/living/carbon/human/Weaken(amount)
-	if(HULK in mutations)	return
+	if(HULK in mutations)
+		return round(amount/2,1)//Weaken is cut in half
 	..()
 
 /mob/living/carbon/human/Paralyse(amount)
-	if(HULK in mutations)	return
+	if(HULK in mutations)
+		Stun(amount)//Paralyse stuns hulks
+		return
 	..()
 
 /mob/living/carbon/human/update_canmove()

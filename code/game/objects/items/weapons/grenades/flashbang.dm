@@ -38,8 +38,6 @@
 		if(ishuman(M))
 			if(istype(M:ears, /obj/item/clothing/ears/earmuffs))
 				ear_safety += 2
-			if(HULK in M.mutations)
-				ear_safety += 1
 			if(istype(M:head, /obj/item/clothing/head/helmet))
 				ear_safety += 1
 
