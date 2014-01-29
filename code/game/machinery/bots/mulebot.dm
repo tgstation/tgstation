@@ -137,7 +137,7 @@ var/global/mulebot_count = 0
 			user << "\blue [src] does not need a repair!"
 	else if(istype(I, /obj/item/device/multitool) || istype(I, /obj/item/weapon/wirecutters))
 		if(open)
-			interact(usr, 0)
+			attack_hand(usr)
 	else if(load && ismob(load))  // chance to knock off rider
 		if(prob(1+I.force * 2))
 			unload(0)
