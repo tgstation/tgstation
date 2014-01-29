@@ -191,6 +191,15 @@
 		new /obj/item/weapon/reagent_containers/pill/inaprovaline( src )
 		new /obj/item/weapon/reagent_containers/pill/inaprovaline( src )
 
+/obj/item/weapon/storage/pill_bottle/stimulant
+	name = "bottle of stimulant pills"
+	desc = "Guaranteed to give you that extra burst of energy during a long shift!"
+
+/obj/item/weapon/storage/pill_bottle/stimulant/New()
+	..()
+	new /obj/item/weapon/reagent_containers/pill/stimulant( src )
+	new /obj/item/weapon/reagent_containers/pill/stimulant( src )
+	new /obj/item/weapon/reagent_containers/pill/stimulant( src )
 
 /obj/item/weapon/storage/pill_bottle/dice
 	name = "bag of dice"
