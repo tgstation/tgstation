@@ -735,6 +735,7 @@
 #include "code\modules\awaymissions\maploader\writer.dm"
 #include "code\modules\awaymissions\mission_code\Academy.dm"
 #include "code\modules\awaymissions\mission_code\blackmarketpackers.dm"
+#include "code\modules\awaymissions\mission_code\box2550Away.dm"
 #include "code\modules\awaymissions\mission_code\centcomAway.dm"
 #include "code\modules\awaymissions\mission_code\challenge.dm"
 #include "code\modules\awaymissions\mission_code\spacebattle.dm"
