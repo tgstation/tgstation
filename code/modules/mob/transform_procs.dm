@@ -371,6 +371,15 @@
 	. = new_slime
 	del(src)
 
+/mob/living/carbon/human/proc/Blobize()
+	if (notransform)
+		return
+	var/obj/effect/blob/core/new_blob = new /obj/effect/blob/core (loc)
+	new_blob.create_overmind(src.client , 1)
+	gib(src)
+
+
+
 /mob/living/carbon/human/proc/corgize()
 	if (notransform)
 		return

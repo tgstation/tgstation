@@ -103,7 +103,8 @@ var/global/floorIsLava = 0
 				body += "<A href='?_src_=holder;makeai=\ref[M]'>Make AI</A> | "
 				body += "<A href='?_src_=holder;makerobot=\ref[M]'>Make Robot</A> | "
 				body += "<A href='?_src_=holder;makealien=\ref[M]'>Make Alien</A> | "
-				body += "<A href='?_src_=holder;makeslime=\ref[M]'>Make Slime</A> "
+				body += "<A href='?_src_=holder;makeslime=\ref[M]'>Make Slime</A> | "
+				body += "<A href='?_src_=holder;makeblob=\ref[M]'>Make Blob</A> | "
 
 			//Simple Animals
 			if(isanimal(M))

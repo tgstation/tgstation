@@ -165,6 +165,22 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	else
 		alert("Invalid mob")
 
+/client/proc/cmd_admin_blobize(var/mob/M in mob_list)
+	set category = "Fun"
+	set name = "Make Blob"
+
+	if(!ticker)
+		alert("Wait until the game starts")
+		return
+	if(istype(M, /mob/living/carbon/human))
+		log_admin("[key_name(src)] has blobized [M.key].")
+		spawn(10)
+			M:Blobize()
+
+	else
+		alert("Invalid mob")
+
+
 /client/proc/cmd_admin_animalize(var/mob/M in mob_list)
 	set category = "Fun"
 	set name = "Make Simple Animal"
