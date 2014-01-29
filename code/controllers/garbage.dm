@@ -1,7 +1,29 @@
 
 #define GC_COLLECTIONS_PER_TICK 100
 var/global/datum/controller/garbage_collector/garbage
-
+var/global/list/uncollectable_vars=list(
+	"alpha",
+	"bestF",
+	"ckey",
+	"color",
+	"contents",
+	"gender",
+	"key",
+	//"loc",
+	"locs",
+	"luminosity",
+	"parent",
+	"parent_type",
+	"step_x",
+	"step_y",
+	"tag",
+	"type",
+	"vars",
+	"verbs",
+	"x",
+	"y",
+	"z",
+)
 /datum/controller/garbage_collector
 	var/list/queue=list()
 	var/waiting=0
@@ -25,11 +47,9 @@ var/global/datum/controller/garbage_collector/garbage
 			del(A)
 			return
 		for(var/vname in A.vars)
-			switch(vname)
-				if("tag","bestF","type","parent_type","vars","type","loc","locs","vars", "parent", "parent_type","verbs","ckey","key","x","y","z","contents", "luminosity", "gender", "alpha", "color", "step_x", "step_y")
-					continue
-				else
-					A.vars[vname]=null
+			if(vname in uncollectable_vars)
+				continue
+			A.vars[vname]=null
 		queue.Remove(A)
 
 	proc/process()
