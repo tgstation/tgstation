@@ -54,6 +54,11 @@
 	if(HULK in mutations)	return
 	..()
 
+/mob/living/carbon/human/update_canmove()
+	var/old_lying = lying
+	. = ..()
+	if(lying && !old_lying && !resting && !buckled) // fell down
+		playsound(loc, "bodyfall", 50, 1, -1)
 ////////////////////////////////////////////
 
 //Returns a list of damaged organs
