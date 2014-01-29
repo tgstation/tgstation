@@ -32,7 +32,6 @@
 	unsuitable_atoms_damage = 15
 	faction = "russian"
 	status_flags = CANPUSH
-	idle_env_destroyer = 0
 
 
 /mob/living/simple_animal/hostile/russian/ranged
@@ -41,6 +40,8 @@
 	corpse = /obj/effect/landmark/mobcorpse/russian/ranged
 	weapon1 = /obj/item/weapon/gun/projectile/revolver/mateba
 	ranged = 1
+	retreat_distance = 5
+	minimum_distance = 5
 	projectiletype = /obj/item/projectile/bullet
 	projectilesound = 'sound/weapons/Gunshot.ogg'
 	casingtype = /obj/item/ammo_casing/a357
