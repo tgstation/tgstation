@@ -228,7 +228,7 @@
 	if("setdir" in href_list)
 		operating=0
 		dir=text2num(href_list["setdir"])
-		initialize()
+		updateConfig()
 
 	if(href_list["unlink"])
 		P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
