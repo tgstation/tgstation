@@ -180,3 +180,10 @@
 	if (src.master)
 		return src.master.attack_hand(a, b, c)
 	return
+
+/////////////////////////////
+// SINGULOTH PULL REFACTOR
+/////////////////////////////
+/atom/movable/proc/canSingulothPull(var/obj/machinery/singularity/singulo)
+	return 1
+
