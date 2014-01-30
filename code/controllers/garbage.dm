@@ -55,7 +55,7 @@ var/global/list/uncollectable_vars=list(
 		for(var/vname in A.vars)
 			if(vname in uncollectable_vars)
 				continue
-			testing("Unsetting [vname] in [A.type]!")
+			//testing("Unsetting [vname] in [A.type]!")
 			A.vars[vname]=null
 		A.loc=null
 		queue.Remove(A)
