@@ -447,6 +447,14 @@ var/list/uplink_items = list()
 	cost = 10
 	excludefrom = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/badass/syndiecards
+	name = "Syndicate Playing Cards"
+	desc = "A special deck of space-grade playing cards with a mono-molecular edge and metal reinforcement, making them lethal weapons both when wielded as a blade and when thrown. \
+	You can also play card games with them."
+	item = /obj/item/toy/cards/deck/syndicate
+	cost = 1
+	excludefrom = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/badass/balloon
 	name = "For showing that you are The Boss"
 	desc = "A useless red balloon with the syndicate logo on it, which can blow the deepest of covers."

@@ -141,4 +141,8 @@
 					if(!(original in permutated))
 						Bump(original)
 						sleep(1)
+			Range()
 		return
+
+/obj/item/projectile/proc/Range()
+	return

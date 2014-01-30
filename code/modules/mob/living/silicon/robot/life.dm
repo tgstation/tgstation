@@ -145,25 +145,25 @@
 		src.sight |= SEE_OBJS
 		src.see_in_dark = 8
 		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (src.sight_mode & BORGMESON && src.sight_mode & BORGTHERM)
-		src.sight |= SEE_TURFS
-		src.sight |= SEE_MOBS
+	else 
 		src.see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_MINIMUM
-	else if (src.sight_mode & BORGMESON)
-		src.sight |= SEE_TURFS
-		src.see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_MINIMUM
-	else if (src.sight_mode & BORGTHERM)
-		src.sight |= SEE_MOBS
-		src.see_in_dark = 8
-		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (src.stat != 2)
-		src.sight &= ~SEE_MOBS
-		src.sight &= ~SEE_TURFS
-		src.sight &= ~SEE_OBJS
-		src.see_in_dark = 8
-		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		if (src.sight_mode & BORGMESON && src.sight_mode & BORGTHERM)
+			src.sight |= SEE_TURFS
+			src.sight |= SEE_MOBS
+			src.see_invisible = SEE_INVISIBLE_MINIMUM
+		else if (src.sight_mode & BORGMESON)
+			src.sight |= SEE_TURFS
+			see_invisible = SEE_INVISIBLE_MINIMUM
+		else if (src.sight_mode & BORGTHERM)
+			src.sight |= SEE_MOBS
+			src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		else if (src.stat != 2)
+			src.sight &= ~SEE_MOBS
+			src.sight &= ~SEE_TURFS
+			src.sight &= ~SEE_OBJS
+			src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		if(see_override)
+			see_invisible = see_override
 
 	for(var/image/hud in client.images)
 		if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
