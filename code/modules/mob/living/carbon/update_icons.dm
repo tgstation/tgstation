@@ -4,7 +4,7 @@
 //IMPORTANT: Multiple animate() calls do not stack well, so try to do them all at once if you can.
 /mob/living/carbon/update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
-	var/final_pixel_y = 0
+	var/final_pixel_y = pixel_y
 	var/final_dir = dir
 	var/changed = 0
 
@@ -13,9 +13,11 @@
 		ntransform.TurnTo(lying_prev,lying)
 		lying_prev = lying	//so we don't try to animate until there's been another change.
 		if(lying != 0)
-			final_pixel_y = -6
+			final_pixel_y -= 6
 			if(dir & (EAST|WEST)) //Facing east or west
 				final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
+		else
+			final_pixel_y += 6
 
 	if(changed)
 		animate(src, transform = ntransform, time = 2, pixel_y = final_pixel_y, dir = final_dir, easing = EASE_IN|EASE_OUT)
