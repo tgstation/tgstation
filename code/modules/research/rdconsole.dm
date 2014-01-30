@@ -927,8 +927,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				Material Storage<HR><ul>"}
 
 
-			for(var/matID in linked_imprinter.materials)
-				var/datum/material/M=linked_imprinter.materials[matID]
+			for(var/matID in linked_imprinter.materials.storage)
+				var/datum/material/M=linked_imprinter.materials.storage[matID]
 				if(!(M.sheettype in linked_imprinter.allowed_materials))
 					continue
 				dat += "<li>[M.stored] cm<sup>3</sup> of [M.processed_name]"
