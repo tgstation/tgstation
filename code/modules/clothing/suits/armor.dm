@@ -10,8 +10,8 @@
 
 
 /obj/item/clothing/suit/armor/vest
-	name = "armor"
-	desc = "An armored vest that protects against some damage."
+	name = "bulletproof vest"
+	desc = "An bulletproof vest that protects against some damage. Standard issue to all Nanotrasen security personnel."
 	icon_state = "armor"
 	item_state = "armor"
 	blood_overlay_type = "armor"
@@ -59,8 +59,8 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
 /obj/item/clothing/suit/armor/bulletproof
-	name = "bulletproof vest"
-	desc = "A vest that excels in protecting the wearer against high-velocity solid projectiles."
+	name = "swat gear"
+	desc = "A suit of armor that excels in protecting the wearer against high-velocity solid projectiles. Good for special operations."
 	icon_state = "bulletproof"
 	item_state = "armor"
 	blood_overlay_type = "armor"
