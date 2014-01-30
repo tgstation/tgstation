@@ -511,7 +511,7 @@ var/global/list/uneatable = list(
 		A:gib()
 	else if(istype(A,/obj/))
 		A:ex_act(1.0)
-		if(A) del(A)
+		if(A) qdel(A)
 	else if(isturf(A))
 		var/turf/T = A
 		if(T.intact)
