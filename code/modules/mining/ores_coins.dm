@@ -81,16 +81,20 @@
 		user.visible_message("<span class='warning'>[user] strikes the [src], causing a chain reaction!</span>")
 		var/turf/bombturf = get_turf(src)
 		var/area/A = get_area(bombturf)
-		message_admins("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+		var/notify_admins = 0
+		if(z != 5)//Only annoy the admins ingame if we're triggered off the mining zlevel
+			notify_admins = 1
+		if(notify_admins)
+			message_admins("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
 		log_game("[key_name(usr)] has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
 		spawn(det_time)
 		if(primed)
 			if(quality == 3)
-				explosion(src.loc,2,4,9)
+				explosion(src.loc,2,4,9,adminlog = notify_admins)
 			if(quality == 2)
-				explosion(src.loc,1,2,5)
+				explosion(src.loc,1,2,5,adminlog = notify_admins)
 			if(quality == 1)
-				explosion(src.loc,-1,1,3)
+				explosion(src.loc,-1,1,3,adminlog = notify_admins)
 			del(src)
 	if(istype(I, /obj/item/device/analyzer) && primed)
 		primed = 0
