@@ -106,6 +106,27 @@
 
 
 // returns the powernet this cable belongs to
+
+/obj/structure/cable/proc/add_avail(var/amount)
+	if(powernet)
+		powernet.newavail += amount
+
+/obj/structure/cable/proc/add_load(var/amount)
+	if(powernet)
+		powernet.newload += amount
+
+/obj/structure/cable/proc/surplus()
+	if(powernet)
+		return powernet.avail-powernet.load
+	else
+		return 0
+
+/obj/structure/cable/proc/avail()
+	if(powernet)
+		return powernet.avail
+	else
+		return 0
+
 /obj/structure/cable/proc/get_powernet()			//TODO: remove this as it is obsolete
 	return powernet
 
