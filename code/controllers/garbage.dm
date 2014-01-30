@@ -14,6 +14,8 @@ var/global/list/uncollectable_vars=list(
 	"luminosity",
 	"parent",
 	"parent_type",
+	"step_size",
+	"glide_size",
 	"step_x",
 	"step_y",
 	"step_z",
@@ -50,7 +52,9 @@ var/global/list/uncollectable_vars=list(
 		for(var/vname in A.vars)
 			if(vname in uncollectable_vars)
 				continue
+			testing("Unsetting [vname] in [A.type]!")
 			A.vars[vname]=null
+		A.loc=null
 		queue.Remove(A)
 
 	proc/process()
