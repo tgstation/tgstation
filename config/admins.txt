@@ -10,6 +10,7 @@
 
 rolan7 = Game Master
 quarxink = Game Master
+adrix89 = Game Master
 tle = Game Master
 xsi = Game Master
 scaredofshadows = Game Master

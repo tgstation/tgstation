@@ -242,6 +242,13 @@
 	*/
 	interact(user, 0)
 
+// hostile mob escape from disposals
+/obj/machinery/disposal/attack_animal(var/mob/living/simple_animal/M)
+	if(M.environment_smash)
+		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
+		del(src)
+	return
+
 // user interaction
 /obj/machinery/disposal/interact(mob/user, var/ai=0)
 

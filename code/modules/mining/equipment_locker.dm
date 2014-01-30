@@ -4,7 +4,7 @@
 	name = "ore redemption machine"
 	desc = "A machine that accepts ore and instantly transforms it into workable material sheets, but cannot produce alloys such as Plasteel. Points for ore are generated based on type and can be redeemed at a mining equipment locker."
 	icon = 'icons/obj/machines/mining_machines.dmi'
-	icon_state = "stacker"
+	icon_state = "ore_redemption"
 	density = 1
 	anchored = 1.0
 	var/obj/machinery/mineral/stacking_unit_console/CONSOLE
@@ -62,8 +62,8 @@
 		var/obj/item/stack/sheet/mineral/gold/M = new /obj/item/stack/sheet/mineral/gold(src)
 		return M
 	if(istype(O, /obj/item/weapon/ore/plasma))
-		var/obj/item/stack/sheet/mineral/plasma/M = new /obj/item/stack/sheet/mineral/plasma(src)
 		points += 10
+		var/obj/item/stack/sheet/mineral/plasma/M = new /obj/item/stack/sheet/mineral/plasma(src)
 		return M
 	if(istype(O, /obj/item/weapon/ore/glass))
 		points += 1
@@ -155,21 +155,18 @@
 	var/obj/item/weapon/card/id/inserted_id
 	var/list/prize_list = list(
 		new /datum/data/mining_equipment("Chili",               /obj/item/weapon/reagent_containers/food/snacks/hotchili,          100),
-		new /datum/data/mining_equipment("Salad",               /obj/item/weapon/reagent_containers/food/snacks/validsalad,        300),
 		new /datum/data/mining_equipment("Whiskey",             /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,    500),
 		new /datum/data/mining_equipment("Cigar",               /obj/item/clothing/mask/cigarette/cigar/havana,                    500),
 		new /datum/data/mining_equipment("Soap",                /obj/item/weapon/soap/nanotrasen, 						           500),
-		new /datum/data/mining_equipment("Stimulant Pills",     /obj/item/weapon/storage/pill_bottle/stimulant, 				   700),
-		new /datum/data/mining_equipment("Alien Toy",           /obj/item/clothing/mask/facehugger/toy, 		                  1000),
-		new /datum/data/mining_equipment("Laser Pointer",       /obj/item/device/laser_pointer, 				                  1500),
-		new /datum/data/mining_equipment("Space Cash",    		/obj/item/weapon/spacecash/c500,                    			  5000),
-		new /datum/data/mining_equipment("Multitool",           /obj/item/device/multitool,                                        100),
-		new /datum/data/mining_equipment("Toolbox",             /obj/item/weapon/storage/toolbox/mechanical,                       300),
-		new /datum/data/mining_equipment("Pickaxe",             /obj/item/weapon/pickaxe,                                          100),
+		new /datum/data/mining_equipment("Stimulant pills",     /obj/item/weapon/storage/pill_bottle/stimulant, 				   700),
+		new /datum/data/mining_equipment("Alien toy",           /obj/item/clothing/mask/facehugger/toy, 		                  1000),
+		new /datum/data/mining_equipment("Laser pointer",       /obj/item/device/laser_pointer, 				                  1500),
+		new /datum/data/mining_equipment("Space cash",    		/obj/item/weapon/spacecash/c500,                    			  5000),
 		new /datum/data/mining_equipment("Drill",               /obj/item/weapon/pickaxe/drill,                                    500),
-		new /datum/data/mining_equipment("Jackhammer",          /obj/item/weapon/pickaxe/jackhammer,                              1000),
-		new /datum/data/mining_equipment("Wormhole Jaunter",    /obj/item/device/wormhole_jaunter,                                1000),
-		new /datum/data/mining_equipment("Blast Shield",        /obj/item/weapon/shield/riot/mining,                              2000),
+		new /datum/data/mining_equipment("Sonic Jackhammer",    /obj/item/weapon/pickaxe/jackhammer,                              1000),
+		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                1000),
+		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                       1500),
+		new /datum/data/mining_equipment("Kinetic accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,                  2500),
 		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide,                      5000),)
 
 /datum/data/mining_equipment/
@@ -239,8 +236,8 @@
 /obj/item/device/wormhole_jaunter
 	name = "wormhole jaunter"
 	desc = "A single use device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to blue space for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "hand_tele"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "Jaunter"
 	item_state = "electronic"
 	throwforce = 0
 	w_class = 2.0
@@ -267,10 +264,13 @@
 		var/obj/effect/portal/wormhole/jaunt_tunnel/J = new /obj/effect/portal/wormhole/jaunt_tunnel(get_turf(src), chosen_beacon, lifespan=100)
 		J.target = chosen_beacon
 		try_move_adjacent(J)
+		playsound(src,'sound/effects/sparks4.ogg',50,1)
 		del(src)
 
 /obj/effect/portal/wormhole/jaunt_tunnel
 	name = "jaunt tunnel"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "bhole3"
 	desc = "A stable hole in the universe made by a wormhole jaunter. Turbulent doesn't even begin to describe how rough passage through one of these is, but at least it will always get you somewhere near a beacon."
 
 /obj/effect/portal/wormhole/jaunt_tunnel/teleport(atom/movable/M)
@@ -291,17 +291,73 @@
 					T.add_vomit_floor(L)
 					playsound(L, 'sound/effects/splat.ogg', 50, 1)
 
-//Mining Blast Shield
-/obj/item/weapon/shield/riot/mining
-	name = "blast shield"
-	desc = "Originally conceived as an attempt to protect miners from gibtonite explosions, these shields are much more effective at protecting miners from hostile wildlife on the asteroid."
+//Mining Resonator
+
+/obj/item/weapon/resonator
+	name = "resonator"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "resonator"
+	item_state = "resonator"
+	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It can also be activated without a target to create a field at the user's location, to act as a delayed time trap. It's more effective in a vaccuum."
+	w_class = 3
+	force = 10
+	throwforce = 10
+	var/cooldown = 0
+
+/obj/item/weapon/resonator/proc/CreateResonance(var/target)
+	if(cooldown <= 0)
+		playsound(src,'sound/effects/stealthoff.ogg',50,1)
+		new /obj/effect/resonance(get_turf(target))
+		cooldown = 1
+		spawn(25)
+			cooldown = 0
+
+/obj/item/weapon/resonator/attack_self(mob/user as mob)
+	CreateResonance(src)
+	..()
+
+/obj/item/weapon/resonator/attack(var/atom/A)
+	CreateResonance(A)
+	..()
+
+/obj/effect/resonance
+	name = "resonance field"
+	desc = "A resonating field that significantly damages anything inside of it when the field eventually ruptures."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shield1"
+	layer = 4.1
+	mouse_opacity = 0
+	var/resonance_damage = 30
+
+/obj/effect/resonance/New()
+	var/turf/proj_turf = get_turf(src)
+	if(!istype(proj_turf, /turf))
+		return
+	if(istype(proj_turf, /turf/simulated/mineral))
+		var/turf/simulated/mineral/M = proj_turf
+		playsound(src,'sound/effects/sparks4.ogg',50,1)
+		M.gets_drilled()
+		spawn(5)
+			del(src)
+	else
+		var/datum/gas_mixture/environment = proj_turf.return_air()
+		var/pressure = environment.return_pressure()
+		if(pressure < 50)
+			name = "strong resonance"
+			resonance_damage = 60
+		spawn(50)
+			playsound(src,'sound/effects/sparks4.ogg',50,1)
+			for(var/mob/living/L in src.loc)
+				L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
+				L.adjustBruteLoss(resonance_damage)
+			del(src)
 
 //Fakehugger Toy
 /obj/item/clothing/mask/facehugger/toy
-	desc = "A commemorative toy often used to play pranks on other miners by putting it in their beds. It takes a bit to recharge after latching onto something."
+	desc = "A toy often used to play pranks on other miners by putting it in their beds. It takes a bit to recharge after latching onto something."
 	throwforce = 0
 	sterile = 1
-	tint = 3
+	tint = 3 //Makes it feel more authentic when it latches on
 
 /obj/item/clothing/mask/facehugger/toy/examine()//So that giant red text about probisci doesn't show up.
 	if(desc)
