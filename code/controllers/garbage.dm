@@ -66,5 +66,14 @@ var/global/list/uncollectable_vars=list(
 				Pop()
 				waiting--
 
-/proc/qdel(var/atom/A)
+/**
+* NEVER USE THIS FOR ANYTHING OTHER THAN /atom/movable
+* OTHER TYPES CANNOT BE QDEL'D BECAUSE THEIR LOC IS LOCKED OR THEY DON'T HAVE ONE.
+*/
+/proc/qdel(var/atom/movable/A)
+	if(!A) return
+	if(!istype(A))
+		warning("qdel passed a [A.type]. qdel() can only handle /atom/movable types.")
+		del(A)
+		return
 	garbage.AddTrash(A)
