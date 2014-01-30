@@ -697,8 +697,10 @@ note dizziness decrements automatically in the mob's Life() proc.
 //Robots and brains have their own version so don't worry about them
 /mob/proc/update_canmove()
 
-	if(stat || weakened || paralysis || resting || (status_flags & FAKEDEATH) || buckled)
+	if(stat || weakened || paralysis || resting || (status_flags & FAKEDEATH))
 		canmove = 0
+		drop_r_hand()	//makes mobs drop items in hands when incapacitated
+		drop_l_hand()
 		if(!lying)
 			if(resting) //Presuming that you're resting on a bed, which would look goofy lying the wrong way
 				lying = 90
@@ -709,17 +711,19 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else
 		lying = 0
 		canmove = 1
+
 	if(buckled)
 		anchored = 1
+		canmove = 0
 		if(istype(buckled, /obj/structure/stool/bed/chair))
 			lying = 0
 		else
 			lying = 90 //Everything else faces right. TODO: Allow left-facing beds
+			drop_r_hand()	// so people drop stuff when buckled to a bed
+			drop_l_hand()
 
 	if(lying)
 		density = 0
-		drop_r_hand()
-		drop_l_hand()
 	else
 		density = 1
 
