@@ -90,6 +90,9 @@
 		if(locate(/obj) in src)
 			user << "There's already something crammed into the nozzle."
 			return
+		if(isrobot(user) && !isMoMMI(user)) // MoMMI's can but borgs can't
+			user << "You're a robot. No."
+			return
 		user.drop_item()
 		W.loc=src
 		user << "You cram \the [W] into the nozzle of \the [src]."
