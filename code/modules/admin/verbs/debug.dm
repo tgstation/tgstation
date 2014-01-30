@@ -159,8 +159,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		return
 	if(istype(M, /mob/living/carbon/human))
 		log_admin("[key_name(src)] has robotized [M.key].")
+		var/mob/living/carbon/human/H = M
 		spawn(10)
-			M:Robotize()
+			H.Robotize()
 
 	else
 		alert("Invalid mob")
@@ -174,8 +175,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		return
 	if(istype(M, /mob/living/carbon/human))
 		log_admin("[key_name(src)] has blobized [M.key].")
+		var/mob/living/carbon/human/H = M
 		spawn(10)
-			M:Blobize()
+			H.Blobize()
 
 	else
 		alert("Invalid mob")
