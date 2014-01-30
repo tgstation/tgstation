@@ -11,13 +11,15 @@
 	if(lying != lying_prev)
 		changed++
 		ntransform.TurnTo(lying_prev,lying)
-		lying_prev = lying	//so we don't try to animate until there's been another change.
-		if(lying != 0)
-			final_pixel_y -= 6
-			if(dir & (EAST|WEST)) //Facing east or west
-				final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
-		else
+		if(lying == 0) //Lying to standing
 			final_pixel_y += 6
+		else //if(lying != 0)
+			if(lying_prev == 0) //Standing to lying
+				final_pixel_y -= 6
+
+		if(dir & (EAST|WEST)) //Facing east or west
+			final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
+		lying_prev = lying	//so we don't try to animate until there's been another change.
 
 	if(changed)
 		animate(src, transform = ntransform, time = 2, pixel_y = final_pixel_y, dir = final_dir, easing = EASE_IN|EASE_OUT)
