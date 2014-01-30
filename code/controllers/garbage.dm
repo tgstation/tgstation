@@ -4,6 +4,9 @@ var/global/datum/controller/garbage_collector/garbage
 var/global/list/uncollectable_vars=list(
 	"alpha",
 	"bestF",
+	"bounds",
+	"bound_height",
+	"bound_width",
 	"ckey",
 	"color",
 	"contents",
