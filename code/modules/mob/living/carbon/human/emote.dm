@@ -564,13 +564,13 @@
 					if(wearing_suit)
 						if(!wearing_mask)
 							src << "\red You gas yourself!"
-							reagents.add_reagent("space_drugs", rand(10,20))
+							reagents.add_reagent("space_drugs", rand(10,50))
 					else
 						// Was /turf/, now /mob/
 						for(var/mob/M in view(location,aoe_range))
 							if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
 								continue
-							if(!airborne_can_reach(location,M,aoe_range))
+							if(!airborne_can_reach(location,get_turf(M),aoe_range))
 								continue
 							// Now, we don't have this:
 							//new /obj/effects/fart_cloud(T,L)
@@ -579,7 +579,7 @@
 							// <[REDACTED]> gets between 1 and 10 units of jenkem added to them...we obviously don't have Jenkem, but Space Drugs do literally the same exact thing as Jenkem
 							// <[REDACTED]> the user, of course, isn't impacted because it's not an actual smoke cloud
 							// So, let's give 'em space drugs.
-							M.reagents.add_reagent("space_drugs",rand(1,10))
+							M.reagents.add_reagent("space_drugs",rand(1,50))
 						/*
 						var/datum/effect/effect/system/smoke_spread/chem/fart/S = new /datum/effect/effect/system/smoke_spread/chem/fart
 						S.attach(location)
