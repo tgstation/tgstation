@@ -93,7 +93,7 @@
 	desc = "It never stays still for long."
 	icon_state = "spiderling"
 	anchored = 0
-	layer = 2.7
+	layer = 2.75
 	health = 3
 	var/amount_grown = 0
 	var/grow_as = null

@@ -136,7 +136,7 @@
 				return
 			step_towards(src, current)
 			sleep(1)
-			if(!bumped && !isturf(original))
+			if(!bumped && (original.layer>=2.75 || ismob(original) ))	//spiderling layer, below tabel layer
 				if(loc == get_turf(original))
 					if(!(original in permutated))
 						Bump(original)
