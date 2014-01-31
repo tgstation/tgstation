@@ -94,6 +94,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "soap"
+	var/uses = 20
 	w_class = 1.0
 	throwforce = 0
 	throw_speed = 4
