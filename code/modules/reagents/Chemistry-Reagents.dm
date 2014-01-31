@@ -214,7 +214,7 @@ datum
 			reaction_turf(var/turf/simulated/T, var/volume)
 				if (!istype(T)) return
 				src = null
-				if(volume >= 3)
+				if(volume >= 10)
 					T.MakeSlippery()
 
 				for(var/mob/living/carbon/slime/M in T)
@@ -757,7 +757,7 @@ datum
 			color = "#A5F0EE" // rgb: 165, 240, 238
 
 			reaction_obj(var/obj/O, var/volume)
-				if(istype(O,/obj/effect/decal/cleanable))
+				if(istype(O,/obj/effect/decal/cleanable) || istype(O,/obj/effect/rune))
 					del(O)
 				else
 					if(O)
