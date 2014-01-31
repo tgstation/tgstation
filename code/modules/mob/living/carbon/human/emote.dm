@@ -596,7 +596,7 @@
 					if(do_after(usr,30))
 						visible_message("\red <b>[name]</b> unleashes a [pick("tremendous","gigantic","colossal")] fart!","You hear a [pick("tremendous","gigantic","colossal")] fart.")
 						//playsound(L.loc, 'superfart.ogg', 50, 0)
-						if(wearing_suit)
+						if(!wearing_suit)
 							for(var/mob/living/V in view(src,aoe_range))
 								shake_camera(V,10,5)
 								if (V == src)
