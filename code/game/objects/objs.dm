@@ -109,11 +109,12 @@
 /obj/proc/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
 	return "<b>NO MULTITOOL_MENU!</b>"
 
-/obj/proc/format_tag(var/label,var/varname)
+/obj/proc/format_tag(var/label,var/varname, var/act="set_tag")
 	var/value = vars[varname]
 	if(!value || value=="")
 		value="-----"
-	return "<b>[label]:</b> <a href=\"?src=\ref[src];set_tag=[varname]\">[value]</a>"
+	return "<b>[label]:</b> <a href=\"?src=\ref[src];[act]=[varname]\">[value]</a>"
+
 
 /obj/proc/update_multitool_menu(mob/user as mob)
 	var/obj/item/device/multitool/P = get_multitool(user)

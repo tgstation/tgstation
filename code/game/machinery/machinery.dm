@@ -198,6 +198,19 @@ Class Procs:
 		log_adminghost("[key_name(usr)] screwed with [src] ([href])!")
 
 	src.add_fingerprint(usr)
+
+	var/obj/item/device/multitool/P = get_multitool(usr)
+	if(P && istype(P))
+		if("set_tag" in href_list)
+			if(!(href_list["set_tag"] in vars))
+				usr << "\red Something went wrong: Unable to find [href_list["set_tag"]] in vars!"
+				return 1
+			var/current_tag = src.vars[href_list["set_tag"]]
+			var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag", src, current_tag) as null|text),1,MAX_MESSAGE_LEN)
+			if(newid)
+				vars[href_list["set_tag"]] = newid
+				initialize()
+			return 1
 	return 0
 
 /obj/machinery/attack_ai(mob/user as mob)
