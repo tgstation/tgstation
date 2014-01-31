@@ -552,7 +552,7 @@ var/list/datum/dna/hivemind_bank = list()
 	if(!changeling)
 		return
 
-	drop_item(get_active_hand())
+	u_equip(get_active_hand())
 
 	put_in_hands(new /obj/item/weapon/melee/arm_blade(src))
 	changeling.geneticdamage += 6
