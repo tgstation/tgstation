@@ -143,15 +143,6 @@
 					var/resolved = A.attackby(W,src)
 					if(!resolved && A && W)
 						W.afterattack(A,src,1,params) // 1: clicking something Adjacent
-			else if(a_intent != "help" && A.layer<2.75)
-				var/turf/T = get_turf(A)
-				var/mob/living/L
-				for(var/mob/living/M in T)	//cycle to last mob in list
-					L = M
-				if(L)
-					UnarmedAttack(L, 1)
-				else
-					UnarmedAttack(A, 1)
 			else
 				UnarmedAttack(A, 1)
 			return
