@@ -9,8 +9,8 @@ proc/mutation_table(var/colour)
 			slime_mutation[4] = "purple"
 		//Tier 2
 		if("purple")
-			slime_mutation[1] = "darkpurple"
-			slime_mutation[2] = "darkblue"
+			slime_mutation[1] = "dark purple"
+			slime_mutation[2] = "dark blue"
 			slime_mutation[3] = "green"
 			slime_mutation[4] = "green"
 		if("metal")
@@ -21,20 +21,20 @@ proc/mutation_table(var/colour)
 		if("yellow")
 			slime_mutation[1] = "red"
 			slime_mutation[2] = "red"
-			slime_mutation[3] = "darkpurple"
+			slime_mutation[3] = "dark purple"
 			slime_mutation[4] = "yellow"
 		if("blue")
-			slime_mutation[1] = "darkblue"
+			slime_mutation[1] = "dark blue"
 			slime_mutation[2] = "pink"
 			slime_mutation[3] = "pink"
 			slime_mutation[4] = "silver"
 		//Tier 3
-		if("darkblue")
+		if("dark blue")
 			slime_mutation[1] = "purple"
 			slime_mutation[2] = "cerulean"
 			slime_mutation[3] = "blue"
 			slime_mutation[4] = "cerulean"
-		if("darkpurple")
+		if("dark purple")
 			slime_mutation[1] = "purple"
 			slime_mutation[2] = "sepia"
 			slime_mutation[3] = "orange"
@@ -53,8 +53,8 @@ proc/mutation_table(var/colour)
 		if("pink")
 			slime_mutation[1] = "pink"
 			slime_mutation[2] = "pink"
-			slime_mutation[3] = "lightpink"
-			slime_mutation[4] = "lightpink"
+			slime_mutation[3] = "light pink"
+			slime_mutation[4] = "light pink"
 		if("red")
 			slime_mutation[1] = "red"
 			slime_mutation[2] = "red"

@@ -190,7 +190,7 @@
 				if(10)	filling.icon_state = "syringe10"
 				if(15)	filling.icon_state = "syringe15"
 
-			filling.icon += mix_color_from_reagents(reagents.reagent_list)
+			filling.color = mix_color_from_reagents(reagents.reagent_list)
 			overlays += filling
 
 

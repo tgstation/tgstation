@@ -52,6 +52,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	wordhide=pick(runewords)
 	runewords-=wordhide
 
+
 /obj/effect/rune
 	desc = ""
 	anchored = 1
@@ -210,9 +211,10 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			return
 
 		check_icon()
+			src.color = rgb(255, 0, 0)
 			if(word1 == wordtravel && word2 == wordself)
 				icon_state = "2"
-				src.icon += rgb(0, 0 , 255)
+				src.color = rgb(0, 0, 255)
 				return
 			if(word1 == wordjoin && word2 == wordblood && word3 == wordself)
 				icon_state = "3"
@@ -222,7 +224,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				return
 			if(word1 == wordsee && word2 == wordblood && word3 == wordhell)
 				icon_state = "5"
-				src.icon += rgb(0, 0 , 255)
+				src.color = rgb(0, 0 , 255)
 				return
 			if(word1 == worddestr && word2 == wordsee && word3 == wordtech)
 				icon_state = "5"
@@ -232,73 +234,73 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				return
 			if(word1 == wordsee && word2 == wordhell && word3 == wordjoin)
 				icon_state = "4"
-				src.icon += rgb(0, 0 , 255)
+				src.color = rgb(0, 0 , 255)
 				return
 			if(word1 == wordblood && word2 == wordjoin && word3 == wordhell)
 				icon_state = "1"
 				return
 			if(word1 == wordhide && word2 == wordsee && word3 == wordblood)
 				icon_state = "1"
-				src.icon += rgb(0, 0 , 255)
+				src.color = rgb(0, 0 , 255)
 				return
 			if(word1 == wordhell && word2 == wordtravel && word3 == wordself)
 				icon_state = "6"
-				src.icon += rgb(0, 0 , 255)
+				src.color = rgb(0, 0 , 255)
 				return
 			if(word1 == wordblood && word2 == wordsee && word3 == wordtravel)
 				icon_state = "6"
 				return
 			if(word1 == wordhell && word2 == wordtech && word3 == wordjoin)
 				icon_state = "3"
-				src.icon += rgb(0, 0 , 255)
+				src.color = rgb(0, 0 , 255)
 				return
 			if(word1 == wordhell && word2 == wordblood && word3 == wordjoin)
 				icon_state = "[rand(1,6)]"
-				src.icon += rgb(255, 255, 255)
+				src.color = rgb(255, 255, 255)
 				return
 			if(word1 == wordblood && word2 == wordsee && word3 == wordhide)
 				icon_state = "4"
-				src.icon += rgb(255, 255, 255)
+				src.color = rgb(255, 255, 255)
 				return
 			if(word1 == worddestr && word2 == wordtravel && word3 == wordself)
 				icon_state = "1"
-				src.icon += rgb(255, 0, 0)
+				src.color = rgb(255, 0, 0)
 				return
 			if(word1 == wordtravel && word2 == wordtech && word3 == wordother)
 				icon_state = "4"
-				src.icon += rgb(255, 0, 255)
+				src.color = rgb(255, 0, 255)
 				return
 			if(word1 == wordjoin && word2 == wordother && word3 == wordself)
 				icon_state = "2"
-				src.icon += rgb(0, 255, 0)
+				src.color = rgb(0, 255, 0)
 				return
 			if(word1 == wordhide && word2 == wordother && word3 == wordsee)
 				icon_state = "4"
-				src.icon += rgb(0, 255, 0)
+				src.color = rgb(0, 255, 0)
 				return
 			if(word1 == worddestr && word2 == wordsee && word3 == wordother)
 				icon_state = "4"
-				src.icon += rgb(0, 0, 255)
+				src.color = rgb(0, 0, 255)
 				return
 			if(word1 == worddestr && word2 == wordsee && word3 == wordblood)
 				icon_state = "4"
-				src.icon += rgb(255, 0, 0)
+				src.color = rgb(255, 0, 0)
 				return
 			if(word1 == wordself && word2 == wordother && word3 == wordtech)
 				icon_state = "3"
-				src.icon += rgb(200, 0, 0)
+				src.color = rgb(200, 0, 0)
 				return
 			if(word1 == wordtravel && word2 == wordother)
 				icon_state = "1"
-				src.icon += rgb(200, 0, 0)
+				src.color = rgb(200, 0, 0)
 				return
 			if(word1 == wordjoin && word2 == wordhide && word3 == wordtech)
 				icon_state = "2"
-				src.icon += rgb(100, 0, 100)
+				src.color = rgb(100, 0, 100)
 				return
 			icon_state="[rand(1,6)]" //random shape and color for dummy runes
-			src.icon -= rgb(255,255,255)
-			src.icon += rgb(rand(1,255),rand(1,255),rand(1,255))
+			src.color = rgb(rand(1,255),rand(1,255),rand(1,255))
+
 
 /obj/item/weapon/tome
 	name = "arcane tome"

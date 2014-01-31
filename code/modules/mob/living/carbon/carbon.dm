@@ -8,6 +8,11 @@
 		if((FAT in src.mutations) && src.m_intent == "run" && src.bodytemperature <= 360)
 			src.bodytemperature += 2
 
+/mob/living/carbon/movement_delay()
+	. = 0
+	if(legcuffed)
+		. += legcuffed.slowdown
+
 /mob/living/carbon/relaymove(var/mob/user, direction)
 	if(user in src.stomach_contents)
 		if(prob(40))
@@ -310,15 +315,16 @@
 
 
 /mob/living/carbon/clean_blood()
-	. = ..()
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if(H.gloves)
 			if(H.gloves.clean_blood())
 				H.update_inv_gloves(0)
 		else
+			..() // Clear the Blood_DNA list
 			if(H.bloody_hands)
 				H.bloody_hands = 0
+				H.bloody_hands_mob = null
 				H.update_inv_gloves(0)
 	update_icons()	//apply the now updated overlays to the mob
 

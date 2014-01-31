@@ -29,8 +29,8 @@ REVIVAL_BRAIN_LIFE -1
 ## To speed things up make the number negative, to slow things down, make the number positive.
 
 ## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied. 
-RUN_DELAY 0
-WALK_DELAY 0
+RUN_DELAY 1
+WALK_DELAY 4
 
 ## The variables below affect the movement of specific mob types.
 HUMAN_DELAY 0

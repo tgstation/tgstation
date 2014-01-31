@@ -214,10 +214,24 @@
 
 	suicide_act(mob/user)
 		if(locate(/obj/structure/stool) in user.loc)
-			viewers(user) << "\red <b>[user] is making a noose with the [src.name]! It looks like \he's trying to commit suicide.</b>"
+			viewers(user) << "<span class='suicide'>[user] is making a noose with the [src.name]! It looks like \he's trying to commit suicide.</span>"
 		else
-			viewers(user) << "\red <b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>"
+			viewers(user) << "<span class='suicide'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>"
 		return(OXYLOSS)
+
+
+/obj/item/weapon/cable_coil/attack(mob/living/carbon/human/H, mob/user)
+	if(!istype(H))
+		return ..()
+
+	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+	if(affecting.status == ORGAN_ROBOTIC)
+		src.item_heal_robotic(H, user, 0, 30)
+		src.use(1)
+		return
+	else
+		return ..()
+
 
 
 /obj/item/weapon/cable_coil/New(loc, length = MAXCOIL, var/param_color = null)

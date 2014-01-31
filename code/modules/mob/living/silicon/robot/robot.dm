@@ -389,9 +389,9 @@
 		var/obj/item/weapon/cable_coil/coil = W
 		adjustFireLoss(-30)
 		updatehealth()
-		coil.use(1)
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("\red [user] has fixed some of the burnt wires on [src]!"), 1)
+		coil.use(1)
 
 	else if (istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
 		if(opened)
@@ -490,7 +490,7 @@
 				else
 					sleep(6)
 					if(prob(50))
-						emagged = 1
+						SetEmagged(1)
 						lawupdate = 0
 						connected_ai = null
 						user << "You emag [src]'s interface."
@@ -518,11 +518,6 @@
 						src << "<b>Obey these laws:</b>"
 						laws.show_laws(src)
 						src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands."
-						if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
-							for(var/obj/item/weapon/pickaxe/borgdrill/D in src.module.modules)
-								del(D)
-							src.module.modules += new /obj/item/weapon/pickaxe/diamonddrill(src.module)
-							src.module.rebuild()
 						updateicon()
 					else
 						user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
@@ -984,7 +979,17 @@
 	lockcharge = state
 	update_canmove()
 
-
+/mob/living/silicon/robot/proc/SetEmagged(var/new_state)
+	emagged = new_state
+	if(new_state)
+		if(src.module)
+			src.module.on_emag()
+	else
+		if (module)
+			uneq_module(module.emag)
+	if(hud_used)
+		hud_used.update_robot_modules_display()	//Shows/hides the emag item if the inventory screen is already open.
+	updateicon()
 
 /mob/living/silicon/robot/verb/outputlaws()
 	set category = "Robot Commands"
