@@ -111,6 +111,7 @@
 /obj/item/weapon/soap/syndie
 	desc = "An untrustworthy bar of soap. Smells of fear."
 	icon_state = "soapsyndie"
+	uses = 40
 
 /obj/item/weapon/bikehorn
 	name = "bike horn"
