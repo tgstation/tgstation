@@ -94,7 +94,7 @@
 		domutcheck(owner)
 
 	check_dna_integrity(owner)
-	return owner.dna
+	return
 
 /proc/check_dna_integrity(mob/living/carbon/character)
 	if(!(istype(character, /mob/living/carbon/human) || istype(character, /mob/living/carbon/monkey))) //Evict xenos from carbon 2012
@@ -935,7 +935,7 @@
 						if("pulsese")
 							var/len = length(viable_occupant.dna.struc_enzymes)
 							num = Wrap(num, 1, len+1)
-							num = randomize_radiation_accuracy(num, radduration, len)
+							num = randomize_radiation_accuracy(num, radduration + (connected.precision_coeff ** 2), len)
 
 							var/block = round((num-1)/DNA_BLOCK_SIZE)+1
 							var/subblock = num - block*DNA_BLOCK_SIZE

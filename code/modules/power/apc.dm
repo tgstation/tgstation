@@ -61,6 +61,7 @@
 	var/updating_icon = 0
 	var/datum/wires/apc/wires = null
 	//var/debug = 0
+	var/auto_name = 0
 
 /obj/machinery/power/apc/updateDialog()
 	if (stat & (BROKEN|MAINT))
@@ -84,6 +85,9 @@
 		dir = ndir
 	src.tdir = dir		// to fix Vars bug
 	dir = SOUTH
+
+	if(auto_name)
+		name = "[get_area(src)] APC"
 
 	pixel_x = (src.tdir & 3)? 0 : (src.tdir == 4 ? 24 : -24)
 	pixel_y = (src.tdir & 3)? (src.tdir ==1 ? 24 : -24) : 0

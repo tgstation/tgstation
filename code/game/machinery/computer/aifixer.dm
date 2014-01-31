@@ -13,10 +13,20 @@
 
 
 /obj/machinery/computer/aifixer/attackby(I as obj, user as mob)
+	if(occupant && istype(I, /obj/item/weapon/screwdriver))
+		if(stat & (NOPOWER|BROKEN))
+			user << "<span class='warning'>The screws on [name]'s screen won't budge.</span>"
+		else
+			user << "<span class='warning'>The screws on [name]'s screen won't budge and it emits a warning beep.</span>"
+		return
 
 	if(istype(I, /obj/item/device/aicard))
 		var/obj/item/device/aicard/AIcard = I
 		if(stat & (NOPOWER|BROKEN))
+			if(occupant)
+				AIcard.transfer_ai("AIFIXER","AICARD",src,user)
+				overlays.Cut()
+				return
 			user << "This terminal isn't functioning right now, get it working!"
 			return
 		AIcard.transfer_ai("AIFIXER","AICARD",src,user)

@@ -161,12 +161,11 @@ Doesn't work on other aliens/AI.*/
 	set desc = "Empties the contents of your stomach"
 	set category = "Alien"
 
-	if(powerc())
-		if(stomach_contents.len)
-			for(var/mob/M in src)
-				if(M in stomach_contents)
-					stomach_contents.Remove(M)
-					M.loc = loc
-					//Paralyse(10)
-			src.visible_message("\green <B>[src] hurls out the contents of their stomach!</B>")
+	if(powerc() && stomach_contents.len)
+		for(var/atom/movable/A in stomach_contents)
+			if(A in stomach_contents)
+				stomach_contents.Remove(A)
+				A.loc = loc
+				//Paralyse(10)
+		src.visible_message("\green <B>[src] hurls out the contents of their stomach!</B>")
 	return

@@ -219,6 +219,17 @@
 			viewers(user) << "<span class='suicide'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>"
 		return(OXYLOSS)
 
+/obj/item/stack/cable_coil/attack(mob/living/carbon/human/H, mob/user)
+	if(!istype(H))
+		return ..()
+
+	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+	if(affecting.status == ORGAN_ROBOTIC)
+		src.item_heal_robotic(H, user, 0, 30)
+		src.use(1)
+		return
+	else
+		return ..()
 
 /obj/item/stack/cable_coil/New(loc, length = MAXCOIL, var/param_color = null)
 	..()
