@@ -275,7 +275,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 						spawn(16/coeff)
 							use_power(power)
 							spawn(16/coeff)
-								if(template.type == /obj/item/stack)
+								if(istype(template, /obj/item/stack))
 									src.m_amount -= template.m_amt*multiplier
 									src.g_amount -= template.g_amt*multiplier
 									var/obj/new_item = new template.type(T)
