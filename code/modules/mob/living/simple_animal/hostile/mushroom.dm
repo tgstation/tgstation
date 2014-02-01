@@ -6,26 +6,28 @@
 	icon_dead = "mushroom_dead"
 	speak_chance = 0
 	turns_per_move = 1
-	maxHealth = 50
-	health = 50
+	maxHealth = 10
+	health = 10
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "whacks"
 	harm_intent_damage = 5
-	melee_damage_lower = 5
-	melee_damage_upper = 15
+	melee_damage_lower = 1
+	melee_damage_upper = 1
 	attack_same = 2
 	attacktext = "chomps"
 	faction = "mushroom"
 	environment_smash = 0
 	stat_attack = 2
 	mouse_opacity = 1
-	var/powerlevel = 0 //Tracks our killcount
+	speed = 1
+	var/powerlevel = 0 //Tracks our general strength level gained from eating other shrooms
 	var/bruised = 0 //If someone tries to cheat the system by attacking a shroom to lower its health, punish them so that it wont award levels to shrooms that eat it
 	var/recovery_cooldown = 0 //So you can't repeatedly revive it during a fight
 	var/faint_ticker = 0 //If we hit three, another mushroom's gonna eat us
-	var/cap_color = null //Holder for our unique mushroom cap color so we always keep it
+	var/image/cap_living = null //Where we store our cap icons so we dont generate them constantly to update our icon
+	var/image/cap_dead = null
 
 /mob/living/simple_animal/hostile/mushroom/examine()
 	..()
@@ -37,14 +39,18 @@
 /mob/living/simple_animal/hostile/mushroom/Life()
 	..()
 	if(!stat)//Mushrooms slowly regenerate if conscious, for people who want to save them from being eaten
-		health += 2
+		health = min(health+2, maxHealth)
 
 /mob/living/simple_animal/hostile/mushroom/New()//Makes every shroom a little unique
-	melee_damage_lower = rand(3, 5)
-	melee_damage_upper = rand(10,20)
-	maxHealth = rand(40,60)
+	melee_damage_lower += rand(3, 5)
+	melee_damage_upper += rand(10,20)
+	maxHealth += rand(40,60)
 	move_to_delay = rand(2,10)
-	cap_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+	var/cap_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+	cap_living = image('icons/mob/animal.dmi',icon_state = "mushroom_cap")
+	cap_dead = image('icons/mob/animal.dmi',icon_state = "mushroom_cap_dead")
+	cap_living.color = cap_color
+	cap_dead.color = cap_color
 	UpdateMushroomCap()
 	..()
 
@@ -64,7 +70,7 @@
 			return
 		M.visible_message("<span class='notice'>[M] devours [src]!</span>")
 		var/level_gain = (powerlevel - M.powerlevel)
-		if(level_gain >= -1 && !bruised)
+		if(level_gain >= -1 && !bruised && !M.ckey)//Player shrooms can't level up to become robust gods.
 			if(level_gain < 1)//So we still gain a level if two mushrooms were the same level
 				level_gain = 1
 			M.LevelUp(level_gain)
@@ -74,6 +80,7 @@
 
 /mob/living/simple_animal/hostile/mushroom/revive()
 	..()
+	icon_state = "mushroom_color"
 	UpdateMushroomCap()
 
 /mob/living/simple_animal/hostile/mushroom/Die()
@@ -83,11 +90,10 @@
 
 /mob/living/simple_animal/hostile/mushroom/proc/UpdateMushroomCap()
 	overlays.Cut()
-	var/image/I = image('icons/mob/animal.dmi',icon_state = "mushroom_cap")
 	if(health == 0)
-		I = image('icons/mob/animal.dmi',icon_state = "mushroom_cap_dead")
-	I.color = cap_color
-	overlays += I
+		overlays += cap_dead
+	else
+		overlays += cap_living
 
 /mob/living/simple_animal/hostile/mushroom/proc/Recover()
 	visible_message("<span class='notice'>[src] slowly begins to recover.</span>")
