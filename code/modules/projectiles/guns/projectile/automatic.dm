@@ -114,7 +114,7 @@
 	..()
 
 /obj/item/weapon/gun/projectile/automatic/tommygun
-	name = "\improper tommy gun"
+	name = "tommy gun"
 	desc = "A genuine Chicago Typewriter."
 	icon_state = "tommygun"
 	item_state = "tommygun"
