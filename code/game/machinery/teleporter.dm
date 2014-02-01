@@ -70,10 +70,16 @@
 	if(..())
 		return
 	if(href_list["regimeset"])
+		power_station.engaged = 0
+		power_station.teleporter_hub.update_icon()
 		reset_regime()
 	if(href_list["settarget"])
-		set_target(usr)
+		power_station.engaged = 0
+		power_station.teleporter_hub.update_icon()
+		reset_regime()
 	if(href_list["locked"])
+		power_station.engaged = 0
+		power_station.teleporter_hub.update_icon()
 		target = get_turf(locked.locked_location)
 	if(href_list["eject"])
 		eject()
@@ -131,19 +137,36 @@
 		target = L[desc]
 
 	else
-		var/list/N
-		var/list/T = power_station.linked_stations
-		if(!T.len)
+		var/list/L = list()
+		var/list/areaindex = list()
+		var/list/S = power_station.linked_stations
+		if(!S.len)
 			user << "<span class='alert'>No connected stations located.</span>"
 			return
-		var/i = 0
-		for(var/obj/machinery/teleport/station/S in T)
-			if(S.teleporter_hub)
-				i++
-				N["[i]. [get_area(S)] ([(S.stat & NOPOWER|BROKEN) ? "inactive" : "active"]"] = get_turf(S)
-		var/desc = input("Please select a teleporter to connent to.", "Locking Computer") in N
-		target = N[desc]
-		target = get_turf(target)
+		for(var/obj/machinery/teleport/station/R in S)
+			var/turf/T = get_turf(R)
+			if (!T || !R.teleporter_hub || !R.teleporter_console)
+				continue
+			if(T.z == 2 || T.z > 7)
+				continue
+			var/tmpname = T.loc.name
+			if(areaindex[tmpname])
+				tmpname = "[tmpname] ([++areaindex[tmpname]])"
+			else
+				areaindex[tmpname] = 1
+			L[tmpname] = R
+		var/desc = input("Please select a station to lock in.", "Locking Computer") in L
+		target = L[desc]
+		if(target)
+			var/obj/machinery/teleport/station/trg = target
+			trg.linked_stations |= power_station
+			trg.stat &= ~NOPOWER
+			if(trg.teleporter_hub)
+				trg.teleporter_hub.stat &= ~NOPOWER
+				trg.teleporter_hub.update_icon()
+			if(trg.teleporter_console)
+				trg.teleporter_console.stat &= ~NOPOWER
+				trg.teleporter_console.update_icon()
 	return
 
 /obj/machinery/teleport

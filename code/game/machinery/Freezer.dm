@@ -43,6 +43,8 @@
 		if(node)
 			disconnect(node)
 		initialize()
+		if(node)
+			node.update_icon()
 		return
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/update_icon()
@@ -160,6 +162,8 @@
 		if(node)
 			disconnect(node)
 		initialize()
+		if(node)
+			node.update_icon()
 		return
 
 /obj/machinery/atmospherics/unary/heat_reservoir/heater/update_icon()

@@ -230,6 +230,8 @@
 		if(node)
 			disconnect(node)
 		initialize()
+		if(node)
+			node.update_icon()
 		return
 
 	default_deconstruction_crowbar(I)
