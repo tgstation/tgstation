@@ -626,13 +626,14 @@
 
 	var/data[0]
 	data["air"]=ui_air_status()
-	data["alarmActivated"]=alarmActivated || local_danger_level==2
+	data["alarmActivated"]=alarmActivated //|| local_danger_level==2
 	data["sensors"]=TLV
 
 	// Locked when:
 	//   Not sent from atmos console AND
-	//   Not silicon AND locked.
-	data["locked"]=!fromAtmosConsole && (!(istype(user, /mob/living/silicon)) && locked)
+	//   Not silicon AND locked AND
+	//   NOT adminghost.
+	data["locked"]=!fromAtmosConsole && (!(istype(user, /mob/living/silicon)) && locked) && !isAdminGhost(user)
 
 	data["rcon"]=rcon_setting
 	data["target_temp"] = target_temperature - T0C
