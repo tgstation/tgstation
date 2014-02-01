@@ -183,8 +183,7 @@
 
 /obj/item/clothing/head/fedora/proc/fedoraproc(mob/user)
 	if(user.canmove && !user.stat && !user.restrained())
-		for(var/mob/living/carbon/M in range(7,src))
-			M.show_message("[user] tips their fedora.")
+		user.visible_message("[user] tips their fedora.")
 
 /obj/item/clothing/head/fedora/verb/fedoratip()
 	set category = "Object"
