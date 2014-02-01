@@ -124,7 +124,7 @@
 	icon_state = "[initial(icon_state)]-[round(ammo_count(),2)]"
 
 obj/item/ammo_box/magazine/tommygunm45
-	name = "Tommygun drum (.45)"
+	name = "tommy gun drum (.45)"
 	icon_state = "drum45"
 	ammo_type = /obj/item/ammo_casing/c45
 	caliber = ".45"
