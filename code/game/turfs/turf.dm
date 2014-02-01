@@ -22,6 +22,9 @@
 	var/icon_old = null
 	var/pathweight = 1
 
+	// Bot shit
+	var/targetted_by=null
+
 /turf/New()
 	..()
 	for(var/atom/movable/AM as mob|obj in src)
