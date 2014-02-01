@@ -713,5 +713,22 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 					pos = A.loc
 					sleep(15)
 				following = null
+
+	if (href_list["jump"])
+		var/mob/target = locate(href_list["jump"])
+		var/mob/A = usr;
+		A << "Teleporting to [target]..."
+		//var/mob/living/silicon/ai/A = locate(href_list["track2"]) in mob_list
+		if(target && target != usr)
+			spawn(0)
+				var/turf/pos = get_turf(A)
+				var/turf/T=get_turf(target)
+				if(T != pos)
+					if(!T)
+						return
+					if(!client)
+						return
+					loc = T
+				following = null
 	..()
 //END TELEPORT HREF CODE
