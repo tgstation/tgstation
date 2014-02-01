@@ -60,7 +60,6 @@
 
 	cover = new /obj/machinery/porta_turret_cover(loc)
 	cover.Parent_Turret = src
-
 	setup()
 
 /obj/machinery/porta_turret/proc/setup()
@@ -70,7 +69,6 @@
 		sound = 1
 	else
 		sound = null
-
 		var/obj/item/weapon/gun/energy/E=new installation	//All energy-based weapons are applicable
 		var/obj/item/ammo_casing/shottype = E.ammo_type[1]
 		projectile = shottype.projectile_type
