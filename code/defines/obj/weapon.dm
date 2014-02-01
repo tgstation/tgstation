@@ -698,7 +698,7 @@
 /obj/item/weapon/stock_parts/capacitor
 	name = "capacitor"
 	desc = "A basic capacitor used in the construction of a variety of devices."
-	icon_state = "capacitor"
+	icon_state = "capacitor2_basic"
 	origin_tech = "powerstorage=1"
 	m_amt = 50
 	g_amt = 50
@@ -738,6 +738,7 @@
 /obj/item/weapon/stock_parts/capacitor/adv
 	name = "advanced capacitor"
 	desc = "An advanced capacitor used in the construction of a variety of devices."
+	icon_state = "capacitor2_adv"
 	origin_tech = "powerstorage=3"
 	rating = 2
 	m_amt = 50
@@ -782,6 +783,7 @@
 /obj/item/weapon/stock_parts/capacitor/super
 	name = "super capacitor"
 	desc = "A super-high capacity capacitor used in the construction of a variety of devices."
+	icon_state = "capacitor2_super"
 	origin_tech = "powerstorage=5;materials=4"
 	rating = 3
 	m_amt = 50
