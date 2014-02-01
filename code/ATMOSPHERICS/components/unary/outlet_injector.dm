@@ -198,7 +198,7 @@
 			P.buffer = null
 
 		usr.set_machine(src)
-		updateUsrDialog()
+		update_multitool_menu()
 
 	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 		if(istype(W, /obj/item/device/multitool))

@@ -333,7 +333,7 @@
 				user << "\blue You need more welding fuel to complete this task."
 				return 1
 		if(istype(W, /obj/item/device/multitool))
-			interact(user)
+			update_multitool_menu(user)
 			return 1
 		if (!istype(W, /obj/item/weapon/wrench))
 			return ..()
@@ -376,6 +376,8 @@
 			return
 
 	var/obj/item/device/multitool/P = get_multitool(usr)
+	if(!P || !istype(P))
+		return
 
 	if("set_id" in href_list)
 		var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id_tag) as null|text),1,MAX_MESSAGE_LEN)
@@ -408,4 +410,4 @@
 		P.buffer = null
 
 	usr.set_machine(src)
-	updateUsrDialog()
+	update_multitool_menu()
