@@ -440,29 +440,30 @@
 //		return
 	if(!user)
 		return
-	src.add_fingerprint(user)
-	if(usr == user && opened)
-		if(cell)
-			if(issilicon(user) && !isMoMMI(user)) // MoMMIs can hold one item in their tool slot.
-				cell.loc=src.loc // Drop it, whoops.
-			else
-				user.put_in_hands(cell)
-			cell.add_fingerprint(user)
-			cell.updateicon()
+	if(!isobserver(user))
+		src.add_fingerprint(user)
+		if(usr == user && opened)
+			if(cell)
+				if(issilicon(user) && !isMoMMI(user)) // MoMMIs can hold one item in their tool slot.
+					cell.loc=src.loc // Drop it, whoops.
+				else
+					user.put_in_hands(cell)
+				cell.add_fingerprint(user)
+				cell.updateicon()
 
-			src.cell = null
-			user.visible_message("\red [user.name] removes the power cell from [src.name]!", "You remove the power cell.")
-			//user << "You remove the power cell."
-			charging = 0
-			src.update_icon()
-		return
-	if(stat & (BROKEN|MAINT))
-		return
-
-	if(ishuman(user))
-		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("APC",src,user:wear_suit)
+				src.cell = null
+				user.visible_message("\red [user.name] removes the power cell from [src.name]!", "You remove the power cell.")
+				//user << "You remove the power cell."
+				charging = 0
+				src.update_icon()
 			return
+		if(stat & (BROKEN|MAINT))
+			return
+
+		if(ishuman(user))
+			if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
+				call(/obj/item/clothing/gloves/space_ninja/proc/drain)("APC",src,user:wear_suit)
+				return
 	// do APC interaction
 	user.set_machine(src)
 	src.interact(user)
