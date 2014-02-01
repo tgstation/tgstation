@@ -43,15 +43,20 @@
 		heal_overall_damage(0, -amount)
 
 /mob/living/carbon/human/Stun(amount)
-	if(HULK in mutations)	return
+	if(HULK in mutations)
+		return round(amount/3,1)//Stun, Weaken, and Paralyze effects on hulk are divided by three and rounded to the nearest integer since they all run through this after applying stun(amount)
 	..()
 
 /mob/living/carbon/human/Weaken(amount)
-	if(HULK in mutations)	return
+	if(HULK in mutations)
+		Stun(amount)//Weaken stuns hulks instead (stun keeps you standing still but able to act, weaken drops you to the floor)
+		return
 	..()
 
 /mob/living/carbon/human/Paralyse(amount)
-	if(HULK in mutations)	return
+	if(HULK in mutations)
+		Stun(amount)//Paralyse stuns hulks instead (stun keeps you standing still but able to act, paralyze makes you unable to do anything at all)
+		return
 	..()
 
 /mob/living/carbon/human/update_canmove()
