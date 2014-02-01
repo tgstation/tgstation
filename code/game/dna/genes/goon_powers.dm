@@ -54,7 +54,7 @@
 		if(!istype(T))
 			return
 		if(T.lighting_lumcount <= 2)
-			M.alpha = round(255 * 0.05)
+			M.alpha = 0
 		else
 			M.alpha = round(255 * 0.80)
 

@@ -104,11 +104,10 @@
 	var/list/deactivation_messages=list()
 
 /datum/dna/gene/basic/can_activate(var/mob/M,var/flags)
-	// Probability check
-	if(flags & MUTCHK_FORCED || probinj(activation_prob,(flags&MUTCHK_FORCED)))
+	if(flags & MUTCHK_FORCED)
 		return 1
-
-	return 0
+	// Probability check
+	return probinj(activation_prob,(flags&MUTCHK_FORCED))
 
 /datum/dna/gene/basic/activate(var/mob/M)
 	M.mutations.Add(mutation)
