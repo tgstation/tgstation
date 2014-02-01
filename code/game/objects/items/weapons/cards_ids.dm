@@ -212,8 +212,3 @@
 /obj/item/weapon/card/id/prisoner/seven
 	name = "Prisoner #13-007"
 	registered_name = "Prisoner #13-007"
-
-/obj/item/weapon/card/id/mining
-	name = "mining ID card"
-	desc = "A miner's ID card. It comes preloaded with 2000 mining points."
-	mining_points = 2000

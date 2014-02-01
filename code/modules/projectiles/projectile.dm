@@ -65,7 +65,8 @@
 			loc = A.loc
 			return 0 //cannot shoot yourself
 
-		if(bumped && original)	return 0
+		if(bumped)//Stops multihit projectiles
+			return 1
 
 		bumped = 1
 		if(ismob(A))

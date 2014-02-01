@@ -1,5 +1,6 @@
 /**********************Ore Redemption Unit**************************/
 //Turns all the various mining machines into a single unit to speed up mining and establish a point system
+
 /obj/machinery/mineral/ore_redemption
 	name = "ore redemption machine"
 	desc = "A machine that accepts ore and instantly transforms it into workable material sheets, but cannot produce alloys such as Plasteel. Points for ore are generated based on type and can be redeemed at a mining equipment locker."
@@ -145,29 +146,32 @@
 	return
 
 /**********************Mining Equipment Locker**************************/
+
 /obj/machinery/mineral/equipment_locker
 	name = "mining equipment locker"
 	desc = "An equipment locker for miners, points collected at an ore redemption machine can be spent here."
-	icon = 'icons/obj/machines/mining_machines.dmi'
-	icon_state = "stacker"
+	icon = 'icons/obj/suitstorage.dmi'
+	icon_state = "suitstorage000001100"
 	density = 1
 	anchored = 1.0
 	var/obj/item/weapon/card/id/inserted_id
 	var/list/prize_list = list(
 		new /datum/data/mining_equipment("Chili",               /obj/item/weapon/reagent_containers/food/snacks/hotchili,          100),
+		new /datum/data/mining_equipment("Cigar",               /obj/item/clothing/mask/cigarette/cigar/havana,                    100),
 		new /datum/data/mining_equipment("Whiskey",             /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,    500),
-		new /datum/data/mining_equipment("Cigar",               /obj/item/clothing/mask/cigarette/cigar/havana,                    500),
 		new /datum/data/mining_equipment("Soap",                /obj/item/weapon/soap/nanotrasen, 						           500),
 		new /datum/data/mining_equipment("Stimulant pills",     /obj/item/weapon/storage/pill_bottle/stimulant, 				   700),
 		new /datum/data/mining_equipment("Alien toy",           /obj/item/clothing/mask/facehugger/toy, 		                  1000),
-		new /datum/data/mining_equipment("Laser pointer",       /obj/item/device/laser_pointer, 				                  1500),
+		new /datum/data/mining_equipment("Laser pointer",       /obj/item/device/laser_pointer, 				                  1000),
+		new /datum/data/mining_equipment("Point card",    		/obj/item/weapon/card/mining_point_card,               			  2500),
 		new /datum/data/mining_equipment("Space cash",    		/obj/item/weapon/spacecash/c500,                    			  5000),
 		new /datum/data/mining_equipment("Drill",               /obj/item/weapon/pickaxe/drill,                                    500),
-		new /datum/data/mining_equipment("Sonic Jackhammer",    /obj/item/weapon/pickaxe/jackhammer,                              1000),
+		new /datum/data/mining_equipment("Sonic jackhammer",    /obj/item/weapon/pickaxe/jackhammer,                              1500),
+		new /datum/data/mining_equipment("Mining drone",        /mob/living/simple_animal/hostile/mining_drone/,                  2500),
 		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                1000),
-		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                       1500),
-		new /datum/data/mining_equipment("Kinetic accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,                  2500),
-		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide,                      5000),)
+		//new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                       1500),
+		//new /datum/data/mining_equipment("Kinetic accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,                  2500),
+		)
 
 /datum/data/mining_equipment/
 	var/equipment_name = "generic"
@@ -219,20 +223,36 @@
 			var/datum/data/mining_equipment/prize = locate(href_list["purchase"])
 			if (!prize || !(prize in prize_list))
 				return
-			world << "You tried to purchase something."
 			if(prize.cost > inserted_id.mining_points)
-				world << "Couldn't afford the item"
 			else
 				inserted_id.mining_points -= prize.cost
 				new prize.equipment_path(src.loc)
-		else
-			world << "There wasn't an ID inside!"
 	src.updateUsrDialog()
 	return
 
 /**********************Mining Equipment Locker Items**************************/
 
-//Wormhole jaunter
+/**********************Mining Point Card**********************/
+
+/obj/item/weapon/card/mining_point_card
+	name = "mining point card"
+	desc = "A small card preloaded with mining points. Swipe your ID card over it to transfer the points, then discard."
+	icon_state = "data"
+	var/points = 2500
+
+/obj/item/weapon/card/mining_point_card/attackby(obj/item/I as obj, mob/user as mob)
+	if(istype(I, /obj/item/weapon/card/id))
+		if(points)
+			var/obj/item/weapon/card/id/C = I
+			C.mining_points += points
+			user << "<span class='info'>You transfer [points] points to [C].</span>"
+			points = 0
+		else
+			user << "<span class='info'>There's no points left on [src].</span>"
+	..()
+
+/**********************Jaunter**********************/
+
 /obj/item/device/wormhole_jaunter
 	name = "wormhole jaunter"
 	desc = "A single use device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to blue space for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least."
@@ -291,7 +311,7 @@
 					T.add_vomit_floor(L)
 					playsound(L, 'sound/effects/splat.ogg', 50, 1)
 
-//Mining Resonator
+/**********************Resonator**********************/
 
 /obj/item/weapon/resonator
 	name = "resonator"
@@ -352,7 +372,8 @@
 				L.adjustBruteLoss(resonance_damage)
 			del(src)
 
-//Fakehugger Toy
+/**********************Facehugger toy**********************/
+
 /obj/item/clothing/mask/facehugger/toy
 	desc = "A toy often used to play pranks on other miners by putting it in their beds. It takes a bit to recharge after latching onto something."
 	throwforce = 0
@@ -365,3 +386,126 @@
 
 /obj/item/clothing/mask/facehugger/toy/Die()
 	return
+
+/**********************Mining drone**********************/
+
+/mob/living/simple_animal/hostile/mining_drone/
+	name = "nanotrasen minebot"
+	desc = "A small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife."
+	icon = 'icons/obj/aibots.dmi'
+	icon_state = "mining_drone"
+	icon_living = "mining_drone"
+	status_flags = CANSTUN|CANWEAKEN|CANPUSH
+	mouse_opacity = 1
+	faction = "neutral"
+	a_intent = "harm"
+	min_oxy = 0
+	max_oxy = 0
+	min_tox = 0
+	max_tox = 0
+	min_co2 = 0
+	max_co2 = 0
+	min_n2 = 0
+	max_n2 = 0
+	minbodytemp = 0
+	wander = 0
+	idle_vision_range = 5
+	move_to_delay = 10
+	retreat_distance = 1
+	minimum_distance = 2
+	health = 60
+	maxHealth = 60
+	melee_damage_lower = 15
+	melee_damage_upper = 15
+	environment_smash = 0
+	attacktext = "drills"
+	attack_sound = 'sound/weapons/circsawhit.ogg'
+	ranged = 1
+	ranged_message = "shoots"
+	ranged_cooldown_cap = 3
+	projectiletype = /obj/item/projectile/kinetic
+	projectilesound = 'sound/weapons/Gunshot4.ogg'
+	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver,
+						  /obj/item/weapon/ore/plasma,  /obj/item/weapon/ore/uranium,    /obj/item/weapon/ore/iron,
+						  /obj/item/weapon/ore/clown)
+
+/mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I as obj, mob/user as mob)
+	if(istype(I, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/W = I
+		if(W.welding && !stat)
+			if(stance != HOSTILE_STANCE_IDLE)
+				user << "<span class='info'>[src] is moving around too much to repair!</span>"
+				return
+			if(maxHealth == health)
+				user << "<span class='info'>[src] is at full integrity.</span>"
+			else
+				health += 10
+				user << "<span class='info'>You repair some of the armor on [src].</span>"
+			return
+	if(istype(I, /obj/item/device/analyzer))
+		user << "<span class='info'>You instruct [src] to drop any collected ore.</span>"
+		DropOre()
+		return
+	..()
+
+/mob/living/simple_animal/hostile/mining_drone/Die()
+	..()
+	visible_message("<span class='danger'>[src] is destroyed!</span>")
+	new /obj/effect/decal/cleanable/robot_debris(src.loc)
+	DropOre()
+	del src
+	return
+
+/mob/living/simple_animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/M)
+	if(M.a_intent == "help")
+		switch(search_objects)
+			if(0)
+				SetCollectBehavior()
+				M << "<span class='info'>[src] has been set to search and store loose ore.</span>"
+			if(2)
+				SetOffenseBehavior()
+				M << "<span class='info'>[src] has been set to attack hostile wildlife.</span>"
+		return
+	..()
+
+/mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior()
+	stop_automated_movement_when_pulled = 1
+	search_objects = 2
+	wander = 1
+	ranged = 0
+	minimum_distance = 1
+	retreat_distance = null
+	icon_state = "mining_drone"
+
+/mob/living/simple_animal/hostile/mining_drone/proc/SetOffenseBehavior()
+	stop_automated_movement_when_pulled = 0
+	search_objects = 0
+	wander = 0
+	ranged = 1
+	retreat_distance = 1
+	minimum_distance = 2
+	icon_state = "mining_drone_offense"
+
+/mob/living/simple_animal/hostile/mining_drone/AttackingTarget()
+	if(istype(target, /obj/item/weapon/ore))
+		CollectOre()
+		return
+	..()
+
+/mob/living/simple_animal/hostile/mining_drone/proc/CollectOre()
+	for(var/obj/item/weapon/O in get_turf(target))
+		O.loc = src
+	return
+
+/mob/living/simple_animal/hostile/mining_drone/proc/DropOre()
+	if(!contents.len)
+		return
+	for(var/obj/item/weapon/ore/O in contents)
+		contents -= O
+		O.loc = src.loc
+	return
+
+/mob/living/simple_animal/hostile/mining_drone/adjustBruteLoss()
+	if(search_objects)
+		SetOffenseBehavior()
+	..()
