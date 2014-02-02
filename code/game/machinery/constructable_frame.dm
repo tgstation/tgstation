@@ -161,6 +161,28 @@ Note: Once everything is added to the public areas, will add m_amt and g_amt to 
 to destroy them and players will be able to make replacements.
 */
 
+/obj/item/weapon/circuitboard/vendor
+	name = "circuit board (Booze-O-Mat Vendor)"
+	build_path = /obj/machinery/vending/boozeomat
+	board_type = "machine"
+	origin_tech = "programming=1"
+	req_components = list(
+							"/obj/item/weapon/vending_refill/boozeomat" = 3)
+
+/obj/item/weapon/circuitboard/vendor/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/screwdriver))
+		var/list/names = list(/obj/machinery/vending/boozeomat = "Booze-O-Mat",
+							/obj/machinery/vending/coffee = "Getmore Chocolate Corp",
+							/obj/machinery/vending/snack = "Hot Drinks",
+							/obj/machinery/vending/cola = "Robust Softdrinks",
+							/obj/machinery/vending/cigarette = "Cigarette",
+							/obj/machinery/vending/autodrobe = "AutoDrobe")
+
+		build_path = pick(names)
+		name = "circuit board ([names[build_path]] Vendor)"
+		user << "<span class='notice'>You set the board to [names[build_path]].</span>"
+		req_components = list("/obj/item/weapon/vending_refill/[copytext("[build_path]", 24)]" = 3)       //Never before has i used a method as horrible as this one, im so sorry
+
 /obj/item/weapon/circuitboard/smes
 	name = "circuit board (SMES)"
 	build_path = /obj/machinery/power/smes

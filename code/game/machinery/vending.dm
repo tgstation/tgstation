@@ -48,6 +48,8 @@
 
 /obj/machinery/vending/New()
 	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/vendor(null)
 	wires = new(src)
 	spawn(4)
 		slogan_list = text2list(product_slogans, ";")
@@ -137,11 +139,19 @@
 
 
 /obj/machinery/vending/attackby(obj/item/weapon/W, mob/user)
+	if(panel_open)
+		if(default_unfasten_wrench(user, W, time = 60))
+			return
+
+		if(istype(W, /obj/item/weapon/crowbar))
+			malfunction()
+			default_deconstruction_crowbar(W)
+
 	if(istype(W, /obj/item/weapon/card/emag))
 		emagged = 1
 		user << "You short out the product lock on [src]"
 		return
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(istype(W, /obj/item/weapon/screwdriver) && anchored)
 		panel_open = !panel_open
 		user << "You [panel_open ? "open" : "close"] the maintenance panel."
 		overlays.Cut()
@@ -384,7 +394,7 @@
 		while(R.amount>0)
 			new dump_path(loc)
 			R.amount--
-		break
+		continue
 
 	stat |= BROKEN
 	icon_state = "[initial(icon_state)]-broken"
