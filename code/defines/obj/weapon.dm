@@ -94,7 +94,6 @@
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "soap"
-	var/uses = 20
 	w_class = 1.0
 	throwforce = 0
 	throw_speed = 4
@@ -111,7 +110,6 @@
 /obj/item/weapon/soap/syndie
 	desc = "An untrustworthy bar of soap. Smells of fear."
 	icon_state = "soapsyndie"
-	uses = 40
 
 /obj/item/weapon/bikehorn
 	name = "bike horn"

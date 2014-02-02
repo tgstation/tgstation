@@ -36,10 +36,6 @@
 		var/obj/effect/decal/cleanable/C = locate() in target
 		del(C)
 		target.clean_blood()
-	uses--
-	if(uses<=0)
-		user << "<span class='notice'>There is no more soap!</span>"
-		del src
 	return
 
 /obj/item/weapon/soap/attack(mob/target as mob, mob/user as mob)
