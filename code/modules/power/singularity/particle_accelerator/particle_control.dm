@@ -27,8 +27,8 @@
 	..()
 
 /obj/machinery/particle_accelerator/control_box/Del()
-	construction_state = 0
-	part_scan()
+	if(active)
+		toggle_power()
 	..()
 
 /obj/machinery/particle_accelerator/control_box/attack_hand(mob/user as mob)
