@@ -53,8 +53,8 @@
 		timer = newtime
 		user << "Timer set for [timer] seconds."
 
-/obj/item/weapon/plastique/preattack(atom/target as obj|turf, mob/user as mob)
-	if (!target.Adjacent(user))
+/obj/item/weapon/plastique/preattack(atom/target as obj|turf, mob/user as mob,proximity_flag)
+	if (!proximity_flag)
 		return
 	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/item/weapon/storage/))
 		return
