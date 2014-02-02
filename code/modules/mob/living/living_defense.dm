@@ -23,22 +23,39 @@
 		apply_damage(P.damage, P.damage_type, def_zone, armor)
 	return P.on_hit(src, armor, def_zone)
 
+proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
+		if(!I)
+				return 0
+		if(I.throwforce && I.w_class)
+				return Clamp((I.throwforce + I.w_class) * 5, 30, 100)// Add the item's throwforce to its weight class and multiply by 5, then clamp the value between 30 and 100
+		else if(I.w_class)
+				return Clamp(I.w_class * 8, 20, 100) // Multiply the item's weight class by 8, then clamp the value between 20 and 100
+		else
+				return 0
+
 /mob/living/hitby(atom/movable/AM)//Standardization and logging -Sieve
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
 		var/zone = ran_zone("chest", 65)//Hits a random part of the body, geared towards the chest
 		var/dtype = BRUTE
-		if(istype(I,/obj/item/weapon))
+		var/volume = vol_by_throwforce_and_or_w_class(I)
+		if(istype(I,/obj/item/weapon)) //If the item is a weapon...
 			var/obj/item/weapon/W = I
 			dtype = W.damtype
-			if (W.throwhitsound && W.throwforce > 0)
-				playsound(loc, W.throwhitsound, 30, 1, -1)
-			else if(W.throwtapsound && W.throwforce == 0)
-				playsound(loc, W.throwtapsound, 30, 1, -1)
-			else if(W.hitsound && W.throwforce > 0)
-				playsound(loc, W.hitsound, 30, 1, -1)
-		else
-			playsound(loc, I.throwtapsound, 30, 1, -1)
+
+			if (W.throwforce > 0) //If the weapon's throwforce is greater than zero...
+				if (W.throwhitsound) //...and throwhitsound is defined...
+					playsound(loc, W.throwhitsound, volume, 1, -1) //...play the weapon's throwhitsound.
+				else if(W.hitsound) //Otherwise, if the weapon's hitsound is defined...
+					playsound(loc, W.hitsound, volume, 1, -1) //...play the weapon's hitsound.
+				else if(!W.throwhitsound) //Otherwise, if throwhitsound isn't defined...
+					playsound(loc, 'sound/weapons/genhit.ogg',volume, 1, -1) //...play genhit.ogg.
+
+		else if(!I.throwhitsound && I.throwforce > 0) //Otherwise, if the item doesn't have a throwhitsound and has a throwforce greater than zero...
+			playsound(loc, 'sound/weapons/genhit.ogg', volume, 1, -1)//...play genhit.ogg
+		if(!I.throwforce)// Otherwise, if the item's throwforce is 0...
+			playsound(loc, 'sound/weapons/throwtap.ogg', 1, volume, -1)//...play throwtap.ogg.
+
 		visible_message("<span class='danger'>[src] has been hit by [I].</span>", \
 						"<span class='userdanger'>[src] has been hit by [I].</span>")
 		var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].")
