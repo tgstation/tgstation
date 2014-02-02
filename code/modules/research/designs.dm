@@ -1516,6 +1516,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/borg/upgrade/medical/surgery
 	category = "Robotic Upgrade Modules"
 
+/datum/design/robotanalyzer
+	name = "cyborg analyzer"
+	desc = "A hand-held scanner able to diagnose robotic injuries."
+	id = "robotanalyzer"
+	req_tech = list("magnets" = 3, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 8000, "$glass" = 2000)
+	build_path = /obj/item/device/robotanalyzer
+
 /////////////////////////////////////////
 /////////////////Weapons/////////////////
 /////////////////////////////////////////
