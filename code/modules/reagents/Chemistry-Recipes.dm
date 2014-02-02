@@ -1460,7 +1460,7 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				var/obj/effect/goleM_RUNe/Z = new /obj/effect/goleM_RUNe
+				var/obj/effect/golem_rune/Z = new /obj/effect/golem_rune
 				Z.loc = get_turf(holder.my_atom)
 				Z.announce_to_ghosts()
 

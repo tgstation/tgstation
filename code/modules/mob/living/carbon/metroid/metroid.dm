@@ -1029,7 +1029,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE
 	armor = list(melee = 80, bullet = 20, laser = 20, energy = 10, bomb = 0, bio = 0, rad = 0)
 
-/obj/effect/goleM_RUNe
+/obj/effect/golem_rune
 	anchored = 1
 	desc = "a strange rune used to create golems. It glows when spirits are nearby."
 	name = "rune"
@@ -1037,19 +1037,14 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	icon_state = "golem"
 	unacidable = 1
 	layer = TURF_LAYER
+	var/list/mob/dead/observer/ghosts[0]
 
 	New()
 		..()
 		processing_objects.Add(src)
 
 	process()
-		var/mob/dead/observer/ghost
-		for(var/mob/dead/observer/O in src.loc)
-			if(!O.client)	continue
-			if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
-			ghost = O
-			break
-		if(ghost)
+		if(ghosts.len>0)
 			icon_state = "golem2"
 		else
 			icon_state = "golem"
@@ -1057,8 +1052,8 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	attack_hand(mob/living/user as mob)
 		var/mob/dead/observer/ghost
 		for(var/mob/dead/observer/O in src.loc)
-			if(!O.client)	continue
-			if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
+			if(!check_observer(O))
+				continue
 			ghost = O
 			break
 		if(!ghost)
@@ -1083,11 +1078,41 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 
 	proc/announce_to_ghosts()
-		for(var/mob/dead/observer/G in player_list)
-			if(G.client)
+		for(var/mob/dead/observer/O in player_list)
+			if(O.client)
 				var/area/A = get_area(src)
 				if(A)
-					G << "<b>Golem rune created in [A.name].</b>"
+					O << "\blue <b>Golem rune created in [A.name]. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)</b>"
+
+	Topic(href,href_list)
+		if("signup" in href_list)
+			var/mob/dead/observer/O = locate(href_list["signup"])
+			volunteer(O)
+
+	attack_ghost(var/mob/dead/observer/O)
+		if(!O) return
+		volunteer(O)
+
+	proc/check_observer(var/mob/dead/observer/O)
+		if(!O)
+			return 0
+		if(!O.client)
+			return 0
+		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)
+			return 0
+		return 1
+
+	proc/volunteer(var/mob/dead/observer/O)
+		if(O in ghosts)
+			ghosts.Remove(O)
+			O << "\red You are no longer signed up to be a golem."
+		else
+			if(!check_observer(O))
+				O << "\red You are not eligable."
+				return
+			ghosts.Add(O)
+			O << "\blue You are signed up to be a golem."
+
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 
 /*
