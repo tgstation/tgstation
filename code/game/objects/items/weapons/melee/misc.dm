@@ -46,19 +46,15 @@
 		if(M.stuttering < 8 && !(HULK in M.mutations))
 			M.stuttering = 8
 		if(!istype(M, /mob/living/silicon/robot)) // Don't stun borgs, fix for issue #2436
-		{
 			M.Stun(8)
 			M.Weaken(8)
-		}
 		M.visible_message("<span class='danger'>[M] has been beaten with [src] by [user]!</span>", \
 							"<span class='userdanger'>[M] has been beaten with [src] by [user]!</span>")
 	else
 		playsound(loc, 'sound/weapons/Genhit.ogg', 50, 1, -1)
 		if(!istype(M, /mob/living/silicon/robot)) // Don't stun borgs, fix for issue #2436
-		{
 			M.Stun(5)
 			M.Weaken(5)
-		}
 		M.visible_message("<span class='danger'>[M] has been stunned with [src] by [user]!</span>", \
 							"<span class='userdanger'>[M] has been stunned with [src] by [user]!</span>")
 
