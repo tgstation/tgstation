@@ -233,10 +233,10 @@ var/list/department_radio_keys = list(
 
 	// Select all always_talk devices
 	//  Carbon lifeforms
-	if(istype(src, /mob/living/carbon))
-		for(var/obj/item/device/radio/R in contents)
-			if(R.always_talk)
-				devices += R
+	//if(istype(src, /mob/living/carbon))
+	for(var/obj/item/device/radio/R in contents)
+		if(R.always_talk)
+			devices += R
 
 	//src << "Speaking on [message_mode]: [message]"
 	if(message_mode)
@@ -263,6 +263,9 @@ var/list/department_radio_keys = list(
 					var/mob/living/carbon/C=src
 					if(C:l_ear) used_radios += C:l_ear
 					if(C:r_ear) used_radios += C:r_ear
+				if(issilicon(src))
+					var/mob/living/silicon/Ro=src
+					if(Ro:radio) devices += Ro:radio
 				message_range = 1
 				italics = 1
 			if ("fake left ear")
