@@ -13,6 +13,7 @@
 	stun = 10
 	weaken = 10
 	stutter = 10
+	hitsound = "sparks"
 
 	on_hit(var/atom/target, var/blocked = 0)
 		if(!ismob(target) || blocked >= 2) //Fully blocked by mob or collided with dense object - burst into sparks!
