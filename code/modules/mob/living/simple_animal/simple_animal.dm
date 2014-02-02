@@ -433,11 +433,21 @@
 	stat(null, "Health: [round((health / maxHealth) * 100)]%")
 
 /mob/living/simple_animal/proc/Die()
+	health = 0 // so /mob/living/simple_animal/Life() doesn't magically revive them
 	dead_mob_list += src
 	icon_state = icon_dead
 	stat = DEAD
 	density = 0
 	return
+
+/mob/living/simple_animal/death(gibbed)
+	if(stat == DEAD)
+		return
+
+	if(!gibbed)
+		visible_message("<span class='danger'>\the [src] stops moving...</span>")
+
+	Die()
 
 /mob/living/simple_animal/ex_act(severity)
 	..()

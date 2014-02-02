@@ -47,6 +47,7 @@
 	g_amt = 0
 	m_amt = 75
 	attack_verb = list("stabbed")
+	hitsound = 'sound/weapons/bladeslice.ogg'
 
 	suicide_act(mob/user)
 		viewers(user) << pick("<span class='suicide'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
@@ -133,6 +134,7 @@
 	slot_flags = SLOT_BELT
 	force = 3
 	throwforce = 5
+	hitsound = "swing_hit"
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2
@@ -163,22 +165,20 @@
 
 
 /obj/item/weapon/weldingtool/attack(mob/living/carbon/human/H, mob/user)
-	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
-
-	if(istype(H))
-		if(affecting.status == ORGAN_ROBOTIC)
-			if(src.remove_fuel(0))
-				src.item_heal_robotic(H, user, 30, 0)
-				return
-			else
-				user << "<span class='warning'>Need more welding fuel!</span>"
-				return
-		else
-			return ..()
-
-	else
+	if(!istype(H))
 		return ..()
 
+	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+
+	if(affecting.status == ORGAN_ROBOTIC)
+		if(src.remove_fuel(0))
+			src.item_heal_robotic(H, user, 30, 0)
+			return
+		else
+			user << "<span class='warning'>Need more welding fuel!</span>"
+			return
+	else
+		return ..()
 
 /obj/item/weapon/weldingtool/process()
 	switch(welding)
@@ -292,10 +292,11 @@
 			user << "<span class='notice'>You switch [src] on.</span>"
 			force = 15
 			damtype = "fire"
+			hitsound = 'sound/items/welder.ogg'
 			icon_state = "welder1"
 			processing_objects.Add(src)
 		else
-			user << "<span class='notice'>Need more fuel.</span>"
+			user << "<span class='notice'>You need more fuel.</span>"
 			welding = 0
 	else
 		if(!message)
@@ -304,6 +305,7 @@
 			user << "<span class='notice'>[src] shuts off!</span>"
 		force = 3
 		damtype = "brute"
+		hitsound = "swing_hit"
 		icon_state = "welder"
 		welding = 0
 

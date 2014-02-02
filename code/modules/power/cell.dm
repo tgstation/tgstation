@@ -63,7 +63,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/obj/item/clothing/gloves/space_ninja/SNG = H.gloves
-		if(!istype(SNG) || !SNG.candrain || !SNG.draining) return
+		if(!istype(SNG) || !SNG.candrain || SNG.draining) return
 
 		SNG.drain("CELL",src,H.wear_suit)
 	return

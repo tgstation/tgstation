@@ -221,16 +221,17 @@
 
 
 /obj/item/weapon/cable_coil/attack(mob/living/carbon/human/H, mob/user)
+	if(!istype(H))
+		return ..()
+
 	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
-	if(istype(H))
-		if(affecting.status == ORGAN_ROBOTIC)
-			src.item_heal_robotic(H, user, 0, 30)
-			src.use(1)
-			return
-		else
-			return ..()
+	if(affecting.status == ORGAN_ROBOTIC)
+		src.item_heal_robotic(H, user, 0, 30)
+		src.use(1)
+		return
 	else
 		return ..()
+
 
 
 /obj/item/weapon/cable_coil/New(loc, length = MAXCOIL, var/param_color = null)

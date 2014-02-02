@@ -2,10 +2,6 @@
 	name = "item"
 	icon = 'icons/obj/items.dmi'
 	var/item_state = null
-	var/r_speed = 1.0
-	var/health = null
-	var/burn_point = null
-	var/burning = null
 	var/hitsound = null
 	var/throwhitsound = null
 	var/throwtapsound = 'sound/weapons/throwtap.ogg'
@@ -13,7 +9,6 @@
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
 	pressure_resistance = 5
-//	causeerrorheresoifixthis
 	var/obj/item/master = null
 
 	var/heat_protection = 0 //flags which determine which body parts are protected from heat. Use the HEAD, CHEST, GROIN, etc. flags. See setup.dm

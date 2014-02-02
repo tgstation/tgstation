@@ -41,8 +41,8 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 						var/turf/T
 						var/safety = 0
 						while(safety < 25)
-							T = pick(get_area_turfs(destination))
-							if(!H.Move(T))
+							T = safepick(get_area_turfs(destination))
+							if(T && !H.Move(T))
 								safety += 1
 								continue
 							else
