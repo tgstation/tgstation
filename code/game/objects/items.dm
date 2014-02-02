@@ -106,16 +106,13 @@
 		f_name = "a bloody [name]"
 
 	var/determiner
-	if(src.gender != PLURAL)
-		determiner = "This is"
-	else
-		determiner = "These are"
-
 	var/pronoun
-	if(src.gender != PLURAL)
-		pronoun = "It is"
-	else
+	if(src.gender == PLURAL)
+		determiner = "These are"
 		pronoun = "They are"
+	else
+		determiner = "This is"
+		pronoun = "It is"
 
 	usr << "\icon[src][determiner] [f_name]. [pronoun] a [size] item." //e.g. These are some gloves. They are a small item. or This is a toolbox. It is a bulky item.
 
