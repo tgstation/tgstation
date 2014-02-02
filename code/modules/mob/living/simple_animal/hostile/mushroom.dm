@@ -52,6 +52,7 @@
 	cap_living.color = cap_color
 	cap_dead.color = cap_color
 	UpdateMushroomCap()
+	health = maxHealth
 	..()
 
 /mob/living/simple_animal/hostile/mushroom/adjustBruteLoss(var/damage)//Possibility to flee from a fight just to make it more visually interesting
