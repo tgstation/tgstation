@@ -28,6 +28,7 @@
 		update_icon()
 		if(payload in src)
 			payload.detonate()
+			del(src)	//to make badminbombs go away when detonated-Jordie
 		return
 	if(!active || defused)					//Counter terrorists win
 		if(defused && payload in src)
