@@ -1075,25 +1075,6 @@ datum
 					)//exclusion list for things you don't want the reaction to create.
 				var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 
-				var/message = "A gold slime reaction has occured"
-
-				var/atom/A = holder.my_atom
-				if(A)
-					var/turf/T = get_turf(A)
-					var/area/my_area = get_area(T)
-					message += " in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
-					message += " (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
-
-					var/mob/M = get(A, /mob)
-					if(M)
-						message += " - Carried By: [M.real_name] ([M.key]) (<A HREF='?_src_=holder;adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>)"
-					else
-						message += " - Last Fingerprint: [(A.fingerprintslast ? A.fingerprintslast : "N/A")]"
-				else
-					message += "."
-
-				message_admins(message, 0, 1)
-
 				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
 				for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
