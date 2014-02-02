@@ -31,7 +31,7 @@
 			for(var/obj/machinery/atmospherics/binary/dp_vent_pump/I in machines)
 				if(!isnull(I.id) && I.frequency == parent.frequency)
 					injector_names|=I.id
-			vent_pump = input("Select an injector:", "Sensor Data", vent_pump) as null|anything in injector_names
+			vent_pump = input("Select a vent:", "Vent Pumps", vent_pump) as null|anything in injector_names
 			parent.updateUsrDialog()
 			return 1
 
@@ -64,6 +64,6 @@
 			for(var/obj/machinery/atmospherics/binary/dp_vent_pump/I in machines)
 				if(!isnull(I.id) && I.frequency == parent.frequency)
 					injector_names|=I.id
-			vent_pump = input("Select an injector:", "Sensor Data", vent_pump) as null|anything in injector_names
+			vent_pump = input("Select a vent:", "Vent Pumps", vent_pump) as null|anything in injector_names
 			parent.updateUsrDialog()
 			return 1
