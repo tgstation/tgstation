@@ -26,7 +26,7 @@
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
-		H.equip_or_collect(new /obj/item/device/radio/headset/heads/rd(H), slot_l_ear)
+		H.equip_or_collect(new /obj/item/device/radio/headset/heads/rd(H), slot_ears)
 		H.equip_or_collect(new /obj/item/clothing/shoes/brown(H), slot_shoes)
 		H.equip_or_collect(new /obj/item/clothing/under/rank/research_director(H), slot_w_uniform)
 		H.equip_or_collect(new /obj/item/device/pda/heads/rd(H), slot_belt)
@@ -60,7 +60,7 @@
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
-		H.equip_or_collect(new /obj/item/device/radio/headset/headset_sci(H), slot_l_ear)
+		H.equip_or_collect(new /obj/item/device/radio/headset/headset_sci(H), slot_ears)
 		H.equip_or_collect(new /obj/item/clothing/under/rank/scientist(H), slot_w_uniform)
 		H.equip_or_collect(new /obj/item/clothing/shoes/white(H), slot_shoes)
 		H.equip_or_collect(new /obj/item/device/pda/toxins(H), slot_belt)
@@ -93,7 +93,7 @@
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
-		H.equip_or_collect(new /obj/item/device/radio/headset/headset_sci(H), slot_l_ear)
+		H.equip_or_collect(new /obj/item/device/radio/headset/headset_sci(H), slot_ears)
 		if(H.backbag == 2) H.equip_or_collect(new /obj/item/weapon/storage/backpack(H), slot_back)
 		if(H.backbag == 3) H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel_norm(H), slot_back)
 		H.equip_or_collect(new /obj/item/clothing/under/rank/roboticist(H), slot_w_uniform)

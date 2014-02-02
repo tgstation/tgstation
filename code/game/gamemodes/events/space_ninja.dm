@@ -526,7 +526,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 		del(gloves)
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(src)
-	equip_to_slot_or_del(R, slot_l_ear)
+	equip_to_slot_or_del(R, slot_ears)
 	if(gender==FEMALE)
 		equip_to_slot_or_del(new /obj/item/clothing/under/color/blackf(src), slot_w_uniform)
 	else

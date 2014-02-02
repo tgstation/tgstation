@@ -163,13 +163,9 @@
 		else
 			msg += "[t_He] [t_has] \icon[glasses] \a [glasses] covering [t_his] eyes.\n"
 
-	//left ear
-	if(l_ear && !skipears)
-		msg += "[t_He] [t_has] \icon[l_ear] \a [l_ear] on [t_his] left ear.\n"
-
-	//right ear
-	if(r_ear && !skipears)
-		msg += "[t_He] [t_has] \icon[r_ear] \a [r_ear] on [t_his] right ear.\n"
+	//ears
+	if(ears && !skipears)
+		msg += "[t_He] [t_has] \icon[ears] \a [ears] on [t_his] ears.\n"
 
 	//ID
 	if(wear_id)

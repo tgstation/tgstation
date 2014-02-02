@@ -26,8 +26,7 @@
 		r_hand,
 		belt,
 		wear_id,
-		l_ear,
-		r_ear,
+		ears,
 		glasses,
 		gloves,
 		head,
@@ -50,7 +49,7 @@
 	return null
 
 /mob/living/carbon/human/proc/is_on_ears(var/typepath)
-	return istype(l_ear,typepath) || istype(r_ear,typepath)
+	return istype(ears,typepath)
 
 /mob/living/carbon/human/proc/is_in_hands(var/typepath)
 	if(istype(l_hand,typepath))
@@ -78,10 +77,8 @@
 			return belt
 		if(slot_wear_id)
 			return wear_id
-		if(slot_l_ear)
-			return l_ear
-		if(slot_r_ear)
-			return r_ear
+		if(slot_ears)
+			return ears
 		if(slot_glasses)
 			return glasses
 		if(slot_gloves)
@@ -126,9 +123,7 @@
 		if(slot_wear_id)
 			// the only relevant check for this is the uniform check
 			return 1
-		if(slot_l_ear)
-			return has_organ("head")
-		if(slot_r_ear)
+		if(slot_ears)
 			return has_organ("head")
 		if(slot_glasses)
 			return has_organ("head")
@@ -189,12 +184,8 @@
 			update_hair(0)	//rebuild hair
 		success = 1
 		update_inv_head()
-	else if (W == l_ear)
-		l_ear = null
-		success = 1
-		update_inv_ears()
-	else if (W == r_ear)
-		r_ear = null
+	else if(W == ears)
+		ears = null
 		success = 1
 		update_inv_ears()
 	else if (W == shoes)
@@ -281,66 +272,41 @@
 		src.r_hand = null
 		update_inv_r_hand()
 
-	W.loc = src
 	switch(slot)
 		if(slot_back)
 			src.back = W
-			W.equipped(src, slot)
 			update_inv_back(redraw_mob)
 		if(slot_wear_mask)
 			src.wear_mask = W
 			if((wear_mask.flags & BLOCKHAIR) || (wear_mask.flags & BLOCKHEADHAIR))
 				update_hair(redraw_mob)	//rebuild hair
-			W.equipped(src, slot)
 			update_inv_wear_mask(redraw_mob)
 		if(slot_handcuffed)
 			src.handcuffed = W
 			update_inv_handcuffed(redraw_mob)
 		if(slot_legcuffed)
 			src.legcuffed = W
-			W.equipped(src, slot)
 			update_inv_legcuffed(redraw_mob)
 		if(slot_l_hand)
 			src.l_hand = W
-			W.equipped(src, slot)
 			update_inv_l_hand(redraw_mob)
 		if(slot_r_hand)
 			src.r_hand = W
-			W.equipped(src, slot)
 			update_inv_r_hand(redraw_mob)
 		if(slot_belt)
 			src.belt = W
-			W.equipped(src, slot)
 			update_inv_belt(redraw_mob)
 		if(slot_wear_id)
 			src.wear_id = W
-			W.equipped(src, slot)
 			update_inv_wear_id(redraw_mob)
-		if(slot_l_ear)
-			src.l_ear = W
-			if(l_ear.slot_flags & SLOT_TWOEARS)
-				var/obj/item/clothing/ears/offear/O = new(W)
-				O.loc = src
-				src.r_ear = O
-				O.layer = 20
-			W.equipped(src, slot)
-			update_inv_ears(redraw_mob)
-		if(slot_r_ear)
-			src.r_ear = W
-			if(r_ear.slot_flags & SLOT_TWOEARS)
-				var/obj/item/clothing/ears/offear/O = new(W)
-				O.loc = src
-				src.l_ear = O
-				O.layer = 20
-			W.equipped(src, slot)
+		if(slot_ears)
+			ears = W
 			update_inv_ears(redraw_mob)
 		if(slot_glasses)
 			src.glasses = W
-			W.equipped(src, slot)
 			update_inv_glasses(redraw_mob)
 		if(slot_gloves)
 			src.gloves = W
-			W.equipped(src, slot)
 			update_inv_gloves(redraw_mob)
 		if(slot_head)
 			src.head = W
@@ -348,43 +314,38 @@
 				update_hair(redraw_mob)	//rebuild hair
 			if(istype(W,/obj/item/clothing/head/kitty))
 				W.update_icon(src)
-			W.equipped(src, slot)
 			update_inv_head(redraw_mob)
 		if(slot_shoes)
 			src.shoes = W
-			W.equipped(src, slot)
 			update_inv_shoes(redraw_mob)
 		if(slot_wear_suit)
 			src.wear_suit = W
-			W.equipped(src, slot)
 			update_inv_wear_suit(redraw_mob)
 		if(slot_w_uniform)
 			src.w_uniform = W
-			W.equipped(src, slot)
 			update_inv_w_uniform(redraw_mob)
 		if(slot_l_store)
 			src.l_store = W
-			W.equipped(src, slot)
 			update_inv_pockets(redraw_mob)
 		if(slot_r_store)
 			src.r_store = W
-			W.equipped(src, slot)
 			update_inv_pockets(redraw_mob)
 		if(slot_s_store)
 			src.s_store = W
-			W.equipped(src, slot)
 			update_inv_s_store(redraw_mob)
 		if(slot_in_backpack)
 			if(src.get_active_hand() == W)
 				src.u_equip(W)
 			W.loc = src.back
+			return
 		else
-			src << "\red You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it..."
+			src << "\red You are trying to equip this item to an unsupported inventory slot. Report this to a coder!"
 			return
 
 	W.layer = 20
+	W.equipped(src, slot)
+	W.loc = src
 
-	return
 
 /obj/effect/equip_e
 	name = "equip e"
@@ -519,22 +480,14 @@
 					return
 				else
 					message = "\red <B>[source] is trying to take off the [target.glasses] from [target]'s eyes!</B>"
-			if("l_ear")
-				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their left ear item ([target.l_ear]) removed by [source.name] ([source.ckey])</font>")
-				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) left ear item ([target.l_ear])</font>")
-				if(target.l_ear && !target.l_ear.canremove)
-					message = "\red <B>[source] fails to take off \a [target.l_ear] from [target]'s left ear!</B>"
+			if("ears")
+				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their ear item ([target.ears]) removed by [source.name] ([source.ckey])</font>")
+				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) ear item ([target.ears])</font>")
+				if(target.ears && !target.ears.canremove)
+					message = "\red <B>[source] fails to take off \a [target.ears] from [target]'s ears!</B>"
 					return
 				else
-					message = "\red <B>[source] is trying to take off the [target.l_ear] from [target]'s left ear!</B>"
-			if("r_ear")
-				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their right ear item ([target.r_ear]) removed by [source.name] ([source.ckey])</font>")
-				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) right ear item ([target.r_ear])</font>")
-				if(target.r_ear && !target.r_ear.canremove)
-					message = "\red <B>[source] fails to take off \a [target.r_ear] from [target]'s right ear!</B>"
-					return
-				else
-					message = "\red <B>[source] is trying to take off the [target.r_ear] from [target]'s right ear!</B>"
+					message = "\red <B>[source] is trying to take off the [target.ears] from [target]'s ears!</B>"
 			if("head")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their hat ([target.head]) removed by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) hat ([target.head])</font>")
@@ -676,14 +629,10 @@ It can still be worn/put on as normal.
 			slot_to_process = slot_head
 			if (target.head && target.head.canremove)
 				strip_item = target.head
-		if("l_ear")
-			slot_to_process = slot_l_ear
-			if (target.l_ear)
-				strip_item = target.l_ear
-		if("r_ear")
-			slot_to_process = slot_r_ear
-			if (target.r_ear)
-				strip_item = target.r_ear
+		if("ears")
+			slot_to_process = slot_ears
+			if (target.ears)
+				strip_item = target.ears
 		if("shoes")
 			slot_to_process = slot_shoes
 			if (target.shoes && target.shoes.canremove)

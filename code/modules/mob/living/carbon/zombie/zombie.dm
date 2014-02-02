@@ -400,8 +400,7 @@
 	O.gloves = gloves
 	O.glasses = glasses
 	O.head = head
-	O.l_ear = l_ear
-	O.r_ear = r_ear
+	O.ears = ears
 	O.wear_id = wear_id
 	O.r_store = r_store
 	O.l_store = l_store

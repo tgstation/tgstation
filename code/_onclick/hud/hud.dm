@@ -116,14 +116,15 @@ datum/hud/New(mob/owner)
 
 
 /datum/hud/proc/hidden_inventory_update()
-	if(!mymob) return
+	if(!mymob)
+		return
+
 	if(ishuman(mymob))
 		var/mob/living/carbon/human/H = mymob
 		if(inventory_shown && hud_shown)
 			if(H.shoes)		H.shoes.screen_loc = ui_shoes
 			if(H.gloves)	H.gloves.screen_loc = ui_gloves
-			if(H.l_ear)		H.l_ear.screen_loc = ui_l_ear
-			if(H.r_ear)		H.r_ear.screen_loc = ui_r_ear
+			if(H.ears)		H.ears.screen_loc = ui_ears
 			if(H.glasses)	H.glasses.screen_loc = ui_glasses
 			if(H.w_uniform)	H.w_uniform.screen_loc = ui_iclothing
 			if(H.wear_suit)	H.wear_suit.screen_loc = ui_oclothing
@@ -132,8 +133,7 @@ datum/hud/New(mob/owner)
 		else
 			if(H.shoes)		H.shoes.screen_loc = null
 			if(H.gloves)	H.gloves.screen_loc = null
-			if(H.l_ear)		H.l_ear.screen_loc = null
-			if(H.r_ear)		H.r_ear.screen_loc = null
+			if(H.ears)		H.ears.screen_loc = null
 			if(H.glasses)	H.glasses.screen_loc = null
 			if(H.w_uniform)	H.w_uniform.screen_loc = null
 			if(H.wear_suit)	H.wear_suit.screen_loc = null
@@ -164,8 +164,11 @@ datum/hud/New(mob/owner)
 
 
 /datum/hud/proc/instantiate()
-	if(!ismob(mymob)) return 0
-	if(!mymob.client) return 0
+	if(!ismob(mymob))
+		return 0
+	if(!mymob.client)
+		return 0
+
 	var/ui_style = ui_style2icon(mymob.client.prefs.UI_style)
 	var/ui_color = mymob.client.prefs.UI_style_color
 	var/ui_alpha = mymob.client.prefs.UI_style_alpha
@@ -188,6 +191,8 @@ datum/hud/New(mob/owner)
 		robot_hud()
 	else if(isobserver(mymob))
 		ghost_hud()
+	else if(isovermind(mymob))
+		blob_hud()
 
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
@@ -195,7 +200,7 @@ datum/hud/New(mob/owner)
 	set name = "F12"
 	set hidden = 1
 
-	if(hud_used)
+	if(hud_used && client)
 		if(ishuman(src))
 			if(!src.client) return
 

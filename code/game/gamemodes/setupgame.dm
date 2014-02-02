@@ -157,14 +157,14 @@
 			var/mob/living/carbon/human/M = new /mob/living/carbon/human(A.loc)
 			M.real_name = "Corpse"
 			M.death()
-			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(M), slot_l_ear)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/device/pda/engineering(M), slot_belt)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/engineer(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(M), slot_shoes)
 		//	M.equip_to_slot_or_del(new /obj/item/weapon/storage/toolbox/mechanical(M), slot_l_hand)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/device/t_scanner(M), slot_r_store)
-			//M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_l_ear)
+			//M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(M), slot_back)
 			if (prob(50))
 				M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas(M), slot_wear_mask)
@@ -179,7 +179,7 @@
 			var/mob/living/carbon/human/M = new /mob/living/carbon/human(A.loc)
 			M.real_name = "Corpse"
 			M.death()
-			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(M), slot_l_ear)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen(M), slot_belt)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/engineer(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(M), slot_shoes)
@@ -202,7 +202,7 @@
 			var/mob/living/carbon/human/M = new /mob/living/carbon/human(A.loc)
 			M.real_name = "Corpse"
 			M.death()
-			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(M), slot_l_ear)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/utilitybelt(M), slot_belt)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chief_engineer(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(M), slot_shoes)
@@ -223,7 +223,7 @@
 			var/mob/living/carbon/human/M = new /mob/living/carbon/human(A.loc)
 			M.real_name = "Corpse"
 			M.death()
-			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_l_ear)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			//M.equip_to_slot_or_del(new /obj/item/weapon/gun/revolver(M), slot_belt)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), slot_shoes)

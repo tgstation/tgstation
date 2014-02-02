@@ -374,7 +374,21 @@
 					else
 						return 0
 				return 1
-			if(slot_l_ear)
+
+			if(slot_ears)
+				if( !(slot_flags & SLOT_EARS) )
+					return 0
+				if(H.ears)
+					if(automatic)
+						if(H.check_for_open_slot(src))
+							return 0
+					if(H.ears.canremove)
+						return 2
+					else
+						return 0
+				return 1
+			/* In case it's ever unfucked.
+			if(slot_ears)
 				if( !(slot_flags & SLOT_EARS) )
 					return 0
 				if( (slot_flags & SLOT_TWOEARS) && H.r_ear )
@@ -406,6 +420,7 @@
 				if( w_class < 2 )
 					return 1
 				return 1
+			*/
 			if(slot_w_uniform)
 				if( !(slot_flags & SLOT_ICLOTHING) )
 					return 0
