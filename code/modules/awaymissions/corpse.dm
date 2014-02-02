@@ -92,33 +92,32 @@
 		return //stop executing the proc
 	var/L = new /datum/ai_laws/default/asimov/ //variable L is a new Asimov lawset
 	var/B = new /obj/item/device/mmi/ //variable B is a new MMI
-	var/mob/living/silicon/ai/M = new(src.loc, L, B, 1) //variable M is a new AI spawned at the location of the landmark with the previously spawned Asimov lawset and MMI
+	var/mob/living/silicon/ai/M = new(src.loc, L, B, 1) //spawn new AI at landmark as var M
 	M.aiPDA.toff = 1 //turns the AI's PDA messenger off, stopping it showing up on player PDAs
 	M.death() //call the AI's death proc
 	M.name = src.name //AI's name is that of the landmark that spawned it
 	M.real_name = M.name //AI's real_name is the same as its name
-	for(var/obj/machinery/ai_status_display/O in world)
-		spawn( 0 )
-			O.mode = 0 //set AI status displays back to blank after the spawned AI dies so displays back on the station don't mislead players
-	mob_list -= M //removes the AI from the mob list to prevent it showing up in the round-end report
+	del(src)
 
 /obj/effect/landmark/corpse/slimeCorpse
 	var/slimecolour = "grey"
 	icon = 'icons/mob/slimes.dmi'
-	icon_state = "grey baby slime" //sets the icon in the map editor, can't use the slimecolour var because jews
+	icon_state = "grey baby slime" //sets the icon in the map editor
 
 /obj/effect/landmark/corpse/slimeCorpse/createCorpse() //proc creates a dead slime
 	var/A = locate(/mob/living/carbon/slime/) in loc //variable A looks for a slime at the location of the landmark
 	if(A) //if variable A is true
 		return //stop executing the proc
 	var/mob/living/carbon/slime/M = new(src.loc) //variable M is a new slime at the location of the landmark
-	M.adjustToxLoss(9001) //this kills the slime by asking Vegeta what the scouter says about his power level and converting that to toxin damage. Just calling death() leaves the slime with a living icon.
-	M.colour = src.slimecolour //slime's colour is set by the slimecolour var of the landmark object
+	M.adjustToxLoss(9001) //kills the slime, death() doesn't update its icon correctly
+	M.colour = src.slimecolour //slime colour is set by landmark's slimecolour var
+	del(src)
 
 /obj/effect/landmark/corpse/facehugCorpse/createCorpse() //Creates a squashed facehugger
 	var/obj/item/clothing/mask/facehugger/O = new(src.loc) //variable O is a new facehugger at the location of the landmark
 	O.Die() //call the facehugger's death proc
 	O.name = src.name //facehugger's name is the landmark's name
+	del(src)
 
 
 // I'll work on making a list of corpses people request for maps, or that I think will be commonly used. Syndicate operatives for example.
