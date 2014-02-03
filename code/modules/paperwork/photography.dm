@@ -145,7 +145,7 @@
 	..()
 
 
-/obj/item/device/camera/proc/camera_get_icon(turf/the_turf, blueprints)
+/obj/item/device/camera/proc/camera_get_icon(turf/the_turf)
 	//Bigger icon base to capture those icons that were shifted to the next tile
 	//i.e. pretty much all wall-mounted machinery
 	var/icon/res = icon('icons/effects/96x96.dmi', "")
@@ -180,8 +180,10 @@
 			var/icon/img = getFlatIcon(A, A.dir)//build_composite_icon(A)
 			if(istype(img, /icon))
 				res.Blend(new/icon(img, "", A.dir), ICON_OVERLAY, 33 + A.pixel_x, 33 + A.pixel_y)
-		if(!blueprints && istype(A, /obj/item/blueprints))
+
+		if(istype(A, /obj/item/blueprints))
 			blueprints = 1
+
 	return res
 
 
@@ -235,13 +237,13 @@
 		y_c--
 		x_c -= 3
 	if(!istype(usr,/mob/living/silicon/ai))
-		printpicture(user, temp, mobs, blueprints, flag)
+		printpicture(user, temp, mobs, flag)
 	else
 		aipicture(user, temp, mobs, blueprints)
 
 
 
-/obj/item/device/camera/proc/printpicture(mob/user, icon/temp, mobs, blueprints, flag) //Normal camera proc for creating photos
+/obj/item/device/camera/proc/printpicture(mob/user, icon/temp, mobs, flag) //Normal camera proc for creating photos
 	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
 	user.put_in_hands(P)
 	var/icon/small_img = icon(temp)
@@ -256,10 +258,10 @@
 
 	if(blueprints)
 		P.blueprints = 1
-	blueprints = 0
+		blueprints = 0
 
 
-/obj/item/device/camera/proc/aipicture(mob/user, icon/temp, mobs, blueprints) //instead of printing a picture like a regular camera would, we do this instead for the AI
+/obj/item/device/camera/proc/aipicture(mob/user, icon/temp, mobs) //instead of printing a picture like a regular camera would, we do this instead for the AI
 
 	var/icon/small_img = icon(temp)
 	var/icon/ic = icon('icons/obj/items.dmi',"photo")
@@ -271,10 +273,12 @@
 	var/pixel_x = rand(-10, 10)
 	var/pixel_y = rand(-10, 10)
 
+	var/injectblueprints = 1
 	if(blueprints)
-		blueprints = 1
+		injectblueprints = 1
+		blueprints = 0
 
-	injectaialbum(icon, img, desc, pixel_x, pixel_y, blueprints)
+	injectaialbum(icon, img, desc, pixel_x, pixel_y, injectblueprints)
 
 
 /datum/picture
@@ -282,7 +286,7 @@
 	var/list/fields = list()
 
 
-/obj/item/device/camera/proc/injectaialbum(var/icon, var/img, var/desc, var/pixel_x, var/pixel_y, var/blueprints) //stores image information to a list similar to that of the datacore
+/obj/item/device/camera/proc/injectaialbum(var/icon, var/img, var/desc, var/pixel_x, var/pixel_y, var/blueprintsinject) //stores image information to a list similar to that of the datacore
 	var/numberer = 1
 	for(var/datum/picture in src.aipictures)
 		numberer++
@@ -293,7 +297,7 @@
 	P.fields["desc"] = desc
 	P.fields["pixel_x"] = pixel_x
 	P.fields["pixel_y"] = pixel_y
-	P.fields["blueprints"] = blueprints
+	P.fields["blueprints"] = blueprintsinject
 
 	aipictures += P
 	usr << "<FONT COLOR=blue><B>Image recorded</B>"	//feedback to the AI player that the picture was taken
