@@ -18,36 +18,54 @@
 
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
-	var/obj/item/weapon/cloaking_device/C = locate((/obj/item/weapon/cloaking_device) in src)
-	if(C && C.active)
-		C.attack_self(src)//Should shut it off
-		update_icons()
-		src << "<span class='notice'>Your [C] was disrupted!</span>"
-		Stun(2)
-
 	var/armor = run_armor_check(def_zone, P.flag)
 	if(!P.nodamage)
 		apply_damage(P.damage, P.damage_type, def_zone, armor)
 	return P.on_hit(src, armor, def_zone)
 
+proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
+		if(!I)
+				return 0
+		if(I.throwforce && I.w_class)
+				return Clamp((I.throwforce + I.w_class) * 5, 30, 100)// Add the item's throwforce to its weight class and multiply by 5, then clamp the value between 30 and 100
+		else if(I.w_class)
+				return Clamp(I.w_class * 8, 20, 100) // Multiply the item's weight class by 8, then clamp the value between 20 and 100
+		else
+				return 0
+
 /mob/living/hitby(atom/movable/AM)//Standardization and logging -Sieve
-	if(istype(AM, /obj/))
-		var/obj/O = AM
+	if(istype(AM, /obj/item))
+		var/obj/item/I = AM
 		var/zone = ran_zone("chest", 65)//Hits a random part of the body, geared towards the chest
 		var/dtype = BRUTE
-		if(istype(O,/obj/item/weapon))
-			var/obj/item/weapon/W = O
+		var/volume = vol_by_throwforce_and_or_w_class(I)
+		if(istype(I,/obj/item/weapon)) //If the item is a weapon...
+			var/obj/item/weapon/W = I
 			dtype = W.damtype
-		visible_message("<span class='danger'>[src] has been hit by [O].</span>", \
-						"<span class='userdanger'>[src] has been hit by [O].</span>")
+
+			if (W.throwforce > 0) //If the weapon's throwforce is greater than zero...
+				if (W.throwhitsound) //...and throwhitsound is defined...
+					playsound(loc, W.throwhitsound, volume, 1, -1) //...play the weapon's throwhitsound.
+				else if(W.hitsound) //Otherwise, if the weapon's hitsound is defined...
+					playsound(loc, W.hitsound, volume, 1, -1) //...play the weapon's hitsound.
+				else if(!W.throwhitsound) //Otherwise, if throwhitsound isn't defined...
+					playsound(loc, 'sound/weapons/genhit.ogg',volume, 1, -1) //...play genhit.ogg.
+
+		else if(!I.throwhitsound && I.throwforce > 0) //Otherwise, if the item doesn't have a throwhitsound and has a throwforce greater than zero...
+			playsound(loc, 'sound/weapons/genhit.ogg', volume, 1, -1)//...play genhit.ogg
+		if(!I.throwforce)// Otherwise, if the item's throwforce is 0...
+			playsound(loc, 'sound/weapons/throwtap.ogg', 1, volume, -1)//...play throwtap.ogg.
+
+		visible_message("<span class='danger'>[src] has been hit by [I].</span>", \
+						"<span class='userdanger'>[src] has been hit by [I].</span>")
 		var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].")
-		apply_damage(O.throwforce, dtype, zone, armor, O)
-		if(!O.fingerprintslast)
+		apply_damage(I.throwforce, dtype, zone, armor, I)
+		if(!I.fingerprintslast)
 			return
-		var/client/assailant = directory[ckey(O.fingerprintslast)]
+		var/client/assailant = directory[ckey(I.fingerprintslast)]
 		if(assailant && assailant.mob && istype(assailant.mob,/mob))
 			var/mob/M = assailant.mob
-			add_logs(M, src, "hit", object="[O]")
+			add_logs(M, src, "hit", object="[I]")
 
 //Mobs on Fire
 /mob/living/proc/IgniteMob()

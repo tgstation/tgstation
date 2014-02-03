@@ -30,7 +30,6 @@
 			else		return default
 	return default
 
-
 /proc/sanitize_hexcolor(color, desired_format=3, include_crunch=0, default)
 	var/crunch = include_crunch ? "#" : ""
 	if(!istext(color))

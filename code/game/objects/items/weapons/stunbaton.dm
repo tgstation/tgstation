@@ -15,7 +15,7 @@
 	var/hitcost = 1000
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is putting the live [name] in \his mouth! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='suicide'>[user] is putting the live [name] in \his mouth! It looks like \he's trying to commit suicide.</span>"
 		return (FIRELOSS)
 
 /obj/item/weapon/melee/baton/New()
@@ -108,9 +108,8 @@
 
 	if(user.a_intent == "harm")
 		..()
-		playsound(loc, "swing_hit", 50, 1, -1)
 
-	else if(!status)
+	if(!status)
 		L.visible_message("<span class='warning'>[L] has been prodded with [src] by [user]. Luckily it was off.</span>")
 		return
 

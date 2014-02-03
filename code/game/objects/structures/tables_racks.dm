@@ -228,7 +228,7 @@
 
 
 /obj/structure/table/attack_animal(mob/living/simple_animal/user)
-	if(user.wall_smash)
+	if(user.environment_smash)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		if(istype(src, /obj/structure/table/reinforced))
 			new /obj/item/weapon/table_parts/reinforced(loc)
@@ -310,7 +310,8 @@
 		playsound(src.loc, "sparks", 50, 1)
 		table_destroy(1, user)
 
-	user.drop_item(src)
+	if(!(((I.flags & ABSTRACT)))) //WE NEED MORE PAREMS
+		user.drop_item(src)
 
 /obj/structure/table/proc/table_destroy(var/destroy_type, var/mob/user as mob)
 
@@ -492,7 +493,7 @@ Destroy type values:
 
 
 /obj/structure/rack/attack_animal(mob/living/simple_animal/user)
-	if(user.wall_smash)
+	if(user.environment_smash)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		new /obj/item/weapon/rack_parts(loc)
 		density = 0

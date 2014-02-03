@@ -36,11 +36,6 @@
 	else if (magazine.ammo_count())
 		chambered = magazine.get_round()
 		chambered.loc = src
-		if(chambered.BB)
-			if(chambered.reagents && chambered.BB.reagents)
-				var/datum/reagents/casting_reagents = chambered.reagents
-				casting_reagents.trans_to(chambered.BB, casting_reagents.total_volume) //For chemical darts/bullets
-				casting_reagents.delete()
 	return
 
 /obj/item/weapon/gun/projectile/attackby(var/obj/item/A as obj, mob/user as mob)

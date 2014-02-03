@@ -41,8 +41,8 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 						var/turf/T
 						var/safety = 0
 						while(safety < 25)
-							T = pick(get_area_turfs(destination))
-							if(!H.Move(T))
+							T = safepick(get_area_turfs(destination))
+							if(T && !H.Move(T))
 								safety += 1
 								continue
 							else
@@ -112,17 +112,13 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	keyslot2 = new /obj/item/device/encryptionkey/headset_sci
 
 /obj/item/clothing/under/rank/security/cargo/New()
-	var/obj/item/clothing/tie/armband/cargo/A		= new /obj/item/clothing/tie/armband/cargo
-	hastie = A
+	attachTie(new /obj/item/clothing/tie/armband/cargo)
 
 /obj/item/clothing/under/rank/security/engine/New()
-	var/obj/item/clothing/tie/armband/engine/A		= new /obj/item/clothing/tie/armband/engine
-	hastie = A
+	attachTie(new /obj/item/clothing/tie/armband/engine)
 
 /obj/item/clothing/under/rank/security/science/New()
-	var/obj/item/clothing/tie/armband/science/A		= new /obj/item/clothing/tie/armband/science
-	hastie = A
+	attachTie(new /obj/item/clothing/tie/armband/science)
 
 /obj/item/clothing/under/rank/security/med/New()
-	var/obj/item/clothing/tie/armband/medgreen/A	= new /obj/item/clothing/tie/armband/medgreen
-	hastie = A
+	attachTie(new /obj/item/clothing/tie/armband/medgreen)
