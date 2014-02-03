@@ -17,7 +17,7 @@
 	w_class = 4.0
 	slot_flags = SLOT_BACK	//ERROOOOO
 	max_w_class = 3
-	max_combined_w_class = 21
+	max_combined_w_class = 15
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	playsound(src.loc, "rustle", 50, 1, -5)
@@ -72,9 +72,9 @@
 	desc = "Space Santa uses this to deliver toys to all the nice children in space in Christmas! Wow, it's pretty big!"
 	icon_state = "giftbag0"
 	item_state = "giftbag"
-	w_class = 4.0
+	w_class = 5.0
 	storage_slots = 20
-	max_w_class = 3
+	max_w_class = 5
 	max_combined_w_class = 400 // can store a ton of shit!
 
 /obj/item/weapon/storage/backpack/cultpack
@@ -112,6 +112,7 @@
 	desc = "It's a tough backpack for the daily grind of station life."
 	icon_state = "engiepack"
 	item_state = "engiepack"
+	max_combined_w_class = 21
 
 /*
  * Satchel Types
@@ -137,6 +138,7 @@
 	desc = "A tough satchel with extra pockets."
 	icon_state = "satchel-eng"
 	item_state = "engiepack"
+	max_combined_w_class = 21
 
 /obj/item/weapon/storage/backpack/satchel_med
 	name = "medical satchel"

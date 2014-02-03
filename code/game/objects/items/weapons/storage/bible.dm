@@ -5,21 +5,11 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
+	max_w_class = 3.0
+	max_combined_w_class = 3.0
+	storage_slots = 2.0
 	var/mob/affecting = null
 	var/deity_name = "Christ"
-
-/obj/item/weapon/storage/bible/booze
-	name = "bible"
-	desc = "To be applied to the head repeatedly."
-	icon_state ="bible"
-
-/obj/item/weapon/storage/bible/booze/New()
-	..()
-	new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
-	new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
-	new /obj/item/weapon/spacecash(src)
-	new /obj/item/weapon/spacecash(src)
-	new /obj/item/weapon/spacecash(src)
 
 /obj/item/weapon/storage/bible/proc/bless(mob/living/carbon/M as mob)
 	if(ishuman(M))

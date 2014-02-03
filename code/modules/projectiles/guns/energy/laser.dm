@@ -76,6 +76,7 @@ obj/item/weapon/gun/energy/laser/retro
 	desc = "With the L.A.S.E.R. cannon, the lasing medium is enclosed in a tube lined with uranium-235 and subjected to high neutron flux in a nuclear reactor core. This incredible technology may help YOU achieve high excitation rates with small laser volumes!"
 	icon_state = "lasercannon"
 	origin_tech = "combat=4;materials=3;powerstorage=3"
+	w_class = 4.0
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/heavy)
 
 
@@ -84,6 +85,7 @@ obj/item/weapon/gun/energy/laser/retro
 	desc = "A high-power laser gun capable of expelling concentrated xray blasts."
 	icon_state = "xray"
 	origin_tech = "combat=5;materials=3;magnets=2;syndicate=2"
+	w_class = 4.0
 	ammo_type = list(/obj/item/ammo_casing/energy/xray)
 
 
