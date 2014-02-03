@@ -137,7 +137,7 @@
 	hitsound = "swing_hit"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3
+	w_class = 2.0
 	m_amt = 70
 	g_amt = 30
 	origin_tech = "engineering=1"
@@ -425,7 +425,7 @@
 	force = 5.0
 	throwforce = 7.0
 	item_state = "crowbar"
-	w_class = 3.0
+	w_class = 2.0
 	m_amt = 50
 	origin_tech = "engineering=1"
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
