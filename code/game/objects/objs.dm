@@ -109,6 +109,12 @@
 /obj/proc/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
 	return "<b>NO MULTITOOL_MENU!</b>"
 
+/obj/proc/linkWith(var/mob/user, var/obj/buffer)
+	return 0
+
+/obj/proc/unlinkFrom(var/mob/user, var/obj/buffer)
+	return 0
+
 /obj/proc/format_tag(var/label,var/varname, var/act="set_tag")
 	var/value = vars[varname]
 	if(!value || value=="")
@@ -152,7 +158,9 @@ a {
 				id=P.buffer:id_tag
 			dat += "<p><b>MULTITOOL BUFFER:</b> [P.buffer] ([id])"
 			if(canLink(P.buffer))
-				dat += " <a href='?src=\ref[src];link=1'>\[Link\]</a> <a href='?src=\ref[src];flush=1'>\[Flush\]</a>"
+				dat += " <a href='?src=\ref[src];link=1'>\[Link\]</a> "
+			if(P.buffer)
+				dat += "<a href='?src=\ref[src];flush=1'>\[Flush\]</a>"
 			dat += "</p>"
 		else
 			dat += "<p><b>MULTITOOL BUFFER:</b> <a href='?src=\ref[src];buffer=1'>\[Add Machine\]</a></p>"

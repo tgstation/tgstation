@@ -397,17 +397,5 @@
 				frequency = newfreq
 				initialize()
 
-	if(href_list["unlink"])
-		P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
-
-	if(href_list["link"])
-		P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
-
-	if(href_list["buffer"])
-		P.buffer = src
-
-	if(href_list["flush"])
-		P.buffer = null
-
 	usr.set_machine(src)
 	update_multitool_menu()

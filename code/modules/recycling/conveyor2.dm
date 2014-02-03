@@ -204,8 +204,6 @@
 		if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
 			return
 
-	var/obj/item/device/multitool/P = get_multitool(usr)
-
 	if("set_id" in href_list)
 		var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id) as null|text),1,MAX_MESSAGE_LEN)
 		if(newid)
@@ -229,18 +227,6 @@
 		operating=0
 		dir=text2num(href_list["setdir"])
 		updateConfig()
-
-	if(href_list["unlink"])
-		P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
-
-	if(href_list["link"])
-		P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
-
-	if(href_list["buffer"])
-		P.buffer = src
-
-	if(href_list["flush"])
-		P.buffer = null
 
 	usr.set_machine(src)
 	update_multitool_menu(usr)

@@ -330,49 +330,36 @@
 		temp = "<font color = #666633>-% Removed frequency filter [x] %-</font color>"
 		freq_listening.Remove(x)
 
-	if(href_list["unlink"])
-
-		if(text2num(href_list["unlink"]) <= length(links))
-			var/obj/machinery/telecomms/T = links[text2num(href_list["unlink"])]
-			if(T)
-				temp = "<font color = #666633>-% Removed \ref[T] [T.name] from linked entities. %-</font color>"
-
-				// Remove link entries from both T and src.
-
-				if(T.links)
-					T.links.Remove(src)
-				links.Remove(T)
-
-			else
-				temp = "<font color = #666633>-% Unable to locate machine to unlink from, try again. %-</font color>"
-
-	if(href_list["link"])
-
-		if(P)
-			if(P.buffer && P.buffer != src && istype(P.buffer, /obj/machinery/telecomms))
-				var/obj/machinery/telecomms/T=P.buffer
-				if(!(src in T.links))
-					T.links.Add(src)
-
-				if(!(T in src.links))
-					src.links.Add(T)
-
-				temp = "<font color = #666633>-% Successfully linked with \ref[P.buffer] [P.buffer.name] %-</font color>"
-
-			else
-				temp = "<font color = #666633>-% Unable to acquire buffer %-</font color>"
-
-	if(href_list["buffer"])
-		P.buffer = src
-		temp = "<font color = #666633>-% Successfully stored \ref[P.buffer] [P.buffer.name] in buffer %-</font color>"
-
-	if(href_list["flush"])
-		temp = "<font color = #666633>-% Buffer successfully flushed. %-</font color>"
-		P.buffer = null
-
 	src.Options_Topic(href, href_list)
 	usr.set_machine(src)
 	updateUsrDialog()
+
+/obj/machinery/telecomms/unlinkFrom(var/mob/user, var/mob/O)
+	if(O && O in links)
+		var/obj/machinery/telecomms/T=O
+		if(T.links)
+			T.links.Remove(src)
+		links.Remove(O)
+		temp = "<font color = #666633>-% Removed \ref[T] [T.name] from linked entities. %-</font color>"
+		return 1
+	else
+		temp = "<font color = #666633>-% Unable to locate machine to unlink from, try again. %-</font color>"
+		return 0
+
+/obj/machinery/telecomms/linkWith(var/mob/user, var/mob/O)
+	if(O && O != src && istype(O, /obj/machinery/telecomms))
+		var/obj/machinery/telecomms/T=O
+		if(!(src in T.links))
+			T.links.Add(src)
+
+		if(!(T in src.links))
+			src.links.Add(T)
+
+		temp = "<font color = #666633>-% Successfully linked with \ref[O] [O.name] %-</font color>"
+		return 1
+	else
+		temp = "<font color = #666633>-% Unable to acquire buffer %-</font color>"
+		return 0
 
 /obj/machinery/telecomms/proc/canAccess(var/mob/user)
 	if(issilicon(user) || in_range(user, src))

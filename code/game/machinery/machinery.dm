@@ -210,6 +210,59 @@ Class Procs:
 			if(newid)
 				vars[href_list["set_tag"]] = newid
 				initialize()
+
+			usr.set_machine(src)
+			update_multitool_menu()
+			return 1
+
+		if("unlink" in href_list)
+			var/obj/O = locate(href_list["unlink"])
+			if(!O)
+				return 1
+			if(!canLink(O))
+				usr << "\red You can't link with that device."
+				return 1
+
+			if(unlinkFrom(usr, O))
+				usr << "\blue A green light flashes on \the [P], confirming the link was removed."
+			else
+				usr << "\red A red light flashes on \the [P].  It appears something went wrong when unlinking the two devices."
+
+			usr.set_machine(src)
+			update_multitool_menu()
+			return 1
+
+		if("link" in href_list)
+			var/obj/O = locate(href_list["unlink"])
+			if(!O)
+				return 1
+			if(!canLink(O))
+				usr << "\red You can't link with that device."
+				return 1
+
+			if(linkWith(usr, O))
+				usr << "\blue A green light flashes on \the [P], confirming the link was removed."
+			else
+				usr << "\red A red light flashes on \the [P].  It appears something went wrong when unlinking the two devices."
+
+			usr.set_machine(src)
+			update_multitool_menu()
+			return 1
+
+		if("buffer" in href_list)
+			P.buffer = src
+			usr << "\blue A green light flashes, and the device appears in the multitool buffer."
+
+			usr.set_machine(src)
+			update_multitool_menu()
+			return 1
+
+		if("flush" in href_list)
+			usr << "\blue A green light flashes, and the device disappears in the multitool buffer."
+			P.buffer = null
+
+			usr.set_machine(src)
+			update_multitool_menu()
 			return 1
 	return 0
 

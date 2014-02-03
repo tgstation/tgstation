@@ -256,8 +256,6 @@ obj/machinery/airlock_sensor/Topic(href,href_list)
 			testing("Not silicon, not using a multitool.")
 			return
 
-	var/obj/item/device/multitool/P = get_multitool(usr)
-
 	if("set_tag" in href_list)
 		if(!(href_list["set_tag"] in vars))
 			usr << "\red Something went wrong: Unable to find [href_list["set_tag"]] in vars!"
@@ -279,18 +277,6 @@ obj/machinery/airlock_sensor/Topic(href,href_list)
 			if(newfreq < 10000)
 				frequency = newfreq
 				initialize()
-
-	if(href_list["unlink"])
-		P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
-
-	if(href_list["link"])
-		P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
-
-	if(href_list["buffer"])
-		P.buffer = src
-
-	if(href_list["flush"])
-		P.buffer = null
 
 	usr.set_machine(src)
 	update_multitool_menu(usr)
