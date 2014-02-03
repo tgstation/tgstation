@@ -41,6 +41,12 @@
 		return
 	add_logs(user, M, "attacked", object="[src.name]")
 
+	if(isrobot(M)) // Don't stun borgs, fix for issue #2436
+		..()
+		return
+	if(!isliving(M)) // Don't stun nonhuman things
+		return
+
 	if(user.a_intent == "harm")
 		if(!..()) return
 		if(M.stuttering < 8 && !(HULK in M.mutations))
