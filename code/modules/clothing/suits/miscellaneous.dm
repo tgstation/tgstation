@@ -180,7 +180,7 @@
 
 /obj/item/clothing/suit/nerdshirt
 	name = "gamer shirt"
-	desc = "A baggy shirt with a vintage game character on it. Why would someone wear this?"
+	desc = "A baggy shirt with vintage game character Phanic the Weasel. Why would someone wear this?"
 	icon_state = "nerdshirt"
 	item_state = "nerdshirt"
 
