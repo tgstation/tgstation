@@ -52,7 +52,86 @@ should be listed in the changelog upon commit tho. Thanks. -->
 
 <!-- You can simply add changelogs using AddToChangelog.exe -->
 
-<!-- DO NOT REMOVE OR MOVE THIS COMMENT! THIS MUST BE THE LAST NON-EMPTY LINE BEFORE THE LOGS #ADDTOCHANGELOGMARKER# -->
+<!-- DO NOT REMOVE OR MOVE THIS COMMENT! THIS MUST BE THE LAST NON-EMPTY LINE BEFORE THE LOGS #ADDTOCHANGELOGMARKER# -->
+
+<div class='commit sansserif'>
+	<h2 class='date'>3 February 2014</h2>
+	<h3 class='author'>Demas updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='tweak'>Changes windoor and newscaster attack messages to be consistent with windows and grilles. This removes the distracting boldness from windoor attack messages, which is reserved for userdanger, and names the attacker.</li>
+		<li class='rscadd'>Thrown items now play a sound effect on impact. The volume of the sound is based on the item's throwforce and/or weight class.</li>
+		<li class='tweak'>The fireaxe now has 15 throwforce, when previously it had only 1. But why would you throw it away, anyway?</li>
+		<li class='rscadd'>Projectiles now play a sound upon impact. The volume of the sound depends on the damage done by the projectile. Damageless projectiles such as electrodes have static volumes. Practise laser and laser tag beams have no impact sound.</li>
+		<li class='soundadd'>Added sear.ogg for the impacts of damaging beams such as lasers. It may be replaced if player feedback proves negative.</li>
+	</ul>
+</div>
+
+
+<div class='commit sansserif'>
+	<h2 class='date'>2 February 2014</h2>
+	<h3 class='author'>Demas updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Attack sounds for all melee weapons! No more silent attacks. </li>
+		<li class='tweak'>The volume of an object's attack sound is based on the weapon's force and/or weight class.</li>
+		<li class='rscadd'>Welders, lighters, matches, cigarettes, energy swords and energy axes have different attack sounds based on whether they're on or off.</li>
+		<li class='rscadd'>Weapons that do no damage play a tap sound. The exceptions are the bike horn, which still honks, and the banhammer, which plays adminhelp.ogg. Surely nothing can go wrong with that last one.</li>
+		<li class='tweak'>When you tap someone with an object, the message now uses "tapped" or "patted" instead of attacked. The horn still uses HONKED, and the banhammer still uses BANNED.</li>
+		<li class='bugfix'>You won't get the "armour has blocked an attack" message for harmless attacks anymore.</li>
+		<li class='rscadd'>Adds 5 force to the lighter when it's lit. Same as when you accidentally burn yourself lighting it.</li>
+		<li class='rscadd'>Removes boldness from item attack messages on non-human mobs. The attack is bolded for a player controlling a non-human mob. Now your eyes won't jump to the chat when it's Pun Pun who's being brutalised.</li>
+		<li class='bugfix'>Blood will no longer come out of non-human mobs if the attack is harmless.</li>
+		<li class='tweak'>Adds a period at the end of the catatonic human examine message. That's been bugging me for years.</li>
+		<li class='tweak'>The activation and deactivation sounds of toy swords, energy swords and energy shields are slightly quieter. Energy swords and shields are now slightly louder than toys.</li>
+		<li class='bugfix'>You can no longer light things with burnt matches.</li>
+		<li class='tweak'>Match, cigarette and lighter attack verbs, forces and damage types change based on whether the object is lit or not.</li>
+		<li class='bugfix'>Fixes a bug with the energy blade that kept it at weight class 5 after it was deactivated. Who cares, it disappears upon deactivation.</li>
+		<li class='tweak'>Changes the welder out of fuel message slightly to be less fragmented.</li>
+		<li class='tweak'>Removes dead air from a lot of weapon sound effects to make them more responsive. In other words, the fire extinguisher attack sound will play a lot sooner after you attack than before. </li>
+		<li class='tweak'>Equalised the peak volumes of most weapon sounds to be -0.1dB in an attempt to make volumes based on force more consistent across different sounds.</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>1 February 2014</h2>
+	<h3 class='author'>Ergovisavi updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Walking Mushrooms will now attack and eat each other! They're all a little unique from each other, no two shrooms are exactly alike, and a better quality harvest means stronger Walking Shrooms. Pit them against each other for your entertainment.</li>
+		<li class='rscadd'>Each mushroom will have a different colored cap to identify them. When mushrooms eat each other, they get stronger. The resulting mushroom will drop more slices when cut down to harvest, and will have better quality slices.</li>
+		<li class='rscadd'>Don't hurt them yourself, though, or you'll bruise them, and mushrooms won't get stronger from eating a bruised mushroom. If your mushroom faints, feed it a mushroom such as a plump helmet to get it back on its feet. It will slowly regenerate to full health eventually.</li>
+	</ul>
+</div>
+
+	<h3 class='author'>ChuckTheSheep updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>You can use a screwdriver to hook up irrigation hoses between hydroponics trays.</li>
+		<li class='rscadd'>If you transfer more than 30 units to the tray, irrigation is triggered and the water is shared between all connected trays.</li>
+	</ul>
+</div>
+
+
+<div class='commit sansserif'>
+	<h2 class='date'>30 January 2014</h2>
+	<h3 class='author'>Demas updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Updates box2550Away</li>
+		<li class='tweak'>Anchors all computer frames</li>
+		<li class='tweak'>Breaks vendors with the intent of preventing players hiding out there all round. Because it's that exciting. Go back to the station if you want to eat!</li>
+		<li class='rscdel'>Removes detective's camera TV which doesn't function off-station</li>
+		<li class='rscdel'>Removes the dead AI and dead slime as both had issues. They will return.</li>
+		<li class='bugfix'>Fixes beer keg and cola incorrect object paths.</li>
+		<li class='bugfix'>Fixes AI module incorrect object paths.</li>
+		<li class='tweak'>Emags the maintenance door to and from the portal so those without maintenance can enter and exit the portal room.</li>
+		<li class='rscdel'>Removes all but one SWAT body armour from the armoury. Removes two of the SWAT helmets, leaving two behind. Q_Q</li>
+	</ul>
+
+<div class='commit sansserif'>
+	<h2 class='date'>28 January 2014</h2>
+	<h3 class='author'>Demas updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Adds thud sounds to falling over</li>
+		<li class='wip'>Known bug: Thuds play when cloning initialises or someone is put into cryo. This will be fixed.</li>
+	</ul>
+</div>
 
 <div class='commit sansserif'>
 	<h2 class='date'>26 January 2014</h2>
@@ -138,6 +217,11 @@ should be listed in the changelog upon commit tho. Thanks. -->
 						  <br>
 						  Please post feedback to these changes on the forums.
 		</li>
+	</ul>
+</div>
+	<h3 class='author'>Demas updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Boxstation 2010 themed away mission! Now you walk amongst the elders.</li>
 	</ul>
 </div>
 

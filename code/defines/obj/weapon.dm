@@ -117,14 +117,17 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "bike_horn"
 	item_state = "bike_horn"
-	hitsound = 'sound/items/bikehorn.ogg'
 	throwforce = 3
+	hitsound = null //To prevent tap.ogg playing, as the item lacks of force
 	w_class = 1.0
 	throw_speed = 3
 	throw_range = 15
 	attack_verb = list("HONKED")
 	var/spam_flag = 0
 
+/obj/item/weapon/bikehorn/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	playsound(loc, 'sound/items/bikehorn.ogg', 50, 1, -1) //plays instead of tap.ogg!
+	return ..()
 
 /obj/item/weapon/c_tube
 	name = "cardboard tube"
@@ -371,10 +374,7 @@
 	m_amt = 15000
 	origin_tech = "materials=2;combat=1"
 	attack_verb = list("chopped", "torn", "cut")
-
-/obj/item/weapon/hatchet/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
-	return ..()
+	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/weapon/scythe
 	icon_state = "scythe0"
@@ -389,6 +389,7 @@
 	slot_flags = SLOT_BACK
 	origin_tech = "materials=2;combat=2"
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
+	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/weapon/scythe/afterattack(atom/A, mob/user as mob, proximity)
 	if(!proximity) return
