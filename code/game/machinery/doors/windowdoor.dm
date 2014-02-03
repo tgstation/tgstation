@@ -122,7 +122,7 @@
 	src.health = max(0, src.health - damage)
 	if (src.health <= 0)
 		new /obj/item/weapon/shard(src.loc)
-		var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
+		var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
 		CC.amount = 2
 		src.density = 0
 		del(src)
@@ -161,7 +161,7 @@
 		visible_message("\red <B>[user] smashes against the [src.name].</B>")
 		if (src.health <= 0)
 			new /obj/item/weapon/shard(src.loc)
-			var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
+			var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
 			CC.amount = 2
 			src.density = 0
 			del(src)
@@ -202,7 +202,7 @@
 		visible_message("<span class='danger'>\The [src] has been hit by [user] with [I].</span>")
 		if (src.health <= 0)
 			new /obj/item/weapon/shard(src.loc)
-			var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
+			var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
 			CC.amount = 2
 			src.density = 0
 			del(src)
