@@ -1064,7 +1064,6 @@
 #include "code\modules\power\cell.dm"
 #include "code\modules\power\engine.dm"
 #include "code\modules\power\generator.dm"
-#include "code\modules\power\generator_type2.dm"
 #include "code\modules\power\gravitygenerator.dm"
 #include "code\modules\power\lighting.dm"
 #include "code\modules\power\port_gen.dm"
