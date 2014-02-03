@@ -71,6 +71,12 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	var/strength = null
 	var/desc_holder = null
 
+/obj/structure/particle_accelerator/Del()
+	construction_state = 0
+	if(master)
+		master.part_scan()
+	..()
+
 /obj/structure/particle_accelerator/end_cap
 	name = "Alpha Particle Generation Array"
 	desc_holder = "This is where Alpha particles are generated from \[REDACTED\]"
