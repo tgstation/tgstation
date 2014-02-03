@@ -8,11 +8,10 @@
 	icon_state = "ore_redemption"
 	density = 1
 	anchored = 1.0
-	var/obj/machinery/mineral/stacking_unit_console/CONSOLE
 	var/stk_types = list()
 	var/stk_amt   = list()
 	var/stack_list[0] //Key: Type.  Value: Instance of type.
-	var/stack_amt = 50; //ammount to stack before releassing
+	var/stack_amt = 50; //amount to stack before releasing
 	input_dir = NORTH
 	output_dir = SOUTH
 	var/obj/item/weapon/card/id/inserted_id
@@ -136,9 +135,10 @@
 		new /datum/data/mining_equipment("Alien toy",           /obj/item/clothing/mask/facehugger/toy, 		                  1000),
 		new /datum/data/mining_equipment("Laser pointer",       /obj/item/device/laser_pointer, 				                  1000),
 		new /datum/data/mining_equipment("Point card",    		/obj/item/weapon/card/mining_point_card,               			  2500),
+		new /datum/data/mining_equipment("Lazarus injector",    /obj/item/weapon/lazarus_injector,                                3000),
 		new /datum/data/mining_equipment("Space cash",    		/obj/item/weapon/spacecash/c500,                    			  5000),
 		new /datum/data/mining_equipment("Drill",               /obj/item/weapon/pickaxe/drill,                                    500),
-		new /datum/data/mining_equipment("Sonic jackhammer",    /obj/item/weapon/pickaxe/jackhammer,                              1500),
+		new /datum/data/mining_equipment("Sonic jackhammer",    /obj/item/weapon/pickaxe/jackhammer,                              2500),
 		new /datum/data/mining_equipment("Mining drone",        /mob/living/simple_animal/hostile/mining_drone/,                  2500),
 		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                1000),
 		//new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                       1500),
@@ -309,9 +309,9 @@
 	CreateResonance(src)
 	..()
 
-/obj/item/weapon/resonator/attack(var/atom/A)
-	CreateResonance(A)
-	..()
+/obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity_flag)
+	if(proximity_flag)
+		CreateResonance(target)
 
 /obj/effect/resonance
 	name = "resonance field"
@@ -489,3 +489,46 @@
 	if(search_objects)
 		SetOffenseBehavior()
 	..()
+
+/**********************Lazarus Injector**********************/
+
+/obj/item/weapon/lazarus_injector
+	name = "lazarus injector"
+	desc = "An injector with a cocktail of nanomachines and chemicals, this device can seemingly raise animals from the dead, making them become friendly to the user. Unfortunately, the process is useless on higher forms of life and incredibly costly, so these were hidden in storage until an executive thought they'd be great motivation for some of their employees."
+	icon = 'icons/obj/syringe.dmi'
+	icon_state = "lazarus_hypo"
+	item_state = "hypo"
+	throwforce = 0
+	w_class = 2.0
+	throw_speed = 3
+	throw_range = 5
+	var/loaded = 1
+
+/obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
+	if(!loaded)
+		return
+	if(istype(target, /mob/living) && proximity_flag)
+		if(istype(target, /mob/living/simple_animal))
+			var/mob/living/simple_animal/M = target
+			if(M.stat == DEAD)
+				M.revive()
+				if(istype(target, /mob/living/simple_animal/hostile))
+					var/mob/living/simple_animal/hostile/H = M
+					H.friends += user
+					H.attack_same = 1
+				loaded = 0
+				user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
+				playsound(src,'sound/effects/refill.ogg',50,1)
+				icon_state = "lazarus_empty"
+				return
+			else
+				user << "<span class='info'>[src] is only effective on the dead.</span>"
+				return
+		else
+			user << "<span class='info'>[src] is only effective on lesser beings.</span>"
+			return
+
+/obj/item/weapon/lazarus_injector/examine()
+	..()
+	if(!loaded)
+		usr << "<span class='info'>[src] is empty.</span>"
