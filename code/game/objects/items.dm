@@ -104,7 +104,16 @@
 	if(src.blood_DNA)
 		f_name = "a bloody [name]"
 
-	usr << "\icon[src]This is [f_name]. It is a [size] item."
+	var/determiner
+	var/pronoun
+	if(src.gender == PLURAL)
+		determiner = "These are"
+		pronoun = "They are"
+	else
+		determiner = "This is"
+		pronoun = "It is"
+
+	usr << "\icon[src][determiner] [f_name]. [pronoun] a [size] item." //e.g. These are some gloves. They are a small item. or This is a toolbox. It is a bulky item.
 
 	if(src.desc)
 		usr << src.desc
