@@ -195,3 +195,90 @@
 		return 1
 	else
 		return 0
+
+
+//Helper procs for cyborg modules on the UI.
+//These are hackish but they help clean up code elsewhere.
+
+//module_selected(module) - Checks whether the module slot specified by "module" is currently selected.
+/mob/living/silicon/robot/mommi/module_selected(var/module) //Module is 1-3
+	return module == get_selected_module()
+
+//module_active(module) - Checks whether there is a module active in the slot specified by "module".
+/mob/living/silicon/robot/mommi/module_active(var/module)
+	if(!(module in list(INV_SLOT_TOOL, INV_SLOT_SIGHT)))
+		return
+
+	switch(module)
+		if(INV_SLOT_TOOL)
+			if(tool_state)
+				return 1
+		if(INV_SLOT_SIGHT)
+			if(sight_state)
+				return 1
+	return 0
+
+//get_selected_module() - Returns the slot number of the currently selected module.  Returns 0 if no modules are selected.
+/mob/living/silicon/robot/mommi/get_selected_module()
+	if(tool_state && module_active == tool_state)
+		return INV_SLOT_TOOL
+	else if(sight_state && module_active == sight_state)
+		return INV_SLOT_SIGHT
+
+	return 0
+
+//select_module(module) - Selects the module slot specified by "module"
+/mob/living/silicon/robot/mommi/select_module(var/module)
+	if(!(module in list(INV_SLOT_TOOL, INV_SLOT_SIGHT)))
+		return
+	if(!module_active(module)) return
+
+	switch(module)
+		if(INV_SLOT_TOOL)
+			if(module_active != tool_state)
+				inv_tool.icon_state = "inv1 +a"
+				inv_sight.icon_state = "sight"
+				module_active = tool_state
+				return
+		if(INV_SLOT_SIGHT)
+			if(module_active != sight_state)
+				inv_tool.icon_state = "inv1"
+				inv_sight.icon_state = "sight+a"
+				module_active = sight_state
+				return
+	return
+
+//deselect_module(module) - Deselects the module slot specified by "module"
+/mob/living/silicon/robot/mommi/deselect_module(var/module)
+	if(!(module in list(INV_SLOT_TOOL, INV_SLOT_SIGHT)))
+		return
+
+	switch(module)
+		if(INV_SLOT_TOOL)
+			if(module_active == tool_state)
+				inv_tool.icon_state = "inv1"
+				module_active = null
+				return
+		if(INV_SLOT_SIGHT)
+			if(module_active == sight_state)
+				inv_sight.icon_state = "sight"
+				module_active = null
+				return
+	return
+
+//toggle_module(module) - Toggles the selection of the module slot specified by "module".
+/mob/living/silicon/robot/mommi/toggle_module(var/module)
+	if(!(module in list(INV_SLOT_TOOL, INV_SLOT_SIGHT)))
+		return
+	if(module_selected(module))
+		deselect_module(module)
+	else
+		if(module_active(module))
+			select_module(module)
+		else
+			deselect_module(get_selected_module()) //If we can't do select anything, at least deselect the current module.
+	return
+
+//cycle_modules() - Cycles through the list of selected modules.
+/mob/living/silicon/robot/mommi/cycle_modules()
+	return
