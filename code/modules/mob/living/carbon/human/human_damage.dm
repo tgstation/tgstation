@@ -54,11 +54,31 @@
 	if(HULK in mutations)	return
 	..()
 
-/mob/living/carbon/human/update_canmove()
-	var/old_lying = lying
-	. = ..()
-	if(lying && !old_lying && !resting && !buckled) // fell down
-		playsound(loc, "bodyfall", 50, 1, -1)
+mob/living/carbon/human/proc/hat_fall_prob()
+	var/multiplier = 1
+	var/obj/item/clothing/head/H = head
+	var/loose = 40
+	if(stat || (status_flags & FAKEDEATH))
+		multiplier = 2
+	if(H.flags & (HEADCOVERSEYES | HEADCOVERSMOUTH) || H.flags_inv & (HIDEEYES | HIDEFACE))
+		loose = 0
+	return loose * multiplier
+
+/mob/living/carbon/human/fall(var/forced)
+	..()
+	if(istype(loc, /turf/space)) //if space is at the human's location
+		return //stop executing the proc
+	if(forced) //if going prone was involuntary
+		playsound(loc, "bodyfall", 50, 1) //play bodyfall at 50% volume
+		if(head)
+			var/obj/item/clothing/head/H = head
+			if(!istype(H) || prob(hat_fall_prob()))
+				drop_from_inventory(H)
+				if(prob(60))
+					step_rand(H)
+				if(!stat)
+					src << "<span class='warning'>[H] fell off your head!</span>"
+
 ////////////////////////////////////////////
 
 //Returns a list of damaged organs
