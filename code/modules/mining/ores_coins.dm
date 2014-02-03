@@ -4,21 +4,29 @@
 	name = "Rock"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "ore"
+	var/points = 0 //How many points this ore gets you from the ore redemption machine
+	var/refined_type = null //What this ore defaults to being refined into
 
 /obj/item/weapon/ore/uranium
 	name = "Uranium ore"
 	icon_state = "Uranium ore"
 	origin_tech = "materials=5"
+	points = 20
+	refined_type = /obj/item/stack/sheet/mineral/uranium
 
 /obj/item/weapon/ore/iron
 	name = "Iron ore"
 	icon_state = "Iron ore"
 	origin_tech = "materials=1"
+	points = 1
+	refined_type = /obj/item/stack/sheet/metal
 
 /obj/item/weapon/ore/glass
 	name = "Sand"
 	icon_state = "Glass ore"
 	origin_tech = "materials=1"
+	points = 1
+	refined_type = /obj/item/stack/sheet/glass
 
 	attack_self(mob/living/user as mob) //It's magic I ain't gonna explain how instant conversion with no tool works. -- Urist
 		var/location = get_turf(user)
@@ -34,26 +42,36 @@
 	name = "Plasma ore"
 	icon_state = "Plasma ore"
 	origin_tech = "materials=2"
+	points = 10
+	refined_type = /obj/item/stack/sheet/mineral/plasma
 
 /obj/item/weapon/ore/silver
 	name = "Silver ore"
 	icon_state = "Silver ore"
 	origin_tech = "materials=3"
+	points = 20
+	refined_type = /obj/item/stack/sheet/mineral/silver
 
 /obj/item/weapon/ore/gold
 	name = "Gold ore"
 	icon_state = "Gold ore"
 	origin_tech = "materials=4"
+	points = 20
+	refined_type = /obj/item/stack/sheet/mineral/gold
 
 /obj/item/weapon/ore/diamond
 	name = "Diamond ore"
 	icon_state = "Diamond ore"
 	origin_tech = "materials=6"
+	points = 40
+	refined_type = /obj/item/stack/sheet/mineral/diamond
 
 /obj/item/weapon/ore/clown
 	name = "Bananium ore"
 	icon_state = "Clown ore"
 	origin_tech = "materials=4"
+	points = 30
+	refined_type = /obj/item/stack/sheet/mineral/clown
 
 /obj/item/weapon/ore/slag
 	name = "Slag"

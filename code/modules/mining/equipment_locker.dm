@@ -13,8 +13,8 @@
 	var/stk_amt   = list()
 	var/stack_list[0] //Key: Type.  Value: Instance of type.
 	var/stack_amt = 50; //ammount to stack before releassing
-	input_dir = EAST
-	output_dir = WEST
+	input_dir = NORTH
+	output_dir = SOUTH
 	var/obj/item/weapon/card/id/inserted_id
 	var/points = 0
 	var/list/ore_values = list(("sand" = 1), ("iron" = 1), ("plasma" = 10), ("gold" = 20), ("silver" = 20), ("uranium" = 20), ("bananium" = 30), ("diamond" = 40))
@@ -42,39 +42,11 @@
 			process_sheet(O)
 
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(var/obj/item/weapon/ore/O)
-	if(istype(O, /obj/item/weapon/ore/diamond))
-		var/obj/item/stack/sheet/mineral/diamond/M = new /obj/item/stack/sheet/mineral/diamond(src)
-		points += 40
+	if(O.refined_type)
+		var/obj/item/stack/sheet/M = new O.refined_type(src)
+		points += O.points
 		return M
-	if(istype(O, /obj/item/weapon/ore/clown))
-		points += 30
-		var/obj/item/stack/sheet/mineral/clown/M = new /obj/item/stack/sheet/mineral/clown(src)
-		return M
-	if(istype(O, /obj/item/weapon/ore/uranium))
-		var/obj/item/stack/sheet/mineral/uranium/M = new /obj/item/stack/sheet/mineral/uranium(src)
-		points += 20
-		return M
-	if(istype(O, /obj/item/weapon/ore/silver))
-		points += 20
-		var/obj/item/stack/sheet/mineral/silver/M = new /obj/item/stack/sheet/mineral/silver(src)
-		return M
-	if(istype(O, /obj/item/weapon/ore/gold))
-		points += 20
-		var/obj/item/stack/sheet/mineral/gold/M = new /obj/item/stack/sheet/mineral/gold(src)
-		return M
-	if(istype(O, /obj/item/weapon/ore/plasma))
-		points += 10
-		var/obj/item/stack/sheet/mineral/plasma/M = new /obj/item/stack/sheet/mineral/plasma(src)
-		return M
-	if(istype(O, /obj/item/weapon/ore/glass))
-		points += 1
-		var/obj/item/stack/sheet/glass/M = new /obj/item/stack/sheet/glass(src)
-		return M
-	if(istype(O, /obj/item/weapon/ore/iron))
-		points += 1
-		var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal(src)
-		return M
-	del(O)//If it isn't any of these things, just vaporize it!
+	del(O)//No refined type? Purge it.
 	return
 
 /obj/machinery/mineral/ore_redemption/attack_hand(user as mob)
@@ -171,6 +143,7 @@
 		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                1000),
 		//new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                       1500),
 		//new /datum/data/mining_equipment("Kinetic accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,                  2500),
+		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide,                      3000),
 		)
 
 /datum/data/mining_equipment/
@@ -470,6 +443,7 @@
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior()
 	stop_automated_movement_when_pulled = 1
+	idle_vision_range = 9
 	search_objects = 2
 	wander = 1
 	ranged = 0
@@ -479,6 +453,7 @@
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetOffenseBehavior()
 	stop_automated_movement_when_pulled = 0
+	idle_vision_range = 5
 	search_objects = 0
 	wander = 0
 	ranged = 1
@@ -493,8 +468,13 @@
 	..()
 
 /mob/living/simple_animal/hostile/mining_drone/proc/CollectOre()
-	for(var/obj/item/weapon/O in get_turf(target))
+	var/obj/item/weapon/ore/O
+	for(O in src.loc)
 		O.loc = src
+	for(var/dir in alldirs)
+		var/turf/T = get_step(src,dir)
+		for(O in T)
+			O.loc = src
 	return
 
 /mob/living/simple_animal/hostile/mining_drone/proc/DropOre()
