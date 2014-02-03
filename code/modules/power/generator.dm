@@ -20,6 +20,7 @@
 
 	var/lastgen = 0
 	var/lastgenlev = -1
+	var/lastcirc = "00"
 
 
 /obj/machinery/power/generator/initialize()
@@ -53,6 +54,9 @@
 
 		if(lastgenlev != 0)
 			overlays += image('icons/obj/power.dmi', "teg-op[lastgenlev]")
+
+		overlays += image('icons/obj/power.dmi', "teg-oc[lastcirc]")
+
 
 #define GENRATE 800		// generator output coefficient from Q
 
@@ -108,8 +112,10 @@
 			circ1.air1.merge(cold_air)
 
 	var/genlev = max(0, min( round(11*lastgen / 100000), 11))
-	if(genlev != lastgenlev)
+	var/circ = "[circ1 && circ1.last_pressure_delta > 0 ? "1" : "0"][circ2 && circ2.last_pressure_delta > 0 ? "1" : "0"]"
+	if((genlev != lastgenlev) || (circ != lastcirc))
 		lastgenlev = genlev
+		lastcirc = circ
 		update_icon()
 
 	src.updateDialog()
