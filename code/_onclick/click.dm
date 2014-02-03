@@ -124,34 +124,11 @@
 			if(W)
 				if(W.flags&USEDELAY)
 					next_move += 5
-				//If you click something below layer 2.75(effect spiderling) it will check to see if there is a mob and hit that instead,depending on intent.
-				if(a_intent == "harm" && A.layer<2.75)
-					var/turf/T = get_turf(A)
-					var/mob/living/L
-					for(var/mob/living/M in T)	//cycle to last mob in list
-						L = M
-					if(L)
-						// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-						var/resolved = L.attackby(W,src)
-						if(!resolved && L && W)
-							W.afterattack(L,src,1,params) // 1: clicking something Adjacent
-					else
-						var/resolved = A.attackby(W,src)
-						if(!resolved && A && W)
-							W.afterattack(A,src,1,params) // 1: clicking something Adjacent
-				else
-					var/resolved = A.attackby(W,src)
-					if(!resolved && A && W)
-						W.afterattack(A,src,1,params) // 1: clicking something Adjacent
-			else if(a_intent != "help" && A.layer<2.75)
-				var/turf/T = get_turf(A)
-				var/mob/living/L
-				for(var/mob/living/M in T)	//cycle to last mob in list
-					L = M
-				if(L)
-					UnarmedAttack(L, 1)
-				else
-					UnarmedAttack(A, 1)
+
+				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
+				var/resolved = A.attackby(W,src)
+				if(!resolved && A && W)
+					W.afterattack(A,src,1,params) // 1: clicking something Adjacent
 			else
 				UnarmedAttack(A, 1)
 			return
@@ -317,7 +294,7 @@
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(var/atom/A)
-	if( buckled || stat != CONSCIOUS || !A || !x || !y || !A.x || !A.y ) return
+	if( buckled || !A || !x || !y || !A.x || !A.y ) return
 	var/dx = A.x - x
 	var/dy = A.y - y
 	if(!dx && !dy) // Wall items are graphically shifted but on the floor
