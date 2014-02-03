@@ -97,7 +97,7 @@
 		name = "sonic jackhammer"
 		icon_state = "jackhammer"
 		item_state = "jackhammer"
-		digspeed = 20 //faster than drill, but cannot dig
+		digspeed = 15 //faster than drill, but cannot dig
 		origin_tech = "materials=3;powerstorage=2;engineering=2"
 		desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
 

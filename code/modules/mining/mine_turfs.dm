@@ -342,6 +342,9 @@
 			user << "\blue You finish cutting into the rock."
 			gets_drilled()
 
+	if(istype(W, /obj/item/weapon/resonator))
+		var/obj/item/weapon/resonator/R = W
+		R.CreateResonance(src)
 	else
 		return attack_hand(user)
 	return

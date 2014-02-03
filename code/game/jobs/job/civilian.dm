@@ -172,6 +172,7 @@
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(H.back), slot_in_backpack)
 			H.equip_to_slot_or_del(new /obj/item/weapon/crowbar(H), slot_in_backpack)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/bag/ore(H), slot_in_backpack)
+			H.equip_to_slot_or_del(new /obj/item/weapon/card/mining_point_card(H), slot_in_backpack)
 		return 1
 
 
