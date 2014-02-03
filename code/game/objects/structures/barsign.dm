@@ -63,6 +63,7 @@
 
 /obj/structure/sign/double/barsign/proc/pick_sign(var/list/L)
 	var/previous_sign = sign_name
+	var/previous_sign_index = L.Find(sign_name)
 
 	L.Remove(sign_name)
 	L.Add("Cancel")
@@ -159,10 +160,10 @@
 
 		if ("Cancel")
 			L.Remove("Cancel")
-			L.Add(previous_sign)
+			L.Insert(previous_sign_index, previous_sign)
 			return
 
 	L.Remove("Cancel")
-	L.Add(previous_sign)
+	L.Insert(previous_sign_index, previous_sign)
 
 	desc = "It displays ``[sign_name]''."
