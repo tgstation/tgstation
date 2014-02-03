@@ -106,7 +106,7 @@
 	desc = "A general purpose Chef's Knife made by SpaceCook Incorporated. Guaranteed to stay sharp for years to come."
 	flags = CONDUCT
 	force = 10.0
-	w_class = 2.0
+	w_class = 3.0
 	throwforce = 6.0
 	throw_speed = 3
 	throw_range = 6
@@ -136,7 +136,7 @@
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products."
 	flags = CONDUCT
 	force = 15.0
-	w_class = 2.0
+	w_class = 3.0
 	throwforce = 8.0
 	throw_speed = 3
 	throw_range = 6
@@ -157,7 +157,7 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 7
-	w_class = 2.0
+	w_class = 3.0
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked") //I think the rollingpin attackby will end up ignoring this anyway.
 
 /obj/item/weapon/kitchen/rollingpin/attack(mob/living/M as mob, mob/living/user as mob)

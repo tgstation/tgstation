@@ -4,6 +4,8 @@
 	icon_state = "pulse"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	force = 10
+	w_class = 4.0
+	slot_flags = SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse, /obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
 	cell_type = "/obj/item/weapon/cell/super"
 
@@ -27,5 +29,6 @@
 	desc = "It's not the size of the gun, it's the size of the hole it puts through people."
 	icon_state = "m1911-p"
 	cell_type = "/obj/item/weapon/cell/infinite"
+	w_class = 2.0
 
 
