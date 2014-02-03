@@ -119,7 +119,8 @@
 		if(istype(the_target, /obj/mecha) && search_objects < 2)
 			var/obj/mecha/M = the_target
 			if(M.occupant)//Just so we don't attack empty mechs
-				return 1
+				if(CanAttack(M.occupant))
+					return 1
 	return 0
 
 /mob/living/simple_animal/hostile/proc/GiveTarget(var/new_target)//Step 4, give us our selected target
