@@ -400,11 +400,16 @@
 // Used in job equipping so shit doesn't pile up at the start loc.
 /mob/living/carbon/human/proc/equip_or_collect(var/obj/item/W, var/slot)
 	if(!equip_to_slot_or_drop(W, slot))
-		// Do I have a bag?
-		var/obj/item/weapon/storage/bag/plasticbag/B = is_in_hands(/obj/item/weapon/storage/bag/plasticbag)
+		// Do I have a backpack?
+		var/obj/item/weapon/storage/B = back
+
+		// Do I have a plastic bag?
+		if(!B)
+			B=is_in_hands(/obj/item/weapon/storage/bag/plasticbag)
+
 		if(!B)
 			// Gimme one.
-			B=new(null) // Null in case of failed equip.
+			B=new /obj/item/weapon/storage/bag/plasticbag(null) // Null in case of failed equip.
 			if(!put_in_hands(B,slot_back))
 				return // Fuck it
 		B.handle_item_insertion(W,1)
