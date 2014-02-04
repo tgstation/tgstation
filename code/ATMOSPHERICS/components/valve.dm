@@ -328,7 +328,6 @@ obj/machinery/atmospherics/valve
 
 		// Just for digital valves.
 		attackby(var/obj/item/W as obj, var/mob/user as mob)
-			testing("attackby([W], [user])")
 			if(istype(W, /obj/item/device/multitool))
 				update_multitool_menu(user)
 				return 1

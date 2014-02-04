@@ -463,7 +463,6 @@ proc/is_blind(A)
 	var/obj/item/device/multitool/P
 	if(isrobot(user) || ishuman(user))
 		P = user.get_active_hand()
-		testing("user.get_active_hand() returned [P].")
 	else if(isAI(user))
 		var/mob/living/silicon/ai/AI=user
 		P = AI.aiMulti
