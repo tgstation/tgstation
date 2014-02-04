@@ -214,7 +214,7 @@ datum
 			reaction_turf(var/turf/simulated/T, var/volume)
 				if (!istype(T)) return
 				src = null
-				if(volume >= 10)
+				if(volume >= 3)
 					T.MakeSlippery()
 
 				for(var/mob/living/carbon/slime/M in T)
