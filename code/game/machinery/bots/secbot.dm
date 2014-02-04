@@ -171,7 +171,7 @@ Auto Patrol: []"},
 				user << "\red Access denied."
 	else
 		..()
-		if(!istype(W, /obj/item/weapon/screwdriver) && (W.force) && (!src.target))
+		if(!istype(W, /obj/item/weapon/screwdriver) && !istype(W, /obj/item/weapon/weldingtool) && (W.force) && (!src.target)) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
 			src.target = user
 			src.mode = SECBOT_HUNT
 
