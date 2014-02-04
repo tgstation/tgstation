@@ -24,6 +24,7 @@
 // Mappers: use "Generate Instances from Directions" for this
 //  one.
 /obj/structure/transit_tube/station
+	name = "station tube station"
 	icon = 'icons/obj/pipes/transit_tube_station.dmi'
 	icon_state = "closed"
 	exit_delay = 2
@@ -32,9 +33,14 @@
 	var/automatic_launch_time = 100
 	var/cooldown_delay = 30
 	var/launch_cooldown = 0
+	var/reverse_launch = 0
 
 	var/const/OPEN_DURATION = 6
 	var/const/CLOSE_DURATION = 6
+
+// Stations which will send the tube in the opposite direction after their stop.
+/obj/structure/transit_tube/station/reverse
+	reverse_launch = 1
 
 
 
@@ -171,12 +177,13 @@ obj/structure/ex_act(severity)
 
 /obj/structure/transit_tube/station/proc/launch_pod()
 	for(var/obj/structure/transit_tube_pod/pod in loc)
-		if(!pod.moving && pod.dir in directions())
+		if(!pod.moving && turn(pod.dir, (reverse_launch ? 180 : 0)) in directions())
 			spawn(5)
 				pod_moving = 1
 				close_animation()
 				sleep(CLOSE_DURATION + 2)
 				if(icon_state == "closed" && pod && launch_cooldown < world.time)
+					pod.dir = turn(pod.dir, (reverse_launch ? 180 : 0))
 					pod.follow_tube()
 
 				pod_moving = 0
