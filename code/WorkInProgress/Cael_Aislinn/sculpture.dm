@@ -92,6 +92,10 @@
 	if(istype(get_turf(src), /turf/space) || hibernate)
 		return
 
+	// Grabbing
+	if(G)
+		G.process()
+
 	for(var/mob/living/M in view(7, src))
 		if(M.stat || M == src)
 			continue
