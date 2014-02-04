@@ -930,14 +930,26 @@ Auto Patrol: []"},
 					name = "shielded frame assembly"
 					user << "<span class='notice'>You welded the vest to [src].</span>"
 		if(4)
-			if( istype(W, /obj/item/clothing/head/helmet) )
-				user.drop_item()
-				del(W)
-				build_step++
-				user << "<span class='notice'>You add the helmet to [src].</span>"
-				name = "covered and shielded frame assembly"
-				item_state = "[lasercolor]ed209_hat"
-				icon_state = "[lasercolor]ed209_hat"
+			switch(lasercolor)
+				if("b")
+					if( !istype(W, /obj/item/clothing/head/helmet/bluetaghelm) )
+						return
+
+				if("r")
+					if( !istype(W, /obj/item/clothing/head/helmet/redtaghelm) )
+						return
+
+				if("")
+					if( !istype(W, /obj/item/clothing/head/helmet) )
+						return
+
+			user.drop_item()
+			del(W)
+			build_step++
+			user << "<span class='notice'>You add the helmet to [src].</span>"
+			name = "covered and shielded frame assembly"
+			item_state = "[lasercolor]ed209_hat"
+			icon_state = "[lasercolor]ed209_hat"
 
 		if(5)
 			if( isprox(W) )
