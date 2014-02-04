@@ -35,4 +35,4 @@
 	contains = list(/obj/machinery/hydroponics/unattached)
 	cost = 10
 	containertype = /obj/structure/largecrate
-	containername = "hydropnics tray crate"
+	containername = "hydroponics tray crate"
