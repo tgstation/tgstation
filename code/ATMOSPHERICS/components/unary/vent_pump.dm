@@ -301,7 +301,7 @@
 		update_icon()
 
 	interact(mob/user as mob)
-		update_multitool_menu()
+		update_multitool_menu(user)
 
 	multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
 		return {"
@@ -397,5 +397,4 @@
 				frequency = newfreq
 				initialize()
 
-	usr.set_machine(src)
-	update_multitool_menu()
+	update_multitool_menu(usr)

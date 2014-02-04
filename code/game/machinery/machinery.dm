@@ -201,6 +201,9 @@ Class Procs:
 
 	var/obj/item/device/multitool/P = get_multitool(usr)
 	if(P && istype(P))
+		var/update_mt_menu=0
+		var/re_init=0
+
 		if("set_tag" in href_list)
 			if(!(href_list["set_tag"] in vars))
 				usr << "\red Something went wrong: Unable to find [href_list["set_tag"]] in vars!"
@@ -209,11 +212,7 @@ Class Procs:
 			var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag", src, current_tag) as null|text),1,MAX_MESSAGE_LEN)
 			if(newid)
 				vars[href_list["set_tag"]] = newid
-				initialize()
-
-			usr.set_machine(src)
-			update_multitool_menu()
-			return 1
+				re_init=1
 
 		if("unlink" in href_list)
 			var/obj/O = locate(href_list["unlink"])
@@ -227,10 +226,7 @@ Class Procs:
 				usr << "\blue A green light flashes on \the [P], confirming the link was removed."
 			else
 				usr << "\red A red light flashes on \the [P].  It appears something went wrong when unlinking the two devices."
-
-			usr.set_machine(src)
-			update_multitool_menu()
-			return 1
+			update_mt_menu=1
 
 		if("link" in href_list)
 			var/obj/O = locate(href_list["unlink"])
@@ -244,25 +240,23 @@ Class Procs:
 				usr << "\blue A green light flashes on \the [P], confirming the link was removed."
 			else
 				usr << "\red A red light flashes on \the [P].  It appears something went wrong when unlinking the two devices."
-
-			usr.set_machine(src)
-			update_multitool_menu()
-			return 1
+			update_mt_menu=1
 
 		if("buffer" in href_list)
 			P.buffer = src
 			usr << "\blue A green light flashes, and the device appears in the multitool buffer."
-
-			usr.set_machine(src)
-			update_multitool_menu()
-			return 1
+			update_mt_menu=1
 
 		if("flush" in href_list)
 			usr << "\blue A green light flashes, and the device disappears in the multitool buffer."
 			P.buffer = null
+			update_mt_menu=1
 
-			usr.set_machine(src)
-			update_multitool_menu()
+		if(re_init)
+			initialize()
+		if(update_mt_menu)
+			//usr.set_machine(src)
+			update_multitool_menu(usr)
 			return 1
 	return 0
 

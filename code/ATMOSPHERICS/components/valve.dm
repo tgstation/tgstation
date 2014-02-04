@@ -297,8 +297,7 @@ obj/machinery/atmospherics/valve
 						frequency = newfreq
 						initialize()
 
-			usr.set_machine(src)
-			updateUsrDialog()
+			update_multitool_menu(usr)
 
 		receive_signal(datum/signal/signal)
 			if(!signal.data["tag"] || (signal.data["tag"] != id))
@@ -328,9 +327,10 @@ obj/machinery/atmospherics/valve
 						open()
 
 		// Just for digital valves.
-		attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-			if (istype(W, /obj/item/device/multitool))
-				update_multitool_menu()
+		attackby(var/obj/item/W as obj, var/mob/user as mob)
+			testing("attackby([W], [user])")
+			if(istype(W, /obj/item/device/multitool))
+				update_multitool_menu(user)
 				return 1
 			// Pass to the method below (does stuff ALL valves should do)
 			..()

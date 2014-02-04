@@ -344,8 +344,7 @@
 				frequency = newfreq
 				initialize()
 
-	usr.set_machine(src)
-	update_multitool_menu()
+	update_multitool_menu(usr)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/Del()
 	if(initial_loc)

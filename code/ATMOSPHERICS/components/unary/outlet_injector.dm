@@ -183,8 +183,7 @@
 					frequency = newfreq
 					initialize()
 
-		usr.set_machine(src)
-		update_multitool_menu()
+		update_multitool_menu(usr)
 
 	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 		if(istype(W, /obj/item/device/multitool))
