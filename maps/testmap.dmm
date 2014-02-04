@@ -1,0 +1,46 @@
+"a" = (/turf/simulated/wall,/area/quartermaster/storage)
+"b" = (/obj/machinery/power/smes/magical,/obj/structure/cable/white{tag = "icon-0-2"; icon_state = "0-2"},/turf/simulated/floor,/area/quartermaster/storage)
+"c" = (/obj/machinery/power/terminal{tag = "icon-term (WEST)"; icon_state = "term"; dir = 8},/turf/simulated/floor,/area/quartermaster/storage)
+"d" = (/turf/simulated/floor,/area/quartermaster/storage)
+"e" = (/obj/machinery/power/apc,/obj/structure/cable/white{tag = "icon-0-4"; icon_state = "0-4"},/turf/simulated/floor,/area/quartermaster/storage)
+"f" = (/obj/structure/cable/white{tag = "icon-1-8"; icon_state = "1-8"},/turf/simulated/floor,/area/quartermaster/storage)
+"g" = (/obj/structure/window/reinforced,/turf/simulated/floor,/area/quartermaster/storage)
+"h" = (/obj/machinery/light{dir = 4; icon_state = "tube1"},/obj/machinery/light,/obj/structure/window/reinforced{dir = 5; health = 1e+007},/turf/simulated/floor{icon_state = "freezerfloor"},/area/quartermaster/storage)
+"i" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor{icon_state = "freezerfloor"},/area/quartermaster/storage)
+"j" = (/turf/simulated/floor{icon_state = "freezerfloor"},/area/quartermaster/storage)
+"k" = (/obj/machinery/light{dir = 4; icon_state = "tube1"},/turf/simulated/floor{icon_state = "freezerfloor"},/area/quartermaster/storage)
+"l" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/obj/machinery/light,/obj/structure/window/reinforced{dir = 5; health = 1e+007},/turf/simulated/floor{icon_state = "freezerfloor"},/area/quartermaster/storage)
+"m" = (/turf/space,/area/quartermaster/storage)
+"n" = (/obj/effect/landmark/start{name = "Cyborg"},/turf/simulated/floor/bluegrid,/area/quartermaster/storage)
+"o" = (/obj/machinery/light{dir = 1},/turf/simulated/floor{icon_state = "freezerfloor"},/area/quartermaster/storage)
+"p" = (/turf/simulated/floor{icon_state = "dark"},/area/quartermaster/storage)
+"q" = (/obj/structure/grille,/obj/structure/window/reinforced{tag = "icon-rwindow (EAST)"; icon_state = "rwindow"; dir = 4; health = 1e+007},/obj/structure/window/reinforced{tag = "icon-rwindow (WEST)"; icon_state = "rwindow"; dir = 8; health = 1e+007},/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor,/area/quartermaster/storage)
+"r" = (/obj/effect/landmark/start,/obj/effect/landmark{name = "JoinLate"},/obj/effect/landmark{name = "Observer-Start"},/turf/simulated/floor{icon_state = "vault"; dir = 8},/area/quartermaster/storage)
+"s" = (/obj/structure/grille,/obj/structure/window/reinforced{tag = "icon-rwindow (EAST)"; icon_state = "rwindow"; dir = 4; health = 1e+007},/obj/structure/window/reinforced{tag = "icon-rwindow (WEST)"; icon_state = "rwindow"; dir = 8; health = 1e+007},/turf/simulated/floor,/area/quartermaster/storage)
+"t" = (/obj/machinery/light,/turf/simulated/floor{icon_state = "freezerfloor"},/area/quartermaster/storage)
+"u" = (/obj/structure/grille,/obj/structure/window/reinforced{tag = "icon-rwindow (EAST)"; icon_state = "rwindow"; dir = 4; health = 1e+007},/obj/structure/window/reinforced{tag = "icon-rwindow (WEST)"; icon_state = "rwindow"; dir = 8; health = 1e+007},/obj/structure/window/reinforced,/turf/simulated/floor,/area/quartermaster/storage)
+"v" = (/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor,/area/quartermaster/storage)
+"w" = (/obj/machinery/light{dir = 4; icon_state = "tube1"},/obj/machinery/light{dir = 1},/obj/structure/window/reinforced{dir = 5; health = 1e+007},/turf/simulated/floor{icon_state = "freezerfloor"},/area/quartermaster/storage)
+"x" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/obj/machinery/light{dir = 1},/obj/structure/window/reinforced{dir = 5; health = 1e+007},/turf/simulated/floor{icon_state = "freezerfloor"},/area/quartermaster/storage)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaa
+aabcdddddddddddddaa
+aefddddddddddddddda
+addddddddddddddddda
+addddddddddddddddda
+addddddddddddddddda
+addddddddddddddddaa
+agdddddhijklddddaam
+andddddopppoddddqmm
+andddddjprpjddddsmm
+andddddtppptddddumm
+avdddddwijkxddddaam
+addddddddddddddddaa
+addddddddddddddddda
+addddddddddddddddda
+addddddddddddddddda
+addddddddddddddddda
+aadddddddddddddddaa
+aaaaaaaaaaaaaaaaaaa
+"}
