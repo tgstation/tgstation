@@ -34,13 +34,12 @@
 		visible_message("\red [src] has grabbed [target]!")
 		target << "\red <b>You feel something suddenly grab you around the neck from behind!</b> Everything goes black..."
 
-		G.state = 3
-		G.killing = 1
+		G.state = GRAB_KILL
 
 		desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid. [G ? "\red The sculpture is holding [G.affecting] in a vice-like grip." : ""]"
 		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been grabbed by SCP-173, and is being strangled!</font>")
 		log_admin("[target] ([target.ckey]) has been grabbed and is being strangled by SCP-173.")
-		message_admins("Alert: [target.real_name] has been grabbed and is being strangled by SCP-173. Set var/allow_escape = 1 to allow this player to escape temporarily, or var/hibernate = 1 to disable it entirely.")
+		message_admins("Alert: [target.real_name] has been grabbed and is being strangled by SCP-173.") //Set var/allow_escape = 1 to allow this player to escape temporarily, or var/hibernate = 1 to disable it entirely.
 
 /mob/living/simple_animal/sculpture/proc/Escape()
 	var/list/turfs = new/list()
@@ -49,8 +48,8 @@
 			continue
 		else if(istype(thisturf, /turf/simulated/wall))
 			continue
-		else if(istype(thisturf, /turf/simulated/mineral))
-			continue
+//		else if(istype(thisturf, /turf/simulated/mineral))
+//			continue
 		else if(istype(thisturf, /turf/simulated/shuttle/wall))
 			continue
 		else if(istype(thisturf, /turf/unsimulated/wall))
@@ -73,12 +72,11 @@
 		desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid."
 
 	//if we are sent into forced hibernation mode, allow our victim to escape
-	if(hibernate && G && G.killing == 1)
+	if(hibernate && G && G.state == GRAB_KILL)
 		if(G)
 			G.affecting << "\red You suddenly feel the grip around your neck being loosened!"
-			visible_message("\red [src] suddenly loosens it's grip!")
-			G.killing = 0
-			G.state = 1
+			visible_message("\red [src] suddenly loosens it's grip due to hibernate!")
+			G.state = GRAB_AGGRESSIVE
 		return
 
 	//
@@ -87,8 +85,7 @@
 		if(G)
 			G.affecting << "\red You suddenly feel the grip around your neck being loosened!"
 			visible_message("\red [src] suddenly loosens it's grip!")
-			G.killing = 0
-			G.state = 1
+			G.state = GRAB_AGGRESSIVE
 			if(!observed)
 				Escape()
 		observed = 1
@@ -136,7 +133,7 @@
 	//see if we're able to do stuff
 	if(!observed || in_darkness)
 		if(G)
-			if(prob(random_escape_chance))
+			if(prob(1))
 				//chance to allow the stranglee to escape
 				allow_escape = 1
 			if(G.affecting.stat == 2)
@@ -212,8 +209,8 @@
 						continue
 					else if(istype(thisturf, /turf/simulated/wall))
 						continue
-					else if(istype(thisturf, /turf/simulated/mineral))
-						continue
+//					else if(istype(thisturf, /turf/simulated/mineral))
+//						continue
 					else if(istype(thisturf, /turf/simulated/shuttle/wall))
 						continue
 					else if(istype(thisturf, /turf/unsimulated/wall))
@@ -237,13 +234,13 @@
 					src.dir = get_dir(src, target_mob)
 					next_turf = get_step(src, get_dir(next_turf,target_turf))
 					num_turfs--
-	else if(G)
-		//we can't move while observed, so we can't effectively strangle any more
-		//our grip is still rock solid, but the victim has a chance to escape
-		G.affecting << "\red You suddenly feel the grip around your neck being loosened!"
-		visible_message("\red [src] suddenly loosens it's grip!")
-		G.state = 1
-		G.killing = 0
+
+//	else if(G)
+//		//we can't move while observed, so we can't effectively strangle any more //since victim is observer this means no strangling
+//		//our grip is still rock solid, but the victim has a chance to escape
+//		G.affecting << "\red You suddenly feel the grip around your neck being loosened!"
+//		visible_message("\red [src] suddenly loosens it's grip due to being observed!")
+//		G.state = GRAB_AGGRESSIVE
 
 /mob/living/simple_animal/sculpture/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	..()
