@@ -22,10 +22,8 @@
 
 /mob/living/simple_animal/sculpture/proc/GrabMob(var/mob/living/target)
 	if(target && target != src && ishuman(target))
-		G = new /obj/item/weapon/grab(target)
-		G.assailant = src
-		G.layer = 20
-		G.affecting = target
+		G = new /obj/item/weapon/grab(src, target)
+		G.loc=src
 		target.grabbed_by += G
 		G.synch()
 		target.LAssailant = src
@@ -48,8 +46,8 @@
 			continue
 		else if(istype(thisturf, /turf/simulated/wall))
 			continue
-//		else if(istype(thisturf, /turf/simulated/mineral))
-//			continue
+		else if(istype(thisturf, /turf/unsimulated/mineral))
+			continue
 		else if(istype(thisturf, /turf/simulated/shuttle/wall))
 			continue
 		else if(istype(thisturf, /turf/unsimulated/wall))
@@ -209,8 +207,8 @@
 						continue
 					else if(istype(thisturf, /turf/simulated/wall))
 						continue
-//					else if(istype(thisturf, /turf/simulated/mineral))
-//						continue
+					else if(istype(thisturf, /turf/unsimulated/mineral))
+						continue
 					else if(istype(thisturf, /turf/simulated/shuttle/wall))
 						continue
 					else if(istype(thisturf, /turf/unsimulated/wall))

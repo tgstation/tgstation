@@ -1354,6 +1354,7 @@
 #include "code\WorkInProgress\buildmode.dm"
 #include "code\WorkInProgress\explosion_particles.dm"
 #include "code\WorkInProgress\periodic_news.dm"
+#include "code\WorkInProgress\Cael_Aislinn\sculpture.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Rust\areas.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Rust\circuits_and_design.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Rust\core_control.dm"
