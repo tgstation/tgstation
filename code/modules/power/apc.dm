@@ -61,6 +61,7 @@
 	var/updating_icon = 0
 	var/datum/wires/apc/wires = null
 	//var/debug = 0
+	var/auto_name = 0
 
 /obj/machinery/power/apc/updateDialog()
 	if (stat & (BROKEN|MAINT))
@@ -84,6 +85,9 @@
 		dir = ndir
 	src.tdir = dir		// to fix Vars bug
 	dir = SOUTH
+
+	if(auto_name)
+		name = "[get_area(src)] APC"
 
 	pixel_x = (src.tdir & 3)? 0 : (src.tdir == 4 ? 24 : -24)
 	pixel_y = (src.tdir & 3)? (src.tdir ==1 ? 24 : -24) : 0
@@ -310,11 +314,11 @@
 					update_icon()
 				else
 					user << "You fail to [ locked ? "unlock" : "lock"] the APC interface."
-	else if (istype(W, /obj/item/weapon/cable_coil) && !terminal && opened && has_electronics!=2)
+	else if (istype(W, /obj/item/stack/cable_coil) && !terminal && opened && has_electronics!=2)
 		if (src.loc:intact)
 			user << "\red You must remove the floor plating in front of the APC first."
 			return
-		var/obj/item/weapon/cable_coil/C = W
+		var/obj/item/stack/cable_coil/C = W
 		if(C.amount < 10)
 			user << "\red You need more wires."
 			return
@@ -346,7 +350,7 @@
 				s.set_up(5, 1, src)
 				s.start()
 				return
-			new /obj/item/weapon/cable_coil(loc,10)
+			new /obj/item/stack/cable_coil(loc,10)
 			user.visible_message(\
 				"\red [user.name] cut the cables and dismantled the power terminal.",\
 				"You cut the cables and dismantle the power terminal.")
@@ -552,15 +556,15 @@
 			)
 		)
 	)
-	
+
 	// update the ui if it exists, returns null if no ui is passed/found
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)	
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "apc.tmpl", "[area.name] - APC", 520, data["siliconUser"] ? 465 : 420)
 		// when the ui is first opened this is the data it will use
-		ui.set_initial_data(data)		
+		ui.set_initial_data(data)
 		// open the new ui window
 		ui.open()
 		// auto update every Master Controller tick

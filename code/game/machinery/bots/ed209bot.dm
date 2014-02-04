@@ -195,7 +195,7 @@ Auto Patrol: []"},
 				user << "<span class='notice'>Access denied.</span>"
 	else
 		..()
-		if (!istype(W, /obj/item/weapon/screwdriver) && (!src.target))
+		if (!istype(W, /obj/item/weapon/screwdriver) && !istype(W, /obj/item/weapon/weldingtool) && (!src.target)) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
 			if(hasvar(W,"force") && W.force)//If force is defined and non-zero
 				src.target = user
 				if(lasercolor)//To make up for the fact that lasertag bots don't hunt
@@ -950,8 +950,8 @@ Auto Patrol: []"},
 				icon_state = "[lasercolor]ed209_prox"
 
 		if(6)
-			if( istype(W, /obj/item/weapon/cable_coil) )
-				var/obj/item/weapon/cable_coil/coil = W
+			if( istype(W, /obj/item/stack/cable_coil) )
+				var/obj/item/stack/cable_coil/coil = W
 				var/turf/T = get_turf(user)
 				user << "<span class='notice'>You start to wire [src]...</span>"
 				sleep(40)

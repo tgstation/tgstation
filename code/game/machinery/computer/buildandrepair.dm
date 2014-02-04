@@ -323,8 +323,8 @@
 				user << "<span class='notice'>You unfasten the circuit board.</span>"
 				src.state = 1
 				src.icon_state = "1"
-			if(istype(P, /obj/item/weapon/cable_coil))
-				var/obj/item/weapon/cable_coil/C = P
+			if(istype(P, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/C = P
 				if(C.amount >= 5)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
@@ -340,7 +340,7 @@
 				user << "<span class='notice'>You remove the cables.</span>"
 				src.state = 2
 				src.icon_state = "2"
-				var/obj/item/weapon/cable_coil/A = new (loc)
+				var/obj/item/stack/cable_coil/A = new (loc)
 				A.amount = 5
 				A.add_fingerprint(user)
 

@@ -178,6 +178,12 @@
 	icon_state = "ianshirt"
 	item_state = "ianshirt"
 
+/obj/item/clothing/suit/nerdshirt
+	name = "gamer shirt"
+	desc = "A baggy shirt with vintage game character Phanic the Weasel. Why would someone wear this?"
+	icon_state = "nerdshirt"
+	item_state = "nerdshirt"
+
 //Blue suit jacket toggle
 /obj/item/clothing/suit/suit/verb/toggle()
 	set name = "Toggle Jacket Buttons"

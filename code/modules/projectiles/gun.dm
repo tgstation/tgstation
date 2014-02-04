@@ -20,6 +20,7 @@
 	var/recoil = 0
 	var/clumsy_check = 1
 	var/obj/item/ammo_casing/chambered = null
+	var/trigger_guard = 1
 
 	proc/process_chamber()
 		return 0
@@ -64,16 +65,18 @@
 		if (!user.IsAdvancedToolUser())
 			user << "<span class='notice'>You don't have the dexterity to do this!</span>"
 			return
-		if(istype(user, /mob/living))
-			var/mob/living/M = user
-			if (HULK in M.mutations)
-				M << "<span class='notice'>Your meaty finger is much too large for the trigger guard!</span>"
-				return
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if(H.dna && H.dna.mutantrace == "adamantine")
-				user << "<span class='notice'>Your metal fingers don't fit in the trigger guard!</span>"
-				return
+
+		if(trigger_guard)
+			if(istype(user, /mob/living))
+				var/mob/living/M = user
+				if (HULK in M.mutations)
+					M << "<span class='notice'>Your meaty finger is much too large for the trigger guard!</span>"
+					return
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
+				if(H.dna && H.dna.mutantrace == "adamantine")
+					user << "<span class='notice'>Your metal fingers don't fit in the trigger guard!</span>"
+					return
 
 		add_fingerprint(user)
 

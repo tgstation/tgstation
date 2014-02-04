@@ -3,6 +3,7 @@
 	icon = 'icons/obj/tank.dmi'
 	flags = CONDUCT
 	slot_flags = SLOT_BACK
+	hitsound = 'sound/weapons/smash.ogg'
 
 	pressure_resistance = ONE_ATMOSPHERE*5
 

@@ -149,7 +149,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/potato/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if(istype(W, /obj/item/weapon/cable_coil))
+	if(istype(W, /obj/item/stack/cable_coil))
 		if(W:amount >= 5)
 			W:amount -= 5
 			if(!W:amount) del(W)
@@ -881,7 +881,12 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom/attack_self(mob/user as mob)
 	if(istype(user.loc,/turf/space))
 		return
-	new /mob/living/simple_animal/mushroom(user.loc)
+	var/mob/living/simple_animal/hostile/mushroom/M = new /mob/living/simple_animal/hostile/mushroom(user.loc)
+	M.maxHealth += round(endurance / 4)
+	M.melee_damage_lower += round(potency / 20)
+	M.melee_damage_upper += round(potency / 20)
+	M.move_to_delay -= round(production / 50)
+	M.health = M.maxHealth
 	del(src)
 
 	user << "<span class='notice'>You plant the walking mushroom.</span>"

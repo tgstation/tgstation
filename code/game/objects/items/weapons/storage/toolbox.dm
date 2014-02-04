@@ -12,6 +12,7 @@
 	w_class = 4.0
 	origin_tech = "combat=1"
 	attack_verb = list("robusted")
+	hitsound = 'sound/weapons/smash.ogg'
 
 	New()
 		..()
@@ -57,12 +58,12 @@
 		new /obj/item/weapon/wirecutters(src)
 		new /obj/item/device/t_scanner(src)
 		new /obj/item/weapon/crowbar(src)
-		new /obj/item/weapon/cable_coil(src,30,color)
-		new /obj/item/weapon/cable_coil(src,30,color)
+		new /obj/item/stack/cable_coil(src,30,color)
+		new /obj/item/stack/cable_coil(src,30,color)
 		if(prob(5))
 			new /obj/item/clothing/gloves/yellow(src)
 		else
-			new /obj/item/weapon/cable_coil(src,30,color)
+			new /obj/item/stack/cable_coil(src,30,color)
 
 /obj/item/weapon/storage/toolbox/syndicate
 	name = "suspicious looking toolbox"
@@ -79,6 +80,6 @@
 		new /obj/item/weapon/wrench(src)
 		new /obj/item/weapon/weldingtool(src)
 		new /obj/item/weapon/crowbar(src)
-		new /obj/item/weapon/cable_coil(src,30,color)
+		new /obj/item/stack/cable_coil(src,30,color)
 		new /obj/item/weapon/wirecutters(src)
 		new /obj/item/device/multitool(src)

@@ -159,11 +159,29 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		return
 	if(istype(M, /mob/living/carbon/human))
 		log_admin("[key_name(src)] has robotized [M.key].")
+		var/mob/living/carbon/human/H = M
 		spawn(10)
-			M:Robotize()
+			H.Robotize()
 
 	else
 		alert("Invalid mob")
+
+/client/proc/cmd_admin_blobize(var/mob/M in mob_list)
+	set category = "Fun"
+	set name = "Make Blob"
+
+	if(!ticker)
+		alert("Wait until the game starts")
+		return
+	if(istype(M, /mob/living/carbon/human))
+		log_admin("[key_name(src)] has blobized [M.key].")
+		var/mob/living/carbon/human/H = M
+		spawn(10)
+			H.Blobize()
+
+	else
+		alert("Invalid mob")
+
 
 /client/proc/cmd_admin_animalize(var/mob/M in mob_list)
 	set category = "Fun"
@@ -614,6 +632,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 		"tunnel clown",
 		"masked killer",
 		"assassin",
+		"mobster",
 		"death commando",
 //		"syndicate commando",
 		"centcom official",
@@ -998,6 +1017,20 @@ var/global/list/g_fancy_list_of_safe_types = null
 			W.assignment = "Admiral"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
+		if("mobster")
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/fedora(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(M), slot_glasses)
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/tommygun(M), slot_r_hand)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket/really_black(M), slot_w_uniform)
+			var/obj/item/weapon/card/id/W = new(M)
+			W.name = "[M.real_name]'s ID Card"
+			W.assignment = "Assistant"
+			W.registered_name = M.real_name
+			M.equip_to_slot_or_del(W, slot_wear_id)
+
 
 	M.regenerate_icons()
 

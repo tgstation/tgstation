@@ -164,5 +164,5 @@
 	if(R.emagged == 1)
 		return 0
 
-	R.emagged = 1
+	R.SetEmagged(1)
 	return 1

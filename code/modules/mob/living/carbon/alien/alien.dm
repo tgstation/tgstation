@@ -10,6 +10,7 @@
 	icon = 'icons/mob/alien.dmi'
 	gender = NEUTER
 	dna = null
+	faction = "alien"
 
 	var/storedPlasma = 250
 	var/max_plasma = 500

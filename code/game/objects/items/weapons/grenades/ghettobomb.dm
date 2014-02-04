@@ -49,9 +49,9 @@
 
 
 /obj/item/weapon/grenade/iedcasing/attackby(var/obj/item/I, mob/user as mob) //Wiring the can for ignition
-	if(istype(I, /obj/item/weapon/cable_coil))
+	if(istype(I, /obj/item/stack/cable_coil))
 		if(assembled == 1)
-			var/obj/item/weapon/cable_coil/C = I
+			var/obj/item/stack/cable_coil/C = I
 			C.use(1)
 			assembled = 2
 			user << "<span  class='notice'>You wire the igniter to detonate the fuel.</span>"
