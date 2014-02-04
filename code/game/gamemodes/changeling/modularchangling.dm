@@ -103,8 +103,8 @@ var/list/powerinstances
 
 /datum/power/changeling/fleshmend
 	name = "Fleshmend"
-	desc = "We evolve the ability to rapidly regenerate, restoring the health of the body we use."
-	helptext = "Heals a moderate amount of damage every tick. Can be used while unconscious."
+	desc = "We evolve the ability to rapidly regenerate, restoring the health and limbs of the body we use."
+	helptext = "Heals a moderate amount of damage every tick, Regrows limbs. Can be used while unconscious."
 	genomecost = 1
 	verbpath = /mob/living/carbon/proc/changeling_fleshmend
 

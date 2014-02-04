@@ -131,17 +131,14 @@
 		return 1
 	return 0
 
+/mob/proc/drop_both_hands(var/atom/Target)
+	drop_r_hand(Target)
+	drop_l_hand(Target)
+
 //Drops the item in our active hand.
 /mob/proc/drop_item(var/atom/Target)
 	if(hand)	return drop_l_hand(Target)
 	else		return drop_r_hand(Target)
-
-
-
-
-
-
-
 
 
 //TODO: phase out this proc

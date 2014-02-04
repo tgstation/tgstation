@@ -424,16 +424,37 @@
 	set desc = "Begins rapidly regenerating.  Does not effect stuns or chemicals."
 
 	var/datum/changeling/changeling = changeling_power(30,0,100,UNCONSCIOUS)
-	if(!changeling)	return 0
-	src.mind.changeling.chem_charges -= 30
+	if(!changeling)
+		return 0
 
-	src << "<span class='notice'>We begin to heal rapidly.</span>"
+	if(!ishuman(src))
+		return
+
+	var/mob/living/carbon/human/H = src
+
+	H << "<span class='notice'>We begin to heal rapidly.</span>"
+
+	for(var/obj/item/organ/limb/L in H.organs)
+		if(L.state == ORGAN_REMOVED)
+			L.state = ORGAN_FINE
+			L.burn_dam = 0
+			L.brute_dam = 0
+			L.brutestate = 0
+			L.burnstate = 0
+			changeling.geneticdamage += 5
+			H.visible_message("<span class='danger'>[src] has regrown their [L.getDisplayName()]!</span>")
+
 	spawn(0)
 		for(var/i = 0, i<10,i++)
 			adjustBruteLoss(-10)
 			adjustOxyLoss(-10)
 			adjustFireLoss(-10)
 			sleep(10)
+
+	changeling.chem_charges -= 30
+
+	H.updatehealth()
+	H.update_body()
 
 	feedback_add_details("changeling_powers","RR")
 	return 1
@@ -540,6 +561,11 @@ var/list/datum/dna/hivemind_bank = list()
 	set category = "Changeling"
 	set name = "Arm Blade (20)"
 
+	if(!ishuman(src))
+		return
+
+	var/mob/living/carbon/human/H = src
+
 	if(istype(l_hand, /obj/item/weapon/melee/arm_blade)) //Not the nicest way to do it, but eh
 		u_equip(l_hand)
 		return
@@ -553,6 +579,14 @@ var/list/datum/dna/hivemind_bank = list()
 		return
 
 	u_equip(get_active_hand())
+	if(H.has_arms()) //if the active hand exists
+		drop_item(get_active_hand())
+		put_in_hands(new /obj/item/weapon/melee/arm_blade(src))
+		changeling.geneticdamage += 6 //Only charge if you actually get the blades
+		changeling.chem_charges -= 20
+	else
+		H <<"<span class='warning'>You cannot form your arm into a blade if it isn't attached!</span>"
+		return
 
 	put_in_hands(new /obj/item/weapon/melee/arm_blade(src))
 	changeling.geneticdamage += 6

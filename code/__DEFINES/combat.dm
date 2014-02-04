@@ -21,6 +21,12 @@
 #define TOXLOSS 4
 #define OXYLOSS 8
 
+//Dismemberment stuff
+#define SHARP			16
+#define MELEE_DISM		32
+#define GUN_DISM		64
+#define EXPLOSION_DISM	128
+
 //Bitflags defining which status effects could be or are inflicted on a mob
 #define CANSTUN		1
 #define CANWEAKEN	2

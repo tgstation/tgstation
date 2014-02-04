@@ -42,6 +42,7 @@
 	icon_state = "sord"
 	item_state = "sord"
 	slot_flags = SLOT_BELT
+	flags = SHARP
 	force = 2
 	throwforce = 1
 	w_class = 3
@@ -58,8 +59,7 @@
 	icon_state = "claymore"
 	item_state = "claymore"
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	flags = CONDUCT | SHARP	slot_flags = SLOT_BELT
 	force = 40
 	throwforce = 10
 	w_class = 3
@@ -77,7 +77,7 @@
 	desc = "Woefully underpowered in D20"
 	icon_state = "katana"
 	item_state = "katana"
-	flags = CONDUCT
+	flags = CONDUCT | SHARP
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
 	throwforce = 10
@@ -127,3 +127,10 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 		user << "<span class='notice'>You fasten the wirecutters to the top of the rod with the cable, prongs outward.</span>"
 		del(I)
 		del(src)
+
+
+/obj/item/weapon/katana/DISMEMBERMENT
+	name = "dismemberment test weapon"
+	desc = "Badmins be bad"
+	flags = SHARP
+	force = 100

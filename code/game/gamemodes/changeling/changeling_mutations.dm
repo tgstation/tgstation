@@ -5,7 +5,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
-	flags = ABSTRACT
+	flags = ABSTRACT | SHARP
 	w_class = 5.0
 	force = 25
 	throwforce = 0 //Just to be on the safe side

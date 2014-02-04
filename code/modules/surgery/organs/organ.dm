@@ -1,8 +1,8 @@
 /obj/item/organ
 	name = "organ"
 	icon = 'icons/obj/surgery.dmi'
-
-
+	var/status = ORGAN_ORGANIC
+	var/state = ORGAN_FINE
 
 /obj/item/organ/heart
 	name = "heart"
@@ -44,9 +44,7 @@
 	var/brute_dam = 0
 	var/burn_dam = 0
 	var/max_damage = 0
-	var/status = ORGAN_ORGANIC
-
-
+	var/dam_icon = "chest"
 
 /obj/item/organ/limb/chest
 	name = "chest"
@@ -62,6 +60,7 @@
 	icon_state = "head"
 	max_damage = 200
 	body_part = HEAD
+	dam_icon = "head"
 
 
 /obj/item/organ/limb/l_arm
@@ -70,6 +69,7 @@
 	icon_state = "l_arm"
 	max_damage = 75
 	body_part = ARM_LEFT
+	dam_icon = "l_arm"
 
 
 /obj/item/organ/limb/l_leg
@@ -78,6 +78,7 @@
 	icon_state = "l_leg"
 	max_damage = 75
 	body_part = LEG_LEFT
+	dam_icon = "l_leg"
 
 
 /obj/item/organ/limb/r_arm
@@ -86,6 +87,7 @@
 	icon_state = "r_arm"
 	max_damage = 75
 	body_part = ARM_RIGHT
+	dam_icon = "r_arm"
 
 
 /obj/item/organ/limb/r_leg
@@ -94,6 +96,7 @@
 	icon_state = "r_leg"
 	max_damage = 75
 	body_part = LEG_RIGHT
+	dam_icon = "r_leg"
 
 
 
@@ -204,3 +207,184 @@
 		else			return name
 
 
+//////////////// DISMEMBERMENT \\\\\\\\\\\\\\\\
+
+/obj/item/organ/limb/proc/dismember(var/obj/item/I, var/removal_type, var/overide)
+	var/obj/item/organ/limb/affecting = src
+
+	if(affecting.state == ORGAN_REMOVED)
+		return
+
+	var/mob/living/carbon/human/owner = affecting.owner
+
+	var/dismember_chance = 0 //Chance for the limb to fall off, if an Item is used this is the item's force
+
+	if(!overide)
+		switch(removal_type)
+			if(EXPLOSION_DISM)
+				dismember_chance = 45
+			if(GUN_DISM)
+				dismember_chance = 30 //About a full clip of a c20r will get a limb to dismember (From full health)
+			if(MELEE_DISM)
+				if(I)
+					dismember_chance = I.force
+			else
+				world << "<span class='notice'> Error, Invalid removal_type in dismemberment call: [removal_type]</span>" //Easy way to let everyone know someone fucked up
+				return
+	else
+		dismember_chance = overide //So you can specify an overide chance to dismember, for Unique weapons / Non weapon dismemberment
+
+	if(affecting.brute_dam >= (affecting.max_damage / 2) && affecting.state != ORGAN_REMOVED) //if it has taken significant enough damage
+		if(prob(dismember_chance))
+			var/turf/T = get_turf(owner)
+
+			if(affecting.body_part == HEAD)
+				return
+
+			if(affecting.body_part == CHEST)
+				for(var/obj/item/organ/O in owner.internal_organs)
+					if(!istype(O, /obj/item/organ/brain))
+						owner.internal_organs -= O
+						O.loc = T
+
+			if(affecting.body_part == ARM_RIGHT || affecting.body_part == ARM_LEFT)
+				if(owner.handcuffed)
+					owner.handcuffed.loc = T
+					owner.handcuffed = null
+					owner.update_inv_handcuffed(0)
+
+			if(affecting.body_part == LEG_RIGHT || affecting.body_part == LEG_LEFT)
+				if(owner.legcuffed)
+					owner.legcuffed.loc = T
+					owner.legcuffed = null
+					owner.update_inv_legcuffed(0)
+
+			affecting.state = ORGAN_REMOVED
+
+			owner.apply_damage(30,"brute","[affecting]")
+
+			affecting.drop_limb(owner)
+
+			affecting.brutestate = 0
+			affecting.burnstate = 0
+
+			if(affecting.body_part != CHEST)
+				owner.visible_message("<span class='danger'><B>[owner]'s [affecting.getDisplayName()] has been violently dismembered!</B></span>")
+			else
+				owner.visible_message("<span class='danger'><B>[owner]'s internal organs have spilled onto the floor!</B></span>")
+
+			owner.drop_both_hands() //Removes any items they may be carrying in their now non existant arms
+		owner.update_body()
+
+
+//////////////// AUGMENTATION \\\\\\\\\\\\\\\\
+
+/mob/living/carbon/human/proc/augmentation(var/obj/item/organ/limb/affecting, var/mob/user, var/obj/item/I)
+	if(affecting.state == ORGAN_REMOVED)
+		var/obj/item/augment/AUG = I
+
+		if(affecting.body_part == AUG.limb_part)
+			affecting.change_organ(ORGAN_ROBOTIC)
+			visible_message("<span class='notice'>[user] has attached [src]'s new limb!</span>")
+
+			if(affecting.body_part == CHEST)
+				for(var/datum/disease/appendicitis/A in viruses)
+					A.cure(1)
+		else
+			user << "<span class='notice'>You can't attach a [AUG.name] where [src]'s [affecting.getDisplayName()] should be!</span>"
+			return
+
+		user.drop_item()
+		del(AUG)
+		update_body()
+		user.attack_log += "\[[time_stamp()]\]<font color='red'> Augmented [src.name]'s [parse_zone(user.zone_sel.selecting)] ([src.ckey]) INTENT: [uppertext(user.a_intent)])</font>"
+		src.attack_log += "\[[time_stamp()]\]<font color='orange'> Augmented by [user.name] ([user.ckey]) (INTENT: [uppertext(user.a_intent)])</font>"
+		log_attack("<font color='red'>[user.name] ([user.ckey]) augmented [src.name] ([src.ckey]) (INTENT: [uppertext(user.a_intent)])</font>")
+
+
+//////////////// LIMB STATUS \\\\\\\\\\\\\\\\
+
+//Informs us if the user has atleast 1 functional Arm.
+/mob/living/carbon/human/proc/arm_ok()
+	var/num_of_arms = 0
+
+	for(var/obj/item/organ/limb/affecting in organs)
+		if(affecting.body_part == ARM_RIGHT || affecting.body_part == ARM_LEFT)
+			if(affecting.state == ORGAN_FINE)
+				num_of_arms += 1
+
+	return num_of_arms
+
+
+//Informs us if the user has atleast 1 functional Leg.
+/mob/living/carbon/human/proc/leg_ok()
+	var/num_of_legs = 0
+
+	for(var/obj/item/organ/limb/affecting in organs)
+		if(affecting.body_part == LEG_RIGHT || affecting.body_part == LEG_LEFT)
+			if(affecting.state == ORGAN_FINE)
+				num_of_legs += 1
+
+	return num_of_legs
+
+//////////////// QUICK ORGAN CHANGE PROCS \\\\\\\\\\\\\\\\
+
+/mob/living/carbon/human/proc/change_all_organs(var/type)
+	for(var/obj/item/organ/O in organs)
+		O.change_organ(type)
+		if(istype(O, /obj/item/organ/limb))
+			var/obj/item/organ/limb/L = O
+			if(L.owner)
+				var/mob/living/carbon/human/H = L.owner //Only humans have limbs
+				H.updatehealth()
+				H.update_body()
+
+/obj/item/organ/proc/change_organ(var/type)
+	status = type
+	state = ORGAN_FINE
+
+	if(istype(src, /obj/item/organ/limb))
+		var/obj/item/organ/limb/L = src
+		L.burn_dam = 0
+		L.brute_dam = 0
+		L.brutestate = 0
+		L.burnstate = 0
+		if(L.owner)
+			var/mob/living/carbon/human/H = L.owner
+			H.update_body()
+
+//////////////// DROP LIMB \\\\\\\\\\\\\\\\
+
+/obj/item/organ/limb/proc/drop_limb(var/location) //Dummy limbs.
+	var/obj/item/organ/limb/LIMB
+	var/turf/T
+
+	if(location)
+		T = get_turf(location)
+	else
+		T = get_turf(src)
+
+	if(status == ORGAN_ORGANIC)	//No chests, heads, they can't be removed
+		switch(body_part)
+			if(ARM_RIGHT)
+				LIMB = new /obj/item/organ/limb/r_arm (T)
+			if(ARM_LEFT)
+				LIMB = new /obj/item/organ/limb/l_arm (T)
+			if(LEG_RIGHT)
+				LIMB = new /obj/item/organ/limb/r_leg (T)
+			if(LEG_LEFT)
+				LIMB = new /obj/item/organ/limb/l_leg (T)
+
+	else if(status == ORGAN_ROBOTIC)
+		switch(body_part)
+			if(ARM_RIGHT)
+				LIMB = new /obj/item/augment/r_arm (T)
+			if(ARM_LEFT)
+				LIMB = new /obj/item/augment/l_arm (T)
+			if(LEG_RIGHT)
+				LIMB = new /obj/item/augment/r_leg (T)
+			if(LEG_LEFT)
+				LIMB = new /obj/item/augment/l_leg (T)
+
+	var/direction = pick(cardinal)
+	step(LIMB,direction) //Make the limb fly off

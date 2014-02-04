@@ -720,8 +720,21 @@ note dizziness decrements automatically in the mob's Life() proc.
 		else
 			lying = 90 //Everything else faces right. TODO: Allow left-facing beds
 
+	if(ishuman(src)) //Limb based movement checks
+		var/mob/living/carbon/human/H = src
+		if(!(stunned) && !(stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH)))
+			if(H.leg_ok())//We have atleast 1 functional leg
+				H.canmove = 1
+				H.density = 1 //If were stood we can't be walked over
+			else if(H.arm_ok())
+				H.canmove = 1 //Atleast 1 arm, let's crawl!
+			else
+				H.canmove = 0 //No Legs No Arms No service.
+				H.density = 0 //were 'crawling' so we can be walked over
+
 	if(lying)
 		density = 0
+		drop_both_hands()
 	else
 		density = 1
 
@@ -740,8 +753,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	return canmove
 
 /mob/proc/fall(var/forced)
-	drop_l_hand()
-	drop_r_hand()
+	drop_both_hands()
 
 /mob/verb/eastface()
 	set hidden = 1
@@ -862,3 +874,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 	resting = max(resting + amount,0)
 	update_canmove()
 	return
+
+/mob/proc/has_arms() //checks that whomever is using this has arms - RR
+	return 1

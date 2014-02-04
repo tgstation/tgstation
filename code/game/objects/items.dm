@@ -126,6 +126,9 @@
 		var/obj/item/weapon/storage/S = src.loc
 		S.remove_from_storage(src)
 
+	if(!user.has_arms())
+		return
+
 	src.throwing = 0
 	if (src.loc == user)
 		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N

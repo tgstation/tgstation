@@ -166,7 +166,8 @@ var/const/MAX_ACTIVE_TIME = 400
 		Die()
 		icon_state = "[initial(icon_state)]_impregnated"
 
-		if(!target.getlimb(/obj/item/organ/limb/robot/chest) && !(target.status_flags & XENO_HOST))
+		var/obj/item/organ/limb/CHEST_ORGAN = target.getorgan("chest")
+		if(CHEST_ORGAN != ORGAN_ROBOTIC && !(target.status_flags & XENO_HOST))
 			new /obj/item/alien_embryo(target)
 
 
@@ -224,6 +225,8 @@ var/const/MAX_ACTIVE_TIME = 400
 	if(iscorgi(M) || ismonkey(M))
 		return 1
 
+	if(!iscarbon(M) || isalien(M))
+		return 0
 	var/mob/living/carbon/C = M
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
