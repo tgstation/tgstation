@@ -245,7 +245,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 	   //#### Grab the connection datum ####//
 		var/datum/radio_frequency/connection = null
-		testing("[src]: talk_into([M], [message], [channel])")
+		//testing("[src]: talk_into([M], [message], [channel])")
 		if(channel == "headset")
 			channel = null
 		if(channel) // If a channel is specified, look for it.
