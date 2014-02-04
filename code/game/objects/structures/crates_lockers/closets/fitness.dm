@@ -52,6 +52,7 @@
 	new /obj/item/weapon/gun/energy/laser/redtag(src)
 	new /obj/item/clothing/suit/redtag(src)
 	new /obj/item/clothing/suit/redtag(src)
+	new /obj/item/clothing/head/helmet/redtaghelm(src)
 
 
 /obj/structure/closet/lasertag/blue
@@ -67,3 +68,4 @@
 	new /obj/item/weapon/gun/energy/laser/bluetag(src)
 	new /obj/item/clothing/suit/bluetag(src)
 	new /obj/item/clothing/suit/bluetag(src)
+	new /obj/item/clothing/head/helmet/bluetaghelm(src)
