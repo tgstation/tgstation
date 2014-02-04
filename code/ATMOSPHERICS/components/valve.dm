@@ -327,6 +327,14 @@ obj/machinery/atmospherics/valve
 					else
 						open()
 
+		// Just for digital valves.
+		attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+			if (istype(W, /obj/item/device/multitool))
+				update_multitool_menu()
+				return 1
+			// Pass to the method below (does stuff ALL valves should do)
+			..()
+
 	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 		if (!istype(W, /obj/item/weapon/wrench))
 			return ..()
