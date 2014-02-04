@@ -115,7 +115,6 @@
 	if(stat & (BROKEN|NOPOWER))
 		return
 
-	user.set_machine(src)
 	var/dat
 
 	dat = {"
