@@ -24,14 +24,20 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/smoketime = 5
 	w_class = 1.0
 	origin_tech = "materials=1"
-	attack_verb = list("burnt", "singed")
+	attack_verb = null
 
 /obj/item/weapon/match/process()
 	var/turf/location = get_turf(src)
 	smoketime--
 	if(smoketime < 1)
-		icon_state = "match_burnt"
 		lit = -1
+		damtype = "brute"
+		force = 0
+		icon_state = "match_burnt"
+		item_state = "cigoff"
+		name = "burnt match"
+		desc = "A match. This one has seen better days."
+		attack_verb = null
 		processing_objects.Remove(src)
 		return
 	if(location)
@@ -46,6 +52,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		item_state = "cigoff"
 		name = "burnt match"
 		desc = "A match. This one has seen better days."
+		attack_verb = null
 	return ..()
 
 //////////////////
@@ -59,7 +66,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	item_state = "cigoff"
 	w_class = 1
 	body_parts_covered = null
-	attack_verb = list("burnt", "singed")
+	attack_verb = null
 	var/lit = 0
 	var/icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi
 	var/icon_off = "cigoff"
@@ -96,7 +103,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	else if(istype(W, /obj/item/weapon/match))
 		var/obj/item/weapon/match/M = W
-		if(M.lit)
+		if(M.lit == 1) //checking for lit = 1 instead of just lit prevents cigarettes being lit by used matches
 			light("<span class='notice'>[user] lights their [name] with [W].</span>")
 
 	else if(istype(W, /obj/item/weapon/melee/energy/sword))
@@ -134,7 +141,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/proc/light(var/flavor_text = "[usr] lights the [name].")
 	if(!src.lit)
 		src.lit = 1
-		damtype = "fire"
+		name = "lit [name]"
+		if(!istype(src, /obj/item/clothing/mask/cigarette/pipe)) //can't burn people with pipes
+			attack_verb = list("burnt", "singed")
+			hitsound = 'sound/items/welder.ogg'
+			damtype = "fire"
+			force = 4
 		if(reagents.get_reagent_amount("plasma")) // the plasma explodes when exposed to fire
 			var/datum/effect/effect/system/reagents_explosion/e = new()
 			e.set_up(round(reagents.get_reagent_amount("plasma") / 2.5, 1), get_turf(src), 0, 0)
@@ -215,7 +227,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))
 		return ..()
-
 	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel && user.zone_sel.selecting == "mouth" && lit)
 		var/obj/item/clothing/mask/cigarette/cig = M.wear_mask
 		if(M == user)
@@ -403,7 +414,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	throwforce = 4
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	attack_verb = list("burnt", "singed")
+	attack_verb = null
 	var/lit = 0
 
 /obj/item/weapon/lighter/zippo
@@ -427,6 +438,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			lit = 1
 			icon_state = icon_on
 			item_state = icon_on
+			force = 5
+			damtype = "fire"
+			hitsound = 'sound/items/welder.ogg'
+			attack_verb = list("burnt", "singed")
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
 				user.visible_message("<span class='rose'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
 			else
@@ -443,6 +458,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			lit = 0
 			icon_state = icon_off
 			item_state = icon_off
+			hitsound = "swing_hit"
+			force = 0
+			attack_verb = null //human_defense.dm takes care of it
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
 				user.visible_message("<span class='rose'>You hear a quiet click, as [user] shuts off [src] without even looking at what they're doing. Wow.")
 			else

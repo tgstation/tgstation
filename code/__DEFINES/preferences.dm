@@ -23,5 +23,5 @@
 #define BE_ALIEN		64
 #define BE_PAI			128
 #define BE_CULTIST		256
-#define BE_MONKEY		512
+#define BE_BLOB			512
 #define BE_NINJA		1024

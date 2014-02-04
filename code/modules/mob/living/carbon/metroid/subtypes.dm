@@ -18,7 +18,7 @@ proc/mutation_table(var/colour)
 			slime_mutation[2] = "yellow"
 			slime_mutation[3] = "gold"
 			slime_mutation[4] = "gold"
-		if("yellow")
+		if("orange")
 			slime_mutation[1] = "red"
 			slime_mutation[2] = "red"
 			slime_mutation[3] = "dark purple"

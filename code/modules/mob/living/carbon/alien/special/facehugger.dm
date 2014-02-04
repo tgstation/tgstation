@@ -222,7 +222,7 @@ var/const/MAX_ACTIVE_TIME = 400
 
 /proc/CanHug(var/mob/M)
 
-	if(iscorgi(M))
+	if(iscorgi(M) || ismonkey(M))
 		return 1
 
 	if(!iscarbon(M) || isalien(M))
@@ -232,4 +232,5 @@ var/const/MAX_ACTIVE_TIME = 400
 		var/mob/living/carbon/human/H = C
 		if(H.head && H.head.flags & HEADCOVERSMOUTH)
 			return 0
-	return 1
+		return 1
+	return 0

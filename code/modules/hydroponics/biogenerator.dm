@@ -95,6 +95,7 @@
 					dat += "<A href='?src=\ref[src];action=create;item=rh'>Robust Harvest</A> <FONT COLOR=blue>(25)</FONT> | <A href='?src=\ref[src];action=create;item=rh5'>x5</A><BR>"
 					dat += "Leather<BR>"
 					dat += "<A href='?src=\ref[src];action=create;item=wallet'>Wallet</A> <FONT COLOR=blue>(100)</FONT><BR>"
+					dat += "<A href='?src=\ref[src];action=create;item=bkbag'>Book bag</A> <FONT COLOR=blue>(200)</FONT><BR>"
 					dat += "<A href='?src=\ref[src];action=create;item=gloves'>Botanical gloves</A> <FONT COLOR=blue>(250)</FONT><BR>"
 					dat += "<A href='?src=\ref[src];action=create;item=tbelt'>Utility belt</A> <FONT COLOR=blue>(300)</FONT><BR>"
 					dat += "<A href='?src=\ref[src];action=create;item=satchel'>Leather Satchel</A> <FONT COLOR=blue>(400)</FONT><BR>"
@@ -202,6 +203,9 @@
 		if("wallet")
 			if (check_cost(100)) return 0
 			else new/obj/item/weapon/storage/wallet(src.loc)
+		if("bkbag")
+			if (check_cost(200)) return 0
+			else new/obj/item/weapon/storage/bag/books(src.loc)
 		if("gloves")
 			if (check_cost(250)) return 0
 			else new/obj/item/clothing/gloves/botanic_leather(src.loc)

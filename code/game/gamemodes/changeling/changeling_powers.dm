@@ -161,7 +161,8 @@
 
 	changeling.chem_charges -= 5
 	changeling.geneticdamage = 3
-	hardset_dna(src, chosen_dna.uni_identity, chosen_dna.struc_enzymes, chosen_dna.real_name, chosen_dna.mutantrace, chosen_dna.blood_type)
+	src.dna = chosen_dna
+	src.real_name = chosen_dna.real_name
 	updateappearance(src)
 	domutcheck(src, null)
 
@@ -216,7 +217,8 @@
 	changeling.chem_charges -= 5
 	remove_changeling_powers()
 	src << "<span class='notice'>We transform our appearance.</span>"
-	hardset_dna(src, chosen_dna.uni_identity, chosen_dna.struc_enzymes, chosen_dna.real_name, chosen_dna.mutantrace, chosen_dna.blood_type)
+	src.dna = chosen_dna
+
 
 	var/mob/living/carbon/human/O = humanize((TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPSRC),chosen_dna.real_name)
 
@@ -576,6 +578,7 @@ var/list/datum/dna/hivemind_bank = list()
 	if(!changeling)
 		return
 
+	u_equip(get_active_hand())
 	if(H.has_arms()) //if the active hand exists
 		drop_item(get_active_hand())
 		put_in_hands(new /obj/item/weapon/melee/arm_blade(src))
@@ -584,6 +587,12 @@ var/list/datum/dna/hivemind_bank = list()
 	else
 		H <<"<span class='warning'>You cannot form your arm into a blade if it isn't attached!</span>"
 		return
+
+	put_in_hands(new /obj/item/weapon/melee/arm_blade(src))
+	changeling.geneticdamage += 6
+
+	changeling.chem_charges -= 20
+
 
 //////////
 //STINGS//	//They get a pretty header because there's just so fucking many of them ;_;
@@ -735,5 +744,3 @@ var/list/datum/dna/hivemind_bank = list()
 
 	feedback_add_details("changeling_powers","CS")
 	return 1
-
-

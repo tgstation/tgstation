@@ -348,8 +348,8 @@
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/cable_coil(null, 1)
-	component_parts += new /obj/item/weapon/cable_coil(null, 1)
+	component_parts += new /obj/item/stack/cable_coil(null, 1)
+	component_parts += new /obj/item/stack/cable_coil(null, 1)
 	RefreshParts()
 
 
@@ -935,7 +935,7 @@
 						if("pulsese")
 							var/len = length(viable_occupant.dna.struc_enzymes)
 							num = Wrap(num, 1, len+1)
-							num = randomize_radiation_accuracy(num, radduration, len)
+							num = randomize_radiation_accuracy(num, radduration + (connected.precision_coeff ** 2), len)
 
 							var/block = round((num-1)/DNA_BLOCK_SIZE)+1
 							var/subblock = num - block*DNA_BLOCK_SIZE

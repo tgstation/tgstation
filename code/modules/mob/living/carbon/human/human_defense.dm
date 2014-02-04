@@ -62,7 +62,7 @@ emp_act
 
 	if(check_shields(P.damage, "the [P.name]"))
 		if(affecting.state != ORGAN_REMOVED)
-			P.on_hit(src, 2, def_zone)
+			P.on_hit(src, 100, def_zone)
 			return 2
 		else
 			return
@@ -150,13 +150,16 @@ emp_act
 		else
 			visible_message("<span class='danger'>[src] has been attacked in the [hit_area] with [I] by [user]!</span>", \
 							"<span class='userdanger'>[src] has been attacked in the [hit_area] with [I] by [user]!</span>")
+	else if(I.force == 0)
+		visible_message("<span class='danger'>[src] has been [pick("tapped","patted")] on the [hit_area] with [I] by [user]!</span>", \
+						"<span class='userdanger'>[src] has been [pick("tapped","patted")] on the [hit_area] with [I] by [user]!</span>")
 	else
 		visible_message("<span class='danger'>[user] tried to hit [src]'s [hit_area], but it isn't there!</span>",\
 						"<span class='userdanger'>[user] tried to hit [src]'s [hit_area], but it isn't there!</span>")
 
+	if(!I.force)	return 0
 	var/armor = run_armor_check(affecting, "melee", "<span class='warning'>Your armour has protected your [hit_area].</span>", "<span class='warning'>Your armour has softened a hit to your [hit_area].</span>")
 	if(armor >= 100)	return 0
-	if(!I.force)	return 0
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
 	if(I.flags & SHARP)
