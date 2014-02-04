@@ -849,7 +849,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containername = "water tank crate"
 	
 /datum/supply_packs/misc/lasertag
-	name = "Recreational Crate"
+	name = "LaserTag Crate"
 	contains =	list(/obj/item/weapon/gun/energy/laser/redtag,
 					/obj/item/weapon/gun/energy/laser/redtag,
 					/obj/item/weapon/gun/energy/laser/bluetag,
@@ -861,7 +861,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/head/helmet/redtaghelm,
 					/obj/item/clothing/head/helmet/bluetaghelm)
 	cost = 15
-	containername = "Recreational Crate"
+	containername = "LaserTag Crate"
 
 ///////////// Paper Work
 
