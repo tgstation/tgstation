@@ -91,3 +91,4 @@
 	..()
 	if(assembled == 3)
 		usr << "You can't tell when it will explode!"
+

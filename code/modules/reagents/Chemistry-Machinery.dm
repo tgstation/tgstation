@@ -181,6 +181,11 @@
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#define MAX_PILL_SPRITE 20 //max icon state of the pill sprites
+#define MAX_BOTTLE_SPRITE 20 //max icon state of the bottle sprites
+var/list/has_sprites = list()
+var/list/pill_icon_list = list()
+var/list/bottle_icon_list = list()
 
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
@@ -195,10 +200,19 @@
 	var/mode = 0
 	var/condi = 0
 	var/useramount = 30 // Last used amount
+	var/bottlesprite = "1" //yes, strings
+	var/pillsprite = "1"
 
 /obj/machinery/chem_master/New()
 	create_reagents(100)
 	overlays += "waitlight"
+
+	if (!pill_icon_list.len)
+		for(var/i = 1 to MAX_PILL_SPRITE)
+			pill_icon_list += icon('icons/obj/chemical.dmi', "pill" + num2text(i))
+	if (!bottle_icon_list.len)
+		for(var/i = 1 to MAX_BOTTLE_SPRITE)
+			bottle_icon_list += icon('icons/obj/chemical.dmi', "bottle" + num2text(i))
 
 /obj/machinery/chem_master/ex_act(severity)
 	switch(severity)
@@ -327,7 +341,8 @@
 				icon_state = "mixer0"
 		else if (href_list["createpill"]) //Also used for condiment packs.
 			if(!condi)
-				var/name = reject_bad_text(input(usr,"Name:","Name your pill!",reagents.get_master_reagent_name()))
+				var/volume = min(reagents.total_volume, 50)
+				var/name = reject_bad_text(input(usr,"Name:","Name your pill!","[reagents.get_master_reagent_name()] ([volume] units)"))
 				var/obj/item/weapon/reagent_containers/pill/P
 
 				if(loaded_pill_bottle && loaded_pill_bottle.contents.len < loaded_pill_bottle.storage_slots)
@@ -335,11 +350,12 @@
 				else
 					P = new/obj/item/weapon/reagent_containers/pill(src.loc)
 
-				if(!name) name = reagents.get_master_reagent_name()
+				if(!name) name = "[reagents.get_master_reagent_name()] ([volume] units)"
 				P.name = "[name] pill"
 				P.pixel_x = rand(-7, 7) //random position
 				P.pixel_y = rand(-7, 7)
 				reagents.trans_to(P,50)
+				P.icon_state = "pill"+pillsprite
 			else
 				var/name = reject_bad_text(input(usr,"Name:","Name your bag!",reagents.get_master_reagent_name()))
 				var/obj/item/weapon/reagent_containers/food/condiment/pack/P = new/obj/item/weapon/reagent_containers/food/condiment/pack(src.loc)
@@ -359,10 +375,26 @@
 				P.pixel_x = rand(-7, 7) //random position
 				P.pixel_y = rand(-7, 7)
 				reagents.trans_to(P,30)
+				P.icon_state = "bottle"+bottlesprite
 			else
 				var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
 				reagents.trans_to(P,50)
-
+		else if(href_list["change_pill"])
+			var/dat = ""
+			for(var/i = 1 to MAX_PILL_SPRITE)
+				dat += "<a href=\"?src=\ref[src]&pill_sprite=[i]\"><img src=\"pill[i].png\" /></a>"
+			usr << browse(dat, "window=chem_master")
+			return
+		else if(href_list["change_bottle"])
+			var/dat = ""
+			for(var/i = 1 to MAX_BOTTLE_SPRITE)
+				dat += "<a href=\"?src=\ref[src]&bottle_sprite=[i]\"><img src=\"bottle[i].png\" /></a>"
+			usr << browse(dat, "window=chem_master")
+			return
+		else if(href_list["pill_sprite"])
+			pillsprite = href_list["pill_sprite"]
+		else if(href_list["bottle_sprite"])
+			bottlesprite = href_list["bottle_sprite"]
 	src.updateUsrDialog()
 	return
 
@@ -376,6 +408,14 @@
 	if(stat & BROKEN)
 		return
 	user.set_machine(src)
+	if(!(user.client in has_sprites))
+		spawn()
+			has_sprites += user.client
+			for(var/i = 1 to MAX_PILL_SPRITE)
+				usr << browse_rsc(pill_icon_list[i], "pill[i].png")
+			for(var/i = 1 to MAX_BOTTLE_SPRITE)
+				usr << browse_rsc(bottle_icon_list[i], "bottle[i].png")
+			src.updateUsrDialog()
 	var/dat = ""
 	if(!beaker)
 		dat = "Please insert beaker.<BR>"
@@ -419,6 +459,8 @@
 		if(!condi)
 			dat += "<HR><BR><A href='?src=\ref[src];createpill=1'>Create pill (50 units max)</A><BR>"
 			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (30 units max)</A>"
+			dat += "<HR><BR><A href='?src=\ref[src];createpill=1'>Create pill (50 units max)</A><a href=\"?src=\ref[src]&change_pill=1\"><img src=\"pill[pillsprite].png\" /></a><BR>"
+			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (30 units max)<a href=\"?src=\ref[src]&change_bottle=1\"><img src=\"bottle[bottlesprite].png\" /></A>"
 		else
 			dat += "<HR><BR><A href='?src=\ref[src];createpill=1'>Create pack (10 units max)</A><BR>"
 			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (50 units max)</A>"
@@ -447,6 +489,8 @@
 	name = "CondiMaster 3000"
 	condi = 1
 
+#undef MAX_PILL_SPRITE
+#undef MAX_BOTTLE_SPRITE
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
