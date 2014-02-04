@@ -219,32 +219,31 @@ Auto Patrol: []"},
 				walk_to(src,0)
 
 			if(target)		// make sure target exists
-				if(get_dist(src, src.target) <= 1 && isturf(src.target.loc))
-					if(src.Adjacent(target))		// if right next to perp
-						playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
-						src.icon_state = "secbot-c"
-						spawn(2)
-							src.icon_state = "secbot[src.on]"
-						var/mob/living/carbon/M = src.target
-						var/maxstuns = 4
-						if(istype(M, /mob/living/carbon/human))
-							if(M.stuttering < 10 && (!(HULK in M.mutations)))
-								M.stuttering = 10
-							M.Stun(10)
-							M.Weaken(10)
-						else
-							M.Weaken(10)
+				if(src.Adjacent(target) && isturf(src.target.loc))				// if right next to perp
+					playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+					src.icon_state = "secbot-c"
+					spawn(2)
+						src.icon_state = "secbot[src.on]"
+					var/mob/living/carbon/M = src.target
+					var/maxstuns = 4
+					if(istype(M, /mob/living/carbon/human))
+						if(M.stuttering < 10 && (!(HULK in M.mutations)))
 							M.stuttering = 10
-							M.Stun(10)
-						maxstuns--
-						if(maxstuns <= 0)
-							target = null
-						visible_message("\red <B>[src.target] has been stunned by [src]!</B>")
+						M.Stun(10)
+						M.Weaken(10)
+					else
+						M.Weaken(10)
+						M.stuttering = 10
+						M.Stun(10)
+					maxstuns--
+					if(maxstuns <= 0)
+						target = null
+					visible_message("\red <B>[src.target] has been stunned by [src]!</B>")
 
-						mode = SECBOT_PREP_ARREST
-						src.anchored = 1
-						src.target_lastloc = M.loc
-						return
+					mode = SECBOT_PREP_ARREST
+					src.anchored = 1
+					src.target_lastloc = M.loc
+					return
 
 				else								// not next to perp
 					var/turf/olddist = get_dist(src, src.target)
