@@ -46,6 +46,20 @@
 /area/shuttle/awaymission/box2550Away/prison
 	name = "\improper Prison Station Shuttle"
 
+/area/turret_protected/ai_upload/box2550Away
+	name = "\improper TG424 AI Upload Chamber"
+	requires_power = 0
+
+/area/turret_protected/ai_upload_foyer/box2550Away
+	name = "\improper TG424 AI Upload Access"
+	icon_state = "ai_foyer"
+	requires_power = 0
+
+/area/turret_protected/ai/box2550Away
+	name = "\improper TG424 AI Chamber"
+	icon_state = "ai_chamber"
+	requires_power = 0
+
 /area/shuttle/awaymission/box2550Away/prison/station
 	icon_state = "shuttle"
 	destination = /area/shuttle/awaymission/box2550Away/prison/prison
@@ -879,6 +893,31 @@ obj/effect/landmark/corpse/away/box2550/det
 	icon_state = "toilet10" //lid up
 	density = 0
 
+/obj/machinery/disposal/box2550away/toilet/update()
+	overlays.Cut()
+	if(stat & BROKEN)
+		mode = 0
+		flush = 0
+		return
+
+	// flush handle
+	if(flush)
+		overlays = null
+
+	// only handle is shown if no power
+	if(stat & NOPOWER || mode == -1)
+		return
+
+	// 	check for items in disposal - occupied light
+	if(contents.len > 0)
+		overlays = null
+
+	// charging and ready light
+	if(mode == 1)
+		overlays = null
+	else if(mode == 2)
+		overlays = null
+
 /obj/machinery/box2550away/fake_status_display
 	name = "status display"
 	icon = 'icons/obj/status_display.dmi'
@@ -891,28 +930,3 @@ obj/effect/landmark/corpse/away/box2550/det
 	name = "\improper AI display"
 	desc = null
 	overlays = list("ai_bsod")
-
-/obj/machinery/disposal/box2550away/toilet/update()
-	overlays.Cut()
-	if(stat & BROKEN)
-		mode = 0
-		flush = 0
-		return
-
-	// flush handle
-	if(flush)
-		return
-
-	// only handle is shown if no power
-	if(stat & NOPOWER || mode == -1)
-		return
-
-	// 	check for items in disposal - occupied light
-	if(contents.len > 0)
-		return
-
-	// charging and ready light
-	if(mode == 1)
-		return
-	else if(mode == 2)
-		return
