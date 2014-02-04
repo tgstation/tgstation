@@ -253,7 +253,7 @@ obj/machinery/atmospherics/valve
 					radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
 
 		var/frequency = 0
-		var/id = null
+		var/id_tag = null
 		var/datum/radio_frequency/radio_connection
 
 		initialize()
@@ -280,9 +280,9 @@ obj/machinery/atmospherics/valve
 					return
 
 			if("set_id" in href_list)
-				var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id) as null|text),1,MAX_MESSAGE_LEN)
+				var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id_tag) as null|text),1,MAX_MESSAGE_LEN)
 				if(newid)
-					id = newid
+					id_tag = newid
 					initialize()
 			if("set_freq" in href_list)
 				var/newfreq=frequency
@@ -300,7 +300,7 @@ obj/machinery/atmospherics/valve
 			update_multitool_menu(usr)
 
 		receive_signal(datum/signal/signal)
-			if(!signal.data["tag"] || (signal.data["tag"] != id))
+			if(!signal.data["tag"] || (signal.data["tag"] != id_tag))
 				return 0
 
 			switch(signal.data["command"])

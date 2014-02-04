@@ -22,7 +22,6 @@
 
 /obj/item/proc/is_used_on(obj/O, mob/user)
 
-
 /obj/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
 	if (src.m_amt == 0 && src.g_amt == 0)
 		return 0

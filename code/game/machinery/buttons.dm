@@ -3,7 +3,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "launcherbtt"
 	desc = "A remote control switch for a mass driver."
-	var/id = null
+	var/id_tag = null
 	var/active = 0
 	anchored = 1.0
 	use_power = 1
@@ -18,7 +18,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "launcherbtt"
 	desc = "A remote control switch for a mounted igniter."
-	var/id = null
+	var/id_tag = null
 	var/active = 0
 	anchored = 1.0
 	use_power = 1
@@ -33,7 +33,7 @@
 	desc = "A remote control switch for a mounted flasher."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "launcherbtt"
-	var/id = null
+	var/id_tag = null
 	var/active = 0
 	anchored = 1.0
 	use_power = 1

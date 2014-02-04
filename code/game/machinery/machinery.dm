@@ -248,7 +248,7 @@ Class Procs:
 			update_mt_menu=1
 
 		if("flush" in href_list)
-			usr << "\blue A green light flashes, and the device disappears in the multitool buffer."
+			usr << "\blue A green light flashes, and the device disappears from the multitool buffer."
 			P.buffer = null
 			update_mt_menu=1
 

@@ -29,8 +29,8 @@
 				if(!isnull(I.id_tag) && I.frequency == parent.frequency)
 					injector_names|=I.id_tag
 			for(var/obj/machinery/atmospherics/binary/dp_vent_pump/I in machines)
-				if(!isnull(I.id) && I.frequency == parent.frequency)
-					injector_names|=I.id
+				if(!isnull(I.id_tag) && I.frequency == parent.frequency)
+					injector_names|=I.id_tag
 			vent_pump = input("Select a vent:", "Vent Pumps", vent_pump) as null|anything in injector_names
 			parent.updateUsrDialog()
 			return 1
@@ -62,8 +62,8 @@
 				if(!isnull(I.id_tag) && I.frequency == parent.frequency)
 					injector_names|=I.id_tag
 			for(var/obj/machinery/atmospherics/binary/dp_vent_pump/I in machines)
-				if(!isnull(I.id) && I.frequency == parent.frequency)
-					injector_names|=I.id
+				if(!isnull(I.id_tag) && I.frequency == parent.frequency)
+					injector_names|=I.id_tag
 			vent_pump = input("Select a vent:", "Vent Pumps", vent_pump) as null|anything in injector_names
 			parent.updateUsrDialog()
 			return 1

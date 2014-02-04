@@ -58,7 +58,7 @@
 		return {"
 		<ul>
 			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[1439]">Reset</a>)</li>
-			<li><b>ID Tag:</b> <a href="?src=\ref[src];set_id=1">[id]</a></li>
+			<li><b>ID Tag:</b> <a href="?src=\ref[src];set_id=1">[id_tag]</a></li>
 		</ul>
 		"}
 	Topic(href, href_list)
@@ -70,9 +70,9 @@
 				return
 
 		if("set_id" in href_list)
-			var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id) as null|text),1,MAX_MESSAGE_LEN)
+			var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id_tag) as null|text),1,MAX_MESSAGE_LEN)
 			if(newid)
-				id = newid
+				id_tag = newid
 				initialize()
 		if("set_freq" in href_list)
 			var/newfreq=frequency
@@ -157,7 +157,7 @@
 			signal.source = src
 
 			signal.data = list(
-				"tag" = id,
+				"tag" = id_tag,
 				"device" = "ADVP",
 				"power" = on,
 				"direction" = pump_direction?("release"):("siphon"),
@@ -172,7 +172,7 @@
 			return 1
 
 	var/frequency = 0
-	var/id = null
+	var/id_tag = null
 	var/datum/radio_frequency/radio_connection
 
 	initialize()
@@ -182,7 +182,7 @@
 
 	receive_signal(datum/signal/signal)
 
-		if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
+		if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 			return 0
 
 		var/handled=0

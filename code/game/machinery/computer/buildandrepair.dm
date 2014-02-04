@@ -21,7 +21,7 @@
 	origin_tech = "programming=2"
 	g_amt=2000 // Recycle glass
 
-	var/id = null
+	var/id_tag = null
 	var/frequency = null
 	var/build_path = null
 	var/board_type = "computer"
@@ -362,7 +362,7 @@
 				user << "\blue You connect the monitor."
 				var/B = new src.circuit.build_path ( src.loc )
 				if(circuit.powernet) B:powernet = circuit.powernet
-				if(circuit.id) B:id = circuit.id
+				if(circuit.id_tag) B:id_tag = circuit.id_tag
 				if(circuit.records) B:records = circuit.records
 				if(circuit.frequency) B:frequency = circuit.frequency
 				if(istype(circuit,/obj/item/weapon/circuitboard/supplycomp))

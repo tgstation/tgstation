@@ -661,7 +661,7 @@ obj/machinery/atmospherics/mains_pipe/valve
 					radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
 
 		var/frequency = 0
-		var/id = null
+		var/id_tag = null
 		var/datum/radio_frequency/radio_connection
 
 		initialize()
@@ -685,7 +685,7 @@ obj/machinery/atmospherics/mains_pipe/valve
 				icon_state = "[hide?"h":""]dvalve[open]"
 
 		receive_signal(datum/signal/signal)
-			if(!signal.data["tag"] || (signal.data["tag"] != id))
+			if(!signal.data["tag"] || (signal.data["tag"] != id_tag))
 				return 0
 
 			switch(signal.data["command"])

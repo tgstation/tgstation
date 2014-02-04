@@ -283,7 +283,7 @@
 	name = "Brig Locker"
 	req_access = list(access_brig)
 	anchored = 1
-	var/id = null
+	var/id_tag = null
 
 	New()
 		new /obj/item/clothing/under/color/orange( src )

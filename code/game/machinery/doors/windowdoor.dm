@@ -240,7 +240,7 @@
 	icon_state = "leftsecure"
 	base_state = "leftsecure"
 	req_access = list(access_security)
-	var/id = null
+	var/id_tag = null
 	health = 300.0 //Stronger doors for prison (regular window door health is 200)
 
 

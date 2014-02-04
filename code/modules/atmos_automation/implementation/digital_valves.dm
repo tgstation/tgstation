@@ -21,8 +21,8 @@
 		if(href_list["set_subject"])
 			var/list/valves=list()
 			for(var/obj/machinery/atmospherics/valve/digital/V in machines)
-				if(!isnull(V.id) && V.frequency == parent.frequency)
-					valves|=V.id
+				if(!isnull(V.id_tag) && V.frequency == parent.frequency)
+					valves|=V.id_tag
 			valve = input("Select a valve:", "Sensor Data", valve) as null|anything in valves
 			parent.updateUsrDialog()
 			return 1

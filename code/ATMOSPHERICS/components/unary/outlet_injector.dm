@@ -13,7 +13,7 @@
 	var/max_rate=50
 
 	var/frequency = 0
-	var/id = null
+	var/id_tag = null
 	var/datum/radio_frequency/radio_connection
 
 	level = 1
@@ -90,7 +90,7 @@
 			signal.source = src
 
 			signal.data = list(
-				"tag" = id,
+				"tag" = id_tag,
 				"device" = "AO",
 				"power" = on,
 				"volume_rate" = volume_rate,
@@ -108,7 +108,7 @@
 		set_frequency(frequency)
 
 	receive_signal(datum/signal/signal)
-		if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
+		if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 			return 0
 
 		if("power" in signal.data)
@@ -166,9 +166,9 @@
 				return
 
 		if("set_id" in href_list)
-			var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id) as null|text),1,MAX_MESSAGE_LEN)
+			var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id_tag) as null|text),1,MAX_MESSAGE_LEN)
 			if(newid)
-				id = newid
+				id_tag = newid
 				initialize()
 		if("set_freq" in href_list)
 			var/newfreq=frequency

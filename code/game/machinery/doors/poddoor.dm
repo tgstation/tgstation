@@ -3,7 +3,7 @@
 	desc = "Why it no open!!!"
 	icon = 'icons/obj/doors/rapid_pdoor.dmi'
 	icon_state = "pdoor1"
-	var/id = 1.0
+	var/id_tag = 1.0
 	explosion_resistance = 25
 
 /obj/machinery/door/poddoor/Bumped(atom/AM)
