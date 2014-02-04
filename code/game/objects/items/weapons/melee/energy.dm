@@ -19,7 +19,6 @@
 	throw_range = 5
 	w_class = 3.0
 	flags = CONDUCT | NOSHIELD | SHARP
-	sharp_power = 65
 	origin_tech = "combat=3"
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 
@@ -54,7 +53,6 @@
 	throw_range = 5
 	w_class = 2.0
 	flags = NOSHIELD | SHARP
-	sharp_power = 55
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/hacked = 0
@@ -167,7 +165,6 @@
 	throw_range = 1
 	w_class = 4.0//So you can't hide it in your pocket or some such.
 	flags = NOSHIELD | SHARP
-	sharp_power = 55
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/datum/effect/effect/system/spark_spread/spark_system
 

@@ -380,7 +380,6 @@
 	force_wielded = 0
 	origin_tech = ""
 	attack_verb = list("attacked", "struck", "hit")
-	sharp_power = 0
 
 /obj/item/weapon/twohanded/dualsaber/toy/IsShield()
 	return 0

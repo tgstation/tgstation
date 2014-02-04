@@ -42,7 +42,6 @@
 	item_state = "sord"
 	slot_flags = SLOT_BELT
 	flags = SHARP
-	sharp_power = 33
 	force = 2
 	throwforce = 1
 	w_class = 3
@@ -59,7 +58,6 @@
 	icon_state = "claymore"
 	item_state = "claymore"
 	flags = CONDUCT | SHARP
-	sharp_power = 33
 	slot_flags = SLOT_BELT
 	force = 40
 	throwforce = 10
@@ -83,7 +81,6 @@
 	icon_state = "katana"
 	item_state = "katana"
 	flags = CONDUCT | SHARP
-	sharp_power = 45
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
 	throwforce = 10
@@ -139,4 +136,4 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 	name = "dismemberment test weapon"
 	desc = "Badmins be bad"
 	flags = SHARP
-	sharp_power = 100 //100% chance once the damage threshold is reached
+	force = 100

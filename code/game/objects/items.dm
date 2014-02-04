@@ -38,7 +38,7 @@
 	var/list/allowed = null //suit storage stuff.
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 	var/reflect_chance = 0 //This var dictates what % of a time an object will reflect an energy based weapon's shot
-	var/sharp_power = 0 //This is how likely a weapon is to dismember (Percentage)
+
 
 /obj/item/device
 	icon = 'icons/obj/device.dmi'

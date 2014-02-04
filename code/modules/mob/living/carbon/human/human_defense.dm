@@ -39,6 +39,7 @@ emp_act
 	return protection
 
 /mob/living/carbon/human/bullet_act(var/obj/item/projectile/P, var/def_zone)
+	var/obj/item/organ/limb/affecting = get_organ(check_zone(def_zone))
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
 			visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
@@ -60,9 +61,17 @@ emp_act
 			return -1 // complete projectile permutation
 
 	if(check_shields(P.damage, "the [P.name]"))
-		P.on_hit(src, 2, def_zone)
-		return 2
-	return (..(P , def_zone))
+		if(affecting.state != ORGAN_REMOVED)
+			P.on_hit(src, 2, def_zone)
+			return 2
+		else
+			return
+
+	if(affecting.state != ORGAN_REMOVED)
+		affecting.dismember(null, GUN_DISM, 0) //GUN_DISMEMBERMENT
+		return (..(P , def_zone))
+	else
+		return
 
 /mob/living/carbon/human/proc/check_reflect(var/def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on reflect_chance var of the object
 	if(wear_suit && istype(wear_suit, /obj/item/))
@@ -134,12 +143,16 @@ emp_act
 	if((user != src) && check_shields(I.force, "the [I.name]"))
 		return 0
 
-	if(I.attack_verb.len)
-		visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I] by [user]!</span>", \
-						"<span class='userdanger'>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I] by [user]!</span>")
+	if(affecting.state != ORGAN_REMOVED)
+		if(I.attack_verb.len)
+			visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I] by [user]!</span>", \
+							"<span class='userdanger'>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I] by [user]!</span>")
+		else
+			visible_message("<span class='danger'>[src] has been attacked in the [hit_area] with [I] by [user]!</span>", \
+							"<span class='userdanger'>[src] has been attacked in the [hit_area] with [I] by [user]!</span>")
 	else
-		visible_message("<span class='danger'>[src] has been attacked in the [hit_area] with [I] by [user]!</span>", \
-						"<span class='userdanger'>[src] has been attacked in the [hit_area] with [I] by [user]!</span>")
+		visible_message("<span class='danger'>[user] tried to hit [src]'s [hit_area], but it isn't there!</span>",\
+						"<span class='userdanger'>[user] tried to hit [src]'s [hit_area], but it isn't there!</span>")
 
 	var/armor = run_armor_check(affecting, "melee", "<span class='warning'>Your armour has protected your [hit_area].</span>", "<span class='warning'>Your armour has softened a hit to your [hit_area].</span>")
 	if(armor >= 100)	return 0
@@ -147,7 +160,7 @@ emp_act
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
 	if(I.flags & SHARP)
-		affecting.dismember(I, MELEE_DISM) //DISMEMBERMENT - It's about time - RR
+		affecting.dismember(I, MELEE_DISM, 0) //DISMEMBERMENT - It's about time - RR
 
 	if(affecting && affecting.status != ORGAN_REMOVED)
 		apply_damage(I.force, I.damtype, affecting, armor , I)

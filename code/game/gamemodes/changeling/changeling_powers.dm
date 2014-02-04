@@ -418,10 +418,10 @@
 //Starts healing you every second for 10 seconds. Can be used whilst unconscious.
 /mob/living/carbon/proc/changeling_fleshmend()
 	set category = "Changeling"
-	set name = "Fleshmend (40)"
+	set name = "Fleshmend (30)"
 	set desc = "Begins rapidly regenerating.  Does not effect stuns or chemicals."
 
-	var/datum/changeling/changeling = changeling_power(40,0,100,UNCONSCIOUS)
+	var/datum/changeling/changeling = changeling_power(30,0,100,UNCONSCIOUS)
 	if(!changeling)
 		return 0
 
@@ -439,7 +439,7 @@
 			L.brute_dam = 0
 			L.brutestate = 0
 			L.burnstate = 0
-			changeling.geneticdamage += 3
+			changeling.geneticdamage += 5
 			H.visible_message("<span class='danger'>[src] has regrown their [L.getDisplayName()]!</span>")
 
 	spawn(0)
@@ -449,7 +449,7 @@
 			adjustFireLoss(-10)
 			sleep(10)
 
-	changeling.chem_charges -= 40
+	changeling.chem_charges -= 30
 
 	H.updatehealth()
 	H.update_body()

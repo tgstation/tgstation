@@ -153,7 +153,6 @@ obj/item/weapon/twohanded/
 	w_class = 4.0
 	slot_flags = SLOT_BACK
 	flags = SHARP
-	sharp_power = 45
 	force_unwielded = 5
 	force_wielded = 24 // Was 18, Buffed - RobRichards/RR
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
@@ -194,7 +193,6 @@ obj/item/weapon/twohanded/
 	wieldsound = 'sound/weapons/saberon.ogg'
 	unwieldsound = 'sound/weapons/saberoff.ogg'
 	flags = NOSHIELD | SHARP
-	sharp_power = 55
 	origin_tech = "magnets=3;syndicate=4"
 	item_color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")

@@ -209,25 +209,30 @@
 
 //////////////// DISMEMBERMENT \\\\\\\\\\\\\\\\
 
-/obj/item/organ/limb/proc/dismember(var/obj/item/I, var/removal_type)
+/obj/item/organ/limb/proc/dismember(var/obj/item/I, var/removal_type, var/overide)
 	var/obj/item/organ/limb/affecting = src
+
+	if(affecting.state == ORGAN_REMOVED)
+		return
 
 	var/mob/living/carbon/human/owner = affecting.owner
 
-	var/dismember_chance = 0 //Chance for the limb to fall off, if an Item is used the it is the item's sharp_power
+	var/dismember_chance = 0 //Chance for the limb to fall off, if an Item is used this is the item's force
 
-	switch(removal_type)
-		if(EXPLOSION_DISM)
-			dismember_chance = 45
-		if(GUN_DISM)
-			dismember_chance = 30
-		if(MELEE_DISM)
-			if(I)
-				dismember_chance = I.sharp_power
-		else
-			world << "<span class='notice'> Error, Invalid removal_type in dismemberment call: [removal_type]</span>" //Easy way to let everyone know someone fucked up
-			return
-
+	if(!overide)
+		switch(removal_type)
+			if(EXPLOSION_DISM)
+				dismember_chance = 45
+			if(GUN_DISM)
+				dismember_chance = 30 //About a full clip of a c20r will get a limb to dismember (From full health)
+			if(MELEE_DISM)
+				if(I)
+					dismember_chance = I.force
+			else
+				world << "<span class='notice'> Error, Invalid removal_type in dismemberment call: [removal_type]</span>" //Easy way to let everyone know someone fucked up
+				return
+	else
+		dismember_chance = overide //So you can specify an overide chance to dismember, for Unique weapons / Non weapon dismemberment
 
 	if(affecting.brute_dam >= (affecting.max_damage / 2) && affecting.state != ORGAN_REMOVED) //if it has taken significant enough damage
 		if(prob(dismember_chance))
