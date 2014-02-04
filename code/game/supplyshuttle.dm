@@ -265,7 +265,10 @@ var/list/mechtoys = list(
 					if(istype(A, /obj/item/stack/sheet/mineral/plasma))
 						var/obj/item/stack/sheet/mineral/plasma/P = A
 						plasma_count += P.amount
-			del(MA)
+					
+					// Delete it. (Fixes github #473)
+					qdel(A)
+			qdel(MA)
 
 		if(plasma_count)
 			points += Floor(plasma_count / plasma_per_point)
