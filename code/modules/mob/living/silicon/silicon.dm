@@ -188,7 +188,7 @@
 	var/dat
 	dat += "<h4>Crew Manifest</h4>"
 	if(data_core)
-		dat += data_core.get_manifest(0) // make it monochrome
+		dat += data_core.get_manifest(1) // make it monochrome
 	dat += "<br>"
 	src << browse(dat, "window=airoster")
 	onclose(src, "airoster")
