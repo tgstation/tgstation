@@ -1616,7 +1616,7 @@
 "aFd" = (/obj/structure/transit_tube{tag = "icon-D-Block (NORTH)"; icon_state = "D-Block"; dir = 1},/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 4},/area/tcommsat/computer)
 "aFe" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 4; on = 1},/turf/simulated/floor/plating,/area/tcommsat/computer)
 "aFf" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/turf/simulated/wall/r_wall,/area/tcommsat/computer)
-"aFg" = (/obj/machinery/camera/autoname{network = list("SS13")},/turf/simulated/floor/bluegrid{name = "Mainframe Base"; nitrogen = 100; oxygen = 0; temperature = 80},/area/tcommsat/computer)
+"aFg" = (/obj/machinery/camera/autoname{dir = 4; network = list("SS13")},/turf/simulated/floor/bluegrid{name = "Mainframe Base"; nitrogen = 100; oxygen = 0; temperature = 80},/area/tcommsat/computer)
 "aFh" = (/obj/structure/sign/securearea{desc = "A warning sign which reads 'SERVER ROOM'."; name = "SERVER ROOM"; pixel_y = 0},/turf/simulated/wall,/area/tcommsat/computer)
 "aFi" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/effect/landmark/start{name = "Cyborg"},/turf/simulated/floor,/area/tcommsat/computer)
 "aFj" = (/obj/machinery/hologram/holopad,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/effect/landmark/start{name = "Cyborg"},/turf/simulated/floor,/area/tcommsat/computer)
