@@ -178,7 +178,7 @@
 	if(W && W.loc)	W.loc = src.loc
 	return
 
-/obj/machinery/conveyor/multitool_menu(mob/user as mob)
+/obj/machinery/conveyor/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
 	//var/obj/item/device/multitool/P = get_multitool(user)
 	var/dis_id_tag="-----"
 	if(id_tag!=null && id_tag!="")
@@ -427,7 +427,7 @@
 	update()
 
 
-/obj/machinery/conveyor_switch/multitool_menu(mob/user as mob)
+/obj/machinery/conveyor_switch/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
 	var/dis_id_tag="-----"
 	if(id_tag!=null && id_tag!="")
 		dis_id_tag=id_tag

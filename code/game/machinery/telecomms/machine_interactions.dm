@@ -105,7 +105,7 @@
 		value="-----"
 	return "<b>[label]:</b> <a href=\"?src=\ref[src];input=[varname]\">[value]</a>"
 
-/obj/machinery/telecomms/multitool_menu(var/mob/user)
+/obj/machinery/telecomms/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
 	// You need a multitool to use this, or be silicon
 	if(!issilicon(user))
 		// istype returns false if the value is null

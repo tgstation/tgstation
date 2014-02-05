@@ -239,7 +239,7 @@ obj/machinery/airlock_sensor/New()
 		//stat |= MAINT
 		//src.update_icon()
 
-obj/machinery/airlock_sensor/multitool_menu(var/obj/item/device/multitool/P, var/mob/user)
+obj/machinery/airlock_sensor/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
 	return {"
 		<ul>
 			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[0]">Reset</a>)</li>
@@ -255,16 +255,6 @@ obj/machinery/airlock_sensor/Topic(href,href_list)
 		if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
 			testing("Not silicon, not using a multitool.")
 			return
-
-	if("set_tag" in href_list)
-		if(!(href_list["set_tag"] in vars))
-			usr << "\red Something went wrong: Unable to find [href_list["set_tag"]] in vars!"
-			return 1
-		var/current_tag = src.vars[href_list["set_tag"]]
-		var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag", src, current_tag) as null|text),1,MAX_MESSAGE_LEN)
-		if(newid)
-			vars[href_list["set_tag"]] = newid
-			initialize()
 	if("set_freq" in href_list)
 		var/newfreq=frequency
 		if(href_list["set_freq"]!="-1")
@@ -277,12 +267,14 @@ obj/machinery/airlock_sensor/Topic(href,href_list)
 			if(newfreq < 10000)
 				frequency = newfreq
 				initialize()
-
-	usr.set_machine(src)
 	update_multitool_menu(usr)
 
 
 obj/machinery/airlock_sensor/attackby(var/obj/item/W, var/mob/user)
+	if(..())
+		return
+	if(istype(W,/obj/item/device/multitool))
+		update_multitool_menu(user)
 	if(istype(W,/obj/item/weapon/screwdriver))
 		user << "You begin to pry \the [src] off the wall..."
 		if(do_after(user, 50))
@@ -378,6 +370,8 @@ obj/machinery/access_button/attack_hand(mob/user)
 
 
 obj/machinery/access_button/attackby(var/obj/item/W, var/mob/user)
+	if (istype(W, /obj/item/device/multitool))
+		update_multitool_menu()
 	if(istype(W,/obj/item/weapon/screwdriver))
 		user << "You begin to pry \the [src] off the wall..."
 		if(do_after(user, 50))
@@ -401,7 +395,7 @@ obj/machinery/access_button/New()
 	if(radio_controller)
 		set_frequency(frequency)
 
-obj/machinery/access_button/multitool_menu(var/obj/item/device/multitool/P, var/mob/user)
+obj/machinery/access_button/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
 	return {"
 		<ul>
 			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[0]">Reset</a>)</li>
@@ -410,7 +404,8 @@ obj/machinery/access_button/multitool_menu(var/obj/item/device/multitool/P, var/
 		</ul>"}
 
 obj/machinery/access_button/Topic(href,href_list)
-	if(..()) return 0
+	if(..())
+		return 1
 
 	if(!issilicon(usr))
 		if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
@@ -418,40 +413,18 @@ obj/machinery/access_button/Topic(href,href_list)
 			return
 
 	var/obj/item/device/multitool/P = get_multitool(usr)
+	if(P)
+		if("set_freq" in href_list)
+			var/newfreq=frequency
+			if(href_list["set_freq"]!="-1")
+				newfreq=text2num(href_list["set_freq"])
+			else
+				newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, frequency) as null|num
+			if(newfreq)
+				if(findtext(num2text(newfreq), "."))
+					newfreq *= 10 // shift the decimal one place
+				if(newfreq < 10000)
+					frequency = newfreq
+					initialize()
 
-	if("set_tag" in href_list)
-		if(!(href_list["set_tag"] in vars))
-			usr << "\red Something went wrong: Unable to find [href_list["set_tag"]] in vars!"
-			return 1
-		var/current_tag = src.vars[href_list["set_tag"]]
-		var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag", src, current_tag) as null|text),1,MAX_MESSAGE_LEN)
-		if(newid)
-			vars[href_list["set_tag"]] = newid
-			initialize()
-	if("set_freq" in href_list)
-		var/newfreq=frequency
-		if(href_list["set_freq"]!="-1")
-			newfreq=text2num(href_list["set_freq"])
-		else
-			newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, frequency) as null|num
-		if(newfreq)
-			if(findtext(num2text(newfreq), "."))
-				newfreq *= 10 // shift the decimal one place
-			if(newfreq < 10000)
-				frequency = newfreq
-				initialize()
-
-	if(href_list["unlink"])
-		P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
-
-	if(href_list["link"])
-		P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
-
-	if(href_list["buffer"])
-		P.buffer = src
-
-	if(href_list["flush"])
-		P.buffer = null
-
-	usr.set_machine(src)
-	update_multitool_menu(usr)
+		update_multitool_menu(usr)

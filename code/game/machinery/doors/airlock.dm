@@ -978,7 +978,7 @@ About the new airlock wires panel:
 		return src.attack_hand(user)
 	else if(istype(C, /obj/item/device/multitool))
 		if(!p_open)
-			return multitool_menu(C,user)
+			return update_multitool_menu(user)
 		return src.attack_hand(user)
 	else if(istype(C, /obj/item/device/assembly/signaler))
 		return src.attack_hand(user)

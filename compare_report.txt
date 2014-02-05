@@ -1,23 +1,4 @@
 # DMITool Difference Report: C:\Users\Rob\Documents\Projects\Baystation12\icons C:\Users\Rob\Documents\Projects\vgstation13\icons
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\robot_component.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\robot_component.dmi
- C:\Users\Rob\Documents\Projects\Baystation12\icons\robot_component.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 133, in compare
-    theirsDMI.loadAll()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 189, in loadAll
-    self.load(flags)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 192, in load
-    self.img = Image.open(self.filename)
-  File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
-    raise IOError("cannot identify image file")
-OSError: cannot identify image file
-
- - actuator
- - armor_plating
- - binary_translator
- - camera
- - diagnosis_unit
- - radio
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\effects\blood.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\blood.dmi
  - armorblood2
@@ -60,6 +41,7 @@ OSError: cannot identify image file
  - cold_s
  - coldfire_l
  - coldfire_s
+ - horns_s
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\effects\tile_effects.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\tile_effects.dmi
  - plasma-orange
@@ -1548,6 +1530,9 @@ OSError: cannot identify image file
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmos.dmi
  - aircond0
  - aircond1
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\barsigns.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\barsigns.dmi
+ - maltesefalcon
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\bureaucracy.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\bureaucracy.dmi
  + paper_stamp-intaff
@@ -1556,6 +1541,16 @@ OSError: cannot identify image file
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\card.dmi
  + guest
  + guest_invalid
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\chemical.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\chemical.dmi
+ - beakerbluespace: beakerbluespace: 6 frames, 1 directions
+ + beakerbluespace: beakerbluespace: 4 frames, 1 directions
+ - beakerbluespacelarge
+ - beakernoreact: beakernoreact: 12 frames, 1 directions
+ + beakernoreact: beakernoreact: 18 frames, 1 directions
+ - beakernoreactlarge
+ - oldbeakerbluespace
+ - oldbeakernoreact
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\coatrack.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\coatrack.dmi
  + coat_cmo
@@ -1565,6 +1560,10 @@ OSError: cannot identify image file
  - coatrack3
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\computer.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\computer.dmi
+ - aac
+ - aac0
+ - aac_active
+ - aacb
  + guest
  + syndicam
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\Cryogenic2.dmi
@@ -1602,6 +1601,10 @@ OSError: cannot identify image file
  + solara_dress
  + williamhackett
  + yuri_kornienkovich_flask
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\decals.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\decals.dmi
+ + maltesefalcon-left
+ + maltesefalcon-right
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\device.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\device.dmi
  - handtv
@@ -1635,6 +1638,11 @@ OSError: cannot identify image file
 
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\grenade.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\grenade.dmi
+ - ex_grenade
+ - ex_grenade_active
+ - ex_grenade_ass
+ - ex_grenade_locked
+ - ex_grenade_primed
  - improvised_grenade
  - improvised_grenade_active
  - improvised_grenade_filled
@@ -1718,12 +1726,16 @@ OSError: cannot identify image file
  - mcleaverblood
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\library.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\library.dmi
+ + bookSupermatter
  + evabook
  + pipingbook
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\mining.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\mining.dmi
  + Phazon
  - Phazon ore
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\module.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\module.dmi
+ - planning frame
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\objects.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\objects.dmi
  - borgcharger
@@ -1738,6 +1750,25 @@ OSError: cannot identify image file
  - insulated_manifold
  - insulated_manifold4w
  - thermalplate
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\power_cond_red.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\power_cond_red.dmi
+ + 11-1
+ + 11-10
+ + 11-2
+ + 11-4
+ + 11-5
+ + 11-6
+ + 11-8
+ + 11-9
+ + 12-0
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\projectiles.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\projectiles.dmi
+ - heavylaser: heavylaser: 1 frames, 8 directions
+ + heavylaser: heavylaser: 1 frames, 4 directions
+ - laser: laser: 1 frames, 8 directions
+ + laser: laser: 1 frames, 4 directions
+ - u_laser: u_laser: 2 frames, 8 directions
+ + u_laser: u_laser: 2 frames, 4 directions
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\radio.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\radio.dmi
  - intercom-frame
@@ -1768,11 +1799,19 @@ OSError: cannot identify image file
  + shrapnelsmall
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\stationobjs.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\stationobjs.dmi
+ - glassbox20
+ - glassbox21
+ - glassbox2b
  + npanel_open
  - recharger3
  - wooden_tv_broken: wooden_tv_broken: 1 frames, 1 directions
  + wooden_tv_broken: wooden_tv_broken: 3 frames, 1 directions
  - wrecharger3
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\stock_parts.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\stock_parts.dmi
+ - capacitor2_adv
+ - capacitor2_basic
+ - capacitor2_super
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\storage.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\storage.dmi
  + cashbag
@@ -1798,6 +1837,9 @@ OSError: cannot identify image file
  - emergency_nitrogen
  - jetpack-red
  - jetpack-red-on
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\telescience.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\telescience.dmi
+ - gps-p
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\vehicles.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\vehicles.dmi
  - pussywagon_destroyed
@@ -1963,6 +2005,16 @@ OSError: cannot identify image file
  + door_opening
  + welded
  + welded_open
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\doors\rapid_pdoor.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\doors\rapid_pdoor.dmi
+ - pdoor0: pdoor0: 5 frames, 1 directions
+ + pdoor0: pdoor0: 5 frames, 4 directions
+ - pdoor1: pdoor1: 5 frames, 1 directions
+ + pdoor1: pdoor1: 5 frames, 4 directions
+ - pdoorc0: pdoorc0: 6 frames, 1 directions
+ + pdoorc0: pdoorc0: 6 frames, 4 directions
+ - pdoorc1: pdoorc1: 6 frames, 1 directions
+ + pdoorc1: pdoorc1: 6 frames, 4 directions
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\machines\antimatter.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\machines\antimatter.dmi
  - control_critical
@@ -1995,6 +2047,10 @@ OSError: cannot identify image file
  - circuit_imprinter_link
  - d_analyzer_link
  - protolathe_link
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes\disposal.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\disposal.dmi
+ + pipe-d
+ + pipe-u
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes\heat.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\heat.dmi
  - intact-f
