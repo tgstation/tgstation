@@ -97,8 +97,13 @@
 	return
 
 /turf/simulated/mineral/random/high_chance
+	icon_state = "rock_highchance"
 	mineralChance = 25
 	mineralSpawnChanceList = list("Uranium" = 10, "Iron" = 30, "Diamond" = 2, "Gold" = 10, "Silver" = 10, "Plasma" = 25, "Gibtonite" = 8)
+
+/turf/simulated/mineral/random/high_chance/New()
+	icon_state = "rock"
+	..()
 
 /turf/simulated/mineral/uranium
 	name = "Uranium deposit"
@@ -166,7 +171,7 @@
 ////////////////////////////////Gibtonite
 /turf/simulated/mineral/gibtonite
 	name = "Diamond deposit" //honk
-	icon_state = "rock_Diamond"
+	icon_state = "rock_Gibtonite"
 	mineralName = "Gibtonite"
 	mineralAmt = 1
 	spreadChance = 0
@@ -177,6 +182,7 @@
 	var/activated_name = null
 
 /turf/simulated/mineral/gibtonite/New()
+	icon_state = "rock_Diamond"
 	det_time = rand(8,10) //So you don't know exactly when the hot potato will explode
 	..()
 
