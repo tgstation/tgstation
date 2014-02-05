@@ -131,7 +131,7 @@
 					new_machine.RefreshParts()
 					del(src)
 
-			if(istype(P, /obj/item/weapon))
+			if(istype(P, /obj/item))
 				var/success
 				for(var/I in req_components)
 					if(istype(P, text2path(I)) && (req_components[I] > 0))
