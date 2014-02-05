@@ -399,6 +399,13 @@
 	orient2hud()
 
 
+/obj/item/weapon/storage/Del()
+	for(var/mob/M in range(1))
+		if (M.s_active == src)
+			src.close(M)
+	..()
+
+
 /obj/item/weapon/storage/emp_act(severity)
 	if(!istype(loc, /mob/living))
 		for(var/obj/O in contents)
