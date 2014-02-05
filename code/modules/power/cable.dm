@@ -231,9 +231,9 @@
 	else
 		return ..()
 
-/obj/item/stack/cable_coil/New(loc, length = MAXCOIL, var/param_color = null)
+/obj/item/stack/cable_coil/New(loc, amount = MAXCOIL, var/param_color = null)
 	..()
-	src.amount = length
+	src.amount = amount
 	if (param_color)
 		item_color = param_color
 	pixel_x = rand(-2,2)
