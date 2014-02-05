@@ -146,7 +146,7 @@
 				return
 			step_towards(src, current)
 			sleep(1)
-			if(!bumped && !isturf(original))
+			if(!bumped && (original.layer>=2.75 || ismob(original)))
 				if(loc == get_turf(original))
 					if(!(original in permutated))
 						Bump(original)
