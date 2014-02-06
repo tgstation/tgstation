@@ -41,29 +41,23 @@
 		return
 
 	var/obj/effect/decal/chempuff/D = new/obj/effect/decal/chempuff(get_turf(src))
+	var/tiles =1
 	D.create_reagents(amount_per_transfer_from_this)
 	if(amount_per_transfer_from_this >=10)
-		reagents.trans_to(D, amount_per_transfer_from_this, 1)
-		D.color = mix_color_from_reagents(D.reagents.reagent_list)
-		spawn(0)
+		tiles =1
+	else
+		tiles =3
+		
+	reagents.trans_to(D, amount_per_transfer_from_this, 1/tiles)
+	D.color = mix_color_from_reagents(D.reagents.reagent_list)
+	spawn(0)
+		for(var/i=0, i<tiles, i++)
 			step_towards(D,A)
 			D.reagents.reaction(get_turf(D))
 			for(var/atom/T in get_turf(D))
 				D.reagents.reaction(T)
 			sleep(3)
-			del(D)
-	else
-		reagents.trans_to(D, amount_per_transfer_from_this, 1/3)
-		D.color = mix_color_from_reagents(D.reagents.reagent_list)
-	
-		spawn(0)
-			for(var/i=0, i<3, i++)
-				step_towards(D,A)
-				D.reagents.reaction(get_turf(D))
-				for(var/atom/T in get_turf(D))
-					D.reagents.reaction(T)
-				sleep(3)
-			del(D)
+		del(D)
 
 	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
 
