@@ -61,7 +61,7 @@
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = 1
 	ranged_message = "stares"
-	ranged_cooldown_cap = 8
+	ranged_cooldown_cap = 14
 	throw_message = "does nothing against the hard shell of"
 	vision_range = 2
 	speed = 3
@@ -98,6 +98,15 @@
 				visible_message("<span class='danger'>The [src.name]'s stare chills [L.name] to the bone!</span>")
 	return
 
+/mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			gib()
+		if(2.0)
+			adjustBruteLoss(140)
+		if(3.0)
+			adjustBruteLoss(110)
+
 /mob/living/simple_animal/hostile/asteroid/goldgrub
 	name = "goldgrub"
 	desc = "A worm that grows fat from eating everything in its sight. Seems to enjoy precious metals and other shiny things, hence the name."
@@ -107,13 +116,13 @@
 	icon_aggro = "Goldgrub_alert"
 	icon_dead = "Goldgrub_dead"
 	icon_gib = "syndicate_gib"
-	vision_range = 6
+	vision_range = 3
 	aggro_vision_range = 9
 	idle_vision_range = 6
 	move_to_delay = 3
 	friendly = "harmlessly rolls into"
-	maxHealth = 45
-	health = 45
+	maxHealth = 60
+	health = 60
 	harm_intent_damage = 5
 	melee_damage_lower = 0
 	melee_damage_upper = 0
@@ -121,10 +130,11 @@
 	a_intent = "help"
 	throw_message = "sinks in slowly, before being pushed out of "
 	status_flags = CANPUSH
-	search_objects = 2
+	search_objects = 1
 	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver, /obj/item/weapon/ore/plasma,
 						  /obj/item/weapon/ore/uranium, /obj/item/weapon/ore/iron, /obj/item/weapon/ore/clown)
 	var/alerted = 0
+	var/ore_points_gained = 0
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/GiveTarget(var/new_target)
 	target = new_target
@@ -132,27 +142,35 @@
 		if(istype(target, /obj/item/weapon/ore))
 			visible_message("<span class='notice'>The [src.name] looks at [target.name] with hungry eyes.</span>")
 			stance = HOSTILE_STANCE_ATTACK
-		if(isliving(target) && !search_objects)
+			return
+		if(isliving(target))
 			Aggro()
 			stance = HOSTILE_STANCE_ATTACK
 			visible_message("<span class='danger'>The [src.name] tries to flee from [target.name]!</span>")
 			retreat_distance = 10
 			Burrow()
+			return
 	return
 
-/obj/item/weapon/ore/attack_animal(var/mob/living/L)
-	if(istype(L, /mob/living/simple_animal/hostile/asteroid/goldgrub))
-		L.visible_message("<span class='notice'>The [src.name] was swallowed whole!</span>")
-		del(src)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/AttackingTarget()
+	if(istype(target, /obj/item/weapon/ore))
+		EatOre(target)
+		return
 	..()
+
+/mob/living/simple_animal/hostile/asteroid/goldgrub/proc/EatOre(var/atom/targeted_ore)
+	for(var/obj/item/weapon/ore/O in targeted_ore.loc)
+		ore_points_gained += O.points
+		del(O)
+	visible_message("<span class='notice'>The ore was swallowed whole!</span>")
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
 	if(!alerted)
 		alerted = 1
 		spawn(100)
-			if(alerted)
-				visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
-				del(src)
+		if(alerted)
+			visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
+			del(src)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(var/obj/item/projectile/P)
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")

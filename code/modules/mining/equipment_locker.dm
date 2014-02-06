@@ -141,8 +141,8 @@
 		new /datum/data/mining_equipment("Sonic jackhammer",    /obj/item/weapon/pickaxe/jackhammer,                              2500),
 		new /datum/data/mining_equipment("Mining drone",        /mob/living/simple_animal/hostile/mining_drone/,                  2500),
 		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                1000),
-		//new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                       1500),
-		//new /datum/data/mining_equipment("Kinetic accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,                  2500),
+		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                       1500),
+		new /datum/data/mining_equipment("Kinetic accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,                  2500),
 		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide,                      3000),
 		)
 
@@ -532,3 +532,31 @@
 	..()
 	if(!loaded)
 		usr << "<span class='info'>[src] is empty.</span>"
+
+/**********************Mining Scanner**********************/
+/obj/item/device/mining_scanner
+	desc = "A scanner that checks surrounding rock for useful minerals, it can also be used to stop gibtonite detonations."
+	name = "analyzer"
+	icon_state = "mining"
+	item_state = "analyzer"
+	w_class = 2.0
+	flags = CONDUCT
+	slot_flags = SLOT_BELT
+	var/cooldown = 0
+
+/obj/item/device/mining_scanner/attack_self(mob/user)
+	if(!user.client)
+		return
+	if(!cooldown)
+		cooldown = 1
+		spawn(40)
+			cooldown = 0
+		var/client/C = user.client
+		for(var/turf/simulated/mineral/M in range(7, user))
+			if(M.scan_state)
+				var/turf/T = get_turf(M)
+				var/image/I = image('icons/turf/walls.dmi', loc = T, icon_state = M.scan_state, layer = 18)
+				C.images += I
+				spawn(30)
+					if(C)
+						C.images -= I

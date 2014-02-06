@@ -161,7 +161,8 @@
 
 	changeling.chem_charges -= 5
 	changeling.geneticdamage = 3
-	hardset_dna(src, chosen_dna.uni_identity, chosen_dna.struc_enzymes, chosen_dna.real_name, chosen_dna.mutantrace, chosen_dna.blood_type)
+	src.dna = chosen_dna
+	src.real_name = chosen_dna.real_name
 	updateappearance(src)
 	domutcheck(src, null)
 
@@ -216,7 +217,8 @@
 	changeling.chem_charges -= 5
 	remove_changeling_powers()
 	src << "<span class='notice'>We transform our appearance.</span>"
-	hardset_dna(src, chosen_dna.uni_identity, chosen_dna.struc_enzymes, chosen_dna.real_name, chosen_dna.mutantrace, chosen_dna.blood_type)
+	src.dna = chosen_dna
+
 
 	var/mob/living/carbon/human/O = humanize((TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPSRC),chosen_dna.real_name)
 

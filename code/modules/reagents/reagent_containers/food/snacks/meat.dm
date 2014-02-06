@@ -3,7 +3,6 @@
 	desc = "A slab of meat"
 	icon_state = "meat"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/sosjerky
-	health = 180
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)

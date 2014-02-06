@@ -589,6 +589,7 @@ obj/item/toy/cards/deck
 	deckstyle = "nanotrasen"
 	icon_state = "deck_nanotrasen_full"
 	w_class = 2.0
+	var/cooldown = 0
 	var/list/cards = list()
 
 obj/item/toy/cards/deck/New()
@@ -641,9 +642,11 @@ obj/item/toy/cards/deck/attack_hand(mob/user as mob)
 		src.icon_state = "deck_[deckstyle]_low"
 
 obj/item/toy/cards/deck/attack_self(mob/user as mob)
-	cards = shuffle(cards)
-	playsound(user, 'sound/items/cardshuffle.ogg', 50, 1)
-	user.visible_message("<span class='notice'>[user] shuffles the deck.</span>", "<span class='notice'>You shuffle the deck.</span>")
+	if(cooldown < world.time - 50)
+		cards = shuffle(cards)
+		playsound(user, 'sound/items/cardshuffle.ogg', 50, 1)
+		user.visible_message("<span class='notice'>[user] shuffles the deck.</span>", "<span class='notice'>You shuffle the deck.</span>")
+		cooldown = world.time
 
 obj/item/toy/cards/deck/attackby(obj/item/toy/cards/singlecard/C, mob/living/user)
 	..()
