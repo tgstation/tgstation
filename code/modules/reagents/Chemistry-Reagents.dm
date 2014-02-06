@@ -757,7 +757,7 @@ datum
 			color = "#A5F0EE" // rgb: 165, 240, 238
 
 			reaction_obj(var/obj/O, var/volume)
-				if(istype(O,/obj/effect/decal/cleanable) || istype(O,/obj/effect/rune))
+				if(istype(O,/obj/effect/decal/cleanable))
 					del(O)
 				else
 					if(O)
