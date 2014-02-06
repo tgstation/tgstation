@@ -4,7 +4,7 @@
 	icon_state = "cell-off"
 	density = 1
 	anchored = 1.0
-	layer = 3
+	layer = 4
 
 	var/on = 0
 	var/temperature_archived
@@ -238,10 +238,12 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/open_machine()
 	if(!state_open && !panel_open)
+		layer = 3
 		..()
 
 /obj/machinery/atmospherics/unary/cryo_cell/close_machine(mob/living/carbon/M)
 	if(state_open && !panel_open)
+		layer = 4
 		..(M)
 		return occupant
 
