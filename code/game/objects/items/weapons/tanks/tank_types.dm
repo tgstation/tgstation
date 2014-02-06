@@ -14,6 +14,7 @@
 	name = "oxygen tank"
 	desc = "A tank of oxygen."
 	icon_state = "oxygen"
+	w_class = 4.0
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 
 
@@ -48,6 +49,7 @@
 	desc = "A tank with an N2O/O2 gas mix."
 	icon_state = "anesthetic"
 	item_state = "an_tank"
+	w_class = 4.0
 
 /obj/item/weapon/tank/anesthetic/New()
 	..()
@@ -67,6 +69,7 @@
 	name = "air tank"
 	desc = "Mixed anyone?"
 	icon_state = "oxygen"
+	w_class = 4.0
 
 
 	examine()
@@ -127,7 +130,7 @@
 	icon_state = "emergency"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	w_class = 2.0
+	w_class = 3.0
 	force = 4.0
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 	volume = 3 //Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)

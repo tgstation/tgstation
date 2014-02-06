@@ -137,7 +137,7 @@
 	hitsound = "swing_hit"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2
+	w_class = 2.0
 	m_amt = 70
 	g_amt = 30
 	origin_tech = "engineering=1"

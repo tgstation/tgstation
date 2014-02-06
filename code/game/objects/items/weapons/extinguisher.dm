@@ -7,7 +7,7 @@
 	hitsound = 'sound/weapons/smash.ogg'
 	flags = CONDUCT
 	throwforce = 10
-	w_class = 3.0
+	w_class = 4.0
 	throw_speed = 2
 	throw_range = 10
 	force = 10

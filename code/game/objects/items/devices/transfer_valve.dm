@@ -3,6 +3,7 @@
 	name = "tank transfer valve"
 	icon_state = "valve_1"
 	desc = "Regulates the transfer of air between two tanks"
+	w_class = 4.0
 	var/obj/item/weapon/tank/tank_one
 	var/obj/item/weapon/tank/tank_two
 	var/obj/item/device/attached_device

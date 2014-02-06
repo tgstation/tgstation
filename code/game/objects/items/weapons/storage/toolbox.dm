@@ -10,6 +10,8 @@
 	throw_speed = 1
 	throw_range = 7
 	w_class = 4.0
+	max_w_class = 3.0
+	max_combined_w_class = 14
 	origin_tech = "combat=1"
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'

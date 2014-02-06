@@ -262,11 +262,11 @@
 	desc = "Apparently a staff used by the wizard."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "staff"
-	force = 3.0
+	force = 10.0
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = 4.0
 	flags = NOSHIELD
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
 
