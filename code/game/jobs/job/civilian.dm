@@ -292,7 +292,8 @@
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket/red(H), slot_w_uniform)
 		H.equip_to_slot_or_del(new /obj/item/device/pda/librarian(H), slot_belt)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
-		H.equip_to_slot_or_del(new /obj/item/weapon/barcodescanner(H), slot_l_hand)
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/bag/books(H), slot_l_hand)
+		H.equip_to_slot_or_del(new /obj/item/weapon/barcodescanner(H), slot_r_store)
 		H.equip_to_slot_or_del(new /obj/item/device/laser_pointer(H), slot_l_store)
 		return 1
 

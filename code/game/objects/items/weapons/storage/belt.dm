@@ -101,8 +101,11 @@
 	desc = "Can hold security gear like handcuffs and flashes."
 	icon_state = "securitybelt"
 	item_state = "security"//Could likely use a better one.
-	storage_slots = 4
+	storage_slots = 5
+	max_w_class = 3 //Because the baton wouldn't fit otherwise. - Neerti
 	can_hold = list(
+		"/obj/item/weapon/melee/baton",
+		"/obj/item/weapon/melee/classic_baton",
 		"/obj/item/weapon/grenade/flashbang",
 		"/obj/item/weapon/reagent_containers/spray/pepper",
 		"/obj/item/weapon/handcuffs",
