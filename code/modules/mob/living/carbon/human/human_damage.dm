@@ -64,21 +64,6 @@ mob/living/carbon/human/proc/hat_fall_prob()
 		loose = 0
 	return loose * multiplier
 
-/mob/living/carbon/human/fall(var/forced)
-	..()
-	if(istype(loc, /turf/space)) //if space is at the human's location
-		return //stop executing the proc
-	if(forced) //if going prone was involuntary
-		playsound(loc, "bodyfall", 50, 1) //play bodyfall at 50% volume
-		if(head)
-			var/obj/item/clothing/head/H = head
-			if(!istype(H) || prob(hat_fall_prob()))
-				drop_from_inventory(H)
-				if(prob(60))
-					step_rand(H)
-				if(!stat)
-					src << "<span class='warning'>[H] fell off your head!</span>"
-
 ////////////////////////////////////////////
 
 //Returns a list of damaged organs
