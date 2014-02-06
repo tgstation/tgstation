@@ -19,6 +19,7 @@
 	var/input_level = 50000 // amount of power the SMES attempts to charge by
 	var/input_available = 0 //amount of charge available from input last tick
 
+	var/output_attempt = 1 //1 = attempting to output, 0 = not attempting to output
 	var/outputting = 1 //1 = actually outputting, 0 = not outputting
 	var/output_level = 50000 // amount of power the SMES attempts to output
 	var/output_used = 0 // amount of power actually outputted. may be less than output_level if the powernet returns excess power
@@ -82,7 +83,7 @@
 	var/last_chrg = inputting
 	var/last_onln = outputting
 
-	if(terminal)
+	if(terminal && input_attempt)
 		input_available = terminal.surplus()
 
 		if(inputting)
@@ -97,7 +98,7 @@
 			else					// if not enough capcity
 				inputting = 0		// stop inputting
 
-		else if(input_attempt)
+		else
 			if(input_available > 0 && input_available >= input_level)
 				inputting = 1
 
@@ -111,18 +112,19 @@
 
 		if(charge < 0.0001)
 			outputting = 0
+			output_attempt = 0
 			investigate_log("lost power and turned <font color='red'>off</font>","singulo")
+	else if(output_attempt && charge > 0)
+		outputting = 1
 
 	// only update icon if state changed
 	if(last_disp != chargedisplay() || last_chrg != inputting || last_onln != outputting)
 		updateicon()
 
-	updateDialog()
-	return
+
 
 // called after all power processes are finished
 // restores charge level to smes if there was excess this ptick
-
 
 /obj/machinery/power/smes/proc/restore()
 	if(stat & BROKEN)
@@ -158,19 +160,15 @@
 
 
 /obj/machinery/power/smes/attack_ai(mob/user)
-	add_fingerprint(user)
 	if(stat & BROKEN) return
-	interact(user)
+	ui_interact(user)
 
 
 /obj/machinery/power/smes/attack_hand(mob/user)
 	add_fingerprint(user)
 	if(stat & BROKEN) return
-	interact(user)
+	ui_interact(user)
 
-
-/obj/machinery/power/smes/interact(mob/user)
-	return ui_interact(user)
 
 /obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(!user)
@@ -186,6 +184,7 @@
 		"inputLevel" = input_level,
 		"inputAvailable" = input_available,
 
+		"outputAttempt" = output_attempt,
 		"outputting" = outputting,
 		"outputLevel" = output_level,
 		"outputUsed" = output_used
@@ -217,8 +216,10 @@
 		investigate_log("input/output; [input_level>output_level?"<font color='green'>":"<font color='red'>"][input_level]/[output_level]</font> | Output-mode: [outputting?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [input_attempt?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [usr.key]","singulo")
 		updateicon()
 
-	else if( href_list["outputting"] )
-		outputting = text2num(href_list["outputting"])
+	else if( href_list["output_attempt"] )
+		output_attempt = text2num(href_list["output_attempt"])
+		if(!output_attempt)
+			outputting = 0
 		investigate_log("input/output; [input_level>output_level?"<font color='green'>":"<font color='red'>"][input_level]/[output_level]</font> | Output-mode: [outputting?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [input_attempt?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [usr.key]","singulo")
 		updateicon()
 
@@ -256,6 +257,7 @@
 
 	add_fingerprint(usr)
 
+/*
 /obj/machinery/power/smes/proc/ion_act()
 	if(src.z == 1)
 		if(prob(1)) //explosion
@@ -285,19 +287,26 @@
 			smoke.set_up(3, 0, src.loc)
 			smoke.attach(src)
 			smoke.start()
+*/
 
 
 /obj/machinery/power/smes/emp_act(severity)
 	outputting = 0
+	output_attempt = 0
 	inputting = 0
+	input_attempt = 0
 	output_level = 0
+	input_level = 0
 	charge -= 1e6/severity
 	if (charge < 0)
 		charge = 0
 	spawn(100)
 		output_level = initial(output_level)
+		input_level = initial(input_level)
 		inputting = initial(inputting)
 		outputting = initial(outputting)
+		output_attempt = initial(output_attempt)
+		input_attempt = initial(input_attempt)
 	..()
 
 
