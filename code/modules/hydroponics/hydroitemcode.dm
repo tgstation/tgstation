@@ -153,6 +153,5 @@
 				s.start()
 	new/obj/effect/decal/cleanable/oil(src.loc)
 	src.visible_message("<span class='notice'>The [src.name] has been squashed, causing a distortion in space-time.</span>","<span class='moderate'>You hear a splat and a crackle.</span>")
-	usr.drop_from_inventory(src)
 	del(src)
 	return
