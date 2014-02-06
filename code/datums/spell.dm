@@ -6,6 +6,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 /obj/effect/proc_holder/spell
 	name = "Spell"
 	desc = "A wizard spell"
+	panel = "Spells"//What panel the proc holder needs to go on.
 	density = 0
 	opacity = 0
 

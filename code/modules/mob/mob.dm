@@ -1193,11 +1193,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 				continue //Not showing the noclothes spell
 			switch(S.charge_type)
 				if("recharge")
-					statpanel("Spells","[S.charge_counter/10.0]/[S.charge_max/10]",S)
+					statpanel(S.panel,"[S.charge_counter/10.0]/[S.charge_max/10]",S)
 				if("charges")
-					statpanel("Spells","[S.charge_counter]/[S.charge_max]",S)
+					statpanel(S.panel,"[S.charge_counter]/[S.charge_max]",S)
 				if("holdervar")
-					statpanel("Spells","[S.holder_var_type] [S.holder_var_amount]",S)
+					statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S)
 
 
 
