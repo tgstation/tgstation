@@ -162,7 +162,7 @@
 	LostTarget()
 
 /mob/living/simple_animal/hostile/proc/Goto(var/target, var/delay, var/minimum_distance)
-        walk_to(src, target, minimum_distance, delay)
+	walk_to(src, target, minimum_distance, delay)
 
 /mob/living/simple_animal/hostile/adjustBruteLoss(var/damage)
 	..(damage)
