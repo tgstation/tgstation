@@ -9,6 +9,7 @@
  *		Mining Satchel
  *		Plant Bag
  *		Sheet Snatcher
+ *		Book Bag
  *
  *	-Sayu
  */
@@ -246,3 +247,20 @@
 	name = "sheet snatcher 9000"
 	desc = ""
 	capacity = 500//Borgs get more because >specialization
+
+
+// -----------------------------
+//           Book bag
+// -----------------------------
+
+/obj/item/weapon/storage/bag/books
+	name = "book bag"
+	desc = "A bag for books."
+	icon = 'icons/obj/library.dmi'
+	icon_state = "bookbag"
+	display_contents_with_number = 0 //This would look really stupid otherwise
+	storage_slots = 7
+	max_combined_w_class = 21
+	max_w_class = 3
+	w_class = 4 //Bigger than a book because physics
+	can_hold = list("/obj/item/weapon/book", "/obj/item/weapon/spellbook") //No bibles, consistent with bookcase

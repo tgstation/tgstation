@@ -161,6 +161,13 @@ var/list/powerinstances
 	allowduringlesserform = 1
 	verbpath = /mob/living/carbon/proc/changeling_mute_sting
 
+/datum/power/changeling/arm_blade
+	name = "Arm Blade"
+	desc = "We reform one of our arms into a deadly blade."
+	helptext = "Cannot be used while in lesser form."
+	genomecost = 1
+	allowduringlesserform = 0
+	verbpath = /mob/living/carbon/proc/changeling_arm_blade
 
 // Modularchangling, totally stolen from the new player panel.  YAYY
 /datum/changeling/proc/EvolutionMenu()//The new one

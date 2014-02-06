@@ -23,8 +23,8 @@
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user)
 	..()
 	add_fingerprint(user)
-	if(istype(W,/obj/item/weapon/cable_coil))
-		var/obj/item/weapon/cable_coil/CC = W
+	if(istype(W,/obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/CC = W
 		if(CC.amount < 5)
 			user << "\b There is not enough wire in this coil. You need 5 lengths."
 			return
@@ -248,6 +248,7 @@
 	item_state = "shard-glass"
 	g_amt = 3750
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
+	hitsound = 'sound/weapons/bladeslice.ogg'
 
 	suicide_act(mob/user)
 		viewers(user) << pick("<span class='suicide'>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</span>", \
@@ -267,12 +268,6 @@
 		if("large")
 			pixel_x = rand(-5, 5)
 			pixel_y = rand(-5, 5)
-
-
-/obj/item/weapon/shard/attack(mob/M, mob/user)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
-	..()
-
 
 /obj/item/weapon/shard/afterattack(atom/A as mob|obj, mob/user, proximity)
 	if(!proximity || !(src in user)) return

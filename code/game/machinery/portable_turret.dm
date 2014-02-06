@@ -60,12 +60,15 @@
 
 	cover = new /obj/machinery/porta_turret_cover(loc)
 	cover.Parent_Turret = src
+	setup()
 
+/obj/machinery/porta_turret/proc/setup()
 	if(!installation)	//if for some reason the turret has no gun (ie, admin spawned) it resorts to basic taser shots
 		projectile = /obj/item/projectile/energy/electrode	//holder for the projectile, here it is being set
 		eprojectile = /obj/item/projectile/beam				//holder for the projectile when emagged, if it is different
 		sound = 1
 	else
+		sound = null
 		var/obj/item/weapon/gun/energy/E=new installation	//All energy-based weapons are applicable
 		var/obj/item/ammo_casing/shottype = E.ammo_type[1]
 		projectile = shottype.projectile_type
@@ -73,7 +76,7 @@
 
 		switch(E.type)
 			if(/obj/item/weapon/gun/energy/laser/bluetag)
-				eprojectile = /obj/item/projectile/omnitag	//This bolt will stun ERRYONE with a vest
+				eprojectile = /obj/item/projectile/bluetag
 				lasercolor = "b"
 				req_access = list(access_maint_tunnels, access_theatre)
 				check_records = 0
@@ -84,7 +87,7 @@
 				shot_delay = 30
 
 			if(/obj/item/weapon/gun/energy/laser/redtag)
-				eprojectile = /obj/item/projectile/omnitag
+				eprojectile = /obj/item/projectile/redtag
 				lasercolor = "r"
 				req_access = list(access_maint_tunnels, access_theatre)
 				check_records = 0
@@ -768,6 +771,7 @@
 					Turret.name = finish_name
 					Turret.installation = installation
 					Turret.gun_charge = gun_charge
+					Turret.setup()
 
 //					Turret.cover=new/obj/machinery/porta_turret_cover(loc)
 //					Turret.cover.Parent_Turret=Turret

@@ -487,7 +487,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			for(var/datum/feed_channel/F in news_network.network_channels)
 				if( (!F.locked || F.author == scanned_user) && !F.censored)
 					available_channels += F.channel_name
-			src.channel_name = strip_html(input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels )
+			src.channel_name = strip_html_simple(input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels )
 			src.updateUsrDialog()
 
 		else if(href_list["set_new_message"])
@@ -714,27 +714,27 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	if (src.isbroken)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 100, 1)
 		for (var/mob/O in hearers(5, src.loc))
-			O.show_message("<EM>[user.name]</EM> further abuses the shattered [src.name].")
+			O.show_message("<span class='danger'>\The shattered [src] has been further abused by [user] with \the [I]!</span>")
 	else
 		if(istype(I, /obj/item/weapon) )
 			var/obj/item/weapon/W = I
 			if(W.force <15)
 				for (var/mob/O in hearers(5, src.loc))
-					O.show_message("[user.name] hits the [src.name] with the [W.name] with no visible effect." )
+					O.show_message("<span class='danger'>\The [src] has been hit by [user] to no effect with \the [W].</span>" )
 					playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 			else
 				src.hitstaken++
 				if(src.hitstaken==3)
 					for (var/mob/O in hearers(5, src.loc))
-						O.show_message("[user.name] smashes the [src.name]!" )
+						O.show_message("<span class='danger'>\The [src] has been smashed by [user] with \the [W]!</span>" )
 					src.isbroken=1
 					playsound(src.loc, 'sound/effects/Glassbr3.ogg', 100, 1)
 				else
 					for (var/mob/O in hearers(5, src.loc))
-						O.show_message("[user.name] forcefully slams the [src.name] with the [I.name]!" )
+						O.show_message("<span class='danger'>\The [src] has been forcefully slammed by [user] with \the [W]!</span>" )
 					playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 		else
-			user << "<FONT COLOR='blue'>This does nothing.</FONT>"
+			user << "<span class='danger'>\The [src] has been hit by [user] to no effect with \the [I].</span>"
 	src.update_icon()
 
 

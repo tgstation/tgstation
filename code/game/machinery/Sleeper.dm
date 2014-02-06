@@ -65,6 +65,12 @@
 			A.blob_act()
 		del(src)
 
+/obj/machinery/sleeper/attack_animal(var/mob/living/simple_animal/M)//Stop putting hostile mobs in things guise
+	if(M.environment_smash)
+		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
+		del(src)
+	return
+
 /obj/machinery/sleeper/attackby(obj/item/I, mob/user)
 	if(!state_open && !occupant)
 		if(default_deconstruction_screwdriver(user, "sleeper-o", "sleeper", I))

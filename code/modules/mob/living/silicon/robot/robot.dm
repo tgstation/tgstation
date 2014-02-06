@@ -385,13 +385,13 @@
 			user << "Need more welding fuel!"
 			return
 
-	else if(istype(W, /obj/item/weapon/cable_coil) && wiresexposed)
-		var/obj/item/weapon/cable_coil/coil = W
+	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
+		var/obj/item/stack/cable_coil/coil = W
 		adjustFireLoss(-30)
 		updatehealth()
-		coil.use(1)
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("\red [user] has fixed some of the burnt wires on [src]!"), 1)
+		coil.use(1)
 
 	else if (istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
 		if(opened)
@@ -1005,7 +1005,7 @@
 		robot_suit.l_leg = null
 		robot_suit.r_leg.loc = T
 		robot_suit.r_leg = null
-		new /obj/item/weapon/cable_coil(T, robot_suit.chest.wires)
+		new /obj/item/stack/cable_coil(T, robot_suit.chest.wires)
 		robot_suit.chest.loc = T
 		robot_suit.chest.wires = 0.0
 		robot_suit.chest = null
@@ -1026,7 +1026,7 @@
 		new /obj/item/robot_parts/robot_suit(T)
 		new /obj/item/robot_parts/l_leg(T)
 		new /obj/item/robot_parts/r_leg(T)
-		new /obj/item/weapon/cable_coil(T, 1)
+		new /obj/item/stack/cable_coil(T, 1)
 		new /obj/item/robot_parts/chest(T)
 		new /obj/item/robot_parts/l_arm(T)
 		new /obj/item/robot_parts/r_arm(T)

@@ -94,6 +94,7 @@
 	var/obj/item/weapon/storage/s_active = null//Carbon
 
 	var/seer = 0 //for cult//Carbon, probably Human
+	var/see_override = 0 //0 for no override, sets see_invisible = see_override in mob life process
 
 	var/datum/hud/hud_used = null
 

@@ -18,6 +18,7 @@
 	anchored = 1 //There's a reason this is here, Mport. God fucking damn it -Agouri. Find&Fix by Pete. The reason this is here is to stop the curving of emitter shots.
 	pass_flags = PASSTABLE
 	mouse_opacity = 0
+	hitsound = 'sound/weapons/pierce.ogg'
 	var/bumped = 0		//Prevents it from hitting more than one guy at once
 	var/def_zone = ""	//Aiming at
 	var/mob/firer = null//Who shot it
@@ -59,8 +60,14 @@
 		var/mob/living/L = target
 		return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, blocked)
 
+	proc/vol_by_damage()
+		if(src.damage)
+			return Clamp((src.damage) * 0.67, 30, 100)// Multiply projectile damage by 0.67, then clamp the value between 30 and 100
+		else
+			return 50 //if the projectile doesn't do damage, play its hitsound at 50% volume
 
 	Bump(atom/A as mob|obj|turf|area)
+
 		if(A == firer)
 			loc = A.loc
 			return 0 //cannot shoot yourself
@@ -83,10 +90,14 @@
 			var/distance = get_dist(get_turf(A), starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
 			def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 			if(silenced)
-				M << "<span class='userdanger'>You've been shot in the [parse_zone(def_zone)] by [src]!</span>"
+				playsound(loc, hitsound, 5, 1, -1)
+				M << "<span class='userdanger'>You've been shot by \a [src] in \the [parse_zone(def_zone)]!</span>"
 			else
-				M.visible_message("<span class='danger'>[M] is hit by [src] in the [parse_zone(def_zone)]!", \
-									"<span class='userdanger'>[M] is hit by [src] in the [parse_zone(def_zone)]!")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+				if(hitsound)
+					var/volume = vol_by_damage()
+					playsound(loc, hitsound, volume, 1, -1)
+				M.visible_message("<span class='danger'>[M] is hit by \a [src] in the [parse_zone(def_zone)]!", \
+									"<span class='userdanger'>[M] is hit by \a [src] in the [parse_zone(def_zone)]!")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 			add_logs(firer, M, "shot", object="[src]", addition=reagent_note)
 
 
@@ -136,9 +147,13 @@
 				return
 			step_towards(src, current)
 			sleep(1)
-			if(!bumped && !isturf(original))
+			if(!bumped && ((original && original.layer>=2.75) || ismob(original)))
 				if(loc == get_turf(original))
 					if(!(original in permutated))
 						Bump(original)
 						sleep(1)
+			Range()
 		return
+
+/obj/item/projectile/proc/Range()
+	return

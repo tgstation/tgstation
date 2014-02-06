@@ -839,6 +839,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				/obj/item/toy/crayon/green = list("greencrayonpowder" = 10),
 				/obj/item/toy/crayon/blue = list("bluecrayonpowder" = 10),
 				/obj/item/toy/crayon/purple = list("purplecrayonpowder" = 10),
+				/obj/item/toy/crayon/mime = list("invisiblecrayonpowder" = 50),
 
 				//Blender Stuff
 				/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = list("soymilk" = 0),

@@ -696,9 +696,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 //Robots and brains have their own version so don't worry about them
 /mob/proc/update_canmove()
-
-	if(stat || weakened || paralysis || resting || (status_flags & FAKEDEATH) || buckled)
+	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
+	if(ko || resting || buckled)
 		canmove = 0
+		drop_r_hand()	//makes mobs drop items in hands when incapacitated
+		drop_l_hand()
 		if(!lying)
 			if(resting) //Presuming that you're resting on a bed, which would look goofy lying the wrong way
 				lying = 90
@@ -709,8 +711,10 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else
 		lying = 0
 		canmove = 1
+
 	if(buckled)
 		anchored = 1
+		canmove = 0
 		if(istype(buckled, /obj/structure/stool/bed/chair))
 			lying = 0
 		else
@@ -718,23 +722,26 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	if(lying)
 		density = 0
-		drop_r_hand()
-		drop_l_hand()
 	else
 		density = 1
 
 	//Temporarily moved here from the various life() procs
 	//I'm fixing stuff incrementally so this will likely find a better home.
 	//It just makes sense for now. ~Carn
-
 	if(lying != lying_prev)
+		if(lying && !lying_prev)
+			fall(ko)
 		update_transform()
+
 	if(update_icon)	//forces a full overlay update
 		update_icon = 0
 		regenerate_icons()
 
 	return canmove
 
+/mob/proc/fall(var/forced)
+	drop_l_hand()
+	drop_r_hand()
 
 /mob/verb/eastface()
 	set hidden = 1

@@ -23,6 +23,10 @@
 	update_icon()
 	return
 
+/obj/item/weapon/melee/baton/CheckParts()
+	bcell = locate(/obj/item/weapon/cell) in contents
+	update_icon()
+
 /obj/item/weapon/melee/baton/loaded/New() //this one starts with a cell pre-installed.
 	..()
 	bcell = new(src)
@@ -108,9 +112,8 @@
 
 	if(user.a_intent == "harm")
 		..()
-		playsound(loc, "swing_hit", 50, 1, -1)
 
-	else if(!status)
+	if(!status)
 		L.visible_message("<span class='warning'>[L] has been prodded with [src] by [user]. Luckily it was off.</span>")
 		return
 

@@ -63,9 +63,9 @@
 	..()
 
 
-/obj/effect/blob/core/proc/create_overmind(var/client/new_overmind)
+/obj/effect/blob/core/proc/create_overmind(var/client/new_overmind, var/override_delay)
 
-	if(overmind_get_delay > world.time)
+	if(overmind_get_delay > world.time && !override_delay)
 		return
 
 	overmind_get_delay = world.time + 300 // 30 seconds
@@ -77,7 +77,7 @@
 	var/list/candidates = list()
 
 	if(!new_overmind)
-		candidates = get_candidates(BE_ALIEN)
+		candidates = get_candidates(BE_BLOB)
 		if(candidates.len)
 			C = pick(candidates)
 	else
