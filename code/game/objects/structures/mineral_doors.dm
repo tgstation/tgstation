@@ -91,10 +91,14 @@
 		density = 0
 		opacity = 0
 		state = 1
+		air_update_turf(1)
 		update_icon()
 		isSwitchingStates = 0
 
 	proc/Close()
+		var/turf/T = get_turf(src)
+		for(var/mob/living/L in T)
+			return
 		isSwitchingStates = 1
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 100, 1)
 		flick("[mineralType]closing",src)
@@ -102,6 +106,7 @@
 		density = 1
 		opacity = 1
 		state = 0
+		air_update_turf(1)
 		update_icon()
 		isSwitchingStates = 0
 

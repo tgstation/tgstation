@@ -80,7 +80,7 @@
 							if(C)
 								M.buckled = C
 							else
-								new/obj/item/weapon/cable_coil/cut(M.loc)
+								new/obj/item/stack/cable_coil/cut(M.loc)
 						else
 							step(M,movedir)
 					else
@@ -97,7 +97,7 @@
 		G.affecting.Move(src.loc)
 		del(G)
 		return
-	else if(istype(I, /obj/item/weapon/cable_coil))	// if cable, see if a mob is present
+	else if(istype(I, /obj/item/stack/cable_coil))	// if cable, see if a mob is present
 		var/mob/M = locate() in src.loc
 		if(M)
 			if (M == user)

@@ -64,6 +64,13 @@
 				user.drop_item()
 				I.loc = src
 				update_icon()
+			else if(istype(I, /obj/item/weapon/storage/bag/books))
+				var/obj/item/weapon/storage/bag/books/B = I
+				for(var/obj/item/T in B.contents)
+					if(istype(T, /obj/item/weapon/book) || istype(T, /obj/item/weapon/spellbook))
+						B.remove_from_storage(T, src)
+				user << "<span class='notice'>You empty \the [I] into \the [src].</span>"
+				update_icon()
 			else if(istype(I, /obj/item/weapon/pen))
 				var/newname = stripped_input(usr, "What would you like to title this bookshelf?")
 				if(!newname)

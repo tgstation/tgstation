@@ -139,12 +139,12 @@
 						user << "You remove the cables."
 						icon_state = "borgdecon3"
 						construct_op ++
-						var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( user.loc )
+						var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( user.loc )
 						A.amount = 5
 						stat |= BROKEN // the machine's been borked!
 				if(3)
-					if(istype(P, /obj/item/weapon/cable_coil))
-						var/obj/item/weapon/cable_coil/A = P
+					if(istype(P, /obj/item/stack/cable_coil))
+						var/obj/item/stack/cable_coil/A = P
 						if(A.amount >= 5)
 							user << "You insert the cables."
 							A.amount -= 5
@@ -177,8 +177,8 @@
 										newpath = text2path(I)
 										var/obj/item/s = new newpath
 										s.loc = user.loc
-										if(istype(P, /obj/item/weapon/cable_coil))
-											var/obj/item/weapon/cable_coil/A = P
+										if(istype(P, /obj/item/stack/cable_coil))
+											var/obj/item/stack/cable_coil/A = P
 											A.amount = 1
 
 								// Drop a circuit board too
@@ -266,7 +266,7 @@
 			var/coeff = recharge_speed / 200
 			for(var/obj/O in um)
 				// Engineering
-				if(istype(O,/obj/item/stack/sheet/metal) || istype(O,/obj/item/stack/sheet/rglass) || istype(O,/obj/item/stack/rods) || istype(O,/obj/item/weapon/cable_coil)|| istype(O,/obj/item/stack/tile/plasteel))
+				if(istype(O,/obj/item/stack/sheet/metal) || istype(O,/obj/item/stack/sheet/rglass) || istype(O,/obj/item/stack/rods) || istype(O,/obj/item/stack/cable_coil)|| istype(O,/obj/item/stack/tile/plasteel))
 					if(O:amount < 50)
 						O:amount += coeff
 				// Security

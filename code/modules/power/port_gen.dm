@@ -113,12 +113,12 @@ display round(lastgen) and plasmatank amount
 /obj/machinery/power/port_gen/pacman/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
-	component_parts += new /obj/item/weapon/cable_coil(null, 1)
-	component_parts += new /obj/item/weapon/cable_coil(null, 1)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new board_path(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
+	component_parts += new /obj/item/stack/cable_coil(src, 1)
+	component_parts += new /obj/item/stack/cable_coil(src, 1)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new board_path(src)
 	var/obj/sheet = new sheet_path(null)
 	sheet_name = sheet.name
 	RefreshParts()
@@ -221,13 +221,28 @@ display round(lastgen) and plasmatank amount
 		emp_act(1)
 	else if(!active)
 
-		if(!isinspace() && default_unfasten_wrench(user, O))
-			return
+		if(istype(O, /obj/item/weapon/wrench))
 
-		if(default_deconstruction_screwdriver(user, "portgen0", "portgen0", O))
-			return
+			if(!anchored && !isinspace())
+				connect_to_network()
+				user << "\blue You secure the generator to the floor."
+				anchored = 1
+			else if(anchored)
+				disconnect_from_network()
+				user << "\blue You unsecure the generator from the floor."
+				anchored = 0
 
-		default_deconstruction_crowbar(O)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+
+		else if(istype(O, /obj/item/weapon/screwdriver))
+			panel_open = !panel_open
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			if(panel_open)
+				user << "\blue You open the access panel."
+			else
+				user << "\blue You close the access panel."
+		else if(istype(O, /obj/item/weapon/crowbar) && panel_open)
+			default_deconstruction_crowbar()
 
 /obj/machinery/power/port_gen/pacman/attack_hand(mob/user as mob)
 	..()
@@ -317,3 +332,4 @@ display round(lastgen) and plasmatank amount
 	board_path = "/obj/item/weapon/circuitboard/pacman/mrs"
 	overheat()
 		explosion(src.loc, 4, 4, 4, -1)
+>>>>>>> SayYiffYiffIfYouAreMachineFucker
