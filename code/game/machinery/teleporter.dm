@@ -76,7 +76,7 @@
 	if(href_list["settarget"])
 		power_station.engaged = 0
 		power_station.teleporter_hub.update_icon()
-		reset_regime()
+		set_target(usr)
 	if(href_list["locked"])
 		power_station.engaged = 0
 		power_station.teleporter_hub.update_icon()
