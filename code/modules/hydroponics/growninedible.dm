@@ -16,7 +16,15 @@
 	var/potency = 20
 	var/plant_type = 0
 
-/obj/item/weapon/grown/New()
+/obj/item/weapon/grown/New(newloc,newpotency)
+	if (!isnull(newpotency))
+		potency = newpotency
+	..()
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
+
+	transform *= TransformUsingVariable(potency, 100, 0.5)
+
 	create_reagents(50)
 
 /obj/item/weapon/grown/proc/changePotency(newValue) //-QualityVan
@@ -119,6 +127,7 @@
 	icon_state = "nettle"
 	damtype = "fire"
 	force = 15
+	hitsound = 'sound/weapons/bladeslice.ogg'
 	throwforce = 1
 	w_class = 1.0
 	throw_speed = 1
@@ -140,6 +149,7 @@
 	icon_state = "deathnettle"
 	damtype = "fire"
 	force = 30
+	hitsound = 'sound/weapons/bladeslice.ogg'
 	throwforce = 1
 	w_class = 1.0
 	throw_speed = 1
@@ -159,3 +169,24 @@
 		viewers(user) << "<span class='suicide'>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</span>"
 		return (BRUTELOSS|TOXLOSS)
 
+/obj/item/weapon/grown/bananapeel
+	name = "banana peel"
+	desc = "A peel from a banana."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "banana_peel"
+	item_state = "banana_peel"
+	w_class = 1.0
+	throwforce = 0
+	throw_speed = 4
+	throw_range = 20
+
+/obj/item/weapon/grown/corncob
+	name = "corn cob"
+	desc = "A reminder of meals gone by."
+	icon = 'icons/obj/harvest.dmi'
+	icon_state = "corncob"
+	item_state = "corncob"
+	w_class = 1.0
+	throwforce = 0
+	throw_speed = 4
+	throw_range = 20

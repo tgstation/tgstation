@@ -16,10 +16,10 @@
 	var/maturation = 0
 	var/production = 0
 	var/yield = 0
-	var/potency = -1
 	var/plant_type = 0
 	var/dry = 0
 	icon = 'icons/obj/harvest.dmi'
+	potency = -1
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/New(newloc,newpotency)
 	if (!isnull(newpotency))
@@ -82,7 +82,7 @@
 	desc = "Needs some butter!"
 	icon_state = "corn"
 	potency = 40
-	trash = /obj/item/weapon/corncob
+	trash = /obj/item/weapon/grown/corncob
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/corn
 
 	New()
@@ -477,7 +477,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "banana"
 	item_state = "banana"
-	trash = /obj/item/weapon/bananapeel
+	trash = /obj/item/weapon/grown/bananapeel
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/banana
 
 	New()
