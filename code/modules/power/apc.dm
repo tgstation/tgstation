@@ -161,6 +161,7 @@
 	overlays = L
 
 	if (opened)
+		// 2 = has cell, 1 = no cell
 		var/basestate = "apc[cell ? "2" : "1"]"
 
 		if (opened == 1)
