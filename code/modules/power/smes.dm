@@ -34,7 +34,7 @@
 	component_parts += new /obj/item/weapon/cell/high(null)
 	component_parts += new /obj/item/weapon/cell/high(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/cable_coil(null, 5)
+	component_parts += new /obj/item/stack/cable_coil(null, 5)
 	RefreshParts()
 	spawn(5)
 		dir_loop:

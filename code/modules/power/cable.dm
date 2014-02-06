@@ -618,4 +618,3 @@ obj/structure/cable/proc/cableColor(var/colorC)
 	item_color = pick("red","yellow","green","blue","pink")
 	icon_state = "coil_[item_color]"
 	..()
->>>>>>> SayYiffYiffIfYouAreMachineFucker

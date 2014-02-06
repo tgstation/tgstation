@@ -332,4 +332,3 @@ display round(lastgen) and plasmatank amount
 	board_path = "/obj/item/weapon/circuitboard/pacman/mrs"
 	overheat()
 		explosion(src.loc, 4, 4, 4, -1)
->>>>>>> SayYiffYiffIfYouAreMachineFucker
