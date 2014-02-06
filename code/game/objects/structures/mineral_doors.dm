@@ -13,6 +13,7 @@
 	var/mineralType = "metal"
 	var/state = 0 //closed, 1 == open
 	var/isSwitchingStates = 0
+	var/close_delay = -1 //-1 if does not auto close.
 	var/hardness = 1
 	var/oreAmount = 7
 	var/openSound = 'sound/effects/stonedoor_openclose.ogg'
@@ -96,6 +97,11 @@
 		air_update_turf(1)
 		update_icon()
 		isSwitchingStates = 0
+
+		if(close_delay != -1)
+			spawn(close_delay)
+				if(!isSwitchingStates && state == 1)
+					Close()
 
 	proc/Close()
 		var/turf/T = get_turf(src)
@@ -248,7 +254,7 @@
 /obj/structure/mineral_door/resin
 	mineralType = "resin"
 	hardness = 1
-	var/close_delay = 100
+	close_delay = 100
 	openSound = 'sound/effects/attackblob.ogg'
 	closeSound = 'sound/effects/attackblob.ogg'
 
