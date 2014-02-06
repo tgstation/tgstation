@@ -273,14 +273,12 @@ datum
 				..()
 				return
 				
-			reaction_obj(var/obj/O, var/volume)
-				..()
-				if(istype(O,/obj/effect/rune) && volume >= 10)
-					del(O)
-				
 			reaction_turf(var/turf/simulated/T, var/volume)
 				..()
 				if(!istype(T)) return
+				if(volume>=10)
+					for(var/obj/effect/rune/R in T)
+						del R
 				T.Bless()
 
 		lube
