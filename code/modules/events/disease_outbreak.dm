@@ -30,8 +30,8 @@
 				continue
 			var/datum/disease/dnaspread/D = new
 			D.strain_data["name"] = H.real_name
-			D.strain_data["UI"] = H.dna.UI
-			D.strain_data["SE"] = H.dna.SE
+			D.strain_data["UI"] = H.dna.UI.Copy()
+			D.strain_data["SE"] = H.dna.SE.Copy()
 			D.carrier = 1
 			D.holder = H
 			D.affected_mob = H
