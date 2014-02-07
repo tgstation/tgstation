@@ -71,7 +71,7 @@
 
 /mob/living/simple_animal/hostile/statue/Life()
 	..()
-	if(target) // If we have a target
+	if(!client && target) // If we have a target and we're AI controlled
 		var/mob/watching = can_be_seen()
 		// If they're not our target
 		if(watching && watching != target)
@@ -123,6 +123,12 @@
 /mob/living/simple_animal/hostile/statue/say()
 	return 0
 
+// Turn to dust when gibbed
+
+/mob/living/simple_animal/hostile/statue/gib(var/animation = 0)
+	dust(animation)
+
+
 // Stop attacking clientless mobs
 
 /mob/living/simple_animal/hostile/statue/CanAttack(var/atom/the_target)
@@ -157,7 +163,7 @@
 
 	charge_max = 800
 	clothes_req = 0
-	range = 7
+	range = 8
 
 /obj/effect/proc_holder/spell/aoe_turf/blindness/cast(list/targets)
 	for(var/turf/T in targets)
