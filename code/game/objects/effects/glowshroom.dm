@@ -16,6 +16,7 @@
 	var/spreadChance = 40
 	var/spreadIntoAdjacentChance = 60
 	var/evolveChance = 2
+	w_type=NOT_RECYCLABLE
 
 /obj/effect/glowshroom/single
 	spreadChance = 0

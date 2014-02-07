@@ -6,6 +6,7 @@
 	anchored = 1
 	density = 0
 	var/health = 15
+	w_type=NOT_RECYCLABLE
 
 //similar to weeds, but only barfed out by nurses manually
 /obj/effect/spider/ex_act(severity)

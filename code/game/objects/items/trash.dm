@@ -6,6 +6,7 @@
 	icon = 'icons/obj/trash.dmi'
 	w_class = 1.0
 	desc = "This is rubbish."
+	w_type=NOT_RECYCLABLE
 	raisins
 		name = "4no raisins"
 		icon_state= "4no_raisins"

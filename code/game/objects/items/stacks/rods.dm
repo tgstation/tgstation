@@ -12,10 +12,11 @@
 	m_amt = 1875
 	max_amount = 60
 	attack_verb = list("hit", "bludgeoned", "whacked")
+	w_type=RECYK_METAL
 
-/obj/item/stack/rods/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-	rec.addMaterial("iron",amount/2)
-	return 1
+/obj/item/stack/rods/recycle(var/datum/materials/rec)
+	rec.addAmount("iron",amount/2)
+	return RECYK_METAL
 
 /obj/item/stack/rods/attackby(obj/item/W as obj, mob/user as mob)
 	..()

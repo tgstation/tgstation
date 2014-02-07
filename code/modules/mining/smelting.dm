@@ -130,3 +130,10 @@
 		"phazon"=1
 	)
 	yieldtype=/obj/item/stack/sheet/mineral/phazon
+
+/datum/smelting_recipe/plastic
+	name="plastic"
+	ingredients=list(
+		"plastic"=1
+	)
+	yieldtype=/obj/item/stack/sheet/mineral/plastic

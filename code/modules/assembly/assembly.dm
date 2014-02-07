@@ -7,7 +7,7 @@
 	w_class = 2.0
 	m_amt = 100
 	g_amt = 0
-	w_amt = 0
+	w_type = RECYK_ELECTRONIC
 	throwforce = 2
 	throw_speed = 3
 	throw_range = 10

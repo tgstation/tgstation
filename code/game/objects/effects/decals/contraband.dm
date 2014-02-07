@@ -13,6 +13,7 @@
 	desc = "The poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface."
 	icon_state = "rolled_poster"
 	var/serial_number = 0
+	w_type=RECYK_MISC
 
 
 /obj/item/weapon/contraband/poster/New(turf/loc, var/given_serial = 0)

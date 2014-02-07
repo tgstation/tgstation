@@ -27,6 +27,7 @@
 	g_amt=2000 // Glass
 	var/gold_amt=0
 	var/diamond_amt=0
+	w_type=RECYK_ELECTRONIC
 	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
 
 	var/purge=0 // Purge laws?
@@ -35,10 +36,10 @@
 	var/list/obj/item/weapon/aiModule/modules = list()
 	var/datum/ai_laws/laws = new base_law_type
 
-/obj/item/weapon/planning_frame/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-	rec.addMaterial("glass",  g_amt)
-	rec.addMaterial("gold",   gold_amt)
-	rec.addMaterial("diamond",diamond_amt)
+/obj/item/weapon/planning_frame/recycle(var/datum/materials/rec)
+	rec.addAmount("glass",  g_amt)
+	rec.addAmount("gold",   gold_amt)
+	rec.addAmount("diamond",diamond_amt)
 	return 1
 
 /obj/item/weapon/planning_frame/attackby(var/obj/item/W,var/mob/user)

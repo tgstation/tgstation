@@ -9,6 +9,7 @@
 	w_class = 5.0
 	g_amt = 2500
 	m_amt = 10000
+	w_type = RECYK_ELECTRONIC
 	var/code = 2
 
 /obj/item/device/radio/electropack/attack_hand(mob/user as mob)

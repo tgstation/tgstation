@@ -7,6 +7,7 @@
 	flags =  FPRINT | TABLEPASS | CONDUCT |  USEDELAY
 	slot_flags = SLOT_BELT
 	m_amt = 2000
+	w_type = RECYK_METAL
 	w_class = 3.0
 	throwforce = 5
 	throw_speed = 4

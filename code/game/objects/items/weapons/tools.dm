@@ -26,6 +26,7 @@
 	throwforce = 7.0
 	w_class = 2.0
 	m_amt = 150
+	w_type = RECYK_METAL
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
@@ -47,6 +48,7 @@
 	throw_range = 5
 	g_amt = 0
 	m_amt = 75
+	w_type = RECYK_METAL
 	attack_verb = list("stabbed")
 
 	suicide_act(mob/user)
@@ -105,6 +107,7 @@
 	throw_range = 9
 	w_class = 2.0
 	m_amt = 80
+	w_type = RECYK_METAL
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("pinched", "nipped")
 
@@ -145,6 +148,7 @@
 	//Cost to make in the autolathe
 	m_amt = 70
 	g_amt = 30
+	w_type = RECYK_MISC
 
 	//R&D tech level
 	origin_tech = "engineering=1"
@@ -441,6 +445,7 @@
 	item_state = "crowbar"
 	w_class = 2.0
 	m_amt = 50
+	w_type = RECYK_METAL
 	origin_tech = "engineering=1"
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 
@@ -477,6 +482,7 @@
 	icon_state = "kit"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 2.0
+	w_type = RECYK_MISC
 	origin_tech = "combat=2"
 	var/open = 0
 

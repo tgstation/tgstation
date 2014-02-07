@@ -11,8 +11,9 @@
 	var/locked = 0
 	var/require_module = 0
 	var/installed = 0
+	w_type=RECYK_ELECTRONIC
 
-/obj/item/borg/upgrade/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
+/obj/item/borg/upgrade/recycle(var/datum/materials/rec)
 	for(var/material in construction_cost)
 		var/rec_mat=material
 		var/CCPS=CC_PER_SHEET_MISC
@@ -21,8 +22,8 @@
 			CCPS=CC_PER_SHEET_METAL
 		if(rec_mat=="glass")
 			CCPS=CC_PER_SHEET_GLASS
-		rec.addMaterial(material,construction_cost[material]/CCPS)
-	return 1
+		rec.addAmount(material,construction_cost[material]/CCPS)
+	return w_type
 
 /obj/item/borg/upgrade/proc/action(var/mob/living/silicon/robot/R)
 	if(R.stat == DEAD)

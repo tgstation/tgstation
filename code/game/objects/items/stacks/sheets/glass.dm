@@ -16,6 +16,7 @@
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
 	g_amt = 3750
+	w_type = RECYK_GLASS
 	origin_tech = "materials=1"
 	var/created_window = /obj/structure/window/basic
 
@@ -122,6 +123,7 @@
 	icon_state = "sheet-rglass"
 	g_amt = 3750
 	m_amt = 1875
+	w_type = RECYK_GLASS
 	origin_tech = "materials=2"
 
 /obj/item/stack/sheet/rglass/cyborg
@@ -312,13 +314,14 @@
 	icon_state = "sheet-plasmaglass"
 	//g_amt = 7500
 	g_amt=CC_PER_SHEET_GLASS
+	w_type = RECYK_GLASS
 	origin_tech = "materials=3;plasmatech=2"
 	created_window = /obj/structure/window/plasmabasic
 
-/obj/item/stack/sheet/glass/plasmaglass/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-	rec.addMaterial("plasma",1)
-	rec.addMaterial("glass", 1)
-	return 1
+/obj/item/stack/sheet/glass/plasmaglass/recycle(var/datum/materials/rec)
+	rec.addAmount("plasma",1)
+	rec.addAmount("glass", 1)
+	return RECYK_GLASS
 
 /obj/item/stack/sheet/glass/plasmaglass/attack_self(mob/user as mob)
 	construct_window(user)
@@ -349,13 +352,14 @@
 	icon_state = "sheet-plasmarglass"
 	g_amt=CC_PER_SHEET_GLASS
 	m_amt = 1875
+	w_type = RECYK_GLASS
 	origin_tech = "materials=4;plasmatech=2"
 	created_window = /obj/structure/window/plasmareinforced
 
-/obj/item/stack/sheet/glass/plasmaglass/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-	rec.addMaterial("plasma",1)
-	rec.addMaterial("glass", 1)
-	rec.addMaterial("iron",  0.5)
+/obj/item/stack/sheet/glass/plasmaglass/recycle(var/datum/materials/rec)
+	rec.addAmount("plasma",1)
+	rec.addAmount("glass", 1)
+	rec.addAmount("iron",  0.5)
 	return 1
 
 /obj/item/stack/sheet/glass/plasmarglass/attack_self(mob/user as mob)

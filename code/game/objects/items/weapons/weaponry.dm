@@ -153,6 +153,7 @@ obj/item/weapon/wirerod
 	throwforce = 10
 	w_class = 3
 	m_amt = 1875
+	w_type = RECYK_METAL
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 
 obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)

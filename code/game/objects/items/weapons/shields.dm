@@ -15,6 +15,7 @@
 	w_class = 4.0
 	g_amt = 7500
 	m_amt = 1000
+	w_type = RECYK_MISC
 	origin_tech = "materials=2"
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time

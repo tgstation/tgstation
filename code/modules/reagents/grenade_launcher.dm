@@ -12,6 +12,7 @@
 	var/list/grenades = new/list()
 	var/max_grenades = 3
 	m_amt = 2000
+	w_type = RECYK_METAL
 
 	examine()
 		set src in view()

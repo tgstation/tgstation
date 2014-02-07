@@ -22,6 +22,7 @@
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 10
+	w_type = RECYK_MISC
 	var/colour = "black"	//what colour the ink is!
 	pressure_resistance = 2
 

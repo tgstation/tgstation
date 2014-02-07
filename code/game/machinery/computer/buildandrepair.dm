@@ -19,7 +19,8 @@
 	icon_state = "id_mod"
 	item_state = "electronic"
 	origin_tech = "programming=2"
-	g_amt=2000 // Recycle glass
+	g_amt=2000 // Recycle glass only
+	w_type = RECYK_ELECTRONIC
 
 	var/id_tag = null
 	var/frequency = null

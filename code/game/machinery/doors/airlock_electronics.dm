@@ -7,6 +7,7 @@
 	w_class = 2.0 //It should be tiny! -Agouri
 	m_amt = 50
 	g_amt = 50
+	w_type = RECYK_ELECTRONIC
 
 	req_access = list(access_engine)
 

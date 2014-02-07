@@ -824,3 +824,16 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 // Unfortunately, it created incredible amounts of lag.
 // Comment the following line if you want it anyway.
 #define USE_BROKEN_RECURSIVE_MOBCHECK
+
+
+//////////////////
+// RECYCLING SHIT
+//////////////////
+
+// Sorting categories
+#define NOT_RECYCLABLE   0
+#define RECYK_MISC       1
+#define RECYK_GLASS      2
+#define RECYK_BIOLOGICAL 3
+#define RECYK_METAL      4
+#define RECYK_ELECTRONIC 5

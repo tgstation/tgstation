@@ -16,6 +16,7 @@
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate
 							  //then open it in a populated area to crash clients.
 	m_amt = 2*CC_PER_SHEET_METAL
+	w_type = RECYK_METAL
 
 /obj/structure/closet/New()
 	..()

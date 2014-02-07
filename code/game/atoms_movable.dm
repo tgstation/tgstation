@@ -1,4 +1,9 @@
 /atom/movable
+	// Recycling shit
+	var/m_amt = 0	         // metal (CC)
+	var/g_amt = 0	         // glass (CC)
+	var/w_type = NOT_RECYCLABLE  // Waste category for sorters. See setup.dm
+
 	layer = 3
 	var/last_move = null
 	var/anchored = 0
@@ -22,7 +27,7 @@
 		src.last_move = get_dir(A, src.loc)
 	return
 
-/atom/movable/proc/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
+/atom/movable/proc/recycle(var/datum/materials/rec)
 	return 0
 
 /atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes)

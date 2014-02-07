@@ -175,6 +175,7 @@
 	throwforce = 7.0
 	w_class = 2.0
 	m_amt = 50
+	w_type = RECYK_MISC
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
 /obj/item/weapon/disk
@@ -355,10 +356,7 @@
 	icon_state = "rack_parts"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	m_amt = 3750
-
-	recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-		rec.addMaterial("iron",1)
-		return 1
+	w_type = RECYK_METAL
 
 /obj/item/weapon/shard
 	name = "shard"
@@ -371,16 +369,13 @@
 	throwforce = 15.0
 	item_state = "shard-glass"
 	g_amt = 3750
+	w_type = RECYK_GLASS
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 
 	suicide_act(mob/user)
 		viewers(user) << pick("\red <b>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</b>", \
 							"\red <b>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</b>")
 		return (BRUTELOSS)
-
-/obj/item/weapon/shard/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-	rec.addMaterial("glass",1)
-	return 1
 
 /obj/item/weapon/shard/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
@@ -445,6 +440,7 @@
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 100
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=1"
 
 /obj/item/weapon/staff
@@ -486,12 +482,9 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "table_parts"
 	m_amt = 3750
+	w_type = RECYK_METAL
 	flags = FPRINT | TABLEPASS| CONDUCT
 	attack_verb = list("slammed", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
-
-	recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-		rec.addMaterial("iron",2)
-		return 1
 
 /obj/item/weapon/table_parts/reinforced
 	name = "reinforced table parts"
@@ -499,12 +492,8 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "reinf_tableparts"
 	m_amt = 7500
+	w_type = RECYK_METAL
 	flags = FPRINT | TABLEPASS| CONDUCT
-
-	recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-		// 2 metal + 4 rods (0.5 metal ea)
-		rec.addMaterial("iron",4)
-		return 1
 
 /obj/item/weapon/table_parts/wood
 	name = "wooden table parts"
@@ -521,6 +510,7 @@
 	var/laying = 0.0
 	var/old_lay = null
 	m_amt = 40
+	w_type = RECYK_METAL
 	attack_verb = list("whipped", "lashed", "disciplined", "tickled")
 
 	suicide_act(mob/user)
@@ -618,6 +608,7 @@
 	throw_speed = 4
 	throw_range = 4
 	m_amt = 15000
+	w_type = RECYK_METAL
 	origin_tech = "materials=2;combat=1"
 	attack_verb = list("chopped", "torn", "cut")
 
@@ -641,6 +632,8 @@
 	throw_speed = 1
 	throw_range = 3
 	w_class = 4.0
+	m_amt = 15000
+	w_type = RECYK_METAL
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	slot_flags = SLOT_BACK
 	origin_tech = "materials=2;combat=2"
@@ -694,6 +687,7 @@
 	icon_state = "screen"
 	origin_tech = "materials=1"
 	g_amt = 200
+	w_type = RECYK_GLASS
 
 /obj/item/weapon/stock_parts/capacitor
 	name = "capacitor"
@@ -702,6 +696,7 @@
 	origin_tech = "powerstorage=1"
 	m_amt = 50
 	g_amt = 50
+	w_type = RECYK_ELECTRONIC
 
 /obj/item/weapon/stock_parts/scanning_module
 	name = "scanning module"
@@ -710,6 +705,7 @@
 	origin_tech = "magnets=1"
 	m_amt = 50
 	g_amt = 20
+	w_type = RECYK_ELECTRONIC
 
 /obj/item/weapon/stock_parts/manipulator
 	name = "micro-manipulator"
@@ -717,6 +713,7 @@
 	icon_state = "micro_mani"
 	origin_tech = "materials=1;programming=1"
 	m_amt = 30
+	w_type = RECYK_ELECTRONIC
 
 /obj/item/weapon/stock_parts/micro_laser
 	name = "micro-laser"
@@ -725,6 +722,7 @@
 	origin_tech = "magnets=1"
 	m_amt = 10
 	g_amt = 20
+	w_type = RECYK_ELECTRONIC
 
 /obj/item/weapon/stock_parts/matter_bin
 	name = "matter bin"
@@ -732,6 +730,7 @@
 	icon_state = "matter_bin"
 	origin_tech = "materials=1"
 	m_amt = 80
+	w_type = RECYK_ELECTRONIC
 
 //Rank 2
 
@@ -884,6 +883,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "ectoplasm"
+	w_type = RECYK_BIOLOGICAL
 
 /*
 /obj/item/weapon/research//Makes testing much less of a pain -Sieve

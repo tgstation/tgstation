@@ -15,6 +15,7 @@
 	desc = "theres something alien about this"
 	icon = 'icons/mob/alien.dmi'
 //	unacidable = 1 //Aliens won't ment their own.
+	w_type=NOT_RECYCLABLE
 
 
 /*

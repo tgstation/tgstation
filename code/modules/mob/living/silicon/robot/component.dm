@@ -172,6 +172,7 @@
 	throw_speed = 5
 	throw_range = 10
 	m_amt = 200
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=3;engineering=3"
 	var/mode = 1;
 

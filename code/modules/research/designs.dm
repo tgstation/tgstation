@@ -1847,6 +1847,7 @@ other types of metals and chemistry for reagents).
 	w_class = 1.0
 	m_amt = 30
 	g_amt = 10
+	w_type = RECYK_ELECTRONIC
 	var/datum/design/blueprint
 
 /obj/item/weapon/disk/design_disk/New()

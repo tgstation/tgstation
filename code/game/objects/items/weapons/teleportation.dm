@@ -22,6 +22,7 @@
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 400
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=1"
 
 /obj/item/weapon/locator/attack_self(mob/user as mob)
@@ -133,6 +134,7 @@ Frequency:
 	throw_speed = 3
 	throw_range = 5
 	m_amt = 10000
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=1;bluespace=3"
 
 /obj/item/weapon/hand_tele/attack_self(mob/user as mob)

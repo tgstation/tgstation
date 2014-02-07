@@ -102,6 +102,7 @@
 	flags = FPRINT | CONDUCT | USEDELAY | TABLEPASS
 	slot_flags = SLOT_BELT
 	m_amt = 2000
+	w_type = RECYK_ELECTRONIC
 	var/pictures_max = 10
 	var/pictures_left = 10
 	var/on = 1

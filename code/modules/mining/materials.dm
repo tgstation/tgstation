@@ -128,3 +128,10 @@
 	oretype=/obj/item/weapon/ore/phazon
 	sheettype=/obj/item/stack/sheet/mineral/phazon
 	cointype=/obj/item/weapon/coin/phazon
+
+/datum/material/plastic
+	name="Plastic"
+	id="plastic"
+	oretype=null
+	sheettype=/obj/item/stack/sheet/mineral/plastic
+	cointype=null

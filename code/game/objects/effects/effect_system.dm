@@ -12,6 +12,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	mouse_opacity = 0
 	unacidable = 1//So effect are not targeted by alien acid.
 	flags = TABLEPASS
+	w_type=NOT_RECYCLABLE
 
 /obj/effect/effect/water
 	name = "water"

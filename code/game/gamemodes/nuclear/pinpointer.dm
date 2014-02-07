@@ -9,6 +9,7 @@
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 500
+	w_type = RECYK_ELECTRONIC
 	var/obj/item/weapon/disk/nuclear/the_disk = null
 	var/active = 0
 

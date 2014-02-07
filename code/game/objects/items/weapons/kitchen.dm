@@ -159,6 +159,7 @@
 	throw_speed = 3
 	throw_range = 6
 	m_amt = 12000
+	w_type = RECYK_METAL
 	origin_tech = "materials=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
@@ -189,6 +190,7 @@
 	throw_speed = 3
 	throw_range = 6
 	m_amt = 12000
+	w_type = RECYK_METAL
 	origin_tech = "materials=1"
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
@@ -279,21 +281,7 @@
 	w_class = 3.0
 	flags = FPRINT | TABLEPASS | CONDUCT
 	m_amt = 3000
-	/* // NOPE
-	var/food_total= 0
-	var/burger_amt = 0
-	var/cheese_amt = 0
-	var/fries_amt = 0
-	var/classyalcdrink_amt = 0
-	var/alcdrink_amt = 0
-	var/bottle_amt = 0
-	var/soda_amt = 0
-	var/carton_amt = 0
-	var/pie_amt = 0
-	var/meatbreadslice_amt = 0
-	var/salad_amt = 0
-	var/miscfood_amt = 0
-	*/
+	w_type = RECYK_METAL
 	var/list/carrying = list() // List of things on the tray. - Doohl
 	var/max_carry = 10 // w_class = 1 -- takes up 1
 					   // w_class = 2 -- takes up 3

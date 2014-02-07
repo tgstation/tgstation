@@ -83,6 +83,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	singular_name = "metal sheet"
 	icon_state = "sheet-metal"
 	m_amt = 3750
+	w_type = RECYK_METAL
 	throwforce = 14.0
 	flags = FPRINT | TABLEPASS | CONDUCT
 	origin_tech = "materials=1"
@@ -121,9 +122,9 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 		recipes = plasteel_recipes
 		return ..()
 
-/obj/item/stack/sheet/plasteel/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-	rec.addMaterial("plasma",1)
-	rec.addMaterial("iron",1)
+/obj/item/stack/sheet/plasteel/recycle(var/datum/materials/rec)
+	rec.addAmount("plasma",1*amount)
+	rec.addAmount("iron",1*amount)
 	return 1
 
 /*

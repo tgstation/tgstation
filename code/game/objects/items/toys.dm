@@ -127,6 +127,7 @@
 	w_class = 3.0
 	g_amt = 10
 	m_amt = 10
+	w_type = RECYK_MISC
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7.0
 

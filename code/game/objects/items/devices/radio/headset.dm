@@ -5,6 +5,7 @@
 	item_state = "headset"
 	g_amt = 0
 	m_amt = 75
+	w_type = RECYK_ELECTRONIC
 	subspace_transmission = 1
 	canhear_range = 0 // can't hear headsets from very far away
 

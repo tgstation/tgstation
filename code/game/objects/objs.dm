@@ -1,8 +1,4 @@
 /obj
-	//var/datum/module/mod		//not used
-	var/m_amt = 0	// metal
-	var/g_amt = 0	// glass
-	var/w_amt = 0	// waster amounts
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/reliability = 100	//Used by SOME devices to determine how reliable they are.
 	var/crit_fail = 0
@@ -22,12 +18,12 @@
 
 /obj/item/proc/is_used_on(obj/O, mob/user)
 
-/obj/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
+/obj/recycle(var/datum/materials/rec)
 	if (src.m_amt == 0 && src.g_amt == 0)
-		return 0
-	rec.addMaterial("iron",src.m_amt/CC_PER_SHEET_METAL)
-	rec.addMaterial("glass",src.g_amt/CC_PER_SHEET_GLASS)
-	return 1
+		return NOT_RECYCLABLE
+	rec.addAmount("iron",src.m_amt/CC_PER_SHEET_METAL)
+	rec.addAmount("glass",src.g_amt/CC_PER_SHEET_GLASS)
+	return w_type
 
 /obj/proc/process()
 	processing_objects.Remove(src)

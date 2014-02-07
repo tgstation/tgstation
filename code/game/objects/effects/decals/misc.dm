@@ -5,6 +5,7 @@
 	icon_state = "arrow"
 	layer = 16.0
 	anchored = 1
+	w_type=NOT_RECYCLABLE
 
 /obj/effect/decal/point/point()
 	set src in oview()
@@ -23,6 +24,7 @@
 	anchored=1
 	layer=2
 	icon='icons/turf/snow.dmi'
+	w_type=NOT_RECYCLABLE
 
 
 /obj/effect/decal/snow/clean/edge

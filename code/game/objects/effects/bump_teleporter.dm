@@ -10,6 +10,7 @@ var/list/obj/effect/bump_teleporter/BUMP_TELEPORTERS = list()
 	anchored = 1
 	density = 1
 	opacity = 0
+	w_type=NOT_RECYCLABLE
 
 /obj/effect/bump_teleporter/New()
 	..()

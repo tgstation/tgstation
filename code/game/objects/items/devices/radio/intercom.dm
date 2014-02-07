@@ -167,3 +167,4 @@
 	w_class = 2.0
 	m_amt = 50
 	g_amt = 50
+	w_type = RECYK_ELECTRONIC
