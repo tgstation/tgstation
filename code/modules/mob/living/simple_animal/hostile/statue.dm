@@ -17,9 +17,9 @@
 	maxHealth = 25000
 	health = 25000
 
-	harm_intent_damage = 40
-	melee_damage_lower = 38
-	melee_damage_upper = 43
+	harm_intent_damage = 70
+	melee_damage_lower = 68
+	melee_damage_upper = 83
 	attacktext = "claws"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 
@@ -34,14 +34,14 @@
 	minbodytemp = 0
 
 	faction = "statue"
-	move_to_delay = 2 // Very fast
+	move_to_delay = 0 // Very fast
 
 	animate_movement = NO_STEPS // Do not animate movement, you jump around as you're a scary statue.
 
-	see_in_dark = 15
-	vision_range = 14
-	aggro_vision_range = 14
-	idle_vision_range = 14
+	see_in_dark = 13
+	vision_range = 12
+	aggro_vision_range = 12
+	idle_vision_range = 12
 
 	search_objects = 1 // So that it can see through walls
 
@@ -62,12 +62,23 @@
 	// Give nightvision
 	see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
 
-/mob/living/simple_animal/hostile/statue/Move(NewLoc)
+/mob/living/simple_animal/hostile/statue/Move(var/turf/NewLoc)
 	if(can_be_seen(NewLoc))
 		if(client)
 			src << "<span class='warning'>You cannot move, there are eyes on you!</span>"
 		return 0
 	return ..()
+
+/mob/living/simple_animal/hostile/statue/Life()
+	..()
+	if(target) // If we have a target
+		var/mob/watching = can_be_seen()
+		// If they're not our target
+		if(watching && watching != target)
+			// This one is closer.
+			if(get_dist(watching, src) > get_dist(target, src))
+				LoseTarget()
+				GiveTarget(watching)
 
 /mob/living/simple_animal/hostile/statue/AttackingTarget()
 	if(!can_be_seen())
@@ -85,13 +96,14 @@
 	..()
 
 /mob/living/simple_animal/hostile/statue/proc/can_be_seen(var/turf/destination)
-
 	// Check for darkness
 	var/turf/T = get_turf(loc)
-	if(T)
-		if(!T.lighting_lumcount) // No one can see us in the darkness, right?
-			if(!destination || !destination.lighting_lumcount)
-				return 0
+	if(T && destination)
+		// Don't check it twice if our destination is the tile we are on or we can't even get to our destination
+		if(T == destination)
+			destination = null
+		else if(!T.lighting_lumcount && !destination.lighting_lumcount) // No one can see us in the darkness, right?
+			return null
 
 	// We aren't in darkness, loop for viewers.
 	var/list/check_list = list(src)
@@ -101,15 +113,25 @@
 	// This loop will, at most, loop twice.
 	for(var/atom/check in check_list)
 		for(var/mob/living/M in viewers(world.view + 1, check))
-			if(M.client && !istype(M, type))
+			if(M.client && CanAttack(M))
 				if(!M.blinded && !(sdisabilities & BLIND))
-					return 1
-	return 0
+					return M
+	return null
 
 // Cannot talk
 
 /mob/living/simple_animal/hostile/statue/say()
 	return 0
+
+// Stop attacking clientless mobs
+
+/mob/living/simple_animal/hostile/statue/CanAttack(var/atom/the_target)
+	if(isliving(the_target))
+		var/mob/living/L = the_target
+		if(!L.client && !L.ckey)
+			return 0
+	return ..()
+
 
 // Statue powers
 
