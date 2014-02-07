@@ -17,6 +17,7 @@
 	var/global/list/acceptable_items // List of the items you can put in
 	var/global/list/acceptable_reagents // List of the reagents you can put in
 	var/global/max_n_of_items = 0
+	var/efficiency = 0
 
 
 // see code/modules/food/recipes_microwave.dm for recipes
@@ -41,13 +42,35 @@
 			if(recipe.items)
 				max_n_of_items = max(max_n_of_items, recipe.items.len)
 
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/microwave(null)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+	component_parts += new /obj/item/stack/cable_coil(null)
+	component_parts += new /obj/item/stack/cable_coil(null)
+	RefreshParts()
+
+/obj/machinery/microwave/RefreshParts()
+	var/E
+	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
+		E += M.rating
+	efficiency = E
+
 /*******************
 *   Item Adding
 ********************/
 
 /obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if(!broken && !dirty && !operating)
+		if(default_deconstruction_screwdriver(user, "mw-o", "mw", O))
+			return
+		if(default_unfasten_wrench(user, O))
+			return
+
+	default_deconstruction_crowbar(O)
+
 	if(src.broken > 0)
-		if(src.broken == 2 && istype(O, /obj/item/weapon/screwdriver)) // If it's broken and they're using a screwdriver
+		if(src.broken == 2 && istype(O, /obj/item/weapon/wirecutters)) // If it's broken and they're using a screwdriver
 			user.visible_message( \
 				"\blue [user] starts to fix part of the microwave.", \
 				"\blue You start to fix part of the microwave." \
@@ -58,7 +81,7 @@
 					"\blue You have fixed part of the microwave." \
 				)
 				src.broken = 1 // Fix it a bit
-		else if(src.broken == 1 && istype(O, /obj/item/weapon/wrench)) // If it's broken and they're doing the wrench
+		else if(src.broken == 1 && istype(O, /obj/item/weapon/weldingtool)) // If it's broken and they're doing the wrench
 			user.visible_message( \
 				"\blue [user] starts to fix part of the microwave.", \
 				"\blue You start to fix part of the microwave." \
@@ -72,6 +95,7 @@
 				src.broken = 0 // Fix it!
 				src.dirty = 0 // just to be sure
 				src.flags = OPENCONTAINER
+				return 0 //to use some fuel
 		else
 			user << "\red It's broken!"
 			return 1
@@ -163,13 +187,15 @@
 ********************/
 
 /obj/machinery/microwave/interact(mob/user as mob) // The microwave Menu
-	var/dat = ""
+	if(panel_open)
+		return
+	var/dat = "<div class='statusDisplay'>"
 	if(src.broken > 0)
-		dat = {"<TT>Bzzzzttttt</TT>"}
+		dat += "ERROR: 09734014-A2379-D18746 --Bad memory<BR>Contact your operator or use command line to rebase memory ///git checkout {HEAD} -a commit pull --rebase push {*NEW HEAD*}</div>"    //Thats how all the git fiddling looks to me
 	else if(src.operating)
-		dat = {"<TT>Microwaving in progress!<BR>Please wait...!</TT>"}
+		dat += "Microwaving in progress!<BR>Please wait...!</div>"
 	else if(src.dirty==100)
-		dat = {"<TT>This microwave is dirty!<BR>Please clean it before use!</TT>"}
+		dat += "ERROR: >> 0 --Responce input zero<BR>Contact your operator of the device manifactor support.</div>"
 	else
 		var/list/items_counts = new
 		var/list/items_measures = new
@@ -196,12 +222,12 @@
 		for (var/O in items_counts)
 			var/N = items_counts[O]
 			if (!(O in items_measures))
-				dat += {"<B>[capitalize(O)]:</B> [N] [lowertext(O)]\s<BR>"}
+				dat += "[capitalize(O)]: [N] [lowertext(O)]\s<BR>"
 			else
 				if (N==1)
-					dat += {"<B>[capitalize(O)]:</B> [N] [items_measures[O]]<BR>"}
+					dat += "[capitalize(O)]: [N] [items_measures[O]]<BR>"
 				else
-					dat += {"<B>[capitalize(O)]:</B> [N] [items_measures_p[O]]<BR>"}
+					dat += "[capitalize(O)]: [N] [items_measures_p[O]]<BR>"
 
 		for (var/datum/reagent/R in reagents.reagent_list)
 			var/display_name = R.name
@@ -209,22 +235,19 @@
 				display_name = "hot sauce"
 			if (R.id == "frostoil")
 				display_name = "cold sauce"
-			dat += {"<B>[display_name]:</B> [R.volume] unit\s<BR>"}
+			dat += "[display_name]: [R.volume] unit\s<BR>"
 
 		if (items_counts.len==0 && reagents.reagent_list.len==0)
-			dat = {"<B>The microwave is empty</B><BR>"}
+			dat += "The microwave is empty.</div>"
 		else
-			dat = {"<b>Ingredients:</b><br>[dat]"}
-		dat += {"<HR><BR>\
-<A href='?src=\ref[src];action=cook'>Turn on!<BR>\
-<A href='?src=\ref[src];action=dispose'>Eject ingredients!<BR>\
-"}
+			dat = "<h3>Ingredients:</h3>[dat]</div>"
+		dat += "<A href='?src=\ref[src];action=cook'>Turn on</A>"
+		dat += "<A href='?src=\ref[src];action=dispose'>Eject ingredients</A>"
 
-	user << browse("<HEAD><TITLE>Microwave Controls</TITLE></HEAD><TT>[dat]</TT>", "window=microwave")
-	onclose(user, "microwave")
+	var/datum/browser/popup = new(user, "microwave", name, 300, 300)
+	popup.set_content(dat)
+	popup.open()
 	return
-
-
 
 /***********************************
 *   Microwave Menu Handling/Cooking
@@ -285,6 +308,8 @@
 		stop()
 		if(cooked)
 			cooked.loc = src.loc
+		for(var/i=1,i<efficiency,i++)
+			cooked = new cooked.type(loc)
 		return
 
 /obj/machinery/microwave/proc/wzhzhzh(var/seconds as num)
@@ -370,12 +395,12 @@
 	return ffuu
 
 /obj/machinery/microwave/Topic(href, href_list)
-	if(..())
+	if(..() || panel_open)
 		return
 
 	usr.set_machine(src)
 	if(src.operating)
-		src.updateUsrDialog()
+		updateUsrDialog()
 		return
 
 	switch(href_list["action"])
@@ -384,4 +409,5 @@
 
 		if ("dispose")
 			dispose()
+	updateUsrDialog()
 	return

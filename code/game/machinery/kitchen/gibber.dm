@@ -9,7 +9,6 @@
 	var/operating = 0 //Is it on?
 	var/dirty = 0 // Does it need cleaning?
 	var/gibtime = 40 // Time from starting until meat appears
-	var/mob/living/occupant // Mob who has been put inside
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 500
@@ -82,6 +81,9 @@
 	if(src.occupant)
 		user << "\red The gibber is full, empty it first!"
 		return
+	if(default_unfasten_wrench(user, G))
+		return
+
 	if (!( istype(G, /obj/item/weapon/grab)) || !(istype(G.affecting, /mob/living/carbon/human)))
 		user << "\red This item is not suitable for the gibber!"
 		return
@@ -101,6 +103,7 @@
 		src.occupant = M
 		del(G)
 		update_icon()
+
 
 /obj/machinery/gibber/verb/eject()
 	set category = "Object"

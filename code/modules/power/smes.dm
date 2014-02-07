@@ -1,9 +1,6 @@
 // the SMES
 // stores power
 
-#define SMESMAXCHARGELEVEL 200000
-#define SMESMAXOUTPUT 200000
-
 /obj/machinery/power/smes
 	name = "power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."
@@ -23,10 +20,22 @@
 	var/online = 1
 	var/n_tag = null
 	var/obj/machinery/power/terminal/terminal = null
+	var/max_input = 200000
+	var/max_output = 200000
 
 
 /obj/machinery/power/smes/New()
 	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/smes(null)
+	component_parts += new /obj/item/weapon/cell/high(null)
+	component_parts += new /obj/item/weapon/cell/high(null)
+	component_parts += new /obj/item/weapon/cell/high(null)
+	component_parts += new /obj/item/weapon/cell/high(null)
+	component_parts += new /obj/item/weapon/cell/high(null)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
+	component_parts += new /obj/item/stack/cable_coil(null, 5)
+	RefreshParts()
 	spawn(5)
 		dir_loop:
 			for(var/d in cardinal)
@@ -35,12 +44,53 @@
 					if(term && term.dir == turn(d, 180))
 						terminal = term
 						break dir_loop
+
 		if(!terminal)
 			stat |= BROKEN
 			return
 		terminal.master = src
-		updateicon()
+		update_icon()
 	return
+
+/obj/machinery/power/smes/RefreshParts()
+	var/IO = 0
+	var/C = 0
+	for(var/obj/item/weapon/stock_parts/capacitor/CP in component_parts)
+		IO += CP.rating
+	max_input = 200000 * IO
+	max_output = 200000 * IO
+	for(var/obj/item/weapon/cell/PC in component_parts)
+		C += PC.maxcharge
+	capacity = C / (15000) * 1e6
+
+/obj/machinery/power/smes/attackby(obj/item/I, mob/user)
+	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
+		update_icon()
+		return
+
+	if(default_change_direction_wrench(user, I))
+		terminal = null
+		var/turf/T = get_step(src, dir)
+		for(var/obj/machinery/power/terminal/term in T)
+			if(term && term.dir == turn(dir, 180))
+				terminal = term
+				terminal.master = src
+				user << "<span class='notice'>Terminal found.</span>"
+				break
+		if(!terminal)
+			for(var/obj/structure/cable/C in T)
+				if(C.d1 == turn(dir, 180) || C.d2 == turn(dir, 180))
+					terminal = C
+					user << "<span class='notice'>Cable found.</span>"
+					break
+		if(!terminal)
+			user << "<span class='alert'>No power source found.</span>"
+			return
+		stat &= ~BROKEN
+		update_icon()
+		return
+
+	default_deconstruction_crowbar(I)
 
 /obj/machinery/power/smes/Del()
 	message_admins("SMES deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
@@ -48,9 +98,14 @@
 	investigate_log("<font color='red'>deleted</font> at ([x],[y],[z])","singulo")
 	..()
 
-/obj/machinery/power/smes/proc/updateicon()
+/obj/machinery/power/smes/update_icon()
 	overlays.Cut()
 	if(stat & BROKEN)	return
+
+	if(panel_open)
+		overlays.Cut()
+		return
+
 
 	overlays += image('icons/obj/power.dmi', "smes-op[online]")
 
@@ -123,7 +178,7 @@
 
 	// only update icon if state changed
 	if(last_disp != chargedisplay() || last_chrg != charging || last_onln != online)
-		updateicon()
+		update_icon()
 
 	updateDialog()
 	return
@@ -156,7 +211,7 @@
 	loaddemand = lastout-excess
 
 	if(clev != chargedisplay() )
-		updateicon()
+		update_icon()
 	return
 
 
@@ -226,12 +281,12 @@
 		if(!chargemode)
 			charging = 0
 		investigate_log("input/output; [chargelevel>output?"<font color='green'>":"<font color='red'>"][chargelevel]/[output]</font> | Output-mode: [online?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [chargemode?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [usr.key]","singulo")
-		updateicon()
+		update_icon()
 
 	else if( href_list["online"] )
 		online = !online
 		investigate_log("input/output; [chargelevel>output?"<font color='green'>":"<font color='red'>"][chargelevel]/[output]</font> | Output-mode: [online?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [chargemode?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [usr.key]","singulo")
-		updateicon()
+		update_icon()
 
 	else if( href_list["input"] )
 
@@ -242,7 +297,7 @@
 			if(-4)
 				chargelevel = 0
 			if(4)
-				chargelevel = SMESMAXCHARGELEVEL		//30000
+				chargelevel = max_input		//30000
 
 			if(1)
 				d = 100
@@ -258,7 +313,7 @@
 				d = -10000
 
 		chargelevel += d
-		chargelevel = max(0, min(SMESMAXCHARGELEVEL, chargelevel))	// clamp to range
+		chargelevel = max(0, min(max_input, chargelevel))	// clamp to range
 		investigate_log("input/output; [chargelevel>output?"<font color='green'>":"<font color='red'>"][chargelevel]/[output]</font> | Output-mode: [online?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [chargemode?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [usr.key]","singulo")
 		src.updateUsrDialog()
 
@@ -271,7 +326,7 @@
 			if(-4)
 				output = 0
 			if(4)
-				output = SMESMAXOUTPUT		//30000
+				output = max_output		//30000
 
 			if(1)
 				d = 100
@@ -287,7 +342,7 @@
 				d = -10000
 
 		output += d
-		output = max(0, min(SMESMAXOUTPUT, output))	// clamp to range
+		output = max(0, min(max_output, output))	// clamp to range
 
 		investigate_log("input/output; [chargelevel>output?"<font color='green'>":"<font color='red'>"][chargelevel]/[output]</font> | Output-mode: [online?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [chargemode?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [usr.key]","singulo")
 		src.updateUsrDialog()

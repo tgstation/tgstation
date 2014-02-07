@@ -47,6 +47,39 @@ var/datum/feed_network/news_network = new /datum/feed_network     //The global n
 var/list/obj/machinery/newscaster/allCasters = list() //Global list that will contain reference to all newscasters in existence.
 
 
+/obj/item/newscaster_frame
+	name = "newscaster frame"
+	desc = "Used to build newscasters, just secure to the wall."
+	icon_state = "newscaster"
+	item_state = "syringe_kit"
+	m_amt = 25000
+	g_amt = 15000
+
+/obj/item/newscaster_frame/proc/try_build(turf/on_wall)
+	if (get_dist(on_wall,usr)>1)
+		return
+	var/ndir = get_dir(usr,on_wall)
+	if (!(ndir in cardinal))
+		return
+	var/turf/loc = get_turf(usr)
+	var/area/A = loc.loc
+	if (!istype(loc, /turf/simulated/floor))
+		usr << "<span class='alert'>Newscaster cannot be placed on this spot.</span>"
+		return
+	if (A.requires_power == 0 || A.name == "Space")
+		usr << "<span class='alert'>Newscaster cannot be placed in this area.</span>"
+		return
+	for(var/obj/machinery/newscaster/T in loc)
+		usr << "<span class='alert'>There is another newscaster here.</span>"
+		return
+	var/obj/machinery/newscaster/N = new(loc)
+	N.pixel_y -= (loc.y - on_wall.y) * 32
+	N.pixel_x -= (loc.x - on_wall.x) * 32
+	del(src)
+
+
+
+
 /obj/machinery/newscaster
 	name = "newscaster"
 	desc = "A standard Nanotrasen-licensed newsfeed handler for use in commercial space stations. All the news you absolutely have no use for, in one place!"
@@ -487,7 +520,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			for(var/datum/feed_channel/F in news_network.network_channels)
 				if( (!F.locked || F.author == scanned_user) && !F.censored)
 					available_channels += F.channel_name
-			src.channel_name = strip_html_simple(input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels )
+			src.channel_name = strip_html(input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels )
 			src.updateUsrDialog()
 
 		else if(href_list["set_new_message"])
@@ -711,30 +744,39 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				src.scanned_user = text("[T.registered_name] ([T.assignment])")
 				src.screen=2*/  //Obsolete after autorecognition
 
+	if(istype(I, /obj/item/weapon/wrench))
+		user << "<span class='notice'>Now [anchored ? "un" : ""]securing [name]</span>"
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		if(do_after(user, 60))
+			new /obj/item/newscaster_frame(loc)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			del(src)
+		return
+
 	if (src.isbroken)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 100, 1)
 		for (var/mob/O in hearers(5, src.loc))
-			O.show_message("<span class='danger'>\The shattered [src] has been further abused by [user] with \the [I]!</span>")
+			O.show_message("<EM>[user.name]</EM> further abuses the shattered [src.name].")
 	else
 		if(istype(I, /obj/item/weapon) )
 			var/obj/item/weapon/W = I
 			if(W.force <15)
 				for (var/mob/O in hearers(5, src.loc))
-					O.show_message("<span class='danger'>\The [src] has been hit by [user] to no effect with \the [W].</span>" )
+					O.show_message("[user.name] hits the [src.name] with the [W.name] with no visible effect." )
 					playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 			else
 				src.hitstaken++
 				if(src.hitstaken==3)
 					for (var/mob/O in hearers(5, src.loc))
-						O.show_message("<span class='danger'>\The [src] has been smashed by [user] with \the [W]!</span>" )
+						O.show_message("[user.name] smashes the [src.name]!" )
 					src.isbroken=1
 					playsound(src.loc, 'sound/effects/Glassbr3.ogg', 100, 1)
 				else
 					for (var/mob/O in hearers(5, src.loc))
-						O.show_message("<span class='danger'>\The [src] has been forcefully slammed by [user] with \the [W]!</span>" )
+						O.show_message("[user.name] forcefully slams the [src.name] with the [I.name]!" )
 					playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 		else
-			user << "<span class='danger'>\The [src] has been hit by [user] to no effect with \the [I].</span>"
+			user << "<FONT COLOR='blue'>This does nothing.</FONT>"
 	src.update_icon()
 
 
