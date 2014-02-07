@@ -1194,10 +1194,10 @@ datum/design/light_replacer
 //////////////MISC Boards///////////////
 ////////////////////////////////////////
 
-datum/design/turbine_computer
-	name = "Power Turbine Console Board"
-	desc = "The circuit board for a power turbine console."
-	id = "power_turbine_console"
+datum/design/smes
+	name = "SMES Board"
+	desc = "The circuit board for a SMES."
+	id = "smes"
 	req_tech = list("programming" = 4, "power" = 5, "engineering" = 4)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
