@@ -248,6 +248,12 @@
 
 /mob/living/simple_animal/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj)	return
+	// FUCK mice. - N3X
+	if(ismouse(src) && (Proj.stun+Proj.weaken+Proj.paralyze+Proj.agony)>5)
+		var/mob/living/simple_animal/mouse/M=src
+		M << "\red What would probably not kill a human completely overwhelms your tiny body."
+		M.splat()
+		return 0
 	adjustBruteLoss(Proj.damage)
 	return 0
 

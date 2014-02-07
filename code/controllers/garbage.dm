@@ -76,4 +76,7 @@ var/global/list/uncollectable_vars=list(
 		warning("qdel passed a [A.type]. qdel() can only handle /atom/movable types.")
 		del(A)
 		return
+	if(!garbage)
+		del(A)
+		return
 	garbage.AddTrash(A)
