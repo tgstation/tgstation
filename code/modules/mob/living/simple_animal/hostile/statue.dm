@@ -1,8 +1,8 @@
 // A mob which only moves when it isn't being watched by living beings.
 
 /mob/living/simple_animal/hostile/statue
-	name = "human statue"
-	desc = "It looks spooky. Its eye seems to follow you.."
+	name = "statue" // matches the name of the statue with the flesh-to-stone spell
+	desc = "An incredibly lifelike marble carving. Its eye seems to follow you.." // same as an ordinary statue with the added "eye following you" description
 	icon = 'icons/obj/statue.dmi'
 	icon_state = "human_male"
 	icon_living = "human_male"
