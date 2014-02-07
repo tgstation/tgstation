@@ -289,7 +289,10 @@
 				L.Add(t)
 	return L
 
-/turf/handle_fall(mob/faller)
+/turf/handle_fall(mob/faller, forced)
+	faller.lying = pick(90, 270)
+	if(!forced)
+		return
 	playsound(src, "bodyfall", 50, 1)
 	var/mob/living/carbon/human/M = faller
 	if(istype(M) && M.head)
