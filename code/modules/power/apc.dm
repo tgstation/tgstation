@@ -30,7 +30,7 @@
 	var/obj/item/weapon/cell/cell
 	var/start_charge = 90				// initial cell charge %
 	var/cell_type = 2500				// 0=no cell, 1=regular, 2=high-cap (x5) <- old, now it's just 0=no cell, otherwise dictate cellcapacity by changing this value. 1 used to be 1000, 2 was 2500
-	var/opened = 0 //0=closed, 1=opened, 2=cover removed
+	var/opened = 0                      //0=closed, 1=opened, 2=cover removed
 	var/shorted = 0
 	var/lighting = 3
 	var/equipment = 3
@@ -78,21 +78,37 @@
 	src.tdir = dir		// to fix Vars bug
 	dir = SOUTH
 
-	pixel_x = (src.tdir & 3)? 0 : (src.tdir == 4 ? 24 : -24)
-	pixel_y = (src.tdir & 3)? (src.tdir ==1 ? 24 : -24) : 0
+	if(src.tdir & 3)
+		pixel_x = 0
+		pixel_y = (src.tdir == 1 ? 24 : -24)
+	else
+		pixel_x = (src.tdir == 4 ? 24 : -24)
+		pixel_y = 0
+
+	// No name set?
+	if(name == initial(name))
+		// Let's get one.
+
+		// Grab the area we're in.
+		var/area/A = get_area(src)
+
+		// Set name if we're in an area.
+		if(A)
+			name = "[A.name] APC"
+		// Otherwise, bitch to the coders.
+		else
+			log_admin("APC tried to spawn in a location without an area. [formatJumpTo(get_turf(src))]")
+
 	if (building==0)
 		init()
 	else
 		area = src.loc.loc:master
 		opened = 1
 		operating = 0
-		name = "[area.name] APC"
 		stat |= MAINT
 		src.update_icon()
 		spawn(5)
 			src.update()
-
-
 
 /obj/machinery/power/apc/proc/make_terminal()
 	// create a terminal object at the same position as original turf loc
@@ -473,6 +489,7 @@
 					cell.loc=src.loc // Drop it, whoops.
 				else
 					user.put_in_hands(cell)
+
 				cell.add_fingerprint(user)
 				cell.updateicon()
 
@@ -592,7 +609,7 @@
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)
-		// the ui does not exist, so we'll create a new() one
+		// the ui does not exist, so we'll create a new one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "apc.tmpl", "[area.name] - APC", 520, data["siliconUser"] ? 465 : 440)
 		// when the ui is first opened this is the data it will use
