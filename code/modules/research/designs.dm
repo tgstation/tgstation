@@ -1198,6 +1198,15 @@ datum/design/turbine_computer
 	name = "Power Turbine Console Board"
 	desc = "The circuit board for a power turbine console."
 	id = "power_turbine_console"
+	req_tech = list("programming" = 4, "power" = 5, "engineering" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/smes
+
+datum/design/turbine_computer
+	name = "Power Turbine Console Board"
+	desc = "The circuit board for a power turbine console."
+	id = "power_turbine_console"
 	req_tech = list("programming" = 4, "power" = 4, "engineering" = 4)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
@@ -1274,7 +1283,7 @@ datum/design/thermomachine
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/thermomachine
-/*
+
 datum/design/biogenerator
 	name = "Biogenerator Board"
 	desc = "The circuit board for a biogenerator."
@@ -1283,7 +1292,7 @@ datum/design/biogenerator
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/biogenerator
-
+/*
 datum/design/hydroponics
 	name = "Hydroponics Tray Board"
 	desc = "The circuit board for a hydroponics tray."
@@ -1292,7 +1301,7 @@ datum/design/hydroponics
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/hydroponics
-
+*/
 datum/design/microwave
 	name = "Microwave Board"
 	desc = "The circuit board for a microwave."
@@ -1301,7 +1310,7 @@ datum/design/microwave
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/microwave
-*/
+
 datum/design/chem_dispenser
 	name = "Portable Chem Dispenser Board"
 	desc = "The circuit board for a portable chem dispenser."
