@@ -49,7 +49,7 @@
 	var/automute_on = 0					//enables automuting/spam prevention
 	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
 	var/jobs_have_maint_access = 0 		//Who gets maint access?  See defines above
-	var/sec_start_brig
+	var/sec_start_brig = 0				//makes sec start in brig or dept sec posts
 
 	var/server
 	var/banappeals

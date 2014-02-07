@@ -233,6 +233,7 @@
 #include "code\game\gamemodes\gameticker.dm"
 #include "code\game\gamemodes\intercept_report.dm"
 #include "code\game\gamemodes\objective.dm"
+#include "code\game\gamemodes\objective_items.dm"
 #include "code\game\gamemodes\setupgame.dm"
 #include "code\game\gamemodes\blob\blob.dm"
 #include "code\game\gamemodes\blob\blob_finish.dm"
