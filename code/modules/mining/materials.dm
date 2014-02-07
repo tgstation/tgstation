@@ -54,7 +54,6 @@
 	var/processed_name=""
 	var/id=""
 	var/stored=0
-	var/selected=0
 	var/cc_per_sheet=CC_PER_SHEET_MISC
 	var/oretype=null
 	var/sheettype=null

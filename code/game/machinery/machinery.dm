@@ -95,6 +95,8 @@ Class Procs:
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
 
+	w_type = NOT_RECYCLABLE
+
 	var/stat = 0
 	var/emagged = 0
 	var/use_power = 1
