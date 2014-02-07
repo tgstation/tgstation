@@ -2,6 +2,9 @@
 	density = 1
 	layer = 4.0
 	animate_movement = 2
+
+	w_type = RECYK_BIOLOGICAL
+
 //	flags = NOREACT
 	var/datum/mind/mind
 
