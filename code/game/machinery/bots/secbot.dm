@@ -713,12 +713,19 @@ Auto Patrol: []"},
 
 /obj/item/weapon/secbot_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if((istype(W, /obj/item/weapon/weldingtool)) && (!src.build_step))
-		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.remove_fuel(0,user))
-			src.build_step++
-			src.overlays += image('icons/obj/aibots.dmi', "hs_hole")
-			user << "You weld a hole in [src]!"
+	if(istype(W, /obj/item/weapon/weldingtool))
+		if(!src.build_step)
+			var/obj/item/weapon/weldingtool/WT = W
+			if(WT.remove_fuel(0,user))
+				src.build_step++
+				src.overlays += image('icons/obj/aibots.dmi', "hs_hole")
+				user << "You weld a hole in [src]!"
+		else if(src.build_step == 1)
+			var/obj/item/weapon/weldingtool/WT = W
+			if(WT.remove_fuel(0,user))
+				src.build_step--
+				src.overlays -= image('icons/obj/aibots.dmi', "hs_hole")
+				user << "You weld the hole in [src] shut!"
 
 	else if(isprox(W) && (src.build_step == 1))
 		user.drop_item()
@@ -753,3 +760,22 @@ Auto Patrol: []"},
 		if(!in_range(src, usr) && src.loc != usr)
 			return
 		src.created_name = t
+
+	else if(istype(W, /obj/item/weapon/screwdriver))
+		if(!src.build_step)
+			new /obj/item/device/assembly/signaler(get_turf(src))
+			new /obj/item/clothing/head/helmet(get_turf(src))
+			user << "You disconnect the signaler from the helmet."
+			del(src)
+
+		else if(src.build_step == 2)
+			src.overlays -= image('icons/obj/aibots.dmi', "hs_eye")
+			new /obj/item/device/assembly/prox_sensor(get_turf(src))
+			user << "You detach the proximity sensor from [src]."
+			src.build_step--
+
+		else if(src.build_step == 3)
+			src.overlays -= image('icons/obj/aibots.dmi', "hs_arm")
+			new /obj/item/robot_parts/l_arm(get_turf(src))
+			user << "You remove the robot arm from [src]."
+			src.build_step--
