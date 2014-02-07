@@ -40,11 +40,8 @@
 	return ..(gibbed)
 
 /mob/living/carbon/human/proc/makeSkeleton()
-	if(!check_dna_integrity(src) || (dna.mutantrace == "skeleton"))	return
-	dna.mutantrace = "skeleton"
-	status_flags |= DISFIGURED
-	update_hair()
-	update_body()
+	if(!check_dna_integrity(src) || (isskeleton(src)))	return
+	src.mutanize(,/mob/living/carbon/human/mutant/skeleton)
 	return 1
 
 /mob/living/carbon/proc/ChangeToHusk()

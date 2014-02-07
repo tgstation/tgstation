@@ -5,6 +5,46 @@
 		return 1
 	return 0
 
+/proc/ismutant(A)
+	if(istype(A, /mob/living/carbon/human/mutant))
+		return 1
+	return 0
+
+/proc/isslimeperson(A)
+	if(istype(A, /mob/living/carbon/human/mutant/slime))
+		return 1
+	return 0
+
+/proc/islizardperson(A)
+	if(istype(A, /mob/living/carbon/human/mutant/lizard))
+		return 1
+	return 0
+
+/proc/isplantperson(A)
+	if(istype(A, /mob/living/carbon/human/mutant/plant))
+		return 1
+	return 0
+
+/proc/isflyperson(A)
+	if(istype(A, /mob/living/carbon/human/mutant/fly))
+		return 1
+	return 0
+
+/proc/isgolem(A)
+	if(istype(A, /mob/living/carbon/human/mutant/golem))
+		return 1
+	return 0
+
+/proc/isshadowperson(A)
+	if(istype(A, /mob/living/carbon/human/mutant/shadow))
+		return 1
+	return 0
+
+/proc/isskeleton(A) //I want the future to know the urge to name this "isspooky()" was intense
+	if(istype(A, /mob/living/carbon/human/mutant/skeleton))
+		return 1
+	return 0
+
 /proc/ismonkey(A)
 	if(A && istype(A, /mob/living/carbon/monkey))
 		return 1

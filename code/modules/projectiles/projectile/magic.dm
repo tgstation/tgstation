@@ -180,16 +180,17 @@ proc/wabbajack(mob/living/M)
 						else			new_mob = new /mob/living/simple_animal/chick(M.loc)
 						new_mob.universal_speak = 1
 				if("human")
-					new_mob = new /mob/living/carbon/human(M.loc)
+					if(prob(50))
+						new_mob = new /mob/living/carbon/human(M.loc)
+					else
+						var/mutant = pick(typesof(/mob/living/carbon/human/mutant/) - /mob/living/carbon/human/mutant)
+						new_mob = new mutant(M.loc)
 
 					var/datum/preferences/A = new()	//Randomize appearance for the human
 					A.copy_to(new_mob)
 
 					var/mob/living/carbon/human/H = new_mob
 					ready_dna(H)
-					if(H.dna)
-						H.dna.mutantrace = pick("lizard","golem","slime","plant","fly","shadow","adamantine","skeleton",8;"")
-						H.update_body()
 				else
 					return
 

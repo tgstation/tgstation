@@ -186,7 +186,7 @@
 				if(status == "")
 					status = "OK"
 				src << "\t [status == "OK" ? "\blue" : "\red"] My [org.getDisplayName()] is [status]."
-			if(dna && (dna.mutantrace == "skeleton") && !H.w_uniform && !H.wear_suit)
+			if(isskeleton(H) && !H.w_uniform && !H.wear_suit)
 				H.play_xylophone()
 		else
 			if(ishuman(src))
@@ -537,13 +537,6 @@
 		return
 
 	..(message, bubble_type)
-
-/mob/living/carbon/proc/is_mutantrace(var/mrace)
-	if(mrace)
-		if(src.dna && src.dna.mutantrace == mrace)
-			return 1
-	else
-		return src.dna && src.dna.mutantrace ? 1 : 0
 
 /mob/living/carbon/getTrail()
 	if(getBruteLoss() < 300)

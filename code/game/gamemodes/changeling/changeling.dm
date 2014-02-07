@@ -281,10 +281,9 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 			if(T.dna.uni_identity == D.uni_identity)
 				if(T.dna.struc_enzymes == D.struc_enzymes)
 					if(T.dna.real_name == D.real_name)
-						if(T.dna.mutantrace == D.mutantrace)
-							if(T.dna.blood_type == D.blood_type)
-								U << "<span class='warning'>We already have that DNA in storage.</span>"
-								return 0
+						if(T.dna.blood_type == D.blood_type)
+							U << "<span class='warning'>We already have that DNA in storage.</span>"
+							return 0
 
 		if(!check_dna_integrity(T))
 			U << "<span class='warning'>[T] is not compatible with our biology.</span>"
@@ -301,7 +300,6 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	new_dna.uni_identity = T.dna.uni_identity
 	new_dna.struc_enzymes = T.dna.struc_enzymes
 	new_dna.real_name = T.dna.real_name
-	new_dna.mutantrace = T.dna.mutantrace
 	new_dna.blood_type = T.dna.blood_type
 	absorbed_dna |= new_dna //And add the target DNA to our absorbed list.
 	absorbedcount++ //all that done, let's increment the objective counter.

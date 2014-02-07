@@ -936,14 +936,31 @@
 	else if(href_list["humanone"])
 		if(!check_rights(R_SPAWN))	return
 
-		var/mob/living/carbon/monkey/Mo = locate(href_list["humanone"])
-		if(!istype(Mo))
-			usr << "This can only be used on instances of type /mob/living/carbon/monkey"
+		var/mob/living/carbon/C = locate(href_list["humanone"])
+		if(!istype(C))
+			usr << "This can only be used on instances of type /mob/living/carbon"
 			return
 
-		log_admin("[key_name(usr)] attempting to humanize [key_name(Mo)]")
-		message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(Mo)]", 1)
-		Mo.humanize()
+		log_admin("[key_name(usr)] attempting to humanize [key_name(C)]")
+		message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(C)]", 1)
+		C.humanize()
+
+	else if(href_list["mutantone"])
+		if(!check_rights(R_SPAWN))	return
+
+		var/mob/living/carbon/human/H = locate(href_list["mutantone"])
+		if(!istype(H))
+			usr << "This can only be used on instances of type /mob/living/carbon/human"
+			return
+
+		var/chosenrace = input("Choose the kind of mutant", "Mutants") as null|anything in typesof(/mob/living/carbon/human/mutant/)
+
+		if(!chosenrace || chosenrace == /mob/living/carbon/human/mutant/)
+			return
+
+		log_admin("[key_name(usr)] attempting to mutanize [key_name(H)]")
+		message_admins("\blue [key_name_admin(usr)] attempting to mutanize [key_name_admin(H)]", 1)
+		H.mutanize(,chosenrace)
 
 	else if(href_list["corgione"])
 		if(!check_rights(R_SPAWN))	return

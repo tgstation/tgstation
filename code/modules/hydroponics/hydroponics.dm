@@ -837,7 +837,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				make_podman = 1
 
 	if(make_podman)	//all conditions met!
-		var/mob/living/carbon/human/podman = new /mob/living/carbon/human(parent.loc)
+		var/mob/living/carbon/human/podman = new /mob/living/carbon/human/mutant/plant(parent.loc)
 		if(realName)
 			podman.real_name = realName
 		else
@@ -867,7 +867,8 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		podman.gender = ghost.gender
 
 		//dna stuff
-		hardset_dna(podman, ui, se, null, !prob(potency) ? "plant" : null)	//makes sure podman has dna and sets the dna's ui/se/mutantrace/real_name etc variables
+		hardset_dna(podman, ui, se, null)	//makes sure podman has dna and sets the dna's ui/se/mutantrace/real_name etc variables
+
 
 	else //else, one packet of seeds. maybe two
 		var/seed_count = 1

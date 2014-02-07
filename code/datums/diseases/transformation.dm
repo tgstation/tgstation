@@ -139,14 +139,12 @@
 	..()
 	switch(stage)
 		if(1)
-			if(ishuman(affected_mob) && affected_mob.dna && affected_mob.dna.mutantrace == "slime")
+			if(isslimeperson(affected_mob))
 				stage = 5
 		if(3)
 			if(ishuman(affected_mob))
-				var/mob/living/carbon/human/human = affected_mob
-				if(human.dna && !human.dna.mutantrace)
-					human.dna.mutantrace = "slime"
-					human.update_body()
+				var/mob/living/carbon/human/H = affected_mob
+				H.mutanize(,/mob/living/carbon/human/mutant/slime)
 
 
 /datum/disease/transformation/corgi

@@ -123,7 +123,7 @@
 //Clonepod
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/mrace)
+/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref)
 	if(panel_open)
 		return 0
 	if(mess || attempting)
@@ -188,7 +188,7 @@
 
 	// -- End mode specific stuff
 
-	hardset_dna(H, ui, se, null, mrace)
+	hardset_dna(H, ui, se, null)
 	if(efficiency > 2)
 		for(var/A in bad_se_blocks)
 			setblock(H.dna.struc_enzymes, A, construct_block(0,2))

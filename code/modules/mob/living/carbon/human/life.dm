@@ -747,34 +747,6 @@
 	proc/handle_chemicals_in_body()
 		if(reagents) reagents.metabolize(src)
 
-		if(dna && dna.mutantrace == "plant") //couldn't think of a better place to place it, since it handles nutrition -- Urist
-			var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
-			if(isturf(loc)) //else, there's considered to be no light
-				var/turf/T = loc
-				var/area/A = T.loc
-				if(A)
-					if(A.lighting_use_dynamic)	light_amount = min(10,T.lighting_lumcount) - 5 //hardcapped so it's not abused by having a ton of flashlights
-					else						light_amount =  5
-			nutrition += light_amount
-			if(nutrition > 500)
-				nutrition = 500
-			if(light_amount > 2) //if there's enough light, heal
-				heal_overall_damage(1,1)
-				adjustToxLoss(-1)
-				adjustOxyLoss(-1)
-		if(dna && dna.mutantrace == "shadow")
-			var/light_amount = 0
-			if(isturf(loc))
-				var/turf/T = loc
-				var/area/A = T.loc
-				if(A)
-					if(A.lighting_use_dynamic)	light_amount = T.lighting_lumcount
-					else						light_amount =  10
-			if(light_amount > 2) //if there's enough light, start dying
-				take_overall_damage(1,1)
-			else if (light_amount < 2) //heal in the dark
-				heal_overall_damage(1,1)
-
 		//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 		if(FAT in mutations)
 			if(overeatduration < 100)
@@ -799,10 +771,6 @@
 		else
 			if(overeatduration > 1)
 				overeatduration -= 2 //doubled the unfat rate
-
-		if(dna && dna.mutantrace == "plant")
-			if(nutrition < 200)
-				take_overall_damage(2,0)
 
 		if (drowsyness)
 			drowsyness--
@@ -1024,15 +992,6 @@
 			sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
 			var/see_temp = see_invisible
 			see_invisible = SEE_INVISIBLE_LIVING
-			if(dna)
-				switch(dna.mutantrace)
-					if("lizard","slime")
-						see_in_dark = 3
-						see_invisible = SEE_INVISIBLE_LEVEL_ONE
-					if("shadow")
-						see_in_dark = 8
-					else
-						see_in_dark = 2
 
 			if(XRAY in mutations)
 				sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
@@ -1099,10 +1058,10 @@
 					see_invisible = SEE_INVISIBLE_LIVING
 				else
 					see_invisible = SEE_INVISIBLE_LIVING
-					
+
 			if(druggy)	//Override for druggy
 				see_invisible = see_temp
-				
+
 			if(see_override)	//Override all
 				see_invisible = see_override
 

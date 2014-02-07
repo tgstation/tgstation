@@ -84,7 +84,7 @@
 		return
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		if(C.is_mutantrace("adamantine"))
+		if(isgolem(C))
 			user << "<span class='warning'>Your metal fingers can't press the button!</span>"
 			return
 
