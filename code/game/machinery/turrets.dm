@@ -142,7 +142,7 @@
 		else if(istype(T,/mob/living/simple_animal))
 			var/mob/living/simple_animal/A = T
 			if( !A.stat )
-				if(lasers)
+				if(lasers || ismouse(A))
 					return 1
 	return 0
 
@@ -235,6 +235,8 @@
 	else
 		A = new /obj/item/projectile/energy/electrode( loc )
 		use_power(200)
+
+	A.original = target
 	A.current = T
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
