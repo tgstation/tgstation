@@ -218,6 +218,7 @@
 		else
 			modules += new /obj/item/weapon/pickaxe/borgdrill(src)
 		modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
+		modules += new /obj/item/device/analyzer(src)
 
 	on_emag()
 		..()
