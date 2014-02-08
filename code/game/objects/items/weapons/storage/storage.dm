@@ -401,8 +401,8 @@
 
 /obj/item/weapon/storage/Del()
 	for(var/mob/M in range(1))
-		if (M.s_active == src)
-			src.close(M)
+		if(M.s_active == src)
+			close(M)
 	..()
 
 
