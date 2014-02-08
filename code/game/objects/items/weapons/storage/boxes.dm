@@ -38,13 +38,8 @@
 		return
 
 	//Close any open UI windows first
-	var/found = 0
-	for(var/mob/M in range(1))
-		if(M.s_active == src)
-			close(M)
-		if(M == user)
-			found = 1
-	if(!found)	//User is too far away
+	var/found = close_all()
+	if(!found)	//No user had any windows closed
 		return
 
 	user << "<span class='notice'>You fold [src] flat.</span>"
