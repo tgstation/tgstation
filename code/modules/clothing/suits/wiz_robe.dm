@@ -2,6 +2,7 @@
 	name = "wizard hat"
 	desc = "Strange-looking hat-wear that most certainly belongs to a real magic user."
 	icon_state = "wizard"
+	fall_chance = 0
 	//Not given any special protective value since the magic robes are full-body protection --NEO
 
 /obj/item/clothing/head/wizard/red
@@ -13,6 +14,8 @@
 	name = "wizard hat"
 	desc = "It has WIZZARD written across it in sequins. Comes with a cool beard."
 	icon_state = "wizard-fake"
+	flags = BLOCKHAIR
+	flags_inv = HIDEEARS|HIDEFACE
 
 /obj/item/clothing/head/wizard/marisa
 	name = "witch hat"
@@ -21,9 +24,11 @@
 
 /obj/item/clothing/head/wizard/magus
 	name = "\improper Magus helm"
-	desc = "A mysterious helmet that hums with an unearthly power"
+	desc = "A mysterious helmet that hums with an unearthly power."
 	icon_state = "magus"
 	item_state = "magus"
+	flags = BLOCKHAIR
+	flags_inv = HIDEEARS|HIDEFACE
 
 
 /obj/item/clothing/suit/wizrobe

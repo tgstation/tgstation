@@ -64,7 +64,7 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/hats.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_HEAD
-
+	var/fall_chance = 40
 //Mask
 /obj/item/clothing/mask
 	name = "mask"
