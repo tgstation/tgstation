@@ -1,11 +1,1 @@
-*.dm text eol=crlf
-*.dme text eol=crlf
-*.dmm text eol=crlf
-*.dms text eol=crlf
-*.htm text eol=crlf
-*.html text eol=crlf
-*.js text eol=crlf
-*.py text eol=crlf
-*.txt text eol=crlf
-
 *.dmm merge=merge-dmm

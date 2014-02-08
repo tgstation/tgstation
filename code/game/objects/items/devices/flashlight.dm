@@ -26,13 +26,13 @@
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
 		if(loc == user)
-			user.SetLuminosity(user.luminosity + brightness_on)
+			user.AddLuminosity(brightness_on)
 		else if(isturf(loc))
 			SetLuminosity(brightness_on)
 	else
 		icon_state = initial(icon_state)
 		if(loc == user)
-			user.SetLuminosity(user.luminosity - brightness_on)
+			user.AddLuminosity(-brightness_on)
 		else if(isturf(loc))
 			SetLuminosity(0)
 
@@ -89,13 +89,13 @@
 
 /obj/item/device/flashlight/pickup(mob/user)
 	if(on)
-		user.SetLuminosity(user.luminosity + brightness_on)
+		user.AddLuminosity(brightness_on)
 		SetLuminosity(0)
 
 
 /obj/item/device/flashlight/dropped(mob/user)
 	if(on)
-		user.SetLuminosity(user.luminosity - brightness_on)
+		user.AddLuminosity(-brightness_on)
 		SetLuminosity(brightness_on)
 
 

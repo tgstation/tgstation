@@ -56,7 +56,7 @@
 	var/has_electronics = 0 // 0 - none, 1 - plugged in, 2 - secured by screwdriver
 	var/overload = 1 //used for the Blackout malf module
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
-	var/mob/living/silicon/ai/occupant = null
+	var/mob/living/silicon/ai/occupier = null
 	var/longtermpower = 10
 	var/updating_icon = 0
 	var/datum/wires/apc/wires = null
@@ -495,7 +495,7 @@
 /obj/machinery/power/apc/proc/get_malf_status(mob/user)
 	if (ticker && ticker.mode && (user.mind in ticker.mode.malf_ai) && istype(user, /mob/living/silicon/ai))
 		if (src.malfai == (user:parent ? user:parent : user))
-			if (src.occupant == user)
+			if (src.occupier == user)
 				return 3 // 3 = User is shunted in this APC
 			else if (istype(user.loc, /obj/machinery/power/apc))
 				return 4 // 4 = User is shunted in another APC
@@ -745,34 +745,34 @@
 		return
 	if(src.z != 1)
 		return
-	src.occupant = new /mob/living/silicon/ai(src,malf.laws,null,1)
-	src.occupant.adjustOxyLoss(malf.getOxyLoss())
-	if(!findtext(src.occupant.name,"APC Copy"))
-		src.occupant.name = "[malf.name] APC Copy"
+	src.occupier = new /mob/living/silicon/ai(src,malf.laws,null,1)
+	src.occupier.adjustOxyLoss(malf.getOxyLoss())
+	if(!findtext(src.occupier.name,"APC Copy"))
+		src.occupier.name = "[malf.name] APC Copy"
 	if(malf.parent)
-		src.occupant.parent = malf.parent
+		src.occupier.parent = malf.parent
 	else
-		src.occupant.parent = malf
-	malf.mind.transfer_to(src.occupant)
-	src.occupant.eyeobj.name = "[src.occupant.name] (AI Eye)"
+		src.occupier.parent = malf
+	malf.mind.transfer_to(src.occupier)
+	src.occupier.eyeobj.name = "[src.occupier.name] (AI Eye)"
 	if(malf.parent)
 		del(malf)
-	src.occupant.verbs += /mob/living/silicon/ai/proc/corereturn
-	src.occupant.verbs += /datum/game_mode/malfunction/proc/takeover
-	src.occupant.cancel_camera()
+	src.occupier.verbs += /mob/living/silicon/ai/proc/corereturn
+	src.occupier.verbs += /datum/game_mode/malfunction/proc/takeover
+	src.occupier.cancel_camera()
 	if (seclevel2num(get_security_level()) == SEC_LEVEL_DELTA)
 		for(var/obj/item/weapon/pinpointer/point in world)
 			point.the_disk = src //the pinpointer will detect the shunted AI
 
 
 /obj/machinery/power/apc/proc/malfvacate(var/forced)
-	if(!src.occupant)
+	if(!src.occupier)
 		return
-	if(src.occupant.parent && src.occupant.parent.stat != 2)
-		src.occupant.mind.transfer_to(src.occupant.parent)
-		src.occupant.parent.adjustOxyLoss(src.occupant.getOxyLoss())
-		src.occupant.parent.cancel_camera()
-		del(src.occupant)
+	if(src.occupier.parent && src.occupier.parent.stat != 2)
+		src.occupier.mind.transfer_to(src.occupier.parent)
+		src.occupier.parent.adjustOxyLoss(src.occupier.getOxyLoss())
+		src.occupier.parent.cancel_camera()
+		del(src.occupier)
 		if (seclevel2num(get_security_level()) == SEC_LEVEL_DELTA)
 			for(var/obj/item/weapon/pinpointer/point in world)
 				for(var/datum/mind/AI_mind in ticker.mode.malf_ai)
@@ -781,11 +781,11 @@
 						point.the_disk = A //The pinpointer tracks the AI back into its core.
 
 	else
-		src.occupant << "\red Primary core damaged, unable to return core processes."
+		src.occupier << "\red Primary core damaged, unable to return core processes."
 		if(forced)
-			src.occupant.loc = src.loc
-			src.occupant.death()
-			src.occupant.gib()
+			src.occupier.loc = src.loc
+			src.occupier.death()
+			src.occupier.gib()
 			for(var/obj/item/weapon/pinpointer/point in world)
 				point.the_disk = null //the pinpointer will go back to pointing at the nuke disc.
 
@@ -1021,8 +1021,8 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 /obj/machinery/power/apc/emp_act(severity)
 	if(cell)
 		cell.emp_act(severity)
-	if(occupant)
-		occupant.emp_act(severity)
+	if(occupier)
+		occupier.emp_act(severity)
 	lighting = 0
 	equipment = 0
 	environ = 0
@@ -1065,7 +1065,7 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 				ticker.mode:apcs--
 	stat |= BROKEN
 	operating = 0
-	if(occupant)
+	if(occupier)
 		malfvacate(1)
 	update_icon()
 	update()
@@ -1093,7 +1093,7 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 	area.power_equip = 0
 	area.power_environ = 0
 	area.power_change()
-	if(occupant)
+	if(occupier)
 		malfvacate(1)
 	..()
 

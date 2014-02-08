@@ -288,3 +288,16 @@
 			if(!LinkBlocked(src, t) && !TurfBlockedNonWindow(t))
 				L.Add(t)
 	return L
+
+/turf/handle_fall(mob/faller)
+	playsound(src, "bodyfall", 50, 1)
+	var/mob/living/carbon/human/M = faller
+	if(istype(M) && M.head)
+		var/obj/item/clothing/head/H = M.head
+		if(!istype(H) || prob(M.hat_fall_prob()))
+			M.drop_from_inventory(H)
+			if(prob(60))
+				step_rand(H)
+			if(!M.stat)
+				M << "<span class='warning'>[H] fell off your head!</span>"
+	else return

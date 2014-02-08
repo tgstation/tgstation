@@ -231,9 +231,9 @@
 	else
 		return ..()
 
-/obj/item/stack/cable_coil/New(loc, length = MAXCOIL, var/param_color = null)
+/obj/item/stack/cable_coil/New(loc, amount = MAXCOIL, var/param_color = null)
 	..()
-	src.amount = length
+	src.amount = amount
 	if (param_color)
 		item_color = param_color
 	pixel_x = rand(-2,2)
@@ -574,6 +574,26 @@ obj/structure/cable/proc/cableColor(var/colorC)
 			icon = 'icons/obj/power_cond/power_cond_cyan.dmi'
 		if("white")
 			icon = 'icons/obj/power_cond/power_cond_white.dmi'
+
+obj/structure/cable/proc/add_avail(var/amount)
+	if(powernet)
+		powernet.newavail += amount
+
+obj/structure/cable/proc/add_load(var/amount)
+	if(powernet)
+		powernet.newload += amount
+
+obj/structure/cable/proc/surplus()
+	if(powernet)
+		return powernet.avail-powernet.load
+	else
+		return 0
+
+obj/structure/cable/proc/avail()
+	if(powernet)
+		return powernet.avail
+	else
+		return 0
 
 /obj/item/stack/cable_coil/cut
 	item_state = "coil_red2"

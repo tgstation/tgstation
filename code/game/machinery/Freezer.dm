@@ -3,169 +3,236 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "freezer"
 	density = 1
-
+	var/min_temperature = 0
 	anchored = 1.0
-
+	use_power = 1
 	current_heat_capacity = 1000
 
-	New()
-		..()
-		initialize_directions = dir
+/obj/machinery/atmospherics/unary/cold_sink/freezer/New()
+	..()
+	initialize_directions = dir
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/thermomachine(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+	component_parts += new /obj/item/stack/cable_coil(null)
+	RefreshParts()
 
-	initialize()
-		if(node) return
+/obj/machinery/atmospherics/unary/cold_sink/freezer/RefreshParts()
+	var/H
+	var/T
+	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+		H += M.rating
+	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
+		T += M.rating
+	min_temperature = T0C - (170 + (T*15))
+	current_heat_capacity = 1000 * ((H - 1) ** 2)
 
-		var/node_connect = dir
+/obj/machinery/atmospherics/unary/cold_sink/freezer/attackby(obj/item/I, mob/user)
+	if(default_deconstruction_screwdriver(user, "freezer-o", "freezer", I))
+		on = 0
+		update_icon()
+		return
 
-		for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node = target
-				break
+	default_deconstruction_crowbar(I)
 
+	if(default_change_direction_wrench(user, I))
+		if(node)
+			disconnect(node)
+		initialize()
+		if(node)
+			node.update_icon()
+		return
+
+/obj/machinery/atmospherics/unary/cold_sink/freezer/update_icon()
+	if(panel_open)
+		icon_state = "freezer-o"
+	else if(src.on)
+		icon_state = "freezer_1"
+	else
+		icon_state = "freezer"
+	return
+
+/obj/machinery/atmospherics/unary/cold_sink/freezer/attack_ai(mob/user as mob)
+	return interact(user)
+
+/obj/machinery/atmospherics/unary/cold_sink/freezer/attack_paw(mob/user as mob)
+	return interact(user)
+
+/obj/machinery/atmospherics/unary/cold_sink/freezer/attack_hand(mob/user as mob)
+	return interact(user)
+
+/obj/machinery/atmospherics/unary/cold_sink/freezer/interact(mob/user)
+	if(stat & (NOPOWER|BROKEN))
+		return
+	user.set_machine(src)
+	var/temp_text = ""
+	if(air_contents.temperature > (T0C - 20))
+		temp_text = "<span class='bad'>[air_contents.temperature]</span>"
+	else if(air_contents.temperature < (T0C - 20) && air_contents.temperature > (T0C - 100))
+		temp_text = "<span class='average'>[air_contents.temperature]</span>"
+	else
+		temp_text = "<span class='good'>[air_contents.temperature]</span>"
+
+	var/dat = {"
+	Current Status: [ on ? "<A href='?src=\ref[src];start=1'>Off</A> <span class='linkOn'>On</span>" : "<span class='linkOn'>Off</span> <A href='?src=\ref[src];start=1'>On</A>"]<BR>
+	Current Gas Temperature: [temp_text]<BR>
+	Current Air Pressure: [air_contents.return_pressure()]<BR>
+	Target Gas Temperature: <A href='?src=\ref[src];temp=-100'>-</A> <A href='?src=\ref[src];temp=-10'>-</A> <A href='?src=\ref[src];temp=-1'>-</A> [current_temperature] <A href='?src=\ref[src];temp=1'>+</A> <A href='?src=\ref[src];temp=10'>+</A> <A href='?src=\ref[src];temp=100'>+</A><BR>
+	"}
+
+	//user << browse(dat, "window=freezer;size=400x500")
+	//onclose(user, "freezer")
+	var/datum/browser/popup = new(user, "freezer", "Cryo Gas Cooling System", 400, 240) // Set up the popup browser window
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_content(dat)
+	popup.open()
+
+/obj/machinery/atmospherics/unary/cold_sink/freezer/Topic(href, href_list)
+	if(..())
+		return
+	usr.set_machine(src)
+	if (href_list["start"])
+		src.on = !src.on
+		update_icon()
+	if(href_list["temp"])
+		var/amount = text2num(href_list["temp"])
+		if(amount > 0)
+			src.current_temperature = min(T20C, src.current_temperature+amount)
+		else
+			src.current_temperature = max(min_temperature, src.current_temperature+amount)
+	src.updateUsrDialog()
+
+/obj/machinery/atmospherics/unary/cold_sink/freezer/process()
+	..()
+	src.updateUsrDialog()
+
+/obj/machinery/atmospherics/unary/cold_sink/freezer/power_change()
+	..()
+	if(stat & NOPOWER)
+		on = 0
 		update_icon()
 
 
-	update_icon()
-		if(src.node)
-			if(src.on)
-				icon_state = "freezer_1"
-			else
-				icon_state = "freezer"
-		else
-			icon_state = "freezer"
-		return
-
-	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
-
-	attack_paw(mob/user as mob)
-		return src.attack_hand(user)
-
-	attack_hand(mob/user as mob)
-		user.set_machine(src)
-		var/temp_text = ""
-		if(air_contents.temperature > (T0C - 20))
-			temp_text = "<span class='bad'>[air_contents.temperature]</span>"
-		else if(air_contents.temperature < (T0C - 20) && air_contents.temperature > (T0C - 100))
-			temp_text = "<span class='average'>[air_contents.temperature]</span>"
-		else
-			temp_text = "<span class='good'>[air_contents.temperature]</span>"
-
-		var/dat = {"
-		Current Status: [ on ? "<A href='?src=\ref[src];start=1'>Off</A> <span class='linkOn'>On</span>" : "<span class='linkOn'>Off</span> <A href='?src=\ref[src];start=1'>On</A>"]<BR>
-		Current Gas Temperature: [temp_text]<BR>
-		Current Air Pressure: [air_contents.return_pressure()]<BR>
-		Target Gas Temperature: <A href='?src=\ref[src];temp=-100'>-</A> <A href='?src=\ref[src];temp=-10'>-</A> <A href='?src=\ref[src];temp=-1'>-</A> [current_temperature] <A href='?src=\ref[src];temp=1'>+</A> <A href='?src=\ref[src];temp=10'>+</A> <A href='?src=\ref[src];temp=100'>+</A><BR>
-		"}
-
-		//user << browse(dat, "window=freezer;size=400x500")
-		//onclose(user, "freezer")
-		var/datum/browser/popup = new(user, "freezer", "Cryo Gas Cooling System", 400, 240) // Set up the popup browser window
-		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
-		popup.set_content(dat)
-		popup.open()
-
-	Topic(href, href_list)
-		if(..())
-			return
-		usr.set_machine(src)
-		if (href_list["start"])
-			src.on = !src.on
-			update_icon()
-		if(href_list["temp"])
-			var/amount = text2num(href_list["temp"])
-			if(amount > 0)
-				src.current_temperature = min(T20C, src.current_temperature+amount)
-			else
-				src.current_temperature = max((T0C - 200), src.current_temperature+amount)
-		src.updateUsrDialog()
-
-	process()
-		..()
-		src.updateUsrDialog()
-
-
-
-
-/obj/machinery/atmospherics/unary/heat_reservoir/heater
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/
 	name = "heater"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "heater"
 	density = 1
-
+	var/max_temperature = 0
 	anchored = 1.0
 
 	current_heat_capacity = 1000
 
-	New()
-		..()
-		initialize_directions = dir
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/New()
+	..()
+	initialize_directions = dir
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/thermomachine(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+	component_parts += new /obj/item/stack/cable_coil(null)
+	RefreshParts()
 
-	initialize()
-		if(node) return
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/RefreshParts()
+	var/H
+	var/T
+	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+		H += M.rating
+	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
+		T += M.rating
+	max_temperature = T20C + (140 * T)
+	current_heat_capacity = 1000 * ((H - 1) ** 2)
 
-		var/node_connect = dir
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node = target
-				break
-
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/attackby(obj/item/I, mob/user)
+	if(default_deconstruction_screwdriver(user, "heater-o", "heater", I))
+		on = 0
 		update_icon()
-
-
-	update_icon()
-		if(src.node)
-			if(src.on)
-				icon_state = "heater_1"
-			else
-				icon_state = "heater"
-		else
-			icon_state = "heater"
 		return
 
-	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+	default_deconstruction_crowbar(I)
 
-	attack_paw(mob/user as mob)
-		return src.attack_hand(user)
-
-	attack_hand(mob/user as mob)
-		user.set_machine(src)
-		var/temp_text = ""
-		if(air_contents.temperature > (T20C+40))
-			temp_text = "<FONT color=red>[air_contents.temperature]</FONT>"
-		else
-			temp_text = "<FONT color=black>[air_contents.temperature]</FONT>"
-
-		var/dat = {"<B>Heating system</B><BR>
-		Current status: [ on ? "<A href='?src=\ref[src];start=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];start=1'>On</A>"]<BR>
-		Current gas temperature: [temp_text]<BR>
-		Current air pressure: [air_contents.return_pressure()]<BR>
-		Target gas temperature: <A href='?src=\ref[src];temp=-100'>-</A> <A href='?src=\ref[src];temp=-10'>-</A> <A href='?src=\ref[src];temp=-1'>-</A> [current_temperature] <A href='?src=\ref[src];temp=1'>+</A> <A href='?src=\ref[src];temp=10'>+</A> <A href='?src=\ref[src];temp=100'>+</A><BR>
-		"}
-
-		user << browse(dat, "window=heater;size=400x500")
-		onclose(user, "heater")
-
-	Topic(href, href_list)
-		if(..())
-			return
-		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
-			usr.set_machine(src)
-			if (href_list["start"])
-				src.on = !src.on
-				update_icon()
-			if(href_list["temp"])
-				var/amount = text2num(href_list["temp"])
-				if(amount > 0)
-					src.current_temperature = min((T20C+280), src.current_temperature+amount)
-				else
-					src.current_temperature = max(T20C, src.current_temperature+amount)
-		src.updateUsrDialog()
-		src.add_fingerprint(usr)
+	if(default_change_direction_wrench(user, I))
+		if(node)
+			disconnect(node)
+		initialize()
+		if(node)
+			node.update_icon()
 		return
 
-	process()
-		..()
-		src.updateUsrDialog()
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/update_icon()
+	if(panel_open)
+		icon_state = "heater-o"
+	else if(src.on)
+		icon_state = "heater_1"
+	else
+		icon_state = "heater"
+	return
+
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/attack_ai(mob/user as mob)
+	return src.attack_hand(user)
+
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/attack_paw(mob/user as mob)
+	return src.attack_hand(user)
+
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/attack_hand(mob/user as mob)
+	return interact(user)
+
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/interact(mob/user)
+	if(stat & (NOPOWER|BROKEN))
+		return
+	user.set_machine(src)
+	var/temp_text = ""
+	if(air_contents.temperature < (T20C + 80))
+		temp_text = "<span class='good'>[air_contents.temperature]</span>"
+	else if(air_contents.temperature > (T20C + 80) && air_contents.temperature < (T20C + 180))
+		temp_text = "<span class='average'>[air_contents.temperature]</span>"
+	else
+		temp_text = "<span class='bad'>[air_contents.temperature]</span>"
+
+	var/dat = {"
+	Current Status: [ on ? "<A href='?src=\ref[src];start=1'>Off</A> <span class='linkOn'>On</span>" : "<span class='linkOn'>Off</span> <A href='?src=\ref[src];start=1'>On</A>"]<BR>
+	Current Gas Temperature: [temp_text]<BR>
+	Current Air Pressure: [air_contents.return_pressure()]<BR>
+	Target Gas Temperature: <A href='?src=\ref[src];temp=-100'>-</A> <A href='?src=\ref[src];temp=-10'>-</A> <A href='?src=\ref[src];temp=-1'>-</A> [current_temperature] <A href='?src=\ref[src];temp=1'>+</A> <A href='?src=\ref[src];temp=10'>+</A> <A href='?src=\ref[src];temp=100'>+</A><BR>
+	"}
+
+	//user << browse(dat, "window=freezer;size=400x500")
+	//onclose(user, "freezer")
+	var/datum/browser/popup = new(user, "freezer", "Cryo Gas Cooling System", 400, 240) // Set up the popup browser window
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_content(dat)
+	popup.open()
+
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/Topic(href, href_list)
+	if(..())
+		return
+	usr.set_machine(src)
+	if (href_list["start"])
+		src.on = !src.on
+		update_icon()
+	if(href_list["temp"])
+		var/amount = text2num(href_list["temp"])
+		if(amount > 0)
+			src.current_temperature = min((T20C+max_temperature), src.current_temperature+amount)
+		else
+			src.current_temperature = max(T20C, src.current_temperature+amount)
+	src.updateUsrDialog()
+	src.add_fingerprint(usr)
+	return
+
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/process()
+	..()
+	src.updateUsrDialog()
+
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/power_change()
+	..()
+	if(stat & NOPOWER)
+		on = 0
+		update_icon()

@@ -134,7 +134,10 @@ proc/wabbajack(mob/living/M)
 					new_mob = new /mob/living/carbon/monkey(M.loc)
 					new_mob.universal_speak = 1
 				if("robot")
-					new_mob = new /mob/living/silicon/robot(M.loc)
+					if(prob(30))
+						new_mob = new /mob/living/silicon/robot/syndicate(M.loc)
+					else
+						new_mob = new /mob/living/silicon/robot(M.loc)
 					new_mob.gender = M.gender
 					new_mob.invisibility = 0
 					new_mob.job = "Cyborg"
