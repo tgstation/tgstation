@@ -262,7 +262,7 @@
 		ui.set_auto_update(1)
 
 /obj/machinery/power/smes/Topic(href, href_list)
-	world << "[href] ; [href_list[href]]"
+//	world << "[href] ; [href_list[href]]"
 
 	if(..())
 		return
@@ -283,7 +283,6 @@
 		update_icon()
 
 	else if( href_list["set_input_level"] )
-		world << href_list["set_input_level"]
 		switch(href_list["set_input_level"])
 			if("max")
 				input_level = input_level_max
@@ -304,7 +303,6 @@
 		log_smes(usr.ckey)
 
 	else if(href_list["set_output_level"])
-		world << href_list["set_output_level"]
 		switch(href_list["set_output_level"])
 			if("max")
 				output_level = output_level_max
