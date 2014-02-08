@@ -620,7 +620,7 @@ var/list/datum/dna/hivemind_bank = list()
 		src << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
 		return 0
 	var/datum/dna/NewDNA = src.mind.changeling.chosen_dna
-	hardset_dna(T, NewDNA.uni_identity, NewDNA.struc_enzymes, NewDNA.real_name, NewDNA.mutantrace, NewDNA.blood_type)
+	hardset_dna(T, NewDNA.uni_identity, NewDNA.struc_enzymes, NewDNA.real_name, NewDNA.blood_type)
 	updateappearance(T)
 	feedback_add_details("changeling_powers","TS")
 	return 1

@@ -8,8 +8,7 @@
 
 /datum/round_event/spooky/start()
 	for(var/mob/living/carbon/human/H in mob_list)
-		if(H.dna)
-			hardset_dna(H, null, null, null, "skeleton")
+		H.mutanize(,/mob/living/carbon/human/mutant/skeleton)
 	for(var/mob/living/simple_animal/corgi/Ian/Ian in mob_list)
 		Ian.place_on_head(new /obj/item/weapon/bedsheet(Ian))
 

@@ -305,11 +305,9 @@ datum
 				if(!M) M = holder.my_atom
 				if(ishuman(M))
 					var/mob/living/carbon/human/human = M
-					if(human.dna && !human.dna.mutantrace)
+					if(!isslimeperson(M))
 						M << "\red Your flesh rapidly mutates!"
-						human.dna.mutantrace = "slime"
-						human.update_body()
-						human.update_hair()
+						human.mutanize(,/mob/living/carbon/human/mutant/slime)
 				..()
 				return
 
@@ -1465,7 +1463,7 @@ datum
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
 						if(H.dna)
-							if(H.dna.mutantrace == "plant") //plantmen take a LOT of damage
+							if(isplantperson(H)) //plantmen take a LOT of damage
 								H.adjustToxLoss(10)
 
 		toxin/stoxin

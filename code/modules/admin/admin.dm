@@ -79,10 +79,14 @@ var/global/floorIsLava = 0
 			body += "<br>"
 
 			//Human
-			if(ishuman(M))
+			if(ishuman(M) && !ismutant(M))
 				body += "<B>Human</B> | "
 			else
 				body += "<A href='?_src_=holder;humanone=\ref[M]'>Humanize</A> | "
+			if(ismutant(M))
+				body += "<A href='?_src_=holder;mutantone=\ref[M]'>Remutanize</A> | "
+			else
+				body += "<A href='?_src_=holder;mutantone=\ref[M]'>Mutanize</A> | "
 
 			//Monkey
 			if(ismonkey(M))

@@ -84,17 +84,10 @@ Please contact me on #coderbus IRC. ~Carnie x
 	var/list/overlays_standing[TOTAL_LAYERS]
 
 /mob/living/carbon/human/proc/update_base_icon_state()
-	var/race = dna ? dna.mutantrace : null
-	switch(race)
-		if("lizard","golem","slime","shadow","adamantine","fly","plant")
-			base_icon_state = "[dna.mutantrace]_[(gender == FEMALE) ? "f" : "m"]"
-		if("skeleton")
-			base_icon_state = "skeleton"
-		else
-			if(HUSK in mutations)
-				base_icon_state = "husk"
-			else
-				base_icon_state = "[skin_tone]_[(gender == FEMALE) ? "f" : "m"]"
+	if(HUSK in mutations)
+		base_icon_state = "husk"
+	else
+		base_icon_state = "[skin_tone]_[(gender == FEMALE) ? "f" : "m"]"
 	icon_state = "[base_icon_state]_s"
 
 
@@ -145,8 +138,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 	//Reset our hair
 	remove_overlay(HAIR_LAYER)
 
-	//mutants don't have hair. masks and helmets can obscure our hair too.
-	if( (HUSK in mutations) || (dna && dna.mutantrace) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) )
+	//masks and helmets can obscure our hair too.
+	if( (HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) )
 		return
 
 	//base icons
@@ -217,14 +210,13 @@ Please contact me on #coderbus IRC. ~Carnie x
 		standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[lip_style]_s", "layer" = -BODY_LAYER)
 
 	//Eyes
-	if(!dna || dna.mutantrace != "skeleton")
-		var/image/img_eyes_s = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes_s", "layer" = -BODY_LAYER)
+	var/image/img_eyes_s = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes_s", "layer" = -BODY_LAYER)
 
-		var/new_color = "#" + eye_color
+	var/new_color = "#" + eye_color
 
-		img_eyes_s.color = new_color
+	img_eyes_s.color = new_color
 
-		standing	+= img_eyes_s
+	standing	+= img_eyes_s
 
 	//Underwear
 	if(underwear)

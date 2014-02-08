@@ -89,20 +89,17 @@
 					user.see_in_dark = 8
 					user.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 					user << "\blue The walls suddenly disappear."
-				user.dna.mutantrace = "shadow"
-				user.update_body()
+				user.mutanize(/mob/living/carbon/human/mutant/shadow)
 			if("Wealth")
 				user << "<B>Your wish is granted, but at a terrible cost...</B>"
 				user << "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart."
 				new /obj/structure/closet/syndicate/resources/everything(loc)
-				user.dna.mutantrace = "shadow"
-				user.update_body()
+				user.mutanize(/mob/living/carbon/human/mutant/shadow)
 			if("Immortality")
 				user << "<B>Your wish is granted, but at a terrible cost...</B>"
 				user << "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart."
 				user.verbs += /mob/living/carbon/proc/immortality
-				user.dna.mutantrace = "shadow"
-				user.update_body()
+				user.mutanize(/mob/living/carbon/human/mutant/shadow)
 			if("To Kill")
 				user << "<B>Your wish is granted, but at a terrible cost...</B>"
 				user << "The Wish Granter punishes you for your wickedness, claiming your soul and warping your body to match the darkness in your heart."
@@ -116,8 +113,7 @@
 				for(var/datum/objective/OBJ in user.mind.objectives)
 					user << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
 					obj_count++
-				user.dna.mutantrace = "shadow"
-				user.update_body()
+				user.mutanize(/mob/living/carbon/human/mutant/shadow)
 			if("Peace")
 				user << "<B>Whatever alien sentience that the Wish Granter possesses is satisfied with your wish. There is a distant wailing as the last of the Faithless begin to die, then silence.</B>"
 				user << "You feel as if you just narrowly avoided a terrible fate..."

@@ -64,12 +64,10 @@
 			var/attack_verb = "punch"
 			if(lying)
 				attack_verb = "kick"
-			else if(M.dna)
-				switch(M.dna.mutantrace)
-					if("lizard")
-						attack_verb = "scratch"
-					if("plant")
-						attack_verb = "slash"
+			if(islizardperson(M))
+				attack_verb = "scratch"
+			if(isplantperson(M))
+				attack_verb = "slash"
 
 			var/damage = rand(0, 9)
 			if(!damage)

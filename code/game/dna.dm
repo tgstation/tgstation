@@ -20,7 +20,6 @@
 	var/struc_enzymes
 	var/uni_identity
 	var/blood_type
-	var/mutantrace = null  //The type of mutant race the player is if applicable (i.e. potato-man)
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
 
 /datum/dna/New()
@@ -65,7 +64,7 @@
 		. += repeat_string(DNA_UNIQUE_ENZYMES_LEN, "0")
 	return .
 
-/proc/hardset_dna(mob/living/carbon/owner, ui, se, real_name, mutantrace, blood_type)
+/proc/hardset_dna(mob/living/carbon/owner, ui, se, real_name, blood_type)
 	if(!istype(owner, /mob/living/carbon/monkey) && !istype(owner, /mob/living/carbon/human))
 		return
 	if(!owner.dna)
@@ -81,13 +80,6 @@
 	if(ui)
 		owner.dna.uni_identity = ui
 		updateappearance(owner)
-
-	var/update_mutantrace = (mutantrace != owner.dna.mutantrace)
-	owner.dna.mutantrace = mutantrace
-	if(update_mutantrace && istype(owner, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = owner
-		H.update_body()
-		H.update_hair()
 
 	if(se)
 		owner.dna.struc_enzymes = se

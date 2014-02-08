@@ -793,18 +793,13 @@ client
 			if(!istype(H))
 				usr << "This can only be done to instances of type /mob/living/carbon/human"
 				return
-
-			var/new_mutantrace = input("Please choose a new mutantrace","Mutantrace",null) as null|anything in list("NONE","golem","lizard","slime","plant","shadow", "fly", "skeleton")
-			switch(new_mutantrace)
-				if(null)		return
-				if("NONE")		new_mutantrace = ""
+			var/list/races = typesof(/mob/living/carbon/human/mutant)
+			var/new_mutantrace = input("Please choose a new mutantrace","Mutantrace",null) as null|anything in races
+			if(!new_mutantrace)	return
 			if(!H)
 				usr << "Mob doesn't exist anymore"
 				return
-			if(H.dna)
-				H.dna.mutantrace = new_mutantrace
-				H.update_body()
-				H.update_hair()
+			H.mutanize(,new_mutantrace)
 
 		else if(href_list["adjustDamage"] && href_list["mobToDamage"])
 			if(!check_rights(0))	return

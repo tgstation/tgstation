@@ -179,6 +179,78 @@
 		del(src)
 	return
 
+/mob/living/carbon/human/proc/mutanize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG), race = null, newname = null)
+	if (notransform || !ishuman(src) || !race)
+		return
+	//Handle items on mob
+
+	//first implants
+	var/list/implants = list()
+	if (tr_flags & TR_KEEPIMPLANTS)
+		for(var/obj/item/weapon/implant/W in src)
+			implants += W
+
+	//now the rest
+	if (tr_flags & TR_KEEPITEMS)
+		for(var/obj/item/W in (src.contents-implants))
+			u_equip(W)
+			if (client)
+				client.screen -= W
+			if (W)
+				W.loc = loc
+				W.dropped(src)
+				//W.layer = initial(W.layer)
+
+	var/mob/living/carbon/human/mutant/O = new race ( loc )
+	hardset_dna(O, dna.uni_identity, dna.struc_enzymes, real_name, blood_type)
+	O.gender = gender
+	O.update_base_icon_state()
+
+	if (newname) //if there's a name as an argument, always take that one over the current name
+		O.real_name = newname
+	else
+		O.real_name = real_name
+	O.name = O.real_name
+
+	if(suiciding)
+		O.suiciding = suiciding
+
+	O.loc = loc
+
+	//keep viruses?
+	if (tr_flags & TR_KEEPVIRUS)
+		O.viruses = viruses
+		viruses = list()
+		for(var/datum/disease/D in O.viruses)
+			D.affected_mob = O
+
+	//keep damage?
+	if (tr_flags & TR_KEEPDAMAGE)
+		O.setToxLoss(getToxLoss())
+		O.adjustBruteLoss(getBruteLoss())
+		O.setOxyLoss(getOxyLoss())
+		O.adjustFireLoss(getFireLoss())
+
+	//re-add implants to new mob
+	for(var/obj/item/weapon/implant/I in implants)
+		I.loc = O
+		I.implanted = O
+
+	if(mind)
+		mind.transfer_to(O)
+	O.a_intent = "help"
+	if (tr_flags & TR_DEFAULTMSG)
+		O << "<B>You are now a [O.racename].</B>"
+	updateappearance(O)
+	. = O
+	if ( !(tr_flags & TR_KEEPSRC) ) //don't delete src yet if it's needed to finish calling proc
+		del(src)
+
+	for(var/obj/item/C in O.loc)
+		O.equip_to_appropriate_slot(C)
+
+	return
+
 /mob/new_player/AIize()
 	spawning = 1
 	return ..()
