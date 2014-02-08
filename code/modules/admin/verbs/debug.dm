@@ -1087,7 +1087,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 
 	for(var/obj/machinery/power/smes/SMES in world)
 		if(SMES.anchored)
-			SMES.chargemode = 1
+			SMES.input_attempt = 1
 
 /client/proc/cmd_debug_mob_lists()
 	set category = "Debug"

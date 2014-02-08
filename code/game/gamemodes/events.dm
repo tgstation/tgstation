@@ -81,8 +81,8 @@
 		if(istype(get_area(S), /area/turret_protected) || S.z != 1)
 			continue
 		S.charge = 0
-		S.output = 0
-		S.online = 0
+		S.output_level = 0
+		S.output_attempt = 0
 		S.update_icon()
 		S.power_change()
 
@@ -133,8 +133,8 @@
 		if(S.z != 1)
 			continue
 		S.charge = S.capacity
-		S.output = S.max_output
-		S.online = 1
+		S.output_level = S.output_level_max
+		S.output_attempt = 1
 		S.update_icon()
 		S.power_change()
 	for(var/area/A in world)
@@ -153,8 +153,8 @@
 		if(S.z != 1)
 			continue
 		S.charge = S.capacity
-		S.output = S.max_output
-		S.online = 1
+		S.output_level = S.output_level_max
+		S.output_attempt = 1
 		S.update_icon()
 		S.power_change()
 
