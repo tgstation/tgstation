@@ -7,6 +7,16 @@
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
 	var/refined_type = null //What this ore defaults to being refined into
 
+/obj/item/weapon/ore/attackby(obj/item/I as obj, mob/user as mob)
+	if(istype(I, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/W = I
+		if(W.remove_fuel(15))
+			new refined_type(get_turf(src.loc))
+			del(src)
+		else
+			user << "<span class='info'>Not enough fuel to smelt [src].</span>"
+	..()
+
 /obj/item/weapon/ore/uranium
 	name = "Uranium ore"
 	icon_state = "Uranium ore"
@@ -44,6 +54,15 @@
 	origin_tech = "materials=2"
 	points = 10
 	refined_type = /obj/item/stack/sheet/mineral/plasma
+
+/obj/item/weapon/ore/plasma/attackby(obj/item/I as obj, mob/user as mob)
+	if(istype(I, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/W = I
+		if(W.welding)
+			user << "<span class='info'>You can't hit a high enough temperature to smelt [src] properly.</span>"
+	else
+		..()
+
 
 /obj/item/weapon/ore/silver
 	name = "Silver ore"

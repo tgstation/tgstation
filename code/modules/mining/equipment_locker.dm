@@ -224,6 +224,10 @@
 			user << "<span class='info'>There's no points left on [src].</span>"
 	..()
 
+/obj/item/weapon/card/mining_point_card/examine()
+	..()
+	usr << "There's [points] points on the card."
+
 /**********************Jaunter**********************/
 
 /obj/item/device/wormhole_jaunter
@@ -310,6 +314,8 @@
 	..()
 
 /obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity_flag)
+	if(target in user.contents)
+		return
 	if(proximity_flag)
 		CreateResonance(target)
 
@@ -336,7 +342,7 @@
 		var/datum/gas_mixture/environment = proj_turf.return_air()
 		var/pressure = environment.return_pressure()
 		if(pressure < 50)
-			name = "strong resonance"
+			name = "strong resonance field"
 			resonance_damage = 60
 		spawn(50)
 			playsound(src,'sound/effects/sparks4.ogg',50,1)
@@ -415,7 +421,7 @@
 				health += 10
 				user << "<span class='info'>You repair some of the armor on [src].</span>"
 			return
-	if(istype(I, /obj/item/device/analyzer))
+	if(istype(I, /obj/item/device/mining_scanner))
 		user << "<span class='info'>You instruct [src] to drop any collected ore.</span>"
 		DropOre()
 		return
@@ -428,6 +434,10 @@
 	DropOre()
 	del src
 	return
+
+/mob/living/simple_animal/hostile/mining_drone/New()
+	..()
+	SetCollectBehavior()
 
 /mob/living/simple_animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/M)
 	if(M.a_intent == "help")
@@ -511,11 +521,11 @@
 		if(istype(target, /mob/living/simple_animal))
 			var/mob/living/simple_animal/M = target
 			if(M.stat == DEAD)
+				M.faction = "lazarus"
 				M.revive()
 				if(istype(target, /mob/living/simple_animal/hostile))
 					var/mob/living/simple_animal/hostile/H = M
 					H.friends += user
-					H.attack_same = 1
 				loaded = 0
 				user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
 				playsound(src,'sound/effects/refill.ogg',50,1)
@@ -536,7 +546,7 @@
 /**********************Mining Scanner**********************/
 /obj/item/device/mining_scanner
 	desc = "A scanner that checks surrounding rock for useful minerals, it can also be used to stop gibtonite detonations."
-	name = "analyzer"
+	name = "mining scanner"
 	icon_state = "mining"
 	item_state = "analyzer"
 	w_class = 2.0
@@ -552,8 +562,16 @@
 		spawn(40)
 			cooldown = 0
 		var/client/C = user.client
-		for(var/turf/simulated/mineral/M in range(7, user))
+		var/list/L = list()
+		var/turf/simulated/mineral/M
+		for(M in range(7, user))
 			if(M.scan_state)
+				L += M
+		if(!L.len)
+			user << "<span class='info'>[src] reports that nothing was detected nearby.</span>"
+			return
+		else
+			for(M in L)
 				var/turf/T = get_turf(M)
 				var/image/I = image('icons/turf/walls.dmi', loc = T, icon_state = M.scan_state, layer = 18)
 				C.images += I
