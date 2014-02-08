@@ -33,6 +33,8 @@
 		del(target)
 	else
 		user << "<span class='notice'>You clean \the [target.name].</span>"
+		var/obj/effect/decal/cleanable/C = locate() in target
+		del(C)
 		target.clean_blood()
 	return
 
