@@ -60,6 +60,10 @@ Used In File(s): \code\game\machinery\cryo.dm
 		{{:~string('<span class="{0}">{1} K</span>', cellTemperatureStatus, cellTemperature)}}
 	</div></div>
 </div>
+<div class="itemContent" style="width: 40%;">
+		{^{:~link('Open', 'unlocked', {'open' : 1}, isOpen ? 'selected' : null)}}{^{:~link('Close', 'locked', {'close' : 1}, isOpen ? null : 'selected')}}
+	</div>
+
 
 <h3>Cryo Cell Operation</h3>
 <div class="item">
@@ -69,9 +73,7 @@ Used In File(s): \code\game\machinery\cryo.dm
 	<div class="itemContent" style="width: 40%;">
 		{{:~link('On', 'power', {'switchOn' : 1}, isOperating ? 'selected' : null)}}{{:~link('Off', 'close', {'switchOff' : 1}, isOperating ? null : 'selected')}}
 	</div>
-	<div class="itemContent" style="width: 26%;">
-		{{:~link('Eject Occupant', 'arrowreturnthick-1-s', {'ejectOccupant' : 1}, hasOccupant ? null : 'disabled')}}
-	</div>
+
 </div>
 <div class="item">&nbsp;</div>
 <div class="item">

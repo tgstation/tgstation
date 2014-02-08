@@ -579,3 +579,8 @@ var/const/GALOSHES_DONT_HELP = 8
 		Weaken(w_amount)
 		return 1
 	return 0 // no success. Used in clown pda and wet floors
+
+/mob/living/carbon/fall(var/forced)
+	..()
+	if(forced) //if going prone was involuntary
+		loc.handle_fall(src) //it's loc so it doesn't call the mob's handle_fall() which does nothing

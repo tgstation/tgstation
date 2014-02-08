@@ -37,6 +37,7 @@
 	var/rpmtarget = 0
 	var/capacity = 1e6
 	var/comp_id = 0
+	var/efficiency
 
 
 /obj/machinery/power/turbine
@@ -51,6 +52,7 @@
 	directwired = 1
 	var/turf/simulated/outturf
 	var/lastgen
+	var/productivity = 1
 
 /obj/machinery/computer/turbine_computer
 	name = "gas turbine control computer"
@@ -59,6 +61,7 @@
 	icon_state = "airtunnel0e"
 	anchored = 1
 	density = 1
+	circuit = /obj/item/weapon/circuitboard/turbine_computer
 	var/obj/machinery/compressor/compressor
 	var/id = 0
 
@@ -66,7 +69,16 @@
 
 /obj/machinery/compressor/New()
 	..()
-
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/power_compressor(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/stack/cable_coil(null, 5)
+	RefreshParts()
 // The inlet of the compressor is the direction it faces
 
 	gas_contained = new
@@ -87,6 +99,27 @@
 // /obj/machinery/power/compressor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 // 		return !density
 
+/obj/machinery/compressor/RefreshParts()
+	var/E = 0
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		E += M.rating
+	efficiency = E / 6
+
+/obj/machinery/compressor/attackby(obj/item/I, mob/user)
+	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
+		return
+
+	if(default_change_direction_wrench(user, I))
+		turbine = null
+		inturf = get_step(src, dir)
+		turbine = locate() in get_step(src, get_dir(inturf, src))
+		if(turbine)
+			user << "<span class='notice'>Turbine connected.</span>"
+		else
+			user << "<span class='alert'>Turbine not connected.</span>"
+		return
+
+	default_deconstruction_crowbar(I)
 
 /obj/machinery/power/compressor/CanAtmosPass(var/turf/T)
 	return !density
@@ -112,7 +145,7 @@
 
 // RPM function to include compression friction - be advised that too low/high of a compfriction value can make things screwy
 
-	rpm = max(0, rpm - (rpm*rpm)/COMPFRICTION)
+	rpm = max(0, rpm - (rpm*rpm)/(COMPFRICTION/efficiency))
 
 
 	if(starter && !(stat & NOPOWER))
@@ -144,7 +177,16 @@
 
 /obj/machinery/power/turbine/New()
 	..()
-
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/power_turbine(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/stack/cable_coil(src, 5)
+	RefreshParts()
 // The outlet is pointed at the direction of the turbine component
 
 	outturf = get_step(src, dir)
@@ -166,10 +208,14 @@
 // /obj/machinery/power/turbine/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 //		return !density
 
+/obj/machinery/power/turbine/RefreshParts()
+	var/P = 0
+	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+		P += C.rating
+	productivity = P / 6
+
 /obj/machinery/power/turbine/CanAtmosPass(var/turf/T)
 	return !density
-
-
 
 /obj/machinery/power/turbine/process()
 
@@ -185,7 +231,7 @@
 	// This is the power generation function. If anything is needed it's good to plot it in EXCEL before modifying
 	// the TURBGENQ and TURBGENG values
 
-	lastgen = ((compressor.rpm / TURBGENQ)**TURBGENG) *TURBGENQ
+	lastgen = ((compressor.rpm / TURBGENQ)**TURBGENG) * TURBGENQ * productivity
 
 	add_avail(lastgen)
 
@@ -217,11 +263,25 @@
 
 	interact(user)
 
+/obj/machinery/power/turbine/attackby(obj/item/I, mob/user)
+	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
+		return
 
+	if(default_change_direction_wrench(user, I))
+		compressor = null
+		outturf = get_step(src, dir)
+		compressor = locate() in get_step(src, get_dir(outturf, src))
+		if(compressor)
+			user << "<span class='notice'>Compressor connected.</span>"
+		else
+			user << "<span class='alert'>Compressor not connected.</span>"
+		return
+
+	default_deconstruction_crowbar(I)
 
 /obj/machinery/power/turbine/interact(mob/user)
 
-	if ( (get_dist(src, user) > 1 ) || (stat & (NOPOWER|BROKEN)) && (!istype(user, /mob/living/silicon/ai)) )
+	if ( !Adjacent(user)  || (stat & (NOPOWER|BROKEN)) && (!istype(user, /mob/living/silicon)) )
 		user.unset_machine(src)
 		user << browse(null, "window=turbine")
 		return
@@ -272,9 +332,10 @@
 /obj/machinery/computer/turbine_computer/New()
 	..()
 	spawn(5)
-		for(var/obj/machinery/compressor/C in world)
-			if(id == C.comp_id)
-				compressor = C
+		search_turbine()
+
+/obj/machinery/computer/turbine_computer/proc/search_turbine()
+	compressor = locate(/obj/machinery/compressor) in range(5)
 
 /obj/machinery/computer/turbine_computer/attack_hand(var/mob/user as mob)
 	if(..())
@@ -285,7 +346,7 @@
 /obj/machinery/computer/turbine_computer/interact(mob/user)
 
 	var/dat
-	if(compressor)
+	if(compressor && compressor.turbine)
 		dat += {"<BR><B>Gas turbine remote control system</B><HR>
 		\nTurbine status: [ src.compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]
 		\n<BR>
@@ -296,7 +357,9 @@
 		\n<BR>
 		\n"}
 	else
-		dat += "\red<B>No compatible attached compressor found."
+		dat += "<B>There is [!compressor ? "no compressor" : " compressor[!compressor.turbine ? " and no turbine" : ""]"].</B><BR>"
+		if(!compressor)
+			dat += "<A href='?src=\ref[src];search=1'>Search for compressor</A>"
 
 	var/datum/browser/popup = new(user, "turbinecomputer", name)
 	popup.set_content(dat)
@@ -314,6 +377,8 @@
 		usr << browse(null, "window=turbinecomputer")
 		usr.unset_machine(src)
 		return
+	else if(href_list["search"])
+		search_turbine()
 
 	src.updateUsrDialog()
 	return

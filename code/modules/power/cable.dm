@@ -575,6 +575,26 @@ obj/structure/cable/proc/cableColor(var/colorC)
 		if("white")
 			icon = 'icons/obj/power_cond/power_cond_white.dmi'
 
+obj/structure/cable/proc/add_avail(var/amount)
+	if(powernet)
+		powernet.newavail += amount
+
+obj/structure/cable/proc/add_load(var/amount)
+	if(powernet)
+		powernet.newload += amount
+
+obj/structure/cable/proc/surplus()
+	if(powernet)
+		return powernet.avail-powernet.load
+	else
+		return 0
+
+obj/structure/cable/proc/avail()
+	if(powernet)
+		return powernet.avail
+	else
+		return 0
+
 /obj/item/stack/cable_coil/cut
 	item_state = "coil_red2"
 
