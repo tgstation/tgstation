@@ -12,6 +12,7 @@
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
 
 	var/walltype = "metal"
+	var/hardness = 40 //lower numbers are harder. Used to determine the probability of a hulk smashing through.
 
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, explode=0)
 	if(istype(src,/turf/simulated/wall/r_wall))
@@ -60,7 +61,6 @@
 			P.roll_and_drop(src)
 		else
 			O.loc = src
-
 	ChangeTurf(/turf/simulated/floor/plating)
 
 /turf/simulated/wall/ex_act(severity)
@@ -92,7 +92,7 @@
 
 /turf/simulated/wall/attack_paw(mob/user as mob)
 	if ((M_HULK in user.mutations))
-		if (prob(40))
+		if (prob(hardness))
 			usr << text("\blue You smash through the wall.")
 			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1)
@@ -103,27 +103,22 @@
 
 	return src.attack_hand(user)
 
-
-/turf/simulated/wall/attack_animal(mob/living/simple_animal/M as mob)
-	if(M.wall_smash)
-		if (istype(src, /turf/simulated/wall/r_wall) && !rotting)
-			M << text("\blue This wall is far too strong for you to destroy.")
-			return
-		else
-			if (prob(40) || rotting)
-				M << text("\blue You smash through the wall.")
+/turf/simulated/wall/attack_animal(var/mob/living/simple_animal/M)
+	if(M.environment_smash >= 2)
+		if(istype(src, /turf/simulated/wall/r_wall))
+			if(M.environment_smash == 3)
 				dismantle_wall(1)
-				return
+				M << "<span class='info'>You smash through the wall.</span>"
 			else
-				M << text("\blue You smash against the wall.")
-				return
-
-	M << "\blue You push the wall but nothing happens!"
-	return
+				M << "<span class='info'>This wall is far too strong for you to destroy.</span>"
+		else
+			M << "<span class='info'>You smash through the wall.</span>"
+			dismantle_wall(1)
+			return
 
 /turf/simulated/wall/attack_hand(mob/user as mob)
 	if (M_HULK in user.mutations)
-		if (prob(40) || rotting)
+		if (prob(hardness) || rotting)
 			usr << text("\blue You smash through the wall.")
 			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1)
@@ -302,7 +297,12 @@
 		var/obj/item/airlock_sensor_frame/AH = W
 		AH.try_build(src)
 		return
-
+	/*
+	else if(istype(W,/obj/item/newscaster_frame))
+		var/obj/item/newscaster_frame/AH = W
+		AH.try_build(src)
+		return
+	*/
 	else if(istype(W,/obj/item/alarm_frame))
 		var/obj/item/alarm_frame/AH = W
 		AH.try_build(src)

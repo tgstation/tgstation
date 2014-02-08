@@ -32,10 +32,14 @@
 	name = "Hivebot"
 	desc = "A smallish robot, this one is armed!"
 	ranged = 1
+	retreat_distance = 5
+	minimum_distance = 5
 
 /mob/living/simple_animal/hostile/hivebot/rapid
 	ranged = 1
 	rapid = 1
+	retreat_distance = 5
+	minimum_distance = 5
 
 /mob/living/simple_animal/hostile/hivebot/strong
 	name = "Strong Hivebot"

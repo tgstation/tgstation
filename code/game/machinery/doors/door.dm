@@ -24,6 +24,9 @@
 	dir = EAST
 	var/width = 1
 
+	// From old /vg/.
+	var/obj/jammed=null // The object that's jammed us open/closed
+
 /obj/machinery/door/New()
 	. = ..()
 	if(density)
@@ -92,7 +95,7 @@
 
 
 /obj/machinery/door/proc/bumpopen(mob/user as mob)
-	if(operating)	return
+	if(operating || jammed)	return
 	if(user.last_airflow > world.time - zas_settings.Get(/datum/ZAS_Setting/airflow_delay)) //Fakkit
 		return
 	src.add_fingerprint(user)
@@ -125,7 +128,7 @@
 /obj/machinery/door/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/device/detective_scanner))
 		return
-	if(src.operating || isrobot(user))	return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
+	if(src.operating || jammed || isrobot(user))	return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
 	src.add_fingerprint(user)
 	if(!src.requiresID())
 		user = null
@@ -206,6 +209,7 @@
 /obj/machinery/door/proc/open()
 	if(!density)		return 1
 	if(operating > 0)	return
+	if(jammed)			return
 	if(!ticker)			return 0
 	if(!operating)		operating = 1
 
@@ -237,6 +241,7 @@
 /obj/machinery/door/proc/close()
 	if(density)	return 1
 	if(operating > 0)	return
+	if(jammed)		return
 	operating = 1
 
 	door_animate("closing")
@@ -304,7 +309,7 @@
 
 /obj/machinery/door/proc/autoclose()
 	var/obj/machinery/door/airlock/A = src
-	if(!A.density && !A.operating && !A.locked && !A.welded && A.autoclose)
+	if(!A.density && !A.operating && !A.locked && !A.welded && A.autoclose && !A.jammed)
 		close()
 	return
 

@@ -161,28 +161,28 @@
 					conscious.Add(M)
 
 			//pick the nearest valid conscious target
-			var/mob/living/carbon/target_mob
+			var/mob/living/carbon/target
 			for(var/mob/living/carbon/M in conscious)
-				if(!target_mob || get_dist(src, M) < get_dist(src, target_mob))
-					target_mob = M
+				if(!target || get_dist(src, M) < get_dist(src, target))
+					target = M
 
-			if(!target_mob)
+			if(!target)
 				//get an unconscious mob
 				for(var/mob/living/carbon/M in incapacitated)
-					if(!target_mob || get_dist(src, M) < get_dist(src, target_mob))
-						target_mob = M
-			if(target_mob)
+					if(!target || get_dist(src, M) < get_dist(src, target))
+						target = M
+			if(target)
 				var/turf/target_turf
 				if(in_darkness)
 					//move to right behind them
-					target_turf = get_step(target_mob, src)
+					target_turf = get_step(target, src)
 				else
 					//move to them really really fast and knock them down
-					target_turf = get_turf(target_mob)
+					target_turf = get_turf(target)
 
 				//rampage along a path to get to them, in the blink of an eye
-				var/turf/next_turf = get_step_towards(src, target_mob)
-				var/num_turfs = get_dist(src,target_mob)
+				var/turf/next_turf = get_step_towards(src, target)
+				var/num_turfs = get_dist(src,target)
 				while(get_turf(src) != target_turf && num_turfs > 0)
 					for(var/obj/structure/window/W in next_turf)
 						W.ex_act(2)
@@ -193,15 +193,15 @@
 					if(!next_turf.CanPass(src, next_turf))
 						break
 					src.loc = next_turf
-					src.dir = get_dir(src, target_mob)
-					next_turf = get_step(src, get_dir(next_turf,target_mob))
+					src.dir = get_dir(src, target)
+					next_turf = get_step(src, get_dir(next_turf,target))
 					num_turfs--
 
 				//if we reached them, knock them down and start strangling them
 				if(get_turf(src) == target_turf)
-					target_mob.Stun(1)
-					target_mob.Paralyse(1)
-					GrabMob(target_mob)
+					target.Stun(1)
+					target.Paralyse(1)
+					GrabMob(target)
 
 			//if we're not strangling anyone, take a stroll
 			if(!G && prob(10))
@@ -233,7 +233,7 @@
 					if(!next_turf.CanPass(src, next_turf))
 						break
 					src.loc = next_turf
-					src.dir = get_dir(src, target_mob)
+					src.dir = get_dir(src, target)
 					next_turf = get_step(src, get_dir(next_turf,target_turf))
 					num_turfs--
 

@@ -276,7 +276,7 @@
 	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
 
 /obj/structure/table/attack_animal(mob/living/simple_animal/user)
-	if(user.wall_smash)
+	if(user.environment_smash>0)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		destroy()
 
@@ -652,7 +652,7 @@
 	destroy()
 
 /obj/structure/rack/attack_animal(mob/living/simple_animal/user)
-	if(user.wall_smash)
+	if(user.environment_smash>0)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		destroy()
 

@@ -30,7 +30,7 @@
 
 	a_intent = "harm" //so they don't get pushed around
 
-	wall_smash = 1
+	environment_smash = 2
 
 	speed = -1
 

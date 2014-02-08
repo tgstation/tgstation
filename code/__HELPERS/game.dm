@@ -19,6 +19,12 @@
 			return null
 	return 0
 
+/proc/get_area_master(O)
+	var/area/A = get_area(O)
+	if(A && A.master)
+		A = A.master
+	return A
+
 /proc/get_area_name(N) //get area by its name
 	for(var/area/A in world)
 		if(A.name == N)
@@ -43,7 +49,16 @@
 
 	return heard
 
-
+/proc/alone_in_area(var/area/the_area, var/mob/must_be_alone, var/check_type = /mob/living/carbon)
+	var/area/our_area = get_area_master(the_area)
+	for(var/C in living_mob_list)
+		if(!istype(C, check_type))
+			continue
+		if(C == must_be_alone)
+			continue
+		if(our_area == get_area_master(C))
+			return 0
+	return 1
 
 
 //Magic constants obtained by using linear regression on right-angled triangles of sides 0<x<1, 0<y<1
@@ -54,7 +69,7 @@
 	var/dx = abs(Ax - Bx)	//sides of right-angled triangle
 	var/dy = abs(Ay - By)
 	if(dx>=dy)	return (k1*dx) + (k2*dy)	//No sqrt or powers :)
-	else		return (k1*dx) + (k2*dy)
+	else		return (k2*dx) + (k1*dy)
 #undef k1
 #undef k2
 
@@ -305,6 +320,12 @@ proc/isInSight(var/atom/A, var/atom/B)
 		else
 			return get_step(start, EAST)
 
+/proc/try_move_adjacent(atom/movable/AM)
+	var/turf/T = get_turf(AM)
+	for(var/direction in cardinal)
+		if(AM.Move(get_step(T, direction)))
+			break
+
 /proc/get_mob_by_key(var/key)
 	for(var/mob/M in mob_list)
 		if(M.ckey == lowertext(key))
@@ -410,3 +431,63 @@ var/list/DummyCache = list()
 		spawn(delay)
 			for(var/client/C in group)
 				C.screen -= O
+
+/proc/flick_overlay(image/I, list/show_to, duration)
+	for(var/client/C in show_to)
+		C.images += I
+	sleep(duration)
+	for(var/client/C in show_to)
+		C.images -= I
+
+/proc/get_active_player_count()
+	// Get active players who are playing in the round
+	var/active_players = 0
+	for(var/i = 1; i <= player_list.len; i++)
+		var/mob/M = player_list[i]
+		if(M && M.client)
+			if(istype(M, /mob/new_player)) // exclude people in the lobby
+				continue
+			else if(isobserver(M)) // Ghosts are fine if they were playing once (didn't start as observers)
+				var/mob/dead/observer/O = M
+				if(O.started_as_observer) // Exclude people who started as observers
+					continue
+			active_players++
+	return active_players
+
+/datum/projectile_data
+	var/src_x
+	var/src_y
+	var/time
+	var/distance
+	var/power_x
+	var/power_y
+	var/dest_x
+	var/dest_y
+
+/datum/projectile_data/New(var/src_x, var/src_y, var/time, var/distance, \
+						   var/power_x, var/power_y, var/dest_x, var/dest_y)
+	src.src_x = src_x
+	src.src_y = src_y
+	src.time = time
+	src.distance = distance
+	src.power_x = power_x
+	src.power_y = power_y
+	src.dest_x = dest_x
+	src.dest_y = dest_y
+
+/proc/projectile_trajectory(var/src_x, var/src_y, var/rotation, var/angle, var/power)
+
+	// returns the destination (Vx,y) that a projectile shot at [src_x], [src_y], with an angle of [angle],
+	// rotated at [rotation] and with the power of [power]
+	// Thanks to VistaPOWA for this function
+
+	var/power_x = power * cos(angle)
+	var/power_y = power * sin(angle)
+	var/time = 2* power_y / 10 //10 = g
+
+	var/distance = time * power_x
+
+	var/dest_x = src_x + distance*sin(rotation);
+	var/dest_y = src_y + distance*cos(rotation);
+
+	return new /datum/projectile_data(src_x, src_y, time, distance, power_x, power_y, dest_x, dest_y)
