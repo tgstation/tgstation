@@ -79,7 +79,7 @@
 /mob/living/simple_animal/hostile/blobspore/Life()
 
 	if(!is_zombie)
-		for(var/mob/living/carbon/human/H in ListTargets(0)) //Only for people in the same tile
+		for(var/mob/living/carbon/human/H in src.loc) //Only for people in the same tile
 			if(H.stat == DEAD)
 				Zombify(H)
 				break
