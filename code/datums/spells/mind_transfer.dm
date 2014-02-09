@@ -10,8 +10,6 @@
 	range = 1
 	cooldown_min = 200 //100 deciseconds reduction per rank
 	var/list/protected_roles = list("Wizard","Changeling","Cultist") //which roles are immune to the spell
-	var/base_spell_loss_chance = 20 //base probability of the wizard losing a spell in the process
-	var/msg_wait = 500 //how long in deciseconds it waits before telling that body doesn't feel right
 	var/paralysis_amount_caster = 20 //how much the caster is paralysed for after the spell
 	var/paralysis_amount_victim = 20 //how much the victim is paralysed for after the spell
 
@@ -81,7 +79,3 @@ Also, you never added distance checking after target is selected. I've went ahea
 	//Here we paralyze both mobs and knock them out for a time.
 	caster.Paralyse(paralysis_amount_caster)
 	victim.Paralyse(paralysis_amount_victim)
-
-	//After a certain amount of time the victim gets a message about being in a different body.
-	spawn(msg_wait)
-		caster << "\red You feel woozy and lightheaded. <b>Your body doesn't seem like your own.</b>"
