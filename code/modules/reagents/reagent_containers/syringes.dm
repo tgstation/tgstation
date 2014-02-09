@@ -14,6 +14,8 @@
 	possible_transfer_amounts = null	//list(5, 10, 15)
 	volume = 15
 	var/mode = SYRINGE_DRAW
+	g_amt = 20
+	m_amt = 10
 
 	on_reagent_change()
 		update_icon()
