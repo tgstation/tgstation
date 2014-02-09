@@ -81,6 +81,7 @@
 	var/continuous_round_rev = 0			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
 	var/continuous_round_wiz = 0
 	var/continuous_round_malf = 0
+	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
 
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
 	var/alert_desc_blue_upto = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
@@ -317,6 +318,8 @@
 					config.continuous_round_wiz		= 1
 				if("continuous_round_malf")
 					config.continuous_round_malf	= 1
+				if("show_game_type_odds")
+					config.show_game_type_odds		= 1
 				if("ghost_interaction")
 					config.ghost_interaction		= 1
 				if("traitor_scaling_coeff")

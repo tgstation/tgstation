@@ -141,12 +141,18 @@
 	else
 		..()
 
-/obj/item/weapon/card/id/syndicate_command
-	name = "syndicate ID card"
+/obj/item/weapon/card/id/syndicate/operative
+	name = "syndicate operative ID card"
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
-	assignment = "Syndicate Overlord"
-	access = list(access_syndicate)
+	assignment = "Syndicate Operative"
+	icon_state = "centcom"
+
+/obj/item/weapon/card/id/syndicate/operative/commander
+	name = "syndicate commander ID card"
+	assignment = "Syndicate Commander"
+	icon_state = "centcomgold"
+	access = list(access_maint_tunnels, access_syndicate, access_syndicate_commander)
 
 /obj/item/weapon/card/id/captains_spare
 	name = "captain's spare ID"

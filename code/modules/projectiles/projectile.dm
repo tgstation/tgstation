@@ -62,9 +62,9 @@
 
 	proc/vol_by_damage()
 		if(src.damage)
-			return Clamp((src.damage) * 2, 30, 100)// Multiply projectile damage by 2, then clamp the value between 30 and 100
+			return Clamp((src.damage) * 0.67, 30, 100)// Multiply projectile damage by 0.67, then clamp the value between 30 and 100
 		else
-			return 40 //if the projectile doesn't do damage, play its hitsound at 40% volume
+			return 50 //if the projectile doesn't do damage, play its hitsound at 50% volume
 
 	Bump(atom/A as mob|obj|turf|area)
 
@@ -91,12 +91,13 @@
 			def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 			if(silenced)
 				playsound(loc, hitsound, 5, 1, -1)
-				M << "<span class='userdanger'>You've been shot in the [parse_zone(def_zone)] by [src]!</span>"
+				M << "<span class='userdanger'>You've been shot by \a [src] in \the [parse_zone(def_zone)]!</span>"
 			else
-				var/volume = vol_by_damage()
-				playsound(loc, hitsound, volume, 1, -1)
-				M.visible_message("<span class='danger'>[M] is hit by [src] in the [parse_zone(def_zone)]!", \
-									"<span class='userdanger'>[M] is hit by [src] in the [parse_zone(def_zone)]!")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+				if(hitsound)
+					var/volume = vol_by_damage()
+					playsound(loc, hitsound, volume, 1, -1)
+				M.visible_message("<span class='danger'>[M] is hit by \a [src] in the [parse_zone(def_zone)]!", \
+									"<span class='userdanger'>[M] is hit by \a [src] in the [parse_zone(def_zone)]!")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 			add_logs(firer, M, "shot", object="[src]", addition=reagent_note)
 
 
@@ -146,7 +147,7 @@
 				return
 			step_towards(src, current)
 			sleep(1)
-			if(!bumped && (original.layer>=2.75 || ismob(original)))
+			if(!bumped && ((original && original.layer>=2.75) || ismob(original)))
 				if(loc == get_turf(original))
 					if(!(original in permutated))
 						Bump(original)
