@@ -150,6 +150,9 @@ GATEWAY_DELAY 18000
 ## Uncomment to give everyone maint access.
 #EVERYONE_HAS_MAINT_ACCESS
 
+## Comment this to make security officers spawn in departmental security posts
+SEC_START_BRIG
+
 
 ### GHOST INTERACTION ###
 ## Uncomment to let ghosts spin chairs. You may be wondering why this is a config option. Don't ask.
