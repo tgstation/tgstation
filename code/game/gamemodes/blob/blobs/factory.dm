@@ -78,7 +78,7 @@
 
 /mob/living/simple_animal/hostile/blobspore/Life()
 
-	if(!is_zombie)
+	if(!is_zombie && isturf(src.loc))
 		for(var/mob/living/carbon/human/H in src.loc) //Only for people in the same tile
 			if(H.stat == DEAD)
 				Zombify(H)
