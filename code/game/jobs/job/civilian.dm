@@ -336,12 +336,12 @@
 	flag = LAWYER
 	department_flag = CIVILIAN
 	faction = "Station"
-	idtype = /obj/item/weapon/card/id/centcomm
+	idtype = /obj/item/weapon/card/id/centcom
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "NanoTransen Law, CentComm Officals, and the stations captain."
 	selection_color = "#dddddd"
-	access = list(access_lawyer, access_court, access_sec_doors, access_maint_tunnels, access_cargo, access_medbay,  access_bar, access_kitchen, access_hydroponics)
+	access = list(access_lawyer, access_court, access_sec_doors, access_maint_tunnels, access_cargo, access_medical,  access_bar, access_kitchen, access_hydroponics)
 	minimal_access = list(access_lawyer, access_court, access_sec_doors, access_cargo,  access_bar, access_kitchen)
 
 
@@ -353,7 +353,7 @@
 			if(4) H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
 		H.equip_or_collect(new /obj/item/clothing/under/rank/internalaffairs(H), slot_w_uniform)
 		H.equip_or_collect(new /obj/item/clothing/suit/storage/internalaffairs(H), slot_wear_suit)
-		H.equip_or_collect(new /obj/item/clothing/shoes/centcomm(H), slot_shoes)
+		H.equip_or_collect(new /obj/item/clothing/shoes/centcom(H), slot_shoes)
 		H.equip_or_collect(new /obj/item/clothing/glasses/sunglasses(H), slot_glasses)
 		H.equip_or_collect(new /obj/item/device/pda/lawyer(H), slot_belt)
 		H.equip_or_collect(new /obj/item/weapon/storage/briefcase(H), slot_l_hand)
