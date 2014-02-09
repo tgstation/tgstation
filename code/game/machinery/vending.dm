@@ -302,13 +302,18 @@
 		vend_ready = 0 //One thing at a time!!
 
 		var/datum/data/vending_product/R = locate(href_list["vend"])
-		if(!R || !istype(R) || !R.product_path || R.amount <= 0)
+		if(!R || !istype(R) || !R.product_path)
 			vend_ready = 1
 			return
 
-		if(R in coin_records)
+		if(R in hidden_records)
+			if(!extended_inventory)
+				vend_ready = 1
+				return
+		else if(R in coin_records)
 			if(!coin)
 				usr << "<span class='notice'>You need to insert a coin to get this item.</span>"
+				vend_ready = 1
 				return
 			if(coin.string_attached)
 				if(prob(50))
@@ -318,8 +323,17 @@
 					del(coin)
 			else
 				del(coin)
+		else if (!(R in product_records))
+			vend_ready = 1
+			message_admins("Vending machine exploit attempted by [key_name(usr, usr.client)]!")
+			return
 
-		R.amount--
+		if (R.amount <= 0)
+			usr << "<span class='warning'>Sold out.</span>"
+			vend_ready = 1
+			return
+		else
+			R.amount--
 
 		if(((last_reply + (vend_delay + 200)) <= world.time) && vend_reply)
 			speak(vend_reply)
