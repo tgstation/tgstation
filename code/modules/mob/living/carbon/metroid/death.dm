@@ -5,8 +5,10 @@
 			M.colour = colour
 			M.rabid = 1
 			is_adult = 0
+			maxHealth = 150
+			revive()
 			regenerate_icons()
-			health = maxHealth
+			name = "[colour] [is_adult ? "adult" : "baby"] slime ([rand(1, 1000)])"
 			return
 
 	if(stat == DEAD)	return

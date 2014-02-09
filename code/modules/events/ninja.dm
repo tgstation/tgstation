@@ -100,8 +100,7 @@
 						Mind.objectives += O
 
 					if(2)	//steal
-						var/datum/objective/steal/O = new /datum/objective/steal()
-						O.set_target(pick(O.possible_items_special))
+						var/datum/objective/steal/special/O = new /datum/objective/steal/special()
 						O.owner = Mind
 						Mind.objectives += O
 
@@ -2207,7 +2206,7 @@ ________________________________________________________________________________
 		spawn(0)
 			anim(U.loc,U,'icons/mob/mob.dmi',,"cloak",,U.dir)
 		s_active=!s_active
-		U.update_icons()	//update their icons
+		U.alpha = 0
 		U << "\blue You are now invisible to normal detection."
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] vanishes into thin air!",1)
@@ -2219,7 +2218,7 @@ ________________________________________________________________________________
 		spawn(0)
 			anim(U.loc,U,'icons/mob/mob.dmi',,"uncloak",,U.dir)
 		s_active=!s_active
-		U.update_icons()	//update their icons
+		U.alpha = 255
 		U << "\blue You are now visible."
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] appears from thin air!",1)

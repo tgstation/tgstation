@@ -21,6 +21,10 @@
 	BB.firer = user
 	BB.def_zone = user.zone_sel.selecting
 	BB.silenced = quiet
+
+	if(reagents && BB.reagents)
+		reagents.trans_to(BB, reagents.total_volume) //For chemical darts/bullets
+		reagents.delete()
 	return
 
 /obj/item/ammo_casing/proc/throw_proj(var/turf/targloc, mob/living/user as mob|obj, params)

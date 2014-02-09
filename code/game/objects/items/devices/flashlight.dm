@@ -26,13 +26,13 @@
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
 		if(loc == user)
-			user.SetLuminosity(user.luminosity + brightness_on)
+			user.AddLuminosity(brightness_on)
 		else if(isturf(loc))
 			SetLuminosity(brightness_on)
 	else
 		icon_state = initial(icon_state)
 		if(loc == user)
-			user.SetLuminosity(user.luminosity - brightness_on)
+			user.AddLuminosity(-brightness_on)
 		else if(isturf(loc))
 			SetLuminosity(0)
 
@@ -89,13 +89,13 @@
 
 /obj/item/device/flashlight/pickup(mob/user)
 	if(on)
-		user.SetLuminosity(user.luminosity + brightness_on)
+		user.AddLuminosity(brightness_on)
 		SetLuminosity(0)
 
 
 /obj/item/device/flashlight/dropped(mob/user)
 	if(on)
-		user.SetLuminosity(user.luminosity - brightness_on)
+		user.AddLuminosity(-brightness_on)
 		SetLuminosity(brightness_on)
 
 
@@ -189,12 +189,19 @@
 	. = ..()
 	// All good, turn it on.
 	if(.)
-		user.visible_message("<span class='notice'>[user] activates the flare.</span>", "<span class='notice'>You pull the cord on the flare, activating it!</span>")
+		user.visible_message("<span class='notice'>[user] lights the [src].</span>", "<span class='notice'>You light the [src]!</span>")
 		src.force = on_damage
 		src.damtype = "fire"
 		processing_objects += src
 
-
+/obj/item/device/flashlight/flare/torch
+	name = "torch"
+	desc = "A torch fashioned from some leaves and a log."
+	w_class = 4
+	brightness_on = 7
+	icon_state = "torch"
+	item_state = "torch_off"
+	on_damage = 10
 
 
 /obj/item/device/flashlight/slime

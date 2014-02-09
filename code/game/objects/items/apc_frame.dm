@@ -35,7 +35,7 @@
 			usr << "\red There is another network terminal here."
 			return
 		else
-			var/obj/item/weapon/cable_coil/C = new /obj/item/weapon/cable_coil(loc)
+			var/obj/item/stack/cable_coil/C = new /obj/item/stack/cable_coil(loc)
 			C.amount = 10
 			usr << "You cut the cables and disassemble the unused power terminal."
 			del(T)

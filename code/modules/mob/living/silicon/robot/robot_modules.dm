@@ -11,24 +11,37 @@
 	var/obj/item/borg/upgrade/jetpack = null
 
 
-	emp_act(severity)
-		if(modules)
-			for(var/obj/O in modules)
-				O.emp_act(severity)
-		if(emag)
-			emag.emp_act(severity)
-		..()
-		return
+/obj/item/weapon/robot_module/emp_act(severity)
+	if(modules)
+		for(var/obj/O in modules)
+			O.emp_act(severity)
+	if(emag)
+		emag.emp_act(severity)
+	..()
+	return
+
+/obj/item/weapon/robot_module/proc/get_usable_modules()
+	. = modules.Copy()
+	var/mob/living/silicon/robot/R = loc
+	if(R.emagged)
+		. += emag
+
+/obj/item/weapon/robot_module/proc/get_inactive_modules()
+	. = list()
+	var/mob/living/silicon/robot/R = loc
+	for(var/m in get_usable_modules())
+		if((m != R.module_state_1) && (m != R.module_state_2) && (m != R.module_state_3))
+			. += m
 
 
-	New()
-		modules += new /obj/item/device/flashlight(src)
-		modules += new /obj/item/device/flash(src)
-		emag = new /obj/item/toy/sword(src)
-		emag.name = "Placeholder Emag Item"
+/obj/item/weapon/robot_module/New()
+	modules += new /obj/item/device/flashlight(src)
+	modules += new /obj/item/device/flash(src)
+	emag = new /obj/item/toy/sword(src)
+	emag.name = "Placeholder Emag Item"
 //		jetpack = new /obj/item/toy/sword(src)
 //		jetpack.name = "Placeholder Upgrade Item"
-		return
+	return
 
 
 /obj/item/weapon/robot_module/proc/respawn_consumable(var/mob/living/silicon/robot/R)
@@ -40,6 +53,9 @@
 	for(var/obj/O in temp_list)
 		if(O)
 			modules += O
+
+/obj/item/weapon/robot_module/proc/on_emag()
+	return
 
 
 /obj/item/weapon/robot_module/standard
@@ -104,7 +120,7 @@
 		R.amount = 50
 		modules += R
 
-		var/obj/item/weapon/cable_coil/W = new /obj/item/weapon/cable_coil(src)
+		var/obj/item/stack/cable_coil/W = new /obj/item/stack/cable_coil(src)
 		W.amount = 50
 		modules += W
 
@@ -118,7 +134,7 @@
 			/obj/item/stack/sheet/metal,
 			/obj/item/stack/sheet/rglass,
 			/obj/item/stack/rods,
-			/obj/item/weapon/cable_coil,
+			/obj/item/stack/cable_coil,
 			/obj/item/stack/tile/plasteel/cyborg,
 		)
 		for(var/T in what)
@@ -193,11 +209,23 @@
 
 	New()
 		..()
+		var/mob/living/silicon/robot/R = loc
 		modules += new /obj/item/borg/sight/meson(src)
 		emag = new /obj/item/borg/stun(src)
 		modules += new /obj/item/weapon/storage/bag/ore(src)
-		modules += new /obj/item/weapon/pickaxe/borgdrill(src)
+		if(R.emagged)
+			modules += new /obj/item/weapon/pickaxe/diamonddrill(src)
+		else
+			modules += new /obj/item/weapon/pickaxe/borgdrill(src)
 		modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
+		modules += new /obj/item/device/analyzer(src)
+
+	on_emag()
+		..()
+		for(var/obj/item/weapon/pickaxe/borgdrill/D in modules)
+			del(D)
+		modules += new /obj/item/weapon/pickaxe/diamonddrill(src)
+		rebuild()
 
 
 /obj/item/weapon/robot_module/syndicate

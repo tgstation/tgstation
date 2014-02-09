@@ -48,6 +48,7 @@
 			if(target.initialize_directions & get_dir(target,src))
 				node = target
 				break
+		build_network()
 
 		update_icon()
 

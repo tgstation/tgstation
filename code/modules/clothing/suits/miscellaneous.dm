@@ -86,15 +86,6 @@
 	flags_inv = HIDEJUMPSUIT
 
 
-/obj/item/clothing/suit/wcoat
-	name = "waistcoat"
-	desc = "For some classy, murderous fun."
-	icon_state = "vest"
-	item_state = "wcoat"
-	blood_overlay_type = "armor"
-	body_parts_covered = CHEST
-
-
 /obj/item/clothing/suit/apron/overalls
 	name = "coveralls"
 	desc = "A set of denim overalls."
@@ -186,6 +177,12 @@
 	desc = "A worn out, curiously comfortable t-shirt with a picture of Ian. You wouldn't go so far as to say it feels like being hugged when you wear it but it's pretty close. Good for sleeping in."
 	icon_state = "ianshirt"
 	item_state = "ianshirt"
+
+/obj/item/clothing/suit/nerdshirt
+	name = "gamer shirt"
+	desc = "A baggy shirt with vintage game character Phanic the Weasel. Why would someone wear this?"
+	icon_state = "nerdshirt"
+	item_state = "nerdshirt"
 
 //Blue suit jacket toggle
 /obj/item/clothing/suit/suit/verb/toggle()

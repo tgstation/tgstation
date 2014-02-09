@@ -120,34 +120,22 @@ var/religion_name = null
 	return name
 
 var/syndicate_name = null
-/proc/syndicate_name()
-	if (syndicate_name)
+var/syndicate_short = null
+/proc/syndicate_name(var/shortname=0) //only picks from syndicate companies that actually field operatives
+	if (syndicate_name && !shortname)
 		return syndicate_name
+	if (shortname)
+		if(syndicate_short)
+			return syndicate_short
 
-	var/name = ""
+	syndicate_name = pick("Cybersun Industries","Gorlex Mauraders","Aussec Armory")//will use factions.dm soon
 
-	// Prefix
-	name += pick("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Bonk", "Gene", "Gib")
+	var/list/shortnamelist = text2list(syndicate_name," ") //creates a short name so that operatives, etc.
+	syndicate_short = shortnamelist[1] //do not have to use the full company name in their title
+	if(shortname) //this will return Gorlex rather than Gorlex Mauraders or Cybersun instead of Cybersun industries.
+		return syndicate_short
 
-	// Suffix
-	if (prob(80))
-		name += " "
-
-		// Full
-		if (prob(60))
-			name += pick("Syndicate", "Consortium", "Collective", "Corporation", "Group", "Holdings", "Biotech", "Industries", "Systems", "Products", "Chemicals", "Enterprises", "Family", "Creations", "International", "Intergalactic", "Interplanetary", "Foundation", "Positronics", "Hive")
-		// Broken
-		else
-			name += pick("Syndi", "Corp", "Bio", "System", "Prod", "Chem", "Inter", "Hive")
-			name += pick("", "-")
-			name += pick("Tech", "Sun", "Co", "Tek", "X", "Inc", "Code")
-	// Small
-	else
-		name += pick("-", "*", "")
-		name += pick("Tech", "Sun", "Co", "Tek", "X", "Inc", "Gen", "Star", "Dyne", "Code", "Hive")
-
-	syndicate_name = name
-	return name
+	return syndicate_name
 
 
 //Traitors and traitor silicons will get these. Revs will not.

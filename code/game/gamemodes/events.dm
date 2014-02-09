@@ -81,9 +81,9 @@
 		if(istype(get_area(S), /area/turret_protected) || S.z != 1)
 			continue
 		S.charge = 0
-		S.output = 0
-		S.online = 0
-		S.updateicon()
+		S.output_level = 0
+		S.output_attempt = 0
+		S.update_icon()
 		S.power_change()
 
 	var/list/skipped_areas = list(/area/engine/engineering, /area/turret_protected/ai)
@@ -133,9 +133,9 @@
 		if(S.z != 1)
 			continue
 		S.charge = S.capacity
-		S.output = 200000
-		S.online = 1
-		S.updateicon()
+		S.output_level = S.output_level_max
+		S.output_attempt = 1
+		S.update_icon()
 		S.power_change()
 	for(var/area/A in world)
 		if(A.name != "Space" && A.name != "Engine Walls" && A.name != "Chemical Lab Test Chamber" && A.name != "space" && A.name != "Escape Shuttle" && A.name != "Arrival Area" && A.name != "Arrival Shuttle" && A.name != "start area" && A.name != "Engine Combustion Chamber")
@@ -153,8 +153,8 @@
 		if(S.z != 1)
 			continue
 		S.charge = S.capacity
-		S.output = 200000
-		S.online = 1
-		S.updateicon()
+		S.output_level = S.output_level_max
+		S.output_attempt = 1
+		S.update_icon()
 		S.power_change()
 

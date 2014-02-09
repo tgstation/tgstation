@@ -61,11 +61,10 @@ Note: Must be placed west/left of and R&D console to function.
 		shock(user,50)
 	if (O.is_open_container())
 		return 1
-	if (istype(O, /obj/item/weapon/screwdriver))
+	if (default_deconstruction_screwdriver(user, "protolathe_t", "protolathe", O))
 		if(linked_console)
 			linked_console.linked_lathe = null
 			linked_console = null
-		default_deconstruction_screwdriver(user, "protolathe_t", "protolathe")
 		return
 	if (panel_open)
 		if(istype(O, /obj/item/weapon/crowbar))
@@ -96,7 +95,7 @@ Note: Must be placed west/left of and R&D console to function.
 			if(adamantine_amount >= 2000)
 				var/obj/item/stack/sheet/mineral/adamantine/G = new /obj/item/stack/sheet/mineral/adamantine(src.loc)
 				G.amount = round(adamantine_amount / G.perunit)
-			default_deconstruction_crowbar()
+			default_deconstruction_crowbar(O)
 			return 1
 		else
 			user << "\red You can't load the [src.name] while it's opened."

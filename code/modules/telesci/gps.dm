@@ -9,6 +9,7 @@ var/list/GPS_list = list()
 	origin_tech = "programming=2;engineering=2"
 	var/gpstag = "COM0"
 	var/emped = 0
+	var/turf/locked_location
 
 /obj/item/device/gps/New()
 	..()
@@ -37,6 +38,8 @@ var/list/GPS_list = list()
 	else
 		t += "<BR><A href='?src=\ref[src];tag=1'>Set Tag</A> "
 		t += "<BR>Tag: [gpstag]"
+		if(locked_location && locked_location.loc)
+			t += "<BR>Bluespace coordinates saved: [locked_location.loc]"
 
 		for(var/obj/item/device/gps/G in GPS_list)
 			var/turf/pos = get_turf(G)

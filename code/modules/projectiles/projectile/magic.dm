@@ -9,10 +9,11 @@
 /obj/item/projectile/magic/death
 	name = "bolt of death"
 	icon_state = "pulse1_bl"
-	damage = 9001
-	damage_type = OXY
-	nodamage = 0
-	flag = "magic"
+
+/obj/item/projectile/magic/death/on_hit(var/target)
+	if(ismob(target))
+		var/mob/M = target
+		M.death(0)
 
 /obj/item/projectile/magic/fireball
 	name = "bolt of fireball"
@@ -133,7 +134,10 @@ proc/wabbajack(mob/living/M)
 					new_mob = new /mob/living/carbon/monkey(M.loc)
 					new_mob.universal_speak = 1
 				if("robot")
-					new_mob = new /mob/living/silicon/robot(M.loc)
+					if(prob(30))
+						new_mob = new /mob/living/silicon/robot/syndicate(M.loc)
+					else
+						new_mob = new /mob/living/silicon/robot(M.loc)
 					new_mob.gender = M.gender
 					new_mob.invisibility = 0
 					new_mob.job = "Cyborg"
@@ -170,7 +174,7 @@ proc/wabbajack(mob/living/M)
 						if("cat")		new_mob = new /mob/living/simple_animal/cat(M.loc)
 						if("carp")		new_mob = new /mob/living/simple_animal/hostile/carp(M.loc)
 						if("bear")		new_mob = new /mob/living/simple_animal/hostile/bear(M.loc)
-						if("mushroom")	new_mob = new /mob/living/simple_animal/mushroom(M.loc)
+						if("mushroom")	new_mob = new /mob/living/simple_animal/hostile/mushroom(M.loc)
 						if("tomato")	new_mob = new /mob/living/simple_animal/tomato(M.loc)
 						if("mouse")		new_mob = new /mob/living/simple_animal/mouse(M.loc)
 						if("chicken")	new_mob = new /mob/living/simple_animal/chicken(M.loc)

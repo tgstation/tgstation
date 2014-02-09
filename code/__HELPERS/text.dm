@@ -305,6 +305,9 @@ var/list/binary = list("0","1")
 /proc/random_short_color()
 	return random_string(3, hex_characters)
 
+/proc/random_color()
+	return random_string(6, hex_characters)
+
 /proc/add_zero2(t, u)
 	var/temp1
 	while (length(t) < u)

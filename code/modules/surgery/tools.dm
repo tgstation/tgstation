@@ -51,8 +51,8 @@
 	attack_verb = list("drilled")
 
 	suicide_act(mob/user)
-		viewers(user) << pick("/red <b>[user] is pressing [src] to \his temple and activating it! It looks like \he's trying to commit suicide.</b>", \
-							"/red <b>[user] is pressing [src] to \his chest and activating it! It looks like \he's trying to commit suicide.</b>")
+		viewers(user) << pick("<span class='suicide'>[user] is pressing [src] to \his temple and activating it! It looks like \he's trying to commit suicide.</span>", \
+							"<span class='suicide'>[user] is pressing [src] to \his chest and activating it! It looks like \he's trying to commit suicide.</span>")
 		return (BRUTELOSS)
 
 
@@ -71,11 +71,12 @@
 	g_amt = 5000
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	hitsound = 'sound/weapons/bladeslice.ogg'
 
 	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is slitting \his wrists with [src]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his throat with [src]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his stomach open with [src]! It looks like \he's trying to commit seppuku.</b>")
+		viewers(user) << pick("<span class='suicide'>[user] is slitting \his wrists with [src]! It looks like \he's trying to commit suicide.</span>", \
+							"<span class='suicide'>[user] is slitting \his throat with [src]! It looks like \he's trying to commit suicide.</span>", \
+							"<span class='suicide'>[user] is slitting \his stomach open with [src]! It looks like \he's trying to commit seppuku.</span>")
 		return (BRUTELOSS)
 
 
@@ -85,6 +86,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "saw"
 	hitsound = 'sound/weapons/circsawhit.ogg'
+	throwhitsound =  'sound/weapons/pierce.ogg'
 	flags = CONDUCT
 	force = 15.0
 	w_class = 3.0

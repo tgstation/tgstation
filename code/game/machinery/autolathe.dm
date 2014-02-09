@@ -46,6 +46,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/light/tube(), \
 		new /obj/item/weapon/light/bulb(), \
 		new /obj/item/weapon/camera_assembly(), \
+		new /obj/item/newscaster_frame(), \
 	)
 
 var/global/list/autolathe_recipes_hidden = list( \
@@ -191,7 +192,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 				if(g_amount >= 3750)
 					var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
 					G.amount = round(g_amount / 3750)
-				default_deconstruction_crowbar()
+				default_deconstruction_crowbar(O)
 				return 1
 			else
 				user.set_machine(src)
@@ -275,7 +276,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 						spawn(16/coeff)
 							use_power(power)
 							spawn(16/coeff)
-								if(template.type == /obj/item/stack)
+								if(istype(template, /obj/item/stack))
 									src.m_amount -= template.m_amt*multiplier
 									src.g_amount -= template.g_amt*multiplier
 									var/obj/new_item = new template.type(T)

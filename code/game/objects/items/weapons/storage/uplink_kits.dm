@@ -1,7 +1,7 @@
 /obj/item/weapon/storage/box/syndicate/
 	New()
 		..()
-		switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "freedom" = 1, "hacker" = 1, "lordsingulo" = 1, "smoothoperator" = 1, "darklord" = 1)))
+		switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "freedom" = 1, "hacker" = 1, "lordsingulo" = 1, "darklord" = 1)))
 			if("bloodyspai")
 				new /obj/item/clothing/under/chameleon(src)
 				new /obj/item/clothing/mask/gas/voice(src)
@@ -56,16 +56,6 @@
 				new /obj/item/clothing/suit/space/syndicate(src)
 				new /obj/item/clothing/head/helmet/space/syndicate(src)
 				new /obj/item/weapon/card/emag(src)
-				return
-
-			if("smoothoperator")
-				new /obj/item/weapon/gun/projectile/automatic/pistol(src)
-				new /obj/item/weapon/silencer(src)
-				new /obj/item/weapon/soap/syndie(src)
-				new /obj/item/weapon/storage/bag/trash(src)
-				new /obj/item/bodybag(src)
-				new /obj/item/clothing/under/suit_jacket(src)
-				new /obj/item/clothing/shoes/laceup(src)
 				return
 
 			if("darklord")
