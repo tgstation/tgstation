@@ -392,8 +392,6 @@
 			if(!condi)
 				var/amount = 1
 				var/vol_each = min(reagents.total_volume, 50)
-				world << vol_each
-				world << href_list["many"]
 				if(text2num(href_list["many"]))
 					amount = min(max(round(input(usr, "Amount:", "How many pills?") as num), 1), 10)
 					vol_each = min(reagents.total_volume/amount, 50)
