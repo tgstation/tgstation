@@ -20,6 +20,7 @@
 		endurance -= rand(1,(endurance/3)+1)
 	else
 		usr << "All the petals have fallen off the [name] from violent whacking."
+		usr.drop_from_inventory(src)
 		del(src)
 
 /obj/item/weapon/grown/novaflower/pickup(mob/living/carbon/human/user as mob)
@@ -43,9 +44,9 @@
 	if(!proximity) return
 	if(force > 0)
 		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
-		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	else
 		usr << "All the leaves have fallen off the nettle from violent whacking."
+		usr.drop_from_inventory(src)
 		del(src)
 
 /obj/item/weapon/grown/nettle/changePotency(newValue) //-QualityVan
@@ -72,8 +73,6 @@
 		M << "\red You are stunned by the powerful acid of the Deathnettle!"
 		add_logs(user, M, "attacked", object="[src.name]")
 
-		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
-
 		M.eye_blurry += force/7
 		if(prob(20))
 			M.Paralyse(force/6)
@@ -87,6 +86,7 @@
 
 	else
 		usr << "All the leaves have fallen off the deathnettle from violent whacking."
+		usr.drop_from_inventory(src)
 		del(src)
 
 /obj/item/weapon/grown/deathnettle/changePotency(newValue) //-QualityVan
@@ -95,11 +95,12 @@
 
 
 //Corncob
-/obj/item/weapon/corncob/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/grown/corncob/attackby(obj/item/weapon/grown/W as obj, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchen/utensil/knife))
 		user << "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>"
 		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
+		usr.drop_from_inventory(src)
 		del(src)
 		return
 
@@ -114,6 +115,7 @@
 	if(inner_teleport_radius < 1) //Wasn't potent enough, it just splats.
 		new/obj/effect/decal/cleanable/oil(src.loc)
 		src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+		usr.drop_from_inventory(src)
 		del(src)
 		return
 	for(var/turf/T in orange(M,outer_teleport_radius))
