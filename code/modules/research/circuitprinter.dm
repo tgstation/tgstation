@@ -39,7 +39,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		T = 0
 		for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 			T += M.rating
-		efficiency_coeff = T //Only 1 manipulator here, you're making runtimes Razharas
+		efficiency_coeff = 2 ** (T - 1) //Only 1 manipulator here, you're making runtimes Razharas
 
 	blob_act()
 		if (prob(50))

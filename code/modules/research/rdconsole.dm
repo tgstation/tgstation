@@ -405,7 +405,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						updateUsrDialog()
 
 	else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.
-		var/coeff = 2 ** linked_imprinter.efficiency_coeff
+		var/coeff = linked_imprinter.efficiency_coeff
 		var/g2g = 1
 		if(linked_imprinter)
 			var/datum/design/being_built = null
@@ -849,7 +849,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<h3>Circuit Imprinter Menu:</h3><BR>"
 			dat += "Material Amount: [linked_imprinter.TotalMaterials()]<BR>"
 			dat += "Chemical Volume: [linked_imprinter.reagents.total_volume]<HR>"
-			var/coeff = linked_imprinter.efficiency_coeff // 2000/20 for micro, 1000/10 for nano, 666.6.../6.666... for pico because pico is BEAST
+			var/coeff = linked_imprinter.efficiency_coeff
 			for(var/datum/design/D in files.known_designs)
 				if(!(D.build_type & IMPRINTER))
 					continue
