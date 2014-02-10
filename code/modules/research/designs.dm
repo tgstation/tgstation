@@ -1525,6 +1525,15 @@ other types of metals and chemistry for reagents).
 	materials = list("$metal" = 8000, "$glass" = 2000)
 	build_path = /obj/item/device/robotanalyzer
 
+/datum/design/defibrilator
+	name = "Defibrilator"
+	desc = "A handheld emergency defibrilator, used to bring people back from the brink of death or put them there."
+	id = "defibrilatorr"
+	req_tech = list("magnets" = 3, "materials" = 4, "biotech" = 4)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 9000, "$silver" = 250, "$glass" = 10000)
+	build_path = /obj/item/weapon/melee/defibrilator
+
 /////////////////////////////////////////
 /////////////////Weapons/////////////////
 /////////////////////////////////////////
@@ -1798,6 +1807,16 @@ other types of metals and chemistry for reagents).
 	reliability = 100
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreactlarge
 
+/datum/design/reactive_teleport_armor
+	name = "Reactive Teleport Armor"
+	desc = "Someone seperated our Research Director from his own head!"
+	id = "reactive_teleport_armor"
+	req_tech = list("bluespace" = 4, "materials" = 5)
+	build_type = PROTOLATHE
+	materials = list("$diamond" = 2000, "$metal" = 3000, "$uranium" = 3750)
+	build_path = /obj/item/clothing/suit/armor/reactive
+
+
 /////////////////////////////////////////
 /////////////////HUDs////////////////////
 /////////////////////////////////////////
@@ -1819,6 +1838,43 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = /obj/item/clothing/glasses/hud/security
+	locked = 1
+
+/////////////////////////////////////////
+/////////////////Engineering/////////////
+/////////////////////////////////////////
+
+/datum/design/superior_welding_goggles
+	name = "Superior Welding Goggles"
+	desc = "Welding goggles made from more expensive materials, strangely smells like potatoes."
+	id = "superior_welding_goggles"
+	req_tech = list("materials" = 3, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 500, "$glass" = 1500)
+	build_path = /obj/item/clothing/glasses/welding/superior
+
+/datum/design/night_vision_goggles
+	name = "Night Vision Goggles"
+	desc = "You can totally see in the dark now!."
+	id = "night_vision_goggles"
+	req_tech = list("materials" = 5, "engineering" = 4)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 700, "$glass" = 2000, "$gold" = 100)
+	build_path = /obj/item/clothing/glasses/night
+
+
+/////////////////////////////////////////
+//////////////////Security///////////////
+/////////////////////////////////////////
+
+/datum/design/ablative_armor_vest
+	name = "Ablative Armor Vest"
+	desc = "A vest that excels in protecting the wearer against energy projectiles."
+	id = "ablative vest"
+	req_tech = list("combat" = 4, "materials" = 5)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 1500, "$glass" = 2500, "$diamond" = 3750, "$silver" = 1000, "$uranium" = 500)
+	build_path = /obj/item/clothing/suit/armor/laserproof
 	locked = 1
 
 /////////////////////////////////////////
