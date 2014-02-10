@@ -200,6 +200,8 @@
 	new /obj/item/weapon/reagent_containers/pill/stimulant( src )
 	new /obj/item/weapon/reagent_containers/pill/stimulant( src )
 	new /obj/item/weapon/reagent_containers/pill/stimulant( src )
+	new /obj/item/weapon/reagent_containers/pill/stimulant( src )
+	new /obj/item/weapon/reagent_containers/pill/stimulant( src )
 
 /obj/item/weapon/storage/pill_bottle/dice
 	name = "bag of dice"

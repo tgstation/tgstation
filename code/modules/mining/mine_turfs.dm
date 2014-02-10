@@ -112,6 +112,16 @@
 
 /turf/simulated/mineral/random/high_chance/New()
 	icon_state = "rock"
+	..()
+
+/turf/simulated/mineral/random/low_chance
+	icon_state = "rock_lowchance"
+	mineralChance = 10
+	mineralSpawnChanceList = list("Uranium" = 1, "Diamond" = 1, "Gold" = 1, "Silver" = 1, "Plasma" = 25, "Iron" = 50, "Gibtonite" = 4)
+
+/turf/simulated/mineral/random/low_chance/New()
+	icon_state = "rock"
+	..()
 
 /turf/simulated/mineral/uranium
 	name = "Uranium deposit"
@@ -129,7 +139,6 @@
 	mineralAmt = 5
 	spreadChance = 20
 	spread = 1
-
 
 /turf/simulated/mineral/diamond
 	name = "Diamond deposit"
@@ -163,7 +172,7 @@
 	icon_state = "rock_Plasma"
 	mineralName = "Plasma"
 	mineralAmt = 5
-	spreadChance = 15
+	spreadChance = 25
 	spread = 1
 
 /turf/simulated/mineral/clown
@@ -327,8 +336,8 @@
 
 
 /turf/simulated/floor/plating/asteroid/airless/cave/proc/SpawnFloor(var/turf/T)
-	for(var/turf/space/S in range(3,T))
-		if(istype(S, /turf/space))
+	for(var/turf/S in range(2,T))
+		if(istype(S, /turf/space) || istype(S, /turf/simulated/mineral/random/low_chance))
 			sanity = 0
 			break
 	if(!sanity)
@@ -410,6 +419,11 @@
 	var/turf/simulated/floor/plating/asteroid/airless/N = ChangeTurf(/turf/simulated/floor/plating/asteroid/airless)
 	N.fullUpdateMineralOverlays()
 	return
+
+/turf/simulated/mineral/attack_animal(mob/living/simple_animal/user as mob)
+	if(user.environment_smash >= 2)
+		gets_drilled()
+	..()
 
 /*
 /turf/simulated/mineral/proc/setRandomMinerals()

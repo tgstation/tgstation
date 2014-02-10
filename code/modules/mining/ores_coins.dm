@@ -111,7 +111,24 @@
 	var/quality = 1 //How pure this gibtonite is, determines the explosion produced by it and is derived from the det_time of the rock wall it was taken from, higher value = better
 
 /obj/item/weapon/twohanded/required/gibtonite/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/pickaxe) && !primed)
+	if(istype(I, /obj/item/weapon/pickaxe) || istype(I, /obj/item/weapon/resonator))
+		GibtoniteReaction(user)
+		return
+	if(istype(I, /obj/item/device/mining_scanner) && primed)
+		primed = 0
+		user.visible_message("<span class='notice'>The chain reaction was stopped! ...The ore's quality went down.</span>")
+		icon_state = "Gibtonite ore"
+		quality = 1
+		return
+	..()
+
+/obj/item/weapon/twohanded/required/gibtonite/bullet_act(var/obj/item/projectile/P)
+	if(istype(P, /obj/item/projectile/kinetic))
+		GibtoniteReaction(P.firer)
+	..()
+
+/obj/item/weapon/twohanded/required/gibtonite/proc/GibtoniteReaction(mob/user)
+	if(!primed)
 		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,1)
 		primed = 1
 		icon_state = "Gibtonite active"
@@ -133,12 +150,6 @@
 			if(quality == 1)
 				explosion(src.loc,-1,1,3,adminlog = notify_admins)
 			del(src)
-	if(istype(I, /obj/item/device/analyzer) && primed)
-		primed = 0
-		user.visible_message("<span class='notice'>The chain reaction was stopped! ...The ore's quality went down.</span>")
-		icon_state = "Gibtonite ore"
-		quality = 1
-	..()
 
 /obj/item/weapon/ore/New()
 	pixel_x = rand(0,16)-8

@@ -149,15 +149,15 @@
 		if(isturf(loc) && target.Adjacent(src))	//If they're next to us, attack
 			AttackingTarget()
 		return
-	if(target.loc != null && get_dist(src, target.loc) <= vision_range)//We can't see our target, but he's in our vision range still
-		if(FindHidden(target) && environment_smash)//Check if he tried to hide in something to lose us
-			var/atom/A = target.loc
-			Goto(A,move_to_delay,minimum_distance)
-			if(A.Adjacent(src))
-				A.attack_animal(src)
-			return
-		else
-			LostTarget()
+	if(environment_smash)
+		if(target.loc != null && get_dist(src, target.loc) <= vision_range)//We can't see our target, but he's in our vision range still
+			if(environment_smash >= 2)//If we're capable of smashing through walls, forget about vision completely after finding our target
+				Goto(target,move_to_delay,minimum_distance)
+				FindHidden()
+				return
+			else
+				if(FindHidden())
+					return
 	LostTarget()
 
 /mob/living/simple_animal/hostile/proc/Goto(var/target, var/delay, var/minimum_distance)
@@ -174,7 +174,7 @@
 			var/new_target = FindTarget()
 			GiveTarget(new_target)
 		if(stance == HOSTILE_STANCE_ATTACK)//No more pulling a mob forever and having a second player attack it, it can switch targets now if it finds a more suitable one
-			if(target != null && prob(25))
+			if(target != null && prob(40))
 				var/new_target = FindTarget()
 				GiveTarget(new_target)
 
@@ -269,7 +269,7 @@
 		EscapeConfinement()
 		for(var/dir in cardinal)
 			var/turf/T = get_step(src, dir)
-			if(istype(T, /turf/simulated/wall))
+			if(istype(T, /turf/simulated/wall) || istype(T, /turf/simulated/mineral))
 				T.attack_animal(src)
 			for(var/atom/A in T)
 				if(istype(A, /obj/structure/window) || istype(A, /obj/structure/closet) || istype(A, /obj/structure/table) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/rack))
@@ -284,8 +284,10 @@
 		A.attack_animal(src)//Bang on it till we get out
 	return
 
-/mob/living/simple_animal/hostile/proc/FindHidden(var/atom/hidden_target)
+/mob/living/simple_animal/hostile/proc/FindHidden()
 	if(istype(target.loc, /obj/structure/closet) || istype(target.loc, /obj/machinery/disposal) || istype(target.loc, /obj/machinery/sleeper))
+		var/atom/A = target.loc
+		Goto(A,move_to_delay,minimum_distance)
+		if(A.Adjacent(src))
+			A.attack_animal(src)
 		return 1
-	else
-		return 0

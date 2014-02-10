@@ -1072,7 +1072,6 @@
 			if(glasses)
 				if(istype(glasses, /obj/item/clothing/glasses/meson))
 					sight |= SEE_TURFS
-				//	see_invisible = SEE_INVISIBLE_MINIMUM
 				else if(istype(glasses, /obj/item/clothing/glasses/night))
 					see_in_dark = 5
 					see_invisible = SEE_INVISIBLE_MINIMUM

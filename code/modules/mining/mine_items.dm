@@ -137,7 +137,7 @@
 
 	borgdrill
 		name = "cyborg mining drill"
-		icon_state = "diamonddrill"
+		icon_state = "jackhammer"
 		item_state = "jackhammer"
 		digspeed = 15
 		desc = ""
