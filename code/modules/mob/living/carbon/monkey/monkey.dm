@@ -167,11 +167,11 @@
 							if ((O.client && !( O.blinded )))
 								O.show_message(text("\red <B>[] has pushed down [name]!</B>", M), 1)
 					else
-						drop_item()
-						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-						for(var/mob/O in viewers(src, null))
-							if ((O.client && !( O.blinded )))
-								O.show_message(text("\red <B>[] has disarmed [name]!</B>", M), 1)
+						if(drop_item())
+							playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+							for(var/mob/O in viewers(src, null))
+								if ((O.client && !( O.blinded )))
+									O.show_message(text("\red <B>[] has disarmed [name]!</B>", M), 1)
 	return
 
 /mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
@@ -236,10 +236,10 @@
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has tackled down [name]!</B>", M), 1)
 			else
-				drop_item()
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has disarmed [name]!</B>", M), 1)
+				if(drop_item())
+					for(var/mob/O in viewers(src, null))
+						if ((O.client && !( O.blinded )))
+							O.show_message(text("\red <B>[] has disarmed [name]!</B>", M), 1)
 			adjustBruteLoss(damage)
 			updatehealth()
 	return

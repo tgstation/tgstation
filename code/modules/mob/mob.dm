@@ -483,13 +483,15 @@ var/list/slot_equipment_priority = list( \
 			var/slot = text2num(href_list["item"])
 			var/obj/item/what = get_item_by_slot(slot)
 
-			if(what && what.canremove)
+			if(what && !(what.flags & NODROP))
 				visible_message("<span class='danger'>[usr] tries to remove [src]'s [what.name].</span>", \
 								"<span class='userdanger'>[usr] tries to remove [src]'s [what.name].</span>")
 				what.add_fingerprint(usr)
 				if(do_mob(usr, src, STRIP_DELAY))
 					if(what && Adjacent(usr))
 						u_equip(what)
+			else if(what.flags & NODROP)
+				usr << "<span class='notice'>You can't remove [src]'s [what.name], it is stuck!</span>"
 			else
 				what = usr.get_active_hand()
 				if(what && what.mob_can_equip(src, slot, 1))
@@ -700,7 +702,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(ko || resting || buckled)
 		canmove = 0
 		drop_r_hand()	//makes mobs drop items in hands when incapacitated
-		drop_l_hand()
+		drop_l_hand()   //NODROP is handled in u_equip which is called by drop_l/r_hand()
 		if(!lying)
 			if(resting) //Presuming that you're resting on a bed, which would look goofy lying the wrong way
 				lying = 90

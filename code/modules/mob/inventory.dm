@@ -6,6 +6,7 @@
 	if(hand)	return l_hand
 	else		return r_hand
 
+
 //Returns the thing in our inactive hand
 /mob/proc/get_inactive_hand()
 	if(hand)	return r_hand
@@ -28,6 +29,7 @@
 		return 1
 	return 0
 
+
 //Puts the item into your r_hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_r_hand(var/obj/item/W)
 	if(lying && !(W.flags&ABSTRACT))			return 0
@@ -44,15 +46,18 @@
 		return 1
 	return 0
 
+
 //Puts the item into our active hand if possible. returns 1 on success.
 /mob/proc/put_in_active_hand(var/obj/item/W)
 	if(hand)	return put_in_l_hand(W)
 	else		return put_in_r_hand(W)
 
+
 //Puts the item into our inactive hand if possible. returns 1 on success.
 /mob/proc/put_in_inactive_hand(var/obj/item/W)
 	if(hand)	return put_in_r_hand(W)
 	else		return put_in_l_hand(W)
+
 
 //Puts the item our active hand if possible. Failing that it tries our inactive hand. Returns 1 on success.
 //If both fail it drops it on the floor and returns 0.
@@ -68,7 +73,6 @@
 		return 0
 
 
-
 /mob/proc/drop_item_v()		//this is dumb.
 	if(stat == CONSCIOUS && isturf(loc))
 		return drop_item()
@@ -77,9 +81,12 @@
 
 /mob/proc/drop_from_inventory(var/obj/item/W)
 	if(W)
-		if(client)	client.screen -= W
-		u_equip(W)
-		if(!W) return 1 // self destroying objects (tk, grabs)
+		if(client)
+			client.screen -= W
+		if(!u_equip(W))
+			return 0
+		if(!W)
+			return 1 // self destroying objects (tk, grabs)
 		W.layer = initial(W.layer)
 		W.loc = loc
 
@@ -88,61 +95,32 @@
 			T.Entered(W)
 
 		W.dropped(src)
-		//update_icons() // Redundant as u_equip will handle updating the specific overlay
+		//update_icons() // Redundant as u_equip will handle updating the specific overlay //WELL HALF OF THIS GODDDAMN PROC IS REDUNDANT DUE TO U_EQUIP
 		return 1
 	return 0
 
 
 //Drops the item in our left hand
-/mob/proc/drop_l_hand(var/atom/Target)
-	if(l_hand)
-		if(client)	client.screen -= l_hand
-		l_hand.layer = initial(l_hand.layer)
-
-		if(Target)	l_hand.loc = Target.loc
-		else		l_hand.loc = loc
-
-		var/turf/T = get_turf(loc)
-		if(isturf(T))
-			T.Entered(l_hand)
-
-		l_hand.dropped(src)
-		l_hand = null
-		update_inv_l_hand(0)
+/mob/proc/drop_l_hand() //I really fucking wonder why this proc had an argument holy shit.
+	if(u_equip(l_hand)) //All needed checks are in u_equip
 		return 1
 	return 0
+
 
 //Drops the item in our right hand
-/mob/proc/drop_r_hand(var/atom/Target)
-	if(r_hand)
-		if(client)	client.screen -= r_hand
-		r_hand.layer = initial(r_hand.layer)
-
-		if(Target)	r_hand.loc = Target.loc
-		else		r_hand.loc = loc
-
-		var/turf/T = get_turf(Target)
-		if(istype(T))
-			T.Entered(r_hand)
-
-		r_hand.dropped(src)
-		r_hand = null
-		update_inv_r_hand(0)
+/mob/proc/drop_r_hand()
+	if(u_equip(r_hand)) //Why was this not calling u_equip in the first place jesus fuck.
 		return 1
 	return 0
 
+
 //Drops the item in our active hand.
-/mob/proc/drop_item(var/atom/Target)
-	if(hand)	return drop_l_hand(Target)
-	else		return drop_r_hand(Target)
+/mob/proc/drop_item() //THIS. DOES. NOT. NEED. AN. ARGUMENT.
+	if(hand)	return drop_l_hand()
+	else		return drop_r_hand()
 
 
-
-
-
-
-
-
+//Things that aren't strictly hand-related are below this comment, apparently.
 
 //TODO: phase out this proc
 /mob/proc/before_take_item(var/obj/item/W)	//TODO: what is this?
@@ -153,7 +131,7 @@
 
 
 /mob/proc/u_equip(obj/item/I)
-	if(!I)	return 0
+	if(!istype(I) /* ;_; */ || (I.flags & NODROP))	return 0
 
 	if(I == r_hand)
 		r_hand = null
@@ -169,6 +147,8 @@
 		I.dropped(src)
 		if(I)
 			I.layer = initial(I.layer)
+
+	return 1
 
 
 //Attemps to remove an object on a mob.  Will not move it to another area or such, just removes from the mob.
