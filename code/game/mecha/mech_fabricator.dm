@@ -785,5 +785,5 @@
 			user << "You insert [count] [sname] sheet\s into \the [src]."
 			src.updateUsrDialog()
 	else
-		user << "\The [src] cannot hold more [sname] sheet\s."
+		user << "\The [src] cannot hold any more [sname] sheet\s."
 	return
