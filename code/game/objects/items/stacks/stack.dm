@@ -29,10 +29,11 @@
 /obj/item/stack/examine()
 	set src in view(1)
 	..()
-	if(src.singular_name && src.amount>1)
-		usr << "There are [src.amount] [src.singular_name]\s in the stack."
-	else if(src.singular_name && src.amount==1)
-		usr << "There is [src.amount] [src.singular_name] in the stack."
+	if(src.singular_name)
+		if(src.amount>1)
+			usr << "There are [src.amount] [src.singular_name]\s in the stack."
+		else
+			usr << "There is [src.amount] [src.singular_name] in the stack."
 	else if(src.amount>1)
 		usr << "There are [src.amount] in the stack."
 	else
