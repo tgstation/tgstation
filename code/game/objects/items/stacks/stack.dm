@@ -8,8 +8,8 @@
  * Stacks
  */
 /obj/item/stack
-	gender = PLURAL
 	origin_tech = "materials=1"
+	gender = PLURAL
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
 	var/amount = 1
@@ -29,7 +29,14 @@
 /obj/item/stack/examine()
 	set src in view(1)
 	..()
-	usr << "There are [src.amount] [src.singular_name]\s in the stack."
+	if(src.singular_name && src.amount>1)
+		usr << "There are [src.amount] [src.singular_name]\s in the stack."
+	else if(src.singular_name && src.amount==1)
+		usr << "There is [src.amount] [src.singular_name] in the stack."
+	else if(src.amount>1)
+		usr << "There are [src.amount] in the stack."
+	else
+		usr << "There is [src.amount] in the stack."
 	return
 
 /obj/item/stack/attack_self(mob/user as mob)
