@@ -115,8 +115,10 @@
 		turbine = locate() in get_step(src, get_dir(inturf, src))
 		if(turbine)
 			user << "<span class='notice'>Turbine connected.</span>"
+			stat &= ~BROKEN
 		else
 			user << "<span class='alert'>Turbine not connected.</span>"
+			stat |= BROKEN
 		return
 
 	default_deconstruction_crowbar(I)
@@ -273,8 +275,10 @@
 		compressor = locate() in get_step(src, get_dir(outturf, src))
 		if(compressor)
 			user << "<span class='notice'>Compressor connected.</span>"
+			stat &= ~BROKEN
 		else
 			user << "<span class='alert'>Compressor not connected.</span>"
+			stat |= BROKEN
 		return
 
 	default_deconstruction_crowbar(I)
