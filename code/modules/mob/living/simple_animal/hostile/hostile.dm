@@ -1,6 +1,5 @@
 /mob/living/simple_animal/hostile
 	faction = "hostile"
-	mouse_opacity = 2 //This makes it easier to hit hostile mobs, you only need to click on their tile, and is set back to 1 when they die
 	stop_automated_movement_when_pulled = 0
 	environment_smash = 1 //Set to 1 to break closets,tables,racks, etc; 2 for walls; 3 for rwalls
 	var/stance = HOSTILE_STANCE_IDLE	//Used to determine behavior
@@ -119,7 +118,8 @@
 		if(istype(the_target, /obj/mecha) && search_objects < 2)
 			var/obj/mecha/M = the_target
 			if(M.occupant)//Just so we don't attack empty mechs
-				return 1
+				if(CanAttack(M.occupant))
+					return 1
 	return 0
 
 /mob/living/simple_animal/hostile/proc/GiveTarget(var/new_target)//Step 4, give us our selected target
@@ -161,7 +161,7 @@
 	LostTarget()
 
 /mob/living/simple_animal/hostile/proc/Goto(var/target, var/delay, var/minimum_distance)
-        walk_to(src, target, minimum_distance, delay)
+	walk_to(src, target, minimum_distance, delay)
 
 /mob/living/simple_animal/hostile/adjustBruteLoss(var/damage)
 	..(damage)
@@ -216,7 +216,6 @@
 
 /mob/living/simple_animal/hostile/Die()
 	LoseAggro()
-	mouse_opacity = 1
 	..()
 	walk(src, 0)
 
@@ -270,8 +269,11 @@
 		for(var/dir in cardinal)
 			var/turf/T = get_step(src, dir)
 			if(istype(T, /turf/simulated/wall) || istype(T, /turf/simulated/mineral))
-				T.attack_animal(src)
+				if(T.Adjacent(src))
+					T.attack_animal(src)
 			for(var/atom/A in T)
+				if(!A.Adjacent(src))
+					continue
 				if(istype(A, /obj/structure/window) || istype(A, /obj/structure/closet) || istype(A, /obj/structure/table) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/rack))
 					A.attack_animal(src)
 	return

@@ -523,6 +523,9 @@
 /obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(var/obj/item/part as obj,var/resource as text, var/roundto=1)
 //Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
 	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
+		var/list/L = part_sets["Misc"]
+		if(L.Find(part.type))
+			return round(part:construction_cost[resource]*(resource_coeff/2), roundto)             //hacky scary skeletons send shivers down your spine
 		return round(part:construction_cost[resource]*resource_coeff, roundto)
 	else
 		return 0
@@ -534,8 +537,11 @@
 	else
 		return 0
 
+/obj/machinery/mecha_part_fabricator/attack_hand(mob/user)
+	if(!(..()))
+		return interact(user)
 
-/obj/machinery/mecha_part_fabricator/attack_hand(mob/user as mob)
+/obj/machinery/mecha_part_fabricator/interact(mob/user as mob)
 	var/dat, left_part
 	if (..())
 		return
@@ -699,10 +705,11 @@
 
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/screwdriver))
-		default_deconstruction_screwdriver(user, "fab-o", "fab-idle")
-
+	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
 		return
+
+	default_deconstruction_crowbar(W)
+
 	if (panel_open)
 		if(istype(W, /obj/item/weapon/crowbar))
 			if(src.resources["metal"] >= 3750)
@@ -729,7 +736,7 @@
 			if(src.resources["bananium"] >= 2000)
 				var/obj/item/stack/sheet/mineral/clown/G = new /obj/item/stack/sheet/mineral/clown(src.loc)
 				G.amount = round(src.resources["bananium"] / G.perunit)
-			default_deconstruction_crowbar()
+			default_deconstruction_crowbar(W)
 			return 1
 		else
 			user << "\red You can't load the [src.name] while it's opened."

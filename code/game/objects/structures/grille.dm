@@ -89,7 +89,7 @@
 	if(istype(mover) && mover.checkpass(PASSGRILLE))
 		return 1
 	else
-		if(istype(mover, /obj/item/projectile))
+		if(istype(mover, /obj/item/projectile) && density)
 			return prob(30)
 		else
 			return !density

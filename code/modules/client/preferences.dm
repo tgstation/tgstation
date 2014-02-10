@@ -12,10 +12,10 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"wizard" = IS_MODE_COMPILED("wizard"),               // 3
 	"malf AI" = IS_MODE_COMPILED("malfunction"),         // 4
 	"revolutionary" = IS_MODE_COMPILED("revolution"),    // 5
-	"alien lifeform" = 1, //always show                 // 6
+	"alien" = 1, //always show                			 // 6
 	"pAI candidate" = 1, // -- TLE                       // 7
 	"cultist" = IS_MODE_COMPILED("cult"),                // 8
-	"infested monkey" = IS_MODE_COMPILED("monkey"),      // 9
+	"blob" = IS_MODE_COMPILED("blob"),					 // 9
 )
 
 

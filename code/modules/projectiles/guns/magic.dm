@@ -15,6 +15,7 @@
 	var/ammo_type
 	origin_tech = null
 	clumsy_check = 0
+	trigger_guard = 0
 
 /obj/item/weapon/gun/magic/afterattack(atom/target as mob, mob/living/user as mob, flag)
 	newshot()

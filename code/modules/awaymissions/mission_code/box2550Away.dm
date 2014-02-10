@@ -871,3 +871,48 @@ obj/effect/landmark/corpse/away/box2550/det
 		new /obj/item/clothing/shoes/brown/box2550away(src)
 		new /obj/item/clothing/shoes/brown/box2550away(src)
 		new /obj/item/clothing/shoes/brown/box2550away(src)
+
+/obj/machinery/disposal/box2550away/toilet
+	name = "toilet"
+	desc = "The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean."
+	icon = 'icons/obj/watercloset.dmi'
+	icon_state = "toilet10" //lid up
+	density = 0
+
+/obj/machinery/box2550away/fake_status_display
+	name = "status display"
+	icon = 'icons/obj/status_display.dmi'
+	icon_state = "frame"
+	anchored = 1
+	density = 0
+	desc = "The display says: \n\n"
+
+/obj/machinery/box2550away/fake_status_display/ai
+	name = "\improper AI display"
+	desc = null
+	overlays = list("ai_bsod")
+
+/obj/machinery/disposal/box2550away/toilet/update()
+	overlays.Cut()
+	if(stat & BROKEN)
+		mode = 0
+		flush = 0
+		return
+
+	// flush handle
+	if(flush)
+		return
+
+	// only handle is shown if no power
+	if(stat & NOPOWER || mode == -1)
+		return
+
+	// 	check for items in disposal - occupied light
+	if(contents.len > 0)
+		return
+
+	// charging and ready light
+	if(mode == 1)
+		return
+	else if(mode == 2)
+		return

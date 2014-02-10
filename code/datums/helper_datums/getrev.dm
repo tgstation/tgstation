@@ -43,5 +43,10 @@ client/verb/showrevinfo()
 	output += "<b>Current Infomational Settings:</b><br>"
 	output += "Protect Authority Roles From Traitor: [config.protect_roles_from_antagonist]<br>"
 	output += "Allow Latejoin Antagonists: [config.allow_latejoin_antagonists]<br>"
+	if(config.show_game_type_odds)
+		output += "<br><b>Game Type Odds:</b><br>"
+		for(var/i=1,i<=config.probabilities.len,i++)
+			var/p = config.probabilities[i]
+			output += "[p] [config.probabilities[p]]<br>"
 	usr << browse(output,"window=revdata");
 	return

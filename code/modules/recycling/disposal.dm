@@ -88,11 +88,11 @@
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-				user << "You start slicing the floorweld off the disposal unit."
+				user << "You start slicing the floorweld off \the [src]."
 
 				if(do_after(user,20))
 					if(!src || !W.isOn()) return
-					user << "You sliced the floorweld off the disposal unit."
+					user << "You slice the floorweld off \the [src]."
 					var/obj/structure/disposalconstruct/C = new (src.loc)
 					src.transfer_fingerprints_to(C)
 					C.ptype = 6 // 6 = disposal unit
@@ -106,7 +106,7 @@
 				return
 
 	if(istype(I, /obj/item/weapon/melee/energy/blade))
-		user << "You can't place that item inside the disposal unit."
+		user << "You can't place \the [I] into \the [src]."
 		return
 
 	if(istype(I, /obj/item/weapon/storage/bag/trash))
@@ -123,14 +123,14 @@
 		if(ismob(G.affecting))
 			var/mob/GM = G.affecting
 			for (var/mob/V in viewers(usr))
-				V.show_message("[usr] starts putting [GM.name] into the disposal.", 3)
+				V.show_message("[usr] starts putting [GM.name] into \the [src].", 3)
 			if(do_after(usr, 20))
 				if (GM.client)
 					GM.client.perspective = EYE_PERSPECTIVE
 					GM.client.eye = src
 				GM.loc = src
 				for (var/mob/C in viewers(src))
-					C.show_message("\red [GM.name] has been placed in the [src] by [user].", 3)
+					C.show_message("\red [GM.name] has been placed in \the [src] by [user].", 3)
 				del(G)
 		return
 
@@ -140,11 +140,11 @@
 	if(I)
 		I.loc = src
 
-	user << "You place \the [I] into the [src]."
+	user << "You place \the [I] into \the [src]."
 	for(var/mob/M in viewers(src))
 		if(M == user)
 			continue
-		M.show_message("[user.name] places \the [I] into the [src].", 3)
+		M.show_message("[user.name] places \the [I] into \the [src].", 3)
 
 	update()
 
@@ -158,22 +158,22 @@
 	var/msg
 	for (var/mob/V in viewers(usr))
 		if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-			V.show_message("[usr] starts climbing into the disposal.", 3)
+			V.show_message("[usr] starts climbing into \the [src].", 3)
 		if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
 			if(target.anchored) return
 			if(!ishuman(user) && !ismonkey(user)) return
-			V.show_message("[usr] starts stuffing [target.name] into the disposal.", 3)
+			V.show_message("[usr] starts stuffing [target.name] into \the [src].", 3)
 	if(!do_after(usr, 20))
 		return
 	if(target_loc != target.loc)
 		return
 	if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)	// if drop self, then climbed in
 											// must be awake, not stunned or whatever
-		msg = "[user.name] climbs into the [src]."
-		user << "You climb into the [src]."
+		msg = "[user.name] climbs into \the [src]."
+		user << "You climb into \the [src]."
 	else if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-		msg = "[user.name] stuffs [target.name] into the [src]!"
-		user << "You stuff [target.name] into the [src]!"
+		msg = "[user.name] stuffs [target.name] into \the [src]!"
+		user << "You stuff [target.name] into \the [src]!"
 	else
 		return
 	if (target.client)
@@ -245,7 +245,7 @@
 // hostile mob escape from disposals
 /obj/machinery/disposal/attack_animal(var/mob/living/simple_animal/M)
 	if(M.environment_smash)
-		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
+		visible_message("<span class='danger'>[M.name] smashes \the [src] apart!</span>")
 		del(src)
 	return
 
@@ -293,7 +293,7 @@
 		return
 
 	if(mode==-1 && !href_list["eject"]) // only allow ejecting if mode is -1
-		usr << "\red The disposal units power is disabled."
+		usr << "\red \The [src]'s power is disabled."
 		return
 	..()
 	usr.set_machine(src)
@@ -1290,10 +1290,10 @@
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-				user << "You start slicing the floorweld off the disposal outlet."
+				user << "You start slicing the floorweld off \the [src]."
 				if(do_after(user,20))
 					if(!src || !W.isOn()) return
-					user << "You sliced the floorweld off the disposal outlet."
+					user << "You slice the floorweld off \the [src]."
 					var/obj/structure/disposalconstruct/C = new (src.loc)
 					src.transfer_fingerprints_to(C)
 					C.ptype = 7 // 7 =  outlet

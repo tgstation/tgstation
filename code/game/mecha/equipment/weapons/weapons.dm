@@ -370,7 +370,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar
 	name = "banana mortar"
 	icon_state = "mecha_bananamrtr"
-	projectile = /obj/item/weapon/bananapeel
+	projectile = /obj/item/weapon/grown/bananapeel
 	fire_sound = 'sound/items/bikehorn.ogg'
 	projectiles = 15
 	missile_speed = 1.5
@@ -388,7 +388,7 @@
 	action(target)
 		if(!action_checks(target)) return
 		set_ready_state(0)
-		var/obj/item/weapon/bananapeel/B = new projectile(chassis.loc)
+		var/obj/item/weapon/grown/bananapeel/B = new projectile(chassis.loc,60)
 		playsound(chassis, fire_sound, 60, 1)
 		B.throw_at(target, missile_range, missile_speed)
 		projectiles--

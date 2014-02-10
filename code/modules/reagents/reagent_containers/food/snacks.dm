@@ -11,7 +11,7 @@
 	var/eatverb
 	var/wrapped = 0
 	var/dried_type = null
-
+	var/potency = null
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume()
@@ -20,7 +20,10 @@
 		usr.drop_from_inventory(src)	//so icons update :[
 
 		if(trash)
-			if(ispath(trash,/obj/item))
+			if(ispath(trash,/obj/item/weapon/grown))
+				var/obj/item/TrashItem = new trash(usr,src.potency)
+				usr.put_in_hands(TrashItem)
+			else if(ispath(trash,/obj/item))
 				var/obj/item/TrashItem = new trash(usr)
 				usr.put_in_hands(TrashItem)
 			else if(istype(trash,/obj/item))

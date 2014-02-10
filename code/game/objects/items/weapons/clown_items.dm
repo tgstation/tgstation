@@ -6,21 +6,21 @@
  */
 
 /*
- * Banana Peals
+ * Banana Peels
  */
-/obj/item/weapon/bananapeel/Crossed(AM as mob|obj)
+/obj/item/weapon/grown/bananapeel/Crossed(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
-		M.slip(4, 2, src)
-
-
+		var/stun = Clamp(potency / 10, 1, 10)
+		var/weaken = Clamp(potency / 20, 0.5, 5)
+		M.slip(stun, weaken, src)
 /*
  * Soap
  */
 /obj/item/weapon/soap/Crossed(AM as mob|obj) //EXACTLY the same as bananapeel for now, so it makes sense to put it in the same dm -- Urist
 	if (istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
-		M.slip(3, 2, src)
+		M.slip(4, 2, src)
 
 /obj/item/weapon/soap/afterattack(atom/target, mob/user as mob, proximity)
 	if(!proximity) return
@@ -33,6 +33,8 @@
 		del(target)
 	else
 		user << "<span class='notice'>You clean \the [target.name].</span>"
+		var/obj/effect/decal/cleanable/C = locate() in target
+		del(C)
 		target.clean_blood()
 	return
 

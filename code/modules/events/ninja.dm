@@ -100,8 +100,7 @@
 						Mind.objectives += O
 
 					if(2)	//steal
-						var/datum/objective/steal/O = new /datum/objective/steal()
-						O.set_target(pick(O.possible_items_special))
+						var/datum/objective/steal/special/O = new /datum/objective/steal/special()
 						O.owner = Mind
 						Mind.objectives += O
 

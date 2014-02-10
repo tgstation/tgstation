@@ -1,5 +1,6 @@
 /datum/game_mode
 	var/list/datum/mind/syndicates = list()
+	var/operationname = "Overlord"
 
 
 /datum/game_mode/nuclear
@@ -21,6 +22,10 @@
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
 	var/nuke_off_station = 0 //Used for tracking if the syndies actually haul the nuke to the station
 	var/syndies_didnt_escape = 0 //Used for tracking if the syndies got the shuttle off of the z-level
+
+//code name lists. List of all lists is at line 114.
+	var/list/natonames = list("Alpha","Bravo","Charlie","Delta","Echo")
+	var/list/oldmilitarynames = list("Able","Baker","Charlie","Dog","Easy")
 
 /datum/game_mode/nuclear/announce()
 	world << "<B>The current game mode is - Nuclear Emergency!</B>"
@@ -99,6 +104,13 @@
 
 	var/list/turf/synd_spawn = list()
 
+
+	for(var/obj/effect/landmark/A in landmarks_list) //Add commander spawn places first, really should only be one though.
+		if(A.name == "Syndicate-Commander")
+			synd_spawn += get_turf(A)
+			del(A)
+			continue
+
 	for(var/obj/effect/landmark/A in landmarks_list)
 		if(A.name == "Syndicate-Spawn")
 			synd_spawn += get_turf(A)
@@ -108,26 +120,39 @@
 	var/obj/effect/landmark/uplinklocker = locate("landmark*Syndicate-Uplink")	//i will be rewriting this shortly
 	var/obj/effect/landmark/nuke_spawn = locate("landmark*Nuclear-Bomb")
 
+	var/list/codenames = list(natoalphabet,oldmilitaryalphabet,greekalphabet)
+	var/list/pickedcodenamelist = pick(codenames)
 	var/nuke_code = "[rand(10000, 99999)]"
 	var/leader_selected = 0
-	var/agent_number = 1
+	var/agent_number = 2
 	var/spawnpos = 1
 
 	for(var/datum/mind/synd_mind in syndicates)
 		if(spawnpos > synd_spawn.len)
 			spawnpos = 1
 		synd_mind.current.loc = synd_spawn[spawnpos]
-
 		forge_syndicate_objectives(synd_mind)
-		greet_syndicate(synd_mind)
-		equip_syndicate(synd_mind.current)
 
 		if(!leader_selected)
-			prepare_syndicate_leader(synd_mind, nuke_code)
+			equip_syndicate(synd_mind.current,1)
+			prepare_syndicate_leader(synd_mind, nuke_code, pickedcodenamelist)
+			greet_syndicate(synd_mind,1,1)
 			leader_selected = 1
 		else
-			synd_mind.current.real_name = "[syndicate_name()] Operative #[agent_number]"
+			equip_syndicate(synd_mind.current)
+			synd_mind.current.real_name = pickedcodenamelist[agent_number] + operationname
+			var/mob/living/carbon/human/H = synd_mind.current
+			var/obj/item/weapon/card/id/C = H.wear_id
+			C.registered_name = synd_mind.current.real_name
+			C.assignment = "[syndicate_name(1)] Operative"
+			C.name = "[C.registered_name]'s ID Card ([C.assignment])"
+			greet_syndicate(synd_mind)
 			agent_number++
+		if (nuke_code)
+			synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
+			synd_mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>"
+		else
+			nuke_code = "code will be provided later"
 		spawnpos++
 		update_synd_icons_added(synd_mind)
 
@@ -145,27 +170,15 @@
 	return ..()
 
 
-/datum/game_mode/proc/prepare_syndicate_leader(var/datum/mind/synd_mind, var/nuke_code)
-	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")
+/datum/game_mode/proc/prepare_syndicate_leader(var/datum/mind/synd_mind, var/nuke_code, var/pickedcodenamelist)
 	spawn(1)
-		NukeNameAssign(nukelastname(synd_mind.current),syndicates) //allows time for the rest of the syndies to be chosen
-	synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
-	if (nuke_code)
-		synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
-		synd_mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>"
-		var/obj/item/weapon/paper/P = new
-		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
-		P.name = "nuclear bomb code"
-		if (ticker.mode.config_tag=="nuclear")
-			P.loc = synd_mind.current.loc
-		else
-			var/mob/living/carbon/human/H = synd_mind.current
-			P.loc = H.loc
-			H.equip_to_slot_or_del(P, slot_r_store, 0)
-			H.update_icons()
-
-	else
-		nuke_code = "code will be provided later"
+		operationname = nukeoperationname(synd_mind.current)
+	synd_mind.current.real_name = pickedcodenamelist[1] + operationname
+	var/mob/living/carbon/human/H = synd_mind.current
+	var/obj/item/weapon/card/id/C = H.wear_id
+	C.registered_name = synd_mind.current.real_name
+	C.assignment = "[syndicate_name(1)] Commander"
+	C.name = "[C.registered_name]'s ID Card ([C.assignment])"
 	return
 
 
@@ -175,21 +188,18 @@
 	syndicate.objectives += syndobj
 
 
-/datum/game_mode/proc/greet_syndicate(var/datum/mind/syndicate, var/you_are=1)
+/datum/game_mode/proc/greet_syndicate(var/datum/mind/syndicate, var/you_are=1, var/boss=0)
 	if (you_are)
-		syndicate.current << "\blue You are a [syndicate_name()] agent!"
+		syndicate.current << "<spanclass='notice'> You are a [syndicate_name(1)] Operative!"
+		if(boss)
+			syndicate.current <<"<spanclass='notice'> You are the [syndicate_name(1)] Commander!"
 	var/obj_count = 1
 	for(var/datum/objective/objective in syndicate.objectives)
 		syndicate.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		obj_count++
 	return
 
-
-/datum/game_mode/proc/random_radio_frequency()
-	return 1337 // WHY??? -- Doohl
-
-
-/datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob)
+/datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob, var/boss)
 	var/radio_freq = SYND_FREQ
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate(synd_mob)
@@ -201,9 +211,14 @@
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(synd_mob), slot_wear_suit)
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(synd_mob), slot_gloves)
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/swat(synd_mob), slot_head)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate(synd_mob), slot_wear_id)
-	if(synd_mob.backbag == 2) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(synd_mob), slot_back)
-	if(synd_mob.backbag == 3) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(synd_mob), slot_back)
+	if(boss)
+		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate/operative/commander(synd_mob), slot_wear_id)
+	else
+		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate/operative(synd_mob), slot_wear_id)
+	if(synd_mob.backbag == 2)
+		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(synd_mob), slot_back)
+	if(synd_mob.backbag == 3)
+		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(synd_mob), slot_back)
 	synd_mob.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/m10mm(synd_mob), slot_in_backpack)
 	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/cyanide(synd_mob), slot_in_backpack)
 	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/pistol(synd_mob), slot_belt)
@@ -323,21 +338,16 @@
 		world << text
 	return 1
 
-
-/proc/nukelastname(var/mob/M as mob) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.
-	var/randomname = pick(last_names)
-	var/newname = copytext(sanitize(input(M,"You are the nuke operative [pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")]. Please choose a last name for your family.", "Name change",randomname)),1,MAX_NAME_LEN)
+/proc/nukeoperationname(var/mob/M) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho. And Kaze Espada was the one to destroy it.
+	var/defaultname = "Overlord"
+	var/newname = reject_bad_name(input(M,"You are the [syndicate_name(1)] Commander. Please choose a operation name to identify this operartion.", "Name Operation",defaultname))
 
 	if (!newname)
-		newname = randomname
-
-	else
-		if (newname == "Unknown" || newname == "floor" || newname == "wall" || newname == "rwall" || newname == "_")
-			M << "That name is reserved."
-			return nukelastname(M)
+		return nukeoperationname(M)
 
 	return newname
 
+/*
 /proc/NukeNameAssign(var/lastname,var/list/syndicates)
 	for(var/datum/mind/synd_mind in syndicates)
 		switch(synd_mind.current.gender)
@@ -347,3 +357,4 @@
 				synd_mind.name = "[pick(first_names_female)] [lastname]"
 		synd_mind.current.real_name = synd_mind.name
 	return
+*/

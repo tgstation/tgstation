@@ -49,6 +49,7 @@
 	var/automute_on = 0					//enables automuting/spam prevention
 	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
 	var/jobs_have_maint_access = 0 		//Who gets maint access?  See defines above
+	var/sec_start_brig = 0				//makes sec start in brig or dept sec posts
 
 	var/server
 	var/banappeals
@@ -81,6 +82,7 @@
 	var/continuous_round_rev = 0			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
 	var/continuous_round_wiz = 0
 	var/continuous_round_malf = 0
+	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
 
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
 	var/alert_desc_blue_upto = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
@@ -309,6 +311,8 @@
 					config.jobs_have_maint_access	|= SECURITY_HAS_MAINT_ACCESS
 				if("everyone_has_maint_access")
 					config.jobs_have_maint_access	|= EVERYONE_HAS_MAINT_ACCESS
+				if("sec_start_brig")
+					config.sec_start_brig			= 1
 				if("gateway_delay")
 					config.gateway_delay			= text2num(value)
 				if("continuous_round_rev")
@@ -317,6 +321,8 @@
 					config.continuous_round_wiz		= 1
 				if("continuous_round_malf")
 					config.continuous_round_malf	= 1
+				if("show_game_type_odds")
+					config.show_game_type_odds		= 1
 				if("ghost_interaction")
 					config.ghost_interaction		= 1
 				if("traitor_scaling_coeff")

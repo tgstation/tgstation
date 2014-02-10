@@ -1,4 +1,4 @@
-/obj/item/weapon/melee/energy
+/obj/item/weapon/melee/energy/
 	var/active = 0
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
@@ -15,6 +15,7 @@
 	icon_state = "axe0"
 	force = 40.0
 	throwforce = 25.0
+	hitsound = 'sound/weapons/bladeslice.ogg'
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
@@ -30,17 +31,17 @@
 	active = !active
 	if(active)
 		user << "<span class='notice'>[src] is now energised.</span>"
-		force = 150
+		force = 150 //these are the drugs, friend
+		hitsound = 'sound/weapons/blade1.ogg'
 		icon_state = "axe1"
 		w_class = 5
 	else
 		user << "<span class='notice'>[src] can now be concealed.</span>"
 		force = 40
+		hitsound = 'sound/weapons/bladeslice.ogg'
 		icon_state = "axe0"
-		w_class = 5
+		w_class = 3 //it goes back to three you goose
 	add_fingerprint(user)
-
-
 
 /obj/item/weapon/melee/energy/sword
 	color
@@ -49,12 +50,12 @@
 	icon_state = "sword0"
 	force = 3.0
 	throwforce = 5.0
+	hitsound = "swing_hit" //it starts deactivated
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
 	flags = NOSHIELD
 	origin_tech = "magnets=3;syndicate=4"
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/hacked = 0
 
 /obj/item/weapon/melee/energy/sword/New()
@@ -73,26 +74,29 @@
 	if (active)
 		force = 30
 		throwforce = 20
+		hitsound = 'sound/weapons/blade1.ogg'
+		attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass1"
 		else
 			icon_state = "sword[item_color]"
 		w_class = 4
-		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
+		playsound(user, 'sound/weapons/saberon.ogg', 35, 1) //changed it from 50% volume to 35% because deafness
 		user << "<span class='notice'>[src] is now active.</span>"
 	else
 		force = 3
 		throwforce = 5.0
+		hitsound = "swing_hit"
+		attack_verb = null
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass0"
 		else
 			icon_state = "sword0"
 		w_class = 2
-		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
+		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)  //changed it from 50% volume to 35% because deafness
 		user << "<span class='notice'>[src] can now be concealed.</span>"
 	add_fingerprint(user)
 	return
-
 
 /obj/item/weapon/melee/energy/sword/attackby(obj/item/weapon/W, mob/living/user)
 	..()
@@ -160,6 +164,7 @@
 	desc = "A concentrated beam of energy in the shape of a blade. Very stylish... and lethal."
 	icon_state = "blade"
 	force = 70.0//Normal attacks deal very high damage.
+	hitsound = 'sound/weapons/blade1.ogg'
 	throwforce = 1//Throwing or dropping the item deletes it.
 	throw_speed = 1
 	throw_range = 1

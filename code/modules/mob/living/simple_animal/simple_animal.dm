@@ -4,6 +4,8 @@
 	health = 20
 	maxHealth = 20
 
+	status_flags = CANPUSH
+
 	var/icon_living = ""
 	var/icon_dead = ""
 	var/icon_gib = null	//We only try to show a gibbing animation if this exists.
@@ -210,7 +212,7 @@
 		return
 
 	if(isturf(src.loc))
-		if(ismob(AM))
+		if((status_flags & CANPUSH) && ismob(AM))
 			var/newamloc = src.loc
 			src.loc = AM:loc
 			AM:loc = newamloc

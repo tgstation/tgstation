@@ -77,6 +77,7 @@
 
 	//The Syndicate
 /var/const/access_syndicate = 150//General Syndicate Access
+/var/const/access_syndicate_commander = 151 //Syndicate Commander Access
 
 /obj/var/list/req_access = null
 /obj/var/req_access_txt = "0"

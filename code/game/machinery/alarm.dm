@@ -769,7 +769,7 @@ table tr:first-child th:first-child { border: none;}
 			if(istype(W, /obj/item/weapon/wirecutters) && wires.wires_status == (2 ** wires.wire_count) - 1)   //this checks for all wires to be cut, disregard the ammount of wires, binary fuckery with the wires_status
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				user << "You cut the final wires."
-				var/obj/item/weapon/cable_coil/cable = new /obj/item/weapon/cable_coil( src.loc )
+				var/obj/item/stack/cable_coil/cable = new /obj/item/stack/cable_coil( src.loc )
 				cable.amount = 5
 				buildstage = 1
 				update_icon()
@@ -806,8 +806,8 @@ table tr:first-child th:first-child { border: none;}
 					update_icon()
 				return
 
-			if(istype(W, /obj/item/weapon/cable_coil))
-				var/obj/item/weapon/cable_coil/cable = W
+			if(istype(W, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/cable = W
 				if(cable.amount < 5)
 					user << "You need more cable!"
 					return
@@ -992,14 +992,14 @@ FIRE ALARM
 				else if (istype(W, /obj/item/weapon/wirecutters))
 					buildstage = 1
 					playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil()
+					var/obj/item/stack/cable_coil/coil = new /obj/item/stack/cable_coil()
 					coil.amount = 5
 					coil.loc = user.loc
 					user << "<span class='notice'>You cut the wires from \the [src]</span>"
 					update_icon()
 			if(1)
-				if(istype(W, /obj/item/weapon/cable_coil))
-					var/obj/item/weapon/cable_coil/coil = W
+				if(istype(W, /obj/item/stack/cable_coil))
+					var/obj/item/stack/cable_coil/coil = W
 					if(coil.amount < 5)
 						user << "<span class='warning'>You need more cable for this!</span>"
 						return

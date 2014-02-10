@@ -31,26 +31,27 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 				access = list(access_research)
 				destination = /area/security/checkpoint/science
 
-		if(destination)
-			var/teleport = 0
-			if(!ticker || ticker.current_state <= GAME_STATE_SETTING_UP)
-				teleport = 1
-			spawn(10)
-				if(H)
-					if(teleport)
-						var/turf/T
-						var/safety = 0
-						while(safety < 25)
-							T = safepick(get_area_turfs(destination))
-							if(T && !H.Move(T))
-								safety += 1
-								continue
-							else
-								break
-					H << "<b>You have been assigned to [department]!</b>"
-					var/obj/item/weapon/card/id/I = locate(/obj/item/weapon/card/id, H)
-					if(I)
-						I.access |= access
+		if(!config.sec_start_brig)
+			if(destination)
+				var/teleport = 0
+				if(!ticker || ticker.current_state <= GAME_STATE_SETTING_UP)
+					teleport = 1
+				spawn(10)
+					if(H)
+						if(teleport)
+							var/turf/T
+							var/safety = 0
+							while(safety < 25)
+								T = safepick(get_area_turfs(destination))
+								if(T && !H.Move(T))
+									safety += 1
+									continue
+								else
+									break
+		H << "<b>You have been assigned to [department]!</b>"
+		var/obj/item/weapon/card/id/I = locate(/obj/item/weapon/card/id, H)
+		if(I)
+			I.access |= access
 
 
 
@@ -112,17 +113,13 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	keyslot2 = new /obj/item/device/encryptionkey/headset_sci
 
 /obj/item/clothing/under/rank/security/cargo/New()
-	var/obj/item/clothing/tie/armband/cargo/A		= new /obj/item/clothing/tie/armband/cargo
-	hastie = A
+	attachTie(new /obj/item/clothing/tie/armband/cargo)
 
 /obj/item/clothing/under/rank/security/engine/New()
-	var/obj/item/clothing/tie/armband/engine/A		= new /obj/item/clothing/tie/armband/engine
-	hastie = A
+	attachTie(new /obj/item/clothing/tie/armband/engine)
 
 /obj/item/clothing/under/rank/security/science/New()
-	var/obj/item/clothing/tie/armband/science/A		= new /obj/item/clothing/tie/armband/science
-	hastie = A
+	attachTie(new /obj/item/clothing/tie/armband/science)
 
 /obj/item/clothing/under/rank/security/med/New()
-	var/obj/item/clothing/tie/armband/medgreen/A	= new /obj/item/clothing/tie/armband/medgreen
-	hastie = A
+	attachTie(new /obj/item/clothing/tie/armband/medgreen)
