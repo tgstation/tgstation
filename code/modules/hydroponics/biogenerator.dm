@@ -239,7 +239,7 @@
 			if (check_cost(100/efficiency)) return 0
 			else new/obj/item/weapon/storage/wallet(src.loc)
 		if("bkbag")
-			if (check_cost(200)) return 0
+			if (check_cost(200/efficiency)) return 0
 			else new/obj/item/weapon/storage/bag/books(src.loc)
 		if("gloves")
 			if (check_cost(250/efficiency)) return 0
