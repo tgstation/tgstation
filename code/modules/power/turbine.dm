@@ -121,7 +121,7 @@
 
 	default_deconstruction_crowbar(I)
 
-/obj/machinery/power/compressor/CanAtmosPass(var/turf/T)
+/obj/machinery/compressor/CanAtmosPass(var/turf/T)
 	return !density
 
 /obj/machinery/compressor/process()
