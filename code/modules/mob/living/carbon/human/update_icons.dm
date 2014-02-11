@@ -288,7 +288,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 					standing         					+= image("icon"=human_parts, "icon_state"="[skin_tone]_[affecting.name]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER)
 
 			if(affecting.status == ORGAN_ROBOTIC)
-				standing         						+= image("icon"=augment_parts, "icon_state"="[affecting.name]_s", "layer"=-BODYPARTS_LAYER)
+				standing         						+= image("icon"=augment_parts, "icon_state"="[affecting.name]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER)
 
 		else // These body parts have no gender, and do not use the gender variable in their icon names
 			if(affecting.state != ORGAN_REMOVED)
