@@ -54,7 +54,11 @@
 	return
 
 /obj/machinery/mineral/ore_redemption/attack_hand(user as mob)
+	if(..())
+		return
+	interact(user)
 
+/obj/machinery/mineral/ore_redemption/interact(mob/user)
 	var/obj/item/stack/sheet/s
 	var/dat
 
@@ -92,8 +96,6 @@
 /obj/machinery/mineral/ore_redemption/Topic(href, href_list)
 	if(..())
 		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
 	if(href_list["choice"])
 		if(istype(inserted_id))
 			if(href_list["choice"] == "eject")
@@ -119,7 +121,7 @@
 			out.amount = inp.amount
 			inp.amount = 0
 			unload_mineral(out)
-	src.updateUsrDialog()
+	updateUsrDialog()
 	return
 
 /obj/machinery/mineral/ore_redemption/ex_act()
@@ -165,6 +167,11 @@
 	src.cost = cost
 
 /obj/machinery/mineral/equipment_locker/attack_hand(user as mob)
+	if(..())
+		return
+	interact(user)
+
+/obj/machinery/mineral/equipment_locker/interact(mob/user)
 	var/dat
 	dat += text("<b>Mining Equipment Locker</b><br><br>")
 
@@ -184,8 +191,6 @@
 /obj/machinery/mineral/equipment_locker/Topic(href, href_list)
 	if(..())
 		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
 	if(href_list["choice"])
 		if(istype(inserted_id))
 			if(href_list["choice"] == "eject")
@@ -208,7 +213,7 @@
 			else
 				inserted_id.mining_points -= prize.cost
 				new prize.equipment_path(src.loc)
-	src.updateUsrDialog()
+	updateUsrDialog()
 	return
 
 /obj/machinery/mineral/equipment_locker/attackby(obj/item/I as obj, mob/user as mob)
@@ -343,23 +348,24 @@
 	throwforce = 10
 	var/cooldown = 0
 
-/obj/item/weapon/resonator/proc/CreateResonance(var/target)
+/obj/item/weapon/resonator/proc/CreateResonance(var/target, var/creator)
 	if(cooldown <= 0)
 		playsound(src,'sound/effects/stealthoff.ogg',50,1)
-		new /obj/effect/resonance(get_turf(target))
+		var/obj/effect/resonance/R = new /obj/effect/resonance(get_turf(target))
+		R.creator = creator
 		cooldown = 1
 		spawn(20)
 			cooldown = 0
 
 /obj/item/weapon/resonator/attack_self(mob/user as mob)
-	CreateResonance(src)
+	CreateResonance(src, user)
 	..()
 
 /obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity_flag)
 	if(target in user.contents)
 		return
 	if(proximity_flag)
-		CreateResonance(target)
+		CreateResonance(target, user)
 
 /obj/effect/resonance
 	name = "resonance field"
@@ -369,10 +375,11 @@
 	layer = 4.1
 	mouse_opacity = 0
 	var/resonance_damage = 30
+	var/creator = null
 
 /obj/effect/resonance/New()
 	var/turf/proj_turf = get_turf(src)
-	if(!istype(proj_turf, /turf))
+	if(!istype(proj_turf))
 		return
 	if(istype(proj_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = proj_turf
@@ -388,9 +395,15 @@
 			resonance_damage = 60
 		spawn(50)
 			playsound(src,'sound/effects/sparks4.ogg',50,1)
-			for(var/mob/living/L in src.loc)
-				L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
-				L.adjustBruteLoss(resonance_damage)
+			if(creator)
+				for(var/mob/living/L in src.loc)
+					add_logs(creator, L, "used a resonator field on", object="resonator")
+					L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
+					L.adjustBruteLoss(resonance_damage)
+			else
+				for(var/mob/living/L in src.loc)
+					L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
+					L.adjustBruteLoss(resonance_damage)
 			del(src)
 
 /**********************Facehugger toy**********************/
@@ -621,3 +634,10 @@
 				spawn(30)
 					if(C)
 						C.images -= I
+
+/**********************Xeno Warning Sign**********************/
+/obj/structure/sign/xeno_warning_mining
+	name = "DANGEROUS ALIEN LIFE"
+	desc = "A sign that warns would be travellers of hostile alien life in the vicinity."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "xeno_warning"

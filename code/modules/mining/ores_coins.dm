@@ -127,20 +127,29 @@
 		GibtoniteReaction(P.firer)
 	..()
 
-/obj/item/weapon/twohanded/required/gibtonite/proc/GibtoniteReaction(mob/user)
+/obj/item/weapon/twohanded/required/gibtonite/ex_act()
+	GibtoniteReaction(triggered_by_explosive = 1)
+
+/obj/item/weapon/twohanded/required/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by_explosive = 0)
 	if(!primed)
 		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,1)
 		primed = 1
 		icon_state = "Gibtonite active"
-		user.visible_message("<span class='warning'>[user] strikes the [src], causing a chain reaction!</span>")
 		var/turf/bombturf = get_turf(src)
 		var/area/A = get_area(bombturf)
 		var/notify_admins = 0
 		if(z != 5)//Only annoy the admins ingame if we're triggered off the mining zlevel
 			notify_admins = 1
 		if(notify_admins)
-			message_admins("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
-		log_game("[key_name(usr)] has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
+			if(triggered_by_explosive)
+				message_admins("An explosion has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+			else
+				message_admins("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+		if(triggered_by_explosive)
+			log_game("An explosion has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
+		else
+			user.visible_message("<span class='warning'>[user] strikes the [src], causing a chain reaction!</span>")
+			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
 		spawn(det_time)
 		if(primed)
 			if(quality == 3)

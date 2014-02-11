@@ -77,7 +77,7 @@
 	for(var/mob/O in viewers(user, null))
 		O.show_message(text("[] shows you: \icon[] []: assignment: []", user, src, src.name, src.assignment), 1)
 	if(mining_points)
-		usr << "There's [mining_points] mining equipment redemption points loaded onto this card."
+		user << "There's [mining_points] mining equipment redemption points loaded onto this card."
 	src.add_fingerprint(user)
 	return
 

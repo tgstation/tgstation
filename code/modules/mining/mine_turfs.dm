@@ -185,7 +185,7 @@
 
 ////////////////////////////////Gibtonite
 /turf/simulated/mineral/gibtonite
-	name = "Diamond deposit" //honk
+	name = "Gibtonite deposit"
 	icon_state = "rock_Gibtonite"
 	mineralName = "Gibtonite"
 	mineralAmt = 1
@@ -273,7 +273,7 @@
 
 /turf/simulated/floor/plating/asteroid/airless/cave
 	var/length = 100
-	var/mob_spawn_list = list("Goldgrub" = 1, "Goliath" = 5, "Basilisk" = 5, "Hivelord" = 5)
+	var/mob_spawn_list = list("Goldgrub" = 1, "Goliath" = 5, "Basilisk" = 3, "Hivelord" = 5)
 	var/sanity = 1
 
 /turf/simulated/floor/plating/asteroid/airless/cave/New(loc, var/length, var/go_backwards = 1, var/exclude_dir = -1)
@@ -349,9 +349,12 @@
 		t.fullUpdateMineralOverlays()
 
 /turf/simulated/floor/plating/asteroid/airless/cave/proc/SpawnMonster(var/turf/T)
-	if(prob(1))
+	if(prob(2))
 		if(istype(loc, /area/mine/explored))
 			return
+		for(var/atom/A in range(7,T))//Lowers chance of mob clumps
+			if(istype(A, /mob/living/simple_animal/hostile/asteroid))
+				return
 		var/randumb = pickweight(mob_spawn_list)
 		switch(randumb)
 			if("Goliath")
