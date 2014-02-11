@@ -309,62 +309,6 @@
 	name = "\improper Black Shoes"
 	desc = null
 
-/obj/item/device/pda/captain/box2550away
-	name = "PDA-Jon Riker"
-	owner = "Jon Riker"
-	ownjob = "Captain"
-	toff = 1 //so players don't see the PDA on their messenger until it's found
-	ttone = "hiss" //did he play a lizard in 2010 who knows
-	note = "Congratulations, your station has chosen the Thinktronic 5100 Personal Data Assistant!"
-
-/obj/item/device/pda/toxins/box2550away
-	name = "PDA-Cuban Pete"
-	owner = "Cuban Pete"
-	ownjob = "Scientist"
-	toff = 1
-	ttone = "maracas"
-	icon_state = "pda-chemistry"
-	note = "Congratulations, your station has chosen the Thinktronic 5100 Personal Data Assistant!"
-
-/obj/item/device/pda/box2550away/lawyer
-	name = "PDA-Bendak Starkiller"
-	owner = "Bendak Starkiller"
-	ownjob = "Lawyer"
-	toff = 1
-	note = "Congratulations, your station has chosen the Thinktronic 5100 Personal Data Assistant!"
-
-/obj/item/device/pda/box2550away/cmo
-	default_cartridge = /obj/item/weapon/cartridge/medical
-	name = "PDA-Amy Lessen"
-	owner = "Amy Lessen"
-	ownjob = "Chief Medical Officer"
-	toff = 1
-	icon_state = "pda-chef"
-	note = "Congratulations, your station has chosen the Thinktronic 5100 Personal Data Assistant!"
-
-/obj/item/device/pda/box2550away/hos
-	name = "PDA-Broba Fett"
-	owner = "Broba Fett"
-	ownjob = "Head of Security"
-	toff = 1
-	icon_state = "pda" //the actual sprite was a lighter shade of green and has since been deleted but no one cares
-	note = "Congratulations, your station has chosen the Thinktronic 5100 Personal Data Assistant!"
-
-/obj/item/device/pda/box2550away/hop
-	name = "PDA-Rebecca Sharpe"
-	owner = "Rebecca Sharpe"
-	ownjob = "Head of Personnel"
-	toff = 1
-	icon_state = "pda"
-	note = "Congratulations, your station has chosen the Thinktronic 5100 Personal Data Assistant!"
-
-/obj/item/device/pda/security/box2550away
-	name = "PDA-Hossan Mubarak"
-	owner = "Hossan Mubarak"
-	ownjob = "Security Officer"
-	toff = 1
-	note = "Congratulations, your station has chosen the Thinktronic 5100 Personal Data Assistant!"
-
 /obj/item/clothing/head/helmet/HoS/box2550away
 	name = "\improper HoS Helmet"
 	desc = null
@@ -373,106 +317,12 @@
 	name = "\improper Security Radio Headset"
 	desc = null
 
-/obj/effect/landmark/corpse/away/box2550/captain
-	name = "Jon Riker"
-	corpseuniform = /obj/item/clothing/under/gimmick/rank/captain/suit/box2550away
-	corpsesuit = /obj/item/clothing/suit/armor/centcom/box2550away
-	corpseshoes = /obj/item/clothing/shoes/brown/box2550away
-	corpseradio = null //same person who took his id took this
-	corpsehelmet = /obj/item/clothing/head/caphat/box2550away
-	corpseback = /obj/item/weapon/storage/backpack/box2550away/captain
-	corpsepocket2 = /obj/item/weapon/pen
-	corpsebelt = /obj/item/device/pda/captain/box2550away
-	corpseglasses = /obj/item/clothing/glasses/sunglasses/box2550away
-	corpsehusk = "very yes"
-	corpsebrute = 40
-	corpseoxy = 120
-
-/obj/effect/landmark/corpse/away/box2550/scientist
-	name = "Cuban Pete"//:D
-	corpseuniform = /obj/item/clothing/under/rank/chemist/box2550away/scientist
-	corpseshoes = /obj/item/clothing/shoes/white/box2550away
-	corpseradio = /obj/item/device/radio/headset/box2550away
-	corpsemask = /obj/item/clothing/mask/gas/box2550away/
-	corpseback = /obj/item/weapon/storage/backpack/box2550away/scientist
-	corpsepocket2 = /obj/item/weapon/pen
-	corpsebelt = /obj/item/device/pda/toxins/box2550away
-	corpseid = 1
-	corpseidjob = "Scientist"
-	corpseidaccess = "Scientist"
-	corpsehusk = "chicky boom"
-	corpsebrute = 40
-	corpseoxy = 120
-
-obj/effect/landmark/corpse/away/box2550/lawyer
-	name = "Bendak Starkiller"//u hungry? xD
-	corpseuniform = /obj/item/clothing/under/lawyer/blue
-	corpseshoes = /obj/item/clothing/shoes/black/box2550away
-	corpseradio = /obj/item/device/radio/headset/box2550away
-	corpseback = /obj/item/weapon/storage/backpack/box2550away/lawyer
-	corpsepocket2 = /obj/item/weapon/pen
-	corpsebelt = /obj/item/device/pda/box2550away/lawyer
-	corpseid = 1
-	corpseidjob = "Lawyer"
-	corpseidaccess = "Lawyer"
-	corpsehusk = "honk"
-	corpsebrute = 40
-	corpseoxy = 120
-
-obj/effect/landmark/corpse/away/box2550/cmo
-	name = "Amy Lessen"
-	mobgender = "female"
-	corpseuniform = /obj/item/clothing/under/rank/medical/box2550/cmo
-	corpsesuit = /obj/item/clothing/suit/labcoat/cmo/box2550
-	corpseshoes = /obj/item/clothing/shoes/brown/box2550away
-	corpseradio = /obj/item/device/radio/headset/heads/box2550/heads/cmo
-	corpseback = /obj/item/weapon/storage/backpack/box2550away/
-	corpsepocket2 = /obj/item/weapon/pen
-	corpsebelt = /obj/item/device/pda/box2550away/cmo
-	corpsehusk = "~~~"
-	corpsebrute = 40
-	corpseoxy = 120
-
-obj/effect/landmark/corpse/away/box2550/hos
-	name = "Broba Fett"
-	corpseuniform = /obj/item/clothing/under/rank/head_of_security/box2550
-	corpsesuit = /obj/item/clothing/suit/armor/hos //exactly the same now as it was in 2010
-	corpseshoes = /obj/item/clothing/shoes/brown/box2550away
-	corpseradio = /obj/item/device/radio/headset/headset_sec/box2550away
-	corpsehelmet = /obj/item/clothing/head/helmet/HoS/box2550away
-	corpsemask = /obj/item/clothing/mask/gas/box2550away/emergency
-	corpseglasses = /obj/item/clothing/glasses/sunglasses/box2550away
-	corpseback = /obj/item/weapon/storage/backpack/box2550away/hos
-	corpsepocket1 = /obj/item/device/flash/box2550away
-	corpsepocket2 = /obj/item/weapon/pen
-	corpsebelt = /obj/item/device/pda/box2550away/hos
-	corpsehusk = "i'm out of ideas"
-	corpsebrute = 40
-	corpseoxy = 120
-
 /obj/item/clothing/under/rank/centcom_officer/box2550/hop
 	desc = "It has a Head of Personnel rank stripe on it."
 	name = "\improper Head of Personnel Jumpsuit"
 
 /obj/item/clothing/head/helmet/box2550away
 	desc = null
-
-obj/effect/landmark/corpse/away/box2550/hop
-	name = "Rebecca Sharpe"
-	mobgender = "female"
-	corpseuniform = /obj/item/clothing/under/rank/centcom_officer/box2550/hop
-	corpsesuit = /obj/item/clothing/suit/armor/vest //exactly the same now as it was in 2010
-	corpseshoes = /obj/item/clothing/shoes/brown/box2550away
-	corpseradio = /obj/item/device/radio/headset/heads/box2550/heads/
-	corpsehelmet = /obj/item/clothing/head/helmet/box2550away
-	corpseglasses = /obj/item/clothing/glasses/sunglasses/box2550away
-	corpseback = /obj/item/weapon/storage/backpack/box2550away/captain
-	corpsepocket1 = /obj/item/device/flash/box2550away
-	corpsepocket2 = /obj/item/weapon/pen
-	corpsebelt = /obj/item/device/pda/box2550away/hop
-	corpsehusk = 1
-	corpsebrute = 40
-	corpseoxy = 120
 
 /obj/item/clothing/mask/gas/clown_hat/box2550/clown
 	desc = "You're gay for even considering wearing this." //check your privilege, coder scum
@@ -482,29 +332,6 @@ obj/effect/landmark/corpse/away/box2550/hop
 
 /obj/item/clothing/under/rank/clown/box2550/clown
 	desc = "Wearing this, all the children love you, for all the wrong reasons."
-
-/obj/item/device/pda/clown/box2550away/clown
-	name = "PDA-Robert Robust"
-	owner = "Robert Robust"
-	ownjob = "Clown"
-	toff = 1
-	note = "Congratulations, your station has chosen the Thinktronic 5100 Personal Data Assistant!"
-
-obj/effect/landmark/corpse/away/box2550/clown
-	name = "Robert Robust"
-	corpseuniform = /obj/item/clothing/under/rank/clown/box2550/clown
-	corpseshoes = /obj/item/clothing/shoes/clown_shoes/box2550/clown_shoes
-	corpseradio = /obj/item/device/radio/headset/box2550away
-	corpsemask = /obj/item/clothing/mask/gas/clown_hat/box2550/clown
-	corpsepocket2 = /obj/item/weapon/pen
-	corpseback = /obj/item/weapon/storage/backpack/box2550away/clown
-	corpsebelt = /obj/item/device/pda/clown/box2550away/clown
-	corpseid = 1
-	corpseidjob = "Clown"
-	corpseidaccess = "Clown"
-	corpsehusk = 1
-	corpsebrute = 40
-	corpseoxy = 120
 
 /obj/item/weapon/melee/baton/loaded/box2550
     name = "\improper Stun Baton"
@@ -521,38 +348,9 @@ obj/effect/landmark/corpse/away/box2550/clown
     update_icon()
     return
 
-obj/effect/landmark/corpse/away/box2550/sec
-	name = "Hossan Mubarak"
-	corpseuniform = /obj/item/clothing/under/color/red/box2550away
-	corpsesuit = /obj/item/clothing/suit/armor/vest
-	corpseshoes = /obj/item/clothing/shoes/brown/box2550away
-	corpseradio = /obj/item/device/radio/headset/headset_sec/box2550away
-	corpsehelmet = /obj/item/clothing/head/helmet/box2550away
-	corpseglasses = /obj/item/clothing/glasses/sunglasses/box2550away
-	corpseback = /obj/item/weapon/storage/backpack/box2550away/sec
-	corpsepocket1 = /obj/item/device/flash/box2550away
-	corpsepocket2 = /obj/item/weapon/pen
-	corpsebelt = /obj/item/device/pda/security/box2550away
-	corpsehusk = 1
-	corpsebrute = 40
-	corpseoxy = 120
-
 /obj/item/clothing/under/rank/janitor/box2550
 	name = "Janitor's Jumpsuit"
 	desc = "Official clothing of the station's poopscooper."
-
-/obj/item/device/pda/janitor/box2550
-	name = "\improper PDA-Jackson Bob"
-	owner = "Jackson Bob"
-	ownjob = "Janitor"
-	toff = 1
-	note = "Congratulations, your station has chosen the Thinktronic 5100 Personal Data Assistant!"
-
-/obj/item/device/pda/security/box2550away/det
-	name = "\improper PDA-Corbin Riker"
-	owner = "Corbin Riker"
-	ownjob = "Detective"
-	toff = 1
 
 /obj/item/weapon/storage/box/lights/mixed/box2550away/
 	desc = null
@@ -574,19 +372,6 @@ obj/effect/landmark/corpse/away/box2550/sec
 		new /obj/item/weapon/reagent_containers/spray/cleaner/box2550away(src)
 		new /obj/item/weapon/mop(src)
 
-obj/effect/landmark/corpse/away/box2550/jan
-	name = "Jackson Bob"
-	corpseuniform = /obj/item/clothing/under/rank/janitor/box2550
-	corpseshoes = /obj/item/clothing/shoes/galoshes
-	corpseradio = /obj/item/device/radio/headset/box2550away
-	corpseback = /obj/item/weapon/storage/backpack/box2550away/jan
-	corpsepocket1 = /obj/item/device/flashlight
-	corpsepocket2 = /obj/item/weapon/pen
-	corpsebelt = /obj/item/device/pda/janitor/box2550
-	corpsehusk = 1
-	corpsebrute = 40
-	corpseoxy = 120
-
 /obj/item/weapon/storage/box/lights/box2550away/lights/
 	name = "box of replacement lights"
 	icon_state = "lightmixed"
@@ -598,19 +383,6 @@ obj/effect/landmark/corpse/away/box2550/jan
 		new /obj/item/weapon/light/tube(src)
 	for(var/i = 0; i < 4; i++)
 		new /obj/item/weapon/light/bulb(src)
-
-obj/effect/landmark/corpse/away/box2550/jan
-	name = "Jackson Bob"
-	corpseuniform = /obj/item/clothing/under/rank/janitor/box2550
-	corpseshoes = /obj/item/clothing/shoes/galoshes
-	corpseradio = /obj/item/device/radio/headset/box2550away
-	corpseback = /obj/item/weapon/storage/backpack/box2550away/jan
-	corpsepocket1 = /obj/item/device/flashlight
-	corpsepocket2 = /obj/item/weapon/pen
-	corpsebelt = /obj/item/device/pda/janitor/box2550
-	corpsehusk = 1
-	corpsebrute = 40
-	corpseoxy = 120
 
 /obj/item/clothing/gloves/black/box2550away
 	name = "Black Gloves"
@@ -627,22 +399,6 @@ obj/effect/landmark/corpse/away/box2550/jan
 /obj/item/clothing/under/det/box2550away
 	name = "Hard worn suit"
 	desc = "Someone who wears this means business"
-
-obj/effect/landmark/corpse/away/box2550/det
-	name = "Corbin Riker"
-	corpseuniform = /obj/item/clothing/under/det/box2550away
-	corpsehelmet = /obj/item/clothing/head/det_hat/box2550away
-	corpsesuit = /obj/item/clothing/suit/det_suit/box2550away
-	corpseshoes = /obj/item/clothing/shoes/black/box2550away
-	corpseradio = /obj/item/device/radio/headset/headset_sec/box2550away
-	corpseback = /obj/item/weapon/storage/backpack/box2550away/lawyer
-	corpsepocket1 = /obj/item/weapon/lighter/zippo/box2550away
-	corpsepocket2 = /obj/item/weapon/pen
-	corpsebelt = /obj/item/device/pda/security/box2550away/det
-	corpsegloves = /obj/item/clothing/gloves/black/box2550away
-	corpsehusk = 1
-	corpsebrute = 40
-	corpseoxy = 120
 
 /obj/item/clothing/under/rank/engineer/box2550away
 	desc = "It has an Engineering rank stripe on it."

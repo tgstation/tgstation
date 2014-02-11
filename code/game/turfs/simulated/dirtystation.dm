@@ -20,7 +20,7 @@
 
 /obj/effect/decal/cleanable/vomit/old
 	name = "crusty dried vomit"
-	desc = "You try not to look at the chunks, and fail."
+	desc = "It smells like the inside of a space roller coaster."
 	New()
 		..()
 		icon_state += "-old"
