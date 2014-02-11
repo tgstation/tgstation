@@ -22,7 +22,7 @@
 //
 
 
-/obj/machinery/compressor
+/obj/machinery/power/compressor
 	name = "compressor"
 	desc = "The compressor stage of a gas turbine generator."
 	icon = 'icons/obj/pipes.dmi'
@@ -48,7 +48,7 @@
 	anchored = 1
 	density = 1
 	var/opened = 0
-	var/obj/machinery/compressor/compressor
+	var/obj/machinery/power/compressor/compressor
 	directwired = 1
 	var/turf/simulated/outturf
 	var/lastgen
@@ -62,12 +62,12 @@
 	anchored = 1
 	density = 1
 	circuit = /obj/item/weapon/circuitboard/turbine_computer
-	var/obj/machinery/compressor/compressor
+	var/obj/machinery/power/compressor/compressor
 	var/id = 0
 
 // the inlet stage of the gas turbine electricity generator
 
-/obj/machinery/compressor/New()
+/obj/machinery/power/compressor/New()
 	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/power_compressor(null)
@@ -99,13 +99,13 @@
 // /obj/machinery/power/compressor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 // 		return !density
 
-/obj/machinery/compressor/RefreshParts()
+/obj/machinery/power/compressor/RefreshParts()
 	var/E = 0
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		E += M.rating
 	efficiency = E / 6
 
-/obj/machinery/compressor/attackby(obj/item/I, mob/user)
+/obj/machinery/power/compressor/attackby(obj/item/I, mob/user)
 	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
 		return
 
@@ -123,10 +123,10 @@
 
 	default_deconstruction_crowbar(I)
 
-/obj/machinery/compressor/CanAtmosPass(var/turf/T)
+/obj/machinery/power/compressor/CanAtmosPass(var/turf/T)
 	return !density
 
-/obj/machinery/compressor/process()
+/obj/machinery/power/compressor/process()
 	if(!starter)
 		return
 	overlays.Cut()
@@ -339,7 +339,7 @@
 		search_turbine()
 
 /obj/machinery/computer/turbine_computer/proc/search_turbine()
-	compressor = locate(/obj/machinery/compressor) in range(5)
+	compressor = locate(/obj/machinery/power/compressor) in range(5)
 
 /obj/machinery/computer/turbine_computer/attack_hand(var/mob/user as mob)
 	if(..())
