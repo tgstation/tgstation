@@ -240,6 +240,8 @@
 	if(!state_open && !panel_open)
 		layer = 3
 		..()
+		if(beaker)
+			beaker.loc = src
 
 /obj/machinery/atmospherics/unary/cryo_cell/close_machine(mob/living/carbon/M)
 	if(state_open && !panel_open)
