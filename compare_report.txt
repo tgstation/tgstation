@@ -69,6 +69,9 @@
  + U-W
  + W
  + W-corner
+ - all
+ - corner
+ - old
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mecha\mecha_equipment.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mecha\mecha_equipment.dmi
  - mecha_phase_array
@@ -141,9 +144,66 @@
  - ai-serithi-crash
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\animal.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\animal.dmi
+ - Basilisk
+ - Basilisk_alert
+ - Basilisk_dead
+ - Goldgrub
+ - Goldgrub_alert
+ - Goldgrub_dead
+ - Goliath
+ - Goliath_alert
+ - Goliath_dead
+ - Goliath_tentacle
+ - Hivelord
+ - Hivelord_alert
+ - Hivelord_dead
+ - Hivelordbrood
+ - bat
+ - bat_dead
+ - cat2
+ - cat2_dead
+ - cat2_rest
+ - cat2_sit
+ - guard_dead0
+ - guard_dead1
+ - guard_dead2
+ - guard_dead3
+ - guard_dead4
+ - guard_dead5
+ - guard_dead6
+ - guard_dead7
+ - heart-ani2
+ - holocarp
+ - hunter_dead0
+ - hunter_dead1
+ - hunter_dead2
+ - hunter_dead3
+ - hunter_dead4
+ - hunter_dead5
+ - hunter_dead6
+ - hunter_dead7
+ - kitten
+ - kitten_dead
+ - mushroom_cap
+ - mushroom_cap_dead
+ - mushroom_color
+ - nurse_dead0
+ - nurse_dead1
+ - nurse_dead2
+ - nurse_dead3
+ - nurse_dead4
+ - nurse_dead5
+ - nurse_dead6
+ - nurse_dead7
+ - otherthing
+ - otherthing-dead
+ - pug
+ - pug_dead
  - scarybat
  - scarybat-dance
  - scarybat-dead
+ - viscerator
+ - viscerator_attack
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\back.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\back.dmi
  - anesthetic2
@@ -163,7 +223,12 @@
  - hfrequency0
  - hfrequency2
  - holdingpack2
+ + ionrifle0
+ + ionrifle100
  - ionrifle2
+ + ionrifle25
+ + ionrifle50
+ + ionrifle75
  - jetpack-black-on2
  - jetpack-black2
  - jetpack-on2
@@ -253,6 +318,7 @@
  + soulstonebelt: soulstonebelt: 1 frames, 4 directions
  - spickaxe2
  - suspenders2
+ + swatbelt
  - template2
  - utility2
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\belt_mirror.dmi
@@ -264,6 +330,28 @@
  - blob_resource
  - blobpod
  - marker
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\collar.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\collar.dmi
+ + bombsuitsec
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\corgi_back.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\corgi_back.dmi
+ - cardborg
+ - cardborg2
+ - fire_extinguisher0
+ - fire_extinguisher02
+ - fire_extinguisher1
+ - fire_extinguisher12
+ - oxygen
+ - oxygen2
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\corgi_head.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\corgi_head.dmi
+ - cardborg_h
+ - cardborg_h2
+ - hardhat0_reindeer
+ - hardhat0_reindeer2
+ - paper_words
+ - paper_words2
+ - wizard-fake2
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\custom-synthetic.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\custom-synthetic.dmi
  + djsnapshot-Combat
@@ -405,6 +493,7 @@
  - sun2
  - sun_thin2
  - sunhud2
+ + swatgoggles
  - thermal2
  - thermalimplants2
  - thermoncle2
@@ -505,6 +594,7 @@
  - bombsuit2_white
  - bombsuitOld2
  - bombsuitsec2
+ + bombsuitsecold
  - bowler2
  - bunny2
  - cake02
@@ -651,6 +741,7 @@
  - surgcap_purple2
  - swat-alt2
  - swat2
+ + swathelm
  - syndicate-helm-black-blue2
  - syndicate-helm-black-engie12
  - syndicate-helm-black-engie2
@@ -759,6 +850,7 @@
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\human_face.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\human_face.dmi
  - bald_l
+ + blank_eyes
  - ears_plain_l
  - eyes_l
  - facial_abe_l
@@ -845,6 +937,10 @@
  - hair_updo_l
  - hair_vlong_l
  - hair_vlongfringe_l
+ + ipc_blue_s
+ + ipc_green_s
+ + ipc_pink_s
+ + ipc_red_s
  - lips_black_l
  - lips_jade_l
  - lips_purple_l
@@ -855,9 +951,13 @@
  - skrell_goldhair_m_l
  - skrell_hair_f_l
  - skrell_hair_m_l
+ - soghun_horns_l
  - soghun_longfrills_l
  - soghun_longspines_l
+ - soghun_shortfrills_l
  - soghun_shortspines_l
+ - vox_eyes_l
+ - vox_shortquills_l
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\items_lefthand.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_lefthand.dmi
  - atmos_gold_hardsuit
@@ -947,7 +1047,6 @@
  - balaclava2
  - breath2
  - breathdown2
- - cigar2on
  - cigaroff2
  - cigaron2
  - cigoff2
@@ -984,6 +1083,7 @@
  + snorkel
  - sterile2
  - swat2
+ + swatclava
  - tooth-necklace2
  - ty_necklace2
  - voxmask2
@@ -1113,6 +1213,7 @@
  - bombsuit2_white
  - bombsuitOld2
  - bombsuitsec2
+ + bombsuitsecold
  - bombvest2
  - bulletproof2
  - caparmor2
@@ -1238,6 +1339,7 @@
  - surgeon2
  - suspenders2
  - swat2
+ + swatarmor
  - syndicate-black-blue2
  - syndicate-black-engie2
  - syndicate-black-green2
@@ -1464,6 +1566,7 @@
  - stripper_g_l
  - stripper_p_l
  - sundress_l
+ + swatunder_s
  - swim_black_l
  - swim_blue_l
  - swim_green_l
@@ -1503,6 +1606,37 @@
  + l_foot
  + l_hand
  + l_leg
+ + r_arm
+ + r_foot
+ + r_hand
+ + r_leg
+ + torso_f
+ + torso_m
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\human_races\r_diona.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\human_races\r_diona.dmi
+ + groin
+ + head
+ + l_arm
+ + l_foot
+ + l_hand
+ + l_leg
+ + overlay_husk
+ + r_arm
+ + r_foot
+ + r_hand
+ + r_leg
+ + torso
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\human_races\r_machine.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\human_races\r_machine.dmi
+ + groin_f
+ + groin_m
+ + head_f
+ + head_m
+ + l_arm
+ + l_foot
+ + l_hand
+ + l_leg
+ + overlay_husk
  + r_arm
  + r_foot
  + r_hand
@@ -1612,6 +1746,11 @@
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\drinks.dmi
  - icetea
  - tea
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\food.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\food.dmi
+ + cheeseburger
+ + hotdog
+ + taco
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\gate.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\gate.dmi
  C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\gate.dmi: Received error, continuing: Traceback (most recent call last):
@@ -1718,6 +1857,13 @@ OSError: cannot identify image file
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\items.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\items.dmi
  - coin_phazon
+ - cuff_blue
+ - cuff_cyan
+ - cuff_green
+ - cuff_orange
+ - cuff_pink
+ - cuff_red
+ - cuff_yellow
  - rpd
  - sheet-phazon
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\kitchen.dmi
@@ -1750,8 +1896,52 @@ OSError: cannot identify image file
  - insulated_manifold
  - insulated_manifold4w
  - thermalplate
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\power_cond_red.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\power_cond_red.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\power.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\power.dmi
+ + coil
+ + coil1
+ + coil2
+ - coil_blue
+ - coil_blue1
+ - coil_blue2
+ - coil_cyan
+ - coil_cyan1
+ - coil_cyan2
+ - coil_green
+ - coil_green1
+ - coil_green2
+ - coil_orange
+ - coil_orange1
+ - coil_orange2
+ - coil_pink
+ - coil_pink1
+ - coil_pink2
+ - coil_red
+ - coil_red1
+ - coil_red2
+ - coil_white
+ - coil_white1
+ - coil_white2
+ - coil_yellow
+ - coil_yellow1
+ - coil_yellow2
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\power_cond_white.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\power_cond_white.dmi
+ - 0-1-f
+ - 0-10-f
+ - 0-2-f
+ - 0-4-f
+ - 0-5-f
+ - 0-6-f
+ - 0-8-f
+ - 0-9-f
+ - 1-10-f
+ - 1-2-f
+ - 1-4-f
+ - 1-5-f
+ - 1-6-f
+ - 1-8-f
+ - 1-9-f
  + 11-1
  + 11-10
  + 11-2
@@ -1761,6 +1951,27 @@ OSError: cannot identify image file
  + 11-8
  + 11-9
  + 12-0
+ - 2-10-f
+ - 2-4-f
+ - 2-5-f
+ - 2-6-f
+ - 2-8-f
+ - 2-9-f
+ - 4-10-f
+ - 4-5-f
+ - 4-6-f
+ - 4-8-f
+ - 4-9-f
+ - 5-10-f
+ - 5-6-f
+ - 5-8-f
+ - 5-9-f
+ - 6-10-f
+ - 6-8-f
+ - 6-9-f
+ - 8-10-f
+ - 8-9-f
+ - 9-10-f
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\projectiles.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\projectiles.dmi
  - heavylaser: heavylaser: 1 frames, 8 directions
@@ -1820,6 +2031,20 @@ OSError: cannot identify image file
  - largebox-deployed
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\structures.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\structures.dmi
+ + down
+ + down-f
+ + green-ladderlight
+ + hatchdown
+ + hatchdown-close
+ + hatchdown-open
+ + ladderdown
+ + ladderup
+ + open
+ + rampbottom
+ + rampbottomold
+ + ramptop
+ + ramptopold
+ + red-ladderlight
  + rtableflip0
  + rtableflip1+
  + rtableflip1-
@@ -1828,6 +2053,8 @@ OSError: cannot identify image file
  + tableflip1+
  + tableflip1-
  + tableflip2
+ + up
+ + up-f
  + woodflip0
  + woodflip1+
  + woodflip1-
@@ -1950,8 +2177,13 @@ OSError: cannot identify image file
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\belts.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\belts.dmi
  + inflatable
+ + swatbelt
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\glasses.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\glasses.dmi
+ + swatgoggles
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\hats.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\hats.dmi
+ + bombsuitsecold
  - ert_commander
  - ert_engineer
  - ert_medical
@@ -1962,6 +2194,7 @@ OSError: cannot identify image file
  - rig0-atmos_gold
  - roman
  - roman_c
+ + swathelm
  - vox-pressure-engineer
  - vox-pressure-medical
  - vox-pressure-normal
@@ -1971,6 +2204,7 @@ OSError: cannot identify image file
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\masks.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\masks.dmi
  + snorkel
+ + swatclava
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\shoes.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\shoes.dmi
  + flippers
@@ -1978,10 +2212,12 @@ OSError: cannot identify image file
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\suits.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\suits.dmi
  - atmosfiresuit
+ + bombsuitsecold
  - paramedic-eva
  - paramedic-vest
  - paramedic-vest-old
  - rig-atmos_gold
+ + swatarmor
  - vox-pressure-engineer
  - vox-pressure-medical
  - vox-pressure-normal
@@ -1993,6 +2229,7 @@ OSError: cannot identify image file
  - paramedic
  - paramedic_old
  - roman
+ + swatunder
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\doors\DoorHazard2x1.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\doors\DoorHazard2x1.dmi
  - door_closed: door_closed: 1 frames, 1 directions
@@ -2134,6 +2371,12 @@ OSError: cannot identify image file
  - enginewarncorner
  + vault
  - vaultfull
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\turf\shuttle.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\shuttle.dmi
+ + swall_floor_f10
+ + swall_floor_f5
+ + swall_floor_f6
+ + swall_floor_f9
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\turf\space.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\space.dmi
  - debug-east
