@@ -388,6 +388,7 @@
 #include "code\game\machinery\computer\prisoner.dm"
 #include "code\game\machinery\computer\prisonshuttle.dm"
 #include "code\game\machinery\computer\robot.dm"
+#include "code\game\machinery\computer\salvage_ship.dm"
 #include "code\game\machinery\computer\security.dm"
 #include "code\game\machinery\computer\shuttle.dm"
 #include "code\game\machinery\computer\specops_shuttle.dm"
