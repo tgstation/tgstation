@@ -92,7 +92,7 @@
 			tank_one.loc = get_turf(src)
 			tank_one = null
 			update_icon()
-			if(!tank_two && (w_class > 3))
+			if((!tank_two || tank_two.w_class < 4) && (w_class > 3))
 				w_class = 3
 		else if(tank_two && href_list["tanktwo"])
 			split_gases()
@@ -100,7 +100,7 @@
 			tank_two.loc = get_turf(src)
 			tank_two = null
 			update_icon()
-			if(!tank_one && (w_class > 3))
+			if((!tank_one || tank_one.w_class < 4) && (w_class > 3))
 				w_class = 3
 		else if(href_list["open"])
 			toggle_valve()
