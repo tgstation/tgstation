@@ -51,10 +51,16 @@
 		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
 	. = ..()
 
-/mob/living/carbon/AltClickOn(var/atom/A)
-	if(!src.stat && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
+/mob/living/carbon/MiddleClickOn(var/atom/A)
+	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
 		next_click = world.time + 5
 		call(src, src.mind.changeling.chosen_sting)(A)
+	else
+		..()
+
+/mob/living/carbon/MouseDrop(atom/over)
+	if(!src.stat && (over != src) && (usr == src) && (istype(over, /mob/living/carbon) && src.mind.changeling && src.mind.changeling.chosen_sting))
+		call(src, src.mind.changeling.chosen_sting)(over)
 	else
 		..()
 
