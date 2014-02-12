@@ -17,7 +17,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume()
 	if(!usr)	return
 	if(!reagents.total_volume)
-		usr.drop_from_inventory(src)	//so icons update :[
+		usr.u_equip(src)	//so icons update :[
 
 		if(trash)
 			if(ispath(trash,/obj/item/weapon/grown))
@@ -41,7 +41,7 @@
 		eatverb = pick("bite","chew","nibble","gnaw","gobble","chomp")
 	if(!reagents.total_volume)						//Shouldn't be needed but it checks to see if it has anything left in it.
 		user << "<span class='notice'>None of [src] left, oh no!</span>"
-		M.drop_from_inventory(src)	//so icons update :[
+		M.u_equip(src)	//so icons update :[
 		del(src)
 		return 0
 	if(istype(M, /mob/living/carbon))

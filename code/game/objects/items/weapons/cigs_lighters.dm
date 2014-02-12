@@ -153,7 +153,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			e.start()
 			if(ismob(loc))
 				var/mob/M = loc
-				M.drop_from_inventory(src)
+				M.u_equip(src)
 			del(src)
 			return
 		if(reagents.get_reagent_amount("fuel")) // the fuel explodes, too, but much less violently
@@ -162,7 +162,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			e.start()
 			if(ismob(loc))
 				var/mob/M = loc
-				M.drop_from_inventory(src)
+				M.u_equip(src)
 			del(src)
 			return
 		flags &= ~NOREACT // allowing reagents to react after being lit

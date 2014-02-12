@@ -295,7 +295,7 @@
 	if(istype(M) && M.head)
 		var/obj/item/clothing/head/H = M.head
 		if(!istype(H) || prob(M.hat_fall_prob()))
-			M.drop_from_inventory(H)
+			M.u_equip(H)
 			if(prob(60))
 				step_rand(H)
 			if(!M.stat)

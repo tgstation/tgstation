@@ -28,7 +28,7 @@
 	if(istype(I, /obj/item/device/gps))
 		var/obj/item/device/gps/L = I
 		if(L.locked_location && !(stat & (NOPOWER|BROKEN)))
-			user.drop_from_inventory(L)
+			user.u_equip(L)
 			L.loc = src
 			locked = L
 			user << "<span class = 'caution'>You insert the GPS device into the [name]'s slot.</span>"

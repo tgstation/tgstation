@@ -140,7 +140,7 @@
 			var/mob/living/carbon/human/H = M
 			if(isobj(H.shoes))
 				var/thingy = H.shoes
-				H.drop_from_inventory(H.shoes)
+				H.u_equip(H.shoes)
 				walk_away(thingy,chassis,15,2)
 				spawn(20)
 					if(thingy)

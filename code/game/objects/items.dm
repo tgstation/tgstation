@@ -172,7 +172,7 @@
 
 	if(!A.has_fine_manipulation || w_class >= 4)
 		if(src in A.contents) // To stop Aliens having items stuck in their pockets
-			A.drop_from_inventory(src)
+			A.u_equip(src)
 		user << "Your claws aren't capable of such fine manipulation."
 		return
 	attack_paw(A)

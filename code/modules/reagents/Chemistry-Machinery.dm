@@ -948,7 +948,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				user << "Cannot refine into a reagent."
 				return 1
 
-		user.before_take_item(O)
+		user.u_equip(O)
 		O.loc = src
 		holdingitems += O
 		src.updateUsrDialog()

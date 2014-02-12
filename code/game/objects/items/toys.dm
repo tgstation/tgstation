@@ -345,8 +345,8 @@
 			if(hacked) // That's right, we'll only check the "original" "sword".
 				newSaber.hacked = 1
 				newSaber.item_color = "rainbow"
-			user.before_take_item(W)
-			user.before_take_item(src)
+			user.u_equip(W)
+			user.u_equip(src)
 			del(W)
 			del(src)
 	else if(istype(W, /obj/item/device/multitool))

@@ -101,7 +101,7 @@
 /obj/machinery/smartfridge/proc/load(var/obj/item/O as obj)
 	if(istype(O.loc,/mob))
 		var/mob/M = O.loc
-		M.before_take_item(O)
+		M.u_equip(O)
 	else if(istype(O.loc,/obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = O.loc
 		S.remove_from_storage(O,src)

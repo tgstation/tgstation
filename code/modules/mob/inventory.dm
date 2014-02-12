@@ -79,39 +79,14 @@
 	return 0
 
 
-/mob/proc/drop_from_inventory(var/obj/item/W)
-	if(W)
-		if(client)
-			client.screen -= W
-		if(!u_equip(W))
-			return 0
-		if(!W)
-			return 1 // self destroying objects (tk, grabs)
-		W.layer = initial(W.layer)
-		W.loc = loc
-
-		var/turf/T = get_turf(loc)
-		if(isturf(T))
-			T.Entered(W)
-
-		W.dropped(src)
-		//update_icons() // Redundant as u_equip will handle updating the specific overlay //WELL HALF OF THIS GODDDAMN PROC IS REDUNDANT DUE TO U_EQUIP
-		return 1
-	return 0
-
-
 //Drops the item in our left hand
 /mob/proc/drop_l_hand() //I really fucking wonder why this proc had an argument holy shit.
-	if(u_equip(l_hand)) //All needed checks are in u_equip
-		return 1
-	return 0
+	return u_equip(l_hand) //All needed checks are in u_equip
 
 
 //Drops the item in our right hand
 /mob/proc/drop_r_hand()
-	if(u_equip(r_hand)) //Why was this not calling u_equip in the first place jesus fuck.
-		return 1
-	return 0
+	return u_equip(r_hand) //Why was this not calling u_equip in the first place jesus fuck.
 
 
 //Drops the item in our active hand.
@@ -120,25 +95,23 @@
 	else		return drop_r_hand()
 
 
-//Things that aren't strictly hand-related are below this comment, apparently.
-
-//TODO: phase out this proc
-/mob/proc/before_take_item(var/obj/item/W)	//TODO: what is this?
-	W.loc = null
-	W.layer = initial(W.layer)
-	u_equip(W)
-	return
-
+//Here lie drop_from_inventory and before_item_take, already forgotten and not missed.
 
 /mob/proc/u_equip(obj/item/I)
-	if(!istype(I) /* ;_; */ || (I.flags & NODROP))	return 0
+	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(u_equip) should generally be used to check for NODROP.
+		world << "nothing here u fage"
+		return 1
+
+	if(I.flags & NODROP)
+		world << "cant drop this fucking shit"
+		return 0
 
 	if(I == r_hand)
 		r_hand = null
-		update_inv_r_hand(0)
+		update_inv_r_hand()
 	else if(I == l_hand)
 		l_hand = null
-		update_inv_l_hand(0)
+		update_inv_l_hand()
 
 	if(I)
 		if(client)
@@ -147,16 +120,13 @@
 		I.dropped(src)
 		if(I)
 			I.layer = initial(I.layer)
-
+	world << "grats u did it m8 u happy now hahaha"
 	return 1
 
 
 //Attemps to remove an object on a mob.  Will not move it to another area or such, just removes from the mob.
 /mob/proc/remove_from_mob(var/obj/O)
-	src.u_equip(O)
-	if (src.client)
-		src.client.screen -= O
-	O.layer = initial(O.layer)
+	u_equip(O)
 	O.screen_loc = null
 	return 1
 

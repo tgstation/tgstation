@@ -65,7 +65,7 @@
 		new/obj/item/trash/candle(src.loc)
 		if(istype(src.loc, /mob))
 			var/mob/M = src.loc
-			M.before_take_item(src)
+			M.u_equip(src)
 		del(src)
 	update_icon()
 	if(istype(loc, /turf)) //start a fire if possible

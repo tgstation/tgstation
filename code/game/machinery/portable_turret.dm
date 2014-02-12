@@ -656,7 +656,7 @@
 					I:amount -= 2
 					icon_state = "turret_frame2"
 					if(I:amount <= 0)
-						user.before_take_item(I)
+						user.u_equip(I)
 						del(I)
 				else
 					user << "<span class='warning'>You need two sheets of metal for that.</span>"
@@ -704,7 +704,7 @@
 				gun_charge = E.power_supply.charge //the gun's charge is stored in gun_charge
 				user << "<span class='notice'>You add [I] to the turret.</span>"
 				build_step = 4
-				user.before_take_item(I)
+				user.u_equip(I)
 				del(I) //delete the gun :(
 				return
 
@@ -718,7 +718,7 @@
 			if(isprox(I))
 				build_step = 5
 				user << "<span class='notice'>You add the prox sensor to the turret.</span>"
-				user.before_take_item(I)
+				user.u_equip(I)
 				del(I)
 				return
 
@@ -740,7 +740,7 @@
 					build_step = 7
 					I:amount -= 2
 					if(I:amount <= 0)
-						user.before_take_item(I)
+						user.u_equip(I)
 						del(I)
 				else
 					user << "<span class='warning'>You need two sheets of metal for that.</span>"

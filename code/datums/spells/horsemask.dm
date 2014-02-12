@@ -35,7 +35,7 @@
 	magichead.voicechange = 1	//NEEEEIIGHH
 	target.visible_message(	"<span class='danger'>[target]'s face  lights up in fire, and after the event a horse's head takes its place!</span>", \
 							"<span class='danger'>Your face burns up, and shortly after the fire you realise you have the face of a horse!</span>")
-	target.drop_from_inventory(target.wear_mask)
+	target.u_equip(target.wear_mask)
 	target.equip_to_slot_if_possible(magichead, slot_wear_mask, 1, 1)
 
 	flick("e_flash", target.flash)

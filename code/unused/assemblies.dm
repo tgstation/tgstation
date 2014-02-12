@@ -211,7 +211,7 @@
 		part2 = null
 
 		user.put_in_hand(R)
-		user.before_take_item(W)
+		user.u_equip(W)
 		R.part3 = W
 		R.part3.master = R
 		del(src)

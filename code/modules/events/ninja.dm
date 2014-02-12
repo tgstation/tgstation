@@ -2690,7 +2690,7 @@ It is possible to destroy the net by the occupant or someone else.
 				if(istype(M,/mob/living/carbon/human))
 					if(W==M:w_uniform)	continue//So all they're left with are shoes and uniform.
 					if(W==M:shoes)	continue
-				M.drop_from_inventory(W)
+				M.u_equip(W)
 
 			spawn(0)
 				playsound(M.loc, 'sound/effects/sparks4.ogg', 50, 1)
