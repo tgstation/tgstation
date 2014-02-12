@@ -40,8 +40,10 @@
 			if("freedom")
 				var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(src)
 				O.imp = new /obj/item/weapon/implant/freedom(O)
+				O.update()
 				var/obj/item/weapon/implanter/U = new /obj/item/weapon/implanter(src)
 				U.imp = new /obj/item/weapon/implant/uplink(U)
+				U.update()
 				return
 
 			if("hacker")
