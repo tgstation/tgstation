@@ -379,7 +379,7 @@
 
 /*
 /obj/item/weapon/cigarpacket
-	name = "Pete's Cuban Cigars"
+	name = "Eddie's Explosive Cigars"
 	desc = "The most robust cigars on the planet."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigarpacket"

@@ -879,14 +879,6 @@
 	items = list()
 	result = /obj/item/weapon/reagent_containers/food/snacks/jellyburger/cherry
 
-/datum/recipe/twobread
-	reagents = list("wine" = 5)
-	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
-		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
-	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/twobread
-
 /datum/recipe/slimesandwich
 	reagents = list("slimejelly" = 5)
 	items = list(

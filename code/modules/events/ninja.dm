@@ -2577,7 +2577,7 @@ ________________________________________________________________________________
 				for(var/mob/living/carbon/human/M in player_list)
 					if(M==U||!M.client||!M.real_name)	continue
 					names.Add(M.real_name)
-				voice = !names.len ? "Cuban Pete" : pick(names)
+				voice = !names.len ? "Explosive Eddie" : pick(names)
 		U << "You are now mimicking <B>[voice]</B>."
 	else
 		U << "The voice synthesizer is [voice!="Unknown"?"now":"already"] deactivated."

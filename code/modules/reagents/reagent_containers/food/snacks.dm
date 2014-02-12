@@ -1663,15 +1663,6 @@
 		reagents.add_reagent("nutriment", 4)
 		bitesize = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/twobread
-	name = "two bread"
-	desc = "This seems awfully bitter."
-	icon_state = "twobread"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 2)
-		bitesize = 3
-
 /obj/item/weapon/reagent_containers/food/snacks/jellysandwich
 	name = "jelly sandwich"
 	desc = "You wish you had some peanut butter to go with this..."

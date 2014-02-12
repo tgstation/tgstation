@@ -5,10 +5,10 @@
 	name = "collectable hat"
 	desc = "A rare collectable hat."
 
-/obj/item/clothing/head/collectable/petehat
-	name = "ultra rare Pete's hat!"
+/obj/item/clothing/head/collectable/eddiehat
+	name = "ultra rare Explosive Eddie's hat!"
 	desc = "It smells faintly of plasma"
-	icon_state = "petehat"
+	icon_state = "eddiehat"
 
 /obj/item/clothing/head/collectable/slime
 	name = "collectable slime cap!"

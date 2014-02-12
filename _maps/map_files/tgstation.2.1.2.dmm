@@ -7512,7 +7512,7 @@
 "cOx" = (/turf/simulated/floor/airless,/turf/simulated/shuttle/wall{icon_state = "swall_f10"; dir = 2},/area)
 "cOy" = (/obj/item/weapon/pickaxe,/turf/simulated/floor/airless,/area)
 "cOz" = (/obj/structure/closet/crate,/obj/item/weapon/ore/clown,/obj/item/weapon/ore/clown,/obj/item/weapon/ore/clown,/obj/item/weapon/ore/clown,/turf/simulated/floor/airless,/area)
-"cOA" = (/obj/structure/closet/crate,/obj/item/weapon/ore/clown,/obj/item/weapon/ore/clown,/obj/item/weapon/ore/clown,/obj/item/weapon/ore/clown,/obj/item/weapon/ore/clown,/obj/item/clothing/shoes/clown_shoes{desc = "These shoes appear var-edited!."; name = "uhangi's shoes"; slowdown = -1},/turf/simulated/floor/airless,/area)
+"cOA" = (/obj/structure/closet/crate,/obj/item/weapon/ore/clown,/obj/item/weapon/ore/clown,/obj/item/weapon/ore/clown,/obj/item/weapon/ore/clown,/obj/item/weapon/ore/clown,/obj/item/clothing/shoes/clown_shoes{desc = "These shoes appear var-edited!."; name = "Cheater's Shoes"; slowdown = -1},/turf/simulated/floor/airless,/area)
 "cOB" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_l"; dir = 8},/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_l"; dir = 8},/turf/space,/area)
 "cOC" = (/obj/structure/ore_box,/turf/simulated/floor{tag = "icon-asteroidwarning (WEST)"; icon_state = "asteroidwarning"; dir = 8; temperature = 273.15},/area/mine/explored)
 "cOD" = (/turf/space,/area/syndicate_station/mining)
