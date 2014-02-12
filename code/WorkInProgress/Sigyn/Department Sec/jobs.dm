@@ -30,7 +30,6 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 				H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec/department/sci(H), slot_ears)
 				access = list(access_research)
 				destination = /area/security/checkpoint/science
-
 		if(!config.sec_start_brig)
 			if(destination)
 				var/teleport = 0
@@ -48,10 +47,11 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 									continue
 								else
 									break
-		H << "<b>You have been assigned to [department]!</b>"
-		var/obj/item/weapon/card/id/I = locate(/obj/item/weapon/card/id, H)
-		if(I)
-			I.access |= access
+			spawn(10)
+				H << "<b>You have been assigned to [department]!</b>"
+				var/obj/item/weapon/card/id/I = locate(/obj/item/weapon/card/id, H)
+				if(I)
+					I.access |= access
 
 
 
