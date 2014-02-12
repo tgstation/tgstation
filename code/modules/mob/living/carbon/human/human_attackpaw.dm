@@ -17,7 +17,7 @@
 		for(var/datum/disease/D in M.viruses)
 			if(istype(D, /datum/disease/jungle_fever))
 				var/mob/living/carbon/human/H = src
-				src = null
-				src = H.monkeyize()
-				contract_disease(D,1,0)
+				if(src.stat != 2)
+					H.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
+					contract_disease(D,1,0)
 	return
