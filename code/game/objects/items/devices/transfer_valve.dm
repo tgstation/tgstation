@@ -16,6 +16,9 @@
 	return 1
 
 /obj/item/device/transfer_valve/attackby(obj/item/item, mob/user)
+	if(istype(item, /obj/item/weapon/tank/jetpack))
+		user << "<span class='warning'>The jetpack is too large to attach.</span>"
+		return
 	if(istype(item, /obj/item/weapon/tank))
 		if(tank_one && tank_two)
 			user << "<span class='warning'>There are already two tanks attached, remove one first.</span>"
