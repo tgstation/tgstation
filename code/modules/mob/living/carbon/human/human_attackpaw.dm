@@ -7,7 +7,7 @@
 			return
 
 		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
+			O.show_message(text("\red <B>[M.name] bites []!</B>", src), 1)
 
 		var/damage = rand(1, 3)
 		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
