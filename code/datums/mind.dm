@@ -877,7 +877,7 @@ datum/mind
 			switch(href_list["common"])
 				if("undress")
 					for(var/obj/item/W in current)
-						current.u_equip(W)
+						current.u_equip(W, 1) //The 1 forces all items to drop, since this is an admin undress.
 				if("takeuplink")
 					take_uplink()
 					memory = null//Remove any memory they may have had.

@@ -472,10 +472,10 @@
 	if(istype(user, /mob/living/carbon/human))
 		user <<"<font size='15' color='red'><b>HOR-SIE HAS RISEN</b></font>"
 		var/obj/item/clothing/mask/horsehead/magichead = new /obj/item/clothing/mask/horsehead
-		magichead.canremove = 0		//curses!
+		magichead.flags |= NODROP		//curses!
 		magichead.flags_inv = null	//so you can still see their face
 		magichead.voicechange = 1	//NEEEEIIGHH
-		user.u_equip(user.wear_mask)
+		user.u_equip(user.wear_mask, 1)
 		user.equip_to_slot_if_possible(magichead, slot_wear_mask, 1, 1)
 		del(src)
 	else

@@ -232,7 +232,8 @@ var/global/list/autolathe_recipes_hidden = list( \
 				flick("autolathe_r",src)//plays glass insertion animation
 			stack.use(amount)
 		else
-			usr.u_equip(O)
+			if(!user.u_equip(O))
+				user << "<span class='notice'>/the [O] is stuck to your hand, you put it in \the [src]!</span>"
 			O.loc = src
 		icon_state = "autolathe"
 		busy = 1

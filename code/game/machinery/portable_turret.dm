@@ -650,14 +650,15 @@
 
 		if(1)
 			if(istype(I, /obj/item/stack/sheet/metal))
-				if(I:amount>=2) //requires 2 metal sheets
+				var/obj/item/stack/sheet/metal/M = I
+				if(M.amount>=2) //requires 2 metal sheets
 					user << "<span class='notice'>You add some metal armor to the interior frame.</span>"
 					build_step = 2
-					I:amount -= 2
+					M:amount -= 2
 					icon_state = "turret_frame2"
-					if(I:amount <= 0)
-						user.u_equip(I)
-						del(I)
+					if(M.amount <= 0)
+						user.u_equip(M, 1) //We're deleting it anyway, so no point in having NODROP fuck shit up.
+						del(M)
 				else
 					user << "<span class='warning'>You need two sheets of metal for that.</span>"
 				return
@@ -704,7 +705,9 @@
 				gun_charge = E.power_supply.charge //the gun's charge is stored in gun_charge
 				user << "<span class='notice'>You add [I] to the turret.</span>"
 				build_step = 4
-				user.u_equip(I)
+				if(!user.u_equip(I))
+					user << "<span class='notice'>\the [I] is stuck to your hand, you cannot put it in \the [src]</span>"
+					return
 				del(I) //delete the gun :(
 				return
 
@@ -718,7 +721,9 @@
 			if(isprox(I))
 				build_step = 5
 				user << "<span class='notice'>You add the prox sensor to the turret.</span>"
-				user.u_equip(I)
+				if(!user.u_equip(I))
+					user << "<span class='notice'>\the [I] is stuck to your hand, you cannot put it in \the [src]</span>"
+					return
 				del(I)
 				return
 
@@ -735,13 +740,14 @@
 
 		if(6)
 			if(istype(I, /obj/item/stack/sheet/metal))
-				if(I:amount>=2)
+				var/obj/item/stack/sheet/metal/M = I
+				if(M.amount>=2)
 					user << "<span class='notice'>You add some metal armor to the exterior frame.</span>"
 					build_step = 7
-					I:amount -= 2
-					if(I:amount <= 0)
-						user.u_equip(I)
-						del(I)
+					M.amount -= 2
+					if(M.amount <= 0)
+						user.u_equip(M, 1)
+						del(M)
 				else
 					user << "<span class='warning'>You need two sheets of metal for that.</span>"
 				return

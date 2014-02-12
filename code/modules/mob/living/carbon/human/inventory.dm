@@ -82,15 +82,14 @@
 
 
 /mob/living/carbon/human/u_equip(obj/item/I)
-	if(!I)	return 0
+	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
+	if(!.)
+		return
 
-	var/success = 0
 
 	if(I == wear_suit)
 		if(s_store)
 			u_equip(s_store)
-		if(I)
-			success = 1
 		wear_suit = null
 		update_inv_wear_suit(0)
 	else if(I == w_uniform)
@@ -103,37 +102,29 @@
 		if(belt)
 			u_equip(belt)
 		w_uniform = null
-		success = 1
 		update_inv_w_uniform(0)
 	else if(I == gloves)
 		gloves = null
-		success = 1
 		update_inv_gloves(0)
 	else if(I == glasses)
 		glasses = null
-		success = 1
 		update_inv_glasses(0)
 	else if(I == head)
 		head = null
 		if(I.flags & BLOCKHAIR)
 			update_hair(0)	//rebuild hair
-		success = 1
 		update_inv_head(0)
 	else if(I == ears)
 		ears = null
-		success = 1
 		update_inv_ears(0)
 	else if(I == shoes)
 		shoes = null
-		success = 1
 		update_inv_shoes(0)
 	else if(I == belt)
 		belt = null
-		success = 1
 		update_inv_belt(0)
 	else if(I == wear_mask)
 		wear_mask = null
-		success = 1
 		if(I.flags & BLOCKHAIR)
 			update_hair(0)	//rebuild hair
 		if(internal)
@@ -143,54 +134,18 @@
 		update_inv_wear_mask(0)
 	else if(I == wear_id)
 		wear_id = null
-		success = 1
 		update_inv_wear_id(0)
 	else if(I == r_store)
 		r_store = null
-		success = 1
 		update_inv_pockets(0)
 	else if(I == l_store)
 		l_store = null
-		success = 1
 		update_inv_pockets(0)
 	else if(I == s_store)
 		s_store = null
-		success = 1
 		update_inv_s_store(0)
-	else if(I == back)
-		back = null
-		success = 1
-		update_inv_back(0)
-	else if(I == handcuffed)
-		handcuffed = null
-		success = 1
-		update_inv_handcuffed(0)
-	else if(I == legcuffed)
-		legcuffed = null
-		success = 1
-		update_inv_legcuffed(0)
-	else if(I == r_hand)
-		r_hand = null
-		success = 1
-		update_inv_r_hand(0)
-	else if(I == l_hand)
-		l_hand = null
-		success = 1
-		update_inv_l_hand(0)
-	else
-		return 0
-
-	if(success)
-		if(I)
-			if(client)
-				client.screen -= I
-			I.loc = loc
-			I.dropped(src)
-			if(I)
-				I.layer = initial(I.layer)
 
 	update_action_buttons()
-	return 1
 
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()

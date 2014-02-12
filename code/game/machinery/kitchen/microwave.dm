@@ -147,7 +147,9 @@
 				"\blue You add one of [O] to \the [src].")
 		else
 		//	user.u_equip(O)	//This just causes problems so far as I can tell. -Pete
-			user.drop_item()
+			if(!user.drop_item())
+				user << "<span class='notice'>\the [O] is stuck to your hand, you cannot put it in \the [src]</span>"
+				return 0
 			O.loc = src
 			user.visible_message( \
 				"\blue [user] has added \the [O] to \the [src].", \

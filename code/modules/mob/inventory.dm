@@ -97,13 +97,11 @@
 
 //Here lie drop_from_inventory and before_item_take, already forgotten and not missed.
 
-/mob/proc/u_equip(obj/item/I)
+/mob/proc/u_equip(obj/item/I, force) //Force overrides NODROP for things like wizarditis and admin undress.
 	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(u_equip) should generally be used to check for NODROP.
-		world << "nothing here u fage"
 		return 1
 
-	if(I.flags & NODROP)
-		world << "cant drop this fucking shit"
+	if((I.flags & NODROP) && !force)
 		return 0
 
 	if(I == r_hand)
@@ -120,7 +118,6 @@
 		I.dropped(src)
 		if(I)
 			I.layer = initial(I.layer)
-	world << "grats u did it m8 u happy now hahaha"
 	return 1
 
 
