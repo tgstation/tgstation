@@ -142,7 +142,7 @@
 	access = list(access_maint_tunnels, access_syndicate, access_external_airlocks)
 	origin_tech = "syndicate=3"
 	var/registered_user=null
-	
+
 /obj/item/weapon/card/id/syndicate/New(mob/user as mob)
 	..()
 	if(!isnull(user)) // Runtime prevention on laggy starts or where users log out because of lag at round start.
@@ -150,7 +150,7 @@
 	else
 		registered_name = "Agent Card"
 	assignment = "Agent"
-	name = "[registered_name]'s ID Card ([assignment])"		
+	name = "[registered_name]'s ID Card ([assignment])"
 
 /obj/item/weapon/card/id/syndicate/afterattack(var/obj/item/weapon/O as obj, mob/user as mob)
 	if(istype(O, /obj/item/weapon/card/id))
@@ -180,7 +180,7 @@
 		registered_user = user
 	else if(!registered_user || registered_user == user)
 
-		if(!registered_user) registered_user = user  // 
+		if(!registered_user) registered_user = user  //
 
 		switch(alert("Would you like to display the ID, or retitle it?","Choose.","Rename","Show"))
 			if("Rename")
@@ -224,10 +224,17 @@
 
 /obj/item/weapon/card/id/centcom
 	name = "\improper CentCom. ID"
-	desc = "A card associated with those in service with CentComm and NanoTransen."
+	desc = "An ID straight from Cent. Com."
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "General"
 	New()
 		access = get_all_centcom_access()
 		..()
+
+/obj/item/weapon/card/id/salvage_captain
+	name = "Captain's ID"
+	registered_name = "Captain"
+	icon_state = "centcom"
+	desc = "Finders, keepers."
+	access = list(access_salvage_captain)
