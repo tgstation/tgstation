@@ -1248,7 +1248,7 @@ Code shamelessly copied from apc_frame
 
 /obj/machinery/firealarm/partyalarm
 	name = "\improper PARTY BUTTON"
-	desc = "Cuban Pete is in the house!"
+	desc = "Explosive Eddie is in the house!"
 
 /obj/machinery/firealarm/partyalarm/attack_hand(mob/user as mob)
 	if(user.stat || stat & (NOPOWER|BROKEN))

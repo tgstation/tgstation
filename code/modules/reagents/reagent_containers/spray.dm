@@ -47,7 +47,7 @@
 		tiles =1
 	else
 		tiles =3
-		
+
 	reagents.trans_to(D, amount_per_transfer_from_this, 1/tiles)
 	D.color = mix_color_from_reagents(D.reagents.reagent_list)
 	spawn(0)
@@ -111,7 +111,7 @@
 //pepperspray
 /obj/item/weapon/reagent_containers/spray/pepper
 	name = "pepperspray"
-	desc = "Manufactured by UhangInc, used to blind and down an opponent quickly."
+	desc = "Manufactured by Robust Industries, used to blind and down an opponent quickly."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "pepperspray"
 	item_state = "pepperspray"

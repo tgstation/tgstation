@@ -89,8 +89,8 @@
 
 	name_action = pick("Defeat ", "Annihilate ", "Save ", "Strike ", "Stop ", "Destroy ", "Robust ", "Romance ", "Pwn ", "Own ")
 
-	name_part1 = pick("the Automatic ", "Farmer ", "Lord ", "Professor ", "the Cuban ", "the Evil ", "the Dread King ", "the Space ", "Lord ", "the Great ", "Duke ", "General ")
-	name_part2 = pick("Melonoid", "Murdertron", "Sorcerer", "Ruin", "Jeff", "Ectoplasm", "Crushulon", "Uhangoid", "Vhakoid", "Peteoid", "slime", "Griefer", "ERPer", "Lizard Man", "Unicorn")
+	name_part1 = pick("the Automatic ", "Farmer ", "Lord ", "Professor ", "the Evil ", "the Dread King ", "the Space ", "Lord ", "the Great ", "Duke ", "General ")
+	name_part2 = pick("Melonoid", "Murdertron", "Sorcerer", "Ruin", "Jeff", "Ectoplasm", "Crushulon", "slime", "Griefer", "ERPer", "Lizard Man", "Unicorn")
 
 	src.enemy_name = replacetext((name_part1 + name_part2), "the ", "")
 	src.name = (name_action + name_part1 + name_part2)
@@ -196,9 +196,9 @@
 			if(emagged)
 				feedback_inc("arcade_win_emagged")
 				new /obj/effect/spawner/newbomb/timer/syndicate(src.loc)
-				new /obj/item/clothing/head/collectable/petehat(src.loc)
-				message_admins("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb.")
-				log_game("[key_name(usr)] has outbombed Cuban Pete and been awarded a bomb.")
+				new /obj/item/clothing/head/collectable/eddiehat(src.loc)
+				message_admins("[key_name_admin(usr)] has outbombed Explosive Eddie and been awarded a bomb.")
+				log_game("[key_name(usr)] has outbombed Explosive Eddie and been awarded a bomb.")
 				src.New()
 				emagged = 0
 			else
@@ -261,8 +261,8 @@
 
 		emagged = 1
 
-		enemy_name = "Cuban Pete"
-		name = "Outbomb Cuban Pete"
+		enemy_name = "Explosive Eddie"
+		name = "Outbomb Explosive Eddie"
 
 
 		src.updateUsrDialog()

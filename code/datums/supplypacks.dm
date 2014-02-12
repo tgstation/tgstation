@@ -847,7 +847,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 8
 	containertype = /obj/structure/largecrate
 	containername = "water tank crate"
-	
+
 /datum/supply_packs/misc/lasertag
 	name = "LaserTag Crate"
 	contains =	list(/obj/item/weapon/gun/energy/laser/redtag,
@@ -988,7 +988,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/head/collectable/police,
 					/obj/item/clothing/head/collectable/slime,
 					/obj/item/clothing/head/collectable/xenom,
-					/obj/item/clothing/head/collectable/petehat)
+					/obj/item/clothing/head/collectable/eddiehat)
 	name = "Collectable hat crate!"
 	cost = 200
 	containername = "Collectable hats crate! Brought to you by Bass.inc!"

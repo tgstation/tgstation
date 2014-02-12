@@ -84,66 +84,63 @@ obj/structure/sign/poster/New(serial)
 
 	switch(serial_number)
 		if(1)
-			name += " - Free Tonto"
-			desc += " A framed shred of a much larger flag, colors bled together and faded from age."
-		if(2)
 			name += " - Atmosia Declaration of Independence"
 			desc += " A relic of a failed rebellion"
-		if(3)
+		if(2)
 			name += " - Fun Police"
 			desc += " A poster condemning the station's security forces."
-		if(4)
+		if(3)
 			name += " - Lusty Xeno"
 			desc += " A heretical poster depicting the titular star of an equally heretical book."
-		if(5)
+		if(4)
 			name += " - Syndicate Recruitment Poster"
 			desc += " See the galaxy! Shatter corrupt megacorporations! Join today!"
-		if(6)
+		if(5)
 			name += " - Clown"
 			desc += " Honk."
-		if(7)
+		if(6)
 			name += " - Smoke"
 			desc += " A poster depicting a carton of cigarettes."
-		if(8)
+		if(7)
 			name += " - Grey Tide"
 			desc += " A rebellious poster symbolizing assistant solidarity."
-		if(9)
+		if(8)
 			name += " - Missing Gloves"
 			desc += " This poster is about the uproar that followed Nanotrasen's financial cuts towards insulated-glove purchases."
-		if(10)
+		if(9)
 			name += " - Hacking Guide"
 			desc += " This poster details the internal workings of the common Nanotrasen airlock."
-		if(11)
+		if(10)
 			name += " - RIP Badger"
 			desc += " This poster commemorates the day hundreds of badgers worldwide were sacrificed for the greater good."
-		if(12)
+		if(11)
 			name += " - Ambrosia Vulgaris"
 			desc += " This poster is lookin' pretty trippy man."
-		if(13)
+		if(12)
 			name += " - Donut Corp."
 			desc += " This poster is an advertisement for Donut Corp."
-		if(14)
+		if(13)
 			name += " - EAT"
 			desc += " This poster is advising that you eat."
-		if(15)
+		if(14)
 			name += " - Tools"
 			desc += " This poster is an advertisement for tools."
-		if(16)
+		if(15)
 			name += " - Power"
 			desc += " A poster all about power."
-		if(17)
+		if(16)
 			name += " - Power to the People"
 			desc += " Screw those EDF guys!"
-		if(18)
+		if(17)
 			name += " - Communist state"
 			desc += " All hail the Communist party!"
-		if(19)
+		if(18)
 			name += " - Lamarr"
 			desc += " This poster depicts Lamarr. Probably made by the research director."
-		if(20)
+		if(19)
 			name += " - Borg Fancy"
 			desc += " Being fancy can be for any borg, Just need a suit."
-		if(21)
+		if(20)
 			name += " - Borg Fancy v2"
 			desc += " Borg Fancy, Now only taking the most fancy."
 		else

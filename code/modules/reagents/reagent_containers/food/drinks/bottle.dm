@@ -175,7 +175,7 @@
 		reagents.add_reagent("patron", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/rum
-	name = "Captain Pete's Cuban Spiced Rum"
+	name = "Captain Griff's Spiced Rum"
 	desc = "This isn't just rum, oh no. It's practically GRIFF in a bottle."
 	icon_state = "rumbottle"
 	New()
@@ -199,8 +199,8 @@
 		reagents.add_reagent("vermouth", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua
-	name = "Robert Robust's Coffee Liqueur"
-	desc = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK"
+	name = "Syndi Sam's Coffee Liqueur"
+	desc = "For when you really need to 'explode' your liver, this kahlua is just what you need. In production since 1936, HONK"
 	icon_state = "kahluabottle"
 	New()
 		..()
@@ -223,8 +223,8 @@
 		reagents.add_reagent("cognac", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/wine
-	name = "Doublebeard Bearded Special Wine"
-	desc = "A faint aura of unease and asspainery surrounds the bottle."
+	name = "Special Vintage Wine"
+	desc = "A finely aged bottle of perfection."
 	icon_state = "winebottle"
 	New()
 		..()
