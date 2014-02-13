@@ -51,6 +51,9 @@
 
 
 /mob/living/carbon/monkey/update_inv_r_hand(var/update_icons=1)
+	if (handcuffed)
+		drop_r_hand()
+		return
 	if(r_hand)
 		r_hand.screen_loc = ui_rhand
 		if(client && hud_used)
@@ -67,6 +70,9 @@
 
 
 /mob/living/carbon/monkey/update_inv_l_hand(var/update_icons=1)
+	if (handcuffed)
+		drop_l_hand()
+		return
 	if(l_hand)
 		l_hand.screen_loc = ui_lhand
 		if(client && hud_used)
