@@ -157,6 +157,8 @@
 	if(!open)
 		interact(user)
 	else if(cell)
+		if(isobserver(user))
+			return 0
 		cell.loc = loc
 		cell.add_fingerprint(user)
 		cell.updateicon()
