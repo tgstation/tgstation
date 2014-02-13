@@ -337,13 +337,7 @@
 
 	var/select_txt
 	var/list/selected_types=list()
-	var/list/types=list(
-		RECYK_BIOLOGICAL = "Biological",
-		RECYK_ELECTRONIC = "Electronics",
-		RECYK_GLASS      = "Glasses",
-		RECYK_METAL      = "Metals/Minerals",
-		RECYK_MISC       = "Miscellaneous"
-	)
+	var/list/types[6]
 
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null
@@ -368,11 +362,23 @@
 				break
 		if(i<3)
 			diary << "\a [src] couldn't find an input or output plate."
+
+		// Set up types. BYOND is the dumb and won't let me do this in the var def.
+		types[RECYK_BIOLOGICAL] = "Biological"
+		types[RECYK_ELECTRONIC] = "Electronics"
+		types[RECYK_GLASS]      = "Glasses"
+		types[RECYK_METAL]      = "Metals/Minerals"
+		types[RECYK_MISC]       = "Miscellaneous"
+
 		if(select_txt)
 			for(var/n in text2list(select_txt," "))
 				if(n=="Carcasses")
 					n="Biological"
-				selected_types += n
+				var/idx = types.Find(n)
+				if(idx)
+					selected_types += idx
+				else
+					warning("Unable to find RECYK_* definition for select_txt item [n]!")
 	return
 
 
@@ -423,7 +429,7 @@ table {
 				<h1>MinerX SortMaster 5000</h1><br>
 				<p>Select the desired items to sort from the line.</p>"}
 	dat += "<ul>"
-	for (var/t_id in types)
+	for (var/t_id=1;t_id<=types.len;t_id++)
 		dat += "<li>"
 		var/selected = (t_id in selected_types)
 		if(selected)
