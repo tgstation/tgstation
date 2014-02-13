@@ -129,7 +129,7 @@ var/const/MAX_ACTIVE_TIME = 400
 		if(target.wear_mask)
 			if(prob(20))	return 0
 			var/obj/item/clothing/W = target.wear_mask
-			if(!W.canremove)	return 0
+			if(W.flags & NODROP)	return 0
 			target.u_equip(W)
 
 			target.visible_message("\red \b [src] tears [W] off of [target]'s face!")

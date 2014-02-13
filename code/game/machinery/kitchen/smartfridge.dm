@@ -102,7 +102,7 @@
 	if(istype(O.loc,/mob))
 		var/mob/M = O.loc
 		if(!M.u_equip(O))
-			user << "<span class='notice'>\the [O] is stuck to your hand, you cannot put it in \the [src]</span>"
+			usr << "<span class='notice'>\the [O] is stuck to your hand, you cannot put it in \the [src]</span>"
 			return
 	else if(istype(O.loc,/obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = O.loc

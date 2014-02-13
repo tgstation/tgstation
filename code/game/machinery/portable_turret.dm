@@ -746,7 +746,7 @@
 					build_step = 7
 					M.amount -= 2
 					if(M.amount <= 0)
-						user.u_equip(M, 1)
+						user.u_equip(M)
 						del(M)
 				else
 					user << "<span class='warning'>You need two sheets of metal for that.</span>"
