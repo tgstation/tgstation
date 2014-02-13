@@ -20,18 +20,18 @@
 //		item_state = "rig[on]-[item_color]"
 		user.update_inv_head()	//so our mob-overlays update
 
-		if(on)	user.SetLuminosity(user.luminosity + brightness_on)
-		else	user.SetLuminosity(user.luminosity - brightness_on)
+		if(on)	user.AddLuminosity(brightness_on)
+		else	user.AddLuminosity(-brightness_on)
 
 	pickup(mob/user)
 		if(on)
-			user.SetLuminosity(user.luminosity + brightness_on)
+			user.AddLuminosity(brightness_on)
 //			user.UpdateLuminosity()
 			SetLuminosity(0)
 
 	dropped(mob/user)
 		if(on)
-			user.SetLuminosity(user.luminosity - brightness_on)
+			user.AddLuminosity(-brightness_on)
 //			user.UpdateLuminosity()
 			SetLuminosity(brightness_on)
 

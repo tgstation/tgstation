@@ -240,7 +240,12 @@
 		if(det_time >= 1 && det_time <= 2)
 			G.quality = 2
 			G.icon_state = "Gibtonite ore 2"
-	..()
+	var/turf/simulated/floor/plating/asteroid/airless/gibtonite_remains/G = ChangeTurf(/turf/simulated/floor/plating/asteroid/airless/gibtonite_remains)
+	G.fullUpdateMineralOverlays()
+
+/turf/simulated/floor/plating/asteroid/airless/gibtonite_remains
+	var/det_time = 0
+	var/stage = 0
 
 ////////////////////////////////End Gibtonite
 
@@ -516,9 +521,6 @@
 	dug = 1
 	icon_plating = "asteroid_dug"
 	icon_state = "asteroid_dug"
-	return
-
-/turf/simulated/floor/plating/asteroid/proc/countdown()//This is here to stop runtimes in the event that changeturf() causes asteroid plating to take gibtonite procs
 	return
 
 /turf/proc/updateMineralOverlays()

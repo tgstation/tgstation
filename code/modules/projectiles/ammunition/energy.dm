@@ -104,3 +104,9 @@
 /obj/item/ammo_casing/energy/meteor
 	projectile_type = /obj/item/projectile/meteor
 	select_name = "goddamn meteor"
+
+/obj/item/ammo_casing/energy/kinetic
+	projectile_type = /obj/item/projectile/kinetic
+	select_name = "kinetic"
+	e_cost = 500
+	fire_sound = 'sound/weapons/Gunshot4.ogg'

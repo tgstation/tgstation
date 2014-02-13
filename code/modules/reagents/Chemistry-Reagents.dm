@@ -214,7 +214,7 @@ datum
 			reaction_turf(var/turf/simulated/T, var/volume)
 				if (!istype(T)) return
 				src = null
-				if(volume >= 3)
+				if(volume >= 10)
 					T.MakeSlippery()
 
 				for(var/mob/living/carbon/slime/M in T)
@@ -272,10 +272,13 @@ datum
 					M.confused += 3
 				..()
 				return
-
+				
 			reaction_turf(var/turf/simulated/T, var/volume)
 				..()
 				if(!istype(T)) return
+				if(volume>=10)
+					for(var/obj/effect/rune/R in T)
+						del R
 				T.Bless()
 
 		lube

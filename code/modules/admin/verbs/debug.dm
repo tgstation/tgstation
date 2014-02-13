@@ -632,6 +632,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 		"tunnel clown",
 		"masked killer",
 		"assassin",
+		"mobster",
 		"death commando",
 //		"syndicate commando",
 		"centcom official",
@@ -1016,6 +1017,20 @@ var/global/list/g_fancy_list_of_safe_types = null
 			W.assignment = "Admiral"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
+		if("mobster")
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/fedora(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(M), slot_glasses)
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/tommygun(M), slot_r_hand)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket/really_black(M), slot_w_uniform)
+			var/obj/item/weapon/card/id/W = new(M)
+			W.name = "[M.real_name]'s ID Card"
+			W.assignment = "Assistant"
+			W.registered_name = M.real_name
+			M.equip_to_slot_or_del(W, slot_wear_id)
+
 
 	M.regenerate_icons()
 
@@ -1072,7 +1087,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 
 	for(var/obj/machinery/power/smes/SMES in world)
 		if(SMES.anchored)
-			SMES.chargemode = 1
+			SMES.input_attempt = 1
 
 /client/proc/cmd_debug_mob_lists()
 	set category = "Debug"

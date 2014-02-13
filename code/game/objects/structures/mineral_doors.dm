@@ -13,8 +13,11 @@
 	var/mineralType = "metal"
 	var/state = 0 //closed, 1 == open
 	var/isSwitchingStates = 0
+	var/close_delay = -1 //-1 if does not auto close.
 	var/hardness = 1
 	var/oreAmount = 7
+	var/openSound = 'sound/effects/stonedoor_openclose.ogg'
+	var/closeSound = 'sound/effects/stonedoor_openclose.ogg'
 
 	New(location)
 		..()
@@ -85,23 +88,33 @@
 
 	proc/Open()
 		isSwitchingStates = 1
-		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 100, 1)
+		playsound(loc, openSound, 100, 1)
 		flick("[mineralType]opening",src)
 		sleep(10)
 		density = 0
 		opacity = 0
 		state = 1
+		air_update_turf(1)
 		update_icon()
 		isSwitchingStates = 0
 
+		if(close_delay != -1)
+			spawn(close_delay)
+				if(!isSwitchingStates && state == 1)
+					Close()
+
 	proc/Close()
+		var/turf/T = get_turf(src)
+		for(var/mob/living/L in T)
+			return
 		isSwitchingStates = 1
-		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 100, 1)
+		playsound(loc, closeSound, 100, 1)
 		flick("[mineralType]closing",src)
 		sleep(10)
 		density = 1
 		opacity = 1
 		state = 0
+		air_update_turf(1)
 		update_icon()
 		isSwitchingStates = 0
 
@@ -229,28 +242,8 @@
 /obj/structure/mineral_door/wood
 	mineralType = "wood"
 	hardness = 1
-
-	Open()
-		isSwitchingStates = 1
-		playsound(loc, 'sound/effects/doorcreaky.ogg', 100, 1)
-		flick("[mineralType]opening",src)
-		sleep(10)
-		density = 0
-		opacity = 0
-		state = 1
-		update_icon()
-		isSwitchingStates = 0
-
-	Close()
-		isSwitchingStates = 1
-		playsound(loc, 'sound/effects/doorcreaky.ogg', 100, 1)
-		flick("[mineralType]closing",src)
-		sleep(10)
-		density = 1
-		opacity = 1
-		state = 0
-		update_icon()
-		isSwitchingStates = 0
+	openSound = 'sound/effects/doorcreaky.ogg'
+	closeSound = 'sound/effects/doorcreaky.ogg'
 
 	Dismantle(devastated = 0)
 		if(!devastated)
@@ -261,37 +254,13 @@
 /obj/structure/mineral_door/resin
 	mineralType = "resin"
 	hardness = 1
-	var/close_delay = 100
+	close_delay = 100
+	openSound = 'sound/effects/attackblob.ogg'
+	closeSound = 'sound/effects/attackblob.ogg'
 
 	TryToSwitchState(atom/user)
 		if(isalien(user))
 			return ..()
-
-	Open()
-		isSwitchingStates = 1
-		playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
-		flick("[mineralType]opening",src)
-		sleep(10)
-		density = 0
-		opacity = 0
-		state = 1
-		update_icon()
-		isSwitchingStates = 0
-
-		spawn(close_delay)
-			if(!isSwitchingStates && state == 1)
-				Close()
-
-	Close()
-		isSwitchingStates = 1
-		playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
-		flick("[mineralType]closing",src)
-		sleep(10)
-		density = 1
-		opacity = 1
-		state = 0
-		update_icon()
-		isSwitchingStates = 0
 
 	Dismantle(devastated = 0)
 		del(src)

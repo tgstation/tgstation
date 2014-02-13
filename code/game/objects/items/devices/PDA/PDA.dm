@@ -202,11 +202,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/pickup(mob/user)
 	if(fon)
 		SetLuminosity(0)
-		user.SetLuminosity(user.luminosity + f_lum)
+		user.AddLuminosity(f_lum)
 
 /obj/item/device/pda/dropped(mob/user)
 	if(fon)
-		user.SetLuminosity(user.luminosity - f_lum)
+		user.AddLuminosity(-f_lum)
 		SetLuminosity(f_lum)
 
 /obj/item/device/pda/New()
@@ -507,11 +507,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if("Light")
 				if(fon)
 					fon = 0
-					if(src in U.contents)	U.SetLuminosity(U.luminosity - f_lum)
+					if(src in U.contents)	U.AddLuminosity(-f_lum)
 					else					SetLuminosity(0)
 				else
 					fon = 1
-					if(src in U.contents)	U.SetLuminosity(U.luminosity + f_lum)
+					if(src in U.contents)	U.AddLuminosity(f_lum)
 					else					SetLuminosity(f_lum)
 			if("Medical Scan")
 				if(scanmode == 1)

@@ -113,6 +113,8 @@
 	if(src.contents.len > 0) //TODO: several items at once? several different items?
 		user << "\red Something is already in the processing chamber."
 		return 1
+	if(default_unfasten_wrench(user, O))
+		return
 	var/what = O
 	if (istype(O, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O

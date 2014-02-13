@@ -33,6 +33,7 @@
 		else if(content_mob == /mob/living/simple_animal/cat)
 			if(prob(50))
 				content_mob = /mob/living/simple_animal/cat/Proc
+			new content_mob(loc)
 		else
 			new content_mob(loc)
 		already_opened = 1

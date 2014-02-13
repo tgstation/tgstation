@@ -171,7 +171,7 @@ Auto Patrol: []"},
 				user << "\red Access denied."
 	else
 		..()
-		if(!istype(W, /obj/item/weapon/screwdriver) && (W.force) && (!src.target))
+		if(!istype(W, /obj/item/weapon/screwdriver) && !istype(W, /obj/item/weapon/weldingtool) && (W.force) && (!src.target)) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
 			src.target = user
 			src.mode = SECBOT_HUNT
 
@@ -219,7 +219,7 @@ Auto Patrol: []"},
 				walk_to(src,0)
 
 			if(target)		// make sure target exists
-				if(get_dist(src, src.target) <= 1 && isturf(src.target.loc))		// if right next to perp
+				if(src.Adjacent(target) && isturf(src.target.loc))				// if right next to perp
 					playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 					src.icon_state = "secbot-c"
 					spawn(2)
@@ -669,7 +669,7 @@ Auto Patrol: []"},
 
 	var/obj/item/weapon/secbot_assembly/Sa = new /obj/item/weapon/secbot_assembly(Tsec)
 	Sa.build_step = 1
-	Sa.overlays += image('icons/obj/aibots.dmi', "hs_hole")
+	Sa.overlays += "hs_hole"
 	Sa.created_name = src.name
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 	new /obj/item/weapon/melee/baton(Tsec)
@@ -705,51 +705,77 @@ Auto Patrol: []"},
 		del(S)
 		var/obj/item/weapon/secbot_assembly/A = new /obj/item/weapon/secbot_assembly
 		user.put_in_hands(A)
-		user << "You add the signaler to the helmet."
+		user << "<span class='notice'>You add the signaler to the helmet.</span>"
 		user.drop_from_inventory(src)
 		del(src)
 	else
 		return
 
-/obj/item/weapon/secbot_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/secbot_assembly/attackby(obj/item/I, mob/user)
 	..()
-	if((istype(W, /obj/item/weapon/weldingtool)) && (!src.build_step))
-		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.remove_fuel(0,user))
-			src.build_step++
-			src.overlays += image('icons/obj/aibots.dmi', "hs_hole")
-			user << "You weld a hole in [src]!"
+	if(istype(I, /obj/item/weapon/weldingtool))
+		if(!build_step)
+			var/obj/item/weapon/weldingtool/WT = I
+			if(WT.remove_fuel(0, user))
+				build_step++
+				overlays += "hs_hole"
+				user << "<span class='notice'>You weld a hole in [src]!</span>"
+		else if(build_step == 1)
+			var/obj/item/weapon/weldingtool/WT = I
+			if(WT.remove_fuel(0, user))
+				build_step--
+				overlays -= "hs_hole"
+				user << "<span class='notice'>You weld the hole in [src] shut!</span>"
 
-	else if(isprox(W) && (src.build_step == 1))
+	else if(isprox(I) && (build_step == 1))
 		user.drop_item()
-		src.build_step++
-		user << "You add the prox sensor to [src]!"
-		src.overlays += image('icons/obj/aibots.dmi', "hs_eye")
-		src.name = "helmet/signaler/prox sensor assembly"
-		del(W)
+		build_step++
+		user << "<span class='notice'>You add the prox sensor to [src]!</span>"
+		overlays += "hs_eye"
+		name = "helmet/signaler/prox sensor assembly"
+		del(I)
 
-	else if(((istype(W, /obj/item/robot_parts/l_arm)) || (istype(W, /obj/item/robot_parts/r_arm))) && (src.build_step == 2))
+	else if(((istype(I, /obj/item/robot_parts/l_arm)) || (istype(I, /obj/item/robot_parts/r_arm))) && (build_step == 2))
 		user.drop_item()
-		src.build_step++
-		user << "You add the robot arm to [src]!"
-		src.name = "helmet/signaler/prox sensor/robot arm assembly"
-		src.overlays += image('icons/obj/aibots.dmi', "hs_arm")
-		del(W)
+		build_step++
+		user << "<span class='notice'>You add the robot arm to [src]!</span>"
+		name = "helmet/signaler/prox sensor/robot arm assembly"
+		overlays += "hs_arm"
+		del(I)
 
-	else if((istype(W, /obj/item/weapon/melee/baton)) && (src.build_step >= 3))
+	else if((istype(I, /obj/item/weapon/melee/baton)) && (build_step >= 3))
 		user.drop_item()
-		src.build_step++
-		user << "You complete the Securitron! Beep boop."
+		build_step++
+		user << "<span class='notice'>You complete the Securitron! Beep boop.</span>"
 		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot
 		S.loc = get_turf(src)
-		S.name = src.created_name
-		del(W)
+		S.name = created_name
+		del(I)
 		del(src)
 
-	else if(istype(W, /obj/item/weapon/pen))
-		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)
+	else if(istype(I, /obj/item/weapon/pen))
+		var/t = copytext(stripped_input(user, "Enter new robot name", name, created_name),1,MAX_NAME_LEN)
 		if(!t)
 			return
-		if(!in_range(src, usr) && src.loc != usr)
+		if(!in_range(src, usr) && loc != usr)
 			return
-		src.created_name = t
+		created_name = t
+
+	else if(istype(I, /obj/item/weapon/screwdriver))
+		if(!build_step)
+			new /obj/item/device/assembly/signaler(get_turf(src))
+			new /obj/item/clothing/head/helmet(get_turf(src))
+			user << "<span class='notice'>You disconnect the signaler from the helmet.</span>"
+			del(src)
+
+		else if(build_step == 2)
+			overlays -= "hs_eye"
+			new /obj/item/device/assembly/prox_sensor(get_turf(src))
+			user << "<span class='notice'>You detach the proximity sensor from [src].</span>"
+			build_step--
+
+		else if(build_step == 3)
+			overlays -= "hs_arm"
+			new /obj/item/robot_parts/l_arm(get_turf(src))
+			user << "<span class='notice'>You remove the robot arm from [src].</span>"
+			build_step--

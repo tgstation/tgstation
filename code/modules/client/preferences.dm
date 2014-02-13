@@ -255,14 +255,15 @@ datum/preferences
 		popup.set_content(dat)
 		popup.open(0)
 
-	proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), width = 555, height = 585)
+	proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), widthPerColumn = 295, height = 620)
 		if(!job_master)	return
 
-		//limit 	 - The amount of jobs allowed per column. Defaults to 17 to make it look nice.
+		//limit - The amount of jobs allowed per column. Defaults to 17 to make it look nice.
 		//splitJobs - Allows you split the table by job. You can make different tables for each department by including their heads. Defaults to CE to make it look nice.
-		//width	 - Screen' width. Defaults to 550 to make it look nice.
-		//height 	 - Screen's height. Defaults to 500 to make it look nice.
+		//widthPerColumn - Screen's width for every column.
+		//height - Screen's height.
 
+		var/width = widthPerColumn
 
 		var/HTML = "<center>"
 		HTML += "<b>Choose occupation chances</b><br>"
@@ -280,6 +281,7 @@ datum/preferences
 
 			index += 1
 			if((index >= limit) || (job.title in splitJobs))
+				width += widthPerColumn
 				if((index < limit) && (lastJob != null))
 					//If the cells were broken up by a job in the splitJob list then it will fill in the rest of the cells with
 					//the last job's selection color. Creating a rather nice effect.

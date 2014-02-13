@@ -234,3 +234,9 @@
 				if ((A && A.loc))
 					A.loc.Entered(A)
 	return
+
+turf/space/handle_fall()
+	return
+
+/turf/space/handle_slip()
+	return

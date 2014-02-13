@@ -120,7 +120,7 @@
 		R.amount = 50
 		modules += R
 
-		var/obj/item/weapon/cable_coil/W = new /obj/item/weapon/cable_coil(src)
+		var/obj/item/stack/cable_coil/W = new /obj/item/stack/cable_coil(src)
 		W.amount = 50
 		modules += W
 
@@ -134,7 +134,7 @@
 			/obj/item/stack/sheet/metal,
 			/obj/item/stack/sheet/rglass,
 			/obj/item/stack/rods,
-			/obj/item/weapon/cable_coil,
+			/obj/item/stack/cable_coil,
 			/obj/item/stack/tile/plasteel/cyborg,
 		)
 		for(var/T in what)
@@ -218,6 +218,7 @@
 		else
 			modules += new /obj/item/weapon/pickaxe/borgdrill(src)
 		modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
+		modules += new /obj/item/device/analyzer(src)
 
 	on_emag()
 		..()

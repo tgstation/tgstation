@@ -696,45 +696,32 @@ note dizziness decrements automatically in the mob's Life() proc.
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 //Robots and brains have their own version so don't worry about them
 /mob/proc/update_canmove()
-
-	if(stat || weakened || paralysis || resting || (status_flags & FAKEDEATH) || buckled)
-		canmove = 0
-		if(!lying)
-			if(resting) //Presuming that you're resting on a bed, which would look goofy lying the wrong way
-				lying = 90
-			else
-				lying = pick(90, 270) //180 looks like shit since BYOND inverts rather than turns in that case
-	else if(stunned)
-		canmove = 0
+	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
+	var/bed = !(buckled && istype(buckled, /obj/structure/stool/bed/chair))
+	if(ko || resting || stunned)
+		drop_l_hand()
+		drop_r_hand()
 	else
 		lying = 0
 		canmove = 1
 	if(buckled)
-		anchored = 1
-		if(istype(buckled, /obj/structure/stool/bed/chair))
-			lying = 0
-		else
-			lying = 90 //Everything else faces right. TODO: Allow left-facing beds
-
-	if(lying)
-		density = 0
-		drop_r_hand()
-		drop_l_hand()
+		lying = 90 * bed
 	else
-		density = 1
-
-	//Temporarily moved here from the various life() procs
-	//I'm fixing stuff incrementally so this will likely find a better home.
-	//It just makes sense for now. ~Carn
-
-	if(lying != lying_prev)
-		update_transform()
+		if((ko || resting) && !lying)
+			fall(ko)
+	anchored = buckled
+	canmove = !(ko || resting || stunned || buckled)
+	density = !lying
+	update_transform()
+	lying_prev = lying
 	if(update_icon)	//forces a full overlay update
 		update_icon = 0
 		regenerate_icons()
-
 	return canmove
 
+/mob/proc/fall(var/forced)
+	drop_l_hand()
+	drop_r_hand()
 
 /mob/verb/eastface()
 	set hidden = 1

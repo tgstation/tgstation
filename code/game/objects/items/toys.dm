@@ -314,7 +314,7 @@
 		active = !( active )
 		if (active)
 			user << "\blue You extend the plastic blade with a quick flick of your wrist."
-			playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
+			playsound(user, 'sound/weapons/saberon.ogg', 20, 1)
 			if(hacked)
 				icon_state = "swordrainbow"
 				item_state = "swordrainbow"
@@ -324,7 +324,7 @@
 			w_class = 4
 		else
 			user << "\blue You push the plastic blade back down into the handle."
-			playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
+			playsound(user, 'sound/weapons/saberoff.ogg', 20, 1)
 			icon_state = "sword0"
 			item_state = "sword0"
 			w_class = 2
@@ -399,6 +399,7 @@
 	throwforce = 5
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
+	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /*
  * Crayons
@@ -589,6 +590,7 @@ obj/item/toy/cards/deck
 	deckstyle = "nanotrasen"
 	icon_state = "deck_nanotrasen_full"
 	w_class = 2.0
+	var/cooldown = 0
 	var/list/cards = list()
 
 obj/item/toy/cards/deck/New()
@@ -641,9 +643,11 @@ obj/item/toy/cards/deck/attack_hand(mob/user as mob)
 		src.icon_state = "deck_[deckstyle]_low"
 
 obj/item/toy/cards/deck/attack_self(mob/user as mob)
-	cards = shuffle(cards)
-	playsound(user, 'sound/items/cardshuffle.ogg', 50, 1)
-	user.visible_message("<span class='notice'>[user] shuffles the deck.</span>", "<span class='notice'>You shuffle the deck.</span>")
+	if(cooldown < world.time - 50)
+		cards = shuffle(cards)
+		playsound(user, 'sound/items/cardshuffle.ogg', 50, 1)
+		user.visible_message("<span class='notice'>[user] shuffles the deck.</span>", "<span class='notice'>You shuffle the deck.</span>")
+		cooldown = world.time
 
 obj/item/toy/cards/deck/attackby(obj/item/toy/cards/singlecard/C, mob/living/user)
 	..()

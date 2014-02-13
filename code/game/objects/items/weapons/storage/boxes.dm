@@ -38,13 +38,8 @@
 		return
 
 	//Close any open UI windows first
-	var/found = 0
-	for(var/mob/M in range(1))
-		if(M.s_active == src)
-			close(M)
-		if(M == user)
-			found = 1
-	if(!found)	//User is too far away
+	var/found = close_all()
+	if(!found)	//No user had any windows closed
 		return
 
 	user << "<span class='notice'>You fold [src] flat.</span>"
@@ -469,6 +464,13 @@
 		if(istype(W, /obj/item/weapon/match) && W.lit == 0)
 			W.lit = 1
 			W.icon_state = "match_lit"
+			W.damtype = "fire"
+			W.force = 3
+			W.hitsound = 'sound/items/welder.ogg'
+			W.item_state = "cigon"
+			W.name = "lit match"
+			W.desc = "A match. This one is lit."
+			W.attack_verb = list("burnt","singed")
 			processing_objects.Add(W)
 		W.update_icon()
 		return

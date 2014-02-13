@@ -78,18 +78,18 @@
 		lit = 0
 		update_icon()
 		SetLuminosity(0)
-		user.SetLuminosity(user.luminosity - CANDLE_LUMINOSITY)
+		user.AddLuminosity(-CANDLE_LUMINOSITY)
 
 
 /obj/item/candle/pickup(mob/user)
 	if(lit)
 		SetLuminosity(0)
-		user.SetLuminosity(user.luminosity + CANDLE_LUMINOSITY)
+		user.AddLuminosity(CANDLE_LUMINOSITY)
 
 
 /obj/item/candle/dropped(mob/user)
 	if(lit)
-		user.SetLuminosity(user.luminosity - CANDLE_LUMINOSITY)
+		user.AddLuminosity(-CANDLE_LUMINOSITY)
 		SetLuminosity(CANDLE_LUMINOSITY)
 
 #undef CANDLE_LUMINOSITY

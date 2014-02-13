@@ -29,9 +29,6 @@
 	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
 	var/allow_vote_restart = 0 			// allow votes to restart
 	var/allow_vote_mode = 0				// allow votes to change mode
-	var/allow_admin_jump = 1			// allows admin jumping
-	var/allow_admin_spawning = 1		// allows admin item spawning
-	var/allow_admin_rev = 1				// allows admin revives
 	var/vote_delay = 6000				// minimum time between voting sessions (deciseconds, 10 minute default)
 	var/vote_period = 600				// length of voting period (deciseconds, default 1 minute)
 	var/vote_no_default = 0				// vote does not default to nochange/norestart (tbi)
@@ -52,6 +49,7 @@
 	var/automute_on = 0					//enables automuting/spam prevention
 	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
 	var/jobs_have_maint_access = 0 		//Who gets maint access?  See defines above
+	var/sec_start_brig = 0				//makes sec start in brig or dept sec posts
 
 	var/server
 	var/banappeals
@@ -84,6 +82,7 @@
 	var/continuous_round_rev = 0			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
 	var/continuous_round_wiz = 0
 	var/continuous_round_malf = 0
+	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
 
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
 	var/alert_desc_blue_upto = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
@@ -213,12 +212,6 @@
 					config.allow_vote_restart = 1
 				if("allow_vote_mode")
 					config.allow_vote_mode = 1
-				if("allow_admin_jump")
-					config.allow_admin_jump = 1
-				if("allow_admin_rev")
-					config.allow_admin_rev = 1
-				if("allow_admin_spawning")
-					config.allow_admin_spawning = 1
 				if("no_dead_vote")
 					config.vote_no_dead = 1
 				if("default_no_vote")
@@ -318,6 +311,8 @@
 					config.jobs_have_maint_access	|= SECURITY_HAS_MAINT_ACCESS
 				if("everyone_has_maint_access")
 					config.jobs_have_maint_access	|= EVERYONE_HAS_MAINT_ACCESS
+				if("sec_start_brig")
+					config.sec_start_brig			= 1
 				if("gateway_delay")
 					config.gateway_delay			= text2num(value)
 				if("continuous_round_rev")
@@ -326,6 +321,8 @@
 					config.continuous_round_wiz		= 1
 				if("continuous_round_malf")
 					config.continuous_round_malf	= 1
+				if("show_game_type_odds")
+					config.show_game_type_odds		= 1
 				if("ghost_interaction")
 					config.ghost_interaction		= 1
 				if("traitor_scaling_coeff")

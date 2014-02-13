@@ -111,6 +111,9 @@ CHANGELING_SCALING_COEFF 10
 ## If late-joining players have a chance to become a traitor/changeling
 ALLOW_LATEJOIN_ANTAGONISTS
 
+## Uncomment to allow players to see the set odds of different rounds in secret/random in the get server revision screen. This will NOT tell the current roundtype.
+#SHOW_GAME_TYPE_ODDS
+
 ### RANDOM EVENTS ###
 
 ## Comment this to disable random events during the round.
@@ -146,6 +149,9 @@ GATEWAY_DELAY 18000
 
 ## Uncomment to give everyone maint access.
 #EVERYONE_HAS_MAINT_ACCESS
+
+## Comment this to make security officers spawn in departmental security posts
+SEC_START_BRIG
 
 
 ### GHOST INTERACTION ###

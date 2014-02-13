@@ -85,7 +85,12 @@
 		..()
 	return
 
-/obj/machinery/computer/cloning/attack_hand(mob/user as mob)
+/obj/machinery/computer/cloning/attack_hand(mob/user)
+	if(..())
+		return
+	interact(user)
+
+/obj/machinery/computer/cloning/interact(mob/user)
 	user.set_machine(src)
 	add_fingerprint(user)
 
