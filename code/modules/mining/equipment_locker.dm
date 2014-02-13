@@ -17,7 +17,7 @@
 	var/stack_amt = 50; //amount to stack before releasing
 	var/obj/item/weapon/card/id/inserted_id
 	var/points = 0
-	var/list/ore_values = list(("sand" = 1), ("iron" = 1), ("plasma" = 10), ("gold" = 20), ("silver" = 20), ("uranium" = 20), ("bananium" = 30), ("diamond" = 40))
+	var/list/ore_values = list(("sand" = 1), ("iron" = 1), ("gold" = 20), ("silver" = 20), ("uranium" = 20), ("bananium" = 30), ("diamond" = 40), ("plasma" = 40))
 
 /obj/machinery/mineral/ore_redemption/proc/process_sheet(obj/item/weapon/ore/O)
 	var/obj/item/stack/sheet/processed_sheet = SmeltMineral(O)
@@ -132,8 +132,8 @@
 /obj/machinery/mineral/equipment_locker
 	name = "mining equipment locker"
 	desc = "An equipment locker for miners, points collected at an ore redemption machine can be spent here."
-	icon = 'icons/obj/suitstorage.dmi'
-	icon_state = "suitstorage000001100"
+	icon = 'icons/obj/machines/mining_machines.dmi'
+	icon_state = "mining"
 	density = 1
 	anchored = 1.0
 	var/obj/item/weapon/card/id/inserted_id

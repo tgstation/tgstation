@@ -3,7 +3,7 @@
 /turf/simulated/mineral //wall piece
 	name = "Rock"
 	icon = 'icons/turf/walls.dmi'
-	icon_state = "rock"
+	icon_state = "rock_nochance"
 	oxygen = 0
 	nitrogen = 0
 	opacity = 1
@@ -16,7 +16,7 @@
 	var/spreadChance = 0 //the percentual chance of an ore spreading to the neighbouring tiles
 	var/last_act = 0
 	var/scan_state = null //Holder for the image we display when we're pinged by a mining scanner
-	var/hidden = 0
+	var/hidden = 1
 
 /turf/simulated/mineral/ex_act(severity)
 	switch(severity)
@@ -71,7 +71,8 @@
 
 /turf/simulated/mineral/random
 	name = "Mineral deposit"
-	var/mineralSpawnChanceList = list("Uranium" = 1, "Diamond" = 1, "Gold" = 1, "Silver" = 1, "Plasma" = 25, "Iron" = 50, "Gibtonite" = 4/*, "Adamantine" =5*/, "Cave" = 2)//Currently, Adamantine won't spawn as it has no uses. -Durandan
+	icon_state = "rock"
+	var/mineralSpawnChanceList = list("Uranium" = 1, "Diamond" = 1, "Gold" = 1, "Silver" = 1, "Plasma" = 1, "Iron" = 50, "Gibtonite" = 4/*, "Adamantine" =5*/, "Cave" = 2)//Currently, Adamantine won't spawn as it has no uses. -Durandan
 	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
 
 /turf/simulated/mineral/random/New()
@@ -108,7 +109,7 @@
 /turf/simulated/mineral/random/high_chance
 	icon_state = "rock_highchance"
 	mineralChance = 25
-	mineralSpawnChanceList = list("Uranium" = 10, "Iron" = 30, "Diamond" = 2, "Gold" = 10, "Silver" = 10, "Plasma" = 25)
+	mineralSpawnChanceList = list("Uranium" = 10, "Iron" = 30, "Diamond" = 2, "Gold" = 10, "Silver" = 10, "Plasma" = 10)
 
 /turf/simulated/mineral/random/high_chance/New()
 	icon_state = "rock"
@@ -116,8 +117,8 @@
 
 /turf/simulated/mineral/random/low_chance
 	icon_state = "rock_lowchance"
-	mineralChance = 10
-	mineralSpawnChanceList = list("Uranium" = 1, "Diamond" = 1, "Gold" = 1, "Silver" = 1, "Plasma" = 25, "Iron" = 50, "Gibtonite" = 4)
+	mineralChance = 5
+	mineralSpawnChanceList = list("Uranium" = 1, "Diamond" = 1, "Gold" = 1, "Silver" = 1, "Plasma" = 1, "Iron" = 50, "Gibtonite" = 4)
 
 /turf/simulated/mineral/random/low_chance/New()
 	icon_state = "rock"
@@ -139,6 +140,7 @@
 	mineralAmt = 5
 	spreadChance = 20
 	spread = 1
+	hidden = 0
 
 /turf/simulated/mineral/diamond
 	name = "Diamond deposit"
@@ -172,8 +174,10 @@
 	icon_state = "rock_Plasma"
 	mineralName = "Plasma"
 	mineralAmt = 5
-	spreadChance = 25
+	spreadChance = 0
 	spread = 1
+	hidden = 1
+	scan_state = "rock_Plasma"
 
 /turf/simulated/mineral/clown
 	name = "Bananium deposit"
@@ -182,6 +186,7 @@
 	mineralAmt = 3
 	spreadChance = 0
 	spread = 0
+	hidden = 0
 
 ////////////////////////////////Gibtonite
 /turf/simulated/mineral/gibtonite
@@ -337,7 +342,7 @@
 
 /turf/simulated/floor/plating/asteroid/airless/cave/proc/SpawnFloor(var/turf/T)
 	for(var/turf/S in range(2,T))
-		if(istype(S, /turf/space) || istype(S, /turf/simulated/mineral/random/low_chance))
+		if(istype(S, /turf/space) || istype(S.loc, /area/mine/explored))
 			sanity = 0
 			break
 	if(!sanity)
@@ -393,10 +398,6 @@
 		if(do_after(user,W:digspeed))
 			user << "\blue You finish cutting into the rock."
 			gets_drilled()
-
-	if(istype(W, /obj/item/weapon/resonator))
-		var/obj/item/weapon/resonator/R = W
-		R.CreateResonance(src)
 	else
 		return attack_hand(user)
 	return

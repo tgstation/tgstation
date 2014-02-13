@@ -52,7 +52,7 @@
 	name = "Plasma ore"
 	icon_state = "Plasma ore"
 	origin_tech = "materials=2"
-	points = 10
+	points = 40
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 
 /obj/item/weapon/ore/plasma/attackby(obj/item/I as obj, mob/user as mob)
