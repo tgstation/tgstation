@@ -119,9 +119,6 @@ obj/machinery/door/airlock/New()
 		set_frequency(frequency)
 
 
-
-
-
 /obj/item/airlock_sensor_frame
 	name = "Airlock Sensor frame"
 	desc = "Used for repairing or building airlock sensors"
@@ -145,7 +142,7 @@ obj/machinery/door/airlock/New()
 	if (!istype(loc, /turf/simulated/floor))
 		usr << "\red [src] cannot be placed on this spot."
 		return
-	new /obj/machinery/access_button(loc, ndir, 1)
+	new /obj/machinery/airlock_sensor(loc, ndir, 1)
 	del(src)
 
 obj/machinery/airlock_sensor
