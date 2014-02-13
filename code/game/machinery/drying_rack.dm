@@ -36,7 +36,7 @@
 		if(ispath(T,/obj/item/weapon/reagent_containers/food/snacks/grown))
 			if(P.dry == 0)
 				P.reagents.trans_to(src, P.reagents.total_volume)
-				if(!user.u_equip(I))
+				if(!user.unEquip(I))
 					user << "<span class='notice'>\the [I] is stuck to your hand, you cannot put it in \the [src]</span>"
 				user << "<span class='notice'>You add the [I] to the drying rack.</span class='notice'>"
 				del(I)
@@ -57,7 +57,7 @@
 			else
 				user << "<span class='warning'>That has already been dried.</span>"
 		else
-			if(!user.u_equip(I))
+			if(!user.unEquip(I))
 				user << "<span class='notice'>\the [I] is stuck to your hand, you cannot put it in \the [src]</span>"
 			user << "<span class='notice'>You add the [I] to the drying rack.</span class='notice'>"
 			del(I)
@@ -71,7 +71,7 @@
 			src.running = 0
 	else
 		var/N = S.dried_type
-		if(!user.u_equip(I))
+		if(!user.unEquip(I))
 			user << "<span class='notice'>\the [I] is stuck to your hand, you cannot put it in \the [src]</span>"
 		user << "<span class='notice'>You add the [I] to the drying rack.</span class='notice'>"
 		del(I)

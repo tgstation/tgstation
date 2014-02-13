@@ -1015,7 +1015,7 @@ Auto Patrol: []"},
 				new /obj/machinery/bot/ed209(T,created_name,lasercolor)
 				user.drop_item()
 				del(W)
-				user.u_equip(src)
+				user.unEquip(src)
 				del(src)
 
 

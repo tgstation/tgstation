@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/humanoid/u_equip(obj/item/I)
+/mob/living/carbon/alien/humanoid/unEquip(obj/item/I)
 	. = ..()
 	if(!.)
 		return

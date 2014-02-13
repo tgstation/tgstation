@@ -345,8 +345,8 @@
 			if(hacked) // That's right, we'll only check the "original" "sword".
 				newSaber.hacked = 1
 				newSaber.item_color = "rainbow"
-			user.u_equip(W)
-			user.u_equip(src)
+			user.unEquip(W)
+			user.unEquip(src)
 			del(W)
 			del(src)
 	else if(istype(W, /obj/item/device/multitool))
@@ -654,7 +654,7 @@ obj/item/toy/cards/deck/attackby(obj/item/toy/cards/singlecard/C, mob/living/use
 	if(istype(C))
 		if(C.parentdeck == src)
 			src.cards += C.cardname
-			user.u_equip(C)
+			user.unEquip(C)
 			user.visible_message("<span class='notice'>[user] adds a card to the bottom of the deck.</span>","<span class='notice'>You add the card to the bottom of the deck.</span>")
 			del(C)
 		else
@@ -672,7 +672,7 @@ obj/item/toy/cards/deck/attackby(obj/item/toy/cards/cardhand/C, mob/living/user)
 	if(istype(C))
 		if(C.parentdeck == src)
 			src.cards += C.currenthand
-			user.u_equip(C)
+			user.unEquip(C)
 			user.visible_message("<span class='notice'>[user] puts their hand of cards in the deck.</span>", "<span class='notice'>You put the hand of cards in the deck.</span>")
 			del(C)
 		else
@@ -696,11 +696,11 @@ obj/item/toy/cards/deck/MouseDrop(atom/over_object)
 		else if(istype(over_object, /obj/screen))
 			switch(over_object.name)
 				if("r_hand")
-					M.u_equip(src)
+					M.unEquip(src)
 					M.put_in_r_hand(src)
 					usr << "<span class='notice'>You pick up the deck.</span>"
 				if("l_hand")
-					M.u_equip(src)
+					M.unEquip(src)
 					M.put_in_l_hand(src)
 					usr << "<span class='notice'>You pick up the deck.</span>"
 	else
@@ -764,7 +764,7 @@ obj/item/toy/cards/cardhand/Topic(href, href_list)
 				N.parentdeck = src.parentdeck
 				N.cardname = src.currenthand[1]
 				N.apply_card_vars(N,O)
-				cardUser.u_equip(src)
+				cardUser.unEquip(src)
 				N.pickup(cardUser)
 				cardUser.put_in_any_hand_if_possible(N)
 				cardUser << "<span class='notice'>You also take [currenthand[1]] and hold it.</span>"
@@ -776,7 +776,7 @@ obj/item/toy/cards/cardhand/attackby(obj/item/toy/cards/singlecard/C, mob/living
 	if(istype(C))
 		if(C.parentdeck == src.parentdeck)
 			src.currenthand += C.cardname
-			user.u_equip(C)
+			user.unEquip(C)
 			user.visible_message("<span class='notice'>[user] adds a card to their hand.</span>", "<span class='notice'>You add the [C.cardname] to your hand.</span>")
 			interact(user)
 			if(currenthand.len > 4)
@@ -852,7 +852,7 @@ obj/item/toy/cards/singlecard/attackby(obj/item/I, mob/living/user)
 			H.currenthand += src.cardname
 			H.parentdeck = C.parentdeck
 			H.apply_card_vars(H,C)
-			user.u_equip(C)
+			user.unEquip(C)
 			H.pickup(user)
 			user.put_in_active_hand(H)
 			user << "<span class='notice'>You combine the [C.cardname] and the [src.cardname] into a hand.</span>"
@@ -865,7 +865,7 @@ obj/item/toy/cards/singlecard/attackby(obj/item/I, mob/living/user)
 		var/obj/item/toy/cards/cardhand/H = I
 		if(H.parentdeck == parentdeck)
 			H.currenthand += cardname
-			user.u_equip(src)
+			user.unEquip(src)
 			user.visible_message("<span class='notice'>[user] adds a card to \his hand.</span>", "<span class='notice'>You add the [cardname] to your hand.</span>")
 			H.interact(user)
 			if(H.currenthand.len > 4)

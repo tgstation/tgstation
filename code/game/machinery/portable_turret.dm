@@ -657,7 +657,7 @@
 					M:amount -= 2
 					icon_state = "turret_frame2"
 					if(M.amount <= 0)
-						user.u_equip(M, 1) //We're deleting it anyway, so no point in having NODROP fuck shit up.
+						user.unEquip(M, 1) //We're deleting it anyway, so no point in having NODROP fuck shit up.
 						del(M)
 				else
 					user << "<span class='warning'>You need two sheets of metal for that.</span>"
@@ -705,7 +705,7 @@
 				gun_charge = E.power_supply.charge //the gun's charge is stored in gun_charge
 				user << "<span class='notice'>You add [I] to the turret.</span>"
 				build_step = 4
-				if(!user.u_equip(I))
+				if(!user.unEquip(I))
 					user << "<span class='notice'>\the [I] is stuck to your hand, you cannot put it in \the [src]</span>"
 					return
 				del(I) //delete the gun :(
@@ -721,7 +721,7 @@
 			if(isprox(I))
 				build_step = 5
 				user << "<span class='notice'>You add the prox sensor to the turret.</span>"
-				if(!user.u_equip(I))
+				if(!user.unEquip(I))
 					user << "<span class='notice'>\the [I] is stuck to your hand, you cannot put it in \the [src]</span>"
 					return
 				del(I)
@@ -746,7 +746,7 @@
 					build_step = 7
 					M.amount -= 2
 					if(M.amount <= 0)
-						user.u_equip(M)
+						user.unEquip(M)
 						del(M)
 				else
 					user << "<span class='warning'>You need two sheets of metal for that.</span>"

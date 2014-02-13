@@ -20,7 +20,7 @@
 		endurance -= rand(1,(endurance/3)+1)
 	else
 		usr << "All the petals have fallen off the [name] from violent whacking."
-		usr.u_equip(src)
+		usr.unEquip(src)
 		del(src)
 
 /obj/item/weapon/grown/novaflower/pickup(mob/living/carbon/human/user as mob)
@@ -46,7 +46,7 @@
 		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
 	else
 		usr << "All the leaves have fallen off the nettle from violent whacking."
-		usr.u_equip(src)
+		usr.unEquip(src)
 		del(src)
 
 /obj/item/weapon/grown/nettle/changePotency(newValue) //-QualityVan
@@ -86,7 +86,7 @@
 
 	else
 		usr << "All the leaves have fallen off the deathnettle from violent whacking."
-		usr.u_equip(src)
+		usr.unEquip(src)
 		del(src)
 
 /obj/item/weapon/grown/deathnettle/changePotency(newValue) //-QualityVan
@@ -100,7 +100,7 @@
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchen/utensil/knife))
 		user << "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>"
 		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
-		usr.u_equip(src)
+		usr.unEquip(src)
 		del(src)
 		return
 
@@ -115,7 +115,7 @@
 	if(inner_teleport_radius < 1) //Wasn't potent enough, it just splats.
 		new/obj/effect/decal/cleanable/oil(src.loc)
 		src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
-		usr.u_equip(src)
+		usr.unEquip(src)
 		del(src)
 		return
 	for(var/turf/T in orange(M,outer_teleport_radius))

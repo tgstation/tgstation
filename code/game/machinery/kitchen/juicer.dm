@@ -40,7 +40,7 @@
 		if (beaker)
 			return 1
 		else
-			if(!user.u_equip(O))
+			if(!user.unEquip(O))
 				user << "<span class='notice'>\the [O] is stuck to your hand, you cannot put it in \the [src]</span>"
 				return 0
 			O.loc = src
@@ -52,7 +52,7 @@
 	if (!is_type_in_list(O, allowed_items))
 		user << "It looks as not containing any juice."
 		return 1
-	if(!user.u_equip(O))
+	if(!user.unEquip(O))
 		user << "<span class='notice'>\the [O] is stuck to your hand, you cannot put it in \the [src]</span>"
 		return 0
 	O.loc = src

@@ -40,7 +40,7 @@ var/const/MAX_ACTIVE_TIME = 400
 
 /obj/item/clothing/mask/facehugger/attack(mob/living/M as mob, mob/user as mob)
 	..()
-	user.u_equip(src)
+	user.unEquip(src)
 	Attach(M)
 
 /obj/item/clothing/mask/facehugger/examine()
@@ -130,7 +130,7 @@ var/const/MAX_ACTIVE_TIME = 400
 			if(prob(20))	return 0
 			var/obj/item/clothing/W = target.wear_mask
 			if(W.flags & NODROP)	return 0
-			target.u_equip(W)
+			target.unEquip(W)
 
 			target.visible_message("\red \b [src] tears [W] off of [target]'s face!")
 

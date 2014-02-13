@@ -153,7 +153,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			e.start()
 			if(ismob(loc))
 				var/mob/M = loc
-				M.u_equip(src)
+				M.unEquip(src)
 			del(src)
 			return
 		if(reagents.get_reagent_amount("fuel")) // the fuel explodes, too, but much less violently
@@ -162,7 +162,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			e.start()
 			if(ismob(loc))
 				var/mob/M = loc
-				M.u_equip(src)
+				M.unEquip(src)
 			del(src)
 			return
 		flags &= ~NOREACT // allowing reagents to react after being lit
@@ -203,7 +203,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		processing_objects.Remove(src)
 		if(ismob(loc))
 			M << "<span class='notice'>Your [name] goes out.</span>"
-			M.u_equip(src)	//un-equip it so the overlays can update
+			M.unEquip(src)	//un-equip it so the overlays can update
 			M.update_inv_wear_mask(0)
 		del(src)
 		return
@@ -527,8 +527,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(istype(target, /obj/item/weapon/reagent_containers/food/snacks/grown))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/O = target
 		if(O.dry)
-			user.u_equip(target)
-			user.u_equip(src)
+			user.unEquip(target)
+			user.unEquip(src)
 			var/obj/item/clothing/mask/cigarette/rollie/R = new /obj/item/clothing/mask/cigarette/rollie(user.loc)
 			R.chem_volume = target.reagents.total_volume
 			target.reagents.trans_to(R, R.chem_volume)

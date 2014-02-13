@@ -21,18 +21,18 @@
 		var/obj/item/stack/sheet/glass/G = new (user.loc)
 		G.add_fingerprint(user)
 		if(amount <= 0)
-			user.u_equip(src)
+			user.unEquip(src)
 			del(src)
 
 	if(istype(O,/obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = O
 		M.amount--
 		if(M.amount <= 0)
-			user.u_equip(M)
+			user.unEquip(M)
 			del(M)
 		amount--
 		var/obj/item/stack/tile/light/L = new (user.loc)
 		L.add_fingerprint(user)
 		if(amount <= 0)
-			user.u_equip(src)
+			user.unEquip(src)
 			del(src)

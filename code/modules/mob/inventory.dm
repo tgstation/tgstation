@@ -81,12 +81,12 @@
 
 //Drops the item in our left hand
 /mob/proc/drop_l_hand() //I really fucking wonder why this proc had an argument holy shit.
-	return u_equip(l_hand) //All needed checks are in u_equip
+	return unEquip(l_hand) //All needed checks are in unEquip
 
 
 //Drops the item in our right hand
 /mob/proc/drop_r_hand()
-	return u_equip(r_hand) //Why was this not calling u_equip in the first place jesus fuck.
+	return unEquip(r_hand) //Why was this not calling unEquip in the first place jesus fuck.
 
 
 //Drops the item in our active hand.
@@ -97,8 +97,8 @@
 
 //Here lie drop_from_inventory and before_item_take, already forgotten and not missed.
 
-/mob/proc/u_equip(obj/item/I, force) //Force overrides NODROP for things like wizarditis and admin undress.
-	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(u_equip) should generally be used to check for NODROP.
+/mob/proc/unEquip(obj/item/I, force) //Force overrides NODROP for things like wizarditis and admin undress.
+	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(unEquip) should generally be used to check for NODROP.
 		return 1
 
 	if((I.flags & NODROP) && !force)
@@ -123,7 +123,7 @@
 
 //Attemps to remove an object on a mob.  Will not move it to another area or such, just removes from the mob.
 /mob/proc/remove_from_mob(var/obj/O)
-	u_equip(O)
+	unEquip(O)
 	O.screen_loc = null
 	return 1
 

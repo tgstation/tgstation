@@ -388,10 +388,10 @@
 
 			if(do_mob(usr, src, STRIP_DELAY))
 				if(pocket_item)
-					u_equip(pocket_item)
+					unEquip(pocket_item)
 				else
 					if(place_item)
-						usr.u_equip(place_item)
+						usr.unEquip(place_item)
 						equip_to_slot_if_possible(place_item, pocket_id, 0, 1)
 
 				// Update strip window

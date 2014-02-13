@@ -111,8 +111,8 @@
 			if(src.hacked) // That's right, we'll only check the "original" esword.
 				newSaber.hacked = 1
 				newSaber.item_color = "rainbow"
-			user.u_equip(W)
-			user.u_equip(src)
+			user.unEquip(W)
+			user.unEquip(src)
 			del(W)
 			del(src)
 	else if(istype(W, /obj/item/device/multitool))

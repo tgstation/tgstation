@@ -28,12 +28,12 @@
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
 		A.icon = 'icons/obj/assemblies.dmi'
 
-		user.u_equip(W)
+		user.unEquip(W)
 		W.loc = A
 		W.master = A
 		A.part1 = W
 
-		user.u_equip(src)
+		user.unEquip(src)
 		loc = A
 		master = A
 		A.part2 = src

@@ -122,7 +122,7 @@
 		if (src.amount<=0)
 			var/oldsrc = src
 			src = null //dont kill proc after del()
-			usr.u_equip(oldsrc)
+			usr.unEquip(oldsrc)
 			del(oldsrc)
 			if (istype(O,/obj/item))
 				usr.put_in_hands(O)
@@ -144,7 +144,7 @@
 		var/oldsrc = src
 		src = null //dont kill proc after del()
 		if(usr)
-			usr.u_equip(oldsrc)
+			usr.unEquip(oldsrc)
 		del(oldsrc)
 	return
 

@@ -125,7 +125,7 @@
 				if(head)
 					var/obj/item/clothing/head/H = head
 					if(!istype(H) || prob(hat_fall_prob()))
-						if(u_equip(H))
+						if(unEquip(H))
 							if(prob(60))
 								step_away(H,M)
 								visible_message("<span class='warning'>[M] has knocked [H] off [src]'s head!</span>",

@@ -81,7 +81,7 @@
 	return null
 
 
-/mob/living/carbon/human/u_equip(obj/item/I)
+/mob/living/carbon/human/unEquip(obj/item/I)
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
 	if(!.)
 		return
@@ -89,18 +89,18 @@
 
 	if(I == wear_suit)
 		if(s_store)
-			u_equip(s_store)
+			unEquip(s_store)
 		wear_suit = null
 		update_inv_wear_suit(0)
 	else if(I == w_uniform)
 		if(r_store)
-			u_equip(r_store)
+			unEquip(r_store)
 		if(l_store)
-			u_equip(l_store)
+			unEquip(l_store)
 		if(wear_id)
-			u_equip(wear_id)
+			unEquip(wear_id)
 		if(belt)
-			u_equip(belt)
+			unEquip(belt)
 		w_uniform = null
 		update_inv_w_uniform(0)
 	else if(I == gloves)
@@ -221,7 +221,7 @@
 			update_inv_s_store(redraw_mob)
 		if(slot_in_backpack)
 			if(get_active_hand() == I)
-				u_equip(I)
+				unEquip(I)
 			I.loc = back
 			return
 		else

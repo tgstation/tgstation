@@ -101,7 +101,7 @@
 /obj/machinery/smartfridge/proc/load(var/obj/item/O as obj)
 	if(istype(O.loc,/mob))
 		var/mob/M = O.loc
-		if(!M.u_equip(O))
+		if(!M.unEquip(O))
 			usr << "<span class='notice'>\the [O] is stuck to your hand, you cannot put it in \the [src]</span>"
 			return
 	else if(istype(O.loc,/obj/item/weapon/storage))

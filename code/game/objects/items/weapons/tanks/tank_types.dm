@@ -109,7 +109,7 @@
 		if ((!F.status)||(F.ptank))	return
 		src.master = F
 		F.ptank = src
-		user.u_equip(src)
+		user.unEquip(src)
 		src.loc = F
 	return
 

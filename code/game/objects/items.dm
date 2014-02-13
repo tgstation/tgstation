@@ -127,7 +127,7 @@
 
 	src.throwing = 0
 	if (loc == user)
-		if(!user.u_equip(src))
+		if(!user.unEquip(src))
 			return
 	else
 		if(isliving(loc))
@@ -148,7 +148,7 @@
 					M.client.screen -= src
 	src.throwing = 0
 	if (src.loc == user)
-		if(!user.u_equip(src))
+		if(!user.unEquip(src))
 			return
 	else
 		if(istype(src.loc, /mob/living))
@@ -165,7 +165,7 @@
 
 	if(!A.has_fine_manipulation || w_class >= 4)
 		if(src in A.contents) // To stop Aliens having items stuck in their pockets
-			A.u_equip(src)
+			A.unEquip(src)
 		user << "Your claws aren't capable of such fine manipulation."
 		return
 	attack_paw(A)

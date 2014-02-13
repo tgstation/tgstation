@@ -205,7 +205,7 @@
 			user << "<span class='notice'>You add [D] to [src].</span>"
 			del(D)
 			user.put_in_hands(new /obj/item/weapon/bucket_sensor)
-			user.u_equip(src)
+			user.unEquip(src)
 			del(src)
 
 /*

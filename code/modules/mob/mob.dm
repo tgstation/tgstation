@@ -491,14 +491,14 @@ var/list/slot_equipment_priority = list( \
 				what.add_fingerprint(usr)
 				if(do_mob(usr, src, STRIP_DELAY))
 					if(what && Adjacent(usr))
-						u_equip(what)
+						unEquip(what)
 			else
 				what = usr.get_active_hand()
 				if(what && what.mob_can_equip(src, slot, 1))
 					visible_message("<span class='notice'>[usr] tries to put [what] on [src].</span>")
 					if(do_mob(usr, src, STRIP_DELAY * 0.5))
 						if(what && Adjacent(usr))
-							usr.u_equip(what)
+							usr.unEquip(what)
 							equip_to_slot_if_possible(what, slot, 0, 1)
 
 	if(usr.machine == src)
@@ -702,7 +702,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(ko || resting || buckled)
 		canmove = 0
 		drop_r_hand()	//makes mobs drop items in hands when incapacitated
-		drop_l_hand()   //NODROP is handled in u_equip which is called by drop_l/r_hand()
+		drop_l_hand()   //NODROP is handled in unEquip which is called by drop_l/r_hand()
 		if(!lying)
 			if(resting) //Presuming that you're resting on a bed, which would look goofy lying the wrong way
 				lying = 90

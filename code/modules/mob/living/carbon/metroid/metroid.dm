@@ -240,7 +240,7 @@
 	return
 
 
-/mob/living/carbon/slime/u_equip(obj/item/W as obj)
+/mob/living/carbon/slime/unEquip(obj/item/W as obj)
 	return
 
 
