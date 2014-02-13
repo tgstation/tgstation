@@ -1582,11 +1582,10 @@ other types of metals and chemistry for reagents).
 	name = "Decloner"
 	desc = "Your opponent will bubble into a messy pile of goop."
 	id = "decloner"
-	req_tech = list("combat" = 8, "materials" = 7, "biotech" = 5, "powerstorage" = 6)
+	req_tech = list("combat" = 4, "materials" = 4, "biotech" = 5, "powerstorage" = 4, "syndicate" = 3) //More reasonable
 	build_type = PROTOLATHE
-	materials = list("$gold" = 5000,"$uranium" = 10000, "mutagen" = 40)
+	materials = list("$metal" = 5000, "$gold" = 5000,"$uranium" = 10000) //, "mutagen" = 40)
 	build_path = /obj/item/weapon/gun/energy/decloner
-	locked = 1
 
 /datum/design/chemsprayer
 	name = "Chem Sprayer"
