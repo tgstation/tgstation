@@ -7,7 +7,7 @@ RSF
 	name = "\improper Rapid-Service-Fabricator"
 	desc = "A device used to rapidly deploy service items."
 	icon = 'icons/obj/items.dmi'
-	icon_state = "rcd"
+	icon_state = "rsf"
 	opacity = 0
 	density = 0
 	anchored = 0.0
