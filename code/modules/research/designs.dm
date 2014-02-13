@@ -1498,7 +1498,7 @@ other types of metals and chemistry for reagents).
 	category = "Misc"
 
 /datum/design/nanopaste
-	name = "nanopaste"
+	name = "Nanopaste"
 	desc = "A tube of paste containing swarms of repair nanites. Very effective in repairing robotic machinery."
 	id = "nanopaste"
 	req_tech = list("materials" = 4, "engineering" = 3)
@@ -1517,7 +1517,7 @@ other types of metals and chemistry for reagents).
 	category = "Robotic Upgrade Modules"
 
 /datum/design/robotanalyzer
-	name = "cyborg analyzer"
+	name = "Cyborg Analyzer"
 	desc = "A hand-held scanner able to diagnose robotic injuries."
 	id = "robotanalyzer"
 	req_tech = list("magnets" = 3, "engineering" = 3)
@@ -1533,6 +1533,15 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list("$metal" = 9000, "$silver" = 250, "$glass" = 10000)
 	build_path = /obj/item/weapon/melee/defibrilator
+
+/datum/design/healthanalyzer
+	name = "Health Analyzer"
+	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
+	id = "healthanalyzer"
+	req_tech = list("magnets" = 2, "biotech" = 2)
+	build_type = PROTOLATHE
+	materials = list ("$metal" = 1000, "$glass" = 1000)
+	build_path = /obj/item/device/healthanalyzer
 
 /////////////////////////////////////////
 /////////////////Weapons/////////////////
@@ -1673,6 +1682,15 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list("$metal" = 4000)
 	build_path = /obj/item/ammo_casing/shotgun/stunshell
+
+/datum/design/pneumatic
+	name = "Pneumatic Cannon"
+	desc = "A launcher powered by compressed air."
+	id = "pneumatic"
+	req_tech = list("materials" = 3, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 12000)
+	build_path = /obj/item/weapon/storage/pneumatic
 
 /////////////////////////////////////////
 /////////////////Mining//////////////////
@@ -1816,6 +1834,14 @@ other types of metals and chemistry for reagents).
 	materials = list("$diamond" = 2000, "$metal" = 3000, "$uranium" = 3750)
 	build_path = /obj/item/clothing/suit/armor/reactive
 
+/datum/design/gps
+	name = "Global Positioning System"
+	desc = "Helping lost spacemen find their way through the planets since 2016."
+	id = "gps"
+	req_tech = list("bluespace" = 2, "magnets" = 2)
+	build_type = PROTOLATHE
+	materials = list ("$metal" = 800, "$glass" = 200)
+	build_path = /obj/item/device/gps/science
 
 /////////////////////////////////////////
 /////////////////HUDs////////////////////
