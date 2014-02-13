@@ -2,7 +2,7 @@
 
 /mob/living/simple_animal/hostile/statue
 	name = "statue" // matches the name of the statue with the flesh-to-stone spell
-	desc = "An incredibly lifelike marble carving. Its eye seems to follow you.." // same as an ordinary statue with the added "eye following you" description
+	desc = "An incredibly lifelike marble carving. Its eyes seems to follow you.." // same as an ordinary statue with the added "eye following you" description
 	icon = 'icons/obj/statue.dmi'
 	icon_state = "human_male"
 	icon_living = "human_male"
@@ -88,6 +88,10 @@
 	if(!can_be_seen())
 		..()
 
+/mob/living/simple_animal/hostile/statue/face_atom()
+	if(!can_be_seen())
+		..()
+
 /mob/living/simple_animal/hostile/statue/UnarmedAttack()
 	if(can_be_seen())
 		if(client)
@@ -112,7 +116,7 @@
 
 	// This loop will, at most, loop twice.
 	for(var/atom/check in check_list)
-		for(var/mob/living/M in viewers(world.view + 1, check))
+		for(var/mob/living/M in viewers(world.view + 1, check) - src)
 			if(M.client && CanAttack(M))
 				if(!M.blinded && !(sdisabilities & BLIND))
 					return M
@@ -148,7 +152,7 @@
 
 	charge_max = 300
 	clothes_req = 0
-	range = 18
+	range = 14
 
 /obj/effect/proc_holder/spell/aoe_turf/flicker_lights/cast(list/targets)
 	for(var/turf/T in targets)
@@ -161,15 +165,16 @@
 	name = "Blindness"
 	desc = "Your prey will be momentarily blind for you to advance on them."
 
-	charge_max = 800
+	message = "<span class='notice'>You glare your eyes.</span>"
+	charge_max = 600
 	clothes_req = 0
 	range = 8
 
 /obj/effect/proc_holder/spell/aoe_turf/blindness/cast(list/targets)
-	for(var/turf/T in targets)
-		for(var/mob/living/L in T)
-			if(L != loc)
-				L.eye_blind = max(L.eye_blind, 3)
+	for(var/mob/living/L in living_mob_list)
+		var/turf/T = get_turf(L.loc)
+		if(T && T in targets)
+			L.eye_blind = max(L.eye_blind, 4)
 	return
 
 //Toggle Night Vision
