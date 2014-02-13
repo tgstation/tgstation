@@ -398,9 +398,13 @@ var/global/list/RPD_recipes=list(
 
 
 /obj/item/weapon/pipe_dispenser/afterattack(atom/A, mob/user)
+	if(!in_range(A,user))
+		return
+	if(loc != user)
+		return
 	if(!isrobot(user) && !ishuman(user))
 		return 0
-	if(istype(A,/area/shuttle)||istype(A,/turf/space/transit)||!Adjacent(user,A))
+	if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
 		return 0
 
 	switch(p_class)
