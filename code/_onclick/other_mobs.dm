@@ -87,7 +87,7 @@
 	if(prob(75))
 		ML.apply_damage(rand(1,3), BRUTE, affecting, armor)
 		for(var/mob/O in viewers(ML, null))
-			O.show_message("\red <B>[name] bites [ML]!</B>", 1)
+			O.show_message("<span class='danger'>[name] bites [ML]!</span>", 1)
 		if(armor >= 2) return
 		for(var/datum/disease/D in viruses)
 			if(istype(D, /datum/disease/jungle_fever))
