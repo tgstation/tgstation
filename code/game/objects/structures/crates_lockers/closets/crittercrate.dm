@@ -22,7 +22,7 @@
 
 	if(content_mob != null && already_opened == 0)
 		if(content_mob == /mob/living/simple_animal/chick)
-			var/num = rand(4, 6)
+			var/num = rand(1, 3)
 			for(var/i = 0, i < num, i++)
 				new content_mob(loc)
 		else if(content_mob == /mob/living/simple_animal/corgi)
