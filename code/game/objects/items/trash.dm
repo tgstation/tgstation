@@ -47,6 +47,9 @@
 		name = "candle"
 		icon = 'icons/obj/candle.dmi'
 		icon_state = "candle4"
+	can
+		name = "crushed can"
+		icon_state = "cola"
 
 /obj/item/trash/attack(mob/M, mob/living/user)
 	return
