@@ -797,10 +797,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				for(var/M in D.materials)
 					temp_dat += " [D.materials[M]] [CallMaterialName(M)]"
 					var/num_units_avail=linked_lathe.check_mat(D,M,upTo)
-					if(num_units_avail<upTo)
+					if(upTo && num_units_avail<upTo)
 						upTo=num_units_avail
-						if(!upTo)
-							break
 				if (upTo)
 					dat += {"<li>
 						<A href='?src=\ref[src];build=[D.id];n=1;now=1'>[temp_dat]</A>
