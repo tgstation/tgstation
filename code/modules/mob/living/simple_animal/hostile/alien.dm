@@ -72,7 +72,6 @@
 	move_to_delay = 3
 	projectiletype = /obj/item/projectile/neurotox
 	projectilesound = 'sound/weapons/pierce.ogg'
-	rapid = 1
 	status_flags = 0
 
 /mob/living/simple_animal/hostile/alien/queen/large
