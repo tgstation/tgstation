@@ -81,8 +81,14 @@
 		src << "Unable to use this blob, find a normal one."
 		return
 
-	for(var/obj/effect/blob/resource/blob in orange(4, T))
+	B.CheckSurroundings()
+
+	if(B.blobstatus & BLOB_RESOURCE_NEARBY)
 		src << "There is a resource blob nearby, move more than 4 tiles away from it!"
+		return
+
+	if(!(B.blobstatus & BLOB_NODE_NEARBY) && !(B.blobstatus & BLOB_CORE_NEARBY))
+		src << "You are too far from the core or a node for this to have an effect here!"
 		return
 
 	if(!can_buy(40))
@@ -117,7 +123,9 @@
 		src << "Unable to use this blob, find a normal one."
 		return
 
-	for(var/obj/effect/blob/node/blob in orange(5, T))
+	B.CheckSurroundings()
+
+	if(B.blobstatus & BLOB_NODE_NEARBY)
 		src << "There is another node nearby, move more than 5 tiles away from it!"
 		return
 
@@ -149,8 +157,14 @@
 		src << "Unable to use this blob, find a normal one."
 		return
 
-	for(var/obj/effect/blob/factory/blob in orange(7, T))
+	B.CheckSurroundings()
+
+	if(B.blobstatus & BLOB_FACTORY_NEARBY)
 		src << "There is a factory blob nearby, move more than 7 tiles away from it!"
+		return
+
+	if(!(B.blobstatus & BLOB_NODE_NEARBY) && !(B.blobstatus & BLOB_CORE_NEARBY))
+		src << "You are too far from the core or a node for this to have an effect here!"
 		return
 
 	if(!can_buy(60))
