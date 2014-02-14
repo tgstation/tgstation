@@ -347,3 +347,18 @@
 	phaseshift = 1
 	jaunt_duration = 50 //in deciseconds
 	centcomm_cancast = 0 //Stop people from getting to centcomm
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/pontiac
+	name = "Chariot"
+	desc = "This spell summons a glorious, flaming chariot that can move in space and through walls."
+
+	school = "conjuration"
+	charge_max = 1200
+	clothes_req = 1
+	invocation = "NO F'AT C'HX"
+	invocation_type = "shout"
+	range = 0
+
+	summon_type = list("/obj/structure/stool/bed/chair/vehicle/wizmobile")
+	summon_lifespan = 0
+	centcomm_cancast = 0 //Stop people from getting to centcomm

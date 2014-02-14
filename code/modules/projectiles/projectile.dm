@@ -135,8 +135,8 @@
 		spawn(0)
 
 			if(A)
-				if(firer && istype(A, /obj/structure/stool/bed/chair/janicart))//This is very sloppy but there's no way to get the firer after its passed to bullet_act, we'll just have to assume the admins will use their judgement
-					var/obj/structure/stool/bed/chair/janicart/JC = A
+				if(firer && istype(A, /obj/structure/stool/bed/chair/vehicle))//This is very sloppy but there's no way to get the firer after its passed to bullet_act, we'll just have to assume the admins will use their judgement
+					var/obj/structure/stool/bed/chair/vehicle/JC = A
 					if(JC.buckled_mob)
 						var/mob/BM = JC.buckled_mob
 						if(istype(firer, /mob))

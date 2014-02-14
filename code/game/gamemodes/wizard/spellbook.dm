@@ -208,6 +208,10 @@
 							new /obj/item/weapon/gun/energy/staff/animate(get_turf(H))
 							temp = "An artefact that spits bolts of life-force which causes objects which are hit by it to animate and come to life! This magic doesn't affect machines."
 							max_uses--
+						if("chariot")
+							feedback_add_details("wizard_spell_learned","WM") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							H.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/pontiac(H)
+							temp = "This spell summons a glorious, flaming chariot that can move in space and through walls."
 		else
 			if(href_list["temp"])
 				temp = null

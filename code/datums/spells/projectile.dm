@@ -51,7 +51,7 @@
 						projectile.loc = get_step_to(projectile,target)
 					else
 						var/turf/T = get_step_to(projectile,target)
-						var/obj/structure/stool/bed/chair/janicart/JC = locate() in T
+						var/obj/structure/stool/bed/chair/vehicle/JC = locate() in T
 						if(JC && istype(JC) && prob(75))
 							projectile.loc = T
 						else
