@@ -268,8 +268,6 @@ obj/machinery/airlock_sensor/Topic(href,href_list)
 
 
 obj/machinery/airlock_sensor/attackby(var/obj/item/W, var/mob/user)
-	if(..())
-		return
 	if(istype(W,/obj/item/device/multitool))
 		update_multitool_menu(user)
 	if(istype(W,/obj/item/weapon/screwdriver))
@@ -278,7 +276,6 @@ obj/machinery/airlock_sensor/attackby(var/obj/item/W, var/mob/user)
 			user << "You successfully pry \the [src] off the wall."
 			new /obj/item/airlock_sensor_frame(get_turf(src))
 			del(src)
-
 
 /obj/item/access_button_frame
 	name = "access button frame"

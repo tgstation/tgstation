@@ -23,6 +23,7 @@ var/global/list/uncollectable_vars=list(
 	"step_y",
 	"step_z",
 	"tag",
+	"thermal_conductivity",
 	"type",
 	"vars",
 	"verbs",
@@ -79,4 +80,6 @@ var/global/list/uncollectable_vars=list(
 	if(!garbage)
 		del(A)
 		return
+	// Let our friend know they're about to get fucked-up.
+	A.QDel()
 	garbage.AddTrash(A)
