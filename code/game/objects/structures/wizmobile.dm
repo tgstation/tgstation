@@ -4,7 +4,7 @@
 	icon_state = "magic_keys"
 
 /obj/structure/stool/bed/chair/vehicle/wizmobile
-	name = "\improper Pontiac"
+	name = "\improper Firebird"
 	desc = "A Pontiac Firebird Trans Am with skulls and crossbones on the hood, dark grey paint, and gold trim.  No magic required for this baby."
 	icon_state = "wizmobile"
 	//nick = "TRUE POWER"

@@ -250,76 +250,19 @@
  + holo3
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\animal.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\animal.dmi
- + Basilisk
- + Basilisk_alert
- + Basilisk_dead
- + Goldgrub
- + Goldgrub_alert
- + Goldgrub_dead
- + Goliath
- + Goliath_alert
- + Goliath_dead
- + Goliath_tentacle
- + Hivelord
- + Hivelord_alert
- + Hivelord_dead
- + Hivelordbrood
- + bat
- + bat_dead
  - brainslug
  - brainslug_dead
- + cat2
- + cat2_dead
- + cat2_rest
- + cat2_sit
  - drone0
  - drone1
  - drone2
  - drone3
  - drone_dead
- + guard_dead0
- + guard_dead1
- + guard_dead2
- + guard_dead3
- + guard_dead4
- + guard_dead5
- + guard_dead6
- + guard_dead7
- + heart-ani2
- + holocarp
- + hunter_dead0
- + hunter_dead1
- + hunter_dead2
- + hunter_dead3
- + hunter_dead4
- + hunter_dead5
- + hunter_dead6
- + hunter_dead7
- + kitten
- + kitten_dead
  - mouse_brown_sleep
  - mouse_gray_sleep
  - mouse_white_sleep
- + mushroom_cap
- + mushroom_cap_dead
- + mushroom_color
- + nurse_dead0
- + nurse_dead1
- + nurse_dead2
- + nurse_dead3
- + nurse_dead4
- + nurse_dead5
- + nurse_dead6
- + nurse_dead7
- + otherthing
- + otherthing-dead
- + pug
- + pug_dead
  - scarybat
  - scarybat-dance
  - scarybat-dead
- + viscerator
- + viscerator_attack
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\augments.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\augments.dmi
  + chest_l
@@ -423,27 +366,10 @@
  + blob_idle_glow
  + blob_node_glow
  + blob_resource_glow
---- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\corgi_back.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\corgi_back.dmi
- + cardborg
- + cardborg2
- + fire_extinguisher0
- + fire_extinguisher02
- + fire_extinguisher1
- + fire_extinguisher12
- + oxygen
- + oxygen2
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\corgi_head.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\corgi_head.dmi
  - bunnycrap
  - bunnycrap2
- + cardborg_h
- + cardborg_h2
- + hardhat0_reindeer
- + hardhat0_reindeer2
- + paper_words
- + paper_words2
- + wizard-fake2
  - wizard2-fake
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\dam_human.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\dam_human.dmi
@@ -2796,6 +2722,8 @@
  + poker_tableparts
  + razor
  - rpd
+ - rsf
+ - rsf_gray
  - sheet-adamantine
  - sheet-clown
  - sheet-diamond
@@ -2872,10 +2800,8 @@
  + torch-on
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\mining.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\mining.dmi
- + Gibtonite active
- + Gibtonite ore
- + Gibtonite ore 2
- + Gibtonite ore 3
+ - Gibtonite ore 3: Gibtonite ore 3: 4 frames, 1 directions
+ + Gibtonite ore 3: Gibtonite ore 3: 4 frames, 4 directions
  + Phazon
  - Phazon ore
  - boulder1
@@ -3155,6 +3081,10 @@
  + animate_largebins
  - critter
  - critteropen
+ - engicrate
+ - engicrateopen
+ - engisecurecrate
+ - engisecurecrateopen
  - excavation
  - gadget_bag
  + giftcloset
@@ -3180,6 +3110,10 @@
  + pdabox
  - plasticcrate
  - plasticcrateopen
+ - scicrate
+ - scicrateopen
+ - scisecurecrate
+ - scisecurecrateopen
  - solution_trays
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\structures.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\structures.dmi
@@ -3447,7 +3381,10 @@
  + syndieturret2
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\vehicles.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\vehicles.dmi
+ - jani_keys
+ - magic_keys
  - pussywagon_destroyed
+ - wizmobile
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\vending.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\vending.dmi
  - Theater
@@ -3863,6 +3800,29 @@
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\doors\Door1.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\doors\Door1.dmi
  - air
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\doors\doorint.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\doors\doorint.dmi
+ + door_closed
+ + door_closing
+ + door_deny
+ + door_locked
+ + door_open
+ + door_opening
+ + door_spark
+ + mdoor0
+ + mdoor1
+ + mdoor_deny
+ + mdoor_spark
+ + mdoorc0
+ + mdoorc1
+ + o_door_closing
+ + o_door_opening
+ + panel_open
+ + pdoor0
+ + pdoor1
+ + pdoorc0
+ + pdoorc1
+ + welded
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\doors\door_assembly.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\doors\door_assembly.dmi
  + door_as_vault0
