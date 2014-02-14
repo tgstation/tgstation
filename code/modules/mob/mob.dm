@@ -670,6 +670,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 					continue
 				statpanel(listed_turf.name, null, A)
 
+
 	if(mind)
 		add_spells_to_statpanel(mind.spell_list)
 	add_spells_to_statpanel(mob_spell_list)
@@ -685,6 +686,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 					statpanel("[S.panel]","[S.charge_counter]/[S.charge_max]",S)
 				if("holdervar")
 					statpanel("[S.panel]","[S.holder_var_type] [S.holder_var_amount]",S)
+
 
 // facing verbs
 /mob/proc/canface()
