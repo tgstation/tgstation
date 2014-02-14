@@ -24,6 +24,7 @@
 	return
 
 /obj/effect/blob/proc/CheckSurroundings()
+	blobstatus = 0
 	var/turf/T = get_turf(src)
 
 	for(var/obj/effect/blob/node/blob in orange(5, T))
