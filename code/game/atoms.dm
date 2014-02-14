@@ -49,6 +49,10 @@
 				var/mob/living/M = src
 				M.take_organ_damage(20)
 
+// Like Del(), but for qdel.
+// Called BEFORE qdel moves shit.
+/atom/proc/QDel()
+	return
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	del(giver)

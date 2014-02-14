@@ -32,6 +32,8 @@
 	var/health = 200
 	//var/mob/living/affecting = null
 
+	var/qdel=0 // Flag to let Del() know we're getting eaten by qdel.
+
 	wall
 		name = "resin wall"
 		desc = "Purple slime solidified into a wall."
@@ -49,10 +51,19 @@
 	var/turf/T = get_turf(src)
 	T.thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 
+
 /obj/effect/alien/resin/Del()
+	if(!qdel)
+		var/turf/T = get_turf(src)
+		T.thermal_conductivity = initial(T.thermal_conductivity)
+	..()
+
+/obj/effect/alien/resin/QDel()
+	qdel=1
 	var/turf/T = get_turf(src)
 	T.thermal_conductivity = initial(T.thermal_conductivity)
 	..()
+
 
 /obj/effect/alien/resin/proc/healthcheck()
 	if(health <=0)
