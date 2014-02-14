@@ -242,9 +242,10 @@
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 			H.equip_to_slot_or_del(new /obj/item/toy/crayon/mime(H), slot_in_backpack)
 			H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(H), slot_in_backpack)
-		H.mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall(null)
-		H.mob_spell_list += new /obj/effect/proc_holder/spell/targeted/mime/speak(null)
-		H.miming = 1
+		if(H.mind)
+			H.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall(null)
+			H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/mime/speak(null)
+			H.mind.miming = 1
 		H.rename_self("mime")
 		return 1
 

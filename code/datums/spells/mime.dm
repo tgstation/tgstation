@@ -38,7 +38,7 @@
 	if(!ishuman(usr))
 		return
 	var/mob/living/carbon/human/H = usr
-	if(H.miming)
+	if(H.mind.miming)
 		still_recharging_msg = "<span class='notice'>You can't break your vow of silence that fast!</span>"
 	else
 		still_recharging_msg = "<span class='notice'>You'll have to wait before you can give your vow of silence again.</span>"
@@ -46,8 +46,8 @@
 
 /obj/effect/proc_holder/spell/targeted/mime/speak/cast(list/targets)
 	for(var/mob/living/carbon/human/H in targets)
-		H.miming=!H.miming
-		if(H.miming)
+		H.mind.miming=!H.mind.miming
+		if(H.mind.miming)
 			H << "<span class='notice'>You make a vow of silence.</span>"
 		else
 			H << "<span class='notice'>You break your vow of silence.</span>"

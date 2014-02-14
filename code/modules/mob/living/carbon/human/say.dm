@@ -126,7 +126,9 @@
 	return real_name
 
 /mob/living/carbon/human/IsVocal()
-	return !miming
+	if(mind)
+		return !mind.miming
+	return 1
 
 /mob/living/carbon/human/proc/SetSpecialVoice(var/new_voice)
 	if(new_voice)
