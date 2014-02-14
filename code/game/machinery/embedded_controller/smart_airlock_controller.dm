@@ -375,15 +375,6 @@ obj/machinery/embedded_controller/radio/smart_airlock_controller
 			var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id_tag) as null|text),1,MAX_MESSAGE_LEN)
 			if(newid)
 				id_tag = newid
-
-		if("set_tag" in href_list)
-			if(!(href_list["set_tag"] in vars))
-				usr << "\red Something went wrong: Unable to find [href_list["set_tag"]] in vars!"
-				return 1
-			var/current_tag = src.vars[href_list["set_tag"]]
-			var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag", src, current_tag) as null|text),1,MAX_MESSAGE_LEN)
-			if(newid)
-				vars[href_list["set_tag"]] = newid
 		if("set_freq" in href_list)
 			var/newfreq=frequency
 			if(href_list["set_freq"]!="-1")
