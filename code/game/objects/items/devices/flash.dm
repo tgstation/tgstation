@@ -7,7 +7,7 @@
 	w_class = 1.0
 	throw_speed = 4
 	throw_range = 10
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	origin_tech = "magnets=2;combat=1"
 
 	var/times_used = 0 //Number of times it's been used.
@@ -159,11 +159,6 @@
 			del(animation)
 
 	for(var/mob/living/carbon/M in oviewers(3, null))
-		if(prob(50))
-			if (locate(/obj/item/weapon/cloaking_device, M))
-				for(var/obj/item/weapon/cloaking_device/S in M)
-					S.active = 0
-					S.icon_state = "shield0"
 		var/safety = M:eyecheck()
 		if(!safety)
 			if(!M.blinded)

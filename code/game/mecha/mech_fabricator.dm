@@ -133,12 +133,12 @@
 /obj/machinery/mecha_part_fabricator/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/mechfab(src)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
+	component_parts += new /obj/item/weapon/circuitboard/mechfab(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	RefreshParts()
 
 	//	part_sets["Cyborg Upgrade Modules"] = typesof(/obj/item/borg/upgrade/) - /obj/item/borg/upgrade/  // Eh.  This does it dymaically, but to support having the items referenced otherwhere in the code but not being constructable, going to do it manaully.
@@ -162,18 +162,16 @@
 	T = 0
 	for(var/obj/item/weapon/stock_parts/micro_laser/Ma in component_parts)
 		T += Ma.rating
-	if(T >= 1)
-		T -= 1
+	T -= 1
 	var/diff
-	diff = round(initial(resource_coeff) - (initial(resource_coeff)*(T))/25,0.01)
+	diff = round(initial(resource_coeff) - (initial(resource_coeff)*(T))/6,0.01)
 	if(resource_coeff!=diff)
 		resource_coeff = diff
 	T = 0
 	for(var/obj/item/weapon/stock_parts/manipulator/Ml in component_parts)
 		T += Ml.rating
-	if(T>= 2)
-		T -= 2
-	diff = round(initial(time_coeff) - (initial(time_coeff)*(T))/25,0.01)
+	T -= 1
+	diff = round(initial(time_coeff) - (initial(time_coeff)*(T))/4,0.01)
 	if(time_coeff!=diff)
 		time_coeff = diff
 
@@ -193,7 +191,7 @@
 		for(var/ID in list(H.get_active_hand(), H.wear_id, H.belt))
 			if(src.check_access(ID))
 				return 1
-	M << "<font color='red'>You don't have required permissions to use [src]</font>"
+	M << "<span class='alert'>You don't have the required permissions to use \the [src]!</span>"
 	return 0
 
 /obj/machinery/mecha_part_fabricator/check_access(obj/item/weapon/card/id/I)
@@ -212,19 +210,19 @@
 	switch(emagged)
 		if(0)
 			emagged = 0.5
-			src.visible_message("\icon[src] <b>[src]</b> beeps: \"DB error \[Code 0x00F1\]\"")
+			src.visible_message("\icon[src] <b>\The [src]</b> beeps: \"DB error \[Code 0x00F1\]\"")
 			sleep(10)
-			src.visible_message("\icon[src] <b>[src]</b> beeps: \"Attempting auto-repair\"")
+			src.visible_message("\icon[src] <b>\The [src]</b> beeps: \"Attempting auto-repair\"")
 			sleep(15)
-			src.visible_message("\icon[src] <b>[src]</b> beeps: \"User DB corrupted \[Code 0x00FA\]. Truncating data structure...\"")
+			src.visible_message("\icon[src] <b>\The [src]</b> beeps: \"User DB corrupted \[Code 0x00FA\]. Truncating data structure...\"")
 			sleep(30)
-			src.visible_message("\icon[src] <b>[src]</b> beeps: \"User DB truncated. Please contact your Nanotrasen system operator for future assistance.\"")
+			src.visible_message("\icon[src] <b>\The [src]</b> beeps: \"User DB truncated. Please contact your Nanotrasen system operator for future assistance.\"")
 			req_access = null
 			emagged = 1
 		if(0.5)
-			src.visible_message("\icon[src] <b>[src]</b> beeps: \"DB not responding \[Code 0x0003\]...\"")
+			src.visible_message("\icon[src] <b>\The [src]</b> beeps: \"DB not responding \[Code 0x0003\]...\"")
 		if(1)
-			src.visible_message("\icon[src] <b>[src]</b> beeps: \"No records in User DB\"")
+			src.visible_message("\icon[src] <b>\The [src]</b> beeps: \"No records in User DB\"")
 	return
 
 /obj/machinery/mecha_part_fabricator/proc/convert_part_set(set_name as text)
@@ -356,8 +354,10 @@
 /obj/machinery/mecha_part_fabricator/proc/build_part(var/obj/item/part)
 	if(!part) return
 	src.being_built = new part.type(src)
-	src.desc = "It's building [src.being_built]."
+	src.desc = "It's building \a [src.being_built]."
 	src.remove_resources(part)
+	part.m_amt = get_resource_cost_w_coeff(part,"metal")
+	part.g_amt = get_resource_cost_w_coeff(part,"glass")
 	src.overlays += "fab-active"
 	src.use_power = 2
 	src.updateUsrDialog()
@@ -367,7 +367,7 @@
 	src.desc = initial(src.desc)
 	if(being_built)
 		src.being_built.loc = get_step(src,SOUTH)
-		src.visible_message("\icon[src] <b>[src]</b> beeps, \"The [src.being_built] is complete\".")
+		src.visible_message("\icon[src] <b>\The [src]</b> beeps, \"\The [src.being_built] is complete.\"")
 		src.being_built = null
 	src.updateUsrDialog()
 	return 1
@@ -413,14 +413,14 @@
 		if(stat&(NOPOWER|BROKEN))
 			return 0
 		if(!check_resources(part))
-			src.visible_message("\icon[src] <b>[src]</b> beeps, \"Not enough resources. Queue processing stopped\".")
-			temp = {"<font color='red'>Not enough resources to build next part.</font><br>
+			src.visible_message("\icon[src] <b>\The [src]</b> beeps, \"Not enough resources. Queue processing stopped.\"")
+			temp = {"<span class='alert'>Not enough resources to build next part.</span><br>
 						<a href='?src=\ref[src];process_queue=1'>Try again</a> | <a href='?src=\ref[src];clear_temp=1'>Return</a><a>"}
 			return 0
 		remove_from_queue(1)
 		build_part(part)
 		part = listgetindex(src.queue, 1)
-	src.visible_message("\icon[src] <b>[src]</b> beeps, \"Queue processing finished successfully\".")
+	src.visible_message("\icon[src] <b>\The [src]</b> beeps, \"Queue processing finished successfully.\"")
 	return 1
 
 /obj/machinery/mecha_part_fabricator/proc/list_queue()
@@ -447,10 +447,10 @@
 	for(var/datum/design/D in files.known_designs)
 		if(D.build_type&16)
 			if(D.category in part_sets)//Checks if it's a valid category
-				if(add_part_to_set(D.category, text2path(D.build_path)))//Adds it to said category
+				if(add_part_to_set(D.category, D.build_path))//Adds it to said category
 					i++
 			else
-				if(add_part_to_set("Misc", text2path(D.build_path)))//If in doubt, chunk it into the Misc
+				if(add_part_to_set("Misc", D.build_path))//If in doubt, chunk it into the Misc
 					i++
 	return i
 
@@ -514,7 +514,7 @@
 			temp += "<a href='?src=\ref[src];clear_temp=1'>Return</a>"
 			src.updateUsrDialog()
 		if(i || tech_output)
-			src.visible_message("\icon[src] <b>[src]</b> beeps, \"Successfully synchronized with R&D server. New data processed.\"")
+			src.visible_message("\icon[src] <b>\The [src]</b> beeps, \"Successfully synchronized with R&D server. New data processed.\"")
 	if(!silent && !found)
 		temp = "Unable to connect to local R&D Database.<br>Please check your connections and try again.<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
 		src.updateUsrDialog()
@@ -523,6 +523,9 @@
 /obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(var/obj/item/part as obj,var/resource as text, var/roundto=1)
 //Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
 	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
+		var/list/L = part_sets["Misc"]
+		if(L.Find(part.type))
+			return round(part:construction_cost[resource]*(resource_coeff/2), roundto)             //hacky scary skeletons send shivers down your spine
 		return round(part:construction_cost[resource]*resource_coeff, roundto)
 	else
 		return 0
@@ -534,8 +537,11 @@
 	else
 		return 0
 
+/obj/machinery/mecha_part_fabricator/attack_hand(mob/user)
+	if(!(..()))
+		return interact(user)
 
-/obj/machinery/mecha_part_fabricator/attack_hand(mob/user as mob)
+/obj/machinery/mecha_part_fabricator/interact(mob/user as mob)
 	var/dat, left_part
 	if (..())
 		return
@@ -544,7 +550,7 @@
 	user.set_machine(src)
 	var/turf/exit = get_step(src,SOUTH)
 	if(exit.density)
-		src.visible_message("\icon[src] <b>[src]</b> beeps, \"Error! Part outlet is obstructed\".")
+		src.visible_message("\icon[src] <b>\The [src]</b> beeps, \"Error! Part outlet is obstructed.\"")
 		return
 	if(temp)
 		left_part = temp
@@ -581,10 +587,10 @@
 				<body>
 				<table style='width: 100%;'>
 				<tr>
-				<td style='width: 70%; padding-right: 10px;'>
+				<td style='width: 65%; padding-right: 10px;'>
 				[left_part]
 				</td>
-				<td style='width: 30%; background: #ccc;' id='queue'>
+				<td style='width: 35%; background: #ccc;' id='queue'>
 				[list_queue()]
 				</td>
 				<tr>
@@ -699,10 +705,11 @@
 
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/screwdriver))
-		default_deconstruction_screwdriver(user, "fab-o", "fab-idle")
-
+	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
 		return
+
+	default_deconstruction_crowbar(W)
+
 	if (panel_open)
 		if(istype(W, /obj/item/weapon/crowbar))
 			if(src.resources["metal"] >= 3750)
@@ -729,10 +736,10 @@
 			if(src.resources["bananium"] >= 2000)
 				var/obj/item/stack/sheet/mineral/clown/G = new /obj/item/stack/sheet/mineral/clown(src.loc)
 				G.amount = round(src.resources["bananium"] / G.perunit)
-			default_deconstruction_crowbar()
+			default_deconstruction_crowbar(W)
 			return 1
 		else
-			user << "\red You can't load the [src.name] while it's opened."
+			user << "\red You can't load \the [src.name] while it's opened."
 			return 1
 
 	if(istype(W, /obj/item/weapon/card/emag))
@@ -760,7 +767,7 @@
 			return ..()
 
 	if(src.being_built)
-		user << "The fabricator is currently processing. Please wait until completion."
+		user << "\The [src] is currently processing. Please wait until completion."
 		return
 	var/obj/item/stack/sheet/stack = W
 	var/sname = "[stack.name]"
@@ -775,8 +782,8 @@
 				stack.use(1)
 				count++
 			src.overlays -= "fab-load-[material]"
-			user << "You insert [count] [sname] into the fabricator."
+			user << "You insert [count] [sname] sheet\s into \the [src]."
 			src.updateUsrDialog()
 	else
-		user << "The fabricator cannot hold more [sname]."
+		user << "\The [src] cannot hold any more [sname] sheet\s."
 	return

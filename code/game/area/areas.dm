@@ -17,6 +17,7 @@
 /area
 	var/global/global_uid = 0
 	var/uid
+	blend_mode = BLEND_MULTIPLY
 
 /area/New()
 	icon_state = ""

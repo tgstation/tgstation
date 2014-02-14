@@ -199,7 +199,7 @@
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/clown_shoes(H), slot_shoes)
 		H.equip_to_slot_or_del(new /obj/item/device/pda/clown(H), slot_belt)
 		H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), slot_wear_mask)
-		H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(H), slot_in_backpack)
+		H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(H, 50), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/stamp/clown(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/toy/crayon/rainbow(H), slot_in_backpack)
@@ -266,6 +266,7 @@
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/janitor(H), slot_w_uniform)
+		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_srv(H), slot_ears)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
 		H.equip_to_slot_or_del(new /obj/item/device/pda/janitor(H), slot_belt)
 		return 1
@@ -291,7 +292,8 @@
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket/red(H), slot_w_uniform)
 		H.equip_to_slot_or_del(new /obj/item/device/pda/librarian(H), slot_belt)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
-		H.equip_to_slot_or_del(new /obj/item/weapon/barcodescanner(H), slot_l_hand)
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/bag/books(H), slot_l_hand)
+		H.equip_to_slot_or_del(new /obj/item/weapon/barcodescanner(H), slot_r_store)
 		H.equip_to_slot_or_del(new /obj/item/device/laser_pointer(H), slot_l_store)
 		return 1
 

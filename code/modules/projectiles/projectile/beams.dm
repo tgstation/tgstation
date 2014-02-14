@@ -4,6 +4,7 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 20
 	damage_type = BURN
+	hitsound = 'sound/weapons/sear.ogg'
 	flag = "laser"
 	eyeblur = 2
 
@@ -12,9 +13,15 @@
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 0
+	hitsound = null
 	damage_type = BURN
 	flag = "laser"
 	eyeblur = 2
+
+/obj/item/projectile/beam/scatter
+	name = "laser pellet"
+	icon_state = "scatterlaser"
+	damage = 5
 
 
 /obj/item/projectile/beam/heavylaser
@@ -53,6 +60,7 @@
 /obj/item/projectile/bluetag
 	name = "lasertag beam"
 	icon_state = "bluelaser"
+	hitsound = null
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 0
 	damage_type = BURN
@@ -68,6 +76,7 @@
 /obj/item/projectile/redtag
 	name = "lasertag beam"
 	icon_state = "laser"
+	hitsound = null
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 0
 	damage_type = BURN
@@ -82,6 +91,7 @@
 
 /obj/item/projectile/omnitag//A laser tag bolt that stuns EVERYONE
 	name = "lasertag beam"
+	hitsound = null
 	icon_state = "omnilaser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 0

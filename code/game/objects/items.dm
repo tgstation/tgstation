@@ -2,17 +2,12 @@
 	name = "item"
 	icon = 'icons/obj/items.dmi'
 	var/item_state = null
-	var/r_speed = 1.0
-	var/health = null
-	var/burn_point = null
-	var/burning = null
 	var/hitsound = null
+	var/throwhitsound = null
 	var/w_class = 3.0
-	flags = FPRINT | TABLEPASS
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
 	pressure_resistance = 5
-//	causeerrorheresoifixthis
 	var/obj/item/master = null
 
 	var/heat_protection = 0 //flags which determine which body parts are protected from heat. Use the HEAD, CHEST, GROIN, etc. flags. See setup.dm
@@ -109,7 +104,16 @@
 	if(src.blood_DNA)
 		f_name = "a bloody [name]"
 
-	usr << "\icon[src]This is [f_name]. It is a [size] item."
+	var/determiner
+	var/pronoun
+	if(src.gender == PLURAL)
+		determiner = "These are"
+		pronoun = "They are"
+	else
+		determiner = "This is"
+		pronoun = "It is"
+
+	usr << "\icon[src][determiner] [f_name]. [pronoun] a [size] item." //e.g. These are some gloves. They are a small item. or This is a toolbox. It is a bulky item.
 
 	if(src.desc)
 		usr << src.desc
@@ -118,6 +122,7 @@
 /obj/item/attack_hand(mob/user as mob)
 	if (!user) return
 	if (istype(src.loc, /obj/item/weapon/storage))
+		//If the item is in a storage item, take it out
 		var/obj/item/weapon/storage/S = src.loc
 		S.remove_from_storage(src)
 
@@ -172,6 +177,13 @@
 		return
 	attack_paw(A)
 
+/obj/item/attack_ai(mob/user as mob)
+	if (istype(src.loc, /obj/item/weapon/robot_module))
+		//If the item is part of a cyborg module, equip it
+		if(!isrobot(user)) return
+		var/mob/living/silicon/robot/R = user
+		R.activate_module(src)
+		R.hud_used.update_robot_modules_display()
 
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
@@ -550,3 +562,4 @@
 	. = ..()
 	if(.)
 		transfer_blood = 0
+		bloody_hands_mob = null

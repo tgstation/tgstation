@@ -3,16 +3,17 @@
 	desc = "A tool used by great men to placate the frothing masses."
 	icon_state = "chain"
 	item_state = "chain"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 10
 	throwforce = 7
 	w_class = 3
 	origin_tech = "combat=4"
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
+	hitsound = 'sound/weapons/slash.ogg' //pls replace
 
 /obj/item/weapon/melee/chainofcommand/suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='suicide'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>"
 		return (OXYLOSS)
 
 
@@ -23,7 +24,6 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "baton"
 	item_state = "classic_baton"
-	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
 	force = 10
 
@@ -41,9 +41,14 @@
 		return
 	add_logs(user, M, "attacked", object="[src.name]")
 
+	if(isrobot(M)) // Don't stun borgs, fix for issue #2436
+		..()
+		return
+	if(!isliving(M)) // Don't stun nonhuman things
+		return
+
 	if(user.a_intent == "harm")
 		if(!..()) return
-		playsound(loc, "swing_hit", 50, 1, -1)
 		if(M.stuttering < 8 && !(HULK in M.mutations))
 			M.stuttering = 8
 		M.Stun(8)

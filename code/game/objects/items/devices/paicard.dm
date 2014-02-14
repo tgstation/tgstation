@@ -4,7 +4,6 @@
 	icon_state = "pai"
 	item_state = "electronic"
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
 	origin_tech = "programming=2"
 	var/obj/item/device/radio/radio

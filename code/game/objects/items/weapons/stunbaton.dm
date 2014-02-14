@@ -3,7 +3,6 @@
 	desc = "A stun baton for incapacitating people with."
 	icon_state = "stunbaton"
 	item_state = "baton"
-	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
 	force = 10
 	throwforce = 7
@@ -16,13 +15,17 @@
 	var/hitcost = 1000
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is putting the live [name] in \his mouth! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='suicide'>[user] is putting the live [name] in \his mouth! It looks like \he's trying to commit suicide.</span>"
 		return (FIRELOSS)
 
 /obj/item/weapon/melee/baton/New()
 	..()
 	update_icon()
 	return
+
+/obj/item/weapon/melee/baton/CheckParts()
+	bcell = locate(/obj/item/weapon/cell) in contents
+	update_icon()
 
 /obj/item/weapon/melee/baton/loaded/New() //this one starts with a cell pre-installed.
 	..()
@@ -109,9 +112,8 @@
 
 	if(user.a_intent == "harm")
 		..()
-		playsound(loc, "swing_hit", 50, 1, -1)
 
-	else if(!status)
+	if(!status)
 		L.visible_message("<span class='warning'>[L] has been prodded with [src] by [user]. Luckily it was off.</span>")
 		return
 

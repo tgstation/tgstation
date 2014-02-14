@@ -183,8 +183,8 @@
 		source.reagents.add_reagent("hyperzine", 10)
 
 /obj/item/weapon/implant/adrenalin/implanted(mob/source)
-	source.mind.store_memory("An adrenal implant can be activated by using the scream emote, <B>say *scream</B> to attempt to activate.", 0, 0)
-	source << "<span class='notice'>The implanted adrenaline implant can be activated by using the scream emote, <B>say *scream</B> to attempt to activate.</span>"
+	source.mind.store_memory("An adrenal implant can be activated [uses] time\s by using the scream emote, <B>say *scream</B> to attempt to activate.", 0, 0)
+	source << "<span class='notice'>The implanted adrenaline implant can be activated [uses] time\s by using the scream emote, <B>say *scream</B> to attempt to activate.</span>"
 	return 1
 
 
@@ -193,7 +193,7 @@
 	desc = "Triggers an EMP."
 
 	var/activation_emote = "chuckle"
-	var/uses = 1
+	var/uses = 2
 
 /obj/item/weapon/implant/emp/New()
 	activation_emote = pick("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
@@ -208,6 +208,6 @@
 	return
 
 /obj/item/weapon/implant/emp/implanted(mob/living/carbon/source)
-		source.mind.store_memory("EMP implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
-		source << "The implanted EMP implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
+		source.mind.store_memory("EMP implant can be activated [uses] time\s by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
+		source << "The implanted EMP implant can be activated [uses] time\s by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
 		return 1

@@ -3,7 +3,7 @@
 /datum/admins/proc/create_object(var/mob/user)
 	if (!create_object_html)
 		var/objectjs = null
-		objectjs = dd_list2text(typesof(/obj), ";")
+		objectjs = list2text(typesof(/obj), ";")
 		create_object_html = file2text('html/create_object.html')
 		create_object_html = replacetext(create_object_html, "null /* object types */", "\"[objectjs]\"")
 
@@ -21,7 +21,7 @@
 
 	if (!quick_create_object_html)
 		var/objectjs = null
-		objectjs = dd_list2text(typesof(path), ";")
+		objectjs = list2text(typesof(path), ";")
 		quick_create_object_html = file2text('html/create_object.html')
 		quick_create_object_html = replacetext(quick_create_object_html, "null /* object types */", "\"[objectjs]\"")
 

@@ -9,10 +9,11 @@
 /obj/item/projectile/magic/death
 	name = "bolt of death"
 	icon_state = "pulse1_bl"
-	damage = 9001
-	damage_type = OXY
-	nodamage = 0
-	flag = "magic"
+
+/obj/item/projectile/magic/death/on_hit(var/target)
+	if(ismob(target))
+		var/mob/M = target
+		M.death(0)
 
 /obj/item/projectile/magic/fireball
 	name = "bolt of fireball"
@@ -133,7 +134,10 @@ proc/wabbajack(mob/living/M)
 					new_mob = new /mob/living/carbon/monkey(M.loc)
 					new_mob.universal_speak = 1
 				if("robot")
-					new_mob = new /mob/living/silicon/robot(M.loc)
+					if(prob(30))
+						new_mob = new /mob/living/silicon/robot/syndicate(M.loc)
+					else
+						new_mob = new /mob/living/silicon/robot(M.loc)
 					new_mob.gender = M.gender
 					new_mob.invisibility = 0
 					new_mob.job = "Cyborg"
@@ -141,8 +145,10 @@ proc/wabbajack(mob/living/M)
 					Robot.mmi = new /obj/item/device/mmi(new_mob)
 					Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
 				if("slime")
-					if(prob(50))		new_mob = new /mob/living/carbon/slime/adult(M.loc)
-					else				new_mob = new /mob/living/carbon/slime(M.loc)
+					new_mob = new /mob/living/carbon/slime(M.loc)
+					if(prob(50))
+						var/mob/living/carbon/slime/Slime = new_mob
+						Slime.is_adult = 1
 					new_mob.universal_speak = 1
 				if("xeno")
 					if(prob(50))
@@ -168,7 +174,7 @@ proc/wabbajack(mob/living/M)
 						if("cat")		new_mob = new /mob/living/simple_animal/cat(M.loc)
 						if("carp")		new_mob = new /mob/living/simple_animal/hostile/carp(M.loc)
 						if("bear")		new_mob = new /mob/living/simple_animal/hostile/bear(M.loc)
-						if("mushroom")	new_mob = new /mob/living/simple_animal/mushroom(M.loc)
+						if("mushroom")	new_mob = new /mob/living/simple_animal/hostile/mushroom(M.loc)
 						if("tomato")	new_mob = new /mob/living/simple_animal/tomato(M.loc)
 						if("mouse")		new_mob = new /mob/living/simple_animal/mouse(M.loc)
 						if("chicken")	new_mob = new /mob/living/simple_animal/chicken(M.loc)
@@ -192,6 +198,9 @@ proc/wabbajack(mob/living/M)
 
 			for (var/obj/effect/proc_holder/spell/S in M.spell_list)
 				new_mob.spell_list += new S.type
+
+			new_mob.attack_log = M.attack_log
+			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
 
 			new_mob.a_intent = "harm"
 			if(M.mind)

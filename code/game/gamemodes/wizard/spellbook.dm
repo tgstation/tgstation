@@ -6,15 +6,14 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 1.0
-	flags = FPRINT | TABLEPASS
 	var/uses = 5
 	var/temp = null
 	var/max_uses = 5
 	var/op = 1
 
 /obj/item/weapon/spellbook/attackby(obj/item/O as obj, mob/user as mob)
-	if(istype(O, /obj/item/weapon/contract))
-		var/obj/item/weapon/contract/contract = O
+	if(istype(O, /obj/item/weapon/antag_spawner/contract))
+		var/obj/item/weapon/antag_spawner/contract/contract = O
 		if(contract.used)
 			user << "The contract has been used, you can't get your points back now."
 		else
@@ -253,7 +252,7 @@
 							max_uses--
 							temp = "You have cast summon guns."
 						if("summonmagic")
-							feedback_add_details("wizard_spell_learned","SM") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							feedback_add_details("wizard_spell_learned","SU") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							H.rightandwrong(1)
 							max_uses--
 							temp = "You have cast summon magic."
@@ -283,7 +282,7 @@
 							max_uses--
 						if("contract")
 							feedback_add_details("wizard_spell_learned","CT") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							new /obj/item/weapon/contract(get_turf(H))
+							new /obj/item/weapon/antag_spawner/contract(get_turf(H))
 							temp = "You have purchased a contract of apprenticeship."
 							max_uses--
 						if("scrying")
@@ -334,6 +333,7 @@
 	else
 		user.spell_list += S
 		user <<"<span class='notice'>you rapidly read through the arcane book. Suddenly you realize you understand [spellname]!</span>"
+		user.attack_log += text("\[[time_stamp()]\] <font color='orange'>[user.real_name] ([user.ckey]) learned the spell [spellname] ([S]).</font>")
 		onlearned(user)
 
 /obj/item/weapon/spellbook/oneuse/proc/recoil(mob/user as mob)

@@ -3,7 +3,7 @@
 	icon = 'icons/obj/robot_parts.dmi'
 	item_state = "buildpipe"
 	icon_state = "blank"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	var/construction_time = 100
 	var/list/construction_cost = list("metal"=20000,"glass"=5000)
@@ -239,12 +239,12 @@
 			W.loc = src
 			src.cell = W
 			user << "\blue You insert the cell!"
-	if(istype(W, /obj/item/weapon/cable_coil))
+	if(istype(W, /obj/item/stack/cable_coil))
 		if(src.wires)
 			user << "\blue You have already inserted wire!"
 			return
 		else
-			var/obj/item/weapon/cable_coil/coil = W
+			var/obj/item/stack/cable_coil/coil = W
 			coil.use(1)
 			src.wires = 1.0
 			user << "\blue You insert the wire!"

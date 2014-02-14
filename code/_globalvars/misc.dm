@@ -1,6 +1,6 @@
 var/global/obj/effect/overlay/plmaster = null // atmospheric overlay for plasma
 var/global/obj/effect/overlay/slmaster = null // atmospheric overlay for sleeping gas
-var/admin_notice = null // Admin notice that all clients see when joining the server
+var/admin_notice = "" // Admin notice that all clients see when joining the server
 
 
 // nanomanager, the manager for Nano UIs

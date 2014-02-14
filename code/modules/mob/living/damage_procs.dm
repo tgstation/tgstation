@@ -9,27 +9,28 @@
 	standard 0 if fail
 */
 /mob/living/proc/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0)
-	if(!damage || (blocked >= 2))	return 0
+	blocked = (100-blocked)/100
+	if(!damage || (blocked <= 0))	return 0
 	switch(damagetype)
 		if(BRUTE)
-			adjustBruteLoss(damage/(blocked+1))
+			adjustBruteLoss(damage * blocked)
 		if(BURN)
 			if(COLD_RESISTANCE in mutations)	damage = 0
-			adjustFireLoss(damage/(blocked+1))
+			adjustFireLoss(damage * blocked)
 		if(TOX)
-			adjustToxLoss(damage/(blocked+1))
+			adjustToxLoss(damage * blocked)
 		if(OXY)
-			adjustOxyLoss(damage/(blocked+1))
+			adjustOxyLoss(damage * blocked)
 		if(CLONE)
-			adjustCloneLoss(damage/(blocked+1))
+			adjustCloneLoss(damage * blocked)
 		if(HALLOSS)
-			adjustHalLoss(damage/(blocked+1))
+			adjustHalLoss(damage * blocked)
 	updatehealth()
 	return 1
 
 
 /mob/living/proc/apply_damages(var/brute = 0, var/burn = 0, var/tox = 0, var/oxy = 0, var/clone = 0, var/def_zone = null, var/blocked = 0, var/halloss = 0)
-	if(blocked >= 2)	return 0
+	if(blocked >= 100)	return 0
 	if(brute)	apply_damage(brute, BRUTE, def_zone, blocked)
 	if(burn)	apply_damage(burn, BURN, def_zone, blocked)
 	if(tox)		apply_damage(tox, TOX, def_zone, blocked)
@@ -41,29 +42,30 @@
 
 
 /mob/living/proc/apply_effect(var/effect = 0,var/effecttype = STUN, var/blocked = 0)
-	if(!effect || (blocked >= 2))	return 0
+	blocked = (100-blocked)/100
+	if(!effect || (blocked <= 0))	return 0
 	switch(effecttype)
 		if(STUN)
-			Stun(effect/(blocked+1))
+			Stun(effect * blocked)
 		if(WEAKEN)
-			Weaken(effect/(blocked+1))
+			Weaken(effect * blocked)
 		if(PARALYZE)
-			Paralyse(effect/(blocked+1))
+			Paralyse(effect * blocked)
 		if(IRRADIATE)
-			radiation += max((((effect - (effect*(getarmor(null, "rad")/100))))/(blocked+1)),0)//Rads auto check armor
+			radiation += max(effect * ((100-run_armor_check(null, "rad", "Your clothes feel warm", "Your clothes feel warm"))/100),0)//Rads auto check armor
 		if(STUTTER)
 			if(status_flags & CANSTUN) // stun is usually associated with stutter
-				stuttering = max(stuttering,(effect/(blocked+1)))
+				stuttering = max(stuttering,(effect * blocked))
 		if(EYE_BLUR)
-			eye_blurry = max(eye_blurry,(effect/(blocked+1)))
+			eye_blurry = max(eye_blurry,(effect * blocked))
 		if(DROWSY)
-			drowsyness = max(drowsyness,(effect/(blocked+1)))
+			drowsyness = max(drowsyness,(effect * blocked))
 	updatehealth()
 	return 1
 
 
 /mob/living/proc/apply_effects(var/stun = 0, var/weaken = 0, var/paralyze = 0, var/irradiate = 0, var/stutter = 0, var/eyeblur = 0, var/drowsy = 0, var/blocked = 0)
-	if(blocked >= 2)	return 0
+	if(blocked >= 100)	return 0
 	if(stun)		apply_effect(stun, STUN, blocked)
 	if(weaken)		apply_effect(weaken, WEAKEN, blocked)
 	if(paralyze)	apply_effect(paralyze, PARALYZE, blocked)

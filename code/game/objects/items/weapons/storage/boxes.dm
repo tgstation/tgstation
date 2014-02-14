@@ -38,13 +38,8 @@
 		return
 
 	//Close any open UI windows first
-	var/found = 0
-	for(var/mob/M in range(1))
-		if(M.s_active == src)
-			close(M)
-		if(M == user)
-			found = 1
-	if(!found)	//User is too far away
+	var/found = close_all()
+	if(!found)	//No user had any windows closed
 		return
 
 	user << "<span class='notice'>You fold [src] flat.</span>"
@@ -145,7 +140,7 @@
 		new /obj/item/weapon/dnainjector/m2h(src)
 		new /obj/item/weapon/dnainjector/m2h(src)
 
-/obj/item/weapon/storage/box/blanks
+/*/obj/item/weapon/storage/box/blanks	//Blanks removed, go home
 	name = "box of blank shells"
 	desc = "It has a picture of a gun and several warning symbols on the front."
 
@@ -157,7 +152,7 @@
 		new /obj/item/ammo_casing/shotgun/blank(src)
 		new /obj/item/ammo_casing/shotgun/blank(src)
 		new /obj/item/ammo_casing/shotgun/blank(src)
-		new /obj/item/ammo_casing/shotgun/blank(src)
+		new /obj/item/ammo_casing/shotgun/blank(src)*/
 
 /obj/item/weapon/storage/box/flashbangs
 	name = "box of flashbangs (WARNING)"
@@ -458,7 +453,6 @@
 	item_state = "zippo"
 	storage_slots = 10
 	w_class = 1
-	flags = TABLEPASS
 	slot_flags = SLOT_BELT
 
 	New()
@@ -470,6 +464,13 @@
 		if(istype(W, /obj/item/weapon/match) && W.lit == 0)
 			W.lit = 1
 			W.icon_state = "match_lit"
+			W.damtype = "fire"
+			W.force = 3
+			W.hitsound = 'sound/items/welder.ogg'
+			W.item_state = "cigon"
+			W.name = "lit match"
+			W.desc = "A match. This one is lit."
+			W.attack_verb = list("burnt","singed")
 			processing_objects.Add(W)
 		W.update_icon()
 		return

@@ -50,6 +50,7 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 /obj/item/stack/sheet/mineral/diamond
 	name = "diamond"
 	icon_state = "sheet-diamond"
+	singular_name = "diamond"
 	force = 5.0
 	throwforce = 5
 	w_class = 3.0
@@ -74,6 +75,7 @@ var/global/list/datum/stack_recipe/diamond_recipes = list ( \
 /obj/item/stack/sheet/mineral/uranium
 	name = "uranium"
 	icon_state = "sheet-uranium"
+	singular_name = "uranium sheet"
 	force = 5.0
 	throwforce = 5
 	w_class = 3.0
@@ -99,6 +101,7 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 /obj/item/stack/sheet/mineral/plasma
 	name = "solid plasma"
 	icon_state = "sheet-plasma"
+	singular_name = "plasma sheet"
 	force = 5.0
 	throwforce = 5
 	w_class = 3.0
@@ -124,6 +127,7 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 /obj/item/stack/sheet/mineral/gold
 	name = "gold"
 	icon_state = "sheet-gold"
+	singular_name = "gold bar"
 	force = 5.0
 	throwforce = 5
 	w_class = 3.0
@@ -149,6 +153,7 @@ var/global/list/datum/stack_recipe/gold_recipes = list ( \
 /obj/item/stack/sheet/mineral/silver
 	name = "silver"
 	icon_state = "sheet-silver"
+	singular_name = "silver bar"
 	force = 5.0
 	throwforce = 5
 	w_class = 3.0
@@ -174,6 +179,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 /obj/item/stack/sheet/mineral/clown
 	name = "bananium"
 	icon_state = "sheet-clown"
+	singular_name = "bananium sheet"
 	force = 5.0
 	throwforce = 5
 	w_class = 3.0
@@ -197,6 +203,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 /obj/item/stack/sheet/mineral/enruranium
 	name = "enriched uranium"
 	icon_state = "sheet-enruranium"
+	singular_name = "enriched uranium sheet"
 	force = 5.0
 	throwforce = 5
 	w_class = 3.0
@@ -211,6 +218,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 /obj/item/stack/sheet/mineral/adamantine
 	name = "adamantine"
 	icon_state = "sheet-adamantine"
+	singular_name = "adamantine sheet"
 	force = 5.0
 	throwforce = 5
 	w_class = 3.0
@@ -225,6 +233,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 /obj/item/stack/sheet/mineral/mythril
 	name = "mythril"
 	icon_state = "sheet-mythril"
+	singular_name = "mythril sheet"
 	force = 5.0
 	throwforce = 5
 	w_class = 3.0

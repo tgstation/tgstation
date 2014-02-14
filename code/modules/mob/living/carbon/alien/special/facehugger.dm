@@ -15,7 +15,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	icon_state = "facehugger"
 	item_state = "facehugger"
 	w_class = 1 //note: can be picked up by aliens unlike most other items of w_class below 4
-	flags = FPRINT | TABLEPASS | MASKCOVERSMOUTH | MASKCOVERSEYES | MASKINTERNALS
+	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | MASKINTERNALS
 	throw_range = 5
 
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
@@ -221,14 +221,13 @@ var/const/MAX_ACTIVE_TIME = 400
 
 /proc/CanHug(var/mob/M)
 
-	if(iscorgi(M))
+	if(iscorgi(M) || ismonkey(M))
 		return 1
 
-	if(!iscarbon(M) || isalien(M))
-		return 0
 	var/mob/living/carbon/C = M
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		if(H.head && H.head.flags & HEADCOVERSMOUTH)
 			return 0
-	return 1
+		return 1
+	return 0

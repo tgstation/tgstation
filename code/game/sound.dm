@@ -1,4 +1,4 @@
-/proc/playsound(var/atom/source, soundin, vol as num, vary, extrarange as num, falloff)
+/proc/playsound(var/atom/source, soundin, vol as num, vary, extrarange as num, falloff, surround = 1)
 
 	soundin = get_sfx(soundin) // same sound for everyone
 
@@ -17,12 +17,12 @@
 		if(get_dist(M, turf_source) <= world.view + extrarange)
 			var/turf/T = get_turf(M)
 			if(T && T.z == turf_source.z)
-				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff)
+				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, surround)
 
 var/const/FALLOFF_SOUNDS = 1
 var/const/SURROUND_CAP = 7
 
-/mob/proc/playsound_local(var/turf/turf_source, soundin, vol as num, vary, frequency, falloff)
+/mob/proc/playsound_local(var/turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1)
 	if(!src.client || ear_deaf > 0)	return
 	soundin = get_sfx(soundin)
 
@@ -40,12 +40,12 @@ var/const/SURROUND_CAP = 7
 	if(isturf(turf_source))
 		// 3D sounds, the technology is here!
 		var/turf/T = get_turf(src)
-		var/dx = turf_source.x - T.x // Hearing from the right/left
+		if (surround)
+			var/dx = turf_source.x - T.x // Hearing from the right/left
+			S.x = round(max(-SURROUND_CAP, min(SURROUND_CAP, dx)), 1)
 
-		S.x = round(max(-SURROUND_CAP, min(SURROUND_CAP, dx)), 1)
-
-		var/dz = turf_source.y - T.y // Hearing from infront/behind
-		S.z = round(max(-SURROUND_CAP, min(SURROUND_CAP, dz)), 1)
+			var/dz = turf_source.y - T.y // Hearing from infront/behind
+			S.z = round(max(-SURROUND_CAP, min(SURROUND_CAP, dz)), 1)
 
 		// The y value is for above your head, but there is no ceiling in 2d spessmens.
 		S.y = 1
@@ -68,6 +68,7 @@ var/const/SURROUND_CAP = 7
 			if ("explosion") soundin = pick('sound/effects/Explosion1.ogg','sound/effects/Explosion2.ogg')
 			if ("sparks") soundin = pick('sound/effects/sparks1.ogg','sound/effects/sparks2.ogg','sound/effects/sparks3.ogg','sound/effects/sparks4.ogg')
 			if ("rustle") soundin = pick('sound/effects/rustle1.ogg','sound/effects/rustle2.ogg','sound/effects/rustle3.ogg','sound/effects/rustle4.ogg','sound/effects/rustle5.ogg')
+			if ("bodyfall") soundin = pick('sound/effects/bodyfall1.ogg','sound/effects/bodyfall2.ogg','sound/effects/bodyfall3.ogg','sound/effects/bodyfall4.ogg')
 			if ("punch") soundin = pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg')
 			if ("clownstep") soundin = pick('sound/effects/clownstep1.ogg','sound/effects/clownstep2.ogg')
 			if ("swing_hit") soundin = pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg')

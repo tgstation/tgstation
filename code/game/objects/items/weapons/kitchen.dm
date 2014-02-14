@@ -22,9 +22,10 @@
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	origin_tech = "materials=1"
 	attack_verb = list("attacked", "stabbed", "poked")
+	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/weapon/kitchen/utensil/New()
 	if (prob(60))
@@ -82,9 +83,9 @@
 	throwforce = 10.0
 
 	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>")
+		viewers(user) << pick("<span class='suicide'>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
+							"<span class='suicide'>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
+							"<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>")
 		return (BRUTELOSS)
 
 /obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
@@ -103,7 +104,7 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "knife"
 	desc = "A general purpose Chef's Knife made by SpaceCook Incorporated. Guaranteed to stay sharp for years to come."
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	force = 10.0
 	w_class = 3.0
 	throwforce = 6.0
@@ -114,9 +115,9 @@
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>")
+		viewers(user) << pick("<span class='suicide'>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
+							"<span class='suicide'>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
+							"<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>")
 		return (BRUTELOSS)
 
 /obj/item/weapon/kitchenknife/ritual
@@ -133,7 +134,7 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "butch"
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products."
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	force = 15.0
 	w_class = 2.0
 	throwforce = 8.0
@@ -204,7 +205,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	m_amt = 3000
 	var/list/carrying = list() // List of things on the tray. - Doohl
 	var/max_carry = 10 // w_class = 1 -- takes up 1

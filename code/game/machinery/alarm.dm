@@ -60,7 +60,6 @@
 	var/datum/wires/alarm/wires = null
 	var/wiresexposed = 0 // If it's been screwdrivered open.
 	var/aidisabled = 0
-	var/AAlarmwires = 31
 	var/shorted = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
 
@@ -658,7 +657,7 @@ table tr:first-child th:first-child { border: none;}
 	if(wiresexposed)
 		switch(buildstage)
 			if(2)
-				if(src.AAlarmwires == 0) // All wires cut
+				if(wires.wires_status == (2 ** wires.wire_count) - 1) // All wires cut
 					icon_state = "alarm_b2"
 				else
 					icon_state = "alarmx"
@@ -767,10 +766,10 @@ table tr:first-child th:first-child { border: none;}
 /obj/machinery/alarm/attackby(obj/item/W as obj, mob/user as mob)
 	switch(buildstage)
 		if(2)
-			if(istype(W, /obj/item/weapon/wirecutters) && AAlarmwires == 0)
+			if(istype(W, /obj/item/weapon/wirecutters) && wires.wires_status == (2 ** wires.wire_count) - 1)   //this checks for all wires to be cut, disregard the ammount of wires, binary fuckery with the wires_status
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				user << "You cut the final wires."
-				var/obj/item/weapon/cable_coil/cable = new /obj/item/weapon/cable_coil( src.loc )
+				var/obj/item/stack/cable_coil/cable = new /obj/item/stack/cable_coil( src.loc )
 				cable.amount = 5
 				buildstage = 1
 				update_icon()
@@ -797,7 +796,7 @@ table tr:first-child th:first-child { border: none;}
 						user << "\red Access denied."
 				return
 		if(1)
-			if(istype(W, /obj/item/weapon/crowbar) && AAlarmwires == 0)
+			if(istype(W, /obj/item/weapon/crowbar) && wires.wires_status == (2 ** wires.wire_count) - 1)
 				user << "You pry out the circuit."
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				spawn(20)
@@ -807,8 +806,8 @@ table tr:first-child th:first-child { border: none;}
 					update_icon()
 				return
 
-			if(istype(W, /obj/item/weapon/cable_coil))
-				var/obj/item/weapon/cable_coil/cable = W
+			if(istype(W, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/cable = W
 				if(cable.amount < 5)
 					user << "You need more cable!"
 					return
@@ -820,7 +819,7 @@ table tr:first-child th:first-child { border: none;}
 						del(cable)
 
 					user << "You wire the air alarm!"
-					src.AAlarmwires = 31
+					wires.wires_status = 0
 					buildstage = 2
 					update_icon()
 				return
@@ -874,7 +873,7 @@ Code shamelessly copied from apc_frame
 	desc = "Used for building Air Alarms"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarm_bitem"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 
 /obj/item/alarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
@@ -993,14 +992,14 @@ FIRE ALARM
 				else if (istype(W, /obj/item/weapon/wirecutters))
 					buildstage = 1
 					playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil()
+					var/obj/item/stack/cable_coil/coil = new /obj/item/stack/cable_coil()
 					coil.amount = 5
 					coil.loc = user.loc
 					user << "<span class='notice'>You cut the wires from \the [src]</span>"
 					update_icon()
 			if(1)
-				if(istype(W, /obj/item/weapon/cable_coil))
-					var/obj/item/weapon/cable_coil/coil = W
+				if(istype(W, /obj/item/stack/cable_coil))
+					var/obj/item/stack/cable_coil/coil = W
 					if(coil.amount < 5)
 						user << "<span class='warning'>You need more cable for this!</span>"
 						return
@@ -1208,7 +1207,7 @@ Code shamelessly copied from apc_frame
 	desc = "Used for building Fire Alarms"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire_bitem"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 
 
 /obj/item/firealarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)

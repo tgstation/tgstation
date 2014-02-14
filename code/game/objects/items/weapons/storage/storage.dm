@@ -24,7 +24,7 @@
 
 
 /obj/item/weapon/storage/MouseDrop(obj/over_object)
-	if(ishuman(usr) || ismonkey(usr)) //so monkeys can take off their backpacks -- Urist
+	if(ismob(usr)) //all the check for item manipulation are in other places, you can safely open any storages as anything and its not buggy, i checked
 		var/mob/M = usr
 
 		if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
@@ -94,6 +94,14 @@
 	hide_from(user)
 	user.s_active = null
 
+
+/obj/item/weapon/storage/proc/close_all() //returns 1 if any mobs actually got a close(M) call
+	var/actually_closed = 0
+	for(var/mob/M in range(1))
+		if(M.s_active == src)
+			close(M)
+			actually_closed = 1
+	return actually_closed
 
 //This proc draws out the inventory and places the items on it. tx and ty are the upper left tile and mx, my are the bottm right.
 //The numbers are calculated from the bottom-left The bottom-left slot being 1,1.
@@ -240,7 +248,7 @@
 	if(usr)
 		if(usr.client && usr.s_active != src)
 			usr.client.screen -= W
-		W.dropped(usr)
+
 		add_fingerprint(usr)
 
 		if(!prevent_warning && !istype(W, /obj/item/weapon/gun/energy/crossbow))
@@ -397,6 +405,11 @@
 	closer.icon_state = "x"
 	closer.layer = 20
 	orient2hud()
+
+
+/obj/item/weapon/storage/Del()
+	close_all()
+	..()
 
 
 /obj/item/weapon/storage/emp_act(severity)

@@ -219,7 +219,6 @@
 			if("larva")				M.change_mob_type( /mob/living/carbon/alien/larva , null, null, delmob )
 			if("human")				M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
 			if("slime")				M.change_mob_type( /mob/living/carbon/slime , null, null, delmob )
-			if("adultslime")		M.change_mob_type( /mob/living/carbon/slime/adult , null, null, delmob )
 			if("monkey")			M.change_mob_type( /mob/living/carbon/monkey , null, null, delmob )
 			if("robot")				M.change_mob_type( /mob/living/silicon/robot , null, null, delmob )
 			if("cat")				M.change_mob_type( /mob/living/simple_animal/cat , null, null, delmob )
@@ -1094,12 +1093,9 @@
 			usr << "This can only be used on instances of type /mob/living"
 			return
 
-		if(config.allow_admin_rev)
-			L.revive()
-			message_admins("\red Admin [key_name_admin(usr)] healed / revived [key_name_admin(L)]!", 1)
-			log_admin("[key_name(usr)] healed / Revived [key_name(L)]")
-		else
-			usr << "Admin Rejuvinates have been disabled"
+		L.revive()
+		message_admins("\red Admin [key_name_admin(usr)] healed / revived [key_name_admin(L)]!", 1)
+		log_admin("[key_name(usr)] healed / Revived [key_name(L)]")
 
 	else if(href_list["makeai"])
 		if(!check_rights(R_SPAWN))	return
@@ -1132,6 +1128,17 @@
 			return
 
 		usr.client.cmd_admin_slimeize(H)
+
+	else if(href_list["makeblob"])
+		if(!check_rights(R_SPAWN))	return
+
+		var/mob/living/carbon/human/H = locate(href_list["makeblob"])
+		if(!istype(H))
+			usr << "This can only be used on instances of type /mob/living/carbon/human"
+			return
+
+		usr.client.cmd_admin_blobize(H)
+
 
 	else if(href_list["makerobot"])
 		if(!check_rights(R_SPAWN))	return
@@ -1427,10 +1434,6 @@
 	else if(href_list["object_list"])			//this is the laggiest thing ever
 		if(!check_rights(R_SPAWN))	return
 
-		if(!config.allow_admin_spawning)
-			usr << "Spawning of items is not allowed."
-			return
-
 		var/atom/loc = usr.loc
 
 		var/dirty_paths
@@ -1471,7 +1474,7 @@
 			alert("Select fewer object types, (max 5)")
 			return
 		else if(length(removed_paths))
-			alert("Removed:\n" + dd_list2text(removed_paths, "\n"))
+			alert("Removed:\n" + list2text(removed_paths, "\n"))
 
 		var/list/offset = text2list(href_list["offset"],",")
 		var/number = dd_range(1, 100, text2num(href_list["object_count"]))

@@ -7,7 +7,7 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "plastic-explosive0"
 	item_state = "plasticx"
-	flags = FPRINT | TABLEPASS | NOBLUDGEON
+	flags = NOBLUDGEON
 	w_class = 2.0
 	origin_tech = "syndicate=2"
 	var/datum/wires/explosive/plastic/wires = null
@@ -21,7 +21,7 @@
 
 /obj/item/weapon/plastique/suicide_act(var/mob/user)
 	. = (BRUTELOSS)
-	viewers(user) << "\red <b>[user] activates the C4 and holds it above his head! It looks like \he's going out with a bang!</b>"
+	viewers(user) << "<span class='suicide'>[user] activates the C4 and holds it above his head! It looks like \he's going out with a bang!</span>"
 	var/message_say = "FOR NO RAISIN!"
 	if(user.mind)
 		if(user.mind.special_role)
@@ -34,6 +34,7 @@
 				message_say = "FOR NARSIE!"
 	user.say(message_say)
 	target = user
+	message_admins("[key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) suicided with C4 at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 	explode(get_turf(user))
 	return .
 
@@ -53,8 +54,8 @@
 		timer = newtime
 		user << "Timer set for [timer] seconds."
 
-/obj/item/weapon/plastique/afterattack(atom/target as obj|turf, mob/user as mob, flag)
-	if (!flag)
+/obj/item/weapon/plastique/preattack(atom/target as obj|turf, mob/user as mob,proximity_flag)
+	if (!proximity_flag)
 		return
 	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/item/weapon/storage/))
 		return
@@ -72,11 +73,18 @@
 		if (ismob(target))
 			add_logs(user, target, "planted [name] on")
 			user.visible_message("\red [user.name] finished planting an explosive on [target.name]!")
+			message_admins("[key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) planted C4 on [key_name(target)](<A HREF='?_src_=holder;adminmoreinfo=\ref[target]'>?</A>) with [timer] second fuse",0,1)
+			log_game("[key_name(user)] planted C4 on [key_name(target)] with [timer] second fuse")
+
+		else
+			message_admins("[key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) planted C4 on [target.name] at ([target.x],[target.y],[target.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) with [timer] second fuse",0,1)
+			log_game("[key_name(user)] planted C4 on [target.name] at ([target.x],[target.y],[target.z]) with [timer] second fuse")
 
 		target.overlays += image('icons/obj/assemblies.dmi', "plastic-explosive2")
 		user << "Bomb has been planted. Timer counting down from [timer]."
 		spawn(timer*10)
 			explode(get_turf(target))
+	return 1
 
 /obj/item/weapon/plastique/proc/explode(var/location)
 

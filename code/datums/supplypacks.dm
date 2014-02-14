@@ -684,11 +684,13 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 50
 	containertype = /obj/structure/closet/critter/corgi
 	containername = "corgi crate"
+
 /datum/supply_packs/organic/cat
 	name = "Cat crate"
-	cost = 40
+	cost = 50 //Cats are worth as much as corgis.
 	containertype = /obj/structure/closet/critter/cat
 	containername = "cat crate"
+
 /datum/supply_packs/organic/pug
 	name = "Pug crate"
 	cost = 50
@@ -845,7 +847,25 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 8
 	containertype = /obj/structure/largecrate
 	containername = "water tank crate"
-
+	
+/datum/supply_packs/misc/lasertag
+	name = "LaserTag Crate"
+	contains =	list(/obj/item/weapon/gun/energy/laser/redtag,
+					/obj/item/weapon/gun/energy/laser/redtag,
+					/obj/item/weapon/gun/energy/laser/redtag,
+					/obj/item/weapon/gun/energy/laser/bluetag,
+					/obj/item/weapon/gun/energy/laser/bluetag,
+					/obj/item/weapon/gun/energy/laser/bluetag,
+					/obj/item/clothing/suit/redtag,
+					/obj/item/clothing/suit/redtag,
+					/obj/item/clothing/suit/redtag,
+					/obj/item/clothing/suit/bluetag,
+					/obj/item/clothing/suit/bluetag,
+					/obj/item/clothing/suit/bluetag,
+					/obj/item/clothing/head/helmet/redtaghelm,
+					/obj/item/clothing/head/helmet/bluetaghelm)
+	cost = 15
+	containername = "LaserTag Crate"
 
 ///////////// Paper Work
 

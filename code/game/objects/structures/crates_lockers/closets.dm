@@ -4,7 +4,6 @@
 	icon = 'icons/obj/closet.dmi'
 	icon_state = "closed"
 	density = 1
-	flags = FPRINT
 	var/icon_closed = "closed"
 	var/icon_opened = "open"
 	var/opened = 0
@@ -149,7 +148,7 @@
 	return
 
 /obj/structure/closet/attack_animal(mob/living/simple_animal/user as mob)
-	if(user.wall_smash)
+	if(user.environment_smash)
 		visible_message("\red [user] destroys the [src]. ")
 		for(var/atom/movable/A as mob|obj in src)
 			A.loc = src.loc

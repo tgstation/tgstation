@@ -10,7 +10,6 @@
 	icon_closed = "crate"
 	req_access = null
 	opened = 0
-	flags = FPRINT
 //	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	//???
 	var/rigged = 0
 	var/sound_effect_open = 'sound/machines/click.ogg'
@@ -331,7 +330,7 @@
 			W.loc = src.loc
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
-	else if(istype(W, /obj/item/weapon/cable_coil))
+	else if(istype(W, /obj/item/stack/cable_coil))
 		if(rigged)
 			user << "<span class='notice'>[src] is already rigged!</span>"
 			return

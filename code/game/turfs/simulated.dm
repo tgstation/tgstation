@@ -55,7 +55,7 @@
 
 		switch (src.wet)
 			if(1) //wet floor
-				if(!M.slip(8, 5, null, (NO_SLIP_WHEN_WALKING|STEP)))
+				if(!M.slip(4, 2, null, (NO_SLIP_WHEN_WALKING|STEP)))
 					M.inertia_dir = 0
 				return
 

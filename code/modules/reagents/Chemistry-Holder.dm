@@ -407,6 +407,11 @@ datum
 
 				return 1
 
+			add_reagent_list(var/list/list_reagents, var/list/data=null) // Like add_reagent but you can enter a list. Format it like this: list("toxin" = 10, "beer" = 15)
+				for(var/r_id in list_reagents)
+					var/amt = list_reagents[r_id]
+					add_reagent(r_id, amt, data)
+
 			remove_reagent(var/reagent, var/amount, var/safety)//Added a safety check for the trans_id_to
 
 				if(!isnum(amount)) return 1
@@ -485,5 +490,7 @@ datum
 // Convenience proc to create a reagents holder for an atom
 // Max vol is maximum volume of holder
 atom/proc/create_reagents(var/max_vol)
+	if(reagents)
+		reagents.delete()
 	reagents = new/datum/reagents(max_vol)
 	reagents.my_atom = src

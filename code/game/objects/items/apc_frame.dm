@@ -5,7 +5,7 @@
 	desc = "Used for repairing or building APCs"
 	icon = 'icons/obj/apc_repair.dmi'
 	icon_state = "apc_frame"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 
 /obj/item/apc_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -35,7 +35,7 @@
 			usr << "\red There is another network terminal here."
 			return
 		else
-			var/obj/item/weapon/cable_coil/C = new /obj/item/weapon/cable_coil(loc)
+			var/obj/item/stack/cable_coil/C = new /obj/item/stack/cable_coil(loc)
 			C.amount = 10
 			usr << "You cut the cables and disassemble the unused power terminal."
 			del(T)
