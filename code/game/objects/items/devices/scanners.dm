@@ -169,7 +169,7 @@ MASS SPECTROMETER
 	w_class = 2.0
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	throwforce = 5
+	throwforce = 0
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 30
@@ -236,7 +236,7 @@ MASS SPECTROMETER
 	w_class = 2.0
 	flags = CONDUCT | OPENCONTAINER
 	slot_flags = SLOT_BELT
-	throwforce = 5
+	throwforce = 0
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 30

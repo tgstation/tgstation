@@ -10,7 +10,7 @@
 	item_state = "scrap-metal"
 	desc = "A piece of scrap"
 	var/classtext = ""
-	throwforce = 14.0
+	throwforce = 5.0
 	m_amt = 0
 	g_amt = 0
 	w_amt = 0

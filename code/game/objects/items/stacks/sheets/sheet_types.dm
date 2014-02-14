@@ -49,7 +49,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	singular_name = "metal sheet"
 	icon_state = "sheet-metal"
 	m_amt = 3750
-	throwforce = 14.0
+	throwforce = 10.0
 	flags = CONDUCT
 	origin_tech = "materials=1"
 

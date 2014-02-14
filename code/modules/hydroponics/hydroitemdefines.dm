@@ -22,7 +22,7 @@
 	item_state = "spray"
 	flags = OPENCONTAINER
 	slot_flags = SLOT_BELT
-	throwforce = 4
+	throwforce = 0
 	w_class = 2.0
 	throw_speed = 2
 	throw_range = 10
@@ -41,7 +41,7 @@
 	item_state = "spray"
 	flags = OPENCONTAINER
 	slot_flags = SLOT_BELT
-	throwforce = 4
+	throwforce = 0
 	w_class = 2.0
 	throw_speed = 2
 	throw_range = 10
