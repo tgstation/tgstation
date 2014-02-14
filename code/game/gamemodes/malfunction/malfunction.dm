@@ -149,7 +149,7 @@
 /datum/game_mode/proc/is_malf_ai_dead()
 	var/all_dead = 1
 	for(var/datum/mind/AI_mind in malf_ai)
-		if (istype(AI_mind.current,/mob/living/silicon/ai) && AI_mind.current.stat!=2)
+		if (istype(AI_mind.current,/mob/living/silicon/ai) && AI_mind.current.stat!=2 && AI_mind.current.z = 1)
 			all_dead = 0
 	return all_dead
 
