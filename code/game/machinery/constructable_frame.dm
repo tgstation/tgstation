@@ -195,7 +195,7 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/power_compressor
 	name = "circuit board (Power Compressor)"
-	build_path = /obj/machinery/compressor
+	build_path = /obj/machinery/power/compressor
 	board_type = "machine"
 	origin_tech = "programming=4;powerstorage=5;engineering=4"
 	req_components = list(

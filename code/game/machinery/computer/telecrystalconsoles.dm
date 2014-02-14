@@ -1,6 +1,6 @@
 #define NUKESCALINGMODIFIER 0.5
 
-var/list/possible_uplinker_IDs = natoalphabet.Copy()
+var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","Foxtrot","Zero", "Niner")
 
 
 /obj/machinery/computer/telecrystals
@@ -16,20 +16,17 @@ var/list/possible_uplinker_IDs = natoalphabet.Copy()
 	icon_state = "tcstation"
 	var/obj/item/uplinkholder = null
 	var/obj/machinery/computer/telecrystals/boss/linkedboss = null
-	var/ID
 
 /obj/machinery/computer/telecrystals/uplinker/New()
 	..()
 
-	if(!ID)
-		if(possible_uplinker_IDs.len)
-			ID = pick(possible_uplinker_IDs)
-			possible_uplinker_IDs -= ID
-			name = "[name] [ID]"
-		else
-			name = "[name] [rand(1,999)]"
-	else
+	var/ID
+	if(possible_uplinker_IDs.len)
+		ID = pick(possible_uplinker_IDs)
+		possible_uplinker_IDs -= ID
 		name = "[name] [ID]"
+	else
+		name = "[name] [rand(1,999)]"
 
 
 /obj/machinery/computer/telecrystals/uplinker/attackby(var/obj/item/O as obj, var/mob/user as mob)
@@ -130,7 +127,6 @@ var/list/possible_uplinker_IDs = natoalphabet.Copy()
 	Once the consoles are linked up, you can assign any telecrystals amongst your operatives; be they donated by your agents or rationed to the squad \
 	based on the danger rating of the mission."
 	icon_state = "tcboss"
-	req_access = list(access_syndicate_commander)
 	var/virgin = 1
 	var/scanrange = 10
 	var/storedcrystals = 0
@@ -165,8 +161,6 @@ var/list/possible_uplinker_IDs = natoalphabet.Copy()
 	if(..())
 		return
 	src.add_fingerprint(user)
-	if(!allowed(user))
-		user << "<spanclass='danger'>Access Denied."
 	user.set_machine(src)
 
 

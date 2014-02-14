@@ -49,6 +49,7 @@
 	var/automute_on = 0					//enables automuting/spam prevention
 	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
 	var/jobs_have_maint_access = 0 		//Who gets maint access?  See defines above
+	var/sec_start_brig = 0				//makes sec start in brig or dept sec posts
 
 	var/server
 	var/banappeals
@@ -310,6 +311,8 @@
 					config.jobs_have_maint_access	|= SECURITY_HAS_MAINT_ACCESS
 				if("everyone_has_maint_access")
 					config.jobs_have_maint_access	|= EVERYONE_HAS_MAINT_ACCESS
+				if("sec_start_brig")
+					config.sec_start_brig			= 1
 				if("gateway_delay")
 					config.gateway_delay			= text2num(value)
 				if("continuous_round_rev")

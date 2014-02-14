@@ -93,14 +93,14 @@
 	var/L = new /datum/ai_laws/default/asimov/ //variable L is a new Asimov lawset
 	var/B = new /obj/item/device/mmi/ //variable B is a new MMI
 	var/mob/living/silicon/ai/M = new(src.loc, L, B, 1) //spawn new AI at landmark as var M
+	M.name = src.name
+	M.real_name = src.name
 	M.aiPDA.toff = 1 //turns the AI's PDA messenger off, stopping it showing up on player PDAs
 	M.death() //call the AI's death proc
-	M.name = src.name //AI's name is that of the landmark that spawned it
-	M.real_name = M.name //AI's real_name is the same as its name
 	del(src)
 
 /obj/effect/landmark/corpse/slimeCorpse
-	var/slimecolour = "grey"
+	var/mobcolour = "grey"
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey baby slime" //sets the icon in the map editor
 
@@ -109,14 +109,14 @@
 	if(A) //if variable A is true
 		return //stop executing the proc
 	var/mob/living/carbon/slime/M = new(src.loc) //variable M is a new slime at the location of the landmark
+	M.colour = src.mobcolour //slime colour is set by landmark's mobcolour var
 	M.adjustToxLoss(9001) //kills the slime, death() doesn't update its icon correctly
-	M.colour = src.slimecolour //slime colour is set by landmark's slimecolour var
 	del(src)
 
 /obj/effect/landmark/corpse/facehugCorpse/createCorpse() //Creates a squashed facehugger
 	var/obj/item/clothing/mask/facehugger/O = new(src.loc) //variable O is a new facehugger at the location of the landmark
+	O.name = src.name
 	O.Die() //call the facehugger's death proc
-	O.name = src.name //facehugger's name is the landmark's name
 	del(src)
 
 
