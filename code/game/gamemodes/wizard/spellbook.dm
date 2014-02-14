@@ -42,6 +42,7 @@
 			<A href='byond://?src=\ref[src];spell_choice=etherealjaunt'>Ethereal Jaunt</A> (60)<BR>
 			<A href='byond://?src=\ref[src];spell_choice=knock'>Knock</A> (10)<BR>
 			<A href='byond://?src=\ref[src];spell_choice=horseman'>Curse of the Horseman</A> (15)<BR>
+			<A href='byond://?src=\ref[src];spell_choice=chariot'>Summon Chariot</A> (60)<BR>
 			<A href='byond://?src=\ref[src];spell_choice=noclothes'>Remove Clothes Requirement</A> <b>Warning: this takes away 2 spell choices.</b><BR>"}
 
 		// END AUTOFIX
@@ -211,7 +212,7 @@
 						if("chariot")
 							feedback_add_details("wizard_spell_learned","WM") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							H.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/pontiac(H)
-							temp = "This spell summons a glorious, flaming chariot that can move in space and through walls."
+							temp = "This spell summons a glorious, flaming chariot that can move in space and through walls.  It also has an extremely long cooldown."
 		else
 			if(href_list["temp"])
 				temp = null

@@ -20,6 +20,7 @@
 	var/inertia_dir = 0
 
 	var/can_spacemove = 0
+	var/ethereal = 0
 
 	var/keytype=null
 	var/obj/item/key/mykey
@@ -58,7 +59,6 @@
 			user << "Hold \the [W] in one of your hands while you drive \the [src]."
 		else
 			user << "You don't need a key."
-
 
 /obj/structure/stool/bed/chair/vehicle/relaymove(mob/user, direction)
 	if(user.stat || user.stunned || user.weakened || user.paralysis  || destroyed)
@@ -262,14 +262,14 @@
 		if(istype(Proj, /obj/item/projectile/energy/electrode))
 			if(prob(25))
 				unbuckle()
-				visible_message("<span class='warning'>The [src.name] absorbs the [Proj]")
+				visible_message("<span class='warning'>\The [src.name] absorbs the [Proj]")
 				if(!istype(buckled_mob, /mob/living/carbon/human))
 					return buckled_mob.bullet_act(Proj)
 				else
 					var/mob/living/carbon/human/H = buckled_mob
 					return H.electrocute_act(0, src, 1, 0)
 	if(!hitrider)
-		visible_message("<span class='warning'>[Proj] hits the pimpin' ride!</span>")
+		visible_message("<span class='warning'>[Proj] hits \the [nick]!</span>")
 		if(!Proj.nodamage && Proj.damage_type == BRUTE || Proj.damage_type == BURN)
 			health -= Proj.damage
 		HealthCheck()
