@@ -75,7 +75,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	icon_state = "sheet-plasteel"
 	item_state = "sheet-metal"
 	m_amt = 7500
-	throwforce = 15.0
+	throwforce = 10.0
 	flags = CONDUCT
 	origin_tech = "materials=2"
 

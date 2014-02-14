@@ -244,7 +244,7 @@
 	icon_state = "large"
 	w_class = 1.0
 	force = 5.0
-	throwforce = 15.0
+	throwforce = 10.0
 	item_state = "shard-glass"
 	g_amt = 3750
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
