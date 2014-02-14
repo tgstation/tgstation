@@ -68,7 +68,7 @@
 
 /datum/camerachunk/proc/update()
 
-	set background = 1
+	set background = BACKGROUND_ENABLED
 
 	var/list/newVisibleTurfs = list()
 

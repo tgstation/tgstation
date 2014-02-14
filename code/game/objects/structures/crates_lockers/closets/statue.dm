@@ -102,7 +102,7 @@
 	return
 
 /obj/structure/closet/statue/attack_animal(mob/living/simple_animal/user as mob)
-	if(user.wall_smash)
+	if(user.environment_smash)
 		for(var/mob/M in src)
 			shatter(M)
 

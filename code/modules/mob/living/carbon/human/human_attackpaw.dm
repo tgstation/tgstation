@@ -7,7 +7,7 @@
 			return
 
 		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
+			O.show_message(text("<span class='danger'>[M.name] bites []!</span>", src), 1)
 
 		var/damage = rand(1, 3)
 		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
@@ -17,7 +17,7 @@
 		for(var/datum/disease/D in M.viruses)
 			if(istype(D, /datum/disease/jungle_fever))
 				var/mob/living/carbon/human/H = src
-				src = null
-				src = H.monkeyize()
-				contract_disease(D,1,0)
+				if(src.stat != 2)
+					H.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
+					contract_disease(D,1,0)
 	return

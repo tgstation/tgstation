@@ -13,6 +13,7 @@
 	stun = 10
 	weaken = 10
 	stutter = 10
+	hitsound = "sparks"
 
 	on_hit(var/atom/target, var/blocked = 0)
 		if(!ismob(target) || blocked >= 2) //Fully blocked by mob or collided with dense object - burst into sparks!
@@ -52,12 +53,8 @@
 	damage = 20
 
 
-/obj/item/projectile/energy/neurotoxin
-	name = "neuro"
-	icon_state = "neurotoxin"
-	damage = 5
-	damage_type = TOX
-	weaken = 5
+
+
 
 
 

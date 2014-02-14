@@ -188,6 +188,9 @@
 	src.unset_machine()
 	src:cameraFollow = null
 
+/mob/living/silicon/pai/UnarmedAttack(var/atom/A)//Stops runtimes due to attack_animal being the default
+	return
+
 //Addition by Mord_Sith to define AI's network change ability
 /*
 /mob/living/silicon/pai/proc/pai_network_change()

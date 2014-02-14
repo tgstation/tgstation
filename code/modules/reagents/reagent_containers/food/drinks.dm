@@ -23,11 +23,11 @@
 		var/fillevel = gulp_size
 
 		if(!R.total_volume || !R)
-			user << "\red None of [src] left, oh no!"
+			user << "<span class='alert'> None of [src] left, oh no!</span>"
 			return 0
 
 		if(M == user)
-			M << "\blue You swallow a gulp of [src]."
+			M << "<span class='notice'>You swallow a gulp of [src].</span>"
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST)
 				spawn(5)

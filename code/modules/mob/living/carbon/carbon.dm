@@ -8,6 +8,11 @@
 		if((FAT in src.mutations) && src.m_intent == "run" && src.bodytemperature <= 360)
 			src.bodytemperature += 2
 
+/mob/living/carbon/movement_delay()
+	. = 0
+	if(legcuffed)
+		. += legcuffed.slowdown
+
 /mob/living/carbon/relaymove(var/mob/user, direction)
 	if(user in src.stomach_contents)
 		if(prob(40))
@@ -310,15 +315,16 @@
 
 
 /mob/living/carbon/clean_blood()
-	. = ..()
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if(H.gloves)
 			if(H.gloves.clean_blood())
 				H.update_inv_gloves(0)
 		else
+			..() // Clear the Blood_DNA list
 			if(H.bloody_hands)
 				H.bloody_hands = 0
+				H.bloody_hands_mob = null
 				H.update_inv_gloves(0)
 	update_icons()	//apply the now updated overlays to the mob
 
@@ -553,23 +559,7 @@ var/const/STEP = 2
 var/const/SLIDE = 4
 var/const/GALOSHES_DONT_HELP = 8
 /mob/living/carbon/slip(var/s_amount, var/w_amount, var/obj/O, var/lube)
-	if (m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
-		return 0
-	if(!lying)
-		stop_pulling()
-		if(lube&STEP)
-			step(src, src.dir)
-		if(lube&SLIDE)
-			for(var/i=1, i<5, i++)
-				spawn (i)
-					step(src, src.dir)
-			take_organ_damage(2)
-		if(O)
-			src << "<span class='notice'>You slipped on the [O.name]!</span>"
-		else
-			src << "<span class='notice'>You slipped!</span>"
-		playsound(loc, 'sound/misc/slip.ogg', 50, 1, -3)
-		Stun(s_amount)
-		Weaken(w_amount)
-		return 1
-	return 0 // no success. Used in clown pda and wet floors
+	loc.handle_slip(src, s_amount, w_amount, O, lube)
+
+/mob/living/carbon/fall(var/forced)
+    loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing

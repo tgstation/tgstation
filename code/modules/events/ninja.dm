@@ -100,8 +100,7 @@
 						Mind.objectives += O
 
 					if(2)	//steal
-						var/datum/objective/steal/O = new /datum/objective/steal()
-						O.set_target(pick(O.possible_items_special))
+						var/datum/objective/steal/special/O = new /datum/objective/steal/special()
 						O.owner = Mind
 						Mind.objectives += O
 
@@ -344,7 +343,7 @@ ________________________________________________________________________________
 
 /proc/create_space_ninja(spawn_loc)
 	var/mob/living/carbon/human/new_ninja = new(spawn_loc)
-
+	if(prob(50)) new_ninja.gender = "female"
 	var/datum/preferences/A = new()//Randomize appearance for the ninja.
 	A.real_name = "[pick(ninja_titles)] [pick(ninja_names)]"
 	A.copy_to(new_ninja)
@@ -1451,7 +1450,7 @@ ________________________________________________________________________________
 //=======//PROCESS PROCS//=======//
 
 /obj/item/clothing/suit/space/space_ninja/proc/ntick(mob/living/carbon/human/U = affecting)
-	set background = 1
+	set background = BACKGROUND_ENABLED
 
 	//Runs in the background while the suit is initialized.
 	spawn while(cell.charge>=0)
@@ -2075,7 +2074,7 @@ ________________________________________________________________________________
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_process()
-	set background = 1
+	set background = BACKGROUND_ENABLED
 
 	spawn while(hologram&&s_initialized&&AI)//Suit on and there is an AI present.
 		if(!s_initialized||get_dist(affecting,hologram.loc)>3)//Once suit is de-initialized or hologram reaches out of bounds.
@@ -2207,7 +2206,7 @@ ________________________________________________________________________________
 		spawn(0)
 			anim(U.loc,U,'icons/mob/mob.dmi',,"cloak",,U.dir)
 		s_active=!s_active
-		U.update_icons()	//update their icons
+		U.alpha = 0
 		U << "\blue You are now invisible to normal detection."
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] vanishes into thin air!",1)
@@ -2219,7 +2218,7 @@ ________________________________________________________________________________
 		spawn(0)
 			anim(U.loc,U,'icons/mob/mob.dmi',,"uncloak",,U.dir)
 		s_active=!s_active
-		U.update_icons()	//update their icons
+		U.alpha = 255
 		U << "\blue You are now visible."
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] appears from thin air!",1)

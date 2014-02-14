@@ -30,7 +30,7 @@
 	var/WeedKillStr = 2
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='suicide'>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</span>"
 		return (TOXLOSS)
 
 /obj/item/weapon/pestspray // -- Skie
@@ -49,7 +49,7 @@
 	var/PestKillStr = 2
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='suicide'>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</span>"
 		return (TOXLOSS)
 
 /obj/item/weapon/minihoe // -- Numbers
@@ -64,6 +64,7 @@
 	w_class = 2.0
 	m_amt = 50
 	attack_verb = list("slashed", "sliced", "cut", "clawed")
+	hitsound = 'sound/weapons/bladeslice.ogg'
 
 // *************************************
 // Nutrient defines for hydroponics

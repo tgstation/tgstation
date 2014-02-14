@@ -13,6 +13,9 @@
 
 
 /obj/machinery/monkey_recycler/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if(default_unfasten_wrench(user, O))
+		return
+
 	if (src.stat != 0) //NOPOWER etc
 		return
 	if (istype(O, /obj/item/weapon/grab))

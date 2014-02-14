@@ -118,11 +118,11 @@
 		user.show_message(text("\red Done!"),1)
 		src.updateicon()
 		return
-	if(istype(W, /obj/item/weapon/cable_coil) && !bypassed)
+	if(istype(W, /obj/item/stack/cable_coil) && !bypassed)
 		if(src.locked)
 			user.show_message(text("\red You must remove the panel first!"),1)
 			return
-		var/obj/item/weapon/cable_coil/C = W
+		var/obj/item/stack/cable_coil/C = W
 		if(C.use(4))
 			user.show_message(text("\red You unravel some cable.."),1)
 		else

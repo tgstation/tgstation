@@ -58,13 +58,13 @@
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
-	equip_cooldown = 40
+	equip_cooldown = 20
 	name = "\improper MKIV ion heavy cannon"
 	icon_state = "mecha_ion"
 	energy_drain = 120
 	projectile = /obj/item/projectile/ion
 	fire_sound = 'sound/weapons/Laser.ogg'
-
+	construction_cost = list("silver" = 6000, "metal" = 20000, "uranium" = 2000)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
 	equip_cooldown = 30
@@ -198,10 +198,10 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
-	name = "\improper FNX-66 Carbine"
+	name = "\improper FNX-99 \"Hades\" Carbine"
 	icon_state = "mecha_carbine"
 	equip_cooldown = 5
-	projectile = /obj/item/projectile/bullet/incendiary
+	projectile = /obj/item/projectile/bullet/mechincendiary
 	projectiles = 24
 	projectile_energy_cost = 15
 
@@ -300,6 +300,7 @@
 	equip_cooldown = 60
 	var/missile_speed = 2
 	var/missile_range = 30
+	construction_cost = list("silver" = 8000, "metal" = 22000, "gold" = 6000)
 
 	action(target)
 		if(!action_checks(target)) return
@@ -369,7 +370,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar
 	name = "banana mortar"
 	icon_state = "mecha_bananamrtr"
-	projectile = /obj/item/weapon/bananapeel
+	projectile = /obj/item/weapon/grown/bananapeel
 	fire_sound = 'sound/items/bikehorn.ogg'
 	projectiles = 15
 	missile_speed = 1.5
@@ -387,7 +388,7 @@
 	action(target)
 		if(!action_checks(target)) return
 		set_ready_state(0)
-		var/obj/item/weapon/bananapeel/B = new projectile(chassis.loc)
+		var/obj/item/weapon/grown/bananapeel/B = new projectile(chassis.loc,60)
 		playsound(chassis, fire_sound, 60, 1)
 		B.throw_at(target, missile_range, missile_speed)
 		projectiles--

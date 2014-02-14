@@ -94,7 +94,7 @@
 		domutcheck(owner)
 
 	check_dna_integrity(owner)
-	return owner.dna
+	return
 
 /proc/check_dna_integrity(mob/living/carbon/character)
 	if(!(istype(character, /mob/living/carbon/human) || istype(character, /mob/living/carbon/monkey))) //Evict xenos from carbon 2012
@@ -331,7 +331,6 @@
 	density = 1
 	var/locked = 0
 	var/open = 0
-	var/mob/occupant = null
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 50
@@ -348,8 +347,8 @@
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/cable_coil(null, 1)
-	component_parts += new /obj/item/weapon/cable_coil(null, 1)
+	component_parts += new /obj/item/stack/cable_coil(null, 1)
+	component_parts += new /obj/item/stack/cable_coil(null, 1)
 	RefreshParts()
 
 
@@ -454,28 +453,14 @@
 
 /obj/machinery/dna_scannernew/attackby(obj/item/weapon/grab/G, mob/user)
 
-	if(istype(G, /obj/item/weapon/screwdriver))
-		if(occupant)
-			user << "<span class='notice'>The maintenance panel is locked.</span>"
-			return
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		panel_open = !panel_open
-		if(panel_open)
-			icon_state = "[icon_state]_maintenance"
-			user << "<span class='notice'>You open the maintenance panel of [src].</span>"
-		else
-			if(open)
-				icon_state = "[initial(icon_state)]_open"
-			else
-				icon_state = "[initial(icon_state)]"
-			user << "<span class='notice'>You close the maintenance panel of [src].</span>"
+	if(!occupant && default_deconstruction_screwdriver(user, "[initial(icon_state)]_open", "[initial(icon_state)]", G))
 		return
 
 	if(istype(G, /obj/item/weapon/crowbar))
 		if(panel_open)
 			for(var/obj/I in contents) // in case there is something in the scanner
 				I.loc = src.loc
-			default_deconstruction_crowbar()
+			default_deconstruction_crowbar(G)
 		return
 
 	if(!istype(G, /obj/item/weapon/grab) || !ismob(G.affecting))
@@ -935,7 +920,7 @@
 						if("pulsese")
 							var/len = length(viable_occupant.dna.struc_enzymes)
 							num = Wrap(num, 1, len+1)
-							num = randomize_radiation_accuracy(num, radduration, len)
+							num = randomize_radiation_accuracy(num, radduration + (connected.precision_coeff ** 2), len)
 
 							var/block = round((num-1)/DNA_BLOCK_SIZE)+1
 							var/subblock = num - block*DNA_BLOCK_SIZE

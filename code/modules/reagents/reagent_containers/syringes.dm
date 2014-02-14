@@ -14,6 +14,8 @@
 	possible_transfer_amounts = null	//list(5, 10, 15)
 	volume = 15
 	var/mode = SYRINGE_DRAW
+	g_amt = 20
+	m_amt = 10
 
 	on_reagent_change()
 		update_icon()
@@ -190,7 +192,7 @@
 				if(10)	filling.icon_state = "syringe10"
 				if(15)	filling.icon_state = "syringe15"
 
-			filling.icon += mix_color_from_reagents(reagents.reagent_list)
+			filling.color = mix_color_from_reagents(reagents.reagent_list)
 			overlays += filling
 
 

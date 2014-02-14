@@ -56,16 +56,37 @@ Note: Must be placed west/left of and R&D console to function.
 		T += M.rating
 	efficiency_coeff = T-1
 
+/obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, var/M)
+	switch(M)
+		if("$metal")
+			return (m_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+		if("$glass")
+			return (g_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+		if("$gold")
+			return (gold_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+		if("$silver")
+			return (silver_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+		if("$plasma")
+			return (plasma_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+		if("$uranium")
+			return (uranium_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+		if("$diamond")
+			return (diamond_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+		if("$clown")
+			return (clown_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+		else
+			return (reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff)) != 0) ? 1 : 0
+
+
 /obj/machinery/r_n_d/protolathe/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (shocked)
 		shock(user,50)
 	if (O.is_open_container())
 		return 1
-	if (istype(O, /obj/item/weapon/screwdriver))
+	if (default_deconstruction_screwdriver(user, "protolathe_t", "protolathe", O))
 		if(linked_console)
 			linked_console.linked_lathe = null
 			linked_console = null
-		default_deconstruction_screwdriver(user, "protolathe_t", "protolathe")
 		return
 	if (panel_open)
 		if(istype(O, /obj/item/weapon/crowbar))
@@ -96,7 +117,7 @@ Note: Must be placed west/left of and R&D console to function.
 			if(adamantine_amount >= 2000)
 				var/obj/item/stack/sheet/mineral/adamantine/G = new /obj/item/stack/sheet/mineral/adamantine(src.loc)
 				G.amount = round(adamantine_amount / G.perunit)
-			default_deconstruction_crowbar()
+			default_deconstruction_crowbar(O)
 			return 1
 		else
 			user << "\red You can't load the [src.name] while it's opened."

@@ -71,6 +71,7 @@
 		return M.click_action(A,src)
 
 	if(restrained())
+		next_move = world.time + 10   //Doing shit in cuffs shall be vey slow
 		RestrainedClickOn(A)
 		return
 
@@ -79,6 +80,7 @@
 		return
 
 	var/obj/item/W = get_active_hand()
+
 
 	if(W == A)
 		next_move = world.time + 6
@@ -93,8 +95,7 @@
 		return
 
 	// operate two levels deep here (item in backpack in src; NOT item in box in backpack in src)
-	if(A == loc || (A in loc) || (A in contents) || (A.loc in contents))
-
+	if(!isturf(A) && A == loc || (A in contents) || (A.loc in contents))
 		// faster access to objects already on you
 		if(A in contents)
 			next_move = world.time + 6 // on your person
@@ -119,12 +120,12 @@
 	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
 	if(isturf(A) || isturf(A.loc) || (A.loc && isturf(A.loc.loc)))
 		next_move = world.time + 10
-
 		if(A.Adjacent(src)) // see adjacent.dm
 			if(W)
 				if(W.flags&USEDELAY)
 					next_move += 5
-
+				if(W.preattack(A,src,1,params))	//Weapon attack override,return 1 to exit
+					return
 				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
 				var/resolved = A.attackby(W,src)
 				if(!resolved && A && W)
@@ -134,6 +135,8 @@
 			return
 		else // non-adjacent click
 			if(W)
+				if(W.preattack(A,src,0,params))	//Weapon attack override,return 1 to exit
+					return
 				W.afterattack(A,src,0,params) // 0: not Adjacent
 			else
 				RangedAttack(A, params)
@@ -294,7 +297,7 @@
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(var/atom/A)
-	if( buckled || !A || !x || !y || !A.x || !A.y ) return
+	if( buckled || stat != CONSCIOUS || !A || !x || !y || !A.x || !A.y ) return
 	var/dx = A.x - x
 	var/dy = A.y - y
 	if(!dx && !dy) // Wall items are graphically shifted but on the floor

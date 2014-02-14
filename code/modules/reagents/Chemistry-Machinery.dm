@@ -15,6 +15,7 @@
 	var/amount = 30
 	var/beaker = null
 	var/recharged = 0
+	var/recharge_delay = 15  //Time it game ticks between recharges
 	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine",
 	"sodium","aluminium","silicon","phosphorus","sulfur","chlorine","potassium","iron",
 	"copper","mercury","radium","water","ethanol","sugar","sacid")
@@ -40,7 +41,7 @@
 
 	if(recharged < 0)
 		recharge()
-		recharged = 15
+		recharged = recharge_delay
 	else
 		recharged -= 1
 
@@ -77,7 +78,7 @@
   *
   * @return nothing
   */
-/obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main")
+/obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(stat & (BROKEN)) return
 	if(user.stat || user.restrained()) return
 
@@ -110,17 +111,16 @@
 			chemicals.Add(list(list("title" = temp.name, "id" = temp.id, "commands" = list("dispense" = temp.id)))) // list in a list because Byond merges the first list...
 	data["chemicals"] = chemicals
 
-	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, ui_key)
+	// update the ui if it exists, returns null if no ui is passed/found
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)
-		// the ui does not exist, so we'll create a new one
-		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "Chem Dispenser 5000", 370, 590)
-		// When the UI is first opened this is the data it will use
+		// the ui does not exist, so we'll create a new() one
+        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
+		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "Chem Dispenser 5000", 390, 610)
+		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
+		// open the new ui window
 		ui.open()
-	else
-		// The UI is already open so push the new data to it
-		ui.push_data(data)
-		return
 
 /obj/machinery/chem_dispenser/Topic(href, href_list)
 	if(stat & (BROKEN))
@@ -181,6 +181,64 @@
 	ui_interact(user)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/obj/machinery/chem_dispenser/constructable
+	name = "portable chem dispenser"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "minidispenser"
+	energy = 5
+	max_energy = 5
+	amount = 5
+	recharge_delay = 30
+	dispensable_reagents = list()
+	var/list/special_reagents = list(list("hydrogen", "oxygen", "silicon", "phosphorus", "sulfur", "carbon", "nitrogen"),
+						 		list("lithium", "sugar", "sacid", "water", "copper", "mercury", "sodium"),
+								list("ethanol", "chlorine", "potassium", "aluminium", "radium", "fluorine", "iron"))
+
+/obj/machinery/chem_dispenser/constructable/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/chem_dispenser(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+	component_parts += new /obj/item/weapon/cell/high(null)
+	RefreshParts()
+
+/obj/machinery/chem_dispenser/constructable/RefreshParts()
+	var/time = 0
+	var/temp_energy = 0
+	var/i
+	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+		temp_energy += M.rating
+	temp_energy--
+	max_energy = temp_energy * 5  //max energy = (bin1.rating + bin2.rating - 1) * 5, 5 on lowest 25 on highest
+	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+		time += C.rating
+	for(var/obj/item/weapon/cell/P in component_parts)
+		time += round(P.maxcharge, 10000) / 10000
+	recharge_delay /= time/2         //delay between recharges, double the usual time on lowest 50% less than usual on highest
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		for(i=1, i<=M.rating, i++)
+			dispensable_reagents |= sortList(special_reagents[i])
+
+/obj/machinery/chem_dispenser/constructable/attackby(var/obj/item/I, var/mob/user)
+	..()
+	if(default_deconstruction_screwdriver(user, "minidispenser-o", "minidispenser", I))
+		return
+
+	if(panel_open)
+		if(istype(I, /obj/item/weapon/crowbar))
+			if(beaker)
+				var/obj/item/weapon/reagent_containers/glass/B = beaker
+				B.loc = loc
+				beaker = null
+			default_deconstruction_crowbar(I)
+			return 1
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/chem_master
@@ -227,6 +285,9 @@
 			stat |= NOPOWER
 
 /obj/machinery/chem_master/attackby(var/obj/item/weapon/B as obj, var/mob/user as mob)
+
+	if(default_unfasten_wrench(user, B))
+		return
 
 	if(istype(B, /obj/item/weapon/reagent_containers/glass))
 
@@ -457,7 +518,7 @@
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
-	circuit = "/obj/item/weapon/circuitboard/pandemic"
+	circuit = /obj/item/weapon/circuitboard/pandemic
 	use_power = 1
 	idle_power_usage = 20
 	var/temp_html = ""
@@ -750,6 +811,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		use_power = 1
 		idle_power_usage = 5
 		active_power_usage = 100
+		pass_flags = PASSTABLE
 		var/inuse = 0
 		var/obj/item/weapon/reagent_containers/beaker = null
 		var/limit = 10
@@ -777,6 +839,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				/obj/item/toy/crayon/green = list("greencrayonpowder" = 10),
 				/obj/item/toy/crayon/blue = list("bluecrayonpowder" = 10),
 				/obj/item/toy/crayon/purple = list("purplecrayonpowder" = 10),
+				/obj/item/toy/crayon/mime = list("invisiblecrayonpowder" = 50),
 
 				//Blender Stuff
 				/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = list("soymilk" = 0),
@@ -784,6 +847,12 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				/obj/item/weapon/reagent_containers/food/snacks/grown/corn = list("cornoil" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/wheat = list("flour" = -5),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
+
+				//Grinder stuff, but only if dry
+				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee_arabica = list("coffeepowder" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee_robusta = list("coffeepowder" = 0, "hyperzine" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/tea_aspera = list("teapowder" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/tea_astra = list("teapowder" = 0, "kelotane" = 0),
 
 
 
@@ -807,6 +876,14 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				/obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries = list("poisonberryjuice" = 0),
 		)
 
+		var/list/dried_items = list(
+
+				//Grinder stuff, but only if dry
+				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee_arabica = list("coffeepowder" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee_robusta = list("coffeepowder" = 0, "hyperzine" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/tea_aspera = list("teapowder" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/tea_astra = list("teapowder" = 0, "kelotane" = 0),
+		)
 
 		var/list/holdingitems = list()
 
@@ -822,6 +899,8 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 
 /obj/machinery/reagentgrinder/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
+		if(default_unfasten_wrench(user, O))
+				return
 
 		if (istype(O,/obj/item/weapon/reagent_containers/glass) || \
 				istype(O,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass) || \
@@ -836,6 +915,13 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 						update_icon()
 						src.updateUsrDialog()
 						return 0
+
+		if(is_type_in_list(O, dried_items))
+				if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
+						var/obj/item/weapon/reagent_containers/food/snacks/grown/G = O
+						if(!G.dry)
+								user << "<span class='notice'>You must dry that first!</span>"
+								return 1
 
 		if(holdingitems && holdingitems.len >= limit)
 				usr << "The machine cannot hold anymore items."

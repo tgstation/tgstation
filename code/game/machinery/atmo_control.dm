@@ -35,7 +35,7 @@ obj/machinery/air_sensor
 			var/datum/gas_mixture/air_sample = return_air()
 
 			if(output&1)
-				signal.data["pressure"] = num2text(round(air_sample.return_pressure(),0.1),)
+				signal.data["pressure"] = num2text(round(air_sample.return_pressure(),0.1))
 			if(output&2)
 				signal.data["temperature"] = round(air_sample.temperature,0.1)
 
@@ -125,6 +125,8 @@ obj/machinery/computer/general_air_control
 				if(data)
 					if(data["pressure"])
 						sensor_part += "   <B>Pressure:</B> [data["pressure"]] kPa<BR>"
+					else
+						sensor_part += "   <B>Pressure:</B> No pressure detected<BR>"
 					if(data["temperature"])
 						sensor_part += "   <B>Temperature:</B> [data["temperature"]] K<BR>"
 					if(data["oxygen"]||data["toxins"]||data["nitrogen"]||data["carbon_dioxide"])
