@@ -7,7 +7,7 @@ var/list/GPS_list = list()
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
-	origin_tech = "programming=2;engineering=2"
+	origin_tech = "bluespace=2;magnets=2"
 	var/gpstag = "COM0"
 	var/emped = 0
 

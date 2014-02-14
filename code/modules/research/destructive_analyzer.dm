@@ -92,9 +92,9 @@ Note: Must be placed within 3 tiles of the R&D Console
 		if (temp_tech.len == 0)
 			user << "\red You cannot deconstruct this item!"
 			return
-		if(O.reliability < 90 && O.crit_fail == 0)
+		/*if(O.reliability < 90 && O.crit_fail == 0)
 			usr << "\red Item is neither reliable enough or broken enough to learn from."
-			return
+			return*/
 		busy = 1
 		loaded_item = O
 		user.drop_item()
