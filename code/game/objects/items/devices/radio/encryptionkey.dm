@@ -60,7 +60,7 @@
 	name = "medical research radio encryption key"
 	desc = "An encryption key for a radio headset.  To access the medical channel, use :m. For science, use :n."
 	icon_state = "medsci_cypherkey"
-	channels = list("Science" = 1, "Medical" = 1)
+	channels = list("Medical" = 1, "Science" = 1)
 
 /obj/item/device/encryptionkey/headset_com
 	name = "command radio encryption key"
@@ -109,6 +109,12 @@
 	desc = "An encryption key for a radio headset.  To access the supply channel, use :u."
 	icon_state = "cargo_cypherkey"
 	channels = list("Supply" = 1)
+
+/obj/item/device/encryptionkey/headset_mine
+	name = "mining radio encryption key"
+	desc = "An encryption key for a radio headset.  To access the supply channel, use :u. For science, use :n."
+	icon_state = "mine_cypherkey"
+	channels = list("Supply" = 1, "Science" = 1)
 
 /obj/item/device/encryptionkey/headset_service
 	name = "service radio encryption key"
