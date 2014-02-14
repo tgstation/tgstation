@@ -1401,7 +1401,7 @@
 			if(!masked && istype(glasses, /obj/item/clothing/glasses/welding) )
 				var/obj/item/clothing/glasses/welding/O = glasses
 				if(!O.up && tinted_weldhelh)
-					client.screen += global_hud.darkMask
+					client.screen += O.getMask()
 
 			if(machine)
 				if(!machine.check_eye(src))		reset_view(null)
