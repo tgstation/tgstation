@@ -178,12 +178,12 @@ obj/machinery/embedded_controller/radio/access_controller
 		return {"
 		<ul>
 			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[1449]">Reset</a>)</li>
-			<li><b>ID Tag:</b> <a href="?src=\ref[src];set_tag=id_tag">[id_tag]</a></li>
+			<li>[format_tag("ID Tag","id_tag")]</li>
 		</ul>
 		<b>Doors:</b>
 		<ul>
-			<li><b>Exterior:</b> <a href="?src=\ref[src];set_tag=exterior_door_tag">[exterior_door_tag]</a></li>
-			<li><b>Interior:</b> <a href="?src=\ref[src];set_tag=interior_door_tag">[interior_door_tag]</a></li>
+			<li>[format_tag("Exterior","exterior_door_tag")]</a></li>
+			<li>[format_tag("Interior","interior_door_tag")]</a></li>
 		</ul>"}
 
 	Topic(href, href_list)
