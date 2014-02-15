@@ -448,12 +448,17 @@ Please contact me on #coderbus IRC. ~Carnie x
 			head.screen_loc = ui_head		//TODO
 			client.screen += head
 
+		if((head.flags_inv&HIDEMASK)||(head.flags&HEADCOVERSMOUTH))
+			update_inv_wear_mask()
+
 		var/image/standing = image("icon"='icons/mob/head.dmi', "icon_state"="[head.icon_state]", "layer"=-HEAD_LAYER)
 
 		overlays_standing[HEAD_LAYER]	= standing
 
 		if(head.blood_DNA)
 			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="helmetblood")
+	else
+		update_inv_wear_mask()
 
 	apply_overlay(HEAD_LAYER)
 
@@ -515,6 +520,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 		if(client && hud_used && hud_used.hud_shown && hud_used.inventory_shown)
 			wear_mask.screen_loc = ui_mask	//TODO
 			client.screen += wear_mask
+
+		if(head && ((head.flags_inv&HIDEMASK)||(head.flags&HEADCOVERSMOUTH)))
+			return
 
 		var/image/standing	= image("icon"='icons/mob/mask.dmi', "icon_state"="[wear_mask.icon_state]", "layer"=-FACEMASK_LAYER)
 		overlays_standing[FACEMASK_LAYER]	= standing
