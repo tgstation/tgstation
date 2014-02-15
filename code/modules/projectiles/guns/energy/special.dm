@@ -185,3 +185,30 @@ obj/item/weapon/gun/energy/staff/focus
 			charge_cost = 100
 			user << "\red The [src.name] will now strike only a single person."
 			projectile_type = "/obj/item/projectile/forcebolt"
+
+/obj/item/weapon/gun/energy/kinetic_accelerator
+	name = "proto-kinetic accelerator"
+	desc = "According to Nanotrasen accounting, this is mining equipment. It's been modified for extreme power output to crush rocks, but often serves as a miner's first defense against hostile alien life; it's not very powerful unless used in a low pressure environment."
+	icon_state = "kineticgun"
+	item_state = "kineticgun"
+	projectile_type = "/obj/item/projectile/bullet"
+	cell_type = "/obj/item/weapon/cell/crap"
+	var/overheat = 0
+	var/recent_reload = 1
+/*
+/obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
+	overheat = 1
+	spawn(20)
+		overheat = 0
+		recent_reload = 0
+	..()
+*/
+/obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(var/mob/living/user/L)
+	if(overheat || recent_reload)
+		return
+	power_supply.give(500)
+	playsound(src.loc, 'sound/weapons/shotgunpump.ogg', 60, 1)
+	recent_reload = 1
+	update_icon()
+	return
+

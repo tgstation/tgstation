@@ -67,6 +67,7 @@
 	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "id"
 	item_state = "card-id"
+	var/mining_points = 0 //For redeeming at mining equipment lockers
 	var/access = list()
 	var/registered_name = "Unknown" // The name registered_name on the card
 	slot_flags = SLOT_ID
@@ -91,7 +92,8 @@
 /obj/item/weapon/card/id/attack_self(mob/user as mob)
 	for(var/mob/O in viewers(user, null))
 		O.show_message(text("[] shows you: \icon[] []: assignment: []", user, src, src.name, src.assignment), 1)
-
+	if(mining_points)
+		user << "There's [mining_points] mining equipment redemption points loaded onto this card."
 	src.add_fingerprint(user)
 	return
 

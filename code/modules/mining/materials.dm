@@ -58,6 +58,7 @@
 	var/oretype=null
 	var/sheettype=null
 	var/cointype=null
+	var/value=0
 
 /datum/material/New()
 	if(processed_name=="")
@@ -66,6 +67,7 @@
 /datum/material/iron
 	name="Iron"
 	id="iron"
+	value=1
 	cc_per_sheet=CC_PER_SHEET_METAL
 	oretype=/obj/item/weapon/ore/iron
 	sheettype=/obj/item/stack/sheet/metal
@@ -75,6 +77,7 @@
 	name="Sand"
 	processed_name="Glass"
 	id="glass"
+	value=1
 	cc_per_sheet=CC_PER_SHEET_GLASS
 	oretype=/obj/item/weapon/ore/glass
 	sheettype=/obj/item/stack/sheet/glass
@@ -82,6 +85,7 @@
 /datum/material/diamond
 	name="Diamond"
 	id="diamond"
+	value=40
 	oretype=/obj/item/weapon/ore/diamond
 	sheettype=/obj/item/stack/sheet/mineral/diamond
 	cointype=/obj/item/weapon/coin/diamond
@@ -89,6 +93,7 @@
 /datum/material/plasma
 	name="Plasma"
 	id="plasma"
+	value=40
 	oretype=/obj/item/weapon/ore/plasma
 	sheettype=/obj/item/stack/sheet/mineral/plasma
 	cointype=/obj/item/weapon/coin/plasma
@@ -96,6 +101,7 @@
 /datum/material/gold
 	name="Gold"
 	id="gold"
+	value=20
 	oretype=/obj/item/weapon/ore/gold
 	sheettype=/obj/item/stack/sheet/mineral/gold
 	cointype=/obj/item/weapon/coin/gold
@@ -103,6 +109,7 @@
 /datum/material/silver
 	name="Silver"
 	id="silver"
+	value=20
 	oretype=/obj/item/weapon/ore/silver
 	sheettype=/obj/item/stack/sheet/mineral/silver
 	cointype=/obj/item/weapon/coin/silver
@@ -110,6 +117,7 @@
 /datum/material/uranium
 	name="Uranium"
 	id="uranium"
+	value=20
 	oretype=/obj/item/weapon/ore/uranium
 	sheettype=/obj/item/stack/sheet/mineral/uranium
 	cointype=/obj/item/weapon/coin/uranium
@@ -117,6 +125,7 @@
 /datum/material/clown
 	name="Bananium"
 	id="clown"
+	value=100
 	oretype=/obj/item/weapon/ore/clown
 	sheettype=/obj/item/stack/sheet/mineral/clown
 	cointype=/obj/item/weapon/coin/clown
@@ -124,6 +133,7 @@
 /datum/material/phazon
 	name="Phazon"
 	id="phazon"
+	value=200
 	oretype=/obj/item/weapon/ore/phazon
 	sheettype=/obj/item/stack/sheet/mineral/phazon
 	cointype=/obj/item/weapon/coin/phazon
@@ -131,6 +141,7 @@
 /datum/material/plastic
 	name="Plastic"
 	id="plastic"
+	value=1
 	oretype=null
 	sheettype=/obj/item/stack/sheet/mineral/plastic
 	cointype=null

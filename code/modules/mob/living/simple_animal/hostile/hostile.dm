@@ -162,7 +162,7 @@
 	LostTarget()
 
 /mob/living/simple_animal/hostile/proc/Goto(var/target, var/delay, var/minimum_distance)
-        walk_to(src, target, minimum_distance, delay)
+	walk_to(src, target, minimum_distance, delay)
 
 /mob/living/simple_animal/hostile/adjustBruteLoss(var/damage)
 	..(damage)
@@ -270,9 +270,11 @@
 		EscapeConfinement()
 		for(var/dir in cardinal)
 			var/turf/T = get_step(src, dir)
-			if(istype(T, /turf/simulated/wall))
+			if(istype(T, /turf/simulated/wall) && T.Adjacent(src))
 				T.attack_animal(src)
 			for(var/atom/A in T)
+				if(!A.Adjacent(src))
+					continue
 				if(istype(A, /obj/structure/window) || istype(A, /obj/structure/closet) || istype(A, /obj/structure/table) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/rack))
 					A.attack_animal(src)
 	return

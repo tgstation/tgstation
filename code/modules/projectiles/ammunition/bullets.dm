@@ -116,3 +116,11 @@
 	caliber = "a762"
 	projectile_type = "/obj/item/projectile/bullet"
 	w_type = RECYK_METAL
+
+
+/obj/item/ammo_casing/energy/kinetic
+	projectile_type = /obj/item/projectile/bullet
+	//select_name = "kinetic"
+	//e_cost = 500
+	//fire_sound = 'sound/weapons/Gunshot4.ogg'
+	w_type = RECYK_METAL
