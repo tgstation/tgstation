@@ -339,6 +339,8 @@
 			user << "<span class='notice'>You try to attach the end of the plastic sword to... itself. You're not very smart, are you?</span>"
 			if(ishuman(user))
 				user.adjustBrainLoss(10)
+		else if((W.flags & NODROP) || (flags & NODROP))
+			user << "<span class='notice'>\the [flags & NODROP ? src : W] is stuck to your hand, you can't attach it to \the [flags & NODROP ? W : src]!</span>"
 		else
 			user << "<span class='notice'>You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool.</span>"
 			var/obj/item/weapon/twohanded/dualsaber/toy/newSaber = new /obj/item/weapon/twohanded/dualsaber/toy(user.loc)
@@ -653,8 +655,10 @@ obj/item/toy/cards/deck/attackby(obj/item/toy/cards/singlecard/C, mob/living/use
 	..()
 	if(istype(C))
 		if(C.parentdeck == src)
+			if(!user.unEquip(C))
+				user << "<span class='notice'>The card is stuck to your hand, you can't add it to the deck!</span>"
+				return
 			src.cards += C.cardname
-			user.unEquip(C)
 			user.visible_message("<span class='notice'>[user] adds a card to the bottom of the deck.</span>","<span class='notice'>You add the card to the bottom of the deck.</span>")
 			del(C)
 		else

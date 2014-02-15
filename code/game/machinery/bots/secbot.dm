@@ -706,7 +706,7 @@ Auto Patrol: []"},
 		var/obj/item/weapon/secbot_assembly/A = new /obj/item/weapon/secbot_assembly
 		user.put_in_hands(A)
 		user << "<span class='notice'>You add the signaler to the helmet.</span>"
-		user.unEquip(src)
+		user.unEquip(src, 1)
 		del(src)
 	else
 		return

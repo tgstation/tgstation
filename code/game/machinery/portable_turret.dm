@@ -701,13 +701,13 @@
 				if(isrobot(user))
 					return
 				var/obj/item/weapon/gun/energy/E = I //typecasts the item to an energy gun
+				if(!user.unEquip(I))
+					user << "<span class='notice'>\the [I] is stuck to your hand, you cannot put it in \the [src]</span>"
+					return
 				installation = I.type //installation becomes I.type
 				gun_charge = E.power_supply.charge //the gun's charge is stored in gun_charge
 				user << "<span class='notice'>You add [I] to the turret.</span>"
 				build_step = 4
-				if(!user.unEquip(I))
-					user << "<span class='notice'>\the [I] is stuck to your hand, you cannot put it in \the [src]</span>"
-					return
 				del(I) //delete the gun :(
 				return
 
@@ -720,10 +720,10 @@
 		if(4)
 			if(isprox(I))
 				build_step = 5
-				user << "<span class='notice'>You add the prox sensor to the turret.</span>"
 				if(!user.unEquip(I))
 					user << "<span class='notice'>\the [I] is stuck to your hand, you cannot put it in \the [src]</span>"
 					return
+				user << "<span class='notice'>You add the prox sensor to the turret.</span>"
 				del(I)
 				return
 
@@ -746,7 +746,7 @@
 					build_step = 7
 					M.amount -= 2
 					if(M.amount <= 0)
-						user.unEquip(M)
+						user.unEquip(M, 1) //If we don't force-unequip, bugs happen because the item was deleted without updating the neccesary stuffs.
 						del(M)
 				else
 					user << "<span class='warning'>You need two sheets of metal for that.</span>"
