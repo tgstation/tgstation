@@ -128,6 +128,7 @@
 	if(module)
 		return
 	var/mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
+	var/animation_length=0
 	if(module)
 		return
 	switch(mod)
@@ -145,11 +146,20 @@
 			hands.icon_state = "service"
 			var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Bro", "Butler", "Kent", "Rich")
 			switch(icontype)
-				if("Waitress")	icon_state = "Service"
-				if("Kent")		icon_state = "toiletbot"
-				if("Bro")		icon_state = "Brobot"
-				if("Rich")		icon_state = "maximillion"
-				else				icon_state = "Service2"
+				if("Waitress")
+					icon_state = "service_female"
+					animation_length=45
+				if("Kent")
+					icon_state = "toiletbot"
+				if("Bro")
+					icon_state = "brobot"
+					animation_length=54
+				if("Rich")
+					icon_state = "maximillion"
+					animation_length=60
+				else
+					icon_state = "service_male"
+					animation_length=43
 			modtype = "Butler"
 			feedback_inc("cyborg_service",1)
 
@@ -157,7 +167,8 @@
 			updatename(mod)
 			module = new /obj/item/weapon/robot_module/miner(src)
 			hands.icon_state = "miner"
-			icon_state = "Miner"
+			icon_state = "minerborg"
+			animation_length = 30
 			modtype = "Miner"
 			feedback_inc("cyborg_miner",1)
 
@@ -165,7 +176,8 @@
 			updatename(mod)
 			module = new /obj/item/weapon/robot_module/medical(src)
 			hands.icon_state = "medical"
-			icon_state = "surgeon"
+			icon_state = "mediborg"
+			animation_length = 35
 			modtype = "Med"
 			status_flags &= ~CANPUSH
 			feedback_inc("cyborg_medical",1)
@@ -174,7 +186,8 @@
 			updatename(mod)
 			module = new /obj/item/weapon/robot_module/security(src)
 			hands.icon_state = "security"
-			icon_state = "bloodhound"
+			icon_state = "secborg"
+			animation_length = 28
 			modtype = "Sec"
 			//speed = -1 Secborgs have nerfed tasers now, so the speed boost is not necessary
 			status_flags &= ~CANPUSH
@@ -184,7 +197,8 @@
 			updatename(mod)
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			hands.icon_state = "engineer"
-			icon_state = "landmate"
+			icon_state = "engiborg"
+			animation_length = 45
 			modtype = "Eng"
 			feedback_inc("cyborg_engineering",1)
 
@@ -192,12 +206,44 @@
 			updatename(mod)
 			module = new /obj/item/weapon/robot_module/janitor(src)
 			hands.icon_state = "janitor"
-			icon_state = "mopgearrex"
+			icon_state = "janiborg"
+			animation_length = 22
 			modtype = "Jan"
 			feedback_inc("cyborg_janitor",1)
 
 	overlays -= "eyes" //Takes off the eyes that it started with
+	transform_animation(animation_length)
 	updateicon()
+
+/mob/living/silicon/robot/proc/transform_animation(animation_length)
+	if(!animation_length)
+		return
+	var/mobloc = get_turf(src.loc)
+	var/obj/effect/dummy/cyborg_holder/holder = new /obj/effect/dummy/cyborg_holder(mobloc)
+	var/atom/movable/overlay/animation = new /atom/movable/overlay(mobloc)
+	src.dir = SOUTH
+	animation.name = name
+	animation.density = 1
+	animation.anchored = 1
+	animation.icon = 'icons/mob/robot_transformations.dmi'
+	animation.layer = 5
+	animation.master = holder
+	src.loc = holder
+	notransform = 1
+	flick(icon_state,animation)
+	sleep(animation_length+1)
+	notransform = 0
+	src.loc=holder.loc
+	del(holder)
+	del(animation)
+
+/obj/effect/dummy/cyborg_holder
+	name = "cyborg"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "nothing"
+	density = 1
+	anchored = 1
+
 
 /mob/living/silicon/robot/proc/updatename(var/prefix as text)
 
@@ -765,18 +811,18 @@
 		if(icon_state == "toiletbot")
 			overlays.Cut()
 			overlays += "eyes-toiletbot"
-		if(icon_state == "bloodhound")
+		if(icon_state == "secborg")
 			overlays.Cut()
-			overlays += "eyes-bloodhound"
-		if(icon_state =="landmate")
+			overlays += "eyes-secborg"
+		if(icon_state =="engiborg")
 			overlays.Cut()
-			overlays += "eyes-landmate"
-		if(icon_state =="mopgearrex")
+			overlays += "eyes-engiborg"
+		if(icon_state =="janiborg")
 			overlays.Cut()
-			overlays += "eyes-mopgearrex"
-		if(icon_state =="Miner" || icon_state =="Miner+j")
+			overlays += "eyes-janiborg"
+		if(icon_state =="minerborg" || icon_state =="Miner+j")
 			overlays.Cut()
-			overlays += "eyes-Miner"
+			overlays += "eyes-minerborg"
 		if(icon_state =="syndie_bloodhound")
 			overlays.Cut()
 			overlays+= "eyes-syndie_bloodhound"
