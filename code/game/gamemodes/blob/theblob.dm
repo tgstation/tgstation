@@ -26,19 +26,36 @@
 /obj/effect/blob/proc/CheckSurroundings()
 	blobstatus = 0
 	var/turf/T = get_turf(src)
+	var/list/nearby = orange(7, T)
 
-	for(var/obj/effect/blob/node/blob in orange(5, T))
-		blobstatus |= BLOB_NODE_NEARBY
-		break
-	for(var/obj/effect/blob/core/blob in orange(5, T))
-		blobstatus |= BLOB_CORE_NEARBY
-		break
-	for(var/obj/effect/blob/resource/blob in orange(4, T))
-		blobstatus |= BLOB_RESOURCE_NEARBY
-		break
-	for(var/obj/effect/blob/factory/blob in orange(7, T))
-		blobstatus |= BLOB_FACTORY_NEARBY
-		break
+	for(var/obj/effect/blob/node/blob in nearby)
+		if(get_dist(blob,src) <= 4)
+			blobstatus |= BLOB_NODE_NEARBY
+			blobstatus |= USEFUL_PLACEMENT
+			break
+		else if(get_dist(blob,src) <= 5)
+			blobstatus |= BLOB_NODE_NEARBY
+			break
+
+	for(var/obj/effect/blob/core/blob in nearby)
+		if(get_dist(blob,src) <= 4)
+			blobstatus |= BLOB_CORE_NEARBY
+			blobstatus |= USEFUL_PLACEMENT
+			break
+		else if(get_dist(blob,src) <= 5)
+			blobstatus |= BLOB_CORE_NEARBY
+			break
+
+	for(var/obj/effect/blob/resource/blob in nearby)
+		if(get_dist(blob,src) <= 4)
+			blobstatus |= BLOB_RESOURCE_NEARBY
+			break
+
+	for(var/obj/effect/blob/factory/blob in nearby)
+		if(get_dist(blob,src) <= 7)
+			blobstatus |= BLOB_FACTORY_NEARBY
+			break
+
 	return
 
 /obj/effect/blob/Del()

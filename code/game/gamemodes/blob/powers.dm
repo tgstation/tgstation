@@ -87,7 +87,7 @@
 		src << "There is a resource blob nearby, move more than 4 tiles away from it!"
 		return
 
-	if(!(B.blobstatus & BLOB_NODE_NEARBY) && !(B.blobstatus & BLOB_CORE_NEARBY))
+	if(!(B.blobstatus & USEFUL_PLACEMENT))
 		src << "You are too far from the core or a node for this to have an effect here!"
 		return
 
@@ -163,7 +163,7 @@
 		src << "There is a factory blob nearby, move more than 7 tiles away from it!"
 		return
 
-	if(!(B.blobstatus & BLOB_NODE_NEARBY) && !(B.blobstatus & BLOB_CORE_NEARBY))
+	if(!(B.blobstatus & USEFUL_PLACEMENT))
 		src << "You are too far from the core or a node for this to have an effect here!"
 		return
 
