@@ -85,7 +85,8 @@ var/const/MAX_ACTIVE_TIME = 400
 	return 0
 
 /obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed)
-	..()
+	if(!..())
+		return
 	if(stat == CONSCIOUS)
 		icon_state = "[initial(icon_state)]_thrown"
 		spawn(15)

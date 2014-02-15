@@ -674,9 +674,11 @@ obj/item/toy/cards/deck/attackby(obj/item/toy/cards/singlecard/C, mob/living/use
 obj/item/toy/cards/deck/attackby(obj/item/toy/cards/cardhand/C, mob/living/user)
 	..()
 	if(istype(C))
-		if(C.parentdeck == src)
+		if(C.parentdeck == src)		
+			if(!user.unEquip(C))
+				user << "<span class='notice'>The hand of cards is stuck to your hand, you can't add it to the deck!</span>"
+				return
 			src.cards += C.currenthand
-			user.unEquip(C)
 			user.visible_message("<span class='notice'>[user] puts their hand of cards in the deck.</span>", "<span class='notice'>You put the hand of cards in the deck.</span>")
 			del(C)
 		else
@@ -688,27 +690,24 @@ obj/item/toy/cards/deck/attackby(obj/item/toy/cards/cardhand/C, mob/living/user)
 		else if(cards.len > 1)
 			src.icon_state = "deck_[deckstyle]_low"
 
-obj/item/toy/cards/deck/MouseDrop(atom/over_object)
+/obj/item/toy/cards/deck/MouseDrop(atom/over_object)
 	var/mob/M = usr
 	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
 		return
 	if(Adjacent(usr))
-		if(over_object == M)
+		if(over_object == M && loc != M)
 			M.put_in_hands(src)
 			usr << "<span class='notice'>You pick up the deck.</span>"
 
 		else if(istype(over_object, /obj/screen))
 			switch(over_object.name)
-				if("r_hand")
-					M.unEquip(src)
-					M.put_in_r_hand(src)
-					usr << "<span class='notice'>You pick up the deck.</span>"
 				if("l_hand")
-					M.unEquip(src)
 					M.put_in_l_hand(src)
-					usr << "<span class='notice'>You pick up the deck.</span>"
+				else if("r_hand")
+					M.put_in_r_hand(src)
+				usr << "<span class='notice'>You pick up the deck.</span>"
 	else
-		usr<< "<span class='notice'>You can't reach it from here.</span>"
+		usr << "<span class='notice'>You can't reach it from here.</span>"
 
 
 

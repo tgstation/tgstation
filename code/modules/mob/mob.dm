@@ -486,6 +486,7 @@ var/list/slot_equipment_priority = list( \
 			if(what)
 				if(what.flags & NODROP)
 					usr << "<span class='notice'>You can't remove \the [what.name], it appears to be stuck!</span>"
+					return
 				visible_message("<span class='danger'>[usr] tries to remove [src]'s [what.name].</span>", \
 								"<span class='userdanger'>[usr] tries to remove [src]'s [what.name].</span>")
 				what.add_fingerprint(usr)
@@ -494,6 +495,9 @@ var/list/slot_equipment_priority = list( \
 						unEquip(what)
 			else
 				what = usr.get_active_hand()
+				if(what.flags & NODROP)
+					usr << "<span class='notice'>You can't put \the [what.name] on [src], it's stuck to your hand!</span>"
+					return
 				if(what && what.mob_can_equip(src, slot, 1))
 					visible_message("<span class='notice'>[usr] tries to put [what] on [src].</span>")
 					if(do_mob(usr, src, STRIP_DELAY * 0.5))
