@@ -150,7 +150,7 @@
 	icon_state = "cigpacket"
 	item_state = "cigpacket"
 	w_class = 1
-	throwforce = 2
+	throwforce = 0
 	slot_flags = SLOT_BELT
 	storage_slots = 6
 	can_hold = list("/obj/item/clothing/mask/cigarette")

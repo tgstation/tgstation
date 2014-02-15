@@ -91,7 +91,7 @@
 	damtype = "fire"
 	force = 0
 	slot_flags = SLOT_HEAD
-	throwforce = 1
+	throwforce = 0
 	w_class = 1.0
 	throw_speed = 1
 	throw_range = 3
@@ -106,7 +106,7 @@
 	damtype = "fire"
 	force = 0
 	slot_flags = SLOT_HEAD
-	throwforce = 1
+	throwforce = 0
 	w_class = 1.0
 	throw_speed = 1
 	throw_range = 3
@@ -128,7 +128,7 @@
 	damtype = "fire"
 	force = 15
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	throwforce = 1
+	throwforce = 5
 	w_class = 1.0
 	throw_speed = 1
 	throw_range = 3
@@ -150,7 +150,7 @@
 	damtype = "fire"
 	force = 30
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	throwforce = 1
+	throwforce = 15
 	w_class = 1.0
 	throw_speed = 1
 	throw_range = 3

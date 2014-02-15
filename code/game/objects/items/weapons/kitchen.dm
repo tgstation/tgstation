@@ -19,7 +19,7 @@
 /obj/item/weapon/kitchen/utensil
 	force = 5.0
 	w_class = 1.0
-	throwforce = 5.0
+	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
 	flags = CONDUCT
@@ -154,7 +154,7 @@
 	desc = "Used to knock out the Bartender."
 	icon_state = "rolling_pin"
 	force = 8.0
-	throwforce = 10.0
+	throwforce = 5.0
 	throw_speed = 2
 	throw_range = 7
 	w_class = 3.0
@@ -200,7 +200,6 @@
 	icon = 'icons/obj/food.dmi'
 	icon_state = "tray"
 	desc = "A metal tray to lay food on."
-	throwforce = 12.0
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5

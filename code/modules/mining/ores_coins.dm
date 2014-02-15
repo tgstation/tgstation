@@ -118,7 +118,7 @@
 	icon_state = "coin"
 	flags = CONDUCT
 	force = 1
-	throwforce = 3
+	throwforce = 0
 	w_class = 1.0
 	var/string_attached
 	var/list/sideslist = list("heads","tails")

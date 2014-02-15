@@ -64,7 +64,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 15.0
-	throwforce = 4.0
+	throwforce = 10.0
 	item_state = "pickaxe"
 	w_class = 4.0
 	m_amt = 3750 //one sheet, but where can you make them?
