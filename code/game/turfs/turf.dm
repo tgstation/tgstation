@@ -289,7 +289,10 @@
 				L.Add(t)
 	return L
 
-/turf/handle_fall(mob/faller)
+/turf/handle_fall(mob/faller, forced)
+	faller.lying = pick(90, 270)
+	if(!forced)
+		return
 	playsound(src, "bodyfall", 50, 1)
 	var/mob/living/carbon/human/M = faller
 	if(istype(M) && M.head)
@@ -301,3 +304,27 @@
 			if(!M.stat)
 				M << "<span class='warning'>[H] fell off your head!</span>"
 	else return
+
+/turf/handle_slip(mob/slipper, s_amount, w_amount, obj/O, lube)
+	var/mob/living/carbon/M = slipper
+	if (M.m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
+		return 0
+	if(!M.lying)
+		M.stop_pulling()
+		if(lube&STEP)
+			step(M, M.dir)
+		if(lube&SLIDE)
+			for(var/i=1, i<5, i++)
+				spawn (i)
+					step(M, M.dir)
+			if(M.lying) //did I fall over?
+				M.adjustBruteLoss(2)
+		if(O)
+			M << "<span class='notice'>You slipped on the [O.name]!</span>"
+		else
+			M << "<span class='notice'>You slipped!</span>"
+		playsound(M.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+		M.Stun(s_amount)
+		M.Weaken(w_amount)
+		return 1
+	return 0 // no success. Used in clown pda and wet floors

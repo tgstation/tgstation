@@ -703,7 +703,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 //Robots and brains have their own version so don't worry about them
 /mob/proc/update_canmove()
 	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
-	if(ko || resting || buckled)
+	var/bed = !(buckled && istype(buckled, /obj/structure/stool/bed/chair))
+	if(ko || resting || stunned)
 		canmove = 0
 		drop_r_hand()	//makes mobs drop items in hands when incapacitated
 		drop_l_hand()   //NODROP is handled in unEquip which is called by drop_l/r_hand()
@@ -717,32 +718,19 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else
 		lying = 0
 		canmove = 1
-
 	if(buckled)
-		anchored = 1
-		canmove = 0
-		if(istype(buckled, /obj/structure/stool/bed/chair))
-			lying = 0
-		else
-			lying = 90 //Everything else faces right. TODO: Allow left-facing beds
-
-	if(lying)
-		density = 0
+		lying = 90 * bed
 	else
-		density = 1
-
-	//Temporarily moved here from the various life() procs
-	//I'm fixing stuff incrementally so this will likely find a better home.
-	//It just makes sense for now. ~Carn
-	if(lying != lying_prev)
-		if(lying && !lying_prev)
+		if((ko || resting) && !lying)
 			fall(ko)
-		update_transform()
-
+	anchored = buckled
+	canmove = !(ko || resting || stunned || buckled)
+	density = !lying
+	update_transform()
+	lying_prev = lying
 	if(update_icon)	//forces a full overlay update
 		update_icon = 0
 		regenerate_icons()
-
 	return canmove
 
 /mob/proc/fall(var/forced)

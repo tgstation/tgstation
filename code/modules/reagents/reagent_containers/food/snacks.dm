@@ -51,15 +51,15 @@
 				M << "<span class='notice'>You can't eat wrapped food!</span>"
 				return 0
 			else if(fullness <= 50)
-				M << "<span class='notice'>You hungrily [eatverb] some of the [src] and gobble it down!</span>"
+				M << "<span class='notice'>You hungrily [eatverb] some of \the [src] and gobble it down!</span>"
 			else if(fullness > 50 && fullness < 150)
-				M << "<span class='notice'>You hungrily begin to [eatverb] the [src].</span>"
+				M << "<span class='notice'>You hungrily begin to [eatverb] \the [src].</span>"
 			else if(fullness > 150 && fullness < 350)
-				M << "<span class='notice'>You [eatverb] the [src].</span>"
+				M << "<span class='notice'>You [eatverb] \the [src].</span>"
 			else if(fullness > 350 && fullness < 550)
-				M << "<span class='notice'>You unwillingly [eatverb] a bit of the [src].</span>"
+				M << "<span class='notice'>You unwillingly [eatverb] a bit of \the [src].</span>"
 			else if(fullness > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
-				M << "<span class='notice'>You cannot force any more of the [src] to go down your throat.</span>"
+				M << "<span class='notice'>You cannot force any more of \the [src] to go down your throat.</span>"
 				return 0
 		else
 			if(! (isslime(M) || isbrain(M)) )		//If you're feeding it to someone else.
