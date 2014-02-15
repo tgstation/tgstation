@@ -341,7 +341,7 @@ var/global/datum/controller/occupations/job_master
 		spawnId(H,rank)
 
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_ears)
-//		H.update_icons()
+		H.update_hud() 	// Tmp fix for Github issue 1006. TODO: make all procs in update_icons.dm do client.screen |= equipment no matter what.
 		return 1
 
 
