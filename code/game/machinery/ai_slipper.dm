@@ -62,6 +62,9 @@
 			user << browse(null, "window=ai_slipper")
 			return
 
+	if(!user.has_arms())
+		return
+
 	user.set_machine(src)
 	var/loc = src.loc
 	if (istype(loc, /turf))

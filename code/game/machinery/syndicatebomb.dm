@@ -103,6 +103,9 @@
 	interact(user)
 
 /obj/machinery/syndicatebomb/interact(var/mob/user)
+	if(!user.has_arms())
+		return
+
 	if(wires)
 		wires.Interact(user)
 	if(!open_panel)

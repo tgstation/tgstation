@@ -174,6 +174,9 @@
 	return src.attack_hand(user)
 
 /obj/machinery/chem_dispenser/attack_hand(mob/user as mob)
+	if(!user.has_arms())
+		return
+
 	if(stat & BROKEN)
 		return
 
@@ -375,6 +378,10 @@
 /obj/machinery/chem_master/attack_hand(mob/user as mob)
 	if(stat & BROKEN)
 		return
+
+	if(!user.has_arms())
+		return
+
 	user.set_machine(src)
 	var/dat = ""
 	if(!beaker)

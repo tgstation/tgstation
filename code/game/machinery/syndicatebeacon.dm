@@ -169,6 +169,8 @@
 
 
 	attack_hand(var/mob/user as mob)
+		if(!user.has_arms())
+			return
 		if(stat & SCREWED)
 			return active ? Deactivate(user) : Activate(user)
 		else

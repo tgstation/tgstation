@@ -130,6 +130,8 @@
 		return
 
 	attack_hand(var/mob/user)
+		if(!user.has_arms())
+			return
 		interact(user, 0)
 
 	interact(var/mob/user, var/ai = 0)

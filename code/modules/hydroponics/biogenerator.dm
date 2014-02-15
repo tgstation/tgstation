@@ -117,6 +117,8 @@
 	return
 
 /obj/machinery/biogenerator/attack_hand(mob/user as mob)
+	if(!user.has_arms())
+		return
 	interact(user)
 
 /obj/machinery/biogenerator/proc/activate()

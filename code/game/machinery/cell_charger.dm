@@ -66,6 +66,9 @@
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 
 	attack_hand(mob/user)
+		if(!user.has_arms())
+			return
+
 		if(charging)
 			user.put_in_hands(charging)
 			charging.add_fingerprint(user)

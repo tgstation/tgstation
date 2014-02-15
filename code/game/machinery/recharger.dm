@@ -43,6 +43,9 @@
 	if(issilicon(user))
 		return
 
+	if(!user.has_arms())
+		return
+
 	add_fingerprint(user)
 	if(charging)
 		charging.update_icon()

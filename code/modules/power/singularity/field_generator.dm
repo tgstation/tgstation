@@ -76,6 +76,9 @@ field_generator power level display
 
 
 /obj/machinery/field/generator/attack_hand(mob/user as mob)
+	if(!user.has_arms())
+		return
+
 	if(state == 2)
 		if(get_dist(src, user) <= 1)//Need to actually touch the thing to turn it on
 			if(src.active >= 1)

@@ -71,6 +71,9 @@
 	return attack_hand(user)
 
 /obj/machinery/computer/gravity_control_computer/attack_hand(mob/user as mob)
+	if(!user.has_arms())
+		return
+
 	user.set_machine(src)
 	add_fingerprint(user)
 

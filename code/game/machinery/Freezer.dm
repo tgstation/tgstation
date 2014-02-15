@@ -42,6 +42,9 @@
 		return src.attack_hand(user)
 
 	attack_hand(mob/user as mob)
+		if(!user.has_arms())
+			return
+
 		user.set_machine(src)
 		var/temp_text = ""
 		if(air_contents.temperature > (T0C - 20))
@@ -131,6 +134,9 @@
 		return src.attack_hand(user)
 
 	attack_hand(mob/user as mob)
+		if(!user.has_arms())
+			return
+
 		user.set_machine(src)
 		var/temp_text = ""
 		if(air_contents.temperature > (T20C+40))

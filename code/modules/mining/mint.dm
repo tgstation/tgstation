@@ -53,7 +53,6 @@
 
 
 /obj/machinery/mineral/mint/attack_hand(user as mob) //TODO: Adamantine coins! -Durandan
-
 	var/dat = "<b>Coin Press</b><br>"
 
 	dat += text("<br><font color='#ffcc00'><b>Gold inserted: </b>[amt_gold]</font> ")

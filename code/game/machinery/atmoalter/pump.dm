@@ -99,6 +99,8 @@
 	return src.attack_hand(user)
 
 /obj/machinery/portable_atmospherics/pump/attack_hand(var/mob/user as mob)
+	if(!user.has_arms())
+		return
 
 	user.set_machine(src)
 	var/holding_text

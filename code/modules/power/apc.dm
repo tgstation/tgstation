@@ -442,6 +442,10 @@
 //		return
 	if(!user)
 		return
+
+	if(!user.has_arms())
+		return
+
 	src.add_fingerprint(user)
 	if(usr == user && opened && (!issilicon(user)))
 		if(cell)
@@ -645,6 +649,7 @@
 
 	if(!can_use(usr, 1))
 		return 0
+
 
 	if (href_list["lock"])
 		coverlocked = !coverlocked

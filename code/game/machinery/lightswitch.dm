@@ -48,6 +48,9 @@
 
 /obj/machinery/light_switch/attack_hand(mob/user)
 
+	if(!user.has_arms())
+		return
+
 	on = !on
 
 	for(var/area/A in area.master.related)

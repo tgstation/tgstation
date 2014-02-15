@@ -33,6 +33,9 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	var/SQLquery
 
 /obj/machinery/librarypubliccomp/attack_hand(var/mob/user as mob)
+	if(!user.has_arms())
+		return
+
 	usr.set_machine(src)
 	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	switch(screenstate)

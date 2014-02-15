@@ -50,6 +50,9 @@
 			return 0
 
 /obj/machinery/r_n_d/attack_hand(mob/user as mob)
+	if(!user.has_arms())
+		return
+
 	if (shocked)
 		shock(user,50)
 	if(panel_open)

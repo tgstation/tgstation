@@ -189,6 +189,9 @@
 
 
 /obj/machinery/vending/attack_hand(mob/user)
+	if(!user.has_arms())
+		return
+
 	if(stat & (BROKEN|NOPOWER))
 		return
 	user.set_machine(src)

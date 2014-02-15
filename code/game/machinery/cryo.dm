@@ -22,7 +22,7 @@
 	var/obj/item/weapon/reagent_containers/glass/B = beaker
 	if(beaker)
 		B.loc = get_step(loc, SOUTH) //Beaker is carefully ejected from the wreckage of the cryotube
-	..() 
+	..()
 
 /obj/machinery/atmospherics/unary/cryo_cell/initialize()
 	if(node) return
@@ -68,7 +68,7 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/examine()
 	..()
-	
+
 	if(in_range(usr, src))
 		usr << "You can just about make out some loose objects floating in the murk:"
 		for(var/obj/O in src)
@@ -95,6 +95,9 @@
   * @return nothing
   */
 /obj/machinery/atmospherics/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+	if(!user.has_arms())
+		return
+
 	if(user == occupant || user.stat)
 		return
 
@@ -141,20 +144,20 @@
 		for(var/datum/reagent/R in beaker:reagents.reagent_list)
 			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
 	data["beakerContents"] = beakerContents
-	
+
 	// update the ui if it exists, returns null if no ui is passed/found
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)	
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "cryo.tmpl", "Cryo Cell Control System", 520, 410)
 		// when the ui is first opened this is the data it will use
-		ui.set_initial_data(data)		
+		ui.set_initial_data(data)
 		// open the new ui window
 		ui.open()
 		// auto update every Master Controller tick
 		ui.set_auto_update(1)
-		
+
 	//user.set_machine(src)
 
 /obj/machinery/atmospherics/unary/cryo_cell/Topic(href, href_list)
@@ -167,7 +170,7 @@
 	if(href_list["switchOn"])
 		on = 1
 		update_icon()
-		
+
 	if(href_list["switchOff"])
 		on = 0
 		update_icon()
@@ -177,12 +180,12 @@
 			var/obj/item/weapon/reagent_containers/glass/B = beaker
 			B.loc = get_step(loc, SOUTH)
 			beaker = null
-			
+
 	if(href_list["ejectOccupant"])
 		if(!occupant || isslime(usr) || ispAI(usr))
 			return 0 // don't update UIs attached to this object
 		go_out()
-	
+
 	add_fingerprint(usr)
 	return 1 // update UIs attached to this object
 
@@ -352,6 +355,6 @@
 	for(var/obj/O in src)
 		if(O != beaker)
 			O.loc = get_step(loc, SOUTH)
-	for(var/mob/M in contents) 
+	for(var/mob/M in contents)
 		M.loc = get_step(loc, SOUTH)
 		update_icon()

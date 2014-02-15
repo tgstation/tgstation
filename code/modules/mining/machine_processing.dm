@@ -19,7 +19,6 @@
 			del(src)
 
 /obj/machinery/mineral/processing_unit_console/attack_hand(user as mob)
-
 	var/dat = "<b>Smelter control console</b><br><br>"
 	//iron
 	if(machine.ore_iron || machine.ore_glass || machine.ore_plasma || machine.ore_uranium || machine.ore_gold || machine.ore_silver || machine.ore_diamond || machine.ore_clown || machine.ore_adamantine)
