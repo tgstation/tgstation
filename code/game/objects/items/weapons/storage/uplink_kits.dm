@@ -38,10 +38,14 @@
 				return
 
 			if("freedom")
-				var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(src)
-				O.imp = new /obj/item/weapon/implant/freedom(O)
+				var/obj/item/weapon/implanter/F = new /obj/item/weapon/implanter(src)
+				F.imp = new /obj/item/weapon/implant/freedom(F)
 				var/obj/item/weapon/implanter/U = new /obj/item/weapon/implanter(src)
 				U.imp = new /obj/item/weapon/implant/uplink(U)
+				var/obj/item/weapon/implanter/C = new /obj/item/weapon/implanter(src)
+				C.imp = new /obj/item/weapon/implant/emp(C)
+				var/obj/item/weapon/implanter/K = new /obj/item/weapon/implanter(src)
+				K.imp = new /obj/item/weapon/implant/adrenalin(K)
 				return
 
 			if("hacker")
