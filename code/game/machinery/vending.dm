@@ -136,8 +136,21 @@
 			machine_content.amount += restock
 			refill.charges -= restock
 			total += restock
+	if(refill.charges == 0)
+		refill.make_type(null)
 	return total
 
+
+/obj/machinery/vending/proc/collect_inventory(obj/item/weapon/vending_refill/refill, datum/data/vending_product/machine, mob/user)
+	var/collected = 0
+	for(var/datum/data/vending_product/machine_content in machine)
+		if(machine_content.amount > 0)
+			collected += machine_content.amount
+			machine_content.amount = 0
+	refill.charges = collected
+	if(collected)
+		refill.make_type(src)
+	return collected
 
 /obj/machinery/vending/attackby(obj/item/weapon/W, mob/user)
 	if(panel_open)
@@ -145,16 +158,24 @@
 			return
 
 		if(deconstructable && istype(W, /obj/item/weapon/crowbar))
-			malfunction()
-			default_deconstruction_crowbar(W)
+			var/no_product = 1
+			for(var/datum/data/vending_product/product in product_records)
+				if(product.amount > 0)
+					no_product = 0
+					break
+			if(no_product)
+				malfunction()
+				default_deconstruction_crowbar(W)
+			else
+				user << "<span class='notice'>The machine needs to be empty first.</span>"
 
 	if(istype(W, /obj/item/weapon/card/emag))
 		emagged = 1
-		user << "You short out the product lock on [src]"
+		user << "<span class='alert'>You short out the product lock on [src].</span>"
 		return
 	else if(istype(W, /obj/item/weapon/screwdriver) && anchored)
 		panel_open = !panel_open
-		user << "You [panel_open ? "open" : "close"] the maintenance panel."
+		user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>"
 		overlays.Cut()
 		if(panel_open)
 			overlays += image(icon, "[initial(icon_state)]-panel")
@@ -170,20 +191,30 @@
 		coin = W
 		user << "<span class='notice'>You insert [W] into [src].</span>"
 		return
-	else if(istype(W, refill_canister) && refill_canister != null)
+	else if(istype(W, /obj/item/weapon/vending_refill))
 		if(stat & (BROKEN|NOPOWER))
-			user << "<span class='notice'>It does nothing.</span>"
+			user << "<span class='notice'>\The [name] needs to be on.</span>"
 		else if(panel_open)
 			//if the panel is open we attempt to refill the machine
 			var/obj/item/weapon/vending_refill/canister = W
 			if(canister.charges == 0)
-				user << "<span class='notice'>This [canister.name] is empty!</span>"
+				if(!refill_canister)
+					user << "<span class='notice'>\The [name] does not permit product unloading.</span>"
+					return
+				var/transfered = collect_inventory(canister,product_records,user)
+				if(transfered)
+					user << "<span class='notice'>You unloaded [transfered] items into \the [canister].</span>"
+				else
+					user << "<span class='notice'>\The [name] is empty.</span>"
 			else
+				if(name != canister.machine_name)
+					user << "<span class='notice'>\The [canister] is not compatible with \the [name].</span>"
+					return
 				var/transfered = refill_inventory(canister,product_records,user)
 				if(transfered)
 					user << "<span class='notice'>You loaded [transfered] items in \the [name].</span>"
 				else
-					user << "<span class='notice'>The [name] is fully stocked.</span>"
+					user << "<span class='notice'>\The [name] is fully stocked.</span>"
 			return;
 		else
 			user << "<span class='notice'>You should probably unscrew the service panel first.</span>"
@@ -502,7 +533,7 @@
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
 	req_access_txt = "25"
-	refill_canister = /obj/item/weapon/vending_refill/boozeomat
+	refill_canister = "refill_booze"
 	deconstructable = 1
 
 /obj/machinery/vending/assist
@@ -520,7 +551,7 @@
 	vend_delay = 34
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/coffee = 25,/obj/item/weapon/reagent_containers/food/drinks/tea = 25,/obj/item/weapon/reagent_containers/food/drinks/h_chocolate = 25)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/ice = 10)
-	refill_canister = /obj/item/weapon/vending_refill/coffee
+	refill_canister = "refill_joe"
 	deconstructable = 1
 
 
@@ -534,7 +565,7 @@
 					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 6,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 6,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 6,
 					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6)
 	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/syndicake = 6)
-	refill_canister = /obj/item/weapon/vending_refill/snack
+	refill_canister = "refill_snack"
 	deconstructable = 1
 
 
@@ -561,7 +592,7 @@
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up = 10,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime = 10)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko = 5)
-	refill_canister = /obj/item/weapon/vending_refill/cola
+	refill_canister = "refill_cola"
 	deconstructable = 1
 
 //This one's from bay12
@@ -586,7 +617,7 @@
 	products = list(/obj/item/weapon/storage/fancy/cigarettes = 10,/obj/item/weapon/storage/box/matches = 10,/obj/item/weapon/lighter/random = 4,/obj/item/weapon/rollingpaperpack = 5)
 	contraband = list(/obj/item/weapon/lighter/zippo = 4)
 	premium = list(/obj/item/clothing/mask/cigarette/cigar/havana = 2)
-	refill_canister = /obj/item/weapon/vending_refill/cigarette
+	refill_canister = "refill_smoke"
 	deconstructable = 1
 
 /obj/machinery/vending/medical
@@ -711,7 +742,7 @@
 					/obj/item/clothing/head/rabbitears =1) //Pretty much everything that had a chance to spawn.
 	contraband = list(/obj/item/clothing/suit/cardborg = 1,/obj/item/clothing/head/cardborg = 1,/obj/item/clothing/suit/judgerobe = 1,/obj/item/clothing/head/powdered_wig = 1,/obj/item/weapon/gun/magic/wand = 1)
 	premium = list(/obj/item/clothing/suit/hgpirate = 1, /obj/item/clothing/head/hgpiratecap = 1, /obj/item/clothing/head/helmet/roman = 1, /obj/item/clothing/head/helmet/roman/legionaire = 1, /obj/item/clothing/under/roman = 1, /obj/item/clothing/shoes/roman = 1, /obj/item/weapon/shield/riot/roman = 1)
-	refill_canister = /obj/item/weapon/vending_refill/autodrobe
+	refill_canister = "refill_costume"
 	deconstructable = 1
 
 /obj/machinery/vending/dinnerware
