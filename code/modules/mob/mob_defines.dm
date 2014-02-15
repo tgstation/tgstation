@@ -156,6 +156,10 @@
 
 	var/digitalcamo = 0 // Can they be tracked by the AI?
 
+	var/list/radar_blips = list() // list of screen objects, radar blips
+	var/radar_open = 0 	// nonzero is radar is open
+
+
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
 
 	//Whether or not mobs can understand other mobtypes. These stay in /mob so that ghosts can hear everything.
