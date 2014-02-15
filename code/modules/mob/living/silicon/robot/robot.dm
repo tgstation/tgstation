@@ -212,38 +212,20 @@
 			feedback_inc("cyborg_janitor",1)
 
 	overlays -= "eyes" //Takes off the eyes that it started with
+
 	transform_animation(animation_length)
 	updateicon()
 
 /mob/living/silicon/robot/proc/transform_animation(animation_length)
 	if(!animation_length)
 		return
-	var/mobloc = get_turf(src.loc)
-	var/obj/effect/dummy/cyborg_holder/holder = new /obj/effect/dummy/cyborg_holder(mobloc)
-	var/atom/movable/overlay/animation = new /atom/movable/overlay(mobloc)
+	icon = 'icons/mob/robot_transformations.dmi'
 	src.dir = SOUTH
-	animation.name = name
-	animation.density = 1
-	animation.anchored = 1
-	animation.icon = 'icons/mob/robot_transformations.dmi'
-	animation.layer = 5
-	animation.master = holder
-	src.loc = holder
 	notransform = 1
-	flick(icon_state,animation)
+	flick(icon_state, src)
 	sleep(animation_length+1)
 	notransform = 0
-	src.loc=holder.loc
-	del(holder)
-	del(animation)
-
-/obj/effect/dummy/cyborg_holder
-	name = "cyborg"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "nothing"
-	density = 1
-	anchored = 1
-
+	icon = 'icons/mob/robots.dmi'
 
 /mob/living/silicon/robot/proc/updatename(var/prefix as text)
 
