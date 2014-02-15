@@ -911,8 +911,8 @@ obj/item/toy/cards/deck/syndicate
 	desc = "A deck of space-grade playing cards. They seem unusually rigid."
 	deckstyle = "syndicate"
 	card_hitsound = 'sound/weapons/bladeslice.ogg'
-	card_force = 15
-	card_throwforce = 15
+	card_force = 5
+	card_throwforce = 10
 	card_throw_speed = 6
 	card_throw_range = 20
 	card_attack_verb = list("attacked", "sliced", "diced", "slashed", "cut")
