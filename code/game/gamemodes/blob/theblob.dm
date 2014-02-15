@@ -11,6 +11,7 @@
 	var/health_timestamp = 0
 	var/brute_resist = 4
 	var/fire_resist = 1
+	var/blobstatus = 0
 
 
 /obj/effect/blob/New(loc)
@@ -22,6 +23,40 @@
 		A.blob_act()
 	return
 
+/obj/effect/blob/proc/CheckSurroundings()
+	blobstatus = 0
+	var/turf/T = get_turf(src)
+	var/list/nearby = orange(7, T)
+
+	for(var/obj/effect/blob/node/blob in nearby)
+		if(get_dist(blob,src) <= 4)
+			blobstatus |= BLOB_NODE_NEARBY
+			blobstatus |= USEFUL_PLACEMENT
+			break
+		else if(get_dist(blob,src) <= 5)
+			blobstatus |= BLOB_NODE_NEARBY
+			break
+
+	for(var/obj/effect/blob/core/blob in nearby)
+		if(get_dist(blob,src) <= 4)
+			blobstatus |= BLOB_CORE_NEARBY
+			blobstatus |= USEFUL_PLACEMENT
+			break
+		else if(get_dist(blob,src) <= 5)
+			blobstatus |= BLOB_CORE_NEARBY
+			break
+
+	for(var/obj/effect/blob/resource/blob in nearby)
+		if(get_dist(blob,src) <= 4)
+			blobstatus |= BLOB_RESOURCE_NEARBY
+			break
+
+	for(var/obj/effect/blob/factory/blob in nearby)
+		if(get_dist(blob,src) <= 7)
+			blobstatus |= BLOB_FACTORY_NEARBY
+			break
+
+	return
 
 /obj/effect/blob/Del()
 	blobs -= src

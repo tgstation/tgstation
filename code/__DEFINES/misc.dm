@@ -27,3 +27,10 @@
 //1 = standard hud
 //2 = reduced hud (just hands and intent switcher)
 //3 = no hud (for screenshots)
+
+//Used by the blob for placement
+#define BLOB_NODE_NEARBY			1
+#define BLOB_RESOURCE_NEARBY		2
+#define BLOB_FACTORY_NEARBY			4
+#define BLOB_CORE_NEARBY			8
+#define USEFUL_PLACEMENT			16
