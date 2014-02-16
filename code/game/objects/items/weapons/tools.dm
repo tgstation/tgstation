@@ -42,7 +42,7 @@
 	force = 5.0
 	w_class = 1.0
 	throwforce = 5.0
-	throw_speed = 3
+	throw_speed = 2
 	throw_range = 5
 	g_amt = 0
 	m_amt = 75
@@ -101,7 +101,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 6.0
-	throw_speed = 2
+	throw_speed = 1
 	throw_range = 9
 	w_class = 2.0
 	m_amt = 80

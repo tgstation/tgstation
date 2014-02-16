@@ -26,7 +26,7 @@ Mineral Sheets
 	desc = "This appears to be a combination of both sand and stone."
 	singular_name = "sandstone brick"
 	icon_state = "sheet-sandstone"
-	throw_speed = 4
+	throw_speed = 3
 	throw_range = 5
 	origin_tech = "materials=1"
 	sheettype = "sandstone"
@@ -79,7 +79,7 @@ var/global/list/datum/stack_recipe/diamond_recipes = list ( \
 	force = 5.0
 	throwforce = 5
 	w_class = 3.0
-	throw_speed = 3
+	throw_speed = 2
 	throw_range = 3
 	origin_tech = "materials=5"
 	perunit = 2000
@@ -105,7 +105,7 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 	force = 5.0
 	throwforce = 5
 	w_class = 3.0
-	throw_speed = 3
+	throw_speed = 2
 	throw_range = 3
 	origin_tech = "plasmatech=2;materials=2"
 	perunit = 2000
@@ -131,7 +131,7 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	force = 5.0
 	throwforce = 5
 	w_class = 3.0
-	throw_speed = 3
+	throw_speed = 2
 	throw_range = 3
 	origin_tech = "materials=4"
 	perunit = 2000
@@ -157,7 +157,7 @@ var/global/list/datum/stack_recipe/gold_recipes = list ( \
 	force = 5.0
 	throwforce = 5
 	w_class = 3.0
-	throw_speed = 3
+	throw_speed = 2
 	throw_range = 3
 	origin_tech = "materials=3"
 	perunit = 2000
@@ -183,7 +183,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	force = 5.0
 	throwforce = 5
 	w_class = 3.0
-	throw_speed = 3
+	throw_speed = 2
 	throw_range = 3
 	origin_tech = "materials=4"
 	perunit = 2000
@@ -207,7 +207,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	force = 5.0
 	throwforce = 5
 	w_class = 3.0
-	throw_speed = 3
+	throw_speed = 2
 	throw_range = 3
 	origin_tech = "materials=5"
 	perunit = 1000
@@ -222,7 +222,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	force = 5.0
 	throwforce = 5
 	w_class = 3.0
-	throw_speed = 3
+	throw_speed = 2
 	throw_range = 3
 	origin_tech = "materials=4"
 	perunit = 2000
@@ -237,7 +237,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	force = 5.0
 	throwforce = 5
 	w_class = 3.0
-	throw_speed = 3
+	throw_speed = 2
 	throw_range = 3
 	origin_tech = "materials=4"
 	perunit = 2000

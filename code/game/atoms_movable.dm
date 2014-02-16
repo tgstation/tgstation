@@ -6,7 +6,7 @@
 	var/l_move_time = 1
 	var/m_flag = 1
 	var/throwing = 0
-	var/throw_speed = 2
+	var/throw_speed = 1
 	var/throw_range = 7
 	var/moved_recently = 0
 	var/mob/pulledby = null

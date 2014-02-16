@@ -8,7 +8,7 @@
 	flags = CONDUCT
 	throwforce = 10
 	w_class = 3.0
-	throw_speed = 2
+	throw_speed = 1
 	throw_range = 10
 	force = 10
 	m_amt = 90

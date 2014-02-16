@@ -5,7 +5,7 @@
 	icon_state = "mop"
 	force = 3.0
 	throwforce = 5.0
-	throw_speed = 5
+	throw_speed = 3
 	throw_range = 10
 	w_class = 3.0
 	attack_verb = list("mopped", "bashed", "bludgeoned", "whacked")

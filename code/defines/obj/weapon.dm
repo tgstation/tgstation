@@ -74,7 +74,7 @@
 	icon_state = "soap"
 	w_class = 1.0
 	throwforce = 0
-	throw_speed = 4
+	throw_speed = 3
 	throw_range = 20
 
 /obj/item/weapon/soap/nanotrasen
@@ -98,7 +98,7 @@
 	throwforce = 0
 	hitsound = null //To prevent tap.ogg playing, as the item lacks of force
 	w_class = 1.0
-	throw_speed = 3
+	throw_speed = 2
 	throw_range = 15
 	attack_verb = list("HONKED")
 	var/spam_flag = 0
@@ -114,7 +114,7 @@
 	icon_state = "c_tube"
 	throwforce = 0
 	w_class = 1.0
-	throw_speed = 4
+	throw_speed = 3
 	throw_range = 5
 
 
@@ -169,7 +169,7 @@
 
 /obj/item/weapon/legcuffs/beartrap
 	name = "bear trap"
-	throw_speed = 2
+	throw_speed = 1
 	throw_range = 1
 	icon_state = "beartrap0"
 	desc = "A trap used to catch bears and other legged creatures."
@@ -347,7 +347,7 @@
 	force = 12.0
 	w_class = 1.0
 	throwforce = 15.0
-	throw_speed = 4
+	throw_speed = 3
 	throw_range = 4
 	m_amt = 15000
 	origin_tech = "materials=2;combat=1"

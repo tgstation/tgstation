@@ -5,7 +5,7 @@
 	item_state = "sheet-metal"
 	throwforce = 0
 	w_class = 3
-	throw_speed = 3
+	throw_speed = 2
 	throw_range = 7
 	pressure_resistance = 10
 	var/amount = 30					//How much paper is in the bin.
