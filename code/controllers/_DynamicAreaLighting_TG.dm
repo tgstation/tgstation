@@ -152,13 +152,13 @@ atom/movable/New()
 
 //Turfs with opacity will trigger nearby lights to update at next lighting process.
 //TODO: is this really necessary? Removing it could help reduce lag during singulo-mayhem somewhat
-turf/Del()
+turf/Destroy()
 	if(opacity)
 		UpdateAffectingLights()
 	..()
 
 //Objects with opacity will trigger nearby lights to update at next lighting process.
-atom/movable/Del()
+atom/movable/Destroy()
 	if(opacity)
 		UpdateAffectingLights()
 	..()

@@ -81,7 +81,7 @@ var/list/mechtoys = list(
 			T.blocks_air = 1
 		..()
 
-	Del() //lazy hack to set the turf to allow air to pass if it's a simulated floor
+	Destroy() //lazy hack to set the turf to allow air to pass if it's a simulated floor
 		var/turf/T = get_turf(loc)
 		if(T)
 			if(istype(T, /turf/simulated/floor))
@@ -265,7 +265,7 @@ var/list/mechtoys = list(
 					if(istype(A, /obj/item/stack/sheet/mineral/plasma))
 						var/obj/item/stack/sheet/mineral/plasma/P = A
 						plasma_count += P.amount
-					
+
 					// Delete it. (Fixes github #473)
 					qdel(A)
 			qdel(MA)

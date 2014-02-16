@@ -18,7 +18,7 @@
 	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
 	icon_state = "abed"
 
-/obj/structure/stool/bed/Del()
+/obj/structure/stool/bed/Destroy()
 	unbuckle()
 	..()
 	return

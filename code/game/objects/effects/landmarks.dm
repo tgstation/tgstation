@@ -73,7 +73,7 @@
 	landmarks_list += src
 	return 1
 
-/obj/effect/landmark/Del()
+/obj/effect/landmark/Destroy()
 	landmarks_list -= src
 	..()
 

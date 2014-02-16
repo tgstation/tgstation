@@ -28,7 +28,7 @@
 
 	initialize_directions = dir
 
-/obj/machinery/atmospherics/unary/cryo_cell/Del()
+/obj/machinery/atmospherics/unary/cryo_cell/Destroy()
 	go_out()
 	var/obj/item/weapon/reagent_containers/glass/B = beaker
 	if(beaker)

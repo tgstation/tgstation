@@ -30,9 +30,7 @@
 	opacity = 1
 	anchored = 1
 	var/health = 200
-	//var/mob/living/affecting = null
-
-	var/qdel=0 // Flag to let Del() know we're getting eaten by qdel.
+	var/turf/linked_turf
 
 	wall
 		name = "resin wall"
@@ -48,20 +46,12 @@
 
 /obj/effect/alien/resin/New()
 	..()
-	var/turf/T = get_turf(src)
-	T.thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
+	linked_turf = get_turf(src)
+	linked_turf.thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 
-
-/obj/effect/alien/resin/Del()
-	if(!qdel)
-		var/turf/T = get_turf(src)
-		T.thermal_conductivity = initial(T.thermal_conductivity)
-	..()
-
-/obj/effect/alien/resin/QDel()
-	qdel=1
-	var/turf/T = get_turf(src)
-	T.thermal_conductivity = initial(T.thermal_conductivity)
+/obj/effect/alien/resin/Destroy()
+	if(linked_turf)
+		linked_turf.thermal_conductivity = initial(linked_turf.thermal_conductivity)
 	..()
 
 

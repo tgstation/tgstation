@@ -49,7 +49,7 @@ Class Variables:
 Class Procs:
    New()                     'game/machinery/machine.dm'
 
-   Del()                     'game/machinery/machine.dm'
+   Destroy()                     'game/machinery/machine.dm'
 
    auto_use_power()            'game/machinery/machine.dm'
       This proc determines how power mode power is deducted by the machine.
@@ -118,7 +118,7 @@ Class Procs:
 	..()
 	machines += src
 
-/obj/machinery/Del()
+/obj/machinery/Destroy()
 	machines -= src
 	..()
 

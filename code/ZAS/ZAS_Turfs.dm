@@ -132,7 +132,7 @@
 				if(istype(target))
 					air_master.tiles_to_update |= target
 
-/turf/simulated/Del()
+/turf/simulated/Destroy()
 	if(active_hotspot)
 		del(active_hotspot)
 	if(blocks_air)

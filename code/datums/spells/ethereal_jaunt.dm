@@ -75,7 +75,7 @@
 	density = 0
 	anchored = 1
 
-/obj/effect/dummy/spell_jaunt/Del()
+/obj/effect/dummy/spell_jaunt/Destroy()
 	// Eject contents if deleted somehow
 	for(var/atom/movable/AM in src)
 		AM.loc = get_turf(src)

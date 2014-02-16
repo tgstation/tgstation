@@ -203,7 +203,7 @@
 	New()
 		icon_state = pick("cocoon1","cocoon2","cocoon3")
 
-/obj/effect/spider/cocoon/Del()
+/obj/effect/spider/cocoon/Destroy()
 	src.visible_message("\red \the [src] splits open.")
 	for(var/atom/movable/A in contents)
 		A.loc = src.loc

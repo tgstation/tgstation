@@ -26,7 +26,7 @@
 			if(port)
 				connect(port)
 				update_icon()
-	
+
 	process()
 		if(!connected_port) //only react when pipe_network will ont it do it for you
 			//Allow for reactions
@@ -34,7 +34,7 @@
 		else
 			update_icon()
 
-	Del()
+	Destroy()
 		del(air_contents)
 
 		..()

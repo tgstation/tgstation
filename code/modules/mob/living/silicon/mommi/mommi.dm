@@ -126,7 +126,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 //Improved /N
-/mob/living/silicon/robot/mommi/Del()
+/mob/living/silicon/robot/mommi/Destroy()
 	if(mmi)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
 		var/obj/item/device/mmi/nmmi = mmi
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.

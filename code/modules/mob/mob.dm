@@ -1,7 +1,7 @@
 /mob/recycle(var/datum/materials)
 	return RECYK_BIOLOGICAL
 
-/mob/Del()//This makes sure that mobs with clients/keys are not just deleted from the game.
+/mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	mob_list -= src
 	dead_mob_list -= src
 	living_mob_list -= src

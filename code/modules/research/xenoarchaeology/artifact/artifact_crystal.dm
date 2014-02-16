@@ -17,7 +17,7 @@
 	"Something twinkles faintly as you look at it.",\
 	"It's mesmerizing to behold.")
 
-/obj/structure/crystal/Del()
+/obj/structure/crystal/Destroy()
 	src.visible_message("\red<b>[src] shatters!</b>")
 	if(prob(75))
 		new /obj/item/weapon/shard/plasma(src.loc)

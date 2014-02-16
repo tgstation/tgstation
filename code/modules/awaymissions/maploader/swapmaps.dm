@@ -89,7 +89,7 @@
 	swapmap.New()
 		Create a new map datum, but does not allocate space or assign an
 		 ID (used for loading).
-	swapmap.Del()
+	swapmap.Destroy()
 		Deletes a map but does not save
 	swapmap.Save()
 		Saves to map_[id].sav

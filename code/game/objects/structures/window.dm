@@ -337,7 +337,7 @@
 	return
 
 
-/obj/structure/window/Del()
+/obj/structure/window/Destroy()
 	density = 0
 	update_nearby_tiles()
 	playsound(src, "shatter", 70, 1)

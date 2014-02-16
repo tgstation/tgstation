@@ -242,7 +242,7 @@
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
 //	preload_vox() //Causes long delays with initial start window and subsequent windows when first logged in.
-	
+
 	// Send NanoUI resources to this client
 	nanomanager.send_resources(src)
 

@@ -7,7 +7,6 @@
 	layer = 3
 	var/last_move = null
 	var/anchored = 0
-	// var/elevation = 2    - not used anywhere
 	var/move_speed = 10
 	var/l_move_time = 1
 	var/m_flag = 1
@@ -35,11 +34,10 @@
 		src.throw_impact(A)
 		src.throwing = 0
 
-	spawn( 0 )
-		if ((A && yes))
-			A.last_bumped = world.time
-			A.Bumped(src)
-		return
+	if ((A && yes))
+		A.last_bumped = world.time
+		A.Bumped(src)
+	return
 	..()
 	return
 
@@ -167,8 +165,7 @@
 	anchored = 1
 
 /atom/movable/overlay/New()
-	for(var/x in src.verbs)
-		src.verbs -= x
+	verbs.Cut()
 	return
 
 /atom/movable/overlay/attackby(a, b)

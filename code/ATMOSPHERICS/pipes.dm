@@ -49,7 +49,7 @@
 	return parent.return_network(reference)
 
 
-/obj/machinery/atmospherics/pipe/Del()
+/obj/machinery/atmospherics/pipe/Destroy()
 	del(parent)
 	if(air_temporary)
 		loc.assume_air(air_temporary)
@@ -189,7 +189,7 @@
 		dir = 4
 
 
-/obj/machinery/atmospherics/pipe/simple/Del()
+/obj/machinery/atmospherics/pipe/simple/Destroy()
 	if(node1)
 		node1.disconnect(src)
 	if(node2)
@@ -433,7 +433,7 @@
 	..()
 
 
-/obj/machinery/atmospherics/pipe/tank/Del()
+/obj/machinery/atmospherics/pipe/tank/Destroy()
 	if(node1)
 		node1.disconnect(src)
 
@@ -544,7 +544,7 @@
 	*/
 
 
-/obj/machinery/atmospherics/pipe/vent/Del()
+/obj/machinery/atmospherics/pipe/vent/Destroy()
 	if(node1)
 		node1.disconnect(src)
 
@@ -678,7 +678,7 @@
 	*/
 
 
-/obj/machinery/atmospherics/pipe/manifold/Del()
+/obj/machinery/atmospherics/pipe/manifold/Destroy()
 	if(node1)
 		node1.disconnect(src)
 	if(node2)
@@ -904,7 +904,7 @@
 	*/
 
 
-/obj/machinery/atmospherics/pipe/manifold4w/Del()
+/obj/machinery/atmospherics/pipe/manifold4w/Destroy()
 	if(node1)
 		node1.disconnect(src)
 	if(node2)
@@ -1085,7 +1085,7 @@
 		. = PROCESS_KILL
 
 
-/obj/machinery/atmospherics/pipe/cap/Del()
+/obj/machinery/atmospherics/pipe/cap/Destroy()
 	if(node)
 		node.disconnect(src)
 

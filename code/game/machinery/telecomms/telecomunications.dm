@@ -158,7 +158,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 				add_link(T)
 
 
-/obj/machinery/telecomms/Del()
+/obj/machinery/telecomms/Destroy()
 	telecomms_list -= src
 	..()
 
@@ -528,7 +528,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	Compiler.Holder = src
 	server_radio = new()
 
-/obj/machinery/telecomms/server/Del()
+/obj/machinery/telecomms/server/Destroy()
 	// Garbage collects all the NTSL datums.
 	if(Compiler)
 		Compiler.GC()

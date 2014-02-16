@@ -14,7 +14,7 @@
 	fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 		return
 
-	Del()
+	Destroy()
 		blob_nodes -= src
 		processing_objects.Remove(src)
 		..()

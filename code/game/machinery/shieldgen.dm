@@ -15,7 +15,7 @@
 	..()
 	update_nearby_tiles(need_rebuild=1)
 
-/obj/machinery/shield/Del()
+/obj/machinery/shield/Destroy()
 	opacity = 0
 	density = 0
 	update_nearby_tiles()
@@ -162,7 +162,7 @@
 		var/is_open = 0 //Whether or not the wires are exposed
 		var/locked = 0
 
-/obj/machinery/shieldgen/Del()
+/obj/machinery/shieldgen/Destroy()
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
 		qdel(shield_tile)
 	..()
@@ -536,7 +536,7 @@
 			if(!G.active)
 				break
 
-/obj/machinery/shieldwallgen/Del()
+/obj/machinery/shieldwallgen/Destroy()
 	src.cleanup(1)
 	src.cleanup(2)
 	src.cleanup(4)

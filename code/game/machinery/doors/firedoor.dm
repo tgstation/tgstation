@@ -36,7 +36,7 @@
 				areas_added += A
 
 
-	Del()
+	Destroy()
 		for(var/area/A in areas_added)
 			A.all_doors.Remove(src)
 		. = ..()

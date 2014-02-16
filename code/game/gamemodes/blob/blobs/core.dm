@@ -20,7 +20,7 @@
 		..(loc, h)
 
 
-	Del()
+	Destroy()
 		blob_cores -= src
 		if(overmind)
 			del(overmind)

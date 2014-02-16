@@ -30,7 +30,7 @@
 	processing_objects.Add(src)
 	return
 
-/obj/item/weapon/tank/Del()
+/obj/item/weapon/tank/Destroy()
 	if(air_contents)
 		del(air_contents)
 

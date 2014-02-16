@@ -22,7 +22,7 @@
 		return
 
 
-	Del()
+	Destroy()
 		blobs -= src
 		..()
 		return

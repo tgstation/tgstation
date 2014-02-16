@@ -21,7 +21,7 @@
 		component_parts += new /obj/item/weapon/stock_parts/matter_bin
 		RefreshParts()
 
-	Del()
+	Destroy()
 		src.go_out()
 		..()
 

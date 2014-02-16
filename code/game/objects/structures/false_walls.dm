@@ -80,7 +80,7 @@
 	relativewall_neighbours()
 	..()
 
-/obj/structure/falsewall/Del()
+/obj/structure/falsewall/Destroy()
 
 	var/temploc = src.loc
 

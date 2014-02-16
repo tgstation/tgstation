@@ -140,6 +140,6 @@
 		step(src, direction)
 	return
 
-/obj/effect/dummy/chameleon/Del()
+/obj/effect/dummy/chameleon/Destroy()
 	master.disrupt(0)
 	..()

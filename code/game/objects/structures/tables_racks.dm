@@ -37,7 +37,7 @@
 	update_icon()
 	update_adjacent()
 
-/obj/structure/table/Del()
+/obj/structure/table/Destroy()
 	update_adjacent()
 	..()
 

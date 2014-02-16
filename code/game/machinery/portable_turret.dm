@@ -176,7 +176,7 @@
 					egun = 1
 					reqpower = 200
 
-	Del()
+	Destroy()
 		// deletes its own cover with it
 		del(cover)
 		..()

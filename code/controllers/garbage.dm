@@ -1,5 +1,6 @@
 
 #define GC_COLLECTIONS_PER_TICK 100
+#define GC_COLLECTION_TIMEOUT 300 // 30s
 var/global/datum/controller/garbage_collector/garbage
 var/global/list/uncollectable_vars=list(
 	"alpha",
@@ -19,6 +20,7 @@ var/global/list/uncollectable_vars=list(
 	"parent_type",
 	"step_size",
 	"glide_size",
+	"gc_destroyed",
 	"step_x",
 	"step_y",
 	"step_z",
@@ -33,6 +35,7 @@ var/global/list/uncollectable_vars=list(
 )
 /datum/controller/garbage_collector
 	var/list/queue=list()
+	var/list/destroyed=list()
 	var/waiting=0
 	var/turf/trashbin=null
 
@@ -59,6 +62,7 @@ var/global/list/uncollectable_vars=list(
 			//testing("Unsetting [vname] in [A.type]!")
 			A.vars[vname]=null
 		A.loc=null
+		destroyed.Add("\ref[A]")
 		queue.Remove(A)
 
 	proc/process()
@@ -66,6 +70,14 @@ var/global/list/uncollectable_vars=list(
 			if(waiting)
 				Pop()
 				waiting--
+		for(var/i=0;i<min(destroyed.len,GC_COLLECTIONS_PER_TICK);i++)
+			if(destroyed.len)
+				var/refID=destroyed[0]
+				var/atom/A = locate(refID)
+				if(A && A.gc_destroyed && A.gc_destroyed >= world.time - GC_COLLECTION_TIMEOUT)
+					// Something's still referring to the qdel'd object.  Kill it.
+					del(A)
+				destroyed.Remove(refID)
 
 /**
 * NEVER USE THIS FOR ANYTHING OTHER THAN /atom/movable
@@ -74,12 +86,12 @@ var/global/list/uncollectable_vars=list(
 /proc/qdel(var/atom/movable/A)
 	if(!A) return
 	if(!istype(A))
-		warning("qdel passed a [A.type]. qdel() can only handle /atom/movable types.")
+		warning("qdel passed a [A.type]. Destroy() can only handle /atom/movable types.")
 		del(A)
 		return
 	if(!garbage)
 		del(A)
 		return
-	// Let our friend know they're about to get fucked-up.
-	A.QDel()
+	// Let our friend know they're about to get fucked up.
+	A.Destroy()
 	garbage.AddTrash(A)

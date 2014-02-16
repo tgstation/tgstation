@@ -177,7 +177,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	del(src)
 	return
 
-/obj/machinery/hologram/Del()
+/obj/machinery/hologram/Destroy()
 	if(hologram)
 		src:clear_holo()
 	..()

@@ -183,7 +183,7 @@ datum
 
 /* Must check the transfering of reagents and their data first. They all can point to one disease datum.
 
-			Del()
+			Destroy()
 				if(src.data["virus"])
 					var/datum/disease/D = src.data["virus"]
 					D.cure(0)

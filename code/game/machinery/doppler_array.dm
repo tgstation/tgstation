@@ -11,7 +11,7 @@ var/list/doppler_arrays = list()
 /obj/machinery/computer/bhangmeter/New()
 	doppler_arrays += src
 
-/obj/machinery/computer/bhangmeter/Del()
+/obj/machinery/computer/bhangmeter/Destroy()
 	doppler_arrays -= src
 
 /obj/machinery/computer/bhangmeter/process()

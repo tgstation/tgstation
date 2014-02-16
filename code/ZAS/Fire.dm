@@ -165,7 +165,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	air_master.active_hotspots.Add(src)
 
 
-/obj/fire/Del()
+/obj/fire/Destroy()
 	if (istype(loc, /turf/simulated))
 		SetLuminosity(0)
 

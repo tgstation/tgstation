@@ -77,7 +77,7 @@ obj/machinery/atmospherics/valve
 
 		return null
 
-	Del()
+	Destroy()
 		loc = null
 
 		if(node1)

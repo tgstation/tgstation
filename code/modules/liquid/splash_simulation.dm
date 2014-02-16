@@ -131,7 +131,7 @@ obj/effect/liquid/proc/apply_calculated_effect()
 obj/effect/liquid/Move()
 	return 0
 
-obj/effect/liquid/Del()
+obj/effect/liquid/Destroy()
 	src.controller.liquid_objects.Remove(src)
 	..()
 
