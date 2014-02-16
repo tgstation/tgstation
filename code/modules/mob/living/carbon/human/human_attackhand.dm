@@ -16,11 +16,17 @@
 				return 1
 
 			//CPR
-			if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
-				M << "<span class='notice'>Remove your mask!</span>"
+			if((M.head && (M.head.flags & HEADCOVERSMOUTH)))
+				M << "<span class='notice'>Remove your [M.head.name] first!</span>"
 				return 0
-			if((head && (head.flags & HEADCOVERSMOUTH)) || (wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)))
-				M << "<span class='notice'>Remove their mask!</span>"
+			if (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH))
+				M << "<span class='notice'>Remove your [M.wear_mask.name] first!</span>"
+				return 0
+			if((head && (head.flags & HEADCOVERSMOUTH)))
+				M << "<span class='notice'>Remove [src]'s [head.name] first!</span>"
+				return 0
+			if (wear_mask && (wear_mask.flags & MASKCOVERSMOUTH))
+				M << "<span class='notice'>Remove [src]'s [wear_mask.name] first!</span>"
 				return 0
 
 			if(cpr_time < world.time + 30)

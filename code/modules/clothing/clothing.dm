@@ -281,6 +281,7 @@ atom/proc/generate_uniform(index,t_color)
 			tint = 0
 
 	if(istype(src, /obj/item/clothing/head))			//makes the mob-overlays update
+		usr.update_inv_wear_mask(0)
 		usr.update_inv_head(0)
 	if(istype(src, /obj/item/clothing/glasses))
 		usr.update_inv_glasses(0)
