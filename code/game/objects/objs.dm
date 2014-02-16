@@ -199,3 +199,6 @@ a {
 		mo.show_message(rendered, 2)
 		*/
 	return
+
+/obj/proc/container_resist()
+	return

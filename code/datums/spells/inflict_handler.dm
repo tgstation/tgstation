@@ -21,7 +21,10 @@
 
 	var/destroys = "none" //can be "none", "gib" or "disintegrate"
 
+	var/summon_type = null //this will put an obj at the target's location
+
 /obj/effect/proc_holder/spell/targeted/inflict_handler/cast(list/targets)
+
 	for(var/mob/living/target in targets)
 		switch(destroys)
 			if("gib")
@@ -65,3 +68,6 @@
 		target.dizziness += amt_dizziness
 		target.confused += amt_confused
 		target.stuttering += amt_stuttering
+		//summoning
+		if(summon_type)
+			new summon_type(target.loc, target)
