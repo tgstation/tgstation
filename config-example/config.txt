@@ -242,3 +242,8 @@ RESPAWN_AS_MOMMI
 
 ## ID tag used to identify the server in the channel
 #IRC_BOT_SERVER_ID Server 1
+
+## Copy logs to a location on server startup?
+## IPs are automatically removed.
+## Default: Don't copy logs.
+#COPY_LOGS data/cleaned_logs

@@ -64,6 +64,7 @@
 	var/ToRban = 0
 	var/automute_on = 0					//enables automuting/spam prevention
 	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
+	var/copy_logs = 0
 
 	var/cult_ghostwriter = 1               //Allows ghosts to write in blood in cult rounds...
 	var/cult_ghostwriter_req_cultists = 10 //...so long as this many cultists are active.
@@ -478,6 +479,8 @@
 					config.assistantlimit = 1
 				if("assistant_ratio")
 					config.assistantratio = text2num(value)
+				if("copy_logs")
+					config.copy_logs = value
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
