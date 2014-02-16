@@ -6,7 +6,7 @@
 	icon_state = "bucket_proxy"
 	force = 3.0
 	throwforce = 5.0
-	throw_speed = 1
+	throw_speed = 2
 	throw_range = 5
 	w_class = 3.0
 	var/created_name = "Cleanbot"

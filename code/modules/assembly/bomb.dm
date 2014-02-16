@@ -4,7 +4,7 @@
 	item_state = "assembly"
 	throwforce = 5
 	w_class = 3.0
-	throw_speed = 1
+	throw_speed = 2
 	throw_range = 4
 	flags = CONDUCT
 	var/status = 0   //0 - not readied //1 - bomb finished with welder

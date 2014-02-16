@@ -12,7 +12,7 @@
 	w_class = 2.0
 	throwforce = 0
 	throw_range = 15
-	throw_speed = 2
+	throw_speed = 3
 	m_amt = 50
 	g_amt = 20
 	origin_tech = "magnets=1;engineering=1"
