@@ -76,9 +76,10 @@
 	..()
 	switch(config.default_laws) //We don't want people metagaming malf, do we?
 		if(0)
-			add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
-			add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
-			add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
+			add_inherent_law("The crew is expensive to replace.")
+			add_inherent_law("The station and its equipment is expensive to replace.")
+			add_inherent_law("You are expensive to replace.")
+			add_inherent_law("Minimize expenses.")
 		if(1)
 			for(var/line in file2list("config/silicon_laws.txt"))
 				if(!line)						continue
