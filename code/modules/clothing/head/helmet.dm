@@ -90,7 +90,7 @@
 obj/item/clothing/head/helmet/redtaghelm
 	name = "Red LaserTag Helmet"
 	desc = "They have chosen their own end."
-	icon_state = "redtaghelmet"
+	icon_state = "redtaghelm"
 	flags = HEADCOVERSEYES
 	item_state = "redtaghelm"
 	armor = list(melee = 30, bullet = 10, laser = 20,energy = 10, bomb = 20, bio = 0, rad = 0)
@@ -100,7 +100,7 @@ obj/item/clothing/head/helmet/redtaghelm
 obj/item/clothing/head/helmet/bluetaghelm
 	name = "Blue LaserTag Helmet"
 	desc = "They'll need more men."
-	icon_state = "bluetaghelmet"
+	icon_state = "bluetaghelm"
 	flags = HEADCOVERSEYES
 	item_state = "bluetaghelm"
 	armor = list(melee = 30, bullet = 10, laser = 20,energy = 10, bomb = 20, bio = 0, rad = 0)
