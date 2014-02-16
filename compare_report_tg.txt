@@ -1,17 +1,17 @@
-# DMITool Difference Report: C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons C:\Users\Rob\Documents\Projects\vgstation13\icons
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\member_content.dmi
+# DMITool Difference Report: C:\Users\Rob\Documents\Projects\tgstation\icons C:\Users\Rob\Documents\Projects\vgstation13\icons
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\member_content.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\member_content.dmi
  + blag
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\effects\160x160.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\effects\160x160.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\160x160.dmi
  - emfield_s5
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\effects\224x224.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\effects\224x224.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\224x224.dmi
  - emfield_s7
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\effects\96x96.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\effects\96x96.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\96x96.dmi
  - emfield_s3
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\effects\blood.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\effects\blood.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\blood.dmi
  + floor1-old
  + floor2-old
@@ -76,10 +76,10 @@
  - writing4
  - writing5
  + xltrails
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\effects\chemsmoke.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\effects\chemsmoke.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\chemsmoke.dmi
  + old
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\effects\effects.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\effects\effects.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\effects.dmi
  - 
  + acid
@@ -90,7 +90,7 @@
  - energynet: energynet: 10 frames, 1 directions
  + energynet: energynet: 4 frames, 1 directions
  + spidereggUnused
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\effects\genetics.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\effects\genetics.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\genetics.dmi
  - adamantine_female_l
  - adamantine_female_s
@@ -159,7 +159,7 @@
  - slimefat_male_s
  - zombie_l
  - zombie_s
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\effects\ss13_dark_alpha6.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\effects\ss13_dark_alpha6.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\ss13_dark_alpha6.dmi
  + 0
  + 1
@@ -168,13 +168,13 @@
  + 4
  + 5
  + 6
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\effects\tile_effects.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\effects\tile_effects.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\tile_effects.dmi
  - plasma-orange
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\effects\water.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\effects\water.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\water.dmi
  + wet_floor_static
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mecha\mecha.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mecha\mecha.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mecha\mecha.dmi
  - earth
  - earth-broken
@@ -185,23 +185,23 @@
  - titan
  - titan-broken
  - titan-open
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mecha\mecha_equipment.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mecha\mecha_equipment.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mecha\mecha_equipment.dmi
  + mecha_carbine
  - mecha_phase_array
  - mecha_wholegen: mecha_wholegen: 1 frames, 1 directions
  + mecha_wholegen: mecha_wholegen: 4 frames, 1 directions
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mecha\mech_bay.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mecha\mech_bay.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mecha\mech_bay.dmi
  - recharge_floor
  - recharge_floor_asteroid
  - recharge_port: recharge_port: 1 frames, 1 directions
  + recharge_port: recharge_port: 1 frames, 4 directions
  + recharge_port-o
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mecha\mech_construct.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mecha\mech_construct.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mecha\mech_construct.dmi
  - phazon_phase_array
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mecha\mech_construction.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mecha\mech_construction.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mecha\mech_construction.dmi
  - phazon_0
  - phazon_1
@@ -220,16 +220,16 @@
  - phazon_7
  - phazon_8
  - phazon_9
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\misc\beach.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\misc\beach.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\misc\beach.dmi
  - water3
  - water4
  - water5
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\misc\fullscreen.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\misc\fullscreen.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\misc\fullscreen.dmi
  - title: title: 8 frames, 1 directions
  + title: title: 20 frames, 1 directions
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\AI.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\AI.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\AI.dmi
  - ai-angryface
  - ai-bliss
@@ -248,7 +248,7 @@
  - ai-triumvirate
  - ai-triumvirate-malf
  + holo3
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\animal.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\animal.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\animal.dmi
  - brainslug
  - brainslug_dead
@@ -263,7 +263,7 @@
  - scarybat
  - scarybat-dance
  - scarybat-dead
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\augments.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\augments.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\augments.dmi
  + chest_l
  + chest_s
@@ -277,7 +277,7 @@
  + r_arm_s
  + r_leg_l
  + r_leg_s
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\back.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\back.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\back.dmi
  - hfrequency0
  - hfrequency2
@@ -349,13 +349,13 @@
  - toddler
  + waterbackpack
  + waterbackpack2
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\belt.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\belt.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\belt.dmi
  - holobadge
  - holobadge2
  + military
  + military2
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\blob.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\blob.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\blob.dmi
  + blob_core_glow
  + blob_damaged2_glow
@@ -366,12 +366,12 @@
  + blob_idle_glow
  + blob_node_glow
  + blob_resource_glow
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\corgi_head.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\corgi_head.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\corgi_head.dmi
  - bunnycrap
  - bunnycrap2
  - wizard2-fake
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\dam_human.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\dam_human.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\dam_human.dmi
  - 00
  - 00-2
@@ -481,7 +481,7 @@
  + r_leg_10
  + r_leg_20
  + r_leg_30
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\eyes.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\eyes.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\eyes.dmi
  - arjun_chopra
  - arjun_chopra2
@@ -495,7 +495,7 @@
  - rwelding-gup
  - uzenwa_sissra_1
  - uzenwa_sissra_12
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\feet.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\feet.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\feet.dmi
  - atmosmagboots0
  - atmosmagboots02
@@ -511,7 +511,7 @@
  - slippers_worn2
  - swat
  - swat2
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\hands.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\hands.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\hands.dmi
  - ashley_rifler_1
  - ashley_rifler_12
@@ -519,7 +519,7 @@
  - chal_appara_12
  - gloves-vox
  - gloves-vox2
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\head.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\head.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\head.dmi
  - alice_mccrea_1
  - alice_mccrea_12
@@ -662,7 +662,7 @@
  - yuki_matsuda_12
  - yuki_matsuda_1up
  - yuki_matsuda_1up2
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\hud.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\hud.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\hud.dmi
  - hudbrainworm
  + hudcentcom
@@ -674,7 +674,7 @@
  - hudsyndicate
  - vampire
  - vampthrall
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\human.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\human.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\human.dmi
  - 
  + adamantine_f_l
@@ -827,7 +827,7 @@
  - underwear6_m_s
  + zombie_l
  + zombie_s
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\human_face.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\human_face.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\human_face.dmi
  + debrained_l
  + debrained_s
@@ -907,7 +907,7 @@
  - vox_eyes_s
  - vox_shortquills_l
  - vox_shortquills_s
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\items_lefthand.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\items_lefthand.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_lefthand.dmi
  - DONGS
  + Gibtonite ore
@@ -988,7 +988,6 @@
  - quarrel
  + razor
  + rdwhimsy
- + resonator
  + restock_unit
  - rocket
  - rpd
@@ -1023,7 +1022,7 @@
  - vox-pressure-specops
  + wand
  - warden
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\items_righthand.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\items_righthand.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_righthand.dmi
  - DONGS
  + Gibtonite ore
@@ -1099,7 +1098,6 @@
  - quarrel
  + razor
  + rdwhimsy
- + resonator
  + restock_unit
  - rocket
  + saw
@@ -1133,7 +1131,7 @@
  - vox-pressure-specops
  + wand
  - warden
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\mask.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\mask.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\mask.dmi
  - breathdown
  - breathdown2
@@ -1166,7 +1164,7 @@
  + weldingmask2
  + weldingmaskup
  + weldingmaskup2
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\mob.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\mob.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\mob.dmi
  + ghost_black
  + ghost_blue
@@ -1187,7 +1185,7 @@
  - vampire
  - vampire2
  - vampthrall
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\monkey.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\monkey.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\monkey.dmi
  - b_mask
  - b_mask2
@@ -1206,7 +1204,7 @@
  - stokkey1
  - tajkey0
  - tajkey1
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\robots.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\robots.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\robots.dmi
  - Engiseer
  - Engiseer-old
@@ -1275,7 +1273,7 @@
  - spiderbot-chassis-posi
  - spiderbot-smashed
  + syndie_bloodhound
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\screen_alien.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\screen_alien.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\screen_alien.dmi
  + act_drop
  + act_resist
@@ -1325,7 +1323,7 @@
  + tox1
  + walking
  + zone_sel
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\screen_cyborg.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\screen_cyborg.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\screen_cyborg.dmi
  + brobot
  + charge-empty
@@ -1374,7 +1372,7 @@
  + temp1
  + temp2
  + zone_sel
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\screen_full.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\screen_full.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\screen_full.dmi
  + blackimageoverlay
  + brutedamageoverlay0
@@ -1403,7 +1401,7 @@
  + passage7
  + passage8
  + passage9
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\screen_gen.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\screen_gen.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\screen_gen.dmi
  + !reinforce
  + arrow
@@ -1480,7 +1478,7 @@
  + x
  + x2
  + x3
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\screen_midnight.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\screen_midnight.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\screen_midnight.dmi
  + act_drop
  + act_equip
@@ -1517,7 +1515,7 @@
  + uniform
  + walking
  + zone_sel
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\screen_plasmafire.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\screen_plasmafire.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\screen_plasmafire.dmi
  + act_drop
  + act_equip
@@ -1554,7 +1552,7 @@
  + uniform
  + walking
  + zone_sel
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\screen_retro.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\screen_retro.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\screen_retro.dmi
  + act_drop
  + act_equip
@@ -1591,7 +1589,7 @@
  + uniform
  + walking
  + zone_sel
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\screen_robot.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\screen_robot.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\screen_robot.dmi
  + brobot
  + charge-empty
@@ -1641,7 +1639,7 @@
  + temp2
  + template
  + zone_sel
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\suit.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\suit.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\suit.dmi
  - aeneasrinil
  - aeneasrinil_open
@@ -1757,7 +1755,7 @@
  - vox-pressure-specops
  - vox-pressure2
  - vox-stealth
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\talk.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\talk.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\talk.dmi
  - 
  + hA0
@@ -1766,7 +1764,7 @@
  - radio0
  - radio1
  - radio2
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\ties.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\ties.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\ties.dmi
  - altair_locket
  - altair_locket2
@@ -1794,7 +1792,7 @@
  + waistcoat2
  - webbing
  - webbing2
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\underwear.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\underwear.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\underwear.dmi
  + female_babyblue_l
  + female_babyblue_s
@@ -1843,7 +1841,7 @@
  + male_stripe_s
  + male_white_l
  + male_white_s
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\uniform.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\uniform.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\uniform.dmi
  - bride_blue_l
  - bride_blue_s
@@ -1953,17 +1951,13 @@
  - wyatt_uniform_s
  - yellow_cheer_l
  - yellow_cheer_s
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\mob\zone_sel.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\zone_sel.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\zone_sel.dmi
  - l_foot
  - l_hand
  - r_foot
  - r_hand
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\aibots.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\aibots.dmi
- + mining_drone
- + mining_drone_offense
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\aicards.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\aicards.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\aicards.dmi
  + aicard
  + aicard-404
@@ -1979,13 +1973,13 @@
  + pai-off
  + pai-sad
  + pai-what
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\airlock_machines.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\airlock_machines.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\airlock_machines.dmi
  - access_button_build
  - airlock_control_build0
  - airlock_control_build1
  - airlock_control_build2
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\ammo.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\ammo.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\ammo.dmi
  + 12mm-10
  + 12mm-12
@@ -2044,7 +2038,7 @@
  + uzi45-4
  + uzi45-6
  + uzi45-8
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\assemblies.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\assemblies.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\assemblies.dmi
  + bigred
  + bombcore
@@ -2065,29 +2059,28 @@
  + training-bomb-active-wires
  + training-bomb-inactive
  + training-bomb-inactive-wires
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\atmos.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\atmos.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmos.dmi
  - aircond0
  - aircond1
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\basketball.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\basketball.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\basketball.dmi
  + dodgeball
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\biogenerator.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\biogenerator.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\biogenerator.dmi
  + biogen-empty-o
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\bureaucracy.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\bureaucracy.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\bureaucracy.dmi
  + labeler_refill
  + paper_stamp-law
  + paper_stamp-ok
  + stamp-law
  + stamp-ok
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\card.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\card.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\card.dmi
  - centcom_old
- + centcomgold
  + orange
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\chemical.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\chemical.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\chemical.dmi
  - beakerbluespace: beakerbluespace: 6 frames, 1 directions
  + beakerbluespace: beakerbluespace: 4 frames, 1 directions
@@ -2108,22 +2101,22 @@
  - oldbeakernoreact
  - soda_dispenser
  + waitlight
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\cigarettes.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\cigarettes.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\cigarettes.dmi
  - cig filter
  - cig paper
  + cig_filter
  + cig_paper
  + cig_paper_pack
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\cloning.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\cloning.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\cloning.dmi
  + pod_0_maintenance
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\closet.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\closet.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\closet.dmi
  + atmos
  + critter
  + critteropen
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\computer.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\computer.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\computer.dmi
  - aac
  - aac0
@@ -2147,7 +2140,7 @@
  + tcstation-closed
  + tcstation0
  + tcstationb
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\contraband.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\contraband.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\contraband.dmi
  - bsposter1
  - bsposter10
@@ -2189,7 +2182,7 @@
  + poster19
  + poster20
  + poster21
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\Cryogenic2.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\Cryogenic2.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\Cryogenic2.dmi
  - body_scanner_0
  - body_scanner_1
@@ -2267,7 +2260,7 @@
  - syndipod_0-r
  - syndipod_1
  - syndipod_1-r
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\cryogenics.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\cryogenics.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\cryogenics.dmi
  + cell-o
  - cell-occupied: cell-occupied: 5 frames, 1 directions
@@ -2280,7 +2273,7 @@
  - cellold0
  - cellold1
  - cellold2
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\decals.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\decals.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\decals.dmi
  - direction_eng
  - direction_evac
@@ -2292,7 +2285,7 @@
  + maltesefalcon-right
  + map-left-MS
  + map-right-MS
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\device.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\device.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\device.dmi
  - bunsen0
  - bunsen1
@@ -2307,7 +2300,7 @@
  - implant_evil
  - implant_melted
  - megaphone
- + mining
+ - mining
  - modkit
  + multitool_red
  + pointer
@@ -2333,7 +2326,7 @@
  - taperecorderplaying
  - taperecorderrecording
  - voice0
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\dice.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\dice.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\dice.dmi
  + d00
  + d001
@@ -2390,7 +2383,7 @@
  + d87
  + d88
  + dicebag
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\drinks.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\drinks.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\drinks.dmi
  - (mdr)grapejuice
  - absinthebottle
@@ -2420,7 +2413,7 @@
  + teaglass
  - vacuumflask
  - waterbottle
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\economy.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\economy.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\economy.dmi
  + coin__heads
  + coin__tails
@@ -2462,7 +2455,7 @@
  + spacecash200
  + spacecash50
  + spacecash500
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\food.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\food.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\food.dmi
  + appendixburger
  - bacon
@@ -2512,7 +2505,7 @@
  + sugarcookie
  - tofurkey
  + wrap
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\grenade.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\grenade.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\grenade.dmi
  - chemg_primed
  - ex_grenade
@@ -2521,7 +2514,7 @@
  - ex_grenade_locked
  - ex_grenade_primed
  - large_grenade_primed
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\gun.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\gun.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\gun.dmi
  + c20r-0-e
  + c20r-e
@@ -2575,7 +2568,7 @@
  + tommygun-50
  + tommygun-50-e
  + tommygun-e
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\harvest.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\harvest.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\harvest.dmi
  - 
  + coffee_arabica
@@ -2598,7 +2591,7 @@
  + tea_aspera_leaves
  + tea_astra_leaves
  + tobacco_leaves
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\hydroponics.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\hydroponics.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\hydroponics.dmi
  - ambrowip
  + coffeea-dead
@@ -2702,9 +2695,8 @@
  + xpod-grow3
  + xpod-grow4
  + xpod-harvest
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\items.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\items.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\items.dmi
- + Jaunter
  - burnkit
  - cimplanter0
  - cimplanter1
@@ -2725,14 +2717,11 @@
  - gift1
  - gift2
  - gift3
- + goliath_hide
- + mining_voucher
  + nanoimplant
  + nanoimplant0
  + newscaster
  + poker_tableparts
  + razor
- + resonator
  - rpd
  - rsf
  - rsf_gray
@@ -2766,7 +2755,7 @@
  - splint
  - strangepresent
  - traumakit
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\kitchen.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\kitchen.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\kitchen.dmi
  + icecream_blue
  + icecream_chocolate
@@ -2781,7 +2770,7 @@
  - pfork
  - pknife
  - pspoon
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\library.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\library.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\library.dmi
  - analysis
  - anomaly
@@ -2803,14 +2792,14 @@
  - faxsend
  - stasis
  - triangulate
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\lighting.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\lighting.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\lighting.dmi
  + slime
  + slime-on
  + torch
  + torch-empty
  + torch-on
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\mining.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\mining.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\mining.dmi
  - Gibtonite ore 3: Gibtonite ore 3: 4 frames, 1 directions
  + Gibtonite ore 3: Gibtonite ore 3: 4 frames, 4 directions
@@ -2834,13 +2823,13 @@
  + sheet-sandstone
  + sheet-silver
  + sheet-uranium
- + xeno_warning
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\module.dmi
+ - xeno_warning
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\module.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\module.dmi
  + airalarm_electronics
  - planning frame
  + secmodschematic
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\objects.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\objects.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\objects.dmi
  - borgcharger
  + borgcharger2
@@ -2854,7 +2843,7 @@
  + paint sprayer
  - psychbed
  + servicebell
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\pda.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\pda.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pda.dmi
  + 
  - (unused) pai personality
@@ -2918,7 +2907,7 @@
  + pdapainter-broken
  + pdapainter-closed
  + pdapainter-off
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\pipe-item.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\pipe-item.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipe-item.dmi
  - cap
  - cap-f
@@ -2929,7 +2918,7 @@
  - manifold4w
  - mtvalve
  - thermalplate
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\pipes.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\pipes.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes.dmi
  - cap
  - cap-f
@@ -2945,12 +2934,12 @@
  + circ2-p
  + circ2-run
  + circ2-slow
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\power.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\power.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\power.dmi
  + smes-o
  - teg: teg: 1 frames, 4 directions
  + teg: teg: 1 frames, 1 directions
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\projectiles.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\projectiles.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\projectiles.dmi
  + blue_laser
  + green_laser
@@ -2965,7 +2954,7 @@
  + scatterlaser
  - u_laser: u_laser: 2 frames, 8 directions
  + u_laser: u_laser: 2 frames, 4 directions
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\radio.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\radio.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\radio.dmi
  - intercom-frame
  - intercom-open
@@ -2974,7 +2963,7 @@
  + sci_headset
  + srv_cypherkey
  + srv_headset
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\reagentfillings.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\reagentfillings.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\reagentfillings.dmi
  - vial-10
  - vial10
@@ -2983,20 +2972,20 @@
  - vial50
  - vial75
  - vial80
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\recycling.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\recycling.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\recycling.dmi
  - new_conveyor1
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\robotics.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\robotics.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\robotics.dmi
  - fab-load-phazon
  - mommispawner-building
  - mommispawner-idle
  - mommispawner-nopower
  - mommispawner-recharging
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\rollerbed.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\rollerbed.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\rollerbed.dmi
  - folded
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\seeds.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\seeds.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\seeds.dmi
  - mycelium-plast
  - seed-alien1
@@ -3015,7 +3004,7 @@
  + seed-teaastra
  + seed-tobacco
  + seed-xpod
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\stationobjs.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\stationobjs.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\stationobjs.dmi
  - coinpress0
  - coinpress1
@@ -3066,13 +3055,13 @@
  - wrecharger1
  - wrecharger2
  - wrecharger3
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\statue.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\statue.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\statue.dmi
  + corgi
  + human_female
  + human_male
  + monkey
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\status_display.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\status_display.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\status_display.dmi
  - ai_beer
  - ai_dwarf
@@ -3083,12 +3072,12 @@
  - ai_tribunal
  - ai_tribunal_malf
  - entertainment
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\stock_parts.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\stock_parts.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\stock_parts.dmi
  - capacitor2_adv
  - capacitor2_basic
  - capacitor2_super
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\storage.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\storage.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\storage.dmi
  - advfirstaid
  + animate_largebins
@@ -3128,7 +3117,7 @@
  - scisecurecrate
  - scisecurecrateopen
  - solution_trays
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\structures.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\structures.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\structures.dmi
  + 
  - plasmarwindow
@@ -3206,7 +3195,7 @@
  + woodtable_dir2
  + woodtable_dir3
  + woodtable_middle
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\surgery.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\surgery.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\surgery.dmi
  - autoclave
  + brain
@@ -3230,30 +3219,28 @@
  - table1
  - table2-active
  - table2-idle
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\syringe.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\syringe.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\syringe.dmi
  - autoinjector0
  - autoinjector1
  - broken
  + combat_hypo
- + lazarus_empty
- + lazarus_hypo
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\tank.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\tank.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\tank.dmi
  - emergency_nitrogen
  + jetpack-mini
  + jetpack-mini-on
  - jetpack-red
  - jetpack-red-on
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\telescience.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\telescience.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\telescience.dmi
  - gps-p
  + pad-idle-o
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\terminals.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\terminals.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\terminals.dmi
  - atm
  - atm_off
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\toy.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\toy.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\toy.dmi
  + AI
  + deck_nanotrasen_empty
@@ -3389,12 +3376,12 @@
  - therapypurple
  - therapyred
  - therapyyellow
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\turrets.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\turrets.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\turrets.dmi
  + syndieturret0
  + syndieturret1
  + syndieturret2
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\vehicles.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\vehicles.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\vehicles.dmi
  - gokart0
  - gokart1
@@ -3403,7 +3390,7 @@
  - magic_keys
  - pussywagon_destroyed
  - wizmobile
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\vending.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\vending.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\vending.dmi
  - Theater
  - Theater-Broken
@@ -3418,7 +3405,7 @@
  + sustenance
  + sustenance-broken
  + sustenance-off
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\vending_restock.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\vending_restock.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\vending_restock.dmi
  + refill_booze
  + refill_cola
@@ -3426,13 +3413,13 @@
  + refill_joe
  + refill_smoke
  + refill_snack
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\virology.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\virology.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\virology.dmi
  - centrifuge
  - centrifuge0
  - centrifuge_moving
  - centrifugeb
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\weapons.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\weapons.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\weapons.dmi
  - Paddle_wield
  + arm_blade
@@ -3495,11 +3482,11 @@
  - telebaton_1
  - toddler
  - unathiknife
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\wizard.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\wizard.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\wizard.dmi
  - focus
  + scroll2
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\atmospherics\cold_sink.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\atmospherics\cold_sink.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\cold_sink.dmi
  + exposed
  - hoff
@@ -3515,27 +3502,27 @@
  - on_cool
  - on_heat
  - on_idle
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\atmospherics\digital_valve.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\atmospherics\digital_valve.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\digital_valve.dmi
  - tvalvem0
  - tvalvem01
  - tvalvem1
  - tvalvem10
  - tvalvem1nopower
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\atmospherics\filter.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\atmospherics\filter.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\filter.dmi
  - 
  - intact_offOLD
  - intact_onOLD
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\atmospherics\heat_exchanger.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\atmospherics\heat_exchanger.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\heat_exchanger.dmi
  - exposed_old
  - intact_old
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\atmospherics\mixer.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\atmospherics\mixer.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\mixer.dmi
  - OLDintact_off
  - OLDintact_on
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\atmospherics\passive_gate.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\atmospherics\passive_gate.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\passive_gate.dmi
  - 
  - exposed_1_off_old
@@ -3543,15 +3530,15 @@
  - exposed_3_off_old
  - intact_off_old
  - intact_on_old
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\atmospherics\pipe_manifold.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\atmospherics\pipe_manifold.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\pipe_manifold.dmi
  - manifold4w_con
  - manifold4w_ex
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\atmospherics\portables_connector.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\atmospherics\portables_connector.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\portables_connector.dmi
  - 
  - exposed_old
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\atmospherics\red_pipe.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\atmospherics\red_pipe.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\red_pipe.dmi
  - manifold
  - manifold-f
@@ -3581,34 +3568,34 @@
  - manifold_8_6
  - manifold_9_2
  - manifold_9_4
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\atmospherics\red_white_pipe_tank.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\atmospherics\red_white_pipe_tank.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\red_white_pipe_tank.dmi
  + 
  + exposed
  + intact
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\atmospherics\valve.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\atmospherics\valve.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\valve.dmi
  + hvalve10
  - tvalvem0
  - tvalvem01
  - tvalvem1
  - tvalvem10
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\atmospherics\vent_scrubber.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\atmospherics\vent_scrubber.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\vent_scrubber.dmi
  - hon1
  - on1
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\clothing\belts.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\clothing\belts.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\belts.dmi
  - gearbelt
  + militarybelt
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\clothing\glasses.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\clothing\glasses.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\glasses.dmi
  - rwelding-g
  - rwelding-gup
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\clothing\gloves.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\clothing\gloves.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\gloves.dmi
  - gloves-vox
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\clothing\hats.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\clothing\hats.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\hats.dmi
  - amp
  + blacksoft
@@ -3674,7 +3661,7 @@
  - vox-pressure-security
  - vox-pressure-specops
  - vox-stealth
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\clothing\masks.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\clothing\masks.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\masks.dmi
  - breathdown
  + hosmask
@@ -3687,14 +3674,14 @@
  + wardenmask
  + weldingmask
  + weldingmaskup
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\clothing\shoes.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\clothing\shoes.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\shoes.dmi
  - boots-vox
  - leather
  - slippers
  - slippers_worn
  - swat
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\clothing\suits.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\clothing\suits.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\suits.dmi
  - armalis_armour
  - armorsec
@@ -3747,7 +3734,7 @@
  - vox-pressure-security
  - vox-pressure-specops
  - vox-stealth
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\clothing\ties.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\clothing\ties.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\ties.dmi
  - holobadge
  - holobadge-cord
@@ -3759,7 +3746,7 @@
  - vest_brown
  + waistcoat
  - webbing
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\clothing\uniforms.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\clothing\uniforms.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\uniforms.dmi
  - bride_blue
  - bride_orange
@@ -3809,16 +3796,16 @@
  - vox-casual-1
  - vox-casual-2
  - warden_corporate
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\doors\blastdoor.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\doors\blastdoor.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\doors\blastdoor.dmi
  + closed
  + closing
  + open
  + opening
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\doors\Door1.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\doors\Door1.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\doors\Door1.dmi
  - air
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\doors\doorint.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\doors\doorint.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\doors\doorint.dmi
  + door_closed
  + door_closing
@@ -3841,23 +3828,23 @@
  + pdoorc0
  + pdoorc1
  + welded
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\doors\door_assembly.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\doors\door_assembly.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\doors\door_assembly.dmi
  + door_as_vault0
  + door_as_vault1
  + door_as_vault2
  + door_as_vault3
  - door_electronics_smoked
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\doors\shutters.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\doors\shutters.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\doors\shutters.dmi
  + closed
  + closing
  + open
  + opening
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\flora\pinetrees.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\flora\pinetrees.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\flora\pinetrees.dmi
  + festivus_pole
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\flora\plants.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\flora\plants.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\flora\plants.dmi
  + applebush
  + plant-01
@@ -3885,7 +3872,7 @@
  + plant-23
  + plant-24
  + plant-25
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\machines\antimatter.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\machines\antimatter.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\machines\antimatter.dmi
  - control_critical
  + core
@@ -3912,15 +3899,15 @@
  - shield_3
  - shield_7
  + shielding
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\machines\mining_machines.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\machines\mining_machines.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\machines\mining_machines.dmi
- + mining
- + mining-deny
- + mining-off
- + ore_redemption
+ - mining
+ - mining-deny
+ - mining-off
+ - ore_redemption
  - unloader: unloader: 3 frames, 1 directions
  + unloader: unloader: 3 frames, 4 directions
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\machines\particle_accelerator.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\machines\particle_accelerator.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\machines\particle_accelerator.dmi
  + control_boxp3
  + emitter_centerp3
@@ -3929,7 +3916,7 @@
  + end_capp3
  + fuel_chamberp3
  + power_boxp3
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\machines\research.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\machines\research.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\machines\research.dmi
  - circuit_imprinter_link
  - d_analyzer_link
@@ -3937,15 +3924,15 @@
  + tdoppler
  + tdoppler-broken
  + tdoppler-off
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\pipes\heat.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\pipes\heat.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\heat.dmi
  - intact-f
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\pipes\junction.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\pipes\junction.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\junction.dmi
  - intact-f
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\pipes\large.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\pipes\large.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi
- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
+ C:\Users\Rob\Documents\Projects\tgstation\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
   File "tools/OpenBYOND/src/DMITool.py", line 133, in compare
     theirsDMI.loadAll()
   File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 189, in loadAll
@@ -3967,10 +3954,10 @@ OSError: cannot identify image file
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\pipes\transit_tube.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\pipes\transit_tube.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\transit_tube.dmi
  + Block
---- C:\Users\Rob\Documents\Projects\-tg-station_ASTEROID\icons\obj\power_cond\power_cond_blue.dmi
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\power_cond\power_cond_blue.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\power_cond\power_cond_blue.dmi
  + 0-1
  + 0-1-f
