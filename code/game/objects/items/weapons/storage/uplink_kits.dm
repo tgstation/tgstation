@@ -1,7 +1,7 @@
 /obj/item/weapon/storage/box/syndicate/
 	New()
 		..()
-		switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "freedom" = 1, "hacker" = 1, "lordsingulo" = 1, "darklord" = 1)))
+		switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "implant" = 1, "hacker" = 1, "lordsingulo" = 1, "darklord" = 1)))
 			if("bloodyspai")
 				new /obj/item/clothing/under/chameleon(src)
 				new /obj/item/clothing/mask/gas/voice(src)
@@ -37,7 +37,7 @@
 				new /obj/item/clothing/shoes/syndigaloshes(src)
 				return
 
-			if("freedom")
+			if("implant")
 				var/obj/item/weapon/implanter/F = new /obj/item/weapon/implanter(src)
 				F.imp = new /obj/item/weapon/implant/freedom(F)
 				var/obj/item/weapon/implanter/U = new /obj/item/weapon/implanter(src)
@@ -46,6 +46,9 @@
 				C.imp = new /obj/item/weapon/implant/emp(C)
 				var/obj/item/weapon/implanter/K = new /obj/item/weapon/implanter(src)
 				K.imp = new /obj/item/weapon/implant/adrenalin(K)
+				var/obj/item/weapon/implanter/S = new /obj/item/weapon/implanter(src)
+				S.imp = new /obj/item/weapon/implant/explosive(S)
+				S.name += " (explosive)"
 				return
 
 			if("hacker")
