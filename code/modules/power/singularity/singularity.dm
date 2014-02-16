@@ -242,9 +242,10 @@ var/global/list/uneatable = list(
 	if(is_type_in_list(A, uneatable))
 		return 0
 	if (istype(A,/mob/living))//Mobs get gibbed
+		var/mob/living/M = A
 		gain = 20
-		if(istype(A,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = A
+		if(istype(M,/mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
 			if(H.mind)
 
 				if((H.mind.assigned_role == "Station Engineer") || (H.mind.assigned_role == "Chief Engineer") )
@@ -253,9 +254,8 @@ var/global/list/uneatable = list(
 				if(H.mind.assigned_role == "Clown")
 					gain = rand(-300, 300) // HONK
 
-		investigate_log(" has consumed [key_name(A)].","singulo") //Oh that's where the clown ended up!
-		spawn()
-			A:gib()
+		investigate_log(" has consumed [key_name(M)].","singulo") //Oh that's where the clown ended up!
+		M.gib()
 		sleep(1)
 	else if(istype(A,/obj/))
 
