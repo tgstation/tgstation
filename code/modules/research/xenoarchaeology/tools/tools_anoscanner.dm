@@ -3,7 +3,7 @@
 	name = "Alden-Saraspova counter"
 	desc = "Aids in triangulation of exotic particles."
 	icon = 'icons/obj/xenoarchaeology.dmi'
-	icon_state = "flashgun"
+	icon_state = "ano_scanner"
 	item_state = "lampgreen"
 	w_class = 1.0
 	flags = FPRINT | TABLEPASS
