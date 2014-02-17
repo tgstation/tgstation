@@ -103,7 +103,7 @@
 	flags = CONDUCT
 	force = 10.0
 	throwforce = 10.0
-	throw_speed = 1
+	throw_speed = 2
 	throw_range = 5
 	var/rcharges = 10
 	var/obj/machinery/pad = null

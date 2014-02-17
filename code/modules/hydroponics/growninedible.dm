@@ -39,7 +39,7 @@
 	force = 5
 	throwforce = 5
 	w_class = 3.0
-	throw_speed = 3
+	throw_speed = 2
 	throw_range = 3
 	plant_type = 2
 	origin_tech = "materials=1"
@@ -177,7 +177,7 @@
 	item_state = "banana_peel"
 	w_class = 1.0
 	throwforce = 0
-	throw_speed = 4
+	throw_speed = 3
 	throw_range = 20
 
 /obj/item/weapon/grown/corncob
@@ -188,5 +188,5 @@
 	item_state = "corncob"
 	w_class = 1.0
 	throwforce = 0
-	throw_speed = 4
+	throw_speed = 3
 	throw_range = 20

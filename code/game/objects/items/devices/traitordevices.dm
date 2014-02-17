@@ -20,7 +20,7 @@ effective or pretty fucking useless.
 	icon_state = "batterer"
 	throwforce = 5
 	w_class = 1.0
-	throw_speed = 4
+	throw_speed = 3
 	throw_range = 10
 	flags = CONDUCT
 	item_state = "electronic"

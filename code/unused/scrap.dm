@@ -18,7 +18,7 @@
 	var/blood = 0		// 0=none, 1=blood-stained, 2=bloody
 
 	throwforce = 8.0
-	throw_speed = 1
+	throw_speed = 2
 	throw_range = 4
 	w_class = 1
 	flags = FPRINT | TABLEPASS | CONDUCT
