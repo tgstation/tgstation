@@ -448,7 +448,12 @@ Please contact me on #coderbus IRC. ~Carnie x
 			head.screen_loc = ui_head		//TODO
 			client.screen += head
 
-		var/image/standing = image("icon"='icons/mob/head.dmi', "icon_state"="[head.icon_state]", "layer"=-HEAD_LAYER)
+		var/image/standing
+		if(istype(head,/obj/item/clothing/head/kitty))
+			var/obj/item/clothing/head/kitty/K = head
+			standing = image("icon"=K.mob, "layer"=-HEAD_LAYER)
+		else
+			standing = image("icon"='icons/mob/head.dmi', "icon_state"="[head.icon_state]", "layer"=-HEAD_LAYER)
 
 		overlays_standing[HEAD_LAYER]	= standing
 
