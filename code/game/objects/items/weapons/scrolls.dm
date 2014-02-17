@@ -13,7 +13,7 @@
 /obj/item/weapon/teleportation_scroll/apprentice
 	name = "lesser scroll of teleportation"
 	uses = 1
-	origin_tech = "bluespace 2"
+	origin_tech = "bluespace=2"
 
 
 
