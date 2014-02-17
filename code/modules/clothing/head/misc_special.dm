@@ -124,15 +124,28 @@
 	name = "kitty ears"
 	desc = "A pair of kitty ears. Meow!"
 	icon_state = "kitty"
+	var/icon/mob
+	
+/obj/item/clothing/head/kitty/equipped(mob/user, slot)
+    if(user && slot == slot_head)
+        update_icon(user)
 
+//ffffuck you kitty ears. this proc is a) retarded and b) seems to fail around fifty percent of the time. idgaf tbh
+/obj/item/clothing/head/kitty/update_icon(mob/living/carbon/human/user)
+    if(!istype(user)) return
+    mob = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kitty")
+    mob.Blend("#[user.hair_color]", ICON_ADD)
+
+    var/icon/earbit = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kittyinner")
+    mob.Blend(earbit, ICON_OVERLAY)
 
 /obj/item/clothing/head/hardhat/reindeer
-	name = "novelty reindeer hat"
-	desc = "Some fake antlers and a very fake red nose."
-	icon_state = "hardhat0_reindeer"
-	item_state = "hardhat0_reindeer"
-	item_color = "reindeer"
-	flags_inv = 0
-	action_button_name = "Toggle Nose Light"
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	brightness_on = 1 //luminosity when on
+    name = "novelty reindeer hat"
+    desc = "Some fake antlers and a very fake red nose."
+    icon_state = "hardhat0_reindeer"
+    item_state = "hardhat0_reindeer"
+    item_color = "reindeer"
+    flags_inv = 0
+    action_button_name = "Toggle Nose Light"
+    armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+    brightness_on = 1 //luminosity when on
