@@ -117,6 +117,25 @@
 		"/obj/item/weapon/reagent_containers/food/snacks/donut/jelly"
 		)
 
+/obj/item/weapon/storage/belt/detective
+	name = "detective's belt"
+	desc = "Can hold detective gear like spare ammunition and film."
+	icon_state = "detectivebelt"
+	item_state = "detective"
+	storage_slots = 5
+	can_hold = list(
+		"/obj/item/weapon/reagent_containers/spray/pepper",
+		"/obj/item/weapon/handcuffs",
+		"/obj/item/device/flash",
+		"/obj/item/clothing/glasses",
+		"/obj/item/ammo_box",
+		"/obj/item/device/camera_film",
+		"/obj/item/device/taperecorder",
+		"/obj/item/device/tape",
+		"/obj/item/weapon/lighter/zippo",
+		"/obj/item/weapon/storage/fancy/cigarettes"
+		)
+
 /obj/item/weapon/storage/belt/soulstone
 	name = "soul stone belt"
 	desc = "Designed for ease of access to the shards during a fight, as to not let a single enemy spirit slip away"
