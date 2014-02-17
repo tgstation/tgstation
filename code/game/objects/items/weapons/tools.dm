@@ -426,7 +426,7 @@
 	throwforce = 7.0
 	item_state = "crowbar"
 	w_class = 2.0
-	m_amt = 50
+	m_amt = 30
 	origin_tech = "engineering=1"
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 
