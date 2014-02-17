@@ -12,7 +12,7 @@ LINEN BINS
 	item_state = "bedsheet"
 	slot_flags = SLOT_BACK
 	layer = 4.0
-	throwforce = 1
+	throwforce = 0
 	throw_speed = 1
 	throw_range = 2
 	w_class = 1.0

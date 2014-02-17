@@ -1,6 +1,7 @@
 var/list/sec_departments = list("engineering", "supply", "medical", "science")
 
 /datum/job/officer/proc/assign_sec_to_department(var/mob/living/carbon/human/H)
+	if(!H) return 0
 	if(!sec_departments.len)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security(H), slot_w_uniform)
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), slot_ears)
@@ -30,28 +31,27 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 				H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec/department/sci(H), slot_ears)
 				access = list(access_research)
 				destination = /area/security/checkpoint/science
-
+		var/teleport = 0
 		if(!config.sec_start_brig)
 			if(destination)
-				var/teleport = 0
 				if(!ticker || ticker.current_state <= GAME_STATE_SETTING_UP)
 					teleport = 1
-				spawn(10)
-					if(H)
-						if(teleport)
-							var/turf/T
-							var/safety = 0
-							while(safety < 25)
-								T = safepick(get_area_turfs(destination))
-								if(T && !H.Move(T))
-									safety += 1
-									continue
-								else
-									break
-		H << "<b>You have been assigned to [department]!</b>"
-		var/obj/item/weapon/card/id/I = locate(/obj/item/weapon/card/id, H)
-		if(I)
-			I.access |= access
+		spawn(10)
+			if(H)
+				if(teleport)
+					var/turf/T
+					var/safety = 0
+					while(safety < 25)
+						T = safepick(get_area_turfs(destination))
+						if(T && !H.Move(T))
+							safety += 1
+							continue
+						else
+							break
+			H << "<b>You have been assigned to [department]!</b>"
+			var/obj/item/weapon/card/id/I = locate(/obj/item/weapon/card/id, H)
+			if(I)
+				I.access |= access
 
 
 

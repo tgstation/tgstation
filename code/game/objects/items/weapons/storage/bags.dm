@@ -102,9 +102,7 @@
 		set desc = "Activate to convert your plants into plantable seeds."
 		for(var/obj/item/O in contents)
 			seedify(O, 1)
-		for(var/mob/M in range(1))
-			if (M.s_active == src)
-				src.close(M)
+		close_all()
 
 
 // -----------------------------

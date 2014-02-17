@@ -76,10 +76,13 @@
 /obj/item/weapon/card/id/attack_self(mob/user as mob)
 	for(var/mob/O in viewers(user, null))
 		O.show_message(text("[] shows you: \icon[] []: assignment: []", user, src, src.name, src.assignment), 1)
-	if(mining_points)
-		user << "There's [mining_points] mining equipment redemption points loaded onto this card."
 	src.add_fingerprint(user)
 	return
+
+/obj/item/weapon/card/id/examine()
+	..()
+	if(mining_points)
+		usr << "There's [mining_points] mining equipment redemption points loaded onto this card."
 
 /obj/item/weapon/card/id/GetAccess()
 	return access
@@ -143,18 +146,12 @@
 	else
 		..()
 
-/obj/item/weapon/card/id/syndicate/operative
-	name = "syndicate operative ID card"
+/obj/item/weapon/card/id/syndicate_command
+	name = "syndicate ID card"
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
-	assignment = "Syndicate Operative"
-	icon_state = "centcom"
-
-/obj/item/weapon/card/id/syndicate/operative/commander
-	name = "syndicate commander ID card"
-	assignment = "Syndicate Commander"
-	icon_state = "centcomgold"
-	access = list(access_maint_tunnels, access_syndicate, access_syndicate_commander)
+	assignment = "Syndicate Overlord"
+	access = list(access_syndicate)
 
 /obj/item/weapon/card/id/captains_spare
 	name = "captain's spare ID"

@@ -427,6 +427,8 @@ datum/preferences
 		return 0
 
 	proc/UpdateJobPreference(mob/user, role, desiredLvl)
+		if(!job_master)
+			return
 		var/datum/job/job = job_master.GetJob(role)
 
 		if(!job)

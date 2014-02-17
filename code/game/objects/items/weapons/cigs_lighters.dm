@@ -216,7 +216,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/attack_self(mob/user as mob)
 	if(lit == 1)
-		user.visible_message("<span class='notice'>[user] calmly drops and treads on the lit [src], putting it out instantly.</span>")
+		user.visible_message("<span class='notice'>[user] calmly drops and treads on \the [src], putting it out instantly.</span>")
 		var/turf/T = get_turf(src)
 		new type_butt(T)
 		new /obj/effect/decal/cleanable/ash(T)
@@ -302,7 +302,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "cigbutt"
 	w_class = 1
-	throwforce = 1
+	throwforce = 0
 
 /obj/item/weapon/cigbutt/cigarbutt
 	name = "cigar butt"
@@ -411,7 +411,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/icon_on = "lighter-g-on"
 	var/icon_off = "lighter-g"
 	w_class = 1
-	throwforce = 4
+	throwforce = 0
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	attack_verb = null

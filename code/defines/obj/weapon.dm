@@ -95,7 +95,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "bike_horn"
 	item_state = "bike_horn"
-	throwforce = 3
+	throwforce = 0
 	hitsound = null //To prevent tap.ogg playing, as the item lacks of force
 	w_class = 1.0
 	throw_speed = 3
@@ -112,7 +112,7 @@
 	desc = "A tube... of cardboard."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "c_tube"
-	throwforce = 1
+	throwforce = 0
 	w_class = 1.0
 	throw_speed = 4
 	throw_range = 5
@@ -125,7 +125,7 @@
 	icon_state = "cane"
 	item_state = "stick"
 	force = 5.0
-	throwforce = 7.0
+	throwforce = 5
 	w_class = 2.0
 	m_amt = 50
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")

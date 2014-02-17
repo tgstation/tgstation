@@ -23,11 +23,11 @@
 		var/fillevel = gulp_size
 
 		if(!R.total_volume || !R)
-			user << "\red None of [src] left, oh no!"
+			user << "<span class='alert'> None of [src] left, oh no!</span>"
 			return 0
 
 		if(M == user)
-			M << "\blue You swallow a gulp of [src]."
+			M << "<span class='notice'>You swallow a gulp of [src].</span>"
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST)
 				spawn(5)
@@ -289,6 +289,15 @@
 //////////////////////////soda_cans//
 //These are in their own group to be used as IED's in /obj/item/weapon/grenade/ghettobomb.dm
 
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
+	if(M == user && !src.reagents.total_volume && user.a_intent == "harm" && user.zone_sel.selecting == "head")
+		user.visible_message("<span class='notice'>[user] crushes the can of [src] on \his forehead!</span>", "<span class='notice'>You crush the can of [src] on your forehead!</span>")
+		playsound(user.loc,'sound/weapons/pierce.ogg', rand(10,50), 1)
+		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(user.loc)
+		crushed_can.icon_state = icon_state
+		del(src)
+	..()
+
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola
 	name = "Space Cola"
 	desc = "Cola. in space."
@@ -376,3 +385,4 @@
 		reagents.add_reagent("dr_gibb", 30)
 		src.pixel_x = rand(-10.0, 10)
 		src.pixel_y = rand(-10.0, 10)
+
