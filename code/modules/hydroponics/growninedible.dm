@@ -178,7 +178,7 @@
 	w_class = 1.0
 	throwforce = 0
 	throw_speed = 3
-	throw_range = 20
+	throw_range = 7
 
 /obj/item/weapon/grown/corncob
 	name = "corn cob"
@@ -189,4 +189,4 @@
 	w_class = 1.0
 	throwforce = 0
 	throw_speed = 3
-	throw_range = 20
+	throw_range = 7

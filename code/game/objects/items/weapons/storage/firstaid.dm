@@ -13,7 +13,7 @@
 	desc = "It's an emergency medical kit for those serious boo-boos."
 	icon_state = "firstaid"
 	throw_speed = 3
-	throw_range = 8
+	throw_range = 7
 	var/empty = 0
 
 

@@ -9,7 +9,7 @@
 	throwforce = 0
 	w_class = 2.0
 	throw_speed = 3
-	throw_range = 10
+	throw_range = 7
 	amount_per_transfer_from_this = 10
 	volume = 250
 	possible_transfer_amounts = null

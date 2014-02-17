@@ -7,7 +7,7 @@
 	w_class = 2.0
 	item_state = "paper"
 	throw_speed = 3
-	throw_range = 20
+	throw_range = 7
 	origin_tech = "bluespace=4"
 
 /obj/item/weapon/teleportation_scroll/apprentice

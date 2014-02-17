@@ -25,7 +25,7 @@
 	throwforce = 0
 	w_class = 2.0
 	throw_speed = 3
-	throw_range = 10
+	throw_range = 7
 	var/toxicity = 4
 	var/WeedKillStr = 2
 
@@ -44,7 +44,7 @@
 	throwforce = 0
 	w_class = 2.0
 	throw_speed = 3
-	throw_range = 10
+	throw_range = 7
 	var/toxicity = 4
 	var/PestKillStr = 2
 
