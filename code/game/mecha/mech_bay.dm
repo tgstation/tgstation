@@ -23,6 +23,7 @@
 	var/max_charge = 50
 	var/on = 0
 	var/repairability = 0
+	var/turf/recharging_turf = null
 
 /obj/machinery/mech_bay_recharge_port/New()
 	..()
@@ -35,23 +36,26 @@
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/stack/cable_coil(null, 1)
 	RefreshParts()
+	recharging_turf = get_step(loc, dir)
 
 /obj/machinery/mech_bay_recharge_port/RefreshParts()
 	var/MC
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		MC += C.rating
-	max_charge = MC - 4 * 50
+	max_charge = MC * 25
 
 /obj/machinery/mech_bay_recharge_port/process()
 	if(stat & NOPOWER || !recharge_console)
 		return
 	if(!recharging_mech)
-		recharging_mech = locate(/obj/mecha) in get_step(loc, dir)
-	if(recharging_mech && recharging_mech.cell && (recharging_mech.loc == get_step(loc, dir)))
+		recharging_mech = locate(/obj/mecha) in recharging_turf
+	if(recharging_mech && recharging_mech.cell)
 		if(recharging_mech.cell.charge < recharging_mech.cell.maxcharge)
 			var/delta = min(max_charge, recharging_mech.cell.maxcharge - recharging_mech.cell.charge)
 			recharging_mech.give_power(delta)
 			use_power(delta*150)
+		if(recharging_mech.loc != recharging_turf)
+			recharging_mech = null
 
 
 /obj/machinery/mech_bay_recharge_port/attackby(obj/item/I, mob/user)
@@ -59,6 +63,7 @@
 		return
 
 	if(default_change_direction_wrench(user, I))
+		recharging_turf = get_step(loc, dir)
 		return
 
 	default_deconstruction_crowbar(I)
@@ -66,11 +71,8 @@
 	if(panel_open)
 		if(istype(I, /obj/item/device/multitool))
 			var/obj/item/device/multitool/MT = I
-			if(istype(MT.buffer, /obj/machinery/computer/mech_bay_power_console))
-				recharge_console = MT.buffer
-				MT.buffer = 0
-				recharge_console.recharge_port = src
-				user << "span class='notice'>You upload the data from the buffer to [src.name].</span>"
+			MT.buffer = src
+			user << "<span class='notice'>You download the data from the [name] to [MT.name].</span>"
 
 /obj/machinery/computer/mech_bay_power_console
 	name = "mech bay power control console"
@@ -85,8 +87,11 @@
 	..()
 	if(istype(I, /obj/item/device/multitool))
 		var/obj/item/device/multitool/MT = I
-		MT.buffer = src
-		user << "<span class='notice'>You download data to the buffer.</span>"
+		if(istype(MT.buffer, /obj/machinery/mech_bay_recharge_port))
+			var/obj/machinery/mech_bay_recharge_port/RP = MT.buffer
+			recharge_port = RP
+			RP.recharge_console = src
+			user << "<span class='notice'>You upload the data from the buffer to [name].</span>"
 
 
 /obj/machinery/computer/mech_bay_power_console/attack_ai(mob/user)

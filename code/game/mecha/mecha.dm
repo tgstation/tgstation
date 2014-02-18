@@ -730,10 +730,12 @@
 	else if(istype(W, /obj/item/weapon/cell))
 		if(state==4)
 			if(!src.cell)
+				var/obj/item/weapon/cell/C = W
 				user << "You install the powercell"
 				user.drop_item()
-				W.forceMove(src)
-				src.cell = W
+				C.forceMove(src)
+				C.use(C.charge * 0.8)
+				src.cell = C
 				src.log_message("Powercell installed")
 			else
 				user << "There's already a powercell installed."
