@@ -19,18 +19,25 @@
 		access_virology
 	)
 	var/datum/materials/materials = new
-	var/stack_amt = 50; //amount to stack before releasing
+	var/stack_amt = 50 //amount to stack before releasing
 	var/obj/item/weapon/card/id/inserted_id
 	var/points = 0
 
-/obj/machinery/mineral/ore_redemption/New()
-	spawn( 5 )
-		for (var/dir in cardinal)
-			src.input = locate(/obj/machinery/mineral/input, get_step(src, dir))
-			if(src.input) break
-		for (var/dir in cardinal)
-			src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
-			if(src.output) break
+/obj/machinery/mineral/ore_redemption/initialize()
+	for (var/dir in cardinal)
+		src.input = locate(/obj/machinery/mineral/input, get_step(src, dir))
+		if(src.input) break
+	for (var/dir in cardinal)
+		src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
+		if(src.output) break
+
+/obj/machinery/mineral/ore_redemption/attackby(var/obj/item/weapon/W, var/mob/user)
+	if(istype(W,/obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/I = usr.get_active_hand()
+		if(istype(I))
+			usr.drop_item()
+			I.loc = src
+			inserted_id = I
 
 /obj/machinery/mineral/ore_redemption/proc/process_sheet(obj/item/weapon/ore/O)
 	var/obj/item/stack/sheet/processed_sheet = SmeltMineral(O)
@@ -90,7 +97,6 @@
 	dat += text("<HR><b>Mineral Value List:</b><BR>[get_ore_values()]")
 
 	user << browse("[dat]", "window=console_stacking_machine")
-
 	return
 
 /obj/machinery/mineral/ore_redemption/proc/get_ore_values()
@@ -114,20 +120,25 @@
 				inserted_id.mining_points += points
 				points = 0
 				src << "Points transferred."
+				return 1
 		else if(href_list["choice"] == "insert")
 			var/obj/item/weapon/card/id/I = usr.get_active_hand()
 			if(istype(I))
 				usr.drop_item()
 				I.loc = src
 				inserted_id = I
-			else usr << "\red No valid ID."
+			else
+				usr << "\red No valid ID."
+				return 1
 	if(href_list["release"] && istype(inserted_id))
 		if(check_access(inserted_id))
 			var/release=href_list["release"]
 			var/datum/material/mat = materials.getMaterial(release)
-			if(!mat) return
+			if(!mat)
+				return 1
 			var/desired = input("How much?","How much [mat.processed_name] to eject?",mat.stored) as num
-			if(desired==0) return
+			if(desired==0)
+				return 1
 			var/obj/item/stack/sheet/out = new mat.sheettype()
 			out.amount = min(mat.stored,desired)
 			mat.stored=desired
@@ -218,7 +229,7 @@
 		if(istype(inserted_id))
 			var/datum/data/mining_equipment/prize = locate(href_list["purchase"])
 			if (!prize || !(prize in prize_list))
-				return
+				return 1
 			if(prize.cost > inserted_id.mining_points)
 			else
 				inserted_id.mining_points -= prize.cost
@@ -226,10 +237,16 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/mineral/equipment_locker/attackby(obj/item/I as obj, mob/user as mob)
-	if(istype(I, /obj/item/weapon/mining_voucher))
-		RedeemVoucher(I, user)
+/obj/machinery/mineral/equipment_locker/attackby(obj/item/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/mining_voucher))
+		RedeemVoucher(W, user)
 		return
+	if(istype(W,/obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/I = usr.get_active_hand()
+		if(istype(I))
+			usr.drop_item()
+			I.loc = src
+			inserted_id = I
 	..()
 
 /obj/machinery/mineral/equipment_locker/proc/RedeemVoucher(voucher, redeemer)
