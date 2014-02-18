@@ -266,8 +266,6 @@
 			overlays = 0
 
 	if(update & 2)
-		if (overlays.len) overlays.len = 0
-
 		if(overlays.len)
 			overlays.len = 0
 		if(!(stat & (BROKEN|MAINT)) && update_state & UPSTATE_ALLGOOD)
