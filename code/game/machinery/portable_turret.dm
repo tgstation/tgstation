@@ -654,7 +654,7 @@
 				if(M.amount>=2) //requires 2 metal sheets
 					user << "<span class='notice'>You add some metal armor to the interior frame.</span>"
 					build_step = 2
-					I.amount -= 2
+					M.amount -= 2
 					icon_state = "turret_frame2"
 					if(M.amount <= 0)
 						user.unEquip(M, 1) //We're deleting it anyway, so no point in having NODROP fuck shit up.
