@@ -52,13 +52,19 @@
 
 /obj/machinery/mineral/ore_redemption/process()
 	var/turf/T = get_turf(input)
+	var/sheets_left_this_tick=50
 	if(T)
 		var/obj/item/weapon/ore/O
 		for(O in T)
-			process_sheet(O)
+			if(sheets_left_this_tick>0)
+				process_sheet(O)
+				sheets_left_this_tick--
+
 		for(var/obj/structure/ore_box/B in T)
 			for(O in B.contents)
-				process_sheet(O)
+				if(sheets_left_this_tick>0)
+					process_sheet(O)
+					sheets_left_this_tick--
 
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(var/obj/item/weapon/ore/O)
 	if(O.material)
