@@ -13,7 +13,7 @@ var/const/AUTOLATHE_DISABLE_WIRE = 4
 	. += text("<BR>The red light is [A.disabled ? "off" : "on"].<BR>The green light is [A.shocked ? "off" : "on"].<BR>The blue light is [A.hacked ? "off" : "on"].<BR>")
 
 /datum/wires/autolathe/CanUse()
-	var/obj/machinery/power/apc/A = holder
+	var/obj/machinery/autolathe/A = holder
 	if(A.panel_open)
 		return 1
 	return 0
