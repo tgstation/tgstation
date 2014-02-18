@@ -54,6 +54,8 @@ What are the archived variables for?
 
 	var/graphics=0
 
+	var/pressure=0
+
 	var/list/datum/gas/trace_gases = list() //Seemed to be a good idea that was abandoned
 
 	var/tmp/oxygen_archived //These are variables for use with the archived data
@@ -157,10 +159,7 @@ What are the archived variables for?
 	//Called by:
 	//Inputs: None
 	//Outputs: Gas pressure.
-
-	if(volume>0)
-		return total_moles()*R_IDEAL_GAS_EQUATION*temperature/volume
-	return 0
+	return pressure
 
 //		proc/return_temperature()
 			//Purpose:
@@ -197,6 +196,12 @@ What are the archived variables for?
 
 	if(aerosols.total_volume)
 		total_moles += aerosols.total_volume
+
+	if(volume>0)
+		pressure = total_moles()*R_IDEAL_GAS_EQUATION*temperature/volume
+	else
+		pressure = 0
+
 	return
 
 ////////////////////////////////////////////
