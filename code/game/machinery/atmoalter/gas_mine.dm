@@ -3,6 +3,7 @@
 	desc = "Gasses mined from the gas giant below flow out through these vents."
 	icon = 'icons/obj/atmospherics/miner.dmi'
 	icon_state = "miner"
+	power_channel=ENVIRON
 
 	m_amt=10*CC_PER_SHEET_METAL
 	w_type = RECYK_METAL
@@ -20,8 +21,13 @@
 	..()
 	air_contents = new
 	air_contents.volume=1000
+	air_contents.temperature = T20C
 	AddAir()
 	air_contents.update_values()
+	update_icon()
+	power_change()
+
+/obj/machinery/atmospherics/miner/power_change()
 	update_icon()
 
 // Add air here.  DO NOT CALL UPDATE_VALUES OR UPDATE_ICON.
@@ -32,7 +38,9 @@
 	src.overlays = 0
 	if(stat & (BROKEN|NOPOWER))
 		return
-	overlays += image(on?"on":"off",color=light_color)
+	var/image/I = image(icon, icon_state=on?"on":"off", dir=src.dir)
+	I.color=light_color
+	overlays += I
 
 /obj/machinery/atmospherics/miner/process()
 	if(stat & (BROKEN|NOPOWER))
@@ -42,6 +50,7 @@
 
 	if(!istype(loc,/turf/simulated))
 		on = 0
+		update_icon()
 		return
 
 	var/datum/gas_mixture/environment = loc.return_air()
