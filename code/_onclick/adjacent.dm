@@ -122,3 +122,13 @@
 
 	Since I don't want to complicate the click code rework by messing with unrelated systems it won't be changed here.
 */
+
+/** /vg/: Hack for full windows on top of panes. **/
+/obj/structure/window/full/Adjacent(var/atom/neighbor)
+	for(var/obj/structure/window/pane in loc)
+		if(pane)
+			pane.throwpass = 1 // allow click to pass
+			. = ..()
+			pane.throwpass = 0
+			return .
+	return ..()
