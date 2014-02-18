@@ -639,14 +639,20 @@ proc
 		// Layers will be a sorted list of icons/overlays, based on the order in which they are displayed
 		var/list/layers = list()
 
-		// Add the atom's icon itself
-		if(A.icon)
-			// Make a copy without pixel_x/y settings
-			var/image/copy = image(icon=A.icon,icon_state=A.icon_state,layer=A.layer,dir=A.dir)
-			layers[copy] = A.layer
-
 		// dir defaults to A's dir
 		if(!dir) dir = A.dir
+
+		// Add the atom's icon itself
+		if(A.icon)
+			var/list/states = icon_states(A.icon)
+			var/image/copy
+			if(A.icon_state in states)
+				// Make a copy without pixel_x/y settings
+				copy = image(icon=A.icon, icon_state=A.icon_state, layer=A.layer, dir=dir)
+				layers[copy] = A.layer
+			else if("" in states)
+				copy = image(icon=A.icon, icon_state="", layer=A.layer, dir=dir)
+				layers[copy] = A.layer
 
 		// Loop through the underlays, then overlays, sorting them into the layers list
 		var/list/process = A.underlays // Current list being processed
@@ -689,7 +695,7 @@ proc
 					break
 
 			// We start with a blank canvas, otherwise some icon procs crash silently
-		var/icon/flat = icon('icons/effects/effects.dmi', "icon_state"="nothing") // Final flattened icon
+		var/icon/flat = icon('icons/effects/effects.dmi', "nothing") // Final flattened icon
 		var/icon/add // Icon of overlay being added
 
 			// Current dimensions of flattened icon
@@ -698,6 +704,9 @@ proc
 		var/{addX1;addX2;addY1;addY2}
 
 		for(var/I in layers)
+
+			if(I:alpha == 0)
+				continue
 
 			if(I:icon)
 				if(I:icon_state)
@@ -723,14 +732,28 @@ proc
 			addY1 = min(flatY1, I:pixel_y+1)
 			addY2 = max(flatY2, I:pixel_y+add.Height())
 
+			if(I:color)
+				add.Blend(I:color, ICON_MULTIPLY)
+			if(I:alpha < 255)
+				add.Blend(rgb(255, 255, 255, I:alpha), ICON_MULTIPLY)
+
 			if(addX1!=flatX1 || addX2!=flatX2 || addY1!=flatY1 || addY2!=flatY2)
 				// Resize the flattened icon so the new icon fits
 				flat.Crop(addX1-flatX1+1, addY1-flatY1+1, addX2-flatX1+1, addY2-flatY1+1)
 				flatX1=addX1;flatX2=addX2
 				flatY1=addY1;flatY2=addY2
 
+			var/blendMode = I:blend_mode
+			if(blendMode == BLEND_DEFAULT)
+				blendMode = A.blend_mode
+			switch(blendMode)
+				if(BLEND_MULTIPLY) blendMode = ICON_MULTIPLY
+				if(BLEND_ADD)      blendMode = ICON_ADD
+				if(BLEND_SUBTRACT) blendMode = ICON_SUBTRACT
+				else               blendMode = ICON_OVERLAY
+
 			// Blend the overlay into the flattened icon
-			flat.Blend(add,ICON_OVERLAY,I:pixel_x+2-flatX1,I:pixel_y+2-flatY1)
+			flat.Blend(add,blendMode,I:pixel_x+2-flatX1,I:pixel_y+2-flatY1)
 
 		return flat
 

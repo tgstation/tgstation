@@ -462,10 +462,9 @@ var/list/artifact_spawn = list() // Runtime fix for geometry loading before cont
 /turf/unsimulated/floor/asteroid/New()
 	var/proper_name = name
 	..()
+
 	name = proper_name
-	//if (prob(50))
-	//	seedName = pick(list("1","2","3","4"))
-	//	seedAmt = rand(1,4)
+
 	if(prob(20))
 		icon_state = "asteroid[rand(0,12)]"
 	spawn(2)

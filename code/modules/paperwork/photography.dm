@@ -59,10 +59,10 @@
 /obj/item/weapon/photo/proc/show(mob/user)
 	user << browse_rsc(img, "tmp_photo.png")
 	user << browse("<html><head><title>[name]</title></head>" \
-		+ "<body style='overflow:hidden'>" \
-		+ "<div> <img src='tmp_photo.png' width = '180'" \
-		+ "[scribble ? "<div> Written on the back:<br><i>[scribble]</i>" : ]"\
-		+ "</body></html>", "window=book;size=200x[scribble ? 400 : 200]")
+		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
+		+ "<img src='tmp_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' />" \
+		+ "[scribble ? "<br>Written on the back:<br><i>[scribble]</i>" : ""]"\
+		+ "</body></html>", "window=book;size=192x[scribble ? 400 : 192]")
 	onclose(user, "[name]")
 
 
@@ -148,43 +148,57 @@
 	..()
 
 
-/obj/item/device/camera/proc/camera_get_icon(turf/the_turf, blueprints)
-	//Bigger icon base to capture those icons that were shifted to the next tile
-	//i.e. pretty much all wall-mounted machinery
+/obj/item/device/camera/proc/camera_get_icon(list/turfs, turf/center)
+	var/atoms[] = list()
+	for(var/turf/T in turfs)
+		atoms.Add(T)
+		for(var/atom/movable/A in T)
+			if(A.invisibility) continue
+			atoms.Add(A)
+
+	var/list/sorted = list()
+	var/j
+	for(var/i = 1 to atoms.len)
+		var/atom/c = atoms[i]
+		j = sorted.len
+		for(j = sorted.len, j > 0, --j)
+			var/atom/c2 = sorted[j]
+			if(c2.layer <= c.layer)
+				break
+		sorted.Insert(j+1, c)
+
 	var/icon/res = icon('icons/effects/96x96.dmi', "")
 
-	var/icon/turficon = build_composite_icon(the_turf)
-	res.Blend(turficon, ICON_OVERLAY, 33, 33)
+	for(var/atom/A in sorted)
+		var/icon/img = getFlatIcon(A)
+		if(istype(A, /mob/living) && A:lying)
+			img.Turn(A:lying)
 
-	var/atoms[] = list()
-	for(var/atom/A in the_turf)
-		if(A.invisibility) continue
-		atoms.Add(A)
+		var/blendMode = A.blend_mode
+		switch(blendMode)
+			if(BLEND_MULTIPLY) blendMode = ICON_MULTIPLY
+			if(BLEND_ADD)      blendMode = ICON_ADD
+			if(BLEND_SUBTRACT) blendMode = ICON_SUBTRACT
+			else               blendMode = ICON_OVERLAY
 
-	//Sorting icons based on levels
-	var/gap = atoms.len
-	var/swapped = 1
-	while (gap > 1 || swapped)
-		swapped = 0
-		if(gap > 1)
-			gap = round(gap / 1.247330950103979)
-		if(gap < 1)
-			gap = 1
-		for(var/i = 1; gap + i <= atoms.len; i++)
-			var/atom/l = atoms[i]		//Fucking hate
-			var/atom/r = atoms[gap+i]	//how lists work here
-			if(l.layer > r.layer)		//no "atoms[i].layer" for me
-				atoms.Swap(i, gap + i)
-				swapped = 1
+		var/offX = 32 * (A.x - center.x) + A.pixel_x + 33
+		var/offY = 32 * (A.y - center.y) + A.pixel_y + 33
+		if(istype(A, /atom/movable))
+			offX += A:step_x
+			offY += A:step_y
 
-	for(var/i; i <= atoms.len; i++)
-		var/atom/A = atoms[i]
-		if(A)
-			var/icon/img = getFlatIcon(A, A.dir)//build_composite_icon(A)
-			if(istype(img, /icon))
-				res.Blend(new/icon(img, "", A.dir), ICON_OVERLAY, 33 + A.pixel_x, 33 + A.pixel_y)
-		if(!blueprints && istype(A, /obj/item/blueprints))
+		if(istype(img, /icon))
+			res.Blend(new/icon(img, "", A.dir), blendMode, offX, offY)
+
+		if(istype(A, /obj/item/blueprints))
 			blueprints = 1
+
+	for(var/turf/T in turfs)
+		//res.Blend(getFlatIcon(T.loc), ICON_OVERLAY, 32 * (T.x - center.x) + 33, 32 * (T.y - center.y) + 33)
+		var/image/shading = T.loc:lighting_overlay
+		if(istype(shading))
+			res.Blend(icon(shading.icon, shading.icon_state), ICON_OVERLAY, 32 * (T.x - center.x) + 33, 32 * (T.y - center.y) + 33)
+
 	return res
 
 
@@ -209,46 +223,41 @@
 
 
 /obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag)  //Proc for both regular and AI-based camera to take the image
-	var/x_c = target.x - 1
-	var/y_c = target.y + 1
-	var/z_c	= target.z
+	var/mobs = ""
+	var/isAi = istype(user, /mob/living/silicon/ai)
+	var/list/seen
+	if(!isAi) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
+		if(user.client)		//To make shooting through security cameras possible
+			seen = hear(world.view, user.client.eye) //To make shooting through security cameras possible
+		else
+			seen = hear(world.view, user)
+	else
+		seen = hear(world.view, target)
+
+	var/list/turfs = list()
+	for(var/turf/T in range(1, target))
+		if(T in seen)
+			if(isAi && !cameranet.checkTurfVis(T))
+				continue
+			else
+				turfs += T
+				mobs += camera_get_mobs(T)
 
 	var/icon/temp = icon('icons/effects/96x96.dmi',"")
 	temp.Blend("#000", ICON_OVERLAY)
-	var/mobs = ""
-	var/viewer = user
-	var/list/seen
-	if(!istype(user,/mob/living/silicon/ai)) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
-		if(user.client)		//To make shooting through security cameras possible
-			viewer = user.client.eye
-		seen = hear(world.view, viewer)
-	else
-		seen = hear(world.view, target)
-	for(var/i = 1; i <= 3; i++)
-		for(var/j = 1; j <= 3; j++)
-			var/turf/T = locate(x_c, y_c, z_c)
-			if(T in seen)
-				if(istype(user,/mob/living/silicon/ai))
-					if(0 == cameranet.checkTurfVis(T)) //Checks to see if this turf is visible to the AI's cameras
-						x_c++  //because continue would skip the x_c++ further down, and it is rather important to this proc to work right
-						continue
-				temp.Blend(camera_get_icon(T), ICON_OVERLAY, 32 * (j-1-1), 32 - 32 * (i-1))
-				mobs += camera_get_mobs(T)
-			x_c++
-		y_c--
-		x_c -= 3
-	if(!istype(usr,/mob/living/silicon/ai))
-		printpicture(user, temp, mobs, blueprints, flag)
+	temp.Blend(camera_get_icon(turfs, target), ICON_OVERLAY)
+
+	if(!isAi)
+		printpicture(user, temp, mobs, flag)
 	else
 		aipicture(user, temp, mobs, blueprints)
 
 
 
-/obj/item/device/camera/proc/printpicture(mob/user, icon/temp, mobs, blueprints, flag) //Normal camera proc for creating photos
+
+/obj/item/device/camera/proc/printpicture(mob/user, icon/temp, mobs, flag) //Normal camera proc for creating photos
 	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
-	P.loc = user.loc
-	if(!user.get_inactive_hand())
-		user.put_in_inactive_hand(P)
+	user.put_in_hands(P)
 	var/icon/small_img = icon(temp)
 	var/icon/ic = icon('icons/obj/items.dmi',"photo")
 	small_img.Scale(8, 8)
@@ -261,10 +270,10 @@
 
 	if(blueprints)
 		P.blueprints = 1
-	blueprints = 0
+		blueprints = 0
 
 
-/obj/item/device/camera/proc/aipicture(mob/user, icon/temp, mobs, blueprints) //instead of printing a picture like a regular camera would, we do this instead for the AI
+/obj/item/device/camera/proc/aipicture(mob/user, icon/temp, mobs) //instead of printing a picture like a regular camera would, we do this instead for the AI
 
 	var/icon/small_img = icon(temp)
 	var/icon/ic = icon('icons/obj/items.dmi',"photo")
@@ -276,10 +285,12 @@
 	var/pixel_x = rand(-10, 10)
 	var/pixel_y = rand(-10, 10)
 
+	var/injectblueprints = 1
 	if(blueprints)
-		blueprints = 1
+		injectblueprints = 1
+		blueprints = 0
 
-	injectaialbum(icon, img, desc, pixel_x, pixel_y, blueprints)
+	injectaialbum(icon, img, desc, pixel_x, pixel_y, injectblueprints)
 
 
 /datum/picture
@@ -287,7 +298,7 @@
 	var/list/fields = list()
 
 
-/obj/item/device/camera/proc/injectaialbum(var/icon, var/img, var/desc, var/pixel_x, var/pixel_y, var/blueprints) //stores image information to a list similar to that of the datacore
+/obj/item/device/camera/proc/injectaialbum(var/icon, var/img, var/desc, var/pixel_x, var/pixel_y, var/blueprintsinject) //stores image information to a list similar to that of the datacore
 	var/numberer = 1
 	for(var/datum/picture in src.aipictures)
 		numberer++
@@ -298,7 +309,7 @@
 	P.fields["desc"] = desc
 	P.fields["pixel_x"] = pixel_x
 	P.fields["pixel_y"] = pixel_y
-	P.fields["blueprints"] = blueprints
+	P.fields["blueprints"] = blueprintsinject
 
 	aipictures += P
 	usr << "<FONT COLOR=blue><B>Image recorded</B>"	//feedback to the AI player that the picture was taken
