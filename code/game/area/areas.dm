@@ -18,6 +18,7 @@
 	var/global/global_uid = 0
 	var/uid
 	blend_mode = BLEND_MULTIPLY
+	dir = 1 // Stops the icons being screwed up in the map editor.
 
 /area/New()
 	icon_state = ""
