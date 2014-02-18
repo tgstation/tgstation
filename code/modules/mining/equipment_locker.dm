@@ -45,26 +45,33 @@
 		var/datum/material/mat = materials.getMaterial(O.material)
 		mat.stored += processed_sheet.amount //Stack the sheets
 		O.loc = null //Let the old sheet garbage collect
+		/* What the fuck is the point of this?
 		while(mat.stored > stack_amt) //Get rid of excessive stackage
 			var/obj/item/stack/sheet/out = new mat.sheettype(output.loc)
 			out.amount = stack_amt-mat.stored
 			mat.stored -= out.amount
+		*/
 
 /obj/machinery/mineral/ore_redemption/process()
 	var/turf/T = get_turf(input)
-	var/sheets_left_this_tick=50
+	var/i
 	if(T)
-		var/obj/item/weapon/ore/O
-		for(O in T)
-			if(sheets_left_this_tick>0)
-				process_sheet(O)
-				sheets_left_this_tick--
-
-		for(var/obj/structure/ore_box/B in T)
-			for(O in B.contents)
-				if(sheets_left_this_tick>0)
+		if(locate(/obj/item/weapon/ore) in T)
+			for (i = 0; i < 10; i++)
+				var/obj/item/weapon/ore/O = locate() in T
+				if(O)
 					process_sheet(O)
-					sheets_left_this_tick--
+				else
+					break
+		else
+			var/obj/structure/ore_box/B = locate() in T
+			if(B)
+				for (i = 0; i < 10; i++)
+					var/obj/item/weapon/ore/O = locate() in B.contents
+					if(O)
+						process_sheet(O)
+					else
+						break
 
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(var/obj/item/weapon/ore/O)
 	if(O.material)
@@ -103,6 +110,8 @@
 	dat += text("<HR><b>Mineral Value List:</b><BR>[get_ore_values()]")
 
 	user << browse("[dat]", "window=console_stacking_machine")
+	user.set_machine(src)
+	onclose(user, "console_stacking_machine")
 	return
 
 /obj/machinery/mineral/ore_redemption/proc/get_ore_values()
@@ -141,13 +150,14 @@
 			var/release=href_list["release"]
 			var/datum/material/mat = materials.getMaterial(release)
 			if(!mat)
+				usr << "\red Unable to find material [release]!"
 				return 1
 			var/desired = input("How much?","How much [mat.processed_name] to eject?",mat.stored) as num
 			if(desired==0)
 				return 1
-			var/obj/item/stack/sheet/out = new mat.sheettype()
-			out.amount = min(mat.stored,desired)
-			mat.stored=desired
+			var/obj/item/stack/sheet/out = new mat.sheettype(output.loc)
+			out.amount = between(0,desired,min(mat.stored,out.max_amount))
+			mat.stored -= out.amount
 	updateUsrDialog()
 	return
 
@@ -213,6 +223,8 @@
 	dat += "</table>"
 
 	user << browse("[dat]", "window=mining_equipment_locker")
+	user.set_machine(src)
+	onclose(user, "mining_equipment_locker")
 	return
 
 /obj/machinery/mineral/equipment_locker/Topic(href, href_list)
@@ -383,7 +395,7 @@
 
 /obj/item/weapon/resonator/proc/CreateResonance(var/target, var/creator)
 	if(cooldown <= 0)
-		playsound(src,'sound/effects/stealthoff.ogg',50,1)
+		playsound(get_turf(src),'sound/effects/stealthoff.ogg',50,1)
 		var/obj/effect/resonance/R = new /obj/effect/resonance(get_turf(target))
 		R.creator = creator
 		cooldown = 1
