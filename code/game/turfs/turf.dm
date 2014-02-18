@@ -25,6 +25,9 @@
 	// Bot shit
 	var/targetted_by=null
 
+	// Decal shit.
+	var/list/decals[0]
+
 /turf/New()
 	..()
 	for(var/atom/movable/AM as mob|obj in src)
@@ -276,6 +279,10 @@
 
 		W.levelupdate()
 		return W
+
+/turf/proc/AddDecal(var/image/decal)
+	decals += decal
+	overlays += decal
 
 
 //Commented out by SkyMarshal 5/10/13 - If you are patching up space, it should be vacuum.

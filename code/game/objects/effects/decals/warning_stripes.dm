@@ -4,8 +4,8 @@
 
 /obj/effect/decal/warning_stripes/New()
 	. = ..()
-
-	loc.overlays += image(icon,icon_state=icon_state, dir=dir)
+	var/turf/T=get_turf(src)
+	T.AddDecal(image(icon,icon_state=icon_state, dir=dir))
 	qdel(src)
 
 /obj/effect/decal/warning_stripes/oldstyle

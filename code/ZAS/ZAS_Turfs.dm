@@ -52,7 +52,10 @@
 /turf/simulated/var/tmp/was_icy=0
 
 /turf/simulated/proc/update_visuals()
-	overlays.Cut()
+	overlays = 0
+
+	if(decals.len)
+		overlays += decals
 
 	var/siding_icon_state = return_siding_icon_state()
 	if(siding_icon_state)
