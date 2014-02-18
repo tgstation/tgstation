@@ -145,15 +145,15 @@
 		if(!sudden)
 			usr << "\blue Suit interlocks disengaged."
 			if(helm)
-				helm.flags &= NODROP
+				helm.flags &= ~NODROP
 				helm = null
 			if(gloves)
-				gloves.flags &= NODROP
+				gloves.flags &= ~NODROP
 				gloves = null
 			if(shoes)
-				shoes.flags &= NODROP
+				shoes.flags &= ~NODROP
 				gloves = null
-			flags &= NODROP
+			flags &= ~NODROP
 			//Not a tabbing error, the thing only unlocks if you intentionally power-down the armor. --NEO
 		sleep(delay)
 

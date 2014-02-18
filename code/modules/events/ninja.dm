@@ -431,18 +431,18 @@ ________________________________________________________________________________
 //This proc allows the suit to be taken off.
 /obj/item/clothing/suit/space/space_ninja/proc/unlock_suit()
 	affecting = null
-	flags &= NODROP
+	flags &= ~NODROP
 	slowdown = 1
 	icon_state = "s-ninja"
 	if(n_hood)//Should be attached, might not be attached.
-		n_hood.flags &= NODROP
+		n_hood.flags &= ~NODROP
 	if(n_shoes)
-		n_shoes.flags &= NODROP
+		n_shoes.flags &= ~NODROP
 		n_shoes.slowdown++
 	if(n_gloves)
 		n_gloves.icon_state = "s-ninja"
 		n_gloves.item_state = "s-ninja"
-		n_gloves.flags &= NODROP
+		n_gloves.flags &= ~NODROP
 		n_gloves.candrain=0
 		n_gloves.draining=0
 

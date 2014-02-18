@@ -233,7 +233,7 @@
 						if(manual)
 							sleep(20)
 							user << "\blue Helmet unlocked."
-						helm.flags &= NODROP
+						helm.flags &= ~NODROP
 						parent.helm = null
 						helm.parent = null
 

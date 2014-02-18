@@ -234,7 +234,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 			stack.use(amount)
 		else
 			if(!user.unEquip(O))
-				user << "<span class='notice'>/the [O] is stuck to your hand, you put it in \the [src]!</span>"
+				user << "<span class='notice'>/the [O] is stuck to your hand, you can't put it in \the [src]!</span>"
 			O.loc = src
 		icon_state = "autolathe"
 		busy = 1
