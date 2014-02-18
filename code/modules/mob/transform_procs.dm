@@ -608,7 +608,7 @@
 	//now the rest
 	if (tr_flags & TR_KEEPITEMS)
 		for(var/obj/item/W in (src.contents-implants))
-			u_equip(W)
+			unEquip(W)
 			if (client)
 				client.screen -= W
 			if (W)
