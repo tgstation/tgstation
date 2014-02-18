@@ -6,7 +6,7 @@
 	slot_flags = SLOT_BELT
 	throwforce = 0
 	w_class = 1.0
-	throw_speed = 7
+	throw_speed = 3
 	throw_range = 15
 	attack_verb = list("banned")
 
@@ -27,7 +27,7 @@
 	item_state = "nullrod"
 	slot_flags = SLOT_BELT
 	force = 15
-	throw_speed = 1
+	throw_speed = 3
 	throw_range = 4
 	throwforce = 10
 	w_class = 1

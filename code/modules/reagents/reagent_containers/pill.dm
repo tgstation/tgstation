@@ -153,3 +153,14 @@
 	New()
 		..()
 		reagents.add_reagent("bicaridine", 30)
+
+/obj/item/weapon/reagent_containers/pill/stimulant
+	name = "stimulant pill"
+	desc = "Often taken by overworked employees, athletes, and the inebriated. You'll snap to attention immediately!"
+	icon_state = "pill19"
+
+/obj/item/weapon/reagent_containers/pill/stimulant/New()
+	..()
+	reagents.add_reagent("hyperzine", 10)
+	reagents.add_reagent("ethylredoxrazine", 10)
+	reagents.add_reagent("coffee", 30)

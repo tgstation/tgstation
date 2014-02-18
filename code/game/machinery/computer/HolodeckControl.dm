@@ -366,7 +366,7 @@
 	desc = "May the force be with you. Sorta"
 	icon_state = "sword0"
 	force = 3.0
-	throw_speed = 1
+	throw_speed = 2
 	throw_range = 5
 	throwforce = 0
 	w_class = 2.0

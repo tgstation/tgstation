@@ -9,7 +9,7 @@
 	m_amt = 2000
 	w_class = 3.0
 	throwforce = 5
-	throw_speed = 4
+	throw_speed = 3
 	throw_range = 5
 	force = 5.0
 	origin_tech = "combat=1"

@@ -16,6 +16,7 @@
 	volume = 1000
 	use_power = 0
 	var/release_log = ""
+	var/update_flag = 0
 
 /obj/machinery/portable_atmospherics/canister/sleeping_agent
 	name = "canister: \[N2O\]"
@@ -48,31 +49,67 @@
 	canister_color = "grey"
 	can_label = 0
 
+/obj/machinery/portable_atmospherics/canister/proc/check_change()
+	var/old_flag = update_flag
+	update_flag = 0
+	if(holding)
+		update_flag |= 1
+	if(connected_port)
+		update_flag |= 2
+
+	var/tank_pressure = air_contents.return_pressure()
+	if(tank_pressure < 10)
+		update_flag |= 4
+	else if(tank_pressure < ONE_ATMOSPHERE)
+		update_flag |= 8
+	else if(tank_pressure < 15*ONE_ATMOSPHERE)
+		update_flag |= 16
+	else
+		update_flag |= 32
+
+	if(update_flag == old_flag)
+		return 1
+	else
+		return 0
+
 /obj/machinery/portable_atmospherics/canister/update_icon()
+/*
+update_flag
+1 = holding
+2 = connected_port
+4 = tank_pressure < 10
+8 = tank_pressure < ONE_ATMOS
+16 = tank_pressure < 15*ONE_ATMOS
+32 = tank_pressure go boom.
+*/
+
+	if (destroyed)
+		overlays = 0
+		icon_state = text("[]-1", canister_color)
+		return
+
+	if(icon_state != "[canister_color]") 
+		icon_state = "[canister_color]"
+
+	if(check_change()) //Returns 1 if no change needed to icons.
+		return
+
 	src.overlays = 0
 
-	if (src.destroyed)
-		src.icon_state = "[src.canister_color]-1"
-
-	else
-		icon_state = "[canister_color]"
-		if(holding)
-			overlays += "can-open"
-
-		if(connected_port)
-			overlays += "can-connector"
-
-		var/tank_pressure = air_contents.return_pressure()
-
-		if (tank_pressure < 10)
-			overlays += image('icons/obj/atmos.dmi', "can-o0")
-		else if (tank_pressure < ONE_ATMOSPHERE)
-			overlays += image('icons/obj/atmos.dmi', "can-o1")
-		else if (tank_pressure < 15*ONE_ATMOSPHERE)
-			overlays += image('icons/obj/atmos.dmi', "can-o2")
-		else
-			overlays += image('icons/obj/atmos.dmi', "can-o3")
+	if(update_flag & 1)
+		overlays += "can-open"
+	if(update_flag & 2)
+		overlays += "can-connector"
+	if(update_flag & 4)
+		overlays += "can-o0"
+	if(update_flag & 8)
+		overlays += "can-o1"
+	else if(update_flag & 16)
+		overlays += "can-o2"
+	else if(update_flag & 32)
+		overlays += "can-o3"
 	return
+
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)

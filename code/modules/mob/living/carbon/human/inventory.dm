@@ -22,9 +22,9 @@
 			S = H.get_item_by_slot(slot_belt)
 			if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))		//else we put in belt
 				S.handle_item_insertion(I)
-			else 
+			else
 				S = H.get_item_by_slot(slot_back)	//else we put in backpack
-				if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))		
+				if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))
 					S.handle_item_insertion(I)
 				else
 					H << "\red You are unable to equip that."
@@ -158,7 +158,11 @@
 		l_hand = null
 	else if(I == r_hand)
 		r_hand = null
+
 	I.screen_loc = null // will get moved if inventory is visible
+	I.loc = src
+	I.equipped(src, slot)
+	I.layer = 20
 
 	switch(slot)
 		if(slot_back)
@@ -228,6 +232,3 @@
 			src << "\red You are trying to equip this item to an unsupported inventory slot. Report this to a coder!"
 			return
 
-	I.loc = src
-	I.equipped(src, slot)
-	I.layer = 20
