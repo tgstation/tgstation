@@ -305,7 +305,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 /obj/item/weapon/tome
 	name = "arcane tome"
 	icon_state ="tome"
-	throw_speed = 1
+	throw_speed = 2
 	throw_range = 5
 	w_class = 2.0
 	var/notedat = ""

@@ -3,7 +3,7 @@
 	desc = "The legendary book of spells of the wizard."
 	icon = 'icons/obj/library.dmi'
 	icon_state ="book"
-	throw_speed = 1
+	throw_speed = 2
 	throw_range = 5
 	w_class = 1.0
 	var/uses = 5
@@ -469,12 +469,13 @@
 	if(istype(user, /mob/living/carbon/human))
 		user <<"<font size='15' color='red'><b>HOR-SIE HAS RISEN</b></font>"
 		var/obj/item/clothing/mask/horsehead/magichead = new /obj/item/clothing/mask/horsehead
-		magichead.canremove = 0		//curses!
+		magichead.flags |= NODROP		//curses!
 		magichead.flags_inv = null	//so you can still see their face
 		magichead.voicechange = 1	//NEEEEIIGHH
-		user.drop_from_inventory(user.wear_mask)
+		if(!user.unEquip(user.wear_mask))
+			del user.wear_mask
 		user.equip_to_slot_if_possible(magichead, slot_wear_mask, 1, 1)
-		del(src)
+		del src
 	else
 		user <<"<span class='notice'>I say thee neigh</span>"
 

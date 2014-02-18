@@ -101,7 +101,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 6.0
-	throw_speed = 2
+	throw_speed = 3
 	throw_range = 9
 	w_class = 2.0
 	m_amt = 80
@@ -135,7 +135,7 @@
 	force = 3
 	throwforce = 5
 	hitsound = "swing_hit"
-	throw_speed = 1
+	throw_speed = 3
 	throw_range = 5
 	w_class = 2
 	m_amt = 70
@@ -362,7 +362,7 @@
 		var/obj/item/stack/rods/R = I
 		R.use(1)
 		var/obj/item/weapon/flamethrower/F = new /obj/item/weapon/flamethrower(user.loc)
-		user.drop_from_inventory(src)
+		user.unEquip(src)
 		loc = F
 		F.weldtool = src
 		add_fingerprint(user)

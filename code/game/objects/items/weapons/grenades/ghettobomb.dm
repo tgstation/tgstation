@@ -5,8 +5,8 @@
         if(istype(I, /obj/item/device/assembly/igniter))
                 var/obj/item/device/assembly/igniter/G = I
                 var/obj/item/weapon/grenade/iedcasing/W = new /obj/item/weapon/grenade/iedcasing
-                user.before_take_item(G)
-                user.before_take_item(src)
+                user.unEquip(G)
+                user.unEquip(src)
                 user.put_in_hands(W)
                 user << "<span  class='notice'>You stuff the [I] in the [src], emptying the contents beforehand.</span>"
                 W.underlays += image(src.icon, icon_state = src.icon_state)
@@ -21,7 +21,7 @@
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "improvised_grenade"
 	item_state = "flashbang"
-	throw_speed = 4
+	throw_speed = 3
 	throw_range = 20
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
@@ -72,7 +72,7 @@
 			add_fingerprint(user)
 			var/turf/bombturf = get_turf(src)
 			var/area/A = get_area(bombturf)
-			
+
 			message_admins("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
 			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name] ([bombturf.x],[bombturf.y],[bombturf.z]).")
 			if(iscarbon(user))

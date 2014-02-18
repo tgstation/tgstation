@@ -5,7 +5,7 @@
 	icon_state = "red_phone"
 	force = 3.0
 	throwforce = 2.0
-	throw_speed = 1
+	throw_speed = 3
 	throw_range = 4
 	w_class = 2
 	attack_verb = list("called", "rang")
@@ -34,7 +34,7 @@
 	anchored = 0.0
 	force = 0
 	throwforce = 0
-	throw_speed = 1
+	throw_speed = 2
 	throw_range = 2
 	w_class = 1.0
 
@@ -74,7 +74,7 @@
 	icon_state = "soap"
 	w_class = 1.0
 	throwforce = 0
-	throw_speed = 4
+	throw_speed = 3
 	throw_range = 20
 
 /obj/item/weapon/soap/nanotrasen
@@ -95,7 +95,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "bike_horn"
 	item_state = "bike_horn"
-	throwforce = 3
+	throwforce = 0
 	hitsound = null //To prevent tap.ogg playing, as the item lacks of force
 	w_class = 1.0
 	throw_speed = 3
@@ -112,9 +112,9 @@
 	desc = "A tube... of cardboard."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "c_tube"
-	throwforce = 1
+	throwforce = 0
 	w_class = 1.0
-	throw_speed = 4
+	throw_speed = 3
 	throw_range = 5
 
 
@@ -125,7 +125,7 @@
 	icon_state = "cane"
 	item_state = "stick"
 	force = 5.0
-	throwforce = 7.0
+	throwforce = 5
 	w_class = 2.0
 	m_amt = 50
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
@@ -169,7 +169,7 @@
 
 /obj/item/weapon/legcuffs/beartrap
 	name = "bear trap"
-	throw_speed = 2
+	throw_speed = 1
 	throw_range = 1
 	icon_state = "beartrap0"
 	desc = "A trap used to catch bears and other legged creatures."
@@ -217,7 +217,7 @@
 	icon_state = "caution"
 	force = 1.0
 	throwforce = 3.0
-	throw_speed = 1
+	throw_speed = 2
 	throw_range = 5
 	w_class = 2.0
 	attack_verb = list("warned", "cautioned", "smashed")
@@ -242,7 +242,7 @@
 	icon_state = "staff"
 	force = 3.0
 	throwforce = 5.0
-	throw_speed = 1
+	throw_speed = 2
 	throw_range = 5
 	w_class = 2.0
 	flags = NOSHIELD
@@ -262,7 +262,7 @@
 	item_state = "stick"
 	force = 3.0
 	throwforce = 5.0
-	throw_speed = 1
+	throw_speed = 2
 	throw_range = 5
 	w_class = 2.0
 	flags = NOSHIELD
@@ -347,7 +347,7 @@
 	force = 12.0
 	w_class = 1.0
 	throwforce = 15.0
-	throw_speed = 4
+	throw_speed = 3
 	throw_range = 4
 	m_amt = 15000
 	origin_tech = "materials=2;combat=1"
@@ -360,7 +360,7 @@
 	desc = "A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow."
 	force = 13.0
 	throwforce = 5.0
-	throw_speed = 1
+	throw_speed = 2
 	throw_range = 3
 	w_class = 4.0
 	flags = CONDUCT | NOSHIELD

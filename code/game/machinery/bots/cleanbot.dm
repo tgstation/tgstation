@@ -5,7 +5,7 @@
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "bucket_proxy"
 	force = 3.0
-	throwforce = 10.0
+	throwforce = 5.0
 	throw_speed = 2
 	throw_range = 5
 	w_class = 3.0
@@ -336,8 +336,8 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		var/obj/machinery/bot/cleanbot/A = new /obj/machinery/bot/cleanbot(T)
 		A.name = src.created_name
 		user << "<span class='notice'>You add the robot arm to the bucket and sensor assembly. Beep boop!</span>"
-		user.drop_from_inventory(src)
-		del(src)
+		user.unEquip(src, 1)
+		del src
 
 	else if (istype(W, /obj/item/weapon/pen))
 		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)

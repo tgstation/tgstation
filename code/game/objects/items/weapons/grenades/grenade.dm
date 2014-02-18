@@ -5,7 +5,7 @@
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "grenade"
 	item_state = "flashbang"
-	throw_speed = 4
+	throw_speed = 3
 	throw_range = 20
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
@@ -78,7 +78,7 @@
 /obj/item/weapon/grenade/proc/update_mob()
 	if(ismob(loc))
 		var/mob/M = loc
-		M.drop_from_inventory(src)
+		M.unEquip(src)
 
 
 /obj/item/weapon/grenade/attackby(obj/item/weapon/W as obj, mob/user as mob)

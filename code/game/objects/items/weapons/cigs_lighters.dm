@@ -153,7 +153,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			e.start()
 			if(ismob(loc))
 				var/mob/M = loc
-				M.drop_from_inventory(src)
+				M.unEquip(src, 1)
 			del(src)
 			return
 		if(reagents.get_reagent_amount("fuel")) // the fuel explodes, too, but much less violently
@@ -162,7 +162,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			e.start()
 			if(ismob(loc))
 				var/mob/M = loc
-				M.drop_from_inventory(src)
+				M.unEquip(src, 1)
 			del(src)
 			return
 		flags &= ~NOREACT // allowing reagents to react after being lit
@@ -203,8 +203,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		processing_objects.Remove(src)
 		if(ismob(loc))
 			M << "<span class='notice'>Your [name] goes out.</span>"
-			M.u_equip(src)	//un-equip it so the overlays can update
-			M.update_inv_wear_mask(0)
+			M.unEquip(src, 1)	//un-equip it so the overlays can update //Force the un-equip so the overlays update
 		del(src)
 		return
 	if(location)
@@ -302,7 +301,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "cigbutt"
 	w_class = 1
-	throwforce = 1
+	throwforce = 0
 
 /obj/item/weapon/cigbutt/cigarbutt
 	name = "cigar butt"
@@ -411,7 +410,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/icon_on = "lighter-g-on"
 	var/icon_off = "lighter-g"
 	w_class = 1
-	throwforce = 4
+	throwforce = 0
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	attack_verb = null
@@ -527,8 +526,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(istype(target, /obj/item/weapon/reagent_containers/food/snacks/grown))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/O = target
 		if(O.dry)
-			user.u_equip(target)
-			user.u_equip(src)
+			user.unEquip(target, 1)
+			user.unEquip(src, 1)
 			var/obj/item/clothing/mask/cigarette/rollie/R = new /obj/item/clothing/mask/cigarette/rollie(user.loc)
 			R.chem_volume = target.reagents.total_volume
 			target.reagents.trans_to(R, R.chem_volume)

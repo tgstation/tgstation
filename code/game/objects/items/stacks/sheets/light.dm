@@ -6,7 +6,7 @@
 	w_class = 3.0
 	force = 3.0
 	throwforce = 5.0
-	throw_speed = 5
+	throw_speed = 3
 	throw_range = 20
 	flags = CONDUCT
 	max_amount = 60
@@ -21,18 +21,18 @@
 		var/obj/item/stack/sheet/glass/G = new (user.loc)
 		G.add_fingerprint(user)
 		if(amount <= 0)
-			user.drop_from_inventory(src)
+			user.unEquip(src, 1)
 			del(src)
 
 	if(istype(O,/obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = O
 		M.amount--
 		if(M.amount <= 0)
-			user.drop_from_inventory(M)
+			user.unEquip(M, 1)
 			del(M)
 		amount--
 		var/obj/item/stack/tile/light/L = new (user.loc)
 		L.add_fingerprint(user)
 		if(amount <= 0)
-			user.drop_from_inventory(src)
+			user.unEquip(src, 1)
 			del(src)

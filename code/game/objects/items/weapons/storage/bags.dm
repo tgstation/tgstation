@@ -164,7 +164,7 @@
 				break
 
 		if(!inserted || !S.amount)
-			usr.u_equip(S)
+			usr.unEquip(S)
 			if (usr.client && usr.s_active != src)
 				usr.client.screen -= S
 			S.dropped(usr)

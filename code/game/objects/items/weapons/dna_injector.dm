@@ -3,7 +3,7 @@
 	desc = "This injects the person with DNA."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "dnainjector"
-	throw_speed = 1
+	throw_speed = 3
 	throw_range = 5
 	w_class = 1.0
 

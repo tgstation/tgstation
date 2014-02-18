@@ -16,7 +16,7 @@
 
 /obj/item/toy
 	throwforce = 0
-	throw_speed = 4
+	throw_speed = 3
 	throw_range = 20
 	force = 0
 
@@ -87,7 +87,7 @@
 	name = "syndicate balloon"
 	desc = "There is a tag on the back that reads \"FUK NT!11!\"."
 	throwforce = 0
-	throw_speed = 4
+	throw_speed = 3
 	throw_range = 20
 	force = 0
 	icon = 'icons/obj/weapons.dmi'
@@ -339,14 +339,16 @@
 			user << "<span class='notice'>You try to attach the end of the plastic sword to... itself. You're not very smart, are you?</span>"
 			if(ishuman(user))
 				user.adjustBrainLoss(10)
+		else if((W.flags & NODROP) || (flags & NODROP))
+			user << "<span class='notice'>\the [flags & NODROP ? src : W] is stuck to your hand, you can't attach it to \the [flags & NODROP ? W : src]!</span>"
 		else
 			user << "<span class='notice'>You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool.</span>"
 			var/obj/item/weapon/twohanded/dualsaber/toy/newSaber = new /obj/item/weapon/twohanded/dualsaber/toy(user.loc)
 			if(hacked) // That's right, we'll only check the "original" "sword".
 				newSaber.hacked = 1
 				newSaber.item_color = "rainbow"
-			user.before_take_item(W)
-			user.before_take_item(src)
+			user.unEquip(W)
+			user.unEquip(src)
 			del(W)
 			del(src)
 	else if(istype(W, /obj/item/device/multitool))
@@ -374,7 +376,7 @@
 	desc = "A cheap, plastic replica of TWO energy swords.  Double the fun!"
 	force = 0
 	throwforce = 0
-	throw_speed = 1
+	throw_speed = 3
 	throw_range = 5
 	force_unwielded = 0
 	force_wielded = 0
@@ -572,7 +574,7 @@ obj/item/toy/cards
 	var/card_hitsound = null
 	var/card_force = 0
 	var/card_throwforce = 0
-	var/card_throw_speed = 4
+	var/card_throw_speed = 3
 	var/card_throw_range = 20
 	var/list/card_attack_verb = list("attacked")
 
@@ -653,8 +655,10 @@ obj/item/toy/cards/deck/attackby(obj/item/toy/cards/singlecard/C, mob/living/use
 	..()
 	if(istype(C))
 		if(C.parentdeck == src)
+			if(!user.unEquip(C))
+				user << "<span class='notice'>The card is stuck to your hand, you can't add it to the deck!</span>"
+				return
 			src.cards += C.cardname
-			user.u_equip(C)
 			user.visible_message("<span class='notice'>[user] adds a card to the bottom of the deck.</span>","<span class='notice'>You add the card to the bottom of the deck.</span>")
 			del(C)
 		else
@@ -670,9 +674,11 @@ obj/item/toy/cards/deck/attackby(obj/item/toy/cards/singlecard/C, mob/living/use
 obj/item/toy/cards/deck/attackby(obj/item/toy/cards/cardhand/C, mob/living/user)
 	..()
 	if(istype(C))
-		if(C.parentdeck == src)
+		if(C.parentdeck == src)		
+			if(!user.unEquip(C))
+				user << "<span class='notice'>The hand of cards is stuck to your hand, you can't add it to the deck!</span>"
+				return
 			src.cards += C.currenthand
-			user.u_equip(C)
 			user.visible_message("<span class='notice'>[user] puts their hand of cards in the deck.</span>", "<span class='notice'>You put the hand of cards in the deck.</span>")
 			del(C)
 		else
@@ -684,27 +690,24 @@ obj/item/toy/cards/deck/attackby(obj/item/toy/cards/cardhand/C, mob/living/user)
 		else if(cards.len > 1)
 			src.icon_state = "deck_[deckstyle]_low"
 
-obj/item/toy/cards/deck/MouseDrop(atom/over_object)
+/obj/item/toy/cards/deck/MouseDrop(atom/over_object)
 	var/mob/M = usr
 	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
 		return
 	if(Adjacent(usr))
-		if(over_object == M)
+		if(over_object == M && loc != M)
 			M.put_in_hands(src)
 			usr << "<span class='notice'>You pick up the deck.</span>"
 
 		else if(istype(over_object, /obj/screen))
 			switch(over_object.name)
-				if("r_hand")
-					M.u_equip(src)
-					M.put_in_r_hand(src)
-					usr << "<span class='notice'>You pick up the deck.</span>"
 				if("l_hand")
-					M.u_equip(src)
 					M.put_in_l_hand(src)
-					usr << "<span class='notice'>You pick up the deck.</span>"
+				else if("r_hand")
+					M.put_in_r_hand(src)
+				usr << "<span class='notice'>You pick up the deck.</span>"
 	else
-		usr<< "<span class='notice'>You can't reach it from here.</span>"
+		usr << "<span class='notice'>You can't reach it from here.</span>"
 
 
 
@@ -764,7 +767,7 @@ obj/item/toy/cards/cardhand/Topic(href, href_list)
 				N.parentdeck = src.parentdeck
 				N.cardname = src.currenthand[1]
 				N.apply_card_vars(N,O)
-				cardUser.u_equip(src)
+				cardUser.unEquip(src)
 				N.pickup(cardUser)
 				cardUser.put_in_any_hand_if_possible(N)
 				cardUser << "<span class='notice'>You also take [currenthand[1]] and hold it.</span>"
@@ -776,7 +779,7 @@ obj/item/toy/cards/cardhand/attackby(obj/item/toy/cards/singlecard/C, mob/living
 	if(istype(C))
 		if(C.parentdeck == src.parentdeck)
 			src.currenthand += C.cardname
-			user.u_equip(C)
+			user.unEquip(C)
 			user.visible_message("<span class='notice'>[user] adds a card to their hand.</span>", "<span class='notice'>You add the [C.cardname] to your hand.</span>")
 			interact(user)
 			if(currenthand.len > 4)
@@ -852,7 +855,7 @@ obj/item/toy/cards/singlecard/attackby(obj/item/I, mob/living/user)
 			H.currenthand += src.cardname
 			H.parentdeck = C.parentdeck
 			H.apply_card_vars(H,C)
-			user.u_equip(C)
+			user.unEquip(C)
 			H.pickup(user)
 			user.put_in_active_hand(H)
 			user << "<span class='notice'>You combine the [C.cardname] and the [src.cardname] into a hand.</span>"
@@ -865,7 +868,7 @@ obj/item/toy/cards/singlecard/attackby(obj/item/I, mob/living/user)
 		var/obj/item/toy/cards/cardhand/H = I
 		if(H.parentdeck == parentdeck)
 			H.currenthand += cardname
-			user.u_equip(src)
+			user.unEquip(src)
 			user.visible_message("<span class='notice'>[user] adds a card to \his hand.</span>", "<span class='notice'>You add the [cardname] to your hand.</span>")
 			H.interact(user)
 			if(H.currenthand.len > 4)
@@ -911,9 +914,9 @@ obj/item/toy/cards/deck/syndicate
 	desc = "A deck of space-grade playing cards. They seem unusually rigid."
 	deckstyle = "syndicate"
 	card_hitsound = 'sound/weapons/bladeslice.ogg'
-	card_force = 15
-	card_throwforce = 15
-	card_throw_speed = 6
+	card_force = 5
+	card_throwforce = 10
+	card_throw_speed = 3
 	card_throw_range = 20
 	card_attack_verb = list("attacked", "sliced", "diced", "slashed", "cut")
 

@@ -388,20 +388,26 @@
 				reagents.clear_reagents()
 				icon_state = "mixer0"
 		else if (href_list["createpill"]) //Also used for condiment packs.
+			if(reagents.total_volume == 0) return
 			if(!condi)
-				var/name = reject_bad_text(input(usr,"Name:","Name your pill!",reagents.get_master_reagent_name()))
+				var/amount = 1
+				var/vol_each = min(reagents.total_volume, 50)
+				if(text2num(href_list["many"]))
+					amount = min(max(round(input(usr, "Amount:", "How many pills?") as num), 1), 10)
+					vol_each = min(reagents.total_volume/amount, 50)
+				var/name = reject_bad_text(input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)"))
 				var/obj/item/weapon/reagent_containers/pill/P
 
-				if(loaded_pill_bottle && loaded_pill_bottle.contents.len < loaded_pill_bottle.storage_slots)
-					P = new/obj/item/weapon/reagent_containers/pill(loaded_pill_bottle)
-				else
-					P = new/obj/item/weapon/reagent_containers/pill(src.loc)
-
-				if(!name) name = reagents.get_master_reagent_name()
-				P.name = "[name] pill"
-				P.pixel_x = rand(-7, 7) //random position
-				P.pixel_y = rand(-7, 7)
-				reagents.trans_to(P,50)
+				for(var/i = 0; i < amount; i++)
+					if(loaded_pill_bottle && loaded_pill_bottle.contents.len < loaded_pill_bottle.storage_slots)
+						P = new/obj/item/weapon/reagent_containers/pill(loaded_pill_bottle)
+					else
+						P = new/obj/item/weapon/reagent_containers/pill(src.loc)
+					if(!name) name = reagents.get_master_reagent_name()
+					P.name = "[name] pill"
+					P.pixel_x = rand(-7, 7) //random position
+					P.pixel_y = rand(-7, 7)
+					reagents.trans_to(P,vol_each)
 			else
 				var/name = reject_bad_text(input(usr,"Name:","Name your bag!",reagents.get_master_reagent_name()))
 				var/obj/item/weapon/reagent_containers/food/condiment/pack/P = new/obj/item/weapon/reagent_containers/food/condiment/pack(src.loc)
@@ -479,7 +485,8 @@
 		else
 			dat += "Empty<BR>"
 		if(!condi)
-			dat += "<HR><BR><A href='?src=\ref[src];createpill=1'>Create pill (50 units max)</A><BR>"
+			dat += "<HR><BR><A href='?src=\ref[src];createpill=1;many=0'>Create pill (50 units max)</A><BR>"
+			dat += "<A href='?src=\ref[src];createpill=1;many=1'>Create pills (10 pills max)</A><BR><BR>"
 			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (30 units max)</A>"
 		else
 			dat += "<HR><BR><A href='?src=\ref[src];createpill=1'>Create pack (10 units max)</A><BR>"
@@ -948,7 +955,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				user << "Cannot refine into a reagent."
 				return 1
 
-		user.before_take_item(O)
+		user.unEquip(O)
 		O.loc = src
 		holdingitems += O
 		src.updateUsrDialog()

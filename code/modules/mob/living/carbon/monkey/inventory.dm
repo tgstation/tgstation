@@ -35,7 +35,7 @@
 			update_inv_r_hand(redraw_mob)
 		if(slot_in_backpack)
 			if(I == get_active_hand())
-				u_equip(I)
+				unEquip(I)
 			I.loc = back
 			return
 		else

@@ -39,7 +39,7 @@
 	force = 5
 	throwforce = 5
 	w_class = 3.0
-	throw_speed = 3
+	throw_speed = 2
 	throw_range = 3
 	plant_type = 2
 	origin_tech = "materials=1"
@@ -75,7 +75,7 @@
 		if(leaf.dry)
 			user.show_message("<span class='notice'>You wrap the [W] around the log, turning it into a torch!</span>")
 			var/obj/item/device/flashlight/flare/torch/T = new /obj/item/device/flashlight/flare/torch(user.loc)
-			usr.u_equip(W)
+			usr.unEquip(W)
 			usr.put_in_active_hand(T)
 			del(leaf)
 			del(src)
@@ -91,7 +91,7 @@
 	damtype = "fire"
 	force = 0
 	slot_flags = SLOT_HEAD
-	throwforce = 1
+	throwforce = 0
 	w_class = 1.0
 	throw_speed = 1
 	throw_range = 3
@@ -106,7 +106,7 @@
 	damtype = "fire"
 	force = 0
 	slot_flags = SLOT_HEAD
-	throwforce = 1
+	throwforce = 0
 	w_class = 1.0
 	throw_speed = 1
 	throw_range = 3
@@ -128,7 +128,7 @@
 	damtype = "fire"
 	force = 15
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	throwforce = 1
+	throwforce = 5
 	w_class = 1.0
 	throw_speed = 1
 	throw_range = 3
@@ -150,7 +150,7 @@
 	damtype = "fire"
 	force = 30
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	throwforce = 1
+	throwforce = 15
 	w_class = 1.0
 	throw_speed = 1
 	throw_range = 3
@@ -177,7 +177,7 @@
 	item_state = "banana_peel"
 	w_class = 1.0
 	throwforce = 0
-	throw_speed = 4
+	throw_speed = 3
 	throw_range = 20
 
 /obj/item/weapon/grown/corncob
@@ -188,5 +188,5 @@
 	item_state = "corncob"
 	w_class = 1.0
 	throwforce = 0
-	throw_speed = 4
+	throw_speed = 3
 	throw_range = 20
