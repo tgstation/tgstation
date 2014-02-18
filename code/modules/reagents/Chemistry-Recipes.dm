@@ -633,7 +633,19 @@ datum
 			required_reagents = list("toxin" = 1, "water" = 4)
 			result_amount = 5
 
+		weedkiller
+			name = "Weed Killer"
+			id = "weedkiller"
+			result = "weedkiller"
+			required_reagents = list("toxin" = 1, "ammonia" = 4)
+			result_amount = 5
 
+		pestkiller
+			name = "Pest Killer"
+			id = "pestkiller"
+			result = "pestkiller"
+			required_reagents = list("toxin" = 1, "ethanol" = 4)
+			result_amount = 5
 /////////////////////////////////////OLD SLIME CORE REACTIONS ///////////////////////////////
 /*
 		slimepepper

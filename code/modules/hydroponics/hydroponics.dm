@@ -500,8 +500,19 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			// Plant-B-Gone is just as bad
 			if(S.has_reagent("plantbgone", 1))
 				H.adjustHealth(-round(S.get_reagent_amount("plantbgone")*2))
-				H.adjustToxic(-round(S.get_reagent_amount("plantbgone")*3))
+				H.adjustToxic(round(S.get_reagent_amount("plantbgone")*3))
 				H.adjustWeeds(-rand(4,8))
+
+			//Weed Spray
+			if(S.has_reagent("weedkiller", 1))
+				H.adjustToxic(round(S.get_reagent_amount("weedkiller")*0.5))
+				//old toxicity was 4, each spray is default 10 (minimal of 5) so 5 and 2.5 are the new ammounts
+				H.adjustWeeds(-rand(1,2))
+
+			//Pest Spray
+			if(S.has_reagent("pestkiller", 1))
+				H.adjustToxic(round(S.get_reagent_amount("pestkiller")*0.5))
+				H.adjustPests(-rand(1,2))
 
 			// Healing
 			if(S.has_reagent("cryoxadone", 1))
@@ -621,7 +632,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		else
 			user << "<span class='notice'>This plot is completely devoid of weeds. It doesn't need uprooting.</span>"
 
-	else if( istype(O, /obj/item/weapon/weedspray) )
+	/*else if( istype(O, /obj/item/weapon/reagent_containers/spray/weedspray) )
 		var/obj/item/weedkiller/myWKiller = O
 		user.u_equip(O)
 		adjustToxic(myWKiller.toxicity)
@@ -629,7 +640,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		user << "You apply the weedkiller solution into [src]."
 		playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 		del(O)
-		update_icon()
+		update_icon()*/
 
 	else if(istype(O, /obj/item/weapon/storage/bag/plants))
 		attack_hand(user)
@@ -639,7 +650,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				return
 			S.handle_item_insertion(G, 1)
 
-	else if( istype(O, /obj/item/weapon/pestspray) )
+	/*else if( istype(O, /obj/item/weapon/reagent_containers/spray/pestspray) )
 		var/obj/item/pestkiller/myPKiller = O
 		user.u_equip(O)
 		adjustToxic(myPKiller.toxicity)
@@ -647,7 +658,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		user << "You apply the pestkiller solution into [src]."
 		playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 		del(O)
-		update_icon()
+		update_icon()*/
 
 	else if(istype(O, /obj/item/weapon/wrench) && unwrenchable)
 		if(anchored==2)

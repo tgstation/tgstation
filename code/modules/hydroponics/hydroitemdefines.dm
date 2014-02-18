@@ -14,12 +14,13 @@
 // Hydroponics Tools
 // *************************************
 
-/obj/item/weapon/weedspray // -- Skie
+/obj/item/weapon/reagent_containers/spray/weedspray // -- Skie
 	desc = "It's a toxic mixture, in spray form, to kill small weeds."
 	icon = 'icons/obj/hydroponics.dmi'
 	name = "weed-spray"
 	icon_state = "weedspray"
 	item_state = "spray"
+	volume = 100
 	flags = OPENCONTAINER
 	slot_flags = SLOT_BELT
 	throwforce = 0
@@ -29,16 +30,21 @@
 	var/toxicity = 4
 	var/WeedKillStr = 2
 
+	New()
+		..()
+		reagents.add_reagent("weedkiller", 100)
+
 	suicide_act(mob/user)
 		viewers(user) << "<span class='suicide'>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</span>"
 		return (TOXLOSS)
 
-/obj/item/weapon/pestspray // -- Skie
+/obj/item/weapon/reagent_containers/spray/pestspray // -- Skie
 	desc = "It's some pest eliminator spray! <I>Do not inhale!</I>"
 	icon = 'icons/obj/hydroponics.dmi'
 	name = "pest-spray"
 	icon_state = "pestspray"
 	item_state = "spray"
+	volume = 100
 	flags = OPENCONTAINER
 	slot_flags = SLOT_BELT
 	throwforce = 0
@@ -47,6 +53,10 @@
 	throw_range = 10
 	var/toxicity = 4
 	var/PestKillStr = 2
+
+	New()
+		..()
+		reagents.add_reagent("pestkiller", 100)
 
 	suicide_act(mob/user)
 		viewers(user) << "<span class='suicide'>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</span>"
@@ -98,7 +108,8 @@
 	icon_state = "bottle18"
 	New()
 		..()
-		reagents.add_reagent("mutagen", 5)
+		reagents.add_reagent("nutriment", 28)
+		reagents.add_reagent("radium", 2)
 
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh
 	name = "bottle of Robust Harvest"
@@ -106,13 +117,14 @@
 	icon_state = "bottle15"
 	New()
 		..()
+		reagents.add_reagent("nutriment", 20)
 		reagents.add_reagent("diethylamine", 10)
 
 
 // *************************************
 // Pestkiller defines for hydroponics
 // *************************************
-
+/*
 /obj/item/pestkiller
 	name = "bottle of pestkiller"
 	icon = 'icons/obj/chemical.dmi'
@@ -152,11 +164,11 @@
 	New()
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
-
+*/
 // *************************************
 // Weedkiller defines for hydroponics
 // *************************************
-
+/*
 /obj/item/weedkiller
 	name = "bottle of weedkiller"
 	icon = 'icons/obj/chemical.dmi'
@@ -184,3 +196,4 @@
 	icon_state = "bottle15"
 	toxicity = 8
 	WeedKillStr = 7
+*/
