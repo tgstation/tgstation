@@ -480,7 +480,7 @@
 				if("assistant_ratio")
 					config.assistantratio = text2num(value)
 				if("copy_logs")
-					config.copy_logs = value
+					copy_logs() // Just copy the logs.
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
