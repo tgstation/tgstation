@@ -5,8 +5,8 @@
         if(istype(I, /obj/item/device/assembly/igniter))
                 var/obj/item/device/assembly/igniter/G = I
                 var/obj/item/weapon/grenade/iedcasing/W = new /obj/item/weapon/grenade/iedcasing
-                user.before_take_item(G)
-                user.before_take_item(src)
+                user.unEquip(G)
+                user.unEquip(src)
                 user.put_in_hands(W)
                 user << "<span  class='notice'>You stuff the [I] in the [src], emptying the contents beforehand.</span>"
                 W.underlays += image(src.icon, icon_state = src.icon_state)

@@ -101,7 +101,9 @@
 /obj/machinery/smartfridge/proc/load(var/obj/item/O as obj)
 	if(istype(O.loc,/mob))
 		var/mob/M = O.loc
-		M.before_take_item(O)
+		if(!M.unEquip(O))
+			usr << "<span class='notice'>\the [O] is stuck to your hand, you cannot put it in \the [src]</span>"
+			return
 	else if(istype(O.loc,/obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = O.loc
 		S.remove_from_storage(O,src)

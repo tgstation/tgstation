@@ -75,7 +75,7 @@
 		if(leaf.dry)
 			user.show_message("<span class='notice'>You wrap the [W] around the log, turning it into a torch!</span>")
 			var/obj/item/device/flashlight/flare/torch/T = new /obj/item/device/flashlight/flare/torch(user.loc)
-			usr.u_equip(W)
+			usr.unEquip(W)
 			usr.put_in_active_hand(T)
 			del(leaf)
 			del(src)
