@@ -160,7 +160,6 @@
 	var/j
 	for(var/i = 1 to atoms.len)
 		var/atom/c = atoms[i]
-		j = sorted.len
 		for(j = sorted.len, j > 0, --j)
 			var/atom/c2 = sorted[j]
 			if(c2.layer <= c.layer)
@@ -174,30 +173,19 @@
 		if(istype(A, /mob/living) && A:lying)
 			img.Turn(A:lying)
 
-		var/blendMode = A.blend_mode
-		switch(blendMode)
-			if(BLEND_MULTIPLY) blendMode = ICON_MULTIPLY
-			if(BLEND_ADD)      blendMode = ICON_ADD
-			if(BLEND_SUBTRACT) blendMode = ICON_SUBTRACT
-			else               blendMode = ICON_OVERLAY
-
 		var/offX = 32 * (A.x - center.x) + A.pixel_x + 33
 		var/offY = 32 * (A.y - center.y) + A.pixel_y + 33
 		if(istype(A, /atom/movable))
 			offX += A:step_x
 			offY += A:step_y
 
-		if(istype(img, /icon))
-			res.Blend(new/icon(img, "", A.dir), blendMode, offX, offY)
+		res.Blend(img, blendMode2iconMode(A.blend_mode), offX, offY)
 
 		if(istype(A, /obj/item/blueprints))
 			blueprints = 1
 
 	for(var/turf/T in turfs)
-		//res.Blend(getFlatIcon(T.loc), ICON_OVERLAY, 32 * (T.x - center.x) + 33, 32 * (T.y - center.y) + 33)
-		var/image/shading = T.loc:lighting_overlay
-		if(istype(shading))
-			res.Blend(icon(shading.icon, shading.icon_state), ICON_OVERLAY, 32 * (T.x - center.x) + 33, 32 * (T.y - center.y) + 33)
+		res.Blend(getFlatIcon(T.loc), blendMode2iconMode(T.blend_mode), 32 * (T.x - center.x) + 33, 32 * (T.y - center.y) + 33)
 
 	return res
 
