@@ -12,7 +12,7 @@
 	name = "first-aid kit"
 	desc = "It's an emergency medical kit for those serious boo-boos."
 	icon_state = "firstaid"
-	throw_speed = 2
+	throw_speed = 3
 	throw_range = 8
 	var/empty = 0
 
@@ -191,6 +191,17 @@
 		new /obj/item/weapon/reagent_containers/pill/inaprovaline( src )
 		new /obj/item/weapon/reagent_containers/pill/inaprovaline( src )
 
+/obj/item/weapon/storage/pill_bottle/stimulant
+	name = "bottle of stimulant pills"
+	desc = "Guaranteed to give you that extra burst of energy during a long shift!"
+
+/obj/item/weapon/storage/pill_bottle/stimulant/New()
+	..()
+	new /obj/item/weapon/reagent_containers/pill/stimulant( src )
+	new /obj/item/weapon/reagent_containers/pill/stimulant( src )
+	new /obj/item/weapon/reagent_containers/pill/stimulant( src )
+	new /obj/item/weapon/reagent_containers/pill/stimulant( src )
+	new /obj/item/weapon/reagent_containers/pill/stimulant( src )
 
 /obj/item/weapon/storage/pill_bottle/dice
 	name = "bag of dice"

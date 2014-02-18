@@ -16,7 +16,7 @@
 	force = 40.0
 	throwforce = 25.0
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	throw_speed = 1
+	throw_speed = 3
 	throw_range = 5
 	w_class = 3.0
 	flags = CONDUCT | NOSHIELD
@@ -51,7 +51,7 @@
 	force = 3.0
 	throwforce = 5.0
 	hitsound = "swing_hit" //it starts deactivated
-	throw_speed = 1
+	throw_speed = 3
 	throw_range = 5
 	w_class = 2.0
 	flags = NOSHIELD
@@ -166,7 +166,7 @@
 	force = 70.0//Normal attacks deal very high damage.
 	hitsound = 'sound/weapons/blade1.ogg'
 	throwforce = 1//Throwing or dropping the item deletes it.
-	throw_speed = 1
+	throw_speed = 3
 	throw_range = 1
 	w_class = 4.0//So you can't hide it in your pocket or some such.
 	flags = NOSHIELD

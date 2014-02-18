@@ -16,7 +16,7 @@
 
 /obj/item/toy
 	throwforce = 0
-	throw_speed = 4
+	throw_speed = 3
 	throw_range = 20
 	force = 0
 
@@ -87,7 +87,7 @@
 	name = "syndicate balloon"
 	desc = "There is a tag on the back that reads \"FUK NT!11!\"."
 	throwforce = 0
-	throw_speed = 4
+	throw_speed = 3
 	throw_range = 20
 	force = 0
 	icon = 'icons/obj/weapons.dmi'
@@ -374,7 +374,7 @@
 	desc = "A cheap, plastic replica of TWO energy swords.  Double the fun!"
 	force = 0
 	throwforce = 0
-	throw_speed = 1
+	throw_speed = 3
 	throw_range = 5
 	force_unwielded = 0
 	force_wielded = 0
@@ -572,7 +572,7 @@ obj/item/toy/cards
 	var/card_hitsound = null
 	var/card_force = 0
 	var/card_throwforce = 0
-	var/card_throw_speed = 4
+	var/card_throw_speed = 3
 	var/card_throw_range = 20
 	var/list/card_attack_verb = list("attacked")
 
@@ -913,7 +913,7 @@ obj/item/toy/cards/deck/syndicate
 	card_hitsound = 'sound/weapons/bladeslice.ogg'
 	card_force = 5
 	card_throwforce = 10
-	card_throw_speed = 6
+	card_throw_speed = 3
 	card_throw_range = 20
 	card_attack_verb = list("attacked", "sliced", "diced", "slashed", "cut")
 

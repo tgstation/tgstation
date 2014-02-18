@@ -47,7 +47,7 @@
 	m_amt = 50000
 	throwforce = 2
 	w_class = 1.0
-	throw_speed = 4
+	throw_speed = 3
 	throw_range = 10
 	var/list/stored_ammo = list()
 	var/ammo_type = /obj/item/ammo_casing

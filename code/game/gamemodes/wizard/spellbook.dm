@@ -3,7 +3,7 @@
 	desc = "The legendary book of spells of the wizard."
 	icon = 'icons/obj/library.dmi'
 	icon_state ="book"
-	throw_speed = 1
+	throw_speed = 2
 	throw_range = 5
 	w_class = 1.0
 	var/uses = 5

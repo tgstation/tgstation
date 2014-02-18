@@ -7,11 +7,23 @@
 	name = "Mine"
 	icon_state = "explored"
 	music = null
+	always_unpowered = 1
+	requires_power = 1
+	poweralm = 0
+	power_environ = 0
+	power_equip = 0
+	power_light = 0
 
 /area/mine/unexplored
 	name = "Mine"
 	icon_state = "unexplored"
 	music = null
+	always_unpowered = 1
+	requires_power = 1
+	poweralm = 0
+	power_environ = 0
+	power_equip = 0
+	power_light = 0
 
 /area/mine/lobby
 	name = "Mining station"
