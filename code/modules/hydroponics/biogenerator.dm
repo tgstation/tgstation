@@ -54,7 +54,7 @@
 		if(beaker)
 			user << "\red The biogenerator already occuped."
 		else
-			user.before_take_item(O)
+			user.unEquip(O)
 			O.loc = src
 			beaker = O
 			updateUsrDialog()
@@ -86,7 +86,7 @@
 		if(i >= 10)
 			user << "\red The biogenerator is full! Activate it."
 		else
-			user.before_take_item(O)
+			user.unEquip(O)
 			O.loc = src
 			user << "\blue You put [O.name] in [src.name]"
 

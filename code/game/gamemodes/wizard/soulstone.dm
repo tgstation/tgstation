@@ -107,7 +107,7 @@
 							U << "\red <b>Capture failed!</b>: \black The soul stone is full! Use or free an existing soul to make room."
 						else
 							for(var/obj/item/W in T)
-								T.drop_from_inventory(W)
+								T.unEquip(W)
 							new /obj/effect/decal/remains/human(T.loc) //Spawns a skeleton
 							T.invisibility = 101
 							var/atom/movable/overlay/animation = new /atom/movable/overlay( T.loc )

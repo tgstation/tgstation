@@ -1570,7 +1570,7 @@ turf/simulated/floor/return_siding_icon_state()
 		if(is_light_floor())
 			var/obj/item/stack/tile/light/T = floor_tile
 			if(T.state)
-				user.u_equip(C)
+				user.unEquip(C)
 				del(C)
 				T.state = C //fixing it by bashing it with a light bulb, fun eh?
 				update_icon()

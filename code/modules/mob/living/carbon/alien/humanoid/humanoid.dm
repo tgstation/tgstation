@@ -379,5 +379,5 @@ In all, this is a lot like the monkey code. /N
 			visible_message("<span class='danger'>[usr] tries to empty [src]'s pouches.</span>", \
 							"<span class='userdanger'>[usr] tries to empty [src]'s pouches.</span>")
 			if(do_mob(usr, src, STRIP_DELAY * 0.5))
-				u_equip(r_store)
-				u_equip(l_store)
+				unEquip(r_store)
+				unEquip(l_store)

@@ -46,10 +46,12 @@
 		if(!( M.restrained() ) && !( M.stat ))
 			switch(over_object.name)
 				if("r_hand")
-					M.u_equip(src)
+					if(!M.unEquip(src))
+						return
 					M.put_in_r_hand(src)
 				if("l_hand")
-					M.u_equip(src)
+					if(!M.unEquip(src))
+						return
 					M.put_in_l_hand(src)
 			add_fingerprint(usr)
 			return
@@ -233,6 +235,11 @@
 			if(!stop_messages)
 				usr << "<span class='notice'>[src] cannot hold [W] as it's a storage item of the same size.</span>"
 			return 0 //To prevent the stacking of same sized storage items.
+
+	if(W.flags & NODROP) //SHOULD be handled in unEquip, but better safe than sorry.
+		usr << "<span class='notice'>\the [W] is stuck to your hand, you can't put it in \the [src]</span>"
+		return 0
+
 	return 1
 
 
@@ -242,7 +249,8 @@
 /obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W, prevent_warning = 0)
 	if(!istype(W)) return 0
 	if(usr)
-		usr.u_equip(W)
+		if(!usr.unEquip(W))
+			return 0
 	W.loc = src
 	W.on_enter_storage(src)
 	if(usr)
