@@ -87,7 +87,7 @@
 				M.dna.UpdateSE()
 			else
 				M.dna.SetSEValue(block,src.GetValue())
-			domutcheck(M, null, block!=null)
+			domutcheck(M, null)
 			uses--
 			if(prob(5))
 				trigger_side_effect(M)
