@@ -72,7 +72,7 @@ var/global/list/uncollectable_vars=list(
 				waiting--
 		for(var/i=0;i<min(destroyed.len,GC_COLLECTIONS_PER_TICK);i++)
 			if(destroyed.len)
-				var/refID=destroyed[0]
+				var/refID=destroyed[1]
 				var/atom/A = locate(refID)
 				if(A && A.gc_destroyed && A.gc_destroyed >= world.time - GC_COLLECTION_TIMEOUT)
 					// Something's still referring to the qdel'd object.  Kill it.
