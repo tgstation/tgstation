@@ -236,19 +236,16 @@ a.notsmelting {
 
 		// Collect ore even if not on.
 		for (i = 0; i < 10; i++)
-			var/obj/item/O
-			O = locate(/obj/item, input.loc)
-			if (O)
-				for(var/ore_id in ore.storage)
-					var/datum/material/po=ore.getMaterial(ore_id)
-					if (po.oretype && istype(O,po.oretype))
-						po.stored++
-						qdel(O)
-						break
-				if(O)
-					O.loc = src.output.loc
-			else
-				break
+			var/obj/item/I = locate(/obj/item, input.loc)
+			if(istype(I,/obj/item/weapon/ore))
+				var/obj/item/weapon/ore/O=I
+				var/datum/material/po=ore.getMaterial(O.material)
+				if (po.oretype && istype(O,po.oretype))
+					po.stored++
+					qdel(O)
+					continue
+			if(I)
+				I.loc = src.output.loc
 	return
 
 /////////////////////////////////////////////////

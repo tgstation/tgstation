@@ -45,12 +45,6 @@
 		var/datum/material/mat = materials.getMaterial(O.material)
 		mat.stored += processed_sheet.amount //Stack the sheets
 		O.loc = null //Let the old sheet garbage collect
-		/* What the fuck is the point of this?
-		while(mat.stored > stack_amt) //Get rid of excessive stackage
-			var/obj/item/stack/sheet/out = new mat.sheettype(output.loc)
-			out.amount = stack_amt-mat.stored
-			mat.stored -= out.amount
-		*/
 
 /obj/machinery/mineral/ore_redemption/process()
 	var/turf/T = get_turf(input)
