@@ -18,7 +18,9 @@
 		else
 			del(src)
 
-/obj/machinery/mineral/stacking_unit_console/attack_hand(user as mob)
+/obj/machinery/mineral/stacking_unit_console/attack_hand(mob/user as mob)
+	if(!user.has_arms())
+		return
 
 	var/obj/item/stack/sheet/s
 	var/dat

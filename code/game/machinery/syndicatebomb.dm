@@ -100,6 +100,8 @@
 		..()
 
 /obj/machinery/syndicatebomb/attack_hand(var/mob/user)
+	if(!user.has_arms())
+		return
 	interact(user)
 
 /obj/machinery/syndicatebomb/interact(var/mob/user)

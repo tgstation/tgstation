@@ -85,6 +85,8 @@
 		mybag.attackby(I, user)
 
 /obj/structure/janitorialcart/attack_hand(mob/user)
+	if(!user.has_arms())
+		return
 	user.set_machine(src)
 	var/dat
 	if(mybag)

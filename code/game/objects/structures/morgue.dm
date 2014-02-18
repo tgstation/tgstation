@@ -79,6 +79,9 @@
 	return src.attack_hand(user)
 
 /obj/structure/morgue/attack_hand(mob/user as mob)
+	if(!user.has_arms())
+		return
+
 	if (src.connected)
 		for(var/atom/movable/A as mob|obj in src.connected.loc)
 			if (!( A.anchored ))

@@ -52,7 +52,9 @@
 			return
 
 
-/obj/machinery/mineral/mint/attack_hand(user as mob) //TODO: Adamantine coins! -Durandan
+/obj/machinery/mineral/mint/attack_hand(mob/user as mob) //TODO: Adamantine coins! -Durandan
+	if(!user.has_arms())
+		return
 
 	var/dat = "<b>Coin Press</b><br>"
 

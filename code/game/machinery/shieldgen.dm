@@ -229,6 +229,9 @@
 	checkhp()
 
 /obj/machinery/shieldgen/attack_hand(mob/user as mob)
+	if(!user.has_arms())
+		return
+
 	if(locked)
 		user << "The machine is locked, you are unable to use it."
 		return

@@ -249,6 +249,8 @@
 	attack_hand(mob/user as mob)
 		if(stat & (BROKEN|NOPOWER))
 			return
+		if(!user.has_arms())
+			return
 		user.set_machine(src)
 		var/dat = "<B>Magnetic Control Console</B><BR><BR>"
 		if(!autolink)

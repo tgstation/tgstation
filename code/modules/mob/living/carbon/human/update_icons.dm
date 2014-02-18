@@ -426,10 +426,14 @@ Please contact me on #coderbus IRC. ~Carnie x
 		if(gloves.blood_DNA)
 			if(has_arms())
 				standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
+			else
+				standing.overlays 	-= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
 	else
 		if(blood_DNA)
 			if(has_arms())
 				overlays_standing[GLOVES_LAYER]	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
+			else
+				overlays_standing[GLOVES_LAYER] = null
 
 	apply_overlay(GLOVES_LAYER)
 

@@ -34,6 +34,8 @@
 		return
 
 	attack_hand(mob/user as mob)
+		if(!user.has_arms())
+			return
 		// taking pinned targets off!
 		if(pinned_target)
 			density = 1

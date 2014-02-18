@@ -66,6 +66,9 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 
+	if(!user.has_arms())
+		return
+
 	if(!allowed(user) && (wires & 1))
 		user << "\red Access Denied"
 		flick("doorctrl-denied",src)

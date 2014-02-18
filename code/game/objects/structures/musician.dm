@@ -310,6 +310,8 @@
 		icon_state = "piano"
 
 /obj/structure/piano/attack_hand(mob/user as mob)
+	if(!user.has_arms())
+		return
 	interact(user)
 
 /obj/structure/piano/interact(mob/user as mob)

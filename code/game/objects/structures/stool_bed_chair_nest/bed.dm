@@ -27,6 +27,9 @@
 	return src.attack_hand(user)
 
 /obj/structure/stool/bed/attack_hand(mob/user as mob)
+	if(!user.has_arms())
+		return
+
 	manual_unbuckle(user)
 	return
 

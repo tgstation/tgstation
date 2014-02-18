@@ -165,10 +165,14 @@ emp_act
 	if(I.flags & SHARP)
 		affecting.dismember(I, MELEE_DISM, 0) //DISMEMBERMENT - It's about time - RR
 
-	if(affecting && affecting.status != ORGAN_REMOVED)
+	if(affecting && affecting.status != ORGAN_REMOVED && I) //Check I still exists, fixes an arm_blade + dismemberment runtime
 		apply_damage(I.force, I.damtype, affecting, armor , I)
 
 	var/bloody = 0
+
+	if(!I) //Another place I may have disappeared, arm_blade + dismemberment runtime fix
+		return 0
+
 	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (I.force * 2)))
 		if(affecting.status == ORGAN_ORGANIC)
 			I.add_blood(src)	//Make the weapon bloody, not the person.

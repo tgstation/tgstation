@@ -103,6 +103,8 @@
 /obj/structure/window/attack_hand(mob/user as mob)
 	if(!can_be_reached(user))
 		return
+	if(!user.has_arms())
+		return
 	if(HULK in user.mutations)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
 		user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")

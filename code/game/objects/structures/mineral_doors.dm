@@ -54,6 +54,8 @@
 		return TryToSwitchState(user)
 
 	attack_hand(mob/user as mob)
+		if(!user.has_arms())
+			return
 		return TryToSwitchState(user)
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)

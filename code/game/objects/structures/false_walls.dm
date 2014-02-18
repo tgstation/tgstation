@@ -56,6 +56,9 @@
 	if(opening)
 		return
 
+	if(!user.has_arms())
+		return
+
 	if(density)
 		opening = 1
 		icon_state = "[mineral]fwall_open"

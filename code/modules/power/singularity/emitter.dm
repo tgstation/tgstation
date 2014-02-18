@@ -54,6 +54,9 @@
 
 
 /obj/machinery/power/emitter/attack_hand(mob/user as mob)
+	if(!user.has_arms())
+		return
+
 	src.add_fingerprint(user)
 	if(state == 2)
 		if(!powernet)

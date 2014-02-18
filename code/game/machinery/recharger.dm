@@ -40,6 +40,8 @@
 
 
 /obj/machinery/recharger/attack_hand(mob/user)
+	if(!user.has_arms())
+		return
 	if(issilicon(user))
 		return
 

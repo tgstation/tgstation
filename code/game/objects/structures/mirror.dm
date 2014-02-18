@@ -12,6 +12,9 @@
 /obj/structure/mirror/attack_hand(mob/user as mob)
 	if(shattered)	return
 
+	if(!user.has_arms())
+		return
+
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 

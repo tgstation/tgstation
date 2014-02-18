@@ -253,6 +253,9 @@
 	return src.attack_hand(user)
 
 /obj/structure/closet/attack_hand(mob/user as mob)
+	if(!user.has_arms())
+		return
+
 	src.add_fingerprint(user)
 
 	if(!src.toggle())

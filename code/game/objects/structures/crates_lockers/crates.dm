@@ -270,6 +270,9 @@
 	return 1
 
 /obj/structure/closet/crate/attack_hand(mob/user as mob)
+	if(!user.has_arms())
+		return
+
 	if(opened)
 		close()
 	else

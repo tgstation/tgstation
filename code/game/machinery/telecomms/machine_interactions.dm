@@ -99,6 +99,8 @@
 	attack_hand(user)
 
 /obj/machinery/telecomms/attack_hand(var/mob/user as mob)
+	if(!user.has_arms())
+		return
 
 	// You need a multitool to use this, or be silicon
 	if(!issilicon(user))
