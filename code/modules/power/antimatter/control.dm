@@ -174,7 +174,7 @@
 		W.loc = src
 		if(user.client)
 			user.client.screen -= W
-		user.u_equip(W)
+		user.unEquip(W)
 		user.update_icons()
 		user.visible_message("[user.name] loads an [W.name] into the [src.name].", \
 				"You load an [W.name].", \

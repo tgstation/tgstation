@@ -32,5 +32,5 @@
 		amount--
 		new/obj/item/stack/light_w(user.loc)
 		if(amount <= 0)
-			user.drop_from_inventory(src)
+			user.unEquip(src, 1)
 			del(src)

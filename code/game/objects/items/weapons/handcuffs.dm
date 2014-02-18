@@ -94,7 +94,7 @@
 		var/obj/item/weapon/wirerod/W = new /obj/item/weapon/wirerod
 		R.use(1)
 
-		user.before_take_item(src)
+		user.unEquip(src)
 
 		user.put_in_hands(W)
 		user << "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>"

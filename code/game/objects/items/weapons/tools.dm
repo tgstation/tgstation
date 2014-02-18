@@ -362,7 +362,7 @@
 		var/obj/item/stack/rods/R = I
 		R.use(1)
 		var/obj/item/weapon/flamethrower/F = new /obj/item/weapon/flamethrower(user.loc)
-		user.drop_from_inventory(src)
+		user.unEquip(src)
 		loc = F
 		F.weldtool = src
 		add_fingerprint(user)
