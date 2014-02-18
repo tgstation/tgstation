@@ -200,7 +200,7 @@ move an amendment</a> to the drawing.</p>
 	for (var/obj/structure/window/W in T2)
 		if(turn(dir,180) == W.dir)
 			return BORDER_BETWEEN
-		if (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST))
+		if (W.is_fulltile())
 			return BORDER_2NDTILE
 	for(var/obj/machinery/door/window/D in T2)
 		if(turn(dir,180) == D.dir)
@@ -225,7 +225,7 @@ move an amendment</a> to the drawing.</p>
 		for (var/dir in cardinal)
 			var/skip = 0
 			for (var/obj/structure/window/W in T)
-				if(dir == W.dir || (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)))
+				if(dir == W.dir || (W.is_fulltile()))
 					skip = 1; break
 			if (skip) continue
 			for(var/obj/machinery/door/window/D in T)

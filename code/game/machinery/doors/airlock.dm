@@ -1148,9 +1148,8 @@ About the new airlock wires panel:
 
 	for(var/turf/T in loc)
 		var/obj/structure/window/W = locate(/obj/structure/window) in T
-
 		if (W)
-			W.ex_act(2)
+			W.destroy()
 
 	..()
 	return

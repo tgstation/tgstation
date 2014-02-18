@@ -91,7 +91,7 @@ proc/move_mining_shuttle()
 			if(istype(A,/obj/structure/lattice) \
 				|| istype(A, /obj/structure/window) \
 				|| istype(A, /obj/structure/grille))
-				del(A)
+				qdel(A)
 
 		fromArea.move_contents_to(toArea)
 		if (mining_shuttle_location)

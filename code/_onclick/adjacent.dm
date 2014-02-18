@@ -46,7 +46,7 @@
 			continue // could not leave T0 in that direction
 
 		var/turf/T1 = get_step(T0,d)
-		if(!T1 || T1.density || !T1.ClickCross(get_dir(T1,T0) & get_dir(T1,src), border_only = 0))
+		if(!T1 || T1.density || !T1.ClickCross(get_dir(T1,T0) | get_dir(T1,src), border_only = 0))
 			continue // couldn't enter or couldn't leave T1
 
 		if(!src.ClickCross(get_dir(src,T1), border_only = 1, target_atom = target))

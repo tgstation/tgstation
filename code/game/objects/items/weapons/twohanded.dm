@@ -160,20 +160,15 @@ obj/item/weapon/twohanded/
 	if(!proximity) return
 	..()
 	if(A && wielded && (istype(A,/obj/structure/window) || istype(A,/obj/structure/grille))) //destroys windows and grilles in one hit
-		if(istype(A,/obj/structure/window)) //should just make a window.Break() proc but couldn't bother with it
+		if(istype(A,/obj/structure/window))
 			var/pdiff=performWallPressureCheck(A.loc)
 			if(pdiff>0)
 				message_admins("[A] with pdiff [pdiff] fire-axed by [user.real_name] ([formatPlayerPanel(user,user.ckey)]) at [formatJumpTo(A.loc)]!")
 				log_admin("[A] with pdiff [pdiff] fire-axed by [user.real_name] ([user.ckey]) at [A.loc]!")
 			var/obj/structure/window/W = A
-
-			new /obj/item/weapon/shard( W.loc )
-			if(W.reinf) new /obj/item/stack/rods( W.loc)
-
-			if (W.dir == SOUTHWEST)
-				new /obj/item/weapon/shard( W.loc )
-				if(W.reinf) new /obj/item/stack/rods( W.loc)
-		del(A)
+			W.destroy()
+		else
+			del(A)
 
 
 /*
