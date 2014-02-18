@@ -138,7 +138,7 @@ This is to cycle sounds forward
 
 
 		else
-			return
+			sound_flag = 12
 
 /*
 And backwards
@@ -202,7 +202,7 @@ And backwards
 
 
 		else
-			return
+			sound_flag = 0
 		
 		
 		
