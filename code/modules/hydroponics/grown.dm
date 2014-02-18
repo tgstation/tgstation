@@ -17,7 +17,6 @@
 	var/production = 0
 	var/yield = 0
 	var/plant_type = 0
-	var/dry = 0
 	icon = 'icons/obj/harvest.dmi'
 	potency = -1
 
