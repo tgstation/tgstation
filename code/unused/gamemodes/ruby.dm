@@ -262,7 +262,7 @@
 	icon_state = "wepon"
 	w_class = 3.0
 	throwforce = 60.0
-	throw_speed = 2
+	throw_speed = 1
 	throw_range = 20
 	force = 24.0
 	var/mob/owner

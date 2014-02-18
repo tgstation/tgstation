@@ -6,7 +6,7 @@
 	var/works = 0
 	var/datum/disease2/disease/virus2 = null
 	item_state = "syringe_0"
-	throw_speed = 1
+	throw_speed = 3
 	throw_range = 5
 	w_class = 2.0
 
