@@ -1,2 +1,3 @@
 /proc/copy_logs(var/where)
-	ext_python("copy_logs.py", "data/logs \"[where]\"")
+	if(config.copy_logs)
+		ext_python("copy_logs.py", "data/logs \"[config.copy_logs]\"")
