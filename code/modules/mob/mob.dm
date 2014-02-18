@@ -670,15 +670,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 					continue
 				statpanel(listed_turf.name, null, A)
 
-
-	if(mind)
-		add_spells_to_statpanel(mind.spell_list)
-	add_spells_to_statpanel(mob_spell_list)
-
-
-/mob/proc/add_spells_to_statpanel(var/list/spells)
-	for(var/obj/effect/proc_holder/spell/S in spells)
-		if(S.can_be_cast_by(src))
+	if(spell_list.len)
+		for(var/obj/effect/proc_holder/spell/S in spell_list)
 			switch(S.charge_type)
 				if("recharge")
 					statpanel("[S.panel]","[S.charge_counter/10.0]/[S.charge_max/10]",S)
@@ -686,6 +679,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 					statpanel("[S.panel]","[S.charge_counter]/[S.charge_max]",S)
 				if("holdervar")
 					statpanel("[S.panel]","[S.holder_var_type] [S.holder_var_amount]",S)
+
 
 
 // facing verbs
