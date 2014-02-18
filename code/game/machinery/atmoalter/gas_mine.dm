@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/miner
 	name = "gas miner"
-	desc = "Gasses mined from the gas giant below flow out through these vents."
+	desc = "Gasses mined from the gas giant below (above?) flow out through this massive vent."
 	icon = 'icons/obj/atmospherics/miner.dmi'
 	icon_state = "miner"
 	power_channel=ENVIRON
@@ -25,9 +25,22 @@
 	AddAir()
 	air_contents.update_values()
 	update_icon()
-	power_change()
 
 /obj/machinery/atmospherics/miner/power_change()
+	..()
+	update_icon()
+
+/obj/machinery/atmospherics/miner/attack_ghost(var/mob/user)
+	return
+
+/obj/machinery/atmospherics/miner/attack_hand(var/mob/user)
+	..()
+	on=!on
+	update_icon()
+
+/obj/machinery/atmospherics/miner/attack_ai(var/mob/user)
+	..()
+	on=!on
 	update_icon()
 
 // Add air here.  DO NOT CALL UPDATE_VALUES OR UPDATE_ICON.
