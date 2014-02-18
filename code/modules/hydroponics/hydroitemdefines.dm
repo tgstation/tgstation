@@ -70,46 +70,44 @@
 // Nutrient defines for hydroponics
 // *************************************
 
-/obj/item/nutrient
+
+/obj/item/weapon/reagent_containers/glass/bottle/nutrient
+
 	name = "bottle of nutrient"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
 	w_class = 1.0
-	var/mutmod = 0
-	var/yieldmod = 0
+
 	New()
+		..()
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
 
-/obj/item/nutrient/ez
+
+/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez
 	name = "bottle of E-Z-Nutrient"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
-	mutmod = 1
-	yieldmod = 1
 	New()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
+		..()
+		reagents.add_reagent("nutriment", 30)
 
-/obj/item/nutrient/l4z
+/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z
 	name = "bottle of Left 4 Zed"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle18"
-	mutmod = 2
-	yieldmod = 0
 	New()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
+		..()
+		reagents.add_reagent("mutagen", 5)
 
-/obj/item/nutrient/rh
+/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh
 	name = "bottle of Robust Harvest"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
-	mutmod = 0
-	yieldmod = 2
 	New()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
+		..()
+		reagents.add_reagent("diethylamine", 10)
+
 
 // *************************************
 // Pestkiller defines for hydroponics

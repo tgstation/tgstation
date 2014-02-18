@@ -7607,7 +7607,7 @@
 "cQo" = (/turf/simulated/floor{icon_state = "dark"},/area/mine/abandoned)
 "cQp" = (/obj/structure/sink{pixel_y = 30},/turf/simulated/floor{icon_state = "floorgrime"},/area/mine/abandoned)
 "cQq" = (/obj/structure/table,/obj/item/weapon/reagent_containers/glass/bucket,/turf/simulated/floor{icon_state = "floorgrime"},/area/mine/abandoned)
-"cQr" = (/obj/structure/table,/obj/item/weapon/paper/crumpled,/obj/item/seeds/cherryseed,/obj/item/nutrient/ez,/obj/item/nutrient/ez,/turf/simulated/floor{icon_state = "floorgrime"},/area/mine/abandoned)
+"cQr" = (/obj/structure/table,/obj/item/weapon/paper/crumpled,/obj/item/seeds/cherryseed,/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez,/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez,/turf/simulated/floor{icon_state = "floorgrime"},/area/mine/abandoned)
 "cQs" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/item/weapon/shard{icon_state = "medium"},/turf/simulated/floor/plating/airless,/area/mine/abandoned)
 "cQt" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plating/airless{icon_state = "asteroidplating"},/area/mine/abandoned)
 "cQu" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating/airless{icon_state = "asteroidplating"},/area/mine/abandoned)

@@ -349,17 +349,8 @@ obj/machinery/hydroponics/proc/mutatepest()
 obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	//Called when mob user "attacks" it with object O
-	if(istype(O, /obj/item/nutrient))
-		var/obj/item/nutrient/myNut = O
-		user.u_equip(O)
-		adjustNutri(10)
-		yieldmod = myNut.yieldmod
-		mutmod = myNut.mutmod
-		user << "You replace the nutrient solution in [src]."
-		del(O)
-		update_icon()
 
-	else if(istype(O, /obj/item/weapon/reagent_containers) )  // Syringe stuff (and other reagent containers now too)
+	if(istype(O, /obj/item/weapon/reagent_containers) )  // Syringe stuff (and other reagent containers now too)
 		var/obj/item/weapon/reagent_containers/reagent_source = O
 
 		if(istype(reagent_source, /obj/item/weapon/reagent_containers/syringe))
