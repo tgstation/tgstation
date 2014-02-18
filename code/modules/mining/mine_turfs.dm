@@ -182,6 +182,10 @@ var/list/artifact_spawn = list() // Runtime fix for geometry loading before cont
 	name = "\improper [mineral.display_name] deposit"
 	icon_state = "rock_[mineral.name]"
 
+/turf/unsimulated/mineral/proc/updateMineralOverlays()
+	// TODO: Figure out what this is supposed to do.
+	return
+
 /turf/unsimulated/mineral/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
@@ -559,7 +563,6 @@ var/list/artifact_spawn = list() // Runtime fix for geometry loading before cont
 	return
 
 /turf/unsimulated/floor/asteroid/proc/updateMineralOverlays()
-
 	src.overlays.Cut()
 
 	if(istype(get_step(src, NORTH), /turf/unsimulated/mineral))
