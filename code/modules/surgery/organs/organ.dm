@@ -234,7 +234,8 @@
 	else
 		dismember_chance = overide //So you can specify an overide chance to dismember, for Unique weapons / Non weapon dismemberment
 
-	if(affecting.brute_dam >= (affecting.max_damage / 2) && affecting.state != ORGAN_REMOVED) //if it has taken significant enough damage
+	if((affecting.brute_dam + I.force) >= (affecting.max_damage / 2) && affecting.state != ORGAN_REMOVED) //if it has taken significant enough damage
+		//The damage the limb has sustained, plus the power of the weapon used
 		if(prob(dismember_chance))
 			var/turf/T = get_turf(owner)
 
