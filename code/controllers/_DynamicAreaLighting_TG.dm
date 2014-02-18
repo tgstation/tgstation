@@ -80,11 +80,6 @@ datum/light_source
 	proc/add_effect()
 		// only do this if the light is turned on and is on the map
 		if(owner.loc && owner.luminosity > 0)
-//			effect = new_effect()						// identify the effects of this light source
-//			for(var/turf/T in effect)
-//				T.update_lumcount(effect[T])			// apply the effect
-
-			// why was this looping through all the turfs twice
 			effect = list()
 			for(var/turf/T in view(owner.get_light_range(),owner))
 				var/delta_lumen = lum(T)
@@ -97,27 +92,28 @@ datum/light_source
 			owner.light = null
 			return 1	//cause the light to be removed from the lights list and garbage collected once it's no
 						//longer referenced by the queue
-/*
-	proc/new_effect()
-		. = list()
-		var/range = owner.get_light_range()
-		for(var/turf/T in view(range, owner))
-			var/change_in_lumcount = lum(T)
-			if(change_in_lumcount > 0)
-				.[T] = change_in_lumcount
-		return .
-*/
-
 
 	proc/lum(turf/A)
+		if (owner.trueLuminosity < 1)
+			return 0
+		var/dist
+		if(!A)
+			dist = 0
+		else
 #ifdef LIGHTING_CIRCULAR
-		return owner.luminosity - cheap_hypotenuse(A.x,A.y,__x,__y)
+			dist = cheap_hypotenuse(A.x, A.y, __x, __y)
 #else
-		return owner.luminosity - max(abs(A.x-__x),abs(A.y-__y))
+			dist = max(abs(A.x - __x), abs(A.y - __y))
 #endif
+		if (owner.trueLuminosity > 100) // This will never happen... right?
+			return sqrt(owner.trueLuminosity) - dist
+		else
+			return sqrtTable[owner.trueLuminosity] - dist
 
 atom
 	var/datum/light_source/light
+	var/trueLuminosity = 0  // Typically 'luminosity' squared.  The builtin luminosity must remain linear.
+	                        // We may read it, but NEVER set it directly.
 
 
 //Turfs with opacity when they are constructed will trigger nearby lights to update
@@ -126,6 +122,7 @@ turf/New()
 	..()
 	if(luminosity)
 		if(light)	warning("[type] - Don't set lights up manually during New(), We do it automatically.")
+		trueLuminosity = luminosity * luminosity
 		light = new(src)
 
 //Movable atoms with opacity when they are constructed will trigger nearby lights to update
@@ -138,6 +135,7 @@ atom/movable/New()
 				UpdateAffectingLights()
 	if(luminosity)
 		if(light)	warning("[type] - Don't set lights up manually during New(), We do it automatically.")
+		trueLuminosity = luminosity * luminosity
 		light = new(src)
 
 //Objects with opacity will trigger nearby lights to update at next lighting process.
@@ -153,19 +151,34 @@ atom/movable/Del()
 //If we are setting luminosity to 0 the light will be cleaned up by the controller and garbage collected once all its
 //queues are complete.
 //if we have a light already it is merely updated, rather than making a new one.
-atom/proc/SetLuminosity(new_luminosity)
+atom/proc/SetLuminosity(new_luminosity, trueLum = FALSE)
 	if(new_luminosity < 0)
 		new_luminosity = 0
+	if(!trueLum)
+		new_luminosity *= new_luminosity
 	if(light)
-		if(luminosity != new_luminosity)	//non-luminous lights are removed from the lights list in add_effect()
+		if(trueLuminosity != new_luminosity)	//non-luminous lights are removed from the lights list in add_effect()
 			light.changed = 1
 	else
 		if(new_luminosity)
 			light = new(src)
-	luminosity = new_luminosity
+	trueLuminosity = new_luminosity
+	if (trueLuminosity < 1)
+		luminosity = 0
+	else if (trueLuminosity <= 100)
+		luminosity = sqrtTable[trueLuminosity]
+	else
+		luminosity = sqrt(trueLuminosity)
+
+atom/proc/AddLuminosity(delta_luminosity)
+	if(delta_luminosity > 0)
+		SetLuminosity(trueLuminosity + delta_luminosity*delta_luminosity, TRUE)
+	else if(delta_luminosity < 0)
+		SetLuminosity(trueLuminosity - delta_luminosity*delta_luminosity, TRUE)
 
 area/SetLuminosity(new_luminosity)			//we don't want dynamic lighting for areas
-	luminosity = new_luminosity
+	luminosity = !!new_luminosity
+	trueLuminosity = luminosity
 
 
 //change our opacity (defaults to toggle), and then update all lights that affect us.

@@ -16,10 +16,10 @@
 	var/maturation = 0
 	var/production = 0
 	var/yield = 0
-	var/potency = -1
 	var/plant_type = 0
 	var/dry = 0
 	icon = 'icons/obj/harvest.dmi'
+	potency = -1
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/New(newloc,newpotency)
 	if (!isnull(newpotency))
@@ -82,7 +82,7 @@
 	desc = "Needs some butter!"
 	icon_state = "corn"
 	potency = 40
-	trash = /obj/item/weapon/corncob
+	trash = /obj/item/weapon/grown/corncob
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/corn
 
 	New()
@@ -229,15 +229,15 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/Del()
 	if(istype(loc,/mob))
-		loc.SetLuminosity(round(loc.luminosity - potency/5,1))
+		loc.AddLuminosity(round(-potency/5,1))
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/pickup(mob/user)
 	src.SetLuminosity(0)
-	user.SetLuminosity(round(user.luminosity + (potency/5),1))
+	user.AddLuminosity(round(potency/5,1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/dropped(mob/user)
-	user.SetLuminosity(round(user.luminosity - (potency/5),1))
+	user.AddLuminosity(round(-potency/5,1))
 	src.SetLuminosity(round(potency/5,1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
@@ -477,7 +477,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "banana"
 	item_state = "banana"
-	trash = /obj/item/weapon/bananapeel
+	trash = /obj/item/weapon/grown/bananapeel
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/banana
 
 	New()
@@ -941,15 +941,15 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/Del()
 	if(istype(loc,/mob))
-		loc.SetLuminosity(round(loc.luminosity - potency/10,1))
+		loc.AddLuminosity(round(-potency/10,1))
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/pickup(mob/user)
 	SetLuminosity(0)
-	user.SetLuminosity(round(user.luminosity + (potency/10),1))
+	user.AddLuminosity(round(potency/10,1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/dropped(mob/user)
-	user.SetLuminosity(round(user.luminosity - (potency/10),1))
+	user.AddLuminosity(round(-potency/10,1))
 	SetLuminosity(round(potency/10,1))
 
 //This object is just a transition object. All it does is make dosh and delete itself. -Cheridan

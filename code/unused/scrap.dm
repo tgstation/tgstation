@@ -10,7 +10,7 @@
 	item_state = "scrap-metal"
 	desc = "A piece of scrap"
 	var/classtext = ""
-	throwforce = 14.0
+	throwforce = 5.0
 	m_amt = 0
 	g_amt = 0
 	w_amt = 0
@@ -18,7 +18,7 @@
 	var/blood = 0		// 0=none, 1=blood-stained, 2=bloody
 
 	throwforce = 8.0
-	throw_speed = 1
+	throw_speed = 2
 	throw_range = 4
 	w_class = 1
 	flags = FPRINT | TABLEPASS | CONDUCT

@@ -24,6 +24,7 @@
 // Mappers: use "Generate Instances from Directions" for this
 //  one.
 /obj/structure/transit_tube/station
+	name = "station tube station"
 	icon = 'icons/obj/pipes/transit_tube_station.dmi'
 	icon_state = "closed"
 	exit_delay = 2
@@ -32,9 +33,14 @@
 	var/automatic_launch_time = 100
 	var/cooldown_delay = 30
 	var/launch_cooldown = 0
+	var/reverse_launch = 0
 
 	var/const/OPEN_DURATION = 6
 	var/const/CLOSE_DURATION = 6
+
+// Stations which will send the tube in the opposite direction after their stop.
+/obj/structure/transit_tube/station/reverse
+	reverse_launch = 1
 
 
 
@@ -171,13 +177,13 @@ obj/structure/ex_act(severity)
 
 /obj/structure/transit_tube/station/proc/launch_pod()
 	for(var/obj/structure/transit_tube_pod/pod in loc)
-		if(!pod.moving && pod.dir in directions())
+		if(!pod.moving && turn(pod.dir, (reverse_launch ? 180 : 0)) in directions())
 			spawn(5)
 				pod_moving = 1
 				close_animation()
 				sleep(CLOSE_DURATION + 2)
 				if(icon_state == "closed" && pod && launch_cooldown < world.time)
-					pod.follow_tube()
+					pod.follow_tube(reverse_launch)
 
 				pod_moving = 0
 
@@ -287,7 +293,7 @@ obj/structure/ex_act(severity)
 
 
 
-/obj/structure/transit_tube_pod/proc/follow_tube()
+/obj/structure/transit_tube_pod/proc/follow_tube(var/reverse_launch)
 	if(moving)
 		return
 
@@ -299,6 +305,9 @@ obj/structure/ex_act(severity)
 		var/next_loc
 		var/last_delay = 0
 		var/exit_delay
+
+		if(reverse_launch)
+			dir = turn(dir, 180) // Back it up
 
 		for(var/obj/structure/transit_tube/tube in loc)
 			if(tube.has_exit(dir))
@@ -420,6 +429,7 @@ obj/structure/ex_act(severity)
 		if(!(locate(/obj/structure/transit_tube) in loc))
 			mob.loc = loc
 			mob.client.Move(get_step(loc, direction), direction)
+			mob.reset_view(null)
 
 			//if(moving && istype(loc, /turf/space))
 				// Todo: If you get out of a moving pod in space, you should move as well.
@@ -433,6 +443,7 @@ obj/structure/ex_act(severity)
 							if(station.icon_state == "open")
 								mob.loc = loc
 								mob.client.Move(get_step(loc, direction), direction)
+								mob.reset_view(null)
 
 							else
 								station.open_animation()

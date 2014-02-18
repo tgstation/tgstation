@@ -6,8 +6,8 @@
 	flags = CONDUCT
 	w_class = 3.0
 	force = 9.0
-	throwforce = 15.0
-	throw_speed = 5
+	throwforce = 10.0
+	throw_speed = 3
 	throw_range = 20
 	m_amt = 1875
 	max_amount = 60

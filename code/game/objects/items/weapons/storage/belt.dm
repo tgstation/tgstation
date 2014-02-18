@@ -36,8 +36,8 @@
 
 
 /obj/item/weapon/storage/belt/utility
-	name = "tool-belt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
-	desc = "Can hold various tools."
+	name = "toolbelt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
+	desc = "Holds tools."
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	can_hold = list(
@@ -104,8 +104,8 @@
 	storage_slots = 5
 	max_w_class = 3 //Because the baton wouldn't fit otherwise. - Neerti
 	can_hold = list(
-		"/obj/item/weapon/baton",
-		"/obj/item/weapon/classic_baton",
+		"/obj/item/weapon/melee/baton",
+		"/obj/item/weapon/melee/classic_baton",
 		"/obj/item/weapon/grenade/flashbang",
 		"/obj/item/weapon/reagent_containers/spray/pepper",
 		"/obj/item/weapon/handcuffs",

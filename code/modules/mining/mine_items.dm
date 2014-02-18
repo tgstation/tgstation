@@ -30,7 +30,7 @@
 	new /obj/item/clothing/under/rank/miner(src)
 	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/clothing/shoes/black(src)
-	new /obj/item/device/analyzer(src)
+	new /obj/item/device/mining_scanner(src)
 	new /obj/item/weapon/storage/bag/ore(src)
 	new /obj/item/device/flashlight/lantern(src)
 	new /obj/item/weapon/shovel(src)
@@ -64,7 +64,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 15.0
-	throwforce = 4.0
+	throwforce = 10.0
 	item_state = "pickaxe"
 	w_class = 4.0
 	m_amt = 3750 //one sheet, but where can you make them?
@@ -97,7 +97,7 @@
 		name = "sonic jackhammer"
 		icon_state = "jackhammer"
 		item_state = "jackhammer"
-		digspeed = 20 //faster than drill, but cannot dig
+		digspeed = 15 //faster than drill, but cannot dig
 		origin_tech = "materials=3;powerstorage=2;engineering=2"
 		desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
 
@@ -137,7 +137,7 @@
 
 	borgdrill
 		name = "cyborg mining drill"
-		icon_state = "diamonddrill"
+		icon_state = "jackhammer"
 		item_state = "jackhammer"
 		digspeed = 15
 		desc = ""

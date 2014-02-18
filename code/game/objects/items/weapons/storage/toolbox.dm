@@ -6,8 +6,8 @@
 	item_state = "toolbox_red"
 	flags = CONDUCT
 	force = 10.0
-	throwforce = 15.0
-	throw_speed = 1
+	throwforce = 10.0
+	throw_speed = 2
 	throw_range = 7
 	w_class = 4.0
 	origin_tech = "combat=1"

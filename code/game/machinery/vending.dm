@@ -43,11 +43,14 @@
 	var/scan_id = 1
 	var/obj/item/weapon/coin/coin
 	var/datum/wires/vending/wires = null
+	var/deconstructable = 0
 
 	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
 
 /obj/machinery/vending/New()
 	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/vendor(null)
 	wires = new(src)
 	spawn(4)
 		slogan_list = text2list(product_slogans, ";")
@@ -137,11 +140,19 @@
 
 
 /obj/machinery/vending/attackby(obj/item/weapon/W, mob/user)
+	if(panel_open)
+		if(default_unfasten_wrench(user, W, time = 60))
+			return
+
+		if(deconstructable && istype(W, /obj/item/weapon/crowbar))
+			malfunction()
+			default_deconstruction_crowbar(W)
+
 	if(istype(W, /obj/item/weapon/card/emag))
 		emagged = 1
 		user << "You short out the product lock on [src]"
 		return
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(istype(W, /obj/item/weapon/screwdriver) && anchored)
 		panel_open = !panel_open
 		user << "You [panel_open ? "open" : "close"] the maintenance panel."
 		overlays.Cut()
@@ -292,13 +303,18 @@
 		vend_ready = 0 //One thing at a time!!
 
 		var/datum/data/vending_product/R = locate(href_list["vend"])
-		if(!R || !istype(R) || !R.product_path || R.amount <= 0)
+		if(!R || !istype(R) || !R.product_path)
 			vend_ready = 1
 			return
 
-		if(R in coin_records)
+		if(R in hidden_records)
+			if(!extended_inventory)
+				vend_ready = 1
+				return
+		else if(R in coin_records)
 			if(!coin)
 				usr << "<span class='notice'>You need to insert a coin to get this item.</span>"
+				vend_ready = 1
 				return
 			if(coin.string_attached)
 				if(prob(50))
@@ -308,8 +324,17 @@
 					del(coin)
 			else
 				del(coin)
+		else if (!(R in product_records))
+			vend_ready = 1
+			message_admins("Vending machine exploit attempted by [key_name(usr, usr.client)]!")
+			return
 
-		R.amount--
+		if (R.amount <= 0)
+			usr << "<span class='warning'>Sold out.</span>"
+			vend_ready = 1
+			return
+		else
+			R.amount--
 
 		if(((last_reply + (vend_delay + 200)) <= world.time) && vend_reply)
 			speak(vend_reply)
@@ -384,7 +409,7 @@
 		while(R.amount>0)
 			new dump_path(loc)
 			R.amount--
-		break
+		continue
 
 	stat |= BROKEN
 	icon_state = "[initial(icon_state)]-broken"
@@ -478,6 +503,7 @@
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
 	req_access_txt = "25"
 	refill_canister = /obj/item/weapon/vending_refill/boozeomat
+	deconstructable = 1
 
 /obj/machinery/vending/assist
 	products = list(	/obj/item/device/assembly/prox_sensor = 5,/obj/item/device/assembly/igniter = 3,/obj/item/device/assembly/signaler = 4,
@@ -495,6 +521,7 @@
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/coffee = 25,/obj/item/weapon/reagent_containers/food/drinks/tea = 25,/obj/item/weapon/reagent_containers/food/drinks/h_chocolate = 25)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/ice = 10)
 	refill_canister = /obj/item/weapon/vending_refill/coffee
+	deconstructable = 1
 
 
 /obj/machinery/vending/snack
@@ -508,6 +535,7 @@
 					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6)
 	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/syndicake = 6)
 	refill_canister = /obj/item/weapon/vending_refill/snack
+	deconstructable = 1
 
 
 /obj/machinery/vending/sustenance
@@ -534,6 +562,7 @@
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime = 10)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko = 5)
 	refill_canister = /obj/item/weapon/vending_refill/cola
+	deconstructable = 1
 
 //This one's from bay12
 /obj/machinery/vending/cart
@@ -558,6 +587,7 @@
 	contraband = list(/obj/item/weapon/lighter/zippo = 4)
 	premium = list(/obj/item/clothing/mask/cigarette/cigar/havana = 2)
 	refill_canister = /obj/item/weapon/vending_refill/cigarette
+	deconstructable = 1
 
 /obj/machinery/vending/medical
 	name = "\improper NanoMed Plus"
@@ -682,6 +712,7 @@
 	contraband = list(/obj/item/clothing/suit/cardborg = 1,/obj/item/clothing/head/cardborg = 1,/obj/item/clothing/suit/judgerobe = 1,/obj/item/clothing/head/powdered_wig = 1,/obj/item/weapon/gun/magic/wand = 1)
 	premium = list(/obj/item/clothing/suit/hgpirate = 1, /obj/item/clothing/head/hgpiratecap = 1, /obj/item/clothing/head/helmet/roman = 1, /obj/item/clothing/head/helmet/roman/legionaire = 1, /obj/item/clothing/under/roman = 1, /obj/item/clothing/shoes/roman = 1, /obj/item/weapon/shield/riot/roman = 1)
 	refill_canister = /obj/item/weapon/vending_refill/autodrobe
+	deconstructable = 1
 
 /obj/machinery/vending/dinnerware
 	name = "dinnerware"

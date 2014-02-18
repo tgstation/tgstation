@@ -638,7 +638,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 /mob/living/carbon/human/update_inv_r_hand()
 	remove_overlay(R_HAND_LAYER)
-
+	if (handcuffed)
+		drop_r_hand()
+		return
 	if(r_hand)
 		if(client)
 			r_hand.screen_loc = ui_rhand	//TODO
@@ -655,7 +657,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 /mob/living/carbon/human/update_inv_l_hand()
 	remove_overlay(L_HAND_LAYER)
-
+	if (handcuffed)
+		drop_l_hand()
+		return
 	if(l_hand)
 		if(client)
 			l_hand.screen_loc = ui_lhand	//TODO

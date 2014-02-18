@@ -68,7 +68,7 @@ MASS SPECTROMETER
 	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 1.0
-	throw_speed = 5
+	throw_speed = 3
 	throw_range = 10
 	m_amt = 200
 	origin_tech = "magnets=1;biotech=1"
@@ -169,8 +169,8 @@ MASS SPECTROMETER
 	w_class = 2.0
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	throwforce = 5
-	throw_speed = 4
+	throwforce = 0
+	throw_speed = 3
 	throw_range = 20
 	m_amt = 30
 	g_amt = 20
@@ -236,8 +236,8 @@ MASS SPECTROMETER
 	w_class = 2.0
 	flags = CONDUCT | OPENCONTAINER
 	slot_flags = SLOT_BELT
-	throwforce = 5
-	throw_speed = 4
+	throwforce = 0
+	throw_speed = 3
 	throw_range = 20
 	m_amt = 30
 	g_amt = 20

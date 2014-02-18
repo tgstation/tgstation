@@ -19,7 +19,7 @@
 /obj/item/weapon/kitchen/utensil
 	force = 5.0
 	w_class = 1.0
-	throwforce = 5.0
+	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
 	flags = CONDUCT
@@ -107,7 +107,7 @@
 	flags = CONDUCT
 	force = 10.0
 	w_class = 3.0
-	throwforce = 6.0
+	throwforce = 10.0
 	throw_speed = 3
 	throw_range = 6
 	m_amt = 12000
@@ -154,8 +154,8 @@
 	desc = "Used to knock out the Bartender."
 	icon_state = "rolling_pin"
 	force = 8.0
-	throwforce = 10.0
-	throw_speed = 2
+	throwforce = 5.0
+	throw_speed = 3
 	throw_range = 7
 	w_class = 3.0
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked") //I think the rollingpin attackby will end up ignoring this anyway.
@@ -200,9 +200,8 @@
 	icon = 'icons/obj/food.dmi'
 	icon_state = "tray"
 	desc = "A metal tray to lay food on."
-	throwforce = 12.0
 	throwforce = 10.0
-	throw_speed = 1
+	throw_speed = 3
 	throw_range = 5
 	w_class = 3.0
 	flags = CONDUCT

@@ -6,9 +6,9 @@
 	item_state = "cleaner"
 	flags = OPENCONTAINER | NOBLUDGEON
 	slot_flags = SLOT_BELT
-	throwforce = 3
+	throwforce = 0
 	w_class = 2.0
-	throw_speed = 2
+	throw_speed = 3
 	throw_range = 10
 	amount_per_transfer_from_this = 10
 	volume = 250
@@ -41,12 +41,17 @@
 		return
 
 	var/obj/effect/decal/chempuff/D = new/obj/effect/decal/chempuff(get_turf(src))
+	var/tiles =1
 	D.create_reagents(amount_per_transfer_from_this)
-	reagents.trans_to(D, amount_per_transfer_from_this, 1/3)
-	D.color = mix_color_from_reagents(D.reagents.reagent_list)
+	if(amount_per_transfer_from_this >=10)
+		tiles =1
+	else
+		tiles =3
 
+	reagents.trans_to(D, amount_per_transfer_from_this, 1/tiles)
+	D.color = mix_color_from_reagents(D.reagents.reagent_list)
 	spawn(0)
-		for(var/i=0, i<3, i++)
+		for(var/i=0, i<tiles, i++)
 			step_towards(D,A)
 			D.reagents.reaction(get_turf(D))
 			for(var/atom/T in get_turf(D))
@@ -70,7 +75,7 @@
 /obj/item/weapon/reagent_containers/spray/attack_self(var/mob/user)
 
 	amount_per_transfer_from_this = (amount_per_transfer_from_this == 10 ? 5 : 10)
-	user << "<span class='notice'>You switched [amount_per_transfer_from_this == 10 ? "on" : "off"] the pressure nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>"
+	user << "<span class='notice'>You [amount_per_transfer_from_this == 10 ? "remove" : "fix"] the nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>"
 
 
 /obj/item/weapon/reagent_containers/spray/examine()
@@ -142,7 +147,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "chemsprayer"
 	item_state = "chemsprayer"
-	throwforce = 3
+	throwforce = 0
 	w_class = 3.0
 	volume = 600
 	origin_tech = "combat=3;materials=3;engineering=3"

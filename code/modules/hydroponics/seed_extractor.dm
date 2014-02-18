@@ -19,17 +19,19 @@
 
 	else if(istype(O, /obj/item/weapon/grown/))
 		var/obj/item/weapon/grown/F = O
-		while(t_amount < t_max)
-			var/obj/item/seeds/t_prod = new F.seed(O.loc)
-			t_prod.lifespan = F.lifespan
-			t_prod.endurance = F.endurance
-			t_prod.maturation = F.maturation
-			t_prod.production = F.production
-			t_prod.yield = F.yield
-			t_prod.potency = F.potency
-			t_amount++
-		del(O)
-		return 1
+		if(F.seed)
+			while(t_amount < t_max)
+				var/obj/item/seeds/t_prod = new F.seed(O.loc)
+				t_prod.lifespan = F.lifespan
+				t_prod.endurance = F.endurance
+				t_prod.maturation = F.maturation
+				t_prod.production = F.production
+				t_prod.yield = F.yield
+				t_prod.potency = F.potency
+				t_amount++
+			del(O)
+			return 1
+		else return 0
 
 	/*else if(istype(O, /obj/item/stack/tile/grass))
 		var/obj/item/stack/tile/grass/S = O
@@ -58,4 +60,4 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 	if(seedify(O,-1))
 		user << "<span class='notice'>You extract some seeds.</span>"
 	else
-		user << "<span class='notice'>You can't extract any seeds from that!</span>"
+		user << "<span class='notice'>You can't extract any seeds from \the [O.name].</span>"

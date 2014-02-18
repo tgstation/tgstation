@@ -959,7 +959,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 /obj/machinery/hydroponics/proc/adjustWeeds(var/adjustamt)
 	weedlevel += adjustamt
 	weedlevel = max(weedlevel, 0)
-	pestlevel = min(pestlevel, 10)
+	weedlevel = min(weedlevel, 10)
 
 /// Seed Setters ///
 /obj/machinery/hydroponics/proc/adjustSYield(var/adjustamt)//0,10
@@ -982,8 +982,8 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 /obj/machinery/hydroponics/proc/adjustSProduct(var/adjustamt)//2,10
 	myseed.production += adjustamt
-	myseed.production = max(myseed.endurance, 2)
-	myseed.production = min(myseed.endurance, 10)
+	myseed.production = max(myseed.production, 2)
+	myseed.production = min(myseed.production, 10)
 
 /obj/machinery/hydroponics/proc/adjustSPot(var/adjustamt)//0,100
 	if(myseed.potency != -1) //Not all plants have a potency

@@ -71,6 +71,7 @@
 		return M.click_action(A,src)
 
 	if(restrained())
+		next_move = world.time + 10   //Doing shit in cuffs shall be vey slow
 		RestrainedClickOn(A)
 		return
 
@@ -79,8 +80,8 @@
 		return
 
 	var/obj/item/W = get_active_hand()
-	
-	
+
+
 	if(W == A)
 		next_move = world.time + 6
 		if(W.flags&USEDELAY)
@@ -92,7 +93,7 @@
 			update_inv_r_hand(0)
 
 		return
-	
+
 	// operate two levels deep here (item in backpack in src; NOT item in box in backpack in src)
 	if(!isturf(A) && A == loc || (A in contents) || (A.loc in contents))
 		// faster access to objects already on you

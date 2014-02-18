@@ -6,7 +6,7 @@
 	slot_flags = SLOT_BELT
 	w_class = 2.0
 	item_state = "electronic"
-	throw_speed = 4
+	throw_speed = 3
 	throw_range = 20
 	m_amt = 500
 	var/obj/effect/ship_landing_beacon/beacon = null

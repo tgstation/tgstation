@@ -40,9 +40,10 @@
 		src.directwired = 1
 
 /obj/machinery/power/emitter/Del()
-	message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-	log_game("Emitter deleted at ([x],[y],[z])")
-	investigate_log("<font color='red'>deleted</font> at ([x],[y],[z])","singulo")
+	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
+		message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+		log_game("Emitter deleted at ([x],[y],[z])")
+		investigate_log("<font color='red'>deleted</font> at ([x],[y],[z])","singulo")
 	..()
 
 /obj/machinery/power/emitter/update_icon()

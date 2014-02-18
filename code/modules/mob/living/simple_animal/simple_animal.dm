@@ -4,6 +4,8 @@
 	health = 20
 	maxHealth = 20
 
+	status_flags = CANPUSH
+
 	var/icon_living = ""
 	var/icon_dead = ""
 	var/icon_gib = null	//We only try to show a gibbing animation if this exists.
@@ -210,7 +212,7 @@
 		return
 
 	if(isturf(src.loc))
-		if(ismob(AM))
+		if((status_flags & CANPUSH) && ismob(AM))
 			var/newamloc = src.loc
 			src.loc = AM:loc
 			AM:loc = newamloc
@@ -411,13 +413,6 @@
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
 					M.show_message("\red \b "+"[src] has been attacked with [O] by [user]. ")
-		else
-			usr << "\red This weapon is ineffective, it does no damage."
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("\red [user] gently taps [src] with [O]. ")
-
-
 
 /mob/living/simple_animal/movement_delay()
 	var/tally = 0 //Incase I need to add stuff other than "speed" later
