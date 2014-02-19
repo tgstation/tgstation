@@ -109,26 +109,24 @@ var/const/VOX_DELAY = 600
 
 
 /proc/play_vox_word(var/word, var/z_level, var/mob/only_listener)
-
 	word = lowertext(word)
-
 	if(vox_sounds[word])
-
-		var/sound_file = vox_sounds[word]
-		var/sound/voice = sound(sound_file, wait = 1, channel = VOX_CHANNEL)
-		voice.status = SOUND_STREAM
-
- 		// If there is no single listener, broadcast to everyone in the same z level
-		if(!only_listener)
-			// Play voice for all mobs in the z level
-			for(var/mob/M in player_list)
-				if(M.client)
-					var/turf/T = get_turf(M)
-					if(T.z == z_level)
-						M << voice
-		else
-			only_listener << voice
-		return 1
+		return play_vox_sound(vox_sounds[word],z_level,only_listener)
 	return 0
 
-// VOX sounds moved to /code/defines/vox_sounds.dm
+
+/proc/play_vox_sound(var/sound_file, var/z_level, var/mob/only_listener)
+	var/sound/voice = sound(sound_file, wait = 1, channel = VOX_CHANNEL)
+	voice.status = SOUND_STREAM
+
+	// If there is no single listener, broadcast to everyone in the same z level
+	if(!only_listener)
+		// Play voice for all mobs in the z level
+		for(var/mob/M in player_list)
+			if(M.client)
+				var/turf/T = get_turf(M)
+				if(T.z == z_level)
+					M << voice
+	else
+		only_listener << voice
+	return 1

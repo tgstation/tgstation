@@ -144,23 +144,21 @@ You must kill it all while minimizing the damage to the station."}
 		// Stage 1
 		sleep(2000)
 		stage(1)
-
 	..()
 
 /datum/game_mode/blob/proc/stage(var/stage)
 
 	switch(stage)
 		if (0)
-			send_intercept(1)
+			biohazard_alert()
 			declared = 1
 			return
 
 		if (1)
-			command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
+			command_alert("Biohazard outbreak alert status upgraded to level 9.  [station_name()] is now locked down, under Directive 7-10, until further notice.", "Directive 7-10 Initiated")
 			for(var/mob/M in player_list)
 				if(!istype(M,/mob/new_player))
-					M << sound('sound/AI/outbreak5.ogg')
-			return
+					M << sound('sound/AI/blob_confirmed.ogg')
 
 	return
 

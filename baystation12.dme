@@ -179,6 +179,7 @@
 #include "code\defines\obj\hydro.dm"
 #include "code\defines\obj\weapon.dm"
 #include "code\defines\procs\AStar.dm"
+#include "code\defines\procs\biohazard_alert.dm"
 #include "code\defines\procs\captain_announce.dm"
 #include "code\defines\procs\command_alert.dm"
 #include "code\defines\procs\dbcore.dm"

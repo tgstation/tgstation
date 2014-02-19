@@ -4,8 +4,7 @@
 
 
 /datum/event/disease_outbreak/announce()
-	command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-	world << sound('sound/AI/outbreak7.ogg')
+	biohazard_alert()
 
 /datum/event/disease_outbreak/setup()
 	announceWhen = rand(15, 30)

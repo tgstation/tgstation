@@ -378,7 +378,7 @@ not
 november
 now
 number
-o = oh
+o = O.
 objective
 observation
 of
@@ -654,7 +654,10 @@ brig
 cage
 cargo
 catbeast
+ce = Chief Engineer
 centcomm
+chemist
+chemists
 changed
 changeling
 changelings
@@ -667,12 +670,18 @@ comdom
 come
 conflict
 connor
+cmo = C. M. O.
 contraband
 court
 cyborg
 cyborgs
 dead
+desk
+department
+departments
 death
+doctor
+doctors
 dorms
 engineer
 engineering
@@ -688,6 +697,8 @@ hacker
 hackers
 hacking
 harm
+hop = Head of Personnel
+hos = Head of Security
 human
 humans
 hunger
@@ -721,7 +732,10 @@ queen
 rage
 raider
 raiders
+rd = Research Director
 removal
+recommend
+request
 requested
 respond
 rest
