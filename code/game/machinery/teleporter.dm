@@ -68,13 +68,13 @@
 
 	return
 
-/obj/machinery/computer/teleporter/attack_paw()
-	src.attack_hand()
+/obj/machinery/computer/teleporter/attack_paw(var/mob/user)
+	src.attack_hand(user)
 
-/obj/machinery/teleport/station/attack_ai()
-	src.attack_hand()
+/obj/machinery/teleport/station/attack_ai(var/mob/user)
+	src.attack_hand(user)
 
-/obj/machinery/computer/teleporter/attack_hand()
+/obj/machinery/computer/teleporter/attack_hand(var/mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
 
@@ -145,6 +145,8 @@
 	density = 1
 	anchored = 1.0
 	var/lockeddown = 0
+	ghost_read=0 // #519
+	ghost_write=0
 
 
 /obj/machinery/teleport/hub
@@ -382,13 +384,13 @@ obj/machinery/teleport/station/New()
 			return 1
 	else src.attack_hand()
 
-/obj/machinery/teleport/station/attack_paw()
-	src.attack_hand()
+/obj/machinery/teleport/station/attack_paw(var/mob/user)
+	src.attack_hand(user)
 
-/obj/machinery/teleport/station/attack_ai()
-	src.attack_hand()
+/obj/machinery/teleport/station/attack_ai(var/mob/user)
+	src.attack_hand(user)
 
-/obj/machinery/teleport/station/attack_hand()
+/obj/machinery/teleport/station/attack_hand(var/mob/user)
 	if(engaged)
 		src.disengage()
 	else
