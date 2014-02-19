@@ -69,7 +69,6 @@
 		..()
 		src.modules += new /obj/item/borg/sight/hud/med(src)
 		src.modules += new /obj/item/device/healthanalyzer(src)
-		src.modules += new /obj/item/device/reagent_scanner/adv(src)
 		src.modules += new /obj/item/weapon/reagent_containers/borghypo(src)
 		src.modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 		src.modules += new /obj/item/weapon/reagent_containers/robodropper(src)
@@ -197,6 +196,7 @@
 
 		src.modules += new /obj/item/weapon/tray/robotray(src)
 		src.modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
+		src.modules += new /obj/item/device/soundsynth(src)
 		src.emag = new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
 
 		var/datum/reagents/R = new/datum/reagents(50)
