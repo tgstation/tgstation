@@ -68,13 +68,16 @@
 			user << "\red The biogenerator is already full! Activate it."
 		else
 			for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
+				if(i >= 10)
+					break
 				G.loc = src
 				i++
-				if(i >= 10)
-					user << "\blue You fill the biogenerator to its capacity."
-					break
 			if(i<10)
 				user << "\blue You empty the plant bag into the biogenerator."
+			else if(O.contents.len == 0)
+				user << "\blue You empty the plant bag into the biogenerator, filling it to its capacity."
+			else
+				user << "\blue You fill the biogenerator to its capacity."
 
 
 	else if(!istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
@@ -111,40 +114,42 @@
 		dat += "<div class='statusDisplay'>Biogenerator is processing! Please wait...</div><BR>"
 	else
 		switch(menustat)
-			if("menu")
-				if(beaker)
-					dat += "<div class='statusDisplay'>Biomass: [points] units.</div><BR>"
-					dat += "<A href='?src=\ref[src];action=activate'>Activate</A><A href='?src=\ref[src];action=detach'>Detach Container</A>"
-					dat += "<h3>Food:</h3>"
-					dat += "<div class='statusDisplay'>"
-					dat += "10 milk: <A href='?src=\ref[src];action=create;item=milk'>Make</A> ([20/efficiency])<BR>"
-					dat += "Monkey cube: <A href='?src=\ref[src];action=create;item=meat'>Make</A> ([250/efficiency])"
-					dat += "</div>"
-					dat += "<h3>Nutrients:</h3>"
-					dat += "<div class='statusDisplay'>"
-					dat += "E-Z-Nutrient: <A href='?src=\ref[src];action=create;item=ez'>Make</A><A href='?src=\ref[src];action=create;item=ez5'>x5</A> ([10/efficiency])<BR>"
-					dat += "Left 4 Zed: <A href='?src=\ref[src];action=create;item=l4z'>Make</A><A href='?src=\ref[src];action=create;item=l4z5'>x5</A> ([20/efficiency])<BR>"
-					dat += "Robust Harvest: <A href='?src=\ref[src];action=create;item=rh'>Make</A><A href='?src=\ref[src];action=create;item=rh5'>x5</A> ([25/efficiency])<BR>"
-					dat += "</div>"
-					dat += "<h3>Leather:</h3>"
-					dat += "<div class='statusDisplay'>"
-					dat += "Wallet: <A href='?src=\ref[src];action=create;item=wallet'>Make</A> ([100/efficiency])<BR>"
-					dat += "Book bag: <A href='?src=\ref[src];action=create;item=bkbag'>Make</A> ([200/efficiency])<BR>"
-					dat += "Botanical gloves: <A href='?src=\ref[src];action=create;item=gloves'>Make</A> ([250/efficiency])<BR>"
-					dat += "Utility belt: <A href='?src=\ref[src];action=create;item=tbelt'>Make</A> ([300/efficiency])<BR>"
-					dat += "Leather Satchel: <A href='?src=\ref[src];action=create;item=satchel'>Make</A> ([400/efficiency])<BR>"
-					dat += "</div>"
-				else
-					dat += "<div class='statusDisplay'>No beaker inside, please insert beaker.</div>"
 			if("nopoints")
 				dat += "<div class='statusDisplay'>You do not have biomass to create products.<BR>Please, put growns into reactor and activate it.</div>"
-				dat += "<A href='?src=\ref[src];action=menu'>Return to menu</A>"
+				menustat = "menu"
 			if("complete")
 				dat += "<div class='statusDisplay'>Operation complete.</div>"
-				dat += "<A href='?src=\ref[src];action=menu'>Return to menu</A>"
+				menustat = "menu"
 			if("void")
 				dat += "<div class='statusDisplay'>Error: No growns inside.<BR>Please, put growns into reactor.</div>"
-				dat += "<A href='?src=\ref[src];action=menu'>Return to menu</A>"
+				menustat = "menu"
+		if(beaker)
+			dat += "<div class='statusDisplay'>Biomass: [points] units.</div><BR>"
+			dat += "<A href='?src=\ref[src];action=activate'>Activate</A><A href='?src=\ref[src];action=detach'>Detach Container</A>"
+			dat += "<h3>Food:</h3>"
+			dat += "<div class='statusDisplay'>"
+			dat += "10 milk: <A href='?src=\ref[src];action=create;item=milk'>Make</A> ([20/efficiency])<BR>"
+			dat += "10 cream: <A href='?src=\ref[src];action=create;item=cream'>Make</A> ([30/efficiency])<BR>"
+			dat += "Monkey cube: <A href='?src=\ref[src];action=create;item=meat'>Make</A> ([250/efficiency])"
+			dat += "</div>"
+			dat += "<h3>Nutrients:</h3>"
+			dat += "<div class='statusDisplay'>"
+			dat += "E-Z-Nutrient: <A href='?src=\ref[src];action=create;item=ez'>Make</A><A href='?src=\ref[src];action=create;item=ez5'>x5</A> ([10/efficiency])<BR>"
+			dat += "Left 4 Zed: <A href='?src=\ref[src];action=create;item=l4z'>Make</A><A href='?src=\ref[src];action=create;item=l4z5'>x5</A> ([20/efficiency])<BR>"
+			dat += "Robust Harvest: <A href='?src=\ref[src];action=create;item=rh'>Make</A><A href='?src=\ref[src];action=create;item=rh5'>x5</A> ([25/efficiency])<BR>"
+			dat += "</div>"
+			dat += "<h3>Leather:</h3>"
+			dat += "<div class='statusDisplay'>"
+			dat += "Wallet: <A href='?src=\ref[src];action=create;item=wallet'>Make</A> ([100/efficiency])<BR>"
+			dat += "Book bag: <A href='?src=\ref[src];action=create;item=bkbag'>Make</A> ([200/efficiency])<BR>"
+			dat += "Plant bag: <A href='?src=\ref[src];action=create;item=ptbag'>Make</A> ([200/efficiency])<BR>"
+			dat += "Mining satchel: <A href='?src=\ref[src];action=create;item=mnbag'>Make</A> ([200/efficiency])<BR>"
+			dat += "Botanical gloves: <A href='?src=\ref[src];action=create;item=gloves'>Make</A> ([250/efficiency])<BR>"
+			dat += "Utility belt: <A href='?src=\ref[src];action=create;item=tbelt'>Make</A> ([300/efficiency])<BR>"
+			dat += "Leather Satchel: <A href='?src=\ref[src];action=create;item=satchel'>Make</A> ([400/efficiency])<BR>"
+			dat += "</div>"
+		else
+			dat += "<div class='statusDisplay'>No beaker inside, please insert beaker.</div>"
 
 	var/datum/browser/popup = new(user, "biogen", name, 350, 520)
 	popup.set_content(dat)
@@ -199,6 +204,9 @@
 		if("milk")
 			if (check_cost(20/efficiency)) return 0
 			else beaker.reagents.add_reagent("milk",10)
+		if("cream")
+			if (check_cost(30/efficiency)) return 0
+			else beaker.reagents.add_reagent("cream",10)
 		if("meat")
 			if (check_cost(250/efficiency)) return 0
 			else new/obj/item/weapon/reagent_containers/food/snacks/monkeycube(src.loc)
@@ -241,6 +249,12 @@
 		if("bkbag")
 			if (check_cost(200/efficiency)) return 0
 			else new/obj/item/weapon/storage/bag/books(src.loc)
+		if("ptbag")
+			if (check_cost(200/efficiency)) return 0
+			else new/obj/item/weapon/storage/bag/plants(src.loc)
+		if("mnbag")
+			if (check_cost(200/efficiency)) return 0
+			else new/obj/item/weapon/storage/bag/ore(src.loc)
 		if("gloves")
 			if (check_cost(250/efficiency)) return 0
 			else new/obj/item/clothing/gloves/botanic_leather(src.loc)
