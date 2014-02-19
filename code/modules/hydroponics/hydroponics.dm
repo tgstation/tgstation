@@ -256,7 +256,7 @@ obj/machinery/hydroponics/update_icon()
 obj/machinery/hydroponics/proc/UpdateDescription()
 	desc = null
 	if (planted)
-		desc = "[src] has \blue [myseed.plantname] \black planted."
+		desc = "[src] has <span class='info'>[myseed.plantname]</span> planted."
 		if (dead)
 			desc += " It's dead."
 		else if (harvest)
@@ -295,7 +295,7 @@ obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient,
 	weedlevel = 0 // Reset
 	pestlevel = 0 // Reset
 	update_icon()
-	visible_message("\blue [oldPlantName] overtaken by [myseed.plantname].")
+	visible_message("<span class='info'>[oldPlantName] overtaken by [myseed.plantname].</span>")
 
 
 obj/machinery/hydroponics/proc/mutate(var/lifemut=2, var/endmut=5, var/productmut=1, var/yieldmut=2, var/potmut=25) // Mutates the current seed
@@ -336,7 +336,7 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 
 	spawn(5) // Wait a while
 	update_icon()
-	visible_message("\red[oldPlantName] suddenly mutated into \blue [myseed.plantname]!")
+	visible_message("<span class='warning'>[oldPlantName] suddenly mutated into [myseed.plantname]!</span>")
 
 
 obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent instead. Mind you, this pretty much destroys the old plant
@@ -356,7 +356,7 @@ obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent in
 
 		spawn(5) // Wait a while
 		update_icon()
-		visible_message("\red The mutated weeds in [src] spawned a \blue [myseed.plantname]!")
+		visible_message("<span class='warning'>The mutated weeds in [src] spawned a [myseed.plantname]!</span>")
 	else
 		usr << "The few weeds in [src] seem to react, but only for a moment..."
 
@@ -632,7 +632,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			update_icon()
 
 		else
-			user << "\red [src] already has seeds in it!"
+			user << "<span class='warning'>[src] already has seeds in it!</span>"
 
 	else if(istype(O, /obj/item/device/analyzer/plant_analyzer))
 		if(planted && myseed)
@@ -727,24 +727,18 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				spawn()
 					h.update_icon()
 
-	else if(istype(O, /obj/item/weapon/shovel))
-		if(istype(src, /obj/machinery/hydroponics/soil))
-			user << "You clear up [src]!"
-			del(src)
+	return
 
-	else if(istype(O, /obj/item/weapon/crowbar))
+obj/machinery/hydroponics/constructable/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	..()
+	if(istype(O, /obj/item/weapon/crowbar))
 		if(anchored==2)
 			user << "Unscrew the hoses first!"
 			return
 
 		if(istype(src, /obj/machinery/hydroponics/soil))
 			return
-		panel_open = 1
-		default_deconstruction_crowbar(O)
-		panel_open = 0
-
-	return
-
+		default_deconstruction_crowbar(O, 1)
 
 /obj/machinery/hydroponics/attack_hand(mob/user as mob)
 	if(istype(user, /mob/living/silicon))		//How does AI know what plant is?
@@ -761,7 +755,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		update_icon()
 	else
 		if(planted && !dead)
-			user << "[src] has \blue [myseed.plantname] \black planted."
+			user << "[src] has <span class='info'>[myseed.plantname]</span> planted."
 			if(health <= (myseed.endurance / 2))
 				user << "The plant looks unhealthy."
 		else
@@ -965,7 +959,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(myseed,/obj/item/seeds/replicapod/))
 		user << "You harvest from the [myseed.plantname]."
 	else if((yieldmod * myseed.yield) <= 0)
-		user << "\red You fail to harvest anything useful."
+		user << "<span class='warning'>You fail to harvest anything useful.</span>"
 	else
 		user << "You harvest [yieldmod * myseed.yield] items from the [myseed.plantname]."
 	if(myseed.oneharvest)
@@ -1073,3 +1067,9 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		else
 			SetLuminosity(0)
 		return
+
+	attackby(var/obj/item/O as obj, var/mob/user as mob)
+		..()
+		if(istype(O, /obj/item/weapon/shovel))
+			user << "You clear up [src]!"
+			del(src)
