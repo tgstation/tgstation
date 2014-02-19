@@ -57,21 +57,32 @@
 
 /obj/machinery/atmospherics/miner/update_icon()
 	src.overlays = 0
-	if(stat & (BROKEN|NOPOWER))
+	if(stat & NOPOWER)
 		return
-	var/image/I = image(icon, icon_state=on?"on":"off", dir=src.dir)
-	I.color=light_color
-	overlays += I
+	if(on)
+		var/new_icon_state="on"
+		var/new_color = light_color
+		if(stat & BROKEN)
+			new_icon_state="broken"
+			new_color="#FF0000"
+		var/image/I = image(icon, icon_state=new_icon_state, dir=src.dir)
+		I.color=new_color
+		overlays += I
 
 /obj/machinery/atmospherics/miner/process()
-	if(stat & (BROKEN|NOPOWER))
+	if(stat & NOPOWER)
 		return
 	if (!on)
 		return
 
+	var/oldstat=stat
 	if(!istype(loc,/turf/simulated))
-		on = 0
+		stat |= BROKEN
+	else
+		stat &= ~BROKEN
+	if(stat!=oldstat)
 		update_icon()
+	if(stat & BROKEN)
 		return
 
 	var/datum/gas_mixture/environment = loc.return_air()
