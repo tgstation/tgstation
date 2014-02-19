@@ -45,6 +45,7 @@
 	var/burn_dam = 0
 	var/max_damage = 0
 	var/dam_icon = "chest"
+	origin_tech = "biotech=3"
 
 /obj/item/organ/limb/chest
 	name = "chest"
@@ -61,7 +62,7 @@
 	max_damage = 200
 	body_part = HEAD
 	dam_icon = "head"
-
+	origin_tech = "biotech=4" //Worth slightly more for being Rare.
 
 /obj/item/organ/limb/l_arm
 	name = "l_arm"
@@ -70,6 +71,7 @@
 	max_damage = 75
 	body_part = ARM_LEFT
 	dam_icon = "l_arm"
+	attack_verb = list("disrespected", "slapped", "punched")
 
 
 /obj/item/organ/limb/l_leg
@@ -79,7 +81,7 @@
 	max_damage = 75
 	body_part = LEG_LEFT
 	dam_icon = "l_leg"
-
+	attack_verb = list("disrespected", "slapped", "kicked")
 
 /obj/item/organ/limb/r_arm
 	name = "r_arm"
@@ -88,7 +90,7 @@
 	max_damage = 75
 	body_part = ARM_RIGHT
 	dam_icon = "r_arm"
-
+	attack_verb = list("disrespected", "slapped", "punched")
 
 /obj/item/organ/limb/r_leg
 	name = "r_leg"
@@ -97,7 +99,7 @@
 	max_damage = 75
 	body_part = LEG_RIGHT
 	dam_icon = "r_leg"
-
+	attack_verb = list("disrespected", "slapped", "kicked")
 
 
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
