@@ -17,9 +17,6 @@
 	midicon = rotate_icon('icons/obj/lightning.dmi', "lightning")
 	endicon = rotate_icon('icons/obj/lightning.dmi', "lightningend")
 
-	// Copy logs before opening streams.
-	copy_logs()
-
 	//logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
 	href_logfile = file("data/logs/[date_string] hrefs.htm")
@@ -51,6 +48,8 @@
 	jobban_updatelegacybans()
 	appearance_loadbanfile()
 	LoadBans()
+
+	copy_logs() // Just copy the logs.
 
 	if(config && config.server_name != null && config.server_suffix && world.port > 0)
 		// dumb and hardcoded but I don't care~
