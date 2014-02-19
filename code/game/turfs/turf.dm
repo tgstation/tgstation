@@ -294,16 +294,6 @@
 	if(!forced)
 		return
 	playsound(src, "bodyfall", 50, 1)
-	var/mob/living/carbon/human/M = faller
-	if(istype(M) && M.head)
-		var/obj/item/clothing/head/H = M.head
-		if(!istype(H) || prob(M.hat_fall_prob()))
-			M.unEquip(H)
-			if(prob(60))
-				step_rand(H)
-			if(!M.stat)
-				M << "<span class='warning'>[H] fell off your head!</span>"
-	else return
 
 /turf/handle_slip(mob/slipper, s_amount, w_amount, obj/O, lube)
 	var/mob/living/carbon/M = slipper
