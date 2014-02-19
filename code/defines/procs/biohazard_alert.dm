@@ -19,6 +19,8 @@ var/global/list/outbreak_level_words=list(
 	for(var/word in vox_sentence)
 		play_vox_sound(word,STATION_Z,null)
 
+/*
 #warning TELL N3X15 TO COMMENT THIS SHIT OUT
 /mob/verb/test_biohazard()
 	biohazard_alert()
+*/
