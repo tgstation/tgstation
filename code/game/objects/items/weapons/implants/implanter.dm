@@ -124,16 +124,16 @@
 		return
 	..()
 
-/obj/item/weapon/implanter/compressed/afterattack(atom/A, mob/user as mob)
-	if(is_type_in_list(A,forbidden_types))
+/obj/item/weapon/implanter/compressed/afterattack(var/obj/item/I, mob/user as mob)
+	if(is_type_in_list(I,forbidden_types))
 		user << "\red A red light flickers on the implanter."
 		return
-	if(istype(A,/obj/item) && imp)
+	if(istype(I) && imp)
 		var/obj/item/weapon/implant/compressed/c = imp
 		if (c.scanned)
 			user << "\red Something is already scanned inside the implant!"
 			return
-		imp:scanned = A
-		user.drop_item(A)
-		A.loc = imp
+		imp:scanned = I
+		user.drop_item(I)
+		I.loc = imp
 		update()
