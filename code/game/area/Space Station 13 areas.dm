@@ -116,6 +116,8 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Admin room"
 	icon_state = "start"
 
+/area/space
+
 
 
 //These are shuttle areas, they must contain two areas in a subgroup if you want to move a shuttle from one
