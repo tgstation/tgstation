@@ -26,6 +26,14 @@
 	air_contents.update_values()
 	update_icon()
 
+// Critical equipment.
+/obj/machinery/atmospherics/miner/ex_act(severity)
+	return
+
+// Critical equipment.
+/obj/machinery/atmospherics/miner/blob_act()
+	return
+
 /obj/machinery/atmospherics/miner/power_change()
 	..()
 	update_icon()
