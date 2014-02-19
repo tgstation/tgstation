@@ -1468,12 +1468,35 @@ datum
 							if(H.dna.mutantrace == "plant") //plantmen take a LOT of damage
 								H.adjustToxLoss(10)
 
-		toxin/plantbgone/weedkiller
+		toxin/weedkiller
 			name = "Weed Killer"
 			id = "weedkiller"
 			description = "A harmful toxic mixture to kill weeds. Do not ingest!"
 			reagent_state = LIQUID
 			color = "#4B004B" // rgb: 75, 0, 75
+
+			reaction_obj(var/obj/O, var/volume)
+				if(istype(O,/obj/structure/alien/weeds/))
+					var/obj/structure/alien/weeds/alien_weeds = O
+					alien_weeds.health -= rand(15,35) // Kills alien weeds pretty fast
+					alien_weeds.healthcheck()
+				else if(istype(O,/obj/effect/glowshroom)) //even a small amount is enough to kill it
+					del(O)
+				else if(istype(O,/obj/effect/spacevine))
+					if(prob(50)) del(O) //Kills kudzu too.
+				// Damage that is done to growing plants is separately at code/game/machinery/hydroponics at obj/item/hydroponics
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+				src = null
+				if(iscarbon(M))
+					var/mob/living/carbon/C = M
+					if(!C.wear_mask) // If not wearing a mask
+						C.adjustToxLoss(2) // 4 toxic damage per application, doubled for some reason
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if(H.dna)
+							if(H.dna.mutantrace == "plant") //plantmen take a LOT of damage
+								H.adjustToxLoss(10)
 
 		toxin/pestkiller
 			name = "Pest Killer"
