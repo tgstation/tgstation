@@ -87,7 +87,7 @@ var/global/list/uncollectable_vars=list(
 /proc/qdel(var/atom/movable/A)
 	if(!A) return
 	if(!istype(A))
-		warning("qdel() passed a [A.type]. qdel() can only handle /atom/movable types.")
+		warning("qdel() passed object of type [A.type]. qdel() can only handle /atom/movable types.")
 		del(A)
 		return
 	if(!garbage)
