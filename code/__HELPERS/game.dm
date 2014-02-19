@@ -145,37 +145,6 @@
 // It will keep doing this until it checks every content possible. This will fix any problems with mobs, that are inside objects,
 // being unable to hear people due to being in a box within a bag.
 
-#ifndef USE_BROKEN_RECURSIVE_MOBCHECK
-#warning Using laggy recursive_mob_check
-// Bay's fixed edition (LAGGY)
-/proc/recursive_mob_check(var/atom/O,  var/list/L = list(), var/recursion_limit = 3, var/client_check = 1, var/sight_check = 1, var/include_radio = 1)
-
-	//debug_mob += O.contents.len
-	if(!recursion_limit)
-		return L
-	for(var/atom/A in O.contents)
-
-		if(ismob(A))
-			var/mob/M = A
-			if(client_check && !M.client)
-				L = recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
-				continue
-			if(sight_check && !isInSight(A, O))
-				continue
-			L |= M
-			//world.log << "[recursion_limit] = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
-
-		else if(include_radio && istype(A, /obj/item/device/radio))
-			if(sight_check && !isInSight(A, O))
-				continue
-			L |= A
-
-		if(isobj(A) || ismob(A))
-			L = recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
-	return L
-#else
-#warning Using broken recursive_mob_check
-// /tg/'s broken edition.
 /proc/recursive_mob_check(var/atom/O,  var/list/L = list(), var/recursion_limit = 3, var/client_check = 1, var/sight_check = 1, var/include_radio = 1)
 
 	//debug_mob += O.contents.len
@@ -201,9 +170,11 @@
 		if(isobj(A) || ismob(A))
 			L |= recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
 	return L
-#endif
+
 // The old system would loop through lists for a total of 5000 per function call, in an empty server.
 // This new system will loop at around 1000 in an empty server.
+
+// SCREW THAT SHIT, we're not recursing.
 
 /proc/get_mobs_in_view(var/R, var/atom/source)
 	// Returns a list of mobs in range of R from source. Used in radio and say code.
@@ -216,18 +187,34 @@
 
 	var/list/range = hear(R, T)
 
-	for(var/atom/A in range)
-		if(ismob(A))
-			var/mob/M = A
-			if(M.client)
-				hear += M
-			//world.log << "Start = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
-		else if(istype(A, /obj/item/device/radio))
-			hear += A
+	for(var/mob/M in range)
+		if(M.client)
+			hear += M
+		
+	var/list/objects = list()
 
-		if(isobj(A) || ismob(A))
-			hear |= recursive_mob_check(A, hear, 3, 1, 0, 1)
+	for(var/obj/O in range)				//Get a list of objects in hearing range.  We'll check to see if any clients have their "eye" set to the object 
+		objects += O
 
+	for(var/client/C in clients)
+		if(!istype(C) || !C.eye)
+			continue   			//I have no idea when this client check would be needed, but if this runtimes people won't hear anything
+							//So kinda paranoid about runtime avoidance.
+		if(C.mob in hear)
+			continue
+		if(C.eye in (hear|objects))
+			if(!(C.mob in hear))
+				hear += C.mob
+			
+		else if(!(C.mob in hear))
+			if(C.mob.loc && C.mob.loc in (hear|objects))
+				hear += C.mob
+			else if(C.mob.loc.loc && C.mob.loc.loc in (hear|objects))  
+				hear += C.mob
+			else if(C.mob.loc.loc.loc && C.mob.loc.loc.loc in (hear|objects))   //Going a little deeper
+				hear += C.mob
+
+				
 	return hear
 
 
