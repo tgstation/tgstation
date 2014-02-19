@@ -70,7 +70,7 @@
 
 	OnMobLife(var/mob/M)
 		if((world.time - M.last_movement) >= 30 && !M.stat && M.canmove && !M.restrained())
-			M.alpha = round(255 * 0.10)
+			M.alpha = 0
 		else
 			M.alpha = round(255 * 0.80)
 
@@ -129,6 +129,8 @@
 	invocation_type = "none"
 	range = 7
 	selection_type = "range"
+	include_user = 1
+	centcomm_cancast = 0
 	var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 
 /obj/effect/proc_holder/spell/targeted/cryokinesis/cast(list/targets)
