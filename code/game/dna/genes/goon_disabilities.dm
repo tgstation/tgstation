@@ -308,16 +308,14 @@
 	invocation_type = "none"
 	range = -1
 	selection_type = "range"
+	var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 
 /obj/effect/proc_holder/spell/targeted/immolate/cast(list/targets)
-	if (istype(usr,/mob/living/))
-		var/mob/living/L = usr
+	var/mob/living/L = usr
 
-		L.adjust_fire_stacks(0.5) // Same as walking into fire. Was 100 (goon fire)
-		L.visible_message("\red <b>[L.name]</b> suddenly bursts into flames!")
-		//playsound(L.loc, 'mag_fireballlaunch.ogg', 50, 0)
-
-	return
+	L.adjust_fire_stacks(0.5) // Same as walking into fire. Was 100 (goon fire)
+	L.visible_message("\red <b>[L.name]</b> suddenly bursts into flames!")
+	//playsound(L.loc, 'mag_fireballlaunch.ogg', 50, 0)
 
 ////////////////////////////////////////////////////////////////////////
 
