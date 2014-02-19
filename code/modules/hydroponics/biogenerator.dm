@@ -52,20 +52,20 @@
 /obj/machinery/biogenerator/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/reagent_containers/glass) && !panel_open)
 		if(beaker)
-			user << "\red The biogenerator already occuped."
+			user << "<span class='warning'>The biogenerator already occuped.</span>"
 		else
 			user.before_take_item(O)
 			O.loc = src
 			beaker = O
 			updateUsrDialog()
 	else if(processing)
-		user << "\red The biogenerator is currently processing."
+		user << "<span class='warning'>The biogenerator is currently processing.</span>"
 	else if(istype(O, /obj/item/weapon/storage/bag/plants))
 		var/i = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
 			i++
 		if(i >= 10)
-			user << "\red The biogenerator is already full! Activate it."
+			user << "<span class='warning'>The biogenerator is already full! Activate it.</span>"
 		else
 			for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
 				if(i >= 10)
@@ -73,25 +73,25 @@
 				G.loc = src
 				i++
 			if(i<10)
-				user << "\blue You empty the plant bag into the biogenerator."
+				user << "<span class='info'>You empty the plant bag into the biogenerator.</span>"
 			else if(O.contents.len == 0)
-				user << "\blue You empty the plant bag into the biogenerator, filling it to its capacity."
+				user << "<span class='info'>You empty the plant bag into the biogenerator, filling it to its capacity.</span>"
 			else
-				user << "\blue You fill the biogenerator to its capacity."
+				user << "<span class='info'>You fill the biogenerator to its capacity.</span>"
 
 
 	else if(!istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
-		user << "\red You cannot put this in [src.name]"
+		user << "<span class='warning'>You cannot put this in [src.name]</span>"
 	else
 		var/i = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
 			i++
 		if(i >= 10)
-			user << "\red The biogenerator is full! Activate it."
+			user << "<span class='warning'>The biogenerator is full! Activate it.</span>"
 		else
 			user.before_take_item(O)
 			O.loc = src
-			user << "\blue You put [O.name] in [src.name]"
+			user << "<span class='info'>You put [O.name] in [src.name]</span>"
 
 	if(!processing)
 		if(default_deconstruction_screwdriver(user, "biogen-empty-o", "biogen-empty", O))
@@ -165,7 +165,7 @@
 	if (src.stat != 0) //NOPOWER etc
 		return
 	if(src.processing)
-		usr << "\red The biogenerator is in the process of working."
+		usr << "<span class='warning'>The biogenerator is in the process of working.</span>"
 		return
 	var/S = 0
 	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/I in contents)
