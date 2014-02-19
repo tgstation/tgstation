@@ -8,8 +8,6 @@
 	var/nutrilevel = 10		//The amount of nutrient in the tray (max 10)
 	var/pestlevel = 0		//The amount of pests in the tray (max 10)
 	var/weedlevel = 0		//The amount of weeds in the tray (max 10)
-	var/yieldmod = 1		//Modifier to yield
-	var/mutmod = 1			//Modifier to mutation chance
 	var/toxic = 0			//Toxicity in the tray?
 	var/age = 0				//Current age
 	var/dead = 0			//Is it dead?
@@ -143,15 +141,15 @@ obj/machinery/hydroponics/process()
 
 			// Harvest code
 			if(age > myseed.production && (age - lastproduce) > myseed.production && (!harvest && !dead))
-				for(var/i = 0; i < mutmod; i++)
-					if(prob(85))
-						mutate()
-					else if(prob(30))
-						hardmutate()
-					else if(prob(5))
-						mutatespecie()
 
-				if(yieldmod > 0 && myseed.yield != -1) // Unharvestable shouldn't be harvested
+				if(prob(85))
+					mutate()
+				else if(prob(30))
+					hardmutate()
+				else if(prob(5))
+					mutatespecie()
+
+				if(myseed.yield != -1) // Unharvestable shouldn't be harvested
 					harvest = 1
 				else
 					lastproduce = age
@@ -523,11 +521,13 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			if(S.has_reagent("ammonia", 1))
 				H.adjustHealth(round(S.get_reagent_amount("ammonia")*0.5))
 				H.adjustNutri(round(S.get_reagent_amount("ammonia")*1))
+				H.adjustSYield(round(S.get_reagent_amount("ammonia")*0.01))
 
 			// This is more bad ass, and pests get hurt by the corrosive nature of it, not the plant.
 			if(S.has_reagent("diethylamine", 1))
 				H.adjustHealth(round(S.get_reagent_amount("diethylamine")*1))
 				H.adjustNutri(round(S.get_reagent_amount("diethylamine")*2))
+				H.adjustSYield(round(S.get_reagent_amount("diethylamine")*0.02))
 				H.adjustPests(-rand(1,2))
 
 			// Compost, effectively
@@ -567,6 +567,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				H.adjustNutri(round(S.get_reagent_amount("adminordrazine")*1))
 				H.adjustPests(-rand(1,5))
 				H.adjustWeeds(-rand(1,5))
+
 			if(S.has_reagent("adminordrazine", 5))
 				switch(rand(100))
 					if(66  to 100)  H.mutatespecie()
@@ -733,7 +734,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
 	var/t_amount = 0
 
-	while(t_amount < (yield * parent.yieldmod))
+	while(t_amount < yield)
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new product(user.loc, potency) // User gets a consumable
 		if(!t_prod)	return
 		t_prod.seed = type
@@ -781,7 +782,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
 	var/t_amount = 0
 
-	while(t_amount < (yield * parent.yieldmod))
+	while(t_amount < yield)
 		var/obj/item/weapon/grown/t_prod = new product(user.loc, potency) // User gets a consumable -QualityVan
 		t_prod.seed = type
 		t_prod.lifespan = lifespan
@@ -799,7 +800,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
 	var/t_amount = 0
 
-	while(t_amount < (yield * parent.yieldmod))
+	while(t_amount < yield)
 		var/obj/item/weapon/grown/t_prod = new product(user.loc, potency) // User gets a consumable -QualityVan
 		t_prod.seed = type
 		t_prod.lifespan = lifespan
@@ -817,7 +818,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
 	var/t_amount = 0
 
-	while(t_amount < (yield * parent.yieldmod))
+	while(t_amount < yield)
 		new product(user.loc)
 		t_amount++
 
@@ -873,7 +874,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	else //else, one packet of seeds. maybe two
 		var/seed_count = 1
-		if(prob(yield * parent.yieldmod * 20))
+		if(prob(yield * 20))
 			seed_count++
 		for(var/i=0,i<seed_count,i++)
 			var/obj/item/seeds/replicapod/harvestseeds = new /obj/item/seeds/replicapod(user.loc)
@@ -919,10 +920,10 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	lastproduce = age
 	if(istype(myseed,/obj/item/seeds/replicapod/))
 		user << "You harvest from the [myseed.plantname]."
-	else if((yieldmod * myseed.yield) <= 0)
+	else if(myseed.yield <= 0)
 		user << "\red You fail to harvest anything useful."
 	else
-		user << "You harvest [yieldmod * myseed.yield] items from the [myseed.plantname]."
+		user << "You harvest [myseed.yield] items from the [myseed.plantname]."
 	if(myseed.oneharvest)
 		del(myseed)
 		planted = 0
@@ -965,7 +966,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 /// Seed Setters ///
 /obj/machinery/hydroponics/proc/adjustSYield(var/adjustamt)//0,10
-	if(myseed.yield != -1) // Unharvestable shouldn't suddenly turn harvestable
+	if(myseed && myseed.yield != -1) // Unharvestable shouldn't suddenly turn harvestable
 		myseed.yield += adjustamt
 		myseed.yield = max(myseed.yield, 0)
 		myseed.yield = min(myseed.yield, 10)
