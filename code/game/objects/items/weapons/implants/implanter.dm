@@ -134,5 +134,6 @@
 			user << "\red Something is already scanned inside the implant!"
 			return
 		imp:scanned = A
-		A.loc.contents.Remove(A)
+		user.drop_item(A)
+		A.loc = imp
 		update()
