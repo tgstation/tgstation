@@ -409,7 +409,7 @@
 	w_class = 2.0
 	throwforce = 0
 	throw_speed = 3
-	throw_range = 15
+	throw_range = 7
 
 	ripley
 		origin_tech = "programming=3"

@@ -81,7 +81,7 @@
 	force_unwielded = 5
 	force_wielded = 20
 	throwforce = 30
-	throw_range = 10
+	throw_range = 7
 	w_class = 5
 	//var/charged = 5
 	origin_tech = "combat=5, power=5"
