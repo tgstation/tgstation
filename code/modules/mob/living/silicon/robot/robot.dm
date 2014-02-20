@@ -165,14 +165,22 @@
 		mmi = null
 	..()
 
-/mob/living/silicon/robot/proc/pick_module()
-	if(module)
-		return
+/proc/getAvailableRobotModules()
 	var/list/modules = list("Standard", "Engineering", "Medical", "Miner", "Janitor", "Service", "Security")
 	if(security_level == SEC_LEVEL_RED) //Add crisis to this check if you want to make it available at an admin's whim
-		src << "\red Crisis mode active. Combat module available."
 		modules+="Combat"
-	modtype = input("Please, select a module!", "Robot", null, null) in modules
+	return modules
+
+// /vg/: Enable forcing module type
+/mob/living/silicon/robot/proc/pick_module(var/forced_module=null)
+	if(module)
+		return
+	var/list/modules = getAvailableRobotModules()
+	if(forced_module)
+		modtype = forced_module
+	else
+		modtype = input("Please, select a module!", "Robot", null, null) in modules
+	// END forced modules.
 
 	var/module_sprites[0] //Used to store the associations between sprite names and sprite index.
 	var/channels = list()
@@ -255,7 +263,7 @@
 	if(modtype == "Medical" || modtype == "Security" || modtype == "Combat")
 		status_flags &= ~CANPUSH
 
-	choose_icon(6,module_sprites)
+	choose_icon(isnull(forced_module) ? 6 : 1, module_sprites)
 	radio.config(channels)
 	base_icon = icon_state
 
@@ -1347,12 +1355,12 @@
 
 /mob/living/silicon/robot/proc/choose_icon(var/triesleft, var/list/module_sprites)
 
-	if(triesleft<1 || !module_sprites.len)
+	if(triesleft == 0 || !module_sprites.len)
 		return
 	else
 		triesleft--
 
-	var/icontype = input("Select an icon! [triesleft ? "You have [triesleft] more chances." : "This is your last try."]", "Robot", null, null) in module_sprites
+	var/icontype = input("Select an icon! [triesleft>0 ? "You have [triesleft] more chances." : "This is your last try."]", "Robot", null, null) in module_sprites
 
 	if(icontype)
 		icon_state = module_sprites[icontype]
