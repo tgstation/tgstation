@@ -190,7 +190,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/dangerous/syndiecards
 	name = "Syndicate Playing Cards"
-	desc = "A special deck of murder-grade playing cards with a mono-molecular edge and metal reinforcement. They are lethal when thrown, but loose their edge very easily. \
+	desc = "A special deck of murder-grade playing cards with a mono-molecular edge and metal reinforcement. They are lethal when thrown, but lose their edge very easily. \
 	You can also play card games with them."
 	item = /obj/item/toy/cards/deck/syndicate
 	cost = 1
