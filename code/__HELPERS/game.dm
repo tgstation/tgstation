@@ -190,10 +190,23 @@
 	for(var/mob/M in range)
 		if(M.client)
 			hear += M
-		
+
 	var/list/objects = list()
 
-	for(var/obj/O in range)				//Get a list of objects in hearing range.  We'll check to see if any clients have their "eye" set to the object 
+	var/list/obj_to_check = list()					//IF SOMEONE DOESN'T HEAR SOMETHING AND ARE IN INSIDE A CONTAINER ADD IT TO THIS LIST.
+	obj_to_check += typesof(/obj/item/device/paicard)
+	obj_to_check += typesof(/obj/item/device/aicard)
+	obj_to_check += typesof(/obj/machinery/computer/aifixer)
+
+	for(var/obj/O in range)				//Get a list of objects in hearing range.  We'll check to see if any clients have their "eye" set to the object
+		if(istype(O, /obj/item/device/radio))   //This avoids all that bullshit with recursion.  FUCK RECURSION  ~Ccomp
+			hear += O
+		if(O.type in obj_to_check)
+			for(var/mob/living/M in O.contents)
+				if(!(M in hear))
+					hear += M
+
+
 		objects += O
 
 	for(var/client/C in clients)
@@ -205,16 +218,14 @@
 		if(C.eye in (hear|objects))
 			if(!(C.mob in hear))
 				hear += C.mob
-			
+
 		else if(!(C.mob in hear))
-			if(C.mob.loc && C.mob.loc in (hear|objects))
+			if(C.mob.loc in (hear|objects))
 				hear += C.mob
-			else if(C.mob.loc.loc && C.mob.loc.loc in (hear|objects))  
-				hear += C.mob
-			else if(C.mob.loc.loc.loc && C.mob.loc.loc.loc in (hear|objects))   //Going a little deeper
+			else if(C.mob.loc.loc in (hear|objects))
 				hear += C.mob
 
-				
+
 	return hear
 
 
