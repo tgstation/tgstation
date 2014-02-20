@@ -525,7 +525,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			if(S.has_reagent("diethylamine", 1))
 				H.adjustHealth(round(S.get_reagent_amount("diethylamine")*1))
 				H.adjustNutri(round(S.get_reagent_amount("diethylamine")*2))
-				H.adjustSYield(round(S.get_reagent_amount("ammonia")*0.02))
+				H.adjustSYield(round(S.get_reagent_amount("diethylamine")*0.02))
 				H.adjustPests(-rand(1,2))
 
 
