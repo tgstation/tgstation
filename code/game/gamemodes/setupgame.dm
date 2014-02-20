@@ -64,7 +64,6 @@
 	MUTEBLOCK      = getAssignedBlock("MUTE",       numsToAssign)
 	RADBLOCK       = getAssignedBlock("RAD",        numsToAssign)
 	FATBLOCK       = getAssignedBlock("FAT",        numsToAssign)
-	STUTTERBLOCK   = getAssignedBlock("STUTTER",    numsToAssign)
 	CHAVBLOCK      = getAssignedBlock("CHAV",       numsToAssign)
 	SWEDEBLOCK     = getAssignedBlock("SWEDE",      numsToAssign)
 	SCRAMBLEBLOCK  = getAssignedBlock("SCRAMBLE",   numsToAssign)

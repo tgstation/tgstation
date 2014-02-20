@@ -66,6 +66,7 @@
 // SPEECH MANIPULATORS //
 /////////////////////////
 
+/* Duplicate
 // WAS: /datum/bioEffect/stutter
 /datum/dna/gene/disability/stutter
 	name = "Stutter"
@@ -87,6 +88,7 @@
 		if(is_type_in_list(/datum/dna/gene/disability/speech,M.active_genes))
 			return 0
 		return ..(M,flags)
+*/
 
 /* Figure out what the fuck this one does.
 // WAS: /datum/bioEffect/smile
