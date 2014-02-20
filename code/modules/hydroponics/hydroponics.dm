@@ -8,8 +8,6 @@
 	var/nutrilevel = 10		//The amount of nutrient in the tray (max 10)
 	var/pestlevel = 0		//The amount of pests in the tray (max 10)
 	var/weedlevel = 0		//The amount of weeds in the tray (max 10)
-	var/yieldmod = 1		//Modifier to yield
-	var/mutmod = 1			//Modifier to mutation chance
 	var/toxic = 0			//Toxicity in the tray?
 	var/age = 0				//Current age
 	var/dead = 0			//Is it dead?
@@ -143,15 +141,14 @@ obj/machinery/hydroponics/process()
 
 			// Harvest code
 			if(age > myseed.production && (age - lastproduce) > myseed.production && (!harvest && !dead))
-				for(var/i = 0; i < mutmod; i++)
-					if(prob(85))
-						mutate()
-					else if(prob(30))
-						hardmutate()
-					else if(prob(5))
-						mutatespecie()
+				if(prob(85))
+					mutate()
+				else if(prob(30))
+					hardmutate()
+				else if(prob(5))
+					mutatespecie()
 
-				if(yieldmod > 0 && myseed.yield != -1) // Unharvestable shouldn't be harvested
+				if(myseed && myseed.yield != -1) // Unharvestable shouldn't be harvested
 					harvest = 1
 				else
 					lastproduce = age
@@ -349,17 +346,7 @@ obj/machinery/hydroponics/proc/mutatepest()
 obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	//Called when mob user "attacks" it with object O
-	if(istype(O, /obj/item/nutrient))
-		var/obj/item/nutrient/myNut = O
-		user.unEquip(O)
-		adjustNutri(10)
-		yieldmod = myNut.yieldmod
-		mutmod = myNut.mutmod
-		user << "You replace the nutrient solution in [src]."
-		del(O)
-		update_icon()
-
-	else if(istype(O, /obj/item/weapon/reagent_containers) )  // Syringe stuff (and other reagent containers now too)
+	if(istype(O, /obj/item/weapon/reagent_containers) )  // Syringe stuff (and other reagent containers now too)
 		var/obj/item/weapon/reagent_containers/reagent_source = O
 
 		if(istype(reagent_source, /obj/item/weapon/reagent_containers/syringe))
@@ -512,6 +499,17 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				H.adjustToxic(-round(S.get_reagent_amount("plantbgone")*3))
 				H.adjustWeeds(-rand(4,8))
 
+			//Weed Spray
+			if(S.has_reagent("weedkiller", 1))
+				H.adjustToxic(round(S.get_reagent_amount("weedkiller")*0.5))
+				//old toxicity was 4, each spray is default 10 (minimal of 5) so 5 and 2.5 are the new ammounts
+				H.adjustWeeds(-rand(1,2))
+
+			//Pest Spray
+			if(S.has_reagent("pestkiller", 1))
+				H.adjustToxic(round(S.get_reagent_amount("pestkiller")*0.5))
+				H.adjustPests(-rand(1,2))
+
 			// Healing
 			if(S.has_reagent("cryoxadone", 1))
 				H.adjustHealth(round(S.get_reagent_amount("cryoxadone")*3))
@@ -521,12 +519,15 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			if(S.has_reagent("ammonia", 1))
 				H.adjustHealth(round(S.get_reagent_amount("ammonia")*0.5))
 				H.adjustNutri(round(S.get_reagent_amount("ammonia")*1))
+				H.adjustSYield(round(S.get_reagent_amount("ammonia")*0.01))
 
 			// This is more bad ass, and pests get hurt by the corrosive nature of it, not the plant.
 			if(S.has_reagent("diethylamine", 1))
 				H.adjustHealth(round(S.get_reagent_amount("diethylamine")*1))
 				H.adjustNutri(round(S.get_reagent_amount("diethylamine")*2))
+				H.adjustSYield(round(S.get_reagent_amount("ammonia")*0.02))
 				H.adjustPests(-rand(1,2))
+
 
 			// Compost, effectively
 			if(S.has_reagent("nutriment", 1))
@@ -630,16 +631,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		else
 			user << "<span class='notice'>This plot is completely devoid of weeds. It doesn't need uprooting.</span>"
 
-	else if( istype(O, /obj/item/weapon/weedspray) )
-		var/obj/item/weedkiller/myWKiller = O
-		user.unEquip(O)
-		adjustToxic(myWKiller.toxicity)
-		adjustWeeds(-myWKiller.WeedKillStr)
-		user << "You apply the weedkiller solution into [src]."
-		playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
-		del(O)
-		update_icon()
-
 	else if(istype(O, /obj/item/weapon/storage/bag/plants))
 		attack_hand(user)
 		var/obj/item/weapon/storage/bag/plants/S = O
@@ -647,16 +638,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			if(!S.can_be_inserted(G))
 				return
 			S.handle_item_insertion(G, 1)
-
-	else if( istype(O, /obj/item/weapon/pestspray) )
-		var/obj/item/pestkiller/myPKiller = O
-		user.unEquip(O)
-		adjustToxic(myPKiller.toxicity)
-		adjustPests(-myPKiller.PestKillStr)
-		user << "You apply the pestkiller solution into [src]."
-		playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
-		del(O)
-		update_icon()
 
 	else if(istype(O, /obj/item/weapon/wrench) && unwrenchable)
 		if(anchored==2)
@@ -731,7 +712,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
 	var/t_amount = 0
 
-	while(t_amount < (yield * parent.yieldmod))
+	while(t_amount < yield)
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new product(user.loc, potency) // User gets a consumable
 		if(!t_prod)	return
 		t_prod.seed = type
@@ -779,7 +760,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
 	var/t_amount = 0
 
-	while(t_amount < (yield * parent.yieldmod))
+	while(t_amount < yield)
 		var/obj/item/weapon/grown/t_prod = new product(user.loc, potency) // User gets a consumable -QualityVan
 		t_prod.seed = type
 		t_prod.lifespan = lifespan
@@ -797,7 +778,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
 	var/t_amount = 0
 
-	while(t_amount < (yield * parent.yieldmod))
+	while(t_amount < yield)
 		var/obj/item/weapon/grown/t_prod = new product(user.loc, potency) // User gets a consumable -QualityVan
 		t_prod.seed = type
 		t_prod.lifespan = lifespan
@@ -815,7 +796,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
 	var/t_amount = 0
 
-	while(t_amount < (yield * parent.yieldmod))
+	while(t_amount < yield)
 		new product(user.loc)
 		t_amount++
 
@@ -871,7 +852,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	else //else, one packet of seeds. maybe two
 		var/seed_count = 1
-		if(prob(yield * parent.yieldmod * 20))
+		if(prob(yield * 20))
 			seed_count++
 		for(var/i=0,i<seed_count,i++)
 			var/obj/item/seeds/replicapod/harvestseeds = new /obj/item/seeds/replicapod(user.loc)
@@ -917,10 +898,10 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	lastproduce = age
 	if(istype(myseed,/obj/item/seeds/replicapod/))
 		user << "You harvest from the [myseed.plantname]."
-	else if((yieldmod * myseed.yield) <= 0)
+	else if(myseed.yield <= 0)
 		user << "\red You fail to harvest anything useful."
 	else
-		user << "You harvest [yieldmod * myseed.yield] items from the [myseed.plantname]."
+		user << "You harvest [myseed.yield] items from the [myseed.plantname]."
 	if(myseed.oneharvest)
 		del(myseed)
 		planted = 0
@@ -963,7 +944,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 /// Seed Setters ///
 /obj/machinery/hydroponics/proc/adjustSYield(var/adjustamt)//0,10
-	if(myseed.yield != -1) // Unharvestable shouldn't suddenly turn harvestable
+	if(myseed && myseed.yield != -1) // Unharvestable shouldn't suddenly turn harvestable
 		myseed.yield += adjustamt
 		myseed.yield = max(myseed.yield, 0)
 		myseed.yield = min(myseed.yield, 10)
@@ -971,22 +952,25 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			myseed.yield = 1 // Mushrooms always have a minimum yield of 1.
 
 /obj/machinery/hydroponics/proc/adjustSLife(var/adjustamt)//10,100
-	myseed.lifespan += adjustamt
-	myseed.lifespan = max(myseed.lifespan, 10)
-	myseed.lifespan = min(myseed.lifespan, 100)
+	if(myseed)
+		myseed.lifespan += adjustamt
+		myseed.lifespan = max(myseed.lifespan, 10)
+		myseed.lifespan = min(myseed.lifespan, 100)
 
 /obj/machinery/hydroponics/proc/adjustSEnd(var/adjustamt)//10,100
-	myseed.endurance += adjustamt
-	myseed.endurance = max(myseed.endurance, 10)
-	myseed.endurance = min(myseed.endurance, 100)
+	if(myseed)
+		myseed.endurance += adjustamt
+		myseed.endurance = max(myseed.endurance, 10)
+		myseed.endurance = min(myseed.endurance, 100)
 
 /obj/machinery/hydroponics/proc/adjustSProduct(var/adjustamt)//2,10
-	myseed.production += adjustamt
-	myseed.production = max(myseed.production, 2)
-	myseed.production = min(myseed.production, 10)
+	if(myseed)
+		myseed.production += adjustamt
+		myseed.production = max(myseed.production, 2)
+		myseed.production = min(myseed.production, 10)
 
 /obj/machinery/hydroponics/proc/adjustSPot(var/adjustamt)//0,100
-	if(myseed.potency != -1) //Not all plants have a potency
+	if(myseed && myseed.potency != -1) //Not all plants have a potency
 		myseed.potency += adjustamt
 		myseed.potency = max(myseed.potency, 0)
 		myseed.potency = min(myseed.potency, 100)
