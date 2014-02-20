@@ -44,6 +44,7 @@
 
 
 
+
 /obj/machinery/hydroponics/bullet_act(var/obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(!planted)
 		..()
