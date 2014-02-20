@@ -197,16 +197,19 @@
 	stat_allowed = 0
 	invocation_type = "none"
 	range = 1
-	selection_type = "range"
+	selection_type = "view"
+
+	var/list/types_allowed=list(/obj/item,/mob/living/simple_animal, /mob/living/carbon/monkey, /mob/living/carbon/human)
 
 /obj/effect/proc_holder/spell/targeted/eat/choose_targets(mob/user = usr)
 	var/list/targets = list()
 	var/list/possible_targets = list()
 
-	for(var/obj/item/O in view_or_range(range, user, selection_type))
-		possible_targets += O
+	for(var/atom/movable/O in view_or_range(range, user, selection_type))
+		if(is_type_in_list(O,types_allowed))
+			possible_targets += O
 
-	targets += input("Choose the target for the spell.", "Targeting") as mob in possible_targets
+	targets += input("Choose the target of your hunger.", "Targeting") as anything in possible_targets
 
 	if(!targets.len) //doesn't waste the spell
 		revert_cast(user)
@@ -219,9 +222,9 @@
 		usr << "<span class='notice'>No target found in range.</span>"
 		return
 
-	var/obj/item/the_item = targets[1]
+	var/atom/movable/the_item = targets[1]
 
-	usr.visible_message("\red [usr] eats [the_item].")
+	usr.visible_message("\red [usr] eats \the [the_item].")
 	playsound(usr.loc, 'sound/items/eatfood.ogg', 50, 0)
 
 	del(the_item)
