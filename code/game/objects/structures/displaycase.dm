@@ -17,7 +17,7 @@
 				state++
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 			if(istype(W, /obj/item/weapon/crowbar))
-				new /obj/machinery/constructable_frame(T)
+				new /obj/machinery/constructable_frame/machine_frame(T)
 				new /obj/item/stack/sheet/glass(T)
 				del(src)
 				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
@@ -196,7 +196,7 @@
 		else
 			C.loc=T
 			circuit=null
-			new /obj/machinery/constructable_frame(T)
+			new /obj/machinery/constructable_frame/machine_frame(T)
 		del(src)
 	if(user.a_intent == "hurt")
 		src.health -= W.force

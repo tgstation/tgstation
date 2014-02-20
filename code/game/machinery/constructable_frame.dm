@@ -46,7 +46,7 @@
 								user << "\blue You add cables to the frame."
 								state = 2
 								icon_state = "box_1"
-				if(istype(P, /obj/item/stack/sheet/glass))
+				else if(istype(P, /obj/item/stack/sheet/glass))
 					var/obj/item/stack/sheet/glass/G=P
 					if(G.amount<1)
 						user << "\red How...?"
