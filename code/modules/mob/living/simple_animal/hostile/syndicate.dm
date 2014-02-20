@@ -64,7 +64,7 @@
 			if (O.damtype == HALLOSS)
 				damage = 0
 			health -= damage
-			visible_message("<span class='danger'>[src] has been attacked with [O] by [user].</span>")
+			visible_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>")
 		else
 			visible_message("<span class='danger'>[src] blocks [O] with its shield!</span>")
 	else
