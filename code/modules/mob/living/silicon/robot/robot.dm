@@ -263,7 +263,11 @@
 	if(modtype == "Medical" || modtype == "Security" || modtype == "Combat")
 		status_flags &= ~CANPUSH
 
-	choose_icon(isnull(forced_module) ? 6 : 1, module_sprites)
+	if(!forced_module)
+		choose_icon(6, module_sprites)
+	else
+		var/picked  = pick(module_sprites)
+		icon_state = module_sprites[picked]
 	radio.config(channels)
 	base_icon = icon_state
 
@@ -1354,7 +1358,6 @@
 	flavor_text =  copytext(sanitize(input(usr, "Please enter your new flavour text.", "Flavour text", null)  as text), 1)
 
 /mob/living/silicon/robot/proc/choose_icon(var/triesleft, var/list/module_sprites)
-
 	if(triesleft == 0 || !module_sprites.len)
 		return
 	else

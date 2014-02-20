@@ -81,6 +81,7 @@
 
 		// /vg/: Force borg module, if needed.
 		R.pick_module(force_borg_module)
+		R.updateicon()
 
 	spawn(50)
 		playsound(get_turf(src), 'sound/machines/ding.ogg', 50, 0)
@@ -123,7 +124,7 @@
 /obj/machinery/transformer/interact(var/mob/user)
 	var/data=""
 	if(cooldown_state)
-		data += {"<b>Recalibrating.</b> Time left: [(cooldown_duration - world.time)/10] seconds."}
+		data += {"<b>Recalibrating.</b> Time left: [(cooldown_time - world.time)/10] seconds."}
 	else
 		data += {"<p style="color:red;font-weight:bold;"><blink>ROBOTICIZER ACTIVE.</blink></p>"}
 	data += {"
