@@ -297,9 +297,7 @@
 				if(M.powerlevel < 0)
 					M.powerlevel = 0
 
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='danger'>The [M.name] has shocked []!</span>", src), 1)
+				visible_message("<span class='danger'>[M] shocked [src]!</span>", "<span class='userdanger'>[M] shocked [src]!</span>")
 
 				Weaken(power)
 				if (stuttering < power)
