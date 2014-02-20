@@ -65,7 +65,7 @@
 	var/destroyed = 0
 	var/locked = 0
 	var/ue=null
-	var/icon/occupant_overlay=null
+	var/image/occupant_overlay=null
 
 	var/obj/item/weapon/circuitboard/airlock/circuit
 
@@ -143,14 +143,19 @@
 		src.icon_state = "glassbox2b"
 	else
 		src.icon_state = "glassbox2[locked]"
-	underlays.Cut()
+	overlays = 0
 	if(occupant)
-		if(!occupant_overlay)
-			occupant_overlay=getFlatIcon(occupant)
-			occupant_overlay.Scale(16,16)
-			occupant_overlay.Shift(NORTH, 8)
-			occupant_overlay.Shift(EAST, 8)
-		underlays += occupant_overlay
+		var/icon/occupant_icon=getFlatIcon(occupant)
+		occupant_icon.Scale(16,16)
+		occupant_overlay = image(occupant_icon)
+		occupant_overlay.pixel_x=8
+		occupant_overlay.pixel_y=8
+		//occupant_overlay.Shift(NORTH, 8)
+		//occupant_overlay.Shift(EAST, 8)
+		if(locked)
+			occupant_overlay.alpha=128//ChangeOpacity(0.5)
+		//underlays += occupant_overlay
+		overlays += occupant_overlay
 	return
 
 
