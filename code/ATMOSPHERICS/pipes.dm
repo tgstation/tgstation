@@ -309,7 +309,8 @@
 	icon_state = "intact-g-f"
 /obj/machinery/atmospherics/pipe/simple/insulated
 	name = "Insulated pipe"
-	icon = 'icons/obj/atmospherics/red_pipe.dmi'
+	//icon = 'icons/obj/atmospherics/red_pipe.dmi'
+	icon = 'icons/obj/atmospherics/insulated.dmi'
 	minimum_temperature_difference = 10000
 	thermal_conductivity = 0
 	maximum_pressure = 1000*ONE_ATMOSPHERE
@@ -318,9 +319,16 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/visible
 	icon_state = "intact"
 	level = 2
+	color="#FF0000"
+/obj/machinery/atmospherics/pipe/simple/insulated/visible/blue
+	color="#4285F4"
 /obj/machinery/atmospherics/pipe/simple/insulated/hidden
-	icon_state = "intact-f"
+	icon_state = "intact"
+	alpha=128
 	level = 1
+	color="#FF0000"
+/obj/machinery/atmospherics/pipe/simple/insulated/hidden/blue
+	color="#4285F4"
 /obj/machinery/atmospherics/pipe/tank
 	icon = 'icons/obj/atmospherics/pipe_tank.dmi'
 	icon_state = "intact"
@@ -780,7 +788,8 @@
 	icon_state = ""
 /obj/machinery/atmospherics/pipe/manifold/insulated
 	name = "Insulated pipe"
-	icon = 'icons/obj/atmospherics/red_pipe.dmi'
+	//icon = 'icons/obj/atmospherics/red_pipe.dmi'
+	icon = 'icons/obj/atmospherics/insulated.dmi'
 	icon_state = "manifold"
 	alert_pressure = 900*ONE_ATMOSPHERE
 	level = 2
@@ -810,10 +819,17 @@
 	icon_state = "manifold-f"
 /obj/machinery/atmospherics/pipe/manifold/insulated/visible
 	level = 2
+	color="#ff0000"
 	icon_state = "manifold"
+/obj/machinery/atmospherics/pipe/manifold/insulated/visible/blue
+	color="#4285F4"
 /obj/machinery/atmospherics/pipe/manifold/insulated/hidden
 	level = 1
-	icon_state = "manifold-f"
+	color="#ff0000"
+	alpha=128
+	icon_state = "manifold"
+/obj/machinery/atmospherics/pipe/manifold/insulated/hidden/blue
+	color="#4285F4"
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible
 	level = 2
 	icon_state = "manifold-y"
@@ -1003,6 +1019,7 @@
 	name = "Insulated pipe"
 	_color = ""
 	alert_pressure = 900*ONE_ATMOSPHERE
+	color="#FF0000"
 	level = 2
 	icon_state = "manifold4w"
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/visible
@@ -1031,7 +1048,15 @@
 	icon_state = "manifold4w-f"
 /obj/machinery/atmospherics/pipe/manifold4w/insulated/hidden
 	level = 1
-	icon_state = "manifold4w-f"
+	alpha=128
+	icon_state = "manifold4w"
+/obj/machinery/atmospherics/pipe/manifold4w/insulated/visible
+	level = 2
+	icon_state = "manifold4w"
+/obj/machinery/atmospherics/pipe/manifold4w/insulated/hidden/blue
+	color="#4285F4"
+/obj/machinery/atmospherics/pipe/manifold4w/insulated/visible/blue
+	color="#4285F4"
 /obj/machinery/atmospherics/pipe/cap
 	name = "pipe endcap"
 	desc = "An endcap for pipes"
