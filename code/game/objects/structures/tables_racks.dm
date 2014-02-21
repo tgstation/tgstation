@@ -569,7 +569,8 @@
 		table_destroy(1, user)
 
 	if(!(((I.flags & ABSTRACT)))) //WE NEED MORE PAREMS
-		user.drop_item(src)
+		user.drop_item()
+		I.Move(loc)
 
 /obj/structure/table/proc/table_destroy(var/destroy_type, var/mob/user as mob)
 
