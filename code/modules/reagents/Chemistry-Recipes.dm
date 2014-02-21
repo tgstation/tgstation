@@ -993,65 +993,62 @@ datum
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
 					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
-				sleep(50)
+				spawn(50)
 
-				var/blocked = list(/mob/living/simple_animal/hostile,
-					/mob/living/simple_animal/hostile/pirate,
-					/mob/living/simple_animal/hostile/pirate/ranged,
-					/mob/living/simple_animal/hostile/russian,
-					/mob/living/simple_animal/hostile/russian/ranged,
-					/mob/living/simple_animal/hostile/syndicate,
-					/mob/living/simple_animal/hostile/syndicate/melee,
-					/mob/living/simple_animal/hostile/syndicate/melee/space,
-					/mob/living/simple_animal/hostile/syndicate/ranged,
-					/mob/living/simple_animal/hostile/syndicate/ranged/space,
-					/mob/living/simple_animal/hostile/alien/queen/large,
-					/mob/living/simple_animal/hostile/retaliate,
-					/mob/living/simple_animal/hostile/retaliate/clown,
-					/mob/living/simple_animal/hostile/mushroom,
-					/mob/living/simple_animal/hostile/asteroid,
-					/mob/living/simple_animal/hostile/asteroid/basilisk,
-					/mob/living/simple_animal/hostile/asteroid/goldgrub,
-					/mob/living/simple_animal/hostile/asteroid/goliath,
-					/mob/living/simple_animal/hostile/asteroid/hivelord,
-					/mob/living/simple_animal/hostile/asteroid/hivelordbrood,
-					/mob/living/simple_animal/hostile/carp/holocarp
-					)//exclusion list for things you don't want the reaction to create.
-				var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
+					if(holder && holder.my_atom)
 
-				var/message = "A gold slime reaction has occured"
+						var/blocked = list(/mob/living/simple_animal/hostile,
+							/mob/living/simple_animal/hostile/pirate,
+							/mob/living/simple_animal/hostile/pirate/ranged,
+							/mob/living/simple_animal/hostile/russian,
+							/mob/living/simple_animal/hostile/russian/ranged,
+							/mob/living/simple_animal/hostile/syndicate,
+							/mob/living/simple_animal/hostile/syndicate/melee,
+							/mob/living/simple_animal/hostile/syndicate/melee/space,
+							/mob/living/simple_animal/hostile/syndicate/ranged,
+							/mob/living/simple_animal/hostile/syndicate/ranged/space,
+							/mob/living/simple_animal/hostile/alien/queen/large,
+							/mob/living/simple_animal/hostile/retaliate,
+							/mob/living/simple_animal/hostile/retaliate/clown,
+							/mob/living/simple_animal/hostile/mushroom,
+							/mob/living/simple_animal/hostile/asteroid,
+							/mob/living/simple_animal/hostile/asteroid/basilisk,
+							/mob/living/simple_animal/hostile/asteroid/goldgrub,
+							/mob/living/simple_animal/hostile/asteroid/goliath,
+							/mob/living/simple_animal/hostile/asteroid/hivelord,
+							/mob/living/simple_animal/hostile/asteroid/hivelordbrood,
+							/mob/living/simple_animal/hostile/carp/holocarp
+							)//exclusion list for things you don't want the reaction to create.
+						var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 
-				var/atom/A = holder.my_atom
-				if(A)
-					var/turf/T = get_turf(A)
-					var/area/my_area = get_area(T)
-					message += " in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
-					message += " (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
+						var/atom/A = holder.my_atom
+						var/turf/T = get_turf(A)
+						var/area/my_area = get_area(T)
+						var/message = "A gold slime reaction has occured in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
+						message += " (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
 
-					var/mob/M = get(A, /mob)
-					if(M)
-						message += " - Carried By: [M.real_name] ([M.key]) (<A HREF='?_src_=holder;adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>)"
-					else
-						message += " - Last Fingerprint: [(A.fingerprintslast ? A.fingerprintslast : "N/A")]"
-				else
-					message += "."
+						var/mob/M = get(A, /mob)
+						if(M)
+							message += " - Carried By: [M.real_name] ([M.key]) (<A HREF='?_src_=holder;adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>)"
+						else
+							message += " - Last Fingerprint: [(A.fingerprintslast ? A.fingerprintslast : "N/A")]"
 
-				message_admins(message, 0, 1)
+						message_admins(message, 0, 1)
 
-				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
+						playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
-				for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
-					if(M:eyecheck() <= 0)
-						flick("e_flash", M.flash)
+						for(var/mob/living/carbon/human/H in viewers(get_turf(holder.my_atom), null))
+							if(H:eyecheck() <= 0)
+								flick("e_flash", H.flash)
 
-				for(var/i = 1, i <= 5, i++)
-					var/chosen = pick(critters)
-					var/mob/living/simple_animal/hostile/C = new chosen
-					C.faction = "slimesummon"
-					C.loc = get_turf(holder.my_atom)
-					if(prob(50))
-						for(var/j = 1, j <= rand(1, 3), j++)
-							step(C, pick(NORTH,SOUTH,EAST,WEST))
+						for(var/i = 1, i <= 5, i++)
+							var/chosen = pick(critters)
+							var/mob/living/simple_animal/hostile/C = new chosen
+							C.faction = "slimesummon"
+							C.loc = get_turf(holder.my_atom)
+							if(prob(50))
+								for(var/j = 1, j <= rand(1, 3), j++)
+									step(C, pick(NORTH,SOUTH,EAST,WEST))
 
 		slimecritlesser
 			name = "Slime Crit Lesser"
@@ -1065,42 +1062,44 @@ datum
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
 					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
-				sleep(50)
+				spawn(50)
 
-				var/blocked = list(/mob/living/simple_animal/hostile,
-					/mob/living/simple_animal/hostile/pirate,
-					/mob/living/simple_animal/hostile/pirate/ranged,
-					/mob/living/simple_animal/hostile/russian,
-					/mob/living/simple_animal/hostile/russian/ranged,
-					/mob/living/simple_animal/hostile/syndicate,
-					/mob/living/simple_animal/hostile/syndicate/melee,
-					/mob/living/simple_animal/hostile/syndicate/melee/space,
-					/mob/living/simple_animal/hostile/syndicate/ranged,
-					/mob/living/simple_animal/hostile/syndicate/ranged/space,
-					/mob/living/simple_animal/hostile/alien/queen/large,
-					/mob/living/simple_animal/hostile/retaliate,
-					/mob/living/simple_animal/hostile/retaliate/clown,
-					/mob/living/simple_animal/hostile/mushroom,
-					/mob/living/simple_animal/hostile/asteroid,
-					/mob/living/simple_animal/hostile/asteroid/basilisk,
-					/mob/living/simple_animal/hostile/asteroid/goldgrub,
-					/mob/living/simple_animal/hostile/asteroid/goliath,
-					/mob/living/simple_animal/hostile/asteroid/hivelord,
-					/mob/living/simple_animal/hostile/asteroid/hivelordbrood,
-					/mob/living/simple_animal/hostile/carp/holocarp
-					)//exclusion list for things you don't want the reaction to create.
-				var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
+					if(holder && holder.my_atom)
 
-				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
+						var/blocked = list(/mob/living/simple_animal/hostile,
+							/mob/living/simple_animal/hostile/pirate,
+							/mob/living/simple_animal/hostile/pirate/ranged,
+							/mob/living/simple_animal/hostile/russian,
+							/mob/living/simple_animal/hostile/russian/ranged,
+							/mob/living/simple_animal/hostile/syndicate,
+							/mob/living/simple_animal/hostile/syndicate/melee,
+							/mob/living/simple_animal/hostile/syndicate/melee/space,
+							/mob/living/simple_animal/hostile/syndicate/ranged,
+							/mob/living/simple_animal/hostile/syndicate/ranged/space,
+							/mob/living/simple_animal/hostile/alien/queen/large,
+							/mob/living/simple_animal/hostile/retaliate,
+							/mob/living/simple_animal/hostile/retaliate/clown,
+							/mob/living/simple_animal/hostile/mushroom,
+							/mob/living/simple_animal/hostile/asteroid,
+							/mob/living/simple_animal/hostile/asteroid/basilisk,
+							/mob/living/simple_animal/hostile/asteroid/goldgrub,
+							/mob/living/simple_animal/hostile/asteroid/goliath,
+							/mob/living/simple_animal/hostile/asteroid/hivelord,
+							/mob/living/simple_animal/hostile/asteroid/hivelordbrood,
+							/mob/living/simple_animal/hostile/carp/holocarp
+							)//exclusion list for things you don't want the reaction to create.
+						var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 
-				for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
-					if(M:eyecheck() <= 0)
-						flick("e_flash", M.flash)
+						playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
-				var/chosen = pick(critters)
-				var/mob/living/simple_animal/hostile/C = new chosen
-				C.faction = "neutral"
-				C.loc = get_turf(holder.my_atom)
+						for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
+							if(M:eyecheck() <= 0)
+								flick("e_flash", M.flash)
+
+						var/chosen = pick(critters)
+						var/mob/living/simple_animal/hostile/C = new chosen
+						C.faction = "neutral"
+						C.loc = get_turf(holder.my_atom)
 
 //Silver
 		slimebork
@@ -1190,11 +1189,12 @@ datum
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
 					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
-				sleep(50)
-				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
-				for(var/mob/living/M in range (get_turf(holder.my_atom), 7))
-					M.bodytemperature -= 240
-					M << "\blue You feel a chill!"
+				spawn(50)
+					if(holder && holder.my_atom)
+						playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
+						for(var/mob/living/M in range (get_turf(holder.my_atom), 7))
+							M.bodytemperature -= 240
+							M << "\blue You feel a chill!"
 
 //Orange
 		slimecasp
@@ -1220,10 +1220,11 @@ datum
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
 					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
-				sleep(50)
-				var/turf/simulated/T = get_turf(holder.my_atom)
-				if(istype(T))
-					T.atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 50)
+				spawn(50)
+					if(holder && holder.my_atom)
+						var/turf/simulated/T = get_turf(holder.my_atom)
+						if(istype(T))
+							T.atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 50)
 
 //Yellow
 		slimeoverload
@@ -1378,8 +1379,9 @@ datum
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
 					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
-				sleep(50)
-				explosion(get_turf(holder.my_atom), 1 ,3, 6)
+				spawn(50)
+					if(holder && holder.my_atom)
+						explosion(get_turf(holder.my_atom), 1 ,3, 6)
 //Light Pink
 		slimepotion2
 			name = "Slime Potion 2"
@@ -1408,67 +1410,8 @@ datum
 				Z.loc = get_turf(holder.my_atom)
 				Z.announce_to_ghosts()
 
-
 //Bluespace
-		slimeteleport
-			name = "Slime Teleport"
-			id = "m_tele"
-			result = null
-			required_reagents = list("plasma" = 5)
-			result_amount = 1
-			required_container = /obj/item/slime_extract/bluespace
-			required_other = 1
-			on_reaction(var/datum/reagents/holder, var/created_volume)
-				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 
-				// Calculate new position (searches through beacons in world)
-				var/obj/item/device/radio/beacon/chosen
-				var/list/possible = list()
-				for(var/obj/item/device/radio/beacon/W in world)
-					possible += W
-
-				if(possible.len > 0)
-					chosen = pick(possible)
-
-				if(chosen)
-				// Calculate previous position for transition
-
-					var/turf/FROM = get_turf(holder.my_atom) // the turf of origin we're travelling FROM
-					var/turf/TO = get_turf(chosen)			 // the turf of origin we're travelling TO
-
-					playsound(TO, 'sound/effects/phasein.ogg', 100, 1)
-
-					var/list/flashers = list()
-					for(var/mob/living/carbon/human/M in viewers(TO, null))
-						if(M:eyecheck() <= 0)
-							flick("e_flash", M.flash) // flash dose faggots
-							flashers += M
-
-					var/y_distance = TO.y - FROM.y
-					var/x_distance = TO.x - FROM.x
-					for (var/atom/movable/A in range(4, FROM )) // iterate thru list of mobs in the area
-						if(istype(A, /obj/item/device/radio/beacon)) continue // don't teleport beacons because that's just insanely stupid
-						if(A.anchored) continue
-						if(istype(A, /obj/structure/cable )) continue
-
-						var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
-						if(!A.Move(newloc)) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
-							A.loc = locate(A.x + x_distance, A.y + y_distance, TO.z)
-
-						spawn()
-							if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect
-								var/mob/M = A
-								if(M.client)
-									var/obj/blueeffect = new /obj(src)
-									blueeffect.screen_loc = "WEST,SOUTH to EAST,NORTH"
-									blueeffect.icon = 'icons/effects/effects.dmi'
-									blueeffect.icon_state = "shieldsparkles"
-									blueeffect.layer = 17
-									blueeffect.mouse_opacity = 0
-									M.client.screen += blueeffect
-									sleep(20)
-									M.client.screen -= blueeffect
-									del(blueeffect)
 		slimecrystal
 			name = "Slime Crystal"
 			id = "m_crystal"
