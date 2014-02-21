@@ -60,52 +60,55 @@ var/const/VOX_DELAY = 600
 
 
 /mob/living/silicon/ai/verb/announcement()
-
 	set name = "Announcement"
 	set desc = "Create a vocal announcement by typing in the available words to create a sentence."
 	set category = "AI Commands"
-	if(parent && istype(parent) && parent.stat != 2)
-		if(istype(usr,/mob/living/silicon/ai))
-			var/mob/living/silicon/ai/AI = parent
-			if(AI.control_disabled)
-				usr << "Wireless control is disabled!"
-				return
 
-		if(announcing_vox > world.time)
-			src << "<span class='notice'>Please wait [round((announcing_vox - world.time) / 10)] seconds.</span>"
+	// If we're in an APC, and APC is ded, ABORT
+	if(parent && istype(parent) && parent.stat)
+		return
+
+	if(istype(usr,/mob/living/silicon/ai))
+		var/mob/living/silicon/ai/AI = usr
+		if(AI.control_disabled)
+			usr << "Wireless control is disabled!"
 			return
 
-		var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text
+	if(announcing_vox > world.time)
+		src << "<span class='notice'>Please wait [round((announcing_vox - world.time) / 10)] seconds.</span>"
+		return
 
-		last_announcement = message
+	var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text
 
-		if(!message || announcing_vox > world.time)
-			return
+	last_announcement = message
 
-		var/list/words = stringsplit(trim(message), " ")
-		var/list/incorrect_words = list()
+	if(!message || announcing_vox > world.time)
+		return
 
-		if(words.len > 30)
-			words.len = 30
+	var/list/words = stringsplit(trim(message), " ")
+	var/list/incorrect_words = list()
 
-		for(var/word in words)
-			word = lowertext(trim(word))
-			if(!word)
-				words -= word
-				continue
-			if(!vox_sounds[word])
-				incorrect_words += word
+	if(words.len > 30)
+		words.len = 30
 
-		if(incorrect_words.len)
-			src << "<span class='notice'>These words are not available on the announcement system: [english_list(incorrect_words)].</span>"
-			return
+	for(var/word in words)
+		word = lowertext(trim(word))
+		if(!word)
+			words -= word
+			continue
+		if(!vox_sounds[word])
+			incorrect_words += word
 
-		announcing_vox = world.time + VOX_DELAY
+	if(incorrect_words.len)
+		src << "<span class='notice'>These words are not available on the announcement system: [english_list(incorrect_words)].</span>"
+		return
 
-		log_game("[key_name_admin(src)] made a vocal announcement with the following message: [message].")
+	announcing_vox = world.time + VOX_DELAY
 
-		for(var/word in words)
-			play_vox_word(word, src.z, null)
+	log_game("[key_name_admin(src)] made a vocal announcement with the following message: [message].")
+
+	for(var/word in words)
+		play_vox_word(word, src.z, null)
 
 
 /proc/play_vox_word(var/word, var/z_level, var/mob/only_listener)
