@@ -736,12 +736,13 @@ var/list/artifact_spawn = list() // Runtime fix for geometry loading before cont
 	var/activated_name = null
 
 /turf/unsimulated/mineral/gibtonite/New()
+	icon_state="rock_Diamond"
 	det_time = rand(8,10) //So you don't know exactly when the hot potato will explode
 	..()
 
 /turf/unsimulated/mineral/gibtonite/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/device/analyzer) && stage == 1)
-		user.visible_message("<span class='notice'>You use the analyzer to locate where to cut off the chain reaction and attempt to stop it...</span>")
+	if(istype(I, /obj/item/device/mining_scanner) && stage == 1)
+		user.visible_message("<span class='notice'>You use [I] to locate where to cut off the chain reaction and attempt to stop it...</span>")
 		defuse()
 	if(istype(I, /obj/item/weapon/pickaxe))
 		src.activated_ckey = "[user.ckey]"
@@ -775,7 +776,7 @@ var/list/artifact_spawn = list() // Runtime fix for geometry loading before cont
 
 /turf/unsimulated/mineral/gibtonite/proc/defuse()
 	if(stage == 1)
-		icon_state = "rock_Gibtonite"
+		icon_state = "rock_Gibtonite_inactive"
 		desc = "An inactive gibtonite reserve. The ore can be extracted."
 		stage = 2
 		if(det_time < 0)
