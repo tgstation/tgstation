@@ -285,8 +285,9 @@
 	name = "Chariot"
 	desc = "This spell summons a glorious, flaming chariot that can move in space and through walls."
 
+	charge_type = "charges"
+	charge_counter = 1
 	school = "conjuration"
-	charge_max = 1200
 	clothes_req = 1
 	invocation = "NO F'AT C'HX"
 	invocation_type = "shout"
