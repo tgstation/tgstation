@@ -330,7 +330,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		sync = !sync
 
 	else if(href_list["build"]) //Causes the Protolathe to build something.
-		var/coeff = linked_lathe.efficiency_coeff
+		var/coeff
+		if(linked_lathe)
+			coeff = linked_lathe.efficiency_coeff
+		else
+			coeff = 1
 		var/g2g = 1
 		if(linked_lathe)
 			var/datum/design/being_built = null
