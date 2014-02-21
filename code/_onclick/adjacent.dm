@@ -102,7 +102,7 @@
 	This is defined as any dense ON_BORDER object, or any dense object without throwpass.
 	The border_only flag allows you to not objects (for source and destination squares)
 */
-/turf/proc/ClickCross(var/target_dir, var/border_only, var/target_atom = null)
+/turf/proc/ClickCross(var/target_dir, var/border_only, var/atom/target_atom = null)
 	for(var/obj/O in src)
 		if( !O.density || O == target_atom || O.throwpass) continue // throwpass is used for anything you can click through
 
@@ -123,12 +123,15 @@
 	Since I don't want to complicate the click code rework by messing with unrelated systems it won't be changed here.
 */
 
-/** /vg/: Hack for full windows on top of panes. **/
+/**
+	/vg/: Hack for full windows on top of panes.
+**/
 /obj/structure/window/full/Adjacent(var/atom/neighbor)
-	for(var/obj/structure/window/pane in loc)
-		if(pane)
-			pane.throwpass = 1 // allow click to pass
-			. = ..()
-			pane.throwpass = 0
-			return .
-	return ..()
+	for(var/obj/structure/window/W in loc)
+		if(W)
+			W.throwpass=1
+	.=..()
+	for(var/obj/structure/window/W in loc)
+		if(W)
+			W.throwpass=0
+	return .

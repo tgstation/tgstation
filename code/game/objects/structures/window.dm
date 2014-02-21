@@ -234,6 +234,14 @@
 		..()
 	return
 
+/obj/structure/window/proc/can_be_reached(mob/user)
+	if(!is_fulltile())
+		if(get_dir(user,src) & dir)
+			for(var/obj/O in loc)
+				if(!O.CanPass(user, user.loc, 1, 0))
+					return 0
+	return 1
+
 /obj/structure/window/proc/hit(var/damage, var/sound_effect = 1)
 	if(reinf) damage *= 0.5
 	health = max(0, health - damage)
