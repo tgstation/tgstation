@@ -10,6 +10,7 @@
 	flags = OPENCONTAINER
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
 	var/obj/item/weapon/storage/bag/trash/mybag	= null
+	keytype=/obj/item/key/janicart
 
 /obj/structure/stool/bed/chair/vehicle/janicart/New()
 	..()
