@@ -103,8 +103,9 @@
 						var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 						if(ore_box)
 							for(var/obj/item/weapon/ore/ore in range(chassis,1))
-								if(get_dir(chassis,ore)&chassis.dir)
-									ore.Move(ore_box)
+								if(get_dir(chassis,ore)&chassis.dir && ore.material)
+									ore_box.materials.addAmount(ore.material,1)
+									qdel(ore)
 				else if(istype(target, /turf/unsimulated/floor/asteroid))
 					for(var/turf/unsimulated/floor/asteroid/M in range(chassis,1))
 						if(get_dir(chassis,M)&chassis.dir)
@@ -114,8 +115,9 @@
 						var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 						if(ore_box)
 							for(var/obj/item/weapon/ore/ore in range(chassis,1))
-								if(get_dir(chassis,ore)&chassis.dir)
-									ore.Move(ore_box)
+								if(get_dir(chassis,ore)&chassis.dir && ore.material)
+									ore_box.materials.addAmount(ore.material,1)
+									qdel(ore)
 				else if(target.loc == C)
 					if(istype(target, /mob/living))
 						var/mob/living/M = target
@@ -171,8 +173,9 @@
 						var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 						if(ore_box)
 							for(var/obj/item/weapon/ore/ore in range(chassis,1))
-								if(get_dir(chassis,ore)&chassis.dir)
-									ore.Move(ore_box)
+								if(get_dir(chassis,ore)&chassis.dir && ore.material)
+									ore_box.materials.addAmount(ore.material,1)
+									qdel(ore)
 				else if(istype(target,/turf/unsimulated/floor/asteroid))
 					for(var/turf/unsimulated/floor/asteroid/M in range(target,1))
 						M.gets_dug()
@@ -181,7 +184,9 @@
 						var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 						if(ore_box)
 							for(var/obj/item/weapon/ore/ore in range(target,1))
-								ore.Move(ore_box)
+								if(ore.material)
+									ore_box.materials.addAmount(ore.material,1)
+									qdel(ore)
 				else if(target.loc == C)
 					if(istype(target, /mob/living))
 						var/mob/living/M = target

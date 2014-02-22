@@ -60,12 +60,8 @@
 		else
 			var/obj/structure/ore_box/B = locate() in T
 			if(B)
-				for (i = 0; i < 10; i++)
-					var/obj/item/weapon/ore/O = locate() in B.contents
-					if(O)
-						process_sheet(O)
-					else
-						break
+				for(var/mat_id in B.materials.storage)
+					materials.addAmount(mat_id,B.materials.getAmount(mat_id))
 
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(var/obj/item/weapon/ore/O)
 	if(O.material)
