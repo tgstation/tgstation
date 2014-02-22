@@ -33,6 +33,8 @@
 
 
 /obj/structure/dispenser/attack_hand(mob/user as mob)
+	if(!user.has_arms())
+		return
 	user.set_machine(src)
 	var/dat = "[src]<br><br>"
 	dat += "Oxygen tanks: [oxygentanks] - [oxygentanks ? "<A href='?src=\ref[src];oxygen=1'>Dispense</A>" : "empty"]<br>"

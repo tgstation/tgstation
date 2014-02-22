@@ -222,6 +222,9 @@
 
 
 /obj/machinery/power/smes/attack_hand(mob/user)
+	if(!user.has_arms())
+		return
+
 	add_fingerprint(user)
 	if(stat & BROKEN) return
 	ui_interact(user)

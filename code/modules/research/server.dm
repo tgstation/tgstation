@@ -139,6 +139,9 @@
 			return 1
 
 /obj/machinery/r_n_d/server/attack_hand(mob/user as mob) // I guess only exists to stop ninjas or hell does it even work I dunno.  See also ninja gloves.
+	if(!user.has_arms())
+		return
+
 	if (disabled)
 		return
 	if (shocked)

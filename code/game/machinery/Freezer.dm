@@ -66,6 +66,8 @@
 	return interact(user)
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/interact(mob/user)
+	if(!user.has_arms())
+		return
 	if(stat & (NOPOWER|BROKEN))
 		return
 	user.set_machine(src)

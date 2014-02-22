@@ -1,51 +1,51 @@
 /////AUGMENTATION\\\\\
-//See code/modules/surgery/organs/organ.dm for the parent "limb"
 
 
-/obj/item/organ/limb/robot
+/obj/item/augment
 	name = "cyberlimb"
 	desc = "You should never be seeing this!"
-	status = ORGAN_ROBOTIC
+	icon = 'icons/mob/augments.dmi'
+	var/limb_part = null
+	var/list/construction_cost = list("metal"=1000)
+	var/construction_time = 75
 
-/obj/item/organ/limb/robot/chest
+/obj/item/augment/chest
 	name = "chest"
 	desc = "A Robotic chest"
-	icon_state = "chest"
-	max_damage = 200
-	body_part = CHEST
+	icon_state = "chest_m_s"
+	limb_part = CHEST
+	construction_cost = list("metal"=2000) //Limbs are cheaper than Heads/chests
+	construction_time = 100
 
-/obj/item/organ/limb/robot/head
+/obj/item/augment/head
 	name = "head"
 	desc = "A Robotic head"
-	icon_state = "head"
-	max_damage = 200
-	body_part = HEAD
+	icon_state = "head_s"
+	limb_part = HEAD
+	construction_cost = list("metal"=1500)
+	construction_time = 100
 
-/obj/item/organ/limb/robot/l_arm
-	name = "l_arm"
+/obj/item/augment/l_arm
+	name = "left arm"
 	desc = "A Robotic arm"
-	icon_state = "l_arm"
-	max_damage = 75
-	body_part = ARM_LEFT
+	icon_state = "l_arm_s"
+	limb_part = ARM_LEFT
 
-/obj/item/organ/limb/robot/l_leg
-	name = "l_leg"
+/obj/item/augment/l_leg
+	name = "left leg"
 	desc = "A Robotic leg"
-	icon_state = "l_leg"
-	max_damage = 75
-	body_part = LEG_LEFT
+	icon_state = "l_leg_s"
+	limb_part = LEG_LEFT
 
-/obj/item/organ/limb/robot/r_arm
-	name = "r_arm"
+/obj/item/augment/r_arm
+	name = "right arm"
 	desc = "A Robotic arm"
-	icon_state = "r_arm"
-	max_damage = 75
-	body_part = ARM_RIGHT
+	icon_state = "r_arm_s"
+	limb_part = ARM_RIGHT
 
-/obj/item/organ/limb/robot/r_leg
-	name = "r_leg"
+/obj/item/augment/r_leg
+	name = "right leg"
 	desc = "A Robotic leg"
-	icon_state = "r_leg"
-	max_damage = 75
-	body_part = LEG_RIGHT
+	icon_state = "r_leg_s"
+	limb_part = LEG_RIGHT
 

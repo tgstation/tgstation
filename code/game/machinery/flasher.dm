@@ -153,7 +153,8 @@
 	return attack_hand(user)
 
 /obj/machinery/flasher_button/attack_hand(mob/user)
-
+	if(!user.has_arms())
+		return
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(active)

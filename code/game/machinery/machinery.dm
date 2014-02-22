@@ -245,6 +245,10 @@ Class Procs:
 		return 1
 	if(user.lying || user.stat)
 		return 1
+
+	if(!user.has_arms())
+		return 1
+
 	if ( ! (istype(usr, /mob/living/carbon/human) || \
 			istype(usr, /mob/living/silicon) || \
 			istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )

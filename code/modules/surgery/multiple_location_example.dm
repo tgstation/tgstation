@@ -1,12 +1,11 @@
-/*
-//CONTENTS//
-Multiple location example surgery
 
+//CONTENTS//
+//Multiple location example surgery
 
 
 //THE SURGERY//
-it is very similar to a normal surgery.
-Location = "anywhere" is the unique difference.
+//it is very similar to a normal surgery.
+Location = "anywhere" //is the unique difference.
 
 /datum/surgery/multiLocExample
 	name = "Multiple Location Surgery Example"
@@ -37,18 +36,15 @@ EG: a zone on a mob (where user is targetting) to the limb thats actually there.
 		user.visible_message("<span class ='notice'>Generic Statement 2.</span>")
 
 
+/*
 /datum/surgery_step/multiLocExampleStep/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 You can use whatever you substituted "L" for here for useful things, swapping limbs for other limbs, etc.
 if the surgery is intended to be MultiLoc but should only be performable once per limb, add this
 "surgery.invalid_locations += user.zone_sel.selecting"
 Just after you have swapped limbs around, see limb augmentation for an example of this
 
+
+
+Enjoy making Multi-location operations! (if you understood my Rambling)
+If you didn't understand this, Ask for RobRichards in Coderbus
 */
-
-//This file is commented out as to avoid:
-// a snowflakey removal of it 100% of the time
-// it's an example, it doesn't work perfectly due to just being the multiple locations section.
-// It is also not set to compile, due to being Empty (according to the compiler)
-
-//Enjoy making Multi-location operations! (if you understood my Rambling)
-//If you didn't understand this, Ask for RobRichards in Coderbus

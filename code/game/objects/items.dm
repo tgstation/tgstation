@@ -125,6 +125,9 @@
 		var/obj/item/weapon/storage/S = src.loc
 		S.remove_from_storage(src)
 
+	if(!user.has_arms())
+		return
+
 	src.throwing = 0
 	if (loc == user)
 		if(!user.unEquip(src))

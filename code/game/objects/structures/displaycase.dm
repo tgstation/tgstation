@@ -80,6 +80,9 @@
 	return src.attack_hand(user)
 
 /obj/structure/displaycase/attack_hand(mob/user as mob)
+	if(!user.has_arms())
+		return
+
 	if (src.destroyed && src.occupied)
 		new /obj/item/weapon/gun/energy/laser/captain( src.loc )
 		user << "\b You deactivate the hover field built into the case."

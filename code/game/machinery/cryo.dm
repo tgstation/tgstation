@@ -101,6 +101,9 @@
 		usr << "<span class='notice'>Too far away to view contents.</span>"
 
 /obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user)
+	if(!user.has_arms())
+		return
+
 	ui_interact(user)
 
 

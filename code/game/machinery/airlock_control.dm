@@ -124,6 +124,9 @@ obj/machinery/airlock_sensor/update_icon()
 		icon_state = "airlock_sensor_off"
 
 obj/machinery/airlock_sensor/attack_hand(mob/user)
+	if(!user.has_arms())
+		return
+
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 //radio signal
 	signal.data["tag"] = master_tag

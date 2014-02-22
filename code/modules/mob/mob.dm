@@ -730,8 +730,7 @@ note dizziness decrements automatically in the mob's Life() proc.
         return canmove
 
 /mob/proc/fall(var/forced)
-	drop_l_hand()
-	drop_r_hand()
+	drop_both_hands()
 
 /mob/verb/eastface()
 	set hidden = 1
@@ -852,3 +851,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 	resting = max(resting + amount,0)
 	update_canmove()
 	return
+
+/mob/proc/has_arms() //checks that whomever is using this has arms - RR
+	return 1

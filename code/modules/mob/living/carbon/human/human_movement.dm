@@ -22,6 +22,17 @@
 	if(back)
 		. += back.slowdown
 
+	//Limb based speed - RR
+	if(leg_ok() == 1)
+		. += 1.0 //1 leg missing, + 1.0 delay
+
+	if(leg_ok() == 0)
+		. += 2.0 //2 legs missing, + 2.0 delay
+		if(arm_ok() == 1)
+			. += 1.0 // 1 arm missing, + 1.0 delay
+		else if(!(arm_ok() == 2)) //2 arms missing, + 2.0 delay again
+			. += 2.0
+
 	if(FAT in mutations)
 		. += 1.5
 	if(bodytemperature < 283.222)

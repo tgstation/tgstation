@@ -88,7 +88,7 @@ update_flag
 		icon_state = text("[]-1", canister_color)
 		return
 
-	if(icon_state != "[canister_color]") 
+	if(icon_state != "[canister_color]")
 		icon_state = "[canister_color]"
 
 	if(check_change()) //Returns 1 if no change needed to icons.
@@ -259,6 +259,8 @@ update_flag
 	return src.attack_hand(user)
 
 /obj/machinery/portable_atmospherics/canister/attack_hand(var/mob/user as mob)
+	if(!user.has_arms())
+		return
 	return src.interact(user)
 
 /obj/machinery/portable_atmospherics/canister/interact(var/mob/user as mob)

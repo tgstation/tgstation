@@ -105,6 +105,8 @@
 
 
 /obj/machinery/door/attack_hand(mob/user as mob)
+	if(!user.has_arms())
+		return
 	return src.attackby(user, user)
 
 

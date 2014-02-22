@@ -107,6 +107,8 @@
 	return src.attack_hand(user)
 
 /obj/machinery/meter/attack_hand(var/mob/user as mob)
+	if(!user.has_arms())
+		return
 
 	if(stat & (NOPOWER|BROKEN))
 		return 1

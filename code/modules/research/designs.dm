@@ -1507,6 +1507,72 @@ datum/design/noreactbeaker
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreact
 	category = "Misc"
 
+datum/design/aug_chest
+	name = "Mechanical Chest"
+	desc = "A replacement chest"
+	id = "aug_chest"
+	req_tech = list("programming" = 2, "biotech" = 4)
+	build_type = MECHFAB
+	materials = list("$metal" = 3000)
+	reliability = 76
+	build_path = /obj/item/augment/chest
+	category = "Misc"
+
+datum/design/aug_head
+	name = "Mechanical Head"
+	desc = "A replacement head"
+	id = "aug_head"
+	req_tech = list("programming" = 2, "biotech" = 4)
+	build_type = MECHFAB
+	materials = list("$metal" = 2500)
+	reliability = 76
+	build_path = /obj/item/augment/head
+	category = "Misc"
+
+datum/design/aug_l_leg
+	name = "Mechanical Left Leg"
+	desc = "A replacement leg"
+	id = "aug_l_leg"
+	req_tech = list("programming" = 2, "biotech" = 3)
+	build_type = MECHFAB
+	materials = list("$metal" = 1750)
+	reliability = 76
+	build_path = /obj/item/augment/l_leg
+	category = "Misc"
+
+datum/design/aug_r_leg
+	name = "Mechanical Right Leg"
+	desc = "A replacement leg"
+	id = "aug_r_leg"
+	req_tech = list("programming" = 2, "biotech" = 3)
+	build_type = MECHFAB
+	materials = list("$metal" = 1750)
+	reliability = 76
+	build_path = /obj/item/augment/r_leg
+	category = "Misc"
+
+datum/design/aug_l_arm
+	name = "Mechanical Left Arm"
+	desc = "A replacement arm"
+	id = "aug_l_arm"
+	req_tech = list("programming" = 2, "biotech" = 3)
+	build_type = MECHFAB
+	materials = list("$metal" = 1750)
+	reliability = 76
+	build_path = /obj/item/augment/l_arm
+	category = "Misc"
+
+datum/design/aug_r_arm
+	name = "Mechanical Right Arm"
+	desc = "A replacement arm"
+	id = "aug_r_arm"
+	req_tech = list("programming" = 2, "biotech" = 3)
+	build_type = MECHFAB
+	materials = list("$metal" = 1750)
+	reliability = 76
+	build_path = /obj/item/augment/r_arm
+	category = "Misc"
+
 /////////////////////////////////////////
 /////////////////Weapons/////////////////
 /////////////////////////////////////////

@@ -89,6 +89,10 @@
 	return unEquip(r_hand) //Why was this not calling unEquip in the first place jesus fuck.
 
 
+/mob/proc/drop_both_hands(var/atom/Target)
+	drop_r_hand(Target)
+	drop_l_hand(Target)
+
 //Drops the item in our active hand.
 /mob/proc/drop_item() //THIS. DOES. NOT. NEED. AN. ARGUMENT.
 	if(hand)	return drop_l_hand()

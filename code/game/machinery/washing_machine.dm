@@ -271,6 +271,9 @@
 	update_icon()
 
 /obj/machinery/washing_machine/attack_hand(mob/user as mob)
+	if(!user.has_arms())
+		return
+
 	switch(state)
 		if(1)
 			state = 2

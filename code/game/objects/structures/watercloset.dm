@@ -17,6 +17,9 @@
 
 
 /obj/structure/toilet/attack_hand(mob/living/user)
+	if(!user.has_arms())
+		return
+
 	if(swirlie)
 		user.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie]'s head!</span>", "<span class='notice'>You slam the toilet seat onto [swirlie]'s head!</span>", "You hear reverberating porcelain.")
 		swirlie.adjustBruteLoss(8)

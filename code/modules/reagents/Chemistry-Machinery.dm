@@ -175,6 +175,9 @@
 	return src.attack_hand(user)
 
 /obj/machinery/chem_dispenser/attack_hand(mob/user as mob)
+	if(!user.has_arms())
+		return
+
 	if(stat & BROKEN)
 		return
 

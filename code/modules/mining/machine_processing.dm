@@ -18,7 +18,9 @@
 		else
 			del(src)
 
-/obj/machinery/mineral/processing_unit_console/attack_hand(user as mob)
+/obj/machinery/mineral/processing_unit_console/attack_hand(mob/user as mob)
+	if(!user.has_arms())
+		return
 
 	var/dat = "<b>Smelter control console</b><br><br>"
 	//iron
