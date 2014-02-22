@@ -277,7 +277,7 @@
 				owner.visible_message("<span class='danger'><B>[owner]'s internal organs have spilled onto the floor!</B></span>")
 
 			owner.drop_both_hands() //Removes any items they may be carrying in their now non existant arms
-		owner.update_body()
+		owner.regenerate_icons() //Redraw the mob and all it's clothing
 
 
 //////////////// AUGMENTATION \\\\\\\\\\\\\\\\
@@ -307,7 +307,7 @@
 
 //////////////// LIMB STATUS \\\\\\\\\\\\\\\\
 
-//Informs us if the user has atleast 1 functional Arm.
+//Informs us Of the number of functional arms
 /mob/living/carbon/human/proc/arm_ok()
 	var/num_of_arms = 0
 
@@ -319,7 +319,7 @@
 	return num_of_arms
 
 
-//Informs us if the user has atleast 1 functional Leg.
+//Informs us of the number of functional legs
 /mob/living/carbon/human/proc/leg_ok()
 	var/num_of_legs = 0
 
@@ -340,7 +340,7 @@
 			if(L.owner)
 				var/mob/living/carbon/human/H = L.owner //Only humans have limbs
 				H.updatehealth()
-				H.update_body()
+				H.regenerate_icons()
 
 /obj/item/organ/proc/change_organ(var/type)
 	status = type
@@ -354,7 +354,7 @@
 		L.burnstate = 0
 		if(L.owner)
 			var/mob/living/carbon/human/H = L.owner
-			H.update_body()
+			H.regenerate_icons()
 
 //////////////// DROP LIMB \\\\\\\\\\\\\\\\
 

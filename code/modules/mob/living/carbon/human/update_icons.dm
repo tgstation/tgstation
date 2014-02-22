@@ -413,24 +413,25 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 /mob/living/carbon/human/update_inv_gloves()
 	remove_overlay(GLOVES_LAYER)
+
 	if(gloves)
 		if(client && hud_used && hud_used.hud_shown && hud_used.inventory_shown)
 			gloves.screen_loc = ui_gloves
 			client.screen += gloves
 
-		var/t_state = gloves.item_state
-		if(!t_state)	t_state = gloves.icon_state
-		var/image/standing	= image("icon"='icons/mob/hands.dmi', "icon_state"="[t_state]", "layer"=-GLOVES_LAYER)
-		overlays_standing[GLOVES_LAYER]	= standing
+		if(arm_ok() == 2) //We need 2 arms to bother with Hand/arm clothing sprites on mob
 
-		if(gloves.blood_DNA)
-			if(has_arms())
+			var/t_state = gloves.item_state
+			if(!t_state)	t_state = gloves.icon_state
+			var/image/standing	= image("icon"='icons/mob/hands.dmi', "icon_state"="[t_state]", "layer"=-GLOVES_LAYER)
+			overlays_standing[GLOVES_LAYER]	= standing
+
+			if(gloves.blood_DNA)
 				standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
 
-	else
-		if(blood_DNA)
-			if(has_arms())
-				overlays_standing[GLOVES_LAYER]	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
+			else
+				if(blood_DNA)
+					overlays_standing[GLOVES_LAYER]	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
 
 	apply_overlay(GLOVES_LAYER)
 
@@ -470,11 +471,12 @@ Please contact me on #coderbus IRC. ~Carnie x
 			shoes.screen_loc = ui_shoes
 			client.screen += shoes
 
-		var/image/standing	= image("icon"='icons/mob/feet.dmi', "icon_state"="[shoes.icon_state]", "layer"=-SHOES_LAYER)
-		overlays_standing[SHOES_LAYER]	= standing
+		if(leg_ok() == 2) //We need 2 legs to bother with Foot/leg clothing sprites on mob
+			var/image/standing	= image("icon"='icons/mob/feet.dmi', "icon_state"="[shoes.icon_state]", "layer"=-SHOES_LAYER)
+			overlays_standing[SHOES_LAYER]	= standing
 
-		if(shoes.blood_DNA)
-			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
+			if(shoes.blood_DNA)
+				standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
 
 	apply_overlay(SHOES_LAYER)
 
@@ -674,6 +676,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 	apply_overlay(L_HAND_LAYER)
 
 //Human Overlays Indexes/////////
+#undef BODYPARTS_LAYER
 #undef BODY_LAYER
 #undef MUTATIONS_LAYER
 #undef DAMAGE_LAYER
