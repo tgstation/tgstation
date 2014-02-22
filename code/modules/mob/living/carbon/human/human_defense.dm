@@ -210,17 +210,17 @@ emp_act
 
 
 /mob/living/carbon/human/emp_act(severity)
-
+	var/informed = 0
 	for(var/obj/item/organ/limb/L in src.organs)
 		if(L.status == ORGAN_ROBOTIC)
+			if(!informed) 
+				src << "<span class='danger'>Error, electormagnetic pulse detected in cyber limb!</span>"
+				informed = 1
 			switch(severity)
 				if(1)
-					L.take_damage(20)
+					L.take_damage(0,rand(1,15))
 					src.Stun(rand(1,10))
 				if(2)
-					L.take_damage(10)
+					L.take_damage(0,rand(1,10))
 					src.Stun(rand(1,5))
-
-
-			src << "<span class='danger'>Error, electormagnetic pulse detected in cyber limb!</span>"
 	..()
