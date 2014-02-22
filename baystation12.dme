@@ -897,6 +897,7 @@
 #include "code\modules\library\lib_readme.dm"
 #include "code\modules\liquid\splash_simulation.dm"
 #include "code\modules\mining\abandonedcrates.dm"
+#include "code\modules\mining\debug_shit.dm"
 #include "code\modules\mining\equipment_locker.dm"
 #include "code\modules\mining\machine_input_output_plates.dm"
 #include "code\modules\mining\machine_processing.dm"

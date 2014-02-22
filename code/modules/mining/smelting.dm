@@ -8,7 +8,7 @@
 	var/sufficient_ore=1
 	var/matching_ingredient_count=0
 	for(var/ore_id in P.ore.storage)
-		var/datum/material/po=P.ore[ore_id]
+		var/datum/material/po=P.ore.getMaterial(ore_id)
 		var/required=(ore_id in ingredients)
 		var/selected=(ore_id in P.selected)
 
