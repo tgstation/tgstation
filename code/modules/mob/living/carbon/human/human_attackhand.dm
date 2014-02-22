@@ -124,15 +124,6 @@
 								"<span class='userdanger'>[M] has pushed [src]!</span>")
 				forcesay(hit_appends)
 				return
-			if(randn <= 45 && !lying)
-				if(head)
-					var/obj/item/clothing/head/H = head
-					if(!istype(H) || prob(hat_fall_prob()))
-						drop_from_inventory(H)
-						if(prob(60))
-							step_away(H,M)
-						visible_message("<span class='warning'>[M] has knocked [H] off [src]'s head!</span>",
-							"<span class='warning'>[M] has knocked [H] off [src]'s head!</span>")
 
 			var/talked = 0	// BubbleWrap
 
@@ -161,9 +152,9 @@
 				//End BubbleWrap
 
 				if(!talked)	//BubbleWrap
-					drop_item()
-					visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
-									"<span class='userdanger'>[M] has disarmed [src]!</span>")
+					if(drop_item())
+						visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
+										"<span class='userdanger'>[M] has disarmed [src]!</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 				return
 

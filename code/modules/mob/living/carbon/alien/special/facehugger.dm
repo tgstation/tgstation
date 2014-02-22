@@ -40,7 +40,7 @@ var/const/MAX_ACTIVE_TIME = 400
 
 /obj/item/clothing/mask/facehugger/attack(mob/living/M as mob, mob/user as mob)
 	..()
-	user.drop_from_inventory(src)
+	user.unEquip(src)
 	Attach(M)
 
 /obj/item/clothing/mask/facehugger/examine()
@@ -85,7 +85,8 @@ var/const/MAX_ACTIVE_TIME = 400
 	return 0
 
 /obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed)
-	..()
+	if(!..())
+		return
 	if(stat == CONSCIOUS)
 		icon_state = "[initial(icon_state)]_thrown"
 		spawn(15)
@@ -129,8 +130,8 @@ var/const/MAX_ACTIVE_TIME = 400
 		if(target.wear_mask)
 			if(prob(20))	return 0
 			var/obj/item/clothing/W = target.wear_mask
-			if(!W.canremove)	return 0
-			target.drop_from_inventory(W)
+			if(W.flags & NODROP)	return 0
+			target.unEquip(W)
 
 			target.visible_message("\red \b [src] tears [W] off of [target]'s face!")
 

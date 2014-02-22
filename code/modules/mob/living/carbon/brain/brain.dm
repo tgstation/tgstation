@@ -49,3 +49,6 @@
 	if(in_contents_of(/obj/mecha))	canmove = 1
 	else							canmove = 0
 	return canmove
+
+/mob/living/carbon/brain/toggle_throw_mode()
+	return

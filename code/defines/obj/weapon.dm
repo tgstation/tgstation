@@ -75,7 +75,7 @@
 	w_class = 1.0
 	throwforce = 0
 	throw_speed = 3
-	throw_range = 20
+	throw_range = 7
 
 /obj/item/weapon/soap/nanotrasen
 	desc = "A Nanotrasen brand bar of soap. Smells of plasma."
@@ -99,7 +99,7 @@
 	hitsound = null //To prevent tap.ogg playing, as the item lacks of force
 	w_class = 1.0
 	throw_speed = 3
-	throw_range = 15
+	throw_range = 7
 	attack_verb = list("HONKED")
 	var/spam_flag = 0
 
@@ -480,7 +480,7 @@
 	name = "nano-manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "nano_mani"
-	origin_tech = "materials=3,programming=2"
+	origin_tech = "materials=3;programming=2"
 	rating = 2
 	m_amt = 30
 
@@ -523,7 +523,7 @@
 	name = "pico-manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "pico_mani"
-	origin_tech = "materials=5,programming=2"
+	origin_tech = "materials=5;programming=2"
 	rating = 3
 	m_amt = 30
 

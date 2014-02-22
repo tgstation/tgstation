@@ -26,7 +26,7 @@
 		if(istype(W, /obj/item/target))
 			density = 0
 			W.density = 1
-			user.drop_item(src)
+			user.drop_item()
 			W.loc = loc
 			W.layer = 3.1
 			pinned_target = W

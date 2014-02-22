@@ -554,7 +554,7 @@
 	del(S)
 	user.put_in_hands(A)
 	user << "<span class='notice'>You add the robot arm to the first aid kit.</span>"
-	user.drop_from_inventory(src)
+	user.unEquip(src, 1)
 	del(src)
 
 
@@ -588,6 +588,6 @@
 					var/obj/machinery/bot/medbot/S = new /obj/machinery/bot/medbot(T)
 					S.skin = src.skin
 					S.name = src.created_name
-					user.drop_from_inventory(src)
+					user.unEquip(src, 1)
 					del(src)
 

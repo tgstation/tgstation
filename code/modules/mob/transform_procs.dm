@@ -11,7 +11,7 @@
 
 	if(tr_flags & TR_KEEPITEMS)
 		for(var/obj/item/W in (src.contents-implants))
-			drop_from_inventory(W)
+			unEquip(W)
 
 	//Make mob invisible and spawn animation
 	regenerate_icons()
@@ -99,7 +99,7 @@
 	//now the rest
 	if (tr_flags & TR_KEEPITEMS)
 		for(var/obj/item/W in (src.contents-implants))
-			u_equip(W)
+			unEquip(W)
 			if (client)
 				client.screen -= W
 			if (W)
@@ -108,7 +108,7 @@
 				W.layer = initial(W.layer)
 
 	//	for(var/obj/item/W in src)
-	//		drop_from_inventory(W)
+	//		unEquip(W)
 
 	//Make mob invisible and spawn animation
 	regenerate_icons()
@@ -195,7 +195,7 @@
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		unEquip(W)
 	regenerate_icons()
 	notransform = 1
 	canmove = 0
@@ -271,7 +271,7 @@
 		if(delete_items)
 			del(W)
 		else
-			drop_from_inventory(W)
+			unEquip(W)
 	regenerate_icons()
 	notransform = 1
 	canmove = 0
@@ -313,7 +313,7 @@
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		unEquip(W)
 	regenerate_icons()
 	notransform = 1
 	canmove = 0
@@ -343,7 +343,7 @@
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		unEquip(W)
 	regenerate_icons()
 	notransform = 1
 	canmove = 0
@@ -390,7 +390,7 @@
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		unEquip(W)
 	regenerate_icons()
 	notransform = 1
 	canmove = 0
@@ -419,7 +419,7 @@
 	if(notransform)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		unEquip(W)
 
 	regenerate_icons()
 	notransform = 1
@@ -508,6 +508,3 @@
 
 	//Not in here? Must be untested!
 	return 0
-
-
-

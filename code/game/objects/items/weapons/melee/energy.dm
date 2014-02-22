@@ -56,7 +56,6 @@
 	w_class = 2.0
 	flags = NOSHIELD | SHARP
 	origin_tech = "magnets=3;syndicate=4"
-
 	var/hacked = 0
 
 /obj/item/weapon/melee/energy/sword/New()
@@ -112,8 +111,8 @@
 			if(src.hacked) // That's right, we'll only check the "original" esword.
 				newSaber.hacked = 1
 				newSaber.item_color = "rainbow"
-			user.before_take_item(W)
-			user.before_take_item(src)
+			user.unEquip(W)
+			user.unEquip(src)
 			del(W)
 			del(src)
 	else if(istype(W, /obj/item/device/multitool))

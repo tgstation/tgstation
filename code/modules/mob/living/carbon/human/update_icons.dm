@@ -394,7 +394,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 	else
 		// Automatically drop anything in store / id / belt if you're not wearing a uniform.	//CHECK IF NECESARRY
 		for(var/obj/item/thing in list(r_store, l_store, wear_id, belt))						//
-			drop_from_inventory(thing)
+			unEquip(thing)
 
 	apply_overlay(UNIFORM_LAYER)
 
@@ -541,7 +541,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 		overlays_standing[SUIT_LAYER]	= standing
 
 		if(istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
-			drop_from_inventory(handcuffed)
+			unEquip(handcuffed)
 			drop_l_hand()
 			drop_r_hand()
 

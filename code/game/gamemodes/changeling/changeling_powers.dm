@@ -567,20 +567,21 @@ var/list/datum/dna/hivemind_bank = list()
 	var/mob/living/carbon/human/H = src
 
 	if(istype(l_hand, /obj/item/weapon/melee/arm_blade)) //Not the nicest way to do it, but eh
-		u_equip(l_hand)
+		del l_hand //Arm  blades can't be dropped, we have to delete them directly.
 		return
 
 	if(istype(r_hand, /obj/item/weapon/melee/arm_blade))
-		u_equip(r_hand)
+		del r_hand
 		return
 
 	var/datum/changeling/changeling = changeling_power(20)
 	if(!changeling)
 		return
 
-	u_equip(get_active_hand())
+	if(!drop_item())
+		usr << "The [get_active_hand()] is stuck to your hand, you cannot grow a blade over it!"
+		return
 	if(H.has_arms()) //if the active hand exists
-		drop_item(get_active_hand())
 		put_in_hands(new /obj/item/weapon/melee/arm_blade(src))
 		changeling.geneticdamage += 6 //Only charge if you actually get the blades
 		changeling.chem_charges -= 20

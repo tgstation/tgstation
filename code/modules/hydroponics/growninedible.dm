@@ -75,7 +75,7 @@
 		if(leaf.dry)
 			user.show_message("<span class='notice'>You wrap the [W] around the log, turning it into a torch!</span>")
 			var/obj/item/device/flashlight/flare/torch/T = new /obj/item/device/flashlight/flare/torch(user.loc)
-			usr.u_equip(W)
+			usr.unEquip(W)
 			usr.put_in_active_hand(T)
 			del(leaf)
 			del(src)
@@ -178,7 +178,7 @@
 	w_class = 1.0
 	throwforce = 0
 	throw_speed = 3
-	throw_range = 20
+	throw_range = 7
 
 /obj/item/weapon/grown/corncob
 	name = "corn cob"
@@ -189,4 +189,4 @@
 	w_class = 1.0
 	throwforce = 0
 	throw_speed = 3
-	throw_range = 20
+	throw_range = 7
