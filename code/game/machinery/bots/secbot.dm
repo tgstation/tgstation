@@ -611,8 +611,10 @@ Auto Patrol: []"},
 		else if(istype(M, /mob/living/simple_animal/hostile))
 			if(M.stat == DEAD)
 				continue
-			else
-				src.threatlevel = 4
+			// Ignore lazarus-injected mobs.
+			if(M.faction == "lazarus")
+				continue
+			src.threatlevel = 4
 
 		if(!src.threatlevel)
 			continue
