@@ -204,7 +204,7 @@
 
 
 /obj/machinery/atmospherics/pipe/simple/update_icon()
-	alpha = invisibility ? 128 : 0
+	alpha = invisibility ? 128 : 255
 	if(node1&&node2)
 		icon_state = "intact"
 
@@ -716,7 +716,7 @@
 
 
 /obj/machinery/atmospherics/pipe/manifold/update_icon()
-	alpha = invisibility ? 128 : 0
+	alpha = invisibility ? 128 : 255
 	if(node1&&node2&&node3)
 		icon_state="manifold"
 	else
@@ -947,7 +947,7 @@
 
 /obj/machinery/atmospherics/pipe/manifold4w/update_icon()
 	overlays=0
-	alpha = invisibility ? 128 : 0
+	alpha = invisibility ? 128 : 255
 	if(node1&&node2&&node3&&node4)
 		icon_state = "[baseicon]"
 	else
@@ -1121,7 +1121,7 @@
 
 /obj/machinery/atmospherics/pipe/cap/update_icon()
 	overlays = 0
-	alpha = invisibility ? 128 : 0
+	alpha = invisibility ? 128 : 255
 	icon_state = "cap"
 	return
 
