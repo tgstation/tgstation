@@ -5,6 +5,15 @@
 	icon_state = "keys"
 	w_class = 1
 	var/obj/structure/stool/bed/chair/vehicle/paired_to=null
+	var/vin = null
+
+	New()
+		if(vin)
+			for(var/obj/structure/stool/bed/chair/vehicle/V in world)
+				if(V.vin == vin)
+					paired_to=V
+					V.mykey=src
+
 
 /obj/structure/stool/bed/chair/vehicle
 	name = "vehicle"
@@ -25,13 +34,15 @@
 	var/keytype=null
 	var/obj/item/key/mykey
 
+	var/vin=null
+
 /obj/structure/stool/bed/chair/vehicle/New()
 	processing_objects |= src
 	handle_rotation()
 
 	if(!nick)
 		nick=name
-	if(keytype)
+	if(keytype && !vin)
 		mykey = new keytype(src.loc)
 		mykey.paired_to=src
 
@@ -60,9 +71,19 @@
 		else
 			user << "You don't need a key."
 
-/obj/structure/stool/bed/chair/vehicle/relaymove(mob/user, direction)
+/obj/structure/stool/bed/chair/vehicle/proc/check_key(var/mob/user)
+	if(!keytype)
+		return 1
+	if(mykey)
+		return user.l_hand == mykey || user.r_hand == mykey
+	return 0
+
+/obj/structure/stool/bed/chair/vehicle/relaymove(var/mob/user, direction)
 	if(user.stat || user.stunned || user.weakened || user.paralysis  || destroyed)
 		unbuckle()
+		return
+	if(!check_key(user))
+		user << "<span class='notice'>You'll need the keys in one of your hands to drive \the [src].</span>"
 		return
 	if(empstun > 0)
 		if(user)
@@ -70,16 +91,13 @@
 		return
 	if(istype(src.loc, /turf/space))
 		if(!src.Process_Spacemove(0))	return
-	if(!keytype || user.l_hand == mykey || user.r_hand == mykey)
-		step(src, direction)
-		update_mob()
-		handle_rotation()
-		/*
-		if(istype(src.loc, /turf/space) && (!src.Process_Spacemove(0, user)))
-			var/turf/space/S = src.loc
-			S.Entered(src)*/
-	else
-		user << "<span class='notice'>You'll need the keys in one of your hands to drive \the [src].</span>"
+	step(src, direction)
+	update_mob()
+	handle_rotation()
+	/*
+	if(istype(src.loc, /turf/space) && (!src.Process_Spacemove(0, user)))
+		var/turf/space/S = src.loc
+		S.Entered(src)*/
 
 /obj/structure/stool/bed/chair/vehicle/proc/Process_Spacemove(var/check_drift = 0, mob/user)
 	if(can_spacemove && buckled_mob)
@@ -182,6 +200,10 @@
 
 /obj/structure/stool/bed/chair/vehicle/buckle_mob(mob/M, mob/user)
 	if(M != user || !ismob(M) || get_dist(src, user) > 1 || user.restrained() || user.lying || user.stat || M.buckled || istype(user, /mob/living/silicon) || destroyed)
+		return
+
+	if(!check_key(M))
+		M << "\red You don't have the key for this."
 		return
 
 	unbuckle()
