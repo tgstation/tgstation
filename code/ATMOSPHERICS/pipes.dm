@@ -6,6 +6,7 @@
 	layer = 2.4 //under wires with their 2.44
 	use_power = 0
 	var/alert_pressure = 80*ONE_ATMOSPHERE
+	var/baseicon=""
 
 /obj/machinery/atmospherics/pipe/proc/pipeline_expansion()
 	return null
@@ -58,7 +59,7 @@
 
 /obj/machinery/atmospherics/pipe/simple
 	icon = 'icons/obj/pipes.dmi'
-	icon_state = "intact-f"
+	icon_state = "intact"
 	name = "pipe"
 	desc = "A one meter section of regular pipe"
 	volume = 70
@@ -203,23 +204,16 @@
 
 
 /obj/machinery/atmospherics/pipe/simple/update_icon()
+	alpha = invisibility ? 128 : 0
 	if(node1&&node2)
-		var/C = ""
-		switch(_color)
-			if ("red") C = "-r"
-			if ("blue") C = "-b"
-			if ("cyan") C = "-c"
-			if ("green") C = "-g"
-			if ("yellow") C = "-y"
-			if ("purple") C = "-p"
-		icon_state = "intact[C][invisibility ? "-f" : "" ]"
+		icon_state = "intact"
 
 	else
 		if(!node1&&!node2)
 			qdel(src) //TODO: silent deleting looks weird
 		var/have_node1 = node1?1:0
 		var/have_node2 = node2?1:0
-		icon_state = "exposed[have_node1][have_node2][invisibility ? "-f" : "" ]"
+		icon_state = "exposed[have_node1][have_node2]"
 
 
 /obj/machinery/atmospherics/pipe/simple/initialize(var/suppress_icon_check=0)
@@ -250,63 +244,67 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers
 	name = "Scrubbers pipe"
 	_color = "red"
-	icon_state = ""
+	color="#FF0000"
 /obj/machinery/atmospherics/pipe/simple/supply
 	name = "Air supply pipe"
 	_color = "blue"
-	icon_state = ""
+	color="#0000FF"
 /obj/machinery/atmospherics/pipe/simple/supplymain
 	name = "Main air supply pipe"
 	_color = "purple"
-	icon_state = ""
+	color="#800080"
 /obj/machinery/atmospherics/pipe/simple/general
 	name = "Pipe"
 	_color = ""
-	icon_state = ""
-/obj/machinery/atmospherics/pipe/simple/scrubbers/visible
-	level = 2
-	icon_state = "intact-r"
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden
-	level = 1
-	icon_state = "intact-r-f"
-/obj/machinery/atmospherics/pipe/simple/supply/visible
-	level = 2
-	icon_state = "intact-b"
-/obj/machinery/atmospherics/pipe/simple/supply/hidden
-	level = 1
-	icon_state = "intact-b-f"
-/obj/machinery/atmospherics/pipe/simple/supplymain/visible
-	level = 2
-	icon_state = "intact-p"
-/obj/machinery/atmospherics/pipe/simple/supplymain/hidden
-	level = 1
-	icon_state = "intact-p-f"
-/obj/machinery/atmospherics/pipe/simple/general/visible
-	level = 2
-	icon_state = "intact"
-/obj/machinery/atmospherics/pipe/simple/general/hidden
-	level = 1
-	icon_state = "intact-f"
+	color="#FFFFFF"
 /obj/machinery/atmospherics/pipe/simple/yellow
 	name = "Pipe"
-	_color = "yellow"
-	icon_state = ""
-/obj/machinery/atmospherics/pipe/simple/yellow/visible
-	level = 2
-	icon_state = "intact-y"
-/obj/machinery/atmospherics/pipe/simple/yellow/hidden
-	level = 1
-	icon_state = "intact-y-f"
+	_color="yellow"
+	color="#FFFF00"
+/obj/machinery/atmospherics/pipe/simple/cyan
+	name = "Pipe"
+	_color="cyan"
+	color="#00FFFF"
 /obj/machinery/atmospherics/pipe/simple/filtering
 	name = "Pipe"
 	_color = "green"
-	icon_state = ""
+	color="#00FF00"
+
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible
+	level = 2
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden
+	level = 1
+	alpha=128
+/obj/machinery/atmospherics/pipe/simple/supply/visible
+	level = 2
+/obj/machinery/atmospherics/pipe/simple/supply/hidden
+	level = 1
+	alpha=128
+/obj/machinery/atmospherics/pipe/simple/supplymain/visible
+	level = 2
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden
+	level = 1
+	alpha=128
+/obj/machinery/atmospherics/pipe/simple/general/visible
+	level = 2
+/obj/machinery/atmospherics/pipe/simple/general/hidden
+	level = 1
+	alpha=128
+/obj/machinery/atmospherics/pipe/simple/yellow/visible
+	level = 2
+/obj/machinery/atmospherics/pipe/simple/yellow/hidden
+	level = 1
+	alpha=128
+/obj/machinery/atmospherics/pipe/simple/cyan/visible
+	level = 2
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden
+	level = 1
+	alpha=128
 /obj/machinery/atmospherics/pipe/simple/filtering/visible
 	level = 2
-	icon_state = "intact-g"
 /obj/machinery/atmospherics/pipe/simple/filtering/hidden
 	level = 1
-	icon_state = "intact-g-f"
+	alpha=128
 /obj/machinery/atmospherics/pipe/simple/insulated
 	name = "Insulated pipe"
 	//icon = 'icons/obj/atmospherics/red_pipe.dmi'
@@ -455,9 +453,7 @@
 /obj/machinery/atmospherics/pipe/tank/update_icon()
 	if(node1)
 		icon_state = "intact"
-
 		dir = get_dir(src, node1)
-
 	else
 		icon_state = "exposed"
 
@@ -601,7 +597,8 @@
 
 /obj/machinery/atmospherics/pipe/manifold
 	icon = 'icons/obj/atmospherics/pipe_manifold.dmi'
-	icon_state = "manifold-f"
+	icon_state = "manifold"
+	baseicon = "manifold"
 	name = "pipe manifold"
 	desc = "A manifold composed of regular pipes"
 	volume = 105
@@ -719,34 +716,21 @@
 
 
 /obj/machinery/atmospherics/pipe/manifold/update_icon()
+	alpha = invisibility ? 128 : 0
 	if(node1&&node2&&node3)
-		var/C = ""
-		switch(_color)
-			if ("red") C = "-r"
-			if ("blue") C = "-b"
-			if ("cyan") C = "-c"
-			if ("green") C = "-g"
-			if ("yellow") C = "-y"
-			if ("purple") C = "-p"
-		icon_state = "manifold[C][invisibility ? "-f" : ""]"
-
+		icon_state="manifold"
 	else
-		var/connected = 0
-		var/unconnected = 0
-		var/connect_directions = (NORTH|SOUTH|EAST|WEST)&(~dir)
+		icon_state = "[baseicon]_ex"
+		var/icon/con = new/icon(icon,"[baseicon]_con") //Since 4-ways are supposed to be directionless, they need an overlay instead it seems.
 
 		if(node1)
-			connected |= get_dir(src, node1)
+			overlays += new/image(con,dir=get_dir(src, node1))
 		if(node2)
-			connected |= get_dir(src, node2)
+			overlays += new/image(con,dir=get_dir(src, node2))
 		if(node3)
-			connected |= get_dir(src, node3)
+			overlays += new/image(con,dir=get_dir(src, node3))
 
-		unconnected = (~connected)&(connect_directions)
-
-		icon_state = "manifold_[connected]_[unconnected]"
-
-		if(!connected)
+		if(!node1 && !node2 && !node3)
 			qdel(src)
 
 	return
@@ -765,27 +749,31 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers
 	name = "Scrubbers pipe"
 	_color = "red"
-	icon_state = ""
+	color="#FF0000"
 /obj/machinery/atmospherics/pipe/manifold/supply
 	name = "Air supply pipe"
 	_color = "blue"
-	icon_state = ""
+	color="#0000FF"
 /obj/machinery/atmospherics/pipe/manifold/supplymain
 	name = "Main air supply pipe"
 	_color = "purple"
-	icon_state = ""
+	color="#800080"
 /obj/machinery/atmospherics/pipe/manifold/general
-	name = "Air supply pipe"
+	name = "Gas pipe"
 	_color = "gray"
-	icon_state = ""
+	color="#FFFFFF"
 /obj/machinery/atmospherics/pipe/manifold/yellow
 	name = "Air supply pipe"
 	_color = "yellow"
-	icon_state = ""
+	color="#FFFF00"
+/obj/machinery/atmospherics/pipe/manifold/cyan
+	name = "Air supply pipe"
+	_color = "cyan"
+	color="#00FFFF"
 /obj/machinery/atmospherics/pipe/manifold/filtering
 	name = "Air filtering pipe"
 	_color = "green"
-	icon_state = ""
+	color="#00FF00"
 /obj/machinery/atmospherics/pipe/manifold/insulated
 	name = "Insulated pipe"
 	//icon = 'icons/obj/atmospherics/red_pipe.dmi'
@@ -795,57 +783,54 @@
 	level = 2
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible
 	level = 2
-	icon_state = "manifold-r"
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden
 	level = 1
-	icon_state = "manifold-r-f"
+	alpha=128
 /obj/machinery/atmospherics/pipe/manifold/supply/visible
 	level = 2
-	icon_state = "manifold-b"
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden
 	level = 1
-	icon_state = "manifold-b-f"
+	alpha=128
 /obj/machinery/atmospherics/pipe/manifold/supplymain/visible
 	level = 2
-	icon_state = "manifold-p"
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden
 	level = 1
-	icon_state = "manifold-p-f"
+	alpha=128
 /obj/machinery/atmospherics/pipe/manifold/general/visible
 	level = 2
-	icon_state = "manifold"
 /obj/machinery/atmospherics/pipe/manifold/general/hidden
 	level = 1
-	icon_state = "manifold-f"
+	alpha=128
 /obj/machinery/atmospherics/pipe/manifold/insulated/visible
 	level = 2
 	color="#ff0000"
-	icon_state = "manifold"
 /obj/machinery/atmospherics/pipe/manifold/insulated/visible/blue
 	color="#4285F4"
 /obj/machinery/atmospherics/pipe/manifold/insulated/hidden
 	level = 1
 	color="#ff0000"
 	alpha=128
-	icon_state = "manifold"
 /obj/machinery/atmospherics/pipe/manifold/insulated/hidden/blue
 	color="#4285F4"
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible
 	level = 2
-	icon_state = "manifold-y"
 /obj/machinery/atmospherics/pipe/manifold/yellow/hidden
 	level = 1
-	icon_state = "manifold-y-f"
+	alpha=128
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible
+	level = 2
+/obj/machinery/atmospherics/pipe/manifold/cyan/hidden
+	level = 1
+	alpha=128
 /obj/machinery/atmospherics/pipe/manifold/filtering/visible
 	level = 2
-	icon_state = "manifold-g"
 /obj/machinery/atmospherics/pipe/manifold/filtering/hidden
 	level = 1
-	icon_state = "manifold-g-f"
+	alpha=128
 
 /obj/machinery/atmospherics/pipe/manifold4w
 	icon = 'icons/obj/atmospherics/pipe_manifold.dmi'
-	icon_state = "manifold4w-f"
+	icon_state = "manifold4w"
 	name = "4-way pipe manifold"
 	desc = "A manifold composed of regular pipes"
 	volume = 140
@@ -857,6 +842,7 @@
 	var/obj/machinery/atmospherics/node4
 	level = 1
 	layer = 2.4 //under wires with their 2.44
+	baseicon="manifold4w"
 
 /obj/machinery/atmospherics/pipe/manifold4w/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
 	dir = pipe.dir
@@ -960,21 +946,13 @@
 
 
 /obj/machinery/atmospherics/pipe/manifold4w/update_icon()
-	overlays.Cut()
+	overlays=0
+	alpha = invisibility ? 128 : 0
 	if(node1&&node2&&node3&&node4)
-		var/C = ""
-		switch(_color)
-			if ("red") C = "-r"
-			if ("blue") C = "-b"
-			if ("cyan") C = "-c"
-			if ("green") C = "-g"
-			if ("yellow") C = "-y"
-			if ("purple") C = "-p"
-		icon_state = "manifold4w[C][invisibility ? "-f" : ""]"
-
+		icon_state = "[baseicon]"
 	else
-		icon_state = "manifold4w_ex"
-		var/icon/con = new/icon('icons/obj/atmospherics/pipe_manifold.dmi',"manifold4w_con") //Since 4-ways are supposed to be directionless, they need an overlay instead it seems.
+		icon_state = "[baseicon]_ex"
+		var/icon/con = new/icon(icon,"[baseicon]_con") //Since 4-ways are supposed to be directionless, they need an overlay instead it seems.
 
 		if(node1)
 			overlays += new/image(con,dir=1)
@@ -1002,61 +980,74 @@
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers
 	name = "Scrubbers pipe"
 	_color = "red"
-	icon_state = ""
+	color="#FF0000"
 /obj/machinery/atmospherics/pipe/manifold4w/supply
 	name = "Air supply pipe"
 	_color = "blue"
-	icon_state = ""
+	color="#0000FF"
 /obj/machinery/atmospherics/pipe/manifold4w/supplymain
 	name = "Main air supply pipe"
 	_color = "purple"
-	icon_state = ""
+	color="#800080"
 /obj/machinery/atmospherics/pipe/manifold4w/general
 	name = "Air supply pipe"
 	_color = "gray"
-	icon_state = ""
+	color="#FFFFFF"
+/obj/machinery/atmospherics/pipe/manifold4w/yellow
+	name = "Air supply pipe"
+	_color = "yellow"
+	color="#FFFF00"
+/obj/machinery/atmospherics/pipe/manifold4w/filtering
+	name = "Air filtering pipe"
+	_color = "green"
+	color="#00FF00"
 /obj/machinery/atmospherics/pipe/manifold4w/insulated
+	icon = 'icons/obj/atmospherics/insulated.dmi'
 	name = "Insulated pipe"
-	_color = ""
+	_color = "red"
 	alert_pressure = 900*ONE_ATMOSPHERE
 	color="#FF0000"
 	level = 2
-	icon_state = "manifold4w"
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/visible
 	level = 2
-	icon_state = "manifold4w-r"
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden
 	level = 1
-	icon_state = "manifold4w-r-f"
+	alpha=128
 /obj/machinery/atmospherics/pipe/manifold4w/supply/visible
 	level = 2
-	icon_state = "manifold4w-b"
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden
 	level = 1
-	icon_state = "manifold4w-b-f"
+	alpha=128
 /obj/machinery/atmospherics/pipe/manifold4w/supplymain/visible
 	level = 2
-	icon_state = "manifold4w-p"
 /obj/machinery/atmospherics/pipe/manifold4w/supplymain/hidden
 	level = 1
-	icon_state = "manifold4w-p-f"
+	alpha=128
 /obj/machinery/atmospherics/pipe/manifold4w/general/visible
 	level = 2
-	icon_state = "manifold4w"
 /obj/machinery/atmospherics/pipe/manifold4w/general/hidden
 	level = 1
-	icon_state = "manifold4w-f"
+	alpha=128
+/obj/machinery/atmospherics/pipe/manifold4w/filtering/visible
+	level = 2
+/obj/machinery/atmospherics/pipe/manifold4w/filtering/hidden
+	level = 1
+	alpha=128
+/obj/machinery/atmospherics/pipe/manifold4w/yellow/visible
+	level = 2
+/obj/machinery/atmospherics/pipe/manifold4w/yellow/hidden
+	level = 1
+	alpha=128
 /obj/machinery/atmospherics/pipe/manifold4w/insulated/hidden
 	level = 1
 	alpha=128
-	icon_state = "manifold4w"
 /obj/machinery/atmospherics/pipe/manifold4w/insulated/visible
 	level = 2
-	icon_state = "manifold4w"
 /obj/machinery/atmospherics/pipe/manifold4w/insulated/hidden/blue
 	color="#4285F4"
 /obj/machinery/atmospherics/pipe/manifold4w/insulated/visible/blue
 	color="#4285F4"
+
 /obj/machinery/atmospherics/pipe/cap
 	name = "pipe endcap"
 	desc = "An endcap for pipes"
@@ -1129,9 +1120,9 @@
 
 
 /obj/machinery/atmospherics/pipe/cap/update_icon()
-	overlays = new()
-
-	icon_state = "cap[invisibility ? "-f" : ""]"
+	overlays = 0
+	alpha = invisibility ? 128 : 0
+	icon_state = "cap"
 	return
 
 
@@ -1148,7 +1139,7 @@
 	icon_state = "cap"
 /obj/machinery/atmospherics/pipe/cap/hidden
 	level = 1
-	icon_state = "cap-f"
+	alpha=128
 
 /obj/machinery/atmospherics/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if(istype(W, /obj/item/weapon/pipe_dispenser) || istype(W, /obj/item/device/pipe_painter))
@@ -1160,21 +1151,25 @@
 
 	if(istype(W, /obj/item/weapon/reagent_containers/glass/paint/red))
 		src._color = "red"
+		src.color = "#FF0000"
 		user << "\red You paint the pipe red."
 		update_icon()
 		return 1
 	if(istype(W, /obj/item/weapon/reagent_containers/glass/paint/blue))
 		src._color = "blue"
+		src.color = "#0000FF"
 		user << "\red You paint the pipe blue."
 		update_icon()
 		return 1
 	if(istype(W, /obj/item/weapon/reagent_containers/glass/paint/green))
 		src._color = "green"
+		src.color = "#00FF00"
 		user << "\red You paint the pipe green."
 		update_icon()
 		return 1
 	if(istype(W, /obj/item/weapon/reagent_containers/glass/paint/yellow))
 		src._color = "yellow"
+		src.color = "#FFFF00"
 		user << "\red You paint the pipe yellow."
 		update_icon()
 		return 1
