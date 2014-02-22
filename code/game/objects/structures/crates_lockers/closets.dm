@@ -193,7 +193,8 @@
 		if(isrobot(user))
 			return
 
-		user.drop_item(src)
+		user.drop_item()
+		W.Move(loc)
 
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return

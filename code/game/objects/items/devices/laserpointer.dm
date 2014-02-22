@@ -10,8 +10,7 @@
 	m_amt = 500
 	g_amt = 500
 	w_class = 2 //Increased to 2, because diodes are w_class 2. Conservation of matter.
-	origin_tech = "combat=1"
-	origin_tech = "magnets=2"
+	origin_tech = "combat=1;magnets=2"
 	var/turf/pointer_loc
 	var/energy = 5
 	var/max_energy = 5
