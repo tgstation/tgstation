@@ -31,6 +31,7 @@
 			for(var/ore_id in BOX.materials.storage)
 				var/datum/material/mat = BOX.materials.getMaterial(ore_id)
 				var/n=mat.stored
+				if(n<=0 || !mat.oretype) continue
 				for(var/i=0;i<n;i++)
 					new mat.oretype(get_turf(output))
 					mat.stored-=1
