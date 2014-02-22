@@ -114,6 +114,8 @@
 			return
 
 /obj/machinery/syndicatebomb/proc/settings(var/mob/user)
+	if(!in_range(src, user) || !isliving(user))
+		return
 	var/newtime = input(user, "Please set the timer.", "Timer", "[timer]") as num
 	newtime = Clamp(newtime, 60, 60000)
 	if(in_range(src, user) && isliving(user)) //No running off and setting bombs from across the station
