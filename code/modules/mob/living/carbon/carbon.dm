@@ -208,7 +208,7 @@
 				)
 			if(prob(10))
 				src.emote("*fart")
-			M.reagents.add("paracetamol", 1)
+			reagents.add_reagent("paracetamol", 1)
 			share_contact_diseases(M)
 
 
