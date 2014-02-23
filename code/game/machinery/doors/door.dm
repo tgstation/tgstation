@@ -189,6 +189,7 @@
 	sleep(animation_delay_2)
 	return
 
+/*
 /obj/machinery/door/proc/open()
 	if (!density || operating || jammed)
 		return
@@ -220,6 +221,29 @@
 			autoclose()
 
 	return
+*/
+
+/obj/machinery/door/proc/open()
+	if(!density)		return 1
+	if(operating > 0)	return
+	if(!ticker)			return 0
+	if(!operating)		operating = 1
+
+	door_animate("opening")
+	icon_state = "door0"
+	src.SetOpacity(0)
+	sleep(10)
+	src.layer = 2.7
+	src.density = 0
+	explosion_resistance = 0
+	update_icon()
+	SetOpacity(0)
+	update_nearby_tiles()
+	//update_freelook_sight()
+
+	if(operating)	operating = 0
+
+	return 1
 
 /obj/machinery/door/proc/autoclose()
 	var/obj/machinery/door/airlock/A = src

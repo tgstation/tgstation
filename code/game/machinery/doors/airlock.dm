@@ -20,6 +20,8 @@
 
 /obj/machinery/door/airlock
 	name = "airlock"
+	icon = 'icons/obj/doors/Doorint.dmi'
+	icon_state = "door_closed"
 	power_channel = ENVIRON
 
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
@@ -406,49 +408,47 @@ About the new airlock wires panel:
 
 
 /obj/machinery/door/airlock/update_icon()
-	var/L[0]
-	overlays = L
+	overlays = 0
 
-	if(locked && lights)
-		icon_state = "door_locked"
+	if(density)
+		if(locked && lights)
+			icon_state = "door_locked"
+		else
+			icon_state = "door_closed"
+		if (p_open || welded)
+			var/L[0]
+			if (p_open)
+				L += "panel_open"
 
-	if (p_open || welded)
-		if (p_open)
-			L += "panel_open"
+			if (welded)
+				L += "welded"
 
-		if (welded)
-			L += "welded"
-
-		overlays = L
-		L = null
-
-	..()
+			overlays = L
+			L = null
+	else
+		icon_state = "door_open"
 
 	return
 
-/obj/machinery/door/airlock/door_animate(var/animation as text)
-	switch (animation)
-		if ("opening")
-			if (p_open)
-				flick("o_door_opening", src)
-				sleep(animation_delay)
-				return
-		if ("closing")
-			if (p_open)
+/obj/machinery/door/airlock/door_animate(var/animation)
+	switch(animation)
+		if("opening")
+			if(overlays) overlays.Cut()
+			if(p_open)
+				spawn(2) // The only work around that works. Downside is that the door will be gone for a millisecond.
+					flick("o_door_opening", src)  //can not use flick due to BYOND bug updating overlays right before flicking
+			else
+				flick("door_opening", src)
+		if("closing")
+			if(overlays) overlays.Cut()
+			if(p_open)
 				flick("o_door_closing", src)
-				sleep(animation_delay)
-				return
-		if ("deny")
-			flick("door_deny", src)
-			sleep(3)
-			return
-		if ("spark")
+			else
+				flick("door_closing", src)
+		if("spark")
 			flick("door_spark", src)
-			sleep(6)
-			return
-
-	..(animation)
-
+		if("deny")
+			flick("door_deny", src)
 	return
 
 /obj/machinery/door/airlock/attack_ai(mob/user as mob)
@@ -986,12 +986,15 @@ About the new airlock wires panel:
 			var/obj/item/weapon/pai_cable/PC = I
 			PC.plugin(src, user)
 			PC = null
-	else if(istype(I, /obj/item/weapon/crowbar))
-		if (!locked && welded && (!arePowerSystemsOn() || (stat & NOPOWER)) && operating < 1)
-			// TODO: analyze the called proc
-			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 100, 1)
-			visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
-
+	else if(istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe) )
+		var/beingcrowbarred = null
+		if(istype(I, /obj/item/weapon/crowbar) )
+			beingcrowbarred = 1 //derp, Agouri
+		else
+			beingcrowbarred = 0
+		if( beingcrowbarred && (density && welded && !operating && src.p_open && (!src.arePowerSystemsOn() || stat & NOPOWER) && !src.locked) )
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
+			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
 			// TODO: refactor the called proc
 			if (do_after(user, 40))
 				user << "\blue You removed the airlock electronics!"
@@ -1032,27 +1035,29 @@ About the new airlock wires panel:
 
 				src = null
 				return
-		else if (!(stat & NOPOWER) && arePowerSystemsOn())
+		else if(arePowerSystemsOn() && !(stat & NOPOWER))
 			user << "\blue The airlock's motors resist your efforts to force it."
-		else if (locked)
+		else if(locked)
 			user << "\blue The airlock's bolts prevent it from being forced."
-		else
-			if (!density)
-				close()
+		else if( !welded && !operating )
+			if(density)
+				if(beingcrowbarred == 0) //being fireaxe'd
+					var/obj/item/weapon/twohanded/fireaxe/F = I
+					if(F:wielded)
+						spawn(0)	open(1)
+					else
+						user << "\red You need to be wielding the Fire axe to do that."
+				else
+					spawn(0)	open(1)
 			else
-				open()
-	else if (istype(I, /obj/item/weapon/twohanded/fireaxe))
-		var/obj/item/weapon/twohanded/fireaxe/FA = I
-
-		if (FA.wielded)
-			if (!density)
-				close()
-			else
-				open()
-		else
-			user << "\red You need to be wielding the Fire axe to do that."
-
-		FA = null
+				if(beingcrowbarred == 0)
+					var/obj/item/weapon/twohanded/fireaxe/F = I
+					if(F:wielded)
+						spawn(0)	close(1)
+					else
+						user << "\red You need to be wielding the Fire axe to do that."
+				else
+					spawn(0)	close(1)
 	else if (istype(I, /obj/item/weapon/card/emag) || istype(I, /obj/item/weapon/melee/energy/blade))
 		if (!operating)
 			if (!density)
@@ -1094,15 +1099,13 @@ About the new airlock wires panel:
 		spawn(5)
 			autoclose()
 	// </worry>
-	..()
-	return
+	return ..()
 
 /obj/machinery/door/airlock/close(var/forced = 0 as num)
 	if (operating || locked || welded)
 		return
-
-	if (!forced)
-		if ((stat & NOPOWER) || !arePowerSystemsOn() || isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+	if(!forced)
+		if( !arePowerSystemsOn() || (stat & NOPOWER) || isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) )
 			return
 
 	use_power(50)
