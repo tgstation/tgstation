@@ -28,8 +28,9 @@
 		explode()
 		return 0
 
-	if(charge < amount)	return 0
-	charge = (charge - amount)
+	if(charge < amount)
+		return 0
+	charge = min(0,charge - amount)
 	return 1
 
 // recharge the cell
