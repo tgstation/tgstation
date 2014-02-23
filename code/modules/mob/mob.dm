@@ -484,7 +484,7 @@ var/list/slot_equipment_priority = list( \
 			var/obj/item/what = get_item_by_slot(slot)
 
 			if(what)
-				if(what.flags & NODROP)
+				if(what && (what.flags & NODROP))
 					usr << "<span class='notice'>You can't remove \the [what.name], it appears to be stuck!</span>"
 					return
 				visible_message("<span class='danger'>[usr] tries to remove [src]'s [what.name].</span>", \
