@@ -26,6 +26,10 @@
 	movement_range = 15
 	energy = 15
 
+/obj/effect/accelerated_particle/powerful
+	movement_range = 20
+	energy = 50
+
 
 /obj/effect/accelerated_particle/New(loc, dir = 2)
 	src.loc = loc
@@ -101,7 +105,7 @@
 			src.loc = get_step(src,dir)
 	movement_range--
 	if(movement_range <= 0)
-		del(src)
+		qdel(src)
 	else
 		sleep(lag)
 		move(lag)
