@@ -11,9 +11,7 @@
 
 /obj/machinery/computer/New()
 	..()
-	if(ticker)
-		initialize()
-
+	power_change()
 
 /obj/machinery/computer/initialize()
 	power_change()
