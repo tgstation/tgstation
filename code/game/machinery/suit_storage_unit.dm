@@ -7,7 +7,7 @@
 	name = "suit storage unit"
 	desc = "An industrial U-Stor-It Storage unit designed to accomodate all kinds of space suits. Its on-board equipment also allows the user to decontaminate the contents through a UV-ray purging cycle. There's a warning label dangling from the control pad, reading \"STRICTLY NO BIOLOGICALS IN THE CONFINES OF THE UNIT\"."
 	icon = 'icons/obj/suitstorage.dmi'
-	icon_state = "close" //in case stuff breaks
+	icon_state = "close"
 	anchored = 1
 	density = 1
 	var/mob/living/carbon/human/OCCUPANT = null
@@ -26,7 +26,6 @@
 	var/panelopen = 0
 	var/safetieson = 1
 	var/cycletime_left = 0
-	var/icon_name = "" //for use in update_icon
 
 
 //The units themselves/////////////////
@@ -46,9 +45,28 @@
 	if(MASK_TYPE)
 		MASK = new MASK_TYPE(src)
 
-/obj/machinery/suit_storage_unit/update_icon() //long and horrid, but still better than it used to be - Jordie
-	icon_state = icon_name + "[(isopen ? "open" : "close")]" + "[(isbroken ? "broken" : "")]" + "[((isUV) ? "uv" : "")]" + "[((issuperUV && isUV) ? "super" : "")]" + "[((HELMET && SUIT && isopen) ? "full" : "")]" + "[((HELMET && !SUIT && isopen) ? "helm" : "")]" + "[((SUIT && !HELMET && isopen) ? "suit" : "")]" + "[(OCCUPANT ? "human" : "")]"
+/obj/machinery/suit_storage_unit/update_icon() //overlays yaaaay - Jordie
+	src.overlays = 0
 
+	if(!isopen)
+		overlays += "close"
+	if(OCCUPANT)
+		overlays += "human"
+	if(OCCUPANT && isUV)
+		overlays += "uvhuman"
+	if(isUV)
+		overlays += "uv"
+	if(issuperUV && isUV)
+		overlays += "super"
+	if(isopen)
+		overlays += "open"
+	if(SUIT && isopen)
+		overlays += "suit"
+	if(HELMET && isopen)
+		overlays += "helm"
+	if(isbroken && isopen)
+		overlays += "broken"
+	return
 
 /obj/machinery/suit_storage_unit/power_change()
 	if( powered() )
