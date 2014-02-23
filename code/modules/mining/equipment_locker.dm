@@ -179,7 +179,7 @@
 		new /datum/data/mining_equipment("Space cash",    		/obj/item/weapon/spacecash/c1000,                    			  5000),
 		new /datum/data/mining_equipment("Sonic jackhammer",    /obj/item/weapon/pickaxe/jackhammer,                               500),
 		new /datum/data/mining_equipment("Mining drone",        /mob/living/simple_animal/hostile/mining_drone/,                   500),
-		//new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 250),
+		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 250),
 		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                        750),
 		new /datum/data/mining_equipment("Kinetic accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,                  1000),
 		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide,                      2000),
@@ -342,40 +342,61 @@
 			user << "<span class='notice'>The [src.name] failed to create a wormhole.</span>"
 			return
 		var/chosen_beacon = pick(L)
-		var/obj/effect/portal/wormhole/jaunt_tunnel/J = new /obj/effect/portal/wormhole/jaunt_tunnel(get_turf(src), chosen_beacon, lifespan=100)
+		var/obj/effect/portal/jaunt_tunnel/J = new /obj/effect/portal/jaunt_tunnel(get_turf(src))
 		J.target = chosen_beacon
 		try_move_adjacent(J)
 		playsound(src,'sound/effects/sparks4.ogg',50,1)
-		del(src)
+		del(src) //Single-use
 
-/obj/effect/portal/wormhole/jaunt_tunnel
+/obj/effect/portal/jaunt_tunnel
 	name = "jaunt tunnel"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "bhole3"
 	desc = "A stable hole in the universe made by a wormhole jaunter. Turbulent doesn't even begin to describe how rough passage through one of these is, but at least it will always get you somewhere near a beacon."
 
-/obj/effect/portal/wormhole/jaunt_tunnel/New()
+/obj/effect/portal/jaunt_tunnel/New()
 	spawn(300) // 30s
 		del(src)
 
-/obj/effect/portal/wormhole/jaunt_tunnel/teleport(atom/movable/M)
+/*/obj/effect/portal/wormhole/jaunt_tunnel/teleport(atom/movable/M)
 	if(istype(M, /obj/effect))
 		return
 	if(istype(M, /atom/movable))
-		do_teleport(M, target, 6)
-		if(isliving(M))
-			var/mob/living/L = M
-			L.Weaken(3)
-			if(ishuman(L))
-				shake_camera(L, 20, 1)
-				spawn(20)
-					if(L)
-						L.visible_message("<span class='danger'>[L.name] vomits from travelling through the [src.name]!</span>")
-						L.nutrition -= 20
-						L.adjustToxLoss(-3)
-						var/turf/T = get_turf(L)
-						T.add_vomit_floor(L)
-						playsound(T, 'sound/effects/splat.ogg', 50, 1)
+		do_teleport(M, target, 6) */
+
+/obj/effect/portal/jaunt_tunnel/teleport(atom/movable/M as mob|obj)
+	if(istype(M, /obj/effect))
+		return
+	if (!(istype(M, /atom/movable)))
+		return
+	if (!(target))
+		del(src)
+
+	//For safety. May be unnecessary.
+	var/T = target
+	if(!(isturf(T)))
+		T = get_turf(target)
+
+	if(prob(1)) //honk
+		T = (locate(rand(5,world.maxx-10), rand(5,world.maxy-10),3))
+
+	do_teleport(M, T, 6)
+
+	if(isliving(M))
+		var/mob/living/L = M
+		L.Weaken(3)
+		if(ishuman(L))
+			shake_camera(L, 20, 1)
+			spawn(20)
+				if(L)
+					L.visible_message("<span class='danger'>[L.name] vomits from travelling through the [src.name]!</span>")
+					L.nutrition -= 20
+					L.adjustToxLoss(-3)
+					var/turf/V = get_turf(L) //V for Vomit
+					V.add_vomit_floor(L)
+					playsound(V, 'sound/effects/splat.ogg', 50, 1)
+					return
+	return
 
 /**********************Resonator**********************/
 
