@@ -81,7 +81,7 @@
 	desc = "Sounds more like quacking than anything else."
 	key = "x"
 	speech_verb = "quacks"
-	colour = "soghun"
+	colour = "rough"
 	native=1
 	flags = RESTRICTED
 
