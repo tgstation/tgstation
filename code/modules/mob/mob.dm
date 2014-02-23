@@ -484,7 +484,7 @@ var/list/slot_equipment_priority = list( \
 			var/obj/item/what = get_item_by_slot(slot)
 
 			if(what)
-				if(what && (what.flags & NODROP))
+				if(what.flags & NODROP)
 					usr << "<span class='notice'>You can't remove \the [what.name], it appears to be stuck!</span>"
 					return
 				visible_message("<span class='danger'>[usr] tries to remove [src]'s [what.name].</span>", \
@@ -495,7 +495,7 @@ var/list/slot_equipment_priority = list( \
 						unEquip(what)
 			else
 				what = usr.get_active_hand()
-				if(what.flags & NODROP)
+				if(what && (what.flags & NODROP))
 					usr << "<span class='notice'>You can't put \the [what.name] on [src], it's stuck to your hand!</span>"
 					return
 				if(what && what.mob_can_equip(src, slot, 1))

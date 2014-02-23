@@ -375,7 +375,8 @@
 
 	if(!item) return //Grab processing has a chance of returning null
 
-	unEquip(item)
+	if(!ismob(item)) //Honk mobs don't have a dropped() proc honk
+		unEquip(item)
 	if(src.client)
 		src.client.screen -= item
 
