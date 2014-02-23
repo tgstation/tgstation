@@ -124,6 +124,11 @@
 	if(src)
 		del(src)
 
+/obj/structure/reagent_dispensers/fueltank/fire_act()
+	explosion(src.loc,0,1,5,7,10, flame_range = 5)
+	if(src)
+		del(src)
+
 /obj/structure/reagent_dispensers/peppertank
 	name = "Pepper Spray Refiller"
 	desc = "Refill pepper spray canisters."
