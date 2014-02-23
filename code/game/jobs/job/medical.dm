@@ -17,6 +17,9 @@
 			access_keycard_auth, access_sec_doors, access_paramedic)
 	minimal_player_age = 7
 
+	pdaslot=slot_belt
+	pdatype=/obj/item/device/pda/heads/cmo
+
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_or_collect(new /obj/item/device/radio/headset/heads/cmo(H), slot_ears)
@@ -26,7 +29,7 @@
 			if(4) H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
 		H.equip_or_collect(new /obj/item/clothing/under/rank/chief_medical_officer(H), slot_w_uniform)
 		H.equip_or_collect(new /obj/item/clothing/shoes/brown(H), slot_shoes)
-		H.equip_or_collect(new /obj/item/device/pda/heads/cmo(H), slot_belt)
+		//H.equip_or_collect(new /obj/item/device/pda/heads/cmo(H), slot_belt)
 		H.equip_or_collect(new /obj/item/clothing/suit/storage/labcoat/cmo(H), slot_wear_suit)
 		H.equip_or_collect(new /obj/item/weapon/storage/firstaid/regular(H), slot_l_hand)
 		H.equip_or_collect(new /obj/item/device/flashlight/pen(H), slot_s_store)
@@ -50,6 +53,9 @@
 	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
 	minimal_access = list(access_medical, access_morgue, access_surgery, access_virology)
 	alt_titles = list("Surgeon","Emergency Physician","Nurse","Virologist")
+
+	pdaslot=slot_belt
+	pdatype=/obj/item/device/pda/medical
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -87,7 +93,7 @@
 			H.equip_or_collect(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
 			H.equip_or_collect(new /obj/item/clothing/suit/storage/labcoat(H), slot_wear_suit)
 		H.equip_or_collect(new /obj/item/clothing/shoes/white(H), slot_shoes)
-		H.equip_or_collect(new /obj/item/device/pda/medical(H), slot_belt)
+		//H.equip_or_collect(new /obj/item/device/pda/medical(H), slot_belt)
 		H.equip_or_collect(new /obj/item/weapon/storage/firstaid/regular(H), slot_l_hand)
 		H.equip_or_collect(new /obj/item/device/flashlight/pen(H), slot_s_store)
 		if(H.backbag == 1)
@@ -112,13 +118,15 @@
 	minimal_access = list(access_medical, access_chemistry)
 	alt_titles = list("Pharmacist")
 
+	pdaslot=slot_belt
+	pdatype=/obj/item/device/pda/chemist
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_or_collect(new /obj/item/device/radio/headset/headset_med(H), slot_ears)
 		H.equip_or_collect(new /obj/item/clothing/under/rank/chemist(H), slot_w_uniform)
 		H.equip_or_collect(new /obj/item/clothing/shoes/white(H), slot_shoes)
-		H.equip_or_collect(new /obj/item/device/pda/chemist(H), slot_belt)
+		//H.equip_or_collect(new /obj/item/device/pda/chemist(H), slot_belt)
 		H.equip_or_collect(new /obj/item/clothing/suit/storage/labcoat/chemist(H), slot_wear_suit)
 		if(H.backbag == 1)
 			H.equip_or_collect(new H.species.survival_gear(H), slot_r_hand)
@@ -140,13 +148,15 @@
 	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_research)
 	minimal_access = list(access_medical, access_morgue, access_genetics, access_research)
 
+	pdaslot=slot_belt
+	pdatype=/obj/item/device/pda/geneticist
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_or_collect(new /obj/item/device/radio/headset/headset_medsci(H), slot_ears)
 		H.equip_or_collect(new /obj/item/clothing/under/rank/geneticist(H), slot_w_uniform)
 		H.equip_or_collect(new /obj/item/clothing/shoes/white(H), slot_shoes)
-		H.equip_or_collect(new /obj/item/device/pda/geneticist(H), slot_belt)
+		//H.equip_or_collect(new /obj/item/device/pda/geneticist(H), slot_belt)
 		H.equip_or_collect(new /obj/item/clothing/suit/storage/labcoat/genetics(H), slot_wear_suit)
 		H.equip_or_collect(new /obj/item/device/flashlight/pen(H), slot_s_store)
 		if(H.backbag == 1)
@@ -200,7 +210,6 @@
 	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_psychiatrist)
 	minimal_access = list(access_medical, access_psychiatrist)
 	alt_titles = list("Psychologist")
-*/
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -219,3 +228,4 @@
 		else
 			H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
 		return 1
+*/

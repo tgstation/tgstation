@@ -47,6 +47,9 @@
 	var/required_objectives=list() // Objectives that are ALWAYS added.
 	var/optional_objectives=list() // Objectives that are SOMETIMES added.
 
+	var/pdatype=/obj/item/device/pda
+	var/pdaslot=slot_belt
+
 /datum/job/proc/equip(var/mob/living/carbon/human/H)
 	return 1
 

@@ -12,6 +12,8 @@
 	minimal_access = list(access_morgue, access_chapel_office, access_crematorium)
 	alt_titles = list("Bishop","Inquisitor")
 
+	pdaslot=slot_belt
+	pdatype=/obj/item/device/pda/chaplain
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -19,7 +21,7 @@
 		var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible(H) //BS12 EDIT
 		H.equip_or_collect(B, slot_l_hand)
 		H.equip_or_collect(new /obj/item/clothing/under/rank/chaplain(H), slot_w_uniform)
-		H.equip_or_collect(new /obj/item/device/pda/chaplain(H), slot_belt)
+		//H.equip_or_collect(new /obj/item/device/pda/chaplain(H), slot_belt)
 		H.equip_or_collect(new /obj/item/clothing/shoes/black(H), slot_shoes)
 		if(H.backbag == 1)
 			H.equip_or_collect(new H.species.survival_gear(H), slot_r_hand)

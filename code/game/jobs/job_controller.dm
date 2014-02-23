@@ -461,7 +461,7 @@ var/global/datum/controller/occupations/job_master
 
 			H.equip_or_collect(C, slot_wear_id)
 
-		H.equip_or_collect(new /obj/item/device/pda(H), slot_belt)
+		H.equip_or_collect(new job.pdatype(H), job.pdaslot)
 		if(locate(/obj/item/device/pda,H))
 			var/obj/item/device/pda/pda = locate(/obj/item/device/pda,H)
 			pda.owner = H.real_name
