@@ -118,6 +118,14 @@ obj/machinery/gateway/centerstation/process()
 	if(!ready)		return
 	if(!active)		return
 	if(!awaygate)	return
+
+	if(istype(M, /obj/item/weapon/disk/nuclear)) // Nuke disk/Away Mission Shenanigans - RR
+		return
+
+	for(var/obj/item/weapon/disk/nuclear/N in M) // More nuke disk checks
+		M << "<span class='warning'>You are forbidden from taking the nuclear authentication disk off station.</span>"
+		return
+
 	if(awaygate.calibrated)
 		M.loc = get_step(awaygate.loc, SOUTH)
 		M.dir = SOUTH
