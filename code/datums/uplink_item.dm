@@ -188,6 +188,14 @@ var/list/uplink_items = list()
 	if(istype(T))
 		T.TC_cost = cost
 
+/datum/uplink_item/dangerous/syndiecards
+	name = "Syndicate Playing Cards"
+	desc = "A special deck of murder-grade playing cards with a mono-molecular edge and metal reinforcement. They are lethal when thrown, but lose their edge very easily. \
+	You can also play card games with them."
+	item = /obj/item/toy/cards/deck/syndicate
+	cost = 1
+	excludefrom = list(/datum/game_mode/nuclear)
+
 // AMMUNITION
 
 /datum/uplink_item/ammo
@@ -445,14 +453,6 @@ var/list/uplink_items = list()
 	desc = "Syndicate Bundles are specialised groups of items that arrive in a plain box. These items are collectively worth more than 10 telecrystals, but you do not know which specialisation you will receive."
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 10
-	excludefrom = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/badass/syndiecards
-	name = "Syndicate Playing Cards"
-	desc = "A special deck of space-grade playing cards with a mono-molecular edge and metal reinforcement, making them lethal weapons both when wielded as a blade and when thrown. \
-	You can also play card games with them."
-	item = /obj/item/toy/cards/deck/syndicate
-	cost = 1
 	excludefrom = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/badass/balloon

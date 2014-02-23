@@ -915,11 +915,20 @@ obj/item/toy/cards/deck/syndicate
 	deckstyle = "syndicate"
 	card_hitsound = 'sound/weapons/bladeslice.ogg'
 	card_force = 5
-	card_throwforce = 10
+	card_throwforce = 20
 	card_throw_speed = 3
 	card_throw_range = 7
 	card_attack_verb = list("attacked", "sliced", "diced", "slashed", "cut")
 
+obj/item/toy/cards/singlecard/throw_at(atom/target, range, speed, mob/user)
+	..()
+	throwforce = 0
+	force = 0
+
+obj/item/toy/cards/singlecard/attack(mob/M, mob/living/user)
+	..()
+	throwforce = 0
+	force = 0
 
 /obj/item/toy/nuke
 	name = "\improper Nuclear Fission Explosive toy"
