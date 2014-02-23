@@ -122,8 +122,10 @@ obj/machinery/gateway/centerstation/process()
 	if(istype(M, /obj/item/weapon/disk/nuclear)) // Nuke disk/Away Mission Shenanigans - RR
 		return
 
-	for(var/obj/item/weapon/disk/nuclear/N in M) // More nuke disk checks
-		M << "<span class='warning'>You are forbidden from taking the nuclear authentication disk off station.</span>"
+	if(M.GetTypeInAllContents(/obj/item/weapon/disk/nuclear, 5)) //5 maybe overkill, but precausions
+		if(ismob(M))
+			var/mob/MOB = M
+			MOB << "<span class='warning'>You are forbidden from taking the nuclear authentication disk off station.</span>"
 		return
 
 	if(awaygate.calibrated)
