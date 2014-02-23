@@ -300,7 +300,7 @@
 	return teleporter_hub && teleporter_console
 
 
-/obj/machinery/teleport/station/Del()
+/obj/machinery/teleport/station/Destroy()
 	if(teleporter_hub)
 		teleporter_hub.update_icon()
 	..()

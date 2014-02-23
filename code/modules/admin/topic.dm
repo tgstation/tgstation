@@ -823,7 +823,7 @@
 				message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 
 				del(M.client)
-				//del(M)	// See no reason why to delete mob. Important stuff can be lost. And ban can be lifted before round ends.
+				//qdel(M)	// See no reason why to delete mob. Important stuff can be lost. And ban can be lifted before round ends.
 			if("No")
 				var/reason = input(usr,"Reason?","reason","Griefer") as text|null
 				if(!reason)
@@ -847,7 +847,7 @@
 				DB_ban_record(BANTYPE_PERMA, M, -1, reason)
 
 				del(M.client)
-				//del(M)
+				//qdel(M)
 			if("Cancel")
 				return
 
@@ -1075,8 +1075,8 @@
 
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/observer = M
-			observer.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket(observer), slot_w_uniform)
-			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(observer), slot_shoes)
+			observer.equip_to_slot_or_qdel(new /obj/item/clothing/under/suit_jacket(observer), slot_w_uniform)
+			observer.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/black(observer), slot_shoes)
 		M.Paralyse(5)
 		sleep(5)
 		M.loc = pick(tdomeobserve)
@@ -1285,9 +1285,9 @@
 			usr << "This can only be used on instances of type /mob/living/carbon/human"
 			return
 
-		H.equip_to_slot_or_del( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), slot_l_hand )
+		H.equip_to_slot_or_qdel( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), slot_l_hand )
 		if(!(istype(H.l_hand,/obj/item/weapon/reagent_containers/food/snacks/cookie)))
-			H.equip_to_slot_or_del( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), slot_r_hand )
+			H.equip_to_slot_or_qdel( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), slot_r_hand )
 			if(!(istype(H.r_hand,/obj/item/weapon/reagent_containers/food/snacks/cookie)))
 				log_admin("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
 				message_admins("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")

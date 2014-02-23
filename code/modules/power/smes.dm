@@ -94,13 +94,21 @@
 
 	default_deconstruction_crowbar(I)
 
-/obj/machinery/power/smes/Del()
+/obj/machinery/power/smes/Destroy()
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
 		var/area/area = get_area(src)
 		message_admins("SMES deleted at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
 		log_game("SMES deleted at ([area.name])")
 		investigate_log("<font color='red'>deleted</font> at ([area.name])","singulo")
+	if(terminal)
+		disconnect_terminal()
 	..()
+
+/obj/machinery/power/smes/disconnect_terminal()
+	if(terminal)
+		terminal.master = null
+		terminal = null
+
 
 /obj/machinery/power/smes/update_icon()
 	overlays.Cut()

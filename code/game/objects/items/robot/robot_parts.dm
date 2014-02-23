@@ -105,7 +105,7 @@
 		if (user.get_inactive_hand()==src)
 			user.unEquip(src)
 			user.put_in_inactive_hand(B)
-		del(src)
+		qdel(src)
 	if(istype(W, /obj/item/robot_parts/l_leg))
 		if(src.l_leg)	return
 		user.drop_item()

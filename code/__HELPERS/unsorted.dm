@@ -591,7 +591,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 		animation.master = target
 		flick(flick_anim, animation)
 	sleep(max(sleeptime, 15))
-	del(animation)
+	qdel(animation)
 
 
 //Will return the contents of an atom recursivly to a depth of 'searchDepth'
@@ -863,7 +863,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 							X.icon = 'icons/turf/shuttle.dmi'
 							X.icon_state = replacetext(O.icon_state, "_f", "_s") // revert the turf to the old icon_state
 							X.name = "wall"
-							del(O) // prevents multiple shuttle corners from stacking
+							qdel(O) // prevents multiple shuttle corners from stacking
 							continue
 						if(!istype(O,/obj)) continue
 						O.loc = X

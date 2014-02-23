@@ -12,17 +12,14 @@
 	var/health = 10
 	var/destroyed = 0
 
-/obj/structure/grille/Del()
-	loc = null //garbage collect
-
 /obj/structure/grille/ex_act(severity)
-	del(src)
+	qdel(src)
 
 /obj/structure/grille/blob_act()
-	del(src)
+	qdel(src)
 
 /obj/structure/grille/meteorhit(var/obj/M)
-	del(src)
+	qdel(src)
 
 
 /obj/structure/grille/Bumped(atom/user)
@@ -191,7 +188,7 @@
 		else
 			if(health <= -6)
 				new /obj/item/stack/rods(loc)
-				del(src)
+				qdel(src)
 				return
 	return
 

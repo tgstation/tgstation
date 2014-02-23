@@ -35,10 +35,9 @@
 	current_heat_capacity = 50 * C
 	efficiency = C
 
-/obj/machinery/atmospherics/unary/cryo_cell/Del()
+/obj/machinery/atmospherics/unary/cryo_cell/Destroy()
 	var/turf/T = loc
 	T.contents += contents
-	..()
 	var/obj/item/weapon/reagent_containers/glass/B = beaker
 	if(beaker)
 		B.loc = get_step(loc, SOUTH) //Beaker is carefully ejected from the wreckage of the cryotube

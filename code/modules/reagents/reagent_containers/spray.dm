@@ -57,7 +57,7 @@
 			for(var/atom/T in get_turf(D))
 				D.reagents.reaction(T)
 			sleep(3)
-		del(D)
+		qdel(D)
 
 	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
 
@@ -211,7 +211,7 @@
 				for(var/atom/t in get_turf(D))
 					D.reagents.reaction(t)
 				sleep(2)
-			del(D)
+			qdel(D)
 
 	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
 

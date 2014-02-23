@@ -379,7 +379,7 @@ var/linenums = 0
 	stat |= BROKEN
 	update()
 
-/obj/machinery/pipes/Del()
+/obj/machinery/pipes/Delete()
 	stat |= BROKEN
 	update()
 	..()

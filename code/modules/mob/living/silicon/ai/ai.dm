@@ -97,7 +97,7 @@ var/list/ai_list = list()
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
 			new/obj/structure/AIcore/deactivated(loc)//New empty terminal.
-			del(src)//Delete AI.
+			qdel(src)//Delete AI.
 			return
 		else
 			if (B.brainmob.mind)
@@ -118,7 +118,7 @@ var/list/ai_list = list()
 	..()
 	return
 
-/mob/living/silicon/ai/Del()
+/mob/living/silicon/ai/Destroy()
 	ai_list -= src
 	shuttle_caller_list -= src
 	emergency_shuttle.autoshuttlecall()

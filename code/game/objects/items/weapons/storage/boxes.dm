@@ -47,7 +47,7 @@
 	user.put_in_hands(I)
 	user.update_inv_l_hand()
 	user.update_inv_r_hand()
-	del(src)
+	qdel(src)
 
 
 /obj/item/weapon/storage/box/survival

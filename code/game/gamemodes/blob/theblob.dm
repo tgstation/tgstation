@@ -23,10 +23,9 @@
 	return
 
 
-/obj/effect/blob/Del()
+/obj/effect/blob/Destroy()
 	blobs -= src
 	..()
-	return
 
 
 /obj/effect/blob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -118,7 +117,7 @@
 		B.loc = T
 	else
 		T.blob_act()//If we cant move in hit the turf
-		B.Delete()
+		B.Destroy()
 
 	for(var/atom/A in T)//Hit everything in the turf
 		A.blob_act()
@@ -178,25 +177,21 @@
 	if(!ispath(type))
 		error("[type] is an invalid type for the blob.")
 	new type(src.loc)
-	Delete()
-	return
-
-/obj/effect/blob/proc/Delete()
-	del(src)
+	qdel(src)
 
 /obj/effect/blob/normal
 	icon_state = "blob"
 	luminosity = 0
 	health = 21
 
-/obj/effect/blob/normal/Delete()
+/obj/effect/blob/normal/Destroy()
 	src.loc = null
 	blobs -= src
 
 /obj/effect/blob/normal/update_icon()
 	if(health <= 0)
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
-		Delete()
+		qdel(src)
 	else if(health <= 15)
 		icon_state = "blob_damaged"
 	else

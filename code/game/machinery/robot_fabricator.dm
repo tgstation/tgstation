@@ -26,7 +26,7 @@
 						count++
 
 					if (O:amount < 1)
-						del(O)
+						qdel(O)
 
 					user << "You insert [count] metal sheet\s into \the [src]."
 					src.overlays -= "fab-load-metal"

@@ -78,7 +78,7 @@
 		if("healing")
 			M.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/charge(null)
 			M.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall(null)
-			M.equip_to_slot_or_del(new /obj/item/weapon/gun/magic/staff/healing(M), slot_r_hand)
+			M.equip_to_slot_or_qdel(new /obj/item/weapon/gun/magic/staff/healing(M), slot_r_hand)
 			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned livesaving survival spells. You are able to cast charge and forcewall."
 		if("robeless")
 			M.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/knock(null)
@@ -104,14 +104,14 @@
 	M.mind.special_role = "apprentice"
 
 /obj/item/weapon/antag_spawner/contract/equip_antag(mob/target as mob)
-	target.equip_to_slot_or_del(new /obj/item/device/radio/headset(target), slot_ears)
-	target.equip_to_slot_or_del(new /obj/item/clothing/under/lightpurple(target), slot_w_uniform)
-	target.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(target), slot_shoes)
-	target.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(target), slot_wear_suit)
-	target.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(target), slot_head)
-	target.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(target), slot_back)
-	target.equip_to_slot_or_del(new /obj/item/weapon/storage/box(target), slot_in_backpack)
-	target.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll/apprentice(target), slot_r_store)
+	target.equip_to_slot_or_qdel(new /obj/item/device/radio/headset(target), slot_ears)
+	target.equip_to_slot_or_qdel(new /obj/item/clothing/under/lightpurple(target), slot_w_uniform)
+	target.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/sandal(target), slot_shoes)
+	target.equip_to_slot_or_qdel(new /obj/item/clothing/suit/wizrobe(target), slot_wear_suit)
+	target.equip_to_slot_or_qdel(new /obj/item/clothing/head/wizard(target), slot_head)
+	target.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack(target), slot_back)
+	target.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box(target), slot_in_backpack)
+	target.equip_to_slot_or_qdel(new /obj/item/weapon/teleportation_scroll/apprentice(target), slot_r_store)
 
 /obj/item/weapon/antag_spawner/borg_tele
 	name = "Syndicate Cyborg Teleporter"

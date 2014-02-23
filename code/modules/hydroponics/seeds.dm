@@ -1056,7 +1056,7 @@
 		return
 	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
 	new /obj/effect/spacevine_controller(user.loc)
-	del(src)
+	qdel(src)
 
 /obj/item/seeds/chillighost
 	name = "pack of ghost chilli seeds"

@@ -24,7 +24,44 @@ obj/machinery/atmospherics/var/initialize_directions = 0
 obj/machinery/atmospherics/var/pipe_color
 
 obj/machinery/atmospherics/process()
+	if(gc_destroyed) //comments on /vg/ imply that GC'd pipes still process
+		return PROCESS_KILL
 	build_network()
+
+/*
+obj/machinery/atmospherics/Destroy()
+
+	worldm << "Pre Destroy()"
+	test_pipenet()
+		..()
+	world << "Post Destroy()"
+	test_pipenet()
+
+obj/machinery/atmospherics/verb/test_pipenet()
+	set src in view()
+	var/found = 0
+	var/srcref = "\ref[src]"
+	var/netref = ""
+	var/pipelineref = ""
+	for(var/datum/pipe_network/Network in pipe_networks)
+		netref = "\ref[Network]"
+		for(var/obj/machinery/atmospherics/AT in Network.normal_members)
+			if(AT == src)
+				world << "Found <A HREF='?_src_=vars;Vars=\ref[src]'>[srcref] - [src.type]</A> in normal_members of pipenet#<A HREF='?_src_=vars;Vars=\ref[Network]'>[netref]</A>"
+				found++
+		for(var/datum/pipeline/PL in Network.line_members)
+			pipelineref = "\ref[PL]"
+			for(var/obj/machinery/atmospherics/AT in PL.members)
+				if(AT == src)
+					world << "Found <A HREF='?_src_=vars;Vars=\ref[src]'>[srcref] - [src.type]</A> in members of pipeline#<A HREF='?_src_=vars;Vars=\ref[PL]'>[pipelineref]</A> in pipenet#<A HREF='?_src_=vars;Vars=\ref[Network]'>[netref]</A>"
+					found++
+			for(var/obj/machinery/atmospherics/ATE in PL.edges)
+				if(ATE == src)
+					world << "Found <A HREF='?_src_=vars;Vars=\ref[src]'>[srcref] - [src.type]</A> in edges of pipeline#<A HREF='?_src_=vars;Vars=\ref[PL]'>[pipelineref]</A> in pipenet#<A HREF='?_src_=vars;Vars=\ref[Network]'>[netref]</A>"
+					found++
+	if(!found)
+		world << "Unable to find <A HREF='?_src_=vars;Vars=\ref[src]'>[srcref]</A> in any pipenets"
+*/
 
 obj/machinery/atmospherics/proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	// Check to see if should be added to network. Add self if so and adjust variables appropriately.
@@ -83,7 +120,7 @@ obj/machinery/atmospherics/attackby(var/obj/item/weapon/W as obj, var/mob/user a
 				for(var/obj/machinery/meter/meter in T)
 					if(meter.target == src)
 						new /obj/item/pipe_meter(T)
-						del(meter)
-			del(src)
+						qdel(meter)
+			qdel(src)
 	else
 		return ..()

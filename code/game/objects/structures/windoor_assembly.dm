@@ -31,7 +31,7 @@ obj/structure/windoor_assembly/New(dir=NORTH)
 	src.ini_dir = src.dir
 	air_update_turf(1)
 
-obj/structure/windoor_assembly/Del()
+obj/structure/windoor_assembly/Destroy()
 	density = 0
 	air_update_turf(1)
 	..()
@@ -87,7 +87,7 @@ obj/structure/windoor_assembly/Del()
 						if(secure)
 							var/obj/item/stack/rods/R = new (get_turf(src), 4)
 							R.add_fingerprint(user)
-						del(src)
+						qdel(src)
 				else
 					user << "<span class='notice'>You need more welding fuel to dissassemble the windoor assembly.</span>"
 					return
@@ -258,7 +258,7 @@ obj/structure/windoor_assembly/Del()
 						src.electronics.loc = windoor
 						windoor.close()
 
-					del(src)
+					qdel(src)
 
 
 			else

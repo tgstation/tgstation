@@ -28,7 +28,7 @@
 
 	return
 
-/obj/item/weapon/tank/Del()
+/obj/item/weapon/tank/Destroy()
 	if(air_contents)
 		del(air_contents)
 
@@ -69,12 +69,12 @@
 	if(prob(50))
 		var/turf/location = src.loc
 		if (!( istype(location, /turf) ))
-			del(src)
+			qdel(src)
 
 		if(src.air_contents)
 			location.assume_air(air_contents)
 
-		del(src)
+		qdel(src)
 
 /obj/item/weapon/tank/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -211,7 +211,7 @@
 		//world << "\blue Exploding Pressure: [pressure] kPa, intensity: [range]"
 
 		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
-		del(src)
+		qdel(src)
 
 	else if(pressure > TANK_RUPTURE_PRESSURE)
 		//world << "\blue[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]"
@@ -221,7 +221,7 @@
 				return
 			T.assume_air(air_contents)
 			playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
-			del(src)
+			qdel(src)
 		else
 			integrity--
 

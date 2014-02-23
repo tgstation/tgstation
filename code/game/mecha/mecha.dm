@@ -89,11 +89,10 @@
 	mechas_list += src //global mech list
 	return
 
-/obj/mecha/Del()
+/obj/mecha/Destroy()
 	src.go_out()
 	mechas_list -= src //global mech list
 	..()
-	return
 
 ////////////////////////
 ////// Helpers /////////
@@ -561,7 +560,7 @@
 						E.forceMove(T)
 						E.destroy()
 		spawn(0)
-			del(src)
+			qdel(src)
 	return
 
 /obj/mecha/ex_act(severity)
@@ -1627,7 +1626,7 @@ var/year_integer = text2num(year) // = 2013???
 			AI.bruteloss = O.getBruteLoss()
 			AI.toxloss = O.toxloss
 			AI.updatehealth()
-			del(O)
+			qdel(O)
 			if (!AI.stat)
 				AI.icon_state = "ai"
 			else

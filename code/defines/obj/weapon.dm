@@ -374,8 +374,8 @@
 	if(istype(A, /obj/effect/spacevine))
 		for(var/obj/effect/spacevine/B in orange(A,1))
 			if(prob(80))
-				del B
-		del A
+				qdel(B)
+		qdel(A)
 
 /*
 /obj/item/weapon/cigarpacket

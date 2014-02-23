@@ -169,7 +169,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 		var/obj/item/weapon/antag_spawner/borg_tele/S = W
 		if(!S.used)
 			hidden_uplink.uses += S.TC_cost
-			del(S)
+			qdel(S)
 			user << "<span class='notice'>Teleporter refunded.</span>"
 		else
 			user << "<span class='notice'>This teleporter is already used.</span>"

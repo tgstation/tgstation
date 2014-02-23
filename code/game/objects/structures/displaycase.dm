@@ -17,7 +17,7 @@
 			if (occupied)
 				new /obj/item/weapon/gun/energy/laser/captain( src.loc )
 				occupied = 0
-			del(src)
+			qdel(src)
 		if (2)
 			if (prob(50))
 				src.health -= 15
@@ -41,13 +41,13 @@
 		if (occupied)
 			new /obj/item/weapon/gun/energy/laser/captain( src.loc )
 			occupied = 0
-		del(src)
+		qdel(src)
 
 
 /obj/structure/displaycase/meteorhit(obj/O as obj)
 		new /obj/item/weapon/shard( src.loc )
 		new /obj/item/weapon/gun/energy/laser/captain( src.loc )
-		del(src)
+		qdel(src)
 
 
 /obj/structure/displaycase/proc/healthcheck()

@@ -76,7 +76,7 @@
 				level_gain = 1
 			M.LevelUp(level_gain)
 		M.health = M.maxHealth
-		del(src)
+		qdel(src)
 	..()
 
 /mob/living/simple_animal/hostile/mushroom/revive()
@@ -125,7 +125,7 @@
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom))
 		if(stat == DEAD && !recovery_cooldown)
 			Recover()
-			del(I)
+			qdel(I)
 		else
 			user << "<span class='notice'>[src] won't eat it!</span>"
 		return
@@ -156,4 +156,4 @@
 		S.reagents.add_reagent("mushroomhallucinogen", powerlevel)
 		S.reagents.add_reagent("doctorsdelight", powerlevel)
 		S.reagents.add_reagent("synaptizine", powerlevel)
-	del(src)
+	qdel(src)

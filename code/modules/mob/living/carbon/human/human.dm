@@ -115,7 +115,7 @@
 	if (client.statpanel == "Status")
 		if (internal)
 			if (!internal.air_contents)
-				del(internal)
+				qdel(internal)
 			else
 				stat("Internal Atmosphere Info", internal.name)
 				stat("Tank Pressure", internal.air_contents.return_pressure())

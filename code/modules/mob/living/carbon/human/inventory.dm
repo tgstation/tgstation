@@ -30,12 +30,12 @@
 					H << "\red You are unable to equip that."
 
 
-/mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/I, list/slots, del_on_fail = 1)
+/mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/I, list/slots, qdel_on_fail = 1)
 	for(var/slot in slots)
-		if(equip_to_slot_if_possible(I, slots[slot], del_on_fail = 0))
+		if(equip_to_slot_if_possible(I, slots[slot], qdel_on_fail = 0))
 			return slot
-	if(del_on_fail)
-		del(I)
+	if(qdel_on_fail)
+		qdel(I)
 	return null
 
 

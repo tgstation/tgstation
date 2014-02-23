@@ -8,7 +8,7 @@
 
 	spawn_gibs()
 
-	end_animation(animate) // Will del(src)
+	end_animation(animate) // Will qdel(src)
 
 /mob/living/proc/spawn_gibs()
 	gibs(loc, viruses)
@@ -55,8 +55,8 @@
 
 /mob/living/proc/end_animation(var/animate)
 	if(!animate)
-		del(src)
+		qdel(src)
 	else
 		spawn(15)
-			if(animate)		del(animate)
-			if(src)			del(src)
+			if(animate)		qdel(animate)
+			if(src)			qdel(src)

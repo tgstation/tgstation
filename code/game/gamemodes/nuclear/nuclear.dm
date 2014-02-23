@@ -102,7 +102,7 @@
 	for(var/obj/effect/landmark/A in landmarks_list)
 		if(A.name == "Syndicate-Spawn")
 			synd_spawn += get_turf(A)
-			del(A)
+			qdel(A)
 			continue
 
 	var/obj/effect/landmark/uplinklocker = locate("landmark*Syndicate-Uplink")	//i will be rewriting this shortly
@@ -161,7 +161,7 @@
 		else
 			var/mob/living/carbon/human/H = synd_mind.current
 			P.loc = H.loc
-			H.equip_to_slot_or_del(P, slot_r_store, 0)
+			H.equip_to_slot_or_qdel(P, slot_r_store, 0)
 			H.update_icons()
 
 	else
@@ -194,24 +194,24 @@
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate(synd_mob)
 	R.set_frequency(radio_freq)
-	synd_mob.equip_to_slot_or_del(R, slot_ears)
+	synd_mob.equip_to_slot_or_qdel(R, slot_ears)
 
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate(synd_mob), slot_w_uniform)
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(synd_mob), slot_shoes)
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(synd_mob), slot_wear_suit)
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(synd_mob), slot_gloves)
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/swat(synd_mob), slot_head)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate(synd_mob), slot_wear_id)
-	if(synd_mob.backbag == 2) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(synd_mob), slot_back)
-	if(synd_mob.backbag == 3) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(synd_mob), slot_back)
-	synd_mob.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/m10mm(synd_mob), slot_in_backpack)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/cyanide(synd_mob), slot_in_backpack)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/pistol(synd_mob), slot_belt)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(synd_mob.back), slot_in_backpack)
+	synd_mob.equip_to_slot_or_qdel(new /obj/item/clothing/under/syndicate(synd_mob), slot_w_uniform)
+	synd_mob.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/black(synd_mob), slot_shoes)
+	synd_mob.equip_to_slot_or_qdel(new /obj/item/clothing/suit/armor/vest(synd_mob), slot_wear_suit)
+	synd_mob.equip_to_slot_or_qdel(new /obj/item/clothing/gloves/combat(synd_mob), slot_gloves)
+	synd_mob.equip_to_slot_or_qdel(new /obj/item/clothing/head/helmet/swat(synd_mob), slot_head)
+	synd_mob.equip_to_slot_or_qdel(new /obj/item/weapon/card/id/syndicate(synd_mob), slot_wear_id)
+	if(synd_mob.backbag == 2) synd_mob.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack(synd_mob), slot_back)
+	if(synd_mob.backbag == 3) synd_mob.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel_norm(synd_mob), slot_back)
+	synd_mob.equip_to_slot_or_qdel(new /obj/item/ammo_box/magazine/m10mm(synd_mob), slot_in_backpack)
+	synd_mob.equip_to_slot_or_qdel(new /obj/item/weapon/reagent_containers/pill/cyanide(synd_mob), slot_in_backpack)
+	synd_mob.equip_to_slot_or_qdel(new /obj/item/weapon/gun/projectile/automatic/pistol(synd_mob), slot_belt)
+	synd_mob.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/engineer(synd_mob.back), slot_in_backpack)
 
 	var/obj/item/device/radio/uplink/U = new /obj/item/device/radio/uplink(synd_mob)
 	U.hidden_uplink.uses = 10
-	synd_mob.equip_to_slot_or_del(U, slot_in_backpack)
+	synd_mob.equip_to_slot_or_qdel(U, slot_in_backpack)
 
 	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(synd_mob)
 	E.imp_in = synd_mob

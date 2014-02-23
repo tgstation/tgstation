@@ -1,8 +1,12 @@
-/mob/Del()//This makes sure that mobs with clients/keys are not just deleted from the game.
+/mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	mob_list -= src
 	dead_mob_list -= src
 	living_mob_list -= src
 	ghostize()
+	for(var/atom/movable/AM in src)
+		if(isobj(AM))
+			unEquip(AM)
+		qdel(AM)
 	..()
 
 var/next_mob_id = 0
@@ -126,7 +130,7 @@ var/next_mob_id = 0
 				var/list/temp = list(  )
 				temp += L.container
 				//L = null
-				del(L)
+				qdel(L)
 				return temp
 			else
 				return L.container
@@ -151,10 +155,10 @@ var/next_mob_id = 0
 
 	return 0
 
-/mob/proc/put_in_any_hand_if_possible(obj/item/W as obj, del_on_fail = 0, disable_warning = 1, redraw_mob = 1)
-	if(equip_to_slot_if_possible(W, slot_l_hand, del_on_fail, disable_warning, redraw_mob))
+/mob/proc/put_in_any_hand_if_possible(obj/item/W as obj, qdel_on_fail = 0, disable_warning = 1, redraw_mob = 1)
+	if(equip_to_slot_if_possible(W, slot_l_hand, qdel_on_fail, disable_warning, redraw_mob))
 		return 1
-	else if(equip_to_slot_if_possible(W, slot_r_hand, del_on_fail, disable_warning, redraw_mob))
+	else if(equip_to_slot_if_possible(W, slot_r_hand, qdel_on_fail, disable_warning, redraw_mob))
 		return 1
 	return 0
 
@@ -162,11 +166,11 @@ var/next_mob_id = 0
 //set del_on_fail to have it delete W if it fails to equip
 //set disable_warning to disable the 'you are unable to equip that' warning.
 //unset redraw_mob to prevent the mob from being redrawn at the end.
-/mob/proc/equip_to_slot_if_possible(obj/item/W as obj, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1)
+/mob/proc/equip_to_slot_if_possible(obj/item/W as obj, slot, qdel_on_fail = 0, disable_warning = 0, redraw_mob = 1)
 	if(!istype(W)) return 0
 	if(!W.mob_can_equip(src, slot, disable_warning))
-		if(del_on_fail)
-			del(W)
+		if(qdel_on_fail)
+			qdel(W)
 		else
 			if(!disable_warning)
 				src << "\red You are unable to equip that." //Only print if del_on_fail is false
@@ -180,7 +184,7 @@ var/next_mob_id = 0
 	return
 
 //This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the rounds tarts and when events happen and such.
-/mob/proc/equip_to_slot_or_del(obj/item/W as obj, slot)
+/mob/proc/equip_to_slot_or_qdel(obj/item/W as obj, slot)
 	equip_to_slot_if_possible(W, slot, 1, 1, 0)
 
 //The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
@@ -207,7 +211,7 @@ var/list/slot_equipment_priority = list( \
 	if(!istype(W)) return 0
 
 	for(var/slot in slot_equipment_priority)
-		if(equip_to_slot_if_possible(W, slot, 0, 1, 1)) //del_on_fail = 0; disable_warning = 0; redraw_mob = 1
+		if(equip_to_slot_if_possible(W, slot, 0, 1, 1)) //qdel_on_fail = 0; disable_warning = 0; redraw_mob = 1
 			return 1
 
 	return 0
@@ -339,7 +343,7 @@ var/list/slot_equipment_priority = list( \
 	var/mob/new_player/M = new /mob/new_player()
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
-		del(M)
+		qdel(M)
 		return
 
 	M.key = key
@@ -662,6 +666,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 				stat(null,"Obj-[master_controller.objects_cost]\t#[processing_objects.len]")
 				stat(null,"Net-[master_controller.networks_cost]\tPnet-[master_controller.powernets_cost]")
 				stat(null,"NanoUI-[master_controller.nano_cost]\t#[nanomanager.processing_uis.len]")
+				stat(null,"GC-[master_controller.gc_cost]\t#[garbage.queue.len]-[garbage.destroyed.len]")
 				stat(null,"Tick-[master_controller.ticker_cost]\tALL-[master_controller.total_cost]")
 			else
 				stat(null,"MasterController-ERROR")

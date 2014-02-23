@@ -146,24 +146,24 @@
 		return
 
 	//So zards properly get their items when they are admin-made.
-	del(wizard_mob.wear_suit)
-	del(wizard_mob.head)
-	del(wizard_mob.shoes)
-	del(wizard_mob.r_hand)
-	del(wizard_mob.r_store)
-	del(wizard_mob.l_store)
+	qdel(wizard_mob.wear_suit)
+	qdel(wizard_mob.head)
+	qdel(wizard_mob.shoes)
+	qdel(wizard_mob.r_hand)
+	qdel(wizard_mob.r_store)
+	qdel(wizard_mob.l_store)
 
-	wizard_mob.equip_to_slot_or_del(new /obj/item/device/radio/headset(wizard_mob), slot_ears)
-	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/under/lightpurple(wizard_mob), slot_w_uniform)
-	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(wizard_mob), slot_shoes)
-	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(wizard_mob), slot_wear_suit)
-	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(wizard_mob), slot_head)
-	if(wizard_mob.backbag == 2) wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(wizard_mob), slot_back)
-	if(wizard_mob.backbag == 3) wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(wizard_mob), slot_back)
-	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(wizard_mob), slot_in_backpack)
-//	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/scrying_gem(wizard_mob), slot_l_store) For scrying gem.
-	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(wizard_mob), slot_r_store)
-	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/spellbook(wizard_mob), slot_r_hand)
+	wizard_mob.equip_to_slot_or_qdel(new /obj/item/device/radio/headset(wizard_mob), slot_ears)
+	wizard_mob.equip_to_slot_or_qdel(new /obj/item/clothing/under/lightpurple(wizard_mob), slot_w_uniform)
+	wizard_mob.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/sandal(wizard_mob), slot_shoes)
+	wizard_mob.equip_to_slot_or_qdel(new /obj/item/clothing/suit/wizrobe(wizard_mob), slot_wear_suit)
+	wizard_mob.equip_to_slot_or_qdel(new /obj/item/clothing/head/wizard(wizard_mob), slot_head)
+	if(wizard_mob.backbag == 2) wizard_mob.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack(wizard_mob), slot_back)
+	if(wizard_mob.backbag == 3) wizard_mob.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel_norm(wizard_mob), slot_back)
+	wizard_mob.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(wizard_mob), slot_in_backpack)
+//	wizard_mob.equip_to_slot_or_qdel(new /obj/item/weapon/scrying_gem(wizard_mob), slot_l_store) For scrying gem.
+	wizard_mob.equip_to_slot_or_qdel(new /obj/item/weapon/teleportation_scroll(wizard_mob), slot_r_store)
+	wizard_mob.equip_to_slot_or_qdel(new /obj/item/weapon/spellbook(wizard_mob), slot_r_hand)
 
 	wizard_mob << "You will find a list of available spells in your spell book. Choose your magic arsenal carefully."
 	wizard_mob << "In your pockets you will find a teleport scroll. Use it as needed."
@@ -264,7 +264,7 @@
 //To batch-remove wizard spells. Linked to mind.dm.
 /mob/proc/spellremove(var/mob/M as mob)
 	for(var/obj/effect/proc_holder/spell/spell_to_remove in src.mind.spell_list)
-		del(spell_to_remove)
+		qdel(spell_to_remove)
 
 /*Checks if the wizard can cast spells.
 Made a proc so this is not repeated 14 (or more) times.*/

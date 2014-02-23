@@ -908,4 +908,4 @@ var/global/mulebot_count = 0
 
 	new /obj/effect/decal/cleanable/oil(src.loc)
 	unload(0)
-	del(src)
+	qdel(src)

@@ -178,7 +178,7 @@
 		src << "Unable to remove this blob."
 		return
 
-	B.Delete()
+	B.Destroy()
 	return
 
 

@@ -19,7 +19,7 @@
 
 /obj/item/weapon/melee/arm_blade/dropped(mob/user)
 	visible_message("<span class='warning'>With a sickening crunch, [user] reforms his blade into an arm!</span>", "<span class='notice'>We assimilate our blade into our body</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
-	del src
+	qdel(src)
 
 /obj/item/weapon/melee/arm_blade/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)

@@ -30,7 +30,7 @@
 	R.uneq_all()
 	R.hands.icon_state = "nomod"
 	R.icon_state = "robot"
-	del(R.module)
+	qdel(R.module)
 	R.module = null
 	R.modtype = "robot"
 	R.updatename("Default")

@@ -109,7 +109,7 @@
 			animation.master = user
 			flick("blspell", animation)
 			sleep(5)
-			del(animation)
+			qdel(animation)
 
 	if(!flashfail)
 		flick("flash2", src)
@@ -156,7 +156,7 @@
 			animation.master = user
 			flick("blspell", animation)
 			sleep(5)
-			del(animation)
+			qdel(animation)
 
 	for(var/mob/living/carbon/M in oviewers(3, null))
 		var/safety = M:eyecheck()

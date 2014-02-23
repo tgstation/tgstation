@@ -39,7 +39,7 @@
 				if(!user.unEquip(I))
 					user << "<span class='notice'>\the [I] is stuck to your hand, you cannot put it in \the [src]</span>"
 				user << "<span class='notice'>You add the [I] to the drying rack.</span class='notice'>"
-				del(I)
+				qdel(I)
 				src.running = 1
 				use_power = 2
 				icon_state = "drying_rack_on"
@@ -60,7 +60,7 @@
 			if(!user.unEquip(I))
 				user << "<span class='notice'>\the [I] is stuck to your hand, you cannot put it in \the [src]</span>"
 			user << "<span class='notice'>You add the [I] to the drying rack.</span class='notice'>"
-			del(I)
+			qdel(I)
 			src.running = 1
 			use_power = 2
 			icon_state = "drying_rack_on"
@@ -74,7 +74,7 @@
 		if(!user.unEquip(I))
 			user << "<span class='notice'>\the [I] is stuck to your hand, you cannot put it in \the [src]</span>"
 		user << "<span class='notice'>You add the [I] to the drying rack.</span class='notice'>"
-		del(I)
+		qdel(I)
 		src.running = 1
 		use_power = 2
 		icon_state = "drying_rack_on"

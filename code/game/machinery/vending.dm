@@ -70,11 +70,11 @@
 /obj/machinery/vending/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if(prob(50))
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if(prob(25))
@@ -85,7 +85,7 @@
 	if(prob(75))
 		malfunction()
 	else
-		del(src)
+		qdel(src)
 
 
 /obj/machinery/vending/proc/build_inventory(list/productlist, hidden=0, req_coin=0)
@@ -321,9 +321,9 @@
 					usr << "<span class='notice'>You successfully pull the coin out before [src] could swallow it.</span>"
 				else
 					usr << "<span class='notice'>You weren't able to pull the coin out fast enough, the machine ate it, string and all.</span>"
-					del(coin)
+					qdel(coin)
 			else
-				del(coin)
+				qdel(coin)
 		else if (!(R in product_records))
 			vend_ready = 1
 			message_admins("Vending machine exploit attempted by [key_name(usr, usr.client)]!")

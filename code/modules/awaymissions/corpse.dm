@@ -41,29 +41,29 @@
 	M.adjustBruteLoss(src.corpsebrute)
 	M.adjustOxyLoss(src.corpseoxy)
 	if(src.corpseuniform)
-		M.equip_to_slot_or_del(new src.corpseuniform(M), slot_w_uniform)
+		M.equip_to_slot_or_qdel(new src.corpseuniform(M), slot_w_uniform)
 	if(src.corpsesuit)
-		M.equip_to_slot_or_del(new src.corpsesuit(M), slot_wear_suit)
+		M.equip_to_slot_or_qdel(new src.corpsesuit(M), slot_wear_suit)
 	if(src.corpseshoes)
-		M.equip_to_slot_or_del(new src.corpseshoes(M), slot_shoes)
+		M.equip_to_slot_or_qdel(new src.corpseshoes(M), slot_shoes)
 	if(src.corpsegloves)
-		M.equip_to_slot_or_del(new src.corpsegloves(M), slot_gloves)
+		M.equip_to_slot_or_qdel(new src.corpsegloves(M), slot_gloves)
 	if(src.corpseradio)
-		M.equip_to_slot_or_del(new src.corpseradio(M), slot_ears)
+		M.equip_to_slot_or_qdel(new src.corpseradio(M), slot_ears)
 	if(src.corpseglasses)
-		M.equip_to_slot_or_del(new src.corpseglasses(M), slot_glasses)
+		M.equip_to_slot_or_qdel(new src.corpseglasses(M), slot_glasses)
 	if(src.corpsemask)
-		M.equip_to_slot_or_del(new src.corpsemask(M), slot_wear_mask)
+		M.equip_to_slot_or_qdel(new src.corpsemask(M), slot_wear_mask)
 	if(src.corpsehelmet)
-		M.equip_to_slot_or_del(new src.corpsehelmet(M), slot_head)
+		M.equip_to_slot_or_qdel(new src.corpsehelmet(M), slot_head)
 	if(src.corpsebelt)
-		M.equip_to_slot_or_del(new src.corpsebelt(M), slot_belt)
+		M.equip_to_slot_or_qdel(new src.corpsebelt(M), slot_belt)
 	if(src.corpsepocket1)
-		M.equip_to_slot_or_del(new src.corpsepocket1(M), slot_r_store)
+		M.equip_to_slot_or_qdel(new src.corpsepocket1(M), slot_r_store)
 	if(src.corpsepocket2)
-		M.equip_to_slot_or_del(new src.corpsepocket2(M), slot_l_store)
+		M.equip_to_slot_or_qdel(new src.corpsepocket2(M), slot_l_store)
 	if(src.corpseback)
-		M.equip_to_slot_or_del(new src.corpseback(M), slot_back)
+		M.equip_to_slot_or_qdel(new src.corpseback(M), slot_back)
 	if(src.corpseid == 1)
 		var/obj/item/weapon/card/id/W = new(M)
 		W.name = "[M.real_name]'s ID Card ([corpseidjob])"
@@ -83,8 +83,8 @@
 		if(corpseidjob)
 			W.assignment = corpseidjob
 		W.registered_name = M.real_name
-		M.equip_to_slot_or_del(W, slot_wear_id)
-	del(src)
+		M.equip_to_slot_or_qdel(W, slot_wear_id)
+	qdel(src)
 
 /obj/effect/landmark/corpse/AICorpse/createCorpse() //Creates a corrupted AI
 	var/A = locate(/mob/living/silicon/ai) in loc //variable A looks for an AI at the location of the landmark
@@ -97,7 +97,7 @@
 	M.real_name = src.name
 	M.aiPDA.toff = 1 //turns the AI's PDA messenger off, stopping it showing up on player PDAs
 	M.death() //call the AI's death proc
-	del(src)
+	qdel(src)
 
 /obj/effect/landmark/corpse/slimeCorpse
 	var/mobcolour = "grey"
@@ -111,13 +111,13 @@
 	var/mob/living/carbon/slime/M = new(src.loc) //variable M is a new slime at the location of the landmark
 	M.colour = src.mobcolour //slime colour is set by landmark's mobcolour var
 	M.adjustToxLoss(9001) //kills the slime, death() doesn't update its icon correctly
-	del(src)
+	qdel(src)
 
 /obj/effect/landmark/corpse/facehugCorpse/createCorpse() //Creates a squashed facehugger
 	var/obj/item/clothing/mask/facehugger/O = new(src.loc) //variable O is a new facehugger at the location of the landmark
 	O.name = src.name
 	O.Die() //call the facehugger's death proc
-	del(src)
+	qdel(src)
 
 
 // I'll work on making a list of corpses people request for maps, or that I think will be commonly used. Syndicate operatives for example.

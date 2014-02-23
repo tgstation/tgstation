@@ -150,7 +150,7 @@
 							A.amount -= 5
 							if(A.amount <= 0)
 								user.drop_item()
-								del(A)
+								qdel(A)
 							icon_state = "borgdecon2"
 							construct_op --
 							stat &= ~BROKEN // the machine's not borked anymore!
@@ -187,7 +187,7 @@
 							// Create a machine frame and delete the current machine
 							var/obj/machinery/constructable_frame/machine_frame/F = new
 							F.loc = src.loc
-							del(src)
+							qdel(src)
 				else
 					user << "This needs to be open first."
 	else

@@ -116,7 +116,7 @@
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 //Improved /N
-/mob/living/silicon/robot/Del()
+/mob/living/silicon/robot/Destroy()
 	if(mmi && mind)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)	mmi.loc = T
@@ -927,7 +927,7 @@
 				for(var/A in tile)
 					if(istype(A, /obj/effect))
 						if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
-							del(A)
+							qdel(A)
 					else if(istype(A, /obj/item))
 						var/obj/item/cleaned_item = A
 						cleaned_item.clean_blood()
@@ -953,7 +953,7 @@
 /mob/living/silicon/robot/proc/self_destruct()
 	if(emagged)
 		if(mmi)
-			del(mmi)
+			qdel(mmi)
 		explosion(src.loc,1,2,4,flame_range = 2)
 	else
 		explosion(src.loc,-1,0,2)
@@ -969,7 +969,7 @@
 	scrambledcodes = 1
 	//Disconnect it's camera so it's not so easily tracked.
 	if(src.camera)
-		del(src.camera)
+		qdel(src.camera)
 		src.camera = null
 		// I'm trying to get the Cyborg to not be listed in the camera list
 		// Instead of being listed as "deactivated". The downside is that I'm going
@@ -1066,7 +1066,7 @@
 	if (cell) //Sanity check.
 		cell.loc = T
 		cell = null
-	del(src)
+	qdel(src)
 
 /mob/living/silicon/robot/syndicate
 	icon_state = "syndie_bloodhound"

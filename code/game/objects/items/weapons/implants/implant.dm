@@ -28,7 +28,7 @@
 
 /obj/item/weapon/implant/dropped(mob/user as mob)
 	. = 1
-	del src
+	qdel(src)
 	return .
 
 /obj/item/weapon/implant/tracking
@@ -119,7 +119,7 @@
 	R << "You hear a faint *beep*."
 	if(!reagents.total_volume)
 		R << "You hear a faint click from your chest."
-		del(src)
+		qdel(src)
 
 
 /obj/item/weapon/implant/loyalty

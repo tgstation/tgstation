@@ -796,7 +796,7 @@ datum
 									M.client.screen += blueeffect
 									sleep(20)
 									M.client.screen -= blueeffect
-									del(blueeffect)
+									qdel(blueeffect)
 		slimecrit
 			name = "Slime Crit"
 			id = "m_tele"
@@ -1468,7 +1468,7 @@ datum
 									M.client.screen += blueeffect
 									sleep(20)
 									M.client.screen -= blueeffect
-									del(blueeffect)
+									qdel(blueeffect)
 		slimecrystal
 			name = "Slime Crystal"
 			id = "m_crystal"

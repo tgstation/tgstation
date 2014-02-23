@@ -573,7 +573,7 @@
 	frequency.post_signal(src, status_signal)
 
 
-/obj/machinery/computer/communications/Del()
+/obj/machinery/computer/communications/Destroy()
 	shuttle_caller_list -= src
 	emergency_shuttle.autoshuttlecall()
 	..()

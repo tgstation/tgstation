@@ -190,8 +190,7 @@
 	O.unset_sting()
 	feedback_add_details("changeling_powers","LF")
 	. = 1
-	del(src)
-	return
+	qdel(src)
 
 //Transform into a human
 /mob/living/carbon/proc/changeling_human_form()
@@ -227,8 +226,7 @@
 		O.unset_sting()
 	feedback_add_details("changeling_powers","LFT")
 	. = 1
-	del(src)
-	return
+	qdel(src)
 
 
 //Fake our own death and fully heal. You will appear to be dead but regenerate fully after a short delay.
@@ -541,11 +539,11 @@ var/list/datum/dna/hivemind_bank = list()
 	set name = "Arm Blade (20)"
 
 	if(istype(l_hand, /obj/item/weapon/melee/arm_blade)) //Not the nicest way to do it, but eh
-		del l_hand //Arm  blades can't be dropped, we have to delete them directly.
+		qdel(l_hand) //Arm  blades can't be dropped, we have to delete them directly.
 		return
 
 	if(istype(r_hand, /obj/item/weapon/melee/arm_blade))
-		del r_hand
+		qdel(r_hand)
 		return
 
 	var/datum/changeling/changeling = changeling_power(20)

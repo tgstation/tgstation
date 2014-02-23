@@ -9,7 +9,7 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 
-/obj/machinery/power/Del()
+/obj/machinery/power/Destroy()
 	disconnect_from_network()
 	..()
 
@@ -33,6 +33,9 @@
 		return powernet.avail
 	else
 		return 0
+
+/obj/machinery/power/proc/disconnect_terminal() // machines without a terminal will just return, no harm no fowl.
+	return
 
 // returns true if the area has power on given channel (or doesn't require power).
 // defaults to power_channel
