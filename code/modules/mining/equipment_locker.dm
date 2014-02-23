@@ -61,7 +61,9 @@
 			var/obj/structure/ore_box/B = locate() in T
 			if(B)
 				for(var/mat_id in B.materials.storage)
-					materials.addAmount(mat_id,B.materials.getAmount(mat_id))
+					var/datum/material/mat = B.materials.getMaterial(mat_id)
+					materials.addAmount(mat_id,mat.stored)
+					mat.stored=0
 
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(var/obj/item/weapon/ore/O)
 	if(O.material)
