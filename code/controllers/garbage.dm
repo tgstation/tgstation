@@ -45,6 +45,7 @@ var/list/uncollectable_vars=list(
 			continue
 //		testing("GC: Unsetting [vname] in [A.type]")
 		A.vars[vname] = null
+	A.invisibility = 101 // Idea by ChuckTheSheep to make the object even more unreferencable
 //	testing("GC: Pop([A.type]) - destroyed\[\ref[A]\] = [A.gc_destroyed] current time: [world.timeofday]")
 	destroyed["\ref[A]"] = A.gc_destroyed
 	queue.Cut(1, 2)
@@ -79,6 +80,7 @@ var/list/uncollectable_vars=list(
 //		else
 //			testing("GC: [refID] properly GC'd at [world.timeofday] with timeout [GCd_at_time]")
 		destroyed.Cut(i, ++i) // also increases i in general
+
 /**
 * NEVER USE THIS FOR ANYTHING OTHER THAN /atom/movable
 * OTHER TYPES CANNOT BE QDEL'D BECAUSE THEIR LOC IS LOCKED OR THEY DON'T HAVE ONE.
