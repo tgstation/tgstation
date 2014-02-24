@@ -8,6 +8,7 @@
 	opacity = 0
 	anchored = 1
 	var/health = 30
+	var/health_timestamp = 0
 	var/brute_resist = 4
 	var/fire_resist = 1
 
