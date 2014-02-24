@@ -461,13 +461,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						updateUsrDialog()
 
 	else if(href_list["disposeI"] && linked_imprinter)  //Causes the circuit imprinter to dispose of a single reagent (all of it)
-		linked_imprinter.reagents.del_reagent(href_list["dispose"])
+		linked_imprinter.reagents.del_reagent(href_list["disposeI"])
 
 	else if(href_list["disposeallI"] && linked_imprinter) //Causes the circuit imprinter to dispose of all it's reagents.
 		linked_imprinter.reagents.clear_reagents()
 
 	else if(href_list["disposeP"] && linked_lathe)  //Causes the protolathe to dispose of a single reagent (all of it)
-		linked_lathe.reagents.del_reagent(href_list["dispose"])
+		linked_lathe.reagents.del_reagent(href_list["disposeP"])
 
 	else if(href_list["disposeallP"] && linked_lathe) //Causes the protolathe to dispose of all it's reagents.
 		linked_lathe.reagents.clear_reagents()
@@ -765,7 +765,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 		if(3.1)
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> "
-			dat += "<A href='?src=\ref[src];menu=3.2'>Material Storage</A><div class='statusDisplay'>"
+			dat += "<A href='?src=\ref[src];menu=3.2'>Material Storage</A>"
+			dat += "<A href='?src=\ref[src];menu=3.3'>Chemical Storage</A><div class='statusDisplay'>"
 			dat += "<h3>Protolathe Menu:</h3><BR>"
 			dat += "<B>Material Amount:</B> [linked_lathe.TotalMaterials()] / [linked_lathe.max_material_storage]<BR>"
 			dat += "<B>Chemical Volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]<HR>"
@@ -840,6 +841,15 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(linked_lathe.clown_amount >= 10000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=clown;lathe_ejectsheet_amt=5'>5x</A> "
 			if(linked_lathe.clown_amount >= 2000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=clown;lathe_ejectsheet_amt=50'>All</A>"
 			dat += "</div>"
+
+		if(3.3)
+			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=3.1'>Protolathe Menu</A>"
+			dat += "<A href='?src=\ref[src];disposeallP=1'>Disposal All Chemicals in Storage</A><div class='statusDisplay'>"
+			dat += "<h3>Chemical Storage:</h3><BR><HR>"
+			for(var/datum/reagent/R in linked_lathe.reagents.reagent_list)
+				dat += "[R.name]: [R.volume]"
+				dat += "<A href='?src=\ref[src];disposeP=[R.id]'>Purge</A><BR>"
 
 		///////////////////CIRCUIT IMPRINTER SCREENS////////////////////
 		if(4.0)
