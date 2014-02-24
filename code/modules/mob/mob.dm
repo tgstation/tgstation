@@ -123,8 +123,10 @@
 
 /mob/proc/put_in_any_hand_if_possible(obj/item/W as obj, act_on_fail = 0, disable_warning = 1, redraw_mob = 1)
 	if(equip_to_slot_if_possible(W, slot_l_hand, act_on_fail, disable_warning, redraw_mob))
+		update_inv_l_hand()
 		return 1
 	else if(equip_to_slot_if_possible(W, slot_r_hand, act_on_fail, disable_warning, redraw_mob))
+		update_inv_r_hand()
 		return 1
 	return 0
 
