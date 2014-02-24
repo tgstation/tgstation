@@ -81,7 +81,7 @@
 		new /obj/item/clothing/head/helmet/HoS/dermal(src)
 		new /obj/item/weapon/cartridge/hos(src)
 		new /obj/item/device/radio/headset/heads/hos(src)
-		new /obj/item/clothing/glasses/sunglasses/sechud(src)
+		new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 		new /obj/item/weapon/shield/riot(src)
 		new /obj/item/clothing/mask/gas/sechailer(src)
 		new /obj/item/clothing/mask/gas/sechailer/hos(src)
@@ -119,7 +119,7 @@
 		new /obj/item/clothing/head/helmet/warden(src)
 		new /obj/item/weapon/clipboard(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
-		new /obj/item/clothing/glasses/sunglasses/sechud(src)
+		new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 		new /obj/item/clothing/mask/gas/sechailer/warden(src)
 		new /obj/item/weapon/storage/box/flashbangs(src)
 		new /obj/item/weapon/reagent_containers/spray/pepper(src)
@@ -157,7 +157,7 @@
 		new /obj/item/weapon/melee/baton/loaded(src)
 		new /obj/item/weapon/gun/energy/taser(src)
 		new /obj/item/weapon/storage/belt/security(src)
-		new /obj/item/clothing/glasses/sunglasses/sechud(src)
+		new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 		return
 
 
