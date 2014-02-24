@@ -218,7 +218,8 @@
 				if(H.uplink_owner && H.uplink_owner==traitor.name)
 					TC_uses += H.used_TC
 					uplink_true=1
-					for(var/i in H.purchase_log) purchases += i
+					for(var/i in H.purchase_log)
+						purchases += i
 
 			if(uplink_true && !TC_uses) text+= "<br>"//EMBRACE THE GAP
 
