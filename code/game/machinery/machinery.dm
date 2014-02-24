@@ -344,7 +344,6 @@ Class Procs:
 							user << "<span class='notice'>[A.name] replaced with [B.name].</span>"
 							break
 			RefreshParts()
-			user << "<span class='notice'>Machine reconstructed!</span>"
 		else
 			user << "<span class='notice'>Following parts detected in the machine:</span>"
 			for(var/var/obj/item/C in component_parts)

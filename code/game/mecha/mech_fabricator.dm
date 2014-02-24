@@ -711,9 +711,6 @@
 	if(exchange_parts(user, W))
 		return
 
-	if(exchange_parts(user, W))
-		return
-
 	default_deconstruction_crowbar(W)
 
 	if (panel_open)

@@ -416,7 +416,6 @@
 /obj/item/weapon/stock_parts
 	name = "stock part"
 	desc = "What?"
-	gender = PLURAL
 	icon = 'icons/obj/stock_parts.dmi'
 	w_class = 2.0
 	var/rating = 1

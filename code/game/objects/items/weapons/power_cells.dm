@@ -29,6 +29,7 @@
 	origin_tech = "powerstorage=0"
 	maxcharge = 500
 	g_amt = 40
+	rating = 2
 
 /obj/item/weapon/stock_parts/cell/crap/empty/New()
 	..()
@@ -39,6 +40,7 @@
 	origin_tech = "powerstorage=0"
 	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
 	g_amt = 40
+	rating = 2.5
 
 /obj/item/weapon/stock_parts/cell/secborg/empty/New()
 	..()
@@ -50,6 +52,7 @@
 	icon_state = "hcell"
 	maxcharge = 10000
 	g_amt = 60
+	rating = 3
 
 /obj/item/weapon/stock_parts/cell/high/empty/New()
 	..()
@@ -62,6 +65,7 @@
 	maxcharge = 20000
 	g_amt = 70
 	construction_cost = list("metal"=750,"glass"=100)
+	rating = 4
 
 /obj/item/weapon/stock_parts/cell/super/empty/New()
 	..()
@@ -74,6 +78,7 @@
 	maxcharge = 30000
 	g_amt = 80
 	construction_cost = list("metal"=500,"glass"=150,"gold"=200,"silver"=200)
+	rating = 5
 
 /obj/item/weapon/stock_parts/cell/hyper/empty/New()
 	..()
@@ -85,6 +90,7 @@
 	origin_tech =  null
 	maxcharge = 30000
 	g_amt = 80
+	rating = 6
 	use()
 		return 1
 
@@ -99,7 +105,7 @@
 	m_amt = 0
 	g_amt = 0
 	minor_fault = 1
-
+	rating = 1
 
 /obj/item/weapon/stock_parts/cell/slime
 	name = "charged slime core"
@@ -110,3 +116,4 @@
 	maxcharge = 10000
 	m_amt = 0
 	g_amt = 0
+	rating = 3
