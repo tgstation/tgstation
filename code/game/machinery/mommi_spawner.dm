@@ -107,7 +107,7 @@
 
 		if(metal < metalPerMoMMI)
 			user << "\red \The [src] doesn't have enough metal to complete this task."
-			return 1
+			return TRUE
 
 		building=1
 		update_icon()
@@ -145,7 +145,7 @@
 
 	//M.cell = locate(/obj/item/weapon/cell) in contents
 	//M.cell.loc = M
-	src.loc = M//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
+	user.loc = M//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 
 	M.mmi = new /obj/item/device/mmi(M)
 	M.mmi.transfer_identity(user)//Does not transfer key/client.
