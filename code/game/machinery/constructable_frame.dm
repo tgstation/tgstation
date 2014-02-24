@@ -149,9 +149,10 @@
 						components += P
 						req_components[I]--
 						update_req_desc()
-						break
+						return 1
 				if(!success)
 					user << "<span class='danger'>You cannot add that to the machine!</span>"
+					return 0
 
 
 //Machine Frame Circuit Boards
