@@ -78,7 +78,12 @@ var/list/uplink_items = list()
 		if(istype(I, /obj/item) && ishuman(user))
 			var/mob/living/carbon/human/A = user
 			A.put_in_any_hand_if_possible(I)
-			U.purchase_log += "<BIG>\icon[I]</BIG>"
+
+			if(istype(I,/obj/item/weapon/storage/box/) && I.contents.len>0)
+				for(var/atom/o in I)
+					U.purchase_log += "<BIG>\icon[o]</BIG>"
+			else
+				U.purchase_log += "<BIG>\icon[I]</BIG>"
 
 		U.interact(user)
 		return 1
