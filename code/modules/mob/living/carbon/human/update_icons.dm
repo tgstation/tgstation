@@ -282,7 +282,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 							standing        			+= image("icon"=human_parts, "icon_state"="[mutant_type]_[affecting.name]_s", "layer"=-BODYPARTS_LAYER)
 
 					else
-						standing        			+= image("icon"=human_parts, "icon_state"="[mutant_type]_[affecting.name]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER)
+						standing        				+= image("icon"=human_parts, "icon_state"="[mutant_type]_[affecting.name]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER)
 
 				if(mutant_type == "normal")//Skin tone IS Relevant in "Normal" race humans
 					standing         					+= image("icon"=human_parts, "icon_state"="[skin_tone]_[affecting.name]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER)
