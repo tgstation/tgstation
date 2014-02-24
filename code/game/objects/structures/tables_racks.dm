@@ -36,9 +36,9 @@
 	reqs = list(/obj/item/weapon/handcuffs/cable = 1,
 				/obj/item/stack/rods = 1,
 				/obj/item/weapon/wirecutters = 1,
-				/obj/item/weapon/cell = 1)
+				/obj/item/weapon/stock_parts/cell = 1)
 	time = 80
-	parts = list(/obj/item/weapon/cell = 1)
+	parts = list(/obj/item/weapon/stock_parts/cell = 1)
 
 /datum/table_recipe/ed209
 	name = "ED209"
@@ -51,7 +51,7 @@
 				/obj/item/stack/sheet/metal = 5,
 				/obj/item/stack/cable_coil = 5,
 				/obj/item/weapon/gun/energy/taser = 1,
-				/obj/item/weapon/cell = 1,
+				/obj/item/weapon/stock_parts/cell = 1,
 				/obj/item/device/assembly/prox_sensor = 1,
 				/obj/item/robot_parts/r_arm = 1)
 	tools = list(/obj/item/weapon/weldingtool, /obj/item/weapon/screwdriver)

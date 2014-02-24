@@ -97,6 +97,9 @@
 				B.loc = loc
 				beaker = null
 
+	if(exchange_parts(user, O))
+		return
+
 	default_deconstruction_crowbar(O)
 
 	update_icon()

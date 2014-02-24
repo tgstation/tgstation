@@ -73,6 +73,9 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 				linked_console = null
 			return
 
+		if(exchange_parts(user, O))
+			return
+
 		if (panel_open)
 			if(istype(O, /obj/item/weapon/crowbar))
 				if(g_amount >= 3750)

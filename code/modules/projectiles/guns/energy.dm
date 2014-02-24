@@ -3,8 +3,8 @@
 	name = "energy gun"
 	desc = "A basic energy-based gun."
 
-	var/obj/item/weapon/cell/power_supply //What type of power cell this uses
-	var/cell_type = /obj/item/weapon/cell
+	var/obj/item/weapon/stock_parts/cell/power_supply //What type of power cell this uses
+	var/cell_type = /obj/item/weapon/stock_parts/cell
 	var/modifystate = 0
 	var/list/ammo_type = list(/obj/item/ammo_casing/energy)
 	var/select = 1 //The state of the select fire switch. Determines from the ammo_type list what kind of shot is fired next.

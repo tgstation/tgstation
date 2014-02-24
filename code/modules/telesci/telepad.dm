@@ -37,6 +37,9 @@
 			M.buffer = src
 			user << "<span class = 'caution'>You save the data in the [I.name]'s buffer.</span>"
 
+	if(exchange_parts(user, I))
+		return
+
 	default_deconstruction_crowbar(I)
 
 

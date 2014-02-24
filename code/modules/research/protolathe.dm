@@ -88,6 +88,10 @@ Note: Must be placed west/left of and R&D console to function.
 			linked_console.linked_lathe = null
 			linked_console = null
 		return
+
+	if(exchange_parts(user, O))
+		return
+
 	if (panel_open)
 		if(istype(O, /obj/item/weapon/crowbar))
 			if(m_amount >= 3750)

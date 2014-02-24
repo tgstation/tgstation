@@ -365,9 +365,9 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/engineering/power
 	name = "Powercell crate"
-	contains = list(/obj/item/weapon/cell/high,		//Changed to an extra high powercell because normal cells are useless
-					/obj/item/weapon/cell/high,
-					/obj/item/weapon/cell/high)
+	contains = list(/obj/item/weapon/stock_parts/cell/high,		//Changed to an extra high powercell because normal cells are useless
+					/obj/item/weapon/stock_parts/cell/high,
+					/obj/item/weapon/stock_parts/cell/high)
 	cost = 10
 	containername = "electrical maintenance crate"
 
@@ -558,8 +558,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/device/assembly/prox_sensor,
 					/obj/item/weapon/storage/toolbox/electrical,
 					/obj/item/weapon/storage/box/flashes,
-					/obj/item/weapon/cell/high,
-					/obj/item/weapon/cell/high)
+					/obj/item/weapon/stock_parts/cell/high,
+					/obj/item/weapon/stock_parts/cell/high)
 	cost = 10
 	containertype = /obj/structure/closet/crate/secure
 	containername = "robotics assembly crate"

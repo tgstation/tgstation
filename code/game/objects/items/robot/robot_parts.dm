@@ -43,7 +43,7 @@
 	construction_time = 350
 	construction_cost = list("metal"=40000)
 	var/wires = 0.0
-	var/obj/item/weapon/cell/cell = null
+	var/obj/item/weapon/stock_parts/cell/cell = null
 
 /obj/item/robot_parts/head
 	name = "cyborg head"
@@ -230,7 +230,7 @@
 
 /obj/item/robot_parts/chest/attackby(obj/item/W as obj, mob/user as mob)
 	..()
-	if(istype(W, /obj/item/weapon/cell))
+	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(src.cell)
 			user << "\blue You have already inserted a cell!"
 			return

@@ -24,7 +24,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/cell/high(null)
+	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
 	RefreshParts()
 	build_icon()
 
@@ -35,7 +35,7 @@
 		recharge_speed += C.rating * 100
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		repairs += M.rating - 1
-	for(var/obj/item/weapon/cell/C in component_parts)
+	for(var/obj/item/weapon/stock_parts/cell/C in component_parts)
 		recharge_speed *= C.maxcharge / 10000
 
 

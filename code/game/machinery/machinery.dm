@@ -322,3 +322,32 @@ Class Procs:
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		return 1
 	return 0
+
+/obj/machinery/proc/exchange_parts(mob/user, obj/item/weapon/storage/part_replacer/W)
+	if(istype(W) && component_parts)
+		if(panel_open)
+			var/obj/item/weapon/circuitboard/CB = locate(/obj/item/weapon/circuitboard) in component_parts
+			for(var/obj/item/weapon/stock_parts/A in component_parts)
+				var/P
+				for(var/D in CB.req_components)
+					if(ispath(A.type, text2path(D)))
+						P = text2path(D)
+						break
+				for(var/obj/item/weapon/stock_parts/B in W.contents)
+					if(istype(B, P) && istype(A, P))
+						if(B.rating > A.rating)
+							W.handle_item_insertion(A)
+							component_parts -= A
+							component_parts += B
+							W.remove_from_storage(B, null)
+							B.loc = null
+							user << "<span class='notice'>[A.name] replaced with [B.name].</span>"
+							break
+			RefreshParts()
+			user << "<span class='notice'>Machine reconstructed!</span>"
+		else
+			user << "<span class='notice'>Following parts detected in the machine:</span>"
+			for(var/var/obj/item/C in component_parts)
+				user << "<span class='notice'>    [C.name]</span>"
+		return 1
+	return 0
