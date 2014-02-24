@@ -7,7 +7,7 @@
 	name = "suit storage unit"
 	desc = "An industrial U-Stor-It Storage unit designed to accomodate all kinds of space suits. Its on-board equipment also allows the user to decontaminate the contents through a UV-ray purging cycle. There's a warning label dangling from the control pad, reading \"STRICTLY NO BIOLOGICALS IN THE CONFINES OF THE UNIT\"."
 	icon = 'icons/obj/suitstorage.dmi'
-	icon_state = "suitstorage000000100" //order is: [has helmet][has suit][has human][is open][is locked][is UV cycling][is powered][is dirty/broken] [is superUVcycling]
+	icon_state = "close"
 	anchored = 1
 	density = 1
 	var/mob/living/carbon/human/OCCUPANT = null
@@ -45,18 +45,28 @@
 	if(MASK_TYPE)
 		MASK = new MASK_TYPE(src)
 
-/obj/machinery/suit_storage_unit/update_icon()
-	var/hashelmet = 0
-	var/hassuit = 0
-	var/hashuman = 0
-	if(HELMET)
-		hashelmet = 1
-	if(SUIT)
-		hassuit = 1
-	if(OCCUPANT)
-		hashuman = 1
-	icon_state = text("suitstorage[][][][][][][][][]",hashelmet,hassuit,hashuman,src.isopen,src.islocked,src.isUV,src.ispowered,src.isbroken,src.issuperUV)
+/obj/machinery/suit_storage_unit/update_icon() //overlays yaaaay - Jordie
+	src.overlays = 0
 
+	if(!isopen)
+		overlays += "close"
+	if(OCCUPANT)
+		overlays += "human"
+	if(OCCUPANT && isUV)
+		overlays += "uvhuman"
+	if(isUV)
+		overlays += "uv"
+	if(issuperUV && isUV)
+		overlays += "super"
+	if(isopen)
+		overlays += "open"
+	if(SUIT && isopen)
+		overlays += "suit"
+	if(HELMET && isopen)
+		overlays += "helm"
+	if(isbroken && isopen)
+		overlays += "broken"
+	return
 
 /obj/machinery/suit_storage_unit/power_change()
 	if( powered() )
@@ -524,7 +534,7 @@
 			return
 		return
 	if( istype(I,/obj/item/clothing/suit/space) )
-		if(!src.isopen)
+		if(!src.isopen || src.isbroken)
 			return
 		var/obj/item/clothing/suit/space/S = I
 		if(src.SUIT)
@@ -538,7 +548,7 @@
 		src.updateUsrDialog()
 		return
 	if( istype(I,/obj/item/clothing/head/helmet) )
-		if(!src.isopen)
+		if(!src.isopen || src.isbroken)
 			return
 		var/obj/item/clothing/head/helmet/H = I
 		if(src.HELMET)
@@ -552,7 +562,7 @@
 		src.updateUsrDialog()
 		return
 	if( istype(I,/obj/item/clothing/mask) )
-		if(!src.isopen)
+		if(!src.isopen || src.isbroken)
 			return
 		var/obj/item/clothing/mask/M = I
 		if(src.MASK)

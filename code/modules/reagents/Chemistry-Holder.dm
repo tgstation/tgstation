@@ -376,8 +376,9 @@ datum
 					reagent_list += R
 					R.holder = src
 					R.volume = amount
-					R.data = data
-					R.on_new(data)
+					if(data)
+						R.data = data
+						R.on_new(data)
 
 					//debug
 					//world << "Adding data"
