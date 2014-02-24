@@ -53,7 +53,7 @@
 
 	var/server
 	var/banappeals
-	var/wikiurl
+	var/wikiurl = "http://wiki.ss13.eu" // Default wiki link.
 	var/forumurl
 
 	var/forbid_singulo_possession = 0

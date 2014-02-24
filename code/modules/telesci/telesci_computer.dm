@@ -73,6 +73,7 @@
 		crystals += W
 		W.loc = null
 		user.visible_message("<span class='notice'>[user] inserts [W] into \the [src]'s crystal slot.</span>")
+		updateDialog()
 	else if(istype(W, /obj/item/device/gps))
 		if(!inserted_gps)
 			inserted_gps = W
