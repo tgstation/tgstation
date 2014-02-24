@@ -211,11 +211,16 @@
 			else
 				special_role_text = "antagonist"
 
+			var/TC_uses = 0
+			for(var/obj/item/device/uplink/hidden/H)
+				if(H.uplink_owner && H.uplink_owner==traitor.name)
+					TC_uses += H.used_TC
+
 			if(traitorwin)
-				text += "<br><font color='green'><B>The [special_role_text] was successful!</B></font>"
+				text += "<br><font color='green'><B>The [special_role_text] was successful!</B>[TC_uses>0 ? " (used [TC_uses] TC)" : ""]</font>"
 				feedback_add_details("traitor_success","SUCCESS")
 			else
-				text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
+				text += "<br><font color='red'><B>The [special_role_text] has failed!</B>[TC_uses>0 ? " (used [TC_uses] TC)" : ""]</font>"
 				feedback_add_details("traitor_success","FAIL")
 			text += "<br>"
 
@@ -257,6 +262,7 @@
 
 			var/obj/item/device/uplink/hidden/T = new(R)
 			target_radio.hidden_uplink = T
+			T.uplink_owner = "[traitor_mob]"
 			target_radio.traitor_frequency = freq
 			traitor_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features."
 			traitor_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [loc]).")
@@ -266,6 +272,7 @@
 
 			var/obj/item/device/uplink/hidden/T = new(R)
 			R.hidden_uplink = T
+			T.uplink_owner = "[traitor_mob]"
 			var/obj/item/device/pda/P = R
 			P.lock_code = pda_pass
 
