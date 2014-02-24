@@ -193,6 +193,19 @@
 				text += "body destroyed"
 			text += ")"
 
+
+			var/TC_uses = 0
+			var/uplink_true = 0
+			var/purchases = ""
+			for(var/obj/item/device/uplink/hidden/H)
+				if(H.uplink_owner && H.uplink_owner==traitor.name)
+					TC_uses += H.used_TC
+					uplink_true=1
+					purchases += H.purchase_log
+
+			if(uplink_true) text += " (used [TC_uses] TC) [purchases]"
+
+
 			if(traitor.objectives.len)//If the traitor had no objectives, don't need to process this.
 				var/count = 1
 				for(var/datum/objective/objective in traitor.objectives)
@@ -211,22 +224,12 @@
 			else
 				special_role_text = "antagonist"
 
-			var/TC_uses = 0
-			var/uplink_true = 0
-			var/purchases = ""
-			for(var/obj/item/device/uplink/hidden/H)
-				if(H.uplink_owner && H.uplink_owner==traitor.name)
-					TC_uses += H.used_TC
-					uplink_true=1
-					purchases += H.purchase_log
-
-			if(uplink_true && !TC_uses) text+= "<br>"//EMBRACE THE GAP
 
 			if(traitorwin)
-				text += "<br><font color='green'><B>The [special_role_text] was successful!</B>[uplink_true ? " (used [TC_uses] TC) [purchases]" : ""]</font>"
+				text += "<br><font color='green'><B>The [special_role_text] was successful!</B></font>"
 				feedback_add_details("traitor_success","SUCCESS")
 			else
-				text += "<br><font color='red'><B>The [special_role_text] has failed!</B>[uplink_true ? " (used [TC_uses] TC) [purchases]" : ""]</font>"
+				text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
 				feedback_add_details("traitor_success","FAIL")
 
 			text += "<br>"
