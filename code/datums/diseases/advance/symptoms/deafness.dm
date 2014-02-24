@@ -35,5 +35,7 @@ Bonus
 				if(!(M.sdisabilities & DEAF))
 					M << "<span class='danger'>Your ears pop and begin ringing loudly!</span>"
 					M.sdisabilities |= DEAF
-					spawn(200)	M.sdisabilities &= ~DEAF
+					spawn(200)
+						if(M)
+							M.sdisabilities &= ~DEAF
 	return

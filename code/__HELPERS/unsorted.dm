@@ -280,7 +280,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		for(var/datum/mind/T in ticker.minds)
 			for(var/datum/objective/obj in T.objectives)
 				// Only update if this player is a target
-				if(obj.target && obj.target.current.real_name == name)
+				if(obj.target && obj.target.current && obj.target.current.real_name == name)
 					obj.update_explanation_text()
 
 	return 1
