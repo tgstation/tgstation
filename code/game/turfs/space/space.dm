@@ -123,7 +123,7 @@
 				var/mob/living/MM = A
 				if(MM.client && !MM.stat)
 					if(MM.locked_to_z!=0)
-						if(src.z == MM.locked_to_z)
+						if(src.z != MM.locked_to_z)
 							MM << "\red You cannot leave this area."
 							if(MM.x <= TRANSITIONEDGE)
 								MM.inertia_dir = 4

@@ -167,7 +167,7 @@
 			M.job = "Mobile MMI"
 
 			if(M.z==4) // Derelict Z-level?
-				M.add_ion_law("The Derelict is your station.  Do not leave the derelict.")
+				M.add_ion_law("The Derelict is your station.  Do not leave the Derelict.")
 				M.locked_to_z=4
 
 			//M.cell = locate(/obj/item/weapon/cell) in contents
