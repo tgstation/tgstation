@@ -181,7 +181,8 @@
 			brainmob = new(src)
 			brainmob.name = H.real_name
 			brainmob.real_name = H.real_name
-			brainmob.dna = H.dna.Clone()
+			if(H.dna)
+				brainmob.dna = H.dna.Clone()
 			brainmob.container = src
 
 			name = "Man-Machine Interface: [brainmob.real_name]"
