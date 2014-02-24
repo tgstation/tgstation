@@ -1,5 +1,6 @@
 #define GC_COLLECTIONS_PER_TICK 100 // maybe make this a config option at some point
 #define GC_COLLECTION_TIMEOUT 300 // deciseconds to wait to let running procs finish before we just say fuck it and force del() the object
+#define GC_FORCE_DEL_PER_TICK 10 // max force del() calls per tick
 var/datum/controller/garbage_collector/garbage = new()
 var/list/uncollectable_vars=list(
 //	"bounds", // bounds and its ilk are all caught by the issaved() check later on
@@ -50,6 +51,7 @@ var/list/uncollectable_vars=list(
 
 /datum/controller/garbage_collector/proc/process()
 	var/i = 1
+	var/dels = 0
 	while(queue.len && i <= GC_COLLECTIONS_PER_TICK)
 		Pop()
 		i++
@@ -61,15 +63,19 @@ var/list/uncollectable_vars=list(
 		var/refID = destroyed[i]
 		var/GCd_at_time = destroyed[refID]
 		if(GCd_at_time > time_to_kill)
-//			testing("GC: [refID] not old enough, breaking at [world.timeofday] for [time_to_kill - GCd_at_time] deciseconds")
+//			testing("GC: [refID] not old enough, breaking at [world.timeofday] for [GCd_at_time - time_to_kill] deciseconds")
 			i++
 			break // Everything else is newer, skip them
 		var/atom/A = locate(refID)
 //		testing("GC: [refID] old enough to test: GCd_at_time: [GCd_at_time] time_to_kill: [time_to_kill] current: [world.timeofday]")
 		if(A && A.gc_destroyed == GCd_at_time) // So if something else coincidently gets the same ref, it's not deleted by mistake
 			// Something's still referring to the qdel'd object.  Kill it.
+			if(dels >= GC_FORCE_DEL_PER_TICK)
+//				testing("GC: Reached max force dels per tick [dels] vs [GC_FORCE_DEL_PER_TICK]")
+				break
 			testing("GC: -- \ref[A] | [A.type] was unable to be garbage collected and was force del() --")
 			del(A)
+			dels++
 //		else
 //			testing("GC: [refID] properly GC'd at [world.timeofday] with timeout [GCd_at_time]")
 		destroyed.Cut(i, ++i) // also increases i in general
