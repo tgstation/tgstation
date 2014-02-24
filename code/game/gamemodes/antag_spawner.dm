@@ -32,7 +32,7 @@
 		dat += "<I>Your apprentice is able to defy physics, melting through solid objects and travelling great distances in the blink of an eye. They know Teleport and Ethereal Jaunt.</I><BR>"
 		//dat += "<A href='byond://?src=\ref[src];school=healing'>Healing</A><BR>"
 		//dat += "<I>Your apprentice is training to cast spells that will aid your survival. They know Forcewall and Charge and come with a Staff of Healing.</I><BR>"
-		dat += "<I>The school of healing has been closed for renovations, so you cannot find an apprentice specializing in this school. (Bug #99 on Redmine for more info)</I>
+		dat += "<I>The school of healing has been closed for renovations, so you cannot find an apprentice specializing in this school. (Bug #99 on Redmine for more info)</I>"
 		dat += "<A href='byond://?src=\ref[src];school=robeless'>Robeless</A><BR>"
 		dat += "<I>Your apprentice is training to cast spells without their robes. They know Knock and Mindswap.</I><BR>"
 	user << browse(dat, "window=radio")
