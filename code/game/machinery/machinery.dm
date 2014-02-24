@@ -327,8 +327,8 @@ Class Procs:
 	if(istype(W) && component_parts)
 		if(panel_open)
 			var/obj/item/weapon/circuitboard/CB = locate(/obj/item/weapon/circuitboard) in component_parts
+			var/P
 			for(var/obj/item/weapon/stock_parts/A in component_parts)
-				var/P
 				for(var/D in CB.req_components)
 					if(ispath(A.type, text2path(D)))
 						P = text2path(D)
@@ -336,10 +336,10 @@ Class Procs:
 				for(var/obj/item/weapon/stock_parts/B in W.contents)
 					if(istype(B, P) && istype(A, P))
 						if(B.rating > A.rating)
+							W.remove_from_storage(B, src)
 							W.handle_item_insertion(A)
 							component_parts -= A
 							component_parts += B
-							W.remove_from_storage(B, null)
 							B.loc = null
 							user << "<span class='notice'>[A.name] replaced with [B.name].</span>"
 							break
