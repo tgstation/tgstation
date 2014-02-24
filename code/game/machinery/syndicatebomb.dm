@@ -102,6 +102,9 @@
 /obj/machinery/syndicatebomb/attack_hand(var/mob/user)
 	interact(user)
 
+/obj/machinery/syndicatebomb/attack_ai()
+	return
+
 /obj/machinery/syndicatebomb/interact(var/mob/user)
 	if(wires)
 		wires.Interact(user)
@@ -114,8 +117,6 @@
 			return
 
 /obj/machinery/syndicatebomb/proc/settings(var/mob/user)
-	if(!in_range(src, user) || !isliving(user))
-		return
 	var/newtime = input(user, "Please set the timer.", "Timer", "[timer]") as num
 	newtime = Clamp(newtime, 60, 60000)
 	if(in_range(src, user) && isliving(user)) //No running off and setting bombs from across the station
