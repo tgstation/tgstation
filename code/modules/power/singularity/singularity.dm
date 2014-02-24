@@ -66,7 +66,8 @@ var/global/list/uneatable = list(
 	switch(severity)
 		if(1.0)
 			if(prob(25))
-				qdel(src)
+				investigate_log("has been destroyed by an explosion.","singulo")
+				del(src)
 				return
 			else
 				energy += 50
@@ -74,6 +75,9 @@ var/global/list/uneatable = list(
 			energy += round((rand(20,60)/2),1)
 			return
 	return
+
+/obj/machinery/singularity/bullet_act(obj/item/projectile/P)
+	return 0 //Will there be an impact? Who knows.  Will we see it? No.
 
 
 /obj/machinery/singularity/Bump(atom/A)
@@ -190,6 +194,7 @@ var/global/list/uneatable = list(
 
 /obj/machinery/singularity/proc/check_energy()
 	if(energy <= 0)
+		investigate_log("collapsed.","singulo")
 		del(src)
 		return 0
 	switch(energy)//Some of these numbers might need to be changed up later -Mport
@@ -260,17 +265,17 @@ var/global/list/uneatable = list(
 	if(is_type_in_list(A, uneatable))
 		return 0
 	if (istype(A,/mob/living))//Mobs get gibbed
+		var/mob/living/M = A
 		gain = 20
-		if(istype(A,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = A
+		if(istype(M,/mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
 			if(H.mind)
 				switch(H.mind.assigned_role)
 					if("Station Engineer","Chief Engineer")
 						gain = 100
 					if("Clown")
 						gain = rand(-300, 300) // HONK
-		spawn()
-			A:gib()
+		M.gib()
 		// Why
 		sleep(1)
 	else if(istype(A,/obj/))
@@ -468,7 +473,7 @@ var/global/list/uneatable = list(
 
 
 /obj/machinery/singularity/narsie //Moving narsie to a child object of the singularity so it can be made to function differently. --NEO
-	name = "Nar-Sie"
+	name = "Nar-sie's Avatar"
 	desc = "Your mind begins to bubble and ooze as it tries to comprehend what it sees."
 	icon = 'icons/obj/magic_terror.dmi'
 	pixel_x = -89
@@ -477,8 +482,8 @@ var/global/list/uneatable = list(
 	contained = 0 //Are we going to move around?
 	dissipate = 0 //Do we lose energy over time?
 	move_self = 1 //Do we move on our own?
-	grav_pull = 10 //How many tiles out do we pull?
-	consume_range = 3 //How many tiles out do we eat
+	grav_pull = 5 //How many tiles out do we pull?
+	consume_range = 6 //How many tiles out do we eat
 
 /obj/machinery/singularity/narsie/large
 	name = "Nar-Sie"
@@ -488,13 +493,14 @@ var/global/list/uneatable = list(
 	pixel_y = -256
 	current_size = 12
 	move_self = 1 //Do we move on our own?
+	grav_pull = 10
 	consume_range = 12 //How many tiles out do we eat
 
 /obj/machinery/singularity/narsie/large/New()
 	..()
-	world << "<font size='28' color='red'><b>NAR-SIE HAS RISEN</b></font>"
+	world << "<font size='15' color='red'><b>NAR-SIE HAS RISEN</b></font>"
 	if(emergency_shuttle)
-		emergency_shuttle.incall(0.5) // Cannot recall
+		emergency_shuttle.incall(0.3) // Cannot recall
 
 /obj/machinery/singularity/narsie/process()
 	eat()
@@ -504,23 +510,49 @@ var/global/list/uneatable = list(
 	if(prob(25))
 		mezzer()
 
-/obj/machinery/singularity/narsie/consume(var/atom/A) //Has its own consume proc because it doesn't need energy and I don't want BoHs to explode it. --NEO
-	if(is_type_in_list(A, uneatable))
-		return 0
-	if (istype(A,/mob/living))//Mobs get gibbed
-		A:gib()
-	else if(istype(A,/obj/))
-		A:ex_act(1.0)
-		if(A) qdel(A)
+
+/obj/machinery/singularity/narsie/Bump(atom/A)//you dare stand before a god?!
+	godsmack(A)
+	return
+
+/obj/machinery/singularity/narsie/Bumped(atom/A)
+	godsmack(A)
+	return
+
+/obj/machinery/singularity/narsie/proc/godsmack(var/atom/A)
+	if(istype(A,/obj/))
+		var/obj/O = A
+		O.ex_act(1.0)
+		if(O) del(O)
+
 	else if(isturf(A))
 		var/turf/T = A
-		if(T.intact)
-			for(var/obj/O in T.contents)
-				if(O.level != 1)
-					continue
-				if(O.invisibility == 101)
-					src.consume(O)
-		A:ChangeTurf(/turf/space)
+		T.ChangeTurf(/turf/simulated/floor/engine/cult)
+
+
+/obj/machinery/singularity/narsie/mezzer()
+	for(var/mob/living/carbon/M in oviewers(8, src))
+		if(M.stat == CONSCIOUS)
+			if(!iscultist(M))
+				M << "\red You feel your sanity crumble away in an instant as you gaze upon [src.name]..."
+				M.apply_effect(3, STUN)
+
+
+/obj/machinery/singularity/narsie/consume(var/atom/A)
+	if(is_type_in_list(A, uneatable))
+		return 0
+
+	if(istype(A,/mob/living/))
+		var/mob/living/C = A
+		C.dust()
+
+	if(isturf(A))
+		var/turf/T = A
+		if(istype(T, /turf/simulated/floor) && !istype(T, /turf/simulated/floor/engine/cult))
+			if(prob(20)) T.ChangeTurf(/turf/simulated/floor/engine/cult)
+
+		else if(istype(T,/turf/simulated/wall) && !istype(T, /turf/simulated/wall/cult))
+			if(prob(20)) T.ChangeTurf(/turf/simulated/wall/cult)
 	return
 
 /obj/machinery/singularity/narsie/ex_act() //No throwing bombs at it either. --NEO
