@@ -1,15 +1,3 @@
-/client/var/inquisitive_ghost = 1
-/mob/dead/observer/verb/toggle_inquisition() // warning: unexpected inquisition
-	set name = "Toggle Inquisitiveness"
-	set desc = "Sets whether your ghost examines everything on click by default"
-	set category = "Ghost"
-	if(!client) return
-	client.inquisitive_ghost = !client.inquisitive_ghost
-	if(client.inquisitive_ghost)
-		src << "\blue You will now examine everything you click on."
-	else
-		src << "\blue You will no longer examine things you click on."
-
 /mob/dead/observer/DblClickOn(var/atom/A, var/params)
 	if(client.buildmode)
 		build_click(src, client.buildmode, params, A)
@@ -33,9 +21,18 @@
 		return
 	if(world.time <= next_move) return
 	next_move = world.time + 8
+
+	var/list/modifiers = params2list(params)
+	if(modifiers["shift"])
+		ShiftClickOn(A)
+		return
 	// You are responsible for checking config.ghost_interaction when you override this function
 	// Not all of them require checking, see below
 	A.attack_ghost(src)
+
+// We don't need a fucking toggle.
+/mob/dead/observer/ShiftClickOn(var/atom/A)
+	A.examine()
 
 /atom/proc/attack_ghost(mob/user as mob)
 	var/ghost_flags = 0
