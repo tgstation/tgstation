@@ -30,7 +30,7 @@
 
 	if(charge < amount)
 		return 0
-	charge = min(0,charge - amount)
+	charge = max(0,charge - amount)
 	return 1
 
 // recharge the cell
