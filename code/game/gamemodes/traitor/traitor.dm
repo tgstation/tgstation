@@ -212,9 +212,11 @@
 				special_role_text = "antagonist"
 
 			var/TC_uses = 0
+			var/purchases = ""
 			for(var/obj/item/device/uplink/hidden/H)
 				if(H.uplink_owner && H.uplink_owner==traitor.name)
 					TC_uses += H.used_TC
+					for(var/i in H.purchase_log) purchases += i
 
 			if(traitorwin)
 				text += "<br><font color='green'><B>The [special_role_text] was successful!</B>[TC_uses>0 ? " (used [TC_uses] TC)" : ""]</font>"
@@ -222,6 +224,10 @@
 			else
 				text += "<br><font color='red'><B>The [special_role_text] has failed!</B>[TC_uses>0 ? " (used [TC_uses] TC)" : ""]</font>"
 				feedback_add_details("traitor_success","FAIL")
+
+			if(TC_uses)
+				text += "<br>  [purchases]"
+
 			text += "<br>"
 
 		world << text
