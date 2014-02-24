@@ -10,7 +10,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	var/welcome 					// Welcoming menu message
 	var/uses 						// Numbers of crystals
 	// List of items not to shove in their hands.
-	var/list/purchase_log = list()
+	var/purchase_log = ""
 	var/show_description = null
 	var/active = 0
 
