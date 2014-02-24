@@ -175,3 +175,16 @@
 	icon_state = "fedora"
 	item_state = "fedora"
 	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
+
+/obj/item/clothing/head/greensombrero
+	name = "green sombrero"
+	icon_state = "greensombrero"
+	item_state = "greensombrero"
+	desc = "As elegant as a dancing cactus."
+
+/obj/item/clothing/head/shamebrero
+	name = "shamebrero"
+	icon_state = "shamebrero"
+	item_state = "shamebrero"
+	desc = "Once it's on, it never comes off."
+	flags = NODROP
