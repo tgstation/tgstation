@@ -55,7 +55,8 @@
 	diceroll(user)
 
 /obj/item/weapon/dice/throw_at(atom/target, range, speed, mob/user as mob)
-	..()
+	if(!..())
+		return
 	diceroll(user)
 
 /obj/item/weapon/dice/proc/diceroll(mob/user as mob)

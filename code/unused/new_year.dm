@@ -17,7 +17,7 @@
 	W.loc = src
 	if (user.client)
 		user.client.screen -= W
-	user.u_equip(W)
+	user.unEquip(W)
 	var/const/bottom_right_x = 115.0
 	var/const/bottom_right_y = 150.0
 	var/const/top_left_x = 15.0
@@ -54,7 +54,7 @@
 	w_class = 2.0
 	item_state = "flashbang"
 	throw_speed = 3
-	throw_range = 20
+	throw_range = 7
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
 

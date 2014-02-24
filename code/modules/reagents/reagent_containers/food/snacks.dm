@@ -12,12 +12,13 @@
 	var/wrapped = 0
 	var/dried_type = null
 	var/potency = null
+	var/dry = 0
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume()
 	if(!usr)	return
 	if(!reagents.total_volume)
-		usr.drop_from_inventory(src)	//so icons update :[
+		usr.unEquip(src)	//so icons update :[
 
 		if(trash)
 			if(ispath(trash,/obj/item/weapon/grown))
@@ -41,7 +42,7 @@
 		eatverb = pick("bite","chew","nibble","gnaw","gobble","chomp")
 	if(!reagents.total_volume)						//Shouldn't be needed but it checks to see if it has anything left in it.
 		user << "<span class='notice'>None of [src] left, oh no!</span>"
-		M.drop_from_inventory(src)	//so icons update :[
+		M.unEquip(src)	//so icons update :[
 		del(src)
 		return 0
 	if(istype(M, /mob/living/carbon))
@@ -143,7 +144,7 @@
 		if(!iscarbon(user))
 			return 0
 		user << "<span class='notice'>You slip [W] inside [src].</span>"
-		user.u_equip(W)
+		user.unEquip(W)
 		if ((user.client && user.s_active != src))
 			user.client.screen -= W
 		W.dropped(user)

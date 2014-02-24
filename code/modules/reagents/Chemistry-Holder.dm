@@ -338,31 +338,19 @@ datum
 					if(TOUCH)
 						for(var/datum/reagent/R in reagent_list)
 							if(ismob(A))
-								spawn(0)
-									if(!R) return
-									else R.reaction_mob(A, TOUCH, R.volume+volume_modifier)
+								R.reaction_mob(A, TOUCH, R.volume+volume_modifier)
 							if(isturf(A))
-								spawn(0)
-									if(!R) return
-									else R.reaction_turf(A, R.volume+volume_modifier)
+								R.reaction_turf(A, R.volume+volume_modifier)
 							if(isobj(A))
-								spawn(0)
-									if(!R) return
-									else R.reaction_obj(A, R.volume+volume_modifier)
+								R.reaction_obj(A, R.volume+volume_modifier)
 					if(INGEST)
 						for(var/datum/reagent/R in reagent_list)
-							if(ismob(A) && R)
-								spawn(0)
-									if(!R) return
-									else R.reaction_mob(A, INGEST, R.volume+volume_modifier)
-							if(isturf(A) && R)
-								spawn(0)
-									if(!R) return
-									else R.reaction_turf(A, R.volume+volume_modifier)
-							if(isobj(A) && R)
-								spawn(0)
-									if(!R) return
-									else R.reaction_obj(A, R.volume+volume_modifier)
+							if(ismob(A))
+								R.reaction_mob(A, INGEST, R.volume+volume_modifier)
+							if(isturf(A))
+								R.reaction_turf(A, R.volume+volume_modifier)
+							if(isobj(A))
+								R.reaction_obj(A, R.volume+volume_modifier)
 				return
 
 			add_reagent(var/reagent, var/amount, var/list/data=null)
@@ -388,8 +376,9 @@ datum
 					reagent_list += R
 					R.holder = src
 					R.volume = amount
-					R.data = data
-					R.on_new(data)
+					if(data)
+						R.data = data
+						R.on_new(data)
 
 					//debug
 					//world << "Adding data"

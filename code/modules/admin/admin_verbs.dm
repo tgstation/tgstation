@@ -466,11 +466,18 @@ var/list/admin_verbs_hideable = list(
 	set name = "Give Spell"
 	set desc = "Gives a spell to a mob."
 	var/obj/effect/proc_holder/spell/S = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in spells
-	if(!S) return
-	T.spell_list += new S
+	if(!S)
+		return
 	feedback_add_details("admin_verb","GS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the spell [S].")
 	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the spell [S].", 1)
+
+	if(T.mind)
+		T.mind.spell_list += new S
+	else
+		T.mob_spell_list += new S
+		message_admins("\red Spells given to mindless mobs will not be transferred in mindswap or cloning!", 1)
+
 
 /client/proc/give_disease(mob/T as mob in mob_list) // -- Giacom
 	set category = "Fun"

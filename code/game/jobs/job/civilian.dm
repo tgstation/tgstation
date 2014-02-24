@@ -8,8 +8,8 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
-	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue)
-	minimal_access = list(access_bar)
+	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue, access_mineral_storeroom)
+	minimal_access = list(access_bar, access_mineral_storeroom)
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -172,6 +172,7 @@
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(H.back), slot_in_backpack)
 			H.equip_to_slot_or_del(new /obj/item/weapon/crowbar(H), slot_in_backpack)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/bag/ore(H), slot_in_backpack)
+			H.equip_to_slot_or_del(new /obj/item/weapon/mining_voucher(H), slot_in_backpack)
 		return 1
 
 
@@ -242,9 +243,10 @@
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 			H.equip_to_slot_or_del(new /obj/item/toy/crayon/mime(H), slot_in_backpack)
 			H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(H), slot_in_backpack)
-		H.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall(H)
-		H.spell_list += new /obj/effect/proc_holder/spell/targeted/mime/speak(H)
-		H.miming = 1
+		if(H.mind)
+			H.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall(null)
+			H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/mime/speak(null)
+			H.mind.miming = 1
 		H.rename_self("mime")
 		return 1
 

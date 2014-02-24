@@ -7,7 +7,7 @@
 	throwforce = 5
 	w_class = 2.0
 	throw_speed = 2
-	throw_range = 10
+	throw_range = 7
 
 	var/secured = 0
 	var/obj/item/device/assembly/a_left = null

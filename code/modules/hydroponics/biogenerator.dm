@@ -54,7 +54,7 @@
 		if(beaker)
 			user << "<span class='warning'>The biogenerator already occuped.</span>"
 		else
-			user.before_take_item(O)
+			user.unEquip(O)
 			O.loc = src
 			beaker = O
 			updateUsrDialog()
@@ -89,7 +89,7 @@
 		if(i >= 10)
 			user << "<span class='warning'>The biogenerator is full! Activate it.</span>"
 		else
-			user.before_take_item(O)
+			user.unEquip(O)
 			O.loc = src
 			user << "<span class='info'>You put [O.name] in [src.name]</span>"
 

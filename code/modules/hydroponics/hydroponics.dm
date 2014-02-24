@@ -385,7 +385,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	//Called when mob user "attacks" it with object O
 	if(istype(O, /obj/item/nutrient))
 		var/obj/item/nutrient/myNut = O
-		user.u_equip(O)
+		user.unEquip(O)
 		if (yieldmod == myNut.yieldmod && mutmod == myNut.mutmod)
 			user << "You add the nutriment solution to [src]."
 		else
@@ -617,7 +617,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	else if( istype(O, /obj/item/seeds/) )
 		if(!planted)
-			user.u_equip(O)
+			user.unEquip(O)
 			user << "You plant [O]."
 			dead = 0
 			myseed = O
@@ -670,7 +670,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	else if( istype(O, /obj/item/weapon/weedspray) )
 		var/obj/item/weedkiller/myWKiller = O
-		user.u_equip(O)
+		user.unEquip(O)
 		adjustToxic(myWKiller.toxicity)
 		adjustWeeds(-myWKiller.WeedKillStr)
 		user << "You apply the weedkiller solution into [src]."
@@ -688,7 +688,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	else if( istype(O, /obj/item/weapon/pestspray) )
 		var/obj/item/pestkiller/myPKiller = O
-		user.u_equip(O)
+		user.unEquip(O)
 		adjustToxic(myPKiller.toxicity)
 		adjustPests(-myPKiller.PestKillStr)
 		user << "You apply the pestkiller solution into [src]."

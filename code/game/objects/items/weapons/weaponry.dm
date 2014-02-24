@@ -7,7 +7,7 @@
 	throwforce = 0
 	w_class = 1.0
 	throw_speed = 3
-	throw_range = 15
+	throw_range = 7
 	attack_verb = list("banned")
 
 /obj/item/weapon/banhammer/suicide_act(mob/user)
@@ -109,8 +109,8 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 	if(istype(I, /obj/item/weapon/shard))
 		var/obj/item/weapon/twohanded/spear/S = new /obj/item/weapon/twohanded/spear
 
-		user.before_take_item(I)
-		user.before_take_item(src)
+		user.unEquip(I)
+		user.unEquip(src)
 
 		user.put_in_hands(S)
 		user << "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>"
@@ -120,8 +120,8 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 	else if(istype(I, /obj/item/weapon/wirecutters))
 		var/obj/item/weapon/melee/baton/cattleprod/P = new /obj/item/weapon/melee/baton/cattleprod
 
-		user.before_take_item(I)
-		user.before_take_item(src)
+		user.unEquip(I)
+		user.unEquip(src)
 
 		user.put_in_hands(P)
 		user << "<span class='notice'>You fasten the wirecutters to the top of the rod with the cable, prongs outward.</span>"

@@ -775,15 +775,14 @@
 	if(src.resources[material] < res_max_amount)
 		var/count = 0
 		src.overlays += "fab-load-[material]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
+		while(src.resources[material] < res_max_amount && stack)
+			src.resources[material] += amnt
+			stack.use(1)
+			count++
 		sleep(10)
-		if(stack && stack.amount)
-			while(src.resources[material] < res_max_amount && stack)
-				src.resources[material] += amnt
-				stack.use(1)
-				count++
-			src.overlays -= "fab-load-[material]"
-			user << "You insert [count] [sname] sheet\s into \the [src]."
-			src.updateUsrDialog()
+		user << "You insert [count] [sname] sheet\s into \the [src]."
+		src.updateUsrDialog()
+		src.overlays -= "fab-load-[material]" //No matter what the overlay shall still be deleted
 	else
 		user << "\The [src] cannot hold any more [sname] sheet\s."
 	return

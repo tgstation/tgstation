@@ -16,6 +16,10 @@
 		if (I.implanted)
 			I.trigger(act, src)
 
+	var/miming=0
+	if(mind)
+		miming=mind.miming
+
 	if(src.stat == 2.0 && (act != "deathgasp"))
 		return
 	switch(act) //Please keep this alphabetically ordered when adding or changing emotes.
@@ -23,20 +27,16 @@
 			if (!src.restrained())
 				message = "<B>[src]</B> flaps \his wings ANGRILY!"
 				m_type = 2
-				if(miming)
-					m_type = 1
 
 		if ("choke")
 			if (miming)
 				message = "<B>[src]</B> clutches \his throat desperately!"
-				m_type = 1
 			else
 				..(act)
 
 		if ("chuckle")
 			if(miming)
 				message = "<B>[src]</B> appears to chuckle."
-				m_type = 1
 			else
 				..(act)
 
@@ -44,20 +44,15 @@
 			if (!src.restrained())
 				message = "<B>[src]</B> claps."
 				m_type = 2
-				if(miming)
-					m_type = 1
 
 		if ("collapse")
 			Paralyse(2)
 			message = "<B>[src]</B> collapses!"
 			m_type = 2
-			if(miming)
-				m_type = 1
 
 		if ("cough")
 			if (miming)
 				message = "<B>[src]</B> appears to cough!"
-				m_type = 1
 			else
 				if (!muzzled)
 					message = "<B>[src]</B> coughs!"
@@ -69,40 +64,6 @@
 		if ("cry")
 			if (miming)
 				message = "<B>[src]</B> cries."
-				m_type = 1
-			else
-				if (!muzzled)
-					message = "<B>[src]</B> cries."
-					m_type = 2
-				else
-					message = "<B>[src]</B> makes a weak noise. \He frowns."
-					m_type = 2
-
-		if ("clap")
-			if (!src.restrained())
-				message = "<B>[src]</B> claps."
-				m_type = 2
-				if(miming)
-					m_type = 1
-
-		if ("collapse")
-			Paralyse(2)
-			message = "<B>[src]</B> collapses!"
-			m_type = 2
-			if(miming)
-				m_type = 1
-
-		if ("cough")
-			if(miming)
-				message = "<B>[src]</B> appears to cough!"
-				m_type = 1
-			else
-				..(act)
-
-		if ("cry")
-			if(miming)
-				message = "<B>[src]</B> cries."
-				m_type = 1
 			else
 				if (!muzzled)
 					message = "<B>[src]</B> cries."
@@ -129,7 +90,7 @@
 				if (input2 == "Visible")
 					m_type = 1
 				else if (input2 == "Hearable")
-					if (src.miming)
+					if(miming)
 						return
 					m_type = 2
 				else
@@ -159,27 +120,22 @@
 			if (!src.restrained())
 				message = "<B>[src]</B> flaps \his wings."
 				m_type = 2
-				if(miming)
-					m_type = 1
 
 		if ("gasp")
 			if (miming)
 				message = "<B>[src]</B> appears to be gasping!"
-				m_type = 1
 			else
 				..(act)
 
 		if ("giggle")
 			if (miming)
 				message = "<B>[src]</B> giggles silently!"
-				m_type = 1
 			else
 				..(act)
 
 		if ("groan")
 			if (miming)
 				message = "<B>[src]</B> appears to groan!"
-				m_type = 1
 			else
 				if (!muzzled)
 					message = "<B>[src]</B> groans!"
@@ -193,9 +149,6 @@
 				message = "<B>[src]</B> grumbles!"
 			else
 				message = "<B>[src]</B> makes a noise."
-			if (miming)
-				m_type = 1
-			else
 				m_type = 2
 
 		if ("handshake")
@@ -240,27 +193,9 @@
 			else
 				if(miming)
 					message = "<B>[src]</B> takes a drag from a cigarette and blows \"[M]\" out in smoke."
-					m_type = 1
 				else
 					message = "<B>[src]</B> says, \"[M], please. He had a family.\" [src.name] takes a drag from a cigarette and blows \his name out in smoke."
 					m_type = 2
-
-		if ("handshake")
-			m_type = 1
-			if (!src.restrained() && !src.r_hand)
-				var/mob/M = null
-				if (param)
-					for (var/mob/A in view(1, null))
-						if (param == A.name)
-							M = A
-							break
-				if (M == src)
-					M = null
-				if (M)
-					if (M.canmove && !M.r_hand && !M.restrained())
-						message = "<B>[src]</B> shakes hands with [M]."
-					else
-						message = "<B>[src]</B> holds out \his hand to [M]."
 
 		if ("me")
 			if(silent)
@@ -290,7 +225,6 @@
 		if ("moan")
 			if(miming)
 				message = "<B>[src]</B> appears to moan!"
-				m_type = 1
 			else
 				message = "<B>[src]</B> moans!"
 				m_type = 2
@@ -298,8 +232,6 @@
 		if ("mumble")
 			message = "<B>[src]</B> mumbles!"
 			m_type = 2
-			if(miming)
-				m_type = 1
 
 		if ("pale")
 			message = "<B>[src]</B> goes pale for a second."
@@ -329,7 +261,6 @@
 		if ("scream")
 			if (miming)
 				message = "<B>[src]</B> acts out a scream!"
-				m_type = 1
 			else
 				..(act)
 
@@ -344,7 +275,6 @@
 		if ("sigh")
 			if(miming)
 				message = "<B>[src]</B> sighs."
-				m_type = 1
 			else
 				..(act)
 
@@ -361,27 +291,22 @@
 		if ("sneeze")
 			if (miming)
 				message = "<B>[src]</B> sneezes."
-				m_type = 1
 			else
 				..(act)
 
 		if ("sniff")
 			message = "<B>[src]</B> sniffs."
 			m_type = 2
-			if(miming)
-				m_type = 1
 
 		if ("snore")
 			if (miming)
 				message = "<B>[src]</B> sleeps soundly."
-				m_type = 1
 			else
 				..(act)
 
 		if ("whimper")
 			if (miming)
 				message = "<B>[src]</B> appears hurt."
-				m_type = 1
 			else
 				..(act)
 
@@ -389,8 +314,6 @@
 			if (!muzzled)
 				message = "<B>[src]</B> yawns."
 				m_type = 2
-				if(miming)
-					m_type = 1
 
 		if ("help") //This can stay at the bottom.
 			src << "Help for human emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, cry, custom, dance, dap, deathgasp, drool, eyebrow, faint, frown, flap, gasp, giggle, glare-(none)/mob, grin, groan, grumble, handshake, hug-(none)/mob, johnny, jump, laugh, look-(none)/mob, me, moan, mumble, nod, pale, point-(atom), raise, salute, scream, shake, shiver, shrug, sigh, signal-#1-10, smile, sneeze, sniff, snore, stare-(none)/mob, tremble, twitch, twitch_s, wave, whimper, wink, yawn"
@@ -398,7 +321,8 @@
 		else
 			..(act)
 
-
+	if(miming)
+		m_type = 1
 
 
 

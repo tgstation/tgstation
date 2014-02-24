@@ -20,7 +20,7 @@
 		user << "\blue You empty the satchel into the box."
 	return
 
-/obj/structure/ore_box/attack_hand(obj, mob/user as mob)
+/obj/structure/ore_box/attack_hand(mob/user as mob)
 	var/amt_gold = 0
 	var/amt_silver = 0
 	var/amt_diamond = 0

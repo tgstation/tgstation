@@ -201,9 +201,6 @@ proc/wabbajack(mob/living/M)
 				else
 					return
 
-			for (var/obj/effect/proc_holder/spell/S in M.spell_list)
-				new_mob.spell_list += new S.type
-
 			new_mob.attack_log = M.attack_log
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
 
@@ -240,6 +237,7 @@ proc/wabbajack(mob/living/M)
 					S << "You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator."
 				del(H)
 				del(change)
+				del(src)
 		else
 			var/obj/O = change
 			new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, firer)

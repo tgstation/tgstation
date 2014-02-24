@@ -58,7 +58,7 @@
 
 /obj/machinery/mill/attackby(var/obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/reagent_containers/food))
-		user.u_equip(W)
+		user.unEquip(W)
 		W.loc = src
 		input += W
 	else
@@ -128,7 +128,7 @@
 
 /obj/machinery/fermenter/attackby(var/obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/reagent_containers/food))
-		user.u_equip(W)
+		user.unEquip(W)
 		W.loc = src
 		input += W
 	else
@@ -189,7 +189,7 @@
 
 /obj/machinery/still/attackby(var/obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/reagent_containers/food))
-		user.u_equip(W)
+		user.unEquip(W)
 		W.loc = src
 		input += W
 	else
@@ -274,7 +274,7 @@
 
 /obj/machinery/centrifuge/attackby(var/obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/reagent_containers/food))
-		user.u_equip(W)
+		user.unEquip(W)
 		W.loc = src
 		input += W
 	else

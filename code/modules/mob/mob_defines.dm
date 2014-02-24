@@ -132,8 +132,8 @@
 //The last mob/living/carbon to push/drag/grab this mob (mostly used by slimes friend recognition)
 	var/mob/living/carbon/LAssailant = null
 
-//Wizard mode, but can be used in other modes thanks to the brand new "Give Spell" badmin button
-	var/list/spell_list = list()
+
+	var/list/mob_spell_list = list() //construct spells and mime spells. Spells that do not transfer from one mob to another and can not be lost in mindswap.
 
 //Changlings, but can be used in other modes
 //	var/obj/effect/proc_holder/changpower/list/power_list = list()
@@ -155,6 +155,10 @@
 	var/area/lastarea = null
 
 	var/digitalcamo = 0 // Can they be tracked by the AI?
+
+	var/list/radar_blips = list() // list of screen objects, radar blips
+	var/radar_open = 0 	// nonzero is radar is open
+
 
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
 
