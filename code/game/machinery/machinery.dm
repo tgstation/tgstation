@@ -337,7 +337,7 @@ Class Procs:
 					if(istype(B, P) && istype(A, P))
 						if(B.rating > A.rating)
 							W.remove_from_storage(B, src)
-							W.handle_item_insertion(A)
+							W.handle_item_insertion(A, 1)
 							component_parts -= A
 							component_parts += B
 							B.loc = null

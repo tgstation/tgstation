@@ -74,7 +74,7 @@
 
 /obj/machinery/recharge_station/attackby(obj/item/P as obj, mob/user as mob)
 	if(open)
-		if(default_deconstruction_screwdriver(user, "borgdecon1", "borgcharger0", P))
+		if(default_deconstruction_screwdriver(user, "borgdecon2", "borgcharger0", P))
 			return
 
 	if(exchange_parts(user, P))
