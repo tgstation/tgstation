@@ -7,6 +7,7 @@
 	var/making_mage = 0
 	var/mages_made = 1
 	var/time_checked = 0
+
 /datum/game_mode/wizard/announce()
 	world << "<B>The current game mode is - Ragin' Mages!</B>"
 	world << "<B>The \red Space Wizard Federation\black is pissed, help defeat all the space wizards!</B>"
@@ -72,8 +73,9 @@
 	spawn(rand(200, 600))
 		message_admins("SWF is still pissed, sending another wizard - [max_mages - mages_made] left.")
 		for(var/mob/dead/observer/G in player_list)
-			if(!jobban_isbanned(G, "wizard") && !jobban_isbanned(G, "Syndicate") && G.client && !G.client.is_afk() && G.client.prefs && G.client.prefs.be_special & BE_WIZARD)
-				candidates += G
+			if(G.client && !G.client.holder && !G.client.is_afk() && G.client.prefs.be_special & BE_WIZARD)
+				if(!jobban_isbanned(G, "wizard") && !jobban_isbanned(G, "Syndicate"))
+					candidates += G
 		if(!candidates.len)
 			message_admins("No applicable ghosts for the next ragin' mage, asking ghosts instead.")
 			var/time_passed = world.time
@@ -94,7 +96,7 @@
 			making_mage = 0
 			mages_made--
 			return
-		if(candidates.len)
+		else
 			shuffle(candidates)
 			for(var/mob/i in candidates)
 				if(!i || !i.client) continue //Dont bother removing them from the list since we only grab one wizard

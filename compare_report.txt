@@ -992,9 +992,12 @@
  - vox_shortquills_l
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\items_lefthand.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_lefthand.dmi
+ - Gibtonite ore
+ - arm_blade
  - atmos_gold_hardsuit
  - atmos_gold_helm
  - banana_peel
+ + coil-wire
  - coil_blue
  - coil_cyan
  - coil_green
@@ -1011,19 +1014,29 @@
  - cuff_red
  - cuff_white
  - cuff_yellow
+ - dualsaberblue1
+ - dualsabergreen1
+ - dualsaberpurple1
+ - dualsaberrainbow1
+ - dualsaberred1
  + eleanorstone
- + flashbang
+ + fork
  - hfrequency0
  - hfrequency1
+ - kineticgun
  + konaahirano
  + mai_yang
+ + nymph
  - pizzabox1
  - prod
+ - resonator
+ + rocket
  - roman_shield
  - rpd
  - spearglass0
  - spearglass1
  - sunflower
+ - swordrainbow
  - vox-helmet-engineer
  - vox-helmet-medical
  - vox-helmet-normal
@@ -1038,9 +1051,12 @@
  - vox-pressure-specops
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\items_righthand.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_righthand.dmi
+ - Gibtonite ore
+ - arm_blade
  - atmos_gold_hardsuit
  - atmos_gold_helm
  - banana_peel
+ + coil-wire
  - coil_blue
  - coil_cyan
  - coil_green
@@ -1053,16 +1069,26 @@
  - cuff_green
  - cuff_red
  - cuff_yellow
+ - dualsaberblue1
+ - dualsabergreen1
+ - dualsaberpurple1
+ - dualsaberrainbow1
+ - dualsaberred1
  + eleanorstone
  - hfrequency0
  - hfrequency1
+ - kineticgun
  + konaahirano
  + mai_yang
+ + nymph
  - prod
+ - resonator
+ + rocket
  - roman_shield
  - spearglass0
  - spearglass1
  - sunflower
+ - swordrainbow
  - vox-helmet-engineer
  - vox-helmet-medical
  - vox-helmet-normal
@@ -1662,6 +1688,7 @@
  + stamp-intaff
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\card.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\card.dmi
+ - demote_chip
  + guest
  + guest_invalid
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\chemical.dmi
@@ -1697,6 +1724,9 @@
  - aacb
  + guest
  + syndicam
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\contraband.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\contraband.dmi
+ - goldstar
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\Cryogenic2.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\Cryogenic2.dmi
  + body_scanner_0-r
