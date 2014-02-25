@@ -174,10 +174,6 @@ obj/machinery/computer/general_air_control/large_tank_control
 
 	var/pressure_setting = ONE_ATMOSPHERE * 45
 
-obj/machinery/computer/general_air_control/large_tank_control/New()
-	..()
-	set_frequency(frequency)
-
 obj/machinery/computer/general_air_control/large_tank_control/attackby(obj/item/I, mob/user)
 	..()
 	if(istype(I, /obj/item/device/multitool))
