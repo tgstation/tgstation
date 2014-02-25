@@ -137,45 +137,43 @@
 // Better recursive loop, technically sort of not actually recursive cause that shit is retarded, enjoy.
 //No need for a recursive limit either
 
-/proc/recursive_mob_check(var/atom/O, var/client_check=1, var/sight_check=1, var/include_radio=1)
+
+proc/recursive_mob_check(var/atom/O, var/client_check=1, var/sight_check=1, var/include_radio=1)
 
 	var/list/processing_list = list(O)
+	var/list/processed_list = list()
 	var/list/found_mobs = list()
 
 	while(processing_list.len)
 
 		var/atom/A = processing_list[1]
 
+		var/passed = 1
+
 		if(ismob(A))
-			var/mob/A_mob = A
-			if(client_check && !A_mob.client)
-				A_mob=null
-			if(A_mob && sight_check && !isInSight(A_mob, O))
-				A_mob=null
-			if(A_mob)
-				found_mobs += A_mob
+			var/mob/A_tmp = A
 
-		for(var/atom/B in A)
-			processing_list += B
+			if(client_check && !A_tmp.client)
+				passed=0
 
-			if(ismob(B))
-				var/mob/B_mob = B
-				if(client_check && !B_mob.client)
-					continue
+			if(A_tmp && sight_check && !isInSight(A_tmp, O))
+				passed=0
 
-				if(sight_check && !isInSight(B, O))
-					continue
-				found_mobs += B
+		else if(include_radio && istype(A, /obj/item/device/radio))
+			if(sight_check && !isInSight(A, O))
+				passed=0
 
-			else if(include_radio && istype(B, /obj/item/device/radio))
-				if(sight_check && !isInSight(B, O))
-					continue
-				found_mobs += B
+		if(passed)
+			if(!(A in found_mobs)) found_mobs += A
+
+			for(var/atom/B in A)
+				if(!(B in processed_list))
+					processing_list += B
 
 		processing_list-=A
+		processed_list += A
 
 	return found_mobs
-
 
 
 
@@ -191,14 +189,6 @@
 	var/list/range = hear(R, T)
 
 	for(var/atom/A in range)
-		if(ismob(A))
-			var/mob/M = A
-			if(M.client)
-				hear += M
-			//world.log << "Start = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
-		else if(istype(A, /obj/item/device/radio))
-			hear += A
-
 		if(isobj(A) || ismob(A))
 			hear = recursive_mob_check(A, 1, 0, 1)
 
