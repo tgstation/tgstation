@@ -70,4 +70,17 @@ h1.alert, h2.alert		{color: #000000;}
 .say_quote				{font-family: Georgia, Verdana, sans-serif;}
 
 .interface				{color: #330033;}
+
+/* /vg/ */
+
+/* Recruiting stuff */
+.recruit {
+	background-color: navy;
+	color: white;
+	font-weight: bold;
+}
+.recruit a {
+	color:white;
+	font-weight:bold;
+}
 </style>"}

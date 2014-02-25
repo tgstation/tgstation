@@ -36,7 +36,7 @@
 		for(var/mob/dead/observer/O in player_list)
 			if(O.client && O.client.prefs.be_special & BE_PAI)
 				if(check_observer(O))
-					O << "\blue <b>\A [src] has been activated. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)"
+					O << "<span class=\"recruit\">\A [src] has been activated. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)</span>"
 					//question(O.client)
 
 	proc/check_observer(var/mob/dead/observer/O)
