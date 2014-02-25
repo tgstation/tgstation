@@ -1,6 +1,6 @@
 /obj/item/key/gokart
-	name = "\improper Firebird key"
-	desc = "A keyring with a small steel key, and a pink fob reading \"Pussy Wagon\"."
+	name = "\improper Go-Kart key"
+	desc = "A keyring with a small steel key, with a picture of Saint Mario as a fob."
 	icon_state = "gokart_keys"
 
 /obj/structure/stool/bed/chair/vehicle/gokart

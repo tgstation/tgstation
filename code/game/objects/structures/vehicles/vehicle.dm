@@ -17,7 +17,7 @@
 
 /obj/structure/stool/bed/chair/vehicle
 	name = "vehicle"
-	var/nick
+	var/nick = null
 	icon = 'icons/obj/vehicles.dmi'
 	anchored = 1
 	density = 1
@@ -303,7 +303,7 @@
 		density = 0
 		if(buckled_mob)
 			unbuckle()
-		visible_message("<span class='warning'>The pimpin' ride explodes!</span>")
+		visible_message("<span class='warning'>\The [nick] explodes!</span>")
 		explosion(src.loc,-1,0,2,7,10)
 		icon_state = "pussywagon_destroyed"
 
