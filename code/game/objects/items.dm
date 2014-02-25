@@ -367,6 +367,8 @@
 					return 1
 				return 0
 			if(slot_s_store)
+				if(flags & NODROP) //Suit storage NODROP items drop if you take a suit off, this is to prevent people exploiting this.
+					return 0
 				if(H.s_store)
 					return 0
 				if(!H.wear_suit)
