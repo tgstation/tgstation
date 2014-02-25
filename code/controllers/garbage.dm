@@ -9,7 +9,7 @@ var/list/uncollectable_vars=list(
 //	"bounds", // bounds and its ilk are all caught by the issaved() check later on
 	"contents",
 	"gc_destroyed",
-	"invisiblity",
+	"invisibility",
 	"gender", // Causes runtimes if the logging is on
 	"parent",
 	"step_size",
