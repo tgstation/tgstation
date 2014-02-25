@@ -94,9 +94,9 @@
 		update_inv_wear_suit(0)
 	else if(I == w_uniform)
 		if(r_store)
-			unEquip(r_store)
+			unEquip(r_store, 1) //Again, makes sense for pockets to drop.
 		if(l_store)
-			unEquip(l_store)
+			unEquip(l_store, 1)
 		if(wear_id)
 			unEquip(wear_id)
 		if(belt)

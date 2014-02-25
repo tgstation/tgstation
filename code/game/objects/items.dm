@@ -344,6 +344,8 @@
 					return 0
 				return 1
 			if(slot_l_store)
+				if(flags & NODROP) //Pockets aren't visible, so you can't move NODROP items into them.
+					return 0
 				if(H.l_store)
 					return 0
 				if(!H.w_uniform)
@@ -355,6 +357,8 @@
 				if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
 					return 1
 			if(slot_r_store)
+				if(flags & NODROP)
+					return 0
 				if(H.r_store)
 					return 0
 				if(!H.w_uniform)
