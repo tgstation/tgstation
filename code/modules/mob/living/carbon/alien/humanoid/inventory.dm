@@ -1,6 +1,6 @@
 /mob/living/carbon/alien/humanoid/unEquip(obj/item/I)
 	. = ..()
-	if(!.)
+	if(!. || !I)
 		return
 
 	if(I == r_store)
