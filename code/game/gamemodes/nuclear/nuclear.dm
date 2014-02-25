@@ -305,6 +305,9 @@
 	if( syndicates.len || (ticker && istype(ticker.mode,/datum/game_mode/nuclear)) )
 		var/text = "<br><FONT size=3><B>The syndicate operatives were:</B></FONT>"
 
+		var/purchases = ""
+		var/TC_uses = 0
+
 		for(var/datum/mind/syndicate in syndicates)
 
 			text += "<br><b>[syndicate.key]</b> was <b>[syndicate.name]</b> ("
@@ -318,7 +321,15 @@
 			else
 				text += "body destroyed"
 			text += ")"
+
+			for(var/obj/item/device/uplink/hidden/H)
+				if(H.uplink_owner && H.uplink_owner==syndicate.name)
+					TC_uses += H.used_TC
+					purchases += H.purchase_log
+
 		text += "<br>"
+
+		text += "(Syndicates used [TC_uses] TC) [purchases]"
 
 		world << text
 	return 1
