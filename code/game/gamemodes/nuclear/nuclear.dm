@@ -322,8 +322,8 @@
 				text += "body destroyed"
 			text += ")"
 
-			for(var/obj/item/device/uplink/hidden/H)
-				if(H.uplink_owner && H.uplink_owner==syndicate.name)
+			for(var/obj/item/device/uplink/H in world_uplinks)
+				if(H && H.uplink_owner && H.uplink_owner==syndicate.name)
 					TC_uses += H.used_TC
 					purchases += H.purchase_log
 

@@ -6,6 +6,8 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 
 */
 
+var/list/world_uplinks = list()
+
 /obj/item/device/uplink
 	var/welcome 					// Welcoming menu message
 	var/uses 						// Numbers of crystals
@@ -19,8 +21,13 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 
 /obj/item/device/uplink/New()
 	..()
+	world_uplinks+=src
 	welcome = ticker.mode.uplink_welcome
 	uses = ticker.mode.uplink_uses
+
+/obj/item/device/uplink/Del()
+	world_uplinks-=src
+	..()
 
 //Let's build a menu!
 /obj/item/device/uplink/proc/generate_menu()
