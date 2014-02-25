@@ -20,3 +20,20 @@
 
 /obj/structure/stool/bed/chair/vehicle/gokart/update_icon()
 	icon_state="gokart[!isnull(buckled_mob)]"
+
+/obj/structure/stool/bed/chair/vehicle/gokart/update_mob()
+	if(buckled_mob)
+		buckled_mob.dir = dir
+		switch(dir)
+			if(SOUTH)
+				buckled_mob.pixel_x = 0
+				buckled_mob.pixel_y = 7
+			if(WEST)
+				buckled_mob.pixel_x = 4
+				buckled_mob.pixel_y = 7
+			if(NORTH)
+				buckled_mob.pixel_x = 0
+				buckled_mob.pixel_y = 4
+			if(EAST)
+				buckled_mob.pixel_x = -4
+				buckled_mob.pixel_y = 7
