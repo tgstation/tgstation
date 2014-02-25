@@ -1,11 +1,15 @@
-#define GC_COLLECTIONS_PER_TICK 100 // maybe make this a config option at some point
+#define GC_COLLECTIONS_PER_TICK 100 // how many objects we're going to null the vars of per tick
 #define GC_COLLECTION_TIMEOUT 300 // deciseconds to wait to let running procs finish before we just say fuck it and force del() the object
-#define GC_FORCE_DEL_PER_TICK 10 // max force del() calls per tick
+#define GC_DEL_CHECK_PER_TICK 100 // number of tests per tick to make sure our GC'd objects are actually GC'd
+#define GC_FORCE_DEL_PER_TICK 20 // max force del() calls per tick
+
 var/datum/controller/garbage_collector/garbage = new()
+
 var/list/uncollectable_vars=list(
 //	"bounds", // bounds and its ilk are all caught by the issaved() check later on
 	"contents",
 	"gc_destroyed",
+	"invisiblity",
 	"gender", // Causes runtimes if the logging is on
 	"parent",
 	"step_size",
@@ -45,41 +49,35 @@ var/list/uncollectable_vars=list(
 			continue
 //		testing("GC: Unsetting [vname] in [A.type]")
 		A.vars[vname] = null
-	A.invisibility = 101 // Idea by ChuckTheSheep to make the object even more unreferencable
-//	testing("GC: Pop([A.type]) - destroyed\[\ref[A]\] = [A.gc_destroyed] current time: [world.timeofday]")
+//	testing("GC: Pop([A.type]) - destroyed\[\ref[A]\] = [A.gc_destroyed] current time: [world.time] first:[queue[1]] second:[queue.len > 1 ? "[queue[2]]" : "NOTHING"]")
 	destroyed["\ref[A]"] = A.gc_destroyed
 	queue.Cut(1, 2)
 
 /datum/controller/garbage_collector/proc/process()
-	var/i = 1
+	var/i
 	var/dels = 0
-	while(queue.len && i <= GC_COLLECTIONS_PER_TICK)
+	for(i = 1, queue.len && i <= GC_COLLECTIONS_PER_TICK, i++)
 		Pop()
-		i++
-	i = 1
-	var/time_to_kill = world.timeofday - GC_COLLECTION_TIMEOUT // Anything qdel() but not GC'd BEFORE this time needs to be manually del()
-	if(time_to_kill < 1) // Within the first GC_COLLECTION_TIMEOUT deciseconds of midnight
-		time_to_kill += MIDNIGHT_ROLLOVER
-	while(i <= destroyed.len && i <= GC_COLLECTIONS_PER_TICK)
-		var/refID = destroyed[i]
+	var/time_to_kill = world.time - GC_COLLECTION_TIMEOUT // Anything qdel() but not GC'd BEFORE this time needs to be manually del()
+	for(i = 1, destroyed.len && i <= GC_DEL_CHECK_PER_TICK, i++)
+		var/refID = destroyed[1]
 		var/GCd_at_time = destroyed[refID]
 		if(GCd_at_time > time_to_kill)
-//			testing("GC: [refID] not old enough, breaking at [world.timeofday] for [GCd_at_time - time_to_kill] deciseconds")
-			i++
+//			testing("GC: [refID] not old enough, breaking at [world.time] for [GCd_at_time - time_to_kill] deciseconds until [GCd_at_time + GC_COLLECTION_TIMEOUT]")
 			break // Everything else is newer, skip them
 		var/atom/A = locate(refID)
-//		testing("GC: [refID] old enough to test: GCd_at_time: [GCd_at_time] time_to_kill: [time_to_kill] current: [world.timeofday]")
+//		testing("GC: [refID] old enough to test: GCd_at_time: [GCd_at_time] time_to_kill: [time_to_kill] current: [world.time]")
 		if(A && A.gc_destroyed == GCd_at_time) // So if something else coincidently gets the same ref, it's not deleted by mistake
 			// Something's still referring to the qdel'd object.  Kill it.
 			if(dels >= GC_FORCE_DEL_PER_TICK)
 //				testing("GC: Reached max force dels per tick [dels] vs [GC_FORCE_DEL_PER_TICK]")
-				break
+				break // Server's already pretty pounded, everything else can wait 2 seconds
 			testing("GC: -- \ref[A] | [A.type] was unable to be garbage collected and was force del() --")
 			del(A)
 			dels++
 //		else
-//			testing("GC: [refID] properly GC'd at [world.timeofday] with timeout [GCd_at_time]")
-		destroyed.Cut(i, ++i) // also increases i in general
+//			testing("GC: [refID] properly GC'd at [world.time] with timeout [GCd_at_time]")
+		destroyed.Cut(1, 2)
 
 /**
 * NEVER USE THIS FOR ANYTHING OTHER THAN /atom/movable

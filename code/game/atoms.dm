@@ -54,7 +54,8 @@
 // Called BEFORE qdel moves shit.
 // Also called on del()
 /atom/proc/Destroy()
-	gc_destroyed = world.timeofday
+	gc_destroyed = world.time
+	invisibility = 101
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
 	if(reagents)

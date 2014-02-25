@@ -35,6 +35,12 @@
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 
+/obj/item/Destroy()
+	if(ismob(loc))
+		var/mob/m = loc
+		m.unEquip(src)
+	return ..()
+
 /obj/item/ex_act(severity)
 	switch(severity)
 		if(1.0)
