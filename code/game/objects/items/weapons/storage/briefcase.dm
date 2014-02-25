@@ -11,6 +11,8 @@
 	max_combined_w_class = 16
 
 /obj/item/weapon/storage/briefcase/New()
+	new /obj/item/weapon/paper/demotion_key(src)
+	new /obj/item/weapon/paper/commendation_key(src)
 	..()
 
 /obj/item/weapon/storage/briefcase/attack(mob/living/M as mob, mob/living/user as mob)

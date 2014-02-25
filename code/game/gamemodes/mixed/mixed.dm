@@ -9,8 +9,8 @@
 	uplink_welcome = "Syndicate Uplink Console:"
 	uplink_uses = 10
 
-	required_players = 25
-	required_players_secret = 30
+	required_players = 20
+	required_players_secret = 25
 
 	var/const/prob_int_murder_target = 50 // intercept names the assassination target half the time
 	var/const/prob_right_murder_target_l = 25 // lower bound on probability of naming right assassination target
@@ -37,7 +37,7 @@
 	world << "<B>Anything can happen!</B>"
 
 /datum/game_mode/mixed/pre_setup()
-	var/list/datum/game_mode/possible = typesof(/datum/game_mode) - list(/datum/game_mode, /datum/game_mode/mixed, /datum/game_mode/borer, /datum/game_mode/malfunction, /datum/game_mode/traitor, /datum/game_mode/traitor/double_agents, /datum/game_mode/sandbox, /datum/game_mode/revolution, /datum/game_mode/meteor, /datum/game_mode/extended, /datum/game_mode/heist, /datum/game_mode/nuclear, /datum/game_mode/traitor/changeling)
+	var/list/datum/game_mode/possible = typesof(/datum/game_mode) - list(/datum/game_mode, /datum/game_mode/mixed, /datum/game_mode/borer, /datum/game_mode/malfunction, /datum/game_mode/traitor, /datum/game_mode/traitor/double_agents, /datum/game_mode/sandbox, /datum/game_mode/revolution, /datum/game_mode/meteor, /datum/game_mode/extended, /datum/game_mode/heist, /datum/game_mode/nuclear, /datum/game_mode/traitor/changeling, /datum/game_mode/wizard/raginmages)
 	possible = shuffle(possible)
 	for(var/i = 0, i < 2, i++)
 		var/datum/game_mode/M = pick(possible)

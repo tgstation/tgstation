@@ -22,6 +22,8 @@
 	else
 		serial_number = given_serial
 	name += " - No. [serial_number]"
+	if(serial_number == -1)
+		name = "Commendation Poster"
 	..(loc)
 
 //############################## THE ACTUAL DECALS ###########################
@@ -39,15 +41,21 @@ obj/structure/sign/poster/New(var/serial)
 
 	serial_number = serial
 
-	if(serial_number == loc)
-		serial_number = rand(1, poster_designs.len)	//This is for the mappers that want individual posters without having to use rolled posters.
+	if(serial_number == -1)
+		name += "Award of Sufficiency"
+		desc += "The mere sight of it makes you very proud."
+		icon_state = "goldstar"
 
-	var/designtype = poster_designs[serial_number]
-	var/datum/poster/design=new designtype
-	name += " - [design.name]"
-	desc += " [design.desc]"
-	icon_state = design.icon_state // poster[serial_number]
-	..()
+	else
+		if(serial_number == loc)
+			serial_number = rand(1, poster_designs.len)	//This is for the mappers that want individual posters without having to use rolled posters.
+
+		var/designtype = poster_designs[serial_number]
+		var/datum/poster/design=new designtype
+		name += " - [design.name]"
+		desc += " [design.desc]"
+		icon_state = design.icon_state // poster[serial_number]
+		..()
 
 obj/structure/sign/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/wirecutters))

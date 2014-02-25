@@ -1,3 +1,5 @@
+//Updated by Cutelildick
+
 var/list/obj/machinery/faxmachine/allfaxes = list()
 var/list/alldepartments = list("Central Command")
 
@@ -75,6 +77,9 @@ var/list/alldepartments = list("Central Command")
 			else
 				dat += "<a href='byond://?src=\ref[src];send=1'>Send</a><br>"
 				dat += "<b>Currently sending:</b> [tofax.name]<br>"
+				if(dpt == null)
+					//Old bug fix. Not selecting a dpt and/or my new lawyer access feature broke the dpt select.
+					dpt = "Central Command"
 				dat += "<b>Sending to:</b> <a href='byond://?src=\ref[src];dept=1'>[dpt]</a><br>"
 
 		else
@@ -98,8 +103,15 @@ var/list/alldepartments = list("Central Command")
 	if(href_list["send"])
 		if(tofax)
 
-			if(dpt == "Central Command")
-				Centcomm_fax(tofax.info, tofax.name, usr)
+			if((dpt == "Central Command") | (dpt == "Nanotrasen HR"))
+				if(dpt == "Central Command")
+					Centcomm_fax(tofax.info, tofax.name, usr)
+				if(dpt == "Nanotrasen HR")
+					if(findtext(tofax.stamps, "magnetic"))
+						if(findtext(tofax.name,"Demotion"))
+							new /obj/item/demote_chip(src.loc)
+						if(findtext(tofax.name,"Commendation"))
+							new /obj/item/weapon/contraband/poster(src.loc,-1)
 				sendcooldown = 1800
 
 			else
@@ -143,9 +155,13 @@ var/list/alldepartments = list("Central Command")
 		if ( (!( authenticated ) && (scan)) )
 			if (check_access(scan))
 				authenticated = 1
+				if(access_lawyer in scan.access)
+					alldepartments += "Nanotrasen HR"
 
 	if(href_list["logout"])
 		authenticated = 0
+		if(access_lawyer in scan.access)
+			alldepartments -= "Nanotrasen HR"
 
 	updateUsrDialog()
 
@@ -183,7 +199,9 @@ var/list/alldepartments = list("Central Command")
 
 proc/SendFax(var/sent, var/sentname, var/mob/Sender, var/dpt)
 
+
 	for(var/obj/machinery/faxmachine/F in allfaxes)
+
 		if( F.department == dpt )
 			if(! (F.stat & (BROKEN|NOPOWER) ) )
 
