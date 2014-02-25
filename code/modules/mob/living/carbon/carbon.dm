@@ -349,16 +349,23 @@
 	src.in_throw_mode = 1
 	src.throw_icon.icon_state = "act_throw_on"
 
-/mob/proc/throw_item(atom/target)
+/mob/proc/throw_item(var/atom/target,var/atom/movable/what=null)
 	return
 
-/mob/living/carbon/throw_item(atom/target)
+/mob/living/carbon/throw_item(var/atom/target,var/atom/movable/what=null)
 	src.throw_mode_off()
 	if(usr.stat || !target)
 		return
+
+	if(!istype(loc,/turf))
+		src << "\red You can't do that now!"
+		return
+
 	if(target.type == /obj/screen) return
 
 	var/atom/movable/item = src.get_active_hand()
+	if(what)
+		item=what
 
 	if(!item) return
 
@@ -389,8 +396,9 @@
 	update_icons()
 
 //	if (istype(usr, /mob/living/carbon/monkey)) //Check if a monkey is throwing. Modify/remove this line as required.
+	var/turf/T=get_turf(loc)
 	if(istype(item, /obj/item))
-		item.loc = src.loc
+		item.loc = T
 		if(src.client)
 			src.client.screen -= item
 		if(istype(item, /obj/item))
@@ -402,10 +410,17 @@
 		src.visible_message("\red [src] has thrown [item].")
 
 		if(!src.lastarea)
-			src.lastarea = get_area(src.loc)
+			src.lastarea = get_area(T)
 		if((istype(src.loc, /turf/space)) || (src.lastarea.has_gravity == 0))
-			src.inertia_dir = get_dir(target, src)
-			step(src, inertia_dir)
+			var/mob/space_obj=src
+			// If we're being held, make the guy holding us move.
+			if(istype(loc,/obj/item/weapon/holder))
+				var/obj/item/weapon/holder/Ho=loc
+				// Who holds the holder?
+				if(ismob(Ho.loc))
+					space_obj=Ho.loc
+			space_obj.inertia_dir = get_dir(target, src)
+			step(space_obj, inertia_dir)
 
 
 /*
