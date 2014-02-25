@@ -1247,9 +1247,7 @@
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\items_lefthand.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_lefthand.dmi
  - DONGS
- + Gibtonite ore
  - altair_locket
- + arm_blade
  + atmo_hardsuit
  + atmo_helm
  - atmos_gold_hardsuit
@@ -1269,7 +1267,6 @@
  - caphat
  - centhat
  - coil
- - coil-wire
  - coil_cyan
  - coil_green
  - coil_orange
@@ -1289,24 +1286,18 @@
  - cultpack
  + dodgeball
  - dualsaber1
- + dualsaberblue1
- + dualsabergreen1
- + dualsaberpurple1
- + dualsaberrainbow1
- + dualsaberred1
  - emergency_double
  + fedora
  - firstaid-advanced
- + flashbang
  - foamcrossbow
  - focus
+ + fork
  - fr_jacket
  - harpoon
  - hfrequency0
  - hfrequency1
  - holidaypriest
  + hypo
- + kineticgun
  - kobskull
  - medibottle
  + mimesuit
@@ -1315,7 +1306,6 @@
  + mjollnir1
  - muzzle
  - nursesuit
- - nymph
  + orange-id
  - oxygen-c
  - pizzabox1
@@ -1325,9 +1315,7 @@
  - quarrel
  + razor
  + rdwhimsy
- + resonator
  + restock_unit
- - rocket
  - rpd
  + saw
  - saw3
@@ -1335,7 +1323,6 @@
  + staffofhealing
  - stool
  - sunflower
- + swordrainbow
  + torch_off
  + torch_on
  - toysword0
@@ -1363,9 +1350,7 @@
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\items_righthand.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_righthand.dmi
  - DONGS
- + Gibtonite ore
  - altair_locket
- + arm_blade
  + atmo_hardsuit
  + atmo_helm
  - atmos_gold_hardsuit
@@ -1385,7 +1370,6 @@
  - caphat
  - centhat
  - coil
- - coil-wire
  - coil_cyan
  - coil_green
  - coil_orange
@@ -1401,11 +1385,6 @@
  - cultpack
  + dodgeball
  - dualsaber1
- + dualsaberblue1
- + dualsabergreen1
- + dualsaberpurple1
- + dualsaberrainbow1
- + dualsaberred1
  - emergency_double
  + fedora
  - firstaid-advanced
@@ -1417,7 +1396,6 @@
  - hfrequency1
  - holidaypriest
  + hypo
- + kineticgun
  - kobskull
  - medibottle
  + mister
@@ -1425,7 +1403,6 @@
  + mjollnir1
  - muzzle
  - nursesuit
- - nymph
  - o_shoes1old
  - o_shoesold
  + orange-id
@@ -1436,16 +1413,13 @@
  - quarrel
  + razor
  + rdwhimsy
- + resonator
  + restock_unit
- - rocket
  + saw
  - saw3
  + staffofanimation
  + staffofhealing
  - stool
  - sunflower
- + swordrainbow
  + tommygun
  + torch_off
  + torch_on
@@ -2705,6 +2679,7 @@
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\card.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\card.dmi
  - centcom_old
+ - demote_chip
  + orange
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\chemical.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\chemical.dmi
@@ -2797,6 +2772,7 @@
  - bsposter7
  - bsposter8
  - bsposter9
+ - goldstar
  + poster11
  + poster12
  + poster13
