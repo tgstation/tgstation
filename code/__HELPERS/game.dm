@@ -200,9 +200,10 @@
 			hear += A
 
 		if(isobj(A) || ismob(A))
-			hear = recursive_mob_check(A, hear, 3, 1, 0, 1)
+			hear = recursive_mob_check(A, 1, 0, 1)
 
 	return hear
+
 
 
 /proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios)

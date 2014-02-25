@@ -32,7 +32,7 @@
 
 			src.icon_state = "morgue2"//default dead no-client mob
 
-			var/list/compiled = recursive_mob_check(src,client_check=0,sight_check=0)//run through contents
+			var/list/compiled = recursive_mob_check(src,0,0)//run through contents
 
 			if(!length(compiled))//no mobs at all, but objects inside
 				src.icon_state = "morgue3"
