@@ -31,6 +31,12 @@
 //		testing("GC: [type] was deleted via GC with qdel()")
 	..()
 
+/atom/movable/Destroy()
+	loc = null	// can never null their loc enough really
+	for(var/atom/movable/AM in contents)
+		qdel(AM)
+	. = ..()
+
 // Previously known as HasEntered()
 // This is automatically called when something enters your square
 /atom/movable/Crossed(atom/movable/AM)
@@ -58,12 +64,6 @@
 			AM.Crossed(src)
 		return 1
 	return 0
-
-/atom/movable/Destroy()
-	loc = null	// can never null their loc enough really
-	for(var/atom/movable/AM in contents)
-		qdel(AM)
-	. = ..()
 
 /atom/movable/proc/hit_check() // todo: this is partly obsolete due to passflags already, add throwing stuff to mob CanPass and finish it
 	if(src.throwing)

@@ -46,7 +46,7 @@
 
 /atom/Del()
 	// Pass to Destroy().
-	if(!gc_destroyed) // If we're just straight up calling del(atom), make sure anything in Destroy() gets called anyways just to be sure.
+	if(isnull(gc_destroyed)) // If we're just straight up calling del(atom), make sure anything in Destroy() gets called anyways just to be sure.
 		Destroy()
 	..()
 
@@ -56,8 +56,6 @@
 /atom/proc/Destroy()
 	gc_destroyed = world.time
 	invisibility = 101
-	for(var/atom/movable/AM in contents)
-		qdel(AM)
 	if(reagents)
 		reagents.delete()
 		del(reagents) // Technically I think the reagent holder will gc, but let's be careful here and delete all the reagents and the holder too

@@ -1058,8 +1058,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 		for(var/obj/machinery/the_singularitygen/G in world)
 			if(G.anchored)
 				var/obj/machinery/singularity/S = new /obj/machinery/singularity(get_turf(G), 50)
-				spawn(0)
-					del(G)
+//				qdel(G)
 				S.energy = 1750
 				S.current_size = 7
 				S.icon = 'icons/effects/224x224.dmi'

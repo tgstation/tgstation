@@ -38,9 +38,6 @@ var/global/list/uneatable = list(
 	admin_investigate_setup()
 
 	src.energy = starting_energy
-	if(temp)
-		spawn(temp)
-			qdel(src)
 	..()
 	for(var/obj/machinery/singularity_beacon/singubeacon in world)
 		if(singubeacon.active)
