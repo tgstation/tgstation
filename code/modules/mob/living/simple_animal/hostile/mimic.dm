@@ -127,7 +127,12 @@
 // Copy Mimic
 //
 
-var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/cable, /obj/structure/window)
+var/global/list/protected_objects = list(
+	/obj/structure/table,
+	/obj/structure/cable,
+	/obj/structure/window,
+	/obj/structure/particle_accelerator // /vg/ Redmine #116
+)
 
 /mob/living/simple_animal/hostile/mimic/copy
 
