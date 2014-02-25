@@ -16,6 +16,8 @@ var/global/list/rad_collectors = list()
 	var/active = 0
 	var/locked = 0
 	var/drainratio = 1
+	ghost_read=0
+	ghost_write=0
 
 /obj/machinery/power/rad_collector/New()
 	..()
