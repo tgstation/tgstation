@@ -2,8 +2,6 @@
 Contains most of the procs that are called when a mob is attacked by something
 
 bullet_act
-ex_act
-meteor_act
 emp_act
 */
 
@@ -218,9 +216,9 @@ emp_act
 				informed = 1
 			switch(severity)
 				if(1)
-					L.take_damage(0,rand(1,15))
-					src.Stun(rand(1,10))
+					L.take_damage(0,10)
+					src.Stun(10)
 				if(2)
-					L.take_damage(0,rand(1,10))
-					src.Stun(rand(1,5))
+					L.take_damage(0,5)
+					src.Stun(5)
 	..()
