@@ -102,6 +102,9 @@
 /obj/machinery/syndicatebomb/attack_hand(var/mob/user)
 	interact(user)
 
+/obj/machinery/syndicatebomb/attack_ai()
+	return
+
 /obj/machinery/syndicatebomb/interact(var/mob/user)
 	if(wires)
 		wires.Interact(user)
