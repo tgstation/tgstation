@@ -8,6 +8,7 @@
 
 	var/area/initial_loc
 	level = 1
+	layer = 2.4
 	var/area_uid
 	var/id_tag = null
 

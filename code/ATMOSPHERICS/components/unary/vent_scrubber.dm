@@ -7,6 +7,7 @@
 	use_power = 1
 
 	level = 1
+	layer = 2.4
 
 	var/area/initial_loc
 	var/id_tag = null
