@@ -14,7 +14,6 @@
 	var/stk_types = list()
 	var/stk_amt   = list()
 	var/stack_list[0] //Key: Type.  Value: Instance of type.
-	var/stack_amt = 50; //amount to stack before releasing
 	var/obj/item/weapon/card/id/inserted_id
 	var/points = 0
 	var/list/ore_values = list(("sand" = 1), ("iron" = 1), ("gold" = 20), ("silver" = 20), ("uranium" = 20), ("bananium" = 30), ("diamond" = 40), ("plasma" = 40))
@@ -22,32 +21,47 @@
 /obj/machinery/mineral/ore_redemption/proc/process_sheet(obj/item/weapon/ore/O)
 	var/obj/item/stack/sheet/processed_sheet = SmeltMineral(O)
 	if(processed_sheet)
-		if(!(processed_sheet.type in stack_list)) //It's the first of this sheet added
-			var/obj/item/stack/sheet/s = new processed_sheet.type(src,0)
+		if(!(processed_sheet in stack_list)) //It's the first of this sheet added
+			var/obj/item/stack/sheet/s = new processed_sheet(src,0)
 			s.amount = 0
-			stack_list[processed_sheet.type] = s
-		var/obj/item/stack/sheet/storage = stack_list[processed_sheet.type]
-		storage.amount += processed_sheet.amount //Stack the sheets
+			stack_list[processed_sheet] = s
+		var/obj/item/stack/sheet/storage = stack_list[processed_sheet]
+		storage.amount += 1 //Stack the sheets
 		O.loc = null //Let the old sheet garbage collect
-		while(storage.amount > stack_amt) //Get rid of excessive stackage
-			var/obj/item/stack/sheet/out = new processed_sheet.type()
-			out.amount = stack_amt
-			unload_mineral(out)
-			storage.amount -= stack_amt
 
 /obj/machinery/mineral/ore_redemption/process()
-	var/turf/T = get_step(src, input_dir)
+	var/turf/T = get_turf(get_step(src, input_dir))
+	var/i
 	if(T)
-		var/obj/item/weapon/ore/O
-		for(O in T)
-			process_sheet(O)
-		for(var/obj/structure/ore_box/B in T)
-			for(O in B.contents)
-				process_sheet(O)
+		if(locate(/obj/item/weapon/ore) in T)
+			for (i = 0; i < 10; i++)
+				var/obj/item/weapon/ore/O = locate() in T
+				if(O)
+					process_sheet(O)
+				else
+					break
+		else
+			var/obj/structure/ore_box/B = locate() in T
+			if(B)
+				for (i = 0; i < 10; i++)
+					var/obj/item/weapon/ore/O = locate() in B.contents
+					if(O)
+						process_sheet(O)
+					else
+						break
+
+/obj/machinery/mineral/ore_redemption/attackby(var/obj/item/weapon/W, var/mob/user)
+	if(istype(W,/obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/I = usr.get_active_hand()
+		if(istype(I) && !istype(inserted_id))
+			usr.drop_item()
+			I.loc = src
+			inserted_id = I
+			interact(user)
 
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(var/obj/item/weapon/ore/O)
 	if(O.refined_type)
-		var/obj/item/stack/sheet/M = new O.refined_type(src)
+		var/obj/item/stack/sheet/M = O.refined_type
 		points += O.points
 		return M
 	del(O)//No refined type? Purge it.
@@ -77,8 +91,6 @@
 		if(s.amount > 0)
 			dat += text("[capitalize(s.name)]: [s.amount] <A href='?src=\ref[src];release=[s.type]'>Release</A><br>")
 
-	dat += text("<br>This unit can hold stacks of [stack_amt] sheets of each mineral type.<br><br>")
-
 	dat += text("<HR><b>Mineral Value List:</b><BR>[get_ore_values()]")
 
 	user << browse("[dat]", "window=console_stacking_machine")
@@ -103,24 +115,30 @@
 				inserted_id.verb_pickup()
 				inserted_id = null
 			if(href_list["choice"] == "claim")
-				inserted_id.mining_points += points
-				points = 0
-				src << "Points transferred."
+				if(access_mining_station in inserted_id.access)
+					inserted_id.mining_points += points
+					points = 0
+				else
+					usr << "<span class='warning'>Required access not found.</span>"
 		else if(href_list["choice"] == "insert")
 			var/obj/item/weapon/card/id/I = usr.get_active_hand()
 			if(istype(I))
 				usr.drop_item()
 				I.loc = src
 				inserted_id = I
-			else usr << "\red No valid ID."
+			else usr << "<span class='warning'>No valid ID.</span>"
 	if(href_list["release"] && istype(inserted_id))
 		if(check_access(inserted_id))
 			if(!(text2path(href_list["release"]) in stack_list)) return
 			var/obj/item/stack/sheet/inp = stack_list[text2path(href_list["release"])]
 			var/obj/item/stack/sheet/out = new inp.type()
-			out.amount = inp.amount
-			inp.amount = 0
-			unload_mineral(out)
+			var/desired = input("How much?", "How much to eject?", 1) as num
+			out.amount = min(desired,50,inp.amount)
+			if(out.amount >= 1)
+				inp.amount -= out.amount
+				unload_mineral(out)
+		else
+			usr << "<span class='warning'>Required access not found.</span>"
 	updateUsrDialog()
 	return
 
@@ -150,10 +168,10 @@
 		new /datum/data/mining_equipment("Space cash",    		/obj/item/weapon/spacecash/c1000,                    			  5000),
 		new /datum/data/mining_equipment("Sonic jackhammer",    /obj/item/weapon/pickaxe/jackhammer,                               500),
 		new /datum/data/mining_equipment("Mining drone",        /mob/living/simple_animal/hostile/mining_drone/,                   500),
-		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 250),
+		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 200),
 		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                        750),
 		new /datum/data/mining_equipment("Kinetic accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,                  1000),
-		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide,                      2000),
+		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide/mining,               2000),
 		)
 
 /datum/data/mining_equipment/
@@ -220,6 +238,14 @@
 	if(istype(I, /obj/item/weapon/mining_voucher))
 		RedeemVoucher(I, user)
 		return
+	if(istype(I,/obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/C = usr.get_active_hand()
+		if(istype(C) && !istype(inserted_id))
+			usr.drop_item()
+			C.loc = src
+			inserted_id = C
+			interact(user)
+		return
 	..()
 
 /obj/machinery/mineral/equipment_locker/proc/RedeemVoucher(voucher, redeemer)
@@ -234,6 +260,7 @@
 			new /obj/item/weapon/gun/energy/kinetic_accelerator(src.loc)
 		if("Mining Drone")
 			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
+			new /obj/item/weapon/weldingtool/hugetank(src.loc)
 		if("Cancel")
 			return
 	del(voucher)
@@ -426,11 +453,12 @@
 
 /mob/living/simple_animal/hostile/mining_drone/
 	name = "nanotrasen minebot"
-	desc = "A small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife."
+	desc = "The instructions printed on the side read: This is a small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife. A mining scanner can instruct it to drop loose ore. Field repairs can be done with a welder. Use a mining scanner to instruct it to drop ore."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
 	status_flags = CANSTUN|CANWEAKEN|CANPUSH
+	stop_automated_movement_when_pulled = 1
 	mouse_opacity = 1
 	faction = "neutral"
 	a_intent = "harm"
@@ -448,8 +476,8 @@
 	move_to_delay = 10
 	retreat_distance = 1
 	minimum_distance = 2
-	health = 100
-	maxHealth = 100
+	health = 125
+	maxHealth = 125
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	environment_smash = 0
@@ -508,7 +536,6 @@
 	..()
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior()
-	stop_automated_movement_when_pulled = 1
 	idle_vision_range = 9
 	search_objects = 2
 	wander = 1
@@ -518,7 +545,6 @@
 	icon_state = "mining_drone"
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetOffenseBehavior()
-	stop_automated_movement_when_pulled = 0
 	idle_vision_range = 5
 	search_objects = 0
 	wander = 0
@@ -642,3 +668,9 @@
 	desc = "A sign that warns would be travellers of hostile alien life in the vicinity."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "xeno_warning"
+
+/**********************Mining Jetpack**********************/
+/obj/item/weapon/tank/jetpack/carbondioxide/mining
+	name = "mining jetpack"
+	icon_state = "jetpack-mining"
+	desc = "A tank of compressed carbon dioxide for miners to use as propulsion in local space. Should not be used for internals."
