@@ -23,6 +23,7 @@ Note: Must be placed west/left of and R&D console to function.
 	var/clown_amount = 0.0
 	var/adamantine_amount = 0.0
 	var/efficiency_coeff
+	reagents = new()
 
 
 /obj/machinery/r_n_d/protolathe/New()
