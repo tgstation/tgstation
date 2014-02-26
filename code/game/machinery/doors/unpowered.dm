@@ -21,6 +21,11 @@
 	..()
 	return
 
+/obj/machinery/door/unpowered/attack_hand(mob/user as mob)
+	if(istype(user,/mob/dead/observer))
+		return
+	..()
+
 /obj/machinery/door/unpowered/shuttle
 	icon = 'icons/obj/doors/shuttle.dmi'
 	icon_state = "door_closed"

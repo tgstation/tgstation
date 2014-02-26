@@ -94,8 +94,11 @@
 
 /mob/living/simple_animal/construct/attack_animal(mob/living/simple_animal/M as mob)
 	if(istype(M, /mob/living/simple_animal/construct/builder))
-		health += 5
-		M.visible_message("[src] mends some of \the <EM>[src]'s</EM> wounds.","You mend some of \the <em>[src]'s</em> wounds.")
+		if(src.health >= src.maxHealth)
+			M << "\blue [src] has nothing to mend."
+			return
+		health = min(maxHealth, health + 5) // Constraining health to maxHealth
+		M.visible_message("[M] mends some of \the <EM>[src]'s</EM> wounds.","You mend some of \the <em>[src]'s</em> wounds.")
 	else
 		if(M.melee_damage_upper <= 0)
 			M.emote("[M.friendly] \the <EM>[src]</EM>")
