@@ -43,29 +43,32 @@
 	var/scan_id = 1
 	var/obj/item/weapon/coin/coin
 	var/datum/wires/vending/wires = null
-	var/deconstructable = 0
 
 	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
 
 /obj/machinery/vending/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/vendor(null)
 	wires = new(src)
 	spawn(4)
 		slogan_list = text2list(product_slogans, ";")
-
 		// So not all machines speak at the exact same time.
 		// The first time this machine says something will be at slogantime + this random value,
 		// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
 		last_slogan = world.time + rand(0, slogan_delay)
-
-		build_inventory(products)
-		 //Add hidden inventory
-		build_inventory(contraband, 1)
-		build_inventory(premium, 0, 1)
 		power_change()
 
+/obj/machinery/vending/initialize()
+	build_inventory(products)
+	build_inventory(contraband, 1)
+	build_inventory(premium, 0, 1)
+
+/obj/machinery/vending/RefreshParts()         //Better would be to make constructable child
+	if(component_parts)
+		build_inventory(products, start_empty = 1)
+		build_inventory(contraband, 1, 1)
+		build_inventory(premium, 0, 1, 1)
+		for(var/obj/item/weapon/vending_refill/VR in component_parts)
+			refill_inventory(VR, product_records)
 
 /obj/machinery/vending/ex_act(severity)
 	switch(severity)
@@ -88,16 +91,17 @@
 		del(src)
 
 
-/obj/machinery/vending/proc/build_inventory(list/productlist, hidden=0, req_coin=0)
+/obj/machinery/vending/proc/build_inventory(list/productlist, hidden=0, req_coin=0, start_empty = null)
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
-		if(isnull(amount)) amount = 1
+		if(isnull(amount)) amount = 0
 
 		var/atom/temp = new typepath(null)
 		var/datum/data/vending_product/R = new /datum/data/vending_product()
 		R.product_name = initial(temp.name)
 		R.product_path = typepath
-		R.amount = amount
+		if(!start_empty)
+			R.amount = amount
 		R.max_amount = amount
 		R.display_color = pick("red","blue","green")
 
@@ -107,7 +111,6 @@
 			coin_records += R
 		else
 			product_records += R
-//		world << "Added: [R.product_name]] - [R.amount] - [R.product_path]"
 
 /obj/machinery/vending/proc/refill_inventory(obj/item/weapon/vending_refill/refill, datum/data/vending_product/machine, mob/user)
 	var/total = 0
@@ -119,7 +122,6 @@
 			refill.charges--
 			total++
 		to_restock += machine_content.max_amount - machine_content.amount
-
 	if(to_restock <= refill.charges)
 		for(var/datum/data/vending_product/machine_content in machine)
 			machine_content.amount = machine_content.max_amount
@@ -144,8 +146,15 @@
 		if(default_unfasten_wrench(user, W, time = 60))
 			return
 
-		if(deconstructable && istype(W, /obj/item/weapon/crowbar))
-			malfunction()
+		if(component_parts && istype(W, /obj/item/weapon/crowbar))
+			var/datum/data/vending_product/machine = product_records
+			for(var/datum/data/vending_product/machine_content in machine)
+				while(machine_content.amount !=0)
+					for(var/obj/item/weapon/vending_refill/VR in component_parts)
+						VR.charges++
+						machine_content.amount--
+						if(!machine_content.amount)
+							break
 			default_deconstruction_crowbar(W)
 
 	if(istype(W, /obj/item/weapon/card/emag))
@@ -503,7 +512,18 @@
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
 	req_access_txt = "25"
 	refill_canister = /obj/item/weapon/vending_refill/boozeomat
-	deconstructable = 1
+
+
+/obj/machinery/vending/boozeomat/New()
+	..()
+	component_parts = list()
+	var/obj/item/weapon/circuitboard/vendor/V = new(null)
+	V.set_type(type)
+	component_parts += V
+	component_parts += new /obj/item/weapon/vending_refill/boozeomat(0)
+	component_parts += new /obj/item/weapon/vending_refill/boozeomat(0)
+	component_parts += new /obj/item/weapon/vending_refill/boozeomat(0)
+
 
 /obj/machinery/vending/assist
 	products = list(	/obj/item/device/assembly/prox_sensor = 5,/obj/item/device/assembly/igniter = 3,/obj/item/device/assembly/signaler = 4,
@@ -521,8 +541,17 @@
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/coffee = 25,/obj/item/weapon/reagent_containers/food/drinks/tea = 25,/obj/item/weapon/reagent_containers/food/drinks/h_chocolate = 25)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/ice = 10)
 	refill_canister = /obj/item/weapon/vending_refill/coffee
-	deconstructable = 1
 
+
+/obj/machinery/vending/coffee/New()
+	..()
+	component_parts = list()
+	var/obj/item/weapon/circuitboard/vendor/V = new(null)
+	V.set_type(type)
+	component_parts += V
+	component_parts += new /obj/item/weapon/vending_refill/coffee(0)
+	component_parts += new /obj/item/weapon/vending_refill/coffee(0)
+	component_parts += new /obj/item/weapon/vending_refill/coffee(0)
 
 /obj/machinery/vending/snack
 	name = "\improper Getmore Chocolate Corp"
@@ -535,8 +564,17 @@
 					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6)
 	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/syndicake = 6)
 	refill_canister = /obj/item/weapon/vending_refill/snack
-	deconstructable = 1
 
+
+/obj/machinery/vending/snack/New()
+	..()
+	component_parts = list()
+	var/obj/item/weapon/circuitboard/vendor/V = new(null)
+	V.set_type(type)
+	component_parts += V
+	component_parts += new /obj/item/weapon/vending_refill/snack(0)
+	component_parts += new /obj/item/weapon/vending_refill/snack(0)
+	component_parts += new /obj/item/weapon/vending_refill/snack(0)
 
 /obj/machinery/vending/sustenance
 	name = "\improper Sustenance Vendor"
@@ -562,7 +600,17 @@
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime = 10)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko = 5)
 	refill_canister = /obj/item/weapon/vending_refill/cola
-	deconstructable = 1
+
+
+/obj/machinery/vending/cola/New()
+	..()
+	component_parts = list()
+	var/obj/item/weapon/circuitboard/vendor/V = new(null)
+	V.set_type(type)
+	component_parts += V
+	component_parts += new /obj/item/weapon/vending_refill/cola(0)
+	component_parts += new /obj/item/weapon/vending_refill/cola(0)
+	component_parts += new /obj/item/weapon/vending_refill/cola(0)
 
 //This one's from bay12
 /obj/machinery/vending/cart
@@ -587,7 +635,17 @@
 	contraband = list(/obj/item/weapon/lighter/zippo = 4)
 	premium = list(/obj/item/clothing/mask/cigarette/cigar/havana = 2)
 	refill_canister = /obj/item/weapon/vending_refill/cigarette
-	deconstructable = 1
+
+
+/obj/machinery/vending/cigarette/New()
+	..()
+	component_parts = list()
+	var/obj/item/weapon/circuitboard/vendor/V = new(null)
+	V.set_type(type)
+	component_parts += V
+	component_parts += new /obj/item/weapon/vending_refill/cigarette(0)
+	component_parts += new /obj/item/weapon/vending_refill/cigarette(0)
+	component_parts += new /obj/item/weapon/vending_refill/cigarette(0)
 
 /obj/machinery/vending/medical
 	name = "\improper NanoMed Plus"
@@ -712,7 +770,17 @@
 	contraband = list(/obj/item/clothing/suit/cardborg = 1,/obj/item/clothing/head/cardborg = 1,/obj/item/clothing/suit/judgerobe = 1,/obj/item/clothing/head/powdered_wig = 1,/obj/item/weapon/gun/magic/wand = 1)
 	premium = list(/obj/item/clothing/suit/hgpirate = 1, /obj/item/clothing/head/hgpiratecap = 1, /obj/item/clothing/head/helmet/roman = 1, /obj/item/clothing/head/helmet/roman/legionaire = 1, /obj/item/clothing/under/roman = 1, /obj/item/clothing/shoes/roman = 1, /obj/item/weapon/shield/riot/roman = 1)
 	refill_canister = /obj/item/weapon/vending_refill/autodrobe
-	deconstructable = 1
+
+
+/obj/machinery/vending/autodrobe/New()
+	..()
+	component_parts = list()
+	var/obj/item/weapon/circuitboard/vendor/V = new(null)
+	V.set_type(type)
+	component_parts += V
+	component_parts += new /obj/item/weapon/vending_refill/autodrobe(0)
+	component_parts += new /obj/item/weapon/vending_refill/autodrobe(0)
+	component_parts += new /obj/item/weapon/vending_refill/autodrobe(0)
 
 /obj/machinery/vending/dinnerware
 	name = "dinnerware"

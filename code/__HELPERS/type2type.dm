@@ -265,6 +265,13 @@ proc/tg_list2text(list/list, glue=",")
 /proc/angle2text(var/degree)
 	return dir2text(angle2dir(degree))
 
+//Converts a blend_mode constant to one acceptable to icon.Blend()
+/proc/blendMode2iconMode(blend_mode)
+	switch(blend_mode)
+		if(BLEND_MULTIPLY) return ICON_MULTIPLY
+		if(BLEND_ADD)      return ICON_ADD
+		if(BLEND_SUBTRACT) return ICON_SUBTRACT
+		else               return ICON_OVERLAY
 
 //Converts a rights bitfield into a string
 /proc/rights2text(rights, seperator="", list/adds, list/subs)

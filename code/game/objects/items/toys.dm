@@ -380,7 +380,7 @@
 	throw_range = 5
 	force_unwielded = 0
 	force_wielded = 0
-	origin_tech = ""
+	origin_tech = null
 	attack_verb = list("attacked", "struck", "hit")
 
 /obj/item/weapon/twohanded/dualsaber/toy/IsShield()

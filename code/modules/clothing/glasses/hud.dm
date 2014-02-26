@@ -3,10 +3,7 @@
 	desc = "A heads-up display that provides important info in (almost) real time."
 	flags = null //doesn't protect eyes because it's a monocle, duh
 	origin_tech = "magnets=3;biotech=2"
-	var/list/icon/current = list() //the current hud icons
-
-	proc
-		process_hud(var/mob/M)	return
+	hud = 1
 
 /* /obj/item/clothing/glasses/hud/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -90,13 +87,26 @@
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and security records."
 	icon_state = "securityhud"
 
+/obj/item/clothing/glasses/hud/security/sunglasses
+	name = "HUDSunglasses"
+	desc = "Sunglasses with a HUD."
+	icon_state = "sunhud"
+	darkness_view = 1
+	flash_protect = 1
+	tint = 1
+
+/obj/item/clothing/glasses/hud/security/sunglasses/emp_act(severity)
+	if(emagged == 0)
+		emagged = 1
+		desc = desc + " The display flickers slightly."
+
 /obj/item/clothing/glasses/hud/security/jensenshades
 	name = "Augmented shades"
 	desc = "Polarized bioneural eyewear, designed to augment your vision."
 	icon_state = "jensenshades"
 	item_state = "jensenshades"
 	vision_flags = SEE_MOBS
-	invisa_view = 2
+	invis_view = 2
 
 /obj/item/clothing/glasses/hud/security/process_hud(var/mob/M)
 	if(!M)	return

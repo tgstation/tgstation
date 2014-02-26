@@ -138,7 +138,7 @@
 		S.update_icon()
 		S.power_change()
 	for(var/area/A in world)
-		if(A.name != "Space" && A.name != "Engine Walls" && A.name != "Chemical Lab Test Chamber" && A.name != "space" && A.name != "Escape Shuttle" && A.name != "Arrival Area" && A.name != "Arrival Shuttle" && A.name != "start area" && A.name != "Engine Combustion Chamber")
+		if(!istype(A, /area/space) && !istype(A, /area/shuttle) && !istype(A,/area/arrival))
 			A.power_light = 1
 			A.power_equip = 1
 			A.power_environ = 1
