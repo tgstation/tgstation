@@ -194,11 +194,11 @@
 		new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
 		new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
 		new /obj/item/weapon/minihoe(src)
-//		new /obj/item/weapon/weedspray(src)
-//		new /obj/item/weapon/weedspray(src)
-//		new /obj/item/weapon/pestspray(src)
-//		new /obj/item/weapon/pestspray(src)
-//		new /obj/item/weapon/pestspray(src)
+//		new /obj/item/weapon/reagent_containers/spray/weedspray(src)
+//		new /obj/item/weapon/reagent_containers/spray/weedspray(src)
+//		new /obj/item/weapon/reagent_containers/spray/pestspray(src)
+//		new /obj/item/weapon/reagent_containers/spray/pestspray(src)
+//		new /obj/item/weapon/reagent_containers/spray/pestspray(src)
 
 
 /obj/structure/closet/crate/secure/New()
