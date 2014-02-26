@@ -311,6 +311,7 @@
 	range = -1
 	selection_type = "range"
 	var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	include_user = 1
 
 /obj/effect/proc_holder/spell/targeted/immolate/cast(list/targets)
 	var/mob/living/L = usr
