@@ -223,15 +223,11 @@ var/global/list/uneatable = list(
 				step_towards(X,src)
 			else if(istype(X,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = X
-				if(H.l_hand && H.l_hand.w_class <= 2.0 && prob(25))
-					var/obj/item/l_hand = H.l_hand
-					H.drop_l_hand()
-					step_towards(l_hand, src, 1)
-				if(H.r_hand && H.r_hand.w_class <= 2.0 && prob(25))
-					var/obj/item/r_hand = H.r_hand
-					H.drop_r_hand()
-					step_towards(r_hand, src, 1)
-				H.apply_effect(15, IRRADIATE)
+				var/list/handlist = list(H.get_active_hand(), H.get_inactive_hand())
+				for(var/obj/item/hand in handlist)
+					H.unEquip(hand)
+					step_towards(hand, src, 1)
+				H.apply_effect(12, IRRADIATE)
 				if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
 					var/obj/item/clothing/shoes/magboots/M = H.shoes
 					if(M.magpulse)
