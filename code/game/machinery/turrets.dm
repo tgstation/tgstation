@@ -22,6 +22,9 @@
 		var/obj/mecha/Mech = O
 		if( Mech.occupant )
 			turretTargets |= Mech
+	// /vg/ vehicles
+	else if( istype(O, /obj/structure/stool/bed/chair/vehicle) )
+		turretTargets |= O
 	else if(istype(O,/mob/living/simple_animal))
 		turretTargets |= O
 	return 1
