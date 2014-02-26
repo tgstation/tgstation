@@ -86,6 +86,12 @@ obj/machinery/computer/general_air_control
 	var/list/sensor_information = list()
 	var/datum/radio_frequency/radio_connection
 
+obj/machinery/computer/general_air_control/New()
+	..()
+
+	if(radio_controller)
+		set_frequency(frequency)
+
 obj/machinery/computer/general_air_control/attack_hand(mob/user)
 	if(..(user))
 		return
@@ -174,32 +180,31 @@ obj/machinery/computer/general_air_control/large_tank_control
 
 	var/pressure_setting = ONE_ATMOSPHERE * 45
 
-obj/machinery/computer/general_air_control/large_tank_control/attackby(obj/item/I, mob/user)
-	..()
-	if(istype(I, /obj/item/device/multitool))
-		var/list/IO = list()
-		var/list/devices = radio_connection.devices["_default"]
-		for(var/obj/machinery/atmospherics/unary/vent_pump/U in devices)
-			var/list/text = text2list(U.id_tag, "_")   //I know its colon but oh well
-			IO |= text[1]
-		for(var/obj/machinery/atmospherics/unary/outlet_injector/U in devices)
-			var/list/text = text2list(U.id, "_")   //I know its colon but oh well
-			IO |= text[1]
-		if(!IO.len)
-			user << "<span class='alert'>No machinery detected.</span>"
-		var/S = input("Select the device set: ", "Selection", IO[1]) as anything in IO
-		if(src)
-			src.input_tag = "[S]_in"
-			src.output_tag = "[S]_out"
-			name = "[uppertext(S)] Supply Control"
-		for(var/obj/machinery/atmospherics/unary/outlet_injector/U in devices)
-			U.broadcast_status()
+obj/machinery/computer/general_air_control/large_tank_control/proc/reconnect(mob/user)
+	var/list/IO = list()
+	var/list/devices = radio_connection.devices["_default"]
+	for(var/obj/machinery/atmospherics/unary/vent_pump/U in devices)
+		var/list/text = text2list(U.id_tag, "_")
+		IO |= text[1]
+	for(var/obj/machinery/atmospherics/unary/outlet_injector/U in devices)
+		var/list/text = text2list(U.id, "_")
+		IO |= text[1]
+	if(!IO.len)
+		user << "<span class='alert'>No machinery detected.</span>"
+	var/S = input("Select the device set: ", "Selection", IO[1]) as anything in IO
+	if(src)
+		src.input_tag = "[S]_in"
+		src.output_tag = "[S]_out"
+		name = "[uppertext(S)] Supply Control"
+	for(var/obj/machinery/atmospherics/unary/outlet_injector/U in devices)
+		U.broadcast_status()
 
-		for(var/obj/machinery/atmospherics/unary/vent_pump/U in devices)
-			U.broadcast_status()
+	for(var/obj/machinery/atmospherics/unary/vent_pump/U in devices)
+		U.broadcast_status()
 
 obj/machinery/computer/general_air_control/large_tank_control/return_text()
-	var/output = ..()
+	var/output = "<A href='?src=\ref[src];reconnect=1'>Reconnect</A><BR>"
+	output += ..()
 			//if(signal.data)
 			//	input_info = signal.data // Attempting to fix intake control -- TLE
 
@@ -212,7 +217,7 @@ Rate: [volume_rate] L/sec<BR>"}
 		output += "<B>Command:</B> <A href='?src=\ref[src];in_toggle_injector=1'>Toggle Power</A><BR>"
 
 	else
-		output += "<FONT color='red'>ERROR: Can not find input port</FONT> <A href='?src=\ref[src];in_refresh_status=1'>Search</A><BR>"
+		output += "<FONT color='red'>ERROR: Can not find input port</FONT><BR>"
 
 	output += "<BR>"
 
@@ -224,7 +229,7 @@ Rate: [volume_rate] L/sec<BR>"}
 		output += "<B>Command:</B> <A href='?src=\ref[src];out_toggle_power=1'>Toggle Power</A> <A href='?src=\ref[src];out_set_pressure=1'>Set Pressure</A><BR>"
 
 	else
-		output += "<FONT color='red'>ERROR: Can not find output port</FONT> <A href='?src=\ref[src];out_refresh_status=1'>Search</A><BR>"
+		output += "<FONT color='red'>ERROR: Can not find output port</FONT><BR>"
 
 	output += "<B>Max Output Pressure Set:</B> <A href='?src=\ref[src];adj_pressure=-1000'>-</A> <A href='?src=\ref[src];adj_pressure=-100'>-</A> <A href='?src=\ref[src];adj_pressure=-10'>-</A> <A href='?src=\ref[src];adj_pressure=-1'>-</A> [pressure_setting] kPa <A href='?src=\ref[src];adj_pressure=1'>+</A> <A href='?src=\ref[src];adj_pressure=10'>+</A> <A href='?src=\ref[src];adj_pressure=100'>+</A> <A href='?src=\ref[src];adj_pressure=1000'>+</A><BR>"
 
@@ -258,6 +263,8 @@ obj/machinery/computer/general_air_control/large_tank_control/Topic(href, href_l
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 //radio signal
 	signal.source = src
+	if(href_list["reconnect"])
+		reconnect(usr)
 	if(href_list["in_refresh_status"])
 		input_info = null
 		signal.data = list ("tag" = input_tag, "status")
