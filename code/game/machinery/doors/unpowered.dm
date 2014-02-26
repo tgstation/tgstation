@@ -22,7 +22,7 @@
 	return
 
 /obj/machinery/door/unpowered/attack_hand(mob/user as mob)
-	if(istype(user,/mob/dead/observer) || mob.stat)
+	if(istype(user,/mob/dead/observer))
 		return
 	..()
 
