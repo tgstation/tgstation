@@ -83,7 +83,7 @@
 						var/amount = src.reagents.maximum_volume - src.reagents.total_volume
 						var/mob/living/carbon/T = target
 						if(!T.dna)
-							usr << "You are unable to locate any blood. (To be specific, your target seems to be missing their DNA datum)"
+							user << "You are unable to locate any blood. (BUG: To be specific, your target seems to be missing their DNA datum)"
 							return
 						if(M_NOCLONE in T.mutations) //target done been et, no more blood in him
 							user << "\red You are unable to locate any blood."
@@ -96,9 +96,12 @@
 							src.reagents.update_total()
 							src.on_reagent_change()
 							src.reagents.handle_reactions()
-						user << "\blue You take a blood sample from [target]"
-						for(var/mob/O in viewers(4, user))
-							O.show_message("\red [user] takes a blood sample from [target].", 1)
+							user << "\blue You take a blood sample from [target]"
+							for(var/mob/O in viewers(4, user))
+								O.show_message("\red [user] takes a blood sample from [target].", 1)
+						else
+							user.visible_message("\red [user] inserts the syringe into [target], draws back the plunger and gets... Nothing?",\
+								"\red You insert the syringe into [target], draw back the plunger and get... Nothing?")
 
 				else //if not mob
 					if(!target.reagents.total_volume)
