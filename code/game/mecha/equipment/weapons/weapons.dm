@@ -201,7 +201,7 @@
 	name = "\improper FNX-99 \"Hades\" Carbine"
 	icon_state = "mecha_carbine"
 	equip_cooldown = 5
-	projectile = /obj/item/projectile/bullet/mechincendiary
+	projectile = /obj/item/projectile/bullet/incendiary/mech
 	projectiles = 24
 	projectile_energy_cost = 15
 
