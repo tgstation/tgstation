@@ -26,10 +26,12 @@
 		owned_scanner = locate(/obj/machinery/artifact_scanpad) in orange(1, src)
 
 /obj/machinery/artifact_analyser/attack_hand(var/mob/user as mob)
+	if(..()) return
 	src.add_fingerprint(user)
 	interact(user)
 
 /obj/machinery/artifact_analyser/interact(mob/user)
+	if(..()) return
 	if(stat & (NOPOWER|BROKEN) || get_dist(src, user) > 1)
 		user.unset_machine(src)
 		return
@@ -87,6 +89,7 @@
 			A.being_used = 0
 
 /obj/machinery/artifact_analyser/Topic(href, href_list)
+	if(..()) return
 	if(href_list["begin_scan"])
 		if(!owned_scanner)
 			reconnect_scanner()
