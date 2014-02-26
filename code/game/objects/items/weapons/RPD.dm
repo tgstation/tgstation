@@ -413,8 +413,11 @@ var/global/list/RPD_recipes=list(
 				// Avoid spewing errors about invalid mode -2 when clicking on stuff that aren't pipes.
 				user << "\The [src]'s error light flickers.  Perhaps you need to only use it on pipes and pipe meters?"
 				return 0
-			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			var/obj/machinery/atmospherics/pipe/P = A
+			if(!(paint_color in P.available_colors))
+				user << "\red This [P] can't be painted [paint_color]. Available colors: [english_list(P.available_colors)]"
+				return 0
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			P._color = paint_color
 			user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
 			P.update_icon()
