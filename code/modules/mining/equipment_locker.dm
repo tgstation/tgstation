@@ -127,7 +127,6 @@
 				inserted_id.mining_points += points
 				points = 0
 				src << "Points transferred."
-				return 1
 		else if(href_list["choice"] == "insert")
 			var/obj/item/weapon/card/id/I = usr.get_active_hand()
 			if(istype(I))
@@ -137,7 +136,7 @@
 			else
 				usr << "\red No valid ID."
 				return 1
-	if(href_list["release"] && istype(inserted_id))
+	else if(href_list["release"] && istype(inserted_id))
 		if(check_access(inserted_id))
 			var/release=href_list["release"]
 			var/datum/material/mat = materials.getMaterial(release)
