@@ -124,6 +124,16 @@
 	name = "kitty ears"
 	desc = "A pair of kitty ears. Meow!"
 	icon_state = "kitty"
+	color = "#999"
+
+/obj/item/clothing/head/kitty/equipped(mob/user, slot)
+	if(user && slot == slot_head)
+		update_icon(user)
+	..()
+
+/obj/item/clothing/head/kitty/update_icon(mob/living/carbon/human/user)
+	if(istype(user))
+		color = "#[user.hair_color]"
 
 
 /obj/item/clothing/head/hardhat/reindeer
