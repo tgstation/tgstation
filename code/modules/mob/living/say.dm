@@ -224,6 +224,13 @@ var/list/department_radio_keys = list(
 			message_range = 1
 			italics = 1
 
+		if ("pAI")
+			if (src:radio)
+				src:radio.talk_into(src, message)
+				used_radios += src:radio
+			message_range = 1
+			italics = 1
+
 		if("changeling")
 			if(mind && mind.changeling)
 				for(var/mob/Changeling in mob_list)
