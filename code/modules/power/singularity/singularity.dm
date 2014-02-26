@@ -231,8 +231,7 @@ var/global/list/uneatable = list(
 					var/obj/item/r_hand = H.r_hand
 					H.drop_r_hand()
 					step_towards(r_hand, src, 1)
-				H.apply_effect(1, IRRADIATE)
-				H.apply_effect(1, IRRADIATE) //Irridiate is so weak that I have to call it twice.
+				H.apply_effect(15, IRRADIATE)
 				if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
 					var/obj/item/clothing/shoes/magboots/M = H.shoes
 					if(M.magpulse)
