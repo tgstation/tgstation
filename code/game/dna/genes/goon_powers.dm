@@ -223,11 +223,29 @@
 		return
 
 	var/atom/movable/the_item = targets[1]
-
-	usr.visible_message("\red [usr] eats \the [the_item].")
-	playsound(usr.loc, 'sound/items/eatfood.ogg', 50, 0)
-
-	del(the_item)
+	if(ismob(the_item))
+		var/t_his="his"
+		if(usr.gender==FEMALE)
+			t_his="her"
+		usr.visible_message("\red <b>[usr] begins stuffing [the_item] into [t_his] gaping maw!")
+		if(do_after(usr,50))
+			usr.visible_message("\red [usr] eats [the_item]!")
+			playsound(usr.loc, 'sound/items/eatfood.ogg', 50, 0)
+			var/mob/M=the_item
+			M.drop_l_hand()
+			M.drop_r_hand()
+			M.death(1)
+			if(ishuman(M) && ishuman(usr))
+				var/datum/organ/external/head = M:get_organ("head")
+				if(head)
+					head.droplimb(1,1)
+					var/datum/organ/external/chest=usr:get_organ("chest")
+					chest.implants += head
+			del(M)
+	else
+		usr.visible_message("\red [usr] eats \the [the_item].")
+		playsound(usr.loc, 'sound/items/eatfood.ogg', 50, 0)
+		del(the_item)
 
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H=usr
