@@ -223,6 +223,16 @@ var/global/list/uneatable = list(
 				step_towards(X,src)
 			else if(istype(X,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = X
+				if(H.l_hand && H.l_hand.w_class <= 2.0 && prob(25))
+					var/obj/item/l_hand = H.l_hand
+					H.drop_l_hand()
+					step_towards(l_hand, src, 1)
+				if(H.r_hand && H.r_hand.w_class <= 2.0 && prob(25))
+					var/obj/item/r_hand = H.r_hand
+					H.drop_r_hand()
+					step_towards(r_hand, src, 1)
+				H.apply_effect(1, IRRADIATE)
+				H.apply_effect(1, IRRADIATE) //Irridiate is so weak that I have to call it twice.
 				if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
 					var/obj/item/clothing/shoes/magboots/M = H.shoes
 					if(M.magpulse)
