@@ -624,7 +624,10 @@
 	var/stddev = radstrength*RADIATION_STRENGTH_MULTIPLIER
 	status += "<div class='line'><div class='statusLabel'>Output Level:</div><div class='statusValue'>[radstrength]</div></div>"
 	status += "<div class='line'><div class='statusLabel'>&nbsp;&nbsp;\> Mutation:</div><div class='statusValue'>(-[stddev] to +[stddev] = 68%) (-[2*stddev] to +[2*stddev] = 95%)</div></div>"
-	stddev = RADIATION_ACCURACY_MULTIPLIER/(radduration + (connected.precision_coeff ** 2))
+	if(connected)
+		stddev = RADIATION_ACCURACY_MULTIPLIER/(radduration + (connected.precision_coeff ** 2))
+	else
+		stddev = RADIATION_ACCURACY_MULTIPLIER/radduration
 	var/chance_to_hit
 	switch(stddev)	//hardcoded values from a z-table for a normal distribution
 		if(0 to 0.25)			chance_to_hit = ">95%"

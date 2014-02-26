@@ -554,7 +554,8 @@ steam.start() -- spawns the effect
 					sleep(10)
 					step(smoke,direction)
 				spawn(150+rand(10,30))
-					smoke.delete()
+					if(smoke)
+						smoke.delete()
 					src.total_smoke--
 
 

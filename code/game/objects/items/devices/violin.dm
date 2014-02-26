@@ -11,7 +11,7 @@
 
 /obj/item/device/violin/New()
 	song = new("violin", src)
-	song.instrumentExt = "mid"
+	song.instrumentExt = "ogg"
 
 /obj/item/device/violin/attack_self(mob/user as mob)
 	interact(user)
