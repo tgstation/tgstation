@@ -5,6 +5,7 @@
 	pass_flags = PASSTABLE
 	voice_message = "skree!"
 	say_message = "hums"
+	ventcrawler = 2
 	var/is_adult = 0
 
 	layer = 5

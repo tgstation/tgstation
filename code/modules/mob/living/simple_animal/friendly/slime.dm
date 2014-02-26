@@ -12,6 +12,7 @@
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
 	emote_see = list("jiggles", "bounces in place")
+	ventcrawler = 2
 	var/colour = "grey"
 
 /mob/living/simple_animal/slime/Bump(atom/movable/AM as mob|obj, yes)
