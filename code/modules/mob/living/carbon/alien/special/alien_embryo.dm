@@ -7,7 +7,7 @@
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "larva0_dead"
 	var/mob/living/affected_mob
-	var/list/ghost_volunteers
+	var/list/ghost_volunteers[0]
 	var/picked=null
 	var/stage = 0
 
