@@ -14,7 +14,7 @@ datum/reagent/
 	var/description = ""
 	var/datum/reagents/holder = null
 	var/reagent_state = SOLID
-	var/list/data = null
+	var/list/data
 	var/volume = 0
 	var/nutriment_factor = 0
 	//var/list/viruses = list()
@@ -84,7 +84,7 @@ datum/reagent/
 			return
 
 datum/reagent/blood
-	data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null)
 	name = "Blood"
 	id = "blood"
 	reagent_state = LIQUID
