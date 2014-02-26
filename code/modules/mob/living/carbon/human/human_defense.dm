@@ -212,7 +212,7 @@ emp_act
 	for(var/obj/item/organ/limb/L in src.organs)
 		if(L.status == ORGAN_ROBOTIC)
 			if(!informed) 
-				src << "<span class='danger'>Error, electormagnetic pulse detected in cyber limb!</span>"
+				src << "<span class='danger'>You feel a sharp pain as your robotic limbs overload.</span>"
 				informed = 1
 			switch(severity)
 				if(1)
