@@ -1022,34 +1022,34 @@ obj/machinery/hydroponics/constructable/attackby(var/obj/item/O as obj, var/mob/
 	unwrenchable = 0
 
 /obj/machinery/hydroponics/soil/update_icon() // Same as normal but with the overlays removed - Cheridan.
-		overlays.Cut()
+	overlays.Cut()
 
-		UpdateDescription()
+	UpdateDescription()
 
-		if(planted)
-			if(dead)
-				overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-dead")
-			else if(harvest)
-				if(myseed.plant_type == 2) // Shrooms don't have a -harvest graphic
-					overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-grow[myseed.growthstages]")
-				else
-					overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-harvest")
-			else if(age < myseed.maturation)
-				var/t_growthstate = ((age / myseed.maturation) * myseed.growthstages )
-				overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-grow[round(t_growthstate)]")
-				lastproduce = age
-			else
+	if(planted)
+		if(dead)
+			overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-dead")
+		else if(harvest)
+			if(myseed.plant_type == 2) // Shrooms don't have a -harvest graphic
 				overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-grow[myseed.growthstages]")
-
-		if(!luminosity)
-			if(istype(myseed,/obj/item/seeds/glowshroom))
-				SetLuminosity(round(myseed.potency/10))
+			else
+				overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-harvest")
+		else if(age < myseed.maturation)
+			var/t_growthstate = ((age / myseed.maturation) * myseed.growthstages )
+			overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-grow[round(t_growthstate)]")
+			lastproduce = age
 		else
-			SetLuminosity(0)
-		return
+			overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-grow[myseed.growthstages]")
+
+	if(!luminosity)
+		if(istype(myseed,/obj/item/seeds/glowshroom))
+			SetLuminosity(round(myseed.potency/10))
+	else
+		SetLuminosity(0)
+	return
 
 /obj/machinery/hydroponics/soil/attackby(var/obj/item/O as obj, var/mob/user as mob)
-		..()
-		if(istype(O, /obj/item/weapon/shovel))
-			user << "You clear up [src]!"
-			del(src)
+	..()
+	if(istype(O, /obj/item/weapon/shovel))
+		user << "You clear up [src]!"
+		del(src)
