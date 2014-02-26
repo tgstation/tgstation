@@ -480,7 +480,7 @@
 	name = "nano-manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "nano_mani"
-	origin_tech = "materials=3,programming=2"
+	origin_tech = "materials=3;programming=2"
 	rating = 2
 	m_amt = 30
 
@@ -523,7 +523,7 @@
 	name = "pico-manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "pico_mani"
-	origin_tech = "materials=5,programming=2"
+	origin_tech = "materials=5;programming=2"
 	rating = 3
 	m_amt = 30
 

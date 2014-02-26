@@ -455,7 +455,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/badass/syndiecards
 	name = "Syndicate Playing Cards"
-	desc = "A special deck of space-grade playing cards with a mono-molecular edge and metal reinforcement, making them lethal weapons both when wielded as a blade and when thrown. \
+	desc = "A special deck of space-grade playing cards with a mono-molecular edge and metal reinforcement, making them slightly more robust than a normal deck of cards. \
 	You can also play card games with them."
 	item = /obj/item/toy/cards/deck/syndicate
 	cost = 1
