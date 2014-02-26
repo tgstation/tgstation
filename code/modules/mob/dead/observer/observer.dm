@@ -60,6 +60,11 @@
 			icon_state = body.icon_state
 			overlays = body.overlays
 
+		// No icon?  Ghost icon time.
+		if(isnull(icon) || isnull(icon_state))
+			icon = initial(icon)
+			icon_state = initial(icon_state)
+
 		alpha = 127
 		// END BAY SPOOKY GHOST SPRITES
 
