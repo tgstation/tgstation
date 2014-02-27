@@ -118,9 +118,9 @@ var/list/uncollectable_vars=list(
 	set category = "Debug"
 	set background = 1
 	set src in world
-
+/*
 	qdel(src)
-	for(var/atom/movable/everything)
+	for(var/datum/everything) //Yes this works.
 		for(var/everyvar in everything.vars)
 			var/variable = everything.vars[everyvar]
 			if(variable == src)
@@ -128,3 +128,12 @@ var/list/uncollectable_vars=list(
 			else if(islist(variable))
 				if(src in variable)
 					testing("Found [src.type]\ref[src] in [everything.type]'s [everyvar] var.")
+	for(var/atom/movable/everything) //The slow part.
+		for(var/everyvar in everything.vars)
+			var/variable = everything.vars[everyvar]
+			if(variable == src)
+				testing("Found [src.type] \ref[src] in [everything.type]'s [everyvar] var.")
+			else if(islist(variable))
+				if(src in variable)
+					testing("Found [src.type]\ref[src] in [everything.type]'s [everyvar] var.")
+*/
