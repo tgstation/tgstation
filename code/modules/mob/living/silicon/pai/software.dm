@@ -267,6 +267,7 @@
 	dat += "<A href='byond://?src=\ref[src];software=refresh'>Refresh</A><br>"
 	// Built-in
 	dat += "<A href='byond://?src=\ref[src];software=directives'>Directives</A><br>"
+	dat += "<A href='byond://?src=\ref[src];software=radio;sub=0'>Radio Configuration</A><br>"
 	dat += "<A href='byond://?src=\ref[src];software=image'>Screen Display</A><br>"
 	//dat += "Text Messaging <br>"
 	dat += "<br>"
