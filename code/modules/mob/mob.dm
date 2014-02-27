@@ -2,11 +2,20 @@
 	mob_list -= src
 	dead_mob_list -= src
 	living_mob_list -= src
+	//Set the mob up for GC. Mobs have lots of references
+	if(client)
+		for(var/atom/movable/AM in client.screen)
+			qdel(AM)
+		client.screen = list()
+	del(hud_used)
+	for(var/magic in mob_spell_list)
+		del(magic)
+	for(var/infection in viruses)
+		del(infection)
+
+	if(mind)
+		mind.current = null
 	ghostize()
-	for(var/atom/movable/AM in src)
-		if(isobj(AM))
-			unEquip(AM)
-		qdel(AM)
 	..()
 
 var/next_mob_id = 0

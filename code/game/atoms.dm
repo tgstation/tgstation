@@ -55,10 +55,10 @@
 // Also called on del()
 /atom/proc/Destroy()
 	gc_destroyed = world.time
-	invisibility = 101
 	if(reagents)
 		reagents.delete()
 		del(reagents) // Technically I think the reagent holder will gc, but let's be careful here and delete all the reagents and the holder too
+	invisibility = 101
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	del(giver)

@@ -45,6 +45,7 @@
 	canmove = 0
 	icon = null
 	invisibility = 101
+	alpha = 0
 
 	if(!prev_lying && animation)
 		animate = new(loc)
