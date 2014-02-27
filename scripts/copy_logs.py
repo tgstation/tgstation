@@ -28,7 +28,7 @@ def replace_walk(in_dir,out_dir):
 	for root, dirnames, filenames in os.walk(in_dir):
 		for filename in fnmatch.filter(filenames, '*.log'):
 			path = os.path.join(root, filename)
-			to = os.path.join(out_dir, path.replace(in_dir, '').replace(os.path.basename(path), ''))
+			to = os.path.join(out_dir, path.replace(in_dir, out_dir).replace(os.path.basename(path), ''))
 			to = os.path.join(to, filename)
 			path = os.path.abspath(path)
 			to = os.path.abspath(to)
