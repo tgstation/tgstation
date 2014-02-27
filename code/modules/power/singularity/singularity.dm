@@ -235,8 +235,9 @@ var/global/list/uneatable = list(
 				if(current_size >= 5)
 					var/list/handlist = list(H.l_hand, H.r_hand)
 					for(var/obj/item/hand in handlist)
-						if(prob(current_size * 10) && H.unEquip(hand))
+						if(prob(current_size * 5) && hand.w_class <= 2 && H.unEquip(hand))
 							step_towards(hand, src)
+							H << "<span class='warning'>\the [src] pulls \the [hand] from your grip!</span>"
 
 				H.apply_effect(current_size * 3, IRRADIATE)
 		// Turf and movable atoms
