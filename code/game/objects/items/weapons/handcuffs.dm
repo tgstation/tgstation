@@ -12,7 +12,7 @@
 	throw_range = 5
 	m_amt = 500
 	origin_tech = "materials=1"
-	var/breakouttime = 1200 //Deciseconds = 120s = 2 minutes
+	var/breakouttime = 600 //Deciseconds = 120s = 2 minutes
 
 
 /obj/item/weapon/handcuffs/attack(mob/living/carbon/C, mob/user)

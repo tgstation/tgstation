@@ -330,7 +330,7 @@ datum/chemical_reaction/flash_powder
 							continue
 
 					flick("e_flash", M.flash)
-					M.Weaken(15)
+					M.Weaken(5)
 
 				if(4 to 5)
 					if(hasvar(M, "glasses"))
