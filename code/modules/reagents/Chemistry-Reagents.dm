@@ -101,10 +101,11 @@ datum
 			reagent_state = LIQUID
 			color = "#801E28" // rgb: 128, 30, 40
 			on_mob_life(var/mob/living/M as mob,var/alien)
-				if(prob(10))
-					M << "\red Your insides are burning!"
-					M.adjustToxLoss(rand(20,60)*REM)
-				else if(prob(40))
+				if(M.dna.mutantrace != "slime" || !istype(M, /mob/living/carbon/slime))
+					if(prob(10))
+						M << "\red Your insides are burning!"
+						M.adjustToxLoss(rand(20,60)*REM)
+				if(prob(40))
 					M.heal_organ_damage(5*REM,0)
 				..()
 				return
@@ -288,6 +289,24 @@ datum
 
 				for(var/mob/living/carbon/slime/M in T)
 					M.adjustToxLoss(rand(15,20))
+				for(var/mob/living/carbon/human/H in T)
+					if(H.dna.mutantrace == "slime")
+						var/chance = 1
+						var/block  = 0
+
+						for(var/obj/item/clothing/C in H.get_equipped_items())
+							if(C.permeability_coefficient < chance) chance = C.permeability_coefficient
+							if(istype(C, /obj/item/clothing/suit/bio_suit))
+								if(prob(75))
+									block = 1
+							if(istype(C, /obj/item/clothing/head/bio_hood))
+								if(prob(50))
+									block = 1
+
+						chance = chance * 100
+
+						if(prob(chance) && !block)
+							H.adjustToxLoss(rand(1,3))
 
 				var/hotspot = (locate(/obj/fire) in T)
 				if(hotspot && !istype(T, /turf/space))
@@ -1351,6 +1370,10 @@ datum
 					for(var/mob/living/carbon/slime/M in T)
 						M.adjustToxLoss(rand(5,10))
 
+					for(var/mob/living/carbon/human/H in T)
+						if(H.dna.mutantrace == "slime")
+							H.adjustToxLoss(rand(0.5,1))
+
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				if(iscarbon(M))
 					var/mob/living/carbon/C = M
@@ -2226,13 +2249,19 @@ datum
 							holder.remove_reagent("frostoil", 5)
 						if(istype(M, /mob/living/carbon/slime))
 							M.bodytemperature += rand(5,20)
+						if(M.dna.mutantrace == "slime")
+							M.bodytemperature += rand(5,20)
 					if(15 to 25)
 						M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
 						if(istype(M, /mob/living/carbon/slime))
 							M.bodytemperature += rand(10,20)
+						if(M.dna.mutantrace == "slime")
+							M.bodytemperature += rand(10,20)
 					if(25 to INFINITY)
 						M.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
 						if(istype(M, /mob/living/carbon/slime))
+							M.bodytemperature += rand(15,20)
+						if(M.dna.mutantrace == "slime")
 							M.bodytemperature += rand(15,20)
 				holder.remove_reagent(src.id, FOOD_METABOLISM)
 				data++
@@ -2318,14 +2347,20 @@ datum
 							holder.remove_reagent("capsaicin", 5)
 						if(istype(M, /mob/living/carbon/slime))
 							M.bodytemperature -= rand(5,20)
+						if(M.dna.mutantrace == "slime")
+							M.bodytemperature -= rand(5,20)
 					if(15 to 25)
 						M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
 						if(istype(M, /mob/living/carbon/slime))
+							M.bodytemperature -= rand(10,20)
+						if(M.dna.mutantrace == "slime")
 							M.bodytemperature -= rand(10,20)
 					if(25 to INFINITY)
 						M.bodytemperature -= 15 * TEMPERATURE_DAMAGE_COEFFICIENT
 						if(prob(1)) M.emote("shiver")
 						if(istype(M, /mob/living/carbon/slime))
+							M.bodytemperature -= rand(15,20)
+						if(M.dna.mutantrace == "slime")
 							M.bodytemperature -= rand(15,20)
 				data++
 				holder.remove_reagent(src.id, FOOD_METABOLISM)
@@ -2335,6 +2370,9 @@ datum
 			reaction_turf(var/turf/simulated/T, var/volume)
 				for(var/mob/living/carbon/slime/M in T)
 					M.adjustToxLoss(rand(15,30))
+				for(var/mob/living/carbon/human/H in T)
+					if(H.dna.mutantrace == "slime")
+						H.adjustToxLoss(rand(5,15))
 
 		sodiumchloride
 			name = "Table Salt"
@@ -2958,14 +2996,20 @@ datum
 									holder.remove_reagent("capsaicin", 5)
 								if(istype(M, /mob/living/carbon/slime))
 									M.bodytemperature -= rand(5,20)
+								if(M.dna.mutantrace == "slime")
+									M.bodytemperature -= rand(5,20)
 							if(15 to 25)
 								M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
 								if(istype(M, /mob/living/carbon/slime))
+									M.bodytemperature -= rand(10,20)
+								if(M.dna.mutantrace == "slime")
 									M.bodytemperature -= rand(10,20)
 							if(25 to INFINITY)
 								M.bodytemperature -= 15 * TEMPERATURE_DAMAGE_COEFFICIENT
 								if(prob(1)) M.emote("shiver")
 								if(istype(M, /mob/living/carbon/slime))
+									M.bodytemperature -= rand(15,20)
+								if(M.dna.mutantrace == "slime")
 									M.bodytemperature -= rand(15,20)
 						data++
 						holder.remove_reagent(src.id, FOOD_METABOLISM)
@@ -3253,7 +3297,7 @@ datum
 				color = "#666300" // rgb: 102, 99, 0
 
 			threemileisland
-				name = "THree Mile Island Iced Tea"
+				name = "Three Mile Island Iced Tea"
 				id = "threemileisland"
 				description = "Made for a woman, strong enough for a man."
 				reagent_state = LIQUID
