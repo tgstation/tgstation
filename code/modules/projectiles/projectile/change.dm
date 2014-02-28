@@ -13,6 +13,7 @@
 /obj/item/projectile/change/proc/wabbajack (mob/M as mob in living_mob_list)
 	if(istype(M, /mob/living) && M.stat != DEAD)
 		if(M.monkeyizing)	return
+		if(M.has_brain_worms()) return //Borer stuff - RR
 		M.monkeyizing = 1
 		M.canmove = 0
 		M.icon = null

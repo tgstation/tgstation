@@ -196,6 +196,7 @@
 			in_chamber.on_hit(M)
 			if (!in_chamber.nodamage)
 				user.apply_damage(in_chamber.damage*2.5, in_chamber.damage_type, "head", used_weapon = "Point blank shot in the mouth with \a [in_chamber]")
+				user.stat=2 // Just to be sure
 				user.death()
 			else
 				user << "<span class = 'notice'>Ow...</span>"
