@@ -554,27 +554,34 @@
 					src << "\red You feel your face freezing and an icicle forming in your lungs!"
 			else if(breath.temperature > species.heat_level_1)
 				if(prob(20))
-					src << "\red You feel your face burning and a searing heat in your lungs!"
-
-			switch(breath.temperature)
-				if(-INFINITY to species.cold_level_3)
-					apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Cold")
+					if(dna.mutantrace == "slime")
+						src << "\red You feel supercharged by the extreme heat!"
+					else
+						src << "\red You feel your face burning and a searing heat in your lungs!"
+			if(dna.mutantrace == "slime")
+				if(breath.temperature < species.cold_level_1)
+					adjustToxLoss(round(species.cold_level_1 - breath.temperature))
 					fire_alert = max(fire_alert, 1)
-				if(species.cold_level_3 to species.cold_level_2)
-					apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, "head", used_weapon = "Excessive Cold")
-					fire_alert = max(fire_alert, 1)
-				if(species.cold_level_2 to species.cold_level_1)
-					apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head", used_weapon = "Excessive Cold")
-					fire_alert = max(fire_alert, 1)
-				if(species.heat_level_1 to species.heat_level_2)
-					apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head", used_weapon = "Excessive Heat")
-					fire_alert = max(fire_alert, 2)
-				if(species.heat_level_2 to species.heat_level_3)
-					apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head", used_weapon = "Excessive Heat")
-					fire_alert = max(fire_alert, 2)
-				if(species.heat_level_3 to INFINITY)
-					apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Heat")
-					fire_alert = max(fire_alert, 2)
+			if(dna.mutantrace != "slime")
+				switch(breath.temperature)
+					if(-INFINITY to species.cold_level_3)
+						apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Cold")
+						fire_alert = max(fire_alert, 1)
+					if(species.cold_level_3 to species.cold_level_2)
+						apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, "head", used_weapon = "Excessive Cold")
+						fire_alert = max(fire_alert, 1)
+					if(species.cold_level_2 to species.cold_level_1)
+						apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head", used_weapon = "Excessive Cold")
+						fire_alert = max(fire_alert, 1)
+					if(species.heat_level_1 to species.heat_level_2)
+						apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head", used_weapon = "Excessive Heat")
+						fire_alert = max(fire_alert, 2)
+					if(species.heat_level_2 to species.heat_level_3)
+						apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head", used_weapon = "Excessive Heat")
+						fire_alert = max(fire_alert, 2)
+					if(species.heat_level_3 to INFINITY)
+						apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Heat")
+						fire_alert = max(fire_alert, 2)
 
 		//Temporary fixes to the alerts.
 
@@ -616,33 +623,40 @@
 		// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 		if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
 			//Body temperature is too hot.
-			fire_alert = max(fire_alert, 1)
+			fire_alert = max(fire_alert, 2)
 			if(status_flags & GODMODE)	return 1	//godmode
-			switch(bodytemperature)
-				if(360 to 400)
-					apply_damage(HEAT_DAMAGE_LEVEL_1, BURN, used_weapon = "High Body Temperature")
-					fire_alert = max(fire_alert, 2)
-				if(400 to 1000)
-					apply_damage(HEAT_DAMAGE_LEVEL_2, BURN, used_weapon = "High Body Temperature")
-					fire_alert = max(fire_alert, 2)
-				if(1000 to INFINITY)
-					apply_damage(HEAT_DAMAGE_LEVEL_3, BURN, used_weapon = "High Body Temperature")
-					fire_alert = max(fire_alert, 2)
+			if(dna.mutantrace != "slime") //slimes are unaffected by heat
+				switch(bodytemperature)
+					if(360 to 400)
+						apply_damage(HEAT_DAMAGE_LEVEL_1, BURN, used_weapon = "High Body Temperature")
+						fire_alert = max(fire_alert, 2)
+					if(400 to 1000)
+						apply_damage(HEAT_DAMAGE_LEVEL_2, BURN, used_weapon = "High Body Temperature")
+						fire_alert = max(fire_alert, 2)
+					if(1000 to INFINITY)
+						apply_damage(HEAT_DAMAGE_LEVEL_3, BURN, used_weapon = "High Body Temperature")
+						fire_alert = max(fire_alert, 2)
+			else
+				fire_alert = 0
 
 		else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 			fire_alert = max(fire_alert, 1)
 			if(status_flags & GODMODE)	return 1	//godmode
 			if(!istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
-				switch(bodytemperature)
-					if(200 to 260)
-						apply_damage(COLD_DAMAGE_LEVEL_1, BURN, used_weapon = "Low Body Temperature")
-						fire_alert = max(fire_alert, 1)
-					if(120 to 200)
-						apply_damage(COLD_DAMAGE_LEVEL_2, BURN, used_weapon = "Low Body Temperature")
-						fire_alert = max(fire_alert, 1)
-					if(-INFINITY to 120)
-						apply_damage(COLD_DAMAGE_LEVEL_3, BURN, used_weapon = "Low Body Temperature")
-						fire_alert = max(fire_alert, 1)
+				if(dna.mutantrace == "slime")
+					adjustToxLoss(round(BODYTEMP_HEAT_DAMAGE_LIMIT - bodytemperature))
+					fire_alert = max(fire_alert, 1)
+				else
+					switch(bodytemperature)
+						if(200 to 260)
+							apply_damage(COLD_DAMAGE_LEVEL_1, BURN, used_weapon = "Low Body Temperature")
+							fire_alert = max(fire_alert, 1)
+						if(120 to 200)
+							apply_damage(COLD_DAMAGE_LEVEL_2, BURN, used_weapon = "Low Body Temperature")
+							fire_alert = max(fire_alert, 1)
+						if(-INFINITY to 120)
+							apply_damage(COLD_DAMAGE_LEVEL_3, BURN, used_weapon = "Low Body Temperature")
+							fire_alert = max(fire_alert, 1)
 
 		// Account for massive pressure differences.  Done by Polymorph
 		// Made it possible to actually have something that can protect against high pressure... Done by Errorage. Polymorph now has an axe sticking from his head for his previous hardcoded nonsense!
