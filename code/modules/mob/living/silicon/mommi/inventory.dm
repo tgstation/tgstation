@@ -1,4 +1,4 @@
-//These procs handle putting s tuff in your hand. It's probably best to use these rather than setting stuff manually
+//These procs handle putting stuff in your hand. It's probably best to use these rather than setting stuff manually
 //as they handle all relevant stuff like adding it to the player's screen and such
 
 //Returns the thing in our active hand (whatever is in our active module-slot, in this case)
@@ -6,17 +6,16 @@
 	return module_active
 
 /mob/living/silicon/robot/mommi/proc/is_in_modules(obj/item/W)
-	var/obj/item/found
 	if(istype(W, src.module.emag.type))
-		found = W
+		return src.module.emag
 	// Exact matching for stacks (so we can load machines)
 	if(istype(W, /obj/item/stack/sheet))
 		for(var/obj/item/stack/sheet/S in src.module.modules)
 			if(S.type==W.type)
 				return S
 	else
-		found = locate(W) in src.module.modules
-	return found
+		return locate(W) in src.module.modules
+
 /mob/living/silicon/robot/mommi/put_in_hands(var/obj/item/W)
 	// Fixing NPEs caused by PDAs giving me NULLs to hold :V - N3X
 	// And before you ask, this is how /mob handles NULLs, too.

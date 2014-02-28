@@ -32,6 +32,9 @@
 		build_click(src, client.buildmode, params, A)
 		return
 
+	if(control_disabled || stat)
+		return
+
 	var/list/modifiers = params2list(params)
 	if(modifiers["middle"])
 		MiddleClickOn(A)
@@ -46,8 +49,14 @@
 		CtrlClickOn(A)
 		return
 
-	if(control_disabled || stat || world.time <= next_move) return
+	if(world.time <= next_move)
+		return
 	next_move = world.time + 9
+
+	if(aicamera.in_camera_mode)
+		aicamera.camera_mode_off()
+		aicamera.captureimage(A, usr)
+		return
 
 	/*
 		AI restrained() currently does nothing
@@ -113,7 +122,8 @@
 	Topic("breaker=1", list("breaker"="1"), 0) // 0 meaning no window (consistency! wait...)
 
 
-/atom/proc/AIAltClick()
+/atom/proc/AIAltClick(var/mob/living/silicon/ai/user)
+	AltClick(user)
 	return
 
 /obj/machinery/door/airlock/AIAltClick() // Eletrifies doors.

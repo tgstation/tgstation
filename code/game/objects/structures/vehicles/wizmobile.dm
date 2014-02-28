@@ -1,6 +1,6 @@
 /obj/item/key/wizmobile
 	name = "\improper Firebird key"
-	desc = "A keyring with a small steel key, and a pink fob reading \"Pussy Wagon\"."
+	desc = "A keyring with a small steel key, and a fancy blue and gold fob."
 	icon_state = "magic_keys"
 
 /obj/structure/stool/bed/chair/vehicle/wizmobile
