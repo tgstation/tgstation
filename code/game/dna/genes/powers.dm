@@ -161,13 +161,14 @@
 
 	OnMobLife(var/mob/living/carbon/human/M)
 		if(!istype(M)) return
-		if(M.health <= 25)
+		if(M.health <= 25 && M_HULK in M.mutations)
 			M.mutations.Remove(M_HULK)
 			M.dna.SetSEState(HULKBLOCK,0)
 			M.update_mutations()		//update our mutation overlays
 			M << "\red You suddenly feel very weak."
 			M.Weaken(3)
 			M.emote("collapse")
+			M.update_mutations()
 
 /datum/dna/gene/basic/xray
 	name="X-Ray Vision"
