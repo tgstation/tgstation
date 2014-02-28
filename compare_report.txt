@@ -1255,8 +1255,6 @@
  - vox_shortquills_l
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\items_lefthand.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_lefthand.dmi
- - Gibtonite ore
- - arm_blade
  - atmos_gold_hardsuit
  - atmos_gold_helm
  - banana_peel
@@ -1283,23 +1281,30 @@
  - dualsaberrainbow1
  - dualsaberred1
  + eleanorstone
+ - folded
  + fork
  - hfrequency0
  - hfrequency1
+ - hypo
  - kineticgun
  + konaahirano
  + mai_yang
- + nymph
+ - o2
  - pizzabox1
  - prod
  - resonator
  + rocket
  - roman_shield
  - rpd
+ - saw
  - spearglass0
  - spearglass1
+ - staffofanimation
+ - staffofhealing
  - sunflower
  - swordrainbow
+ - telebaton_0
+ - telebaton_1
  - vox-helmet-engineer
  - vox-helmet-medical
  - vox-helmet-normal
@@ -1312,10 +1317,10 @@
  - vox-pressure-science
  - vox-pressure-security
  - vox-pressure-specops
+ - wand
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\items_righthand.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_righthand.dmi
  - Gibtonite ore
- - arm_blade
  - atmos_gold_hardsuit
  - atmos_gold_helm
  - banana_peel
@@ -1329,8 +1334,12 @@
  - coil_white
  - coil_yellow
  - cuff_blue
+ - cuff_cyan
  - cuff_green
+ - cuff_orange
+ - cuff_pink
  - cuff_red
+ - cuff_white
  - cuff_yellow
  - dualsaberblue1
  - dualsabergreen1
@@ -1338,20 +1347,28 @@
  - dualsaberrainbow1
  - dualsaberred1
  + eleanorstone
+ - folded
  - hfrequency0
  - hfrequency1
+ - hypo
  - kineticgun
  + konaahirano
  + mai_yang
- + nymph
+ - o2
+ - pizzabox1
  - prod
- - resonator
  + rocket
  - roman_shield
+ - rpd
+ - saw
  - spearglass0
  - spearglass1
+ - staffofanimation
+ - staffofhealing
  - sunflower
  - swordrainbow
+ - telebaton_0
+ - telebaton_1
  - vox-helmet-engineer
  - vox-helmet-medical
  - vox-helmet-normal
@@ -1363,6 +1380,7 @@
  - vox-pressure-normal
  - vox-pressure-science
  - vox-pressure-specops
+ - wand
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\mask.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\mask.dmi
  - balaclava2
@@ -2046,22 +2064,22 @@
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\gate.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\gate.dmi
  C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\gate.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 135, in compare
+  File "tools/OpenBYOND/src/DMITool.py", line 146, in compare
     theirsDMI.loadAll()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 189, in loadAll
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 194, in loadAll
     self.load(flags)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 192, in load
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 197, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
  C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\gate.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 151, in compare
+  File "tools/OpenBYOND/src/DMITool.py", line 162, in compare
     mineDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 186, in loadMetadata
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 191, in loadMetadata
     self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 192, in load
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 197, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
@@ -2770,22 +2788,22 @@ OSError: cannot identify image file
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes\large.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi
  C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 135, in compare
+  File "tools/OpenBYOND/src/DMITool.py", line 146, in compare
     theirsDMI.loadAll()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 189, in loadAll
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 194, in loadAll
     self.load(flags)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 192, in load
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 197, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
  C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 151, in compare
+  File "tools/OpenBYOND/src/DMITool.py", line 162, in compare
     mineDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 186, in loadMetadata
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 191, in loadMetadata
     self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 192, in load
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 197, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")

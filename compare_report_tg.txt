@@ -715,6 +715,7 @@
  + blacksoft_flipped
  - bluesoft2
  - bluesoft_flipped2
+ + bluetaghelm
  - bombsuit2
  - bombsuit2_white
  - bombsuitOld2
@@ -843,6 +844,7 @@
  - redcoat2
  - redsoft2
  - redsoft_flipped2
+ + redtaghelm
  - redwizard2
  - rig-old2
  - rig0-atmos
@@ -1248,6 +1250,7 @@
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_lefthand.dmi
  - DONGS
  - altair_locket
+ + arm_blade
  + atmo_hardsuit
  + atmo_helm
  - atmos_gold_hardsuit
@@ -1291,13 +1294,13 @@
  - firstaid-advanced
  - foamcrossbow
  - focus
+ - folded
  + fork
  - fr_jacket
  - harpoon
  - hfrequency0
  - hfrequency1
  - holidaypriest
- + hypo
  - kobskull
  - medibottle
  + mimesuit
@@ -1306,6 +1309,8 @@
  + mjollnir1
  - muzzle
  - nursesuit
+ - nymph
+ - o2
  + orange-id
  - oxygen-c
  - pizzabox1
@@ -1317,12 +1322,11 @@
  + rdwhimsy
  + restock_unit
  - rpd
- + saw
  - saw3
- + staffofanimation
- + staffofhealing
  - stool
  - sunflower
+ - telebaton_0
+ - telebaton_1
  + torch_off
  + torch_on
  - toysword0
@@ -1345,12 +1349,12 @@
  - vox-pressure-science
  - vox-pressure-security
  - vox-pressure-specops
- + wand
  - warden
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\items_righthand.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_righthand.dmi
  - DONGS
  - altair_locket
+ + arm_blade
  + atmo_hardsuit
  + atmo_helm
  - atmos_gold_hardsuit
@@ -1379,8 +1383,12 @@
  - coolant-c
  - crossbow-solid
  - cuff_blue
+ - cuff_cyan
  - cuff_green
+ - cuff_orange
+ - cuff_pink
  - cuff_red
+ - cuff_white
  - cuff_yellow
  - cultpack
  + dodgeball
@@ -1390,12 +1398,12 @@
  - firstaid-advanced
  - foamcrossbow
  - focus
+ - folded
  - fr_jacket
  - harpoon
  - hfrequency0
  - hfrequency1
  - holidaypriest
- + hypo
  - kobskull
  - medibottle
  + mister
@@ -1403,10 +1411,13 @@
  + mjollnir1
  - muzzle
  - nursesuit
+ - nymph
+ - o2
  - o_shoes1old
  - o_shoesold
  + orange-id
  - oxygen-c
+ - pizzabox1
  - plasticbag
  - pneumatic
  - pneumatic-tank
@@ -1414,12 +1425,12 @@
  + razor
  + rdwhimsy
  + restock_unit
- + saw
+ - rpd
  - saw3
- + staffofanimation
- + staffofhealing
  - stool
  - sunflower
+ - telebaton_0
+ - telebaton_1
  + tommygun
  + torch_off
  + torch_on
@@ -1442,7 +1453,6 @@
  - vox-pressure-normal
  - vox-pressure-science
  - vox-pressure-specops
- + wand
  - warden
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\mask.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\mask.dmi
@@ -1580,57 +1590,76 @@
  - Lying
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\robots.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\robots.dmi
+ - Brobot
  - Engiseer
  - Engiseer-old
+ - Miner
+ - Service
+ - Service2
+ - bloodhound
+ + brobot
  - droid
  - droid-combat
  - droid-combat-roll
  - droid-combat-shield
  - droid-medical
  - droid-miner
+ + engiborg
  - engineerrobot
  - eyes-Brobot
  - eyes-Engineering
  - eyes-Engiseer
  - eyes-Hydrobot
+ - eyes-Miner
  - eyes-Miner_old
  - eyes-Security
+ - eyes-bloodhound
  - eyes-droid
  - eyes-droid-combat
  - eyes-droid-medical
  - eyes-droid-miner
+ + eyes-engiborg
  - eyes-engineerrobot
+ + eyes-janiborg
  - eyes-janitorrobot
  - eyes-keeper
  - eyes-keeper-emagged
+ - eyes-landmate
  - eyes-marina
+ + eyes-mediborg
  - eyes-medicalrobot
+ + eyes-minerborg
  - eyes-mommi
  - eyes-mommi-emagged
  - eyes-mommi-emaggedold
  - eyes-mommiold
- - eyes-mopgearrex: eyes-mopgearrex: 4 frames, 4 directions
- + eyes-mopgearrex: eyes-mopgearrex: 1 frames, 4 directions
+ - eyes-mopgearrex
  - eyes-robot
  - eyes-robot_old
+ + eyes-secborg
  - eyes-securityrobot
  + eyes-standard
- - eyes-surgeon: eyes-surgeon: 3 frames, 4 directions
- + eyes-surgeon: eyes-surgeon: 1 frames, 4 directions
+ - eyes-surgeon
  + eyes-syndie_bloodhound
  - eyes-toiletbot: eyes-toiletbot: 3 frames, 4 directions
  + eyes-toiletbot: eyes-toiletbot: 1 frames, 4 directions
  + eyes_old
+ + janiborg
  - janitorrobot
  - keeper
  - keeper-park
+ - landmate
  - marina
  - marina-heavyshading
  - marina-noshading
+ + mediborg
  - medicalrobot
+ + minerborg
  - mommi
  - mommi-park
  - mommiold
+ - mopgearrex
+ + ninjaborg
  + ov-opencover +c
  + ov-opencover +w
  + ov-opencover -c
@@ -1642,11 +1671,25 @@
  - rowtree-medical
  - rowtree-security
  - securityrobot
+ + service_female
+ + service_male
  - spiderbot-chassis
  - spiderbot-chassis-mmi
  - spiderbot-chassis-posi
  - spiderbot-smashed
+ - surgeon
  + syndie_bloodhound
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\robot_transformations.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\robot_transformations.dmi
+ + brobot
+ + engiborg
+ + janiborg
+ + maximillion
+ + mediborg
+ + minerborg
+ + secborg
+ + service_female
+ + service_male
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\screen_alien.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\screen_alien.dmi
  + act_drop
@@ -3066,6 +3109,7 @@
  + berrymuffin
  - boiledrice
  + booberrymuffin
+ + cburger
  + chocolatebarunwrapped
  + condi_cornoil
  + condi_empty
@@ -3171,6 +3215,8 @@
  + coffeer-harvest
  + corn-dead
  + drying_rack
+ + drying_rack_drying
+ + drying_rack_filled
  + drying_rack_on
  + gatfruit-dead
  + gatfruit-grow1
@@ -3516,17 +3562,10 @@
  + teg: teg: 1 frames, 1 directions
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\projectiles.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\projectiles.dmi
- + blue_laser
- + green_laser
  - heavylaser: heavylaser: 1 frames, 8 directions
  + heavylaser: heavylaser: 1 frames, 4 directions
- + kinetic_blast
  - laser: laser: 1 frames, 8 directions
  + laser: laser: 1 frames, 4 directions
- + purple_laser
- + red_1
- + red_laser
- + scatterlaser
  - u_laser: u_laser: 2 frames, 8 directions
  + u_laser: u_laser: 2 frames, 4 directions
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\radio.dmi
@@ -3640,7 +3679,7 @@
  + ai_sal
  - ai_tribunal
  - ai_tribunal_malf
- - entertainment
+ + entertainment_xmas
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\stock_parts.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\stock_parts.dmi
  - box_glass
@@ -3742,6 +3781,68 @@
  - wood_tabledir
  - wood_tabledir2
  - wood_tabledir3
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\suitstorage.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\suitstorage.dmi
+ + broken
+ + close
+ - derpplaceholder
+ + helm
+ + human
+ + open
+ + suit
+ - suitstorage000000100
+ - suitstorage000000101
+ - suitstorage000001100
+ - suitstorage000010100
+ - suitstorage000010101
+ - suitstorage000011100
+ - suitstorage000100000
+ - suitstorage000100001
+ - suitstorage000100010
+ - suitstorage000100011
+ - suitstorage000100100
+ - suitstorage000100101
+ - suitstorage000100110
+ - suitstorage000100111
+ - suitstorage001000100
+ - suitstorage001000101
+ - suitstorage001010100
+ - suitstorage001010101
+ - suitstorage001011100
+ - suitstorage001011101
+ - suitstorage010000100
+ - suitstorage010000101
+ - suitstorage010001100
+ - suitstorage010001101
+ - suitstorage010010100
+ - suitstorage010010101
+ - suitstorage010011100
+ - suitstorage010011101
+ - suitstorage010100100
+ - suitstorage010100101
+ - suitstorage100000100
+ - suitstorage100000101
+ - suitstorage100001100
+ - suitstorage100001101
+ - suitstorage100010100
+ - suitstorage100010101
+ - suitstorage100011100
+ - suitstorage100011101
+ - suitstorage100100100
+ - suitstorage100100101
+ - suitstorage110000100
+ - suitstorage110000101
+ - suitstorage110001100
+ - suitstorage110001101
+ - suitstorage110010100
+ - suitstorage110010101
+ - suitstorage110011100
+ - suitstorage110011101
+ - suitstorage110100100
+ - suitstorage110100101
+ + super
+ + uv
+ + uvhuman
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\surgery.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\surgery.dmi
  - autoclave
@@ -4180,6 +4281,7 @@
  - amp
  + blacksoft
  + blacksoft_flipped
+ + bluetaghelm
  - centcomcaptain
  - centcomofficerberet
  - corpsoft
@@ -4195,10 +4297,12 @@
  - hairflower
  + hardhat0_reindeer
  + hardhat1_reindeer
+ + kittyinner
  - krinn_hat
  - paramedic-eva-helmet
  - paramedicsoft
  - paramedicsoft_flipped
+ + redtaghelm
  - rig0-atmos
  - rig0-atmos_gold
  + rig0-atmospherics
@@ -4477,22 +4581,22 @@
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\pipes\large.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi
  C:\Users\Rob\Documents\Projects\tgstation\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 135, in compare
+  File "tools/OpenBYOND/src/DMITool.py", line 146, in compare
     theirsDMI.loadAll()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 189, in loadAll
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 194, in loadAll
     self.load(flags)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 192, in load
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 197, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
  C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 151, in compare
+  File "tools/OpenBYOND/src/DMITool.py", line 162, in compare
     mineDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 186, in loadMetadata
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 191, in loadMetadata
     self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 192, in load
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 197, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
