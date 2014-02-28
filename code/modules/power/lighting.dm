@@ -592,6 +592,14 @@
 	if(prob(75))
 		broken()
 
+/obj/machinery/light/emp_act(severity)
+	switch(severity)
+		if(1)
+			if(prob(85))
+				broken()
+		if(2)
+			if(prob(40))
+				broken()
 
 // timed process
 // use power
