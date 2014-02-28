@@ -6,6 +6,7 @@
 	density = 1
 	opened = 0
 	large = 1
+	locked = 1
 	icon_closed = "secure"
 	var/icon_locked = "secure1"
 	icon_opened = "secureopen"
