@@ -187,7 +187,7 @@
 			msg += "<span class='warning'><B>[t_He] [t_is] convulsing violently!</B></span>\n"
 		if(200 to 300)
 			msg += "<span class='warning'>[t_He] [t_is] extremely jittery.</span>\n"
-		if(1 to 100)
+		if(100 to 200)
 			msg += "<span class='warning'>[t_He] [t_is] twitching ever so slightly.</span>\n"
 
 	if(suiciding)
