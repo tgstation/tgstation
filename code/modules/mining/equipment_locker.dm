@@ -162,7 +162,7 @@
 		new /datum/data/mining_equipment("Soap",                /obj/item/weapon/soap/nanotrasen, 						           150),
 		new /datum/data/mining_equipment("Stimulant pills",     /obj/item/weapon/storage/pill_bottle/stimulant, 				   350),
 		new /datum/data/mining_equipment("Alien toy",           /obj/item/clothing/mask/facehugger/toy, 		                   250),
-		new /datum/data/mining_equipment("Laser pointer",       /obj/item/device/laser_pointer, 				                   250),
+		new /datum/data/mining_equipment("Laser pointer",       /obj/item/device/laser_pointer, 				                   500),
 		new /datum/data/mining_equipment("Point card",    		/obj/item/weapon/card/mining_point_card,               			   500),
 		new /datum/data/mining_equipment("Lazarus injector",    /obj/item/weapon/lazarus_injector,                                1000),
 		new /datum/data/mining_equipment("Space cash",    		/obj/item/weapon/spacecash/c1000,                    			  5000),
@@ -249,13 +249,12 @@
 	..()
 
 /obj/machinery/mineral/equipment_locker/proc/RedeemVoucher(voucher, redeemer)
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") in list("Resonator kit", "Kinetic Accelerator", "Mining Drone", "Cancel")
+	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") in list("Resonator", "Kinetic Accelerator", "Mining Drone", "Cancel")
 	if(!selection || !Adjacent(redeemer))
 		return
 	switch(selection)
-		if("Resonator kit")
+		if("Resonator")
 			new /obj/item/weapon/resonator(src.loc)
-			new /obj/item/weapon/storage/pill_bottle/stimulant(src.loc)
 		if("Kinetic Accelerator")
 			new /obj/item/weapon/gun/energy/kinetic_accelerator(src.loc)
 		if("Mining Drone")
@@ -402,7 +401,7 @@
 	icon_state = "shield1"
 	layer = 4.1
 	mouse_opacity = 0
-	var/resonance_damage = 30
+	var/resonance_damage = 20
 	var/creator = null
 
 /obj/effect/resonance/New()
@@ -420,7 +419,7 @@
 		var/pressure = environment.return_pressure()
 		if(pressure < 50)
 			name = "strong resonance field"
-			resonance_damage = 60
+			resonance_damage = 45
 		spawn(50)
 			playsound(src,'sound/effects/sparks4.ogg',50,1)
 			if(creator)
@@ -453,7 +452,7 @@
 
 /mob/living/simple_animal/hostile/mining_drone/
 	name = "nanotrasen minebot"
-	desc = "The instructions printed on the side read: This is a small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife. A mining scanner can instruct it to drop loose ore. Field repairs can be done with a welder. Use a mining scanner to instruct it to drop ore."
+	desc = "The instructions printed on the side read: This is a small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife. A mining scanner can instruct it to drop loose ore. Field repairs can be done with a welder."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
@@ -545,7 +544,7 @@
 	icon_state = "mining_drone"
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetOffenseBehavior()
-	idle_vision_range = 5
+	idle_vision_range = 7
 	search_objects = 0
 	wander = 0
 	ranged = 1
@@ -608,6 +607,7 @@
 				if(istype(target, /mob/living/simple_animal/hostile))
 					var/mob/living/simple_animal/hostile/H = M
 					H.friends += user
+					H.attack_same = 1 //No invincible army of completely loyal mobs
 					log_game("[user] has revived hostile mob [target] with a lazarus injector")
 				loaded = 0
 				user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
