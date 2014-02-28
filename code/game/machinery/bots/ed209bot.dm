@@ -286,7 +286,7 @@ Auto Patrol: []"},
 					else
 						M.Weaken(5)
 						M.stuttering = 5
-						M.Stun()
+						M.Stun(5)
 					maxstuns--
 					if (maxstuns <= 0)
 						target = null
