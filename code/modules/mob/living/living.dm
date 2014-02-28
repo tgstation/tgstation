@@ -462,7 +462,7 @@
 				C.next_move = world.time + 100
 				C.last_special = world.time + 100
 				C.visible_message("<span class='warning'>[usr] attempts to unbuckle themself!</span>", \
-							"<span class='notice'>You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stay still.)</span>")
+							"<span class='notice'>You attempt to unbuckle yourself. (This will take around one minute and you need to stay still.)</span>")
 				spawn(0)
 					if(do_after(usr, 600))
 						if(!C.buckled)
