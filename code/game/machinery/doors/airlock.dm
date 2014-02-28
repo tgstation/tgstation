@@ -1061,8 +1061,8 @@ About the new airlock wires panel:
 	else if (istype(I, /obj/item/weapon/card/emag) || istype(I, /obj/item/weapon/melee/energy/blade))
 		if (!operating)
 			if(density)
-				sleep(6)
 				door_animate("spark")
+				sleep(6)
 				open()
 			operating = -1
 	else
