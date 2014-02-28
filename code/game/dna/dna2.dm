@@ -45,6 +45,9 @@ var/global/list/assigned_blocks[DNA_SE_LENGTH]
 
 var/global/list/datum/dna/gene/dna_genes[0]
 
+var/global/list/good_blocks[0]
+var/global/list/bad_blocks[0]
+
 /////////////////
 // GENE DEFINES
 /////////////////
