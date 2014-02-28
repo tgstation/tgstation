@@ -1189,7 +1189,7 @@ datum
 
 				var/chosen = pick(critters)
 				var/mob/living/simple_animal/hostile/C = new chosen
-				C.faction = "neutral"
+				C.faction = "neutral" // Uh, beepsky ignores mobs in this faction as of Redmine #147 - N3X
 				C.loc = get_turf(holder.my_atom)
 
 //Silver

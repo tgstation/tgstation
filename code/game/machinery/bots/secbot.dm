@@ -67,8 +67,6 @@
 	var/build_step = 0
 	var/created_name = "Securitron" //To preserve the name if it's a unique securitron I guess
 
-
-
 /obj/machinery/bot/secbot
 	New()
 		..()
@@ -613,6 +611,9 @@ Auto Patrol: []"},
 				continue
 			// Ignore lazarus-injected mobs.
 			if(M.faction == "lazarus")
+				continue
+			// Minebots only, I hope.
+			if(M.faction == "neutral")
 				continue
 			src.threatlevel = 4
 
