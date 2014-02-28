@@ -1411,8 +1411,8 @@ datum
 				if(!M) M = holder.my_atom
 				M.status_flags |= FAKEDEATH
 				M.adjustOxyLoss(0.5*REM)
-				M.Weaken(10)
-				M.silent = max(M.silent, 10)
+				M.Weaken(5)
+				M.silent = max(M.silent, 5)
 				M.tod = worldtime2text()
 				..()
 				return

@@ -51,8 +51,8 @@
 		if(!..()) return
 		if(M.stuttering < 8 && !(HULK in M.mutations))
 			M.stuttering = 8
-		M.Stun(8)
-		M.Weaken(8)
+		M.Stun(5)
+		M.Weaken(5)
 		M.visible_message("<span class='danger'>[M] has been beaten with [src] by [user]!</span>", \
 							"<span class='userdanger'>[M] has been beaten with [src] by [user]!</span>")
 	else
