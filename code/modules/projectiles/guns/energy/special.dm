@@ -211,3 +211,7 @@ obj/item/weapon/gun/energy/staff/focus
 	recent_reload = 1
 	update_icon()
 	return
+
+// /vg/ - Broken until we update to /tg/ guncode.
+/obj/item/weapon/gun/energy/kinetic_accelerator/update_icon()
+	return
