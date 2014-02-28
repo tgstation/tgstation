@@ -191,7 +191,7 @@ obj/item/weapon/gun/energy/staff/focus
 	desc = "According to Nanotrasen accounting, this is mining equipment. It's been modified for extreme power output to crush rocks, but often serves as a miner's first defense against hostile alien life; it's not very powerful unless used in a low pressure environment."
 	icon_state = "kineticgun"
 	item_state = "kineticgun"
-	projectile_type = "/obj/item/projectile/bullet"
+	projectile_type = "/obj/item/projectile/kinetic"
 	cell_type = "/obj/item/weapon/cell/crap"
 	var/overheat = 0
 	var/recent_reload = 1
@@ -211,4 +211,3 @@ obj/item/weapon/gun/energy/staff/focus
 	recent_reload = 1
 	update_icon()
 	return
-
