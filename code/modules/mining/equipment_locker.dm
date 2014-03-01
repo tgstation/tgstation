@@ -44,7 +44,7 @@
 	if(processed_sheet)
 		var/datum/material/mat = materials.getMaterial(O.material)
 		mat.stored += processed_sheet.amount //Stack the sheets
-		O.loc = null //Let the old sheet garbage collect
+		qdel(O)
 
 /obj/machinery/mineral/ore_redemption/process()
 	var/turf/T = get_turf(input)

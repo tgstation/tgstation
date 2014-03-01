@@ -132,6 +132,9 @@
 				else
 					temp = "You may only re-memorize spells whilst located inside the wizard sanctuary."
 			else if(uses >= 1 && max_uses >=1)
+				if(href_list["spell_choice"] == "noclothes")
+					if(uses < 2)
+						return
 				uses--
 			/*
 			*/

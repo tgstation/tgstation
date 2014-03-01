@@ -66,7 +66,6 @@
 			M.client.perspective = MOB_PERSPECTIVE
 
 /obj/structure/closet/proc/take_contents()
-
 	for(var/atom/movable/AM in src.loc)
 		if(insert(AM) == -1) // limit reached
 			break
@@ -93,6 +92,10 @@
 
 	if(contents.len >= storage_capacity)
 		return -1
+
+	// Prevent AIs from being crammed into lockers. /vg/ Redmine #153 - N3X
+	if(istype(AM, /mob/living/silicon/ai))
+		return 0
 
 	if(istype(AM, /mob/living))
 		var/mob/living/L = AM

@@ -13,6 +13,7 @@
 /obj/item/projectile/change/proc/wabbajack (mob/M as mob in living_mob_list)
 	if(istype(M, /mob/living) && M.stat != DEAD)
 		if(M.monkeyizing)	return
+		if(M.has_brain_worms()) return //Borer stuff - RR
 		M.monkeyizing = 1
 		M.canmove = 0
 		M.icon = null
@@ -56,6 +57,7 @@
 				MoMMI.mmi = new /obj/item/device/mmi(new_mob)
 				MoMMI.mmi.transfer_identity(M)	//Does not transfer key/client.
 			if("slime")
+				// TODO: This is stupid. - N3X
 				var/slime_color = pick("grey","purple","metal","orange","blue","darkblue","darkpurple","yellow","silver","pink","red","gold","green","lightpink","oil","black","adamantine","bluespace","pyrite","cerulean","sepia")
 				switch(slime_color)
 					if("grey")	        new_mob = new /mob/living/carbon/slime(M.loc)

@@ -1,4 +1,262 @@
 # DMITool Difference Report: C:\Users\Rob\Documents\Projects\Baystation12\icons C:\Users\Rob\Documents\Projects\vgstation13\icons
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\effects\ArynLights.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\ArynLights.dmi
+ + 0000
+ + 0001
+ + 0002
+ + 0003
+ + 0010
+ + 0011
+ + 0012
+ + 0013
+ + 0020
+ + 0021
+ + 0022
+ + 0023
+ + 0030
+ + 0031
+ + 0032
+ + 0033
+ + 0100
+ + 0101
+ + 0102
+ + 0103
+ + 0110
+ + 0111
+ + 0112
+ + 0113
+ + 0120
+ + 0121
+ + 0122
+ + 0123
+ + 0130
+ + 0131
+ + 0132
+ + 0133
+ + 0200
+ + 0201
+ + 0202
+ + 0203
+ + 0210
+ + 0211
+ + 0212
+ + 0213
+ + 0220
+ + 0221
+ + 0222
+ + 0223
+ + 0230
+ + 0231
+ + 0232
+ + 0233
+ + 0300
+ + 0301
+ + 0302
+ + 0303
+ + 0310
+ + 0311
+ + 0312
+ + 0313
+ + 0320
+ + 0321
+ + 0322
+ + 0323
+ + 0330
+ + 0331
+ + 0332
+ + 0333
+ + 1000
+ + 1001
+ + 1002
+ + 1003
+ + 1010
+ + 1011
+ + 1012
+ + 1013
+ + 1020
+ + 1021
+ + 1022
+ + 1023
+ + 1030
+ + 1031
+ + 1032
+ + 1033
+ + 1100
+ + 1101
+ + 1102
+ + 1103
+ + 1110
+ + 1111
+ + 1112
+ + 1113
+ + 1120
+ + 1121
+ + 1122
+ + 1123
+ + 1130
+ + 1131
+ + 1132
+ + 1133
+ + 1200
+ + 1201
+ + 1202
+ + 1203
+ + 1210
+ + 1211
+ + 1212
+ + 1213
+ + 1220
+ + 1221
+ + 1222
+ + 1223
+ + 1230
+ + 1231
+ + 1232
+ + 1233
+ + 1300
+ + 1301
+ + 1302
+ + 1303
+ + 1310
+ + 1311
+ + 1312
+ + 1313
+ + 1320
+ + 1321
+ + 1322
+ + 1323
+ + 1330
+ + 1331
+ + 1332
+ + 1333
+ + 2000
+ + 2001
+ + 2002
+ + 2003
+ + 2010
+ + 2011
+ + 2012
+ + 2013
+ + 2020
+ + 2021
+ + 2022
+ + 2023
+ + 2030
+ + 2031
+ + 2032
+ + 2033
+ + 2100
+ + 2101
+ + 2102
+ + 2103
+ + 2110
+ + 2111
+ + 2112
+ + 2113
+ + 2120
+ + 2121
+ + 2122
+ + 2123
+ + 2130
+ + 2131
+ + 2132
+ + 2133
+ + 2200
+ + 2201
+ + 2202
+ + 2203
+ + 2210
+ + 2211
+ + 2212
+ + 2213
+ + 2220
+ + 2221
+ + 2222
+ + 2223
+ + 2230
+ + 2231
+ + 2232
+ + 2233
+ + 2300
+ + 2301
+ + 2302
+ + 2303
+ + 2310
+ + 2311
+ + 2312
+ + 2313
+ + 2320
+ + 2321
+ + 2322
+ + 2323
+ + 2330
+ + 2331
+ + 2332
+ + 2333
+ + 3000
+ + 3001
+ + 3002
+ + 3003
+ + 3010
+ + 3011
+ + 3012
+ + 3013
+ + 3020
+ + 3021
+ + 3022
+ + 3023
+ + 3030
+ + 3031
+ + 3032
+ + 3033
+ + 3100
+ + 3101
+ + 3102
+ + 3103
+ + 3110
+ + 3111
+ + 3112
+ + 3113
+ + 3120
+ + 3121
+ + 3122
+ + 3123
+ + 3130
+ + 3131
+ + 3132
+ + 3133
+ + 3200
+ + 3201
+ + 3202
+ + 3203
+ + 3210
+ + 3211
+ + 3212
+ + 3213
+ + 3220
+ + 3221
+ + 3222
+ + 3223
+ + 3230
+ + 3231
+ + 3232
+ + 3233
+ + 3300
+ + 3301
+ + 3302
+ + 3303
+ + 3310
+ + 3311
+ + 3312
+ + 3313
+ + 3320
+ + 3321
+ + 3322
+ + 3323
+ + 3330
+ + 3331
+ + 3332
+ + 3333
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\effects\blood.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\blood.dmi
  - armorblood2
@@ -35,6 +293,10 @@
  - xgibbl3
  - xgibbl4
  - xgibbl5
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\effects\chemsmoke.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\chemsmoke.dmi
+ - : : 3 frames, 1 directions
+ + : : 3 frames, 4 directions
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\effects\effects.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\effects.dmi
  - acid
@@ -89,6 +351,7 @@
  - oxygen
  - plasma
  - unloading
+ - zoo
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mecha\mecha_equipment.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mecha\mecha_equipment.dmi
  - mecha_phase_array
@@ -993,7 +1256,6 @@
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\items_lefthand.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_lefthand.dmi
  - Gibtonite ore
- - arm_blade
  - atmos_gold_hardsuit
  - atmos_gold_helm
  - banana_peel
@@ -1020,23 +1282,30 @@
  - dualsaberrainbow1
  - dualsaberred1
  + eleanorstone
+ - folded
  + fork
  - hfrequency0
  - hfrequency1
+ - hypo
  - kineticgun
  + konaahirano
  + mai_yang
- + nymph
+ - o2
  - pizzabox1
  - prod
  - resonator
  + rocket
  - roman_shield
  - rpd
+ - saw
  - spearglass0
  - spearglass1
+ - staffofanimation
+ - staffofhealing
  - sunflower
  - swordrainbow
+ - telebaton_0
+ - telebaton_1
  - vox-helmet-engineer
  - vox-helmet-medical
  - vox-helmet-normal
@@ -1049,10 +1318,10 @@
  - vox-pressure-science
  - vox-pressure-security
  - vox-pressure-specops
+ - wand
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\items_righthand.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_righthand.dmi
  - Gibtonite ore
- - arm_blade
  - atmos_gold_hardsuit
  - atmos_gold_helm
  - banana_peel
@@ -1066,8 +1335,12 @@
  - coil_white
  - coil_yellow
  - cuff_blue
+ - cuff_cyan
  - cuff_green
+ - cuff_orange
+ - cuff_pink
  - cuff_red
+ - cuff_white
  - cuff_yellow
  - dualsaberblue1
  - dualsabergreen1
@@ -1075,20 +1348,29 @@
  - dualsaberrainbow1
  - dualsaberred1
  + eleanorstone
+ - folded
  - hfrequency0
  - hfrequency1
+ - hypo
  - kineticgun
  + konaahirano
  + mai_yang
- + nymph
+ - o2
+ - pizzabox1
  - prod
  - resonator
  + rocket
  - roman_shield
+ - rpd
+ - saw
  - spearglass0
  - spearglass1
+ - staffofanimation
+ - staffofhealing
  - sunflower
  - swordrainbow
+ - telebaton_0
+ - telebaton_1
  - vox-helmet-engineer
  - vox-helmet-medical
  - vox-helmet-normal
@@ -1100,6 +1382,7 @@
  - vox-pressure-normal
  - vox-pressure-science
  - vox-pressure-specops
+ - wand
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\mask.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\mask.dmi
  - balaclava2
@@ -1777,28 +2060,61 @@
  - tea
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\food.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\food.dmi
+ - appendixburger
+ - beans
+ - benedict
+ - berrymuffin
+ - booberrymuffin
+ - cburger
  + cheeseburger
- + hotdog
+ - chocolatebarunwrapped
+ - condi_cornoil
+ - condi_empty
+ - condi_empty2
+ - condi_frostoil
+ - condi_greygoo
+ - condi_hotsauce
+ - condi_ketchup
+ - condi_mixed
+ - condi_pepper
+ - condi_salt
+ - condi_soysauce
+ - condi_sugar
+ - copypasta
+ - icecreamsandwich
+ - meatbun
+ - meatsteak
+ - notasandwich
+ - sashimi
+ - spidereggs
+ - spidereggsham
+ - spiderleg
+ - spiderlegcooked
+ - spidermeat
+ - spidermeatbread
+ - spidermeatslice
+ - sugarcookie
  + taco
+ - wrap
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\gate.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\gate.dmi
  C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\gate.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 135, in compare
+  File "tools/OpenBYOND/src/DMITool.py", line 146, in compare
     theirsDMI.loadAll()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 189, in loadAll
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 194, in loadAll
     self.load(flags)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 192, in load
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 197, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
  C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\gate.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 151, in compare
+  File "tools/OpenBYOND/src/DMITool.py", line 162, in compare
     mineDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 186, in loadMetadata
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 191, in loadMetadata
     self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 192, in load
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 197, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
@@ -2080,10 +2396,17 @@ OSError: cannot identify image file
  - 9-10-f
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\projectiles.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\projectiles.dmi
+ - blue_laser
+ - green_laser
  - heavylaser: heavylaser: 1 frames, 8 directions
  + heavylaser: heavylaser: 1 frames, 4 directions
+ - kinetic_blast
  - laser: laser: 1 frames, 8 directions
  + laser: laser: 1 frames, 4 directions
+ - purple_laser
+ - red_1
+ - red_laser
+ - scatterlaser
  - u_laser: u_laser: 2 frames, 8 directions
  + u_laser: u_laser: 2 frames, 4 directions
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\radio.dmi
@@ -2440,6 +2763,10 @@ OSError: cannot identify image file
  + pdoorc0: pdoorc0: 6 frames, 4 directions
  - pdoorc1: pdoorc1: 6 frames, 1 directions
  + pdoorc1: pdoorc1: 6 frames, 4 directions
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\flora\pinetrees.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\flora\pinetrees.dmi
+ - 
+ - festivus_pole
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\machines\antimatter.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\machines\antimatter.dmi
  - control_critical
@@ -2500,22 +2827,22 @@ OSError: cannot identify image file
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes\large.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi
  C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 135, in compare
+  File "tools/OpenBYOND/src/DMITool.py", line 146, in compare
     theirsDMI.loadAll()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 189, in loadAll
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 194, in loadAll
     self.load(flags)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 192, in load
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 197, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
  C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 151, in compare
+  File "tools/OpenBYOND/src/DMITool.py", line 162, in compare
     mineDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 186, in loadMetadata
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 191, in loadMetadata
     self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 192, in load
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 197, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
