@@ -30,7 +30,7 @@
 
 /datum/game_mode/malfunction/pre_setup()
 	for(var/mob/new_player/player in player_list)
-		if(player.mind && player.mind.assigned_role == "AI")
+		if(player.mind && player.mind.assigned_role == "AI" && (player.client.prefs.be_special & BE_MALF))
 			malf_ai+=player.mind
 	if(malf_ai.len)
 		return 1

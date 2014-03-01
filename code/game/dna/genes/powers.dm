@@ -166,6 +166,7 @@
 			M.mutations.Remove(M_HULK)
 			M.dna.SetSEState(HULKBLOCK,0)
 			M.update_mutations()		//update our mutation overlays
+			M.update_body()
 			M << "\red You suddenly feel very weak."
 			M.Weaken(3)
 			M.emote("collapse")
