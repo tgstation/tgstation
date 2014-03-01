@@ -1255,6 +1255,7 @@
  - vox_shortquills_l
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\items_lefthand.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_lefthand.dmi
+ - Gibtonite ore
  - atmos_gold_hardsuit
  - atmos_gold_helm
  - banana_peel
@@ -1357,6 +1358,7 @@
  - o2
  - pizzabox1
  - prod
+ - resonator
  + rocket
  - roman_shield
  - rpd
@@ -2058,9 +2060,42 @@
  - tea
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\food.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\food.dmi
+ - appendixburger
+ - beans
+ - benedict
+ - berrymuffin
+ - booberrymuffin
+ - cburger
  + cheeseburger
- + hotdog
+ - chocolatebarunwrapped
+ - condi_cornoil
+ - condi_empty
+ - condi_empty2
+ - condi_frostoil
+ - condi_greygoo
+ - condi_hotsauce
+ - condi_ketchup
+ - condi_mixed
+ - condi_pepper
+ - condi_salt
+ - condi_soysauce
+ - condi_sugar
+ - copypasta
+ - icecreamsandwich
+ - meatbun
+ - meatsteak
+ - notasandwich
+ - sashimi
+ - spidereggs
+ - spidereggsham
+ - spiderleg
+ - spiderlegcooked
+ - spidermeat
+ - spidermeatbread
+ - spidermeatslice
+ - sugarcookie
  + taco
+ - wrap
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\gate.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\gate.dmi
  C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\gate.dmi: Received error, continuing: Traceback (most recent call last):
@@ -2728,6 +2763,10 @@ OSError: cannot identify image file
  + pdoorc0: pdoorc0: 6 frames, 4 directions
  - pdoorc1: pdoorc1: 6 frames, 1 directions
  + pdoorc1: pdoorc1: 6 frames, 4 directions
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\flora\pinetrees.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\flora\pinetrees.dmi
+ - 
+ - festivus_pole
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\machines\antimatter.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\machines\antimatter.dmi
  - control_critical
