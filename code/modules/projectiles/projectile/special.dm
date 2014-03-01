@@ -169,7 +169,7 @@ obj/item/projectile/kinetic/New()
 /obj/item/projectile/kinetic/on_hit(var/atom/target, var/blocked = 0)
 	if(!loc) return
 	var/turf/target_turf = get_turf(target)
-	testing("Hit [target.type], on [target_turf.type].")
+	//testing("Hit [target.type], on [target_turf.type].")
 	if(istype(target_turf, /turf/unsimulated/mineral))
 		var/turf/unsimulated/mineral/M = target_turf
 		M.GetDrilled()
@@ -185,7 +185,7 @@ obj/item/projectile/kinetic/New()
 	if(src)//Do not add to this if() statement, otherwise the meteor won't delete them
 		if(A)
 			var/turf/target_turf = get_turf(A)
-			testing("Bumped [A.type], on [target_turf.type].")
+			//testing("Bumped [A.type], on [target_turf.type].")
 			if(istype(target_turf, /turf/unsimulated/mineral))
 				var/turf/unsimulated/mineral/M = target_turf
 				M.GetDrilled()
