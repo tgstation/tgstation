@@ -97,7 +97,7 @@
 	language = "Clatter"
 	attack_verb = "punch"
 
-	flags = IS_WHITELISTED | HAS_LIPS | HAS_TAIL /*| NO_EAT*/ | NO_BREATHE /*| NON_GENDERED*/
+	flags = IS_WHITELISTED | HAS_LIPS | HAS_TAIL /*| NO_EAT*/ | NO_BREATHE /*| NON_GENDERED*/ | NO_BLOOD
 
 
 /datum/species/tajaran
