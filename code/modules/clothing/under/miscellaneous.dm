@@ -254,3 +254,38 @@
 	item_color = "sundress"
 	body_parts_covered = CHEST|GROIN
 	fitted = 0
+
+/obj/item/clothing/under/captainformal
+	name = "captain's formal uniform"
+	desc = "A captain's formal-wear, for special occasions."
+	icon_state = "captain_formal"
+	item_state = "captain_formal"
+	item_color = "captain_formal"
+
+/obj/item/clothing/under/hosformalmale
+	name = "head of security's formal uniform"
+	desc = "A male head of security's formal-wear, for special occasions."
+	icon_state = "hos_formal_male"
+	item_state = "hos_formal_male"
+	item_color = "hos_formal_male"
+
+/obj/item/clothing/under/hosformalfem
+	name = "head of security's formal uniform"
+	desc = "A female head of security's formal-wear, for special occasions."
+	icon_state = "hos_formal_fem"
+	item_state = "hos_formal_fem"
+	item_color = "hos_formal_fem"
+
+/obj/item/clothing/under/assistantformal
+	name = "assistant's formal uniform"
+	desc = "An assistant's formal-wear. Why an assistant needs formal-wear is still unknown."
+	icon_state = "assistant_formal"
+	item_state = "assistant_formal"
+	item_color = "assistant_formal"
+
+/obj/item/clothing/under/blacktango
+	name = "black tango dress"
+	desc = "Filled with latin fire."
+	icon_state = "black_tango"
+	item_state = "black_tango"
+	item_color = "black_tango"

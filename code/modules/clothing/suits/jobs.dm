@@ -100,6 +100,14 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
 
+/obj/item/clothing/suit/lawyer/blackjacet
+	name = "black suit jacket"
+	desc = "A professional suit jacket."
+	icon_state = "suitjacket_black"
+	item_state = "suitjacket_black"
+	blood_overlay_type = "coat"
+	body_parts_covered = CHEST|ARMS
+
 //Mime
 /obj/item/clothing/suit/suspenders
 	name = "suspenders"
