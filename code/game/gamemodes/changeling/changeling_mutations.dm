@@ -1,4 +1,12 @@
-//This only contains the arm blade for now because I'm a lazy fuck. Yers truely, Miauw, resident lazy fuck.
+/* Changeling Mutations! ~By Miauw
+	Contains:
+		Arm Blade
+		Space Suit
+	TODO:
+		Shield
+		Armor
+*/
+
 /obj/item/weapon/melee/arm_blade
 	name = "arm blade"
 	desc = "A grotesque blade made out of bone and flesh that cleaves through people as a hot knife through butter"
@@ -50,3 +58,23 @@
 			//user.say("Heeeeeeeeeerrre's Johnny!")
 			user.visible_message("<span class='warning'>[user] forces the door to open with \his [src]!</span>", "<span class='warning'>We force the door to open.</span>", "<span class='warning'>You hear a metal screeching sound.</span>")
 			A.open(1)
+
+//Space Suit & Helmet
+/obj/item/clothing/suit/space/changeling
+	name = "flesh mass"
+	desc = "A huge, bulky mass of pressure and temperature-resistant organic tissue, evolved to facilitate space travel."
+	flags = STOPSPRESSUREDMAGE | NODROP //Not THICKMATERIAL because it's organic tissue, so if somebody tries to inject something into it, it still ends up in your blood. (also balance but muh fluff)
+	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/emergency_oxygen, /obj/item/weapon/tank/oxygen)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0) //No armor at all.
+
+/obj/item/clothing/suit/space/changeling/dropped()
+	del src
+
+/obj/item/clothing/head/helmet/space/changeling
+	name = "flesh mass"
+	desc = "A covering of pressure and temperature-resistant organic tissue with a glass-like chitin front."
+	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | NODROP //Again, no THICKMATERIAL.
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/head/helmet/space/changeling/dropped()
+	del src

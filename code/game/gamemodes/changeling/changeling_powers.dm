@@ -561,6 +561,57 @@ var/list/datum/dna/hivemind_bank = list()
 
 	changeling.chem_charges -= 20
 
+/mob/living/carbon/proc/changeling_space_suit()
+	set category = "Changeling"
+	set name = "Organic Space Suit (20)"
+
+	if(!ishuman(src))
+		return
+
+	var/mob/living/carbon/human/H = src
+
+	if(mind && mind.changeling && mind.changeling.spacesuitactive)
+		mind.changeling.spacesuitactive = 0
+		visible_message("<span class='warning'>[src] casts off their flesh shell!</span>", "<span class='warning'>We cast off our protective organic shell, temporarily weakening our genomes.</span>", "<span class='warning'>You hear the organic matter ripping and tearing!</span>")
+
+		del H.wear_suit //Delete the suit.
+		del H.head
+		H.update_inv_wear_suit()
+		H.update_inv_head()
+		H.update_hair()
+
+		var/turf/simulated/T = get_turf(src)
+		if(istype(T))
+			T.add_blood(src) //So real blood decals
+			playsound(loc, 'sound/effects/splat.ogg', 50, 1) //So real sounds
+
+		mind.changeling.geneticdamage += 8 //Casting off a space suit leaves you weak for a few seconds.
+		return
+
+	var/datum/changeling/changeling = changeling_power(20, 0, 5)
+	if(!changeling)
+		return
+
+	if(!H.unEquip(H.wear_suit))
+		src << "\the [H.wear_suit] is stuck to your body, you cannot grow a space suit over it!"
+		return
+	if(!H.unEquip(H.head))
+		src << "\the [H.head] is stuck on your head, you cannot grow a space helmet over it!"
+		return
+
+	equip_to_slot_if_possible(new /obj/item/clothing/suit/space/changeling(H), slot_wear_suit, 1, 1, 1)
+	equip_to_slot_if_possible(new /obj/item/clothing/head/helmet/space/changeling(H), slot_head, 1, 1, 1)
+
+	visible_message("<span class='warning'>[src]'s flesh rapidly inflates, forming a bloated mass around their body!</span>", "<span class='warning'>We inflate our flesh, creating a spaceproof suit!</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
+
+	changeling.spacesuitactive = 1
+	changeling.chem_charges -= 20
+	changeling.geneticdamage += 8
+
+	spawn(0)
+		while(src && mind && mind.changeling && mind.changeling.spacesuitactive)
+			src.mind.changeling.chem_charges = max(src.mind.changeling.chem_charges - 1,5, 0)
+			sleep(40)
 
 //////////
 //STINGS//	//They get a pretty header because there's just so fucking many of them ;_;

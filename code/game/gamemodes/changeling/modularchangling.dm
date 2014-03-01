@@ -169,6 +169,14 @@ var/list/powerinstances
 	allowduringlesserform = 0
 	verbpath = /mob/living/carbon/proc/changeling_arm_blade
 
+/datum/power/changeling/spacesuit
+	name = "Organic Space Suit"
+	desc = "We grow an organic suit to protect ourselves from space exposure."
+	helptext = "We must constantly repair our suit to make it space-proof, so we cant regenerate chemicals while our suit is active. Casting off the suit damages our genomes. Cannot be used in lesser form."
+	genomecost = 1
+	allowduringlesserform = 0
+	verbpath = /mob/living/carbon/proc/changeling_space_suit
+
 // Modularchangling, totally stolen from the new player panel.  YAYY
 /datum/changeling/proc/EvolutionMenu()//The new one
 	set name = "-Evolution Menu-"//Dashes are so it's listed before all the other abilities.
