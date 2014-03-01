@@ -548,7 +548,7 @@ var/list/datum/dna/hivemind_bank = list()
 		del r_hand
 		return
 
-	var/datum/changeling/changeling = changeling_power(20)
+	var/datum/changeling/changeling = changeling_power(20, 0, 5)
 	if(!changeling)
 		return
 
@@ -557,8 +557,8 @@ var/list/datum/dna/hivemind_bank = list()
 		return
 
 	put_in_hands(new /obj/item/weapon/melee/arm_blade(src))
-	changeling.geneticdamage += 6
 
+	changeling.geneticdamage += 8
 	changeling.chem_charges -= 20
 
 /mob/living/carbon/proc/changeling_space_suit()
