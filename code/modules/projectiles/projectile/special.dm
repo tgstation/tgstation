@@ -141,10 +141,10 @@
 
 /obj/item/projectile/kinetic
 	name = "kinetic force"
-	icon_state = null
+	icon_state = "energy"
 	damage = 15
 	damage_type = BRUTE
-	flag = "bomb"
+	flag = "energy"
 	var/range = 2
 
 obj/item/projectile/kinetic/New()
@@ -166,13 +166,34 @@ obj/item/projectile/kinetic/New()
 		qdel(src)
 */
 
-/obj/item/projectile/kinetic/on_hit(var/atom/target)
-	var/turf/target_turf= get_turf(target)
+/obj/item/projectile/kinetic/on_hit(var/atom/target, var/blocked = 0)
+	if(!loc) return
+	var/turf/target_turf = get_turf(target)
+	testing("Hit [target.type], on [target_turf.type].")
 	if(istype(target_turf, /turf/unsimulated/mineral))
 		var/turf/unsimulated/mineral/M = target_turf
 		M.GetDrilled()
 	new /obj/item/effect/kinetic_blast(target_turf)
 	..()
+
+/obj/item/projectile/kinetic/Bump(atom/A as mob|obj|turf|area)
+	if(!loc) return
+	if(A == firer)
+		loc = A.loc
+		return
+
+	if(src)//Do not add to this if() statement, otherwise the meteor won't delete them
+		if(A)
+			var/turf/target_turf = get_turf(A)
+			testing("Bumped [A.type], on [target_turf.type].")
+			if(istype(target_turf, /turf/unsimulated/mineral))
+				var/turf/unsimulated/mineral/M = target_turf
+				M.GetDrilled()
+			qdel(src) // Comment this out if you want to shoot through the asteroid, ERASER-style.
+			return 1
+	else
+		qdel(src)
+		return 0
 
 /obj/item/effect/kinetic_blast
 	name = "kinetic explosion"
