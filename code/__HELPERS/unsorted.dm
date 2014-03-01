@@ -596,27 +596,43 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 
 atom/proc/GetAllContents()
 	var/list/processing_list = list(src)
+	var/list/processed = list()
 	var/list/assembled = list()
 
 	while(processing_list.len)
 		var/atom/A = processing_list[1]
 		processing_list -= A
-		processing_list += A.contents
-		assembled += A
+
+		for(var/atom/a in A)
+			if(!(a in processed))
+				processing_list += a
+
+		if(!(A in assembled))
+			assembled += A
 
 	return assembled
 
 atom/proc/GetTypeInAllContents(typepath)
 	var/list/processing_list = list(src)
+	var/list/processed = list()
 
-	while(processing_list.len)
+	var/atom/found = null
+
+	while(processing_list.len && found==null)
 		var/atom/A = processing_list[1]
 		if(istype(A, typepath))
-			return 1
-		processing_list -= A
-		processing_list += A.contents
+			found = A
 
-	return 0
+		processing_list -= A
+
+		for(var/atom/a in A)
+			if(!(a in processed))
+				processing_list += a
+
+		if(!(A in processed))
+			processed += A
+
+	return found
 
 
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
