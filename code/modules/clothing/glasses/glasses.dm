@@ -6,6 +6,11 @@
 	origin_tech = "magnets=2;engineering=2"
 	vision_flags = SEE_TURFS
 
+/obj/item/clothing/glasses/meson/advanced
+	name = "Advanced Optical Meson Scanner"
+	desc = "More powerful than your standard mesons, these ones make everything appear to be lit extremely brightly."
+	invis_view = SEE_INVISIBLE_MINIMUM
+
 /obj/item/clothing/glasses/science
 	name = "Science Goggles"
 	desc = "nothing"
@@ -14,12 +19,12 @@
 
 /obj/item/clothing/glasses/night
 	name = "Night Vision Goggles"
-	desc = "You can totally see in the dark now!."
+	desc = "You can totally see in the dark now!"
 	icon_state = "night"
 	item_state = "glasses"
-	origin_tech = "magnets=2"
-	vision_flags = SEE_TURFS
-	darkness_view = 3
+	origin_tech = "magnets=4"
+	darkness_view = 8
+	invis_view = SEE_INVISIBLE_MINIMUM
 
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"
@@ -40,6 +45,7 @@
 	item_state = "glasses"
 	origin_tech = "magnets=3;engineering=3"
 	vision_flags = SEE_OBJS
+	invis_view = SEE_INVISIBLE_MINIMUM
 
 /obj/item/clothing/glasses/regular
 	name = "Prescription Glasses"
@@ -64,7 +70,7 @@
 	name = "sunglasses"
 	icon_state = "sun"
 	item_state = "sunglasses"
-	darkness_view = -1
+	darkness_view = 1
 	flash_protect = 1
 	tint = 1
 
@@ -106,33 +112,6 @@
 	icon_state = "bigsunglasses"
 	item_state = "bigsunglasses"
 
-/obj/item/clothing/glasses/sunglasses/sechud
-	name = "HUDSunglasses"
-	desc = "Sunglasses with a HUD."
-	icon_state = "sunhud"
-	var/obj/item/clothing/glasses/hud/security/hud = null
-
-	New()
-		..()
-		src.hud = new/obj/item/clothing/glasses/hud/security(src)
-		return
-
-/* /obj/item/clothing/glasses/sunglasses/sechud/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
-	if(istype(W, /obj/item/weapon/card/emag))
-		if(emagged == 0)
-			emagged = 1
-			user << "<span class='warning'>PZZTTPFFFT</span>"
-			desc = desc + " The display flickers slightly."
-		else
-			user << "<span class='warning'>It is already emagged!</span>" */ //Fuck emags
-
-/obj/item/clothing/glasses/sunglasses/sechud/emp_act(severity)
-	if(emagged == 0)
-		emagged = 1
-		desc = desc + " The display flickers slightly."
-
-
 /obj/item/clothing/glasses/thermal
 	name = "Optical Thermal Scanner"
 	desc = "Thermals in the shape of glasses."
@@ -140,7 +119,7 @@
 	item_state = "glasses"
 	origin_tech = "magnets=3"
 	vision_flags = SEE_MOBS
-	invisa_view = 2
+	invis_view = 2
 	flash_protect = -1
 
 	emp_act(severity)

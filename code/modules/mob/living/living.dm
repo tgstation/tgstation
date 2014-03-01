@@ -462,9 +462,9 @@
 				C.next_move = world.time + 100
 				C.last_special = world.time + 100
 				C.visible_message("<span class='warning'>[usr] attempts to unbuckle themself!</span>", \
-							"<span class='notice'>You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stay still.)</span>")
+							"<span class='notice'>You attempt to unbuckle yourself. (This will take around one minute and you need to stay still.)</span>")
 				spawn(0)
-					if(do_after(usr, 1200))
+					if(do_after(usr, 600))
 						if(!C.buckled)
 							return
 						C.visible_message("<span class='danger'>[usr] manages to unbuckle themself!</span>", \
@@ -512,7 +512,7 @@
 						CM.update_inv_handcuffed(0)
 			else
 				var/obj/item/weapon/handcuffs/HC = CM.handcuffed
-				var/breakouttime = 1200 //A default in case you are somehow handcuffed with something that isn't an obj/item/weapon/handcuffs type
+				var/breakouttime = 600 //A default in case you are somehow handcuffed with something that isn't an obj/item/weapon/handcuffs type
 				var/displaytime = 2 //Minutes to display in the "this will take X minutes."
 				if(istype(HC)) //If you are handcuffed with actual handcuffs... Well what do I know, maybe someone will want to handcuff you with toilet paper in the future...
 					breakouttime = HC.breakouttime
@@ -546,7 +546,7 @@
 						CM.update_inv_legcuffed(0)
 			else
 				var/obj/item/weapon/legcuffs/HC = CM.legcuffed
-				var/breakouttime = 1200 //A default in case you are somehow legcuffed with something that isn't an obj/item/weapon/legcuffs type
+				var/breakouttime = 600 //A default in case you are somehow legcuffed with something that isn't an obj/item/weapon/legcuffs type
 				var/displaytime = 2 //Minutes to display in the "this will take X minutes."
 				if(istype(HC)) //If you are legcuffed with actual legcuffs... Well what do I know, maybe someone will want to legcuff you with toilet paper in the future...
 					breakouttime = HC.breakouttime

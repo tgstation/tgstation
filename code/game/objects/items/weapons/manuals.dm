@@ -6,32 +6,11 @@
 	due_date = 0 // Game time in 1/10th seconds
 	unique = 1   // 0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
 
-
-/obj/item/weapon/book/manual/engineering_construction
-	name = "Station Repairs and Construction"
-	icon_state ="bookEngineering"
-	author = "Engineering Encyclopedia"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
-	title = "Station Repairs and Construction"
-	dat = {"
-
-		<html><head>
-		</head>
-
-		<body>
-		<iframe width='100%' height='97%' src="http://wiki.nanotrasen.com/index.php?title=Guide_to_construction&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
-		</body>
-
-		</html>
-
-		"}
-
 /obj/item/weapon/book/manual/engineering_particle_accelerator
 	name = "Particle Accelerator User's Guide"
 	icon_state ="bookParticleAccelerator"
 	author = "Engineering Encyclopedia"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
 	title = "Particle Accelerator User's Guide"
-//big pile of shit below.
-
 	dat = {"<html>
 				<head>
 				<style>
@@ -67,59 +46,6 @@
 				</body>
 				</html>"}
 
-/obj/item/weapon/book/manual/infections
-	name = "Infections - Making your own pandemic!"
-	icon_state = "bookInfections"
-	author = "Infections Encyclopedia"
-	title = "Infections - Making your own pandemic!"
-
-	dat = {"
-	<html><head>
-	</head>
-
-	<body>
-	<iframe width='100%' height='97%' src="http://wiki.nanotrasen.com/index.php?title=Infections&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
-	</body>
-
-	</html>
-	"}
-
-/obj/item/weapon/book/manual/telescience
-	name = "Teleportation Science - Bluespace for dummies!"
-	icon_state = "book7"
-	author = "University of Bluespace"
-	title = "Teleportation Science - Bluespace for dummies!"
-
-	dat = {"
-	<html><head>
-	</head>
-
-	<body>
-	<iframe width='100%' height='97%' src="http://wiki.nanotrasen.com/index.php?title=Telescience&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
-	</body>
-
-	</html>
-	"}
-
-/obj/item/weapon/book/manual/engineering_hacking
-	name = "Hacking"
-	icon_state ="bookHacking"
-	author = "Engineering Encyclopedia"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
-	title = "Hacking"
-//big pile of shit below.
-
-	dat = {"
-
-		<html><head>
-		</head>
-
-		<body>
-		<iframe width='100%' height='97%' src="http://wiki.nanotrasen.com/index.php?title=Hacking&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
-		</body>
-
-		</html>
-
-		"}
 
 /obj/item/weapon/book/manual/engineering_singularity_safety
 	name = "Singularity Safety in Special Circumstances"
@@ -143,12 +69,12 @@
 
 				<h4>Power outage</h4>
 
-				A power problem has made the entire station loose power? Could be station-wide wiring problems or syndicate power sinks. In any case follow these steps:
+				A power problem has made the entire station lose power? Could be station-wide wiring problems or syndicate power sinks. In any case follow these steps:
 				<p>
 				<b>Step one:</b> <b><font color='red'>PANIC!</font></b><br>
 				<b>Step two:</b> Get your ass over to engineering! <b>QUICKLY!!!</b><br>
-				<b>Step three:</b> Get to the <b>Area Power Controller</b> which controls the power to the emitters.<br>
-				<b>Step four:</b> Swipe it with your <b>ID card</b> - if it doesn't unlock, continue with step 15.<br>
+				<b>Step three:</b> Make sure the SMES is still powering the emitters, if not, setup the generator in secure storage and disconnect the emitters from the SMES.<br>
+				<b>Step four:</b> Next, head over to the APC and swipe it with your <b>ID card</b> - if it doesn't unlock, continue with step 15.<br>
 				<b>Step five:</b> Open the console and disengage the cover lock.<br>
 				<b>Step six:</b> Pry open the APC with a <b>Crowbar.</b><br>
 				<b>Step seven:</b> Take out the empty <b>power cell.</b><br>
@@ -457,62 +383,22 @@
 				When a cyborg is created it picks out of an array of modules to designate its purpose. There are 6 different cyborg modules.
 
 				<h3>Standard Cyborg</h3>
-				The standard cyborg module is a multi-purpose cyborg. It is equipped with various modules, allowing it to do basic tasks.<br>A Standard Cyborg comes with:
-				<ul>
-				  <li>Crowbar</li>
-				  <li>Stun Baton</li>
-				  <li>Health Analyzer</li>
-				  <li>Fire Extinguisher</li>
-				</ul>
+				The standard cyborg module is a multi-purpose cyborg. It is equipped with various modules, allowing it to do basic tasks.<br>
 
 				<h3>Engineering Cyborg</h3>
-				The Engineering cyborg module comes equipped with various engineering-related tools to help with engineering-related tasks.<br>An Engineering Cyborg comes with:
-				<ul>
-				  <li>A basic set of engineering tools</li>
-				  <li>Metal Synthesizer</li>
-				  <li>Reinforced Glass Synthesizer</li>
-				  <li>An RCD</li>
-				  <li>Wire Synthesizer</li>
-				  <li>Fire Extinguisher</li>
-				  <li>Built-in Optical Meson Scanners</li>
-				</ul>
+				The Engineering cyborg module comes equipped with various engineering-related tools to help with engineering-related tasks.<br>
 
 				<h3>Mining Cyborg</h3>
-				The Mining Cyborg module comes equipped with the latest in mining equipment. They are efficient at mining due to no need for oxygen, but their power cells limit their time in the mines.<br>A Mining Cyborg comes with:
-				<ul>
-				  <li>Jackhammer</li>
-				  <li>Shovel</li>
-				  <li>Mining Satchel</li>
-				  <li>Built-in Optical Meson Scanners</li>
-				</ul>
+				The Mining Cyborg module comes equipped with the latest in mining equipment. They are efficient at mining due to no need for oxygen, but their power cells limit their time in the mines.
 
 				<h3>Security Cyborg</h3>
-				The Security Cyborg module is equipped with effective security measures used to apprehend and arrest criminals without harming them a bit.<br>A Security Cyborg comes with:
-				<ul>
-				  <li>Stun Baton</li>
-				  <li>Handcuffs</li>
-				  <li>Taser</li>
-				</ul>
+				The Security Cyborg module is equipped with effective security measures used to apprehend and arrest criminals without harming them a bit.
 
 				<h3>Janitor Cyborg</h3>
-				The Janitor Cyborg module is equipped with various cleaning-facilitating devices.<br>A Janitor Cyborg comes with:
-				<ul>
-				  <li>Mop</li>
-				  <li>Hand Bucket</li>
-				  <li>Cleaning Spray Synthesizer and Spray Nozzle</li>
-				</ul>
+				The Janitor Cyborg module is equipped with various cleaning-facilitating devices.
 
 				<h3>Service Cyborg</h3>
-				The service cyborg module comes ready to serve your human needs. It includes various entertainment and refreshment devices. Occasionally some service cyborgs may have been referred to as "Bros"<br>A Service Cyborg comes with:
-				<ul>
-				  <li>Shaker</li>
-				  <li>Industrail Dropper</li>
-				  <li>Platter</li>
-				  <li>Beer Synthesizer</li>
-				  <li>Zippo Lighter</li>
-				  <li>Rapid-Service-Fabricator (Produces various entertainment and refreshment objects)</li>
-				  <li>Pen</li>
-				</ul>
+				The service cyborg module comes ready to serve your human needs. It includes various entertainment and refreshment devices. Occasionally some service cyborgs may have been referred to as "Bros"
 
 				<h2><a name="Construction">Cyborg Construction</h2>
 				Cyborg construction is a rather easy process, requiring a decent amount of metal and a few other supplies.<br>The required materials to make a cyborg are:
@@ -639,42 +525,6 @@
 		</html>
 		"}
 
-/obj/item/weapon/book/manual/security_space_law
-	name = "Space Law"
-	desc = "A set of Nanotrasen guidelines for keeping law and order on their space stations."
-	icon_state = "bookSpaceLaw"
-	author = "Nanotrasen"
-	title = "Space Law"
-	dat = {"
-
-		<html><head>
-		</head>
-
-		<body>
-		<iframe width='100%' height='97%' src="http://wiki.nanotrasen.com/index.php?title=Space_Law&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
-		</body>
-
-		</html>
-
-		"}
-
-/obj/item/weapon/book/manual/engineering_guide
-	name = "Engineering Textbook"
-	icon_state ="bookEngineering2"
-	author = "Engineering Encyclopedia"
-	title = "Engineering Textbook"
-	dat = {"
-
-		<html><head>
-		</head>
-
-		<body>
-		<iframe width='100%' height='97%' src="http://wiki.nanotrasen.com/index.php?title=Guide_to_engineering&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
-		</body>
-
-		</html>
-
-		"}
 
 
 /obj/item/weapon/book/manual/chef_recipes
@@ -857,3 +707,73 @@
 			Intelligence Analysts believe that normal Nanotrasen procedure is for the Captain to secure the nuclear authorisation disk.<br>
 			Good luck!
 			</html>"}
+
+// Wiki books that are linked to the configured wiki link.
+
+// A book that links to the wiki
+/obj/item/weapon/book/manual/wiki
+	var/page_link = ""
+	window_size = "800x600"
+
+/obj/item/weapon/book/manual/wiki/attack_self()
+	if(!dat)
+		initialize_wikibook()
+	..()
+
+/obj/item/weapon/book/manual/wiki/proc/initialize_wikibook()
+	if(config.wikiurl)
+		dat = {"
+
+			<html><head>
+			</head>
+
+			<body>
+			<iframe width='100%' height='97%' src="[config.wikiurl]/index.php?title=[page_link]&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+			</body>
+
+			</html>
+
+			"}
+
+/obj/item/weapon/book/manual/wiki/engineering_construction
+	name = "Station Repairs and Construction"
+	icon_state ="bookEngineering"
+	author = "Engineering Encyclopedia"
+	title = "Station Repairs and Construction"
+	page_link = "Guide_to_construction"
+
+/obj/item/weapon/book/manual/wiki/engineering_guide
+	name = "Engineering Textbook"
+	icon_state ="bookEngineering2"
+	author = "Engineering Encyclopedia"
+	title = "Engineering Textbook"
+	page_link = "Guide_to_engineering"
+
+/obj/item/weapon/book/manual/wiki/security_space_law
+	name = "Space Law"
+	desc = "A set of Nanotrasen guidelines for keeping law and order on their space stations."
+	icon_state = "bookSpaceLaw"
+	author = "Nanotrasen"
+	title = "Space Law"
+	page_link = "Space_Law"
+
+/obj/item/weapon/book/manual/wiki/infections
+	name = "Infections - Making your own pandemic!"
+	icon_state = "bookInfections"
+	author = "Infections Encyclopedia"
+	title = "Infections - Making your own pandemic!"
+	page_link = "Infections"
+
+/obj/item/weapon/book/manual/wiki/telescience
+	name = "Teleportation Science - Bluespace for dummies!"
+	icon_state = "book7"
+	author = "University of Bluespace"
+	title = "Teleportation Science - Bluespace for dummies!"
+	page_link = "Telescience"
+
+/obj/item/weapon/book/manual/wiki/engineering_hacking
+	name = "Hacking"
+	icon_state ="bookHacking"
+	author = "Engineering Encyclopedia"
+	title = "Hacking"
+	page_link = "Hacking"
