@@ -337,12 +337,6 @@
 		L << "That vent is welded shut."
 		return
 
-	/*else
-		for(var/obj/machinery/atmospherics/unary/vent_pump/v in range(1,src))
-			if(!v.welded)
-				if(v.Adjacent(src))
-					vent_found = v*/
-
 	if(!network || !network.normal_members.len)
 		L << "This vent is not connected to anything."
 		return
@@ -375,7 +369,7 @@
 		return
 	if(iscarbon(L) && L.ventcrawler < 2) // lesser ventcrawlers can't bring items
 		for(var/obj/item/carried_item in L.contents)
-			if(!istype(carried_item, /obj/item/weapon/implant))//If it's not an implant or a facehugger
+			if(!istype(carried_item, /obj/item/weapon/implant))//If it's not an implant
 				L << "<span class='warning'> You can't be carrying items or have items equipped when vent crawling!</span>"
 				return
 
