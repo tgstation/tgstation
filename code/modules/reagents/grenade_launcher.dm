@@ -6,7 +6,7 @@
 	item_state = "riotgun"
 	w_class = 4.0
 	throw_speed = 2
-	throw_range = 10
+	throw_range = 7
 	force = 5.0
 	var/list/grenades = new/list()
 	var/max_grenades = 3

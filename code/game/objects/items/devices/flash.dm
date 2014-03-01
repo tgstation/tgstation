@@ -6,7 +6,7 @@
 	throwforce = 0
 	w_class = 1.0
 	throw_speed = 3
-	throw_range = 10
+	throw_range = 7
 	flags = CONDUCT
 	origin_tech = "magnets=2;combat=1"
 
@@ -68,7 +68,7 @@
 	if(iscarbon(M))
 		var/safety = M:eyecheck()
 		if(safety <= 0)
-			M.Weaken(10)
+			M.Weaken(5)
 			flick("e_flash", M.flash)
 
 			if(ishuman(M) && ishuman(user) && M.stat != DEAD)
@@ -179,7 +179,7 @@
 				var/mob/living/carbon/M = loc
 				var/safety = M.eyecheck()
 				if(safety <= 0)
-					M.Weaken(10)
+					M.Weaken(5)
 					flick("e_flash", M.flash)
 					for(var/mob/O in viewers(M, null))
 						O.show_message("<span class='disarm'>[M] is blinded by the flash!</span>")

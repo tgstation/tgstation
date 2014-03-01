@@ -83,7 +83,7 @@
 
 /mob/living/carbon/human/unEquip(obj/item/I)
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
-	if(!.)
+	if(!. || !I)
 		return
 
 

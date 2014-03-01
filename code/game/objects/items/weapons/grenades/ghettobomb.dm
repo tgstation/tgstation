@@ -22,7 +22,7 @@
 	icon_state = "improvised_grenade"
 	item_state = "flashbang"
 	throw_speed = 3
-	throw_range = 20
+	throw_range = 7
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	var/assembled = 0

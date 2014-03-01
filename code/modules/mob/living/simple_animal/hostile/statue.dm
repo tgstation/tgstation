@@ -14,8 +14,8 @@
 	response_disarm = "pushes"
 
 	speed = -1
-	maxHealth = 25000
-	health = 25000
+	maxHealth = 50000
+	health = 50000
 
 	harm_intent_damage = 70
 	melee_damage_lower = 68
@@ -49,15 +49,17 @@
 	anchored = 1
 	status_flags = GODMODE // Cannot push also
 
+	var/cannot_be_seen = 1
+
 
 // No movement while seen code.
 
 /mob/living/simple_animal/hostile/statue/New()
 	..()
 	// Give spells
-	spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flicker_lights(src)
-	spell_list += new /obj/effect/proc_holder/spell/aoe_turf/blindness(src)
-	spell_list += new /obj/effect/proc_holder/spell/targeted/night_vision(src)
+	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flicker_lights(src)
+	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/blindness(src)
+	mob_spell_list += new /obj/effect/proc_holder/spell/targeted/night_vision(src)
 
 	// Give nightvision
 	see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
@@ -100,6 +102,8 @@
 	..()
 
 /mob/living/simple_animal/hostile/statue/proc/can_be_seen(var/turf/destination)
+	if(!cannot_be_seen)
+		return null
 	// Check for darkness
 	var/turf/T = get_turf(loc)
 	if(T && destination)
@@ -117,7 +121,7 @@
 	// This loop will, at most, loop twice.
 	for(var/atom/check in check_list)
 		for(var/mob/living/M in viewers(world.view + 1, check) - src)
-			if(M.client && CanAttack(M))
+			if(M.client && CanAttack(M) && !issilicon(M))
 				if(!M.blinded && !(sdisabilities & BLIND))
 					return M
 	return null
@@ -168,7 +172,7 @@
 	message = "<span class='notice'>You glare your eyes.</span>"
 	charge_max = 600
 	clothes_req = 0
-	range = 8
+	range = 10
 
 /obj/effect/proc_holder/spell/aoe_turf/blindness/cast(list/targets)
 	for(var/mob/living/L in living_mob_list)
@@ -190,7 +194,6 @@
 	include_user = 1
 
 /obj/effect/proc_holder/spell/targeted/night_vision/cast(list/targets)
-
 	for(var/mob/living/target in targets)
 		if(target.see_invisible == SEE_INVISIBLE_LIVING)
 			target.see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING

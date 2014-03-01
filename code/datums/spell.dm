@@ -49,7 +49,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 
-	if(!(src in user.spell_list))
+	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.mob_spell_list))
 		user << "<span class='warning'>You shouldn't have this spell! Something's wrong.</span>"
 		return 0
 
@@ -91,7 +91,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				return 0
 	else
 		if(clothes_req || human_req)
-			user << "<span class='notice'>This spell can only be casted by humans!</span>"
+			user << "<span class='notice'>This spell can only be cast by humans!</span>"
 			return 0
 
 	if(!skipcharge)
@@ -298,3 +298,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	perform(targets)
 
 	return
+
+/obj/effect/proc_holder/spell/proc/can_be_cast_by(mob/caster)
+	if((human_req || clothes_req) && !ishuman(caster))
+		return 0
+	return 1

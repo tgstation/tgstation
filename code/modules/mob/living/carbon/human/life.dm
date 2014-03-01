@@ -1070,34 +1070,13 @@
 						see_invisible = SEE_INVISIBLE_LIVING
 
 			if(glasses)
-				if(istype(glasses, /obj/item/clothing/glasses/meson))
-					sight |= SEE_TURFS
-				else if(istype(glasses, /obj/item/clothing/glasses/night))
-					see_in_dark = 5
-					see_invisible = SEE_INVISIBLE_MINIMUM
-				else if(istype(glasses, /obj/item/clothing/glasses/thermal))
-					sight |= SEE_MOBS
-					see_invisible = SEE_INVISIBLE_MINIMUM
-				else if(istype(glasses, /obj/item/clothing/glasses/material))
-					sight |= SEE_OBJS
-					see_invisible = SEE_INVISIBLE_MINIMUM
-
-	/* HUD shit goes here, as long as it doesn't modify sight flags */
-	// The purpose of this is to stop xray and w/e from preventing you from using huds -- Love, Doohl
-
-				else if(istype(glasses, /obj/item/clothing/glasses/sunglasses))
-					see_in_dark = 1
-					if(istype(glasses, /obj/item/clothing/glasses/sunglasses/sechud))
-						var/obj/item/clothing/glasses/sunglasses/sechud/O = glasses
-						if(O.hud)		O.hud.process_hud(src)
-						see_invisible = SEE_INVISIBLE_LIVING
-
-				else if(istype(glasses, /obj/item/clothing/glasses/hud))
-					var/obj/item/clothing/glasses/hud/O = glasses
-					O.process_hud(src)
-					see_invisible = SEE_INVISIBLE_LIVING
-				else
-					see_invisible = SEE_INVISIBLE_LIVING
+				if(istype(glasses, /obj/item/clothing/glasses))
+					var/obj/item/clothing/glasses/G = glasses
+					sight |= G.vision_flags
+					see_in_dark = G.darkness_view
+					see_invisible = G.invis_view
+					if(G.hud)
+						G.process_hud(src)
 
 			if(druggy)	//Override for druggy
 				see_invisible = see_temp
