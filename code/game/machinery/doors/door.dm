@@ -61,7 +61,7 @@
 	if (istype(AM, /obj/machinery/bot))
 		var/obj/machinery/bot/bot = AM
 
-		if (check_access(bot.botcard))
+		if (check_access(bot.botcard) && !operating)
 			open()
 
 		return
@@ -70,7 +70,7 @@
 		var/obj/mecha/mecha = AM
 
 		if (density)
-			if (mecha.occupant && (allowed(mecha.occupant) || check_access_list(mecha.operation_req_access)))
+			if (mecha.occupant && !operating && (allowed(mecha.occupant) || check_access_list(mecha.operation_req_access)))
 				open()
 			else
 				door_animate("deny")
@@ -89,7 +89,7 @@
 	if(!requiresID())
 		user = null
 
-	if(allowed(user))
+	if(allowed(user) && !operating)
 		open()
 	else
 		door_animate("deny")
