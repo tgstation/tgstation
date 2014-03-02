@@ -535,7 +535,7 @@
 				M.drop_item()
 			M.eye_blurry += 10
 			M.Paralyse(1)
-			M.Weaken(4)
+			M.Weaken(2)
 		if (prob(M.eye_stat - 10 + 1))
 			if(M.stat != 2)
 				M << "\red You go blind!"

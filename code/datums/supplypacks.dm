@@ -105,6 +105,24 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 10
 	containername = "internals crate"
 
+/datum/supply_packs/emergency/firefighting
+	name = "Firefighting Crate"
+	contains = list(/obj/item/clothing/suit/fire/firefighter,
+					/obj/item/clothing/suit/fire/firefighter,
+					/obj/item/clothing/mask/gas,
+					/obj/item/clothing/mask/gas,
+					/obj/item/device/flashlight,
+					/obj/item/device/flashlight,
+					/obj/item/weapon/tank/oxygen/red,
+					/obj/item/weapon/tank/oxygen/red,
+					/obj/item/weapon/extinguisher,
+					/obj/item/weapon/extinguisher,
+					/obj/item/clothing/head/hardhat/red,
+					/obj/item/clothing/head/hardhat/red)
+	cost = 10
+	containertype = /obj/structure/closet/crate
+	containername = "firefighting crate"
+
 /datum/supply_packs/emergency/weedcontrol
 	name = "Weed Control Crate"
 	contains = list(/obj/item/weapon/scythe,

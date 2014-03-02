@@ -1302,7 +1302,7 @@ datum/design/biogenerator
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/biogenerator
-/*
+
 datum/design/hydroponics
 	name = "Hydroponics Tray Board"
 	desc = "The circuit board for a hydroponics tray."
@@ -1311,7 +1311,7 @@ datum/design/hydroponics
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/hydroponics
-*/
+
 datum/design/microwave
 	name = "Microwave Board"
 	desc = "The circuit board for a microwave."

@@ -530,7 +530,8 @@
 		return
 	if(isrobot(user))
 		return
-	user.drop_item()
+	if(!user.drop_item())
+		return
 	if (O.loc != src.loc)
 		step(O, get_dir(O, src))
 	return
@@ -568,9 +569,9 @@
 		playsound(src.loc, "sparks", 50, 1)
 		table_destroy(1, user)
 
-	if(!(((I.flags & ABSTRACT)))) //WE NEED MORE PAREMS
-		user.drop_item()
-		I.Move(loc)
+	if(!(I.flags & ABSTRACT)) //rip more parems rip in peace ;_;
+		if(user.drop_item())
+			I.Move(loc)
 
 /obj/structure/table/proc/table_destroy(var/destroy_type, var/mob/user as mob)
 

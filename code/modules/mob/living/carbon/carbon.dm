@@ -108,9 +108,9 @@
 		"\red You hear a heavy electrical crack." \
 	)
 //	if(src.stunned < shock_damage)	src.stunned = shock_damage
-	Stun(10)//This should work for now, more is really silly and makes you lay there forever
+	Stun(5)//This should work for now, more is really silly and makes you lay there forever
 //	if(src.weakened < 20*siemens_coeff)	src.weakened = 20*siemens_coeff
-	Weaken(10)
+	Weaken(5)
 	return shock_damage
 
 
