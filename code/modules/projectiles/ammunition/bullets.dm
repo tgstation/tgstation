@@ -84,10 +84,18 @@
 	m_amt = 2500
 
 
+/obj/item/ammo_casing/shotgun/incendiary
+	name = "incendiary shell"
+	desc = "An incendiary shell"
+	icon_state = "ishell"
+	projectile_type = /obj/item/projectile/bullet/incendiary/shell
+	m_amt = 12500
+
+
 /obj/item/ammo_casing/shotgun/dart
 	name = "shotgun dart"
 	desc = "A dart for use in shotguns. Can be injected with up to 30 units of any chemical."
-	icon_state = "blshell" //someone, draw the icon, please.
+	icon_state = "cshell"
 	projectile_type = /obj/item/projectile/bullet/dart
 	m_amt = 12500
 
