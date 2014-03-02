@@ -48,7 +48,7 @@
 		flick("e_flash", M.flash)
 		M.eye_stat += rand(1, 3)
 		M.Stun(2)
-		M.Weaken(10)
+		M.Weaken(5)
 
 
 
@@ -58,7 +58,7 @@
 			M.Stun(2)
 			M.Weaken(1)
 		else
-			M.Stun(10)
+			M.Stun(5)
 			M.Weaken(3)
 			if ((prob(14) || (M == src.loc && prob(70))))
 				M.ear_damage += rand(1, 10)

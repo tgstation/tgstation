@@ -15,7 +15,7 @@ datum
 		var/description = ""
 		var/datum/reagents/holder = null
 		var/reagent_state = SOLID
-		var/list/data = null
+		var/list/data
 		var/volume = 0
 		var/nutriment_factor = 0
 		//var/list/viruses = list()
@@ -85,7 +85,7 @@ datum
 				return
 
 		blood
-			data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null)
+			data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null)
 			name = "Blood"
 			id = "blood"
 			reagent_state = LIQUID
@@ -272,7 +272,7 @@ datum
 					M.confused += 3
 				..()
 				return
-				
+
 			reaction_turf(var/turf/simulated/T, var/volume)
 				..()
 				if(!istype(T)) return
@@ -1285,7 +1285,7 @@ datum
 			on_mob_life(var/mob/living/carbon/M)
 				if(!istype(M))	return
 				if(!M) M = holder.my_atom
-				M.apply_effect(10,IRRADIATE,0)
+				M.apply_effect(5,IRRADIATE,0)
 				..()
 				return
 
@@ -1411,8 +1411,8 @@ datum
 				if(!M) M = holder.my_atom
 				M.status_flags |= FAKEDEATH
 				M.adjustOxyLoss(0.5*REM)
-				M.Weaken(10)
-				M.silent = max(M.silent, 10)
+				M.Weaken(5)
+				M.silent = max(M.silent, 5)
 				M.tod = worldtime2text()
 				..()
 				return
@@ -1466,6 +1466,33 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(H.dna)
 							if(H.dna.mutantrace == "plant") //plantmen take a LOT of damage
+								H.adjustToxLoss(10)
+
+		toxin/plantbgone/weedkiller
+			name = "Weed Killer"
+			id = "weedkiller"
+			description = "A harmful toxic mixture to kill weeds. Do not ingest!"
+			reagent_state = LIQUID
+			color = "#4B004B" // rgb: 75, 0, 75
+
+
+		toxin/pestkiller
+			name = "Pest Killer"
+			id = "pestkiller"
+			description = "A harmful toxic mixture to kill pests. Do not ingest!"
+			color = "#4B004B" // rgb: 75, 0, 75
+			toxpwr = 1
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+				src = null
+				if(iscarbon(M))
+					var/mob/living/carbon/C = M
+					if(!C.wear_mask) // If not wearing a mask
+						C.adjustToxLoss(2) // 4 toxic damage per application, doubled for some reason
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if(H.dna)
+							if(H.dna.mutantrace == "fly") //Botanists can now genocide plant and fly people alike.
 								H.adjustToxLoss(10)
 
 		toxin/stoxin

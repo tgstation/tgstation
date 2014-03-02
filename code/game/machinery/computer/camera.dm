@@ -103,7 +103,7 @@
 /obj/machinery/computer/security/telescreen/entertainment
 	name = "entertainment monitor"
 	desc = "Damn, they better have the /tg/ channel on these things."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/status_display.dmi'
 	icon_state = "entertainment"
 	network = list("thunder")
 	density = 0

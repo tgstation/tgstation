@@ -449,6 +449,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 			client.screen += head
 
 		var/image/standing = image("icon"='icons/mob/head.dmi', "icon_state"="[head.icon_state]", "layer"=-HEAD_LAYER)
+		standing.color = head.color // For now, this is here solely for kitty ears, but everything should do this eventually
+		standing.alpha = head.alpha
 
 		overlays_standing[HEAD_LAYER]	= standing
 

@@ -51,8 +51,15 @@
 		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
 	. = ..()
 
+/mob/living/carbon/MiddleClickOn(var/atom/A)
+	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
+		next_click = world.time + 5
+		call(src, src.mind.changeling.chosen_sting)(A)
+	else
+		..()
+
 /mob/living/carbon/AltClickOn(var/atom/A)
-	if(!src.stat && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
+	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
 		next_click = world.time + 5
 		call(src, src.mind.changeling.chosen_sting)(A)
 	else
@@ -108,9 +115,9 @@
 		"\red You hear a heavy electrical crack." \
 	)
 //	if(src.stunned < shock_damage)	src.stunned = shock_damage
-	Stun(10)//This should work for now, more is really silly and makes you lay there forever
+	Stun(5)//This should work for now, more is really silly and makes you lay there forever
 //	if(src.weakened < 20*siemens_coeff)	src.weakened = 20*siemens_coeff
-	Weaken(10)
+	Weaken(5)
 	return shock_damage
 
 
@@ -375,7 +382,8 @@
 
 	if(!item) return //Grab processing has a chance of returning null
 
-	unEquip(item)
+	if(!ismob(item)) //Honk mobs don't have a dropped() proc honk
+		unEquip(item)
 	if(src.client)
 		src.client.screen -= item
 
@@ -416,7 +424,7 @@
 
 /mob/living/carbon/unEquip(obj/item/I) //THIS PROC DID NOT CALL ..() AND THAT COST ME AN ENTIRE DAY OF DEBUGGING.
 	. = ..() //Sets the default return value to what the parent returns.
-	if(!.) //We don't want to set anything to null if the parent returned 0.
+	if(!. || !I) //We don't want to set anything to null if the parent returned 0.
 		return
 
 	if(I == back)

@@ -2,8 +2,6 @@
 Contains most of the procs that are called when a mob is attacked by something
 
 bullet_act
-ex_act
-meteor_act
 emp_act
 */
 
@@ -210,17 +208,17 @@ emp_act
 
 
 /mob/living/carbon/human/emp_act(severity)
-
+	var/informed = 0
 	for(var/obj/item/organ/limb/L in src.organs)
 		if(L.status == ORGAN_ROBOTIC)
+			if(!informed) 
+				src << "<span class='danger'>You feel a sharp pain as your robotic limbs overload.</span>"
+				informed = 1
 			switch(severity)
 				if(1)
-					L.take_damage(20)
-					src.Stun(rand(1,10))
+					L.take_damage(0,10)
+					src.Stun(10)
 				if(2)
-					L.take_damage(10)
-					src.Stun(rand(1,5))
-
-
-			src << "<span class='danger'>Error, electormagnetic pulse detected in cyber limb!</span>"
+					L.take_damage(0,5)
+					src.Stun(5)
 	..()
