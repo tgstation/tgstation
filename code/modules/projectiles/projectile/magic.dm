@@ -235,8 +235,8 @@ proc/wabbajack(mob/living/M)
 				if(H.mind)
 					H.mind.transfer_to(S)
 					S << "You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator."
-				del(H)
-				del(change)
+				H = change
+				H.loc = S
 				del(src)
 		else
 			var/obj/O = change
