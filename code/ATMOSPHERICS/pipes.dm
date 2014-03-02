@@ -750,6 +750,7 @@
 /obj/machinery/atmospherics/pipe/manifold/update_icon()
 	alpha = invisibility ? 128 : 255
 	color = available_colors[_color]
+	overlays = 0
 	if(node1&&node2&&node3)
 		icon_state="manifold"
 	else
