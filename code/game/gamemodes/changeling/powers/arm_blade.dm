@@ -1,11 +1,40 @@
-//This only contains the arm blade for now because I'm a lazy fuck. Yers truely, Miauw, resident lazy fuck.
+/obj/effect/proc_holder/changeling/arm_blade
+	name = "Arm Blade"
+	desc = "We reform one of our arms into a deadly blade."
+	helptext = "Cannot be used while in lesser form."
+	chemical_cost = 20
+	dna_cost = 1
+	genetic_damage = 6
+	req_human = 1 //if you need to be human to use this ability
+
+
+/obj/effect/proc_holder/changeling/arm_blade/try_to_sting(var/mob/user, var/mob/target)
+	if(istype(user.l_hand, /obj/item/weapon/melee/arm_blade)) //Not the nicest way to do it, but eh
+		del user.l_hand
+		user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his blade into an arm!</span>", "<span class='notice'>We assimilate our blade into our body</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
+		user.update_inv_l_hand()
+		return
+	if(istype(user.r_hand, /obj/item/weapon/melee/arm_blade))
+		del user.r_hand
+		user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his blade into an arm!</span>", "<span class='notice'>We assimilate our blade into our body</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
+		user.update_inv_r_hand()
+		return
+	..(user, target)
+
+/obj/effect/proc_holder/changeling/arm_blade/sting_action(var/mob/user)
+	if(!user.drop_item())
+		user << "The [user.get_active_hand()] is stuck to your hand, you cannot grow a blade over it!"
+		return
+	user.put_in_hands(new /obj/item/weapon/melee/arm_blade(user))
+	return 1
+
 /obj/item/weapon/melee/arm_blade
 	name = "arm blade"
 	desc = "A grotesque blade made out of bone and flesh that cleaves through people as a hot knife through butter"
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
-	flags = ABSTRACT | NODROP
+	flags = ABSTRACT
 	w_class = 5.0
 	force = 25
 	throwforce = 0 //Just to be on the safe side

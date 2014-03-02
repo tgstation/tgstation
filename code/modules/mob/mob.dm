@@ -679,6 +679,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	if(mind)
 		add_spells_to_statpanel(mind.spell_list)
+		if(mind.changeling)
+			add_stings_to_statpanel(mind.changeling.purchasedpowers)
 	add_spells_to_statpanel(mob_spell_list)
 
 /mob/proc/add_spells_to_statpanel(var/list/spells)
@@ -691,6 +693,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 					statpanel("[S.panel]","[S.charge_counter]/[S.charge_max]",S)
 				if("holdervar")
 					statpanel("[S.panel]","[S.holder_var_type] [S.holder_var_amount]",S)
+
+/mob/proc/add_stings_to_statpanel(var/list/stings)
+	for(var/obj/effect/proc_holder/changeling/S in stings)
+		if(S.chemical_cost >=0 && S.can_be_used_by(src))
+			statpanel("[S.panel]",((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""),S)
 
 // facing verbs
 /mob/proc/canface()
