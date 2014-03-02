@@ -106,6 +106,9 @@
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
 /obj/item/organ/limb/proc/take_damage(brute, burn)
+	if(state == ORGAN_REMOVED)
+		return 0
+
 	if(owner && (owner.status_flags & GODMODE))	return 0	//godmode
 	brute	= max(brute,0)
 	burn	= max(burn,0)
@@ -142,6 +145,8 @@
 //Damage cannot go below zero.
 //Cannot remove negative damage (i.e. apply damage)
 /obj/item/organ/limb/proc/heal_damage(brute, burn, var/robotic)
+	if(state == ORGAN_REMOVED)
+		return
 
 	if(robotic && status != ORGAN_ROBOTIC) // This makes organic limbs not heal when the proc is in Robotic mode.
 		brute = max(0, brute - 3)
@@ -165,6 +170,9 @@
 		dam = 1
 	else
 		dam = 0
+
+	if(affecting.state == ORGAN_REMOVED)
+		return
 
 	if(affecting.status == ORGAN_ROBOTIC)
 		if(brute > 0 && affecting.brute_dam > 0 || burn > 0 && affecting.burn_dam > 0)
@@ -236,7 +244,7 @@
 	else
 		dismember_chance = overide //So you can specify an overide chance to dismember, for Unique weapons / Non weapon dismemberment
 
-	if((affecting.brute_dam + I.force) >= (affecting.max_damage / 2) && affecting.state != ORGAN_REMOVED) //if it has taken significant enough damage
+	if((affecting.brute_dam + I.force && I) >= (affecting.max_damage / 2) && affecting.state != ORGAN_REMOVED) //if it has taken significant enough damage
 		//The damage the limb has sustained, plus the power of the weapon used
 		if(prob(dismember_chance))
 			var/turf/T = get_turf(owner)
@@ -278,6 +286,7 @@
 
 			owner.drop_both_hands() //Removes any items they may be carrying in their now non existant arms
 		owner.regenerate_icons() //Redraw the mob and all it's clothing
+		owner.update_canmove()
 
 
 //////////////// AUGMENTATION \\\\\\\\\\\\\\\\
@@ -390,4 +399,5 @@
 				LIMB = new /obj/item/augment/l_leg (T)
 
 	var/direction = pick(cardinal)
+	LIMB.name = LIMB.getDisplayName()
 	step(LIMB,direction) //Make the limb fly off

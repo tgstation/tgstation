@@ -82,3 +82,12 @@
 	if(isobj(shoes) && (shoes.flags&NOSLIP) && !(lube&GALOSHES_DONT_HELP))
 		return 0
 	.=..()
+
+/mob/living/carbon/human/update_canmove()
+	..()
+
+	if(!leg_ok())
+		if(!arm_ok())
+			canmove = 0
+
+	return canmove
