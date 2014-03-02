@@ -129,7 +129,7 @@
 	name = "black suit"
 	desc = "A professional black suit. Nanotrasen Investigation Bureau approved!"
 	icon_state = "blacksuit"
-	item_state = "blacksuit"
+	item_state = "ba_suit"
 	item_color = "blacksuit"
 
 /obj/item/clothing/under/librarian
