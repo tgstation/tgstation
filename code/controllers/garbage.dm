@@ -1,6 +1,6 @@
 
-#define GC_COLLECTIONS_PER_TICK 100
-#define GC_COLLECTION_TIMEOUT 300 // 30s
+#define GC_COLLECTIONS_PER_TICK 250 // Was 100
+#define GC_COLLECTION_TIMEOUT 100 // 10s
 var/global/datum/controller/garbage_collector/garbage
 var/global/list/uncollectable_vars=list(
 	"alpha",
