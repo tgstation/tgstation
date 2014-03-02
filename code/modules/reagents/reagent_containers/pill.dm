@@ -21,7 +21,7 @@
 	attack(mob/M, mob/user, def_zone)
 		if(M == user)
 			M << "<span class='notice'>You swallow [src].</span>"
-			M.drop_from_inventory(src) //icon update
+			M.unEquip(src) //icon update
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST)
 				spawn(5)
@@ -37,7 +37,7 @@
 
 			if(!do_mob(user, M)) return
 
-			user.drop_from_inventory(src) //icon update
+			user.unEquip(src) //icon update
 			M.visible_message("<span class='danger'>[user] forces [M] to swallow [src].</span>", \
 								"<span class='userdanger'>[user] forces [M] to swallow [src].</span>")
 
@@ -153,3 +153,14 @@
 	New()
 		..()
 		reagents.add_reagent("bicaridine", 30)
+
+/obj/item/weapon/reagent_containers/pill/stimulant
+	name = "stimulant pill"
+	desc = "Often taken by overworked employees, athletes, and the inebriated. You'll snap to attention immediately!"
+	icon_state = "pill19"
+
+/obj/item/weapon/reagent_containers/pill/stimulant/New()
+	..()
+	reagents.add_reagent("hyperzine", 10)
+	reagents.add_reagent("ethylredoxrazine", 10)
+	reagents.add_reagent("coffee", 30)

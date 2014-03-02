@@ -8,8 +8,8 @@
  * Stacks
  */
 /obj/item/stack
-	gender = PLURAL
 	origin_tech = "materials=1"
+	gender = PLURAL
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
 	var/amount = 1
@@ -29,7 +29,15 @@
 /obj/item/stack/examine()
 	set src in view(1)
 	..()
-	usr << "There are [src.amount] [src.singular_name]\s in the stack."
+	if(src.singular_name)
+		if(src.amount>1)
+			usr << "There are [src.amount] [src.singular_name]\s in the stack."
+		else
+			usr << "There is [src.amount] [src.singular_name] in the stack."
+	else if(src.amount>1)
+		usr << "There are [src.amount] in the stack."
+	else
+		usr << "There is [src.amount] in the stack."
 	return
 
 /obj/item/stack/attack_self(mob/user as mob)
@@ -122,7 +130,7 @@
 		if (src.amount<=0)
 			var/oldsrc = src
 			src = null //dont kill proc after del()
-			usr.before_take_item(oldsrc)
+			usr.unEquip(oldsrc, 1)
 			del(oldsrc)
 			if (istype(O,/obj/item))
 				usr.put_in_hands(O)
@@ -144,7 +152,7 @@
 		var/oldsrc = src
 		src = null //dont kill proc after del()
 		if(usr)
-			usr.before_take_item(oldsrc)
+			usr.unEquip(oldsrc, 1)
 		del(oldsrc)
 	return
 
@@ -165,7 +173,7 @@
 
 /obj/item/stack/attack_hand(mob/user as mob)
 	if (user.get_inactive_hand() == src)
-		var/obj/item/stack/F = new src.type( user, amount=1)
+		var/obj/item/stack/F = new src.type( user, 1)
 		F.copy_evidences(src)
 		user.put_in_hands(F)
 		src.add_fingerprint(user)

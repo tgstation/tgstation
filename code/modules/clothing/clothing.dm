@@ -10,7 +10,7 @@
 /obj/item/clothing/ears
 	name = "ears"
 	w_class = 1.0
-	throwforce = 2
+	throwforce = 0
 	slot_flags = SLOT_EARS
 
 /obj/item/clothing/ears/earmuffs
@@ -28,9 +28,14 @@
 	flags = GLASSESCOVERSEYES
 	slot_flags = SLOT_EYES
 	var/vision_flags = 0
-	var/darkness_view = 0//Base human is 2
-	var/invisa_view = 0
+	var/darkness_view = 2//Base human is 2
+	var/invis_view = SEE_INVISIBLE_LIVING
 	var/emagged = 0
+	var/hud = null
+	var/list/icon/current = list() //the current hud icons
+
+/obj/item/clothing/glasses/proc/process_hud(var/mob/M)
+	return
 
 /*
 SEE_SELF  // can see self, no matter what

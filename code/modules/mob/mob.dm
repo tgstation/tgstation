@@ -483,20 +483,26 @@ var/list/slot_equipment_priority = list( \
 			var/slot = text2num(href_list["item"])
 			var/obj/item/what = get_item_by_slot(slot)
 
-			if(what && what.canremove)
+			if(what)
+				if(what.flags & NODROP)
+					usr << "<span class='notice'>You can't remove \the [what.name], it appears to be stuck!</span>"
+					return
 				visible_message("<span class='danger'>[usr] tries to remove [src]'s [what.name].</span>", \
 								"<span class='userdanger'>[usr] tries to remove [src]'s [what.name].</span>")
 				what.add_fingerprint(usr)
 				if(do_mob(usr, src, STRIP_DELAY))
 					if(what && Adjacent(usr))
-						u_equip(what)
+						unEquip(what)
 			else
 				what = usr.get_active_hand()
+				if(what && (what.flags & NODROP))
+					usr << "<span class='notice'>You can't put \the [what.name] on [src], it's stuck to your hand!</span>"
+					return
 				if(what && what.mob_can_equip(src, slot, 1))
 					visible_message("<span class='notice'>[usr] tries to put [what] on [src].</span>")
 					if(do_mob(usr, src, STRIP_DELAY * 0.5))
 						if(what && Adjacent(usr))
-							usr.u_equip(what)
+							usr.unEquip(what)
 							equip_to_slot_if_possible(what, slot, 0, 1)
 
 	if(usr.machine == src)
@@ -670,8 +676,14 @@ note dizziness decrements automatically in the mob's Life() proc.
 					continue
 				statpanel(listed_turf.name, null, A)
 
-	if(spell_list.len)
-		for(var/obj/effect/proc_holder/spell/S in spell_list)
+
+	if(mind)
+		add_spells_to_statpanel(mind.spell_list)
+	add_spells_to_statpanel(mob_spell_list)
+
+/mob/proc/add_spells_to_statpanel(var/list/spells)
+	for(var/obj/effect/proc_holder/spell/S in spells)
+		if(S.can_be_cast_by(src))
 			switch(S.charge_type)
 				if("recharge")
 					statpanel("[S.panel]","[S.charge_counter/10.0]/[S.charge_max/10]",S)
@@ -679,8 +691,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 					statpanel("[S.panel]","[S.charge_counter]/[S.charge_max]",S)
 				if("holdervar")
 					statpanel("[S.panel]","[S.holder_var_type] [S.holder_var_amount]",S)
-
-
 
 // facing verbs
 /mob/proc/canface()
@@ -696,48 +706,28 @@ note dizziness decrements automatically in the mob's Life() proc.
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 //Robots and brains have their own version so don't worry about them
 /mob/proc/update_canmove()
-	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
-	if(ko || resting || buckled)
-		canmove = 0
-		drop_r_hand()	//makes mobs drop items in hands when incapacitated
-		drop_l_hand()
-		if(!lying)
-			if(resting) //Presuming that you're resting on a bed, which would look goofy lying the wrong way
-				lying = 90
-			else
-				lying = pick(90, 270) //180 looks like shit since BYOND inverts rather than turns in that case
-	else if(stunned)
-		canmove = 0
-	else
-		lying = 0
-		canmove = 1
-
-	if(buckled)
-		anchored = 1
-		canmove = 0
-		if(istype(buckled, /obj/structure/stool/bed/chair))
-			lying = 0
-		else
-			lying = 90 //Everything else faces right. TODO: Allow left-facing beds
-
-	if(lying)
-		density = 0
-	else
-		density = 1
-
-	//Temporarily moved here from the various life() procs
-	//I'm fixing stuff incrementally so this will likely find a better home.
-	//It just makes sense for now. ~Carn
-	if(lying != lying_prev)
-		if(lying && !lying_prev)
-			fall(ko)
-		update_transform()
-
-	if(update_icon)	//forces a full overlay update
-		update_icon = 0
-		regenerate_icons()
-
-	return canmove
+        var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
+        var/bed = !(buckled && istype(buckled, /obj/structure/stool/bed/chair))
+        if(ko || resting || stunned)
+                drop_r_hand()
+                drop_l_hand()
+        else
+                lying = 0
+                canmove = 1
+        if(buckled)
+                lying = 90 * bed
+        else
+                if((ko || resting) && !lying)
+                        fall(ko)
+        anchored = buckled
+        canmove = !(ko || resting || stunned || buckled)
+        density = !lying
+        update_transform()
+        lying_prev = lying
+        if(update_icon) //forces a full overlay update
+                update_icon = 0
+                regenerate_icons()
+        return canmove
 
 /mob/proc/fall(var/forced)
 	drop_l_hand()

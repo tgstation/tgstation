@@ -48,7 +48,7 @@
 
 /obj/machinery/gravity_generator/proc/locatelocalareas()
 	for(var/area/A in range(src,effectiverange))
-		if(A.name == "Space")
+		if(istype(A, /area/space))
 			continue // No (de)gravitizing space.
 		if(A.master && !( A.master in localareas) )
 			localareas += A.master

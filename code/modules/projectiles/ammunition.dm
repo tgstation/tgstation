@@ -5,7 +5,7 @@
 	icon_state = "s-casing"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	throwforce = 1
+	throwforce = 0
 	w_class = 1.0
 	var/caliber = null							//Which kind of guns it can be loaded into
 	var/projectile_type = null					//The bullet type to create when New() is called
@@ -47,8 +47,8 @@
 	m_amt = 50000
 	throwforce = 2
 	w_class = 1.0
-	throw_speed = 4
-	throw_range = 10
+	throw_speed = 3
+	throw_range = 7
 	var/list/stored_ammo = list()
 	var/ammo_type = /obj/item/ammo_casing
 	var/max_ammo = 7

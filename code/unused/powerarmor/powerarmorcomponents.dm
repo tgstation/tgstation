@@ -206,7 +206,7 @@
 					return
 				if(!helm.parent)
 					user << "\blue Helmet locked."
-					helm.canremove = 0
+					helm.flags |= NODROP
 					parent.helm = helm
 					helm.parent = parent
 					sleep(20)
@@ -233,7 +233,7 @@
 						if(manual)
 							sleep(20)
 							user << "\blue Helmet unlocked."
-						helm.canremove = 1
+						helm.flags &= ~NODROP
 						parent.helm = null
 						helm.parent = null
 

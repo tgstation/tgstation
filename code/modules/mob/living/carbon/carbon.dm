@@ -114,9 +114,9 @@
 		"\red You hear a heavy electrical crack." \
 	)
 //	if(src.stunned < shock_damage)	src.stunned = shock_damage
-	Stun(10)//This should work for now, more is really silly and makes you lay there forever
+	Stun(5)//This should work for now, more is really silly and makes you lay there forever
 //	if(src.weakened < 20*siemens_coeff)	src.weakened = 20*siemens_coeff
-	Weaken(10)
+	Weaken(5)
 	return shock_damage
 
 
@@ -363,7 +363,7 @@
 
 	var/atom/movable/item = src.get_active_hand()
 
-	if(!item) return
+	if(!item || (item.flags & NODROP)) return
 
 	if(istype(item, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = item
@@ -381,7 +381,8 @@
 
 	if(!item) return //Grab processing has a chance of returning null
 
-	u_equip(item)
+	if(!ismob(item)) //Honk mobs don't have a dropped() proc honk
+		unEquip(item)
 	if(src.client)
 		src.client.screen -= item
 
@@ -420,19 +421,17 @@
 	return
 
 
-/mob/living/carbon/u_equip(obj/item/I)
-	if(!I)	return 0
+/mob/living/carbon/unEquip(obj/item/I) //THIS PROC DID NOT CALL ..() AND THAT COST ME AN ENTIRE DAY OF DEBUGGING.
+	. = ..() //Sets the default return value to what the parent returns.
+	if(!. || !I) //We don't want to set anything to null if the parent returned 0.
+		return
 
-	if(I == r_hand)
-		r_hand = null
-		update_inv_r_hand(0)
-	else if(I == l_hand)
-		l_hand = null
-		update_inv_l_hand(0)
 	if(I == back)
 		back = null
 		update_inv_back(0)
 	else if(I == wear_mask)
+		if(istype(src, /mob/living/carbon/human)) //If we don't do this hair won't be properly rebuilt.
+			return
 		wear_mask = null
 		update_inv_wear_mask(0)
 	else if(I == handcuffed)
@@ -441,14 +440,6 @@
 	else if(I == legcuffed)
 		legcuffed = null
 		update_inv_legcuffed(0)
-
-	if(I)
-		if(client)
-			client.screen -= I
-		I.loc = loc
-		I.dropped(src)
-		if(I)
-			I.layer = initial(I.layer)
 
 
 /mob/living/carbon/proc/get_temperature(var/datum/gas_mixture/environment)
@@ -565,28 +556,7 @@ var/const/STEP = 2
 var/const/SLIDE = 4
 var/const/GALOSHES_DONT_HELP = 8
 /mob/living/carbon/slip(var/s_amount, var/w_amount, var/obj/O, var/lube)
-	if (m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
-		return 0
-	if(!lying)
-		stop_pulling()
-		if(lube&STEP)
-			step(src, src.dir)
-		if(lube&SLIDE)
-			for(var/i=1, i<5, i++)
-				spawn (i)
-					step(src, src.dir)
-			take_organ_damage(2)
-		if(O)
-			src << "<span class='notice'>You slipped on the [O.name]!</span>"
-		else
-			src << "<span class='notice'>You slipped!</span>"
-		playsound(loc, 'sound/misc/slip.ogg', 50, 1, -3)
-		Stun(s_amount)
-		Weaken(w_amount)
-		return 1
-	return 0 // no success. Used in clown pda and wet floors
+	loc.handle_slip(src, s_amount, w_amount, O, lube)
 
 /mob/living/carbon/fall(var/forced)
-	..()
-	if(forced) //if going prone was involuntary
-		loc.handle_fall(src) //it's loc so it doesn't call the mob's handle_fall() which does nothing
+    loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing

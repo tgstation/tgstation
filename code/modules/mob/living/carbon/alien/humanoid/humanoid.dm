@@ -136,7 +136,7 @@
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[M.name] has bit [src]!</B>"), 1)
+						O.show_message(text("<span class='danger'>[M.name] bites [src]!</span>"), 1)
 				adjustBruteLoss(rand(1, 3))
 				updatehealth()
 	return
@@ -330,7 +330,7 @@ In all, this is a lot like the monkey code. /N
 				var/damage = rand(1, 3)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
+						O.show_message(text("<span class='danger'>[M.name] bites []!</span>", src), 1)
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
@@ -379,5 +379,5 @@ In all, this is a lot like the monkey code. /N
 			visible_message("<span class='danger'>[usr] tries to empty [src]'s pouches.</span>", \
 							"<span class='userdanger'>[usr] tries to empty [src]'s pouches.</span>")
 			if(do_mob(usr, src, STRIP_DELAY * 0.5))
-				u_equip(r_store)
-				u_equip(l_store)
+				unEquip(r_store)
+				unEquip(l_store)

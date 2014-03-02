@@ -160,7 +160,7 @@
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[M.name] has bit [src]!</B>"), 1)
+						O.show_message(text("<span class='danger'>[M.name] bites [src]!</span>"), 1)
 				adjustBruteLoss(rand(1, 3))
 				updatehealth()
 	return
@@ -240,7 +240,7 @@
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has kicked []!</B>", M, src), 1)
 				if ((stat != DEAD) && (damage > 4.9))
-					Weaken(rand(10,15))
+					Weaken(rand(5,10))
 					for(var/mob/O in viewers(M, null))
 						if ((O.client && !( O.blinded )))
 							O.show_message(text("\red <B>[] has weakened []!</B>", M, src), 1, "\red You hear someone fall.", 2)
@@ -282,7 +282,7 @@
 				var/damage = rand(1, 3)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
+						O.show_message(text("<span class='danger'>[M.name] bites []!</span>", src), 1)
 				adjustBruteLoss(damage)
 				updatehealth()
 			else

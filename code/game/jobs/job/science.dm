@@ -12,11 +12,11 @@
 	access = list(access_rd, access_heads, access_tox, access_genetics, access_morgue,
 			            access_tox_storage, access_teleporter, access_sec_doors,
 			            access_research, access_robotics, access_xenobiology, access_ai_upload,
-			            access_RC_announce, access_keycard_auth, access_gateway)
+			            access_RC_announce, access_keycard_auth, access_gateway, access_mineral_storeroom)
 	minimal_access = list(access_rd, access_heads, access_tox, access_genetics, access_morgue,
 			            access_tox_storage, access_teleporter, access_sec_doors,
 			            access_research, access_robotics, access_xenobiology, access_ai_upload,
-			            access_RC_announce, access_keycard_auth, access_gateway)
+			            access_RC_announce, access_keycard_auth, access_gateway, access_mineral_storeroom)
 	minimal_player_age = 7
 
 	equip(var/mob/living/carbon/human/H)
@@ -41,8 +41,8 @@
 	spawn_positions = 3
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
-	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology)
-	minimal_access = list(access_tox, access_tox_storage, access_research, access_xenobiology)
+	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology, access_mineral_storeroom)
+	minimal_access = list(access_tox, access_tox_storage, access_research, access_xenobiology, access_mineral_storeroom)
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -67,8 +67,8 @@
 	spawn_positions = 1
 	supervisors = "research director"
 	selection_color = "#ffeeff"
-	access = list(access_robotics, access_tox, access_tox_storage, access_tech_storage, access_morgue, access_research) //As a job that handles so many corpses, it makes sense for them to have morgue access.
-	minimal_access = list(access_robotics, access_tech_storage, access_morgue, access_research) //As a job that handles so many corpses, it makes sense for them to have morgue access.
+	access = list(access_robotics, access_tox, access_tox_storage, access_tech_storage, access_morgue, access_research, access_mineral_storeroom) //As a job that handles so many corpses, it makes sense for them to have morgue access.
+	minimal_access = list(access_robotics, access_tech_storage, access_morgue, access_research, access_mineral_storeroom) //As a job that handles so many corpses, it makes sense for them to have morgue access.
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0

@@ -50,7 +50,7 @@
 /obj/item/weapon/watertank/proc/remove_noz(mob/user)
 	if (noz != null)
 		var/mob/living/carbon/human/M = user
-		M.u_equip(noz)
+		M.unEquip(noz)
 	return
 
 /obj/item/weapon/watertank/Del()
@@ -82,7 +82,7 @@
 	..()
 	if (!parent_tank || !istype(parent_tank, /obj/item/weapon/watertank))	//To avoid weird issues from admin spawns
 		var/mob/living/carbon/human/M = usr
-		M.u_equip(src)
+		M.unEquip(src)
 		Del()
 	else
 		tank = parent_tank

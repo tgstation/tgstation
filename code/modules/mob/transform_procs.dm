@@ -11,7 +11,7 @@
 
 	if(tr_flags & TR_KEEPITEMS)
 		for(var/obj/item/W in (src.contents-implants))
-			drop_from_inventory(W)
+			unEquip(W)
 
 	//Make mob invisible and spawn animation
 	regenerate_icons()
@@ -99,7 +99,7 @@
 	//now the rest
 	if (tr_flags & TR_KEEPITEMS)
 		for(var/obj/item/W in (src.contents-implants))
-			u_equip(W)
+			unEquip(W)
 			if (client)
 				client.screen -= W
 			if (W)
@@ -108,7 +108,7 @@
 				W.layer = initial(W.layer)
 
 	//	for(var/obj/item/W in src)
-	//		drop_from_inventory(W)
+	//		unEquip(W)
 
 	//Make mob invisible and spawn animation
 	regenerate_icons()
@@ -195,7 +195,7 @@
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		unEquip(W)
 	regenerate_icons()
 	notransform = 1
 	canmove = 0
@@ -271,7 +271,7 @@
 		if(delete_items)
 			del(W)
 		else
-			drop_from_inventory(W)
+			unEquip(W)
 	regenerate_icons()
 	notransform = 1
 	canmove = 0
@@ -313,7 +313,7 @@
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		unEquip(W)
 	regenerate_icons()
 	notransform = 1
 	canmove = 0
@@ -343,7 +343,7 @@
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		unEquip(W)
 	regenerate_icons()
 	notransform = 1
 	canmove = 0
@@ -375,7 +375,13 @@
 	if (notransform)
 		return
 	var/obj/effect/blob/core/new_blob = new /obj/effect/blob/core (loc)
-	new_blob.create_overmind(src.client , 1)
+	if(!client)
+		for(var/mob/dead/observer/G in player_list)
+			if(ckey == "@[G.ckey]")
+				new_blob.create_overmind(G.client , 1)
+				break
+	else
+		new_blob.create_overmind(src.client , 1)
 	gib(src)
 
 
@@ -384,7 +390,7 @@
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		unEquip(W)
 	regenerate_icons()
 	notransform = 1
 	canmove = 0
@@ -413,7 +419,7 @@
 	if(notransform)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		unEquip(W)
 
 	regenerate_icons()
 	notransform = 1
@@ -502,6 +508,3 @@
 
 	//Not in here? Must be untested!
 	return 0
-
-
-

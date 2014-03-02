@@ -25,10 +25,10 @@
 	if (!M.restrained() && !M.stat && can_use())
 		switch(over_object.name)
 			if("r_hand")
-				M.u_equip(src)
+				M.unEquip(src)
 				M.put_in_r_hand(src)
 			if("l_hand")
-				M.u_equip(src)
+				M.unEquip(src)
 				M.put_in_l_hand(src)
 		src.add_fingerprint(usr)
 		return
@@ -36,8 +36,8 @@
 
 
 /obj/item/weapon/storage/belt/utility
-	name = "tool-belt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
-	desc = "Can hold various tools."
+	name = "toolbelt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
+	desc = "Holds tools."
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	can_hold = list(

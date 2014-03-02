@@ -2,7 +2,7 @@
 
 /mob/living/simple_animal/hostile/statue
 	name = "statue" // matches the name of the statue with the flesh-to-stone spell
-	desc = "An incredibly lifelike marble carving. Its eye seems to follow you.." // same as an ordinary statue with the added "eye following you" description
+	desc = "An incredibly lifelike marble carving. Its eyes seems to follow you.." // same as an ordinary statue with the added "eye following you" description
 	icon = 'icons/obj/statue.dmi'
 	icon_state = "human_male"
 	icon_living = "human_male"
@@ -14,8 +14,8 @@
 	response_disarm = "pushes"
 
 	speed = -1
-	maxHealth = 25000
-	health = 25000
+	maxHealth = 50000
+	health = 50000
 
 	harm_intent_damage = 70
 	melee_damage_lower = 68
@@ -49,15 +49,17 @@
 	anchored = 1
 	status_flags = GODMODE // Cannot push also
 
+	var/cannot_be_seen = 1
+
 
 // No movement while seen code.
 
 /mob/living/simple_animal/hostile/statue/New()
 	..()
 	// Give spells
-	spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flicker_lights(src)
-	spell_list += new /obj/effect/proc_holder/spell/aoe_turf/blindness(src)
-	spell_list += new /obj/effect/proc_holder/spell/targeted/night_vision(src)
+	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flicker_lights(src)
+	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/blindness(src)
+	mob_spell_list += new /obj/effect/proc_holder/spell/targeted/night_vision(src)
 
 	// Give nightvision
 	see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
@@ -88,6 +90,10 @@
 	if(!can_be_seen())
 		..()
 
+/mob/living/simple_animal/hostile/statue/face_atom()
+	if(!can_be_seen())
+		..()
+
 /mob/living/simple_animal/hostile/statue/UnarmedAttack()
 	if(can_be_seen())
 		if(client)
@@ -96,6 +102,8 @@
 	..()
 
 /mob/living/simple_animal/hostile/statue/proc/can_be_seen(var/turf/destination)
+	if(!cannot_be_seen)
+		return null
 	// Check for darkness
 	var/turf/T = get_turf(loc)
 	if(T && destination)
@@ -112,8 +120,8 @@
 
 	// This loop will, at most, loop twice.
 	for(var/atom/check in check_list)
-		for(var/mob/living/M in viewers(world.view + 1, check))
-			if(M.client && CanAttack(M))
+		for(var/mob/living/M in viewers(world.view + 1, check) - src)
+			if(M.client && CanAttack(M) && !issilicon(M))
 				if(!M.blinded && !(sdisabilities & BLIND))
 					return M
 	return null
@@ -148,7 +156,7 @@
 
 	charge_max = 300
 	clothes_req = 0
-	range = 18
+	range = 14
 
 /obj/effect/proc_holder/spell/aoe_turf/flicker_lights/cast(list/targets)
 	for(var/turf/T in targets)
@@ -161,15 +169,16 @@
 	name = "Blindness"
 	desc = "Your prey will be momentarily blind for you to advance on them."
 
-	charge_max = 800
+	message = "<span class='notice'>You glare your eyes.</span>"
+	charge_max = 600
 	clothes_req = 0
-	range = 8
+	range = 10
 
 /obj/effect/proc_holder/spell/aoe_turf/blindness/cast(list/targets)
-	for(var/turf/T in targets)
-		for(var/mob/living/L in T)
-			if(L != loc)
-				L.eye_blind = max(L.eye_blind, 3)
+	for(var/mob/living/L in living_mob_list)
+		var/turf/T = get_turf(L.loc)
+		if(T && T in targets)
+			L.eye_blind = max(L.eye_blind, 4)
 	return
 
 //Toggle Night Vision
@@ -185,7 +194,6 @@
 	include_user = 1
 
 /obj/effect/proc_holder/spell/targeted/night_vision/cast(list/targets)
-
 	for(var/mob/living/target in targets)
 		if(target.see_invisible == SEE_INVISIBLE_LIVING)
 			target.see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING

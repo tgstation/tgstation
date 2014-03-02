@@ -3,7 +3,7 @@
 	desc = "A case containing an implant."
 	icon_state = "implantcase-0"
 	item_state = "implantcase"
-	throw_speed = 1
+	throw_speed = 2
 	throw_range = 5
 	w_class = 1.0
 	var/obj/item/weapon/implant/imp = null

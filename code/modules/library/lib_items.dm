@@ -145,10 +145,10 @@
 
 	New()
 		..()
-		new /obj/item/weapon/book/manual/engineering_construction(src)
+		new /obj/item/weapon/book/manual/wiki/engineering_construction(src)
 		new /obj/item/weapon/book/manual/engineering_particle_accelerator(src)
-		new /obj/item/weapon/book/manual/engineering_hacking(src)
-		new /obj/item/weapon/book/manual/engineering_guide(src)
+		new /obj/item/weapon/book/manual/wiki/engineering_hacking(src)
+		new /obj/item/weapon/book/manual/wiki/engineering_guide(src)
 		new /obj/item/weapon/book/manual/engineering_singularity_safety(src)
 		new /obj/item/weapon/book/manual/robotics_cyborgs(src)
 		update_icon()
@@ -181,6 +181,7 @@
 	var/title			//The real name of the book.
 	var/carved = 0		//Has the book been hollowed out for use as a secret storage item?
 	var/obj/item/store	//What's in the book?
+	var/window_size = null // Specific window size for the book, i.e: "1920x1080", Size x Width
 
 
 /obj/item/weapon/book/attack_self(mob/user)
@@ -198,7 +199,7 @@
 		return
 
 	if(dat)
-		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book")
+		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 		user.visible_message("[user] opens a book titled \"[title]\" and begins reading intently.")
 		onclose(user, "book")
 	else
@@ -303,7 +304,7 @@
 	name = "barcode scanner"
 	icon = 'icons/obj/library.dmi'
 	icon_state ="scanner"
-	throw_speed = 1
+	throw_speed = 3
 	throw_range = 5
 	w_class = 1.0
 	var/obj/machinery/librarycomp/computer	//Associated computer - Modes 1 to 3 use this

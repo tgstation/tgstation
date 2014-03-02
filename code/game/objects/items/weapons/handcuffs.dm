@@ -6,13 +6,13 @@
 	icon_state = "handcuff"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	throwforce = 5
+	throwforce = 0
 	w_class = 2.0
-	throw_speed = 2
+	throw_speed = 3
 	throw_range = 5
 	m_amt = 500
 	origin_tech = "materials=1"
-	var/breakouttime = 1200 //Deciseconds = 120s = 2 minutes
+	var/breakouttime = 600 //Deciseconds = 120s = 2 minutes
 
 
 /obj/item/weapon/handcuffs/attack(mob/living/carbon/C, mob/user)
@@ -40,7 +40,7 @@
 
 		var/turf/user_loc = user.loc
 		var/turf/C_loc = C.loc
-		if(do_after(user, 50))
+		if(do_after(user, 40))
 			if(!C || C.handcuffed)
 				return
 			if(user_loc == user.loc && C_loc == C.loc)
@@ -94,7 +94,7 @@
 		var/obj/item/weapon/wirerod/W = new /obj/item/weapon/wirerod
 		R.use(1)
 
-		user.before_take_item(src)
+		user.unEquip(src)
 
 		user.put_in_hands(W)
 		user << "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>"

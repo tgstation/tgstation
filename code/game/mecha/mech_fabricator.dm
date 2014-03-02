@@ -191,7 +191,7 @@
 		for(var/ID in list(H.get_active_hand(), H.wear_id, H.belt))
 			if(src.check_access(ID))
 				return 1
-	M << "<font color='red'>You don't have required permissions to use [src]</font>"
+	M << "<span class='alert'>You don't have the required permissions to use \the [src]!</span>"
 	return 0
 
 /obj/machinery/mecha_part_fabricator/check_access(obj/item/weapon/card/id/I)
@@ -210,19 +210,19 @@
 	switch(emagged)
 		if(0)
 			emagged = 0.5
-			src.visible_message("\icon[src] <b>[src]</b> beeps: \"DB error \[Code 0x00F1\]\"")
+			src.visible_message("\icon[src] <b>\The [src]</b> beeps: \"DB error \[Code 0x00F1\]\"")
 			sleep(10)
-			src.visible_message("\icon[src] <b>[src]</b> beeps: \"Attempting auto-repair\"")
+			src.visible_message("\icon[src] <b>\The [src]</b> beeps: \"Attempting auto-repair\"")
 			sleep(15)
-			src.visible_message("\icon[src] <b>[src]</b> beeps: \"User DB corrupted \[Code 0x00FA\]. Truncating data structure...\"")
+			src.visible_message("\icon[src] <b>\The [src]</b> beeps: \"User DB corrupted \[Code 0x00FA\]. Truncating data structure...\"")
 			sleep(30)
-			src.visible_message("\icon[src] <b>[src]</b> beeps: \"User DB truncated. Please contact your Nanotrasen system operator for future assistance.\"")
+			src.visible_message("\icon[src] <b>\The [src]</b> beeps: \"User DB truncated. Please contact your Nanotrasen system operator for future assistance.\"")
 			req_access = null
 			emagged = 1
 		if(0.5)
-			src.visible_message("\icon[src] <b>[src]</b> beeps: \"DB not responding \[Code 0x0003\]...\"")
+			src.visible_message("\icon[src] <b>\The [src]</b> beeps: \"DB not responding \[Code 0x0003\]...\"")
 		if(1)
-			src.visible_message("\icon[src] <b>[src]</b> beeps: \"No records in User DB\"")
+			src.visible_message("\icon[src] <b>\The [src]</b> beeps: \"No records in User DB\"")
 	return
 
 /obj/machinery/mecha_part_fabricator/proc/convert_part_set(set_name as text)
@@ -354,7 +354,7 @@
 /obj/machinery/mecha_part_fabricator/proc/build_part(var/obj/item/part)
 	if(!part) return
 	src.being_built = new part.type(src)
-	src.desc = "It's building [src.being_built]."
+	src.desc = "It's building \a [src.being_built]."
 	src.remove_resources(part)
 	part.m_amt = get_resource_cost_w_coeff(part,"metal")
 	part.g_amt = get_resource_cost_w_coeff(part,"glass")
@@ -367,7 +367,7 @@
 	src.desc = initial(src.desc)
 	if(being_built)
 		src.being_built.loc = get_step(src,SOUTH)
-		src.visible_message("\icon[src] <b>[src]</b> beeps, \"The [src.being_built] is complete\".")
+		src.visible_message("\icon[src] <b>\The [src]</b> beeps, \"\The [src.being_built] is complete.\"")
 		src.being_built = null
 	src.updateUsrDialog()
 	return 1
@@ -413,14 +413,14 @@
 		if(stat&(NOPOWER|BROKEN))
 			return 0
 		if(!check_resources(part))
-			src.visible_message("\icon[src] <b>[src]</b> beeps, \"Not enough resources. Queue processing stopped\".")
-			temp = {"<font color='red'>Not enough resources to build next part.</font><br>
+			src.visible_message("\icon[src] <b>\The [src]</b> beeps, \"Not enough resources. Queue processing stopped.\"")
+			temp = {"<span class='alert'>Not enough resources to build next part.</span><br>
 						<a href='?src=\ref[src];process_queue=1'>Try again</a> | <a href='?src=\ref[src];clear_temp=1'>Return</a><a>"}
 			return 0
 		remove_from_queue(1)
 		build_part(part)
 		part = listgetindex(src.queue, 1)
-	src.visible_message("\icon[src] <b>[src]</b> beeps, \"Queue processing finished successfully\".")
+	src.visible_message("\icon[src] <b>\The [src]</b> beeps, \"Queue processing finished successfully.\"")
 	return 1
 
 /obj/machinery/mecha_part_fabricator/proc/list_queue()
@@ -514,7 +514,7 @@
 			temp += "<a href='?src=\ref[src];clear_temp=1'>Return</a>"
 			src.updateUsrDialog()
 		if(i || tech_output)
-			src.visible_message("\icon[src] <b>[src]</b> beeps, \"Successfully synchronized with R&D server. New data processed.\"")
+			src.visible_message("\icon[src] <b>\The [src]</b> beeps, \"Successfully synchronized with R&D server. New data processed.\"")
 	if(!silent && !found)
 		temp = "Unable to connect to local R&D Database.<br>Please check your connections and try again.<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
 		src.updateUsrDialog()
@@ -550,7 +550,7 @@
 	user.set_machine(src)
 	var/turf/exit = get_step(src,SOUTH)
 	if(exit.density)
-		src.visible_message("\icon[src] <b>[src]</b> beeps, \"Error! Part outlet is obstructed\".")
+		src.visible_message("\icon[src] <b>\The [src]</b> beeps, \"Error! Part outlet is obstructed.\"")
 		return
 	if(temp)
 		left_part = temp
@@ -739,7 +739,7 @@
 			default_deconstruction_crowbar(W)
 			return 1
 		else
-			user << "\red You can't load the [src.name] while it's opened."
+			user << "\red You can't load \the [src.name] while it's opened."
 			return 1
 
 	if(istype(W, /obj/item/weapon/card/emag))
@@ -767,7 +767,7 @@
 			return ..()
 
 	if(src.being_built)
-		user << "The fabricator is currently processing. Please wait until completion."
+		user << "\The [src] is currently processing. Please wait until completion."
 		return
 	var/obj/item/stack/sheet/stack = W
 	var/sname = "[stack.name]"
@@ -775,15 +775,14 @@
 	if(src.resources[material] < res_max_amount)
 		var/count = 0
 		src.overlays += "fab-load-[material]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
+		while(src.resources[material] < res_max_amount && stack)
+			src.resources[material] += amnt
+			stack.use(1)
+			count++
 		sleep(10)
-		if(stack && stack.amount)
-			while(src.resources[material] < res_max_amount && stack)
-				src.resources[material] += amnt
-				stack.use(1)
-				count++
-			src.overlays -= "fab-load-[material]"
-			user << "You insert [count] [sname] into the fabricator."
-			src.updateUsrDialog()
+		user << "You insert [count] [sname] sheet\s into \the [src]."
+		src.updateUsrDialog()
+		src.overlays -= "fab-load-[material]" //No matter what the overlay shall still be deleted
 	else
-		user << "The fabricator cannot hold more [sname]."
+		user << "\The [src] cannot hold any more [sname] sheet\s."
 	return

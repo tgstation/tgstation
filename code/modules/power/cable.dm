@@ -202,9 +202,9 @@
 	amount = MAXCOIL
 	item_color = "red"
 	desc = "A coil of power cable."
-	throwforce = 10
+	throwforce = 0
 	w_class = 2.0
-	throw_speed = 2
+	throw_speed = 3
 	throw_range = 5
 	m_amt = 50
 	g_amt = 20
@@ -316,7 +316,7 @@
 		.=1 //Because del(src) stops the proc, set the default return value to 1
 		if(ismob(loc)) //handle mob icon update
 			var/mob/M = loc
-			M.u_equip(src)
+			M.unEquip(src)
 		del(src)
 	else
 		amount -= used

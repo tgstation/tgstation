@@ -342,7 +342,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 	else
 		// Automatically drop anything in store / id / belt if you're not wearing a uniform.	//CHECK IF NECESARRY
 		for(var/obj/item/thing in list(r_store, l_store, wear_id, belt))						//
-			drop_from_inventory(thing)
+			unEquip(thing)
 
 	apply_overlay(UNIFORM_LAYER)
 
@@ -449,6 +449,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 			client.screen += head
 
 		var/image/standing = image("icon"='icons/mob/head.dmi', "icon_state"="[head.icon_state]", "layer"=-HEAD_LAYER)
+		standing.color = head.color // For now, this is here solely for kitty ears, but everything should do this eventually
+		standing.alpha = head.alpha
 
 		overlays_standing[HEAD_LAYER]	= standing
 
@@ -486,7 +488,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 		overlays_standing[SUIT_LAYER]	= standing
 
 		if(istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
-			drop_from_inventory(handcuffed)
+			unEquip(handcuffed)
 			drop_l_hand()
 			drop_r_hand()
 
@@ -584,7 +586,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 /mob/living/carbon/human/update_inv_r_hand()
 	remove_overlay(R_HAND_LAYER)
-
+	if (handcuffed)
+		drop_r_hand()
+		return
 	if(r_hand)
 		if(client)
 			r_hand.screen_loc = ui_rhand	//TODO
@@ -601,7 +605,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 /mob/living/carbon/human/update_inv_l_hand()
 	remove_overlay(L_HAND_LAYER)
-
+	if (handcuffed)
+		drop_l_hand()
+		return
 	if(l_hand)
 		if(client)
 			l_hand.screen_loc = ui_lhand	//TODO

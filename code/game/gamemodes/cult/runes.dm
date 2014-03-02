@@ -811,7 +811,7 @@ var/list/sacrificed = list()
 					cultist.legcuffed = null
 					cultist.update_inv_legcuffed(0)
 				if (istype(cultist.wear_mask, /obj/item/clothing/mask/muzzle))
-					cultist.u_equip(cultist.wear_mask)
+					cultist.unEquip(cultist.wear_mask)
 				if(istype(cultist.loc, /obj/structure/closet)&&cultist.loc:welded)
 					cultist.loc:welded = 0
 				if(istype(cultist.loc, /obj/structure/closet/secure_closet)&&cultist.loc:locked)
@@ -1038,15 +1038,15 @@ var/list/sacrificed = list()
 						O.show_message(text("\red <B>[] invokes a talisman at []</B>", usr, T), 1)
 
 					if(issilicon(T))
-						T.Weaken(15)
+						T.Weaken(10)
 
 					else if(iscarbon(T))
 						var/mob/living/carbon/C = T
 						flick("e_flash", C.flash)
 						if (!(HULK in C.mutations))
 							C.silent += 15
-						C.Weaken(25)
-						C.Stun(25)
+						C.Weaken(10)
+						C.Stun(10)
 				return
 
 /////////////////////////////////////////TWENTY-FIFTH RUNE

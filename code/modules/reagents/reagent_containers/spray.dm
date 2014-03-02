@@ -6,10 +6,10 @@
 	item_state = "cleaner"
 	flags = OPENCONTAINER | NOBLUDGEON
 	slot_flags = SLOT_BELT
-	throwforce = 3
+	throwforce = 0
 	w_class = 2.0
-	throw_speed = 2
-	throw_range = 10
+	throw_speed = 3
+	throw_range = 7
 	amount_per_transfer_from_this = 10
 	volume = 250
 	possible_transfer_amounts = null
@@ -47,7 +47,7 @@
 		tiles =1
 	else
 		tiles =3
-		
+
 	reagents.trans_to(D, amount_per_transfer_from_this, 1/tiles)
 	D.color = mix_color_from_reagents(D.reagents.reagent_list)
 	spawn(0)
@@ -147,7 +147,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "chemsprayer"
 	item_state = "chemsprayer"
-	throwforce = 3
+	throwforce = 0
 	w_class = 3.0
 	volume = 600
 	origin_tech = "combat=3;materials=3;engineering=3"

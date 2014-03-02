@@ -10,8 +10,8 @@
 	icon_state = "multitool"
 	force = 5.0
 	w_class = 2.0
-	throwforce = 5.0
-	throw_range = 15
+	throwforce = 0
+	throw_range = 7
 	throw_speed = 3
 	m_amt = 50
 	g_amt = 20

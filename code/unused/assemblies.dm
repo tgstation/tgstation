@@ -5,8 +5,8 @@
 	var/status = 0.0
 	throwforce = 10
 	w_class = 3.0
-	throw_speed = 4
-	throw_range = 10
+	throw_speed = 3
+	throw_range = 7
 
 /obj/item/assembly/a_i_a
 	name = "Health-Analyzer/Igniter/Armor Assembly"
@@ -211,7 +211,7 @@
 		part2 = null
 
 		user.put_in_hand(R)
-		user.before_take_item(W)
+		user.unEquip(W)
 		R.part3 = W
 		R.part3.master = R
 		del(src)
@@ -224,15 +224,15 @@
 		if (user.client)
 			user.client.screen -= W
 		if (user.r_hand == W)
-			user.u_equip(W)
+			user.unEquip(W)
 			user.r_hand = R
 		else
-			user.u_equip(W)
+			user.unEquip(W)
 			user.l_hand = R
 		W.master = R
 		src.master = R
 		src.layer = initial(src.layer)
-		user.u_equip(src)
+		user.unEquip(src)
 		if (user.client)
 			user.client.screen -= src
 		src.loc = R
@@ -251,15 +251,15 @@
 		if (user.client)
 			user.client.screen -= W
 		if (user.r_hand == W)
-			user.u_equip(W)
+			user.unEquip(W)
 			user.r_hand = R
 		else
-			user.u_equip(W)
+			user.unEquip(W)
 			user.l_hand = R
 		W.master = R
 		src.master = R
 		src.layer = initial(src.layer)
-		user.u_equip(src)
+		user.unEquip(src)
 		if (user.client)
 			user.client.screen -= src
 		src.loc = R

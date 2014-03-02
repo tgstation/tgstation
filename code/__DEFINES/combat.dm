@@ -40,8 +40,8 @@
 #define GRAB_KILL		5
 
 #define HOSTILE_STANCE_IDLE			1
-#define HOSTILE_STANCE_ALERT		2
+//#define HOSTILE_STANCE_ALERT		2 //Was only used by bears
 #define HOSTILE_STANCE_ATTACK		3
 #define HOSTILE_STANCE_ATTACKING	4
-#define HOSTILE_STANCE_TIRED		5
+//#define HOSTILE_STANCE_TIRED		5 //Was also only used by bears
 
