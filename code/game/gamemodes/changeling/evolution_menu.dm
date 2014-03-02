@@ -333,24 +333,12 @@ var/list/sting_paths
 	if(canrespec)
 		user << "We have removed our evolutions from this form, and are now ready to readapt."
 		user.remove_changeling_powers(1)
-
-		//Resets our stats, to account for purchased passives.
-		user.digitalcamo = 0
-		geneticpoints = initial(geneticpoints)
-		sting_range = initial(sting_range)
-		chem_storage = initial(chem_storage)
-		chem_recharge_rate = initial(chem_recharge_rate)
-		chem_charges = min(chem_charges, chem_storage)
-		mimicing = ""
-
 		canrespec = 0
-
-		user.make_changeling()//Remake our verbs; rebuys the 0 cost skills.
+		user.make_changeling()
 		return 1
 	else
 		user << "You lack the power to readapt your evolutions!"
 		return 0
-
 
 /mob/proc/make_changeling()
 	if(!mind)
@@ -361,7 +349,8 @@ var/list/sting_paths
 		mind.changeling = new /datum/changeling(gender)
 	if(!sting_paths)
 		sting_paths = init_paths(/obj/effect/proc_holder/changeling)
-
+	if(mind.changeling.purchasedpowers)
+		remove_changeling_powers(1)
 	// purchase free powers.
 	for(var/path in sting_paths)
 		var/obj/effect/proc_holder/changeling/S = new path()
@@ -374,10 +363,20 @@ var/list/sting_paths
 	mind.changeling.absorbed_dna |= C.dna
 	return 1
 
+/datum/changeling/proc/reset()
+	chosen_sting = null
+	geneticpoints = initial(geneticpoints)
+	sting_range = initial(sting_range)
+	chem_storage = initial(chem_storage)
+	chem_recharge_rate = initial(chem_recharge_rate)
+	chem_charges = min(chem_charges, chem_storage)
+	mimicing = ""
+
 /mob/proc/remove_changeling_powers(var/keep_free_powers=0)
 	if(ishuman(src) || ismonkey(src))
 		if(mind && mind.changeling)
-			mind.changeling.chosen_sting = null
+			digitalcamo = 0
+			mind.changeling.reset()
 			for(var/obj/effect/proc_holder/changeling/p in mind.changeling.purchasedpowers)
 				if(!(p.dna_cost == 0 && keep_free_powers))
 					mind.changeling.purchasedpowers -= p

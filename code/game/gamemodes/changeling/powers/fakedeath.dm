@@ -14,7 +14,6 @@
 
 	user.status_flags |= FAKEDEATH		//play dead
 	user.update_canmove()
-	user.remove_changeling_powers()
 
 	if(user.stat != DEAD)
 		user.emote("deathgasp")
@@ -23,7 +22,6 @@
 	spawn(800)
 		if(user && user.mind && user.mind.changeling && user.mind.changeling.purchasedpowers)
 			user << "<span class='notice'>We are ready to regenerate.</span>"
-			user.mind.changeling.purchasedpowers -= src
 			user.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/revive(null)
 
 	feedback_add_details("changeling_powers","FD")

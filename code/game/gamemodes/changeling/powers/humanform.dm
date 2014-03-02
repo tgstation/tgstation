@@ -24,10 +24,8 @@
 	user << "<span class='notice'>We transform our appearance.</span>"
 	user.dna = chosen_dna
 
-	var/mob/living/carbon/human/O = user.humanize((TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPSRC),chosen_dna.real_name)
+	user.humanize((TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPSRC),chosen_dna.real_name)
 
-	if(O)
-		O.make_changeling()
 	changeling.purchasedpowers -= src
 	feedback_add_details("changeling_powers","LFT")
 	del(user)

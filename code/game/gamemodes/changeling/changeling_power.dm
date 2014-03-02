@@ -61,12 +61,15 @@
 	if(req_stat < user.stat)
 		user << "<span class='warning'>We are incapacitated.</span>"
 		return 0
+	if((user.status_flags & FAKEDEATH) && name!="Regenerate")
+		user << "<span class='warning'>We are incapacitated.</span>"
+		return 0
 	if(c.geneticdamage > max_genetic_damage)
 		user << "<span class='warning'>Our genomes are still reassembling. We need time to recover first.</span>"
 		return 0
 	return 1
 
-//This is used in /mob/Stat()
+//used in /mob/Stat()
 /obj/effect/proc_holder/changeling/proc/can_be_used_by(var/mob/user)
 	if(!ishuman(user) && !ismonkey(user))
 		return 0

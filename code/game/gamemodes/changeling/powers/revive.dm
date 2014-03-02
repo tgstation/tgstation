@@ -25,7 +25,6 @@
 
 	user.status_flags &= ~(FAKEDEATH)
 	user.update_canmove()
-	user.make_changeling()
 	user.mind.changeling.purchasedpowers -= src
 	feedback_add_details("changeling_powers","CR")
 	return 1

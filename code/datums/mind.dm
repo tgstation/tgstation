@@ -68,7 +68,6 @@ datum/mind
 
 			nanomanager.user_transferred(current, new_character)
 
-
 		if(key)
 			if(new_character.key != key)					//if we're transfering into a body with a key associated which is not ours
 				new_character.ghostize(1)						//we'll need to ghostize so that key isn't mobless.
@@ -80,10 +79,6 @@ datum/mind
 
 		current = new_character								//associate ourself with our new body
 		new_character.mind = src							//and associate our new body with ourself
-
-		if(changeling && istype(new_character, /mob/living/carbon))		//if we are a changeling mind, re-add any powers
-			var/mob/living/carbon/C = new_character
-			C.make_changeling()
 
 		if(active)
 			new_character.key = key		//now transfer the key to link the client to our new body

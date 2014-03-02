@@ -11,7 +11,7 @@
 	user << "<span class='warning'>Our genes cry out!</span>"
 
 	var/mob/living/carbon/monkey/O = user.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPSE | TR_KEEPSRC)
-	O.make_changeling()
+
 	O.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
 	feedback_add_details("changeling_powers","LF")
 	.=1
