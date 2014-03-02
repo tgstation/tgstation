@@ -1038,7 +1038,10 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/shoes/laceup,
 					/obj/item/clothing/shoes/laceup,
 					/obj/item/clothing/shoes/laceup,
-					/obj/item/clothing/gloves/white,
-					/obj/item/clothing/gloves/white,)
+					/obj/item/clothing/under/suit_jacket/charcoal,
+					/obj/item/clothing/under/suit_jacket/navy,
+					/obj/item/clothing/under/suit_jacket/burgundy,
+					/obj/item/clothing/under/suit_jacket/checkered,
+					/obj/item/clothing/under/suit_jacket/tan)
 	cost = 30 //Lots of very expensive items. You gotta pay up to look good!
 	containername = "formal-wear crate"

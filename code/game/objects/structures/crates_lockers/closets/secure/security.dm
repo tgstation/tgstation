@@ -25,7 +25,8 @@
 		new /obj/item/device/radio/headset/heads/captain(src)
 		new /obj/item/clothing/gloves/captain(src)
 		new /obj/item/weapon/gun/energy/gun(src)
-		new /obj/item/clothing/under/captainformal
+		new /obj/item/clothing/under/captainformal(src)
+		new /obj/item/clothing/head/helmet/HoS/dermal(src)
 		return
 
 
@@ -92,8 +93,8 @@
 		new /obj/item/weapon/melee/baton/loaded(src)
 		new /obj/item/weapon/gun/energy/gun(src)
 		new /obj/item/weapon/storage/belt/security(src)
-		new /obj/item/clothing/under/hosformalfem
-		new /obj/item/clothing/under/hosformalmale
+		new /obj/item/clothing/under/hosformalfem(src)
+		new /obj/item/clothing/under/hosformalmale(src)
 		return
 
 
