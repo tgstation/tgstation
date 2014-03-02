@@ -29,7 +29,7 @@ REVIVAL_BRAIN_LIFE -1
 ## To speed things up make the number negative, to slow things down, make the number positive.
 
 ## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied. 
-RUN_DELAY 1
+RUN_DELAY 2
 WALK_DELAY 4
 
 ## The variables below affect the movement of specific mob types.
@@ -43,7 +43,7 @@ ANIMAL_DELAY 0
 
 ### NAMES ###
 ## If uncommented this adds a random surname to a player's name if they only specify one name.
-#HUMANS_NEED_SURNAMES
+HUMANS_NEED_SURNAMES
 
 ## If uncommented, this forces all players to use random names !and appearances!.
 #FORCE_RANDOM_NAMES
@@ -75,15 +75,15 @@ ALERT_DELTA The station's self-destruct mechanism has been engaged. All crew are
 ## Set to 0 to disable that mode.
 
 PROBABILITY TRAITOR 5
-PROBABILITY TRAITORCHAN 4
-PROBABILITY DOUBLE_AGENTS 3
-PROBABILITY NUCLEAR 2
-PROBABILITY REVOLUTION 2
-PROBABILITY CULT 2
-PROBABILITY CHANGELING 2
-PROBABILITY WIZARD 4
-PROBABILITY MALFUNCTION 1
-PROBABILITY BLOB 2
+PROBABILITY TRAITORCHAN 0
+PROBABILITY DOUBLE_AGENTS 0
+PROBABILITY NUCLEAR 0
+PROBABILITY REVOLUTION 0
+PROBABILITY CULT 0
+PROBABILITY CHANGELING 0
+PROBABILITY WIZARD 0
+PROBABILITY MALFUNCTION 0
+PROBABILITY BLOB 0
 PROBABILITY METEOR 0
 PROBABILITY EXTENDED 0
 
@@ -106,7 +106,7 @@ CHANGELING_SCALING_COEFF 10
 
 ## Uncomment to prohibit jobs that start with loyalty
 ## implants from being most antagonists.
-#PROTECT_ROLES_FROM_ANTAGONIST
+PROTECT_ROLES_FROM_ANTAGONIST
 
 ## If late-joining players have a chance to become a traitor/changeling
 ALLOW_LATEJOIN_ANTAGONISTS
@@ -123,7 +123,7 @@ ALLOW_RANDOM_EVENTS
 ### AI ###
 
 ## Allow the AI job to be picked.
-ALLOW_AI
+#ALLOW_AI
 
 
 
@@ -139,16 +139,16 @@ GATEWAY_DELAY 18000
 ## This is intended for servers with low populations - where there are not enough
 ## players to fill all roles, so players need to do more than just one job.
 ## Also for servers where they don't want people to hide in their own departments.
-#JOBS_HAVE_MINIMAL_ACCESS
+JOBS_HAVE_MINIMAL_ACCESS
 
 ## Uncomment to give assistants maint access.
-#ASSISTANTS_HAVE_MAINT_ACCESS
+ASSISTANTS_HAVE_MAINT_ACCESS
 
 ## Uncoment to give security maint access. Note that if you comment JOBS_HAVE_MINIMAL_ACCESS security already gets maint from that.
-#SECURITY_HAS_MAINT_ACCESS
+SECURITY_HAS_MAINT_ACCESS
 
 ## Uncomment to give everyone maint access.
-#EVERYONE_HAS_MAINT_ACCESS
+EVERYONE_HAS_MAINT_ACCESS
 
 ## Comment this to make security officers spawn in departmental security posts
 SEC_START_BRIG
@@ -156,7 +156,7 @@ SEC_START_BRIG
 
 ### GHOST INTERACTION ###
 ## Uncomment to let ghosts spin chairs. You may be wondering why this is a config option. Don't ask.
-#GHOST_INTERACTION
+GHOST_INTERACTION
 
 ### NON-VOCAL SILICONS ###
 ## Uncomment to stop the AI, or cyborgs, from having vocal communication.
