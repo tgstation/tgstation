@@ -542,10 +542,12 @@ var/list/datum/dna/hivemind_bank = list()
 
 	if(istype(l_hand, /obj/item/weapon/melee/arm_blade)) //Not the nicest way to do it, but eh
 		del l_hand //Arm  blades can't be dropped, we have to delete them directly.
+		update_inv_l_hand()
 		return
 
 	if(istype(r_hand, /obj/item/weapon/melee/arm_blade))
 		del r_hand
+		update_inv_r_hand()
 		return
 
 	var/datum/changeling/changeling = changeling_power(20)
