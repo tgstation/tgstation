@@ -847,7 +847,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 8
 	containertype = /obj/structure/largecrate
 	containername = "water tank crate"
-	
+
 /datum/supply_packs/misc/lasertag
 	name = "LaserTag Crate"
 	contains =	list(/obj/item/weapon/gun/energy/laser/redtag,
@@ -1014,3 +1014,31 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/vending_refill/autodrobe)
 	cost = 15
 	containername = "autodrobe supply crate"
+
+/datum/supply_packs/misc/formalwear //This is a very classy crate.
+	name = "Formal-wear crate"
+	contains = list(/obj/item/clothing/under/blacktango,
+					/obj/item/clothing/under/assistantformal,
+					/obj/item/clothing/under/assistantformal,
+					/obj/item/clothing/under/lawyer/bluesuit,
+					/obj/item/clothing/suit/lawyer/bluejacket,
+					/obj/item/clothing/under/lawyer/purpsuit,
+					/obj/item/clothing/suit/lawyer/purpjacket,
+					/obj/item/clothing/under/lawyer/blacksuit,
+					/obj/item/clothing/suit/lawyer/blackjacket,
+					/obj/item/clothing/tie/waistcoat,
+					/obj/item/clothing/tie/blue,
+					/obj/item/clothing/tie/red,
+					/obj/item/clothing/tie/black,
+					/obj/item/clothing/head/bowler,
+					/obj/item/clothing/head/fedora,
+					/obj/item/clothing/head/flatcap,
+					/obj/item/clothing/head/beret,
+					/obj/item/clothing/head/that,
+					/obj/item/clothing/shoes/laceup,
+					/obj/item/clothing/shoes/laceup,
+					/obj/item/clothing/shoes/laceup,
+					/obj/item/clothing/gloves/white,
+					/obj/item/clothing/gloves/white,)
+	cost = 30 //Lots of very expensive items. You gotta pay up to look good!
+	containername = "formal-wear crate"

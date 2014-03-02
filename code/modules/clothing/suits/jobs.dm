@@ -100,7 +100,7 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
 
-/obj/item/clothing/suit/lawyer/blackjacet
+/obj/item/clothing/suit/lawyer/blackjacket
 	name = "black suit jacket"
 	desc = "A professional suit jacket."
 	icon_state = "suitjacket_black"
