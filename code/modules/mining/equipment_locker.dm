@@ -250,7 +250,7 @@
 
 /obj/machinery/mineral/equipment_locker/proc/RedeemVoucher(voucher, redeemer)
 	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") in list("Resonator", "Kinetic Accelerator", "Mining Drone", "Cancel")
-	if(!selection || !Adjacent(redeemer))
+	if(!selection || !Adjacent(redeemer) || !voucher)
 		return
 	switch(selection)
 		if("Resonator")
