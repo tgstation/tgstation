@@ -106,7 +106,7 @@
 /mob/living/simple_animal/construct/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(O.force)
 		var/damage = O.force
-		if (O.damtype == HALLOSS)
+		if (O.damtype == STAMINA)
 			damage = 0
 		adjustBruteLoss(damage)
 		for(var/mob/M in viewers(src, null))
@@ -148,7 +148,7 @@
 	if(O.force)
 		if(O.force >= 11)
 			var/damage = O.force
-			if (O.damtype == HALLOSS)
+			if (O.damtype == STAMINA)
 				damage = 0
 			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))
@@ -169,7 +169,8 @@
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		var/reflectchance = 80 - round(P.damage/3)
 		if(prob(reflectchance))
-			adjustBruteLoss(P.damage * 0.5)
+			if((P.damage_type == BRUTE || P.damage_type == BURN))
+				adjustBruteLoss(P.damage * 0.5)
 			visible_message("<span class='danger'>The [P.name] gets reflected by [src]'s shell!</span>", \
 							"<span class='userdanger'>The [P.name] gets reflected by [src]'s shell!</span>")
 
@@ -272,7 +273,7 @@
 	if(O.force)
 		if(O.force >= 11)
 			var/damage = O.force
-			if (O.damtype == HALLOSS)
+			if (O.damtype == STAMINA)
 				damage = 0
 			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))

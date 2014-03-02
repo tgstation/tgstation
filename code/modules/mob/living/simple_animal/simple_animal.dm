@@ -261,9 +261,11 @@
 		adjustBruteLoss(damage)
 
 /mob/living/simple_animal/bullet_act(var/obj/item/projectile/Proj)
-	if(!Proj)	return
-	adjustBruteLoss(Proj.damage)
-	Proj.on_hit(src, 0)
+	if(!Proj)
+		return
+	if((Proj.damage_type != STAMINA))
+		adjustBruteLoss(Proj.damage)
+		Proj.on_hit(src, 0)
 	return 0
 
 /mob/living/simple_animal/attack_hand(mob/living/carbon/human/M as mob)
@@ -407,7 +409,7 @@
 	else
 		if(O.force)
 			var/damage = O.force
-			if (O.damtype == HALLOSS)
+			if (O.damtype == STAMINA)
 				damage = 0
 			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))

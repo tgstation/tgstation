@@ -144,16 +144,16 @@
 	if(status_flags & GODMODE)	return 0	//godmode
 	brainloss = amount
 
-/mob/living/proc/getHalLoss()
-	return halloss
+/mob/living/proc/getStaminaLoss()
+	return staminaloss
 
-/mob/living/proc/adjustHalLoss(var/amount)
+/mob/living/proc/adjustStaminaLoss(var/amount)
 	if(status_flags & GODMODE)	return 0	//godmode
-	halloss = min(max(halloss + amount, 0),(maxHealth*2))
+	staminaloss = min(max(staminaloss + amount, 0),(maxHealth*2))
 
-/mob/living/proc/setHalLoss(var/amount)
+/mob/living/proc/setStaminaLoss(var/amount)
 	if(status_flags & GODMODE)	return 0	//godmode
-	halloss = amount
+	staminaloss = amount
 
 /mob/living/proc/getMaxHealth()
 	return maxHealth
@@ -259,7 +259,7 @@
 	setOxyLoss(0)
 	setCloneLoss(0)
 	setBrainLoss(0)
-	setHalLoss(0)
+	setStaminaLoss(0)
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
