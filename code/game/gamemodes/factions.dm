@@ -1,4 +1,3 @@
-
 // Normal factions:
 
 /datum/faction
@@ -29,26 +28,38 @@
 
 /* ----- Begin defining syndicate factions ------ */
 
+/datum/faction/syndicate/Redcorps
+	name = "RedCorps"
+	desc = "<b>Redcorps</b> is a megacorporated started in the early 21st century, that is entirly R&D focused. It has contributed many diffrent inventions, including the \
+			lightspeed capaciter, the singularity quantumflux, and the cronologistic recolabolator. In the 22nd century, they terraformed the moon into what is now Luna, \
+			and caused the final push needed for the Geneva Conventions to be rewriten due to countries having to recognize it as a nation, and the much needed claiming of antartica. \
+			In recent years they have taken to annexing several countries, including canada, germany, and denmark. They formed the syndicate with several buisness partners after the \
+			discovery of plasma and nanotransen's rise to immediate power."
+	alliances = list("The Syndicate")
+	friendly_identification = 1
+	operative_notes = "Even if you are part of the lead corporation, the other corporations may still have their own agenda, and cannot be trusted. Unless there is no other option, or instructed otherwise, \please keep civilian casualties to a minimum.\ We have a reputation to uphold."
+	
+	// Because RedSnowflake is best Snowflake.
+
+
 /datum/faction/syndicate/Cybersun_Industries
 	name = "Cybersun Industries"
 	desc = "<b>Cybersun Industries</b> is a well-known organization that bases its business model primarily on the research and development of human-enhancing computer \
 			and mechanical technology. They are notorious for their aggressive corporate tactics, and have been known to subsidize the Gorlex Marauder warlords as a form of paid terrorism. \
-			Their competent coverups and unchallenged mind-manipulation and augmentation technology makes them a large threat to Nanotrasen. In the recent years of \
-			the syndicate coalition, Cybersun Industries have established themselves as the leaders of the coalition, succeededing the founding group, the Gorlex Marauders."
+			Their competent coverups and unchallenged mind-manipulation and augmentation technology makes them a large threat to Nanotrasen."
 
 	alliances = list("MI13")
 	friendly_identification = 1
 	max_op = 3
 
-	// Friendly to everyone. (with Tiger Cooperative too, only because they are a member of the coalition. This is the only reason why the Tiger Cooperative are even allowed in the coalition)
+	// Friendly to everyone. 
 
 /datum/faction/syndicate/Donk
 	name = "Donk Corporation"
-	desc = "<b>Donk.co</b> is led by a group of ex-pirates, who used to be at a state of all-out war against Waffle.co because of an obscure political scandal, but have recently come to a war limitation. \
-			They now consist of a series of colonial governments and companies. They were the first to officially begin confrontations against Nanotrasen because of an incident where \
-			Nanotrasen purposely swindled them out of a fortune, sending their controlled colonies into a terrible poverty. Their missions against Nanotrasen \
-			revolve around stealing valuables and kidnapping and executing key personnel, ransoming their lives for money. They merged with a splinter-cell of Waffle.co who wanted to end \
-			hostilities and formed the Gorlex Marauders."
+	desc = "<b>Donk.co</b> is a large corporation headed by pro-communism veterans from the third cold war. Until the recent syndicate formation, they were at war with Waffle.Co \
+			over the claiming of the tau ceti system with their collegues NanoTransen. However, after NanoTransen discovered plasma and was infiltrated by Ex-Waffle.co members, \
+			some employees were willing to make an alligence with waffle.co called the 'Gorlex Marauders'. Due to the falling sales of the 'Donk Pocket', and the new alligance, the war with \
+			waffle.co has run cold, however each side still holds a grudge."
 
 	alliances = list("Gorlex Marauders")
 	friendly_identification = 2
@@ -58,17 +69,18 @@
 
 /datum/faction/syndicate/Waffle
 	name = "Waffle Corporation"
-	desc = "<b>Waffle.co</b> is an interstellar company that produces the best waffles in the galaxy. Their waffles have been rumored to be dipped in the most exotic and addictive \
-			drug known to man. They were involved in a political scandal with Donk.co, and have since been in constant war with them. Because of their constant exploits of the galactic \
-			economy and stock market, they have been able to bribe their way into amassing a large arsenal of weapons of mass destruction. They target Nanotrasen because of their communistic \
-			threat, and their economic threat. Their leaders often have a twisted sense of humor, often misleading and intentionally putting their operatives into harm for laughs.\
-			A splinter-cell of Waffle.co merged with Donk.co and formed the Gorlex Marauders and have been a constant ally since. The Waffle.co has lost an overwhelming majority of its military to the Gorlex Marauders."
+	desc = "<b>Waffle.co</b> is a large corporation headed by pro-capitalism veterans from the third cold warl. Until recently, they were at war with Donk.co over the Tau Ceti system. \
+			While they were at war, they amassed a huge amount of nucular weapons via the sale of their waffles. Said waffles are known to be some of 'the best waffles in this star cluster' \
+			The actual validity of the supposed greatness is in need of citation (due to no known races having explored the entire virgo supercluster as of yet), but Waffle.Co clings to it all the same. \
+			Near the end of the war, NanoTransen discovered plasma while being infiltrated by ex-waffle.co members. NanoTransen has since become a capitalist corporation, but retains some communist values. \
+			Other members left to form the 'Gorlex Marauders' with Donk.Co, leaving the now crippled patriotic company to join the syndicate. Waffle.Co has targeted NanoTransen due to their retained communist values, \
+			and to avenge the heart and soul of america."
 
 	alliances = list("Gorlex Marauders")
 	friendly_identification = 2
-	operative_notes = "Most other syndicate operatives are not to be trusted, except for members of the Gorlex Marauders. Do not trust fellow members of the Waffle.co (but try not to rat them out), as they might have been assigned opposing objectives. We encourage humorous terrorism against Nanotrasen; we like to see our operatives creatively kill people while getting the job done."
+	operative_notes = "Most other syndicate operatives are not to be trusted, except for members of the Gorlex Marauders. Donk.Co members are to be treated as targets. We encourage humorous terrorism against Nanotrasen; \there isnt any point to killing commies if you arn't having fun.\"
 
-	// Neutral to everyone, friendly to Marauders
+	// Neutral to everyone, friendly to Marauders, hostile to donks
 
 
 /* ----- Begin defining miscellaneous factions ------ */
@@ -78,7 +90,8 @@
 	desc = "The <b>Wizards Federation</b> is a mysterious organization of magically-talented individuals who act as an equal collective, and have no heirarchy. It is unknown how the wizards \
 			are even able to communicate; some suggest a form of telepathic hive-mind. Not much is known about the wizards or their philosphies and motives. They appear to attack random \
 			civilian, corporate, planetary, orbital, pretty much any sort of organized facility they come across. Members of the Wizards Federation are considered amongst the most dangerous \
-			individuals in the known universe, and have been labeled threats to humanity by most governments. As such, they are enemies of both Nanotrasen and the Syndicate."
+			individuals in the known universe, and have been labeled threats to humanity by most governments. As such, they are enemies of both Nanotrasen and the Syndicate. Recently, the Syndicate \
+			have reached out in order to gain the trust of the organization, but with no avail."
 
 /datum/faction/Cult
 	name = "The Cult of the Elder Gods"
