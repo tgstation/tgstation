@@ -341,9 +341,9 @@
 	for(var/mob/living/M in hearers(4, usr))
 		if(iscarbon(M))
 			if(!M.mind || !M.mind.changeling)
-				M.ear_deaf += 30
-				M.confused += 20
-				M.make_jittery(50)
+				M.ear_deaf += 20
+				M.confused += 10
+				M.make_jittery(40)
 			else
 				M << sound('sound/effects/screech.ogg')
 
@@ -351,10 +351,7 @@
 			M << sound('sound/weapons/flash.ogg')
 			M.Weaken(rand(5,10))
 
-
-	for(var/obj/machinery/light/L in range(4, usr))
-		L.on = 1
-		L.broken()
+	empulse(get_turf(src), 2, 4, 1)
 
 	feedback_add_details("changeling_powers","RS")
 	return 1
