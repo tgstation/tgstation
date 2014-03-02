@@ -91,6 +91,8 @@
 		return 0
 	else if(AM.density || AM.anchored)
 		return 0
+	else if(AM.flags & NODROP)
+		return 0
 	AM.loc = src
 	return 1
 
@@ -193,8 +195,8 @@
 		if(isrobot(user))
 			return
 
-		user.drop_item()
-		W.Move(loc)
+		if(user.drop_item())
+			W.Move(loc)
 
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return

@@ -81,8 +81,6 @@ Note: Must be placed west/left of and R&D console to function.
 /obj/machinery/r_n_d/protolathe/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (shocked)
 		shock(user,50)
-	if (O.is_open_container())
-		return 1
 	if (default_deconstruction_screwdriver(user, "protolathe_t", "protolathe", O))
 		if(linked_console)
 			linked_console.linked_lathe = null
@@ -130,6 +128,8 @@ Note: Must be placed west/left of and R&D console to function.
 	if (busy)
 		user << "\red The protolathe is busy. Please wait for completion of previous operation."
 		return 1
+	if (O.is_open_container())
+		return
 	if (!istype(O, /obj/item/stack/sheet))
 		user << "\red You cannot insert this item into the protolathe!"
 		return 1

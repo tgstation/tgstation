@@ -567,7 +567,7 @@ var/list/datum/dna/hivemind_bank = list()
 //////////
 
 /mob/living/carbon/proc/set_sting(A, icon, dna=null) //setting the sting and ui icon for it
-	src << "<span class='notice'>We prepare our sting, use alt+click on target to sting them.</span>"
+	src << "<span class='notice'>We prepare our sting, use alt+click or middle mouse button on target to sting them.</span>"
 	src.mind.changeling.chosen_sting = A
 	if(dna)
 		src.mind.changeling.chosen_dna = dna

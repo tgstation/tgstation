@@ -58,9 +58,9 @@
 /obj/item/projectile/bullet/stunshot
 	name = "stunshot"
 	damage = 5
-	stun = 10
-	weaken = 10
-	stutter = 10
+	stun = 5
+	weaken = 5
+	stutter = 5
 
 
 /obj/item/projectile/bullet/a762
