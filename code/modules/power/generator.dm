@@ -6,7 +6,7 @@
 	density = 1
 	anchored = 0
 
-	use_power = 1
+	use_power = 0
 	idle_power_usage = 100 //Watts, I hope.  Just enough to do the computer and display things.
 
 	var/obj/machinery/atmospherics/binary/circulator/circ1
@@ -120,7 +120,7 @@
 	if(istype(W, /obj/item/weapon/wrench))
 		anchored = !anchored
 		user << "\blue You [anchored ? "secure" : "unsecure"] the bolts holding [src] to the floor."
-		use_power = anchored
+		//use_power = anchored
 		reconnect()
 	else
 		..()
