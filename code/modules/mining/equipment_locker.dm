@@ -673,4 +673,5 @@
 /obj/item/weapon/tank/jetpack/carbondioxide/mining
 	name = "mining jetpack"
 	icon_state = "jetpack-mining"
+	item_state = "jetpack-mining"
 	desc = "A tank of compressed carbon dioxide for miners to use as propulsion in local space. Should not be used for internals."

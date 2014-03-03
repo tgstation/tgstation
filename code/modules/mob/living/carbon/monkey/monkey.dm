@@ -231,7 +231,7 @@
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			var/damage = 5
 			if(prob(95))
-				Weaken(15)
+				Weaken(10)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("<span class='danger'>[] has tackled down [name]!</span>", M), 1)

@@ -60,6 +60,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 		new /obj/item/ammo_casing/shotgun(), \
 		new /obj/item/ammo_casing/shotgun/buckshot(), \
 		new /obj/item/ammo_casing/shotgun/dart(), \
+		new /obj/item/ammo_casing/shotgun/incendiary(), \
 		/* new /obj/item/weapon/shield/riot(), */ \
 	)
 

@@ -102,7 +102,7 @@ PROBABILITY SANDBOX 0
 ## Used as (Antagonists = Population / Coeff)
 ## Set to 0 to disable scaling and use default numbers instead.
 TRAITOR_SCALING_COEFF 6
-CHANGELING_SCALING_COEFF 10
+CHANGELING_SCALING_COEFF 7
 
 ## Uncomment to prohibit jobs that start with loyalty
 ## implants from being most antagonists.

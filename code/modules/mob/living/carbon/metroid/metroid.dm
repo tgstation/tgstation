@@ -844,16 +844,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	item_state = "golem"
 	siemens_coefficient = 0
 	unacidable = 1
-	flags = ABSTRACT | NODROP
-
-/obj/item/clothing/mask/breath/golem
-	name = "golem's face"
-	desc = "the imposing face of an adamantine golem"
-	icon_state = "golem"
-	item_state = "golem"
-	siemens_coefficient = 0
-	unacidable = 1
-	flags = ABSTRACT | NODROP
+	flags = ABSTRACT | NODROP | MASKINTERNALS | MASKCOVERSMOUTH
 
 
 /obj/item/clothing/gloves/golem

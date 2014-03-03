@@ -222,7 +222,7 @@
 	recharge_delay /= time/2         //delay between recharges, double the usual time on lowest 50% less than usual on highest
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		for(i=1, i<=M.rating, i++)
-			dispensable_reagents |= sortList(special_reagents[i])
+			dispensable_reagents = sortList(dispensable_reagents | special_reagents[i])
 
 /obj/machinery/chem_dispenser/constructable/attackby(var/obj/item/I, var/mob/user)
 	..()

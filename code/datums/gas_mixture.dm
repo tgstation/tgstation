@@ -41,10 +41,6 @@ What are the archived variables for?
 
 	var/last_share
 
-	var/group_multiplier = 1
-		//Size of the group this gas_mixture is representing.
-		//=1 for singletons
-
 	var/graphic
 
 	var/list/datum/gas/trace_gases = list()
@@ -323,22 +319,16 @@ What are the archived variables for?
 			return 0
 
 		if(abs(temperature-giver.temperature)>MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-			var/self_heat_capacity = heat_capacity()*group_multiplier
-			var/giver_heat_capacity = giver.heat_capacity()*giver.group_multiplier
+			var/self_heat_capacity = heat_capacity()
+			var/giver_heat_capacity = giver.heat_capacity()
 			var/combined_heat_capacity = giver_heat_capacity + self_heat_capacity
 			if(combined_heat_capacity != 0)
 				temperature = (giver.temperature*giver_heat_capacity + temperature*self_heat_capacity)/combined_heat_capacity
 
-		if((group_multiplier>1)||(giver.group_multiplier>1))
-			oxygen += giver.oxygen*giver.group_multiplier/group_multiplier
-			carbon_dioxide += giver.carbon_dioxide*giver.group_multiplier/group_multiplier
-			nitrogen += giver.nitrogen*giver.group_multiplier/group_multiplier
-			toxins += giver.toxins*giver.group_multiplier/group_multiplier
-		else
-			oxygen += giver.oxygen
-			carbon_dioxide += giver.carbon_dioxide
-			nitrogen += giver.nitrogen
-			toxins += giver.toxins
+		oxygen += giver.oxygen
+		carbon_dioxide += giver.carbon_dioxide
+		nitrogen += giver.nitrogen
+		toxins += giver.toxins
 
 		if(giver.trace_gases.len)
 			for(var/datum/gas/trace_gas in giver.trace_gases)
@@ -346,7 +336,7 @@ What are the archived variables for?
 				if(!corresponding)
 					corresponding = new trace_gas.type()
 					trace_gases += corresponding
-				corresponding.moles += trace_gas.moles*giver.group_multiplier/group_multiplier
+				corresponding.moles += trace_gas.moles
 
 	//	del(giver)
 		return 1
@@ -366,10 +356,10 @@ What are the archived variables for?
 		removed.carbon_dioxide = QUANTIZE((carbon_dioxide/sum)*amount)
 		removed.toxins = QUANTIZE((toxins/sum)*amount)
 
-		oxygen -= removed.oxygen/group_multiplier
-		nitrogen -= removed.nitrogen/group_multiplier
-		carbon_dioxide -= removed.carbon_dioxide/group_multiplier
-		toxins -= removed.toxins/group_multiplier
+		oxygen -= removed.oxygen
+		nitrogen -= removed.nitrogen
+		carbon_dioxide -= removed.carbon_dioxide
+		toxins -= removed.toxins
 
 		if(trace_gases.len)
 			for(var/datum/gas/trace_gas in trace_gases)
@@ -377,7 +367,7 @@ What are the archived variables for?
 				removed.trace_gases += corresponding
 
 				corresponding.moles = (trace_gas.moles/sum)*amount
-				trace_gas.moles -= corresponding.moles/group_multiplier
+				trace_gas.moles -= corresponding.moles
 
 		removed.temperature = temperature
 
@@ -397,10 +387,10 @@ What are the archived variables for?
 		removed.carbon_dioxide = QUANTIZE(carbon_dioxide*ratio)
 		removed.toxins = QUANTIZE(toxins*ratio)
 
-		oxygen -= removed.oxygen/group_multiplier
-		nitrogen -= removed.nitrogen/group_multiplier
-		carbon_dioxide -= removed.carbon_dioxide/group_multiplier
-		toxins -= removed.toxins/group_multiplier
+		oxygen -= removed.oxygen
+		nitrogen -= removed.nitrogen
+		carbon_dioxide -= removed.carbon_dioxide
+		toxins -= removed.toxins
 
 		if(trace_gases.len)
 			for(var/datum/gas/trace_gas in trace_gases)
@@ -408,7 +398,7 @@ What are the archived variables for?
 				removed.trace_gases += corresponding
 
 				corresponding.moles = trace_gas.moles*ratio
-				trace_gas.moles -= corresponding.moles/group_multiplier
+				trace_gas.moles -= corresponding.moles
 
 		removed.temperature = temperature
 
@@ -574,20 +564,20 @@ What are the archived variables for?
 				else
 					heat_capacity_sharer_to_self -= toxins_heat_capacity
 
-			old_self_heat_capacity = heat_capacity()*group_multiplier
-			old_sharer_heat_capacity = sharer.heat_capacity()*sharer.group_multiplier
+			old_self_heat_capacity = heat_capacity()
+			old_sharer_heat_capacity = sharer.heat_capacity()
 
-		oxygen -= delta_oxygen/group_multiplier
-		sharer.oxygen += delta_oxygen/sharer.group_multiplier
+		oxygen -= delta_oxygen
+		sharer.oxygen += delta_oxygen
 
-		carbon_dioxide -= delta_carbon_dioxide/group_multiplier
-		sharer.carbon_dioxide += delta_carbon_dioxide/sharer.group_multiplier
+		carbon_dioxide -= delta_carbon_dioxide
+		sharer.carbon_dioxide += delta_carbon_dioxide
 
-		nitrogen -= delta_nitrogen/group_multiplier
-		sharer.nitrogen += delta_nitrogen/sharer.group_multiplier
+		nitrogen -= delta_nitrogen
+		sharer.nitrogen += delta_nitrogen
 
-		toxins -= delta_toxins/group_multiplier
-		sharer.toxins += delta_toxins/sharer.group_multiplier
+		toxins -= delta_toxins
+		sharer.toxins += delta_toxins
 
 		var/moved_moles = (delta_oxygen + delta_carbon_dioxide + delta_nitrogen + delta_toxins)
 		last_share = abs(delta_oxygen) + abs(delta_carbon_dioxide) + abs(delta_nitrogen) + abs(delta_toxins)
@@ -608,8 +598,8 @@ What are the archived variables for?
 
 					delta = trace_gas.moles_archived/(atmos_adjacent_turfs+1)
 
-				trace_gas.moles -= delta/group_multiplier
-				corresponding.moles += delta/sharer.group_multiplier
+				trace_gas.moles -= delta
+				corresponding.moles += delta
 
 				if(delta)
 					var/individual_heat_capacity = trace_gas.specific_heat*delta
@@ -636,8 +626,8 @@ What are the archived variables for?
 
 					delta = trace_gas.moles_archived/5
 
-					trace_gas.moles -= delta/sharer.group_multiplier
-					corresponding.moles += delta/group_multiplier
+					trace_gas.moles -= delta
+					corresponding.moles += delta
 
 					//Guaranteed transfer from sharer to self
 					var/individual_heat_capacity = trace_gas.specific_heat*delta
@@ -694,18 +684,18 @@ What are the archived variables for?
 				heat_transferred -= toxins_heat_capacity*model.temperature
 				heat_capacity_transferred -= toxins_heat_capacity
 
-			old_self_heat_capacity = heat_capacity()*group_multiplier
+			old_self_heat_capacity = heat_capacity()
 
 		if(border_multiplier)
-			oxygen -= delta_oxygen*border_multiplier/group_multiplier
-			carbon_dioxide -= delta_carbon_dioxide*border_multiplier/group_multiplier
-			nitrogen -= delta_nitrogen*border_multiplier/group_multiplier
-			toxins -= delta_toxins*border_multiplier/group_multiplier
+			oxygen -= delta_oxygen*border_multiplier
+			carbon_dioxide -= delta_carbon_dioxide*border_multiplier
+			nitrogen -= delta_nitrogen*border_multiplier
+			toxins -= delta_toxins*border_multiplier
 		else
-			oxygen -= delta_oxygen/group_multiplier
-			carbon_dioxide -= delta_carbon_dioxide/group_multiplier
-			nitrogen -= delta_nitrogen/group_multiplier
-			toxins -= delta_toxins/group_multiplier
+			oxygen -= delta_oxygen
+			carbon_dioxide -= delta_carbon_dioxide
+			nitrogen -= delta_nitrogen
+			toxins -= delta_toxins
 
 		var/moved_moles = (delta_oxygen + delta_carbon_dioxide + delta_nitrogen + delta_toxins)
 		last_share = abs(delta_oxygen) + abs(delta_carbon_dioxide) + abs(delta_nitrogen) + abs(delta_toxins)
@@ -717,9 +707,9 @@ What are the archived variables for?
 				delta = trace_gas.moles_archived/(atmos_adjacent_turfs+1)
 
 				if(border_multiplier)
-					trace_gas.moles -= delta*border_multiplier/group_multiplier
+					trace_gas.moles -= delta*border_multiplier
 				else
-					trace_gas.moles -= delta/group_multiplier
+					trace_gas.moles -= delta
 
 				var/heat_cap_transferred = delta*trace_gas.specific_heat
 				heat_transferred += heat_cap_transferred*temperature_archived
@@ -756,8 +746,8 @@ What are the archived variables for?
 			var/heat = conduction_coefficient*delta_temperature* \
 				(self_heat_capacity*sharer_heat_capacity/(self_heat_capacity+sharer_heat_capacity))
 
-			self_temperature_delta = -heat/(self_heat_capacity*group_multiplier)
-			sharer_temperature_delta = heat/(sharer_heat_capacity*sharer.group_multiplier)
+			self_temperature_delta = -heat/(self_heat_capacity)
+			sharer_temperature_delta = heat/(sharer_heat_capacity)
 		else
 			return 1
 
@@ -788,8 +778,8 @@ What are the archived variables for?
 			var/heat = conduction_coefficient*delta_temperature* \
 				(self_heat_capacity*sharer_heat_capacity/(self_heat_capacity+sharer_heat_capacity))
 
-			self_temperature_delta = -heat/(self_heat_capacity*group_multiplier)
-			sharer_temperature_delta = heat/(sharer_heat_capacity*sharer.group_multiplier)
+			self_temperature_delta = -heat/self_heat_capacity
+			sharer_temperature_delta = heat/sharer_heat_capacity
 		else
 			return 1
 
@@ -816,7 +806,7 @@ What are the archived variables for?
 				var/heat = conduction_coefficient*delta_temperature* \
 					(self_heat_capacity*sharer.heat_capacity/(self_heat_capacity+sharer.heat_capacity))
 
-				self_temperature_delta = -heat/(self_heat_capacity*group_multiplier)
+				self_temperature_delta = -heat/self_heat_capacity
 				sharer_temperature_delta = heat/sharer.heat_capacity
 		else
 			return 1
@@ -842,7 +832,7 @@ What are the archived variables for?
 				var/heat = conduction_coefficient*delta_temperature* \
 					(self_heat_capacity*model.heat_capacity/(self_heat_capacity+model.heat_capacity))
 
-				self_temperature_delta = -heat/(self_heat_capacity*group_multiplier)
+				self_temperature_delta = -heat/self_heat_capacity
 
 		if((abs(self_temperature_delta) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND) \
 			&& (abs(self_temperature_delta) > MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND*temperature_archived))
@@ -864,8 +854,8 @@ What are the archived variables for?
 				var/heat = conduction_coefficient*delta_temperature* \
 					(self_heat_capacity*sharer_heat_capacity/(self_heat_capacity+sharer_heat_capacity))
 
-				temperature -= heat/(self_heat_capacity*group_multiplier)
-				sharer.temperature += heat/(sharer_heat_capacity*sharer.group_multiplier)
+				temperature -= heat/self_heat_capacity
+				sharer.temperature += heat/sharer_heat_capacity
 
 	temperature_mimic(turf/model, conduction_coefficient, border_multiplier)
 		var/delta_temperature = (temperature - model.temperature)
@@ -877,9 +867,9 @@ What are the archived variables for?
 					(self_heat_capacity*model.heat_capacity/(self_heat_capacity+model.heat_capacity))
 
 				if(border_multiplier)
-					temperature -= heat*border_multiplier/(self_heat_capacity*group_multiplier)
+					temperature -= heat*border_multiplier/self_heat_capacity
 				else
-					temperature -= heat/(self_heat_capacity*group_multiplier)
+					temperature -= heat/self_heat_capacity
 
 	temperature_turf_share(turf/simulated/sharer, conduction_coefficient)
 		var/delta_temperature = (temperature_archived - sharer.temperature)
@@ -890,7 +880,7 @@ What are the archived variables for?
 				var/heat = conduction_coefficient*delta_temperature* \
 					(self_heat_capacity*sharer.heat_capacity/(self_heat_capacity+sharer.heat_capacity))
 
-				temperature -= heat/(self_heat_capacity*group_multiplier)
+				temperature -= heat/self_heat_capacity
 				sharer.temperature += heat/sharer.heat_capacity
 
 	compare(datum/gas_mixture/sample)

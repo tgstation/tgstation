@@ -8,13 +8,6 @@
 	slot_flags = SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
 
-/obj/item/weapon/gun/energy/ionrifle/emp_act(severity)
-	if(severity <= 2)
-		power_supply.use(round(power_supply.maxcharge / severity))
-		update_icon()
-	else
-		return
-
 /obj/item/weapon/gun/energy/decloner
 	name = "biological demolecularisor"
 	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
