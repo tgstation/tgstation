@@ -48,7 +48,7 @@
 	nutrilevel = 3
 
 /obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/user)
-	if(exchange_parts(I, user))
+	if(exchange_parts(user, I))
 		return
 
 	if(istype(I, /obj/item/weapon/crowbar))
