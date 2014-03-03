@@ -93,7 +93,7 @@
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red [user] cuts the cable.", 1)
 
-		var/message = "A wire has been cut"
+		var/message = "A wire has been cut "
 		var/atom/A = user
 		if(A)
 			var/turf/Z = get_turf(A)
