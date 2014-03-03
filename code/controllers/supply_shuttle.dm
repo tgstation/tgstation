@@ -121,7 +121,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	var/points_per_process = 1
 	var/points_per_slip = 2
 	var/points_per_crate = 5
-	var/plasma_per_point = 0.2 //5 points per plasma sheet due to increased rarity
+	var/plasma_per_point = 1 //5 points per plasma sheet due to increased rarity
 	var/centcom_message = "" // Remarks from Centcom on how well you checked the last order.
 	// Unique typepaths for unusual things we've already sent CentComm, associated with their potencies
 	var/list/discoveredPlants = list()
