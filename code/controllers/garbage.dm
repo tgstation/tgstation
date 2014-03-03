@@ -111,14 +111,14 @@ var/list/uncollectable_vars=list(
 	for(var/atom/movable/everything in world)
 		qdel(everything)
 */
-
+/*
 // Uncomment this verb and run it on things to report blockages.
 /atom/verb/qdel_test()
 	set name = "qdel with test"
 	set category = "Debug"
 	set background = 1
 	set src in world
-/*
+
 	qdel(src)
 	for(var/datum/everything) //Yes this works.
 		for(var/everyvar in everything.vars)
