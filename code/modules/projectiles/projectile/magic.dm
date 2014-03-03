@@ -237,6 +237,8 @@ proc/wabbajack(mob/living/M)
 					S << "You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator."
 				qdel(H)
 				qdel(change)
+				qdel(src)
+				return
 		else
 			var/obj/O = change
 			new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, firer)

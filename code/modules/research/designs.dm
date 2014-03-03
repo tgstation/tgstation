@@ -1292,7 +1292,7 @@ datum/design/biogenerator
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/biogenerator
-/*
+
 datum/design/hydroponics
 	name = "Hydroponics Tray Board"
 	desc = "The circuit board for a hydroponics tray."
@@ -1301,7 +1301,7 @@ datum/design/hydroponics
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/hydroponics
-*/
+
 datum/design/microwave
 	name = "Microwave Board"
 	desc = "The circuit board for a microwave."
@@ -1596,7 +1596,7 @@ datum/design/flora_gun
 	id = "flora_gun"
 	req_tech = list("materials" = 2, "biotech" = 3, "powerstorage" = 3)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 2000, "$glass" = 500, "$uranium" = 500)
+	materials = list("$metal" = 2000, "$glass" = 500, "radium" = 20)
 	build_path = /obj/item/weapon/gun/energy/floragun
 
 datum/design/large_grenade
@@ -1717,15 +1717,6 @@ datum/design/drill_diamond
 	reliability = 79
 	build_path = /obj/item/weapon/pickaxe/diamonddrill
 
-datum/design/mesons
-	name = "Optical Meson Scanners"
-	desc = "Used for seeing walls, floors, and stuff through anything."
-	id = "mesons"
-	req_tech = list("magnets" = 2, "engineering" = 2)
-	build_type = PROTOLATHE
-	materials = list("$metal" = 50, "$glass" = 50)
-	build_path = /obj/item/clothing/glasses/meson
-
 /////////////////////////////////////////
 //////////////Blue Space/////////////////
 /////////////////////////////////////////
@@ -1831,7 +1822,6 @@ datum/design/borg_syndicate_module
 //////////////////Misc///////////////////
 /////////////////////////////////////////
 
-
 datum/design/welding_mask
 	name = "Welding Gas Mask"
 	desc = "A gas mask with built in welding goggles and face shield. Looks like a skull, clearly designed by a nerd."
@@ -1840,3 +1830,30 @@ datum/design/welding_mask
 	build_type = PROTOLATHE
 	materials = list("$metal" = 4000, "$glass" = 2000)
 	build_path = /obj/item/clothing/mask/gas/welding
+
+datum/design/mesons
+	name = "Optical Meson Scanners"
+	desc = "Used for seeing walls, floors, and stuff through anything."
+	id = "mesons"
+	req_tech = list("magnets" = 2, "engineering" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 50, "$glass" = 50)
+	build_path = /obj/item/clothing/glasses/meson
+
+datum/design/advanced_mesons
+	name = "Advanced Optical Meson Scanner"
+	desc = "More powerful than your standard mesons, these ones make everything appear to be lit extremely brightly."
+	id = "advanced_mesons"
+	req_tech = list("magnets" = 4, "engineering" = 4)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 100, "$glass" = 100)
+	build_path = /obj/item/clothing/glasses/meson/advanced
+
+datum/design/night_vision_goggles
+	name = "Night Vision Goggles"
+	desc = "Goggles that let you see through darkness unhindered."
+	id = "night_visision_goggles"
+	req_tech = list("magnets" = 4)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 100, "$glass" = 100, "$uranium" = 1000)
+	build_path = /obj/item/clothing/glasses/night

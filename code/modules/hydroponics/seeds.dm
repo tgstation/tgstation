@@ -5,22 +5,22 @@
 /obj/item/seeds
 	name = "pack of seeds"
 	icon = 'icons/obj/seeds.dmi'
-	icon_state = "seed" // unknown plant seed - these shouldn't exist in-game
-	w_class = 1.0 // Makes them pocketable
-	var/plantname = "Plants"
-	var/product	//a type path
-	var/species = ""
-	var/lifespan = 0
-	var/endurance = 0
-	var/maturation = 0
-	var/production = 0
-	var/yield = 0 // If is -1, the plant/shroom/weed is never meant to be harvested
-	var/oneharvest = 0
-	var/potency = -1
-	var/growthstages = 0
-	var/plant_type = 0 // 0 = 'normal plant'; 1 = weed; 2 = shroom
-	var/rarity = 0
-	var/list/mutatelist = list()
+	icon_state = "seed"				//Unknown plant seed - these shouldn't exist in-game.
+	w_class = 1						//Pocketable.
+	var/plantname = "Plants"		//Name of plant when planted.
+	var/product						//A type path. The thing that is created when the plant is harvested.
+	var/species = ""				//Used to update icons. Should match the name in the sprites.
+	var/lifespan = 0 				//How long before the plant begins to take damage from age.
+	var/endurance = 0 				//Amount of health the plant has.
+	var/maturation = 0 				//Used to determine which sprite to switch to when growing.
+	var/production = 0 				//Changes the amount of time needed for a plant to become harvestable.
+	var/yield = 0					//Amount of growns created per harvest. If is -1, the plant/shroom/weed is never meant to be harvested.
+	var/oneharvest = 0				//If a plant is cleared from the tray after harvesting, e.g. a carrot.
+	var/potency = -1				//The 'power' of a plant. Generally effects the amount of reagent in a plant, also used in other ways.
+	var/growthstages = 0			//Amount of growth sprites the plant has.
+	var/plant_type = 0				//0 = 'normal plant'; 1 = weed; 2 = shroom
+	var/rarity = 0					//How rare the plant is. Used for giving points to cargo when shipping off to Centcom.
+	var/list/mutatelist = list()	//The type of plants that this plant can mutate into.
 
 /obj/item/seeds/New()
 	..()
@@ -59,7 +59,6 @@
 	rarity = 0 // CentComm knows about this species already, it's in exotic seeds crates.
 	mutatelist = list(/obj/item/seeds/icepepperseed, /obj/item/seeds/chillighost)
 
-
 /obj/item/seeds/replicapod
 	name = "pack of replica pod seeds"
 	desc = "These seeds grow into replica pods. They say these are used to harvest humans."
@@ -67,7 +66,7 @@
 	species = "replicapod"
 	plantname = "Replica Pod"
 	product = /mob/living/carbon/human //verrry special -- Urist
-	lifespan = 50 //no idea what those do
+	lifespan = 50
 	endurance = 8
 	maturation = 10
 	production = 10
@@ -179,6 +178,7 @@
 	maturation = 6
 	production = 6
 	yield = 3
+	potency = 10
 	plant_type = 0
 	growthstages = 6
 
@@ -243,7 +243,7 @@
 	endurance = 15
 	maturation = 8
 	production = 6
-	yield = 2
+	yield = 3
 	potency = 10
 	plant_type = 0
 	growthstages = 6
@@ -382,7 +382,7 @@
 	maturation = 4
 	production = 4
 	yield = 3
-	potency = 5
+	potency = 15
 	plant_type = 0
 	growthstages = 4
 	mutatelist = list(/obj/item/seeds/koiseed)
@@ -416,7 +416,7 @@
 	maturation = 6
 	production = 1
 	yield = 4
-	potency = 5
+	potency = 15
 	oneharvest = 1
 	plant_type = 0
 	growthstages = 6
@@ -467,7 +467,7 @@
 	maturation = 10
 	production = 5
 	yield = 4
-	potency = 10 // Damage based on potency?
+	potency = 10
 	oneharvest = 1
 	growthstages = 3
 	plant_type = 2
@@ -503,7 +503,7 @@
 	maturation = 7
 	production = 1
 	yield = 5
-	potency = 15 // Lowish potency at start
+	potency = 15
 	oneharvest = 1
 	growthstages = 3
 	plant_type = 2
@@ -520,7 +520,7 @@
 	maturation = 7
 	production = 1
 	yield = 5
-	potency = 1
+	potency = 15
 	oneharvest = 1
 	growthstages = 3
 	plant_type = 2
@@ -537,7 +537,7 @@
 	maturation = 15
 	production = 1
 	yield = 5
-	potency = 1
+	potency = 50
 	oneharvest = 1
 	growthstages = 3
 	plant_type = 2
@@ -572,7 +572,7 @@
 	maturation = 8
 	production = 1
 	yield = 4
-	potency = 0
+	potency = 15
 	oneharvest = 1
 	growthstages = 3
 	plant_type = 2
@@ -590,7 +590,7 @@
 	maturation = 5
 	production = 1
 	yield = 1
-	potency = 0
+	potency = 10
 	oneharvest = 1
 	growthstages = 3
 	plant_type = 2
@@ -660,7 +660,7 @@
 	maturation = 7
 	production = 1
 	yield = 2
-	potency = 1
+	potency = 30
 	oneharvest = 1
 	growthstages = 4
 	plant_type = 1
@@ -718,22 +718,6 @@
 	growthstages = 3
 	plant_type = 0
 
-/obj/item/seeds/brownmold
-	name = "pack of brown mold"
-	desc = "Eww.. moldy."
-	icon_state = "seed"
-	species = "mold"
-	plantname = "Brown Mold"
-	lifespan = 50
-	endurance = 30
-	maturation = 10
-	production = 1
-	yield = -1
-	potency = 1
-	oneharvest = 1
-	growthstages = 3
-	plant_type = 2
-
 /obj/item/seeds/appleseed
 	name = "pack of apple seeds"
 	desc = "These seeds grow into apple trees."
@@ -750,7 +734,6 @@
 	plant_type = 0
 	growthstages = 6
 	mutatelist = list(/obj/item/seeds/goldappleseed)
-
 
 /obj/item/seeds/poisonedappleseed
 	name = "pack of apple seeds"
@@ -865,7 +848,7 @@
 	maturation = 6
 	production = 6
 	yield = 3
-	potency = 1
+	potency = 10
 	plant_type = 0
 	growthstages = 6
 
@@ -947,7 +930,7 @@
 	maturation = 6
 	production = 6
 	yield = 5
-	potency = 1
+	potency = 20
 	plant_type = 0
 	growthstages = 6
 

@@ -29,7 +29,7 @@
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE"
 	name = "\improper DEATH-RIPLEY"
 	icon_state = "deathripley"
-	step_in = 2
+	step_in = 3
 	opacity=0
 	lights_power = 60
 	wreckage = /obj/structure/mecha_wreckage/ripley/deathripley

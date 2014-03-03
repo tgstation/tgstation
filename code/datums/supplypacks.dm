@@ -106,6 +106,24 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 10
 	containername = "internals crate"
 
+/datum/supply_packs/emergency/firefighting
+	name = "Firefighting Crate"
+	contains = list(/obj/item/clothing/suit/fire/firefighter,
+					/obj/item/clothing/suit/fire/firefighter,
+					/obj/item/clothing/mask/gas,
+					/obj/item/clothing/mask/gas,
+					/obj/item/device/flashlight,
+					/obj/item/device/flashlight,
+					/obj/item/weapon/tank/oxygen/red,
+					/obj/item/weapon/tank/oxygen/red,
+					/obj/item/weapon/extinguisher,
+					/obj/item/weapon/extinguisher,
+					/obj/item/clothing/head/hardhat/red,
+					/obj/item/clothing/head/hardhat/red)
+	cost = 10
+	containertype = /obj/structure/closet/crate
+	containername = "firefighting crate"
+
 /datum/supply_packs/emergency/weedcontrol
 	name = "Weed Control Crate"
 	contains = list(/obj/item/weapon/scythe,
@@ -750,8 +768,12 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 /datum/supply_packs/organic/vending
 	name = "Bartending Supply Crate"
 	contains = list(/obj/item/weapon/vending_refill/boozeomat,
+					/obj/item/weapon/vending_refill/boozeomat,
+					/obj/item/weapon/vending_refill/boozeomat,
+					/obj/item/weapon/vending_refill/coffee,
+					/obj/item/weapon/vending_refill/coffee,
 					/obj/item/weapon/vending_refill/coffee)
-	cost = 15
+	cost = 20
 	containername = "bartending supply crate"
 
 /datum/supply_packs/organic/vending/snack
@@ -765,13 +787,16 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 /datum/supply_packs/organic/vending/cola
 	name = "Softdrinks Supply Crate"
 	contains = list(/obj/item/weapon/vending_refill/cola,
+					/obj/item/weapon/vending_refill/cola,
 					/obj/item/weapon/vending_refill/cola)
 	cost = 15
 	containername = "softdrinks supply crate"
 
 /datum/supply_packs/organic/vending/cigarette
 	name = "Cigarette Supply Crate"
-	contains = list(/obj/item/weapon/vending_refill/cigarette)
+	contains = list(/obj/item/weapon/vending_refill/cigarette,
+					/obj/item/weapon/vending_refill/cigarette,
+					/obj/item/weapon/vending_refill/cigarette)
 	cost = 15
 	containername = "cigarette supply crate"
 

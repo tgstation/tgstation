@@ -30,7 +30,7 @@
 		return
 
 	var/obj/item/clothing/mask/horsehead/magichead = new /obj/item/clothing/mask/horsehead
-	magichead.flags |= 0		//curses!
+	magichead.flags |= NODROP	//curses!
 	magichead.flags_inv = null	//so you can still see their face
 	magichead.voicechange = 1	//NEEEEIIGHH
 	target.visible_message(	"<span class='danger'>[target]'s face  lights up in fire, and after the event a horse's head takes its place!</span>", \

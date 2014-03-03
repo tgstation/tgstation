@@ -51,7 +51,7 @@
 				health -= damage
 				for(var/mob/M in viewers(src, null))
 					if ((M.client && !( M.blinded )))
-						M.show_message("\red \b [src] has been attacked with [O] by [user]. ")
+						M.show_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>")
 			else
 				usr << "\red This weapon is ineffective, it does no damage."
 				for(var/mob/M in viewers(src, null))

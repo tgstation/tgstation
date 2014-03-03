@@ -20,7 +20,7 @@
 		"<span class='warning'>[buckled_mob.name] struggles to break free of the gelatinous resin...</span>",\
 		"<span class='warning'>You struggle to break free from the gelatinous resin...</span>",\
 		"You hear squelching...")
-	spawn(1200)
+	spawn(600)
 		if(user && buckled_mob && user.buckled == src)
 			buckled_mob.pixel_y = 0
 			unbuckle()

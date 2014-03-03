@@ -297,7 +297,7 @@ That prevents a few funky behaviors.
 								C.name = "inteliCard"
 								C.overlays.Cut()
 								A.loc = T
-								T.occupant = A
+								T.occupier = A
 								A.control_disabled = 1
 								if (A.stat == 2)
 									T.overlays += image('icons/obj/computer.dmi', "ai-fixer-404")
@@ -308,25 +308,25 @@ That prevents a few funky behaviors.
 								A << "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here."
 								U << "\blue <b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
 						else
-							if(!C.contents.len && T.occupant && !T.active)
-								C.name = "inteliCard - [T.occupant.name]"
+							if(!C.contents.len && T.occupier && !T.active)
+								C.name = "inteliCard - [T.occupier.name]"
 								T.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
-								if (T.occupant.stat == 2)
+								if (T.occupier.stat == 2)
 									C.icon_state = "aicard-404"
 									T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-404")
 								else
 									C.icon_state = "aicard-full"
 									T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-full")
-								T.occupant << "You have been downloaded to a mobile storage device. Still no remote access."
-								U << "\blue <b>Transfer successful</b>: \black [T.occupant.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
-								T.occupant.loc = C
-								T.occupant.cancel_camera()
-								T.occupant = null
+								T.occupier << "You have been downloaded to a mobile storage device. Still no remote access."
+								U << "\blue <b>Transfer successful</b>: \black [T.occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+								T.occupier.loc = C
+								T.occupier.cancel_camera()
+								T.occupier = null
 							else if (C.contents.len)
 								U << "\red <b>ERROR</b>: \black Artificial intelligence detected on terminal."
 							else if (T.active)
 								U << "\red <b>ERROR</b>: \black Reconstruction in progress."
-							else if (!T.occupant)
+							else if (!T.occupier)
 								U << "\red <b>ERROR</b>: \black Unable to locate artificial intelligence."
 					if("NINJASUIT")
 						var/obj/item/clothing/suit/space/space_ninja/C = src
@@ -336,7 +336,7 @@ That prevents a few funky behaviors.
 							else
 								var/mob/living/silicon/ai/A = C.AI
 								A.loc = T
-								T.occupant = A
+								T.occupier = A
 								C.AI = null
 								A.control_disabled = 1
 								T.overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
@@ -345,22 +345,22 @@ That prevents a few funky behaviors.
 								A << "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here."
 								U << "\blue <b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
 						else
-							if(!C.AI && T.occupant && !T.active)
-								if (T.occupant.stat)
-									U << "\red <b>ERROR</b>: \black [T.occupant.name] data core is corrupted. Unable to install."
+							if(!C.AI && T.occupier && !T.active)
+								if (T.occupier.stat)
+									U << "\red <b>ERROR</b>: \black [T.occupier.name] data core is corrupted. Unable to install."
 								else
 									T.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
 									T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-full")
-									T.occupant << "You have been downloaded to a mobile storage device. Still no remote access."
-									U << "\blue <b>Transfer successful</b>: \black [T.occupant.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
-									T.occupant.loc = C
-									T.occupant.cancel_camera()
-									T.occupant = null
+									T.occupier << "You have been downloaded to a mobile storage device. Still no remote access."
+									U << "\blue <b>Transfer successful</b>: \black [T.occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+									T.occupier.loc = C
+									T.occupier.cancel_camera()
+									T.occupier = null
 							else if (C.AI)
 								U << "\red <b>ERROR</b>: \black Artificial intelligence detected on terminal."
 							else if (T.active)
 								U << "\red <b>ERROR</b>: \black Reconstruction in progress."
-							else if (!T.occupant)
+							else if (!T.occupier)
 								U << "\red <b>ERROR</b>: \black Unable to locate artificial intelligence."
 			if("NINJASUIT")//Ninjasuit
 				var/obj/item/clothing/suit/space/space_ninja/T = target

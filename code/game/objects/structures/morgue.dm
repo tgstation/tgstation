@@ -10,7 +10,6 @@
  * Morgue
  */
 
-
 /obj/structure/morgue
 	name = "morgue"
 	desc = "Used to keep bodies in untill someone fetches them."
@@ -33,7 +32,7 @@
 
 			src.icon_state = "morgue2"//default dead no-client mob
 
-			var/list/compiled = recursive_mob_check(src)//run through contents
+			var/list/compiled = recursive_mob_check(src,0,0)//run through contents
 
 			if(!length(compiled))//no mobs at all, but objects inside
 				src.icon_state = "morgue3"
@@ -44,9 +43,6 @@
 					src.icon_state = "morgue4"//clone that mofo
 					break
 
-
-
-	return
 
 /obj/structure/morgue/ex_act(severity)
 	switch(severity)

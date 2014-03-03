@@ -196,7 +196,7 @@
 	if(I.attack_verb.len)
 		visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] with [I] by [user].</span>")
 	else
-		visible_message("<span class='danger'>[src] has been attacked with [I] by [user].</span>")
+		visible_message("<span class='danger'>[src] has been attacked with [I] by [user]!</span>")
 
 	var/damage = I.force / 4.0
 	if(istype(I, /obj/item/weapon/weldingtool))
@@ -325,7 +325,7 @@
 	if(I.attack_verb.len)
 		visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] with [I] by [user].</span>")
 	else
-		visible_message("<span class='danger'>[src] has been attacked with [I] by [user].</span>")
+		visible_message("<span class='danger'>[src] has been attacked with [I] by [user]!</span>")
 
 	var/damage = I.force / 4
 	if(istype(I, /obj/item/weapon/weldingtool))

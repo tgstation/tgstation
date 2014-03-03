@@ -102,7 +102,7 @@ display round(lastgen) and plasmatank amount
 	var/sheet_path = /obj/item/stack/sheet/mineral/plasma
 	var/board_path = "/obj/item/weapon/circuitboard/pacman"
 	var/sheet_left = 0 // How much is left of the sheet
-	var/time_per_sheet = 40
+	var/time_per_sheet = 260
 	var/heat = 0
 
 /obj/machinery/power/port_gen/pacman/initialize()
@@ -318,7 +318,7 @@ display round(lastgen) and plasmatank amount
 	icon_state = "portgen1"
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
 	power_gen = 15000
-	time_per_sheet = 65
+	time_per_sheet = 85
 	board_path = "/obj/item/weapon/circuitboard/pacman/super"
 	overheat()
 		explosion(src.loc, 3, 3, 3, -1)

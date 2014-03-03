@@ -17,7 +17,6 @@
 	var/production = 0
 	var/yield = 0
 	var/plant_type = 0
-	var/dry = 0
 	icon = 'icons/obj/harvest.dmi'
 	potency = -1
 
@@ -25,8 +24,8 @@
 	if (!isnull(newpotency))
 		potency = newpotency
 	..()
-	pixel_x = rand(-5.0, 5)
-	pixel_y = rand(-5.0, 5)
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
 
 	transform *= TransformUsingVariable(potency, 100, 0.5) //Makes the resulting produce's sprite larger or smaller based on potency!
 
