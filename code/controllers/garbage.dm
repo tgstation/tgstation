@@ -38,6 +38,7 @@ var/global/list/uncollectable_vars=list(
 	var/list/queue=list()
 	var/list/destroyed=list()
 	var/waiting=0
+	var/del_everything=0
 	var/turf/trashbin=null
 
 	New()
@@ -46,6 +47,9 @@ var/global/list/uncollectable_vars=list(
 	proc/AddTrash(var/atom/movable/A)
 		if(!A)
 			return
+		if(del_everything)
+			del(A)
+			return
 		A.loc=trashbin
 		queue.Add(A)
 		waiting++
@@ -53,11 +57,16 @@ var/global/list/uncollectable_vars=list(
 	proc/Pop()
 		var/atom/movable/A = queue[1]
 		if(!A) return
+		if(del_everything)
+			del(A)
+			return
 		if(!istype(A,/atom/movable))
 			testing("GC given a [A.type].")
 			del(A)
 			return
 		for(var/vname in A.vars)
+			if(!issaved(A.vars[vname]))
+				continue
 			if(vname in uncollectable_vars)
 				continue
 			//testing("Unsetting [vname] in [A.type]!")
@@ -96,3 +105,13 @@ var/global/list/uncollectable_vars=list(
 	// Let our friend know they're about to get fucked up.
 	A.Destroy()
 	garbage.AddTrash(A)
+
+/client/proc/qdel_toggle()
+	set name = "Toggle qdel Behavior"
+	set desc = "Toggle qdel usage between normal and force del()."
+	set category = "Debug"
+
+	garbage.del_everything = !garbage.del_everything
+	world << "<b>GC: qdel turned [garbage.del_everything?"off":"on"].</b>"
+	log_admin("[key_name(usr)] turned qdel [garbage.del_everything?"off":"on"].")
+	message_admins("\blue [key_name(usr)] turned qdel [garbage.del_everything?"off":"on"].", 1)
