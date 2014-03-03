@@ -246,6 +246,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 	   //#### Grab the connection datum ####//
 		var/datum/radio_frequency/connection = null
+		/* NEW
 		//testing("[src]: talk_into([M], [message], [channel])")
 		if(channel == "headset")
 			channel = null
@@ -261,6 +262,16 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				// If we were to send to a channel we don't have, drop it.
 				return
 		else // If a channel isn't specified, send to common.
+		*/
+		// OLD
+		if(channel && channels && channels.len > 0)
+			if (channel == "department")
+				//world << "DEBUG: channel=\"[channel]\" switching to \"[channels[1]]\""
+				channel = channels[1]
+			connection = secure_radio_connections[channel]
+			if (!channels[channel]) // if the channel is turned off, don't broadcast
+				return
+		else
 			connection = radio_connection
 			channel = null
 		if (!istype(connection))
