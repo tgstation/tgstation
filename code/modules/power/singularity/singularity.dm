@@ -228,17 +228,6 @@ var/global/list/uneatable = list(
 		if(dist > consume_range && istype(X, /atom/movable))
 			if(canPull(X))
 				step_towards(X,src)
-			/*
-			if((X &&!X:anchored && !istype(X,/mob/living/carbon/human))|| (src.current_size >= 9))
-				step_towards(X,src)
-			else if(istype(X,/mob/living/carbon/human))
-				var/mob/living/carbon/human/H = X
-				if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
-					var/obj/item/clothing/shoes/magboots/M = H.shoes
-					if(M.magpulse)
-						continue
-				step_towards(H,src)
-			*/
 		// Turf and movable atoms
 		else if(dist <= consume_range && (isturf(X) || istype(X, /atom/movable)))
 			consume(X)

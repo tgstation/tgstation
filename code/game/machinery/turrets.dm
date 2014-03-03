@@ -35,6 +35,9 @@
 
 	if( ismob(O) && !issilicon(O) )
 		turretTargets -= O
+	// /vg/ vehicles
+	else if( istype(O, /obj/structure/stool/bed/chair/vehicle) )
+		turretTargets -= O
 	else if( istype(O, /obj/mecha) )
 		turretTargets -= O
 	..()
@@ -142,6 +145,11 @@
 			var/obj/mecha/ME = T
 			if( ME.occupant )
 				return 1
+		// /vg/ vehicles
+		else if( istype(T, /obj/structure/stool/bed/chair/vehicle) )
+			var/obj/structure/stool/bed/chair/vehicle/V = T
+			if(V.buckled_mob)
+				return 1
 		else if(istype(T,/mob/living/simple_animal))
 			var/mob/living/simple_animal/A = T
 			if( !A.stat )
@@ -159,6 +167,12 @@
 	for(var/obj/mecha/M in protected_area.turretTargets)
 		if(M.occupant)
 			new_targets += M
+
+	// /vg/ vehicles
+	for(var/obj/structure/stool/bed/chair/vehicle/V in protected_area.turretTargets)
+		if(V.buckled_mob)
+			new_targets += V
+
 	for(var/mob/living/simple_animal/M in protected_area.turretTargets)
 		if(!M.stat)
 			new_targets += M
