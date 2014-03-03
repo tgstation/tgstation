@@ -276,7 +276,8 @@ var/global/list/uneatable = list(
 			O.z = 2
 		else
 			A.ex_act(1.0)
-			if(A) qdel(A)
+			if(A && isnull(A.gc_destroyed))
+				qdel(A)
 		gain = 2
 	else if(isturf(A))
 		var/turf/T = A
