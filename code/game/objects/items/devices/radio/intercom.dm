@@ -154,8 +154,6 @@
 				on = A.master.powered(EQUIP) // set "on" to the power status
 		update_icon()
 
-		sleep(30)
-
 
 /obj/item/weapon/intercom_electronics
 	name = "intercom electronics"
