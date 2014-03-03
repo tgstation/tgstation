@@ -343,7 +343,7 @@
 			if(!M.mind || !M.mind.changeling)
 				M.ear_deaf += 30
 				M.confused += 20
-				M.make_jittery(50)
+				M.Jitter(50)
 			else
 				M << sound('sound/effects/screech.ogg')
 
