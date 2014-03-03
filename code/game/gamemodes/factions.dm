@@ -63,7 +63,7 @@
 
 	alliances = list("Gorlex Marauders")
 	friendly_identification = 2
-	operative_notes = "Most other syndicate operatives are not to be trusted, except fellow Donk members and members of the Gorlex Marauders. We do not approve of mindless killing of innocent workers; \"get in, get done, get out\" is our motto. Members of Waffle.co are to be killed on sight; they are not allowed to be on the station while we're around."
+	operative_notes = "Most other syndicate operatives are not to be trusted, except fellow Donk members and members of the Gorlex Marauders. We do not approve of mindless killing of innocent workers; \'get in, get done, get out'\ is our motto. Members of Waffle.co are to be killed on sight; they are not allowed to be on the station while we're around."
 
 	// Neutral to everyone, friendly to Marauders
 
