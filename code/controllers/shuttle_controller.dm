@@ -193,7 +193,7 @@ datum/shuttle_controller
 			sleep(speed)
 			step(src, direction)
 			for(var/obj/effect/starender/E in loc)
-				del(src)
+				qdel(src)
 
 
 /obj/effect/starender

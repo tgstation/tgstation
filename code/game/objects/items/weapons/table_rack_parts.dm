@@ -40,12 +40,12 @@
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/metal( user.loc )
 		new /obj/item/stack/rods( user.loc )
-		del(src)
+		qdel(src)
 
 /obj/item/weapon/table_parts/reinforced/attack_self(mob/user as mob)
 	new /obj/structure/table/reinforced( user.loc )
 	user.drop_item()
-	del(src)
+	qdel(src)
 	return
 
 /*

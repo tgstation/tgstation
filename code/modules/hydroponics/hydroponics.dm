@@ -1052,4 +1052,4 @@ obj/machinery/hydroponics/constructable/attackby(var/obj/item/O as obj, var/mob/
 	..()
 	if(istype(O, /obj/item/weapon/shovel))
 		user << "You clear up [src]!"
-		del(src)
+		qdel(src)

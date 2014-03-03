@@ -21,7 +21,7 @@
 	var/obj/item/weapon/tank/plasma/ptank = null
 
 
-/obj/item/weapon/flamethrower/Del()
+/obj/item/weapon/flamethrower/Destroy()
 	if(weldtool)
 		qdel(weldtool)
 	if(igniter)

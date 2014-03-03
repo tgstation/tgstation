@@ -107,7 +107,7 @@
 			else
 				new /obj/item/stack/rods(loc)
 				new /obj/item/stack/rods(loc)
-			del(src)
+			qdel(src)
 	else if((istype(W, /obj/item/weapon/screwdriver)) && (istype(loc, /turf/simulated) || anchored))
 		if(!shock(user, 90))
 			playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)

@@ -25,7 +25,7 @@ var/list/world_uplinks = list()
 	welcome = ticker.mode.uplink_welcome
 	uses = ticker.mode.uplink_uses
 
-/obj/item/device/uplink/Del()
+/obj/item/device/uplink/Destroy()
 	world_uplinks-=src
 	..()
 

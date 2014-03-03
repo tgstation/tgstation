@@ -86,7 +86,7 @@
 			G.amount = remaining
 			if(!G.amount)
 				user.drop_item()
-				del(G)
+				qdel(G)
 			AddUses(increment)
 			user << "You insert a piece of glass into the [src.name]. You have [uses] lights remaining."
 			return

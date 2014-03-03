@@ -189,7 +189,7 @@
 				G = new (user.loc)
 				G.add_fingerprint(user)
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		src.Del(1)
+		qdel(src)
 	else
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			hit(I.force)
@@ -303,10 +303,10 @@
 	return
 
 
-/obj/structure/window/Destroy(quiet)
+/obj/structure/window/Destroy()
 	density = 0
 	air_update_turf(1)
-	if(!quiet)playsound(src, "shatter", 70, 1)
+	if(anchored)playsound(src, "shatter", 70, 1)
 	update_nearby_icons()
 	..()
 
