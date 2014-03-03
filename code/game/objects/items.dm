@@ -27,7 +27,6 @@
 	var/permeability_coefficient = 1 // for chemicals/diseases
 	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
-	var/canremove = 1 //Mostly for Ninja code at this point but basically will not allow the item to be removed if set to 0. /N
 	var/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/list/allowed = null //suit storage stuff.
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
@@ -127,17 +126,14 @@
 		S.remove_from_storage(src)
 
 	src.throwing = 0
-	if (src.loc == user)
-		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
-		if(!src.canremove)
+	if (loc == user)
+		if(!user.unEquip(src))
 			return
-		else
-			user.u_equip(src)
 	else
-		if(isliving(src.loc))
+		if(isliving(loc))
 			return
 		user.next_move = max(user.next_move+2,world.time + 2)
-	src.pickup(user)
+	pickup(user)
 	add_fingerprint(user)
 	user.put_in_active_hand(src)
 	return
@@ -152,11 +148,8 @@
 					M.client.screen -= src
 	src.throwing = 0
 	if (src.loc == user)
-		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
-		if(istype(src, /obj/item/clothing) && !src:canremove)
+		if(!user.unEquip(src))
 			return
-		else
-			user.u_equip(src)
 	else
 		if(istype(src.loc, /mob/living))
 			return
@@ -172,7 +165,7 @@
 
 	if(!A.has_fine_manipulation || w_class >= 4)
 		if(src in A.contents) // To stop Aliens having items stuck in their pockets
-			A.drop_from_inventory(src)
+			A.unEquip(src)
 		user << "Your claws aren't capable of such fine manipulation."
 		return
 	attack_paw(A)
@@ -351,6 +344,8 @@
 					return 0
 				return 1
 			if(slot_l_store)
+				if(flags & NODROP) //Pockets aren't visible, so you can't move NODROP items into them.
+					return 0
 				if(H.l_store)
 					return 0
 				if(!H.w_uniform)
@@ -362,6 +357,8 @@
 				if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
 					return 1
 			if(slot_r_store)
+				if(flags & NODROP)
+					return 0
 				if(H.r_store)
 					return 0
 				if(!H.w_uniform)
@@ -374,6 +371,8 @@
 					return 1
 				return 0
 			if(slot_s_store)
+				if(flags & NODROP) //Suit storage NODROP items drop if you take a suit off, this is to prevent people exploiting this.
+					return 0
 				if(H.s_store)
 					return 0
 				if(!H.wear_suit)
@@ -542,7 +541,7 @@
 				M.drop_item()
 			M.eye_blurry += 10
 			M.Paralyse(1)
-			M.Weaken(4)
+			M.Weaken(2)
 		if (prob(M.eye_stat - 10 + 1))
 			if(M.stat != 2)
 				M << "\red You go blind!"

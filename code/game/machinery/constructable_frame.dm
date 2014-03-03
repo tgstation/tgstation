@@ -169,18 +169,22 @@ to destroy them and players will be able to make replacements.
 	req_components = list(
 							"/obj/item/weapon/vending_refill/boozeomat" = 3)
 
-/obj/item/weapon/circuitboard/vendor/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/screwdriver))
-		var/list/names = list(/obj/machinery/vending/boozeomat = "Booze-O-Mat",
-							/obj/machinery/vending/coffee = "Getmore Chocolate Corp",
-							/obj/machinery/vending/snack = "Hot Drinks",
+	var/list/names_paths = list(/obj/machinery/vending/boozeomat = "Booze-O-Mat",
+							/obj/machinery/vending/coffee = "Hot Drinks",
+							/obj/machinery/vending/snack = "Getmore Chocolate Corp",
 							/obj/machinery/vending/cola = "Robust Softdrinks",
 							/obj/machinery/vending/cigarette = "Cigarette",
 							/obj/machinery/vending/autodrobe = "AutoDrobe")
 
-		build_path = pick(names)
-		name = "circuit board ([names[build_path]] Vendor)"
-		user << "<span class='notice'>You set the board to [names[build_path]].</span>"
+/obj/item/weapon/circuitboard/vendor/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/screwdriver))
+		set_type(pick(names_paths), user)
+
+
+/obj/item/weapon/circuitboard/vendor/proc/set_type(typepath, mob/user)
+		build_path = typepath
+		name = "circuit board ([names_paths[build_path]] Vendor)"
+		user << "<span class='notice'>You set the board to [names_paths[build_path]].</span>"
 		req_components = list("/obj/item/weapon/vending_refill/[copytext("[build_path]", 24)]" = 3)       //Never before has i used a method as horrible as this one, im so sorry
 
 /obj/item/weapon/circuitboard/smes
@@ -304,16 +308,16 @@ to destroy them and players will be able to make replacements.
 							"/obj/item/weapon/stock_parts/manipulator" = 1,
 							"/obj/item/stack/cable_coil" = 1,
 							"/obj/item/weapon/stock_parts/console_screen" = 1)
-/*
+
 /obj/item/weapon/circuitboard/hydroponics
 	name = "circuit board (Hydroponics Tray)"
 	build_path = /obj/machinery/hydroponics/constructable
 	board_type = "machine"
 	origin_tech = "programming=1;biotech=1"
 	req_components = list(
-							"/obj/item/weapon/reagent_containers/glass/beaker" = 2,
+							"/obj/item/weapon/stock_parts/matter_bin" = 2,
 							"/obj/item/weapon/stock_parts/console_screen" = 1)
-*/
+
 /obj/item/weapon/circuitboard/microwave
 	name = "circuit board (Microwave)"
 	build_path = /obj/machinery/microwave
@@ -382,7 +386,7 @@ to destroy them and players will be able to make replacements.
 	name = "circuit board (PACMAN-type Generator)"
 	build_path = /obj/machinery/power/port_gen/pacman
 	board_type = "machine"
-	origin_tech = "programming=3:powerstorage=3;plasmatech=3;engineering=3"
+	origin_tech = "programming=3;powerstorage=3;plasmatech=3;engineering=3"
 	req_components = list(
 							"/obj/item/weapon/stock_parts/matter_bin" = 1,
 							"/obj/item/weapon/stock_parts/micro_laser" = 1,

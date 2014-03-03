@@ -483,20 +483,26 @@ var/list/slot_equipment_priority = list( \
 			var/slot = text2num(href_list["item"])
 			var/obj/item/what = get_item_by_slot(slot)
 
-			if(what && what.canremove)
+			if(what)
+				if(what.flags & NODROP)
+					usr << "<span class='notice'>You can't remove \the [what.name], it appears to be stuck!</span>"
+					return
 				visible_message("<span class='danger'>[usr] tries to remove [src]'s [what.name].</span>", \
 								"<span class='userdanger'>[usr] tries to remove [src]'s [what.name].</span>")
 				what.add_fingerprint(usr)
 				if(do_mob(usr, src, STRIP_DELAY))
 					if(what && Adjacent(usr))
-						u_equip(what)
+						unEquip(what)
 			else
 				what = usr.get_active_hand()
+				if(what && (what.flags & NODROP))
+					usr << "<span class='notice'>You can't put \the [what.name] on [src], it's stuck to your hand!</span>"
+					return
 				if(what && what.mob_can_equip(src, slot, 1))
 					visible_message("<span class='notice'>[usr] tries to put [what] on [src].</span>")
 					if(do_mob(usr, src, STRIP_DELAY * 0.5))
 						if(what && Adjacent(usr))
-							usr.u_equip(what)
+							usr.unEquip(what)
 							equip_to_slot_if_possible(what, slot, 0, 1)
 
 	if(usr.machine == src)
@@ -563,79 +569,6 @@ var/list/slot_equipment_priority = list( \
 	for(var/mob/M in viewers())
 		M.see(message)
 
-/*
-adds a dizziness amount to a mob
-use this rather than directly changing var/dizziness
-since this ensures that the dizzy_process proc is started
-currently only humans get dizzy
-
-value of dizziness ranges from 0 to 1000
-below 100 is not dizzy
-*/
-/mob/proc/make_dizzy(var/amount)
-	if(!istype(src, /mob/living/carbon/human)) // for the moment, only humans get dizzy
-		return
-
-	dizziness = min(1000, dizziness + amount)	// store what will be new value
-													// clamped to max 1000
-	if(dizziness > 100 && !is_dizzy)
-		spawn(0)
-			dizzy_process()
-
-
-/*
-dizzy process - wiggles the client's pixel offset over time
-spawned from make_dizzy(), will terminate automatically when dizziness gets <100
-note dizziness decrements automatically in the mob's Life() proc.
-*/
-/mob/proc/dizzy_process()
-	is_dizzy = 1
-	while(dizziness > 100)
-		if(client)
-			var/amplitude = dizziness*(sin(dizziness * 0.044 * world.time) + 1) / 70
-			client.pixel_x = amplitude * sin(0.008 * dizziness * world.time)
-			client.pixel_y = amplitude * cos(0.008 * dizziness * world.time)
-
-		sleep(1)
-	//endwhile - reset the pixel offsets to zero
-	is_dizzy = 0
-	if(client)
-		client.pixel_x = 0
-		client.pixel_y = 0
-
-// jitteriness - copy+paste of dizziness
-
-/mob/proc/make_jittery(var/amount)
-	if(!istype(src, /mob/living/carbon/human)) // for the moment, only humans get dizzy
-		return
-
-	jitteriness = min(1000, jitteriness + amount)	// store what will be new value
-													// clamped to max 1000
-	if(jitteriness > 100 && !is_jittery)
-		spawn(0)
-			jittery_process()
-
-
-// Typo from the oriignal coder here, below lies the jitteriness process. So make of his code what you will, the previous comment here was just a copypaste of the above.
-/mob/proc/jittery_process()
-	var/old_x = pixel_x
-	var/old_y = pixel_y
-	is_jittery = 1
-	while(jitteriness > 100)
-//		var/amplitude = jitteriness*(sin(jitteriness * 0.044 * world.time) + 1) / 70
-//		pixel_x = amplitude * sin(0.008 * jitteriness * world.time)
-//		pixel_y = amplitude * cos(0.008 * jitteriness * world.time)
-
-		var/amplitude = min(4, jitteriness / 100)
-		pixel_x = rand(-amplitude, amplitude)
-		pixel_y = rand(-amplitude/3, amplitude/3)
-
-		sleep(1)
-	//endwhile - reset the pixel offsets to zero
-	is_jittery = 0
-	pixel_x = old_x
-	pixel_y = old_y
-
 /mob/Stat()
 	..()
 
@@ -670,8 +603,14 @@ note dizziness decrements automatically in the mob's Life() proc.
 					continue
 				statpanel(listed_turf.name, null, A)
 
-	if(spell_list.len)
-		for(var/obj/effect/proc_holder/spell/S in spell_list)
+
+	if(mind)
+		add_spells_to_statpanel(mind.spell_list)
+	add_spells_to_statpanel(mob_spell_list)
+
+/mob/proc/add_spells_to_statpanel(var/list/spells)
+	for(var/obj/effect/proc_holder/spell/S in spells)
+		if(S.can_be_cast_by(src))
 			switch(S.charge_type)
 				if("recharge")
 					statpanel("[S.panel]","[S.charge_counter/10.0]/[S.charge_max/10]",S)
@@ -679,8 +618,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 					statpanel("[S.panel]","[S.charge_counter]/[S.charge_max]",S)
 				if("holdervar")
 					statpanel("[S.panel]","[S.holder_var_type] [S.holder_var_amount]",S)
-
-
 
 // facing verbs
 /mob/proc/canface()
@@ -696,28 +633,28 @@ note dizziness decrements automatically in the mob's Life() proc.
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 //Robots and brains have their own version so don't worry about them
 /mob/proc/update_canmove()
-	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
-	var/bed = !(buckled && istype(buckled, /obj/structure/stool/bed/chair))
-	if(ko || resting || stunned)
-		drop_l_hand()
-		drop_r_hand()
-	else
-		lying = 0
-		canmove = 1
-	if(buckled)
-		lying = 90 * bed
-	else
-		if((ko || resting) && !lying)
-			fall(ko)
-	anchored = buckled
-	canmove = !(ko || resting || stunned || buckled)
-	density = !lying
-	update_transform()
-	lying_prev = lying
-	if(update_icon)	//forces a full overlay update
-		update_icon = 0
-		regenerate_icons()
-	return canmove
+        var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
+        var/bed = !(buckled && istype(buckled, /obj/structure/stool/bed/chair))
+        if(ko || resting || stunned)
+                drop_r_hand()
+                drop_l_hand()
+        else
+                lying = 0
+                canmove = 1
+        if(buckled)
+                lying = 90 * bed
+        else
+                if((ko || resting) && !lying)
+                        fall(ko)
+        anchored = buckled
+        canmove = !(ko || resting || stunned || buckled)
+        density = !lying
+        update_transform()
+        lying_prev = lying
+        if(update_icon) //forces a full overlay update
+                update_icon = 0
+                regenerate_icons()
+        return canmove
 
 /mob/proc/fall(var/forced)
 	drop_l_hand()
@@ -758,6 +695,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
 	return 0
 
+/mob/proc/Jitter(amount)
+	jitteriness = max(jitteriness,amount,0)
+
+/mob/proc/Dizzy(amount)
+	dizziness = max(dizziness,amount,0)
 
 /mob/proc/Stun(amount)
 	if(status_flags & CANSTUN)

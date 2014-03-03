@@ -119,6 +119,7 @@
 	else
 		return ONE_ATMOSPHERE - pressure_difference
 
+
 /mob/living/carbon/human
 
 	proc/handle_disabilities()
@@ -130,30 +131,23 @@
 						continue
 					O.show_message(text("\red <B>[src] starts having a seizure!"), 1)
 				Paralyse(10)
-				make_jittery(1000)
+				Jitter(1000)
 		if (disabilities & COUGHING)
 			if ((prob(5) && paralysis <= 1))
 				drop_item()
-				spawn( 0 )
-					emote("cough")
-					return
+				emote("cough")
 		if (disabilities & TOURETTES)
 			if ((prob(10) && paralysis <= 1))
 				Stun(10)
-				spawn( 0 )
-					switch(rand(1, 3))
-						if(1)
-							emote("twitch")
-						if(2 to 3)
-							say("[prob(50) ? ";" : ""][pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]")
-					var/old_x = pixel_x
-					var/old_y = pixel_y
-					pixel_x += rand(-2,2)
-					pixel_y += rand(-1,1)
-					sleep(2)
-					pixel_x = old_x
-					pixel_y = old_y
-					return
+				switch(rand(1, 3))
+					if(1)
+						emote("twitch")
+					if(2 to 3)
+						say("[prob(50) ? ";" : ""][pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]")
+				var/x_offset = pixel_x + rand(-2,2) //Should probably be moved into the twitch emote at some point.
+				var/y_offset = pixel_y + rand(-1,1)
+				animate(src, pixel_x = pixel_x + x_offset, pixel_y = pixel_y + y_offset, time = 1)
+				animate(pixel_x = pixel_x - x_offset, pixel_y = pixel_y - y_offset, time = 1)
 		if (disabilities & NERVOUS)
 			if (prob(10))
 				stuttering = max(10, stuttering)
@@ -912,6 +906,50 @@
 			else if(ear_damage < 25)	//ear damage heals slowly under this threshold. otherwise you'll need earmuffs
 				ear_damage = max(ear_damage-0.05, 0)
 
+			//Dizziness
+			if(dizziness)
+				var/client/C = client
+				var/pixel_x_diff = 0
+				var/pixel_y_diff = 0
+				var/temp
+				var/saved_dizz = dizziness
+				dizziness = max(dizziness-1, 0)
+				if(C)
+					var/oldsrc = src
+					var/amplitude = dizziness*(sin(dizziness * 0.044 * world.time) + 1) / 70 // This shit is annoying at high strength
+					src = null
+					spawn(0)
+						if(C)
+							temp = amplitude * sin(0.008 * saved_dizz * world.time)
+							pixel_x_diff += temp
+							C.pixel_x += temp
+							temp = amplitude * cos(0.008 * saved_dizz * world.time)
+							pixel_y_diff += temp
+							C.pixel_y += temp
+							sleep(3)
+							if(C)
+								temp = amplitude * sin(0.008 * saved_dizz * world.time)
+								pixel_x_diff += temp
+								C.pixel_x += temp
+								temp = amplitude * cos(0.008 * saved_dizz * world.time)
+								pixel_y_diff += temp
+								C.pixel_y += temp
+							sleep(3)
+							if(C)
+								C.pixel_x -= pixel_x_diff
+								C.pixel_y -= pixel_y_diff
+					src = oldsrc
+
+			//Jitteryness
+			if(jitteriness)
+				var/amplitude = min(4, (jitteriness/100) + 1)
+				var/pixel_x_diff = rand(-amplitude, amplitude)
+				var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
+
+				animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = -1)
+				animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 2)
+				jitteriness = max(jitteriness-1, 0)
+
 			//Other
 			if(stunned)
 				AdjustStunned(-1)
@@ -1070,34 +1108,13 @@
 						see_invisible = SEE_INVISIBLE_LIVING
 
 			if(glasses)
-				if(istype(glasses, /obj/item/clothing/glasses/meson))
-					sight |= SEE_TURFS
-				else if(istype(glasses, /obj/item/clothing/glasses/night))
-					see_in_dark = 5
-					see_invisible = SEE_INVISIBLE_MINIMUM
-				else if(istype(glasses, /obj/item/clothing/glasses/thermal))
-					sight |= SEE_MOBS
-					see_invisible = SEE_INVISIBLE_MINIMUM
-				else if(istype(glasses, /obj/item/clothing/glasses/material))
-					sight |= SEE_OBJS
-					see_invisible = SEE_INVISIBLE_MINIMUM
-
-	/* HUD shit goes here, as long as it doesn't modify sight flags */
-	// The purpose of this is to stop xray and w/e from preventing you from using huds -- Love, Doohl
-
-				else if(istype(glasses, /obj/item/clothing/glasses/sunglasses))
-					see_in_dark = 1
-					if(istype(glasses, /obj/item/clothing/glasses/sunglasses/sechud))
-						var/obj/item/clothing/glasses/sunglasses/sechud/O = glasses
-						if(O.hud)		O.hud.process_hud(src)
-						see_invisible = SEE_INVISIBLE_LIVING
-
-				else if(istype(glasses, /obj/item/clothing/glasses/hud))
-					var/obj/item/clothing/glasses/hud/O = glasses
-					O.process_hud(src)
-					see_invisible = SEE_INVISIBLE_LIVING
-				else
-					see_invisible = SEE_INVISIBLE_LIVING
+				if(istype(glasses, /obj/item/clothing/glasses))
+					var/obj/item/clothing/glasses/G = glasses
+					sight |= G.vision_flags
+					see_in_dark = G.darkness_view
+					see_invisible = G.invis_view
+					if(G.hud)
+						G.process_hud(src)
 
 			if(druggy)	//Override for druggy
 				see_invisible = see_temp

@@ -22,9 +22,12 @@
 				var/obj/item/weapon/grab/G = item
 				if(G.affecting)
 					var/mob/M = G.affecting
-					if(M.spell_list.len != 0)
-						for(var/obj/effect/proc_holder/spell/S in M.spell_list)
+					if(M.mob_spell_list.len != 0 || (M.mind && M.mind.spell_list.len != 0))
+						for(var/obj/effect/proc_holder/spell/S in M.mob_spell_list)
 							S.charge_counter = S.charge_max
+						if(M.mind)
+							for(var/obj/effect/proc_holder/spell/S in M.mind.spell_list)
+								S.charge_counter = S.charge_max
 						M <<"<span class='notice'>you feel raw magic flowing through you, it feels good!</span>"
 					else
 						M <<"<span class='notice'>you feel very strange for a moment, but then it passes.</span>"

@@ -7,7 +7,7 @@
 	w_class = 2.0
 	item_state = "electronic"
 	throw_speed = 3
-	throw_range = 20
+	throw_range = 7
 	m_amt = 500
 	var/obj/effect/ship_landing_beacon/beacon = null
 	var/active = 0

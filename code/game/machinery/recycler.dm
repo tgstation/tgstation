@@ -138,8 +138,8 @@ var/const/SAFETY_COOLDOWN = 100
 
 	// Remove and recycle the equipped items.
 	for(var/obj/item/I in L.get_equipped_items())
-		L.drop_from_inventory(I)
-		recycle(I, 0)
+		if(L.unEquip(I))
+			recycle(I, 0)
 
 	// Instantly lie down, also go unconscious from the pain, before you die.
 	L.Paralyse(5)

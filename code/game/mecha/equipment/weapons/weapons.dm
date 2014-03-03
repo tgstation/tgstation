@@ -134,13 +134,13 @@
 			M.Stun(10)
 			M.Paralyse(4)
 		else
-			M.make_jittery(500)
+			M.Jitter(500)
 		/* //else the mousetraps are useless
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
 			if(isobj(H.shoes))
 				var/thingy = H.shoes
-				H.drop_from_inventory(H.shoes)
+				H.unEquip(H.shoes)
 				walk_away(thingy,chassis,15,2)
 				spawn(20)
 					if(thingy)
@@ -201,7 +201,7 @@
 	name = "\improper FNX-99 \"Hades\" Carbine"
 	icon_state = "mecha_carbine"
 	equip_cooldown = 5
-	projectile = /obj/item/projectile/bullet/mechincendiary
+	projectile = /obj/item/projectile/bullet/incendiary/mech
 	projectiles = 24
 	projectile_energy_cost = 15
 
@@ -355,7 +355,8 @@
 		message_admins("[key_name(chassis.occupant, chassis.occupant.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[chassis.occupant]'>?</A>) fired a [src] in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
 		log_game("[chassis.occupant.ckey]([chassis.occupant]) fired a [src] ([T.x],[T.y],[T.z])")
 		spawn(det_time)
-			F.prime()
+			if(F)
+				F.prime()
 		do_after_cooldown()
 		return
 

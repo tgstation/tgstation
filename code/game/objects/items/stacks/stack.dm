@@ -130,7 +130,7 @@
 		if (src.amount<=0)
 			var/oldsrc = src
 			src = null //dont kill proc after del()
-			usr.before_take_item(oldsrc)
+			usr.unEquip(oldsrc, 1)
 			del(oldsrc)
 			if (istype(O,/obj/item))
 				usr.put_in_hands(O)
@@ -152,7 +152,7 @@
 		var/oldsrc = src
 		src = null //dont kill proc after del()
 		if(usr)
-			usr.before_take_item(oldsrc)
+			usr.unEquip(oldsrc, 1)
 		del(oldsrc)
 	return
 
@@ -173,7 +173,7 @@
 
 /obj/item/stack/attack_hand(mob/user as mob)
 	if (user.get_inactive_hand() == src)
-		var/obj/item/stack/F = new src.type( user, amount=1)
+		var/obj/item/stack/F = new src.type( user, 1)
 		F.copy_evidences(src)
 		user.put_in_hands(F)
 		src.add_fingerprint(user)

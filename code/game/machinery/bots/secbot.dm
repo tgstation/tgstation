@@ -227,14 +227,14 @@ Auto Patrol: []"},
 					var/mob/living/carbon/M = src.target
 					var/maxstuns = 4
 					if(istype(M, /mob/living/carbon/human))
-						if(M.stuttering < 10 && (!(HULK in M.mutations)))
-							M.stuttering = 10
-						M.Stun(10)
-						M.Weaken(10)
+						if(M.stuttering < 5 && (!(HULK in M.mutations)))
+							M.stuttering = 5
+						M.Stun(5)
+						M.Weaken(5)
 					else
-						M.Weaken(10)
-						M.stuttering = 10
-						M.Stun(10)
+						M.Weaken(5)
+						M.stuttering = 5
+						M.Stun(5)
 					maxstuns--
 					if(maxstuns <= 0)
 						target = null
@@ -706,7 +706,7 @@ Auto Patrol: []"},
 		var/obj/item/weapon/secbot_assembly/A = new /obj/item/weapon/secbot_assembly
 		user.put_in_hands(A)
 		user << "<span class='notice'>You add the signaler to the helmet.</span>"
-		user.drop_from_inventory(src)
+		user.unEquip(src, 1)
 		del(src)
 	else
 		return
