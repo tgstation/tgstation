@@ -123,13 +123,13 @@
 	icon_aggro = "Goldgrub_alert"
 	icon_dead = "Goldgrub_dead"
 	icon_gib = "syndicate_gib"
-	vision_range = 3
+	vision_range = 2
 	aggro_vision_range = 9
-	idle_vision_range = 3
-	move_to_delay = 3
+	idle_vision_range = 2
+	move_to_delay = 5
 	friendly = "harmlessly rolls into"
-	maxHealth = 60
-	health = 60
+	maxHealth = 45
+	health = 45
 	harm_intent_damage = 5
 	melee_damage_lower = 0
 	melee_damage_upper = 0
@@ -208,6 +208,10 @@
 	Reward()
 	..()
 
+/mob/living/simple_animal/hostile/asteroid/goldgrub/adjustBruteLoss(var/damage)
+	idle_vision_range = 9
+	..()
+
 /mob/living/simple_animal/hostile/asteroid/hivelord
 	name = "hivelord"
 	desc = "A truly alien creature, it is a mass of unknown organic material, constantly fluctuating. When attacking, pieces of it split off and attack in tandem with the original."
@@ -250,6 +254,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/Die()
 	new /obj/item/asteroid/hivelord_core(src.loc)
+	mouse_opacity = 1
 	..()
 
 /obj/item/asteroid/hivelord_core
@@ -330,7 +335,7 @@
 	ranged = 1
 	ranged_cooldown_cap = 8
 	friendly = "wails at"
-	vision_range = 5
+	vision_range = 4
 	speed = 3
 	maxHealth = 300
 	health = 300

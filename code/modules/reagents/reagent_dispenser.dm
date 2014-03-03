@@ -109,20 +109,21 @@
 		message_admins("[key_name_admin(Proj.firer)] triggered a fueltank explosion.")
 		log_game("[key_name(Proj.firer)] triggered a fueltank explosion.")
 		explosion(src.loc,-1,0,2, flame_range = 2)
-		if(src)
-			del(src)
-
 
 
 /obj/structure/reagent_dispensers/fueltank/blob_act()
 	explosion(src.loc,0,1,5,7,10, flame_range = 5)
-	if(src)
-		del(src)
+
 
 /obj/structure/reagent_dispensers/fueltank/ex_act()
 	explosion(src.loc,-1,0,2, flame_range = 2)
 	if(src)
 		del(src)
+
+
+/obj/structure/reagent_dispensers/fueltank/fire_act()
+	blob_act() //saving a few lines of copypasta
+
 
 /obj/structure/reagent_dispensers/peppertank
 	name = "Pepper Spray Refiller"
@@ -180,7 +181,7 @@
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act()
 	explosion(src.loc,0,3,5,7,10)
-	del(src)
+
 
 /obj/structure/reagent_dispensers/virusfood
 	name = "Virus Food Dispenser"
