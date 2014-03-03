@@ -195,7 +195,7 @@ var/const/tk_maxrange = 15
 		return 1
 */
 
-//equip_to_slot_or_qdel(obj/item/W, slot, qdel_on_fail = 1)
+//equip_to_slot_or_del(obj/item/W, slot, qdel_on_fail = 1)
 /*
 		if(istype(user, /mob/living/carbon))
 			if(user:mutations & TK && get_dist(source, user) <= 7)

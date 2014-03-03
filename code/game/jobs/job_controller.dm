@@ -324,15 +324,15 @@ var/global/datum/controller/occupations/job_master
 				else
 					switch(H.backbag)
 						if(1)
-							H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
+							H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 						if(2)
 							var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack(H)
 							new /obj/item/weapon/storage/box/survival(BPK)
-							H.equip_to_slot_or_qdel(BPK, slot_back,1)
+							H.equip_to_slot_or_del(BPK, slot_back,1)
 						if(3)
 							var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel_norm(H)
 							new /obj/item/weapon/storage/box/survival(BPK)
-							H.equip_to_slot_or_qdel(BPK, slot_back,1)
+							H.equip_to_slot_or_del(BPK, slot_back,1)
 
 		H << "<B>You are the [rank].</B>"
 		H << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
@@ -340,7 +340,7 @@ var/global/datum/controller/occupations/job_master
 			H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
 		spawnId(H,rank)
 
-		H.equip_to_slot_or_qdel(new /obj/item/device/radio/headset(H), slot_ears)
+		H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_ears)
 		H.update_hud() 	// Tmp fix for Github issue 1006. TODO: make all procs in update_icons.dm do client.screen |= equipment no matter what.
 		return 1
 
@@ -367,12 +367,12 @@ var/global/datum/controller/occupations/job_master
 			C.registered_name = H.real_name
 			C.assignment = rank
 			C.name = "[C.registered_name]'s ID Card ([C.assignment])"
-			H.equip_to_slot_or_qdel(C, slot_wear_id)
+			H.equip_to_slot_or_del(C, slot_wear_id)
 	/*	if(prob(50))
-			H.equip_to_slot_or_qdel(new /obj/item/weapon/pen(H), slot_r_store)
+			H.equip_to_slot_or_del(new /obj/item/weapon/pen(H), slot_r_store)
 		else
-			H.equip_to_slot_or_qdel(new /obj/item/weapon/pen/blue(H), slot_r_store)*/
-		H.equip_to_slot_or_qdel(new /obj/item/device/pda(H), slot_belt)
+			H.equip_to_slot_or_del(new /obj/item/weapon/pen/blue(H), slot_r_store)*/
+		H.equip_to_slot_or_del(new /obj/item/device/pda(H), slot_belt)
 		if(locate(/obj/item/device/pda,H))//I bet this could just use locate.  It can --SkyMarshal
 			var/obj/item/device/pda/pda = locate(/obj/item/device/pda,H)
 			pda.owner = H.real_name
