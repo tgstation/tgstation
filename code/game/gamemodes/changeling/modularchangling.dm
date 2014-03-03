@@ -172,7 +172,7 @@ var/list/powerinstances
 /datum/power/changeling/spacesuit
 	name = "Organic Space Suit"
 	desc = "We grow an organic suit to protect ourselves from space exposure."
-	helptext = "We must constantly repair our suit to make it space-proof, so we cant regenerate chemicals while our suit is active. Casting off the suit damages our genomes. Cannot be used in lesser form."
+	helptext = "We must constantly repair our suit to make it space-proof, so we cant regenerate chemicals while we are protected. Casting off the suit damages our genomes. Cannot be used in lesser form."
 	genomecost = 1
 	allowduringlesserform = 0
 	verbpath = /mob/living/carbon/proc/changeling_space_suit

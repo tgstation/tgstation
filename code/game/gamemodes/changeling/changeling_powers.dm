@@ -614,6 +614,12 @@ var/list/datum/dna/hivemind_bank = list()
 			src.mind.changeling.chem_charges = max(src.mind.changeling.chem_charges - 1,5, 0)
 			sleep(40)
 
+	spawn(0) //I'm so sorry.
+		while(src && mind && mind.changeling && mind.changeling.spacesuitactive)
+			H.reagents.add_reagent("dexalinp", 1) //So you don't need internals.
+			sleep(60)
+
+
 //////////
 //STINGS//	//They get a pretty header because there's just so fucking many of them ;_;
 //////////
