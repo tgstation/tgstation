@@ -597,6 +597,7 @@ var/list/datum/dna/hivemind_bank = list()
 		return
 	if(!H.unEquip(H.head))
 		src << "\the [H.head] is stuck on your head, you cannot grow a space helmet over it!"
+		H.unEquip(H.wear_suit, 1) //Force unequip the suit to prevent bugginess.
 		return
 
 	equip_to_slot_if_possible(new /obj/item/clothing/suit/space/changeling(H), slot_wear_suit, 1, 1, 1)
