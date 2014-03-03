@@ -355,6 +355,10 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Asteroid - Artifact"
 	icon_state = "cave"
 
+/area/asteroid/artifactroom/New()
+	..()
+	lighting_use_dynamic = 1
+	InitializeLighting()
 
 
 
