@@ -28,41 +28,6 @@ obj/machinery/atmospherics/process()
 		return PROCESS_KILL
 	build_network()
 
-/*
-obj/machinery/atmospherics/Destroy()
-
-	worldm << "Pre Destroy()"
-	test_pipenet()
-		..()
-	world << "Post Destroy()"
-	test_pipenet()
-
-obj/machinery/atmospherics/verb/test_pipenet()
-	set src in view()
-	var/found = 0
-	var/srcref = "\ref[src]"
-	var/netref = ""
-	var/pipelineref = ""
-	for(var/datum/pipe_network/Network in pipe_networks)
-		netref = "\ref[Network]"
-		for(var/obj/machinery/atmospherics/AT in Network.normal_members)
-			if(AT == src)
-				world << "Found <A HREF='?_src_=vars;Vars=\ref[src]'>[srcref] - [src.type]</A> in normal_members of pipenet#<A HREF='?_src_=vars;Vars=\ref[Network]'>[netref]</A>"
-				found++
-		for(var/datum/pipeline/PL in Network.line_members)
-			pipelineref = "\ref[PL]"
-			for(var/obj/machinery/atmospherics/AT in PL.members)
-				if(AT == src)
-					world << "Found <A HREF='?_src_=vars;Vars=\ref[src]'>[srcref] - [src.type]</A> in members of pipeline#<A HREF='?_src_=vars;Vars=\ref[PL]'>[pipelineref]</A> in pipenet#<A HREF='?_src_=vars;Vars=\ref[Network]'>[netref]</A>"
-					found++
-			for(var/obj/machinery/atmospherics/ATE in PL.edges)
-				if(ATE == src)
-					world << "Found <A HREF='?_src_=vars;Vars=\ref[src]'>[srcref] - [src.type]</A> in edges of pipeline#<A HREF='?_src_=vars;Vars=\ref[PL]'>[pipelineref]</A> in pipenet#<A HREF='?_src_=vars;Vars=\ref[Network]'>[netref]</A>"
-					found++
-	if(!found)
-		world << "Unable to find <A HREF='?_src_=vars;Vars=\ref[src]'>[srcref]</A> in any pipenets"
-*/
-
 obj/machinery/atmospherics/proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	// Check to see if should be added to network. Add self if so and adjust variables appropriately.
 	// Note don't forget to have neighbors look as well!
