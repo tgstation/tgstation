@@ -102,11 +102,11 @@
 
 			if(damage > emergency_point)
 
-				radio.autosay(addtext(emergency_alert, " Stability: ",stability,"%"), "Supermatter Monitor")
+				radio.autosay(addtext(emergency_alert, " Instability: ",stability,"%"), "Supermatter Monitor")
 				lastwarning = world.timeofday
 
 			else if(damage >= damage_archived) // The damage is still going up
-				radio.autosay(addtext(warning_alert," Stability: ",stability,"%"), "Supermatter Monitor")
+				radio.autosay(addtext(warning_alert," Instability: ",stability,"%"), "Supermatter Monitor")
 				lastwarning = world.timeofday - 150
 
 			else                                                 // Phew, we're safe
