@@ -81,13 +81,6 @@
 			if(get_dist(watching, src) > get_dist(target, src))
 				LoseTarget()
 				GiveTarget(watching)
-	for(var/obj/structure/closet/statue/S in contents)
-		if(S.timer <= 10)
-			S.loc = src.loc
-			if(mind)
-				for(var/mob/M in S.contents)
-					mind.transfer_to(M)
-			del(src)
 
 /mob/living/simple_animal/hostile/statue/AttackingTarget()
 	if(!can_be_seen())
