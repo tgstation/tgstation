@@ -174,7 +174,7 @@ obj/item/projectile/kinetic/New()
 		var/turf/unsimulated/mineral/M = target_turf
 		M.GetDrilled()
 	new /obj/item/effect/kinetic_blast(target_turf)
-	..()
+	..(target,blocked)
 
 /obj/item/projectile/kinetic/Bump(atom/A as mob|obj|turf|area)
 	if(!loc) return
