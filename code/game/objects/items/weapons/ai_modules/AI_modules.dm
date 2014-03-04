@@ -48,9 +48,9 @@ Refactored AI modules by N3X15
 		user << "\red Your firmware prevents you from picking that up!"
 	return
 
-// See a lot of modules overriding this, so let's do it here.
-/obj/item/weapon/aiModule/attack_hand(mob/user as mob)
-	return
+// This prevents modules from being picked up.  Use it, if needed.
+// /obj/item/weapon/aiModule/attack_hand(mob/user as mob)
+// 	return
 
 // Make a copy of this module.
 /obj/item/weapon/aiModule/proc/copy()
@@ -72,11 +72,8 @@ Refactored AI modules by N3X15
 // Apply laws to ai_laws datum.
 /obj/item/weapon/aiModule/proc/upload(var/datum/ai_laws/laws, var/atom/target, var/mob/sender)
 	var/senderName="Unknown"
-	var/senderKey
 	if(sender)
-		var/mob/M=target
-		senderName=M.name
-		senderKey=M.key
+		senderName=sender.name
 	var/targetName="\a [target.name]"
 	if(ismob(target))
 		var/mob/M=target
@@ -85,9 +82,9 @@ Refactored AI modules by N3X15
 			target << "\red <b>\[REDACTED\]</b> \black has uploaded a change to the laws you must follow, using \a [name]. From now on: "
 		else
 			target << "[senderName] has uploaded a change to the laws you must follow, using \a [name]. From now on: "
-		targetName="[M.name]([M.key])"
+		targetName="[fmtSubject(M)])"
 	var/time = time2text(world.realtime,"hh:mm:ss")
-	var/log_entry = "[senderName]([senderKey]) used [src.name] on [targetName]"
+	var/log_entry = "[fmtSubject(sender)]) used [src.name] on [targetName]"
 	lawchanges.Add("[time] : [log_entry]")
 	message_admins(log_entry)
 	log_game(log_entry)

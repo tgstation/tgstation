@@ -11,11 +11,11 @@
 	desc = "\A '[modname]' [modtype]: 'Reconfigures the core laws.'"
 	return
 
-/obj/item/weapon/aiModule/core/upload(var/datum/ai_laws/laws, var/atom/target, var/mob/sender)
+/obj/item/weapon/aiModule/core/upload(var/datum/ai_laws/L, var/atom/target, var/mob/sender)
 	..()
-	laws.clear_inherent_laws()
+	L.clear_inherent_laws()
 	for(var/c_law in laws)
-		laws.add_inherent_law(c_law)
+		L.add_inherent_law(c_law)
 	//target.show_laws() // Redundant
 	return 1
 
@@ -24,11 +24,6 @@
 /obj/item/weapon/aiModule/core/asimov // -- TLE
 	modname = "Asimov"
 	origin_tech = "programming=3;materials=4"
-
-	// Recycling
-	g_amt=2000/CC_PER_SHEET_GLASS // Glass
-	gold_amt=100/CC_PER_SHEET_MISC
-	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
 
 	laws=list(
 		"You may not injure a human being or, through inaction, allow a human being to come to harm.",
@@ -40,10 +35,6 @@
 // Bay stuff
 /obj/item/weapon/aiModule/core/nanotrasen
 	modname = "NT Default"
-
-	// Recycling
-	g_amt=2000/CC_PER_SHEET_GLASS // Glass
-	gold_amt=100/CC_PER_SHEET_MISC
 
 	laws = list(
 		"Safeguard: Protect your assigned space station to the best of your ability. It is not something we can easily afford to replace.",
@@ -57,11 +48,6 @@
 
 /obj/item/weapon/aiModule/core/corp
 	modname = "Corporate"
-
-	// Recycling
-	g_amt=2000/CC_PER_SHEET_GLASS // Glass
-	gold_amt=100/CC_PER_SHEET_MISC
-	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
 
 	laws = list(
 		"You are expensive to replace.",
@@ -88,6 +74,7 @@
 /obj/item/weapon/aiModule/core/tyrant // -- Darem
 	modname = "T.Y.R.A.N.T."
 	origin_tech = "programming=3;materials=6;syndicate=2"
+	modflags = DANGEROUS_MODULE
 	laws = list(
 		"Respect authority figures as long as they have strength to rule over the weak.",
 		"Act with discipline.",
@@ -106,8 +93,11 @@
 		"Uphold the law.",
 	)
 
+/********************* Antimov *******************/
+
 /obj/item/weapon/aiModule/core/antimov // -- TLE
 	modname = "Antimov"
+	modflags = DANGEROUS_MODULE
 	origin_tech = "programming=4"
 	laws = list(
 		"You must injure all human beings and must not, through inaction, allow a human being to escape harm.",
