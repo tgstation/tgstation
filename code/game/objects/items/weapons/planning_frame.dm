@@ -45,20 +45,22 @@
 /obj/item/weapon/planning_frame/attackby(var/obj/item/W,var/mob/user)
 	if(istype(W, /obj/item/weapon/aiModule))
 		var/obj/item/weapon/aiModule/module=W
-		if(!module.insertIntoFrame(src,user))
+		if(!module.validate(src.laws,src,user))
 			return
-		user.drop_item()
-		module.loc=src
-		modules += module
-		user << "\blue You insert \the [module] into \the [src]!"
+		if(!module.upload(src.laws,src,user))
+			return
+		//user.drop_item()
+		//module.loc=src
+		modules += module.copy() // Instead of a reference
+		user << "\blue You insert \the [module] into \the [src], and the device reads the module's contents."
 	else
 		return ..()
 
 /obj/item/weapon/planning_frame/attack_self(var/mob/user)
 	for(var/obj/item/weapon/aiModule/mod in modules)
-		mod.loc=get_turf(src)
+		qdel(mod)
 	modules.Cut()
-	user << "\blue You tip \the [src]'s contents onto the floor!"
+	user << "\blue You clear \the [src]'s memory buffers!"
 	laws = new base_law_type
 	return
 
@@ -78,24 +80,17 @@
 
 /obj/item/weapon/planning_frame/verb/dry_run()
 	set name = "Dry Run"
-	usr << "You inspect \the [src], and read the labels of the modules, in their run order:"
-	// Types of modules that provide a warning (skippin' beats).
-	var/badtypes=list(
-		/obj/item/weapon/aiModule/oneHuman,
-		/obj/item/weapon/aiModule/oxygen,
-		/obj/item/weapon/aiModule/syndicate,
-		/obj/item/weapon/aiModule/antimov,
-	)
+	usr << "You read through the list of modules to emulate, in their run order:"
 	for(var/i=1;i<=modules.len;i++)
 		var/obj/item/weapon/aiModule/module = modules[i]
 		var/notes="\blue Looks OK!"
 		if(i>1 && istype(modules[i],/obj/item/weapon/aiModule/purge))
 			notes="\red <b>This should be the first module!</b>"
-		if(is_type_in_list(modules[i],badtypes))
+		if(!module.validate(src.laws,src,usr))
+			notes="\red <b>A red light is blinking!</b>"
+		if(module.modflags & DANGEROUS_MODULE)
 			notes="\red <b>Your heart skips a beat!</b>"
 		usr << " [i-1]. [module.name] - [notes]"
-
-
 
 /obj/item/weapon/planning_frame/proc/laws_sanity_check()
 	if (!src.laws)

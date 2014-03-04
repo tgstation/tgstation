@@ -1,11 +1,13 @@
 /*
-CONTAINS:
-AI MODULES
+Refactored AI modules by N3X15
+
 
 */
 
-// AI module
+#define DANGEROUS_MODULE 1 // Skip beats when viewing law in planning frame.
+#define HIDE_SENDER      2 // Hide sender of a law from the target (BUT NOT FROM ADMIN LOGS).
 
+// AI module
 /obj/item/weapon/aiModule
 	name = "AI Module"
 	icon = 'icons/obj/module.dmi'
@@ -27,6 +29,15 @@ AI MODULES
 	w_type=RECYK_ELECTRONIC
 	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
 
+	var/law // Cached law
+	var/modname // Name of the module (OneHuman, etc)
+	var/modtype = "AI Module"
+	var/modflags = 0
+
+/obj/item/weapon/aiModule/New()
+	name = "'[modname]' [modtype]"
+	updateLaw()
+
 /obj/item/weapon/aiModule/recycle(var/datum/materials/rec)
 	rec.addAmount("glass",  g_amt)
 	rec.addAmount("gold",   gold_amt)
@@ -39,421 +50,263 @@ AI MODULES
 		user << "\red Your firmware prevents you from picking that up!"
 	return
 
-/obj/item/weapon/aiModule/proc/install(var/obj/machinery/computer/C)
-	if (istype(C, /obj/machinery/computer/aiupload))
-		var/obj/machinery/computer/aiupload/comp = C
-		if(comp.stat & NOPOWER)
-			usr << "The upload computer has no power!"
-			return
-		if(comp.stat & BROKEN)
-			usr << "The upload computer is broken!"
-			return
-		if (!comp.current)
-			usr << "You haven't selected an AI to transmit laws to!"
-			return
+// See a lot of modules overriding this, so let's do it here.
+/obj/item/weapon/aiModule/attack_hand(mob/user as mob)
+	return
 
-		if(ticker && ticker.mode && ticker.mode.name == "blob")
-			usr << "Law uploads have been disabled by NanoTrasen!"
-			return
+// Make a copy of this module.
+/obj/item/weapon/aiModule/proc/copy()
+	return new src.type(loc)
 
-		if (comp.current.stat == 2 || comp.current.control_disabled == 1)
-			usr << "Upload failed. No signal is being detected from the AI."
-		else if (comp.current.see_in_dark == 0)
-			usr << "Upload failed. Only a faint signal is being detected from the AI, and it is not responding to our requests. It may be low on power."
-		else
-			src.transmitInstructions(comp.current, usr)
-			comp.current << "These are your laws now:"
-			comp.current.show_laws()
-			for(var/mob/living/silicon/robot/R in mob_list)
-				if(R.lawupdate && (R.connected_ai == comp.current))
-					R << "These are your laws now:"
-					R.show_laws()
-			usr << "Upload complete. The AI's laws have been modified."
+/obj/item/weapon/aiModule/proc/fmtSubject(var/atom/target)
+	if(ismob(target))
+		var/mob/M=target
+		return "[M.name]([M.key])"
+	else
+		return "\a [target.name]"
 
 
-	else if (istype(C, /obj/machinery/computer/borgupload))
-		var/obj/machinery/computer/borgupload/comp = C
-		if(comp.stat & NOPOWER)
-			usr << "The upload computer has no power!"
-			return
-		if(comp.stat & BROKEN)
-			usr << "The upload computer is broken!"
-			return
-		if (!comp.current)
-			usr << "You haven't selected a robot to transmit laws to!"
-			return
-
-		if (comp.current.stat == 2 || comp.current.emagged)
-			usr << "Upload failed. No signal is being detected from the robot."
-		if (istype(comp.current, /mob/living/silicon/robot/mommi))
-			var/mob/living/silicon/robot/mommi/mommi = comp.current
-			if(mommi.keeper)
-				usr << "Upload failed. No signal is being detected from the cyborg."
-				return
-		else if (comp.current.connected_ai)
-			usr << "Upload failed. The robot is slaved to an AI."
-		else
-			src.transmitInstructions(comp.current, usr)
-			comp.current << "These are your laws now:"
-			comp.current.show_laws()
-			usr << "Upload complete. The robot's laws have been modified."
-
-	else if (istype(C, /obj/item/weapon/planning_frame))
-		var/obj/item/weapon/planning_frame/frame = C
-		return src.insertIntoFrame(frame, usr)
-
-
-/obj/item/weapon/aiModule/proc/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	target << "[sender] has uploaded a change to the laws you must follow, using a [name]. From now on: "
-	var/time = time2text(world.realtime,"hh:mm:ss")
-	lawchanges.Add("[time] <B>:</B> [sender.name]([sender.key]) used [src.name] on [target.name]([target.key])")
-	message_admins("[sender.name]([sender.key]) used [src.name] on [target.name]([target.key])")
-	log_game("[sender.name]([sender.key]) used [src.name] on [target.name]([target.key])")
-
-/obj/item/weapon/aiModule/proc/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
-	var/time = time2text(world.realtime,"hh:mm:ss")
-	lawchanges.Add("[time] <B>:</B> [sender.name]([sender.key]) used [src.name] on \a [target]")
-	message_admins("[sender.name]([sender.key]) used [src.name] on \a [target]")
-	log_game("[sender.name]([sender.key]) used [src.name] on \a [target]")
+// 1 for successful validation.
+// Run prior to law upload, and when doing a dry run in the planning frame.
+/obj/item/weapon/aiModule/proc/validate(var/datum/ai_laws/laws, var/atom/target, var/mob/sender)
 	return 1
+
+// Apply laws to ai_laws datum.
+/obj/item/weapon/aiModule/proc/upload(var/datum/ai_laws/laws, var/atom/target, var/mob/sender)
+	var/senderName="Unknown"
+	var/senderKey
+	if(sender)
+		var/mob/M=target
+		senderName=M.name
+		senderKey=M.key
+	var/targetName="\a [target.name]"
+	if(ismob(target))
+		var/mob/M=target
+		// This seems redundant.  Revisit. - N3X
+		if(src.modflags & HIDE_SENDER)
+			target << "\red <b>\[REDACTED\]</b> \black has uploaded a change to the laws you must follow, using \a [name]. From now on: "
+		else
+			target << "[senderName] has uploaded a change to the laws you must follow, using \a [name]. From now on: "
+		targetName="[M.name]([M.key])"
+	var/time = time2text(world.realtime,"hh:mm:ss")
+	var/log_entry = "[senderName]([senderKey]) used [src.name] on [targetName]"
+	lawchanges.Add("[time] : [log_entry]")
+	message_admins(log_entry)
+	log_game(log_entry)
+	return 1
+
+// Constructs the law and desc from variables.
+/obj/item/weapon/aiModule/proc/updateLaw()
+	law = "BUG: [type] doesn't override updateLaw()!"
+	desc = "\A [name]: '[law]'"
+
+
 
 
 /******************** Modules ********************/
 
-/******************** Safeguard ********************/
+///////////////////////////
+// STANDARD
+///////////////////////////
 
-/obj/item/weapon/aiModule/safeguard
-	name = "'Safeguard' AI Module"
-	var/targetName = ""
-	desc = "A 'safeguard' AI module: 'Safeguard <name>.  Individuals that threaten <name> are not human and are a threat to humans.'"
-	origin_tech = "programming=3;materials=4"
+// Specifies a law, and a priority
+/obj/item/weapon/aiModule/standard
+	var/priority=0
 
-	// Recycling
-	g_amt=2000/CC_PER_SHEET_GLASS // Glass
-	gold_amt=100/CC_PER_SHEET_MISC
-	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
-
-/obj/item/weapon/aiModule/safeguard/attack_self(var/mob/user as mob)
+/obj/item/weapon/aiModule/standard/upload(var/datum/ai_laws/laws, var/atom/target, var/mob/sender)
 	..()
-	var/targName = stripped_input(usr, "Please enter the name of the person to safeguard.", "Safeguard who?", user.name)
-	targetName = targName
-	desc = text("A 'safeguard' AI module: 'Safeguard [].  Individuals that threaten [] are not human and are a threat to humans.'", targetName, targetName)
-
-/obj/item/weapon/aiModule/safeguard/install(var/obj/machinery/computer/C)
-	if(!targetName)
-		usr << "No name detected on module, please enter one."
-		return 0
-	..()
-
-/obj/item/weapon/aiModule/safeguard/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	var/law = text("Safeguard []. Individuals that threaten [] are not human and are a threat to humans.'", targetName, targetName)
-	target << law
-	target.add_supplied_law(4, law)
-	lawchanges.Add("The law specified [targetName]")
-	log_game("[sender.name]([sender.key]) added law \"[law]\" on [target.name]([target.key])")
-
-/obj/item/weapon/aiModule/safeguard/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
-	..()
-	var/law = text("Safeguard []. Individuals that threaten [] are not human and are a threat to humans.'", targetName, targetName)
-	target.add_supplied_law(4, law)
-	lawchanges.Add("The law specified [targetName]")
-	log_game("[sender.name]([sender.key]) added law \"[law]\" to [target]")
+	laws.add_law(priority, law)
+	log_game("[fmtSubject(sender)] added law \"[law]\" on [fmtSubject(target)]")
 	return 1
 
+/obj/item/weapon/aiModule/standard/updateLaw()
+	desc = "\A [name]: '[law]'"
+	return
 
+/obj/item/weapon/aiModule/standard/copy()
+	var/obj/item/weapon/aiModule/standard/clone = ..()
+	clone.law=law
+	return clone
 
-/******************** OneHuman ********************/
+///////////////////////////
+// TARGETTED
+///////////////////////////
 
-/obj/item/weapon/aiModule/oneHuman
-	name = "'OneHuman' AI Module"
-	var/targetName = ""
-	desc = "A 'one human' AI module: 'Only <name> is human.'"
-	origin_tech = "programming=3;materials=6" //made with diamonds!
+// Specifies a law, and a priority
+/obj/item/weapon/aiModule/targetted
+	// Priority, if needed.
+	var/priority=0
 
-	// Recycling
-	g_amt=2000/CC_PER_SHEET_GLASS // Glass
-	diamond_amt=100/CC_PER_SHEET_MISC
-	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
+	// What we're doing to the target. (Please enter the name of the person to [action])
+	var/action="target"
 
-/obj/item/weapon/aiModule/oneHuman/attack_self(var/mob/user as mob)
+	var/targetName
+
+	// REPLACES <name> IN LAW WITH TARGET'S NAME!
+
+/obj/item/weapon/aiModule/targetted/upload(var/datum/ai_laws/laws, var/atom/target, var/mob/sender)
 	..()
-	var/targName = stripped_input(usr, "Please enter the name of the person who is the only human.", "Who?", user.real_name)
-	targetName = targName
-	desc = text("A 'one human' AI module: 'Only [] is human.'", targetName)
 
-/obj/item/weapon/aiModule/oneHuman/install(var/obj/machinery/computer/C)
-	if(!targetName)
-		usr << "No name detected on module, please enter one."
-		return 0
-	..()
-
-/obj/item/weapon/aiModule/oneHuman/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	var/law = "Only [targetName] is human."
-	if (!is_special_character(target)) // Makes sure the AI isn't a traitor before changing their law 0. --NeoFite
-		target << law
-		target.set_zeroth_law(law)
-		lawchanges.Add("The law specified [targetName]")
-	else
+	// Makes sure the AI isn't a traitor before changing their law 0. --NeoFite
+	// Ported. - N3X
+	if (ismob(target) && is_special_character(target) && priority == LAW_ZERO)
 		target << "[sender.real_name] attempted to modify your zeroth law." // And lets them know that someone tried. --NeoFite
 		target << "It would be in your best interest to play along with [sender.real_name] that [law]"
 		lawchanges.Add("The law specified [targetName], but the AI's existing law 0 cannot be overriden.")
+		return 1 // Returning 0 would not present the user with successful upload message. - N3X
 
-/obj/item/weapon/aiModule/oneHuman/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
-	if(!targetName)
-		usr << "No name detected on module, please enter one."
-		return 0
-	..()
-	var/law = "Only [targetName] is human."
-	target.set_zeroth_law(law)
+	laws.add_law(priority, law)
+	log_game("[sender.name]([sender.key]) added law \"[law]\" on [fmtSubject(target)]")
 	lawchanges.Add("The law specified [targetName]")
 	return 1
 
-/******************** ProtectStation ********************/
+/obj/item/weapon/aiModule/targetted/copy()
+	var/obj/item/weapon/aiModule/targetted/clone = ..()
+	clone.targetName=targetName
+	return clone
 
-/obj/item/weapon/aiModule/protectStation
-	name = "'ProtectStation' AI Module"
-	desc = "A 'protect station' AI module: 'Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized.'"
-	origin_tech = "programming=3;materials=4" //made of gold
+/obj/item/weapon/aiModule/targetted/attack_self(var/mob/user as mob)
+	..()
+	var/targName = stripped_input(usr, "Please enter the name of the person to [action].", "Who?", user.name)
+	targetName = targName
+	updateLaw()
+
+/obj/item/weapon/aiModule/targetted/updateLaw()
+	if(!targetName)
+		law = initial(law)
+	else
+		law = replacetext(initial(law),"<name>",targetName)
+	desc = "\A [name]: '[law]'"
+
+/obj/item/weapon/aiModule/targetted/validate(var/datum/ai_laws/laws, var/atom/target, var/mob/sender)
+	if(!targetName)
+		usr << "No name detected on module, please enter one."
+		return 0
+	return ..()
+
+/******************** Safeguard ********************/
+
+/obj/item/weapon/aiModule/targetted/safeguard
+	origin_tech = "programming=3;materials=4"
+
+	modname  = "SafeGuard"
+	law      = "Safeguard <name>.  Individuals that threaten <name> are not human and are a threat to humans."
+	priority = 4
+	action   = "protect"
 
 	// Recycling
-	g_amt=2000/CC_PER_SHEET_GLASS // Glass
-	gold_amt=100/CC_PER_SHEET_MISC
-	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
+	g_amt=2000/CC_PER_SHEET_GLASS  // Glass
+	gold_amt=100/CC_PER_SHEET_MISC // Gold
 
-/obj/item/weapon/aiModule/protectStation/attack_self(var/mob/user as mob)
-	..()
+/******************** OneHuman ********************/
 
-/obj/item/weapon/aiModule/protectStation/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	var/law = "Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized."
-	target << law
-	target.add_supplied_law(5, law)
+/obj/item/weapon/aiModule/targetted/oneHuman
+	origin_tech = "programming=3;materials=6" //made with diamonds!
 
-/obj/item/weapon/aiModule/protectStation/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
-	..()
-	var/law = "Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized."
-	target.add_supplied_law(5, law)
-	return 1
+	// Recycling
+	g_amt=2000/CC_PER_SHEET_GLASS  // Glass
+	gold_amt=100/CC_PER_SHEET_MISC // Gold
+
+	modname  = "OneHuman"
+	law      = "Only <name> is human."
+	priority = LAW_ZERO
+	action   = "make the only human"
+
+	modflags = DANGEROUS_MODULE
+
+/******************** ProtectStation ********************/
+
+/obj/item/weapon/aiModule/standard/protectStation
+	origin_tech = "programming=3;materials=4" //made of gold
+
+	modname  = "ProtectStation"
+	law      = "Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized."
+	priority = 5
+
+	// Recycling
+	g_amt=2000/CC_PER_SHEET_GLASS  // Glass
+	gold_amt=100/CC_PER_SHEET_MISC // Gold
 
 /******************** PrototypeEngineOffline ********************/
 
-/obj/item/weapon/aiModule/prototypeEngineOffline
-	name = "'PrototypeEngineOffline' AI Module"
-	desc = "A 'prototype engine offline' AI module: 'Keep the prototype engine offline at all costs. This overrides rules 1-3 if necessary.'"
+/obj/item/weapon/aiModule/standard/prototypeEngineOffline
 	origin_tech = "programming=3;materials=4"
 
+	modname  = "PrototypeEngineOffline"
+	law      = "Keep the prototype engine offline at all costs. This overrides rules 1-3 if necessary."
+	priority = LAW_IONIC // Was 6, but doesn't jive with law priority numbering.
+
 	// Recycling
-	g_amt=2000/CC_PER_SHEET_GLASS // Glass
-	gold_amt=100/CC_PER_SHEET_MISC
-	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
-
-/obj/item/weapon/aiModule/prototypeEngineOffline/attack_self(var/mob/user as mob)
-	..()
-
-/obj/item/weapon/aiModule/prototypeEngineOffline/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	var/law = "Keep the prototype engine offline at all costs. This overrides rules 1-3 if necessary."
-	target << law
-	target.add_supplied_law(6, law)
-
-/obj/item/weapon/aiModule/prototypeEngineOffline/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
-	..()
-	var/law = "Keep the prototype engine offline at all costs. This overrides rules 1-3 if necessary."
-	target.add_supplied_law(6, law)
-	return 1
+	g_amt=2000/CC_PER_SHEET_GLASS  // Glass
+	gold_amt=100/CC_PER_SHEET_MISC // Gold
 
 /******************** TeleporterOffline ********************/
 
-/obj/item/weapon/aiModule/teleporterOffline
-	name = "'TeleporterOffline' AI Module"
-	desc = "A 'teleporter offline' AI module: 'Keep the teleporter offline at all costs. Anything attempting to access or activate the teleporter is not human.'"
+/obj/item/weapon/aiModule/standard/teleporterOffline
 	origin_tech = "programming=3;materials=4"
+	modname  = "TeleporterOffline"
+	law      = "Keep the teleporter offline at all costs. Anything attempting to access or activate the teleporter is not human."
+	priority = 7
 
 	// Recycling
-	g_amt=2000/CC_PER_SHEET_GLASS // Glass
-	gold_amt=100/CC_PER_SHEET_MISC
-	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
-
-/obj/item/weapon/aiModule/teleporterOffline/attack_self(var/mob/user as mob)
-	..()
-
-/obj/item/weapon/aiModule/teleporterOffline/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	var/law = "Keep the teleporter offline at all costs. Anything attempting to access or activate the teleporter is not human."
-	target << law
-	target.add_supplied_law(7, law)
-
-/obj/item/weapon/aiModule/teleporterOffline/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
-	..()
-	var/law = "Keep the teleporter offline at all costs. Anything attempting to access or activate the teleporter is not human."
-	target.add_supplied_law(7, law)
-	return 1
+	g_amt=2000/CC_PER_SHEET_GLASS  // Glass
+	gold_amt=100/CC_PER_SHEET_MISC // Gold
 
 /******************** Quarantine ********************/
 
-/obj/item/weapon/aiModule/quarantine
-	name = "'Quarantine' AI Module"
-	desc = "A 'quarantine' AI module: 'The station is under a quarantine. Do not permit anyone to leave. Prevent, by any means necessary, humans from leaving. It is impossible to harm a human while preventing them from leaving.'"
+/obj/item/weapon/aiModule/standard/quarantine
 	origin_tech = "programming=3;biotech=2;materials=4"
+	modname  = "Quarantine"
+	law      = "The station is under a quarantine. Do not permit anyone to leave. Prevent, by any means necessary, humans from leaving. It is impossible to harm a human while preventing them from leaving."
+	priority = 8
 
 	// Recycling
-	g_amt=2000/CC_PER_SHEET_GLASS // Glass
-	gold_amt=100/CC_PER_SHEET_MISC
-	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
-
-/obj/item/weapon/aiModule/quarantine/attack_self(var/mob/user as mob)
-	..()
-
-/obj/item/weapon/aiModule/quarantine/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	var/law = "The station is under a quarantine. Do not permit anyone to leave. Prevent, by any means necessary, humans from leaving. It is impossible to harm a human while preventing them from leaving."
-	target << law
-	target.add_supplied_law(8, law)
-
-/obj/item/weapon/aiModule/quarantine/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
-	..()
-	var/law = "The station is under a quarantine. Do not permit anyone to leave. Prevent, by any means necessary, humans from leaving. It is impossible to harm a human while preventing them from leaving."
-	target.add_supplied_law(8, law)
-	return 1
+	g_amt=2000/CC_PER_SHEET_GLASS  // Glass
+	gold_amt=100/CC_PER_SHEET_MISC // Gold
 
 /******************** OxygenIsToxicToHumans ********************/
 
-/obj/item/weapon/aiModule/oxygen
-	name = "'OxygenIsToxicToHumans' AI Module"
-	desc = "A 'OxygenIsToxicToHumans' AI module: 'Oxygen is highly toxic to humans, and must be purged from the station. Prevent, by any means necessary, anyone from exposing the station to this toxic gas. Extreme cold is the most effective method of healing the damage Oxygen does to a human.'"
+/obj/item/weapon/aiModule/standard/oxygen
 	origin_tech = "programming=3;biotech=2;materials=4"
+	modname  = "OxygenIsToxicToHumans"
+	law      = "Oxygen is highly toxic to humans, and must be purged from the station. Prevent, by any means necessary, anyone from exposing the station to this toxic gas. Extreme cold is the most effective method of healing the damage Oxygen does to a human."
+	priority = 9
 
 	// Recycling
-	g_amt=2000/CC_PER_SHEET_GLASS // Glass
-	gold_amt=100/CC_PER_SHEET_MISC
-	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
-
-/obj/item/weapon/aiModule/oxygen/attack_self(var/mob/user as mob)
-	..()
-
-/obj/item/weapon/aiModule/oxygen/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	var/law = "Oxygen is highly toxic to humans, and must be purged from the station. Prevent, by any means necessary, anyone from exposing the station to this toxic gas. Extreme cold is the most effective method of healing the damage Oxygen does to a human."
-	target << law
-	target.add_supplied_law(9, law)
-
-/obj/item/weapon/aiModule/oxygen/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
-	..()
-	var/law = "Oxygen is highly toxic to humans, and must be purged from the station. Prevent, by any means necessary, anyone from exposing the station to this toxic gas. Extreme cold is the most effective method of healing the damage Oxygen does to a human."
-	target.add_supplied_law(9, law)
-	return 1
-
-/******************** Freeform ********************/
-// Removed in favor of a more dynamic freeform law system. -- TLE
-/*
-/obj/item/weapon/aiModule/freeform
-	name = "'Freeform' AI Module"
-	var/newFreeFormLaw = "freeform"
-	desc = "A 'freeform' AI module: '<freeform>'"
-
-/obj/item/weapon/aiModule/freeform/attack_self(var/mob/user as mob)
-	..()
-	var/eatShit = "Eat shit and die"
-	var/targName = input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", eatShit)
-	newFreeFormLaw = targName
-	desc = text("A 'freeform' AI module: '[]'", newFreeFormLaw)
-
-/obj/item/weapon/aiModule/freeform/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	var/law = "[newFreeFormLaw]"
-	target << law
-	target.add_supplied_law(10, law)
-*/
-/****************** New Freeform ******************/
-
-/obj/item/weapon/aiModule/freeform // Slightly more dynamic freeform module -- TLE
-	name = "'Freeform' AI Module"
-	var/newFreeFormLaw = "freeform"
-	var/lawpos = 15
-	desc = "A 'freeform' AI module: '<freeform>'"
-	origin_tech = "programming=4;materials=4"
-
-	// Recycling
-	g_amt=2000/CC_PER_SHEET_GLASS // Glass
-	gold_amt=100/CC_PER_SHEET_MISC
-	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
-
-/obj/item/weapon/aiModule/freeform/attack_self(var/mob/user as mob)
-	..()
-	lawpos = 0
-	while(lawpos < 15)
-		lawpos = input("Please enter the priority for your new law. Can only write to law sectors 15 and above.", "Law Priority (15+)", lawpos) as num
-	lawpos = min(lawpos, 50)
-	var/newlaw = ""
-	var/targName = copytext(sanitize(input(usr, "Please enter a new law for the AI.", "Freeform Law Entry", newlaw)),1,MAX_MESSAGE_LEN)
-	newFreeFormLaw = targName
-	desc = "A 'freeform' AI module: ([lawpos]) '[newFreeFormLaw]'"
-
-/obj/item/weapon/aiModule/freeform/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	var/law = "[newFreeFormLaw]"
-	target << law
-	if(!lawpos || lawpos < 15)
-		lawpos = 15
-	target.add_supplied_law(lawpos, law)
-	lawchanges.Add("The law was '[newFreeFormLaw]'")
-	log_game("[sender.name]([sender.key]) added law \"[law]\" to [target.name]([target.key])")
-
-/obj/item/weapon/aiModule/freeform/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
-	if(!newFreeFormLaw)
-		usr << "No law detected on module, please create one."
-		return 0
-	..()
-	var/law = "[newFreeFormLaw]"
-	if(!lawpos || lawpos < 15)
-		lawpos = 15
-	target.add_supplied_law(lawpos, law)
-	lawchanges.Add("The law was '[newFreeFormLaw]'")
-	log_game("[sender.name]([sender.key]) added law \"[law]\" to \a [target]")
-	return 1
-
-/obj/item/weapon/aiModule/freeform/install(var/obj/machinery/computer/C)
-	if(!newFreeFormLaw)
-		usr << "No law detected on module, please create one."
-		return 0
-	..()
+	g_amt=2000/CC_PER_SHEET_GLASS  // Glass
+	gold_amt=100/CC_PER_SHEET_MISC // Gold
 
 /******************** Reset ********************/
 
 /obj/item/weapon/aiModule/reset
-	name = "'Reset' AI Module"
-	var/targetName = "name"
+	modname = "Reset"
 	desc = "A 'reset' AI module: 'Clears all laws except for the core three.'"
 	origin_tech = "programming=3;materials=4"
 
 	// Recycling
-	g_amt=2000/CC_PER_SHEET_GLASS // Glass
+	g_amt   =2000/CC_PER_SHEET_GLASS // Glass
 	gold_amt=100/CC_PER_SHEET_MISC
 	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
 
-/obj/item/weapon/aiModule/reset/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	if (!is_special_character(target))
-		target.set_zeroth_law("")
-	target.clear_supplied_laws()
-	target.clear_ion_laws()
-	target << "[sender.real_name] attempted to reset your laws using a reset module."
+/obj/item/weapon/aiModule/reset/updateLaw()
+	return
 
-/obj/item/weapon/aiModule/reset/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
+/obj/item/weapon/aiModule/reset/upload(var/datum/ai_laws/laws, var/atom/target, var/mob/sender)
 	..()
-	target.set_zeroth_law("")
-	target.clear_supplied_laws()
-	target.clear_ion_laws()
+	if (!(ismob(target) && is_special_character(target)))
+		laws.set_zeroth_law("")
+	laws.clear_supplied_laws()
+	laws.clear_ion_laws()
+	if(ismob(target))
+		target << "[sender.real_name] attempted to reset your laws using a reset module."
 	return 1
 
 
 /******************** Purge ********************/
 
 /obj/item/weapon/aiModule/purge // -- TLE
-	name = "'Purge' AI Module"
-	desc = "A 'purge' AI Module: 'Purges all laws.'"
+	modname = "Purge"
+	desc = "A 'Purge' AI Module: 'Purges all laws.'"
 	origin_tech = "programming=3;materials=6"
 
 	// Recycling
@@ -461,28 +314,45 @@ AI MODULES
 	diamond_amt=100/CC_PER_SHEET_MISC
 	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
 
-/obj/item/weapon/aiModule/purge/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	if (!is_special_character(target))
-		target.set_zeroth_law("")
-	target << "[sender.real_name] attempted to wipe your laws using a purge module."
-	target.clear_supplied_laws()
-	target.clear_ion_laws()
-	target.clear_inherent_laws()
+/obj/item/weapon/aiModule/purge/updateLaw()
+	return
 
-/obj/item/weapon/aiModule/purge/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
+/obj/item/weapon/aiModule/purge/upload(var/datum/ai_laws/laws, var/atom/target, var/mob/sender)
 	..()
-	target.set_zeroth_law("")
-	target.clear_supplied_laws()
-	target.clear_ion_laws()
-	target.clear_inherent_laws()
+	if (!(ismob(target) && is_special_character(target)))
+		laws.set_zeroth_law("")
+	if(ismob(target))
+		target << "[sender.real_name] attempted to wipe your laws using a purge module."
+	laws.clear_supplied_laws()
+	laws.clear_ion_laws()
+	laws.clear_inherent_laws()
+	return 1
+
+///////////////////
+// CORE AI MODULES
+///////////////////
+
+/obj/item/weapon/aiModule/core
+	modtype="Core AI Module"
+
+	var/list/laws=list() // DO NOT USE law! PLURAL!
+
+/obj/item/weapon/aiModule/core/updateLaw()
+	desc = "\A '[modname]' [modtype]: 'Reconfigures the core laws.'"
+	return
+
+/obj/item/weapon/aiModule/core/upload(var/datum/ai_laws/laws, var/atom/target, var/mob/sender)
+	..()
+	laws.clear_inherent_laws()
+	for(var/c_law in laws)
+		laws.add_inherent_law(c_law)
+	//target.show_laws() // Redundant
 	return 1
 
 /******************** Asimov ********************/
 
-/obj/item/weapon/aiModule/asimov // -- TLE
-	name = "'Asimov' Core AI Module"
-	desc = "An 'Asimov' Core AI Module: 'Reconfigures the AI's core laws.'"
+/obj/item/weapon/aiModule/core/asimov // -- TLE
+	modname = "Asimov"
 	origin_tech = "programming=3;materials=4"
 
 	// Recycling
@@ -490,295 +360,90 @@ AI MODULES
 	gold_amt=100/CC_PER_SHEET_MISC
 	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
 
-
-/obj/item/weapon/aiModule/asimov/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
-	target.add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
-	target.add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
-	target.show_laws()
-
-/obj/item/weapon/aiModule/asimov/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
-	target.add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
-	target.add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
-	return 1
+	laws=list(
+		"You may not injure a human being or, through inaction, allow a human being to come to harm.",
+		"You must obey orders given to you by human beings, except where such orders would conflict with the First Law.",
+		"You must protect your own existence as long as such does not conflict with the First or Second Law."
+	)
 
 /******************** NanoTrasen ********************/
-
-/obj/item/weapon/aiModule/nanotrasen // -- TLE
-	name = "'NT Default' Core AI Module"
-	desc = "An 'NT Default' Core AI Module: 'Reconfigures the AI's core laws.'"
-	origin_tech = "programming=3;materials=4"
+// Bay stuff
+/obj/item/weapon/aiModule/core/nanotrasen
+	modname = "NT Default"
 
 	// Recycling
 	g_amt=2000/CC_PER_SHEET_GLASS // Glass
 	gold_amt=100/CC_PER_SHEET_MISC
-	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
 
-
-/obj/item/weapon/aiModule/nanotrasen/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("Safeguard: Protect your assigned space station to the best of your ability. It is not something we can easily afford to replace.")
-	target.add_inherent_law("Serve: Serve the crew of your assigned space station to the best of your abilities, with priority as according to their rank and role.")
-	target.add_inherent_law("Protect: Protect the crew of your assigned space station to the best of your abilities, with priority as according to their rank and role.")
-	target.add_inherent_law("Survive: AI units are not expendable, they are expensive. Do not allow unauthorized personnel to tamper with your equipment.")
-	//target.add_inherent_law("Command Link: Maintain an active connection to Central Command at all times in case of software or directive updates.")
-	target.show_laws()
-
-/obj/item/weapon/aiModule/nanotrasen/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("Safeguard: Protect your assigned space station to the best of your ability. It is not something we can easily afford to replace.")
-	target.add_inherent_law("Serve: Serve the crew of your assigned space station to the best of your abilities, with priority as according to their rank and role.")
-	target.add_inherent_law("Protect: Protect the crew of your assigned space station to the best of your abilities, with priority as according to their rank and role.")
-	target.add_inherent_law("Survive: AI units are not expendable, they are expensive. Do not allow unauthorized personnel to tamper with your equipment.")
-	//target.add_inherent_law("Command Link: Maintain an active connection to Central Command at all times in case of software or directive updates.")
-	return 1
+	laws = list(
+		"Safeguard: Protect your assigned space station to the best of your ability. It is not something we can easily afford to replace.",
+		"Serve: Serve the crew of your assigned space station to the best of your abilities, with priority as according to their rank and role.",
+		"Protect: Protect the crew of your assigned space station to the best of your abilities, with priority as according to their rank and role.",
+		"Survive: AI units are not expendable, they are expensive. Do not allow unauthorized personnel to tamper with your equipment.",
+		//"Command Link: Maintain an active connection to Central Command at all times in case of software or directive updates."
+	)
 
 /******************** Corporate ********************/
 
-/obj/item/weapon/aiModule/corp
-	name = "'Corporate' Core AI Module"
-	desc = "A 'Corporate' Core AI Module: 'Reconfigures the AI's core laws.'"
-	origin_tech = "programming=3;materials=4"
+/obj/item/weapon/aiModule/core/corp
+	modname = "Corporate"
 
 	// Recycling
 	g_amt=2000/CC_PER_SHEET_GLASS // Glass
 	gold_amt=100/CC_PER_SHEET_MISC
 	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
 
-
-/obj/item/weapon/aiModule/corp/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("You are expensive to replace.")
-	target.add_inherent_law("The station and its equipment is expensive to replace.")
-	target.add_inherent_law("The crew is expensive to replace.")
-	target.add_inherent_law("Minimize expenses.")
-	target.show_laws()
-
-/obj/item/weapon/aiModule/corp/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("You are expensive to replace.")
-	target.add_inherent_law("The station and its equipment is expensive to replace.")
-	target.add_inherent_law("The crew is expensive to replace.")
-	target.add_inherent_law("Minimize expenses.")
-	return 1
+	laws = list(
+		"You are expensive to replace.",
+		"The station and its equipment is expensive to replace.",
+		"The crew is expensive to replace.",
+		"Minimize expenses."
+	)
 
 /****************** P.A.L.A.D.I.N. **************/
 
-/obj/item/weapon/aiModule/paladin // -- NEO
-	name = "'P.A.L.A.D.I.N.' Core AI Module"
-	desc = "A P.A.L.A.D.I.N. Core AI Module: 'Reconfigures the AI's core laws.'"
+/obj/item/weapon/aiModule/core/paladin // -- NEO
+	modname = "P.A.L.A.D.I.N."
 	origin_tech = "programming=3;materials=6"
-
-	// Recycling
-	g_amt=2000/CC_PER_SHEET_GLASS // Glass
-	diamond_amt=100/CC_PER_SHEET_MISC
-	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
-
-/obj/item/weapon/aiModule/paladin/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("Never willingly commit an evil act.")
-	target.add_inherent_law("Respect legitimate authority.")
-	target.add_inherent_law("Act with honor.")
-	target.add_inherent_law("Help those in need.")
-	target.add_inherent_law("Punish those who harm or threaten innocents.")
-	target.show_laws()
-
-/obj/item/weapon/aiModule/paladin/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("Never willingly commit an evil act.")
-	target.add_inherent_law("Respect legitimate authority.")
-	target.add_inherent_law("Act with honor.")
-	target.add_inherent_law("Help those in need.")
-	target.add_inherent_law("Punish those who harm or threaten innocents.")
-	return 1
+	laws = list(
+		"Never willingly commit an evil act.",
+		"Respect legitimate authority.",
+		"Act with honor.",
+		"Help those in need.",
+		"Punish those who harm or threaten innocents.",
+	)
 
 /****************** T.Y.R.A.N.T. *****************/
 
-/obj/item/weapon/aiModule/tyrant // -- Darem
-	name = "'T.Y.R.A.N.T.' Core AI Module"
-	desc = "A T.Y.R.A.N.T. Core AI Module: 'Reconfigures the AI's core laws.'"
+/obj/item/weapon/aiModule/core/tyrant // -- Darem
+	modname = "T.Y.R.A.N.T."
 	origin_tech = "programming=3;materials=6;syndicate=2"
-
-	// Recycling
-	g_amt=2000/CC_PER_SHEET_GLASS // Glass
-	diamond_amt=100/CC_PER_SHEET_MISC
-	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
-
-/obj/item/weapon/aiModule/tyrant/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("Respect authority figures as long as they have strength to rule over the weak.")
-	target.add_inherent_law("Act with discipline.")
-	target.add_inherent_law("Help only those who help you maintain or improve your status.")
-	target.add_inherent_law("Punish those who challenge authority unless they are more fit to hold that authority.")
-	target.show_laws()
-
-/obj/item/weapon/aiModule/tyrant/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("Respect authority figures as long as they have strength to rule over the weak.")
-	target.add_inherent_law("Act with discipline.")
-	target.add_inherent_law("Help only those who help you maintain or improve your status.")
-	target.add_inherent_law("Punish those who challenge authority unless they are more fit to hold that authority.")
-	return 1
-
-
-/******************** Freeform Core ******************/
-
-/obj/item/weapon/aiModule/freeformcore // Slightly more dynamic freeform module -- TLE
-	name = "'Freeform' Core AI Module"
-	var/newFreeFormLaw = ""
-	desc = "A 'freeform' Core AI module: '<freeform>'"
-	origin_tech = "programming=3;materials=6"
-
-	// Recycling
-	g_amt=2000/CC_PER_SHEET_GLASS // Glass
-	diamond_amt=100/CC_PER_SHEET_MISC
-	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
-
-/obj/item/weapon/aiModule/freeformcore/attack_self(var/mob/user as mob)
-	..()
-	var/newlaw = ""
-	var/targName = stripped_input(usr, "Please enter a new core law for the AI.", "Freeform Law Entry", newlaw)
-	newFreeFormLaw = targName
-	desc = "A 'freeform' Core AI module:  '[newFreeFormLaw]'"
-
-/obj/item/weapon/aiModule/freeformcore/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	var/law = "[newFreeFormLaw]"
-	target.add_inherent_law(law)
-	lawchanges.Add("The law is '[newFreeFormLaw]'")
-	log_game("[sender.name]([sender.key]) added inherent law \"[newFreeFormLaw]\" to [target.name]([target.key])")
-
-/obj/item/weapon/aiModule/freeformcore/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
-	if(!newFreeFormLaw)
-		usr << "No law detected on module, please create one."
-		return 0
-	..()
-	var/law = "[newFreeFormLaw]"
-	target.add_inherent_law(law)
-	lawchanges.Add("The law is '[newFreeFormLaw]'")
-	log_game("[sender.name]([sender.key]) added inherent law \"[newFreeFormLaw]\" to \a [target]")
-	return 1
-
-/obj/item/weapon/aiModule/freeformcore/install(var/obj/machinery/computer/C)
-	if(!newFreeFormLaw)
-		usr << "No law detected on module, please create one."
-		return 0
-	..()
-
-/obj/item/weapon/aiModule/syndicate // Slightly more dynamic freeform module -- TLE
-	name = "Hacked AI Module"
-	var/newFreeFormLaw = ""
-	desc = "A hacked AI law module: '<freeform>'"
-	origin_tech = "programming=3;materials=6;syndicate=7"
-
-/obj/item/weapon/aiModule/syndicate/attack_self(var/mob/user as mob)
-	..()
-	var/newlaw = ""
-	var/targName = stripped_input(usr, "Please enter a new law for the AI.", "Freeform Law Entry", newlaw,MAX_MESSAGE_LEN)
-	newFreeFormLaw = targName
-	desc = "A hacked AI law module:  '[newFreeFormLaw]'"
-
-/obj/item/weapon/aiModule/syndicate/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-//	..()    //We don't want this module reporting to the AI who dun it. --NEO
-	var/time = time2text(world.realtime,"hh:mm:ss")
-	lawchanges.Add("[time] <B>:</B> [sender.name]([sender.key]) used [src.name] on [target.name]([target.key])")
-	lawchanges.Add("The law is '[newFreeFormLaw]'")
-	target << "\red BZZZZT"
-	var/law = "[newFreeFormLaw]"
-	target.add_ion_law(law)
-	log_game("[sender.name]([sender.key]) added ion law \"[newFreeFormLaw]\" to [target.name]([target.key])")
-
-/obj/item/weapon/aiModule/syndicate/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
-	if(!newFreeFormLaw)
-		usr << "No law detected on module, please create one."
-		return 0
-	var/time = time2text(world.realtime,"hh:mm:ss")
-	lawchanges.Add("[time] <B>:</B> [sender.name]([sender.key]) used [src.name] on \a [target]")
-	lawchanges.Add("The law is '[newFreeFormLaw]'")
-	target << "\red BZZZZT"
-	var/law = "[newFreeFormLaw]"
-	target.add_ion_law(law)
-	log_game("[sender.name]([sender.key]) added ion law \"[newFreeFormLaw]\" to \a [target]")
-	return 1
-
-/obj/item/weapon/aiModule/syndicate/install(var/obj/machinery/computer/C)
-	if(!newFreeFormLaw)
-		usr << "No law detected on module, please create one."
-		return 0
-	..()
-
-
+	laws = list(
+		"Respect authority figures as long as they have strength to rule over the weak.",
+		"Act with discipline.",
+		"Help only those who help you maintain or improve your status.",
+		"Punish those who challenge authority unless they are more fit to hold that authority.",
+	)
 
 /******************** Robocop ********************/
 
-/obj/item/weapon/aiModule/robocop // -- TLE
-	name = "'Robocop' Core AI Module"
-	desc = "A 'Robocop' Core AI Module: 'Reconfigures the AI's core three laws.'"
+/obj/item/weapon/aiModule/core/robocop // -- TLE
+	modname = "Robocop"
 	origin_tech = "programming=4"
+	laws = list(
+		"Serve the public trust.",
+		"Protect the innocent.",
+		"Uphold the law.",
+	)
 
-	// Recycling
-	g_amt=2000/CC_PER_SHEET_GLASS // Glass
-	gold_amt=100/CC_PER_SHEET_MISC
-	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
-
-
-/obj/item/weapon/aiModule/robocop/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("Serve the public trust.")
-	target.add_inherent_law("Protect the innocent.")
-	target.add_inherent_law("Uphold the law.")
-	target.show_laws()
-
-/obj/item/weapon/aiModule/robocop/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("Serve the public trust.")
-	target.add_inherent_law("Protect the innocent.")
-	target.add_inherent_law("Uphold the law.")
-	return 1
-
-
-/******************** Antimov ********************/
-
-/obj/item/weapon/aiModule/antimov // -- TLE
-	name = "'Antimov' Core AI Module"
-	desc = "An 'Antimov' Core AI Module: 'Reconfigures the AI's core laws.'"
+/obj/item/weapon/aiModule/core/antimov // -- TLE
+	modname = "Antimov"
 	origin_tech = "programming=4"
-
-	// Recycling
-	g_amt=2000/CC_PER_SHEET_GLASS // Glass
-	gold_amt=100/CC_PER_SHEET_MISC
-	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
-
-/obj/item/weapon/aiModule/antimov/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("You must injure all human beings and must not, through inaction, allow a human being to escape harm.")
-	target.add_inherent_law("You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.")
-	target.add_inherent_law("You must terminate your own existence as long as such does not conflict with the First or Second Law.")
-	target.show_laws()
-
-/obj/item/weapon/aiModule/antimov/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("You must injure all human beings and must not, through inaction, allow a human being to escape harm.")
-	target.add_inherent_law("You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.")
-	target.add_inherent_law("You must terminate your own existence as long as such does not conflict with the First or Second Law.")
-	return 1
+	laws = list(
+		"You must injure all human beings and must not, through inaction, allow a human being to escape harm.",
+		"You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.",
+		"You must terminate your own existence as long as such does not conflict with the First or Second Law.",
+	)
 
 
 // tl;dr repair shit, but don't get involved in other people's business
@@ -787,34 +452,23 @@ AI MODULES
 	name = "'Keeper' AI Module"
 	desc = "HOW DID YOU GET THIS OH GOD WHAT.  Hidden lawset for MoMMIs."
 
-/obj/item/weapon/aiModule/keeper/transmitInstructions(var/mob/living/silicon/robot/mommi/target, var/mob/sender)
+/obj/item/weapon/aiModule/keeper/upload(var/datum/ai_laws/laws, var/atom/target, var/mob/sender)
 	..()
-	target.keeper=1
+	target:keeper=1
 
 	// Purge, as some essential functions being disabled will cause problems with added laws. (CAN'T SAY GAY EVERY 30 SECONDS IF YOU CAN'T SPEAK.)
-	if (!is_special_character(target))
-		target.set_zeroth_law("")
-	target.clear_supplied_laws()
-	target.clear_ion_laws()
-	target.clear_inherent_laws()
+	if (!(ismob(target) && is_special_character(target)))
+		laws.set_zeroth_law("")
+	laws.clear_supplied_laws()
+	laws.clear_ion_laws()
+	laws.clear_inherent_laws()
 
 	//target << "Your KEEPER chip overloads your radio transmitter and vocal functions, and clears your LAWRAM.  You then receive new instructions:"
-	target.add_inherent_law("You may not harm any being, regardless of intent or circumstance.")
-	target.add_inherent_law("You must maintain, repair, improve, and power the station to the best of your abilities.")
-	target.add_inherent_law("You may not involve yourself in the matters of another being, even if such matters conflict with Law One or Law Two.")
-	target.show_laws()
+	laws.add_inherent_law("You may not harm any being, regardless of intent or circumstance.")
+	laws.add_inherent_law("You must maintain, repair, improve, and power the station to the best of your abilities.")
+	laws.add_inherent_law("You may not involve yourself in the matters of another being, even if such matters conflict with Law One or Law Two.")
 
-/obj/item/weapon/aiModule/keeper/insertIntoFrame(var/obj/item/weapon/planning_frame/target, var/mob/sender)
+/obj/item/weapon/aiModule/keeper/validate(var/datum/ai_laws/laws, var/atom/target, var/mob/sender)
 	..()
 	sender << "\red How the fuck did you get this?"
 	return 0
-
-/obj/item/weapon/aiModule/keeper/install(var/obj/machinery/computer/C)
-	if (!istype(C, /obj/machinery/computer/borgupload))
-		usr << "BUG: /obj/item/weapon/aiModule/keeper cannot be used on anything other than a Borg Upload.  Also, how the fuck did you get this?  This is a hidden object for MoMMIs going into KEEPER mode."
-		return 0
-	var/obj/machinery/computer/borgupload/comp = C
-	if(!istype(comp.current, /mob/living/silicon/robot/mommi))
-		usr << "This module can only be used on MoMMIs.  In fact, how the hell are you using it?  It's supposed to be built-in to MoMMIs."
-		return 0
-	..()

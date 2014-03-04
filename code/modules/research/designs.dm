@@ -519,6 +519,7 @@ other types of metals and chemistry for reagents).
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/pipedispenser/disposal
+
 ///////////////////////////////////
 //////////AI Module Disks//////////
 ///////////////////////////////////
@@ -529,7 +530,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("programming" = 3, "materials" = 4)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
-	build_path = /obj/item/weapon/aiModule/safeguard
+	build_path = /obj/item/weapon/aiModule/targetted/safeguard
 
 /datum/design/onehuman_module
 	name = "Module Design (OneHuman)"
@@ -538,7 +539,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("programming" = 4, "materials" = 6)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$diamond" = 100)
-	build_path = /obj/item/weapon/aiModule/oneHuman
+	build_path = /obj/item/weapon/aiModule/targetted/oneHuman
 
 /datum/design/protectstation_module
 	name = "Module Design (ProtectStation)"
@@ -547,7 +548,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("programming" = 3, "materials" = 6)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
-	build_path = /obj/item/weapon/aiModule/protectStation
+	build_path = /obj/item/weapon/aiModule/standard/protectStation
 
 /datum/design/notele_module
 	name = "Module Design (TeleporterOffline Module)"
@@ -556,7 +557,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
-	build_path = /obj/item/weapon/aiModule/teleporterOffline
+	build_path = /obj/item/weapon/aiModule/standard/teleporterOffline
 
 /datum/design/quarantine_module
 	name = "Module Design (Quarantine)"
@@ -565,7 +566,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("programming" = 3, "biotech" = 2, "materials" = 4)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
-	build_path = /obj/item/weapon/aiModule/quarantine
+	build_path = /obj/item/weapon/aiModule/standard/quarantine
 
 /datum/design/oxygen_module
 	name = "Module Design (OxygenIsToxicToHumans)"
@@ -574,7 +575,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("programming" = 3, "biotech" = 2, "materials" = 4)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
-	build_path = /obj/item/weapon/aiModule/oxygen
+	build_path = /obj/item/weapon/aiModule/standard/oxygen
 
 /datum/design/freeform_module
 	name = "Module Design (Freeform)"
@@ -610,7 +611,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("programming" = 4, "materials" = 6)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$diamond" = 100)
-	build_path = /obj/item/weapon/aiModule/freeformcore
+	build_path = /obj/item/weapon/aiModule/freeform/core
 
 /datum/design/asimov
 	name = "Core Module Design (Asimov)"
@@ -619,7 +620,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("programming" = 3, "materials" = 6)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$diamond" = 100)
-	build_path = /obj/item/weapon/aiModule/asimov
+	build_path = /obj/item/weapon/aiModule/core/asimov
 
 /datum/design/paladin_module
 	name = "Core Module Design (P.A.L.A.D.I.N.)"
@@ -628,7 +629,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("programming" = 4, "materials" = 6)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$diamond" = 100)
-	build_path = /obj/item/weapon/aiModule/paladin
+	build_path = /obj/item/weapon/aiModule/core/paladin
 
 /datum/design/tyrant_module
 	name = "Core Module Design (T.Y.R.A.N.T.)"
@@ -637,9 +638,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("programming" = 4, "syndicate" = 2, "materials" = 6)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$diamond" = 100)
-	build_path = /obj/item/weapon/aiModule/tyrant
-
-
+	build_path = /obj/item/weapon/aiModule/core/tyrant
 
 ///////////////////////////////////
 /////Subspace Telecomms////////////

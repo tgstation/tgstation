@@ -1,6 +1,11 @@
 var/global/const/base_law_type = /datum/ai_laws/asimov
 var/global/const/mommi_base_law_type = /datum/ai_laws/keeper // /datum/ai_laws/asimov
 
+// Used for the refactored law modules.
+#define LAW_IONIC    -2
+#define LAW_INHERENT -1
+#define LAW_ZERO      0
+
 /datum/ai_laws
 	var/name = "Unknown Laws"
 	var/randomly_selectable = 0
@@ -153,3 +158,15 @@ var/global/const/mommi_base_law_type = /datum/ai_laws/keeper // /datum/ai_laws/a
 		if (length(law) > 0)
 			who << "[number]. [law]"
 			number++
+
+// /vg/: Used in the simplified law system. Takes LAW_ constants.
+/datum/ai_laws/proc/add_law(var/number,var/law)
+	switch(number)
+		if(LAW_IONIC)
+			add_ion_law(law)
+		if(LAW_ZERO)
+			set_zeroth_law(law)
+		if(LAW_INHERENT)
+			add_inherent_law(law)
+		else
+			add_supplied_law(number,law)

@@ -81,6 +81,34 @@ var/global/list/mining_surprises = typesof(/mining_surprise)-/mining_surprise
 			ATi.adjacents["[reverse_direction(dir)]"]=Ti.types
 
 
+	// Common stuff
+
+
+	proc/IsWall(var/turf/T)
+		var/surprise_turf_info/sti = GetTurfInfo(T)
+		return sti.turf_type == TURF_WALL
+
+	proc/IsFloor(var/turf/T)
+		var/surprise_turf_info/sti = GetTurfInfo(T)
+		return sti.turf_type == TURF_FLOOR
+
+	// Are we adjacent to an object of this type?
+	proc/AdjacentToType(var/turf/T,var/adjacent_type)
+		var/surprise_turf_info/sti = GetTurfInfo(T)
+		return locate(adjacent_type) in sti.GetAdjacentTypes()
+
+	// Same, but for walls/floors
+	proc/AdjacentToTurfType(var/turf/T,var/turfType)
+		for(var/dir in cardinal)
+			var/turf/AT = get_step(T,dir)
+			var/surprise_turf_info/info = GetTurfInfo(AT)
+			if(!info)
+				continue
+			if(info.turf_type == turfType)
+				return 1
+		return 0
+
+
 // For room layouts.
 /layout_rule
 	var/mining_surprise/root
