@@ -1,6 +1,3 @@
-/datum/game_mode
-	var/mixed = 0 // denotes whether its apart of a mixed mode or not
-
 /datum/game_mode/mixed
 	name = "mixed"
 	config_tag = "mixed"
