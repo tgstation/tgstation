@@ -40,6 +40,17 @@
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 	var/icon_override = null  //Used to override hardcoded clothing dmis in human clothing proc.
 
+/obj/item/Destroy()
+	if(istype(src.loc, /mob/living))
+		var/mob/living/H = src.loc
+		H.u_equip(src) // items at the very least get unequipped from their mob before being deleted
+	if(reagents && istype(reagents))
+		reagents.holder = null
+		reagents.delete()
+	if(hasvar(src, "holder"))
+		src:holder = null
+	..()
+
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 
