@@ -121,7 +121,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	var/points_per_process = 1
 	var/points_per_slip = 2
 	var/points_per_crate = 5
-	var/plasma_per_point = 5 // 2 plasma for 1 point
+	var/plasma_per_point = 0.2 //5 points per plasma sheet due to increased rarity
 	var/centcom_message = "" // Remarks from Centcom on how well you checked the last order.
 	// Unique typepaths for unusual things we've already sent CentComm, associated with their potencies
 	var/list/discoveredPlants = list()
@@ -231,7 +231,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 		var/crate_count = 0
 
 		centcom_message = ""
-		
+
 		for(var/atom/movable/MA in shuttle)
 			if(MA.anchored)	continue
 
@@ -286,7 +286,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 					if(istype(A, /obj/item/stack/sheet/mineral/plasma))
 						var/obj/item/stack/sheet/mineral/plasma/P = A
 						plasma_count += P.amount
-					
+
 					if(istype(A, /obj/item/seeds))
 						var/obj/item/seeds/S = A
 						if(S.rarity == 0) // Mundane species
@@ -304,7 +304,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 							centcom_message += "<font color=green>+[S.rarity]</font>: New species discovered: \"[capitalize(S.species)]\".  Excellent work.<BR>"
 							points += S.rarity // That's right, no bonus for potency.  Send a crappy sample first to "show improvement" later
 			del(MA)
-		
+
 		if(plasma_count)
 			centcom_message += "<font color=green>+[round(plasma_count/plasma_per_point)]</font>: Received [plasma_count] units of exotic material.<BR>"
 			points += round(plasma_count / plasma_per_point)

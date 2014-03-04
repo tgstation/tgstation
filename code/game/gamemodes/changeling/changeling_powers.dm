@@ -343,7 +343,7 @@
 			if(!M.mind || !M.mind.changeling)
 				M.ear_deaf += 30
 				M.confused += 20
-				M.make_jittery(50)
+				M.Jitter(50)
 			else
 				M << sound('sound/effects/screech.ogg')
 
@@ -535,6 +535,20 @@ var/list/datum/dna/hivemind_bank = list()
 		if(src && src.mind && src.mind.changeling)
 			src.mind.changeling.mimicing = ""
 
+/mob/living/carbon/proc/changeling_emp_shriek()
+	set category = "Changeling"
+	set name = "Dissonant Shriek (20)"
+
+	var/datum/changeling/changeling = changeling_power(20)
+	if(!changeling) return
+
+	for(var/obj/machinery/light/L in range(5, usr))
+		L.on = 1
+		L.broken()
+
+	empulse(get_turf(src), 2, 5, 1)
+
+	changeling.chem_charges -= 20
 
 /mob/living/carbon/proc/changeling_arm_blade()
 	set category = "Changeling"
