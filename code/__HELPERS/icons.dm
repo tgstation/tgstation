@@ -746,6 +746,9 @@ proc // Creates a single icon from a given /atom or /image.  Only the first argu
 			else // 'I' is an appearance object.
 				add = getFlatIcon(new/image(I), curdir, curicon, curstate, curblend)
 
+			// /vg/: Dodge runtimes?
+			if(!add) continue
+
 			// Find the new dimensions of the flat icon to fit the added overlay
 			addX1 = min(flatX1, I:pixel_x+1)
 			addX2 = max(flatX2, I:pixel_x+add.Width())
