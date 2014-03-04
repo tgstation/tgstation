@@ -942,9 +942,9 @@ About the new airlock wires panel:
 
 	if (!p_open)
 		..(user)
-	else
-		// TODO: logic for adding fingerprints when interacting with wires
-		wires.Interact(user)
+	//else
+	//	// TODO: logic for adding fingerprints when interacting with wires
+	//	wires.Interact(user)
 
 	return
 
@@ -974,10 +974,11 @@ About the new airlock wires panel:
 			p_open = !p_open
 			update_icon()
 	else if (istype(I, /obj/item/weapon/wirecutters))
-		if (!operating)
-			attack_hand(user)
+		if (!operating && p_open)
+			wires.Interact(user)
 	else if (istype(I, /obj/item/device/multitool))
-		if (p_open)
+		if (!operating && p_open)
+			wires.Interact(user)
 			update_multitool_menu(user)
 		attack_hand(user)
 	// TODO: review this if
