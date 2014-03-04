@@ -199,7 +199,6 @@
 	if(last_disp != chargedisplay() || last_chrg != charging || last_onln != online)
 		updateicon()
 
-	updateDialog()
 	return
 
 // called after all power processes are finished
@@ -294,7 +293,7 @@
 
 //world << "[href] ; [href_list[href]]"
 
-	if (!istype(src.loc, /turf) || istype(usr, /mob/living/silicon/ai))
+	if (!istype(src.loc, /turf) && !istype(usr, /mob/living/silicon/))
 		return 0 // Do not update ui
 
 	if( href_list["cmode"] )
