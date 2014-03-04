@@ -38,7 +38,7 @@ var/global/list/uncollectable_vars=list(
 	var/list/queue=list()
 	var/list/destroyed=list()
 	var/waiting=0
-	var/del_everything=0
+	var/del_everything=1
 	var/turf/trashbin=null
 
 	New()
