@@ -85,11 +85,6 @@ would spawn and follow the beaker, even if it is carried or thrown.
 
 	proc/start()
 
-	Destroy()
-		holder = null
-		location = null
-		..()
-
 /////////////////////////////////////////////
 // GENERIC STEAM SPREAD SYSTEM
 

@@ -213,10 +213,10 @@
 	..(src.loc, src)
 
 
-/obj/effect/alien/weeds/New(pos, node)
+/obj/effect/alien/weeds/New(pos, var/obj/effect/alien/weeds/node/node)
 	..()
 	linked_node = node
-	node.spawns.Add(src)
+	linked_node.spawns.Add(src)
 	if(istype(loc, /turf/space))
 		del(src)
 		return

@@ -45,7 +45,7 @@
 		var/mob/living/H = src.loc
 		H.u_equip(src) // items at the very least get unequipped from their mob before being deleted
 	if(reagents && istype(reagents))
-		reagents.holder = null
+		reagents.my_atom = null
 		reagents.delete()
 	if(hasvar(src, "holder"))
 		src:holder = null
