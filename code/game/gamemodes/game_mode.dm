@@ -30,6 +30,7 @@
 	var/newscaster_announcements = null
 	var/uplink_welcome = "Syndicate Uplink Console:"
 	var/uplink_uses = 10
+	var/mixed = 0 // denotes whether its apart of a mixed mode or not
 
 /datum/game_mode/proc/announce() //to be calles when round starts
 	world << "<B>Notice</B>: [src] did not define announce()"
