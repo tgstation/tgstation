@@ -210,6 +210,7 @@
 	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(synd_mob.back), slot_in_backpack)
 
 	var/obj/item/device/radio/uplink/U = new /obj/item/device/radio/uplink(synd_mob)
+	U.hidden_uplink.uplink_owner="[synd_mob]"
 	U.hidden_uplink.uses = 10
 	synd_mob.equip_to_slot_or_del(U, slot_in_backpack)
 
