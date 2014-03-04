@@ -198,7 +198,7 @@
 			var/uplink_true = 0
 			var/purchases = ""
 			for(var/obj/item/device/uplink/H in world_uplinks)
-				if(H && H.uplink_owner && H.uplink_owner==traitor.name)
+				if(H && H.uplink_owner && H.uplink_owner==traitor.key)
 					TC_uses += H.used_TC
 					uplink_true=1
 					purchases += H.purchase_log
@@ -272,7 +272,7 @@
 
 			var/obj/item/device/uplink/hidden/T = new(R)
 			target_radio.hidden_uplink = T
-			T.uplink_owner = "[traitor_mob]"
+			T.uplink_owner = "[traitor_mob.key]"
 			target_radio.traitor_frequency = freq
 			traitor_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features."
 			traitor_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [loc]).")
@@ -282,7 +282,7 @@
 
 			var/obj/item/device/uplink/hidden/T = new(R)
 			R.hidden_uplink = T
-			T.uplink_owner = "[traitor_mob]"
+			T.uplink_owner = "[traitor_mob.key]"
 			var/obj/item/device/pda/P = R
 			P.lock_code = pda_pass
 
