@@ -120,7 +120,7 @@
 				steal_objective.find_target()
 				traitor.objectives += steal_objective
 		switch(rand(1,100))
-			if(1 to 30) // Die glorious death
+			if(1 to 30 && !(locate(/datum/objective/steal) in traitor.objectives)) // Die glorious death
 				if (!(locate(/datum/objective/die) in traitor.objectives))
 					var/datum/objective/die/die_objective = new
 					die_objective.owner = traitor
