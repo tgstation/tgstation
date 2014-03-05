@@ -332,6 +332,9 @@
 
 		text += "(Syndicates used [TC_uses] TC) [purchases]"
 
+		if(TC_uses==0 && station_was_nuked && !is_operatives_are_dead())
+			text += "<IMG CLASS=icon SRC=\ref['icons/MLG_PRO.dmi'] ICONSTATE='mlg'>"
+
 		world << text
 	return 1
 
