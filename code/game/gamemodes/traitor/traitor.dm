@@ -203,25 +203,20 @@
 					uplink_true=1
 					purchases += H.purchase_log
 
-			var/objectives = ""
+			if(uplink_true)
+				text += " (used [TC_uses] TC) [purchases]"
+
 			if(traitor.objectives.len)//If the traitor had no objectives, don't need to process this.
 				var/count = 1
 				for(var/datum/objective/objective in traitor.objectives)
 					if(objective.check_completion())
-						objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
 						feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
 					else
-						objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
 						feedback_add_details("traitor_objective","[objective.type]|FAIL")
 						traitorwin = 0
 					count++
-
-			if(uplink_true)
-				text += " (used [TC_uses] TC) [purchases]"
-				if(TC_uses==0 && traitorwin)
-					text += "<IMG CLASS=icon SRC=\ref['icons/MLG_PRO.dmi'] ICONSTATE='mlg'>"
-
-			text += objectives
 
 			var/special_role_text
 			if(traitor.special_role)
