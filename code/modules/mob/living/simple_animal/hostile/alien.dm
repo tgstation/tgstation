@@ -69,7 +69,7 @@
 	ranged = 1
 	retreat_distance = 5
 	minimum_distance = 5
-	move_to_delay = 3
+	move_to_delay = 4
 	projectiletype = /obj/item/projectile/neurotox
 	projectilesound = 'sound/weapons/pierce.ogg'
 	status_flags = 0
