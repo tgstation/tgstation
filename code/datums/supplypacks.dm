@@ -1082,7 +1082,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	access = access_research
 	group = "Medical / Science"
 
-	/datum/supply_packs/supermatter_shard
+/datum/supply_packs/supermatter_shard
 	contains = list(/obj/machinery/power/supermatter/shard)
 	name = "Supermatter Shard"
 	cost = 100 //So cargo thinks twice before killing themselves with it
