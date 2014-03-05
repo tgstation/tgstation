@@ -49,9 +49,9 @@
 		reagents.delete()
 	if(hasvar(src, "holder"))
 		src:holder = null
-	/* // BROKEN, FUCK BYOND
+	/*  BROKEN, FUCK BYOND
 	if(hasvar(src, "my_atom"))
-		//src:my_atom = null*/
+		src:my_atom = null*/
 	..()
 
 /obj/item/device
