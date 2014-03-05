@@ -84,7 +84,8 @@
 				if (prob(50))
 					slimey = "/adult[slimey]"
 
-				new_mob = new text2path("/mob/living/carbon/slime[slimey]")
+				slimey = text2path("/mob/living/carbon/slime[slimey]")
+				new_mob = new slimey
 				new_mob.universal_speak = 1
 			if("xeno")
 				var/alien_caste = pick("Hunter","Sentinel","Drone","Larva")
