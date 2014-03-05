@@ -219,7 +219,7 @@
 			if(uplink_true)
 				text += " (used [TC_uses] TC) [purchases]"
 				if(TC_uses==0 && traitorwin)
-					text += "<IMG CLASS=icon SRC=\ref['icons/obj/weapons.dmi'] ICONSTATE='syndballoon'>"
+					text += "<IMG CLASS=icon SRC=\ref['icons/BadAss.dmi.dmi'] ICONSTATE='badass'>"
 
 			text += objectives
 
