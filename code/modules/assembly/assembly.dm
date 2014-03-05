@@ -59,6 +59,14 @@
 			process_cooldown()
 		return 1
 
+	Destroy()
+		if(istype(src.loc, /obj/item/device/assembly_holder) || istype(holder))
+			var/obj/item/device/assembly_holder/A = src.loc
+			if(A.a_left == src)
+				A.a_left = null
+			else if(A.a_right == src)
+				A.a_right = null
+			src.holder = null
 
 	pulsed(var/radio = 0)
 		if(holder && (wires & WIRE_RECEIVE))

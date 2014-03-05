@@ -44,20 +44,14 @@
 	if(istype(src.loc, /mob))
 		var/mob/H = src.loc
 		H.drop_from_inventory(src) // items at the very least get unequipped from their mob before being deleted
-	if(istype(src.loc, /obj/item/assembly))
-		var/obj/item/assembly/A = src.loc
-		if(A.part1 == src)
-			A.part1 = null
-		else if(A.part2 == src)
-			A.part2 = null
-		master = null
 	if(reagents && istype(reagents))
 		reagents.my_atom = null
 		reagents.delete()
 	if(hasvar(src, "holder"))
-		src:holder = null
+		I:holder = null
+	/* // BROKEN, FUCK BYOND
 	if(hasvar(src, "my_atom"))
-		src:my_atom = null
+		I:my_atom = null*/
 
 	..()
 
