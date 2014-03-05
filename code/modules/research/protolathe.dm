@@ -23,6 +23,7 @@ Note: Must be placed west/left of and R&D console to function.
 	var/clown_amount = 0.0
 	var/adamantine_amount = 0.0
 	var/efficiency_coeff
+	reagents = new()
 
 
 /obj/machinery/r_n_d/protolathe/New()
@@ -36,6 +37,7 @@ Note: Must be placed west/left of and R&D console to function.
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
 	RefreshParts()
+	reagents.my_atom = src
 
 /obj/machinery/r_n_d/protolathe/proc/TotalMaterials() //returns the total of all the stored materials. Makes code neater.
 	return m_amount + g_amount + gold_amount + silver_amount + plasma_amount + uranium_amount + diamond_amount + clown_amount
@@ -43,11 +45,7 @@ Note: Must be placed west/left of and R&D console to function.
 /obj/machinery/r_n_d/protolathe/RefreshParts()
 	var/T = 0
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
-		T += G.reagents.maximum_volume
-	var/datum/reagents/R = new/datum/reagents(T)		//Holder for the reagents used as materials.
-	reagents = R
-	R.my_atom = src
-	T = 0
+		G.reagents.trans_to(src, G.reagents.total_volume)
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
 	max_material_storage = T * 75000
@@ -86,8 +84,14 @@ Note: Must be placed west/left of and R&D console to function.
 			linked_console.linked_lathe = null
 			linked_console = null
 		return
+
+	if(exchange_parts(user, O))
+		return
+
 	if (panel_open)
 		if(istype(O, /obj/item/weapon/crowbar))
+			for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
+				reagents.trans_to(G, G.reagents.maximum_volume)
 			if(m_amount >= 3750)
 				var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src.loc)
 				G.amount = round(m_amount / G.perunit)

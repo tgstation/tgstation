@@ -224,6 +224,9 @@
 	if(default_deconstruction_screwdriver(user, "tele-o", "tele0", W))
 		return
 
+	if(exchange_parts(user, W))
+		return
+
 	default_deconstruction_crowbar(W)
 
 /obj/machinery/teleport/hub/proc/teleport(atom/movable/M as mob|obj, turf/T)
@@ -316,6 +319,9 @@
 			else
 				user << "<span class = 'alert'>This station cant hold more information, try to use better parts.</span>"
 	if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
+		return
+
+	if(exchange_parts(user, W))
 		return
 
 	default_deconstruction_crowbar(W)

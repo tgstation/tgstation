@@ -1238,6 +1238,7 @@ datum/chemical_reaction/pestkiller
 				T.atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 50)
 
 //Yellow
+
 /datum/chemical_reaction/slimeoverload
 	name = "Slime EMP"
 	id = "m_emp"
@@ -1261,7 +1262,7 @@ datum/chemical_reaction/pestkiller
 	required_other = 1
 /datum/chemical_reaction/slimecell/on_reaction(var/datum/reagents/holder, var/created_volume)
 	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-	var/obj/item/weapon/cell/slime/P = new /obj/item/weapon/cell/slime
+	var/obj/item/weapon/stock_parts/cell/slime/P = new /obj/item/weapon/stock_parts/cell/slime
 	P.loc = get_turf(holder.my_atom)
 
 /datum/chemical_reaction/slimeglow

@@ -221,6 +221,9 @@ display round(lastgen) and plasmatank amount
 		emp_act(1)
 	else if(!active)
 
+		if(exchange_parts(user, O))
+			return
+
 		if(istype(O, /obj/item/weapon/wrench))
 
 			if(!anchored && !isinspace())
@@ -242,7 +245,7 @@ display round(lastgen) and plasmatank amount
 			else
 				user << "\blue You close the access panel."
 		else if(istype(O, /obj/item/weapon/crowbar) && panel_open)
-			default_deconstruction_crowbar()
+			default_deconstruction_crowbar(O)
 
 /obj/machinery/power/port_gen/pacman/attack_hand(mob/user as mob)
 	..()
