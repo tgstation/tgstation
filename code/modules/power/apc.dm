@@ -165,59 +165,56 @@
 			else
 				usr << "The cover is closed."
 
-/*
- * return 0 (reached the proc code end)
- *        1 (wires is exposed)
- *        2 (something is wrong)
- *        3 (broken)
- *        4 (opened)
- */
 /obj/machinery/power/apc/update_icon()
-	var/L[0]
-	overlays = L
+	overlays = null
 
 	if (opened)
-		// 2 = has cell, 1 = no cell
+		// 2 = has cell
+		// 1 = no cell
 		var/basestate = "apc[cell ? "2" : "1"]"
 
 		if (opened == 1)
 			if (stat & (BROKEN | MAINT))
-				//disassembled APC cannot hold cell
+				// Disassembled APC cannot hold cell.
 				icon_state = "apcmaint"
 			else
 				icon_state = basestate
 		else if (opened == 2)
 			icon_state = "[basestate]-nocover"
 
-		basestate = null
-		return 4
+		return
 	else if (stat & BROKEN)
 		icon_state = "apc-b"
-		return 3
+		return
 	else if (emagged || malfai || spooky)
 		icon_state = "apcemag"
-		return 2
+		return
 	else if (wiresexposed)
 		icon_state = "apcewires"
-		return 1
+		return
 
 	icon_state = "apc0"
 
-	if(!(stat & (BROKEN|MAINT)))
-		// 0 = green, 1 = red
-		L += "apcox-[locked]"
-		// 0 = red, 1 = blue, 2 = green
-		L += "apco3-[charging]"
+	if ((stat & (BROKEN | MAINT)) == 0)
+		var/list/L = new/list()
+		// 0 = green
+		// 1 = red
+		//
+		// 0 = red
+		// 1 = blue
+		// 2 = green
+		L.Add("apcox-[locked]", "apco3-[charging]")
 
 		if (operating)
-			// 0 = red, 1 = yellow, 2 = green, 3 = blue
-			L += "apco0-[equipment]"
-			L += "apco1-[lighting]"
-			L += "apco2-[environ]"
+			// 0 = red
+			// 1 = yellow
+			// 2 = green
+			// 3 = blue
+			L.Add("apco0-[equipment]", "apco1-[lighting]", "apco2-[environ]")
 
-		overlays = L
+		overlays = L.Copy()
 		L = null
-	return 0
+	return
 
 // Used in process so it doesn't update the icon too much
 /obj/machinery/power/apc/proc/queue_icon_update()
