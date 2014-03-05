@@ -607,6 +607,8 @@ atom/proc/GetAllContents()
 			if(!(a in processed))
 				processing_list += a
 
+		if(!(A in processed))
+			processed += A
 		if(!(A in assembled))
 			assembled += A
 
