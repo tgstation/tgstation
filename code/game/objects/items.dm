@@ -48,11 +48,10 @@
 		reagents.my_atom = null
 		reagents.delete()
 	if(hasvar(src, "holder"))
-		I:holder = null
+		src:holder = null
 	/* // BROKEN, FUCK BYOND
 	if(hasvar(src, "my_atom"))
-		I:my_atom = null*/
-
+		//src:my_atom = null*/
 	..()
 
 /obj/item/device
