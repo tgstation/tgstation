@@ -196,24 +196,22 @@
 	icon_state = "apc0"
 
 	if ((stat & (BROKEN | MAINT)) == 0)
-		var/list/L = new/list()
+		overlays = new/list()
 		// 0 = green
 		// 1 = red
 		//
 		// 0 = red
 		// 1 = blue
 		// 2 = green
-		L.Add("apcox-[locked]", "apco3-[charging]")
+		overlays.Add("apcox-[locked]", "apco3-[charging]")
 
 		if (operating)
 			// 0 = red
 			// 1 = yellow
 			// 2 = green
 			// 3 = blue
-			L.Add("apco0-[equipment]", "apco1-[lighting]", "apco2-[environ]")
+			overlays.Add("apco0-[equipment]", "apco1-[lighting]", "apco2-[environ]")
 
-		overlays = L.Copy()
-		L = null
 	return
 
 // Used in process so it doesn't update the icon too much
