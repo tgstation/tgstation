@@ -57,7 +57,10 @@
 		spawn(5)
 			if(radio_controller)
 				radio_controller.add_object(src, control_freq, filter = RADIO_SECBOT)
-
+	Destroy()
+		if(radio_controller)
+			radio_controller.remove_object(src, control_freq)
+		..()
 	// receive radio signals
 	// can detect bot status signals
 	// create/populate list as they are recvd
@@ -128,6 +131,10 @@
 				spawn(10)
 					post_signal(beacon_freq, "findbeacon", "delivery", s_filter = RADIO_NAVBEACONS)
 
+	Destroy()
+		if(radio_controller)
+			radio_controller.remove_object(src, control_freq)
+			radio_controller.remove_object(src, beacon_freq)
 	// receive radio signals
 	// can detect bot status signals
 	// and beacon locations
