@@ -25,6 +25,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 /obj/effect/proc/delete()
 	loc = null
 	if(reagents)
+		reagents.my_atom = null
 		reagents.delete()
 	return
 
@@ -43,6 +44,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	//var/turf/T = src.loc
 	//if (istype(T, /turf))
 	//	T.firelevel = 0 //TODO: FIX
+	src.delete()
 	..()
 	return
 
@@ -82,7 +84,6 @@ would spawn and follow the beaker, even if it is carried or thrown.
 		holder = atom
 
 	proc/start()
-
 
 /////////////////////////////////////////////
 // GENERIC STEAM SPREAD SYSTEM

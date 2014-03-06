@@ -56,7 +56,14 @@ var/global/list/uncollectable_vars=list(
 
 	proc/Pop()
 		var/atom/movable/A = queue[1]
-		if(!A) return
+		if(!A)
+			if(isnull(A))
+				var/loopcheck = 0
+				while(queue.Remove(null))
+					loopcheck++
+					if(loopcheck > 50)
+						break
+			return
 		if(del_everything)
 			del(A)
 			return

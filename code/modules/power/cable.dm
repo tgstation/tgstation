@@ -48,6 +48,14 @@
 		if(powernet)
 			powernet.cut_cable(src)				// update the powernets
 	cable_list -= src
+	if(istype(attached))
+		attached.SetLuminosity(0)
+		attached.icon_state = "powersink0"
+		attached.mode = 0
+		processing_objects.Remove(attached)
+		attached.anchored = 0
+		attached.attached = null
+	attached = null
 	..()													// then go ahead and delete the cable
 
 /obj/structure/cable/hide(var/i)
