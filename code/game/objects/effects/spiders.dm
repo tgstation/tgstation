@@ -22,9 +22,9 @@
 
 /obj/effect/spider/attackby(var/obj/item/weapon/W, var/mob/user)
 	if(W.attack_verb.len)
-		visible_message("\red <B>\The [src] has been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
+		visible_message("<span class='danger'>\The [src] has been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]!</span>")
 	else
-		visible_message("\red <B>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".")]")
+		visible_message("<span class='danger'>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".")]!</span>")
 
 	var/damage = W.force / 4.0
 
@@ -93,7 +93,7 @@
 	desc = "It never stays still for long."
 	icon_state = "spiderling"
 	anchored = 0
-	layer = 2.7
+	layer = 2.75
 	health = 3
 	var/amount_grown = 0
 	var/grow_as = null

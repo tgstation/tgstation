@@ -5,15 +5,22 @@
 		cur_area.mob_activate(src)
 
 
-/mob/living/verb/succumb()
+/mob/living/verb/succumb(var/whispered as null)
 	set hidden = 1
-	if ((src.health < 0 && src.health > -95.0))
-		src.attack_log += "[src] has succumbed to death with [health] points of health!"
+	if (InCritical())
+		src.attack_log += "[src] has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!"
 		src.adjustOxyLoss(src.health + 200)
 		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss()
-		src << "\blue You have given up life and succumbed to death."
+		if(!whispered)
+			src << "\blue You have given up life and succumbed to death."
 		death()
 
+/mob/living/proc/InCritical()
+	return (src.health < 0 && src.health > -95.0 && stat == UNCONSCIOUS)
+
+/mob/living/ex_act(severity)
+	if(client && !blinded)
+		flick("flash", src.flash)
 
 /mob/living/proc/updatehealth()
 	if(status_flags & GODMODE)
@@ -211,6 +218,9 @@
 		O.emp_act(severity)
 	..()
 
+/mob/living/proc/can_inject()
+	return 1
+
 /mob/living/proc/get_organ_target()
 	var/mob/shooter = src
 	var/t = shooter:zone_sel.selecting
@@ -249,6 +259,7 @@
 	setOxyLoss(0)
 	setCloneLoss(0)
 	setBrainLoss(0)
+	setHalLoss(0)
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
@@ -265,6 +276,7 @@
 	heal_overall_damage(1000, 1000)
 	ExtinguishMob()
 	fire_stacks = 0
+	suiciding = 0
 	buckled = initial(src.buckled)
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
@@ -277,7 +289,7 @@
 	if(stat == 2)
 		dead_mob_list -= src
 		living_mob_list += src
-	stat = CONSCIOUS
+	if(!isanimal(src))	stat = CONSCIOUS
 	update_fire()
 	regenerate_icons()
 	..()
@@ -450,9 +462,9 @@
 				C.next_move = world.time + 100
 				C.last_special = world.time + 100
 				C.visible_message("<span class='warning'>[usr] attempts to unbuckle themself!</span>", \
-							"<span class='notice'>You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stay still.)</span>")
+							"<span class='notice'>You attempt to unbuckle yourself. (This will take around one minute and you need to stay still.)</span>")
 				spawn(0)
-					if(do_after(usr, 1200))
+					if(do_after(usr, 600))
 						if(!C.buckled)
 							return
 						C.visible_message("<span class='danger'>[usr] manages to unbuckle themself!</span>", \
@@ -500,7 +512,7 @@
 						CM.update_inv_handcuffed(0)
 			else
 				var/obj/item/weapon/handcuffs/HC = CM.handcuffed
-				var/breakouttime = 1200 //A default in case you are somehow handcuffed with something that isn't an obj/item/weapon/handcuffs type
+				var/breakouttime = 600 //A default in case you are somehow handcuffed with something that isn't an obj/item/weapon/handcuffs type
 				var/displaytime = 2 //Minutes to display in the "this will take X minutes."
 				if(istype(HC)) //If you are handcuffed with actual handcuffs... Well what do I know, maybe someone will want to handcuff you with toilet paper in the future...
 					breakouttime = HC.breakouttime
@@ -534,7 +546,7 @@
 						CM.update_inv_legcuffed(0)
 			else
 				var/obj/item/weapon/legcuffs/HC = CM.legcuffed
-				var/breakouttime = 1200 //A default in case you are somehow legcuffed with something that isn't an obj/item/weapon/legcuffs type
+				var/breakouttime = 600 //A default in case you are somehow legcuffed with something that isn't an obj/item/weapon/legcuffs type
 				var/displaytime = 2 //Minutes to display in the "this will take X minutes."
 				if(istype(HC)) //If you are legcuffed with actual legcuffs... Well what do I know, maybe someone will want to legcuff you with toilet paper in the future...
 					breakouttime = HC.breakouttime
@@ -550,3 +562,7 @@
 						CM.legcuffed.loc = usr.loc
 						CM.legcuffed = null
 						CM.update_inv_legcuffed(0)
+
+
+/mob/living/proc/get_visible_name()
+	return name

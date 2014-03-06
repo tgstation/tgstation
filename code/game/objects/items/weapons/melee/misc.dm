@@ -3,16 +3,17 @@
 	desc = "A tool used by great men to placate the frothing masses."
 	icon_state = "chain"
 	item_state = "chain"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 10
 	throwforce = 7
 	w_class = 3
 	origin_tech = "combat=4"
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
+	hitsound = 'sound/weapons/slash.ogg' //pls replace
 
 /obj/item/weapon/melee/chainofcommand/suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='suicide'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>"
 		return (OXYLOSS)
 
 
@@ -23,7 +24,6 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "baton"
 	item_state = "classic_baton"
-	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
 	force = 10
 
@@ -39,18 +39,20 @@
 		else
 			user.take_organ_damage(2 * force)
 		return
+	add_logs(user, M, "attacked", object="[src.name]")
 
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
-	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+	if(isrobot(M)) // Don't stun borgs, fix for issue #2436
+		..()
+		return
+	if(!isliving(M)) // Don't stun nonhuman things
+		return
 
 	if(user.a_intent == "harm")
 		if(!..()) return
-		playsound(loc, "swing_hit", 50, 1, -1)
 		if(M.stuttering < 8 && !(HULK in M.mutations))
 			M.stuttering = 8
-		M.Stun(8)
-		M.Weaken(8)
+		M.Stun(5)
+		M.Weaken(5)
 		M.visible_message("<span class='danger'>[M] has been beaten with [src] by [user]!</span>", \
 							"<span class='userdanger'>[M] has been beaten with [src] by [user]!</span>")
 	else

@@ -1,9 +1,9 @@
 //NEVER USE THIS IT SUX	-PETETHEGOAT
-
-var/global/list/cached_icons = list()
+//IT SUCKS A BIT LESS -GIACOM
 
 /obj/item/weapon/paint
-	name = "Paint Can"
+	gender= PLURAL
+	name = "paint"
 	desc = "Used to recolor floors and walls. Can not be removed by the janitor."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "paint_neutral"
@@ -13,43 +13,44 @@ var/global/list/cached_icons = list()
 	var/paintleft = 10
 
 /obj/item/weapon/paint/red
-	name = "Red paint"
+	name = "red paint"
 	item_color = "C73232" //"FF0000"
 	icon_state = "paint_red"
 
 /obj/item/weapon/paint/green
-	name = "Green paint"
+	name = "green paint"
 	item_color = "2A9C3B" //"00FF00"
 	icon_state = "paint_green"
 
 /obj/item/weapon/paint/blue
-	name = "Blue paint"
+	name = "blue paint"
 	item_color = "5998FF" //"0000FF"
 	icon_state = "paint_blue"
 
 /obj/item/weapon/paint/yellow
-	name = "Yellow paint"
+	name = "yellow paint"
 	item_color = "CFB52B" //"FFFF00"
 	icon_state = "paint_yellow"
 
 /obj/item/weapon/paint/violet
-	name = "Violet paint"
+	name = "violet paint"
 	item_color = "AE4CCD" //"FF00FF"
 	icon_state = "paint_violet"
 
 /obj/item/weapon/paint/black
-	name = "Black paint"
+	name = "black paint"
 	item_color = "333333"
 	icon_state = "paint_black"
 
 /obj/item/weapon/paint/white
-	name = "White paint"
+	name = "white paint"
 	item_color = "FFFFFF"
 	icon_state = "paint_white"
 
 
 /obj/item/weapon/paint/anycolor
-	name = "Any color"
+	gender= PLURAL
+	name = "any color"
 	icon_state = "paint_neutral"
 
 	attack_self(mob/user as mob)
@@ -83,25 +84,16 @@ var/global/list/cached_icons = list()
 		return
 	if(!istype(target) || istype(target, /turf/space))
 		return
-	var/ind = "[initial(target.icon)][item_color]"
-	if(!cached_icons[ind])
-		var/icon/overlay = new/icon(initial(target.icon))
-		overlay.Blend("#[item_color]",ICON_MULTIPLY)
-		overlay.SetIntensity(1.4)
-		target.icon = overlay
-		cached_icons[ind] = target.icon
-		paintleft--
-	else
-		target.icon = cached_icons[ind]
-		paintleft--
+	target.color = "#" + item_color
 	return
 
 /obj/item/weapon/paint/paint_remover
-	name = "Paint remover"
+	gender =  PLURAL
+	name = "paint remover"
 	icon_state = "paint_neutral"
 
 	afterattack(turf/target, mob/user as mob,proximity)
 		if(!proximity) return
-		if(istype(target) && target.icon != initial(target.icon))
-			target.icon = initial(target.icon)
+		if(istype(target) && target.color != initial(target.color))
+			target.color = initial(target.color)
 		return

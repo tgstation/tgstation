@@ -20,9 +20,9 @@ effective or pretty fucking useless.
 	icon_state = "batterer"
 	throwforce = 5
 	w_class = 1.0
-	throw_speed = 4
-	throw_range = 10
-	flags = FPRINT | TABLEPASS| CONDUCT
+	throw_speed = 3
+	throw_range = 7
+	flags = CONDUCT
 	item_state = "electronic"
 	origin_tech = "magnets=3;combat=3;syndicate=3"
 
@@ -36,7 +36,7 @@ effective or pretty fucking useless.
 		user << "\red The mind batterer has been burnt out!"
 		return
 
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used [src] to knock down people in the area.</font>")
+	add_logs(user, null, "knocked down people in the area", admin=0, object="[src]")
 
 	for(var/mob/living/carbon/human/M in orange(10, user))
 		spawn()

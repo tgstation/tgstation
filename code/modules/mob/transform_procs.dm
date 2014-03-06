@@ -1,5 +1,5 @@
 /mob/living/carbon/proc/monkeyize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG), newname = null)
-	if (monkeyizing)
+	if (notransform)
 		return
 	//Handle items on mob
 
@@ -9,14 +9,13 @@
 		for(var/obj/item/weapon/implant/W in src)
 			implants += W
 
-	//now the rest
-	if (tr_flags & TR_KEEPITEMS)
+	if(tr_flags & TR_KEEPITEMS)
 		for(var/obj/item/W in (src.contents-implants))
-			drop_from_inventory(W)
+			unEquip(W)
 
 	//Make mob invisible and spawn animation
 	regenerate_icons()
-	monkeyizing = 1
+	notransform = 1
 	canmove = 0
 	stunned = 1
 	icon = null
@@ -30,6 +29,8 @@
 	//animation = null
 	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( loc )
 	del(animation)
+
+
 
 	// hash the original name?
 	if	(tr_flags & TR_HASHNAME)
@@ -85,7 +86,7 @@
 //Could probably be merged with monkeyize but other transformations got their own procs, too
 
 /mob/living/carbon/proc/humanize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG), newname = null)
-	if (monkeyizing)
+	if (notransform)
 		return
 	//Handle items on mob
 
@@ -98,7 +99,7 @@
 	//now the rest
 	if (tr_flags & TR_KEEPITEMS)
 		for(var/obj/item/W in (src.contents-implants))
-			u_equip(W)
+			unEquip(W)
 			if (client)
 				client.screen -= W
 			if (W)
@@ -107,11 +108,11 @@
 				W.layer = initial(W.layer)
 
 	//	for(var/obj/item/W in src)
-	//		drop_from_inventory(W)
+	//		unEquip(W)
 
 	//Make mob invisible and spawn animation
 	regenerate_icons()
-	monkeyizing = 1
+	notransform = 1
 	canmove = 0
 	stunned = 1
 	icon = null
@@ -123,6 +124,8 @@
 	flick("monkey2h", animation)
 	sleep(22)
 	var/mob/living/carbon/human/O = new( loc )
+	for(var/obj/item/C in O.loc)
+		O.equip_to_appropriate_slot(C)
 	del(animation)
 
 
@@ -181,7 +184,7 @@
 	return ..()
 
 /mob/living/carbon/human/AIize()
-	if (monkeyizing)
+	if (notransform)
 		return
 	for(var/t in organs)
 		del(t)
@@ -189,12 +192,12 @@
 	return ..()
 
 /mob/living/carbon/AIize()
-	if (monkeyizing)
+	if (notransform)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		unEquip(W)
 	regenerate_icons()
-	monkeyizing = 1
+	notransform = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
@@ -203,7 +206,7 @@
 /mob/proc/AIize()
 	if(client)
 		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // stop the jams for AIs
-	var/mob/living/silicon/ai/O = new (loc, /datum/ai_laws/asimov,,1)//No MMI but safety is in effect.
+	var/mob/living/silicon/ai/O = new (loc,,,1)//No MMI but safety is in effect.
 	O.invisibility = 0
 	O.aiRestorePowerRoutine = 0
 
@@ -262,15 +265,15 @@
 
 //human -> robot
 /mob/living/carbon/human/proc/Robotize(var/delete_items = 0)
-	if (monkeyizing)
+	if (notransform)
 		return
 	for(var/obj/item/W in src)
 		if(delete_items)
 			del(W)
 		else
-			drop_from_inventory(W)
+			unEquip(W)
 	regenerate_icons()
-	monkeyizing = 1
+	notransform = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
@@ -307,12 +310,12 @@
 
 //human -> alien
 /mob/living/carbon/human/proc/Alienize()
-	if (monkeyizing)
+	if (notransform)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		unEquip(W)
 	regenerate_icons()
-	monkeyizing = 1
+	notransform = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
@@ -336,13 +339,13 @@
 	. = new_xeno
 	del(src)
 
-/mob/living/carbon/human/proc/slimeize(adult as num, reproduce as num)
-	if (monkeyizing)
+/mob/living/carbon/human/proc/slimeize(reproduce as num)
+	if (notransform)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		unEquip(W)
 	regenerate_icons()
-	monkeyizing = 1
+	notransform = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
@@ -360,10 +363,7 @@
 			babies += M
 		new_slime = pick(babies)
 	else
-		if(adult)
-			new_slime = new /mob/living/carbon/slime/adult(loc)
-		else
-			new_slime = new /mob/living/carbon/slime(loc)
+		new_slime = new /mob/living/carbon/slime(loc)
 	new_slime.a_intent = "harm"
 	new_slime.key = key
 
@@ -371,13 +371,28 @@
 	. = new_slime
 	del(src)
 
+/mob/living/carbon/human/proc/Blobize()
+	if (notransform)
+		return
+	var/obj/effect/blob/core/new_blob = new /obj/effect/blob/core (loc)
+	if(!client)
+		for(var/mob/dead/observer/G in player_list)
+			if(ckey == "@[G.ckey]")
+				new_blob.create_overmind(G.client , 1)
+				break
+	else
+		new_blob.create_overmind(src.client , 1)
+	gib(src)
+
+
+
 /mob/living/carbon/human/proc/corgize()
-	if (monkeyizing)
+	if (notransform)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		unEquip(W)
 	regenerate_icons()
-	monkeyizing = 1
+	notransform = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
@@ -401,13 +416,13 @@
 		usr << "\red Sorry but this mob type is currently unavailable."
 		return
 
-	if(monkeyizing)
+	if(notransform)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		unEquip(W)
 
 	regenerate_icons()
-	monkeyizing = 1
+	notransform = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
@@ -454,8 +469,8 @@
 	if(!MP)
 		return 0	//Sanity, this should never happen.
 
-	if(ispath(MP, /mob/living/simple_animal/space_worm))
-		return 0 //Unfinished. Very buggy, they seem to just spawn additional space worms everywhere and eating your own tail results in new worms spawning.
+//	if(ispath(MP, /mob/living/simple_animal/space_worm)) //Goodbye Space Worms 2014
+//		return 0 //Unfinished. Very buggy, they seem to just spawn additional space worms everywhere and eating your own tail results in new worms spawning.
 
 	if(ispath(MP, /mob/living/simple_animal/construct/behemoth))
 		return 0 //I think this may have been an unfinished WiP or something. These constructs should really have their own class simple_animal/construct/subtype
@@ -478,7 +493,7 @@
 		return 1
 	if(ispath(MP, /mob/living/simple_animal/hostile/carp))
 		return 1
-	if(ispath(MP, /mob/living/simple_animal/mushroom))
+	if(ispath(MP, /mob/living/simple_animal/hostile/mushroom))
 		return 1
 	if(ispath(MP, /mob/living/simple_animal/shade))
 		return 1
@@ -493,6 +508,3 @@
 
 	//Not in here? Must be untested!
 	return 0
-
-
-

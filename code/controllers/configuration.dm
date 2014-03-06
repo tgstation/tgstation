@@ -29,9 +29,6 @@
 	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
 	var/allow_vote_restart = 0 			// allow votes to restart
 	var/allow_vote_mode = 0				// allow votes to change mode
-	var/allow_admin_jump = 1			// allows admin jumping
-	var/allow_admin_spawning = 1		// allows admin item spawning
-	var/allow_admin_rev = 1				// allows admin revives
 	var/vote_delay = 6000				// minimum time between voting sessions (deciseconds, 10 minute default)
 	var/vote_period = 600				// length of voting period (deciseconds, default 1 minute)
 	var/vote_no_default = 0				// vote does not default to nochange/norestart (tbi)
@@ -52,10 +49,11 @@
 	var/automute_on = 0					//enables automuting/spam prevention
 	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
 	var/jobs_have_maint_access = 0 		//Who gets maint access?  See defines above
+	var/sec_start_brig = 0				//makes sec start in brig or dept sec posts
 
 	var/server
 	var/banappeals
-	var/wikiurl
+	var/wikiurl = "http://wiki.ss13.eu" // Default wiki link.
 	var/forumurl
 
 	var/forbid_singulo_possession = 0
@@ -77,13 +75,14 @@
 	var/allow_ai = 0					// allow ai job
 
 	var/traitor_scaling_coeff = 6		//how much does the amount of players get divided by to determine traitors
-	var/changeling_scaling_coeff = 10	//how much does the amount of players get divided by to determine changelings
+	var/changeling_scaling_coeff = 7	//how much does the amount of players get divided by to determine changelings
 
 	var/protect_roles_from_antagonist = 0// If security and such can be traitor/cult/other
 	var/allow_latejoin_antagonists = 0 // If late-joining players can be traitor/changeling
 	var/continuous_round_rev = 0			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
 	var/continuous_round_wiz = 0
 	var/continuous_round_malf = 0
+	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
 
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
 	var/alert_desc_blue_upto = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
@@ -122,6 +121,7 @@
 
 	var/sandbox_autoclose = 0 // close the sandbox panel after spawning an item, potentially reducing griff
 
+	var/default_laws = 0 //Controls what laws the AI spawns with.
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -212,12 +212,6 @@
 					config.allow_vote_restart = 1
 				if("allow_vote_mode")
 					config.allow_vote_mode = 1
-				if("allow_admin_jump")
-					config.allow_admin_jump = 1
-				if("allow_admin_rev")
-					config.allow_admin_rev = 1
-				if("allow_admin_spawning")
-					config.allow_admin_spawning = 1
 				if("no_dead_vote")
 					config.vote_no_dead = 1
 				if("default_no_vote")
@@ -317,6 +311,8 @@
 					config.jobs_have_maint_access	|= SECURITY_HAS_MAINT_ACCESS
 				if("everyone_has_maint_access")
 					config.jobs_have_maint_access	|= EVERYONE_HAS_MAINT_ACCESS
+				if("sec_start_brig")
+					config.sec_start_brig			= 1
 				if("gateway_delay")
 					config.gateway_delay			= text2num(value)
 				if("continuous_round_rev")
@@ -325,6 +321,8 @@
 					config.continuous_round_wiz		= 1
 				if("continuous_round_malf")
 					config.continuous_round_malf	= 1
+				if("show_game_type_odds")
+					config.show_game_type_odds		= 1
 				if("ghost_interaction")
 					config.ghost_interaction		= 1
 				if("traitor_scaling_coeff")
@@ -368,6 +366,8 @@
 					config.silent_borg				= 1
 				if("sandbox_autoclose")
 					config.sandbox_autoclose		= 1
+				if("default_laws")
+					config.default_laws				= text2num(value)
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

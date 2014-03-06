@@ -97,10 +97,10 @@
 	switch(severity)
 		if(1)
 			src.take_organ_damage(20)
-			Stun(rand(5,10))
+			Stun(8)
 		if(2)
 			src.take_organ_damage(10)
-			Stun(rand(1,5))
+			Stun(3)
 	flick("noise", src:flash)
 	src << "\red <B>*BZZZT*</B>"
 	src << "\red Warning: Electromagnetic pulse detected."
@@ -108,6 +108,11 @@
 
 /mob/living/silicon/proc/damage_mob(var/brute = 0, var/fire = 0, var/tox = 0)
 	return
+
+/mob/living/silicon/can_inject(var/mob/user, var/error_msg)
+	if(error_msg)
+		user << "<span class='alert'>Their outer shell is too tough.</span>"
+	return 0
 
 /mob/living/silicon/IsAdvancedToolUser()
 	return 1

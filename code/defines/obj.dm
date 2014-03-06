@@ -73,9 +73,8 @@
 	w_class = 1.0
 	force = 0.0
 	throwforce = 0.0
-	throw_speed = 1
-	throw_range = 20
-	flags = FPRINT | TABLEPASS
+	throw_speed = 2
+	throw_range = 7
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		user.drop_item()
 		src.throw_at(target, throw_range, throw_speed)

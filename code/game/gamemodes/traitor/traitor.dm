@@ -193,17 +193,35 @@
 				text += "body destroyed"
 			text += ")"
 
+
+			var/TC_uses = 0
+			var/uplink_true = 0
+			var/purchases = ""
+			for(var/obj/item/device/uplink/H in world_uplinks)
+				if(H && H.uplink_owner && H.uplink_owner==traitor.key)
+					TC_uses += H.used_TC
+					uplink_true=1
+					purchases += H.purchase_log
+
+			var/objectives = ""
 			if(traitor.objectives.len)//If the traitor had no objectives, don't need to process this.
 				var/count = 1
 				for(var/datum/objective/objective in traitor.objectives)
 					if(objective.check_completion())
-						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+						objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
 						feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
 					else
-						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+						objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
 						feedback_add_details("traitor_objective","[objective.type]|FAIL")
 						traitorwin = 0
 					count++
+
+			if(uplink_true)
+				text += " (used [TC_uses] TC) [purchases]"
+				if(TC_uses==0 && traitorwin)
+					text += "<IMG CLASS=icon SRC=\ref['icons/BadAss.dmi'] ICONSTATE='badass'>"
+
+			text += objectives
 
 			var/special_role_text
 			if(traitor.special_role)
@@ -211,12 +229,14 @@
 			else
 				special_role_text = "antagonist"
 
+
 			if(traitorwin)
 				text += "<br><font color='green'><B>The [special_role_text] was successful!</B></font>"
 				feedback_add_details("traitor_success","SUCCESS")
 			else
 				text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
 				feedback_add_details("traitor_success","FAIL")
+
 			text += "<br>"
 
 		world << text
@@ -257,6 +277,7 @@
 
 			var/obj/item/device/uplink/hidden/T = new(R)
 			target_radio.hidden_uplink = T
+			T.uplink_owner = "[traitor_mob.key]"
 			target_radio.traitor_frequency = freq
 			traitor_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features."
 			traitor_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [loc]).")
@@ -266,6 +287,7 @@
 
 			var/obj/item/device/uplink/hidden/T = new(R)
 			R.hidden_uplink = T
+			T.uplink_owner = "[traitor_mob.key]"
 			var/obj/item/device/pda/P = R
 			P.lock_code = pda_pass
 

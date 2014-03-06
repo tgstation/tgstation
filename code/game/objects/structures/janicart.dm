@@ -10,9 +10,10 @@
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
 	var/obj/item/weapon/storage/bag/trash/mybag	= null
 	var/obj/item/weapon/mop/mymop = null
-	var/obj/item/weapon/reagent_containers/spray/myspray = null
+	var/obj/item/weapon/reagent_containers/spray/cleaner/myspray = null
 	var/obj/item/device/lightreplacer/myreplacer = null
-	var/signs = 0	//maximum capacity hardcoded below
+	var/signs = 0
+	var/const/max_signs = 4
 
 
 /obj/structure/janitorialcart/New()
@@ -25,63 +26,63 @@
 	usr << "It contains [reagents.total_volume] unit\s of liquid!"
 	//everything else is visible, so doesn't need to be mentioned
 
+/obj/structure/janitorialcart/proc/wet_mop(obj/item/weapon/mop, mob/user)
+	if(reagents.total_volume < 1)
+		user << "[src] is out of water!</span>"
+	else
+		reagents.trans_to(mop, 5)	//
+		user << "<span class='notice'>You wet [mop] in [src].</span>"
+		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+
+/obj/structure/janitorialcart/proc/put_in_cart(obj/item/I, mob/user)
+	user.drop_item()
+	I.loc = src
+	updateUsrDialog()
+	user << "<span class='notice'>You put [I] into [src].</span>"
+	return
+
 
 /obj/structure/janitorialcart/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/storage/bag/trash) && !mybag)
-		user.drop_item()
-		mybag = I
-		I.loc = src
-		update_icon()
-		updateUsrDialog()
-		user << "<span class='notice'>You put [I] into [src].</span>"
+	var/fail_msg = "<span class='notice'>There is already one of those in [src].</span>"
 
-	else if(istype(I, /obj/item/weapon/mop))
-		if(I.reagents.total_volume < I.reagents.maximum_volume)	//if it's not completely soaked we assume they want to wet it, otherwise store it
-			if(reagents.total_volume < 1)
-				user << "[src] is out of water!</span>"
-			else
-				reagents.trans_to(I, 5)	//
-				user << "<span class='notice'>You wet [I] in [src].</span>"
-				playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
-				return
+	if(istype(I, /obj/item/weapon/mop))
+		var/obj/item/weapon/mop/m=I
+		if(m.reagents.total_volume < m.reagents.maximum_volume)
+			wet_mop(m, user)
+			return
 		if(!mymop)
-			user.drop_item()
-			mymop = I
-			I.loc = src
+			m.janicart_insert(user, src)
+		else
+			user << fail_msg
+
+	else if(istype(I, /obj/item/weapon/storage/bag/trash))
+		if(!mybag)
+			var/obj/item/weapon/storage/bag/trash/t=I
+			t.janicart_insert(user, src)
+		else
+			user <<  fail_msg
+	else if(istype(I, /obj/item/weapon/reagent_containers/spray/cleaner))
+		if(!myspray)
+			put_in_cart(I, user)
+			myspray=I
 			update_icon()
-			updateUsrDialog()
-			user << "<span class='notice'>You put [I] into [src].</span>"
-
-	else if(istype(I, /obj/item/weapon/reagent_containers/spray) && !myspray)
-		user.drop_item()
-		myspray = I
-		I.loc = src
-		update_icon()
-		updateUsrDialog()
-		user << "<span class='notice'>You put [I] into [src].</span>"
-
-	else if(istype(I, /obj/item/device/lightreplacer) && !myreplacer)
-		user.drop_item()
-		myreplacer = I
-		I.loc = src
-		update_icon()
-		updateUsrDialog()
-		user << "<span class='notice'>You put [I] into [src].</span>"
-
+		else
+			user << fail_msg
+	else if(istype(I, /obj/item/device/lightreplacer))
+		if(!myreplacer)
+			var/obj/item/device/lightreplacer/l=I
+			l.janicart_insert(user,src)
+		else
+			user << fail_msg
 	else if(istype(I, /obj/item/weapon/caution))
-		if(signs < 4)
-			user.drop_item()
-			I.loc = src
+		if(signs < max_signs)
+			put_in_cart(I, user)
 			signs++
 			update_icon()
-			updateUsrDialog()
-			user << "<span class='notice'>You put [I] into [src].</span>"
 		else
 			user << "<span class='notice'>[src] can't hold any more signs.</span>"
-
 	else if(mybag)
 		mybag.attackby(I, user)
-
 
 /obj/structure/janitorialcart/attack_hand(mob/user)
 	user.set_machine(src)

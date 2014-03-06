@@ -60,19 +60,23 @@
 
 	cover = new /obj/machinery/porta_turret_cover(loc)
 	cover.Parent_Turret = src
+	setup()
 
+/obj/machinery/porta_turret/proc/setup()
 	if(!installation)	//if for some reason the turret has no gun (ie, admin spawned) it resorts to basic taser shots
 		projectile = /obj/item/projectile/energy/electrode	//holder for the projectile, here it is being set
 		eprojectile = /obj/item/projectile/beam				//holder for the projectile when emagged, if it is different
 		sound = 1
 	else
+		sound = null
 		var/obj/item/weapon/gun/energy/E=new installation	//All energy-based weapons are applicable
-		projectile = E.projectile_type
+		var/obj/item/ammo_casing/shottype = E.ammo_type[1]
+		projectile = shottype.projectile_type
 		eprojectile = projectile
 
 		switch(E.type)
 			if(/obj/item/weapon/gun/energy/laser/bluetag)
-				eprojectile = /obj/item/projectile/omnitag	//This bolt will stun ERRYONE with a vest
+				eprojectile = /obj/item/projectile/bluetag
 				lasercolor = "b"
 				req_access = list(access_maint_tunnels, access_theatre)
 				check_records = 0
@@ -83,7 +87,7 @@
 				shot_delay = 30
 
 			if(/obj/item/weapon/gun/energy/laser/redtag)
-				eprojectile = /obj/item/projectile/omnitag
+				eprojectile = /obj/item/projectile/redtag
 				lasercolor = "r"
 				req_access = list(access_maint_tunnels, access_theatre)
 				check_records = 0
@@ -378,7 +382,7 @@
 /obj/machinery/porta_turret/process()
 	//the main machinery process
 
-	set background = 1
+	set background = BACKGROUND_ENABLED
 
 	if(cover == null && anchored)	//if it has no cover and is anchored
 		if(stat & BROKEN)	//if the turret is borked
@@ -646,14 +650,15 @@
 
 		if(1)
 			if(istype(I, /obj/item/stack/sheet/metal))
-				if(I:amount>=2) //requires 2 metal sheets
+				var/obj/item/stack/sheet/metal/M = I
+				if(M.amount>=2) //requires 2 metal sheets
 					user << "<span class='notice'>You add some metal armor to the interior frame.</span>"
 					build_step = 2
-					I:amount -= 2
+					M.amount -= 2
 					icon_state = "turret_frame2"
-					if(I:amount <= 0)
-						user.before_take_item(I)
-						del(I)
+					if(M.amount <= 0)
+						user.unEquip(M, 1) //We're deleting it anyway, so no point in having NODROP fuck shit up.
+						del(M)
 				else
 					user << "<span class='warning'>You need two sheets of metal for that.</span>"
 				return
@@ -696,11 +701,13 @@
 				if(isrobot(user))
 					return
 				var/obj/item/weapon/gun/energy/E = I //typecasts the item to an energy gun
+				if(!user.unEquip(I))
+					user << "<span class='notice'>\the [I] is stuck to your hand, you cannot put it in \the [src]</span>"
+					return
 				installation = I.type //installation becomes I.type
 				gun_charge = E.power_supply.charge //the gun's charge is stored in gun_charge
 				user << "<span class='notice'>You add [I] to the turret.</span>"
 				build_step = 4
-				user.before_take_item(I)
 				del(I) //delete the gun :(
 				return
 
@@ -713,8 +720,10 @@
 		if(4)
 			if(isprox(I))
 				build_step = 5
+				if(!user.unEquip(I))
+					user << "<span class='notice'>\the [I] is stuck to your hand, you cannot put it in \the [src]</span>"
+					return
 				user << "<span class='notice'>You add the prox sensor to the turret.</span>"
-				user.before_take_item(I)
 				del(I)
 				return
 
@@ -731,13 +740,14 @@
 
 		if(6)
 			if(istype(I, /obj/item/stack/sheet/metal))
-				if(I:amount>=2)
+				var/obj/item/stack/sheet/metal/M = I
+				if(M.amount>=2)
 					user << "<span class='notice'>You add some metal armor to the exterior frame.</span>"
 					build_step = 7
-					I:amount -= 2
-					if(I:amount <= 0)
-						user.before_take_item(I)
-						del(I)
+					M.amount -= 2
+					if(M.amount <= 0)
+						user.unEquip(M, 1) //If we don't force-unequip, bugs happen because the item was deleted without updating the neccesary stuffs.
+						del(M)
 				else
 					user << "<span class='warning'>You need two sheets of metal for that.</span>"
 				return
@@ -767,6 +777,7 @@
 					Turret.name = finish_name
 					Turret.installation = installation
 					Turret.gun_charge = gun_charge
+					Turret.setup()
 
 //					Turret.cover=new/obj/machinery/porta_turret_cover(loc)
 //					Turret.cover.Parent_Turret=Turret

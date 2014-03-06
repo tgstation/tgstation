@@ -7,7 +7,7 @@
 	icon = 'icons/mecha/mech_construct.dmi'
 	icon_state = "blank"
 	w_class = 20
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	origin_tech = "programming=2;materials=2"
 	var/construction_time = 100
 	var/list/construction_cost = list("metal"=20000,"glass"=5000)
@@ -18,7 +18,6 @@
 	icon_state = "backbone"
 	var/datum/construction/construct
 	construction_cost = list("metal"=20000)
-	flags = FPRINT | CONDUCT
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(!construct || !construct.action(W, user))
@@ -405,12 +404,12 @@
 	icon_state = "std_mod"
 	item_state = "electronic"
 	board_type = "other"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	force = 5.0
 	w_class = 2.0
-	throwforce = 5.0
+	throwforce = 0
 	throw_speed = 3
-	throw_range = 15
+	throw_range = 7
 
 	ripley
 		origin_tech = "programming=3"

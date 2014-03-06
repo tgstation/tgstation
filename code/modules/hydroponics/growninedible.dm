@@ -8,19 +8,28 @@
 	var/seed = ""
 	var/plantname = ""
 	var/product	//a type path
-	var/species = ""
 	var/lifespan = 20
 	var/endurance = 15
 	var/maturation = 7
 	var/production = 7
 	var/yield = 2
-	var/potency = 1
+	var/potency = 20
 	var/plant_type = 0
-	New()
-		create_reagents(50)
+
+/obj/item/weapon/grown/New(newloc,newpotency)
+	if (!isnull(newpotency))
+		potency = newpotency
+	..()
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
+
+	transform *= TransformUsingVariable(potency, 100, 0.5)
+
+	create_reagents(50)
 
 /obj/item/weapon/grown/proc/changePotency(newValue) //-QualityVan
 	potency = newValue
+	transform *= TransformUsingVariable(potency, 100, 0.5) //Makes the resulting produce's sprite larger or smaller based on potency!
 
 /obj/item/weapon/grown/log
 	name = "tower-cap log"
@@ -28,15 +37,23 @@
 	icon = 'icons/obj/harvest.dmi'
 	icon_state = "logs"
 	force = 5
-	flags = TABLEPASS
 	throwforce = 5
 	w_class = 3.0
-	throw_speed = 3
+	throw_speed = 2
 	throw_range = 3
 	plant_type = 2
 	origin_tech = "materials=1"
 	seed = "/obj/item/seeds/towermycelium"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
+	var/list/accepted = list(/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/tea_aspera,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/tea_astra,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/wheat)
+
 
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -53,6 +70,18 @@
 				usr << "You add the newly-formed wood to the stack. It now contains [NG.amount] planks."
 		del(src)
 		return
+	if(is_type_in_list(W,accepted))
+		var/obj/item/weapon/reagent_containers/food/snacks/grown/leaf = W
+		if(leaf.dry)
+			user.show_message("<span class='notice'>You wrap the [W] around the log, turning it into a torch!</span>")
+			var/obj/item/device/flashlight/flare/torch/T = new /obj/item/device/flashlight/flare/torch(user.loc)
+			usr.unEquip(W)
+			usr.put_in_active_hand(T)
+			del(leaf)
+			del(src)
+			return
+		else
+			usr << "\red You must dry this first."
 
 /obj/item/weapon/grown/sunflower // FLOWER POWER!
 	name = "sunflower"
@@ -61,9 +90,8 @@
 	icon_state = "sunflower"
 	damtype = "fire"
 	force = 0
-	flags = TABLEPASS
 	slot_flags = SLOT_HEAD
-	throwforce = 1
+	throwforce = 0
 	w_class = 1.0
 	throw_speed = 1
 	throw_range = 3
@@ -77,9 +105,8 @@
 	icon_state = "novaflower"
 	damtype = "fire"
 	force = 0
-	flags = TABLEPASS
 	slot_flags = SLOT_HEAD
-	throwforce = 1
+	throwforce = 0
 	w_class = 1.0
 	throw_speed = 1
 	throw_range = 3
@@ -100,8 +127,8 @@
 	icon_state = "nettle"
 	damtype = "fire"
 	force = 15
-	flags = TABLEPASS
-	throwforce = 1
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	throwforce = 5
 	w_class = 1.0
 	throw_speed = 1
 	throw_range = 3
@@ -122,8 +149,8 @@
 	icon_state = "deathnettle"
 	damtype = "fire"
 	force = 30
-	flags = TABLEPASS
-	throwforce = 1
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	throwforce = 15
 	w_class = 1.0
 	throw_speed = 1
 	throw_range = 3
@@ -139,6 +166,27 @@
 			force = round((5+potency/2.5), 1)
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='suicide'>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</span>"
 		return (BRUTELOSS|TOXLOSS)
 
+/obj/item/weapon/grown/bananapeel
+	name = "banana peel"
+	desc = "A peel from a banana."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "banana_peel"
+	item_state = "banana_peel"
+	w_class = 1.0
+	throwforce = 0
+	throw_speed = 3
+	throw_range = 7
+
+/obj/item/weapon/grown/corncob
+	name = "corn cob"
+	desc = "A reminder of meals gone by."
+	icon = 'icons/obj/harvest.dmi'
+	icon_state = "corncob"
+	item_state = "corncob"
+	w_class = 1.0
+	throwforce = 0
+	throw_speed = 3
+	throw_range = 7

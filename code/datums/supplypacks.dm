@@ -105,6 +105,24 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 10
 	containername = "internals crate"
 
+/datum/supply_packs/emergency/firefighting
+	name = "Firefighting Crate"
+	contains = list(/obj/item/clothing/suit/fire/firefighter,
+					/obj/item/clothing/suit/fire/firefighter,
+					/obj/item/clothing/mask/gas,
+					/obj/item/clothing/mask/gas,
+					/obj/item/device/flashlight,
+					/obj/item/device/flashlight,
+					/obj/item/weapon/tank/oxygen/red,
+					/obj/item/weapon/tank/oxygen/red,
+					/obj/item/weapon/extinguisher,
+					/obj/item/weapon/extinguisher,
+					/obj/item/clothing/head/hardhat/red,
+					/obj/item/clothing/head/hardhat/red)
+	cost = 10
+	containertype = /obj/structure/closet/crate
+	containername = "firefighting crate"
+
 /datum/supply_packs/emergency/weedcontrol
 	name = "Weed Control Crate"
 	contains = list(/obj/item/weapon/scythe,
@@ -365,9 +383,9 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/engineering/power
 	name = "Powercell crate"
-	contains = list(/obj/item/weapon/cell/high,		//Changed to an extra high powercell because normal cells are useless
-					/obj/item/weapon/cell/high,
-					/obj/item/weapon/cell/high)
+	contains = list(/obj/item/weapon/stock_parts/cell/high,		//Changed to an extra high powercell because normal cells are useless
+					/obj/item/weapon/stock_parts/cell/high,
+					/obj/item/weapon/stock_parts/cell/high)
 	cost = 10
 	containername = "electrical maintenance crate"
 
@@ -558,8 +576,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/device/assembly/prox_sensor,
 					/obj/item/weapon/storage/toolbox/electrical,
 					/obj/item/weapon/storage/box/flashes,
-					/obj/item/weapon/cell/high,
-					/obj/item/weapon/cell/high)
+					/obj/item/weapon/stock_parts/cell/high,
+					/obj/item/weapon/stock_parts/cell/high)
 	cost = 10
 	containertype = /obj/structure/closet/crate/secure
 	containername = "robotics assembly crate"
@@ -684,11 +702,13 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 50
 	containertype = /obj/structure/closet/critter/corgi
 	containername = "corgi crate"
+
 /datum/supply_packs/organic/cat
 	name = "Cat crate"
-	cost = 40
+	cost = 50 //Cats are worth as much as corgis.
 	containertype = /obj/structure/closet/critter/cat
 	containername = "cat crate"
+
 /datum/supply_packs/organic/pug
 	name = "Pug crate"
 	cost = 50
@@ -747,8 +767,12 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 /datum/supply_packs/organic/vending
 	name = "Bartending Supply Crate"
 	contains = list(/obj/item/weapon/vending_refill/boozeomat,
+					/obj/item/weapon/vending_refill/boozeomat,
+					/obj/item/weapon/vending_refill/boozeomat,
+					/obj/item/weapon/vending_refill/coffee,
+					/obj/item/weapon/vending_refill/coffee,
 					/obj/item/weapon/vending_refill/coffee)
-	cost = 15
+	cost = 20
 	containername = "bartending supply crate"
 
 /datum/supply_packs/organic/vending/snack
@@ -762,13 +786,16 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 /datum/supply_packs/organic/vending/cola
 	name = "Softdrinks Supply Crate"
 	contains = list(/obj/item/weapon/vending_refill/cola,
+					/obj/item/weapon/vending_refill/cola,
 					/obj/item/weapon/vending_refill/cola)
 	cost = 15
 	containername = "softdrinks supply crate"
 
 /datum/supply_packs/organic/vending/cigarette
 	name = "Cigarette Supply Crate"
-	contains = list(/obj/item/weapon/vending_refill/cigarette)
+	contains = list(/obj/item/weapon/vending_refill/cigarette,
+					/obj/item/weapon/vending_refill/cigarette,
+					/obj/item/weapon/vending_refill/cigarette)
 	cost = 15
 	containername = "cigarette supply crate"
 
@@ -846,6 +873,24 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containertype = /obj/structure/largecrate
 	containername = "water tank crate"
 
+/datum/supply_packs/misc/lasertag
+	name = "LaserTag Crate"
+	contains =	list(/obj/item/weapon/gun/energy/laser/redtag,
+					/obj/item/weapon/gun/energy/laser/redtag,
+					/obj/item/weapon/gun/energy/laser/redtag,
+					/obj/item/weapon/gun/energy/laser/bluetag,
+					/obj/item/weapon/gun/energy/laser/bluetag,
+					/obj/item/weapon/gun/energy/laser/bluetag,
+					/obj/item/clothing/suit/redtag,
+					/obj/item/clothing/suit/redtag,
+					/obj/item/clothing/suit/redtag,
+					/obj/item/clothing/suit/bluetag,
+					/obj/item/clothing/suit/bluetag,
+					/obj/item/clothing/suit/bluetag,
+					/obj/item/clothing/head/helmet/redtaghelm,
+					/obj/item/clothing/head/helmet/bluetaghelm)
+	cost = 15
+	containername = "LaserTag Crate"
 
 ///////////// Paper Work
 
@@ -994,3 +1039,34 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/vending_refill/autodrobe)
 	cost = 15
 	containername = "autodrobe supply crate"
+
+/datum/supply_packs/misc/formalwear //This is a very classy crate.
+	name = "Formal-wear crate"
+	contains = list(/obj/item/clothing/under/blacktango,
+					/obj/item/clothing/under/assistantformal,
+					/obj/item/clothing/under/assistantformal,
+					/obj/item/clothing/under/lawyer/bluesuit,
+					/obj/item/clothing/suit/lawyer/bluejacket,
+					/obj/item/clothing/under/lawyer/purpsuit,
+					/obj/item/clothing/suit/lawyer/purpjacket,
+					/obj/item/clothing/under/lawyer/blacksuit,
+					/obj/item/clothing/suit/lawyer/blackjacket,
+					/obj/item/clothing/tie/waistcoat,
+					/obj/item/clothing/tie/blue,
+					/obj/item/clothing/tie/red,
+					/obj/item/clothing/tie/black,
+					/obj/item/clothing/head/bowler,
+					/obj/item/clothing/head/fedora,
+					/obj/item/clothing/head/flatcap,
+					/obj/item/clothing/head/beret,
+					/obj/item/clothing/head/that,
+					/obj/item/clothing/shoes/laceup,
+					/obj/item/clothing/shoes/laceup,
+					/obj/item/clothing/shoes/laceup,
+					/obj/item/clothing/under/suit_jacket/charcoal,
+					/obj/item/clothing/under/suit_jacket/navy,
+					/obj/item/clothing/under/suit_jacket/burgundy,
+					/obj/item/clothing/under/suit_jacket/checkered,
+					/obj/item/clothing/under/suit_jacket/tan)
+	cost = 30 //Lots of very expensive items. You gotta pay up to look good!
+	containername = "formal-wear crate"

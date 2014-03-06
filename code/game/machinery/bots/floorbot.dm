@@ -9,7 +9,6 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = 3.0
-	flags = TABLEPASS
 	var/created_name = "Floorbot"
 
 /obj/item/weapon/toolbox_tiles_sensor
@@ -22,7 +21,6 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = 3.0
-	flags = TABLEPASS
 	var/created_name = "Floorbot"
 
 //Floorbot
@@ -165,7 +163,7 @@
 			src.updateUsrDialog()
 
 /obj/machinery/bot/floorbot/process()
-	set background = 1
+	set background = BACKGROUND_ENABLED
 
 	if(!src.on)
 		return
@@ -406,7 +404,7 @@
 	var/obj/item/weapon/toolbox_tiles/B = new /obj/item/weapon/toolbox_tiles
 	user.put_in_hands(B)
 	user << "<span class='notice'>You add the tiles into the empty toolbox. They protrude from the top.</span>"
-	user.drop_from_inventory(src)
+	user.unEquip(src, 1)
 	del(src)
 
 /obj/item/weapon/toolbox_tiles/attackby(var/obj/item/W, mob/user as mob)
@@ -417,7 +415,7 @@
 		B.created_name = src.created_name
 		user.put_in_hands(B)
 		user << "<span class='notice'>You add the sensor to the toolbox and tiles!</span>"
-		user.drop_from_inventory(src)
+		user.unEquip(src, 1)
 		del(src)
 
 	else if (istype(W, /obj/item/weapon/pen))
@@ -437,7 +435,7 @@
 		var/obj/machinery/bot/floorbot/A = new /obj/machinery/bot/floorbot(T)
 		A.name = src.created_name
 		user << "<span class='notice'>You add the robot arm to the odd looking toolbox assembly! Boop beep!</span>"
-		user.drop_from_inventory(src)
+		user.unEquip(src, 1)
 		del(src)
 	else if (istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "Enter new robot name", src.name, src.created_name)

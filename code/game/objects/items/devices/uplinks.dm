@@ -6,18 +6,28 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 
 */
 
+var/list/world_uplinks = list()
+
 /obj/item/device/uplink
 	var/welcome 					// Welcoming menu message
 	var/uses 						// Numbers of crystals
 	// List of items not to shove in their hands.
-	var/list/purchase_log = list()
+	var/purchase_log = ""
 	var/show_description = null
 	var/active = 0
 
+	var/uplink_owner = null//text-only
+	var/used_TC = 0
+
 /obj/item/device/uplink/New()
 	..()
+	world_uplinks+=src
 	welcome = ticker.mode.uplink_welcome
 	uses = ticker.mode.uplink_uses
+
+/obj/item/device/uplink/Del()
+	world_uplinks-=src
+	..()
 
 //Let's build a menu!
 /obj/item/device/uplink/proc/generate_menu()
@@ -85,7 +95,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	if (href_list["buy_item"])
 
 		var/item = href_list["buy_item"]
-		var/list/split = stringsplit(item, ":") // throw away variable
+		var/list/split = text2list(item, ":") // throw away variable
 
 		if(split.len == 2)
 			// Collect category and number
@@ -125,6 +135,8 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	desc = "There is something wrong if you're examining this."
 
 /obj/item/device/uplink/hidden/Topic(href, href_list)
+	if(usr.stat || usr.restrained() || usr.paralysis || usr.stunned || usr.weakened)
+		return 0		// To stop people using their uplink when they shouldn't be able to
 	..()
 	if(href_list["lock"])
 		toggle()
@@ -161,6 +173,16 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			src.hidden_uplink.trigger(user)
 			return 1
 	return 0
+//Refund proc for the borg teleporter (later I'll make a general refund proc if there is demand for it)
+/obj/item/device/radio/uplink/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/antag_spawner/borg_tele))
+		var/obj/item/weapon/antag_spawner/borg_tele/S = W
+		if(!S.used)
+			hidden_uplink.uses += S.TC_cost
+			del(S)
+			user << "<span class='notice'>Teleporter refunded.</span>"
+		else
+			user << "<span class='notice'>This teleporter is already used.</span>"
 
 // PRESET UPLINKS
 // A collection of preset uplinks.

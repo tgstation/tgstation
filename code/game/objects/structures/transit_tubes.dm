@@ -24,15 +24,23 @@
 // Mappers: use "Generate Instances from Directions" for this
 //  one.
 /obj/structure/transit_tube/station
+	name = "station tube station"
 	icon = 'icons/obj/pipes/transit_tube_station.dmi'
 	icon_state = "closed"
 	exit_delay = 2
 	enter_delay = 3
 	var/pod_moving = 0
 	var/automatic_launch_time = 100
+	var/cooldown_delay = 30
+	var/launch_cooldown = 0
+	var/reverse_launch = 0
 
 	var/const/OPEN_DURATION = 6
 	var/const/CLOSE_DURATION = 6
+
+// Stations which will send the tube in the opposite direction after their stop.
+/obj/structure/transit_tube/station/reverse
+	reverse_launch = 1
 
 
 
@@ -121,9 +129,33 @@ obj/structure/ex_act(severity)
 					open_animation()
 
 				else if(icon_state == "open")
-					close_animation()
+					if(pod.contents.len && user.loc != pod)
+						user.visible_message("<span class='warning'>[user] starts emptying [pod]'s contents onto the floor!</span>")
+						if(do_after(user, 40)) //So it doesn't default to close_animation() on fail
+							if(pod.loc == loc)
+								for(var/atom/movable/AM in pod)
+									AM.loc = get_turf(user)
+									if(ismob(AM))
+										var/mob/M = AM
+										M.Weaken(5)
+
+					else
+						close_animation()
+			break
 
 
+/obj/structure/transit_tube/station/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/weapon/grab) && icon_state == "open")
+		var/obj/item/weapon/grab/G = W
+		if(ismob(G.affecting) && G.state >= GRAB_AGGRESSIVE)
+			var/mob/GM = G.affecting
+			for(var/obj/structure/transit_tube_pod/pod in loc)
+				pod.visible_message("<span class='warning'>[user] starts putting [GM] into the [pod]!</span>")
+				if(do_after(user, 60) && GM && G && G.affecting == GM)
+					GM.Weaken(5)
+					src.Bumped(GM)
+					del(G)
+				break
 
 /obj/structure/transit_tube/station/proc/open_animation()
 	if(icon_state == "closed")
@@ -145,13 +177,13 @@ obj/structure/ex_act(severity)
 
 /obj/structure/transit_tube/station/proc/launch_pod()
 	for(var/obj/structure/transit_tube_pod/pod in loc)
-		if(!pod.moving && pod.dir in directions())
+		if(!pod.moving && turn(pod.dir, (reverse_launch ? 180 : 0)) in directions())
 			spawn(5)
 				pod_moving = 1
 				close_animation()
 				sleep(CLOSE_DURATION + 2)
-				if(icon_state == "closed" && pod)
-					pod.follow_tube()
+				if(icon_state == "closed" && pod && launch_cooldown < world.time)
+					pod.follow_tube(reverse_launch)
 
 				pod_moving = 0
 
@@ -179,6 +211,7 @@ obj/structure/ex_act(severity)
 /obj/structure/transit_tube/station/pod_stopped(obj/structure/transit_tube_pod/pod, from_dir)
 	pod_moving = 1
 	spawn(5)
+		launch_cooldown = world.time + min(cooldown_delay, automatic_launch_time)
 		open_animation()
 		sleep(OPEN_DURATION + 2)
 		pod_moving = 0
@@ -260,7 +293,7 @@ obj/structure/ex_act(severity)
 
 
 
-/obj/structure/transit_tube_pod/proc/follow_tube()
+/obj/structure/transit_tube_pod/proc/follow_tube(var/reverse_launch)
 	if(moving)
 		return
 
@@ -272,6 +305,9 @@ obj/structure/ex_act(severity)
 		var/next_loc
 		var/last_delay = 0
 		var/exit_delay
+
+		if(reverse_launch)
+			dir = turn(dir, 180) // Back it up
 
 		for(var/obj/structure/transit_tube/tube in loc)
 			if(tube.has_exit(dir))
@@ -393,6 +429,7 @@ obj/structure/ex_act(severity)
 		if(!(locate(/obj/structure/transit_tube) in loc))
 			mob.loc = loc
 			mob.client.Move(get_step(loc, direction), direction)
+			mob.reset_view(null)
 
 			//if(moving && istype(loc, /turf/space))
 				// Todo: If you get out of a moving pod in space, you should move as well.
@@ -406,6 +443,7 @@ obj/structure/ex_act(severity)
 							if(station.icon_state == "open")
 								mob.loc = loc
 								mob.client.Move(get_step(loc, direction), direction)
+								mob.reset_view(null)
 
 							else
 								station.open_animation()
@@ -420,7 +458,6 @@ obj/structure/ex_act(severity)
 					if(tube.has_exit(direction))
 						dir = direction
 						return
-
 
 
 // Parse the icon_state into a list of directions.
@@ -550,7 +587,7 @@ obj/structure/ex_act(severity)
 	if(text in direction_table)
 		return direction_table[text]
 
-	var/list/split_text = stringsplit(text, "-")
+	var/list/split_text = text2list(text, "-")
 
 	// If the first token is D, the icon_state represents
 	//  a purely decorative tube, and doesn't actually

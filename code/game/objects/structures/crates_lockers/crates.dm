@@ -10,7 +10,6 @@
 	icon_closed = "crate"
 	req_access = null
 	opened = 0
-	flags = FPRINT
 //	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	//???
 	var/rigged = 0
 	var/sound_effect_open = 'sound/machines/click.ogg'
@@ -195,11 +194,11 @@
 		new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
 		new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
 		new /obj/item/weapon/minihoe(src)
-//		new /obj/item/weapon/weedspray(src)
-//		new /obj/item/weapon/weedspray(src)
-//		new /obj/item/weapon/pestspray(src)
-//		new /obj/item/weapon/pestspray(src)
-//		new /obj/item/weapon/pestspray(src)
+//		new /obj/item/weapon/reagent_containers/spray/weedspray(src)
+//		new /obj/item/weapon/reagent_containers/spray/weedspray(src)
+//		new /obj/item/weapon/reagent_containers/spray/pestspray(src)
+//		new /obj/item/weapon/reagent_containers/spray/pestspray(src)
+//		new /obj/item/weapon/reagent_containers/spray/pestspray(src)
 
 
 /obj/structure/closet/crate/secure/New()
@@ -331,7 +330,7 @@
 			W.loc = src.loc
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
-	else if(istype(W, /obj/item/weapon/cable_coil))
+	else if(istype(W, /obj/item/stack/cable_coil))
 		if(rigged)
 			user << "<span class='notice'>[src] is already rigged!</span>"
 			return
@@ -378,23 +377,3 @@
 			src.req_access += pick(get_all_accesses())
 	..()
 
-
-/obj/structure/closet/crate/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			for(var/obj/O in src.contents)
-				del(O)
-			del(src)
-			return
-		if(2.0)
-			for(var/obj/O in src.contents)
-				if(prob(50))
-					del(O)
-			del(src)
-			return
-		if(3.0)
-			if (prob(50))
-				del(src)
-			return
-		else
-	return

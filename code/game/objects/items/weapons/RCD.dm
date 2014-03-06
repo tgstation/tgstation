@@ -12,10 +12,10 @@ RCD
 	opacity = 0
 	density = 0
 	anchored = 0.0
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	force = 10.0
 	throwforce = 10.0
-	throw_speed = 1
+	throw_speed = 3
 	throw_range = 5
 	w_class = 3.0
 	m_amt = 50000

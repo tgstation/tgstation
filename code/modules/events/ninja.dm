@@ -100,8 +100,7 @@
 						Mind.objectives += O
 
 					if(2)	//steal
-						var/datum/objective/steal/O = new /datum/objective/steal()
-						O.set_target(pick(O.possible_items_special))
+						var/datum/objective/steal/special/O = new /datum/objective/steal/special()
 						O.owner = Mind
 						Mind.objectives += O
 
@@ -344,7 +343,7 @@ ________________________________________________________________________________
 
 /proc/create_space_ninja(spawn_loc)
 	var/mob/living/carbon/human/new_ninja = new(spawn_loc)
-
+	if(prob(50)) new_ninja.gender = "female"
 	var/datum/preferences/A = new()//Randomize appearance for the ninja.
 	A.real_name = "[pick(ninja_titles)] [pick(ninja_names)]"
 	A.copy_to(new_ninja)
@@ -377,6 +376,10 @@ ________________________________________________________________________________
 	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_l_store)
 	equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen(src), slot_s_store)
 	equip_to_slot_or_del(new /obj/item/weapon/tank/jetpack/carbondioxide(src), slot_back)
+
+	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(src)
+	E.imp_in = src
+	E.implanted = 1
 	return 1
 
 //=======//HELPER PROCS//=======//
@@ -413,33 +416,33 @@ ________________________________________________________________________________
 			return 0
 
 		affecting = U
-		canremove = 0
+		flags |= NODROP //colons make me go all |=
 		slowdown = 0
 		n_hood = U:head
-		n_hood.canremove=0
+		n_hood.flags |= NODROP
 		n_shoes = U:shoes
-		n_shoes.canremove=0
+		n_shoes.flags |= NODROP
 		n_shoes.slowdown--
 		n_gloves = U:gloves
-		n_gloves.canremove=0
+		n_gloves.flags |= NODROP
 
 	return 1
 
 //This proc allows the suit to be taken off.
 /obj/item/clothing/suit/space/space_ninja/proc/unlock_suit()
 	affecting = null
-	canremove = 1
+	flags &= ~NODROP
 	slowdown = 1
 	icon_state = "s-ninja"
 	if(n_hood)//Should be attached, might not be attached.
-		n_hood.canremove=1
+		n_hood.flags &= ~NODROP
 	if(n_shoes)
-		n_shoes.canremove=1
+		n_shoes.flags &= ~NODROP
 		n_shoes.slowdown++
 	if(n_gloves)
 		n_gloves.icon_state = "s-ninja"
 		n_gloves.item_state = "s-ninja"
-		n_gloves.canremove=1
+		n_gloves.flags &= ~NODROP
 		n_gloves.candrain=0
 		n_gloves.draining=0
 
@@ -1370,7 +1373,7 @@ ________________________________________________________________________________
 	reagents.my_atom = src
 	for(var/reagent_id in reagent_list)
 		reagent_id == "radium" ? reagents.add_reagent(reagent_id, r_maxamount+(a_boost*a_transfer)) : reagents.add_reagent(reagent_id, r_maxamount)//It will take into account radium used for adrenaline boosting.
-	cell = new/obj/item/weapon/cell/high//The suit should *always* have a battery because so many things rely on it.
+	cell = new/obj/item/weapon/stock_parts/cell/high//The suit should *always* have a battery because so many things rely on it.
 	cell.charge = 9000//Starting charge should not be higher than maximum charge. It leads to problems with recharging.
 
 /obj/item/clothing/suit/space/space_ninja/Del()
@@ -1447,7 +1450,7 @@ ________________________________________________________________________________
 //=======//PROCESS PROCS//=======//
 
 /obj/item/clothing/suit/space/space_ninja/proc/ntick(mob/living/carbon/human/U = affecting)
-	set background = 1
+	set background = BACKGROUND_ENABLED
 
 	//Runs in the background while the suit is initialized.
 	spawn while(cell.charge>=0)
@@ -2071,7 +2074,7 @@ ________________________________________________________________________________
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_process()
-	set background = 1
+	set background = BACKGROUND_ENABLED
 
 	spawn while(hologram&&s_initialized&&AI)//Suit on and there is an AI present.
 		if(!s_initialized||get_dist(affecting,hologram.loc)>3)//Once suit is de-initialized or hologram reaches out of bounds.
@@ -2156,14 +2159,14 @@ ________________________________________________________________________________
 
 			U << "Replenished a total of [total_reagent_transfer ? total_reagent_transfer : "zero"] chemical units."//Let the player know how much total volume was added.
 			return
-		else if(istype(I, /obj/item/weapon/cell))
+		else if(istype(I, /obj/item/weapon/stock_parts/cell))
 			if(I:maxcharge>cell.maxcharge&&n_gloves&&n_gloves.candrain)
 				U << "\blue Higher maximum capacity detected.\nUpgrading..."
 				if (n_gloves&&n_gloves.candrain&&do_after(U,s_delay))
 					U.drop_item()
 					I.loc = src
 					I:charge = min(I:charge+cell.charge, I:maxcharge)
-					var/obj/item/weapon/cell/old_cell = cell
+					var/obj/item/weapon/stock_parts/cell/old_cell = cell
 					old_cell.charge = 0
 					U.put_in_hands(old_cell)
 					old_cell.add_fingerprint(U)
@@ -2203,7 +2206,7 @@ ________________________________________________________________________________
 		spawn(0)
 			anim(U.loc,U,'icons/mob/mob.dmi',,"cloak",,U.dir)
 		s_active=!s_active
-		U.update_icons()	//update their icons
+		U.alpha = 0
 		U << "\blue You are now invisible to normal detection."
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] vanishes into thin air!",1)
@@ -2215,7 +2218,7 @@ ________________________________________________________________________________
 		spawn(0)
 			anim(U.loc,U,'icons/mob/mob.dmi',,"uncloak",,U.dir)
 		s_active=!s_active
-		U.update_icons()	//update their icons
+		U.alpha = 255
 		U << "\blue You are now visible."
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] appears from thin air!",1)
@@ -2335,7 +2338,7 @@ ________________________________________________________________________________
 				U << "\red This SMES cell has run dry of power. You must find another source."
 
 		if("CELL")
-			var/obj/item/weapon/cell/A = target
+			var/obj/item/weapon/stock_parts/cell/A = target
 			if(A.charge)
 				if (G.candrain&&do_after(U,30))
 					U << "\blue Gained <B>[A.charge]</B> energy from the cell."
@@ -2504,7 +2507,7 @@ ________________________________________________________________________________
 /obj/item/clothing/gloves/space_ninja/examine()
 	set src in view()
 	..()
-	if(!canremove)
+	if(flags & NODROP)
 		var/mob/living/carbon/human/U = loc
 		U << "The energy drain mechanism is: <B>[candrain?"active":"inactive"]</B>."
 
@@ -2544,7 +2547,7 @@ ________________________________________________________________________________
 					U.client.images += image(tempHud,target,"hudninja")
 				else//If we don't know what role they have but they have one.
 					U.client.images += image(tempHud,target,"hudunknown1")
-		else//If the silicon mob has no law datum, no inherent laws, or a law zero, add them to the hud.
+		else if(issilicon(target))//If the silicon mob has no law datum, no inherent laws, or a law zero, add them to the hud.
 			var/mob/living/silicon/silicon_target = target
 			if(!silicon_target.laws||(silicon_target.laws&&(silicon_target.laws.zeroth||!silicon_target.laws.inherent.len)))
 				if(isrobot(silicon_target))//Different icons for robutts and AI.
@@ -2687,7 +2690,7 @@ It is possible to destroy the net by the occupant or someone else.
 				if(istype(M,/mob/living/carbon/human))
 					if(W==M:w_uniform)	continue//So all they're left with are shoes and uniform.
 					if(W==M:shoes)	continue
-				M.drop_from_inventory(W)
+				M.unEquip(W)
 
 			spawn(0)
 				playsound(M.loc, 'sound/effects/sparks4.ogg', 50, 1)

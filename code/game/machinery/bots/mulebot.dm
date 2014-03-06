@@ -48,7 +48,7 @@ var/global/mulebot_count = 0
 	var/auto_return = 1	// true if auto return to home beacon after unload
 	var/auto_pickup = 1 // true if auto-pickup at beacon
 
-	var/obj/item/weapon/cell/cell
+	var/obj/item/weapon/stock_parts/cell/cell
 	var/datum/wires/mulebot/wires = null
 						// the installed power cell
 
@@ -105,8 +105,8 @@ var/global/mulebot_count = 0
 		if(toggle_lock(user))
 			user << "\blue Controls [(locked ? "locked" : "unlocked")]."
 
-	else if(istype(I,/obj/item/weapon/cell) && open && !cell)
-		var/obj/item/weapon/cell/C = I
+	else if(istype(I,/obj/item/weapon/stock_parts/cell) && open && !cell)
+		var/obj/item/weapon/stock_parts/cell/C = I
 		user.drop_item()
 		C.loc = src
 		cell = C
@@ -135,6 +135,9 @@ var/global/mulebot_count = 0
 			)
 		else
 			user << "\blue [src] does not need a repair!"
+	else if(istype(I, /obj/item/device/multitool) || istype(I, /obj/item/weapon/wirecutters))
+		if(open)
+			attack_hand(usr)
 	else if(load && ismob(load))  // chance to knock off rider
 		if(prob(1+I.force * 2))
 			unload(0)
@@ -290,7 +293,7 @@ var/global/mulebot_count = 0
 
 			if("cellinsert")
 				if(open && !cell)
-					var/obj/item/weapon/cell/C = usr.get_active_hand()
+					var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
 					if(istype(C))
 						usr.drop_item()
 						cell = C
@@ -893,7 +896,7 @@ var/global/mulebot_count = 0
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/rods(Tsec)
-	new /obj/item/weapon/cable_coil/cut(Tsec)
+	new /obj/item/stack/cable_coil/cut(Tsec)
 	if (cell)
 		cell.loc = Tsec
 		cell.update_icon()

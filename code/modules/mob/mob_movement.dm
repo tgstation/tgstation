@@ -143,7 +143,7 @@
 /client/Move(n, direct)
 	if(!mob)
 		return 0
-	if(mob.monkeyizing)
+	if(mob.notransform)
 		return 0	//This is sota the goto stop mobs from moving var
 	if(mob.control_object)
 		return Move_object(direct)
@@ -200,9 +200,9 @@
 			if("run")
 				if(mob.drowsyness > 0)
 					move_delay += 6
-				move_delay += 1 + config.run_speed
+				move_delay += config.run_speed
 			if("walk")
-				move_delay += 7 + config.walk_speed
+				move_delay += config.walk_speed
 		move_delay += mob.movement_delay()
 
 		if(config.Tickcomp)
@@ -442,4 +442,7 @@
 			M.start_pulling(t)
 	else
 		step(pulling, get_dir(pulling.loc, A))
+	return
+
+/mob/proc/slip(var/s_amount, var/w_amount, var/obj/O, var/lube)
 	return

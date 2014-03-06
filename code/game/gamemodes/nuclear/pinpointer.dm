@@ -2,12 +2,12 @@
 	name = "pinpointer"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "pinoff"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	w_class = 2.0
 	item_state = "electronic"
-	throw_speed = 4
-	throw_range = 20
+	throw_speed = 3
+	throw_range = 7
 	m_amt = 500
 	var/obj/item/weapon/disk/nuclear/the_disk = null
 	var/active = 0
@@ -123,12 +123,10 @@
 			mode = 2
 			switch(alert("Search for item signature or DNA fragment?" , "Signature Mode Select" , "" , "Item" , "DNA"))
 				if("Item")
-					var/datum/objective/steal/itemlist
-					itemlist = itemlist // To supress a 'variable defined but not used' error.
-					var/targetitem = input("Select item to search for.", "Item Mode Select","") as null|anything in itemlist.possible_items
+					var/targetitem = input("Select item to search for.", "Item Mode Select","") as null|anything in possible_items
 					if(!targetitem)
 						return
-					target=locate(itemlist.possible_items[targetitem])
+					target=locate(possible_items[targetitem])
 					if(!target)
 						usr << "Failed to locate [targetitem]!"
 						return

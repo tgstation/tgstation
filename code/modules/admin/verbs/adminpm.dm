@@ -39,7 +39,7 @@
 	if(prefs.muted & MUTE_ADMINHELP)
 		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
 		return
-	
+
 	var/client/C
 	if(istext(whom))
 		C = directory[whom]
@@ -52,7 +52,7 @@
 
 	//get message text, limit it's length.and clean/escape html
 	if(!msg)
-		msg = input(src,"Message:", "Private message to [C.key]") as text|null
+		msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as text|null
 
 		if(!msg)	return
 		if(!C)

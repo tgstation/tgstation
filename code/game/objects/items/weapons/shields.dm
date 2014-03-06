@@ -6,11 +6,10 @@
 	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "riot"
-	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BACK
 	force = 5.0
 	throwforce = 5.0
-	throw_speed = 1
+	throw_speed = 2
 	throw_range = 4
 	w_class = 4.0
 	g_amt = 7500
@@ -30,20 +29,21 @@
 				cooldown = world.time
 		else
 			..()
+
 /obj/item/weapon/shield/riot/roman
 	name = "roman shield"
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
 	icon_state = "roman_shield"
+	item_state = "roman_shield"
 
 /obj/item/weapon/shield/energy
 	name = "energy combat shield"
 	desc = "A shield capable of stopping most projectile and melee attacks. Energy projectiles are reflected. It can be retracted, expanded, and stored anywhere."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "eshield0" // eshield1 for expanded
-	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 3.0
 	throwforce = 5.0
-	throw_speed = 1
+	throw_speed = 2
 	throw_range = 4
 	w_class = 1
 	origin_tech = "materials=4;magnets=3;syndicate=4"
@@ -66,50 +66,14 @@
 		force = 10
 		icon_state = "eshield[active]"
 		w_class = 4
-		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
+		playsound(user, 'sound/weapons/saberon.ogg', 35, 1)
 		user << "<span class='notice'>[src] is now active.</span>"
 		reflect_chance = 40
 	else
 		force = 3
 		icon_state = "eshield[active]"
 		w_class = 1
-		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
+		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)
 		user << "<span class='notice'>[src] can now be concealed.</span>"
 		reflect_chance = 0
 	add_fingerprint(user)
-
-
-
-/obj/item/weapon/cloaking_device
-	name = "cloaking device"
-	desc = "Use this to become invisible to the human eyesocket."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "shield0"
-	var/active = 0.0
-	flags = FPRINT | TABLEPASS| CONDUCT
-	item_state = "electronic"
-	throwforce = 10.0
-	throw_speed = 2
-	throw_range = 10
-	w_class = 2.0
-	origin_tech = "magnets=3;syndicate=4"
-
-
-/obj/item/weapon/cloaking_device/attack_self(mob/user as mob)
-	src.active = !( src.active )
-	if (src.active)
-		user << "\blue The cloaking device is now active."
-		src.icon_state = "shield1"
-	else
-		user << "\blue The cloaking device is now inactive."
-		src.icon_state = "shield0"
-	src.add_fingerprint(user)
-	user.update_icons()
-	return
-
-/obj/item/weapon/cloaking_device/emp_act(severity)
-	active = 0
-	icon_state = "shield0"
-	if(ismob(loc))
-		loc:update_icons()
-	..()

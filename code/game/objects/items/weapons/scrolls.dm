@@ -4,17 +4,16 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
 	var/uses = 4.0
-	flags = FPRINT | TABLEPASS
 	w_class = 2.0
 	item_state = "paper"
-	throw_speed = 4
-	throw_range = 20
+	throw_speed = 3
+	throw_range = 7
 	origin_tech = "bluespace=4"
 
 /obj/item/weapon/teleportation_scroll/apprentice
 	name = "lesser scroll of teleportation"
 	uses = 1
-	origin_tech = "bluespace 2"
+	origin_tech = "bluespace=2"
 
 
 
@@ -53,7 +52,7 @@
 	A = input(user, "Area to jump to", "BOOYEA", A) in teleportlocs
 	var/area/thearea = teleportlocs[A]
 
-	if (!user || user.stat || user.restrained())
+	if (!user || user.stat || user.restrained() || uses <= 0)
 		return
 	if(!((user == loc || (in_range(src, user) && istype(src.loc, /turf)))))
 		return

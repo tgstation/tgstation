@@ -1,7 +1,7 @@
 obj/structure/door_assembly
 	icon = 'icons/obj/doors/door_assembly.dmi'
 
-	name = "Airlock Assembly"
+	name = "airlock assembly"
 	icon_state = "door_as_0"
 	anchored = 0
 	density = 1
@@ -20,7 +20,7 @@ obj/structure/door_assembly
 		base_icon_state = copytext(icon_state,1,lentext(icon_state))
 
 	door_assembly_0
-		name = "Airlock Assembly"
+		name = "airlock assembly"
 		icon_state = "door_as_1"
 		airlock_type = /obj/machinery/door/airlock
 		anchored = 1
@@ -28,7 +28,7 @@ obj/structure/door_assembly
 		state = 1
 
 	door_assembly_com
-		name = "Command Airlock Assembly"
+		name = "command airlock assembly"
 		icon_state = "door_as_com1"
 		glass_base_icon_state = "door_as_gcom"
 		typetext = "command"
@@ -44,7 +44,7 @@ obj/structure/door_assembly
 			icon_state = "door_as_gcom1"
 
 	door_assembly_sec
-		name = "Security Airlock Assembly"
+		name = "security airlock assembly"
 		icon_state = "door_as_sec1"
 		glass_base_icon_state = "door_as_gsec"
 		typetext = "security"
@@ -438,8 +438,8 @@ obj/structure/door_assembly
 			src.name = "Airlock Assembly"
 			src.anchored = 0
 
-	else if(istype(W, /obj/item/weapon/cable_coil) && state == 0 && anchored )
-		var/obj/item/weapon/cable_coil/coil = W
+	else if(istype(W, /obj/item/stack/cable_coil) && state == 0 && anchored )
+		var/obj/item/stack/cable_coil/coil = W
 		user.visible_message("[user] wires the airlock assembly.", "You start to wire the airlock assembly.")
 		if(do_after(user, 40))
 			if(!src) return
@@ -455,7 +455,7 @@ obj/structure/door_assembly
 		if(do_after(user, 40))
 			if(!src) return
 			user << "\blue You've cut the wires from the airlock assembly."
-			new/obj/item/weapon/cable_coil(get_turf(user), 1)
+			new/obj/item/stack/cable_coil(get_turf(user), 1)
 			src.state = 0
 			src.name = "Secured Airlock Assembly"
 

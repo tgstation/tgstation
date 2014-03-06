@@ -60,7 +60,7 @@
 
 	// attack by item places it in to disposal
 /obj/machinery/disposal/attackby(var/obj/item/I, var/mob/user)
-	if(stat & BROKEN || !I || !user)
+	if(stat & BROKEN || !I || !user || (I.flags & NODROP))
 		return
 
 	if(isrobot(user) && !istype(I, /obj/item/weapon/storage/bag/trash))
@@ -88,11 +88,11 @@
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-				user << "You start slicing the floorweld off the disposal unit."
+				user << "You start slicing the floorweld off \the [src]."
 
 				if(do_after(user,20))
 					if(!src || !W.isOn()) return
-					user << "You sliced the floorweld off the disposal unit."
+					user << "You slice the floorweld off \the [src]."
 					var/obj/structure/disposalconstruct/C = new (src.loc)
 					src.transfer_fingerprints_to(C)
 					C.ptype = 6 // 6 = disposal unit
@@ -106,7 +106,7 @@
 				return
 
 	if(istype(I, /obj/item/weapon/melee/energy/blade))
-		user << "You can't place that item inside the disposal unit."
+		user << "You can't place \the [I] into \the [src]."
 		return
 
 	if(istype(I, /obj/item/weapon/storage/bag/trash))
@@ -123,14 +123,14 @@
 		if(ismob(G.affecting))
 			var/mob/GM = G.affecting
 			for (var/mob/V in viewers(usr))
-				V.show_message("[usr] starts putting [GM.name] into the disposal.", 3)
+				V.show_message("[usr] starts putting [GM.name] into \the [src].", 3)
 			if(do_after(usr, 20))
 				if (GM.client)
 					GM.client.perspective = EYE_PERSPECTIVE
 					GM.client.eye = src
 				GM.loc = src
 				for (var/mob/C in viewers(src))
-					C.show_message("\red [GM.name] has been placed in the [src] by [user].", 3)
+					C.show_message("\red [GM.name] has been placed in \the [src] by [user].", 3)
 				del(G)
 		return
 
@@ -140,11 +140,11 @@
 	if(I)
 		I.loc = src
 
-	user << "You place \the [I] into the [src]."
+	user << "You place \the [I] into \the [src]."
 	for(var/mob/M in viewers(src))
 		if(M == user)
 			continue
-		M.show_message("[user.name] places \the [I] into the [src].", 3)
+		M.show_message("[user.name] places \the [I] into \the [src].", 3)
 
 	update()
 
@@ -158,22 +158,22 @@
 	var/msg
 	for (var/mob/V in viewers(usr))
 		if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-			V.show_message("[usr] starts climbing into the disposal.", 3)
+			V.show_message("[usr] starts climbing into \the [src].", 3)
 		if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
 			if(target.anchored) return
 			if(!ishuman(user) && !ismonkey(user)) return
-			V.show_message("[usr] starts stuffing [target.name] into the disposal.", 3)
+			V.show_message("[usr] starts stuffing [target.name] into \the [src].", 3)
 	if(!do_after(usr, 20))
 		return
 	if(target_loc != target.loc)
 		return
 	if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)	// if drop self, then climbed in
 											// must be awake, not stunned or whatever
-		msg = "[user.name] climbs into the [src]."
-		user << "You climb into the [src]."
+		msg = "[user.name] climbs into \the [src]."
+		user << "You climb into \the [src]."
 	else if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-		msg = "[user.name] stuffs [target.name] into the [src]!"
-		user << "You stuff [target.name] into the [src]!"
+		msg = "[user.name] stuffs [target.name] into \the [src]!"
+		user << "You stuff [target.name] into \the [src]!"
 	else
 		return
 	if (target.client)
@@ -242,6 +242,13 @@
 	*/
 	interact(user, 0)
 
+// hostile mob escape from disposals
+/obj/machinery/disposal/attack_animal(var/mob/living/simple_animal/M)
+	if(M.environment_smash)
+		visible_message("<span class='danger'>[M.name] smashes \the [src] apart!</span>")
+		del(src)
+	return
+
 // user interaction
 /obj/machinery/disposal/interact(mob/user, var/ai=0)
 
@@ -286,7 +293,7 @@
 		return
 
 	if(mode==-1 && !href_list["eject"]) // only allow ejecting if mode is -1
-		usr << "\red The disposal units power is disabled."
+		usr << "\red \The [src]'s power is disabled."
 		return
 	..()
 	usr.set_machine(src)
@@ -716,18 +723,12 @@
 
 		var/turf/target
 
-		if(T.density)		// dense ouput turf, so stop holder
-			H.active = 0
-			H.loc = src
-			return
-		if(istype(T,/turf/simulated/floor && T.intact)) //intact floor, pop the tile
+		if(istype(T, /turf/simulated/floor)) //intact floor, pop the tile
 			var/turf/simulated/floor/F = T
-			//F.health	= 100
-			F.burnt	= 1
-			F.intact	= 0
-			F.levelupdate()
-			new /obj/item/stack/tile(H)	// add to holder so it will be thrown with other stuff
-			F.icon_state = "Floor[F.burnt ? "1" : ""]"
+			if(F.floor_tile)
+				F.floor_tile.loc = H //It took me a day to figure out this was the right way to do it. ¯\_(;_;)_/¯
+			F.floor_tile = null //So it doesn't get deleted in make_plating()
+			F.make_plating()
 
 		if(direction)		// direction is specified
 			if(istype(T, /turf/space)) // if ended in space, then range is unlimited
@@ -743,8 +744,6 @@
 					spawn(1)
 						if(AM)
 							AM.throw_at(target, 100, 1)
-				H.vent_gas(T)
-				del(H)
 
 		else	// no specified direction, so throw in random direction
 
@@ -758,10 +757,8 @@
 					spawn(1)
 						if(AM)
 							AM.throw_at(target, 5, 1)
-
-				H.vent_gas(T)	// all gas vent to turf
-				del(H)
-
+		H.vent_gas(T)
+		del(H)
 		return
 
 	// call to break the pipe
@@ -1154,6 +1151,10 @@
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
 
+		if(linked)
+			user << "You need to deconstruct disposal machinery above this pipe."
+			return
+
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 			// check if anything changed over 2 seconds
@@ -1168,6 +1169,7 @@
 				user << "You must stay still while welding the pipe."
 		else
 			user << "You need more welding fuel to cut the pipe."
+
 			return
 
 	// would transfer to next pipe segment, but we are in a trunk
@@ -1288,10 +1290,10 @@
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-				user << "You start slicing the floorweld off the disposal outlet."
+				user << "You start slicing the floorweld off \the [src]."
 				if(do_after(user,20))
 					if(!src || !W.isOn()) return
-					user << "You sliced the floorweld off the disposal outlet."
+					user << "You slice the floorweld off \the [src]."
 					var/obj/structure/disposalconstruct/C = new (src.loc)
 					src.transfer_fingerprints_to(C)
 					C.ptype = 7 // 7 =  outlet

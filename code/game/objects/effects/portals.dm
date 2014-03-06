@@ -27,6 +27,8 @@
 	src.loc = loc
 	src.target = target
 	src.creator = creator
+	for(var/mob/M in src.loc)
+		src.teleport(M)
 	if(lifespan > 0)
 		spawn(lifespan)
 			del(src)

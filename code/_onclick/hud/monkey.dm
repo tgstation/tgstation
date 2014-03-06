@@ -142,18 +142,24 @@
 	lingchemdisplay.layer = 20
 	lingchemdisplay.invisibility = 101
 
+	lingstingdisplay = new /obj/screen()
+	lingstingdisplay.name = "current sting"
+	lingstingdisplay.screen_loc = ui_lingstingdisplay
+	lingstingdisplay.layer = 20
+	lingstingdisplay.invisibility = 101
+
 	mymob.blind = new /obj/screen()
 	mymob.blind.icon = 'icons/mob/screen_full.dmi'
 	mymob.blind.icon_state = "blackimageoverlay"
 	mymob.blind.name = " "
-	mymob.blind.screen_loc = "1,1"
+	mymob.blind.screen_loc = "CENTER-7,CENTER-7"
 	mymob.blind.layer = 0
 
 	mymob.flash = new /obj/screen()
 	mymob.flash.icon = ui_style
 	mymob.flash.icon_state = "blank"
 	mymob.flash.name = "flash"
-	mymob.flash.screen_loc = "1,1 to 15,15"
+	mymob.flash.screen_loc = "WEST,SOUTH to EAST,NORTH"
 	mymob.flash.layer = 17
 
 	mymob.zone_sel = new /obj/screen/zone_sel()
@@ -162,5 +168,13 @@
 
 	mymob.client.screen = null
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.pullin, mymob.blind, mymob.flash) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
+	using = new /obj/screen()
+	using.name = "resist"
+	using.icon = ui_style
+	using.icon_state = "act_resist"
+	using.screen_loc = ui_pull_resist
+	using.layer = 19
+	adding += using
+
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.pullin, mymob.blind, mymob.flash, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += adding + other

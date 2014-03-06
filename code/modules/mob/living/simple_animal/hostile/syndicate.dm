@@ -31,10 +31,8 @@
 	min_n2 = 0
 	max_n2 = 0
 	unsuitable_atoms_damage = 15
-	wall_smash = 1
 	faction = "syndicate"
 	status_flags = CANPUSH
-	idle_env_destroyer = 0
 
 /mob/living/simple_animal/hostile/syndicate/Die()
 	..()
@@ -66,9 +64,9 @@
 			if (O.damtype == HALLOSS)
 				damage = 0
 			health -= damage
-			visible_message("\red \b [src] has been attacked with [O] by [user]. ")
+			visible_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>")
 		else
-			visible_message("\red \b [src] blocks [O] with its shield! ")
+			visible_message("<span class='danger'>[src] blocks [O] with its shield!</span>")
 	else
 		usr << "\red This weapon is ineffective, it does no damage."
 		visible_message("\red [user] gently taps [src] with [O]. ")
@@ -105,6 +103,8 @@
 /mob/living/simple_animal/hostile/syndicate/ranged
 	ranged = 1
 	rapid = 1
+	retreat_distance = 5
+	minimum_distance = 5
 	icon_state = "syndicateranged"
 	icon_living = "syndicateranged"
 	casingtype = /obj/item/ammo_casing/a12mm

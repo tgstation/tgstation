@@ -1,14 +1,14 @@
 /proc/gibs(atom/location, var/list/viruses, var/datum/dna/MobDNA)
-	new /obj/effect/gibspawner/generic(get_turf(location),viruses,MobDNA)
+	new /obj/effect/gibspawner/generic(location,viruses,MobDNA)
 
 /proc/hgibs(atom/location, var/list/viruses, var/datum/dna/MobDNA)
-	new /obj/effect/gibspawner/human(get_turf(location),viruses,MobDNA)
+	new /obj/effect/gibspawner/human(location,viruses,MobDNA)
 
 /proc/xgibs(atom/location, var/list/viruses)
-	new /obj/effect/gibspawner/xeno(get_turf(location),viruses)
+	new /obj/effect/gibspawner/xeno(location,viruses)
 
 /proc/robogibs(atom/location, var/list/viruses)
-	new /obj/effect/gibspawner/robot(get_turf(location),viruses)
+	new /obj/effect/gibspawner/robot(location,viruses)
 
 /obj/effect/gibspawner
 	var/sparks = 0 //whether sparks spread on Gib()
@@ -20,8 +20,7 @@
 	New(location, var/list/viruses, var/datum/dna/MobDNA)
 		..()
 
-		if(istype(loc,/turf)) //basically if a badmin spawns it
-			Gib(loc,viruses,MobDNA)
+		Gib(loc,viruses,MobDNA)
 
 	proc/Gib(atom/location, var/list/viruses = list(), var/datum/dna/MobDNA = null)
 		if(gibtypes.len != gibamounts.len || gibamounts.len != gibdirections.len)
@@ -43,6 +42,9 @@
 				for(var/j = 1, j<= gibamounts[i], j++)
 					var/gibType = gibtypes[i]
 					gib = new gibType(location)
+					if(istype(location,/mob/living/carbon))
+						var/mob/living/carbon/digester = location
+						digester.stomach_contents += gib
 
 					if(viruses.len > 0)
 						for(var/datum/disease/D in viruses)
@@ -59,7 +61,8 @@
 					else if(istype(src, /obj/effect/gibspawner/human)) // Probably a monkey
 						gib.blood_DNA["Non-human DNA"] = "A+"
 					var/list/directions = gibdirections[i]
-					if(directions.len)
-						gib.streak(directions)
+					if(istype(loc,/turf))
+						if(directions.len)
+							gib.streak(directions)
 
 		del(src)

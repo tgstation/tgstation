@@ -36,9 +36,9 @@
 
 /mob/living/carbon/human/Life()
 	set invisibility = 0
-	set background = 1
+	set background = BACKGROUND_ENABLED
 
-	if (monkeyizing)	return
+	if (notransform)	return
 	if(!loc)			return	// Fixing a null error that occurs when the mob isn't found in the world -- TLE
 
 	..()
@@ -119,6 +119,7 @@
 	else
 		return ONE_ATMOSPHERE - pressure_difference
 
+
 /mob/living/carbon/human
 
 	proc/handle_disabilities()
@@ -130,30 +131,23 @@
 						continue
 					O.show_message(text("\red <B>[src] starts having a seizure!"), 1)
 				Paralyse(10)
-				make_jittery(1000)
+				Jitter(1000)
 		if (disabilities & COUGHING)
 			if ((prob(5) && paralysis <= 1))
 				drop_item()
-				spawn( 0 )
-					emote("cough")
-					return
+				emote("cough")
 		if (disabilities & TOURETTES)
 			if ((prob(10) && paralysis <= 1))
 				Stun(10)
-				spawn( 0 )
-					switch(rand(1, 3))
-						if(1)
-							emote("twitch")
-						if(2 to 3)
-							say("[prob(50) ? ";" : ""][pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]")
-					var/old_x = pixel_x
-					var/old_y = pixel_y
-					pixel_x += rand(-2,2)
-					pixel_y += rand(-1,1)
-					sleep(2)
-					pixel_x = old_x
-					pixel_y = old_y
-					return
+				switch(rand(1, 3))
+					if(1)
+						emote("twitch")
+					if(2 to 3)
+						say("[prob(50) ? ";" : ""][pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]")
+				var/x_offset = pixel_x + rand(-2,2) //Should probably be moved into the twitch emote at some point.
+				var/y_offset = pixel_y + rand(-1,1)
+				animate(src, pixel_x = pixel_x + x_offset, pixel_y = pixel_y + y_offset, time = 1)
+				animate(pixel_x = pixel_x - x_offset, pixel_y = pixel_y - y_offset, time = 1)
 		if (disabilities & NERVOUS)
 			if (prob(10))
 				stuttering = max(10, stuttering)
@@ -912,6 +906,50 @@
 			else if(ear_damage < 25)	//ear damage heals slowly under this threshold. otherwise you'll need earmuffs
 				ear_damage = max(ear_damage-0.05, 0)
 
+			//Dizziness
+			if(dizziness)
+				var/client/C = client
+				var/pixel_x_diff = 0
+				var/pixel_y_diff = 0
+				var/temp
+				var/saved_dizz = dizziness
+				dizziness = max(dizziness-1, 0)
+				if(C)
+					var/oldsrc = src
+					var/amplitude = dizziness*(sin(dizziness * 0.044 * world.time) + 1) / 70 // This shit is annoying at high strength
+					src = null
+					spawn(0)
+						if(C)
+							temp = amplitude * sin(0.008 * saved_dizz * world.time)
+							pixel_x_diff += temp
+							C.pixel_x += temp
+							temp = amplitude * cos(0.008 * saved_dizz * world.time)
+							pixel_y_diff += temp
+							C.pixel_y += temp
+							sleep(3)
+							if(C)
+								temp = amplitude * sin(0.008 * saved_dizz * world.time)
+								pixel_x_diff += temp
+								C.pixel_x += temp
+								temp = amplitude * cos(0.008 * saved_dizz * world.time)
+								pixel_y_diff += temp
+								C.pixel_y += temp
+							sleep(3)
+							if(C)
+								C.pixel_x -= pixel_x_diff
+								C.pixel_y -= pixel_y_diff
+					src = oldsrc
+
+			//Jitteryness
+			if(jitteriness)
+				var/amplitude = min(4, (jitteriness/100) + 1)
+				var/pixel_x_diff = rand(-amplitude, amplitude)
+				var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
+
+				animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = -1)
+				animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 2)
+				jitteriness = max(jitteriness-1, 0)
+
 			//Other
 			if(stunned)
 				AdjustStunned(-1)
@@ -946,69 +984,74 @@
 		if(stat == UNCONSCIOUS)
 			//Critical damage passage overlay
 			if(health <= config.health_threshold_crit)
-				var/image/I
+				var/image/I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage0")
+				I.blend_mode = BLEND_OVERLAY //damageoverlay is BLEND_MULTIPLY
 				switch(health)
 					if(-20 to -10)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage1")
+						I.icon_state = "passage1"
 					if(-30 to -20)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage2")
+						I.icon_state = "passage2"
 					if(-40 to -30)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage3")
+						I.icon_state = "passage3"
 					if(-50 to -40)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage4")
+						I.icon_state = "passage4"
 					if(-60 to -50)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage5")
+						I.icon_state = "passage5"
 					if(-70 to -60)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage6")
+						I.icon_state = "passage6"
 					if(-80 to -70)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage7")
+						I.icon_state = "passage7"
 					if(-90 to -80)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage8")
+						I.icon_state = "passage8"
 					if(-95 to -90)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage9")
+						I.icon_state = "passage9"
 					if(-INFINITY to -95)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage10")
+						I.icon_state = "passage10"
 				damageoverlay.overlays += I
 		else
 			//Oxygen damage overlay
 			if(oxyloss)
-				var/image/I
+				var/image/I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "oxydamageoverlay0")
 				switch(oxyloss)
 					if(10 to 20)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "oxydamageoverlay1")
+						I.icon_state = "oxydamageoverlay1"
 					if(20 to 25)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "oxydamageoverlay2")
+						I.icon_state = "oxydamageoverlay2"
 					if(25 to 30)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "oxydamageoverlay3")
+						I.icon_state = "oxydamageoverlay3"
 					if(30 to 35)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "oxydamageoverlay4")
+						I.icon_state = "oxydamageoverlay4"
 					if(35 to 40)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "oxydamageoverlay5")
+						I.icon_state = "oxydamageoverlay5"
 					if(40 to 45)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "oxydamageoverlay6")
+						I.icon_state = "oxydamageoverlay6"
 					if(45 to INFINITY)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "oxydamageoverlay7")
+						I.icon_state = "oxydamageoverlay7"
 				damageoverlay.overlays += I
 
 			//Fire and Brute damage overlay (BSSR)
 			var/hurtdamage = src.getBruteLoss() + src.getFireLoss() + damageoverlaytemp
 			damageoverlaytemp = 0 // We do this so we can detect if someone hits us or not.
 			if(hurtdamage)
-				var/image/I
+				var/image/I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay0")
+				I.blend_mode = BLEND_ADD
 				switch(hurtdamage)
-					if(10 to 25)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay1")
-					if(25 to 40)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay2")
-					if(40 to 55)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay3")
-					if(55 to 70)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay4")
+					if(5 to 15)
+						I.icon_state = "brutedamageoverlay1"
+					if(15 to 30)
+						I.icon_state = "brutedamageoverlay2"
+					if(30 to 45)
+						I.icon_state = "brutedamageoverlay3"
+					if(45 to 70)
+						I.icon_state = "brutedamageoverlay4"
 					if(70 to 85)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay5")
+						I.icon_state = "brutedamageoverlay5"
 					if(85 to INFINITY)
-						I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay6")
+						I.icon_state = "brutedamageoverlay6"
+				var/image/black = image(I.icon, I.icon_state) //BLEND_ADD doesn't let us darken, so this is just to blacken the edge of the screen
+				black.color = "#170000"
 				damageoverlay.overlays += I
+				damageoverlay.overlays += black
 
 		if( stat == DEAD )
 			sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
@@ -1017,6 +1060,8 @@
 			if(healths)		healths.icon_state = "health7"	//DEAD healthmeter
 		else
 			sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
+			var/see_temp = see_invisible
+			see_invisible = SEE_INVISIBLE_LIVING
 			if(dna)
 				switch(dna.mutantrace)
 					if("lizard","slime")
@@ -1030,15 +1075,10 @@
 			if(XRAY in mutations)
 				sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 				see_in_dark = 8
-				if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
+				see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
 			if(seer)
-				var/obj/effect/rune/R = locate() in loc
-				if(R && R.word1 == wordsee && R.word2 == wordhell && R.word3 == wordjoin)
-					see_invisible = SEE_INVISIBLE_OBSERVER
-				else
-					see_invisible = SEE_INVISIBLE_LIVING
-					seer = 0
+				see_invisible = SEE_INVISIBLE_OBSERVER
 
 			if(mind && mind.changeling)
 				hud_used.lingchemdisplay.invisibility = 0
@@ -1056,54 +1096,31 @@
 								target_list += target
 						if(target_list.len)//Everything else is handled by the ninja mask proc.
 							O.assess_targets(target_list, src)
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
+						see_invisible = SEE_INVISIBLE_LIVING
 					if(1)
 						see_in_dark = 5
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
+						see_invisible = SEE_INVISIBLE_LIVING
 					if(2)
 						sight |= SEE_MOBS
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
+						see_invisible = SEE_INVISIBLE_LEVEL_TWO
 					if(3)
 						sight |= SEE_TURFS
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
+						see_invisible = SEE_INVISIBLE_LIVING
 
 			if(glasses)
-				if(istype(glasses, /obj/item/clothing/glasses/meson))
-					sight |= SEE_TURFS
-					if(!druggy)
-						see_invisible = SEE_INVISIBLE_MINIMUM
-				else if(istype(glasses, /obj/item/clothing/glasses/night))
-					see_in_dark = 5
-					if(!druggy)
-						see_invisible = SEE_INVISIBLE_MINIMUM
-				else if(istype(glasses, /obj/item/clothing/glasses/thermal))
-					sight |= SEE_MOBS
-					if(!druggy)
-						see_invisible = SEE_INVISIBLE_MINIMUM
-				else if(istype(glasses, /obj/item/clothing/glasses/material))
-					sight |= SEE_OBJS
-					if(!druggy)
-						see_invisible = SEE_INVISIBLE_MINIMUM
+				if(istype(glasses, /obj/item/clothing/glasses))
+					var/obj/item/clothing/glasses/G = glasses
+					sight |= G.vision_flags
+					see_in_dark = G.darkness_view
+					see_invisible = G.invis_view
+					if(G.hud)
+						G.process_hud(src)
 
-	/* HUD shit goes here, as long as it doesn't modify sight flags */
-	// The purpose of this is to stop xray and w/e from preventing you from using huds -- Love, Doohl
+			if(druggy)	//Override for druggy
+				see_invisible = see_temp
 
-				else if(istype(glasses, /obj/item/clothing/glasses/sunglasses))
-					see_in_dark = 1
-					if(istype(glasses, /obj/item/clothing/glasses/sunglasses/sechud))
-						var/obj/item/clothing/glasses/sunglasses/sechud/O = glasses
-						if(O.hud)		O.hud.process_hud(src)
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
-
-				else if(istype(glasses, /obj/item/clothing/glasses/hud))
-					var/obj/item/clothing/glasses/hud/O = glasses
-					O.process_hud(src)
-					if(!druggy)
-						see_invisible = SEE_INVISIBLE_LIVING
-				else
-					see_invisible = SEE_INVISIBLE_LIVING
-			else
-				see_invisible = SEE_INVISIBLE_LIVING
+			if(see_override)	//Override all
+				see_invisible = see_override
 
 			if(healths)
 				switch(hal_screwyhud)

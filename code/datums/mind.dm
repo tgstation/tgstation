@@ -48,9 +48,12 @@ datum/mind
 	var/has_been_rev = 0//Tracks if this mind has been a rev or not
 
 	var/list/cult_words = list()
+	var/list/spell_list = list() // Wizard mode & "Give Spell" badmin button.
 
 	var/datum/faction/faction 			//associated faction
 	var/datum/changeling/changeling		//changeling holder
+
+	var/miming = 0 // Mime's vow of silence
 
 	New(var/key)
 		src.key = key
@@ -783,7 +786,7 @@ datum/mind
 
 		else if (href_list["monkey"])
 			var/mob/living/L = current
-			if (L.monkeyizing)
+			if (L.notransform)
 				return
 			switch(href_list["monkey"])
 				if("healthy")
@@ -844,7 +847,7 @@ datum/mind
 
 						A.malf_picker.remove_verbs(A)
 
-						A.laws = new /datum/ai_laws/asimov
+						A.make_laws()
 						del(A.malf_picker)
 						A.show_laws()
 						A.icon_state = "ai"
@@ -861,18 +864,7 @@ datum/mind
 				if("unemag")
 					var/mob/living/silicon/robot/R = current
 					if (istype(R))
-						R.emagged = 0
-						if (R.activated(R.module.emag))
-							R.module_active = null
-						if(R.module_state_1 == R.module.emag)
-							R.module_state_1 = null
-							R.contents -= R.module.emag
-						else if(R.module_state_2 == R.module.emag)
-							R.module_state_2 = null
-							R.contents -= R.module.emag
-						else if(R.module_state_3 == R.module.emag)
-							R.module_state_3 = null
-							R.contents -= R.module.emag
+						R.SetEmagged(0)
 						message_admins("[key_name_admin(usr)] has unemag'ed [R].")
 						log_admin("[key_name(usr)] has unemag'ed [R].")
 
@@ -880,19 +872,7 @@ datum/mind
 					if (istype(current, /mob/living/silicon/ai))
 						var/mob/living/silicon/ai/ai = current
 						for (var/mob/living/silicon/robot/R in ai.connected_robots)
-							R.emagged = 0
-							if (R.module)
-								if (R.activated(R.module.emag))
-									R.module_active = null
-								if(R.module_state_1 == R.module.emag)
-									R.module_state_1 = null
-									R.contents -= R.module.emag
-								else if(R.module_state_2 == R.module.emag)
-									R.module_state_2 = null
-									R.contents -= R.module.emag
-								else if(R.module_state_3 == R.module.emag)
-									R.module_state_3 = null
-									R.contents -= R.module.emag
+							R.SetEmagged(0)
 						message_admins("[key_name_admin(usr)] has unemag'ed [ai]'s Cyborgs.")
 						log_admin("[key_name(usr)] has unemag'ed [ai]'s Cyborgs.")
 
@@ -900,7 +880,7 @@ datum/mind
 			switch(href_list["common"])
 				if("undress")
 					for(var/obj/item/W in current)
-						current.drop_from_inventory(W)
+						current.unEquip(W, 1) //The 1 forces all items to drop, since this is an admin undress.
 				if("takeuplink")
 					take_uplink()
 					memory = null//Remove any memory they may have had.

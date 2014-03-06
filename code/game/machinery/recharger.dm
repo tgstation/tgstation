@@ -25,8 +25,6 @@
 		if (istype(G, /obj/item/weapon/gun/energy/gun/nuclear) || istype(G, /obj/item/weapon/gun/energy/crossbow))
 			user << "<span class='notice'>Your gun's recharge port was removed to make room for a miniaturized reactor.</span>"
 			return
-		if (istype(G, /obj/item/weapon/gun/energy/staff))
-			return
 		user.drop_item()
 		G.loc = src
 		charging = G
@@ -82,7 +80,7 @@
 		if(istype(charging, /obj/item/weapon/melee/baton))
 			var/obj/item/weapon/melee/baton/B = charging
 			if(B.bcell)
-				if(B.bcell.give(175))
+				if(B.bcell.give(1500)) //Because otherwise it takes two minutes to fully charge due to 15k cells. - Neerti
 					icon_state = "recharger1"
 					use_power(200)
 				else

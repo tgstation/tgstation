@@ -71,9 +71,30 @@ var/global/normal_ooc_colour = "#002eb8"
 	if(!holder || check_rights_for(src, R_ADMIN))
 		if(!is_content_unlocked())	return
 
-	var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
+	var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour", prefs.ooccolor) as color|null
 	if(new_ooccolor)
 		prefs.ooccolor = sanitize_ooccolor(new_ooccolor)
 		prefs.save_preferences()
 	feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
+
+//Checks admin notice
+/client/verb/admin_notice()
+	set name = "Adminnotice"
+	set category = "Admin"
+	set desc ="Check the admin notice if it has been set"
+
+	if(admin_notice)
+		src << "\blue <b>Admin Notice:</b>\n \t [admin_notice]"
+	else
+		src << "\blue There are no admin notices at the moment."
+
+/client/verb/motd()
+	set name = "MOTD"
+	set category = "OOC"
+	set desc ="Check the Message of the Day"
+
+	if(join_motd)
+		src << "<div class=\"motd\">[join_motd]</div>"
+	else
+		src << "\blue The Message of the Day has not been set."

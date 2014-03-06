@@ -114,7 +114,7 @@ GUEST_BAN
 # FORUMURL http://justanotherday.example.com
 
 ## Wiki address
-# WIKIURL http://www.nanotrasen.com/wiki/index.php
+# WIKIURL http://wiki.ss13.eu
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
 # BANAPPEALS http://justanotherday.example.com
@@ -123,7 +123,7 @@ GUEST_BAN
 ##Toggle for having jobs load up from the .txt
 # LOAD_JOBS_FROM_TXT
 
-##Remove the # mark infront of this to forbid admins from posssessing the singularity.
+##Remove the # mark infront of this to forbid admins from possessing the singularity.
 #FORBID_SINGULO_POSSESSION
 
 ## Remove the # to show a popup 'reply to' window to every non-admin that recieves an adminPM. 

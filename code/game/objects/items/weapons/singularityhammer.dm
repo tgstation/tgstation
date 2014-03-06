@@ -1,9 +1,8 @@
-
 /obj/item/weapon/twohanded/singularityhammer
 	name = "singularity hammer"
 	desc = "The pinnacle of close combat technology, the hammer harnesses the power of a miniaturized singularity to deal crushing blows."
 	icon_state = "mjollnir0"
-	flags = FPRINT | TABLEPASS
+	flags = CONDUCT
 	slot_flags = SLOT_BACK
 	force = 5
 	force_unwielded = 5
@@ -12,7 +11,7 @@
 	throw_range = 1
 	w_class = 5
 	var/charged = 5
-	origin_tech = "combat=5, bluespace=4"
+	origin_tech = "combat=5;bluespace=4"
 
 
 
@@ -75,16 +74,16 @@
 	name = "Mjollnir"
 	desc = "A weapon worthy of a god, able to strike with the force of a lightning bolt. It crackles with barely contained energy."
 	icon_state = "mjollnir0"
-	flags = FPRINT | TABLEPASS
+	flags = CONDUCT
 	slot_flags = SLOT_BACK
 	force = 5
 	force_unwielded = 5
 	force_wielded = 20
 	throwforce = 30
-	throw_range = 10
+	throw_range = 7
 	w_class = 5
 	//var/charged = 5
-	origin_tech = "combat=5, power=5"
+	origin_tech = "combat=5;powerstorage=5"
 
 
 /*

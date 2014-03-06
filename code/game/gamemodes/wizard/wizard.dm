@@ -178,6 +178,7 @@
 		return ..()
 
 	var/wizards_alive = 0
+	var/traitors_alive = 0
 	for(var/datum/mind/wizard in wizards)
 		if(!istype(wizard.current,/mob/living/carbon))
 			continue
@@ -185,7 +186,15 @@
 			continue
 		wizards_alive++
 
-	if (wizards_alive)
+	if(!wizards_alive)
+		for(var/datum/mind/traitor in traitors)
+			if(!istype(traitor.current,/mob/living/carbon))
+				continue
+			if(traitor.current.stat==2)
+				continue
+			traitors_alive++
+
+	if (wizards_alive || traitors_alive)
 		return ..()
 	else
 		finished = 1
@@ -237,12 +246,12 @@
 			else
 				text += "<br><font color='red'><B>The wizard has failed!</B></font>"
 				feedback_add_details("wizard_success","FAIL")
-			if(wizard.current && wizard.current.spell_list)
+			if(wizard.spell_list.len>0)
 				text += "<br><B>[wizard.name] used the following spells: </B>"
 				var/i = 1
-				for(var/obj/effect/proc_holder/spell/S in wizard.current.spell_list)
+				for(var/obj/effect/proc_holder/spell/S in wizard.spell_list)
 					text += "[S.name]"
-					if(wizard.current.spell_list.len > i)
+					if(wizard.spell_list.len > i)
 						text += ", "
 					i++
 			text += "<br>"
@@ -254,7 +263,7 @@
 
 //To batch-remove wizard spells. Linked to mind.dm.
 /mob/proc/spellremove(var/mob/M as mob)
-	for(var/obj/effect/proc_holder/spell/spell_to_remove in src.spell_list)
+	for(var/obj/effect/proc_holder/spell/spell_to_remove in src.mind.spell_list)
 		del(spell_to_remove)
 
 /*Checks if the wizard can cast spells.

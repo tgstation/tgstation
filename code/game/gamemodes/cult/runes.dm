@@ -226,12 +226,18 @@ var/list/sacrificed = list()
 		seer()
 			if(usr.loc==src.loc)
 				usr.say("Rash'tla sektath mal[pick("'","`")]zua. Zasan therium vivira. Itonis al'ra matum!")
-				if(usr.see_invisible!=0 && usr.see_invisible!=15)
-					usr << "\red The world beyond flashes your eyes but disappears quickly, as if something is disrupting your vision."
+				var/mob/living/carbon/human/user = usr
+				if(user.see_invisible!=25  || (istype(user) && user.glasses))	//check for non humans
+					user << "\red The world beyond flashes your eyes but disappears quickly, as if something is disrupting your vision."
 				else
-					usr << "\red The world beyond opens to your eyes."
-				usr.see_invisible = SEE_INVISIBLE_OBSERVER
-				usr.seer = 1
+					user << "\red The world beyond opens to your eyes."
+				var/see_temp = user.see_invisible
+				user.see_invisible = SEE_INVISIBLE_OBSERVER
+				user.seer = 1
+				while(user.loc==src.loc)
+					sleep(30)
+				user.seer = 0
+				user.see_invisible = see_temp
 				return
 			return fizzle()
 
@@ -288,7 +294,7 @@ var/list/sacrificed = list()
 				return fizzle()
 
 			for(var/obj/item/organ/limb/affecting in corpse_to_raise.organs)
-				affecting.heal_damage(1000, 1000)
+				affecting.heal_damage(1000, 1000, 0)
 			corpse_to_raise.setToxLoss(0)
 			corpse_to_raise.setOxyLoss(0)
 			corpse_to_raise.SetParalysis(0)
@@ -805,7 +811,7 @@ var/list/sacrificed = list()
 					cultist.legcuffed = null
 					cultist.update_inv_legcuffed(0)
 				if (istype(cultist.wear_mask, /obj/item/clothing/mask/muzzle))
-					cultist.u_equip(cultist.wear_mask)
+					cultist.unEquip(cultist.wear_mask)
 				if(istype(cultist.loc, /obj/structure/closet)&&cultist.loc:welded)
 					cultist.loc:welded = 0
 				if(istype(cultist.loc, /obj/structure/closet/secure_closet)&&cultist.loc:locked)
@@ -1032,15 +1038,15 @@ var/list/sacrificed = list()
 						O.show_message(text("\red <B>[] invokes a talisman at []</B>", usr, T), 1)
 
 					if(issilicon(T))
-						T.Weaken(15)
+						T.Weaken(10)
 
 					else if(iscarbon(T))
 						var/mob/living/carbon/C = T
 						flick("e_flash", C.flash)
 						if (!(HULK in C.mutations))
 							C.silent += 15
-						C.Weaken(25)
-						C.Stun(25)
+						C.Weaken(10)
+						C.Stun(10)
 				return
 
 /////////////////////////////////////////TWENTY-FIFTH RUNE

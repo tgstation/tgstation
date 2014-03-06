@@ -12,7 +12,7 @@
 	idle_power_usage = 5
 	active_power_usage = 100
 	flags = NOREACT
-	var/global/max_n_of_items = 999 // Sorry but the BYOND infinite loop detector doesn't look things over 1000.
+	var/global/max_n_of_items = 999 // Sorry but the BYOND infinite loop detector doesn't like things over 1000.
 	var/icon_on = "smartfridge"
 	var/icon_off = "smartfridge-off"
 	var/item_quants = list()
@@ -34,6 +34,9 @@
 ********************/
 
 /obj/machinery/smartfridge/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if(default_unfasten_wrench(user, O))
+		power_change()
+		return
 	if(stat)
 		return 0
 
@@ -99,7 +102,9 @@
 /obj/machinery/smartfridge/proc/load(var/obj/item/O as obj)
 	if(istype(O.loc,/mob))
 		var/mob/M = O.loc
-		M.before_take_item(O)
+		if(!M.unEquip(O))
+			usr << "<span class='notice'>\the [O] is stuck to your hand, you cannot put it in \the [src]</span>"
+			return
 	else if(istype(O.loc,/obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = O.loc
 		S.remove_from_storage(O,src)
@@ -111,6 +116,7 @@
 		item_quants[n]++
 	else
 		item_quants[n] = 1
+	item_quants = sortAssoc(item_quants)
 
 /obj/machinery/smartfridge/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
@@ -128,7 +134,7 @@
 
 /obj/machinery/smartfridge/interact(mob/user as mob)
 	if(stat)
-		return
+		return 0
 
 	var/dat = "<TT><b>Select an item:</b><br>"
 
@@ -149,57 +155,19 @@
 							dat += "(<a href='byond://?src=\ref[src];vend=[O];amount=25'>x25</A>)"
 				if(N > 1)
 					dat += "(<a href='?src=\ref[src];vend=[O];amount=[N]'>All</A>)"
-				/*
-				if((findtext(O,"seeds") || findtext(O,"mycelium")) && N>1)
-					var/max_bags = round((N-1)/7)+1
-					dat += "(<a href='?src=\ref[src];bagvend=[O];amount=1'>1 Bag</A>)"
-					if(max_bags > 2) // at least 14
-						dat += "(<a href='?src=\ref[src];bagvend=[O];amount=2'>2 Bags</A>)"
-						if(max_bags > 5) // at least 35
-							dat += "(<a href='?src=\ref[src];bagvend=[O];amount=5'>5 Bags</A>)"
-					if(max_bags > 1)
-						dat += "(<a href='?src=\ref[src];bagvend=[O];amount=[max_bags]'>Bag All</A>)"
-				*/
+
 				dat += "<br>"
 
 		dat += "</TT>"
-	user << browse("<HEAD><TITLE>[src] Supplies</TITLE></HEAD><TT>[dat]</TT>", "window=smartfridge")
+	user << browse("<HEAD><TITLE>[src] supplies</TITLE></HEAD><TT>[dat]</TT>", "window=smartfridge")
 	onclose(user, "smartfridge")
-	return
+	return dat
 
 /obj/machinery/smartfridge/Topic(var/href, var/list/href_list)
 	if(..())
 		return
 	usr.set_machine(src)
-	/*
-	if(href_list["bagvend"]) // bag seeds and dispense
-		var/N = href_list["bagvend"]
-		var/amount = text2num(href_list["amount"])
 
-		if(item_quants[N] <= 0) // Sanity check, there are probably ways to press the button when it shouldn't be possible.
-			return
-
-		item_quants[N] = max(item_quants[N] - amount*7, 0)
-
-		var/i = amount * 7
-		var/j = 0
-		var/obj/item/weapon/storage/bag/seeds/SB = new(loc)
-		for(var/obj/O in contents)
-			if(name_filter(O.name) == N)
-				O.loc = SB
-				i--
-				j++
-				if(i <= 0)
-					break
-				if(j >= 7)
-					j = 0
-					SB.update_icon()
-					SB = new(loc)
-		SB.update_icon()
-
-		src.updateUsrDialog()
-		return
-	*/
 	var/N = href_list["vend"]
 	var/amount = text2num(href_list["amount"])
 
@@ -218,6 +186,95 @@
 
 	src.updateUsrDialog()
 	return
+
+
+// ----------------------------
+//  Drying Rack 'smartfridge'
+// ----------------------------
+/obj/machinery/smartfridge/drying_rack
+	name = "drying rack"
+	icon = 'icons/obj/hydroponics.dmi'
+	icon_state = "drying_rack_on"
+	use_power = 1
+	idle_power_usage = 5
+	active_power_usage = 200
+	icon_on = "drying_rack_on"
+	icon_off = "drying_rack"
+	var/drying = 0
+
+/obj/machinery/smartfridge/drying_rack/interact(mob/user as mob)
+	var/dat = ..()
+	if(dat)
+		dat += "<br>"
+		dat += "<a href='byond://?src=\ref[src];dry=1'>Toggle Drying</A> "
+		user << browse("<HEAD><TITLE>[src] supplies</TITLE></HEAD><TT>[dat]</TT>", "window=smartfridge")
+	onclose(user, "smartfridge")
+
+/obj/machinery/smartfridge/drying_rack/Topic(var/href, var/list/href_list)
+	..()
+	if(href_list["dry"])
+		toggle_drying()
+	src.updateUsrDialog()
+
+/obj/machinery/smartfridge/drying_rack/power_change()
+	if(powered() && anchored)
+		stat &= ~NOPOWER
+	else
+		stat |= NOPOWER
+		toggle_drying(1)
+	update_icon()
+
+obj/machinery/smartfridge/drying_rack/load() //For updating the filled overlay
+	..()
+	update_icon()
+
+/obj/machinery/smartfridge/drying_rack/update_icon()
+	..()
+	overlays = 0
+	if(drying)
+		overlays += "drying_rack_drying"
+	if(contents.len)
+		overlays += "drying_rack_filled"
+
+/obj/machinery/smartfridge/drying_rack/process()
+	..()
+	if(drying)
+		if(rack_dry())//no need to update unless something got dried
+			update_icon()
+
+/obj/machinery/smartfridge/drying_rack/accept_check(var/obj/item/O as obj)
+	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/))
+		var/obj/item/weapon/reagent_containers/food/snacks/S = O
+		if(S.dried_type)
+			return 1
+	return 0
+
+/obj/machinery/smartfridge/drying_rack/proc/toggle_drying(var/forceoff = 0)
+	if(drying || forceoff)
+		drying = 0
+		use_power = 1
+	else
+		drying = 1
+		use_power = 2
+	update_icon()
+
+/obj/machinery/smartfridge/drying_rack/proc/rack_dry()
+	for(var/obj/item/weapon/reagent_containers/food/snacks/S in contents)
+		if(S.dried_type == S.type)//if the dried type is the same as the object's type, don't bother creating a whole new item...
+			S.color = "#ad7257"
+			S.dry = 1
+			S.loc = get_turf(src)
+		else
+			var/dried = S.dried_type
+			new dried(src.loc)
+			del S
+		return 1
+	return 0
+
+/obj/machinery/smartfridge/drying_rack/emp_act(severity)
+	..()
+	atmos_spawn_air(SPAWN_HEAT, 75)
+
 
 // ----------------------------
 //  Bar drink smartfridge

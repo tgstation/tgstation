@@ -10,9 +10,10 @@
 	name = "electrode"
 	icon_state = "spark"
 	nodamage = 1
-	stun = 10
-	weaken = 10
-	stutter = 10
+	stun = 5
+	weaken = 5
+	stutter = 5
+	hitsound = "sparks"
 
 	on_hit(var/atom/target, var/blocked = 0)
 		if(!ismob(target) || blocked >= 2) //Fully blocked by mob or collided with dense object - burst into sparks!
@@ -43,8 +44,8 @@
 	damage = 10
 	damage_type = TOX
 	nodamage = 0
-	weaken = 10
-	stutter = 10
+	weaken = 5
+	stutter = 5
 
 
 /obj/item/projectile/energy/bolt/large
@@ -52,12 +53,8 @@
 	damage = 20
 
 
-/obj/item/projectile/energy/neurotoxin
-	name = "neuro"
-	icon_state = "neurotoxin"
-	damage = 5
-	damage_type = TOX
-	weaken = 5
+
+
 
 
 

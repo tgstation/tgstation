@@ -2,6 +2,7 @@
 	The global hud:
 	Uses the same visual objects for all players.
 */
+
 var/datum/global_hud/global_hud = new()
 
 /datum/global_hud
@@ -15,6 +16,7 @@ var/datum/global_hud/global_hud = new()
 	druggy = new /obj/screen()
 	druggy.screen_loc = "WEST,SOUTH to EAST,NORTH"
 	druggy.icon_state = "druggy"
+	druggy.blend_mode = BLEND_MULTIPLY
 	druggy.layer = 17
 	druggy.mouse_opacity = 0
 
@@ -30,47 +32,51 @@ var/datum/global_hud/global_hud = new()
 	//that nasty looking dither you  get when you're short-sighted
 	vimpaired = newlist(/obj/screen,/obj/screen,/obj/screen,/obj/screen)
 	O = vimpaired[1]
-	O.screen_loc = "1,1 to 5,15"
+	O.screen_loc = "WEST,SOUTH to CENTER-3,NORTH"	//West dither
 	O = vimpaired[2]
-	O.screen_loc = "5,1 to 10,5"
+	O.screen_loc = "WEST,SOUTH to EAST,CENTER-3"	//South dither
 	O = vimpaired[3]
-	O.screen_loc = "6,11 to 10,15"
+	O.screen_loc = "CENTER+3,SOUTH to EAST,NORTH"	//East dither
 	O = vimpaired[4]
-	O.screen_loc = "11,1 to 15,15"
+	O.screen_loc = "WEST,CENTER+3 to EAST,NORTH"	//North dither
 
 	//welding mask overlay black/dither
 	darkMask = newlist(/obj/screen, /obj/screen, /obj/screen, /obj/screen, /obj/screen, /obj/screen, /obj/screen, /obj/screen)
 	O = darkMask[1]
-	O.screen_loc = "3,3 to 5,13"
+	O.screen_loc = "CENTER-5,CENTER-5 to CENTER-3,CENTER+5" //West dither
 	O = darkMask[2]
-	O.screen_loc = "5,3 to 10,5"
+	O.screen_loc = "CENTER-5,CENTER-5 to CENTER+5,CENTER-3"	//South dither
 	O = darkMask[3]
-	O.screen_loc = "6,11 to 10,13"
+	O.screen_loc = "CENTER+3,CENTER-5 to CENTER+5,CENTER+5"	//East dither
 	O = darkMask[4]
-	O.screen_loc = "11,3 to 13,13"
+	O.screen_loc = "CENTER-5,CENTER+3 to CENTER+5,CENTER+5"	//North dither
 	O = darkMask[5]
-	O.screen_loc = "1,1 to 15,2"
+	O.screen_loc = "WEST,SOUTH to CENTER-5,NORTH"	//West black
 	O = darkMask[6]
-	O.screen_loc = "1,3 to 2,15"
+	O.screen_loc = "WEST,SOUTH to EAST,CENTER-5"	//South black
 	O = darkMask[7]
-	O.screen_loc = "14,3 to 15,15"
+	O.screen_loc = "CENTER+5,SOUTH to EAST,NORTH"	//East black
 	O = darkMask[8]
-	O.screen_loc = "3,14 to 13,15"
+	O.screen_loc = "WEST,CENTER+5 to EAST,NORTH"	//North black
+
 
 	for(i = 1, i <= 4, i++)
 		O = vimpaired[i]
 		O.icon_state = "dither50"
+		O.blend_mode = BLEND_MULTIPLY
 		O.layer = 17
 		O.mouse_opacity = 0
 
 		O = darkMask[i]
 		O.icon_state = "dither50"
+		O.blend_mode = BLEND_MULTIPLY
 		O.layer = 17
 		O.mouse_opacity = 0
 
 	for(i = 5, i <= 8, i++)
 		O = darkMask[i]
 		O.icon_state = "black"
+		O.blend_mode = BLEND_MULTIPLY
 		O.layer = 17
 		O.mouse_opacity = 0
 
@@ -84,11 +90,13 @@ var/datum/global_hud/global_hud = new()
 	var/mob/mymob
 
 	var/hud_shown = 1			//Used for the HUD toggle (F12)
+	var/hud_version = 1			//Current displayed version of the HUD
 	var/inventory_shown = 1		//the inventory
 	var/show_intent_icons = 0
 	var/hotkey_ui_hidden = 0	//This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
 
 	var/obj/screen/lingchemdisplay
+	var/obj/screen/lingstingdisplay
 	var/obj/screen/blobpwrdisplay
 	var/obj/screen/blobhealthdisplay
 	var/obj/screen/alien_plasma_display
@@ -188,57 +196,99 @@ datum/hud/New(mob/owner)
 		blob_hud()
 
 	if(istype(mymob.loc,/obj/mecha))
-		hide_hud()
+		show_hud(HUD_STYLE_REDUCED)
 
-
-/datum/hud/proc/hide_hud() // hide hands is not currently used by anything but could be
+//Version denotes which style should be displayed. blank or 0 means "next version"
+/datum/hud/proc/show_hud(var/version = 0)
 	if(!ismob(mymob))
 		return 0
 	if(!mymob.client)
 		return 0
-	if(hud_shown)
-		hud_shown = 0
-		if(adding)
-			mymob.client.screen -= adding
-		if(other)
-			mymob.client.screen -= other
-		if(hotkeybuttons)
-			mymob.client.screen -= hotkeybuttons
-		if(item_action_list)
-			mymob.client.screen -= item_action_list
+	var/display_hud_version = version
+	if(!display_hud_version)	//If 0 or blank, display the next hud version
+		display_hud_version = hud_version + 1
+	if(display_hud_version > HUD_VERSIONS)	//If the requested version number is greater than the available versions, reset back to the first version
+		display_hud_version = 1
 
-		//These ones are not a part of 'adding', 'other' or 'hotkeybuttons' but we want them gone.
-		mymob.client.screen -= mymob.zone_sel	//zone_sel is a mob variable for some reason.
+	switch(display_hud_version)
+		if(HUD_STYLE_STANDARD)	//Default HUD
+			hud_shown = 1	//Governs behavior of other procs
+			if(adding)
+				mymob.client.screen += adding
+			if(other && inventory_shown)
+				mymob.client.screen += other
+			if(hotkeybuttons && !hotkey_ui_hidden)
+				mymob.client.screen += hotkeybuttons
 
-		//These ones are a part of 'adding', 'other' or 'hotkeybuttons' but we want them to stay
-		mymob.client.screen += l_hand_hud_object	//we want the hands to be visible
-		mymob.client.screen += r_hand_hud_object	//we want the hands to be visible
-		mymob.client.screen += action_intent		//we want the intent swticher visible
-		action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
+			action_intent.screen_loc = ui_acti //Restore intent selection to the original position
+			mymob.client.screen += mymob.zone_sel				//This one is a special snowflake
+			mymob.client.screen += mymob.bodytemp				//As are the rest of these...
+			mymob.client.screen += mymob.fire
+			mymob.client.screen += mymob.healths
+			mymob.client.screen += mymob.internals
+			mymob.client.screen += mymob.nutrition_icon
+			mymob.client.screen += mymob.oxygen
+			mymob.client.screen += mymob.pressure
+			mymob.client.screen += mymob.toxin
+			mymob.client.screen += lingstingdisplay
+			mymob.client.screen += lingchemdisplay
 
-		hidden_inventory_update()
-		persistant_inventory_update()
-		mymob.update_action_buttons()
+			hidden_inventory_update()
+			persistant_inventory_update()
+			mymob.update_action_buttons()
+		if(HUD_STYLE_REDUCED)	//Reduced HUD
+			hud_shown = 0	//Governs behavior of other procs
+			if(adding)
+				mymob.client.screen -= adding
+			if(other)
+				mymob.client.screen -= other
+			if(hotkeybuttons)
+				mymob.client.screen -= hotkeybuttons
+			if(item_action_list)
+				mymob.client.screen -= item_action_list
 
-/datum/hud/proc/show_hud()
-	if(!ismob(mymob))
-		return 0
-	if(!mymob.client)
-		return 0
-	if(!hud_shown)
-		hud_shown = 1
-		if(adding)
-			mymob.client.screen += adding
-		if(other && inventory_shown)
-			mymob.client.screen += other
-		if(hotkeybuttons && !hotkey_ui_hidden)
-			mymob.client.screen += hotkeybuttons
+			//These ones are not a part of 'adding', 'other' or 'hotkeybuttons' but we want them gone.
+			mymob.client.screen -= mymob.zone_sel	//zone_sel is a mob variable for some reason.
+			mymob.client.screen -= lingstingdisplay
+			mymob.client.screen -= lingchemdisplay
 
-		action_intent.screen_loc = ui_acti //Restore intent selection to the original position
-		mymob.client.screen += mymob.zone_sel				//This one is a special snowflake
-		hidden_inventory_update()
-		persistant_inventory_update()
-		mymob.update_action_buttons()
+			//These ones are a part of 'adding', 'other' or 'hotkeybuttons' but we want them to stay
+			mymob.client.screen += l_hand_hud_object	//we want the hands to be visible
+			mymob.client.screen += r_hand_hud_object	//we want the hands to be visible
+			mymob.client.screen += action_intent		//we want the intent swticher visible
+			action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
+
+			hidden_inventory_update()
+			persistant_inventory_update()
+			mymob.update_action_buttons()
+		if(HUD_STYLE_NOHUD)	//No HUD
+			hud_shown = 0	//Governs behavior of other procs
+			if(adding)
+				mymob.client.screen -= adding
+			if(other)
+				mymob.client.screen -= other
+			if(hotkeybuttons)
+				mymob.client.screen -= hotkeybuttons
+			if(item_action_list)
+				mymob.client.screen -= item_action_list
+
+			//These ones are not a part of 'adding', 'other' or 'hotkeybuttons' but we want them gone.
+			mymob.client.screen -= mymob.zone_sel	//zone_sel is a mob variable for some reason.
+			mymob.client.screen -= mymob.bodytemp
+			mymob.client.screen -= mymob.fire
+			mymob.client.screen -= mymob.healths
+			mymob.client.screen -= mymob.internals
+			mymob.client.screen -= mymob.nutrition_icon
+			mymob.client.screen -= mymob.oxygen
+			mymob.client.screen -= mymob.pressure
+			mymob.client.screen -= mymob.toxin
+			mymob.client.screen -= lingstingdisplay
+			mymob.client.screen -= lingchemdisplay
+
+			hidden_inventory_update()
+			persistant_inventory_update()
+			mymob.update_action_buttons()
+	hud_version = display_hud_version
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
 /mob/verb/button_pressed_F12()
@@ -247,11 +297,9 @@ datum/hud/New(mob/owner)
 
 	if(hud_used && client)
 		if(ishuman(src))
-			if(hud_used.hud_shown)
-				hud_used.hide_hud()
-			else
-				hud_used.show_hud()
+			hud_used.show_hud() //Shows the next hud preset
+			usr << "<span class ='info'>Switched HUD mode.</span>"
 		else
-			usr << "\red Inventory hiding is currently only supported for human mobs, sorry."
+			usr << "<span class ='warning'>Inventory hiding is currently only supported for human mobs, sorry.</span>"
 	else
-		usr << "\red This mob type does not use a HUD."
+		usr << "<span class ='warning'>This mob type does not use a HUD.</span>"

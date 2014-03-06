@@ -3,13 +3,13 @@
 	desc = "A small electronic device that should never exist."
 	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	icon_state = ""
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	w_class = 2.0
 	m_amt = 100
 	g_amt = 0
 	throwforce = 2
 	throw_speed = 3
-	throw_range = 10
+	throw_range = 7
 	origin_tech = "magnets=1"
 
 	var/secured = 1

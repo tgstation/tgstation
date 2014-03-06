@@ -31,7 +31,7 @@
 	name = text("[initial(name)] ([rand(1, 1000)])")
 	real_name = name
 	for(var/spell in construct_spells)
-		spell_list += new spell(src)
+		mob_spell_list += new spell(src)
 
 /mob/living/simple_animal/construct/Die()
 	..()
@@ -99,8 +99,7 @@
 				playsound(loc, M.attack_sound, 50, 1, 1)
 			for(var/mob/O in viewers(src, null))
 				O.show_message("<span class='attack'>\The <EM>[M]</EM> [M.attacktext] \the <EM>[src]</EM>!</span>", 1)
-			M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
-			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
+			add_logs(M, src, "attacked", admin=0)
 			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 			adjustBruteLoss(damage)
 
@@ -112,7 +111,7 @@
 		adjustBruteLoss(damage)
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
-				M.show_message("\red \b [src] has been attacked with [O] by [user]. ")
+				M.show_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>")
 	else
 		usr << "\red This weapon is ineffective, it does no damage."
 		for(var/mob/M in viewers(src, null))
@@ -140,7 +139,7 @@
 	melee_damage_upper = 30
 	attacktext = "smashes their armoured gauntlet into"
 	speed = 3
-	wall_smash = 1
+	environment_smash = 2
 	attack_sound = 'sound/weapons/punch3.ogg'
 	status_flags = 0
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
@@ -154,7 +153,7 @@
 			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [src] has been attacked with [O] by [user]. ")
+					M.show_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>")
 		else
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
@@ -236,7 +235,7 @@
 	melee_damage_upper = 5
 	attacktext = "rams"
 	speed = 0
-	wall_smash = 1
+	environment_smash = 2
 	attack_sound = 'sound/weapons/punch2.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
@@ -264,7 +263,7 @@
 	melee_damage_upper = 50
 	attacktext = "brutally crushes"
 	speed = 5
-	wall_smash = 1
+	environment_smash = 2
 	attack_sound = 'sound/weapons/punch4.ogg'
 	var/energy = 0
 	var/max_energy = 1000
@@ -278,7 +277,7 @@
 			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [src] has been attacked with [O] by [user]. ")
+					M.show_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>")
 		else
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))

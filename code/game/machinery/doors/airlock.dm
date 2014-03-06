@@ -611,7 +611,7 @@ About the new airlock wires panel:
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				visible_message("\red [user] headbutts the airlock.")
 				var/obj/item/organ/limb/affecting = H.get_organ("head")
-				H.Stun(8)
+				H.Stun(5)
 				H.Weaken(5)
 				if(affecting.take_damage(10, 0))
 					H.update_damage_overlays(0)
@@ -764,7 +764,7 @@ About the new airlock wires panel:
 						usr << text("The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
 					else
 						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
-						usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Electrified the [name] at [x] [y] [z]</font>")
+						add_logs(usr, src, "electrified", admin=0, addition="at [x],[y],[z]")
 						src.secondsElectrified = 30
 						spawn(10)
 							while (src.secondsElectrified>0)
@@ -783,7 +783,7 @@ About the new airlock wires panel:
 						usr << text("The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
 					else
 						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
-						usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Electrified the [name] at [x] [y] [z]</font>")
+						add_logs(usr, src, "electrified", admin=0, addition="at [x],[y],[z]")
 						src.secondsElectrified = -1
 
 				if (8) // Not in order >.>

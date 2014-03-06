@@ -22,9 +22,9 @@
 	..()
 
 /obj/machinery/shield/Move()
-	air_update_turf(1)
+	var/turf/T = loc
 	..()
-	air_update_turf(1)
+	move_update_air(T)
 
 /obj/machinery/shield/CanPass(atom/movable/mover, turf/target, height, air_group)
 	if(!height || air_group) return 0
@@ -150,6 +150,7 @@
 		var/list/deployed_shields = list()
 		var/is_open = 0 //Whether or not the wires are exposed
 		var/locked = 0
+		var/shield_range = 4
 
 /obj/machinery/shieldgen/Del()
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
@@ -163,7 +164,7 @@
 	src.active = 1
 	update_icon()
 
-	for(var/turf/target_tile in range(2, src))
+	for(var/turf/target_tile in range(shield_range, src))
 		if (istype(target_tile,/turf/space) && !(locate(/obj/machinery/shield) in target_tile))
 			if (malfunction && prob(33) || !malfunction)
 				deployed_shields += new /obj/machinery/shield(target_tile)
@@ -176,6 +177,7 @@
 
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
 		del(shield_tile)
+	deployed_shields.Cut()
 
 /obj/machinery/shieldgen/process()
 	if(malfunction && active)
@@ -263,8 +265,8 @@
 			user << "\blue You open the panel and expose the wiring."
 			is_open = 1
 
-	else if(istype(W, /obj/item/weapon/cable_coil) && malfunction && is_open)
-		var/obj/item/weapon/cable_coil/coil = W
+	else if(istype(W, /obj/item/stack/cable_coil) && malfunction && is_open)
+		var/obj/item/stack/cable_coil/coil = W
 		user << "\blue You begin to replace the wires."
 		//if(do_after(user, min(60, round( ((maxhealth/health)*10)+(malfunction*10) ))) //Take longer to repair heavier damage
 		if(do_after(user, 30))
@@ -332,7 +334,7 @@
 //		var/maxshieldload = 200
 		var/obj/structure/cable/attached		// the attached cable
 		var/storedpower = 0
-		flags = FPRINT | CONDUCT
+		flags = CONDUCT
 		use_power = 0
 
 /obj/machinery/shieldwallgen/proc/power()

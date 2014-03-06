@@ -43,7 +43,7 @@
 	var/disabilities = 0	//Carbon
 	var/atom/movable/pulling = null
 	var/next_move = null
-	var/monkeyizing = null	//Carbon
+	var/notransform = null	//Carbon
 	var/hand = null
 	var/eye_blind = null	//Carbon
 	var/eye_blurry = null	//Carbon
@@ -74,8 +74,6 @@
 	var/bodytemperature = 310.055	//98.7 F
 	var/drowsyness = 0//Carbon
 	var/dizziness = 0//Carbon
-	var/is_dizzy = 0
-	var/is_jittery = 0
 	var/jitteriness = 0//Carbon
 	var/nutrition = 400//Carbon
 
@@ -94,6 +92,7 @@
 	var/obj/item/weapon/storage/s_active = null//Carbon
 
 	var/seer = 0 //for cult//Carbon, probably Human
+	var/see_override = 0 //0 for no override, sets see_invisible = see_override in mob life process
 
 	var/datum/hud/hud_used = null
 
@@ -131,8 +130,8 @@
 //The last mob/living/carbon to push/drag/grab this mob (mostly used by slimes friend recognition)
 	var/mob/living/carbon/LAssailant = null
 
-//Wizard mode, but can be used in other modes thanks to the brand new "Give Spell" badmin button
-	var/list/spell_list = list()
+
+	var/list/mob_spell_list = list() //construct spells and mime spells. Spells that do not transfer from one mob to another and can not be lost in mindswap.
 
 //Changlings, but can be used in other modes
 //	var/obj/effect/proc_holder/changpower/list/power_list = list()

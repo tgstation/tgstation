@@ -4,31 +4,44 @@
 	icon_state = "std_module"
 	w_class = 100.0
 	item_state = "electronic"
-	flags = FPRINT|TABLEPASS | CONDUCT
+	flags = CONDUCT
 
 	var/list/modules = list()
 	var/obj/item/emag = null
 	var/obj/item/borg/upgrade/jetpack = null
 
 
-	emp_act(severity)
-		if(modules)
-			for(var/obj/O in modules)
-				O.emp_act(severity)
-		if(emag)
-			emag.emp_act(severity)
-		..()
-		return
+/obj/item/weapon/robot_module/emp_act(severity)
+	if(modules)
+		for(var/obj/O in modules)
+			O.emp_act(severity)
+	if(emag)
+		emag.emp_act(severity)
+	..()
+	return
+
+/obj/item/weapon/robot_module/proc/get_usable_modules()
+	. = modules.Copy()
+	var/mob/living/silicon/robot/R = loc
+	if(R.emagged)
+		. += emag
+
+/obj/item/weapon/robot_module/proc/get_inactive_modules()
+	. = list()
+	var/mob/living/silicon/robot/R = loc
+	for(var/m in get_usable_modules())
+		if((m != R.module_state_1) && (m != R.module_state_2) && (m != R.module_state_3))
+			. += m
 
 
-	New()
-		modules += new /obj/item/device/flashlight(src)
-		modules += new /obj/item/device/flash(src)
-		emag = new /obj/item/toy/sword(src)
-		emag.name = "Placeholder Emag Item"
+/obj/item/weapon/robot_module/New()
+	modules += new /obj/item/device/flashlight(src)
+	modules += new /obj/item/device/flash(src)
+	emag = new /obj/item/toy/sword(src)
+	emag.name = "Placeholder Emag Item"
 //		jetpack = new /obj/item/toy/sword(src)
 //		jetpack.name = "Placeholder Upgrade Item"
-		return
+	return
 
 
 /obj/item/weapon/robot_module/proc/respawn_consumable(var/mob/living/silicon/robot/R)
@@ -40,6 +53,9 @@
 	for(var/obj/O in temp_list)
 		if(O)
 			modules += O
+
+/obj/item/weapon/robot_module/proc/on_emag()
+	return
 
 
 /obj/item/weapon/robot_module/standard
@@ -104,7 +120,7 @@
 		R.amount = 50
 		modules += R
 
-		var/obj/item/weapon/cable_coil/W = new /obj/item/weapon/cable_coil(src)
+		var/obj/item/stack/cable_coil/W = new /obj/item/stack/cable_coil(src)
 		W.amount = 50
 		modules += W
 
@@ -118,7 +134,7 @@
 			/obj/item/stack/sheet/metal,
 			/obj/item/stack/sheet/rglass,
 			/obj/item/stack/rods,
-			/obj/item/weapon/cable_coil,
+			/obj/item/stack/cable_coil,
 			/obj/item/stack/tile/plasteel/cyborg,
 		)
 		for(var/T in what)
@@ -147,9 +163,9 @@
 	New()
 		..()
 		modules += new /obj/item/weapon/soap/nanotrasen(src)
-		modules += new /obj/item/weapon/storage/bag/trash(src)
-		modules += new /obj/item/weapon/mop(src)
-		modules += new /obj/item/device/lightreplacer(src)
+		modules += new /obj/item/weapon/storage/bag/trash/cyborg(src)
+		modules += new /obj/item/weapon/mop/cyborg(src)
+		modules += new /obj/item/device/lightreplacer/cyborg(src)
 		emag = new /obj/item/weapon/reagent_containers/spray(src)
 
 		emag.reagents.add_reagent("lube", 250)
@@ -193,17 +209,34 @@
 
 	New()
 		..()
+		var/mob/living/silicon/robot/R = loc
 		modules += new /obj/item/borg/sight/meson(src)
 		emag = new /obj/item/borg/stun(src)
 		modules += new /obj/item/weapon/storage/bag/ore(src)
-		modules += new /obj/item/weapon/pickaxe/borgdrill(src)
+		if(R.emagged)
+			modules += new /obj/item/weapon/pickaxe/diamonddrill(src)
+		else
+			modules += new /obj/item/weapon/pickaxe/borgdrill(src)
 		modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
+		modules += new /obj/item/device/mining_scanner(src)
+		modules += new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
+	on_emag()
+		..()
+		for(var/obj/item/weapon/pickaxe/borgdrill/D in modules)
+			del(D)
+		modules += new /obj/item/weapon/pickaxe/diamonddrill(src)
+		rebuild()
 
 
 /obj/item/weapon/robot_module/syndicate
 	name = "syndicate robot module"
 
 	New()
-		modules += new /obj/item/weapon/melee/energy/sword(src)
-		modules += new /obj/item/weapon/gun/energy/pulse_rifle/destroyer(src)
+		..()
+		modules += new /obj/item/weapon/melee/energy/sword/cyborg(src)
+		modules += new /obj/item/weapon/gun/energy/crossbow/cyborg(src)
 		modules += new /obj/item/weapon/card/emag(src)
+		modules += new /obj/item/weapon/gun/energy/laser/cyborg(src)
+		modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
+		modules += new /obj/item/weapon/crowbar(src)
+		emag = null

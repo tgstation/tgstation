@@ -61,6 +61,7 @@
 /var/const/access_tcomsat = 61 // has access to the entire telecomms satellite / machinery
 /var/const/access_gateway = 62
 /var/const/access_sec_doors = 63 // Security front doors
+/var/const/access_mineral_storeroom = 64
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -82,29 +83,6 @@
 /obj/var/req_access_txt = "0"
 /obj/var/list/req_one_access = null
 /obj/var/req_one_access_txt = "0"
-
-/obj/New()
-	..()
-	//NOTE: If a room requires more than one access (IE: Morgue + medbay) set the req_acesss_txt to "5;6" if it requires 5 and 6
-	if(src.req_access_txt)
-		var/list/req_access_str = text2list(req_access_txt,";")
-		if(!req_access)
-			req_access = list()
-		for(var/x in req_access_str)
-			var/n = text2num(x)
-			if(n)
-				req_access += n
-
-	if(src.req_one_access_txt)
-		var/list/req_one_access_str = text2list(req_one_access_txt,";")
-		if(!req_one_access)
-			req_one_access = list()
-		for(var/x in req_one_access_str)
-			var/n = text2num(x)
-			if(n)
-				req_one_access += n
-
-
 
 //returns 1 if this mob has sufficient access to use this object
 /obj/proc/allowed(mob/M)
@@ -133,9 +111,25 @@
 	return null
 
 /obj/proc/check_access(obj/item/I)
+	//These generations have been moved out of /obj/New() because they were slowing down the creation of objects that never even used the access system.
+	if(!src.req_access)
+		src.req_access = list()
+		if(src.req_access_txt)
+			var/list/req_access_str = text2list(req_access_txt,";")
+			for(var/x in req_access_str)
+				var/n = text2num(x)
+				if(n)
+					req_access += n
 
-	if(!src.req_access && !src.req_one_access) //no requirements
-		return 1
+	if(!src.req_one_access)
+		src.req_one_access = list()
+		if(src.req_one_access_txt)
+			var/list/req_one_access_str = text2list(req_one_access_txt,";")
+			for(var/x in req_one_access_str)
+				var/n = text2num(x)
+				if(n)
+					req_one_access += n
+
 	if(!istype(src.req_access, /list)) //something's very wrong
 		return 1
 
@@ -205,7 +199,7 @@
 	            access_hydroponics, access_library, access_lawyer, access_virology, access_cmo, access_qm, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
-	            access_keycard_auth, access_tcomsat, access_gateway)
+	            access_keycard_auth, access_tcomsat, access_gateway, access_mineral_storeroom)
 
 /proc/get_all_centcom_access()
 	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_captain)
@@ -222,7 +216,7 @@
 		if(2) //medbay
 			return list(access_medical, access_genetics, access_morgue, access_chemistry, access_virology, access_surgery, access_cmo)
 		if(3) //research
-			return list(access_research, access_tox, access_tox_storage, access_robotics, access_xenobiology, access_rd)
+			return list(access_research, access_tox, access_tox_storage, access_robotics, access_xenobiology, access_rd, access_mineral_storeroom)
 		if(4) //engineering and maintenance
 			return list(access_construction, access_maint_tunnels, access_engine, access_engine_equip, access_external_airlocks, access_tech_storage, access_atmospherics, access_tcomsat, access_ce)
 		if(5) //command
@@ -376,6 +370,8 @@
 			return "Gateway"
 		if(access_sec_doors)
 			return "Brig"
+		if(access_mineral_storeroom)
+			return "Mineral Storeroom"
 
 /proc/get_centcom_access_desc(A)
 	switch(A)

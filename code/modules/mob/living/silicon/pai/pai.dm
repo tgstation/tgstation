@@ -143,8 +143,7 @@
 			src << "<font color=green>You feel an electric surge run through your circuitry and become acutely aware at how lucky you are that you can still feel at all.</font>"
 
 /mob/living/silicon/pai/ex_act(severity)
-	if(!blinded)
-		flick("flash", src.flash)
+	..()
 
 	switch(severity)
 		if(1.0)
@@ -159,7 +158,7 @@
 			if (src.stat != 2)
 				adjustBruteLoss(30)
 
-	src.updatehealth()
+	return
 
 
 // See software.dm for Topic()
@@ -188,6 +187,9 @@
 	src.reset_view(null)
 	src.unset_machine()
 	src:cameraFollow = null
+
+/mob/living/silicon/pai/UnarmedAttack(var/atom/A)//Stops runtimes due to attack_animal being the default
+	return
 
 //Addition by Mord_Sith to define AI's network change ability
 /*

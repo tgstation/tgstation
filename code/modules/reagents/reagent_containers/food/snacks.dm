@@ -10,16 +10,21 @@
 	var/slices_num
 	var/eatverb
 	var/wrapped = 0
-
+	var/dried_type = null
+	var/potency = null
+	var/dry = 0
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume()
 	if(!usr)	return
 	if(!reagents.total_volume)
-		usr.drop_from_inventory(src)	//so icons update :[
+		usr.unEquip(src)	//so icons update :[
 
 		if(trash)
-			if(ispath(trash,/obj/item))
+			if(ispath(trash,/obj/item/weapon/grown))
+				var/obj/item/TrashItem = new trash(usr,src.potency)
+				usr.put_in_hands(TrashItem)
+			else if(ispath(trash,/obj/item))
 				var/obj/item/TrashItem = new trash(usr)
 				usr.put_in_hands(TrashItem)
 			else if(istype(trash,/obj/item))
@@ -37,7 +42,7 @@
 		eatverb = pick("bite","chew","nibble","gnaw","gobble","chomp")
 	if(!reagents.total_volume)						//Shouldn't be needed but it checks to see if it has anything left in it.
 		user << "<span class='notice'>None of [src] left, oh no!</span>"
-		M.drop_from_inventory(src)	//so icons update :[
+		M.unEquip(src)	//so icons update :[
 		del(src)
 		return 0
 	if(istype(M, /mob/living/carbon))
@@ -47,15 +52,15 @@
 				M << "<span class='notice'>You can't eat wrapped food!</span>"
 				return 0
 			else if(fullness <= 50)
-				M << "<span class='notice'>You hungrily [eatverb] some of the [src] and gobble it down!</span>"
+				M << "<span class='notice'>You hungrily [eatverb] some of \the [src] and gobble it down!</span>"
 			else if(fullness > 50 && fullness < 150)
-				M << "<span class='notice'>You hungrily begin to [eatverb] the [src].</span>"
+				M << "<span class='notice'>You hungrily begin to [eatverb] \the [src].</span>"
 			else if(fullness > 150 && fullness < 350)
-				M << "<span class='notice'>You [eatverb] the [src].</span>"
+				M << "<span class='notice'>You [eatverb] \the [src].</span>"
 			else if(fullness > 350 && fullness < 550)
-				M << "<span class='notice'>You unwillingly [eatverb] a bit of the [src].</span>"
+				M << "<span class='notice'>You unwillingly [eatverb] a bit of \the [src].</span>"
 			else if(fullness > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
-				M << "<span class='notice'>You cannot force any more of the [src] to go down your throat.</span>"
+				M << "<span class='notice'>You cannot force any more of \the [src] to go down your throat.</span>"
 				return 0
 		else
 			if(! (isslime(M) || isbrain(M)) )		//If you're feeding it to someone else.
@@ -71,12 +76,7 @@
 					return 0
 
 				if(!do_mob(user, M)) return
-
-				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
-				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
-
-				log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
-
+				add_logs(user, M, "fed", object="[reagentlist(src)]")
 				M.visible_message("<span class='danger'>[user] forces [M] to eat [src].</span>", \
 									"<span class='userdanger'>[user] feeds [M] to eat [src].</span>")
 
@@ -144,7 +144,7 @@
 		if(!iscarbon(user))
 			return 0
 		user << "<span class='notice'>You slip [W] inside [src].</span>"
-		user.u_equip(W)
+		user.unEquip(W)
 		if ((user.client && user.s_active != src))
 			user.client.screen -= W
 		W.dropped(user)
@@ -575,6 +575,26 @@
 		reagents.add_reagent("nutriment", 3)
 		src.bitesize = 6
 
+/obj/item/weapon/reagent_containers/food/snacks/spidermeat
+	name = "spider meat"
+	desc = "A slab of spider meat."
+	icon_state = "spidermeat"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("toxin", 3)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/spiderleg
+	name = "spider leg"
+	desc = "A still twitching leg of a giant spider... you don't really want to eat this, do you?"
+	icon_state = "spiderleg"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("toxin", 2)
+		bitesize = 2
+
 /obj/item/weapon/reagent_containers/food/snacks/faggot
 	name = "faggot"
 	desc = "A great meal all round. Not a cord of wood."
@@ -611,40 +631,20 @@
 				name = initial(name)
 		return
 
-/obj/item/weapon/reagent_containers/food/snacks/brainburger
+/obj/item/weapon/reagent_containers/food/snacks/burger/brain
 	name = "brainburger"
 	desc = "A strange looking burger. It looks almost sentient."
 	icon_state = "brainburger"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 6)
 		reagents.add_reagent("alkysine", 6)
-		bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/ghostburger
+/obj/item/weapon/reagent_containers/food/snacks/burger/ghost
 	name = "ghost burger"
-	desc = "Spooky! It doesn't look very filling."
+	desc = "Too Spooky!"
 	icon_state = "ghostburger"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 2)
-		bitesize = 2
 
-
-/obj/item/weapon/reagent_containers/food/snacks/human
-	var/hname = ""
-	var/job = null
-
-/obj/item/weapon/reagent_containers/food/snacks/human/burger
-	name = "-burger"
-	desc = "A bloody burger."
-	icon_state = "hburger"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 6)
-		bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/monkeyburger
+/obj/item/weapon/reagent_containers/food/snacks/burger
 	name = "burger"
 	desc = "The cornerstone of every nutritious breakfast."
 	icon_state = "hburger"
@@ -653,84 +653,66 @@
 		reagents.add_reagent("nutriment", 6)
 		bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/appendixburger
+/obj/item/weapon/reagent_containers/food/snacks/burger/human
+	var/hname = ""
+	var/job = null
+	name = "-burger"
+	desc = "A bloody burger."
+	icon_state = "hburger"
+
+/obj/item/weapon/reagent_containers/food/snacks/burger/appendix
 	name = "appendix burger"
 	desc = "Tastes like appendicitis."
-	icon_state = "hburger"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 6)
-		bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/fishburger
+/obj/item/weapon/reagent_containers/food/snacks/burger/fish
 	name = "fillet -o- carp sandwich"
 	desc = "Almost like a carp is yelling somewhere... Give me back that fillet -o- carp, give me that carp."
 	icon_state = "fishburger"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 6)
 		reagents.add_reagent("carpotoxin", 3)
 		bitesize = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/tofuburger
+/obj/item/weapon/reagent_containers/food/snacks/burger/tofu
 	name = "tofu burger"
 	desc = "What.. is that meat?"
 	icon_state = "tofuburger"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 6)
-		bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/roburger
+/obj/item/weapon/reagent_containers/food/snacks/burger/roburger
 	name = "roburger"
 	desc = "The lettuce is the only organic component. Beep."
 	icon_state = "roburger"
 	New()
 		..()
 		reagents.add_reagent("nanites", 2)
-		bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/roburgerbig
+/obj/item/weapon/reagent_containers/food/snacks/burger/roburgerbig
 	name = "roburger"
 	desc = "This massive patty looks like poison. Beep."
 	icon_state = "roburger"
-	volume = 100
+	volume = 106
 	New()
 		..()
 		reagents.add_reagent("nanites", 100)
 		bitesize = 0.1
 
-/obj/item/weapon/reagent_containers/food/snacks/xenoburger
+/obj/item/weapon/reagent_containers/food/snacks/burger/xeno
 	name = "xenoburger"
 	desc = "Smells caustic. Tastes like heresy."
 	icon_state = "xburger"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 8)
-		bitesize = 2
+		reagents.add_reagent("nutriment", 2)
 
-/obj/item/weapon/reagent_containers/food/snacks/clownburger
+/obj/item/weapon/reagent_containers/food/snacks/burger/clown
 	name = "clown burger"
 	desc = "This tastes funny..."
 	icon_state = "clownburger"
-	New()
-		..()
-/*
-		var/datum/disease/F = new /datum/disease/pierrot_throat(0)
-		var/list/data = list("viruses"= list(F))
-		reagents.add_reagent("blood", 4, data)
-*/
-		reagents.add_reagent("nutriment", 6)
-		bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/mimeburger
+/obj/item/weapon/reagent_containers/food/snacks/burger/mime
 	name = "mime burger"
 	desc = "Its taste defies language."
 	icon_state = "mimeburger"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 6)
-		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/omelette	//FUCK THIS
 	name = "omelette du fromage"
@@ -996,7 +978,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/spacetwinkie
 	name = "space twinkie"
 	icon_state = "space_twinkie"
-	desc = "Guaranteed to survive longer then you will."
+	desc = "Guaranteed to survive longer than you will."
 	New()
 		..()
 		reagents.add_reagent("sugar", 4)
@@ -1353,22 +1335,18 @@
 	wrapped = 1
 
 
-/obj/item/weapon/reagent_containers/food/snacks/spellburger
+/obj/item/weapon/reagent_containers/food/snacks/burger/spell
 	name = "spell burger"
 	desc = "This is absolutely Ei Nath."
 	icon_state = "spellburger"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 6)
-		bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/bigbiteburger
+/obj/item/weapon/reagent_containers/food/snacks/burger/bigbite
 	name = "big bite burger"
 	desc = "Forget the Big Mac. THIS is the future!"
 	icon_state = "bigbiteburger"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 14)
+		reagents.add_reagent("nutriment", 8)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/enchiladas
@@ -1503,21 +1481,17 @@
 		..()
 		reagents.add_reagent("slimejelly", 5)
 
-/obj/item/weapon/reagent_containers/food/snacks/jellyburger
+/obj/item/weapon/reagent_containers/food/snacks/burger/jelly
 	name = "jelly burger"
 	desc = "Culinary delight..?"
 	icon_state = "jellyburger"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 5)
-		bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/jellyburger/slime
+/obj/item/weapon/reagent_containers/food/snacks/burger/jelly/slime
 	New()
 		..()
 		reagents.add_reagent("slimejelly", 5)
 
-/obj/item/weapon/reagent_containers/food/snacks/jellyburger/cherry
+/obj/item/weapon/reagent_containers/food/snacks/burger/jelly/cherry
 	New()
 		..()
 		reagents.add_reagent("cherryjelly", 5)
@@ -1607,7 +1581,7 @@
 		reagents.add_reagent("imidazoline", 3)
 		bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/superbiteburger
+/obj/item/weapon/reagent_containers/food/snacks/burger/superbite
 	name = "super bite burger"
 	desc = "This is a mountain of a burger. FOOD!"
 	icon_state = "superbiteburger"
@@ -1812,6 +1786,28 @@
 	icon_state = "xenobreadslice"
 	trash = /obj/item/trash/plate
 	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/spidermeatbread
+	name = "spider meat loaf"
+	desc = "Reassuringly green meatloaf made from spider meat."
+	icon_state = "spidermeatbread"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/spidermeatbreadslice
+	slices_num = 5
+	New()
+		..()
+		reagents.add_reagent("nutriment", 30)
+		reagents.add_reagent("toxin", 15)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/spidermeatbreadslice
+	name = "spider meat bread slice"
+	desc = "A slice of meatloaf made from an animal that most likely still wants you dead."
+	icon_state = "xenobreadslice"
+	trash = /obj/item/trash/plate
+	bitesize = 2
+	New()
+		..()
+		reagents.add_reagent("toxin", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/bananabread
 	name = "banana-nut bread"
@@ -2428,3 +2424,106 @@
 		reagents.add_reagent("nutriment", 2)
 		reagents.add_reagent("sugar", 5)
 		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledspiderleg
+	name = "boiled spider leg"
+	desc = "A giant spider's leg that's still twitching after being cooked. Gross!"
+	icon_state = "spiderlegcooked"
+	trash = /obj/item/trash/plate
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("toxin", 2)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/spidereggs
+	name = "spider eggs"
+	desc = "A cluster of juicy spider eggs. A great side dish for when you care not for your health."
+	icon_state = "spidereggs"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("toxin", 3)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/spidereggsham
+	name = "green eggs and ham"
+	desc = "Would you eat them on a train? Would you eat them on a plane? Would you eat them on a state of the art corporate deathtrap floating through space?"
+	icon_state = "spidereggsham"
+	trash = /obj/item/trash/plate
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("sodiumchloride", 1)
+		reagents.add_reagent("toxin", 3)
+		bitesize = 4
+
+/obj/item/weapon/reagent_containers/food/snacks/sashimi
+	name = "carp sashimi"
+	desc = "Celebrate surviving attack from hostile alien lifeforms by hospitalising yourself."
+	icon_state = "sashimi"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("toxin", 5)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/burger/red
+	name = "red burger"
+	desc = "Perfect for hiding the fact it's burnt to a crisp."
+	icon_state = "cburger"
+	color = "#DA0000FF"
+	New()
+		..()
+		reagents.add_reagent("redcrayonpowder", 10)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/burger/orange
+	name = "orange burger"
+	desc = "Contains 0% juice."
+	icon_state = "cburger"
+	color = "#FF9300FF"
+	New()
+		..()
+		reagents.add_reagent("orangecrayonpowder", 10)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/burger/yellow
+	name = "yellow burger"
+	desc = "Bright to the last bite."
+	icon_state = "cburger"
+	color = "#FFF200FF"
+	New()
+		..()
+		reagents.add_reagent("yellowcrayonpowder", 10)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/burger/green
+	name = "green burger"
+	desc = "It's not tainted meat, it's painted meat!"
+	icon_state = "cburger"
+	color = "#A8E61DFF"
+	New()
+		..()
+		reagents.add_reagent("greencrayonpowder", 10)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/burger/blue
+	name = "blue burger"
+	desc = "Is this blue rare?"
+	icon_state = "cburger"
+	color = "#00B7EFFF"
+	New()
+		..()
+		reagents.add_reagent("bluecrayonpowder", 10)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/burger/purple
+	name = "purple burger"
+	desc = "Regal and low class at the same time."
+	icon_state = "cburger"
+	color = "#DA00FFFF"
+	New()
+		..()
+		reagents.add_reagent("purplecrayonpowder", 10)
+		bitesize = 3

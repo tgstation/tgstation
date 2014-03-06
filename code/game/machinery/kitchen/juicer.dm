@@ -4,11 +4,12 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "juicer1"
 	layer = 2.9
-	density = 0
+	density = 1
 	anchored = 0
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 100
+	pass_flags = PASSTABLE
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/global/list/allowed_items = list (
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato  = "tomatojuice",
@@ -32,12 +33,16 @@
 
 
 /obj/machinery/juicer/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if(default_unfasten_wrench(user, O))
+		return
 	if (istype(O,/obj/item/weapon/reagent_containers/glass) || \
 		istype(O,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass))
 		if (beaker)
 			return 1
 		else
-			user.before_take_item(O)
+			if(!user.unEquip(O))
+				user << "<span class='notice'>\the [O] is stuck to your hand, you cannot put it in \the [src]</span>"
+				return 0
 			O.loc = src
 			beaker = O
 			src.verbs += /obj/machinery/juicer/verb/detach
@@ -47,7 +52,9 @@
 	if (!is_type_in_list(O, allowed_items))
 		user << "It looks as not containing any juice."
 		return 1
-	user.before_take_item(O)
+	if(!user.unEquip(O))
+		user << "<span class='notice'>\the [O] is stuck to your hand, you cannot put it in \the [src]</span>"
+		return 0
 	O.loc = src
 	src.updateUsrDialog()
 	return 0

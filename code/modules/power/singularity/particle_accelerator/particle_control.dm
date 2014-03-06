@@ -26,6 +26,10 @@
 	connected_parts = list()
 	..()
 
+/obj/machinery/particle_accelerator/control_box/Del()
+	if(active)
+		toggle_power()
+	..()
 
 /obj/machinery/particle_accelerator/control_box/attack_hand(mob/user as mob)
 	if(construction_state >= 3)

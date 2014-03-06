@@ -219,7 +219,6 @@
 			if("larva")				M.change_mob_type( /mob/living/carbon/alien/larva , null, null, delmob )
 			if("human")				M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
 			if("slime")				M.change_mob_type( /mob/living/carbon/slime , null, null, delmob )
-			if("adultslime")		M.change_mob_type( /mob/living/carbon/slime/adult , null, null, delmob )
 			if("monkey")			M.change_mob_type( /mob/living/carbon/monkey , null, null, delmob )
 			if("robot")				M.change_mob_type( /mob/living/silicon/robot , null, null, delmob )
 			if("cat")				M.change_mob_type( /mob/living/simple_animal/cat , null, null, delmob )
@@ -988,7 +987,7 @@
 			return
 
 		for(var/obj/item/I in M)
-			M.u_equip(I)
+			M.unEquip(I)
 			if(I)
 				I.loc = M.loc
 				I.layer = initial(I.layer)
@@ -1017,7 +1016,7 @@
 			return
 
 		for(var/obj/item/I in M)
-			M.u_equip(I)
+			M.unEquip(I)
 			if(I)
 				I.loc = M.loc
 				I.layer = initial(I.layer)
@@ -1068,7 +1067,7 @@
 			return
 
 		for(var/obj/item/I in M)
-			M.u_equip(I)
+			M.unEquip(I)
 			if(I)
 				I.loc = M.loc
 				I.layer = initial(I.layer)
@@ -1094,12 +1093,9 @@
 			usr << "This can only be used on instances of type /mob/living"
 			return
 
-		if(config.allow_admin_rev)
-			L.revive()
-			message_admins("\red Admin [key_name_admin(usr)] healed / revived [key_name_admin(L)]!", 1)
-			log_admin("[key_name(usr)] healed / Revived [key_name(L)]")
-		else
-			usr << "Admin Rejuvinates have been disabled"
+		L.revive()
+		message_admins("\red Admin [key_name_admin(usr)] healed / revived [key_name_admin(L)]!", 1)
+		log_admin("[key_name(usr)] healed / Revived [key_name(L)]")
 
 	else if(href_list["makeai"])
 		if(!check_rights(R_SPAWN))	return
@@ -1132,6 +1128,17 @@
 			return
 
 		usr.client.cmd_admin_slimeize(H)
+
+	else if(href_list["makeblob"])
+		if(!check_rights(R_SPAWN))	return
+
+		var/mob/living/carbon/human/H = locate(href_list["makeblob"])
+		if(!istype(H))
+			usr << "This can only be used on instances of type /mob/living/carbon/human"
+			return
+
+		usr.client.cmd_admin_blobize(H)
+
 
 	else if(href_list["makerobot"])
 		if(!check_rights(R_SPAWN))	return
@@ -1339,11 +1346,11 @@
 			usr << "The person you are trying to contact is not wearing a headset"
 			return
 
-		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcomm", "")
+		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcom", "")
 		if(!input)	return
 
 		src.owner << "You sent [input] to [H] via a secure channel."
-		log_admin("[src.owner] replied to [key_name(H)]'s Centcomm message with the message [input].")
+		log_admin("[src.owner] replied to [key_name(H)]'s Centcom message with the message [input].")
 		message_admins("[src.owner] replied to [key_name(H)]'s Centcom message with: \"[input]\"")
 		H << "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. [input].  Message ends.\""
 
@@ -1427,10 +1434,6 @@
 	else if(href_list["object_list"])			//this is the laggiest thing ever
 		if(!check_rights(R_SPAWN))	return
 
-		if(!config.allow_admin_spawning)
-			usr << "Spawning of items is not allowed."
-			return
-
 		var/atom/loc = usr.loc
 
 		var/dirty_paths
@@ -1471,7 +1474,7 @@
 			alert("Select fewer object types, (max 5)")
 			return
 		else if(length(removed_paths))
-			alert("Removed:\n" + dd_list2text(removed_paths, "\n"))
+			alert("Removed:\n" + list2text(removed_paths, "\n"))
 
 		var/list/offset = text2list(href_list["offset"],",")
 		var/number = dd_range(1, 100, text2num(href_list["object_count"]))
@@ -1851,8 +1854,16 @@
 					if(W.z == 1 && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
 						W.req_access = list()
 				message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
-				command_alert("Centcomm airlock control override activated. Please take this time to get acquainted with your coworkers.")
+				command_alert("Centcom airlock control override activated. Please take this time to get acquainted with your coworkers.")
 				world << sound('sound/AI/commandreport.ogg')
+			if("guns")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","SG")
+				usr.rightandwrong(0)
+			if("magic")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","SM")
+				usr.rightandwrong(1)
 			if("dorf")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","DF")

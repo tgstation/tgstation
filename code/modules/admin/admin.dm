@@ -103,7 +103,8 @@ var/global/floorIsLava = 0
 				body += "<A href='?_src_=holder;makeai=\ref[M]'>Make AI</A> | "
 				body += "<A href='?_src_=holder;makerobot=\ref[M]'>Make Robot</A> | "
 				body += "<A href='?_src_=holder;makealien=\ref[M]'>Make Alien</A> | "
-				body += "<A href='?_src_=holder;makeslime=\ref[M]'>Make Slime</A> "
+				body += "<A href='?_src_=holder;makeslime=\ref[M]'>Make Slime</A> | "
+				body += "<A href='?_src_=holder;makeblob=\ref[M]'>Make Blob</A> | "
 
 			//Simple Animals
 			if(isanimal(M))
@@ -464,6 +465,8 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=quickpower'>Power all SMES</A><BR>
 			<A href='?src=\ref[src];secretsfun=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
 			<A href='?src=\ref[src];secretsfun=traitor_all'>Everyone is the traitor</A><BR>
+			<A href='?src=\ref[src];secretsfun=guns'>Summon Guns</A><BR>
+			<A href='?src=\ref[src];secretsfun=magic'>Summon Magic</A><BR>
 			<A href='?src=\ref[src];secretsfun=onlyone'>There can only be one!</A><BR>
 			<A href='?src=\ref[src];secretsfun=retardify'>Make all players retarded</A><BR>
 			<A href='?src=\ref[src];secretsfun=eagles'>Egalitarian Station Mode</A><BR>
@@ -536,6 +539,28 @@ var/global/floorIsLava = 0
 		world << "\blue <b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n \t [message]"
 		log_admin("Announce: [key_name(usr)] : [message]")
 	feedback_add_details("admin_verb","A") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/datum/admins/proc/set_admin_notice()
+	set category = "Special Verbs"
+	set name = "Set Admin Notice"
+	set desc ="Set an announcement that appears to everyone who joins the server. Only lasts this round"
+	if(!check_rights(0))	return
+
+	var/new_admin_notice = input(src,"Set a public notice for this round. Everyone who joins the server will see it.\n(Leaving it blank will delete the current notice):","Set Notice",admin_notice) as message|null
+	if(new_admin_notice == null)
+		return
+	if(new_admin_notice == admin_notice)
+		return
+	if(new_admin_notice == "")
+		message_admins("[key_name(usr)] removed the admin notice.")
+		log_admin("[key_name(usr)] removed the admin notice:\n[admin_notice]")
+	else
+		message_admins("[key_name(usr)] set the admin notice.")
+		log_admin("[key_name(usr)] set the admin notice:\n[new_admin_notice]")
+		world << "<span class ='notice'><b>Admin Notice:</b>\n \t [new_admin_notice]</span>"
+	feedback_add_details("admin_verb","SAN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	admin_notice = new_admin_notice
+	return
 
 /datum/admins/proc/toggleooc()
 	set category = "Server"
@@ -642,30 +667,6 @@ var/global/floorIsLava = 0
 		log_admin("[key_name(usr)] removed the delay.")
 	feedback_add_details("admin_verb","DELAY") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/datum/admins/proc/adjump()
-	set category = "Server"
-	set desc="Toggle admin jumping"
-	set name="Toggle Jump"
-	config.allow_admin_jump = !(config.allow_admin_jump)
-	message_admins("\blue Toggled admin jumping to [config.allow_admin_jump].")
-	feedback_add_details("admin_verb","TJ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/datum/admins/proc/adspawn()
-	set category = "Server"
-	set desc="Toggle admin spawning"
-	set name="Toggle Spawn"
-	config.allow_admin_spawning = !(config.allow_admin_spawning)
-	message_admins("\blue Toggled admin item spawning to [config.allow_admin_spawning].")
-	feedback_add_details("admin_verb","TAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/datum/admins/proc/adrev()
-	set category = "Server"
-	set desc="Toggle admin revives"
-	set name="Toggle Revive"
-	config.allow_admin_rev = !(config.allow_admin_rev)
-	message_admins("\blue Toggled reviving to [config.allow_admin_rev].")
-	feedback_add_details("admin_verb","TAR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /datum/admins/proc/immreboot()
 	set category = "Server"
 	set desc="Reboots the server post haste"
@@ -688,12 +689,9 @@ var/global/floorIsLava = 0
 	set category = "Admin"
 	set name = "Unprison"
 	if (M.z == 2)
-		if (config.allow_admin_jump)
-			M.loc = pick(latejoin)
-			message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]", 1)
-			log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
-		else
-			alert("Admin jumping disabled")
+		M.loc = pick(latejoin)
+		message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]", 1)
+		log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
 	else
 		alert("[M.name] is not prisoned.")
 	feedback_add_details("admin_verb","UP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -741,7 +739,11 @@ var/global/floorIsLava = 0
 			return
 	chosen = matches[chosen]
 
-	new chosen(usr.loc)
+	if(ispath(chosen,/turf))
+		var/turf/T = get_turf(usr.loc)
+		T.ChangeTurf(chosen)
+	else
+		new chosen(usr.loc)
 
 	log_admin("[key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
 	feedback_add_details("admin_verb","SA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

@@ -667,7 +667,7 @@ lines 294-301 in living/say.dm (speech buffer)
 			stolen_item = C.r_hand
 
 		if(stolen_item)
-			C.u_equip(stolen_item)
+			C.unEquip(stolen_item)
 			held_item = stolen_item
 			stolen_item.loc = src
 			visible_message("[src] grabs [held_item] out of [C]'s hand!", "\blue You snag [held_item] out of [C]'s hand!", "You hear the sounds of wings flapping furiously.")

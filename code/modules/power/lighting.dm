@@ -16,7 +16,7 @@
 	desc = "Used for building lights."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-construct-item"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	var/fixture_type = "tube"
 	var/obj/machinery/light/newlight = null
 	var/sheets_refunded = 2
@@ -63,7 +63,7 @@
 	desc = "Used for building small lights."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "bulb-construct-item"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	fixture_type = "bulb"
 	sheets_refunded = 1
 
@@ -128,15 +128,15 @@
 				src.icon_state = "tube-construct-stage1"
 			if("bulb")
 				src.icon_state = "bulb-construct-stage1"
-		new /obj/item/weapon/cable_coil(get_turf(src.loc), 1, "red")
+		new /obj/item/stack/cable_coil(get_turf(src.loc), 1, "red")
 		user.visible_message("[user.name] removes the wiring from [src].", \
 			"You remove the wiring from [src].", "You hear a noise.")
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		return
 
-	if(istype(W, /obj/item/weapon/cable_coil))
+	if(istype(W, /obj/item/stack/cable_coil))
 		if (src.stage != 1) return
-		var/obj/item/weapon/cable_coil/coil = W
+		var/obj/item/stack/cable_coil/coil = W
 		coil.use(1)
 		switch(fixture_type)
 			if ("tube")
@@ -632,7 +632,6 @@
 
 /obj/item/weapon/light
 	icon = 'icons/obj/lighting.dmi'
-	flags = FPRINT | TABLEPASS
 	force = 2
 	throwforce = 5
 	w_class = 1

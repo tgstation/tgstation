@@ -54,7 +54,7 @@
 	var/datum/trackable/TB = new()
 	for(var/mob/living/M in mob_list)
 		// Easy checks first.
-		// Don't detect mobs on Centcom. Since the wizard den is on Centcomm, we only need this.
+		// Don't detect mobs on Centcom. Since the wizard den is on Centcom, we only need this.
 		var/turf/T = get_turf(M)
 		if(!T)
 			continue
@@ -77,10 +77,8 @@
 			//Cameras can't track people wearing an agent card or a ninja hood.
 			if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
 				continue
-		 	if(istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja))
-		 		var/obj/item/clothing/head/helmet/space/space_ninja/hood = H.head
-	 			if(!hood.canremove)
-	 				continue
+		 	if(istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja) && (H.head.flags & NODROP))
+		 		continue
 
 		 // Now, are they viewable by a camera? (This is last because it's the most intensive check)
 		if(!near_camera(M))
@@ -125,7 +123,7 @@
 	//U << text("Now tracking [] on camera.", target.name)
 	//if (U.machine == null)
 	//	U.machine = U
-	U << "Now tracking [target.name] on camera."
+	U << "Now tracking [target.get_visible_name()] on camera."
 
 	spawn (0)
 		while (U.cameraFollow == target)
@@ -137,7 +135,7 @@
 					U << "Follow camera mode terminated."
 					U.cameraFollow = null
 					return
-		 		if(istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja) && !H.head.canremove)
+		 		if(istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja) && (H.head.flags & NODROP))
 		 			U << "Follow camera mode terminated."
 					U.cameraFollow = null
 					return

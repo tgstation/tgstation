@@ -15,7 +15,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	icon_state = "facehugger"
 	item_state = "facehugger"
 	w_class = 1 //note: can be picked up by aliens unlike most other items of w_class below 4
-	flags = FPRINT | TABLEPASS | MASKCOVERSMOUTH | MASKCOVERSEYES | MASKINTERNALS
+	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | MASKINTERNALS
 	throw_range = 5
 
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
@@ -40,7 +40,7 @@ var/const/MAX_ACTIVE_TIME = 400
 
 /obj/item/clothing/mask/facehugger/attack(mob/living/M as mob, mob/user as mob)
 	..()
-	user.drop_from_inventory(src)
+	user.unEquip(src)
 	Attach(M)
 
 /obj/item/clothing/mask/facehugger/examine()
@@ -54,12 +54,14 @@ var/const/MAX_ACTIVE_TIME = 400
 		usr << "\red \b It looks like the proboscis has been removed."
 	return
 
-/obj/item/clothing/mask/facehugger/attackby()
-	Die()
+/obj/item/clothing/mask/facehugger/attackby(var/obj/item/O,var/mob/m)
+	if(O.force)
+		Die()
 	return
 
-/obj/item/clothing/mask/facehugger/bullet_act()
-	Die()
+/obj/item/clothing/mask/facehugger/bullet_act(var/obj/item/projectile/P)
+	if(P.damage)
+		Die()
 	return
 
 /obj/item/clothing/mask/facehugger/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -85,7 +87,8 @@ var/const/MAX_ACTIVE_TIME = 400
 	return 0
 
 /obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed)
-	..()
+	if(!..())
+		return
 	if(stat == CONSCIOUS)
 		icon_state = "[initial(icon_state)]_thrown"
 		spawn(15)
@@ -129,8 +132,8 @@ var/const/MAX_ACTIVE_TIME = 400
 		if(target.wear_mask)
 			if(prob(20))	return 0
 			var/obj/item/clothing/W = target.wear_mask
-			if(!W.canremove)	return 0
-			target.drop_from_inventory(W)
+			if(W.flags & NODROP)	return 0
+			target.unEquip(W)
 
 			target.visible_message("\red \b [src] tears [W] off of [target]'s face!")
 
@@ -161,13 +164,14 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	if(!sterile)
 		//target.contract_disease(new /datum/disease/alien_embryo(0)) //so infection chance is same as virus infection chance
-		new /obj/item/alien_embryo(target)
-		target.status_flags |= XENO_HOST
-
 		target.visible_message("\red \b [src] falls limp after violating [target]'s face!")
 
 		Die()
 		icon_state = "[initial(icon_state)]_impregnated"
+
+		if(!target.getlimb(/obj/item/organ/limb/robot/chest) && !(target.status_flags & XENO_HOST))
+			new /obj/item/alien_embryo(target)
+
 
 		if(iscorgi(target))
 			var/mob/living/simple_animal/corgi/C = target
@@ -220,14 +224,13 @@ var/const/MAX_ACTIVE_TIME = 400
 
 /proc/CanHug(var/mob/M)
 
-	if(iscorgi(M))
+	if(iscorgi(M) || ismonkey(M))
 		return 1
 
-	if(!iscarbon(M) || isalien(M))
-		return 0
 	var/mob/living/carbon/C = M
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		if(H.head && H.head.flags & HEADCOVERSMOUTH)
 			return 0
-	return 1
+		return 1
+	return 0

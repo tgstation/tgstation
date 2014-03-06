@@ -4,7 +4,7 @@
 	icon_state = "electropack0"
 	item_state = "electropack"
 	frequency = 1449
-	flags = FPRINT | CONDUCT | TABLEPASS
+	flags = CONDUCT
 	slot_flags = SLOT_BACK
 	w_class = 5.0
 	g_amt = 2500
@@ -28,18 +28,22 @@
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
 		A.icon = 'icons/obj/assemblies.dmi'
 
-		user.drop_from_inventory(W)
+		if(!user.unEquip(W))
+			user << "<span class='notice'>\the [W] is stuck to your hand, you cannot attach it to \the [src]!</span>"
+			return
 		W.loc = A
 		W.master = A
 		A.part1 = W
 
-		user.drop_from_inventory(src)
+		user.unEquip(src)
 		loc = A
 		master = A
 		A.part2 = src
 
 		user.put_in_hands(A)
 		A.add_fingerprint(user)
+		if(src.flags & NODROP)
+			A.flags |= NODROP
 
 /obj/item/device/radio/electropack/Topic(href, href_list)
 	//..()
@@ -98,7 +102,7 @@
 		s.set_up(3, 1, M)
 		s.start()
 
-		M.Weaken(10)
+		M.Weaken(5)
 
 	if(master && !isWireCut(WIRE_SIGNAL))
 		master.receive_signal()

@@ -2,7 +2,7 @@
 	set invisibility = 0
 	set background = 1
 
-	if (src.monkeyizing)
+	if (src.notransform)
 		return
 
 	if (src.stat != 2)
@@ -128,6 +128,8 @@
 				src.sight &= ~SEE_OBJS
 				src.see_in_dark = 8
 				src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+				if(see_override)
+					see_invisible = see_override
 
 			if (src.healths)
 				if (src.stat != 2)

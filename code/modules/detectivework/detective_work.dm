@@ -5,10 +5,10 @@ atom/var/list/suit_fibers
 atom/proc/add_fibers(mob/living/carbon/human/M)
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/))
 		var/obj/item/clothing/gloves/G = M.gloves
-		if(G.transfer_blood) //bloodied gloves transfer blood to touched objects
+		if(G.transfer_blood > 1) //bloodied gloves transfer blood to touched objects
 			if(add_blood(G.bloody_hands_mob)) //only reduces the bloodiness of our gloves if the item wasn't already bloody
 				G.transfer_blood--
-	else if(M.bloody_hands)
+	else if(M.bloody_hands > 1)
 		if(add_blood(M.bloody_hands_mob))
 			M.bloody_hands--
 	if(!suit_fibers) suit_fibers = list()
@@ -50,8 +50,6 @@ atom/proc/add_fibers(mob/living/carbon/human/M)
 /atom/proc/add_hiddenprint(mob/living/M as mob)
 	if(isnull(M)) return
 	if(isnull(M.key)) return
-	if(!( flags ) & FPRINT)
-		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(!istype(H.dna, /datum/dna))
@@ -76,8 +74,6 @@ atom/proc/add_fibers(mob/living/carbon/human/M)
 /atom/proc/add_fingerprint(mob/living/M as mob, ignoregloves = 0)
 	if(isnull(M)) return
 	if(isnull(M.key)) return
-	if(!(flags & FPRINT))
-		return
 	if(ishuman(M))
 		//Add the list if it does not exist.
 		if(!fingerprintshidden)

@@ -35,10 +35,9 @@
 	return
 
 /obj/structure/alien/resin/Move()
-	air_update_turf(1)
+	var/turf/T = loc
 	..()
-	air_update_turf(1)
-	return
+	move_update_air(T)
 
 /obj/structure/alien/resin/CanAtmosPass()
 	return !density
@@ -165,7 +164,7 @@
 
 
 /obj/structure/alien/weeds/proc/Life()
-	set background = 1
+	set background = BACKGROUND_ENABLED
 	var/turf/U = get_turf(src)
 
 	if(istype(U, /turf/space))
@@ -197,7 +196,7 @@
 	if(I.attack_verb.len)
 		visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] with [I] by [user].</span>")
 	else
-		visible_message("<span class='danger'>[src] has been attacked with [I] by [user].</span>")
+		visible_message("<span class='danger'>[src] has been attacked with [I] by [user]!</span>")
 
 	var/damage = I.force / 4.0
 	if(istype(I, /obj/item/weapon/weldingtool))
@@ -326,7 +325,7 @@
 	if(I.attack_verb.len)
 		visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] with [I] by [user].</span>")
 	else
-		visible_message("<span class='danger'>[src] has been attacked with [I] by [user].</span>")
+		visible_message("<span class='danger'>[src] has been attacked with [I] by [user]!</span>")
 
 	var/damage = I.force / 4
 	if(istype(I, /obj/item/weapon/weldingtool))

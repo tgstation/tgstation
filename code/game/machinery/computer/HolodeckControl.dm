@@ -200,8 +200,7 @@
 	if(isobj(obj))
 		var/mob/M = obj.loc
 		if(ismob(M))
-			M.u_equip(obj)
-			M.update_icons()	//so their overlays update
+			M.unEquip(obj, 1) //Holoweapons should always drop.
 
 	if(!silent)
 		var/obj/oldobj = obj
@@ -226,7 +225,7 @@
 		if(world.time < (last_change + 15))//To prevent super-spam clicking, reduced process size and annoyance -Sieve
 			return
 		for(var/mob/M in range(3,src))
-			M.show_message("\b ERROR. Recalibrating projetion apparatus.")
+			M.show_message("\b ERROR. Recalibrating projection apparatus.")
 			last_change = world.time
 			return
 
@@ -261,7 +260,7 @@
 							T.temperature = 5000
 							T.hotspot_expose(50000,50000,1)
 			if(L.name=="Holocarp Spawn")
-				new /mob/living/simple_animal/hostile/carp(L.loc)
+				new /mob/living/simple_animal/hostile/carp/holocarp(L.loc)
 
 
 /obj/machinery/computer/HolodeckControl/proc/emergencyShutdown()
@@ -364,14 +363,14 @@
 	damtype = HALLOSS
 
 /obj/item/weapon/holo/esword
-	desc = "May the force be within you. Sorta"
+	desc = "May the force be with you. Sorta"
 	icon_state = "sword0"
 	force = 3.0
-	throw_speed = 1
+	throw_speed = 2
 	throw_range = 5
 	throwforce = 0
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = NOSHIELD
 	var/active = 0
 
 /obj/item/weapon/holo/esword/green
@@ -399,13 +398,13 @@
 		force = 30
 		icon_state = "sword[item_color]"
 		w_class = 4
-		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
+		playsound(user, 'sound/weapons/saberon.ogg', 20, 1)
 		user << "\blue [src] is now active."
 	else
 		force = 3
 		icon_state = "sword0"
 		w_class = 2
-		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
+		playsound(user, 'sound/weapons/saberoff.ogg', 20, 1)
 		user << "\blue [src] can now be concealed."
 	add_fingerprint(user)
 	return

@@ -280,7 +280,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		for(var/datum/mind/T in ticker.minds)
 			for(var/datum/objective/obj in T.objectives)
 				// Only update if this player is a target
-				if(obj.target && obj.target.current.real_name == name)
+				if(obj.target && obj.target.current && obj.target.current.real_name == name)
 					obj.update_explanation_text()
 
 	return 1
@@ -594,26 +594,45 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 	del(animation)
 
 
-//Will return the contents of an atom recursivly to a depth of 'searchDepth'
-/atom/proc/GetAllContents(searchDepth = 5)
-	var/list/toReturn = list()
+atom/proc/GetAllContents()
+	var/list/processing_list = list(src)
+	var/list/processed = list()
+	var/list/assembled = list()
 
-	for(var/atom/part in contents)
-		toReturn += part
-		if(part.contents.len && searchDepth)
-			toReturn += part.GetAllContents(searchDepth - 1)
+	while(processing_list.len)
+		var/atom/A = processing_list[1]
+		processing_list -= A
 
-	return toReturn
+		for(var/atom/a in A)
+			if(!(a in processed))
+				processing_list += a
 
+		if(!(A in assembled))
+			assembled += A
 
-/atom/proc/GetTypeInAllContents(typepath, searchDepth = 5)
-	for(var/atom/part in contents)
-		if(istype(part, typepath))
-			return 1
-		if(part.contents.len && searchDepth)
-			if(part.GetTypeInAllContents(typepath, searchDepth - 1))
-				return 1
-	return 0
+	return assembled
+
+atom/proc/GetTypeInAllContents(typepath)
+	var/list/processing_list = list(src)
+	var/list/processed = list()
+
+	var/atom/found = null
+
+	while(processing_list.len && found==null)
+		var/atom/A = processing_list[1]
+		if(istype(A, typepath))
+			found = A
+
+		processing_list -= A
+
+		for(var/atom/a in A)
+			if(!(a in processed))
+				processing_list += a
+
+		if(!(A in processed))
+			processed += A
+
+	return found
 
 
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
@@ -1113,7 +1132,7 @@ proc/oview_or_orange(distance = world.view , center = usr , type)
 
 //Quick type checks for some tools
 var/global/list/common_tools = list(
-/obj/item/weapon/cable_coil,
+/obj/item/stack/cable_coil,
 /obj/item/weapon/wrench,
 /obj/item/weapon/weldingtool,
 /obj/item/weapon/screwdriver,
@@ -1256,3 +1275,17 @@ var/list/WALLITEMS = list(
 	else
 		user << "\blue [target] is empty!"
 	return
+
+proc/check_target_facings(mob/living/initator, mob/living/target)
+	/*This can be used to add additional effects on interactions between mobs depending on how the mobs are facing each other, such as adding a crit damage to blows to the back of a guy's head.
+	Given how click code currently works (Nov '13), the initiating mob will be facing the target mob most of the time
+	That said, this proc should not be used if the change facing proc of the click code is overriden at the same time*/
+	if(!ismob(target) || target.lying)
+	//Make sure we are not doing this for things that can't have a logical direction to the players given that the target would be on their side
+		return
+	if(initator.dir == target.dir) //mobs are facing the same direction
+		return 1
+	if(initator.dir + 4 == target.dir || initator.dir - 4 == target.dir) //mobs are facing each other
+		return 2
+	if(initator.dir + 2 == target.dir || initator.dir - 2 == target.dir || initator.dir + 6 == target.dir || initator.dir - 6 == target.dir) //Initating mob is looking at the target, while the target mob is looking in a direction perpendicular to the 1st
+		return 3

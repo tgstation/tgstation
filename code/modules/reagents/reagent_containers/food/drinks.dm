@@ -6,7 +6,7 @@
 	desc = "yummy"
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = null
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	flags = OPENCONTAINER
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,25)
 	volume = 50
@@ -23,11 +23,11 @@
 		var/fillevel = gulp_size
 
 		if(!R.total_volume || !R)
-			user << "\red None of [src] left, oh no!"
+			user << "<span class='alert'> None of [src] left, oh no!</span>"
 			return 0
 
 		if(M == user)
-			M << "\blue You swallow a gulp of [src]."
+			M << "<span class='notice'>You swallow a gulp of [src].</span>"
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST)
 				spawn(5)
@@ -42,13 +42,7 @@
 			if(!do_mob(user, M)) return
 			for(var/mob/O in viewers(world.view, user))
 				O.show_message("\red [user] feeds [M] [src].", 1)
-
-			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
-
-			log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
-
-
+			add_logs(user, M, "fed", object="[reagentlist(src)]")
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST)
 				spawn(5)
@@ -134,7 +128,7 @@
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = null
 	volume = 150
-	flags = FPRINT | CONDUCT | TABLEPASS | OPENCONTAINER
+	flags = CONDUCT | OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/food/drinks/golden_cup/tournament_26_06_2011
 	desc = "A golden cup. It will be presented to a winner of tournament 26 june and name of the winner will be graved on it."
@@ -295,6 +289,15 @@
 //////////////////////////soda_cans//
 //These are in their own group to be used as IED's in /obj/item/weapon/grenade/ghettobomb.dm
 
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
+	if(M == user && !src.reagents.total_volume && user.a_intent == "harm" && user.zone_sel.selecting == "head")
+		user.visible_message("<span class='notice'>[user] crushes the can of [src] on \his forehead!</span>", "<span class='notice'>You crush the can of [src] on your forehead!</span>")
+		playsound(user.loc,'sound/weapons/pierce.ogg', rand(10,50), 1)
+		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(user.loc)
+		crushed_can.icon_state = icon_state
+		del(src)
+	..()
+
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola
 	name = "Space Cola"
 	desc = "Cola. in space."
@@ -382,3 +385,4 @@
 		reagents.add_reagent("dr_gibb", 30)
 		src.pixel_x = rand(-10.0, 10)
 		src.pixel_y = rand(-10.0, 10)
+

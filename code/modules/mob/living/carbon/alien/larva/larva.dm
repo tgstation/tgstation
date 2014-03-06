@@ -55,23 +55,12 @@
 
 
 /mob/living/carbon/alien/larva/ex_act(severity)
-	if(!blinded)
-		flick("flash", flash)
-
-	if (stat == 2 && client)
-		gib()
-		return
-
-	else if (stat == 2 && !client)
-		gibs(loc, viruses)
-		del(src)
-		return
+	..()
 
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
 		if (1.0)
-			b_loss += 500
 			gib()
 			return
 
@@ -143,8 +132,7 @@
 			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
-		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
-		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
+		add_logs(M, src, "attacked", admin=0)
 		updatehealth()
 
 
@@ -172,7 +160,7 @@
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[M.name] has bit [src]!</B>"), 1)
+						O.show_message(text("<span class='danger'>[M.name] bites [src]!</span>"), 1)
 				adjustBruteLoss(rand(1, 3))
 				updatehealth()
 	return
@@ -193,7 +181,7 @@
 
 		var/damage = rand(1, 3)
 
-		if(istype(src, /mob/living/carbon/slime/adult))
+		if(M.is_adult)
 			damage = rand(20, 40)
 		else
 			damage = rand(5, 35)
@@ -228,7 +216,6 @@
 
 			M.put_in_active_hand(G)
 
-			grabbed_by += G
 			G.synch()
 
 			LAssailant = M
@@ -253,7 +240,7 @@
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has kicked []!</B>", M, src), 1)
 				if ((stat != DEAD) && (damage > 4.9))
-					Weaken(rand(10,15))
+					Weaken(rand(5,10))
 					for(var/mob/O in viewers(M, null))
 						if ((O.client && !( O.blinded )))
 							O.show_message(text("\red <B>[] has weakened []!</B>", M, src), 1, "\red You hear someone fall.", 2)
@@ -295,7 +282,7 @@
 				var/damage = rand(1, 3)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
+						O.show_message(text("<span class='danger'>[M.name] bites []!</span>", src), 1)
 				adjustBruteLoss(damage)
 				updatehealth()
 			else

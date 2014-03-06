@@ -15,7 +15,7 @@ datum
 		var/description = ""
 		var/datum/reagents/holder = null
 		var/reagent_state = SOLID
-		var/list/data = null
+		var/list/data
 		var/volume = 0
 		var/nutriment_factor = 0
 		//var/list/viruses = list()
@@ -85,7 +85,7 @@ datum
 				return
 
 		blood
-			data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null)
+			data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null)
 			name = "Blood"
 			id = "blood"
 			reagent_state = LIQUID
@@ -209,12 +209,12 @@ datum
 			id = "water"
 			description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
 			reagent_state = LIQUID
-			color = "#0064C8" // rgb: 0, 100, 200
+			color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
 
 			reaction_turf(var/turf/simulated/T, var/volume)
 				if (!istype(T)) return
 				src = null
-				if(volume >= 3)
+				if(volume >= 10)
 					T.MakeSlippery()
 
 				for(var/mob/living/carbon/slime/M in T)
@@ -266,7 +266,7 @@ datum
 				if(data >= 30)
 					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 4
-					M.make_dizzy(5)
+					M.Dizzy(5)
 				if(data >= 30*2.5 && prob(33))
 					if (!M.confused) M.confused = 1
 					M.confused += 3
@@ -276,6 +276,9 @@ datum
 			reaction_turf(var/turf/simulated/T, var/volume)
 				..()
 				if(!istype(T)) return
+				if(volume>=10)
+					for(var/obj/effect/rune/R in T)
+						del R
 				T.Bless()
 
 		lube
@@ -695,9 +698,9 @@ datum
 					if(!istype(T, /turf/space))
 						new /obj/effect/decal/cleanable/greenglow(T)
 
-		aluminum
-			name = "Aluminum"
-			id = "aluminum"
+		aluminium
+			name = "Aluminium"
+			id = "aluminium"
 			description = "A silvery white and ductile member of the boron group of chemical elements."
 			reagent_state = SOLID
 			color = "#A8A8A8" // rgb: 168, 168, 168
@@ -822,7 +825,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.make_dizzy(1)
+				M.Dizzy(1)
 				if(!M.confused) M.confused = 1
 				M.confused = max(M.confused, 20)
 				holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
@@ -1148,8 +1151,8 @@ datum
 						M.status_flags &= ~DISFIGURED
 					if(35 to INFINITY)
 						M.adjustToxLoss(1)
-						M.make_dizzy(5)
-						M.make_jittery(5)
+						M.Dizzy(5)
+						M.Jitter(5)
 
 				..()
 				return
@@ -1282,7 +1285,7 @@ datum
 			on_mob_life(var/mob/living/carbon/M)
 				if(!istype(M))	return
 				if(!M) M = holder.my_atom
-				M.apply_effect(10,IRRADIATE,0)
+				M.apply_effect(5,IRRADIATE,0)
 				..()
 				return
 
@@ -1291,7 +1294,7 @@ datum
 			id = "plasma"
 			description = "Plasma in its liquid form."
 			reagent_state = LIQUID
-			color = "#E71B00" // rgb: 231, 27, 0
+			color = "#DB2D08" // rgb: 219, 45, 8
 			toxpwr = 3
 
 			on_mob_life(var/mob/living/M as mob)
@@ -1408,8 +1411,8 @@ datum
 				if(!M) M = holder.my_atom
 				M.status_flags |= FAKEDEATH
 				M.adjustOxyLoss(0.5*REM)
-				M.Weaken(10)
-				M.silent = max(M.silent, 10)
+				M.Weaken(5)
+				M.silent = max(M.silent, 5)
 				M.tod = worldtime2text()
 				..()
 				return
@@ -1463,6 +1466,33 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(H.dna)
 							if(H.dna.mutantrace == "plant") //plantmen take a LOT of damage
+								H.adjustToxLoss(10)
+
+		toxin/plantbgone/weedkiller
+			name = "Weed Killer"
+			id = "weedkiller"
+			description = "A harmful toxic mixture to kill weeds. Do not ingest!"
+			reagent_state = LIQUID
+			color = "#4B004B" // rgb: 75, 0, 75
+
+
+		toxin/pestkiller
+			name = "Pest Killer"
+			id = "pestkiller"
+			description = "A harmful toxic mixture to kill pests. Do not ingest!"
+			color = "#4B004B" // rgb: 75, 0, 75
+			toxpwr = 1
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+				src = null
+				if(iscarbon(M))
+					var/mob/living/carbon/C = M
+					if(!C.wear_mask) // If not wearing a mask
+						C.adjustToxLoss(2) // 4 toxic damage per application, doubled for some reason
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if(H.dna)
+							if(H.dna.mutantrace == "fly") //Botanists can now genocide plant and fly people alike.
 								H.adjustToxLoss(10)
 
 		toxin/stoxin
@@ -1640,6 +1670,22 @@ datum
 			toxpwr = 2
 			meltprob = 30
 
+		toxin/coffeepowder
+			name = "Coffee Grounds"
+			id = "coffeepowder"
+			description = "Finely ground coffee beans, used to make coffee."
+			reagent_state = SOLID
+			color = "#5B2E0D" // rgb: 91, 46, 13
+			toxpwr = 0.5
+
+		toxin/teapowder
+			name = "Ground Tea Leaves"
+			id = "teapowder"
+			description = "Finely shredded tea leaves, used for making tea."
+			reagent_state = SOLID
+			color = "#7F8400" // rgb: 127, 132, 0
+			toxpwr = 0.5
+
 /////////////////////////Coloured Crayon Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
 
@@ -1659,52 +1705,42 @@ datum
 			name = "Red Crayon Powder"
 			id = "redcrayonpowder"
 			colorname = "red"
-			color = "#DA0000" // red
-			New()
-				..()
 
 		crayonpowder/orange
 			name = "Orange Crayon Powder"
 			id = "orangecrayonpowder"
 			colorname = "orange"
 			color = "#FF9300" // orange
-			New()
-				..()
-
 
 		crayonpowder/yellow
 			name = "Yellow Crayon Powder"
 			id = "yellowcrayonpowder"
 			colorname = "yellow"
 			color = "#FFF200" // yellow
-			New()
-				..()
-
 
 		crayonpowder/green
 			name = "Green Crayon Powder"
 			id = "greencrayonpowder"
 			colorname = "green"
 			color = "#A8E61D" // green
-			New()
-				..()
-
 
 		crayonpowder/blue
 			name = "Blue Crayon Powder"
 			id = "bluecrayonpowder"
 			colorname = "blue"
 			color = "#00B7EF" // blue
-			New()
-				..()
 
 		crayonpowder/purple
 			name = "Purple Crayon Powder"
 			id = "purplecrayonpowder"
 			colorname = "purple"
 			color = "#DA00FF" // purple
-			New()
-				..()
+
+		crayonpowder/invisible
+			name = "Invisible Crayon Powder"
+			id = "invisiblecrayonpowder"
+			colorname = "invisible"
+			color = "#FFFFFF00" // white + no alpha
 
 
 /////////////////////////Food Reagents////////////////////////////
@@ -1959,18 +1995,18 @@ datum
 				switch(data)
 					if(1 to 5)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_dizzy(5)
+						M.Dizzy(5)
 						if(prob(10)) M.emote(pick("twitch","giggle"))
 					if(5 to 10)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_jittery(10)
-						M.make_dizzy(10)
+						M.Jitter(10)
+						M.Dizzy(10)
 						M.druggy = max(M.druggy, 35)
 						if(prob(20)) M.emote(pick("twitch","giggle"))
 					if (10 to INFINITY)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_jittery(20)
-						M.make_dizzy(20)
+						M.Jitter(20)
+						M.Dizzy(20)
 						M.druggy = max(M.druggy, 40)
 						if(prob(30)) M.emote(pick("twitch","giggle"))
 				holder.remove_reagent(src.id, 0.2)
@@ -2358,7 +2394,7 @@ datum
 				M.sleeping = max(0,M.sleeping - 2)
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
-				M.make_jittery(5)
+				M.Jitter(5)
 				if(holder.has_reagent("frostoil"))
 					holder.remove_reagent("frostoil", 5)
 				..()
@@ -2398,7 +2434,7 @@ datum
 				M.sleeping = max(0,M.sleeping-2)
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
-				M.make_jittery(5)
+				M.Jitter(5)
 				..()
 				return
 
@@ -2443,7 +2479,7 @@ datum
 			color = "#100800" // rgb: 16, 8, 0
 
 			on_mob_life(var/mob/living/M as mob)
-				M.make_jittery(20)
+				M.Jitter(20)
 				M.druggy = max(M.druggy, 30)
 				M.dizziness +=5
 				M.drowsyness = 0
@@ -2466,7 +2502,7 @@ datum
 				M.sleeping = max(0,M.sleeping-1)
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
-				M.make_jittery(5)
+				M.Jitter(5)
 				M.nutrition += 1
 				..()
 				return
@@ -2572,7 +2608,7 @@ datum
 				M.sleeping = 0
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
-				M.make_jittery(5)
+				M.Jitter(5)
 				if(M.getBruteLoss() && prob(20)) M.heal_organ_damage(1,0)
 				M.nutrition++
 				..()
@@ -2592,7 +2628,7 @@ datum
 				M.sleeping = 0
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
-				M.make_jittery(5)
+				M.Jitter(5)
 				if(M.getBruteLoss() && prob(20)) M.heal_organ_damage(1,0)
 				M.nutrition++
 				..()
@@ -2628,7 +2664,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				M.druggy = max(M.druggy, 50)
 				M.confused = max(M.confused+2,0)
-				M.make_dizzy(10)
+				M.Dizzy(10)
 				if (!M.stuttering) M.stuttering = 1
 				M.stuttering += 3
 				if(!data) data = 1
@@ -2705,24 +2741,24 @@ datum
 				switch(data)
 					if(1 to 5)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_dizzy(10)
+						M.Dizzy(10)
 						if(prob(10)) M.emote(pick("twitch","giggle"))
 					if(5 to 10)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_jittery(20)
-						M.make_dizzy(20)
+						M.Jitter(20)
+						M.Dizzy(20)
 						M.druggy = max(M.druggy, 45)
 						if(prob(20)) M.emote(pick("twitch","giggle"))
 					if (10 to 200)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_jittery(40)
-						M.make_dizzy(40)
+						M.Jitter(40)
+						M.Dizzy(40)
 						M.druggy = max(M.druggy, 60)
 						if(prob(30)) M.emote(pick("twitch","giggle"))
 					if(200 to INFINITY)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_jittery(60)
-						M.make_dizzy(60)
+						M.Jitter(60)
+						M.Dizzy(60)
 						M.druggy = max(M.druggy, 75)
 						if(prob(40)) M.emote(pick("twitch","giggle"))
 						if(prob(30)) M.adjustToxLoss(2)
@@ -2753,7 +2789,7 @@ datum
 				if(data >= boozepwr)
 					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 4
-					M.make_dizzy(5)
+					M.Dizzy(5)
 				if(data >= boozepwr*2.5 && prob(33))
 					if (!M.confused) M.confused = 1
 					M.confused += 3
@@ -2805,7 +2841,7 @@ datum
 				M.dizziness = max(0,M.dizziness-5)
 				M.drowsyness = max(0,M.drowsyness-3)
 				M.sleeping = max(0,M.sleeping-2)
-				M.make_jittery(5)
+				M.Jitter(5)
 				..()
 				return
 
@@ -2828,7 +2864,7 @@ datum
 				M.sleeping = max(0,M.sleeping-2)
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
-				M.make_jittery(5)
+				M.Jitter(5)
 				M.nutrition += 1
 				..()
 				return

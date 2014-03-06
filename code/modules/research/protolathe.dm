@@ -22,6 +22,8 @@ Note: Must be placed west/left of and R&D console to function.
 	var/diamond_amount = 0.0
 	var/clown_amount = 0.0
 	var/adamantine_amount = 0.0
+	var/efficiency_coeff
+	reagents = new()
 
 
 /obj/machinery/r_n_d/protolathe/New()
@@ -35,6 +37,7 @@ Note: Must be placed west/left of and R&D console to function.
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
 	RefreshParts()
+	reagents.my_atom = src
 
 /obj/machinery/r_n_d/protolathe/proc/TotalMaterials() //returns the total of all the stored materials. Makes code neater.
 	return m_amount + g_amount + gold_amount + silver_amount + plasma_amount + uranium_amount + diamond_amount + clown_amount
@@ -42,45 +45,53 @@ Note: Must be placed west/left of and R&D console to function.
 /obj/machinery/r_n_d/protolathe/RefreshParts()
 	var/T = 0
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
-		T += G.reagents.maximum_volume
-	var/datum/reagents/R = new/datum/reagents(T)		//Holder for the reagents used as materials.
-	reagents = R
-	R.my_atom = src
-	T = 0
+		G.reagents.trans_to(src, G.reagents.total_volume)
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
 	max_material_storage = T * 75000
+	T = 0
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		T += M.rating
+	efficiency_coeff = T-1
+
+/obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, var/M)
+	switch(M)
+		if("$metal")
+			return (m_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+		if("$glass")
+			return (g_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+		if("$gold")
+			return (gold_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+		if("$silver")
+			return (silver_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+		if("$plasma")
+			return (plasma_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+		if("$uranium")
+			return (uranium_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+		if("$diamond")
+			return (diamond_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+		if("$clown")
+			return (clown_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+		else
+			return (reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff)) != 0) ? 1 : 0
+
 
 /obj/machinery/r_n_d/protolathe/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (shocked)
 		shock(user,50)
-	if (O.is_open_container())
-		return 1
-	if (istype(O, /obj/item/weapon/screwdriver))
-		if (!opened)
-			opened = 1
-			if(linked_console)
-				linked_console.linked_lathe = null
-				linked_console = null
-			icon_state = "protolathe_t"
-			user << "You open the maintenance hatch of [src]."
-		else
-			opened = 0
-			icon_state = "protolathe"
-			user << "You close the maintenance hatch of [src]."
+	if (default_deconstruction_screwdriver(user, "protolathe_t", "protolathe", O))
+		if(linked_console)
+			linked_console.linked_lathe = null
+			linked_console = null
 		return
-	if (opened)
+
+	if(exchange_parts(user, O))
+		return
+
+	if (panel_open)
 		if(istype(O, /obj/item/weapon/crowbar))
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
-			M.icon_state = "box_1"
-			for(var/obj/I in component_parts)
-				if(istype(I, /obj/item/weapon/reagent_containers/glass/beaker))
-					reagents.trans_to(I, reagents.total_volume)
-				if(I.reliability != 100 && crit_fail)
-					I.crit_fail = 1
-				I.loc = src.loc
+			for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
+				reagents.trans_to(G, G.reagents.maximum_volume)
 			if(m_amount >= 3750)
 				var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src.loc)
 				G.amount = round(m_amount / G.perunit)
@@ -108,7 +119,7 @@ Note: Must be placed west/left of and R&D console to function.
 			if(adamantine_amount >= 2000)
 				var/obj/item/stack/sheet/mineral/adamantine/G = new /obj/item/stack/sheet/mineral/adamantine(src.loc)
 				G.amount = round(adamantine_amount / G.perunit)
-			del(src)
+			default_deconstruction_crowbar(O)
 			return 1
 		else
 			user << "\red You can't load the [src.name] while it's opened."
@@ -121,6 +132,8 @@ Note: Must be placed west/left of and R&D console to function.
 	if (busy)
 		user << "\red The protolathe is busy. Please wait for completion of previous operation."
 		return 1
+	if (O.is_open_container())
+		return
 	if (!istype(O, /obj/item/stack/sheet))
 		user << "\red You cannot insert this item into the protolathe!"
 		return 1

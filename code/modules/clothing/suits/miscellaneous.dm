@@ -34,7 +34,6 @@
 	desc = "Yarr."
 	icon_state = "pirate"
 	item_state = "pirate"
-	flags = FPRINT | TABLEPASS
 
 
 /obj/item/clothing/suit/hgpirate
@@ -42,7 +41,6 @@
 	desc = "Yarr."
 	icon_state = "hgpirate"
 	item_state = "hgpirate"
-	flags = FPRINT | TABLEPASS
 	flags_inv = HIDEJUMPSUIT
 
 
@@ -51,7 +49,7 @@
 	desc = "Suit for a cyborg costume."
 	icon_state = "death"
 	item_state = "death"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	fire_resist = T0C+5200
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
@@ -61,7 +59,6 @@
 	desc = "A Nazi great coat"
 	icon_state = "nazi"
 	item_state = "nazi"
-	flags = FPRINT | TABLEPASS
 
 
 /obj/item/clothing/suit/johnny_coat
@@ -69,7 +66,6 @@
 	desc = "Johnny~~"
 	icon_state = "johnny"
 	item_state = "johnny"
-	flags = FPRINT | TABLEPASS
 
 
 /obj/item/clothing/suit/justice
@@ -77,7 +73,6 @@
 	desc = "this pretty much looks ridiculous"
 	icon_state = "justice"
 	item_state = "justice"
-	flags = FPRINT | TABLEPASS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 
@@ -86,19 +81,9 @@
 	desc = "This robe commands authority."
 	icon_state = "judge"
 	item_state = "judge"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/spacecash)
 	flags_inv = HIDEJUMPSUIT
-
-
-/obj/item/clothing/suit/wcoat
-	name = "waistcoat"
-	desc = "For some classy, murderous fun."
-	icon_state = "vest"
-	item_state = "wcoat"
-	blood_overlay_type = "armor"
-	body_parts_covered = CHEST
 
 
 /obj/item/clothing/suit/apron/overalls
@@ -115,7 +100,6 @@
 	item_state = "space_suit_syndicate"
 	desc = "A plastic replica of the syndicate space suit, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
 	w_class = 3
-	flags = FPRINT | TABLEPASS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
@@ -176,6 +160,31 @@
 	body_parts_covered = CHEST|GROIN
 	flags_inv = HIDEJUMPSUIT
 
+/obj/item/clothing/suit/poncho
+	name = "poncho"
+	desc = "Your classic, non-racist poncho."
+	icon_state = "classicponcho"
+	item_state = "classicponcho"
+
+/obj/item/clothing/suit/poncho/green
+	name = "green poncho"
+	desc = "Your classic, non-racist poncho. This one is green."
+	icon_state = "greenponcho"
+	item_state = "greenponcho"
+
+/obj/item/clothing/suit/poncho/red
+	name = "red poncho"
+	desc = "Your classic, non-racist poncho. This one is red."
+	icon_state = "redponcho"
+	item_state = "redponcho"
+
+/obj/item/clothing/suit/poncho/ponchoshame
+	name = "poncho of shame"
+	desc = "Forced to live on your shameful acting as a fake mexican, you and your poncho have grown inseperable. Literally."
+	icon_state = "ponchoshame"
+	item_state = "ponchoshame"
+	flags = NODROP
+
 /*
  * Misc
  */
@@ -193,6 +202,12 @@
 	desc = "A worn out, curiously comfortable t-shirt with a picture of Ian. You wouldn't go so far as to say it feels like being hugged when you wear it but it's pretty close. Good for sleeping in."
 	icon_state = "ianshirt"
 	item_state = "ianshirt"
+
+/obj/item/clothing/suit/nerdshirt
+	name = "gamer shirt"
+	desc = "A baggy shirt with vintage game character Phanic the Weasel. Why would someone wear this?"
+	icon_state = "nerdshirt"
+	item_state = "nerdshirt"
 
 //Blue suit jacket toggle
 /obj/item/clothing/suit/suit/verb/toggle()

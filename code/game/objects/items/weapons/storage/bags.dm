@@ -9,6 +9,7 @@
  *		Mining Satchel
  *		Plant Bag
  *		Sheet Snatcher
+ *		Book Bag
  *
  *	-Sayu
  */
@@ -20,7 +21,6 @@
 	display_contents_with_number = 1 // should work fine now
 	use_to_pickup = 1
 	slot_flags = SLOT_BELT
-	flags = FPRINT | TABLEPASS
 
 // -----------------------------
 //          Trash bag
@@ -47,6 +47,16 @@
 	else if(contents.len < 21)
 		icon_state = "trashbag2"
 	else icon_state = "trashbag3"
+
+/obj/item/weapon/storage/bag/trash/cyborg
+
+/obj/item/weapon/storage/bag/trash/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
+	J.put_in_cart(src, user)
+	J.mybag=src
+	J.update_icon()
+
+/obj/item/weapon/storage/bag/trash/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
+	return
 
 // -----------------------------
 //        Mining Satchel
@@ -92,9 +102,7 @@
 		set desc = "Activate to convert your plants into plantable seeds."
 		for(var/obj/item/O in contents)
 			seedify(O, 1)
-		for(var/mob/M in range(1))
-			if (M.s_active == src)
-				src.close(M)
+		close_all()
 
 
 // -----------------------------
@@ -156,7 +164,7 @@
 				break
 
 		if(!inserted || !S.amount)
-			usr.u_equip(S)
+			usr.unEquip(S)
 			if (usr.client && usr.s_active != src)
 				usr.client.screen -= S
 			S.dropped(usr)
@@ -237,3 +245,20 @@
 	name = "sheet snatcher 9000"
 	desc = ""
 	capacity = 500//Borgs get more because >specialization
+
+
+// -----------------------------
+//           Book bag
+// -----------------------------
+
+/obj/item/weapon/storage/bag/books
+	name = "book bag"
+	desc = "A bag for books."
+	icon = 'icons/obj/library.dmi'
+	icon_state = "bookbag"
+	display_contents_with_number = 0 //This would look really stupid otherwise
+	storage_slots = 7
+	max_combined_w_class = 21
+	max_w_class = 3
+	w_class = 4 //Bigger than a book because physics
+	can_hold = list("/obj/item/weapon/book", "/obj/item/weapon/spellbook") //No bibles, consistent with bookcase

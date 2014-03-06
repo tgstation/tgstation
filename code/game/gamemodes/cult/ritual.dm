@@ -52,6 +52,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	wordhide=pick(runewords)
 	runewords-=wordhide
 
+
 /obj/effect/rune
 	desc = ""
 	anchored = 1
@@ -210,9 +211,10 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			return
 
 		check_icon()
+			src.color = rgb(255, 0, 0)
 			if(word1 == wordtravel && word2 == wordself)
 				icon_state = "2"
-				src.icon += rgb(0, 0 , 255)
+				src.color = rgb(0, 0, 255)
 				return
 			if(word1 == wordjoin && word2 == wordblood && word3 == wordself)
 				icon_state = "3"
@@ -222,7 +224,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				return
 			if(word1 == wordsee && word2 == wordblood && word3 == wordhell)
 				icon_state = "5"
-				src.icon += rgb(0, 0 , 255)
+				src.color = rgb(0, 0 , 255)
 				return
 			if(word1 == worddestr && word2 == wordsee && word3 == wordtech)
 				icon_state = "5"
@@ -232,81 +234,80 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				return
 			if(word1 == wordsee && word2 == wordhell && word3 == wordjoin)
 				icon_state = "4"
-				src.icon += rgb(0, 0 , 255)
+				src.color = rgb(0, 0 , 255)
 				return
 			if(word1 == wordblood && word2 == wordjoin && word3 == wordhell)
 				icon_state = "1"
 				return
 			if(word1 == wordhide && word2 == wordsee && word3 == wordblood)
 				icon_state = "1"
-				src.icon += rgb(0, 0 , 255)
+				src.color = rgb(0, 0 , 255)
 				return
 			if(word1 == wordhell && word2 == wordtravel && word3 == wordself)
 				icon_state = "6"
-				src.icon += rgb(0, 0 , 255)
+				src.color = rgb(0, 0 , 255)
 				return
 			if(word1 == wordblood && word2 == wordsee && word3 == wordtravel)
 				icon_state = "6"
 				return
 			if(word1 == wordhell && word2 == wordtech && word3 == wordjoin)
 				icon_state = "3"
-				src.icon += rgb(0, 0 , 255)
+				src.color = rgb(0, 0 , 255)
 				return
 			if(word1 == wordhell && word2 == wordblood && word3 == wordjoin)
 				icon_state = "[rand(1,6)]"
-				src.icon += rgb(255, 255, 255)
+				src.color = rgb(255, 255, 255)
 				return
 			if(word1 == wordblood && word2 == wordsee && word3 == wordhide)
 				icon_state = "4"
-				src.icon += rgb(255, 255, 255)
+				src.color = rgb(255, 255, 255)
 				return
 			if(word1 == worddestr && word2 == wordtravel && word3 == wordself)
 				icon_state = "1"
-				src.icon += rgb(255, 0, 0)
+				src.color = rgb(255, 0, 0)
 				return
 			if(word1 == wordtravel && word2 == wordtech && word3 == wordother)
 				icon_state = "4"
-				src.icon += rgb(255, 0, 255)
+				src.color = rgb(255, 0, 255)
 				return
 			if(word1 == wordjoin && word2 == wordother && word3 == wordself)
 				icon_state = "2"
-				src.icon += rgb(0, 255, 0)
+				src.color = rgb(0, 255, 0)
 				return
 			if(word1 == wordhide && word2 == wordother && word3 == wordsee)
 				icon_state = "4"
-				src.icon += rgb(0, 255, 0)
+				src.color = rgb(0, 255, 0)
 				return
 			if(word1 == worddestr && word2 == wordsee && word3 == wordother)
 				icon_state = "4"
-				src.icon += rgb(0, 0, 255)
+				src.color = rgb(0, 0, 255)
 				return
 			if(word1 == worddestr && word2 == wordsee && word3 == wordblood)
 				icon_state = "4"
-				src.icon += rgb(255, 0, 0)
+				src.color = rgb(255, 0, 0)
 				return
 			if(word1 == wordself && word2 == wordother && word3 == wordtech)
 				icon_state = "3"
-				src.icon += rgb(200, 0, 0)
+				src.color = rgb(200, 0, 0)
 				return
 			if(word1 == wordtravel && word2 == wordother)
 				icon_state = "1"
-				src.icon += rgb(200, 0, 0)
+				src.color = rgb(200, 0, 0)
 				return
 			if(word1 == wordjoin && word2 == wordhide && word3 == wordtech)
 				icon_state = "2"
-				src.icon += rgb(100, 0, 100)
+				src.color = rgb(100, 0, 100)
 				return
 			icon_state="[rand(1,6)]" //random shape and color for dummy runes
-			src.icon -= rgb(255,255,255)
-			src.icon += rgb(rand(1,255),rand(1,255),rand(1,255))
+			src.color = rgb(rand(1,255),rand(1,255),rand(1,255))
+
 
 /obj/item/weapon/tome
 	name = "arcane tome"
 	icon_state ="tome"
-	throw_speed = 1
+	throw_speed = 2
 	throw_range = 5
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS
 	var/notedat = ""
 	var/tomedat = ""
 	var/list/words = list("ire" = "ire", "ego" = "ego", "nahlizet" = "nahlizet", "certum" = "certum", "veri" = "veri", "jatkaa" = "jatkaa", "balaq" = "balaq", "mgar" = "mgar", "karazet" = "karazet", "geeri" = "geeri")
@@ -386,7 +387,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				<h3>Create a wall</h3>
 				Invoking this rune solidifies the air above it, creating an an invisible wall. To remove the wall, simply invoke the rune again.
 				<h3>Summon cultist</h3>
-				This rune allows you to summon a fellow cultist to your location. The target cultist must be unhandcuffed ant not buckled to anything. You also need to have 3 people chanting at the rune to succesfully invoke it. Invoking it takes heavy strain on the bodies of all chanting cultists.<br>
+				This rune allows you to summon a fellow cultist to your location. The target cultist must be unhandcuffed ant not buckled to anything. You also need to have 3 people chanting at the rune to successfully invoke it. Invoking it takes heavy strain on the bodies of all chanting cultists.<br>
 				<h3>Free a cultist</h3>
 				This rune unhandcuffs and unbuckles any cultist of your choice, no matter where he is. Invoking it takes heavy strain on the bodies of all chanting cultists.<br>
 				<h3>Deafen</h3>
@@ -394,7 +395,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				<h3>Blind</h3>
 				This rune temporarily blinds all non-cultists around you. Very robust. Use together with the deafen rune to leave your enemies completely helpless.<br>
 				<h3>Blood boil</h3>
-				This rune boils the blood all non-cultists in visible range. The damage is enough to instantly critically hurt any person. You need 3 cultists invoking the rune for it to work. This rune is unreliable and may cause unpredicted effect when invoked. It also drains significant amount of your health when succesfully invoked.<br>
+				This rune boils the blood all non-cultists in visible range. The damage is enough to instantly critically hurt any person. You need 3 cultists invoking the rune for it to work. This rune is unreliable and may cause unpredicted effect when invoked. It also drains significant amount of your health when successfully invoked.<br>
 				<h3>Communicate</h3>
 				Invoking this rune allows you to relay a message to all cultists on the station and nearby space objects.
 				<h3>Stun</h3>
@@ -460,12 +461,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 //		usr << browse(null, "window=tank")
 
 	attack(mob/living/M as mob, mob/living/user as mob)
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had the [name] used on him by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used [name] on [M.name] ([M.ckey])</font>")
-
-		log_attack("<font color='red'>[user.name] ([user.ckey]) used [name] on [M.name] ([M.ckey])</font>")
-
-
+		add_logs(user, M, "smacked", object=src)
 		if(istype(M,/mob/dead))
 			M.invisibility = 0
 			user.visible_message( \

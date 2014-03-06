@@ -2,89 +2,27 @@
 	name = "ion rifle"
 	desc = "A man portable anti-armor weapon designed to disable mechanical threats"
 	icon_state = "ionrifle"
-	fire_sound = 'sound/weapons/Laser.ogg'
 	origin_tech = "combat=2;magnets=4"
 	w_class = 5
-	flags =  FPRINT | TABLEPASS | CONDUCT
+	flags =  CONDUCT
 	slot_flags = SLOT_BACK
-	charge_cost = 100
-	projectile_type = "/obj/item/projectile/ion"
-
-/obj/item/weapon/gun/energy/ionrifle/emp_act(severity)
-	if(severity <= 2)
-		power_supply.use(round(power_supply.maxcharge / severity))
-		update_icon()
-	else
-		return
+	ammo_type = list(/obj/item/ammo_casing/energy/ion)
 
 /obj/item/weapon/gun/energy/decloner
 	name = "biological demolecularisor"
 	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
 	icon_state = "decloner"
-	fire_sound = 'sound/weapons/pulse3.ogg'
 	origin_tech = "combat=5;materials=4;powerstorage=3"
-	charge_cost = 100
-	projectile_type = "/obj/item/projectile/energy/declone"
-
-obj/item/weapon/gun/energy/staff
-	name = "staff of change"
-	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself"
-	icon = 'icons/obj/gun.dmi'
-	icon_state = "staffofchange"
-	item_state = "staffofchange"
-	fire_sound = 'sound/weapons/emitter.ogg'
-	flags =  FPRINT | TABLEPASS | CONDUCT
-	slot_flags = SLOT_BACK
-	w_class = 5
-	charge_cost = 200
-	projectile_type = "/obj/item/projectile/change"
-	origin_tech = null
-	clumsy_check = 0
-	var/charge_tick = 0
-
-
-	New()
-		..()
-		processing_objects.Add(src)
-
-
-	Del()
-		processing_objects.Remove(src)
-		..()
-
-
-	process()
-		charge_tick++
-		if(charge_tick < 4) return 0
-		charge_tick = 0
-		if(!power_supply) return 0
-		power_supply.give(200)
-		return 1
-
-	update_icon()
-		return
-
-	shoot_with_empty_chamber(mob/living/user as mob|obj)
-		user << "<span class='warning'>The [name] whizzles quietly.<span>"
-		return
-
-/obj/item/weapon/gun/energy/staff/animate
-	name = "staff of animation"
-	desc = "An artefact that spits bolts of life-force which causes objects which are hit by it to animate and come to life! This magic doesn't affect machines."
-	projectile_type = "/obj/item/projectile/animate"
-	icon_state = "staffofanimation"
-	item_state = "staffofanimation"
+	ammo_type = list(/obj/item/ammo_casing/energy/declone)
 
 /obj/item/weapon/gun/energy/floragun
 	name = "floral somatoray"
 	desc = "A tool that discharges controlled radiation which induces mutation in plant cells."
-	icon_state = "floramut100"
+	icon_state = "flora"
 	item_state = "obj/item/gun.dmi"
-	fire_sound = 'sound/effects/stealthoff.ogg'
-	charge_cost = 100
-	projectile_type = "/obj/item/projectile/energy/floramut"
+	ammo_type = list(/obj/item/ammo_casing/energy/flora/yield, /obj/item/ammo_casing/energy/flora/mut)
 	origin_tech = "materials=2;biotech=3;powerstorage=3"
-	modifystate = "floramut"
+	modifystate = 1
 	var/charge_tick = 0
 	var/mode = 0 //0 = mutate, 1 = yield boost
 
@@ -108,19 +46,7 @@ obj/item/weapon/gun/energy/staff
 		return 1
 
 	attack_self(mob/living/user as mob)
-		switch(mode)
-			if(0)
-				mode = 1
-				charge_cost = 100
-				user << "\red The [src.name] is now set to increase yield."
-				projectile_type = "/obj/item/projectile/energy/florayield"
-				modifystate = "florayield"
-			if(1)
-				mode = 0
-				charge_cost = 100
-				user << "\red The [src.name] is now set to induce mutations."
-				projectile_type = "/obj/item/projectile/energy/floramut"
-				modifystate = "floramut"
+		select_fire(user)
 		update_icon()
 		return
 
@@ -130,9 +56,8 @@ obj/item/weapon/gun/energy/staff
 	icon_state = "riotgun"
 	item_state = "c20r"
 	w_class = 4
-	projectile_type = "/obj/item/projectile/meteor"
-	charge_cost = 100
-	cell_type = "/obj/item/weapon/cell/potato"
+	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
+	cell_type = "/obj/item/weapon/stock_parts/cell/potato"
 	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
 	var/charge_tick = 0
 	var/recharge_time = 5 //Time it takes for shots to recharge (in ticks)
@@ -170,5 +95,30 @@ obj/item/weapon/gun/energy/staff
 	name = "mind flayer"
 	desc = "A prototype weapon recovered from the ruins of Research-Station Epsilon."
 	icon_state = "xray"
-	projectile_type = "/obj/item/projectile/beam/mindflayer"
-	fire_sound = 'sound/weapons/Laser.ogg'
+	ammo_type = list(/obj/item/ammo_casing/energy/mindflayer)
+
+/obj/item/weapon/gun/energy/kinetic_accelerator
+	name = "proto-kinetic accelerator"
+	desc = "According to Nanotrasen accounting, this is mining equipment. It's been modified for extreme power output to crush rocks, but often serves as a miner's first defense against hostile alien life; it's not very powerful unless used in a low pressure environment."
+	icon_state = "kineticgun"
+	item_state = "kineticgun"
+	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
+	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
+	var/overheat = 0
+	var/recent_reload = 1
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
+	overheat = 1
+	spawn(20)
+		overheat = 0
+		recent_reload = 0
+	..()
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(var/mob/living/user/L)
+	if(overheat || recent_reload)
+		return
+	power_supply.give(500)
+	playsound(src.loc, 'sound/weapons/shotgunpump.ogg', 60, 1)
+	recent_reload = 1
+	update_icon()
+	return

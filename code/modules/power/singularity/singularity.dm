@@ -62,6 +62,7 @@ var/global/list/uneatable = list(
 	switch(severity)
 		if(1.0)
 			if(prob(25))
+				investigate_log("has been destroyed by an explosion.","singulo")
 				del(src)
 				return
 			else
@@ -189,6 +190,7 @@ var/global/list/uneatable = list(
 
 /obj/machinery/singularity/proc/check_energy()
 	if(energy <= 0)
+		investigate_log("collapsed.","singulo")
 		del(src)
 		return 0
 	switch(energy)//Some of these numbers might need to be changed up later -Mport
@@ -208,7 +210,7 @@ var/global/list/uneatable = list(
 
 
 /obj/machinery/singularity/proc/eat()
-	set background = 1
+	set background = BACKGROUND_ENABLED
 	if(defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 1
 	// Let's just make this one loop.
@@ -240,9 +242,10 @@ var/global/list/uneatable = list(
 	if(is_type_in_list(A, uneatable))
 		return 0
 	if (istype(A,/mob/living))//Mobs get gibbed
+		var/mob/living/M = A
 		gain = 20
-		if(istype(A,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = A
+		if(istype(M,/mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
 			if(H.mind)
 
 				if((H.mind.assigned_role == "Station Engineer") || (H.mind.assigned_role == "Chief Engineer") )
@@ -251,8 +254,8 @@ var/global/list/uneatable = list(
 				if(H.mind.assigned_role == "Clown")
 					gain = rand(-300, 300) // HONK
 
-		spawn()
-			A:gib()
+		investigate_log(" has consumed [key_name(M)].","singulo") //Oh that's where the clown ended up!
+		M.gib()
 		sleep(1)
 	else if(istype(A,/obj/))
 
@@ -589,7 +592,7 @@ var/global/list/uneatable = list(
 	grav_pull = 0
 
 /obj/machinery/singularity/narsie/wizard/eat()
-	set background = 1
+	set background = BACKGROUND_ENABLED
 	if(defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 1
 	for(var/atom/X in orange(consume_range,src))

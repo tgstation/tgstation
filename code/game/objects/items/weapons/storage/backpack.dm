@@ -15,7 +15,6 @@
 	icon_state = "backpack"
 	item_state = "backpack"
 	w_class = 4.0
-	flags = FPRINT|TABLEPASS
 	slot_flags = SLOT_BACK	//ERROOOOO
 	max_w_class = 3
 	max_combined_w_class = 21
@@ -29,12 +28,12 @@
  */
 
 /obj/item/weapon/storage/backpack/holding
-	name = "Bag of Holding"
+	name = "bag of holding"
 	desc = "A backpack that opens into a localized pocket of Blue Space."
 	origin_tech = "bluespace=4"
 	icon_state = "holdingpack"
-	max_w_class = 4
-	max_combined_w_class = 28
+	max_w_class = 5
+	max_combined_w_class = 35
 
 	New()
 		..()
@@ -85,7 +84,7 @@
 	item_state = "backpack"
 
 /obj/item/weapon/storage/backpack/clown
-	name = "Giggles Von Honkerton"
+	name = "Giggles von Honkerton"
 	desc = "It's a backpack made by Honk! Co."
 	icon_state = "clownpack"
 	item_state = "clownpack"

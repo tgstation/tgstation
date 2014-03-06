@@ -16,9 +16,9 @@
 	density = 1
 	unacidable = 1
 	anchored = 1 //There's a reason this is here, Mport. God fucking damn it -Agouri. Find&Fix by Pete. The reason this is here is to stop the curving of emitter shots.
-	flags = FPRINT | TABLEPASS
 	pass_flags = PASSTABLE
 	mouse_opacity = 0
+	hitsound = 'sound/weapons/pierce.ogg'
 	var/bumped = 0		//Prevents it from hitting more than one guy at once
 	var/def_zone = ""	//Aiming at
 	var/mob/firer = null//Who shot it
@@ -26,7 +26,6 @@
 	var/yo = null
 	var/xo = null
 	var/current = null
-	var/obj/shot_from = null // the object which shot us
 	var/atom/original = null // the original target clicked
 	var/turf/starting = null // the projectile's starting turf
 	var/list/permutated = list() // we've passed through these atoms, don't try to hit them again
@@ -55,21 +54,26 @@
 		// Garbage collect the projectiles
 		loc = null
 
-	proc/on_hit(var/atom/target, var/blocked = 0)
-		if(blocked >= 2)		return 0//Full block
+	proc/on_hit(var/atom/target, var/blocked = 0, var/hit_zone)
 		if(!isliving(target))	return 0
 		if(isanimal(target))	return 0
 		var/mob/living/L = target
-		L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, blocked)
-		return 1
+		return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, blocked)
 
+	proc/vol_by_damage()
+		if(src.damage)
+			return Clamp((src.damage) * 0.67, 30, 100)// Multiply projectile damage by 0.67, then clamp the value between 30 and 100
+		else
+			return 50 //if the projectile doesn't do damage, play its hitsound at 50% volume
 
 	Bump(atom/A as mob|obj|turf|area)
+
 		if(A == firer)
 			loc = A.loc
 			return 0 //cannot shoot yourself
 
-		if(bumped)	return 0
+		if(bumped)//Stops multihit projectiles
+			return 1
 
 		bumped = 1
 		if(ismob(A))
@@ -78,21 +82,25 @@
 				loc = A.loc
 				return 0// nope.avi
 
+			var/reagent_note
+			if(reagents && reagents.reagent_list)
+				reagent_note = " REAGENTS:"
+				for(var/datum/reagent/R in reagents.reagent_list)
+					reagent_note += R.id + " ("
+					reagent_note += num2text(R.volume) + ") "
 			var/distance = get_dist(get_turf(A), starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
 			def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 			if(silenced)
-				M << "<span class='userdanger'>You've been shot in the [parse_zone(def_zone)] by [src]!</span>"
+				playsound(loc, hitsound, 5, 1, -1)
+				M << "<span class='userdanger'>You've been shot by \a [src] in \the [parse_zone(def_zone)]!</span>"
 			else
-				M.visible_message("<span class='danger'>[M] is hit by [src] in the [parse_zone(def_zone)]!", \
-									"<span class='userdanger'>[M] is hit by [src] in the [parse_zone(def_zone)]!")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+				if(hitsound)
+					var/volume = vol_by_damage()
+					playsound(loc, hitsound, volume, 1, -1)
+				M.visible_message("<span class='danger'>[M] is hit by \a [src] in the [parse_zone(def_zone)]!", \
+									"<span class='userdanger'>[M] is hit by \a [src] in the [parse_zone(def_zone)]!")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+			add_logs(firer, M, "shot", object="[src]", addition=reagent_note)
 
-			if(istype(firer, /mob))
-				M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
-				firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
-				log_attack("<font color='red'>[firer] ([firer.ckey]) shot [M] ([M.ckey]) with a [src]</font>")
-			else
-				M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
-				log_attack("<font color='red'>UNKNOWN shot [M] ([M.ckey]) with a [src]</font>")
 
 		spawn(0)
 			if(A)
@@ -140,9 +148,13 @@
 				return
 			step_towards(src, current)
 			sleep(1)
-			if(!bumped && !isturf(original))
+			if(!bumped && ((original && original.layer>=2.75) || ismob(original)))
 				if(loc == get_turf(original))
 					if(!(original in permutated))
 						Bump(original)
 						sleep(1)
+			Range()
 		return
+
+/obj/item/projectile/proc/Range()
+	return
