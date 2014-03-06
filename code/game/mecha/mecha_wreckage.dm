@@ -100,7 +100,10 @@
 	name = "\improper Seraph wreckage"
 	icon_state = "seraph-broken"
 
-
+/obj/structure/mecha_wreckage/recitence
+	name = "\improper Recitence wreckage"
+	icon_state = "recitence-broken"
+	color = "#87878715"
 
 /obj/structure/mecha_wreckage/ripley
 	name = "\improper Ripley wreckage"
