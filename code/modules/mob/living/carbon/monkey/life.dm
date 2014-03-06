@@ -465,6 +465,8 @@
 
 			if(druggy)
 				druggy = max(druggy-1, 0)
+
+			CheckStamina()
 		return 1
 
 

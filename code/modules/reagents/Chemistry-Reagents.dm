@@ -266,7 +266,7 @@ datum
 				if(data >= 30)
 					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 4
-					M.make_dizzy(5)
+					M.Dizzy(5)
 				if(data >= 30*2.5 && prob(33))
 					if (!M.confused) M.confused = 1
 					M.confused += 3
@@ -825,7 +825,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.make_dizzy(1)
+				M.Dizzy(1)
 				if(!M.confused) M.confused = 1
 				M.confused = max(M.confused, 20)
 				holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
@@ -1151,8 +1151,8 @@ datum
 						M.status_flags &= ~DISFIGURED
 					if(35 to INFINITY)
 						M.adjustToxLoss(1)
-						M.make_dizzy(5)
-						M.make_jittery(5)
+						M.Dizzy(5)
+						M.Jitter(5)
 
 				..()
 				return
@@ -1285,7 +1285,7 @@ datum
 			on_mob_life(var/mob/living/carbon/M)
 				if(!istype(M))	return
 				if(!M) M = holder.my_atom
-				M.apply_effect(10,IRRADIATE,0)
+				M.apply_effect(5,IRRADIATE,0)
 				..()
 				return
 
@@ -1995,18 +1995,18 @@ datum
 				switch(data)
 					if(1 to 5)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_dizzy(5)
+						M.Dizzy(5)
 						if(prob(10)) M.emote(pick("twitch","giggle"))
 					if(5 to 10)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_jittery(10)
-						M.make_dizzy(10)
+						M.Jitter(10)
+						M.Dizzy(10)
 						M.druggy = max(M.druggy, 35)
 						if(prob(20)) M.emote(pick("twitch","giggle"))
 					if (10 to INFINITY)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_jittery(20)
-						M.make_dizzy(20)
+						M.Jitter(20)
+						M.Dizzy(20)
 						M.druggy = max(M.druggy, 40)
 						if(prob(30)) M.emote(pick("twitch","giggle"))
 				holder.remove_reagent(src.id, 0.2)
@@ -2394,7 +2394,7 @@ datum
 				M.sleeping = max(0,M.sleeping - 2)
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
-				M.make_jittery(5)
+				M.Jitter(5)
 				if(holder.has_reagent("frostoil"))
 					holder.remove_reagent("frostoil", 5)
 				..()
@@ -2434,7 +2434,7 @@ datum
 				M.sleeping = max(0,M.sleeping-2)
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
-				M.make_jittery(5)
+				M.Jitter(5)
 				..()
 				return
 
@@ -2479,7 +2479,7 @@ datum
 			color = "#100800" // rgb: 16, 8, 0
 
 			on_mob_life(var/mob/living/M as mob)
-				M.make_jittery(20)
+				M.Jitter(20)
 				M.druggy = max(M.druggy, 30)
 				M.dizziness +=5
 				M.drowsyness = 0
@@ -2502,7 +2502,7 @@ datum
 				M.sleeping = max(0,M.sleeping-1)
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
-				M.make_jittery(5)
+				M.Jitter(5)
 				M.nutrition += 1
 				..()
 				return
@@ -2608,7 +2608,7 @@ datum
 				M.sleeping = 0
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
-				M.make_jittery(5)
+				M.Jitter(5)
 				if(M.getBruteLoss() && prob(20)) M.heal_organ_damage(1,0)
 				M.nutrition++
 				..()
@@ -2628,7 +2628,7 @@ datum
 				M.sleeping = 0
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
-				M.make_jittery(5)
+				M.Jitter(5)
 				if(M.getBruteLoss() && prob(20)) M.heal_organ_damage(1,0)
 				M.nutrition++
 				..()
@@ -2664,7 +2664,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				M.druggy = max(M.druggy, 50)
 				M.confused = max(M.confused+2,0)
-				M.make_dizzy(10)
+				M.Dizzy(10)
 				if (!M.stuttering) M.stuttering = 1
 				M.stuttering += 3
 				if(!data) data = 1
@@ -2741,24 +2741,24 @@ datum
 				switch(data)
 					if(1 to 5)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_dizzy(10)
+						M.Dizzy(10)
 						if(prob(10)) M.emote(pick("twitch","giggle"))
 					if(5 to 10)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_jittery(20)
-						M.make_dizzy(20)
+						M.Jitter(20)
+						M.Dizzy(20)
 						M.druggy = max(M.druggy, 45)
 						if(prob(20)) M.emote(pick("twitch","giggle"))
 					if (10 to 200)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_jittery(40)
-						M.make_dizzy(40)
+						M.Jitter(40)
+						M.Dizzy(40)
 						M.druggy = max(M.druggy, 60)
 						if(prob(30)) M.emote(pick("twitch","giggle"))
 					if(200 to INFINITY)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_jittery(60)
-						M.make_dizzy(60)
+						M.Jitter(60)
+						M.Dizzy(60)
 						M.druggy = max(M.druggy, 75)
 						if(prob(40)) M.emote(pick("twitch","giggle"))
 						if(prob(30)) M.adjustToxLoss(2)
@@ -2789,7 +2789,7 @@ datum
 				if(data >= boozepwr)
 					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 4
-					M.make_dizzy(5)
+					M.Dizzy(5)
 				if(data >= boozepwr*2.5 && prob(33))
 					if (!M.confused) M.confused = 1
 					M.confused += 3
@@ -2841,7 +2841,7 @@ datum
 				M.dizziness = max(0,M.dizziness-5)
 				M.drowsyness = max(0,M.drowsyness-3)
 				M.sleeping = max(0,M.sleeping-2)
-				M.make_jittery(5)
+				M.Jitter(5)
 				..()
 				return
 
@@ -2864,7 +2864,7 @@ datum
 				M.sleeping = max(0,M.sleeping-2)
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
-				M.make_jittery(5)
+				M.Jitter(5)
 				M.nutrition += 1
 				..()
 				return
