@@ -68,10 +68,9 @@ Pipelines + Other Objects -> Pipe network
 
 // Wait..  What the fuck?
 // I asked /tg/ and bay and they have no idea why this is here, so into the trash it goes. - N3X
-/*
+// Re-enabled for debugging.
 /obj/machinery/atmospherics/process()
 	build_network()
-*/
 
 /obj/machinery/atmospherics/proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	// Check to see if should be added to network. Add self if so and adjust variables appropriately.
