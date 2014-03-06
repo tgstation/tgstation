@@ -283,7 +283,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/pontiac
 	name = "Chariot"
-	desc = "This spell summons a glorious, flaming chariot that can move in space and through walls."
+	desc = "This spell summons a glorious, flaming chariot that can move in space."
 
 	charge_type = "charges"
 	charge_max = 1
