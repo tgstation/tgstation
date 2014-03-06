@@ -74,7 +74,7 @@
 				del(src)
 				return
 
-	if (!user.IsAdvancedToolUser() || isMoMMI(user))
+	if (!user.IsAdvancedToolUser() || isMoMMI(user) || istype(user, /mob/living/carbon/monkey/diona))
 		user << "\red You don't have the dexterity to do this!"
 		return
 	if(istype(user, /mob/living))
