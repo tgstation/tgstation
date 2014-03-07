@@ -154,32 +154,32 @@
 /proc/randomize_radiation_accuracy(position_we_were_supposed_to_hit, radduration, number_of_blocks)
 	return Wrap(round(position_we_were_supposed_to_hit + gaussian(0, RADIATION_ACCURACY_MULTIPLIER/radduration), 1), 1, number_of_blocks+1)
 
-/proc/randmutb(mob/living/carbon/M)
-	if(!check_dna_integrity(M))	return
-	var/num
-	var/newdna
-	num = pick(bad_se_blocks)
-	newdna = setblock(M.dna.struc_enzymes, num, construct_block(2,2))
+/proc/randmut(mob/living/carbon/M, list/candidates, var/difficulty = 2)
+	if(!check_dna_integrity(M))
+		return
+	var/num = pick(candidates)
+	var/newdna = setblock(M.dna.struc_enzymes, num, construct_block(difficulty,difficulty))
 	M.dna.struc_enzymes = newdna
 	return
 
+/proc/randmutb(mob/living/carbon/M)
+	return randmut(M, bad_se_blocks)
+
 /proc/randmutg(mob/living/carbon/M)
-	if(!check_dna_integrity(M))	return
-	var/num
-	var/newdna
-	num = pick(good_se_blocks | op_se_blocks)
-	newdna = setblock(M.dna.struc_enzymes, num, construct_block(2,2))
-	M.dna.struc_enzymes = newdna
-	return
+	return randmut(M, good_se_blocks | op_se_blocks)
 
 /proc/randmuti(mob/living/carbon/M)
 	if(!check_dna_integrity(M))	return
-	var/num
-	var/newdna
-	num = rand(1, DNA_STRUC_ENZYMES_BLOCKS)
-	newdna = setblock(M.dna.uni_identity, num, random_string(DNA_BLOCK_SIZE, hex_characters))
+	var/num = rand(1, DNA_STRUC_ENZYMES_BLOCKS)
+	var/newdna = setblock(M.dna.uni_identity, num, random_string(DNA_BLOCK_SIZE, hex_characters))
 	M.dna.uni_identity = newdna
 	return
+
+/proc/clean_randmut(mob/living/carbon/M, list/candidates)
+	if(!check_dna_integrity(M))
+		return
+	M.dna.struc_enzymes = M.dna.generate_struc_enzymes(M) // Give clean DNA.
+	randmut(M, candidates)
 
 /proc/scramble_dna(mob/living/carbon/M, ui=FALSE, se=FALSE, probability)
 	if(!check_dna_integrity(M))
