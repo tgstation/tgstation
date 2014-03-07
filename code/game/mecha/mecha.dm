@@ -730,7 +730,7 @@
 	else if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(state==4)
 			if(!src.cell)
-				var/obj/item/weapon/cell/C = W
+				var/obj/item/weapon/stock_parts/cell/C = W
 				user << "You install the powercell"
 				user.drop_item()
 				C.forceMove(src)
