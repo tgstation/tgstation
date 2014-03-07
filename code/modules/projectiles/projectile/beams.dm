@@ -57,50 +57,28 @@
 	damage = 30
 
 
-/obj/item/projectile/bluetag
+/obj/item/projectile/lasertag
 	name = "lasertag beam"
-	icon_state = "bluelaser"
-	hitsound = null
-	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	damage = 0
-	damage_type = BURN
-	flag = "laser"
-
-	on_hit(var/atom/target, var/blocked = 0)
-		if(istype(target, /mob/living/carbon/human))
-			var/mob/living/carbon/human/M = target
-			if(istype(M.wear_suit, /obj/item/clothing/suit/redtag))
-				M.Weaken(5)
-		return 1
-
-/obj/item/projectile/redtag
-	name = "lasertag beam"
-	icon_state = "laser"
-	hitsound = null
-	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	damage = 0
-	damage_type = BURN
-	flag = "laser"
-
-	on_hit(var/atom/target, var/blocked = 0)
-		if(istype(target, /mob/living/carbon/human))
-			var/mob/living/carbon/human/M = target
-			if(istype(M.wear_suit, /obj/item/clothing/suit/bluetag))
-				M.Weaken(5)
-		return 1
-
-/obj/item/projectile/omnitag//A laser tag bolt that stuns EVERYONE
-	name = "lasertag beam"
-	hitsound = null
 	icon_state = "omnilaser"
-	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+	hitsound = null
 	damage = 0
-	damage_type = BURN
+	damage_type = STAMINA
 	flag = "laser"
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+	var/suit_types = list(/obj/item/clothing/suit/redtag, /obj/item/clothing/suit/bluetag)
 
-	on_hit(var/atom/target, var/blocked = 0)
-		if(istype(target, /mob/living/carbon/human))
-			var/mob/living/carbon/human/M = target
-			if((istype(M.wear_suit, /obj/item/clothing/suit/bluetag))||(istype(M.wear_suit, /obj/item/clothing/suit/redtag)))
-				M.Weaken(5)
-		return 1
+/obj/item/projectile/lasertag/on_hit(var/atom/target, var/blocked = 0)
+	if(istype(target, /mob/living/carbon/human))
+		var/mob/living/carbon/human/M = target
+		if(istype(M.wear_suit))
+			if(M.wear_suit.type in suit_types)
+				M.adjustStaminaLoss(34)
+	return 1
+
+/obj/item/projectile/lasertag/redtag
+	icon_state = "laser"
+	suit_types = list(/obj/item/clothing/suit/bluetag)
+
+/obj/item/projectile/lasertag/bluetag
+	icon_state = "bluelaser"
+	suit_types = list(/obj/item/clothing/suit/redtag)
