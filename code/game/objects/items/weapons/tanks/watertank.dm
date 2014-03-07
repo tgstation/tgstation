@@ -1,3 +1,4 @@
+//Hydroponics tank and base code
 /obj/item/weapon/watertank
 	name = "backpack water tank"
 	desc = "A S.U.N.S.H.I.N.E. brand watertank backpack with nozzle to water plants."
@@ -9,7 +10,7 @@
 	slowdown = 1
 	action_button_name = "Toggle Mister"
 
-	var/obj/item/weapon/reagent_containers/glass/mister/noz
+	var/obj/item/weapon/noz
 	var/on = 0
 	var/volume = 500
 
@@ -33,7 +34,7 @@
 	var/mob/living/carbon/human/user = usr
 	if(on)
 		//Detach the nozzle into the user's hands
-		noz = new(src)
+		make_noz()
 		var/list/L = list("left hand" = slot_l_hand,"right hand" = slot_r_hand)
 		if(!user.equip_in_one_of_slots(noz, L))
 			on = 0
@@ -41,6 +42,10 @@
 	else
 		//Remove from their hands and put back "into" the tank
 		remove_noz(user)
+	return
+	
+/obj/item/weapon/watertank/proc/make_noz()
+	noz = new /obj/item/weapon/reagent_containers/spray/mister(src)
 	return
 
 /obj/item/weapon/watertank/equipped(mob/user, slot)
@@ -64,7 +69,7 @@
 // Therefore, it's designed to be "locked" to the player's hands or extended back onto
 // the watertank backpack. Allowing it to be placed elsewhere or created without a parent
 // watertank object will likely lead to weird behaviour or runtimes.
-/obj/item/weapon/reagent_containers/glass/mister
+/obj/item/weapon/reagent_containers/spray/mister
 	name = "water mister"
 	desc = "A mister nozzle attached to a water tank."
 	icon = 'icons/obj/hydroponics.dmi'
@@ -74,22 +79,75 @@
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
-	can_be_placed_into = list(/obj/structure/sink)
 
 	var/obj/item/weapon/watertank/tank
 
-/obj/item/weapon/reagent_containers/glass/mister/New(parent_tank)
+/obj/item/weapon/reagent_containers/spray/mister/New(parent_tank)
 	..()
-	if (!parent_tank || !istype(parent_tank, /obj/item/weapon/watertank))	//To avoid weird issues from admin spawns
-		var/mob/living/carbon/human/M = usr
-		M.unEquip(src)
-		Del()
-	else
+	if(check_tank_exists(parent_tank, usr, src))
 		tank = parent_tank
 		reagents = tank.reagents	//This mister is really just a proxy for the tank's reagents
 		return
 
-/obj/item/weapon/reagent_containers/glass/mister/dropped(mob/user as mob)
+/obj/item/weapon/reagent_containers/spray/mister/dropped(mob/user as mob)
 	user << "<span class='notice'>The mister snaps back onto the watertank!</span>"
 	tank.on = 0
 	Del()
+	
+/proc/check_tank_exists(parent_tank, var/mob/living/carbon/human/M, var/obj/O)
+	if (!parent_tank || !istype(parent_tank, /obj/item/weapon/watertank) || !M || !istype(M))	//To avoid weird issues from admin spawns
+		world << "Fail!"
+		M.unEquip(O)
+		O.Del()
+		return 0
+	else
+		return 1
+
+//Janitor tank
+/obj/item/weapon/watertank/janitor
+	name = "backpack water tank"
+	desc = "A janitorial watertank backpack with nozzle to clean dirt and graffiti."
+	icon_state = "waterbackpackjani"
+	item_state = "waterbackpackjani"
+	
+/obj/item/weapon/reagent_containers/spray/mister/janitor
+	icon_state = "misterjani"
+	item_state = "misterjani"
+	
+/obj/item/weapon/watertank/janitor/make_noz()
+	noz = new /obj/item/weapon/reagent_containers/spray/mister/janitor(src)
+	return
+	
+//Atmos tank
+/obj/item/weapon/watertank/atmos
+	name = "backpack water tank"
+	desc = "A backpack watertank with fire extinguisher nozzle, intended to fight fires. Shouldn't toxins have one of these?"
+	icon_state = "waterbackpackatmos"
+	item_state = "waterbackpackatmos"
+	
+/obj/item/weapon/watertank/atmos/make_noz()
+	noz = new /obj/item/weapon/extinguisher/mini/nozzle(src)
+	
+/obj/item/weapon/extinguisher/mini/nozzle
+	name = "fire extinguisher nozzle"
+	desc = "A fire extinguisher nozzle attached to a water tank."
+	icon = 'icons/obj/hydroponics.dmi'
+	icon_state = "misteratmos"
+	item_state = "misteratmos"
+	safety = 0
+	var/obj/item/weapon/watertank/tank
+	
+/obj/item/weapon/extinguisher/mini/nozzle/New(parent_tank)
+	if(check_tank_exists(parent_tank, usr, src))
+		tank = parent_tank
+		reagents = tank.reagents
+		max_water = tank.volume
+		return
+		
+/obj/item/weapon/extinguisher/mini/nozzle/dropped(mob/user as mob)
+	user << "<span class='notice'>The nozzle snaps back onto the watertank!</span>"
+	tank.on = 0
+	Del()
+	
+/obj/item/weapon/extinguisher/mini/nozzle/attack_self()
+	return
