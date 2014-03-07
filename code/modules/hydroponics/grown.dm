@@ -689,7 +689,7 @@
 		M.stop_pulling()
 		M << "\blue You slipped on the [name]!"
 		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
-		M.Stun(8)
+		M.Stun(5)
 		M.Weaken(5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/wheat

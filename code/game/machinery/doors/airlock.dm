@@ -611,8 +611,8 @@ About the new airlock wires panel:
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				visible_message("\red [user] headbutts the airlock.")
 				var/obj/item/organ/limb/affecting = H.get_organ("head")
-				H.Stun(5)
-				H.Weaken(5)
+				H.Stun(7)
+				H.Weaken(7)
 				if(affecting.take_damage(10, 0))
 					H.update_damage_overlays(0)
 			else

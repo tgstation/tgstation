@@ -13,10 +13,10 @@
 
 		user.cell.charge -= 30
 
-		M.Weaken(5)
-		if (M.stuttering < 5)
-			M.stuttering = 5
-		M.Stun(5)
+		M.Weaken(7)
+		if (M.stuttering < 7)
+			M.stuttering = 7
+		M.Stun(7)
 
 		for(var/mob/O in viewers(M, null))
 			if (O.client)
