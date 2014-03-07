@@ -166,6 +166,7 @@
 	response_harm   = "kicks"
 	attacktext = "kicks"
 	health = 1
+	ventcrawler = 2
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE
 
@@ -206,6 +207,7 @@ var/global/chicken_count = 0
 	response_harm   = "kicks"
 	attacktext = "kicks"
 	health = 10
+	ventcrawler = 2
 	var/eggsleft = 0
 	var/body_color
 	pass_flags = PASSTABLE

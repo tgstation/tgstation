@@ -5,7 +5,7 @@
 	item_state = null	//so the human update icon uses the icon_state instead.
 	force = 10
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse, /obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
-	cell_type = "/obj/item/weapon/cell/super"
+	cell_type = "/obj/item/weapon/stock_parts/cell/super"
 
 
 /obj/item/weapon/gun/energy/pulse_rifle/attack_self(mob/living/user as mob)
@@ -14,7 +14,7 @@
 /obj/item/weapon/gun/energy/pulse_rifle/destroyer
 	name = "pulse destroyer"
 	desc = "A heavy-duty, pulse-based energy weapon."
-	cell_type = "/obj/item/weapon/cell/infinite"
+	cell_type = "/obj/item/weapon/stock_parts/cell/infinite"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse)
 
 /obj/item/weapon/gun/energy/pulse_rifle/destroyer/attack_self(mob/living/user as mob)
@@ -26,6 +26,6 @@
 	name = "m1911-P"
 	desc = "It's not the size of the gun, it's the size of the hole it puts through people."
 	icon_state = "m1911-p"
-	cell_type = "/obj/item/weapon/cell/infinite"
+	cell_type = "/obj/item/weapon/stock_parts/cell/infinite"
 
 

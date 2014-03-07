@@ -51,6 +51,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/proc/spawn_item(var/turf/loc, var/obj/item/device/uplink/U)
 	if(item)
 		U.uses -= max(cost, 0)
+		U.used_TC += cost
 		feedback_add_details("traitor_uplink_items_bought", "[item]")
 		return new item(loc)
 
@@ -77,7 +78,12 @@ var/list/uplink_items = list()
 		if(istype(I, /obj/item) && ishuman(user))
 			var/mob/living/carbon/human/A = user
 			A.put_in_any_hand_if_possible(I)
-			U.purchase_log += "[user] ([user.ckey]) bought [name]."
+
+			if(istype(I,/obj/item/weapon/storage/box/) && I.contents.len>0)
+				for(var/atom/o in I)
+					U.purchase_log += "<BIG>\icon[o]</BIG>"
+			else
+				U.purchase_log += "<BIG>\icon[I]</BIG>"
 
 		U.interact(user)
 		return 1
@@ -449,7 +455,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/badass/syndiecards
 	name = "Syndicate Playing Cards"
-	desc = "A special deck of space-grade playing cards with a mono-molecular edge and metal reinforcement, making them lethal weapons both when wielded as a blade and when thrown. \
+	desc = "A special deck of space-grade playing cards with a mono-molecular edge and metal reinforcement, making them slightly more robust than a normal deck of cards. \
 	You can also play card games with them."
 	item = /obj/item/toy/cards/deck/syndicate
 	cost = 1

@@ -17,7 +17,6 @@
 	var/production = 0
 	var/yield = 0
 	var/plant_type = 0
-	var/dry = 0
 	icon = 'icons/obj/harvest.dmi'
 	potency = -1
 
@@ -25,8 +24,8 @@
 	if (!isnull(newpotency))
 		potency = newpotency
 	..()
-	pixel_x = rand(-5.0, 5)
-	pixel_y = rand(-5.0, 5)
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
 
 	transform *= TransformUsingVariable(potency, 100, 0.5) //Makes the resulting produce's sprite larger or smaller based on potency!
 
@@ -154,7 +153,7 @@
 			W:amount -= 5
 			if(!W:amount) del(W)
 			user << "<span class='notice'>You add some cable to the potato and slide it inside the battery encasing.</span>"
-			var/obj/item/weapon/cell/potato/pocell = new /obj/item/weapon/cell/potato(user.loc)
+			var/obj/item/weapon/stock_parts/cell/potato/pocell = new /obj/item/weapon/stock_parts/cell/potato(user.loc)
 			pocell.maxcharge = src.potency * 10
 			pocell.charge = pocell.maxcharge
 			del(src)

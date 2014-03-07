@@ -300,8 +300,8 @@ About the new airlock wires panel:
 				return
 		else if(user.hallucination > 50 && prob(10) && src.operating == 0)
 			user << "\red <B>You feel a powerful shock course through your body!</B>"
-			user.halloss += 10
-			user.stunned += 10
+			user.staminaloss += 50
+			user.stunned += 5
 			return
 	..(user)
 
@@ -611,7 +611,7 @@ About the new airlock wires panel:
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				visible_message("\red [user] headbutts the airlock.")
 				var/obj/item/organ/limb/affecting = H.get_organ("head")
-				H.Stun(8)
+				H.Stun(5)
 				H.Weaken(5)
 				if(affecting.take_damage(10, 0))
 					H.update_damage_overlays(0)

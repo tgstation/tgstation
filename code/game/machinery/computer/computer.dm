@@ -11,9 +11,7 @@
 
 /obj/machinery/computer/New()
 	..()
-	if(ticker)
-		initialize()
-
+	power_change()
 
 /obj/machinery/computer/initialize()
 	power_change()
@@ -58,7 +56,8 @@
 
 /obj/machinery/computer/bullet_act(var/obj/item/projectile/Proj)
 	if(prob(Proj.damage))
-		set_broken()
+		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+			set_broken()
 	..()
 
 

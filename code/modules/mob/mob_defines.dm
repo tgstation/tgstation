@@ -74,8 +74,6 @@
 	var/bodytemperature = 310.055	//98.7 F
 	var/drowsyness = 0//Carbon
 	var/dizziness = 0//Carbon
-	var/is_dizzy = 0
-	var/is_jittery = 0
 	var/jitteriness = 0//Carbon
 	var/nutrition = 400//Carbon
 
@@ -155,6 +153,10 @@
 	var/area/lastarea = null
 
 	var/digitalcamo = 0 // Can they be tracked by the AI?
+
+	var/list/radar_blips = list() // list of screen objects, radar blips
+	var/radar_open = 0 	// nonzero is radar is open
+
 
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
 

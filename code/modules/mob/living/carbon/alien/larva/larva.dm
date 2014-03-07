@@ -240,7 +240,7 @@
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has kicked []!</B>", M, src), 1)
 				if ((stat != DEAD) && (damage > 4.9))
-					Weaken(rand(10,15))
+					Weaken(rand(5,10))
 					for(var/mob/O in viewers(M, null))
 						if ((O.client && !( O.blinded )))
 							O.show_message(text("\red <B>[] has weakened []!</B>", M, src), 1, "\red You hear someone fall.", 2)

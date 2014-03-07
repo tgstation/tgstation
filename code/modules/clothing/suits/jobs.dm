@@ -10,7 +10,7 @@
 	item_state = "apron"
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN
-	allowed = list(/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/analyzer/plant_analyzer,/obj/item/seeds,/obj/item/nutrient,/obj/item/weapon/minihoe)
+	allowed = list(/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/analyzer/plant_analyzer,/obj/item/seeds,/obj/item/weapon/reagent_containers/glass/bottle,/obj/item/weapon/minihoe)
 
 //Captain
 /obj/item/clothing/suit/captunic
@@ -97,6 +97,14 @@
 	desc = "A foppish dress jacket."
 	icon_state = "suitjacket_purp"
 	item_state = "suitjacket_purp"
+	blood_overlay_type = "coat"
+	body_parts_covered = CHEST|ARMS
+
+/obj/item/clothing/suit/lawyer/blackjacket
+	name = "black suit jacket"
+	desc = "A professional suit jacket."
+	icon_state = "suitjacket_black"
+	item_state = "ro_suit"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
 
