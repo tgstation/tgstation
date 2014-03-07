@@ -52,7 +52,7 @@
 	A = input(user, "Area to jump to", "BOOYEA", A) in teleportlocs
 	var/area/thearea = teleportlocs[A]
 
-	if (!user || user.stat || user.restrained())
+	if (!user || user.stat || user.restrained() || uses <= 0)
 		return
 	if(!((user == loc || (in_range(src, user) && istype(src.loc, /turf)))))
 		return

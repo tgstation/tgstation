@@ -52,7 +52,7 @@
 	req_access = list(access_engine_equip)
 	var/area/area
 	var/areastring = null
-	var/obj/item/weapon/cell/cell
+	var/obj/item/weapon/stock_parts/cell/cell
 	var/start_charge = 90				// initial cell charge %
 	var/cell_type = 2500				// 0=no cell, 1=regular, 2=high-cap (x5) <- old, now it's just 0=no cell, otherwise dictate cellcapacity by changing this value. 1 used to be 1000, 2 was 2500
 	var/opened = 0 //0=closed, 1=opened, 2=cover removed
@@ -149,7 +149,7 @@
 	has_electronics = 2 //installed and secured
 	// is starting with a power cell installed, create it and set its charge level
 	if(cell_type)
-		src.cell = new/obj/item/weapon/cell(src)
+		src.cell = new/obj/item/weapon/stock_parts/cell(src)
 		cell.maxcharge = cell_type	// cell_type is maximum charge (old default was 1000 or 2500 (values one and two respectively)
 		cell.charge = start_charge * cell.maxcharge / 100.0 		// (convert percentage to actual value)
 
@@ -214,9 +214,9 @@
 		status_overlays_lock[1] = image(icon, "apcox-0")    // 0=blue 1=red
 		status_overlays_lock[2] = image(icon, "apcox-1")
 
-		status_overlays_charging[1] = image(icon, "apco3-0") 
+		status_overlays_charging[1] = image(icon, "apco3-0")
 		status_overlays_charging[2] = image(icon, "apco3-1")
-		status_overlays_charging[3] = image(icon, "apco3-2")		
+		status_overlays_charging[3] = image(icon, "apco3-2")
 
 		status_overlays_equipment[1] = image(icon, "apco0-0")
 		status_overlays_equipment[2] = image(icon, "apco0-1")
@@ -227,7 +227,7 @@
 		status_overlays_lighting[2] = image(icon, "apco1-1")
 		status_overlays_lighting[3] = image(icon, "apco1-2")
 		status_overlays_lighting[4] = image(icon, "apco1-3")
-		
+
 		status_overlays_environ[1] = image(icon, "apco2-0")
 		status_overlays_environ[2] = image(icon, "apco2-1")
 		status_overlays_environ[3] = image(icon, "apco2-2")
@@ -279,10 +279,10 @@
 
 /obj/machinery/power/apc/proc/check_updates()
 
-	var/last_update_state = update_state 
+	var/last_update_state = update_state
 	var/last_update_overlay = update_overlay
 	update_state = 0
-	update_overlay = 0	
+	update_overlay = 0
 
 	if(cell)
 		update_state |= UPSTATE_CELL_IN
@@ -319,7 +319,7 @@
 			update_overlay |= APC_UPOVERLAY_EQUIPMENT1
 		else if(equipment == 2)
 			update_overlay |= APC_UPOVERLAY_EQUIPMENT2
-		
+
 		if(!lighting)
 			update_overlay |= APC_UPOVERLAY_LIGHTING0
 		else if(lighting == 1)
@@ -389,7 +389,7 @@
 		else
 			opened = 1
 			update_icon()
-	else if	(istype(W, /obj/item/weapon/cell) && opened)	// trying to put a cell inside
+	else if	(istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
 		if(cell)
 			user << "There is a power cell already installed."
 			return

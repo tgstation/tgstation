@@ -48,7 +48,7 @@ var/global/mulebot_count = 0
 	var/auto_return = 1	// true if auto return to home beacon after unload
 	var/auto_pickup = 1 // true if auto-pickup at beacon
 
-	var/obj/item/weapon/cell/cell
+	var/obj/item/weapon/stock_parts/cell/cell
 	var/datum/wires/mulebot/wires = null
 						// the installed power cell
 
@@ -105,8 +105,8 @@ var/global/mulebot_count = 0
 		if(toggle_lock(user))
 			user << "\blue Controls [(locked ? "locked" : "unlocked")]."
 
-	else if(istype(I,/obj/item/weapon/cell) && open && !cell)
-		var/obj/item/weapon/cell/C = I
+	else if(istype(I,/obj/item/weapon/stock_parts/cell) && open && !cell)
+		var/obj/item/weapon/stock_parts/cell/C = I
 		user.drop_item()
 		C.loc = src
 		cell = C
@@ -293,7 +293,7 @@ var/global/mulebot_count = 0
 
 			if("cellinsert")
 				if(open && !cell)
-					var/obj/item/weapon/cell/C = usr.get_active_hand()
+					var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
 					if(istype(C))
 						usr.drop_item()
 						cell = C

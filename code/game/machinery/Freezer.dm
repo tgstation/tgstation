@@ -37,6 +37,9 @@
 		update_icon()
 		return
 
+	if(exchange_parts(user, I))
+		return
+
 	default_deconstruction_crowbar(I)
 
 	if(default_change_direction_wrench(user, I))
@@ -154,6 +157,9 @@
 	if(default_deconstruction_screwdriver(user, "heater-o", "heater", I))
 		on = 0
 		update_icon()
+		return
+
+	if(exchange_parts(user, I))
 		return
 
 	default_deconstruction_crowbar(I)
