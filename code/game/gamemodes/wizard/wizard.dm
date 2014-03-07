@@ -195,7 +195,8 @@
 
 
 /datum/game_mode/wizard/check_finished()
-
+	if(istype(ticker.mode, /datum/game_mode/mixed))
+		mixed = 1
 	if(config.continous_rounds || mixed)
 		return ..()
 
