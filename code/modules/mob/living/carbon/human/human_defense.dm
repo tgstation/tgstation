@@ -115,7 +115,7 @@ emp_act
 	return 0
 
 
-/mob/living/carbon/human/proc/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
+/mob/living/carbon/human/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
 	if(!I || !user)	return 0
 
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(user.zone_sel.selecting))
@@ -128,14 +128,12 @@ emp_act
 	if(I.attack_verb && I.attack_verb.len)
 		visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I] by [user]!</span>", \
 						"<span class='userdanger'>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I] by [user]!</span>")
-	else if(I.force == 0)
-		visible_message("<span class='danger'>[src] has been [pick("tapped","patted")] on the [hit_area] with [I] by [user]!</span>", \
-						"<span class='userdanger'>[src] has been [pick("tapped","patted")] on the [hit_area] with [I] by [user]!</span>")
-	else
+	else if(I.force)
 		visible_message("<span class='danger'>[src] has been attacked in the [hit_area] with [I] by [user]!</span>", \
 						"<span class='userdanger'>[src] has been attacked in the [hit_area] with [I] by [user]!</span>")
+	else
+		return 0
 
-	if(!I.force)	return 0
 	var/armor = run_armor_check(affecting, "melee", "<span class='warning'>Your armour has protected your [hit_area].</span>", "<span class='warning'>Your armour has softened a hit to your [hit_area].</span>")
 	if(armor >= 100)	return 0
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)

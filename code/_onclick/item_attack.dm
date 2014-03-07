@@ -12,6 +12,8 @@
 
 /mob/living/attackby(obj/item/I, mob/user)
 	I.attack(src, user)
+
+/mob/living/proc/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
 	apply_damage(I.force, I.damtype)
 	if(I.damtype == "brute")
 		if(prob(33) && I.force)
@@ -28,19 +30,12 @@
 	if(I.attack_verb && I.attack_verb.len)
 		src.visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] with [I][showname]</span>",
 		"<span class='userdanger'>[src] has been [pick(I.attack_verb)] with [I][showname]</span>")
-	else if(I.force == 0)
-		src.visible_message("<span class='danger'>[src] has been [pick("tapped","patted")] with [I][showname]</span>",
-		"<span class='userdanger'>[src] has been [pick("tapped","patted")] with [I][showname]</span>")
-	else
+	else if(I.force)
 		src.visible_message("<span class='danger'>[src] has been attacked with [I][showname]</span>",
 		"<span class='userdanger'>[src] has been attacked with [I][showname]</span>")
 	if(!showname && user)
 		if(user.client)
 			user << "\red <B>You attack [src] with [I]. </B>"
-
-/mob/living/carbon/human/attackby(obj/item/I, mob/user)
-	I.attack(src, user)
-	attacked_by(I, user)
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
@@ -59,7 +54,7 @@ obj/item/proc/get_clamped_volume()
 	else if(!src.force && src.w_class)
 		return Clamp(src.w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
-/obj/item/proc/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/proc/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
 
 	if (!istype(M)) // not sure if this is the right thing...
 		return
@@ -77,5 +72,6 @@ obj/item/proc/get_clamped_volume()
 	//spawn(1800)            // this wont work right
 	//	M.lastattacker = null
 	/////////////////////////
+	M.attacked_by(src, user, def_zone)
 	add_fingerprint(user)
 	return 1
