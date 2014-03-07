@@ -180,7 +180,7 @@ obj/machinery/computer/general_air_control/large_tank_control
 
 	var/pressure_setting = ONE_ATMOSPHERE * 45
 
-obj/machinery/computer/general_air_control/large_tank_control/proc/reconnect(mob/user)
+obj/machinery/computer/general_air_control/large_tank_control/proc/reconnect(mob/user)    //This hacky madness is the evidence of the fact that a lot of machines were never meant to be constructable, im so sorry you had to see this
 	var/list/IO = list()
 	var/list/devices = radio_connection.devices["_default"]
 	for(var/obj/machinery/atmospherics/unary/vent_pump/U in devices)
@@ -196,6 +196,16 @@ obj/machinery/computer/general_air_control/large_tank_control/proc/reconnect(mob
 		src.input_tag = "[S]_in"
 		src.output_tag = "[S]_out"
 		name = "[uppertext(S)] Supply Control"
+		devices = radio_connection.devices["4"]
+		for(var/obj/machinery/air_sensor/U in devices)
+			world << "[U.id_tag]"
+			var/list/text = text2list(U.id_tag, "_")
+			if(text[1] == S)
+				sensors = list("[S]_sensor" = "Tank")
+				break
+
+	devices = radio_connection.devices["_default"]
+
 	for(var/obj/machinery/atmospherics/unary/outlet_injector/U in devices)
 		U.broadcast_status()
 
