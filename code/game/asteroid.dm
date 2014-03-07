@@ -104,7 +104,7 @@ proc/make_mining_asteroid_secret()
 			theme = "hitech"
 			walltypes = list(/turf/simulated/wall/r_wall=5,/turf/simulated/mineral/random=1)
 			floortypes = list(/turf/simulated/floor/greengrid,/turf/simulated/floor/bluegrid)
-			treasureitems = list(/obj/item/weapon/cell/hyper=1, /obj/machinery/chem_dispenser/constructable=1,/obj/machinery/computer/telescience=1, /obj/machinery/r_n_d/protolathe=1,
+			treasureitems = list(/obj/item/weapon/stock_parts/cell/hyper=1, /obj/machinery/chem_dispenser/constructable=1,/obj/machinery/computer/telescience=1, /obj/machinery/r_n_d/protolathe=1,
 								/obj/machinery/biogenerator=1)
 			fluffitems = list(/obj/structure/table/reinforced=2,/obj/item/weapon/stock_parts/scanning_module/phasic=3,
 							  /obj/item/weapon/stock_parts/matter_bin/super=3,/obj/item/weapon/stock_parts/manipulator/pico=3,

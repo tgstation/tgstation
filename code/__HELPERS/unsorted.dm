@@ -256,7 +256,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if(R)	R.fields["name"] = newname
 
 		//update our pda and id if we have them on our person
-		var/list/searching = GetAllContents(searchDepth = 3)
+		var/list/searching = GetAllContents(3)
 		var/search_id = 1
 		var/search_pda = 1
 
@@ -594,26 +594,45 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 	del(animation)
 
 
-//Will return the contents of an atom recursivly to a depth of 'searchDepth'
-/atom/proc/GetAllContents(searchDepth = 5)
-	var/list/toReturn = list()
+atom/proc/GetAllContents()
+	var/list/processing_list = list(src)
+	var/list/processed = list()
+	var/list/assembled = list()
 
-	for(var/atom/part in contents)
-		toReturn += part
-		if(part.contents.len && searchDepth)
-			toReturn += part.GetAllContents(searchDepth - 1)
+	while(processing_list.len)
+		var/atom/A = processing_list[1]
+		processing_list -= A
 
-	return toReturn
+		for(var/atom/a in A)
+			if(!(a in processed))
+				processing_list += a
 
+		if(!(A in assembled))
+			assembled += A
 
-/atom/proc/GetTypeInAllContents(typepath, searchDepth = 5)
-	for(var/atom/part in contents)
-		if(istype(part, typepath))
-			return 1
-		if(part.contents.len && searchDepth)
-			if(part.GetTypeInAllContents(typepath, searchDepth - 1))
-				return 1
-	return 0
+	return assembled
+
+atom/proc/GetTypeInAllContents(typepath)
+	var/list/processing_list = list(src)
+	var/list/processed = list()
+
+	var/atom/found = null
+
+	while(processing_list.len && found==null)
+		var/atom/A = processing_list[1]
+		if(istype(A, typepath))
+			found = A
+
+		processing_list -= A
+
+		for(var/atom/a in A)
+			if(!(a in processed))
+				processing_list += a
+
+		if(!(A in processed))
+			processed += A
+
+	return found
 
 
 //Step-towards method of determining whether one atom can see another. Similar to viewers()

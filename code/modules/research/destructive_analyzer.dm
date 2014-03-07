@@ -48,6 +48,9 @@ Note: Must be placed within 3 tiles of the R&D Console
 			linked_console = null
 		return
 
+	if(exchange_parts(user, O))
+		return
+
 	default_deconstruction_crowbar(O)
 
 	if (disabled)
