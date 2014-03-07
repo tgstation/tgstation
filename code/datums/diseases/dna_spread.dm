@@ -56,10 +56,11 @@
 
 /datum/disease/dnaspread/Del()
 	if ((original_dna["name"]) && (original_dna["UI"]) && (original_dna["SE"]))
-		affected_mob.dna.uni_identity = original_dna["UI"]
-		updateappearance(affected_mob)
-		affected_mob.dna.struc_enzymes = original_dna["SE"]
-		affected_mob.real_name = original_dna["name"]
+		if(affected_mob)
+			affected_mob.dna.uni_identity = original_dna["UI"]
+			updateappearance(affected_mob)
+			affected_mob.dna.struc_enzymes = original_dna["SE"]
+			affected_mob.real_name = original_dna["name"]
 
-		affected_mob << "\blue You feel more like yourself."
+			affected_mob << "\blue You feel more like yourself."
 	..()
