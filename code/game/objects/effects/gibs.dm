@@ -75,4 +75,4 @@
 					if(directions.len)
 						gib.streak(directions)
 
-		del(src)
+		qdel(src)

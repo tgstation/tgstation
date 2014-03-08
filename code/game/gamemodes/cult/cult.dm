@@ -53,6 +53,8 @@
 
 
 /datum/game_mode/cult/pre_setup()
+	if(istype(ticker.mode, /datum/game_mode/mixed))
+		mixed = 1
 	if(prob(50))
 		objectives += "survive"
 		objectives += "sacrifice"

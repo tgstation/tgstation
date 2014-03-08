@@ -195,14 +195,28 @@
 	desc = "Weird purple octopus-like thing."
 	luminosity = NODERANGE
 	var/node_range = NODERANGE
+	var/list/obj/effect/alien/weeds/spawns
+
+/obj/effect/alien/weeds/node/Destroy()
+	for(var/obj/effect/alien/weeds/W in spawns)
+		if(W.linked_node == src)
+			W.linked_node = null
+	..()
+
+/obj/effect/alien/weeds/Destroy()
+	if(linked_node)
+		linked_node.spawns.Remove(src)
+	..()
 
 /obj/effect/alien/weeds/node/New()
+	spawns = new()
 	..(src.loc, src)
 
 
-/obj/effect/alien/weeds/New(pos, node)
+/obj/effect/alien/weeds/New(pos, var/obj/effect/alien/weeds/node/node)
 	..()
 	linked_node = node
+	linked_node.spawns.Add(src)
 	if(istype(loc, /turf/space))
 		del(src)
 		return
@@ -284,7 +298,7 @@ Alien plants should do something if theres a lot of poison
 
 /obj/effect/alien/weeds/proc/healthcheck()
 	if(health <= 0)
-		del(src)
+		qdel(src)
 
 
 /obj/effect/alien/weeds/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)

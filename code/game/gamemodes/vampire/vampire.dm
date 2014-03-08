@@ -46,6 +46,8 @@
 
 /datum/game_mode/vampire/pre_setup()
 	// mixed mode scaling
+	if(istype(ticker.mode, /datum/game_mode/mixed))
+		mixed = 1
 	if(mixed)
 		recommended_enemies = 2
 		required_enemies = 1

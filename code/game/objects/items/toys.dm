@@ -578,3 +578,13 @@
 	force = 5
 	w_class = 4.0
 	slot_flags = SLOT_BACK
+
+
+/*
+ * OMG THEIF
+ */
+/obj/item/toy/gooncode
+	name = "Goonecode"
+	desc = "The holy grail of all programmers."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "gooncode"

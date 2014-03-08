@@ -35,6 +35,7 @@
 		var/mob/living/new_mob
 
 		var/randomize = pick("monkey","robot","slime","xeno","human")
+
 		switch(randomize)
 			if("monkey")
 				new_mob = new /mob/living/carbon/monkey(M.loc)
@@ -57,31 +58,34 @@
 				MoMMI.mmi = new /obj/item/device/mmi(new_mob)
 				MoMMI.mmi.transfer_identity(M)	//Does not transfer key/client.
 			if("slime")
-				// TODO: This is stupid. - N3X
-				var/slime_color = pick("grey","purple","metal","orange","blue","darkblue","darkpurple","yellow","silver","pink","red","gold","green","lightpink","oil","black","adamantine","bluespace","pyrite","cerulean","sepia")
-				switch(slime_color)
-					if("grey")	        new_mob = new /mob/living/carbon/slime(M.loc)
-					if("purple")	    new_mob = new /mob/living/carbon/slime/purple(M.loc)
-					if("metal")	        new_mob = new /mob/living/carbon/slime/metal(M.loc)
-					if("orange")	    new_mob = new /mob/living/carbon/slime/orange(M.loc)
-					if("blue")	        new_mob = new /mob/living/carbon/slime/blue(M.loc)
-					if("darkblue")	    new_mob = new /mob/living/carbon/slime/darkblue(M.loc)
-					if("darkpurple")	new_mob = new /mob/living/carbon/slime/darkpurple(M.loc)
-					if("yellow")	    new_mob = new /mob/living/carbon/slime/yellow(M.loc)
-					if("silver")	    new_mob = new /mob/living/carbon/slime/silver(M.loc)
-					if("pink")	        new_mob = new /mob/living/carbon/slime/pink(M.loc)
-					if("red")	        new_mob = new /mob/living/carbon/slime/red(M.loc)
-					if("gold")	        new_mob = new /mob/living/carbon/slime/gold(M.loc)
-					if("green")	        new_mob = new /mob/living/carbon/slime/green(M.loc)
-					if("lightpink")	    new_mob = new /mob/living/carbon/slime/lightpink(M.loc)
-					if("oil")	        new_mob = new /mob/living/carbon/slime/oil(M.loc)
-					if("black")	        new_mob = new /mob/living/carbon/slime/black(M.loc)
-					if("adamantine")	new_mob = new /mob/living/carbon/slime/adamantine(M.loc)
-					if("bluespace")	    new_mob = new /mob/living/carbon/slime/bluespace(M.loc)
-					if("pyrite")	    new_mob = new /mob/living/carbon/slime/pyrite(M.loc)
-					if("cerulean")	    new_mob = new /mob/living/carbon/slime/cerulean(M.loc)
-					if("sepia")	        new_mob = new /mob/living/carbon/slime/sepia(M.loc)
+				var/slimey = pick("",\
+				                 "/purple",\
+				                 "/metal",\
+				                 "/orange",\
+				                 "/blue",\
+				                 "/darkblue",\
+				                 "/darkpurple",\
+				                 "/yellow",\
+				                 "/silver",\
+				                 "/pink",\
+				                 "/red",\
+				                 "/gold",\
+				                 "/green",\
+				                 "/lightpink",\
+				                 "/oil",\
+				                 "/black",\
+				                 "/adamantine",\
+				                 "/bluespace",\
+				                 "/pyrite",\
+				                 "/cerulean",\
+				                 "/sepia"\
+				                 )
 
+				if (prob(50))
+					slimey = "/adult[slimey]"
+
+				slimey = text2path("/mob/living/carbon/slime[slimey]")
+				new_mob = new slimey(M.loc)
 				new_mob.universal_speak = 1
 			if("xeno")
 				var/alien_caste = pick("Hunter","Sentinel","Drone","Larva")

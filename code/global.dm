@@ -1,6 +1,9 @@
 //#define TESTING
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
+// List of types and how many instances of each type there are.
+var/global/list/type_instances[0]
+
 var/global/obj/effect/datacore/data_core = null
 var/global/obj/effect/overlay/plmaster = null
 var/global/obj/effect/overlay/slmaster = null

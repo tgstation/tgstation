@@ -1110,3 +1110,17 @@ Pressure: [env.return_pressure()]"}
 		log_admin("[key_name(src)] has toggled [M.key]'s [blockname] block [state]!")
 	else
 		alert("Invalid mob")
+
+
+/client/proc/cmd_admin_dump_instances()
+	set category = "Debug"
+	set name = "Dump Instance Counts"
+	set desc = "MEMORY PROFILING IS TOO HIGH TECH"
+
+	var/F=file("instances.csv")
+	fdel(F)
+	F << "Types,Number of Instances"
+	for(var/key in type_instances)
+		F << "[key],[type_instances[key]]"
+
+	usr << "\blue Dumped to instances.csv."

@@ -1174,6 +1174,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	PDAs -= src
 	if (src.id)
 		src.id.loc = get_turf(src.loc)
+	if(src.pai)
+		src.pai.loc = get_turf(src.loc)
 	..()
 
 /obj/item/device/pda/clown/HasEntered(AM as mob|obj) //Clown PDA is slippery.
