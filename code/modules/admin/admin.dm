@@ -150,6 +150,16 @@ var/global/floorIsLava = 0
 					body+="</td>"
 				body += "</tr></table>"
 
+			// Law Admin Hax
+			if(issilicon(M) && M:laws)
+				body += "<br><br>"
+				body += "<b>Laws:</b><br />"
+				var/datum/ai_laws/L = M:laws
+				body += L.display_admin_tools(M)
+				body += "<br /><a href='?src=\ref[src];mob=\ref[M];add_law=1'>Add Law</a>"
+				body += " | <a href='?src=\ref[src];mob=\ref[M];clear_laws=1'>Clear Laws</a>"
+				body += "<br /><a href='?src=\ref[src];mob=\ref[M];announce_laws=1'><b>Send Laws</b></a> - User is not notified of changes until this button pushed!<br />"
+
 			body += {"<br><br>
 				<b>Rudimentary transformation:</b><font size=2><br>These transformations only create a new mob type and copy stuff over. They do not take into account MMIs and similar mob-specific things. The buttons in 'Transformations' are preferred, when possible.</font><br>
 				<A href='?src=\ref[src];simplemake=observer;mob=\ref[M]'>Observer</A> |

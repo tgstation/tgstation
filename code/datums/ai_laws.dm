@@ -159,6 +159,60 @@ var/global/const/mommi_base_law_type = /datum/ai_laws/keeper // /datum/ai_laws/a
 			who << "[number]. [law]"
 			number++
 
+/datum/ai_laws/proc/adminLink(var/mob/living/silicon/S,var/law_type,var/index,var/label)
+	return "<a href=\"?src=\ref[src];set_law=[law_type];index=[index];mob=\ref[S]\">[label]</a>"
+
+/datum/ai_laws/Topic(href,href_list)
+	if("set_law" in href_list)
+		if(usr.client && usr.client.holder)
+			var/lawtype=text2num(href_list["set_law"])
+			var/index=text2num(href_list["index"])
+			var/mob/living/silicon/S=locate(href_list["mob"])
+			var/oldlaw = get_law(lawtype,index)
+			var/newlaw = copytext(sanitize(input(usr, "Please enter a new law.", "Freeform Law Entry", oldlaw)),1,MAX_MESSAGE_LEN)
+			if(newlaw == "")
+				if(alert(src,"Are you sure you wish to delete this law?","Yes","No") == "No")
+					return
+			set_law(lawtype,index,newlaw)
+
+			var/lawtype_str="law #[index]"
+			switch(lawtype)
+				if(LAW_ZERO)
+					lawtype_str = "law zero"
+				if(LAW_IONIC)
+					lawtype_str = "ionic law #[index]"
+				if(LAW_INHERENT)
+					lawtype_str = "core law #[index]"
+			log_admin("[key_name(usr)] has changed [lawtype_str] on [key_name(S)]: \"[newlaw]\"")
+			message_admins("[usr.key] changed [lawtype_str] on [key_name(S)]: \"[newlaw]\"")
+			return 1
+	return 0
+
+/datum/ai_laws/proc/display_admin_tools(var/mob/living/silicon/context)
+	var/dat=""
+	if (src.zeroth)
+		dat += "<br />0. [adminLink(context,LAW_ZERO,1,zeroth)]"
+
+	for (var/index = 1, index <= src.ion.len, index++)
+		var/law = src.ion[index]
+		var/num = ionnum()
+		dat += "<br />[num]. [adminLink(context,LAW_IONIC,index,law)]"
+
+	var/number = 1
+	for (var/index = 1, index <= src.inherent.len, index++)
+		var/law = src.inherent[index]
+
+		if (length(law) > 0)
+			dat += "<br />[number]. [adminLink(context,LAW_INHERENT,index,law)]"
+			number++
+
+	for (var/index = 1, index <= src.supplied.len, index++)
+		var/law = src.supplied[index]
+		if (length(law) > 0)
+			dat += "<br />[number]. [adminLink(context,1,index,law)]"
+			number++
+	return dat
+
 // /vg/: Used in the simplified law system. Takes LAW_ constants.
 /datum/ai_laws/proc/add_law(var/number,var/law)
 	switch(number)
@@ -170,3 +224,27 @@ var/global/const/mommi_base_law_type = /datum/ai_laws/keeper // /datum/ai_laws/a
 			add_inherent_law(law)
 		else
 			add_supplied_law(number,law)
+
+// /vg/: Used in the simplified law system. Takes LAW_ constants.
+/datum/ai_laws/proc/get_law(var/law_type,var/idx)
+	switch(law_type)
+		if(LAW_IONIC)
+			return ion[idx]
+		if(LAW_ZERO)
+			return zeroth
+		if(LAW_INHERENT)
+			return inherent[idx]
+		else
+			return supplied[idx]
+
+// /vg/: Used in the simplified law system. Takes LAW_ constants.
+/datum/ai_laws/proc/set_law(var/law_type,var/idx,var/law)
+	switch(law_type)
+		if(LAW_IONIC)
+			ion[idx]=law
+		if(LAW_ZERO)
+			zeroth=law
+		if(LAW_INHERENT)
+			inherent[idx]=law
+		else
+			inherent[idx]=law
