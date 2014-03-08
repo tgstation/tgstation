@@ -514,6 +514,7 @@ var/list/datum/dna/hivemind_bank = list()
 
 	if(changeling.mimicing)
 		changeling.mimicing = ""
+		changeling.chem_recharge_slowdown -= 0.5
 		src << "<span class='notice'>We return our vocal glands to their original location.</span>"
 		return
 
@@ -522,18 +523,12 @@ var/list/datum/dna/hivemind_bank = list()
 		return
 
 	changeling.mimicing = mimic_voice
+	changeling.chem_recharge_slowdown += 0.5
 
 	src << "<span class='notice'>We shape our glands to take the voice of <b>[mimic_voice]</b>, this will stop us from regenerating chemicals while active.</span>"
 	src << "<span class='notice'>Use this power again to return to our original voice and reproduce chemicals again.</span>"
 
 	feedback_add_details("changeling_powers","MV")
-
-	spawn(0)
-		while(src && src.mind && src.mind.changeling && src.mind.changeling.mimicing)
-			src.mind.changeling.chem_charges = max(src.mind.changeling.chem_charges - 1, 0)
-			sleep(40)
-		if(src && src.mind && src.mind.changeling)
-			src.mind.changeling.mimicing = ""
 
 
 /mob/living/carbon/proc/changeling_arm_blade()
@@ -586,6 +581,7 @@ var/list/datum/dna/hivemind_bank = list()
 			playsound(loc, 'sound/effects/splat.ogg', 50, 1) //So real sounds
 
 		mind.changeling.geneticdamage += 8 //Casting off a space suit leaves you weak for a few seconds.
+		mind.changeling.chem_recharge_slowdown -= 0.5
 		return
 
 	var/datum/changeling/changeling = changeling_power(20, 0, 5)
@@ -597,7 +593,7 @@ var/list/datum/dna/hivemind_bank = list()
 		return
 	if(!H.unEquip(H.head))
 		src << "\the [H.head] is stuck on your head, you cannot grow a space helmet over it!"
-		H.unEquip(H.wear_suit, 1) //Force unequip the suit to prevent bugginess.
+		H.unEquip(H.wear_suit, 1) //Force unequip the changeling suit to prevent bugginess.
 		return
 
 	equip_to_slot_if_possible(new /obj/item/clothing/suit/space/changeling(H), slot_wear_suit, 1, 1, 1)
@@ -608,16 +604,7 @@ var/list/datum/dna/hivemind_bank = list()
 	changeling.spacesuitactive = 1
 	changeling.chem_charges -= 20
 	changeling.geneticdamage += 8
-
-	spawn(0)
-		while(src && mind && mind.changeling && mind.changeling.spacesuitactive)
-			src.mind.changeling.chem_charges = max(src.mind.changeling.chem_charges - 1,5, 0)
-			sleep(40)
-
-	spawn(0) //I'm so sorry.
-		while(src && mind && mind.changeling && mind.changeling.spacesuitactive)
-			H.reagents.add_reagent("dexalinp", 1) //So you don't need internals.
-			sleep(60)
+	changeling.chem_recharge_slowdown += 0.5
 
 
 //////////

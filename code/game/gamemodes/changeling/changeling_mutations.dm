@@ -62,16 +62,26 @@
 //Space Suit & Helmet
 /obj/item/clothing/suit/space/changeling
 	name = "flesh mass"
+	icon_state = "lingspacesuit"
 	desc = "A huge, bulky mass of pressure and temperature-resistant organic tissue, evolved to facilitate space travel."
 	flags = STOPSPRESSUREDMAGE | NODROP //Not THICKMATERIAL because it's organic tissue, so if somebody tries to inject something into it, it still ends up in your blood. (also balance but muh fluff)
 	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/emergency_oxygen, /obj/item/weapon/tank/oxygen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0) //No armor at all.
 
+/obj/item/clothing/suit/space/changeling/New()
+	processing_objects += src
+
 /obj/item/clothing/suit/space/changeling/dropped()
 	del src
 
+/obj/item/clothing/suit/space/changeling/process()
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		H.reagents.add_reagent("dexalinp", REAGENTS_METABOLISM)
+
 /obj/item/clothing/head/helmet/space/changeling
 	name = "flesh mass"
+	icon_state = "lingspacehelmet"
 	desc = "A covering of pressure and temperature-resistant organic tissue with a glass-like chitin front."
 	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | NODROP //Again, no THICKMATERIAL.
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
