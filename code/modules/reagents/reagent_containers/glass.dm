@@ -26,6 +26,8 @@
 		/obj/machinery/computer/pandemic,
 		/obj/item/weapon/storage/secure/safe,
 		/obj/machinery/disposal,
+		/obj/machinery/hydroponics,
+		/obj/machinery/biogenerator,
 		/mob/living/simple_animal/cow,
 		/mob/living/simple_animal/hostile/retaliate/goat
 	)

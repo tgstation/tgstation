@@ -2652,6 +2652,44 @@ datum
 				..()
 				return
 
+//////////////////////////////////Hydroponics stuff///////////////////////////////
+
+		eznutriment
+			name = "E-Z-Nutrient"
+			id = "eznutriment"
+			description = "Cheap and extremely common type of plant nutriment."
+			reagent_state = LIQUID
+			color = "#376400" // RBG: 50, 100, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				if(prob(10)) M.adjustToxLoss(1)
+				..()
+				return
+
+		left4zednutriment
+			name = "Left 4 Zed"
+			id = "left4zednutriment"
+			description = "Unstable nutriment that makes plants mutate more often than usual."
+			reagent_state = LIQUID
+			color = "#1A1E4D" // RBG: 26, 30, 77
+
+			on_mob_life(var/mob/living/M as mob)
+				if(prob(25)) M.adjustToxLoss(1)
+				..()
+				return
+
+		robustharvestnutriment
+			name = "Robust Harvest"
+			id = "robustharvestnutriment"
+			description = "Very potent nutriment that prevents plants from mutating."
+			reagent_state = LIQUID
+			color = "#9D9D00" // RBG: 157, 157, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				if(prob(15)) M.adjustToxLoss(1)
+				..()
+				return
+
 //////////////////////////////////////////////The ten friggen million reagents that get you drunk//////////////////////////////////////////////
 
 		atomicbomb
