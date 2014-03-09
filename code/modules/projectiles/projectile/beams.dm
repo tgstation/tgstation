@@ -227,8 +227,8 @@ var/list/beam_master = list()
 					beam_master[reference] = turfs
 			else
 				first = 0
-		cleanup(reference)
 		qdel(src)
+		cleanup(reference)
 		return
 
 	Destroy()
