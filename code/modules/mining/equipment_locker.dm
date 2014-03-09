@@ -44,7 +44,7 @@
 	if(processed_sheet)
 		var/datum/material/mat = materials.getMaterial(O.material)
 		mat.stored += processed_sheet.amount //Stack the sheets
-		points += mat.value // Gimme my fucking points
+		points += mat.value * processed_sheet.amount // Gimme my fucking points
 		qdel(O)
 
 /obj/machinery/mineral/ore_redemption/process()
@@ -64,7 +64,7 @@
 				for(var/mat_id in B.materials.storage)
 					var/datum/material/mat = B.materials.getMaterial(mat_id)
 					materials.addAmount(mat_id,mat.stored)
-					points += mat.value // Gimme my fucking points
+					points += mat.value * mat.stored // Gimme my fucking points
 					mat.stored=0
 
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(var/obj/item/weapon/ore/O)
