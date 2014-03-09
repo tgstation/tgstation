@@ -264,6 +264,10 @@
 			if (holding)
 				release_log += "Valve was <b>closed</b> by [usr] ([usr.ckey]), stopping the transfer into the [holding]<br>"
 			else
+				var/datum/gas/sleeping_agent/S = locate() in src.air_contents.trace_gases
+				if(src.air_contents.toxins > 0 || (istype(S)))
+					message_admins("[usr.real_name] ([formatPlayerPanel(usr,usr.ckey)]) opened a canister that contains \[[src.air_contents.toxins > 0 ? "Toxins" : ""] [istype(S) ? " N2O" : ""]\] at [formatJumpTo(loc)]!")
+					log_admin("[usr]([ckey(usr.key)]) opened a canister that contains \[[src.air_contents.toxins > 0 ? "Toxins" : ""] [istype(S) ? " N2O" : ""]\] at [loc.x], [loc.y], [loc.z]")
 				release_log += "Valve was <b>closed</b> by [usr] ([usr.ckey]), stopping the transfer into the <font color='red'><b>air</b></font><br>"
 		else
 			if (holding)
