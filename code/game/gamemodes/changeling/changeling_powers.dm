@@ -164,7 +164,7 @@
 	src.dna = chosen_dna
 	src.real_name = chosen_dna.real_name
 	updateappearance(src)
-	domutcheck(src, null)
+	domutcheck(src, null, 1)
 
 	feedback_add_details("changeling_powers","TR")
 	return 1
