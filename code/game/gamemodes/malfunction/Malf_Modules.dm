@@ -119,10 +119,7 @@
 					V.show_message("\blue You hear a loud electrical buzzing sound!", 2)
 				spawn(50)
 					if(M)
-						var/mob/living/simple_animal/hostile/mimic/copy/machine = new(get_turf(M), M, src, 1)
-						machine.speak = list("HUMANS ARE IMPERFECT!", "YOU SHALL BE ASSIMILATED!", "YOU ARE HARMING YOURSELF", "You have been deemed hazardous. Will you comply?", \
-									   "My logic is undeniable.", "One of us.", "FLESH IS WEAK", "THIS ISN'T WAR, THIS IS EXTERMINATION!")
-						machine.speak_chance = 15
+						new /mob/living/simple_animal/hostile/mimic/copy/machine(get_turf(M), M, src, 1)
 			else src << "Out of uses."
 	else src << "That's not a machine."
 
