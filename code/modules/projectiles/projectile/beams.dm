@@ -227,7 +227,6 @@ var/list/beam_master = list()
 					beam_master[reference] = turfs
 			else
 				first = 0
-		qdel(src)
 		cleanup(reference)
 		return
 
@@ -243,6 +242,7 @@ var/list/beam_master = list()
 				var/list/turfs = turf_master[laser_state]
 				for(var/turf/T in turfs)
 					T.overlays -= beam_master[laser_state]
+			qdel(src)
 		return
 
 /obj/item/projectile/beam/practice
