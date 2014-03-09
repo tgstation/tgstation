@@ -32,8 +32,8 @@ Bonus
 		switch(A.stage)
 			if(4, 5)
 				M << "<span class='notice'>[pick("Your skin feels itchy.", "You feel light headed.")]</span>"
-				clean_randmut(M, good_mutations == 1 ? (good_se_blocks | op_se_blocks) : bad_se_blocks) // Give them a random good/bad mutation.
-				domutcheck(M, null, 1, 20) // Force the power to manifest
+				clean_randmut(M, good_mutations == 1 ? (good_se_blocks | op_se_blocks) : bad_se_blocks, 20) // Give them a random good/bad mutation.
+				domutcheck(M, null, 1) // Force the power to manifest
 	return
 
 

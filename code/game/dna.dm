@@ -154,7 +154,7 @@
 /proc/randomize_radiation_accuracy(position_we_were_supposed_to_hit, radduration, number_of_blocks)
 	return Wrap(round(position_we_were_supposed_to_hit + gaussian(0, RADIATION_ACCURACY_MULTIPLIER/radduration), 1), 1, number_of_blocks+1)
 
-/proc/randmut(mob/living/carbon/M, list/candidates, var/difficulty = 2)
+/proc/randmut(mob/living/carbon/M, list/candidates, difficulty = 2)
 	if(!check_dna_integrity(M))
 		return
 	var/num = pick(candidates)
@@ -175,11 +175,11 @@
 	M.dna.uni_identity = newdna
 	return
 
-/proc/clean_randmut(mob/living/carbon/M, list/candidates)
+/proc/clean_randmut(mob/living/carbon/M, list/candidates, difficulty = 2)
 	if(!check_dna_integrity(M))
 		return
 	M.dna.struc_enzymes = M.dna.generate_struc_enzymes(M) // Give clean DNA.
-	randmut(M, candidates)
+	randmut(M, candidates, difficulty)
 
 /proc/scramble_dna(mob/living/carbon/M, ui=FALSE, se=FALSE, probability)
 	if(!check_dna_integrity(M))
