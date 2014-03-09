@@ -135,6 +135,15 @@
 	if(istype(user))
 		color = "#[user.hair_color]"
 
+/obj/item/clothing/head/kitty/get_overlay(var/head_layer)
+	var/icon/ears = icon("icon"='icons/mob/head.dmi', "icon_state"="[icon_state]")
+	if(color)
+		ears.Blend("#323232", ICON_MULTIPLY)
+		ears.Blend(color)
+	var/icon/inner = icon('icons/mob/head.dmi', "icon_state"="kittyinner")
+	ears.Blend(inner, ICON_OVERLAY)
+	var/image/standing = image(ears, "layer"=head_layer)
+	return standing
 
 /obj/item/clothing/head/hardhat/reindeer
 	name = "novelty reindeer hat"

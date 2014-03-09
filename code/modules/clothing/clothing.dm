@@ -70,6 +70,9 @@ BLIND     // can't see anything
 	body_parts_covered = HEAD
 	slot_flags = SLOT_HEAD
 
+/obj/item/clothing/head/proc/get_overlay(var/head_layer)
+	return image("icon"='icons/mob/head.dmi', "icon_state"="[icon_state]", "layer"=head_layer)
+
 //Mask
 /obj/item/clothing/mask
 	name = "mask"
