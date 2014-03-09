@@ -38,7 +38,6 @@
 	possible = shuffle(possible)
 	for(var/i = 0, i < 2, i++)
 		var/datum/game_mode/M = pick(possible)
-		M.mixed = 1
 		modes[i] = M
 		possible = shuffle(possible)
 	for(var/datum/game_mode/M in modes)

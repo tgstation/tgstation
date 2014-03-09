@@ -44,7 +44,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	world << "<B>There are alien changelings on the station. Do not let the changelings succeed!</B>"
 
 /datum/game_mode/changeling/pre_setup()
-
+	if(istype(ticker.mode, /datum/game_mode/mixed))
+		mixed = 1
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
