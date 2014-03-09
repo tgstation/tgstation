@@ -99,6 +99,14 @@
 
 	flags = IS_WHITELISTED | HAS_LIPS | HAS_TAIL /*| NO_EAT*/ | NO_BREATHE /*| NON_GENDERED*/ | NO_BLOOD
 
+	default_mutations=list(SKELETON)
+
+/datum/species/skellington/say_filter(mob/M, message, datum/language/speaking)
+	// 25% chance of adding ACK ACK! to the end of a message.
+	if(copytext(message, 1, 2) != "*" && prob(25))
+		message += "  ACK ACK!"
+	return message
+
 
 /datum/species/tajaran
 	name = "Tajaran"
