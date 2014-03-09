@@ -444,13 +444,17 @@ Please contact me on #coderbus IRC. ~Carnie x
 	remove_overlay(HEAD_LAYER)
 
 	if(head)
+
 		if(client && hud_used && hud_used.hud_shown && hud_used.inventory_shown)
 			head.screen_loc = ui_head		//TODO
 			client.screen += head
 
-		var/image/standing = image("icon"='icons/mob/head.dmi', "icon_state"="[head.icon_state]", "layer"=-HEAD_LAYER)
-		standing.color = head.color // For now, this is here solely for kitty ears, but everything should do this eventually
-		standing.alpha = head.alpha
+		var/image/standing
+		if(istype(head, /obj/item/clothing/head))
+			var/obj/item/clothing/head/worn_head = head
+			standing = worn_head.get_overlay(-HEAD_LAYER)
+		else
+			standing = image("icon"='icons/mob/head.dmi', "icon_state"="[head.icon_state]", "layer"=-HEAD_LAYER)
 
 		overlays_standing[HEAD_LAYER]	= standing
 
