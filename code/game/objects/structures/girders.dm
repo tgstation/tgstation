@@ -20,7 +20,8 @@
 				user << "\blue Now securing the girder"
 				if(get_turf(user, 40))
 					user << "\blue You secured the girder!"
-					new/obj/structure/girder( src.loc )
+					var/obj/structure/girder/G = new/obj/structure/girder( src.loc )
+					G.add_hiddenprint(user)
 					del(src)
 
 		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
