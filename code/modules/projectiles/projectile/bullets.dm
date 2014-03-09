@@ -58,9 +58,9 @@
 /obj/item/projectile/bullet/stunshot
 	name = "stunshot"
 	damage = 5
-	stun = 7
-	weaken = 7
-	stutter = 7
+	stun = 5
+	weaken = 5
+	stutter = 5
 
 
 /obj/item/projectile/bullet/a762
@@ -123,7 +123,7 @@
 	icon_state = "neurotoxin"
 	damage = 5
 	damage_type = TOX
-	weaken = 7
+	weaken = 5
 
 /obj/item/projectile/bullet/neurotoxin/on_hit(var/atom/target, var/blocked = 0)
 	if(isalien(target))

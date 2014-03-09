@@ -332,7 +332,7 @@
 			user << "\red You need a better grip to do that!"
 			return
 		G.affecting.loc = src.loc
-		G.affecting.Weaken(7)
+		G.affecting.Weaken(5)
 		visible_message("\red [G.assailant] puts [G.affecting] on the table.")
 		del(W)
 		return
@@ -450,7 +450,7 @@
 			user << "\red You need a better grip to do that!"
 			return
 		G.affecting.loc = src.loc
-		G.affecting.Weaken(7)
+		G.affecting.Weaken(5)
 		visible_message("\red [G.assailant] dunks [G.affecting] into the [src]!", 3)
 		del(W)
 		return

@@ -1024,7 +1024,7 @@ var/list/sacrificed = list()
 
 					else if(issilicon(L))
 						var/mob/living/silicon/S = L
-						S.Weaken(7)
+						S.Weaken(5)
 						S.show_message("\red BZZZT... The rune has exploded in a bright flash.", 3)
 				del(src)
 			else                        ///When invoked as talisman, stun and mute the target mob.

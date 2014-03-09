@@ -549,7 +549,7 @@
 		if(!G.confirm())
 			return
 		G.affecting.loc = src.loc
-		G.affecting.Weaken(7)
+		G.affecting.Weaken(5)
 		G.affecting.visible_message("<span class='danger'>[G.assailant] pushes [G.affecting] onto [src].</span>", \
 									"<span class='userdanger'>[G.assailant] pushes [G.affecting] onto [src].</span>")
 		del(I)

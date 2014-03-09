@@ -87,7 +87,7 @@
 			if(check_dna_integrity(M) && M.dna.mutantrace == "plant") //Plantmen possibly get mutated and damaged by the rays.
 				if(prob(15))
 					M.apply_effect((rand(30,80)),IRRADIATE)
-					M.Weaken(7)
+					M.Weaken(5)
 					for (var/mob/V in viewers(src))
 						V.show_message("\red [M] writhes in pain as \his vacuoles boil.", 3, "\red You hear the crunching of leaves.", 2)
 				if(prob(35))

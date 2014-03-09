@@ -722,8 +722,8 @@ var/global/mulebot_count = 0
 			else
 				src.visible_message("\red [src] knocks over [M]!")
 				M.stop_pulling()
-				M.Stun(7)
-				M.Weaken(7)
+				M.Stun(8)
+				M.Weaken(5)
 				M.lying = 1
 	..()
 

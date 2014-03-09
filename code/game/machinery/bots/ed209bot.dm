@@ -279,14 +279,14 @@ Auto Patrol: []"},
 					var/mob/living/carbon/M = src.target
 					var/maxstuns = 4
 					if (istype(M, /mob/living/carbon/human))
-						if (M.stuttering < 7 && (!(HULK in M.mutations))  /*&& (!istype(M:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
-							M.stuttering = 7
-						M.Stun(7)
-						M.Weaken(7)
+						if (M.stuttering < 5 && (!(HULK in M.mutations))  /*&& (!istype(M:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+							M.stuttering = 5
+						M.Stun(5)
+						M.Weaken(5)
 					else
-						M.Weaken(7)
-						M.stuttering = 7
-						M.Stun(7)
+						M.Weaken(5)
+						M.stuttering = 5
+						M.Stun(5)
 					maxstuns--
 					if (maxstuns <= 0)
 						target = null
