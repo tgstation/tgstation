@@ -8,6 +8,7 @@
 	gender = NEUTER
 	pass_flags = PASSTABLE
 	update_icon = 0		///no need to call regenerate_icon
+	ventcrawler = 1
 
 /mob/living/carbon/monkey/New()
 	create_reagents(1000)

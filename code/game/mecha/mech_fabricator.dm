@@ -708,6 +708,9 @@
 	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
 		return
 
+	if(exchange_parts(user, W))
+		return
+
 	default_deconstruction_crowbar(W)
 
 	if (panel_open)

@@ -130,7 +130,8 @@
 
 /obj/machinery/door/window/bullet_act(var/obj/item/projectile/Proj)
 	if(Proj.damage)
-		take_damage(round(Proj.damage / 2))
+		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+			take_damage(round(Proj.damage / 2))
 	..()
 
 //When an object is thrown at the window

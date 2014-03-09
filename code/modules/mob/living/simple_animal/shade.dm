@@ -46,7 +46,7 @@
 		else
 			if(O.force)
 				var/damage = O.force
-				if (O.damtype == HALLOSS)
+				if (O.damtype == STAMINA)
 					damage = 0
 				health -= damage
 				for(var/mob/M in viewers(src, null))

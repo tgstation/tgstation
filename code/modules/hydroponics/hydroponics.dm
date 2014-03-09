@@ -47,6 +47,16 @@
 	waterlevel = maxwater
 	nutrilevel = 3
 
+/obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/user)
+	if(exchange_parts(user, I))
+		return
+
+	if(istype(I, /obj/item/weapon/crowbar))
+		if(anchored==2)
+			user << "Unscrew the hoses first!"
+			return
+		default_deconstruction_crowbar(I, 1)
+	..()
 
 /obj/machinery/hydroponics/proc/FindConnected()
 
@@ -687,7 +697,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			anchored = 0
 			user << "You unwrench [src]."
 
-	else if(istype(O, /obj/item/weapon/screwdriver))
+	else if(istype(O, /obj/item/weapon/screwdriver) && unwrenchable) //THIS NEED TO BE DONE DIFFERENTLY, SOMEONE REFACTOR THE TRAY CODE ALREADY
 
 		if(anchored)
 			if(anchored==2)
@@ -705,17 +715,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 					h.update_icon()
 
 	return
-
-obj/machinery/hydroponics/constructable/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	..()
-	if(istype(O, /obj/item/weapon/crowbar))
-		if(anchored==2)
-			user << "Unscrew the hoses first!"
-			return
-
-		if(istype(src, /obj/machinery/hydroponics/soil))
-			return
-		default_deconstruction_crowbar(O, 1)
 
 /obj/machinery/hydroponics/attack_hand(mob/user as mob)
 	if(istype(user, /mob/living/silicon))		//How does AI know what plant is?

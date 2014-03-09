@@ -127,6 +127,9 @@ var/global/list/autolathe_recipes_hidden = list( \
 		updateUsrDialog()
 		return
 
+	if(exchange_parts(user, O))
+		return
+
 	if (panel_open)
 		if(istype(O, /obj/item/weapon/crowbar))
 			if(m_amount >= 3750)
@@ -251,9 +254,9 @@ var/global/list/autolathe_recipes_hidden = list( \
 			objs += src.LL
 		for(var/obj/t in objs)
 			if(disabled || m_amount<t.m_amt || g_amount<t.g_amt)
-				dat += "<span class='linkOff'>[t]</span>"
+				dat += "<span class='linkOff'>[t.name]</span>"
 			else
-				dat += "<A href='?src=\ref[src];make=\ref[t]'>[t]</A>"
+				dat += "<A href='?src=\ref[src];make=\ref[t]'>[t.name]</A>"
 
 			if(istype(t, /obj/item/stack))
 				var/obj/item/stack/S = t

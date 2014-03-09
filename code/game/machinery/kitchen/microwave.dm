@@ -67,6 +67,9 @@
 		if(default_unfasten_wrench(user, O))
 			return
 
+	if(exchange_parts(user, O))
+		return
+
 	default_deconstruction_crowbar(O)
 
 	if(src.broken > 0)

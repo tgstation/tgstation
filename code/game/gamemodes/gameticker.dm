@@ -337,7 +337,7 @@ var/global/datum/controller/gameticker/ticker
 			world << "[robolist]"
 			world << "[vsrobolist]"
 	for (var/mob/living/silicon/robot/robo in mob_list)
-		if (!robo.connected_ai)
+		if (!robo.connected_ai && robo.mind)
 			if (robo.stat != 2)
 				world << "<b>[robo.name] (Played by: [robo.mind.key]) survived as an AI-less borg! Its laws were:</b>"
 			else

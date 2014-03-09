@@ -132,6 +132,8 @@
 		shock(user,50)
 	if (default_deconstruction_screwdriver(user, "server_o", "server", O))
 		return
+	if(exchange_parts(user, O))
+		return
 	if (panel_open)
 		if(istype(O, /obj/item/weapon/crowbar))
 			griefProtection()

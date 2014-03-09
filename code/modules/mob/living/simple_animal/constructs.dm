@@ -106,9 +106,8 @@
 /mob/living/simple_animal/construct/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(O.force)
 		var/damage = O.force
-		if (O.damtype == HALLOSS)
-			damage = 0
-		adjustBruteLoss(damage)
+		if(O.damtype == BURN || O.damtype == BRUTE)
+			adjustBruteLoss(damage)
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
 				M.show_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>")
@@ -117,6 +116,14 @@
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
 				M.show_message("\red [user] gently taps [src] with [O]. ")
+
+/mob/living/simple_animal/construct/bullet_act(var/obj/item/projectile/Proj)
+	if(!Proj)
+		return
+	if(Proj.damage_type == BURN || Proj.damage_type == BRUTE)
+		adjustBruteLoss(Proj.damage)
+	Proj.on_hit(src, 0)
+	return 0
 
 
 
@@ -147,10 +154,8 @@
 /mob/living/simple_animal/construct/armoured/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(O.force)
 		if(O.force >= 11)
-			var/damage = O.force
-			if (O.damtype == HALLOSS)
-				damage = 0
-			adjustBruteLoss(damage)
+			if(O.damtype == BURN || O.damtype == BRUTE)
+				adjustBruteLoss(O.force)
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
 					M.show_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>")
@@ -169,7 +174,8 @@
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		var/reflectchance = 80 - round(P.damage/3)
 		if(prob(reflectchance))
-			adjustBruteLoss(P.damage * 0.5)
+			if(P.damage_type == BURN || P.damage_type == BRUTE)
+				adjustBruteLoss(P.damage * 0.5)
 			visible_message("<span class='danger'>The [P.name] gets reflected by [src]'s shell!</span>", \
 							"<span class='userdanger'>The [P.name] gets reflected by [src]'s shell!</span>")
 
@@ -272,7 +278,7 @@
 	if(O.force)
 		if(O.force >= 11)
 			var/damage = O.force
-			if (O.damtype == HALLOSS)
+			if (O.damtype == STAMINA)
 				damage = 0
 			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))

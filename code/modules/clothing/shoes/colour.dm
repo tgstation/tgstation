@@ -97,3 +97,11 @@
 		src.slowdown = 15
 		src.icon_state = "orange1"
 	return
+
+/obj/item/clothing/shoes/orange/attack_hand(mob/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/C = user
+		if(C.shoes == src && src.chained == 1)
+			user << "<span class='notice'>You need help taking these off!</span>"
+			return
+	..()

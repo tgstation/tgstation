@@ -301,6 +301,10 @@
 	new /obj/item/clothing/head/soft/grey(src)
 	new /obj/item/clothing/head/soft/grey(src)
 	new /obj/item/clothing/head/soft/grey(src)
+	if(prob(40))
+		new /obj/item/clothing/under/assistantformal(src)
+	if(prob(40))
+		new /obj/item/clothing/under/assistantformal(src)
 	return
 
 

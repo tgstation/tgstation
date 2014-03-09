@@ -111,7 +111,7 @@
 
 
 /obj/item/clothing/under/lawyer/bluesuit
-	name = "Blue Suit"
+	name = "blue suit"
 	desc = "A classy suit and tie"
 	icon_state = "bluesuit"
 	item_state = "bluesuit"
@@ -119,11 +119,18 @@
 
 
 /obj/item/clothing/under/lawyer/purpsuit
-	name = "Purple Suit"
+	name = "purple suit"
 	icon_state = "lawyer_purp"
 	item_state = "lawyer_purp"
 	item_color = "lawyer_purp"
 	fitted = 0
+
+/obj/item/clothing/under/lawyer/blacksuit
+	name = "black suit"
+	desc = "A professional black suit. Nanotrasen Investigation Bureau approved!"
+	icon_state = "blacksuit"
+	item_state = "ba_suit"
+	item_color = "blacksuit"
 
 /obj/item/clothing/under/librarian
 	name = "sensible suit"
