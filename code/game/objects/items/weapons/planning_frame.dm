@@ -34,7 +34,10 @@
 	var/assuming_base=0 // Assuming we're on base_laws.
 
 	var/list/obj/item/weapon/aiModule/modules = list()
-	var/datum/ai_laws/laws = new base_law_type
+	var/datum/ai_laws/laws
+
+/obj/item/weapon/planning_frame/New()
+	laws = new base_law_type
 
 /obj/item/weapon/planning_frame/recycle(var/datum/materials/rec)
 	rec.addAmount("glass",  g_amt)

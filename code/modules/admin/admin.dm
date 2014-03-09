@@ -575,12 +575,24 @@ var/global/floorIsLava = 0
 		dat += "<A href='?src=\ref[src];f_secret=1'>(Force Secret Mode)</A><br>"
 
 	dat += {"
-		<BR>
+		<hr />
+		<ul>
+			<li>
+				<b>Default Cyborg/AI Laws:</b>
+				<a href="?src=\ref[src];set_base_laws=ai">[base_law_type]</a>
+			</li>
+			<li>
+				<b>Default MoMMI Laws:</b>
+				<a href="?src=\ref[src];set_base_laws=mommi">[mommi_base_law_type]</a>
+			</li>
+		</ul>
+		<hr />
 		<A href='?src=\ref[src];create_object=1'>Create Object</A><br>
 		<A href='?src=\ref[src];quick_create_object=1'>Quick Create Object</A><br>
 		<A href='?src=\ref[src];create_turf=1'>Create Turf</A><br>
 		<A href='?src=\ref[src];create_mob=1'>Create Mob</A><br>
-		<br><A href='?src=\ref[src];vsc=airflow'>Edit ZAS Settings</A><br>
+		<hr />
+		<A href='?src=\ref[src];vsc=airflow'>Edit ZAS Settings</A><br>
 		<A href='?src=\ref[src];vsc=default'>Choose a default ZAS setting</A><br>
 		"}
 

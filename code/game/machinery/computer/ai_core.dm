@@ -5,10 +5,12 @@
 	icon = 'icons/mob/AI.dmi'
 	icon_state = "0"
 	var/state = 0
-	var/datum/ai_laws/laws = new /datum/ai_laws/nanotrasen
+	var/datum/ai_laws/laws
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/obj/item/device/mmi/brain = null
 
+/obj/structure/AIcore/New()
+	laws = new base_law_type
 
 /obj/structure/AIcore/attackby(obj/item/P as obj, mob/user as mob)
 	switch(state)

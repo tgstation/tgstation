@@ -1635,6 +1635,26 @@
 			return
 		show_traitor_panel(M)
 
+	// /vg/
+	else if(href_list["set_base_laws"])
+		if(!check_rights(R_FUN))
+			usr << "\red You don't have +FUN. Go away."
+			return
+		var/lawtypes = typesof(/datum/ai_laws) - /datum/ai_laws
+		var/selected_law = input("Select the default lawset desired.","Lawset Selection",null) as null|anything in lawtypes
+		if(!selected_law) return
+		var/subject="Unknown"
+		switch(href_list["set_base_laws"])
+			if("ai")
+				base_law_type = selected_law
+				subject = "AIs and Cyborgs"
+			if("mommi")
+				mommi_base_law_type = selected_law
+				subject = "MoMMIs"
+		usr << "\blue New [subject] will spawn with the [selected_law] lawset."
+		log_admin("[key_name(src.owner)] set the default laws of [subject] to: [selected_law]")
+		message_admins("[key_name_admin(src.owner)] set the default laws of [subject] to: [selected_law]", 1)
+
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))	return
 		return create_object(usr)
