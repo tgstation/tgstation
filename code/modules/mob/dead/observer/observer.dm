@@ -1,4 +1,4 @@
-
+#define POLTERGEIST_COOLDOWN 300 // 30s
 
 #define GHOST_CAN_REENTER 1
 #define GHOST_IS_OBSERVER 2
@@ -21,6 +21,7 @@
 	var/can_reenter_corpse
 	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0
+	var/next_poltergeist = 0
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
 							//If you died in the game and are a ghsot - this will remain as null.
 							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
@@ -263,6 +264,19 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		ghost.timeofdeath = world.time // Because the living mob won't have a time of death and we want the respawn timer to work properly.
 	return
 
+// Check for last poltergeist activity.
+/mob/dead/observer/proc/can_poltergeist(var/start_cooldown=1)
+	if(world.time >= next_poltergeist)
+		if(start_cooldown)
+			start_poltergeist_cooldown()
+		return 1
+	return 0
+
+/mob/dead/observer/proc/start_poltergeist_cooldown()
+	next_poltergeist=world.time + POLTERGEIST_COOLDOWN
+
+/mob/dead/observer/proc/reset_poltergeist_cooldown()
+	next_poltergeist=0
 
 /mob/dead/observer/Move(NewLoc, direct)
 	dir = direct
