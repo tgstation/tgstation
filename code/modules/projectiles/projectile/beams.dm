@@ -228,6 +228,7 @@ var/list/beam_master = list()
 			else
 				first = 0
 		cleanup(reference)
+		qdel(src)
 		return
 
 	Destroy()
@@ -235,7 +236,7 @@ var/list/beam_master = list()
 		..()
 
 	proc/cleanup(reference) //Waits .3 seconds then removes the overlay.
-		src = null
+		//src = null // Redundant.
 		spawn(3)
 			var/list/turf_master = beam_master[reference]
 			for(var/laser_state in turf_master)
