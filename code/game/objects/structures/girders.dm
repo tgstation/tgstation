@@ -60,7 +60,8 @@
 			if(do_after(user, 40))
 				if(!src) return
 				user << "\blue You dislodged the girder!"
-				new/obj/structure/girder/displaced( src.loc )
+				var/obj/structure/girder/displaced/D = new/obj/structure/girder/displaced( src.loc )
+				D.add_hiddenprint(user)
 				del(src)
 
 		else if(istype(W, /obj/item/stack/sheet))
@@ -75,7 +76,8 @@
 						if(!pdiff)
 							S.use(2)
 							user << "\blue You create a false wall! Push on it to open or close the passage."
-							new /obj/structure/falsewall (src.loc)
+							var/obj/structure/falsewall/FW = new /obj/structure/falsewall (src.loc)
+							FW.add_hiddenprint(user)
 							del(src)
 						else
 							user << "\red There is too much air moving through the gap!  The door wouldn't stay closed if you built it."
@@ -103,7 +105,8 @@
 						if(!pdiff)
 							S.use(2)
 							user << "\blue You create a false wall! Push on it to open or close the passage."
-							new /obj/structure/falserwall (src.loc)
+							var/obj/structure/falserwall/FW = new /obj/structure/falserwall (src.loc)
+							FW.add_hiddenprint(user)
 							del(src)
 						else
 							user << "\red There is too much air moving through the gap!  The door wouldn't stay closed if you built it."
@@ -131,7 +134,8 @@
 								if(!src || !S || S.amount < 1) return
 								S.use(1)
 								user << "\blue Girders reinforced!"
-								new/obj/structure/girder/reinforced( src.loc )
+								var/obj/structure/girder/reinforced/R = new /obj/structure/girder/reinforced( src.loc )
+								R.add_hiddenprint(user)
 								del(src)
 							return
 
@@ -144,7 +148,8 @@
 						S.use(2)
 						user << "\blue You create a false wall! Push on it to open or close the passage."
 						var/F = text2path("/obj/structure/falsewall/[M]")
-						new F (src.loc)
+						var/obj/structure/falsewall/FW = new F (src.loc)
+						FW.add_hiddenprint(user)
 						del(src)
 					else
 						user << "\red There is too much air moving through the gap!  The door wouldn't stay closed if you built it."
