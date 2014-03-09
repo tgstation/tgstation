@@ -18,6 +18,7 @@ var/list/uncollectable_vars=list(
 // I dunno how many are necessary but since most of these are numbers anyways, I don't care.
 
 /datum/controller/garbage_collector
+	var/dels = 0				// number of del()'s we've done this tick
 	var/list/queue = list() 	// list of things that have yet to have all their vars nulled out
 	var/list/destroyed = list() // list of refID's of things that should be garbage collected
 								// refID's are associated with the time at which they time out and need to be manually del()
@@ -38,6 +39,7 @@ var/list/uncollectable_vars=list(
 	if(!istype(A,/atom/movable))
 //		testing("GC: -- Pop() given [A.type]  --")
 		queue.Cut(1, 2)
+		dels++
 		del(A)
 		return
 	for(var/vname in A.vars)
@@ -54,8 +56,8 @@ var/list/uncollectable_vars=list(
 	queue.Cut(1, 2)
 
 /datum/controller/garbage_collector/proc/process()
+	dels = 0
 	var/i
-	var/dels = 0
 	for(i = 1, queue.len && i <= GC_COLLECTIONS_PER_TICK, i++)
 		Pop()
 	var/time_to_kill = world.time - GC_COLLECTION_TIMEOUT // Anything qdel() but not GC'd BEFORE this time needs to be manually del()
@@ -88,29 +90,19 @@ var/list/uncollectable_vars=list(
 /proc/qdel(var/atom/movable/A)
 	if(!A)
 		return
-	if(!istype(A))
-		warning("qdel() passed object of type [A.type]. qdel() can only handle /atom/movable types.")
+	if(!garbage)
 		del(A)
 		return
-	if(!garbage)
+	if(!istype(A))
+		warning("qdel() passed object of type [A.type]. qdel() can only handle /atom/movable types.")
+		garbage.dels++
 		del(A)
 		return
 	// Let our friend know they're about to get fucked up.
 	A.Destroy()
 	garbage.AddTrash(A)
 
-/* // If you can get this to run, report the results please.
-/client/verb/delete_everything()
-	set name = "qdel() everything"
-	set category = "Debug"
-	set background = 1
 
-	if(input("Are you sure you want to do that?") as null|anything in list("Yes","No") != "Yes")
-		return
-	src << "qdel(everything)"
-	for(var/atom/movable/everything in world)
-		qdel(everything)
-*/
 /*
 // Uncomment this verb and run it on things to report blockages.
 /atom/verb/qdel_test()
