@@ -45,11 +45,60 @@
 			if("10")
 				log_admin("[key_name(usr)] has spawned a death squad.")
 				if(!makeDeathsquad())
-					usr << "\red Unfortunatly there were no candidates available"
+					usr << "\red Unfortunately, there were no candidates available"
 			if("11")
 				log_admin("[key_name(usr)] has spawned vox raiders.")
 				if(!src.makeVoxRaiders())
-					usr << "\red Unfortunately there weren't enough candidates available."
+					usr << "\red Unfortunately, there weren't enough candidates available."
+
+	else if("announce_laws" in href_list)
+		var/mob/living/silicon/S = locate(href_list["mob"])
+
+		log_admin("[key_name(usr)] has notified [key_name(S)] of a change to their laws.")
+		message_admins("[usr.key] has notified [key_name(S)] of a change to their laws.")
+
+		S << "____________________________________"
+		S << "<span style=\"color:red;font-weight:bold;\">LAW CHANGE NOTICE</span>"
+		if(S.laws)
+			S << "<b>Your new laws are as follows:</b>"
+			S.laws.show_laws(S)
+		else
+			S << "<b>Your laws are null.</b> Contact a coder immediately."
+		S << "____________________________________"
+
+	else if("add_law" in href_list)
+		var/mob/living/silicon/S = locate(href_list["mob"])
+		var/lawtypes = list(
+			"Law Zero"= LAW_ZERO,
+			"Ion"     = LAW_IONIC,
+			"Core"    = LAW_INHERENT,
+			"Standard"= 1
+		)
+		var/lawtype = text2num(input("Select a law type.","Law Type",1) as null|anything in lawtypes)
+		if(lawtype==1)
+			lawtype=text2num(input("Enter desired law priority. (15-50)","Priority", 15) as num)
+			lawtype=Clamp(lawtype,15,50)
+		var/newlaw = copytext(sanitize(input(usr, "Please enter a new law for the AI.", "Freeform Law Entry", "")),1,MAX_MESSAGE_LEN)
+		if(newlaw=="")
+			return
+		S.laws.add_law(lawtype,newlaw)
+
+		log_admin("[key_name(usr)] has added a law to [key_name(S)]: \"[newlaw]\"")
+		message_admins("[usr.key] has added a law to [key_name(S)]: \"[newlaw]\"")
+
+	else if("clear_laws" in href_list)
+		var/mob/living/silicon/S = locate(href_list["mob"])
+		S.laws.clear_inherent_laws()
+		S.laws.clear_supplied_laws()
+		S.laws.clear_ion_laws()
+
+		if(S.laws.zeroth || S.laws.zeroth_borg)
+			if(alert(src,"Do you also wish to clear law zero?","Yes","No") == "Yes")
+				S.laws.set_zeroth_law("","")
+
+		log_admin("[key_name(usr)] has purged [key_name(S)]")
+		message_admins("[usr.key] has purged [key_name(S)]")
+
 	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"])
 		var/adminckey = href_list["dbsearchadmin"]
 		var/playerckey = href_list["dbsearchckey"]

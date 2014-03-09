@@ -513,6 +513,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 /mob/living/silicon/robot/mommi/Move(a, b, flag)
 	..()
 
+/*
 /mob/living/silicon/robot/mommi/proc/ActivateKeeper()
 	set category = "Robot Commands"
 	set name = "Activate KEEPER"
@@ -527,8 +528,9 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		R.UnlinkSelf()
 		var/obj/item/weapon/aiModule/keeper/mdl = new
 
-		mdl.transmitInstructions(src, src)
+		mdl.upload(src.laws,src,src)
 		src << "These are your laws now:"
 		src.show_laws()
 
 		src.verbs -= /mob/living/silicon/robot/mommi/proc/ActivateKeeper
+*/
