@@ -7,7 +7,6 @@
 	health = 100
 	var/sight_mode = 0
 	var/custom_name = ""
-	faction = "silicon"
 
 //Hud stuff
 
