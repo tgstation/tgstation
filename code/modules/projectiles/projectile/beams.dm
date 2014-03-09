@@ -227,7 +227,6 @@ var/list/beam_master = list()
 					beam_master[reference] = turfs
 			else
 				first = 0
-		qdel(src)
 		cleanup(reference)
 		return
 
@@ -236,7 +235,7 @@ var/list/beam_master = list()
 		..()
 
 	proc/cleanup(reference) //Waits .3 seconds then removes the overlay.
-		//src = null // Redundant.
+		src = null // Redundant.
 		spawn(3)
 			var/list/turf_master = beam_master[reference]
 			for(var/laser_state in turf_master)
