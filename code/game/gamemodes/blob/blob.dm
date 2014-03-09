@@ -111,7 +111,7 @@ var/list/blob_nodes = list()
 		if(B)
 			B.max_occurrences = 0 // disable the event
 	else
-		error("Events variable is null in blob gamemode post setup.")
+		ERROR("Events variable is null in blob gamemode post setup.")
 
 	spawn(10)
 		start_state = new /datum/station_state()

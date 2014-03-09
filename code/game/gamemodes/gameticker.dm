@@ -45,7 +45,7 @@ var/global/datum/controller/gameticker/ticker
 		if(config)
 			pregame_timeleft = config.lobby_countdown
 		else
-			error("configuration was null when retrieving the lobby_countdown value.")
+			ERROR("configuration was null when retrieving the lobby_countdown value.")
 			pregame_timeleft = 120
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
 		world << "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds"

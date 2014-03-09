@@ -171,7 +171,7 @@
 		Ninja.internals.icon_state = "internal1"
 
 	if(Ninja.mind != Mind)			//something has gone wrong!
-		error("The ninja wasn't assigned the right mind. ;(")
+		ERROR("The ninja wasn't assigned the right mind. ;ç;")
 
 	success_spawn = 1
 

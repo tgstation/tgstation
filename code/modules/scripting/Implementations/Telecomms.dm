@@ -286,7 +286,7 @@ datum/signal
 		var/obj/item/device/radio/hradio = S.server_radio
 
 		if(!hradio)
-			error("[src] has no radio.")
+			ERROR("[src] has no radio.")
 			return
 
 		if((!message || message == "") && message != 0)
