@@ -121,7 +121,7 @@ atom
 turf/New()
 	..()
 	if(luminosity)
-		if(light)	warning("[type] - Don't set lights up manually during New(), We do it automatically.")
+		if(light)	WARNING("[type] - Don't set lights up manually during New(), We do it automatically.")
 		trueLuminosity = luminosity * luminosity
 		light = new(src)
 
@@ -134,7 +134,7 @@ atom/movable/New()
 			if(loc:lighting_lumcount > 1)
 				UpdateAffectingLights()
 	if(luminosity)
-		if(light)	warning("[type] - Don't set lights up manually during New(), We do it automatically.")
+		if(light)	WARNING("[type] - Don't set lights up manually during New(), We do it automatically.")
 		trueLuminosity = luminosity * luminosity
 		light = new(src)
 
