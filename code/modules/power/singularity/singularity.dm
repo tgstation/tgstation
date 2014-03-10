@@ -6,8 +6,8 @@ var/global/list/uneatable = list(
 	)
 
 /obj/machinery/singularity
-	name = "Gravitational Singularity"
-	desc = "A Gravitational Singularity."
+	name = "gravitational singularity"
+	desc = "A gravitational singularity."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
 	anchored = 1
@@ -237,7 +237,7 @@ var/global/list/uneatable = list(
 					for(var/obj/item/hand in handlist)
 						if(prob(current_size * 5) && hand.w_class <= 2 && H.unEquip(hand))
 							step_towards(hand, src)
-							H << "<span class='warning'>\the [src] pulls \the [hand] from your grip!</span>"
+							H << "<span class='warning'>\The [src] pulls \the [hand] from your grip!</span>"
 
 				H.apply_effect(current_size * 3, IRRADIATE)
 		// Turf and movable atoms
