@@ -248,3 +248,8 @@ RESPAWN_AS_MOMMI
 ## IPs are automatically removed.
 ## Default: Don't copy logs.
 #COPY_LOGS data/cleaned_logs
+
+## Media URL.
+## The base URL of your media library.  DO NOT ADD A SLASH AT THE END!
+## NOTE that this must be publically-accessible.
+#MEDIA_BASE_URL http://yoursite.tld/media
