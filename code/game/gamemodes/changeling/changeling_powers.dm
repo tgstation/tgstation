@@ -343,7 +343,7 @@
 			if(!M.mind || !M.mind.changeling)
 				M.ear_deaf += 30
 				M.confused += 20
-				M.make_jittery(50)
+				M.Jitter(50)
 			else
 				M << sound('sound/effects/screech.ogg')
 
@@ -530,17 +530,35 @@ var/list/datum/dna/hivemind_bank = list()
 
 	feedback_add_details("changeling_powers","MV")
 
+//EMP Shriek
+/mob/living/carbon/proc/changeling_emp_shriek()
+	set category = "Changeling"
+	set name = "Dissonant Shriek (20)"
 
+	var/datum/changeling/changeling = changeling_power(20)
+	if(!changeling) return
+
+	for(var/obj/machinery/light/L in range(5, usr))
+		L.on = 1
+		L.broken()
+
+	empulse(get_turf(src), 2, 5, 1)
+
+	changeling.chem_charges -= 20
+
+//Arm Blade
 /mob/living/carbon/proc/changeling_arm_blade()
 	set category = "Changeling"
 	set name = "Arm Blade (20)"
 
 	if(istype(l_hand, /obj/item/weapon/melee/arm_blade)) //Not the nicest way to do it, but eh
 		del l_hand //Arm  blades can't be dropped, we have to delete them directly.
+		update_inv_l_hand()
 		return
 
 	if(istype(r_hand, /obj/item/weapon/melee/arm_blade))
 		del r_hand
+		update_inv_r_hand()
 		return
 
 	var/datum/changeling/changeling = changeling_power(20, 0, 5)
@@ -556,6 +574,7 @@ var/list/datum/dna/hivemind_bank = list()
 	changeling.geneticdamage += 8
 	changeling.chem_charges -= 20
 
+//Space Suit
 /mob/living/carbon/proc/changeling_space_suit()
 	set category = "Changeling"
 	set name = "Organic Space Suit (20)"
@@ -612,7 +631,7 @@ var/list/datum/dna/hivemind_bank = list()
 //////////
 
 /mob/living/carbon/proc/set_sting(A, icon, dna=null) //setting the sting and ui icon for it
-	src << "<span class='notice'>We prepare our sting, use alt+click on target to sting them.</span>"
+	src << "<span class='notice'>We prepare our sting, use alt+click or middle mouse button on target to sting them.</span>"
 	src.mind.changeling.chosen_sting = A
 	if(dna)
 		src.mind.changeling.chosen_dna = dna

@@ -212,6 +212,14 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 15
 	containername = "stun gun crate"
 
+/datum/supply_packs/security/disabler
+	name = "Disabler crate"
+	contains = list(/obj/item/weapon/gun/energy/disabler,
+					/obj/item/weapon/gun/energy/disabler,
+					/obj/item/weapon/gun/energy/disabler)
+	cost = 10
+	containername = "disabler crate"
+
 ///// Armory stuff
 
 /datum/supply_packs/security/armory
@@ -383,9 +391,9 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/engineering/power
 	name = "Powercell crate"
-	contains = list(/obj/item/weapon/cell/high,		//Changed to an extra high powercell because normal cells are useless
-					/obj/item/weapon/cell/high,
-					/obj/item/weapon/cell/high)
+	contains = list(/obj/item/weapon/stock_parts/cell/high,		//Changed to an extra high powercell because normal cells are useless
+					/obj/item/weapon/stock_parts/cell/high,
+					/obj/item/weapon/stock_parts/cell/high)
 	cost = 10
 	containername = "electrical maintenance crate"
 
@@ -576,8 +584,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/device/assembly/prox_sensor,
 					/obj/item/weapon/storage/toolbox/electrical,
 					/obj/item/weapon/storage/box/flashes,
-					/obj/item/weapon/cell/high,
-					/obj/item/weapon/cell/high)
+					/obj/item/weapon/stock_parts/cell/high,
+					/obj/item/weapon/stock_parts/cell/high)
 	cost = 10
 	containertype = /obj/structure/closet/crate/secure
 	containername = "robotics assembly crate"
@@ -1039,3 +1047,34 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/vending_refill/autodrobe)
 	cost = 15
 	containername = "autodrobe supply crate"
+
+/datum/supply_packs/misc/formalwear //This is a very classy crate.
+	name = "Formal-wear crate"
+	contains = list(/obj/item/clothing/under/blacktango,
+					/obj/item/clothing/under/assistantformal,
+					/obj/item/clothing/under/assistantformal,
+					/obj/item/clothing/under/lawyer/bluesuit,
+					/obj/item/clothing/suit/lawyer/bluejacket,
+					/obj/item/clothing/under/lawyer/purpsuit,
+					/obj/item/clothing/suit/lawyer/purpjacket,
+					/obj/item/clothing/under/lawyer/blacksuit,
+					/obj/item/clothing/suit/lawyer/blackjacket,
+					/obj/item/clothing/tie/waistcoat,
+					/obj/item/clothing/tie/blue,
+					/obj/item/clothing/tie/red,
+					/obj/item/clothing/tie/black,
+					/obj/item/clothing/head/bowler,
+					/obj/item/clothing/head/fedora,
+					/obj/item/clothing/head/flatcap,
+					/obj/item/clothing/head/beret,
+					/obj/item/clothing/head/that,
+					/obj/item/clothing/shoes/laceup,
+					/obj/item/clothing/shoes/laceup,
+					/obj/item/clothing/shoes/laceup,
+					/obj/item/clothing/under/suit_jacket/charcoal,
+					/obj/item/clothing/under/suit_jacket/navy,
+					/obj/item/clothing/under/suit_jacket/burgundy,
+					/obj/item/clothing/under/suit_jacket/checkered,
+					/obj/item/clothing/under/suit_jacket/tan)
+	cost = 30 //Lots of very expensive items. You gotta pay up to look good!
+	containername = "formal-wear crate"

@@ -27,7 +27,7 @@
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	//the values in this list show how much damage will pass through, not how much will be absorbed.
 	var/list/damage_absorption = list("brute"=0.8,"fire"=1.2,"bullet"=0.9,"laser"=1,"energy"=1,"bomb"=1)
-	var/obj/item/weapon/cell/cell
+	var/obj/item/weapon/stock_parts/cell/cell
 	var/state = 0
 	var/list/log = new
 	var/last_message = 0
@@ -109,7 +109,7 @@
 	internal_tank = new /obj/machinery/portable_atmospherics/canister/air(src)
 	return internal_tank
 
-/obj/mecha/proc/add_cell(var/obj/item/weapon/cell/C=null)
+/obj/mecha/proc/add_cell(var/obj/item/weapon/stock_parts/cell/C=null)
 	if(C)
 		C.forceMove(src)
 		cell = C
@@ -513,8 +513,9 @@
 		return
 	if(istype(Proj, /obj/item/projectile/beam/pulse))
 		ignore_threshold = 1
-	src.take_damage(Proj.damage,Proj.flag)
-	src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),ignore_threshold)
+	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		src.take_damage(Proj.damage,Proj.flag)
+		src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),ignore_threshold)
 	Proj.on_hit(src)
 	return
 
@@ -727,13 +728,15 @@
 			user << "You screw the cell in place"
 		return
 
-	else if(istype(W, /obj/item/weapon/cell))
+	else if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(state==4)
 			if(!src.cell)
+				var/obj/item/weapon/stock_parts/cell/C = W
 				user << "You install the powercell"
 				user.drop_item()
-				W.forceMove(src)
-				src.cell = W
+				C.forceMove(src)
+				C.use(C.charge * 0.8)
+				src.cell = C
 				src.log_message("Powercell installed")
 			else
 				user << "There's already a powercell installed."

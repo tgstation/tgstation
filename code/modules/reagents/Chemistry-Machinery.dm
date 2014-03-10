@@ -204,7 +204,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/cell/high(null)
+	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
 	RefreshParts()
 
 /obj/machinery/chem_dispenser/constructable/RefreshParts()
@@ -217,16 +217,19 @@
 	max_energy = temp_energy * 5  //max energy = (bin1.rating + bin2.rating - 1) * 5, 5 on lowest 25 on highest
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		time += C.rating
-	for(var/obj/item/weapon/cell/P in component_parts)
+	for(var/obj/item/weapon/stock_parts/cell/P in component_parts)
 		time += round(P.maxcharge, 10000) / 10000
 	recharge_delay /= time/2         //delay between recharges, double the usual time on lowest 50% less than usual on highest
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		for(i=1, i<=M.rating, i++)
-			dispensable_reagents |= sortList(special_reagents[i])
+			dispensable_reagents = sortList(dispensable_reagents | special_reagents[i])
 
 /obj/machinery/chem_dispenser/constructable/attackby(var/obj/item/I, var/mob/user)
 	..()
 	if(default_deconstruction_screwdriver(user, "minidispenser-o", "minidispenser", I))
+		return
+
+	if(exchange_parts(user, I))
 		return
 
 	if(panel_open)

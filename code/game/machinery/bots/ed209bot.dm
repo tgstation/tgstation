@@ -222,10 +222,10 @@ Auto Patrol: []"},
 /obj/machinery/bot/ed209/process()
 	set background = BACKGROUND_ENABLED
 
-	if (!src.on)
+	if (!src.on || src.disabled)
 		return
 	var/list/targets = list()
-	for (var/mob/living/carbon/C in view(12,src)) //Let's find us a target
+	for (var/mob/living/carbon/C in view(9,src)) //Let's find us a target
 		var/threatlevel = 0
 		if ((C.stat) || (C.lying))
 			continue
@@ -818,14 +818,14 @@ Auto Patrol: []"},
 				projectile = /obj/item/projectile/energy/electrode
 		else if(lasercolor == "b")
 			if (src.emagged == 2)
-				projectile = /obj/item/projectile/omnitag
+				projectile = /obj/item/projectile/lasertag
 			else
-				projectile = /obj/item/projectile/bluetag
+				projectile = /obj/item/projectile/lasertag/bluetag
 		else if(lasercolor == "r")
 			if (src.emagged == 2)
-				projectile = /obj/item/projectile/omnitag
+				projectile = /obj/item/projectile/lasertag
 			else
-				projectile = /obj/item/projectile/redtag
+				projectile = /obj/item/projectile/lasertag/redtag
 
 	if (!( istype(U, /turf) ))
 		return
@@ -1008,7 +1008,7 @@ Auto Patrol: []"},
 					user << "<span class='notice'>Taser gun attached.</span>"
 
 		if(9)
-			if(istype(W, /obj/item/weapon/cell))
+			if(istype(W, /obj/item/weapon/stock_parts/cell))
 				build_step++
 				user << "<span class='notice'>You complete the ED-209.</span>"
 				var/turf/T = get_turf(src)
@@ -1020,24 +1020,26 @@ Auto Patrol: []"},
 
 
 /obj/machinery/bot/ed209/bullet_act(var/obj/item/projectile/Proj)
-	if((src.lasercolor == "b") && (src.disabled == 0))
-		if(istype(Proj, /obj/item/projectile/redtag))
+	if(!disabled)
+		var/lasertag_check = 0
+		if((src.lasercolor == "b"))
+			if(istype(Proj, /obj/item/projectile/lasertag/redtag))
+				lasertag_check++
+		else if((src.lasercolor == "r"))
+			if(istype(Proj, /obj/item/projectile/lasertag/bluetag))
+				lasertag_check++
+		if(lasertag_check)
+			icon_state = "[lasercolor]ed2090"
 			src.disabled = 1
-			del (Proj)
-			sleep(100)
-			src.disabled = 0
+			target = null
+			spawn(100)
+				src.disabled = 0
+				icon_state = "[lasercolor]ed2091"
+			return 1
 		else
-			..()
-	else if((src.lasercolor == "r") && (src.disabled == 0))
-		if(istype(Proj, /obj/item/projectile/bluetag))
-			src.disabled = 1
-			del (Proj)
-			sleep(100)
-			src.disabled = 0
-		else
-			..()
+			..(Proj)
 	else
-		..()
+		..(Proj)
 
 /obj/machinery/bot/ed209/bluetag/New()//If desired, you spawn red and bluetag bots easily
 	new /obj/machinery/bot/ed209(get_turf(src),null,"b")

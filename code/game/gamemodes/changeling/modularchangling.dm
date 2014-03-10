@@ -161,6 +161,13 @@ var/list/powerinstances
 	allowduringlesserform = 1
 	verbpath = /mob/living/carbon/proc/changeling_mute_sting
 
+/datum/power/changeling/emp_shriek
+	name = "Dissonant Shriek"
+	desc = "We shift our vocal cords to release a high-frequency sound that overloads nearby electronics."
+	genomecost = 1
+	allowduringlesserform = 1
+	verbpath = /mob/living/carbon/proc/changeling_emp_shriek
+
 /datum/power/changeling/arm_blade
 	name = "Arm Blade"
 	desc = "We reform one of our arms into a deadly blade."

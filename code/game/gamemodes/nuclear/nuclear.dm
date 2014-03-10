@@ -210,6 +210,7 @@
 	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(synd_mob.back), slot_in_backpack)
 
 	var/obj/item/device/radio/uplink/U = new /obj/item/device/radio/uplink(synd_mob)
+	U.hidden_uplink.uplink_owner="[synd_mob.key]"
 	U.hidden_uplink.uses = 10
 	synd_mob.equip_to_slot_or_del(U, slot_in_backpack)
 
@@ -305,6 +306,9 @@
 	if( syndicates.len || (ticker && istype(ticker.mode,/datum/game_mode/nuclear)) )
 		var/text = "<br><FONT size=3><B>The syndicate operatives were:</B></FONT>"
 
+		var/purchases = ""
+		var/TC_uses = 0
+
 		for(var/datum/mind/syndicate in syndicates)
 
 			text += "<br><b>[syndicate.key]</b> was <b>[syndicate.name]</b> ("
@@ -318,7 +322,18 @@
 			else
 				text += "body destroyed"
 			text += ")"
+
+			for(var/obj/item/device/uplink/H in world_uplinks)
+				if(H && H.uplink_owner && H.uplink_owner==syndicate.key)
+					TC_uses += H.used_TC
+					purchases += H.purchase_log
+
 		text += "<br>"
+
+		text += "(Syndicates used [TC_uses] TC) [purchases]"
+
+		if(TC_uses==0 && station_was_nuked && !is_operatives_are_dead())
+			text += "<IMG CLASS=icon SRC=\ref['icons/BadAss.dmi'] ICONSTATE='badass'>"
 
 		world << text
 	return 1
