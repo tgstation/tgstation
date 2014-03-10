@@ -12,7 +12,7 @@
 /obj/machinery/the_singularitygen/process()
 	var/turf/T = get_turf(src)
 	if(src.energy >= 200)
-		if(fingerprintshidden.len)
+		if(fingerprintshidden && fingerprintshidden.len)
 			var/prints
 			for(var/i = 1, i < fingerprintshidden.len, i++)
 				if(i > fingerprintshidden.len)
