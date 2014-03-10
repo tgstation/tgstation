@@ -154,6 +154,7 @@
 #include "code\datums\diseases\advance\symptoms\dizzy.dm"
 #include "code\datums\diseases\advance\symptoms\fever.dm"
 #include "code\datums\diseases\advance\symptoms\flesh_eating.dm"
+#include "code\datums\diseases\advance\symptoms\genetics.dm"
 #include "code\datums\diseases\advance\symptoms\hallucigen.dm"
 #include "code\datums\diseases\advance\symptoms\headache.dm"
 #include "code\datums\diseases\advance\symptoms\heal.dm"

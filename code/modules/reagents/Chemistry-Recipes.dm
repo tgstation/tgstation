@@ -483,7 +483,7 @@ silicate
 
 	name = "Mix Virus 2"
 	id = "mixvirus2"
-	required_reagents = list("mutagen" = 5)
+	required_reagents = list("mutagen" = 1)
 	level_min = 2
 	level_max = 4
 
@@ -491,7 +491,7 @@ silicate
 
 	name = "Mix Virus 3"
 	id = "mixvirus3"
-	required_reagents = list("plasma" = 5)
+	required_reagents = list("plasma" = 1)
 	level_min = 4
 	level_max = 6
 
