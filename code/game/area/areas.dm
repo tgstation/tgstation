@@ -1,8 +1,7 @@
-// Areas.dm
+// Flags for door_alerts.
+#define DOORALERT_ATMOS 1
+#define DOORALERT_FIRE  2
 
-
-
-// ===
 /area
 	var/global/global_uid = 0
 	var/uid
@@ -66,11 +65,11 @@
 						a.triggerAlarm("Power", src, cameras, source)
 	return
 
+/////////////////////////////////////////
+// BEGIN /VG/ UNFUCKING OF AIR ALARMS
+/////////////////////////////////////////
+
 /area/proc/updateDangerLevel()
-//	if(type==/area) //No atmos alarms in space
-//		return 0 //redudant
-
-
 	var/danger_level = 0
 
 	// Determine what the highest DL reported by air alarms is
@@ -101,8 +100,8 @@
 				aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
 			for(var/obj/machinery/computer/station_alert/a in machines)
 				a.triggerAlarm("Atmosphere", src, cameras, src)
-			air_doors_activated=1
-			CloseFirelocks()
+			door_alerts |= DOORALERT_ATMOS
+			UpdateFirelocks()
 		// Dropping from danger level 2.
 		else if (atmosalm == 2)
 			for(var/area/RA in related)
@@ -112,8 +111,8 @@
 				aiPlayer.cancelAlarm("Atmosphere", src, src)
 			for(var/obj/machinery/computer/station_alert/a in machines)
 				a.cancelAlarm("Atmosphere", src, src)
-			air_doors_activated=0
-			OpenFirelocks()
+			door_alerts &= ~DOORALERT_ATMOS
+			UpdateFirelocks()
 		atmosalm = danger_level
 		for (var/obj/machinery/alarm/AA in src)
 			if ( !(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
@@ -121,7 +120,15 @@
 		return 1
 	return 0
 
+/area/proc/UpdateFirelocks()
+	if(door_alerts != 0)
+		CloseFirelocks()
+	else
+		OpenFirelocks()
+
 /area/proc/CloseFirelocks()
+	if(doors_down) return
+	doors_down=1
 	for(var/obj/machinery/door/firedoor/D in all_doors)
 		if(!D.blocked)
 			if(D.operating)
@@ -131,6 +138,8 @@
 					D.close()
 
 /area/proc/OpenFirelocks()
+	if(!doors_down) return
+	doors_down=0
 	for(var/obj/machinery/door/firedoor/D in all_doors)
 		if(!D.blocked)
 			if(D.operating)
@@ -139,14 +148,22 @@
 				spawn()
 					D.open()
 
+//////////////////////////////////////////////
+// END UNFUCKING
+//////////////////////////////////////////////
+
 /area/proc/firealert()
+	if(lighting_subarea)
+		testing("Some jackass called firealert() in a subarea.")
+		return
 	if(name == "Space") //no fire alarms in space
 		return
 	if( !fire )
 		fire = 1
 		updateicon()
 		mouse_opacity = 0
-		CloseFirelocks()
+		door_alerts |= DOORALERT_FIRE
+		UpdateFirelocks()
 		var/list/cameras = list()
 		for(var/area/RA in related)
 			for (var/obj/machinery/camera/C in RA)
@@ -158,6 +175,9 @@
 			a.triggerAlarm("Fire", src, cameras, src)
 
 /area/proc/firereset()
+	if(lighting_subarea)
+		testing("Some jackass called firereset() in a subarea.")
+		return
 	if (fire)
 		fire = 0
 		mouse_opacity = 0
@@ -169,9 +189,13 @@
 			aiPlayer.cancelAlarm("Fire", src, src)
 		for (var/obj/machinery/computer/station_alert/a in machines)
 			a.cancelAlarm("Fire", src, src)
-		OpenFirelocks()
+		door_alerts &= ~DOORALERT_FIRE
+		UpdateFirelocks()
 
 /area/proc/radiation_alert()
+	if(lighting_subarea)
+		testing("Some jackass called radiation_alert() in a subarea.")
+		return
 	if(name == "Space")
 		return
 	if(!radalert)
@@ -180,6 +204,9 @@
 	return
 
 /area/proc/reset_radiation_alert()
+	if(lighting_subarea)
+		testing("Some jackass called reset_radiation_alert() in a subarea.")
+		return
 	if(name == "Space")
 		return
 	if(radalert)
@@ -188,6 +215,9 @@
 	return
 
 /area/proc/readyalert()
+	if(lighting_subarea)
+		testing("Some jackass called readyalert() in a subarea.")
+		return
 	if(name == "Space")
 		return
 	if(!eject)
@@ -196,12 +226,18 @@
 	return
 
 /area/proc/readyreset()
+	if(lighting_subarea)
+		testing("Some jackass called ready_reset() in a subarea.")
+		return
 	if(eject)
 		eject = 0
 		updateicon()
 	return
 
 /area/proc/partyalert()
+	if(lighting_subarea)
+		testing("Some jackass called partyalert() in a subarea.")
+		return
 	if(name == "Space") //no parties in space!!!
 		return
 	if (!( party ))
@@ -211,6 +247,9 @@
 	return
 
 /area/proc/partyreset()
+	if(lighting_subarea)
+		testing("Some jackass called partyreset() in a subarea.")
+		return
 	if (party)
 		party = 0
 		mouse_opacity = 0
@@ -218,6 +257,10 @@
 	return
 
 /area/proc/updateicon()
+	if(lighting_subarea)
+		// Pull from master.
+		icon_state=master.icon_state
+		return
 	if ((fire || eject || party || radalert) && ((!requires_power)?(!requires_power):power_environ))//If it doesn't require power, can still activate this proc.
 		// Highest priority at the top.
 		if(radalert && !fire)
@@ -235,6 +278,12 @@
 	else
 	//	new lighting behaviour with obj lights
 		icon_state = null
+
+	// We're master, Update children.
+	for(var/area/A in related)
+		if(A && A!=src)
+			// Propogate
+			A.icon_state=icon_state
 
 
 /*
