@@ -417,6 +417,8 @@
 
 /obj/item/weapon/storage/Destroy()
 	close_all()
+	qdel(boxes)
+	qdel(closer)
 	..()
 
 

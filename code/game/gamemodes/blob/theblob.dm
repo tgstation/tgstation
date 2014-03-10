@@ -184,10 +184,6 @@
 	luminosity = 0
 	health = 21
 
-/obj/effect/blob/normal/Destroy()
-	src.loc = null
-	blobs -= src
-
 /obj/effect/blob/normal/update_icon()
 	if(health <= 0)
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)

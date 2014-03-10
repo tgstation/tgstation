@@ -128,3 +128,4 @@
 	if(contents)
 		for(var/mob/M in contents)
 			M.loc = src.loc
+	..()
