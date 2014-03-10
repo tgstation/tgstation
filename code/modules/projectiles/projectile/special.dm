@@ -174,7 +174,7 @@ obj/item/projectile/kinetic/New()
 		var/turf/unsimulated/mineral/M = target_turf
 		M.GetDrilled()
 	new /obj/item/effect/kinetic_blast(target_turf)
-	..()
+	..(target,blocked)
 
 /obj/item/projectile/kinetic/Bump(atom/A as mob|obj|turf|area)
 	if(!loc) return
@@ -183,12 +183,16 @@ obj/item/projectile/kinetic/New()
 		return
 
 	if(src)//Do not add to this if() statement, otherwise the meteor won't delete them
+
 		if(A)
 			var/turf/target_turf = get_turf(A)
 			//testing("Bumped [A.type], on [target_turf.type].")
 			if(istype(target_turf, /turf/unsimulated/mineral))
 				var/turf/unsimulated/mineral/M = target_turf
 				M.GetDrilled()
+			// Now we bump as a bullet, if the atom is a non-turf.
+			if(!isturf(A))
+				..(A)
 			qdel(src) // Comment this out if you want to shoot through the asteroid, ERASER-style.
 			return 1
 	else

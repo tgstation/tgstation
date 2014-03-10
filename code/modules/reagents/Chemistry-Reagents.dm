@@ -1173,6 +1173,7 @@ datum
 			description = "Most probably know this as Tylenol, but this chemical is a mild, simple painkiller."
 			reagent_state = LIQUID
 			color = "#C855DC"
+			overdose_dam = 0
 			overdose = 60
 
 			on_mob_life(var/mob/living/M as mob)

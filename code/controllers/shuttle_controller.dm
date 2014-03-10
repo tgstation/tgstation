@@ -39,10 +39,11 @@ datum/shuttle_controller
 			settimeleft(SHUTTLEARRIVETIME*coeff)
 			online = 1
 			if(always_fake_recall)
-				fake_recall = rand(300,500)		//turning on the red lights in hallways
+				fake_recall = rand(300,500)
+		//turning on the red lights in hallways
 		if(alert == 0)
 			for(var/area/A in world)
-				if(istype(A, /area/hallway))
+				if(istype(A, /area/hallway) && !A.lighting_subarea)
 					A.readyalert()
 
 	proc/shuttlealert(var/X)
@@ -60,7 +61,7 @@ datum/shuttle_controller
 				setdirection(-1)
 				online = 1
 				for(var/area/A in world)
-					if(istype(A, /area/hallway))
+					if(istype(A, /area/hallway) && !A.lighting_subarea)
 						A.readyreset()
 				return
 			else //makes it possible to send shuttle back.

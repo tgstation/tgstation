@@ -102,7 +102,7 @@
 		ASSERT(istype(A))
 		if(A.master)
 			A = A.master
-		var/alarmed = A.air_doors_activated || A.fire
+		var/alarmed = A.doors_down || A.fire
 
 		if( istype(C, /obj/item/weapon/crowbar) || ( istype(C,/obj/item/weapon/twohanded/fireaxe) && C:wielded == 1 ) )
 			if(operating)

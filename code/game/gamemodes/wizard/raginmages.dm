@@ -1,7 +1,7 @@
 /datum/game_mode/wizard/raginmages
 	name = "Ragin' Mages"
 	config_tag = "raginmages"
-	required_players = 15
+	required_players = 1
 	required_players_secret = 15
 	var/max_mages = 0
 	var/making_mage = 0
@@ -50,7 +50,8 @@
 		wizards_alive++
 
 	if (wizards_alive)
-		if(world.time > time_checked + rand(3000, 6000))
+		if(!time_checked) time_checked = world.time
+		if(world.time > time_checked + 3000 && (mages_made < max_mages))
 			time_checked = world.time
 			make_more_mages()
 	else
@@ -59,13 +60,14 @@
 			return 1
 		else
 			make_more_mages()
-	return 0
+	return ..()
 
 /datum/game_mode/wizard/raginmages/proc/make_more_mages()
 
 	if(making_mage || emergency_shuttle.departed)
 		return 0
-
+	if(mages_made >= max_mages)
+		return 0
 	making_mage = 1
 	mages_made++
 	var/list/mob/dead/observer/candidates = list()
@@ -114,5 +116,4 @@
 	if(finished)
 		feedback_set_details("round_end_result","loss - wizard killed")
 		world << "\red <FONT size = 3><B> The crew has managed to hold off the wizard attack! The Space Wizards Federation has been taught a lesson they will not soon forget!</B></FONT>"
-	..()
-	return 1
+	..(1)

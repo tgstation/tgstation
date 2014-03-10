@@ -469,60 +469,11 @@
 
 /obj/machinery/alarm/proc/air_doors_close(manual)
 	var/area/A = get_area(src)
-	if(!A.master.air_doors_activated)
-		A.master.air_doors_activated = 1
-		for(var/obj/machinery/door/E in A.master.all_doors)
-			if(istype(E,/obj/machinery/door/firedoor))
-				if(!E:blocked)
-					if(E.operating)
-						E:nextstate = CLOSED
-					else if(!E.density)
-						spawn(0)
-							E.close()
-				continue
-
-/*				if(istype(E, /obj/machinery/door/airlock))
-				if((!E:arePowerSystemsOn()) || (E.stat & NOPOWER) || E:air_locked) continue
-				if(!E.density)
-					spawn(0)
-						E.close()
-						spawn(10)
-							if(E.density)
-								E:air_locked = E.req_access
-								E:req_access = list(ACCESS_ENGINE, ACCESS_ATMOSPHERICS)
-								E.update_icon()
-				else if(E.operating)
-					spawn(10)
-						E.close()
-						if(E.density)
-							E:air_locked = E.req_access
-							E:req_access = list(ACCESS_ENGINE, ACCESS_ATMOSPHERICS)
-							E.update_icon()
-				else if(!E:locked) //Don't lock already bolted doors.
-					E:air_locked = E.req_access
-					E:req_access = list(ACCESS_ENGINE, ACCESS_ATMOSPHERICS)
-					E.update_icon()*/
+	A.master.CloseFirelocks()
 
 /obj/machinery/alarm/proc/air_doors_open(manual)
 	var/area/A = get_area(loc)
-	if(A.master.air_doors_activated)
-		A.master.air_doors_activated = 0
-		for(var/obj/machinery/door/E in A.master.all_doors)
-			if(istype(E, /obj/machinery/door/firedoor))
-				if(!E:blocked)
-					if(E.operating)
-						E:nextstate = OPEN
-					else if(E.density)
-						spawn(0)
-							E.open()
-				continue
-
-/*				if(istype(E, /obj/machinery/door/airlock))
-				if((!E:arePowerSystemsOn()) || (E.stat & NOPOWER)) continue
-				if(!isnull(E:air_locked)) //Don't mess with doors locked for other reasons.
-					E:req_access = E:air_locked
-					E:air_locked = null
-					E.update_icon()*/
+	A.master.OpenFirelocks()
 
 
 
@@ -1044,6 +995,16 @@ FIRE ALARM
 	var/wiresexposed = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
 
+	var/area/master_area
+
+/obj/machinery/firealarm/New()
+	var/area/A = get_area(src)
+	if (!( istype(A, /area) ))
+		return
+	if(A.master)
+		A=A.master
+	master_area=A
+
 /obj/machinery/firealarm/update_icon()
 
 	if(wiresexposed)
@@ -1188,13 +1149,11 @@ FIRE ALARM
 		return
 
 	user.set_machine(src)
-	var/area/A = src.loc
 	var/d1
 	var/d2
 	if (istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon))
-		A = A.loc
 
-		if (A.fire)
+		if (master_area.fire)
 			d1 = text("<A href='?src=\ref[];reset=1'>Reset - Lockdown</A>", src)
 		else
 			d1 = text("<A href='?src=\ref[];alarm=1'>Alarm - Lockdown</A>", src)
@@ -1208,8 +1167,7 @@ FIRE ALARM
 		user << browse(dat, "window=firealarm")
 		onclose(user, "firealarm")
 	else
-		A = A.loc
-		if (A.fire)
+		if (master_area.fire)
 			d1 = text("<A href='?src=\ref[];reset=1'>[]</A>", src, stars("Reset - Lockdown"))
 		else
 			d1 = text("<A href='?src=\ref[];alarm=1'>[]</A>", src, stars("Alarm - Lockdown"))
@@ -1258,22 +1216,14 @@ FIRE ALARM
 /obj/machinery/firealarm/proc/reset()
 	if (!( src.working ))
 		return
-	var/area/A = src.loc
-	A = A.loc
-	if (!( istype(A, /area) ))
-		return
-	A.firereset()
+	master_area.firereset()
 	update_icon()
 	return
 
 /obj/machinery/firealarm/proc/alarm()
 	if (!( src.working ))
 		return
-	var/area/A = src.loc
-	A = A.loc
-	if (!( istype(A, /area) ))
-		return
-	A.firealert()
+	master_area.firealert()
 	update_icon()
 	//playsound(get_turf(src), 'sound/ambience/signal.ogg', 75, 0)
 	return
@@ -1364,6 +1314,16 @@ Code shamelessly copied from apc_frame
 	idle_power_usage = 2
 	active_power_usage = 6
 
+	var/area/master_area
+
+/obj/machinery/partyalarm/New()
+	var/area/A = get_area(src)
+	if (!( istype(A, /area) ))
+		return
+	if(A.master)
+		A=A.master
+	master_area=A
+
 /obj/machinery/partyalarm/attack_paw(mob/user as mob)
 	return attack_hand(user)
 
@@ -1372,15 +1332,10 @@ Code shamelessly copied from apc_frame
 		return
 
 	user.machine = src
-	var/area/A = get_area(src)
-	ASSERT(isarea(A))
-	if(A.master)
-		A = A.master
 	var/d1
 	var/d2
 	if (istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon/ai))
-
-		if (A.party)
+		if (master_area.party)
 			d1 = text("<A href='?src=\ref[];reset=1'>No Party :(</A>", src)
 		else
 			d1 = text("<A href='?src=\ref[];alarm=1'>PARTY!!!</A>", src)
@@ -1394,7 +1349,7 @@ Code shamelessly copied from apc_frame
 		user << browse(dat, "window=partyalarm")
 		onclose(user, "partyalarm")
 	else
-		if (A.fire)
+		if (master_area.fire)
 			d1 = text("<A href='?src=\ref[];reset=1'>[]</A>", src, stars("No Party :("))
 		else
 			d1 = text("<A href='?src=\ref[];alarm=1'>[]</A>", src, stars("PARTY!!!"))
@@ -1412,21 +1367,13 @@ Code shamelessly copied from apc_frame
 /obj/machinery/partyalarm/proc/reset()
 	if (!( working ))
 		return
-	var/area/A = get_area(src)
-	ASSERT(isarea(A))
-	if(A.master)
-		A = A.master
-	A.partyreset()
+	master_area.partyreset()
 	return
 
 /obj/machinery/partyalarm/proc/alarm()
 	if (!( working ))
 		return
-	var/area/A = get_area(src)
-	ASSERT(isarea(A))
-	if(A.master)
-		A = A.master
-	A.partyalert()
+	master_area.partyalert()
 	return
 
 /obj/machinery/partyalarm/Topic(href, href_list)

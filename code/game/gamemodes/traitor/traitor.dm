@@ -121,10 +121,27 @@
 				traitor.objectives += steal_objective
 		switch(rand(1,100))
 			if(1 to 30) // Die glorious death
-				if (!(locate(/datum/objective/die) in traitor.objectives))
+				if (!(locate(/datum/objective/die) in traitor.objectives) && !(locate(/datum/objective/steal) in traitor.objectives))
 					var/datum/objective/die/die_objective = new
 					die_objective.owner = traitor
 					traitor.objectives += die_objective
+				else
+					if(prob(85))
+						if (!(locate(/datum/objective/escape) in traitor.objectives))
+							var/datum/objective/escape/escape_objective = new
+							escape_objective.owner = traitor
+							traitor.objectives += escape_objective
+					else
+						if(prob(50))
+							if (!(locate(/datum/objective/hijack) in traitor.objectives))
+								var/datum/objective/hijack/hijack_objective = new
+								hijack_objective.owner = traitor
+								traitor.objectives += hijack_objective
+						else
+							if (!(locate(/datum/objective/minimize_casualties) in traitor.objectives))
+								var/datum/objective/minimize_casualties/escape_objective = new
+								escape_objective.owner = traitor
+								traitor.objectives += escape_objective
 			if(31 to 90)
 				if (!(locate(/datum/objective/escape) in traitor.objectives))
 					var/datum/objective/escape/escape_objective = new

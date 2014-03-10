@@ -150,6 +150,16 @@ var/global/floorIsLava = 0
 					body+="</td>"
 				body += "</tr></table>"
 
+			// Law Admin Hax
+			if(issilicon(M) && M:laws)
+				body += "<br><br>"
+				body += "<b>Laws:</b><br />"
+				var/datum/ai_laws/L = M:laws
+				body += L.display_admin_tools(M)
+				body += "<br /><a href='?src=\ref[src];mob=\ref[M];add_law=1'>Add Law</a>"
+				body += " | <a href='?src=\ref[src];mob=\ref[M];clear_laws=1'>Clear Laws</a>"
+				body += "<br /><a href='?src=\ref[src];mob=\ref[M];announce_laws=1'><b>Send Laws</b></a> - User is not notified of changes until this button pushed!<br />"
+
 			body += {"<br><br>
 				<b>Rudimentary transformation:</b><font size=2><br>These transformations only create a new mob type and copy stuff over. They do not take into account MMIs and similar mob-specific things. The buttons in 'Transformations' are preferred, when possible.</font><br>
 				<A href='?src=\ref[src];simplemake=observer;mob=\ref[M]'>Observer</A> |
@@ -575,12 +585,24 @@ var/global/floorIsLava = 0
 		dat += "<A href='?src=\ref[src];f_secret=1'>(Force Secret Mode)</A><br>"
 
 	dat += {"
-		<BR>
+		<hr />
+		<ul>
+			<li>
+				<b>Default Cyborg/AI Laws:</b>
+				<a href="?src=\ref[src];set_base_laws=ai">[base_law_type]</a>
+			</li>
+			<li>
+				<b>Default MoMMI Laws:</b>
+				<a href="?src=\ref[src];set_base_laws=mommi">[mommi_base_law_type]</a>
+			</li>
+		</ul>
+		<hr />
 		<A href='?src=\ref[src];create_object=1'>Create Object</A><br>
 		<A href='?src=\ref[src];quick_create_object=1'>Quick Create Object</A><br>
 		<A href='?src=\ref[src];create_turf=1'>Create Turf</A><br>
 		<A href='?src=\ref[src];create_mob=1'>Create Mob</A><br>
-		<br><A href='?src=\ref[src];vsc=airflow'>Edit ZAS Settings</A><br>
+		<hr />
+		<A href='?src=\ref[src];vsc=airflow'>Edit ZAS Settings</A><br>
 		<A href='?src=\ref[src];vsc=default'>Choose a default ZAS setting</A><br>
 		"}
 

@@ -114,3 +114,10 @@
 	m_amt = 0
 	g_amt = 0
 	w_type = RECYK_BIOLOGICAL
+
+
+/obj/item/weapon/cell/temperaturegun
+	name = "temperature gun cell"
+	desc = "A specially designed power cell for heating and cooling projectiles"
+	icon_state = "icell"
+	maxcharge = 900

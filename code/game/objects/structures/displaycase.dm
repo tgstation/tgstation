@@ -75,6 +75,12 @@
 	req_access=list(access_captain)
 	update_icon()
 
+/obj/structure/displaycase/gooncode/New()
+	occupant=new /obj/item/toy/gooncode(src)
+	locked=1
+	req_access=list(access_captain)
+	update_icon()
+
 /obj/structure/displaycase/examine()
 	..()
 	usr << "\blue Peering through the glass, you see that it contains:"

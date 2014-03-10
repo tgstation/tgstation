@@ -42,6 +42,10 @@ def buildDMI(directory, output):
     logging.info('Saving {0} states to {1}...'.format(len(dmi.states),output))
     dmi.save(output)
 if __name__ == '__main__':
+    logging.basicConfig(
+        format='%(asctime)s [%(levelname)-8s]: %(message)s', 
+        datefmt='%m/%d/%Y %I:%M:%S %p', 
+        level=logging.INFO)
     # Cheating, but useful for checking for unsync'd stuff
     compare_all('left/','right/','in-hand_sync_report.txt',None,newfile_theirs=False,newfile_mine=False)
     for output, input_dir in ToBuild.items():

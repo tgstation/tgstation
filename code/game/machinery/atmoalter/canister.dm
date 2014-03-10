@@ -53,30 +53,33 @@
 	can_label = 0
 
 /obj/machinery/portable_atmospherics/canister/update_icon()
-	src.overlays = 0
+	overlays = null
 
-	if (src.destroyed)
-		src.icon_state = text("[]-1", src.canister_color)
-
+	if (destroyed)
+		icon_state = "[canister_color]-1"
 	else
-		icon_state = "[canister_color]"
-		if(holding)
-			overlays += "can-open"
+		icon_state = canister_color
+		overlays = new/list()
 
-		if(connected_port)
-			overlays += "can-connector"
+		if (holding)
+			overlays.Add("can-open")
+
+		if (connected_port)
+			overlays.Add("can-connector")
 
 		var/tank_pressure = air_contents.return_pressure()
 
 		if (tank_pressure < 10)
-			overlays += image('icons/obj/atmos.dmi', "can-o0")
+			overlays.Add("can-o0")
 		else if (tank_pressure < ONE_ATMOSPHERE)
-			overlays += image('icons/obj/atmos.dmi', "can-o1")
-		else if (tank_pressure < 15*ONE_ATMOSPHERE)
-			overlays += image('icons/obj/atmos.dmi', "can-o2")
+			overlays.Add("can-o1")
+		else if (tank_pressure < 15 * ONE_ATMOSPHERE)
+			overlays.Add("can-o2")
 		else
-			overlays += image('icons/obj/atmos.dmi', "can-o3")
+			overlays.Add("can-o3")
+
 	return
+
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)
@@ -261,6 +264,10 @@
 			if (holding)
 				release_log += "Valve was <b>closed</b> by [usr] ([usr.ckey]), stopping the transfer into the [holding]<br>"
 			else
+				var/datum/gas/sleeping_agent/S = locate() in src.air_contents.trace_gases
+				if(src.air_contents.toxins > 0 || (istype(S)))
+					message_admins("[usr.real_name] ([formatPlayerPanel(usr,usr.ckey)]) opened a canister that contains \[[src.air_contents.toxins > 0 ? "Toxins" : ""] [istype(S) ? " N2O" : ""]\] at [formatJumpTo(loc)]!")
+					log_admin("[usr]([ckey(usr.key)]) opened a canister that contains \[[src.air_contents.toxins > 0 ? "Toxins" : ""] [istype(S) ? " N2O" : ""]\] at [loc.x], [loc.y], [loc.z]")
 				release_log += "Valve was <b>closed</b> by [usr] ([usr.ckey]), stopping the transfer into the <font color='red'><b>air</b></font><br>"
 		else
 			if (holding)

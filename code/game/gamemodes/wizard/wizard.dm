@@ -195,8 +195,9 @@
 
 
 /datum/game_mode/wizard/check_finished()
-
-	if(config.continous_rounds)
+	if(istype(ticker.mode, /datum/game_mode/mixed))
+		mixed = 1
+	if(config.continous_rounds || mixed)
 		return ..()
 
 	var/wizards_alive = 0
@@ -224,8 +225,8 @@
 
 
 
-/datum/game_mode/wizard/declare_completion()
-	if(finished)
+/datum/game_mode/wizard/declare_completion(var/ragin = 0)
+	if(finished && !ragin)
 		feedback_set_details("round_end_result","loss - wizard killed")
 		world << "\red <FONT size = 3><B> The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</B></FONT>"
 	..()

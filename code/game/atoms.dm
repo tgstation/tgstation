@@ -52,11 +52,34 @@
 				var/mob/living/M = src
 				M.take_organ_damage(20)
 
+/atom/proc/AddToProfiler()
+	// Memory usage profiling - N3X
+	if(type in type_instances)
+		type_instances[type]=type_instances[type]+1
+	else
+		type_instances[type]=1
+
+/atom/proc/DeleteFromProfiler()
+	// Memory usage profiling - N3X
+	if(type in type_instances)
+		type_instances[type]=type_instances[type]-1
+	else
+		type_instances[type]=0
+		warning("Type [type] does not inherit /atom/New().  Please ensure ..() is called, or that the type at least adds to type_instances\[type\].")
+
 /atom/Del()
 	// Pass to Destroy().
 	if(!gc_destroyed)
 		Destroy()
+
+	// Only call when we're actually deleted.
+	DeleteFromProfiler()
+
 	..()
+
+/atom/New()
+	AddToProfiler()
+
 
 // Like Del(), but for qdel.
 // Called BEFORE qdel moves shit.

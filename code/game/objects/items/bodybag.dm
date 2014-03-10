@@ -9,7 +9,7 @@
 	attack_self(mob/user)
 		var/obj/structure/closet/body_bag/R = new /obj/structure/closet/body_bag(user.loc)
 		R.add_fingerprint(user)
-		del(src)
+		qdel(src)
 
 
 /obj/item/weapon/storage/box/bodybags

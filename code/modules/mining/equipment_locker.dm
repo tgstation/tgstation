@@ -44,6 +44,7 @@
 	if(processed_sheet)
 		var/datum/material/mat = materials.getMaterial(O.material)
 		mat.stored += processed_sheet.amount //Stack the sheets
+		points += mat.value * processed_sheet.amount // Gimme my fucking points
 		qdel(O)
 
 /obj/machinery/mineral/ore_redemption/process()
@@ -63,13 +64,14 @@
 				for(var/mat_id in B.materials.storage)
 					var/datum/material/mat = B.materials.getMaterial(mat_id)
 					materials.addAmount(mat_id,mat.stored)
+					points += mat.value * mat.stored // Gimme my fucking points
 					mat.stored=0
 
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(var/obj/item/weapon/ore/O)
 	if(O.material)
 		var/datum/material/mat = materials.getMaterial(O.material)
 		var/obj/item/stack/sheet/M = new mat.sheettype(src)
-		points += mat.value
+		//points += mat.value // Old behavior
 		return M
 	del(O)//No refined type? Purge it.
 	return

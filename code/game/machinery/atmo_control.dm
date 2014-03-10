@@ -94,18 +94,15 @@ obj/machinery/air_sensor
 		if(..(user))
 			return
 		var/html=return_text()+"</body></html>"
-		/*
-		#warning Remember to remove atmo_control.dm:94-96!
-		var/f = file("data/gac_debug.html")
-		fdel(f)
-		f << html
-		*/
 		user << browse(html,"window=gac")
 		user.set_machine(src)
 		onclose(user, "gac")
 
 	process()
 		..()
+		if(!sensors)
+			warning("[src.type] at [x],[y],[z] has null sensors.  Please fix.")
+			sensors = list()
 		src.updateUsrDialog()
 
 	attackby(I as obj, user as mob)
@@ -145,7 +142,7 @@ obj/machinery/air_sensor
 		if(!signal || signal.encryption) return
 
 		var/id_tag = signal.data["tag"]
-		if(!id_tag || !sensors.Find(id_tag)) return
+		if(!id_tag || !sensors || !sensors.Find(id_tag)) return
 
 		sensor_information[id_tag] = signal.data
 

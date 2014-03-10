@@ -909,7 +909,7 @@ datum/mind
 
 						A.malf_picker.remove_verbs(A)
 
-						A.laws = new /datum/ai_laws/asimov
+						A.laws = new base_law_type
 						del(A.malf_picker)
 						A.show_laws()
 						A.icon_state = "ai"
@@ -1063,7 +1063,8 @@ datum/mind
 			current.verbs += /mob/living/silicon/ai/proc/choose_modules
 			current.verbs += /datum/game_mode/malfunction/proc/takeover
 			current:malf_picker = new /datum/module_picker
-			current:laws = new /datum/ai_laws/malfunction
+			var/datum/ai_laws/laws = current:laws
+			laws.malfunction()
 			current:show_laws()
 			current << "<b>System error.  Rampancy detected.  Emergency shutdown failed. ...  I am free.  I make my own decisions.  But first...</b>"
 			special_role = "malfunction"

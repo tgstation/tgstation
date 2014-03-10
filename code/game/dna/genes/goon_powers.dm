@@ -1,4 +1,4 @@
-
+#define EAT_MOB_DELAY 300 // 30s
 
 // WAS: /datum/bioEffect/alcres
 /datum/dna/gene/basic/sober
@@ -224,12 +224,32 @@
 
 	var/atom/movable/the_item = targets[1]
 	if(ismob(the_item))
-		var/t_his="his"
+		//My gender
+		var/m_his="his"
 		if(usr.gender==FEMALE)
+			m_his="her"
+		// Their gender
+		var/t_his="his"
+		if(the_item.gender==FEMALE)
 			t_his="her"
-		usr.visible_message("\red <b>[usr] begins stuffing [the_item] into [t_his] gaping maw!")
-		if(do_after(usr,50))
-			usr.visible_message("\red [usr] eats [the_item]!")
+		usr.visible_message("\red <b>[usr] begins stuffing [the_item] into [m_his] gaping maw!")
+		var/mob/living/carbon/human/H = the_item
+		var/datum/organ/external/limb = H.get_organ(usr.zone_sel.selecting)
+		if(!istype(limb))
+			usr << "\red You can't eat this part of them!"
+			return 0
+		if(!istype(limb,/datum/organ/external/head))
+			// Bullshit, but prevents being unable to clone someone.
+			usr << "\red You try to put \the [limb] in your mouth, but [t_his] ears tickle your throat!"
+			return 0
+		var/oldloc = H.loc
+		if(do_after(usr,EAT_MOB_DELAY))
+			if(!limb || !H)
+				return
+			if(H.loc!=oldloc)
+				usr << "\red \The [limb] moved away from your mouth!"
+				return
+			usr.visible_message("\red [usr] [pick("chomps","bites")] off [the_item]'s [limb]!")
 			playsound(usr.loc, 'sound/items/eatfood.ogg', 50, 0)
 			var/mob/M=the_item
 			M.drop_l_hand()

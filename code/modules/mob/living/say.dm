@@ -213,6 +213,126 @@ var/list/department_radio_keys = list(
 	if (stuttering)
 		message = stutter(message)
 
+// BEGIN OLD RADIO CODE
+/////////////////////////////////////////////////////////////////////////
+	var/list/obj/item/used_radios = new
+	var/is_speaking_radio = 0
+
+	switch (message_mode)
+		if ("headset")
+			if (src:ears)
+				src:ears.talk_into(src, message)
+				used_radios += src:ears
+				is_speaking_radio = 1
+
+			message_range = 1
+			italics = 1
+
+
+		if ("secure headset")
+			if (src:ears)
+				src:ears.talk_into(src, message, 1)
+				used_radios += src:ears
+				is_speaking_radio = 1
+
+			message_range = 1
+			italics = 1
+
+		if ("right hand")
+			if (r_hand)
+				r_hand.talk_into(src, message)
+				used_radios += src:r_hand
+				is_speaking_radio = 1
+
+			message_range = 1
+			italics = 1
+
+		if ("left hand")
+			if (l_hand)
+				l_hand.talk_into(src, message)
+				used_radios += src:l_hand
+				is_speaking_radio = 1
+
+			message_range = 1
+			italics = 1
+
+		if ("intercom")
+			for (var/obj/item/device/radio/intercom/I in view(1, null))
+				I.talk_into(src, message)
+				used_radios += I
+				is_speaking_radio = 1
+
+			message_range = 1
+			italics = 1
+
+		//I see no reason to restrict such way of whispering
+		if ("whisper")
+			whisper(message)
+			return
+
+		if ("binary")
+			if(robot_talk_understand || binarycheck())
+			//message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)) //seems redundant
+				robot_talk(message)
+			return
+
+		if ("alientalk")
+			if(alien_talk_understand || hivecheck())
+			//message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)) //seems redundant
+				alien_talk(message)
+			return
+
+		if ("department")
+			if(istype(src, /mob/living/carbon))
+				if (src:ears)
+					src:ears.talk_into(src, message, message_mode)
+					used_radios += src:ears
+					is_speaking_radio = 1
+			else if(istype(src, /mob/living/silicon/robot))
+				if (src:radio)
+					src:radio.talk_into(src, message, message_mode)
+					used_radios += src:radio
+			message_range = 1
+			italics = 1
+
+		if ("pAI")
+			if (src:radio)
+				src:radio.talk_into(src, message)
+				used_radios += src:radio
+			message_range = 1
+			italics = 1
+
+		if("changeling")
+			if(mind && mind.changeling)
+				log_say("[key_name(src)] ([mind.changeling.changelingID]): [message]")
+				for(var/mob/Changeling in mob_list)
+					if(istype(Changeling, /mob/living/silicon)) continue //WHY IS THIS NEEDED?
+					if((Changeling.mind && Changeling.mind.changeling) || istype(Changeling, /mob/dead/observer))
+						Changeling << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
+					else if(istype(Changeling,/mob/dead/observer)  && (Changeling.client && Changeling.client.prefs.toggles & CHAT_GHOSTEARS))
+						Changeling << "<i><font color=#800080><b>[mind.changeling.changelingID] (:</b> <a href='byond://?src=\ref[Changeling];follow2=\ref[Changeling];follow=\ref[src]'>(Follow)</a> [message]</font></i>"
+				return
+////SPECIAL HEADSETS START
+		else
+			//world << "SPECIAL HEADSETS"
+			if (message_mode in radiochannels)
+				if(isrobot(src))//Seperates robots to prevent runtimes from the ear stuff
+					var/mob/living/silicon/robot/R = src
+					if(R.radio)//Sanityyyy
+						R.radio.talk_into(src, message, message_mode)
+						used_radios += R.radio
+				else
+					if (src:ears)
+						src:ears.talk_into(src, message, message_mode)
+						used_radios += src:ears
+				message_range = 1
+				italics = 1
+/////SPECIAL HEADSETS END
+
+/////////////////////////////////////////////////////////////////////
+// END OLD RADIO CODE
+
+	/*
 	///////////////////////////////////////////////////////////
 	// VIDEO KILLED THE RADIO STAR V2.0
 	//
@@ -331,6 +451,7 @@ var/list/department_radio_keys = list(
 	/////////////////////////////////////////////////////////////////
 	// </NEW RADIO CODE>
 	/////////////////////////////////////////////////////////////////
+	*/
 
 	var/datum/gas_mixture/environment = loc.return_air()
 	if(environment)
