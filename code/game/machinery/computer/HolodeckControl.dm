@@ -360,7 +360,7 @@
 	..()
 
 /obj/item/weapon/holo
-	damtype = HALLOSS
+	damtype = STAMINA
 
 /obj/item/weapon/holo/esword
 	desc = "May the force be with you. Sorta"
@@ -429,7 +429,7 @@
 	if((ishuman(hit_atom)))
 		var/mob/living/carbon/M = hit_atom
 		playsound(src, 'sound/items/dodgeball.ogg', 50, 1)
-		M.apply_damage(10, HALLOSS)
+		M.apply_damage(10, STAMINA)
 		if(prob(5))
 			M.Weaken(3)
 			visible_message("\red [M] is knocked right off \his feet!", 3)

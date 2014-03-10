@@ -212,6 +212,14 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 15
 	containername = "stun gun crate"
 
+/datum/supply_packs/security/disabler
+	name = "Disabler crate"
+	contains = list(/obj/item/weapon/gun/energy/disabler,
+					/obj/item/weapon/gun/energy/disabler,
+					/obj/item/weapon/gun/energy/disabler)
+	cost = 10
+	containername = "disabler crate"
+
 ///// Armory stuff
 
 /datum/supply_packs/security/armory

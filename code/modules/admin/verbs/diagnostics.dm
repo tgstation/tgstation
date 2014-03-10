@@ -87,9 +87,9 @@
 
 /client/proc/reload_admins()
 	set name = "Reload Admins"
-	set category = "Debug"
+	set category = "Admin"
 
-	if(!check_rights(R_SERVER))	return
+	if(!src.holder)	return
 
 	message_admins("[key_name_admin(usr)] manually reloaded admins")
 	load_admins()

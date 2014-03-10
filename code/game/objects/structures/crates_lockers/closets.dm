@@ -140,13 +140,13 @@
 				del(src)
 
 /obj/structure/closet/bullet_act(var/obj/item/projectile/Proj)
-	health -= Proj.damage
 	..()
-	if(health <= 0)
-		for(var/atom/movable/A as mob|obj in src)
-			A.loc = src.loc
-		del(src)
-
+	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		health -= Proj.damage
+		if(health <= 0)
+			for(var/atom/movable/A as mob|obj in src)
+				A.loc = src.loc
+			del(src)
 	return
 
 /obj/structure/closet/attack_animal(mob/living/simple_animal/user as mob)
@@ -176,8 +176,10 @@
 			if(src.large)
 				var/obj/item/weapon/grab/G = W
 				src.MouseDrop_T(G.affecting, user)	//act like they were dragged onto the closet
+				user.drop_item()
 			else
 				user << "<span class='notice'>The locker is too small to stuff [W] into!</span>"
+			return
 		if(istype(W,/obj/item/tk_grab))
 			return 0
 

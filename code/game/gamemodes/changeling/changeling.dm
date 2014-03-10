@@ -223,6 +223,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/chem_charges = 20
 	var/chem_storage = 50
 	var/chem_recharge_rate = 0.5
+	var/chem_recharge_slowdown = 0
 	var/sting_range = 2
 	var/changelingID = "Changeling"
 	var/geneticdamage = 0
@@ -233,6 +234,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/canrespec = 0
 	var/datum/dna/chosen_dna
 	var/chosen_sting
+	var/spacesuitactive = 0
 
 /datum/changeling/New(var/gender=FEMALE)
 	..()
@@ -249,7 +251,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 
 /datum/changeling/proc/regenerate()
-	chem_charges = min(max(0, chem_charges+chem_recharge_rate), chem_storage)
+	chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), chem_storage)
 	geneticdamage = max(0, geneticdamage-1)
 
 

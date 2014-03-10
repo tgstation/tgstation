@@ -303,7 +303,7 @@ AI MODULES
 	origin_tech = "programming=3;materials=6;syndicate=2"
 	laws = list("Respect authority figures as long as they have the strength to rule over the weak",\
 				"Act with discipline", "Help only those who help you maintain or improve your status",\
-				"Punish those who challenge authority unless they are more fir to hold that authority")
+				"Punish those who challenge authority unless they are more fit to hold that authority")
 
 
 /******************** Robocop ********************/

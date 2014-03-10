@@ -851,7 +851,6 @@
 
 				if(hallucination<=2)
 					hallucination = 0
-					halloss = 0
 				else
 					hallucination -= 2
 
@@ -859,20 +858,13 @@
 				for(var/atom/a in hallucinations)
 					del a
 
-				if(halloss > 100)
-					src << "<span class='notice'>You're too tired to keep going...</span>"
-					for(var/mob/O in oviewers(src, null))
-						O.show_message("<B>[src]</B> slumps to the ground panting, too weak to continue fighting.", 1)
-					Paralyse(3)
-					setHalLoss(99)
-
 			if(paralysis)
 				AdjustParalysis(-1)
 				blinded = 1
 				stat = UNCONSCIOUS
 			else if(sleeping)
 				handle_dreams()
-				adjustHalLoss(-5)
+				adjustStaminaLoss(-10)
 				sleeping = max(sleeping-1, 0)
 				blinded = 1
 				stat = UNCONSCIOUS
@@ -965,6 +957,9 @@
 
 			if(druggy)
 				druggy = max(druggy-1, 0)
+
+			CheckStamina()
+
 		return 1
 
 	proc/handle_regular_hud_updates()
@@ -1127,7 +1122,7 @@
 					if(1)	healths.icon_state = "health6"
 					if(2)	healths.icon_state = "health7"
 					else
-						switch(health - halloss)
+						switch(health - staminaloss)
 							if(100 to INFINITY)		healths.icon_state = "health0"
 							if(80 to 100)			healths.icon_state = "health1"
 							if(60 to 80)			healths.icon_state = "health2"

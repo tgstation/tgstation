@@ -102,7 +102,7 @@ MASS SPECTROMETER
 	var/tox_loss = M.getToxLoss()
 	var/fire_loss = M.getFireLoss()
 	var/brute_loss = M.getBruteLoss()
-	var/mob_status = (M.stat > 1 ? "<font color='red'>Deceased</font>" : text("[]% healthy", M.health - M.halloss))
+	var/mob_status = (M.stat > 1 ? "<font color='red'>Deceased</font>" : text("[]% healthy", M.health))
 
 	if(M.status_flags & FAKEDEATH)
 		mob_status = "<font color='red'>Deceased</font>"
@@ -132,6 +132,9 @@ MASS SPECTROMETER
 	// Damage descriptions
 
 	user.show_message(text("<span class='notice'>[] | [] | [] | []</span>", oxy_loss > 50 ? "\red Severe oxygen deprivation detected\blue" : "Subject bloodstream oxygen level normal", tox_loss > 50 ? "\red Dangerous amount of toxins detected\blue" : "Subject bloodstream toxin level minimal", fire_loss > 50 ? "\red Severe burn damage detected\blue" : "Subject burn injury status O.K", brute_loss > 50 ? "\red Severe anatomical damage detected\blue" : "Subject brute-force injury status O.K"), 1)
+
+	if(M.getStaminaLoss())
+		user.show_message(text("<span class='info'>Subject appears to be suffering from fatigue.</span>"), 1)
 
 	if (M.getCloneLoss())
 		user.show_message(text("<span class='alert'>Subject appears to have been imperfectly cloned.</span>"), 1)

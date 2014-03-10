@@ -18,6 +18,13 @@
 	..()
 	create_reagents(volume)
 	return
+	
+/obj/item/weapon/watertank/examine()
+	set src in usr
+	..()
+	for(var/datum/reagent/R in reagents.reagent_list)
+		usr << "[round(R.volume)] units of [R.name] left."
+	return
 
 /obj/item/weapon/watertank/ui_action_click()
 	if (usr.get_item_by_slot(slot_back) == src)
@@ -94,9 +101,11 @@
 	tank.on = 0
 	Del()
 	
+/obj/item/weapon/reagent_containers/spray/mister/attack_self()
+	return
+	
 /proc/check_tank_exists(parent_tank, var/mob/living/carbon/human/M, var/obj/O)
 	if (!parent_tank || !istype(parent_tank, /obj/item/weapon/watertank) || !M || !istype(M))	//To avoid weird issues from admin spawns
-		world << "Fail!"
 		M.unEquip(O)
 		O.Del()
 		return 0
@@ -110,13 +119,27 @@
 	icon_state = "waterbackpackjani"
 	item_state = "waterbackpackjani"
 	
+/obj/item/weapon/watertank/janitor/New()
+	..()
+	reagents.add_reagent("cleaner", 250)
+	
+	
 /obj/item/weapon/reagent_containers/spray/mister/janitor
+	name = "janitor spray nozzle"
+	desc = "A janitorial spray nozzle attached to a watertank, designed to clean up large messes."
+	icon = 'icons/obj/hydroponics.dmi'
 	icon_state = "misterjani"
 	item_state = "misterjani"
-	
+	amount_per_transfer_from_this = 5
+	possible_transfer_amounts = null
+
 /obj/item/weapon/watertank/janitor/make_noz()
 	noz = new /obj/item/weapon/reagent_containers/spray/mister/janitor(src)
 	return
+	
+/obj/item/weapon/reagent_containers/spray/mister/janitor/attack_self(var/mob/user)
+	amount_per_transfer_from_this = (amount_per_transfer_from_this == 10 ? 5 : 10)
+	user << "<span class='notice'>You [amount_per_transfer_from_this == 10 ? "remove" : "fix"] the nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>"
 	
 //Atmos tank
 /obj/item/weapon/watertank/atmos
@@ -124,6 +147,7 @@
 	desc = "A backpack watertank with fire extinguisher nozzle, intended to fight fires. Shouldn't toxins have one of these?"
 	icon_state = "waterbackpackatmos"
 	item_state = "waterbackpackatmos"
+	volume = 100
 	
 /obj/item/weapon/watertank/atmos/make_noz()
 	noz = new /obj/item/weapon/extinguisher/mini/nozzle(src)
@@ -142,7 +166,7 @@
 		tank = parent_tank
 		reagents = tank.reagents
 		max_water = tank.volume
-		return
+	return
 		
 /obj/item/weapon/extinguisher/mini/nozzle/dropped(mob/user as mob)
 	user << "<span class='notice'>The nozzle snaps back onto the watertank!</span>"
