@@ -4,6 +4,8 @@
 // May need to be increased.
 #define CONVEYOR_CONTROL_RANGE 30
 
+var/global/list/conveyors[0]
+
 /obj/machinery/conveyor
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "conveyor0"
@@ -17,16 +19,38 @@
 	var/movedir			// the actual direction to move stuff in
 
 	var/list/affecting	// the list of all items that will be moved this ptick
+
 	var/id_tag = ""			// the control ID	- must match controller ID
 
-	var/frequency = 1367
-	var/datum/radio_frequency/radio_connection
+	//var/frequency = 1367
+	//var/datum/radio_frequency/radio_connection
+
+/obj/machinery/conveyor/New()
+	Connect()
+
+/obj/machinery/conveyor/Destroy()
+	Disconnect()
+
+/obj/machinery/conveyor/proc/Connect()
+	var/list/peers=list()
+	if(id_tag in conveyors)
+		peers = conveyors[id_tag]
+	peers += src
+
+	// Just to be sure
+	conveyors[id_tag] = peers
+
+/obj/machinery/conveyor/proc/Disconnect()
+	var/list/peers=list()
+	if(id_tag in conveyors)
+		peers = conveyors[id_tag]
+	if(src in peers)
+		peers -= src
 
 /obj/machinery/conveyor/centcom_auto
 	id_tag = "round_end_belt"
 
 // Auto conveyour is always on unless unpowered
-
 /obj/machinery/conveyor/auto/New(loc, newdir)
 	..(loc, newdir)
 	operating = 1
@@ -45,7 +69,7 @@
 		operating = 1
 	icon_state = "conveyor[operating]"
 
-
+/* RV to test if this is the source of lag. - N3X
 
 /obj/machinery/conveyor/initialize()
 	if(frequency)
@@ -77,6 +101,7 @@
 		else
 			testing("Got unknown command \"[signal.data["command"]]\" from [src]!")
 
+*/
 
 	// create a conveyor
 /obj/machinery/conveyor/New(loc, newdir=null, building=0)
@@ -113,8 +138,8 @@
 		if(SOUTHWEST)
 			forwards = WEST
 			backwards = NORTH
-	if(!startup) // Need to wait for the radio_controller to wake up.
-		initialize()
+	//if(!startup) // Need to wait for the radio_controller to wake up.
+	//	initialize()
 
 /obj/machinery/conveyor/proc/setmove()
 	if(operating == 1)
@@ -191,7 +216,6 @@
 			<a href="?src=\ref[src];setdir=[SOUTH]" title="South">&darr;</a>
 			<a href="?src=\ref[src];setdir=[WEST]" title="West">&larr;</a>
 		</li>
-		<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=1367">Reset</a>)</li>
 		<li><b>ID Tag:</b> <a href="?src=\ref[src];set_id=1">[dis_id_tag]</a></li>
 	</ul>"}
 
@@ -207,9 +231,11 @@
 	if("set_id" in href_list)
 		var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id_tag) as null|text),1,MAX_MESSAGE_LEN)
 		if(newid)
+			Disconnect()
 			id_tag = newid
-			initialize()
+			Connect()
 
+	/*
 	if("set_freq" in href_list)
 		var/newfreq=frequency
 		if(href_list["set_freq"]!="-1")
@@ -222,6 +248,7 @@
 			if(newfreq < 10000)
 				frequency = newfreq
 				initialize()
+	*/
 
 	if("setdir" in href_list)
 		operating=0
@@ -254,7 +281,7 @@
 /obj/machinery/conveyor/proc/broken()
 	stat |= BROKEN
 	update()
-
+	Disconnect()
 	/*
 	var/obj/machinery/conveyor/C = locate() in get_step(src, dir)
 	if(C)
@@ -304,11 +331,11 @@
 
 	var/id_tag = "" 			// must match conveyor IDs to control them
 
-	var/frequency = 1367
-	var/datum/radio_frequency/radio_connection
+	//var/frequency = 1367
+	//var/datum/radio_frequency/radio_connection
 
 	anchored = 1
-
+/*
 /obj/machinery/conveyor_switch/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
 	if(src == signal.source) return
@@ -328,13 +355,36 @@
 			testing("Got unknown command \"[signal.data["command"]]\" from [src]!")
 			return
 	update()
+*/
 
+var/global/list/conveyor_switches[0]
 
 /obj/machinery/conveyor_switch/New()
 	..()
+	Connect()
 	update()
 	spawn(5)		// allow map load
 		updateConfig()
+
+/obj/machinery/conveyor_switch/Destroy()
+	Disconnect()
+	..()
+
+/obj/machinery/conveyor_switch/proc/Connect()
+	var/list/peers=list()
+	if(id_tag in conveyor_switches)
+		peers = conveyor_switches[id_tag]
+	peers += src
+
+	// Just to be sure
+	conveyor_switches[id_tag] = peers
+
+/obj/machinery/conveyor_switch/proc/Disconnect()
+	var/list/peers=list()
+	if(id_tag in conveyor_switches)
+		peers = conveyor_switches[id_tag]
+	if(src in peers)
+		peers -= src
 
 /obj/machinery/conveyor_switch/proc/updateConfig()
 	//initialize()
@@ -350,14 +400,16 @@
 		icon_state = "switch-off"
 
 /obj/machinery/conveyor_switch/initialize()
-	if(frequency)
-		set_frequency(frequency)
-	update()
+	//if(frequency)
+	//	set_frequency(frequency)
+	//update()
 
+/*
 /obj/machinery/conveyor_switch/proc/set_frequency(var/new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, frequency, RADIO_CONVEYORS)
+*/
 
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/attack_hand(mob/user)
@@ -368,18 +420,31 @@
 		if(last_pos < 0)
 			position = 1
 			last_pos = 0
-			send_command("forward")
+			//send_command("forward")
 		else
 			position = -1
 			last_pos = 0
-			send_command("reverse")
+			//send_command("reverse")
 	else
 		last_pos = position
 		position = 0
-		send_command("stop")
+		//send_command("stop")
 
+	send_position()
 	update()
 
+/obj/machinery/conveyor_switch/proc/send_position()
+	if(id_tag in conveyors)
+		for(var/obj/machinery/conveyor/C in conveyors[id_tag])
+			if(!istype(C)) continue
+			C.operating=position
+			C.setmove()
+		for(var/obj/machinery/conveyor_switch/C in conveyor_switches[id_tag])
+			if(!istype(C)) continue
+			C.position=position
+			C.update()
+
+/*
 /obj/machinery/conveyor_switch/proc/send_command(var/command)
 	if(radio_connection)
 		var/datum/signal/signal = new
@@ -391,6 +456,7 @@
 		signal.data["command"] = command
 
 		radio_connection.post_signal(src, signal, range = CONVEYOR_CONTROL_RANGE)
+*/
 
 /obj/machinery/conveyor_switch/attackby(var/obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/multitool))
@@ -419,11 +485,12 @@
 		return 0
 	if(position == 0)
 		position = convdir
-		send_command(convdir==1?"forward":"reverse")
+		//send_command(convdir==1?"forward":"reverse")
 	else
 		position = 0
-		send_command("stop")
+		//send_command("stop")
 
+	send_position()
 	update()
 
 
@@ -433,11 +500,11 @@
 		dis_id_tag=id_tag
 	return {"
 		<ul>
-			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=1367">Reset</a>)</li>
 			<li><b>ID Tag:</b> <a href="?src=\ref[src];set_id=1">[dis_id_tag]</a></li>
 		</ul>
 	"}
 
+/*
 /obj/machinery/conveyor_switch/oneway/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
 	if(src == signal.source) return
@@ -456,7 +523,7 @@
 			testing("Got unknown command \"[signal.data["command"]]\" from [src]!")
 			return
 	update()
-
+*/
 
 /obj/machinery/conveyor_switch/Topic(href, href_list)
 	if(..())
@@ -471,9 +538,11 @@
 	if("set_id" in href_list)
 		var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id_tag) as null|text),1,MAX_MESSAGE_LEN)
 		if(newid)
+			Disconnect()
 			id_tag = newid
-			initialize()
+			Connect()
 
+	/*
 	if("set_freq" in href_list)
 		var/newfreq=frequency
 		if(href_list["set_freq"]!="-1")
@@ -486,6 +555,7 @@
 			if(newfreq < 10000)
 				frequency = newfreq
 				initialize()
+	*/
 
 	usr.set_machine(src)
 	update_multitool_menu(usr)
