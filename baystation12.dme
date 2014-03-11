@@ -33,6 +33,7 @@
 #include "code\__HELPERS\unsorted.dm"
 #include "code\_hooks\area.dm"
 #include "code\_hooks\hooks.dm"
+#include "code\_hooks\mob.dm"
 #include "code\_onclick\adjacent.dm"
 #include "code\_onclick\ai.dm"
 #include "code\_onclick\click.dm"

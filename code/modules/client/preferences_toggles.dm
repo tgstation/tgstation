@@ -25,7 +25,7 @@
 	src << "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTRADIO) ? "hear all radio chat in the world" : "only hear from nearby speakers"]."
 	prefs.save_preferences()
 	feedback_add_details("admin_verb","TGR")
-	
+
 /client/proc/toggle_hear_radio()
 	set name = "Show/Hide RadioChatter"
 	set category = "Preferences"
@@ -175,11 +175,21 @@
 			I.color = UI_style_color_new
 			I.alpha = UI_style_alpha_new
 
-
-
 	if(alert("Like it? Save changes?",,"Yes", "No") == "Yes")
 		prefs.UI_style = UI_style_new
 		prefs.UI_style_alpha = UI_style_alpha_new
 		prefs.UI_style_color = UI_style_color_new
 		prefs.save_preferences()
 		usr << "UI was saved"
+
+/client/verb/toggle_media()
+	set name = "Hear/Silence Streaming"
+	set category = "Preferences"
+	set desc = "Toggle hearing streaming media (radios, jukeboxes, etc)"
+
+	prefs.toggles ^= SOUND_STREAMING
+	prefs.save_preferences()
+	usr << "You will [(prefs.toggles & SOUND_STREAMING) ? "now" : "no longer"] hear streamed media."
+	// Restart.
+	media.stop_music()
+	media.update_music()

@@ -998,11 +998,9 @@ FIRE ALARM
 	var/area/master_area
 
 /obj/machinery/firealarm/New()
-	var/area/A = get_area(src)
+	var/area/A = get_area_master(src)
 	if (!( istype(A, /area) ))
 		return
-	if(A.master)
-		A=A.master
 	master_area=A
 
 /obj/machinery/firealarm/update_icon()
@@ -1317,11 +1315,9 @@ Code shamelessly copied from apc_frame
 	var/area/master_area
 
 /obj/machinery/partyalarm/New()
-	var/area/A = get_area(src)
+	var/area/A = get_area_master(src)
 	if (!( istype(A, /area) ))
 		return
-	if(A.master)
-		A=A.master
 	master_area=A
 
 /obj/machinery/partyalarm/attack_paw(mob/user as mob)
