@@ -196,7 +196,7 @@ proc/recursive_mob_check(var/atom/O, var/client_check=1, var/sight_check=1, var/
 	for(var/atom/A in range)
 
 		if(isobj(A) || ismob(A))
-			hear += recursive_mob_check(A, 1, 0, 1)
+			hear |= recursive_mob_check(A, 1, 0, 1)
 
 	return hear
 
