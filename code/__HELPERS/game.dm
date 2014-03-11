@@ -166,14 +166,14 @@ proc/recursive_mob_check(var/atom/O, var/client_check=1, var/sight_check=1, var/
 			if(sight_check && !isInSight(A, O))
 				passed=0
 
-		//else passed = 0 <- this is what broke MMIs and more. Whoops.
+		else passed = 0
 
 		if(passed)
 			found_mobs |= A
 
-			for(var/atom/B in A)
-				if(!(B in processed_list) && (istype(A, /obj/item/device/radio)||ismob(B)) )
-					processing_list |= B
+		for(var/atom/B in A)
+			if(!(B in processed_list) && (istype(A, /obj/item/device/radio)||ismob(B)) )
+				processing_list |= B
 
 		processing_list-=A
 		processed_list |= A
