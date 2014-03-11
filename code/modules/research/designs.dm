@@ -1521,6 +1521,16 @@ datum/design/noreactbeaker
 /////////////////Weapons/////////////////
 /////////////////////////////////////////
 
+datum/design/classic_baton
+	name = "police baton"
+	desc = "A wooden truncheon for beating criminal scum."
+	id = "classic_baton"
+	req_tech = list("combat" = 4, "materials" = 5, "syndicate" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 6000)
+	build_path = /obj/item/weapon/melee/classic_baton
+	locked = 1
+
 datum/design/nuclear_gun
 	name = "Advanced Energy Gun"
 	desc = "An energy gun with an experimental miniaturized reactor."
