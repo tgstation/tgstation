@@ -404,13 +404,13 @@ obj/machinery/hydroponics/proc/applyChemicals(var/datum/reagents/S)
 	// Requires 5 mutagen to possibly change species.// Poor man's mutagen.
 	if(S.has_reagent("mutagen", 5) || S.has_reagent("radium", 10) || S.has_reagent("uranium", 10))
 		switch(rand(100))
-			if(91  to 100)	plantdies()
-			if(81  to 90)	mutatespecie()
-			if(66	to 80)	hardmutate()
-			if(41  to 65)	mutate()
-			if(21  to 41)	usr << "The plants don't seem to react..."
-			if(11	to 20)	mutateweed()
-			if(1   to 10)	mutatepest()
+			if(91 to 100)	plantdies()
+			if(81 to 90)	mutatespecie()
+			if(66 to 80)	hardmutate()
+			if(41 to 65)	mutate()
+			if(21 to 41)	usr << "The plants don't seem to react..."
+			if(11 to 20)	mutateweed()
+			if(1 to 10)		mutatepest()
 			else 			usr << "Nothing happens..."
 
 	// 2 or 1 units is enough to change the yield and other stats.// Can change the yield and other stats, but requires more than mutagen
@@ -427,7 +427,7 @@ obj/machinery/hydroponics/proc/applyChemicals(var/datum/reagents/S)
 		adjustHealth(-round(S.get_reagent_amount("radium")*1))
 		adjustToxic(round(S.get_reagent_amount("radium")*3)) // Radium is harsher (OOC: also easier to produce)
 
-	//Nutriments
+	// Nutriments
 	if(S.has_reagent("eznutriment", 1))
 		yieldmod = 1
 		mutmod = 1
@@ -600,9 +600,10 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				if(syr.reagents.total_volume <= 0)
 					syr.mode = 0
 					syr.update_icon()
-			else if(istype(reagent_source, /obj/item/weapon/reagent_containers/spray/))		//Reminder: fix droppers
+			else if(istype(reagent_source, /obj/item/weapon/reagent_containers/spray/))
 				visi_msg="[user] sprays [target] with [reagent_source]"
 				playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
+				irrigate = 1
 			else if(reagent_source.amount_per_transfer_from_this) // Droppers, cans, beakers, what have you.
 				visi_msg="[user] uses [reagent_source] on [target]"
 				irrigate = 1
@@ -699,7 +700,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			S.handle_item_insertion(G, 1)
 
 	else if(istype(O, /obj/item/weapon/wrench) && unwrenchable)
-		if(anchored==2)
+		if(anchored == 2)
 			user << "Unscrew the hoses first!"
 			return
 
@@ -713,14 +714,13 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			user << "You unwrench [src]."
 
 	else if(istype(O, /obj/item/weapon/screwdriver) && unwrenchable) //THIS NEED TO BE DONE DIFFERENTLY, SOMEONE REFACTOR THE TRAY CODE ALREADY
-
 		if(anchored)
-			if(anchored==2)
+			if(anchored == 2)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				anchored = 1
 				user << "You unscrew the [src]'s hoses."
 
-			else if(anchored==1)
+			else if(anchored == 1)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				anchored = 2
 				user << "You screw in the [src]'s hoses."
@@ -762,7 +762,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 /obj/item/seeds/proc/getYield()
 	var/obj/machinery/hydroponics/parent = loc
 	if (parent.yieldmod == 0)
-		return max(yield, 1)
+		return min(yield, 1)//1 if above zero, 0 otherwise
 	return (yield * parent.yieldmod)
 
 /obj/item/seeds/proc/harvest(mob/user = usr)
