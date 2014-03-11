@@ -605,10 +605,9 @@ atom/proc/GetAllContents()
 
 		for(var/atom/a in A)
 			if(!(a in processed))
-				processing_list += a
-
-		if(!(A in assembled))
-			assembled += A
+				processing_list |= a
+		processed |= A
+		assembled |= A
 
 	return assembled
 
@@ -627,10 +626,8 @@ atom/proc/GetTypeInAllContents(typepath)
 
 		for(var/atom/a in A)
 			if(!(a in processed))
-				processing_list += a
-
-		if(!(A in processed))
-			processed += A
+				processing_list |= a
+		processed |= A
 
 	return found
 
