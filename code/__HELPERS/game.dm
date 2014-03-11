@@ -169,14 +169,14 @@ proc/recursive_mob_check(var/atom/O, var/client_check=1, var/sight_check=1, var/
 		else passed = 0
 
 		if(passed)
-			if(!(A in found_mobs)) found_mobs += A
+			found_mobs |= A
 
-			for(var/atom/B in A)
-				if(!(B in processed_list) && (istype(A, /obj/item/device/radio)||ismob(B)) )
-					processing_list += B
+		for(var/atom/B in A)
+			if(!(B in processed_list))
+				processing_list |= B
 
 		processing_list-=A
-		processed_list += A
+		processed_list |= A
 
 	return found_mobs
 
@@ -194,14 +194,6 @@ proc/recursive_mob_check(var/atom/O, var/client_check=1, var/sight_check=1, var/
 	var/list/range = hear(R, T)
 
 	for(var/atom/A in range)
-
-		/*if(ismob(A))
-			var/mob/M = A
-			if(M.client)
-				hear += M
-					//world.log << "Start = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
-		else if(istype(A, /obj/item/device/radio))
-			hear += A*/
 
 		if(isobj(A) || ismob(A))
 			hear += recursive_mob_check(A, 1, 0, 1)
