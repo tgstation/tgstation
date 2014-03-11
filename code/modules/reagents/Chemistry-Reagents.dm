@@ -431,9 +431,9 @@ datum
 				return
 
 		chlorine
-			name = "A poisonous highly-reactive chemical element. Observed as white gas, it can quickly kill a man by burning his lungs. Best known for being used in WWI as a chemical warfare agent."
+			name = "Chlorine"
 			id = "chlorine"
-			description = "A chemical element."
+			description = "A poisonous highly-reactive chemical element. Observed as white gas, it can quickly kill a man by burning his lungs. Best known for being used in WWI as a chemical warfare agent."
 			reagent_state = GAS
 			color = "#808080" // rgb: 128, 128, 128
 
