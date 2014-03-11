@@ -398,21 +398,28 @@ datum
 		sulfur
 			name = "Sulfur"
 			id = "sulfur"
-			description = "A chemical element."
+			description = "A chemical element known since antiquity. Has a distinctive yellow colour and a nasty smell. Can come in solid, liquid and gaseous states even at room temperature!"
 			reagent_state = SOLID
 			color = "#BF8C00" // rgb: 191, 140, 0
 
 		phosphorus
 			name = "Phosphorus"
 			id = "phosphorus"
-			description = "A chemical element."
+			description = "Dangerous and poisonous chemical that proved to be a great reductor. Comes in 3 flavours - white, red and black of varied toxicity."
 			reagent_state = SOLID
 			color = "#832828" // rgb: 131, 40, 40
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				M.adjustToxLoss(1*REM)
+				M.take_organ_damage(1*REM, 0)
+				..()
+				return			
 
 		fluorine
 			name = "Fluorine"
 			id = "fluorine"
-			description = "A highly-reactive chemical element."
+			description = "A poisonous highly-reactive chemical element. Observed as yellowish gas, it can quickly kill a man by burning his lungs."
 			reagent_state = GAS
 			color = "#808080" // rgb: 128, 128, 128
 
@@ -424,7 +431,7 @@ datum
 				return
 
 		chlorine
-			name = "Chlorine"
+			name = "A poisonous highly-reactive chemical element. Observed as white gas, it can quickly kill a man by burning his lungs. Best known for being used in WWI as a chemical warfare agent."
 			id = "chlorine"
 			description = "A chemical element."
 			reagent_state = GAS
@@ -440,7 +447,7 @@ datum
 		bromine
 			name = "Bromine"
 			id = "bromine"
-			description = "A chemical element."
+			description = "One of the few elements liquid at room temperature. It's quite poisonous and can cause sterility. Not like that it matters."
 			reagent_state = LIQUID
 			color = "#808080" // rgb: 128, 128, 128
 
@@ -453,7 +460,7 @@ datum
 		iodine
 			name = "Iodine"
 			id = "iodine"
-			description = "A chemical element."
+			description = "A chemical element. Known for it's reducing capabilities and sterilizing capabilities."
 			reagent_state = SOLID
 			color = "#808080" // rgb: 128, 128, 128
 
@@ -478,7 +485,6 @@ datum
 			description = "A metal that has been famous due to its use in a lot of coins or platings. It's also a powerful catalyst used in many reactions that require hydrogen addition."
 			reagent_state = SOLID
 			color = "#C8C8C8" // rgb: 200, 200, 200
-
 
 		copper
 			name = "Copper"
@@ -598,13 +604,134 @@ datum
 
 /////////////// SALTS //////////////////////////////
 
-		sodiumchloride
-			name = "Table Salt"
-			id = "sodiumchloride"
-			description = "A salt made of sodium chloride. Commonly used to season food."
+		salt
+			name = "Generic Salt"
+			id = "salt"
+			description = "A salt of unknown origin."
 			reagent_state = SOLID
 			color = "#FFFFFF" // rgb: 255,255,255
 
+		salt/toxicsalt
+			name = "Plasma Salt"
+			id = "toxicsalt"
+			description = "A salt of plasma."
+			reagent_state = SOLID
+			color = "#FFFFFF" // rgb: 255,255,255
+			var/salttoxpwr = 2
+			var/saltburnpwr = 0
+			var/saltbrutepwr = 0
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				if(salttoxpwr)
+					M.adjustToxLoss(salttoxpwr*REM)
+				if(saltburnpwr)
+					M.take_organ_damage(0, saltburnpwr*REM)
+				if(saltbrutepwr)
+					M.take_organ_damage(saltbrutepwr*REM, 0)
+				..()
+				return
+
+		salt/lithiumchloride	
+			name = "Lithium Chloride"
+			id = "lithiumchloride"
+			description = "A salt of lithium. Used to control populace."
+			reagent_state = SOLID
+			color = "#FFFFFF" // rgb: 255,255,255
+			
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				if(M.canmove && istype(M.loc, /turf/space))
+					step(M, pick(cardinal))
+				if(prob(5)) M.emote(pick("twitch","drool","moan"))
+				..()
+				return
+
+		salt/sodiumchloride
+			name = "Table Salt"
+			id = "sodiumchloride"
+			description = "A salt of sodium. Commonly used to season food."
+			reagent_state = SOLID
+			color = "#FFFFFF" // rgb: 255,255,255
+			
+		salt/potassiumchloride	
+			name = "Potassium Chloride"
+			id = "potassiumchloride"
+			description = "A salt of potassium. The OTHER salt."
+			reagent_state = SOLID
+			color = "#FFFFFF" // rgb: 255,255,255
+
+		salt/toxicsalt/iron3chloride	
+			name = "Iron (III) Chloride"
+			id = "iron3chloride"
+			description = "A corrosive salt made of potassium chloride. Very useful for organic reactions."
+			reagent_state = SOLID
+			color = "#FFFFFF" // rgb: 255,255,255
+			salttoxpwr = 1
+			saltburnpwr = 2
+			saltbrutepwr = 0
+			
+		salt/lithiumsulfate
+			name = "Lithium Sulfate"
+			id = "lithiumsulfate"
+			description = "A salt of lithium. Used to treat bipolar disorders."
+			reagent_state = SOLID
+			color = "#FFFFFF" // rgb: 255,255,255
+			
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				if(M.canmove && istype(M.loc, /turf/space))
+					step(M, pick(cardinal))
+				if(prob(5)) M.emote(pick("twitch","drool","moan"))
+				..()
+				return
+						
+		salt/sodiumsulfate
+			name = "Sodium Sulfate"
+			id = "sodiumsulfate"
+			description = "A salt of sodium. Used as laxative to purge medicine from one's stomach. Ow."
+			reagent_state = SOLID
+			color = "#FFFFFF" // rgb: 255,255,255
+					
+			on_mob_life(var/mob/living/M as mob)  // This should be only done for medicine in stomach. But currently, let's sad bloodstream works.
+				if(!M) M = holder.my_atom
+				holder.remove_reagent("anti_toxin", 4*REM) 
+				M.reagents.remove_all_type(/datum/reagent/medicine, 1*REM, 0, 1)
+				..()
+				return		
+		
+		salt/potassiumsulfate
+			name = "Potassium Sulfate"
+			id = "potassiumsulfate"
+			description = "A salt of potassium. Works as a fertilizer for some plants."
+			reagent_state = SOLID
+			color = "#FFFFFF" // rgb: 255,255,255
+			
+		salt/toxicsalt/lithiumnitrate
+			name = "Lithium Nitrate"
+			id = "lithium nitrate"
+			description = "Toxic salt with very narrow uses in the fields of organic chemistry as oxidizer and phase-transfer catalysis."
+			reagent_state = SOLID
+			color = "#FFFFFF" // rgb: 255,255,255
+			salttoxpwr = 1
+			saltburnpwr = 1
+			saltbrutepwr = 0		
+			
+		salt/sodiumnitrate
+			name = "Sodium Nitrate"
+			id = "sodiumnitrate"
+			description = "A salt commonly refered to as Chile saltpeter. Used for explosives, oxidizer and as a plant nutriment"
+			reagent_state = SOLID
+			color = "#FFFFFF" // rgb: 255,255,255
+	
+		salt/potassiumnitrate
+			name = "Potassium Nitrate"
+			id = "potassiumnitrate"
+			description = "A salt commonly refered to as salt petre. Used for pickling, gunpowder and as a plant nutriment"
+			reagent_state = SOLID
+			color = "#FFFFFF" // rgb: 255,255,255
+		
+			
 
 //////////////// ACIDS //////////////////////////////
 
@@ -966,34 +1093,34 @@ datum
 			description = "Most common fatty acid. It's saturated."
 			reagent_state = SOLID
 			nutriment_factor = 10 * REAGENTS_METABOLISM
-			color = "#FFFFFF" // rgb: 255, 255, 255		
+			color = "#FFFFFF" // rgb: 255, 255, 255
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
 				..()
-				return				
+				return
 
 		fattyacid/palmiticacid
 			name = "Palmitic acid"
 			id = "palmiticacid"
 			description = "One of the more common saturated fatty acid."
 			reagent_state = SOLID
-			color = "#FFFFFF" // rgb: 255, 255, 255		
+			color = "#FFFFFF" // rgb: 255, 255, 255
 
 		fattyacid/oleicacid
 			name = "Oleic acid"
 			id = "oleicacid"
 			description = "One of the more common unsaturated fatty acid."
 			reagent_state = SOLID
-			color = "#FFFFFF" // rgb: 255, 255, 255		
-			
+			color = "#FFFFFF" // rgb: 255, 255, 255
+
 		glyceride
 			name = "Lard"
 			id = "lard"
 			description = "Muh Lurd."
-			nutriment_factor = 20 * REAGENTS_METABOLISM			
+			nutriment_factor = 20 * REAGENTS_METABOLISM
 			reagent_state = LIQUID
 			color = "#FFFFE0" // rgb: 128, 128, 128
-			
+
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
 				..()
@@ -1009,15 +1136,15 @@ datum
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 					lowertemp.react()
 					T.assume_air(lowertemp)
-					del(hotspot)			
-		
+					del(hotspot)
+
 		glyceride/cornoil
 			name = "Corn Oil"
 			id = "cornoil"
 			description = "An oil derived from various types of corn."
 			reagent_state = LIQUID
 			color = "#302000" // rgb: 48, 32, 0
-			
+
 		glyceride/oliveoil
 			name = "Olive Oil"
 			id = "oliveoil"
@@ -1078,28 +1205,28 @@ datum
 			description = "One of many Carotene forms commonly found in foods such as carrots. Known for it's orange-red colour"
 			reagent_state = LIQUID
 			color = "#FFA500" // rgb: 255,165,0
-			
+
 		chlorophyllb
 			name = "Chlorophyll b"
 			id = "chlorophyllb"
 			description = "A green dye commonly found in most plants - responsible for photosythesis reactions."
 			reagent_state = LIQUID
 			color = "#008000" // rgb: 0,128,0
-			
+
 		flavanol
 			name = "Flavanol"
 			id = "flavanol"
 			description = "A compound known for it's anti-oxidant and skin-protection properties. Commonly found in grapes."
 			reagent_state = LIQUID
 			color = "#7CFC00" // rgb: 124,252,0
-				
+
 		vitaminc
 			name = "Vitamin C"
 			id = "vitaminc"
 			description = "Ascorbic acid. Famous for fighting all manners of scurvy. Yarr."
 			reagent_state = LIQUID
 			color = "#FFFF00" // rgb: 255,255,0
-		
+
 
 ///////////// USABLE ORGANIC PRODUCT PRECURSORS //////////////
 
@@ -1363,7 +1490,7 @@ datum
 		anti_toxin //_d
 			name = "Anti-Toxin D (Detoxene)"
 			id = "anti_toxin"
-			description = "Detoxene is a first response drug in curing tissue damage done by toxins. Watch out though - it has a nasty side effect of purging all other medicine from the bloodstream."
+			description = "Detoxene is a first response drug in curing tissue damage done by toxins. Watch out though - it has a nasty side effect of purging all other medicine (including other anti-tox drugs) from the bloodstream."
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 
@@ -1379,13 +1506,13 @@ datum
 				M.reagents.remove_all_type(/datum/reagent/medicine, 2*REM, 0, 1)
 				M.drowsyness = max(M.drowsyness-2*REM, 0)
 				M.hallucination = max(0, M.hallucination - 5*REM)
-				M.adjustToxLoss(-2*REM)
+				M.adjustToxLoss(-3*REM)
 				..()
 				return
 
 		anti_toxin_p
 			name = "Anti-Toxin P (Plasmoxan)"
-			id = "anti_toxin_d"
+			id = "anti_toxin_p"
 			description = "Plasmoxan is used to treat plasma poisoning. Causes light drowziness. Users are not advised to operate machinery after its use."
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
@@ -1400,7 +1527,7 @@ datum
 
 		anti_toxin_r
 			name = "Anti-Toxin R (RadAway)"
-			id = "anti_toxin_d"
+			id = "anti_toxin_r"
 			description = "For purging your bodystream from radiocative particles! Comes with a cupon for a six-pack of Nuka-Cola."
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
@@ -1574,10 +1701,10 @@ datum
 			reagent_state = LIQUID
 			color = "#202040" // rgb: 20, 20, 40
 			medicinetox = 45
-			overdosetype = ODDIZZY+ODBRAIN+ODHALLO
+			overdosetype = ODDIZZY | ODBRAIN | ODHALLO
 			interactingreagent = "alkysine"
 			interactingpwr = 1
-			interactingeffects = ODTOXIC+ODHALLO
+			interactingeffects = ODTOXIC | ODHALLO
 
 			on_mob_life(var/mob/living/M as mob)
 				if(ishuman(M))
@@ -1589,12 +1716,12 @@ datum
 		medicine/ryetalyn
 			name = "Ryetalyn"
 			id = "ryetalyn"
-			description = "Ryetalyn can cure all genetic abnomalities, but is slightly toxic. DO NOT USE WITH ARITHRAZINE, HYRONALIN OR IMIDAZOLINE. LD50 = 30 units."
+			description = "Ryetalyn can cure all genetic abnomalities, but is slightly toxic. DO NOT USE WITH ARITHRAZINE, HYRONALIN, ANTI-TOX R OR IMIDAZOLINE. LD50 = 30 units."
 			reagent_state = SOLID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			medicinetox = 15
-			overdosetype = ODDIZZY+ODCLONE
-			interactingreagent = "ryetalyn"
+			overdosetype = ODDIZZY | ODCLONE
+			interactingreagent = "anti_toxin_r"
 			interactingpwr = 1
 			interactingeffects = ODCLONE
 
@@ -1619,11 +1746,11 @@ datum
 		medicine/leporazine
 			name = "Leporazine"
 			id = "leporazine"
-			description = "Leporazine can be use to stabilize an individuals body temperature. DO NOT USE WITH DEXALINE/DEXALINE+. LD50 = 120 units."
+			description = "Leporazine can be use to stabilize an individuals body temperature. DO NOT USE WITH DEXALIN/DEXALIN+. LD50 = 120 units."
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			medicinetox = 60
-			overdosetype = ODDIZZY+ODBURND
+			overdosetype = ODDIZZY | ODBURND
 			interactingreagent = ""
 			interactingpwr = 1
 			interactingeffects = ODBURND
@@ -1644,10 +1771,10 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			medicinetox = 30
-			overdosetype = ODDIZZY+ODTOXIC
+			overdosetype = ODDIZZY | ODTOXIC
 			interactingreagent = "bicaridine"
 			interactingpwr = 1
-			interactingeffects = ODTOXIC+ODCLONE
+			interactingeffects = ODTOXIC | ODCLONE
 
 			on_mob_life(var/mob/living/M as mob)
 				if(M.stat == 2.0)
@@ -1664,10 +1791,10 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			medicinetox = 15
-			overdosetype = ODDIZZY+ODTOXIC+ODFEVER
+			overdosetype = ODDIZZY | ODTOXIC | ODFEVER
 			interactingreagent = "bicardine"
 			interactingpwr = 1
-			interactingeffects = ODTOXIC+ODCLONE
+			interactingeffects = ODTOXIC | ODCLONE
 
 			on_mob_life(var/mob/living/M as mob)
 				if(M.stat == 2.0) //THE GUY IS **DEAD**! BEREFT OF ALL LIFE HE RESTS IN PEACE etc etc. He does NOT metabolise shit anymore, god DAMN
@@ -1684,10 +1811,10 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			medicinetox = 25
-			overdosetype = ODDIZZY+ODBURND
+			overdosetype = ODDIZZY | ODBURND
 			interactingreagent = "leporazine"
 			interactingpwr = 2
-			interactingeffects = ODBURND+ODCHOKE
+			interactingeffects = ODBURND | ODCHOKE
 
 			on_mob_life(var/mob/living/M as mob)
 				if(M.stat == 2.0)
@@ -1706,10 +1833,10 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			medicinetox = 15
-			overdosetype = ODDIZZY+ODBURND
+			overdosetype = ODDIZZY | ODBURND
 			interactingreagent = "leporazine"
 			interactingpwr = 3
-			interactingeffects = ODBURND+ODCHOKE
+			interactingeffects = ODBURND | ODCHOKE
 
 			on_mob_life(var/mob/living/M as mob)
 				if(M.stat == 2.0)
@@ -1728,10 +1855,10 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			medicinetox = 15
-			overdosetype = ODDIZZY+ODTOXIC+ODFEVER
+			overdosetype = ODDIZZY | ODTOXIC | ODFEVER
 			interactingreagent = "kelotane"
 			interactingpwr = 3
-			interactingeffects = ODTOXIC+ODCLONE+ODBRAIN+ODFEVER
+			interactingeffects = ODTOXIC | ODCLONE | ODBRAIN | ODFEVER
 
 			on_mob_life(var/mob/living/M as mob)
 				if(M.stat == 2.0)
@@ -1751,10 +1878,10 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			medicinetox = 30
-			overdosetype = ODDIZZY+ODBRAIN+ODHALLO
+			overdosetype = ODDIZZY | ODBRAIN | ODHALLO
 			interactingreagent = "alkysine"
 			interactingpwr = 1
-			interactingeffects = ODTOXIC+ODBRAIN+ODCHILL+ODHALLO
+			interactingeffects = ODTOXIC | ODBRAIN | ODCHILL | ODHALLO
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -1776,10 +1903,10 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			medicinetox = 30
-			overdosetype = ODDIZZY+ODTOXIC
+			overdosetype = ODDIZZY | ODTOXIC
 			interactingreagent = "ryetalyn"
 			interactingpwr = 1
-			interactingeffects = ODCLONE
+			interactingeffects = ODCHILL | ODCLONE
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -1794,7 +1921,7 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			medicinetox = 15
-			overdosetype = ODDIZZY+ODTOXIC
+			overdosetype = ODDIZZY | ODTOXIC
 			interactingreagent = "ryetalyn"
 			interactingpwr = 1
 			interactingeffects = ODCLONE
@@ -1817,10 +1944,10 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			medicinetox = 25
-			overdosetype = ODDIZZY+ODCHILL+ODCHOKE
+			overdosetype = ODDIZZY | ODCHILL | ODCHOKE
 			interactingreagent = "tricordrazine"
 			interactingpwr = 3
-			interactingeffects = ODCHOKE+ODBRUTE
+			interactingeffects = ODCHOKE | ODBRUTE
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -1835,7 +1962,7 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			medicinetox = 25
-			overdosetype = ODDIZZY+ODBRAIN+ODHALLO
+			overdosetype = ODDIZZY | ODBRAIN | ODHALLO
 			interactingreagent = "ryetalyn"
 			interactingpwr = 3
 			interactingeffects = ODCHOKE
@@ -1857,10 +1984,10 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			medicinetox = 30
-			overdosetype = ODDIZZY+ODFEVER+ODCLONE
+			overdosetype = ODDIZZY | ODFEVER | ODCLONE
 			interactingreagent = "tricordrazine"
 			interactingpwr = 3
-			interactingeffects = ODCHOKE+ODBURND
+			interactingeffects = ODCHOKE | ODBURND
 
 			on_mob_life(var/mob/living/M as mob)
 				if(M.stat == 2.0)
@@ -1877,10 +2004,10 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			medicinetox = 15
-			overdosetype = ODDIZZY+ODHALLO+ODTOXIC+ODBRAIN // Don't do meth, kids.
+			overdosetype = ODDIZZY | ODHALLO | ODTOXIC | ODBRAIN // Don't do meth, kids.
 			interactingreagent = "bicaridine"
 			interactingpwr = 1
-			interactingeffects = ODCHOKE+ODCLONE
+			interactingeffects = ODCHOKE | ODCLONE
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -1896,7 +2023,7 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			medicinetox = 100
-			overdosetype = ODDIZZY+ODCHILL
+			overdosetype = ODDIZZY | ODCHILL
 			interactingreagent = ""
 			interactingpwr = 1
 			interactingeffects = ODDIZZY
@@ -1918,7 +2045,7 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			medicinetox = 100
-			overdosetype = ODDIZZY+ODCHILL
+			overdosetype = ODDIZZY | ODCHILL
 			interactingreagent = ""
 			interactingpwr = 1
 			interactingeffects = ODDIZZY
@@ -1941,7 +2068,7 @@ datum
 			reagent_state = SOLID
 			color = "#669900" // rgb: 102, 153, 0
 			medicinetox = 10
-			overdosetype = ODDIZZY+ODHALLO
+			overdosetype = ODDIZZY | ODHALLO
 			interactingreagent = ""
 			interactingpwr = 1
 			interactingeffects = ODDIZZY
@@ -1973,7 +2100,7 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			medicinetox = 40
-			overdosetype = ODDIZZY+ODFEVER
+			overdosetype = ODDIZZY | ODFEVER
 			interactingreagent = ""
 			interactingpwr = 1
 			interactingeffects = ODDIZZY
@@ -1991,7 +2118,7 @@ datum
 			nutriment_factor = 10 * REAGENTS_METABOLISM
 			color = "#BBEDA4" // rgb: 187, 237, 164
 			medicinetox = 30
-			overdosetype = ODDIZZY+ODFEVER+ODBURND
+			overdosetype = ODDIZZY | ODFEVER | ODBURND
 			interactingreagent = ""
 			interactingpwr = 1
 			interactingeffects = ODDIZZY
@@ -2014,7 +2141,7 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			medicinetox = 30
-			overdosetype = ODDIZZY+ODHALLO
+			overdosetype = ODDIZZY | ODHALLO
 			interactingreagent = ""
 			interactingpwr = 1
 			interactingeffects = ODDIZZY
@@ -2038,7 +2165,7 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			medicinetox = 10
-			overdosetype = ODDIZZY+ODHALLO
+			overdosetype = ODDIZZY | ODHALLO
 			interactingreagent = ""
 			interactingpwr = 1
 			interactingeffects = ODDIZZY
@@ -2206,7 +2333,7 @@ datum
 				M.adjustCloneLoss(2*REM)
 				..()
 				return
-				
+
 		toxin/naturaltox/muscmol
 			name = "Muscmol"
 			id = "muscmol"
@@ -2224,8 +2351,8 @@ datum
 					M.AdjustWeakened(-1)
 				M.hallucination += 2
 				..()
-				return				
-				
+				return
+
 		toxin/artificaltox/mutagen
 			name = "Unstable mutagen"
 			id = "mutagen"
@@ -2620,6 +2747,13 @@ datum
 				M.adjustFireLoss(1)
 				..()
 				return
+				
+		gunpowder
+			name = "Gunpowder"
+			id = "gunpowder"
+			description = "Every chemist's starting point."
+			reagent_state = SOLID
+			color = "#080808" // rgb: 8, 8, 8
 
 		virus_food
 			name = "Virus Food"
