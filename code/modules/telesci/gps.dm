@@ -52,7 +52,7 @@ var/list/GPS_list = list()
 			else
 				t += "<BR>[tracked_gpstag]: [format_text(gps_area.name)] ([pos.x], [pos.y], [pos.z])"
 
-	var/datum/browser/popup = new(user, "GPS", name, 360, gps_window_height)
+	var/datum/browser/popup = new(user, "GPS", name, 360, min(gps_window_height, 800))
 	popup.set_content(t)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
