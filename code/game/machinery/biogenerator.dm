@@ -148,7 +148,8 @@
 						Misc<BR>
 						<A href='?src=\ref[src];action=create;item=pest'>Pest Spray</A> <FONT COLOR=blue>(40)</FONT> | <A href='?src=\ref[src];action=create;item=pest5'>x5</A><BR>
 						<A href='?src=\ref[src];action=create;item=beez'>BeezEez</A> <FONT COLOR=blue>(40)</FONT> | <A href='?src=\ref[src];action=create;item=beez5'>x5</A><BR>
-						<A href='?src=\ref[src];action=create;item=cardboard'>Cardboard Sheet</A> <FONT COLOR=blue>(200)</FONT> | <A href='?src=\ref[src];action=create;item=cardboard5'>x5</A><BR>"}
+						<A href='?src=\ref[src];action=create;item=cardboard'>Cardboard Sheet</A> <FONT COLOR=blue>(200)</FONT> | <A href='?src=\ref[src];action=create;item=cardboard5'>x5</A><BR>
+						<A href='?src=\ref[src];action=create;item=paper'>Sheet of Paper</A> <FONT COLOR=blue>(75)</FONT> | <A href='?src=\ref[src];action=create;item=paper5'>x5</A><BR>"}
 /*						<A href='?src=\ref[src];action=create;item=portaseed'>Portable Seed Extractor</A> <FONT COLOR=blue>(700)</FONT><BR>*/
 					// END AUTOFIX
 					//dat += "Other<BR>"
@@ -314,6 +315,17 @@
 				new /obj/item/stack/sheet/cardboard(src.loc)
 				new /obj/item/stack/sheet/cardboard(src.loc)
 				new /obj/item/stack/sheet/cardboard(src.loc)
+		if("paper")
+			if (check_cost(75)) return 0
+			else new /obj/item/weapon/paper(src.loc)
+		if("paper5")
+			if (check_cost(375)) return 0
+			else
+				new /obj/item/weapon/paper(src.loc)
+				new /obj/item/weapon/paper(src.loc)
+				new /obj/item/weapon/paper(src.loc)
+				new /obj/item/weapon/paper(src.loc)
+				new /obj/item/weapon/paper(src.loc)
 		if("gloves")
 			if (check_cost(250)) return 0
 			else new/obj/item/clothing/gloves/botanic_leather(src.loc)

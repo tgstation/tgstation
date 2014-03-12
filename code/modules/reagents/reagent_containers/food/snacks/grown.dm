@@ -346,6 +346,16 @@
 			reagents.add_reagent("toxin", 1+round(potency / 10, 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
+	if(istype(O, /obj/item/weapon/paper))
+		del(O)
+		user << "<span class='notice'>You roll a blunt.</span>"
+		var/obj/item/clothing/mask/cigarette/blunt/rolled/B = new/obj/item/clothing/mask/cigarette/blunt/rolled(src.loc)
+		reagents.trans_to(B, (reagents.total_volume))
+		user.put_in_hands(B)
+		user.drop_from_inventory(src)
+		del(src)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/cruciatus
 	seed = "/obj/item/seeds/ambrosiavulgaris/cruciatus"
 	name = "ambrosia vulgaris branch"
@@ -363,6 +373,16 @@
 			reagents.add_reagent("spiritbreaker", 10)
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/cruciatus/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
+	if(istype(O, /obj/item/weapon/paper))
+		del(O)
+		user << "<span class='notice'>You roll a blunt.</span>"
+		var/obj/item/clothing/mask/cigarette/blunt/cruciatus/rolled/B = new/obj/item/clothing/mask/cigarette/blunt/cruciatus/rolled(src.loc)
+		reagents.trans_to(B, (reagents.total_volume))
+		user.put_in_hands(B)
+		user.drop_from_inventory(src)
+		del(src)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus
 	seed = "/obj/item/seeds/ambrosiadeus"
 	name = "ambrosia deus branch"
@@ -378,6 +398,16 @@
 			reagents.add_reagent("hyperzine", 1+round(potency / 10, 1))
 			reagents.add_reagent("space_drugs", 1+round(potency / 10, 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
+	if(istype(O, /obj/item/weapon/paper))
+		del(O)
+		user << "<span class='notice'>You roll a godly blunt.</span>"
+		var/obj/item/clothing/mask/cigarette/blunt/deus/rolled/B = new/obj/item/clothing/mask/cigarette/blunt/deus/rolled(src.loc)
+		reagents.trans_to(B, (reagents.total_volume))
+		user.put_in_hands(B)
+		user.drop_from_inventory(src)
+		del(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/apple
 	seed = "/obj/item/seeds/appleseed"
