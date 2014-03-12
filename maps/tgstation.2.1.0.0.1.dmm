@@ -10690,7 +10690,7 @@
 "dXD" = (/obj/machinery/sleeper,/obj/effect/decal/cleanable/dirt,/turf/simulated/floor{icon_state = "white"},/area/shuttle/salvage/start)
 "dXE" = (/obj/machinery/sleep_console,/obj/effect/decal/cleanable/dirt,/turf/simulated/floor{icon_state = "white"},/area/shuttle/salvage/start)
 "dXF" = (/obj/structure/table,/obj/effect/decal/cleanable/dirt,/obj/item/weapon/soap,/obj/item/weapon/storage/firstaid/regular{pixel_x = 2; pixel_y = 6},/obj/item/weapon/storage/firstaid/toxin{pixel_x = -2; pixel_y = 4},/turf/simulated/floor{icon_state = "white"},/area/shuttle/salvage/start)
-"dXG" = (/obj/machinery/media/jukebox,/turf/simulated/floor/wood,/area/crew_quarters/bar)
+"dXG" = (/obj/machinery/media/jukebox/bar,/turf/simulated/floor/wood,/area/crew_quarters/bar)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

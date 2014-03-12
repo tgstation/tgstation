@@ -48,19 +48,36 @@ var/global/loopModeNames=list(
 	playing=0
 
 	var/loop_mode = JUKEMODE_SHUFFLE
-	// /datum/song_info
+
+	// Server-side playlist IDs this jukebox can play.
+	var/list/playlists=list() // ID = Label
+
+	// Playlist to load at startup.
+	var/playlist_id=""
+
 	var/list/playlist
 	var/current_song  = 0
 	var/autoplay      = 0
 	var/last_reload   = 0
+
+/obj/machinery/media/jukebox/bar
+	playlist_id="bar"
+	// Must be defined on your server.
+	playlists=list(
+		"bar"  = "Bar Mix",
+		"jazz" = "Jazz",
+		"rock" = "Rock"
+	)
 
 /obj/machinery/media/jukebox/attack_ai()
 	return
 
 /obj/machinery/media/jukebox/attack_paw()
 	return
+
 /obj/machinery/media/jukebox/proc/check_reload()
 	return world.time > last_reload + JUKEBOX_RELOAD_COOLDOWN
+
 /obj/machinery/media/jukebox/attack_hand(var/mob/user)
 	var/t = "<h1>Jukebox Interface</h1>"
 	t += "<b>Power:</b> <a href='?src=\ref[src];power=1'>[playing?"On":"Off"]</a><br />"
@@ -68,11 +85,14 @@ var/global/loopModeNames=list(
 	if(playlist == null)
 		t += "\[DOWNLOADING PLAYLIST, PLEASE WAIT\]"
 	else
+		if(check_reload())
+			t += "<b>Playlist:</b> "
+			for(var/plid in playlists)
+				t += "<a href='?src=\ref[src];playlist=[plid]'>[playlists[plid]]</a>"
+			t += "<br />"
 		if(current_song)
 			var/datum/song_info/song=playlist[current_song]
 			t += "<b>Current song:</b> [song.artist] - [song.title]<br />"
-		if(check_reload())
-			t += "\[<a href='?src=\ref[src];reload=1'>Reload Playlist</a>\]"
 		t += "<table class='prettytable'><tr><th colspan='2'>Artist - Title</th><th>Album</th></tr>"
 		var/i
 		for(i = 1,i <= playlist.len,i++)
@@ -92,10 +112,11 @@ var/global/loopModeNames=list(
 		playing=!playing
 		update_music()
 
-	if (href_list["reload"])
+	if (href_list["playlist"])
 		if(!check_reload())
-			usr << "\red You must wait 60 seconds between reloads."
+			usr << "\red You must wait 60 seconds between playlist reloads."
 			return
+		playlist_id=href_list["playlist"]
 		last_reload=world.time
 		playlist=null
 		current_song=0
@@ -112,12 +133,17 @@ var/global/loopModeNames=list(
 
 /obj/machinery/media/jukebox/process()
 	if(!playlist)
-		var/url="[config.media_base_url]/index.php"
+		var/url="[config.media_base_url]/index.php?playlist=[playlist_id]"
 		testing("[src] - Updating playlist from [url]...")
 		var/response = world.Export(url)
 		playlist=list()
 		if(response)
 			var/json = file2text(response["CONTENT"])
+			if("/>" in json)
+				visible_message("<span class='warning'>\icon[src] \The [src] buzzes, unable to update its playlist.</span>","<em>You hear a buzz.</em>")
+				stat &= BROKEN
+				update_icon()
+				return
 			var/json_reader/reader = new()
 			reader.tokens = reader.ScanJson(json)
 			reader.i = 1
