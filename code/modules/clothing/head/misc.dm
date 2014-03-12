@@ -188,6 +188,17 @@
 	desc = "A great hat ruined by being within fifty yards of you."
 	flags = FPRINT|TABLEPASS
 
+/obj/item/clothing/head/fedora/OnMobLife(var/mob/living/carbon/human/wearer)
+	if(!istype(wearer)) return
+	if(wearer.head == src)
+		// And now you get fucked.
+		wearer.reagents.add_reagent("nutriment",     100) // Fat
+		wearer.reagents.add_reagent("toxin",         10) // Dying
+		wearer.reagents.add_reagent("spiritbreaker", 10) // Screaming
+		wearer.reagents.add_reagent("mercury",       10) // Idiot
+		if(prob(1))
+			wearer << "<span class=\"warning\">You feel positively euphoric!</span>"
+
 //TIPS FEDORA
 /obj/item/clothing/head/fedora/verb/tip_fedora()
 	set name = "Tip Fedora"
