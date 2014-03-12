@@ -5020,7 +5020,7 @@
 "bSB" = (/obj/machinery/requests_console{department = "Security"; departmentType = 5; pixel_y = 30},/obj/structure/closet/secure_closet/security/engine,/turf/simulated/floor{icon_state = "red"; dir = 1},/area/security/checkpoint/engineering)
 "bSC" = (/obj/structure/filingcabinet,/obj/machinery/alarm{pixel_y = 23},/turf/simulated/floor{icon_state = "red"; dir = 5},/area/security/checkpoint/engineering)
 "bSD" = (/obj/structure/closet/fireaxecabinet{pixel_x = -32; pixel_y = 0},/turf/simulated/floor,/area/atmos)
-"bSE" = (/obj/structure/rack{dir = 8; layer = 2.9},/obj/item/clothing/suit/space/rig/atmos,/obj/item/clothing/mask/breath,/obj/item/clothing/head/helmet/space/rig/atmos,/turf/simulated/floor{dir = 8; icon_state = "warning"},/area/atmos)
+"bSE" = (/obj/structure/rack{dir = 8; layer = 2.9},/obj/item/clothing/suit/space/rig/atmos,/obj/item/clothing/mask/breath,/obj/item/clothing/head/helmet/space/rig/atmos,/obj/item/weapon/watertank/atmos,/turf/simulated/floor{dir = 8; icon_state = "warning"},/area/atmos)
 "bSF" = (/obj/machinery/atmospherics/portables_connector{dir = 4},/obj/machinery/portable_atmospherics/canister,/turf/simulated/floor{dir = 2; icon_state = "bot"},/area/atmos)
 "bSG" = (/obj/machinery/atmospherics/portables_connector{dir = 8},/turf/simulated/floor{dir = 2; icon_state = "bot"},/area/atmos)
 "bSH" = (/obj/machinery/atmospherics/pipe/manifold{pipe_color = "yellow"; dir = 8; icon_state = "manifold-y"; level = 2},/turf/simulated/floor,/area/atmos)
