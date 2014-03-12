@@ -656,7 +656,7 @@ proc // Creates a single icon from a given /atom or /image.  Only the first argu
 				noIcon = TRUE // Do not render this object.
 
 		var/curdir
-		if(A.dir)
+		if(A.dir != 2)
 			curdir = A.dir
 		else
 			curdir = defdir
