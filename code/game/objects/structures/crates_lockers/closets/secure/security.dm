@@ -45,7 +45,7 @@
 		..()
 		sleep(2)
 		new /obj/item/clothing/under/rank/head_of_personnel(src)
-//		new /obj/item/clothing/suit/armor/vest(src)
+		new /obj/item/clothing/suit/armor/vest(src)
 //		new /obj/item/clothing/head/helmet(src)
 		new /obj/item/weapon/cartridge/hop(src)
 		new /obj/item/device/radio/headset/heads/hop(src)
