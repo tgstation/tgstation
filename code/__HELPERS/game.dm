@@ -138,35 +138,32 @@
 //No need for a recursive limit either
 
 
-proc/recursive_mob_check(var/atom/O, var/client_check=1, var/sight_check=1, var/include_radio=1)
+proc/recursive_mob_check(var/atom/O,var/client_check=1,var/sight_check=1,var/include_radio=1)
 
 	var/list/processing_list = list(O)
 	var/list/processed_list = list()
 	var/list/found_mobs = list()
 
-	if(!O.contents.len)
-		return found_mobs
-
 	while(processing_list.len)
 
 		var/atom/A = processing_list[1]
-
-		var/passed = 1
+		var/passed = 0
 
 		if(ismob(A))
 			var/mob/A_tmp = A
+			passed=1
 
 			if(client_check && !A_tmp.client)
 				passed=0
 
-			if(A_tmp && sight_check && !isInSight(A_tmp, O))
+			if(sight_check && !isInSight(A_tmp, O))
 				passed=0
 
 		else if(include_radio && istype(A, /obj/item/device/radio))
+			passed=1
+
 			if(sight_check && !isInSight(A, O))
 				passed=0
-
-		else passed = 0
 
 		if(passed)
 			found_mobs |= A
@@ -175,14 +172,13 @@ proc/recursive_mob_check(var/atom/O, var/client_check=1, var/sight_check=1, var/
 			if(!(B in processed_list))
 				processing_list |= B
 
-		processing_list-=A
+		processing_list -= A
 		processed_list |= A
 
 	return found_mobs
 
 
-
-/proc/get_mobs_in_view(var/R, var/atom/source)
+proc/get_mobs_in_view(var/R, var/atom/source)
 	// Returns a list of mobs in range of R from source. Used in radio and say code.
 
 	var/turf/T = get_turf(source)
@@ -195,7 +191,7 @@ proc/recursive_mob_check(var/atom/O, var/client_check=1, var/sight_check=1, var/
 
 	for(var/atom/A in range)
 
-		if(isobj(A) || ismob(A))
+		if(istype(A, /obj/item/device/radio) || ismob(A))
 			hear |= recursive_mob_check(A, 1, 0, 1)
 
 	return hear
