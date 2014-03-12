@@ -48,6 +48,7 @@
 	jobban_updatelegacybans()
 	appearance_loadbanfile()
 	LoadBans()
+	SetupHooks() // /vg/
 
 	copy_logs() // Just copy the logs.
 

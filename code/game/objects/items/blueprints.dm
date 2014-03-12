@@ -75,8 +75,7 @@ move an amendment</a> to the drawing.</p>
 
 /obj/item/blueprints/proc/get_area()
 	var/turf/T = get_turf_loc(usr)
-	var/area/A = T.loc
-	A = A.master
+	var/area/A = get_area_master(T)
 	return A
 
 /obj/item/blueprints/proc/get_area_type(var/area/A = get_area())

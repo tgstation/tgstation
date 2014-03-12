@@ -3080,7 +3080,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				// Sobering multiplier.
 				// Sober block makes it more difficult to get drunk
-				var/sober_str=(M_SOBER in M.mutations)?1:2
+				var/sober_str=!(M_SOBER in M.mutations)?1:2
 
 				M:nutrition += nutriment_factor
 				holder.remove_reagent(src.id, FOOD_METABOLISM)

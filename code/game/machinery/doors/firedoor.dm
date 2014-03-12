@@ -98,10 +98,8 @@
 			user << "\red \The [src] is welded solid!"
 			return
 
-		var/area/A = get_area(src)
-		ASSERT(istype(A))
-		if(A.master)
-			A = A.master
+		var/area/A = get_area_master(src)
+		ASSERT(istype(A)) // This worries me.
 		var/alarmed = A.doors_down || A.fire
 
 		if( istype(C, /obj/item/weapon/crowbar) || ( istype(C,/obj/item/weapon/twohanded/fireaxe) && C:wielded == 1 ) )

@@ -1037,7 +1037,7 @@
 
 			// Sobering multiplier.
 			// Sober block grants quadruple the alcohol metabolism.
-			var/sober_str=(M_SOBER in mutations)?1:4
+			var/sober_str=!(M_SOBER in mutations)?1:4
 
 			updatehealth()	//TODO
 			if(!in_stasis)

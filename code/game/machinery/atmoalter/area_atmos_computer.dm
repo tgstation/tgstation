@@ -164,9 +164,7 @@
 
 		var/turf/T = get_turf(src)
 		if(!T.loc) return
-		var/area/A = T.loc
-		if (A.master)
-			A = A.master
+		var/area/A = get_area_master(T)
 		for(var/obj/machinery/portable_atmospherics/scrubber/huge/scrubber in world )
 			var/turf/T2 = get_turf(scrubber)
 			if(T2 && T2.loc)
