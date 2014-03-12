@@ -186,6 +186,11 @@
 		if(prob(40))
 			del(src)
 
+	bullet_act(var/obj/item/projectile/Proj)
+		if(istype(Proj ,/obj/item/projectile/beam/pulse))
+			src.ex_act(2)
+		..()
+		return 0
 
 	ex_act(severity)
 		switch(severity)
