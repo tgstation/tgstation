@@ -281,6 +281,19 @@
 			name = "Corgi Tech [real_name]"
 			desc = "The reason your yellow gloves have chew-marks."
 			valid = 1
+
+		if(/obj/item/clothing/head/fedora)
+			name = "Autistic [real_name]"
+			desc = "You took a dog and showed him the internet? The hell is wrong with you!?"
+			emote_hear = list("barks ironicly", "makes you cringe")
+			emote_see = list("unsheathes katana", "tips fedora"/*,"Posts on 4chan" hue*/)
+
+		if(/obj/item/clothing/head/fez)
+			name = "Doctor Whom"
+			desc = "A time-dog from the planet barkifray."
+			emote_hear =  list("barks cleverly.")
+			emote_see = list("fiddles around with a sonic-bone", "builds something amazing- thats a poop. He just pooped.")
+
 		/*
 		if(/obj/item/clothing/head/hardhat/reindeer)
 			name = "[real_name] the red-nosed Corgi"
@@ -378,7 +391,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
 	name = "Corgi meat"
-	desc = "Tastes like... well you know..."
+	desc = "Tastes like the tears of the station. Gives off the faint aroma of a valid salad. Just like mom used to make. This revalation horrifies you greatly."
 
 /mob/living/simple_animal/corgi/Ian/Bump(atom/movable/AM as mob|obj, yes)
 	if ((!( yes ) || now_pushing))

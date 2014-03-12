@@ -761,3 +761,6 @@
 	if(I && !I.abstract)
 		I.showoff(src)
 
+// /vg/ Affects wearers.
+/obj/item/proc/OnMobLife(var/mob/holder)
+	return
