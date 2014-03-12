@@ -121,7 +121,16 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/afterattack(obj/item/weapon/reagent_containers/glass/glass, mob/user as mob)
 	..()
+	var/turf/location = get_turf(src)
 	if(istype(glass))	//you can dip cigarettes into beakers
+		if(glass.reagents.has_reagent("sacid") || glass.reagents.has_reagent("pacid"))
+			new src.type_butt(location)
+			processing_objects.Remove(src)
+			user << "<span class='warning'>Half of the [name] dissolves with a nasty fizzle.</span>"
+			user.drop_item()
+			del(src)
+			return
+		return
 		var/transfered = glass.reagents.trans_to(src, chem_volume)
 		if(transfered)	//if reagents were transfered, show the message
 			user << "<span class='notice'>You dip \the [src] into \the [glass].</span>"
@@ -191,11 +200,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(location)
 		location.hotspot_expose(700, 5)
 	if(reagents && reagents.total_volume)	//	check if it has any reagents at all
-		if(iscarbon(loc) && (src == loc:wear_mask)) // if it's in the human/monkey mouth, transfer reagents to the mob
-			var/mob/living/carbon/C = loc
-			if(prob(15)) // so it's not an instarape in case of acid
-				reagents.reaction(C, INGEST)
-			reagents.trans_to(C, REAGENTS_METABOLISM)
+		if(iscarbon(M) && (src == M:wear_mask)) // if it's in the human/monkey mouth, transfer reagents to the mob
+			if(M.reagents.has_reagent("lexorin") || M_NO_BREATH in M.mutations || istype(M, /obj/machinery/atmospherics/unary/cryo_cell))
+				reagents.remove_any(REAGENTS_METABOLISM)
+			else
+				if(prob(25)) // so it's not an instarape in case of acid
+					reagents.reaction(M, INGEST)
+				reagents.trans_to(M, 1)
 		else // else just remove some of the reagents
 			reagents.remove_any(REAGENTS_METABOLISM)
 	return
@@ -214,12 +225,61 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!istype(M))
 		return ..()
 
+	if(src.lit == 0 && M.on_fire) //Hit burning mobs with cigarettes to light it up.
+		if(M == user)
+			src.light("<span class='notice'>[user] uses his burning body to light the [src]. Smooth.</span>")
+			return
+		else
+			src.light("<span class='notice'>[user] uses the flames on [M] to light the [src]. How rude.</span>")
+			return
+
 	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel && user.zone_sel.selecting == "mouth" && lit)
 		var/obj/item/clothing/mask/cigarette/cig = M.wear_mask
 		if(M == user)
 			cig.attackby(src, user)
 		else
 			cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights the [cig.name].</span>")
+
+
+	if(user != M && user.zone_sel.selecting == "mouth" && !M.wear_mask)
+		if(user.a_intent == "hurt")
+			M.visible_message("<span class='warning'>[user] shoved \a [name] into [M]'s face!</span>")
+			M << "<span class='warning'>[user] shoves \a [name] in your mouth!</span>"
+			user.drop_item()
+			M.wear_mask = src
+			src.loc = M
+			src.layer = initial(src.layer)
+			M.update_inv_wear_mask()
+			user.update_inv_l_hand()
+			user.update_inv_r_hand()
+		else
+			switch(alert(M,"[user] wants to give you \a [name]?",,"Yes","No"))
+				if("Yes")
+					if(!src)
+						return
+					if(!Adjacent(user))
+						user << "\red You need to stay in reaching distance while giving an object."
+						M << "\red [user.name] moved too far away."
+						return
+					if((user.hand && user.l_hand != src) || (!user.hand && user.r_hand != src))
+						user << "\red You need to keep the item in your active hand."
+						M << "\red [user.name] seems to have given up on giving \the [src.name] to you."
+						return
+					if(M.wear_mask != null)
+						M << "<span class='notice'>You can't take the [src] if your mouth is blocked.</span>"
+						user << "<span class='notice'>There isn't anywhere for the [src] to go!</span>"
+						return
+					else
+						user.drop_item()
+						M.wear_mask = src
+						src.loc = M
+						src.layer = initial(src.layer)
+						M.update_inv_wear_mask()
+						user.update_inv_l_hand()
+						user.update_inv_r_hand()
+						M.visible_message("<span class='notice'>[user] gave \the [name] to [M].</span>")
+				if("No")
+					M.visible_message("\red [user] offered a [name] to [M] but [M] didn't want it.")
 	else
 		return ..()
 
@@ -276,6 +336,87 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		..()
 	else
 		user << "<span class='notice'>\The [src] straight out REFUSES to be lit by such uncivilized means.</span>"
+
+///////////////////
+//AMBROSIA BLUNTS//
+///////////////////
+/obj/item/clothing/mask/cigarette/blunt
+	name = "blunt"
+	desc = "A fat ambrosia vulgaris cigar. Light it up and pass it around."
+	icon_state = "bluntoff"
+	icon_on = "blunton"
+	icon_off = "bluntoff"
+	overlay_on = "bluntlit"
+	type_butt = /obj/item/weapon/cigbutt/bluntbutt
+	throw_speed = 0.5
+	item_state = "bluntoff"
+	attack_verb = list("burnt", "singed", "blunted")
+	smoketime = 420
+	chem_volume = 26
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("space_drugs", 7)
+		reagents.add_reagent("kelotane", 7)
+		reagents.add_reagent("bicaridine", 5)
+		reagents.add_reagent("toxin", 5)
+
+/obj/item/clothing/mask/cigarette/blunt/rolled //grown.dm handles reagents for these
+
+/obj/item/clothing/mask/cigarette/blunt/rolled/New()
+	..()
+
+/obj/item/clothing/mask/cigarette/blunt/cruciatus
+	name = "blunt"
+	desc = "A fat ambrosia vulgaris cigar. Light it up and pass it around."
+	chem_volume = 36
+
+	New()
+		..()
+		reagents.clear_reagents()
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("space_drugs", 7)
+		reagents.add_reagent("kelotane", 7)
+		reagents.add_reagent("bicaridine", 5)
+		reagents.add_reagent("toxin", 5)
+		reagents.add_reagent("spiritbreaker", 10)
+
+/obj/item/clothing/mask/cigarette/blunt/cruciatus/rolled
+
+/obj/item/clothing/mask/cigarette/blunt/cruciatus/rolled/New()
+	..()
+
+/obj/item/clothing/mask/cigarette/blunt/deus
+	name = "godblunt"
+	desc = "A fat ambrosia deus cigar. Smoke weed every day."
+	icon_state = "dbluntoff"
+	icon_on = "dblunton"
+	icon_off = "dbluntoff"
+	overlay_on = "dbluntlit"
+
+	New()
+		..()
+		reagents.clear_reagents()
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("bicaridine", 7)
+		reagents.add_reagent("synaptizine", 7)
+		reagents.add_reagent("hyperzine", 5)
+		reagents.add_reagent("space_drugs", 5)
+
+/obj/item/clothing/mask/cigarette/blunt/deus/rolled
+
+/obj/item/clothing/mask/cigarette/blunt/deus/rolled/New()
+	..()
+
+/obj/item/weapon/cigbutt/bluntbutt
+	name = "blunt butt"
+	desc = "A manky old blunt butt."
+	icon = 'icons/obj/clothing/masks.dmi'
+	icon_state = "bluntbutt"
+	w_class = 1
+	throwforce = 1
+
 
 /////////////////
 //SMOKING PIPES//
