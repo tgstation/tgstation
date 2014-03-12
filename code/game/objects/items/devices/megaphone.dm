@@ -54,21 +54,21 @@
 		insults = rand(1, 3)//to prevent dickflooding
 		return
 	return
-	
-	
-	
-	
+
+
+
+
 /*
 	SOUND SYNTH BELOW THIS LINE
 ----------------------------------------------
 */
-	
-	
+
+
 
 /obj/item/device/soundsynth
 	name = "sound synthesizer"
 	desc = "A device that is able to create sounds."
-	icon_state = "megaphone"
+	icon_state = "soundsynth"
 	item_state = "radio"
 	w_class = 1.0
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -203,9 +203,9 @@ And backwards
 
 		else
 			sound_flag = 0
-		
-		
-		
+
+
+
 /*
 This long ass as fuck shit plays the sounds. Im a huge fucking faggot.
 If you can make this smaller, please do.
