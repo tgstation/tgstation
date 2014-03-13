@@ -863,14 +863,17 @@
 							if(buffer_slot["SE"])
 								I = new /obj/item/weapon/dnainjector(loc)
 								I.fields = list("SE"=buffer_slot["SE"])
+								I.damage_coeff  = connected.damage_coeff
 						if("ui")
 							if(buffer_slot["UI"])
 								I = new /obj/item/weapon/dnainjector(loc)
 								I.fields = list("UI"=buffer_slot["UI"])
+								I.damage_coeff = connected.damage_coeff
 						else
 							if(buffer_slot["name"] && buffer_slot["UE"] && buffer_slot["blood_type"])
 								I = new /obj/item/weapon/dnainjector(loc)
 								I.fields = list("name"=buffer_slot["name"], "UE"=buffer_slot["UE"], "blood_type"=buffer_slot["blood_type"])
+								I.damage_coeff  = connected.damage_coeff
 					if(I)
 						injectorready = 0
 						spawn(INJECTOR_TIMEOUT)
