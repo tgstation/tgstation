@@ -15,7 +15,7 @@
 	if (notransform)	return
 	..()
 
-	var/datum/gas_mixture/environment // Added to prevent null location errors-- TLE
+	var/datum/gas_mixture/environment
 	if(loc)
 		environment = loc.return_air()
 
@@ -49,7 +49,7 @@
 	blinded = null
 
 	//Handle temperature/pressure differences between body and environment
-	if(environment)	// More error checking -- TLE
+	if(environment)
 		handle_environment(environment)
 
 	//Check if we're on fire

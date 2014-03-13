@@ -371,7 +371,7 @@
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
-/datum/configuration/proc/loadsql(filename)  // -- TLE
+/datum/configuration/proc/loadsql(filename)
 	var/list/Lines = file2list(filename)
 	for(var/t in Lines)
 		if(!t)	continue
