@@ -709,7 +709,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/det_hat(M), slot_head)
 
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile(M), slot_r_hand)
-			M.equip_to_slot_or_del(new /obj/item/ammo_box/a357(M), slot_l_store)
+			M.equip_to_slot_or_del(new /obj/item/ammo_box/c10mm(M), slot_l_store)
 
 		if ("tournament chef") //Steven Seagal FTW
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chef(M), slot_w_uniform)
