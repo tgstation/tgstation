@@ -465,7 +465,7 @@ silicate
 	name = "Mix Virus"
 	id = "mixvirus"
 	result = "blood"
-	required_reagents = list("virusfood" = 5)
+	required_reagents = list("virusfood" = 1)
 	required_catalysts = list("blood" = 5)
 	var/level_min = 0
 	var/level_max = 2
