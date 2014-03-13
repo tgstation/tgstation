@@ -39,7 +39,7 @@
 	set background = BACKGROUND_ENABLED
 
 	if (notransform)	return
-	if(!loc)			return	// Fixing a null error that occurs when the mob isn't found in the world
+	if(!loc)			return	// Fixing a null error that occurs when the mob isn't found in the world -- TLE
 
 	..()
 
@@ -240,7 +240,8 @@
 				location_as_object.handle_internal_lifeform(src, 0)
 		else
 			//First, check for air from internal atmosphere (using an air tank and mask generally)
-			breath = get_breath_from_internal(BREATH_VOLUME)
+			breath = get_breath_from_internal(BREATH_VOLUME) // Super hacky -- TLE
+			//breath = get_breath_from_internal(0.5) // Manually setting to old BREATH_VOLUME amount -- TLE
 
 			//No breath from internal atmosphere so get breath from location
 			if(!breath)
@@ -340,7 +341,7 @@
 		// Same, but for the toxins
 		var/Toxins_pp = (breath.toxins/breath.total_moles())*breath_pressure
 		// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
-		var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*breath_pressure
+		var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*breath_pressure // Tweaking to fit the hacky bullshit I've done with atmo -- TLE
 		//var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*0.5 // The default pressure value
 
 		if(O2_pp < safe_oxygen_min) 			// Too little oxygen
