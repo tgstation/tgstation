@@ -68,10 +68,10 @@ What are the archived variables for?
 	var/tmp/graphics_archived = 0
 	var/tmp/fuel_burnt = 0
 
-	var/datum/reagents/aerosols
+	//var/datum/reagents/aerosols
 
 /datum/gas_mixture/New()
-	create_reagents(10)
+	//create_reagents(10)
 
 //FOR THE LOVE OF GOD PLEASE USE THIS PROC
 //Call it with negative numbers to remove gases.
@@ -97,9 +97,11 @@ What are the archived variables for?
 	update_values()
 	return
 
+/*
 /datum/gas_mixture/proc/create_reagents(var/max_vol)
 	aerosols = new /datum/reagents(max_vol)
 	aerosols.my_atom = src
+*/
 
 //tg seems to like using these a lot
 /datum/gas_mixture/proc/return_temperature()
@@ -194,8 +196,10 @@ What are the archived variables for?
 		for(var/datum/gas/trace_gas in trace_gases)
 			total_moles += trace_gas.moles
 
+/*
 	if(aerosols.total_volume)
 		total_moles += aerosols.total_volume
+*/
 
 	if(volume>0)
 		pressure = total_moles()*R_IDEAL_GAS_EQUATION*temperature/volume
@@ -231,9 +235,10 @@ What are the archived variables for?
 		var/datum/gas/sleeping_agent = locate(/datum/gas/sleeping_agent) in trace_gases
 		if(sleeping_agent && (sleeping_agent.moles > 1))
 			graphics |= GRAPHICS_N2O
-
+/*
 	if(aerosols && aerosols.total_volume >= 1)
 		graphics |= GRAPHICS_REAGENTS
+*/
 
 	return graphics != graphics_archived
 
@@ -397,10 +402,10 @@ What are the archived variables for?
 				corresponding = new trace_gas.type()
 				trace_gases += corresponding
 			corresponding.moles += trace_gas.moles*giver.group_multiplier/group_multiplier
-
+/*
 	if(giver.aerosols.total_volume > 1)
 		giver.aerosols.trans_to_atmos(src,aerosols.total_volume)
-
+*/
 	update_values()
 
 	// Let the garbage collector handle it, faster according to /tg/ testers
@@ -442,9 +447,10 @@ What are the archived variables for?
 
 			corresponding.moles = (trace_gas.moles/sum)*amount
 			trace_gas.moles -= corresponding.moles/group_multiplier
-
+/*
 	if(aerosols.total_volume > 1)
 		removed.aerosols.trans_to_atmos(src,(aerosols.total_volume/sum)*amount)
+*/
 
 	removed.temperature = temperature
 	update_values()
