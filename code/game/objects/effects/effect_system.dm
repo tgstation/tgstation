@@ -906,8 +906,14 @@ steam.start() -- spawns the effect
 			var/heavy = -1
 			var/light = -1
 			var/flash = -1
-
+			var/range = 0
 			// Clamp all values to MAX_EXPLOSION_RANGE
+			range = min (MAX_EXPLOSION_RANGE, light + round(amount/3))
+			devastation = range * 0.25
+			heavy = range * 0.5
+			light = range
+			flash = range * 1.5
+			/*
 			if (round(amount/12) > 0)
 				devastation = min (MAX_EXPLOSION_RANGE, devastation + round(amount/12))
 
@@ -919,6 +925,7 @@ steam.start() -- spawns the effect
 
 			if (flash && flashing_factor)
 				flash += (round(amount/4) * flashing_factor)
+			*/
 
 			for(var/mob/M in viewers(8, location))
 				M << "\red The solution violently explodes."
