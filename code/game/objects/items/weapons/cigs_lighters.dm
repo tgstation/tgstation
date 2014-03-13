@@ -130,7 +130,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			user.drop_item()
 			del(src)
 			return
-		return
 		var/transfered = glass.reagents.trans_to(src, chem_volume)
 		if(transfered)	//if reagents were transfered, show the message
 			user << "<span class='notice'>You dip \the [src] into \the [glass].</span>"
@@ -206,7 +205,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			else
 				if(prob(25)) // so it's not an instarape in case of acid
 					reagents.reaction(M, INGEST)
-				reagents.trans_to(M, 1)
+				reagents.trans_to(M, 0.9)
 		else // else just remove some of the reagents
 			reagents.remove_any(REAGENTS_METABOLISM)
 	return
@@ -240,46 +239,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		else
 			cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights the [cig.name].</span>")
 
-
-	if(user != M && user.zone_sel.selecting == "mouth" && !M.wear_mask)
-		if(user.a_intent == "hurt")
-			M.visible_message("<span class='warning'>[user] shoved \a [name] into [M]'s face!</span>")
-			M << "<span class='warning'>[user] shoves \a [name] in your mouth!</span>"
-			user.drop_item()
-			M.wear_mask = src
-			src.loc = M
-			src.layer = initial(src.layer)
-			M.update_inv_wear_mask()
-			user.update_inv_l_hand()
-			user.update_inv_r_hand()
-		else
-			switch(alert(M,"[user] wants to give you \a [name]?",,"Yes","No"))
-				if("Yes")
-					if(!src)
-						return
-					if(!Adjacent(user))
-						user << "\red You need to stay in reaching distance while giving an object."
-						M << "\red [user.name] moved too far away."
-						return
-					if((user.hand && user.l_hand != src) || (!user.hand && user.r_hand != src))
-						user << "\red You need to keep the item in your active hand."
-						M << "\red [user.name] seems to have given up on giving \the [src.name] to you."
-						return
-					if(M.wear_mask != null)
-						M << "<span class='notice'>You can't take the [src] if your mouth is blocked.</span>"
-						user << "<span class='notice'>There isn't anywhere for the [src] to go!</span>"
-						return
-					else
-						user.drop_item()
-						M.wear_mask = src
-						src.loc = M
-						src.layer = initial(src.layer)
-						M.update_inv_wear_mask()
-						user.update_inv_l_hand()
-						user.update_inv_r_hand()
-						M.visible_message("<span class='notice'>[user] gave \the [name] to [M].</span>")
-				if("No")
-					M.visible_message("\red [user] offered a [name] to [M] but [M] didn't want it.")
 	else
 		return ..()
 
