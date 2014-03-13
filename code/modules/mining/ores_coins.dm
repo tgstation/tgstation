@@ -1,7 +1,7 @@
 /**********************Mineral ores**************************/
 
 /obj/item/weapon/ore
-	name = "Rock"
+	name = "rock"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "ore"
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
@@ -18,21 +18,21 @@
 	..()
 
 /obj/item/weapon/ore/uranium
-	name = "Uranium ore"
+	name = "uranium ore"
 	icon_state = "Uranium ore"
 	origin_tech = "materials=5"
 	points = 20
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 
 /obj/item/weapon/ore/iron
-	name = "Iron ore"
+	name = "iron ore"
 	icon_state = "Iron ore"
 	origin_tech = "materials=1"
 	points = 1
 	refined_type = /obj/item/stack/sheet/metal
 
 /obj/item/weapon/ore/glass
-	name = "Sand"
+	name = "sand"
 	icon_state = "Glass ore"
 	origin_tech = "materials=1"
 	points = 1
@@ -49,7 +49,7 @@
 		del(src)
 
 /obj/item/weapon/ore/plasma
-	name = "Plasma ore"
+	name = "plasma ore"
 	icon_state = "Plasma ore"
 	origin_tech = "materials=2"
 	points = 40
@@ -65,40 +65,40 @@
 
 
 /obj/item/weapon/ore/silver
-	name = "Silver ore"
+	name = "silver ore"
 	icon_state = "Silver ore"
 	origin_tech = "materials=3"
 	points = 20
 	refined_type = /obj/item/stack/sheet/mineral/silver
 
 /obj/item/weapon/ore/gold
-	name = "Gold ore"
+	name = "gold ore"
 	icon_state = "Gold ore"
 	origin_tech = "materials=4"
 	points = 20
 	refined_type = /obj/item/stack/sheet/mineral/gold
 
 /obj/item/weapon/ore/diamond
-	name = "Diamond ore"
+	name = "diamond ore"
 	icon_state = "Diamond ore"
 	origin_tech = "materials=6"
 	points = 40
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 
 /obj/item/weapon/ore/clown
-	name = "Bananium ore"
+	name = "bananium ore"
 	icon_state = "Clown ore"
 	origin_tech = "materials=4"
 	points = 30
 	refined_type = /obj/item/stack/sheet/mineral/clown
 
 /obj/item/weapon/ore/slag
-	name = "Slag"
+	name = "slag"
 	desc = "Completely useless"
 	icon_state = "slag"
 
 /obj/item/weapon/twohanded/required/gibtonite
-	name = "Gibtonite ore"
+	name = "gibtonite ore"
 	desc = "Extremely explosive if struck with mining equipment, Gibtonite is often used by miners to speed up their work by using it as a mining charge. This material is illegal to possess by unauthorized personnel under space law."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "Gibtonite ore"
