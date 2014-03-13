@@ -111,8 +111,8 @@ datum/shuttle_controller
 		if(callshuttle)
 			if(!online && direction == 1) //we don't call the shuttle if it's already coming
 				incall(SHUTTLEAUTOCALLTIMER) //X minutes! If they want to recall, they have X-(X-5) minutes to do so
-				log_game("All the comm consolers are destroyed and all AIs are inactive. Shuttle called.")
-				message_admins("All the comm consolers are destroyed and all AIs are inactive. Shuttle called.", 1)
+				log_game("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
+				message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.", 1)
 				captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
 				world << sound('sound/AI/shuttlecalled.ogg')
 
