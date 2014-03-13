@@ -28,7 +28,7 @@
 	var/spam_flag = 0
 
 	var/const/deffont = "Verdana"
-	var/const/signfont = "Segoe Script"
+	var/const/signfont = "Lucida Handwriting"
 	var/const/crayonfont = "Comic Sans MS"
 
 
