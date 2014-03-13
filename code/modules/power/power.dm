@@ -450,8 +450,7 @@
 		else
 			return 0
 
-//The powernet that calls this proc will consume the other powernet - Rockdtben
-//TODO: rewrite so the larger net absorbs the smaller net
+//The powernet that calls this proc will consume the other powernet
 /proc/merge_powernets(var/datum/powernet/net1, var/datum/powernet/net2)
 	if(!net1 || !net2)	return
 	if(net1 == net2)	return

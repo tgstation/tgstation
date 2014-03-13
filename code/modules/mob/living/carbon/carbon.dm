@@ -231,8 +231,6 @@
 /mob/living/carbon/proc/tintcheck()
 	return 0
 
-// ++++ROCKDTBEN++++ MOB PROCS //END
-
 /mob/living/carbon/clean_blood()
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
