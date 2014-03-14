@@ -162,7 +162,7 @@ var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck o
 		if(LAW_INHERENT)
 			inherent[idx]=law
 		else
-			inherent[idx]=law
+			supplied[idx]=law
 
 
 

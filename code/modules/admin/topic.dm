@@ -74,7 +74,11 @@
 			"Core"    = LAW_INHERENT,
 			"Standard"= 1
 		)
-		var/lawtype = text2num(input("Select a law type.","Law Type",1) as null|anything in lawtypes)
+		var/lawtype = input("Select a law type.","Law Type",1) as anything in lawtypes
+		lawtype=lawtypes[lawtype]
+		if(lawtype == null)
+			return
+		testing("Lawtype: [lawtype]")
 		if(lawtype==1)
 			lawtype=text2num(input("Enter desired law priority. (15-50)","Priority", 15) as num)
 			lawtype=Clamp(lawtype,15,50)
