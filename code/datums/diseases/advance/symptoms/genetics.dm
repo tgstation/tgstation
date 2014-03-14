@@ -24,6 +24,7 @@ Bonus
 	transmittable = -3
 	level = 6
 	var/good_mutations = 0
+	var/archived_dna = null
 
 /datum/symptom/genetic_mutation/Activate(var/datum/disease/advance/A)
 	..()
@@ -36,6 +37,21 @@ Bonus
 				domutcheck(M, null, 1) // Force the power to manifest
 	return
 
+// Archive their DNA before they were infected.
+/datum/symptom/genetic_mutation/Start(var/datum/disease/advance/A)
+	var/mob/living/carbon/M = A.affected_mob
+	if(M)
+		if(!check_dna_integrity(M))
+			return
+		archived_dna = M.dna.struc_enzymes
+
+// Give them back their old DNA when cured.
+/datum/symptom/genetic_mutation/End(var/datum/disease/advance/A)
+	var/mob/living/carbon/M = A.affected_mob
+	if(M && archived_dna)
+		if(!check_dna_integrity(M))
+			return
+		hardset_dna(M, se = archived_dna)
 
 /*
 //////////////////////////////////////
