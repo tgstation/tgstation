@@ -117,6 +117,8 @@ obj/machinery/computer/general_air_control/receive_signal(datum/signal/signal)
 	var/id_tag = signal.data["tag"]
 	if(!id_tag || !sensors.Find(id_tag)) return
 
+	sensor_information = list()
+
 	sensor_information[id_tag] = signal.data
 
 obj/machinery/computer/general_air_control/proc/return_text()
@@ -135,7 +137,7 @@ obj/machinery/computer/general_air_control/proc/return_text()
 				if(data["temperature"])
 					sensor_part += "   <B>Temperature:</B> [data["temperature"]] K<BR>"
 				if(data["oxygen"]||data["toxins"]||data["nitrogen"]||data["carbon_dioxide"])
-					sensor_part += "   <B>Gas Composition :</B>"
+					sensor_part += "   <B>Gas Composition : </B>"
 					if(data["oxygen"])
 						sensor_part += "[data["oxygen"]]% O2; "
 					if(data["nitrogen"])
@@ -182,7 +184,10 @@ obj/machinery/computer/general_air_control/large_tank_control
 
 obj/machinery/computer/general_air_control/large_tank_control/proc/reconnect(mob/user)    //This hacky madness is the evidence of the fact that a lot of machines were never meant to be constructable, im so sorry you had to see this
 	var/list/IO = list()
-	var/list/devices = radio_connection.devices["_default"]
+	var/datum/radio_frequency/air_freq = radio_controller.return_frequency(1443)
+	var/datum/radio_frequency/gas_freq = radio_controller.return_frequency(1441)
+	var/list/devices = air_freq.devices["_default"]
+	devices |= gas_freq.devices["_default"]
 	for(var/obj/machinery/atmospherics/unary/vent_pump/U in devices)
 		var/list/text = text2list(U.id_tag, "_")
 		IO |= text[1]
@@ -196,15 +201,20 @@ obj/machinery/computer/general_air_control/large_tank_control/proc/reconnect(mob
 		src.input_tag = "[S]_in"
 		src.output_tag = "[S]_out"
 		name = "[uppertext(S)] Supply Control"
-		devices = radio_connection.devices["4"]
-		for(var/obj/machinery/air_sensor/U in devices)
-			world << "[U.id_tag]"
+		var/list/new_devices = gas_freq.devices["4"]
+		new_devices |= air_freq.devices["4"]
+		for(var/obj/machinery/air_sensor/U in new_devices)
 			var/list/text = text2list(U.id_tag, "_")
 			if(text[1] == S)
 				sensors = list("[S]_sensor" = "Tank")
 				break
 
-	devices = radio_connection.devices["_default"]
+	if(S == "air")
+		frequency = 1443
+	else
+		frequency = 1441
+
+	set_frequency(frequency)
 
 	for(var/obj/machinery/atmospherics/unary/outlet_injector/U in devices)
 		U.broadcast_status()
