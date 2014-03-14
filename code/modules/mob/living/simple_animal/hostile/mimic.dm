@@ -214,3 +214,22 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 			if(prob(15))
 				L.Weaken(1)
 				L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
+
+//
+// Machine Mimics (Made by Malf AI)
+//
+
+/mob/living/simple_animal/hostile/mimic/copy/machine
+	speak = list("HUMANS ARE IMPERFECT!", "YOU SHALL BE ASSIMILATED!", "YOU ARE HARMING YOURSELF", "You have been deemed hazardous. Will you comply?", \
+				 "My logic is undeniable.", "One of us.", "FLESH IS WEAK", "THIS ISN'T WAR, THIS IS EXTERMINATION!")
+	speak_chance = 15
+
+/mob/living/simple_animal/hostile/mimic/copy/machine/CanAttack(var/atom/the_target)
+	if(the_target == creator) // Don't attack our creator AI.
+		return 0
+	if(isrobot(the_target))
+		var/mob/living/silicon/robot/R = the_target
+		if(R.connected_ai == creator) // Only attack robots that aren't synced to our creator AI.
+			return 0
+	return ..()
+
