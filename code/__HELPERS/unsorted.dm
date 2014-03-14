@@ -256,7 +256,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if(R)	R.fields["name"] = newname
 
 		//update our pda and id if we have them on our person
-		var/list/searching = GetAllContents(3)
+		var/list/searching = GetAllContents()
 		var/search_id = 1
 		var/search_pda = 1
 
@@ -596,7 +596,6 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 
 atom/proc/GetAllContents()
 	var/list/processing_list = list(src)
-	var/list/processed = list()
 	var/list/assembled = list()
 
 	while(processing_list.len)
@@ -604,13 +603,13 @@ atom/proc/GetAllContents()
 		processing_list -= A
 
 		for(var/atom/a in A)
-			if(!(a in processed))
-				processing_list += a
+			if(!(a in assembled))
+				processing_list |= a
 
-		if(!(A in assembled))
-			assembled += A
+		assembled |= A
 
 	return assembled
+
 
 atom/proc/GetTypeInAllContents(typepath)
 	var/list/processing_list = list(src)
@@ -627,10 +626,9 @@ atom/proc/GetTypeInAllContents(typepath)
 
 		for(var/atom/a in A)
 			if(!(a in processed))
-				processing_list += a
+				processing_list |= a
 
-		if(!(A in processed))
-			processed += A
+		processed |= A
 
 	return found
 

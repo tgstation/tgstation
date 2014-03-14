@@ -189,7 +189,7 @@
 				if(istype(O, /obj/item/device/lightreplacer))
 					var/obj/item/device/lightreplacer/LR = O
 					var/i = 1
-					for(1, i < coeff, i++)
+					for(1, i <= coeff, i++)
 						LR.Charge(occupier)
 
 			if(occupier)
