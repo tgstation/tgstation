@@ -358,7 +358,6 @@
 	else
 		return ..()
 
-
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/cruciatus
 	seed = "/obj/item/seeds/ambrosiavulgaris/cruciatus"
 	name = "ambrosia vulgaris branch"
@@ -385,6 +384,8 @@
 		user.put_in_hands(B)
 		user.drop_from_inventory(src)
 		del(src)
+	else
+		return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus
 	seed = "/obj/item/seeds/ambrosiadeus"
@@ -411,6 +412,8 @@
 		user.put_in_hands(B)
 		user.drop_from_inventory(src)
 		del(src)
+	else
+		return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/apple
 	seed = "/obj/item/seeds/appleseed"
