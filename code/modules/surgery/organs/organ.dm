@@ -228,6 +228,8 @@
 	var/mob/living/carbon/human/owner = affecting.owner
 
 	var/dismember_chance = 0 //Chance for the limb to fall off, if an Item is used this is the item's force
+	var/succesful = 0 //Did they lose the limb?
+
 
 	if(!overide)
 		switch(removal_type)
@@ -244,8 +246,15 @@
 	else
 		dismember_chance = overide //So you can specify an overide chance to dismember, for Unique weapons / Non weapon dismemberment
 
-	if((affecting.brute_dam + I.force && I) >= (affecting.max_damage / 2) && affecting.state != ORGAN_REMOVED) //if it has taken significant enough damage
-		//The damage the limb has sustained, plus the power of the weapon used
+	if(I)
+		if((affecting.brute_dam + I.force) >= (affecting.max_damage / 2) && affecting.state != ORGAN_REMOVED)
+			succesful = 1
+
+	else
+		if((affecting.brute_dam) >= (affecting.max_damage / 2) && affecting.state != ORGAN_REMOVED)
+			succesful = 1
+
+	if(succesful)
 		if(prob(dismember_chance))
 			var/turf/T = get_turf(owner)
 
