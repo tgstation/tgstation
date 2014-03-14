@@ -22,7 +22,7 @@
 
 
 //Drone verbs
-/mob/living/carbon/alien/humanoid/drone/verb/evolve() // -- TLE
+/mob/living/carbon/alien/humanoid/drone/verb/evolve()
 	set name = "Evolve (500)"
 	set desc = "Produce an interal egg sac capable of spawning children. Only one queen can exist at a time."
 	set category = "Alien"

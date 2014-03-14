@@ -188,7 +188,7 @@
 	return
 
 
-/mob/living/silicon/proc/statelaws() // -- TLE
+/mob/living/silicon/proc/statelaws()
 
 	src.say("Current Active Laws:")
 	//src.laws_sanity_check()
@@ -199,7 +199,7 @@
 
 
 	if (src.laws.zeroth)
-		if (src.lawcheck[1] == "Yes") //This line and the similar lines below make sure you don't state a law unless you want to. --NeoFite
+		if (src.lawcheck[1] == "Yes")
 			src.say("0. [src.laws.zeroth]")
 			sleep(10)
 

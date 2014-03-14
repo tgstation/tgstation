@@ -400,7 +400,7 @@
 
 	var/numapc = 0
 
-	if(nodes && nodes.len) // Added to fix a bad list bug -- TLE
+	if(nodes && nodes.len)
 		for(var/obj/machinery/power/terminal/term in nodes)
 			if( istype( term.master, /obj/machinery/power/apc ) )
 				numapc++

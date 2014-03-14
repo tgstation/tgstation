@@ -316,7 +316,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 */
 /*
-/client/proc/make_cultist(var/mob/M in world) // -- TLE, modified by Urist
+/client/proc/make_cultist(var/mob/M in world)
 	set category = "Fun"
 	set name = "Make Cultist"
 	set desc = "Makes target a cultist"
