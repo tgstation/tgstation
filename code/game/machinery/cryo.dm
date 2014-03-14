@@ -238,7 +238,7 @@
 	if(!state_open && !panel_open)
 		layer = 3
 		if(occupant)
-			occupant.bodytemperature = T0C
+			occupant.bodytemperature = Clamp(occupant.bodytemperature, 261, 360)
 		..()
 		if(beaker)
 			beaker.loc = src
