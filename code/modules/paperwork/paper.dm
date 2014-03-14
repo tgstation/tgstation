@@ -5,6 +5,8 @@
  * lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
  */
 
+var/list/font_resources = list('font/Crayon.ttf','font/Signature.ttf')
+
 /obj/item/weapon/paper
 	name = "paper"
 	gender = PLURAL
@@ -28,8 +30,8 @@
 	var/spam_flag = 0
 
 	var/const/deffont = "Verdana"
-	var/const/signfont = "Lucida Handwriting"
-	var/const/crayonfont = "Comic Sans MS"
+	var/const/signfont = "Signature"
+	var/const/crayonfont = "Crayon"
 
 
 /obj/item/weapon/paper/New()
