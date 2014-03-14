@@ -45,7 +45,7 @@
 			var/randn = rand(1, 100)
 			if (randn <= 80)
 				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-				Weaken(10)
+				Weaken(5)
 				visible_message(text("\red <B>[] has tackled down []!</B>", M, src))
 			else
 				if (randn <= 99)

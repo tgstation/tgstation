@@ -10,9 +10,9 @@
 	name = "electrode"
 	icon_state = "spark"
 	nodamage = 1
-	stun = 10
-	weaken = 10
-	stutter = 10
+	stun = 5
+	weaken = 5
+	stutter = 5
 	hitsound = "sparks"
 
 	on_hit(var/atom/target, var/blocked = 0)
@@ -44,17 +44,25 @@
 	damage = 10
 	damage_type = TOX
 	nodamage = 0
-	weaken = 10
-	stutter = 10
+	weaken = 5
+	stutter = 5
 
 
 /obj/item/projectile/energy/bolt/large
 	name = "largebolt"
 	damage = 20
 
+/obj/item/projectile/energy/disabler
+	name = "disabler beam"
+	icon_state = "omnilaser"
+	damage = 34
+	damage_type = STAMINA
+	var/range = 7
 
-
-
+/obj/item/projectile/energy/disabler/Range()
+	range--
+	if(range <= 0)
+		delete()
 
 
 

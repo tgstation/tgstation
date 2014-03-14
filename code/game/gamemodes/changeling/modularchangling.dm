@@ -161,6 +161,13 @@ var/list/powerinstances
 	allowduringlesserform = 1
 	verbpath = /mob/living/carbon/proc/changeling_mute_sting
 
+/datum/power/changeling/emp_shriek
+	name = "Dissonant Shriek"
+	desc = "We shift our vocal cords to release a high-frequency sound that overloads nearby electronics."
+	genomecost = 1
+	allowduringlesserform = 1
+	verbpath = /mob/living/carbon/proc/changeling_emp_shriek
+
 /datum/power/changeling/arm_blade
 	name = "Arm Blade"
 	desc = "We reform one of our arms into a deadly blade."
@@ -168,6 +175,14 @@ var/list/powerinstances
 	genomecost = 1
 	allowduringlesserform = 0
 	verbpath = /mob/living/carbon/proc/changeling_arm_blade
+
+/datum/power/changeling/spacesuit
+	name = "Organic Space Suit"
+	desc = "We grow an organic suit to protect ourselves from space exposure."
+	helptext = "We must constantly repair our suit to make it space-proof, so we cant regenerate chemicals while we are protected. Casting off the suit damages our genomes. Cannot be used in lesser form."
+	genomecost = 1
+	allowduringlesserform = 0
+	verbpath = /mob/living/carbon/proc/changeling_space_suit
 
 // Modularchangling, totally stolen from the new player panel.  YAYY
 /datum/changeling/proc/EvolutionMenu()//The new one

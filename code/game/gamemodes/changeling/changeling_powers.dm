@@ -164,7 +164,7 @@
 	src.dna = chosen_dna
 	src.real_name = chosen_dna.real_name
 	updateappearance(src)
-	domutcheck(src, null)
+	domutcheck(src, null, 1)
 
 	feedback_add_details("changeling_powers","TR")
 	return 1
@@ -343,7 +343,7 @@
 			if(!M.mind || !M.mind.changeling)
 				M.ear_deaf += 30
 				M.confused += 20
-				M.make_jittery(50)
+				M.Jitter(50)
 			else
 				M << sound('sound/effects/screech.ogg')
 
@@ -514,6 +514,7 @@ var/list/datum/dna/hivemind_bank = list()
 
 	if(changeling.mimicing)
 		changeling.mimicing = ""
+		changeling.chem_recharge_slowdown -= 0.5
 		src << "<span class='notice'>We return our vocal glands to their original location.</span>"
 		return
 
@@ -522,33 +523,45 @@ var/list/datum/dna/hivemind_bank = list()
 		return
 
 	changeling.mimicing = mimic_voice
+	changeling.chem_recharge_slowdown += 0.5
 
 	src << "<span class='notice'>We shape our glands to take the voice of <b>[mimic_voice]</b>, this will stop us from regenerating chemicals while active.</span>"
 	src << "<span class='notice'>Use this power again to return to our original voice and reproduce chemicals again.</span>"
 
 	feedback_add_details("changeling_powers","MV")
 
-	spawn(0)
-		while(src && src.mind && src.mind.changeling && src.mind.changeling.mimicing)
-			src.mind.changeling.chem_charges = max(src.mind.changeling.chem_charges - 1, 0)
-			sleep(40)
-		if(src && src.mind && src.mind.changeling)
-			src.mind.changeling.mimicing = ""
+//EMP Shriek
+/mob/living/carbon/proc/changeling_emp_shriek()
+	set category = "Changeling"
+	set name = "Dissonant Shriek (20)"
 
+	var/datum/changeling/changeling = changeling_power(20)
+	if(!changeling) return
 
+	for(var/obj/machinery/light/L in range(5, usr))
+		L.on = 1
+		L.broken()
+
+	empulse(get_turf(src), 2, 5, 1)
+
+	changeling.chem_charges -= 20
+
+//Arm Blade
 /mob/living/carbon/proc/changeling_arm_blade()
 	set category = "Changeling"
 	set name = "Arm Blade (20)"
 
 	if(istype(l_hand, /obj/item/weapon/melee/arm_blade)) //Not the nicest way to do it, but eh
 		del l_hand //Arm  blades can't be dropped, we have to delete them directly.
+		update_inv_l_hand()
 		return
 
 	if(istype(r_hand, /obj/item/weapon/melee/arm_blade))
 		del r_hand
+		update_inv_r_hand()
 		return
 
-	var/datum/changeling/changeling = changeling_power(20)
+	var/datum/changeling/changeling = changeling_power(20, 0, 5)
 	if(!changeling)
 		return
 
@@ -557,9 +570,60 @@ var/list/datum/dna/hivemind_bank = list()
 		return
 
 	put_in_hands(new /obj/item/weapon/melee/arm_blade(src))
-	changeling.geneticdamage += 6
 
+	changeling.geneticdamage += 8
 	changeling.chem_charges -= 20
+
+//Space Suit
+/mob/living/carbon/proc/changeling_space_suit()
+	set category = "Changeling"
+	set name = "Organic Space Suit (20)"
+
+	if(!ishuman(src))
+		return
+
+	var/mob/living/carbon/human/H = src
+
+	if(mind && mind.changeling && mind.changeling.spacesuitactive)
+		mind.changeling.spacesuitactive = 0
+		visible_message("<span class='warning'>[src] casts off their flesh shell!</span>", "<span class='warning'>We cast off our protective organic shell, temporarily weakening our genomes.</span>", "<span class='warning'>You hear the organic matter ripping and tearing!</span>")
+
+		del H.wear_suit //Delete the suit.
+		del H.head
+		H.update_inv_wear_suit()
+		H.update_inv_head()
+		H.update_hair()
+
+		var/turf/simulated/T = get_turf(src)
+		if(istype(T))
+			T.add_blood(src) //So real blood decals
+			playsound(loc, 'sound/effects/splat.ogg', 50, 1) //So real sounds
+
+		mind.changeling.geneticdamage += 8 //Casting off a space suit leaves you weak for a few seconds.
+		mind.changeling.chem_recharge_slowdown -= 0.5
+		return
+
+	var/datum/changeling/changeling = changeling_power(20, 0, 5)
+	if(!changeling)
+		return
+
+	if(!H.unEquip(H.wear_suit))
+		src << "\the [H.wear_suit] is stuck to your body, you cannot grow a space suit over it!"
+		return
+	if(!H.unEquip(H.head))
+		src << "\the [H.head] is stuck on your head, you cannot grow a space helmet over it!"
+		H.unEquip(H.wear_suit, 1) //Force unequip the changeling suit to prevent bugginess.
+		return
+
+	equip_to_slot_if_possible(new /obj/item/clothing/suit/space/changeling(H), slot_wear_suit, 1, 1, 1)
+	equip_to_slot_if_possible(new /obj/item/clothing/head/helmet/space/changeling(H), slot_head, 1, 1, 1)
+
+	visible_message("<span class='warning'>[src]'s flesh rapidly inflates, forming a bloated mass around their body!</span>", "<span class='warning'>We inflate our flesh, creating a spaceproof suit!</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
+
+	changeling.spacesuitactive = 1
+	changeling.chem_charges -= 20
+	changeling.geneticdamage += 8
+	changeling.chem_recharge_slowdown += 0.5
 
 
 //////////
@@ -567,7 +631,7 @@ var/list/datum/dna/hivemind_bank = list()
 //////////
 
 /mob/living/carbon/proc/set_sting(A, icon, dna=null) //setting the sting and ui icon for it
-	src << "<span class='notice'>We prepare our sting, use alt+click on target to sting them.</span>"
+	src << "<span class='notice'>We prepare our sting, use alt+click or middle mouse button on target to sting them.</span>"
 	src.mind.changeling.chosen_sting = A
 	if(dna)
 		src.mind.changeling.chosen_dna = dna

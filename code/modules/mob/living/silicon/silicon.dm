@@ -97,14 +97,27 @@
 	switch(severity)
 		if(1)
 			src.take_organ_damage(20)
-			Stun(rand(5,10))
+			Stun(8)
 		if(2)
 			src.take_organ_damage(10)
-			Stun(rand(1,5))
+			Stun(3)
 	flick("noise", src:flash)
 	src << "\red <B>*BZZZT*</B>"
 	src << "\red Warning: Electromagnetic pulse detected."
 	..()
+
+/mob/living/silicon/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0)
+	blocked = (100-blocked)/100
+	if(!damage || (blocked <= 0))	return 0
+	switch(damagetype)
+		if(BRUTE)
+			adjustBruteLoss(damage * blocked)
+		if(BURN)
+			adjustFireLoss(damage * blocked)
+		else
+			return 1
+	updatehealth()
+	return 1
 
 /mob/living/silicon/proc/damage_mob(var/brute = 0, var/fire = 0, var/tox = 0)
 	return
@@ -118,7 +131,8 @@
 	return 1
 
 /mob/living/silicon/bullet_act(var/obj/item/projectile/Proj)
-	if(!Proj.nodamage)	adjustBruteLoss(Proj.damage)
+	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		adjustBruteLoss(Proj.damage)
 	Proj.on_hit(src,2)
 	return 2
 

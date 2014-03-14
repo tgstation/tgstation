@@ -5,6 +5,7 @@
 	pass_flags = PASSTABLE
 	voice_message = "skree!"
 	say_message = "hums"
+	ventcrawler = 2
 	var/is_adult = 0
 
 	layer = 5
@@ -552,6 +553,64 @@
 			updatehealth()
 	return
 
+/mob/living/carbon/slime/attackby(obj/item/W, mob/user)
+	if(W.force > 0)
+		attacked += 10
+		if(prob(25))
+			user << "\red [W] passes right through [src]!"
+			return
+		if(Discipline && prob(50))	// wow, buddy, why am I getting attacked??
+			Discipline = 0
+	if(W.force >= 3)
+		if(is_adult)
+			if(prob(5 + round(W.force/2)))
+				if(Victim)
+					if(prob(80) && !client)
+						Discipline++
+
+					Victim = null
+					anchored = 0
+
+					spawn()
+						SStun = 1
+						sleep(rand(5,20))
+						SStun = 0
+
+					spawn(0)
+						if(user)
+							canmove = 0
+							step_away(src, user)
+							if(prob(25 + W.force))
+								sleep(2)
+								if(user)
+									step_away(src, user)
+								canmove = 1
+
+		else
+			if(prob(10 + W.force*2))
+				if(Victim)
+					if(prob(80) && !client)
+						Discipline++
+					if(Discipline == 1)
+						attacked = 0
+					spawn()
+						SStun = 1
+						sleep(rand(5,20))
+						SStun = 0
+
+					Victim = null
+					anchored = 0
+
+					spawn(0)
+						if(user)
+							canmove = 0
+							step_away(src, user)
+							if(prob(25 + W.force*4))
+								sleep(2)
+								if(user)
+									step_away(src, user)
+							canmove = 1
+	..()
 
 /mob/living/carbon/slime/restrained()
 	return 0
@@ -844,16 +903,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	item_state = "golem"
 	siemens_coefficient = 0
 	unacidable = 1
-	flags = ABSTRACT | NODROP
-
-/obj/item/clothing/mask/breath/golem
-	name = "golem's face"
-	desc = "the imposing face of an adamantine golem"
-	icon_state = "golem"
-	item_state = "golem"
-	siemens_coefficient = 0
-	unacidable = 1
-	flags = ABSTRACT | NODROP
+	flags = ABSTRACT | NODROP | MASKINTERNALS | MASKCOVERSMOUTH
 
 
 /obj/item/clothing/gloves/golem

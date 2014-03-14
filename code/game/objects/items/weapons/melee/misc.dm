@@ -49,16 +49,16 @@
 
 	if(user.a_intent == "harm")
 		if(!..()) return
-		if(M.stuttering < 8 && !(HULK in M.mutations))
-			M.stuttering = 8
-		M.Stun(8)
-		M.Weaken(8)
+		if(M.stuttering < 7 && !(HULK in M.mutations))
+			M.stuttering = 7
+		M.Stun(7)
+		M.Weaken(7)
 		M.visible_message("<span class='danger'>[M] has been beaten with [src] by [user]!</span>", \
 							"<span class='userdanger'>[M] has been beaten with [src] by [user]!</span>")
 	else
 		playsound(loc, 'sound/weapons/Genhit.ogg', 50, 1, -1)
-		M.Stun(5)
-		M.Weaken(5)
+		M.Stun(7)
+		M.Weaken(7)
 		M.visible_message("<span class='danger'>[M] has been stunned with [src] by [user]!</span>", \
 							"<span class='userdanger'>[M] has been stunned with [src] by [user]!</span>")
 

@@ -1,4 +1,3 @@
-
 /obj/machinery/microwave
 	name = "microwave"
 	icon = 'icons/obj/kitchen.dmi'
@@ -46,8 +45,7 @@
 	component_parts += new /obj/item/weapon/circuitboard/microwave(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil(null)
-	component_parts += new /obj/item/stack/cable_coil(null)
+	component_parts += new /obj/item/stack/cable_coil(null, 2)
 	RefreshParts()
 
 /obj/machinery/microwave/RefreshParts()
@@ -66,6 +64,9 @@
 			return
 		if(default_unfasten_wrench(user, O))
 			return
+
+	if(exchange_parts(user, O))
+		return
 
 	default_deconstruction_crowbar(O)
 

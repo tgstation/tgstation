@@ -16,7 +16,8 @@
 
 
 /obj/structure/window/bullet_act(var/obj/item/projectile/Proj)
-	health -= Proj.damage
+	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		health -= Proj.damage
 	..()
 	if(health <= 0)
 		new /obj/item/weapon/shard(loc)

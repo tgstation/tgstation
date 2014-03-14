@@ -13,17 +13,23 @@
 	anchored = 1
 	var/efficiency
 	state_open = 1
+	var/initial_bin_rating = 1
 	var/min_health = 25
 	var/list/injection_chems = list() //list of injectable chems except inaprovaline, coz inaprovaline is always avalible
 	var/list/possible_chems = list(list("stoxin", "dexalin", "bicaridine", "kelotane"),
-									list("stoxin", "dexalinp", "imidazoline", "dermaline", "bicaridine"),
-									list("tricordrazine", "anti_toxin", "ryetalyn", "dermaline", "bicaridine", "imidazoline", "alkysine", "arithrazine"))
+								   list("stoxin", "dexalinp", "imidazoline", "dermaline", "bicaridine"),
+								   list("tricordrazine", "anti_toxin", "ryetalyn", "dermaline", "bicaridine", "imidazoline", "alkysine", "arithrazine"))
 
 /obj/machinery/sleeper/New()
 	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/sleeper(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+
+	// Customizable bin rating, used by the labor camp to stop people filling themselves with chemicals and escaping.
+	var/obj/item/weapon/stock_parts/matter_bin/B = new(null)
+	B.rating = initial_bin_rating
+	component_parts += B
+
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
@@ -69,6 +75,9 @@
 			return
 
 	if(default_change_direction_wrench(user, I))
+		return
+
+	if(exchange_parts(user, I))
 		return
 
 	default_deconstruction_crowbar(I)
@@ -224,10 +233,11 @@
 
 /obj/machinery/sleeper/proc/inject_chem(mob/user, chem)
 	if(occupant && occupant.reagents)
-		if(occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency)
-			occupant.reagents.add_reagent(chem, 10)
-		var/units = round(occupant.reagents.get_reagent_amount(chem))
-		user << "<span class='notice'>Occupant now has [units] unit\s of [chem] in their bloodstream.</span>"
+		if(chem in injection_chems + "inaprovaline")
+			if(occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency)
+				occupant.reagents.add_reagent(chem, 10)
+			var/units = round(occupant.reagents.get_reagent_amount(chem))
+			user << "<span class='notice'>Occupant now has [units] unit\s of [chem] in their bloodstream.</span>"
 
 /obj/machinery/sleeper/update_icon()
 	if(state_open)

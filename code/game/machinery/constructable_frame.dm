@@ -149,9 +149,10 @@
 						components += P
 						req_components[I]--
 						update_req_desc()
-						break
+						return 1
 				if(!success)
 					user << "<span class='danger'>You cannot add that to the machine!</span>"
+					return 0
 
 
 //Machine Frame Circuit Boards
@@ -194,7 +195,7 @@ to destroy them and players will be able to make replacements.
 	origin_tech = "programming=4;powerstorage=5;engineering=5"
 	req_components = list(
 							"/obj/item/stack/cable_coil" = 5,
-							"/obj/item/weapon/cell" = 5,
+							"/obj/item/weapon/stock_parts/cell" = 5,
 							"/obj/item/weapon/stock_parts/capacitor" = 1)
 
 /obj/item/weapon/circuitboard/power_compressor
@@ -338,7 +339,7 @@ to destroy them and players will be able to make replacements.
 							"/obj/item/weapon/stock_parts/capacitor" = 1,
 							"/obj/item/weapon/stock_parts/manipulator" = 1,
 							"/obj/item/weapon/stock_parts/console_screen" = 1,
-							"/obj/item/weapon/cell" = 1)
+							"/obj/item/weapon/stock_parts/cell" = 1)
 
 
 /obj/item/weapon/circuitboard/destructive_analyzer
@@ -453,7 +454,7 @@ obj/item/weapon/circuitboard/rdserver
 	origin_tech = "powerstorage=3;engineering=3"
 	req_components = list(
 							"/obj/item/weapon/stock_parts/capacitor" = 2,
-							"/obj/item/weapon/cell" = 1,
+							"/obj/item/weapon/stock_parts/cell" = 1,
 							"/obj/item/weapon/stock_parts/manipulator" = 1,)
 
 // Telecomms circuit boards:
