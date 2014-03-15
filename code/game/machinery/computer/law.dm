@@ -68,7 +68,7 @@
 		if(istype(O, /obj/item/weapon/aiModule))
 			if(install_module(O,user))
 				announce_law_changes(user)
-		if(istype(O, /obj/item/weapon/planning_frame))
+		else if(istype(O, /obj/item/weapon/planning_frame))
 			if(stat & NOPOWER)
 				usr << "The upload computer has no power!"
 				return

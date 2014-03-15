@@ -61,7 +61,7 @@ By N3X15
 		if(sender)
 			sender << "No law detected on module, please create one."
 		return 0
-	..()
+	return ..()
 
 /////////////////////////////////////
 // Core Freeform
