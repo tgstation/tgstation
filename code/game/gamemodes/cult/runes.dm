@@ -113,6 +113,7 @@ var/list/sacrificed = list()
 					M.mind.special_role = "Cultist"
 					M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
 					M << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
+/*			//convert no longer gives words
 					//picking which word to use
 					if(usr.mind.cult_words.len != ticker.mode.allwords.len) // No point running if they already know everything
 						var/convert_word
@@ -127,7 +128,7 @@ var/list/sacrificed = list()
 						else
 							usr << "\red The Geometer of Blood is pleased to see his followers grow in numbers."
 							ticker.mode.grant_runeword(usr, convert_word)
-						return 1
+						return 1		*/
 				else
 					M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
 					M << "<font color=\"red\"><b>And not a single fuck was given, exterminate the cult at all costs.</b></font>"

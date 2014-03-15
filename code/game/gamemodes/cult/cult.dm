@@ -22,9 +22,9 @@
 	antag_flag = BE_CULTIST
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	protected_jobs = list()
-	required_players = 15
-	required_enemies = 3
-	recommended_enemies = 4
+	required_players = 20
+	required_enemies = 9 // 3+3+3 - d' magic number o' magic numbars mon
+	recommended_enemies = 9
 
 	uplink_welcome = "Nar-Sie Uplink Console:"
 	uplink_uses = 10
@@ -124,11 +124,12 @@
 				explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
 		cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
 		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
-	cult_mind.current << "The Geometer of Blood grants you the knowledge to convert non-believers. (Join Blood Self)"
-	cult_mind.memory += "The Geometer of Blood grants you the knowledge to convert non-believers. (Join Blood Self)<BR>"
-	grant_runeword(cult_mind.current,"join")
-	grant_runeword(cult_mind.current,"blood")
-	grant_runeword(cult_mind.current,"self")
+	cult_mind.current << "The Geometer of Blood grants you the knowledge to sacrifice non-believers. (Hell Blood Join)"
+	cult_mind.memory += "The Geometer of Blood grants you the knowledge to sacrifice non-believers. (Hell Blood Join)<BR>"
+	for(var/startingword in startwords)
+		grant_runeword(cult_mind.current,startingword)
+//	grant_runeword(cult_mind.current,"blood")
+//	grant_runeword(cult_mind.current,"hell")
 
 /datum/game_mode/proc/equip_cultist(mob/living/carbon/human/mob)
 	if(!istype(mob))
