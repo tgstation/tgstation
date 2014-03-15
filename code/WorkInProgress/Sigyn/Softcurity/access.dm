@@ -74,7 +74,6 @@
 /var/const/access_cent_living = 105//Living quarters.
 /var/const/access_cent_storage = 106//Generic storage areas.
 /var/const/access_cent_teleporter = 107//Teleporter.
-/var/const/access_cent_creed = 108//Creed's office.
 /var/const/access_cent_captain = 109//Captain's office/ID comp/AI.
 
 	//The Syndicate
@@ -198,11 +197,11 @@
 			return list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
 		if("Medical Doctor")
 			return list(access_medical, access_morgue, access_surgery)
-		if("Botanist")	// -- TLE
+		if("Botanist")
 			return list(access_hydroponics, access_morgue) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
-		if("Librarian") // -- TLE
+		if("Librarian")
 			return list(access_library)
-		if("Lawyer") //Muskets 160910
+		if("Lawyer")
 			return list(access_lawyer, access_court, access_sec_doors)
 		if("Captain")
 			return get_all_accesses()
@@ -283,7 +282,7 @@
 		if("Research Officer")
 			return list(access_cent_general, access_cent_specops, access_cent_medical, access_cent_teleporter, access_cent_storage)
 		if("BlackOps Commander")
-			return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_living, access_cent_storage, access_cent_creed)
+			return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_living, access_cent_storage)
 		if("Supreme Commander")
 			return get_all_centcom_access()
 
@@ -301,7 +300,7 @@
 	            access_keycard_auth, access_tcomsat, access_gateway)
 
 /proc/get_all_centcom_access()
-	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_creed, access_cent_captain)
+	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_captain)
 
 /proc/get_all_syndicate_access()
 	return list(access_syndicate)
@@ -490,8 +489,6 @@
 			return "Code Blue"
 		if(access_cent_specops)
 			return "Code Black"
-		if(access_cent_creed)
-			return "Code Silver"
 		if(access_cent_captain)
 			return "Code Gold"
 

@@ -182,12 +182,12 @@
 		msg += "[t_He] [t_is] wearing \icon[wear_id] \a [wear_id].\n"
 
 	//Jitters
-	if(is_jittery)
-		if(jitteriness >= 300)
+	switch(jitteriness)
+		if(300 to INFINITY)
 			msg += "<span class='warning'><B>[t_He] [t_is] convulsing violently!</B></span>\n"
-		else if(jitteriness >= 200)
+		if(200 to 300)
 			msg += "<span class='warning'>[t_He] [t_is] extremely jittery.</span>\n"
-		else if(jitteriness >= 100)
+		if(100 to 200)
 			msg += "<span class='warning'>[t_He] [t_is] twitching ever so slightly.</span>\n"
 
 	if(suiciding)

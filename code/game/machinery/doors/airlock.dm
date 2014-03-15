@@ -300,8 +300,8 @@ About the new airlock wires panel:
 				return
 		else if(user.hallucination > 50 && prob(10) && src.operating == 0)
 			user << "\red <B>You feel a powerful shock course through your body!</B>"
-			user.halloss += 10
-			user.stunned += 10
+			user.staminaloss += 50
+			user.stunned += 5
 			return
 	..(user)
 
@@ -863,7 +863,7 @@ About the new airlock wires panel:
 		return src.attack_hand(user)
 	else if(istype(C, /obj/item/device/assembly/signaler))
 		return src.attack_hand(user)
-	else if(istype(C, /obj/item/weapon/pai_cable))	// -- TLE
+	else if(istype(C, /obj/item/weapon/pai_cable))
 		var/obj/item/weapon/pai_cable/cable = C
 		cable.plugin(src, user)
 	else if(istype(C, /obj/item/weapon/crowbar) || istype(C, /obj/item/weapon/twohanded/fireaxe) )

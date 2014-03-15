@@ -89,14 +89,14 @@
 
 	if(I == wear_suit)
 		if(s_store)
-			unEquip(s_store)
+			unEquip(s_store, 1) //It makes no sense for your suit storage to stay on you if you drop your suit.
 		wear_suit = null
 		update_inv_wear_suit(0)
 	else if(I == w_uniform)
 		if(r_store)
-			unEquip(r_store)
+			unEquip(r_store, 1) //Again, makes sense for pockets to drop.
 		if(l_store)
-			unEquip(l_store)
+			unEquip(l_store, 1)
 		if(wear_id)
 			unEquip(wear_id)
 		if(belt)

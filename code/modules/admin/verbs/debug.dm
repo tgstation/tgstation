@@ -19,7 +19,7 @@
 /* 21st Sept 2010
 Updated by Skie -- Still not perfect but better!
 Stuff you can't do:
-Call proc /mob/proc/make_dizzy() for some player
+Call proc /mob/proc/Dizzy() for some player
 Because if you select a player mob as owner it tries to do the proc for
 /mob/living/carbon/human/ instead. And that gives a run-time error.
 But you can call procs that are of type /mob/living/carbon/human/proc/ for that player.
@@ -316,7 +316,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 */
 /*
-/client/proc/make_cultist(var/mob/M in world) // -- TLE, modified by Urist
+/client/proc/make_cultist(var/mob/M in world)
 	set category = "Fun"
 	set name = "Make Cultist"
 	set desc = "Makes target a cultist"
@@ -709,7 +709,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/det_hat(M), slot_head)
 
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile(M), slot_r_hand)
-			M.equip_to_slot_or_del(new /obj/item/ammo_box/a357(M), slot_l_store)
+			M.equip_to_slot_or_del(new /obj/item/ammo_box/c10mm(M), slot_l_store)
 
 		if ("tournament chef") //Steven Seagal FTW
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chef(M), slot_w_uniform)

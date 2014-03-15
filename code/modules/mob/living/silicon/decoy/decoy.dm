@@ -2,7 +2,7 @@
 	name = "AI"
 	icon = 'icons/mob/AI.dmi'//
 	icon_state = "ai"
-	anchored = 1 // -- TLE
+	anchored = 1
 	canmove = 0
 
 /mob/living/silicon/decoy/New()

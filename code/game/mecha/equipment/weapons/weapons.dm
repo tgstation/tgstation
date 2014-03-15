@@ -134,7 +134,7 @@
 			M.Stun(10)
 			M.Paralyse(4)
 		else
-			M.make_jittery(500)
+			M.Jitter(500)
 		/* //else the mousetraps are useless
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
@@ -201,10 +201,18 @@
 	name = "\improper FNX-99 \"Hades\" Carbine"
 	icon_state = "mecha_carbine"
 	equip_cooldown = 5
-	projectile = /obj/item/projectile/bullet/mechincendiary
+	projectile = /obj/item/projectile/bullet/incendiary/mech
 	projectiles = 24
 	projectile_energy_cost = 15
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced
+	name = "\improper S.H.H. \"Quietus\" Carbine"
+	fire_sound = "sound/weapons/Gunshot_silenced.ogg"
+	icon_state = "mecha_mime"
+	equip_cooldown = 30
+	projectile = /obj/item/projectile/bullet/mime
+	projectiles = 6
+	projectile_energy_cost = 50
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
 	name = "\improper LBX AC 10 \"Scattershot\""

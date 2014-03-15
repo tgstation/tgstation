@@ -10,7 +10,6 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 			return 1
 	return 0
 
-// This proc has some procs that should be extracted from it. I believe we can develop some helper procs from it - Rockdtben
 /mob/proc/contract_disease(var/datum/disease/virus, var/skip_this = 0, var/force_species_check=1, var/spread_type = -5)
 	//world << "Contract_disease called by [src] with virus [virus]"
 	if(stat >=2)

@@ -8,13 +8,6 @@
 	slot_flags = SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
 
-/obj/item/weapon/gun/energy/ionrifle/emp_act(severity)
-	if(severity <= 2)
-		power_supply.use(round(power_supply.maxcharge / severity))
-		update_icon()
-	else
-		return
-
 /obj/item/weapon/gun/energy/decloner
 	name = "biological demolecularisor"
 	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
@@ -64,7 +57,7 @@
 	item_state = "c20r"
 	w_class = 4
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
-	cell_type = "/obj/item/weapon/cell/potato"
+	cell_type = "/obj/item/weapon/stock_parts/cell/potato"
 	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
 	var/charge_tick = 0
 	var/recharge_time = 5 //Time it takes for shots to recharge (in ticks)
@@ -110,7 +103,7 @@
 	icon_state = "kineticgun"
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
-	cell_type = "/obj/item/weapon/cell/crap"
+	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
 	var/overheat = 0
 	var/recent_reload = 1
 
@@ -129,3 +122,11 @@
 	recent_reload = 1
 	update_icon()
 	return
+
+/obj/item/weapon/gun/energy/disabler
+	name = "disabler"
+	desc = "A self defense weapon that exhausts targets, weakening them until they collapse. Non-lethal."
+	icon_state = "disabler"
+	item_state = null
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
+	cell_type = "/obj/item/weapon/stock_parts/cell"

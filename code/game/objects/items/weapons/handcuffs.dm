@@ -40,7 +40,7 @@
 
 		var/turf/user_loc = user.loc
 		var/turf/C_loc = C.loc
-		if(do_after(user, 40))
+		if(do_after(user, 30))
 			if(!C || C.handcuffed)
 				return
 			if(user_loc == user.loc && C_loc == C.loc)

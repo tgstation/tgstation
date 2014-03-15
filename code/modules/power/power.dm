@@ -400,7 +400,7 @@
 
 	var/numapc = 0
 
-	if(nodes && nodes.len) // Added to fix a bad list bug -- TLE
+	if(nodes && nodes.len)
 		for(var/obj/machinery/power/terminal/term in nodes)
 			if( istype( term.master, /obj/machinery/power/apc ) )
 				numapc++
@@ -450,8 +450,7 @@
 		else
 			return 0
 
-//The powernet that calls this proc will consume the other powernet - Rockdtben
-//TODO: rewrite so the larger net absorbs the smaller net
+//The powernet that calls this proc will consume the other powernet
 /proc/merge_powernets(var/datum/powernet/net1, var/datum/powernet/net2)
 	if(!net1 || !net2)	return
 	if(net1 == net2)	return
@@ -534,11 +533,11 @@
 		power_source = Cable.powernet
 
 	var/datum/powernet/PN
-	var/obj/item/weapon/cell/cell
+	var/obj/item/weapon/stock_parts/cell/cell
 
 	if(istype(power_source,/datum/powernet))
 		PN = power_source
-	else if(istype(power_source,/obj/item/weapon/cell))
+	else if(istype(power_source,/obj/item/weapon/stock_parts/cell))
 		cell = power_source
 	else if(istype(power_source,/obj/machinery/power/apc))
 		var/obj/machinery/power/apc/apc = power_source
@@ -573,7 +572,7 @@
 	else if (istype(power_source,/datum/powernet))
 		var/drained_power = drained_energy/CELLRATE //convert from "joules" to "watts"
 		PN.newload+=drained_power
-	else if (istype(power_source, /obj/item/weapon/cell))
+	else if (istype(power_source, /obj/item/weapon/stock_parts/cell))
 		cell.use(drained_energy)
 	return drained_energy
 

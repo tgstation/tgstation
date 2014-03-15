@@ -53,7 +53,7 @@
 
 	var/server
 	var/banappeals
-	var/wikiurl = "http://wiki.ss13.eu" // Default wiki link.
+	var/wikiurl = "http://www.ss13.eu/wiki" // Default wiki link.
 	var/forumurl
 
 	var/forbid_singulo_possession = 0
@@ -75,7 +75,7 @@
 	var/allow_ai = 0					// allow ai job
 
 	var/traitor_scaling_coeff = 6		//how much does the amount of players get divided by to determine traitors
-	var/changeling_scaling_coeff = 10	//how much does the amount of players get divided by to determine changelings
+	var/changeling_scaling_coeff = 7	//how much does the amount of players get divided by to determine changelings
 
 	var/protect_roles_from_antagonist = 0// If security and such can be traitor/cult/other
 	var/allow_latejoin_antagonists = 0 // If late-joining players can be traitor/changeling
@@ -371,7 +371,7 @@
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
-/datum/configuration/proc/loadsql(filename)  // -- TLE
+/datum/configuration/proc/loadsql(filename)
 	var/list/Lines = file2list(filename)
 	for(var/t in Lines)
 		if(!t)	continue

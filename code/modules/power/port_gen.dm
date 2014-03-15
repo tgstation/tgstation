@@ -102,7 +102,7 @@ display round(lastgen) and plasmatank amount
 	var/sheet_path = /obj/item/stack/sheet/mineral/plasma
 	var/board_path = "/obj/item/weapon/circuitboard/pacman"
 	var/sheet_left = 0 // How much is left of the sheet
-	var/time_per_sheet = 40
+	var/time_per_sheet = 260
 	var/heat = 0
 
 /obj/machinery/power/port_gen/pacman/initialize()
@@ -221,6 +221,9 @@ display round(lastgen) and plasmatank amount
 		emp_act(1)
 	else if(!active)
 
+		if(exchange_parts(user, O))
+			return
+
 		if(istype(O, /obj/item/weapon/wrench))
 
 			if(!anchored && !isinspace())
@@ -242,7 +245,7 @@ display round(lastgen) and plasmatank amount
 			else
 				user << "\blue You close the access panel."
 		else if(istype(O, /obj/item/weapon/crowbar) && panel_open)
-			default_deconstruction_crowbar()
+			default_deconstruction_crowbar(O)
 
 /obj/machinery/power/port_gen/pacman/attack_hand(mob/user as mob)
 	..()
@@ -318,7 +321,7 @@ display round(lastgen) and plasmatank amount
 	icon_state = "portgen1"
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
 	power_gen = 15000
-	time_per_sheet = 65
+	time_per_sheet = 85
 	board_path = "/obj/item/weapon/circuitboard/pacman/super"
 	overheat()
 		explosion(src.loc, 3, 3, 3, -1)
