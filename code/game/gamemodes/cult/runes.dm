@@ -99,41 +99,48 @@ var/list/sacrificed = list()
 /////////////////////////////////////////THIRD RUNE
 
 		convert()
+			var/list/mob/living/carbon/human/cultsinrange = list()
 			for(var/mob/living/carbon/M in src.loc)
 				if(iscultist(M))
 					continue
 				if(M.stat==2)
 					continue
-				usr.say("Mah[pick("'","`")]weyh pleggh at e'ntrath!")
-				M.visible_message("\red [M] writhes in pain as the markings below him glow a bloody red.", \
-				"\red AAAAAAHHHH!.", \
-				"\red You hear an anguished scream.")
-				if(is_convertable_to_cult(M.mind))
-					ticker.mode.add_cultist(M.mind)
-					M.mind.special_role = "Cultist"
-					M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
-					M << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
-/*			//convert no longer gives words
-					//picking which word to use
-					if(usr.mind.cult_words.len != ticker.mode.allwords.len) // No point running if they already know everything
-						var/convert_word
-						for(var/i=1, i<=3, i++)
-							convert_word = pick(ticker.mode.grantwords)
-							if(convert_word in usr.mind.cult_words)
-								if(i==3) convert_word = null				//NOTE: If max loops is changed ensure this condition is changed to match /Mal
+				for(var/mob/living/carbon/C in orange(1,src))
+					if(iscultist(C) && !C.stat)		//converting requires three cultists
+						cultsinrange += C
+						C.say("Mah[pick("'","`")]weyh pleggh at e'ntrath!")
+				if(cultsinrange.len >= 3)
+					M.visible_message("\red [M] writhes in pain as the markings below him glow a bloody red.", \
+					"\red AAAAAAHHHH!.", \
+					"\red You hear an anguished scream.")
+					if(is_convertable_to_cult(M.mind))
+						ticker.mode.add_cultist(M.mind)
+						M.mind.special_role = "Cultist"
+						M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
+						M << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
+	/*	//convert no longer gives words
+						//picking which word to use
+						if(usr.mind.cult_words.len != ticker.mode.allwords.len) // No point running if they already know everything
+							var/convert_word
+							for(var/i=1, i<=3, i++)
+								convert_word = pick(ticker.mode.grantwords)
+								if(convert_word in usr.mind.cult_words)
+									if(i==3) convert_word = null				//NOTE: If max loops is changed ensure this condition is changed to match /Mal
+								else
+									break
+							if(!convert_word)
+								usr << "\red This Convert was unworthy of knowledge of the other side!"
 							else
-								break
-						if(!convert_word)
-							usr << "\red This Convert was unworthy of knowledge of the other side!"
-						else
-							usr << "\red The Geometer of Blood is pleased to see his followers grow in numbers."
-							ticker.mode.grant_runeword(usr, convert_word)
-						return 1		*/
+								usr << "\red The Geometer of Blood is pleased to see his followers grow in numbers."
+								ticker.mode.grant_runeword(usr, convert_word)
+							return 1		*/
+					else
+						M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
+						M << "<font color=\"red\"><b>And not a single fuck was given, exterminate the cult at all costs.</b></font>"
+						return 0
 				else
-					M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
-					M << "<font color=\"red\"><b>And not a single fuck was given, exterminate the cult at all costs.</b></font>"
-					return 0
-
+					for(var/mob/living/carbon/human/cultist in cultsinrange)
+						cultist << "<span class='warning'>You need more brothers to overcome their lies and make them see Truth. </span>"
 			return fizzle()
 
 
@@ -590,10 +597,7 @@ var/list/sacrificed = list()
 					if(H.mind == ticker.mode:sacrifice_target)
 						if(cultsinrange.len >= 3)
 							sacrificed += H.mind
-							if(isrobot(H))
-								H.dust()//To prevent the MMI from remaining
-							else
-								H.gib()
+							stone_or_gib(H)
 							usr << "\red The Geometer of Blood accepts this sacrifice, your objective is now complete."
 							usr << "\red He is pleased!"
 							sac_grant_word()
@@ -606,10 +610,7 @@ var/list/sacrificed = list()
 							if(H.stat !=2)
 								usr << "\red The Geometer of Blood accepts this sacrifice."
 								sac_grant_word()
-								if(isrobot(H))
-									H.dust()//To prevent the MMI from remaining
-								else
-									H.gib()
+								stone_or_gib(H)
 							else
 								if(prob(60))
 									usr << "\red The Geometer of blood accepts this sacrifice."
@@ -617,10 +618,7 @@ var/list/sacrificed = list()
 								else
 									usr << "\red The Geometer of blood accepts this sacrifice."
 									usr << "\red However, a mere dead body is not enough to satisfy Him."
-								if(isrobot(H))
-									H.dust()//To prevent the MMI from remaining
-								else
-									H.gib()
+								stone_or_gib(H)
 						else
 							if(H.stat !=2)
 								usr << "\red The victim is still alive, you will need more cultists chanting for the sacrifice to succeed."
@@ -631,10 +629,7 @@ var/list/sacrificed = list()
 								else
 									usr << "\red The Geometer of blood accepts this sacrifice."
 									usr << "\red However, a mere dead body is not enough to satisfy Him."
-								if(isrobot(H))
-									H.dust()//To prevent the MMI from remaining
-								else
-									H.gib()
+								stone_or_gib(H)
 				else
 					if(cultsinrange.len >= 3)
 						if(H.stat !=2)
@@ -651,10 +646,7 @@ var/list/sacrificed = list()
 							else
 								usr << "\red The Geometer of blood accepts this sacrifice."
 								usr << "\red However, a mere dead body is not enough to satisfy Him."
-							if(isrobot(H))
-								H.dust()//To prevent the MMI from remaining
-							else
-								H.gib()
+							stone_or_gib(H)
 					else
 						if(H.stat !=2)
 							usr << "\red The victim is still alive, you will need more cultists chanting for the sacrifice to succeed."
@@ -665,10 +657,7 @@ var/list/sacrificed = list()
 							else
 								usr << "\red The Geometer of blood accepts this sacrifice."
 								usr << "\red However, a mere dead body is not enough to satisfy Him."
-							if(isrobot(H))
-								H.dust()//To prevent the MMI from remaining
-							else
-								H.gib()
+							stone_or_gib(H)
 			for(var/mob/living/carbon/monkey/M in src.loc)
 				if (ticker.mode.name == "cult")
 					if(M.mind == ticker.mode:sacrifice_target)
@@ -693,7 +682,7 @@ var/list/sacrificed = list()
 					usr << "\red The Geometer of Blood accepts your meager sacrifice."
 					if(prob(30))
 						ticker.mode.grant_runeword(usr)
-				M.gib()
+				stone_or_gib(M)
 /*			for(var/mob/living/carbon/alien/A)
 				for(var/mob/K in cultsinrange)
 					K.say("Barhah hra zar'garis!")
@@ -716,6 +705,16 @@ var/list/sacrificed = list()
 				var/pick_list = ticker.mode.allwords - usr.mind.cult_words
 				convert_word = pick(pick_list)
 				ticker.mode.grant_runeword(usr, convert_word)
+
+		stone_or_gib(var/mob/T)
+			var/obj/item/device/soulstone/stone = new /obj/item/device/soulstone(get_turf(src))
+			if(!stone.transfer_soul("FORCE", T, usr))	//if it fails to add soul
+				del stone
+			if(T)
+				if(isrobot(T))
+					T.dust()//To prevent the MMI from remaining
+				else
+					T.gib()
 
 
 /////////////////////////////////////////SIXTEENTH RUNE
