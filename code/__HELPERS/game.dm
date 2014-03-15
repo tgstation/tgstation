@@ -191,7 +191,7 @@ proc/get_mobs_in_view(var/R, var/atom/source)
 
 	for(var/atom/A in range)
 
-		if(istype(A, /obj/item/device/radio) || ismob(A))
+		if(isobj(A) || ismob(A))
 			hear |= recursive_mob_check(A, 1, 0, 1)
 
 	return hear
