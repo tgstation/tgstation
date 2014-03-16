@@ -1114,6 +1114,12 @@ datum/mind
 	if(!mind.name)	mind.name = real_name
 	mind.current = src
 
+//VENTCRAWLERS
+/mob/living/mind_initialize()
+	..()
+	if(ventcrawler)
+		add_memory("As [real_name] you can ventcrawl! Use alt+click on vents to quickly travel about the station.")
+
 //HUMAN
 /mob/living/carbon/human/mind_initialize()
 	..()
