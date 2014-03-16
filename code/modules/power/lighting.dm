@@ -501,6 +501,8 @@
 	if(isobserver(user))
 		return
 
+	if(!Adjacent(user)) return
+
 	add_fingerprint(user)
 
 	if(status == LIGHT_EMPTY)
