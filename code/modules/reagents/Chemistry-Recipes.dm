@@ -996,7 +996,7 @@ datum
 			required_container = /obj/item/slime_extract/grey
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
-				send_admin_alert(holder, reaction_name="grey slime reaction")
+				send_admin_alert(holder, reaction_name="grey slime")
 
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
@@ -1086,7 +1086,7 @@ datum
 					)//exclusion list for things you don't want the reaction to create.
 				var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 
-				send_admin_alert(holder, reaction_name="gold slime + plasma reaction")
+				send_admin_alert(holder, reaction_name="gold slime + plasma")
 
 				playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
@@ -1141,7 +1141,7 @@ datum
 					)//exclusion list for things you don't want the reaction to create.
 				var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 
-				send_admin_alert(holder, reaction_name="gold slime + blood reaction")
+				send_admin_alert(holder, reaction_name="gold slime + blood")
 
 				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
