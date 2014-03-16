@@ -136,7 +136,6 @@ proc/process_ghost_teleport_locs()
 	lighting_use_dynamic = 0
 	var/push_dir = SOUTH
 	var/destination
-	has_gravity = 1
 
 /area/shuttle/arrival
 	name = "\improper Arrival Shuttle"
@@ -403,11 +402,11 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Syndicate Station"
 	icon_state = "yellow"
 	requires_power = 0
-	has_gravity = 1
 
 /area/syndicate_station/start
 	name = "\improper Syndicate Forward Operating Base"
 	icon_state = "yellow"
+	has_gravity = 1
 
 /area/syndicate_station/southwest
 	name = "\improper south-west of SS13"

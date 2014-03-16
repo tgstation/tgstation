@@ -6,9 +6,6 @@
 
 var/global/datum/controller/supply_shuttle/supply_shuttle
 
-/area/supply
-	has_gravity = 1
-
 /area/supply/station //DO NOT TURN THE lighting_use_dynamic STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
 	name = "supply shuttle"
 	icon_state = "shuttle3"
