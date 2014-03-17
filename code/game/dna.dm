@@ -175,10 +175,13 @@
 	M.dna.uni_identity = newdna
 	return
 
-/proc/clean_randmut(mob/living/carbon/M, list/candidates, difficulty = 2)
+/proc/clean_dna(mob/living/carbon/M)
 	if(!check_dna_integrity(M))
 		return
 	M.dna.struc_enzymes = M.dna.generate_struc_enzymes(M) // Give clean DNA.
+
+/proc/clean_randmut(mob/living/carbon/M, list/candidates, difficulty = 2)
+	clean_dna(M)
 	randmut(M, candidates, difficulty)
 
 /proc/scramble_dna(mob/living/carbon/M, ui=FALSE, se=FALSE, probability)
