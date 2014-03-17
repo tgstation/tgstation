@@ -918,7 +918,7 @@ About the new airlock wires panel:
 					user << "<span class='warning'>You discard the damaged electronics.</span>"
 					del(src)
 					return
-				user << "\blue You removed the airlock electronics!"
+				user << "<span class='notice'>You removed the airlock electronics!</span>"
 
 				var/obj/item/weapon/airlock_electronics/ae
 				if(!electronics)
@@ -940,20 +940,20 @@ About the new airlock wires panel:
 				if(beingcrowbarred == 0) //being fireaxe'd
 					var/obj/item/weapon/twohanded/fireaxe/F = C
 					if(F:wielded)
-						spawn(0)	open(1)
+						spawn(0)	open(2)
 					else
 						user << "<span class='warning'>You need to be wielding the Fire axe to do that.</span>"
 				else
-					spawn(0)	open(1)
+					spawn(0)	open(2)
 			else
 				if(beingcrowbarred == 0)
 					var/obj/item/weapon/twohanded/fireaxe/F = C
 					if(F:wielded)
-						spawn(0)	close(1)
+						spawn(0)	close(2)
 					else
 						user << "<span class='warning'>You need to be wielding the Fire axe to do that.</span>"
 				else
-					spawn(0)	close(1)
+					spawn(0)	close(2)
 
 	else if(istype(C, /obj/item/weapon/airlock_painter))
 		change_paintjob(C, user)
@@ -972,15 +972,18 @@ About the new airlock wires panel:
 	if(!forced)
 		if( !arePowerSystemsOn() || (stat & NOPOWER) || isWireCut(AIRLOCK_WIRE_OPEN_DOOR) )
 			return 0
-	use_power(50)
-	if(istype(src, /obj/machinery/door/airlock/glass))
-		playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
-	if(istype(src, /obj/machinery/door/airlock/clown))
-		playsound(src.loc, 'sound/items/bikehorn.ogg', 30, 1)
-	else
-		playsound(src.loc, 'sound/machines/airlock.ogg', 30, 1)
-	if(src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
-		src.closeOther.close()
+	if(forced < 2)
+		if(emagged)
+			return 0
+		use_power(50)
+		if(istype(src, /obj/machinery/door/airlock/glass))
+			playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
+		if(istype(src, /obj/machinery/door/airlock/clown))
+			playsound(src.loc, 'sound/items/bikehorn.ogg', 30, 1)
+		else
+			playsound(src.loc, 'sound/machines/airlock.ogg', 30, 1)
+		if(src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
+			src.closeOther.close()
 
 	if(autoclose  && normalspeed)
 		spawn(150)
@@ -1007,13 +1010,16 @@ About the new airlock wires panel:
 
 	crush()
 
-	use_power(50)
-	if(istype(src, /obj/machinery/door/airlock/glass))
-		playsound(src.loc, 'sound/machines/windowdoor.ogg', 30, 1)
-	if(istype(src, /obj/machinery/door/airlock/clown))
-		playsound(src.loc, 'sound/items/bikehorn.ogg', 30, 1)
-	else
-		playsound(src.loc, 'sound/machines/airlock.ogg', 30, 1)
+	if(forced < 2)
+		if(emagged)
+			return
+		use_power(50)
+		if(istype(src, /obj/machinery/door/airlock/glass))
+			playsound(src.loc, 'sound/machines/windowdoor.ogg', 30, 1)
+		if(istype(src, /obj/machinery/door/airlock/clown))
+			playsound(src.loc, 'sound/items/bikehorn.ogg', 30, 1)
+		else
+			playsound(src.loc, 'sound/machines/airlock.ogg', 30, 1)
 	var/obj/structure/window/killthis = (locate(/obj/structure/window) in get_turf(src))
 	if(killthis)
 		killthis.ex_act(2)//Smashin windows
@@ -1033,6 +1039,7 @@ About the new airlock wires panel:
 
 
 /obj/machinery/door/airlock/proc/prison_open()
+	if(emagged)	return
 	src.locked = 0
 	src.open()
 	src.locked = 1
@@ -1040,7 +1047,7 @@ About the new airlock wires panel:
 
 
 /obj/machinery/door/airlock/proc/autoclose()
-	if(!density && !operating && !locked && !welded && autoclose && !emagged)
+	if(!density && !operating && !locked && !welded && autoclose)
 		close()
 
 /obj/machinery/door/airlock/proc/change_paintjob(obj/item/C as obj, mob/user as mob)

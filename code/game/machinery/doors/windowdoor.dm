@@ -100,7 +100,7 @@
 	return 1
 
 /obj/machinery/door/window/close()
-	if (src.operating)
+	if (src.operating || emagged)
 		return 0
 	src.operating = 1
 	flick(text("[]closing", src.base_state), src)

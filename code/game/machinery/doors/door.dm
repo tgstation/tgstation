@@ -86,7 +86,7 @@
 	if(!src.requiresID())
 		user = null
 
-	if(density)
+	if(density && !emagged)
 		if(allowed(user))	open()
 		else				flick("door_deny", src)
 	return
