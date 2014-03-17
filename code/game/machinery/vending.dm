@@ -246,7 +246,7 @@
 					dat += "<a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</a> "
 				else
 					dat += "<span class='linkOff'>Sold out</span> "
-				dat += replacetext("<font color = '[R.display_color]'><b>[R.product_name]</b>:</font>", "ÿ", "")
+				dat += "<font color = '[R.display_color]'><b>[sanitize(R.product_name)]</b>:</font>"
 				dat += " <b>[R.amount]</b>"
 				dat += "</li>"
 			dat += "</ul>"
