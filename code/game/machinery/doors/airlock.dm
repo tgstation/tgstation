@@ -409,7 +409,7 @@ About the new airlock wires panel:
 				overlays += image(icon, "panel_open")
 			if(welded)
 				overlays += image(icon, "welded")
-			if(emergency)
+			if(emergency && !locked)
 				overlays += image(icon, "elights")
 	else
 		icon_state = "door_open"
