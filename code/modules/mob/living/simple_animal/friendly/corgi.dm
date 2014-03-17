@@ -280,19 +280,22 @@
 		if(/obj/item/clothing/head/soft)
 			name = "Corgi Tech [real_name]"
 			desc = "The reason your yellow gloves have chew-marks."
+			emote_see = list("Orders emitter crates and goes full blown cargonia.")
 			valid = 1
 
 		if(/obj/item/clothing/head/fedora)
 			name = "Autistic [real_name]"
-			desc = "You took a dog and showed him the internet? The hell is wrong with you!?"
+			desc = "His paws seem to be covered in what looks like Cheezy Honker dust."
 			emote_hear = list("barks ironicly", "makes you cringe")
 			emote_see = list("unsheathes katana", "tips fedora"/*,"Posts on 4chan" hue*/)
+			valid = 1
 
 		if(/obj/item/clothing/head/fez)
 			name = "Doctor Whom"
 			desc = "A time-dog from the planet barkifray."
 			emote_hear =  list("barks cleverly.")
 			emote_see = list("fiddles around with a sonic-bone", "builds something amazing- thats a poop. He just pooped.")
+			valid = 1
 
 		/*
 		if(/obj/item/clothing/head/hardhat/reindeer)
