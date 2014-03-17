@@ -7,7 +7,7 @@
 	req_human = 1
 
 //A flashy ability, good for crowd control and sewing chaos.
-/obj/effect/proc_holder/changeling/shriek/sting_action(var/mob/user)
+/obj/effect/proc_holder/changeling/resonant_shriek/sting_action(var/mob/user)
 	for(var/mob/living/M in hearers(4, user))
 		if(iscarbon(M))
 			if(!M.mind || !M.mind.changeling)
