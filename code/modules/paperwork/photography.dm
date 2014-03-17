@@ -95,7 +95,7 @@
 /obj/item/device/camera
 	name = "camera"
 	icon = 'icons/obj/items.dmi'
-	desc = "A polaroid camera. 10 photos left."
+	desc = "A polaroid camera."
 	icon_state = "camera"
 	item_state = "electropack"
 	w_class = 2.0
@@ -111,9 +111,10 @@
 	var/blueprints = 0	//are blueprints visible in the current photo being created?
 	var/list/aipictures = list() //Allows for storage of pictures taken by AI, in a similar manner the datacore stores info
 
-/obj/item/device/camera/proc/update_desc()
-	desc = "A polaroid camera. It has [pictures_left] photos left."
-
+/obj/item/device/camera/examine()
+	set src in view(1)
+	..()
+	usr <<"<span class='notice'>It has [pictures_left] photos left.</span>"
 
 
 /obj/item/device/camera/ai_camera //camera AI can take pictures with
@@ -148,7 +149,8 @@
 		user.drop_item()
 		del(I)
 		pictures_left = pictures_max
-		update_desc()
+		icon_state = icon_on
+		on = 1
 		return
 	..()
 
@@ -340,13 +342,13 @@
 	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
 
 	pictures_left--
-	update_desc()
 	user << "<span class='notice'>[pictures_left] photos left.</span>"
 	icon_state = icon_off
 	on = 0
-	spawn(64)
-		icon_state = icon_on
-		on = 1
+	if(pictures_left > 0)
+		spawn(64)
+			icon_state = icon_on
+			on = 1
 
 /obj/item/device/camera/ai_camera/proc/toggle_camera_mode()
 	if(in_camera_mode)
