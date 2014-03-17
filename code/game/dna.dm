@@ -985,3 +985,11 @@ proc/deconstruct_block(value, values, blocksize=DNA_BLOCK_SIZE)
 	if(value > values)
 		value = values
 	return value
+
+
+/datum/dna/proc/is_same_as(var/datum/dna/D)
+	if(uni_identity == D.uni_identity && struc_enzymes == D.struc_enzymes && real_name == D.real_name)
+		if(mutantrace == D.mutantrace && blood_type == D.blood_type)
+			return 1
+	return 0
+
