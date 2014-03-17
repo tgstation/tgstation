@@ -220,7 +220,7 @@
 	step=10
 
 /datum/theft_objective/number/special/uranium
-	name = "refined uranium bars"
+	name = "refined uranium sheets"
 	typepath = /obj/item/stack/sheet/mineral/uranium
 	min=10
 	max=30

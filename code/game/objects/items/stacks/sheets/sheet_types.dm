@@ -188,3 +188,20 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 /obj/item/stack/sheet/cardboard/New(var/loc, var/amount=null)
 		recipes = cardboard_recipes
 		return ..()
+
+/*
+ * /vg/ charcoal
+ */
+var/global/list/datum/stack_recipe/charcoal_recipes = list ()
+
+/obj/item/stack/sheet/charcoal	//N3X15
+	name = "charcoal"
+	desc = "Yum."
+	singular_name = "charcoal sheet"
+	icon_state = "sheet-charcoal"
+	flags = FPRINT | TABLEPASS
+	origin_tech = "materials=1"
+
+/obj/item/stack/sheet/charcoal/New(var/loc, var/amount=null)
+		recipes = charcoal_recipes
+		return ..()
