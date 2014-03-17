@@ -94,12 +94,15 @@ var/global/datum/controller/gameticker/ticker
 	job_master.DivideOccupations() 				//Distribute jobs
 	if (!src.mode.pre_setup_before_jobs)	can_continue = src.mode.pre_setup()
 
-	if(!can_continue)
-		del(mode)
-		current_state = GAME_STATE_PREGAME
-		world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
-		job_master.ResetOccupations()
-		return 0
+	if(!Debug2)
+		if(!can_continue)
+			del(mode)
+			current_state = GAME_STATE_PREGAME
+			world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
+			job_master.ResetOccupations()
+			return 0
+	else
+		world << "<span class='notice'>DEBUG: Bypassing prestart checks..."
 
 	if(hide_mode)
 		var/list/modes = new

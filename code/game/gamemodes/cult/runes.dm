@@ -137,6 +137,10 @@ var/list/sacrificed = list()
 					else
 						M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
 						M << "<font color=\"red\"><b>And not a single fuck was given, exterminate the cult at all costs.</b></font>"
+						if(ticker.mode.name == "cult")
+							if(M.mind == ticker.mode.sacrifice_target)
+								for(var/mob/living/carbon/human/cultist in cultsinrange)
+									cultist << "<span class='h2.userdanger'>The Chosen One!! <BR>KILL THE CHOSEN ONE!!! </span>"
 						return 0
 				else
 					for(var/mob/living/carbon/human/cultist in cultsinrange)

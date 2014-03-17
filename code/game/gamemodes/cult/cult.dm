@@ -13,6 +13,8 @@
 	if(istype(mind.current, /mob/living/carbon/human) && (mind.assigned_role in list("Captain", "Chaplain")))	return 0
 	if(isloyal(mind.current))
 		return 0
+	if (ticker.mode.name == "cult")
+		if(mind.current == ticker.mode.sacrifice_target)	return 0
 	return 1
 
 
@@ -29,7 +31,6 @@
 	uplink_welcome = "Nar-Sie Uplink Console:"
 	uplink_uses = 10
 
-	var/datum/mind/sacrifice_target = null
 	var/finished = 0
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
