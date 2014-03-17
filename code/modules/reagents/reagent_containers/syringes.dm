@@ -429,6 +429,15 @@
 		mode = SYRINGE_INJECT
 		update_icon()
 
+/obj/item/weapon/reagent_containers/syringe/charcoal
+	name = "Syringe (Activated Charcoal)"
+	desc = "Contains activated charcoal - used to treat overdoses."
+	New()
+		..()
+		reagents.add_reagent("charcoal", 15)
+		mode = SYRINGE_INJECT
+		update_icon()
+
 /obj/item/weapon/reagent_containers/ld50_syringe/choral
 	New()
 		..()
@@ -454,6 +463,15 @@
 	New()
 		..()
 		reagents.add_reagent("inaprovaline", 15)
+		mode = SYRINGE_INJECT
+		update_icon()
+
+/obj/item/weapon/reagent_containers/syringe/robot/charcoal
+	name = "Syringe (Activated Charcoal)"
+	desc = "Contains activated charcoal - used to treat overdoses."
+	New()
+		..()
+		reagents.add_reagent("charcoal", 15)
 		mode = SYRINGE_INJECT
 		update_icon()
 
