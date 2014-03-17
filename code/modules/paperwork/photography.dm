@@ -111,6 +111,10 @@
 	var/blueprints = 0	//are blueprints visible in the current photo being created?
 	var/list/aipictures = list() //Allows for storage of pictures taken by AI, in a similar manner the datacore stores info
 
+/obj/item/device/camera/proc/update_desc()
+	desc = "A polaroid camera. It has [pictures_left] photos left."
+
+
 
 /obj/item/device/camera/ai_camera //camera AI can take pictures with
 	name = "AI photo camera"
@@ -144,7 +148,7 @@
 		user.drop_item()
 		del(I)
 		pictures_left = pictures_max
-		desc = "A polaroid camera. It has [pictures_left] photos left."
+		update_desc()
 		return
 	..()
 
@@ -336,7 +340,7 @@
 	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
 
 	pictures_left--
-	desc = "A polaroid camera. It has [pictures_left] photos left."
+	update_desc()
 	user << "<span class='notice'>[pictures_left] photos left.</span>"
 	icon_state = icon_off
 	on = 0
