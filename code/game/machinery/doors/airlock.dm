@@ -441,7 +441,10 @@ About the new airlock wires panel:
 			src.hack(user)
 			return
 		else
-			user << "Airlock AI control has been blocked with a firewall. Unable to hack."
+			user << "<span class='warning'>Airlock AI control has been blocked with a firewall. Unable to hack.</span>"
+	if(emagged)
+		user << "<span class='warning'>Unable to interface: Airlock is unresponsive.</span>"
+		return
 
 	//Separate interface for the AI.
 	user.set_machine(src)
@@ -876,7 +879,6 @@ About the new airlock wires panel:
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
 			if(do_after(user,40))
-				user << "\blue You removed the airlock electronics!"
 				switch(src.doortype)
 					if(0) new/obj/structure/door_assembly/door_assembly_0( src.loc )
 					if(1) new/obj/structure/door_assembly/door_assembly_com( src.loc )
@@ -912,6 +914,11 @@ About the new airlock wires panel:
 					if(31) new/obj/structure/door_assembly/door_assembly_science( src.loc )
 					if(32) new/obj/structure/door_assembly/door_assembly_science/glass( src.loc )
 					if(33) new/obj/structure/door_assembly/door_assembly_highsecurity(src.loc)
+				if(emagged)
+					user << "<span class='warning'>You discard the damaged electronics.</span>"
+					del(src)
+					return
+				user << "\blue You removed the airlock electronics!"
 
 				var/obj/item/weapon/airlock_electronics/ae
 				if(!electronics)
@@ -925,17 +932,17 @@ About the new airlock wires panel:
 				del(src)
 				return
 		else if(arePowerSystemsOn() && !(stat & NOPOWER))
-			user << "\blue The airlock's motors resist your efforts to force it."
+			user << "<span class='warning'> The airlock's motors resist your efforts to force it.</span>"
 		else if(locked)
-			user << "\blue The airlock's bolts prevent it from being forced."
-		else if( !welded && !operating )
+			user << "<span class='warning'> The airlock's bolts prevent it from being forced.</span>"
+		else if( !welded && !operating)
 			if(density)
 				if(beingcrowbarred == 0) //being fireaxe'd
 					var/obj/item/weapon/twohanded/fireaxe/F = C
 					if(F:wielded)
 						spawn(0)	open(1)
 					else
-						user << "\red You need to be wielding the Fire axe to do that."
+						user << "<span class='warning'>You need to be wielding the Fire axe to do that.</span>"
 				else
 					spawn(0)	open(1)
 			else
@@ -944,7 +951,7 @@ About the new airlock wires panel:
 					if(F:wielded)
 						spawn(0)	close(1)
 					else
-						user << "\red You need to be wielding the Fire axe to do that."
+						user << "<span class='warning'>You need to be wielding the Fire axe to do that.</span>"
 				else
 					spawn(0)	close(1)
 
@@ -1033,7 +1040,7 @@ About the new airlock wires panel:
 
 
 /obj/machinery/door/airlock/proc/autoclose()
-	if(!density && !operating && !locked && !welded && autoclose)
+	if(!density && !operating && !locked && !welded && autoclose && !emagged)
 		close()
 
 /obj/machinery/door/airlock/proc/change_paintjob(obj/item/C as obj, mob/user as mob)
