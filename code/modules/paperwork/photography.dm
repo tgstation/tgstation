@@ -144,6 +144,7 @@
 		user.drop_item()
 		del(I)
 		pictures_left = pictures_max
+		desc = "A polaroid camera. It has [pictures_left] photos left."
 		return
 	..()
 
@@ -329,7 +330,7 @@
 	del P    //so 10 thousdand pictures items are not left in memory should an AI take them and then view them all.
 
 /obj/item/device/camera/afterattack(atom/target, mob/user, flag)
-	if(!on || !pictures_left || ismob(target.loc)) return
+	if(!on || !pictures_left || get_dist(src, target) < 1) return
 	captureimage(target, user, flag)
 
 	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
