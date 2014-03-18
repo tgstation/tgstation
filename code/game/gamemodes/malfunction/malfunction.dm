@@ -56,6 +56,7 @@
 			return
 		AI_mind.current.verbs += /mob/living/silicon/ai/proc/choose_modules
 		//AI_mind.current:laws = new /datum/ai_laws/malfunction
+		AI_mind.current:laws_sanity_check()
 		var/datum/ai_laws/laws = AI_mind.current:laws
 		laws.malfunction()
 		AI_mind.current:malf_picker = new /datum/module_picker
