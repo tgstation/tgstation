@@ -175,10 +175,13 @@
 	M.dna.uni_identity = newdna
 	return
 
-/proc/clean_randmut(mob/living/carbon/M, list/candidates, difficulty = 2)
+/proc/clean_dna(mob/living/carbon/M)
 	if(!check_dna_integrity(M))
 		return
 	M.dna.struc_enzymes = M.dna.generate_struc_enzymes(M) // Give clean DNA.
+
+/proc/clean_randmut(mob/living/carbon/M, list/candidates, difficulty = 2)
+	clean_dna(M)
 	randmut(M, candidates, difficulty)
 
 /proc/scramble_dna(mob/living/carbon/M, ui=FALSE, se=FALSE, probability)
@@ -985,3 +988,11 @@ proc/deconstruct_block(value, values, blocksize=DNA_BLOCK_SIZE)
 	if(value > values)
 		value = values
 	return value
+
+
+/datum/dna/proc/is_same_as(var/datum/dna/D)
+	if(uni_identity == D.uni_identity && struc_enzymes == D.struc_enzymes && real_name == D.real_name)
+		if(mutantrace == D.mutantrace && blood_type == D.blood_type)
+			return 1
+	return 0
+
