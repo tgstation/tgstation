@@ -292,6 +292,11 @@
 			desc = "You must respect elder [real_name]"
 			valid = 1
 
+		if(/obj/item/clothing/head/hopcap)
+			name = "Lieutenant [real_name]"
+			desc = "Can actually be trusted to not run off on his own."
+			valid = 1
+
 	if(valid)
 		if(usr)
 			usr.visible_message("[usr] puts [item_to_add] on [real_name]'s head.  [src] looks at [usr] and barks once.",
