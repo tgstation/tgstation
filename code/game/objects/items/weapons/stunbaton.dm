@@ -35,6 +35,9 @@
 /obj/item/weapon/melee/baton/proc/deductcharge(var/chrgdeductamt)
 	if(bcell)
 		if(bcell.use(chrgdeductamt))
+			if(bcell.charge < hitcost)
+				status = 0
+				update_icon()
 			return 1
 		else
 			status = 0
@@ -86,7 +89,7 @@
 		user.Weaken(stunforce*3)
 		deductcharge(hitcost)
 		return
-	if(bcell && bcell.charge > hitcost)
+	if(bcell && bcell.charge >= hitcost)
 		status = !status
 		user << "<span class='notice'>[src] is now [status ? "on" : "off"].</span>"
 		playsound(loc, "sparks", 75, 1, -1)
