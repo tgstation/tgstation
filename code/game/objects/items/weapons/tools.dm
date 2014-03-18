@@ -106,6 +106,7 @@
 	m_amt = 80
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("pinched", "nipped")
+	hitsound = 'sound/itmes/Wirecutter.ogg'
 
 /obj/item/weapon/wirecutters/New()
 	if(prob(50))
