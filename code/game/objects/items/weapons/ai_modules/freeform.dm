@@ -55,6 +55,7 @@ By N3X15
 	laws.add_law(priority, law)
 	lawchanges.Add("The law was '[law]'")
 	log_game("[fmtSubject(sender)] added law \"[law]\" to [fmtSubject(target)]")
+	return 1
 
 /obj/item/weapon/aiModule/freeform/validate(var/datum/ai_laws/laws, var/atom/subject=null, var/mob/sender=null)
 	if(!law)
