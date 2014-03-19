@@ -35,6 +35,7 @@
 	R.modtype = "robot"
 	R.updatename("Default")
 	R.status_flags |= CANPUSH
+	R.connected_ai << "<br><br><span class='notice'>NOTICE - Cyborg module change detected: [R.name] has been reset.</span><br>"
 	R.updateicon()
 
 	return 1
@@ -51,7 +52,7 @@
 
 /obj/item/borg/upgrade/rename/action(var/mob/living/silicon/robot/R)
 	if(..()) return 0
-	R.connected_ai << "<br><br><span class='notice'>NOTICE - Cyborg connection change detected: [R.name] has been reclassified as <b><a href='byond://?src=\ref[R.connected_ai];track2=\ref[R.connected_ai];track=\ref[R]'>[heldname]</a></b>.</span><br>"
+	R.connected_ai << "<br><br><span class='notice'>NOTICE - Cyborg reclassification detected: [R.name] is now designated as [heldname].</span><br>"
 	R.name = heldname
 	R.real_name = heldname
 	R.camera.c_tag = heldname
@@ -77,7 +78,7 @@
 				R.key = ghost.key
 
 	R.stat = CONSCIOUS
-	R.connected_ai << "<br><br><span class='notice'>NOTICE - New cyborg connection detected: <b><a href='byond://?src=\ref[R.connected_ai];track2=\ref[R.connected_ai];track=\ref[R]'>[R.name]</a></b>.</span><br>"
+	R.connected_ai << "<br><br><span class='notice'>NOTICE - New cyborg connection detected: <a href='byond://?src=\ref[R.connected_ai];track2=\ref[R.connected_ai];track=\ref[R]'>[R.name]</a>.</span><br>"
 
 	return 1
 

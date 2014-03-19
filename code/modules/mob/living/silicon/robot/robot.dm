@@ -86,7 +86,7 @@
 			connected_ai.connected_robots += src
 			lawsync()
 			lawupdate = 1
-			connected_ai << "<br><br><span class='notice'>NOTICE - New cyborg connection detected: <b><a href='byond://?src=\ref[connected_ai];track2=\ref[connected_ai];track=\ref[src]'>[name]</a></b></span><br>"
+			connected_ai << "<br><br><span class='notice'>NOTICE - New cyborg connection detected: <a href='byond://?src=\ref[connected_ai];track2=\ref[connected_ai];track=\ref[src]'>[name]</a></span><br>"
 		else
 			lawupdate = 0
 
@@ -215,6 +215,7 @@
 	overlays -= "eyes" //Takes off the eyes that it started with
 
 	transform_animation(animation_length)
+	connected_ai << "<br><br><span class='notice'>NOTICE - Cyborg module change detected: [name] has loaded the [mod] module.</span><br>"
 	updateicon()
 
 /mob/living/silicon/robot/proc/transform_animation(animation_length)
