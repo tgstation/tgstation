@@ -38,8 +38,9 @@
 
 	var/obj/item/device/pda/ai/pai/pda = null
 
-	var/secHUD = 0			// Toggles whether the Security HUD is active or not
-	var/medHUD = 0			// Toggles whether the Medical  HUD is active or not
+	var/secHUD   = 0			// Toggles whether the Security HUD is active or not
+	var/medHUD   = 0			// Toggles whether the Medical  HUD is active or not
+	var/Wireless = 0			// Toggles whether the pAI has wireless access to electronics or not
 
 	var/datum/data/record/medicalActive1		// Datacore record declarations for record software
 	var/datum/data/record/medicalActive2
