@@ -20,6 +20,7 @@
 															"universal translator" = 35,
 															//"projection array" = 15
 															"remote signaller" = 5,
+															"bluetooth drivers" = 50,
 															)
 
 /mob/living/silicon/pai/verb/paiInterface()
@@ -58,6 +59,8 @@
 				left_part = src.softwareAtmo()
 			if("securityhud")
 				left_part = src.facialRecognition()
+			if("wireless")
+				left_part = src.bluetoothDrivers()
 			if("medicalhud")
 				left_part = src.medicalAnalysis()
 			if("doorjack")
@@ -240,6 +243,9 @@
 		if("medicalhud")
 			if(href_list["toggle"])
 				src.medHUD = !src.medHUD
+		if("wireless")
+			if(href_list["toggle"])
+				src.Wireless = !src.Wireless
 		if("translator")
 			if(href_list["toggle"])
 				src.universal_speak = !src.universal_speak
@@ -308,6 +314,8 @@
 			dat += "<a href='byond://?src=\ref[src];software=camerajack;sub=0'>Camera Jack</a> <br>"
 		if(s == "door jack")
 			dat += "<a href='byond://?src=\ref[src];software=doorjack;sub=0'>Door Jack</a> <br>"
+		if(s == "bluetooth drivers")
+			dat += "<a href='byond://?src=\ref[src];software=wireless;sub=0'>Bluetooth</a> <br>"
 	dat += "<br>"
 	dat += "<br>"
 	dat += "<a href='byond://?src=\ref[src];software=buy;sub=0'>Download additional software</a>"
@@ -464,6 +472,15 @@
 				When enabled, this package will scan all viewable faces and compare them against the known criminal database, providing real-time graphical data about any detected persons of interest.<br><br>
 				The package is currently [ (src.secHUD) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
 				<a href='byond://?src=\ref[src];software=securityhud;sub=0;toggle=1'>Toggle Package</a><br>
+				"}
+	return dat
+
+// Bluetooth Drivers
+/mob/living/silicon/pai/proc/bluetoothDrivers()
+	var/dat = {"<h3>Bluetooth Drivers</h3><br>
+				When enabled, this package will enable the pAI's bluetooth allowing it to access electronic devices.<br><br>
+				The package is currently [ (src.Wireless) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
+				<a href='byond://?src=\ref[src];software=wireless;sub=0;toggle=1'>Toggle Package</a><br>
 				"}
 	return dat
 
