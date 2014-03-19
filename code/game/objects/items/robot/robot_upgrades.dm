@@ -54,6 +54,7 @@
 	R.connected_ai << "<br><br><span class='notice'>NOTICE - Cyborg connection change detected: [R.name] has been reclassified as <b><a href='byond://?src=\ref[R.connected_ai];track2=\ref[R.connected_ai];track=\ref[R]'>[heldname]</a></b>.</span><br>"
 	R.name = heldname
 	R.real_name = heldname
+	R.camera.c_tag = heldname
 	R.custom_name = heldname //Required or else if the cyborg's module changes, their name is lost.
 
 	return 1
