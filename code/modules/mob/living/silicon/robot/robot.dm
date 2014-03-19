@@ -86,6 +86,7 @@
 			connected_ai.connected_robots += src
 			lawsync()
 			lawupdate = 1
+			connected_ai << "<br><br><span class='notice'>NOTICE - New cyborg connection detected: [name].</span><br>"
 		else
 			lawupdate = 0
 
