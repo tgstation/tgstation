@@ -314,3 +314,20 @@ var/global/movement_disabled_exception //This is the client that calls the proc,
 		movement_disabled_exception = usr.ckey
 	else
 		message_admins("[src.ckey] used 'Disable all movement', restoring all movement.")*/
+
+/////////////////
+// /vg/
+/////////////////
+//This proc is intended to detect lag problems relating to fucking virology.
+var/global/blood_virus_spreading_disabled = 0
+/client/proc/disable_bloodvirii()
+	set category = "Mapping"
+	set name = "Disable Blood Virus Spreading"
+
+	//usr << "\red Proc disabled."
+
+	blood_virus_spreading_disabled = !blood_virus_spreading_disabled
+	if(blood_virus_spreading_disabled)
+		message_admins("[src.ckey] disabled findAirborneVirii.")
+	else
+		message_admins("[src.ckey] enabled findAirborneVirii.")

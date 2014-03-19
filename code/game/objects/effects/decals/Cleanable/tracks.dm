@@ -53,6 +53,11 @@ var/global/list/image/fluidtrack_cache=list()
 	// List of laid tracks and their colors.
 	var/list/datum/fluidtrack/stack=list()
 
+
+	/** DO NOT FUCKING REMOVE THIS. **/
+	process()
+		return PROCESS_KILL
+
 	/**
 	* Add tracks to an existing trail.
 	*

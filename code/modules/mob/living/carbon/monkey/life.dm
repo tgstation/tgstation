@@ -172,6 +172,8 @@
 
 	// Separate proc so we can jump out of it when we've succeeded in spreading disease.
 	proc/findAirborneVirii()
+		if(blood_virus_spreading_disabled)
+			return 0
 		for(var/obj/effect/decal/cleanable/blood/B in get_turf(src))
 			if(B.virus2.len)
 				for (var/ID in B.virus2)
