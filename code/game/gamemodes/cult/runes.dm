@@ -687,6 +687,8 @@ var/list/sacrificed = list()
 					if(prob(30))
 						ticker.mode.grant_runeword(usr)
 				stone_or_gib(M)
+			for(var/mob/victim in src.loc)			//TO-DO: Move the shite above into the mob's own sac_act - see /mob/living/simple_animal/corgi/sac_act for an example
+				victim.sac_act(src, victim)			//Sacrifice procs are now seperate per mob, this allows us to allow sacrifice on as many mob types as we want without making an already clunky system worse
 /*			for(var/mob/living/carbon/alien/A)
 				for(var/mob/K in cultsinrange)
 					K.say("Barhah hra zar'garis!")
@@ -1075,3 +1077,15 @@ var/list/sacrificed = list()
 			del(src)
 			return
 
+		summon_shell()		// Summons a construct shell
+			for(var/obj/item/stack/sheet/plasteel/PS in src.loc)		//I could probably combine the amounts but I'm too lazy to compensate for others' lazyness
+				if(PS.amount >= 4)		// may need increasing?
+					usr.say("Eth ra p'ni[pick("'","`")]dedo ol!")		//I have no idea if these are written in a proper made up language or just Urist smacking his face on the keyboard
+					new /obj/structure/constructshell(src.loc)
+		//?			PS.remove_amount(4)			//TO-DO: Write a proc for removing sheets from a stack and deleting when stack is empty... why doesnt this exist yet??
+					PS.amount -= 4
+					if(PS.amount <= 0)
+						del(PS)
+					del(src)
+					return 1
+			return fizzle()

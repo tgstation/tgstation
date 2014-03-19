@@ -5,6 +5,9 @@
 	ghostize()
 	..()
 
+/mob/proc/sac_act(var/obj/effect/rune/R, var/mob/victim as mob)
+	return
+
 var/next_mob_id = 0
 /mob/New()
 	tag = "mob_[next_mob_id++]"

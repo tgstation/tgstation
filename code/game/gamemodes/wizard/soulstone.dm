@@ -92,7 +92,7 @@
 /obj/item/proc/transfer_soul(var/choice as text, var/target, var/mob/U as mob).
 	switch(choice)
 		if("FORCE")
-			if(!iscarbon(target))
+			if(!iscarbon(target))		//TO-DO: Add sacrifice stoning for non-organics, just because you have no body doesnt mean you dont have a soul
 				return 0
 			var/mob/living/carbon/T = target
 			var/obj/item/device/soulstone/C = src

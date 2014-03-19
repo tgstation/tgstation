@@ -29,6 +29,12 @@
 	..()
 	regenerate_icons()
 
+/mob/living/simple_animal/corgi/sac_act(var/obj/effect/rune/R, victim)
+	usr << "You horrible monster"
+	R.sac_grant_word()
+	R.stone_or_gib(victim)
+
+
 /mob/living/simple_animal/corgi/show_inv(mob/user as mob)
 	user.set_machine(src)
 	if(user.stat) return

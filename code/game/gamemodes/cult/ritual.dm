@@ -135,7 +135,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		return
 
 
-	attack_hand(mob/living/user as mob)
+	attack_hand(mob/living/user as mob)		// OH GOD this is horrible
 		if(!iscultist(user))
 			user << "<span class='notice'>You can't mouth the arcane scratchings without fumbling over them.</span>"
 			return
@@ -194,6 +194,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			return itemport(src.word3)
 		if(word1 == wordjoin && word2 == wordhide && word3 == wordtech)
 			return runestun()
+		if(word1 == wordtravel && word2 == wordhell && word3 == wordtech)
+			return summon_shell()
 		else
 			user.take_overall_damage(30, 0)
 			user << "\red You feel the life draining from you, as if Lord Nar-Sie is displeased with you."
@@ -557,7 +559,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				"stun" = list("join","hide","technology"),
 				"armor" = list("hell","destroy","other"),
 				"teleport" = list("travel","self"),
-				"teleport other" = list("travel","other")
+				"teleport other" = list("travel","other"),
+				"summon shell" = list("travel","hell","technology")
 				)
 
 
@@ -649,7 +652,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			var/r
 			if (!istype(user.loc,/turf))
 				user << "\red You do not have enough space to write a proper rune."
-			var/list/runes = list("teleport", "itemport", "tome", "armor", "convert", "tear in reality", "emp", "drain", "seer", "raise", "obscure", "reveal", "astral journey", "manifest", "imbue talisman", "sacrifice", "wall", "freedom", "cultsummon", "deafen", "blind", "bloodboil", "communicate", "stun")
+			var/list/runes = list("teleport", "itemport", "tome", "armor", "convert", "tear in reality", "emp", "drain", "seer", "raise", "obscure", "reveal", "astral journey", "manifest", "imbue talisman", "sacrifice", "wall", "freedom", "cultsummon", "deafen", "blind", "bloodboil", "communicate", "stun", "summon shell")
 			r = input("Choose a rune to scribe", "Rune Scribing") in runes //not cancellable.
 			var/obj/effect/rune/R = new /obj/effect/rune
 			if(istype(user, /mob/living/carbon/human))
@@ -806,6 +809,12 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				if("stun")
 					R.word1=wordjoin
 					R.word2=wordhide
+					R.word3=wordtech
+					R.loc = user.loc
+					R.check_icon()
+				if("summon shell")
+					R.word1=wordtravel
+					R.word2=wordhell
 					R.word3=wordtech
 					R.loc = user.loc
 					R.check_icon()

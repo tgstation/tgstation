@@ -13,7 +13,7 @@
 	if(istype(mind.current, /mob/living/carbon/human) && (mind.assigned_role in list("Captain", "Chaplain")))	return 0
 	if(isloyal(mind.current))
 		return 0
-	if (ticker.mode.name == "cult")
+	if (ticker.mode.name == "cult")		//redundent?
 		if(mind.current == ticker.mode.sacrifice_target)	return 0
 	return 1
 
