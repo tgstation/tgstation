@@ -51,7 +51,7 @@
 
 /obj/item/borg/upgrade/rename/action(var/mob/living/silicon/robot/R)
 	if(..()) return 0
-	R.connected_ai << "<br><br><span class='notice'>NOTICE - Cyborg connection change detected: [R.name] has been reclassified as [heldname].</span><br>"
+	R.connected_ai << "<br><br><span class='notice'>NOTICE - Cyborg connection change detected: [R.name] has been reclassified as <b><a href='byond://?src=\ref[R.connected_ai];track2=\ref[R.connected_ai];track=\ref[R]'>[heldname]</a></b>.</span><br>"
 	R.name = heldname
 	R.real_name = heldname
 	R.custom_name = heldname //Required or else if the cyborg's module changes, their name is lost.
@@ -76,7 +76,7 @@
 				R.key = ghost.key
 
 	R.stat = CONSCIOUS
-	R.connected_ai << "<br><br><span class='notice'>NOTICE - New cyborg connection detected: [R.name].</span><br>"
+	R.connected_ai << "<br><br><span class='notice'>NOTICE - New cyborg connection detected: <b><a href='byond://?src=\ref[R.connected_ai];track2=\ref[R.connected_ai];track=\ref[R]'>[R.name]</a></b>.</span><br>"
 
 	return 1
 
