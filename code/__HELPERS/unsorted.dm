@@ -330,6 +330,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					A.aiPDA.owner = newname
 					A.aiPDA.name = newname + " (" + A.aiPDA.ownjob + ")"
 
+		if(cmptext("cyborg",role))
+			if(isrobot(src))
+				var/mob/living/silicon/robot/A = src
+				A.custom_name = newname
 
 		fully_replace_character_name(oldname,newname)
 
