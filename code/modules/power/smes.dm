@@ -293,7 +293,8 @@
 			if("custom")
 				var/custom = input(usr, "What rate would you like this SMES to attempt to charge at? Max is [input_level_max].") as null|num
 				if(isnum(custom))
-					input_level = custom
+					href_list["set_input_level"] = custom
+					.()
 			if("plus")
 				input_level += 10000
 			if("minus")
@@ -313,7 +314,8 @@
 			if("custom")
 				var/custom = input(usr, "What rate would you like this SMES to attempt to output at? Max is [output_level_max].") as null|num
 				if(isnum(custom))
-					output_level = custom
+					href_list["set_output_level"] = custom
+					.()
 			if("plus")
 				output_level += 10000
 			if("minus")
