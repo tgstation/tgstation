@@ -192,15 +192,16 @@ var/list/mechtoys = list(
 		moving = 0
 
 		//Do I really need to explain this loop?
-		for(var/atom/A in the_shuttles_way)
-			if(istype(A,/mob/living))
-				var/mob/living/unlucky_person = A
-				unlucky_person.gib()
-			// Weird things happen when this shit gets in the way.
-			if(istype(A,/obj/structure/lattice) \
-				|| istype(A, /obj/structure/window) \
-				|| istype(A, /obj/structure/grille))
-				del(A)
+		if(at_station)
+			for(var/atom/A in the_shuttles_way)
+				if(istype(A,/mob/living))
+					var/mob/living/unlucky_person = A
+					unlucky_person.gib()
+				// Weird things happen when this shit gets in the way.
+				if(istype(A,/obj/structure/lattice) \
+					|| istype(A, /obj/structure/window) \
+					|| istype(A, /obj/structure/grille))
+					del(A)
 
 		from.move_contents_to(dest)
 
@@ -268,6 +269,7 @@ var/list/mechtoys = list(
 
 					// Delete it. (Fixes github #473)
 					qdel(A)
+			//world << "deleting [MA]/[MA.type] it was [!MA.anchored ? "not ": ""] anchored"
 			qdel(MA)
 
 		if(plasma_count)
