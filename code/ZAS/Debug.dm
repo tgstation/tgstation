@@ -73,6 +73,8 @@ zone/proc/DebugDisplay(client/client)
 
 		for(var/turf/space/S in unsimulated_tiles)
 			current_zone_images += image('icons/misc/debug_space.dmi', S, null, TURF_LAYER)
+		for(var/turf/simulated/floor/plating/airless/catwalk/C in unsimulated_tiles)
+			current_zone_images += image('icons/misc/debug_space.dmi', C, null, TURF_LAYER)
 
 		client << "<u>Zone Air Contents</u>"
 		client << "Oxygen: [air.oxygen]"
