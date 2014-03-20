@@ -7,7 +7,7 @@
 	health = 100
 	var/sight_mode = 0
 	var/custom_name = ""
-	var/designation = "Default" //used for displaying the prefix & getting the current module of cyborg
+	designation = "Default" //used for displaying the prefix & getting the current module of cyborg
 
 //Hud stuff
 
