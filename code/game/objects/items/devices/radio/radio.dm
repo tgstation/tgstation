@@ -285,7 +285,11 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		// --- Cyborg ---
 		else if (isrobot(M))
-			jobname = "Cyborg"
+			var/mob/living/silicon/robot/speaking_robot = M
+			if(speaking_robot.module)
+				jobname = "[speaking_robot.module.name] Cyborg"
+			else
+				jobname = "Cyborg"
 
 		// --- Personal AI (pAI) ---
 		else if (istype(M, /mob/living/silicon/pai))

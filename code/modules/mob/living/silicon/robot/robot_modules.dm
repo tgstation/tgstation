@@ -59,7 +59,7 @@
 
 
 /obj/item/weapon/robot_module/standard
-	name = "standard robot module"
+	name = "Standard"
 
 	New()
 		..()
@@ -72,7 +72,7 @@
 
 
 /obj/item/weapon/robot_module/medical
-	name = "medical robot module"
+	name = "Medical"
 
 	New()
 		..()
@@ -91,7 +91,7 @@
 
 
 /obj/item/weapon/robot_module/engineering
-	name = "engineering robot module"
+	name = "Engineering"
 
 	New()
 		..()
@@ -146,7 +146,7 @@
 
 
 /obj/item/weapon/robot_module/security
-	name = "security robot module"
+	name = "Security"
 
 	New()
 		..()
@@ -158,7 +158,7 @@
 
 
 /obj/item/weapon/robot_module/janitor
-	name = "janitorial robot module"
+	name = "Janitorial"
 
 	New()
 		..()
@@ -173,7 +173,7 @@
 
 
 /obj/item/weapon/robot_module/butler
-	name = "service robot module"
+	name = "Service"
 
 	New()
 		..()
@@ -205,7 +205,7 @@
 
 
 /obj/item/weapon/robot_module/miner
-	name = "miner robot module"
+	name = "Mining"
 
 	New()
 		..()
@@ -229,7 +229,7 @@
 
 
 /obj/item/weapon/robot_module/syndicate
-	name = "syndicate robot module"
+	name = "Unknown"
 
 	New()
 		..()

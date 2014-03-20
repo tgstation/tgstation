@@ -95,11 +95,22 @@
 
 	var/message_a = say_quote(message)
 	var/rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
+	var/silicon_job = "Unknown"
+
+	if(isAI(src))
+		silicon_job = "AI"
+
+	else if(isrobot(src))
+		var/mob/living/silicon/robot/speaking_robot = src
+		if(speaking_robot.module)
+			silicon_job = "[speaking_robot.module.name]"
+		else
+			silicon_job = "No Module"
 
 	for (var/mob/living/S in living_mob_list)
 		if(S.robot_talk_understand && (S.robot_talk_understand == robot_talk_understand)) // This SHOULD catch everything caught by the one below, but I'm not going to change it.
 			if(istype(S , /mob/living/silicon/ai))
-				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src]'><span class='name'>[name]</span></a> <span class='message'>[message_a]</span></span></i>"
+				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src]'><span class='name'>[name] ([silicon_job])</span></a> <span class='message'>[message_a]</span></span></i>"
 				S.show_message(renderedAI, 2)
 			else
 				S.show_message(rendered, 2)
@@ -107,7 +118,7 @@
 
 		else if (S.binarycheck())
 			if(istype(S , /mob/living/silicon/ai))
-				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src]'><span class='name'>[name]</span></a> <span class='message'>[message_a]</span></span></i>"
+				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src]'><span class='name'>[name] ([silicon_job])</span></a> <span class='message'>[message_a]</span></span></i>"
 				S.show_message(renderedAI, 2)
 			else
 				S.show_message(rendered, 2)
