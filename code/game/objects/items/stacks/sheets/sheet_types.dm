@@ -48,7 +48,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	desc = "Sheets made out of metal."
 	singular_name = "metal sheet"
 	icon_state = "sheet-metal"
-	m_amt = 3750
+	m_amt = MINERAL_MATERIAL_AMOUNT
 	throwforce = 10.0
 	flags = CONDUCT
 	origin_tech = "materials=1"
@@ -74,7 +74,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	desc = "This sheet is an alloy of iron and plasma."
 	icon_state = "sheet-plasteel"
 	item_state = "sheet-metal"
-	m_amt = 7500
+	m_amt = 6000
 	throwforce = 10.0
 	flags = CONDUCT
 	origin_tech = "materials=2"

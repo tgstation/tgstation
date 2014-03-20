@@ -662,6 +662,15 @@
 					if(C)
 						C.images -= I
 
+//Debug item to identify all ore spread quickly
+/obj/item/device/mining_scanner/admin
+
+/obj/item/device/mining_scanner/admin/attack_self(mob/user)
+	for(var/turf/simulated/mineral/M in world)
+		if(M.scan_state)
+			M.icon_state = M.scan_state
+	del(src)
+
 /**********************Xeno Warning Sign**********************/
 /obj/structure/sign/xeno_warning_mining
 	name = "DANGEROUS ALIEN LIFE"
