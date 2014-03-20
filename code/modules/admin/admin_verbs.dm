@@ -189,6 +189,8 @@ var/list/admin_verbs_hideable = list(
 
 /client/proc/add_admin_verbs()
 	if(holder)
+		control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
+
 		var/rights = holder.rank.rights
 		verbs += admin_verbs_default
 		if(rights & R_BUILDMODE)	verbs += /client/proc/togglebuildmodeself
