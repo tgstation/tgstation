@@ -37,7 +37,7 @@
 		insisting = 0
 
 		if (!(M_HULK in user.mutations))
-			user.mutations.Add(M_HULK)
+			user.dna.SetSEState(HULKBLOCK,1)
 
 		if (!(M_LASER in user.mutations))
 			user.mutations.Add(M_LASER)

@@ -138,6 +138,7 @@
 		..(M,connected,flags)
 		M.pass_flags |= 1
 
+/* OLD HULK BEHAVIOR
 /datum/dna/gene/basic/hulk
 	name="Hulk"
 	activation_messages=list("Your muscles hurt.")
@@ -147,7 +148,7 @@
 		block=HULKBLOCK
 
 	can_activate(var/mob/M,var/flags)
-		// Can't be big and small.
+		// Can't be big AND small.
 		if(M_DWARF in M.mutations)
 			return 0
 		return ..(M,flags)
@@ -170,7 +171,7 @@
 			M << "\red You suddenly feel very weak."
 			M.Weaken(3)
 			M.emote("collapse")
-
+*/
 /datum/dna/gene/basic/xray
 	name="X-Ray Vision"
 	activation_messages=list("The walls suddenly disappear.")
