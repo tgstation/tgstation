@@ -249,8 +249,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if(C.dna)
 			C.dna.real_name = real_name
 
-	if(istype(src, /mob/living/silicon/robot))
+	if(isrobot(src))
 		var/mob/living/silicon/robot/R = src
+		if(oldname != real_name)
+			R.connected_ai << "<br><br><span class='notice'>NOTICE - Cyborg reclassification detected: [oldname] is now designated as [real_name].</span><br>"
 		if(R.camera)
 			R.camera.c_tag = real_name
 

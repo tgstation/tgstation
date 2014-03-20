@@ -18,6 +18,10 @@ REVIVAL_CLONING 1
 # amount of time (in hundredths of seconds) for which a brain retains the "spark of life" after the person's death (set to -1 for infinite)
 REVIVAL_BRAIN_LIFE -1
 
+### RENAMING ###
+
+#Uncommend to allow cyborgs to rename themselves at roundstart.  Has no effect on roboticists renaming cyborgs the normal way.
+#RENAME_CYBORG
 
 ### MOB MOVEMENT ###
 
