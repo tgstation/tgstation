@@ -486,7 +486,7 @@ var/global/list/uneatable = list(
 
 /obj/machinery/singularity/narsie/large/New()
 	..()
-	world << "<font size='15' color='red'><b>NAR-SIE HAS RISEN</b></font>"
+	world << "<font size='15' color='red'><b>[uppertext(name)] HAS RISEN</b></font>"
 	if(emergency_shuttle)
 		emergency_shuttle.incall(0.3) // Cannot recall
 
@@ -576,12 +576,13 @@ var/global/list/uneatable = list(
 		//no living humans, follow a ghost instead.
 
 /obj/machinery/singularity/narsie/proc/acquire(var/mob/food)
-	target << "\blue <b>NAR-SIE HAS LOST INTEREST IN YOU</b>"
+	var/capname=uppertext(name)
+	target << "\blue <b>[capname] HAS LOST INTEREST IN YOU</b>"
 	target = food
 	if(ishuman(target))
-		target << "\red <b>NAR-SIE HUNGERS FOR YOUR SOUL</b>"
+		target << "\red <b>[capname] HUNGERS FOR YOUR SOUL</b>"
 	else
-		target << "\red <b>NAR-SIE HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL</b>"
+		target << "\red <b>[capname] HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL</b>"
 
 //Wizard narsie
 
@@ -598,3 +599,68 @@ var/global/list/uneatable = list(
 	if(defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 0
 	return
+
+/////////////////////////////////////////////////
+// MR. CLEAN
+/////////////////////////////////////////////////
+
+var/global/mr_clean_targets=list(
+	/obj/effect/decal/cleanable,
+	/obj/effect/decal/mecha_wreckage,
+	/obj/effect/decal/remains,
+	/obj/effect/spacevine,
+	/obj/effect/spacevine_controller,
+	/obj/effect/biomass,
+	/obj/effect/biomass_controller,
+	/obj/effect/rune,
+	/obj/effect/blob,
+	/obj/effect/spider,
+)
+/obj/machinery/singularity/narsie/large/clean // Mr. Clean
+	name = "Mr. Clean"
+	desc = "This universe is dirty.  Time to change that."
+	icon = 'icons/obj/mrclean.dmi'
+	icon_state = ""
+
+/obj/machinery/singularity/narsie/large/clean/update_icon()
+	overlays = 0
+	if(target && !isturf(target))
+		overlays += "eyes"
+
+/obj/machinery/singularity/narsie/large/clean/acquire(var/mob/food)
+	..()
+	update_icon()
+
+/obj/machinery/singularity/narsie/large/clean/consume(var/atom/A)
+	if(is_type_in_list(A, uneatable))
+		return 0
+	if(istype(A,/mob/living/))
+		var/mob/living/C = A
+		if(isrobot(C))
+			var/mob/living/silicon/robot/R=C
+			if(R.mmi)
+				del(R.mmi) // Nuke MMI
+		del(C) // Just delete it.
+	else if(is_type_in_list(A, mr_clean_targets))
+		qdel(A)
+	else if(isturf(A))
+		var/turf/T = A
+		T.clean_blood()
+		if(T.intact)
+			for(var/obj/O in T.contents)
+				if(O.level != 1)
+					continue
+				if(O.invisibility == 101)
+					src.consume(O)
+		//A:ChangeTurf(/turf/space)
+	return
+
+// Mr. Clean just follows the dirt and grime.
+/obj/machinery/singularity/narsie/large/clean/pickcultist()
+	var/list/targets = list()
+	for(var/obj/effect/E in world)
+		if(is_type_in_list(E, mr_clean_targets) && E.z == src.z)
+			targets += E
+	if(targets.len)
+		acquire(pick(targets))
+		return
