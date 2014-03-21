@@ -1,11 +1,4 @@
 // honk
-
-/client/verb/make_pod()
-	set name = "makin da pood"
-	set category = "Mapping"
-	if(!holder)
-		return
-	new /obj/spacepod/civilian(get_turf(usr))
 /obj/spacepod
 	name = "\improper space pod"
 	desc = "A space pod meant for space travel."
