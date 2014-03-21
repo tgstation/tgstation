@@ -76,6 +76,7 @@
 	ranged_cooldown_cap = 4
 	aggro_vision_range = 9
 	idle_vision_range = 2
+	turns_per_move = 5
 
 /obj/item/projectile/temp/basilisk
 	name = "freezing blast"

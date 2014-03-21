@@ -274,7 +274,6 @@
 	ExtinguishMob()
 	fire_stacks = 0
 	suiciding = 0
-	buckled = initial(src.buckled)
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
 		C.handcuffed = initial(C.handcuffed)
