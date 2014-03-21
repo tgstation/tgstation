@@ -1488,3 +1488,8 @@ proc/rotate_icon(file, state, step = 1, aa = FALSE)
 		result.Insert(temp, "[angle]")
 
 	return result
+
+/proc/iscatwalk(atom/A)
+	if(istype(A, /turf/simulated/floor/plating/airless/catwalk))
+		return 1
+	return 0
