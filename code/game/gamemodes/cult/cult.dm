@@ -4,6 +4,8 @@
 	var/list/datum/mind/cult = list()
 	var/list/allwords = list("travel","self","see","hell","blood","join","tech","destroy", "other", "hide")
 	var/list/grantwords = list("travel", "see", "hell", "tech", "destroy", "other", "hide")
+	var/list/cult_objectives = list()
+
 
 /proc/iscultist(mob/living/M as mob)
 	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.cult)
@@ -38,8 +40,6 @@
 	var/list/startwords = list("blood","join","self","hell")
 	var/list/secondwords = list("travel", "see", "tech", "destroy", "other", "hide")
 
-	var/list/objectives = list()
-
 	var/eldergod = 1 //for the summon god objective
 
 	var/const/acolytes_needed = 5 //for the survive objective
@@ -53,11 +53,11 @@
 
 /datum/game_mode/cult/pre_setup()
 	if(prob(50))
-		objectives += "survive"
-		objectives += "sacrifice"
+		cult_objectives += "survive"
+		cult_objectives += "sacrifice"
 	else
-		objectives += "eldergod"
-		objectives += "sacrifice"
+		cult_objectives += "eldergod"
+		cult_objectives += "sacrifice"
 
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
@@ -80,7 +80,7 @@
 
 /datum/game_mode/cult/post_setup()
 	modePlayer += cult
-	if("sacrifice" in objectives)
+	if("sacrifice" in cult_objectives)
 		var/list/possible_targets = get_unconvertables()
 
 		if(!possible_targets.len)
@@ -111,9 +111,9 @@
 
 
 /datum/game_mode/cult/proc/memorize_cult_objectives(var/datum/mind/cult_mind)
-	for(var/obj_count = 1,obj_count <= objectives.len,obj_count++)
+	for(var/obj_count = 1,obj_count <= cult_objectives.len,obj_count++)
 		var/explanation
-		switch(objectives[obj_count])
+		switch(cult_objectives[obj_count])
 			if("survive")
 				explanation = "Our knowledge must live on. Make sure at least [acolytes_needed] acolytes escape on the shuttle to spread their work on an another station."
 			if("sacrifice")
@@ -296,11 +296,11 @@
 
 /datum/game_mode/cult/proc/check_cult_victory()
 	var/cult_fail = 0
-	if(objectives.Find("survive"))
+	if(cult_objectives.Find("survive"))
 		cult_fail += check_survive() //the proc returns 1 if there are not enough cultists on the shuttle, 0 otherwise
-	if(objectives.Find("eldergod"))
+	if(cult_objectives.Find("eldergod"))
 		cult_fail += eldergod //1 by default, 0 if the elder god has been summoned at least once
-	if(objectives.Find("sacrifice"))
+	if(cult_objectives.Find("sacrifice"))
 		if(sacrifice_target && !sacrificed.Find(sacrifice_target)) //if the target has been sacrificed, ignore this step. otherwise, add 1 to cult_fail
 			cult_fail++
 
@@ -333,11 +333,11 @@
 
 	var/text = "<b>Cultists escaped:</b> [acolytes_survived]"
 
-	if(objectives.len)
+	if(cult_objectives.len)
 		text += "<br><b>The cultists' objectives were:</b>"
-		for(var/obj_count=1, obj_count <= objectives.len, obj_count++)
+		for(var/obj_count=1, obj_count <= cult_objectives.len, obj_count++)
 			var/explanation
-			switch(objectives[obj_count])
+			switch(cult_objectives[obj_count])
 				if("survive")
 					if(!check_survive())
 						explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. <font color='green'><B>Success!</B></font>"

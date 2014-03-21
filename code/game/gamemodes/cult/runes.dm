@@ -152,12 +152,21 @@ var/list/sacrificed = list()
 /////////////////////////////////////////FOURTH RUNE
 
 		tearreality()
-			var/cultist_count = 0
+			var/list/mob/living/carbon/human/cultist_count = list()
 			for(var/mob/M in range(1,src))
 				if(iscultist(M) && !M.stat)
 					M.say("Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
-					cultist_count += 1
-			if(cultist_count >= 9)
+					cultist_count += M
+			if(cultist_count.len >= 9)
+				if(ticker.mode.name == "cult")
+					if("eldergod" in ticker.mode.cult_objectives)
+						ticker.mode:eldergod = 0
+					else
+						message_admins("[usr.real_name]([usr.ckey]) tried to summon a god when she didn't want to come out to play.")	// Admin alert because you *KNOW* dickbutts are going to abuse this.
+						for(var/mob/M in cultist_count)
+							M.reagents.add_reagent("hell_water", 10)
+							M << "<span class='h2.userdanger'>YOUR SOUL BURNS WITH YOUR ARROGANCE!!!</span>"
+						return
 				var/narsie_type = /obj/machinery/singularity/narsie/large
 				// Moves narsie if she was already summoned.
 				var/obj/her = locate(narsie_type, machines)
@@ -166,8 +175,6 @@ var/list/sacrificed = list()
 					return
 				// Otherwise...
 				new narsie_type(src.loc) // Summon her!
-				if(ticker.mode.name == "cult")
-					ticker.mode:eldergod = 0
 				del(src) // Stops cultists from spamming the rune to summon narsie more than once.
 				return
 			else
