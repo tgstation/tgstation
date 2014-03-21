@@ -137,6 +137,14 @@ var/global/datum/controller/gameticker/ticker
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
 				del(S)
+		var/list/obj/effect/landmark/spacepod/L = list()
+		for(var/obj/effect/landmark/spacepod in landmarks_list)
+			if(istype(spacepod))
+				L += spacepod
+		var/obj/effect/landmark/spacepod/S = pick(L)
+		new /obj/spacepod/random(S.loc)
+		for(var/obj in L)
+			del(obj)
 		world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
 		//world << sound('sound/AI/welcome.ogg') // Skie //Out with the old, in with the new. - N3X15
 		var/welcome_sentence=list('sound/AI/vox_login.ogg')
