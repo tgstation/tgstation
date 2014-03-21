@@ -53,6 +53,7 @@
 	if(..()) return 0
 	R.name = heldname
 	R.real_name = heldname
+	R.custom_name = heldname //Required or else if the cyborg's module changes, their name is lost.
 
 	return 1
 

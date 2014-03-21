@@ -64,13 +64,9 @@ datum/mind
 			error("transfer_to(): Some idiot has tried to transfer_to() a non mob/living mob. Please inform Carn")
 
 		if(current)					//remove ourself from our old body's mind variable
-			if(changeling)
-				current.remove_changeling_powers()
-				current.verbs -= /datum/changeling/proc/EvolutionMenu
 			current.mind = null
 
 			nanomanager.user_transferred(current, new_character)
-
 
 		if(key)
 			if(new_character.key != key)					//if we're transfering into a body with a key associated which is not ours
@@ -83,10 +79,6 @@ datum/mind
 
 		current = new_character								//associate ourself with our new body
 		new_character.mind = src							//and associate our new body with ourself
-
-		if(changeling && istype(new_character, /mob/living/carbon))										//if we are a changeling mind, re-add any powers
-			var/mob/living/carbon/C = new_character
-			C.make_changeling()
 
 		if(active)
 			new_character.key = key		//now transfer the key to link the client to our new body
@@ -672,8 +664,8 @@ datum/mind
 						ticker.mode.changelings -= src
 						special_role = null
 						current.remove_changeling_powers()
-						current.verbs -= /datum/changeling/proc/EvolutionMenu
-						if(changeling)	del(changeling)
+						if(changeling)
+							del(changeling)
 						current << "<FONT color='red' size = 3><B>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</B></FONT>"
 						message_admins("[key_name_admin(usr)] has de-changeling'ed [current].")
 						log_admin("[key_name(usr)] has de-changeling'ed [current].")

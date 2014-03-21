@@ -13,7 +13,7 @@
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm = "hits"
-	speed = -1
+	speed = 0
 	maxHealth = 25
 	health = 25
 

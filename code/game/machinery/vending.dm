@@ -222,12 +222,12 @@
 	if(premium.len > 0)
 		dat += "<b>Coin slot:</b> "
 		if (coin)
-			dat += "[coin]&nbsp;&nbsp;<a href='byond://?src=\ref[src];remove_coin=1'>Remove</A>"
+			dat += "[coin]&nbsp;&nbsp;<a href='byond://?src=\ref[src];remove_coin=1'>Remove</a>"
 		else
 			dat += "<i>No coin</i>&nbsp;&nbsp;<span class='linkOff'>Remove</span>"
 
 	if(!panel_open)//Vending machines do not dispense items when they are unscrewed
-		dat += "<h3>Select an Item</h3>"
+		dat += "<h3>Select an item</h3>"
 		dat += "<div class='statusDisplay'>"
 		if(product_records.len == 0)
 			dat += "<font color = 'red'>No product loaded!</font>"
@@ -243,10 +243,10 @@
 			for (var/datum/data/vending_product/R in display_records)
 				dat += "<li>"
 				if(R.amount > 0)
-					dat += "<a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</A> "
+					dat += "<a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</a> "
 				else
-					dat += "<span class='linkOff'>Sold Out</span> "
-				dat += "<FONT color = '[R.display_color]'><B>[R.product_name]</B>:</font>"
+					dat += "<span class='linkOff'>Sold out</span> "
+				dat += "<font color = '[R.display_color]'><b>[sanitize(R.product_name)]</b>:</font>"
 				dat += " <b>[R.amount]</b>"
 				dat += "</li>"
 			dat += "</ul>"
@@ -833,9 +833,6 @@
 					/obj/item/weapon/stock_parts/cell = 8, /obj/item/weapon/weldingtool = 8,/obj/item/clothing/head/welding = 8,
 					/obj/item/weapon/light/tube = 10,/obj/item/clothing/suit/fire = 4, /obj/item/weapon/stock_parts/scanning_module = 5,/obj/item/weapon/stock_parts/micro_laser = 5,
 					/obj/item/weapon/stock_parts/matter_bin = 5,/obj/item/weapon/stock_parts/manipulator = 5,/obj/item/weapon/stock_parts/console_screen = 5)
-	// There was an incorrect entry (cablecoil/power).  I improvised to cablecoil/heavyduty.
-	// Another invalid entry, /obj/item/weapon/circuitry.  I don't even know what that would translate to, removed it.
-	// The original products list wasn't finished.  The ones without given quantities became quantity 5.  -Sayu
 
 //This one's from bay12
 /obj/machinery/vending/robotics
@@ -848,5 +845,3 @@
 					/obj/item/weapon/stock_parts/cell/high = 12, /obj/item/device/assembly/prox_sensor = 3,/obj/item/device/assembly/signaler = 3,/obj/item/device/healthanalyzer = 3,
 					/obj/item/weapon/scalpel = 2,/obj/item/weapon/circular_saw = 2,/obj/item/weapon/tank/anesthetic = 2,/obj/item/clothing/mask/breath/medical = 5,
 					/obj/item/weapon/screwdriver = 5,/obj/item/weapon/crowbar = 5)
-	//everything after the power cell had no amounts, I improvised.  -Sayu
-

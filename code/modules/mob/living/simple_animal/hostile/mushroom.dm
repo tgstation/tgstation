@@ -46,7 +46,7 @@
 	melee_damage_lower += rand(3, 5)
 	melee_damage_upper += rand(10,20)
 	maxHealth += rand(40,60)
-	move_to_delay = rand(2,10)
+	move_to_delay = rand(3,11)
 	var/cap_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	cap_living = image('icons/mob/animal.dmi',icon_state = "mushroom_cap")
 	cap_dead = image('icons/mob/animal.dmi',icon_state = "mushroom_cap_dead")

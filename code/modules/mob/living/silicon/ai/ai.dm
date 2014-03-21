@@ -16,7 +16,7 @@ var/list/ai_list = list()
 	name = "AI"
 	icon = 'icons/mob/AI.dmi'//
 	icon_state = "ai"
-	anchored = 1 // -- TLE
+	anchored = 1
 	density = 1
 	status_flags = CANSTUN|CANPARALYSE|CANPUSH
 	var/list/network = list("SS13")
@@ -37,7 +37,7 @@ var/list/ai_list = list()
 	var/list/datum/AI_Module/current_modules = list()
 	var/fire_res_on_core = 0
 
-	var/control_disabled = 0 // Set to 1 to stop AI from interacting via Click() -- TLE
+	var/control_disabled = 0 // Set to 1 to stop AI from interacting via Click()
 	var/malfhacking = 0 // More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
 
 	var/obj/machinery/power/apc/malfhack = null

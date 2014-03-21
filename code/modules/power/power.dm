@@ -403,7 +403,7 @@
 
 	var/numapc = 0
 
-	if(nodes && nodes.len) // Added to fix a bad list bug -- TLE
+	if(nodes && nodes.len)
 		for(var/obj/machinery/power/terminal/term in nodes)
 			if( istype( term.master, /obj/machinery/power/apc ) )
 				numapc++
@@ -453,8 +453,7 @@
 		else
 			return 0
 
-//The powernet that calls this proc will consume the other powernet - Rockdtben
-//TODO: rewrite so the larger net absorbs the smaller net
+//The powernet that calls this proc will consume the other powernet
 /proc/merge_powernets(var/datum/powernet/net1, var/datum/powernet/net2)
 	if(!net1 || !net2)	return
 	if(net1 == net2)	return

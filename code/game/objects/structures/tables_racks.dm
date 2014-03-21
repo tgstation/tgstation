@@ -538,20 +538,21 @@
 
 
 /obj/structure/table/attackby(obj/item/I, mob/user)
-	if (istype(I, /obj/item/weapon/grab) && get_dist(src, user) < 2)
-		var/obj/item/weapon/grab/G = I
-		if(G.affecting.buckled)
-			user << "<span class='notice'>[G.affecting] is buckled to [G.affecting.buckled]!</span>"
-			return
-		if(G.state < GRAB_AGGRESSIVE)
-			user << "<span class='notice'>You need a better grip to do that!</span>"
-			return
-		if(!G.confirm())
-			return
-		G.affecting.loc = src.loc
-		G.affecting.Weaken(5)
-		G.affecting.visible_message("<span class='danger'>[G.assailant] pushes [G.affecting] onto [src].</span>", \
-									"<span class='userdanger'>[G.assailant] pushes [G.affecting] onto [src].</span>")
+	if (istype(I, /obj/item/weapon/grab))
+		if(get_dist(src, user) < 2)
+			var/obj/item/weapon/grab/G = I
+			if(G.affecting.buckled)
+				user << "<span class='notice'>[G.affecting] is buckled to [G.affecting.buckled]!</span>"
+				return
+			if(G.state < GRAB_AGGRESSIVE)
+				user << "<span class='notice'>You need a better grip to do that!</span>"
+				return
+			if(!G.confirm())
+				return
+			G.affecting.loc = src.loc
+			G.affecting.Weaken(5)
+			G.affecting.visible_message("<span class='danger'>[G.assailant] pushes [G.affecting] onto [src].</span>", \
+										"<span class='userdanger'>[G.assailant] pushes [G.affecting] onto [src].</span>")
 		qdel(I)
 		return
 

@@ -194,7 +194,7 @@
 		if(targetdirection != null)
 			/*
 			for (var/turf/space/D in view(7,src))
-				if(!(D in floorbottargets) && D != src.oldtarget)			// Added for bridging mode -- TLE
+				if(!(D in floorbottargets) && D != src.oldtarget)			// Added for bridging mode
 					if(get_dir(src, D) == targetdirection)
 						src.oldtarget = D
 						src.target = D

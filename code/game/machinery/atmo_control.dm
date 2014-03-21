@@ -186,7 +186,7 @@ obj/machinery/computer/general_air_control
 		return_text()
 			var/output = ..()
 			//if(signal.data)
-			//	input_info = signal.data // Attempting to fix intake control -- TLE
+			//	input_info = signal.data // Attempting to fix intake control
 
 			output += "<h1>Tank Control System</h1>"
 			if(input_info)

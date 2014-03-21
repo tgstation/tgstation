@@ -61,14 +61,14 @@
 /mob/living/carbon/MiddleClickOn(var/atom/A)
 	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
 		next_click = world.time + 5
-		call(src, src.mind.changeling.chosen_sting)(A)
+		mind.changeling.chosen_sting.try_to_sting(src, A)
 	else
 		..()
 
 /mob/living/carbon/AltClickOn(var/atom/A)
 	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
 		next_click = world.time + 5
-		call(src, src.mind.changeling.chosen_sting)(A)
+		mind.changeling.chosen_sting.try_to_sting(src, A)
 	else
 		..()
 
@@ -237,8 +237,6 @@
 
 /mob/living/carbon/proc/tintcheck()
 	return 0
-
-// ++++ROCKDTBEN++++ MOB PROCS //END
 
 /mob/living/carbon/clean_blood()
 	if(ishuman(src))
