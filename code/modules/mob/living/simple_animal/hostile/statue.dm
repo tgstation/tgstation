@@ -50,11 +50,12 @@
 	status_flags = GODMODE // Cannot push also
 
 	var/cannot_be_seen = 1
+	var/mob/living/creator = null
 
 
 // No movement while seen code.
 
-/mob/living/simple_animal/hostile/statue/New()
+/mob/living/simple_animal/hostile/statue/New(var/mob/living/creator)
 	..()
 	// Give spells
 	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flicker_lights(src)
@@ -140,14 +141,17 @@
 // Stop attacking clientless mobs
 
 /mob/living/simple_animal/hostile/statue/CanAttack(var/atom/the_target)
-	if(mind && mind.key && !ckey)
-		return 0
 	if(isliving(the_target))
 		var/mob/living/L = the_target
 		if(!L.client && !L.ckey)
 			return 0
 	return ..()
 
+// Don't attack your creator if there is one
+
+/mob/living/simple_animal/hostile/statue/ListTargets()
+	. = ..()
+	return . - creator
 
 // Statue powers
 
