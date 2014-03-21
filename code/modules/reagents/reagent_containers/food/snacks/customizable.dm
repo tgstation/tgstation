@@ -1,25 +1,25 @@
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/shard) || istype(W,/obj/item/weapon/reagent_containers/food/snacks))
+	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/customizable/S = new(get_turf(user))
 		S.attackby(W,user)
 		del(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/bun/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/shard) || istype(W,/obj/item/weapon/reagent_containers/food/snacks))
+	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/customizable/burger/S = new(get_turf(user))
 		S.attackby(W,user)
 		del(src)
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/shard) || istype(W,/obj/item/weapon/reagent_containers/food/snacks))
+	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/customizable/pizza/S = new(get_turf(user))
 		S.attackby(W,user)
 		del(src)
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledspagetti/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/shard) || istype(W,/obj/item/weapon/reagent_containers/food/snacks))
+	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/customizable/pasta/S = new(get_turf(user))
 		S.attackby(W,user)
 		del(src)
@@ -32,7 +32,7 @@
 	icon_state = "soup"
 
 /obj/item/trash/bowl/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/shard) || istype(W,/obj/item/weapon/reagent_containers/food/snacks))
+	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/customizable/soup/S = new(get_turf(user))
 		S.attackby(W,user)
 		del(src)
@@ -89,13 +89,7 @@
 	trash = null
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/shard))
-		user << "<span class='notice'> You hide [W] in [src].</span>"
-		user.drop_item()
-		W.loc = src
-		update()
-		return
-	else if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
+	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
 		user << "<span class='notice'> You add [W] to [src].</span>"
 		var/obj/item/weapon/reagent_containers/F = W
 		F.reagents.trans_to(src, F.reagents.total_volume)
@@ -149,20 +143,3 @@
 	var/whatsinside = pick(ingredients)
 
 	usr << "<span class='notice'> You think you can see [whatsinside] in there.</span>"
-
-/obj/item/weapon/reagent_containers/food/snacks/customizable/attack(mob/M as mob, mob/user as mob, def_zone)
-
-	var/obj/item/shard
-	for(var/obj/item/O in contents)
-		if(istype(O,/obj/item/weapon/shard))
-			shard = O
-			break
-
-	var/mob/living/H
-	if(istype(M,/mob/living))
-		H = M
-
-	if(H && shard && M == user) //This needs a check for feeding the food to other people, but that could be abusable.
-		H << "<span class='warning'> You lacerate your mouth on a [shard.name] in the [src.basename]!</span>"
-		H.adjustBruteLoss(5) //TODO: Target head if human.
-	..()
