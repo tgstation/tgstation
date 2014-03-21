@@ -7,7 +7,7 @@
 	opacity = 0
 	anchored = 1
 	unacidable = 1
-	layer = MOB_LAYER
+	layer = 3.9
 	infra_luminosity = 15
 	var/mob/living/carbon/occupant
 	var/obj/item/weapon/cell/high/battery
