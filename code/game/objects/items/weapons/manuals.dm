@@ -32,7 +32,7 @@
 	title = "Particle Accelerator User's Guide"
 //big pile of shit below.
 
-	/*dat = {"<html>
+	dat = {"<html>
 				<head>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
@@ -65,7 +65,7 @@
 				</ol>
 
 				</body>
-				</html>"}*/
+				</html>"}
 
 
 /obj/item/weapon/book/manual/engineering_hacking
@@ -75,7 +75,7 @@
 	title = "Hacking"
 //big pile of shit below.
 
-	/*dat = {"
+	dat = {"
 
 		<html><head>
 		</head>
@@ -86,7 +86,7 @@
 
 		</html>
 
-		"}*/
+		"}
 
 /obj/item/weapon/book/manual/engineering_singularity_safety
 	name = "Singularity Safety in Special Circumstances"
@@ -95,7 +95,7 @@
 	title = "Singularity Safety in Special Circumstances"
 //big pile of shit below.
 
-	/*dat = {"<html>
+	dat = {"<html>
 				<head>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
@@ -134,7 +134,7 @@
 				Step one: <b>GET THE FUCK OUT OF THERE!!! FORGET THE WOMEN AND CHILDREN, SAVE YOURSELF!!!</b><br>
 				</body>
 				</html>
-				"}*/
+				"}
 
 /obj/item/weapon/book/manual/hydroponics_pod_people
 	name = "The Human Harvest - From seed to market"
@@ -178,7 +178,7 @@
 	title = "Cloning techniques of the 26th century"
 //big pile of shit below.
 
-	/*dat = {"<html>
+	dat = {"<html>
 				<head>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
@@ -246,7 +246,7 @@
 
 				</body>
 				</html>
-				"}*/
+				"}
 
 
 /obj/item/weapon/book/manual/ripley_build_and_repair
@@ -330,8 +330,7 @@
 	icon_state = "rdbook"
 	author = "Dr. L. Ight"
 	title = "Research and Development 101"
-	/*dat = {"
-	<html>
+	dat = {"<html>
 				<head>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
@@ -373,7 +372,7 @@
 				Many machines produces from circuit boards and inserted into a machine frame require a variety of parts to construct. These are parts like capacitors, batteries, matter bins, and so forth. As your knowledge of science improves, more advanced versions are unlocked. If you use these parts when constructing something, its attributes may be improved. For example, if you use an advanced matter bin when constructing an autolathe (rather then a regular one), it'll hold more materials. Experiment around with stock parts of various qualities to see how they affect the end results! Be warned, however: Tier 3 and higher stock parts don't have 100% reliability and their low reliability may affect the reliability of the end machine.
 				</body>
 				</html>
-			"}*/
+			"}
 
 
 /obj/item/weapon/book/manual/robotics_cyborgs
@@ -381,12 +380,12 @@
 	icon_state = "borgbook"
 	author = "XISC"
 	title = "Cyborgs for Dummies"
-	/*dat = {"<html>
+	dat = {"<html>
 				<head>
 				<style>
 				h1 {font-size: 21px; margin: 15px 0px 5px;}
 				h2 {font-size: 18px; margin: 15px 0px 5px;}
-        h3 {font-size: 15px; margin: 15px 0px 5px;}
+				h3 {font-size: 15px; margin: 15px 0px 5px;}
 				li {margin: 2px 0px 2px 15px;}
 				ul {list-style: none; margin: 5px; padding: 0px;}
 				ol {margin: 5px; padding: 0px 15px;}
@@ -576,7 +575,7 @@
 
         </body>
 		</html>
-		"}*/
+		"}
 
 /obj/item/weapon/book/manual/security_space_law
 	name = "Space Law"
@@ -620,7 +619,7 @@
 	icon_state = "cooked_book"
 	author = "Lord Frenrir Cageth"
 	title = "Chef Recipes"
-	/*dat = {"<html>
+	dat = {"<html>
 				<head>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
@@ -636,13 +635,13 @@
 				Here is a guide on basic food recipes and also how to not poison your customers accidentally.
 
 				<h2>Burger:<h2>
-				Put 1 meat and 1 flour into the microwave and turn it on. Then wait.
+				Put 1 meat and 5 flour into the microwave and turn it on. Then wait.
 
 				<h2>Bread:<h2>
-				Put 3 flour into the microwave and then wait.
+				Put 15 flour into the microwave and then wait.
 
 				<h2>Waffles:<h2>
-				Add 2 flour and 2 egg to the microwave and then wait.
+				Add 10 flour and 2 egg to the microwave and then wait.
 
 				<h2>Popcorn:<h2>
 				Add 1 corn to the microwave and wait.
@@ -651,13 +650,13 @@
 				Put 1 meat, 1 unit of salt and 1 unit of pepper into the microwave and wait.
 
 				<h2>Meat Pie:<h2>
-				Put 1 meat and 2 flour into the microwave and wait.
+				Put 1 meat and 10 flour into the microwave and wait.
 
 				<h2>Boiled Spagetti:<h2>
 				Put 1 spagetti and 5 units of water into the microwave and wait.
 
 				<h2>Donuts:<h2>
-				Add 1 egg and 1 flour to the microwave and wait.
+				Add 1 egg and 5 flour to the microwave and wait.
 
 				<h2>Fries:<h2>
 				Add one potato to the processor and wait.
@@ -665,7 +664,7 @@
 
 				</body>
 				</html>
-			"}*/
+			"}
 
 /obj/item/weapon/book/manual/barman_recipes
 	name = "Barman Recipes"
