@@ -595,6 +595,9 @@
 			var/obj/mecha/M = loc
 			loc_temp =  M.return_temperature()
 		//else if(istype(get_turf(src), /turf/space))
+		if(istype(loc, /obj/spacepod))
+			var/obj/spacepod/S = loc
+			loc_temp = S.return_temperature()
 		else if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			loc_temp = loc:air_contents.temperature
 		else

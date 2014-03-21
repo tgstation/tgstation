@@ -170,6 +170,9 @@
 		if (istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)&&wear_suit:s_initialized)
 			stat("Energy Charge", round(wear_suit:cell:charge/100))
 
+	if(istype(loc, /obj/spacepod)) // Spacdpods!
+		var/obj/spacepod/S = loc
+		stat("Spacepod Charge", "[istype(S.battery) ? "[(S.battery.charge / S.battery.maxcharge) * 100]" : "No cell detected"]")
 
 /mob/living/carbon/human/ex_act(severity)
 	if(!blinded)
