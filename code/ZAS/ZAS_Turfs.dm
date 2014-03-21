@@ -153,7 +153,7 @@
 
 /turf/simulated/assume_air(datum/gas_mixture/giver)
 	if(!giver)	return 0
-	if(zone)
+	if(zone && zone.air && !iscatwalk(src))
 		zone.air.merge(giver)
 		return 1
 	else
@@ -222,7 +222,7 @@
 		for(var/connection/C in air_master.turfs_with_connections["\ref[src]"])
 			air_master.connections_to_check |= C
 
-	if(zone && !zone.rebuild)
+	if(zone && istype(zone.air) && !zone.rebuild)
 		if(zone.air.check_tile_graphic())
 			update_visuals(zone.air)
 		for(var/direction in cardinal)
