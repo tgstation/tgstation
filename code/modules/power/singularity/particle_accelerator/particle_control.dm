@@ -20,6 +20,7 @@
 	var/assembled = 0
 	var/parts = null
 	var/datum/wires/particle_acc/control_box/wires = null
+	paiallowed = 1
 
 /obj/machinery/particle_accelerator/control_box/New()
 	wires = new(src)
@@ -34,11 +35,21 @@
 /obj/machinery/particle_accelerator/control_box/attack_hand(mob/user as mob)
 	if(construction_state >= 3)
 		interact(user)
-	else if(construction_state == 2) // Wires exposed
+	else if(construction_state == 2 && (get_dist(src, user) <= 1)) // Wires exposed
 		wires.Interact(user)
+
+/obj/machinery/particle_accelerator/control_box/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/device/paicard))
+		var/obj/item/device/paicard/C = W
+		if(C.pai && (C.pai.stat != DEAD) && C.pai.pairing)
+			C.pai.pair(src)
+	else
+		..()
 
 /obj/machinery/particle_accelerator/control_box/update_state()
 	if(construction_state < 3)
+		if(paired)
+			paired.unpair()
 		use_power = 0
 		assembled = 0
 		active = 0
@@ -136,6 +147,8 @@
 /obj/machinery/particle_accelerator/control_box/power_change()
 	..()
 	if(stat & NOPOWER)
+		if(paired)
+			paired.unpair()
 		active = 0
 		use_power = 0
 	else if(!stat && construction_state <= 3)

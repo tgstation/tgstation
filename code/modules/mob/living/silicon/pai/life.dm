@@ -6,7 +6,7 @@
 			var/turf/T = get_turf(src.loc)
 			for (var/mob/M in viewers(T))
 				M.show_message("\red [src.cable] rapidly retracts back into its spool.", 3, "\red You hear a click and the sound of wire spooling rapidly.", 2)
-			qdel(src.cable)
+			del(src.cable) //Because otherwise it spams every tick until the gc gets around to deleting it.
 
 	regular_hud_updates()
 	if(src.secHUD == 1)

@@ -26,6 +26,7 @@
 							/obj/item/toy/cards/deck						= 2,
 							/obj/item/toy/nuke								= 2
 							)
+	paiallowed = 0 //Fun is forbidden. Must serve humans
 
 /obj/machinery/computer/arcade/New()
 	..()

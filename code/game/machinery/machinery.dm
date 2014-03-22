@@ -109,12 +109,16 @@ Class Procs:
 	var/mob/living/occupant = null
 	var/unsecuring_tool = /obj/item/weapon/wrench
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
+	var/mob/living/silicon/pai/paired
+	var/paiallowed = 0
 
 /obj/machinery/New()
 	..()
 	machines += src
 
 /obj/machinery/Destroy()
+	if(paired)
+		paired.unpair(0)
 	machines.Remove(src)
 	..()
 
@@ -234,6 +238,19 @@ Class Procs:
 			return src.attack_hand(user)
 	else
 		return src.attack_hand(user)
+
+/obj/machinery/attackby(I as obj, user as mob)
+	if(istype(I, /obj/item/device/paicard))
+		var/obj/item/device/paicard/C = I
+		if(C.pai && (C.pai.stat != DEAD) && C.pai.pairing)
+			if(allowed(user))
+				if(paiallowed)
+					C.pai.pair(src)
+				else
+					C.pai << "<span class='warning'><b>\[ERROR\]</b> Remote device does not accept remote control connections.</span>"
+			else
+				user << "<span class='warning'>Access denied.</span>"
+				C.pai << "<span class='warning'><b>\[ERROR\]</b> Handshake failed. User not authorised to connect remote devices.</span>"
 
 /obj/machinery/attack_paw(mob/user as mob)
 	return src.attack_hand(user)

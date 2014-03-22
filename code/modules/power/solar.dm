@@ -281,6 +281,7 @@ var/list/solars_list = list()
 	var/trackrate = 600		// 300-900 seconds
 	var/trackdir = 1		// 0 =CCW, 1=CW
 	var/nexttime = 0
+	paiallowed = 1
 
 
 /obj/machinery/power/solar_control/New()
@@ -358,6 +359,10 @@ var/list/solars_list = list()
 				A.icon_state = "4"
 				A.anchored = 1
 				qdel(src)
+	else if(paiallowed && istype(I, /obj/item/device/paicard))
+		var/obj/item/device/paicard/C = I
+		if(C.pai && (C.pai.stat != DEAD) && C.pai.pairing)
+			C.pai.pair(src)
 	else
 		src.attack_hand(user)
 	return
@@ -473,11 +478,15 @@ var/list/solars_list = list()
 		update_icon()
 	else
 		spawn(rand(0, 15))
+			if(paired)
+				paired.unpair(0)
 			stat |= NOPOWER
 			update_icon()
 
 
 /obj/machinery/power/solar_control/proc/broken()
+	if(paired)
+		paired.unpair()
 	stat |= BROKEN
 	update_icon()
 
