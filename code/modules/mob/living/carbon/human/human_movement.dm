@@ -1,9 +1,11 @@
 /mob/living/carbon/human/movement_delay()
 	if(istype(loc, /turf/space))
 		return -1	//It's hard to be slowed down in space by... anything
-	if(reagents.has_reagent("hyperzine"))
+	else if(reagents.has_reagent("hyperzine"))
 		return -1
-	if(reagents.has_reagent("nuka_cola"))
+	else if(reagents.has_reagent("nuka_cola"))
+		return -1
+	else if(reagents.has_reagent("unholywater"))
 		return -1
 
 	. = 0

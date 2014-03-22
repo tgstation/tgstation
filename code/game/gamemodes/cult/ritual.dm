@@ -24,6 +24,52 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		runerandom()
 	usr << "[wordtravel] is travel, [wordblood] is blood, [wordjoin] is join, [wordhell] is Hell, [worddestr] is destroy, [wordtech] is technology, [wordself] is self, [wordsee] is see, [wordother] is other, [wordhide] is hide."
 
+/mob/proc/cult_add_comm()
+	verbs += /mob/living/proc/cult_innate_comm
+
+/mob/living/proc/cult_innate_comm()
+	set category = "Cultist"
+	set name = "Communicate"
+
+	#define CHECK_STATUS (usr.stat || usr.restrained() || usr.paralysis || usr.stunned || usr.weakened)
+
+	if(!iscultist(usr))		//they shouldn't have this verb, but just to be sure...
+		return
+
+	if(CHECK_STATUS)
+		world << "STATUS CHECKS FAILED"
+		return	//dead men tell no tales
+
+	var/input = stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
+	if(!input)					// TO-DO: Add some kind of filter to corrupt the inputted text
+		return
+
+	if(ishuman(usr) || ismonkey(usr))	//Damage only applies to humans and monkeys, to allow constructs to communicate
+		usr.visible_message("<span class='warning'>[usr.name] starts clawing at his arms like a mad man!")
+		apply_damage(25,BRUTE, "l_arm")
+		apply_damage(25,BRUTE, "r_arm")
+		sleep(50)
+		if(CHECK_STATUS)
+			return	//Hard to drawn intrinsic symbols when you're bleeding out in your cell.
+		var/turf/location = loc
+		if(istype(location, /turf/simulated))	// tearing your arms apart is going to spill a bit of blood, in fact thats the idea
+			location.add_blood(usr)				// TO-DO change this to a badly drawn rune
+		apply_damage(15,BRUTE, "l_arm")		// does a metric fuck ton of damage because this meant to be an emergency method of communication.
+		apply_damage(15,BRUTE, "r_arm")
+		if(CHECK_STATUS)
+			return	//dead men tell no tales
+		usr.visible_message("<span class='warning'>[usr.name] paints strange symbols with their own blood")
+		sleep(20)
+
+	usr.say("O bidai nabora se[pick("'","`")]sma!")
+	sleep(10)
+	usr.say("[input]")
+	for(var/datum/mind/H in ticker.mode.cult)
+		if (H.current)
+			H.current << "\red \b [input]"
+	return
+	#undef CHECK_STATUS
+
 
 /proc/runerandom() //randomizes word meaning
 	var/list/runewords=list("ire","ego","nahlizet","certum","veri","jatkaa","mgar","balaq", "karazet", "geeri") ///"orkan" and "allaq" removed.
@@ -314,6 +360,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	var/tomedat = ""
 	var/list/words = list("ire" = "ire", "ego" = "ego", "nahlizet" = "nahlizet", "certum" = "certum", "veri" = "veri", "jatkaa" = "jatkaa", "balaq" = "balaq", "mgar" = "mgar", "karazet" = "karazet", "geeri" = "geeri")
 
+
 	tomedat = {"<html>
 				<head>
 				<style>
@@ -419,6 +466,11 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			switch(href_list["action"])
 				if("clear")
 					words[words[number]] = words[number]
+				if("read")
+					if(usr.get_active_hand() != src)
+						return
+					usr << browse("[tomedat]", "window=Arcane Tome")
+					return
 				if("change")
 					words[words[number]] = input("Enter the translation for [words[number]]", "Word notes") in engwords
 					for (var/entry in words)
@@ -510,114 +562,123 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				alert("The cloth of reality can't take that much of a strain. Remove some runes first!")
 				return
 			else
-				switch(alert("You open the tome",,"Read it","Scribe a rune", "Notes")) //Fuck the "Cancel" option. Rewrite the whole tome interface yourself if you want it to work better. And input() is just ugly. - K0000
+				switch(alert("You open the tome",,"Commune","Scribe a rune", "Notes")) //Fuck the "Cancel" option. Rewrite the whole tome interface yourself if you want it to work better. And input() is just ugly. - K0000
 					if("Cancel")
 						return
-					if("Read it")
+					if("Commune")
 						if(usr.get_active_hand() != src)
 							return
-						user << browse("[tomedat]", "window=Arcane Tome")
+						var/input = stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
+						if(!input)
+							return
+						usr.whisper("O bidai nabora se[pick("'","`")]sma!")
+						usr.whisper("[input]")
+						for(var/datum/mind/H in ticker.mode.cult)
+							if (H.current)
+								H.current << "\red \b [input]"
 						return
 					if("Notes")
 						if(usr.get_active_hand() != src)
 							return
 						notedat = {"
-					<br><b>Word translation notes</b> <br>
-					[words[1]] is <a href='byond://?src=\ref[src];number=1;action=change'>[words[words[1]]]</A> <A href='byond://?src=\ref[src];number=1;action=clear'>Clear</A><BR>
-					[words[2]] is <A href='byond://?src=\ref[src];number=2;action=change'>[words[words[2]]]</A> <A href='byond://?src=\ref[src];number=2;action=clear'>Clear</A><BR>
-					[words[3]] is <a href='byond://?src=\ref[src];number=3;action=change'>[words[words[3]]]</A> <A href='byond://?src=\ref[src];number=3;action=clear'>Clear</A><BR>
-					[words[4]] is <a href='byond://?src=\ref[src];number=4;action=change'>[words[words[4]]]</A> <A href='byond://?src=\ref[src];number=4;action=clear'>Clear</A><BR>
-					[words[5]] is <a href='byond://?src=\ref[src];number=5;action=change'>[words[words[5]]]</A> <A href='byond://?src=\ref[src];number=5;action=clear'>Clear</A><BR>
-					[words[6]] is <a href='byond://?src=\ref[src];number=6;action=change'>[words[words[6]]]</A> <A href='byond://?src=\ref[src];number=6;action=clear'>Clear</A><BR>
-					[words[7]] is <a href='byond://?src=\ref[src];number=7;action=change'>[words[words[7]]]</A> <A href='byond://?src=\ref[src];number=7;action=clear'>Clear</A><BR>
-					[words[8]] is <a href='byond://?src=\ref[src];number=8;action=change'>[words[words[8]]]</A> <A href='byond://?src=\ref[src];number=8;action=clear'>Clear</A><BR>
-					[words[9]] is <a href='byond://?src=\ref[src];number=9;action=change'>[words[words[9]]]</A> <A href='byond://?src=\ref[src];number=9;action=clear'>Clear</A><BR>
-					[words[10]] is <a href='byond://?src=\ref[src];number=10;action=change'>[words[words[10]]]</A> <A href='byond://?src=\ref[src];number=10;action=clear'>Clear</A><BR>
-					"}
+							<a href='byond://?src=\ref[src];action=read'>Read the Arcane Tome.</A></BR>
+							<br><b>Word translation notes</b> <br>
+							[words[1]] is <a href='byond://?src=\ref[src];number=1;action=change'>[words[words[1]]]</A> <A href='byond://?src=\ref[src];number=1;action=clear'>Clear</A><BR>
+							[words[2]] is <A href='byond://?src=\ref[src];number=2;action=change'>[words[words[2]]]</A> <A href='byond://?src=\ref[src];number=2;action=clear'>Clear</A><BR>
+							[words[3]] is <a href='byond://?src=\ref[src];number=3;action=change'>[words[words[3]]]</A> <A href='byond://?src=\ref[src];number=3;action=clear'>Clear</A><BR>
+							[words[4]] is <a href='byond://?src=\ref[src];number=4;action=change'>[words[words[4]]]</A> <A href='byond://?src=\ref[src];number=4;action=clear'>Clear</A><BR>
+							[words[5]] is <a href='byond://?src=\ref[src];number=5;action=change'>[words[words[5]]]</A> <A href='byond://?src=\ref[src];number=5;action=clear'>Clear</A><BR>
+							[words[6]] is <a href='byond://?src=\ref[src];number=6;action=change'>[words[words[6]]]</A> <A href='byond://?src=\ref[src];number=6;action=clear'>Clear</A><BR>
+							[words[7]] is <a href='byond://?src=\ref[src];number=7;action=change'>[words[words[7]]]</A> <A href='byond://?src=\ref[src];number=7;action=clear'>Clear</A><BR>
+							[words[8]] is <a href='byond://?src=\ref[src];number=8;action=change'>[words[words[8]]]</A> <A href='byond://?src=\ref[src];number=8;action=clear'>Clear</A><BR>
+							[words[9]] is <a href='byond://?src=\ref[src];number=9;action=change'>[words[words[9]]]</A> <A href='byond://?src=\ref[src];number=9;action=clear'>Clear</A><BR>
+							[words[10]] is <a href='byond://?src=\ref[src];number=10;action=change'>[words[words[10]]]</A> <A href='byond://?src=\ref[src];number=10;action=clear'>Clear</A><BR>
+							"}	// whoever screwed the tabbing on this originally is an asshole.
 //						call(/obj/item/weapon/tome/proc/edit_notes)()
 						user << browse("[notedat]", "window=notes")
 						return
-			if(usr.get_active_hand() != src)
-				return
+					if("Scribe a rune")		//fixed more assbackward tabbing
+						if(usr.get_active_hand() != src)
+							return
 
-			var/list/dictionary = list(
-				"convert" = list("join","blood","self"),
-				"wall" = list("destroy","travel","self"),
-				"blood boil" = list("destroy","see","blood"),
-				"blood drain" = list("travel","blood","self"),
-				"raise dead" = list("blood","join","hell"),
-				"summon narsie" = list("hell","join","self"),
-				"communicate" = list("self","other","technology"),
-				"emp" = list("destroy","see","technology"),
-				"manifest" = list("blood","see","travel"),
-				"summon tome" = list("see","blood","hell"),
-				"see invisible" = list("see","hell","join"),
-				"hide" = list("hide","see","blood"),
-				"reveal" = list("blood","see","hide"),
-				"astral journey" = list("hell","travel","self"),
-				"imbue" = list("hell","technology","join"),
-				"sacrifice" = list("hell","blood","join"),
-				"summon cultist" = list("join","other","self"),
-				"free cultist" = list("travel","technology","other"),
-				"deafen" = list("hide","other","see"),
-				"blind" = list("destroy","see","other"),
-				"stun" = list("join","hide","technology"),
-				"armor" = list("hell","destroy","other"),
-				"teleport" = list("travel","self"),
-				"teleport other" = list("travel","other"),
-				"summon shell" = list("travel","hell","technology")
-				)
-
-
-			var/list/scribewords = list("none")
-
-			var/list/english = list()
-
-			for (var/entry in words)
-				if (words[entry] != entry)
-					english+=list(words[entry] = entry)
-
-			for (var/entry in dictionary)
-				var/list/required = dictionary[entry]
-				if (length(english&required) == required.len)
-					scribewords += entry
-
-			var/chosen_rune = null
+						var/list/dictionary = list(
+							"convert" = list("join","blood","self"),
+							"wall" = list("destroy","travel","self"),
+							"blood boil" = list("destroy","see","blood"),
+							"blood drain" = list("travel","blood","self"),
+							"raise dead" = list("blood","join","hell"),
+							"summon narsie" = list("hell","join","self"),
+							"communicate" = list("self","other","technology"),
+							"emp" = list("destroy","see","technology"),
+							"manifest" = list("blood","see","travel"),
+							"summon tome" = list("see","blood","hell"),
+							"see invisible" = list("see","hell","join"),
+							"hide" = list("hide","see","blood"),
+							"reveal" = list("blood","see","hide"),
+							"astral journey" = list("hell","travel","self"),
+							"imbue" = list("hell","technology","join"),
+							"sacrifice" = list("hell","blood","join"),
+							"summon cultist" = list("join","other","self"),
+							"free cultist" = list("travel","technology","other"),
+							"deafen" = list("hide","other","see"),
+							"blind" = list("destroy","see","other"),
+							"stun" = list("join","hide","technology"),
+							"armor" = list("hell","destroy","other"),
+							"teleport" = list("travel","self"),
+							"teleport other" = list("travel","other"),
+							"summon shell" = list("travel","hell","technology")
+							)
 
 
-			if(usr)
-				chosen_rune = input ("Choose a rune to scribe.") in scribewords
-				if (!chosen_rune)
-					return
-				if (chosen_rune == "none")
-					user << "\red You decide against scribing a rune, perhaps you should take this time to study your notes."
-					return
-				if (chosen_rune == "teleport")
-					dictionary[chosen_rune] += input ("Choose a destination word") in english
-				if (chosen_rune == "teleport other")
-					dictionary[chosen_rune] += input ("Choose a destination word") in english
+						var/list/scribewords = list("none")
 
-			if(user.get_active_hand() != src)
-				return
+						var/list/english = list()
 
-			for (var/mob/V in viewers(src))
-				V.show_message("\red [user] slices open a finger and begins to chant and paint symbols on the floor.", 3, "\red You hear chanting.", 2)
-			user << "\red You slice open one of your fingers and begin drawing a rune on the floor whilst chanting the ritual that binds your life essence with the dark arcane energies flowing through the surrounding world."
-			user.take_overall_damage((rand(9)+1)/10) // 0.1 to 1.0 damage
-			if(do_after(user, 50))
-				if(usr.get_active_hand() != src)
-					return
-				var/mob/living/carbon/human/H = user
-				var/obj/effect/rune/R = new /obj/effect/rune(user.loc)
-				user << "\red You finish drawing the arcane markings of the Geometer."
-				var/list/required = dictionary[chosen_rune]
-				R.word1 = english[required[1]]
-				R.word2 = english[required[2]]
-				R.word3 = english[required[3]]
-				R.check_icon()
-				R.blood_DNA = list()
-				R.blood_DNA[H.dna.unique_enzymes] = H.dna.blood_type
-			return
+						for (var/entry in words)
+							if (words[entry] != entry)
+								english+=list(words[entry] = entry)
+
+						for (var/entry in dictionary)
+							var/list/required = dictionary[entry]
+							if (length(english&required) == required.len)
+								scribewords += entry
+
+						var/chosen_rune = null
+
+
+						if(usr)
+							chosen_rune = input ("Choose a rune to scribe.") in scribewords
+							if (!chosen_rune)
+								return
+							if (chosen_rune == "none")
+								user << "\red You decide against scribing a rune, perhaps you should take this time to study your notes."
+								return
+							if (chosen_rune == "teleport")
+								dictionary[chosen_rune] += input ("Choose a destination word") in english
+							if (chosen_rune == "teleport other")
+								dictionary[chosen_rune] += input ("Choose a destination word") in english
+
+						if(user.get_active_hand() != src)
+							return
+
+						for (var/mob/V in viewers(src))
+							V.show_message("\red [user] slices open a finger and begins to chant and paint symbols on the floor.", 3, "\red You hear chanting.", 2)
+						user << "\red You slice open one of your fingers and begin drawing a rune on the floor whilst chanting the ritual that binds your life essence with the dark arcane energies flowing through the surrounding world."
+						user.take_overall_damage((rand(9)+1)/10) // 0.1 to 1.0 damage
+						if(do_after(user, 50))
+							if(usr.get_active_hand() != src)
+								return
+							var/mob/living/carbon/human/H = user
+							var/obj/effect/rune/R = new /obj/effect/rune(user.loc)
+							user << "\red You finish drawing the arcane markings of the Geometer."
+							var/list/required = dictionary[chosen_rune]
+							R.word1 = english[required[1]]
+							R.word2 = english[required[2]]
+							R.word3 = english[required[3]]
+							R.check_icon()
+							R.blood_DNA = list()
+							R.blood_DNA[H.dna.unique_enzymes] = H.dna.blood_type
+						return
 		else
 			user << "The book seems full of illegible scribbles. Is this a joke?"
 			return
