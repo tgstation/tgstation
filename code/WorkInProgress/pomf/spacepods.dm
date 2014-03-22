@@ -288,3 +288,13 @@
 		user << "<span class='warning'>She's dead, Jim</span>"
 		return 0
 	battery.use(3)
+
+/obj/effect/landmark/spacepod/random
+	name = "spacepod spawner"
+	invisibility = 101
+	icon = 'icons/mob/screen1.dmi'
+	icon_state = "x"
+	anchored = 1
+
+/obj/effect/landmark/spacepod/random/New()
+	..()
