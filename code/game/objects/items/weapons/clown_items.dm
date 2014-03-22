@@ -30,11 +30,11 @@
 		user << "<span class='notice'>You need to take that [target.name] off before cleaning it.</span>"
 	else if(istype(target,/obj/effect/decal/cleanable))
 		user << "<span class='notice'>You scrub \the [target.name] out.</span>"
-		del(target)
+		qdel(target)
 	else
 		user << "<span class='notice'>You clean \the [target.name].</span>"
 		var/obj/effect/decal/cleanable/C = locate() in target
-		del(C)
+		qdel(C)
 		target.clean_blood()
 	return
 

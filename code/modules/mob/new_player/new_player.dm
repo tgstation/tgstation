@@ -120,7 +120,7 @@
 				observer.name = observer.real_name
 				observer.key = key
 
-				del(src)
+				qdel(src)
 				return 1
 
 		if(href_list["late_join"])
@@ -267,7 +267,7 @@
 
 		if(config.allow_latejoin_antagonists && emergency_shuttle.timeleft() > 300) //Don't make them antags if the station is evacuating
 			ticker.mode.make_antag_chance(character)
-		del(src)
+		qdel(src)
 
 	proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 		if (ticker.current_state == GAME_STATE_PLAYING)
