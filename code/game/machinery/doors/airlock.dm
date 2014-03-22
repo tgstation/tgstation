@@ -937,7 +937,7 @@ About the new airlock wires panel:
 					if(33) new/obj/structure/door_assembly/door_assembly_highsecurity(src.loc)
 				if(emagged)
 					user << "<span class='warning'>You discard the damaged electronics.</span>"
-					del(src)
+					qdel(src)
 					return
 				user << "<span class='notice'>You removed the airlock electronics!</span>"
 
