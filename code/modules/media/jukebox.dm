@@ -29,6 +29,14 @@
 
 		length = text2num(json["length"])
 
+	proc/display()
+		var/str="\"[title]\""
+		if(artist!="")
+			str += ", by [artist]"
+		if(album!="")
+			str += ", from '[album]'"
+		return str
+
 
 var/global/loopModeNames=list(
 	JUKEMODE_SHUFFLE = "Shuffle",
@@ -39,7 +47,7 @@ var/global/loopModeNames=list(
 	name = "Jukebox"
 	desc = "A jukebox used for parties and shit."
 	icon = 'icons/obj/jukebox.dmi'
-	icon_state = "jukebox"
+	icon_state = "jukebox2-unpowered"
 	density = 1
 
 	anchored = 1
@@ -69,19 +77,35 @@ var/global/loopModeNames=list(
 		"rock" = "Rock"
 	)
 
-/obj/machinery/media/jukebox/attack_ai()
-	return
+/obj/machinery/media/jukebox/attack_ai(var/mob/user)
+	attack_hand(user)
 
 /obj/machinery/media/jukebox/attack_paw()
 	return
+
+/obj/machinery/media/jukebox/power_change()
+	..()
+	update_icon()
+
+/obj/machinery/media/jukebox/update_icon()
+	overlays = 0
+	if(stat & (NOPOWER|BROKEN))
+		icon_state = "jukebox2-unpowered"
+		stop_playing()
+		return
+	icon_state = "jukebox2"
+	if(playing)
+		overlays += "jukebox2-running"
 
 /obj/machinery/media/jukebox/proc/check_reload()
 	return world.time > last_reload + JUKEBOX_RELOAD_COOLDOWN
 
 /obj/machinery/media/jukebox/attack_hand(var/mob/user)
+	if(stat & (NOPOWER|BROKEN))
+		return
 	var/t = "<h1>Jukebox Interface</h1>"
 	t += "<b>Power:</b> <a href='?src=\ref[src];power=1'>[playing?"On":"Off"]</a><br />"
-	t += "<b>Play Mode:</b> <a href='?src=\ref[src];loop=1'>[loopModeNames[loop_mode]]</a><br />"
+	t += "<b>Play Mode:</b> <a href='?src=\ref[src];mode=1'>[loopModeNames[loop_mode]]</a><br />"
 	if(playlist == null)
 		t += "\[DOWNLOADING PLAYLIST, PLEASE WAIT\]"
 	else
@@ -111,6 +135,7 @@ var/global/loopModeNames=list(
 	if (href_list["power"])
 		playing=!playing
 		update_music()
+		update_icon()
 
 	if (href_list["playlist"])
 		if(!check_reload())
@@ -121,14 +146,16 @@ var/global/loopModeNames=list(
 		playlist=null
 		current_song=0
 		update_music()
+		update_icon()
 
 	if (href_list["song"])
 		current_song=Clamp(text2num(href_list["song"]),1,playlist.len)
 		update_music()
+		update_icon()
 
 	if (href_list["mode"])
-		// Theoretically, this should barrel shift.
-		loop_mode = (loop_mode % JUKEMODE_COUNT)+1
+		loop_mode = (loop_mode % JUKEMODE_COUNT) + 1
+
 	return attack_hand(usr)
 
 /obj/machinery/media/jukebox/process()
@@ -169,19 +196,24 @@ var/global/loopModeNames=list(
 					current_song=current_song
 				if(JUKEMODE_PLAY_ONCE)
 					playing=0
+					update_icon()
 					return
-			if(!playing)
-				return
 			update_music()
 
 /obj/machinery/media/jukebox/update_music()
-	if(current_song)
+	if(current_song && playing)
 		var/datum/song_info/song = playlist[current_song]
 		media_url = song.url
 		media_start_time = world.time
-		visible_message("<span class='notice'>\icon[src] \The [src] begins to play \"[song.title]\", by [song.artist].</span>","<em>You hear music.</em>")
+		visible_message("<span class='notice'>\icon[src] \The [src] begins to play [song.display()].</span>","<em>You hear music.</em>")
 		//visible_message("<span class='notice'>\icon[src] \The [src] warbles: [song.length/10]s @ [song.url]</notice>")
 	else
 		media_url=""
 		media_start_time = 0
 	..()
+
+/obj/machinery/media/jukebox/proc/stop_playing()
+	current_song=0
+	playing=0
+	update_music()
+	return
