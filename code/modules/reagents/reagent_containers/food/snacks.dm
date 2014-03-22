@@ -595,6 +595,16 @@
 		reagents.add_reagent("toxin", 2)
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/cornedbeef
+	name = "corned beef and cabbage"
+	desc = "Now you can feel like a real tourist vacationing in Ireland."
+	icon_state = "cornedbeef"
+	trash = /obj/item/trash/plate
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		bitesize = 3
+
 /obj/item/weapon/reagent_containers/food/snacks/faggot
 	name = "faggot"
 	desc = "A great meal all round. Not a cord of wood."
@@ -642,7 +652,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/burger/ghost
 	name = "ghost burger"
 	desc = "Too Spooky!"
-	icon_state = "ghostburger"
+	alpha = 125
 
 /obj/item/weapon/reagent_containers/food/snacks/burger
 	name = "burger"
@@ -755,7 +765,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/muffin/booberry
 	name = "booberry muffin"
-	icon_state = "booberrymuffin"
+	icon_state = "berrymuffin"
+	alpha = 125
 	desc = "My stomach is a graveyard! No living being can quench my bloodthirst!"
 
 /obj/item/weapon/reagent_containers/food/snacks/pie
@@ -2410,6 +2421,7 @@
 	name = "not-a-sandwich"
 	desc = "Something seems to be wrong with this, you can't quite figure what. Maybe it's his moustache."
 	icon_state = "notasandwich"
+	trash = /obj/item/trash/plate
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
