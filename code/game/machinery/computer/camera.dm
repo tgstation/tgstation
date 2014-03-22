@@ -56,37 +56,41 @@
 
 			var/t = input(user, "Which camera should you change to?") as null|anything in D
 			if(!t)
+				if(!isAI(user))
+					user.reset_view()
 				user.unset_machine()
 				return 0
 
 			var/obj/machinery/camera/C = D[t]
 
 			if(t == "Cancel")
-				user.reset_view()
+				if(!isAI(user))
+					user.reset_view()
 				user.unset_machine()
 				return 0
 
 			if(C)
-				if ((get_dist(user, src) > 1 || user.machine != src || user.blinded || !( C.can_use() )) && (!issilicon(user)))
-					if(!C.can_use() && !isAI(user))
-						src.current = null
+				if(isAI(user))
+					var/mob/living/silicon/ai/A = user
+					A.eyeobj.setLoc(get_turf(C))
+					A.client.eye = A.eyeobj
+				if(ispAI(user))
+					var/mob/living/silicon/pai/A = user
+					A.switchCamera(C)
+				else if ((get_dist(user, src) > 1) || (user.machine != src)|| user.blinded || !( C.can_use() ))
+					src.current = null
 					return 0
 				else
-					if(isAI(user))
-						var/mob/living/silicon/ai/A = user
-						A.eyeobj.setLoc(get_turf(C))
-						A.client.eye = A.eyeobj
-					else if (ispAI(user))
-						var/mob/living/silicon/pai/A = user
-						A.switchCamera(C)
-					else
-						src.current = C
-						use_power(50)
-
-					spawn(5)
-						attack_hand(user)
+					src.current = C
+					use_power(50)
+				spawn(5)
+					attack_hand(user)
 			return
-
+		else
+			if(!isAI(user))
+				user.reset_view()
+			user.unset_machine()
+			return
 
 
 /obj/machinery/computer/security/telescreen
