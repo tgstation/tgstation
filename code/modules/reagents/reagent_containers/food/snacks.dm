@@ -292,9 +292,9 @@
 	bitesize = 2
 	New()
 		..()
-		reagents.add_reagent("nutriment", 5)
-		reagents.add_reagent("sugar", 5)
-		reagents.add_reagent("coco", 5)
+		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("sugar", 2)
+		reagents.add_reagent("coco", 2)
 
 	attack_self(mob/user)
 		if(wrapped)
