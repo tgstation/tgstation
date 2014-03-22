@@ -54,14 +54,14 @@
 /mob/living/carbon/MiddleClickOn(var/atom/A)
 	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
 		next_click = world.time + 5
-		call(src, src.mind.changeling.chosen_sting)(A)
+		mind.changeling.chosen_sting.try_to_sting(src, A)
 	else
 		..()
 
 /mob/living/carbon/AltClickOn(var/atom/A)
 	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
 		next_click = world.time + 5
-		call(src, src.mind.changeling.chosen_sting)(A)
+		mind.changeling.chosen_sting.try_to_sting(src, A)
 	else
 		..()
 
@@ -266,6 +266,7 @@
 
 /mob/proc/throw_item(atom/target)
 	return
+
 /mob/living/carbon/throw_item(atom/target)
 	throw_mode_off()
 	if(usr.stat || !target)
@@ -304,7 +305,7 @@
 
 		if(!src.lastarea)
 			src.lastarea = get_area(src.loc)
-		if((istype(src.loc, /turf/space)) || (src.lastarea.has_gravity == 0))
+		if(!has_gravity(src))
 			src.inertia_dir = get_dir(target, src)
 			step(src, inertia_dir)
 

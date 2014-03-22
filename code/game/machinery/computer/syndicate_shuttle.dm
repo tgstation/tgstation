@@ -28,6 +28,8 @@
 		var/area/transit_location = locate(/area/syndicate_station/transit)
 		curr_location.move_contents_to(transit_location)
 		curr_location = transit_location
+		curr_location.has_gravity = 0
+		transit_location.has_gravity = 1
 		sleep(SYNDICATE_SHUTTLE_MOVE_TIME)
 
 	curr_location.move_contents_to(dest_location)

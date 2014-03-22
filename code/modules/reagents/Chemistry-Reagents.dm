@@ -2830,6 +2830,12 @@ datum
 				..()
 				return
 
+		ethanol/beer/greenbeer
+			name = "Green Beer"
+			id = "greenbeer"
+			description = "An alcoholic beverage made from malted grains, hops, yeast, and water. Dyed a festive green."
+			color = "#A8E61D"
+
 		ethanol/kahlua
 			name = "Kahlua"
 			id = "kahlua"

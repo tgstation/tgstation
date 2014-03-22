@@ -39,3 +39,14 @@
 		if(path == prototype)	continue
 		L += new path()
 	return L
+
+//returns a list of paths to every subtype of prototype (excluding prototype)
+//if no list/L is provided, one is created.
+/proc/init_paths(prototype, list/L)
+	if(!istype(L))
+		L = list()
+		for(var/path in typesof(prototype))
+			if(path == prototype)
+				continue
+			L+= path
+		return L
