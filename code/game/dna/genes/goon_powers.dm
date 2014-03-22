@@ -248,18 +248,21 @@
 			t_his="her"
 		var/mob/living/carbon/human/H = the_item
 		var/datum/organ/external/limb = H.get_organ(usr.zone_sel.selecting)
-		usr.visible_message("\red <b>[usr] begins stuffing [the_item]'s [limb] into [m_his] gaping maw!</b>")
 		if(!istype(limb))
 			usr << "\red You can't eat this part of them!"
+			revert_cast()
 			return 0
 		if(istype(limb,/datum/organ/external/head))
 			// Bullshit, but prevents being unable to clone someone.
 			usr << "\red You try to put \the [limb] in your mouth, but [t_his] ears tickle your throat!"
+			revert_cast()
 			return 0
 		if(istype(limb,/datum/organ/external/chest))
 			// Bullshit, but prevents being able to instagib someone.
 			usr << "\red You try to put their [limb] in your mouth, but it's too big to fit!"
+			revert_cast()
 			return 0
+		usr.visible_message("\red <b>[usr] begins stuffing [the_item]'s [limb.display_name] into [m_his] gaping maw!</b>")
 		var/oldloc = H.loc
 		if(!do_mob(usr,H,EAT_MOB_DELAY))
 			usr << "\red You were interrupted before you could eat [the_item]!"
