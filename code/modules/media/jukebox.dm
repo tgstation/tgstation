@@ -103,9 +103,6 @@ var/global/loopModeNames=list(
 /obj/machinery/media/jukebox/attack_hand(var/mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if(isobserver(user) && !isAdminGhost(user))
-		usr << "\red You can't push buttons when your fingers go right through them, dummy."
-		return
 	var/t = "<h1>Jukebox Interface</h1>"
 	t += "<b>Power:</b> <a href='?src=\ref[src];power=1'>[playing?"On":"Off"]</a><br />"
 	t += "<b>Play Mode:</b> <a href='?src=\ref[src];mode=1'>[loopModeNames[loop_mode]]</a><br />"
@@ -134,6 +131,9 @@ var/global/loopModeNames=list(
 
 
 /obj/machinery/media/jukebox/Topic(href, href_list)
+	if(isobserver(usr) && !isAdminGhost(usr))
+		usr << "\red You can't push buttons when your fingers go right through them, dummy."
+		return
 	..()
 	if (href_list["power"])
 		playing=!playing
