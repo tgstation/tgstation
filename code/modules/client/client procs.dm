@@ -239,6 +239,14 @@
 	if(inactivity > duration)	return inactivity
 	return 0
 
+/client/verb/resend_resources()
+	set name = "Resend Resources"
+	set desc = "Re-send resources for NanoUI. May help those with NanoUI issues."
+	set category = "Preferences"
+
+	usr << "\blue Re-sending NanoUI resources.  This may result in lag."
+	nanomanager.send_resources(src)
+
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
 //	preload_vox() //Causes long delays with initial start window and subsequent windows when first logged in.
