@@ -676,7 +676,7 @@ steam.start() -- spawns the effect
 			src.processing = 0
 			var/turf/T = get_turf(src.holder)
 			if(T != src.oldposition)
-				if(istype(T, /turf/space))
+				if(!has_gravity(T))
 					var/obj/effect/effect/ion_trails/I = new /obj/effect/effect/ion_trails(src.oldposition)
 					src.oldposition = T
 					I.dir = src.holder.dir
