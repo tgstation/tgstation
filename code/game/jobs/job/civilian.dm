@@ -209,10 +209,6 @@
 			H.equip_or_collect(new /obj/item/weapon/storage/bag/ore(H), slot_in_backpack)
 		return 1
 
-
-
-//Griff //BS12 EDIT
-
 /datum/job/clown
 	title = "Clown"
 	flag = CLOWN
@@ -314,7 +310,7 @@
 			H.equip_or_collect(new H.species.survival_gear(H), slot_r_hand)
 		else
 			H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
-		H.equip_or_collect(new /obj/item/key(H), slot_l_store)
+		// Now spawns on the janikart.  H.equip_or_collect(new /obj/item/key(H), slot_l_store)
 		return 1
 
 
