@@ -3,6 +3,15 @@
 	desc = "A keyring with a small steel key, and a pink fob reading \"Pussy Wagon\"."
 	icon_state = "jani_keys"
 
+/obj/item/mecha_parts/janicart_upgrade
+	name = "Janicart cleaner upgrade"
+	desc = "This device upgrades the janicart to automatically clean surfaces when driving."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "cyborg_upgrade"
+	origin_tech = "engineering=2;materials=2"
+	construction_time = 50
+	construction_cost = list("metal"=20000)
+
 /obj/structure/stool/bed/chair/vehicle/janicart
 	name = "janicart"
 	icon_state = "pussywagon"
@@ -11,6 +20,8 @@
 	flags = OPENCONTAINER
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
 	var/obj/item/weapon/storage/bag/trash/mybag	= null
+
+	var/upgraded = 0
 
 /obj/structure/stool/bed/chair/vehicle/janicart/New()
 	..()
@@ -38,6 +49,13 @@
 
 /obj/structure/stool/bed/chair/vehicle/janicart/attackby(obj/item/W, mob/user)
 	..()
+	if(istype(W, /obj/item/mecha_parts/janicart_upgrade) && !upgraded && !destroyed)
+		user.drop_item()
+		del(W)
+		user << "<span class='notice'>You upgrade the Pussy Wagon.</span>"
+		upgraded = 1
+		name = "upgraded janicart"
+		icon_state = "pussywagon_upgraded"
 	if(istype(W, /obj/item/weapon/mop))
 		if(reagents.total_volume >= 2)
 			reagents.trans_to(W, 2)
@@ -59,3 +77,35 @@
 		mybag = null
 	else
 		..()
+
+/obj/structure/stool/bed/chair/vehicle/janicart/Move()
+	..()
+	if(upgraded)
+		var/turf/tile = loc
+		if(isturf(tile))
+			tile.clean_blood()
+			for(var/A in tile)
+				if(istype(A, /obj/effect))
+					if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
+						del(A)
+				else if(istype(A, /obj/item))
+					var/obj/item/cleaned_item = A
+					cleaned_item.clean_blood()
+				else if(istype(A, /mob/living/carbon/human))
+					var/mob/living/carbon/human/cleaned_human = A
+					if(cleaned_human.lying)
+						if(cleaned_human.head)
+							cleaned_human.head.clean_blood()
+							cleaned_human.update_inv_head(0)
+						if(cleaned_human.wear_suit)
+							cleaned_human.wear_suit.clean_blood()
+							cleaned_human.update_inv_wear_suit(0)
+						else if(cleaned_human.w_uniform)
+							cleaned_human.w_uniform.clean_blood()
+							cleaned_human.update_inv_w_uniform(0)
+						if(cleaned_human.shoes)
+							cleaned_human.shoes.clean_blood()
+							cleaned_human.update_inv_shoes(0)
+						cleaned_human.clean_blood()
+						cleaned_human << "\red [src] cleans your face!"
+	return
