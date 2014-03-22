@@ -580,6 +580,7 @@ This function completely restores a damaged organ to perfect condition.
 			var/lol = pick(cardinal)
 			step(organ,lol)
 			owner.regenerate_icons()
+		return organ
 
 
 /****************************************************
