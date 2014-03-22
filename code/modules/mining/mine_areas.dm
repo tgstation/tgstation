@@ -2,6 +2,7 @@
 
 /area/mine
 	icon_state = "mining"
+	has_gravity = 1
 
 /area/mine/explored
 	name = "Mine"

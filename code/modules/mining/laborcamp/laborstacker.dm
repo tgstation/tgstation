@@ -26,7 +26,7 @@
 		if (machine && release_door)
 			machine.CONSOLE = src
 		else
-			del(src)
+			qdel(src)
 
 /obj/machinery/mineral/labor_claim_console/proc/check_auth()
 	if(emagged) return 1 //Shuttle is emagged, let any ol' person through

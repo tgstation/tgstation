@@ -107,7 +107,7 @@
 	if(ismob(M))
 		if(!M:lastarea)
 			M:lastarea = get_area(M.loc)
-		if(M:lastarea.has_gravity == 0)
+		if(!has_gravity(M))
 			inertial_drift(M)
 
 	/*
@@ -178,7 +178,7 @@
 /turf/proc/RemoveLattice()
 	var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 	if(L)
-		del L
+		qdel(L)
 
 //Creates a new turf
 /turf/proc/ChangeTurf(var/path)

@@ -121,14 +121,14 @@
 	..()
 	for(var/obj/structure/table/T in src.loc)
 		if(T != src)
-			del(T)
+			qdel(T)
 	update_icon()
 	for(var/direction in list(1,2,4,8,5,6,9,10))
 		if(locate(/obj/structure/table,get_step(src,direction)))
 			var/obj/structure/table/T = locate(/obj/structure/table,get_step(src,direction))
 			T.update_icon()
 
-/obj/structure/table/Del()
+/obj/structure/table/Destroy()
 	for(var/direction in list(1,2,4,8,5,6,9,10))
 		if(locate(/obj/structure/table,get_step(src,direction)))
 			var/obj/structure/table/T = locate(/obj/structure/table,get_step(src,direction))
@@ -227,7 +227,7 @@
 								break stack_loop
 							else
 								amt -= S.amount
-								del(S)
+								qdel(S)
 		else if(ispath(A, /obj/item))
 			var/obj/item/I
 			item_loop:
@@ -259,7 +259,7 @@
 		for(var/B in Deletion)
 			if(!istype(B, A))
 				Deletion.Remove(B)
-				del(B)
+				qdel(B)
 	return Deletion
 
 /obj/structure/table/interact(mob/user)
@@ -434,11 +434,11 @@
 /obj/structure/table/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(25))
@@ -451,10 +451,10 @@
 	if(prob(75))
 		if(istype(src, /obj/structure/table/woodentable))
 			new /obj/item/weapon/table_parts/wood( src.loc )
-			del(src)
+			qdel(src)
 			return
 		new /obj/item/weapon/table_parts( src.loc )
-		del(src)
+		qdel(src)
 		return
 
 /obj/structure/table/attack_paw(mob/user)
@@ -468,7 +468,7 @@
 		else
 			new /obj/item/weapon/table_parts(loc)
 		density = 0
-		del(src)
+		qdel(src)
 
 
 /obj/structure/table/attack_alien(mob/user)
@@ -480,7 +480,7 @@
 	else
 		new /obj/item/weapon/table_parts(loc)
 	density = 0
-	del(src)
+	qdel(src)
 
 
 /obj/structure/table/attack_animal(mob/living/simple_animal/user)
@@ -493,7 +493,7 @@
 		else
 			new /obj/item/weapon/table_parts(loc)
 		density = 0
-		del(src)
+		qdel(src)
 
 
 
@@ -509,7 +509,7 @@
 		else
 			new /obj/item/weapon/table_parts(loc)
 		density = 0
-		del(src)
+		qdel(src)
 	else
 		..()
 
@@ -538,21 +538,22 @@
 
 
 /obj/structure/table/attackby(obj/item/I, mob/user)
-	if (istype(I, /obj/item/weapon/grab) && get_dist(src, user) < 2)
-		var/obj/item/weapon/grab/G = I
-		if(G.affecting.buckled)
-			user << "<span class='notice'>[G.affecting] is buckled to [G.affecting.buckled]!</span>"
-			return
-		if(G.state < GRAB_AGGRESSIVE)
-			user << "<span class='notice'>You need a better grip to do that!</span>"
-			return
-		if(!G.confirm())
-			return
-		G.affecting.loc = src.loc
-		G.affecting.Weaken(5)
-		G.affecting.visible_message("<span class='danger'>[G.assailant] pushes [G.affecting] onto [src].</span>", \
-									"<span class='userdanger'>[G.assailant] pushes [G.affecting] onto [src].</span>")
-		del(I)
+	if (istype(I, /obj/item/weapon/grab))
+		if(get_dist(src, user) < 2)
+			var/obj/item/weapon/grab/G = I
+			if(G.affecting.buckled)
+				user << "<span class='notice'>[G.affecting] is buckled to [G.affecting.buckled]!</span>"
+				return
+			if(G.state < GRAB_AGGRESSIVE)
+				user << "<span class='notice'>You need a better grip to do that!</span>"
+				return
+			if(!G.confirm())
+				return
+			G.affecting.loc = src.loc
+			G.affecting.Weaken(5)
+			G.affecting.visible_message("<span class='danger'>[G.assailant] pushes [G.affecting] onto [src].</span>", \
+										"<span class='userdanger'>[G.assailant] pushes [G.affecting] onto [src].</span>")
+		qdel(I)
 		return
 
 	if (istype(I, /obj/item/weapon/wrench))
@@ -584,7 +585,7 @@ Destroy type values:
 	if(destroy_type == 1)
 		user.visible_message("<span class='notice'>The table was sliced apart by [user]!</span>")
 		new parts( src.loc )
-		del(src)
+		qdel(src)
 		return
 
 	if(destroy_type == 2)
@@ -596,7 +597,7 @@ Destroy type values:
 				if (do_after(user, 50))
 					new parts( src.loc )
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					del(src)
+					qdel(src)
 				return
 		else
 			user << "<span class='notice'>Now disassembling table</span>"
@@ -604,7 +605,7 @@ Destroy type values:
 			if (do_after(user, 50))
 				new parts( src.loc )
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				del(src)
+				qdel(src)
 			return
 
 
@@ -672,23 +673,23 @@ Destroy type values:
 /obj/structure/rack/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 		if(2.0)
-			del(src)
+			qdel(src)
 			if(prob(50))
 				new /obj/item/weapon/rack_parts(src.loc)
 		if(3.0)
 			if(prob(25))
-				del(src)
+				qdel(src)
 				new /obj/item/weapon/rack_parts(src.loc)
 
 /obj/structure/rack/blob_act()
 	if(prob(75))
-		del(src)
+		qdel(src)
 		return
 	else if(prob(50))
 		new /obj/item/weapon/rack_parts(src.loc)
-		del(src)
+		qdel(src)
 		return
 
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -714,7 +715,7 @@ Destroy type values:
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/weapon/rack_parts( src.loc )
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		del(src)
+		qdel(src)
 		return
 
 	if(isrobot(user))
@@ -724,7 +725,7 @@ Destroy type values:
 	return 1
 
 /obj/structure/rack/meteorhit(obj/O as obj)
-	del(src)
+	qdel(src)
 
 
 /obj/structure/rack/attack_hand(mob/user)
@@ -733,7 +734,7 @@ Destroy type values:
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		new /obj/item/weapon/rack_parts(loc)
 		density = 0
-		del(src)
+		qdel(src)
 
 
 /obj/structure/rack/attack_paw(mob/user)
@@ -742,14 +743,14 @@ Destroy type values:
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		new /obj/item/weapon/rack_parts(loc)
 		density = 0
-		del(src)
+		qdel(src)
 
 
 /obj/structure/rack/attack_alien(mob/user)
 	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
 	new /obj/item/weapon/rack_parts(loc)
 	density = 0
-	del(src)
+	qdel(src)
 
 
 /obj/structure/rack/attack_animal(mob/living/simple_animal/user)
@@ -757,7 +758,7 @@ Destroy type values:
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		new /obj/item/weapon/rack_parts(loc)
 		density = 0
-		del(src)
+		qdel(src)
 /obj/structure/rack/attack_tk() // no telehulk sorry
 	return
 
