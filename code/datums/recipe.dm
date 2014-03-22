@@ -79,7 +79,7 @@
 	var/obj/result_obj = new result(container)
 	for (var/obj/O in (container.contents-result_obj))
 		O.reagents.trans_to(result_obj, O.reagents.total_volume)
-		del(O)
+		qdel(O)
 	container.reagents.clear_reagents()
 	return result_obj
 
@@ -91,7 +91,7 @@
 			O.reagents.del_reagent("nutriment")
 			O.reagents.update_total()
 			O.reagents.trans_to(result_obj, O.reagents.total_volume)
-		del(O)
+		qdel(O)
 	container.reagents.clear_reagents()
 	return result_obj
 

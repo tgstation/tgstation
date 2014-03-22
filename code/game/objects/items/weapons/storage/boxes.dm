@@ -47,7 +47,7 @@
 	user.put_in_hands(I)
 	user.update_inv_l_hand()
 	user.update_inv_r_hand()
-	del(src)
+	qdel(src)
 
 
 /obj/item/weapon/storage/box/survival
@@ -407,7 +407,7 @@
 
 /obj/item/weapon/storage/box/mousetraps
 	name = "box of Pest-B-Gon mousetraps"
-	desc = "<B><FONT=red>WARNING:</FONT></B> <I>Keep out of reach of children</I>."
+	desc = "<span class='alert'>Keep out of reach of children.</span>"
 	icon_state = "mousetraps"
 
 	New()

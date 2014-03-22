@@ -14,7 +14,7 @@
 			t_prod.yield = F.yield
 			t_prod.potency = F.potency
 			t_amount++
-		del(O)
+		qdel(O)
 		return 1
 
 	else if(istype(O, /obj/item/weapon/grown/))
@@ -29,7 +29,7 @@
 				t_prod.yield = F.yield
 				t_prod.potency = F.potency
 				t_amount++
-			del(O)
+			qdel(O)
 			return 1
 		else return 0
 

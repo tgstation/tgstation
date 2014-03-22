@@ -15,6 +15,7 @@
 	var/glass = 0
 	var/normalspeed = 1
 	var/heat_proof = 0 // For glass airlocks/opacity firedoors
+	var/emergency = 0 // Emergency access override
 
 /obj/machinery/door/New()
 	..()
@@ -29,7 +30,7 @@
 	return
 
 
-/obj/machinery/door/Del()
+/obj/machinery/door/Destroy()
 	density = 0
 	air_update_turf(1)
 	update_freelook_sight()
@@ -51,7 +52,7 @@
 
 	if(istype(AM, /obj/machinery/bot))
 		var/obj/machinery/bot/bot = AM
-		if(src.check_access(bot.botcard))
+		if(src.check_access(bot.botcard) || emergency == 1)
 			if(density)
 				open()
 		return
@@ -59,7 +60,7 @@
 	if(istype(AM, /obj/mecha))
 		var/obj/mecha/mecha = AM
 		if(density)
-			if(mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access)))
+			if(mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access) || emergency == 1))
 				open()
 			else
 				flick("door_deny", src)
@@ -87,7 +88,7 @@
 		user = null
 
 	if(density && !emagged)
-		if(allowed(user))	open()
+		if(allowed(user) || src.emergency == 1)	open()
 		else				flick("door_deny", src)
 	return
 
@@ -136,7 +137,7 @@
 			A.loseBackupPower()
 			A.update_icon()
 		return 1
-	if(src.allowed(user))
+	if(src.allowed(user) || src.emergency == 1)
 		if(src.density)
 			open()
 		else
@@ -149,7 +150,7 @@
 
 /obj/machinery/door/blob_act()
 	if(prob(40))
-		del(src)
+		qdel(src)
 	return
 
 
@@ -167,10 +168,10 @@
 /obj/machinery/door/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 		if(2.0)
 			if(prob(25))
-				del(src)
+				qdel(src)
 		if(3.0)
 			if(prob(80))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread

@@ -44,7 +44,7 @@
 /mob/living/simple_animal/hostile/mimic/Die()
 	..()
 	visible_message("\red <b>[src]</b> stops moving!")
-	del(src)
+	qdel(src)
 
 
 
@@ -198,7 +198,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 			src.creator = creator
 			faction = "\ref[creator]" // very unique
 		if(destroy_original)
-			del(O)
+			qdel(O)
 		return 1
 	return
 

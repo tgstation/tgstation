@@ -8,15 +8,7 @@
 	volume = 50
 
 	on_reagent_change()
-		/*if(reagents.reagent_list.len > 1 )
-			icon_state = "glass_brown"
-			name = "Glass of Hooch"
-			desc = "Two or more drinks, mixed together."*/
-		/*else if(reagents.reagent_list.len == 1)
-			for(var/datum/reagent/R in reagents.reagent_list)
-				switch(R.id)*/
 		if (reagents.reagent_list.len > 0)
-			//mrid = R.get_master_reagent_id()
 			switch(reagents.get_master_reagent_id())
 				if("beer")
 					icon_state = "beerglass"
@@ -26,6 +18,10 @@
 					icon_state = "beerglass"
 					name = "Beer glass"
 					desc = "A freezing pint of beer"
+				if("greenbeer")
+					icon_state = "greenbeerglass"
+					name = "Green beer glass"
+					desc = "A freezing pint of green beer. Festive."
 				if("ale")
 					icon_state = "aleglass"
 					name = "Ale glass"
