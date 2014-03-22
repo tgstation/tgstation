@@ -61,12 +61,12 @@
 		for(var/atom/movable/A in src)
 			A.loc = loc
 			A.blob_act()
-		del(src)
+		qdel(src)
 
 /obj/machinery/sleeper/attack_animal(var/mob/living/simple_animal/M)//Stop putting hostile mobs in things guise
 	if(M.environment_smash)
 		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
-		del(src)
+		qdel(src)
 	return
 
 /obj/machinery/sleeper/attackby(obj/item/I, mob/user)
@@ -88,21 +88,21 @@
 			for(var/atom/movable/A in src)
 				A.loc = loc
 				ex_act(severity)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if(prob(50))
 				for(var/atom/movable/A in src)
 					A.loc = loc
 					ex_act(severity)
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if(prob(25))
 				for(var/atom/movable/A in src)
 					A.loc = loc
 					ex_act(severity)
-				del(src)
+				qdel(src)
 
 
 /obj/machinery/sleeper/emp_act(severity)
@@ -131,7 +131,7 @@
 	..()
 	open_machine()
 
-/obj/machinery/sleeper/Del()
+/obj/machinery/sleeper/Destroy()
 	var/turf/T = loc
 	T.contents += contents
 	..()
