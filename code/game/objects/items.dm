@@ -38,7 +38,7 @@
 /obj/item/Destroy()
 	if(ismob(loc))
 		var/mob/m = loc
-		m.unEquip(src)
+		m.unEquip(src, 1)
 	return ..()
 
 /obj/item/ex_act(severity)

@@ -12,9 +12,6 @@
 		del(magic)
 	for(var/infection in viruses)
 		del(infection)
-
-	if(mind)
-		mind.current = null
 	ghostize()
 	..()
 

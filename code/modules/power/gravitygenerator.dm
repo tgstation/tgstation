@@ -45,7 +45,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 // You aren't allowed to move.
 /obj/machinery/gravity_generator/Move()
 	..()
-	del(src)
+	qdel(src)
 
 /obj/machinery/gravity_generator/proc/set_broken()
 	stat |= BROKEN
@@ -53,10 +53,10 @@ var/const/GRAV_NEEDS_WRENCH = 3
 /obj/machinery/gravity_generator/proc/set_fix()
 	stat &= ~BROKEN
 
-/obj/machinery/gravity_generator/part/Del()
+/obj/machinery/gravity_generator/part/Destroy()
 	set_broken()
 	if(main_part)
-		del(main_part)
+		qdel(main_part)
 	..()
 
 //
@@ -110,12 +110,12 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	var/current_overlay = null
 	var/broken_state = 0
 
-/obj/machinery/gravity_generator/main/Del() // If we somehow get deleted, remove all of our other parts.
+/obj/machinery/gravity_generator/main/Destroy() // If we somehow get deleted, remove all of our other parts.
 	on = 0
 	update_list()
 	for(var/obj/machinery/gravity_generator/part/O in parts)
 		O.main_part = null
-		del(O)
+		qdel(O)
 	..()
 
 /obj/machinery/gravity_generator/main/proc/setup_parts()

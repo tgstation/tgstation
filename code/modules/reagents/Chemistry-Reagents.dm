@@ -278,7 +278,7 @@ datum
 				if(!istype(T)) return
 				if(volume>=10)
 					for(var/obj/effect/rune/R in T)
-						del R
+						qdel(R)
 				T.Bless()
 
 		lube
