@@ -6864,7 +6864,7 @@
 "cBZ" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"; tag = ""},/turf/simulated/floor/plating/airless,/area/solar/starboard)
 "cCa" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 1; on = 1},/turf/simulated/floor{icon_state = "freezerfloor"},/area/medical/virology)
 "cCb" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor{icon_state = "freezerfloor"},/area/medical/virology)
-"cCc" = (/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/machinery/power/terminal{icon_state = "term"; dir = 1},/turf/simulated/floor{icon_state = "floorgrime"},/area/maintenance/incinerator)
+"cCc" = (/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/machinery/power/terminal{icon_state = "term"; dir = 1},/obj/machinery/alarm{desc = "This particular atmos control unit appears to have no access restrictions."; dir = 8; icon_state = "alarm0"; locked = 0; name = "all-access air alarm"; pixel_x = 24; req_access = "0"; req_one_access = "0"},/turf/simulated/floor{icon_state = "floorgrime"},/area/maintenance/incinerator)
 "cCd" = (/obj/machinery/atmospherics/binary/pump{dir = 4; name = "plasma tank pump"},/obj/structure/sign/nosmoking_2{pixel_x = 0; pixel_y = 28},/turf/simulated/floor{icon_state = "floorgrime"},/area/maintenance/incinerator)
 "cCe" = (/obj/effect/landmark{name = "xeno_spawn"; pixel_x = -1},/obj/machinery/atmospherics/unary/vent_pump{dir = 1; on = 1},/turf/simulated/floor{icon_state = "freezerfloor"},/area/medical/virology)
 "cCf" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/item/device/radio/intercom{pixel_y = 25},/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/hallway/secondary/exit{name = "\improper Departure Lounge"})
