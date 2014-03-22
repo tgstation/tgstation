@@ -275,9 +275,10 @@
 			usr.visible_message("\red [usr] [pick("chomps","bites")] off [the_item]'s [limb]!")
 			playsound(usr.loc, 'sound/items/eatfood.ogg', 50, 0)
 			var/obj/limb_obj=limb.droplimb(1,1)
-			var/datum/organ/external/chest=usr:get_organ("chest")
-			chest.implants += limb_obj
-			limb_obj.loc=usr
+			if(limb_obj)
+				var/datum/organ/external/chest=usr:get_organ("chest")
+				chest.implants += limb_obj
+				limb_obj.loc=usr
 			doHeal(usr)
 	else
 		usr.visible_message("\red [usr] eats \the [the_item].")
