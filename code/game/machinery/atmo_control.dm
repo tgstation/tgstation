@@ -74,6 +74,10 @@ obj/machinery/air_sensor
 		if(radio_controller)
 			set_frequency(frequency)
 
+	Destroy()
+		radio_controller.remove_object(src, frequency)
+		..()
+
 obj/machinery/computer/general_air_control
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "tank"
@@ -161,6 +165,10 @@ obj/machinery/computer/general_air_control
 
 	initialize()
 		set_frequency(frequency)
+
+	Destroy()
+		radio_controller.remove_object(src, frequency)
+		..()
 
 	large_tank_control
 		icon = 'icons/obj/computer.dmi'

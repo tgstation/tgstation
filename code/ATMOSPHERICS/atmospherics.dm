@@ -24,6 +24,8 @@ obj/machinery/atmospherics/var/initialize_directions = 0
 obj/machinery/atmospherics/var/pipe_color
 
 obj/machinery/atmospherics/process()
+	if(gc_destroyed) //comments on /vg/ imply that GC'd pipes still process
+		return PROCESS_KILL
 	build_network()
 
 obj/machinery/atmospherics/proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
@@ -83,7 +85,7 @@ obj/machinery/atmospherics/attackby(var/obj/item/weapon/W as obj, var/mob/user a
 				for(var/obj/machinery/meter/meter in T)
 					if(meter.target == src)
 						new /obj/item/pipe_meter(T)
-						del(meter)
-			del(src)
+						qdel(meter)
+			qdel(src)
 	else
 		return ..()

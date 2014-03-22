@@ -336,7 +336,7 @@
 			return
 		user  << "<span class='notice'>You rig [src].</span>"
 		user.drop_item()
-		del(W)
+		qdel(W)
 		rigged = 1
 		return
 	else if(istype(W, /obj/item/device/radio/electropack))

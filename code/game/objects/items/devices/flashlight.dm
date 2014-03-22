@@ -229,7 +229,7 @@
 		..()
 		processing_objects.Add(src)
 
-/obj/item/device/flashlight/emp/Del()
+/obj/item/device/flashlight/emp/Destroy()
 		processing_objects.Remove(src)
 		..()
 

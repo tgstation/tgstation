@@ -30,7 +30,7 @@
 	return
 
 
-/obj/machinery/door/Del()
+/obj/machinery/door/Destroy()
 	density = 0
 	air_update_turf(1)
 	update_freelook_sight()
@@ -142,7 +142,7 @@
 
 /obj/machinery/door/blob_act()
 	if(prob(40))
-		del(src)
+		qdel(src)
 	return
 
 
@@ -160,10 +160,10 @@
 /obj/machinery/door/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 		if(2.0)
 			if(prob(25))
-				del(src)
+				qdel(src)
 		if(3.0)
 			if(prob(80))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread

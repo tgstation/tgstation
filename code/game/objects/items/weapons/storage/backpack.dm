@@ -46,12 +46,12 @@
 		if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
 			investigate_log("has become a singularity. Caused by [user.key]","singulo")
 			user << "\red The Bluespace interfaces of the two devices catastrophically malfunction!"
-			del(W)
+			qdel(W)
 			var/obj/machinery/singularity/singulo = new /obj/machinery/singularity (get_turf(src))
 			singulo.energy = 300 //should make it a bit bigger~
 			message_admins("[key_name_admin(user)] detonated a bag of holding")
 			log_game("[key_name(user)] detonated a bag of holding")
-			del(src)
+			qdel(src)
 			return
 		..()
 
@@ -62,7 +62,7 @@
 		else
 			user << "\red The Bluespace generator malfunctions!"
 			for (var/obj/O in src.contents) //it broke, delete what was in it
-				del(O)
+				qdel(O)
 			crit_fail = 1
 			icon_state = "brokenpack"
 

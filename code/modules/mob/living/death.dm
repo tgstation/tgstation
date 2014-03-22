@@ -8,7 +8,7 @@
 
 	spawn_gibs()
 
-	end_animation(animate) // Will del(src)
+	end_animation(animate) // Will qdel(src)
 
 /mob/living/proc/spawn_gibs()
 	gibs(loc, viruses)
@@ -45,6 +45,7 @@
 	canmove = 0
 	icon = null
 	invisibility = 101
+	alpha = 0
 
 	if(!prev_lying && animation)
 		animate = new(loc)
@@ -55,8 +56,8 @@
 
 /mob/living/proc/end_animation(var/animate)
 	if(!animate)
-		del(src)
+		qdel(src)
 	else
 		spawn(15)
-			if(animate)		del(animate)
-			if(src)			del(src)
+			if(animate)		qdel(animate)
+			if(src)			qdel(src)

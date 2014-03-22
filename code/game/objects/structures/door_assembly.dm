@@ -414,7 +414,7 @@ obj/structure/door_assembly
 						var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
 						new M(get_turf(src))
 						new M(get_turf(src))
-				del(src)
+				qdel(src)
 		else
 			user << "\blue You need more welding fuel to dissassemble the airlock assembly."
 			return
@@ -474,7 +474,7 @@ obj/structure/door_assembly
 		else
 			W.loc = src.loc
 
-			//del(W)
+			//qdel(W)
 
 	else if(istype(W, /obj/item/weapon/crowbar) && state == 2 )
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
@@ -549,7 +549,7 @@ obj/structure/door_assembly
 			if(created_name)
 				door.name = created_name
 			src.electronics.loc = door
-			del(src)
+			qdel(src)
 	else
 		..()
 	if(mineral == "glass")

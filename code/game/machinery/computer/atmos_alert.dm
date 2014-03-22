@@ -16,6 +16,10 @@
 	..()
 	set_frequency(receive_frequency)
 
+/obj/machinery/computer/atmos_alert/Destroy()
+	radio_controller.remove_object(src, receive_frequency)
+	..()
+
 /obj/machinery/computer/atmos_alert/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
 

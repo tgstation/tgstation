@@ -87,14 +87,14 @@ for reference:
 				new /obj/item/stack/sheet/wood(get_turf(src))
 				new /obj/item/stack/sheet/wood(get_turf(src))
 				new /obj/item/stack/sheet/wood(get_turf(src))
-				del(src)
+				qdel(src)
 			..()
 
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
 				visible_message("\red <B>The barricade is blown apart!</B>")
-				del(src)
+				qdel(src)
 				return
 			if(2.0)
 				src.health -= 25
@@ -103,7 +103,7 @@ for reference:
 					new /obj/item/stack/sheet/wood(get_turf(src))
 					new /obj/item/stack/sheet/wood(get_turf(src))
 					new /obj/item/stack/sheet/wood(get_turf(src))
-					del(src)
+					qdel(src)
 				return
 
 	meteorhit()
@@ -111,14 +111,14 @@ for reference:
 		new /obj/item/stack/sheet/wood(get_turf(src))
 		new /obj/item/stack/sheet/wood(get_turf(src))
 		new /obj/item/stack/sheet/wood(get_turf(src))
-		del(src)
+		qdel(src)
 		return
 
 	blob_act()
 		src.health -= 25
 		if (src.health <= 0)
 			visible_message("\red <B>The blob eats through the barricade!</B>")
-			del(src)
+			qdel(src)
 		return
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)//So bullets will fly over and stuff.
@@ -267,4 +267,4 @@ for reference:
 
 		explosion(src.loc,-1,-1,0)
 		if(src)
-			del(src)
+			qdel(src)

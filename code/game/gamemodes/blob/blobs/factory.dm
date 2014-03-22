@@ -11,7 +11,7 @@
 /obj/effect/blob/factory/update_icon()
 	if(health <= 0)
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
-		Delete()
+		Destroy()
 		return
 	return
 
@@ -120,12 +120,11 @@
 	S.set_up(reagents, 1, 1, location, 15, 1) // only 1-2 smoke cloud
 	S.start()
 
-	del(src)
+	qdel(src)
 
-/mob/living/simple_animal/hostile/blobspore/Del()
+/mob/living/simple_animal/hostile/blobspore/Destroy()
 	if(factory)
 		factory.spores -= src
 	if(contents)
 		for(var/mob/M in contents)
 			M.loc = src.loc
-	..()
