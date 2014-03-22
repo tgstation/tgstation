@@ -28,9 +28,7 @@
 
 		return null
 
-	Del()
-		loc = null
-
+	Destroy()
 		if(node)
 			node.disconnect(src)
 			del(network)

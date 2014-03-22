@@ -197,11 +197,11 @@
 			return list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
 		if("Medical Doctor")
 			return list(access_medical, access_morgue, access_surgery)
-		if("Botanist")	// -- TLE
+		if("Botanist")
 			return list(access_hydroponics, access_morgue) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
-		if("Librarian") // -- TLE
+		if("Librarian")
 			return list(access_library)
-		if("Lawyer") //Muskets 160910
+		if("Lawyer")
 			return list(access_lawyer, access_court, access_sec_doors)
 		if("Captain")
 			return get_all_accesses()

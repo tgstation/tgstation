@@ -73,6 +73,10 @@ obj/machinery/air_sensor/New()
 	if(radio_controller)
 		set_frequency(frequency)
 
+obj/machinery/computer/general_air_control/Destroy()
+		radio_controller.remove_object(src, frequency)
+		..()
+
 obj/machinery/computer/general_air_control
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "tank"
@@ -160,6 +164,10 @@ obj/machinery/computer/general_air_control/proc/return_text()
 
 	return output
 
+obj/machinery/computer/general_air_control/Destroy()
+	radio_controller.remove_object(src, frequency)
+	..()
+
 obj/machinery/computer/general_air_control/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
@@ -226,7 +234,7 @@ obj/machinery/computer/general_air_control/large_tank_control/return_text()
 	var/output = "<A href='?src=\ref[src];reconnect=1'>Reconnect</A><BR>"
 	output += ..()
 			//if(signal.data)
-			//	input_info = signal.data // Attempting to fix intake control -- TLE
+			//	input_info = signal.data // Attempting to fix intake control
 
 	output += "<h1>Tank Control System</h1>"
 	if(input_info)

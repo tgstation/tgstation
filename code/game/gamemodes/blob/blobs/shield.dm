@@ -10,7 +10,7 @@
 /obj/effect/blob/shield/update_icon()
 	if(health <= 0)
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
-		Delete()
+		Destroy()
 		return
 	return
 

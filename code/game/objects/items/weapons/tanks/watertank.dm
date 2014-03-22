@@ -65,7 +65,7 @@
 		M.unEquip(noz)
 	return
 
-/obj/item/weapon/watertank/Del()
+/obj/item/weapon/watertank/Destroy()
 	if (noz)
 		var/M = get(noz, /mob)
 		remove_noz(M)
@@ -99,7 +99,7 @@
 /obj/item/weapon/reagent_containers/spray/mister/dropped(mob/user as mob)
 	user << "<span class='notice'>The mister snaps back onto the watertank!</span>"
 	tank.on = 0
-	Del()
+	qdel(src)
 	
 /obj/item/weapon/reagent_containers/spray/mister/attack_self()
 	return
@@ -107,7 +107,7 @@
 /proc/check_tank_exists(parent_tank, var/mob/living/carbon/human/M, var/obj/O)
 	if (!parent_tank || !istype(parent_tank, /obj/item/weapon/watertank) || !M || !istype(M))	//To avoid weird issues from admin spawns
 		M.unEquip(O)
-		O.Del()
+		qdel(O)
 		return 0
 	else
 		return 1
@@ -171,7 +171,7 @@
 /obj/item/weapon/extinguisher/mini/nozzle/dropped(mob/user as mob)
 	user << "<span class='notice'>The nozzle snaps back onto the watertank!</span>"
 	tank.on = 0
-	Del()
+	qdel(src)
 	
 /obj/item/weapon/extinguisher/mini/nozzle/attack_self()
 	return

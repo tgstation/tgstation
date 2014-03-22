@@ -10,7 +10,7 @@
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "hits"
-	speed = -1
+	speed = 0
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 100
 	health = 100
@@ -42,7 +42,7 @@
 		new weapon1 (src.loc)
 	if(weapon2)
 		new weapon2 (src.loc)
-	del src
+	qdel(src)
 	return
 
 ///////////////Sword and shield////////////
@@ -96,7 +96,7 @@
 	icon_living = "syndicatemeleespace"
 	name = "Syndicate Commando"
 	corpse = /obj/effect/landmark/mobcorpse/syndicatecommando
-	speed = 0
+	speed = 1
 
 /mob/living/simple_animal/hostile/syndicate/melee/space/Process_Spacemove(var/check_drift = 0)
 	return
@@ -128,7 +128,7 @@
 	max_n2 = 0
 	minbodytemp = 0
 	corpse = /obj/effect/landmark/mobcorpse/syndicatecommando
-	speed = 0
+	speed = 1
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space/Process_Spacemove(var/check_drift = 0)
 	return
@@ -161,5 +161,5 @@
 /mob/living/simple_animal/hostile/viscerator/Die()
 	..()
 	visible_message("\red <b>[src]</b> is smashed into pieces!")
-	del src
+	qdel(src)
 	return

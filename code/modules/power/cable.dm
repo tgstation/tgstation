@@ -35,7 +35,6 @@
 	var/d2 = 1
 	layer = 2.44 //Just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
 	var/cable_color = "red"
-	var/obj/structure/powerswitch/power_switch
 
 /obj/structure/cable/yellow
 	cable_color = "yellow"
@@ -85,10 +84,10 @@
 	cable_list += src
 
 
-/obj/structure/cable/Del()						// called when a cable is deleted
-	if(!defer_powernet_rebuild)					// set if network will be rebuilt manually
-		if(powernet)
-			powernet.cut_cable(src)				// update the powernets
+/obj/structure/cable/Destroy()					// called when a cable is deleted
+//	if(!defer_powernet_rebuild)					// set if network will be rebuilt manually
+	if(powernet)
+		powernet.cut_cable(src)				// update the powernets
 	cable_list -= src
 	..()													// then go ahead and delete the cable
 
@@ -120,10 +119,6 @@
 
 	if(istype(W, /obj/item/weapon/wirecutters))
 
-//		if(power_switch)
-//			user << "\red This piece of cable is tied to a power switch. Flip the switch to remove it."
-//			return
-
 		if (shock(user, 50))
 			return
 
@@ -137,7 +132,7 @@
 
 		investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")
 
-		del(src)
+		qdel(src)
 		return
 
 
@@ -179,16 +174,16 @@
 /obj/structure/cable/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 		if(2.0)
 			if (prob(50))
 				new/obj/item/stack/cable_coil(src.loc, src.d1 ? 2 : 1, cable_color)
-				del(src)
+				qdel(src)
 
 		if(3.0)
 			if (prob(25))
 				new/obj/item/stack/cable_coil(src.loc, src.d1 ? 2 : 1, cable_color)
-				del(src)
+				qdel(src)
 	return
 
 // the cable coil object, used for laying cable
@@ -313,11 +308,11 @@
 	if(src.amount < used)
 		return 0
 	else if (src.amount == used)
-		.=1 //Because del(src) stops the proc, set the default return value to 1
 		if(ismob(loc)) //handle mob icon update
 			var/mob/M = loc
 			M.unEquip(src)
-		del(src)
+		qdel(src)
+		return 1
 	else
 		amount -= used
 		update_icon()
@@ -379,7 +374,7 @@
 		if (C.shock(user, 50))
 			if (prob(50)) //fail
 				new/obj/item/stack/cable_coil(C.loc, 1, C.cable_color)
-				del(C)
+				qdel(C)
 		//src.laying = 1
 		//last = C
 
@@ -439,7 +434,7 @@
 			if (NC.shock(user, 50))
 				if (prob(50)) //fail
 					new/obj/item/stack/cable_coil(NC.loc, 1, NC.cable_color)
-					del(NC)
+					qdel(NC)
 
 			return
 	else if(C.d1 == 0)		// exisiting cable doesn't point at our position, so see if it's a stub
@@ -478,7 +473,7 @@
 		if (C.shock(user, 50))
 			if (prob(50)) //fail
 				new/obj/item/stack/cable_coil(C.loc, 2, C.cable_color)
-				del(C)
+				qdel(C)
 				return
 
 		C.denode()// this call may have disconnected some cables that terminated on the centre of the turf, if so split the powernets.

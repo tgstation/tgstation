@@ -248,7 +248,7 @@
 
 /obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I,/obj/item/weapon/screwdriver))
-		if(src.build_path == "/obj/machinery/computer/rdconsole/core")
+		if(build_path == /obj/machinery/computer/rdconsole/core)
 			name = "circuit board (RD Console - Robotics)"
 			build_path = /obj/machinery/computer/rdconsole/robotics
 			user << "<span class='notice'>Access protocols successfully updated.</span>"
@@ -286,7 +286,7 @@
 					user << "<span class='notice'>You deconstruct the frame.</span>"
 					var/obj/item/stack/sheet/metal/M = new (loc, 5)
 					M.add_fingerprint(user)
-					del(src)
+					qdel(src)
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
@@ -332,7 +332,7 @@
 					if(do_after(user, 20))
 						if(C && C.amount >= 5)
 							C.amount -= 5
-							if(C.amount <= 0) del(C)
+							if(C.amount <= 0) qdel(C)
 							user << "<span class='notice'>You add cables to the frame.</span>"
 							src.state = 3
 							src.icon_state = "3"
@@ -380,4 +380,4 @@
 					var/obj/item/weapon/circuitboard/shuttle/C = circuit
 					S.id = C.id
 				transfer_fingerprints_to(B)
-				del(src)
+				qdel(src)

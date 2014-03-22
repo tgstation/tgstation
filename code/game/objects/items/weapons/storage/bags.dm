@@ -169,7 +169,7 @@
 				usr.client.screen -= S
 			S.dropped(usr)
 			if(!S.amount)
-				del S
+				qdel(S)
 			else
 				S.loc = src
 
@@ -214,7 +214,7 @@
 				N.amount = stacksize
 				S.amount -= stacksize
 			if(!S.amount)
-				del S // todo: there's probably something missing here
+				qdel(S)// todo: there's probably something missing here
 		orient2hud(usr)
 		if(usr.s_active)
 			usr.s_active.show_to(usr)

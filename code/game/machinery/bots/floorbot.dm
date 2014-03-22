@@ -194,7 +194,7 @@
 		if(targetdirection != null)
 			/*
 			for (var/turf/space/D in view(7,src))
-				if(!(D in floorbottargets) && D != src.oldtarget)			// Added for bridging mode -- TLE
+				if(!(D in floorbottargets) && D != src.oldtarget)			// Added for bridging mode
 					if(get_dir(src, D) == targetdirection)
 						src.oldtarget = D
 						src.target = D
@@ -331,7 +331,7 @@
 			T.amount -= i
 		else
 			src.amount += T.amount
-			del(T)
+			qdel(T)
 		src.updateicon()
 		src.target = null
 		src.repairing = 0
@@ -351,7 +351,7 @@
 		var/obj/item/stack/tile/plasteel/T = new /obj/item/stack/tile/plasteel
 		T.amount = 4
 		T.loc = M.loc
-		del(M)
+		qdel(M)
 		src.target = null
 		src.repairing = 0
 
@@ -387,7 +387,7 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
-	del(src)
+	qdel(src)
 	return
 
 
@@ -400,23 +400,23 @@
 		return
 	if(user.s_active)
 		user.s_active.close(user)
-	del(T)
+	qdel(T)
 	var/obj/item/weapon/toolbox_tiles/B = new /obj/item/weapon/toolbox_tiles
 	user.put_in_hands(B)
 	user << "<span class='notice'>You add the tiles into the empty toolbox. They protrude from the top.</span>"
 	user.unEquip(src, 1)
-	del(src)
+	qdel(src)
 
 /obj/item/weapon/toolbox_tiles/attackby(var/obj/item/W, mob/user as mob)
 	..()
 	if(isprox(W))
-		del(W)
+		qdel(W)
 		var/obj/item/weapon/toolbox_tiles_sensor/B = new /obj/item/weapon/toolbox_tiles_sensor()
 		B.created_name = src.created_name
 		user.put_in_hands(B)
 		user << "<span class='notice'>You add the sensor to the toolbox and tiles!</span>"
 		user.unEquip(src, 1)
-		del(src)
+		qdel(src)
 
 	else if (istype(W, /obj/item/weapon/pen))
 		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)
@@ -430,13 +430,13 @@
 /obj/item/weapon/toolbox_tiles_sensor/attackby(var/obj/item/W, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
-		del(W)
+		qdel(W)
 		var/turf/T = get_turf(user.loc)
 		var/obj/machinery/bot/floorbot/A = new /obj/machinery/bot/floorbot(T)
 		A.name = src.created_name
 		user << "<span class='notice'>You add the robot arm to the odd looking toolbox assembly! Boop beep!</span>"
 		user.unEquip(src, 1)
-		del(src)
+		qdel(src)
 	else if (istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "Enter new robot name", src.name, src.created_name)
 

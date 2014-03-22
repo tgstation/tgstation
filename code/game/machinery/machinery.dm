@@ -46,7 +46,7 @@ Class Variables:
 Class Procs:
    New()                     'game/machinery/machine.dm'
 
-   Del()                     'game/machinery/machine.dm'
+   Destroy()                   'game/machinery/machine.dm'
 
    auto_use_power()            'game/machinery/machine.dm'
       This proc determines how power mode power is deducted by the machine.
@@ -108,12 +108,14 @@ Class Procs:
 	var/state_open = 0
 	var/mob/living/occupant = null
 	var/unsecuring_tool = /obj/item/weapon/wrench
+	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
 
 /obj/machinery/New()
 	..()
 	machines += src
 
-/obj/machinery/Del()
+/obj/machinery/Destroy()
+	machines.Remove(src)
 	..()
 
 /obj/machinery/process()//If you dont use process or power why are you here
@@ -170,22 +172,22 @@ Class Procs:
 /obj/machinery/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(25))
-				del(src)
+				qdel(src)
 				return
 		else
 	return
 
 /obj/machinery/blob_act()
 	if(prob(50))
-		del(src)
+		qdel(src)
 
 /obj/machinery/proc/auto_use_power()
 	if(!powered(power_channel))
@@ -198,7 +200,7 @@ Class Procs:
 
 /obj/machinery/Topic(href, href_list)
 	..()
-	if(stat & (NOPOWER|BROKEN))
+	if(!interact_offline && stat & (NOPOWER|BROKEN))
 		return 1
 	if(usr.restrained() || usr.lying || usr.stat)
 		return 1
@@ -237,7 +239,7 @@ Class Procs:
 	return src.attack_hand(user)
 
 /obj/machinery/attack_hand(mob/user as mob)
-	if(stat & (NOPOWER|BROKEN|MAINT))
+	if(!interact_offline && stat & (NOPOWER|BROKEN|MAINT))
 		return 1
 	if(user.lying || user.stat)
 		return 1
@@ -285,7 +287,7 @@ Class Procs:
 			if(I.reliability != 100 && crit_fail)
 				I.crit_fail = 1
 			I.loc = src.loc
-		del(src)
+		qdel(src)
 
 /obj/machinery/proc/default_deconstruction_screwdriver(var/mob/user, var/icon_state_open, var/icon_state_closed, var/obj/item/weapon/screwdriver/S)
 	if(istype(S))

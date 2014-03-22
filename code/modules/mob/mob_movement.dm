@@ -174,7 +174,7 @@
 	if(!mob.lastarea)
 		mob.lastarea = get_area(mob.loc)
 
-	if((istype(mob.loc, /turf/space)) || (mob.lastarea.has_gravity == 0))
+	if(!has_gravity(mob))
 		if(!mob.Process_Spacemove(0))
 			return 0
 
@@ -272,21 +272,21 @@
 
 		for(var/obj/item/weapon/grab/G in mob.grabbed_by)
 			if(G.state == GRAB_PASSIVE && !grabbing.Find(G.assailant))
-				del(G)
+				qdel(G)
 
 			if(G.state == GRAB_AGGRESSIVE)
 				move_delay = world.time + 10
 				if(!prob(25))
 					return 1
 				mob.visible_message("<span class='warning'>[mob] has broken free of [G.assailant]'s grip!</span>")
-				del(G)
+				qdel(G)
 
 			if(G.state == GRAB_NECK)
 				move_delay = world.time + 10
 				if(!prob(5))
 					return 1
 				mob.visible_message("<span class='warning'>[mob] has broken free of [G.assailant]'s headlock!</span>")
-				del(G)
+				qdel(G)
 	return 0
 
 
@@ -357,33 +357,19 @@
 	if(!isturf(loc))	//if they're in a disposal unit, for example
 		return 1
 
-	/*
-	if(istype(src,/mob/living/carbon))
-		if(src.l_hand && src.r_hand)
-			return 0
-	*/
-
 	var/dense_object = 0
 	for(var/turf/turf in oview(1,src))
 		if(istype(turf,/turf/space))
 			continue
 
 		if(istype(src,/mob/living/carbon/human/))  // Only humans can wear magboots, so we give them a chance to.
-			if((istype(turf,/turf/simulated/floor)) && (src.lastarea.has_gravity == 0) && !(istype(src:shoes, /obj/item/clothing/shoes/magboots) && (src:shoes:flags & NOSLIP)))
+			if((istype(turf,/turf/simulated/floor)) && (!has_gravity(src)) && !(istype(src:shoes, /obj/item/clothing/shoes/magboots) && (src:shoes:flags & NOSLIP)))
 				continue
 
 
 		else
-			if((istype(turf,/turf/simulated/floor)) && (src.lastarea.has_gravity == 0)) // No one else gets a chance.
+			if((istype(turf,/turf/simulated/floor)) && (!has_gravity(src))) // No one else gets a chance.
 				continue
-
-
-
-		/*
-		if(istype(turf,/turf/simulated/floor) && (src.flags & NOGRAV))
-			continue
-		*/
-
 
 		dense_object++
 		break

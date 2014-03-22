@@ -623,7 +623,7 @@
 					spawn(2) step(M, M.dir)
 					spawn(3) step(M, M.dir)
 					spawn(4) step(M, M.dir)
-					M.take_organ_damage(2) // Was 5 -- TLE
+					M.take_organ_damage(2)
 					M << "\blue You slipped on the floor!"
 					playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 					M.Weaken(10)

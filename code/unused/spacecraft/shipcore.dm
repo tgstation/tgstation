@@ -138,30 +138,17 @@ obj/machinery/shipcore/attack_hand(user as mob)
 	var/dat
 	if(..())
 		return
-	if (1 == 1)	// Haha why did I even do this what the fuck. Whatever. It's too entertaining to remove now. -- TLE
-/*
-		dat += "Autolathe Wires:<BR>"
-		var/wire
-		for(wire in src.wires)
-			dat += text("[wire] Wire: <A href='?src=\ref[src];wire=[wire];act=wire'>[src.wires[wire] ? "Mend" : "Cut"]</A> <A href='?src=\ref[src];wire=[wire];act=pulse'>Pulse</A><BR>")
 
-		dat += text("The red light is [src.disabled ? "off" : "on"].<BR>")
-		dat += text("The green light is [src.shocked ? "off" : "on"].<BR>")
-		dat += text("The blue light is [src.hacked ? "off" : "on"].<BR>")
-*/
-		switch(src.build_status)
-			if("unbuilt")
-				dat += "<h3>Core Status: <font color =#FF3300>Undeployed</font></h3><BR>"
-				dat += "<A href='?src=\ref[src];groupself=1'>Build Ship</A><BR>"
-			if("built")
-				dat += "<h3>Core Status: <font color =#00CC00>Deployed</font></h3><BR>"
-				dat += "<A href='?src=\ref[src];move=1'>Move</A><BR>"
-			if("rebuilding")
-				dat += "<h3>Core Status: <font color =#FFCC00>Recalibrating</font></h3><BR>"
-		user << browse("<HEAD><TITLE>Ship Core</TITLE></HEAD>[dat]","window=shipcore")
-		onclose(user, "shipcore")
-		return
-	user << browse("<HEAD><TITLE>Ship Core Control Panel</TITLE></HEAD><TT>[dat]</TT>", "window=shipcore")
+	switch(src.build_status)
+		if("unbuilt")
+			dat += "<h3>Core Status: <font color =#FF3300>Undeployed</font></h3><BR>"
+			dat += "<A href='?src=\ref[src];groupself=1'>Build Ship</A><BR>"
+		if("built")
+			dat += "<h3>Core Status: <font color =#00CC00>Deployed</font></h3><BR>"
+			dat += "<A href='?src=\ref[src];move=1'>Move</A><BR>"
+		if("rebuilding")
+			dat += "<h3>Core Status: <font color =#FFCC00>Recalibrating</font></h3><BR>"
+	user << browse("<HEAD><TITLE>Ship Core</TITLE></HEAD>[dat]","window=shipcore")
 	onclose(user, "shipcore")
 	return
 
