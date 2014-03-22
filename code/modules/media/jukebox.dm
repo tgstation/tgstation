@@ -90,7 +90,7 @@ var/global/loopModeNames=list(
 /obj/machinery/media/jukebox/update_icon()
 	overlays = 0
 	if(stat & (NOPOWER|BROKEN))
-		icon_state = "jukebox2-unpowered"
+		icon_state = "jukebox2-nopower"
 		stop_playing()
 		return
 	icon_state = "jukebox2"
