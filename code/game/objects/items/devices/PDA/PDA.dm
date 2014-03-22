@@ -948,10 +948,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 		explosion(T, -1, -1, 2, 3)
 
-	del(src)
+	qdel(src)
 	return
 
-/obj/item/device/pda/Del()
+/obj/item/device/pda/Destroy()
 	PDAs -= src
 	if (src.id)
 		src.id.loc = get_turf(src.loc)

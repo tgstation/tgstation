@@ -63,7 +63,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 20
 	poison_per_bite = 5
-	move_to_delay = 4
+	move_to_delay = 5
 
 /mob/living/simple_animal/hostile/giant_spider/AttackingTarget()
 	..()

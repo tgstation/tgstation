@@ -10,7 +10,7 @@ obj/machinery/atmospherics/trinary/filter
 	can_unwrench = 1
 
 	var/on = 0
-	var/temp = null // -- TLE
+	var/temp = null
 
 	var/target_pressure = ONE_ATMOSPHERE
 
@@ -138,7 +138,7 @@ Filter types:
 		set_frequency(frequency)
 		return ..()
 
-obj/machinery/atmospherics/trinary/filter/attack_hand(user as mob) // -- TLE
+obj/machinery/atmospherics/trinary/filter/attack_hand(user as mob)
 	if(..())
 		return
 
@@ -191,7 +191,7 @@ obj/machinery/atmospherics/trinary/filter/attack_hand(user as mob) // -- TLE
 	onclose(user, "atmo_filter")
 	return
 
-obj/machinery/atmospherics/trinary/filter/Topic(href, href_list) // -- TLE
+obj/machinery/atmospherics/trinary/filter/Topic(href, href_list)
 	if(..())
 		return
 	usr.set_machine(src)

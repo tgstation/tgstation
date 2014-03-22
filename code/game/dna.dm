@@ -154,32 +154,35 @@
 /proc/randomize_radiation_accuracy(position_we_were_supposed_to_hit, radduration, number_of_blocks)
 	return Wrap(round(position_we_were_supposed_to_hit + gaussian(0, RADIATION_ACCURACY_MULTIPLIER/radduration), 1), 1, number_of_blocks+1)
 
-/proc/randmutb(mob/living/carbon/M)
-	if(!check_dna_integrity(M))	return
-	var/num
-	var/newdna
-	num = pick(bad_se_blocks)
-	newdna = setblock(M.dna.struc_enzymes, num, construct_block(2,2))
+/proc/randmut(mob/living/carbon/M, list/candidates, difficulty = 2)
+	if(!check_dna_integrity(M))
+		return
+	var/num = pick(candidates)
+	var/newdna = setblock(M.dna.struc_enzymes, num, construct_block(difficulty,difficulty))
 	M.dna.struc_enzymes = newdna
 	return
 
+/proc/randmutb(mob/living/carbon/M)
+	return randmut(M, bad_se_blocks)
+
 /proc/randmutg(mob/living/carbon/M)
-	if(!check_dna_integrity(M))	return
-	var/num
-	var/newdna
-	num = pick(good_se_blocks | op_se_blocks)
-	newdna = setblock(M.dna.struc_enzymes, num, construct_block(2,2))
-	M.dna.struc_enzymes = newdna
-	return
+	return randmut(M, good_se_blocks | op_se_blocks)
 
 /proc/randmuti(mob/living/carbon/M)
 	if(!check_dna_integrity(M))	return
-	var/num
-	var/newdna
-	num = rand(1, DNA_STRUC_ENZYMES_BLOCKS)
-	newdna = setblock(M.dna.uni_identity, num, random_string(DNA_BLOCK_SIZE, hex_characters))
+	var/num = rand(1, DNA_STRUC_ENZYMES_BLOCKS)
+	var/newdna = setblock(M.dna.uni_identity, num, random_string(DNA_BLOCK_SIZE, hex_characters))
 	M.dna.uni_identity = newdna
 	return
+
+/proc/clean_dna(mob/living/carbon/M)
+	if(!check_dna_integrity(M))
+		return
+	M.dna.struc_enzymes = M.dna.generate_struc_enzymes(M) // Give clean DNA.
+
+/proc/clean_randmut(mob/living/carbon/M, list/candidates, difficulty = 2)
+	clean_dna(M)
+	randmut(M, candidates, difficulty)
 
 /proc/scramble_dna(mob/living/carbon/M, ui=FALSE, se=FALSE, probability)
 	if(!check_dna_integrity(M))
@@ -474,7 +477,7 @@
 	var/mob/M = G.affecting
 	M.loc = loc
 	user.stop_pulling()
-	del(G)
+	qdel(G)
 
 /obj/machinery/dna_scannernew/attack_hand(mob/user)
 	if(..())
@@ -487,24 +490,15 @@
 /obj/machinery/dna_scannernew/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			for(var/atom/movable/A in src)
-				A.loc = loc
-				A.ex_act(severity)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if(prob(50))
-				for(var/atom/movable/A in src)
-					A.loc = loc
-					A.ex_act(severity)
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if(prob(25))
-				for(var/atom/movable/A in src)
-					A.loc = loc
-					A.ex_act(severity)
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -512,9 +506,7 @@
 
 /obj/machinery/dna_scannernew/blob_act()
 	if(prob(75))
-		for(var/atom/movable/A in contents)
-			A.loc = loc
-		del(src)
+		qdel(src)
 
 
 //DNA COMPUTER
@@ -863,14 +855,17 @@
 							if(buffer_slot["SE"])
 								I = new /obj/item/weapon/dnainjector(loc)
 								I.fields = list("SE"=buffer_slot["SE"])
+								I.damage_coeff  = connected.damage_coeff
 						if("ui")
 							if(buffer_slot["UI"])
 								I = new /obj/item/weapon/dnainjector(loc)
 								I.fields = list("UI"=buffer_slot["UI"])
+								I.damage_coeff = connected.damage_coeff
 						else
 							if(buffer_slot["name"] && buffer_slot["UE"] && buffer_slot["blood_type"])
 								I = new /obj/item/weapon/dnainjector(loc)
 								I.fields = list("name"=buffer_slot["name"], "UE"=buffer_slot["UE"], "blood_type"=buffer_slot["blood_type"])
+								I.damage_coeff  = connected.damage_coeff
 					if(I)
 						injectorready = 0
 						spawn(INJECTOR_TIMEOUT)
@@ -982,3 +977,11 @@ proc/deconstruct_block(value, values, blocksize=DNA_BLOCK_SIZE)
 	if(value > values)
 		value = values
 	return value
+
+
+/datum/dna/proc/is_same_as(var/datum/dna/D)
+	if(uni_identity == D.uni_identity && struc_enzymes == D.struc_enzymes && real_name == D.real_name)
+		if(mutantrace == D.mutantrace && blood_type == D.blood_type)
+			return 1
+	return 0
+

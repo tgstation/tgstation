@@ -20,7 +20,7 @@
 			user << "You feed the contract back into the spellbook, refunding your points."
 			src.max_uses++
 			src.uses++
-			del (O)
+			qdel(O)
 
 
 
@@ -355,7 +355,7 @@
 /obj/item/weapon/spellbook/oneuse/fireball/recoil(mob/user as mob)
 	..()
 	explosion(user.loc, -1, 0, 2, 3, 0, flame_range = 2)
-	del(src)
+	qdel(src)
 
 /obj/item/weapon/spellbook/oneuse/smoke
 	spell = /obj/effect/proc_holder/spell/targeted/smoke
@@ -473,9 +473,9 @@
 		magichead.flags_inv = null	//so you can still see their face
 		magichead.voicechange = 1	//NEEEEIIGHH
 		if(!user.unEquip(user.wear_mask))
-			del user.wear_mask
+			qdel(user.wear_mask)
 		user.equip_to_slot_if_possible(magichead, slot_wear_mask, 1, 1)
-		del src
+		qdel(src)
 	else
 		user <<"<span class='notice'>I say thee neigh</span>"
 

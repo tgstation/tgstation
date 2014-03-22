@@ -3,4 +3,4 @@
 	icon = 'icons/effects/effects.dmi'
 
 /obj/effect/decal/ex_act(severity)
-		del(src)
+	qdel(src)

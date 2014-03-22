@@ -1,4 +1,3 @@
-
 /obj/machinery/microwave
 	name = "microwave"
 	icon = 'icons/obj/kitchen.dmi'
@@ -46,8 +45,7 @@
 	component_parts += new /obj/item/weapon/circuitboard/microwave(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil(null)
-	component_parts += new /obj/item/stack/cable_coil(null)
+	component_parts += new /obj/item/stack/cable_coil(null, 2)
 	RefreshParts()
 
 /obj/machinery/microwave/RefreshParts()
@@ -393,7 +391,7 @@
 			var/id = O.reagents.get_master_reagent_id()
 			if (id)
 				amount+=O.reagents.get_reagent_amount(id)
-		del(O)
+		qdel(O)
 	src.reagents.clear_reagents()
 	ffuu.reagents.add_reagent("carbon", amount)
 	ffuu.reagents.add_reagent("toxin", amount/10)

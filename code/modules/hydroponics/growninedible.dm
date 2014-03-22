@@ -68,7 +68,7 @@
 					continue
 				G.attackby(NG, user)
 				usr << "You add the newly-formed wood to the stack. It now contains [NG.amount] planks."
-		del(src)
+		qdel(src)
 		return
 	if(is_type_in_list(W,accepted))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/leaf = W
@@ -77,8 +77,8 @@
 			var/obj/item/device/flashlight/flare/torch/T = new /obj/item/device/flashlight/flare/torch(user.loc)
 			usr.unEquip(W)
 			usr.put_in_active_hand(T)
-			del(leaf)
-			del(src)
+			qdel(leaf)
+			qdel(src)
 			return
 		else
 			usr << "\red You must dry this first."

@@ -14,9 +14,11 @@
 	var/timer = 10
 	var/atom/target = null
 	var/open_panel = 0
+	var/image_overlay = null
 
 /obj/item/weapon/plastique/New()
 	wires = new(src)
+	image_overlay = image('icons/obj/assemblies.dmi', "plastic-explosive2")
 	..()
 
 /obj/item/weapon/plastique/suicide_act(var/mob/user)
@@ -77,10 +79,10 @@
 			log_game("[key_name(user)] planted C4 on [key_name(target)] with [timer] second fuse")
 
 		else
-			message_admins("[key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) planted C4 on [target.name] at ([target.x],[target.y],[target.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) with [timer] second fuse",0,1)
+			message_admins("[key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) planted C4 on [target.name] at ([target.x],[target.y],[target.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[target.x];Y=[target.y];Z=[target.z]'>JMP</a>) with [timer] second fuse",0,1)
 			log_game("[key_name(user)] planted C4 on [target.name] at ([target.x],[target.y],[target.z]) with [timer] second fuse")
 
-		target.overlays += image('icons/obj/assemblies.dmi', "plastic-explosive2")
+		target.overlays += image_overlay
 		user << "Bomb has been planted. Timer counting down from [timer]."
 		spawn(timer*10)
 			explode(get_turf(target))
@@ -100,10 +102,9 @@
 			target:dismantle_wall(1)
 		else
 			target.ex_act(1)
-		if (isobj(target))
-			if (target)
-				del(target)
-	del(src)
+	if(target)
+		target.overlays -= image_overlay
+	qdel(src)
 
 /obj/item/weapon/plastique/attack(mob/M as mob, mob/user as mob, def_zone)
 	return

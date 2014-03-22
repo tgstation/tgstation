@@ -97,6 +97,14 @@
 
 //Here lie drop_from_inventory and before_item_take, already forgotten and not missed.
 
+
+/mob/proc/canUnEquip(obj/item/I, force)
+	if(!I)
+		return 1
+	if((I.flags & NODROP) && !force)
+		return 0
+	return 1
+
 /mob/proc/unEquip(obj/item/I, force) //Force overrides NODROP for things like wizarditis and admin undress.
 	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(unEquip) should generally be used to check for NODROP.
 		return 1
