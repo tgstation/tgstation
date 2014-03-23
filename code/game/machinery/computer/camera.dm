@@ -101,6 +101,7 @@
 	network = list("thunder")
 	density = 0
 	circuit = null
+	paiallowed = 0 //2retro
 
 /obj/machinery/computer/security/telescreen/update_icon()
 	icon_state = initial(icon_state)
@@ -122,6 +123,7 @@
 	name = "security camera monitor"
 	desc = "An old TV hooked into the stations camera network."
 	icon_state = "security_det"
+	paiallowed = 0 //2retro
 
 
 /obj/machinery/computer/security/mining

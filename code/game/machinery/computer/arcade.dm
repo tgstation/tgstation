@@ -26,7 +26,6 @@
 							/obj/item/toy/cards/deck						= 2,
 							/obj/item/toy/nuke								= 2
 							)
-	paiallowed = 0 //Fun is forbidden. Must serve humans
 
 /obj/machinery/computer/arcade/New()
 	..()
@@ -223,6 +222,9 @@
 			src.temp = "You have been drained! GAME OVER"
 			if(emagged)
 				feedback_inc("arcade_loss_mana_emagged")
+				if(ispAI(usr))
+					var/mob/living/silicon/pai/pai = usr
+					pai.card.explode()
 				usr.gib()
 			else
 				feedback_inc("arcade_loss_mana_normal")
@@ -242,6 +244,9 @@
 		src.temp = "You have been crushed! GAME OVER"
 		if(emagged)
 			feedback_inc("arcade_loss_hp_emagged")
+			if(ispAI(usr))
+				var/mob/living/silicon/pai/pai = usr
+				pai.card.explode()
 			usr.gib()
 		else
 			feedback_inc("arcade_loss_hp_normal")

@@ -200,6 +200,7 @@
 	if(!(paired.paired == src))
 		return
 	src.unset_machine()
+	paired.overlays -= image('icons/obj/computer.dmi', "paipaired")
 	paired.paired = null
 	paired = null
 	if(!silent)
@@ -221,6 +222,7 @@
 		P.paired.unpair(0)
 	P.paired = src
 	paired = P
+	paired.overlays += image('icons/obj/computer.dmi', "paipaired")
 	src << "<span class='info'>Handshake complete. Remote control connection established.</span>"
 	return
 
