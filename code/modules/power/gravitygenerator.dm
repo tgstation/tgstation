@@ -90,6 +90,14 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	update_list()
 
 //
+// Generator an admin can spawn
+//
+
+/obj/machinery/gravity_generator/main/station/admin/New()
+	..()
+	initialize()
+
+//
 // Main Generator with the main code
 //
 
