@@ -177,7 +177,7 @@ proc/recursive_mob_check(var/atom/O,var/client_check=1,var/sight_check=1,var/inc
 	return found_mobs
 
 
-proc/get_mobs_in_view(var/R, var/atom/source, var/client_check = 1, var/sight_check=0, var/include_radio=1, var/darkness_check=0)
+proc/get_mobs_in_view(var/R, var/atom/source, var/client_check = 1, var/sight_check=0, var/include_radio=1, var/view=0)
 	// Returns a list of mobs in range of R from source. Used in radio and say code.
 
 	var/turf/T = get_turf(source)
@@ -187,19 +187,24 @@ proc/get_mobs_in_view(var/R, var/atom/source, var/client_check = 1, var/sight_ch
 		return hear
 
 	var/list/range
-	if(darkness_check)
+	if(view)
 		range = view(R, T)
 	else
 		range = hear(R, T)
 
 	for(var/atom/movable/A in range)
+		if(istype(A, /mob/camera/aiEye))
+			if(!view) //AI can't hear through a camera
+				continue
+			if(!(cameranet.checkTurfVis(T)))
+				continue
 		hear |= recursive_mob_check(A, client_check, sight_check, include_radio)
 
 	return hear
 
 
-proc/get_observers(var/R, var/atom/source, var/darkness_check)
-	if(darkness_check == 1)
+proc/get_observers(var/R, var/atom/source, var/view)
+	if(view == 1)
 		return get_mobs_in_view(R, source, 0, 1, 0, 1)
 	else
 		return get_mobs_in_view(R, source, 0, 1, 0, 0)
