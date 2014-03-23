@@ -5,8 +5,8 @@
 	amount = 5
 	max_amount = 5
 	w_class = 1
-	throw_speed = 4
-	throw_range = 20
+	throw_speed = 3
+	throw_range = 7
 	var/heal_brute = 0
 	var/heal_burn = 0
 

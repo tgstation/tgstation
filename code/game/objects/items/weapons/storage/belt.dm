@@ -25,10 +25,10 @@
 	if (!M.restrained() && !M.stat && can_use())
 		switch(over_object.name)
 			if("r_hand")
-				M.u_equip(src)
+				M.unEquip(src)
 				M.put_in_r_hand(src)
 			if("l_hand")
-				M.u_equip(src)
+				M.unEquip(src)
 				M.put_in_l_hand(src)
 		src.add_fingerprint(usr)
 		return
@@ -36,8 +36,8 @@
 
 
 /obj/item/weapon/storage/belt/utility
-	name = "tool-belt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
-	desc = "Can hold various tools."
+	name = "toolbelt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
+	desc = "Holds tools."
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	can_hold = list(
@@ -48,7 +48,7 @@
 		"/obj/item/weapon/wrench",
 		"/obj/item/device/multitool",
 		"/obj/item/device/flashlight",
-		"/obj/item/weapon/cable_coil",
+		"/obj/item/stack/cable_coil",
 		"/obj/item/device/t_scanner",
 		"/obj/item/device/analyzer")
 
@@ -60,7 +60,7 @@
 	new /obj/item/weapon/weldingtool(src)
 	new /obj/item/weapon/crowbar(src)
 	new /obj/item/weapon/wirecutters(src)
-	new /obj/item/weapon/cable_coil(src,30,pick("red","yellow","orange"))
+	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
 
 
 /obj/item/weapon/storage/belt/utility/atmostech/New()
@@ -101,8 +101,11 @@
 	desc = "Can hold security gear like handcuffs and flashes."
 	icon_state = "securitybelt"
 	item_state = "security"//Could likely use a better one.
-	storage_slots = 4
+	storage_slots = 5
+	max_w_class = 3 //Because the baton wouldn't fit otherwise. - Neerti
 	can_hold = list(
+		"/obj/item/weapon/melee/baton",
+		"/obj/item/weapon/melee/classic_baton",
 		"/obj/item/weapon/grenade/flashbang",
 		"/obj/item/weapon/reagent_containers/spray/pepper",
 		"/obj/item/weapon/handcuffs",

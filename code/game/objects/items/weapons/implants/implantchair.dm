@@ -16,7 +16,6 @@
 	var/injection_cooldown = 600
 	var/replenish_cooldown = 6000
 	var/replenishing = 0
-	var/mob/living/carbon/occupant = null
 	var/injecting = 0
 
 	proc
@@ -84,7 +83,7 @@
 					return
 			var/mob/M = G:affecting
 			if(put_mob(M))
-				del(G)
+				qdel(G)
 		src.updateUsrDialog()
 		return
 

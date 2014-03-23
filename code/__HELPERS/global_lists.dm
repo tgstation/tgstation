@@ -17,6 +17,8 @@
 		var/datum/surgery/S = new path()
 		surgeries_list[S.name] = S
 
+	init_subtypes(/datum/table_recipe, table_recipes)
+
 /* // Uncomment to debug chemical reaction list.
 /client/verb/debug_chemical_list()
 
@@ -37,3 +39,14 @@
 		if(path == prototype)	continue
 		L += new path()
 	return L
+
+//returns a list of paths to every subtype of prototype (excluding prototype)
+//if no list/L is provided, one is created.
+/proc/init_paths(prototype, list/L)
+	if(!istype(L))
+		L = list()
+		for(var/path in typesof(prototype))
+			if(path == prototype)
+				continue
+			L+= path
+		return L

@@ -18,6 +18,10 @@ REVIVAL_CLONING 1
 # amount of time (in hundredths of seconds) for which a brain retains the "spark of life" after the person's death (set to -1 for infinite)
 REVIVAL_BRAIN_LIFE -1
 
+### RENAMING ###
+
+# Whether cyborgs can rename themselves at roundstart or when built.  Has no effect on roboticists renaming cyborgs the normal way.  Set to 0 to disable self-renaming.
+#RENAME_CYBORG
 
 ### MOB MOVEMENT ###
 
@@ -29,8 +33,8 @@ REVIVAL_BRAIN_LIFE -1
 ## To speed things up make the number negative, to slow things down, make the number positive.
 
 ## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied. 
-RUN_DELAY 0
-WALK_DELAY 0
+RUN_DELAY 1
+WALK_DELAY 4
 
 ## The variables below affect the movement of specific mob types.
 HUMAN_DELAY 0
@@ -102,7 +106,7 @@ PROBABILITY SANDBOX 0
 ## Used as (Antagonists = Population / Coeff)
 ## Set to 0 to disable scaling and use default numbers instead.
 TRAITOR_SCALING_COEFF 6
-CHANGELING_SCALING_COEFF 10
+CHANGELING_SCALING_COEFF 7
 
 ## Uncomment to prohibit jobs that start with loyalty
 ## implants from being most antagonists.
@@ -110,6 +114,9 @@ CHANGELING_SCALING_COEFF 10
 
 ## If late-joining players have a chance to become a traitor/changeling
 ALLOW_LATEJOIN_ANTAGONISTS
+
+## Uncomment to allow players to see the set odds of different rounds in secret/random in the get server revision screen. This will NOT tell the current roundtype.
+#SHOW_GAME_TYPE_ODDS
 
 ### RANDOM EVENTS ###
 
@@ -147,6 +154,9 @@ GATEWAY_DELAY 18000
 ## Uncomment to give everyone maint access.
 #EVERYONE_HAS_MAINT_ACCESS
 
+## Comment this to make security officers spawn in departmental security posts
+SEC_START_BRIG
+
 
 ### GHOST INTERACTION ###
 ## Uncomment to let ghosts spin chairs. You may be wondering why this is a config option. Don't ask.
@@ -163,3 +173,10 @@ GATEWAY_DELAY 18000
 ## without preventing people from using it properly.
 ## Only functions in sandbox game mode.
 #SANDBOX_AUTOCLOSE
+
+### ROUNDSTART SILICON LAWS ###
+## This controls what the AI's laws are at the start of the round.
+## Set to 0/commented for "off", silicons will just start with Asimov.
+## Set to 1 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
+## Set to 2 for "random", silicons will start with a random lawset picked from (at the time of writing): P.A.L.A.D.I.N., Corporate, Asimov. More can be added by changing the law datum paths in ai_laws.dm.
+DEFAULT_LAWS 1

@@ -302,7 +302,7 @@ turf/simulated/floor/proc/update_icon()
 		icon_state = "plating" //Nothing is defined, so just make it plating
 		icon_plating = "plating"
 	if(floor_tile)
-		del(floor_tile)
+		qdel(floor_tile)
 
 	SetLuminosity(0)
 	floor_tile = null
@@ -422,8 +422,8 @@ turf/simulated/floor/proc/update_icon()
 		if(is_light_floor())
 			var/obj/item/stack/tile/light/T = floor_tile
 			if(T.state)
-				user.drop_item(C)
-				del(C)
+				user.drop_item()
+				qdel(C)
 				T.state = C //fixing it by bashing it with a light bulb, fun eh?
 				update_icon()
 				user << "\blue You replace the light bulb."
@@ -503,9 +503,9 @@ turf/simulated/floor/proc/update_icon()
 				user << "\blue This section is too damaged to support a tile. Use a welder to fix the damage."
 
 
-	if(istype(C, /obj/item/weapon/cable_coil))
+	if(istype(C, /obj/item/stack/cable_coil))
 		if(is_plating())
-			var/obj/item/weapon/cable_coil/coil = C
+			var/obj/item/stack/cable_coil/coil = C
 			for(var/obj/structure/cable/LC in src)
 				if((LC.d1==0)||(LC.d2==0))
 					LC.attackby(C,user)

@@ -44,7 +44,7 @@
 				if(do_after(user, 20))
 					user << "<span class='notice'>You pry the frame apart.</span>"
 					new /obj/item/stack/sheet/wood(loc, 4)
-					del(src)
+					qdel(src)
 
 		if(1)
 			if(istype(I, /obj/item/stack/sheet/wood))
@@ -63,6 +63,13 @@
 			if(istype(I, /obj/item/weapon/book) || istype(I, /obj/item/weapon/spellbook))
 				user.drop_item()
 				I.loc = src
+				update_icon()
+			else if(istype(I, /obj/item/weapon/storage/bag/books))
+				var/obj/item/weapon/storage/bag/books/B = I
+				for(var/obj/item/T in B.contents)
+					if(istype(T, /obj/item/weapon/book) || istype(T, /obj/item/weapon/spellbook))
+						B.remove_from_storage(T, src)
+				user << "<span class='notice'>You empty \the [I] into \the [src].</span>"
 				update_icon()
 			else if(istype(I, /obj/item/weapon/pen))
 				var/newname = stripped_input(usr, "What would you like to title this bookshelf?")
@@ -101,20 +108,20 @@
 	switch(severity)
 		if(1.0)
 			for(var/obj/item/weapon/book/b in contents)
-				del(b)
-			del(src)
+				qdel(b)
+			qdel(src)
 		if(2.0)
 			for(var/obj/item/weapon/book/b in contents)
 				if(prob(50))
 					b.loc = (get_turf(src))
 				else
-					del(b)
-			del(src)
+					qdel(b)
+			qdel(src)
 		if(3.0)
 			if(prob(50))
 				for(var/obj/item/weapon/book/b in contents)
 					b.loc = (get_turf(src))
-				del(src)
+				qdel(src)
 
 
 /obj/structure/bookcase/update_icon()
@@ -138,10 +145,10 @@
 
 	New()
 		..()
-		new /obj/item/weapon/book/manual/engineering_construction(src)
+		new /obj/item/weapon/book/manual/wiki/engineering_construction(src)
 		new /obj/item/weapon/book/manual/engineering_particle_accelerator(src)
-		new /obj/item/weapon/book/manual/engineering_hacking(src)
-		new /obj/item/weapon/book/manual/engineering_guide(src)
+		new /obj/item/weapon/book/manual/wiki/engineering_hacking(src)
+		new /obj/item/weapon/book/manual/wiki/engineering_guide(src)
 		new /obj/item/weapon/book/manual/engineering_singularity_safety(src)
 		new /obj/item/weapon/book/manual/robotics_cyborgs(src)
 		update_icon()
@@ -174,6 +181,7 @@
 	var/title			//The real name of the book.
 	var/carved = 0		//Has the book been hollowed out for use as a secret storage item?
 	var/obj/item/store	//What's in the book?
+	var/window_size = null // Specific window size for the book, i.e: "1920x1080", Size x Width
 
 
 /obj/item/weapon/book/attack_self(mob/user)
@@ -191,7 +199,7 @@
 		return
 
 	if(dat)
-		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book")
+		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 		user.visible_message("[user] opens a book titled \"[title]\" and begins reading intently.")
 		onclose(user, "book")
 	else
@@ -296,7 +304,7 @@
 	name = "barcode scanner"
 	icon = 'icons/obj/library.dmi'
 	icon_state ="scanner"
-	throw_speed = 1
+	throw_speed = 3
 	throw_range = 5
 	w_class = 1.0
 	var/obj/machinery/librarycomp/computer	//Associated computer - Modes 1 to 3 use this

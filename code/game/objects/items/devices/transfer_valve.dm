@@ -26,11 +26,15 @@
 			user.drop_item()
 			item.loc = src
 			user << "<span class='notice'>You attach the tank to the transfer valve.</span>"
+			if(item.w_class > w_class)
+				w_class = item.w_class
 		else if(!tank_two)
 			tank_two = item
 			user.drop_item()
 			item.loc = src
 			user << "<span class='notice'>You attach the tank to the transfer valve.</span>"
+			if(item.w_class > w_class)
+				w_class = item.w_class
 
 		update_icon()
 //TODO: Have this take an assemblyholder
@@ -88,12 +92,16 @@
 			tank_one.loc = get_turf(src)
 			tank_one = null
 			update_icon()
+			if((!tank_two || tank_two.w_class < 4) && (w_class > 3))
+				w_class = 3
 		else if(tank_two && href_list["tanktwo"])
 			split_gases()
 			valve_open = 0
 			tank_two.loc = get_turf(src)
 			tank_two = null
 			update_icon()
+			if((!tank_one || tank_one.w_class < 4) && (w_class > 3))
+				w_class = 3
 		else if(href_list["open"])
 			toggle_valve()
 		else if(attached_device)

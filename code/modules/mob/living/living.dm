@@ -4,6 +4,10 @@
 	if(cur_area)
 		cur_area.mob_activate(src)
 
+/mob/living/Destroy()
+	if(mind)
+		mind.current = null
+	..()
 
 /mob/living/verb/succumb(var/whispered as null)
 	set hidden = 1
@@ -82,78 +86,75 @@
 	return temperature
 
 
-// ++++ROCKDTBEN++++ MOB PROCS -- Ask me before touching.
-// Stop! ... Hammertime! ~Carn
-// I touched them without asking... I'm soooo edgy ~Erro (added nodamage checks)
-
+// MOB PROCS
 /mob/living/proc/getBruteLoss()
 	return bruteloss
 
 /mob/living/proc/adjustBruteLoss(var/amount)
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(status_flags & GODMODE)	return 0
 	bruteloss = min(max(bruteloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
 /mob/living/proc/adjustOxyLoss(var/amount)
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(status_flags & GODMODE)	return 0
 	oxyloss = min(max(oxyloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/setOxyLoss(var/amount)
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(status_flags & GODMODE)	return 0
 	oxyloss = amount
 
 /mob/living/proc/getToxLoss()
 	return toxloss
 
 /mob/living/proc/adjustToxLoss(var/amount)
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(status_flags & GODMODE)	return 0
 	toxloss = min(max(toxloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/setToxLoss(var/amount)
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(status_flags & GODMODE)	return 0
 	toxloss = amount
 
 /mob/living/proc/getFireLoss()
 	return fireloss
 
 /mob/living/proc/adjustFireLoss(var/amount)
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(status_flags & GODMODE)	return 0
 	fireloss = min(max(fireloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/getCloneLoss()
 	return cloneloss
 
 /mob/living/proc/adjustCloneLoss(var/amount)
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(status_flags & GODMODE)	return 0
 	cloneloss = min(max(cloneloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/setCloneLoss(var/amount)
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(status_flags & GODMODE)	return 0
 	cloneloss = amount
 
 /mob/living/proc/getBrainLoss()
 	return brainloss
 
 /mob/living/proc/adjustBrainLoss(var/amount)
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(status_flags & GODMODE)	return 0
 	brainloss = min(max(brainloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/setBrainLoss(var/amount)
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(status_flags & GODMODE)	return 0
 	brainloss = amount
 
-/mob/living/proc/getHalLoss()
-	return halloss
+/mob/living/proc/getStaminaLoss()
+	return staminaloss
 
-/mob/living/proc/adjustHalLoss(var/amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	halloss = min(max(halloss + amount, 0),(maxHealth*2))
+/mob/living/proc/adjustStaminaLoss(var/amount)
+	if(status_flags & GODMODE)	return 0
+	staminaloss = min(max(staminaloss + amount, 0),(maxHealth*2))
 
-/mob/living/proc/setHalLoss(var/amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	halloss = amount
+/mob/living/proc/setStaminaLoss(var/amount)
+	if(status_flags & GODMODE)	return 0
+	staminaloss = amount
 
 /mob/living/proc/getMaxHealth()
 	return maxHealth
@@ -161,7 +162,7 @@
 /mob/living/proc/setMaxHealth(var/newMaxHealth)
 	maxHealth = newMaxHealth
 
-// ++++ROCKDTBEN++++ MOB PROCS //END
+// MOB PROCS //END
 
 
 /mob/proc/get_contents()
@@ -259,6 +260,7 @@
 	setOxyLoss(0)
 	setCloneLoss(0)
 	setBrainLoss(0)
+	setStaminaLoss(0)
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
@@ -361,7 +363,7 @@
 								for(var/mob/O in viewers(M, null))
 									O.show_message(text("\red [] has been pulled from []'s grip by []", G.affecting, G.assailant, src), 1)
 								//G = null
-								del(G)
+								qdel(G)
 						else
 							ok = 0
 						if (locate(/obj/item/weapon/grab, M.grabbed_by.len))
@@ -433,22 +435,22 @@
 	if(!L.stat && L.canmove && !L.restrained())
 		var/resisting = 0
 		for(var/obj/O in L.requests)
-			del(O)
+			qdel(O)
 			resisting++
 		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
 			resisting++
 			if(G.state == GRAB_PASSIVE)
-				del(G)
+				qdel(G)
 			else
 				if(G.state == GRAB_AGGRESSIVE)
 					if(prob(25))
 						L.visible_message("<span class='warning'>[L] has broken free of [G.assailant]'s grip!</span>")
-						del(G)
+						qdel(G)
 				else
 					if(G.state == GRAB_NECK)
 						if(prob(5))
 							L.visible_message("<span class='warning'>[L] has broken free of [G.assailant]'s headlock!</span>")
-							del(G)
+							qdel(G)
 		if(resisting)
 			L.visible_message("<span class='warning'>[L] resists!</span>")
 			return
@@ -461,9 +463,9 @@
 				C.next_move = world.time + 100
 				C.last_special = world.time + 100
 				C.visible_message("<span class='warning'>[usr] attempts to unbuckle themself!</span>", \
-							"<span class='notice'>You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stay still.)</span>")
+							"<span class='notice'>You attempt to unbuckle yourself. (This will take around one minute and you need to stay still.)</span>")
 				spawn(0)
-					if(do_after(usr, 1200))
+					if(do_after(usr, 600))
 						if(!C.buckled)
 							return
 						C.visible_message("<span class='danger'>[usr] manages to unbuckle themself!</span>", \
@@ -506,12 +508,12 @@
 						CM.visible_message("<span class='danger'>[CM] manages to break [CM.handcuffed]!</span>" , \
 										"<span class='notice'>You successfully break [CM.handcuffed]!</span>")
 						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-						del(CM.handcuffed)
+						qdel(CM.handcuffed)
 						CM.handcuffed = null
 						CM.update_inv_handcuffed(0)
 			else
 				var/obj/item/weapon/handcuffs/HC = CM.handcuffed
-				var/breakouttime = 1200 //A default in case you are somehow handcuffed with something that isn't an obj/item/weapon/handcuffs type
+				var/breakouttime = 600 //A default in case you are somehow handcuffed with something that isn't an obj/item/weapon/handcuffs type
 				var/displaytime = 2 //Minutes to display in the "this will take X minutes."
 				if(istype(HC)) //If you are handcuffed with actual handcuffs... Well what do I know, maybe someone will want to handcuff you with toilet paper in the future...
 					breakouttime = HC.breakouttime
@@ -540,12 +542,12 @@
 						CM.visible_message("<span class='danger'>[CM] manages to break [CM.legcuffed]!</span>", \
 											"<span class='notice'>You successfully break [CM.legcuffed].</span>")
 						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-						del(CM.legcuffed)
+						qdel(CM.legcuffed)
 						CM.legcuffed = null
 						CM.update_inv_legcuffed(0)
 			else
 				var/obj/item/weapon/legcuffs/HC = CM.legcuffed
-				var/breakouttime = 1200 //A default in case you are somehow legcuffed with something that isn't an obj/item/weapon/legcuffs type
+				var/breakouttime = 600 //A default in case you are somehow legcuffed with something that isn't an obj/item/weapon/legcuffs type
 				var/displaytime = 2 //Minutes to display in the "this will take X minutes."
 				if(istype(HC)) //If you are legcuffed with actual legcuffs... Well what do I know, maybe someone will want to legcuff you with toilet paper in the future...
 					breakouttime = HC.breakouttime
@@ -565,3 +567,16 @@
 
 /mob/living/proc/get_visible_name()
 	return name
+
+/mob/living/proc/CheckStamina()
+	if(staminaloss)
+		var/total_health = (health - staminaloss)
+		if(total_health <= config.health_threshold_crit && !stat)
+			Exhaust()
+			setStaminaLoss(health - 2)
+			return
+		setStaminaLoss(max((staminaloss - 2), 0))
+
+/mob/living/proc/Exhaust()
+	src << "<span class='notice'>You're too exhausted to keep going...</span>"
+	Weaken(5)

@@ -194,11 +194,11 @@
 		new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
 		new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
 		new /obj/item/weapon/minihoe(src)
-//		new /obj/item/weapon/weedspray(src)
-//		new /obj/item/weapon/weedspray(src)
-//		new /obj/item/weapon/pestspray(src)
-//		new /obj/item/weapon/pestspray(src)
-//		new /obj/item/weapon/pestspray(src)
+//		new /obj/item/weapon/reagent_containers/spray/weedspray(src)
+//		new /obj/item/weapon/reagent_containers/spray/weedspray(src)
+//		new /obj/item/weapon/reagent_containers/spray/pestspray(src)
+//		new /obj/item/weapon/reagent_containers/spray/pestspray(src)
+//		new /obj/item/weapon/reagent_containers/spray/pestspray(src)
 
 
 /obj/structure/closet/crate/secure/New()
@@ -330,13 +330,13 @@
 			W.loc = src.loc
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
-	else if(istype(W, /obj/item/weapon/cable_coil))
+	else if(istype(W, /obj/item/stack/cable_coil))
 		if(rigged)
 			user << "<span class='notice'>[src] is already rigged!</span>"
 			return
 		user  << "<span class='notice'>You rig [src].</span>"
 		user.drop_item()
-		del(W)
+		qdel(W)
 		rigged = 1
 		return
 	else if(istype(W, /obj/item/device/radio/electropack))

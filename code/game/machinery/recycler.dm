@@ -91,7 +91,7 @@ var/const/SAFETY_COOLDOWN = 100
 /obj/machinery/recycler/proc/recycle(var/obj/item/I, var/sound = 1)
 	I.loc = src.loc
 	if(!istype(I, /obj/item/weapon/disk/nuclear))
-		del(I)
+		qdel(I)
 		if(prob(15))
 			new /obj/item/stack/sheet/metal(loc)
 		if(prob(10))
@@ -138,8 +138,8 @@ var/const/SAFETY_COOLDOWN = 100
 
 	// Remove and recycle the equipped items.
 	for(var/obj/item/I in L.get_equipped_items())
-		L.drop_from_inventory(I)
-		recycle(I, 0)
+		if(L.unEquip(I))
+			recycle(I, 0)
 
 	// Instantly lie down, also go unconscious from the pain, before you die.
 	L.Paralyse(5)

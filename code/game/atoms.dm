@@ -17,6 +17,9 @@
 	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()
 	///Chemistry.
 
+	// Garbage collection
+	var/gc_destroyed //Time when this object
+
 /atom/proc/throw_impact(atom/hit_atom)
 	if(istype(hit_atom,/mob/living))
 		var/mob/living/M = hit_atom
@@ -38,6 +41,24 @@
 				M.take_organ_damage(20)
 
 
+/atom/proc/CheckParts()
+	return
+
+/atom/Del()
+	// Pass to Destroy().
+	if(isnull(gc_destroyed)) // If we're just straight up calling del(atom), make sure anything in Destroy() gets called anyways just to be sure.
+		Destroy()
+	..()
+
+// Like Del(), but for qdel.
+// Called BEFORE qdel moves shit.
+// Also called on del()
+/atom/proc/Destroy()
+	gc_destroyed = world.time
+	if(reagents)
+		reagents.delete()
+		del(reagents) // Technically I think the reagent holder will gc, but let's be careful here and delete all the reagents and the holder too
+	invisibility = 101
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	del(giver)
@@ -159,7 +180,7 @@ its easier to just keep the beam vertical.
 
 		for(var/obj/effect/overlay/beam/O in orange(10,src))	//This section erases the previously drawn beam because I found it was easier to
 			if(O.BeamSource==src)				//just draw another instance of the beam instead of trying to manipulate all the
-				del O							//pieces to a new orientation.
+				qdel(O)							//pieces to a new orientation.
 		var/Angle=round(Get_Angle(src,BeamTarget))
 		var/icon/I=new(icon,icon_state)
 		I.Turn(Angle)
@@ -200,7 +221,7 @@ its easier to just keep the beam vertical.
 			X.pixel_y=Pixel_y
 		sleep(3)	//Changing this to a lower value will cause the beam to follow more smoothly with movement, but it will also be more laggy.
 					//I've found that 3 ticks provided a nice balance for my use.
-	for(var/obj/effect/overlay/beam/O in orange(10,src)) if(O.BeamSource==src) del O
+	for(var/obj/effect/overlay/beam/O in orange(10,src)) if(O.BeamSource==src) qdel(O)
 
 
 //All atoms
@@ -280,6 +301,12 @@ var/list/blood_splatter_icons = list()
 		overlays += blood_splatter_icon
 	return 1 //we applied blood to the item
 
+/obj/item/clothing/gloves/add_blood(mob/living/carbon/M)
+	if(..() == 0) return 0
+	transfer_blood = rand(2, 4)
+	bloody_hands_mob = M
+	return 1
+
 /turf/simulated/add_blood(mob/living/carbon/M)
 	if(..() == 0)	return 0
 
@@ -291,6 +318,8 @@ var/list/blood_splatter_icons = list()
 /mob/living/carbon/human/add_blood(mob/living/carbon/M)
 	if(..() == 0)	return 0
 	add_blood_list(M)
+	bloody_hands = rand(2, 4)
+	bloody_hands_mob = M
 	update_inv_gloves()	//handles bloody hands overlays and updating
 	return 1 //we applied blood to the item
 
@@ -355,3 +384,9 @@ var/list/blood_splatter_icons = list()
 		return 1
 	else
 		return 0
+
+/atom/proc/handle_fall()
+	return
+
+/atom/proc/handle_slip()
+	return

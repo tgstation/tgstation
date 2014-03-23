@@ -26,13 +26,13 @@
 						count++
 
 					if (O:amount < 1)
-						del(O)
+						qdel(O)
 
-					user << "You insert [count] metal sheet\s into the fabricator."
+					user << "You insert [count] metal sheet\s into \the [src]."
 					src.overlays -= "fab-load-metal"
 					updateDialog()
 		else
-			user << "The robot part maker is full. Please remove metal from the robot part maker in order to insert more."
+			user << "\The [src] is full."
 
 /obj/machinery/robotic_fabricator/power_change()
 	if (powered())

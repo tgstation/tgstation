@@ -11,7 +11,7 @@
 
 //clamp bleeders
 /datum/surgery_step/clamp_bleeders
-	implements = list(/obj/item/weapon/hemostat = 100, /obj/item/weapon/wirecutters = 60, /obj/item/weapon/cable_coil = 15)
+	implements = list(/obj/item/weapon/hemostat = 100, /obj/item/weapon/wirecutters = 60, /obj/item/stack/cable_coil = 15)
 	time = 48
 
 /datum/surgery_step/clamp_bleeders/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -58,7 +58,7 @@
 
 //saw bone
 /datum/surgery_step/saw
-	implements = list(/obj/item/weapon/circular_saw = 100, /obj/item/weapon/hatchet = 35, /obj/item/weapon/butch = 25)
+	implements = list(/obj/item/weapon/circular_saw = 100, /obj/item/weapon/melee/arm_blade = 75, /obj/item/weapon/hatchet = 35, /obj/item/weapon/butch = 25)
 	time = 64
 
 /datum/surgery_step/saw/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

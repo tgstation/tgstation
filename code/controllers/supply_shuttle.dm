@@ -49,13 +49,13 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 /obj/structure/plasticflaps/ex_act(severity)
 	switch(severity)
 		if (1)
-			del(src)
+			qdel(src)
 		if (2)
 			if (prob(50))
-				del(src)
+				qdel(src)
 		if (3)
 			if (prob(5))
-				del(src)
+				qdel(src)
 
 /obj/structure/plasticflaps/mining //A specific type for mining that doesn't allow airflow because of them damn crates
 	name = "airtight plastic flaps"
@@ -67,7 +67,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 			T.blocks_air = 1
 		..()
 
-	Del() //lazy hack to set the turf to allow air to pass if it's a simulated floor
+	Destroy() //lazy hack to set the turf to allow air to pass if it's a simulated floor //wow this is terrible
 		var/turf/T = get_turf(loc)
 		if(T)
 			if(istype(T, /turf/simulated/floor))
@@ -121,8 +121,10 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	var/points_per_process = 1
 	var/points_per_slip = 2
 	var/points_per_crate = 5
-	var/plasma_per_point = 5 // 2 plasma for 1 point
+	var/plasma_per_point = 0.2 //5 points per plasma sheet due to increased rarity
 	var/centcom_message = "" // Remarks from Centcom on how well you checked the last order.
+	// Unique typepaths for unusual things we've already sent CentComm, associated with their potencies
+	var/list/discoveredPlants = list()
 	//control
 	var/ordernum
 	var/list/shoppinglist = list()
@@ -284,7 +286,24 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 					if(istype(A, /obj/item/stack/sheet/mineral/plasma))
 						var/obj/item/stack/sheet/mineral/plasma/P = A
 						plasma_count += P.amount
-			del(MA)
+
+					if(istype(A, /obj/item/seeds))
+						var/obj/item/seeds/S = A
+						if(S.rarity == 0) // Mundane species
+							centcom_message += "<font color=red>+0</font>: We don't need samples of mundane species \"[capitalize(S.species)]\".<BR>"
+						else if(discoveredPlants[S.type]) // This species has already been sent to CentComm
+							var/potDiff = S.potency - discoveredPlants[S.type] // Compare it to the previous best
+							if(potDiff > 0) // This sample is better
+								discoveredPlants[S.type] = S.potency
+								centcom_message += "<font color=green>+[potDiff]</font>: New sample of \"[capitalize(S.species)]\" is superior.  Good work.<BR>"
+								points += potDiff
+							else // This sample is worthless
+								centcom_message += "<font color=red>+0</font>: New sample of \"[capitalize(S.species)]\" is not more potent than existing sample ([discoveredPlants[S.type]] potency).<BR>"
+						else // This is a new discovery!
+							discoveredPlants[S.type] = S.potency
+							centcom_message += "<font color=green>+[S.rarity]</font>: New species discovered: \"[capitalize(S.species)]\".  Excellent work.<BR>"
+							points += S.rarity // That's right, no bonus for potency.  Send a crappy sample first to "show improvement" later
+			qdel(MA)
 
 		if(plasma_count)
 			centcom_message += "<font color=green>+[round(plasma_count/plasma_per_point)]</font>: Received [plasma_count] units of exotic material.<BR>"
@@ -368,7 +387,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 				// If it has multiple items, there's a 1% of each going missing... Not for secure crates or those large wooden ones, though.
 				if(contains.len > 1 && prob(1) && !findtext(SP.containertype,"/secure/") && !findtext(SP.containertype,"/largecrate/"))
 					slip.erroneous |= MANIFEST_ERROR_ITEM // This item was not included in the shipment!
-					del(B2) // Lost in space... or the loading dock.
+					qdel(B2) // Lost in space... or the loading dock.
 
 			//manifest finalisation
 			slip.info += "</ul><br>"
@@ -513,7 +532,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 /obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
 	if(!allowed(user))
-		user << "\red Access Denied."
+		user << "<span class='warning'> Access Denied.</span>"
 		return
 
 	if(..())
@@ -541,7 +560,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 /obj/machinery/computer/supplycomp/attackby(I as obj, user as mob)
 	if(istype(I,/obj/item/weapon/card/emag) && !hacked)
-		user << "\blue Special supplies unlocked."
+		user << "<span class='notice'> Special supplies unlocked.</span>"
 		hacked = 1
 		return
 	else

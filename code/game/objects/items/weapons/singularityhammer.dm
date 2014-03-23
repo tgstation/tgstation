@@ -1,4 +1,3 @@
-
 /obj/item/weapon/twohanded/singularityhammer
 	name = "singularity hammer"
 	desc = "The pinnacle of close combat technology, the hammer harnesses the power of a miniaturized singularity to deal crushing blows."
@@ -12,7 +11,7 @@
 	throw_range = 1
 	w_class = 5
 	var/charged = 5
-	origin_tech = "combat=5, bluespace=4"
+	origin_tech = "combat=5;bluespace=4"
 
 
 
@@ -21,7 +20,7 @@
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -81,28 +80,11 @@
 	force_unwielded = 5
 	force_wielded = 20
 	throwforce = 30
-	throw_range = 10
+	throw_range = 7
 	w_class = 5
 	//var/charged = 5
-	origin_tech = "combat=5, power=5"
+	origin_tech = "combat=5;powerstorage=5"
 
-
-/*
-	New()
-		..()
-		processing_objects.Add(src)
-
-
-	Del()
-		processing_objects.Remove(src)
-		..()
-
-
-	process()
-		if(charged < 5)
-			charged++
-		return
-*/
 /obj/item/weapon/twohanded/mjollnir/proc/shock(mob/living/target as mob)
 	var/datum/effect/effect/system/lightning_spread/s = new /datum/effect/effect/system/lightning_spread
 	s.set_up(5, 1, target.loc)

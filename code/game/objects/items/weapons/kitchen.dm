@@ -19,12 +19,13 @@
 /obj/item/weapon/kitchen/utensil
 	force = 5.0
 	w_class = 1.0
-	throwforce = 5.0
+	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
 	flags = CONDUCT
 	origin_tech = "materials=1"
 	attack_verb = list("attacked", "stabbed", "poked")
+	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/weapon/kitchen/utensil/New()
 	if (prob(60))
@@ -82,9 +83,9 @@
 	throwforce = 10.0
 
 	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>")
+		viewers(user) << pick("<span class='suicide'>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
+							"<span class='suicide'>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
+							"<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>")
 		return (BRUTELOSS)
 
 /obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
@@ -106,7 +107,7 @@
 	flags = CONDUCT
 	force = 10.0
 	w_class = 3.0
-	throwforce = 6.0
+	throwforce = 10.0
 	throw_speed = 3
 	throw_range = 6
 	m_amt = 12000
@@ -114,9 +115,9 @@
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>")
+		viewers(user) << pick("<span class='suicide'>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
+							"<span class='suicide'>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
+							"<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>")
 		return (BRUTELOSS)
 
 /obj/item/weapon/kitchenknife/ritual
@@ -153,8 +154,8 @@
 	desc = "Used to knock out the Bartender."
 	icon_state = "rolling_pin"
 	force = 8.0
-	throwforce = 10.0
-	throw_speed = 2
+	throwforce = 5.0
+	throw_speed = 3
 	throw_range = 7
 	w_class = 3.0
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked") //I think the rollingpin attackby will end up ignoring this anyway.
@@ -199,9 +200,8 @@
 	icon = 'icons/obj/food.dmi'
 	icon_state = "tray"
 	desc = "A metal tray to lay food on."
-	throwforce = 12.0
 	throwforce = 10.0
-	throw_speed = 1
+	throw_speed = 3
 	throw_range = 5
 	w_class = 3.0
 	flags = CONDUCT
@@ -412,7 +412,7 @@
 		viewers(3,user) << "[user] takes a piece of omelette with his fork!"
 		reagents.remove_reagent("nutriment", 1)
 		if (reagents.total_volume <= 0)
-			del(src)*/
+			qdel(src)*/
 
 
 /*			if (prob(33))

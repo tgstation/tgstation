@@ -54,6 +54,16 @@
 	if(HULK in mutations)	return
 	..()
 
+mob/living/carbon/human/proc/hat_fall_prob()
+	var/multiplier = 1
+	var/obj/item/clothing/head/H = head
+	var/loose = 40
+	if(stat || (status_flags & FAKEDEATH))
+		multiplier = 2
+	if(H.flags & (HEADCOVERSEYES | HEADCOVERSMOUTH) || H.flags_inv & (HIDEEYES | HIDEFACE))
+		loose = 0
+	return loose * multiplier
+
 ////////////////////////////////////////////
 
 //Returns a list of damaged organs

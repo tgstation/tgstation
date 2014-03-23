@@ -19,12 +19,12 @@
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/rdserver(null)
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
-	component_parts += new /obj/item/weapon/cable_coil(null, 1)
-	component_parts += new /obj/item/weapon/cable_coil(null, 1)
+	component_parts += new /obj/item/stack/cable_coil(null, 1)
+	component_parts += new /obj/item/stack/cable_coil(null, 1)
 	RefreshParts()
 	src.initialize(); //Agouri
 
-/obj/machinery/r_n_d/server/Del()
+/obj/machinery/r_n_d/server/Destroy()
 	griefProtection()
 	..()
 
@@ -130,13 +130,14 @@
 		return
 	if (shocked)
 		shock(user,50)
-	if (istype(O, /obj/item/weapon/screwdriver))
-		default_deconstruction_screwdriver(user, "server_o", "server")
+	if (default_deconstruction_screwdriver(user, "server_o", "server", O))
+		return
+	if(exchange_parts(user, O))
 		return
 	if (panel_open)
 		if(istype(O, /obj/item/weapon/crowbar))
 			griefProtection()
-			default_deconstruction_crowbar()
+			default_deconstruction_crowbar(O)
 			return 1
 
 /obj/machinery/r_n_d/server/attack_hand(mob/user as mob) // I guess only exists to stop ninjas or hell does it even work I dunno.  See also ninja gloves.
@@ -237,7 +238,7 @@
 			temp_server.id_with_download += num
 
 	else if(href_list["reset_tech"])
-		var/choice = alert("Technology Data Rest", "Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Continue", "Cancel")
+		var/choice = alert("Technology Data Reset", "Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Continue", "Cancel")
 		if(choice == "Continue")
 			for(var/datum/tech/T in temp_server.files.known_tech)
 				if(T.id == href_list["reset_tech"])

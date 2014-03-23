@@ -22,6 +22,7 @@
 	health = 40
 	melee_damage_lower = 1
 	melee_damage_upper = 2
+	environment_smash = 0
 	var/datum/reagents/udder = null
 
 /mob/living/simple_animal/hostile/retaliate/goat/New()
@@ -47,7 +48,7 @@
 
 		if(locate(/obj/effect/spacevine) in loc)
 			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in loc
-			del(SV)
+			qdel(SV)
 			if(prob(10))
 				say("Nom")
 
@@ -67,7 +68,7 @@
 	if(!stat)
 		if(locate(/obj/effect/spacevine) in loc)
 			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in loc
-			del(SV)
+			qdel(SV)
 			if(prob(10))
 				say("Nom")
 
@@ -165,6 +166,7 @@
 	response_harm   = "kicks"
 	attacktext = "kicks"
 	health = 1
+	ventcrawler = 2
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE
 
@@ -181,7 +183,7 @@
 		amount_grown += rand(1,2)
 		if(amount_grown >= 100)
 			new /mob/living/simple_animal/chicken(src.loc)
-			del(src)
+			qdel(src)
 
 var/const/MAX_CHICKENS = 50
 var/global/chicken_count = 0
@@ -205,6 +207,7 @@ var/global/chicken_count = 0
 	response_harm   = "kicks"
 	attacktext = "kicks"
 	health = 10
+	ventcrawler = 2
 	var/eggsleft = 0
 	var/body_color
 	pass_flags = PASSTABLE
@@ -229,7 +232,7 @@ var/global/chicken_count = 0
 		if(!stat && eggsleft < 8)
 			user.visible_message("\blue [user] feeds [O] to [name]! It clucks happily.","\blue You feed [O] to [name]! It clucks happily.")
 			user.drop_item()
-			del(O)
+			qdel(O)
 			eggsleft += rand(1, 4)
 			//world << eggsleft
 		else
@@ -247,7 +250,7 @@ var/global/chicken_count = 0
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = new(get_turf(src))
 		E.pixel_x = rand(-6,6)
 		E.pixel_y = rand(-6,6)
-		if(chicken_count < MAX_CHICKENS && prob(10))
+		if(chicken_count < MAX_CHICKENS && prob(25))
 			processing_objects.Add(E)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0
@@ -258,6 +261,6 @@ var/global/chicken_count = 0
 			visible_message("[src] hatches with a quiet cracking sound.")
 			new /mob/living/simple_animal/chick(get_turf(src))
 			processing_objects.Remove(src)
-			del(src)
+			qdel(src)
 	else
 		processing_objects.Remove(src)

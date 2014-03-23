@@ -27,7 +27,7 @@
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	//the values in this list show how much damage will pass through, not how much will be absorbed.
 	var/list/damage_absorption = list("brute"=0.8,"fire"=1.2,"bullet"=0.9,"laser"=1,"energy"=1,"bomb"=1)
-	var/obj/item/weapon/cell/cell
+	var/obj/item/weapon/stock_parts/cell/cell
 	var/state = 0
 	var/list/log = new
 	var/last_message = 0
@@ -61,13 +61,15 @@
 	var/datum/global_iterator/pr_give_air //moves air from tank to cabin
 	var/datum/global_iterator/pr_internal_damage //processes internal damage
 
-
 	var/wreckage
 
 	var/list/equipment = new
 	var/obj/item/mecha_parts/mecha_equipment/selected
 	var/max_equip = 3
 	var/datum/events/events
+
+	var/stepsound = 'sound/mecha/mechturn.ogg'
+
 
 /obj/mecha/New()
 	..()
@@ -89,11 +91,10 @@
 	mechas_list += src //global mech list
 	return
 
-/obj/mecha/Del()
+/obj/mecha/Destroy()
 	src.go_out()
 	mechas_list -= src //global mech list
 	..()
-	return
 
 ////////////////////////
 ////// Helpers /////////
@@ -109,7 +110,7 @@
 	internal_tank = new /obj/machinery/portable_atmospherics/canister/air(src)
 	return internal_tank
 
-/obj/mecha/proc/add_cell(var/obj/item/weapon/cell/C=null)
+/obj/mecha/proc/add_cell(var/obj/item/weapon/stock_parts/cell/C=null)
 	if(C)
 		C.forceMove(src)
 		cell = C
@@ -309,20 +310,20 @@
 
 /obj/mecha/proc/mechturn(direction)
 	dir = direction
-	playsound(src,'sound/mecha/mechturn.ogg',40,1)
+	if(stepsound)
+		playsound(src,stepsound,40,1)
 	return 1
 
 /obj/mecha/proc/mechstep(direction)
 	var/result = step(src,direction)
-	if(result)
-		playsound(src,'sound/mecha/mechstep.ogg',40,1)
+	if(result && stepsound)
+		playsound(src,stepsound,40,1)
 	return result
-
 
 /obj/mecha/proc/mechsteprand()
 	var/result = step_rand(src)
-	if(result)
-		playsound(src,'sound/mecha/mechstep.ogg',40,1)
+	if(result && stepsound)
+		playsound(src,stepsound,40,1)
 	return result
 
 /obj/mecha/Bump(var/atom/obstacle)
@@ -513,8 +514,9 @@
 		return
 	if(istype(Proj, /obj/item/projectile/beam/pulse))
 		ignore_threshold = 1
-	src.take_damage(Proj.damage,Proj.flag)
-	src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),ignore_threshold)
+	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		src.take_damage(Proj.damage,Proj.flag)
+		src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),ignore_threshold)
 	Proj.on_hit(src)
 	return
 
@@ -561,7 +563,7 @@
 						E.forceMove(T)
 						E.destroy()
 		spawn(0)
-			del(src)
+			qdel(src)
 	return
 
 /obj/mecha/ex_act(severity)
@@ -702,9 +704,9 @@
 			state=2
 			user << "You close the hatch to the power unit"
 		return
-	else if(istype(W, /obj/item/weapon/cable_coil))
+	else if(istype(W, /obj/item/stack/cable_coil))
 		if(state == 3 && hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
-			var/obj/item/weapon/cable_coil/CC = W
+			var/obj/item/stack/cable_coil/CC = W
 			if(CC.amount > 1)
 				CC.use(2)
 				clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
@@ -727,13 +729,15 @@
 			user << "You screw the cell in place"
 		return
 
-	else if(istype(W, /obj/item/weapon/cell))
+	else if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(state==4)
 			if(!src.cell)
+				var/obj/item/weapon/stock_parts/cell/C = W
 				user << "You install the powercell"
 				user.drop_item()
-				W.forceMove(src)
-				src.cell = W
+				C.forceMove(src)
+				C.use(C.charge * 0.8)
+				src.cell = C
 				src.log_message("Powercell installed")
 			else
 				user << "There's already a powercell installed."
@@ -755,7 +759,9 @@
 		return
 
 	else if(istype(W, /obj/item/mecha_parts/mecha_tracking))
-		user.drop_from_inventory(W)
+		if(!user.unEquip(W))
+			user << "<span class='notice'>\the [W] is stuck to your hand, you cannot put it in \the [src]</span>"
+			return
 		W.forceMove(src)
 		user.visible_message("[user] attaches [W] to [src].", "You attach [W] to [src]")
 		return
@@ -909,8 +915,8 @@
 	if(usr != occupant)	return
 
 	lights = !lights
-	if(lights)	SetLuminosity(luminosity + lights_power)
-	else		SetLuminosity(luminosity - lights_power)
+	if(lights)	AddLuminosity(lights_power)
+	else		AddLuminosity(-lights_power)
 	src.occupant_message("Toggled lights [lights?"on":"off"].")
 	log_message("Toggled lights [lights?"on":"off"].")
 	return
@@ -988,7 +994,7 @@
 		H.forceMove(src)
 		if(H.hud_used)
 			last_user_hud = H.hud_used.hud_shown
-			H.hud_used.show_hud(1)
+			H.hud_used.show_hud(HUD_STYLE_REDUCED)
 
 		src.occupant = H
 		src.add_fingerprint(H)
@@ -1038,7 +1044,9 @@
 		else if(mmi_as_oc.brainmob.stat)
 			user << "Beta-rhythm below acceptable level."
 			return 0
-		user.drop_from_inventory(mmi_as_oc)
+		if(!user.unEquip(mmi_as_oc))
+			user << "<span class='notice'>\the [mmi_as_oc] is stuck to your hand, you cannot put it in \the [src]</span>"
+			return
 		var/mob/brainmob = mmi_as_oc.brainmob
 		brainmob.reset_view(src)
 	/*
@@ -1139,7 +1147,7 @@
 		*/
 		src.occupant << browse(null, "window=exosuit")
 		if(src.occupant.hud_used && src.last_user_hud)
-			src.occupant.hud_used.show_hud()
+			src.occupant.hud_used.show_hud(HUD_STYLE_STANDARD)
 
 		if(istype(mob_container, /obj/item/device/mmi))
 			var/obj/item/device/mmi/mmi = mob_container
@@ -1623,7 +1631,7 @@ var/year_integer = text2num(year) // = 2013???
 			AI.bruteloss = O.getBruteLoss()
 			AI.toxloss = O.toxloss
 			AI.updatehealth()
-			del(O)
+			qdel(O)
 			if (!AI.stat)
 				AI.icon_state = "ai"
 			else

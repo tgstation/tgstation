@@ -8,13 +8,6 @@
 	slot_flags = SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
 
-/obj/item/weapon/gun/energy/ionrifle/emp_act(severity)
-	if(severity <= 2)
-		power_supply.use(round(power_supply.maxcharge / severity))
-		update_icon()
-	else
-		return
-
 /obj/item/weapon/gun/energy/decloner
 	name = "biological demolecularisor"
 	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
@@ -38,7 +31,7 @@
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -64,7 +57,7 @@
 	item_state = "c20r"
 	w_class = 4
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
-	cell_type = "/obj/item/weapon/cell/potato"
+	cell_type = "/obj/item/weapon/stock_parts/cell/potato"
 	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
 	var/charge_tick = 0
 	var/recharge_time = 5 //Time it takes for shots to recharge (in ticks)
@@ -74,7 +67,7 @@
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -103,3 +96,37 @@
 	desc = "A prototype weapon recovered from the ruins of Research-Station Epsilon."
 	icon_state = "xray"
 	ammo_type = list(/obj/item/ammo_casing/energy/mindflayer)
+
+/obj/item/weapon/gun/energy/kinetic_accelerator
+	name = "proto-kinetic accelerator"
+	desc = "According to Nanotrasen accounting, this is mining equipment. It's been modified for extreme power output to crush rocks, but often serves as a miner's first defense against hostile alien life; it's not very powerful unless used in a low pressure environment."
+	icon_state = "kineticgun"
+	item_state = "kineticgun"
+	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
+	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
+	var/overheat = 0
+	var/recent_reload = 1
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
+	overheat = 1
+	spawn(20)
+		overheat = 0
+		recent_reload = 0
+	..()
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(var/mob/living/user/L)
+	if(overheat || recent_reload)
+		return
+	power_supply.give(500)
+	playsound(src.loc, 'sound/weapons/shotgunpump.ogg', 60, 1)
+	recent_reload = 1
+	update_icon()
+	return
+
+/obj/item/weapon/gun/energy/disabler
+	name = "disabler"
+	desc = "A self defense weapon that exhausts targets, weakening them until they collapse. Non-lethal."
+	icon_state = "disabler"
+	item_state = null
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
+	cell_type = "/obj/item/weapon/stock_parts/cell"

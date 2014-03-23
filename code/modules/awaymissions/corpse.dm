@@ -84,28 +84,40 @@
 			W.assignment = corpseidjob
 		W.registered_name = M.real_name
 		M.equip_to_slot_or_del(W, slot_wear_id)
-	del(src)
+	qdel(src)
 
 /obj/effect/landmark/corpse/AICorpse/createCorpse() //Creates a corrupted AI
-	var/A = locate(/mob/living/silicon/ai) in loc //stops multiple dead ais spawning, apparently hacky, ¯\_(?)_/¯ (who's that pokemon?)
-	if(A)
-		return
-	var/L = new /datum/ai_laws/asimov //avoid runtimes
-	var/B = new /obj/item/device/mmi/ //avoid runtimes
-	var/mob/living/silicon/ai/M = new(src.loc, L, B, 1)
-	M.death()
-	M.name = src.name //name is that of the landmark that spawned it
-	M.real_name = M.name
-
-/obj/effect/landmark/corpse/slimeCorpse/createCorpse() //Creates a dead slime
-	var/mob/living/carbon/slime/M = new /mob/living/carbon/slime/ (src.loc)
-	M.death(1)
+	var/A = locate(/mob/living/silicon/ai) in loc //variable A looks for an AI at the location of the landmark
+	if(A) //if variable A is true
+		return //stop executing the proc
+	var/L = new /datum/ai_laws/default/asimov/ //variable L is a new Asimov lawset
+	var/B = new /obj/item/device/mmi/ //variable B is a new MMI
+	var/mob/living/silicon/ai/M = new(src.loc, L, B, 1) //spawn new AI at landmark as var M
 	M.name = src.name
+	M.real_name = src.name
+	M.aiPDA.toff = 1 //turns the AI's PDA messenger off, stopping it showing up on player PDAs
+	M.death() //call the AI's death proc
+	qdel(src)
+
+/obj/effect/landmark/corpse/slimeCorpse
+	var/mobcolour = "grey"
+	icon = 'icons/mob/slimes.dmi'
+	icon_state = "grey baby slime" //sets the icon in the map editor
+
+/obj/effect/landmark/corpse/slimeCorpse/createCorpse() //proc creates a dead slime
+	var/A = locate(/mob/living/carbon/slime/) in loc //variable A looks for a slime at the location of the landmark
+	if(A) //if variable A is true
+		return //stop executing the proc
+	var/mob/living/carbon/slime/M = new(src.loc) //variable M is a new slime at the location of the landmark
+	M.colour = src.mobcolour //slime colour is set by landmark's mobcolour var
+	M.adjustToxLoss(9001) //kills the slime, death() doesn't update its icon correctly
+	qdel(src)
 
 /obj/effect/landmark/corpse/facehugCorpse/createCorpse() //Creates a squashed facehugger
-	var/obj/item/clothing/mask/facehugger/O = new /obj/item/clothing/mask/facehugger (src.loc)
-	O.Die()
+	var/obj/item/clothing/mask/facehugger/O = new(src.loc) //variable O is a new facehugger at the location of the landmark
 	O.name = src.name
+	O.Die() //call the facehugger's death proc
+	qdel(src)
 
 
 // I'll work on making a list of corpses people request for maps, or that I think will be commonly used. Syndicate operatives for example.

@@ -136,7 +136,7 @@
 				if(80 to 90)	filling.icon_state = "[icon_state]80"
 				if(91 to INFINITY)	filling.icon_state = "[icon_state]100"
 
-			filling.icon += mix_color_from_reagents(reagents.reagent_list)
+			filling.color = mix_color_from_reagents(reagents.reagent_list)
 			overlays += filling
 
 /obj/item/weapon/reagent_containers/glass/beaker/large
@@ -203,10 +203,10 @@
 	attackby(var/obj/D, mob/user as mob)
 		if(isprox(D))
 			user << "<span class='notice'>You add [D] to [src].</span>"
-			del(D)
+			qdel(D)
 			user.put_in_hands(new /obj/item/weapon/bucket_sensor)
-			user.drop_from_inventory(src)
-			del(src)
+			user.unEquip(src)
+			qdel(src)
 
 /*
 /obj/item/weapon/reagent_containers/glass/blender_jug

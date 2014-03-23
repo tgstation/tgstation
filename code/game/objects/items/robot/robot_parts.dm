@@ -43,7 +43,7 @@
 	construction_time = 350
 	construction_cost = list("metal"=40000)
 	var/wires = 0.0
-	var/obj/item/weapon/cell/cell = null
+	var/obj/item/weapon/stock_parts/cell/cell = null
 
 /obj/item/robot_parts/head
 	name = "cyborg head"
@@ -103,9 +103,9 @@
 		user << "You armed the robot frame"
 		W:use(1)
 		if (user.get_inactive_hand()==src)
-			user.before_take_item(src)
+			user.unEquip(src)
 			user.put_in_inactive_hand(B)
-		del(src)
+		qdel(src)
 	if(istype(W, /obj/item/robot_parts/l_leg))
 		if(src.l_leg)	return
 		user.drop_item()
@@ -230,7 +230,7 @@
 
 /obj/item/robot_parts/chest/attackby(obj/item/W as obj, mob/user as mob)
 	..()
-	if(istype(W, /obj/item/weapon/cell))
+	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(src.cell)
 			user << "\blue You have already inserted a cell!"
 			return
@@ -239,12 +239,12 @@
 			W.loc = src
 			src.cell = W
 			user << "\blue You insert the cell!"
-	if(istype(W, /obj/item/weapon/cable_coil))
+	if(istype(W, /obj/item/stack/cable_coil))
 		if(src.wires)
 			user << "\blue You have already inserted wire!"
 			return
 		else
-			var/obj/item/weapon/cable_coil/coil = W
+			var/obj/item/stack/cable_coil/coil = W
 			coil.use(1)
 			src.wires = 1.0
 			user << "\blue You insert the wire!"

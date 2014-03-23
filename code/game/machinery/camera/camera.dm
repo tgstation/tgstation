@@ -48,7 +48,7 @@
 	if(z == 1 && prob(3))
 		deactivate()
 
-/obj/machinery/camera/Del()
+/obj/machinery/camera/Destroy()
 	if(istype(bug))
 		bug.bugged_cameras -= src.c_tag
 	..()
@@ -90,7 +90,7 @@
 	return
 
 /obj/machinery/camera/blob_act()
-	del(src)
+	qdel(src)
 	return
 
 /obj/machinery/camera/proc/setViewRange(var/num = 7)
@@ -131,7 +131,7 @@
 			if(assembly)
 				assembly.loc = src.loc
 				assembly.state = 1
-			del(src)
+			qdel(src)
 
 
 	// OTHER
@@ -180,7 +180,7 @@
 		playsound(loc, 'sound/weapons/blade1.ogg', 50, 1)
 		playsound(loc, "sparks", 50, 1)
 		visible_message("\blue The camera has been sliced apart by [] with an energy blade!")
-		del(src)
+		qdel(src)
 	else if(istype(W, /obj/item/device/laser_pointer))
 		var/obj/item/device/laser_pointer/L = W
 		L.laser_act(src, user)

@@ -9,7 +9,7 @@
 	response_disarm = "flails at"
 	response_harm   = "punches"
 	icon_dead = "shade_dead"
-	speed = -1
+	speed = 0
 	a_intent = "harm"
 	stop_automated_movement = 1
 	status_flags = CANPUSH
@@ -31,7 +31,7 @@
 	name = text("[initial(name)] ([rand(1, 1000)])")
 	real_name = name
 	for(var/spell in construct_spells)
-		spell_list += new spell(src)
+		mob_spell_list += new spell(src)
 
 /mob/living/simple_animal/construct/Die()
 	..()
@@ -40,7 +40,7 @@
 		if((M.client && !( M.blinded )))
 			M.show_message("\red [src] collapses in a shattered heap. ")
 	ghostize()
-	del src
+	qdel(src)
 	return
 
 /mob/living/simple_animal/construct/examine()
@@ -106,17 +106,24 @@
 /mob/living/simple_animal/construct/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(O.force)
 		var/damage = O.force
-		if (O.damtype == HALLOSS)
-			damage = 0
-		adjustBruteLoss(damage)
+		if(O.damtype == BURN || O.damtype == BRUTE)
+			adjustBruteLoss(damage)
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
-				M.show_message("\red \b [src] has been attacked with [O] by [user]. ")
+				M.show_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>")
 	else
 		usr << "\red This weapon is ineffective, it does no damage."
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
 				M.show_message("\red [user] gently taps [src] with [O]. ")
+
+/mob/living/simple_animal/construct/bullet_act(var/obj/item/projectile/Proj)
+	if(!Proj)
+		return
+	if(Proj.damage_type == BURN || Proj.damage_type == BRUTE)
+		adjustBruteLoss(Proj.damage)
+	Proj.on_hit(src, 0)
+	return 0
 
 
 
@@ -139,7 +146,7 @@
 	melee_damage_upper = 30
 	attacktext = "smashes their armoured gauntlet into"
 	speed = 3
-	wall_smash = 1
+	environment_smash = 2
 	attack_sound = 'sound/weapons/punch3.ogg'
 	status_flags = 0
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
@@ -147,13 +154,11 @@
 /mob/living/simple_animal/construct/armoured/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(O.force)
 		if(O.force >= 11)
-			var/damage = O.force
-			if (O.damtype == HALLOSS)
-				damage = 0
-			adjustBruteLoss(damage)
+			if(O.damtype == BURN || O.damtype == BRUTE)
+				adjustBruteLoss(O.force)
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [src] has been attacked with [O] by [user]. ")
+					M.show_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>")
 		else
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
@@ -169,7 +174,8 @@
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		var/reflectchance = 80 - round(P.damage/3)
 		if(prob(reflectchance))
-			adjustBruteLoss(P.damage * 0.5)
+			if(P.damage_type == BURN || P.damage_type == BRUTE)
+				adjustBruteLoss(P.damage * 0.5)
 			visible_message("<span class='danger'>The [P.name] gets reflected by [src]'s shell!</span>", \
 							"<span class='userdanger'>The [P.name] gets reflected by [src]'s shell!</span>")
 
@@ -209,7 +215,7 @@
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	attacktext = "slashes"
-	speed = -1
+	speed = 0
 	see_in_dark = 7
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
@@ -235,7 +241,7 @@
 	melee_damage_upper = 5
 	attacktext = "rams"
 	speed = 0
-	wall_smash = 1
+	environment_smash = 2
 	attack_sound = 'sound/weapons/punch2.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
@@ -263,7 +269,7 @@
 	melee_damage_upper = 50
 	attacktext = "brutally crushes"
 	speed = 5
-	wall_smash = 1
+	environment_smash = 2
 	attack_sound = 'sound/weapons/punch4.ogg'
 	var/energy = 0
 	var/max_energy = 1000
@@ -272,12 +278,12 @@
 	if(O.force)
 		if(O.force >= 11)
 			var/damage = O.force
-			if (O.damtype == HALLOSS)
+			if (O.damtype == STAMINA)
 				damage = 0
 			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [src] has been attacked with [O] by [user]. ")
+					M.show_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>")
 		else
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))

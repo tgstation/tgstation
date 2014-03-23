@@ -15,7 +15,7 @@ RCD
 	flags = CONDUCT
 	force = 10.0
 	throwforce = 10.0
-	throw_speed = 1
+	throw_speed = 3
 	throw_range = 5
 	w_class = 3.0
 	m_amt = 50000
@@ -106,7 +106,7 @@ RCD
 				user << "<span class='notice'>The RCD cant hold any more matter-units.</span>"
 				return
 			user.drop_item()
-			del(W)
+			qdel(W)
 			matter += 10
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 			user << "<span class='notice'>The RCD now holds [matter]/30 matter-units.</span>"
@@ -217,7 +217,7 @@ RCD
 						if(do_after(user, 50))
 							if(!useResource(10, user)) return 0
 							activate()
-							del(A)
+							qdel(A)
 							return 1
 					return	0
 				return 0

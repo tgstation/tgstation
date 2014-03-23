@@ -136,7 +136,7 @@
 	//		loadProgram(target)
 
 //This could all be done better, but it works for now.
-/obj/machinery/computer/HolodeckControl/Del()
+/obj/machinery/computer/HolodeckControl/Destroy()
 	emergencyShutdown()
 	..()
 
@@ -200,13 +200,12 @@
 	if(isobj(obj))
 		var/mob/M = obj.loc
 		if(ismob(M))
-			M.u_equip(obj)
-			M.update_icons()	//so their overlays update
+			M.unEquip(obj, 1) //Holoweapons should always drop.
 
 	if(!silent)
 		var/obj/oldobj = obj
 		visible_message("The [oldobj.name] fades away!")
-	del(obj)
+	qdel(obj)
 
 /obj/machinery/computer/HolodeckControl/proc/checkInteg(var/area/A)
 	for(var/turf/T in A)
@@ -237,10 +236,10 @@
 		derez(item)
 
 	for(var/obj/effect/decal/cleanable/blood/B in linkedholodeck)
-		del(B)
+		qdel(B)
 
 	for(var/mob/living/simple_animal/hostile/carp/C in linkedholodeck)
-		del(C)
+		qdel(C)
 
 	holographic_items = A.copy_contents_to(linkedholodeck , 1)
 
@@ -261,7 +260,7 @@
 							T.temperature = 5000
 							T.hotspot_expose(50000,50000,1)
 			if(L.name=="Holocarp Spawn")
-				new /mob/living/simple_animal/hostile/carp(L.loc)
+				new /mob/living/simple_animal/hostile/carp/holocarp(L.loc)
 
 
 /obj/machinery/computer/HolodeckControl/proc/emergencyShutdown()
@@ -335,7 +334,7 @@
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
 		visible_message("\red [G.assailant] puts [G.affecting] on the table.")
-		del(W)
+		qdel(W)
 		return
 
 	if (istype(W, /obj/item/weapon/wrench))
@@ -357,17 +356,14 @@
 	flags = ON_BORDER
 
 
-/obj/structure/holowindow/Del()
-	..()
-
 /obj/item/weapon/holo
-	damtype = HALLOSS
+	damtype = STAMINA
 
 /obj/item/weapon/holo/esword
 	desc = "May the force be with you. Sorta"
 	icon_state = "sword0"
 	force = 3.0
-	throw_speed = 1
+	throw_speed = 2
 	throw_range = 5
 	throwforce = 0
 	w_class = 2.0
@@ -399,13 +395,13 @@
 		force = 30
 		icon_state = "sword[item_color]"
 		w_class = 4
-		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
+		playsound(user, 'sound/weapons/saberon.ogg', 20, 1)
 		user << "\blue [src] is now active."
 	else
 		force = 3
 		icon_state = "sword0"
 		w_class = 2
-		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
+		playsound(user, 'sound/weapons/saberoff.ogg', 20, 1)
 		user << "\blue [src] can now be concealed."
 	add_fingerprint(user)
 	return
@@ -430,7 +426,7 @@
 	if((ishuman(hit_atom)))
 		var/mob/living/carbon/M = hit_atom
 		playsound(src, 'sound/items/dodgeball.ogg', 50, 1)
-		M.apply_damage(10, HALLOSS)
+		M.apply_damage(10, STAMINA)
 		if(prob(5))
 			M.Weaken(3)
 			visible_message("\red [M] is knocked right off \his feet!", 3)
@@ -453,7 +449,7 @@
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
 		visible_message("\red [G.assailant] dunks [G.affecting] into the [src]!", 3)
-		del(W)
+		qdel(W)
 		return
 	else if (istype(W, /obj/item) && get_dist(src,user)<2)
 		user.drop_item(src)
@@ -512,7 +508,7 @@
 
 	currentarea = get_area(src.loc)
 	if(!currentarea)
-		del(src)
+		qdel(src)
 
 	if(eventstarted)
 		usr << "The event has already begun!"
@@ -543,7 +539,7 @@
 	eventstarted = 1
 
 	for(var/obj/structure/holowindow/W in currentarea)
-		del(W)
+		qdel(W)
 
 	for(var/mob/M in currentarea)
 		M << "FIGHT!"

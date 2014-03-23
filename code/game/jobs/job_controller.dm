@@ -291,11 +291,6 @@ var/global/datum/controller/occupations/job_master
 	proc/EquipRank(var/mob/living/carbon/human/H, var/rank, var/joined_late = 0)
 		if(!H)	return 0
 		var/datum/job/job = GetJob(rank)
-		if(job)
-			job.equip(H)
-			job.apply_fingerprints(H)
-		else
-			H << "Your job is [rank] and the game just can't handle it! Please report this bug to an administrator."
 
 		H.job = rank
 
@@ -311,7 +306,9 @@ var/global/datum/controller/occupations/job_master
 			if(istype(S, /obj/effect/landmark/start) && istype(S.loc, /turf))
 				H.loc = S.loc
 
-
+		if(job)
+			job.equip(H)
+			job.apply_fingerprints(H)
 
 		if(H.mind)
 			H.mind.assigned_role = rank
@@ -338,10 +335,11 @@ var/global/datum/controller/occupations/job_master
 		H << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
 		if(job.req_admin_notify)
 			H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
+
 		spawnId(H,rank)
 
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_ears)
-//		H.update_icons()
+		H.update_hud() 	// Tmp fix for Github issue 1006. TODO: make all procs in update_icons.dm do client.screen |= equipment no matter what.
 		return 1
 
 

@@ -146,12 +146,12 @@
 		return
 
 	//So zards properly get their items when they are admin-made.
-	del(wizard_mob.wear_suit)
-	del(wizard_mob.head)
-	del(wizard_mob.shoes)
-	del(wizard_mob.r_hand)
-	del(wizard_mob.r_store)
-	del(wizard_mob.l_store)
+	qdel(wizard_mob.wear_suit)
+	qdel(wizard_mob.head)
+	qdel(wizard_mob.shoes)
+	qdel(wizard_mob.r_hand)
+	qdel(wizard_mob.r_store)
+	qdel(wizard_mob.l_store)
 
 	wizard_mob.equip_to_slot_or_del(new /obj/item/device/radio/headset(wizard_mob), slot_ears)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/under/lightpurple(wizard_mob), slot_w_uniform)
@@ -246,12 +246,12 @@
 			else
 				text += "<br><font color='red'><B>The wizard has failed!</B></font>"
 				feedback_add_details("wizard_success","FAIL")
-			if(wizard.current && wizard.current.spell_list)
+			if(wizard.spell_list.len>0)
 				text += "<br><B>[wizard.name] used the following spells: </B>"
 				var/i = 1
-				for(var/obj/effect/proc_holder/spell/S in wizard.current.spell_list)
+				for(var/obj/effect/proc_holder/spell/S in wizard.spell_list)
 					text += "[S.name]"
-					if(wizard.current.spell_list.len > i)
+					if(wizard.spell_list.len > i)
 						text += ", "
 					i++
 			text += "<br>"
@@ -263,8 +263,8 @@
 
 //To batch-remove wizard spells. Linked to mind.dm.
 /mob/proc/spellremove(var/mob/M as mob)
-	for(var/obj/effect/proc_holder/spell/spell_to_remove in src.spell_list)
-		del(spell_to_remove)
+	for(var/obj/effect/proc_holder/spell/spell_to_remove in src.mind.spell_list)
+		qdel(spell_to_remove)
 
 /*Checks if the wizard can cast spells.
 Made a proc so this is not repeated 14 (or more) times.*/

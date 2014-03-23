@@ -22,9 +22,12 @@
 				var/obj/item/weapon/grab/G = item
 				if(G.affecting)
 					var/mob/M = G.affecting
-					if(M.spell_list.len != 0)
-						for(var/obj/effect/proc_holder/spell/S in M.spell_list)
+					if(M.mob_spell_list.len != 0 || (M.mind && M.mind.spell_list.len != 0))
+						for(var/obj/effect/proc_holder/spell/S in M.mob_spell_list)
 							S.charge_counter = S.charge_max
+						if(M.mind)
+							for(var/obj/effect/proc_holder/spell/S in M.mind.spell_list)
+								S.charge_counter = S.charge_max
 						M <<"<span class='notice'>you feel raw magic flowing through you, it feels good!</span>"
 					else
 						M <<"<span class='notice'>you feel very strange for a moment, but then it passes.</span>"
@@ -35,7 +38,7 @@
 				var/obj/item/weapon/spellbook/oneuse/I = item
 				if(prob(80))
 					user.visible_message("<span class='warning'>[I] catches fire!</span>")
-					del(I)
+					qdel(I)
 				else
 					I.used = 0
 					charged_item = I
@@ -53,8 +56,8 @@
 					W.icon_state = initial(W.icon_state)
 				charged_item = I
 				break
-			else if(istype(item, /obj/item/weapon/cell/))
-				var/obj/item/weapon/cell/C = item
+			else if(istype(item, /obj/item/weapon/stock_parts/cell/))
+				var/obj/item/weapon/stock_parts/cell/C = item
 				if(prob(80))
 					C.maxcharge -= 200
 				if(C.maxcharge <= 1) //Div by 0 protection
@@ -66,8 +69,8 @@
 			else if(item.contents)
 				var/obj/I = null
 				for(I in item.contents)
-					if(istype(I, /obj/item/weapon/cell/))
-						var/obj/item/weapon/cell/C = I
+					if(istype(I, /obj/item/weapon/stock_parts/cell/))
+						var/obj/item/weapon/stock_parts/cell/C = I
 						if(prob(80))
 							C.maxcharge -= 200
 						if(C.maxcharge <= 1) //Div by 0 protection

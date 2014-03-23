@@ -414,7 +414,7 @@ obj/structure/door_assembly
 						var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
 						new M(get_turf(src))
 						new M(get_turf(src))
-				del(src)
+				qdel(src)
 		else
 			user << "\blue You need more welding fuel to dissassemble the airlock assembly."
 			return
@@ -438,8 +438,8 @@ obj/structure/door_assembly
 			src.name = "Airlock Assembly"
 			src.anchored = 0
 
-	else if(istype(W, /obj/item/weapon/cable_coil) && state == 0 && anchored )
-		var/obj/item/weapon/cable_coil/coil = W
+	else if(istype(W, /obj/item/stack/cable_coil) && state == 0 && anchored )
+		var/obj/item/stack/cable_coil/coil = W
 		user.visible_message("[user] wires the airlock assembly.", "You start to wire the airlock assembly.")
 		if(do_after(user, 40))
 			if(!src) return
@@ -455,7 +455,7 @@ obj/structure/door_assembly
 		if(do_after(user, 40))
 			if(!src) return
 			user << "\blue You've cut the wires from the airlock assembly."
-			new/obj/item/weapon/cable_coil(get_turf(user), 1)
+			new/obj/item/stack/cable_coil(get_turf(user), 1)
 			src.state = 0
 			src.name = "Secured Airlock Assembly"
 
@@ -474,7 +474,7 @@ obj/structure/door_assembly
 		else
 			W.loc = src.loc
 
-			//del(W)
+			//qdel(W)
 
 	else if(istype(W, /obj/item/weapon/crowbar) && state == 2 )
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
@@ -549,7 +549,7 @@ obj/structure/door_assembly
 			if(created_name)
 				door.name = created_name
 			src.electronics.loc = door
-			del(src)
+			qdel(src)
 	else
 		..()
 	if(mineral == "glass")

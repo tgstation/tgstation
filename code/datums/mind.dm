@@ -48,9 +48,12 @@ datum/mind
 	var/has_been_rev = 0//Tracks if this mind has been a rev or not
 
 	var/list/cult_words = list()
+	var/list/spell_list = list() // Wizard mode & "Give Spell" badmin button.
 
 	var/datum/faction/faction 			//associated faction
 	var/datum/changeling/changeling		//changeling holder
+
+	var/miming = 0 // Mime's vow of silence
 
 	New(var/key)
 		src.key = key
@@ -61,13 +64,9 @@ datum/mind
 			error("transfer_to(): Some idiot has tried to transfer_to() a non mob/living mob. Please inform Carn")
 
 		if(current)					//remove ourself from our old body's mind variable
-			if(changeling)
-				current.remove_changeling_powers()
-				current.verbs -= /datum/changeling/proc/EvolutionMenu
 			current.mind = null
 
 			nanomanager.user_transferred(current, new_character)
-
 
 		if(key)
 			if(new_character.key != key)					//if we're transfering into a body with a key associated which is not ours
@@ -80,10 +79,6 @@ datum/mind
 
 		current = new_character								//associate ourself with our new body
 		new_character.mind = src							//and associate our new body with ourself
-
-		if(changeling && istype(new_character, /mob/living/carbon))										//if we are a changeling mind, re-add any powers
-			var/mob/living/carbon/C = new_character
-			C.make_changeling()
 
 		if(active)
 			new_character.key = key		//now transfer the key to link the client to our new body
@@ -566,7 +561,7 @@ datum/mind
 					var/obj/item/device/flash/flash = locate() in L
 					if (!flash)
 						usr << "\red Deleting flash failed!"
-					del(flash)
+					qdel(flash)
 
 				if("repairflash")
 					var/list/L = current.get_contents()
@@ -579,7 +574,7 @@ datum/mind
 				if("reequip")
 					var/list/L = current.get_contents()
 					var/obj/item/device/flash/flash = locate() in L
-					del(flash)
+					qdel(flash)
 					take_uplink()
 					var/fail = 0
 					fail |= !ticker.mode.equip_traitor(current, 1)
@@ -669,8 +664,8 @@ datum/mind
 						ticker.mode.changelings -= src
 						special_role = null
 						current.remove_changeling_powers()
-						current.verbs -= /datum/changeling/proc/EvolutionMenu
-						if(changeling)	del(changeling)
+						if(changeling)
+							del(changeling)
 						current << "<FONT color='red' size = 3><B>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</B></FONT>"
 						message_admins("[key_name_admin(usr)] has de-changeling'ed [current].")
 						log_admin("[key_name(usr)] has de-changeling'ed [current].")
@@ -726,15 +721,15 @@ datum/mind
 					current.loc = get_turf(locate("landmark*Syndicate-Spawn"))
 				if("dressup")
 					var/mob/living/carbon/human/H = current
-					del(H.belt)
-					del(H.back)
-					del(H.ears)
-					del(H.gloves)
-					del(H.head)
-					del(H.shoes)
-					del(H.wear_id)
-					del(H.wear_suit)
-					del(H.w_uniform)
+					qdel(H.belt)
+					qdel(H.back)
+					qdel(H.ears)
+					qdel(H.gloves)
+					qdel(H.head)
+					qdel(H.shoes)
+					qdel(H.wear_id)
+					qdel(H.wear_suit)
+					qdel(H.w_uniform)
 
 					if (!ticker.mode.equip_syndicate(current))
 						usr << "\red Equipping a syndicate failed!"
@@ -844,8 +839,8 @@ datum/mind
 
 						A.malf_picker.remove_verbs(A)
 
-						A.laws = new /datum/ai_laws/asimov
-						del(A.malf_picker)
+						A.make_laws()
+						qdel(A.malf_picker)
 						A.show_laws()
 						A.icon_state = "ai"
 
@@ -861,18 +856,7 @@ datum/mind
 				if("unemag")
 					var/mob/living/silicon/robot/R = current
 					if (istype(R))
-						R.emagged = 0
-						if (R.activated(R.module.emag))
-							R.module_active = null
-						if(R.module_state_1 == R.module.emag)
-							R.module_state_1 = null
-							R.contents -= R.module.emag
-						else if(R.module_state_2 == R.module.emag)
-							R.module_state_2 = null
-							R.contents -= R.module.emag
-						else if(R.module_state_3 == R.module.emag)
-							R.module_state_3 = null
-							R.contents -= R.module.emag
+						R.SetEmagged(0)
 						message_admins("[key_name_admin(usr)] has unemag'ed [R].")
 						log_admin("[key_name(usr)] has unemag'ed [R].")
 
@@ -880,19 +864,7 @@ datum/mind
 					if (istype(current, /mob/living/silicon/ai))
 						var/mob/living/silicon/ai/ai = current
 						for (var/mob/living/silicon/robot/R in ai.connected_robots)
-							R.emagged = 0
-							if (R.module)
-								if (R.activated(R.module.emag))
-									R.module_active = null
-								if(R.module_state_1 == R.module.emag)
-									R.module_state_1 = null
-									R.contents -= R.module.emag
-								else if(R.module_state_2 == R.module.emag)
-									R.module_state_2 = null
-									R.contents -= R.module.emag
-								else if(R.module_state_3 == R.module.emag)
-									R.module_state_3 = null
-									R.contents -= R.module.emag
+							R.SetEmagged(0)
 						message_admins("[key_name_admin(usr)] has unemag'ed [ai]'s Cyborgs.")
 						log_admin("[key_name(usr)] has unemag'ed [ai]'s Cyborgs.")
 
@@ -900,7 +872,7 @@ datum/mind
 			switch(href_list["common"])
 				if("undress")
 					for(var/obj/item/W in current)
-						current.drop_from_inventory(W)
+						current.unEquip(W, 1) //The 1 forces all items to drop, since this is an admin undress.
 				if("takeuplink")
 					take_uplink()
 					memory = null//Remove any memory they may have had.
@@ -937,10 +909,10 @@ datum/mind
 		var/list/L = current.get_contents()
 		for (var/t in L)
 			if (istype(t, /obj/item/device/pda))
-				if (t:uplink) del(t:uplink)
+				if (t:uplink) qdel(t:uplink)
 				t:uplink = null
 			else if (istype(t, /obj/item/device/radio))
-				if (t:traitorradio) del(t:traitorradio)
+				if (t:traitorradio) qdel(t:traitorradio)
 				t:traitorradio = null
 				t:traitor_frequency = 0.0
 			else if (istype(t, /obj/item/weapon/SWF_uplink) || istype(t, /obj/item/weapon/syndicate_uplink))
@@ -949,7 +921,7 @@ datum/mind
 					R.loc = current.loc
 					R.traitorradio = null
 					R.traitor_frequency = 0.0
-				del(t)
+				qdel(t)
 
 		// remove wizards spells
 		//If there are more special powers that need removal, they can be procced into here./N
@@ -971,7 +943,7 @@ datum/mind
 	proc/take_uplink()
 		var/obj/item/device/uplink/hidden/H = find_syndicate_uplink()
 		if(H)
-			del(H)
+			qdel(H)
 
 
 	proc/make_AI_Malf()
@@ -1012,15 +984,15 @@ datum/mind
 			current.loc = get_turf(locate("landmark*Syndicate-Spawn"))
 
 			var/mob/living/carbon/human/H = current
-			del(H.belt)
-			del(H.back)
-			del(H.ears)
-			del(H.gloves)
-			del(H.head)
-			del(H.shoes)
-			del(H.wear_id)
-			del(H.wear_suit)
-			del(H.w_uniform)
+			qdel(H.belt)
+			qdel(H.back)
+			qdel(H.ears)
+			qdel(H.gloves)
+			qdel(H.head)
+			qdel(H.shoes)
+			qdel(H.wear_id)
+			qdel(H.wear_suit)
+			qdel(H.w_uniform)
 
 			ticker.mode.equip_syndicate(current)
 
@@ -1109,7 +1081,7 @@ datum/mind
 
 		var/list/L = current.get_contents()
 		var/obj/item/device/flash/flash = locate() in L
-		del(flash)
+		qdel(flash)
 		take_uplink()
 		var/fail = 0
 	//	fail |= !ticker.mode.equip_traitor(current, 1)

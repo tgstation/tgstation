@@ -12,7 +12,7 @@
 	response_help = "brushes"
 	response_disarm = "pushes"
 	response_harm = "hits"
-	speed = -1
+	speed = 1
 	maxHealth = 250
 	health = 250
 
@@ -54,7 +54,7 @@
 	..()
 	visible_message("\red <b>[src]</b> is hacked into pieces!")
 	new /obj/item/stack/sheet/wood(loc)
-	del(src)
+	qdel(src)
 
 /mob/living/simple_animal/hostile/tree/festivus
 	name = "festivus pole"
@@ -68,4 +68,4 @@
 	..()
 	visible_message("\red <b>[src]</b> is hacked into pieces!")
 	new /obj/item/stack/rods(loc)
-	del(src)
+	qdel(src)

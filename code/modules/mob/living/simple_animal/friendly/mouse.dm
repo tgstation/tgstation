@@ -18,6 +18,7 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
 	density = 0
+	ventcrawler = 2
 	var/body_color //brown, gray and white, leave blank for random
 
 /mob/living/simple_animal/mouse/New()
@@ -39,7 +40,7 @@
 	if(!ckey)
 		var/obj/item/trash/deadmouse/M = new(src.loc)
 		M.icon_state = src.icon_dead
-		del (src)
+		qdel(src)
 
 /mob/living/simple_animal/mouse/Crossed(AM as mob|obj)
 	if( ishuman(AM) )

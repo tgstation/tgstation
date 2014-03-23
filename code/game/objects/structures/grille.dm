@@ -12,17 +12,14 @@
 	var/health = 10
 	var/destroyed = 0
 
-/obj/structure/grille/Del()
-	loc = null //garbage collect
-
 /obj/structure/grille/ex_act(severity)
-	del(src)
+	qdel(src)
 
 /obj/structure/grille/blob_act()
-	del(src)
+	qdel(src)
 
 /obj/structure/grille/meteorhit(var/obj/M)
-	del(src)
+	qdel(src)
 
 
 /obj/structure/grille/Bumped(atom/user)
@@ -59,8 +56,8 @@
 		healthcheck()
 		return
 
-/obj/structure/grille/attack_slime(mob/user as mob)
-	if(!istype(user, /mob/living/carbon/slime/adult))	return
+/obj/structure/grille/attack_slime(mob/living/carbon/slime/user as mob)
+	if(!user.is_adult)	return
 
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] smashes against [src].</span>", \
@@ -89,16 +86,18 @@
 	if(istype(mover) && mover.checkpass(PASSGRILLE))
 		return 1
 	else
-		if(istype(mover, /obj/item/projectile))
+		if(istype(mover, /obj/item/projectile) && density)
 			return prob(30)
 		else
 			return !density
 
 /obj/structure/grille/bullet_act(var/obj/item/projectile/Proj)
-	if(!Proj)	return
+	if(!Proj)
+		return
 	..()
-	src.health -= Proj.damage*0.2
-	healthcheck()
+	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		src.health -= Proj.damage*0.2
+		healthcheck()
 	return
 
 /obj/structure/grille/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -110,7 +109,7 @@
 			else
 				new /obj/item/stack/rods(loc)
 				new /obj/item/stack/rods(loc)
-			del(src)
+			qdel(src)
 	else if((istype(W, /obj/item/weapon/screwdriver)) && (istype(loc, /turf/simulated) || anchored))
 		if(!shock(user, 90))
 			playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
@@ -191,7 +190,7 @@
 		else
 			if(health <= -6)
 				new /obj/item/stack/rods(loc)
-				del(src)
+				qdel(src)
 				return
 	return
 

@@ -35,16 +35,16 @@
 	linked_cores = list()
 
 
-/obj/machinery/power/am_control_unit/Del()//Perhaps damage and run stability checks rather than just del on the others
+/obj/machinery/power/am_control_unit/Destroy()//Perhaps damage and run stability checks rather than just del on the others
 	for(var/obj/machinery/am_shielding/AMS in linked_shielding)
-		del(AMS)
+		qdel(AMS)
 	..()
 
 
 /obj/machinery/power/am_control_unit/process()
 	if(exploding)
 		explosion(get_turf(src),8,12,18,12)
-		if(src) del(src)
+		if(src) qdel(src)
 
 	if(update_shield_icons && !shield_icon_delay)
 		check_shield_icons()
@@ -106,9 +106,7 @@
 	if(prob(100-stability))//Might infect the rest of the machine
 		for(var/obj/machinery/am_shielding/AMS in linked_shielding)
 			AMS.blob_act()
-		spawn(0)
-			//Likely explode
-			del(src)
+		qdel(src)
 		return
 	check_stability()
 	return
@@ -174,7 +172,7 @@
 		W.loc = src
 		if(user.client)
 			user.client.screen -= W
-		user.u_equip(W)
+		user.unEquip(W)
 		user.update_icons()
 		user.visible_message("[user.name] loads an [W.name] into the [src.name].", \
 				"You load an [W.name].", \
@@ -213,7 +211,7 @@
 
 /obj/machinery/power/am_control_unit/proc/check_stability()//TODO: make it break when low also might want to add a way to fix it like a part or such that can be replaced
 	if(stability <= 0)
-		del(src)
+		qdel(src)
 	return
 
 

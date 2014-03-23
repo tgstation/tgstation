@@ -11,7 +11,7 @@
 	anchored = 0
 	opacity = 0
 	var/list/welder_salvage = list(/obj/item/stack/sheet/plasteel,/obj/item/stack/sheet/metal,/obj/item/stack/rods)
-	var/list/wirecutters_salvage = list(/obj/item/weapon/cable_coil)
+	var/list/wirecutters_salvage = list(/obj/item/stack/cable_coil)
 	var/list/crowbar_salvage = list()
 	var/salvage_num = 5
 
@@ -100,7 +100,10 @@
 	name = "\improper Seraph wreckage"
 	icon_state = "seraph-broken"
 
-
+/obj/structure/mecha_wreckage/reticence
+	name = "\improper Reticence wreckage"
+	icon_state = "reticence-broken"
+	color = "#87878715"
 
 /obj/structure/mecha_wreckage/ripley
 	name = "\improper Ripley wreckage"

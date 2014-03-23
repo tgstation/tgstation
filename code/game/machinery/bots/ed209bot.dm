@@ -195,7 +195,7 @@ Auto Patrol: []"},
 				user << "<span class='notice'>Access denied.</span>"
 	else
 		..()
-		if (!istype(W, /obj/item/weapon/screwdriver) && (!src.target))
+		if (!istype(W, /obj/item/weapon/screwdriver) && !istype(W, /obj/item/weapon/weldingtool) && (!src.target)) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
 			if(hasvar(W,"force") && W.force)//If force is defined and non-zero
 				src.target = user
 				if(lasercolor)//To make up for the fact that lasertag bots don't hunt
@@ -222,10 +222,10 @@ Auto Patrol: []"},
 /obj/machinery/bot/ed209/process()
 	set background = BACKGROUND_ENABLED
 
-	if (!src.on)
+	if (!src.on || src.disabled)
 		return
 	var/list/targets = list()
-	for (var/mob/living/carbon/C in view(12,src)) //Let's find us a target
+	for (var/mob/living/carbon/C in view(9,src)) //Let's find us a target
 		var/threatlevel = 0
 		if ((C.stat) || (C.lying))
 			continue
@@ -279,14 +279,14 @@ Auto Patrol: []"},
 					var/mob/living/carbon/M = src.target
 					var/maxstuns = 4
 					if (istype(M, /mob/living/carbon/human))
-						if (M.stuttering < 10 && (!(HULK in M.mutations))  /*&& (!istype(M:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
-							M.stuttering = 10
-						M.Stun(10)
-						M.Weaken(10)
+						if (M.stuttering < 5 && (!(HULK in M.mutations))  /*&& (!istype(M:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+							M.stuttering = 5
+						M.Stun(5)
+						M.Weaken(5)
 					else
-						M.Weaken(10)
-						M.stuttering = 10
-						M.Stun(10)
+						M.Weaken(5)
+						M.stuttering = 5
+						M.Stun(5)
 					maxstuns--
 					if (maxstuns <= 0)
 						target = null
@@ -791,7 +791,7 @@ Auto Patrol: []"},
 	s.start()
 
 	new /obj/effect/decal/cleanable/oil(src.loc)
-	del(src)
+	qdel(src)
 
 
 /obj/machinery/bot/ed209/proc/shootAt(var/mob/target)
@@ -818,14 +818,14 @@ Auto Patrol: []"},
 				projectile = /obj/item/projectile/energy/electrode
 		else if(lasercolor == "b")
 			if (src.emagged == 2)
-				projectile = /obj/item/projectile/omnitag
+				projectile = /obj/item/projectile/lasertag
 			else
-				projectile = /obj/item/projectile/bluetag
+				projectile = /obj/item/projectile/lasertag/bluetag
 		else if(lasercolor == "r")
 			if (src.emagged == 2)
-				projectile = /obj/item/projectile/omnitag
+				projectile = /obj/item/projectile/lasertag
 			else
-				projectile = /obj/item/projectile/redtag
+				projectile = /obj/item/projectile/lasertag/redtag
 
 	if (!( istype(U, /turf) ))
 		return
@@ -895,9 +895,9 @@ Auto Patrol: []"},
 
 	switch(build_step)
 		if(0,1)
-			if( istype(W, /obj/item/robot_parts/l_leg) || istype(W, /obj/item/robot_parts/r_leg) )
+			if(istype(W, /obj/item/robot_parts/l_leg) || istype(W, /obj/item/robot_parts/r_leg))
 				user.drop_item()
-				del(W)
+				qdel(W)
 				build_step++
 				user << "<span class='notice'>You add the robot leg to [src].</span>"
 				name = "legs/frame assembly"
@@ -909,13 +909,13 @@ Auto Patrol: []"},
 					icon_state = "ed209_legs"
 
 		if(2)
-			if( istype(W, /obj/item/clothing/suit/redtag) )
+			if(istype(W, /obj/item/clothing/suit/redtag))
 				lasercolor = "r"
-			else if( istype(W, /obj/item/clothing/suit/bluetag) )
+			else if(istype(W, /obj/item/clothing/suit/bluetag))
 				lasercolor = "b"
-			if( lasercolor || istype(W, /obj/item/clothing/suit/armor/vest) )
+			if(lasercolor || istype(W, /obj/item/clothing/suit/armor/vest))
 				user.drop_item()
-				del(W)
+				qdel(W)
 				build_step++
 				user << "<span class='notice'>You add the armor to [src].</span>"
 				name = "vest/legs/frame assembly"
@@ -923,26 +923,38 @@ Auto Patrol: []"},
 				icon_state = "[lasercolor]ed209_shell"
 
 		if(3)
-			if( istype(W, /obj/item/weapon/weldingtool) )
+			if(istype(W, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.remove_fuel(0,user))
 					build_step++
 					name = "shielded frame assembly"
 					user << "<span class='notice'>You welded the vest to [src].</span>"
 		if(4)
-			if( istype(W, /obj/item/clothing/head/helmet) )
-				user.drop_item()
-				del(W)
-				build_step++
-				user << "<span class='notice'>You add the helmet to [src].</span>"
-				name = "covered and shielded frame assembly"
-				item_state = "[lasercolor]ed209_hat"
-				icon_state = "[lasercolor]ed209_hat"
+			switch(lasercolor)
+				if("b")
+					if(!istype(W, /obj/item/clothing/head/helmet/bluetaghelm))
+						return
+
+				if("r")
+					if(!istype(W, /obj/item/clothing/head/helmet/redtaghelm))
+						return
+
+				if("")
+					if(!istype(W, /obj/item/clothing/head/helmet))
+						return
+
+			user.drop_item()
+			qdel(W)
+			build_step++
+			user << "<span class='notice'>You add the helmet to [src].</span>"
+			name = "covered and shielded frame assembly"
+			item_state = "[lasercolor]ed209_hat"
+			icon_state = "[lasercolor]ed209_hat"
 
 		if(5)
-			if( isprox(W) )
+			if(isprox(W))
 				user.drop_item()
-				del(W)
+				qdel(W)
 				build_step++
 				user << "<span class='notice'>You add the prox sensor to [src].</span>"
 				name = "covered, shielded and sensored frame assembly"
@@ -950,8 +962,8 @@ Auto Patrol: []"},
 				icon_state = "[lasercolor]ed209_prox"
 
 		if(6)
-			if( istype(W, /obj/item/weapon/cable_coil) )
-				var/obj/item/weapon/cable_coil/coil = W
+			if(istype(W, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/coil = W
 				var/turf/T = get_turf(user)
 				user << "<span class='notice'>You start to wire [src]...</span>"
 				sleep(40)
@@ -964,15 +976,15 @@ Auto Patrol: []"},
 		if(7)
 			switch(lasercolor)
 				if("b")
-					if( !istype(W, /obj/item/weapon/gun/energy/laser/bluetag) )
+					if(!istype(W, /obj/item/weapon/gun/energy/laser/bluetag))
 						return
 					name = "bluetag ED-209 assembly"
 				if("r")
-					if( !istype(W, /obj/item/weapon/gun/energy/laser/redtag) )
+					if(!istype(W, /obj/item/weapon/gun/energy/laser/redtag))
 						return
 					name = "redtag ED-209 assembly"
 				if("")
-					if( !istype(W, /obj/item/weapon/gun/energy/taser) )
+					if(!istype(W, /obj/item/weapon/gun/energy/taser))
 						return
 					name = "taser ED-209 assembly"
 				else
@@ -982,10 +994,10 @@ Auto Patrol: []"},
 			src.item_state = "[lasercolor]ed209_taser"
 			src.icon_state = "[lasercolor]ed209_taser"
 			user.drop_item()
-			del(W)
+			qdel(W)
 
 		if(8)
-			if( istype(W, /obj/item/weapon/screwdriver) )
+			if(istype(W, /obj/item/weapon/screwdriver))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				var/turf/T = get_turf(user)
 				user << "<span class='notice'>Now attaching the gun to the frame...</span>"
@@ -996,42 +1008,44 @@ Auto Patrol: []"},
 					user << "<span class='notice'>Taser gun attached.</span>"
 
 		if(9)
-			if( istype(W, /obj/item/weapon/cell) )
+			if(istype(W, /obj/item/weapon/stock_parts/cell))
 				build_step++
 				user << "<span class='notice'>You complete the ED-209.</span>"
 				var/turf/T = get_turf(src)
 				new /obj/machinery/bot/ed209(T,created_name,lasercolor)
 				user.drop_item()
-				del(W)
-				user.drop_from_inventory(src)
-				del(src)
+				qdel(W)
+				user.unEquip(src, 1)
+				qdel(src)
 
 
 /obj/machinery/bot/ed209/bullet_act(var/obj/item/projectile/Proj)
-	if((src.lasercolor == "b") && (src.disabled == 0))
-		if(istype(Proj, /obj/item/projectile/redtag))
+	if(!disabled)
+		var/lasertag_check = 0
+		if((src.lasercolor == "b"))
+			if(istype(Proj, /obj/item/projectile/lasertag/redtag))
+				lasertag_check++
+		else if((src.lasercolor == "r"))
+			if(istype(Proj, /obj/item/projectile/lasertag/bluetag))
+				lasertag_check++
+		if(lasertag_check)
+			icon_state = "[lasercolor]ed2090"
 			src.disabled = 1
-			del (Proj)
-			sleep(100)
-			src.disabled = 0
+			target = null
+			spawn(100)
+				src.disabled = 0
+				icon_state = "[lasercolor]ed2091"
+			return 1
 		else
-			..()
-	else if((src.lasercolor == "r") && (src.disabled == 0))
-		if(istype(Proj, /obj/item/projectile/bluetag))
-			src.disabled = 1
-			del (Proj)
-			sleep(100)
-			src.disabled = 0
-		else
-			..()
+			..(Proj)
 	else
-		..()
+		..(Proj)
 
 /obj/machinery/bot/ed209/bluetag/New()//If desired, you spawn red and bluetag bots easily
 	new /obj/machinery/bot/ed209(get_turf(src),null,"b")
-	del(src)
+	qdel(src)
 
 
 /obj/machinery/bot/ed209/redtag/New()
 	new /obj/machinery/bot/ed209(get_turf(src),null,"r")
-	del(src)
+	qdel(src)

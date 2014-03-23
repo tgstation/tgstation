@@ -4,8 +4,8 @@
 	icon_state = "syringegun"
 	item_state = "syringegun"
 	w_class = 3
-	throw_speed = 2
-	throw_range = 10
+	throw_speed = 3
+	throw_range = 7
 	force = 4
 	m_amt = 2000
 	clumsy_check = 0
@@ -29,7 +29,7 @@
 	chambered.BB.name = S.name
 	syringes.Remove(S)
 
-	del(S)
+	qdel(S)
 	return
 
 /obj/item/weapon/gun/syringe/process_chamber()

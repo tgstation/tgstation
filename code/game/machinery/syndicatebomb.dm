@@ -102,6 +102,9 @@
 /obj/machinery/syndicatebomb/attack_hand(var/mob/user)
 	interact(user)
 
+/obj/machinery/syndicatebomb/attack_ai()
+	return
+
 /obj/machinery/syndicatebomb/interact(var/mob/user)
 	if(wires)
 		wires.Interact(user)
@@ -136,6 +139,7 @@
 			if(payload && !istype(payload, /obj/item/weapon/bombcore/training))
 				message_admins("[key_name(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has primed a [name] ([payload]) for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
 				log_game("[key_name(user)] has primed a [name] ([payload]) for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
+				payload.adminlog = "The [src.name] that [key_name(user)] had primed detonated!"
 
 /obj/machinery/syndicatebomb/proc/isWireCut(var/index)
 	return wires.IsIndexCut(index)
@@ -173,13 +177,17 @@
 	item_state = "eshield0"
 	w_class = 3.0
 	origin_tech = "syndicate=6;combat=5"
+	var/adminlog = null
 
 /obj/item/weapon/bombcore/ex_act(severity) //Little boom can chain a big boom
 	src.detonate()
 
 /obj/item/weapon/bombcore/proc/detonate()
+	if(adminlog)
+		message_admins(adminlog)
+		log_game(adminlog)
 	explosion(get_turf(src),2,5,11, flame_range = 11)
-	del(src)
+	qdel(src)
 
 /obj/item/weapon/bombcore/proc/defuse()
 //Note: 	Because of how var/defused is used you shouldn't override this UNLESS you intend to set the var to 0 or
@@ -211,7 +219,7 @@
 		holder.loc.visible_message("\red \icon[holder] Alert: Bomb has detonated. Your score is now [defusals] for [attempts]. Resetting wires...")
 		reset()
 	else
-		del(src)
+		qdel(src)
 
 /obj/item/weapon/bombcore/training/defuse()
 	var/obj/machinery/syndicatebomb/holder = src.loc
@@ -227,21 +235,24 @@
 	origin_tech = null
 
 /obj/item/weapon/bombcore/badmin/defuse() //because we wouldn't want them being harvested by players
-	del(src)
+	var/obj/machinery/syndicatebomb/B = src.loc
+	qdel(B)
+	qdel(src)
 
 /obj/item/weapon/bombcore/badmin/summon/
 	var/summon_path = /obj/item/weapon/reagent_containers/food/snacks/cookie
 	var/amt_summon = 1
 
 /obj/item/weapon/bombcore/badmin/summon/detonate()
+	var/obj/machinery/syndicatebomb/B = src.loc
 	for(var/i = 0; i < amt_summon; i++)
 		var/atom/movable/X = new summon_path
 		X.loc = get_turf(src)
 		if(prob(50))
 			for(var/j = 1, j <= rand(1, 3), j++)
 				step(X, pick(NORTH,SOUTH,EAST,WEST))
-
-	del(src)
+	qdel(B)
+	qdel(src)
 
 /obj/item/weapon/bombcore/badmin/summon/clown
 	summon_path = /mob/living/simple_animal/hostile/retaliate/clown

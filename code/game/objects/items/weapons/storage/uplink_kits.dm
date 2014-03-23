@@ -1,7 +1,7 @@
 /obj/item/weapon/storage/box/syndicate/
 	New()
 		..()
-		switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "freedom" = 1, "hacker" = 1, "lordsingulo" = 1, "smoothoperator" = 1, "darklord" = 1)))
+		switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "implant" = 1, "hacker" = 1, "lordsingulo" = 1, "darklord" = 1)))
 			if("bloodyspai")
 				new /obj/item/clothing/under/chameleon(src)
 				new /obj/item/clothing/mask/gas/voice(src)
@@ -37,11 +37,18 @@
 				new /obj/item/clothing/shoes/syndigaloshes(src)
 				return
 
-			if("freedom")
-				var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(src)
-				O.imp = new /obj/item/weapon/implant/freedom(O)
+			if("implant")
+				var/obj/item/weapon/implanter/F = new /obj/item/weapon/implanter(src)
+				F.imp = new /obj/item/weapon/implant/freedom(F)
 				var/obj/item/weapon/implanter/U = new /obj/item/weapon/implanter(src)
 				U.imp = new /obj/item/weapon/implant/uplink(U)
+				var/obj/item/weapon/implanter/C = new /obj/item/weapon/implanter(src)
+				C.imp = new /obj/item/weapon/implant/emp(C)
+				var/obj/item/weapon/implanter/K = new /obj/item/weapon/implanter(src)
+				K.imp = new /obj/item/weapon/implant/adrenalin(K)
+				var/obj/item/weapon/implanter/S = new /obj/item/weapon/implanter(src)
+				S.imp = new /obj/item/weapon/implant/explosive(S)
+				S.name += " (explosive)"
 				return
 
 			if("hacker")
@@ -56,16 +63,6 @@
 				new /obj/item/clothing/suit/space/syndicate(src)
 				new /obj/item/clothing/head/helmet/space/syndicate(src)
 				new /obj/item/weapon/card/emag(src)
-				return
-
-			if("smoothoperator")
-				new /obj/item/weapon/gun/projectile/automatic/pistol(src)
-				new /obj/item/weapon/silencer(src)
-				new /obj/item/weapon/soap/syndie(src)
-				new /obj/item/weapon/storage/bag/trash(src)
-				new /obj/item/bodybag(src)
-				new /obj/item/clothing/under/suit_jacket(src)
-				new /obj/item/clothing/shoes/laceup(src)
 				return
 
 			if("darklord")

@@ -10,7 +10,7 @@
 /obj/item/clothing/ears
 	name = "ears"
 	w_class = 1.0
-	throwforce = 2
+	throwforce = 0
 	slot_flags = SLOT_EARS
 
 /obj/item/clothing/ears/earmuffs
@@ -28,9 +28,14 @@
 	flags = GLASSESCOVERSEYES
 	slot_flags = SLOT_EYES
 	var/vision_flags = 0
-	var/darkness_view = 0//Base human is 2
-	var/invisa_view = 0
+	var/darkness_view = 2//Base human is 2
+	var/invis_view = SEE_INVISIBLE_LIVING
 	var/emagged = 0
+	var/hud = null
+	var/list/icon/current = list() //the current hud icons
+
+/obj/item/clothing/glasses/proc/process_hud(var/mob/M)
+	return
 
 /*
 SEE_SELF  // can see self, no matter what
@@ -130,7 +135,7 @@ BLIND     // can't see anything
 	flags = STOPSPRESSUREDMAGE | THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen)
-	slowdown = 3
+	slowdown = 2
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
@@ -158,15 +163,28 @@ BLIND     // can't see anything
 	var/obj/item/clothing/tie/hastie = null
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user)
+	attachTie(I, user)
+	..()
+
+/obj/item/clothing/under/proc/attachTie(obj/item/I, mob/user)
 	if(istype(I, /obj/item/clothing/tie))
 		if(hastie)
-			user << "<span class='warning'>[src] already has an accessory.</span>"
+			if(user)
+				user << "<span class='warning'>[src] already has an accessory.</span>"
 			return
 		else
-			user.drop_item()
+			if(user)
+				user.drop_item()
 			hastie = I
 			I.loc = src
-			user << "<span class='notice'>You attach [I] to [src].</span>"
+			if(user)
+				user << "<span class='notice'>You attach [I] to [src].</span>"
+			I.transform *= 0.5	//halve the size so it doesn't overpower the under
+			I.pixel_x += 8
+			I.pixel_y -= 8
+			I.layer = FLOAT_LAYER
+			overlays += I
+
 
 			if(istype(loc, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = loc
@@ -174,7 +192,6 @@ BLIND     // can't see anything
 
 			return
 
-	..()
 
 /obj/item/clothing/under/examine()
 	set src in view()
@@ -189,7 +206,7 @@ BLIND     // can't see anything
 		if(3)
 			usr << "Its vital tracker and tracking beacon appear to be enabled."
 	if(hastie)
-		usr << "\A [hastie] is clipped to it."
+		usr << "\A [hastie] is attached to it."
 
 atom/proc/generate_uniform(index,t_color)
 	var/icon/female_uniform_icon	= icon("icon"='icons/mob/uniform.dmi', "icon_state"="[t_color]_s")
@@ -233,6 +250,11 @@ atom/proc/generate_uniform(index,t_color)
 	if(usr.stat) return
 
 	if(hastie)
+		hastie.transform *= 2
+		hastie.pixel_x -= 8
+		hastie.pixel_y += 8
+		hastie.layer = initial(hastie.layer)
+		overlays = null
 		usr.put_in_hands(hastie)
 		hastie = null
 

@@ -100,8 +100,7 @@
 						Mind.objectives += O
 
 					if(2)	//steal
-						var/datum/objective/steal/O = new /datum/objective/steal()
-						O.set_target(pick(O.possible_items_special))
+						var/datum/objective/steal/special/O = new /datum/objective/steal/special()
 						O.owner = Mind
 						Mind.objectives += O
 
@@ -354,12 +353,12 @@ ________________________________________________________________________________
 
 /mob/living/carbon/human/proc/equip_space_ninja(safety=0)//Safety in case you need to unequip stuff for existing characters.
 	if(safety)
-		del(w_uniform)
-		del(wear_suit)
-		del(wear_mask)
-		del(head)
-		del(shoes)
-		del(gloves)
+		qdel(w_uniform)
+		qdel(wear_suit)
+		qdel(wear_mask)
+		qdel(head)
+		qdel(shoes)
+		qdel(gloves)
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(src)
 	equip_to_slot_or_del(R, slot_ears)
@@ -417,33 +416,33 @@ ________________________________________________________________________________
 			return 0
 
 		affecting = U
-		canremove = 0
+		flags |= NODROP //colons make me go all |=
 		slowdown = 0
 		n_hood = U:head
-		n_hood.canremove=0
+		n_hood.flags |= NODROP
 		n_shoes = U:shoes
-		n_shoes.canremove=0
+		n_shoes.flags |= NODROP
 		n_shoes.slowdown--
 		n_gloves = U:gloves
-		n_gloves.canremove=0
+		n_gloves.flags |= NODROP
 
 	return 1
 
 //This proc allows the suit to be taken off.
 /obj/item/clothing/suit/space/space_ninja/proc/unlock_suit()
 	affecting = null
-	canremove = 1
+	flags &= ~NODROP
 	slowdown = 1
 	icon_state = "s-ninja"
 	if(n_hood)//Should be attached, might not be attached.
-		n_hood.canremove=1
+		n_hood.flags &= ~NODROP
 	if(n_shoes)
-		n_shoes.canremove=1
+		n_shoes.flags &= ~NODROP
 		n_shoes.slowdown++
 	if(n_gloves)
 		n_gloves.icon_state = "s-ninja"
 		n_gloves.item_state = "s-ninja"
-		n_gloves.canremove=1
+		n_gloves.flags &= ~NODROP
 		n_gloves.candrain=0
 		n_gloves.draining=0
 
@@ -656,10 +655,10 @@ BYOND fixed the verb bugs so this is no longer necessary. I prefer verb panels.
 	var/obj/effect/proc_holder/ai_hack_ninja/B_C = locate() in AI
 	var/obj/effect/proc_holder/ai_instruction/C_C = locate() in AI
 	var/obj/effect/proc_holder/ai_holo_clear/D_C = locate() in AI
-	del(A_C)
-	del(B_C)
-	del(C_C)
-	del(D_C)
+	qdel(A_C)
+	qdel(B_C)
+	qdel(C_C)
+	qdel(D_C)
 	AI.proc_holder_list = list()
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
@@ -678,8 +677,8 @@ BYOND fixed the verb bugs so this is no longer necessary. I prefer verb panels.
 
 /obj/effect/proc_holder/ai_holo_clear/Click()
 	var/obj/item/clothing/suit/space/space_ninja/S = loc.loc//This is so stupid but makes sure certain things work. AI.SUIT
-	del(S.hologram.i_attached)
-	del(S.hologram)
+	qdel(S.hologram.i_attached)
+	qdel(S.hologram)
 	var/obj/effect/proc_holder/ai_holo_clear/D_C = locate() in S.AI
 	S.AI.proc_holder_list -= D_C
 	return
@@ -751,8 +750,8 @@ mob/verb/remove_object_panel()
 	var/obj/effect/proc_holder/ai_hack_ninja/B = locate() in src
 	usr:proc_holder_list -= A
 	usr:proc_holder_list -= B
-	del(A)//First.
-	del(B)//Second, to keep the proc going.
+	qdel(A)//First.
+	qdel(B)//Second, to keep the proc going.
 	return
 
 /client/verb/grant_verb_ninja_debug1(var/mob/M in view())
@@ -869,7 +868,7 @@ That is why you attached them to objects.
 				spawn(0)
 					src << current_clone
 					spawn(300)
-						del(current_clone)
+						qdel(current_clone)
 					spawn while(!isnull(current_clone))
 						step_to(current_clone,src,1)
 						sleep(5)
@@ -1374,26 +1373,25 @@ ________________________________________________________________________________
 	reagents.my_atom = src
 	for(var/reagent_id in reagent_list)
 		reagent_id == "radium" ? reagents.add_reagent(reagent_id, r_maxamount+(a_boost*a_transfer)) : reagents.add_reagent(reagent_id, r_maxamount)//It will take into account radium used for adrenaline boosting.
-	cell = new/obj/item/weapon/cell/high//The suit should *always* have a battery because so many things rely on it.
+	cell = new/obj/item/weapon/stock_parts/cell/high//The suit should *always* have a battery because so many things rely on it.
 	cell.charge = 9000//Starting charge should not be higher than maximum charge. It leads to problems with recharging.
 
-/obj/item/clothing/suit/space/space_ninja/Del()
+/obj/item/clothing/suit/space/space_ninja/Destroy()
 	if(affecting)//To make sure the window is closed.
 		affecting << browse(null, "window=hack spideros")
 	if(AI)//If there are AIs present when the ninja kicks the bucket.
 		killai()
 	if(hologram)//If there is a hologram
-		del(hologram.i_attached)//Delete it and the attached image.
-		del(hologram)
+		qdel(hologram.i_attached)//Delete it and the attached image.
+		qdel(hologram)
 	..()
-	return
 
 //Simply deletes all the attachments and self, killing all related procs.
 /obj/item/clothing/suit/space/space_ninja/proc/terminate()
-	del(n_hood)
-	del(n_gloves)
-	del(n_shoes)
-	del(src)
+	qdel(n_hood)
+	qdel(n_gloves)
+	qdel(n_shoes)
+	qdel(src)
 
 /obj/item/clothing/suit/space/space_ninja/proc/killai(mob/living/silicon/ai/A = AI)
 	if(A.client)
@@ -1401,7 +1399,7 @@ ________________________________________________________________________________
 		A << browse(null, "window=hack spideros")
 	AI = null
 	A.death(1)//Kill, deleting mob.
-	del(A)
+	qdel(A)
 	return
 
 //=======//SUIT VERBS//=======//
@@ -2079,8 +2077,8 @@ ________________________________________________________________________________
 
 	spawn while(hologram&&s_initialized&&AI)//Suit on and there is an AI present.
 		if(!s_initialized||get_dist(affecting,hologram.loc)>3)//Once suit is de-initialized or hologram reaches out of bounds.
-			del(hologram.i_attached)
-			del(hologram)
+			qdel(hologram.i_attached)
+			qdel(hologram)
 
 			verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_clear
 			return
@@ -2100,8 +2098,8 @@ ________________________________________________________________________________
 	set category = "AI Ninja Equip"
 	set src = usr.loc
 
-	del(hologram.i_attached)
-	del(hologram)
+	qdel(hologram.i_attached)
+	qdel(hologram)
 
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_clear
 	return
@@ -2160,14 +2158,14 @@ ________________________________________________________________________________
 
 			U << "Replenished a total of [total_reagent_transfer ? total_reagent_transfer : "zero"] chemical units."//Let the player know how much total volume was added.
 			return
-		else if(istype(I, /obj/item/weapon/cell))
+		else if(istype(I, /obj/item/weapon/stock_parts/cell))
 			if(I:maxcharge>cell.maxcharge&&n_gloves&&n_gloves.candrain)
 				U << "\blue Higher maximum capacity detected.\nUpgrading..."
 				if (n_gloves&&n_gloves.candrain&&do_after(U,s_delay))
 					U.drop_item()
 					I.loc = src
 					I:charge = min(I:charge+cell.charge, I:maxcharge)
-					var/obj/item/weapon/cell/old_cell = cell
+					var/obj/item/weapon/stock_parts/cell/old_cell = cell
 					old_cell.charge = 0
 					U.put_in_hands(old_cell)
 					old_cell.add_fingerprint(U)
@@ -2207,7 +2205,7 @@ ________________________________________________________________________________
 		spawn(0)
 			anim(U.loc,U,'icons/mob/mob.dmi',,"cloak",,U.dir)
 		s_active=!s_active
-		U.update_icons()	//update their icons
+		U.alpha = 0
 		U << "\blue You are now invisible to normal detection."
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] vanishes into thin air!",1)
@@ -2219,7 +2217,7 @@ ________________________________________________________________________________
 		spawn(0)
 			anim(U.loc,U,'icons/mob/mob.dmi',,"uncloak",,U.dir)
 		s_active=!s_active
-		U.update_icons()	//update their icons
+		U.alpha = 255
 		U << "\blue You are now visible."
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] appears from thin air!",1)
@@ -2339,7 +2337,7 @@ ________________________________________________________________________________
 				U << "\red This SMES cell has run dry of power. You must find another source."
 
 		if("CELL")
-			var/obj/item/weapon/cell/A = target
+			var/obj/item/weapon/stock_parts/cell/A = target
 			if(A.charge)
 				if (G.candrain&&do_after(U,30))
 					U << "\blue Gained <B>[A.charge]</B> energy from the cell."
@@ -2508,7 +2506,7 @@ ________________________________________________________________________________
 /obj/item/clothing/gloves/space_ninja/examine()
 	set src in view()
 	..()
-	if(!canremove)
+	if(flags & NODROP)
 		var/mob/living/carbon/human/U = loc
 		U << "The energy drain mechanism is: <B>[candrain?"active":"inactive"]</B>."
 
@@ -2664,7 +2662,7 @@ It is possible to destroy the net by the occupant or someone else.
 						O.show_message(text("[] was recovered from the energy net!", M.name), 1, text("You hear a grunt."), 2)
 					if(!isnull(master))//As long as they still exist.
 						master << "\red <b>ERROR</b>: \black unable to initiate transport protocol. Procedure terminated."
-				del(src)
+				qdel(src)
 			return
 
 	process(var/mob/living/carbon/M as mob)
@@ -2678,7 +2676,7 @@ It is possible to destroy the net by the occupant or someone else.
 		if(isnull(M)||M.loc!=loc)//If mob is gone or not at the location.
 			if(!isnull(master))//As long as they still exist.
 				master << "\red <b>ERROR</b>: \black unable to locate \the [mob_name]. Procedure terminated."
-			del(src)//Get rid of the net.
+			qdel(src)//Get rid of the net.
 			return
 
 		if(!isnull(src))//As long as both net and person exist.
@@ -2691,7 +2689,7 @@ It is possible to destroy the net by the occupant or someone else.
 				if(istype(M,/mob/living/carbon/human))
 					if(W==M:w_uniform)	continue//So all they're left with are shoes and uniform.
 					if(W==M:shoes)	continue
-				M.drop_from_inventory(W)
+				M.unEquip(W)
 
 			spawn(0)
 				playsound(M.loc, 'sound/effects/sparks4.ogg', 50, 1)
@@ -2707,7 +2705,7 @@ It is possible to destroy the net by the occupant or someone else.
 				playsound(M.loc, 'sound/effects/phasein.ogg', 25, 1)
 				playsound(M.loc, 'sound/effects/sparks2.ogg', 50, 1)
 				anim(M.loc,M,'icons/mob/mob.dmi',,"phasein",,M.dir)
-				del(src)//Wait for everything to finish, delete the net. Else it will stop everything once net is deleted, including the spawn(0).
+				qdel(src)//Wait for everything to finish, delete the net. Else it will stop everything once net is deleted, including the spawn(0).
 
 			for(var/mob/O in viewers(src, 3))
 				O.show_message(text("[] vanished!", M), 1, text("You hear sparks flying!"), 2)

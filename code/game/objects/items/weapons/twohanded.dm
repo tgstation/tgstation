@@ -102,10 +102,10 @@
 	flags = ABSTRACT
 
 /obj/item/weapon/twohanded/offhand/unwield()
-	del(src)
+	qdel(src)
 
 /obj/item/weapon/twohanded/offhand/wield()
-	del(src)
+	qdel(src)
 
 /obj/item/weapon/twohanded/offhand/IsShield()//if the actual twohanded weapon is a shield, we count as a shield too!
 	var/mob/user = loc
@@ -115,6 +115,32 @@
 	if(!I) return 0
 	return I.IsShield()
 
+///////////Two hand required objects///////////////
+//This is for objects that require two hands to even pick up
+/obj/item/weapon/twohanded/required/
+	w_class = 5.0
+
+/obj/item/weapon/twohanded/required/attack_self()
+	return
+
+/obj/item/weapon/twohanded/required/mob_can_equip(M as mob, slot)
+	if(wielded)
+		M << "<span class='warning'>[src.name] is too cumbersome to carry with anything but your hands!</span>"
+		return 0
+	return ..()
+
+/obj/item/weapon/twohanded/required/attack_hand(mob/user)//Can't even pick it up without both hands empty
+	var/obj/item/weapon/twohanded/required/H = user.get_inactive_hand()
+	if(H != null)
+		user.visible_message("<span class='notice'>[src.name] is too cumbersome to carry in one hand!</span>")
+		return
+	var/obj/item/weapon/twohanded/offhand/O = new(user)
+	user.put_in_inactive_hand(O)
+	..()
+	wielded = 1
+
+
+obj/item/weapon/twohanded/
 
 /*
  * Fireaxe
@@ -124,11 +150,13 @@
 	name = "fire axe"
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
 	force = 5
+	throwforce = 15
 	w_class = 4.0
 	slot_flags = SLOT_BACK
 	force_unwielded = 5
 	force_wielded = 24 // Was 18, Buffed - RobRichards/RR
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
+	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/weapon/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
@@ -146,7 +174,7 @@
 			if (W.dir == SOUTHWEST)
 				new /obj/item/weapon/shard( W.loc )
 				if(W.reinf) new /obj/item/stack/rods( W.loc)
-		del(A)
+		qdel(A)
 
 
 /*
@@ -158,7 +186,7 @@
 	desc = "Handle with care."
 	force = 3
 	throwforce = 5.0
-	throw_speed = 1
+	throw_speed = 3
 	throw_range = 5
 	w_class = 2.0
 	force_unwielded = 3
@@ -249,7 +277,8 @@
 	slot_flags = SLOT_BACK
 	force_unwielded = 10
 	force_wielded = 18 // Was 13, Buffed - RR
-	throwforce = 15
+	throwforce = 20
+	throw_speed = 3
 	flags = NOSHIELD
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")

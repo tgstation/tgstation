@@ -48,10 +48,11 @@
 
 /obj/structure/mirror/bullet_act(var/obj/item/projectile/Proj)
 	if(prob(Proj.damage * 2))
-		if(!shattered)
-			shatter()
-		else
-			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+			if(!shattered)
+				shatter()
+			else
+				playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 	..()
 
 
@@ -89,7 +90,6 @@
 
 
 /obj/structure/mirror/attack_slime(mob/user as mob)
-	if(!isslimeadult(user)) return
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		return

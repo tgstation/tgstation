@@ -9,7 +9,7 @@
 	response_help = "pushes"
 	response_disarm = "shoves"
 	response_harm = "hits"
-	speed = -1
+	speed = 0
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 100
 	health = 100
@@ -33,7 +33,6 @@
 	var/weapon1 = /obj/item/weapon/melee/energy/sword/pirate
 
 	faction = "pirate"
-	idle_env_destroyer = 0
 
 /mob/living/simple_animal/hostile/pirate/ranged
 	name = "Pirate Gunner"
@@ -43,6 +42,8 @@
 	projectilesound = 'sound/weapons/laser.ogg'
 	ranged = 1
 	rapid = 1
+	retreat_distance = 5
+	minimum_distance = 5
 	projectiletype = /obj/item/projectile/beam
 	corpse = /obj/effect/landmark/mobcorpse/pirate/ranged
 	weapon1 = /obj/item/weapon/gun/energy/laser
@@ -54,5 +55,5 @@
 		new corpse (src.loc)
 	if(weapon1)
 		new weapon1 (src.loc)
-	del src
+	qdel(src)
 	return

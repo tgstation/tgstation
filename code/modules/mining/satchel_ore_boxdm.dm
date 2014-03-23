@@ -10,7 +10,8 @@
 
 /obj/structure/ore_box/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/ore))
-		src.contents += W;
+		user.drop_item()
+		W.loc = src
 	if (istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		S.hide_from(usr)
@@ -19,7 +20,7 @@
 		user << "\blue You empty the satchel into the box."
 	return
 
-/obj/structure/ore_box/attack_hand(obj, mob/user as mob)
+/obj/structure/ore_box/attack_hand(mob/user as mob)
 	var/amt_gold = 0
 	var/amt_silver = 0
 	var/amt_diamond = 0

@@ -58,7 +58,7 @@
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
-	equip_cooldown = 40
+	equip_cooldown = 20
 	name = "\improper MKIV ion heavy cannon"
 	icon_state = "mecha_ion"
 	energy_drain = 120
@@ -88,7 +88,7 @@
 			var/mob/M = A
 			add_logs(firer, M, "shot", object="[src]")
 		if(life <= 0)
-			del(src)
+			qdel(src)
 		return
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
@@ -134,13 +134,13 @@
 			M.Stun(10)
 			M.Paralyse(4)
 		else
-			M.make_jittery(500)
+			M.Jitter(500)
 		/* //else the mousetraps are useless
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
 			if(isobj(H.shoes))
 				var/thingy = H.shoes
-				H.drop_from_inventory(H.shoes)
+				H.unEquip(H.shoes)
 				walk_away(thingy,chassis,15,2)
 				spawn(20)
 					if(thingy)
@@ -198,13 +198,21 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
-	name = "\improper FNX-66 Carbine"
+	name = "\improper FNX-99 \"Hades\" Carbine"
 	icon_state = "mecha_carbine"
 	equip_cooldown = 5
-	projectile = /obj/item/projectile/bullet/incendiary
+	projectile = /obj/item/projectile/bullet/incendiary/mech
 	projectiles = 24
 	projectile_energy_cost = 15
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced
+	name = "\improper S.H.H. \"Quietus\" Carbine"
+	fire_sound = "sound/weapons/Gunshot_silenced.ogg"
+	icon_state = "mecha_mime"
+	equip_cooldown = 30
+	projectile = /obj/item/projectile/bullet/mime
+	projectiles = 6
+	projectile_energy_cost = 50
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
 	name = "\improper LBX AC 10 \"Scattershot\""
@@ -327,7 +335,7 @@
 	throw_impact(atom/hit_atom)
 		if(primed)
 			explosion(hit_atom, 0, 0, 2, 4, 0)
-			del(src)
+			qdel(src)
 		else
 			..()
 		return
@@ -355,7 +363,8 @@
 		message_admins("[key_name(chassis.occupant, chassis.occupant.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[chassis.occupant]'>?</A>) fired a [src] in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
 		log_game("[chassis.occupant.ckey]([chassis.occupant]) fired a [src] ([T.x],[T.y],[T.z])")
 		spawn(det_time)
-			F.prime()
+			if(F)
+				F.prime()
 		do_after_cooldown()
 		return
 
@@ -370,7 +379,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar
 	name = "banana mortar"
 	icon_state = "mecha_bananamrtr"
-	projectile = /obj/item/weapon/bananapeel
+	projectile = /obj/item/weapon/grown/bananapeel
 	fire_sound = 'sound/items/bikehorn.ogg'
 	projectiles = 15
 	missile_speed = 1.5
@@ -388,7 +397,7 @@
 	action(target)
 		if(!action_checks(target)) return
 		set_ready_state(0)
-		var/obj/item/weapon/bananapeel/B = new projectile(chassis.loc)
+		var/obj/item/weapon/grown/bananapeel/B = new projectile(chassis.loc,60)
 		playsound(chassis, fire_sound, 60, 1)
 		B.throw_at(target, missile_range, missile_speed)
 		projectiles--

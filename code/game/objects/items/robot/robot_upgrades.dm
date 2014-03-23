@@ -30,7 +30,7 @@
 	R.uneq_all()
 	R.hands.icon_state = "nomod"
 	R.icon_state = "robot"
-	del(R.module)
+	qdel(R.module)
 	R.module = null
 	R.modtype = "robot"
 	R.updatename("Default")
@@ -53,6 +53,7 @@
 	if(..()) return 0
 	R.name = heldname
 	R.real_name = heldname
+	R.custom_name = heldname //Required or else if the cyborg's module changes, their name is lost.
 
 	return 1
 
@@ -164,5 +165,5 @@
 	if(R.emagged == 1)
 		return 0
 
-	R.emagged = 1
+	R.SetEmagged(1)
 	return 1

@@ -28,7 +28,7 @@
 
 /obj/item/weapon/implant/dropped(mob/user as mob)
 	. = 1
-	del src
+	qdel(src)
 	return .
 
 /obj/item/weapon/implant/tracking
@@ -119,7 +119,7 @@
 	R << "You hear a faint *beep*."
 	if(!reagents.total_volume)
 		R << "You hear a faint click from your chest."
-		del(src)
+		qdel(src)
 
 
 /obj/item/weapon/implant/loyalty
@@ -196,7 +196,7 @@
 	var/uses = 2
 
 /obj/item/weapon/implant/emp/New()
-	activation_emote = pick("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
+	activation_emote = pick("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "smile", "pale", "sniff", "whimper", "wink")
 	..()
 	return
 

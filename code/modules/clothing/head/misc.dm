@@ -161,7 +161,6 @@
 	desc = "Fuzzy."
 	icon_state = "bearpelt"
 	item_state = "bearpelt"
-	flags = BLOCKHAIR
 
 /obj/item/clothing/head/xenos
 	name = "xenos helmet"
@@ -170,3 +169,28 @@
 	desc = "A helmet made out of chitinous alien hide."
 	flags = BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+
+/obj/item/clothing/head/fedora
+	name = "fedora"
+	icon_state = "fedora"
+	item_state = "fedora"
+	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
+
+/obj/item/clothing/head/sombrero
+	name = "sombrero"
+	icon_state = "sombrero"
+	item_state = "sombrero"
+	desc = "You feel mexican just wearing this."
+
+/obj/item/clothing/head/sombrero/green
+	name = "green sombrero"
+	icon_state = "greensombrero"
+	item_state = "greensombrero"
+	desc = "As elegant as a dancing cactus."
+
+/obj/item/clothing/head/sombrero/shamebrero
+	name = "shamebrero"
+	icon_state = "shamebrero"
+	item_state = "shamebrero"
+	desc = "Once it's on, it never comes off."
+	flags = NODROP

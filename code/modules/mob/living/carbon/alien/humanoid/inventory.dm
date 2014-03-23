@@ -1,31 +1,14 @@
-/mob/living/carbon/alien/humanoid/u_equip(obj/item/I)
-	if(!I)	return 0
+/mob/living/carbon/alien/humanoid/unEquip(obj/item/I)
+	. = ..()
+	if(!. || !I)
+		return
 
-	var/success = 1
-
-	if(I == r_hand)
-		r_hand = null
-		update_inv_r_hand(0)
-	else if(I == l_hand)
-		l_hand = null
-		update_inv_l_hand(0)
-	else if(I == r_store)
+	if(I == r_store)
 		r_store = null
 		update_inv_pockets(0)
 	else if(I == l_store)
 		l_store = null
 		update_inv_pockets(0)
-	else
-		success = 0
-
-	if(success)
-		if(I)
-			if(client)
-				client.screen -= I
-			I.loc = loc
-			I.dropped(src)
-			if(I)
-				I.layer = initial(I.layer)
 
 
 //yaaaaaaay snowflakes

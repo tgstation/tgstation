@@ -46,12 +46,12 @@
 
 		// teehee
 		if ("delete")
-			del(src)
+			qdel(src)
 
 		//If you want to re-add fire, just add "fire" = 15 to the pick list.
 		/*if ("fire")
 			new /obj/structure/closet/firecloset(src.loc)
-			del(src)*/
+			qdel(src)*/
 
 /obj/structure/closet/emcloset/legacy/New()
 	new /obj/item/weapon/tank/oxygen(src)
@@ -125,11 +125,11 @@
 	if(prob(20))
 		new /obj/item/weapon/storage/belt/utility(src)
 	if(prob(30))
-		new /obj/item/weapon/cable_coil/random(src)
+		new /obj/item/stack/cable_coil/random(src)
 	if(prob(30))
-		new /obj/item/weapon/cable_coil/random(src)
+		new /obj/item/stack/cable_coil/random(src)
 	if(prob(30))
-		new /obj/item/weapon/cable_coil/random(src)
+		new /obj/item/stack/cable_coil/random(src)
 	if(prob(20))
 		new /obj/item/device/multitool(src)
 	if(prob(5))

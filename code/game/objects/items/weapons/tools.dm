@@ -47,10 +47,11 @@
 	g_amt = 0
 	m_amt = 75
 	attack_verb = list("stabbed")
+	hitsound = 'sound/weapons/bladeslice.ogg'
 
 	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</b>")
+		viewers(user) << pick("<span class='suicide'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
+							"<span class='suicide'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>")
 		return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/New()
@@ -100,12 +101,13 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 6.0
-	throw_speed = 2
-	throw_range = 9
+	throw_speed = 3
+	throw_range = 7
 	w_class = 2.0
 	m_amt = 80
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("pinched", "nipped")
+	hitsound = 'sound/items/Wirecutter.ogg'
 
 /obj/item/weapon/wirecutters/New()
 	if(prob(50))
@@ -133,7 +135,8 @@
 	slot_flags = SLOT_BELT
 	force = 3
 	throwforce = 5
-	throw_speed = 1
+	hitsound = "swing_hit"
+	throw_speed = 3
 	throw_range = 5
 	w_class = 2
 	m_amt = 70
@@ -161,6 +164,22 @@
 		flamethrower_rods(I, user)
 	..()
 
+
+/obj/item/weapon/weldingtool/attack(mob/living/carbon/human/H, mob/user)
+	if(!istype(H))
+		return ..()
+
+	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+
+	if(affecting.status == ORGAN_ROBOTIC)
+		if(src.remove_fuel(0))
+			src.item_heal_robotic(H, user, 30, 0)
+			return
+		else
+			user << "<span class='warning'>Need more welding fuel!</span>"
+			return
+	else
+		return ..()
 
 /obj/item/weapon/weldingtool/process()
 	switch(welding)
@@ -205,7 +224,7 @@
 			user << "<span class='warning'>That was stupid of you.</span>"
 			explosion(O.loc, -1, 0, 2, flame_range = 2)
 			if(O)
-				del(O)
+				qdel(O)
 			return
 
 	if(welding)
@@ -274,10 +293,11 @@
 			user << "<span class='notice'>You switch [src] on.</span>"
 			force = 15
 			damtype = "fire"
+			hitsound = 'sound/items/welder.ogg'
 			icon_state = "welder1"
 			processing_objects.Add(src)
 		else
-			user << "<span class='notice'>Need more fuel.</span>"
+			user << "<span class='notice'>You need more fuel.</span>"
 			welding = 0
 	else
 		if(!message)
@@ -286,6 +306,7 @@
 			user << "<span class='notice'>[src] shuts off!</span>"
 		force = 3
 		damtype = "brute"
+		hitsound = "swing_hit"
 		icon_state = "welder"
 		welding = 0
 
@@ -342,7 +363,7 @@
 		var/obj/item/stack/rods/R = I
 		R.use(1)
 		var/obj/item/weapon/flamethrower/F = new /obj/item/weapon/flamethrower(user.loc)
-		user.drop_from_inventory(src)
+		user.unEquip(src)
 		loc = F
 		F.weldtool = src
 		add_fingerprint(user)
@@ -377,7 +398,7 @@
 	w_class = 3.0
 	m_amt = 70
 	g_amt = 120
-	origin_tech = "engineering=4;plasma=3"
+	origin_tech = "engineering=4;plasmatech=3"
 	icon_state = "ewelder"
 	var/last_gen = 0
 

@@ -25,15 +25,6 @@
 	uid = ++global_uid
 	related = list(src)
 
-	if(type == /area)	// override defaults for space. TODO: make space areas of type /area/space rather than /area
-		requires_power = 1
-		always_unpowered = 1
-		lighting_use_dynamic = 0
-		power_light = 0
-		power_equip = 0
-		power_environ = 0
-		//has_gravity = 0    // Space has gravity.  Because.. because.
-
 	if(requires_power)
 		luminosity = 0
 	else
@@ -48,6 +39,8 @@
 //	spawn(15)
 	power_change()		// all machines set to current power level, also updates lighting icon
 	InitializeLighting()
+
+	blend_mode = BLEND_MULTIPLY // Putting this in the constructure so that it stops the icons being screwed up in the map editor.
 
 
 /area/proc/poweralert(var/state, var/obj/source as obj)
@@ -267,9 +260,6 @@
 	if(!L.lastarea)
 		L.lastarea = get_area(L.loc)
 	var/area/newarea = get_area(L.loc)
-	var/area/oldarea = L.lastarea
-	if((oldarea.has_gravity == 0) && (newarea.has_gravity == 1) && (L.m_intent == "run")) // Being ready when you change areas gives you a chance to avoid falling all together.
-		thunk(L)
 
 	L.lastarea = newarea
 
@@ -307,32 +297,18 @@
 				if(L.&& L.client)
 					L.client.played = 0
 
-/area/proc/gravitychange(var/gravitystate = 0)
-
-	has_gravity = gravitystate
-
-	if(gravitystate)
-		for(var/mob/living/carbon/human/M in contents)
-			thunk(M)
-
 /area/proc/mob_activate(var/mob/living/L)
 	return
 
-/area/proc/thunk(mob)
-	if(istype(mob,/mob/living/carbon/human/))  // Only humans can wear magboots, so we give them a chance to.
-		if((istype(mob:shoes, /obj/item/clothing/shoes/magboots) && (mob:shoes.flags & NOSLIP)))
-			return
-
-	if(istype(get_turf(mob), /turf/space)) // Can't fall onto nothing.
-		return
-
-	if((istype(mob,/mob/living/carbon/human/)) && (mob:m_intent == "run")) // Only clumbsy humans can fall on their asses.
-		mob:AdjustStunned(5)
-		mob:AdjustWeakened(5)
-
-	else if (istype(mob,/mob/living/carbon/human/))
-		mob:AdjustStunned(2)
-		mob:AdjustWeakened(2)
-
-	mob << "Gravity!"
-
+/proc/has_gravity(var/atom/AT)
+	var/area/A = get_area(AT)
+	var/turf/T = get_turf(AT)
+	if(istype(T, /turf/space)) // Turf never has gravity
+		return 0
+	else if(A && A.has_gravity) // Areas which always has gravity
+		return 1
+	else
+		// There's a gravity generator on our z level
+		if(T && gravity_generators["[T.z]"] && length(gravity_generators["[T.z]"]))
+			return 1
+	return 0

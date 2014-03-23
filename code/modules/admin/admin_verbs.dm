@@ -12,7 +12,8 @@ var/list/admin_verbs_default = list(
 	/client/proc/toggleprayers,			/*toggles prayers on/off*/
 	/client/proc/toggle_hear_radio,		/*toggles whether we hear the radio*/
 	/client/proc/investigate_show,		/*various admintools for investigation. Such as a singulo grief-log*/
-	/client/proc/secrets
+	/client/proc/secrets,
+	/client/proc/reload_admins
 	)
 var/list/admin_verbs_admin = list(
 	/client/proc/player_panel,			/*shows an interface for all players, with links to various panels (old style)*/
@@ -97,9 +98,6 @@ var/list/admin_verbs_server = list(
 	/datum/admins/proc/toggleAI,
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_debug_del_all,
-	/datum/admins/proc/adrev,
-	/datum/admins/proc/adspawn,
-	/datum/admins/proc/adjump,
 	/client/proc/toggle_random_events
 	)
 var/list/admin_verbs_debug = list(
@@ -112,7 +110,6 @@ var/list/admin_verbs_debug = list(
 	/client/proc/cmd_debug_mob_lists,
 	/client/proc/cmd_admin_delete,
 	/client/proc/cmd_debug_del_all,
-	/client/proc/reload_admins,
 	/client/proc/restart_controller,
 	/client/proc/enable_debug_verbs,
 	/client/proc/callproc
@@ -174,9 +171,6 @@ var/list/admin_verbs_hideable = list(
 	/datum/admins/proc/immreboot,
 	/client/proc/everyone_random,
 	/datum/admins/proc/toggleAI,
-	/datum/admins/proc/adrev,
-	/datum/admins/proc/adspawn,
-	/datum/admins/proc/adjump,
 	/client/proc/restart_controller,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/callproc,
@@ -195,6 +189,8 @@ var/list/admin_verbs_hideable = list(
 
 /client/proc/add_admin_verbs()
 	if(holder)
+		control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
+
 		var/rights = holder.rank.rights
 		verbs += admin_verbs_default
 		if(rights & R_BUILDMODE)	verbs += /client/proc/togglebuildmodeself
@@ -441,7 +437,7 @@ var/list/admin_verbs_hideable = list(
 #undef MAX_WARNS
 #undef AUTOBANTIME
 
-/client/proc/drop_bomb() // Some admin dickery that can probably be done better -- TLE
+/client/proc/drop_bomb()
 	set category = "Special Verbs"
 	set name = "Drop Bomb"
 	set desc = "Cause an explosion of varying strength at your location."
@@ -467,18 +463,25 @@ var/list/admin_verbs_hideable = list(
 	message_admins("\blue [ckey] creating an admin explosion at [epicenter.loc].")
 	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/give_spell(mob/T as mob in mob_list) // -- Urist
+/client/proc/give_spell(mob/T as mob in mob_list)
 	set category = "Fun"
 	set name = "Give Spell"
 	set desc = "Gives a spell to a mob."
 	var/obj/effect/proc_holder/spell/S = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in spells
-	if(!S) return
-	T.spell_list += new S
+	if(!S)
+		return
 	feedback_add_details("admin_verb","GS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the spell [S].")
 	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the spell [S].", 1)
 
-/client/proc/give_disease(mob/T as mob in mob_list) // -- Giacom
+	if(T.mind)
+		T.mind.spell_list += new S
+	else
+		T.mob_spell_list += new S
+		message_admins("\red Spells given to mindless mobs will not be transferred in mindswap or cloning!", 1)
+
+
+/client/proc/give_disease(mob/T as mob in mob_list)
 	set category = "Fun"
 	set name = "Give Disease"
 	set desc = "Gives a Disease to a mob."
@@ -489,7 +492,7 @@ var/list/admin_verbs_hideable = list(
 	log_admin("[key_name(usr)] gave [key_name(T)] the disease [D].")
 	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the disease [D].", 1)
 
-/client/proc/make_sound(var/obj/O in world) // -- TLE
+/client/proc/make_sound(var/obj/O in world)
 	set category = "Special Verbs"
 	set name = "Make Sound"
 	set desc = "Display a message to everyone who can hear the target"
@@ -511,7 +514,7 @@ var/list/admin_verbs_hideable = list(
 		togglebuildmode(src.mob)
 	feedback_add_details("admin_verb","TBMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/object_talk(var/msg as text) // -- TLE
+/client/proc/object_talk(var/msg as text)
 	set category = "Special Verbs"
 	set name = "oSay"
 	set desc = "Display a message to everyone who can hear the target"
@@ -522,7 +525,7 @@ var/list/admin_verbs_hideable = list(
 			V.show_message("<b>[mob.control_object.name]</b> says: \"" + msg + "\"", 2)
 	feedback_add_details("admin_verb","OT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/kill_air() // -- TLE
+/client/proc/kill_air()
 	set category = "Debug"
 	set name = "Kill Air"
 	set desc = "Toggle Air Processing"

@@ -60,7 +60,6 @@
 	var/datum/wires/alarm/wires = null
 	var/wiresexposed = 0 // If it's been screwdrivered open.
 	var/aidisabled = 0
-	var/AAlarmwires = 31
 	var/shorted = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
 
@@ -658,7 +657,7 @@ table tr:first-child th:first-child { border: none;}
 	if(wiresexposed)
 		switch(buildstage)
 			if(2)
-				if(src.AAlarmwires == 0) // All wires cut
+				if(wires.wires_status == (2 ** wires.wire_count) - 1) // All wires cut
 					icon_state = "alarm_b2"
 				else
 					icon_state = "alarmx"
@@ -767,10 +766,10 @@ table tr:first-child th:first-child { border: none;}
 /obj/machinery/alarm/attackby(obj/item/W as obj, mob/user as mob)
 	switch(buildstage)
 		if(2)
-			if(istype(W, /obj/item/weapon/wirecutters) && AAlarmwires == 0)
+			if(istype(W, /obj/item/weapon/wirecutters) && wires.wires_status == (2 ** wires.wire_count) - 1)   //this checks for all wires to be cut, disregard the ammount of wires, binary fuckery with the wires_status
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				user << "You cut the final wires."
-				var/obj/item/weapon/cable_coil/cable = new /obj/item/weapon/cable_coil( src.loc )
+				var/obj/item/stack/cable_coil/cable = new /obj/item/stack/cable_coil( src.loc )
 				cable.amount = 5
 				buildstage = 1
 				update_icon()
@@ -797,7 +796,7 @@ table tr:first-child th:first-child { border: none;}
 						user << "\red Access denied."
 				return
 		if(1)
-			if(istype(W, /obj/item/weapon/crowbar) && AAlarmwires == 0)
+			if(istype(W, /obj/item/weapon/crowbar) && wires.wires_status == (2 ** wires.wire_count) - 1)
 				user << "You pry out the circuit."
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				spawn(20)
@@ -807,8 +806,8 @@ table tr:first-child th:first-child { border: none;}
 					update_icon()
 				return
 
-			if(istype(W, /obj/item/weapon/cable_coil))
-				var/obj/item/weapon/cable_coil/cable = W
+			if(istype(W, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/cable = W
 				if(cable.amount < 5)
 					user << "You need more cable!"
 					return
@@ -817,10 +816,10 @@ table tr:first-child th:first-child { border: none;}
 				spawn(20)
 					cable.amount -= 5
 					if(!cable.amount)
-						del(cable)
+						qdel(cable)
 
 					user << "You wire the air alarm!"
-					src.AAlarmwires = 31
+					wires.wires_status = 0
 					buildstage = 2
 					update_icon()
 				return
@@ -830,14 +829,14 @@ table tr:first-child th:first-child { border: none;}
 				buildstage = 1
 				update_icon()
 				user.drop_item()
-				del(W)
+				qdel(W)
 				return
 
 			if(istype(W, /obj/item/weapon/wrench))
 				user << "You detach \the [src] from the wall!"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				new /obj/item/alarm_frame( user.loc )
-				del(src)
+				qdel(src)
 				return
 
 	return ..()
@@ -879,7 +878,7 @@ Code shamelessly copied from apc_frame
 /obj/item/alarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
-		del(src)
+		qdel(src)
 		return
 	..()
 
@@ -906,7 +905,7 @@ Code shamelessly copied from apc_frame
 
 	new /obj/machinery/alarm(loc, ndir, 1)
 
-	del(src)
+	qdel(src)
 
 
 /*
@@ -993,21 +992,21 @@ FIRE ALARM
 				else if (istype(W, /obj/item/weapon/wirecutters))
 					buildstage = 1
 					playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil()
+					var/obj/item/stack/cable_coil/coil = new /obj/item/stack/cable_coil()
 					coil.amount = 5
 					coil.loc = user.loc
 					user << "<span class='notice'>You cut the wires from \the [src]</span>"
 					update_icon()
 			if(1)
-				if(istype(W, /obj/item/weapon/cable_coil))
-					var/obj/item/weapon/cable_coil/coil = W
+				if(istype(W, /obj/item/stack/cable_coil))
+					var/obj/item/stack/cable_coil/coil = W
 					if(coil.amount < 5)
 						user << "<span class='warning'>You need more cable for this!</span>"
 						return
 
 					coil.amount -= 5
 					if(!coil.amount)
-						del(coil)
+						qdel(coil)
 
 					buildstage = 2
 					user << "<span class='notice'>You wire \the [src]!</span>"
@@ -1024,7 +1023,7 @@ FIRE ALARM
 			if(0)
 				if(istype(W, /obj/item/weapon/firealarm_electronics))
 					user << "<span class='notice'>You insert the circuit!</span>"
-					del(W)
+					qdel(W)
 					buildstage = 1
 					update_icon()
 
@@ -1033,7 +1032,7 @@ FIRE ALARM
 					var/obj/item/firealarm_frame/frame = new /obj/item/firealarm_frame()
 					frame.loc = user.loc
 					playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-					del(src)
+					qdel(src)
 		return
 
 	src.alarm()
@@ -1214,7 +1213,7 @@ Code shamelessly copied from apc_frame
 /obj/item/firealarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
-		del(src)
+		qdel(src)
 		return
 	..()
 
@@ -1241,7 +1240,7 @@ Code shamelessly copied from apc_frame
 
 	new /obj/machinery/firealarm(loc, ndir, 1)
 
-	del(src)
+	qdel(src)
 
 /*
  * Party button

@@ -7,12 +7,12 @@
 	w_class = 4
 	force = 30
 	throwforce = 10
+	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 
 /obj/item/weapon/melee/cultblade/attack(mob/living/target as mob, mob/living/carbon/human/user as mob)
 	if(iscultist(user))
-		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 		return ..()
 	else
 		user.Paralyse(5)
@@ -26,7 +26,7 @@
 /obj/item/weapon/melee/cultblade/pickup(mob/living/user as mob)
 	if(!iscultist(user))
 		user << "\red An overwhelming feeling of dread comes over you as you pick up the cultist's sword. It would be wise to be rid of this blade quickly."
-		user.make_dizzy(120)
+		user.Dizzy(120)
 
 
 /obj/item/clothing/head/culthood

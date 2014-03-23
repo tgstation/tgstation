@@ -29,7 +29,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	decon_mod = T
 
 /obj/machinery/r_n_d/destructive_analyzer/meteorhit()
-	del(src)
+	qdel(src)
 	return
 
 /obj/machinery/r_n_d/destructive_analyzer/proc/ConvertReqString2List(var/list/source_list)
@@ -42,19 +42,17 @@ Note: Must be placed within 3 tiles of the R&D Console
 /obj/machinery/r_n_d/destructive_analyzer/attackby(var/obj/O as obj, var/mob/user as mob)
 	if (shocked)
 		shock(user,50)
-	if (istype(O, /obj/item/weapon/screwdriver))
+	if (default_deconstruction_screwdriver(user, "d_analyzer_t", "d_analyzer", O))
 		if(linked_console)
 			linked_console.linked_destroy = null
 			linked_console = null
-		default_deconstruction_screwdriver(user, "d_analyzer_t", "d_analyzer")
 		return
-	if (panel_open)
-		if(istype(O, /obj/item/weapon/crowbar))
-			default_deconstruction_crowbar()
-			return 1
-		else
-			user << "<span class='warning'>You can't load the [src.name] while it's opened.</span>"
-			return 1
+
+	if(exchange_parts(user, O))
+		return
+
+	default_deconstruction_crowbar(O)
+
 	if (disabled)
 		return
 	if (!linked_console)

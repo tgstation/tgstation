@@ -28,7 +28,18 @@
 	var/list/records = null
 	var/frame_desc = null
 
-
+/obj/item/weapon/circuitboard/large_tank_control
+	name = "cirquir board (Large Tank Control)"
+	build_path = /obj/machinery/computer/general_air_control/large_tank_control
+	origin_tech = "programming=2;engineering=3;materials=2"
+/obj/item/weapon/circuitboard/turbine_computer
+	name = "circuit board (Turbine Computer)"
+	build_path = /obj/machinery/computer/turbine_computer
+	origin_tech = "programming=4;engineering=4;powerstorage=4"
+/obj/item/weapon/circuitboard/telesci_console
+	name = "circuit board (Telescience Console)"
+	build_path = /obj/machinery/computer/telescience
+	origin_tech = "programming=3;bluespace=2"
 /obj/item/weapon/circuitboard/message_monitor
 	name = "circuit board (Message Monitor)"
 	build_path = /obj/machinery/computer/message_monitor
@@ -112,7 +123,6 @@
 /obj/item/weapon/circuitboard/arcade/orion_trail
 	name = "circuit board (Orion_Trail)"
 	build_path = /obj/machinery/computer/arcade/orion_trail
-	origin_tech = "programming=2"
 /obj/item/weapon/circuitboard/turbine_control
 	name = "circuit board (Turbine control)"
 	build_path = /obj/machinery/computer/turbine_computer
@@ -155,7 +165,6 @@
 /obj/item/weapon/circuitboard/ordercomp
 	name = "circuit board (Supply Ordering Console)"
 	build_path = /obj/machinery/computer/ordercomp
-	origin_tech = "programming=2"
 /obj/item/weapon/circuitboard/supplycomp
 	name = "circuit board (Supply shuttle console)"
 	build_path = /obj/machinery/computer/supplycomp
@@ -168,7 +177,6 @@
 /obj/item/weapon/circuitboard/mining
 	name = "circuit board (Outpost Status Display)"
 	build_path = /obj/machinery/computer/security/mining
-	origin_tech = "programming=2"
 /obj/item/weapon/circuitboard/comm_monitor
 	name = "circuit board (Telecommunications Monitor)"
 	build_path = /obj/machinery/computer/telecomms/monitor
@@ -190,20 +198,16 @@
 /obj/item/weapon/circuitboard/shuttle
 	name = "circuit board (Shuttle)"
 	build_path = /obj/machinery/computer/shuttle
-	origin_tech = "programming=2"
 	id = "1"
 /obj/item/weapon/circuitboard/labor_shuttle
 	name = "circuit Board (Labor Shuttle)"
 	build_path = /obj/machinery/computer/shuttle/labor
-	origin_tech = "programming 2"
 /obj/item/weapon/circuitboard/labor_shuttle/one_way
 	name = "circuit Board (Prisoner Shuttle Console)"
 	build_path = /obj/machinery/computer/shuttle/labor/one_way
-	origin_tech = "programming 2"
 /obj/item/weapon/circuitboard/mining_shuttle
 	name = "circuit Board (Mining Shuttle)"
 	build_path = /obj/machinery/computer/shuttle/mining
-	origin_tech = "programming 2"
 /obj/item/weapon/circuitboard/HolodeckControl // Not going to let people get this, but it's just here for future
 	name = "circuit board (Holodeck Control)"
 	build_path = /obj/machinery/computer/HolodeckControl
@@ -215,11 +219,9 @@
 /obj/item/weapon/circuitboard/area_atmos
 	name = "circuit board (Area Air Control)"
 	build_path = /obj/machinery/computer/area_atmos
-	origin_tech = "programming=2"
 /*/obj/item/weapon/circuitboard/prison_shuttle
 	name = "circuit board (Prison Shuttle)"
-	build_path = /obj/machinery/computer/prison_shuttle
-	origin_tech = "programming=2"*/
+	build_path = /obj/machinery/computer/prison_shuttle*/
 
 
 /obj/item/weapon/circuitboard/supplycomp/attackby(obj/item/I as obj, mob/user as mob)
@@ -246,7 +248,7 @@
 
 /obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I,/obj/item/weapon/screwdriver))
-		if(src.build_path == "/obj/machinery/computer/rdconsole/core")
+		if(build_path == /obj/machinery/computer/rdconsole/core)
 			name = "circuit board (RD Console - Robotics)"
 			build_path = /obj/machinery/computer/rdconsole/robotics
 			user << "<span class='notice'>Access protocols successfully updated.</span>"
@@ -284,7 +286,7 @@
 					user << "<span class='notice'>You deconstruct the frame.</span>"
 					var/obj/item/stack/sheet/metal/M = new (loc, 5)
 					M.add_fingerprint(user)
-					del(src)
+					qdel(src)
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
@@ -323,14 +325,14 @@
 				user << "<span class='notice'>You unfasten the circuit board.</span>"
 				src.state = 1
 				src.icon_state = "1"
-			if(istype(P, /obj/item/weapon/cable_coil))
-				var/obj/item/weapon/cable_coil/C = P
+			if(istype(P, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/C = P
 				if(C.amount >= 5)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
 						if(C && C.amount >= 5)
 							C.amount -= 5
-							if(C.amount <= 0) del(C)
+							if(C.amount <= 0) qdel(C)
 							user << "<span class='notice'>You add cables to the frame.</span>"
 							src.state = 3
 							src.icon_state = "3"
@@ -340,7 +342,7 @@
 				user << "<span class='notice'>You remove the cables.</span>"
 				src.state = 2
 				src.icon_state = "2"
-				var/obj/item/weapon/cable_coil/A = new (loc)
+				var/obj/item/stack/cable_coil/A = new (loc)
 				A.amount = 5
 				A.add_fingerprint(user)
 
@@ -378,4 +380,4 @@
 					var/obj/item/weapon/circuitboard/shuttle/C = circuit
 					S.id = C.id
 				transfer_fingerprints_to(B)
-				del(src)
+				qdel(src)

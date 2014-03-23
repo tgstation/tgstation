@@ -27,7 +27,7 @@
 
 	var/obj/item/device/radio/borg/radio = null
 	var/mob/living/silicon/ai/connected_ai = null
-	var/obj/item/weapon/cell/cell = null
+	var/obj/item/weapon/stock_parts/cell/cell = null
 	var/obj/machinery/camera/camera = null
 
 	var/obj/item/device/mmi/mmi = null
@@ -75,12 +75,12 @@
 	updateicon()
 
 	if(!cell)
-		cell = new /obj/item/weapon/cell(src)
+		cell = new /obj/item/weapon/stock_parts/cell(src)
 		cell.maxcharge = 7500
 		cell.charge = 7500
 
 	if(lawupdate)
-		laws = new /datum/ai_laws/asimov()
+		make_laws()
 		connected_ai = select_active_ai_with_fewest_borgs()
 		if(connected_ai)
 			connected_ai.connected_robots += src
@@ -116,7 +116,7 @@
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 //Improved /N
-/mob/living/silicon/robot/Del()
+/mob/living/silicon/robot/Destroy()
 	if(mmi && mind)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)	mmi.loc = T
@@ -128,6 +128,7 @@
 	if(module)
 		return
 	var/mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
+	var/animation_length=0
 	if(module)
 		return
 	switch(mod)
@@ -145,11 +146,20 @@
 			hands.icon_state = "service"
 			var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Bro", "Butler", "Kent", "Rich")
 			switch(icontype)
-				if("Waitress")	icon_state = "Service"
-				if("Kent")		icon_state = "toiletbot"
-				if("Bro")		icon_state = "Brobot"
-				if("Rich")		icon_state = "maximillion"
-				else				icon_state = "Service2"
+				if("Waitress")
+					icon_state = "service_female"
+					animation_length=45
+				if("Kent")
+					icon_state = "toiletbot"
+				if("Bro")
+					icon_state = "brobot"
+					animation_length=54
+				if("Rich")
+					icon_state = "maximillion"
+					animation_length=60
+				else
+					icon_state = "service_male"
+					animation_length=43
 			modtype = "Butler"
 			feedback_inc("cyborg_service",1)
 
@@ -157,7 +167,8 @@
 			updatename(mod)
 			module = new /obj/item/weapon/robot_module/miner(src)
 			hands.icon_state = "miner"
-			icon_state = "Miner"
+			icon_state = "minerborg"
+			animation_length = 30
 			modtype = "Miner"
 			feedback_inc("cyborg_miner",1)
 
@@ -165,7 +176,8 @@
 			updatename(mod)
 			module = new /obj/item/weapon/robot_module/medical(src)
 			hands.icon_state = "medical"
-			icon_state = "surgeon"
+			icon_state = "mediborg"
+			animation_length = 35
 			modtype = "Med"
 			status_flags &= ~CANPUSH
 			feedback_inc("cyborg_medical",1)
@@ -174,7 +186,8 @@
 			updatename(mod)
 			module = new /obj/item/weapon/robot_module/security(src)
 			hands.icon_state = "security"
-			icon_state = "bloodhound"
+			icon_state = "secborg"
+			animation_length = 28
 			modtype = "Sec"
 			//speed = -1 Secborgs have nerfed tasers now, so the speed boost is not necessary
 			status_flags &= ~CANPUSH
@@ -184,7 +197,8 @@
 			updatename(mod)
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			hands.icon_state = "engineer"
-			icon_state = "landmate"
+			icon_state = "engiborg"
+			animation_length = 45
 			modtype = "Eng"
 			feedback_inc("cyborg_engineering",1)
 
@@ -192,12 +206,26 @@
 			updatename(mod)
 			module = new /obj/item/weapon/robot_module/janitor(src)
 			hands.icon_state = "janitor"
-			icon_state = "mopgearrex"
+			icon_state = "janiborg"
+			animation_length = 22
 			modtype = "Jan"
 			feedback_inc("cyborg_janitor",1)
 
 	overlays -= "eyes" //Takes off the eyes that it started with
+
+	transform_animation(animation_length)
 	updateicon()
+
+/mob/living/silicon/robot/proc/transform_animation(animation_length)
+	if(!animation_length)
+		return
+	icon = 'icons/mob/robot_transformations.dmi'
+	src.dir = SOUTH
+	notransform = 1
+	flick(icon_state, src)
+	sleep(animation_length+1)
+	notransform = 0
+	icon = 'icons/mob/robots.dmi'
 
 /mob/living/silicon/robot/proc/updatename(var/prefix as text)
 
@@ -385,13 +413,13 @@
 			user << "Need more welding fuel!"
 			return
 
-	else if(istype(W, /obj/item/weapon/cable_coil) && wiresexposed)
-		var/obj/item/weapon/cable_coil/coil = W
+	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
+		var/obj/item/stack/cable_coil/coil = W
 		adjustFireLoss(-30)
 		updatehealth()
-		coil.use(1)
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("\red [user] has fixed some of the burnt wires on [src]!"), 1)
+		coil.use(1)
 
 	else if (istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
 		if(opened)
@@ -406,7 +434,7 @@
 				opened = 1
 				updateicon()
 
-	else if (istype(W, /obj/item/weapon/cell) && opened)	// trying to put a cell inside
+	else if (istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
 		if(wiresexposed)
 			user << "Close the cover first."
 		else if(cell)
@@ -490,7 +518,7 @@
 				else
 					sleep(6)
 					if(prob(50))
-						emagged = 1
+						SetEmagged(1)
 						lawupdate = 0
 						connected_ai = null
 						user << "You emag [src]'s interface."
@@ -518,11 +546,6 @@
 						src << "<b>Obey these laws:</b>"
 						laws.show_laws(src)
 						src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands."
-						if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
-							for(var/obj/item/weapon/pickaxe/borgdrill/D in src.module.modules)
-								del(D)
-							src.module.modules += new /obj/item/weapon/pickaxe/diamonddrill(src.module)
-							src.module.rebuild()
 						updateicon()
 					else
 						user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
@@ -548,7 +571,8 @@
 
 
 	else
-		spark_system.start()
+		if(W.force)
+			spark_system.start()
 		return ..()
 
 /mob/living/silicon/robot/verb/unlock_own_cover()
@@ -649,7 +673,7 @@
 
 		var/damage = rand(1, 3)
 
-		if(istype(src, /mob/living/carbon/slime/adult))
+		if(M.is_adult)
 			damage = rand(20, 40)
 		else
 			damage = rand(5, 35)
@@ -769,18 +793,18 @@
 		if(icon_state == "toiletbot")
 			overlays.Cut()
 			overlays += "eyes-toiletbot"
-		if(icon_state == "bloodhound")
+		if(icon_state == "secborg")
 			overlays.Cut()
-			overlays += "eyes-bloodhound"
-		if(icon_state =="landmate")
+			overlays += "eyes-secborg"
+		if(icon_state =="engiborg")
 			overlays.Cut()
-			overlays += "eyes-landmate"
-		if(icon_state =="mopgearrex")
+			overlays += "eyes-engiborg"
+		if(icon_state =="janiborg")
 			overlays.Cut()
-			overlays += "eyes-mopgearrex"
-		if(icon_state =="Miner" || icon_state =="Miner+j")
+			overlays += "eyes-janiborg"
+		if(icon_state =="minerborg" || icon_state =="Miner+j")
 			overlays.Cut()
-			overlays += "eyes-Miner"
+			overlays += "eyes-minerborg"
 		if(icon_state =="syndie_bloodhound")
 			overlays.Cut()
 			overlays+= "eyes-syndie_bloodhound"
@@ -903,7 +927,7 @@
 				for(var/A in tile)
 					if(istype(A, /obj/effect))
 						if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
-							del(A)
+							qdel(A)
 					else if(istype(A, /obj/item))
 						var/obj/item/cleaned_item = A
 						cleaned_item.clean_blood()
@@ -929,7 +953,7 @@
 /mob/living/silicon/robot/proc/self_destruct()
 	if(emagged)
 		if(mmi)
-			del(mmi)
+			qdel(mmi)
 		explosion(src.loc,1,2,4,flame_range = 2)
 	else
 		explosion(src.loc,-1,0,2)
@@ -945,7 +969,7 @@
 	scrambledcodes = 1
 	//Disconnect it's camera so it's not so easily tracked.
 	if(src.camera)
-		del(src.camera)
+		qdel(src.camera)
 		src.camera = null
 		// I'm trying to get the Cyborg to not be listed in the camera list
 		// Instead of being listed as "deactivated". The downside is that I'm going
@@ -983,7 +1007,17 @@
 	lockcharge = state
 	update_canmove()
 
-
+/mob/living/silicon/robot/proc/SetEmagged(var/new_state)
+	emagged = new_state
+	if(new_state)
+		if(src.module)
+			src.module.on_emag()
+	else
+		if (module)
+			uneq_module(module.emag)
+	if(hud_used)
+		hud_used.update_robot_modules_display()	//Shows/hides the emag item if the inventory screen is already open.
+	updateicon()
 
 /mob/living/silicon/robot/verb/outputlaws()
 	set category = "Robot Commands"
@@ -999,7 +1033,7 @@
 		robot_suit.l_leg = null
 		robot_suit.r_leg.loc = T
 		robot_suit.r_leg = null
-		new /obj/item/weapon/cable_coil(T, robot_suit.chest.wires)
+		new /obj/item/stack/cable_coil(T, robot_suit.chest.wires)
 		robot_suit.chest.loc = T
 		robot_suit.chest.wires = 0.0
 		robot_suit.chest = null
@@ -1020,7 +1054,7 @@
 		new /obj/item/robot_parts/robot_suit(T)
 		new /obj/item/robot_parts/l_leg(T)
 		new /obj/item/robot_parts/r_leg(T)
-		new /obj/item/weapon/cable_coil(T, 1)
+		new /obj/item/stack/cable_coil(T, 1)
 		new /obj/item/robot_parts/chest(T)
 		new /obj/item/robot_parts/l_arm(T)
 		new /obj/item/robot_parts/r_arm(T)
@@ -1032,13 +1066,14 @@
 	if (cell) //Sanity check.
 		cell.loc = T
 		cell = null
-	del(src)
+	qdel(src)
 
 /mob/living/silicon/robot/syndicate
 	icon_state = "syndie_bloodhound"
 	lawupdate = 0
 	scrambledcodes = 1
 	modtype = "Synd"
+	faction = "syndicate"
 
 /mob/living/silicon/robot/syndicate/New(loc)
 	..()

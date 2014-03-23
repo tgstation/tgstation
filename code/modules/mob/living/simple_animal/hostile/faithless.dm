@@ -9,7 +9,7 @@
 	response_help = "passes through"
 	response_disarm = "shoves"
 	response_harm = "hits"
-	speed = -1
+	speed = 0
 	maxHealth = 80
 	health = 80
 

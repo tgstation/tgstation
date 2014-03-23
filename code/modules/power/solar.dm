@@ -72,7 +72,7 @@ var/list/solars_list = list()
 				S.give_glass()
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			user.visible_message("<span class='notice'>[user] takes the glass off the solar panel.</span>")
-			del(src)
+			qdel(src)
 		return
 	else if (W)
 		src.add_fingerprint(user)
@@ -94,7 +94,7 @@ var/list/solars_list = list()
 		else
 			new /obj/item/weapon/shard(src.loc)
 			new /obj/item/weapon/shard(src.loc)
-			del(src)
+			qdel(src)
 			return
 	return
 
@@ -151,20 +151,20 @@ var/list/solars_list = list()
 	if(stat & !BROKEN)
 		broken()
 	else
-		del(src)
+		qdel(src)
 
 
 /obj/machinery/power/solar/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			if(prob(15))
 				new /obj/item/weapon/shard( src.loc )
 			return
 		if(2.0)
 			if (prob(25))
 				new /obj/item/weapon/shard( src.loc )
-				del(src)
+				qdel(src)
 				return
 			if (prob(50))
 				broken()
@@ -247,7 +247,7 @@ var/list/solars_list = list()
 		if(istype(W, /obj/item/weapon/tracker_electronics))
 			tracker = 1
 			user.drop_item()
-			del(W)
+			qdel(W)
 			user.visible_message("<span class='notice'>[user] inserts the electronics into the solar assembly.</span>")
 			return 1
 	else
@@ -346,7 +346,7 @@ var/list/solars_list = list()
 				A.state = 3
 				A.icon_state = "3"
 				A.anchored = 1
-				del(src)
+				qdel(src)
 			else
 				user << "\blue You disconnect the monitor."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
@@ -357,7 +357,7 @@ var/list/solars_list = list()
 				A.state = 4
 				A.icon_state = "4"
 				A.anchored = 1
-				del(src)
+				qdel(src)
 	else
 		src.attack_hand(user)
 	return
@@ -491,7 +491,7 @@ var/list/solars_list = list()
 	switch(severity)
 		if(1.0)
 			//SN src = null
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
@@ -515,3 +515,9 @@ var/list/solars_list = list()
 /obj/item/weapon/paper/solar
 	name = "paper- 'Going green! Setup your own solar array instructions.'"
 	info = "<h1>Welcome</h1><p>At greencorps we love the environment, and space. With this package you are able to help mother nature and produce energy without any usage of fossil fuel or plasma! Singularity energy is dangerous while solar energy is safe, which is why it's better. Now here is how you setup your own solar array.</p><p>You can make a solar panel by wrenching the solar assembly onto a cable node. Adding a glass panel, reinforced or regular glass will do, will finish the construction of your solar panel. It is that easy!.</p><p>Now after setting up 19 more of these solar panels you will want to create a solar tracker to keep track of our mother nature's gift, the sun. These are the same steps as before except you insert the tracker equipment circuit into the assembly before performing the final step of adding the glass. You now have a tracker! Now the last step is to add a computer to calculate the sun's movements and to send commands to the solar panels to change direction with the sun. Setting up the solar computer is the same as setting up any computer, so you should have no trouble in doing that. You do need to put a wire node under the computer, and the wire needs to be connected to the tracker.</p><p>Congratulations, you should have a working solar array. If you are having trouble, here are some tips. Make sure all solar equipment are on a cable node, even the computer. You can always deconstruct your creations if you make a mistake.</p><p>That's all to it, be safe, be green!</p>"
+
+/proc/rate_control(var/S, var/V, var/C, var/Min=1, var/Max=5, var/Limit=null) //How not to name vars
+	var/href = "<A href='?src=\ref[S];rate control=1;[V]"
+	var/rate = "[href]=-[Max]'>-</A>[href]=-[Min]'>-</A> [(C?C : 0)] [href]=[Min]'>+</A>[href]=[Max]'>+</A>"
+	if(Limit) return "[href]=-[Limit]'>-</A>"+rate+"[href]=[Limit]'>+</A>"
+	return rate

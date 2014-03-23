@@ -11,7 +11,7 @@
 
 	if(tr_flags & TR_KEEPITEMS)
 		for(var/obj/item/W in (src.contents-implants))
-			drop_from_inventory(W)
+			unEquip(W)
 
 	//Make mob invisible and spawn animation
 	regenerate_icons()
@@ -28,7 +28,7 @@
 	sleep(22)
 	//animation = null
 	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( loc )
-	del(animation)
+	qdel(animation)
 
 
 
@@ -77,7 +77,7 @@
 	updateappearance(O)
 	. = O
 	if ( !(tr_flags & TR_KEEPSRC) ) //flag should be used if monkeyize() is called inside another proc of src so that one does not crash
-		del(src)
+		qdel(src)
 	return
 
 
@@ -99,7 +99,7 @@
 	//now the rest
 	if (tr_flags & TR_KEEPITEMS)
 		for(var/obj/item/W in (src.contents-implants))
-			u_equip(W)
+			unEquip(W)
 			if (client)
 				client.screen -= W
 			if (W)
@@ -108,7 +108,7 @@
 				W.layer = initial(W.layer)
 
 	//	for(var/obj/item/W in src)
-	//		drop_from_inventory(W)
+	//		unEquip(W)
 
 	//Make mob invisible and spawn animation
 	regenerate_icons()
@@ -126,7 +126,7 @@
 	var/mob/living/carbon/human/O = new( loc )
 	for(var/obj/item/C in O.loc)
 		O.equip_to_appropriate_slot(C)
-	del(animation)
+	qdel(animation)
 
 
 	O.gender = (deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
@@ -176,7 +176,7 @@
 	updateappearance(O)
 	. = O
 	if ( !(tr_flags & TR_KEEPSRC) ) //don't delete src yet if it's needed to finish calling proc
-		del(src)
+		qdel(src)
 	return
 
 /mob/new_player/AIize()
@@ -187,7 +187,7 @@
 	if (notransform)
 		return
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 
 	return ..()
 
@@ -195,7 +195,7 @@
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		unEquip(W)
 	regenerate_icons()
 	notransform = 1
 	canmove = 0
@@ -206,7 +206,7 @@
 /mob/proc/AIize()
 	if(client)
 		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // stop the jams for AIs
-	var/mob/living/silicon/ai/O = new (loc, /datum/ai_laws/asimov,,1)//No MMI but safety is in effect.
+	var/mob/living/silicon/ai/O = new (loc,,,1)//No MMI but safety is in effect.
 	O.invisibility = 0
 	O.aiRestorePowerRoutine = 0
 
@@ -259,7 +259,7 @@
 
 	O.rename_self("ai",1)
 	. = O
-	del(src)
+	qdel(src)
 	return
 
 
@@ -269,18 +269,21 @@
 		return
 	for(var/obj/item/W in src)
 		if(delete_items)
-			del(W)
+			qdel(W)
 		else
-			drop_from_inventory(W)
+			unEquip(W)
 	regenerate_icons()
 	notransform = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot( loc )
+
+	if (config.rename_cyborg)
+		O.rename_self("cyborg", 1)
 
 	// cyborgs produced by Robotize get an automatic power cell
 	O.cell = new(O)
@@ -306,21 +309,21 @@
 	O.mmi.transfer_identity(src)//Does not transfer key/client.
 
 	. = O
-	del(src)
+	qdel(src)
 
 //human -> alien
 /mob/living/carbon/human/proc/Alienize()
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		unEquip(W)
 	regenerate_icons()
 	notransform = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 
 	var/alien_caste = pick("Hunter","Sentinel","Drone")
 	var/mob/living/carbon/alien/humanoid/new_xeno
@@ -337,20 +340,20 @@
 
 	new_xeno << "<B>You are now an alien.</B>"
 	. = new_xeno
-	del(src)
+	qdel(src)
 
-/mob/living/carbon/human/proc/slimeize(adult as num, reproduce as num)
+/mob/living/carbon/human/proc/slimeize(reproduce as num)
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		unEquip(W)
 	regenerate_icons()
 	notransform = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 
 	var/mob/living/carbon/slime/new_slime
 	if(reproduce)
@@ -363,29 +366,41 @@
 			babies += M
 		new_slime = pick(babies)
 	else
-		if(adult)
-			new_slime = new /mob/living/carbon/slime/adult(loc)
-		else
-			new_slime = new /mob/living/carbon/slime(loc)
+		new_slime = new /mob/living/carbon/slime(loc)
 	new_slime.a_intent = "harm"
 	new_slime.key = key
 
 	new_slime << "<B>You are now a slime. Skreee!</B>"
 	. = new_slime
-	del(src)
+	qdel(src)
+
+/mob/living/carbon/human/proc/Blobize()
+	if (notransform)
+		return
+	var/obj/effect/blob/core/new_blob = new /obj/effect/blob/core (loc)
+	if(!client)
+		for(var/mob/dead/observer/G in player_list)
+			if(ckey == "@[G.ckey]")
+				new_blob.create_overmind(G.client , 1)
+				break
+	else
+		new_blob.create_overmind(src.client , 1)
+	gib(src)
+
+
 
 /mob/living/carbon/human/proc/corgize()
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		unEquip(W)
 	regenerate_icons()
 	notransform = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
 	for(var/t in organs)	//this really should not be necessary
-		del(t)
+		qdel(t)
 
 	var/mob/living/simple_animal/corgi/new_corgi = new /mob/living/simple_animal/corgi (loc)
 	new_corgi.a_intent = "harm"
@@ -393,7 +408,7 @@
 
 	new_corgi << "<B>You are now a Corgi. Yap Yap!</B>"
 	. = new_corgi
-	del(src)
+	qdel(src)
 
 /mob/living/carbon/human/Animalize()
 
@@ -407,7 +422,7 @@
 	if(notransform)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		unEquip(W)
 
 	regenerate_icons()
 	notransform = 1
@@ -416,7 +431,7 @@
 	invisibility = 101
 
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 
 	var/mob/new_mob = new mobpath(src.loc)
 
@@ -426,7 +441,7 @@
 
 	new_mob << "You suddenly feel more... animalistic."
 	. = new_mob
-	del(src)
+	qdel(src)
 
 /mob/proc/Animalize()
 
@@ -444,7 +459,7 @@
 	new_mob << "You feel more... animalistic"
 
 	. = new_mob
-	del(src)
+	qdel(src)
 
 /* Certain mob types have problems and should not be allowed to be controlled by players.
  *
@@ -457,8 +472,8 @@
 	if(!MP)
 		return 0	//Sanity, this should never happen.
 
-	if(ispath(MP, /mob/living/simple_animal/space_worm))
-		return 0 //Unfinished. Very buggy, they seem to just spawn additional space worms everywhere and eating your own tail results in new worms spawning.
+//	if(ispath(MP, /mob/living/simple_animal/space_worm)) //Goodbye Space Worms 2014
+//		return 0 //Unfinished. Very buggy, they seem to just spawn additional space worms everywhere and eating your own tail results in new worms spawning.
 
 	if(ispath(MP, /mob/living/simple_animal/construct/behemoth))
 		return 0 //I think this may have been an unfinished WiP or something. These constructs should really have their own class simple_animal/construct/subtype
@@ -481,7 +496,7 @@
 		return 1
 	if(ispath(MP, /mob/living/simple_animal/hostile/carp))
 		return 1
-	if(ispath(MP, /mob/living/simple_animal/mushroom))
+	if(ispath(MP, /mob/living/simple_animal/hostile/mushroom))
 		return 1
 	if(ispath(MP, /mob/living/simple_animal/shade))
 		return 1
@@ -496,6 +511,3 @@
 
 	//Not in here? Must be untested!
 	return 0
-
-
-

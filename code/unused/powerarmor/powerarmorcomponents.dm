@@ -42,7 +42,7 @@
 	powercell
 		name = "Powercell interface"
 		desc = "Boring, but reliable."
-		var/obj/item/weapon/cell/cell
+		var/obj/item/weapon/stock_parts/cell/cell
 		slowdown = 0.5
 
 		process()
@@ -206,7 +206,7 @@
 					return
 				if(!helm.parent)
 					user << "\blue Helmet locked."
-					helm.canremove = 0
+					helm.flags |= NODROP
 					parent.helm = helm
 					helm.parent = parent
 					sleep(20)
@@ -233,7 +233,7 @@
 						if(manual)
 							sleep(20)
 							user << "\blue Helmet unlocked."
-						helm.canremove = 1
+						helm.flags &= ~NODROP
 						parent.helm = null
 						helm.parent = null
 

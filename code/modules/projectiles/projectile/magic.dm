@@ -9,10 +9,11 @@
 /obj/item/projectile/magic/death
 	name = "bolt of death"
 	icon_state = "pulse1_bl"
-	damage = 9001
-	damage_type = OXY
-	nodamage = 0
-	flag = "magic"
+
+/obj/item/projectile/magic/death/on_hit(var/target)
+	if(ismob(target))
+		var/mob/M = target
+		M.death(0)
 
 /obj/item/projectile/magic/fireball
 	name = "bolt of fireball"
@@ -115,11 +116,11 @@ proc/wabbajack(mob/living/M)
 
 			if(istype(M, /mob/living/silicon/robot))
 				var/mob/living/silicon/robot/Robot = M
-				if(Robot.mmi)	del(Robot.mmi)
+				if(Robot.mmi)	qdel(Robot.mmi)
 			else
 				for(var/obj/item/W in M)
 					if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
-						del(W)
+						qdel(W)
 						continue
 					W.layer = initial(W.layer)
 					W.loc = M.loc
@@ -133,7 +134,10 @@ proc/wabbajack(mob/living/M)
 					new_mob = new /mob/living/carbon/monkey(M.loc)
 					new_mob.universal_speak = 1
 				if("robot")
-					new_mob = new /mob/living/silicon/robot(M.loc)
+					if(prob(30))
+						new_mob = new /mob/living/silicon/robot/syndicate(M.loc)
+					else
+						new_mob = new /mob/living/silicon/robot(M.loc)
 					new_mob.gender = M.gender
 					new_mob.invisibility = 0
 					new_mob.job = "Cyborg"
@@ -141,8 +145,10 @@ proc/wabbajack(mob/living/M)
 					Robot.mmi = new /obj/item/device/mmi(new_mob)
 					Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
 				if("slime")
-					if(prob(50))		new_mob = new /mob/living/carbon/slime/adult(M.loc)
-					else				new_mob = new /mob/living/carbon/slime(M.loc)
+					new_mob = new /mob/living/carbon/slime(M.loc)
+					if(prob(50))
+						var/mob/living/carbon/slime/Slime = new_mob
+						Slime.is_adult = 1
 					new_mob.universal_speak = 1
 				if("xeno")
 					if(prob(50))
@@ -159,23 +165,28 @@ proc/wabbajack(mob/living/M)
 						else			new_mob = new /mob/living/carbon/alien/larva(M.loc)
 					new_mob.universal_speak = 1*/
 				if("animal")
-					var/animal = pick("parrot","corgi","crab","pug","cat","carp","bear","mushroom","tomato","mouse","chicken","cow","lizard","chick")
-					switch(animal)
-						if("parrot")	new_mob = new /mob/living/simple_animal/parrot(M.loc)
-						if("corgi")		new_mob = new /mob/living/simple_animal/corgi(M.loc)
-						if("crab")		new_mob = new /mob/living/simple_animal/crab(M.loc)
-						if("pug")		new_mob = new /mob/living/simple_animal/pug(M.loc)
-						if("cat")		new_mob = new /mob/living/simple_animal/cat(M.loc)
-						if("carp")		new_mob = new /mob/living/simple_animal/hostile/carp(M.loc)
-						if("bear")		new_mob = new /mob/living/simple_animal/hostile/bear(M.loc)
-						if("mushroom")	new_mob = new /mob/living/simple_animal/mushroom(M.loc)
-						if("tomato")	new_mob = new /mob/living/simple_animal/tomato(M.loc)
-						if("mouse")		new_mob = new /mob/living/simple_animal/mouse(M.loc)
-						if("chicken")	new_mob = new /mob/living/simple_animal/chicken(M.loc)
-						if("cow")		new_mob = new /mob/living/simple_animal/cow(M.loc)
-						if("lizard")	new_mob = new /mob/living/simple_animal/lizard(M.loc)
-						else			new_mob = new /mob/living/simple_animal/chick(M.loc)
-						new_mob.universal_speak = 1
+					if(prob(50))
+						var/beast = pick("carp","bear","mushroom","statue")
+						switch(beast)
+							if("carp")		new_mob = new /mob/living/simple_animal/hostile/carp(M.loc)
+							if("bear")		new_mob = new /mob/living/simple_animal/hostile/bear(M.loc)
+							if("mushroom")	new_mob = new /mob/living/simple_animal/hostile/mushroom(M.loc)
+							if("statue")	new_mob = new /mob/living/simple_animal/hostile/statue(M.loc)
+					else
+						var/animal = pick("parrot","corgi","crab","pug","cat","tomato","mouse","chicken","cow","lizard","chick")
+						switch(animal)
+							if("parrot")	new_mob = new /mob/living/simple_animal/parrot(M.loc)
+							if("corgi")		new_mob = new /mob/living/simple_animal/corgi(M.loc)
+							if("crab")		new_mob = new /mob/living/simple_animal/crab(M.loc)
+							if("pug")		new_mob = new /mob/living/simple_animal/pug(M.loc)
+							if("cat")		new_mob = new /mob/living/simple_animal/cat(M.loc)
+							if("tomato")	new_mob = new /mob/living/simple_animal/tomato(M.loc)
+							if("mouse")		new_mob = new /mob/living/simple_animal/mouse(M.loc)
+							if("chicken")	new_mob = new /mob/living/simple_animal/chicken(M.loc)
+							if("cow")		new_mob = new /mob/living/simple_animal/cow(M.loc)
+							if("lizard")	new_mob = new /mob/living/simple_animal/lizard(M.loc)
+							else			new_mob = new /mob/living/simple_animal/chick(M.loc)
+					new_mob.universal_speak = 1
 				if("human")
 					new_mob = new /mob/living/carbon/human(M.loc)
 
@@ -190,9 +201,6 @@ proc/wabbajack(mob/living/M)
 				else
 					return
 
-			for (var/obj/effect/proc_holder/spell/S in M.spell_list)
-				new_mob.spell_list += new S.type
-
 			new_mob.attack_log = M.attack_log
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
 
@@ -204,7 +212,7 @@ proc/wabbajack(mob/living/M)
 
 			new_mob << "<B>Your form morphs into that of a [randomize].</B>"
 
-			del(M)
+			qdel(M)
 			return new_mob
 
 /obj/item/projectile/magic/animate
@@ -218,8 +226,22 @@ proc/wabbajack(mob/living/M)
 /obj/item/projectile/magic/animate/Bump(var/atom/change)
 	. = ..()
 	if(istype(change, /obj/item) || istype(change, /obj/structure) && !is_type_in_list(change, protected_objects))
-		var/obj/O = change
-		new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, firer)
+		if(istype(change, /obj/structure/closet/statue))
+			for(var/mob/living/carbon/human/H in change.contents)
+				var/mob/living/simple_animal/hostile/statue/S = new /mob/living/simple_animal/hostile/statue(change.loc)
+				S.name = "statue of [H.name]"
+				S.faction = "\ref[firer]"
+				S.icon = change.icon
+				if(H.mind)
+					H.mind.transfer_to(S)
+					S << "You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator."
+				qdel(H)
+				qdel(change)
+				qdel(src)
+				return
+		else
+			var/obj/O = change
+			new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, firer)
 	else if(istype(change, /mob/living/simple_animal/hostile/mimic/copy))
 		// Change our allegiance!
 		var/mob/living/simple_animal/hostile/mimic/copy/C = change

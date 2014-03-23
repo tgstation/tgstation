@@ -10,7 +10,7 @@
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "hits"
-	speed = -1
+	speed = 0
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 100
 	health = 100
@@ -31,10 +31,8 @@
 	min_n2 = 0
 	max_n2 = 0
 	unsuitable_atoms_damage = 15
-	wall_smash = 1
 	faction = "syndicate"
 	status_flags = CANPUSH
-	idle_env_destroyer = 0
 
 /mob/living/simple_animal/hostile/syndicate/Die()
 	..()
@@ -44,7 +42,7 @@
 		new weapon1 (src.loc)
 	if(weapon2)
 		new weapon2 (src.loc)
-	del src
+	qdel(src)
 	return
 
 ///////////////Sword and shield////////////
@@ -63,12 +61,12 @@
 	if(O.force)
 		if(prob(80))
 			var/damage = O.force
-			if (O.damtype == HALLOSS)
+			if (O.damtype == STAMINA)
 				damage = 0
 			health -= damage
-			visible_message("\red \b [src] has been attacked with [O] by [user]. ")
+			visible_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>")
 		else
-			visible_message("\red \b [src] blocks [O] with its shield! ")
+			visible_message("<span class='danger'>[src] blocks [O] with its shield!</span>")
 	else
 		usr << "\red This weapon is ineffective, it does no damage."
 		visible_message("\red [user] gently taps [src] with [O]. ")
@@ -77,7 +75,8 @@
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj)	return
 	if(prob(65))
-		src.health -= Proj.damage
+		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+			src.health -= Proj.damage
 	else
 		visible_message("\red <B>[src] blocks [Proj] with its shield!</B>")
 	return 0
@@ -97,7 +96,7 @@
 	icon_living = "syndicatemeleespace"
 	name = "Syndicate Commando"
 	corpse = /obj/effect/landmark/mobcorpse/syndicatecommando
-	speed = 0
+	speed = 1
 
 /mob/living/simple_animal/hostile/syndicate/melee/space/Process_Spacemove(var/check_drift = 0)
 	return
@@ -105,6 +104,8 @@
 /mob/living/simple_animal/hostile/syndicate/ranged
 	ranged = 1
 	rapid = 1
+	retreat_distance = 5
+	minimum_distance = 5
 	icon_state = "syndicateranged"
 	icon_living = "syndicateranged"
 	casingtype = /obj/item/ammo_casing/a12mm
@@ -127,7 +128,7 @@
 	max_n2 = 0
 	minbodytemp = 0
 	corpse = /obj/effect/landmark/mobcorpse/syndicatecommando
-	speed = 0
+	speed = 1
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space/Process_Spacemove(var/check_drift = 0)
 	return
@@ -160,5 +161,5 @@
 /mob/living/simple_animal/hostile/viscerator/Die()
 	..()
 	visible_message("\red <b>[src]</b> is smashed into pieces!")
-	del src
+	qdel(src)
 	return

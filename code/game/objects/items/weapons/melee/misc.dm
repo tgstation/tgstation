@@ -10,9 +10,10 @@
 	w_class = 3
 	origin_tech = "combat=4"
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
+	hitsound = 'sound/weapons/slash.ogg' //pls replace
 
 /obj/item/weapon/melee/chainofcommand/suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='suicide'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>"
 		return (OXYLOSS)
 
 
@@ -40,19 +41,24 @@
 		return
 	add_logs(user, M, "attacked", object="[src.name]")
 
+	if(isrobot(M)) // Don't stun borgs, fix for issue #2436
+		..()
+		return
+	if(!isliving(M)) // Don't stun nonhuman things
+		return
+
 	if(user.a_intent == "harm")
 		if(!..()) return
-		playsound(loc, "swing_hit", 50, 1, -1)
-		if(M.stuttering < 8 && !(HULK in M.mutations))
-			M.stuttering = 8
-		M.Stun(8)
-		M.Weaken(8)
+		if(M.stuttering < 7 && !(HULK in M.mutations))
+			M.stuttering = 7
+		M.Stun(7)
+		M.Weaken(7)
 		M.visible_message("<span class='danger'>[M] has been beaten with [src] by [user]!</span>", \
 							"<span class='userdanger'>[M] has been beaten with [src] by [user]!</span>")
 	else
 		playsound(loc, 'sound/weapons/Genhit.ogg', 50, 1, -1)
-		M.Stun(5)
-		M.Weaken(5)
+		M.Stun(7)
+		M.Weaken(7)
 		M.visible_message("<span class='danger'>[M] has been stunned with [src] by [user]!</span>", \
 							"<span class='userdanger'>[M] has been stunned with [src] by [user]!</span>")
 

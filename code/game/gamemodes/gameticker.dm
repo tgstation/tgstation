@@ -111,7 +111,7 @@ var/global/datum/controller/gameticker/ticker
 	else
 		src.mode.announce()
 
-	supply_shuttle.process() 		//Start the supply shuttle regenerating points -- TLE
+	supply_shuttle.process() 		//Start the supply shuttle regenerating points
 	master_controller.process()		//Start master_controller.process()
 	lighting_controller.process()	//Start processing DynamicAreaLighting updates
 
@@ -129,7 +129,7 @@ var/global/datum/controller/gameticker/ticker
 		for(var/obj/effect/landmark/start/S in landmarks_list)
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
-				del(S)
+				qdel(S)
 		world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
 		world << sound('sound/AI/welcome.ogg') // Skie
 		//Holiday Round-start stuff	~Carn
@@ -142,7 +142,7 @@ var/global/datum/controller/gameticker/ticker
 
 	if(config.sql_enabled)
 		spawn(3000)
-			statistic_cycle() // Polls population totals regularly and stores them in an SQL DB -- TLE
+			statistic_cycle() // Polls population totals regularly and stores them in an SQL DB
 	return 1
 
 /datum/controller/gameticker
@@ -150,7 +150,7 @@ var/global/datum/controller/gameticker/ticker
 	//Now we have a general cinematic centrally held within the gameticker....far more efficient!
 	var/obj/screen/cinematic = null
 
-	//Plus it provides an easy way to make cinematics for other events. Just use this as a template :)
+	//Plus it provides an easy way to make cinematics for other events. Just use this as a template
 	proc/station_explosion_cinematic(var/station_missed=0, var/override = null)
 		if( cinematic )	return	//already a cinematic in progress!
 
@@ -234,8 +234,8 @@ var/global/datum/controller/gameticker/ticker
 		//Otherwise if its a verb it will continue on afterwards.
 		sleep(300)
 
-		if(cinematic)	del(cinematic)		//end the cinematic
-		if(temp_buckle)	del(temp_buckle)	//release everybody
+		if(cinematic)	qdel(cinematic)		//end the cinematic
+		if(temp_buckle)	qdel(temp_buckle)	//release everybody
 		return
 
 
@@ -248,7 +248,7 @@ var/global/datum/controller/gameticker/ticker
 					player.AIize()
 				else
 					player.create_character()
-					del(player)
+					qdel(player)
 			else
 				player.new_player_panel()
 
@@ -319,28 +319,29 @@ var/global/datum/controller/gameticker/ticker
 /datum/controller/gameticker/proc/declare_completion()
 
 	for (var/mob/living/silicon/ai/aiPlayer in mob_list)
-		if (aiPlayer.stat != 2)
-			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.key])'s laws at the end of the game were:</b>"
-		else
-			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.key])'s laws when it was deactivated were:</b>"
-		aiPlayer.show_laws(1)
+		if (aiPlayer.stat != 2 && aiPlayer.mind)
+			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws at the end of the game were:</b>"
+			aiPlayer.show_laws(1)
+		else if (aiPlayer.mind) //if the dead ai has a mind, use its key instead
+			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws when it was deactivated were:</b>"
+			aiPlayer.show_laws(1)
 
 		if (aiPlayer.connected_robots.len)
 			var/robolist = "<b>[aiPlayer.real_name]'s loyal minions were:</b> "
 			var/vsrobolist = "\red <b>[aiPlayer.real_name]'s disloyal minions were:</b> \black"
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
-				if (is_special_character(robo))
-					vsrobolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.key]), ":" (Played by: [robo.key]), "]"
+				if (is_special_character(robo) && robo.mind)
+					vsrobolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"
 					continue
-				robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.key]), ":" (Played by: [robo.key]), "]"
+				robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"
 			world << "[robolist]"
 			world << "[vsrobolist]"
 	for (var/mob/living/silicon/robot/robo in mob_list)
-		if (!robo.connected_ai)
+		if (!robo.connected_ai && robo.mind)
 			if (robo.stat != 2)
-				world << "<b>[robo.name] (Played by: [robo.key]) survived as an AI-less borg! Its laws were:</b>"
+				world << "<b>[robo.name] (Played by: [robo.mind.key]) survived as an AI-less borg! Its laws were:</b>"
 			else
-				world << "<b>[robo.name] (Played by: [robo.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</b>"
+				world << "<b>[robo.name] (Played by: [robo.mind.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</b>"
 
 			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
 				robo.laws.show_laws(world)

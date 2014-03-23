@@ -5,8 +5,8 @@
 	var/status = 0.0
 	throwforce = 10
 	w_class = 3.0
-	throw_speed = 4
-	throw_range = 10
+	throw_speed = 3
+	throw_range = 7
 
 /obj/item/assembly/a_i_a
 	name = "Health-Analyzer/Igniter/Armor Assembly"
@@ -121,7 +121,7 @@
 	part2.master = src
 	//part2.status = 0
 
-/obj/item/assembly/time_ignite/Del()
+/obj/item/assembly/time_ignite/Delete()
 	del(part1)
 	del(part2)
 	..()
@@ -211,7 +211,7 @@
 		part2 = null
 
 		user.put_in_hand(R)
-		user.before_take_item(W)
+		user.unEquip(W)
 		R.part3 = W
 		R.part3.master = R
 		del(src)
@@ -224,15 +224,15 @@
 		if (user.client)
 			user.client.screen -= W
 		if (user.r_hand == W)
-			user.u_equip(W)
+			user.unEquip(W)
 			user.r_hand = R
 		else
-			user.u_equip(W)
+			user.unEquip(W)
 			user.l_hand = R
 		W.master = R
 		src.master = R
 		src.layer = initial(src.layer)
-		user.u_equip(src)
+		user.unEquip(src)
 		if (user.client)
 			user.client.screen -= src
 		src.loc = R
@@ -251,15 +251,15 @@
 		if (user.client)
 			user.client.screen -= W
 		if (user.r_hand == W)
-			user.u_equip(W)
+			user.unEquip(W)
 			user.r_hand = R
 		else
-			user.u_equip(W)
+			user.unEquip(W)
 			user.l_hand = R
 		W.master = R
 		src.master = R
 		src.layer = initial(src.layer)
-		user.u_equip(src)
+		user.unEquip(src)
 		if (user.client)
 			user.client.screen -= src
 		src.loc = R
@@ -301,7 +301,7 @@
 			user.show_message("\blue The armor is now unsecured!", 1)
 		src.add_fingerprint(user)
 
-/obj/item/assembly/a_i_a/Del()
+/obj/item/assembly/a_i_a/Delete()
 	//src.part1 = null
 	del(src.part1)
 	//src.part2 = null
@@ -311,7 +311,7 @@
 	return
 //*****
 
-/obj/item/assembly/rad_time/Del()
+/obj/item/assembly/rad_time/Delete()
 	//src.part1 = null
 	del(src.part1)
 	//src.part2 = null
@@ -361,7 +361,7 @@
 	src.icon_state = "prox-radio[n]"
 	return
 
-/obj/item/assembly/rad_prox/Del()
+/obj/item/assembly/rad_prox/Delete()
 	//src.part1 = null
 	del(src.part1)
 	//src.part2 = null
@@ -431,7 +431,7 @@
 	src.icon_state = text("infrared-radio[]", n)
 	return
 
-/obj/item/assembly/rad_infra/Del()
+/obj/item/assembly/rad_infra/Delete()
 	del(src.part1)
 	del(src.part2)
 	..()
@@ -516,7 +516,7 @@
 		return
 	return
 
-/obj/item/assembly/prox_ignite/Del()
+/obj/item/assembly/prox_ignite/Delete()
 	del(src.part1)
 	del(src.part2)
 	..()
@@ -565,7 +565,7 @@
 	src.part2.Activate()
 	return
 
-/obj/item/assembly/rad_ignite/Del()
+/obj/item/assembly/rad_ignite/Delete()
 	del(src.part1)
 	del(src.part2)
 	..()
@@ -664,7 +664,7 @@
 	..()
 	part3.examine()
 
-/obj/item/assembly/m_i_ptank/Del()
+/obj/item/assembly/m_i_ptank/Delete()
 
 	//src.part1 = null
 	del(src.part1)
@@ -752,7 +752,7 @@
 	..()
 	src.part3.examine()
 
-/obj/item/assembly/t_i_ptank/Del()
+/obj/item/assembly/t_i_ptank/Delete()
 
 	//src.part1 = null
 	del(src.part1)
@@ -831,7 +831,7 @@
 	..()
 	src.part3.examine()
 
-/obj/item/assembly/r_i_ptank/Del()
+/obj/item/assembly/r_i_ptank/Delete()
 
 	//src.part1 = null
 	del(src.part1)

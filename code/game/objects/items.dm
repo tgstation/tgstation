@@ -2,16 +2,12 @@
 	name = "item"
 	icon = 'icons/obj/items.dmi'
 	var/item_state = null
-	var/r_speed = 1.0
-	var/health = null
-	var/burn_point = null
-	var/burning = null
 	var/hitsound = null
+	var/throwhitsound = null
 	var/w_class = 3.0
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
 	pressure_resistance = 5
-//	causeerrorheresoifixthis
 	var/obj/item/master = null
 
 	var/heat_protection = 0 //flags which determine which body parts are protected from heat. Use the HEAD, CHEST, GROIN, etc. flags. See setup.dm
@@ -31,7 +27,6 @@
 	var/permeability_coefficient = 1 // for chemicals/diseases
 	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
-	var/canremove = 1 //Mostly for Ninja code at this point but basically will not allow the item to be removed if set to 0. /N
 	var/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/list/allowed = null //suit storage stuff.
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
@@ -40,24 +35,30 @@
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 
+/obj/item/Destroy()
+	if(ismob(loc))
+		var/mob/m = loc
+		m.unEquip(src, 1)
+	return ..()
+
 /obj/item/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(5))
-				del(src)
+				qdel(src)
 				return
 		else
 	return
 
 /obj/item/blob_act()
-	del(src)
+	qdel(src)
 
 //user: The mob that is suiciding
 //damagetype: The type of damage the item will inflict on the user
@@ -108,7 +109,16 @@
 	if(src.blood_DNA)
 		f_name = "a bloody [name]"
 
-	usr << "\icon[src]This is [f_name]. It is a [size] item."
+	var/determiner
+	var/pronoun
+	if(src.gender == PLURAL)
+		determiner = "These are"
+		pronoun = "They are"
+	else
+		determiner = "This is"
+		pronoun = "It is"
+
+	usr << "\icon[src][determiner] [f_name]. [pronoun] a [size] item." //e.g. These are some gloves. They are a small item. or This is a toolbox. It is a bulky item.
 
 	if(src.desc)
 		usr << src.desc
@@ -122,17 +132,14 @@
 		S.remove_from_storage(src)
 
 	src.throwing = 0
-	if (src.loc == user)
-		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
-		if(!src.canremove)
+	if (loc == user)
+		if(!user.unEquip(src))
 			return
-		else
-			user.u_equip(src)
 	else
-		if(isliving(src.loc))
+		if(isliving(loc))
 			return
 		user.next_move = max(user.next_move+2,world.time + 2)
-	src.pickup(user)
+	pickup(user)
 	add_fingerprint(user)
 	user.put_in_active_hand(src)
 	return
@@ -147,11 +154,8 @@
 					M.client.screen -= src
 	src.throwing = 0
 	if (src.loc == user)
-		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
-		if(istype(src, /obj/item/clothing) && !src:canremove)
+		if(!user.unEquip(src))
 			return
-		else
-			user.u_equip(src)
 	else
 		if(istype(src.loc, /mob/living))
 			return
@@ -167,7 +171,7 @@
 
 	if(!A.has_fine_manipulation || w_class >= 4)
 		if(src in A.contents) // To stop Aliens having items stuck in their pockets
-			A.drop_from_inventory(src)
+			A.unEquip(src)
 		user << "Your claws aren't capable of such fine manipulation."
 		return
 	attack_paw(A)
@@ -346,6 +350,8 @@
 					return 0
 				return 1
 			if(slot_l_store)
+				if(flags & NODROP) //Pockets aren't visible, so you can't move NODROP items into them.
+					return 0
 				if(H.l_store)
 					return 0
 				if(!H.w_uniform)
@@ -357,6 +363,8 @@
 				if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
 					return 1
 			if(slot_r_store)
+				if(flags & NODROP)
+					return 0
 				if(H.r_store)
 					return 0
 				if(!H.w_uniform)
@@ -369,6 +377,8 @@
 					return 1
 				return 0
 			if(slot_s_store)
+				if(flags & NODROP) //Suit storage NODROP items drop if you take a suit off, this is to prevent people exploiting this.
+					return 0
 				if(H.s_store)
 					return 0
 				if(!H.wear_suit)
@@ -537,7 +547,7 @@
 				M.drop_item()
 			M.eye_blurry += 10
 			M.Paralyse(1)
-			M.Weaken(4)
+			M.Weaken(2)
 		if (prob(M.eye_stat - 10 + 1))
 			if(M.stat != 2)
 				M << "\red You go blind!"
@@ -557,3 +567,4 @@
 	. = ..()
 	if(.)
 		transfer_blood = 0
+		bloody_hands_mob = null

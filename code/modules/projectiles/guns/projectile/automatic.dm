@@ -113,6 +113,15 @@
 		return
 	..()
 
+/obj/item/weapon/gun/projectile/automatic/tommygun
+	name = "tommy gun"
+	desc = "A genuine Chicago Typewriter."
+	icon_state = "tommygun"
+	item_state = "tommygun"
+	slot_flags = 0
+	origin_tech = "combat=5;materials=1;syndicate=2"
+	mag_type = /obj/item/ammo_box/magazine/tommygunm45
+	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 
 /* The thing I found with guns in ss13 is that they don't seem to simulate the rounds in the magazine in the gun.
    Afaik, since projectile.dm features a revolver, this would make sense since the magazine is part of the gun.

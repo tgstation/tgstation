@@ -4,6 +4,8 @@
 	health = 20
 	maxHealth = 20
 
+	status_flags = CANPUSH
+
 	var/icon_living = ""
 	var/icon_dead = ""
 	var/icon_gib = null	//We only try to show a gibbing animation if this exists.
@@ -53,9 +55,9 @@
 	var/attacktext = "attacks"
 	var/attack_sound = null
 	var/friendly = "nuzzles" //If the mob does no damage with it's attack
-	var/wall_smash = 0 //if they can smash walls
+	var/environment_smash = 0 //Set to 1 to allow breaking of crates,lockers,racks,tables; 2 for walls; 3 for Rwalls
 
-	var/speed = 0 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
+	var/speed = 1 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
 
 	//Hot simple_animal baby making vars
 	var/childtype = null
@@ -210,7 +212,7 @@
 		return
 
 	if(isturf(src.loc))
-		if(ismob(AM))
+		if((status_flags & CANPUSH) && ismob(AM))
 			var/newamloc = src.loc
 			src.loc = AM:loc
 			AM:loc = newamloc
@@ -259,9 +261,11 @@
 		adjustBruteLoss(damage)
 
 /mob/living/simple_animal/bullet_act(var/obj/item/projectile/Proj)
-	if(!Proj)	return
-	adjustBruteLoss(Proj.damage)
-	Proj.on_hit(src, 0)
+	if(!Proj)
+		return
+	if((Proj.damage_type != STAMINA))
+		adjustBruteLoss(Proj.damage)
+		Proj.on_hit(src, 0)
 	return 0
 
 /mob/living/simple_animal/attack_hand(mob/living/carbon/human/M as mob)
@@ -363,7 +367,7 @@
 
 	var/damage = rand(1, 3)
 
-	if(istype(src, /mob/living/carbon/slime/adult))
+	if(M.is_adult)
 		damage = rand(20, 40)
 	else
 		damage = rand(5, 35)
@@ -385,7 +389,7 @@
 						adjustBruteLoss(-MED.heal_brute)
 						MED.amount -= 1
 						if(MED.amount <= 0)
-							del(MED)
+							qdel(MED)
 						for(var/mob/M in viewers(src, null))
 							if ((M.client && !( M.blinded )))
 								M.show_message("\blue [user] applies [MED] on [src]")
@@ -405,19 +409,12 @@
 	else
 		if(O.force)
 			var/damage = O.force
-			if (O.damtype == HALLOSS)
+			if (O.damtype == STAMINA)
 				damage = 0
 			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b "+"[src] has been attacked with [O] by [user]. ")
-		else
-			usr << "\red This weapon is ineffective, it does no damage."
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("\red [user] gently taps [src] with [O]. ")
-
-
+					M.show_message("<span class='danger'>"+"[src] has been attacked with [O] by [user]!</span>")
 
 /mob/living/simple_animal/movement_delay()
 	var/tally = 0 //Incase I need to add stuff other than "speed" later
@@ -433,11 +430,21 @@
 	stat(null, "Health: [round((health / maxHealth) * 100)]%")
 
 /mob/living/simple_animal/proc/Die()
+	health = 0 // so /mob/living/simple_animal/Life() doesn't magically revive them
 	dead_mob_list += src
 	icon_state = icon_dead
 	stat = DEAD
 	density = 0
 	return
+
+/mob/living/simple_animal/death(gibbed)
+	if(stat == DEAD)
+		return
+
+	if(!gibbed)
+		visible_message("<span class='danger'>\the [src] stops moving...</span>")
+
+	Die()
 
 /mob/living/simple_animal/ex_act(severity)
 	..()
@@ -493,7 +500,9 @@
 	var/mob/living/simple_animal/partner
 	var/children = 0
 	for(var/mob/M in oview(7, src))
-		if(istype(M, childtype)) //Check for children FIRST.
+		if(M.stat != CONSCIOUS) //Check if it's concious FIRSTER.
+			continue
+		else if(istype(M, childtype)) //Check for children FIRST.
 			children++
 		else if(istype(M, species))
 			if(M.client)
@@ -510,7 +519,7 @@
 /mob/living/simple_animal/proc/harvest()
 	new meat_type (get_turf(src))
 	if(prob(95))
-		del(src)
+		qdel(src)
 		return
 	gib()
 	return

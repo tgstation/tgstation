@@ -38,13 +38,8 @@
 		return
 
 	//Close any open UI windows first
-	var/found = 0
-	for(var/mob/M in range(1))
-		if(M.s_active == src)
-			close(M)
-		if(M == user)
-			found = 1
-	if(!found)	//User is too far away
+	var/found = close_all()
+	if(!found)	//No user had any windows closed
 		return
 
 	user << "<span class='notice'>You fold [src] flat.</span>"
@@ -52,7 +47,7 @@
 	user.put_in_hands(I)
 	user.update_inv_l_hand()
 	user.update_inv_r_hand()
-	del(src)
+	qdel(src)
 
 
 /obj/item/weapon/storage/box/survival
@@ -412,7 +407,7 @@
 
 /obj/item/weapon/storage/box/mousetraps
 	name = "box of Pest-B-Gon mousetraps"
-	desc = "<B><FONT=red>WARNING:</FONT></B> <I>Keep out of reach of children</I>."
+	desc = "<span class='alert'>Keep out of reach of children.</span>"
 	icon_state = "mousetraps"
 
 	New()
@@ -469,6 +464,13 @@
 		if(istype(W, /obj/item/weapon/match) && W.lit == 0)
 			W.lit = 1
 			W.icon_state = "match_lit"
+			W.damtype = "fire"
+			W.force = 3
+			W.hitsound = 'sound/items/welder.ogg'
+			W.item_state = "cigon"
+			W.name = "lit match"
+			W.desc = "A match. This one is lit."
+			W.attack_verb = list("burnt","singed")
 			processing_objects.Add(W)
 		W.update_icon()
 		return

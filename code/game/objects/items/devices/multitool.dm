@@ -10,13 +10,14 @@
 	icon_state = "multitool"
 	force = 5.0
 	w_class = 2.0
-	throwforce = 5.0
-	throw_range = 15
+	throwforce = 0
+	throw_range = 7
 	throw_speed = 3
 	m_amt = 50
 	g_amt = 20
 	origin_tech = "magnets=1;engineering=1"
 	var/obj/machinery/telecomms/buffer // simple machine buffer for device linkage
+	hitsound = 'sound/weapons/tap.ogg'
 
 
 // Syndicate device disguised as a multitool; it will turn red when an AI camera is nearby.
@@ -30,7 +31,7 @@
 	processing_objects += src
 
 
-/obj/item/device/multitool/ai_detect/Del()
+/obj/item/device/multitool/ai_detect/Destroy()
 	processing_objects -= src
 	..()
 

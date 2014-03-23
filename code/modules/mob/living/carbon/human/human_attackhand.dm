@@ -138,20 +138,20 @@
 						visible_message("<span class='warning'>[M] has broken [src]'s grip on [lgrab.affecting]!</span>")
 						talked = 1
 					spawn(1)
-						del(lgrab)
+						qdel(lgrab)
 				if(istype(r_hand, /obj/item/weapon/grab))
 					var/obj/item/weapon/grab/rgrab = r_hand
 					if(rgrab.affecting)
 						visible_message("<span class='warning'>[M] has broken [src]'s grip on [rgrab.affecting]!</span>")
 						talked = 1
 					spawn(1)
-						del(rgrab)
+						qdel(rgrab)
 				//End BubbleWrap
 
 				if(!talked)	//BubbleWrap
-					drop_item()
-					visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
-									"<span class='userdanger'>[M] has disarmed [src]!</span>")
+					if(drop_item())
+						visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
+										"<span class='userdanger'>[M] has disarmed [src]!</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 				return
 

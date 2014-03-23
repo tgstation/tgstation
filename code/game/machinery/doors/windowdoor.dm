@@ -20,7 +20,7 @@
 		src.base_state = src.icon_state
 	return
 
-/obj/machinery/door/window/Del()
+/obj/machinery/door/window/Destroy()
 	density = 0
 	playsound(src, "shatter", 70, 1)
 	..()
@@ -122,22 +122,23 @@
 	src.health = max(0, src.health - damage)
 	if (src.health <= 0)
 		new /obj/item/weapon/shard(src.loc)
-		var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
+		var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
 		CC.amount = 2
 		src.density = 0
-		del(src)
+		qdel(src)
 		return
 
 /obj/machinery/door/window/bullet_act(var/obj/item/projectile/Proj)
 	if(Proj.damage)
-		take_damage(round(Proj.damage / 2))
+		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+			take_damage(round(Proj.damage / 2))
 	..()
 
 //When an object is thrown at the window
 /obj/machinery/door/window/hitby(AM as mob|obj)
 
 	..()
-	visible_message("\red <B>The glass door was hit by [AM].</B>")
+	visible_message("<span class='danger'>\The [src] was hit by \the [AM].</span>")
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 40
@@ -153,7 +154,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/door/window/attack_paw(mob/user as mob)
-	if(istype(user, /mob/living/carbon/alien/humanoid) || istype(user, /mob/living/carbon/slime/adult))
+	if(istype(user, /mob/living/carbon/alien/humanoid) || istype(user, /mob/living/carbon/slime/))
 		if(src.operating)
 			return
 		src.health = max(0, src.health - 25)
@@ -161,10 +162,10 @@
 		visible_message("\red <B>[user] smashes against the [src.name].</B>")
 		if (src.health <= 0)
 			new /obj/item/weapon/shard(src.loc)
-			var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
+			var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
 			CC.amount = 2
 			src.density = 0
-			del(src)
+			qdel(src)
 	else
 		return src.attack_hand(user)
 
@@ -199,13 +200,13 @@
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			src.health = max(0, src.health - aforce)
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-		visible_message("\red <B>[src] was hit by [I].</B>")
+		visible_message("<span class='danger'>\The [src] has been hit by [user] with [I].</span>")
 		if (src.health <= 0)
 			new /obj/item/weapon/shard(src.loc)
-			var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
+			var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
 			CC.amount = 2
 			src.density = 0
-			del(src)
+			qdel(src)
 		return
 
 

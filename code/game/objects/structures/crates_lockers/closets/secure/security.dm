@@ -25,6 +25,8 @@
 		new /obj/item/device/radio/headset/heads/captain(src)
 		new /obj/item/clothing/gloves/captain(src)
 		new /obj/item/weapon/gun/energy/gun(src)
+		new /obj/item/clothing/under/captainformal(src)
+		new /obj/item/clothing/head/helmet/HoS/dermal(src)
 		return
 
 
@@ -43,16 +45,17 @@
 		..()
 		sleep(2)
 		new /obj/item/clothing/under/rank/head_of_personnel(src)
-		new /obj/item/clothing/suit/armor/vest(src)
-		new /obj/item/clothing/head/helmet(src)
+		new /obj/item/clothing/head/hopcap(src)
 		new /obj/item/weapon/cartridge/hop(src)
 		new /obj/item/device/radio/headset/heads/hop(src)
 		new /obj/item/clothing/shoes/brown(src)
 		new /obj/item/weapon/storage/box/ids(src)
-		new /obj/item/weapon/storage/box/ids( src )
+		new /obj/item/weapon/storage/box/ids(src)
+		new /obj/item/clothing/suit/armor/vest(src)
 		new /obj/item/weapon/gun/energy/gun(src)
 		new /obj/item/device/flash(src)
 		new /obj/item/clothing/glasses/sunglasses(src)
+		new /obj/item/weapon/mining_voucher(src)
 		return
 
 
@@ -80,7 +83,7 @@
 		new /obj/item/clothing/head/helmet/HoS/dermal(src)
 		new /obj/item/weapon/cartridge/hos(src)
 		new /obj/item/device/radio/headset/heads/hos(src)
-		new /obj/item/clothing/glasses/sunglasses/sechud(src)
+		new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 		new /obj/item/weapon/shield/riot(src)
 		new /obj/item/clothing/mask/gas/sechailer(src)
 		new /obj/item/clothing/mask/gas/sechailer/hos(src)
@@ -90,6 +93,8 @@
 		new /obj/item/weapon/melee/baton/loaded(src)
 		new /obj/item/weapon/gun/energy/gun(src)
 		new /obj/item/weapon/storage/belt/security(src)
+		new /obj/item/clothing/under/hosformalfem(src)
+		new /obj/item/clothing/under/hosformalmale(src)
 		return
 
 
@@ -118,7 +123,7 @@
 		new /obj/item/clothing/head/helmet/warden(src)
 		new /obj/item/weapon/clipboard(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
-		new /obj/item/clothing/glasses/sunglasses/sechud(src)
+		new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 		new /obj/item/clothing/mask/gas/sechailer/warden(src)
 		new /obj/item/weapon/storage/box/flashbangs(src)
 		new /obj/item/weapon/reagent_containers/spray/pepper(src)
@@ -153,12 +158,18 @@
 		new /obj/item/device/flash(src)
 		new /obj/item/weapon/reagent_containers/spray/pepper(src)
 		new /obj/item/weapon/grenade/flashbang(src)
-		new /obj/item/weapon/melee/baton/loaded(src)
 		new /obj/item/weapon/gun/energy/taser(src)
 		new /obj/item/weapon/storage/belt/security(src)
-		new /obj/item/clothing/glasses/sunglasses/sechud(src)
+		new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 		return
 
+
+/obj/structure/closet/secure_closet/security/sec
+
+	New()
+		new /obj/item/weapon/melee/baton/loaded(src)
+		..()
+		return
 
 /obj/structure/closet/secure_closet/security/cargo
 
@@ -187,7 +198,7 @@
 /obj/structure/closet/secure_closet/security/med
 
 	New()
-		new /obj/item/clothing/tie/armband/medgreen(src)
+		new /obj/item/clothing/tie/armband/medblue(src)
 		new /obj/item/device/encryptionkey/headset_med(src)
 		..()
 		return

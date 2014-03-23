@@ -219,7 +219,6 @@
 			if("larva")				M.change_mob_type( /mob/living/carbon/alien/larva , null, null, delmob )
 			if("human")				M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
 			if("slime")				M.change_mob_type( /mob/living/carbon/slime , null, null, delmob )
-			if("adultslime")		M.change_mob_type( /mob/living/carbon/slime/adult , null, null, delmob )
 			if("monkey")			M.change_mob_type( /mob/living/carbon/monkey , null, null, delmob )
 			if("robot")				M.change_mob_type( /mob/living/silicon/robot , null, null, delmob )
 			if("cat")				M.change_mob_type( /mob/living/simple_animal/cat , null, null, delmob )
@@ -824,7 +823,7 @@
 				message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 
 				del(M.client)
-				//del(M)	// See no reason why to delete mob. Important stuff can be lost. And ban can be lifted before round ends.
+				//qdel(M)	// See no reason why to delete mob. Important stuff can be lost. And ban can be lifted before round ends.
 			if("No")
 				var/reason = input(usr,"Reason?","reason","Griefer") as text|null
 				if(!reason)
@@ -848,7 +847,7 @@
 				DB_ban_record(BANTYPE_PERMA, M, -1, reason)
 
 				del(M.client)
-				//del(M)
+				//qdel(M)
 			if("Cancel")
 				return
 
@@ -988,7 +987,7 @@
 			return
 
 		for(var/obj/item/I in M)
-			M.u_equip(I)
+			M.unEquip(I)
 			if(I)
 				I.loc = M.loc
 				I.layer = initial(I.layer)
@@ -1017,7 +1016,7 @@
 			return
 
 		for(var/obj/item/I in M)
-			M.u_equip(I)
+			M.unEquip(I)
 			if(I)
 				I.loc = M.loc
 				I.layer = initial(I.layer)
@@ -1068,7 +1067,7 @@
 			return
 
 		for(var/obj/item/I in M)
-			M.u_equip(I)
+			M.unEquip(I)
 			if(I)
 				I.loc = M.loc
 				I.layer = initial(I.layer)
@@ -1094,12 +1093,9 @@
 			usr << "This can only be used on instances of type /mob/living"
 			return
 
-		if(config.allow_admin_rev)
-			L.revive()
-			message_admins("\red Admin [key_name_admin(usr)] healed / revived [key_name_admin(L)]!", 1)
-			log_admin("[key_name(usr)] healed / Revived [key_name(L)]")
-		else
-			usr << "Admin Rejuvinates have been disabled"
+		L.revive()
+		message_admins("\red Admin [key_name_admin(usr)] healed / revived [key_name_admin(L)]!", 1)
+		log_admin("[key_name(usr)] healed / Revived [key_name(L)]")
 
 	else if(href_list["makeai"])
 		if(!check_rights(R_SPAWN))	return
@@ -1132,6 +1128,17 @@
 			return
 
 		usr.client.cmd_admin_slimeize(H)
+
+	else if(href_list["makeblob"])
+		if(!check_rights(R_SPAWN))	return
+
+		var/mob/living/carbon/human/H = locate(href_list["makeblob"])
+		if(!istype(H))
+			usr << "This can only be used on instances of type /mob/living/carbon/human"
+			return
+
+		usr.client.cmd_admin_blobize(H)
+
 
 	else if(href_list["makerobot"])
 		if(!check_rights(R_SPAWN))	return
@@ -1426,10 +1433,6 @@
 
 	else if(href_list["object_list"])			//this is the laggiest thing ever
 		if(!check_rights(R_SPAWN))	return
-
-		if(!config.allow_admin_spawning)
-			usr << "Spawning of items is not allowed."
-			return
 
 		var/atom/loc = usr.loc
 
@@ -2030,11 +2033,13 @@
 		switch(href_list["secretscoder"])
 			if("maint_access_brig")
 				for(var/obj/machinery/door/airlock/maintenance/M in world)
+					M.check_access()
 					if (access_maint_tunnels in M.req_access)
 						M.req_access = list(access_brig)
 				message_admins("[key_name_admin(usr)] made all maint doors brig access-only.")
 			if("maint_access_engiebrig")
 				for(var/obj/machinery/door/airlock/maintenance/M in world)
+					M.check_access()
 					if (access_maint_tunnels in M.req_access)
 						M.req_access = list()
 						M.req_one_access = list(access_brig,access_engine)

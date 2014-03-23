@@ -54,7 +54,7 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 
 		if(adminlog)
 			message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z])")
-			log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area [epicenter.loc.name] ")
+			log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z])")
 
 		// Play sounds; we want sounds to be different depending on distance so we will manually do it ourselves.
 		// Stereo users will also hear the direction of the explosion!
@@ -86,9 +86,9 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 
 		var/lighting_controller_was_processing = lighting_controller.processing	//Pause the lighting updates for a bit
 		lighting_controller.processing = 0
-		var/powernet_rebuild_was_deferred_already = defer_powernet_rebuild
-		if(defer_powernet_rebuild != 2)
-			defer_powernet_rebuild = 1
+//		var/powernet_rebuild_was_deferred_already = defer_powernet_rebuild
+//		if(defer_powernet_rebuild != 2)
+//			defer_powernet_rebuild = 1
 
 		if(heavy_impact_range > 1)
 			var/datum/effect/system/explosion/E = new/datum/effect/system/explosion()
@@ -118,13 +118,11 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 
 			if(T)
 				if(flame_dist && prob(40) && !istype(T, /turf/space))
-					spawn()
-						new/obj/effect/hotspot(T) //Mostly for ambience!
+					new/obj/effect/hotspot(T) //Mostly for ambience!
 					hotspot_exists = 1
 				if(dist)
-					spawn()
-						if(T)
-							T.ex_act(dist)
+					if(T)
+						T.ex_act(dist)
 
 			//------- THINGS IN TURFS FIRES -------
 
@@ -134,14 +132,12 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 					if(AM) //Something is inside T (We have already checked T exists above) - RR
 						if(flame_dist) //if it has flame distance, run this - RR
 							if(isliving(AM) && !hotspot_exists && !istype(T, /turf/space))
-								spawn()
-									if(AM && AM.loc!=null)
-										new /obj/effect/hotspot(AM.loc)
+								if(AM && AM.loc!=null)
+									new /obj/effect/hotspot(AM.loc)
 								//Just in case we missed a mob while they were in flame_range, but a hotspot didn't spawn on them, otherwise it looks weird when you just burst into flame out of nowhere
 						if(dist) //if no flame_dist, run this - RR
-							spawn()
-								if(AM)
-									AM.ex_act(dist)
+							if(AM)
+								AM.ex_act(dist)
 
 
 
@@ -158,9 +154,9 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 		sleep(8)
 
 		if(!lighting_controller.processing)	lighting_controller.processing = lighting_controller_was_processing
-		if(!powernet_rebuild_was_deferred_already)
-			if(defer_powernet_rebuild != 2)
-				defer_powernet_rebuild = 0
+//		if(!powernet_rebuild_was_deferred_already)
+//			if(defer_powernet_rebuild != 2)
+//				defer_powernet_rebuild = 0
 
 	return 1
 

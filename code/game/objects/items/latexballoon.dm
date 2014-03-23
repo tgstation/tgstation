@@ -7,7 +7,7 @@
 	throwforce = 0
 	w_class = 1.0
 	throw_speed = 1
-	throw_range = 15
+	throw_range = 7
 	var/state
 	var/datum/gas_mixture/air_contents = null
 
@@ -30,10 +30,10 @@
 	burst()
 	switch(severity)
 		if (1)
-			del(src)
+			qdel(src)
 		if (2)
 			if (prob(50))
-				del(src)
+				qdel(src)
 
 /obj/item/latexballon/bullet_act()
 	burst()

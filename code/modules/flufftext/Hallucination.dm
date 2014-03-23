@@ -77,7 +77,7 @@ mob/living/carbon/proc/handle_hallucinations()
 								halitem.name = "Flashbang"
 						if(client) client.screen += halitem
 						spawn(rand(100,250))
-							del halitem
+							qdel(halitem)
 			if(26 to 40)
 				//Flashes of danger
 				//src << "Danger Flash"
@@ -262,7 +262,7 @@ proc/check_panel(mob/M)
 		spawn(300)
 			if(my_target)
 				my_target.hallucinations -= src
-			del(src)
+			qdel(src)
 		step_away(src,my_target,2)
 		spawn attack_loop()
 
@@ -300,8 +300,8 @@ proc/check_panel(mob/M)
 				if(prob(15))
 					if(weapon_name)
 						my_target << sound(pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg'))
-						my_target.show_message("\red <B>[my_target] has been attacked with [weapon_name] by [src.name] </B>", 1)
-						my_target.halloss += 8
+						my_target.show_message("<span class='danger'>[my_target] has been attacked with [weapon_name] by [src.name]!</span>", 1)
+						my_target.staminaloss += 30
 						if(prob(20)) my_target.eye_blurry += 3
 						if(prob(33))
 							if(!locate(/obj/effect/overlay) in my_target.loc)
@@ -309,7 +309,7 @@ proc/check_panel(mob/M)
 					else
 						my_target << sound(pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg'))
 						my_target.show_message("\red <B>[src.name] has punched [my_target]!</B>", 1)
-						my_target.halloss += 4
+						my_target.staminaloss += 30
 						if(prob(33))
 							if(!locate(/obj/effect/overlay) in my_target.loc)
 								fake_blood(my_target)
@@ -327,7 +327,7 @@ proc/check_panel(mob/M)
 	var/image/I = image('icons/effects/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
 	target << I
 	spawn(300)
-		del(O)
+		qdel(O)
 	return
 
 var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/item/ammo_box/a357,\

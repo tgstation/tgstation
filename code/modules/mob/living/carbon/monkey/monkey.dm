@@ -8,6 +8,7 @@
 	gender = NEUTER
 	pass_flags = PASSTABLE
 	update_icon = 0		///no need to call regenerate_icon
+	ventcrawler = 1
 
 /mob/living/carbon/monkey/New()
 	create_reagents(1000)
@@ -90,7 +91,7 @@
 			if ((prob(75) && health > 0))
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				for(var/mob/O in viewers(src, null))
-					O.show_message("\red <B>[M.name] has bit [name]!</B>", 1)
+					O.show_message("<span class='danger'>[M.name] bites [name]!</span>", 1)
 				var/damage = rand(1, 5)
 				adjustBruteLoss(damage)
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
@@ -99,7 +100,7 @@
 						contract_disease(D,1,0)
 			else
 				for(var/mob/O in viewers(src, null))
-					O.show_message("\red <B>[M.name] has attempted to bite [name]!</B>", 1)
+					O.show_message("<span class='danger'>[M.name] has attempted to bite [name]!</span>", 1)
 	return
 
 /mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M as mob)
@@ -122,7 +123,7 @@
 			if (prob(75))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has punched [name]!</B>", M), 1)
+						O.show_message(text("<span class='danger'>[] has punched [name]!</span>", M), 1)
 
 				playsound(loc, "punch", 25, 1, -1)
 				var/damage = rand(5, 10)
@@ -133,7 +134,7 @@
 						spawn( 0 )
 							for(var/mob/O in viewers(src, null))
 								if ((O.client && !( O.blinded )))
-									O.show_message(text("\red <B>[] has knocked out [name]!</B>", M), 1)
+									O.show_message(text("<span class='danger'>[] has knocked out [name]!</span>", M), 1)
 							return
 				adjustBruteLoss(damage)
 				updatehealth()
@@ -141,7 +142,7 @@
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has attempted to punch [name]!</B>", M), 1)
+						O.show_message(text("<span class='danger'>[] has attempted to punch [name]!</span>", M), 1)
 		else
 			if (M.a_intent == "grab")
 				if (M == src || anchored)
@@ -165,13 +166,13 @@
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 						for(var/mob/O in viewers(src, null))
 							if ((O.client && !( O.blinded )))
-								O.show_message(text("\red <B>[] has pushed down [name]!</B>", M), 1)
+								O.show_message(text("<span class='danger'>[] has pushed down [name]!</span>", M), 1)
 					else
-						drop_item()
-						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-						for(var/mob/O in viewers(src, null))
-							if ((O.client && !( O.blinded )))
-								O.show_message(text("\red <B>[] has disarmed [name]!</B>", M), 1)
+						if(drop_item())
+							playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+							for(var/mob/O in viewers(src, null))
+								if ((O.client && !( O.blinded )))
+									O.show_message(text("<span class='danger'>[] has disarmed [name]!</span>", M), 1)
 	return
 
 /mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
@@ -199,18 +200,18 @@
 						Paralyse(rand(10, 15))
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
-							O.show_message(text("\red <B>[] has wounded [name]!</B>", M), 1)
+							O.show_message(text("<span class='danger'>[] has wounded [name]!</span>", M), 1)
 				else
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
-							O.show_message(text("\red <B>[] has slashed [name]!</B>", M), 1)
+							O.show_message(text("<span class='danger'>[] has slashed [name]!</span>", M), 1)
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has attempted to lunge at [name]!</B>", M), 1)
+						O.show_message(text("<span class='danger'>[] has attempted to lunge at [name]!</span>", M), 1)
 
 		if ("grab")
 			if (M == src || anchored)
@@ -231,15 +232,15 @@
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			var/damage = 5
 			if(prob(95))
-				Weaken(15)
+				Weaken(10)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has tackled down [name]!</B>", M), 1)
+						O.show_message(text("<span class='danger'>[] has tackled down [name]!</span>", M), 1)
 			else
-				drop_item()
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has disarmed [name]!</B>", M), 1)
+				if(drop_item())
+					for(var/mob/O in viewers(src, null))
+						if ((O.client && !( O.blinded )))
+							O.show_message(text("<span class='danger'>[] has disarmed [name]!</span>", M), 1)
 			adjustBruteLoss(damage)
 			updatehealth()
 	return
@@ -251,7 +252,7 @@
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+			O.show_message("<span class='danger'>[M] [M.attacktext] [src]!</span>", 1)
 		add_logs(M, src, "attacked", admin=0)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
@@ -269,11 +270,11 @@
 
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O.show_message(text("\red <B>The [M.name] glomps []!</B>", src), 1)
+				O.show_message(text("<span class='danger'>The [M.name] glomps []!</span>", src), 1)
 
 		var/damage = rand(1, 3)
 
-		if(istype(src, /mob/living/carbon/slime/adult))
+		if(M.is_adult)
 			damage = rand(20, 40)
 		else
 			damage = rand(5, 35)
@@ -297,9 +298,7 @@
 				if(M.powerlevel < 0)
 					M.powerlevel = 0
 
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>The [M.name] has shocked []!</B>", src), 1)
+				visible_message("<span class='danger'>[M] shocked [src]!</span>", "<span class='userdanger'>[M] shocked [src]!</span>")
 
 				Weaken(power)
 				if (stuttering < power)
@@ -366,7 +365,7 @@
 		return
 	if (stat == DEAD && !client)
 		gibs(loc, viruses)
-		del(src)
+		qdel(src)
 		return
 
 

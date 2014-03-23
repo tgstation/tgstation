@@ -65,8 +65,8 @@
 		new/obj/item/trash/candle(src.loc)
 		if(istype(src.loc, /mob))
 			var/mob/M = src.loc
-			M.before_take_item(src)
-		del(src)
+			M.unEquip(src, 1) //src is being deleted anyway
+		qdel(src)
 	update_icon()
 	if(istype(loc, /turf)) //start a fire if possible
 		var/turf/T = loc
@@ -78,18 +78,18 @@
 		lit = 0
 		update_icon()
 		SetLuminosity(0)
-		user.SetLuminosity(user.luminosity - CANDLE_LUMINOSITY)
+		user.AddLuminosity(-CANDLE_LUMINOSITY)
 
 
 /obj/item/candle/pickup(mob/user)
 	if(lit)
 		SetLuminosity(0)
-		user.SetLuminosity(user.luminosity + CANDLE_LUMINOSITY)
+		user.AddLuminosity(CANDLE_LUMINOSITY)
 
 
 /obj/item/candle/dropped(mob/user)
 	if(lit)
-		user.SetLuminosity(user.luminosity - CANDLE_LUMINOSITY)
+		user.AddLuminosity(-CANDLE_LUMINOSITY)
 		SetLuminosity(CANDLE_LUMINOSITY)
 
 #undef CANDLE_LUMINOSITY

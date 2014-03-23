@@ -8,6 +8,41 @@
 	use_power = 1
 	idle_power_usage = 200
 	active_power_usage = 5000
+	var/efficiency
+
+/obj/machinery/telepad/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/telesci_pad(null)
+	component_parts += new /obj/item/bluespace_crystal/artificial(null)
+	component_parts += new /obj/item/bluespace_crystal/artificial(null)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+	component_parts += new /obj/item/stack/cable_coil(null, 1)
+	RefreshParts()
+
+/obj/machinery/telepad/RefreshParts()
+	var/E
+	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+		E += C.rating
+	efficiency = E
+
+/obj/machinery/telepad/attackby(obj/item/I, mob/user)
+	if(default_deconstruction_screwdriver(user, "pad-idle-o", "pad-idle", I))
+		return
+
+	if(panel_open)
+		if(istype(I, /obj/item/device/multitool))
+			var/obj/item/device/multitool/M = I
+			M.buffer = src
+			user << "<span class = 'caution'>You save the data in the [I.name]'s buffer.</span>"
+
+	if(exchange_parts(user, I))
+		return
+
+	default_deconstruction_crowbar(I)
+
+
 //CARGO TELEPAD//
 /obj/machinery/telepad_cargo
 	name = "cargo telepad"
@@ -43,7 +78,7 @@
 		user << "<span class = 'caution'> You disassemble the telepad.</span>"
 		new /obj/item/stack/sheet/metal(get_turf(src))
 		new /obj/item/stack/sheet/glass(get_turf(src))
-		del(src)
+		qdel(src)
 
 ///TELEPAD CALLER///
 /obj/item/device/telepad_beacon
@@ -59,7 +94,7 @@
 		user << "<span class = 'caution'> Locked In</span>"
 		new /obj/machinery/telepad_cargo(user.loc)
 		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
-		del(src)
+		qdel(src)
 	return
 
 ///HANDHELD TELEPAD USER///
@@ -71,7 +106,7 @@
 	flags = CONDUCT
 	force = 10.0
 	throwforce = 10.0
-	throw_speed = 1
+	throw_speed = 2
 	throw_range = 5
 	var/rcharges = 10
 	var/obj/machinery/pad = null
@@ -89,7 +124,7 @@
 	desc = "Use this to send crates and closets to cargo telepads. There are [rcharges] charges left."
 	..()
 
-/obj/item/weapon/rcs/Del()
+/obj/item/weapon/rcs/Destroy()
 	processing_objects.Remove(src)
 	..()
 /obj/item/weapon/rcs/process()

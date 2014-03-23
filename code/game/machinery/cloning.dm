@@ -14,7 +14,6 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0"
 	req_access = list(access_genetics) //For premature unlocking.
-	var/mob/living/occupant
 	var/heal_level = 90 //The clone is released once its health reaches this level.
 	var/locked = 0
 	var/obj/machinery/computer/cloning/connected = null //So we remember the connected clone machine.
@@ -33,8 +32,8 @@
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/cable_coil(null, 1)
-	component_parts += new /obj/item/weapon/cable_coil(null, 1)
+	component_parts += new /obj/item/stack/cable_coil(null, 1)
+	component_parts += new /obj/item/stack/cable_coil(null, 1)
 	RefreshParts()
 
 /obj/machinery/clonepod/RefreshParts()
@@ -259,18 +258,14 @@
 
 //Let's unlock this early I guess.  Might be too early, needs tweaking.
 /obj/machinery/clonepod/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/screwdriver))
-		if(occupant || mess || locked)
-			user << "<span class='notice'>The maintenance panel is locked.</span>"
+	if(!(occupant || mess || locked))
+		if(default_deconstruction_screwdriver(user, "[icon_state]_maintenance", "[initial(icon_state)]",W))
 			return
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		default_deconstruction_screwdriver(user, "[icon_state]_maintenance", "[initial(icon_state)]")
+
+	if(exchange_parts(user, W))
 		return
 
-	if(istype(W, /obj/item/weapon/crowbar))
-		if(panel_open)
-			default_deconstruction_crowbar()
-		return
+	default_deconstruction_crowbar(W)
 
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (!src.check_access(W))
@@ -358,7 +353,7 @@
 		src.icon_state = "pod_g"
 		src.occupant.ghostize()
 		spawn(5)
-			del(src.occupant)
+			qdel(src.occupant)
 	return
 
 /obj/machinery/clonepod/relaymove(mob/user as mob)
@@ -377,21 +372,21 @@
 			for(var/atom/movable/A as mob|obj in src)
 				A.loc = src.loc
 				ex_act(severity)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(25))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
-				del(src)
+				qdel(src)
 				return
 	return
 

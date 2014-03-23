@@ -58,9 +58,9 @@
 /obj/item/projectile/bullet/stunshot
 	name = "stunshot"
 	damage = 5
-	stun = 10
-	weaken = 10
-	stutter = 10
+	stun = 5
+	weaken = 5
+	stutter = 5
 
 
 /obj/item/projectile/bullet/a762
@@ -68,14 +68,27 @@
 
 
 /obj/item/projectile/bullet/incendiary
-	name = "incendiary bullet"
-	damage = 20
 
 /obj/item/projectile/bullet/incendiary/on_hit(var/atom/target, var/blocked = 0)
-	if(istype(target, /mob/living/carbon))
-		var/mob/living/carbon/M = target
-		M.adjust_fire_stacks(1)
-		M.IgniteMob()
+		if(istype(target, /mob/living/carbon))
+				var/mob/living/carbon/M = target
+				M.adjust_fire_stacks(1)
+				M.IgniteMob()
+
+/obj/item/projectile/bullet/incendiary/shell
+	damage = 20
+
+/obj/item/projectile/bullet/incendiary/mech
+	damage = 5
+
+
+/obj/item/projectile/bullet/mime
+	damage = 20
+
+/obj/item/projectile/bullet/mime/on_hit(var/atom/target, var/blocked = 0)
+		if(istype(target, /mob/living/carbon))
+				var/mob/living/carbon/M = target
+				M.silent = max(M.silent, 10)
 
 
 /obj/item/projectile/bullet/dart

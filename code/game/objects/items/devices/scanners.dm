@@ -68,8 +68,8 @@ MASS SPECTROMETER
 	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 1.0
-	throw_speed = 5
-	throw_range = 10
+	throw_speed = 3
+	throw_range = 7
 	m_amt = 200
 	origin_tech = "magnets=1;biotech=1"
 	var/mode = 1;
@@ -102,7 +102,7 @@ MASS SPECTROMETER
 	var/tox_loss = M.getToxLoss()
 	var/fire_loss = M.getFireLoss()
 	var/brute_loss = M.getBruteLoss()
-	var/mob_status = (M.stat > 1 ? "<font color='red'>Deceased</font>" : text("[]% healthy", M.health - M.halloss))
+	var/mob_status = (M.stat > 1 ? "<font color='red'>Deceased</font>" : text("[]% healthy", M.health))
 
 	if(M.status_flags & FAKEDEATH)
 		mob_status = "<font color='red'>Deceased</font>"
@@ -132,6 +132,9 @@ MASS SPECTROMETER
 	// Damage descriptions
 
 	user.show_message(text("<span class='notice'>[] | [] | [] | []</span>", oxy_loss > 50 ? "\red Severe oxygen deprivation detected\blue" : "Subject bloodstream oxygen level normal", tox_loss > 50 ? "\red Dangerous amount of toxins detected\blue" : "Subject bloodstream toxin level minimal", fire_loss > 50 ? "\red Severe burn damage detected\blue" : "Subject burn injury status O.K", brute_loss > 50 ? "\red Severe anatomical damage detected\blue" : "Subject brute-force injury status O.K"), 1)
+
+	if(M.getStaminaLoss())
+		user.show_message(text("<span class='info'>Subject appears to be suffering from fatigue.</span>"), 1)
 
 	if (M.getCloneLoss())
 		user.show_message(text("<span class='alert'>Subject appears to have been imperfectly cloned.</span>"), 1)
@@ -169,9 +172,9 @@ MASS SPECTROMETER
 	w_class = 2.0
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	throwforce = 5
-	throw_speed = 4
-	throw_range = 20
+	throwforce = 0
+	throw_speed = 3
+	throw_range = 7
 	m_amt = 30
 	g_amt = 20
 	origin_tech = "magnets=1;engineering=1"
@@ -236,9 +239,9 @@ MASS SPECTROMETER
 	w_class = 2.0
 	flags = CONDUCT | OPENCONTAINER
 	slot_flags = SLOT_BELT
-	throwforce = 5
-	throw_speed = 4
-	throw_range = 20
+	throwforce = 0
+	throw_speed = 3
+	throw_range = 7
 	m_amt = 30
 	g_amt = 20
 	origin_tech = "magnets=2;biotech=2"

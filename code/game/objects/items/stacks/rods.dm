@@ -6,12 +6,13 @@
 	flags = CONDUCT
 	w_class = 3.0
 	force = 9.0
-	throwforce = 15.0
-	throw_speed = 5
-	throw_range = 20
+	throwforce = 10.0
+	throw_speed = 3
+	throw_range = 7
 	m_amt = 1875
 	max_amount = 60
 	attack_verb = list("hit", "bludgeoned", "whacked")
+	hitsound = 'sound/weapons/grenadelaunch.ogg'
 
 /obj/item/stack/rods/attackby(obj/item/W as obj, mob/user as mob)
 	..()

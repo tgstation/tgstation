@@ -182,12 +182,12 @@
 		msg += "[t_He] [t_is] wearing \icon[wear_id] \a [wear_id].\n"
 
 	//Jitters
-	if(is_jittery)
-		if(jitteriness >= 300)
+	switch(jitteriness)
+		if(300 to INFINITY)
 			msg += "<span class='warning'><B>[t_He] [t_is] convulsing violently!</B></span>\n"
-		else if(jitteriness >= 200)
+		if(200 to 300)
 			msg += "<span class='warning'>[t_He] [t_is] extremely jittery.</span>\n"
-		else if(jitteriness >= 100)
+		if(100 to 200)
 			msg += "<span class='warning'>[t_He] [t_is] twitching ever so slightly.</span>\n"
 
 	if(suiciding)
@@ -268,7 +268,7 @@
 
 		if(getorgan(/obj/item/organ/brain))
 			if(!key)
-				msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely</span>\n"
+				msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely.</span>\n"
 			else if(!client)
 				msg += "[t_He] [t_has] a vacant, braindead stare...\n"
 
@@ -278,7 +278,7 @@
 
 	if(istype(usr, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = usr
-		if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+		if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
 			if(!usr.stat && usr != src) //|| !usr.canmove || usr.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
 				var/criminal = "None"
 

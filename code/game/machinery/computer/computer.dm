@@ -11,9 +11,7 @@
 
 /obj/machinery/computer/New()
 	..()
-	if(ticker)
-		initialize()
-
+	power_change()
 
 /obj/machinery/computer/initialize()
 	power_change()
@@ -40,11 +38,11 @@
 /obj/machinery/computer/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(25))
-				del(src)
+				qdel(src)
 				return
 			if (prob(50))
 				verbs.Cut()
@@ -58,7 +56,8 @@
 
 /obj/machinery/computer/bullet_act(var/obj/item/projectile/Proj)
 	if(prob(Proj.damage))
-		set_broken()
+		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+			set_broken()
 	..()
 
 
@@ -112,7 +111,7 @@
 				user << "\blue You disconnect the monitor."
 				A.state = 4
 				A.icon_state = "4"
-			del(src)
+			qdel(src)
 	return
 
 /obj/machinery/computer/attack_hand(user)
@@ -122,23 +121,23 @@
 /obj/machinery/computer/attack_paw(mob/user)
 	if(circuit)
 		if(prob(10))
-			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with /his paws.</span>",\
+			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with its paws.</span>",\
 			"<span class='danger'>You smash the [src.name] with your paws.</span>",\
 			"<span class='danger'>You hear a smashing sound.</span>")
 			set_broken()
 			return
-	user.visible_message("<span class='danger'>[user.name] smashes against the [src.name] with /his paws.</span>",\
+	user.visible_message("<span class='danger'>[user.name] smashes against the [src.name] with its paws.</span>",\
 	"<span class='danger'>You smash against the [src.name] with your paws.</span>",\
 	"<span class='danger'>You hear a clicking sound.</span>")
 
 /obj/machinery/computer/attack_alien(mob/user)
 	if(circuit)
 		if(prob(80))
-			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with /his claws.</span>",\
+			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with its claws.</span>",\
 			"<span class='danger'>You smash the [src.name] with your claws.</span>",\
 			"<span class='danger'>You hear a smashing sound.</span>")
 			set_broken()
 			return
-	user.visible_message("<span class='danger'>[user.name] smashes against the [src.name] with /his claws.</spanclass>",\
-	"<span class='danger'>You smash against the [src.name] with your claws.</spanclass>",\
-	"<span class='danger'>You hear a clicking sound.</spanclass>")
+	user.visible_message("<span class='danger'>[user.name] smashes against the [src.name] with its claws.</span>",\
+	"<span class='danger'>You smash against the [src.name] with your claws.</span>",\
+	"<span class='danger'>You hear a clicking sound.</span>")

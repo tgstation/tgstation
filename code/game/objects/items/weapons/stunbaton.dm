@@ -9,19 +9,23 @@
 	w_class = 3
 	origin_tech = "combat=2"
 	attack_verb = list("beaten")
-	var/stunforce = 10
+	var/stunforce = 7
 	var/status = 0
-	var/obj/item/weapon/cell/high/bcell = null
+	var/obj/item/weapon/stock_parts/cell/high/bcell = null
 	var/hitcost = 1000
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is putting the live [name] in \his mouth! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='suicide'>[user] is putting the live [name] in \his mouth! It looks like \he's trying to commit suicide.</span>"
 		return (FIRELOSS)
 
 /obj/item/weapon/melee/baton/New()
 	..()
 	update_icon()
 	return
+
+/obj/item/weapon/melee/baton/CheckParts()
+	bcell = locate(/obj/item/weapon/stock_parts/cell) in contents
+	update_icon()
 
 /obj/item/weapon/melee/baton/loaded/New() //this one starts with a cell pre-installed.
 	..()
@@ -55,7 +59,7 @@
 		usr <<"<span class='warning'>The baton does not have a power source installed.</span>"
 
 /obj/item/weapon/melee/baton/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/cell))
+	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(!bcell)
 			user.drop_item()
 			W.loc = src
@@ -108,9 +112,8 @@
 
 	if(user.a_intent == "harm")
 		..()
-		playsound(loc, "swing_hit", 50, 1, -1)
 
-	else if(!status)
+	if(!status)
 		L.visible_message("<span class='warning'>[L] has been prodded with [src] by [user]. Luckily it was off.</span>")
 		return
 

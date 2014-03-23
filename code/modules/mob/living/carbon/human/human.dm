@@ -32,6 +32,11 @@
 
 	..()
 
+/mob/living/carbon/human/Destroy()
+	for(var/atom/movable/organelle in organs)
+		qdel(organelle)
+	return ..()
+
 /mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)
 	if ((!( yes ) || now_pushing))
 		return
@@ -115,7 +120,7 @@
 	if (client.statpanel == "Status")
 		if (internal)
 			if (!internal.air_contents)
-				del(internal)
+				qdel(internal)
 			else
 				stat("Internal Atmosphere Info", internal.name)
 				stat("Tank Pressure", internal.air_contents.return_pressure())
@@ -244,7 +249,7 @@
 
 		var/damage = rand(1, 3)
 
-		if(istype(M, /mob/living/carbon/slime/adult))
+		if(M.is_adult)
 			damage = rand(10, 35)
 		else
 			damage = rand(5, 25)
@@ -378,6 +383,8 @@
 			//visible_message("<span class='danger'>[usr] tries to empty [src]'s pockets.</span>", \
 							"<span class='userdanger'>[usr] tries to empty [src]'s pockets.</span>") // Pickpocketing!
 			if(pocket_item && !(pocket_item.flags&ABSTRACT))
+				if(pocket_item.flags & NODROP)
+					usr << "<span class='notice'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>"
 				usr << "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>"
 			else if(place_item && place_item.mob_can_equip(src, pocket_id, 1) && !(place_item.flags&ABSTRACT))
 				usr << "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>"
@@ -386,10 +393,10 @@
 
 			if(do_mob(usr, src, STRIP_DELAY))
 				if(pocket_item)
-					u_equip(pocket_item)
+					unEquip(pocket_item)
 				else
 					if(place_item)
-						usr.u_equip(place_item)
+						usr.unEquip(place_item)
 						equip_to_slot_if_possible(place_item, pocket_id, 0, 1)
 
 				// Update strip window
@@ -405,7 +412,7 @@
 	if(href_list["criminal"])
 		if(istype(usr, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = usr
-			if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+			if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
 				if(usr.stat || usr == src) //|| !usr.canmove || usr.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
 					return													  //Non-fluff: This allows sec to set people to arrest as they get disarmed or beaten
 				// Checks the user has security clearence before allowing them to change arrest status via hud, comment out to enable all access
@@ -432,7 +439,7 @@
 					if(R)
 						var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Released", "Cancel")
 						if(R)
-							if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+							if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
 								if(setcriminal != "Cancel")
 									R.fields["criminal"] = setcriminal
 									modified = 1
