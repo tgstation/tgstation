@@ -1,5 +1,20 @@
 // Code taken from /bay/station.
 
+// Examples
+/*
+	-- Will call the proc for all computers in the world, thats dir is 2.
+	CALL ex_act(1) ON /obj/machinery/computer IN world WHERE dir == 2
+	-- Will open a window with a list of all the closets in the world, with a link to VV them.
+	SELECT /obj/structure/closet/secure_closet/security/cargo IN world WHERE icon_off == "secoff"
+	-- Will change all the tube lights to green
+	UPDATE /obj/machinery/light IN world SET color = "#0F0" WHERE icon_state == "tube1"
+	-- Will delete all pickaxes. "IN world" is not required.
+	DELETE /obj/item/weapon/pickaxe
+
+	--You can use operators other than ==, such as >, <=, != and etc..
+
+*/
+
 /client/proc/SDQL2_query(query_text as message)
 	set category = "Debug"
 	if(!check_rights(R_DEBUG))  //Shouldn't happen... but just to be safe.
@@ -72,9 +87,7 @@
 					// To stop any procs which sleep from executing slowly.
 					if(d)
 						if(hascall(d, v))
-							// Replace _ with a space because BYOND doesn't like it in call, hascall loves it though! (Really I can't believe this myself)
-							var/sanitized_v = replacetext(v, "_", " ")
-							spawn() call(d, sanitized_v)(arglist(args_list)) // Spawn in case the function sleeps.
+							spawn() call(d, v)(arglist(args_list)) // Spawn in case the function sleeps.
 
 		if("delete")
 			for(var/datum/d in objs)
