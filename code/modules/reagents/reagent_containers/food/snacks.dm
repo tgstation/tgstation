@@ -29,7 +29,7 @@
 				usr.put_in_hands(TrashItem)
 			else if(istype(trash,/obj/item))
 				usr.put_in_hands(trash)
-		del(src)
+		qdel(src)
 	return
 
 
@@ -43,7 +43,7 @@
 	if(!reagents.total_volume)						//Shouldn't be needed but it checks to see if it has anything left in it.
 		user << "<span class='notice'>None of [src] left, oh no!</span>"
 		M.unEquip(src)	//so icons update :[
-		del(src)
+		qdel(src)
 		return 0
 	if(istype(M, /mob/living/carbon))
 		if(M == user)								//If you're eating it yourself.
@@ -179,10 +179,10 @@
 	for(var/i=1 to (slices_num-slices_lost))
 		var/obj/slice = new slice_path (src.loc)
 		reagents.trans_to(slice,reagents_per_slice)
-	del(src) // so long and thanks for all the fish
+	qdel(src) // so long and thanks for all the fish
 
 
-/obj/item/weapon/reagent_containers/food/snacks/Del()
+/obj/item/weapon/reagent_containers/food/snacks/Destroy()
 	if(contents)
 		for(var/atom/movable/something in contents)
 			something.loc = get_turf(src)
@@ -199,7 +199,7 @@
 				var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where the [src] was")
 				if(sattisfaction_text)
 					M.emote("[sattisfaction_text]")
-				del(src)
+				qdel(src)
 
 
 //////////////////////////////////////////////////
@@ -434,7 +434,7 @@
 		..()
 		new/obj/effect/decal/cleanable/egg_smudge(src.loc)
 		reagents.reaction(hit_atom, TOUCH)
-		del(src)
+		qdel(src)
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(istype( W, /obj/item/toy/crayon ))
@@ -595,6 +595,16 @@
 		reagents.add_reagent("toxin", 2)
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/cornedbeef
+	name = "corned beef and cabbage"
+	desc = "Now you can feel like a real tourist vacationing in Ireland."
+	icon_state = "cornedbeef"
+	trash = /obj/item/trash/plate
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		bitesize = 3
+
 /obj/item/weapon/reagent_containers/food/snacks/faggot
 	name = "faggot"
 	desc = "A great meal all round. Not a cord of wood."
@@ -642,7 +652,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/burger/ghost
 	name = "ghost burger"
 	desc = "Too Spooky!"
-	icon_state = "ghostburger"
+	alpha = 125
 
 /obj/item/weapon/reagent_containers/food/snacks/burger
 	name = "burger"
@@ -737,7 +747,7 @@
 			)
 			reagents.remove_reagent("nutriment", 1)
 			if(reagents.total_volume <= 0)
-				del(src)
+				qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/muffin
 	name = "muffin"
@@ -755,7 +765,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/muffin/booberry
 	name = "booberry muffin"
-	icon_state = "booberrymuffin"
+	icon_state = "berrymuffin"
+	alpha = 125
 	desc = "My stomach is a graveyard! No living being can quench my bloodthirst!"
 
 /obj/item/weapon/reagent_containers/food/snacks/pie
@@ -772,7 +783,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom)
 	..()
 	new/obj/effect/decal/cleanable/pie_smudge(src.loc)
-	del(src)
+	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/berryclafoutis
 	name = "berry clafoutis"
@@ -1320,7 +1331,7 @@
 	proc/Expand()
 		visible_message("<span class='notice'>[src] expands!</span>")
 		new /mob/living/carbon/monkey(get_turf(src))
-		del(src)
+		qdel(src)
 
 	proc/Unwrap(mob/user)
 		icon_state = "monkeycube"
@@ -2410,6 +2421,7 @@
 	name = "not-a-sandwich"
 	desc = "Something seems to be wrong with this, you can't quite figure what. Maybe it's his moustache."
 	icon_state = "notasandwich"
+	trash = /obj/item/trash/plate
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)

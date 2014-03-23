@@ -240,7 +240,7 @@
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has kicked []!</B>", M, src), 1)
 				if ((stat != DEAD) && (damage > 4.9))
-					Weaken(rand(10,15))
+					Weaken(rand(5,10))
 					for(var/mob/O in viewers(M, null))
 						if ((O.client && !( O.blinded )))
 							O.show_message(text("\red <B>[] has weakened []!</B>", M, src), 1, "\red You hear someone fall.", 2)
@@ -306,10 +306,10 @@
 	return
 
 /* Commented out because it's duplicated in life.dm
-/mob/living/carbon/alien/larva/proc/grow() // Larvae can grow into full fledged Xenos if they survive long enough -- TLE
+/mob/living/carbon/alien/larva/proc/grow() // Larvae can grow into full fledged Xenos if they survive long enough
 	if(icon_state == "larva_l" && !canmove) // This is a shit death check. It is made of shit and death. Fix later.
 		return
 	else
 		var/mob/living/carbon/alien/humanoid/A = new(loc)
 		A.key = key
-		del(src) */
+		qdel(src) */

@@ -287,6 +287,15 @@
 			SetLuminosity(1)
 			valid = 1
 
+		if(/obj/item/clothing/head/sombrero)
+			name = "Segnor [real_name]"
+			desc = "You must respect elder [real_name]"
+			valid = 1
+
+		if(/obj/item/clothing/head/hopcap)
+			name = "Lieutenant [real_name]"
+			desc = "Can actually be trusted to not run off on his own."
+			valid = 1
 
 	if(valid)
 		if(usr)

@@ -27,12 +27,14 @@
 	src.loc = loc
 	src.target = target
 	src.creator = creator
+	for(var/mob/M in src.loc)
+		src.teleport(M)
 	if(lifespan > 0)
 		spawn(lifespan)
-			del(src)
+			qdel(src)
 	return
 
-/obj/effect/portal/Del()
+/obj/effect/portal/Destroy()
 	portals -= src
 	if(istype(creator, /obj/item/weapon/hand_tele))
 		var/obj/item/weapon/hand_tele/O = creator
@@ -47,7 +49,7 @@
 	if(icon_state == "portal1")
 		return
 	if (!( target ))
-		del(src)
+		qdel(src)
 		return
 	if (istype(M, /atom/movable))
 		if(prob(failchance)) //oh dear a problem, put em in deep space

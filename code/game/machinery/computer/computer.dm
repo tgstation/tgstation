@@ -38,11 +38,11 @@
 /obj/machinery/computer/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(25))
-				del(src)
+				qdel(src)
 				return
 			if (prob(50))
 				verbs.Cut()
@@ -56,7 +56,8 @@
 
 /obj/machinery/computer/bullet_act(var/obj/item/projectile/Proj)
 	if(prob(Proj.damage))
-		set_broken()
+		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+			set_broken()
 	..()
 
 
@@ -110,7 +111,7 @@
 				user << "\blue You disconnect the monitor."
 				A.state = 4
 				A.icon_state = "4"
-			del(src)
+			qdel(src)
 	return
 
 /obj/machinery/computer/attack_hand(user)

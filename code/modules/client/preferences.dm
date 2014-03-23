@@ -4,7 +4,7 @@ var/list/preferences_datums = list()
 
 #define IS_MODE_COMPILED(MODE) (ispath(text2path("/datum/game_mode/"+(MODE))))
 
-var/global/list/special_roles = list( //keep synced with the defines BE_* in setup.dm --rastaf
+var/global/list/special_roles = list( //keep synced with the defines BE_* in setup.dm
 //some autodetection here.
 	"traitor" = IS_MODE_COMPILED("traitor"),             // 0
 	"operative" = IS_MODE_COMPILED("nuclear"),           // 1
@@ -13,7 +13,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"malf AI" = IS_MODE_COMPILED("malfunction"),         // 4
 	"revolutionary" = IS_MODE_COMPILED("revolution"),    // 5
 	"alien" = 1, //always show                			 // 6
-	"pAI candidate" = 1, // -- TLE                       // 7
+	"pAI candidate" = 1,                                 // 7
 	"cultist" = IS_MODE_COMPILED("cult"),                // 8
 	"blob" = IS_MODE_COMPILED("blob"),					 // 9
 )

@@ -30,11 +30,11 @@
 	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/smes(null)
-	component_parts += new /obj/item/weapon/cell/high(null)
-	component_parts += new /obj/item/weapon/cell/high(null)
-	component_parts += new /obj/item/weapon/cell/high(null)
-	component_parts += new /obj/item/weapon/cell/high(null)
-	component_parts += new /obj/item/weapon/cell/high(null)
+	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
+	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
+	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
+	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
+	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/stack/cable_coil(null, 5)
 	RefreshParts()
@@ -61,7 +61,7 @@
 		IO += CP.rating
 	input_level_max = 200000 * IO
 	output_level_max = 200000 * IO
-	for(var/obj/item/weapon/cell/PC in component_parts)
+	for(var/obj/item/weapon/stock_parts/cell/PC in component_parts)
 		C += PC.maxcharge
 	capacity = C / (15000) * 1e6
 
@@ -92,15 +92,26 @@
 		update_icon()
 		return
 
+	if(exchange_parts(user, I))
+		return
+
 	default_deconstruction_crowbar(I)
 
-/obj/machinery/power/smes/Del()
+/obj/machinery/power/smes/Destroy()
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
 		var/area/area = get_area(src)
 		message_admins("SMES deleted at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
 		log_game("SMES deleted at ([area.name])")
 		investigate_log("<font color='red'>deleted</font> at ([area.name])","singulo")
+	if(terminal)
+		disconnect_terminal()
 	..()
+
+/obj/machinery/power/smes/disconnect_terminal()
+	if(terminal)
+		terminal.master = null
+		terminal = null
+
 
 /obj/machinery/power/smes/update_icon()
 	overlays.Cut()
@@ -290,7 +301,8 @@
 			if("custom")
 				var/custom = input(usr, "What rate would you like this SMES to attempt to charge at? Max is [input_level_max].") as null|num
 				if(isnum(custom))
-					input_level = custom
+					href_list["set_input_level"] = custom
+					.()
 			if("plus")
 				input_level += 10000
 			if("minus")
@@ -310,7 +322,8 @@
 			if("custom")
 				var/custom = input(usr, "What rate would you like this SMES to attempt to output at? Max is [output_level_max].") as null|num
 				if(isnum(custom))
-					output_level = custom
+					href_list["set_output_level"] = custom
+					.()
 			if("plus")
 				output_level += 10000
 			if("minus")

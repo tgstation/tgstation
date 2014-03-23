@@ -133,9 +133,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	for(var/obj/item/organ/limb/O in organs)
 		if(O.brutestate)
-			standing.overlays	+= "[O.icon]_[O.brutestate]0"	//we're adding icon_states of the base image as overlays
+			standing.overlays	+= "[O.icon_state]_[O.brutestate]0"	//we're adding icon_states of the base image as overlays
 		if(O.burnstate)
-			standing.overlays	+= "[O.icon]_0[O.burnstate]"
+			standing.overlays	+= "[O.icon_state]_0[O.burnstate]"
 
 	apply_overlay(DAMAGE_LAYER)
 
@@ -449,6 +449,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 			client.screen += head
 
 		var/image/standing = image("icon"='icons/mob/head.dmi', "icon_state"="[head.icon_state]", "layer"=-HEAD_LAYER)
+		standing.color = head.color // For now, this is here solely for kitty ears, but everything should do this eventually
+		standing.alpha = head.alpha
 
 		overlays_standing[HEAD_LAYER]	= standing
 

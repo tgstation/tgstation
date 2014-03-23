@@ -116,11 +116,11 @@ proc/wabbajack(mob/living/M)
 
 			if(istype(M, /mob/living/silicon/robot))
 				var/mob/living/silicon/robot/Robot = M
-				if(Robot.mmi)	del(Robot.mmi)
+				if(Robot.mmi)	qdel(Robot.mmi)
 			else
 				for(var/obj/item/W in M)
 					if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
-						del(W)
+						qdel(W)
 						continue
 					W.layer = initial(W.layer)
 					W.loc = M.loc
@@ -212,7 +212,7 @@ proc/wabbajack(mob/living/M)
 
 			new_mob << "<B>Your form morphs into that of a [randomize].</B>"
 
-			del(M)
+			qdel(M)
 			return new_mob
 
 /obj/item/projectile/magic/animate
@@ -237,7 +237,8 @@ proc/wabbajack(mob/living/M)
 					S << "You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator."
 				H = change
 				H.loc = S
-				del(src)
+				qdel(src)
+				return
 		else
 			var/obj/O = change
 			new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, firer)

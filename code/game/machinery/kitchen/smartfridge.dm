@@ -116,6 +116,7 @@
 		item_quants[n]++
 	else
 		item_quants[n] = 1
+	item_quants = sortAssoc(item_quants)
 
 /obj/machinery/smartfridge/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
@@ -266,7 +267,7 @@ obj/machinery/smartfridge/drying_rack/load() //For updating the filled overlay
 		else
 			var/dried = S.dried_type
 			new dried(src.loc)
-			del S
+			qdel(S)
 		return 1
 	return 0
 

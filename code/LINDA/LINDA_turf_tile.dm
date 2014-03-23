@@ -261,7 +261,7 @@ turf/simulated/proc/share_temperature_mutual_solid(turf/simulated/sharer, conduc
 
 /turf/simulated/proc/last_share_check()
 	if(air.last_share > MINIMUM_AIR_TO_SUSPEND)
-		excited_group.breakdown = 0
+		excited_group.reset_cooldowns()
 
 /turf/proc/high_pressure_movements()
 	for(var/atom/movable/M in src)
@@ -287,7 +287,6 @@ atom/movable/proc/experience_pressure_difference(pressure_difference, direction)
 
 /datum/excited_group
 	var/list/turf_list = list()
-	var/breakdown = 0
 	var/breakdown_cooldown = 0
 
 /datum/excited_group/New()
@@ -317,36 +316,46 @@ atom/movable/proc/experience_pressure_difference(pressure_difference, direction)
 /datum/excited_group/proc/reset_cooldowns()
 	breakdown_cooldown = 0
 
-/datum/excited_group/proc/self_compare()
-	var/restore = 1
-	var/turf/simulated/sample = pick(turf_list)
-	for(var/turf/simulated/T in turf_list)
-		if(!T.air.compare(sample.air))
-			restore = 0
-			break
-	if(restore)
-		return 1
-
 /datum/excited_group/proc/self_breakdown()
 	var/datum/gas_mixture/A = new
+	var/datum/gas/sleeping_agent/S = new
+	A.trace_gases += S
 	for(var/turf/simulated/T in turf_list)
 		A.oxygen 		+= T.air.oxygen
 		A.carbon_dioxide+= T.air.carbon_dioxide
 		A.nitrogen 		+= T.air.nitrogen
 		A.toxins 		+= T.air.toxins
+
+		if(T.air.trace_gases.len)
+			for(var/datum/gas/N in T.air.trace_gases)
+				S.moles += N.moles
+
 	for(var/turf/simulated/T in turf_list)
 		T.air.oxygen		= A.oxygen/turf_list.len
 		T.air.carbon_dioxide= A.carbon_dioxide/turf_list.len
 		T.air.nitrogen		= A.nitrogen/turf_list.len
 		T.air.toxins		= A.toxins/turf_list.len
 
+		if(S.moles > 0)
+			if(T.air.trace_gases.len)
+				for(var/datum/gas/G in T.air.trace_gases)
+					G.moles = S.moles/turf_list.len
+			else
+				var/datum/gas/sleeping_agent/G = new
+				G.moles = S.moles/turf_list.len
+				T.air.trace_gases += G
+
+		if(T.air.check_tile_graphic())
+			T.update_visuals(T.air)
+
 
 /datum/excited_group/proc/dismantle()
 	for(var/turf/simulated/T in turf_list)
 		T.excited = 0
 		T.recently_active = 0
+		T.excited_group = null
 		air_master.active_turfs -= T
-	air_master.excited_groups -= src
+	garbage_collect()
 
 /datum/excited_group/proc/garbage_collect()
 	for(var/turf/simulated/T in turf_list)

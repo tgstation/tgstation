@@ -12,7 +12,7 @@
 	throw_range = 5
 	m_amt = 500
 	origin_tech = "materials=1"
-	var/breakouttime = 1200 //Deciseconds = 120s = 2 minutes
+	var/breakouttime = 600 //Deciseconds = 120s = 2 minutes
 
 
 /obj/item/weapon/handcuffs/attack(mob/living/carbon/C, mob/user)
@@ -40,7 +40,7 @@
 
 		var/turf/user_loc = user.loc
 		var/turf/C_loc = C.loc
-		if(do_after(user, 50))
+		if(do_after(user, 30))
 			if(!C || C.handcuffed)
 				return
 			if(user_loc == user.loc && C_loc == C.loc)
@@ -99,7 +99,7 @@
 		user.put_in_hands(W)
 		user << "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>"
 
-		del(src)
+		qdel(src)
 
 /obj/item/weapon/handcuffs/cyborg/attack(mob/living/carbon/C, mob/user)
 	if(isrobot(user))

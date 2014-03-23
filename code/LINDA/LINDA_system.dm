@@ -110,19 +110,12 @@ datum/controller/air_system
 
 /datum/controller/air_system/proc/process_excited_groups()
 	for(var/datum/excited_group/EG in excited_groups)
-		if(EG.breakdown)
-			EG.breakdown_cooldown ++
-		else
-			EG.breakdown_cooldown = 0
-
-		if(EG.breakdown_cooldown > 10)
-			if(EG.self_compare())
-				EG.dismantle()
+		EG.breakdown_cooldown ++
 		if(EG.breakdown_cooldown == 10)
-			if(!EG.self_compare())
-				EG.reset_cooldowns()
 			EG.self_breakdown()
-		EG.breakdown = 1
+			return
+		if(EG.breakdown_cooldown > 20)
+			EG.dismantle()
 
 /turf/proc/CanAtmosPass(var/turf/T)
 	if(!istype(T))	return 0

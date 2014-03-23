@@ -21,8 +21,8 @@
 		src.amount=amount
 	return
 
-/obj/item/stack/Del()
-	if (src && usr && usr.machine==src)
+/obj/item/stack/Destroy()
+	if (usr && usr.machine==src)
 		usr << browse(null, "window=stack")
 	..()
 
@@ -97,7 +97,7 @@
 	if ((usr.restrained() || usr.stat || usr.get_active_hand() != src))
 		return
 	if (href_list["make"])
-		if (src.amount < 1) del(src) //Never should happen
+		if (src.amount < 1) qdel(src) //Never should happen
 
 		var/datum/stack_recipe/R = recipes[text2num(href_list["make"])]
 		var/multiplier = text2num(href_list["multiplier"])
@@ -131,14 +131,14 @@
 			var/oldsrc = src
 			src = null //dont kill proc after del()
 			usr.unEquip(oldsrc, 1)
-			del(oldsrc)
+			qdel(oldsrc)
 			if (istype(O,/obj/item))
 				usr.put_in_hands(O)
 		O.add_fingerprint(usr)
 		//BubbleWrap - so newly formed boxes are empty
 		if ( istype(O, /obj/item/weapon/storage) )
 			for (var/obj/item/I in O)
-				del(I)
+				qdel(I)
 		//BubbleWrap END
 	if (src && usr.machine==src) //do not reopen closed window
 		spawn( 0 )
@@ -153,7 +153,7 @@
 		src = null //dont kill proc after del()
 		if(usr)
 			usr.unEquip(oldsrc, 1)
-		del(oldsrc)
+		qdel(oldsrc)
 	return
 
 /obj/item/stack/proc/add_to_stacks(mob/usr as mob)
@@ -173,7 +173,7 @@
 
 /obj/item/stack/attack_hand(mob/user as mob)
 	if (user.get_inactive_hand() == src)
-		var/obj/item/stack/F = new src.type( user, amount=1)
+		var/obj/item/stack/F = new src.type( user, 1)
 		F.copy_evidences(src)
 		user.put_in_hands(F)
 		src.add_fingerprint(user)

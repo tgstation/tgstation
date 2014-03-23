@@ -61,7 +61,7 @@
 					if(do_after(user, 20))
 						if(C)
 							C.amount -= 5
-							if(!C.amount) del(C)
+							if(!C.amount) qdel(C)
 							user << "<span class='notice'>You add cables to the frame.</span>"
 							state = 2
 							icon_state = "box_1"
@@ -69,7 +69,7 @@
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				user << "<span class='notice'>You dismantle the frame.</span>"
 				new /obj/item/stack/sheet/metal(src.loc, 5)
-				del(src)
+				qdel(src)
 		if(2)
 			if(istype(P, /obj/item/weapon/circuitboard))
 				var/obj/item/weapon/circuitboard/B = P
@@ -122,14 +122,14 @@
 					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 					var/obj/machinery/new_machine = new src.circuit.build_path(src.loc)
 					for(var/obj/O in new_machine.component_parts)
-						del(O)
+						qdel(O)
 					new_machine.component_parts = list()
 					for(var/obj/O in src)
 						O.loc = null
 						new_machine.component_parts += O
 					circuit.loc = null
 					new_machine.RefreshParts()
-					del(src)
+					qdel(src)
 
 			if(istype(P, /obj/item))
 				var/success
@@ -149,9 +149,10 @@
 						components += P
 						req_components[I]--
 						update_req_desc()
-						break
+						return 1
 				if(!success)
 					user << "<span class='danger'>You cannot add that to the machine!</span>"
+					return 0
 
 
 //Machine Frame Circuit Boards
@@ -194,7 +195,7 @@ to destroy them and players will be able to make replacements.
 	origin_tech = "programming=4;powerstorage=5;engineering=5"
 	req_components = list(
 							"/obj/item/stack/cable_coil" = 5,
-							"/obj/item/weapon/cell" = 5,
+							"/obj/item/weapon/stock_parts/cell" = 5,
 							"/obj/item/weapon/stock_parts/capacitor" = 1)
 
 /obj/item/weapon/circuitboard/power_compressor
@@ -308,16 +309,16 @@ to destroy them and players will be able to make replacements.
 							"/obj/item/weapon/stock_parts/manipulator" = 1,
 							"/obj/item/stack/cable_coil" = 1,
 							"/obj/item/weapon/stock_parts/console_screen" = 1)
-/*
+
 /obj/item/weapon/circuitboard/hydroponics
 	name = "circuit board (Hydroponics Tray)"
 	build_path = /obj/machinery/hydroponics/constructable
 	board_type = "machine"
 	origin_tech = "programming=1;biotech=1"
 	req_components = list(
-							"/obj/item/weapon/reagent_containers/glass/beaker" = 2,
+							"/obj/item/weapon/stock_parts/matter_bin" = 2,
 							"/obj/item/weapon/stock_parts/console_screen" = 1)
-*/
+
 /obj/item/weapon/circuitboard/microwave
 	name = "circuit board (Microwave)"
 	build_path = /obj/machinery/microwave
@@ -338,7 +339,7 @@ to destroy them and players will be able to make replacements.
 							"/obj/item/weapon/stock_parts/capacitor" = 1,
 							"/obj/item/weapon/stock_parts/manipulator" = 1,
 							"/obj/item/weapon/stock_parts/console_screen" = 1,
-							"/obj/item/weapon/cell" = 1)
+							"/obj/item/weapon/stock_parts/cell" = 1)
 
 
 /obj/item/weapon/circuitboard/destructive_analyzer
@@ -453,7 +454,7 @@ obj/item/weapon/circuitboard/rdserver
 	origin_tech = "powerstorage=3;engineering=3"
 	req_components = list(
 							"/obj/item/weapon/stock_parts/capacitor" = 2,
-							"/obj/item/weapon/cell" = 1,
+							"/obj/item/weapon/stock_parts/cell" = 1,
 							"/obj/item/weapon/stock_parts/manipulator" = 1,)
 
 // Telecomms circuit boards:

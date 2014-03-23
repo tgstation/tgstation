@@ -29,7 +29,7 @@
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE"
 	name = "\improper DEATH-RIPLEY"
 	icon_state = "deathripley"
-	step_in = 2
+	step_in = 3
 	opacity=0
 	lights_power = 60
 	wreckage = /obj/structure/mecha_wreckage/ripley/deathripley
@@ -59,7 +59,7 @@
 	var/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp/HC = new /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp
 	HC.attach(src)
 	for(var/obj/item/mecha_parts/mecha_tracking/B in src.contents)//Deletes the beacon so it can't be found easily
-		del (B)
+		qdel(B)
 
 /obj/mecha/working/ripley/Exit(atom/movable/O)
 	if(O in cargo)
@@ -93,7 +93,7 @@
 	output += "</div>"
 	return output
 
-/obj/mecha/working/ripley/Del()
+/obj/mecha/working/ripley/Destroy()
 	for(var/mob/M in src)
 		if(M==src.occupant)
 			continue

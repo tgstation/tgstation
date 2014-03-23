@@ -5,7 +5,7 @@
 	icon_state = "sheater0"
 	name = "space heater"
 	desc = "Made by Space Amish using traditional space techniques, this heater is guaranteed not to set the station on fire."
-	var/obj/item/weapon/cell/cell
+	var/obj/item/weapon/stock_parts/cell/cell
 	var/on = 0
 	var/open = 0
 	var/set_temperature = 50		// in celcius, add T0C for kelvin
@@ -49,14 +49,14 @@
 		..(severity)
 
 	attackby(obj/item/I, mob/user)
-		if(istype(I, /obj/item/weapon/cell))
+		if(istype(I, /obj/item/weapon/stock_parts/cell))
 			if(open)
 				if(cell)
 					user << "There is already a power cell inside."
 					return
 				else
 					// insert cell
-					var/obj/item/weapon/cell/C = usr.get_active_hand()
+					var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
 					if(istype(C))
 						user.drop_item()
 						cell = C
@@ -136,7 +136,7 @@
 
 			if("cellinstall")
 				if(open && !cell)
-					var/obj/item/weapon/cell/C = usr.get_active_hand()
+					var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
 					if(istype(C))
 						usr.drop_item()
 						cell = C
@@ -167,9 +167,9 @@
 
 							var/heat_capacity = removed.heat_capacity()
 							//world << "heating ([heat_capacity])"
-							if(heat_capacity == 0 || heat_capacity == null) // Added check to avoid divide by zero (oshi-) runtime errors -- TLE
+							if(heat_capacity == 0 || heat_capacity == null) // Added check to avoid divide by zero (oshi-) runtime errors
 								heat_capacity = 1
-							removed.temperature = min((removed.temperature*heat_capacity + heating_power)/heat_capacity, 1000) // Added min() check to try and avoid wacky superheating issues in low gas scenarios -- TLE
+							removed.temperature = min((removed.temperature*heat_capacity + heating_power)/heat_capacity, 1000) // Added min() check to try and avoid wacky superheating issues in low gas scenarios
 							cell.use(heating_power/20000)
 
 							//world << "now at [removed.temperature]"

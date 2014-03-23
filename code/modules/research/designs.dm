@@ -921,6 +921,16 @@ datum/design/tech_disk
 /////////////Stock Parts////////////////
 ////////////////////////////////////////
 
+datum/design/RPED
+	name = "Rapid Part Exchange Device"
+	desc = "Special mechanical module made to store, sort, and apply standart machine parts."
+	id = "rped"
+	req_tech = list("engineering" = 3,
+					"materials" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 15000, "$glass" = 5000) //hardcore
+	build_path = /obj/item/weapon/storage/part_replacer
+
 datum/design/basic_capacitor
 	name = "Basic Capacitor"
 	desc = "A stock part used in the construction of various devices."
@@ -1146,7 +1156,7 @@ datum/design/basic_cell
 	req_tech = list("powerstorage" = 1)
 	build_type = PROTOLATHE | AUTOLATHE |MECHFAB
 	materials = list("$metal" = 700, "$glass" = 50)
-	build_path = /obj/item/weapon/cell
+	build_path = /obj/item/weapon/stock_parts/cell
 	category = "Misc"
 
 datum/design/high_cell
@@ -1156,7 +1166,7 @@ datum/design/high_cell
 	req_tech = list("powerstorage" = 2)
 	build_type = PROTOLATHE | AUTOLATHE | MECHFAB
 	materials = list("$metal" = 700, "$glass" = 60)
-	build_path = /obj/item/weapon/cell/high
+	build_path = /obj/item/weapon/stock_parts/cell/high
 	category = "Misc"
 
 datum/design/super_cell
@@ -1167,7 +1177,7 @@ datum/design/super_cell
 	reliability = 75
 	build_type = PROTOLATHE | MECHFAB
 	materials = list("$metal" = 700, "$glass" = 70)
-	build_path = /obj/item/weapon/cell/super
+	build_path = /obj/item/weapon/stock_parts/cell/super
 	category = "Misc"
 
 datum/design/hyper_cell
@@ -1178,7 +1188,7 @@ datum/design/hyper_cell
 	reliability = 70
 	build_type = PROTOLATHE | MECHFAB
 	materials = list("$metal" = 400, "$gold" = 150, "$silver" = 150, "$glass" = 70)
-	build_path = /obj/item/weapon/cell/hyper
+	build_path = /obj/item/weapon/stock_parts/cell/hyper
 	category = "Misc"
 
 datum/design/light_replacer
@@ -1292,7 +1302,7 @@ datum/design/biogenerator
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/biogenerator
-/*
+
 datum/design/hydroponics
 	name = "Hydroponics Tray Board"
 	desc = "The circuit board for a hydroponics tray."
@@ -1301,7 +1311,7 @@ datum/design/hydroponics
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/hydroponics
-*/
+
 datum/design/microwave
 	name = "Microwave Board"
 	desc = "The circuit board for a microwave."

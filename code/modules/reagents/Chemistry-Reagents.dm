@@ -226,7 +226,7 @@ datum
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 					lowertemp.react()
 					T.assume_air(lowertemp)
-					del(hotspot)
+					qdel(hotspot)
 				return
 			reaction_obj(var/obj/O, var/volume)
 				src = null
@@ -237,7 +237,7 @@ datum
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 					lowertemp.react()
 					T.assume_air(lowertemp)
-					del(hotspot)
+					qdel(hotspot)
 				if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 					var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
 					if(!cube.wrapped)
@@ -266,7 +266,7 @@ datum
 				if(data >= 30)
 					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 4
-					M.make_dizzy(5)
+					M.Dizzy(5)
 				if(data >= 30*2.5 && prob(33))
 					if (!M.confused) M.confused = 1
 					M.confused += 3
@@ -278,7 +278,7 @@ datum
 				if(!istype(T)) return
 				if(volume>=10)
 					for(var/obj/effect/rune/R in T)
-						del R
+						qdel(R)
 				T.Bless()
 
 		lube
@@ -761,7 +761,7 @@ datum
 
 			reaction_obj(var/obj/O, var/volume)
 				if(istype(O,/obj/effect/decal/cleanable))
-					del(O)
+					qdel(O)
 				else
 					if(O)
 						O.clean_blood()
@@ -769,7 +769,7 @@ datum
 				if(volume >= 1)
 					T.clean_blood()
 					for(var/obj/effect/decal/cleanable/C in T)
-						del(C)
+						qdel(C)
 
 					for(var/mob/living/carbon/slime/M in T)
 						M.adjustToxLoss(rand(5,10))
@@ -825,7 +825,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.make_dizzy(1)
+				M.Dizzy(1)
 				if(!M.confused) M.confused = 1
 				M.confused = max(M.confused, 20)
 				holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
@@ -1151,8 +1151,8 @@ datum
 						M.status_flags &= ~DISFIGURED
 					if(35 to INFINITY)
 						M.adjustToxLoss(1)
-						M.make_dizzy(5)
-						M.make_jittery(5)
+						M.Dizzy(5)
+						M.Jitter(5)
 
 				..()
 				return
@@ -1285,7 +1285,7 @@ datum
 			on_mob_life(var/mob/living/carbon/M)
 				if(!istype(M))	return
 				if(!M) M = holder.my_atom
-				M.apply_effect(10,IRRADIATE,0)
+				M.apply_effect(5,IRRADIATE,0)
 				..()
 				return
 
@@ -1411,8 +1411,8 @@ datum
 				if(!M) M = holder.my_atom
 				M.status_flags |= FAKEDEATH
 				M.adjustOxyLoss(0.5*REM)
-				M.Weaken(10)
-				M.silent = max(M.silent, 10)
+				M.Weaken(5)
+				M.silent = max(M.silent, 5)
 				M.tod = worldtime2text()
 				..()
 				return
@@ -1451,9 +1451,9 @@ datum
 					alien_weeds.health -= rand(15,35) // Kills alien weeds pretty fast
 					alien_weeds.healthcheck()
 				else if(istype(O,/obj/effect/glowshroom)) //even a small amount is enough to kill it
-					del(O)
+					qdel(O)
 				else if(istype(O,/obj/effect/spacevine))
-					if(prob(50)) del(O) //Kills kudzu too.
+					if(prob(50)) qdel(O) //Kills kudzu too.
 				// Damage that is done to growing plants is separately at code/game/machinery/hydroponics at obj/item/hydroponics
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
@@ -1466,6 +1466,33 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(H.dna)
 							if(H.dna.mutantrace == "plant") //plantmen take a LOT of damage
+								H.adjustToxLoss(10)
+
+		toxin/plantbgone/weedkiller
+			name = "Weed Killer"
+			id = "weedkiller"
+			description = "A harmful toxic mixture to kill weeds. Do not ingest!"
+			reagent_state = LIQUID
+			color = "#4B004B" // rgb: 75, 0, 75
+
+
+		toxin/pestkiller
+			name = "Pest Killer"
+			id = "pestkiller"
+			description = "A harmful toxic mixture to kill pests. Do not ingest!"
+			color = "#4B004B" // rgb: 75, 0, 75
+			toxpwr = 1
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+				src = null
+				if(iscarbon(M))
+					var/mob/living/carbon/C = M
+					if(!C.wear_mask) // If not wearing a mask
+						C.adjustToxLoss(2) // 4 toxic damage per application, doubled for some reason
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if(H.dna)
+							if(H.dna.mutantrace == "fly") //Botanists can now genocide plant and fly people alike.
 								H.adjustToxLoss(10)
 
 		toxin/stoxin
@@ -1572,7 +1599,7 @@ datum
 						if(H.head)
 							if(prob(meltprob) && !H.head.unacidable)
 								H << "<span class='danger'>Your headgear melts away but protects you from the acid!</span>"
-								del(H.head)
+								qdel(H.head)
 								H.update_inv_head(0)
 								H.update_hair(0)
 							else
@@ -1582,7 +1609,7 @@ datum
 						if(H.wear_mask)
 							if(prob(meltprob) && !H.wear_mask.unacidable)
 								H << "<span class='danger'>Your mask melts away but protects you from the acid!</span>"
-								del (H.wear_mask)
+								qdel(H.wear_mask)
 								H.update_inv_wear_mask(0)
 								H.update_hair(0)
 							else
@@ -1592,7 +1619,7 @@ datum
 						if(H.glasses) //Doesn't protect you from the acid but can melt anyways!
 							if(prob(meltprob) && !H.glasses.unacidable)
 								H << "<span class='danger'>Your glasses melts away!</span>"
-								del (H.glasses)
+								qdel(H.glasses)
 								H.update_inv_glasses(0)
 
 					else if(ismonkey(M))
@@ -1600,7 +1627,7 @@ datum
 						if(MK.wear_mask)
 							if(!MK.wear_mask.unacidable)
 								MK << "<span class='danger'>Your mask melts away but protects you from the acid!</span>"
-								del (MK.wear_mask)
+								qdel(MK.wear_mask)
 								MK.update_inv_wear_mask(0)
 							else
 								MK << "<span class='warning'>Your mask protects you from the acid.</span>"
@@ -1632,7 +1659,7 @@ datum
 						I.desc = "Looks like this was \an [O] some time ago."
 						for(var/mob/M in viewers(5, O))
 							M << "\red \the [O] melts."
-						del(O)
+						qdel(O)
 
 		toxin/acid/polyacid
 			name = "Polytrinic acid"
@@ -1968,18 +1995,18 @@ datum
 				switch(data)
 					if(1 to 5)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_dizzy(5)
+						M.Dizzy(5)
 						if(prob(10)) M.emote(pick("twitch","giggle"))
 					if(5 to 10)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_jittery(10)
-						M.make_dizzy(10)
+						M.Jitter(10)
+						M.Dizzy(10)
 						M.druggy = max(M.druggy, 35)
 						if(prob(20)) M.emote(pick("twitch","giggle"))
 					if (10 to INFINITY)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_jittery(20)
-						M.make_dizzy(20)
+						M.Jitter(20)
+						M.Dizzy(20)
 						M.druggy = max(M.druggy, 40)
 						if(prob(30)) M.emote(pick("twitch","giggle"))
 				holder.remove_reagent(src.id, 0.2)
@@ -2046,7 +2073,7 @@ datum
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 					lowertemp.react()
 					T.assume_air(lowertemp)
-					del(hotspot)
+					qdel(hotspot)
 
 		enzyme
 			name = "Universal Enzyme"
@@ -2367,7 +2394,7 @@ datum
 				M.sleeping = max(0,M.sleeping - 2)
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
-				M.make_jittery(5)
+				M.Jitter(5)
 				if(holder.has_reagent("frostoil"))
 					holder.remove_reagent("frostoil", 5)
 				..()
@@ -2407,7 +2434,7 @@ datum
 				M.sleeping = max(0,M.sleeping-2)
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
-				M.make_jittery(5)
+				M.Jitter(5)
 				..()
 				return
 
@@ -2452,7 +2479,7 @@ datum
 			color = "#100800" // rgb: 16, 8, 0
 
 			on_mob_life(var/mob/living/M as mob)
-				M.make_jittery(20)
+				M.Jitter(20)
 				M.druggy = max(M.druggy, 30)
 				M.dizziness +=5
 				M.drowsyness = 0
@@ -2475,7 +2502,7 @@ datum
 				M.sleeping = max(0,M.sleeping-1)
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
-				M.make_jittery(5)
+				M.Jitter(5)
 				M.nutrition += 1
 				..()
 				return
@@ -2581,7 +2608,7 @@ datum
 				M.sleeping = 0
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
-				M.make_jittery(5)
+				M.Jitter(5)
 				if(M.getBruteLoss() && prob(20)) M.heal_organ_damage(1,0)
 				M.nutrition++
 				..()
@@ -2601,7 +2628,7 @@ datum
 				M.sleeping = 0
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
-				M.make_jittery(5)
+				M.Jitter(5)
 				if(M.getBruteLoss() && prob(20)) M.heal_organ_damage(1,0)
 				M.nutrition++
 				..()
@@ -2637,7 +2664,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				M.druggy = max(M.druggy, 50)
 				M.confused = max(M.confused+2,0)
-				M.make_dizzy(10)
+				M.Dizzy(10)
 				if (!M.stuttering) M.stuttering = 1
 				M.stuttering += 3
 				if(!data) data = 1
@@ -2714,24 +2741,24 @@ datum
 				switch(data)
 					if(1 to 5)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_dizzy(10)
+						M.Dizzy(10)
 						if(prob(10)) M.emote(pick("twitch","giggle"))
 					if(5 to 10)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_jittery(20)
-						M.make_dizzy(20)
+						M.Jitter(20)
+						M.Dizzy(20)
 						M.druggy = max(M.druggy, 45)
 						if(prob(20)) M.emote(pick("twitch","giggle"))
 					if (10 to 200)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_jittery(40)
-						M.make_dizzy(40)
+						M.Jitter(40)
+						M.Dizzy(40)
 						M.druggy = max(M.druggy, 60)
 						if(prob(30)) M.emote(pick("twitch","giggle"))
 					if(200 to INFINITY)
 						if (!M.stuttering) M.stuttering = 1
-						M.make_jittery(60)
-						M.make_dizzy(60)
+						M.Jitter(60)
+						M.Dizzy(60)
 						M.druggy = max(M.druggy, 75)
 						if(prob(40)) M.emote(pick("twitch","giggle"))
 						if(prob(30)) M.adjustToxLoss(2)
@@ -2762,7 +2789,7 @@ datum
 				if(data >= boozepwr)
 					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 4
-					M.make_dizzy(5)
+					M.Dizzy(5)
 				if(data >= boozepwr*2.5 && prob(33))
 					if (!M.confused) M.confused = 1
 					M.confused += 3
@@ -2803,6 +2830,12 @@ datum
 				..()
 				return
 
+		ethanol/beer/greenbeer
+			name = "Green Beer"
+			id = "greenbeer"
+			description = "An alcoholic beverage made from malted grains, hops, yeast, and water. Dyed a festive green."
+			color = "#A8E61D"
+
 		ethanol/kahlua
 			name = "Kahlua"
 			id = "kahlua"
@@ -2814,7 +2847,7 @@ datum
 				M.dizziness = max(0,M.dizziness-5)
 				M.drowsyness = max(0,M.drowsyness-3)
 				M.sleeping = max(0,M.sleeping-2)
-				M.make_jittery(5)
+				M.Jitter(5)
 				..()
 				return
 
@@ -2837,7 +2870,7 @@ datum
 				M.sleeping = max(0,M.sleeping-2)
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
-				M.make_jittery(5)
+				M.Jitter(5)
 				M.nutrition += 1
 				..()
 				return

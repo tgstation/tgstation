@@ -29,7 +29,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	decon_mod = T
 
 /obj/machinery/r_n_d/destructive_analyzer/meteorhit()
-	del(src)
+	qdel(src)
 	return
 
 /obj/machinery/r_n_d/destructive_analyzer/proc/ConvertReqString2List(var/list/source_list)
@@ -46,6 +46,9 @@ Note: Must be placed within 3 tiles of the R&D Console
 		if(linked_console)
 			linked_console.linked_destroy = null
 			linked_console = null
+		return
+
+	if(exchange_parts(user, O))
 		return
 
 	default_deconstruction_crowbar(O)

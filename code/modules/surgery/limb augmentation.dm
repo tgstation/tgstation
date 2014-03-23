@@ -67,7 +67,7 @@
 					for(var/datum/disease/appendicitis/A in H.viruses) //If they already have Appendicitis, Remove it
 						A.cure(1)
 			user.drop_item()
-			del(tool)
+			qdel(tool)
 			H.update_damage_overlays(0)
 			H.update_augments() //Gives them the Cyber limb overlay
 			add_logs(user, target, "augmented", addition="by giving him new [parse_zone(user.zone_sel.selecting)] INTENT: [uppertext(user.a_intent)]")

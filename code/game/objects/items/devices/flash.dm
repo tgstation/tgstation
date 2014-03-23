@@ -13,6 +13,8 @@
 	var/times_used = 0 //Number of times it's been used.
 	var/broken = 0     //Is the flash burnt out?
 	var/last_used = 0 //last world.time it was used.
+	var/burnt = "flashburnt"
+	var/flashanim = "flash2"
 
 /obj/item/device/flash/proc/clown_check(mob/user)
 	if(user && (CLUMSY in user.mutations) && prob(50))
@@ -33,7 +35,7 @@
 
 /obj/item/device/flash/proc/burn_out(mob/user = null) //Made so you can override it if you want to have an invincible flash from R&D or something.
 	broken = 1
-	icon_state = "flashburnt"
+	icon_state = burnt
 	if(user)
 		user << "<span class='warning'>The bulb has burnt out!</span>"
 
@@ -68,7 +70,7 @@
 	if(iscarbon(M))
 		var/safety = M:eyecheck()
 		if(safety <= 0)
-			M.Weaken(10)
+			M.Weaken(5)
 			flick("e_flash", M.flash)
 
 			if(ishuman(M) && ishuman(user) && M.stat != DEAD)
@@ -109,10 +111,10 @@
 			animation.master = user
 			flick("blspell", animation)
 			sleep(5)
-			del(animation)
+			qdel(animation)
 
 	if(!flashfail)
-		flick("flash2", src)
+		flick(flashanim, src)
 		if(!issilicon(M))
 
 			user.visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
@@ -156,7 +158,7 @@
 			animation.master = user
 			flick("blspell", animation)
 			sleep(5)
-			del(animation)
+			qdel(animation)
 
 	for(var/mob/living/carbon/M in oviewers(3, null))
 		var/safety = M:eyecheck()
@@ -179,7 +181,7 @@
 				var/mob/living/carbon/M = loc
 				var/safety = M.eyecheck()
 				if(safety <= 0)
-					M.Weaken(10)
+					M.Weaken(5)
 					flick("e_flash", M.flash)
 					for(var/mob/O in viewers(M, null))
 						O.show_message("<span class='disarm'>[M] is blinded by the flash!</span>")
@@ -202,3 +204,11 @@
 	..()
 	if(!broken)
 		burn_out(user)
+
+/obj/item/device/flash/memorizer
+	name = "memorizer"
+	desc = "If you see this, you're not likely to remember it any time soon."
+	icon_state = "memorizer"
+	item_state = "nullrod"
+	burnt = "memorizerburnt"
+	flashanim = "memorizer2"

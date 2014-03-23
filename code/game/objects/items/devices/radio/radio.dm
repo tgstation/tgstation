@@ -448,7 +448,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		var/list/receive = list()
 
 		//for (var/obj/item/device/radio/R in radio_connection.devices)
-		for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"]) // Modified for security headset code -- TLE
+		for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
 			//if(R.accept_rad(src, message))
 			receive |= R.send_hear(display_freq, 0)
 
@@ -498,7 +498,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			if(!freq_text)
 				freq_text = format_frequency(display_freq)
 
-			var/part_b = "</span><b> \[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
+			var/part_b = "</span><b> \[[freq_text]\]</b> <span class='message'>"
 			var/part_c = "</span></span>"
 
 			if (display_freq==SYND_FREQ)
@@ -524,7 +524,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 			//This following recording is intended for research and feedback in the use of department radio channels.
 
-			var/part_blackbox_b = "</span><b> \[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
+			var/part_blackbox_b = "</span><b> \[[freq_text]\]</b> <span class='message'>"
 			var/blackbox_msg = "[part_a][M.name][part_blackbox_b][quotedmsg][part_c]"
 			//var/blackbox_admin_msg = "[part_a][M.name] (Real name: [M.real_name])[part_blackbox_b][quotedmsg][part_c]"
 			if(istype(blackbox))

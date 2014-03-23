@@ -114,7 +114,7 @@ GUEST_BAN
 # FORUMURL http://justanotherday.example.com
 
 ## Wiki address
-# WIKIURL http://wiki.ss13.eu
+# WIKIURL http://www.ss13.eu/wiki/
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
 # BANAPPEALS http://justanotherday.example.com
