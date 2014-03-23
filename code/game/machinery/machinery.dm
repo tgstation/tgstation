@@ -109,12 +109,16 @@ Class Procs:
 	var/mob/living/occupant = null
 	var/unsecuring_tool = /obj/item/weapon/wrench
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
+	var/mob/living/silicon/pai/paired
+	var/paiallowed = 0
 
 /obj/machinery/New()
 	..()
 	machines += src
 
 /obj/machinery/Destroy()
+	if(paired)
+		paired.unpair(0)
 	machines.Remove(src)
 	..()
 
@@ -208,6 +212,10 @@ Class Procs:
 		usr << "<span class='notice'>You don't have the dexterity to do this!</span>"
 		return 1
 
+	if(ispAI(usr))
+		if(paired != usr)
+			return 1
+
 	var/norange = 0
 	if(istype(usr, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = usr
@@ -235,6 +243,19 @@ Class Procs:
 	else
 		return src.attack_hand(user)
 
+/obj/machinery/attackby(I as obj, user as mob)
+	if(istype(I, /obj/item/device/paicard))
+		var/obj/item/device/paicard/C = I
+		if(C.pai && (C.pai.stat != DEAD) && C.pai.pairing)
+			if(allowed(user))
+				if(paiallowed)
+					C.pai.pair(src)
+				else
+					C.pai << "<span class='warning'><b>\[ERROR\]</b> Remote device does not accept remote control connections.</span>"
+			else
+				user << "<span class='warning'>Access denied.</span>"
+				C.pai << "<span class='warning'><b>\[ERROR\]</b> Handshake failed. User not authorised to connect remote devices.</span>"
+
 /obj/machinery/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
@@ -253,6 +274,10 @@ Class Procs:
 	if ((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !istype(user, /mob/living/silicon))
 		return 1
 */
+	if(ispAI(usr))
+		if(paired != usr)
+			return 1
+
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)

@@ -134,3 +134,22 @@
 		pai.emp_act(severity)
 	..()
 
+/obj/item/device/paicard/proc/explode()
+	var/turf/T = get_turf(src.loc)
+
+	if (ismob(loc))
+		var/mob/M = loc
+		M.show_message("\red Your [src] explodes!", 1)
+	else if(istype(loc, /obj/item/device/pda))
+		var/obj/item/device/pda/P = loc
+		if(P.detonate)
+			P.explode()
+			qdel(src)
+			return
+	if(T)
+		T.hotspot_expose(700,125)
+
+		explosion(T, -1, -1, 2, 3)
+
+	qdel(src)
+	return

@@ -52,6 +52,9 @@
 
 	var/obj/item/radio/integrated/signal/sradio // AI's signaller
 
+	var/obj/machinery/paired
+	var/pairing = 0
+
 
 /mob/living/silicon/pai/New(var/obj/item/device/paicard)
 	canmove = 0
@@ -189,6 +192,40 @@
 	src:cameraFollow = null
 
 /mob/living/silicon/pai/UnarmedAttack(var/atom/A)//Stops runtimes due to attack_animal being the default
+	return
+
+/mob/living/silicon/pai/proc/unpair(var/silent = 0)
+	if(!paired)
+		return
+	if(!(paired.paired == src))
+		return
+	src.unset_machine()
+	paired.overlays -= image('icons/obj/computer.dmi', "paipaired")
+	paired.paired = null
+	paired = null
+	if(!silent)
+		src << "<span class='warning'><b>\[ERROR\]</b> Network timeout. Remote control connection severed.</span>"
+	return
+
+/mob/living/silicon/pai/proc/pair(var/obj/machinery/P)
+	if(!pairing)
+		return
+	if(!P)
+		return
+	if(P.stat & (BROKEN|NOPOWER))
+		src << "<span class='warning'><b>\[ERROR\]</b> Remote device not responding to remote control handshake. Cannot establish connection.</span>"
+		return
+	if(!P.paiallowed)
+		src << "<span class='warning'><b>\[ERROR\]</b> Remote device does not accept remote control connections.</span>"
+		return
+	pairing = 0
+	unpair(1)
+	if(P.paired && (P.paired != src))
+		P.paired.unpair(0)
+	P.paired = src
+	paired = P
+	paired.overlays += image('icons/obj/computer.dmi', "paipaired")
+	src << "<span class='info'>Handshake complete. Remote control connection established.</span>"
 	return
 
 //Addition by Mord_Sith to define AI's network change ability
