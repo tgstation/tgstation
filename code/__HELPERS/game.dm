@@ -31,7 +31,6 @@
 	return 0 //not in range and not telekinetic
 
 // Like view but bypasses luminosity check
-
 /proc/hear(var/range, var/atom/source)
 
 	var/lum = source.luminosity
@@ -178,7 +177,7 @@ proc/recursive_mob_check(var/atom/O,var/client_check=1,var/sight_check=1,var/inc
 	return found_mobs
 
 
-proc/get_mobs_in_view(var/R, var/atom/source)
+proc/get_mobs_in_view(var/R, var/atom/source, var/client_check = 1, var/sight_check=0, var/include_radio=1, var/darkness_check=0)
 	// Returns a list of mobs in range of R from source. Used in radio and say code.
 
 	var/turf/T = get_turf(source)
@@ -187,14 +186,23 @@ proc/get_mobs_in_view(var/R, var/atom/source)
 	if(!T)
 		return hear
 
-	var/list/range = hear(R, T)
+	var/list/range
+	if(darkness_check)
+		range = view(R, T)
+	else
+		range = hear(R, T)
 
 	for(var/atom/movable/A in range)
-		hear |= recursive_mob_check(A, 1, 0, 1)
+		hear |= recursive_mob_check(A, client_check, sight_check, include_radio)
 
 	return hear
 
 
+proc/get_observers(var/R, var/atom/source, var/darkness_check)
+	if(darkness_check == 1)
+		return get_mobs_in_view(R, source, 0, 1, 0, 1)
+	else
+		return get_mobs_in_view(R, source, 0, 1, 0, 0)
 
 /proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios)
 

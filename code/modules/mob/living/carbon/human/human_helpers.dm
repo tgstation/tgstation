@@ -117,3 +117,8 @@
 
 /mob/living/carbon/human/InCritical()
 	return (health <= config.health_threshold_crit && stat == UNCONSCIOUS)
+
+/mob/living/carbon/human/is_blind()
+	if(istype(glasses, /obj/item/clothing/glasses/sunglasses/blindfold))
+		return 1
+	return ..()

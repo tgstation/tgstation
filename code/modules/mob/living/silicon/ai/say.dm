@@ -31,6 +31,12 @@
 /mob/living/silicon/ai/IsVocal()
 	return !config.silent_ai
 
+/mob/living/silicon/ai/get_ear()
+	if(eyeobj)
+		return get_turf(eyeobj)
+	else
+		return get_turf(src)
+
 // Make sure that the code compiles with AI_VOX undefined
 #ifdef AI_VOX
 

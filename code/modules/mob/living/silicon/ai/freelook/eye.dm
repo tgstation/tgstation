@@ -31,6 +31,9 @@
 /mob/camera/aiEye/Move()
 	return 0
 
+/mob/camera/aiEye/show_message(msg, type, alt, alt_type)
+	if(ai)
+		ai.show_message(msg, type, alt, alt_type)
 
 // AI MOVEMENT
 

@@ -74,12 +74,7 @@
 	if ((message && src.stat == 0))
 		if(src.client)
 			log_emote("[name]/[key] : [message]")
-		if (m_type & 1)
-			for(var/mob/O in viewers(src, null))
-				O.show_message(message, m_type)
-				//Foreach goto(703)
-		else
-			for(var/mob/O in hearers(src, null))
-				O.show_message(message, m_type)
-				//Foreach goto(746)
+		for (var/mob/O in get_observers(null, src.loc, m_type))
+			O.show_message(message, m_type)
+
 	return
