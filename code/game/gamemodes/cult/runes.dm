@@ -722,7 +722,7 @@ var/list/sacrificed = list()
 		stone_or_gib(var/mob/T)
 			var/obj/item/device/soulstone/stone = new /obj/item/device/soulstone(get_turf(src))
 			if(!stone.transfer_soul("FORCE", T, usr))	//if it fails to add soul
-				del stone
+				qdel(stone)
 			if(T)
 				if(isrobot(T))
 					T.dust()//To prevent the MMI from remaining
@@ -1091,7 +1091,7 @@ var/list/sacrificed = list()
 		//?			PS.remove_amount(4)			//TO-DO: Write a proc for removing sheets from a stack and deleting when stack is empty... why doesnt this exist yet??
 					PS.amount -= 4
 					if(PS.amount <= 0)
-						del(PS)
-					del(src)
+						qdel(PS)
+					qdel(src)
 					return 1
 			return fizzle()

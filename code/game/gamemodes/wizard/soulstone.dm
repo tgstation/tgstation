@@ -103,7 +103,7 @@
 					for(var/obj/item/W in T)
 						T.unEquip(W)
 				init_shade(C, T, U)
-				//del T		//Gib instead
+				//qdel T		//Gib instead
 				return 1
 			return 0
 		if("VICTIM")
@@ -214,7 +214,7 @@ obj/item/proc/init_shade(var/obj/item/device/soulstone/C, var/mob/living/carbon/
 		animation.icon = 'icons/mob/mob.dmi'
 		animation.master = T
 		flick("dust-h", animation)
-		del(animation)
+		qdel(animation)
 		var/mob/living/simple_animal/shade/S = new /mob/living/simple_animal/shade( T.loc )
 		S.loc = C //put shade in stone
 		S.status_flags |= GODMODE //So they won't die inside the stone somehow
