@@ -248,9 +248,11 @@
 				src.universal_speak = !src.universal_speak
 		if("remote")
 			if(href_list["pair"])
-				pairing = 1
+				if(!paired)
+					pairing = 1
 			if(href_list["abort"])
-				pairing = 0
+				if(!paired)
+					pairing = 0
 			if(href_list["control"])
 				if(paired)
 					paired.attack_hand(src)

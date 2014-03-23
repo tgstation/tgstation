@@ -218,6 +218,8 @@
 	if(!P.paiallowed)
 		src << "<span class='warning'><b>\[ERROR\]</b> Remote device does not accept remote control connections.</span>"
 		return
+	pairing = 0
+	unpair(1)
 	if(P.paired && (P.paired != src))
 		P.paired.unpair(0)
 	P.paired = src
