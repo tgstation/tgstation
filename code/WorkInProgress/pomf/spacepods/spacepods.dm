@@ -10,6 +10,7 @@
 	layer = 3.9
 	infra_luminosity = 15
 	var/mob/living/carbon/occupant
+	var/datum/spacepod/equipment/equipment_system
 	var/obj/item/weapon/cell/high/battery
 	var/datum/gas_mixture/cabin_air
 	var/obj/machinery/portable_atmospherics/canister/internal_tank
@@ -18,6 +19,8 @@
 	var/datum/global_iterator/pr_int_temp_processor //normalizes internal air mixture temperature
 	var/datum/global_iterator/pr_give_air //moves air from tank to cabin
 	var/inertia_dir = 0
+	var/hatch_open = 0
+	var/next_firetime = 0
 
 /obj/spacepod/New()
 	bound_width = 64
@@ -32,6 +35,88 @@
 	src.use_internal_tank = 1
 	pr_int_temp_processor = new /datum/global_iterator/pod_preserve_temp(list(src))
 	pr_give_air = new /datum/global_iterator/pod_tank_give_air(list(src))
+	equipment_system = new(src)
+
+/obj/spacepod/attackby(obj/item/W as obj, mob/user as mob)
+	if(iscrowbar(W))
+		hatch_open = !hatch_open
+		user << "<span class='notice'>You [hatch_open ? "open" : "close"] the maintenance hatch.</span>"
+	if(istype(W, /obj/item/weapon/cell))
+		if(!hatch_open)
+			return ..()
+		if(battery)
+			user << "<span class='notice'>The pod already has a battery.</span>"
+			return
+		user.drop_item(W)
+		battery = W
+		W.loc = src
+		return
+	if(istype(W, /obj/item/device/spacepod_equipment))
+		if(!hatch_open)
+			return ..()
+		if(!equipment_system)
+			user << "<span class='warning'>The pod has no equipment datum, yell at pomf</span>"
+			return
+		if(istype(W, /obj/item/device/spacepod_equipment/weaponry))
+			if(equipment_system.weapon_system)
+				user << "<span class='notice'>The pod already has a weapon system, remove it first.</span>"
+				return
+			else
+				user << "<span class='notice'>You insert \the [W] into the equipment system.</span>"
+				user.drop_item(W)
+				W.loc = equipment_system
+				equipment_system.weapon_system = W
+				verbs += /obj/spacepod/proc/fire_weapons
+				return
+
+/obj/spacepod/attack_hand(mob/user as mob)
+	if(!hatch_open)
+		return ..()
+	if(!equipment_system || !istype(equipment_system))
+		user << "<span class='warning'>The pod has no equpment datum, or is the wrong type, yell at pomf.</span>"
+		return
+	var/list/possible = list()
+	if(battery)
+		possible.Add("Energy Cell")
+	if(equipment_system.weapon_system)
+		possible.Add("Weapon System")
+	/* Not yet implemented
+	if(equipment_system.engine_system)
+		possible.Add("Engine System")
+	if(equipment_system.shield_system)
+		possible.Add("Shield System")
+	*/
+	var/obj/item/device/spacepod_equipment/SPE
+	switch(input(user, "Remove which equipment?", null, null) as null|anything in possible)
+		if("Energy Cell")
+			if(user.put_in_any_hand_if_possible(battery))
+				user << "<span class='notice'>You remove \the [battery] from the space pod</span>"
+				battery = null
+		if("Weapon System")
+			SPE = equipment_system.weapon_system
+			if(user.put_in_any_hand_if_possible(SPE))
+				user << "<span class='notice'>You remove \the [SPE] from the equipment system.</span>"
+				equipment_system.weapon_system = null
+			else
+				user << "<span class='warning'>You need an open hand to do that.</span>"
+		/*
+		if("engine system")
+			SPE = equipment_system.engine_system
+			if(user.put_in_any_hand_if_possible(SPE))
+				user << "<span class='notice'>You remove \the [SPE] from the equipment system.</span>"
+				equipment_system.engine_system = null
+			else
+				user << "<span class='warning'>You need an open hand to do that.</span>"
+		if("shield system")
+			SPE = equipment_system.shield_system
+			if(user.put_in_any_hand_if_possible(SPE))
+				user << "<span class='notice'>You remove \the [SPE] from the equipment system.</span>"
+				equipment_system.shield_system = null
+			else
+				user << "<span class='warning'>You need an open hand to do that.</span>"
+		*/
+
+	return
 
 /obj/spacepod/civilian
 	icon_state = "pod_civ"
@@ -142,6 +227,56 @@
 		return
 	move_inside(M, user)
 
+/obj/spacepod/proc/fire_weapons()
+	set category = "Spacepod"
+	set name = "Fire Weapon System"
+	set desc = "Fire ze missiles(or lasers)"
+	set src = usr.loc
+
+	if(next_firetime > world.time)
+		usr << "<span class='warning'>Your weapons are recharging.</span>"
+		return
+	var/turf/firstloc
+	var/turf/secondloc
+	if(!equipment_system || !equipment_system.weapon_system)
+		usr << "<span class='warning'>Missing equipment or weapons.</span>"
+		src.verbs -= /obj/spacepod/proc/fire_weapons
+		return
+	battery.use(equipment_system.weapon_system.shot_cost)
+	var/olddir
+	for(var/i = 0; i < equipment_system.weapon_system.shots_per; i++)
+		if(olddir != dir)
+			switch(dir)
+				if(NORTH)
+					firstloc = get_step(src, NORTH)
+					secondloc = get_step(firstloc,EAST)
+				if(SOUTH)
+					firstloc = get_turf(src)
+					secondloc = get_step(firstloc,EAST)
+				if(EAST)
+					firstloc = get_turf(src)
+					firstloc = get_step(firstloc, EAST)
+					secondloc = get_step(firstloc,NORTH)
+				if(WEST)
+					firstloc = get_turf(src)
+					secondloc = get_step(firstloc,NORTH)
+		olddir = dir
+		var/obj/item/projectile/projone = new equipment_system.weapon_system.projectile_type(firstloc)
+		var/obj/item/projectile/projtwo = new equipment_system.weapon_system.projectile_type(secondloc)
+		projone.starting = get_turf(src)
+		projone.shot_from = src
+		projone.firer = usr
+		projone.def_zone = "chest"
+		projtwo.starting = get_turf(src)
+		projtwo.shot_from = src
+		projtwo.firer = usr
+		projtwo.def_zone = "chest"
+		spawn()
+			playsound(src, equipment_system.weapon_system.fire_sound, 50, 1)
+			projone.dumbfire(dir)
+			projtwo.dumbfire(dir)
+		sleep(1)
+	next_firetime = world.time + equipment_system.weapon_system.fire_delay
 /obj/spacepod/verb/move_inside()
 	set category = "Object"
 	set name = "Enter Pod"

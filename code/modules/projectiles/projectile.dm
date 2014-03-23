@@ -199,6 +199,22 @@
 						Bump(original)
 						sleep(1)
 		return
+	proc/dumbfire(var/dir) // for spacepods, go snowflake go
+		if(!dir)
+			del(src)
+		if(kill_count < 1)
+			del(src)
+		kill_count--
+		spawn while(src)
+			var/turf/T = get_step(src, dir)
+			step_towards(src, T)
+			sleep(1)
+			if(!bumped && !isturf(original))
+				if(loc == get_turf(original))
+					if(!(original in permutated))
+						Bump(original)
+						sleep(1)
+		return
 
 /obj/item/projectile/test //Used to see if you can hit them.
 	invisibility = 101 //Nope!  Can't see me!

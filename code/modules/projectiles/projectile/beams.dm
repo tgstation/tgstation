@@ -229,6 +229,55 @@ var/list/beam_master = list()
 				first = 0
 		cleanup(reference)
 		return
+	dumbfire(var/dir)
+		var/reference = "\ref[src]" //So we do not have to recalculate it a ton
+		var/first = 1 //So we don't make the overlay in the same tile as the firer
+		if(!dir)
+			del(src)
+		spawn while(src) //Move until we hit something
+			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
+				del(src) //Delete if it passes the world edge
+				return
+			var/turf/T = get_step(src, dir)
+			step_towards(src, T) //Move~
+
+			if(kill_count < 1)
+				del(src)
+			kill_count--
+
+			if(!bumped && !isturf(original))
+				if(loc == get_turf(original))
+					if(!(original in permutated))
+						Bump(original)
+
+			if(!first) //Add the overlay as we pass over tiles
+				var/target_dir = dir //So we don't call this too much
+
+				//If the icon has not been added yet
+				if( !("[icon_state][target_dir]" in beam_master) )
+					var/image/I = image(icon,icon_state,10,target_dir) //Generate it.
+					beam_master["[icon_state][target_dir]"] = I //And cache it!
+
+				//Finally add the overlay
+				src.loc.overlays += beam_master["[icon_state][target_dir]"]
+
+				//Add the turf to a list in the beam master so they can be cleaned up easily.
+				if(reference in beam_master)
+					var/list/turf_master = beam_master[reference]
+					if("[icon_state][target_dir]" in turf_master)
+						var/list/turfs = turf_master["[icon_state][target_dir]"]
+						turfs += loc
+					else
+						turf_master["[icon_state][target_dir]"] = list(loc)
+				else
+					var/list/turfs = list()
+					turfs["[icon_state][target_dir]"] = list(loc)
+					beam_master[reference] = turfs
+			else
+				first = 0
+		cleanup(reference)
+		return
+
 
 	Destroy()
 		cleanup("\ref[src]")
