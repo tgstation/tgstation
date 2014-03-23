@@ -55,7 +55,7 @@
 
 // No movement while seen code.
 
-/mob/living/simple_animal/hostile/statue/New(var/mob/living/creator)
+/mob/living/simple_animal/hostile/statue/New(loc, var/mob/living/creator)
 	..()
 	// Give spells
 	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flicker_lights(src)
@@ -64,6 +64,10 @@
 
 	// Give nightvision
 	see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+
+	// Set creator
+	if(creator)
+		src.creator = creator
 
 /mob/living/simple_animal/hostile/statue/Move(var/turf/NewLoc)
 	if(can_be_seen(NewLoc))
