@@ -1423,7 +1423,7 @@
 #include "code\WorkInProgress\kilakk\fax.dm"
 #include "code\WorkInProgress\Mini\ATM.dm"
 #include "code\WorkInProgress\Mini\atmos_control.dm"
-#include "code\WorkInProgress\pomf\spacepods.dm"
+#include "code\WorkInProgress\pomf\spacepods\spacepods.dm"
 #include "code\WorkInProgress\Ported\policetape.dm"
 #include "code\WorkInProgress\SkyMarshal\officer_stuff.dm"
 #include "code\WorkInProgress\SkyMarshal\Ultralight_procs.dm"
