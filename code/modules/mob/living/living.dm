@@ -423,7 +423,7 @@
 
 	if(!isliving(usr) || usr.next_move > world.time)
 		return
-	usr.next_move = world.time + 20
+	usr.changeNext_move(20)
 
 	var/mob/living/L = usr
 
@@ -456,7 +456,7 @@
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
 			if(C.handcuffed)
-				C.next_move = world.time + 100
+				C.changeNext_move(100)
 				C.last_special = world.time + 100
 				C.visible_message("<span class='warning'>[usr] attempts to unbuckle themself!</span>", \
 							"<span class='notice'>You attempt to unbuckle yourself. (This will take around one minute and you need to stay still.)</span>")
@@ -492,7 +492,7 @@
 				ExtinguishMob()
 			return
 		if(CM.handcuffed && CM.canmove && (CM.last_special <= world.time))
-			CM.next_move = world.time + 100
+			CM.changeNext_move(100)
 			CM.last_special = world.time + 100
 			if(isalienadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
 				CM.visible_message("<span class='warning'>[CM] is trying to break [CM.handcuffed]!</span>", \
@@ -526,7 +526,7 @@
 						CM.handcuffed = null
 						CM.update_inv_handcuffed(0)
 		else if(CM.legcuffed && CM.canmove && (CM.last_special <= world.time))
-			CM.next_move = world.time + 100
+			CM.changeNext_move(100)
 			CM.last_special = world.time + 100
 			if(isalienadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
 				CM.visible_message("<span class='warning'>[CM] is trying to break [CM.legcuffed]!</span>", \
