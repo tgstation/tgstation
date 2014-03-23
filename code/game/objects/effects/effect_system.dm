@@ -964,8 +964,8 @@ steam.start() -- spawns the effect
 			var/range = 0
 			// Clamp all values to MAX_EXPLOSION_RANGE
 			range = min (MAX_EXPLOSION_RANGE, light + round(amount/3))
-			devastation = min(1, round(range * 0.25)) // clamps to 1 devestation for grenades
-			heavy = min(3, round(range * 0.5)) // clamps to 3 heavy range for grenades
+			devastation = min(1, range * 0.25) // clamps to 1 devestation for grenades
+			heavy = min(3, range * 0.5) // clamps to 3 heavy range for grenades
 			light = min(6, range) // clamps to 6 light range for grenades
 			flash = range * 1.5
 			/*
