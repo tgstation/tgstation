@@ -268,4 +268,4 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	attachTie(new /obj/item/clothing/tie/armband/science)
 
 /obj/item/clothing/under/rank/security/med/New()
-	attachTie(new /obj/item/clothing/tie/armband/medgreen)
+	attachTie(new /obj/item/clothing/tie/armband/medblue)
