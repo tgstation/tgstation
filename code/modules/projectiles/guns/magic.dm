@@ -34,7 +34,7 @@
 	if(can_charge)	processing_objects.Add(src)
 
 
-/obj/item/weapon/gun/magic/Del()
+/obj/item/weapon/gun/magic/Destroy()
 	if(can_charge)	processing_objects.Remove(src)
 	..()
 

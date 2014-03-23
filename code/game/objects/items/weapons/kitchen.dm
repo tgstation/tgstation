@@ -412,7 +412,7 @@
 		viewers(3,user) << "[user] takes a piece of omelette with his fork!"
 		reagents.remove_reagent("nutriment", 1)
 		if (reagents.total_volume <= 0)
-			del(src)*/
+			qdel(src)*/
 
 
 /*			if (prob(33))

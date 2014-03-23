@@ -33,7 +33,7 @@
 	..()
 	recalibrate()
 
-/obj/machinery/computer/telescience/Del()
+/obj/machinery/computer/telescience/Destroy()
 	eject()
 	if(inserted_gps)
 		inserted_gps.loc = loc

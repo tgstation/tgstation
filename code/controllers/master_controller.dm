@@ -27,6 +27,7 @@ datum/controller/game_controller
 	var/nano_cost		= 0
 	var/events_cost		= 0
 	var/ticker_cost		= 0
+	var/gc_cost			= 0
 	var/total_cost		= 0
 
 	var/last_thing_processed
@@ -62,7 +63,6 @@ datum/controller/game_controller/New()
 	if(!ticker)						ticker = new /datum/controller/gameticker()
 	if(!emergency_shuttle)			emergency_shuttle = new /datum/shuttle_controller/emergency_shuttle()
 	if(!supply_shuttle)				supply_shuttle = new /datum/controller/supply_shuttle()
-
 
 datum/controller/game_controller/proc/setup()
 	world.tick_lag = config.Ticklag
@@ -201,8 +201,14 @@ datum/controller/game_controller/proc/process()
 				ticker.process()
 				ticker_cost = (world.timeofday - timer) / 10
 
+				// GC
+				timer = world.timeofday
+				last_thing_processed = garbage.type
+				garbage.process()
+				gc_cost = (world.timeofday - timer) / 10
+
 				//TIMING
-				total_cost = air_cost + sun_cost + mobs_cost + diseases_cost + machines_cost + objects_cost + networks_cost + powernets_cost + nano_cost + events_cost + ticker_cost
+				total_cost = air_cost + sun_cost + mobs_cost + diseases_cost + machines_cost + objects_cost + networks_cost + powernets_cost + nano_cost + events_cost + ticker_cost + gc_cost
 
 				var/end_time = world.timeofday
 				if(end_time < start_time)
@@ -228,7 +234,7 @@ datum/controller/game_controller/proc/process_mobs()
 	var/i = 1
 	while(i<=mob_list.len)
 		var/mob/M = mob_list[i]
-		if(M)
+		if(M && !M.gc_destroyed)
 			last_thing_processed = M.type
 			M.Life()
 			i++
@@ -250,7 +256,7 @@ datum/controller/game_controller/proc/process_machines()
 	var/i = 1
 	while(i<=machines.len)
 		var/obj/machinery/Machine = machines[i]
-		if(Machine)
+		if(Machine && !Machine.gc_destroyed)
 			last_thing_processed = Machine.type
 			if(Machine.process() != PROCESS_KILL)
 				if(Machine)
@@ -264,7 +270,7 @@ datum/controller/game_controller/proc/process_objects()
 	var/i = 1
 	while(i<=processing_objects.len)
 		var/obj/Object = processing_objects[i]
-		if(Object)
+		if(Object && !Object.gc_destroyed)
 			last_thing_processed = Object.type
 			Object.process()
 			i++

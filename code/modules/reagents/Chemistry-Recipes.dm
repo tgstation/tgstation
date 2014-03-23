@@ -807,7 +807,7 @@ datum/chemical_reaction/pestkiller
 						M.client.screen += blueeffect
 						sleep(20)
 						M.client.screen -= blueeffect
-						del(blueeffect)
+						qdel(blueeffect)
 /datum/chemical_reaction/slimecrit
 	name = "Slime Crit"
 	id = "m_tele"
@@ -1801,6 +1801,13 @@ datum/chemical_reaction/pestkiller
 	result = "manlydorf"
 	required_reagents = list ("beer" = 1, "ale" = 2)
 	result_amount = 3
+
+/datum/chemical_reaction/greenbeer
+	name = "Green Beer"
+	id = "greenbeer"
+	result = "greenbeer"
+	required_reagents = list("greencrayonpowder" = 1, "beer" = 10)
+	result_amount = 10
 
 /datum/chemical_reaction/hooch
 	name = "Hooch"
