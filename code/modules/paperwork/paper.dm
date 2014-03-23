@@ -51,7 +51,7 @@
 /obj/item/weapon/paper/examine()
 	set src in oview(1)
 
-	if(is_blind(usr))
+	if(usr.is_blind())
 		return
 	if(in_range(usr, src))
 		if( !(ishuman(usr) || isobserver(usr) || issilicon(usr)) )
@@ -252,7 +252,7 @@
 			return
 
 		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
-		
+
 		if(t != null)	//No input from the user means nothing needs to be added
 			if(id!="end")
 				addtofield(text2num(id), t) // He wants to edit a field, let him.
@@ -267,7 +267,7 @@
 /obj/item/weapon/paper/attackby(obj/item/weapon/P, mob/user)
 	..()
 
-	if(is_blind(user))
+	if(user.is_blind())
 		return
 
 	var/clown = 0

@@ -359,12 +359,13 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			else
 				hud_used.action_intent.icon_state = "help"
 
-proc/is_blind(A)
-	if(istype(A, /mob/living/carbon))
-		var/mob/living/carbon/C = A
-		if(C.blinded != null)
-			return 1
-	return 0
+mob/proc/is_blind()
+	if(sdisabilities & BLIND || blinded || paralysis || sleeping)
+		return 1
+
+mob/proc/is_deaf()
+	if((sdisabilities & DEAF) || ear_deaf)
+		return 1
 
 proc/is_special_character(mob/M) // returns 1 for special characters and 2 for heroes of gamemode //moved out of admins.dm because things other than admin procs were calling this.
 	if(!ticker || !ticker.mode)

@@ -195,7 +195,7 @@
 			user << "<span class='notice'>The pages of [title] have been cut out!</span>"
 			return
 
-	if(is_blind(user))
+	if(user.is_blind())
 		return
 
 	if(dat)
@@ -223,7 +223,7 @@
 			return
 
 	if(istype(I, /obj/item/weapon/pen))
-		if(is_blind(user))
+		if(user.is_blind())
 			return
 		if(unique)
 			user << "<span class='notice'>These pages don't seem to take the ink well. Looks like you can't modify it.</span>"
