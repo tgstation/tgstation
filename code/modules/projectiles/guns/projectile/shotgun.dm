@@ -33,7 +33,6 @@
 		recentpump = 0
 	return
 
-
 /obj/item/weapon/gun/projectile/shotgun/proc/pump(mob/M)
 	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
 	pumped = 0
@@ -69,28 +68,60 @@
 	slot_flags = SLOT_BACK
 	origin_tech = "combat=3;materials=1"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot
+	var/sawn_off = 0
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/verb/rename_gun() //BARMAN CAN INTO SNOWFLAKES TOO
+	set name = "Name Gun"
+	set category = "Object"
+	set desc = "Click to rename your gun."
+
+	var/mob/M = usr
+	var/input = stripped_input(M,"What do you want to name the gun?", ,"", MAX_NAME_LEN)
+
+	if(src && input && !M.stat && in_range(M,src))
+		name = input
+		M << "You name the gun [input]. Say hello to your new friend."
+		return 1
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/verb/reskin_gun()
+	set name = "Change gun furniture"
+	set category = "Object"
+	set desc = "Click to change the color of your gun's wooden furniture." //since naming it reskin when its the same gun with different colors would be dumb
+
+	var/mob/M = usr
+	var/list/options = list()
+	options["Standard Walnut"] = "dshotgun"
+	options["Dark Red Finish"] = "dshotgun-d"
+	options["Ash"] = "dshotgun-f"
+	options["Faded Grey"] = "dshotgun-g"
+	options["Maple"] = "dshotgun-l"
+	options["Rosewood"] = "dshotgun-p"
+	var/choice = input(M,"What do you want to change the color to?","Refurnish Gun") in options
+
+	if(src && choice && !M.stat && in_range(M,src))
+		icon_state = options[choice] + (sawn_off ? "-sawn" :)
+		M << "Your gun is now refurnished with [choice]. Say hello to your new friend."
+		return 1
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(var/obj/item/A as obj, mob/user as mob)
 	..()
 	if (istype(A,/obj/item/ammo_box) || istype(A,/obj/item/ammo_casing))
 		chamber_round()
-	if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/melee/energy) || istype(A, /obj/item/weapon/pickaxe/plasmacutter))
+	if(sawn_off == 0 && (istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/melee/energy) || istype(A, /obj/item/weapon/pickaxe/plasmacutter)))
 		user << "<span class='notice'>You begin to shorten the barrel of \the [src].</span>"
-		if(get_ammo())
+		if(get_ammo(0, 0) && afterattack(user, user))
 			afterattack(user, user)	//will this work?
 			afterattack(user, user)	//it will. we call it twice, for twice the FUN
-			playsound(user, fire_sound, 50, 1)
-			user.visible_message("<span class='danger'>The shotgun goes off!</span>", "<span class='danger'>The shotgun goes off in your face!</span>")
-			return
 		if(do_after(user, 30))	//SHIT IS STEALTHY EYYYYY
-			icon_state = "sawnshotgun"
+			icon_state = "[icon_state]-sawn"
 			w_class = 3.0
 			item_state = "gun"
 			slot_flags &= ~SLOT_BACK	//you can't sling it on your back
 			slot_flags |= SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
 			user << "<span class='warning'>You shorten the barrel of \the [src]!</span>"
-			name = "sawn-off shotgun"
+			name = "[name]"
 			desc = "Omar's coming!"
+			sawn_off = 1
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attack_self(mob/living/user as mob)
 	var/num_unloaded = 0
