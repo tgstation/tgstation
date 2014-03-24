@@ -127,7 +127,7 @@
 		//verbs += /obj/item/weapon/storage/bag/sheetsnatcher/quick_empty
 
 	can_be_inserted(obj/item/W as obj, stop_messages = 0)
-		if(!istype(W,/obj/item/stack/sheet) || istype(W,/obj/item/stack/sheet/mineral/sandstone) || istype(W,/obj/item/stack/sheet/wood))
+		if(!istype(W,/obj/item/stack/sheet) || istype(W,/obj/item/stack/sheet/mineral/sandstone) || istype(W,/obj/item/stack/sheet/mineral/wood))
 			if(!stop_messages)
 				usr << "The snatcher does not accept [W]."
 			return 0 //I don't care, but the existing code rejects them for not being "sheets" *shrug* -Sayu
