@@ -28,9 +28,7 @@
 
 		return null
 
-	Del()
-		loc = null
-
+	Destroy()
 		if(node)
 			node.disconnect(src)
 			del(network)
@@ -52,6 +50,14 @@
 		build_network()
 
 		update_icon()
+
+	default_change_direction_wrench(mob/user, /obj/item/weapon/wrench/W)
+		if(..())
+			initialize_directions = dir
+			if(node)
+				disconnect(node)
+			initialize()
+			. = 1
 
 	build_network()
 		if(!network && node)
@@ -84,6 +90,7 @@
 
 	disconnect(obj/machinery/atmospherics/reference)
 		if(reference==node)
+			node.disconnect(src)
 			del(network)
 			node = null
 

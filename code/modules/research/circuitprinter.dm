@@ -41,10 +41,10 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 /obj/machinery/r_n_d/circuit_imprinter/blob_act()
 	if (prob(50))
-		del(src)
+		qdel(src)
 
 /obj/machinery/r_n_d/circuit_imprinter/meteorhit()
-	del(src)
+	qdel(src)
 	return
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/check_mat(datum/design/being_built, var/M)

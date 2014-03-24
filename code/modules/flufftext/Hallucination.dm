@@ -77,7 +77,7 @@ mob/living/carbon/proc/handle_hallucinations()
 								halitem.name = "Flashbang"
 						if(client) client.screen += halitem
 						spawn(rand(100,250))
-							del halitem
+							qdel(halitem)
 			if(26 to 40)
 				//Flashes of danger
 				//src << "Danger Flash"
@@ -262,7 +262,7 @@ proc/check_panel(mob/M)
 		spawn(300)
 			if(my_target)
 				my_target.hallucinations -= src
-			del(src)
+			qdel(src)
 		step_away(src,my_target,2)
 		spawn attack_loop()
 
@@ -327,7 +327,7 @@ proc/check_panel(mob/M)
 	var/image/I = image('icons/effects/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
 	target << I
 	spawn(300)
-		del(O)
+		qdel(O)
 	return
 
 var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/item/ammo_box/a357,\

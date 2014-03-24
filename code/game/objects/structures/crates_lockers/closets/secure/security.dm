@@ -198,7 +198,7 @@
 /obj/structure/closet/secure_closet/security/med
 
 	New()
-		new /obj/item/clothing/tie/armband/medgreen(src)
+		new /obj/item/clothing/tie/armband/medblue(src)
 		new /obj/item/device/encryptionkey/headset_med(src)
 		..()
 		return

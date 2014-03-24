@@ -294,7 +294,7 @@
 	user << "<span class='warning'>The thermite melts through the wall.</span>"
 
 	spawn(100)
-		if(O)	del(O)
+		if(O)	qdel(O)
 //	F.sd_LumReset()		//TODO: ~Carn
 	return
 

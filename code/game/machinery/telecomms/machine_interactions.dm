@@ -92,7 +92,7 @@
 					// Create a machine frame and delete the current machine
 					var/obj/machinery/constructable_frame/machine_frame/F = new
 					F.loc = src.loc
-					del(src)
+					qdel(src)
 
 
 /obj/machinery/telecomms/attack_ai(var/mob/user as mob)

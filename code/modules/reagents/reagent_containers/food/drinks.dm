@@ -295,7 +295,7 @@
 		playsound(user.loc,'sound/weapons/pierce.ogg', rand(10,50), 1)
 		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(user.loc)
 		crushed_can.icon_state = icon_state
-		del(src)
+		qdel(src)
 	..()
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola
