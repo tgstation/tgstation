@@ -9,10 +9,7 @@
 
 /obj/effect/blob/resource/update_icon()
 	if(health <= 0)
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
-		Destroy()
-		return
-	return
+		qdel(src)
 
 /obj/effect/blob/resource/PulseAnimation(var/activate = 0)
 	if(activate)
