@@ -34,14 +34,26 @@
 					icon_state  = "glass_white"
 					name = "Glass of cream"
 					desc = "Ewwww..."
-				if("chocolate")
+				if("hot_coco")
 					icon_state  = "chocolateglass"
 					name = "Glass of chocolate"
 					desc = "Tasty"
-				if("lemon")
+				if("lemonjuice")
 					icon_state  = "lemonglass"
 					name = "Glass of lemon"
 					desc = "Sour..."
+				if("holywater")
+					icon_state  = "glass_clear"
+					name = "Glass of Holy Water"
+					desc = "A glass of holy water."
+				if("potato")
+					icon_state = "glass_brown"
+					name = "Glass of Potato juice"
+					desc = "Bleh..."
+				if("watermelonjuice")
+					icon_state = "glass_red"
+					name = "Glass of Watermelon juice"
+					desc = "A glass of watermelon juice."
 				if("cola")
 					icon_state  = "glass_brown"
 					name = "Glass of Space Cola"
