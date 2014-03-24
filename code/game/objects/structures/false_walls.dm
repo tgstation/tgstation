@@ -304,7 +304,6 @@
 	icon_state = ""
 	mineral = "plasma"
 
-//-----------wtf?-----------start
 /obj/structure/falsewall/clown
 	name = "bananium wall"
 	desc = "A wall with bananium plating. Honk!"
@@ -316,4 +315,9 @@
 	desc = "A wall with sandstone plating."
 	icon_state = ""
 	mineral = "sandstone"
-//------------wtf?------------end
+
+/obj/structure/falsewall/wood
+	name = "wooden wall"
+	desc = "A wall with wooden plating."
+	icon_state = ""
+	mineral = "wood"
