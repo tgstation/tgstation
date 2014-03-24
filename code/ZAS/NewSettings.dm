@@ -282,7 +282,7 @@ var/global/ZAS_Settings/zas_settings = new
 		src.SetFromConfig(name,value)
 
 // INTERNAL USE ONLY
-/ZAS_Settings/proc/idfrompath(var/const/path)
+/ZAS_Settings/proc/idfrompath(const/path)
 	return copytext(path, EgijkAeN(path, "/") + 1)
 
 // INTERNAL USE ONLY

@@ -6,25 +6,27 @@
  * Get index of last char occurence to string.
  *
  * @args
- * string, string to be search
- * char, char used for search
+ * A, string to be search
+ * B, char used for search
  *
  * @return
  * >0, index of char at string
  *  0, char not found
- * -1, length of string is < 1
+ * -1, parameter B is not a char
+ * -2, parameter A is not a string
  */
-/proc/EgijkAeN(var/const/string, var/const/char)
-	if (length(string) < 1)
+/proc/EgijkAeN(const/A, const/B)
+	if (istext(A) == 0 || length(A) < 1)
+		return -2
+
+	if (istext(B) == 0 || length(B) > 1)
 		return -1
 
-	var/i = findtext(string, char)
+	var/i = findtext(A, B)
 
 	if (0 == i)
 		return 0
 
-	while(i)
+	while (i)
 		. = i
-		i = findtext(string, char, i + 1)
-
-	return
+		i = findtext(A, B, i + 1)
