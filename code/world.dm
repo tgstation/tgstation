@@ -1,11 +1,8 @@
 /world
 	mob = /mob/new_player
 	turf = /turf/space
-	area = /area
 	view = "15x15"
 	cache_lifespan = 0	//stops player uploaded stuff from being kept in the rsc past the current session
-
-
 
 #define RECOMMENDED_VERSION 501
 /world/New()
@@ -92,8 +89,6 @@
 
 	src.update_status()
 
-	. = ..()
-
 	sleep_offline = 1
 
 	send2mainirc("Server starting up on [config.server? "byond://[config.server]" : "byond://[world.address]:[world.port]"]")
@@ -115,7 +110,7 @@
 
 #undef RECOMMENDED_VERSION
 
-	return
+	return ..()
 
 //world/Topic(href, href_list[])
 //		world << "Received a Topic() call!"
@@ -172,7 +167,7 @@
 		return list2params(s)
 
 
-/world/Reboot(var/reason)
+/world/Reboot(reason)
 	spawn(0)
 		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/slugmissioncomplete.ogg')) // random end sounds!! - LastyBatsy
 
@@ -182,7 +177,7 @@
 		else
 			C << link("byond://[world.address]:[world.port]")
 
-	..(reason)
+	..()
 
 
 #define INACTIVITY_KICK	6000	//10 minutes in ticks (approx.)
