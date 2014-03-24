@@ -1,6 +1,6 @@
-#define GC_COLLECTION_TIMEOUT  300 // deciseconds to wait to let running procs finish before we just say fuck it and force del() the object
-#define GC_DEL_CHECK_PER_CYCLE 100 // number of tests per cycle to make sure our GC'd objects are actually GC'd
-#define GC_FORCE_DEL_PER_CYCLE 20  // max force del() calls per cycle
+#define GC_COLLECTION_TIMEOUT 300 // deciseconds to wait to let running procs finish before we just say fuck it and force del() the object
+#define GC_DEL_CHECK_PER_TICK 100 // number of tests per master controller tick to make sure our GC'd objects are actually GC'd
+#define GC_FORCE_DEL_PER_TICK 20  // max force del() calls per master controller tick
 
 var/datum/controller/garbage_collector/garbage = new()
 
@@ -12,18 +12,19 @@ var/datum/controller/garbage_collector/garbage = new()
 								// we do this so we aren't constantly locating them and preventing them from being gc'd
 
 /datum/controller/garbage_collector/proc/AddTrash(var/datum/A)
-	if(!istype(A) || A.gc_destroyed)
+	if(!istype(A) || !isnull(A.gc_destroyed))
 		return
 //	testing("GC: AddTrash([A.type])")
 	A.gc_destroyed = world.time
+	destroyed -= "\ref[A]" // Removing any previous references that were GC'd so that the current object will be at the end of the list.
 	destroyed["\ref[A]"] = world.time
 
 /datum/controller/garbage_collector/proc/process()
 	dels = 0
 	var/time_to_kill = world.time - GC_COLLECTION_TIMEOUT // Anything qdel() but not GC'd BEFORE this time needs to be manually del()
-	var/checkRemain = GC_DEL_CHECK_PER_CYCLE
+	var/checkRemain = GC_DEL_CHECK_PER_TICK
 	while(destroyed.len && --checkRemain >= 0)
-		if(dels > GC_FORCE_DEL_PER_CYCLE)
+		if(dels > GC_FORCE_DEL_PER_TICK)
 //			testing("GC: Reached max force dels per tick [dels] vs [GC_FORCE_DEL_PER_TICK]")
 			break // Server's already pretty pounded, everything else can wait 2 seconds
 		var/refID = destroyed[1]
@@ -52,7 +53,7 @@ var/datum/controller/garbage_collector/garbage = new()
 		del(A)
 		if(garbage)
 			garbage.dels++
-	else
+	else if(isnull(A.gc_destroyed))
 		// Let our friend know they're about to get fucked up.
 		. = !A.Destroy()
 		if(. && A)
