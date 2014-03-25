@@ -226,11 +226,6 @@
 			return
 
 	if(default_change_direction_wrench(user, I))
-		if(node)
-			disconnect(node)
-		initialize()
-		if(node)
-			node.update_icon()
 		return
 
 	if(exchange_parts(user, I))
@@ -241,6 +236,8 @@
 /obj/machinery/atmospherics/unary/cryo_cell/open_machine()
 	if(!state_open && !panel_open)
 		layer = 3
+		if(occupant)
+			occupant.bodytemperature = Clamp(occupant.bodytemperature, 261, 360)
 		..()
 		if(beaker)
 			beaker.loc = src
@@ -272,6 +269,7 @@
 		return
 	if(occupant)
 		if(occupant.stat == 2 || occupant.health >= 100)  //Why waste energy on dead or healthy people
+			occupant.bodytemperature = T0C
 			return
 		occupant.bodytemperature += 2*(air_contents.temperature - occupant.bodytemperature) * current_heat_capacity / (current_heat_capacity + air_contents.heat_capacity())
 		occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
