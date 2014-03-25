@@ -288,6 +288,13 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	target_types += /obj/effect/decal/cleanable/vomit
 	target_types += /obj/effect/decal/cleanable/robot_debris
 	target_types += /obj/effect/decal/cleanable/crayon
+	target_types += /obj/effect/decal/cleanable/molten_item
+	target_types += /obj/effect/decal/cleanable/tomato_smudge
+	target_types += /obj/effect/decal/cleanable/egg_smudge
+	target_types += /obj/effect/decal/cleanable/pie_smudge
+	target_types += /obj/effect/decal/cleanable/flour
+	target_types += /obj/effect/decal/cleanable/ash
+	target_types += /obj/effect/decal/cleanable/greenglow
 
 	if(src.blood)
 		target_types += /obj/effect/decal/cleanable/xenoblood/
@@ -300,7 +307,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 /obj/machinery/bot/cleanbot/proc/clean(var/obj/effect/decal/cleanable/target)
 	src.anchored = 1
 	src.icon_state = "cleanbot-c"
-	visible_message("\red [src] begins to clean up the [target]")
+	visible_message("\red [src] begins to clean up [target]")
 	src.cleaning = 1
 	spawn(50)
 		src.cleaning = 0
