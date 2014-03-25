@@ -11,6 +11,53 @@
 	access = list(access_morgue, access_chapel_office, access_crematorium, access_maint_tunnels)
 	minimal_access = list(access_morgue, access_chapel_office, access_crematorium)
 
+	//Pretty bible names
+	var/global/list/biblenames =		list("Bible", "Koran", "Scrapbook", "Creeper", "White Bible", "Holy Light", "Athiest", "Tome", "The King in Yellow", "Ithaqua", "Scientology", "the bible melts", "Necronomicon")
+
+	//Bible iconstates
+	var/global/list/biblestates =		list("bible", "koran", "scrapbook", "creeper", "white", "holylight", "athiest", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon")
+
+	//Bible itemstates
+	var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "syringe_kit", "syringe_kit", "syringe_kit", "syringe_kit", "syringe_kit", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon")
+
+	Topic(href, href_list)
+		if(href_list["seticon"])
+			var/iconi = text2num(href_list["seticon"])
+
+			//Set biblespecific chapels
+			switch(iconi)
+				if(1)
+					for(var/area/chapel/main/A in world)
+						for(var/turf/T in A.contents)
+							if(T.icon_state == "carpetsymbol")
+								T.dir = 2
+				if(2)
+					for(var/area/chapel/main/A in world)
+						for(var/turf/T in A.contents)
+							if(T.icon_state == "carpetsymbol")
+								T.dir = 4
+				if(7)
+					for(var/area/chapel/main/A in world)
+						for(var/turf/T in A.contents)
+							if(T.icon_state == "carpetsymbol")
+								T.dir = 10
+
+			var/biblename = biblenames[iconi]
+			var/obj/item/weapon/storage/bible/B = locate(href_list["bible"])
+
+			B.name = biblename
+			B.icon_state = biblestates[iconi]
+			B.item_state = bibleitemstates[iconi]
+
+			usr.update_inv_l_hand(0) // Update inhand icon
+
+			if(ticker)
+				ticker.Bible_icon_state = B.icon_state
+				ticker.Bible_item_state = B.item_state
+				ticker.Bible_name = B.name
+			feedback_set_details("religion_book","[biblename]")
+
+			usr << browse(null, "window=editicon") // Close window
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -63,88 +110,21 @@
 				new_deity = deity_name
 			B.deity_name = new_deity
 
-			var/accepted = 0
-			var/outoftime = 0
-			spawn(200) // 20 seconds to choose
-				outoftime = 1
-			var/new_book_style = "Bible"
+			var/dat = "<html><head><title>Pick Bible Style</title></head><body><center><h2>Pick a bible style</h2></center><table>"
 
-			while(!accepted)
-				if(!B) break // prevents possible runtime errors
-				new_book_style = input(H,"Which bible style would you like?") in list("Bible", "Koran", "Scrapbook", "Creeper", "White Bible", "Holy Light", "Athiest", "Tome", "The King in Yellow", "Ithaqua", "Scientology", "the bible melts", "Necronomicon")
-				switch(new_book_style)
-					if("Koran")
-						B.icon_state = "koran"
-						B.item_state = "koran"
-						for(var/area/chapel/main/A in world)
-							for(var/turf/T in A.contents)
-								if(T.icon_state == "carpetsymbol")
-									T.dir = 4
-					if("Scrapbook")
-						B.icon_state = "scrapbook"
-						B.item_state = "scrapbook"
-					if("Creeper")
-						B.icon_state = "creeper"
-						B.item_state = "syringe_kit"
-					if("White Bible")
-						B.icon_state = "white"
-						B.item_state = "syringe_kit"
-					if("Holy Light")
-						B.icon_state = "holylight"
-						B.item_state = "syringe_kit"
-					if("Athiest")
-						B.icon_state = "athiest"
-						B.item_state = "syringe_kit"
-						for(var/area/chapel/main/A in world)
-							for(var/turf/T in A.contents)
-								if(T.icon_state == "carpetsymbol")
-									T.dir = 10
-					if("Tome")
-						B.icon_state = "tome"
-						B.item_state = "syringe_kit"
-					if("The King in Yellow")
-						B.icon_state = "kingyellow"
-						B.item_state = "kingyellow"
-					if("Ithaqua")
-						B.icon_state = "ithaqua"
-						B.item_state = "ithaqua"
-					if("Scientology")
-						B.icon_state = "scientology"
-						B.item_state = "scientology"
-						for(var/area/chapel/main/A in world)
-							for(var/turf/T in A.contents)
-								if(T.icon_state == "carpetsymbol")
-									T.dir = 8
-					if("the bible melts")
-						B.icon_state = "melted"
-						B.item_state = "melted"
-					if("Necronomicon")
-						B.icon_state = "necronomicon"
-						B.item_state = "necronomicon"
-					else
-						// if christian bible, revert to default
-						B.icon_state = "bible"
-						B.item_state = "bible"
-						for(var/area/chapel/main/A in world)
-							for(var/turf/T in A.contents)
-								if(T.icon_state == "carpetsymbol")
-									T.dir = 2
+			var/i
+			for(i = 1, i < biblestates.len, i++)
+				var/icon/bibleicon = icon('icons/obj/storage.dmi', biblestates[i])
 
-				H.update_inv_l_hand(0) // so that it updates the bible's item_state in his hand
+				var/nicename = biblenames[i]
+				H << browse_rsc(bibleicon, nicename)
+				dat += {"<tr><td><img src="[nicename]"></td><td><a href="?src=\ref[src];seticon=[i];bible=\ref[B]">[nicename]</a></td></tr>"}
 
-				switch(input(H,"Look at your bible - is this what you want?") in list("Yes","No"))
-					if("Yes")
-						accepted = 1
-					if("No")
-						if(outoftime)
-							H << "Welp, out of time, buddy. You're stuck. Next time choose faster."
-							accepted = 1
+			dat += "</table></body></html>"
+
+			H << browse(dat, "window=editicon;can_close=0;can_minimize=0;size=250x600")
 
 			if(ticker)
-				ticker.Bible_icon_state = B.icon_state
-				ticker.Bible_item_state = B.item_state
-				ticker.Bible_name = B.name
 				ticker.Bible_deity_name = B.deity_name
 			feedback_set_details("religion_deity","[new_deity]")
-			feedback_set_details("religion_book","[new_book_style]")
 		return 1
