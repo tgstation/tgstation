@@ -61,6 +61,17 @@
 
 /obj/structure/closet/statue/dump_contents()
 
+	if(istype(src.loc, /mob/living/simple_animal/hostile/statue))
+		var/mob/living/simple_animal/hostile/statue/S = src.loc
+		src.loc = S.loc
+		if(S.mind)
+			for(var/mob/M in contents)
+				S.mind.transfer_to(M)
+				M << "As the animating magic wears off you feel yourself coming back to your senses. You are yourself again!"
+				break
+		qdel(S)
+
+
 	for(var/obj/O in src)
 		O.loc = src.loc
 
