@@ -890,7 +890,7 @@
 			//Ears
 			if(sdisabilities & DEAF)	//disabled-deaf, doesn't get better on its own
 				ear_deaf = max(ear_deaf, 1)
-			else if(ear_deaf && !istype(ears, /obj/item/clothing/ears/earmuffs) //deafness, heals slowly over time
+			else if(ear_deaf && !istype(ears, /obj/item/clothing/ears/earmuffs)) //deafness, heals slowly over time
 				ear_deaf = max(ear_deaf-1, 0)
 			else if(istype(ears, /obj/item/clothing/ears/earmuffs))	//resting your ears with earmuffs heals ear damage faster, and slowly heals deafness
 				ear_damage = max(ear_damage-0.15, 0)
