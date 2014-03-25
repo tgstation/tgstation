@@ -2,7 +2,7 @@
 	name = "Pierrot's Throat"
 	max_stages = 4
 	spread = "Airborne"
-	cure = "A whole banana."
+	cure = "Banana"
 	cure_id = "banana"
 	cure_chance = 75
 	agent = "H0NI<42 Virus"
