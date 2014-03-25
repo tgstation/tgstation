@@ -5,6 +5,7 @@
 /datum/dna/gene/basic/nobreath
 	name="No Breathing"
 	activation_messages=list("You feel no need to breathe.")
+	deactivation_messages=list("The need to breathe returns.")
 	mutation=M_NO_BREATH
 
 	New()
@@ -13,6 +14,7 @@
 /datum/dna/gene/basic/remoteview
 	name="Remote Viewing"
 	activation_messages=list("Your mind expands.")
+	deactivation_messages=list("Your mind is no longer expanded.")
 	mutation=M_REMOTE_VIEW
 
 	New()
@@ -25,6 +27,7 @@
 /datum/dna/gene/basic/regenerate
 	name="Regenerate"
 	activation_messages=list("You feel better.")
+	deactivation_messages=list("You stop feeling better.")
 	mutation=M_REGEN
 
 	New()
@@ -33,6 +36,7 @@
 /datum/dna/gene/basic/increaserun
 	name="Super Speed"
 	activation_messages=list("Your leg muscles pulsate.")
+	deactivation_messages=list("Your leg muscles no longer pulsate.")
 	mutation=M_RUN
 
 	New()
@@ -40,7 +44,8 @@
 
 /datum/dna/gene/basic/remotetalk
 	name="Telepathy"
-	activation_messages=list("You expand your mind outwards.")
+	activation_messages=list("You feel your voice can penetrate other minds.")
+	deactivation_messages=list("Your mind can no longer project your voice onto others.")
 	mutation=M_REMOTE_TALK
 
 	New()
@@ -53,6 +58,7 @@
 /datum/dna/gene/basic/morph
 	name="Morph"
 	activation_messages=list("Your skin feels strange.")
+	deactivation_messages=list("Your skin no longer feels strange.")
 	mutation=M_MORPH
 
 	New()
@@ -65,6 +71,7 @@
 /datum/dna/gene/basic/heat_resist
 	name="Heat Resistance"
 	activation_messages=list("Your skin is icy to the touch.")
+	deactivation_messages=list("Your skin stops feeling icy.")
 	mutation=M_RESIST_HEAT
 
 	New()
@@ -86,6 +93,7 @@
 /datum/dna/gene/basic/cold_resist
 	name="Cold Resistance"
 	activation_messages=list("Your body is filled with warmth.")
+	deactivation_messages=list("Your body is no longer filled with warmth.")
 	mutation=M_RESIST_COLD
 
 	New()
@@ -107,6 +115,7 @@
 /datum/dna/gene/basic/noprints
 	name="No Prints"
 	activation_messages=list("Your fingers feel numb.")
+	deactivation_messages=list("Your fingers stop feeling numb.")
 	mutation=M_FINGERPRINTS
 
 	New()
@@ -114,7 +123,8 @@
 
 /datum/dna/gene/basic/noshock
 	name="Shock Immunity"
-	activation_messages=list("Your skin feels strange.")
+	activation_messages=list("Your skin feels electric.")
+	deactivation_messages=list("Your skin no longer feels electric.")
 	mutation=M_NO_SHOCK
 
 	New()
@@ -122,7 +132,8 @@
 
 /datum/dna/gene/basic/midget
 	name="Midget"
-	activation_messages=list("Your skin feels rubbery.")
+	activation_messages=list("You feel small.")
+	deactivation_messages=list("You stop feeling small.")
 	mutation=M_DWARF
 
 	New()
@@ -175,6 +186,7 @@
 /datum/dna/gene/basic/xray
 	name="X-Ray Vision"
 	activation_messages=list("The walls suddenly disappear.")
+	deactivation_messages=list("The walls suddenly appear.")
 	mutation=M_XRAY
 
 	New()
@@ -183,6 +195,7 @@
 /datum/dna/gene/basic/tk
 	name="Telekenesis"
 	activation_messages=list("You feel smarter.")
+	deactivation_messages=list("You feel less smart.")
 	mutation=M_TK
 	activation_prob=15
 
