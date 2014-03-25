@@ -282,6 +282,46 @@
 		name = "Side Part"
 		icon_state = "hair_part"
 
+	braid
+		name = "Braided"
+		icon_state = "hair_braid"
+		gender = FEMALE
+
+	bun
+		name = "Bun Head"
+		icon_state = "hair_bun"
+		gender = FEMALE
+
+	side_tail
+		name = "Side Pony"
+		icon_state = "hair_sidetail"
+		gender = FEMALE
+
+	long_over_eye
+		name = "Over eye"
+		icon_state = "hair_longovereye"
+		gender = FEMALE
+
+	front_braid
+		name = "Braided front"
+		icon_state = "hair_braidfront"
+		gender = FEMALE
+
+	antenna
+		name = "Ahoge"
+		icon_state = "hair_antenna"
+		gender = FEMALE
+
+	pigtail
+		name = "Pig tails"
+		icon_state = "hair_pigtails"
+		gender = FEMALE
+
+	protagonist
+		name = "Slightly long"
+		icon_state = "hair_protagonist"
+		gender = MALE
+
 /////////////////////////////
 // Facial Hair Definitions //
 /////////////////////////////
