@@ -104,7 +104,7 @@
 			target.ex_act(1)
 	if(target)
 		target.overlays -= image_overlay
-	del(src)
+	qdel(src)
 
 /obj/item/weapon/plastique/attack(mob/M as mob, mob/user as mob, def_zone)
 	return

@@ -68,7 +68,7 @@
 	var/obj/item/robot_parts/head/head = null
 
 	var/created_name = ""
-	var/forced_module = ""
+	var/mob/living/silicon/ai/forced_ai
 	var/locomotion = 1
 	var/lawsync = 1
 	var/aisync = 1
@@ -111,7 +111,7 @@
 		if (user.get_inactive_hand()==src)
 			user.unEquip(src)
 			user.put_in_inactive_hand(B)
-		del(src)
+		qdel(src)
 	if(istype(W, /obj/item/robot_parts/l_leg))
 		if(src.l_leg)	return
 		user.drop_item()
@@ -210,10 +210,12 @@
 			O.custom_name = created_name
 			O.updatename("Default")
 			O.locked = panel_locked
-
-			if(!aisync || !lawsync)
-				if(!aisync)
-					O.connected_ai = null
+			if(!aisync)
+				lawsync = 0
+				O.connected_ai = null
+			else if(forced_ai)
+				O.connected_ai = forced_ai
+			if(!lawsync)
 				O.lawupdate = 0
 				O.make_laws()
 				if(ticker.mode.config_tag == "malfunction") //Don't let humans get a cyborg on their side during malf, for balance reasons.
@@ -237,9 +239,6 @@
 			src.loc = O
 			O.robot_suit = src
 
-			if(forced_module)
-				O << "<span class='warning'>SYSTEM: Forcing [forced_module] module.</span>"
-				O.pick_module(forced_module)
 			if(!locomotion)
 				O.lockcharge = 1
 				O.update_canmove()
@@ -252,7 +251,7 @@
 
 /obj/item/robot_parts/robot_suit/proc/Interact(mob/user)
 			var/t1 = text("Designation: <A href='?src=\ref[];Name=1'>[(created_name ? "[created_name]" : "Default Cyborg")]</a><br>\n",src)
-			t1 += text("Module Load Method: <A href='?src=\ref[];Module=1'>[(forced_module ? "Forced [forced_module]" : "Default")]</a><br><br>\n",src)
+			t1 += text("Master AI: <A href='?src=\ref[];Master=1'>[(forced_ai ? "[forced_ai.name]" : "Automatic")]</a><br><br>\n",src)
 
 			t1 += text("LawSync Port: <A href='?src=\ref[];Law=1'>[(lawsync ? "Open" : "Closed")]</a><br>\n",src)
 			t1 += text("AI Connection Port: <A href='?src=\ref[];AI=1'>[(aisync ? "Open" : "Closed")]</a><br>\n",src)
@@ -284,10 +283,10 @@
 		else
 			created_name = ""
 
-	else if(href_list["Module"])
-		forced_module = input("Force a module to load on boot", "Cyborg Debug", null, null) in list("Default", "Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
-		if(forced_module == "Default")
-			forced_module = ""
+	else if(href_list["Master"])
+		forced_ai = select_active_ai(usr)
+		if(!forced_ai)
+			usr << "No active AIs detected."
 
 	else if(href_list["Law"])
 		lawsync = !lawsync

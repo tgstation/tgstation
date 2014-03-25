@@ -22,6 +22,21 @@
 		src.last_move = get_dir(A, src.loc)
 	return
 
+/atom/movable/Del()
+	if(!gc_destroyed && loc)
+		testing("GC: -- [type] was deleted via del() rather than qdel() --")
+//	else if(!gc_destroyed)
+//		testing("GC: [type] was deleted via GC without qdel()") //Not really a huge issue but from now on, please qdel()
+//	else
+//		testing("GC: [type] was deleted via GC with qdel()")
+	..()
+
+/atom/movable/Destroy()
+	loc = null	// can never null their loc enough really
+	for(var/atom/movable/AM in contents)
+		qdel(AM)
+	. = ..()
+
 // Previously known as HasEntered()
 // This is automatically called when something enters your square
 /atom/movable/Crossed(atom/movable/AM)

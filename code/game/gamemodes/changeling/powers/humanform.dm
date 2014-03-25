@@ -28,6 +28,6 @@
 
 	changeling.purchasedpowers -= src
 	feedback_add_details("changeling_powers","LFT")
-	del(user)
+	qdel(user)
 	return 1
 

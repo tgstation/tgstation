@@ -124,14 +124,10 @@
 		mmi = null
 	..()
 
-/mob/living/silicon/robot/proc/pick_module(var/forced = "")
+/mob/living/silicon/robot/proc/pick_module()
 	if(module)
 		return
-	var/mod
-	if(forced)
-		mod = forced
-	else
-		mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
+	var/mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
 	var/animation_length=0
 	if(module)
 		return

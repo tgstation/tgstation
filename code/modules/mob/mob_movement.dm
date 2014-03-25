@@ -272,21 +272,21 @@
 
 		for(var/obj/item/weapon/grab/G in mob.grabbed_by)
 			if(G.state == GRAB_PASSIVE && !grabbing.Find(G.assailant))
-				del(G)
+				qdel(G)
 
 			if(G.state == GRAB_AGGRESSIVE)
 				move_delay = world.time + 10
 				if(!prob(25))
 					return 1
 				mob.visible_message("<span class='warning'>[mob] has broken free of [G.assailant]'s grip!</span>")
-				del(G)
+				qdel(G)
 
 			if(G.state == GRAB_NECK)
 				move_delay = world.time + 10
 				if(!prob(5))
 					return 1
 				mob.visible_message("<span class='warning'>[mob] has broken free of [G.assailant]'s headlock!</span>")
-				del(G)
+				qdel(G)
 	return 0
 
 

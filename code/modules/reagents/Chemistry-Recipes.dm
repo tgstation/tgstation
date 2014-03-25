@@ -807,7 +807,7 @@ datum/chemical_reaction/pestkiller
 						M.client.screen += blueeffect
 						sleep(20)
 						M.client.screen -= blueeffect
-						del(blueeffect)
+						qdel(blueeffect)
 /datum/chemical_reaction/slimecrit
 	name = "Slime Crit"
 	id = "m_tele"

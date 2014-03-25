@@ -816,7 +816,7 @@ table tr:first-child th:first-child { border: none;}
 				spawn(20)
 					cable.amount -= 5
 					if(!cable.amount)
-						del(cable)
+						qdel(cable)
 
 					user << "You wire the air alarm!"
 					wires.wires_status = 0
@@ -829,14 +829,14 @@ table tr:first-child th:first-child { border: none;}
 				buildstage = 1
 				update_icon()
 				user.drop_item()
-				del(W)
+				qdel(W)
 				return
 
 			if(istype(W, /obj/item/weapon/wrench))
 				user << "You detach \the [src] from the wall!"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				new /obj/item/alarm_frame( user.loc )
-				del(src)
+				qdel(src)
 				return
 
 	return ..()
@@ -878,7 +878,7 @@ Code shamelessly copied from apc_frame
 /obj/item/alarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
-		del(src)
+		qdel(src)
 		return
 	..()
 
@@ -905,7 +905,7 @@ Code shamelessly copied from apc_frame
 
 	new /obj/machinery/alarm(loc, ndir, 1)
 
-	del(src)
+	qdel(src)
 
 
 /*
@@ -1006,7 +1006,7 @@ FIRE ALARM
 
 					coil.amount -= 5
 					if(!coil.amount)
-						del(coil)
+						qdel(coil)
 
 					buildstage = 2
 					user << "<span class='notice'>You wire \the [src]!</span>"
@@ -1023,7 +1023,7 @@ FIRE ALARM
 			if(0)
 				if(istype(W, /obj/item/weapon/firealarm_electronics))
 					user << "<span class='notice'>You insert the circuit!</span>"
-					del(W)
+					qdel(W)
 					buildstage = 1
 					update_icon()
 
@@ -1032,7 +1032,7 @@ FIRE ALARM
 					var/obj/item/firealarm_frame/frame = new /obj/item/firealarm_frame()
 					frame.loc = user.loc
 					playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-					del(src)
+					qdel(src)
 		return
 
 	src.alarm()
@@ -1213,7 +1213,7 @@ Code shamelessly copied from apc_frame
 /obj/item/firealarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
-		del(src)
+		qdel(src)
 		return
 	..()
 
@@ -1240,7 +1240,7 @@ Code shamelessly copied from apc_frame
 
 	new /obj/machinery/firealarm(loc, ndir, 1)
 
-	del(src)
+	qdel(src)
 
 /*
  * Party button
