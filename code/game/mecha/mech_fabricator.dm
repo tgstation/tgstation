@@ -780,7 +780,7 @@
 	if(src.resources[material] < res_max_amount)
 		var/count = 0
 		src.overlays += "fab-load-[material]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
-		while(src.resources[material] < res_max_amount && stack)
+		while(src.resources[material] < res_max_amount && stack && stack.amount > 0)
 			src.resources[material] += amnt
 			stack.use(1)
 			count++
