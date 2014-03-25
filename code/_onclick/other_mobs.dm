@@ -30,20 +30,9 @@
 	var/obj/item/clothing/gloves/G = gloves
 	if((LASER in mutations) && a_intent == "harm")
 		LaserEyes(A) // moved into a proc below
-
 	else if(istype(G) && G.Touch(A,0)) // for magic gloves
 		return
-
 	else if(TK in mutations)
-		switch(get_dist(src,A))
-			if(1 to 5) // not adjacent may mean blocked by window
-				next_move += 2
-			if(5 to 7)
-				next_move += 5
-			if(8 to 15)
-				next_move += 10
-			if(16 to 128)
-				return
 		A.attack_tk(src)
 
 /*
