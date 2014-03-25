@@ -74,8 +74,10 @@
 			if(SDQL_expression(d, query_tree["where"]))
 				objs += d
 
-	//usr << "Query: [query_text]"
-	message_admins("[usr] executed SDQL query: \"[query_text]\".")
+	var/query_log = "[usr] executed SDQL query: \"[query_text]\"."
+	world.log << query_log
+	message_admins(query_log)
+	log_game(query_log)
 
 	switch(query_tree[1])
 		if("call")
