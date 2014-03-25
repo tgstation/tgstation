@@ -162,7 +162,7 @@
 
 /mob/camera/blob/verb/relocate_core()
 	set category = "Blob"
-	set name = "Relocate Core (100)"
+	set name = "Relocate Core (80)"
 	set desc = "Relocates your core to the node you are on, your old core will be turned into a node."
 
 
@@ -176,7 +176,7 @@
 		src << "You must be on a blob node!"
 		return
 
-	if(!can_buy(100))
+	if(!can_buy(80))
 		return
 
 	// The old switcharoo.
