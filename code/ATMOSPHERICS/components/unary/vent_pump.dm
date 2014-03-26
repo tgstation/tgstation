@@ -24,7 +24,7 @@
 	//2: Do not pass internal_pressure_bound
 	//3: Do not pass either
 
-	var/welded = 0 // Added for aliens -- TLE
+	var/welded = 0
 
 	var/frequency = 1439
 	var/datum/radio_frequency/radio_connection
@@ -314,12 +314,11 @@
 			stat |= NOPOWER
 		update_icon()
 
-/obj/machinery/atmospherics/unary/vent_pump/Del()
+/obj/machinery/atmospherics/unary/vent_pump/Destroy()
 	if(initial_loc)
 		initial_loc.air_vent_info -= id_tag
 		initial_loc.air_vent_names -= id_tag
 	..()
-	return
 
 /*
 	Alt-click to ventcrawl

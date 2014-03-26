@@ -6,6 +6,7 @@
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/list/alarms_to_show = list()
 	var/list/alarms_to_clear = list()
+	var/designation = ""
 
 
 	var/list/alarm_types_show = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
@@ -188,7 +189,7 @@
 	return
 
 
-/mob/living/silicon/proc/statelaws() // -- TLE
+/mob/living/silicon/proc/statelaws()
 
 	src.say("Current Active Laws:")
 	//src.laws_sanity_check()
@@ -199,7 +200,7 @@
 
 
 	if (src.laws.zeroth)
-		if (src.lawcheck[1] == "Yes") //This line and the similar lines below make sure you don't state a law unless you want to. --NeoFite
+		if (src.lawcheck[1] == "Yes")
 			src.say("0. [src.laws.zeroth]")
 			sleep(10)
 

@@ -13,17 +13,23 @@
 	anchored = 1
 	var/efficiency
 	state_open = 1
+	var/initial_bin_rating = 1
 	var/min_health = 25
 	var/list/injection_chems = list() //list of injectable chems except inaprovaline, coz inaprovaline is always avalible
 	var/list/possible_chems = list(list("stoxin", "dexalin", "bicaridine", "kelotane"),
-									list("stoxin", "dexalinp", "imidazoline", "dermaline", "bicaridine"),
-									list("tricordrazine", "anti_toxin", "ryetalyn", "dermaline", "bicaridine", "imidazoline", "alkysine", "arithrazine"))
+								   list("stoxin", "dexalinp", "imidazoline", "dermaline", "bicaridine"),
+								   list("tricordrazine", "anti_toxin", "ryetalyn", "dermaline", "bicaridine", "imidazoline", "alkysine", "arithrazine"))
 
 /obj/machinery/sleeper/New()
 	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/sleeper(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+
+	// Customizable bin rating, used by the labor camp to stop people filling themselves with chemicals and escaping.
+	var/obj/item/weapon/stock_parts/matter_bin/B = new(null)
+	B.rating = initial_bin_rating
+	component_parts += B
+
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
@@ -55,12 +61,12 @@
 		for(var/atom/movable/A in src)
 			A.loc = loc
 			A.blob_act()
-		del(src)
+		qdel(src)
 
 /obj/machinery/sleeper/attack_animal(var/mob/living/simple_animal/M)//Stop putting hostile mobs in things guise
 	if(M.environment_smash)
 		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
-		del(src)
+		qdel(src)
 	return
 
 /obj/machinery/sleeper/attackby(obj/item/I, mob/user)
@@ -82,21 +88,21 @@
 			for(var/atom/movable/A in src)
 				A.loc = loc
 				ex_act(severity)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if(prob(50))
 				for(var/atom/movable/A in src)
 					A.loc = loc
 					ex_act(severity)
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if(prob(25))
 				for(var/atom/movable/A in src)
 					A.loc = loc
 					ex_act(severity)
-				del(src)
+				qdel(src)
 
 
 /obj/machinery/sleeper/emp_act(severity)
@@ -125,7 +131,7 @@
 	..()
 	open_machine()
 
-/obj/machinery/sleeper/Del()
+/obj/machinery/sleeper/Destroy()
 	var/turf/T = loc
 	T.contents += contents
 	..()
@@ -227,10 +233,11 @@
 
 /obj/machinery/sleeper/proc/inject_chem(mob/user, chem)
 	if(occupant && occupant.reagents)
-		if(occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency)
-			occupant.reagents.add_reagent(chem, 10)
-		var/units = round(occupant.reagents.get_reagent_amount(chem))
-		user << "<span class='notice'>Occupant now has [units] unit\s of [chem] in their bloodstream.</span>"
+		if(chem in injection_chems + "inaprovaline")
+			if(occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency)
+				occupant.reagents.add_reagent(chem, 10)
+			var/units = round(occupant.reagents.get_reagent_amount(chem))
+			user << "<span class='notice'>Occupant now has [units] unit\s of [chem] in their bloodstream.</span>"
 
 /obj/machinery/sleeper/update_icon()
 	if(state_open)

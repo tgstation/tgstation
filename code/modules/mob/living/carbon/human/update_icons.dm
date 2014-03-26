@@ -133,9 +133,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	for(var/obj/item/organ/limb/O in organs)
 		if(O.brutestate)
-			standing.overlays	+= "[O.icon]_[O.brutestate]0"	//we're adding icon_states of the base image as overlays
+			standing.overlays	+= "[O.icon_state]_[O.brutestate]0"	//we're adding icon_states of the base image as overlays
 		if(O.burnstate)
-			standing.overlays	+= "[O.icon]_0[O.burnstate]"
+			standing.overlays	+= "[O.icon_state]_0[O.burnstate]"
 
 	apply_overlay(DAMAGE_LAYER)
 

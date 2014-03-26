@@ -9,7 +9,7 @@
 
 /mob/living/silicon/robot/dust(var/animation = 1)
 	if(mmi)
-		del(mmi)
+		qdel(mmi)
 	..()
 
 /mob/living/silicon/robot/spawn_dust()

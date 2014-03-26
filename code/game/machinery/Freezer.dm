@@ -18,7 +18,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil(null)
+	component_parts += new /obj/item/stack/cable_coil(null, 1)
 	RefreshParts()
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/RefreshParts()
@@ -43,11 +43,6 @@
 	default_deconstruction_crowbar(I)
 
 	if(default_change_direction_wrench(user, I))
-		if(node)
-			disconnect(node)
-		initialize()
-		if(node)
-			node.update_icon()
 		return
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/update_icon()
@@ -140,7 +135,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil(null)
+	component_parts += new /obj/item/stack/cable_coil(null, 1)
 	RefreshParts()
 
 /obj/machinery/atmospherics/unary/heat_reservoir/heater/RefreshParts()
@@ -165,11 +160,6 @@
 	default_deconstruction_crowbar(I)
 
 	if(default_change_direction_wrench(user, I))
-		if(node)
-			disconnect(node)
-		initialize()
-		if(node)
-			node.update_icon()
 		return
 
 /obj/machinery/atmospherics/unary/heat_reservoir/heater/update_icon()

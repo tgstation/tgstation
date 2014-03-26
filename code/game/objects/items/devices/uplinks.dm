@@ -25,7 +25,7 @@ var/list/world_uplinks = list()
 	welcome = ticker.mode.uplink_welcome
 	uses = ticker.mode.uplink_uses
 
-/obj/item/device/uplink/Del()
+/obj/item/device/uplink/Destroy()
 	world_uplinks-=src
 	..()
 
@@ -179,7 +179,7 @@ var/list/world_uplinks = list()
 		var/obj/item/weapon/antag_spawner/borg_tele/S = W
 		if(!S.used)
 			hidden_uplink.uses += S.TC_cost
-			del(S)
+			qdel(S)
 			user << "<span class='notice'>Teleporter refunded.</span>"
 		else
 			user << "<span class='notice'>This teleporter is already used.</span>"

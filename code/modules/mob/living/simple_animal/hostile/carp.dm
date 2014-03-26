@@ -13,7 +13,7 @@
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm = "hits"
-	speed = -1
+	speed = 0
 	maxHealth = 25
 	health = 25
 
@@ -57,5 +57,5 @@
 	icon_living = "holocarp"
 
 /mob/living/simple_animal/hostile/carp/holocarp/Die()
-	del(src)
+	qdel(src)
 	return

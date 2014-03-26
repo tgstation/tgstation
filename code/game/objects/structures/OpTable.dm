@@ -40,5 +40,5 @@
 			visible_message("<span class='notice'>[M] has been laid on [src] by [user].</span>")
 			patient = M
 			check_patient()
-			del(W)
+			qdel(W)
 			return

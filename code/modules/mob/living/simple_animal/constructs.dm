@@ -9,7 +9,7 @@
 	response_disarm = "flails at"
 	response_harm   = "punches"
 	icon_dead = "shade_dead"
-	speed = -1
+	speed = 0
 	a_intent = "harm"
 	stop_automated_movement = 1
 	status_flags = CANPUSH
@@ -40,7 +40,7 @@
 		if((M.client && !( M.blinded )))
 			M.show_message("\red [src] collapses in a shattered heap. ")
 	ghostize()
-	del src
+	qdel(src)
 	return
 
 /mob/living/simple_animal/construct/examine()
@@ -215,7 +215,7 @@
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	attacktext = "slashes"
-	speed = -1
+	speed = 0
 	see_in_dark = 7
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
