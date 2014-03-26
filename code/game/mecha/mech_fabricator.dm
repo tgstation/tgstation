@@ -13,8 +13,10 @@
 	idle_power_usage = 20
 	active_power_usage = 5000
 	req_access = list(access_robotics)
-	var/time_coeff = 1.5 //can be upgraded with research
-	var/resource_coeff = 1.5 //can be upgraded with research
+	var/time_coeff = 1
+	var/resource_coeff = 1
+	var/time_coeff_tech = 1
+	var/resource_coeff_tech = 1
 	var/list/resources = list(
 										"metal"=0,
 										"glass"=0,
@@ -164,20 +166,20 @@
 		T += Ma.rating
 	T -= 1
 	var/diff
-	diff = round(initial(resource_coeff) - (initial(resource_coeff)*(T))/6,0.01)
+	diff = round(initial(resource_coeff) - (initial(resource_coeff)*(T))/8,0.01)
 	if(resource_coeff!=diff)
 		resource_coeff = diff
 	T = 0
 	for(var/obj/item/weapon/stock_parts/manipulator/Ml in component_parts)
 		T += Ml.rating
 	T -= 1
-	diff = round(initial(time_coeff) - (initial(time_coeff)*(T))/4,0.01)
+	diff = round(initial(time_coeff) - (initial(time_coeff)*(T))/5,0.01)
 	if(time_coeff!=diff)
 		time_coeff = diff
 
-/obj/machinery/mecha_part_fabricator/Del()
+/obj/machinery/mecha_part_fabricator/Destroy()
 	for(var/atom/A in src)
-		del A
+		qdel(A)
 	..()
 	return
 
@@ -260,7 +262,7 @@
 	if(!istype(apart)) return 0
 	for(var/obj/O in part_set)
 		if(O.type == apart.type)
-			del apart
+			qdel(apart)
 			return 0
 	part_set[++part_set.len] = apart
 	return 1
@@ -467,9 +469,9 @@
 						pmat += Ml.rating
 					if(pmat >= 1)
 						pmat -= 1//So the equations don't have to be reworked, upgrading a single part from T1 to T2 is == to 1 tech level
-					diff = round(initial(resource_coeff) - (initial(resource_coeff)*(T.level+pmat))/25,0.01)
-					if(resource_coeff!=diff)
-						resource_coeff = diff
+					diff = round(initial(resource_coeff_tech) - (initial(resource_coeff_tech)*(T.level+pmat))/30,0.01)
+					if(resource_coeff_tech>diff)
+						resource_coeff_tech = diff
 						output+="Production efficiency increased.<br>"
 				if("programming")
 					var/ptime = 0
@@ -477,9 +479,9 @@
 						ptime += Ma.rating
 					if(ptime >= 2)
 						ptime -= 2
-					diff = round(initial(time_coeff) - (initial(time_coeff)*(T.level+ptime))/25,0.1)
-					if(time_coeff!=diff)
-						time_coeff = diff
+					diff = round(initial(time_coeff_tech) - (initial(time_coeff_tech)*(T.level+ptime))/25,0.1)
+					if(time_coeff_tech>diff)
+						time_coeff_tech = diff
 						output+="Production routines updated.<br>"
 	return output
 
@@ -525,15 +527,15 @@
 	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
 		var/list/L = part_sets["Misc"]
 		if(L.Find(part.type))
-			return round(part:construction_cost[resource]*(resource_coeff/2), roundto)             //hacky scary skeletons send shivers down your spine
-		return round(part:construction_cost[resource]*resource_coeff, roundto)
+			return round(part:construction_cost[resource]*(resource_coeff/2)*resource_coeff_tech, roundto)             //hacky scary skeletons send shivers down your spine
+		return round(part:construction_cost[resource]*resource_coeff*resource_coeff_tech, roundto)
 	else
 		return 0
 
 /obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(var/obj/item/part as obj, var/roundto=1)
 //Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
 	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
-		return round(part:construction_time*time_coeff, roundto)
+		return round(part:construction_time*time_coeff*time_coeff_tech, roundto)
 	else
 		return 0
 
@@ -700,7 +702,7 @@
 		res.Move(src.loc)
 		result = res.amount
 	else
-		del res
+		qdel(res)
 	return result
 
 
@@ -778,7 +780,7 @@
 	if(src.resources[material] < res_max_amount)
 		var/count = 0
 		src.overlays += "fab-load-[material]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
-		while(src.resources[material] < res_max_amount && stack)
+		while(src.resources[material] < res_max_amount && stack && stack.amount > 0)
 			src.resources[material] += amnt
 			stack.use(1)
 			count++

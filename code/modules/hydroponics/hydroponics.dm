@@ -287,7 +287,7 @@ obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient,
 	var/oldPlantName
 	if(myseed) // In case there's nothing in the tray beforehand
 		oldPlantName = myseed.plantname
-		del(myseed)
+		qdel(myseed)
 	else
 		oldPlantName = "Empty tray"
 	switch(rand(1,18))		// randomly pick predominative weed
@@ -339,7 +339,7 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 	var/oldPlantName = myseed.plantname
 	if(myseed.mutatelist.len > 0)
 		var/mutantseed = pick(myseed.mutatelist)
-		del(myseed)
+		qdel(myseed)
 		myseed = new mutantseed
 
 	else
@@ -362,7 +362,7 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent instead. Mind you, this pretty much destroys the old plant
 	if( weedlevel > 5 )
 		if(myseed)
-			del(myseed)
+			qdel(myseed)
 		var/newWeed = pick(/obj/item/seeds/libertymycelium, /obj/item/seeds/angelmycelium, /obj/item/seeds/deathnettleseed, /obj/item/seeds/kudzuseed)
 		myseed = new newWeed
 		dead = 0
@@ -629,7 +629,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 			reagent_source.reagents.trans_to(S,split)
 			if(istype(reagent_source, /obj/item/weapon/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/weapon/reagent_containers/pill))
-				del(reagent_source)
+				qdel(reagent_source)
 
 			H.applyChemicals(S)
 
@@ -742,7 +742,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		planted = 0
 		dead = 0
 		user << "You remove the dead plant from [src]."
-		del(myseed)
+		qdel(myseed)
 		update_icon()
 	else
 		if(planted && !dead)
@@ -960,7 +960,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	else
 		user << "You harvest [myseed.getYield()] items from the [myseed.plantname]."
 	if(myseed.oneharvest)
-		del(myseed)
+		qdel(myseed)
 		planted = 0
 		dead = 0
 	update_icon()
@@ -1072,4 +1072,4 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	..()
 	if(istype(O, /obj/item/weapon/shovel))
 		user << "You clear up [src]!"
-		del(src)
+		qdel(src)

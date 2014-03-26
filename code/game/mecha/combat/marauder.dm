@@ -25,7 +25,7 @@
 	desc = "Heavy-duty, command-type exosuit. This is a custom model, utilized only by high-ranking military personnel."
 	name = "\improper Seraph"
 	icon_state = "seraph"
-	operation_req_access = list(access_cent_creed)
+	operation_req_access = list(access_cent_specops)
 	step_in = 3
 	health = 550
 	wreckage = /obj/structure/mecha_wreckage/seraph
@@ -76,7 +76,7 @@
 	if(equipment.len)//Now to remove it and equip anew.
 		for(ME in equipment)
 			equipment -= ME
-			del(ME)
+			qdel(ME)
 	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot(src)
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack(src)

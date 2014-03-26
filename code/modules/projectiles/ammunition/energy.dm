@@ -34,11 +34,11 @@
 	fire_sound = 'sound/weapons/pulse.ogg'
 
 /obj/item/ammo_casing/energy/laser/bluetag
-	projectile_type = /obj/item/projectile/bluetag
+	projectile_type = /obj/item/projectile/lasertag/bluetag
 	select_name = "bluetag"
 
 /obj/item/ammo_casing/energy/laser/redtag
-	projectile_type = /obj/item/projectile/redtag
+	projectile_type = /obj/item/projectile/lasertag/redtag
 	select_name = "redtag"
 
 /obj/item/ammo_casing/energy/bolt
@@ -110,3 +110,9 @@
 	select_name = "kinetic"
 	e_cost = 500
 	fire_sound = 'sound/weapons/Gunshot4.ogg'
+
+/obj/item/ammo_casing/energy/disabler
+	projectile_type = /obj/item/projectile/energy/disabler
+	select_name  = "disable"
+	e_cost = 50
+	fire_sound = "sound/weapons/taser.ogg"

@@ -57,7 +57,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 		if(!path)	continue
 		var/atom/movable/AM = new path()
 		manifest += "<li>[AM.name]</li>"
-		del AM	//just to make sure they're deleted, no longer garbage collected, as there are way to many objects in crates that have other references.
+//		del AM	//just to make sure they're deleted, no longer garbage collected, as there are way to many objects in crates that have other references.
+		qdel(AM) // How about we fix the issues rather than bypass them, mmkay?
 	manifest += "</ul>"
 
 
@@ -122,6 +123,14 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 10
 	containertype = /obj/structure/closet/crate
 	containername = "firefighting crate"
+	
+/datum/supply_packs/emergency/atmostank
+	name = "Firefighting Watertank"
+	contains = list(/obj/item/weapon/watertank/atmos)
+	cost = 10
+	containertype = /obj/structure/closet/crate/secure
+	containername = "firefighting watertank crate"
+	access = access_atmospherics
 
 /datum/supply_packs/emergency/weedcontrol
 	name = "Weed Control Crate"
@@ -211,6 +220,14 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/gun/energy/taser)
 	cost = 15
 	containername = "stun gun crate"
+
+/datum/supply_packs/security/disabler
+	name = "Disabler crate"
+	contains = list(/obj/item/weapon/gun/energy/disabler,
+					/obj/item/weapon/gun/energy/disabler,
+					/obj/item/weapon/gun/energy/disabler)
+	cost = 10
+	containername = "disabler crate"
 
 ///// Armory stuff
 
@@ -731,6 +748,14 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 15
 	containertype = /obj/structure/closet/crate/hydroponics
 	containername = "hydroponics crate"
+	
+/datum/supply_packs/misc/hydroponics/hydrotank
+	name = "Hydroponics Watertank Backpack Crate"
+	contains = list(/obj/item/weapon/watertank)
+	cost = 10
+	containertype = /obj/structure/closet/crate/secure
+	containername = "hydroponics watertank crate"
+	access = access_hydroponics
 
 /datum/supply_packs/organic/hydroponics/seeds
 	name = "Seeds Crate"
@@ -952,6 +977,14 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 10
 	containertype = /obj/structure/largecrate
 	containername = "janitorial cart crate"
+	
+/datum/supply_packs/misc/janitor/janitank
+	name = "Janitor Watertank Backpack Crate"
+	contains = list(/obj/item/weapon/watertank/janitor)
+	cost = 10
+	containertype = /obj/structure/closet/crate/secure
+	containername = "janitor watertank crate"
+	access = access_janitor
 
 /datum/supply_packs/misc/janitor/lightbulbs
 	name = "Replacement lights"

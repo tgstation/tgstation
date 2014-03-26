@@ -139,7 +139,7 @@
 			return
 		user << "<span class='notice'>You insert [I] into [src].</span>"
 		user.drop_item()
-		del(I)
+		qdel(I)
 		pictures_left = pictures_max
 		return
 	..()
@@ -323,7 +323,7 @@
 
 	P.show(usr)
 	usr << P.desc
-	del P    //so 10 thousdand pictures items are not left in memory should an AI take them and then view them all.
+	qdel(src)    //so 10 thousdand pictures items are not left in memory should an AI take them and then view them all.
 
 /obj/item/device/camera/afterattack(atom/target, mob/user, flag)
 	if(!on || !pictures_left || ismob(target.loc)) return

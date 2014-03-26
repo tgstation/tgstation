@@ -76,7 +76,7 @@
 
 		switch(E.type)
 			if(/obj/item/weapon/gun/energy/laser/bluetag)
-				eprojectile = /obj/item/projectile/bluetag
+				eprojectile = /obj/item/projectile/lasertag/bluetag
 				lasercolor = "b"
 				req_access = list(access_maint_tunnels, access_theatre)
 				check_records = 0
@@ -87,7 +87,7 @@
 				shot_delay = 30
 
 			if(/obj/item/weapon/gun/energy/laser/redtag)
-				eprojectile = /obj/item/projectile/redtag
+				eprojectile = /obj/item/projectile/lasertag/redtag
 				lasercolor = "r"
 				req_access = list(access_maint_tunnels, access_theatre)
 				check_records = 0
@@ -133,9 +133,9 @@
 				egun = 1
 
 
-/obj/machinery/porta_turret/Del()
+/obj/machinery/porta_turret/Destroy()
 	//deletes its own cover with it
-	del(cover)
+	qdel(cover)
 	..()
 
 
@@ -261,7 +261,7 @@
 					new /obj/item/device/assembly/prox_sensor(loc)
 			else
 				user << "<span class='notice'>You remove the turret but did not manage to salvage anything.</span>"
-			del(src)
+			qdel(src)
 
 	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
 		//Emagging the turret makes it go bonkers and stun everyone. It also makes
@@ -288,7 +288,7 @@
 			user << "<span class='notice'>You unsecure the exterior bolts on the turret.</span>"
 			icon_state = "turretCover"
 			invisibility = 0
-			del(cover) //deletes the cover, and the turret instance itself becomes its own cover.
+			qdel(cover) //deletes the cover, and the turret instance itself becomes its own cover.
 
 	else if(istype(I, /obj/item/weapon/card/id)||istype(I, /obj/item/device/pda))
 		//Behavior lock/unlock mangement
@@ -320,7 +320,8 @@
 				sleep(60)
 				attacked = 0
 
-	health -= Proj.damage
+	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		health -= Proj.damage
 
 	..()
 
@@ -330,15 +331,15 @@
 		die()	//the death process :(
 
 	if(lasercolor == "b" && disabled == 0)
-		if(istype(Proj, /obj/item/projectile/redtag))
+		if(istype(Proj, /obj/item/projectile/lasertag/redtag))
 			disabled = 1
-			del (Proj)
+			qdel(Proj)
 			sleep(100)
 			disabled = 0
 	if(lasercolor == "r" && disabled == 0)
-		if(istype(Proj, /obj/item/projectile/bluetag))
+		if(istype(Proj, /obj/item/projectile/lasertag/bluetag))
 			disabled = 1
-			del (Proj)
+			qdel(Proj)
 			sleep(100)
 			disabled = 0
 
@@ -363,7 +364,7 @@
 
 /obj/machinery/porta_turret/ex_act(severity)
 	if(severity >= 3)	//turret dies if an explosion touches it!
-		del(src)
+		qdel(src)
 	else
 		die()
 
@@ -375,7 +376,7 @@
 	invisibility = 0
 	spark_system.start()	//creates some sparks because they look cool
 	density = 1
-	del(cover)	//deletes the cover - no need on keeping it there!
+	qdel(cover)	//deletes the cover - no need on keeping it there!
 
 
 
@@ -386,7 +387,7 @@
 
 	if(cover == null && anchored)	//if it has no cover and is anchored
 		if(stat & BROKEN)	//if the turret is borked
-			del(cover)	//delete its cover, assuming it has one. Workaround for a pesky little bug
+			qdel(cover)	//delete its cover, assuming it has one. Workaround for a pesky little bug
 		else
 
 			cover = new /obj/machinery/porta_turret_cover(loc)	//if the turret has no cover and is anchored, give it a cover
@@ -645,7 +646,7 @@
 				playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
 				user << "<span class='notice'>You dismantle the turret construction.</span>"
 				new /obj/item/stack/sheet/metal( loc, 5)
-				del(src)
+				qdel(src)
 				return
 
 		if(1)
@@ -658,7 +659,7 @@
 					icon_state = "turret_frame2"
 					if(M.amount <= 0)
 						user.unEquip(M, 1) //We're deleting it anyway, so no point in having NODROP fuck shit up.
-						del(M)
+						qdel(M)
 				else
 					user << "<span class='warning'>You need two sheets of metal for that.</span>"
 				return
@@ -708,7 +709,7 @@
 				gun_charge = E.power_supply.charge //the gun's charge is stored in gun_charge
 				user << "<span class='notice'>You add [I] to the turret.</span>"
 				build_step = 4
-				del(I) //delete the gun :(
+				qdel(I) //delete the gun :(
 				return
 
 			else if(istype(I, /obj/item/weapon/wrench))
@@ -724,7 +725,7 @@
 					user << "<span class='notice'>\the [I] is stuck to your hand, you cannot put it in \the [src]</span>"
 					return
 				user << "<span class='notice'>You add the prox sensor to the turret.</span>"
-				del(I)
+				qdel(I)
 				return
 
 			//attack_hand() removes the gun
@@ -747,7 +748,7 @@
 					M.amount -= 2
 					if(M.amount <= 0)
 						user.unEquip(M, 1) //If we don't force-unequip, bugs happen because the item was deleted without updating the neccesary stuffs.
-						del(M)
+						qdel(M)
 				else
 					user << "<span class='warning'>You need two sheets of metal for that.</span>"
 				return
@@ -782,7 +783,7 @@
 //					Turret.cover=new/obj/machinery/porta_turret_cover(loc)
 //					Turret.cover.Parent_Turret=Turret
 //					Turret.cover.name = finish_name
-					del(src)
+					qdel(src)
 
 			else if(istype(I, /obj/item/weapon/crowbar))
 				playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
@@ -980,7 +981,7 @@ Status: []<BR>"},
 			user << "<span class='notice'>You unsecure the exterior bolts on the turret.</span>"
 			Parent_Turret.icon_state = "turretCover"
 			Parent_Turret.invisibility = 0
-			del(src)
+			qdel(src)
 
 	else if(istype(I, /obj/item/weapon/card/id)||istype(I, /obj/item/device/pda))
 		if(Parent_Turret.allowed(user))

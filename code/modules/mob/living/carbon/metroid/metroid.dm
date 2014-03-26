@@ -201,7 +201,7 @@
 	var/f_loss = null
 	switch (severity)
 		if (1.0)
-			del(src)
+			qdel(src)
 			return
 
 		if (2.0)
@@ -553,6 +553,64 @@
 			updatehealth()
 	return
 
+/mob/living/carbon/slime/attackby(obj/item/W, mob/user)
+	if(W.force > 0)
+		attacked += 10
+		if(prob(25))
+			user << "\red [W] passes right through [src]!"
+			return
+		if(Discipline && prob(50))	// wow, buddy, why am I getting attacked??
+			Discipline = 0
+	if(W.force >= 3)
+		if(is_adult)
+			if(prob(5 + round(W.force/2)))
+				if(Victim)
+					if(prob(80) && !client)
+						Discipline++
+
+					Victim = null
+					anchored = 0
+
+					spawn()
+						SStun = 1
+						sleep(rand(5,20))
+						SStun = 0
+
+					spawn(0)
+						if(user)
+							canmove = 0
+							step_away(src, user)
+							if(prob(25 + W.force))
+								sleep(2)
+								if(user)
+									step_away(src, user)
+								canmove = 1
+
+		else
+			if(prob(10 + W.force*2))
+				if(Victim)
+					if(prob(80) && !client)
+						Discipline++
+					if(Discipline == 1)
+						attacked = 0
+					spawn()
+						SStun = 1
+						sleep(rand(5,20))
+						SStun = 0
+
+					Victim = null
+					anchored = 0
+
+					spawn(0)
+						if(user)
+							canmove = 0
+							step_away(src, user)
+							if(prob(25 + W.force*4))
+								sleep(2)
+								if(user)
+									step_away(src, user)
+							canmove = 1
+	..()
 
 /mob/living/carbon/slime/restrained()
 	return 0
@@ -594,7 +652,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			user <<"You apply the enhancer. It now has triple the amount of uses."
 			Uses = 3
 			enhanced = 1
-			del (O)
+			qdel(O)
 
 /obj/item/slime_extract/New()
 		..()
@@ -715,14 +773,14 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		pet.icon_dead = "[M.colour] baby slime dead"
 		pet.colour = "[M.colour]"
 		user <<"You feed the slime the potion, removing it's powers and calming it."
-		del (M)
+		qdel(M)
 		var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
 
 		if (!newname)
 			newname = "pet slime"
 		pet.name = newname
 		pet.real_name = newname
-		del (src)
+		qdel(src)
 
 /obj/item/weapon/slimepotion2
 	name = "advanced docility potion"
@@ -746,14 +804,14 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		pet.icon_dead = "[M.colour] baby slime dead"
 		pet.colour = "[M.colour]"
 		user <<"You feed the slime the potion, removing it's powers and calming it."
-		del (M)
+		qdel(M)
 		var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
 
 		if (!newname)
 			newname = "pet slime"
 		pet.name = newname
 		pet.real_name = newname
-		del (src)
+		qdel(src)
 
 
 /obj/item/weapon/slimesteroid
@@ -778,7 +836,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 		user <<"You feed the slime the steroid. It now has triple the amount of extract."
 		M.cores = 3
-		del (src)
+		qdel(src)
 
 /obj/item/weapon/slimesteroid2
 	name = "extract enhancer"
@@ -797,7 +855,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			user <<"You apply the enhancer. It now has triple the amount of uses."
 			target.Uses = 3
 			target.enahnced = 1
-			del (src)*/
+			qdel(src)*/
 
 ////////Adamantine Golem stuff I dunno where else to put it
 
@@ -917,7 +975,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		G.loc = src.loc
 		G.key = ghost.key
 		G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
-		del (src)
+		qdel(src)
 
 
 	proc/announce_to_ghosts()
@@ -1005,7 +1063,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	spawn(rand(50,100))
 		src.visible_message("\blue The [name] bursts open!")
 		new/mob/living/carbon/slime(T)
-		del(src)
+		qdel(src)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/process()

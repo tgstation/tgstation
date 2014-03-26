@@ -5,7 +5,7 @@
 #define TOX			"tox"
 #define OXY			"oxy"
 #define CLONE		"clone"
-#define HALLOSS		"halloss"
+#define STAMINA 	"stamina"
 
 #define STUN		"stun"
 #define WEAKEN		"weaken"

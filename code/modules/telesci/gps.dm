@@ -17,7 +17,7 @@ var/list/GPS_list = list()
 	name = "global positioning system ([gpstag])"
 	overlays += "working"
 
-/obj/item/device/gps/Del()
+/obj/item/device/gps/Destroy()
 	GPS_list.Remove(src)
 	..()
 
@@ -33,6 +33,7 @@ var/list/GPS_list = list()
 /obj/item/device/gps/attack_self(mob/user as mob)
 
 	var/obj/item/device/gps/t = ""
+	var/gps_window_height = 110 + GPS_list.len * 20 // Variable window height, depending on how many GPS units there are to show
 	if(emped)
 		t += "ERROR"
 	else
@@ -40,6 +41,7 @@ var/list/GPS_list = list()
 		t += "<BR>Tag: [gpstag]"
 		if(locked_location && locked_location.loc)
 			t += "<BR>Bluespace coordinates saved: [locked_location.loc]"
+			gps_window_height += 20
 
 		for(var/obj/item/device/gps/G in GPS_list)
 			var/turf/pos = get_turf(G)
@@ -50,7 +52,7 @@ var/list/GPS_list = list()
 			else
 				t += "<BR>[tracked_gpstag]: [format_text(gps_area.name)] ([pos.x], [pos.y], [pos.z])"
 
-	var/datum/browser/popup = new(user, "GPS", name, 600, 450)
+	var/datum/browser/popup = new(user, "GPS", name, 360, min(gps_window_height, 800))
 	popup.set_content(t)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()

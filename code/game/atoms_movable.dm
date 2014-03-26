@@ -22,6 +22,21 @@
 		src.last_move = get_dir(A, src.loc)
 	return
 
+/atom/movable/Del()
+	if(isnull(gc_destroyed) && loc)
+		testing("GC: -- [type] was deleted via del() rather than qdel() --")
+//	else if(isnull(gc_destroyed))
+//		testing("GC: [type] was deleted via GC without qdel()") //Not really a huge issue but from now on, please qdel()
+//	else
+//		testing("GC: [type] was deleted via GC with qdel()")
+	..()
+
+/atom/movable/Destroy()
+	loc = null	// can never null their loc enough really
+	for(var/atom/movable/AM in contents)
+		qdel(AM)
+	. = ..()
+
 // Previously known as HasEntered()
 // This is automatically called when something enters your square
 /atom/movable/Crossed(atom/movable/AM)
@@ -76,7 +91,6 @@
 	var/dy = (target.y > src.y) ? NORTH : SOUTH
 	var/dist_travelled = 0
 	var/dist_since_sleep = 0
-	var/area/a = get_area(src.loc)
 
 	var/tdist_x = dist_x;
 	var/tdist_y = dist_y;
@@ -90,7 +104,7 @@
 		tdy = dx;
 
 	var/error = tdist_x/2 - tdist_y
-	while(target && (((((dist_x > dist_y) && ((src.x < target.x && dx == EAST) || (src.x > target.x && dx == WEST))) || ((dist_x <= dist_y) && ((src.y < target.y && dy == NORTH) || (src.y > target.y && dy == SOUTH))) || (src.x > target.x && dx == WEST)) && dist_travelled < range) || (a && a.has_gravity == 0)  || istype(src.loc, /turf/space)))
+	while(target && (((((dist_x > dist_y) && ((src.x < target.x && dx == EAST) || (src.x > target.x && dx == WEST))) || ((dist_x <= dist_y) && ((src.y < target.y && dy == NORTH) || (src.y > target.y && dy == SOUTH))) || (src.x > target.x && dx == WEST)) && dist_travelled < range) || !has_gravity(src)))
 		// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
 		if(!src.throwing) break
 		if(!istype(src.loc, /turf)) break
@@ -106,8 +120,6 @@
 		if(dist_since_sleep >= speed)
 			dist_since_sleep = 0
 			sleep(1)
-
-		a = get_area(src.loc)
 
 	//done throwing, either because it hit something or it finished moving
 	src.throwing = 0

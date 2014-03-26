@@ -20,7 +20,7 @@
 		src.base_state = src.icon_state
 	return
 
-/obj/machinery/door/window/Del()
+/obj/machinery/door/window/Destroy()
 	density = 0
 	playsound(src, "shatter", 70, 1)
 	..()
@@ -100,7 +100,7 @@
 	return 1
 
 /obj/machinery/door/window/close()
-	if (src.operating)
+	if (src.operating || emagged)
 		return 0
 	src.operating = 1
 	flick(text("[]closing", src.base_state), src)
@@ -125,12 +125,13 @@
 		var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
 		CC.amount = 2
 		src.density = 0
-		del(src)
+		qdel(src)
 		return
 
 /obj/machinery/door/window/bullet_act(var/obj/item/projectile/Proj)
 	if(Proj.damage)
-		take_damage(round(Proj.damage / 2))
+		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+			take_damage(round(Proj.damage / 2))
 	..()
 
 //When an object is thrown at the window
@@ -164,7 +165,7 @@
 			var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
 			CC.amount = 2
 			src.density = 0
-			del(src)
+			qdel(src)
 	else
 		return src.attack_hand(user)
 
@@ -205,7 +206,7 @@
 			var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
 			CC.amount = 2
 			src.density = 0
-			del(src)
+			qdel(src)
 		return
 
 

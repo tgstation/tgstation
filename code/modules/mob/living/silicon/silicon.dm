@@ -6,6 +6,7 @@
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/list/alarms_to_show = list()
 	var/list/alarms_to_clear = list()
+	var/designation = ""
 
 
 	var/list/alarm_types_show = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
@@ -106,6 +107,19 @@
 	src << "\red Warning: Electromagnetic pulse detected."
 	..()
 
+/mob/living/silicon/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0)
+	blocked = (100-blocked)/100
+	if(!damage || (blocked <= 0))	return 0
+	switch(damagetype)
+		if(BRUTE)
+			adjustBruteLoss(damage * blocked)
+		if(BURN)
+			adjustFireLoss(damage * blocked)
+		else
+			return 1
+	updatehealth()
+	return 1
+
 /mob/living/silicon/proc/damage_mob(var/brute = 0, var/fire = 0, var/tox = 0)
 	return
 
@@ -118,7 +132,8 @@
 	return 1
 
 /mob/living/silicon/bullet_act(var/obj/item/projectile/Proj)
-	if(!Proj.nodamage)	adjustBruteLoss(Proj.damage)
+	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		adjustBruteLoss(Proj.damage)
 	Proj.on_hit(src,2)
 	return 2
 
@@ -174,7 +189,7 @@
 	return
 
 
-/mob/living/silicon/proc/statelaws() // -- TLE
+/mob/living/silicon/proc/statelaws()
 
 	src.say("Current Active Laws:")
 	//src.laws_sanity_check()
@@ -185,7 +200,7 @@
 
 
 	if (src.laws.zeroth)
-		if (src.lawcheck[1] == "Yes") //This line and the similar lines below make sure you don't state a law unless you want to. --NeoFite
+		if (src.lawcheck[1] == "Yes")
 			src.say("0. [src.laws.zeroth]")
 			sleep(10)
 

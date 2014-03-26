@@ -54,7 +54,7 @@
 
 	if( istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(src,target) <= 1)
 		var/obj/o = target
-		o.reagents.trans_to(src, 50)
+		o.reagents.trans_to(src, max_water)
 		user << "\blue \The [src] is now refilled"
 		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
 		return
@@ -124,7 +124,7 @@
 					if(W.loc == my_target) break
 					sleep(2)
 
-		if((istype(usr.loc, /turf/space)) || (usr.lastarea && usr.lastarea.has_gravity == 0))
+		if(!has_gravity(user))
 			user.inertia_dir = get_dir(target, user)
 			step(user, user.inertia_dir)
 	else

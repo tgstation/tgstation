@@ -174,7 +174,7 @@
 
 	invisibility = INVISIBILITY_MAXIMUM		//Why am i doing this?
 	spawn(50)		   //To make sure all reagents can work
-		del(src)	   //correctly before deleting the grenade.
+		qdel(src)	   //correctly before deleting the grenade.
 
 
 
@@ -236,7 +236,7 @@
 
 	invisibility = INVISIBILITY_MAXIMUM //Why am i doing this?
 	spawn(50)		   //To make sure all reagents can work
-		del(src)	   //correctly before deleting the grenade.
+		qdel(src)	   //correctly before deleting the grenade.
 
 
 	//I tried to just put it in the allowed_containers list but

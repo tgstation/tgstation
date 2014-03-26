@@ -10,7 +10,7 @@
 		//Chemicals in the body
 		handle_chemicals_in_body()
 
-	var/datum/gas_mixture/environment // Added to prevent null location errors-- TLE
+	var/datum/gas_mixture/environment // Added to prevent null location errors
 	if(loc)
 		environment = loc.return_air()
 
@@ -21,7 +21,7 @@
 	blinded = null
 
 	//Handle temperature/pressure differences between body and environment
-	if(environment)	// More error checking -- TLE
+	if(environment)	// More error checking
 		handle_environment(environment)
 
 	//Status updates, death etc.
@@ -191,7 +191,7 @@
 				AdjustStunned(-1)
 
 			if(weakened)
-				weakened = max(weakened-1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
+				weakened = max(weakened-1,0)
 
 			if(stuttering)
 				stuttering = max(stuttering-1, 0)

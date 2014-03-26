@@ -31,7 +31,7 @@
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -67,7 +67,7 @@
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -122,3 +122,11 @@
 	recent_reload = 1
 	update_icon()
 	return
+
+/obj/item/weapon/gun/energy/disabler
+	name = "disabler"
+	desc = "A self defense weapon that exhausts targets, weakening them until they collapse. Non-lethal."
+	icon_state = "disabler"
+	item_state = null
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
+	cell_type = "/obj/item/weapon/stock_parts/cell"

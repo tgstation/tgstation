@@ -223,6 +223,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/chem_charges = 20
 	var/chem_storage = 50
 	var/chem_recharge_rate = 0.5
+	var/chem_recharge_slowdown = 0
 	var/sting_range = 2
 	var/changelingID = "Changeling"
 	var/geneticdamage = 0
@@ -232,7 +233,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/mimicing = ""
 	var/canrespec = 0
 	var/datum/dna/chosen_dna
-	var/chosen_sting
+	var/obj/effect/proc_holder/changeling/sting/chosen_sting
+	var/space_suit_active = 0
 
 /datum/changeling/New(var/gender=FEMALE)
 	..()
@@ -249,63 +251,33 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 
 /datum/changeling/proc/regenerate()
-	chem_charges = min(max(0, chem_charges+chem_recharge_rate), chem_storage)
+	chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), chem_storage)
 	geneticdamage = max(0, geneticdamage-1)
 
 
-/datum/changeling/proc/GetDNA(var/dna_owner)
-	var/datum/dna/chosen_dna
+/datum/changeling/proc/get_dna(var/dna_owner)
 	for(var/datum/dna/DNA in absorbed_dna)
 		if(dna_owner == DNA.real_name)
-			chosen_dna = DNA
-			break
-	return chosen_dna
+			return DNA
 
-
-//Checks if the target DNA is valid and absorbable.
-/datum/changeling/proc/can_absorb_dna(mob/living/carbon/T, mob/living/carbon/U)
-	if(absorbed_dna[1] == U.dna)//If our current DNA is the stalest, we gotta ditch it.
-		U << "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>"
-		return 0
-
-	if(T)
-		if(NOCLONE in T.mutations || HUSK in T.mutations)
-			U << "<span class='warning'>DNA of [T] is ruined beyond usability!</span>"
-			return 0
-
-		if(!ishuman(T))//Absorbing monkeys is entirely possible, but it can cause issues with transforming. That's what lesser form is for anyway!
-			U << "<span class='warning'>We could gain no benefit from absorbing a lesser creature.</span>"
-			return 0
-
-		for(var/datum/dna/D in absorbed_dna)
-			if(T.dna.uni_identity == D.uni_identity)
-				if(T.dna.struc_enzymes == D.struc_enzymes)
-					if(T.dna.real_name == D.real_name)
-						if(T.dna.mutantrace == D.mutantrace)
-							if(T.dna.blood_type == D.blood_type)
-								U << "<span class='warning'>We already have that DNA in storage.</span>"
-								return 0
-
-		if(!check_dna_integrity(T))
-			U << "<span class='warning'>[T] is not compatible with our biology.</span>"
-			return 0
-
+/datum/changeling/proc/can_absorb_dna(var/mob/living/carbon/user, var/mob/living/carbon/target)
+	if(absorbed_dna[1] == user.dna)//If our current DNA is the stalest, we gotta ditch it.
+		user << "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>"
+		return
+	if(!target)
+		return
+	if(NOCLONE in target.mutations || HUSK in target.mutations)
+		user << "<span class='warning'>DNA of [target] is ruined beyond usability!</span>"
+		return
+	if(!ishuman(target))//Absorbing monkeys is entirely possible, but it can cause issues with transforming. That's what lesser form is for anyway!
+		user << "<span class='warning'>We could gain no benefit from absorbing a lesser creature.</span>"
+		return
+	var/datum/dna/tDna = target.dna
+	for(var/datum/dna/D in absorbed_dna)
+		if(tDna.is_same_as(D))
+			user << "<span class='warning'>We already have that DNA in storage.</span>"
+			return
+	if(!check_dna_integrity(target))
+		user << "<span class='warning'>[target] is not compatible with our biology.</span>"
+		return
 	return 1
-
-
-//Absorbs the target DNA.
-/datum/changeling/proc/absorb_dna(mob/living/carbon/T)
-	shuffle_dna()
-	T.dna.real_name = T.real_name //Set this again, just to be sure that it's properly set.
-	var/datum/dna/new_dna = new T.dna.type
-	new_dna.uni_identity = T.dna.uni_identity
-	new_dna.struc_enzymes = T.dna.struc_enzymes
-	new_dna.real_name = T.dna.real_name
-	new_dna.mutantrace = T.dna.mutantrace
-	new_dna.blood_type = T.dna.blood_type
-	absorbed_dna |= new_dna //And add the target DNA to our absorbed list.
-	absorbedcount++ //all that done, let's increment the objective counter.
-
-/datum/changeling/proc/shuffle_dna()//boots out the stalest DNA.
-	if(absorbed_dna.len)
-		absorbed_dna.Cut(1,2)

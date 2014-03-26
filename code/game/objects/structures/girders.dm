@@ -15,7 +15,7 @@
 					if(!src) return
 					user << "<span class='notice'>You dissasembled the girder!</span>"
 					new /obj/item/stack/sheet/metal(get_turf(src))
-					del(src)
+					qdel(src)
 			else if(!anchored)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 				user << "<span class='notice'>Now securing the girder...</span>"
@@ -23,7 +23,7 @@
 					user << "<span class='notice'>You secured the girder!</span>"
 					var/obj/structure/girder/G = new (loc)
 					transfer_fingerprints_to(G)
-					del(src)
+					qdel(src)
 
 		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 			user << "<span class='notice'>Now slicing apart the girder...</span>"
@@ -31,12 +31,12 @@
 				if(!src) return
 				user << "<span class='notice'>You slice apart the girder!</span>"
 				new /obj/item/stack/sheet/metal(get_turf(src))
-				del(src)
+				qdel(src)
 
 		else if(istype(W, /obj/item/weapon/pickaxe/diamonddrill))
 			user << "<span class='notice'>You drill through the girder!</span>"
 			new /obj/item/stack/sheet/metal(get_turf(src))
-			del(src)
+			qdel(src)
 
 		else if(istype(W, /obj/item/weapon/screwdriver) && state == 2 && istype(src,/obj/structure/girder/reinforced))
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
@@ -54,7 +54,7 @@
 				user << "<span class='notice'>You removed the support struts!</span>"
 				var/obj/structure/girder/G = new (loc)
 				transfer_fingerprints_to(G)
-				del(src)
+				qdel(src)
 
 		else if(istype(W, /obj/item/weapon/crowbar) && state == 0 && anchored )
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
@@ -64,7 +64,7 @@
 				user << "<span class='notice'>You dislodged the girder!</span>"
 				var/obj/structure/girder/displaced/D = new (loc)
 				transfer_fingerprints_to(D)
-				del(src)
+				qdel(src)
 
 		else if(istype(W, /obj/item/stack/sheet))
 
@@ -78,7 +78,7 @@
 						user << "<span class='notice'>You create a false wall! Push on it to open or close the passage.</span>"
 						var/obj/structure/falsewall/F = new (loc)
 						transfer_fingerprints_to(F)
-						del(src)
+						qdel(src)
 					else
 						if(S.amount < 2) return ..()
 						user << "<span class='notice'>Now adding plating...</span>"
@@ -90,7 +90,7 @@
 							Tsrc.ChangeTurf(/turf/simulated/wall)
 							for(var/turf/simulated/wall/X in Tsrc.loc)
 								if(X)	transfer_fingerprints_to(X)
-							del(src)
+							qdel(src)
 						return
 
 				if(/obj/item/stack/sheet/plasteel)
@@ -100,7 +100,7 @@
 						user << "<span class='notice'>You create a false wall! Push on it to open or close the passage.</span>"
 						var/obj/structure/falserwall/FW = new (loc)
 						transfer_fingerprints_to(FW)
-						del(src)
+						qdel(src)
 					else
 						if (src.icon_state == "reinforced") //I cant believe someone would actually write this line of code...
 							if(S.amount < 1) return ..()
@@ -113,7 +113,7 @@
 								Tsrc.ChangeTurf(/turf/simulated/wall/r_wall)
 								for(var/turf/simulated/wall/r_wall/X in Tsrc.loc)
 									if(X)	transfer_fingerprints_to(X)
-								del(src)
+								qdel(src)
 							return
 						else
 							if(S.amount < 1) return ..()
@@ -124,7 +124,7 @@
 								user << "<span class='notice'>Girders reinforced!</span>"
 								var/obj/structure/girder/reinforced/R = new (loc)
 								transfer_fingerprints_to(R)
-								del(src)
+								qdel(src)
 							return
 
 			if(S.sheettype)
@@ -136,7 +136,7 @@
 					var/F = text2path("/obj/structure/falsewall/[M]")
 					var/obj/structure/FW = new F (loc)
 					transfer_fingerprints_to(FW)
-					del(src)
+					qdel(src)
 				else
 					if(S.amount < 2) return ..()
 					user << "<span class='notice'>Now adding plating...</span>"
@@ -148,7 +148,7 @@
 						Tsrc.ChangeTurf(text2path("/turf/simulated/wall/mineral/[M]"))
 						for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
 							if(X)	transfer_fingerprints_to(X)
-						del(src)
+						qdel(src)
 					return
 
 			add_hiddenprint(usr)
@@ -165,25 +165,25 @@
 
 	blob_act()
 		if(prob(40))
-			del(src)
+			qdel(src)
 
 
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				del(src)
+				qdel(src)
 				return
 			if(2.0)
 				if (prob(30))
 					var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
 					new remains(loc)
-					del(src)
+					qdel(src)
 				return
 			if(3.0)
 				if (prob(5))
 					var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
 					new remains(loc)
-					del(src)
+					qdel(src)
 				return
 			else
 		return
@@ -211,7 +211,7 @@
 				user << "<span class='notice'>You dissasembled the girder!</span>"
 				var/obj/effect/decal/remains/human/R = new (get_turf(src))
 				transfer_fingerprints_to(R)
-				del(src)
+				qdel(src)
 
 		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 			user << "<span class='notice'>Now slicing apart the girder...</span>"
@@ -219,34 +219,34 @@
 				user << "<span class='notice'>You slice apart the girder!</span>"
 				var/obj/effect/decal/remains/human/R = new (get_turf(src))
 				transfer_fingerprints_to(R)
-				del(src)
+				qdel(src)
 
 		else if(istype(W, /obj/item/weapon/pickaxe/diamonddrill))
 			user << "<span class='notice'>You drill through the girder!</span>"
 			if(do_after(user, 5))
 				var/obj/effect/decal/remains/human/R = new (get_turf(src))
 				transfer_fingerprints_to(R)
-				del(src)
+				qdel(src)
 
 	blob_act()
 		if(prob(40))
-			del(src)
+			qdel(src)
 
 
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				del(src)
+				qdel(src)
 				return
 			if(2.0)
 				if (prob(30))
 					new /obj/effect/decal/remains/human(loc)
-					del(src)
+					qdel(src)
 				return
 			if(3.0)
 				if (prob(5))
 					new /obj/effect/decal/remains/human(loc)
-					del(src)
+					qdel(src)
 				return
 			else
 		return
