@@ -54,6 +54,7 @@
 /datum/dna/gene/disability/hallucinate
 	name="Hallucinate"
 	activation_message="Your mind says 'Hello'."
+	deactivation_message = "Your mind no longer speaks to you."
 	mutation=M_HALLUCINATE
 
 	New()
@@ -62,6 +63,7 @@
 /datum/dna/gene/disability/epilepsy
 	name="Epilepsy"
 	activation_message="You get a headache."
+	deactivation_message = "Your headache disappears."
 	disability=EPILEPSY
 
 	New()
@@ -70,6 +72,7 @@
 /datum/dna/gene/disability/cough
 	name="Coughing"
 	activation_message="You start coughing."
+	deactivation_message = "The need to cough disappears."
 	disability=COUGHING
 
 	New()
@@ -78,6 +81,7 @@
 /datum/dna/gene/disability/clumsy
 	name="Clumsiness"
 	activation_message="You feel lightheaded."
+	deactivation_message = "You no longer feel lightheaded."
 	mutation=M_CLUMSY
 
 	New()
@@ -86,6 +90,7 @@
 /datum/dna/gene/disability/tourettes
 	name="Tourettes"
 	activation_message="You twitch."
+	deactivation_message = "You stop twitching."
 	disability=TOURETTES
 
 	New()
@@ -94,6 +99,7 @@
 /datum/dna/gene/disability/nervousness
 	name="Nervousness"
 	activation_message="You feel nervous."
+	deactivation_message = "You feel calmer."
 	disability=NERVOUS
 
 	New()
@@ -102,6 +108,7 @@
 /datum/dna/gene/disability/blindness
 	name="Blindness"
 	activation_message="You can't seem to see anything."
+	deactivation_message = "You can see again."
 	sdisability=BLIND
 
 	New()
@@ -110,6 +117,7 @@
 /datum/dna/gene/disability/deaf
 	name="Deafness"
 	activation_message="It's kinda quiet."
+	deactivation_message = "You can hear again."
 	sdisability=DEAF
 
 	New()
@@ -122,6 +130,7 @@
 /datum/dna/gene/disability/nearsighted
 	name="Nearsightedness"
 	activation_message="Your eyes feel weird..."
+	deactivation_message = "Your eyes no longer feel weird..."
 	disability=NEARSIGHTED
 
 	New()
