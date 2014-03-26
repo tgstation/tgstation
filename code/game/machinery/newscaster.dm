@@ -46,18 +46,20 @@
 /datum/feed_network/New()
 	CreateFeedChannel("Central Command", "Centcom Official", 1)
 
-/datum/feed_network/proc/CreateFeedChannel(var/channel_name, var/author, var/locked)
+/datum/feed_network/proc/CreateFeedChannel(var/channel_name, var/author, var/locked, var/adminChannel = 0)
 	var/datum/feed_channel/newChannel = new /datum/feed_channel
 	newChannel.channel_name = channel_name
 	newChannel.author = author
 	newChannel.locked = locked
+	newChannel.is_admin_channel = adminChannel
 	network_channels += newChannel
 
-/datum/feed_network/proc/SubmitArticle(var/msg, var/author, var/channel_name, var/obj/item/weapon/photo/photo = null)
+/datum/feed_network/proc/SubmitArticle(var/msg, var/author, var/channel_name, var/obj/item/weapon/photo/photo, var/adminMessage = 0)
 	var/datum/feed_message/newMsg = new /datum/feed_message
 	newMsg.author = author
 	newMsg.body = msg
 	newMsg.time_stamp = "[worldtime2text()]"
+	newMsg.is_admin_message = adminMessage
 	if(photo)
 		newMsg.img = photo.img
 	for(var/datum/feed_channel/FC in network_channels)
