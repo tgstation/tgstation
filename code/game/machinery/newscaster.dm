@@ -10,6 +10,7 @@
 	var/backup_author =""
 	var/is_admin_message = 0
 	var/icon/img = null
+	var/time_stamp = ""
 
 /datum/feed_channel
 	var/channel_name=""
@@ -56,6 +57,7 @@
 	var/datum/feed_message/newMsg = new /datum/feed_message
 	newMsg.author = author
 	newMsg.body = msg
+	newMsg.time_stamp = "[worldtime2text()]"
 	if(photo)
 		newMsg.img = photo.img
 	for(var/datum/feed_channel/FC in network_channels)
@@ -359,7 +361,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 							if(MESSAGE.img)
 								usr << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
 								dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
-							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
+							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author] </FONT>\] - ([MESSAGE.time_stamp])</FONT><BR>"
 				dat+="<BR><HR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Back</A>"
 			if(10)
