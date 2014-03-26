@@ -603,6 +603,7 @@ var/list/sacrificed = list()
 				if(iscultist(C) && !C.stat)
 					cultsinrange += C
 					C.say("Barhah hra zar[pick("'","`")]garis!")
+					if(cultsinrange.len >= 3) break		//we only need to check for three alive cultists, loop breaks so their aren't extra cultists getting word rewards
 			for(var/mob/H in victims)
 				if (ticker.mode.name == "cult")
 					if(H.mind == ticker.mode:sacrifice_target)
