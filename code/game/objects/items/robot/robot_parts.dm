@@ -262,17 +262,14 @@
 			popup.open()
 
 /obj/item/robot_parts/robot_suit/Topic(href, href_list)
-	if(usr.lying || usr.stat || !in_range(src, usr))
-		return 1
-	if(!(ishuman(usr)))
-		usr << "<span class='notice'>You don't have the dexterity to do this!</span>"
-		return 1
+	if(usr.lying || usr.stat || usr.stunned || !Adjacent(usr))
+		return
 
 	var/mob/living/living_user = usr
 	var/obj/item/item_in_hand = living_user.get_active_hand()
 	if(!istype(item_in_hand, /obj/item/device/multitool))
 		living_user << "<span class='error'>You need a multitool!</span>"
-		return 1
+		return
 
 	if(href_list["Name"])
 		var/new_name = reject_bad_name(input(usr, "Enter new designation. Set to blank to reset to default.", "Cyborg Debug", src.created_name))
@@ -286,7 +283,7 @@
 	else if(href_list["Master"])
 		forced_ai = select_active_ai(usr)
 		if(!forced_ai)
-			usr << "No active AIs detected."
+			usr << "<span class='error'>No active AIs detected.</span>"
 
 	else if(href_list["Law"])
 		lawsync = !lawsync
@@ -299,7 +296,7 @@
 
 	add_fingerprint(usr)
 	Interact(usr)
-	return 0
+	return
 
 /obj/item/robot_parts/chest/attackby(obj/item/W as obj, mob/user as mob)
 	..()
