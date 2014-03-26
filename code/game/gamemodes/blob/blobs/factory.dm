@@ -10,10 +10,13 @@
 
 /obj/effect/blob/factory/update_icon()
 	if(health <= 0)
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
-		Destroy()
-		return
-	return
+		qdel(src)
+
+/obj/effect/blob/factory/Destroy()
+	for(var/mob/living/simple_animal/hostile/blobspore/spore in spores)
+		if(spore.factory == src)
+			spore.factory = null
+	..()
 
 /obj/effect/blob/factory/PulseAnimation(var/activate = 0)
 	if(activate)
@@ -128,3 +131,4 @@
 	if(contents)
 		for(var/mob/M in contents)
 			M.loc = src.loc
+	..()

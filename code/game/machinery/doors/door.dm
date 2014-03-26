@@ -41,7 +41,7 @@
 	//return
 
 /obj/machinery/door/Bumped(atom/AM)
-	if(p_open || operating) return
+	if(operating || emagged) return
 	if(ismob(AM))
 		var/mob/M = AM
 		if(world.time - M.last_bumped <= 10) return	//Can bump-open one airlock per second. This is to prevent shock spam.
@@ -87,7 +87,7 @@
 	if(!src.requiresID())
 		user = null
 
-	if(density)
+	if(density && !emagged)
 		if(allowed(user) || src.emergency == 1)	open()
 		else				flick("door_deny", src)
 	return
@@ -117,8 +117,9 @@
 /obj/machinery/door/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/device/detective_scanner))
 		return
-	if(src.operating || isrobot(user))	return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
+	if(isrobot(user))	return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
 	src.add_fingerprint(user)
+	if(operating || emagged)	return
 	if(!Adjacent(user))
 		user = null
 	if(!src.requiresID())
@@ -127,7 +128,14 @@
 		flick("door_spark", src)
 		sleep(6)
 		open()
-		operating = -1
+		emagged = 1
+		if(istype(src, /obj/machinery/door/airlock))
+			var/obj/machinery/door/airlock/A = src
+			A.lights = 0
+			A.locked = 1
+			A.loseMainPower()
+			A.loseBackupPower()
+			A.update_icon()
 		return 1
 	if(src.allowed(user) || src.emergency == 1)
 		if(src.density)
@@ -199,9 +207,9 @@
 
 /obj/machinery/door/proc/open()
 	if(!density)		return 1
-	if(operating > 0)	return
+	if(operating)		return
 	if(!ticker)			return 0
-	if(!operating)		operating = 1
+	operating = 1
 
 	do_animate("opening")
 	icon_state = "door0"

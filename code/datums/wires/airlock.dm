@@ -37,7 +37,7 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 	. += text("<br>\n[]<br>\n[]<br>\n[]<br>\n[]<br>\n[]<br>\n[]<br>\n[]", (A.locked ? "The door bolts have fallen!" : "The door bolts look up."),
 	(A.lights ? "The door bolt lights are on." : "The door bolt lights are off!"),
 	((A.arePowerSystemsOn() && !(A.stat & NOPOWER)) ? "The test light is on." : "The test light is off!"),
-	(A.aiControlDisabled==0 ? "The 'AI control allowed' light is on." : "The 'AI control allowed' light is off."),
+	((A.aiControlDisabled==0 && !A.emagged) ? "The 'AI control allowed' light is on." : "The 'AI control allowed' light is off."),
 	(A.safe==0 ? "The 'Check Wiring' light is on." : "The 'Check Wiring' light is off."),
 	(A.normalspeed==0 ? "The 'Check Timing Mechanism' light is on." : "The 'Check Timing Mechanism' light is off."),
 	(A.emergency==0 ? "The emergency lights are off." : "The emergency lights are on."))
@@ -179,7 +179,8 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 				return
 		if(AIRLOCK_WIRE_OPEN_DOOR)
 			//tries to open the door without ID
-			//will succeed only if the ID wire is cut or the door requires no access
+			//will succeed only if the ID wire is cut or the door requires no access and it's not emagged
+			if(A.emagged)	return
 			if(!A.requiresID() || A.check_access(null))
 				if(A.density)	A.open()
 				else		A.close()
