@@ -76,7 +76,7 @@
 	return 1
 
 /obj/item/projectile/lasertag/redtag
-	icon_state = "laser"
+	icon_state = "redlaser"
 	suit_types = list(/obj/item/clothing/suit/bluetag)
 
 /obj/item/projectile/lasertag/bluetag
