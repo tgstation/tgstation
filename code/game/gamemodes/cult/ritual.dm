@@ -37,7 +37,6 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		return
 
 	if(CHECK_STATUS)
-		world << "STATUS CHECKS FAILED"
 		return	//dead men tell no tales
 
 	var/input = stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
