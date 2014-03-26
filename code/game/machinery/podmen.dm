@@ -73,8 +73,9 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	//If a sample is injected (and revival is allowed) the plant will be controlled by the original donor.
 	if(source && source.stat == 2 && source.client && source.ckey && config.revival_pod_plants)
 		transfer_personality(source.client)
+	/* This is fucking dumb
 	else // If no sample was injected or revival is not allowed, we grab an interested observer.
-		request_player()
+		request_player()*/
 
 	spawn(75) //If we don't have a ghost or the ghost is now unplayed, we just give the harvester some seeds.
 		if(!found_player)
