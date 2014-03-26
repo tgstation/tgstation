@@ -94,7 +94,7 @@
 	throw_speed = 1
 	throw_range = 3
 	plant_type = 0
-	seed = "/obj/item/seeds/sunflower"
+	seed = "/obj/item/seeds/sunflowerseed"
 
 /obj/item/weapon/grown/novaflower
 	name = "novaflower"
@@ -109,7 +109,7 @@
 	throw_speed = 1
 	throw_range = 3
 	plant_type = 0
-	seed = "/obj/item/seeds/novaflower"
+	seed = "/obj/item/seeds/novaflowerseed"
 	attack_verb = list("seared", "heated", "whacked", "steamed")
 	New(var/loc, var/potency = 10)
 		..()
