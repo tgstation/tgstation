@@ -292,9 +292,9 @@
 	bitesize = 2
 	New()
 		..()
-		reagents.add_reagent("nutriment", 5)
-		reagents.add_reagent("sugar", 5)
-		reagents.add_reagent("coco", 5)
+		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("sugar", 2)
+		reagents.add_reagent("coco", 2)
 
 	attack_self(mob/user)
 		if(wrapped)
@@ -320,7 +320,7 @@
 	icon_state = "chocolateegg"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("nutriment", 4)
 		reagents.add_reagent("sugar", 2)
 		reagents.add_reagent("coco", 2)
 		bitesize = 2
@@ -515,7 +515,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/carpmeat
 	name = "carp fillet"
-	desc = "A fillet of spess carp meat"
+	desc = "A fillet of spess carp meat."
 	icon_state = "fishfillet"
 	New()
 		..()
@@ -545,16 +545,16 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
-		src.bitesize = 6
+		src.bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/tomatomeat
 	name = "tomato slice"
-	desc = "A slice from a huge tomato"
+	desc = "A slice from a huge tomato."
 	icon_state = "tomatomeat"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
-		src.bitesize = 6
+		src.bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/bearmeat
 	name = "bear meat"
@@ -573,7 +573,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
-		src.bitesize = 6
+		src.bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/spidermeat
 	name = "spider meat"
@@ -798,7 +798,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/waffles
 	name = "waffles"
-	desc = "Mmm, waffles"
+	desc = "Mmm, waffles."
 	icon_state = "waffles"
 	trash = /obj/item/trash/waffles
 	New()
@@ -1027,7 +1027,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/fries
 	name = "space fries"
-	desc = "AKA: French Fries, Freedom Fries, etc"
+	desc = "AKA: French Fries, Freedom Fries, etc."
 	icon_state = "fries"
 	trash = /obj/item/trash/plate
 	New()
@@ -1098,7 +1098,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/spacylibertyduff
 	name = "spacy liberty duff"
-	desc = "Jello gelatin, from Alfred Hubbard's cookbook"
+	desc = "Jello gelatin, from Alfred Hubbard's cookbook."
 	icon_state = "spacylibertyduff"
 	trash = /obj/item/trash/snack_bowl
 	New()
@@ -1109,7 +1109,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/amanitajelly
 	name = "amanita jelly"
-	desc = "Looks curiously toxic"
+	desc = "Looks curiously toxic."
 	icon_state = "amanitajelly"
 	trash = /obj/item/trash/snack_bowl
 	New()
@@ -1154,7 +1154,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/bloodsoup
 	name = "tomato soup"
-	desc = "Smells like copper"
+	desc = "Smells like copper."
 	icon_state = "tomatosoup"
 	New()
 		..()
@@ -1178,7 +1178,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/vegetablesoup
 	name = "vegetable soup"
-	desc = "A true vegan meal"
+	desc = "A true vegan meal."
 	icon_state = "vegetablesoup"
 	trash = /obj/item/trash/snack_bowl
 	New()
@@ -1574,7 +1574,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/spesslaw
 	name = "spesslaw"
-	desc = "A lawyers favourite"
+	desc = "A lawyers favourite."
 	icon_state = "spesslaw"
 	New()
 		..()
@@ -1841,7 +1841,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/tofubread
 	name = "Tofubread"
-	icon_state = "Like meatbread but for vegetarians. Not guaranteed to give superpowers."
+	desc = "Like meatbread but for vegetarians. Not guaranteed to give superpowers."
 	icon_state = "tofubread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice
 	slices_num = 5
@@ -1909,7 +1909,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesecakeslice
 	name = "cheese cake slice"
-	desc = "Slice of pure cheestisfaction"
+	desc = "Slice of pure cheestisfaction."
 	icon_state = "cheesecake_slice"
 	trash = /obj/item/trash/plate
 	bitesize = 2
@@ -1984,7 +1984,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/chocolatecake
 	name = "chocolate cake"
-	desc = "A cake with added chocolate"
+	desc = "A cake with added chocolate."
 	icon_state = "chocolatecake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/chocolatecakeslice
 	slices_num = 5
@@ -2037,7 +2037,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread
 	name = "bread"
-	icon_state = "Some plain old Earthen bread."
+	desc = "Some plain old Earthen bread."
 	icon_state = "bread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice
 	slices_num = 5
@@ -2082,7 +2082,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/applecake
 	name = "apple cake"
-	desc = "A cake centred with Apple"
+	desc = "A cake centred with Apple."
 	icon_state = "applecake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/applecakeslice
 	slices_num = 5
@@ -2123,7 +2123,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/margherita
 	name = "margherita"
-	desc = "The most cheezy pizza in galaxy"
+	desc = "The most cheezy pizza in galaxy."
 	icon_state = "pizzamargherita"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/margheritaslice
 	slices_num = 6
@@ -2135,13 +2135,13 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/margheritaslice
 	name = "margherita slice"
-	desc = "A slice of the most cheezy pizza in galaxy"
+	desc = "A slice of the most cheezy pizza in galaxy."
 	icon_state = "pizzamargheritaslice"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meatpizza
 	name = "meatpizza"
-	desc = "" //TODO:
+	desc = "Greasy pizza with delicious meat."
 	icon_state = "meatpizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meatpizzaslice
 	slices_num = 6
@@ -2153,13 +2153,13 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meatpizzaslice
 	name = "meatpizza slice"
-	desc = "A slice of " //TODO:
+	desc = "A nutritious slice of meatpizza."
 	icon_state = "meatpizzaslice"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/mushroompizza
 	name = "mushroom pizza"
-	desc = "Very special pizza"
+	desc = "Very special pizza."
 	icon_state = "mushroompizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/mushroompizzaslice
 	slices_num = 6
@@ -2176,7 +2176,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/vegetablepizza
 	name = "vegetable pizza"
-	desc = "No one of Tomatos Sapiens were harmed during making this pizza"
+	desc = "No one of Tomatos Sapiens were harmed during making this pizza."
 	icon_state = "vegetablepizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/vegetablepizzaslice
 	slices_num = 6
@@ -2189,7 +2189,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/vegetablepizzaslice
 	name = "vegetable pizza slice"
-	desc = "A slice of the most green pizza of all pizzas not containing green ingredients "
+	desc = "A slice of the most green pizza of all pizzas not containing green ingredients."
 	icon_state = "vegetablepizzaslice"
 	bitesize = 2
 
@@ -2385,7 +2385,7 @@
 	icon_state = "benedict"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("nutriment", 6)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/hotdog
@@ -2394,7 +2394,7 @@
 	icon_state = "hotdog"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("nutriment", 6)
 		reagents.add_reagent("ketchup", 3)
 		bitesize = 3
 

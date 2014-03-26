@@ -25,6 +25,8 @@
 
 /obj/effect/blob/Destroy()
 	blobs -= src
+	if(isturf(loc)) //Necessary because Expand() is retarded and spawns a blob and then deletes it
+		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 	..()
 
 
@@ -117,7 +119,8 @@
 		B.loc = T
 	else
 		T.blob_act()//If we cant move in hit the turf
-		B.Destroy()
+		B.loc = null //So we don't play the splat sound, see Destroy()
+		qdel(B)
 
 	for(var/atom/A in T)//Hit everything in the turf
 		A.blob_act()
@@ -184,13 +187,8 @@
 	luminosity = 0
 	health = 21
 
-/obj/effect/blob/normal/Destroy()
-	src.loc = null
-	blobs -= src
-
 /obj/effect/blob/normal/update_icon()
 	if(health <= 0)
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 		qdel(src)
 	else if(health <= 15)
 		icon_state = "blob_damaged"

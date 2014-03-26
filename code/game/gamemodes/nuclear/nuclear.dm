@@ -333,7 +333,7 @@
 		text += "(Syndicates used [TC_uses] TC) [purchases]"
 
 		if(TC_uses==0 && station_was_nuked && !is_operatives_are_dead())
-			text += "<IMG CLASS=icon SRC=\ref['icons/BadAss.dmi'] ICONSTATE='badass'>"
+			text += "<BIG><IMG CLASS=icon SRC=\ref['icons/BadAss.dmi'] ICONSTATE='badass'></BIG>"
 
 		world << text
 	return 1
