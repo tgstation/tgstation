@@ -5,9 +5,10 @@
 		cur_area.mob_activate(src)
 
 /mob/living/Destroy()
-	if(mind)
-		mind.current = null
+//	if(mind)
+//		mind.current = null
 	..()
+	del(src)
 
 /mob/living/verb/succumb(var/whispered as null)
 	set hidden = 1
