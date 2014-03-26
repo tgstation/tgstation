@@ -61,12 +61,16 @@
 	dna_cost = 1
 	var/datum/dna/selected_dna = null
 
-/obj/effect/proc_holder/changeling/sting/transformation/can_sting(var/mob/user, var/mob/target)
-	if(!..())
-		return
+/obj/effect/proc_holder/changeling/sting/transformation/Click()
+	var/mob/user = usr
 	var/datum/changeling/changeling = user.mind.changeling
 	selected_dna = changeling.select_dna("Select the target DNA: ", "Target DNA")
 	if(!selected_dna)
+		return
+	..()
+
+/obj/effect/proc_holder/changeling/sting/transformation/can_sting(var/mob/user, var/mob/target)
+	if(!..())
 		return
 	if((HUSK in target.mutations) || !check_dna_integrity(target))
 		user << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
