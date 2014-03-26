@@ -53,7 +53,7 @@
 		return
 	next_move = world.time + 9
 
-	if(aicamera.in_camera_mode)
+if(aicamera && aicamera.in_camera_mode) //MrStonedOne: makes ai/clickon() not depend on photo module being present
 		aicamera.camera_mode_off()
 		aicamera.captureimage(A, usr)
 		return
