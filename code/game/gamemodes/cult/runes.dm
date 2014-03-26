@@ -609,23 +609,25 @@ var/list/sacrificed = list()
 						if(cultsinrange.len >= 3)
 							sacrificed += H.mind
 							stone_or_gib(H)
-							usr << "\red The Geometer of Blood accepts this sacrifice, your objective is now complete."
-							usr << "\red He is pleased!"
-							sac_grant_word()
-							sac_grant_word()
-							sac_grant_word()	//Little reward for completing the objective
+							for(var/mob/living/carbon/C in cultsinrange)
+								C << "\red The Geometer of Blood accepts this sacrifice, your objective is now complete."
+								C << "\red He is pleased!"
+								sac_grant_word(C)
+								sac_grant_word(C)
+								sac_grant_word(C)	//Little reward for completing the objective
 						else
 							usr << "\red Your target's earthly bonds are too strong. You need more cultists to succeed in this ritual."
 					else
 						if(cultsinrange.len >= 3)
 							if(H.stat !=2)
-								usr << "\red The Geometer of Blood accepts this sacrifice."
-								sac_grant_word()
-								stone_or_gib(H)
+								for(var/mob/living/carbon/C in cultsinrange)
+									C << "\red The Geometer of Blood accepts this sacrifice."
+									sac_grant_word(C)
+									stone_or_gib(H)
 							else
 								if(prob(60))
 									usr << "\red The Geometer of blood accepts this sacrifice."
-									sac_grant_word()
+									sac_grant_word(usr)
 								else
 									usr << "\red The Geometer of blood accepts this sacrifice."
 									usr << "\red However, a mere dead body is not enough to satisfy Him."
@@ -636,7 +638,7 @@ var/list/sacrificed = list()
 							else
 								if(prob(60))
 									usr << "\red The Geometer of blood accepts this sacrifice."
-									sac_grant_word()
+									sac_grant_word(usr)
 								else
 									usr << "\red The Geometer of blood accepts this sacrifice."
 									usr << "\red However, a mere dead body is not enough to satisfy Him."
@@ -644,16 +646,14 @@ var/list/sacrificed = list()
 				else
 					if(cultsinrange.len >= 3)
 						if(H.stat !=2)
-							usr << "\red The Geometer of Blood accepts this sacrifice."
-							sac_grant_word()
-							if(isrobot(H))
-								H.dust()//To prevent the MMI from remaining
-							else
-								H.gib()
+							for(var/mob/living/carbon/C in cultsinrange)
+								C << "\red The Geometer of Blood accepts this sacrifice."
+								sac_grant_word(C)
+								stone_or_gib(H)
 						else
 							if(prob(60))
 								usr << "\red The Geometer of blood accepts this sacrifice."
-								sac_grant_word()
+								sac_grant_word(usr)
 							else
 								usr << "\red The Geometer of blood accepts this sacrifice."
 								usr << "\red However, a mere dead body is not enough to satisfy Him."
@@ -664,7 +664,7 @@ var/list/sacrificed = list()
 						else
 							if(prob(60))
 								usr << "\red The Geometer of blood accepts this sacrifice."
-								sac_grant_word()
+								sac_grant_word(usr)
 							else
 								usr << "\red The Geometer of blood accepts this sacrifice."
 								usr << "\red However, a mere dead body is not enough to satisfy Him."
@@ -674,18 +674,19 @@ var/list/sacrificed = list()
 					if(M.mind == ticker.mode:sacrifice_target)
 						if(cultsinrange.len >= 3)
 							sacrificed += M.mind
-							usr << "\red The Geometer of Blood accepts this sacrifice, your objective is now complete."
-							usr << "\red He is pleased!"
-							sac_grant_word()
-							sac_grant_word()
-							sac_grant_word()	//Little reward for completing the objective
+							for(var/mob/living/carbon/C in cultsinrange)
+								C << "\red The Geometer of Blood accepts this sacrifice, your objective is now complete."
+								C << "\red He is pleased!"
+								sac_grant_word(C)
+								sac_grant_word(C)
+								sac_grant_word(C)	//Little reward for completing the objective
 						else
 							usr << "\red Your target's earthly bonds are too strong. You need more cultists to succeed in this ritual."
 							continue
 					else
 						if(prob(30))
 							usr << "\red The Geometer of Blood accepts your meager sacrifice."
-							sac_grant_word()
+							sac_grant_word(usr)
 						else
 							usr << "\red The Geometer of blood accepts this sacrifice."
 							usr << "\red However, a mere monkey is not enough to satisfy Him."
@@ -712,12 +713,12 @@ var/list/sacrificed = list()
 				return
 			return fizzle() */
 
-		sac_grant_word()	//The proc that which chooses a word rewarded for a successful sacrifice, sacrifices always give a currently unknown word if the normal checks pass
-			if(usr.mind.cult_words.len != ticker.mode.allwords.len) // No point running if they already know everything
+		sac_grant_word(var/mob/living/C)	//The proc that which chooses a word rewarded for a successful sacrifice, sacrifices always give a currently unknown word if the normal checks pass
+			if(C.mind.cult_words.len != ticker.mode.allwords.len) // No point running if they already know everything
 				var/convert_word
-				var/pick_list = ticker.mode.allwords - usr.mind.cult_words
+				var/pick_list = ticker.mode.allwords - C.mind.cult_words
 				convert_word = pick(pick_list)
-				ticker.mode.grant_runeword(usr, convert_word)
+				ticker.mode.grant_runeword(C, convert_word)
 
 		stone_or_gib(var/mob/T)
 			var/obj/item/device/soulstone/stone = new /obj/item/device/soulstone(get_turf(src))

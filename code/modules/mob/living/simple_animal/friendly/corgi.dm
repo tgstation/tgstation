@@ -31,7 +31,7 @@
 
 /mob/living/simple_animal/corgi/sac_act(var/obj/effect/rune/R, victim)
 	usr << "<span class='warning'>Even dark gods from another plane have standards, sicko.</span>"
-	usr.reagents.add_reagent("hell_water", 20)
+	usr.reagents.add_reagent("hell_water", 2)
 	R.stone_or_gib(victim)
 
 

@@ -314,13 +314,11 @@ datum
 			description = "YOUR FLESH! IT BURNS!"
 
 			on_mob_life(var/mob/living/M as mob)
-				M.fire_stacks = min(10,M.fire_stacks + 4)
+				M.fire_stacks = min(5,M.fire_stacks + 3)
 				M.IgniteMob()			//Only problem with igniting people is currently the commonly availible fire suits make you immune to being on fire
 				M.adjustToxLoss(1)
 				M.adjustFireLoss(1)		//Hence the other damages... ain't I a bastard?
-				M.adjustOxyLoss(1)
-				M.adjustBruteLoss(1)
-				M.adjustBrainLoss(10)
+				M.adjustBrainLoss(5)
 				holder.remove_reagent(src.id, 1)
 
 		lube
