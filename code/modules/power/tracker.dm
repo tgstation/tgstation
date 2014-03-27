@@ -40,15 +40,11 @@
 	//set icon dir to show sun illumination
 	dir = turn(NORTH, -angle - 22.5)	// 22.5 deg bias ensures, e.g. 67.5-112.5 is EAST
 
-	// check we can draw power
-	if(stat & NOPOWER)
-		return
-
 	// find all solar controls and update them
 	// currently, just update all controllers in world
 	// ***TODO: better communication system using network
 	if(powernet)
-		for(var/obj/machinery/power/solar_control/C in get_solars_powernet())
+		for(var/obj/machinery/power/solar_control/C in powernet.nodes)
 			if(powernet.nodes[C])
 				if(get_dist(C, src) < SOLAR_MAX_DIST)
 					C.tracker_update(angle)
@@ -65,22 +61,9 @@
 				S.give_glass()
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			user.visible_message("<span class='notice'>[user] takes the glass off the tracker.</span>")
-			del(src)
+			qdel(src)
 		return
 	..()
-
-// timed process
-// make sure we can draw power from the powernet
-/obj/machinery/power/tracker/process()
-
-	var/avail = surplus()
-
-	if(avail > 500)
-		add_load(500)
-		stat &= ~NOPOWER
-	else
-		stat |= NOPOWER
-
 
 // Tracker Electronic
 

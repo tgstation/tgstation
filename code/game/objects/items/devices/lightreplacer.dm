@@ -86,7 +86,7 @@
 			G.amount = remaining
 			if(!G.amount)
 				user.drop_item()
-				del(G)
+				qdel(G)
 			AddUses(increment)
 			user << "You insert a piece of glass into the [src.name]. You have [uses] lights remaining."
 			return
@@ -98,7 +98,7 @@
 				AddUses(1)
 				user << "You insert the [L.name] into the [src.name]. You have [uses] lights remaining."
 				user.drop_item()
-				del(L)
+				qdel(L)
 				return
 		else
 			user << "You need a working light."
@@ -164,7 +164,7 @@
 			target.brightness = L2.brightness
 			target.on = target.has_power()
 			target.update()
-			del(L2)
+			qdel(L2)
 
 			if(target.on && target.rigged)
 				target.explode()

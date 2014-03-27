@@ -33,4 +33,4 @@
 		new/obj/item/stack/light_w(user.loc)
 		if(amount <= 0)
 			user.unEquip(src, 1)
-			del(src)
+			qdel(src)

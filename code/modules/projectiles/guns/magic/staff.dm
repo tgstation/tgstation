@@ -21,3 +21,22 @@ obj/item/weapon/gun/magic/staff/healing
 	ammo_type = /obj/item/ammo_casing/magic/heal
 	icon_state = "staffofhealing"
 	item_state = "staffofhealing"
+
+obj/item/weapon/gun/magic/staff/chaos
+	name = "staff of chaos"
+	desc = "An artefact that spits bolts of chaotic magic that can potentially do anything."
+	ammo_type = /obj/item/ammo_casing/magic/chaos
+	icon_state = "staffofhealing"
+	item_state = "staffofhealing"
+	max_charges = 10
+	recharge_rate = 2
+
+obj/item/weapon/gun/magic/staff/door
+	name = "staff of door creation"
+	desc = "An artefact that spits bolts of transformative magic that can create doors in walls."
+	ammo_type = /obj/item/ammo_casing/magic/door
+	icon_state = "staffofhealing"
+	item_state = "staffofhealing"
+	max_charges = 10
+	recharge_rate = 2
+

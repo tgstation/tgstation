@@ -4,6 +4,11 @@
 	if(cur_area)
 		cur_area.mob_activate(src)
 
+/mob/living/Destroy()
+//	if(mind)
+//		mind.current = null
+	..()
+	del(src)
 
 /mob/living/verb/succumb(var/whispered as null)
 	set hidden = 1
@@ -359,7 +364,7 @@
 								for(var/mob/O in viewers(M, null))
 									O.show_message(text("\red [] has been pulled from []'s grip by []", G.affecting, G.assailant, src), 1)
 								//G = null
-								del(G)
+								qdel(G)
 						else
 							ok = 0
 						if (locate(/obj/item/weapon/grab, M.grabbed_by.len))
@@ -431,22 +436,22 @@
 	if(!L.stat && L.canmove && !L.restrained())
 		var/resisting = 0
 		for(var/obj/O in L.requests)
-			del(O)
+			qdel(O)
 			resisting++
 		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
 			resisting++
 			if(G.state == GRAB_PASSIVE)
-				del(G)
+				qdel(G)
 			else
 				if(G.state == GRAB_AGGRESSIVE)
 					if(prob(25))
 						L.visible_message("<span class='warning'>[L] has broken free of [G.assailant]'s grip!</span>")
-						del(G)
+						qdel(G)
 				else
 					if(G.state == GRAB_NECK)
 						if(prob(5))
 							L.visible_message("<span class='warning'>[L] has broken free of [G.assailant]'s headlock!</span>")
-							del(G)
+							qdel(G)
 		if(resisting)
 			L.visible_message("<span class='warning'>[L] resists!</span>")
 			return
@@ -504,7 +509,7 @@
 						CM.visible_message("<span class='danger'>[CM] manages to break [CM.handcuffed]!</span>" , \
 										"<span class='notice'>You successfully break [CM.handcuffed]!</span>")
 						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-						del(CM.handcuffed)
+						qdel(CM.handcuffed)
 						CM.handcuffed = null
 						CM.update_inv_handcuffed(0)
 			else
@@ -538,7 +543,7 @@
 						CM.visible_message("<span class='danger'>[CM] manages to break [CM.legcuffed]!</span>", \
 											"<span class='notice'>You successfully break [CM.legcuffed].</span>")
 						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-						del(CM.legcuffed)
+						qdel(CM.legcuffed)
 						CM.legcuffed = null
 						CM.update_inv_legcuffed(0)
 			else

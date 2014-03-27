@@ -22,17 +22,17 @@
 		G.add_fingerprint(user)
 		if(amount <= 0)
 			user.unEquip(src, 1)
-			del(src)
+			qdel(src)
 
 	if(istype(O,/obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = O
 		M.amount--
 		if(M.amount <= 0)
 			user.unEquip(M, 1)
-			del(M)
+			qdel(M)
 		amount--
 		var/obj/item/stack/tile/light/L = new (user.loc)
 		L.add_fingerprint(user)
 		if(amount <= 0)
 			user.unEquip(src, 1)
-			del(src)
+			qdel(src)
