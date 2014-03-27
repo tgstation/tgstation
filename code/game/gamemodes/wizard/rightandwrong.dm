@@ -1,6 +1,10 @@
 
 
 /mob/proc/rightandwrong(var/summon_type) //0 = Summon Guns, 1 = Summon Magic
+	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","smg","nuclear","deagle","gyrojet","pulse","silenced","cannon","doublebarrel","shotgun","combatshotgun","mateba","smg","uzi","crossbow","saw")
+	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge","wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying", "staffdoor", "special")
+	var/list/magicspeciallist	= list("staffchange","staffanimation", "wandbelt", "contract", "staffchaos")
+
 	usr << "<B>You summoned [summon_type ? "magic" : "guns"]!</B>"
 	message_admins("[key_name_admin(usr, 1)] summoned [summon_type ? "magic" : "guns"]!")
 	log_game("[key_name(usr)] summoned [summon_type ? "magic" : "guns"]!")
@@ -20,8 +24,9 @@
 			for(var/datum/objective/OBJ in H.mind.objectives)
 				H << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
 				obj_count++
-		var/randomizeguns = pick("taser","egun","laser","revolver","detective","smg","nuclear","deagle","gyrojet","pulse","silenced","cannon","doublebarrel","shotgun","combatshotgun","mateba","smg","uzi","crossbow","saw")
-		var/randomizemagic = pick("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge","wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying")
+		var/randomizeguns 			= pick(gunslist)
+		var/randomizemagic 			= pick(magiclist)
+		var/randomizemagicspecial 	= pick(magicspeciallist)
 		if(!summon_type)
 			switch (randomizeguns)
 				if("taser")
@@ -95,10 +100,10 @@
 					new /obj/item/weapon/gun/magic/wand/teleport(get_turf(H))
 				if("wanddoor")
 					new /obj/item/weapon/gun/magic/wand/door(get_turf(H))
-				if("staffchange")
-					new /obj/item/weapon/gun/magic/staff/change(get_turf(H))
 				if("staffhealing")
 					new /obj/item/weapon/gun/magic/staff/healing(get_turf(H))
+				if("staffdoor")
+					new /obj/item/weapon/gun/magic/staff/door(get_turf(H))
 				if("armor")
 					new /obj/item/clothing/suit/space/rig/wizard(get_turf(H))
 					new /obj/item/clothing/head/helmet/space/rig/wizard(get_turf(H))
@@ -109,4 +114,19 @@
 						H.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 						H.see_in_dark = 8
 						H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-						H << "\blue The walls suddenly disappear."
+						H << "<span class='notice'>The walls suddenly disappear.</span>"
+
+				if("special")
+					magiclist -= "special" //only one super OP item per summoning max
+					switch (randomizemagicspecial)
+						if("staffchange")
+							new /obj/item/weapon/gun/magic/staff/change(get_turf(H))
+						if("staffanimation")
+							new /obj/item/weapon/gun/magic/staff/animate(get_turf(H))
+						if("wandbelt")
+							new /obj/item/weapon/storage/belt/wands/full(get_turf(H))
+						if("contract")
+							new /obj/item/weapon/antag_spawner/contract(get_turf(H))
+						if("staffchaos")
+							new /obj/item/weapon/gun/magic/staff/chaos(get_turf(H))
+					H << "<span class='notice'>You suddenly feel lucky.</span>"
