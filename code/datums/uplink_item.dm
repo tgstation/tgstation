@@ -187,7 +187,7 @@ var/list/uplink_items = list()
 //Geneticist
 /datum/uplink_item/jobspecific/radgun
 	name = "Radgun"
-	desc = "An experimental energy gun that fires radioactive projectiles that deal toxin damage and scramble DNA, giving the victim a different appearance, name, and a chance of harmful disabilities. Recharges automatically."
+	desc = "An experimental energy gun that fires radioactive projectiles that deal toxin damage, irradiate, and scramble DNA, giving the victim a different appearance and name, and potentially harmful or beneficial mutations. Recharges automatically."
 	item = /obj/item/weapon/gun/energy/radgun
 	cost = 6
 	job = list("Geneticist")

@@ -70,24 +70,18 @@
 
 	on_hit(var/atom/hit)
 		if(ishuman(hit))
+
 			var/mob/living/carbon/human/H = hit
+
 			if(H.gender == MALE)
 				H.name = pick(first_names_male)
 			else
 				H.name = pick(first_names_female)
+
 			H.name += " [pick(last_names)]"
 			H.real_name = H.name
 
-			var/datum/preferences/A = new()
-			var/underwear = H.underwear
-			A.randomize_appearance_for(H)
-			H.underwear = underwear // We don't want to change their underwear
+			scramble(1, H, 100) // Scramble all UIs
+			scramble(null, H, 5) // Scramble SEs, 5% chance for each block
 
-			H.apply_effect((rand(50,100)),IRRADIATE)
-			H.dna.SetSEState(pick("GLASSES","HEADACHE","COUGH","CLUMSY","TWITCH","NERVOUS","BLIND","DEAF","HALLUCINATION","MUTE"), 1)
-			domutcheck(H, null)
-
-			H.update_body(0)
-			H.update_hair(0)
-			H.update_icons()
-
+			H.apply_effect((rand(50, 250)),IRRADIATE)
