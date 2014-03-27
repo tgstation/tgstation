@@ -23,9 +23,9 @@
 	return
 
 /atom/movable/Del()
-	if(!gc_destroyed && loc)
+	if(isnull(gc_destroyed) && loc)
 		testing("GC: -- [type] was deleted via del() rather than qdel() --")
-//	else if(!gc_destroyed)
+//	else if(isnull(gc_destroyed))
 //		testing("GC: [type] was deleted via GC without qdel()") //Not really a huge issue but from now on, please qdel()
 //	else
 //		testing("GC: [type] was deleted via GC with qdel()")

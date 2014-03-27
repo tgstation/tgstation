@@ -30,8 +30,7 @@
 
 /obj/effect/blob/core/update_icon()
 	if(health <= 0)
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
-		Destroy()
+		qdel(src)
 		return
 	// update_icon is called when health changes so... call update_health in the overmind
 	if(overmind)
