@@ -2607,11 +2607,8 @@
 	name = "not-a-sandwich"
 	desc = "Something seems to be wrong with this, you can't quite figure what. Maybe it's his moustache."
 	icon_state = "notasandwich"
-<<<<<<< HEAD
 	filling_color = "#341300"
-=======
 	trash = /obj/item/trash/plate
->>>>>>> b61912f27d28b1f8933c49a3fbb6f3e71526d5a3
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
