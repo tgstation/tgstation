@@ -281,6 +281,12 @@ var/list/uplink_items = list()
 	item = /obj/item/clothing/mask/gas/voice
 	cost = 4
 
+/datum/uplink_item/stealthy_tools/dnascrambler
+	name = "DNA Scrambler"
+	desc = "A syringe with one injection that randomizes appearance and name upon use. A cheaper but less versatile alternative to an agent card and voice changer."
+	item = /obj/item/weapon/dnascrambler
+	cost = 1
+
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon-Projector"
 	desc = "Projects an image across a user, disguising them as an object scanned with it, as long as they don't move the projector from their hand. The disguised user cannot run and rojectiles pass over them."
