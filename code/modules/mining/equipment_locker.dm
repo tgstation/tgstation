@@ -64,7 +64,7 @@
 		var/obj/item/stack/sheet/M = O.refined_type
 		points += O.points
 		return M
-	del(O)//No refined type? Purge it.
+	qdel(O)//No refined type? Purge it.
 	return
 
 /obj/machinery/mineral/ore_redemption/attack_hand(user as mob)
@@ -262,7 +262,7 @@
 			new /obj/item/weapon/weldingtool/hugetank(src.loc)
 		if("Cancel")
 			return
-	del(voucher)
+	qdel(voucher)
 
 /obj/machinery/mineral/equipment_locker/ex_act()
 	return
@@ -335,7 +335,7 @@
 		J.target = chosen_beacon
 		try_move_adjacent(J)
 		playsound(src,'sound/effects/sparks4.ogg',50,1)
-		del(src)
+		qdel(src)
 
 /obj/effect/portal/wormhole/jaunt_tunnel
 	name = "jaunt tunnel"
@@ -413,7 +413,7 @@
 		playsound(src,'sound/effects/sparks4.ogg',50,1)
 		M.gets_drilled()
 		spawn(5)
-			del(src)
+			qdel(src)
 	else
 		var/datum/gas_mixture/environment = proj_turf.return_air()
 		var/pressure = environment.return_pressure()
@@ -431,7 +431,7 @@
 				for(var/mob/living/L in src.loc)
 					L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
 					L.adjustBruteLoss(resonance_damage)
-			del(src)
+			qdel(src)
 
 /**********************Facehugger toy**********************/
 
@@ -515,7 +515,7 @@
 	visible_message("<span class='danger'>[src] is destroyed!</span>")
 	new /obj/effect/decal/cleanable/robot_debris(src.loc)
 	DropOre()
-	del src
+	qdel(src)
 	return
 
 /mob/living/simple_animal/hostile/mining_drone/New()

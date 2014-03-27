@@ -175,7 +175,7 @@
 		ore_eaten++
 		if(!(O.type in ore_types_eaten))
 			ore_types_eaten += O.type
-		del(O)
+		qdel(O)
 	if(ore_eaten > 5)//Limit the scope of the reward you can get, or else things might get silly
 		ore_eaten = 5
 	visible_message("<span class='notice'>The ore was swallowed whole!</span>")
@@ -186,7 +186,7 @@
 		spawn(chase_time)
 		if(alerted)
 			visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
-			del(src)
+			qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Reward()
 	if(!ore_eaten || ore_types_eaten.len == 0)
@@ -286,7 +286,7 @@
 				user << "<span class='notice'>You chomp into [src], barely managing to hold it down, but feel amazingly refreshed in mere moments.</span>"
 			playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 			H.revive()
-			del(src)
+			qdel(src)
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood
@@ -316,10 +316,10 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/New()
 	..()
 	spawn(100)
-		del(src)
+		qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/Die()
-	del(src)
+	qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goliath
 	name = "goliath"
@@ -398,7 +398,7 @@
 	for(var/mob/living/M in src.loc)
 		M.Weaken(5)
 		visible_message("<span class='warning'>The [src.name] knocks [M.name] down!</span>")
-	del(src)
+	qdel(src)
 
 /obj/effect/goliath_tentacle/Crossed(AM as mob|obj)
 	if(isliving(AM))
@@ -427,7 +427,7 @@
 			if(current_armor.["melee"] < 80)
 				current_armor.["melee"] = min(current_armor.["melee"] + 10, 80)
 				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
-				del(src)
+				qdel(src)
 			else
 				user << "<span class='info'>You can't improve [C] any further.</span>"
 	return

@@ -20,7 +20,7 @@
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -85,23 +85,6 @@
 	//var/charged = 5
 	origin_tech = "combat=5;powerstorage=5"
 
-
-/*
-	New()
-		..()
-		processing_objects.Add(src)
-
-
-	Del()
-		processing_objects.Remove(src)
-		..()
-
-
-	process()
-		if(charged < 5)
-			charged++
-		return
-*/
 /obj/item/weapon/twohanded/mjollnir/proc/shock(mob/living/target as mob)
 	var/datum/effect/effect/system/lightning_spread/s = new /datum/effect/effect/system/lightning_spread
 	s.set_up(5, 1, target.loc)

@@ -47,20 +47,20 @@
 				affected_mob.invisibility = 101
 				for(var/obj/item/W in affected_mob)
 					if(istype(W, /obj/item/weapon/implant))
-						del(W)
+						qdel(W)
 						continue
 					W.layer = initial(W.layer)
 					W.loc = affected_mob.loc
 					W.dropped(affected_mob)
 				var/mob/living/new_mob = new new_form(affected_mob.loc)
-				if(istype(new_mob)) 
+				if(istype(new_mob))
 					new_mob.a_intent = "harm"
 					new_mob.universal_speak = 1
 					if(affected_mob.mind)
 						affected_mob.mind.transfer_to(new_mob)
 					else
 						new_mob.key = affected_mob.key
-				del(affected_mob)
+				qdel(affected_mob)
 
 
 /datum/disease/transformation/robot

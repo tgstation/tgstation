@@ -12,7 +12,7 @@
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.remove_fuel(15))
 			new refined_type(get_turf(src.loc))
-			del(src)
+			qdel(src)
 		else
 			user << "<span class='info'>Not enough fuel to smelt [src].</span>"
 	..()
@@ -43,10 +43,10 @@
 		var/sandAmt = 1 // The sand we're holding
 		for(var/obj/item/weapon/ore/glass/sandToConvert in location) // The sand on the floor
 			sandAmt += 1
-			del(sandToConvert)
+			qdel(sandToConvert)
 		var/obj/item/stack/sheet/mineral/newSandstone = new /obj/item/stack/sheet/mineral/sandstone(location)
 		newSandstone.amount = sandAmt
-		del(src)
+		qdel(src)
 
 /obj/item/weapon/ore/plasma
 	name = "Plasma ore"
@@ -158,7 +158,7 @@
 				explosion(src.loc,1,2,5,adminlog = notify_admins)
 			if(quality == 1)
 				explosion(src.loc,-1,1,3,adminlog = notify_admins)
-			del(src)
+			qdel(src)
 
 /obj/item/weapon/ore/New()
 	pixel_x = rand(0,16)-8
@@ -232,7 +232,7 @@
 
 		if(CC.amount <= 0)
 			user << "\blue This cable coil appears to be empty."
-			del(CC)
+			qdel(CC)
 			return
 
 		overlays += image('icons/obj/economy.dmi',"coin_string_overlay")

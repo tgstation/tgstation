@@ -260,9 +260,6 @@
 	if(!L.lastarea)
 		L.lastarea = get_area(L.loc)
 	var/area/newarea = get_area(L.loc)
-	var/area/oldarea = L.lastarea
-	if((oldarea.has_gravity == 0) && (newarea.has_gravity == 1) && (L.m_intent == "run")) // Being ready when you change areas gives you a chance to avoid falling all together.
-		thunk(L)
 
 	L.lastarea = newarea
 
@@ -300,32 +297,18 @@
 				if(L.&& L.client)
 					L.client.played = 0
 
-/area/proc/gravitychange(var/gravitystate = 0)
-
-	has_gravity = gravitystate
-
-	if(gravitystate)
-		for(var/mob/living/carbon/human/M in contents)
-			thunk(M)
-
 /area/proc/mob_activate(var/mob/living/L)
 	return
 
-/area/proc/thunk(mob)
-	if(istype(mob,/mob/living/carbon/human/))  // Only humans can wear magboots, so we give them a chance to.
-		if((istype(mob:shoes, /obj/item/clothing/shoes/magboots) && (mob:shoes.flags & NOSLIP)))
-			return
-
-	if(istype(get_turf(mob), /turf/space)) // Can't fall onto nothing.
-		return
-
-	if((istype(mob,/mob/living/carbon/human/)) && (mob:m_intent == "run")) // Only clumbsy humans can fall on their asses.
-		mob:AdjustStunned(5)
-		mob:AdjustWeakened(5)
-
-	else if (istype(mob,/mob/living/carbon/human/))
-		mob:AdjustStunned(2)
-		mob:AdjustWeakened(2)
-
-	mob << "Gravity!"
-
+/proc/has_gravity(var/atom/AT)
+	var/area/A = get_area(AT)
+	var/turf/T = get_turf(AT)
+	if(istype(T, /turf/space)) // Turf never has gravity
+		return 0
+	else if(A && A.has_gravity) // Areas which always has gravity
+		return 1
+	else
+		// There's a gravity generator on our z level
+		if(T && gravity_generators["[T.z]"] && length(gravity_generators["[T.z]"]))
+			return 1
+	return 0

@@ -20,12 +20,12 @@
 
 /obj/effect/proc_holder/changeling/arm_blade/try_to_sting(var/mob/user, var/mob/target)
 	if(istype(user.l_hand, /obj/item/weapon/melee/arm_blade)) //Not the nicest way to do it, but eh
-		del user.l_hand
+		qdel(user.l_hand)
 		user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his blade into an arm!</span>", "<span class='notice'>We assimilate our blade into our body</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
 		user.update_inv_l_hand()
 		return
 	if(istype(user.r_hand, /obj/item/weapon/melee/arm_blade))
-		del user.r_hand
+		qdel(user.r_hand)
 		user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his blade into an arm!</span>", "<span class='notice'>We assimilate our blade into our body</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
 		user.update_inv_r_hand()
 		return
@@ -58,7 +58,7 @@
 
 /obj/item/weapon/melee/arm_blade/dropped(mob/user)
 	visible_message("<span class='warning'>With a sickening crunch, [user] reforms his blade into an arm!</span>", "<span class='notice'>We assimilate our blade into our body</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
-	del src
+	qdel(src)
 
 /obj/item/weapon/melee/arm_blade/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
@@ -108,8 +108,8 @@
 	if(changeling.space_suit_active)
 		changeling.space_suit_active = 0
 		H.visible_message("<span class='warning'>[H] casts off their flesh shell!</span>", "<span class='warning'>We cast off our protective organic shell, temporarily weakening our genomes.</span>", "<span class='warning'>You hear the organic matter ripping and tearing!</span>")
-		del H.wear_suit
-		del H.head
+		qdel(H.wear_suit)
+		qdel(H.head)
 		H.update_inv_wear_suit()
 		H.update_inv_head()
 		H.update_hair()
@@ -152,7 +152,7 @@
 	processing_objects += src
 
 /obj/item/clothing/suit/space/changeling/dropped()
-	del src
+	qdel(src)
 
 /obj/item/clothing/suit/space/changeling/process()
 	if(ishuman(loc))
@@ -167,4 +167,4 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/head/helmet/space/changeling/dropped()
-	del src
+	qdel(src)

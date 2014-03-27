@@ -31,7 +31,7 @@
 	..()
 	var/choice = pick(typesof(/obj/machinery/computer/arcade) - /obj/machinery/computer/arcade)
 	new choice(loc)
-	del(src)
+	qdel(src)
 
 /obj/machinery/computer/arcade/proc/prizevend()
 	if(!contents.len)

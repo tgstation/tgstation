@@ -284,7 +284,7 @@ lines 294-301 in living/say.dm (speech buffer)
 			icon_state = "parrot_fly"
 			drop_held_item(0)
 	else if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/cracker)) //Poly wants a cracker.
-		del(O)
+		qdel(O)
 		user.drop_item()
 		if(health < maxHealth)
 			adjustBruteLoss(-10)
@@ -704,7 +704,7 @@ lines 294-301 in living/say.dm (speech buffer)
 
 //parrots will eat crackers instead of dropping them
 	if(istype(held_item,/obj/item/weapon/reagent_containers/food/snacks/cracker) && (drop_gently))
-		del(held_item)
+		qdel(held_item)
 		held_item = null
 		if(health < maxHealth)
 			adjustBruteLoss(-10)

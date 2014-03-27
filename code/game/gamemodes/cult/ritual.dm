@@ -112,8 +112,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				usr << "It reads: <i>[desc]</i>."
 				sleep(30)
 				explosion(src.loc, 0, 2, 5, 5)
-				if(src)
-					del(src)
+				qdel(src)
 			*/
 		if(!desc)
 			usr << "A spell circle drawn in blood. It reads: <i>[word1] [word2] [word3]</i>."
@@ -126,11 +125,11 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	attackby(I as obj, user as mob)
 		if(istype(I, /obj/item/weapon/tome) && iscultist(user))
 			user << "<span class='notice'>You retrace your steps, carefully undoing the lines of the rune.</span>"
-			del(src)
+			qdel(src)
 			return
 		else if(istype(I, /obj/item/weapon/nullrod))
 			user << "<span class='notice'>You disrupt the vile magic with the deadening field of the null rod!</span>"
-			del(src)
+			qdel(src)
 			return
 		return
 

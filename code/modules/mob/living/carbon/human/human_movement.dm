@@ -1,5 +1,5 @@
 /mob/living/carbon/human/movement_delay()
-	if(istype(loc, /turf/space))
+	if(!has_gravity(src))
 		return -1	//It's hard to be slowed down in space by... anything
 	if(reagents.has_reagent("hyperzine"))
 		return -1
