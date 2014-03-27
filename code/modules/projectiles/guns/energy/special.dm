@@ -215,3 +215,31 @@ obj/item/weapon/gun/energy/staff/focus
 // /vg/ - Broken until we update to /tg/ guncode.
 /obj/item/weapon/gun/energy/kinetic_accelerator/update_icon()
 	return
+
+
+/obj/item/weapon/gun/energy/radgun
+	name = "radgun"
+	desc = "A gun that fires radioactive projectiles."
+	icon_state = "radgun"
+	fire_sound = 'sound/weapons/pulse3.ogg'
+	charge_cost = 100
+	var/charge_tick = 0
+	projectile_type = "/obj/item/projectile/energy/rad"
+
+	New()
+		..()
+		processing_objects.Add(src)
+
+
+	Destroy()
+		processing_objects.Remove(src)
+		..()
+
+	process()
+		charge_tick++
+		if(charge_tick < 4) return 0
+		charge_tick = 0
+		if(!power_supply) return 0
+		power_supply.give(100)
+		update_icon()
+		return 1

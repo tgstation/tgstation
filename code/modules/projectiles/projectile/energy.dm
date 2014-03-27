@@ -59,5 +59,35 @@
 	damage_type = TOX
 	weaken = 5
 
+/obj/item/projectile/energy/rad
+	name = "rad"
+	icon_state = "rad"
+	damage = 10
+	damage_type = TOX
+	nodamage = 0
+	weaken = 10
+	stutter = 10
 
+	on_hit(var/atom/hit)
+		if(ishuman(hit))
+			var/mob/living/carbon/human/H = hit
+			if(H.gender == MALE)
+				H.name = pick(first_names_male)
+			else
+				H.name = pick(first_names_female)
+			H.name += " [pick(last_names)]"
+			H.real_name = H.name
+
+			var/datum/preferences/A = new()
+			var/underwear = H.underwear
+			A.randomize_appearance_for(H)
+			H.underwear = underwear // We don't want to change their underwear
+
+			H.apply_effect((rand(50,100)),IRRADIATE)
+			H.dna.SetSEState(pick("GLASSES","HEADACHE","COUGH","CLUMSY","TWITCH","NERVOUS","BLIND","DEAF","HALLUCINATION","MUTE"), 1)
+			domutcheck(H, null)
+
+			H.update_body(0)
+			H.update_hair(0)
+			H.update_icons()
 
