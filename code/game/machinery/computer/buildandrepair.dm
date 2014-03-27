@@ -271,8 +271,9 @@
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				user << "<span class='notice'>You start wrenching the frame into place.</span>"
 				if(do_after(user, 20))
-					user << "<span class='notice'>You wrench the frame into place.</span>"
+					user << "<span class='notice'>You've wrenched the frame into place.</span>"
 					anchored = 1
 					state = 1
 			if(istype(P, /obj/item/weapon/weldingtool))
@@ -290,8 +291,9 @@
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				user << "<span class='notice'>You start to unfasten the frame.</span>"
 				if(do_after(user, 20))
-					user << "<span class='notice'>You unfasten the frame.</span>"
+					user << "<span class='notice'>You've unfastened the frame.</span>"
 					anchored = 0
 					state = 0
 			if(istype(P, /obj/item/weapon/circuitboard) && !circuit)
