@@ -153,6 +153,7 @@
 	access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels, access_morgue)
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_court) //But see /datum/job/warden/get_access()
 	minimal_player_age = 7
+	var/list/dep_access = null
 
 
 /datum/job/officer/equip(var/mob/living/carbon/human/H)
@@ -180,7 +181,10 @@
 
 /datum/job/officer/get_access()
 	var/list/L = list()
-	L = ..() | check_config_for_sec_maint()
+	if(dep_access)
+		L |= dep_access.Copy()
+	L |= ..() | check_config_for_sec_maint()
+	dep_access = null;
 	return L
 	
 var/list/sec_departments = list("engineering", "supply", "medical", "science")
@@ -193,7 +197,6 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	else
 		var/department = pick(sec_departments)
 		sec_departments -= department
-		var/dep_access = null
 		var/destination = null
 		switch(department)
 			if("supply")
@@ -232,7 +235,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 				else
 					break
 		H << "<b>You have been assigned to [department]!</b>"
-		access += dep_access
+		return
 	
 /obj/item/device/radio/headset/headset_sec/department/New()
 	wires = new(src)
