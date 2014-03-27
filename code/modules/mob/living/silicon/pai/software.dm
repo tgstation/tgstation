@@ -254,7 +254,7 @@
 				if(!paired)
 					pairing = 0
 			if(href_list["control"])
-				if(paired)
+				if(paired && (paired.paired == src))
 					paired.attack_hand(src)
 			if(href_list["disconnect"])
 				unpair(1)

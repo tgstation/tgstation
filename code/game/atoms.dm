@@ -44,12 +44,6 @@
 /atom/proc/CheckParts()
 	return
 
-/atom/Del()
-	// Pass to Destroy().
-	if(isnull(gc_destroyed)) // If we're just straight up calling del(atom), make sure anything in Destroy() gets called anyways just to be sure.
-		Destroy()
-	..()
-
 // Like Del(), but for qdel.
 // Called BEFORE qdel moves shit.
 // Also called on del()

@@ -35,6 +35,12 @@
 			if(..())
 				return
 
+			if(ispAI(usr))
+				if(paired != usr)
+					user.reset_view()
+					user.unset_machine()
+					return
+
 			var/list/L = list()
 			for (var/obj/machinery/camera/C in cameranet.cameras)
 				L.Add(C)
