@@ -2654,39 +2654,52 @@ datum
 
 //////////////////////////////////Hydroponics stuff///////////////////////////////
 
-		eznutriment
+		plantnutriment
+			name = "Generic nutriment"
+			id = "plantnutriment"
+			description = "Some kind of nutriment. You can't really tell what it is. You should probably report it, along with how you obtained it."
+			reagent_state = LIQUID
+			color = "#000000" // RBG: 0, 0, 0
+			var/tox_prob = 0
+
+			on_mob_life(var/mob/living/M as mob)
+				if(prob(tox_prob)) M.adjustToxLoss(1*REM)
+				..()
+				return
+
+		plantnutriment/eznutriment
 			name = "E-Z-Nutrient"
 			id = "eznutriment"
 			description = "Cheap and extremely common type of plant nutriment."
 			reagent_state = LIQUID
 			color = "#376400" // RBG: 50, 100, 0
+			tox_prob = 10
 
 			on_mob_life(var/mob/living/M as mob)
-				if(prob(10)) M.adjustToxLoss(1)
 				..()
 				return
 
-		left4zednutriment
+		plantnutriment/left4zednutriment
 			name = "Left 4 Zed"
 			id = "left4zednutriment"
 			description = "Unstable nutriment that makes plants mutate more often than usual."
 			reagent_state = LIQUID
 			color = "#1A1E4D" // RBG: 26, 30, 77
+			tox_prob = 25
 
 			on_mob_life(var/mob/living/M as mob)
-				if(prob(25)) M.adjustToxLoss(1)
 				..()
 				return
 
-		robustharvestnutriment
+		plantnutriment/robustharvestnutriment
 			name = "Robust Harvest"
 			id = "robustharvestnutriment"
 			description = "Very potent nutriment that prevents plants from mutating."
 			reagent_state = LIQUID
 			color = "#9D9D00" // RBG: 157, 157, 0
+			tox_prob = 15
 
 			on_mob_life(var/mob/living/M as mob)
-				if(prob(15)) M.adjustToxLoss(1)
 				..()
 				return
 
