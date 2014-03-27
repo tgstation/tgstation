@@ -681,12 +681,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/burger/ghost
 	name = "ghost burger"
 	desc = "Too Spooky!"
-<<<<<<< HEAD
 	icon_state = "ghostburger"
 	filling_color = "#BF0000"
-=======
 	alpha = 125
->>>>>>> b61912f27d28b1f8933c49a3fbb6f3e71526d5a3
 
 /obj/item/weapon/reagent_containers/food/snacks/burger
 	name = "burger"
