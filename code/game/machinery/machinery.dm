@@ -243,19 +243,6 @@ Class Procs:
 	else
 		return src.attack_hand(user)
 
-/obj/machinery/attackby(I as obj, user as mob)
-	if(istype(I, /obj/item/device/paicard))
-		var/obj/item/device/paicard/C = I
-		if(C.pai && (C.pai.stat != DEAD) && C.pai.pairing)
-			if(allowed(user))
-				if(paiallowed)
-					C.pai.pair(src)
-				else
-					C.pai << "<span class='warning'><b>\[ERROR\]</b> Remote device does not accept remote control connections.</span>"
-			else
-				user << "<span class='warning'>Access denied.</span>"
-				C.pai << "<span class='warning'><b>\[ERROR\]</b> Handshake failed. User not authorised to connect remote devices.</span>"
-
 /obj/machinery/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 

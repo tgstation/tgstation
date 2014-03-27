@@ -115,8 +115,17 @@
 				A.state = 4
 				A.icon_state = "4"
 			qdel(src)
-	else
-		..()
+	if(istype(I, /obj/item/device/paicard))
+		var/obj/item/device/paicard/C = I
+		if(C.pai && (C.pai.stat != DEAD) && C.pai.pairing)
+			if(allowed(user))
+				if(paiallowed)
+					C.pai.pair(src)
+				else
+					C.pai << "<span class='warning'><b>\[ERROR\]</b> Remote device does not accept remote control connections.</span>"
+			else
+				user << "<span class='warning'>Access denied.</span>"
+				C.pai << "<span class='warning'><b>\[ERROR\]</b> Handshake failed. User not authorised to connect remote devices.</span>"
 	return
 
 /obj/machinery/computer/attack_hand(user)

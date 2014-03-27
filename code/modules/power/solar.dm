@@ -359,7 +359,7 @@ var/list/solars_list = list()
 				A.icon_state = "4"
 				A.anchored = 1
 				qdel(src)
-	else if(paiallowed && istype(I, /obj/item/device/paicard))
+	else if(istype(I, /obj/item/device/paicard))
 		var/obj/item/device/paicard/C = I
 		if(C.pai && (C.pai.stat != DEAD) && C.pai.pairing)
 			C.pai.pair(src)
