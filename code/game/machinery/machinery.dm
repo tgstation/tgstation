@@ -274,10 +274,6 @@ Class Procs:
 	if ((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !istype(user, /mob/living/silicon))
 		return 1
 */
-	if(ispAI(usr))
-		if(paired != usr)
-			return 1
-
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
