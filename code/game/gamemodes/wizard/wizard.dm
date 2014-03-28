@@ -263,8 +263,11 @@
 
 //To batch-remove wizard spells. Linked to mind.dm.
 /mob/proc/spellremove(var/mob/M as mob)
+	if(!mind)
+		return
 	for(var/obj/effect/proc_holder/spell/spell_to_remove in src.mind.spell_list)
 		qdel(spell_to_remove)
+		mind.spell_list -= spell_to_remove
 
 /*Checks if the wizard can cast spells.
 Made a proc so this is not repeated 14 (or more) times.*/
