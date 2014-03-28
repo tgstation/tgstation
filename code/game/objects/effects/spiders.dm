@@ -197,7 +197,7 @@
 /obj/effect/spider/cocoon/container_resist()
 	var/mob/living/user = usr
 	var/breakout_time = 2
-	user.next_move = world.time + 100
+	user.changeNext_move(100)
 	user.last_special = world.time + 100
 	user << "<span class='notice'>You struggle against the tight bonds! (This will take about [breakout_time] minutes.)</span>"
 	visible_message("You see something struggling and writhing in the [src]!")

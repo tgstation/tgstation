@@ -10,7 +10,7 @@
 			return 0
 		if(i > 1)
 			newshot()
-	user.next_move = world.time + 4
+	user.changeNext_move(4)
 	update_icon()
 	return 1
 
