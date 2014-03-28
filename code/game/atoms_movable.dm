@@ -35,7 +35,7 @@
 	loc = null	// can never null their loc enough really
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
-	. = ..()
+	..()
 
 // Previously known as HasEntered()
 // This is automatically called when something enters your square
