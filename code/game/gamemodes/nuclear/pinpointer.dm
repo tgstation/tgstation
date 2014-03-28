@@ -279,4 +279,6 @@
 		if(!target)
 			usr << "Failed to locate [target]!"
 			return
+		active = 1
+		point_at(target)
 		usr << "You set the pinpointer to locate [target]"
