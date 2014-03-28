@@ -50,7 +50,6 @@
 		return 1
 	if(usr.next_move >= world.time)
 		return
-	usr.next_move = world.time + 6
 
 	if(usr.stat || usr.restrained() || usr.stunned || usr.lying)
 		return 1
@@ -95,7 +94,6 @@
 		var/obj/item/I = usr.get_active_hand()
 		if(I)
 			master.attackby(I, usr)
-			usr.next_move = world.time+2
 	return 1
 
 /obj/screen/zone_sel
@@ -301,6 +299,7 @@
 	// We don't even know if it's a middle click
 	if(world.time <= usr.next_move)
 		return 1
+
 	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened)
 		return 1
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
@@ -310,12 +309,10 @@
 			if(iscarbon(usr))
 				var/mob/living/carbon/C = usr
 				C.activate_hand("r")
-				usr.next_move = world.time+2
 		if("l_hand")
 			if(iscarbon(usr))
 				var/mob/living/carbon/C = usr
 				C.activate_hand("l")
-				usr.next_move = world.time+2
 		if("swap")
 			usr:swap_hand()
 		if("hand")
@@ -324,6 +321,5 @@
 			if(usr.attack_ui(slot_id))
 				usr.update_inv_l_hand(0)
 				usr.update_inv_r_hand(0)
-				usr.next_move = world.time+6
 	return 1
 
