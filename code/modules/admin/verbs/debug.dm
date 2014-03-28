@@ -626,6 +626,8 @@ var/global/list/g_fancy_list_of_safe_types = null
 		"tournament gangster",
 		"tournament chef",
 		"tournament janitor",
+		"lasertag red",
+		"lasertag blue",
 		"pirate",
 		"space pirate",
 		"soviet admiral",
@@ -744,6 +746,28 @@ var/global/list/g_fancy_list_of_safe_types = null
 			M.equip_to_slot_or_del(new /obj/item/stack/tile/plasteel(M), slot_in_backpack)
 			M.equip_to_slot_or_del(new /obj/item/stack/tile/plasteel(M), slot_in_backpack)
 			M.equip_to_slot_or_del(new /obj/item/stack/tile/plasteel(M), slot_in_backpack)
+
+		if ("lasertag red")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/red(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/red(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/red(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/redtaghelm(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/redtag(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(M), slot_back)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/laser/redtag(M), slot_s_store)
+
+		if ("lasertag blue")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/blue(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/blue(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/blue(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/bluetaghelm(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/bluetag(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(M), slot_back)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/laser/bluetag(M), slot_s_store)
 
 		if ("pirate")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/pirate(M), slot_w_uniform)
