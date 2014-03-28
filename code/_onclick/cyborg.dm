@@ -118,7 +118,7 @@
 	CtrlShiftClick(user)
 
 /obj/machinery/door/airlock/BorgCtrlShiftClick() // Sets/Unsets Emergency Access Override Forwards to AI code.
-	AiCtrlShiftClick()
+	AICtrlShiftClick()
 
 
 /atom/proc/BorgShiftClick(var/mob/living/silicon/robot/user) //forward to human click if not overriden
