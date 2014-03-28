@@ -11,7 +11,7 @@
 	..()
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
-		del(src)
+		qdel(src)
 
 /obj/item/apc_frame/proc/try_build(turf/on_wall)
 	if (get_dist(on_wall,usr)>1)
@@ -38,6 +38,6 @@
 			var/obj/item/stack/cable_coil/C = new /obj/item/stack/cable_coil(loc)
 			C.amount = 10
 			usr << "You cut the cables and disassemble the unused power terminal."
-			del(T)
+			qdel(T)
 	new /obj/machinery/power/apc(loc, ndir, 1)
-	del(src)
+	qdel(src)

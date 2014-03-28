@@ -19,7 +19,7 @@
 		part.loc = src.loc
 		part.master = null
 		part = null
-		del(src)
+		qdel(src)
 		return
 	return
 

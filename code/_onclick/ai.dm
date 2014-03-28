@@ -15,7 +15,6 @@
 		return
 
 	if(control_disabled || stat) return
-	next_move = world.time + 9
 
 	if(ismob(A))
 		ai_actual_track(A)
@@ -51,7 +50,6 @@
 
 	if(world.time <= next_move)
 		return
-	next_move = world.time + 9
 
 	if(aicamera.in_camera_mode)
 		aicamera.camera_mode_off()
@@ -101,6 +99,8 @@
 	return
 
 /obj/machinery/door/airlock/AIShiftClick()  // Opens and closes doors!
+	if(emagged)
+		return
 	if(density)
 		Topic("aiEnable=7", list("aiEnable"="7"), 1) // 1 meaning no window (consistency!)
 	else
@@ -112,6 +112,8 @@
 	return
 
 /obj/machinery/door/airlock/AICtrlClick() // Bolts doors
+	if(emagged)
+		return
 	if(locked)
 		Topic("aiEnable=4", list("aiEnable"="4"), 1)// 1 meaning no window (consistency!)
 	else
@@ -126,6 +128,8 @@
 	return
 
 /obj/machinery/door/airlock/AIAltClick() // Eletrifies doors.
+	if(emagged)
+		return
 	if(!secondsElectrified)
 		// permenant shock
 		Topic("aiEnable=6", list("aiEnable"="6"), 1) // 1 meaning no window (consistency!)

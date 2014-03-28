@@ -288,23 +288,30 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	target_types += /obj/effect/decal/cleanable/vomit
 	target_types += /obj/effect/decal/cleanable/robot_debris
 	target_types += /obj/effect/decal/cleanable/crayon
+	target_types += /obj/effect/decal/cleanable/molten_item
+	target_types += /obj/effect/decal/cleanable/tomato_smudge
+	target_types += /obj/effect/decal/cleanable/egg_smudge
+	target_types += /obj/effect/decal/cleanable/pie_smudge
+	target_types += /obj/effect/decal/cleanable/flour
+	target_types += /obj/effect/decal/cleanable/ash
+	target_types += /obj/effect/decal/cleanable/greenglow
+	target_types += /obj/effect/decal/cleanable/dirt
 
 	if(src.blood)
 		target_types += /obj/effect/decal/cleanable/xenoblood/
 		target_types += /obj/effect/decal/cleanable/xenoblood/xgibs
 		target_types += /obj/effect/decal/cleanable/blood/
 		target_types += /obj/effect/decal/cleanable/blood/gibs/
-		target_types += /obj/effect/decal/cleanable/dirt
 		target_types += /obj/effect/decal/cleanable/trail_holder
 
 /obj/machinery/bot/cleanbot/proc/clean(var/obj/effect/decal/cleanable/target)
 	src.anchored = 1
 	src.icon_state = "cleanbot-c"
-	visible_message("\red [src] begins to clean up the [target]")
+	visible_message("\red [src] begins to clean up [target]")
 	src.cleaning = 1
 	spawn(50)
 		src.cleaning = 0
-		del(target)
+		qdel(target)
 		src.icon_state = "cleanbot[src.on]"
 		src.anchored = 0
 		src.target = null
@@ -324,20 +331,20 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
-	del(src)
+	qdel(src)
 	return
 
 /obj/item/weapon/bucket_sensor/attackby(var/obj/item/W, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
 		user.drop_item()
-		del(W)
+		qdel(W)
 		var/turf/T = get_turf(src.loc)
 		var/obj/machinery/bot/cleanbot/A = new /obj/machinery/bot/cleanbot(T)
 		A.name = src.created_name
 		user << "<span class='notice'>You add the robot arm to the bucket and sensor assembly. Beep boop!</span>"
 		user.unEquip(src, 1)
-		del src
+		qdel(src)
 
 	else if (istype(W, /obj/item/weapon/pen))
 		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)

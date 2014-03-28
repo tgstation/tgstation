@@ -108,7 +108,6 @@ var/list/advance_cures = 	list(
 			affected_mob.resistances[id] = id
 		affected_mob.viruses -= src		//remove the datum from the list
 	del(src)	//delete the datum to stop it processing
-	return
 
 // Returns the advance disease with a different reference memory.
 /datum/disease/advance/Copy(var/process = 0)

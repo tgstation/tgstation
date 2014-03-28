@@ -116,11 +116,11 @@ proc/wabbajack(mob/living/M)
 
 			if(istype(M, /mob/living/silicon/robot))
 				var/mob/living/silicon/robot/Robot = M
-				if(Robot.mmi)	del(Robot.mmi)
+				if(Robot.mmi)	qdel(Robot.mmi)
 			else
 				for(var/obj/item/W in M)
 					if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
-						del(W)
+						qdel(W)
 						continue
 					W.layer = initial(W.layer)
 					W.loc = M.loc
@@ -166,12 +166,14 @@ proc/wabbajack(mob/living/M)
 					new_mob.universal_speak = 1*/
 				if("animal")
 					if(prob(50))
-						var/beast = pick("carp","bear","mushroom","statue")
+						var/beast = pick("carp","bear","mushroom","statue", "bat", "goat")
 						switch(beast)
 							if("carp")		new_mob = new /mob/living/simple_animal/hostile/carp(M.loc)
 							if("bear")		new_mob = new /mob/living/simple_animal/hostile/bear(M.loc)
 							if("mushroom")	new_mob = new /mob/living/simple_animal/hostile/mushroom(M.loc)
 							if("statue")	new_mob = new /mob/living/simple_animal/hostile/statue(M.loc)
+							if("bat") 		new_mob = new /mob/living/simple_animal/hostile/retaliate/bat(M.loc)
+							if("goat")		new_mob = new /mob/living/simple_animal/hostile/retaliate/goat(M.loc)
 					else
 						var/animal = pick("parrot","corgi","crab","pug","cat","tomato","mouse","chicken","cow","lizard","chick")
 						switch(animal)
@@ -212,7 +214,7 @@ proc/wabbajack(mob/living/M)
 
 			new_mob << "<B>Your form morphs into that of a [randomize].</B>"
 
-			del(M)
+			qdel(M)
 			return new_mob
 
 /obj/item/projectile/magic/animate
@@ -228,16 +230,17 @@ proc/wabbajack(mob/living/M)
 	if(istype(change, /obj/item) || istype(change, /obj/structure) && !is_type_in_list(change, protected_objects))
 		if(istype(change, /obj/structure/closet/statue))
 			for(var/mob/living/carbon/human/H in change.contents)
-				var/mob/living/simple_animal/hostile/statue/S = new /mob/living/simple_animal/hostile/statue(change.loc)
+				var/mob/living/simple_animal/hostile/statue/S = new /mob/living/simple_animal/hostile/statue(change.loc, firer)
 				S.name = "statue of [H.name]"
 				S.faction = "\ref[firer]"
 				S.icon = change.icon
 				if(H.mind)
 					H.mind.transfer_to(S)
 					S << "You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator."
-				del(H)
-				del(change)
-				del(src)
+				H = change
+				H.loc = S
+				qdel(src)
+				return
 		else
 			var/obj/O = change
 			new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, firer)

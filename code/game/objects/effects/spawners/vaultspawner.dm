@@ -25,4 +25,4 @@
 				T.ChangeTurf(/turf/simulated/floor/vault)
 			T.icon_state = "[type]vault"
 
-	del(src)
+	qdel(src)

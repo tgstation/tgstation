@@ -75,7 +75,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	var/obj/machinery/newscaster/N = new(loc)
 	N.pixel_y -= (loc.y - on_wall.y) * 32
 	N.pixel_x -= (loc.x - on_wall.x) * 32
-	del(src)
+	qdel(src)
 
 
 
@@ -139,7 +139,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	src.update_icon() //for any custom ones on the map...
 	..()                                //I just realised the newscasters weren't in the global machines list. The superconstructor call will tend to that
 
-/obj/machinery/newscaster/Del()
+/obj/machinery/newscaster/Destroy()
 	allCasters -= src
 	..()
 
@@ -183,12 +183,12 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 /obj/machinery/newscaster/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			src.isbroken=1
 			if(prob(50))
-				del(src)
+				qdel(src)
 			else
 				src.update_icon() //can't place it above the return and outside the if-else. or we might get runtimes of null.update_icon() if(prob(50)) goes in.
 			return
@@ -750,7 +750,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		if(do_after(user, 60))
 			new /obj/item/newscaster_frame(loc)
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			del(src)
+			qdel(src)
 		return
 
 	if (src.isbroken)

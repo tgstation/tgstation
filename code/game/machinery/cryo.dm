@@ -35,10 +35,9 @@
 	current_heat_capacity = 50 * C
 	efficiency = C
 
-/obj/machinery/atmospherics/unary/cryo_cell/Del()
+/obj/machinery/atmospherics/unary/cryo_cell/Destroy()
 	var/turf/T = loc
 	T.contents += contents
-	..()
 	var/obj/item/weapon/reagent_containers/glass/B = beaker
 	if(beaker)
 		B.loc = get_step(loc, SOUTH) //Beaker is carefully ejected from the wreckage of the cryotube
@@ -227,11 +226,6 @@
 			return
 
 	if(default_change_direction_wrench(user, I))
-		if(node)
-			disconnect(node)
-		initialize()
-		if(node)
-			node.update_icon()
 		return
 
 	if(exchange_parts(user, I))
@@ -242,6 +236,8 @@
 /obj/machinery/atmospherics/unary/cryo_cell/open_machine()
 	if(!state_open && !panel_open)
 		layer = 3
+		if(occupant)
+			occupant.bodytemperature = Clamp(occupant.bodytemperature, 261, 360)
 		..()
 		if(beaker)
 			beaker.loc = src
@@ -273,6 +269,7 @@
 		return
 	if(occupant)
 		if(occupant.stat == 2 || occupant.health >= 100)  //Why waste energy on dead or healthy people
+			occupant.bodytemperature = T0C
 			return
 		occupant.bodytemperature += 2*(air_contents.temperature - occupant.bodytemperature) * current_heat_capacity / (current_heat_capacity + air_contents.heat_capacity())
 		occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise

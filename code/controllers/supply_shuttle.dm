@@ -49,13 +49,13 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 /obj/structure/plasticflaps/ex_act(severity)
 	switch(severity)
 		if (1)
-			del(src)
+			qdel(src)
 		if (2)
 			if (prob(50))
-				del(src)
+				qdel(src)
 		if (3)
 			if (prob(5))
-				del(src)
+				qdel(src)
 
 /obj/structure/plasticflaps/mining //A specific type for mining that doesn't allow airflow because of them damn crates
 	name = "airtight plastic flaps"
@@ -67,7 +67,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 			T.blocks_air = 1
 		..()
 
-	Del() //lazy hack to set the turf to allow air to pass if it's a simulated floor
+	Destroy() //lazy hack to set the turf to allow air to pass if it's a simulated floor //wow this is terrible
 		var/turf/T = get_turf(loc)
 		if(T)
 			if(istype(T, /turf/simulated/floor))
@@ -303,7 +303,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 							discoveredPlants[S.type] = S.potency
 							centcom_message += "<font color=green>+[S.rarity]</font>: New species discovered: \"[capitalize(S.species)]\".  Excellent work.<BR>"
 							points += S.rarity // That's right, no bonus for potency.  Send a crappy sample first to "show improvement" later
-			del(MA)
+			qdel(MA)
 
 		if(plasma_count)
 			centcom_message += "<font color=green>+[round(plasma_count/plasma_per_point)]</font>: Received [plasma_count] units of exotic material.<BR>"
@@ -387,7 +387,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 				// If it has multiple items, there's a 1% of each going missing... Not for secure crates or those large wooden ones, though.
 				if(contains.len > 1 && prob(1) && !findtext(SP.containertype,"/secure/") && !findtext(SP.containertype,"/largecrate/"))
 					slip.erroneous |= MANIFEST_ERROR_ITEM // This item was not included in the shipment!
-					del(B2) // Lost in space... or the loading dock.
+					qdel(B2) // Lost in space... or the loading dock.
 
 			//manifest finalisation
 			slip.info += "</ul><br>"

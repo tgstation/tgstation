@@ -57,5 +57,5 @@
 	icon_living = "holocarp"
 
 /mob/living/simple_animal/hostile/carp/holocarp/Die()
-	del(src)
+	qdel(src)
 	return

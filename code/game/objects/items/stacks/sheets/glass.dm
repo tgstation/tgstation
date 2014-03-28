@@ -302,7 +302,7 @@
 					continue
 				G.attackby(NG, user)
 				user << "<span class='notice'>You add the newly-formed glass to the stack. It now contains [NG.amount] sheet\s.</span>"
-			del(src)
+			qdel(src)
 	..()
 
 /obj/item/weapon/shard/Crossed(var/mob/AM)

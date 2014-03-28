@@ -378,7 +378,7 @@
 	if(open || !locked)	//Open and unlocked, no need to escape
 		open = 1
 		return
-	user.next_move = world.time + 100
+	user.changeNext_move(100)
 	user.last_special = world.time + 100
 	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>"
 	user.visible_message("<span class='warning'>You hear a metallic creaking from [src]!</span>")
@@ -477,7 +477,7 @@
 	var/mob/M = G.affecting
 	M.loc = loc
 	user.stop_pulling()
-	del(G)
+	qdel(G)
 
 /obj/machinery/dna_scannernew/attack_hand(mob/user)
 	if(..())
@@ -490,24 +490,15 @@
 /obj/machinery/dna_scannernew/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			for(var/atom/movable/A in src)
-				A.loc = loc
-				A.ex_act(severity)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if(prob(50))
-				for(var/atom/movable/A in src)
-					A.loc = loc
-					A.ex_act(severity)
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if(prob(25))
-				for(var/atom/movable/A in src)
-					A.loc = loc
-					A.ex_act(severity)
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -515,9 +506,7 @@
 
 /obj/machinery/dna_scannernew/blob_act()
 	if(prob(75))
-		for(var/atom/movable/A in contents)
-			A.loc = loc
-		del(src)
+		qdel(src)
 
 
 //DNA COMPUTER

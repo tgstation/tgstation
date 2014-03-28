@@ -175,16 +175,16 @@
 	if(istype(target, /obj/item/weapon/reagent_containers/food/snacks))
 		if(!reagents.total_volume)
 			user << "<span class='warning'>You tear open [src], but there's nothing in it.</span>"
-			del src
+			qdel(src)
 			return
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			user << "<span class='warning'>You tear open [src], but [target] is stacked so high that it just drips off!</span>" //Not sure if food can ever be full, but better safe than sorry.
-			del src
+			qdel(src)
 			return
 		else
 			user << "<span class='notice'>You tear open [src] above [target] and the condiments drip onto it.</span>"
 			src.reagents.trans_to(target, amount_per_transfer_from_this)
-			del src
+			qdel(src)
 
 /obj/item/weapon/reagent_containers/food/condiment/pack/on_reagent_change()
 	if(reagents.reagent_list.len > 0)

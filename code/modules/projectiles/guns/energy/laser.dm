@@ -34,7 +34,7 @@ obj/item/weapon/gun/energy/laser/retro
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -110,7 +110,7 @@ obj/item/weapon/gun/energy/laser/retro
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -147,7 +147,7 @@ obj/item/weapon/gun/energy/laser/retro
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
