@@ -975,7 +975,7 @@ FIRE ALARM
 	if (istype(W, /obj/item/weapon/screwdriver) && buildstage == 2)
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		panel_open = !panel_open
- 		user << "The wires have been [panel_open ? "exposed" : "unexposed"]"
+		user << "The wires have been [panel_open ? "exposed" : "unexposed"]"
 		update_icon()
 		return
 
