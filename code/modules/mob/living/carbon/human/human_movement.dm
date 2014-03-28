@@ -7,18 +7,14 @@
 	if (istype(loc, /turf/space)) return -1 // It's hard to be slowed down in space by... anything
 
 	//(VG EDIT disabling for now) handle_embedded_objects() //Moving with objects stuck in you can cause bad times.
-	var/hyperizine = reagents.has_reagent("hyperizine")
-	if(hyperizine && dna.mutantrace == "slime")
+	var/hyperzine = reagents.has_reagent("hyperzine")
+	if(hyperzine && dna.mutantrace == "slime")
 		tally *= 2
-	else if(hyperizine || M_RUN in mutations || istype(loc, /turf/space))
+	else if(hyperzine || M_RUN in mutations || istype(loc, /turf/space))
 		return -1
 
 	if(reagents.has_reagent("frostoil") && dna.mutantrace == "slime")
 		tally *= 5
-
-	if((M_RUN in mutations)) return -1
-
-	if (istype(loc, /turf/space)) return -1 // It's hard to be slowed down in space by... anything
 
 	var/health_deficiency = (100 - health - halloss)
 	if(health_deficiency >= 40) tally += (health_deficiency / 25)
