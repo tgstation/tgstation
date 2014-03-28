@@ -372,6 +372,12 @@ var/list/uplink_items = list()
 	item = /obj/item/device/radio/beacon/syndicate
 	cost = 7
 
+/datum/uplink_item/device_tools/pdapinpointer
+	name = "PDA Pinpointer"
+	desc = "A pinpointer that tracks any PDA on the station. Useful for locating assassination targets or other high-value targets."
+	item = /obj/item/weapon/pinpointer/pdapinpointer
+	cost = 2
+
 /datum/uplink_item/device_tools/teleporter
 	name = "Teleporter Circuit Board"
 	desc = "A printed circuit board that completes the teleporter onboard the mothership. Advise you test fire the teleporter before entering it, as malfunctions can occur."

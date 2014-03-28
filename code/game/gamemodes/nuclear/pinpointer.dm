@@ -244,3 +244,39 @@
 				icon_state = "pinonfar"
 
 	spawn(5) .()
+
+/obj/item/weapon/pinpointer/pdapinpointer
+	name = "pda pinpointer"
+	desc = "A pinpointer that has been illegally modified to track PDAs of crewmembers for malicious reasons."
+	var/obj/target = null
+
+	attack_self()
+		if(!active)
+			active = 1
+			point_at(target)
+			usr << "\blue You activate the pinpointer"
+		else
+			active = 0
+			icon_state = "pinoff"
+			usr << "\blue You deactivate the pinpointer"
+
+	verb/select_pda()
+		set category = "Object"
+		set name = "Select pinpointer target"
+		set src in view(1)
+
+		var/list/L = list()
+		var/length = 1
+		for (var/obj/item/device/pda/P in world)
+			if(P.name != "\improper PDA")
+				L[text("([length]) [P.name]")] = P
+				length++
+
+		var/t = input("Select pinpointer target") as null|anything in L
+		target = L[t]
+		if(!target)
+			return
+		if(!target)
+			usr << "Failed to locate [target]!"
+			return
+		usr << "You set the pinpointer to locate [target]"
