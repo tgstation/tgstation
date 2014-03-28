@@ -17,9 +17,6 @@
 	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()
 	///Chemistry.
 
-	// Garbage collection
-	var/gc_destroyed //Time when this object
-
 /atom/proc/throw_impact(atom/hit_atom)
 	if(istype(hit_atom,/mob/living))
 		var/mob/living/M = hit_atom
@@ -40,19 +37,15 @@
 				var/mob/living/M = src
 				M.take_organ_damage(20)
 
-
 /atom/proc/CheckParts()
 	return
 
-// Like Del(), but for qdel.
-// Called BEFORE qdel moves shit.
-// Also called on del()
-/atom/proc/Destroy()
-	gc_destroyed = world.time
+/atom/Destroy()
 	if(reagents)
 		reagents.delete()
-		del(reagents) // Technically I think the reagent holder will gc, but let's be careful here and delete all the reagents and the holder too
+		qdel(reagents)
 	invisibility = 101
+	// Do not call ..()
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	del(giver)

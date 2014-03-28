@@ -13,6 +13,10 @@
 	unacidable = 1
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
 
+/obj/screen/Destroy()
+	master = null
+	..()
+
 
 /obj/screen/text
 	icon = null
@@ -322,3 +326,4 @@
 				usr.update_inv_r_hand(0)
 				usr.next_move = world.time+6
 	return 1
+
