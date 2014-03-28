@@ -16,12 +16,8 @@ macro "borghotkeymode"
 		command = ".southeast"
 		is-disabled = false
 	elem 
-		name = "SOUTHWEST"
-		command = ".southwest"
-		is-disabled = false
-	elem 
 		name = "NORTHWEST"
-		command = ".northwest"
+		command = "unequip-module"
 		is-disabled = false
 	elem 
 		name = "CTRL+WEST"
@@ -112,14 +108,6 @@ macro "borghotkeymode"
 		command = ".east"
 		is-disabled = false
 	elem 
-		name = "E"
-		command = "quick-equip"
-		is-disabled = false
-	elem 
-		name = "CTRL+E"
-		command = "quick-equip"
-		is-disabled = false
-	elem 
 		name = "F"
 		command = "a-intent left"
 		is-disabled = false
@@ -142,14 +130,6 @@ macro "borghotkeymode"
 	elem 
 		name = "CTRL+Q"
 		command = "unequip-module"
-		is-disabled = false
-	elem 
-		name = "R"
-		command = ".southwest"
-		is-disabled = false
-	elem 
-		name = "CTRL+R"
-		command = ".southwest"
 		is-disabled = false
 	elem "s_key"
 		name = "S+REP"
@@ -650,12 +630,8 @@ macro "borgmacro"
 		command = ".southeast"
 		is-disabled = false
 	elem 
-		name = "SOUTHWEST"
-		command = ".southwest"
-		is-disabled = false
-	elem 
 		name = "NORTHWEST"
-		command = ".northwest"
+		command = "unequip-module"
 		is-disabled = false
 	elem 
 		name = "CTRL+WEST"
@@ -722,10 +698,6 @@ macro "borgmacro"
 		command = ".east"
 		is-disabled = false
 	elem 
-		name = "CTRL+E"
-		command = "quick-equip"
-		is-disabled = false
-	elem 
 		name = "CTRL+F"
 		command = "a-intent left"
 		is-disabled = false
@@ -736,10 +708,6 @@ macro "borgmacro"
 	elem 
 		name = "CTRL+Q"
 		command = "unequip-module"
-		is-disabled = false
-	elem 
-		name = "CTRL+R"
-		command = ".southwest"
 		is-disabled = false
 	elem 
 		name = "CTRL+S+REP"
