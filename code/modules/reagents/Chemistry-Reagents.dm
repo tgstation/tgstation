@@ -2675,10 +2675,6 @@ datum
 			color = "#376400" // RBG: 50, 100, 0
 			tox_prob = 10
 
-			on_mob_life(var/mob/living/M as mob)
-				..()
-				return
-
 		plantnutriment/left4zednutriment
 			name = "Left 4 Zed"
 			id = "left4zednutriment"
@@ -2687,10 +2683,6 @@ datum
 			color = "#1A1E4D" // RBG: 26, 30, 77
 			tox_prob = 25
 
-			on_mob_life(var/mob/living/M as mob)
-				..()
-				return
-
 		plantnutriment/robustharvestnutriment
 			name = "Robust Harvest"
 			id = "robustharvestnutriment"
@@ -2698,10 +2690,6 @@ datum
 			reagent_state = LIQUID
 			color = "#9D9D00" // RBG: 157, 157, 0
 			tox_prob = 15
-
-			on_mob_life(var/mob/living/M as mob)
-				..()
-				return
 
 //////////////////////////////////////////////The ten friggen million reagents that get you drunk//////////////////////////////////////////////
 

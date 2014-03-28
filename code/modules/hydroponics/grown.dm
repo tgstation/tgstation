@@ -20,12 +20,13 @@
 	icon = 'icons/obj/harvest.dmi'
 	potency = -1
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/New(newloc, newpotency = 50)
+/obj/item/weapon/reagent_containers/food/snacks/grown/New(newloc, potency = 50)
 	..()
+	src.potency = potency
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
 
-	transform *= TransformUsingVariable(newpotency, 100, 0.5) //Makes the resulting produce's sprite larger or smaller based on potency!
+	transform *= TransformUsingVariable(potency, 100, 0.5) //Makes the resulting produce's sprite larger or smaller based on potency!
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
@@ -78,11 +79,10 @@
 	name = "ear of corn"
 	desc = "Needs some butter!"
 	icon_state = "corn"
-	potency = 40
 	trash = /obj/item/weapon/grown/corncob
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/corn
 
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 40)
 		..()
 		if(reagents)
 			reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
@@ -108,9 +108,8 @@
 	desc = "Long-used as a symbol of rest, peace, and death."
 	icon_state = "poppy"
 	slot_flags = SLOT_HEAD
-	potency = 30
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/poppy
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 30)
 		..()
 		if(reagents)
 			reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
@@ -123,9 +122,8 @@
 	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweeten’d not thy breath.\""
 	icon_state = "harebell"
 	slot_flags = SLOT_HEAD
-	potency = 1
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/harebell
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 1)
 		..()
 		if(reagents)
 			reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
@@ -136,9 +134,8 @@
 	name = "potato"
 	desc = "Boil 'em! Mash 'em! Stick 'em in a stew!"
 	icon_state = "potato"
-	potency = 25
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/potato
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 25)
 		..()
 		if(reagents)
 			reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
@@ -175,9 +172,8 @@
 	name = "bunch of green grapes"
 	desc = "Nutritious!"
 	icon_state = "greengrapes"
-	potency = 25
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/no_raisin
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 25)
 		..()
 		if(reagents)
 			reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
@@ -189,9 +185,8 @@
 	name = "cabbage"
 	desc = "Ewwwwwwwwww. Cabbage."
 	icon_state = "cabbage"
-	potency = 25
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/cabbage
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 25)
 		..()
 		if(reagents)
 			reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
@@ -242,9 +237,8 @@
 	name = "cocoa pod"
 	desc = "Fattening... Mmmmm... chucklate."
 	icon_state = "cocoapod"
-	potency = 50
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 50)
 		..()
 		if(reagents)
 			reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
@@ -256,9 +250,8 @@
 	name = "sugarcane"
 	desc = "Sickly sweet."
 	icon_state = "sugarcane"
-	potency = 50
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 50)
 		..()
 		if(reagents)
 			reagents.add_reagent("sugar", 4+round((potency / 5), 1))
@@ -269,9 +262,8 @@
 	desc = "Taste so good, you could die!"
 	icon_state = "poisonberrypile"
 	gender = PLURAL
-	potency = 15
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 15)
 		..()
 		if(reagents)
 			reagents.add_reagent("nutriment", 1)
@@ -284,9 +276,8 @@
 	desc = "Taste so good, you could die!"
 	icon_state = "deathberrypile"
 	gender = PLURAL
-	potency = 50
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/deathberries
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 50)
 		..()
 		if(reagents)
 			reagents.add_reagent("nutriment", 1)
@@ -300,7 +291,6 @@
 	desc = "This is a plant containing various healing chemicals."
 	icon_state = "ambrosiavulgaris"
 	slot_flags = SLOT_HEAD
-	potency = 10
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris
 	New(var/loc, var/potency = 10)
 		..()
@@ -318,7 +308,6 @@
 	desc = "Eating this makes you feel immortal!"
 	icon_state = "ambrosiadeus"
 	slot_flags = SLOT_HEAD
-	potency = 10
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus
 	New(var/loc, var/potency = 10)
 		..()
@@ -335,9 +324,8 @@
 	name = "apple"
 	desc = "It's a little piece of Eden."
 	icon_state = "apple"
-	potency = 15
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/apple
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 15)
 		..()
 		if(reagents)
 			reagents.maximum_volume = 20
@@ -349,9 +337,8 @@
 	name = "apple"
 	desc = "It's a little piece of Eden."
 	icon_state = "apple"
-	potency = 15
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/apple/poisoned
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 15)
 		..()
 		if(reagents)
 			reagents.maximum_volume = 20
@@ -363,9 +350,8 @@
 	name = "golden apple"
 	desc = "Emblazoned upon the apple is the word 'Kallisti'."
 	icon_state = "goldapple"
-	potency = 15
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/goldapple
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 15)
 		..()
 		if(reagents)
 			reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
@@ -383,7 +369,6 @@
 	name = "watermelon"
 	desc = "It's full of watery goodness."
 	icon_state = "watermelon"
-	potency = 10
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/watermelonslice
 	slices_num = 5
 	New(var/loc, var/potency = 10)
@@ -397,7 +382,6 @@
 	name = "pumpkin"
 	desc = "It's large and scary."
 	icon_state = "pumpkin"
-	potency = 10
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin
 	New(var/loc, var/potency = 10)
 		..()
@@ -419,9 +403,8 @@
 	name = "lime"
 	desc = "It's so sour, your face will twist."
 	icon_state = "lime"
-	potency = 20
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/lime
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 20)
 		..()
 		if(reagents)
 			reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
@@ -432,9 +415,8 @@
 	name = "lemon"
 	desc = "When life gives you lemons, be grateful they aren't limes."
 	icon_state = "lemon"
-	potency = 20
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/lemon
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 20)
 		..()
 		if(reagents)
 			reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
@@ -445,9 +427,8 @@
 	name = "orange"
 	desc = "It's an tangy fruit."
 	icon_state = "orange"
-	potency = 20
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/orange
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 20)
 		..()
 		if(reagents)
 			reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
@@ -458,9 +439,8 @@
 	name = "white-beet"
 	desc = "You can't beat white-beet."
 	icon_state = "whitebeet"
-	potency = 15
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 15)
 		..()
 		if(reagents)
 			reagents.add_reagent("nutriment", round((potency / 20), 1))
@@ -595,7 +575,6 @@
 	name = "tomato"
 	desc = "I say to-mah-to, you say tom-mae-to."
 	icon_state = "tomato"
-	potency = 10
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato
 	New(var/loc, var/potency = 10)
 		..()
@@ -615,7 +594,6 @@
 	name = "killer-tomato"
 	desc = "I say to-mah-to, you say tom-mae-to... OH GOD IT'S EATING MY LEGS!!"
 	icon_state = "killertomato"
-	potency = 10
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -635,7 +613,6 @@
 	name = "blood-tomato"
 	desc = "So bloody...so...very...bloody....AHHHH!!!!"
 	icon_state = "bloodtomato"
-	potency = 10
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato
 	New(var/loc, var/potency = 10)
 		..()
@@ -659,7 +636,6 @@
 	name = "blue-tomato"
 	desc = "I say blue-mah-to, you say blue-mae-to."
 	icon_state = "bluetomato"
-	potency = 10
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato
 	New(var/loc, var/potency = 10)
 		..()
@@ -742,9 +718,8 @@
 	name = "ice-pepper"
 	desc = "It's a mutant strain of chili"
 	icon_state = "icepepper"
-	potency = 20
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 20)
 		..()
 		if(reagents)
 			reagents.add_reagent("nutriment", 1+round((potency / 50), 1))
@@ -761,7 +736,6 @@
 	name = "carrot"
 	desc = "It's good for the eyes!"
 	icon_state = "carrot"
-	potency = 10
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/carrot
 	New(var/loc, var/potency = 10)
 		..()
@@ -775,7 +749,6 @@
 	name = "reishi"
 	desc = "<I>Ganoderma lucidum</I>: A special fungus known for its medicinal and stress relieving properties."
 	icon_state = "reishi"
-	potency = 10
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi
 	New(var/loc, var/potency = 10)
 		..()
@@ -796,7 +769,6 @@
 	name = "fly amanita"
 	desc = "<I>Amanita Muscaria</I>: Learn poisonous mushrooms by heart. Only pick mushrooms you know."
 	icon_state = "amanita"
-	potency = 10
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita
 	New(var/loc, var/potency = 10)
 		..()
@@ -817,9 +789,8 @@
 	name = "destroying angel"
 	desc = "<I>Amanita Virosa</I>: Deadly poisonous basidiomycete fungus filled with alpha amatoxins."
 	icon_state = "angel"
-	potency = 35
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 35)
 		if(reagents)
 			reagents.add_reagent("nutriment", 1+round((potency / 50), 1))
 			reagents.add_reagent("amatoxin", 13+round(potency / 3, 1))
@@ -837,9 +808,8 @@
 	name = "liberty-cap"
 	desc = "<I>Psilocybe Semilanceata</I>: Liberate yourself!"
 	icon_state = "libertycap"
-	potency = 15
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 15)
 		..()
 		if(reagents)
 			reagents.add_reagent("nutriment", 1+round((potency / 50), 1))
@@ -955,7 +925,6 @@
 	name = "dosh"
 	desc = "Green and lush."
 	icon_state = "spawner"
-	potency = 10
 	New(var/loc, var/potency = 10)
 		..()
 		switch(potency)
@@ -983,10 +952,9 @@
 	name = "blue-space tomato"
 	desc = "So lubricated, you might slip through space-time."
 	icon_state = "bluespacetomato"
-	potency = 20
 	origin_tech = "bluespace=3"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 20)
 		..()
 		if(reagents)
 			reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
@@ -998,10 +966,9 @@
 	name = "gatfruit"
 	desc = "It smells like burning."
 	icon_state = "gatfruit"
-	potency = 60
 	origin_tech = "combat=3"
 	trash = /obj/item/weapon/gun/projectile/revolver
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 60)
 		..()
 		if(reagents)
 			reagents.add_reagent("sulfur", 1+round((potency / 10), 1))
@@ -1016,9 +983,8 @@
 	name = "coffee arabica beans"
 	desc = "Dry them out to make coffee."
 	icon_state = "coffee_arabica"
-	potency = 20
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/coffee_arabica
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 20)
 		..()
 		if(reagents)
 			reagents.add_reagent("coffeepowder", 1+round((potency / 10), 2))
@@ -1028,9 +994,8 @@
 	name = "coffee robusta beans"
 	desc = "Dry them out to make coffee."
 	icon_state = "coffee_robusta"
-	potency = 20
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/coffee_robusta
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 20)
 		..()
 		if(reagents)
 			reagents.add_reagent("coffeepowder", 1+round((potency / 10), 2))
@@ -1041,8 +1006,9 @@
 	name = "tobacco leaves"
 	desc = "Dry them out to make some smokes."
 	icon_state = "tobacco_leaves"
-	potency = 20
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco
+	New(vat/loc, var/potency = 20)
+		..()
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space
@@ -1050,9 +1016,8 @@
 	name = "space tobacco leaves"
 	desc = "Dry them out to make some space-smokes."
 	icon_state = "stobacco_leaves"
-	potency = 20
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 20)
 		..()
 		if(reagents)
 			reagents.add_reagent("dexalin", 1+round((potency / 20), 1))
@@ -1063,9 +1028,8 @@
 	name = "Tea Aspera tips"
 	desc = "These aromatic tips of the tea plant can be dried to make tea."
 	icon_state = "tea_aspera_leaves"
-	potency = 20
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tea_aspera
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 20)
 		..()
 		if(reagents)
 			reagents.add_reagent("teapowder", 1+round((potency / 10), 2))
@@ -1076,9 +1040,8 @@
 	name = "Tea Astra tips"
 	desc = "These aromatic tips of the tea plant can be dried to make tea."
 	icon_state = "tea_astra_leaves"
-	potency = 20
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tea_astra
-	New(var/loc, var/potency = 10)
+	New(var/loc, var/potency = 20)
 		..()
 		if(reagents)
 			reagents.add_reagent("teapowder", 1+round((potency / 10), 2))
