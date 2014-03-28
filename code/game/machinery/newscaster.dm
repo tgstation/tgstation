@@ -787,7 +787,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 /obj/machinery/newscaster/proc/AttachPhoto(mob/user as mob)
 	if(photo)
 		photo.loc = src.loc
-		user.put_in_inactive_hand(photo)
+		if(!issilicon(user))
+			user.put_in_inactive_hand(photo)
+		else
+			qdel(photo)
 		photo = null
 	if(istype(user.get_active_hand(), /obj/item/weapon/photo))
 		photo = user.get_active_hand()
@@ -799,7 +802,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		var/datum/picture/selection
 		var/mob/living/silicon/ai/tempAI = user
 		if(tempAI.aicamera.aipictures.len == 0)
-			usr << "<FONT COLOR=red><B>No images saved</B>"
+			usr << "<span class='userdanger'>No images saved</span>"
 			return
 		for(var/datum/picture/t in tempAI.aicamera.aipictures)
 			nametemp += t.fields["name"]
@@ -809,6 +812,38 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			if(q.fields["name"] == find)
 				selection = q
 				break  	// just in case some AI decides to take 10 thousand pictures in a round
+		P.icon = selection.fields["icon"]
+		P.img = selection.fields["img"]
+		P.desc = selection.fields["desc"]
+		photo = P
+	if(istype(usr,/mob/living/silicon/robot))
+		var/list/nametemp = list()
+		var/find
+		var/datum/picture/selection
+		var/mob/living/silicon/robot/R = user
+		if(R.connected_ai)
+			if(R.connected_ai.aicamera.aipictures.len == 0)
+				usr << "<span class='userdanger'>No images saved</span>"
+				return
+			for(var/datum/picture/t in R.connected_ai.aicamera.aipictures)
+				nametemp += t.fields["name"]
+			find = input("Select image (numbered in order taken)") in nametemp
+			for(var/datum/picture/q in R.connected_ai.aicamera.aipictures)
+				if(q.fields["name"] == find)
+					selection = q
+					break  	// just in case some AI decides to take 10 thousand pictures in a round
+		else
+			if(R.aicamera.aipictures.len == 0)
+				usr << "<span class='userdanger'>No images saved</span>"
+				return
+			for(var/datum/picture/t in R.aicamera.aipictures)
+				nametemp += t.fields["name"]
+			find = input("Select image (numbered in order taken)") in nametemp
+			for(var/datum/picture/q in R.aicamera.aipictures)
+				if(q.fields["name"] == find)
+					selection = q
+					break  	// just in case some AI decides to take 10 thousand pictures in a round
+		var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
 		P.icon = selection.fields["icon"]
 		P.img = selection.fields["img"]
 		P.desc = selection.fields["desc"]

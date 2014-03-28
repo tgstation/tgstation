@@ -57,6 +57,9 @@
 
 	var/obj/item/weapon/tank/internal = null	//Hatred. Used if a borg has a jetpack.
 	var/obj/item/robot_parts/robot_suit/robot_suit = null //Used for deconstruction to remember what the borg was constructed out of..
+	var/obj/item/device/camera/siliconcam/aicamera = null //photography
+	var/toner = 0
+	var/tonermax = 40
 
 
 
@@ -111,6 +114,9 @@
 	mmi.brainmob.real_name = src.real_name
 	mmi.brainmob.container = mmi
 	mmi.contents += mmi.brainmob
+
+	aicamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
+	toner = 40
 
 	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 
@@ -563,6 +569,15 @@
 				U.loc = src
 			else
 				usr << "Upgrade error!"
+
+	else if(istype(W, /obj/item/device/toner))
+		if(toner >= tonermax)
+			usr << "The toner level of [src] is at it's highest level possible"
+		else
+			toner = 40
+			usr.drop_item()
+			qdel(W)
+			usr << "You fill the toner level of [src] to it's max capacity"
 
 
 	else
