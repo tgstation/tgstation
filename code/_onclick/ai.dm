@@ -141,6 +141,10 @@
 /obj/machinery/power/apc/AICtrlClick() // turns off/on APCs.
 	toggle_breaker()
 
+/obj/machinery/turretid/AICtrlClick() //turns off/on Turrets
+	src.enabled = !src.enabled
+	src.updateTurrets()
+
 
 /atom/proc/AIAltClick(var/mob/living/silicon/ai/user)
 	AltClick(user)
@@ -156,6 +160,10 @@
 		// disable/6 is not in Topic; disable/5 disables both temporary and permenant shock
 		Topic("aiDisable=5", list("aiDisable"="5"), 1)
 	return
+
+/obj/machinery/turretid/AIAltClick() //toggles lethal on turrets
+	src.lethal = !src.lethal
+	src.updateTurrets()
 
 //
 // Override TurfAdjacent for AltClicking
