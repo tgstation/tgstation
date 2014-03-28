@@ -36,6 +36,9 @@
 		return
 
 	var/list/modifiers = params2list(params)
+	if(modifiers["shift"] && modifiers["ctrl"])
+		CtrlShiftClickOn(A)
+		return
 	if(modifiers["middle"])
 		MiddleClickOn(A)
 		return
@@ -85,6 +88,9 @@
 	than anything else in the game, atoms have separate procs
 	for AI shift, ctrl, and alt clicking.
 */
+
+/mob/living/silicon/ai/CtrlShiftClickOn(var/atom/A)
+	A.AICtrlShiftClick(src)
 /mob/living/silicon/ai/ShiftClickOn(var/atom/A)
 	A.AIShiftClick(src)
 /mob/living/silicon/ai/CtrlClickOn(var/atom/A)
@@ -96,6 +102,17 @@
 	The following criminally helpful code is just the previous code cleaned up;
 	I have no idea why it was in atoms.dm instead of respective files.
 */
+/atom/proc/AICtrlShiftClick()
+	return
+
+/obj/machinery/door/airlock/AICtrlShiftClick()  // Sets/Unsets Emergency Access Override
+	if(emagged)
+		return
+	if(!emergency)
+		Topic("aiEnable=11", list("aiEnable"="11"), 1) // 1 meaning no window (consistency!)
+	else
+		Topic("aiDisable=11", list("aiDisable"="11"), 1)
+	return
 
 /atom/proc/AIShiftClick()
 	return
