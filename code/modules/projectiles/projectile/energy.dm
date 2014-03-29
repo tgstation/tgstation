@@ -62,8 +62,8 @@
 /obj/item/projectile/energy/rad
 	name = "rad"
 	icon_state = "rad"
-	damage = 10
-	damage_type = TOX
+	damage = 30
+	damage_type = BURN
 	nodamage = 0
 	weaken = 10
 	stutter = 10

@@ -187,7 +187,7 @@ var/list/uplink_items = list()
 //Geneticist
 /datum/uplink_item/jobspecific/radgun
 	name = "Radgun"
-	desc = "An experimental energy gun that fires radioactive projectiles that deal toxin damage, irradiate, and scramble DNA, giving the victim a different appearance and name, and potentially harmful or beneficial mutations. Recharges automatically."
+	desc = "An experimental energy gun that fires radioactive projectiles that burn, irradiate, and scramble DNA, giving the victim a different appearance and name, and potentially harmful or beneficial mutations. Recharges automatically."
 	item = /obj/item/weapon/gun/energy/radgun
 	cost = 6
 	job = list("Geneticist")
@@ -285,7 +285,7 @@ var/list/uplink_items = list()
 	name = "DNA Scrambler"
 	desc = "A syringe with one injection that randomizes appearance and name upon use. A cheaper but less versatile alternative to an agent card and voice changer."
 	item = /obj/item/weapon/dnascrambler
-	cost = 1
+	cost = 2
 
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon-Projector"
