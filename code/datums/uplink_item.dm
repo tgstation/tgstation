@@ -374,7 +374,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/device_tools/pdapinpointer
 	name = "PDA Pinpointer"
-	desc = "A pinpointer that tracks any PDA on the station. Useful for locating assassination targets or other high-value targets."
+	desc = "A pinpointer that tracks any PDA on the station. Useful for locating assassination targets or other high-value targets that you can't find. WARNING: Can only set once."
 	item = /obj/item/weapon/pinpointer/pdapinpointer
 	cost = 2
 
