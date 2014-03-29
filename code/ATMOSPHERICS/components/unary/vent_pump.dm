@@ -386,6 +386,6 @@
 		target_vent = src
 		L << "<span class='warning'> The vent you were heading to appears to be welded.</span>"
 	L.loc = target_vent.loc
-	var/area/new_area = get_area(loc)
+	var/area/new_area = get_area(L.loc)
 	if(new_area)
 		new_area.Entered(L)
