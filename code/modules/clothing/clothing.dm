@@ -76,6 +76,7 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/masks.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_MASK
+	var/alloweat = 0
 
 
 //Override this to modify speech like luchador masks.

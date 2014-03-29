@@ -46,6 +46,9 @@
 		qdel(src)
 		return 0
 	if(istype(M, /mob/living/carbon))
+		if(!canconsume(M, user))
+			return 0
+
 		if(M == user)								//If you're eating it yourself.
 			var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
 			if(wrapped)
