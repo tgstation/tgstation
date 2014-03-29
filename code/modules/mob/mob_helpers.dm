@@ -100,11 +100,6 @@
 		return 1
 	return 0
 
-/proc/isaiorborg(A)
-	if(istype(A, /mob/living/silicon/ai) || istype(A, /mob/living/silicon/robot))
-		return 1
-	return 0
-
 /proc/isliving(A)
 	if(istype(A, /mob/living))
 		return 1
