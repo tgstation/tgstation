@@ -10,4 +10,8 @@
 *.rsc
 *.lk
 *.int
-/data/mode.txt
+
+/data/*
+*.dme
+tgstation.dme
+thumbs.db
