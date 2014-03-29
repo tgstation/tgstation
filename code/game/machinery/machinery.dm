@@ -109,12 +109,16 @@ Class Procs:
 	var/mob/living/occupant = null
 	var/unsecuring_tool = /obj/item/weapon/wrench
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
+	var/mob/living/silicon/pai/paired
+	var/paiallowed = 0
 
 /obj/machinery/New()
 	..()
 	machines += src
 
 /obj/machinery/Destroy()
+	if(paired)
+		paired.unpair(0)
 	machines.Remove(src)
 	..()
 
@@ -207,6 +211,10 @@ Class Procs:
 	if(!(ishuman(usr) || issilicon(usr) || (ismonkey(usr) && ticker && ticker.mode.name == "monkey")))
 		usr << "<span class='notice'>You don't have the dexterity to do this!</span>"
 		return 1
+
+	if(ispAI(usr))
+		if(paired != usr)
+			return 1
 
 	var/norange = 0
 	if(istype(usr, /mob/living/carbon/human))

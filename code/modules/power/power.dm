@@ -71,7 +71,8 @@
 	if(powered(power_channel))
 		stat &= ~NOPOWER
 	else
-
+		if(paired)
+			paired.unpair(0)
 		stat |= NOPOWER
 	return
 

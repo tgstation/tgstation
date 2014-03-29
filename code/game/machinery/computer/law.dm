@@ -3,6 +3,7 @@
 /obj/machinery/computer/upload
 	var/mob/living/silicon/current = null //The target of future law uploads
 	icon_state = null //To make sure mappers understand THIS ISN'T A VALID TYPE
+	paiallowed = 0
 
 /obj/machinery/computer/upload/attackby(obj/item/O as obj, mob/user as mob)
 	if(istype(O, /obj/item/weapon/aiModule))

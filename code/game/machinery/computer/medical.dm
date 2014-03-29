@@ -133,12 +133,18 @@
 			src.active1 = null
 			src.active2 = null
 		else if (href_list["login"])
-			if (istype(usr, /mob/living/silicon))
-				src.active1 = null
-				src.active2 = null
-				src.authenticated = 1
-				src.rank = "AI"
-				src.screen = 1
+			if (isaiorborg(usr))
+				active1 = null
+				active2 = null
+				authenticated = 1
+				rank = "AI"
+				screen = 1
+			else if (ispAI(usr))
+				active1 = null
+				active2 = null
+				authenticated = usr.name
+				rank = "pAI"
+				screen = 1
 			else if (istype(src.scan, /obj/item/weapon/card/id))
 				src.active1 = null
 				src.active2 = null
@@ -453,3 +459,4 @@
 	name = "medical laptop"
 	desc = "A cheap Nanotrasen medical laptop, it functions as a medical records computer. It's bolted to the table."
 	icon_state = "medlaptop"
+	paiallowed = 0 //Go use a real computer
