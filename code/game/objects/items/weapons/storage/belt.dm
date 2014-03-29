@@ -114,8 +114,13 @@
 		"/obj/item/ammo_casing/shotgun",
 		"/obj/item/ammo_box",
 		"/obj/item/weapon/reagent_containers/food/snacks/donut/normal",
-		"/obj/item/weapon/reagent_containers/food/snacks/donut/jelly"
+		"/obj/item/weapon/reagent_containers/food/snacks/donut/jelly",
+		"/obj/item/device/flashlight/maglite"
 		)
+
+/obj/item/weapon/storage/belt/security/New()
+	..()
+	new /obj/item/device/flashlight/maglite(src)
 
 /obj/item/weapon/storage/belt/soulstone
 	name = "soul stone belt"
