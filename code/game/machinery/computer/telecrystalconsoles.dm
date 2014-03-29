@@ -7,7 +7,6 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	name = "\improper Telecrystal assignment station"
 	desc = "A device used to manage telecrystals during group operations. You shouldn't be looking at this particular one..."
 	icon_state = "tcstation"
-	paiallowed = 0
 
 /////////////////////////////////////////////
 /obj/machinery/computer/telecrystals/uplinker
