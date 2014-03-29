@@ -132,11 +132,12 @@
 
 /obj/item/weapon/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
+	can_hold = list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate)
 
 /obj/item/weapon/storage/box/syndie_kit/space/New()
 	..()
-	new /obj/item/clothing/suit/space/syndicate(src)
-	new /obj/item/clothing/head/helmet/space/syndicate(src)
+	new /obj/item/clothing/suit/space/syndicate/black/red(src) // Black and red is so in right now
+	new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
 	return
 
 /obj/item/weapon/storage/box/syndie_kit/emp
