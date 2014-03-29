@@ -8,7 +8,6 @@
 	active_power_usage = 300
 	var/obj/item/weapon/circuitboard/circuit = null //if circuit==null, computer can't disassembly
 	var/processing = 0
-	paiallowed = 1
 
 /obj/machinery/computer/New()
 	..()
@@ -89,8 +88,6 @@
 
 /obj/machinery/computer/proc/set_broken()
 	if(circuit) //no circuit, no breaking
-		if(paired)
-			paired.unpair(0)
 		stat |= BROKEN
 		update_icon()
 	return
@@ -115,17 +112,6 @@
 				A.state = 4
 				A.icon_state = "4"
 			qdel(src)
-	if(istype(I, /obj/item/device/paicard))
-		var/obj/item/device/paicard/C = I
-		if(C.pai && (C.pai.stat != DEAD) && C.pai.pairing)
-			if(allowed(user))
-				if(paiallowed)
-					C.pai.pair(src)
-				else
-					C.pai << "<span class='warning'><b>\[ERROR\]</b> Remote device does not accept remote control connections.</span>"
-			else
-				user << "<span class='warning'>Access denied.</span>"
-				C.pai << "<span class='warning'><b>\[ERROR\]</b> Handshake failed. User not authorised to connect remote devices.</span>"
 	return
 
 /obj/machinery/computer/attack_hand(user)

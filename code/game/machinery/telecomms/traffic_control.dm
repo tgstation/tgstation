@@ -142,10 +142,8 @@
 
 /obj/machinery/computer/telecomms/traffic/proc/create_log(var/entry, var/mob/user)
 	var/id = null
-	if(isaiorborg(user))
+	if(issilicon(user))
 		id = "System Administrator"
-	else if(ispAI(user))
-		id = "[user.name] (pAI)"
 	else
 		if(auth)
 			id = "[auth.registered_name] ([auth.assignment])"
