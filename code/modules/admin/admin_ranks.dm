@@ -159,7 +159,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			var/ckey = ckey(query.item[1])
 			var/rank = ckeyEx(query.item[2])
 			if(rank_names[rank] == null)
-				error("Admin rank does not exist.")
+				error("Admin rank ([rank]) does not exist.")
 				continue
 			var/datum/admins/D = new(rank_names[rank], ckey)				//create the admin datum and store it for later use
 			if(!D)	continue									//will occur if an invalid rank is provided
