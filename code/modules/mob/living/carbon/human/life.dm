@@ -1418,8 +1418,9 @@
 
 			if(!masked && istype(glasses, /obj/item/clothing/glasses/welding) )
 				var/obj/item/clothing/glasses/welding/O = glasses
-				if(!O.up && tinted_weldhelh)
-					client.screen += O.getMask()
+				var/list/DM = O.getMask()
+				if(!O.up && istype(DM) && DM.len && tinted_weldhelh)
+					client.screen += DM
 
 			if(machine)
 				if(!machine.check_eye(src))		reset_view(null)
