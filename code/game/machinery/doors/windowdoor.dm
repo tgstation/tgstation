@@ -101,7 +101,7 @@
 	return 1
 
 /obj/machinery/door/window/close()
-	if (src.operating)
+	if (src.operating || emagged)
 		return 0
 	src.operating = 1
 	flick(text("[]closing", src.base_state), src)
@@ -164,6 +164,7 @@
 	if(istype(user, /mob/living/carbon/alien/humanoid) || istype(user, /mob/living/carbon/slime/))
 		if(src.operating)
 			return
+		user.changeNext_move(8)
 		src.health = max(0, src.health - 25)
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		visible_message("\red <B>[user] smashes against the [src.name].</B>")
