@@ -82,8 +82,8 @@ proc/process_ghost_teleport_locs()
 		if(istype(AR, /area/turret_protected/aisat) || istype(AR, /area/derelict) || istype(AR, /area/tdome))
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
-		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (picked.z == 1 || picked.z == 5 || picked.z == 3)
+		var/turf/picked = safepick(get_area_turfs(AR.type))
+		if (picked && (picked.z == 1 || picked.z == 5 || picked.z == 3))
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 

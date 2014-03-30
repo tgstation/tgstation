@@ -56,20 +56,12 @@
 		return
 
 	if(W == A)
-		next_move = world.time + 8
-		if(W.flags&USEDELAY)
-			next_move += 5
-
 		W.attack_self(src)
 		return
 
 	// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc in contents)
 	if(A == loc || (A in loc) || (A in contents))
 		// No adjacency checks
-		next_move = world.time + 8
-		if(W.flags&USEDELAY)
-			next_move += 5
-
 		var/resolved = A.attackby(W,src)
 		if(!resolved && A && W)
 			W.afterattack(A,src,1,params)
@@ -81,16 +73,11 @@
 	// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc && isturf(A.loc.loc))
 	if(isturf(A) || isturf(A.loc))
 		if(A.Adjacent(src)) // see adjacent.dm
-			next_move = world.time + 10
-			if(W.flags&USEDELAY)
-				next_move += 5
-
 			var/resolved = A.attackby(W, src)
 			if(!resolved && A && W)
 				W.afterattack(A, src, 1, params)
 			return
 		else
-			next_move = world.time + 10
 			W.afterattack(A, src, 0, params)
 			return
 	return
