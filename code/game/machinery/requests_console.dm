@@ -518,13 +518,12 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		return
 
 	//Text to be sent
-	var/pritxt
+	var/pritxt = ""
 	switch(priority)
-		if(3) pritxt = "<span class='danger' style='font-size:200%'>EXTREME</span> priority m" //Annoy the fuck out of them
-		if(2) pritxt = "<span class='danger'>High</span> priority m"
-		else pritxt = "M"
+		if(3) pritxt = "<span class='danger' style='font-size:200%'>EXTREME</span> priority" //Annoy the fuck out of them
+		if(2) pritxt = "<span class='danger'>High</span> priority"
 
-	var/t = "<b>New [pritxt]essage at \icon[src][src.name]!</b>"
+	var/t = "<b>New [pritxt] message at \icon[src][src.name]!</b>"
 
 	for(var/obj/item/device/pda/PDA in recipients)
 		//useMS.send_pda_message("[PDA.owner]","[src]","[t]")
