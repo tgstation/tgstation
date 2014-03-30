@@ -337,7 +337,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 						if(!pdamsgsent)
 							pdamsgsent = 1
 							spawn(0) // To prevent halting the whole interface
-								Console.sendpdanote(priority, href_list["department"])
+								Console.sendpdanote(priority)
 
 						switch(priority)
 							if(2)		//High priority
@@ -481,7 +481,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			updateUsrDialog()
 	return
 
-/obj/machinery/requests_console/proc/sendpdanote(var/priority, var/fromdepartment)
+/obj/machinery/requests_console/proc/sendpdanote(var/priority)
 
 	//Copied code from PDA
 	var/obj/machinery/message_server/useMS = null
