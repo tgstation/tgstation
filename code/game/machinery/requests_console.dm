@@ -483,17 +483,6 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 /obj/machinery/requests_console/proc/sendpdanote(var/priority)
 
-	//Copied code from PDA
-	var/obj/machinery/message_server/useMS = null
-	if(message_servers)
-		for (var/obj/machinery/message_server/MS in message_servers)
-			if(MS.active)
-				useMS = MS
-				break
-
-	if(!useMS)
-		return
-
 	//Create a new signal
 	var/datum/signal/signal = src.telecomms_process()
 
