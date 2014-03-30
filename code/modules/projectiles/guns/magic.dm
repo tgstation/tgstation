@@ -18,8 +18,12 @@
 	trigger_guard = 0
 
 /obj/item/weapon/gun/magic/afterattack(atom/target as mob, mob/living/user as mob, flag)
-	newshot()
-	..()
+	var/area/wizard_station/A = locate()
+	if(!(usr in A.contents))
+		newshot()
+		..()
+	else
+		user << "<span class='warning'>You know better than to violate the security of The Den, best wait until you leave to use [src].<span>"
 
 /obj/item/weapon/gun/magic/proc/newshot()
 	if (charges && chambered)
