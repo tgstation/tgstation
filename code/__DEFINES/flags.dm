@@ -9,7 +9,7 @@
 #define NOBLUDGEON	4		// when an item has this it produces no "X has been hit by Y with Z" message in the default attackby()
 #define MASKINTERNALS	8	// mask allows internals
 //#define SUITSPACE		8	// suit protects against space
-#define USEDELAY 	16		// For adding extra delay to heavy items, not currently used
+//#define USEDELAY 	16		// For adding extra delay to heavy items, not currently used
 #define NOSHIELD	32		// weapon not affected by shield
 #define CONDUCT		64		// conducts electricity (metal etc.)
 #define ABSTRACT    128		// for all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way
