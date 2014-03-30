@@ -558,6 +558,7 @@
 
 	if (istype(I, /obj/item/weapon/wrench))
 		table_destroy(2, user)
+		return
 
 	if(isrobot(user))
 		return
@@ -569,6 +570,7 @@
 		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 		playsound(src.loc, "sparks", 50, 1)
 		table_destroy(1, user)
+		return
 
 	if(!(I.flags & ABSTRACT)) //rip more parems rip in peace ;_;
 		if(user.drop_item())

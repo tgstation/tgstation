@@ -8,8 +8,7 @@
 			qdel(AM)
 		client.screen = list()
 	del(hud_used)
-	for(var/magic in mob_spell_list)
-		del(magic)
+	spellremove(src)
 	for(var/infection in viruses)
 		del(infection)
 	ghostize()
@@ -268,8 +267,6 @@ var/list/slot_equipment_priority = list( \
 		if (W)
 			W.attack_self(src)
 			update_inv_r_hand(0)
-	if(next_move < world.time)
-		next_move = world.time + 2
 	return
 
 /*
@@ -599,7 +596,7 @@ var/list/slot_equipment_priority = list( \
 				stat(null,"Obj-[master_controller.objects_cost]\t#[processing_objects.len]")
 				stat(null,"Net-[master_controller.networks_cost]\tPnet-[master_controller.powernets_cost]")
 				stat(null,"NanoUI-[master_controller.nano_cost]\t#[nanomanager.processing_uis.len]")
-				stat(null,"GC-[master_controller.gc_cost]\t#[garbage.destroyed.len + garbage.queue.len]-#dels[garbage.dels]")
+				stat(null,"GC-[master_controller.gc_cost]\t#[garbage.destroyed.len]-#dels[garbage.dels]")
 				stat(null,"Tick-[master_controller.ticker_cost]\tALL-[master_controller.total_cost]")
 			else
 				stat(null,"MasterController-ERROR")
