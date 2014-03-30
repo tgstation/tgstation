@@ -56,6 +56,29 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	var/priority = -1 ; //Priority of the message being sent
 	luminosity = 0
 
+	var/global/list/assoccartridge = list(
+		"Atmospherics" = list(/obj/item/weapon/cartridge/atmos, /obj/item/weapon/cartridge/ce),
+		"Bar" = list(), //Bartenders carry no special cartridge, poor u
+		"Bridge" = list(/obj/item/weapon/cartridge/hop, /obj/item/weapon/cartridge/hos, /obj/item/weapon/cartridge/ce, /obj/item/weapon/cartridge/cmo, /obj/item/weapon/cartridge/rd, /obj/item/weapon/cartridge/captain),
+		"Captain's Desk" = list(/obj/item/weapon/cartridge/captain),
+		"Cargo Bay" = list(/obj/item/weapon/cartridge/quartermaster),
+		"Chapel" = list(), //Nor does chaplains
+		"Chemistry" = list(/obj/item/weapon/cartridge/chemistry, /obj/item/weapon/cartridge/cmo),
+		"Chief Medical Officer's Desk" = list(/obj/item/weapon/cartridge/cmo),
+		"Engineering" = list(/obj/item/weapon/cartridge/engineering, /obj/item/weapon/cartridge/ce),
+		"Head of Personnel's Desk" = list(/obj/item/weapon/cartridge/hop, /obj/item/weapon/cartridge/captain),
+		"Head of Security's Desk" = list(/obj/item/weapon/cartridge/hos, /obj/item/weapon/cartridge/captain),
+		"Hydroponics" = list(), //Nor does botanists
+		"Janitorial" = list(/obj/item/weapon/cartridge/janitor),
+		"Medbay" = list(/obj/item/weapon/cartridge/medical, /obj/item/weapon/cartridge/cmo),
+		"Research Director's Desk" = list(/obj/item/weapon/cartridge/rd),
+		"Robotics" = list(/obj/item/weapon/cartridge/rd),
+		"Science" = list(/obj/item/weapon/cartridge/signal/toxins, /obj/item/weapon/cartridge/rd), //I'm abit unsure wether the signal/toxins cartridge should be here, only scientists spawn with it but it's still quite "generic"
+		"Security" = list(/obj/item/weapon/cartridge/security, /obj/item/weapon/cartridge/hos, /obj/item/weapon/cartridge/captain),
+		"Telecoms Admin" = list(/obj/item/weapon/cartridge/engineering, /obj/item/weapon/cartridge/ce)
+	)
+
+
 /obj/machinery/requests_console/power_change()
 	..()
 	update_icon()
@@ -307,8 +330,15 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 			if(pass)
 
+				var/pdamsgsent = 0
 				for (var/obj/machinery/requests_console/Console in allConsoles)
 					if (ckey(Console.department) == ckey(href_list["department"]))
+
+						if(!pdamsgsent)
+							pdamsgsent = 1
+							spawn(0) // To prevent halting the whole interface
+								Console.sendpdanote(priority, href_list["department"])
+
 						switch(priority)
 							if(2)		//High priority
 								if(Console.newmessagepriority < 2)
@@ -450,3 +480,70 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			msgStamped = "<font color='blue'><b>Stamped with the [T.name]</b></font>"
 			updateUsrDialog()
 	return
+
+/obj/machinery/requests_console/proc/sendpdanote(var/priority, var/fromdepartment)
+
+	//Copied code from PDA
+	var/obj/machinery/message_server/useMS = null
+	if(message_servers)
+		for (var/obj/machinery/message_server/MS in message_servers)
+			if(MS.active)
+				useMS = MS
+				break
+
+	if(!useMS)
+		world << "No message server found"
+		return
+
+	//Create a new signal
+	var/datum/signal/signal = src.telecomms_process()
+
+	if(!signal || !signal.data["done"])
+		world << "Signal not done"
+		return
+
+	//Retrieve PDA's to send to
+	var/list/carttypes = assoccartridge[src.department]
+	var/list/recipients = list()
+
+	for(var/obj/item/device/pda/PDA)
+		if(PDA.cartridge && PDA.cartridge.type in carttypes)
+			var/turf/pos = get_turf(PDA)
+			if(pos && pos.z in signal.data["level"]) //We need to be on same Z level
+				recipients += PDA
+
+	//world << "#[recipients.len] recipients"
+
+	if(recipients.len == 0)
+		return
+
+	//Text to be sent
+	var/pritxt
+	switch(priority)
+		if(3) pritxt = "<span class='danger' style='font-size:200%'>EXTREME</span> priority m" //Annoy the fuck out of them
+		if(2) pritxt = "<span class='danger'>High</span> priority m"
+		else pritxt = "M"
+
+	var/t = "<b>New [pritxt]essage at \icon[src][src.name]!</b>"
+
+	for(var/obj/item/device/pda/PDA in recipients)
+		//useMS.send_pda_message("[PDA.owner]","[src]","[t]")
+
+		//PDA.tnote += "<i><b>&larr; From [src]:</b></i><br>[t]<br>"
+
+		if (!PDA.silent)
+			playsound(PDA.loc, 'sound/machines/twobeep.ogg', 50, 1)
+
+		//Search for holder of the PDA.
+		var/mob/living/L = null
+		if(PDA.loc && isliving(PDA.loc))
+			L = PDA.loc
+		//Maybe they are a pAI!
+		else
+			L = get(PDA, /mob/living/silicon)
+
+		if(L)
+			L << "\icon[PDA] [t]"
+
+		//PDA.overlays.Cut()
+		//PDA.overlays += image('icons/obj/pda.dmi', "pda-r")
