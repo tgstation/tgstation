@@ -11,6 +11,7 @@
 	opacity = 0
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	explosion_resistance = 5
+	var/silent = 0
 
 /obj/machinery/door/window/New()
 	..()
@@ -22,7 +23,7 @@
 
 /obj/machinery/door/window/Destroy()
 	density = 0
-	playsound(src, "shatter", 70, 1)
+	if(!silent) playsound(src, "shatter", 70, 1)
 	..()
 
 /obj/machinery/door/window/Bumped(atom/movable/AM as mob|obj)
@@ -118,7 +119,9 @@
 	src.operating = 0
 	return 1
 
-/obj/machinery/door/window/proc/take_damage(var/damage)
+/obj/machinery/door/window/proc/hit(var/damage, var/sound_effect = 1)
+	if(sound_effect)
+		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 	src.health = max(0, src.health - damage)
 	if (src.health <= 0)
 		new /obj/item/weapon/shard(src.loc)
@@ -131,22 +134,26 @@
 /obj/machinery/door/window/bullet_act(var/obj/item/projectile/Proj)
 	if(Proj.damage)
 		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-			take_damage(round(Proj.damage / 2))
+			hit(round(Proj.damage / 2))
 	..()
 
 //When an object is thrown at the window
 /obj/machinery/door/window/hitby(AM as mob|obj)
-
 	..()
 	visible_message("<span class='danger'>\The [src] was hit by \the [AM].</span>")
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 40
-	else
-		tforce = AM:throwforce
-	playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
-	take_damage(tforce)
-	//..() //Does this really need to be here twice? The parent proc doesn't even do anything yet. - Nodrak
+	else if(isobj(AM))
+		var/obj/item/I = AM
+		tforce = I.throwforce
+		if(istype(I, /obj/item/weapon/pen/red/tactical))
+			var/obj/item/weapon/pen/red/tactical/P = I
+			if(P.uses > 0)
+				tforce = health //Ensures that window gets destroyed
+				P.uses--
+			//Gives no feedback to user, it's also less stealthy
+	hit(tforce)
 	return
 
 
@@ -196,17 +203,20 @@
 
 	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
 	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
-		var/aforce = I.force
-		if(I.damtype == BRUTE || I.damtype == BURN)
-			src.health = max(0, src.health - aforce)
-		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-		visible_message("<span class='danger'>\The [src] has been hit by [user] with [I].</span>")
-		if (src.health <= 0)
-			new /obj/item/weapon/shard(src.loc)
-			var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
-			CC.amount = 2
-			src.density = 0
-			qdel(src)
+		if(istype(I, /obj/item/weapon/pen/red/tactical))
+			var/obj/item/weapon/pen/red/tactical/P = I
+			if(P.uses > 0)
+				silent = 1
+				hit(health, 0)//This ensures that the window gets destroyed. It's also silent.
+				user << "<span class='warning'>You strike the windoor with precision, it quickly cracks in several pieces and silently falls apart.</span>"
+				P.uses--
+				if(P.uses == 0)
+					user << "<span class='notice'>The pen's tip becomes blunt!</span>"
+			else
+				hit(I.force)
+		else if(I.damtype == BRUTE || I.damtype == BURN)
+			visible_message("<span class='danger'>\The [src] has been hit by [user] with [I].</span>")
+			hit(I.force)
 		return
 
 

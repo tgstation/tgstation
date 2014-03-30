@@ -53,11 +53,10 @@
 	add_logs(user, M, "stabbed", object="[name]")
 
 /*
- * Parapens
+ * Tater' pens
  */
  /obj/item/weapon/pen/paralysis
 	origin_tech = "materials=2;syndicate=5"
-
 
 /obj/item/weapon/pen/paralysis/attack(mob/living/M, mob/user)
 	if(!istype(M))	return
@@ -67,10 +66,19 @@
 			if(M.reagents)
 				reagents.trans_to(M, 50)
 
-
 /obj/item/weapon/pen/paralysis/New()
 	create_reagents(50)
 	reagents.add_reagent("zombiepowder", 10)
 	reagents.add_reagent("impedrezene", 25)
 	reagents.add_reagent("cryptobiolin", 15)
+	..()
+
+/obj/item/weapon/pen/red/tactical
+	force = 10
+	damtype = BRUTE
+	origin_tech = "materials=6;syndicate=3" //There is diamond in it, so why not?
+	var/uses = 5
+
+/obj/item/weapon/pen/red/tactical/New()
+	uses = rand(5,7)
 	..()

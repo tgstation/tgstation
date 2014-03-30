@@ -13,6 +13,7 @@
 	var/reinf = 0
 //	var/silicate = 0 // number of units of silicate
 //	var/icon/silicateIcon = null // the silicated icon
+	var/silent = 0 //Whether the window makes a noise when falling apart
 
 
 /obj/structure/window/bullet_act(var/obj/item/projectile/Proj)
@@ -84,17 +85,18 @@
 	else if(isobj(AM))
 		var/obj/item/I = AM
 		tforce = I.throwforce
-	if(reinf) tforce *= 0.25
-	playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
-	health = max(0, health - tforce)
+		if(istype(I, /obj/item/weapon/pen/red/tactical))
+			var/obj/item/weapon/pen/red/tactical/P = I
+			if(P.uses > 0)
+				tforce = health*4 //Ensures that the window gets destroyed
+				P.uses--
+			//Gives no feedback to user, it's also less stealthy
+	if(reinf) tforce *= 0.5 //This gets halved in hit() too
+	hit(tforce)
 	if(health <= 7 && !reinf)
 		anchored = 0
 		update_nearby_icons()
 		step(src, get_dir(AM, src))
-	if(health <= 0)
-		new /obj/item/weapon/shard(loc)
-		if(reinf) new /obj/item/stack/rods(loc)
-		qdel(src)
 
 /obj/structure/window/attack_tk(mob/user as mob)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
@@ -191,6 +193,17 @@
 				G.add_fingerprint(user)
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		qdel(src)
+	else if (istype(I, /obj/item/weapon/pen/red/tactical))
+		var/obj/item/weapon/pen/red/tactical/P = I
+		if(P.uses > 0)
+			silent = 1
+			hit(health*2, 0) //This ensures that the window gets destroyed. It's also silent.
+			user << "<span class='warning'>You strike the window with precision, it quickly cracks in several pieces and silently falls apart.</span>"
+			P.uses--
+			if(P.uses == 0)
+				user << "<span class='notice'>The pen's tip becomes blunt!</span>"
+		else
+			hit(I.force) //It functions as a normal pen with increased damage after it has gone blunt.
 	else
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			hit(I.force)
@@ -307,7 +320,7 @@
 /obj/structure/window/Destroy()
 	density = 0
 	air_update_turf(1)
-	if(anchored)playsound(src, "shatter", 70, 1)
+	if(anchored && !silent) playsound(src, "shatter", 70, 1)
 	update_nearby_icons()
 	..()
 
