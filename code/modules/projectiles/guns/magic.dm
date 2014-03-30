@@ -19,11 +19,11 @@
 
 /obj/item/weapon/gun/magic/afterattack(atom/target as mob, mob/living/user as mob, flag)
 	var/area/wizard_station/A = locate()
-	if(!(usr in A.contents))
-		newshot()
-		..()
-	else
+	if(user in A.contents)
 		user << "<span class='warning'>You know better than to violate the security of The Den, best wait until you leave to use [src].<span>"
+		return
+	newshot()
+	..()
 
 /obj/item/weapon/gun/magic/proc/newshot()
 	if (charges && chambered)

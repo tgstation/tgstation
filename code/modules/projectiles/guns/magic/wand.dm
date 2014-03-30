@@ -31,6 +31,10 @@
 	..()
 
 /obj/item/weapon/gun/magic/wand/afterattack(atom/target as mob, mob/living/user as mob)
+	var/area/wizard_station/A = locate()
+	if(user in A.contents)
+		user << "<span class='warning'>You know better than to violate the security of The Den, best wait until you leave to use [src].<span>"
+		return
 	if(!charges)
 		shoot_with_empty_chamber(user)
 		return
