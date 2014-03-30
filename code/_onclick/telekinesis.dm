@@ -197,5 +197,3 @@ var/const/tk_maxrange = 15
 				var/Z = source:z
 
 */
-
->>>>>>> 039e81687217c0c9819ca1a88d8ac26cb8d4f8d1
