@@ -220,7 +220,12 @@ var/list/department_radio_keys = list(
 
 	switch (message_mode)
 		if ("headset")
-			if (src:ears)
+			if (isrobot(src) && src:radio)
+				src:radio.talk_into(src, message)
+				used_radios += src:radio
+				is_speaking_radio = 1
+
+			if (!isrobot(src) && src:ears)
 				src:ears.talk_into(src, message)
 				used_radios += src:ears
 				is_speaking_radio = 1
