@@ -492,14 +492,12 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				break
 
 	if(!useMS)
-		world << "No message server found"
 		return
 
 	//Create a new signal
 	var/datum/signal/signal = src.telecomms_process()
 
 	if(!signal || !signal.data["done"])
-		world << "Signal not done"
 		return
 
 	//Retrieve PDA's to send to
@@ -511,8 +509,6 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			var/turf/pos = get_turf(PDA)
 			if(pos && pos.z in signal.data["level"]) //We need to be on same Z level
 				recipients += PDA
-
-	//world << "#[recipients.len] recipients"
 
 	if(recipients.len == 0)
 		return
@@ -526,10 +522,6 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	var/t = "<b>New [pritxt] message at \icon[src][src.name]!</b>"
 
 	for(var/obj/item/device/pda/PDA in recipients)
-		//useMS.send_pda_message("[PDA.owner]","[src]","[t]")
-
-		//PDA.tnote += "<i><b>&larr; From [src]:</b></i><br>[t]<br>"
-
 		if (!PDA.silent)
 			playsound(PDA.loc, 'sound/machines/twobeep.ogg', 50, 1)
 
@@ -543,6 +535,3 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 		if(L)
 			L << "\icon[PDA] [t]"
-
-		//PDA.overlays.Cut()
-		//PDA.overlays += image('icons/obj/pda.dmi', "pda-r")
