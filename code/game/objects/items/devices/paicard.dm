@@ -139,7 +139,7 @@
 
 	if (ismob(loc))
 		var/mob/M = loc
-		M.show_message("\red Your [src] explodes!", 1)
+		M.show_message("<span class='userdanger'>Your [src] explodes!</span>", 1)
 	else if(istype(loc, /obj/item/device/pda))
 		var/obj/item/device/pda/P = loc
 		if(P.detonate)
