@@ -243,7 +243,7 @@ var/list/uplink_items = list()
 	name = "Tactical Pen"
 	desc = "A functional red pen, equipped with a complex ceramic-synthetic diamond tip. Capable of shattering any window or windoor silently, even when thrown. Average number of uses: 6"
 	item = /obj/item/weapon/pen/red/tactical
-	cost = 2
+	cost = 1
 
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
