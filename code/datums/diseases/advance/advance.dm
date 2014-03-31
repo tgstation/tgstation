@@ -164,6 +164,7 @@ var/list/advance_cures = 	list(
 	//world << "[src.name] \ref[src] - REFRESH!"
 	var/list/properties = GenerateProperties()
 	AssignProperties(properties)
+	id = null
 
 	if(!archive_diseases[GetDiseaseID()])
 		if(new_name)
@@ -286,14 +287,14 @@ var/list/advance_cures = 	list(
 
 // Return a unique ID of the disease.
 /datum/disease/advance/GetDiseaseID()
-
-	var/list/L = list()
-	for(var/datum/symptom/S in symptoms)
-		L += S.id
-	L = sortList(L) // Sort the list so it doesn't matter which order the symptoms are in.
-	var/result = list2text(L, ":")
-	id = result
-	return result
+	if(!id)
+		var/list/L = list()
+		for(var/datum/symptom/S in symptoms)
+			L += S.id
+		L = sortList(L) // Sort the list so it doesn't matter which order the symptoms are in.
+		var/result = list2text(L, ":")
+		id = result
+	return id
 
 
 // Add a symptom, if it is over the limit (with a small chance to be able to go over)
