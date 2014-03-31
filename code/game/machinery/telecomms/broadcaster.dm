@@ -352,6 +352,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 				freq_text = "Service"
 			if(SUPP_FREQ)
 				freq_text = "Supply"
+			if(AIPRIV_FREQ)
+				freq_text = "AI Private"
 		//There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
 
 
@@ -386,6 +388,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			part_a = "<span class='suppradio'><span class='name'>"
 		else if (display_freq==DSQUAD_FREQ)
 			part_a = "<span class='dsquadradio'><span class='name'>"
+		else if (display_freq==AIPRIV_FREQ)
+			part_a = "<span class='aiprivradio'><span class='name'>"
 
 		// --- Filter the message; place it in quotes apply a verb ---
 
@@ -647,6 +651,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 				freq_text = "Service"
 			if(SUPP_FREQ)
 				freq_text = "Supply"
+			if(AIPRIV_FREQ)
+				freq_text = "AI Private"
 		//There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
 
 
@@ -685,6 +691,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			part_a = "<span class='suppradio'><span class='name'>"
 		else if (display_freq==DSQUAD_FREQ)
 			part_a = "<span class='dsquadradio'><span class='name'>"
+		else if (display_freq==AIPRIV_FREQ)
+			part_a = "<span class='aiprivradio'><span class='name'>"
 
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
 
