@@ -6,7 +6,6 @@
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 10
 	volume = 50
-	var/const/duration = 8 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
 	g_amt = 500
 
 
@@ -31,66 +30,42 @@
 		if(user.a_intent != "hurt")
 			return ..()
 
-
 		force = 5
 
 		var/datum/organ/external/affecting = user.zone_sel.selecting //Find what the player is aiming at
 
 		var/armor_block = 0 //Get the target's armour values for normal attack damage.
-		var/armor_duration = 0 //The more force the bottle has, the longer the duration.
 
-		//Calculating duration and calculating damage.
+		//Calculating damage.
 		if(ishuman(target))
 
 			var/mob/living/carbon/human/H = target
-			var/headarmor = 0 // Target's head armour
 			armor_block = H.run_armor_check(affecting, "melee") // For normal attack damage
-
-			//If they have a hat/helmet and the user is targeting their head.
-			if(istype(H.head, /obj/item/clothing/head) && affecting == "head")
-
-				// If their head has an armour value, assign headarmor to it, else give it 0.
-				if(H.head.armor["melee"])
-					headarmor = H.head.armor["melee"]
-				else
-					headarmor = 0
-			else
-				headarmor = 0
-
-			//Calculate the weakening duration for the target.
-			armor_duration = (duration - headarmor) + force
 
 		else
 			//Only humans can have armour, right?
 			armor_block = target.run_armor_check(affecting, "melee")
-			if(affecting == "head")
-				armor_duration = duration + force
-		armor_duration /= 10
 
 		//Apply the damage!
 		target.apply_damage(force, BRUTE, affecting, armor_block)
 
-		// You are going to knock someone out for longer if they are not wearing a helmet.
 		if(affecting == "head" && istype(target, /mob/living/carbon/))
 
 			//Display an attack message.
 			for(var/mob/O in viewers(user, null))
 				if(target != user) O.show_message(text("\red <B>[target] has been hit over the head with a [src.name], by [user]!</B>"), 1)
 				else O.show_message(text("\red <B>[target] hit himself with a [src.name] on the head!</B>"), 1)
-			//Weaken the target for the duration that we calculated and divide it by 5.
-			if(armor_duration)
-				target.apply_effect(min(armor_duration, 10) , WEAKEN) // Never weaken more than a flash!
 
 		else
-			//Default attack message and don't weaken the target.
+			//Default attack message
 			for(var/mob/O in viewers(user, null))
-				if(target != user) O.show_message(text("\red <B>[target] has been attacked with a bottle of [src.name], by [user]!</B>"), 1)
-				else O.show_message(text("\red <B>[target] has attacked himself with a bottle of [src.name]!</B>"), 1)
+				if(target != user) O.show_message(text("\red <B>[target] has been attacked with a [src.name], by [user]!</B>"), 1)
+				else O.show_message(text("\red <B>[target] has attacked himself with a [src.name]!</B>"), 1)
 
 		//Attack logs
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has attacked [target.name] ([target.ckey]) with a drinking glass!</font>")
 		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been smashed with a drinking glass by [user.name] ([user.ckey])</font>")
-		log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [target.name] with a drinking. ([target.ckey])</font>")
+		log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [target.name] with a drinking glass. ([target.ckey])</font>")
 		if(!iscarbon(user))
 			target.LAssailant = null
 		else
