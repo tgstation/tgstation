@@ -190,9 +190,9 @@
 
 ////////////////////////////////Gibtonite
 /turf/simulated/mineral/gibtonite
-	name = "Gibtonite deposit"
+	name = "gibtonite deposit"
 	icon_state = "rock_Gibtonite"
-	mineralName = "Gibtonite"
+	mineralName = "gibtonite"
 	mineralAmt = 1
 	spreadChance = 0
 	spread = 0
@@ -219,16 +219,16 @@
 /turf/simulated/mineral/gibtonite/proc/explosive_reaction()
 	if(stage == 0)
 		icon_state = "rock_Gibtonite_active"
-		name = "Gibtonite deposit"
+		name = "gibtonite deposit"
 		desc = "An active gibtonite reserve. Run!"
 		stage = 1
 		visible_message("<span class='warning'>There was gibtonite inside! It's going to explode!</span>")
 		var/turf/bombturf = get_turf(src)
 		var/area/A = get_area(bombturf)
-		var/log_str = "[src.activated_ckey]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> [src.activated_name] has triggered a gibtonite deposit reaction <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>."
+		visible_message("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has triggered a gibtonite deposit reaction at [A.name] ([A.x], [A.y], [A.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>JMP</a>).")
 		if(z != 5)
-			message_admins(log_str)
-		log_game("[src.activated_ckey] ([src.activated_name]) has triggered a gibtonite deposit reaction at [A.name] ([A.x], [A.y], [A.z]).")
+			message_admins("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has triggered a gibtonite deposit reaction at [A.name] ([bombturf.x], [bombturf.y], [bombturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>JMP</a>).")
+		log_game("[key_name(usr)] has triggered a gibtonite deposit reaction at [A.name] ([bombturf.x], [bombturf.y], [bombturf.z]).")
 		countdown()
 
 /turf/simulated/mineral/gibtonite/proc/countdown()
