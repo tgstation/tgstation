@@ -297,6 +297,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				M.adjustBrainLoss(3)
 				if(iscultist(M))
+					M.status_flags |= GOTTAGOFAST
 					M.drowsyness = max(M.drowsyness-5, 0)
 					M.AdjustParalysis(-2)
 					M.AdjustStunned(-2)
@@ -1131,6 +1132,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(prob(5)) M.emote(pick("twitch","blink_r","shiver"))
+				M.status_flags |= GOTTAGOFAST
 				holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
 	//			..()		//this was causing hyperzine to be consumed twice...
 				return
@@ -2524,6 +2526,7 @@ datum
 				M.dizziness +=5
 				M.drowsyness = 0
 				M.sleeping = max(0,M.sleeping-2)
+				M.status_flags |= GOTTAGOFAST
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				M.nutrition += 1
