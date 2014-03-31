@@ -328,10 +328,10 @@
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/poppy
 	lifespan = 25
 	endurance = 10
-	potency = 20
 	maturation = 8
 	production = 6
 	yield = 6
+	potency = 20
 	plant_type = 0
 	oneharvest = 1
 	growthstages = 3
