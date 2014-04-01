@@ -1127,6 +1127,16 @@
 		..()
 		reagents.add_reagent("nutriment", 6)
 
+/obj/item/weapon/reagent_containers/food/snacks/bustanuts
+	name = "Busta-Nuts"
+	icon_state = "busta_nut"
+	desc = "2hard4u"
+	trash = /obj/item/trash/bustanuts
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("bustanut", 6)
+
 /obj/item/weapon/reagent_containers/food/snacks/spacetwinkie
 	name = "space twinkie"
 	icon_state = "space_twinkie"

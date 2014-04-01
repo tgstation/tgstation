@@ -93,7 +93,21 @@ datum
 
 			on_update(var/atom/A)
 				return
-
+		muhhardcores
+			name = "Hardcores"
+			id = "bustanut"
+			description = "Concenctrated feelings of being hardcore"
+			reagent_state = LIQUID
+			color = "#FFF000"
+			custom_metabolism = 0.01
+			on_mob_life(var/mob/living/M)
+				if(prob(1))
+					if(prob(90))
+						M << "<span class='notice'>[pick("You feel quite hardcore","Coderbased is your god", "Fucking kickscammers Bustration will be the best")]."
+					else
+						M.say(pick("Muh hardcores.", "Falling down is a feature", "Gorrillionaires and Booty Borgs when?"))
+				..()
+				return
 		slimejelly
 			name = "Slime Jelly"
 			id = "slimejelly"
