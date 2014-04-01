@@ -195,7 +195,7 @@ datum/hSB
 					new/obj/item/stack/sheet/glass{amount=50}(usr.loc)
 
 				if("hsbwood")
-					new/obj/item/stack/sheet/wood{amount=50}(usr.loc)
+					new/obj/item/stack/sheet/mineral/wood{amount=50}(usr.loc)
 
 				//
 				// All access ID
