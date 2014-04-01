@@ -364,7 +364,7 @@ var/global/datum/controller/occupations/job_master
 		if(C)
 			C.registered_name = H.real_name
 			C.assignment = rank
-			C.name = "[C.registered_name]'s ID Card ([C.assignment])"
+			C.update_label()
 			H.equip_to_slot_or_del(C, slot_wear_id)
 
 		H.equip_to_slot_or_del(new /obj/item/device/pda(H), slot_belt)
