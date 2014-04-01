@@ -92,9 +92,7 @@ atom/movable/proc/check_airflow_movable(n)
 	if(!zas_settings.Get(/datum/ZAS_Setting/airflow_push))
 		if(ismob(src))
 			var/mob/living/L = src
-			world << "BUSTANUT"
 			if(L.reagents.has_reagent("bustanut"))
-				world << "has dem nuts"
 				return 1
 		return 0
 	if(anchored && !ismob(src))
