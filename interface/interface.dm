@@ -35,6 +35,21 @@
 	set name = "hotkeys-help"
 	set category = "OOC"
 
+	var/adminhotkeys = {"<font color='purple'>
+Admin:
+\tF5 = Aghost (admin-ghost)
+\tF6 = player-panel-new
+\tF7 = admin-pm
+\tF8 = Invisimin
+</font>"}
+
+	mob.hotkey_help()
+
+	if(holder)
+		src << adminhotkeys
+
+
+/mob/proc/hotkey_help()
 	var/hotkey_mode = {"<font color='purple'>
 Hotkey-Mode: (hotkey-mode must be on)
 \tTAB = toggle hotkey-mode
@@ -81,8 +96,11 @@ Any-Mode: (hotkey doesn't need to be on)
 \tEND = throw
 </font>"}
 
+	src << hotkey_mode
+	src << other
 
-	var/borghotkey_mode = {"<font color='purple'>
+/mob/living/silicon/robot/hotkey_help()
+	var/hotkey_mode = {"<font color='purple'>
 Hotkey-Mode: (hotkey-mode must be on)
 \tTAB = toggle hotkey-mode
 \ta = left
@@ -101,7 +119,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \t4 = toggle intents
 </font>"}
 
-	var/borgother = {"<font color='purple'>
+	var/other = {"<font color='purple'>
 Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+a = left
 \tCtrl+s = down
@@ -122,19 +140,5 @@ Any-Mode: (hotkey doesn't need to be on)
 \tPGDN = activate held object
 </font>"}
 
-	var/admin = {"<font color='purple'>
-Admin:
-\tF5 = Aghost (admin-ghost)
-\tF6 = player-panel-new
-\tF7 = admin-pm
-\tF8 = Invisimin
-</font>"}
-	if (isrobot(mob))
-		src << borghotkey_mode
-		src << borgother
-	else
-		src << hotkey_mode
-		src << other
-
-	if(holder)
-		src << admin
+	src << hotkey_mode
+	src << other
