@@ -59,7 +59,7 @@
 	S["warns"]				>> warns
 	S["warnbans"]			>> warnbans
 	S["randomslot"]			>> randomslot
-
+	S["volume"]				>> volume
 	//Sanitize
 	ooccolor		= sanitize_hexcolor(ooccolor, initial(ooccolor))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
@@ -70,6 +70,7 @@
 	UI_style_color	= sanitize_hexcolor(UI_style_color, initial(UI_style_color))
 	UI_style_alpha	= sanitize_integer(UI_style_alpha, 0, 255, initial(UI_style_alpha))
 	randomslot		= sanitize_integer(randomslot, 0, 1, initial(randomslot))
+	volume			= sanitize_integer(volume, 0, 100, initial(volume))
 	return 1
 
 /datum/preferences/proc/save_preferences()
@@ -92,6 +93,17 @@
 	S["warns"]				<< warns
 	S["warnbans"]			<< warnbans
 	S["randomslot"]			<< randomslot
+	S["volume"]				<< volume
+	return 1
+
+//saving volume changes
+/datum/preferences/proc/save_volume()
+	if(!path)				return 0
+	var/savefile/S = new /savefile(path)
+	if(!S)					return 0
+	S.cd = "/"
+
+	S["volume"]				<< volume
 	return 1
 
 /datum/preferences/proc/load_save(dir)
