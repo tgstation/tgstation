@@ -25,10 +25,10 @@
 			if(istype(O, /obj/item/device/multitool))
 				user << "\red Resetting circuitry..."
 				playsound(user, 'sound/machines/lockreset.ogg', 50, 1)
-				sleep(50) // Sleeping time~
-				src.locked = 0
-				user << "\blue You disable the locking modules."
-				update_icon()
+				if(do_after(user, 20))
+					src.locked = 0
+					user << "\blue You disable the locking modules."
+					update_icon()
 				return
 			else if(istype(O, /obj/item/weapon))
 				var/obj/item/weapon/W = O
@@ -83,10 +83,10 @@
 					return
 				else
 					user << "\red Resetting circuitry..."
-					sleep(50)
-					src.locked = 1
-					user << "\blue You re-enable the locking modules."
 					playsound(user, 'sound/machines/lockenable.ogg', 50, 1)
+					if(do_after(user, 20))
+						src.locked = 1
+						user << "\blue You re-enable the locking modules."
 					return
 			else
 				localopened = !localopened
