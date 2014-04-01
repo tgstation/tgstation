@@ -43,6 +43,9 @@
 		return
 
 	var/list/modifiers = params2list(params)
+	if(modifiers["shift"] && modifiers["ctrl"])
+		CtrlShiftClickOn(A)
+		return
 	if(modifiers["middle"])
 		MiddleClickOn(A)
 		return
@@ -98,8 +101,8 @@
 			if(!resolved && A && W)
 				W.afterattack(A,src,1,params) // 1 indicates adjacency
 		else
-			if(ismob(A))
-				changeNext_move(8)
+			//if(ismob(A))
+			//	changeNext_move(8)
 			UnarmedAttack(A)
 		return
 
@@ -117,8 +120,8 @@
 				if(!resolved && A && W)
 					W.afterattack(A,src,1,params) // 1: clicking something Adjacent
 			else
-				if(ismob(A))
-					changeNext_move(8)
+				//if(ismob(A))
+				//	changeNext_move(8)
 				UnarmedAttack(A, 1)
 			return
 		else // non-adjacent click
@@ -241,6 +244,17 @@
 
 /mob/proc/TurfAdjacent(var/turf/T)
 	return T.Adjacent(src)
+
+/*
+	Control+Shift click
+	Unused except for AI
+*/
+/mob/proc/CtrlShiftClickOn(var/atom/A)
+	A.CtrlShiftClick(src)
+	return
+
+/atom/proc/CtrlShiftClick(var/mob/user)
+	return
 
 /*
 	Misc helpers

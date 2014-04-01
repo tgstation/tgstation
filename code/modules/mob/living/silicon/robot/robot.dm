@@ -125,6 +125,7 @@
 		mmi = null
 	..()
 
+
 /mob/living/silicon/robot/proc/pick_module()
 	if(module)
 		return
@@ -239,6 +240,18 @@
 	set category = "Robot Commands"
 	set name = "Show Alerts"
 	robot_alerts()
+
+//for borg hotkeys, here module refers to borg inv slot, not core module
+/mob/living/silicon/robot/verb/cmd_toggle_module(module as num)
+	set name = "Toggle Module"
+	set hidden = 1
+	toggle_module(module)
+
+/mob/living/silicon/robot/verb/cmd_unequip_module()
+	set name = "Unequip Module"
+	set hidden = 1
+	uneq_active()
+
 
 /mob/living/silicon/robot/proc/robot_alerts()
 	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
