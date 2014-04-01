@@ -75,7 +75,7 @@
 	item_state = "roman_c"
 
 	/obj/item/clothing/head/helmet/hopcap
-	name = "HoP's Cap"
+	name = "Head of Personnel's Cap"
 	desc = "Papers, Please"
 	icon_state = "hopcap"
 	flags_inv = 0
