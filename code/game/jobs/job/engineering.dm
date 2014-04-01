@@ -20,7 +20,7 @@
 	minimal_player_age = 7
 
 
-	equip(var/mob/living/carbon/human/H)
+	equip_items(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/ce(H), slot_ears)
 		if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial (H), slot_back)
@@ -53,7 +53,7 @@
 
 
 
-	equip(var/mob/living/carbon/human/H)
+	equip_items(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(H), slot_ears)
 		if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(H), slot_back)
@@ -85,7 +85,7 @@
 	minimal_access = list(access_atmospherics, access_maint_tunnels, access_emergency_storage, access_construction)
 
 
-	equip(var/mob/living/carbon/human/H)
+	equip_items(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(H), slot_ears)
 		if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)

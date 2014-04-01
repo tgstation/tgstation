@@ -12,7 +12,7 @@
 	minimal_access = list(access_bar, access_mineral_storeroom)
 
 
-	equip(var/mob/living/carbon/human/H)
+	equip_items(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
 		if(H.backbag == 3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(H), slot_back)
@@ -53,7 +53,7 @@
 	minimal_access = list(access_kitchen, access_morgue)
 
 
-	equip(var/mob/living/carbon/human/H)
+	equip_items(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_srv(H), slot_ears)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chef(H), slot_w_uniform)
@@ -78,7 +78,7 @@
 	minimal_access = list(access_hydroponics, access_morgue) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
 
 
-	equip(var/mob/living/carbon/human/H)
+	equip_items(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_srv(H), slot_ears)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/hydroponics(H), slot_w_uniform)
@@ -105,7 +105,7 @@
 	minimal_access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
 
 
-	equip(var/mob/living/carbon/human/H)
+	equip_items(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cargo(H), slot_ears)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cargo(H), slot_w_uniform)
@@ -131,7 +131,7 @@
 	minimal_access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
 
 
-	equip(var/mob/living/carbon/human/H)
+	equip_items(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cargo(H), slot_ears)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cargotech(H), slot_w_uniform)
@@ -155,7 +155,7 @@
 	minimal_access = list(access_mining, access_mint, access_mining_station, access_mailsorting)
 
 
-	equip(var/mob/living/carbon/human/H)
+	equip_items(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cargo (H), slot_ears)
 		if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial (H), slot_back)
@@ -191,7 +191,7 @@
 	minimal_access = list(access_theatre)
 
 
-	equip(var/mob/living/carbon/human/H)
+	equip_items(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.fully_replace_character_name(H.real_name, pick(clown_names))
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/clown(H), slot_back)
@@ -224,7 +224,7 @@
 	minimal_access = list(access_theatre)
 
 
-	equip(var/mob/living/carbon/human/H)
+	equip_items(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/mime(H), slot_back)
 		if(H.backbag == 3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(H), slot_back)
@@ -265,7 +265,7 @@
 	minimal_access = list(access_janitor, access_maint_tunnels)
 
 
-	equip(var/mob/living/carbon/human/H)
+	equip_items(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/janitor(H), slot_w_uniform)
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_srv(H), slot_ears)
@@ -289,7 +289,7 @@
 	minimal_access = list(access_library)
 
 
-	equip(var/mob/living/carbon/human/H)
+	equip_items(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket/red(H), slot_w_uniform)
 		H.equip_to_slot_or_del(new /obj/item/device/pda/librarian(H), slot_belt)
@@ -315,7 +315,7 @@ var/global/lawyer = 0//Checks for another lawyer
 	minimal_access = list(access_lawyer, access_court, access_sec_doors)
 
 
-	equip(var/mob/living/carbon/human/H)
+	equip_items(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
 		if(H.backbag == 3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(H), slot_back)

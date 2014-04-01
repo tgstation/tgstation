@@ -73,7 +73,7 @@
 
 		usr << browse(null, "window=editicon") // Close window
 
-/datum/job/chaplain/equip(var/mob/living/carbon/human/H)
+/datum/job/chaplain/equip_items(var/mob/living/carbon/human/H)
 	if(!H)	return 0
 
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), slot_w_uniform)

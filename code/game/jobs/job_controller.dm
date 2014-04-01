@@ -294,6 +294,7 @@ var/global/datum/controller/occupations/job_master
 
 		H.job = rank
 
+		//If we joined at roundstart we should be positioned at our workstation
 		if(!joined_late)
 			var/obj/S = null
 			for(var/obj/effect/landmark/start/sloc in landmarks_list)
@@ -306,13 +307,14 @@ var/global/datum/controller/occupations/job_master
 			if(istype(S, /obj/effect/landmark/start) && istype(S.loc, /turf))
 				H.loc = S.loc
 
+		if(H.mind)
+			H.mind.assigned_role = rank
+
 		if(job)
 			job.equip(H)
 			job.apply_fingerprints(H)
 
-		if(H.mind)
-			H.mind.assigned_role = rank
-
+/*
 			switch(rank)
 				if("Cyborg")
 					H.Robotize()
@@ -330,29 +332,33 @@ var/global/datum/controller/occupations/job_master
 							var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel_norm(H)
 							new /obj/item/weapon/storage/box/survival(BPK)
 							H.equip_to_slot_or_del(BPK, slot_back,1)
-
+*/
 		H << "<B>You are the [rank].</B>"
 		H << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
 		if(job.req_admin_notify)
 			H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
 
-		spawnId(H,rank)
+		//spawnId(H,rank)
 
-		H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_ears)
+		//H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_ears)
 		H.update_hud() 	// Tmp fix for Github issue 1006. TODO: make all procs in update_icons.dm do client.screen |= equipment no matter what.
 		return 1
 
 
+/*
 	proc/spawnId(var/mob/living/carbon/human/H, rank)
 		if(!H)	return 0
-		var/obj/item/weapon/card/id/C = null
+		//var/obj/item/weapon/card/id/C = null
 
+		//Try to find the datum related to this job
 		var/datum/job/job = null
 		for(var/datum/job/J in occupations)
 			if(J.title == rank)
 				job = J
 				break
 
+		if(job)
+			job.equip(
 		if(job)
 			if(job.title == "Cyborg")
 				return
@@ -373,6 +379,7 @@ var/global/datum/controller/occupations/job_master
 			pda.owner = H.real_name
 			pda.ownjob = C.assignment
 			pda.update_label()
+*/
 		return 1
 
 
