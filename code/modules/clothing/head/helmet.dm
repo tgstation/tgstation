@@ -73,3 +73,9 @@
 	armor = list(melee = 25, bullet = 0, laser = 25, energy = 10, bomb = 10, bio = 0, rad = 0)
 	icon_state = "roman_c"
 	item_state = "roman_c"
+
+	/obj/item/clothing/head/helmet/hopcap
+	name = "Head of Personnel's Cap"
+	desc = "Papers, Please"
+	icon_state = "hopcap"
+	flags_inv = 0
