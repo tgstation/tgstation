@@ -610,6 +610,10 @@ proc/process_ghost_teleport_locs()
 	name = "Waste Disposal"
 	icon_state = "disposal"
 
+/area/maintenance/electrical
+	name = "Electrical Maintenance"
+	icon_state = "yellow"
+
 //Hallway
 
 /area/hallway/primary/fore
