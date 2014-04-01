@@ -280,7 +280,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				var/obj/item/device/pda/PDA = A
 				if(PDA.owner == oldname)
 					PDA.owner = newname
-					PDA.name = "PDA-[newname] ([PDA.ownjob])"
+					PDA.update_label()
 					if(!search_id)	break
 					search_pda = 0
 

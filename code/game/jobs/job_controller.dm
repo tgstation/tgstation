@@ -366,16 +366,13 @@ var/global/datum/controller/occupations/job_master
 			C.assignment = rank
 			C.update_label()
 			H.equip_to_slot_or_del(C, slot_wear_id)
-	/*	if(prob(50))
-			H.equip_to_slot_or_del(new /obj/item/weapon/pen(H), slot_r_store)
-		else
-			H.equip_to_slot_or_del(new /obj/item/weapon/pen/blue(H), slot_r_store)*/
+
 		H.equip_to_slot_or_del(new /obj/item/device/pda(H), slot_belt)
 		if(locate(/obj/item/device/pda,H))//I bet this could just use locate.  It can --SkyMarshal
 			var/obj/item/device/pda/pda = locate(/obj/item/device/pda,H)
 			pda.owner = H.real_name
 			pda.ownjob = C.assignment
-			pda.name = "PDA-[H.real_name] ([pda.ownjob])"
+			pda.update_label()
 		return 1
 
 
