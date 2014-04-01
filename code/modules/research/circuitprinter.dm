@@ -113,23 +113,20 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		return
 
 	var/amount = round(input("How many sheets do you want to add?") as num)
-	if(amount < 0)
-		amount = 0
-	if(amount == 0)
+	if(amount <= 0 || stack.amount <= 0)
 		return
 	if(amount > stack.amount)
 		amount = min(stack.amount, round((max_material_amount-TotalMaterials())/stack.perunit))
 
 	busy = 1
 	use_power(max(1000, (3750*amount/10)))
-	spawn(16)
-		user << "\blue You add [amount] sheets to the [src.name]."
-		if(istype(stack, /obj/item/stack/sheet/glass))
-			g_amount += amount * 3750
-		else if(istype(stack, /obj/item/stack/sheet/mineral/gold))
-			gold_amount += amount * 2000
-		else if(istype(stack, /obj/item/stack/sheet/mineral/diamond))
-			diamond_amount += amount * 2000
-		stack.use(amount)
-		busy = 0
-		src.updateUsrDialog()
+	user << "\blue You add [amount] sheets to the [src.name]."
+	if(istype(stack, /obj/item/stack/sheet/glass))
+		g_amount += amount * 3750
+	else if(istype(stack, /obj/item/stack/sheet/mineral/gold))
+		gold_amount += amount * 2000
+	else if(istype(stack, /obj/item/stack/sheet/mineral/diamond))
+		diamond_amount += amount * 2000
+	stack.use(amount)
+	busy = 0
+	src.updateUsrDialog()
