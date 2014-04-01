@@ -123,7 +123,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 10
 	containertype = /obj/structure/closet/crate
 	containername = "firefighting crate"
-	
+
 /datum/supply_packs/emergency/atmostank
 	name = "Firefighting Watertank"
 	contains = list(/obj/item/weapon/watertank/atmos)
@@ -748,7 +748,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 15
 	containertype = /obj/structure/closet/crate/hydroponics
 	containername = "hydroponics crate"
-	
+
 /datum/supply_packs/misc/hydroponics/hydrotank
 	name = "Hydroponics Watertank Backpack Crate"
 	contains = list(/obj/item/weapon/watertank)
@@ -900,7 +900,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/misc/lasertag
 	name = "LaserTag Crate"
-	contains =	list(/obj/item/weapon/gun/energy/laser/redtag,
+	contains = list(/obj/item/weapon/gun/energy/laser/redtag,
 					/obj/item/weapon/gun/energy/laser/redtag,
 					/obj/item/weapon/gun/energy/laser/redtag,
 					/obj/item/weapon/gun/energy/laser/bluetag,
@@ -917,10 +917,24 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 15
 	containername = "LaserTag Crate"
 
+/datum/supply_packs/misc/religious_supplies
+	name = "Religious Supplies Crate"
+	contains = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
+					/obj/item/weapon/storage/bible/booze,
+					/obj/item/weapon/storage/bible/booze,
+					/obj/item/clothing/suit/chaplain_hoodie,
+					/obj/item/clothing/head/chaplain_hood,
+					/obj/item/clothing/suit/chaplain_hoodie,
+					/obj/item/clothing/head/chaplain_hood)
+	cost = 40	// it costs so much because the Space Church is ran by Space Jews
+	containername = "religious supplies crate"
+
+
 ///////////// Paper Work
 
 /datum/supply_packs/misc/paper
-	name = "Bureaucracy crate"
+	name = "Bureaucracy Crate"
 	contains = list(/obj/structure/filingcabinet/chestdrawer/wheeled,
 					/obj/item/device/camera_film,
 					/obj/item/weapon/hand_labeler,
@@ -936,7 +950,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/clipboard,
 					/obj/item/weapon/clipboard)
 	cost = 15
-	containername = "Bureaucracy crate"
+	containername = "bureaucracy crate"
 
 /datum/supply_packs/misc/toner
 	name = "Toner Cartridges"
@@ -977,7 +991,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 10
 	containertype = /obj/structure/largecrate
 	containername = "janitorial cart crate"
-	
+
 /datum/supply_packs/misc/janitor/janitank
 	name = "Janitor Watertank Backpack Crate"
 	contains = list(/obj/item/weapon/watertank/janitor)
