@@ -57,7 +57,7 @@ mob/proc/airflow_stun()
 		src << "\blue You stay upright as the air rushes past you."
 		return 0
 
-	if(zas_settings.Get(/datum/ZAS_Setting/airflow_push) || reagents.has_reagent("bustanut"))
+	if(zas_settings.Get(/datum/ZAS_Setting/airflow_push) || (reagents && reagents.has_reagent("bustanut")))
 		if(weakened <= 0) src << "\red The sudden rush of air knocks you over!"
 		weakened = max(weakened,5)
 		last_airflow_stun = world.time
@@ -80,7 +80,7 @@ mob/living/carbon/human/airflow_stun()
 		src << "\blue You stay upright as the air rushes past you."
 		return 0
 
-	if(zas_settings.Get(/datum/ZAS_Setting/airflow_push) || reagents.has_reagent("bustanut"))
+	if(zas_settings.Get(/datum/ZAS_Setting/airflow_push) || (reagents && reagents.has_reagent("bustanut")))
 		if(weakened <= 0) src << "\red The sudden rush of air knocks you over!"
 		weakened = max(weakened,rand(1,5))
 		last_airflow_stun = world.time
@@ -92,7 +92,7 @@ atom/movable/proc/check_airflow_movable(n)
 	if(!zas_settings.Get(/datum/ZAS_Setting/airflow_push))
 		if(ismob(src))
 			var/mob/living/L = src
-			if(L.reagents.has_reagent("bustanut"))
+			if(L.reagents && L.reagents.has_reagent("bustanut"))
 				return 1
 		return 0
 	if(anchored && !ismob(src))
@@ -248,7 +248,7 @@ proc/AirflowSpace(zone/A)
 /atom/movable/var/tmp/last_airflow = 0
 
 /atom/movable/proc/GotoAirflowDest(n)
-	if(!zas_settings.Get(/datum/ZAS_Setting/airflow_push) && !reagents.has_reagent("bustanut")) return // If not enabled, fuck it.
+	if(!zas_settings.Get(/datum/ZAS_Setting/airflow_push) && (!reagents || !reagents.has_reagent("bustanut"))) return // If not enabled, fuck it.
 	if(!airflow_dest) return
 	if(airflow_speed < 0) return
 	if(last_airflow > world.time - zas_settings.Get(/datum/ZAS_Setting/airflow_delay)) return
@@ -314,7 +314,7 @@ proc/AirflowSpace(zone/A)
 
 
 /atom/movable/proc/RepelAirflowDest(n)
-	if(!zas_settings.Get(/datum/ZAS_Setting/airflow_push) && !reagents.has_reagent("bustanut")) return // If not enabled, fuck it.
+	if(!zas_settings.Get(/datum/ZAS_Setting/airflow_push) && (!reagents ||  !reagents.has_reagent("bustanut"))) return // If not enabled, fuck it.
 	if(!airflow_dest) return
 	if(airflow_speed < 0) return
 	if(last_airflow > world.time - zas_settings.Get(/datum/ZAS_Setting/airflow_delay)) return
@@ -421,7 +421,7 @@ mob/living/carbon/human/airflow_hit(atom/A)
 	blocked = run_armor_check("groin","melee")
 	apply_damage(b_loss/3, BRUTE, "groin", blocked, 0, "Airflow")
 
-	if(zas_settings.Get(/datum/ZAS_Setting/airflow_push) || reagents.has_reagent("bustanut"))
+	if(zas_settings.Get(/datum/ZAS_Setting/airflow_push) || (reagents && reagents.has_reagent("bustanut")))
 		if(airflow_speed > 10)
 			paralysis += round(airflow_speed * zas_settings.Get(/datum/ZAS_Setting/airflow_stun))
 			stunned = max(stunned,paralysis + 3)
