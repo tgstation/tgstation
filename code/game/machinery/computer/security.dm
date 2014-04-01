@@ -230,17 +230,11 @@ What a mess.*/
 				active2 = null
 
 			if("Log In")
-				if (isaiorborg(usr))
+				if (istype(usr, /mob/living/silicon))
 					active1 = null
 					active2 = null
 					authenticated = 1
 					rank = "AI"
-					screen = 1
-				else if (ispAI(usr))
-					active1 = null
-					active2 = null
-					authenticated = usr.name
-					rank = "pAI"
 					screen = 1
 				else if (istype(scan, /obj/item/weapon/card/id))
 					active1 = null
@@ -562,4 +556,3 @@ What a mess.*/
 /obj/machinery/computer/secure_data/detective_computer
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "messyfiles"
-	paiallowed = 0 //2retro

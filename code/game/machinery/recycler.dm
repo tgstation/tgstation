@@ -32,16 +32,19 @@ var/const/SAFETY_COOLDOWN = 100
 
 
 /obj/machinery/recycler/attackby(var/obj/item/I, var/mob/user)
-	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
-		emagged = 1
-		if(safety_mode)
-			safety_mode = 0
+	if(istype(I, /obj/item/weapon/card/emag))
+		if(!emagged)
+			emagged = 1
+			if(safety_mode)
+				safety_mode = 0
+				update_icon()
+			playsound(src.loc, "sparks", 75, 1, -1)
+			user << "<span class='notice'>You use the [I.name] on the [src.name].</span>"
+	else if(istype(I, /obj/item/weapon/screwdriver))
+		if(emagged)
+			emagged = 0
 			update_icon()
-		playsound(src.loc, "sparks", 75, 1, -1)
-	else if(istype(I, /obj/item/weapon/screwdriver) && emagged)
-		emagged = 0
-		update_icon()
-		user << "<span class='notice'>You reset the crusher to its default factory settings.</span>"
+			user << "<span class='notice'>You reset the crusher to its default factory settings.</span>"
 	else
 		..()
 		return

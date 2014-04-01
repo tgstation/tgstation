@@ -123,7 +123,6 @@
 	icon_state = "old"
 	name = "\improper DoorMex control console"
 	title = "Door Controls"
-	paiallowed = 0 //2retro
 
 
 /obj/machinery/computer/pod/old/syndicate

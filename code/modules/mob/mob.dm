@@ -14,6 +14,10 @@
 	ghostize()
 	..()
 
+/mob/proc/sac_act(var/obj/effect/rune/R, var/mob/victim as mob)
+	return
+
+
 var/next_mob_id = 0
 /mob/New()
 	tag = "mob_[next_mob_id++]"
@@ -799,3 +803,4 @@ var/list/slot_equipment_priority = list( \
 	resting = max(resting + amount,0)
 	update_canmove()
 	return
+

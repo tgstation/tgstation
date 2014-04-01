@@ -29,7 +29,7 @@
 	var/frame_desc = null
 
 /obj/item/weapon/circuitboard/large_tank_control
-	name = "cirquir board (Large Tank Control)"
+	name = "circuit board (Large Tank Control)"
 	build_path = /obj/machinery/computer/general_air_control/large_tank_control
 	origin_tech = "programming=2;engineering=3;materials=2"
 /obj/item/weapon/circuitboard/turbine_computer
