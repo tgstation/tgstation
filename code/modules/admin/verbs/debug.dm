@@ -672,7 +672,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 			var/obj/item/device/pda/P = new(M)
 			P.owner = M.real_name
 			P.ownjob = "Assistant"
-			P.name = "PDA-[M.real_name] (Assistant)"
+			P.update_label()
 			M.equip_to_slot_or_del(P, slot_belt)
 
 
@@ -856,7 +856,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 			var/obj/item/device/pda/heads/pda = new(M)
 			pda.owner = M.real_name
 			pda.ownjob = "Reaper"
-			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
+			pda.update_label()
 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
@@ -927,7 +927,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 			var/obj/item/device/pda/heads/pda = new(M)
 			pda.owner = M.real_name
 			pda.ownjob = "Centcom Official"
-			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
+			pda.update_label()
 
 			M.equip_to_slot_or_del(pda, slot_r_store)
 
