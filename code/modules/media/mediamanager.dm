@@ -52,7 +52,7 @@ function SetMusic(url, time, volume) {
 /datum/media_manager
 	var/url = ""
 	var/start_time = 0
-	var/volume = 100
+	var/volume = 50
 
 	var/client/owner
 	var/mob/mob
@@ -63,6 +63,8 @@ function SetMusic(url, time, volume) {
 	New(var/mob/holder)
 		src.mob=holder
 		owner=src.mob.client
+		if(owner.prefs && !isnull(owner.prefs.volume))
+			volume = owner.prefs.volume
 
 	// Actually pop open the player in the background.
 	proc/open()
