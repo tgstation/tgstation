@@ -345,7 +345,7 @@
 			if (!R || !istype(R) || !R.product_path || R.amount <= 0)
 				return
 
-			if(R.price == null)
+			if(R.price == null || !R.price)
 				src.vend(R, usr)
 			else
 				src.currently_vending = R
@@ -595,11 +595,13 @@
 	icon_state = "snack"
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/candy = 6,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 6,/obj/item/weapon/reagent_containers/food/snacks/chips =6,
 					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 6,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 6,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 6,
-					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6)
+					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6,
+					/obj/item/weapon/reagent_containers/food/snacks/bustanuts = 10)
 	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/syndicake = 6)
 	prices = list(/obj/item/weapon/reagent_containers/food/snacks/candy = 20,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 30,/obj/item/weapon/reagent_containers/food/snacks/chips =25,
 					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 30,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 20,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 30,
-					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 25)
+					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 25,
+					/obj/item/weapon/reagent_containers/food/snacks/bustanuts = 0)
 
 
 

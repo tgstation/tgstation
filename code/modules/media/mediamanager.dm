@@ -85,7 +85,7 @@ function SetMusic(url, time, volume) {
 	proc/update_music()
 		var/targetURL = ""
 		var/targetStartTime = 0
-		var/targetVolume = 100
+		//var/targetVolume = volume
 
 		if (!owner)
 			//testing("owner is null")
@@ -104,8 +104,26 @@ function SetMusic(url, time, volume) {
 		//else
 		//	testing("M is not playing or null.")
 
-		if (url != targetURL || abs(targetStartTime - start_time) > 1 || targetVolume != volume)
+		if (url != targetURL || abs(targetStartTime - start_time) > 1)
 			url = targetURL
 			start_time = targetStartTime
-			volume = targetVolume
+			//volume = targetVolume
 			send_update()
+
+	proc/update_volume(var/value)
+		volume = value
+		send_update()
+
+/client/verb/change_volume()
+	set name = "Set Volume"
+	set category = "Preferences"
+	set desc = "Set jukebox volume"
+	if(!media || !istype(media))
+		usr << "You have no media datum to change, if you're not in the lobby tell an admin."
+		return
+	var/value = input("Choose your Jukebox volume.", "Jukebox volume", media.volume)
+	value = round(max(0, min(100, value)))
+	media.update_volume(value)
+	if(prefs)
+		prefs.volume = value
+		prefs.save_volume()

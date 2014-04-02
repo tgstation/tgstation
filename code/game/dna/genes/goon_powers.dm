@@ -206,7 +206,7 @@
 	var/list/possible_targets = list()
 
 	for(var/atom/movable/O in view_or_range(range, user, selection_type))
-		if(is_type_in_list(O,types_allowed))
+		if(is_type_in_list(O,types_allowed) && !istype(O.loc, /mob)) // No eating things inside of you or another person, that's just creepy
 			possible_targets += O
 
 	targets += input("Choose the target of your hunger.", "Targeting") as anything in possible_targets

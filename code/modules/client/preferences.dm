@@ -118,6 +118,8 @@ datum/preferences
 	// Whether or not to use randomized character slots
 	var/randomslot = 0
 
+	// jukebox volume
+	var/volume = 100
 /datum/preferences/New(client/C)
 	b_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
 	if(istype(C))

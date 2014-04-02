@@ -283,6 +283,9 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 		if(!mind.vampire || !(mind in ticker.mode.vampires))
 			src << "\red Your fangs have disappeared!"
 			return 0
+		if(H.flags & NO_BLOOD)
+			src << "<span class='warning'>Not a drop of blood here</span>"
+			return 0
 		bloodtotal = src.mind.vampire.bloodtotal
 		bloodusable = src.mind.vampire.bloodusable
 		if(!H.vessel.get_reagent_amount("blood"))

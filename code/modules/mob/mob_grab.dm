@@ -1,4 +1,4 @@
-#define UPGRADE_COOLDOWN	40
+#define UPGRADE_COOLDOWN	5
 #define UPGRADE_KILL_TIMER	100
 
 /obj/item/weapon/grab
@@ -108,16 +108,17 @@
 		return
 	if(state == GRAB_UPGRADING)
 		return
+	/* This is handled in mob/proc/ClickOn
 	if(assailant.next_move > world.time)
 		return
 	if(world.time < (last_upgrade + UPGRADE_COOLDOWN))
 		return
+	*/
 	if(!assailant.canmove || assailant.lying)
 		del(src)
 		return
 
 	last_upgrade = world.time
-
 	if(state < GRAB_AGGRESSIVE)
 		if(!allow_upgrade)
 			return
@@ -129,7 +130,6 @@
 			if(isslime(affecting))
 				assailant << "<span class='notice'>You squeeze [affecting], but nothing interesting happens.</span>"
 				return
-
 			assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>")
 			state = GRAB_NECK
 			icon_state = "grabbed+1"

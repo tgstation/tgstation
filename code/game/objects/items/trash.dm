@@ -7,6 +7,9 @@
 	w_class = 1.0
 	desc = "This is rubbish."
 	w_type=NOT_RECYCLABLE
+	bustanuts
+		name = "Busta-Nuts"
+		icon_state = "busta_nut"
 	raisins
 		name = "4no raisins"
 		icon_state= "4no_raisins"

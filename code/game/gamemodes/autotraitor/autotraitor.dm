@@ -94,7 +94,7 @@
 				playercount += 1
 			if (player.client && player.mind && player.mind.special_role && player.stat != 2)
 				traitorcount += 1
-			if (player.client && player.mind && !player.mind.special_role && player.stat != 2 && (player.client && player.client.prefs.be_special & BE_TRAITOR) && !jobban_isbanned(player, "Syndicate"))
+			if (player.client && player.mind && !player.mind.special_role && player.stat != 2 && (player.client && player.client.prefs.be_special & BE_TRAITOR) && !jobban_isbanned(player, "Syndicate") && !isMoMMI(player))
 				possible_traitors += player
 		for(var/datum/mind/player in possible_traitors)
 			for(var/job in restricted_jobs)
