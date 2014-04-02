@@ -228,9 +228,7 @@
 	icon_state = "clown"
 	item_state = "clown_hat"
 
-obj/item/clothing/mask/gas/clown_hat/verb/morph_mask()
-	set name = "Morph Mask"
-	set category = "Object"
+obj/item/clothing/mask/gas/clown_hat/attack_self(mob/user)
 
 	var/mob/M = usr
 	var/list/options = list()
