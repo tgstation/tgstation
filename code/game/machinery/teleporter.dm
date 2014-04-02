@@ -12,8 +12,12 @@
 
 /obj/machinery/computer/teleporter/New()
 	src.id = "[rand(1000, 9999)]"
+	link_power_station()
 	..()
 	return
+
+/obj/machinery/computer/teleporter/initialize()
+	link_power_station()
 
 /obj/machinery/computer/teleporter/proc/link_power_station()
 	if(power_station)
@@ -198,6 +202,9 @@
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	RefreshParts()
 
+/obj/machinery/teleport/hub/initialize()
+	link_power_station()
+
 /obj/machinery/teleport/hub/RefreshParts()
 	var/A = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
@@ -282,6 +289,10 @@
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	RefreshParts()
+	link_console_and_hub()
+
+/obj/machinery/teleport/station/initialize()
+	link_console_and_hub()
 
 /obj/machinery/teleport/station/RefreshParts()
 	var/E
