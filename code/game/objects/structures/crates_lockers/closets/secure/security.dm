@@ -74,6 +74,7 @@
 		sleep(2)
 		new /obj/item/clothing/suit/armor/vest(src)
 		new /obj/item/clothing/suit/armor/hos/jensen(src)
+		new /obj/item/clothing/head/helmet/HoS/dermal(src)
 		new /obj/item/weapon/cartridge/hos(src)
 		new /obj/item/device/radio/headset/heads/hos(src)
 		new /obj/item/clothing/glasses/hud/security/sunglasses(src)
