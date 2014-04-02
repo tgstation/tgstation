@@ -248,9 +248,9 @@
 		return
 	..()
 
-/obj/machinery/mineral/equipment_locker/proc/RedeemVoucher(voucher, redeemer)
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") in list("Resonator", "Kinetic Accelerator", "Mining Drone", "Cancel")
-	if(!selection || !Adjacent(redeemer) || !voucher)
+/obj/machinery/mineral/equipment_locker/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
+	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Resonator", "Kinetic Accelerator", "Mining Drone")
+	if(!selection || !Adjacent(redeemer) || voucher.gc_destroyed || voucher.loc != redeemer)
 		return
 	switch(selection)
 		if("Resonator")
@@ -260,8 +260,6 @@
 		if("Mining Drone")
 			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
 			new /obj/item/weapon/weldingtool/hugetank(src.loc)
-		if("Cancel")
-			return
 	qdel(voucher)
 
 /obj/machinery/mineral/equipment_locker/ex_act()
