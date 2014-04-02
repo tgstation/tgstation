@@ -30,9 +30,6 @@
 	for(var/i=0;i<7;i++) // 2 for medHUDs and 5 for secHUDs
 		hud_list += image('icons/mob/hud.dmi', src, "hudunknown")
 
-	if(real_name == "John McClane")
-		ventcrawler = 2
-
 	..()
 
 /mob/living/carbon/human/Destroy()
