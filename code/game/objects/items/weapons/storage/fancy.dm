@@ -48,7 +48,7 @@
 	icon_type = "donut"
 	name = "donut box"
 	storage_slots = 6
-	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/donut")
+	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/donut)
 
 
 /obj/item/weapon/storage/fancy/donut_box/New()
@@ -67,7 +67,7 @@
 	icon_type = "egg"
 	name = "egg box"
 	storage_slots = 12
-	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/egg")
+	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/egg)
 
 /obj/item/weapon/storage/fancy/egg_box/New()
 	..()
@@ -153,7 +153,7 @@
 	throwforce = 0
 	slot_flags = SLOT_BELT
 	storage_slots = 6
-	can_hold = list("/obj/item/clothing/mask/cigarette")
+	can_hold = list(/obj/item/clothing/mask/cigarette)
 	icon_type = "cigarette"
 
 /obj/item/weapon/storage/fancy/cigarettes/New()

@@ -296,6 +296,16 @@ obj/structure/door_assembly
 		density = 1
 		state = 1
 
+	door_assembly_shuttle
+		name = "Shuttle Airlock Assembly"
+		icon_state = "door_as_shuttle1"
+		typetext = "shuttle"
+		icontext = "shuttle"
+		airlock_type = /obj/machinery/door/airlock/shuttle
+		anchored = 1
+		density = 1
+		state = 1
+
 /obj/structure/door_assembly/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = copytext(stripped_input(user, "Enter the name for the door.", src.name, src.created_name),1,MAX_NAME_LEN)
