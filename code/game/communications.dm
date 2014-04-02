@@ -121,7 +121,7 @@ var/const/MED_FREQ = 1355 //medical, coloured blue in chat window
 var/const/ENG_FREQ = 1357 //engineering, coloured orange in chat window
 var/const/SEC_FREQ = 1359 //security, coloured red in chat window
 var/const/DSQUAD_FREQ = 1441 //death squad frequency, coloured grey in chat window
-var/const/AIPRIV_FREQ = 1447 //AI private, colored light blue in chat window
+var/const/AIPRIV_FREQ = 1447 //AI private, colored magenta in chat window
 
 #define TRANSMISSION_WIRE	0
 #define TRANSMISSION_RADIO	1
