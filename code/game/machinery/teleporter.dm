@@ -221,10 +221,9 @@
 	return power_station
 
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
-	spawn()
-		if(power_station && power_station.engaged && !panel_open)
-			teleport(M)
-			use_power(5000)
+	if(power_station && power_station.engaged && !panel_open)
+		teleport(M)
+		use_power(5000)
 	return
 
 /obj/machinery/teleport/hub/attackby(obj/item/W, mob/user)
@@ -244,18 +243,16 @@
 		visible_message("<span class='notice'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
 		return
 	if (istype(M, /atom/movable))
-		if(prob(30 - (accurate * 10))) //oh dear a problem
-			do_teleport(M, com.target)
-			if(ishuman(M))//don't remove people from the round randomly you jerks
-				var/mob/living/carbon/human/human = M
-				if(human.dna && !human.dna.mutantrace)
-					M  << "<span class='danger'>You hear a buzzing in your ears.</span>"
-					human.dna.mutantrace = "fly"
-					human.update_body()
-					human.update_hair()
-				human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
-		else
-			do_teleport(M, com.target)
+		if(do_teleport(M, com.target))
+			if(prob(30 - (accurate * 10))) //oh dear a problem
+				if(ishuman(M))//don't remove people from the round randomly you jerks
+					var/mob/living/carbon/human/human = M
+					if(human.dna && !human.dna.mutantrace)
+						M  << "<span class='danger'>You hear a buzzing in your ears.</span>"
+						human.dna.mutantrace = "fly"
+						human.update_body()
+						human.update_hair()
+					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
 	return
 
 /obj/machinery/teleport/hub/update_icon()
