@@ -610,6 +610,10 @@ proc/process_ghost_teleport_locs()
 	name = "Waste Disposal"
 	icon_state = "disposal"
 
+/area/maintenance/electrical
+	name = "Electrical Maintenance"
+	icon_state = "yellow"
+
 //Hallway
 
 /area/hallway/primary/fore
@@ -1008,12 +1012,16 @@ proc/process_ghost_teleport_locs()
 	icon_state = "sec_prison"
 
 /area/security/processing
-	name = "\improper Prisoner Processing"
+	name = "\improper Labor Shuttle Dock"
 	icon_state = "sec_prison"
 
 /area/security/warden
-	name = "\improper Armory"
+	name = "\improper Brig Control"
 	icon_state = "Warden"
+
+/area/security/armory
+	name = "\improper Armory"
+	icon_state = "armory"
 
 /area/security/hos
 	name = "\improper Head of Security's Office"

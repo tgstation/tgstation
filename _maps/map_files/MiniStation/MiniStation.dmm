@@ -860,7 +860,7 @@
 "aqB" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 4; layer = 2.4; on = 1},/obj/structure/closet/crate/bin,/turf/simulated/floor,/area/hallway/primary/central)
 "aqC" = (/obj/structure/stool/bed/chair,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/turf/simulated/floor,/area/hallway/primary/central)
 "aqD" = (/obj/structure/stool/bed/chair,/turf/simulated/floor,/area/hallway/primary/central)
-"aqE" = (/obj/structure/sign/greencross,/turf/simulated/wall,/area/medical/medbay)
+"aqE" = (/obj/structure/sign/bluecross,/turf/simulated/wall,/area/medical/medbay)
 "aqF" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/door/airlock/glass_medical{id_tag = "MedbayFoyer"; name = "Medbay"; req_access_txt = "5"},/turf/simulated/floor{icon_state = "white"},/area/medical/medbay)
 "aqG" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/door/airlock/glass_medical{id_tag = "MedbayFoyer"; name = "Medbay"; req_access_txt = "5"},/turf/simulated/floor{icon_state = "white"},/area/medical/medbay)
 "aqH" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/medical/medbay)

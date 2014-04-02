@@ -263,14 +263,22 @@ datum
 				if(!data) data = 1
 				data++
 				M.jitteriness = max(M.jitteriness-5,0)
-				if(data >= 30)
+				if(data >= 30)		// 12 units, 54 seconds @ metabolism 0.4 units & tick rate 1.8 sec
 					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 4
 					M.Dizzy(5)
-				if(data >= 30*2.5 && prob(33))
+					if(iscultist(M) && prob(5))
+						M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","Egkau'haom'nai en Chaous","Ho Diak'nos tou Ap'iron","R'ge Na'sie","Diabo us Vo'iscum","Si gn'um Co'nu"))
+				if(data >= 75 && prob(33))	// 30 units, 135 seconds
 					if (!M.confused) M.confused = 1
 					M.confused += 3
-				..()
+					if(iscultist(M))
+						ticker.mode.remove_cultist(M.mind)
+						holder.remove_reagent(src.id, src.volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
+						M.jitteriness = 0
+						M.stuttering = 0
+						M.confused = 0
+				holder.remove_reagent(src.id, 0.4)	//fixed consumption to prevent balancing going out of whack
 				return
 
 			reaction_turf(var/turf/simulated/T, var/volume)
@@ -280,6 +288,39 @@ datum
 					for(var/obj/effect/rune/R in T)
 						qdel(R)
 				T.Bless()
+
+		fuel/unholywater		//if you somehow managed to extract this from someone, dont splash it on yourself and have a smoke
+			name = "Unholy Water"
+			id = "unholywater"
+			description = "Something that shouldn't exist on this plane of existance."
+
+			on_mob_life(var/mob/living/M as mob)
+				M.adjustBrainLoss(3)
+				if(iscultist(M))
+					M.status_flags |= GOTTAGOFAST
+					M.drowsyness = max(M.drowsyness-5, 0)
+					M.AdjustParalysis(-2)
+					M.AdjustStunned(-2)
+					M.AdjustWeakened(-2)
+				else
+					M.adjustToxLoss(2)
+					M.adjustFireLoss(2)
+					M.adjustOxyLoss(2)
+					M.adjustBruteLoss(2)
+				holder.remove_reagent(src.id, 1)
+
+		plasma/hellwater			//if someone has this in their system they've really pissed off an eldrich god
+			name = "Hell Water"
+			id = "hell_water"
+			description = "YOUR FLESH! IT BURNS!"
+
+			on_mob_life(var/mob/living/M as mob)
+				M.fire_stacks = min(5,M.fire_stacks + 3)
+				M.IgniteMob()			//Only problem with igniting people is currently the commonly availible fire suits make you immune to being on fire
+				M.adjustToxLoss(1)
+				M.adjustFireLoss(1)		//Hence the other damages... ain't I a bastard?
+				M.adjustBrainLoss(5)
+				holder.remove_reagent(src.id, 1)
 
 		lube
 			name = "Space Lube"
@@ -1091,8 +1132,9 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(prob(5)) M.emote(pick("twitch","blink_r","shiver"))
+				M.status_flags |= GOTTAGOFAST
 				holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
-				..()
+	//			..()		//this was causing hyperzine to be consumed twice...
 				return
 
 		cryoxadone
@@ -2484,6 +2526,7 @@ datum
 				M.dizziness +=5
 				M.drowsyness = 0
 				M.sleeping = max(0,M.sleeping-2)
+				M.status_flags |= GOTTAGOFAST
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				M.nutrition += 1
@@ -2651,6 +2694,45 @@ datum
 				if(M.confused !=0) M.confused = max(0,M.confused - 5)
 				..()
 				return
+
+//////////////////////////////////Hydroponics stuff///////////////////////////////
+
+		plantnutriment
+			name = "Generic nutriment"
+			id = "plantnutriment"
+			description = "Some kind of nutriment. You can't really tell what it is. You should probably report it, along with how you obtained it."
+			reagent_state = LIQUID
+			color = "#000000" // RBG: 0, 0, 0
+			var/tox_prob = 0
+
+			on_mob_life(var/mob/living/M as mob)
+				if(prob(tox_prob)) M.adjustToxLoss(1*REM)
+				..()
+				return
+
+		plantnutriment/eznutriment
+			name = "E-Z-Nutrient"
+			id = "eznutriment"
+			description = "Cheap and extremely common type of plant nutriment."
+			reagent_state = LIQUID
+			color = "#376400" // RBG: 50, 100, 0
+			tox_prob = 10
+
+		plantnutriment/left4zednutriment
+			name = "Left 4 Zed"
+			id = "left4zednutriment"
+			description = "Unstable nutriment that makes plants mutate more often than usual."
+			reagent_state = LIQUID
+			color = "#1A1E4D" // RBG: 26, 30, 77
+			tox_prob = 25
+
+		plantnutriment/robustharvestnutriment
+			name = "Robust Harvest"
+			id = "robustharvestnutriment"
+			description = "Very potent nutriment that prevents plants from mutating."
+			reagent_state = LIQUID
+			color = "#9D9D00" // RBG: 157, 157, 0
+			tox_prob = 15
 
 //////////////////////////////////////////////The ten friggen million reagents that get you drunk//////////////////////////////////////////////
 

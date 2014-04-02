@@ -58,7 +58,6 @@
 	var/datum/radio_frequency/radio_connection
 	var/locked = 1
 	var/datum/wires/alarm/wires = null
-	var/wiresexposed = 0 // If it's been screwdrivered open.
 	var/aidisabled = 0
 	var/shorted = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
@@ -126,7 +125,7 @@
 
 	if(nbuild)
 		buildstage = 0
-		wiresexposed = 1
+		panel_open = 1
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 
@@ -185,7 +184,7 @@
 		popup.open()
 		refresh_all()
 
-	if(wiresexposed && (!istype(user, /mob/living/silicon)))
+	if(panel_open && (!istype(user, /mob/living/silicon)))
 		wires.Interact(user)
 
 	return
@@ -654,7 +653,7 @@ table tr:first-child th:first-child { border: none;}
 				))
 
 /obj/machinery/alarm/update_icon()
-	if(wiresexposed)
+	if(panel_open)
 		switch(buildstage)
 			if(2)
 				if(wires.wires_status == (2 ** wires.wire_count) - 1) // All wires cut
@@ -777,12 +776,12 @@ table tr:first-child th:first-child { border: none;}
 
 			if(istype(W, /obj/item/weapon/screwdriver))  // Opening that Air Alarm up.
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				wiresexposed = !wiresexposed
-				user << "The wires have been [wiresexposed ? "exposed" : "unexposed"]"
+				panel_open = !panel_open
+				user << "The wires have been [panel_open ? "exposed" : "unexposed"]"
 				update_icon()
 				return
 
-			if (wiresexposed && ((istype(W, /obj/item/device/multitool) || istype(W, /obj/item/weapon/wirecutters))))
+			if (panel_open && ((istype(W, /obj/item/device/multitool) || istype(W, /obj/item/weapon/wirecutters))))
 				return src.attack_hand(user)
 			else if (istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
 				if(stat & (NOPOWER|BROKEN))
@@ -927,12 +926,11 @@ FIRE ALARM
 	active_power_usage = 6
 	power_channel = ENVIRON
 	var/last_process = 0
-	var/wiresexposed = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
 
 /obj/machinery/firealarm/update_icon()
 
-	if(wiresexposed)
+	if(panel_open)
 		switch(buildstage)
 			if(2)
 				icon_state="fire_b2"
@@ -975,11 +973,13 @@ FIRE ALARM
 	src.add_fingerprint(user)
 
 	if (istype(W, /obj/item/weapon/screwdriver) && buildstage == 2)
-		wiresexposed = !wiresexposed
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		panel_open = !panel_open
+		user << "The wires have been [panel_open ? "exposed" : "unexposed"]"
 		update_icon()
 		return
 
-	if(wiresexposed)
+	if(panel_open)
 		switch(buildstage)
 			if(2)
 				if (istype(W, /obj/item/device/multitool))
@@ -1171,7 +1171,7 @@ FIRE ALARM
 
 	if(building)
 		buildstage = 0
-		wiresexposed = 1
+		panel_open = 1
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 
