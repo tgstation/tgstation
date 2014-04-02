@@ -41,16 +41,16 @@
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	can_hold = list(
-		"/obj/item/weapon/crowbar",
-		"/obj/item/weapon/screwdriver",
-		"/obj/item/weapon/weldingtool",
-		"/obj/item/weapon/wirecutters",
-		"/obj/item/weapon/wrench",
-		"/obj/item/device/multitool",
-		"/obj/item/device/flashlight",
-		"/obj/item/stack/cable_coil",
-		"/obj/item/device/t_scanner",
-		"/obj/item/device/analyzer")
+		/obj/item/weapon/crowbar,
+		/obj/item/weapon/screwdriver,
+		/obj/item/weapon/weldingtool,
+		/obj/item/weapon/wirecutters,
+		/obj/item/weapon/wrench,
+		/obj/item/device/multitool,
+		/obj/item/device/flashlight,
+		/obj/item/stack/cable_coil,
+		/obj/item/device/t_scanner,
+		/obj/item/device/analyzer)
 
 
 /obj/item/weapon/storage/belt/utility/full/New()
@@ -80,19 +80,18 @@
 	icon_state = "medicalbelt"
 	item_state = "medical"
 	can_hold = list(
-		"/obj/item/device/healthanalyzer",
-		"/obj/item/weapon/dnainjector",
-		"/obj/item/weapon/reagent_containers/dropper",
-		"/obj/item/weapon/reagent_containers/glass/beaker",
-		"/obj/item/weapon/reagent_containers/glass/bottle",
-		"/obj/item/weapon/reagent_containers/pill",
-		"/obj/item/weapon/reagent_containers/syringe",
-		"/obj/item/weapon/reagent_containers/glass/dispenser",
-		"/obj/item/weapon/lighter/zippo",
-		"/obj/item/weapon/storage/fancy/cigarettes",
-		"/obj/item/weapon/storage/pill_bottle",
-		"/obj/item/stack/medical",
-		"/obj/item/device/flashlight/pen"
+		/obj/item/device/healthanalyzer,
+		/obj/item/weapon/dnainjector,
+		/obj/item/weapon/reagent_containers/dropper,
+		/obj/item/weapon/reagent_containers/glass/beaker,
+		/obj/item/weapon/reagent_containers/glass/bottle,
+		/obj/item/weapon/reagent_containers/pill,
+		/obj/item/weapon/reagent_containers/syringe,
+		/obj/item/weapon/lighter/zippo,
+		/obj/item/weapon/storage/fancy/cigarettes,
+		/obj/item/weapon/storage/pill_bottle,
+		/obj/item/stack/medical,
+		/obj/item/device/flashlight/pen
 	)
 
 
@@ -104,18 +103,23 @@
 	storage_slots = 5
 	max_w_class = 3 //Because the baton wouldn't fit otherwise. - Neerti
 	can_hold = list(
-		"/obj/item/weapon/melee/baton",
-		"/obj/item/weapon/melee/classic_baton",
-		"/obj/item/weapon/grenade/flashbang",
-		"/obj/item/weapon/reagent_containers/spray/pepper",
-		"/obj/item/weapon/handcuffs",
-		"/obj/item/device/flash",
-		"/obj/item/clothing/glasses",
-		"/obj/item/ammo_casing/shotgun",
-		"/obj/item/ammo_box",
-		"/obj/item/weapon/reagent_containers/food/snacks/donut/normal",
-		"/obj/item/weapon/reagent_containers/food/snacks/donut/jelly"
+		/obj/item/weapon/melee/baton,
+		/obj/item/weapon/melee/classic_baton,
+		/obj/item/weapon/grenade/flashbang,
+		/obj/item/weapon/reagent_containers/spray/pepper,
+		/obj/item/weapon/handcuffs,
+		/obj/item/device/flash,
+		/obj/item/clothing/glasses,
+		/obj/item/ammo_casing/shotgun,
+		/obj/item/ammo_box,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/normal,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/jelly,
+		/obj/item/device/flashlight/seclite
 		)
+
+/obj/item/weapon/storage/belt/security/New()
+	..()
+	new /obj/item/device/flashlight/seclite(src)
 
 /obj/item/weapon/storage/belt/soulstone
 	name = "soul stone belt"
@@ -124,7 +128,7 @@
 	item_state = "soulstonebelt"
 	storage_slots = 6
 	can_hold = list(
-		"/obj/item/device/soulstone"
+		/obj/item/device/soulstone
 		)
 
 /obj/item/weapon/storage/belt/soulstone/full/New()
@@ -144,7 +148,7 @@
 	item_state = "champion"
 	storage_slots = 1
 	can_hold = list(
-		"/obj/item/clothing/mask/luchador"
+		/obj/item/clothing/mask/luchador
 		)
 
 /obj/item/weapon/storage/belt/military
@@ -160,7 +164,7 @@
 	item_state = "soulstonebelt"
 	storage_slots = 6
 	can_hold = list(
-		"/obj/item/weapon/gun/magic/wand"
+		/obj/item/weapon/gun/magic/wand
 		)
 
 /obj/item/weapon/storage/belt/wands/full/New()
