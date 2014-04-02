@@ -282,9 +282,9 @@
 		name = "Side Part"
 		icon_state = "hair_part"
 
-	braid
+	braided
 		name = "Braided"
-		icon_state = "hair_braid"
+		icon_state = "hair_braided"
 
 	bun
 		name = "Bun Head"
