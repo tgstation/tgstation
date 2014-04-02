@@ -43,6 +43,7 @@
 	var/default_headset		= /obj/item/device/radio/headset
 	var/default_backpack	= /obj/item/weapon/storage/backpack
 	var/default_satchel		= /obj/item/weapon/storage/backpack/satchel_norm
+	var/default_storagebox= /obj/item/weapon/storage/box/survival
 
 //Only override this proc
 /datum/job/proc/equip_items(var/mob/living/carbon/human/H)
@@ -51,14 +52,14 @@
 /datum/job/proc/equip_backpack(var/mob/living/carbon/human/H)
 	switch(H.backbag)
 		if(1) //No backpack or satchel
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
+			H.equip_to_slot_or_del(new default_storagebox(H), slot_r_hand)
 		if(2) // Backpack
 			var/obj/item/weapon/storage/backpack/BPK = new default_backpack(H)
-			new /obj/item/weapon/storage/box/survival(BPK)
+			new default_storagebox(BPK)
 			H.equip_to_slot_or_del(BPK, slot_back,1)
 		if(3) //Satchel
 			var/obj/item/weapon/storage/backpack/BPK = new default_satchel(H)
-			new /obj/item/weapon/storage/box/survival(BPK)
+			new default_storagebox(BPK)
 			H.equip_to_slot_or_del(BPK, slot_back,1)
 
 //But don't override this
@@ -71,17 +72,17 @@
 
 	//Equip ID
 	var/obj/item/weapon/card/id/C = new src.default_id(H)
-		C.access = src.get_access()
-		C.registered_name = H.real_name
-		C.assignment = H.job
-		C.update_label()
+	C.access = src.get_access()
+	C.registered_name = H.real_name
+	C.assignment = H.job
+	C.update_label()
 	H.equip_to_slot_or_del(C, slot_wear_id)
 
 	//Equip PDA
 	var/obj/item/device/pda/PDA = new src.default_pda(H)
-		PDA.owner = H.real_name
-		PDA.ownjob = H.job
-		PDA.update_label()
+	PDA.owner = H.real_name
+	PDA.ownjob = H.job
+	PDA.update_label()
 	H.equip_to_slot_or_del(PDA, default_pda_slot)
 
 	//Equip the rest of the gear

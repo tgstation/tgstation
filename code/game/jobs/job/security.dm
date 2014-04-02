@@ -49,8 +49,8 @@ Head of Shitcurity
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
 
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
-		L.imp_in = H
-		L.implanted = 1
+	L.imp_in = H
+	L.implanted = 1
 
 /*
 Warden
@@ -89,8 +89,8 @@ Warden
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
 
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
-		L.imp_in = H
-		L.implanted = 1
+	L.imp_in = H
+	L.implanted = 1
 
 /datum/job/warden/get_access()
 	var/list/L = list()
@@ -124,8 +124,9 @@ Detective
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/det_suit(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(H), slot_l_store)
+
 	var/obj/item/clothing/mask/cigarette/cig = new /obj/item/clothing/mask/cigarette(H)
-		cig.light("")
+	cig.light("")
 	H.equip_to_slot_or_del(cig, slot_wear_mask)
 
 	if(H.backbag == 1)//Why cant some of these things spawn in his office?
@@ -136,8 +137,8 @@ Detective
 		H.equip_to_slot_or_del(new /obj/item/device/detective_scanner(H), slot_in_backpack)
 
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
-		L.imp_in = H
-		L.implanted = 1
+	L.imp_in = H
+	L.implanted = 1
 
 /*
 Security Officer
@@ -181,8 +182,8 @@ Security Officer
 	//TODO: Make sure security officers get shit properly when no backpack
 
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
-		L.imp_in = H
-		L.implanted = 1
+	L.imp_in = H
+	L.implanted = 1
 
 /datum/job/officer/get_access()
 	var/list/L = list()
