@@ -70,23 +70,29 @@
 	//Equip backpack
 	equip_backpack(H)
 
+	//Equip the rest of the gear
+	equip_items(H)
+
 	//Equip ID
-	var/obj/item/weapon/card/id/C = new src.default_id(H)
-	C.access = src.get_access()
+	var/obj/item/weapon/card/id/C = new default_id(H)
+	C.access = get_access()
 	C.registered_name = H.real_name
 	C.assignment = H.job
 	C.update_label()
+
+	world << "Equip ID [C]"
+
 	H.equip_to_slot_or_del(C, slot_wear_id)
 
 	//Equip PDA
-	var/obj/item/device/pda/PDA = new src.default_pda(H)
+	var/obj/item/device/pda/PDA = new default_pda(H)
 	PDA.owner = H.real_name
 	PDA.ownjob = H.job
 	PDA.update_label()
-	H.equip_to_slot_or_del(PDA, default_pda_slot)
 
-	//Equip the rest of the gear
-	equip_items(H)
+	world << "Equip PDA [PDA]"
+
+	H.equip_to_slot_or_del(PDA, default_pda_slot)
 
 	//Equip headset
 	H.equip_to_slot_or_del(new src.default_headset(H), slot_ears)

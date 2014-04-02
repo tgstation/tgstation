@@ -179,8 +179,6 @@ Security Officer
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/melee/baton/loaded(H), slot_in_backpack)
 
-	//TODO: Make sure security officers get shit properly when no backpack
-
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 	L.imp_in = H
 	L.implanted = 1
@@ -222,7 +220,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security/science(H), slot_w_uniform)
 				default_headset = /obj/item/device/radio/headset/headset_sec/department/sci
 				dep_access = list(access_research)
-				destination = /area/security/checkpoint/science // TODO: Make sure correct headsets are handed out
+				destination = /area/security/checkpoint/science
 		var/teleport = 0
 		if(!config.sec_start_brig)
 			if(destination)

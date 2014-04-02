@@ -182,7 +182,6 @@ Shaft Miner
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/bag/ore(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/mining_voucher(H), slot_in_backpack)
 
-//TODO: Make sure shaftminer without backpack get shit properly
 /*
 Clown
 */
@@ -202,15 +201,12 @@ Clown
 	access = list(access_theatre, access_maint_tunnels)
 	minimal_access = list(access_theatre)
 
-//TODO: Make sure clown gets his survival box
 /datum/job/clown/equip_backpack(var/mob/living/carbon/human/H)
 	var/obj/item/weapon/storage/backpack/BPK = new default_backpack(H)
 
 	new default_storagebox(BPK)
 	new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(BPK, 50)
-	new /obj/item/weapon/bikehorn(BPK)
 	new /obj/item/weapon/stamp/clown(BPK)
-	new /obj/item/toy/crayon/rainbow(BPK)
 	new /obj/item/weapon/reagent_containers/spray/waterflower(BPK)
 
 	H.equip_to_slot_or_del(BPK, slot_back)
@@ -221,6 +217,8 @@ Clown
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/clown(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/clown_shoes(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), slot_wear_mask)
+	H.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(H), slot_l_store)
+	H.equip_to_slot_or_del(new /obj/item/toy/crayon/rainbow(H), slot_r_store)
 
 	H.mutations.Add(CLUMSY)
 	H.rename_self("clown")
@@ -317,7 +315,6 @@ Librarian
 /*
 Lawyer
 */
-//TODO: Make sure lawyers get proper suits
 /datum/job/lawyer
 	title = "Lawyer"
 	flag = LAWYER
