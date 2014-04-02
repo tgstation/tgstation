@@ -184,6 +184,14 @@ var/list/uplink_items = list()
 	cost = 7
 	job = list("Station Engineer","Chief Engineer")
 
+//Geneticist
+/datum/uplink_item/jobspecific/radgun
+	name = "Radgun"
+	desc = "An experimental energy gun that fires radioactive projectiles that burn, irradiate, and scramble DNA, giving the victim a different appearance and name, and potentially harmful or beneficial mutations. Recharges automatically."
+	item = /obj/item/weapon/gun/energy/radgun
+	cost = 6
+	job = list("Geneticist")
+
 // DANGEROUS WEAPONS
 
 /datum/uplink_item/dangerous
@@ -273,6 +281,12 @@ var/list/uplink_items = list()
 	item = /obj/item/clothing/mask/gas/voice
 	cost = 4
 
+/datum/uplink_item/stealthy_tools/dnascrambler
+	name = "DNA Scrambler"
+	desc = "A syringe with one injection that randomizes appearance and name upon use. A cheaper but less versatile alternative to an agent card and voice changer."
+	item = /obj/item/weapon/dnascrambler
+	cost = 2
+
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon-Projector"
 	desc = "Projects an image across a user, disguising them as an object scanned with it, as long as they don't move the projector from their hand. The disguised user cannot run and rojectiles pass over them."
@@ -357,6 +371,12 @@ var/list/uplink_items = list()
 	desc = "When screwed to wiring attached to an electric grid, then activated, this large device pulls the singularity towards it. Does not work when the singularity is still in containment. A singularity beacon can cause catastrophic damage to a space station, leading to an emergency evacuation. Because of its size, it cannot be carried. Ordering this sends you a small beacon that will teleport the larger beacon to your location on activation."
 	item = /obj/item/device/radio/beacon/syndicate
 	cost = 7
+
+/datum/uplink_item/device_tools/pdapinpointer
+	name = "PDA Pinpointer"
+	desc = "A pinpointer that tracks any PDA on the station. Useful for locating assassination targets or other high-value targets that you can't find. WARNING: Can only set once."
+	item = /obj/item/weapon/pinpointer/pdapinpointer
+	cost = 2
 
 /datum/uplink_item/device_tools/teleporter
 	name = "Teleporter Circuit Board"
