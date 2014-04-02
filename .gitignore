@@ -11,3 +11,4 @@
 *.lk
 *.int
 /data/mode.txt
+data/investigate/*.html

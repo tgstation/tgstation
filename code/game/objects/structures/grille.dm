@@ -105,7 +105,7 @@
 
 /obj/structure/grille/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	user.changeNext_move(8)
-	if(istype(W, /obj/item/weapon/wirecutters))
+	if(istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/weapon/pen/red/tactical))
 		if(!shock(user, 100))
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			if(destroyed)

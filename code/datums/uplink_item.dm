@@ -239,6 +239,13 @@ var/list/uplink_items = list()
 	cost = 3
 	excludefrom = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/stealthy_weapons/tactical_pen
+	name = "Tactical Pen"
+	desc = "A functional red pen, equipped with a complex ceramic-synthetic diamond tip. Capable of shattering any window or windoor silently, even when thrown. \
+	It also has a serrated micro-edge on it's side, not visible on visual inspection. The tip can withstand 6 uses at average."
+	item = /obj/item/weapon/pen/red/tactical
+	cost = 1
+
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
 	desc = "A sinister-looking surfactant used to clean blood stains to hide murders and prevent DNA analysis. You can also drop it underfoot to slip people."
