@@ -14,7 +14,7 @@ Captain
 	minimal_player_age = 14
 
 	default_id = /obj/item/weapon/card/id/gold
-	default_pda = /obj/item/device/pda/heads/captain
+	default_pda = /obj/item/device/pda/captain
 	default_headset = /obj/item/device/radio/headset/heads/captain
 	default_backpack = /obj/item/weapon/storage/backpack/captain
 	default_satchel = /obj/item/weapon/storage/backpack/satchel_cap
@@ -24,7 +24,7 @@ Captain
 
 /datum/job/captain/equip_items(var/mob/living/carbon/human/H)
 	var/obj/item/clothing/under/U = new /obj/item/clothing/under/rank/captain(H)
-		U.hastie = new /obj/item/clothing/tie/medal/gold/captain(U)
+	U.hastie = new /obj/item/clothing/tie/medal/gold/captain(U)
 	H.equip_to_slot_or_del(U, slot_w_uniform)
 
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/capcarapace(H), slot_wear_suit)
@@ -40,8 +40,8 @@ Captain
 
 	//Implant him
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
-		L.imp_in = H
-		L.implanted = 1
+	L.imp_in = H
+	L.implanted = 1
 
 	world << "<b>[H.real_name] is the captain!</b>"
 
