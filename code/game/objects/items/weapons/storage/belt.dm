@@ -193,5 +193,5 @@
 		/obj/item/device/flashlight,
 		/obj/item/weapon/reagent_containers/spray,
 		/obj/item/weapon/soap,
-		/obj/item/weapon/storage/bag/trash
+		/obj/item/weapon/caution
 		)
