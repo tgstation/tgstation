@@ -50,7 +50,7 @@ By N3X15
 /obj/item/weapon/aiModule/freeform/upload(var/datum/ai_laws/laws, var/atom/target=null, var/mob/sender=null, var/notify_target=0)
 	..()
 	//target << law
-	if(!priority || priority < allowed_priority_min)
+	if((!priority || priority < allowed_priority_min) && !(priority == LAW_IONIC || priority == LAW_INHERENT || priority == LAW_ZERO))
 		priority = allowed_priority_min
 	laws.add_law(priority, law)
 	lawchanges.Add("The law was '[law]'")
