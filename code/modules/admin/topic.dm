@@ -1675,6 +1675,22 @@
 		var/mob/M = locate(href_list["subtlemessage"])
 		usr.client.cmd_admin_subtle_message(M)
 
+	else if(href_list["rapsheet"])
+		checkSessionKey()
+		// build the link
+		var/dat = "http://vg13.undo.it/index.php/rapsheet/?s=[sessKey]"
+		if(href_list["rsckey"])
+			dat += "?ckey=[href_list["rsckey"]]"
+		if(href_list["rscid"])
+			dat += "?cid=[href_list["rscid"]]"
+		usr << link(dat)
+		return
+
+	else if(href_list["bansheet"])
+		checkSessionKey()
+		usr << link("http://vg13.undo.it/index.php/rapsheet/?s=[sessKey]")
+		return
+
 	else if(href_list["traitor"])
 		if(!check_rights(R_ADMIN|R_MOD))	return
 
