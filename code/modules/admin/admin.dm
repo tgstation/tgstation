@@ -37,7 +37,7 @@ var/global/floorIsLava = 0
 		usr << "Error: you are not an admin!"
 		return
 
-
+	checkSessionKey()
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\admin.dm:40: var/body = "<html><head><title>Options for [M.key]</title></head>"
 	var/body = {"<html><head><title>Options for [M.key]</title></head>
@@ -59,6 +59,7 @@ var/global/floorIsLava = 0
 		<br><br>\[
 		<a href='?_src_=vars;Vars=\ref[M]'>VV</a> -
 		<a href='?src=\ref[src];traitor=\ref[M]'>TP</a> -
+		[M.client ? "<a href='http://vg13.undo.it/index.php/bans/?s=[sessKey]&ckey=[M.client.ckey]'>B&amp;</a> | <a href='http://vg13.undo.it/index.php/rapsheet/?s=[sessKey]&ckey=[M.client.ckey]'>RS</a>" : ""]
 		<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a> -
 		<a href='?src=\ref[src];subtlemessage=\ref[M]'>SM</a> -
 		<a href='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</a>\] </b><br>
