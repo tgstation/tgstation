@@ -58,7 +58,7 @@ var/const/BORG_WIRE_CAMERA = 16
 				var/new_ai = select_active_ai(R)
 				if(new_ai && (new_ai != R.connected_ai))
 					R.connected_ai = new_ai
-					R.connected_ai << "<br><br><span class='notice'>NOTICE - New cyborg connection detected: <b><a href='byond://?src=\ref[R.connected_ai];track2=\ref[R.connected_ai];track=\ref[R]'>[R.name]</a></b></span><br>"
+					R.notify_ai(1)
 
 		if (BORG_WIRE_CAMERA)
 			if(!isnull(R.camera) && R.camera.can_use() && !R.scrambledcodes)

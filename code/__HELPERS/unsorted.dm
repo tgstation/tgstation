@@ -252,7 +252,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(isrobot(src))
 		var/mob/living/silicon/robot/R = src
 		if(oldname != real_name)
-			R.connected_ai << "<br><br><span class='notice'>NOTICE - Cyborg reclassification detected: [oldname] is now designated as [real_name].</span><br>"
+			R.notify_ai(3, oldname, newname)
 		if(R.camera)
 			R.camera.c_tag = real_name
 
