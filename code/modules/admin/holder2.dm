@@ -104,10 +104,11 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 /datum/admins/proc/checkSessionKey(var/recurse=0)
 	if(recurse==5)
 		return "\[BROKEN\]";
+	recurse++
 	var/DBQuery/query = dbcon.NewQuery("DELETE FROM admin_sessions WHERE expires < Now()")
 	query.Execute()
 
-	query = dbcon.NewQuery("SELECT sessID, FROM admin_sessions WHERE ckey = '[owner.ckey]' AND expires > Now()")
+	query = dbcon.NewQuery("SELECT sessID FROM admin_sessions WHERE ckey = '[owner.ckey]' AND expires > Now()")
 	query.Execute()
 
 	sessKey=0
@@ -119,4 +120,4 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 
 	query=dbcon.NewQuery("INSERT INTO admin_sessions (sessID,ckey,expires, IP) VALUES (UUID(), '[owner.ckey]', DATE_ADD(NOW(), INTERVAL 2 HOUR)), '[owner.address]'")
 	query.Execute()
-	return checkSessionKey(recurse++)
+	return checkSessionKey(recurse)
