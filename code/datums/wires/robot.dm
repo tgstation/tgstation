@@ -55,7 +55,10 @@ var/const/BORG_WIRE_CAMERA = 16
 	switch(index)
 		if (BORG_WIRE_AI_CONTROL) //pulse the AI wire to make the borg reselect an AI
 			if(!R.emagged)
-				R.connected_ai = select_active_ai(R)
+				var/new_ai = select_active_ai(R)
+				if(new_ai && (new_ai != R.connected_ai))
+					R.connected_ai = new_ai
+					R.notify_ai(1)
 
 		if (BORG_WIRE_CAMERA)
 			if(!isnull(R.camera) && R.camera.can_use() && !R.scrambledcodes)
