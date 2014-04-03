@@ -79,9 +79,6 @@
 	C.registered_name = H.real_name
 	C.assignment = H.job
 	C.update_label()
-
-	world << "Equip ID [C]"
-
 	H.equip_to_slot_or_del(C, slot_wear_id)
 
 	//Equip PDA
@@ -89,9 +86,6 @@
 	PDA.owner = H.real_name
 	PDA.ownjob = H.job
 	PDA.update_label()
-
-	world << "Equip PDA [PDA]"
-
 	H.equip_to_slot_or_del(PDA, default_pda_slot)
 
 	//Equip headset
