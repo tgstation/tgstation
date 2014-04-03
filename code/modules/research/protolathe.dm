@@ -122,7 +122,7 @@ Note: Must be placed west/left of and R&D console to function.
 			default_deconstruction_crowbar(O)
 			return 1
 		else
-			user << "\red You can't load the [src.name] while it's opened."
+			user << "<span class='warning'>You can't load the [src.name] while it's opened.</span>"
 			return 1
 	if (disabled)
 		return
@@ -130,19 +130,19 @@ Note: Must be placed west/left of and R&D console to function.
 		user << "\The protolathe must be linked to an R&D console first!"
 		return 1
 	if (busy)
-		user << "\red The protolathe is busy. Please wait for completion of previous operation."
+		user << "<span class='warning'>The protolathe is busy. Please wait for completion of previous operation.</span>"
 		return 1
 	if (O.is_open_container())
 		return
 	if (!istype(O, /obj/item/stack/sheet))
-		user << "\red You cannot insert this item into the protolathe!"
+		user << "<span class='warning'>You cannot insert this item into the protolathe!</span>"
 		return 1
 	if (stat)
 		return 1
 	if(istype(O,/obj/item/stack/sheet))
 		var/obj/item/stack/sheet/S = O
 		if (TotalMaterials() + S.perunit > max_material_storage)
-			user << "\red The protolathe's material bin is full. Please remove material before adding more."
+			user << "<span class='warning'>The protolathe's material bin is full. Please remove material before adding more.</span>"
 			return 1
 
 	var/obj/item/stack/sheet/stack = O
@@ -157,7 +157,7 @@ Note: Must be placed west/left of and R&D console to function.
 	icon_state = "protolathe"
 	busy = 1
 	use_power(max(1000, (3750*amount/10)))
-	user << "\blue You add [amount] sheets to the [src.name]."
+	user << "<span class='notice'>You add [amount] sheets to the [src.name].</span>"
 	icon_state = "protolathe"
 	if(istype(stack, /obj/item/stack/sheet/metal))
 		m_amount += amount * 3750
