@@ -1681,8 +1681,6 @@
 		var/dat = "http://vg13.undo.it/index.php/rapsheet/?s=[sessKey]"
 		if(href_list["rsckey"])
 			dat += "&ckey=[href_list["rsckey"]]"
-		if(href_list["rscid"])
-			dat += "&cid=[href_list["rscid"]]"
 		usr << link(dat)
 		return
 

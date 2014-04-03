@@ -222,6 +222,36 @@ var/global/floorIsLava = 0
 		return
 	PlayerNotesPage(1)
 
+/datum/admins/proc/checkCID()
+	set category = "Admin"
+	set name = "Lookup bans on Computer ID"
+	if(!usr)
+		return
+	if (!istype(src,/datum/admins))
+		src = usr.client.holder
+	if (!istype(src,/datum/admins))
+		usr << "Error: you are not an admin!"
+		return
+	checkSessionKey()
+	var/cid = input("Type computer ID", "CID", 0)
+	usr << link("http://vg13.undo.it/index.php/rapsheet/?s=[sessKey]&cid=[cid]")
+	return
+
+/datum/admins/proc/checkCKEY()
+	set category = "Admin"
+	set name = "Lookup bans on CKEY"
+	if(!usr)
+		return
+	if (!istype(src,/datum/admins))
+		src = usr.client.holder
+	if (!istype(src,/datum/admins))
+		usr << "Error: you are not an admin!"
+		return
+	checkSessionKey()
+	var/ckey = lowertext(input("Type player ckey", "ckey", null) as text | null)
+	usr << link("http://vg13.undo.it/index.php/rapsheet/?s=[sessKey]&ckey=[ckey]")
+	return
+
 /datum/admins/proc/PlayerNotesPage(page)
 	var/dat = "<B>Player notes</B><HR>"
 	var/savefile/S=new("data/player_notes.sav")
