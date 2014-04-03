@@ -107,16 +107,16 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 	var/DBQuery/query = dbcon.NewQuery("DELETE FROM admin_sessions WHERE expires < Now()")
 	query.Execute()
 
-	query = dbcon.NewQuery("SELECT sessID FROM admin_sessions WHERE ckey = '[owner.ckey]' AND expires > Now()")
+	query = dbcon.NewQuery("SELECT sessID, FROM admin_sessions WHERE ckey = '[owner.ckey]' AND expires > Now()")
 	query.Execute()
 
 	sessKey=0
 	while(query.NextRow())
 		sessKey = query.item[1]
-		query=dbcon.NewQuery("UPDATE admin_sessions SET expires=DATE_ADD(NOW(), INTERVAL 2 HOUR) WHERE sessID='[sessKey]'")
+		query=dbcon.NewQuery("UPDATE admin_sessions SET expires=DATE_ADD(NOW(), INTERVAL 2 HOUR), IP='[owner.address]' WHERE sessID='[sessKey]'")
 		query.Execute()
 		return sessKey
 
-	query=dbcon.NewQuery("INSERT INTO admin_sessions (sessID,ckey,expires) VALUES (UUID(), '[owner.ckey]', DATE_ADD(NOW(), INTERVAL 2 HOUR))")
+	query=dbcon.NewQuery("INSERT INTO admin_sessions (sessID,ckey,expires, IP) VALUES (UUID(), '[owner.ckey]', DATE_ADD(NOW(), INTERVAL 2 HOUR)), '[owner.address]'")
 	query.Execute()
 	return checkSessionKey(recurse++)
