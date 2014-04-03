@@ -1348,6 +1348,9 @@ proc/process_ghost_teleport_locs()
 	icon_state = "yellow"
 
 //AI
+/area/ai_monitored/security/armory
+	name = "\improper Armory"
+	icon_state = "armory"
 
 /area/ai_monitored/storage/eva
 	name = "EVA Storage"
