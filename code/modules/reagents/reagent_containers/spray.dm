@@ -44,7 +44,6 @@
 
 	var/obj/effect/decal/chempuff/D = new/obj/effect/decal/chempuff(get_turf(src))
 	D.create_reagents(amount_per_transfer_from_this)
-	user.changeNext_move(4)
 
 	reagents.trans_to(D, amount_per_transfer_from_this, 1/spray_currentrange)
 	D.color = mix_color_from_reagents(D.reagents.reagent_list)
@@ -58,6 +57,7 @@
 		qdel(D)
 
 	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+	user.changeNext_move(4)
 
 	if(reagents.has_reagent("sacid"))
 		message_admins("[key_name_admin(user)] fired sulphuric acid from \a [src].")
@@ -217,6 +217,7 @@
 			qdel(D)
 
 	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+	user.changeNext_move(4)
 
 	if(reagents.has_reagent("sacid"))
 		message_admins("[key_name_admin(user)] fired sulphuric acid from a chem sprayer.")
