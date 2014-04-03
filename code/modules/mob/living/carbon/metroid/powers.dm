@@ -139,7 +139,11 @@
 					if(Victim.LAssailant && Victim.LAssailant != Victim)
 						if(prob(50))
 							if(!(Victim.LAssailant in Friends))
-								Friends.Add(Victim.LAssailant) // no idea why i was using the |= operator
+								Friends[Victim.LAssailant] = 1
+								//Friends.Add(Victim.LAssailant) // no idea why i was using the |= operator
+							else
+								++Friends[Victim.LAssailant]
+
 
 			if(M.client && istype(src, /mob/living/carbon/human))
 				if(prob(85))
@@ -211,6 +215,7 @@
 				if(ckey)	M.nutrition = new_nutrition //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
 				M.powerlevel = new_powerlevel
 				if(i != 1) step_away(M,src)
+				M.Friends = Friends.Copy()
 				babies += M
 				feedback_add_details("slime_babies_born","slimebirth_[replacetext(M.colour," ","_")]")
 

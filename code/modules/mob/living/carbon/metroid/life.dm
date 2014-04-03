@@ -370,10 +370,6 @@
 
 		if(Victim) return // if it's eating someone already, continue eating!
 
-
-		if(prob(1))
-			emote(pick("bounce","sway","light","vibrate","jiggle"))
-
 		if(AIproc && SStun) return
 
 
@@ -398,27 +394,17 @@
 		if(starving && !client) // if a slime is starving, it starts losing its friends
 			if(Friends.len > 0 && prob(1))
 				var/mob/nofriend = pick(Friends)
-				Friends -= nofriend
+				--Friends[nofriend]
 
 		if(!Target)
 			var/list/targets = list()
 
-			if(hungry || starving) //Only add to the list if we need to
+			if((hungry && !Leader) || starving) //Only add to the list if we need to
 				for(var/mob/living/L in view(7,src))
 
 					//Ignore other slimes, dead mobs and simple_animals
-					if(isslime(L) || L.stat != CONSCIOUS || isanimal(L))
+					if(isslime(L) || L.stat == DEAD || isanimal(L) || issilicon(L))
 						continue
-
-					if(issilicon(L))
-						if(!is_adult) //Non-starving diciplined adult slimes wont eat things
-							if(!starving && Discipline > 0)
-								continue
-
-						if(tame) //Tame slimes ignore electronic life
-							continue
-
-						targets += L //Possible target found!
 
 					else if(iscarbon(L))
 
@@ -435,7 +421,7 @@
 						if(L in Friends) //No eating friends!
 							continue
 
-						if(tame && ishuman(L)) //Tame slimes dont eat people.
+						if(tame && ishuman(L)) //Tame slimes don't eat people.
 							continue
 
 						if(!L.canmove) //Only one slime can latch on at a time.
@@ -449,37 +435,141 @@
 
 						targets += L //Possible target found!
 
-
-
 			if((hungry || starving) && targets.len > 0)
-				if(!is_adult)
-					if(!starving)
-						for(var/mob/living/carbon/C in targets)
-							if(!Discipline && prob(5))
-								if(ishuman(C))
-									Target = C
-									break
-								if(isalienadult(C))
-									Target = C
-									break
+				if(!starving)
+					for(var/mob/living/carbon/C in targets)
+						if(!Discipline && prob(5))
+							if(ishuman(C))
+								Target = C
+								break
+							if(isalienadult(C))
+								Target = C
+								break
 
-							if(islarva(C))
-								Target = C
-								break
-							if(ismonkey(C))
-								Target = C
-								break
-					else
-						Target = targets[1]
+						if(islarva(C))
+							Target = C
+							break
+						if(ismonkey(C))
+							Target = C
+							break
 				else
-					Target = targets[1] // closest target
+					Target = targets[1]
 
 			if(targets.len > 0)
 				if(attacked > 0 || rabid)
 					Target = targets[1] //closest mob probably attacked it, so override Target and attack the nearest!
 
+		if (speech_buffer.len > 0)
+			var/who = speech_buffer[1] // Who said it?
+			var/phrase = speech_buffer[2] // What did they say?
+			if ((findtext(phrase, number) || findtext(phrase, "Slimes"))) // Talking to us
+				if (findtext(phrase, "Friend")) // Debug
+					++Friends[who]
+				if (findtext(phrase, "Hello") || findtext(phrase, "Hi"))
+					say (pick("Hello...", "Hi..."))
+				if (findtext(phrase, "Follow"))
+					if (Leader)
+						if (Leader == who) // Already following him
+							say (pick("Yes...", "Lead..."))
+						else if (Friends[who] > Friends[Leader]) // VIVA
+							Leader = who
+							say ("Yes... I follow [who]...")
+						else
+							say ("No... I follow [Leader]...")
+					else
+						if (Friends[who] > 2)
+							Leader = who
+							say ("I follow...")
+						else // Not friendly enough
+							say ("No...")
+				if (findtext(phrase, "Stop"))
+					if (Victim) // We are asked to stop feeding
+						if (Friends[who] > 4)
+							Victim = null
+							if (Friends[who] < 7)
+								--Friends[who]
+								say ("Grrr...") // I'm angry but I do it
+							else
+								say ("Fine...")
+					else if (Leader) // We are asked to stop following
+						if (Leader == who)
+							say ("Yes... I'll stay...")
+							Leader = null
+						else
+							if (Friends[who] > Friends[Leader])
+								Leader = null
+								say ("Yes... I'll stop...")
+							else
+								say ("No... I'll keep following...")
+				if (findtext(phrase, "Kill")) // Will remove later
+					if (Friends[who] > 5)
+						rabid = 1
+			speech_buffer = list()
+		if(prob(1))
+			emote(pick("bounce","sway","light","vibrate","jiggle"))
+		else
+			var/t = 10
+			var/slimes_near = -1 // Don't count itself
+			var/friends_near = list()
+			for (var/mob/living/carbon/M in view(7,src))
+				if (isslime(M))
+					slimes_near += 1
+				if (M in Friends)
+					t += 20
+					friends_near += M
+			if (hungry) t += 10
+			if (starving) t += 20
+			if (prob(100) && prob(t))
+				var/phrases = list()
+				if (Target) phrases += "[Target]... looks tasty..."
+				if (starving)
+					phrases += "So... hungry..."
+					phrases += "Very... hungry..."
+					phrases += "Need... food..."
+					phrases += "Must... eat..."
+				if (hungry)
+					phrases += "Hungry..."
+					phrases += "Where is the food?"
+					phrases += "I want to eat..."
+				//phrases += "Rawr..."
+				//phrases += "Blop..."
+				if (rabid)
+					phrases += "Hrr..."
+					phrases += "Nhuu..."
+					phrases += "Unn..."
+				if (tame)
+					phrases += "Purr..."
+				if (attacked)
+					phrases += "Grrr..."
+				if (getToxLoss() > 30)
+					phrases += "Cold..."
+				if (getToxLoss() > 60)
+					phrases += "So... cold..."
+					phrases += "Very... cold..."
+				if (getToxLoss() > 90)
+					phrases += "..."
+					phrases += "C... c..."
+				if (amount_grown > 8 && !is_adult) phrases += "Soon I'll evolve..."
+				if (powerlevel > 3) phrases += "Bzzz..."
+				if (powerlevel > 5) phrases += "Zap..."
+				if (powerlevel > 8) phrases += "Zap... Bzz..."
+				if (slimes_near) phrases += "Brother..."
+				if (slimes_near > 1) phrases += "Brothers..."
+				if (!slimes_near)
+					phrases += "Lonely..."
+				for (var/M in friends_near)
+					phrases += "[M]... friend... [Friends[M]]..." // Debug info
+					if (hungry)
+						phrases += "[M]... I'm hungry..."
+				if (Friends.len > 0) phrases += "Friends are not food..."
+				
+				say (pick(phrases))
 
 		if(!Target)
+			if (Leader)
+				if(canmove && isturf(loc))
+					step_to(src, Leader)
+
 			if(hungry || starving)
 				if(canmove && isturf(loc) && prob(50))
 					step(src, pick(cardinal))

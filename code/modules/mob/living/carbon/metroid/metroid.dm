@@ -30,16 +30,19 @@
 	var/amount_grown = 0 // controls how long the slime has been overfed, if 10, grows into an adult
 						 // if adult: if 10: reproduces
 
+	var/number = 0 // Used to understand when someone is talking to it
 
 	var/mob/living/Victim = null // the person the slime is currently feeding on
 	var/mob/living/Target = null // AI variable - tells the slime to hunt this down
+	var/mob/living/Leader = null // AI variable - tells the slime to follow this person
 
 	var/attacked = 0 // determines if it's been attacked recently. Can be any number, is a cooloff-ish variable
 	var/tame = 0 // if set to 1, the slime will not eat humans ever, or attack them
 	var/rabid = 0 // if set to 1, the slime will attack and eat anything it comes in contact with
 
 	var/list/Friends = list() // A list of potential friends
-	var/list/FriendsWeight = list() // A list containing values respective to Friends. This determines how many times a slime "likes" something. If the slime likes it more than 2 times, it becomes a friend
+
+	var/list/speech_buffer = list() // List of phrases said near it
 
 	// slimes pass on genetic data, so all their offspring have the same "Friends",
 
@@ -52,7 +55,8 @@
 /mob/living/carbon/slime/New()
 	create_reagents(100)
 	spawn (0)
-		name = "[colour] [is_adult ? "adult" : "baby"] slime ([rand(1, 1000)])"
+		number = rand(1, 1000)
+		name = "[colour] [is_adult ? "adult" : "baby"] slime ([number])"
 		icon_state = "[colour] [is_adult ? "adult" : "baby"] slime"
 		real_name = name
 		slime_mutation = mutation_table(colour)
