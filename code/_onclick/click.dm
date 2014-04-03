@@ -101,8 +101,8 @@
 			if(!resolved && A && W)
 				W.afterattack(A,src,1,params) // 1 indicates adjacency
 		else
-			//if(ismob(A))
-			//	changeNext_move(8)
+			if(ismob(A))
+				changeNext_move(8)
 			UnarmedAttack(A)
 		return
 
@@ -120,8 +120,8 @@
 				if(!resolved && A && W)
 					W.afterattack(A,src,1,params) // 1: clicking something Adjacent
 			else
-				//if(ismob(A))
-				//	changeNext_move(8)
+				if(ismob(A))
+					changeNext_move(8)
 				UnarmedAttack(A, 1)
 			return
 		else // non-adjacent click
@@ -153,8 +153,8 @@
 	in human click code to allow glove touches only at melee range.
 */
 /mob/proc/UnarmedAttack(var/atom/A, var/proximity_flag)
-	//if(ismob(A))
-	//	changeNext_move(8)
+	if(ismob(A))
+		changeNext_move(8)
 	return
 
 /*
