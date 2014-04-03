@@ -15,4 +15,4 @@
 	O.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
 	feedback_add_details("changeling_powers","LF")
 	.=1
-	del(user)
+	qdel(user)

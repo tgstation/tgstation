@@ -26,6 +26,8 @@
 		/obj/machinery/computer/pandemic,
 		/obj/item/weapon/storage/secure/safe,
 		/obj/machinery/disposal,
+		/obj/machinery/hydroponics,
+		/obj/machinery/biogenerator,
 		/mob/living/simple_animal/cow,
 		/mob/living/simple_animal/hostile/retaliate/goat
 	)
@@ -203,10 +205,10 @@
 	attackby(var/obj/D, mob/user as mob)
 		if(isprox(D))
 			user << "<span class='notice'>You add [D] to [src].</span>"
-			del(D)
+			qdel(D)
 			user.put_in_hands(new /obj/item/weapon/bucket_sensor)
 			user.unEquip(src)
-			del(src)
+			qdel(src)
 
 /*
 /obj/item/weapon/reagent_containers/glass/blender_jug

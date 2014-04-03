@@ -296,6 +296,16 @@ obj/structure/door_assembly
 		density = 1
 		state = 1
 
+	door_assembly_shuttle
+		name = "Shuttle Airlock Assembly"
+		icon_state = "door_as_shuttle1"
+		typetext = "shuttle"
+		icontext = "shuttle"
+		airlock_type = /obj/machinery/door/airlock/shuttle
+		anchored = 1
+		density = 1
+		state = 1
+
 /obj/structure/door_assembly/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = copytext(stripped_input(user, "Enter the name for the door.", src.name, src.created_name),1,MAX_NAME_LEN)
@@ -414,7 +424,7 @@ obj/structure/door_assembly
 						var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
 						new M(get_turf(src))
 						new M(get_turf(src))
-				del(src)
+				qdel(src)
 		else
 			user << "\blue You need more welding fuel to dissassemble the airlock assembly."
 			return
@@ -474,7 +484,7 @@ obj/structure/door_assembly
 		else
 			W.loc = src.loc
 
-			//del(W)
+			//qdel(W)
 
 	else if(istype(W, /obj/item/weapon/crowbar) && state == 2 )
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
@@ -549,7 +559,7 @@ obj/structure/door_assembly
 			if(created_name)
 				door.name = created_name
 			src.electronics.loc = door
-			del(src)
+			qdel(src)
 	else
 		..()
 	if(mineral == "glass")

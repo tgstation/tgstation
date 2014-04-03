@@ -561,7 +561,7 @@ datum/mind
 					var/obj/item/device/flash/flash = locate() in L
 					if (!flash)
 						usr << "\red Deleting flash failed!"
-					del(flash)
+					qdel(flash)
 
 				if("repairflash")
 					var/list/L = current.get_contents()
@@ -574,7 +574,7 @@ datum/mind
 				if("reequip")
 					var/list/L = current.get_contents()
 					var/obj/item/device/flash/flash = locate() in L
-					del(flash)
+					qdel(flash)
 					take_uplink()
 					var/fail = 0
 					fail |= !ticker.mode.equip_traitor(current, 1)
@@ -598,14 +598,7 @@ datum/mind
 						log_admin("[key_name(usr)] has de-cult'ed [current].")
 				if("cultist")
 					if(!(src in ticker.mode.cult))
-						ticker.mode.cult += src
-						ticker.mode.update_cult_icons_added(src)
-						special_role = "Cultist"
-						current << "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>"
-						current << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
-						var/datum/game_mode/cult/cult = ticker.mode
-						if (istype(cult))
-							cult.memorize_cult_objectives(src)
+						ticker.mode.add_cultist(src)
 						message_admins("[key_name_admin(usr)] has cult'ed [current].")
 						log_admin("[key_name(usr)] has cult'ed [current].")
 				if("tome")
@@ -721,15 +714,15 @@ datum/mind
 					current.loc = get_turf(locate("landmark*Syndicate-Spawn"))
 				if("dressup")
 					var/mob/living/carbon/human/H = current
-					del(H.belt)
-					del(H.back)
-					del(H.ears)
-					del(H.gloves)
-					del(H.head)
-					del(H.shoes)
-					del(H.wear_id)
-					del(H.wear_suit)
-					del(H.w_uniform)
+					qdel(H.belt)
+					qdel(H.back)
+					qdel(H.ears)
+					qdel(H.gloves)
+					qdel(H.head)
+					qdel(H.shoes)
+					qdel(H.wear_id)
+					qdel(H.wear_suit)
+					qdel(H.w_uniform)
 
 					if (!ticker.mode.equip_syndicate(current))
 						usr << "\red Equipping a syndicate failed!"
@@ -840,7 +833,7 @@ datum/mind
 						A.malf_picker.remove_verbs(A)
 
 						A.make_laws()
-						del(A.malf_picker)
+						qdel(A.malf_picker)
 						A.show_laws()
 						A.icon_state = "ai"
 
@@ -909,10 +902,10 @@ datum/mind
 		var/list/L = current.get_contents()
 		for (var/t in L)
 			if (istype(t, /obj/item/device/pda))
-				if (t:uplink) del(t:uplink)
+				if (t:uplink) qdel(t:uplink)
 				t:uplink = null
 			else if (istype(t, /obj/item/device/radio))
-				if (t:traitorradio) del(t:traitorradio)
+				if (t:traitorradio) qdel(t:traitorradio)
 				t:traitorradio = null
 				t:traitor_frequency = 0.0
 			else if (istype(t, /obj/item/weapon/SWF_uplink) || istype(t, /obj/item/weapon/syndicate_uplink))
@@ -921,7 +914,7 @@ datum/mind
 					R.loc = current.loc
 					R.traitorradio = null
 					R.traitor_frequency = 0.0
-				del(t)
+				qdel(t)
 
 		// remove wizards spells
 		//If there are more special powers that need removal, they can be procced into here./N
@@ -943,7 +936,7 @@ datum/mind
 	proc/take_uplink()
 		var/obj/item/device/uplink/hidden/H = find_syndicate_uplink()
 		if(H)
-			del(H)
+			qdel(H)
 
 
 	proc/make_AI_Malf()
@@ -984,15 +977,15 @@ datum/mind
 			current.loc = get_turf(locate("landmark*Syndicate-Spawn"))
 
 			var/mob/living/carbon/human/H = current
-			del(H.belt)
-			del(H.back)
-			del(H.ears)
-			del(H.gloves)
-			del(H.head)
-			del(H.shoes)
-			del(H.wear_id)
-			del(H.wear_suit)
-			del(H.w_uniform)
+			qdel(H.belt)
+			qdel(H.back)
+			qdel(H.ears)
+			qdel(H.gloves)
+			qdel(H.head)
+			qdel(H.shoes)
+			qdel(H.wear_id)
+			qdel(H.wear_suit)
+			qdel(H.w_uniform)
 
 			ticker.mode.equip_syndicate(current)
 
@@ -1081,7 +1074,7 @@ datum/mind
 
 		var/list/L = current.get_contents()
 		var/obj/item/device/flash/flash = locate() in L
-		del(flash)
+		qdel(flash)
 		take_uplink()
 		var/fail = 0
 	//	fail |= !ticker.mode.equip_traitor(current, 1)

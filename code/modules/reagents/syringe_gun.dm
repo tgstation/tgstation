@@ -29,7 +29,7 @@
 	chambered.BB.name = S.name
 	syringes.Remove(S)
 
-	del(S)
+	qdel(S)
 	return
 
 /obj/item/weapon/gun/syringe/process_chamber()

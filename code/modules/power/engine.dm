@@ -8,12 +8,12 @@
 	switch(severity)
 		if(1.0)
 			ChangeTurf(/turf/space)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
 				ChangeTurf(/turf/space)
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -21,6 +21,6 @@
 /turf/simulated/floor/engine/blob_act()
 	if (prob(25))
 		ChangeTurf(/turf/space)
-		del(src)
+		qdel(src)
 		return
 	return

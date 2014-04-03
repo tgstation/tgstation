@@ -76,6 +76,7 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/masks.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_MASK
+	var/alloweat = 0
 
 
 //Override this to modify speech like luchador masks.
@@ -273,7 +274,7 @@ atom/proc/generate_uniform(index,t_color)
 			flags |= (visor_flags)
 			flags_inv |= (visor_flags_inv)
 			icon_state = initial(icon_state)
-			usr << "You flip the [src] down to protect your eyes."
+			usr << "You pull the [src] down."
 			flash_protect = initial(flash_protect)
 			tint = initial(tint)
 		else
@@ -281,7 +282,7 @@ atom/proc/generate_uniform(index,t_color)
 			flags &= ~(visor_flags)
 			flags_inv &= ~(visor_flags_inv)
 			icon_state = "[initial(icon_state)]up"
-			usr << "You push the [src] up out of your face."
+			usr << "You push the [src] up."
 			flash_protect = 0
 			tint = 0
 

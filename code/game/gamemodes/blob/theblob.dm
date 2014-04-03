@@ -23,10 +23,11 @@
 	return
 
 
-/obj/effect/blob/Del()
+/obj/effect/blob/Destroy()
 	blobs -= src
+	if(isturf(loc)) //Necessary because Expand() is retarded and spawns a blob and then deletes it
+		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 	..()
-	return
 
 
 /obj/effect/blob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -118,7 +119,8 @@
 		B.loc = T
 	else
 		T.blob_act()//If we cant move in hit the turf
-		B.Delete()
+		B.loc = null //So we don't play the splat sound, see Destroy()
+		qdel(B)
 
 	for(var/atom/A in T)//Hit everything in the turf
 		A.blob_act()
@@ -148,6 +150,7 @@
 
 
 /obj/effect/blob/attackby(var/obj/item/weapon/W, var/mob/user)
+	user.changeNext_move(8)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
 	src.visible_message("<span class='danger'>The [src.name] has been attacked with \the [W][(user ? " by [user]." : ".")]!</span>")
 	var/damage = 0
@@ -164,6 +167,7 @@
 	return
 
 /obj/effect/blob/attack_animal(mob/living/simple_animal/M as mob)
+	M.changeNext_move(8)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
 	src.visible_message("<span class='danger'>The [src.name] has been attacked by \the [M]!</span>")
 	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -178,25 +182,16 @@
 	if(!ispath(type))
 		error("[type] is an invalid type for the blob.")
 	new type(src.loc)
-	Delete()
-	return
-
-/obj/effect/blob/proc/Delete()
-	del(src)
+	qdel(src)
 
 /obj/effect/blob/normal
 	icon_state = "blob"
 	luminosity = 0
 	health = 21
 
-/obj/effect/blob/normal/Delete()
-	src.loc = null
-	blobs -= src
-
 /obj/effect/blob/normal/update_icon()
 	if(health <= 0)
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
-		Delete()
+		qdel(src)
 	else if(health <= 15)
 		icon_state = "blob_damaged"
 	else

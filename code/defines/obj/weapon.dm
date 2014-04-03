@@ -374,8 +374,8 @@
 	if(istype(A, /obj/effect/spacevine))
 		for(var/obj/effect/spacevine/B in orange(A,1))
 			if(prob(80))
-				del B
-		del A
+				qdel(B)
+		qdel(A)
 
 /*
 /obj/item/weapon/cigarpacket
@@ -405,7 +405,7 @@
 	icon_state = "RPED"
 	item_state = "RPED"
 	w_class = 5
-	can_hold = list("/obj/item/weapon/stock_parts")
+	can_hold = list(/obj/item/weapon/stock_parts)
 	storage_slots = 14
 	use_to_pickup = 1
 	allow_quick_gather = 1

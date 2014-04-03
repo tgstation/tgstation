@@ -55,7 +55,7 @@ var/const/BORG_WIRE_CAMERA = 16
 	switch(index)
 		if (BORG_WIRE_AI_CONTROL) //pulse the AI wire to make the borg reselect an AI
 			if(!R.emagged)
-				var/new_ai = select_active_ai()
+				var/new_ai = select_active_ai(R)
 				if(new_ai && (new_ai != R.connected_ai))
 					R.connected_ai = new_ai
 					R.connected_ai << "<br><br><span class='notice'>NOTICE - New cyborg connection detected: <b><a href='byond://?src=\ref[R.connected_ai];track2=\ref[R.connected_ai];track=\ref[R]'>[R.name]</a></b></span><br>"

@@ -55,7 +55,7 @@
 				if(O.reagents.has_reagent("pacid", 1))
 					user << "The acid chews through the balloon!"
 					O.reagents.reaction(user)
-					del(src)
+					qdel(src)
 				else
 					src.desc = "A translucent balloon with some form of liquid sloshing around in it."
 					user << "\blue You fill the balloon with the contents of [O]."
@@ -72,7 +72,7 @@
 		src.icon_state = "burst"
 		spawn(5)
 			if(src)
-				del(src)
+				qdel(src)
 	return
 
 /obj/item/toy/balloon/update_icon()
@@ -203,7 +203,7 @@
 		if(istype(I, /obj/item/toy/ammo/crossbow))
 			if(bullets <= 4)
 				user.drop_item()
-				del(I)
+				qdel(I)
 				bullets++
 				user << "\blue You load the foam dart into the crossbow."
 			else
@@ -235,21 +235,21 @@
 						for(var/mob/O in viewers(world.view, D))
 							O.show_message(text("\red [] was hit by the foam dart!", M), 1)
 						new /obj/item/toy/ammo/crossbow(M.loc)
-						del(D)
+						qdel(D)
 						return
 
 					for(var/atom/A in D.loc)
 						if(A == user) continue
 						if(A.density)
 							new /obj/item/toy/ammo/crossbow(A.loc)
-							del(D)
+							qdel(D)
 
 				sleep(1)
 
 			spawn(10)
 				if(D)
 					new /obj/item/toy/ammo/crossbow(D.loc)
-					del(D)
+					qdel(D)
 
 			return
 		else if (bullets == 0)
@@ -349,8 +349,8 @@
 				newSaber.item_color = "rainbow"
 			user.unEquip(W)
 			user.unEquip(src)
-			del(W)
-			del(src)
+			qdel(W)
+			qdel(src)
 	else if(istype(W, /obj/item/device/multitool))
 		if(hacked == 0)
 			hacked = 1
@@ -442,7 +442,7 @@
 		new /obj/effect/decal/cleanable/ash(src.loc)
 		src.visible_message("\red The [src.name] explodes!","\red You hear a snap!")
 		playsound(src, 'sound/effects/snap.ogg', 50, 1)
-		del(src)
+		qdel(src)
 
 /obj/item/toy/snappop/Crossed(H as mob|obj)
 	if((ishuman(H))) //i guess carp and shit shouldn't set them off
@@ -456,7 +456,7 @@
 			new /obj/effect/decal/cleanable/ash(src.loc)
 			src.visible_message("\red The [src.name] explodes!","\red You hear a snap!")
 			playsound(src, 'sound/effects/snap.ogg', 50, 1)
-			del(src)
+			qdel(src)
 
 /*
  * Mech prizes
@@ -660,7 +660,7 @@ obj/item/toy/cards/deck/attackby(obj/item/toy/cards/singlecard/C, mob/living/use
 				return
 			src.cards += C.cardname
 			user.visible_message("<span class='notice'>[user] adds a card to the bottom of the deck.</span>","<span class='notice'>You add the card to the bottom of the deck.</span>")
-			del(C)
+			qdel(C)
 		else
 			user << "<span class='notice'>You can't mix cards from other decks.</span>"
 		if(cards.len > 26)
@@ -674,13 +674,13 @@ obj/item/toy/cards/deck/attackby(obj/item/toy/cards/singlecard/C, mob/living/use
 obj/item/toy/cards/deck/attackby(obj/item/toy/cards/cardhand/C, mob/living/user)
 	..()
 	if(istype(C))
-		if(C.parentdeck == src)		
+		if(C.parentdeck == src)
 			if(!user.unEquip(C))
 				user << "<span class='notice'>The hand of cards is stuck to your hand, you can't add it to the deck!</span>"
 				return
 			src.cards += C.currenthand
 			user.visible_message("<span class='notice'>[user] puts their hand of cards in the deck.</span>", "<span class='notice'>You put the hand of cards in the deck.</span>")
-			del(C)
+			qdel(C)
 		else
 			user << "<span class='notice'>You can't mix cards from other decks.</span>"
 		if(cards.len > 26)
@@ -772,7 +772,7 @@ obj/item/toy/cards/cardhand/Topic(href, href_list)
 				cardUser.put_in_any_hand_if_possible(N)
 				cardUser << "<span class='notice'>You also take [currenthand[1]] and hold it.</span>"
 				cardUser << browse(null, "window=cardhand")
-				del(src)
+				qdel(src)
 		return
 
 obj/item/toy/cards/cardhand/attackby(obj/item/toy/cards/singlecard/C, mob/living/user)
@@ -788,7 +788,7 @@ obj/item/toy/cards/cardhand/attackby(obj/item/toy/cards/singlecard/C, mob/living
 				src.icon_state = "[deckstyle]_hand4"
 			else if(currenthand.len > 2)
 				src.icon_state = "[deckstyle]_hand3"
-			del(C)
+			qdel(C)
 		else
 			user << "<span class='notice'>You can't mix cards from other decks.</span>"
 
@@ -859,8 +859,8 @@ obj/item/toy/cards/singlecard/attackby(obj/item/I, mob/living/user)
 			H.pickup(user)
 			user.put_in_active_hand(H)
 			user << "<span class='notice'>You combine the [C.cardname] and the [src.cardname] into a hand.</span>"
-			del(C)
-			del(src)
+			qdel(C)
+			qdel(src)
 		else
 			user << "<span class='notice'>You can't mix cards from other decks.</span>"
 
@@ -877,7 +877,7 @@ obj/item/toy/cards/singlecard/attackby(obj/item/I, mob/living/user)
 				H.icon_state = "[deckstyle]_hand4"
 			else if(H.currenthand.len > 2)
 				H.icon_state = "[deckstyle]_hand3"
-			del(src)
+			qdel(src)
 		else
 			user << "<span class='notice'>You can't mix cards from other decks.</span>"
 

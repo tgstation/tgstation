@@ -94,12 +94,15 @@ var/global/datum/controller/gameticker/ticker
 	job_master.DivideOccupations() 				//Distribute jobs
 	if (!src.mode.pre_setup_before_jobs)	can_continue = src.mode.pre_setup()
 
-	if(!can_continue)
-		del(mode)
-		current_state = GAME_STATE_PREGAME
-		world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
-		job_master.ResetOccupations()
-		return 0
+	if(!Debug2)
+		if(!can_continue)
+			del(mode)
+			current_state = GAME_STATE_PREGAME
+			world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
+			job_master.ResetOccupations()
+			return 0
+	else
+		world << "<span class='notice'>DEBUG: Bypassing prestart checks..."
 
 	if(hide_mode)
 		var/list/modes = new
@@ -129,7 +132,7 @@ var/global/datum/controller/gameticker/ticker
 		for(var/obj/effect/landmark/start/S in landmarks_list)
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
-				del(S)
+				qdel(S)
 		world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
 		world << sound('sound/AI/welcome.ogg') // Skie
 		//Holiday Round-start stuff	~Carn
@@ -234,8 +237,8 @@ var/global/datum/controller/gameticker/ticker
 		//Otherwise if its a verb it will continue on afterwards.
 		sleep(300)
 
-		if(cinematic)	del(cinematic)		//end the cinematic
-		if(temp_buckle)	del(temp_buckle)	//release everybody
+		if(cinematic)	qdel(cinematic)		//end the cinematic
+		if(temp_buckle)	qdel(temp_buckle)	//release everybody
 		return
 
 
@@ -248,7 +251,7 @@ var/global/datum/controller/gameticker/ticker
 					player.AIize()
 				else
 					player.create_character()
-					del(player)
+					qdel(player)
 			else
 				player.new_player_panel()
 

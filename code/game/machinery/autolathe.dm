@@ -48,6 +48,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/camera_assembly(), \
 		new /obj/item/newscaster_frame(), \
 		new /obj/item/weapon/reagent_containers/syringe(), \
+		new /obj/item/device/assembly/prox_sensor(), \
 	)
 
 var/global/list/autolathe_recipes_hidden = list( \
@@ -179,7 +180,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	src.g_amount += g_amt * amount
 	user << "You insert [amount] sheet[amount>1 ? "s" : ""] to the autolathe."
 	if (O && O.loc == src)
-		del(O)
+		qdel(O)
 	busy = 0
 	src.updateUsrDialog()
 
