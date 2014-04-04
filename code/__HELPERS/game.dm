@@ -52,7 +52,22 @@
 		if(our_area == get_area_master(C))
 			return 0
 	return 1
-
+	
+/proc/get_mobs_in_area(var/area/the_area)
+	var/list/mobs = list()
+	var/area/A = get_area_master(the_area)
+	for(var/C in living_mob_list)
+		if(A == get_area_master(C))
+			mobs += C
+	return mobs
+	
+/proc/get_players_in_area(var/area/the_area)
+	var/list/mobs = get_mobs_in_area(the_area)
+	var/list/players = list()
+	for(var/mob/C in mobs)
+		if(C.key != null)
+			players += C
+	return players
 
 //Magic constants obtained by using linear regression on right-angled triangles of sides 0<x<1, 0<y<1
 //They should approximate pythagoras theorem well enough for our needs.
