@@ -180,7 +180,7 @@ datum/controller/game_controller/proc/process()
 
 				//MACHINES
 				timer = world.timeofday
-				process_machines()
+				processMachines()
 				machines_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
@@ -263,19 +263,18 @@ datum/controller/game_controller/proc/process_diseases()
 			continue
 		active_diseases.Cut(i,i+1)
 
-datum/controller/game_controller/proc/process_machines()
-	var/i = 1
-	while(i<=machines.len)
-		var/obj/machinery/Machine = machines[i]
-		if(Machine && Machine.loc)
-			last_thing_processed = Machine.type
-			if(Machine.process() != PROCESS_KILL)
-				if(Machine)
-					if(Machine.use_power)
-						Machine.auto_use_power()
-					i++
+/datum/controller/game_controller/proc/processMachines()
+	for (var/obj/machinery/Machinery in machines)
+		if (Machinery && Machinery.loc)
+			last_thing_processed = Machinery.type
+
+			if(Machinery.process() != PROCESS_KILL)
+				if (Machinery) // Why another check?
+					if (Machinery.use_power)
+						Machinery.auto_use_power()
+
 					continue
-		machines.Cut(i,i+1)
+		machines = machines - Machinery
 
 datum/controller/game_controller/proc/process_objects()
 	var/i = 1
