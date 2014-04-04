@@ -33,7 +33,8 @@
 #define ARCHAEO_REMAINS_HUMANOID 32
 #define ARCHAEO_REMAINS_ROBOT 33
 #define ARCHAEO_REMAINS_XENO 34
-#define MAX_ARCHAEO 34
+#define ARCHAEO_MASK 35
+#define MAX_ARCHAEO 35
 //eggs
 //droppings
 //footprints
@@ -119,6 +120,8 @@
 			return "carbon"
 		if(ARCHAEO_REMAINS_XENO)
 			return "carbon"
+		if(ARCHAEO_MASK)
+			return "mercury"
 	return "plasma"
 
 //see /turf/unsimulated/mineral/New() in code/modules/mining/mine_turfs.dm
@@ -179,6 +182,7 @@
 			100;ARCHAEO_BOWL,\
 			100;ARCHAEO_KNIFE,\
 			100;ARCHAEO_CRYSTAL,\
+			75;ARCHAEO_MASK,\
 			75;ARCHAEO_CULTBLADE,\
 			50;ARCHAEO_SOULSTONE,\
 			50;ARCHAEO_UNKNOWN,\
@@ -262,6 +266,7 @@ var/list/finds_as_strings = list( \
 #undef ARCHAEO_REMAINS_HUMANOID
 #undef ARCHAEO_REMAINS_ROBOT
 #undef ARCHAEO_REMAINS_XENO
+#undef ARCHAEO_MASK
 
 #undef DIGSITE_GARDEN
 #undef DIGSITE_ANIMAL
