@@ -166,7 +166,7 @@ datum/controller/game_controller/proc/process()
 
 				//MOBS
 				timer = world.timeofday
-				process_mobs()
+				processMobs()
 				mobs_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
@@ -241,16 +241,14 @@ datum/controller/game_controller/proc/process()
 			else
 				sleep(10)
 
-datum/controller/game_controller/proc/process_mobs()
-	var/i = 1
-	while(i<=mob_list.len)
-		var/mob/M = mob_list[i]
-		if(M)
-			last_thing_processed = M.type
-			M.Life()
-			i++
+datum/controller/game_controller/proc/processMobs()
+	for (var/mob/Mob in mob_list)
+		if (Mob)
+			last_thing_processed = Mob.type
+			Mob.Life()
 			continue
-		mob_list.Cut(i,i+1)
+
+		mob_list = mob_list - Mob
 
 datum/controller/game_controller/proc/process_diseases()
 	var/i = 1
@@ -274,6 +272,7 @@ datum/controller/game_controller/proc/process_diseases()
 						Machinery.auto_use_power()
 
 					continue
+
 		machines = machines - Machinery
 
 datum/controller/game_controller/proc/process_objects()
