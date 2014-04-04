@@ -202,7 +202,7 @@ datum/controller/game_controller/proc/process()
 
 				//POWERNETS
 				timer = world.timeofday
-				process_powernets()
+				processPowernets()
 				powernets_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
@@ -293,16 +293,15 @@ datum/controller/game_controller/proc/process_diseases()
 
 		pipe_networks = pipe_networks - Pipe_Network
 
-datum/controller/game_controller/proc/process_powernets()
+/datum/controller/game_controller/proc/processPowernets()
 	last_thing_processed = /datum/powernet
-	var/i = 1
-	while(i<=powernets.len)
-		var/datum/powernet/Powernet = powernets[i]
-		if(Powernet)
+
+	for (var/datum/powernet/Powernet in powernets)
+		if (Powernet)
 			Powernet.reset()
-			i++
 			continue
-		powernets.Cut(i,i+1)
+
+		powernets = powernets - Powernet
 
 /datum/controller/game_controller/proc/processNano()
 	for (var/datum/nanoui/Nanoui in nanomanager.processing_uis)
