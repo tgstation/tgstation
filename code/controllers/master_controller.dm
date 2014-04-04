@@ -187,7 +187,7 @@ datum/controller/game_controller/proc/process()
 
 				//OBJECTS
 				timer = world.timeofday
-				process_objects()
+				processObjects()
 				objects_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
@@ -241,7 +241,7 @@ datum/controller/game_controller/proc/process()
 			else
 				sleep(10)
 
-datum/controller/game_controller/proc/processMobs()
+/datum/controller/game_controller/proc/processMobs()
 	for (var/mob/Mob in mob_list)
 		if (Mob)
 			last_thing_processed = Mob.type
@@ -275,16 +275,14 @@ datum/controller/game_controller/proc/process_diseases()
 
 		machines = machines - Machinery
 
-datum/controller/game_controller/proc/process_objects()
-	var/i = 1
-	while(i<=processing_objects.len)
-		var/obj/Object = processing_objects[i]
-		if(Object && Object.loc)
+/datum/controller/game_controller/proc/processObjects()
+	for (var/obj/Object in processing_objects)
+		if (Object && Object.loc)
 			last_thing_processed = Object.type
 			Object.process()
-			i++
 			continue
-		processing_objects.Cut(i,i+1)
+
+		processing_objects = processing_objects - Object
 
 datum/controller/game_controller/proc/process_pipenets()
 	last_thing_processed = /datum/pipe_network
