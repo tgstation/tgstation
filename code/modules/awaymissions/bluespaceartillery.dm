@@ -6,6 +6,7 @@
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	density = 1
 	anchored = 1
+	paiallowed = 1
 
 /obj/machinery/artillerycontrol/process()
 	if(src.reload<180)
@@ -19,6 +20,12 @@
 
 /obj/structure/artilleryplaceholder/decorative
 	density = 0
+
+/obj/machinery/artillerycontrol/attackby(I as obj, user as mob)
+	if(istype(I, /obj/item/device/paicard))
+		var/obj/item/device/paicard/C = I
+		if(C.pai && (C.pai.stat != DEAD) && C.pai.pairing)
+			C.pai.pair(src)
 
 /obj/machinery/artillerycontrol/attack_hand(mob/user as mob)
 	user.set_machine(src)

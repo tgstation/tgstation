@@ -941,7 +941,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	if (ismob(loc))
 		var/mob/M = loc
-		M.show_message("\red Your [src] explodes!", 1)
+		M.show_message("<span class='userdanger'>Your [src] explodes!</span>", 1)
 
 	if(T)
 		T.hotspot_expose(700,125)

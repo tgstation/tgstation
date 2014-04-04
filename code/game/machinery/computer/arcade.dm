@@ -222,6 +222,9 @@
 			src.temp = "You have been drained! GAME OVER"
 			if(emagged)
 				feedback_inc("arcade_loss_mana_emagged")
+				if(ispAI(usr))
+					var/mob/living/silicon/pai/pai = usr
+					pai.card.explode()
 				usr.gib()
 			else
 				feedback_inc("arcade_loss_mana_normal")
@@ -241,6 +244,9 @@
 		src.temp = "You have been crushed! GAME OVER"
 		if(emagged)
 			feedback_inc("arcade_loss_hp_emagged")
+			if(ispAI(usr))
+				var/mob/living/silicon/pai/pai = usr
+				pai.card.explode()
 			usr.gib()
 		else
 			feedback_inc("arcade_loss_hp_normal")
