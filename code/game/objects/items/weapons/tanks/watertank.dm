@@ -1,4 +1,4 @@
-	//Hydroponics tank and base code
+//Hydroponics tank and base code
 /obj/item/weapon/watertank
 	name = "backpack water tank"
 	desc = "A S.U.N.S.H.I.N.E. brand watertank backpack with nozzle to water plants."
