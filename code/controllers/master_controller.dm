@@ -195,7 +195,7 @@ datum/controller/game_controller/proc/process()
 				//PIPENETS
 				if(!pipe_processing_killed)
 					timer = world.timeofday
-					process_pipenets()
+					processPipenets()
 					networks_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
@@ -284,16 +284,14 @@ datum/controller/game_controller/proc/process_diseases()
 
 		processing_objects = processing_objects - Object
 
-datum/controller/game_controller/proc/process_pipenets()
+/datum/controller/game_controller/proc/processPipenets()
 	last_thing_processed = /datum/pipe_network
-	var/i = 1
-	while(i<=pipe_networks.len)
-		var/datum/pipe_network/Network = pipe_networks[i]
-		if(Network)
-			Network.process()
-			i++
-			continue
-		pipe_networks.Cut(i,i+1)
+
+	for (var/datum/pipe_network/Pipe_Network in pipe_networks)
+		if(Pipe_Network)
+			Pipe_Network.process()
+
+		pipe_networks = pipe_networks - Pipe_Network
 
 datum/controller/game_controller/proc/process_powernets()
 	last_thing_processed = /datum/powernet
