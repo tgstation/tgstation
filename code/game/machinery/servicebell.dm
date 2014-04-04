@@ -23,29 +23,25 @@
 	return
 	
 /obj/machinery/servicebell/attack_hand(mob/user)
+	if(..())
+		return
 	if(cooldown >= world.time)
 		return
-	if(issilicon(user) || user.stat)
-		return
-	if(!anchored || stat & (BROKEN|NOPOWER))
+	if(!anchored)
 		return
 	if(!departments.Find(get_area_master(loc)))	// Only work if in designated areas
 		return
-		
-	add_fingerprint(user)
 	
 	for(var/area/department in departments)
 		var/list/mobs = get_players_in_area(department)
 		for(var/M in mobs)
-			if(M != usr)
+			if(M != user)
 				M << 'sound/machines/dingdong.ogg'
-	usr << 'sound/machines/dingdong.ogg'
+	user << 'sound/machines/dingdong.ogg'
 	cooldown = world.time + delay
 	return
 	
 /obj/machinery/servicebell/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
-		anchored = !anchored
-		user << "<span class='notice'>You [anchored ? "attached" : "detached"] [src] from the surface.</span>"
-		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
-	return
+	if(default_unfasten_wrench(user, W))
+		return
+	return ..()
