@@ -288,6 +288,7 @@ datum/controller/game_controller/proc/process()
 	for (var/datum/pipe_network/Pipe_Network in pipe_networks)
 		if(Pipe_Network)
 			Pipe_Network.process()
+			continue
 
 		pipe_networks = pipe_networks - Pipe_Network
 
