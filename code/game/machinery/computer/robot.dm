@@ -36,10 +36,12 @@
 	var/dat
 	var/robots = 0
 	for(var/mob/living/silicon/robot/R in mob_list)
+		var/area/robot_area = get_area(R)
+		var/turf/pos = get_turf(R)
 		if(!can_control(user, R))
 			continue
 		robots++
-		dat += "[R.name] |"
+		dat += "[R.name] | [format_text(robot_area.name)] ([pos.x], [pos.y]) |"
 		if(R.stat)
 			dat += " Not Responding |"
 		else if (!R.canmove)
