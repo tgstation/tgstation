@@ -104,6 +104,33 @@
 				if(!(copytext(message, 1, 2) == "*" || (mind && mind.changeling && department_radio_keys[copytext(message, 1, 3)] != "changeling")))
 					message = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
 
+		else if(istype(wear_mask, /obj/item/clothing/mask/happy))
+			var/obj/item/clothing/mask/happy/happiest = wear_mask
+			if(copytext(message, 1, 2) != "*")
+				if(prob(5))
+					message = pick("AHAHAHAHA!", "GAHAHAHAHA!")
+					playsound(get_turf(src), 'sound/effects/hellclown.ogg', 50, 1)
+					flick("happiest_flash", happiest)
+					src << "<span class=warning>You lose self-control for a second and let out an ugly laugh.</span>"
+				else
+					message = replacetext(message, "die", "laugh")
+					message = replacetext(message, "dying", "laughing")
+					message = replacetext(message, "death", "laughter")
+					message = replacetext(message, "kill", "tickle")
+					message = replacetext(message, "killed", "tickled")
+					message = replacetext(message, "killing", "tickling")
+					message = replacetext(message, "murder", "humor")
+					message = replacetext(message, "murderer", "clown")
+					message = replacetext(message, "ghost", "fan")
+					message = replacetext(message, "dead", "happy")
+					message = replacetext(message, "killer", "comedian")
+					message = replacetext(message, "blood", "confetti")
+					message = replacetext(message, "gun", "banana")
+					message = replacetext(message, "killer", "comedian")
+					message = replacetext(message, "bomb", "pie")
+					message = replacetext(message, "explode", "comedian")
+					message = replacetext(message, "violence", "joy")
+
 	if ((M_HULK in mutations) && health >= 25 && length(message))
 		if(copytext(message, 1, 2) != "*")
 			message = "[uppertext(message)]!!" //because I don't know how to code properly in getting vars from other files -Bro
