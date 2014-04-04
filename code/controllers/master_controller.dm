@@ -173,7 +173,7 @@ datum/controller/game_controller/proc/process()
 
 				//DISEASES
 				timer = world.timeofday
-				process_diseases()
+				processDiseases()
 				diseases_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
@@ -250,16 +250,14 @@ datum/controller/game_controller/proc/process()
 
 		mob_list = mob_list - Mob
 
-datum/controller/game_controller/proc/process_diseases()
-	var/i = 1
-	while(i<=active_diseases.len)
-		var/datum/disease/Disease = active_diseases[i]
+/datum/controller/game_controller/proc/processDiseases()
+	for (var/datum/disease/Disease in active_diseases)
 		if(Disease)
 			last_thing_processed = Disease.type
 			Disease.process()
-			i++
 			continue
-		active_diseases.Cut(i,i+1)
+
+		active_diseases = active_diseases - Disease
 
 /datum/controller/game_controller/proc/processMachines()
 	for (var/obj/machinery/Machinery in machines)
