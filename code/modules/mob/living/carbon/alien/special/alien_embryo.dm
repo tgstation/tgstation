@@ -43,7 +43,7 @@
 	if(!check_observer(O))
 		O << "\red You cannot be \a [src]."
 		return
-	O.<< "\blue You've been added to the list of ghosts that may become this [src].  Click again to unvolunteer."
+	O << "\blue You've been added to the list of ghosts that may become this [src].  Click again to unvolunteer."
 	ghost_volunteers.Add(O)
 
 /obj/item/alien_embryo/proc/check_observer(var/mob/dead/observer/O)
@@ -115,9 +115,17 @@
 	// if we find no ghosts to become the alien. If the host has a client
 	// he will become the alien but if he doesn't then we will set the stage
 	// to 2, so we don't do a process heavy check everytime.
-	picked = pick(ghost_volunteers)
-	if(!picked)
+	var/mob/dead/observer/ghostpicked
+	while(ghost_volunteers.len)
+		ghostpicked = pick(ghost_volunteers)
+		ghost_volunteers -= ghostpicked
+		if(!istype(ghostpicked))
+			continue
+		break
+	if(!ghostpicked || !istype(ghostpicked))
 		picked = affected_mob.key
+	else
+		picked = ghostpicked.key
 	if(!picked)
 		stage = 4 // Let's try again later.
 		return
