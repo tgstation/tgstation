@@ -183,7 +183,7 @@
 			maxHealth = 200
 			amount_grown = 0
 			regenerate_icons()
-			name = text("[colour] [is_adult ? "adult" : "baby"] slime ([rand(1, 1000)])")
+			name = text("[colour] [is_adult ? "adult" : "baby"] slime ([number])")
 		else
 			src << "<i>I am not ready to evolve yet...</i>"
 	else

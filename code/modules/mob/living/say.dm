@@ -295,7 +295,7 @@ var/list/department_radio_keys = list(
 			if (src in S.Friends)
 				S.speech_buffer = list()
 				S.speech_buffer.Add(src)
-				S.speech_buffer.Add(html_decode(message))
+				S.speech_buffer.Add(lowertext(html_decode(message)))
 
 		if(istype(A, /obj/)) //radio in pocket could work, radio in backpack wouldn't --rastaf0
 			var/obj/O = A

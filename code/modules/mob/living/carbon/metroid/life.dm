@@ -462,12 +462,12 @@
 		if (speech_buffer.len > 0)
 			var/who = speech_buffer[1] // Who said it?
 			var/phrase = speech_buffer[2] // What did they say?
-			if ((findtext(phrase, number) || findtext(phrase, "Slimes"))) // Talking to us
-				if (findtext(phrase, "Friend")) // Debug
+			if ((findtext(phrase, num2text(number)) || findtext(phrase, "slimes"))) // Talking to us
+				if (findtext(phrase, "friend")) // Debug
 					++Friends[who]
-				if (findtext(phrase, "Hello") || findtext(phrase, "Hi"))
+				if (findtext(phrase, "hello") || findtext(phrase, "hi"))
 					say (pick("Hello...", "Hi..."))
-				if (findtext(phrase, "Follow"))
+				else if (findtext(phrase, "follow"))
 					if (Leader)
 						if (Leader == who) // Already following him
 							say (pick("Yes...", "Lead..."))
@@ -482,7 +482,7 @@
 							say ("I follow...")
 						else // Not friendly enough
 							say ("No...")
-				if (findtext(phrase, "Stop"))
+				else if (findtext(phrase, "stop"))
 					if (Victim) // We are asked to stop feeding
 						if (Friends[who] > 4)
 							Victim = null
@@ -501,7 +501,7 @@
 								say ("Yes... I'll stop...")
 							else
 								say ("No... I'll keep following...")
-				if (findtext(phrase, "Kill")) // Will remove later
+				else if (findtext(phrase, "kill")) // Will remove later
 					if (Friends[who] > 5)
 						rabid = 1
 			speech_buffer = list()
@@ -531,8 +531,8 @@
 					phrases += "Hungry..."
 					phrases += "Where is the food?"
 					phrases += "I want to eat..."
-				//phrases += "Rawr..."
-				//phrases += "Blop..."
+				phrases += "Rawr..."
+				phrases += "Blop..."
 				if (rabid)
 					phrases += "Hrr..."
 					phrases += "Nhuu..."
