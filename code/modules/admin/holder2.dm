@@ -118,6 +118,6 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 		query.Execute()
 		return sessKey
 
-	query=dbcon.NewQuery("INSERT INTO admin_sessions (sessID,ckey,expires, IP) VALUES (UUID(), '[owner.ckey]', DATE_ADD(NOW(), INTERVAL 2 HOUR)), '[owner.address]'")
+	query=dbcon.NewQuery("INSERT INTO admin_sessions (sessID,ckey,expires, IP) VALUES (UUID(), '[owner.ckey]', DATE_ADD(NOW(), INTERVAL 2 HOUR), '[owner.address]')")
 	query.Execute()
 	return checkSessionKey(recurse)
