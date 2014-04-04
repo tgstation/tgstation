@@ -209,7 +209,7 @@ datum/controller/game_controller/proc/process()
 
 				//NANO UIS
 				timer = world.timeofday
-				process_nano()
+				processNano()
 				nano_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
@@ -304,15 +304,13 @@ datum/controller/game_controller/proc/process_powernets()
 			continue
 		powernets.Cut(i,i+1)
 
-datum/controller/game_controller/proc/process_nano()
-	var/i = 1
-	while(i<=nanomanager.processing_uis.len)
-		var/datum/nanoui/ui = nanomanager.processing_uis[i]
-		if(ui)
-			ui.process()
-			i++
+/datum/controller/game_controller/proc/processNano()
+	for (var/datum/nanoui/Nanoui in nanomanager.processing_uis)
+		if (Nanoui)
+			Nanoui.process()
 			continue
-		nanomanager.processing_uis.Cut(i,i+1)
+
+		nanomanager.processing_uis = nanomanager.processing_uis - Nanoui
 
 /datum/controller/game_controller/proc/processEvents()
 	last_thing_processed = /datum/event
