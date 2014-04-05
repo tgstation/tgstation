@@ -990,6 +990,8 @@ About the new airlock wires panel:
 
 /obj/machinery/door/airlock/plasma/attackby(C as obj, mob/user as mob)
 	if(C)
+		message_admins("Plasma airlock ignited by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+		log_game("Plasma airlock ignited by [user.ckey]([user]) in ([x],[y],[z])")
 		ignite(is_hot(C))
 	..()
 
