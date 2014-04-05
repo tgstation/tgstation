@@ -22,7 +22,8 @@
 		if(T.density && !summon_ignore_density)
 			targets -= T
 
-	playsound(src.loc, cast_sound, 50, 1)
+	if(cast_sound)
+		playsound(src.loc, cast_sound, 50, 1)
 
 	if(do_after(usr,delay))
 		for(var/i=0,i<summon_amt,i++)
@@ -49,7 +50,7 @@
 				if(summon_lifespan)
 					spawn(summon_lifespan)
 						if(summoned_object)
-							del(summoned_object)
+							qdel(summoned_object)
 	else
 		switch(charge_type)
 			if("recharge")

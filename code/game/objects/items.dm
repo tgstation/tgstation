@@ -35,24 +35,30 @@
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 
+/obj/item/Destroy()
+	if(ismob(loc))
+		var/mob/m = loc
+		m.unEquip(src, 1)
+	return ..()
+
 /obj/item/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(5))
-				del(src)
+				qdel(src)
 				return
 		else
 	return
 
 /obj/item/blob_act()
-	del(src)
+	qdel(src)
 
 //user: The mob that is suiciding
 //damagetype: The type of damage the item will inflict on the user
@@ -132,7 +138,6 @@
 	else
 		if(isliving(loc))
 			return
-		user.next_move = max(user.next_move+2,world.time + 2)
 	pickup(user)
 	add_fingerprint(user)
 	user.put_in_active_hand(src)
@@ -154,7 +159,6 @@
 		if(istype(src.loc, /mob/living))
 			return
 		src.pickup(user)
-		user.next_move = max(user.next_move+2,world.time + 2)
 
 	user.put_in_active_hand(src)
 	return
@@ -344,6 +348,8 @@
 					return 0
 				return 1
 			if(slot_l_store)
+				if(flags & NODROP) //Pockets aren't visible, so you can't move NODROP items into them.
+					return 0
 				if(H.l_store)
 					return 0
 				if(!H.w_uniform)
@@ -355,6 +361,8 @@
 				if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
 					return 1
 			if(slot_r_store)
+				if(flags & NODROP)
+					return 0
 				if(H.r_store)
 					return 0
 				if(!H.w_uniform)
@@ -367,6 +375,8 @@
 					return 1
 				return 0
 			if(slot_s_store)
+				if(flags & NODROP) //Suit storage NODROP items drop if you take a suit off, this is to prevent people exploiting this.
+					return 0
 				if(H.s_store)
 					return 0
 				if(!H.wear_suit)

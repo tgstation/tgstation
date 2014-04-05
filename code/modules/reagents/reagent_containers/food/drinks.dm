@@ -26,6 +26,9 @@
 			user << "<span class='alert'> None of [src] left, oh no!</span>"
 			return 0
 
+		if(!canconsume(M, user))
+			return 0
+
 		if(M == user)
 			M << "<span class='notice'>You swallow a gulp of [src].</span>"
 			if(reagents.total_volume)
@@ -295,7 +298,7 @@
 		playsound(user.loc,'sound/weapons/pierce.ogg', rand(10,50), 1)
 		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(user.loc)
 		crushed_can.icon_state = icon_state
-		del(src)
+		qdel(src)
 	..()
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola

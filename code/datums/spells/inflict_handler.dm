@@ -27,10 +27,12 @@
 				target.gib()
 			if("gib_brain")
 				if(ishuman(target) || ismonkey(target))
-					var/obj/item/organ/brain/B = target.getorgan(/obj/item/organ/brain)
+					var/mob/living/carbon/C_target = target
+					var/obj/item/organ/brain/B = C_target.getorgan(/obj/item/organ/brain)
 					if(B)
-						B.loc = get_turf(target)
-						B.transfer_identity(target)
+						B.loc = get_turf(C_target)
+						B.transfer_identity(C_target)
+						C_target.internal_organs -= B
 				target.gib()
 			if("disintegrate")
 				target.dust()

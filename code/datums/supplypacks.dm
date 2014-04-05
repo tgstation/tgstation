@@ -57,7 +57,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 		if(!path)	continue
 		var/atom/movable/AM = new path()
 		manifest += "<li>[AM.name]</li>"
-		del AM	//just to make sure they're deleted, no longer garbage collected, as there are way to many objects in crates that have other references.
+//		del AM	//just to make sure they're deleted, no longer garbage collected, as there are way to many objects in crates that have other references.
+		qdel(AM) // How about we fix the issues rather than bypass them, mmkay?
 	manifest += "</ul>"
 
 
@@ -122,6 +123,14 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 10
 	containertype = /obj/structure/closet/crate
 	containername = "firefighting crate"
+
+/datum/supply_packs/emergency/atmostank
+	name = "Firefighting Watertank"
+	contains = list(/obj/item/weapon/watertank/atmos)
+	cost = 10
+	containertype = /obj/structure/closet/crate/secure
+	containername = "firefighting watertank crate"
+	access = access_atmospherics
 
 /datum/supply_packs/emergency/weedcontrol
 	name = "Weed Control Crate"
@@ -211,6 +220,14 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/gun/energy/taser)
 	cost = 15
 	containername = "stun gun crate"
+
+/datum/supply_packs/security/disabler
+	name = "Disabler crate"
+	contains = list(/obj/item/weapon/gun/energy/disabler,
+					/obj/item/weapon/gun/energy/disabler,
+					/obj/item/weapon/gun/energy/disabler)
+	cost = 10
+	containername = "disabler crate"
 
 ///// Armory stuff
 
@@ -383,9 +400,9 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/engineering/power
 	name = "Powercell crate"
-	contains = list(/obj/item/weapon/cell/high,		//Changed to an extra high powercell because normal cells are useless
-					/obj/item/weapon/cell/high,
-					/obj/item/weapon/cell/high)
+	contains = list(/obj/item/weapon/stock_parts/cell/high,		//Changed to an extra high powercell because normal cells are useless
+					/obj/item/weapon/stock_parts/cell/high,
+					/obj/item/weapon/stock_parts/cell/high)
 	cost = 10
 	containername = "electrical maintenance crate"
 
@@ -576,8 +593,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/device/assembly/prox_sensor,
 					/obj/item/weapon/storage/toolbox/electrical,
 					/obj/item/weapon/storage/box/flashes,
-					/obj/item/weapon/cell/high,
-					/obj/item/weapon/cell/high)
+					/obj/item/weapon/stock_parts/cell/high,
+					/obj/item/weapon/stock_parts/cell/high)
 	cost = 10
 	containertype = /obj/structure/closet/crate/secure
 	containername = "robotics assembly crate"
@@ -732,6 +749,14 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containertype = /obj/structure/closet/crate/hydroponics
 	containername = "hydroponics crate"
 
+/datum/supply_packs/misc/hydroponics/hydrotank
+	name = "Hydroponics Watertank Backpack Crate"
+	contains = list(/obj/item/weapon/watertank)
+	cost = 10
+	containertype = /obj/structure/closet/crate/secure
+	containername = "hydroponics watertank crate"
+	access = access_hydroponics
+
 /datum/supply_packs/organic/hydroponics/seeds
 	name = "Seeds Crate"
 	contains = list(/obj/item/seeds/chiliseed,
@@ -875,7 +900,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/misc/lasertag
 	name = "LaserTag Crate"
-	contains =	list(/obj/item/weapon/gun/energy/laser/redtag,
+	contains = list(/obj/item/weapon/gun/energy/laser/redtag,
 					/obj/item/weapon/gun/energy/laser/redtag,
 					/obj/item/weapon/gun/energy/laser/redtag,
 					/obj/item/weapon/gun/energy/laser/bluetag,
@@ -892,10 +917,24 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 15
 	containername = "LaserTag Crate"
 
+/datum/supply_packs/misc/religious_supplies
+	name = "Religious Supplies Crate"
+	contains = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
+					/obj/item/weapon/storage/bible/booze,
+					/obj/item/weapon/storage/bible/booze,
+					/obj/item/clothing/suit/chaplain_hoodie,
+					/obj/item/clothing/head/chaplain_hood,
+					/obj/item/clothing/suit/chaplain_hoodie,
+					/obj/item/clothing/head/chaplain_hood)
+	cost = 40	// it costs so much because the Space Church is ran by Space Jews
+	containername = "religious supplies crate"
+
+
 ///////////// Paper Work
 
 /datum/supply_packs/misc/paper
-	name = "Bureaucracy crate"
+	name = "Bureaucracy Crate"
 	contains = list(/obj/structure/filingcabinet/chestdrawer/wheeled,
 					/obj/item/device/camera_film,
 					/obj/item/weapon/hand_labeler,
@@ -911,7 +950,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/clipboard,
 					/obj/item/weapon/clipboard)
 	cost = 15
-	containername = "Bureaucracy crate"
+	containername = "bureaucracy crate"
 
 /datum/supply_packs/misc/toner
 	name = "Toner Cartridges"
@@ -952,6 +991,14 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 10
 	containertype = /obj/structure/largecrate
 	containername = "janitorial cart crate"
+
+/datum/supply_packs/misc/janitor/janitank
+	name = "Janitor Watertank Backpack Crate"
+	contains = list(/obj/item/weapon/watertank/janitor)
+	cost = 10
+	containertype = /obj/structure/closet/crate/secure
+	containername = "janitor watertank crate"
+	access = access_janitor
 
 /datum/supply_packs/misc/janitor/lightbulbs
 	name = "Replacement lights"
@@ -1039,3 +1086,34 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/vending_refill/autodrobe)
 	cost = 15
 	containername = "autodrobe supply crate"
+
+/datum/supply_packs/misc/formalwear //This is a very classy crate.
+	name = "Formal-wear crate"
+	contains = list(/obj/item/clothing/under/blacktango,
+					/obj/item/clothing/under/assistantformal,
+					/obj/item/clothing/under/assistantformal,
+					/obj/item/clothing/under/lawyer/bluesuit,
+					/obj/item/clothing/suit/lawyer/bluejacket,
+					/obj/item/clothing/under/lawyer/purpsuit,
+					/obj/item/clothing/suit/lawyer/purpjacket,
+					/obj/item/clothing/under/lawyer/blacksuit,
+					/obj/item/clothing/suit/lawyer/blackjacket,
+					/obj/item/clothing/tie/waistcoat,
+					/obj/item/clothing/tie/blue,
+					/obj/item/clothing/tie/red,
+					/obj/item/clothing/tie/black,
+					/obj/item/clothing/head/bowler,
+					/obj/item/clothing/head/fedora,
+					/obj/item/clothing/head/flatcap,
+					/obj/item/clothing/head/beret,
+					/obj/item/clothing/head/that,
+					/obj/item/clothing/shoes/laceup,
+					/obj/item/clothing/shoes/laceup,
+					/obj/item/clothing/shoes/laceup,
+					/obj/item/clothing/under/suit_jacket/charcoal,
+					/obj/item/clothing/under/suit_jacket/navy,
+					/obj/item/clothing/under/suit_jacket/burgundy,
+					/obj/item/clothing/under/suit_jacket/checkered,
+					/obj/item/clothing/under/suit_jacket/tan)
+	cost = 30 //Lots of very expensive items. You gotta pay up to look good!
+	containername = "formal-wear crate"

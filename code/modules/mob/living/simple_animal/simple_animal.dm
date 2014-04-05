@@ -57,7 +57,7 @@
 	var/friendly = "nuzzles" //If the mob does no damage with it's attack
 	var/environment_smash = 0 //Set to 1 to allow breaking of crates,lockers,racks,tables; 2 for walls; 3 for Rwalls
 
-	var/speed = 0 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
+	var/speed = 1 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
 
 	//Hot simple_animal baby making vars
 	var/childtype = null
@@ -261,9 +261,11 @@
 		adjustBruteLoss(damage)
 
 /mob/living/simple_animal/bullet_act(var/obj/item/projectile/Proj)
-	if(!Proj)	return
-	adjustBruteLoss(Proj.damage)
-	Proj.on_hit(src, 0)
+	if(!Proj)
+		return
+	if((Proj.damage_type != STAMINA))
+		adjustBruteLoss(Proj.damage)
+		Proj.on_hit(src, 0)
 	return 0
 
 /mob/living/simple_animal/attack_hand(mob/living/carbon/human/M as mob)
@@ -387,7 +389,7 @@
 						adjustBruteLoss(-MED.heal_brute)
 						MED.amount -= 1
 						if(MED.amount <= 0)
-							del(MED)
+							qdel(MED)
 						for(var/mob/M in viewers(src, null))
 							if ((M.client && !( M.blinded )))
 								M.show_message("\blue [user] applies [MED] on [src]")
@@ -407,7 +409,7 @@
 	else
 		if(O.force)
 			var/damage = O.force
-			if (O.damtype == HALLOSS)
+			if (O.damtype == STAMINA)
 				damage = 0
 			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))
@@ -517,7 +519,7 @@
 /mob/living/simple_animal/proc/harvest()
 	new meat_type (get_turf(src))
 	if(prob(95))
-		del(src)
+		qdel(src)
 		return
 	gib()
 	return

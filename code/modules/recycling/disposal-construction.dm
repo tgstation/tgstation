@@ -85,6 +85,7 @@
 	// flip and rotate verbs
 	verb/rotate()
 		set name = "Rotate Pipe"
+		set category = "Object"
 		set src in view(1)
 
 		if(usr.stat)
@@ -99,6 +100,7 @@
 
 	verb/flip()
 		set name = "Flip Pipe"
+		set category = "Object"
 		set src in view(1)
 		if(usr.stat)
 			return
@@ -252,7 +254,7 @@
 							src.transfer_fingerprints_to(P)
 							P.dir = dir
 
-						del(src)
+						qdel(src)
 						return
 				else
 					user << "You need more welding fuel to complete this task."

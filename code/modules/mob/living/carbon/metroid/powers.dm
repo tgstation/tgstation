@@ -221,17 +221,8 @@
 				src.mind.transfer_to(new_slime)
 			else
 				new_slime.key = src.key
-			del(src)
+			qdel(src)
 		else
 			src << "<i>I am not ready to reproduce yet...</i>"
 	else
 		src << "<i>I am not old enough to reproduce yet...</i>"
-
-
-
-/mob/living/carbon/slime/verb/ventcrawl()
-	set name = "Crawl through Vent"
-	set desc = "Enter an air vent and crawl through the pipe system."
-	set category = "Slime"
-	if(Victim)	return
-	handle_ventcrawl()

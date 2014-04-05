@@ -27,6 +27,7 @@
 #define APC_UPOVERLAY_ENVIRON1 1024
 #define APC_UPOVERLAY_ENVIRON2 2048
 #define APC_UPOVERLAY_LOCKED 4096
+#define APC_UPOVERLAY_OPERATING 8192
 
 
 #define APC_UPDATE_ICON_COOLDOWN 200 // 20 seconds
@@ -52,7 +53,7 @@
 	req_access = list(access_engine_equip)
 	var/area/area
 	var/areastring = null
-	var/obj/item/weapon/cell/cell
+	var/obj/item/weapon/stock_parts/cell/cell
 	var/start_charge = 90				// initial cell charge %
 	var/cell_type = 2500				// 0=no cell, 1=regular, 2=high-cap (x5) <- old, now it's just 0=no cell, otherwise dictate cellcapacity by changing this value. 1 used to be 1000, 2 was 2500
 	var/opened = 0 //0=closed, 1=opened, 2=cover removed
@@ -136,7 +137,23 @@
 		spawn(5)
 			src.update()
 
-
+/obj/machinery/power/apc/Destroy()
+	if(malfai && operating)
+		if (ticker.mode.config_tag == "malfunction")
+			if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
+				ticker.mode:apcs--
+	area.power_light = 0
+	area.power_equip = 0
+	area.power_environ = 0
+	area.power_change()
+	if(occupier)
+		malfvacate(1)
+	del(wires)
+	if(cell)
+		qdel(cell)
+	if(terminal)
+		disconnect_terminal()
+	..()
 
 /obj/machinery/power/apc/proc/make_terminal()
 	// create a terminal object at the same position as original turf loc
@@ -149,7 +166,7 @@
 	has_electronics = 2 //installed and secured
 	// is starting with a power cell installed, create it and set its charge level
 	if(cell_type)
-		src.cell = new/obj/item/weapon/cell(src)
+		src.cell = new/obj/item/weapon/stock_parts/cell(src)
 		cell.maxcharge = cell_type	// cell_type is maximum charge (old default was 1000 or 2500 (values one and two respectively)
 		cell.charge = start_charge * cell.maxcharge / 100.0 		// (convert percentage to actual value)
 
@@ -214,9 +231,9 @@
 		status_overlays_lock[1] = image(icon, "apcox-0")    // 0=blue 1=red
 		status_overlays_lock[2] = image(icon, "apcox-1")
 
-		status_overlays_charging[1] = image(icon, "apco3-0") 
+		status_overlays_charging[1] = image(icon, "apco3-0")
 		status_overlays_charging[2] = image(icon, "apco3-1")
-		status_overlays_charging[3] = image(icon, "apco3-2")		
+		status_overlays_charging[3] = image(icon, "apco3-2")
 
 		status_overlays_equipment[1] = image(icon, "apco0-0")
 		status_overlays_equipment[2] = image(icon, "apco0-1")
@@ -227,7 +244,7 @@
 		status_overlays_lighting[2] = image(icon, "apco1-1")
 		status_overlays_lighting[3] = image(icon, "apco1-2")
 		status_overlays_lighting[4] = image(icon, "apco1-3")
-		
+
 		status_overlays_environ[1] = image(icon, "apco2-0")
 		status_overlays_environ[2] = image(icon, "apco2-1")
 		status_overlays_environ[3] = image(icon, "apco2-2")
@@ -279,10 +296,10 @@
 
 /obj/machinery/power/apc/proc/check_updates()
 
-	var/last_update_state = update_state 
+	var/last_update_state = update_state
 	var/last_update_overlay = update_overlay
 	update_state = 0
-	update_overlay = 0	
+	update_overlay = 0
 
 	if(cell)
 		update_state |= UPSTATE_CELL_IN
@@ -302,6 +319,9 @@
 	if(update_state <= 1)
 		update_state |= UPSTATE_ALLGOOD
 
+	if(operating)
+		update_overlay |= APC_UPOVERLAY_OPERATING
+
 	if(update_state & UPSTATE_ALLGOOD)
 		if(locked)
 			update_overlay |= APC_UPOVERLAY_LOCKED
@@ -319,7 +339,7 @@
 			update_overlay |= APC_UPOVERLAY_EQUIPMENT1
 		else if(equipment == 2)
 			update_overlay |= APC_UPOVERLAY_EQUIPMENT2
-		
+
 		if(!lighting)
 			update_overlay |= APC_UPOVERLAY_LIGHTING0
 		else if(lighting == 1)
@@ -333,6 +353,7 @@
 			update_overlay |= APC_UPOVERLAY_ENVIRON1
 		else if(environ==2)
 			update_overlay |= APC_UPOVERLAY_ENVIRON2
+	
 
 	var/results = 0
 	if(last_update_state == update_state && last_update_overlay == update_overlay)
@@ -389,7 +410,7 @@
 		else
 			opened = 1
 			update_icon()
-	else if	(istype(W, /obj/item/weapon/cell) && opened)	// trying to put a cell inside
+	else if	(istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
 		if(cell)
 			user << "There is a power cell already installed."
 			return
@@ -505,14 +526,14 @@
 			user.visible_message(\
 				"\red [user.name] cut the cables and dismantled the power terminal.",\
 				"You cut the cables and dismantle the power terminal.")
-			del(terminal)
+			qdel(terminal)
 	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && !((stat & BROKEN) || malfhack))
 		user << "You trying to insert the power control board into the frame..."
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 10))
 			has_electronics = 1
 			user << "You place the power control board inside the frame."
-			del(W)
+			qdel(W)
 	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && ((stat & BROKEN) || malfhack))
 		user << "\red You cannot put the board inside, the frame is damaged."
 		return
@@ -537,7 +558,7 @@
 					"\red [src] has been cut from the wall by [user.name] with the weldingtool.",\
 					"You cut the APC frame from the wall.",\
 					"\red You hear welding.")
-			del(src)
+			qdel(src)
 			return
 	else if (istype(W, /obj/item/apc_frame) && opened && emagged)
 		emagged = 0
@@ -546,7 +567,7 @@
 		user.visible_message(\
 			"\red [user.name] has replaced the damaged APC frontal panel with a new one.",\
 			"You replace the damaged APC frontal panel with a new one.")
-		del(W)
+		qdel(W)
 		update_icon()
 	else if (istype(W, /obj/item/apc_frame) && opened && ((stat & BROKEN) || malfhack))
 		if (has_electronics)
@@ -557,7 +578,7 @@
 			user.visible_message(\
 				"\red [user.name] has replaced the damaged APC frame with new one.",\
 				"You replace the damaged APC frame with new one.")
-			del(W)
+			qdel(W)
 			stat &= ~BROKEN
 			malfai = null
 			malfhack = 0
@@ -907,7 +928,7 @@
 	malf.mind.transfer_to(src.occupier)
 	src.occupier.eyeobj.name = "[src.occupier.name] (AI Eye)"
 	if(malf.parent)
-		del(malf)
+		qdel(malf)
 	src.occupier.verbs += /mob/living/silicon/ai/proc/corereturn
 	src.occupier.verbs += /datum/game_mode/malfunction/proc/takeover
 	src.occupier.cancel_camera()
@@ -923,7 +944,7 @@
 		src.occupier.mind.transfer_to(src.occupier.parent)
 		src.occupier.parent.adjustOxyLoss(src.occupier.getOxyLoss())
 		src.occupier.parent.cancel_camera()
-		del(src.occupier)
+		qdel(src.occupier)
 		if (seclevel2num(get_security_level()) == SEC_LEVEL_DELTA)
 			for(var/obj/item/weapon/pinpointer/point in world)
 				for(var/datum/mind/AI_mind in ticker.mode.malf_ai)
@@ -1189,7 +1210,7 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 			//set_broken() //now Del() do what we need
 			if (cell)
 				cell.ex_act(1.0) // more lags woohoo
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
@@ -1208,6 +1229,11 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 		set_broken()
 		if (cell && prob(5))
 			cell.blob_act()
+
+/obj/machinery/power/apc/disconnect_terminal()
+	if(terminal)
+		terminal.master = null
+		terminal = null
 
 /obj/machinery/power/apc/proc/set_broken()
 	if(malfai && operating)
@@ -1234,19 +1260,6 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 					L.on = 1
 					L.broken()
 					sleep(1)
-
-/obj/machinery/power/apc/Del()
-	if(malfai && operating)
-		if (ticker.mode.config_tag == "malfunction")
-			if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
-				ticker.mode:apcs--
-	area.power_light = 0
-	area.power_equip = 0
-	area.power_environ = 0
-	area.power_change()
-	if(occupier)
-		malfvacate(1)
-	..()
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)
 	if(!prob(prb))

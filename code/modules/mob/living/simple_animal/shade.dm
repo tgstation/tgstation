@@ -36,7 +36,7 @@
 				if((M.client && !( M.blinded )))
 					M.show_message("\red [src] lets out a contented sigh as their form unwinds. ")
 					ghostize()
-			del src
+			qdel(src)
 			return
 
 
@@ -46,7 +46,7 @@
 		else
 			if(O.force)
 				var/damage = O.force
-				if (O.damtype == HALLOSS)
+				if (O.damtype == STAMINA)
 					damage = 0
 				health -= damage
 				for(var/mob/M in viewers(src, null))

@@ -18,6 +18,10 @@ REVIVAL_CLONING 1
 # amount of time (in hundredths of seconds) for which a brain retains the "spark of life" after the person's death (set to -1 for infinite)
 REVIVAL_BRAIN_LIFE -1
 
+### RENAMING ###
+
+#Uncomment to allow cyborgs to rename themselves at roundstart.  Has no effect on roboticists renaming cyborgs the normal way.
+#RENAME_CYBORG
 
 ### MOB MOVEMENT ###
 
@@ -102,7 +106,7 @@ PROBABILITY SANDBOX 0
 ## Used as (Antagonists = Population / Coeff)
 ## Set to 0 to disable scaling and use default numbers instead.
 TRAITOR_SCALING_COEFF 6
-CHANGELING_SCALING_COEFF 10
+CHANGELING_SCALING_COEFF 7
 
 ## Uncomment to prohibit jobs that start with loyalty
 ## implants from being most antagonists.

@@ -51,10 +51,11 @@ obj/machinery/atmospherics/pipe
 
 		return parent.return_network(reference)
 
-	Del()
+	Destroy()
 		del(parent)
 		if(air_temporary)
 			loc.assume_air(air_temporary)
+			del(air_temporary)
 
 		..()
 
@@ -166,7 +167,7 @@ obj/machinery/atmospherics/pipe
 			var/datum/effect/effect/system/harmless_smoke_spread/smoke = new
 			smoke.set_up(1,0, src.loc, 0)
 			smoke.start()
-			del(src)
+			qdel(src)
 
 		proc/normalize_dir()
 			if(dir==3)
@@ -174,7 +175,7 @@ obj/machinery/atmospherics/pipe
 			else if(dir==12)
 				dir = 4
 
-		Del()
+		Destroy()
 			if(node1)
 				node1.disconnect(src)
 			if(node2)
@@ -204,7 +205,7 @@ obj/machinery/atmospherics/pipe
 
 			else
 				if(!node1&&!node2)
-					del(src) //TODO: silent deleting looks weird
+					qdel(src) //TODO: silent deleting looks weird
 				var/have_node1 = node1?1:0
 				var/have_node2 = node2?1:0
 				icon_state = "exposed[have_node1][have_node2][invisibility ? "-f" : "" ]"
@@ -447,7 +448,7 @@ obj/machinery/atmospherics/pipe
 
 				..()
 
-		Del()
+		Destroy()
 			if(node1)
 				node1.disconnect(src)
 
@@ -531,7 +532,7 @@ obj/machinery/atmospherics/pipe
 			else if (nodealert)
 				nodealert = 0
 */
-		Del()
+		Destroy()
 			if(node1)
 				node1.disconnect(src)
 
@@ -642,7 +643,7 @@ obj/machinery/atmospherics/pipe
 			else if (nodealert)
 				nodealert = 0
 */
-		Del()
+		Destroy()
 			if(node1)
 				node1.disconnect(src)
 			if(node2)
@@ -701,7 +702,7 @@ obj/machinery/atmospherics/pipe
 				icon_state = "manifold_[connected]_[unconnected]"
 
 				if(!connected)
-					del(src)
+					qdel(src)
 
 			return
 

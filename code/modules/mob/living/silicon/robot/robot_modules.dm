@@ -223,7 +223,7 @@
 	on_emag()
 		..()
 		for(var/obj/item/weapon/pickaxe/borgdrill/D in modules)
-			del(D)
+			qdel(D)
 		modules += new /obj/item/weapon/pickaxe/diamonddrill(src)
 		rebuild()
 

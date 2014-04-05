@@ -221,9 +221,9 @@
 			if(4)
 				A = new /obj/item/projectile/magic/change( loc )
 			if(5)
-				A = new /obj/item/projectile/bluetag( loc )
+				A = new /obj/item/projectile/lasertag/bluetag( loc )
 			if(6)
-				A = new /obj/item/projectile/redtag( loc )
+				A = new /obj/item/projectile/lasertag/redtag( loc )
 		A.original = target
 		use_power(500)
 	else
@@ -262,12 +262,13 @@
 				popping = 0
 
 /obj/machinery/turret/bullet_act(var/obj/item/projectile/Proj)
-	src.health -= Proj.damage
-	..()
-	if(prob(45) && Proj.damage > 0) src.spark_system.start()
-	del (Proj)
-	if (src.health <= 0)
-		src.die()
+	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		src.health -= Proj.damage
+		..()
+		if(prob(45) && Proj.damage > 0) src.spark_system.start()
+		qdel(Proj)
+		if (src.health <= 0)
+			src.die()
 	return
 
 /obj/machinery/turret/attackby(obj/item/weapon/W, mob/user)//I can't believe no one added this before/N
@@ -297,11 +298,11 @@
 	src.stat |= BROKEN
 	src.icon_state = "destroyed_target_prism"
 	if (cover!=null)
-		del(cover)
+		qdel(cover)
 	sleep(3)
 	flick("explosion", src)
 	spawn(13)
-		del(src)
+		qdel(src)
 
 /obj/machinery/turretid
 	name = "turret deactivation control"

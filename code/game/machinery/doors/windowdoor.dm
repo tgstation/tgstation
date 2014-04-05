@@ -20,7 +20,7 @@
 		src.base_state = src.icon_state
 	return
 
-/obj/machinery/door/window/Del()
+/obj/machinery/door/window/Destroy()
 	density = 0
 	playsound(src, "shatter", 70, 1)
 	..()
@@ -100,7 +100,7 @@
 	return 1
 
 /obj/machinery/door/window/close()
-	if (src.operating)
+	if (src.operating || emagged)
 		return 0
 	src.operating = 1
 	flick(text("[]closing", src.base_state), src)
@@ -125,12 +125,13 @@
 		var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
 		CC.amount = 2
 		src.density = 0
-		del(src)
+		qdel(src)
 		return
 
 /obj/machinery/door/window/bullet_act(var/obj/item/projectile/Proj)
 	if(Proj.damage)
-		take_damage(round(Proj.damage / 2))
+		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+			take_damage(round(Proj.damage / 2))
 	..()
 
 //When an object is thrown at the window
@@ -156,6 +157,7 @@
 	if(istype(user, /mob/living/carbon/alien/humanoid) || istype(user, /mob/living/carbon/slime/))
 		if(src.operating)
 			return
+		user.changeNext_move(8)
 		src.health = max(0, src.health - 25)
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		visible_message("\red <B>[user] smashes against the [src.name].</B>")
@@ -164,7 +166,7 @@
 			var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
 			CC.amount = 2
 			src.density = 0
-			del(src)
+			qdel(src)
 	else
 		return src.attack_hand(user)
 
@@ -195,6 +197,7 @@
 
 	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
 	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
+		user.changeNext_move(8)
 		var/aforce = I.force
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			src.health = max(0, src.health - aforce)
@@ -205,7 +208,7 @@
 			var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
 			CC.amount = 2
 			src.density = 0
-			del(src)
+			qdel(src)
 		return
 
 

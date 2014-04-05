@@ -192,7 +192,7 @@
 	//var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	//the values in this list show how much damage will pass through, not how much will be absorbed.
 	var/list/damage_absorption = list("brute"=0.8,"fire"=1.2,"bullet"=0.9,"laser"=1,"energy"=1,"bomb"=1)
-	var/obj/item/weapon/cell/cell //Our power source
+	var/obj/item/weapon/stock_parts/cell/cell //Our power source
 	var/state = 0
 	var/list/log = new
 	var/last_message = 0
@@ -269,7 +269,7 @@
 	internal_tank = new /obj/machinery/portable_atmospherics/canister/air(src)
 	return internal_tank*/
 
-/obj/vehicle/proc/add_cell(var/obj/item/weapon/cell/C=null)
+/obj/vehicle/proc/add_cell(var/obj/item/weapon/stock_parts/cell/C=null)
 	if(C)
 		C.forceMove(src)
 		cell = C
@@ -623,7 +623,7 @@
 					spawn(2) step(M, M.dir)
 					spawn(3) step(M, M.dir)
 					spawn(4) step(M, M.dir)
-					M.take_organ_damage(2) // Was 5 -- TLE
+					M.take_organ_damage(2)
 					M << "\blue You slipped on the floor!"
 					playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 					M.Weaken(10)

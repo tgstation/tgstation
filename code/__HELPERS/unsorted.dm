@@ -249,6 +249,13 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if(C.dna)
 			C.dna.real_name = real_name
 
+	if(isrobot(src))
+		var/mob/living/silicon/robot/R = src
+		if(oldname != real_name)
+			R.notify_ai(3, oldname, newname)
+		if(R.camera)
+			R.camera.c_tag = real_name
+
 	if(oldname)
 		//update the datacore records! This is goig to be a bit costly.
 		for(var/list/L in list(data_core.general,data_core.medical,data_core.security,data_core.locked))
@@ -256,7 +263,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if(R)	R.fields["name"] = newname
 
 		//update our pda and id if we have them on our person
-		var/list/searching = GetAllContents(searchDepth = 3)
+		var/list/searching = GetAllContents()
 		var/search_id = 1
 		var/search_pda = 1
 
@@ -330,6 +337,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					A.aiPDA.owner = newname
 					A.aiPDA.name = newname + " (" + A.aiPDA.ownjob + ")"
 
+		if(cmptext("cyborg",role))
+			if(isrobot(src))
+				var/mob/living/silicon/robot/A = src
+				A.custom_name = newname
 
 		fully_replace_character_name(oldname,newname)
 
@@ -591,29 +602,46 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 		animation.master = target
 		flick(flick_anim, animation)
 	sleep(max(sleeptime, 15))
-	del(animation)
+	qdel(animation)
 
 
-//Will return the contents of an atom recursivly to a depth of 'searchDepth'
-/atom/proc/GetAllContents(searchDepth = 5)
-	var/list/toReturn = list()
+atom/proc/GetAllContents()
+	var/list/processing_list = list(src)
+	var/list/assembled = list()
 
-	for(var/atom/part in contents)
-		toReturn += part
-		if(part.contents.len && searchDepth)
-			toReturn += part.GetAllContents(searchDepth - 1)
+	while(processing_list.len)
+		var/atom/A = processing_list[1]
+		processing_list -= A
 
-	return toReturn
+		for(var/atom/a in A)
+			if(!(a in assembled))
+				processing_list |= a
+
+		assembled |= A
+
+	return assembled
 
 
-/atom/proc/GetTypeInAllContents(typepath, searchDepth = 5)
-	for(var/atom/part in contents)
-		if(istype(part, typepath))
-			return 1
-		if(part.contents.len && searchDepth)
-			if(part.GetTypeInAllContents(typepath, searchDepth - 1))
-				return 1
-	return 0
+atom/proc/GetTypeInAllContents(typepath)
+	var/list/processing_list = list(src)
+	var/list/processed = list()
+
+	var/atom/found = null
+
+	while(processing_list.len && found==null)
+		var/atom/A = processing_list[1]
+		if(istype(A, typepath))
+			found = A
+
+		processing_list -= A
+
+		for(var/atom/a in A)
+			if(!(a in processed))
+				processing_list |= a
+
+		processed |= A
+
+	return found
 
 
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
@@ -863,7 +891,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 							X.icon = 'icons/turf/shuttle.dmi'
 							X.icon_state = replacetext(O.icon_state, "_f", "_s") // revert the turf to the old icon_state
 							X.name = "wall"
-							del(O) // prevents multiple shuttle corners from stacking
+							qdel(O) // prevents multiple shuttle corners from stacking
 							continue
 						if(!istype(O,/obj)) continue
 						O.loc = X

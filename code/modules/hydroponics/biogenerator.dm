@@ -100,6 +100,9 @@
 				B.loc = loc
 				beaker = null
 
+	if(exchange_parts(user, O))
+		return
+
 	default_deconstruction_crowbar(O)
 
 	update_icon()
@@ -173,7 +176,7 @@
 		if(I.reagents.get_reagent_amount("nutriment") < 0.1)
 			points += 1*productivity
 		else points += I.reagents.get_reagent_amount("nutriment")*10*productivity
-		del(I)
+		qdel(I)
 	if(S)
 		processing = 1
 		update_icon()

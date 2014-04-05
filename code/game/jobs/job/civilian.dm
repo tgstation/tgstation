@@ -226,7 +226,7 @@
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
-		if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
+		if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/mime(H), slot_back)
 		if(H.backbag == 3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(H), slot_back)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/mime(H), slot_w_uniform)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
@@ -327,7 +327,7 @@ var/global/lawyer = 0//Checks for another lawyer
 			H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/purpsuit(H), slot_w_uniform)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/lawyer/purpjacket(H), slot_wear_suit)
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), slot_ears)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), slot_shoes)
 		H.equip_to_slot_or_del(new /obj/item/device/pda/lawyer(H), slot_belt)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/briefcase(H), slot_l_hand)
 		H.equip_to_slot_or_del(new /obj/item/device/laser_pointer(H), slot_l_store)
@@ -337,5 +337,3 @@ var/global/lawyer = 0//Checks for another lawyer
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 
 		return 1
-
-

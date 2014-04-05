@@ -152,7 +152,7 @@ datum/objective_item/special/boh
 
 datum/objective_item/special/hypercell
 	name = "a hyper-capacity cell"
-	targetitem = /obj/item/weapon/cell/hyper
+	targetitem = /obj/item/weapon/stock_parts/cell/hyper
 	difficulty = 5
 
 datum/objective_item/special/laserpointer

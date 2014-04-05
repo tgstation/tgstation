@@ -30,12 +30,12 @@
 					H << "\red You are unable to equip that."
 
 
-/mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/I, list/slots, del_on_fail = 1)
+/mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/I, list/slots, qdel_on_fail = 1)
 	for(var/slot in slots)
-		if(equip_to_slot_if_possible(I, slots[slot], del_on_fail = 0))
+		if(equip_to_slot_if_possible(I, slots[slot], qdel_on_fail = 0))
 			return slot
-	if(del_on_fail)
-		del(I)
+	if(qdel_on_fail)
+		qdel(I)
 	return null
 
 
@@ -89,14 +89,14 @@
 
 	if(I == wear_suit)
 		if(s_store)
-			unEquip(s_store)
+			unEquip(s_store, 1) //It makes no sense for your suit storage to stay on you if you drop your suit.
 		wear_suit = null
 		update_inv_wear_suit(0)
 	else if(I == w_uniform)
 		if(r_store)
-			unEquip(r_store)
+			unEquip(r_store, 1) //Again, makes sense for pockets to drop.
 		if(l_store)
-			unEquip(l_store)
+			unEquip(l_store, 1)
 		if(wear_id)
 			unEquip(wear_id)
 		if(belt)

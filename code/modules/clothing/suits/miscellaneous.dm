@@ -95,9 +95,9 @@
 
 
 /obj/item/clothing/suit/syndicatefake
-	name = "red space suit replica"
-	icon_state = "syndicate"
-	item_state = "space_suit_syndicate"
+	name = "black and red space suit replica"
+	icon_state = "syndicate-black-red"
+	item_state = "syndicate-black-red"
 	desc = "A plastic replica of the syndicate space suit, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
 	w_class = 3
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy)
@@ -159,6 +159,31 @@
 	item_state = "cardborg"
 	body_parts_covered = CHEST|GROIN
 	flags_inv = HIDEJUMPSUIT
+
+/obj/item/clothing/suit/poncho
+	name = "poncho"
+	desc = "Your classic, non-racist poncho."
+	icon_state = "classicponcho"
+	item_state = "classicponcho"
+
+/obj/item/clothing/suit/poncho/green
+	name = "green poncho"
+	desc = "Your classic, non-racist poncho. This one is green."
+	icon_state = "greenponcho"
+	item_state = "greenponcho"
+
+/obj/item/clothing/suit/poncho/red
+	name = "red poncho"
+	desc = "Your classic, non-racist poncho. This one is red."
+	icon_state = "redponcho"
+	item_state = "redponcho"
+
+/obj/item/clothing/suit/poncho/ponchoshame
+	name = "poncho of shame"
+	desc = "Forced to live on your shameful acting as a fake mexican, you and your poncho have grown inseperable. Literally."
+	icon_state = "ponchoshame"
+	item_state = "ponchoshame"
+	flags = NODROP
 
 /*
  * Misc

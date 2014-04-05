@@ -455,7 +455,7 @@
 				AdjustStunned(-1)
 
 			if(weakened)
-				weakened = max(weakened-1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
+				weakened = max(weakened-1,0)
 
 			if(stuttering)
 				stuttering = max(stuttering-1, 0)
@@ -465,6 +465,8 @@
 
 			if(druggy)
 				druggy = max(druggy-1, 0)
+
+			CheckStamina()
 		return 1
 
 

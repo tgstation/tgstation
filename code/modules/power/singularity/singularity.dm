@@ -6,8 +6,8 @@ var/global/list/uneatable = list(
 	)
 
 /obj/machinery/singularity
-	name = "Gravitational Singularity"
-	desc = "A Gravitational Singularity."
+	name = "gravitational singularity"
+	desc = "A gravitational singularity."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
 	anchored = 1
@@ -38,9 +38,6 @@ var/global/list/uneatable = list(
 	admin_investigate_setup()
 
 	src.energy = starting_energy
-	if(temp)
-		spawn(temp)
-			del(src)
 	..()
 	for(var/obj/machinery/singularity_beacon/singubeacon in world)
 		if(singubeacon.active)
@@ -57,20 +54,21 @@ var/global/list/uneatable = list(
 /obj/machinery/singularity/blob_act(severity)
 	return
 
-
 /obj/machinery/singularity/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			if(prob(25))
-				investigate_log("has been destroyed by an explosion.","singulo")
-				del(src)
+			if(current_size <= 3)
+				investigate_log("has been destroyed by a heavy explosion.","singulo")
+				qdel(src)
 				return
 			else
-				energy += 50
-		if(2.0 to 3.0)
-			energy += round((rand(20,60)/2),1)
-			return
+				energy -= round(((energy+1)/2),1)
+		if(2.0)
+			energy -= round(((energy+1)/3),1)
+		if(3.0)
+			energy -= round(((energy+1)/4),1)
 	return
+
 
 /obj/machinery/singularity/bullet_act(obj/item/projectile/P)
 	return 0 //Will there be an impact? Who knows.  Will we see it? No.
@@ -191,7 +189,7 @@ var/global/list/uneatable = list(
 /obj/machinery/singularity/proc/check_energy()
 	if(energy <= 0)
 		investigate_log("collapsed.","singulo")
-		del(src)
+		qdel(src)
 		return 0
 	switch(energy)//Some of these numbers might need to be changed up later -Mport
 		if(1 to 199)
@@ -211,8 +209,8 @@ var/global/list/uneatable = list(
 
 /obj/machinery/singularity/proc/eat()
 	set background = BACKGROUND_ENABLED
-	if(defer_powernet_rebuild != 2)
-		defer_powernet_rebuild = 1
+//	if(defer_powernet_rebuild != 2)
+//		defer_powernet_rebuild = 1
 	// Let's just make this one loop.
 	for(var/atom/X in orange(grav_pull,src))
 		var/dist = get_dist(X, src)
@@ -221,19 +219,31 @@ var/global/list/uneatable = list(
 			if(is_type_in_list(X, uneatable))	continue
 			if(((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))|| (src.current_size >= 9))
 				step_towards(X,src)
+
 			else if(istype(X,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = X
+
 				if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
 					var/obj/item/clothing/shoes/magboots/M = H.shoes
-					if(M.magpulse)
-						continue
-				step_towards(H,src)
+					if(!M.magpulse)
+						step_towards(H,src)
+				else
+					step_towards(H,src)
+
+				if(current_size >= 5)
+					var/list/handlist = list(H.l_hand, H.r_hand)
+					for(var/obj/item/hand in handlist)
+						if(prob(current_size * 5) && hand.w_class <= 2 && H.unEquip(hand))
+							step_towards(hand, src)
+							H << "<span class='warning'>\The [src] pulls \the [hand] from your grip!</span>"
+
+				H.apply_effect(current_size * 3, IRRADIATE)
 		// Turf and movable atoms
 		else if(dist <= consume_range && (isturf(X) || istype(X, /atom/movable)))
 			consume(X)
 
-	if(defer_powernet_rebuild != 2)
-		defer_powernet_rebuild = 0
+//	if(defer_powernet_rebuild != 2)
+//		defer_powernet_rebuild = 0
 	return
 
 
@@ -267,7 +277,7 @@ var/global/list/uneatable = list(
 		if(istype(A, /obj/machinery/singularity))//Welp now you did it
 			var/obj/machinery/singularity/S = A
 			src.energy += (S.energy/2)//Absorb most of it
-			del(S)
+			qdel(S)
 			var/dist = max((current_size - 2),1)
 			explosion(src.loc,(dist),(dist*2),(dist*4))
 			return//Quits here, the obj should be gone, hell we might be
@@ -279,7 +289,8 @@ var/global/list/uneatable = list(
 			O.z = 2
 		else
 			A.ex_act(1.0)
-			if(A) del(A)
+			if(A && isnull(A.gc_destroyed))
+				qdel(A)
 		gain = 2
 	else if(isturf(A))
 		var/turf/T = A
@@ -505,7 +516,7 @@ var/global/list/uneatable = list(
 	if(istype(A,/obj/))
 		var/obj/O = A
 		O.ex_act(1.0)
-		if(O) del(O)
+		if(O) qdel(O)
 
 	else if(isturf(A))
 		var/turf/T = A
@@ -593,11 +604,11 @@ var/global/list/uneatable = list(
 
 /obj/machinery/singularity/narsie/wizard/eat()
 	set background = BACKGROUND_ENABLED
-	if(defer_powernet_rebuild != 2)
-		defer_powernet_rebuild = 1
+//	if(defer_powernet_rebuild != 2)
+//		defer_powernet_rebuild = 1
 	for(var/atom/X in orange(consume_range,src))
 		if(isturf(X) || istype(X, /atom/movable))
 			consume(X)
-	if(defer_powernet_rebuild != 2)
-		defer_powernet_rebuild = 0
+//	if(defer_powernet_rebuild != 2)
+//		defer_powernet_rebuild = 0
 	return

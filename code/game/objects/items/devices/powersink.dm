@@ -16,6 +16,7 @@
 	var/power_drained = 0 		// has drained this much power
 	var/max_power = 1e8		// maximum power that can be drained before exploding
 	var/mode = 0		// 0 = off, 1=clamped (off), 2=operating
+	var/admins_warned = 0 // stop spam, only warn the admins once that we are about to boom
 
 	var/const/DISCONNECTED = 0
 	var/const/CLAMPED_OFF = 1
@@ -133,10 +134,12 @@
 							A.charging = 1 // It's no longer full
 
 	if(power_drained > max_power * 0.95)
-		message_admins("Power sink at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) is about to explode")
+		if (!admins_warned)
+			admins_warned = 1
+			message_admins("Power sink at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) is 95% full. Explosion imminent.")
 		playsound(src, 'sound/effects/screech.ogg', 100, 1, 1)
 
 	if(power_drained >= max_power)
 		processing_objects.Remove(src)
 		explosion(src.loc, 3,6,9,12)
-		del(src)
+		qdel(src)

@@ -465,8 +465,8 @@ silicate
 	name = "Mix Virus"
 	id = "mixvirus"
 	result = "blood"
-	required_reagents = list("virusfood" = 5)
-	required_catalysts = list("blood" = 5)
+	required_reagents = list("virusfood" = 1)
+	required_catalysts = list("blood" = 1)
 	var/level_min = 0
 	var/level_max = 2
 
@@ -483,7 +483,7 @@ silicate
 
 	name = "Mix Virus 2"
 	id = "mixvirus2"
-	required_reagents = list("mutagen" = 5)
+	required_reagents = list("mutagen" = 1)
 	level_min = 2
 	level_max = 4
 
@@ -491,7 +491,7 @@ silicate
 
 	name = "Mix Virus 3"
 	id = "mixvirus3"
-	required_reagents = list("plasma" = 5)
+	required_reagents = list("plasma" = 1)
 	level_min = 4
 	level_max = 6
 
@@ -807,7 +807,7 @@ datum/chemical_reaction/pestkiller
 						M.client.screen += blueeffect
 						sleep(20)
 						M.client.screen -= blueeffect
-						del(blueeffect)
+						qdel(blueeffect)
 /datum/chemical_reaction/slimecrit
 	name = "Slime Crit"
 	id = "m_tele"
@@ -1238,6 +1238,7 @@ datum/chemical_reaction/pestkiller
 				T.atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 50)
 
 //Yellow
+
 /datum/chemical_reaction/slimeoverload
 	name = "Slime EMP"
 	id = "m_emp"
@@ -1261,7 +1262,7 @@ datum/chemical_reaction/pestkiller
 	required_other = 1
 /datum/chemical_reaction/slimecell/on_reaction(var/datum/reagents/holder, var/created_volume)
 	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-	var/obj/item/weapon/cell/slime/P = new /obj/item/weapon/cell/slime
+	var/obj/item/weapon/stock_parts/cell/slime/P = new /obj/item/weapon/stock_parts/cell/slime
 	P.loc = get_turf(holder.my_atom)
 
 /datum/chemical_reaction/slimeglow
@@ -1801,6 +1802,13 @@ datum/chemical_reaction/pestkiller
 	required_reagents = list ("beer" = 1, "ale" = 2)
 	result_amount = 3
 
+/datum/chemical_reaction/greenbeer
+	name = "Green Beer"
+	id = "greenbeer"
+	result = "greenbeer"
+	required_reagents = list("greencrayonpowder" = 1, "beer" = 10)
+	result_amount = 10
+
 /datum/chemical_reaction/hooch
 	name = "Hooch"
 	id = "hooch"
@@ -2026,7 +2034,7 @@ datum/chemical_reaction/pestkiller
 	name = "Aloe"
 	id = "aloe"
 	result = "aloe"
-	required_reagents = list("cream" = 1, "whiskey" = 1, "watermelonjuice" = 1)
+	required_reagents = list("irishcream" = 1, "watermelonjuice" = 1)
 	result_amount = 2
 
 /datum/chemical_reaction/andalusia

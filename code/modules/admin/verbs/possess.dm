@@ -39,7 +39,7 @@
 			H.name = H.get_visible_name()
 //		usr.regenerate_icons() //So the name is updated properly
 
-	usr.loc = O.loc // Appear where the object you were controlling is -- TLE
+	usr.loc = O.loc
 	usr.client.eye = usr
 	usr.control_object = null
 	feedback_add_details("admin_verb","RO") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

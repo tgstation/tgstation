@@ -44,7 +44,7 @@
 		flush = initial(flush)
 		trunk.linked = src	// link the pipe trunk to self
 
-/obj/machinery/disposal/Del()
+/obj/machinery/disposal/Destroy()
 	for(var/atom/movable/AM in contents)
 		AM.loc = src.loc
 	..()
@@ -99,7 +99,7 @@
 					C.anchored = 1
 					C.density = 1
 					C.update()
-					del(src)
+					qdel(src)
 				return
 			else
 				user << "You need more welding fuel to complete this task."
@@ -131,7 +131,7 @@
 				GM.loc = src
 				for (var/mob/C in viewers(src))
 					C.show_message("\red [GM.name] has been placed in \the [src] by [user].", 3)
-				del(G)
+				qdel(G)
 		return
 
 	if(!I)	return
@@ -246,7 +246,7 @@
 /obj/machinery/disposal/attack_animal(var/mob/living/simple_animal/M)
 	if(M.environment_smash)
 		visible_message("<span class='danger'>[M.name] smashes \the [src] apart!</span>")
-		del(src)
+		qdel(src)
 	return
 
 // user interaction
@@ -462,7 +462,7 @@
 					AM.throw_at(target, 5, 1)
 
 		H.vent_gas(loc)
-		del(H)
+		qdel(H)
 
 /obj/machinery/disposal/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if (istype(mover,/obj/item) && mover.throwing)
@@ -599,7 +599,7 @@
 
 		if(other.has_fat_guy)
 			has_fat_guy = 1
-		del(other)
+		qdel(other)
 
 
 	// called when player tries to move while in a pipe
@@ -642,7 +642,7 @@
 
 	// pipe is deleted
 	// ensure if holder is present, it is expelled
-	Del()
+	Destroy()
 		var/obj/structure/disposalholder/H = locate() in src
 		if(H)
 			// holder was present
@@ -655,7 +655,7 @@
 				for(var/atom/movable/AM in H)
 					AM.loc = T
 					AM.pipe_eject(0)
-				del(H)
+				qdel(H)
 				..()
 				return
 
@@ -758,7 +758,7 @@
 						if(AM)
 							AM.throw_at(target, 5, 1)
 		H.vent_gas(T)
-		del(H)
+		qdel(H)
 		return
 
 	// call to break the pipe
@@ -785,7 +785,7 @@
 				for(var/atom/movable/AM in H)
 					AM.loc = T
 					AM.pipe_eject(0)
-				del(H)
+				qdel(H)
 				return
 
 			// otherwise, do normal expel from turf
@@ -793,7 +793,7 @@
 				expel(H, T, 0)
 
 		spawn(2)	// delete pipe after 2 ticks to ensure expel proc finished
-			del(src)
+			qdel(src)
 
 
 	// pipe affected by explosion
@@ -876,7 +876,7 @@
 		C.anchored = 1
 		C.update()
 
-		del(src)
+		qdel(src)
 
 // *** TEST verb
 //client/verb/dispstop()
@@ -1220,7 +1220,7 @@
 	welded()
 //		var/obj/item/scrap/S = new(src.loc)
 //		S.set_components(200,0,0)
-		del(src)
+		qdel(src)
 
 // the disposal outlet machine
 
@@ -1268,7 +1268,7 @@
 					if(AM)
 						AM.throw_at(target, eject_range, 1)
 			H.vent_gas(src.loc)
-			del(H)
+			qdel(H)
 		return
 
 	attackby(var/obj/item/I, var/mob/user)
@@ -1300,7 +1300,7 @@
 					C.update()
 					C.anchored = 1
 					C.density = 1
-					del(src)
+					qdel(src)
 				return
 			else
 				user << "You need more welding fuel to complete this task."

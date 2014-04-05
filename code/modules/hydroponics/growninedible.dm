@@ -17,8 +17,6 @@
 	var/plant_type = 0
 
 /obj/item/weapon/grown/New(newloc,newpotency)
-	if (!isnull(newpotency))
-		potency = newpotency
 	..()
 	pixel_x = rand(-5.0, 5)
 	pixel_y = rand(-5.0, 5)
@@ -68,7 +66,7 @@
 					continue
 				G.attackby(NG, user)
 				usr << "You add the newly-formed wood to the stack. It now contains [NG.amount] planks."
-		del(src)
+		qdel(src)
 		return
 	if(is_type_in_list(W,accepted))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/leaf = W
@@ -77,8 +75,8 @@
 			var/obj/item/device/flashlight/flare/torch/T = new /obj/item/device/flashlight/flare/torch(user.loc)
 			usr.unEquip(W)
 			usr.put_in_active_hand(T)
-			del(leaf)
-			del(src)
+			qdel(leaf)
+			qdel(src)
 			return
 		else
 			usr << "\red You must dry this first."
@@ -96,7 +94,7 @@
 	throw_speed = 1
 	throw_range = 3
 	plant_type = 0
-	seed = "/obj/item/seeds/sunflower"
+	seed = "/obj/item/seeds/sunflowerseed"
 
 /obj/item/weapon/grown/novaflower
 	name = "novaflower"
@@ -111,14 +109,13 @@
 	throw_speed = 1
 	throw_range = 3
 	plant_type = 0
-	seed = "/obj/item/seeds/novaflower"
+	seed = "/obj/item/seeds/novaflowerseed"
 	attack_verb = list("seared", "heated", "whacked", "steamed")
-	New()
+	New(var/loc, var/potency = 10)
 		..()
-		spawn(5)	//So potency can be set in the proc that creates these crops
-			reagents.add_reagent("nutriment", 1)
-			reagents.add_reagent("capsaicin", round(potency, 1))
-			force = round((5+potency/5), 1)
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("capsaicin", round(potency, 1))
+		force = round((5+potency/5), 1)
 
 /obj/item/weapon/grown/nettle // -- Skie
 	desc = "It's probably <B>not</B> wise to touch it with bare hands..."
@@ -135,12 +132,11 @@
 	plant_type = 1
 	origin_tech = "combat=1"
 	seed = "/obj/item/seeds/nettleseed"
-	New()
+	New(var/loc, var/potency = 10)
 		..()
-		spawn(5)	//So potency can be set in the proc that creates these crops
-			reagents.add_reagent("nutriment", 1)
-			reagents.add_reagent("sacid", round(potency, 1))
-			force = round((5+potency/5), 1)
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("sacid", round(potency, 1))
+		force = round((5+potency/5), 1)
 
 /obj/item/weapon/grown/deathnettle // -- Skie
 	desc = "The \red glowing \black nettle incites \red<B> rage</B>\black in you just from looking at it!"
@@ -158,12 +154,11 @@
 	seed = "/obj/item/seeds/deathnettleseed"
 	origin_tech = "combat=3"
 	attack_verb = list("stung")
-	New()
+	New(var/loc, var/potency = 10)
 		..()
-		spawn(5)	//So potency can be set in the proc that creates these crops
-			reagents.add_reagent("nutriment", 1)
-			reagents.add_reagent("pacid", round(potency, 1))
-			force = round((5+potency/2.5), 1)
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("pacid", round(potency, 1))
+		force = round((5+potency/2.5), 1)
 
 	suicide_act(mob/user)
 		viewers(user) << "<span class='suicide'>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</span>"

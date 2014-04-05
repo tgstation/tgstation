@@ -823,7 +823,7 @@
 				message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 
 				del(M.client)
-				//del(M)	// See no reason why to delete mob. Important stuff can be lost. And ban can be lifted before round ends.
+				//qdel(M)	// See no reason why to delete mob. Important stuff can be lost. And ban can be lifted before round ends.
 			if("No")
 				var/reason = input(usr,"Reason?","reason","Griefer") as text|null
 				if(!reason)
@@ -847,7 +847,7 @@
 				DB_ban_record(BANTYPE_PERMA, M, -1, reason)
 
 				del(M.client)
-				//del(M)
+				//qdel(M)
 			if("Cancel")
 				return
 
@@ -2033,11 +2033,13 @@
 		switch(href_list["secretscoder"])
 			if("maint_access_brig")
 				for(var/obj/machinery/door/airlock/maintenance/M in world)
+					M.check_access()
 					if (access_maint_tunnels in M.req_access)
 						M.req_access = list(access_brig)
 				message_admins("[key_name_admin(usr)] made all maint doors brig access-only.")
 			if("maint_access_engiebrig")
 				for(var/obj/machinery/door/airlock/maintenance/M in world)
+					M.check_access()
 					if (access_maint_tunnels in M.req_access)
 						M.req_access = list()
 						M.req_one_access = list(access_brig,access_engine)
@@ -2074,13 +2076,8 @@
 		else
 			var/choice = alert("Please confirm Feed channel creation","Network Channel Handler","Confirm","Cancel")
 			if(choice=="Confirm")
-				var/datum/feed_channel/newChannel = new /datum/feed_channel
-				newChannel.channel_name = src.admincaster_feed_channel.channel_name
-				newChannel.author = src.admincaster_signature
-				newChannel.locked = src.admincaster_feed_channel.locked
-				newChannel.is_admin_channel = 1
+				news_network.CreateFeedChannel(src.admincaster_feed_channel.channel_name, src.admincaster_signature, src.admincaster_feed_channel.locked, 1)
 				feedback_inc("newscaster_channels",1)
-				news_network.network_channels += newChannel                        //Adding channel to the global network
 				log_admin("[key_name(usr)] created command feed channel: [src.admincaster_feed_channel.channel_name]!")
 				src.admincaster_screen=5
 		src.access_news_network()
@@ -2102,15 +2099,8 @@
 		if(src.admincaster_feed_message.body =="" || src.admincaster_feed_message.body =="\[REDACTED\]" || src.admincaster_feed_channel.channel_name == "" )
 			src.admincaster_screen = 6
 		else
-			var/datum/feed_message/newMsg = new /datum/feed_message
-			newMsg.author = src.admincaster_signature
-			newMsg.body = src.admincaster_feed_message.body
-			newMsg.is_admin_message = 1
+			news_network.SubmitArticle(src.admincaster_feed_message.body, src.admincaster_signature, src.admincaster_feed_channel.channel_name, null, 1)
 			feedback_inc("newscaster_stories",1)
-			for(var/datum/feed_channel/FC in news_network.network_channels)
-				if(FC.channel_name == src.admincaster_feed_channel.channel_name)
-					FC.messages += newMsg                  //Adding message to the network's appropriate feed_channel
-					break
 			src.admincaster_screen=4
 
 		for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)

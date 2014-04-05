@@ -53,7 +53,7 @@
 
 	var/server
 	var/banappeals
-	var/wikiurl = "http://wiki.ss13.eu" // Default wiki link.
+	var/wikiurl = "http://www.ss13.eu/wiki" // Default wiki link.
 	var/forumurl
 
 	var/forbid_singulo_possession = 0
@@ -75,7 +75,7 @@
 	var/allow_ai = 0					// allow ai job
 
 	var/traitor_scaling_coeff = 6		//how much does the amount of players get divided by to determine traitors
-	var/changeling_scaling_coeff = 10	//how much does the amount of players get divided by to determine changelings
+	var/changeling_scaling_coeff = 7	//how much does the amount of players get divided by to determine changelings
 
 	var/protect_roles_from_antagonist = 0// If security and such can be traitor/cult/other
 	var/allow_latejoin_antagonists = 0 // If late-joining players can be traitor/changeling
@@ -97,6 +97,8 @@
 	var/revival_pod_plants = 1
 	var/revival_cloning = 1
 	var/revival_brain_life = -1
+
+	var/rename_cyborg = 0
 
 	//Used for modifying movement speed for mobs.
 	//Unversal modifiers
@@ -277,6 +279,8 @@
 					config.revival_cloning			= text2num(value)
 				if("revival_brain_life")
 					config.revival_brain_life		= text2num(value)
+				if("rename_cyborg")
+					config.rename_cyborg			= 1
 				if("run_delay")
 					config.run_speed				= text2num(value)
 				if("walk_delay")
@@ -371,7 +375,7 @@
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
-/datum/configuration/proc/loadsql(filename)  // -- TLE
+/datum/configuration/proc/loadsql(filename)
 	var/list/Lines = file2list(filename)
 	for(var/t in Lines)
 		if(!t)	continue

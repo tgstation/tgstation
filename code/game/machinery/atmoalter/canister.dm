@@ -88,7 +88,7 @@ update_flag
 		icon_state = text("[]-1", canister_color)
 		return
 
-	if(icon_state != "[canister_color]") 
+	if(icon_state != "[canister_color]")
 		icon_state = "[canister_color]"
 
 	if(check_change()) //Returns 1 if no change needed to icons.
@@ -198,9 +198,10 @@ update_flag
 	return
 
 /obj/machinery/portable_atmospherics/canister/bullet_act(var/obj/item/projectile/Proj)
-	if(Proj.damage)
-		src.health -= round(Proj.damage / 2)
-		healthcheck()
+	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		if(Proj.damage)
+			src.health -= round(Proj.damage / 2)
+			healthcheck()
 	..()
 
 /obj/machinery/portable_atmospherics/canister/meteorhit(var/obj/O as obj)
@@ -212,14 +213,14 @@ update_flag
 	switch(severity)
 		if(1.0)
 			if(destroyed || prob(30))
-				del(src)
+				qdel(src)
 			else
 				src.health = 0
 				healthcheck()
 			return
 		if(2.0)
 			if(destroyed)
-				del(src)
+				qdel(src)
 			else
 				src.health -= rand(40, 100)
 				healthcheck()

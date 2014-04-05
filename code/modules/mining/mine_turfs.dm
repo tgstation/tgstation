@@ -226,7 +226,8 @@
 		var/turf/bombturf = get_turf(src)
 		var/area/A = get_area(bombturf)
 		var/log_str = "[src.activated_ckey]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> [src.activated_name] has triggered a gibtonite deposit reaction <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>."
-		message_admins(log_str)
+		if(z != 5)
+			message_admins(log_str)
 		log_game("[src.activated_ckey] ([src.activated_name]) has triggered a gibtonite deposit reaction at [A.name] ([A.x], [A.y], [A.z]).")
 		countdown()
 
@@ -279,7 +280,7 @@
 
 /turf/simulated/floor/plating/asteroid/airless/cave
 	var/length = 100
-	var/mob_spawn_list = list("Goldgrub" = 1, "Goliath" = 5, "Basilisk" = 3, "Hivelord" = 5)
+	var/mob_spawn_list = list("Goldgrub" = 1, "Goliath" = 5, "Basilisk" = 4, "Hivelord" = 3)
 	var/sanity = 1
 
 /turf/simulated/floor/plating/asteroid/airless/cave/New(loc, var/length, var/go_backwards = 1, var/exclude_dir = -1)
@@ -355,10 +356,10 @@
 		t.fullUpdateMineralOverlays()
 
 /turf/simulated/floor/plating/asteroid/airless/cave/proc/SpawnMonster(var/turf/T)
-	if(prob(2))
+	if(prob(30))
 		if(istype(loc, /area/mine/explored))
 			return
-		for(var/atom/A in range(7,T))//Lowers chance of mob clumps
+		for(var/atom/A in range(15,T))//Lowers chance of mob clumps
 			if(istype(A, /mob/living/simple_animal/hostile/asteroid))
 				return
 		var/randumb = pickweight(mob_spawn_list)

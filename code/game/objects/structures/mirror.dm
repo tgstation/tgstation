@@ -48,10 +48,11 @@
 
 /obj/structure/mirror/bullet_act(var/obj/item/projectile/Proj)
 	if(prob(Proj.damage * 2))
-		if(!shattered)
-			shatter()
-		else
-			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+			if(!shattered)
+				shatter()
+			else
+				playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 	..()
 
 

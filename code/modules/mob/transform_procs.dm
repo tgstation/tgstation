@@ -28,7 +28,7 @@
 	sleep(22)
 	//animation = null
 	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( loc )
-	del(animation)
+	qdel(animation)
 
 
 
@@ -77,7 +77,7 @@
 	updateappearance(O)
 	. = O
 	if ( !(tr_flags & TR_KEEPSRC) ) //flag should be used if monkeyize() is called inside another proc of src so that one does not crash
-		del(src)
+		qdel(src)
 	return
 
 
@@ -126,7 +126,7 @@
 	var/mob/living/carbon/human/O = new( loc )
 	for(var/obj/item/C in O.loc)
 		O.equip_to_appropriate_slot(C)
-	del(animation)
+	qdel(animation)
 
 
 	O.gender = (deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
@@ -176,7 +176,7 @@
 	updateappearance(O)
 	. = O
 	if ( !(tr_flags & TR_KEEPSRC) ) //don't delete src yet if it's needed to finish calling proc
-		del(src)
+		qdel(src)
 	return
 
 /mob/new_player/AIize()
@@ -187,7 +187,7 @@
 	if (notransform)
 		return
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 
 	return ..()
 
@@ -259,7 +259,7 @@
 
 	O.rename_self("ai",1)
 	. = O
-	del(src)
+	qdel(src)
 	return
 
 
@@ -269,7 +269,7 @@
 		return
 	for(var/obj/item/W in src)
 		if(delete_items)
-			del(W)
+			qdel(W)
 		else
 			unEquip(W)
 	regenerate_icons()
@@ -278,9 +278,12 @@
 	icon = null
 	invisibility = 101
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot( loc )
+
+	if (config.rename_cyborg)
+		O.rename_self("cyborg", 1)
 
 	// cyborgs produced by Robotize get an automatic power cell
 	O.cell = new(O)
@@ -301,12 +304,13 @@
 
 	O.loc = loc
 	O.job = "Cyborg"
+	O.notify_ai(1)
 
 	O.mmi = new /obj/item/device/mmi(O)
 	O.mmi.transfer_identity(src)//Does not transfer key/client.
 
 	. = O
-	del(src)
+	qdel(src)
 
 //human -> alien
 /mob/living/carbon/human/proc/Alienize()
@@ -320,7 +324,7 @@
 	icon = null
 	invisibility = 101
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 
 	var/alien_caste = pick("Hunter","Sentinel","Drone")
 	var/mob/living/carbon/alien/humanoid/new_xeno
@@ -337,7 +341,7 @@
 
 	new_xeno << "<B>You are now an alien.</B>"
 	. = new_xeno
-	del(src)
+	qdel(src)
 
 /mob/living/carbon/human/proc/slimeize(reproduce as num)
 	if (notransform)
@@ -350,7 +354,7 @@
 	icon = null
 	invisibility = 101
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 
 	var/mob/living/carbon/slime/new_slime
 	if(reproduce)
@@ -369,7 +373,7 @@
 
 	new_slime << "<B>You are now a slime. Skreee!</B>"
 	. = new_slime
-	del(src)
+	qdel(src)
 
 /mob/living/carbon/human/proc/Blobize()
 	if (notransform)
@@ -397,7 +401,7 @@
 	icon = null
 	invisibility = 101
 	for(var/t in organs)	//this really should not be necessary
-		del(t)
+		qdel(t)
 
 	var/mob/living/simple_animal/corgi/new_corgi = new /mob/living/simple_animal/corgi (loc)
 	new_corgi.a_intent = "harm"
@@ -405,7 +409,7 @@
 
 	new_corgi << "<B>You are now a Corgi. Yap Yap!</B>"
 	. = new_corgi
-	del(src)
+	qdel(src)
 
 /mob/living/carbon/human/Animalize()
 
@@ -428,7 +432,7 @@
 	invisibility = 101
 
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 
 	var/mob/new_mob = new mobpath(src.loc)
 
@@ -438,7 +442,7 @@
 
 	new_mob << "You suddenly feel more... animalistic."
 	. = new_mob
-	del(src)
+	qdel(src)
 
 /mob/proc/Animalize()
 
@@ -456,7 +460,7 @@
 	new_mob << "You feel more... animalistic"
 
 	. = new_mob
-	del(src)
+	qdel(src)
 
 /* Certain mob types have problems and should not be allowed to be controlled by players.
  *

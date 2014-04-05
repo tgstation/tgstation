@@ -73,7 +73,6 @@
 /var/const/access_cent_living = 105//Living quarters.
 /var/const/access_cent_storage = 106//Generic storage areas.
 /var/const/access_cent_teleporter = 107//Teleporter.
-/var/const/access_cent_creed = 108//Creed's office.
 /var/const/access_cent_captain = 109//Captain's office/ID comp/AI.
 
 	//The Syndicate
@@ -83,29 +82,6 @@
 /obj/var/req_access_txt = "0"
 /obj/var/list/req_one_access = null
 /obj/var/req_one_access_txt = "0"
-
-/obj/New()
-	..()
-	//NOTE: If a room requires more than one access (IE: Morgue + medbay) set the req_acesss_txt to "5;6" if it requires 5 and 6
-	if(src.req_access_txt)
-		var/list/req_access_str = text2list(req_access_txt,";")
-		if(!req_access)
-			req_access = list()
-		for(var/x in req_access_str)
-			var/n = text2num(x)
-			if(n)
-				req_access += n
-
-	if(src.req_one_access_txt)
-		var/list/req_one_access_str = text2list(req_one_access_txt,";")
-		if(!req_one_access)
-			req_one_access = list()
-		for(var/x in req_one_access_str)
-			var/n = text2num(x)
-			if(n)
-				req_one_access += n
-
-
 
 //returns 1 if this mob has sufficient access to use this object
 /obj/proc/allowed(mob/M)
@@ -134,9 +110,25 @@
 	return null
 
 /obj/proc/check_access(obj/item/I)
+	//These generations have been moved out of /obj/New() because they were slowing down the creation of objects that never even used the access system.
+	if(!src.req_access)
+		src.req_access = list()
+		if(src.req_access_txt)
+			var/list/req_access_str = text2list(req_access_txt,";")
+			for(var/x in req_access_str)
+				var/n = text2num(x)
+				if(n)
+					req_access += n
 
-	if(!src.req_access && !src.req_one_access) //no requirements
-		return 1
+	if(!src.req_one_access)
+		src.req_one_access = list()
+		if(src.req_one_access_txt)
+			var/list/req_one_access_str = text2list(req_one_access_txt,";")
+			for(var/x in req_one_access_str)
+				var/n = text2num(x)
+				if(n)
+					req_one_access += n
+
 	if(!istype(src.req_access, /list)) //something's very wrong
 		return 1
 
@@ -189,7 +181,7 @@
 		if("Research Officer")
 			return list(access_cent_general, access_cent_specops, access_cent_medical, access_cent_teleporter, access_cent_storage)
 		if("Special Ops Officer")
-			return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_living, access_cent_storage, access_cent_creed)
+			return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_living, access_cent_storage)
 		if("Admiral")
 			return get_all_centcom_access()
 		if("Centcom Commander")
@@ -396,8 +388,6 @@
 			return "Code Blue"
 		if(access_cent_specops)
 			return "Code Black"
-		if(access_cent_creed)
-			return "Code Silver"
 		if(access_cent_captain)
 			return "Code Gold"
 
