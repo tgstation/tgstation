@@ -44,6 +44,8 @@
 
 	var/list/speech_buffer = list() // List of phrases said near it
 
+	var/mood = "" // To show its face
+
 	// slimes pass on genetic data, so all their offspring have the same "Friends",
 
 	///////////TIME FOR SUBSPECIES
@@ -66,6 +68,9 @@
 
 /mob/living/carbon/slime/regenerate_icons()
 	icon_state = "[colour] [is_adult ? "adult" : "baby"] slime"
+	overlays.Cut()
+	if (mood)
+		overlays += image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]")
 	..()
 
 /mob/living/carbon/slime/movement_delay()

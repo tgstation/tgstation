@@ -5,8 +5,6 @@
 	var/Discipline = 0 // if a slime has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
 	var/SStun = 0 // stun variable
 
-
-
 /mob/living/carbon/slime/Life()
 	set invisibility = 0
 	set background = BACKGROUND_ENABLED
@@ -24,11 +22,12 @@
 
 		handle_targets()
 
+		if (!ckey)
+			handle_speech_and_mood()
 
 	var/datum/gas_mixture/environment
 	if(src.loc)
 		environment = loc.return_air()
-
 
 	//Apparently, the person who wrote this code designed it so that
 	//blinded get reset each cycle and then get activated later in the
@@ -45,8 +44,6 @@
 
 	//Status updates, death etc.
 	handle_regular_status_updates()
-
-
 
 /mob/living/carbon/slime/proc/AIprocess()  // the master AI process
 
@@ -221,7 +218,6 @@
 
 	if(reagents) reagents.metabolize(src)
 
-
 	src.updatehealth()
 
 	return //TODO: DEFERRED
@@ -357,7 +353,6 @@
 		if(prob(10))
 			Discipline--
 
-
 	if(!client)
 
 		if(!canmove) return
@@ -371,7 +366,6 @@
 		if(Victim) return // if it's eating someone already, continue eating!
 
 		if(AIproc && SStun) return
-
 
 		var/hungry = 0 // determines if the slime is hungry
 		var/starving = 0 // determines if the slime is starving-hungry
@@ -402,7 +396,7 @@
 			if((hungry && !Leader) || starving) //Only add to the list if we need to
 				for(var/mob/living/L in view(7,src))
 
-					//Ignore other slimes, dead mobs and simple_animals
+					//Ignore other slimes, dead mobs, simple_animals and silicons
 					if(isslime(L) || L.stat == DEAD || isanimal(L) || issilicon(L))
 						continue
 
@@ -459,112 +453,6 @@
 				if(attacked > 0 || rabid)
 					Target = targets[1] //closest mob probably attacked it, so override Target and attack the nearest!
 
-		if (speech_buffer.len > 0)
-			var/who = speech_buffer[1] // Who said it?
-			var/phrase = speech_buffer[2] // What did they say?
-			if ((findtext(phrase, num2text(number)) || findtext(phrase, "slimes"))) // Talking to us
-				if (findtext(phrase, "friend")) // Debug
-					++Friends[who]
-				if (findtext(phrase, "hello") || findtext(phrase, "hi"))
-					say (pick("Hello...", "Hi..."))
-				else if (findtext(phrase, "follow"))
-					if (Leader)
-						if (Leader == who) // Already following him
-							say (pick("Yes...", "Lead..."))
-						else if (Friends[who] > Friends[Leader]) // VIVA
-							Leader = who
-							say ("Yes... I follow [who]...")
-						else
-							say ("No... I follow [Leader]...")
-					else
-						if (Friends[who] > 2)
-							Leader = who
-							say ("I follow...")
-						else // Not friendly enough
-							say ("No...")
-				else if (findtext(phrase, "stop"))
-					if (Victim) // We are asked to stop feeding
-						if (Friends[who] > 4)
-							Victim = null
-							if (Friends[who] < 7)
-								--Friends[who]
-								say ("Grrr...") // I'm angry but I do it
-							else
-								say ("Fine...")
-					else if (Leader) // We are asked to stop following
-						if (Leader == who)
-							say ("Yes... I'll stay...")
-							Leader = null
-						else
-							if (Friends[who] > Friends[Leader])
-								Leader = null
-								say ("Yes... I'll stop...")
-							else
-								say ("No... I'll keep following...")
-				else if (findtext(phrase, "kill")) // Will remove later
-					if (Friends[who] > 5)
-						rabid = 1
-			speech_buffer = list()
-		if(prob(1))
-			emote(pick("bounce","sway","light","vibrate","jiggle"))
-		else
-			var/t = 10
-			var/slimes_near = -1 // Don't count itself
-			var/friends_near = list()
-			for (var/mob/living/carbon/M in view(7,src))
-				if (isslime(M))
-					slimes_near += 1
-				if (M in Friends)
-					t += 20
-					friends_near += M
-			if (hungry) t += 10
-			if (starving) t += 20
-			if (prob(100) && prob(t))
-				var/phrases = list()
-				if (Target) phrases += "[Target]... looks tasty..."
-				if (starving)
-					phrases += "So... hungry..."
-					phrases += "Very... hungry..."
-					phrases += "Need... food..."
-					phrases += "Must... eat..."
-				if (hungry)
-					phrases += "Hungry..."
-					phrases += "Where is the food?"
-					phrases += "I want to eat..."
-				phrases += "Rawr..."
-				phrases += "Blop..."
-				if (rabid)
-					phrases += "Hrr..."
-					phrases += "Nhuu..."
-					phrases += "Unn..."
-				if (tame)
-					phrases += "Purr..."
-				if (attacked)
-					phrases += "Grrr..."
-				if (getToxLoss() > 30)
-					phrases += "Cold..."
-				if (getToxLoss() > 60)
-					phrases += "So... cold..."
-					phrases += "Very... cold..."
-				if (getToxLoss() > 90)
-					phrases += "..."
-					phrases += "C... c..."
-				if (amount_grown > 8 && !is_adult) phrases += "Soon I'll evolve..."
-				if (powerlevel > 3) phrases += "Bzzz..."
-				if (powerlevel > 5) phrases += "Zap..."
-				if (powerlevel > 8) phrases += "Zap... Bzz..."
-				if (slimes_near) phrases += "Brother..."
-				if (slimes_near > 1) phrases += "Brothers..."
-				if (!slimes_near)
-					phrases += "Lonely..."
-				for (var/M in friends_near)
-					phrases += "[M]... friend... [Friends[M]]..." // Debug info
-					if (hungry)
-						phrases += "[M]... I'm hungry..."
-				if (Friends.len > 0) phrases += "Friends are not food..."
-				
-				say (pick(phrases))
-
 		if(!Target)
 			if (Leader)
 				if(canmove && isturf(loc))
@@ -580,3 +468,135 @@
 		else
 			if(!AIproc)
 				spawn() AIprocess()
+
+/mob/living/carbon/slime/proc/handle_speech_and_mood()
+	//Mood starts here
+	var/newmood = ""
+	if (rabid) newmood = "angry"
+	else if (Target) newmood = "mischevous"
+
+	if (!newmood)
+		if (prob(1))
+			newmood = pick("sad", ":3", "pout")
+
+	if (mood == "sad" || mood == ":3" || mood == "pout" && !newmood)
+		if (prob(75)) newmood = mood
+
+	if (newmood != mood) // This is so we don't redraw them every time
+		mood = newmood
+		regenerate_icons()
+
+	//Speech understanding starts here
+	var/to_say
+	if (speech_buffer.len > 0)
+		var/who = speech_buffer[1] // Who said it?
+		var/phrase = speech_buffer[2] // What did they say?
+		if ((findtext(phrase, num2text(number)) || findtext(phrase, "slimes"))) // Talking to us
+			if (findtext(phrase, "friend")) // Debug
+				++Friends[who]
+			if (findtext(phrase, "hello") || findtext(phrase, "hi"))
+				to_say = pick("Hello...", "Hi...")
+			else if (findtext(phrase, "follow"))
+				if (Leader)
+					if (Leader == who) // Already following him
+						to_say = pick("Yes...", "Lead...", "Following...")
+					else if (Friends[who] > Friends[Leader]) // VIVA
+						Leader = who
+						to_say = "Yes... I follow [who]..."
+					else
+						to_say = "No... I follow [Leader]..."
+				else
+					if (Friends[who] > 2)
+						Leader = who
+						to_say = "I follow..."
+					else // Not friendly enough
+						to_say = pick("No...", "I won't follow...")
+			else if (findtext(phrase, "stop"))
+				if (Victim) // We are asked to stop feeding
+					if (Friends[who] > 4)
+						Victim = null
+						if (Friends[who] < 7)
+							--Friends[who]
+							to_say = "Grrr..." // I'm angry but I do it
+						else
+							to_say = "Fine..."
+				else if (Leader) // We are asked to stop following
+					if (Leader == who)
+						to_say = "Yes... I'll stay..."
+						Leader = null
+					else
+						if (Friends[who] > Friends[Leader])
+							Leader = null
+							to_say = "Yes... I'll stop..."
+						else
+							to_say = "No... I'll keep following..."
+			else if (findtext(phrase, "kill")) // Will remove later
+				if (Friends[who] > 5)
+					rabid = 1
+		speech_buffer = list()
+
+	//Speech starts here
+	if (to_say)
+		say (to_say)
+	else if(prob(1))
+		emote(pick("bounce","sway","light","vibrate","jiggle"))
+	else
+		var/t = 10
+		var/slimes_near = -1 // Don't count itself
+		var/friends_near = list()
+		for (var/mob/living/carbon/M in view(7,src))
+			if (isslime(M))
+				slimes_near += 1
+			if (M in Friends)
+				t += 20
+				friends_near += M
+		if (nutrition < 800) t += 10
+		if (nutrition < 300) t += 20
+		if (prob(100) && prob(t))
+			var/phrases = list()
+			if (Target) phrases += "[Target]... looks tasty..."
+			if (nutrition < 300)
+				phrases += "So... hungry..."
+				phrases += "Very... hungry..."
+				phrases += "Need... food..."
+				phrases += "Must... eat..."
+			else if (nutrition < 800)
+				phrases += "Hungry..."
+				phrases += "Where is the food?"
+				phrases += "I want to eat..."
+			phrases += "Rawr..."
+			phrases += "Blop..."
+			if (rabid)
+				phrases += "Hrr..."
+				phrases += "Nhuu..."
+				phrases += "Unn..."
+			if (tame || mood == ":3")
+				phrases += "Purr..."
+			if (attacked)
+				phrases += "Grrr..."
+			if (getToxLoss() > 30)
+				phrases += "Cold..."
+			if (getToxLoss() > 60)
+				phrases += "So... cold..."
+				phrases += "Very... cold..."
+			if (getToxLoss() > 90)
+				phrases += "..."
+				phrases += "C... c..."
+			if (Victim)
+				phrases += "Nom..."
+				phrases += "Tasty..."
+			if (amount_grown > 8 && !is_adult) phrases += "Soon I'll evolve..."
+			if (powerlevel > 3) phrases += "Bzzz..."
+			if (powerlevel > 5) phrases += "Zap..."
+			if (powerlevel > 8) phrases += "Zap... Bzz..."
+			if (mood == "sad") phrases += "Bored..."
+			if (slimes_near) phrases += "Brother..."
+			if (slimes_near > 1) phrases += "Brothers..."
+			if (!slimes_near)
+				phrases += "Lonely..."
+			for (var/M in friends_near)
+				phrases += "[M]... friend... [Friends[M]]..." // Debug info
+				if (nutrition < 750)
+					phrases += "[M]... I'm hungry..."
+			if (Friends.len > 0) phrases += "Friends are not food..."
+			say (pick(phrases))
