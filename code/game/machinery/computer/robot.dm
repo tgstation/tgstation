@@ -41,15 +41,13 @@
 		if(!can_control(user, R))
 			continue
 		robots++
-		dat += "[R.name] | [format_text(robot_area.name)] "
-		if(robot_area.name == "Space")
-			dat+= "([pos.x], [pos.y]) "
+		dat += "[R.name] | [format_text(robot_area.name)] |"
 		if(R.stat)
-			dat += "| Not Responding |"
+			dat += " Not Responding |"
 		else if (!R.canmove)
-			dat += "| Locked Down |"
+			dat += " Locked Down |"
 		else
-			dat += "| Operating Normally |"
+			dat += " Operating Normally |"
 		if (!R.canmove)
 		else if(R.cell)
 			dat += " Battery Installed ([R.cell.charge]/[R.cell.maxcharge]) |"
