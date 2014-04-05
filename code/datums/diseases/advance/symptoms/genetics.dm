@@ -6,7 +6,7 @@ DNA Saboteur
 	Very noticable.
 	Lowers resistance tremendously.
 	No changes to stage speed.
-	Decreases transmittablity temrendously.
+	Decreases transmittablity tremendously.
 	Fatal Level.
 
 Bonus
@@ -60,8 +60,8 @@ DNA Aide
 
 	Very very very very noticable.
 	Lowers resistance tremendously.
-	Decreases stage speed temrendously.
-	Decreases transmittablity temrendously.
+	Decreases stage speed tremendously.
+	Decreases transmittablity tremendously.
 	Fatal Level.
 
 Bonus
