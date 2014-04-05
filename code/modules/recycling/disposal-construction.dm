@@ -170,7 +170,7 @@
 			user << "You can only attach the [nicetype] if the floor plating is removed."
 			return
 
-
+		var/obj/structure/disposalpipe/CP = locate() in T
 
 		if(istype(I, /obj/item/weapon/wrench))
 			if(anchored)
@@ -182,7 +182,6 @@
 					density = 1
 				user << "You detach the [nicetype] from the underfloor."
 			else
-				var/obj/structure/disposalpipe/CP = locate() in T
 				if(ptype>=6 && ptype <= 8) // Disposal or outlet
 					if(CP) // There's something there
 						if(!istype(CP,/obj/structure/disposalpipe/trunk))
