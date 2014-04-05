@@ -9,6 +9,7 @@
 	var/mineral = "metal"
 	var/opening = 0
 	density = 1
+	opacity = 1
 
 /obj/structure/falsewall/New()
 	relativewall_neighbours()
@@ -50,28 +51,32 @@
 	if(opening)
 		return
 
+	opening = 1
 	if(density)
-		opening = 1
-		icon_state = "[mineral]fwall_open"
-		flick("[mineral]fwall_opening", src)
+		do_the_flick()
 		sleep(4)
-		src.density = 0
+		density = 0
 		SetOpacity(0)
-		opening = 0
+		update_icon(0)
 	else
-		opening = 1
-		flick("[mineral]fwall_closing", src)
-		icon_state = "[mineral]0"
+		do_the_flick()
 		density = 1
 		sleep(4)
 		SetOpacity(1)
-		src.relativewall()
-		opening = 0
+		update_icon()
+	opening = 0
 
-/obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
+/obj/structure/falsewall/proc/do_the_flick()
+	if(density)
+		flick("[mineral]fwall_opening", src)
+	else
+		flick("[mineral]fwall_closing", src)
+
+/obj/structure/falsewall/update_icon(relativewall = 1)//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	if(density)
 		icon_state = "[mineral]0"
-		src.relativewall()
+		if(relativewall)
+			relativewall()
 	else
 		icon_state = "[mineral]fwall_open"
 
@@ -137,29 +142,6 @@
 	desc = "A huge chunk of reinforced metal used to seperate rooms."
 	icon_state = "r_wall"
 
-/obj/structure/falsewall/reinforced/attack_hand(mob/user)
-	if(opening)
-		return
-
-	if(density)
-		opening = 1
-		// Open wall
-		icon_state = "frwall_open"
-		flick("frwall_opening", src)
-		sleep(5)
-		density = 0
-		SetOpacity(0)
-		opening = 0
-	else
-		opening = 1
-		icon_state = "r_wall"
-		flick("frwall_closing", src)
-		density = 1
-		sleep(5)
-		SetOpacity(1)
-		relativewall()
-		opening = 0
-
 /obj/structure/falsewall/reinforced/ChangeToWall(delete = 1)
 	var/turf/T = get_turf(src)
 	T.ChangeTurf(/turf/simulated/wall/r_wall)
@@ -167,7 +149,13 @@
 		qdel(src)
 	return T
 
-/obj/structure/falsewall/reinforced/update_icon()
+/obj/structure/falsewall/reinforced/do_the_flick()
+	if(density)
+		flick("frwall_opening", src)
+	else
+		flick("frwall_closing", src)
+
+/obj/structure/falsewall/reinforced/update_icon(relativewall = 1)
 	if(density)
 		icon_state = "rwall0"
 		src.relativewall()
