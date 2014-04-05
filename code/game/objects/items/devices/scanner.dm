@@ -19,6 +19,17 @@
 	var/module_capacity = 2
 	var/list/obj/item/weapon/scanner_module/modules = list()
 	var/panel_open = 0
+	var/logging = 0
+	var/list/log = list()
+	var/scanning = 0
+
+
+/obj/item/device/scanner/proc/add_log(var/msg, var/mob/user, var/broadcast = 1)
+	if(broadcast && user)
+		user.show_message(msg,1)
+	if(logging)
+		log += "&nbsp;&nbsp;[msg]"
+
 
 
 /obj/item/device/scanner/attackby(obj/item/O, mob/user)
@@ -64,6 +75,9 @@
 
 //TODO: stupid check
 /obj/item/device/scanner/afterattack(atom/A, mob/user as mob, proximity)
+	if(scanning)
+		return
+
 	if(panel_open == 1)
 		user << "<span class='notice'>You cannot use \the [src]. The module panel is still open.</span>"
 		return
@@ -72,8 +86,38 @@
 		user << "<span class='notice'>No scanner modules installed.</span>"
 
 	for(var/obj/item/weapon/scanner_module/mod in modules)
-		mod.scan(A, user)
+		mod.scan(A, user, src)
 
 	user.visible_message("<span class='alert'>[user] has used \the [src] on \the [A].</span>")
 	src.add_fingerprint(user)
 
+/obj/item/device/scanner/attack_self(var/mob/user)
+	if(logging)
+		if(log.len && !scanning)
+
+			user << "<span class='notice'>Printing report, please wait...</span>"
+			scanning = 1
+			spawn(60)
+
+				// Create our paper
+				var/obj/item/weapon/paper/P = new(get_turf(src))
+				P.name = "paper- 'Scanner Report'"
+				P.info = "<center><font size='6'><B>Scanner Report</B></font></center><HR><BR>"
+				P.info += list2text(log, "<BR>")
+				P.info += "<HR><B>Notes:</B><BR>"
+				P.info_links = P.info
+
+				if(ismob(loc))
+					var/mob/M = loc
+					M.put_in_hands(P)
+					M << "<span class='notice'>Report printed. Log cleared.<span>"
+
+				scanning = 0
+				// Clear the logs
+				log = list()
+		else
+			user << "<span class='notice'>The scanner has no logs or is in use.</span>"
+	else
+		return
+
+	return
