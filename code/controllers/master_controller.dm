@@ -166,28 +166,28 @@ datum/controller/game_controller/proc/process()
 
 				//MOBS
 				timer = world.timeofday
-				process_mobs()
+				processMobs()
 				mobs_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
 				//DISEASES
 				timer = world.timeofday
-				process_diseases()
+				processDiseases()
 				diseases_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
 				//MACHINES
 				timer = world.timeofday
-				process_machines()
+				processMachines()
 				machines_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
 				//OBJECTS
 				timer = world.timeofday
-				process_objects()
+				processObjects()
 				objects_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
@@ -195,28 +195,28 @@ datum/controller/game_controller/proc/process()
 				//PIPENETS
 				if(!pipe_processing_killed)
 					timer = world.timeofday
-					process_pipenets()
+					processPipenets()
 					networks_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
 				//POWERNETS
 				timer = world.timeofday
-				process_powernets()
+				processPowernets()
 				powernets_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
 				//NANO UIS
 				timer = world.timeofday
-				process_nano()
+				processNano()
 				nano_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
 				//EVENTS
 				timer = world.timeofday
-				process_events()
+				processEvents()
 				events_cost = (world.timeofday - timer) / 10
 
 				//TICKER
@@ -241,95 +241,85 @@ datum/controller/game_controller/proc/process()
 			else
 				sleep(10)
 
-datum/controller/game_controller/proc/process_mobs()
-	var/i = 1
-	while(i<=mob_list.len)
-		var/mob/M = mob_list[i]
-		if(M)
-			last_thing_processed = M.type
-			M.Life()
-			i++
+/datum/controller/game_controller/proc/processMobs()
+	for (var/mob/Mob in mob_list)
+		if (Mob)
+			last_thing_processed = Mob.type
+			Mob.Life()
 			continue
-		mob_list.Cut(i,i+1)
 
-datum/controller/game_controller/proc/process_diseases()
-	var/i = 1
-	while(i<=active_diseases.len)
-		var/datum/disease/Disease = active_diseases[i]
+		mob_list = mob_list - Mob
+
+/datum/controller/game_controller/proc/processDiseases()
+	for (var/datum/disease/Disease in active_diseases)
 		if(Disease)
 			last_thing_processed = Disease.type
 			Disease.process()
-			i++
 			continue
-		active_diseases.Cut(i,i+1)
 
-datum/controller/game_controller/proc/process_machines()
-	var/i = 1
-	while(i<=machines.len)
-		var/obj/machinery/Machine = machines[i]
-		if(Machine && Machine.loc)
-			last_thing_processed = Machine.type
-			if(Machine.process() != PROCESS_KILL)
-				if(Machine)
-					if(Machine.use_power)
-						Machine.auto_use_power()
-					i++
+		active_diseases = active_diseases - Disease
+
+/datum/controller/game_controller/proc/processMachines()
+	for (var/obj/machinery/Machinery in machines)
+		if (Machinery && Machinery.loc)
+			last_thing_processed = Machinery.type
+
+			if(Machinery.process() != PROCESS_KILL)
+				if (Machinery) // Why another check?
+					if (Machinery.use_power)
+						Machinery.auto_use_power()
+
 					continue
-		machines.Cut(i,i+1)
 
-datum/controller/game_controller/proc/process_objects()
-	var/i = 1
-	while(i<=processing_objects.len)
-		var/obj/Object = processing_objects[i]
-		if(Object && Object.loc)
+		machines = machines - Machinery
+
+/datum/controller/game_controller/proc/processObjects()
+	for (var/obj/Object in processing_objects)
+		if (Object && Object.loc)
 			last_thing_processed = Object.type
 			Object.process()
-			i++
 			continue
-		processing_objects.Cut(i,i+1)
 
-datum/controller/game_controller/proc/process_pipenets()
+		processing_objects = processing_objects - Object
+
+/datum/controller/game_controller/proc/processPipenets()
 	last_thing_processed = /datum/pipe_network
-	var/i = 1
-	while(i<=pipe_networks.len)
-		var/datum/pipe_network/Network = pipe_networks[i]
-		if(Network)
-			Network.process()
-			i++
-			continue
-		pipe_networks.Cut(i,i+1)
 
-datum/controller/game_controller/proc/process_powernets()
+	for (var/datum/pipe_network/Pipe_Network in pipe_networks)
+		if(Pipe_Network)
+			Pipe_Network.process()
+			continue
+
+		pipe_networks = pipe_networks - Pipe_Network
+
+/datum/controller/game_controller/proc/processPowernets()
 	last_thing_processed = /datum/powernet
-	var/i = 1
-	while(i<=powernets.len)
-		var/datum/powernet/Powernet = powernets[i]
-		if(Powernet)
+
+	for (var/datum/powernet/Powernet in powernets)
+		if (Powernet)
 			Powernet.reset()
-			i++
 			continue
-		powernets.Cut(i,i+1)
 
-datum/controller/game_controller/proc/process_nano()
-	var/i = 1
-	while(i<=nanomanager.processing_uis.len)
-		var/datum/nanoui/ui = nanomanager.processing_uis[i]
-		if(ui)
-			ui.process()
-			i++
+		powernets = powernets - Powernet
+
+/datum/controller/game_controller/proc/processNano()
+	for (var/datum/nanoui/Nanoui in nanomanager.processing_uis)
+		if (Nanoui)
+			Nanoui.process()
 			continue
-		nanomanager.processing_uis.Cut(i,i+1)
 
-datum/controller/game_controller/proc/process_events()
+		nanomanager.processing_uis = nanomanager.processing_uis - Nanoui
+
+/datum/controller/game_controller/proc/processEvents()
 	last_thing_processed = /datum/event
-	var/i = 1
-	while(i<=events.len)
-		var/datum/event/Event = events[i]
-		if(Event)
+
+	for (var/datum/event/Event in events)
+		if (Event)
 			Event.process()
-			i++
 			continue
-		events.Cut(i,i+1)
+
+		events = events - Event
+
 	checkEvent()
 
 datum/controller/game_controller/proc/Recover()		//Mostly a placeholder for now.
