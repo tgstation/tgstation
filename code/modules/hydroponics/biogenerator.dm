@@ -57,7 +57,7 @@
 			user.unEquip(O)
 			O.loc = src
 			beaker = O
-			user << "<span class='notice'>You add the container to the machine</span>"
+			user << "<span class='notice'>You add the container to the machine.</span>"
 			updateUsrDialog()
 	else if(processing)
 		user << "<span class='warning'>The biogenerator is currently processing.</span>"
