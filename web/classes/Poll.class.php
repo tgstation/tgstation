@@ -92,19 +92,29 @@ class Poll {
 
 	public function GetVotesForOption() {
 		global $db;
-		$res = $db->Execute('SELECT COUNT(*) as count, optionid FROM erro_poll_vote WHERE pollid=? GROUP BY optionid', array($this->ID));
-		if (!$res)
+		$_res = $db->Execute('SELECT id FROM erro_poll_option WHERE pollid=?', array($this->ID));
+		if(!$_res)
 			return null;
 		$results = array();
 		$results['total'] = 0;
 		$results['winner'] = 0;
-		foreach ($res as $row) {
-			$optID = intval($row['optionid']);
-			$optCount = intval($row['count']);
-			if ($optCount > $results['winner'])
-				$results['winner'] = $optCount;
-			$results[$optID] = $optCount;
-			$results['total'] += $optCount;
+		$res = $db->Execute('SELECT COUNT(*) as count, optionid FROM erro_poll_vote WHERE pollid=? GROUP BY optionid', array($this->ID));
+		if (!$res)
+			return null;
+		foreach ($_res as $_row)
+		{
+			$optID = intval($_row['id']);
+			foreach ($res as $row) {
+				if($optID != intval($row['optionid']))
+					continue;
+				$optCount = intval($row['count']);
+				if ($optCount > $results['winner'])
+					$results['winner'] = $optCount;
+				$results[$optID] = $optCount;
+				$results['total'] += $optCount;
+			}
+			if(!array_key_exists($optID, $results))
+				$results[$optID] = 0;
 		}
 		return $results;
 	}
