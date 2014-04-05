@@ -20,7 +20,7 @@ REVIVAL_BRAIN_LIFE -1
 
 ### RENAMING ###
 
-# Whether cyborgs can rename themselves at roundstart or when built.  Has no effect on roboticists renaming cyborgs the normal way.  Set to 0 to disable self-renaming.
+#Uncomment to allow cyborgs to rename themselves at roundstart.  Has no effect on roboticists renaming cyborgs the normal way.
 #RENAME_CYBORG
 
 ### MOB MOVEMENT ###
