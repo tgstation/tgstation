@@ -555,7 +555,10 @@ obj/structure/door_assembly
 				door = new src.airlock_type( src.loc )
 			//door.req_access = src.req_access
 			door.electronics = src.electronics
-			door.req_access = src.electronics.conf_access
+			if(src.electronics.use_one_access)
+				door.req_one_access = src.electronics.conf_access
+			else
+				door.req_access = src.electronics.conf_access
 			if(created_name)
 				door.name = created_name
 			src.electronics.loc = door
