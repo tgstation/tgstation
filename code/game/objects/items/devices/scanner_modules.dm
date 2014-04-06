@@ -88,7 +88,7 @@
 
 //VIRUS SCANNER MODULE
 /obj/item/weapon/scanner_module/virus_module
-	name = "health scanner module"
+	name = "virus scanner module"
 	scan_name = "Diseases:"
 	desc = "A scanner module that displays diseases"
 
@@ -99,13 +99,16 @@
 	if(!..())
 		return
 
+	var/virus_detected = 0
 	var/mob/living/M = A
 
 	for(var/datum/disease/D in M.viruses)
 		if(!D.hidden[SCANNER])
 			scnr.add_log(text("<span class='warning'><b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span>"), user)
-
-
+			virus_detected = 1
+	if(!virus_detected)
+		scnr.add_log("<span class='notice'> No disease detected</span>")
+	return
 //ATMOS SCANNER MODULE
 /obj/item/weapon/scanner_module/atmos_module
 	name = "atmosphere scanner module"

@@ -84,11 +84,13 @@
 
 	if(modules.len == 0)
 		user << "<span class='notice'>No scanner modules installed.</span>"
+		return
+
+	user.visible_message("<span class='alert'>[user] has used \the [src] on \the [A].</span>")
 
 	for(var/obj/item/weapon/scanner_module/mod in modules)
 		mod.scan(A, user, src)
 
-	user.visible_message("<span class='alert'>[user] has used \the [src] on \the [A].</span>")
 	src.add_fingerprint(user)
 
 /obj/item/device/scanner/attack_self(var/mob/user)
@@ -132,3 +134,117 @@
 		return
 
 	return
+
+//MEDBAY SCANNER
+/obj/item/device/scanner/medbay_scanner
+	name = "medbay scanner"
+	desc = "A 2 slot scanner, usually used by doctors to scan patients."
+	icon_state = "health"
+	item_state = "analyzer"
+	module_capacity = 2
+	logging = 0
+	origin_tech = "magnets=1;engineering=1"
+
+/obj/item/device/scanner/medbay_scanner/full
+
+/obj/item/device/scanner/medbay_scanner/full/New()
+	..()
+
+	modules += new /obj/item/weapon/scanner_module/health_module
+	modules += new /obj/item/weapon/scanner_module/virus_module
+
+/obj/item/device/scanner/medbay_scanner/advanced
+	name = "advanced medbay scanner"
+	desc = "A 3 slot scanner, usually used by doctors to scan patients."
+	origin_tech = "magnets=2;engineering=2"
+	module_capacity = 3
+
+/obj/item/device/scanner/medbay_scanner/advanced/full
+
+/obj/item/device/scanner/medbay_scanner/advanced/full/New()
+	..()
+
+	modules += new /obj/item/weapon/scanner_module/health_module
+	modules += new /obj/item/weapon/scanner_module/virus_module
+	modules += new /obj/item/weapon/scanner_module/blood_reagent_module
+
+//DETECTIVE SCANNER
+/obj/item/device/scanner/detective_scanner
+	name = "forensic scanner"
+	desc = "A 4 slot scanner, used by the detective to scan objects for traces of the murderer."
+	icon_state = "forensic1"
+	item_state = "electronic"
+	module_capacity = 4
+	logging = 1
+	origin_tech = "magnets=2;engineering=3"
+
+/obj/item/device/scanner/detective_scanner/full
+
+/obj/item/device/scanner/detective_scanner/full/New()
+	..()
+
+	modules += new /obj/item/weapon/scanner_module/fingerprint_module
+	modules += new /obj/item/weapon/scanner_module/fiber_module
+	modules += new /obj/item/weapon/scanner_module/blood_dna_module
+	modules += new /obj/item/weapon/scanner_module/reagent_module
+
+/obj/item/device/scanner/detective_scanner/advanced
+	name = "advanced forensic scanner"
+	desc = "A 5 slot scanner, used by the detective to scan objects for traces of the murderer."
+	origin_tech = "magnets=3;engineering=3"
+	module_capacity = 5
+
+/obj/item/device/scanner/detective_scanner/advanced/full
+
+/obj/item/device/scanner/detective_scanner/advanced/full/New()
+	..()
+
+	modules += new /obj/item/weapon/scanner_module/fingerprint_module
+	modules += new /obj/item/weapon/scanner_module/fiber_module
+	modules += new /obj/item/weapon/scanner_module/blood_dna_module
+	modules += new /obj/item/weapon/scanner_module/reagent_module
+	modules += new /obj/item/weapon/scanner_module/blood_reagent_module
+
+//ENGINEERING SCANNER
+/obj/item/device/scanner/engineering_scanner
+	name = "engineering scanner"
+	desc = "A 2 slot scanner designed for a dangerous workplace."
+	origin_tech = "magnets=2;engineering=2"
+	module_capacity = 2
+
+/obj/item/device/scanner/engineering_scanner/full/New()
+	..()
+
+	modules += new /obj/item/weapon/scanner_module/atmos_module
+	modules += new /obj/item/weapon/scanner_module/electric_module
+
+//MINING SCANNER mining + empty slot
+/obj/item/device/scanner/mining_scanner
+	name = "mining scanner"
+	desc = "A 2 slot scanner designed to improve the mining experience."
+	icon_state = "mining"
+	item_state = "analyzer"
+	module_capacity = 2
+	logging = 0
+
+/obj/item/device/scanner/mining_scanner/full/New()
+	..()
+
+	modules += new /obj/item/weapon/scanner_module/mining_module
+
+//BLOOD SCANNER
+/obj/item/device/scanner/blood_scanner
+	name = "blood scanner"
+	desc = "A 1 slot scanner designed to replace the old mass spectrometers."
+	icon_state = "spectrometer"
+	item_state = "analyzer"
+	module_capacity = 1
+	logging = 0
+
+/obj/item/device/scanner/blood_scanner/full/New()
+	..()
+
+	modules += new /obj/item/weapon/scanner_module/blood_reagent_module
+
+
+
