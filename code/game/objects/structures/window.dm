@@ -31,7 +31,8 @@
 // This should result in the same materials used to make the window.
 /obj/structure/window/proc/destroy()
 	for(var/i=0;i<sheets;i++)
-		new shardtype(loc)
+		var /obj/item/weapon/shard/Shard = getFromPool(shardtype)
+		Shard.loc = loc
 		if(reinf)
 			new /obj/item/stack/rods(loc)
 	qdel(src)
