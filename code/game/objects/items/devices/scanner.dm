@@ -92,6 +92,17 @@
 	src.add_fingerprint(user)
 
 /obj/item/device/scanner/attack_self(var/mob/user)
+	if(scanning)
+		return
+
+	if(panel_open == 1)
+		user << "<span class='notice'>You cannot use \the [src]. The module panel is still open.</span>"
+		return
+
+	for(var/obj/item/weapon/scanner_module/mod in modules)
+		if(mod.scan_on_attack_self)
+			mod.scan(user, user, src)
+
 	if(logging)
 		if(log.len && !scanning)
 

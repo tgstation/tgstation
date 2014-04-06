@@ -8,6 +8,7 @@
 
 	var/range = 1
 	var/scan_name = "dummy scan"
+	var/scan_on_attack_self = 0
 
 /obj/item/weapon/scanner_module/proc/scan(var/atom/A, var/mob/user, var/obj/item/device/scanner/scnr)
 
@@ -20,6 +21,7 @@
 //MEDBAY SCANNER MODULE
 /obj/item/weapon/scanner_module/health_module
 	name = "health scanner module"
+	desc = "A scanner module that displays and analyzes the health of the scanned human"
 	scan_name = "Health Scan Results:"
 
 /obj/item/weapon/scanner_module/health_module/scan(var/atom/A, var/mob/user, var/obj/item/device/scanner/scnr)
@@ -73,9 +75,7 @@
 	if (M.getCloneLoss())
 		scnr.add_log(text("<span class='alert'>Subject appears to have been imperfectly cloned.</span>"), user)
 
-	for(var/datum/disease/D in M.viruses)
-		if(!D.hidden[SCANNER])
-			scnr.add_log(text("<span class='warning'><b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span>"), user)
+
 
 	if (M.reagents && M.reagents.get_reagent_amount("inaprovaline"))
 		scnr.add_log(text("<span class='notice'>Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals.</span>"), user)
@@ -86,30 +86,83 @@
 	else if (M.getBrainLoss() >= 10)
 		scnr.add_log(text("<span class='warning'>Significant brain damage detected. Subject may have had a concussion.</span>"), user)
 
-//ATMOS SCANNER MODULE
-/obj/item/weapon/scanner_module/atmos_module
-	name = "atmosphere scanner module"
-	range = 1
-	scan_name = "Atmosphere Scan Results:"
+//VIRUS SCANNER MODULE
+/obj/item/weapon/scanner_module/virus_module
+	name = "health scanner module"
+	scan_name = "Diseases:"
+	desc = "A scanner module that displays diseases"
 
-/obj/item/weapon/scanner_module/atmos_module/scan(var/atom/A, var/mob/user, var/obj/item/device/scanner/scnr)
-
-	var/turf/location = A
-	if (!( istype(location, /turf) ))
+/obj/item/weapon/scanner_module/virus_module/scan(var/atom/A, var/mob/user, var/obj/item/device/scanner/scnr)
+	if(!istype(A, /mob/living/))
 		return
 
 	if(!..())
 		return
 
+	var/mob/living/M = A
+
+	for(var/datum/disease/D in M.viruses)
+		if(!D.hidden[SCANNER])
+			scnr.add_log(text("<span class='warning'><b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span>"), user)
+
+
+//ATMOS SCANNER MODULE
+/obj/item/weapon/scanner_module/atmos_module
+	name = "atmosphere scanner module"
+	range = 1
+	scan_name = "Atmosphere Scan Results:"
+	scan_on_attack_self = 1
+	desc = "A scanner module that analyzes the atmosphere or the gasses in a container"
+
+/obj/item/weapon/scanner_module/atmos_module/scan(var/atom/A, var/mob/user, var/obj/item/device/scanner/scnr)
+
+	var/turf/location = A
+	if (!( istype(location, /turf) ))
+		location = A.loc
+		if (!location || !( istype(location, /turf) ))
+			return
+
+	if(!..())
+		return
+
+	//check if scannable object
+	if(istype(A, /obj/item/weapon/flamethrower))
+		var/obj/item/weapon/flamethrower/F = A
+		if(F.ptank)
+			atmosmodule_scan(F.ptank.air_contents, user, scnr)
+		return
+
+	if (istype(A, /obj/item/weapon/tank))
+		var/obj/item/weapon/tank/T = A
+		atmosmodule_scan(T.air_contents, user, scnr)
+		return
+
+	if (istype(A, /obj/machinery/portable_atmospherics))
+		var/obj/machinery/portable_atmospherics/T = A
+		atmosmodule_scan(T.air_contents, user, scnr)
+		return
+
+	if (istype(A, /obj/machinery/atmospherics/pipe))
+		var/obj/machinery/atmospherics/pipe/T = A
+		atmosmodule_scan(T.parent.air, user, scnr)
+		return
+
+	if (istype(A, /obj/machinery/power/rad_collector))
+		var/obj/machinery/power/rad_collector/T = A
+		if(T.P)
+			atmosmodule_scan(T.P.air_contents, user, scnr)
+		return
+
+	//scan turf atmos
 	var/datum/gas_mixture/environment = location.return_air()
 
 	var/pressure = environment.return_pressure()
 	var/total_moles = environment.total_moles()
 
 	if(abs(pressure - ONE_ATMOSPHERE) < 10)
-		scnr.add_log("\blue Pressure: [round(pressure,0.1)] kPa", user)
+		scnr.add_log("<span class='notice'> Pressure: [round(pressure,0.1)] kPa </span>", user)
 	else
-		scnr.add_log("\red Pressure: [round(pressure,0.1)] kPa", user)
+		scnr.add_log("<span class='warning'> Pressure: [round(pressure,0.1)] kPa </span>", user)
 	if(total_moles)
 		var/o2_concentration = environment.oxygen/total_moles
 		var/n2_concentration = environment.nitrogen/total_moles
@@ -118,28 +171,58 @@
 
 		var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
 		if(abs(n2_concentration - N2STANDARD) < 20)
-			scnr.add_log("\blue Nitrogen: [round(n2_concentration*100)]%", user)
+			scnr.add_log("<span class='notice'> Nitrogen: [round(n2_concentration*100)]% </span>", user)
 		else
-			scnr.add_log("\red Nitrogen: [round(n2_concentration*100)]%", user)
+			scnr.add_log("<span class='alert'> Nitrogen: [round(n2_concentration*100)]% </span>", user)
 
 		if(abs(o2_concentration - O2STANDARD) < 2)
-			scnr.add_log("\blue Oxygen: [round(o2_concentration*100)]%", user)
+			scnr.add_log("<span class='notice'> Oxygen: [round(o2_concentration*100)]% </span>", user)
 		else
-			scnr.add_log("\red Oxygen: [round(o2_concentration*100)]%", user)
+			scnr.add_log("<span class='alert'> Oxygen: [round(o2_concentration*100)]% </span>", user)
 
 		if(co2_concentration > 0.01)
-			scnr.add_log("\red CO2: [round(co2_concentration*100)]%", user)
+			scnr.add_log("<span class='alert'> CO2: [round(co2_concentration*100)]% </span>", user)
 		else
-			scnr.add_log("\blue CO2: [round(co2_concentration*100)]%", user)
+			scnr.add_log("<span class='notice'> CO2: [round(co2_concentration*100)]% </span>", user)
 
 		if(plasma_concentration > 0.01)
-			scnr.add_log("\red Plasma: [round(plasma_concentration*100)]%", user)
+			scnr.add_log("<span class='alert'> Plasma: [round(plasma_concentration*100)]% </span>", user)
 
 		if(unknown_concentration > 0.01)
-			scnr.add_log("\red Unknown: [round(unknown_concentration*100)]%", user)
+			scnr.add_log("<span class='alert'> Unknown: [round(unknown_concentration*100)]% </span>", user)
 
-		scnr.add_log("\blue Temperature: [round(environment.temperature-T0C)]&deg;C", user)
+		scnr.add_log("<span class='notice'> Temperature: [round(environment.temperature-T0C)]&deg;C </span>", user)
 
+	return
+
+
+/obj/item/weapon/scanner_module/atmos_module/proc/atmosmodule_scan(var/datum/gas_mixture/air_contents, mob/user, var/obj/item/device/scanner/scnr)
+	var/pressure = air_contents.return_pressure()
+	var/total_moles = air_contents.total_moles()
+
+	if(total_moles>0)
+		var/o2_concentration = air_contents.oxygen/total_moles
+		var/n2_concentration = air_contents.nitrogen/total_moles
+		var/co2_concentration = air_contents.carbon_dioxide/total_moles
+		var/plasma_concentration = air_contents.toxins/total_moles
+
+		var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
+		scnr.add_log("<span class='notice'> Pressure: [round(pressure,0.1)] kPa </span>", user)
+		scnr.add_log("<span class='notice'> Nitrogen: [round(n2_concentration*100)]% </span>", user)
+
+		scnr.add_log("<span class='notice'> Oxygen: [round(o2_concentration*100)]% </span>", user)
+
+		scnr.add_log("<span class='notice'> CO2: [round(co2_concentration*100)]% </span>", user)
+
+		scnr.add_log("<span class='notice'> Plasma: [round(plasma_concentration*100)]% </span>", user)
+
+		if(unknown_concentration>0.01)
+			scnr.add_log("<span class='alert'> Unknown: [round(unknown_concentration*100)]% </span>", user)
+
+		scnr.add_log("<span class='notice'> Temperature: [round(air_contents.temperature-T0C)]&deg;C </span>", user)
+
+	else
+		scnr.add_log("<span class='notice'> No atmosphere detected! </span>", user)
 	return
 
 //BLOOD DNA MODULE
@@ -147,6 +230,7 @@
 	name = "blood scanner module"
 	range = 1
 	scan_name = "Blood:"
+	desc = "A scanner module that determines the DNA after scanning blood"
 
 /obj/item/weapon/scanner_module/blood_dna_module/scan(var/atom/A, var/mob/user, var/obj/item/device/scanner/scnr)
 	if(!..())
@@ -179,4 +263,194 @@
 					blood_detected = 1
 	if(!blood_detected)
 		scnr.add_log("<span class='notice'>No blood detected.</span>", user)
+	return
+
+//REAGENT MODULE
+/obj/item/weapon/scanner_module/reagent_module
+	name = "reagent scanner module"
+	range = 1
+	scan_name = "Detected Reagents:"
+	desc = "A scanner module that analyzes reagents and their amounts in a scanned container"
+
+/obj/item/weapon/scanner_module/reagent_module/scan(var/atom/A, var/mob/user, var/obj/item/device/scanner/scnr)
+	if(ismob(A))
+		return
+
+	if(!..())
+		return
+
+	var/reagent_detected = 0
+
+	// Only get reagents from non-mobs.
+	if(A.reagents && A.reagents.reagent_list.len)
+
+		for(var/datum/reagent/R in A.reagents.reagent_list)
+			scnr.add_log("<span class='notice'>[R.name] ([R.volume] units)</span>", user)
+			reagent_detected = 1
+
+	if(!reagent_detected)
+		scnr.add_log("<span class='notice'>No reagents detected.</span>", user)
+	return
+
+//BLOOD REAGENT MODULE
+/obj/item/weapon/scanner_module/blood_reagent_module
+	name = "blood reagent scanner module"
+	range = 1
+	scan_name = "Detected Reagent Traces in Blood:"
+	desc = "A scanner module that analyzes traces of reagents found in blood"
+
+/obj/item/weapon/scanner_module/blood_reagent_module/scan(var/atom/A, var/mob/user, var/obj/item/device/scanner/scnr)
+	if(!..())
+		return
+
+	var/reagent_detected = 0
+	var/blood_found = 0
+
+	if(ismob(A))
+		if(A.reagents && A.reagents.reagent_list.len)
+			for(var/datum/reagent/R in A.reagents.reagent_list)
+				scnr.add_log("<span class='notice'>[R.name] ([R.volume] units)</span>", user)
+				reagent_detected = 1
+				blood_found = 1
+
+
+	if(!ismob(A))
+		// Only get reagents from non-mobs.
+		if(A.reagents && A.reagents.reagent_list.len)
+
+			for(var/datum/reagent/R in A.reagents.reagent_list)
+				var/list/blood_traces = list()
+				// Get blood data from the blood reagent.
+				if(istype(R, /datum/reagent/blood))
+					blood_found = 1
+					if(R.data["blood_DNA"] && R.data["blood_type"])
+						blood_traces = params2list(R.data["trace_chem"])
+				for(var/T in blood_traces)
+					scnr.add_log("<span class='notice'>[T] ([blood_traces[T]] units)</span>", user)
+					reagent_detected = 1
+
+	if(!blood_found)
+		scnr.add_log("<span class='notice'>No blood detected.</span>", user)
+		return
+	if(!reagent_detected)
+		scnr.add_log("<span class='notice'>No reagents detected.</span>", user)
+	return
+
+//FINGERPRINT MODULE
+/obj/item/weapon/scanner_module/fingerprint_module
+	name = "fingerprint scanner module"
+	range = 1
+	scan_name = "Detected Fingerprints:"
+	desc = "A scanner module that detects fingerprints on the scanned object"
+
+/obj/item/weapon/scanner_module/fingerprint_module/scan(var/atom/A, var/mob/user, var/obj/item/device/scanner/scnr)
+	if(!..())
+		return
+
+	var/prints_detected = 0
+	if(ishuman(A))
+
+		var/mob/living/carbon/human/H = A
+		if (istype(H.dna, /datum/dna) && !H.gloves)
+			scnr.add_log("<span class='notice'>[md5(H.dna.uni_identity)]</span>", user)
+			prints_detected = 1
+
+	else if(!ismob(A))
+		if(A.fingerprints && A.fingerprints.len)
+			for(var/finger in A.fingerprints)
+				scnr.add_log("<span class='notice'>[finger]</span>", user)
+				prints_detected = 1
+
+	if(!prints_detected)
+		scnr.add_log("<span class='notice'>No prints detected</span>", user)
+
+	return
+
+//FIBER MODULE
+/obj/item/weapon/scanner_module/fiber_module
+	name = "fiber scanner module"
+	range = 1
+	scan_name = "Detected Fibers:"
+	desc = "A scanner module that detects fibers of clothing on the scanned object"
+
+/obj/item/weapon/scanner_module/fiber_module/scan(var/atom/A, var/mob/user, var/obj/item/device/scanner/scnr)
+	if(!..())
+		return
+
+	var/fibers_detected = 0
+
+	if(A.suit_fibers && A.suit_fibers.len)
+		for(var/fiber in A.suit_fibers)
+			scnr.add_log("[fiber]", user)
+			fibers_detected = 1
+
+	if(!fibers_detected)
+		scnr.add_log("<span class='notice'>No fibers detected</span>", user)
+
+	return
+
+//Electric MODULE
+/obj/item/weapon/scanner_module/electric_module
+	name = "electric scanner module"
+	range = 1
+	scan_name = "Cable Scan:"
+	desc = "A scanner module that connects to a power cable and reads the available power"
+
+/obj/item/weapon/scanner_module/electric_module/scan(var/atom/A, var/mob/user, var/obj/item/device/scanner/scnr)
+
+	if(!istype(A, /obj/structure/cable))
+		return
+
+	if(!..())
+		return
+
+	var/obj/structure/cable/C = A
+
+	var/datum/powernet/PN = C.get_powernet()		// find the powernet
+
+	if(PN && (PN.avail > 0))		// is it powered?
+		scnr.add_log("<span class='notice'>[PN.avail]W in power network.</span>", user)
+	else
+		scnr.add_log("<span class='notice'>The cable is not powered.</span>", user)
+
+	return
+
+//MINING MODULE
+/obj/item/weapon/scanner_module/mining_module
+	name = "mining scanner module"
+	range = 1
+	scan_name = "Mining Scan in progress"
+	scan_on_attack_self = 1
+	desc = "A scanner module that checks surrounding rock for useful minerals, it can also be used to stop gibtonite detonations. Requires you to wear mesons to work properly"
+	var/cooldown = 0
+
+/obj/item/weapon/scanner_module/mining_module/scan(var/atom/A, var/mob/user, var/obj/item/device/scanner/scnr)
+
+	if(!..())
+		return
+
+	if(!user.client)
+		return
+	if(!cooldown)
+		cooldown = 1
+		spawn(40)
+			cooldown = 0
+		var/client/C = user.client
+		var/list/L = list()
+		var/turf/simulated/mineral/M
+		for(M in range(7, user))
+			if(M.scan_state)
+				L += M
+		if(!L.len)
+			scnr.add_log("<span class='notice'>Nothing was detected nearby.</span>", user)
+			return
+		else
+			for(M in L)
+				var/turf/T = get_turf(M)
+				var/image/I = image('icons/turf/walls.dmi', loc = T, icon_state = M.scan_state, layer = 18)
+				C.images += I
+				spawn(30)
+					if(C)
+						C.images -= I
+
 	return
