@@ -1909,7 +1909,7 @@ datum/design/night_vision_goggles
 /////////////////SCANNERS/////////////////
 /////////////////////////////////////////
 datum/design/medbay_scanner
-	name = "Medbay Scanner Frame"
+	name = "Medbay Scanner"
 	desc = "Simple 2 slot scanner, usually used by doctors"
 	id = "medbay_scanner"
 	req_tech = list("engineering" = 2)
@@ -1918,7 +1918,7 @@ datum/design/medbay_scanner
 	build_path = /obj/item/device/scanner/medbay_scanner
 
 datum/design/engineering_scanner
-	name = "Engineering Scanner Frame"
+	name = "Engineering Scanner"
 	desc = "Simple 2 slot scanner"
 	id = "engineering_scanner"
 	req_tech = list("engineering" = 2)
@@ -1927,7 +1927,7 @@ datum/design/engineering_scanner
 	build_path = /obj/item/device/scanner/engineering_scanner
 
 datum/design/adv_medbay_scanner
-	name = "Advanced Medbay Scanner Frame"
+	name = "Advanced Medbay Scanner"
 	desc = "Simple 3 slot scanner, usually used by doctors"
 	id = "adv_medbay_scanner"
 	req_tech = list("engineering" = 3, "magnets" = 2)
@@ -1936,7 +1936,7 @@ datum/design/adv_medbay_scanner
 	build_path = /obj/item/device/scanner/medbay_scanner/advanced
 
 datum/design/forensic_scanner
-	name = "Forensic Scanner Frame"
+	name = "Forensic Scanner"
 	desc = "A 4 slot scanner, used by the detective to scan objects for traces of criminals."
 	id = "forensic_scanner"
 	req_tech = list("engineering" = 3, "magnets" = 3)
@@ -1945,7 +1945,7 @@ datum/design/forensic_scanner
 	build_path = /obj/item/device/scanner/detective_scanner
 
 datum/design/adv_forensic_scanner
-	name = "Advanced Forensic Scanner Frame"
+	name = "Advanced Forensic Scanner"
 	desc = "A 5 slot scanner, used by the detective to scan objects for traces of criminals."
 	id = "adv_forensic_scanner"
 	req_tech = list("engineering" = 4, "magnets" = 3)
@@ -1957,7 +1957,7 @@ datum/design/adv_forensic_scanner
 /////////////////SCANNER MODULES/////////////////
 /////////////////////////////////////////
 datum/design/health_scanner_module
-	name = "Simple Health Scanner Module"
+	name = "Health Scanmodule"
 	desc = "Scans patients and analyzes their vital data"
 	id = "health_scanner_module"
 	req_tech = list("engineering" = 2, "biotech" = 2)
@@ -1966,7 +1966,7 @@ datum/design/health_scanner_module
 	build_path = /obj/item/weapon/scanner_module/health_module/L1
 
 datum/design/adv_health_scanner_module
-	name = "Advanced Health Scanner Module"
+	name = "Advanced Health Scanmodule"
 	desc = "Allows scanning patients from a few meters away"
 	id = "adv_health_scanner_module"
 	req_tech = list("engineering" = 3, "biotech" = 3)
@@ -1975,7 +1975,7 @@ datum/design/adv_health_scanner_module
 	build_path = /obj/item/weapon/scanner_module/health_module/L2
 
 datum/design/virus_scanner_module
-	name = "Simple Virus Scanner Module"
+	name = "Virus Scanmodule"
 	desc = "Scans patients for diseases"
 	id = "virus_scanner_module"
 	req_tech = list("engineering" = 2, "biotech" = 2)
@@ -1984,7 +1984,7 @@ datum/design/virus_scanner_module
 	build_path = /obj/item/weapon/scanner_module/virus_module/L1
 
 datum/design/adv_virus_scanner_module
-	name = "Advanced Health Scanner Module"
+	name = "Advanced Health Scanmodule"
 	desc = "Allows scanning patients for diseases from a few meters away"
 	id = "adv_virus_scanner_module"
 	req_tech = list("engineering" = 3, "biotech" = 3)
@@ -1993,7 +1993,7 @@ datum/design/adv_virus_scanner_module
 	build_path = /obj/item/weapon/scanner_module/virus_module/L2
 
 datum/design/atmos_scanner_module
-	name = "Simple Atmosphere Scanner Module"
+	name = "Atmosphere Scanmodule"
 	desc = "Scans and analyzes gasses"
 	id = "atmos_scanner_module"
 	req_tech = list("engineering" = 2, "materials" = 2)
@@ -2002,7 +2002,7 @@ datum/design/atmos_scanner_module
 	build_path = /obj/item/weapon/scanner_module/atmos_module/L1
 
 datum/design/adv_atmos_scanner_module
-	name = "Advanced Atmosphere Scanner Module"
+	name = "Advanced Atmosphere Scanmodule"
 	desc = "Allows scanning gasses from a few meters away"
 	id = "adv_atmos_scanner_module"
 	req_tech = list("engineering" = 3, "materials" = 3)
@@ -2011,7 +2011,7 @@ datum/design/adv_atmos_scanner_module
 	build_path = /obj/item/weapon/scanner_module/atmos_module/L2
 
 datum/design/blood_dna_scanner_module
-	name = "Simple Blood Scanner Module"
+	name = "Blood Scanmodule"
 	desc = "Scans blood and extracts the DNA"
 	id = "blood_dna_scanner_module"
 	req_tech = list("engineering" = 2, "biotech" = 3)
@@ -2020,7 +2020,7 @@ datum/design/blood_dna_scanner_module
 	build_path = /obj/item/weapon/scanner_module/blood_dna_module/L1
 
 datum/design/adv_blood_scanner_module
-	name = "Advanced Blood Scanner Module"
+	name = "Advanced Blood Scanmodule"
 	desc = "Allows extracting DNA from blood without standing next to it"
 	id = "adv_blood_dna_scanner_module"
 	req_tech = list("engineering" = 3, "biotech" = 3)
@@ -2029,7 +2029,7 @@ datum/design/adv_blood_scanner_module
 	build_path = /obj/item/weapon/scanner_module/blood_dna_module/L2
 
 datum/design/reagent_scanner_module
-	name = "Simple Atmosphere Scanner Module"
+	name = "Atmosphere Scanmodule"
 	desc = "Scans and analyzes reagents"
 	id = "reagent_scanner_module"
 	req_tech = list("engineering" = 3, "materials" = 2)
@@ -2038,7 +2038,7 @@ datum/design/reagent_scanner_module
 	build_path = /obj/item/weapon/scanner_module/reagent_module/L1
 
 datum/design/adv_reagent_scanner_module
-	name = "Advanced Atmosphere Scanner Module"
+	name = "Advanced Atmosphere Scanmodule"
 	desc = "Allows scanning reagents from a few meters away"
 	id = "adv_reagent_scanner_module"
 	req_tech = list("engineering" = 4, "materials" = 3)
@@ -2048,7 +2048,7 @@ datum/design/adv_reagent_scanner_module
 
 
 datum/design/blood_reagent_scanner_module
-	name = "Simple Blood Reagent Scanner Module"
+	name = "Blood Reagent Scanmodule"
 	desc = "Scans and analyzes traces of reagents found in blood"
 	id = "blood:reagent_scanner_module"
 	req_tech = list("magnets" = 2, "biotech" = 2)
@@ -2057,7 +2057,7 @@ datum/design/blood_reagent_scanner_module
 	build_path = /obj/item/weapon/scanner_module/blood_reagent_module/L1
 
 datum/design/adv_blood_reagent_scanner_module
-	name = "Advanced Blood Reagent Scanner Module"
+	name = "Advanced Blood Reagent Scanmodule"
 	desc = "Allows scanning patients for traces of reagents in their blood"
 	id = "adv_blood_reagent_scanner_module"
 	req_tech = list("magnets" = 3, "biotech" = 3)
@@ -2066,7 +2066,7 @@ datum/design/adv_blood_reagent_scanner_module
 	build_path = /obj/item/weapon/scanner_module/blood_reagent_module/L2
 
 datum/design/bspc_blood_reagent_scanner_module
-	name = "Bluespace Blood Reagent Scanner Module"
+	name = "Bluespace Blood Reagent Scanmodule"
 	desc = "Allows scanning patients for traces of reagents in their blood without standing next to them"
 	id = "bspc_blood_reagent_scanner_module"
 	req_tech = list("magnets" = 4, "biotech" = 3)
@@ -2075,7 +2075,7 @@ datum/design/bspc_blood_reagent_scanner_module
 	build_path = /obj/item/weapon/scanner_module/blood_reagent_module/L3
 
 datum/design/fingerprint_scanner_module
-	name = "Simple Fingerprint Scanner Module"
+	name = "Fingerprint Scanmodule"
 	desc = "Scans and analyzes fingerprints on objects"
 	id = "fingerprint_scanner_module"
 	req_tech = list("engineering" = 3, "magnets" = 3)
@@ -2084,7 +2084,7 @@ datum/design/fingerprint_scanner_module
 	build_path = /obj/item/weapon/scanner_module/fingerprint_module/L1
 
 datum/design/adv_fingerprint_scanner_module
-	name = "Advanced Fingerprint Scanner Module"
+	name = "Advanced Fingerprint Scanmodule"
 	desc = "Allows scanning fingerprints from a few meters away"
 	id = "adv_fingerprint_scanner_module"
 	req_tech = list("engineering" = 4, "magnets" = 4)
@@ -2093,7 +2093,7 @@ datum/design/adv_fingerprint_scanner_module
 	build_path = /obj/item/weapon/scanner_module/fingerprint_module/L2
 
 datum/design/fiber_scanner_module
-	name = "Simple Fiber Scanner Module"
+	name = "Fiber Scanmodule"
 	desc = "Scans and analyzes fibers on objects"
 	id = "fibers_scanner_module"
 	req_tech = list("engineering" = 3, "magnets" = 3)
@@ -2102,7 +2102,7 @@ datum/design/fiber_scanner_module
 	build_path = /obj/item/weapon/scanner_module/fiber_module/L1
 
 datum/design/adv_fiber_scanner_module
-	name = "Advanced Fiber Scanner Module"
+	name = "Advanced Fiber Scanmodule"
 	desc = "Allows scanning for fibers from a few meters away"
 	id = "adv_fiber_scanner_module"
 	req_tech = list("engineering" = 4, "magnets" = 4)
@@ -2111,7 +2111,7 @@ datum/design/adv_fiber_scanner_module
 	build_path = /obj/item/weapon/scanner_module/fiber_module/L2
 
 datum/design/electric_scanner_module
-	name = "Simple Electric Scanner Module"
+	name = "Electric Scanmodule"
 	desc = "Scans and analyzes usage of power cables"
 	id = "electric_scanner_module"
 	req_tech = list("engineering" = 2, "power" = 2)
@@ -2120,7 +2120,7 @@ datum/design/electric_scanner_module
 	build_path = /obj/item/weapon/scanner_module/electric_module/L1
 
 datum/design/adv_electric_scanner_module
-	name = "Advanced Electric Scanner Module"
+	name = "Advanced Electric Scanmodule"
 	desc = "Allows scanning wires from a few meters away"
 	id = "adv_electric_scanner_module"
 	req_tech = list("engineering" = 3, "power" = 3)
@@ -2129,7 +2129,7 @@ datum/design/adv_electric_scanner_module
 	build_path = /obj/item/weapon/scanner_module/electric_module/L2
 
 datum/design/mining_scanner_module
-	name = "Simple Mining Scanner Module"
+	name = "Mining Scanmodule"
 	desc = "Scans for valuable mining resources"
 	id = "mining_scanner_module"
 	req_tech = list("engineering" = 3, "magnets" = 2)
@@ -2138,7 +2138,7 @@ datum/design/mining_scanner_module
 	build_path = /obj/item/weapon/scanner_module/mining_module/L1
 
 datum/design/adv_mining_scanner_module
-	name = "Advanced Mining Scanner Module"
+	name = "Advanced Mining Scanmodule"
 	desc = "Allows scanning with less cooldown time"
 	id = "adv_mining_scanner_module"
 	req_tech = list("engineering" = 4, "magnets" = 3)

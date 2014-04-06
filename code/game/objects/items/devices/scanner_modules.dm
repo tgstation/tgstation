@@ -1,5 +1,5 @@
 /obj/item/weapon/scanner_module
-	name = "dummy scanner module"
+	name = "dummy scanmodule"
 	desc = "Just an empty cartridge."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "cart"
@@ -25,7 +25,7 @@
 
 //MEDBAY SCANNER MODULE
 /obj/item/weapon/scanner_module/health_module
-	name = "health scanner module"
+	name = "health scanmodule"
 	desc = "A scanner module that displays and analyzes the health of the scanned human"
 	scan_name = "Health Scan Results:"
 	origin_tech = "engineering=2;biotech=2"
@@ -95,13 +95,13 @@
 /obj/item/weapon/scanner_module/health_module/L1
 
 /obj/item/weapon/scanner_module/health_module/L2
-	name = "advanced health scanner module"
+	name = "advanced health scanmodule"
 	origin_tech = "engineering=3;biotech=3"
 	range = 8
 
 //VIRUS SCANNER MODULE
 /obj/item/weapon/scanner_module/virus_module
-	name = "virus scanner module"
+	name = "virus scanmodule"
 	scan_name = "Diseases:"
 	desc = "A scanner module that displays diseases"
 	origin_tech = "engineering=2;biotech=2"
@@ -127,13 +127,13 @@
 /obj/item/weapon/scanner_module/virus_module/L1
 
 /obj/item/weapon/scanner_module/virus_module/L2
-	name = "advanced virus scanner module"
+	name = "advanced virus scanmodule"
 	origin_tech = "engineering=3;biotech=3"
 	range = 8
 
 //ATMOS SCANNER MODULE
 /obj/item/weapon/scanner_module/atmos_module
-	name = "atmosphere scanner module"
+	name = "atmosphere scanmodule"
 	range = 1
 	scan_name = "Atmosphere Scan Results:"
 	scan_on_attack_self = 1
@@ -224,7 +224,7 @@
 /obj/item/weapon/scanner_module/atmos_module/L1
 
 /obj/item/weapon/scanner_module/atmos_module/L2
-	name = "advanced atmosphere scanner module"
+	name = "advanced atmosphere scanmodule"
 	origin_tech = "engineering=3;materials=3"
 	range = 8
 
@@ -260,7 +260,7 @@
 
 //BLOOD DNA MODULE
 /obj/item/weapon/scanner_module/blood_dna_module
-	name = "blood scanner module"
+	name = "blood scanmodule"
 	range = 1
 	scan_name = "Blood:"
 	desc = "A scanner module that determines the DNA after scanning blood"
@@ -302,13 +302,13 @@
 /obj/item/weapon/scanner_module/blood_dna_module/L1
 
 /obj/item/weapon/scanner_module/blood_dna_module/L2
-	name = "advanced blood scanner module"
+	name = "advanced blood scanmodule"
 	origin_tech = "engineering=3;biotech=3"
 	range = 8
 
 //REAGENT MODULE
 /obj/item/weapon/scanner_module/reagent_module
-	name = "reagent scanner module"
+	name = "reagent scanmodule"
 	range = 1
 	scan_name = "Detected Reagents:"
 	desc = "A scanner module that analyzes reagents and their amounts in a scanned container"
@@ -337,7 +337,7 @@
 /obj/item/weapon/scanner_module/reagent_module/L1
 
 /obj/item/weapon/scanner_module/reagent_module/L2
-	name = "advanced reagent scanner module"
+	name = "advanced reagent scanmodule"
 	range = 8
 	origin_tech = "engineering=4;materials=3"
 
@@ -389,23 +389,23 @@
 
 /obj/item/weapon/scanner_module/blood_reagent_module/L1
 	on_mobs = 0
-	name = "simple blood reagent scanner module"
+	name = "blood reagent scanmodule"
 	range = 1
 
 /obj/item/weapon/scanner_module/blood_reagent_module/L2
 	on_mobs = 1
-	name = "advanced blood reagent scanner module"
+	name = "advanced blood reagent scanmodule"
 	origin_tech = "magnets=3;biotech=3"
 	range = 1
 /obj/item/weapon/scanner_module/blood_reagent_module/L3
 	on_mobs = 1
-	name = "bluespace blood reagent scanner module"
+	name = "bluespace blood reagent scanmodule"
 	origin_tech = "magnets=4;biotech=3"
 	range = 8
 
 //FINGERPRINT MODULE
 /obj/item/weapon/scanner_module/fingerprint_module
-	name = "fingerprint scanner module"
+	name = "fingerprint scanmodule"
 	range = 1
 	scan_name = "Detected Fingerprints:"
 	desc = "A scanner module that detects fingerprints on the scanned object"
@@ -436,13 +436,13 @@
 /obj/item/weapon/scanner_module/fingerprint_module/L1
 
 /obj/item/weapon/scanner_module/fingerprint_module/L2
-	name = "advanced fingerprint scanner module"
+	name = "advanced fingerprint scanmodule"
 	range = 8
 	origin_tech = "magnets=4;engineering=4"
 
 //FIBER MODULE
 /obj/item/weapon/scanner_module/fiber_module
-	name = "fiber scanner module"
+	name = "fiber scanmodule"
 	range = 1
 	scan_name = "Detected Fibers:"
 	desc = "A scanner module that detects fibers of clothing on the scanned object"
@@ -467,14 +467,14 @@
 /obj/item/weapon/scanner_module/fiber_module/L1
 
 /obj/item/weapon/scanner_module/fiber_module/L2
-	name = "advanced fiber scanner module"
+	name = "advanced fiber scanmodule"
 	range = 8
 	origin_tech = "magnets=4;engineering=4"
 
 
 //Electric MODULE
 /obj/item/weapon/scanner_module/electric_module
-	name = "electric scanner module"
+	name = "electric scanmodule"
 	range = 1
 	scan_name = "Cable Scan:"
 	desc = "A scanner module that connects to a power cable and reads the available power"
@@ -502,13 +502,13 @@
 /obj/item/weapon/scanner_module/electric_module/L1
 
 /obj/item/weapon/scanner_module/electric_module/L2
-	name = "advanced electric scanner module"
+	name = "advanced electric scanmodule"
 	range = 8
 	origin_tech = "power=3;engineering=3"
 
 //MINING MODULE
 /obj/item/weapon/scanner_module/mining_module
-	name = "mining scanner module"
+	name = "mining scanmodule"
 	range = 1
 	scan_name = "Mining Scan in progress"
 	scan_on_attack_self = 1
@@ -552,7 +552,7 @@
 /obj/item/weapon/scanner_module/mining_module/L1
 	cooldowntime = 100
 /obj/item/weapon/scanner_module/mining_module/L2
-	name = "advanced mining scanner module"
+	name = "advanced mining scanmodule"
 	cooldowntime = 40
 	origin_tech = "magnets=3;engineering=4"
 
