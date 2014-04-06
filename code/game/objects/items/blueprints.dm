@@ -205,8 +205,6 @@ move an amendment</a> to the drawing.</p>
 		return BORDER_2NDTILE
 	if (locate(/obj/structure/falsewall) in T2)
 		return BORDER_2NDTILE
-	if (locate(/obj/structure/falserwall) in T2)
-		return BORDER_2NDTILE
 
 	return BORDER_NONE
 
