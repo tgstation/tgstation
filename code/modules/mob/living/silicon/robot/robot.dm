@@ -212,6 +212,7 @@
 	transform_animation(animation_length)
 	notify_ai(2)
 	updateicon()
+	SetEmagged(emagged) // Give emag object if emagged already.
 
 /mob/living/silicon/robot/proc/transform_animation(animation_length)
 	if(!animation_length)
