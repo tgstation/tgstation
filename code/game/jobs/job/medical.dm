@@ -9,10 +9,10 @@
 	selection_color = "#ffddf0"
 	idtype = /obj/item/weapon/card/id/silver
 	req_admin_notify = 1
-	access = list(access_medical, access_morgue, access_genetics, access_heads,
+	access = list(access_medical, access_morgue, access_genetics, access_heads, access_mineral_storeroom,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
 			access_keycard_auth, access_sec_doors)
-	minimal_access = list(access_medical, access_morgue, access_genetics, access_heads,
+	minimal_access = list(access_medical, access_morgue, access_genetics, access_heads, access_mineral_storeroom,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
 			access_keycard_auth, access_sec_doors)
 	minimal_player_age = 7
