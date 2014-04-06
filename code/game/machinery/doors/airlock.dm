@@ -951,6 +951,7 @@ About the new airlock wires panel:
 				if(!electronics)
 					ae = new/obj/item/weapon/airlock_electronics( src.loc )
 					if(req_one_access)
+						ae.use_one_access = 1
 						ae.conf_access = src.req_one_access
 					else
 						ae.conf_access = src.req_access
