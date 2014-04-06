@@ -6,13 +6,18 @@
 	item_state = "electronic"
 	w_class = 1
 
+	m_amt = 50
+	g_amt = 50
+
+	origin_tech = "magnets=1;engineering=1"
+
 	var/range = 1
 	var/scan_name = "dummy scan"
 	var/scan_on_attack_self = 0
 
 /obj/item/weapon/scanner_module/proc/scan(var/atom/A, var/mob/user, var/obj/item/device/scanner/scnr)
 
-	if(get_dist(A, user) > range)
+	if(get_dist(A, user) > range || !(A in view(world.view, user)))
 		scnr.add_log("<span class='notice'>[A] is not in range.</span>", user)
 		return 0
 	scnr.add_log("<span class='info'><B>[scan_name]</B></span>", user)
@@ -23,6 +28,7 @@
 	name = "health scanner module"
 	desc = "A scanner module that displays and analyzes the health of the scanned human"
 	scan_name = "Health Scan Results:"
+	origin_tech = "engineering=2;biotech=2"
 
 /obj/item/weapon/scanner_module/health_module/scan(var/atom/A, var/mob/user, var/obj/item/device/scanner/scnr)
 
@@ -86,11 +92,19 @@
 	else if (M.getBrainLoss() >= 10)
 		scnr.add_log(text("<span class='warning'>Significant brain damage detected. Subject may have had a concussion.</span>"), user)
 
+/obj/item/weapon/scanner_module/health_module/L1
+
+/obj/item/weapon/scanner_module/health_module/L2
+	name = "advanced health scanner module"
+	origin_tech = "engineering=3;biotech=3"
+	range = 8
+
 //VIRUS SCANNER MODULE
 /obj/item/weapon/scanner_module/virus_module
 	name = "virus scanner module"
 	scan_name = "Diseases:"
 	desc = "A scanner module that displays diseases"
+	origin_tech = "engineering=2;biotech=2"
 
 /obj/item/weapon/scanner_module/virus_module/scan(var/atom/A, var/mob/user, var/obj/item/device/scanner/scnr)
 	if(!istype(A, /mob/living/))
@@ -109,6 +123,14 @@
 	if(!virus_detected)
 		scnr.add_log("<span class='notice'> No disease detected</span>")
 	return
+
+/obj/item/weapon/scanner_module/virus_module/L1
+
+/obj/item/weapon/scanner_module/virus_module/L2
+	name = "advanced virus scanner module"
+	origin_tech = "engineering=3;biotech=3"
+	range = 8
+
 //ATMOS SCANNER MODULE
 /obj/item/weapon/scanner_module/atmos_module
 	name = "atmosphere scanner module"
@@ -116,6 +138,7 @@
 	scan_name = "Atmosphere Scan Results:"
 	scan_on_attack_self = 1
 	desc = "A scanner module that analyzes the atmosphere or the gasses in a container"
+	origin_tech = "engineering=2;materials=2"
 
 /obj/item/weapon/scanner_module/atmos_module/scan(var/atom/A, var/mob/user, var/obj/item/device/scanner/scnr)
 
@@ -198,6 +221,13 @@
 
 	return
 
+/obj/item/weapon/scanner_module/atmos_module/L1
+
+/obj/item/weapon/scanner_module/atmos_module/L2
+	name = "advanced atmosphere scanner module"
+	origin_tech = "engineering=3;materials=3"
+	range = 8
+
 
 /obj/item/weapon/scanner_module/atmos_module/proc/atmosmodule_scan(var/datum/gas_mixture/air_contents, mob/user, var/obj/item/device/scanner/scnr)
 	var/pressure = air_contents.return_pressure()
@@ -234,6 +264,7 @@
 	range = 1
 	scan_name = "Blood:"
 	desc = "A scanner module that determines the DNA after scanning blood"
+	origin_tech = "engineering=2;biotech=3"
 
 /obj/item/weapon/scanner_module/blood_dna_module/scan(var/atom/A, var/mob/user, var/obj/item/device/scanner/scnr)
 	if(!..())
@@ -268,12 +299,20 @@
 		scnr.add_log("<span class='notice'>No blood detected.</span>", user)
 	return
 
+/obj/item/weapon/scanner_module/blood_dna_module/L1
+
+/obj/item/weapon/scanner_module/blood_dna_module/L2
+	name = "advanced blood scanner module"
+	origin_tech = "engineering=3;biotech=3"
+	range = 8
+
 //REAGENT MODULE
 /obj/item/weapon/scanner_module/reagent_module
 	name = "reagent scanner module"
 	range = 1
 	scan_name = "Detected Reagents:"
 	desc = "A scanner module that analyzes reagents and their amounts in a scanned container"
+	origin_tech = "engineering=3;materials=2"
 
 /obj/item/weapon/scanner_module/reagent_module/scan(var/atom/A, var/mob/user, var/obj/item/device/scanner/scnr)
 	if(ismob(A))
@@ -295,12 +334,21 @@
 		scnr.add_log("<span class='notice'>No reagents detected.</span>", user)
 	return
 
+/obj/item/weapon/scanner_module/reagent_module/L1
+
+/obj/item/weapon/scanner_module/reagent_module/L2
+	name = "advanced reagent scanner module"
+	range = 8
+	origin_tech = "engineering=4;materials=3"
+
 //BLOOD REAGENT MODULE
 /obj/item/weapon/scanner_module/blood_reagent_module
 	name = "blood reagent scanner module"
 	range = 1
 	scan_name = "Detected Reagent Traces in Blood:"
 	desc = "A scanner module that analyzes traces of reagents found in blood"
+	var/on_mobs = 0
+	origin_tech = "magnets=2;biotech=2"
 
 /obj/item/weapon/scanner_module/blood_reagent_module/scan(var/atom/A, var/mob/user, var/obj/item/device/scanner/scnr)
 	if(!..())
@@ -309,7 +357,7 @@
 	var/reagent_detected = 0
 	var/blood_found = 0
 
-	if(ismob(A))
+	if(ismob(A) && on_mobs)
 		if(A.reagents && A.reagents.reagent_list.len)
 			for(var/datum/reagent/R in A.reagents.reagent_list)
 				scnr.add_log("<span class='notice'>[R.name] ([R.volume] units)</span>", user)
@@ -339,12 +387,29 @@
 		scnr.add_log("<span class='notice'>No reagents detected.</span>", user)
 	return
 
+/obj/item/weapon/scanner_module/blood_reagent_module/L1
+	on_mobs = 0
+	name = "simple blood reagent scanner module"
+	range = 1
+
+/obj/item/weapon/scanner_module/blood_reagent_module/L2
+	on_mobs = 1
+	name = "advanced blood reagent scanner module"
+	origin_tech = "magnets=3;biotech=3"
+	range = 1
+/obj/item/weapon/scanner_module/blood_reagent_module/L3
+	on_mobs = 1
+	name = "bluespace blood reagent scanner module"
+	origin_tech = "magnets=4;biotech=3"
+	range = 8
+
 //FINGERPRINT MODULE
 /obj/item/weapon/scanner_module/fingerprint_module
 	name = "fingerprint scanner module"
 	range = 1
 	scan_name = "Detected Fingerprints:"
 	desc = "A scanner module that detects fingerprints on the scanned object"
+	origin_tech = "magnets=3;engineering=3"
 
 /obj/item/weapon/scanner_module/fingerprint_module/scan(var/atom/A, var/mob/user, var/obj/item/device/scanner/scnr)
 	if(!..())
@@ -368,6 +433,12 @@
 		scnr.add_log("<span class='notice'>No prints detected</span>", user)
 
 	return
+/obj/item/weapon/scanner_module/fingerprint_module/L1
+
+/obj/item/weapon/scanner_module/fingerprint_module/L2
+	name = "advanced fingerprint scanner module"
+	range = 8
+	origin_tech = "magnets=4;engineering=4"
 
 //FIBER MODULE
 /obj/item/weapon/scanner_module/fiber_module
@@ -375,6 +446,7 @@
 	range = 1
 	scan_name = "Detected Fibers:"
 	desc = "A scanner module that detects fibers of clothing on the scanned object"
+	origin_tech = "magnets=3;engineering=3"
 
 /obj/item/weapon/scanner_module/fiber_module/scan(var/atom/A, var/mob/user, var/obj/item/device/scanner/scnr)
 	if(!..())
@@ -392,12 +464,21 @@
 
 	return
 
+/obj/item/weapon/scanner_module/fiber_module/L1
+
+/obj/item/weapon/scanner_module/fiber_module/L2
+	name = "advanced fiber scanner module"
+	range = 8
+	origin_tech = "magnets=4;engineering=4"
+
+
 //Electric MODULE
 /obj/item/weapon/scanner_module/electric_module
 	name = "electric scanner module"
 	range = 1
 	scan_name = "Cable Scan:"
 	desc = "A scanner module that connects to a power cable and reads the available power"
+	origin_tech = "power=2;engineering=2"
 
 /obj/item/weapon/scanner_module/electric_module/scan(var/atom/A, var/mob/user, var/obj/item/device/scanner/scnr)
 
@@ -418,6 +499,13 @@
 
 	return
 
+/obj/item/weapon/scanner_module/electric_module/L1
+
+/obj/item/weapon/scanner_module/electric_module/L2
+	name = "advanced electric scanner module"
+	range = 8
+	origin_tech = "power=3;engineering=3"
+
 //MINING MODULE
 /obj/item/weapon/scanner_module/mining_module
 	name = "mining scanner module"
@@ -426,8 +514,12 @@
 	scan_on_attack_self = 1
 	desc = "A scanner module that checks surrounding rock for useful minerals, it can also be used to stop gibtonite detonations. Requires you to wear mesons to work properly"
 	var/cooldown = 0
+	var/cooldowntime = 100
+	origin_tech = "magnets=2;engineering=3"
 
 /obj/item/weapon/scanner_module/mining_module/scan(var/atom/A, var/mob/user, var/obj/item/device/scanner/scnr)
+	if(cooldown)
+		return
 
 	if(!..())
 		return
@@ -436,7 +528,7 @@
 		return
 	if(!cooldown)
 		cooldown = 1
-		spawn(40)
+		spawn(cooldowntime)
 			cooldown = 0
 		var/client/C = user.client
 		var/list/L = list()
@@ -452,8 +544,15 @@
 				var/turf/T = get_turf(M)
 				var/image/I = image('icons/turf/walls.dmi', loc = T, icon_state = M.scan_state, layer = 18)
 				C.images += I
-				spawn(30)
+				spawn(cooldowntime/2)
 					if(C)
 						C.images -= I
 
 	return
+/obj/item/weapon/scanner_module/mining_module/L1
+	cooldowntime = 100
+/obj/item/weapon/scanner_module/mining_module/L2
+	name = "advanced mining scanner module"
+	cooldowntime = 40
+	origin_tech = "magnets=3;engineering=4"
+
