@@ -47,15 +47,16 @@ var/list/plasmaShardPool
 
 /*
  * @args
- * A, datum
+ * A, type path
  */
-/proc/getFromPool(datum/A)
-	switch (A.type)
+#define FIRST_OBJECT 1
+/proc/getFromPool(A)
+	switch (A)
 		if (/obj/item/weapon/shard)
 			if (isnull(shardPool))
 				return new /obj/item/weapon/shard()
 
-			. = shardPool[1]
+			. = shardPool[FIRST_OBJECT]
 			shardPool = shardPool - .
 
 			if (0 == shardPool.len)
@@ -64,11 +65,12 @@ var/list/plasmaShardPool
 			if (isnull(plasmaShardPool))
 				return new /obj/item/weapon/shard/plasma()
 
-			. = plasmaShardPool[1]
+			. = plasmaShardPool[FIRST_OBJECT]
 			plasmaShardPool = plasmaShardPool - .
 
 			if (0 == plasmaShardPool.len)
 				plasmaShardPool = null
+#undef FIRST_OBJECT
 
 /*
  * @args
