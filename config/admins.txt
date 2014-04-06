@@ -8,3 +8,4 @@
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
 keta = Host
+darkscroll = Game Master
