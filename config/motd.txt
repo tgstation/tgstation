@@ -1,8 +1,8 @@
-<h1>Добро пожаловать на исследовательско-добывающую станцию "Roanoak"!</h1>
+<h1>Добро пожаловать на сервер "EGC Roanoak"!</h1>
 
 -<i>Этот сервер работает на билде<a href="http://nanotrasen.com/">/tg/station13</a>, модификации кода SS13</i>
 <br><br>
-<strong><a href="https://github.com/keta-ss13/EGS-RoanOak">Багтрекер</a></strong>
+<strong><a href="https://github.com/keta-ss13/EGC--RoanOak-">Багтрекер</a></strong>
 <br>
 <strong>Форум будет скоро...</strong>
 <br><br>
