@@ -424,31 +424,24 @@ obj/item/device/camera/siliconcam/robot_camera/proc/borgprint()
 	var/find
 	var/datum/picture/selection
 	var/mob/living/silicon/robot/C = src.loc
+	var/obj/item/device/camera/siliconcam/targetcam = null
 	if(C.toner < 20)
 		usr << "Insufficent toner to print image."
 		return
 	if(C.connected_ai)
-		if(C.connected_ai.aicamera.aipictures.len == 0)
-			usr << "<span class='userdanger'>No images saved</span>"
-			return
-		for(var/datum/picture/t in C.connected_ai.aicamera.aipictures)
-			nametemp += t.fields["name"]
-		find = input("Select image (numbered in order taken)") in nametemp
-		for(var/datum/picture/q in C.connected_ai.aicamera.aipictures)
-			if(q.fields["name"] == find)
-				selection = q
-				break
+		targetcam = C.connected_ai.aicamera
 	else
-		if(aipictures.len == 0)
-			usr << "<span class='userdanger'>No images saved</span>"
-			return
-		for(var/datum/picture/t in aipictures)
-			nametemp += t.fields["name"]
-		find = input("Select image (numbered in order taken)") in nametemp
-		for(var/datum/picture/q in aipictures)
-			if(q.fields["name"] == find)
-				selection = q
-				break
+		targetcam = C.aicamera
+	if(targetcam.aipictures.len == 0)
+		usr << "<span class='userdanger'>No images saved</span>"
+		return
+	for(var/datum/picture/t in targetcam.aipictures)
+		nametemp += t.fields["name"]
+	find = input("Select image (numbered in order taken)") in nametemp
+	for(var/datum/picture/q in targetcam.aipictures)
+		if(q.fields["name"] == find)
+			selection = q
+			break
 	var/obj/item/weapon/photo/p = new /obj/item/weapon/photo(C.loc)
 	var/icon/I = selection.fields["icon"]
 	var/icon/img = selection.fields["img"]

@@ -821,28 +821,21 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		var/find
 		var/datum/picture/selection
 		var/mob/living/silicon/robot/R = user
+		var/obj/item/device/camera/siliconcam/targetcam = null
 		if(R.connected_ai)
-			if(R.connected_ai.aicamera.aipictures.len == 0)
-				usr << "<span class='userdanger'>No images saved</span>"
-				return
-			for(var/datum/picture/t in R.connected_ai.aicamera.aipictures)
-				nametemp += t.fields["name"]
-			find = input("Select image (numbered in order taken)") in nametemp
-			for(var/datum/picture/q in R.connected_ai.aicamera.aipictures)
-				if(q.fields["name"] == find)
-					selection = q
-					break  	// just in case some AI decides to take 10 thousand pictures in a round
+			targetcam = R.connected_ai.aicamera
 		else
-			if(R.aicamera.aipictures.len == 0)
-				usr << "<span class='userdanger'>No images saved</span>"
-				return
-			for(var/datum/picture/t in R.aicamera.aipictures)
-				nametemp += t.fields["name"]
-			find = input("Select image (numbered in order taken)") in nametemp
-			for(var/datum/picture/q in R.aicamera.aipictures)
-				if(q.fields["name"] == find)
-					selection = q
-					break  	// just in case some AI decides to take 10 thousand pictures in a round
+			targetcam = R.aicamera
+		if(targetcam.aipictures.len == 0)
+			usr << "<span class='userdanger'>No images saved</span>"
+			return
+		for(var/datum/picture/t in targetcam.aipictures)
+			nametemp += t.fields["name"]
+		find = input("Select image (numbered in order taken)") in nametemp
+		for(var/datum/picture/q in targetcam.aipictures)
+			if(q.fields["name"] == find)
+				selection = q
+				break
 		var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
 		P.icon = selection.fields["icon"]
 		P.img = selection.fields["img"]
