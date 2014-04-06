@@ -1,5 +1,9 @@
-<!-- Most valid html will work in here, excluding images. -->
+<h1>Добро пожаловать на исследовательско-добывающую станцию "Roanoak"!</h1>
 
-<h1>Welcome to Space Station 13!</h1>
-
-<i>This server is running a /tg/station 13 SVN build.</i>
+-<i>Этот сервер работает на билде<a href="http://nanotrasen.com/">/tg/station13</a>, модификации кода SS13</i>
+<br><br>
+<strong><a href="https://github.com/keta-ss13/EGS-RoanOak">Багтрекер</a></strong>
+<br>
+<strong>Форум будет скоро...</strong>
+<br><br>
+Это РП сервер, не забудьте настроить персонажа, а также не забывайте отыргывать роль. По любым вопросам обращайтесь в ahelp (кнопка f1)
