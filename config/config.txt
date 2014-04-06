@@ -72,7 +72,7 @@ ALLOW_METADATA
 #ALLOW_VOTE_RESTART
 
 ## allow players to initate a mode-change start
-#ALLOW_VOTE_MODE
+ALLOW_VOTE_MODE
 
 ## min delay (deciseconds) between voting sessions (default 10 minutes)
 VOTE_DELAY 6000
@@ -108,13 +108,13 @@ GUEST_BAN
 
 ## set a server location for world reboot. Don't include the byond://, just give the address and port.
 # Don't set this to the same server, BYOND will automatically restart players to the server when it has restarted.
-SERVER 5.19.246.14:7776
+SERVER 5.19.246.14:2506
 
 ## forum address
 # FORUMURL http://justanotherday.example.com
 
 ## Wiki address
-# WIKIURL http://www.ss13.eu/wiki/
+WIKIURL http://wiki.ss13.ru/
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
 # BANAPPEALS http://justanotherday.example.com
@@ -137,7 +137,7 @@ ALLOW_HOLIDAYS
 #USEIRCBOT
 
 ##Defines the ticklag for the world.  0.9 is the normal one, 0.5 is smoother.
-TICKLAG 0.6
+TICKLAG 0.7
 
 ## Defines if Tick Compensation is used.  It results in a minor slowdown of movement of all mobs, but attempts to result in a level movement speed across all ticks.  Recommended if tickrate is lowered.
 TICKCOMP 0
