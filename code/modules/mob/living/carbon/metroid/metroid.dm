@@ -39,6 +39,7 @@
 	var/attacked = 0 // determines if it's been attacked recently. Can be any number, is a cooloff-ish variable
 	var/tame = 0 // if set to 1, the slime will not eat humans ever, or attack them
 	var/rabid = 0 // if set to 1, the slime will attack and eat anything it comes in contact with
+	var/holding_still = 0 // AI variable, cooloff-ish for how long it's going to stay in one place
 
 	var/list/Friends = list() // A list of potential friends
 

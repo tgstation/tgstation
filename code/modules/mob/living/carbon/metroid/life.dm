@@ -456,15 +456,25 @@
 		if(!Target)
 			if (Leader)
 				if(canmove && isturf(loc))
-					step_to(src, Leader)
+					if (holding_still)
+						holding_still = max(holding_still - 1, 0)
+					else
+						step_to(src, Leader)
 
 			if(hungry || starving)
 				if(canmove && isturf(loc) && prob(50))
-					step(src, pick(cardinal))
+					if (holding_still)
+						holding_still = max(holding_still - 1, 0)
+						if (starving) holding_still = max(holding_still - 1, 0) // Getting impatient twice as fast
+					else
+						step(src, pick(cardinal))
 
 			else
 				if(canmove && isturf(loc) && prob(33))
-					step(src, pick(cardinal))
+					if (holding_still)
+						holding_still = max(holding_still - 1, 0)
+					else
+						step(src, pick(cardinal))
 		else
 			if(!AIproc)
 				spawn() AIprocess()
@@ -530,6 +540,22 @@
 							to_say = "Yes... I'll stop..."
 						else
 							to_say = "No... I'll keep following..."
+			else if (findtext(phrase, "stay"))
+				if (Leader)
+					if (Leader == who)
+						holding_still = Friends[who] * 10
+						to_say = "Yes... Staying..."
+					else if (Friends[who] > Friends[Leader])
+						holding_still = (Friends[who] - Friends[Leader]) * 10
+						to_say = "Yes... Staying..."
+					else
+						to_say = "No... I'll keep following..."
+				else
+					if (Friends[who] > 2)
+						holding_still = Friends[who] * 10
+						to_say = "Yes... Staying..."
+					else
+						to_say = "No... I won't stay..."
 			else if (findtext(phrase, "kill")) // Will remove later
 				if (Friends[who] > 5)
 					rabid = 1
