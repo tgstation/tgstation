@@ -122,8 +122,7 @@ var/list/grillePool
 				shardPool = new /list()
 
 			var /obj/item/weapon/shard/Shard = A
-
-			Shard.loc = initial(Shard.loc)
+			Shard.loc = null
 
 			shardPool = shardPool + Shard
 		if (/obj/item/weapon/shard/plasma)
@@ -134,8 +133,7 @@ var/list/grillePool
 				plasmaShardPool = new /list()
 
 			var /obj/item/weapon/shard/plasma/Plasma = A
-
-			Plasma.loc = initial(Plasma.loc)
+			Plasma.loc = null
 
 			plasmaShardPool = plasmaShardPool + Plasma
 		if (/obj/structure/grille)
@@ -146,8 +144,8 @@ var/list/grillePool
 				grillePool = new /list()
 
 			var /obj/structure/grille/Grille = A
+			Grille.loc = null
 
-			Grille.loc = initial(Grille.loc)
 			Grille.icon_state = initial(Grille.icon_state)
 			Grille.density = initial(Grille.density)
 			Grille.destroyed = initial(Grille.destroyed)
