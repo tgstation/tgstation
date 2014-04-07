@@ -4,7 +4,6 @@
 		Arm Blade
 		Space Suit
 		Shield
-	TODO:
 		Armor
 */
 
@@ -308,7 +307,7 @@
 	item_state = "swat_suit"
 	flags = NODROP
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	slowdown = 1.5
+	slowdown = 2
 	armor = list(melee = 65, bullet = 20, laser = 10, energy = 13, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = 0
