@@ -57,6 +57,9 @@
 // BEGIN_INCLUDE
 #include "_maps\metastation.dm"
 #include "_maps\map_files\MetaStation.v39K.dmm"
+#include "_maps\RandomZLevels\beach.dmm"
+#include "_maps\RandomZLevels\spacebattle.dmm"
+#include "_maps\RandomZLevels\stationCollision.dmm"
 #include "code\_compile_options.dm"
 #include "code\hub.dm"
 #include "code\world.dm"

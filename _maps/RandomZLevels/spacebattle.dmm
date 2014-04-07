@@ -390,7 +390,7 @@
 "hz" = (/obj/structure/shuttle/engine/propulsion{tag = "icon-propulsion_l (WEST)"; icon_state = "propulsion_l"; dir = 8},/turf/space,/area/awaymission/spacebattle/syndicate7)
 "hA" = (/obj/structure/largecrate,/mob/living/simple_animal/corgi/puppy,/turf/simulated/floor/plating,/area/awaymission/spacebattle/cruiser)
 "hB" = (/obj/structure/closet/crate,/obj/item/weapon/paint/anycolor,/turf/simulated/floor/plating,/area/awaymission/spacebattle/cruiser)
-"hC" = (/obj/structure/closet/crate,/obj/item/weapon/cell/high,/obj/item/weapon/cell/high,/turf/simulated/floor/plating,/area/awaymission/spacebattle/cruiser)
+"hC" = (/obj/structure/closet/crate,/obj/item/weapon/stock_parts/micro_laser/high,/obj/item/weapon/stock_parts/micro_laser/high,/turf/simulated/floor/plating,/area/awaymission/spacebattle/cruiser)
 "hD" = (/obj/structure/closet/crate/medical,/obj/item/weapon/storage/firstaid/regular,/turf/simulated/floor/plating,/area/awaymission/spacebattle/cruiser)
 "hE" = (/obj/structure/closet/crate/medical,/obj/item/weapon/tank/anesthetic,/turf/simulated/floor/plating,/area/awaymission/spacebattle/cruiser)
 "hF" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/floor{icon_state = "white"},/area/awaymission/spacebattle/cruiser)
