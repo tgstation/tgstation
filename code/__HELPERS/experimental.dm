@@ -44,6 +44,7 @@ var/turf/sekrit = locate(1, 1, CENTCOMM_Z)
 // List reference for pools.
 var/list/shardPool
 var/list/plasmaShardPool
+var/list/grillePool
 
 /*
  * @args
@@ -70,6 +71,15 @@ var/list/plasmaShardPool
 
 			if (0 == plasmaShardPool.len)
 				plasmaShardPool = null
+		if (/obj/structure/grille)
+			if (isnull(grillePool))
+				return new /obj/structure/grille()
+
+			. = grillePool[FIRST_OBJECT]
+			grillePool = grillePool - .
+
+			if (0 == grillePool.len)
+				grillePool = null
 #undef FIRST_OBJECT
 
 /*
@@ -92,3 +102,10 @@ var/list/plasmaShardPool
 			var /obj/item/weapon/shard/plasma/Plasma = A
 			Plasma.loc = sekrit
 			plasmaShardPool = plasmaShardPool + Plasma
+		if (/obj/structure/grille)
+			if (isnull(grillePool))
+				grillePool = new /list()
+
+			var /obj/structure/grille/Grille = A
+			Grille.loc = sekrit
+			grillePool = grillePool + Grille
