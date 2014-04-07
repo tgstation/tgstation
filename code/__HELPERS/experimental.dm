@@ -40,6 +40,8 @@
  * REMINDER TO MYSELF: Ignore fireaxe deletion for now.
  */
 
+#define DEBUG_OBJECT_POOL 1
+
 // List reference for pools.
 var/list/shardPool
 var/list/plasmaShardPool
@@ -70,6 +72,9 @@ var/list/grillePool
 	switch (A)
 		if (/obj/item/weapon/shard)
 			if (isnull(shardPool))
+				#if DEBUG_OBJECT_POOL
+				world << "New proc has been called (/obj/item/weapon/shard)."
+				#endif
 				return new /obj/item/weapon/shard()
 
 			. = shardPool[FIRST_OBJECT]
@@ -79,6 +84,9 @@ var/list/grillePool
 				shardPool = null
 		if (/obj/item/weapon/shard/plasma)
 			if (isnull(plasmaShardPool))
+				#if DEBUG_OBJECT_POOL
+				world << "New proc has been called (obj/item/weapon/shard/plasma)."
+				#endif
 				return new /obj/item/weapon/shard/plasma()
 
 			. = plasmaShardPool[FIRST_OBJECT]
@@ -88,6 +96,9 @@ var/list/grillePool
 				plasmaShardPool = null
 		if (/obj/structure/grille)
 			if (isnull(grillePool))
+				#if DEBUG_OBJECT_POOL
+				world << "New proc has been called (/obj/structure/grille)."
+				#endif
 				return new /obj/structure/grille()
 
 			. = grillePool[FIRST_OBJECT]
@@ -105,6 +116,9 @@ var/list/grillePool
 	switch(A.type)
 		if (/obj/item/weapon/shard)
 			if (isnull(shardPool))
+				#if DEBUG_OBJECT_POOL
+				world << "Shard pool is empty, recreating list."
+				#endif
 				shardPool = new /list()
 
 			var /obj/item/weapon/shard/Shard = A
@@ -114,6 +128,9 @@ var/list/grillePool
 			shardPool = shardPool + Shard
 		if (/obj/item/weapon/shard/plasma)
 			if (isnull(plasmaShardPool))
+				#if DEBUG_OBJECT_POOL
+				world << "Plasma shard pool is empty, recreating list."
+				#endif
 				plasmaShardPool = new /list()
 
 			var /obj/item/weapon/shard/plasma/Plasma = A
@@ -123,6 +140,9 @@ var/list/grillePool
 			plasmaShardPool = plasmaShardPool + Plasma
 		if (/obj/structure/grille)
 			if (isnull(grillePool))
+				#if DEBUG_OBJECT_POOL
+				world << "Grille pool is empty, recreating list."
+				#endif
 				grillePool = new /list()
 
 			var /obj/structure/grille/Grille = A
@@ -134,3 +154,5 @@ var/list/grillePool
 			Grille.health = initial(Grille.health)
 
 			grillePool = grillePool + Grille
+
+#undef DEBUG_OBJECT_POOL
