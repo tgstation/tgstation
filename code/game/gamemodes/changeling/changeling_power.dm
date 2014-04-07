@@ -76,5 +76,3 @@
 	if(req_human && !ishuman(user))
 		return 0
 	return 1
-
-
