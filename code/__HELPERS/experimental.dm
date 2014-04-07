@@ -110,6 +110,8 @@ var/list/grillePool
 			Grille.loc = sekrit
 
 			Grille.icon_state = initial(Grille.icon_state)
+			Grille.density = initial(Grille.density)
 			Grille.destroyed = initial(Grille.destroyed)
+			Grille.health = initial(Grille.health)
 
 			grillePool = grillePool + Grille
