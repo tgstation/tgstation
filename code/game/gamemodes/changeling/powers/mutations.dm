@@ -112,8 +112,9 @@
 	helptext = "Cannot be used while in lesser form."
 	chemical_cost = 20
 	dna_cost = 1
-	genetic_damage = 8
+	genetic_damage = 10
 	req_human = 1
+	max_genetic_damage = 11
 	weapon_type = /obj/item/weapon/melee/arm_blade
 	weapon_name_simple = "blade"
 
@@ -181,6 +182,8 @@
 	dna_cost = 1
 	genetic_damage = 12
 	req_human = 1
+	max_genetic_damage = 10
+
 	weapon_type = /obj/item/weapon/shield/changeling
 	weapon_name_simple = "shield"
 
@@ -237,6 +240,7 @@
 	dna_cost = 1
 	genetic_damage = 8
 	req_human = 1
+	max_genetic_damage = 8
 
 	suit_type = /obj/item/clothing/suit/space/changeling
 	helmet_type = /obj/item/clothing/head/helmet/space/changeling
@@ -289,6 +293,7 @@
 	dna_cost = 1
 	genetic_damage = 11
 	req_human = 1
+	max_genetic_damage = 10
 
 	suit_type = /obj/item/clothing/suit/armor/changeling
 	helmet_type = /obj/item/clothing/head/helmet/changeling
