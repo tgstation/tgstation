@@ -40,7 +40,7 @@
  * REMINDER TO MYSELF: Ignore fireaxe deletion for now.
  */
 
-#define DEBUG_OBJECT_POOL 1
+#define DEBUG_OBJECT_POOL 0
 #define STARTING_OBJECT_POOL_COUNT 20
 
 var/list/masterPool
