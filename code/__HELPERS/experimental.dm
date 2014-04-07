@@ -100,7 +100,7 @@ var/list/masterPool
  * Example call: returnToPool(src)
  */
 /proc/returnToPool(atom/movable/A)
-	if (isnull(masterPool[A]))
+	if (isnull(masterPool[A.type]))
 		#if DEBUG_OBJECT_POOL
 		world << "DEBUG_OBJECT_POOL: [A.type] pool is empty, recreating list."
 		#endif
