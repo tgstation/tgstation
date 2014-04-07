@@ -36,6 +36,8 @@
  *
  * If this file is named experimental,
  * well treat this implementation as experimental experimental (redundancy intended).
+ *
+ * REMINDER TO MYSELF: Ignore fireaxe deletion for a now.
  */
 
 // We put the pools on a place that's very hard to find.
