@@ -41,13 +41,14 @@
  */
 
 #define DEBUG_OBJECT_POOL 1
+#define STARTING_OBJECT_POOL_COUNT 20
+#define FIRST_OBJECT_INDEX 1
 
 // List reference for pools.
 var/list/shardPool
 var/list/plasmaShardPool
 var/list/grillePool
 
-#define STARTING_OBJECT_POOL_COUNT 20
 /proc/setupPool()
 	world << "\red \b Creating Object Pool..."
 
@@ -61,13 +62,13 @@ var/list/grillePool
 		grillePool = grillePool + new /obj/structure/grille()
 
 	world << "\red \b Object Pool Creation Complete!"
+
 #undef STARTING_OBJECT_POOL_COUNT
 
 /*
  * @args
  * A, type path
  */
-#define FIRST_OBJECT 1
 /proc/getFromPool(A)
 	switch (A)
 		if (/obj/item/weapon/shard)
@@ -77,7 +78,7 @@ var/list/grillePool
 				#endif
 				return new /obj/item/weapon/shard()
 
-			. = shardPool[FIRST_OBJECT]
+			. = shardPool[FIRST_OBJECT_INDEX]
 			shardPool = shardPool - .
 
 			if (0 == shardPool.len)
@@ -89,7 +90,7 @@ var/list/grillePool
 				#endif
 				return new /obj/item/weapon/shard/plasma()
 
-			. = plasmaShardPool[FIRST_OBJECT]
+			. = plasmaShardPool[FIRST_OBJECT_INDEX]
 			plasmaShardPool = plasmaShardPool - .
 
 			if (0 == plasmaShardPool.len)
@@ -101,12 +102,13 @@ var/list/grillePool
 				#endif
 				return new /obj/structure/grille()
 
-			. = grillePool[FIRST_OBJECT]
+			. = grillePool[FIRST_OBJECT_INDEX]
 			grillePool = grillePool - .
 
 			if (0 == grillePool.len)
 				grillePool = null
-#undef FIRST_OBJECT
+
+#undef FIRST_OBJECT_INDEX
 
 /*
  * @args
