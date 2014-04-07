@@ -50,20 +50,32 @@ var/list/masterPool
 
 	masterPool = new /list()
 
-	var/list/shardPool = new /list()
-	var/list/plasmaShardPool = new /list()
-	var/list/grillePool = new /list()
-
-	for (var/i = 1 to STARTING_OBJECT_POOL_COUNT)
-		shardPool = shardPool + new /obj/item/weapon/shard()
-		plasmaShardPool = plasmaShardPool + new /obj/item/weapon/shard/plasma()
-		grillePool = grillePool + new /obj/structure/grille()
-
-	masterPool[/obj/item/weapon/shard] = shardPool
-	masterPool[/obj/item/weapon/shard/plasma] = plasmaShardPool
-	masterPool[/obj/structure/grille] = grillePool
+	initializePool(new /list(\
+		/obj/item/weapon/shard,\
+		/obj/item/weapon/shard/plasma,\
+		/obj/structure/grille))
 
 	world << "\red \b Object Pool Creation Complete!"
+
+/*
+ * Dynamic pool initialization, mostly used on setupPool()
+ *
+ * @args
+ * A, list of object types.
+ *
+ * Example call: initializePool(new /list(/obj/item/weapon/shard))
+ */
+/proc/initializePool(list/A)
+	var/list/Object = new /list()
+
+	for (var/i = 1 to A.len)
+		#if DEBUG_OBJECT_POOL
+		world << "DEBUG_OBJECT_POOL: initializing [A[i]]"
+		#endif
+		for (var/j = 1 to STARTING_OBJECT_POOL_COUNT)
+			Object = Object + new A[j]()
+
+		masterPool[A[i]] = Object
 
 #undef STARTING_OBJECT_POOL_COUNT
 
@@ -81,7 +93,7 @@ var/list/masterPool
 		#endif
 		return new A(B)
 
-	var /atom/movable/Object = masterPool[A][1]
+	var/atom/movable/Object = masterPool[A][1]
 	masterPool[A] = masterPool[A] - Object
 	Object.loc = B
 	. = Object
@@ -106,7 +118,7 @@ var/list/masterPool
 		#endif
 		masterPool[A.type] = new /list()
 
-	var /atom/movable/Object = A
+	var/atom/movable/Object = A
 	Object.loc = null
 
 	Object.resetVariables()
