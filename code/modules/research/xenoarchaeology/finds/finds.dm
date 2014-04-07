@@ -296,9 +296,10 @@
 			apply_material_decorations = 0
 		if(22)
 			if(prob(50))
-				new_item = new /obj/item/weapon/shard(src.loc)
+				new_item = getFromPool(/obj/item/weapon/shard, loc)
 			else
-				new_item = new /obj/item/weapon/shard/plasma(src.loc)
+				new_item = getFromPool(/obj/item/weapon/shard/plasma, loc)
+
 			apply_prefix = 0
 			apply_image_decorations = 0
 			apply_material_decorations = 0

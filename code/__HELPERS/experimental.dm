@@ -68,18 +68,21 @@ var/list/grillePool
 /*
  * @args
  * A, type path
+ * B, loc
  */
-/proc/getFromPool(A)
+/proc/getFromPool(A, B)
 	switch (A)
 		if (/obj/item/weapon/shard)
 			if (isnull(shardPool))
 				#if DEBUG_OBJECT_POOL
 				world << "DEBUG_OBJECT_POOL: New proc has been called (/obj/item/weapon/shard)."
 				#endif
-				return new /obj/item/weapon/shard()
+				return new /obj/item/weapon/shard(B)
 
-			. = shardPool[FIRST_OBJECT_INDEX]
-			shardPool = shardPool - .
+			var /obj/item/weapon/shard/Shard = shardPool[FIRST_OBJECT_INDEX]
+			shardPool = shardPool - Shard
+			Shard.loc = B
+			. = Shard
 
 			if (0 == shardPool.len)
 				shardPool = null
@@ -88,10 +91,12 @@ var/list/grillePool
 				#if DEBUG_OBJECT_POOL
 				world << "DEBUG_OBJECT_POOL: New proc has been called (obj/item/weapon/shard/plasma)."
 				#endif
-				return new /obj/item/weapon/shard/plasma()
+				return new /obj/item/weapon/shard/plasma(B)
 
-			. = plasmaShardPool[FIRST_OBJECT_INDEX]
-			plasmaShardPool = plasmaShardPool - .
+			var /obj/item/weapon/shard/plasma/Plasma = plasmaShardPool[FIRST_OBJECT_INDEX]
+			plasmaShardPool = plasmaShardPool - Plasma
+			Plasma.loc = B
+			. = Plasma
 
 			if (0 == plasmaShardPool.len)
 				plasmaShardPool = null
@@ -100,10 +105,12 @@ var/list/grillePool
 				#if DEBUG_OBJECT_POOL
 				world << "DEBUG_OBJECT_POOL: New proc has been called (/obj/structure/grille)."
 				#endif
-				return new /obj/structure/grille()
+				return new /obj/structure/grille(B)
 
-			. = grillePool[FIRST_OBJECT_INDEX]
-			grillePool = grillePool - .
+			var /obj/structure/grille/Grille = grillePool[FIRST_OBJECT_INDEX]
+			grillePool = grillePool - Grille
+			Grille.loc = B
+			. = Grille
 
 			if (0 == grillePool.len)
 				grillePool = null
