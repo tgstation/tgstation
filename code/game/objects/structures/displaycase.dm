@@ -98,7 +98,7 @@
 /obj/structure/displaycase/ex_act(severity)
 	switch(severity)
 		if (1)
-			new /obj/item/weapon/shard( src.loc )
+			getFromPool(/obj/item/weapon/shard, loc)
 			if (occupant)
 				dump()
 			qdel(src)
@@ -121,13 +121,13 @@
 
 /obj/structure/displaycase/blob_act()
 	if (prob(75))
-		new /obj/item/weapon/shard( src.loc )
+		getFromPool(/obj/item/weapon/shard, loc)
 		if(occupant) dump()
 		del(src)
 
 
 /obj/structure/displaycase/meteorhit(obj/O as obj)
-		new /obj/item/weapon/shard( src.loc )
+		getFromPool(/obj/item/weapon/shard, loc)
 		if(occupant) dump()
 		del(src)
 
@@ -137,7 +137,7 @@
 		if (!( src.destroyed ))
 			src.density = 0
 			src.destroyed = 1
-			new /obj/item/weapon/shard( src.loc )
+			getFromPool(/obj/item/weapon/shard, loc)
 			playsound(get_turf(src), "shatter", 70, 1)
 			update_icon()
 	else

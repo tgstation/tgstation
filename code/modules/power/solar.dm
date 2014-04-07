@@ -92,8 +92,8 @@ var/list/solars_list = list()
 		if(!(stat & BROKEN))
 			broken()
 		else
-			new /obj/item/weapon/shard(src.loc)
-			new /obj/item/weapon/shard(src.loc)
+			getFromPool(/obj/item/weapon/shard, loc)
+			getFromPool(/obj/item/weapon/shard, loc)
 			del(src)
 			return
 	return
@@ -159,11 +159,11 @@ var/list/solars_list = list()
 		if(1.0)
 			qdel(src)
 			if(prob(15))
-				new /obj/item/weapon/shard( src.loc )
+				getFromPool(/obj/item/weapon/shard, loc)
 			return
 		if(2.0)
 			if (prob(25))
-				new /obj/item/weapon/shard( src.loc )
+				getFromPool(/obj/item/weapon/shard, loc)
 				qdel(src)
 				return
 			if (prob(50))
@@ -339,7 +339,7 @@ var/list/solars_list = list()
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				new /obj/item/weapon/shard( src.loc )
+				getFromPool(/obj/item/weapon/shard, loc)
 				var/obj/item/weapon/circuitboard/solar_control/M = new /obj/item/weapon/circuitboard/solar_control( A )
 				for (var/obj/C in src)
 					C.loc = src.loc

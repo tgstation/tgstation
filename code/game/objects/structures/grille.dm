@@ -22,13 +22,13 @@
 	icon='icons/fence-ns.dmi'
 
 /obj/structure/grille/ex_act(severity)
-	qdel(src)
+	returnToPool(src)
 
 /obj/structure/grille/blob_act()
-	qdel(src)
+	returnToPool(src)
 
 /obj/structure/grille/meteorhit(var/obj/M)
-	qdel(src)
+	returnToPool(src)
 
 
 /obj/structure/grille/Bumped(atom/user)
@@ -111,7 +111,7 @@
 		if(!shock(user, 100))
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			new /obj/item/stack/rods(loc, 2)
-			del(src)
+			returnToPool(src)
 	else if((isscrewdriver(W)) && (istype(loc, /turf/simulated) || anchored))
 		if(!shock(user, 90))
 			playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
@@ -191,7 +191,7 @@
 		else
 			if(health <= -6)
 				new /obj/item/stack/rods(loc)
-				del(src)
+				returnToPool(src)
 				return
 	return
 
@@ -223,3 +223,11 @@
 			health -= 1
 			healthcheck()
 	..()
+
+/obj/structure/grille/resetVariables()
+	density = initial(density)
+	icon_state = initial(icon_state)
+	destroyed = initial(destroyed)
+	health = initial(health)
+
+	return ..()
