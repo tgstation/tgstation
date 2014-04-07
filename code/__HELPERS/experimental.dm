@@ -42,24 +42,26 @@
 
 #define DEBUG_OBJECT_POOL 1
 #define STARTING_OBJECT_POOL_COUNT 20
-#define FIRST_OBJECT_INDEX 1
 
-// List reference for pools.
-var/list/shardPool
-var/list/plasmaShardPool
-var/list/grillePool
+var/list/masterPool
 
 /proc/setupPool()
 	world << "\red \b Creating Object Pool..."
 
-	shardPool = new /list()
-	plasmaShardPool = new /list()
-	grillePool = new /list()
+	masterPool = new /list()
 
-	for (var/i = 0; i < STARTING_OBJECT_POOL_COUNT; i++)
+	var/list/shardPool = new /list()
+	var/list/plasmaShardPool = new /list()
+	var/list/grillePool = new /list()
+
+	for (var/i = 1 to STARTING_OBJECT_POOL_COUNT)
 		shardPool = shardPool + new /obj/item/weapon/shard()
 		plasmaShardPool = plasmaShardPool + new /obj/item/weapon/shard/plasma()
 		grillePool = grillePool + new /obj/structure/grille()
+
+	masterPool[/obj/item/weapon/shard] = shardPool
+	masterPool[/obj/item/weapon/shard/plasma] = plasmaShardPool
+	masterPool[/obj/structure/grille] = grillePool
 
 	world << "\red \b Object Pool Creation Complete!"
 
@@ -71,95 +73,42 @@ var/list/grillePool
  * B, loc
  */
 /proc/getFromPool(A, B)
-	switch (A)
-		if (/obj/item/weapon/shard)
-			if (isnull(shardPool))
-				#if DEBUG_OBJECT_POOL
-				world << "DEBUG_OBJECT_POOL: New proc has been called (/obj/item/weapon/shard)."
-				#endif
-				return new /obj/item/weapon/shard(B)
+	if (isnull(masterPool[A]))
+		#if DEBUG_OBJECT_POOL
+		world << "DEBUG_OBJECT_POOL: new proc has been called ([A])."
+		#endif
+		return new A(B)
 
-			var /obj/item/weapon/shard/Shard = shardPool[FIRST_OBJECT_INDEX]
-			shardPool = shardPool - Shard
-			Shard.loc = B
-			. = Shard
+	var /atom/movable/Object = masterPool[A][1]
+	masterPool[A] = masterPool[A] - Object
+	Object.loc = B
+	. = Object
 
-			if (0 == shardPool.len)
-				shardPool = null
-		if (/obj/item/weapon/shard/plasma)
-			if (isnull(plasmaShardPool))
-				#if DEBUG_OBJECT_POOL
-				world << "DEBUG_OBJECT_POOL: New proc has been called (obj/item/weapon/shard/plasma)."
-				#endif
-				return new /obj/item/weapon/shard/plasma(B)
+	#if DEBUG_OBJECT_POOL
+	world << "DEBUG_OBJECT_POOL: getFromPool([A]) [length(masterPool[A])]"
+	#endif
 
-			var /obj/item/weapon/shard/plasma/Plasma = plasmaShardPool[FIRST_OBJECT_INDEX]
-			plasmaShardPool = plasmaShardPool - Plasma
-			Plasma.loc = B
-			. = Plasma
-
-			if (0 == plasmaShardPool.len)
-				plasmaShardPool = null
-		if (/obj/structure/grille)
-			if (isnull(grillePool))
-				#if DEBUG_OBJECT_POOL
-				world << "DEBUG_OBJECT_POOL: New proc has been called (/obj/structure/grille)."
-				#endif
-				return new /obj/structure/grille(B)
-
-			var /obj/structure/grille/Grille = grillePool[FIRST_OBJECT_INDEX]
-			grillePool = grillePool - Grille
-			Grille.loc = B
-			. = Grille
-
-			if (0 == grillePool.len)
-				grillePool = null
-
-#undef FIRST_OBJECT_INDEX
+	if (0 == length(masterPool[A]))
+		masterPool[A] = null
 
 /*
  * @args
  * A, datum
  */
-/proc/returnToPool(datum/A)
-	switch(A.type)
-		if (/obj/item/weapon/shard)
-			if (isnull(shardPool))
-				#if DEBUG_OBJECT_POOL
-				world << "DEBUG_OBJECT_POOL: Shard pool is empty, recreating list."
-				#endif
-				shardPool = new /list()
+/proc/returnToPool(atom/movable/A)
+	if (isnull(masterPool[A]))
+		#if DEBUG_OBJECT_POOL
+		world << "DEBUG_OBJECT_POOL: [A.type] pool is empty, recreating list."
+		#endif
+		masterPool[A.type] = new /list()
 
-			var /obj/item/weapon/shard/Shard = A
-			Shard.loc = null
+	var /atom/movable/Object = A
+	Object.loc = null
 
-			shardPool = shardPool + Shard
-		if (/obj/item/weapon/shard/plasma)
-			if (isnull(plasmaShardPool))
-				#if DEBUG_OBJECT_POOL
-				world << "DEBUG_OBJECT_POOL: Plasma shard pool is empty, recreating list."
-				#endif
-				plasmaShardPool = new /list()
+	masterPool[A.type] = masterPool[A.type] + Object
 
-			var /obj/item/weapon/shard/plasma/Plasma = A
-			Plasma.loc = null
-
-			plasmaShardPool = plasmaShardPool + Plasma
-		if (/obj/structure/grille)
-			if (isnull(grillePool))
-				#if DEBUG_OBJECT_POOL
-				world << "DEBUG_OBJECT_POOL: Grille pool is empty, recreating list."
-				#endif
-				grillePool = new /list()
-
-			var /obj/structure/grille/Grille = A
-			Grille.loc = null
-
-			Grille.icon_state = initial(Grille.icon_state)
-			Grille.density = initial(Grille.density)
-			Grille.destroyed = initial(Grille.destroyed)
-			Grille.health = initial(Grille.health)
-
-			grillePool = grillePool + Grille
+	#if DEBUG_POOL_OBJECT
+	world << "DEBUG_OBJECT_POOL: returnToPool([A]) [length(masterPool[A])]"
+	#endif
 
 #undef DEBUG_OBJECT_POOL
