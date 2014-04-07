@@ -73,7 +73,7 @@ var/list/grillePool
 		if (/obj/item/weapon/shard)
 			if (isnull(shardPool))
 				#if DEBUG_OBJECT_POOL
-				world << "New proc has been called (/obj/item/weapon/shard)."
+				world << "DEBUG_OBJECT_POOL: New proc has been called (/obj/item/weapon/shard)."
 				#endif
 				return new /obj/item/weapon/shard()
 
@@ -85,7 +85,7 @@ var/list/grillePool
 		if (/obj/item/weapon/shard/plasma)
 			if (isnull(plasmaShardPool))
 				#if DEBUG_OBJECT_POOL
-				world << "New proc has been called (obj/item/weapon/shard/plasma)."
+				world << "DEBUG_OBJECT_POOL: New proc has been called (obj/item/weapon/shard/plasma)."
 				#endif
 				return new /obj/item/weapon/shard/plasma()
 
@@ -97,7 +97,7 @@ var/list/grillePool
 		if (/obj/structure/grille)
 			if (isnull(grillePool))
 				#if DEBUG_OBJECT_POOL
-				world << "New proc has been called (/obj/structure/grille)."
+				world << "DEBUG_OBJECT_POOL: New proc has been called (/obj/structure/grille)."
 				#endif
 				return new /obj/structure/grille()
 
@@ -117,7 +117,7 @@ var/list/grillePool
 		if (/obj/item/weapon/shard)
 			if (isnull(shardPool))
 				#if DEBUG_OBJECT_POOL
-				world << "Shard pool is empty, recreating list."
+				world << "DEBUG_OBJECT_POOL: Shard pool is empty, recreating list."
 				#endif
 				shardPool = new /list()
 
@@ -129,7 +129,7 @@ var/list/grillePool
 		if (/obj/item/weapon/shard/plasma)
 			if (isnull(plasmaShardPool))
 				#if DEBUG_OBJECT_POOL
-				world << "Plasma shard pool is empty, recreating list."
+				world << "DEBUG_OBJECT_POOL: Plasma shard pool is empty, recreating list."
 				#endif
 				plasmaShardPool = new /list()
 
@@ -141,7 +141,7 @@ var/list/grillePool
 		if (/obj/structure/grille)
 			if (isnull(grillePool))
 				#if DEBUG_OBJECT_POOL
-				world << "Grille pool is empty, recreating list."
+				world << "DEBUG_OBJECT_POOL: Grille pool is empty, recreating list."
 				#endif
 				grillePool = new /list()
 
