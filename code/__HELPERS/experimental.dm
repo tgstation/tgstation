@@ -37,16 +37,29 @@
  * If this file is named experimental,
  * well treat this implementation as experimental experimental (redundancy intended).
  *
- * REMINDER TO MYSELF: Ignore fireaxe deletion for a now.
+ * REMINDER TO MYSELF: Ignore fireaxe deletion for now.
  */
-
-// We put the pools on a place that's very hard to find.
-var/turf/sekrit = locate(1, 1, CENTCOMM_Z)
 
 // List reference for pools.
 var/list/shardPool
 var/list/plasmaShardPool
 var/list/grillePool
+
+#define STARTING_OBJECT_POOL_COUNT 20
+/proc/setupPool()
+	world << "\red \b Creating Object Pool..."
+
+	shardPool = new /list()
+	plasmaShardPool = new /list()
+	grillePool = new /list()
+
+	for (var/i = 0; i < STARTING_OBJECT_POOL_COUNT; i++)
+		shardPool = shardPool + new /obj/item/weapon/shard()
+		plasmaShardPool = plasmaShardPool + new /obj/item/weapon/shard/plasma()
+		grillePool = grillePool + new /obj/structure/grille()
+
+	world << "\red \b Object Pool Creation Complete!"
+#undef STARTING_OBJECT_POOL_COUNT
 
 /*
  * @args
@@ -95,22 +108,26 @@ var/list/grillePool
 				shardPool = new /list()
 
 			var /obj/item/weapon/shard/Shard = A
-			Shard.loc = sekrit
+
+			Shard.loc = initial(Shard.loc)
+
 			shardPool = shardPool + Shard
 		if (/obj/item/weapon/shard/plasma)
 			if (isnull(plasmaShardPool))
 				plasmaShardPool = new /list()
 
 			var /obj/item/weapon/shard/plasma/Plasma = A
-			Plasma.loc = sekrit
+
+			Plasma.loc = initial(Plasma.loc)
+
 			plasmaShardPool = plasmaShardPool + Plasma
 		if (/obj/structure/grille)
 			if (isnull(grillePool))
 				grillePool = new /list()
 
 			var /obj/structure/grille/Grille = A
-			Grille.loc = sekrit
 
+			Grille.loc = initial(Grille.loc)
 			Grille.icon_state = initial(Grille.icon_state)
 			Grille.density = initial(Grille.density)
 			Grille.destroyed = initial(Grille.destroyed)
