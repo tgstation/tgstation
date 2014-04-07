@@ -73,7 +73,8 @@ var/list/masterPool
 		world << "DEBUG_OBJECT_POOL: initializing [A[i]]"
 		#endif
 		for (var/j = 1 to STARTING_OBJECT_POOL_COUNT)
-			Object = Object + new A[j]()
+			var/honk = A[j]
+			Object = Object + new honk()
 
 		masterPool[A[i]] = Object
 
@@ -99,7 +100,7 @@ var/list/masterPool
 	. = Object
 
 	#if DEBUG_OBJECT_POOL
-	world << "DEBUG_OBJECT_POOL: getFromPool([A.type]) [length(masterPool[A])]"
+	world << "DEBUG_OBJECT_POOL: getFromPool([A]) [length(masterPool[A])]"
 	#endif
 
 	if (0 == length(masterPool[A]))
