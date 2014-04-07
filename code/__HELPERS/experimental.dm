@@ -87,7 +87,7 @@ var/list/masterPool
 	. = Object
 
 	#if DEBUG_OBJECT_POOL
-	world << "DEBUG_OBJECT_POOL: getFromPool([A]) [length(masterPool[A])]"
+	world << "DEBUG_OBJECT_POOL: getFromPool([A.type]) [length(masterPool[A])]"
 	#endif
 
 	if (0 == length(masterPool[A]))
