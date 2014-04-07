@@ -69,8 +69,10 @@ var/list/masterPool
 
 /*
  * @args
- * A, type path
+ * A, type not object instance
  * B, loc
+ *
+ * Example call: getFromPool(/obj/item/weapon/shard, loc)
  */
 /proc/getFromPool(A, B)
 	if (isnull(masterPool[A]))
@@ -93,7 +95,9 @@ var/list/masterPool
 
 /*
  * @args
- * A, datum
+ * A, object instance not type
+ *
+ * Example call: returnToPool(src)
  */
 /proc/returnToPool(atom/movable/A)
 	if (isnull(masterPool[A]))
@@ -105,10 +109,19 @@ var/list/masterPool
 	var /atom/movable/Object = A
 	Object.loc = null
 
+	Object.resetVariables()
+
 	masterPool[A.type] = masterPool[A.type] + Object
 
-	#if DEBUG_POOL_OBJECT
+	#if DEBUG_OBJECT_POOL
 	world << "DEBUG_OBJECT_POOL: returnToPool([A]) [length(masterPool[A])]"
 	#endif
 
 #undef DEBUG_OBJECT_POOL
+
+/*
+ * Override this if the object variables needed to reset.
+ *
+ * Example: see, code\game\objects\structures\grille.dm
+ */
+/atom/movable/proc/resetVariables()
