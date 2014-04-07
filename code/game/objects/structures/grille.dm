@@ -223,3 +223,11 @@
 			health -= 1
 			healthcheck()
 	..()
+
+/obj/structure/grille/resetVariables()
+	density = initial(density)
+	icon_state = initial(icon_state)
+	destroyed = initial(destroyed)
+	health = initial(health)
+
+	return ..()
