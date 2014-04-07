@@ -108,4 +108,8 @@ var/list/grillePool
 
 			var /obj/structure/grille/Grille = A
 			Grille.loc = sekrit
+
+			Grille.icon_state = initial(Grille.icon_state)
+			Grille.destroyed = initial(Grille.destroyed)
+
 			grillePool = grillePool + Grille
