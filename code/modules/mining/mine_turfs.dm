@@ -430,12 +430,12 @@ var/list/artifact_spawn = list() // Runtime fix for geometry loading before cont
 			if(5)
 				var/quantity = rand(1,3)
 				for(var/i=0, i<quantity, i++)
-					new /obj/item/weapon/shard(src)
+					getFromPool(/obj/item/weapon/shard, loc)
 
 			if(6)
 				var/quantity = rand(1,3)
 				for(var/i=0, i<quantity, i++)
-					new /obj/item/weapon/shard/plasma(src)
+					getFromPool(/obj/item/weapon/shard/plasma, loc)
 
 			if(7)
 				var/obj/item/stack/sheet/mineral/uranium/R = new(src)

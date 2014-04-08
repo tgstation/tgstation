@@ -12,7 +12,7 @@
 	proc/smash(mob/living/target as mob, mob/living/user as mob)
 		//Creates a shattering noise and replaces the drinking glass with a glass shard
 		user.drop_item()
-		var/obj/item/weapon/shard/S = new /obj/item/weapon/shard(user.loc)
+		var/obj/item/weapon/shard/S = getFromPool(/obj/item/weapon/shard, user.loc)
 		user.put_in_active_hand(S)
 
 		playsound(src, "shatter", 70, 1)

@@ -25,7 +25,11 @@ $winningCount=$responses['winner'];
 		<th class="clmText"><?=$opt->text?></th>
 		<td class="clmRespondants"><?=$respondants?></td>
 		<td class="clmPercent">
-			<?=sprintf('%0.2f%%',($respondants/$totalRespondants)*100)?>
+			<?if(!$respondants || !$totalRespondants) :?>
+			0%
+			<?else:?>
+				<?=sprintf('%0.2f%%',($respondants/$totalRespondants)*100)?>
+			<?endif?>
 			<span class="bar<?=($winningCount==$respondants)?' green':''?>" style="width:<?=(500*($respondants/$totalRespondants))?>px">&nbsp;</span>
 		</td>
 	</tr>
