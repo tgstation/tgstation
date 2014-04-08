@@ -20,6 +20,8 @@
 	var/url    = ""
 	var/length = 0 // decaseconds
 
+	var/emagged = 0
+
 	New(var/list/json)
 		title  = json["title"]
 		artist = json["artist"]
@@ -95,13 +97,16 @@ var/global/loopModeNames=list(
 		return
 	icon_state = "jukebox2"
 	if(playing)
-		overlays += "jukebox2-running"
+		if(emagged)
+			overlays += "jukebox2-emagged"
+		else
+			overlays += "jukebox2-running"
 
 /obj/machinery/media/jukebox/proc/check_reload()
 	return world.time > last_reload + JUKEBOX_RELOAD_COOLDOWN
 
 /obj/machinery/media/jukebox/attack_hand(var/mob/user)
-	if(stat & (NOPOWER|BROKEN))
+	if(stat & (NOPOWER|BROKEN) || emagged)
 		return
 	var/t = "<h1>Jukebox Interface</h1>"
 	t += "<b>Power:</b> <a href='?src=\ref[src];power=1'>[playing?"On":"Off"]</a><br />"
@@ -130,11 +135,26 @@ var/global/loopModeNames=list(
 	popup.open()
 
 
+/obj/machinery/media/jukebox/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/weapon/card/emag) && !emagged)
+		playlist_id = "emagged"
+		last_reload=world.time
+		playlist=null
+		current_song=0
+		loop_mode = JUKEMODE_SHUFFLE
+		emagged = 1
+		user.visible_message("[user.name] emags the [src.name].","\red You short out the [src.name].")
+		update_icon()
+		update_music()
+		return
+
 /obj/machinery/media/jukebox/Topic(href, href_list)
 	if(isobserver(usr) && !isAdminGhost(usr))
 		usr << "\red You can't push buttons when your fingers go right through them, dummy."
 		return
 	..()
+	if(emagged) return
+
 	if (href_list["power"])
 		playing=!playing
 		update_music()
