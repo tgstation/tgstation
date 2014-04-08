@@ -301,9 +301,7 @@
 	name = "ammunition locker"
 	req_access = list(access_armory)
 
-	New()
-		..()
-		sleep(2)
+/obj/structure/closet/secure_closet/ammunitionlocker/New()
 		new /obj/item/ammo_casing/shotgun/beanbag(src)
 		new /obj/item/ammo_casing/shotgun/beanbag(src)
 		new /obj/item/ammo_casing/shotgun/beanbag(src)
@@ -312,4 +310,4 @@
 		new /obj/item/ammo_casing/shotgun/beanbag(src)
 		new /obj/item/ammo_casing/shotgun/beanbag(src)
 		new /obj/item/ammo_casing/shotgun/beanbag(src)
-		return
+
