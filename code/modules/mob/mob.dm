@@ -8,12 +8,15 @@
 			qdel(AM)
 		client.screen = list()
 	del(hud_used)
-	for(var/magic in mob_spell_list)
-		del(magic)
+	spellremove(src)
 	for(var/infection in viruses)
 		del(infection)
 	ghostize()
 	..()
+
+/mob/proc/sac_act(var/obj/effect/rune/R, var/mob/victim as mob)
+	return
+
 
 var/next_mob_id = 0
 /mob/New()
@@ -800,3 +803,4 @@ var/list/slot_equipment_priority = list( \
 	resting = max(resting + amount,0)
 	update_canmove()
 	return
+

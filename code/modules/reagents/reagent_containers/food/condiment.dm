@@ -29,6 +29,9 @@
 		user << "<span class='warning'>None of [src] left, oh no!</span>"
 		return 0
 
+	if(!canconsume(M, user))
+		return 0
+
 	if(M == user)
 		M << "<span class='notice'>You swallow some of contents of the [src].</span>"
 		if(reagents.total_volume)

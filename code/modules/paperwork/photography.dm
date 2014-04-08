@@ -86,7 +86,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "album"
 	item_state = "briefcase"
-	can_hold = list("/obj/item/weapon/photo",)
+	can_hold = list(/obj/item/weapon/photo)
 
 
 /*

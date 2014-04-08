@@ -19,6 +19,9 @@
 		return
 
 	attack(mob/M, mob/user, def_zone)
+		if(!canconsume(M, user))
+			return 0
+
 		if(M == user)
 			M << "<span class='notice'>You swallow [src].</span>"
 			M.unEquip(src) //icon update

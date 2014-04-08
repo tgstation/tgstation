@@ -122,6 +122,8 @@
 	deactivate(user,0)
 
 /obj/machinery/camera/attackby(W as obj, mob/living/user as mob)
+	var/msg = "<span class='notice'>You attach [W] into the assembly inner circuits.</span>"
+	var/msg2 = "<span class='notice'>The camera already has that upgrade!</span>"
 
 	// DECONSTRUCTION
 	if(istype(W, /obj/item/weapon/screwdriver))
@@ -147,7 +149,28 @@
 			assembly = null
 			qdel(src)
 			return
+	else if(istype(W, /obj/item/device/analyzer) && panel_open) //XRay
+		if(!isXRay())
+			upgradeXRay()
+			qdel(W)
+			user << "[msg]"
+		else
+			user << "[msg2]"
 
+	else if(istype(W, /obj/item/stack/sheet/mineral/plasma) && panel_open)
+		if(!isEmpProof())
+			upgradeEmpProof()
+			user << "[msg]"
+			qdel(W)
+		else
+			user << "[msg2]"
+	else if(istype(W, /obj/item/device/assembly/prox_sensor) && panel_open)
+		if(!isMotion())
+			upgradeMotion()
+			user << "[msg]"
+			qdel(W)
+		else
+			user << "[msg2]"
 
 	// OTHER
 	else if ((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/device/pda)) && isliving(user))

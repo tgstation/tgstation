@@ -227,7 +227,7 @@
 	max_w_class = 8
 	anchored = 1.0
 	density = 0
-	cant_hold = list("/obj/item/weapon/storage/secure/briefcase")
+	cant_hold = list(/obj/item/weapon/storage/secure/briefcase)
 
 	New()
 		..()

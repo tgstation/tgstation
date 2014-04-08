@@ -87,6 +87,7 @@
 		sleep(30)
 		if(R)
 			R.SetLockdown(0)
+			R.notify_ai(1)
 
 /obj/machinery/transformer/conveyor/New()
 	..()
