@@ -14,9 +14,9 @@
 	title = "Station Repairs and Construction"
 	dat = {"
 		<html>
-		<body>
-			<iframe width='100%' height='100%' src="http://ss13.nexisonline.net/w/index.php?title=Guide_to_Construction&printable=yes"></iframe>
-		</body>
+			<body>
+				<iframe width='100%' height='100%' src="http://ss13.nexisonline.net/w/index.php?title=Guide_to_Construction&printable=yes"></iframe>
+			</body>
 		</html>
 		"}
 
