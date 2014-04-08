@@ -160,6 +160,9 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 /obj/machinery/telecomms/Destroy()
 	telecomms_list -= src
+	for(var/obj/machinery/telecomms/comm in telecomms_list)
+		comm.links -= src
+	links = list()
 	..()
 
 // Used in auto linking
