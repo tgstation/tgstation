@@ -66,7 +66,7 @@
 					aNames += " <i>(as [C.holder.fakekey])</i>"
 
 				if (isobserver(C.mob))
-					msg += " - Observing"
+					aNames += " - Observing"
 				else if (istype(C.mob,/mob/new_player))
 					aNames += " - Lobby"
 				else
