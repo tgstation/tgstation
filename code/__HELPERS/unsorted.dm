@@ -249,6 +249,12 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if(C.dna)
 			C.dna.real_name = real_name
 
+	if(isAI(src))
+		var/mob/living/silicon/ai/AI = src
+		if(oldname != real_name)
+			for(var/mob/living/silicon/robot/Slave in AI.connected_robots)
+				Slave.show_laws()
+
 	if(isrobot(src))
 		var/mob/living/silicon/robot/R = src
 		if(oldname != real_name)
@@ -336,6 +342,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				if(A.aiPDA)
 					A.aiPDA.owner = newname
 					A.aiPDA.name = newname + " (" + A.aiPDA.ownjob + ")"
+
+				// Notify Cyborgs
+				for(var/mob/living/silicon/robot/Slave in A.connected_robots)
+					Slave.show_laws()
 
 		if(cmptext("cyborg",role))
 			if(isrobot(src))
