@@ -65,11 +65,7 @@ var/const/tk_maxrange = 15
 	desc = "Magic"
 	icon = 'icons/obj/magic.dmi'//Needs sprites
 	icon_state = "2"
-<<<<<<< HEAD
-	flags = NOBLUDGEON
-=======
 	flags = NOBLUDGEON | ABSTRACT
->>>>>>> d212022b8b06bc7e5b01912d990e7a1f57dd6bcf
 	//item_state = null
 	w_class = 10.0
 	layer = 20
@@ -201,7 +197,3 @@ var/const/tk_maxrange = 15
 				var/Z = source:z
 
 */
-<<<<<<< HEAD
-=======
-
->>>>>>> d212022b8b06bc7e5b01912d990e7a1f57dd6bcf
