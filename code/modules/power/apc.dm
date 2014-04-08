@@ -353,7 +353,7 @@
 			update_overlay |= APC_UPOVERLAY_ENVIRON1
 		else if(environ==2)
 			update_overlay |= APC_UPOVERLAY_ENVIRON2
-	
+
 
 	var/results = 0
 	if(last_update_state == update_state && last_update_overlay == update_overlay)
@@ -773,7 +773,7 @@
 		return 0
 	if ( ! (istype(user, /mob/living/carbon/human) || \
 			istype(user, /mob/living/silicon) || \
-			istype(user, /mob/living/carbon/monkey) /*&& ticker && ticker.mode.name == "monkey"*/) )
+			istype(user, /mob/living/carbon/monkey)) )
 		user << "\red You don't have the dexterity to use this [src]!"
 		return 0
 	if(user.restrained())
