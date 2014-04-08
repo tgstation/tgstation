@@ -108,6 +108,15 @@
 	brightness_on = 2
 
 
+/obj/item/device/flashlight/seclite
+	name = "seclite"
+	desc = "A robust flashlight used by security."
+	icon_state = "seclite"
+	item_state = "seclite"
+	force = 9 // Not as good as a stun baton.
+	brightness_on = 5 // A little better than the standard flashlight.
+
+
 // the desk lamps are a bit special
 /obj/item/device/flashlight/lamp
 	name = "desk lamp"

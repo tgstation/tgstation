@@ -257,7 +257,7 @@ datum/design/orion_trail
 
 datum/design/powermonitor
 	name = "Circuit Design (Power Monitor)"
-	desc = "Allows for the construction of circuit boards used to build a new power monitor"
+	desc = "Allows for the construction of circuit boards used to build a new power monitor."
 	id = "powermonitor"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
@@ -266,7 +266,7 @@ datum/design/powermonitor
 
 datum/design/solarcontrol
 	name = "Circuit Design (Solar Control)"
-	desc = "Allows for the construction of circuit boards used to build a solar control console"
+	desc = "Allows for the construction of circuit boards used to build a solar control console."
 	id = "solarcontrol"
 	req_tech = list("programming" = 2, "powerstorage" = 2)
 	build_type = IMPRINTER
@@ -362,6 +362,24 @@ datum/design/message_monitor
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/message_monitor
+
+datum/design/comm_traffic
+	name = "Circuit Design (Telecommunications Traffic Control Console)"
+	desc = "Allows for the construction of circuit boards used to build a telecommunications traffic control console."
+	id = "comm_traffic"
+	req_tech = list("programming" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/comm_traffic
+
+datum/design/telesci_console
+	name = "Circuit Design (Telepad Control Console Board)"
+	desc = "Allows for the construction of circuit boards used to build a telescience console."
+	id = "telesci_console"
+	req_tech = list("programming" = 3, "bluespace" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/telesci_console
 
 datum/design/aifixer
 	name = "Circuit Design (AI Integrity Restorer)"
@@ -592,7 +610,7 @@ datum/design/intellicard
 
 datum/design/paicard
 	name = "Personal Artificial Intelligence Card"
-	desc = "Allows for the construction of a pAI Card"
+	desc = "Allows for the construction of a pAI Card."
 	id = "paicard"
 	req_tech = list("programming" = 2)
 	build_type = PROTOLATHE
@@ -879,7 +897,7 @@ datum/design/mech_syringe_gun
 
 datum/design/mech_diamond_drill
 	name = "Exosuit Module Design (Diamond Mining Drill)"
-	desc = "An upgraded version of the standard drill"
+	desc = "An upgraded version of the standard drill."
 	id = "mech_diamond_drill"
 	build_type = MECHFAB
 	req_tech = list("materials" = 4, "engineering" = 3)
@@ -888,7 +906,7 @@ datum/design/mech_diamond_drill
 
 datum/design/mech_generator_nuclear
 	name = "Exosuit Module Design (ExoNuclear Reactor)"
-	desc = "Compact nuclear reactor module"
+	desc = "Compact nuclear reactor module."
 	id = "mech_generator_nuclear"
 	build_type = MECHFAB
 	req_tech = list("powerstorage"= 3, "engineering" = 3, "materials" = 3)
@@ -1151,7 +1169,7 @@ datum/design/subspace_transmitter
 
 datum/design/basic_cell
 	name = "Basic Power Cell"
-	desc = "A basic power cell that holds 1000 units of energy"
+	desc = "A basic power cell that holds 1000 units of energy."
 	id = "basic_cell"
 	req_tech = list("powerstorage" = 1)
 	build_type = PROTOLATHE | AUTOLATHE |MECHFAB
@@ -1161,7 +1179,7 @@ datum/design/basic_cell
 
 datum/design/high_cell
 	name = "High-Capacity Power Cell"
-	desc = "A power cell that holds 10000 units of energy"
+	desc = "A power cell that holds 10000 units of energy."
 	id = "high_cell"
 	req_tech = list("powerstorage" = 2)
 	build_type = PROTOLATHE | AUTOLATHE | MECHFAB
@@ -1171,7 +1189,7 @@ datum/design/high_cell
 
 datum/design/super_cell
 	name = "Super-Capacity Power Cell"
-	desc = "A power cell that holds 20000 units of energy"
+	desc = "A power cell that holds 20000 units of energy."
 	id = "super_cell"
 	req_tech = list("powerstorage" = 3, "materials" = 2)
 	reliability = 75
@@ -1182,7 +1200,7 @@ datum/design/super_cell
 
 datum/design/hyper_cell
 	name = "Hyper-Capacity Power Cell"
-	desc = "A power cell that holds 30000 units of energy"
+	desc = "A power cell that holds 30000 units of energy."
 	id = "hyper_cell"
 	req_tech = list("powerstorage" = 5, "materials" = 4)
 	reliability = 70
@@ -1368,7 +1386,7 @@ datum/design/autolathe
 
 datum/design/rdservercontrol
 	name = "R&D Server Control Console Board"
-	desc = "The circuit board for an R&D Server Control Console"
+	desc = "The circuit board for an R&D Server Control Console."
 	id = "rdservercontrol"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
@@ -1377,7 +1395,7 @@ datum/design/rdservercontrol
 
 datum/design/rdserver
 	name = "R&D Server Board"
-	desc = "The circuit board for an R&D Server"
+	desc = "The circuit board for an R&D Server."
 	id = "rdserver"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
@@ -1386,7 +1404,7 @@ datum/design/rdserver
 
 datum/design/mechfab
 	name = "Exosuit Fabricator Board"
-	desc = "The circuit board for an Exosuit Fabricator"
+	desc = "The circuit board for an Exosuit Fabricator."
 	id = "mechfab"
 	req_tech = list("programming" = 3, "engineering" = 3)
 	build_type = IMPRINTER
@@ -1396,12 +1414,31 @@ datum/design/mechfab
 
 datum/design/cyborgrecharger
 	name = "Cyborg Recharger Board"
-	desc = "The circuit board for a Cyborg Recharger"
+	desc = "The circuit board for a Cyborg Recharger."
 	id = "cyborgrecharger"
 	req_tech = list("powerstorage" = 3, "engineering" = 3)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/cyborgrecharger
+
+datum/design/mech_recharger
+	name = "Mechbay Recharger Board"
+	desc = "The circuit board for a Mechbay Recharger."
+	id = "mech_recharger"
+	req_tech = list("programming" = 3, "powerstorage" = 4, "engineering" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/mech_recharger
+
+datum/design/vendor
+	name = "Vendor Board"
+	desc = "The circuit board for a Vendor."
+	id = "vendor"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/vendor
+
 
 /////////////////////////////////////////
 ////////////Power Stuff//////////////////

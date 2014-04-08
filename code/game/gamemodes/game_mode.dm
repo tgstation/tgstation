@@ -31,6 +31,7 @@
 	var/uplink_welcome = "Syndicate Uplink Console:"
 	var/uplink_uses = 10
 	var/antag_flag = null //preferences flag such as BE_WIZARD that need to be turned on for players to be antag
+	var/datum/mind/sacrifice_target = null
 
 
 /datum/game_mode/proc/announce() //to be calles when round starts
@@ -47,9 +48,13 @@
 	if(playerC < required_players)
 		return 0
 	antag_candidates = get_players_for_role(antag_flag)
-	if(antag_candidates.len < required_enemies)
-		return 0
-	return 1
+	if(!Debug2)
+		if(antag_candidates.len < required_enemies)
+			return 0
+		return 1
+	else
+		world << "<span class='notice'>DEBUG: GAME STARTING WITHOUT PLAYER NUMBER CHECKS, THIS WILL PROBABLY BREAK SHIT."
+		return 1
 
 
 ///pre_setup()

@@ -312,10 +312,18 @@ datum
 						del(A)
 						update_total()
 						my_atom.on_reagent_change()
+						check_gofast(my_atom)
 						return 0
 
 
 				return 1
+
+			check_gofast(var/mob/M)
+				if(istype(M, /mob))
+					if(M.reagents.has_reagent("hyperzine")||M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola"))
+						return 1
+					else
+						M.status_flags &= ~GOTTAGOFAST
 
 			update_total()
 				total_volume = 0

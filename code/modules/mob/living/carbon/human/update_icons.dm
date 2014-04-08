@@ -314,9 +314,10 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	if(istype(w_uniform, /obj/item/clothing/under))
 		var/obj/item/clothing/under/U = w_uniform
-		if(client && hud_used && hud_used.hud_shown && hud_used.inventory_shown)
-			w_uniform.screen_loc = ui_iclothing
-			client.screen += w_uniform
+		if(client && hud_used && hud_used.hud_shown)
+			if(hud_used.inventory_shown)			//if the inventory is open ...
+				w_uniform.screen_loc = ui_iclothing //...draw the item in the inventory screen
+			client.screen += w_uniform				//Either way, add the item to the HUD
 
 		var/t_color = w_uniform.item_color
 		if(!t_color)		t_color = icon_state
@@ -362,9 +363,10 @@ Please contact me on #coderbus IRC. ~Carnie x
 /mob/living/carbon/human/update_inv_gloves()
 	remove_overlay(GLOVES_LAYER)
 	if(gloves)
-		if(client && hud_used && hud_used.hud_shown && hud_used.inventory_shown)
-			gloves.screen_loc = ui_gloves
-			client.screen += gloves
+		if(client && hud_used && hud_used.hud_shown)
+			if(hud_used.inventory_shown)			//if the inventory is open ...
+				gloves.screen_loc = ui_gloves		//...draw the item in the inventory screen
+			client.screen += gloves					//Either way, add the item to the HUD
 
 		var/t_state = gloves.item_state
 		if(!t_state)	t_state = gloves.icon_state
@@ -385,9 +387,10 @@ Please contact me on #coderbus IRC. ~Carnie x
 	remove_overlay(GLASSES_LAYER)
 
 	if(glasses)
-		if(client && hud_used && hud_used.hud_shown && hud_used.inventory_shown)
-			glasses.screen_loc = ui_glasses
-			client.screen += glasses
+		if(client && hud_used && hud_used.hud_shown)
+			if(hud_used.inventory_shown)			//if the inventory is open ...
+				glasses.screen_loc = ui_glasses		//...draw the item in the inventory screen
+			client.screen += glasses				//Either way, add the item to the HUD
 
 		overlays_standing[GLASSES_LAYER]	= image("icon"='icons/mob/eyes.dmi', "icon_state"="[glasses.icon_state]", "layer"=-GLASSES_LAYER)
 
@@ -398,9 +401,10 @@ Please contact me on #coderbus IRC. ~Carnie x
 	remove_overlay(EARS_LAYER)
 
 	if(ears)
-		if(client && hud_used && hud_used.hud_shown && hud_used.inventory_shown)
-			ears.screen_loc = ui_ears
-			client.screen += ears
+		if(client && hud_used && hud_used.hud_shown)
+			if(hud_used.inventory_shown)			//if the inventory is open ...
+				ears.screen_loc = ui_ears			//...draw the item in the inventory screen
+			client.screen += ears					//Either way, add the item to the HUD
 
 		overlays_standing[EARS_LAYER] = image("icon"='icons/mob/ears.dmi', "icon_state"="[ears.icon_state]", "layer"=-EARS_LAYER)
 
@@ -411,9 +415,10 @@ Please contact me on #coderbus IRC. ~Carnie x
 	remove_overlay(SHOES_LAYER)
 
 	if(shoes)
-		if(client && hud_used && hud_used.hud_shown && hud_used.inventory_shown)
-			shoes.screen_loc = ui_shoes
-			client.screen += shoes
+		if(client && hud_used && hud_used.hud_shown)
+			if(hud_used.inventory_shown)			//if the inventory is open ...
+				shoes.screen_loc = ui_shoes			//...draw the item in the inventory screen
+			client.screen += shoes					//Either way, add the item to the HUD
 
 		var/image/standing	= image("icon"='icons/mob/feet.dmi', "icon_state"="[shoes.icon_state]", "layer"=-SHOES_LAYER)
 		overlays_standing[SHOES_LAYER]	= standing
@@ -444,9 +449,10 @@ Please contact me on #coderbus IRC. ~Carnie x
 	remove_overlay(HEAD_LAYER)
 
 	if(head)
-		if(client && hud_used && hud_used.hud_shown && hud_used.inventory_shown)
-			head.screen_loc = ui_head		//TODO
-			client.screen += head
+		if(client && hud_used && hud_used.hud_shown)
+			if(hud_used.inventory_shown)				//if the inventory is open ...
+				head.screen_loc = ui_head		//TODO	//...draw the item in the inventory screen
+			client.screen += head						//Either way, add the item to the HUD
 
 		var/image/standing = image("icon"='icons/mob/head.dmi', "icon_state"="[head.icon_state]", "layer"=-HEAD_LAYER)
 		standing.color = head.color // For now, this is here solely for kitty ears, but everything should do this eventually
@@ -480,9 +486,10 @@ Please contact me on #coderbus IRC. ~Carnie x
 	remove_overlay(SUIT_LAYER)
 
 	if(istype(wear_suit, /obj/item/clothing/suit))
-		if(client && hud_used && hud_used.hud_shown && hud_used.inventory_shown)
-			wear_suit.screen_loc = ui_oclothing	//TODO
-			client.screen += wear_suit
+		if(client && hud_used && hud_used.hud_shown)
+			if(hud_used.inventory_shown)					//if the inventory is open ...
+				wear_suit.screen_loc = ui_oclothing	//TODO	//...draw the item in the inventory screen
+			client.screen += wear_suit						//Either way, add the item to the HUD
 
 		var/image/standing	= image("icon"='icons/mob/suit.dmi', "icon_state"="[wear_suit.icon_state]", "layer"=-SUIT_LAYER)
 		overlays_standing[SUIT_LAYER]	= standing
@@ -514,9 +521,10 @@ Please contact me on #coderbus IRC. ~Carnie x
 	remove_overlay(FACEMASK_LAYER)
 
 	if(istype(wear_mask, /obj/item/clothing/mask))
-		if(client && hud_used && hud_used.hud_shown && hud_used.inventory_shown)
-			wear_mask.screen_loc = ui_mask	//TODO
-			client.screen += wear_mask
+		if(client && hud_used && hud_used.hud_shown)
+			if(hud_used.inventory_shown)				//if the inventory is open ...
+				wear_mask.screen_loc = ui_mask	//TODO	//...draw the item in the inventory screen
+			client.screen += wear_mask					//Either way, add the item to the HUD
 
 		var/image/standing	= image("icon"='icons/mob/mask.dmi', "icon_state"="[wear_mask.icon_state]", "layer"=-FACEMASK_LAYER)
 		overlays_standing[FACEMASK_LAYER]	= standing

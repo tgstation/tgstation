@@ -90,7 +90,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 			default_deconstruction_crowbar(O)
 			return
 		else
-			user << "\red You can't load the [src.name] while it's opened."
+			user << "<span class='warning'>You can't load the [src.name] while it's opened.</span>"
 			return
 	if (disabled)
 		return
@@ -100,36 +100,33 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	if (O.is_open_container())
 		return
 	if (!istype(O, /obj/item/stack/sheet/glass) && !istype(O, /obj/item/stack/sheet/mineral/gold) && !istype(O, /obj/item/stack/sheet/mineral/diamond))
-		user << "\red You cannot insert this item into the [name]!"
+		user << "<span class='warning'>You cannot insert this item into the [name]!</span>"
 		return
 	if (stat)
 		return
 	if (busy)
-		user << "\red The [name] is busy. Please wait for completion of previous operation."
+		user << "<span class='warning'>The [name] is busy. Please wait for completion of previous operation.</span>"
 		return
 	var/obj/item/stack/sheet/stack = O
 	if ((TotalMaterials() + stack.perunit) > max_material_amount)
-		user << "\red The [name] is full. Please remove glass from the protolathe in order to insert more."
+		user << "<span class='warning'>The [name] is full. Please remove glass from the protolathe in order to insert more.</span>"
 		return
 
 	var/amount = round(input("How many sheets do you want to add?") as num)
-	if(amount < 0)
-		amount = 0
-	if(amount == 0)
+	if(amount <= 0 || stack.amount <= 0)
 		return
 	if(amount > stack.amount)
 		amount = min(stack.amount, round((max_material_amount-TotalMaterials())/stack.perunit))
 
 	busy = 1
 	use_power(max(1000, (3750*amount/10)))
-	spawn(16)
-		user << "\blue You add [amount] sheets to the [src.name]."
-		if(istype(stack, /obj/item/stack/sheet/glass))
-			g_amount += amount * 3750
-		else if(istype(stack, /obj/item/stack/sheet/mineral/gold))
-			gold_amount += amount * 2000
-		else if(istype(stack, /obj/item/stack/sheet/mineral/diamond))
-			diamond_amount += amount * 2000
-		stack.use(amount)
-		busy = 0
-		src.updateUsrDialog()
+	user << "<span class='notice'>You add [amount] sheets to the [src.name].</span>"
+	if(istype(stack, /obj/item/stack/sheet/glass))
+		g_amount += amount * 3750
+	else if(istype(stack, /obj/item/stack/sheet/mineral/gold))
+		gold_amount += amount * 2000
+	else if(istype(stack, /obj/item/stack/sheet/mineral/diamond))
+		diamond_amount += amount * 2000
+	stack.use(amount)
+	busy = 0
+	src.updateUsrDialog()
