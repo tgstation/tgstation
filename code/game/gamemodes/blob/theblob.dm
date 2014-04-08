@@ -180,7 +180,7 @@
 
 /obj/effect/blob/proc/change_to(var/type)
 	if(!ispath(type))
-		error("[type] is an invalid type for the blob.")
+		ERROR("[type] is an invalid type for the blob.")
 	new type(src.loc)
 	qdel(src)
 
