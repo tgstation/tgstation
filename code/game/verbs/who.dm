@@ -20,9 +20,10 @@
 					entry += " - <font color='darkgray'><b>Unconscious</b></font>"
 
 				if (DEAD)
-					if(isobserver(C.mob))
+					if (isobserver(C.mob))
 						var/mob/dead/observer/O = C.mob
-						if(O.started_as_observer)
+
+						if (O.started_as_observer)
 							entry += " - <font color='gray'>Observing</font>"
 						else
 							entry += " - <font color='black'><b>DEAD</b></font>"
@@ -84,7 +85,7 @@
 
 				if (isobserver(C.mob))
 					mNames += " - Observing"
-				else if(istype(C.mob,/mob/new_player))
+				else if (istype(C.mob,/mob/new_player))
 					mNames += " - Lobby"
 				else
 					mNames += " - Playing"
@@ -101,7 +102,7 @@
 					aNames += "\t[C] is a [C.holder.rank]\n"
 					numAdminsOnline++
 			else
-				if(!C.holder.fakekey)
+				if (!C.holder.fakekey)
 					mNames += "\t[C] is a [C.holder.rank]\n"
 					numModsOnline++
 
