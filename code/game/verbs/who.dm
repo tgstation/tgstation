@@ -106,4 +106,4 @@
 					mNames += "\t[C] is a [C.holder.rank]\n"
 					numModsOnline++
 
-	src << "<b>Current Admins ([numAdminsOnline]):</b>\n" + aNames + "\n<b>Current Moderators([numModsOnline]):</b>\n" + mNames
+	src << "<b>Current Admins ([numAdminsOnline]):</b>\n" + aNames + "\n<b>Current Moderators ([numModsOnline]):</b>\n" + mNames
