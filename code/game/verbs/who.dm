@@ -1,4 +1,3 @@
-
 /client/verb/who()
 	set name = "Who"
 	set category = "OOC"
@@ -42,96 +41,62 @@
 	msg += "<b>Total Players: [length(Lines)]</b>"
 	src << msg
 
-/client/verb/adminwho()
+/client/verb/staffwho()
 	set category = "Admin"
-	set name = "Adminwho"
+	set name = "Staff Who"
 
-	var/msg = ""
-	var/num_mods_online = 0
-	var/num_admins_online = 0
-	if(holder)
+	var/aNames = ""
+	var/mNames = ""
+	var/numAdminsOnline = 0
+	var/numModsOnline = 0
+
+	if (holder)
 		for(var/client/C in admins)
 			if(R_ADMIN & C.holder.rights || !(R_MOD & C.holder.rights))
-				msg += "\t[C] is a [C.holder.rank]"
+				aNames += "\t[C] is a [C.holder.rank]"
 
-				if(C.holder.fakekey)
-					msg += " <i>(as [C.holder.fakekey])</i>"
+				if (C.holder.fakekey)
+					aNames += " <i>(as [C.holder.fakekey])</i>"
 
-				if(isobserver(C.mob))
+				if (isobserver(C.mob))
 					msg += " - Observing"
-				else if(istype(C.mob,/mob/new_player))
-					msg += " - Lobby"
+				else if (istype(C.mob,/mob/new_player))
+					aNames += " - Lobby"
 				else
-					msg += " - Playing"
+					aNames += " - Playing"
 
 				if(C.is_afk())
-					msg += " (AFK)"
-				msg += "\n"
+					aNames += " (AFK)"
 
-				num_admins_online++
+				aNames += "\n"
+				numAdminsOnline++
 			else
-				num_mods_online++
-	else
-		for(var/client/C in admins)
-			if(R_ADMIN & C.holder.rights || !(R_MOD & C.holder.rights))
-				if(!C.holder.fakekey)
-					msg += "\t[C] is a [C.holder.rank]\n"
-					num_admins_online++
-			else
-				if(!C.holder.fakekey)
-					num_mods_online++
-
-
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\verbs\who.dm:84: msg = "<b>Current Admins ([num_admins_online]):</b>\n" + msg
-	msg = {"<b>Current Admins ([num_admins_online]):</b>
-[msg]
-<b>There are also [num_mods_online] moderators online.</b> To view online moderators, type 'modwho'
-"}
-	// END AUTOFIX
-	src << msg
-
-/client/verb/modwho()
-	set category = "Admin"
-	set name = "Modwho"
-
-	var/msg = ""
-	var/num_admins_online = 0
-	var/num_mods_online = 0
-	if(holder)
-		for(var/client/C in admins)
-			if(R_ADMIN & C.holder.rights || !(R_MOD & C.holder.rights))
-				num_admins_online++
-			else
-				msg += "\t[C] is a [C.holder.rank]"
+				mNames += "\t[C] is a [C.holder.rank]"
 
 				if(C.holder.fakekey)
-					msg += " <i>(as [C.holder.fakekey])</i>"
+					mNames += " <i>(as [C.holder.fakekey])</i>"
 
 				if(isobserver(C.mob))
-					msg += " - Observing"
+					mNames += " - Observing"
 				else if(istype(C.mob,/mob/new_player))
-					msg += " - Lobby"
+					mNames += " - Lobby"
 				else
-					msg += " - Playing"
+					mNames += " - Playing"
 
 				if(C.is_afk())
-					msg += " (AFK)"
-				msg += "\n"
-				num_mods_online++
+					mNames += " (AFK)"
+
+				mNames += "\n"
+				numMondsOnline++
 	else
-		for(var/client/C in admins)
-			if(R_ADMIN & C.holder.rights || !(R_MOD & C.holder.rights))
-				if(!C.holder.fakekey)
-					num_admins_online++
+		for (var/client/C in admins)
+			if (R_ADMIN & C.holder.rights || !(R_MOD & C.holder.rights))
+				if (!C.holder.fakekey)
+					aNames += "\t[C] is a [C.holder.rank]\n"
+					numAdminsOnline++
 			else
 				if(!C.holder.fakekey)
-					msg += "\t[C] is a [C.holder.rank]\n"
+					mNames += "\t[C] is a [C.holder.rank]\n"
+					numModsOnline++
 
-
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\verbs\who.dm:125: msg = "<b>Current Moderators ([num_mods_online]):</b>\n" + msg
-	msg = {"<b>Current Moderators ([num_mods_online]):</b>\n" + ms
-		<b>There are also [num_admins_online] admins online.</b> To view online admins, type 'adminwho'\n"}
-	// END AUTOFIX
-	src << msg
+	src << "<b>Current Admins ([numAdminsOnline]):</b>\n" + aNames + "\n<b>Current Moderators([numModsOnline]):</b>\n" + mNames
