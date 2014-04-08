@@ -60,13 +60,16 @@
 		set category = "Object"
 		set src in usr
 
-		if(icon_state == "psyche")
-			usr << "\red Your suit is malfunctioning"
-			return
-
 		var/obj/item/clothing/under/A
 		A = input("Select Colour to change it to", "BOOYEA", A) in clothing_choices
 		if(!A)
+			return
+
+		if(usr.stat != CONSCIOUS)
+			return
+
+		if(icon_state == "psyche")
+			usr << "\red Your suit is malfunctioning"
 			return
 
 		desc = null

@@ -6,7 +6,7 @@
 	w_class = 3.0
 	m_amt = 2000
 	origin_tech = "combat=3;magnets=2"
-	ammo_type = list(/obj/item/ammo_casing/energy/laser)
+	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 
 
 /obj/item/weapon/gun/energy/laser/practice

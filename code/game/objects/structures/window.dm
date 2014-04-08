@@ -114,6 +114,7 @@
 			R.add_fingerprint(user)
 		qdel(src)
 	else
+		user.changeNext_move(8)
 		user.visible_message("<span class='notice'>[user] knocks on [src].</span>")
 		add_fingerprint(user)
 		playsound(loc, 'sound/effects/Glasshit.ogg', 50, 1)
@@ -126,6 +127,7 @@
 /obj/structure/window/proc/attack_generic(mob/user as mob, damage = 0)	//used by attack_alien, attack_animal, and attack_slime
 	if(!can_be_reached(user))
 		return
+	user.changeNext_move(8)
 	health -= damage
 	if(health <= 0)
 		user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
@@ -193,6 +195,7 @@
 		qdel(src)
 	else
 		if(I.damtype == BRUTE || I.damtype == BURN)
+			user.changeNext_move(8)
 			hit(I.force)
 			if(health <= 7)
 				anchored = 0

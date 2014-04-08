@@ -15,11 +15,11 @@ var/list/admin_datums = list()
 
 /datum/admins/New(datum/admin_rank/R, ckey)
 	if(!ckey)
-		error("Admin datum created without a ckey argument. Datum has been deleted")
+		ERROR("Admin datum created without a ckey argument. Datum has been deleted")
 		del(src)
 		return
 	if(!istype(R))
-		error("Admin datum created without a rank. Datum has been deleted")
+		ERROR("Admin datum created without a rank. Datum has been deleted")
 		del(src)
 		return
 	rank = R

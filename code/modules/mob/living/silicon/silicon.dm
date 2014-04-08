@@ -31,7 +31,7 @@
 		alarm_types_clear[type] += 1
 
 	if(!in_cooldown)
-		spawn(10 * 10) // 10 seconds
+		spawn(3 * 10) // 10 seconds
 
 			if(alarms_to_show.len < 5)
 				for(var/msg in alarms_to_show)

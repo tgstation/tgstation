@@ -55,7 +55,10 @@ var/const/BORG_WIRE_CAMERA = 16
 	switch(index)
 		if (BORG_WIRE_AI_CONTROL) //pulse the AI wire to make the borg reselect an AI
 			if(!R.emagged)
-				R.connected_ai = select_active_ai()
+				var/new_ai = select_active_ai(R)
+				if(new_ai && (new_ai != R.connected_ai))
+					R.connected_ai = new_ai
+					R.notify_ai(1)
 				var/numberer = 1  // Send images the Cyborg has taken to the AI's album upon sync.
 				for(var/datum/picture/z in R.aicamera.aipictures)
 					for(var/datum/picture/t in R.connected_ai.aicamera.aipictures) //Hopefully to prevent someone spamming images to silicons, by spamming this wire

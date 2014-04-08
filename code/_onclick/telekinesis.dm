@@ -45,7 +45,7 @@ var/const/tk_maxrange = 15
 		O.host = user
 		O.focus_object(src)
 	else
-		warning("Strange attack_tk(): TK([TK in user.mutations]) empty hand([!user.get_active_hand()])")
+		WARNING("Strange attack_tk(): TK([TK in user.mutations]) empty hand([!user.get_active_hand()])")
 	return
 
 
@@ -65,7 +65,7 @@ var/const/tk_maxrange = 15
 	desc = "Magic"
 	icon = 'icons/obj/magic.dmi'//Needs sprites
 	icon_state = "2"
-	flags = NOBLUDGEON
+	flags = NOBLUDGEON | ABSTRACT
 	//item_state = null
 	w_class = 10.0
 	layer = 20
@@ -108,20 +108,12 @@ var/const/tk_maxrange = 15
 			return
 
 		var/d = get_dist(user, target)
-		if(focus) d = max(d,get_dist(user,focus)) // whichever is further
-		switch(d)
-			if(0)
-				;
-			if(1 to 5) // not adjacent may mean blocked by window
-				if(!proximity)
-					user.next_move += 2
-			if(5 to 7)
-				user.next_move += 5
-			if(8 to tk_maxrange)
-				user.next_move += 10
-			else
-				user << "\blue Your mind won't reach that far."
-				return
+		if(focus)
+			d = max(d,get_dist(user,focus)) // whichever is further
+
+		if(d > tk_maxrange)
+			user << "<span class ='warning'>Your mind won't reach that far.</span>"
+			return
 
 		if(!focus)
 			focus_object(target, user)
@@ -205,4 +197,3 @@ var/const/tk_maxrange = 15
 				var/Z = source:z
 
 */
-
