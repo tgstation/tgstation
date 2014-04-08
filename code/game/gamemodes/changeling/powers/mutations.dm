@@ -197,14 +197,14 @@
 
 /obj/item/weapon/shield/changeling
 	name = "shield-like mass"
-	desc = "A mass of though, boney tissue. You can still see the fingers as a twisted pattern in the shield."
+	desc = "A mass of tough, boney tissue. You can still see the fingers as a twisted pattern in the shield."
 	flags = NODROP
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "riot"
 
 	var/remaining_uses //Set by the changeling ability.
 
-/obj/item/weapon/melee/arm_blade/New()
+/obj/item/weapon/melee/shield/New()
 	..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!</span>", "<span class='warning'>We inflate our hand into a strong shield.</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
@@ -286,7 +286,7 @@
 \***************************************/
 /obj/effect/proc_holder/changeling/suit/armor
 	name = "Chitinous Armor"
-	desc = "We turn our skin into though chitin to protect us from damage."
+	desc = "We turn our skin into tough chitin to protect us from damage."
 	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor is strong against brute force, but does not provide much protection from lasers. Retreating the armor damages our genomes. Cannot be used in lesser form."
 	chemical_cost = 25
 	dna_cost = 1
@@ -302,7 +302,7 @@
 
 /obj/item/clothing/suit/armor/changeling
 	name = "chitinous mass"
-	desc = "A though, hard covering of black chitin."
+	desc = "A tough, hard covering of black chitin."
 	icon_state = "riot"
 	item_state = "swat_suit"
 	flags = NODROP
