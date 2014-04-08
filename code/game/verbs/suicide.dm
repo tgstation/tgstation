@@ -12,7 +12,7 @@
 		return
 
 	if(istype(wear_mask, /obj/item/clothing/mask/happy))
-		src << "<span class=sinister>BUT WHY? I'M SO HAPPY!</span>"
+		src << "<span class='sinister'>BUT WHY? I'M SO HAPPY!</span>"
 		return
 
 	var/permitted = 1

@@ -15,13 +15,13 @@
 	if(!istype(H)) return
 	if(H.wear_mask == src)
 		flick("happiest_flash", src)
-		H << "<span class=sinister>Your thoughts are bombarded by incessant laughter.</span>"
+		H << "<span class='sinister'>Your thoughts are bombarded by incessant laughter.</span>"
 		H << sound('sound/effects/hellclown.ogg')
 		canremove = 0
 
 /obj/item/clothing/mask/happy/attack_hand(mob/user as mob)
 	if(user.wear_mask == src)
-		user << "<span class=sinister>It won't come off.</span>"
+		user << "<span class='sinister'>It won't come off.</span>"
 		flick("happiest_flash", src)
 	else
 		..()
@@ -65,5 +65,5 @@
 			M.client.mob = S
 		S.cancel_camera()
 		flick("happiest_flash", src)
-		H << "<span class=sinister>Oh joy! [M.real_name]'s decided to join the party!</span>"
-		S << "<span class=sinister>You have been given form by the power of the happiest mask! Go forth and cause joyful chaos for [H.real_name]!</span>"
+		H << "<span class='sinister'>Oh joy! [M.real_name]'s decided to join the party!</span>"
+		S << "<span class='sinister'>You have been given form by the power of the happiest mask! Go forth and cause joyful chaos for [H.real_name]!</span>"
