@@ -36,6 +36,32 @@
 		viewers(user) << "<span class='suicide'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>"
 		return (BRUTELOSS|FIRELOSS)
 
+obj/item/weapon/holysword
+	name = "holy sword"
+	desc = "A sword blessed by many of the gods of Law and Justice. These holy blades are granted to the preachers, priests, and chaplain of any religion who ventures forth into space, to protect themselves against the horrors of the Nar-Sie Cul
+	icon_state = "holysword"
+	item_state = "holysword"
+	slot_flags = SLOT_BELT
+	flags = CONDUCT
+	force = 15
+	damtype = "fire"
+	throw_speed = 3
+	throw_range = 7
+	throw_force = 15
+	w_class = 3
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb = list("pierced", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+
+	IsShield()
+		return 1
+
+	suicide_act(mob/user)
+		viewers(user) << "<span class='suicide'>[user] stabs \himself with [src.name] in the chest! It looks like \his soul is burning.</span>"
+		return(BURNLOSS)
+
+
+
+
 /obj/item/weapon/sord
 	name = "\improper SORD"
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
