@@ -9,7 +9,7 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 
-/obj/machinery/power/Del()
+/obj/machinery/power/Destroy()
 	disconnect_from_network()
 	..()
 
@@ -34,6 +34,9 @@
 	else
 		return 0
 
+/obj/machinery/power/proc/disconnect_terminal() // machines without a terminal will just return, no harm no fowl.
+	return
+
 // returns true if the area has power on given channel (or doesn't require power).
 // defaults to power_channel
 
@@ -55,7 +58,7 @@
 // increment the power usage stats for an area
 
 /obj/machinery/proc/use_power(var/amount, var/chan = -1) // defaults to power_channel
-	var/area/A = src.loc.loc		// make sure it's in an area
+	var/area/A = get_area(src)		// make sure it's in an area
 	if(!A || !isarea(A) || !A.master)
 		return
 	if(chan == -1)
@@ -416,7 +419,7 @@
 				if(S.powernet == src)
 					S.restore()				// and restore some of the power that was used
 				else
-					error("[S.name] (\ref[S]) had a [S.powernet ? "different (\ref[S.powernet])" : "null"] powernet to our powernet (\ref[src]).")
+					error("[S.name] (\ref[S]) had a [S.powernet ? "different (\ref[S.powernet])" : "null"] powernet to our powernet (\ref[src]).") //this line is a faggot and using the normal ERROR proc breaks it
 					nodes.Remove(S)
 
 /datum/powernet/proc/get_electrocute_damage()

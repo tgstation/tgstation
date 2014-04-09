@@ -18,6 +18,11 @@
 	processing_objects.Remove(src)
 	return 0
 
+/obj/Destroy()
+	if(!istype(src, /obj/machinery))
+		processing_objects.Remove(src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
+	..()
+
 /obj/assume_air(datum/gas_mixture/giver)
 	if(loc)
 		return loc.assume_air(giver)

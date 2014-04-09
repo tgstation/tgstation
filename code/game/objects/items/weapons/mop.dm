@@ -22,7 +22,7 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 		A.clean_blood()
 		for(var/obj/effect/O in A)
 			if(istype(O,/obj/effect/decal/cleanable) || istype(O,/obj/effect/overlay))
-				del(O)
+				qdel(O)
 	reagents.reaction(A, TOUCH, 10)	//10 is the multiplier for the reaction effect. probably needed to wet the floor properly.
 	reagents.remove_any(1)			//reaction() doesn't use up the reagents
 

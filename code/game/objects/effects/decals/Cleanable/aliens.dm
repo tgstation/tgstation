@@ -13,7 +13,7 @@
 	var/list/viruses = list()
 	blood_DNA = list()
 
-	Del()
+	Destroy()
 		for(var/datum/disease/D in viruses)
 			D.cure(0)
 		..()

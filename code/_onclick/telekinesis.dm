@@ -45,7 +45,7 @@ var/const/tk_maxrange = 15
 		O.host = user
 		O.focus_object(src)
 	else
-		warning("Strange attack_tk(): TK([TK in user.mutations]) empty hand([!user.get_active_hand()])")
+		WARNING("Strange attack_tk(): TK([TK in user.mutations]) empty hand([!user.get_active_hand()])")
 	return
 
 
@@ -65,7 +65,7 @@ var/const/tk_maxrange = 15
 	desc = "Magic"
 	icon = 'icons/obj/magic.dmi'//Needs sprites
 	icon_state = "2"
-	flags = NOBLUDGEON
+	flags = NOBLUDGEON | ABSTRACT
 	//item_state = null
 	w_class = 10.0
 	layer = 20
@@ -80,14 +80,14 @@ var/const/tk_maxrange = 15
 			if(focus.Adjacent(loc))
 				focus.loc = loc
 
-		del(src)
+		qdel(src)
 		return
 
 
 	//stops TK grabs being equipped anywhere but into hands
 	equipped(var/mob/user, var/slot)
 		if( (slot == slot_l_hand) || (slot== slot_r_hand) )	return
-		del(src)
+		qdel(src)
 		return
 
 
@@ -99,29 +99,21 @@ var/const/tk_maxrange = 15
 		if(!target || !user)	return
 		if(last_throw+3 > world.time)	return
 		if(!host || host != user)
-			del(src)
+			qdel(src)
 			return
 		if(!(TK in host.mutations))
-			del(src)
+			qdel(src)
 			return
 		if(isobj(target) && !isturf(target.loc))
 			return
 
 		var/d = get_dist(user, target)
-		if(focus) d = max(d,get_dist(user,focus)) // whichever is further
-		switch(d)
-			if(0)
-				;
-			if(1 to 5) // not adjacent may mean blocked by window
-				if(!proximity)
-					user.next_move += 2
-			if(5 to 7)
-				user.next_move += 5
-			if(8 to tk_maxrange)
-				user.next_move += 10
-			else
-				user << "\blue Your mind won't reach that far."
-				return
+		if(focus)
+			d = max(d,get_dist(user,focus)) // whichever is further
+
+		if(d > tk_maxrange)
+			user << "<span class ='warning'>Your mind won't reach that far.</span>"
+			return
 
 		if(!focus)
 			focus_object(target, user)
@@ -152,7 +144,7 @@ var/const/tk_maxrange = 15
 	proc/focus_object(var/obj/target, var/mob/living/user)
 		if(!istype(target,/obj))	return//Cant throw non objects atm might let it do mobs later
 		if(target.anchored || !isturf(target.loc))
-			del src
+			qdel(src)
 			return
 		focus = target
 		update_icon()
@@ -195,7 +187,7 @@ var/const/tk_maxrange = 15
 		return 1
 */
 
-//equip_to_slot_or_del(obj/item/W, slot, del_on_fail = 1)
+//equip_to_slot_or_del(obj/item/W, slot, qdel_on_fail = 1)
 /*
 		if(istype(user, /mob/living/carbon))
 			if(user:mutations & TK && get_dist(source, user) <= 7)
@@ -205,4 +197,3 @@ var/const/tk_maxrange = 15
 				var/Z = source:z
 
 */
-

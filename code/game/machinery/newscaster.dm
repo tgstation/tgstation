@@ -10,6 +10,7 @@
 	var/backup_author =""
 	var/is_admin_message = 0
 	var/icon/img = null
+	var/time_stamp = ""
 
 /datum/feed_channel
 	var/channel_name=""
@@ -41,6 +42,33 @@
 /datum/feed_network
 	var/list/datum/feed_channel/network_channels = list()
 	var/datum/feed_message/wanted_issue
+
+/datum/feed_network/New()
+	CreateFeedChannel("Central Command", "Centcom Official", 1)
+
+/datum/feed_network/proc/CreateFeedChannel(var/channel_name, var/author, var/locked, var/adminChannel = 0)
+	var/datum/feed_channel/newChannel = new /datum/feed_channel
+	newChannel.channel_name = channel_name
+	newChannel.author = author
+	newChannel.locked = locked
+	newChannel.is_admin_channel = adminChannel
+	network_channels += newChannel
+
+/datum/feed_network/proc/SubmitArticle(var/msg, var/author, var/channel_name, var/obj/item/weapon/photo/photo, var/adminMessage = 0)
+	var/datum/feed_message/newMsg = new /datum/feed_message
+	newMsg.author = author
+	newMsg.body = msg
+	newMsg.time_stamp = "[worldtime2text()]"
+	newMsg.is_admin_message = adminMessage
+	if(photo)
+		newMsg.img = photo.img
+	for(var/datum/feed_channel/FC in network_channels)
+		if(FC.channel_name == channel_name)
+			FC.messages += newMsg                  //Adding message to the network's appropriate feed_channel
+			break
+	for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
+		NEWSCASTER.newsAlert(channel_name)
+
 
 var/datum/feed_network/news_network = new /datum/feed_network     //The global news-network, which is coincidentally a global list.
 
@@ -75,7 +103,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	var/obj/machinery/newscaster/N = new(loc)
 	N.pixel_y -= (loc.y - on_wall.y) * 32
 	N.pixel_x -= (loc.x - on_wall.x) * 32
-	del(src)
+	qdel(src)
 
 
 
@@ -89,7 +117,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	var/ispowered = 1 //starts powered, changes with power_change()
 	//var/list/datum/feed_channel/channel_list = list() //This list will contain the names of the feed channels. Each name will refer to a data region where the messages of the feed channels are stored.
 	//OBSOLETE: We're now using a global news network
-	var/screen = 0                  //Or maybe I'll make it into a list within a list afterwards... whichever I prefer, go fuck yourselves :3
+	var/screen = 0
 		// 0 = welcome screen - main menu
 		// 1 = view feed channels
 		// 2 = create feed channel
@@ -131,15 +159,15 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	name = "security newscaster"
 	securityCaster = 1
 
-/obj/machinery/newscaster/New()         //Constructor, ho~
+/obj/machinery/newscaster/New()
 	allCasters += src
-	src.paper_remaining = 15            // Will probably change this to something better
-	for(var/obj/machinery/newscaster/NEWSCASTER in allCasters) // Let's give it an appropriate unit number
+	src.paper_remaining = 15
+	for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
 		src.unit_no++
 	src.update_icon() //for any custom ones on the map...
 	..()                                //I just realised the newscasters weren't in the global machines list. The superconstructor call will tend to that
 
-/obj/machinery/newscaster/Del()
+/obj/machinery/newscaster/Destroy()
 	allCasters -= src
 	..()
 
@@ -183,12 +211,12 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 /obj/machinery/newscaster/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			src.isbroken=1
 			if(prob(50))
-				del(src)
+				qdel(src)
 			else
 				src.update_icon() //can't place it above the return and outside the if-else. or we might get runtimes of null.update_icon() if(prob(50)) goes in.
 			return
@@ -335,7 +363,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 							if(MESSAGE.img)
 								usr << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
 								dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
-							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
+							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author] </FONT>\] - ([MESSAGE.time_stamp])</FONT><BR>"
 				dat+="<BR><HR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Back</A>"
 			if(10)
@@ -458,14 +486,6 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		popup.set_title_image(human_or_robot_user.browse_rsc_icon(src.icon, src.icon_state))
 		popup.open()
 
-	/*if(src.isbroken) //debugging shit
-		return
-	src.hitstaken++
-	if(src.hitstaken==3)
-		src.isbroken = 1
-	src.update_icon()*/
-
-
 /obj/machinery/newscaster/Topic(href, href_list)
 	if(..())
 		return
@@ -484,7 +504,6 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			//src.update_icon()
 
 		else if(href_list["submit_new_channel"])
-			//var/list/existing_channels = list() //OBSOLETE
 			var/list/existing_authors = list()
 			for(var/datum/feed_channel/FC in news_network.network_channels)
 				//existing_channels += FC.channel_name
@@ -502,14 +521,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			else
 				var/choice = alert("Please confirm Feed channel creation","Network Channel Handler","Confirm","Cancel")
 				if(choice=="Confirm")
-					var/datum/feed_channel/newChannel = new /datum/feed_channel
-					newChannel.channel_name = src.channel_name
-					newChannel.author = src.scanned_user
-					newChannel.locked = c_locked
+					news_network.CreateFeedChannel(src.channel_name, src.scanned_user, c_locked)
 					feedback_inc("newscaster_channels",1)
-					/*for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)    //Let's add the new channel in all casters.
-						NEWSCASTER.channel_list += newChannel*/                     //Now that it is sane, get it into the list. -OBSOLETE
-					news_network.network_channels += newChannel                        //Adding channel to the global network
 					src.screen=5
 			src.updateUsrDialog()
 			//src.update_icon()
@@ -520,7 +533,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			for(var/datum/feed_channel/F in news_network.network_channels)
 				if( (!F.locked || F.author == scanned_user) && !F.censored)
 					available_channels += F.channel_name
-			src.channel_name = strip_html(input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels )
+			src.channel_name = input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels
 			src.updateUsrDialog()
 
 		else if(href_list["set_new_message"])
@@ -537,20 +550,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			if(src.msg =="" || src.msg=="\[REDACTED\]" || src.scanned_user == "Unknown" || src.channel_name == "" )
 				src.screen=6
 			else
-				var/datum/feed_message/newMsg = new /datum/feed_message
-				newMsg.author = src.scanned_user
-				newMsg.body = src.msg
-				if(photo)
-					newMsg.img = photo.img
+				news_network.SubmitArticle(msg, scanned_user, channel_name, photo)
 				feedback_inc("newscaster_stories",1)
-				for(var/datum/feed_channel/FC in news_network.network_channels)
-					if(FC.channel_name == src.channel_name)
-						FC.messages += newMsg                  //Adding message to the network's appropriate feed_channel
-						break
 				src.screen=4
-				for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
-					NEWSCASTER.newsAlert(src.channel_name)
-
 			src.updateUsrDialog()
 
 		else if(href_list["create_channel"])
@@ -750,7 +752,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		if(do_after(user, 60))
 			new /obj/item/newscaster_frame(loc)
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			del(src)
+			qdel(src)
 		return
 
 	if (src.isbroken)

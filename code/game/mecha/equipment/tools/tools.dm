@@ -303,7 +303,7 @@
 					if(do_after_cooldown(target))
 						if(disabled) return
 						chassis.spark_system.start()
-						del(target)
+						qdel(target)
 						playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 						chassis.use_power(energy_drain)
 			if(1)
@@ -420,7 +420,6 @@
 		P.target = target_turf
 		P.creator = null
 		P.icon = 'icons/obj/objects.dmi'
-		P.failchance = 0
 		P.icon_state = "anom"
 		P.name = "wormhole"
 		var/turf/T = get_turf(target)
@@ -429,7 +428,7 @@
 		do_after_cooldown()
 		src = null
 		spawn(rand(150,300))
-			del(P)
+			qdel(P)
 		return
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult

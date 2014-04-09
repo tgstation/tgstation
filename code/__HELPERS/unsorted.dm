@@ -249,6 +249,19 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if(C.dna)
 			C.dna.real_name = real_name
 
+	if(isAI(src))
+		var/mob/living/silicon/ai/AI = src
+		if(oldname != real_name)
+			for(var/mob/living/silicon/robot/Slave in AI.connected_robots)
+				Slave.show_laws()
+
+	if(isrobot(src))
+		var/mob/living/silicon/robot/R = src
+		if(oldname != real_name)
+			R.notify_ai(3, oldname, newname)
+		if(R.camera)
+			R.camera.c_tag = real_name
+
 	if(oldname)
 		//update the datacore records! This is goig to be a bit costly.
 		for(var/list/L in list(data_core.general,data_core.medical,data_core.security,data_core.locked))
@@ -330,6 +343,14 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					A.aiPDA.owner = newname
 					A.aiPDA.name = newname + " (" + A.aiPDA.ownjob + ")"
 
+				// Notify Cyborgs
+				for(var/mob/living/silicon/robot/Slave in A.connected_robots)
+					Slave.show_laws()
+
+		if(cmptext("cyborg",role))
+			if(isrobot(src))
+				var/mob/living/silicon/robot/A = src
+				A.custom_name = newname
 
 		fully_replace_character_name(oldname,newname)
 
@@ -591,7 +612,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 		animation.master = target
 		flick(flick_anim, animation)
 	sleep(max(sleeptime, 15))
-	del(animation)
+	qdel(animation)
 
 
 atom/proc/GetAllContents()
@@ -880,7 +901,7 @@ atom/proc/GetTypeInAllContents(typepath)
 							X.icon = 'icons/turf/shuttle.dmi'
 							X.icon_state = replacetext(O.icon_state, "_f", "_s") // revert the turf to the old icon_state
 							X.name = "wall"
-							del(O) // prevents multiple shuttle corners from stacking
+							qdel(O) // prevents multiple shuttle corners from stacking
 							continue
 						if(!istype(O,/obj)) continue
 						O.loc = X

@@ -226,7 +226,7 @@ datum
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 					lowertemp.react()
 					T.assume_air(lowertemp)
-					del(hotspot)
+					qdel(hotspot)
 				return
 			reaction_obj(var/obj/O, var/volume)
 				src = null
@@ -237,7 +237,7 @@ datum
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 					lowertemp.react()
 					T.assume_air(lowertemp)
-					del(hotspot)
+					qdel(hotspot)
 				if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 					var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
 					if(!cube.wrapped)
@@ -263,14 +263,22 @@ datum
 				if(!data) data = 1
 				data++
 				M.jitteriness = max(M.jitteriness-5,0)
-				if(data >= 30)
+				if(data >= 30)		// 12 units, 54 seconds @ metabolism 0.4 units & tick rate 1.8 sec
 					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 4
 					M.Dizzy(5)
-				if(data >= 30*2.5 && prob(33))
+					if(iscultist(M) && prob(5))
+						M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","Egkau'haom'nai en Chaous","Ho Diak'nos tou Ap'iron","R'ge Na'sie","Diabo us Vo'iscum","Si gn'um Co'nu"))
+				if(data >= 75 && prob(33))	// 30 units, 135 seconds
 					if (!M.confused) M.confused = 1
 					M.confused += 3
-				..()
+					if(iscultist(M))
+						ticker.mode.remove_cultist(M.mind)
+						holder.remove_reagent(src.id, src.volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
+						M.jitteriness = 0
+						M.stuttering = 0
+						M.confused = 0
+				holder.remove_reagent(src.id, 0.4)	//fixed consumption to prevent balancing going out of whack
 				return
 
 			reaction_turf(var/turf/simulated/T, var/volume)
@@ -278,8 +286,41 @@ datum
 				if(!istype(T)) return
 				if(volume>=10)
 					for(var/obj/effect/rune/R in T)
-						del R
+						qdel(R)
 				T.Bless()
+
+		fuel/unholywater		//if you somehow managed to extract this from someone, dont splash it on yourself and have a smoke
+			name = "Unholy Water"
+			id = "unholywater"
+			description = "Something that shouldn't exist on this plane of existance."
+
+			on_mob_life(var/mob/living/M as mob)
+				M.adjustBrainLoss(3)
+				if(iscultist(M))
+					M.status_flags |= GOTTAGOFAST
+					M.drowsyness = max(M.drowsyness-5, 0)
+					M.AdjustParalysis(-2)
+					M.AdjustStunned(-2)
+					M.AdjustWeakened(-2)
+				else
+					M.adjustToxLoss(2)
+					M.adjustFireLoss(2)
+					M.adjustOxyLoss(2)
+					M.adjustBruteLoss(2)
+				holder.remove_reagent(src.id, 1)
+
+		plasma/hellwater			//if someone has this in their system they've really pissed off an eldrich god
+			name = "Hell Water"
+			id = "hell_water"
+			description = "YOUR FLESH! IT BURNS!"
+
+			on_mob_life(var/mob/living/M as mob)
+				M.fire_stacks = min(5,M.fire_stacks + 3)
+				M.IgniteMob()			//Only problem with igniting people is currently the commonly availible fire suits make you immune to being on fire
+				M.adjustToxLoss(1)
+				M.adjustFireLoss(1)		//Hence the other damages... ain't I a bastard?
+				M.adjustBrainLoss(5)
+				holder.remove_reagent(src.id, 1)
 
 		lube
 			name = "Space Lube"
@@ -761,7 +802,7 @@ datum
 
 			reaction_obj(var/obj/O, var/volume)
 				if(istype(O,/obj/effect/decal/cleanable))
-					del(O)
+					qdel(O)
 				else
 					if(O)
 						O.clean_blood()
@@ -769,7 +810,7 @@ datum
 				if(volume >= 1)
 					T.clean_blood()
 					for(var/obj/effect/decal/cleanable/C in T)
-						del(C)
+						qdel(C)
 
 					for(var/mob/living/carbon/slime/M in T)
 						M.adjustToxLoss(rand(5,10))
@@ -1091,8 +1132,9 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(prob(5)) M.emote(pick("twitch","blink_r","shiver"))
+				M.status_flags |= GOTTAGOFAST
 				holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
-				..()
+	//			..()		//this was causing hyperzine to be consumed twice...
 				return
 
 		cryoxadone
@@ -1310,12 +1352,12 @@ datum
 					if (egg.grown)
 						egg.Hatch()*/
 				if((!O) || (!volume))	return 0
-				O.atmos_spawn_air(SPAWN_TOXINS, volume)
+				O.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, volume)
 
 			reaction_turf(var/turf/simulated/T, var/volume)
 				src = null
 				if(istype(T))
-					T.atmos_spawn_air(SPAWN_TOXINS, volume)
+					T.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, volume)
 				return
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with plasma is stronger than fuel!
@@ -1451,9 +1493,9 @@ datum
 					alien_weeds.health -= rand(15,35) // Kills alien weeds pretty fast
 					alien_weeds.healthcheck()
 				else if(istype(O,/obj/effect/glowshroom)) //even a small amount is enough to kill it
-					del(O)
+					qdel(O)
 				else if(istype(O,/obj/effect/spacevine))
-					if(prob(50)) del(O) //Kills kudzu too.
+					if(prob(50)) qdel(O) //Kills kudzu too.
 				// Damage that is done to growing plants is separately at code/game/machinery/hydroponics at obj/item/hydroponics
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
@@ -1599,7 +1641,7 @@ datum
 						if(H.head)
 							if(prob(meltprob) && !H.head.unacidable)
 								H << "<span class='danger'>Your headgear melts away but protects you from the acid!</span>"
-								del(H.head)
+								qdel(H.head)
 								H.update_inv_head(0)
 								H.update_hair(0)
 							else
@@ -1609,7 +1651,7 @@ datum
 						if(H.wear_mask)
 							if(prob(meltprob) && !H.wear_mask.unacidable)
 								H << "<span class='danger'>Your mask melts away but protects you from the acid!</span>"
-								del (H.wear_mask)
+								qdel(H.wear_mask)
 								H.update_inv_wear_mask(0)
 								H.update_hair(0)
 							else
@@ -1619,7 +1661,7 @@ datum
 						if(H.glasses) //Doesn't protect you from the acid but can melt anyways!
 							if(prob(meltprob) && !H.glasses.unacidable)
 								H << "<span class='danger'>Your glasses melts away!</span>"
-								del (H.glasses)
+								qdel(H.glasses)
 								H.update_inv_glasses(0)
 
 					else if(ismonkey(M))
@@ -1627,7 +1669,7 @@ datum
 						if(MK.wear_mask)
 							if(!MK.wear_mask.unacidable)
 								MK << "<span class='danger'>Your mask melts away but protects you from the acid!</span>"
-								del (MK.wear_mask)
+								qdel(MK.wear_mask)
 								MK.update_inv_wear_mask(0)
 							else
 								MK << "<span class='warning'>Your mask protects you from the acid.</span>"
@@ -1659,7 +1701,7 @@ datum
 						I.desc = "Looks like this was \an [O] some time ago."
 						for(var/mob/M in viewers(5, O))
 							M << "\red \the [O] melts."
-						del(O)
+						qdel(O)
 
 		toxin/acid/polyacid
 			name = "Polytrinic acid"
@@ -2073,7 +2115,7 @@ datum
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 					lowertemp.react()
 					T.assume_air(lowertemp)
-					del(hotspot)
+					qdel(hotspot)
 
 		enzyme
 			name = "Universal Enzyme"
@@ -2484,6 +2526,7 @@ datum
 				M.dizziness +=5
 				M.drowsyness = 0
 				M.sleeping = max(0,M.sleeping-2)
+				M.status_flags |= GOTTAGOFAST
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				M.nutrition += 1
@@ -2651,6 +2694,45 @@ datum
 				if(M.confused !=0) M.confused = max(0,M.confused - 5)
 				..()
 				return
+
+//////////////////////////////////Hydroponics stuff///////////////////////////////
+
+		plantnutriment
+			name = "Generic nutriment"
+			id = "plantnutriment"
+			description = "Some kind of nutriment. You can't really tell what it is. You should probably report it, along with how you obtained it."
+			reagent_state = LIQUID
+			color = "#000000" // RBG: 0, 0, 0
+			var/tox_prob = 0
+
+			on_mob_life(var/mob/living/M as mob)
+				if(prob(tox_prob)) M.adjustToxLoss(1*REM)
+				..()
+				return
+
+		plantnutriment/eznutriment
+			name = "E-Z-Nutrient"
+			id = "eznutriment"
+			description = "Cheap and extremely common type of plant nutriment."
+			reagent_state = LIQUID
+			color = "#376400" // RBG: 50, 100, 0
+			tox_prob = 10
+
+		plantnutriment/left4zednutriment
+			name = "Left 4 Zed"
+			id = "left4zednutriment"
+			description = "Unstable nutriment that makes plants mutate more often than usual."
+			reagent_state = LIQUID
+			color = "#1A1E4D" // RBG: 26, 30, 77
+			tox_prob = 25
+
+		plantnutriment/robustharvestnutriment
+			name = "Robust Harvest"
+			id = "robustharvestnutriment"
+			description = "Very potent nutriment that prevents plants from mutating."
+			reagent_state = LIQUID
+			color = "#9D9D00" // RBG: 157, 157, 0
+			tox_prob = 15
 
 //////////////////////////////////////////////The ten friggen million reagents that get you drunk//////////////////////////////////////////////
 
@@ -2829,6 +2911,12 @@ datum
 				M.nutrition += 1
 				..()
 				return
+
+		ethanol/beer/greenbeer
+			name = "Green Beer"
+			id = "greenbeer"
+			description = "An alcoholic beverage made from malted grains, hops, yeast, and water. Dyed a festive green."
+			color = "#A8E61D"
 
 		ethanol/kahlua
 			name = "Kahlua"

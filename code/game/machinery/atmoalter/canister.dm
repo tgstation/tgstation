@@ -213,14 +213,14 @@ update_flag
 	switch(severity)
 		if(1.0)
 			if(destroyed || prob(30))
-				del(src)
+				qdel(src)
 			else
 				src.health = 0
 				healthcheck()
 			return
 		if(2.0)
 			if(destroyed)
-				del(src)
+				qdel(src)
 			else
 				src.health -= rand(40, 100)
 				healthcheck()

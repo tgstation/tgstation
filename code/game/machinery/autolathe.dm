@@ -48,6 +48,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/camera_assembly(), \
 		new /obj/item/newscaster_frame(), \
 		new /obj/item/weapon/reagent_containers/syringe(), \
+		new /obj/item/device/assembly/prox_sensor(), \
 	)
 
 var/global/list/autolathe_recipes_hidden = list( \
@@ -120,7 +121,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	if (stat)
 		return 1
 	if (busy)
-		user << "\red The autolathe is busy. Please wait for completion of previous operation."
+		user << "<span class=\"alert\">The autolathe is busy. Please wait for completion of previous operation.</span>"
 		return 1
 
 	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", O))
@@ -145,13 +146,13 @@ var/global/list/autolathe_recipes_hidden = list( \
 			return 1
 
 	if (src.m_amount + O.m_amt > max_m_amount)
-		user << "\red The autolathe is full. Please remove metal from the autolathe in order to insert more."
+		user << "<span class=\"alert\">The autolathe is full. Please remove metal from the autolathe in order to insert more.</span>"
 		return 1
 	if (src.g_amount + O.g_amt > max_g_amount)
-		user << "\red The autolathe is full. Please remove glass from the autolathe in order to insert more."
+		user << "<span class=\"alert\">The autolathe is full. Please remove glass from the autolathe in order to insert more.</span>"
 		return 1
 	if (O.m_amt == 0 && O.g_amt == 0)
-		user << "\red This object does not contain significant amounts of metal or glass, or cannot be accepted by the autolathe due to size or hazardous materials."
+		user << "<span class=\"alert\">This object does not contain significant amounts of metal or glass, or cannot be accepted by the autolathe due to size or hazardous materials.</span>"
 		return 1
 
 	var/amount = 1
@@ -179,7 +180,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	src.g_amount += g_amt * amount
 	user << "You insert [amount] sheet[amount>1 ? "s" : ""] to the autolathe."
 	if (O && O.loc == src)
-		del(O)
+		qdel(O)
 	busy = 0
 	src.updateUsrDialog()
 
@@ -227,7 +228,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 						src.g_amount = 0
 					busy = 0
 	else
-		usr << "\red The autolathe is busy. Please wait for completion of previous operation."
+		usr << "<span class=\"alert\">The autolathe is busy. Please wait for completion of previous operation.</span>"
 	src.updateUsrDialog()
 	return
 
@@ -246,27 +247,27 @@ var/global/list/autolathe_recipes_hidden = list( \
 	var/dat
 	if(!panel_open)
 		var/coeff = 2 ** prod_coeff
-		dat = "<div class='statusDisplay'><B>Metal Amount:</B> [src.m_amount] / [max_m_amount] cm<sup>3</sup><BR>"
-		dat += "<B>Glass Amount:</B> [src.g_amount] / [max_g_amount] cm<sup>3</sup><HR>"
+		dat = "<div class='statusDisplay'><b>Metal amount:</b> [src.m_amount] / [max_m_amount] cm<sup>3</sup><br>"
+		dat += "<b>Glass amount:</b> [src.g_amount] / [max_g_amount] cm<sup>3</sup><hr>"
 		var/list/objs = list()
 		objs += src.L
 		if(src.hacked)
 			objs += src.LL
 		for(var/obj/t in objs)
 			if(disabled || m_amount<t.m_amt || g_amount<t.g_amt)
-				dat += "<span class='linkOff'>[t.name]</span>"
+				dat += replacetext("<span class='linkOff'>[t]</span>", "The ", "")
 			else
-				dat += "<A href='?src=\ref[src];make=\ref[t]'>[t.name]</A>"
+				dat += replacetext("<a href='?src=\ref[src];make=\ref[t]'>[t]</a>", "The ", "")
 
 			if(istype(t, /obj/item/stack))
 				var/obj/item/stack/S = t
 				var/max_multiplier = min(S.max_amount, S.m_amt?round(m_amount/S.m_amt):INFINITY, S.g_amt?round(g_amount/S.g_amt):INFINITY)
 				if (max_multiplier>10 && !disabled)
-					dat += " <A href='?src=\ref[src];make=\ref[t];multiplier=[10]'>x[10]</A>"
+					dat += " <a href='?src=\ref[src];make=\ref[t];multiplier=[10]'>x[10]</a>"
 				if (max_multiplier>25 && !disabled)
-					dat += " <A href='?src=\ref[src];make=\ref[t];multiplier=[25]'>x[25]</A>"
+					dat += " <a href='?src=\ref[src];make=\ref[t];multiplier=[25]'>x[25]</a>"
 				if (max_multiplier>1 && !disabled)
-					dat += " <A href='?src=\ref[src];make=\ref[t];multiplier=[max_multiplier]'>x[max_multiplier]</A>"
+					dat += " <a href='?src=\ref[src];make=\ref[t];multiplier=[max_multiplier]'>x[max_multiplier]</a>"
 				dat += " [t.m_amt] m / [t.g_amt] g"
 			else
 				dat += " [t.m_amt/coeff] m / [t.g_amt/coeff] g"

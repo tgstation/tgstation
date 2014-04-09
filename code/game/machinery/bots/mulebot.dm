@@ -416,9 +416,6 @@ var/global/mulebot_count = 0
 
 	if(get_dist(C, src) > 1 || load || !on)
 		return
-	for(var/obj/structure/plasticflaps/P in src.loc)//Takes flaps into account
-		if(!CanPass(C,P))
-			return
 	mode = 1
 
 	// if a create, close before loading
@@ -908,4 +905,4 @@ var/global/mulebot_count = 0
 
 	new /obj/effect/decal/cleanable/oil(src.loc)
 	unload(0)
-	del(src)
+	qdel(src)

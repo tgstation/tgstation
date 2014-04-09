@@ -177,9 +177,9 @@
 	if(time_coeff!=diff)
 		time_coeff = diff
 
-/obj/machinery/mecha_part_fabricator/Del()
+/obj/machinery/mecha_part_fabricator/Destroy()
 	for(var/atom/A in src)
-		del A
+		qdel(A)
 	..()
 	return
 
@@ -262,7 +262,7 @@
 	if(!istype(apart)) return 0
 	for(var/obj/O in part_set)
 		if(O.type == apart.type)
-			del apart
+			qdel(apart)
 			return 0
 	part_set[++part_set.len] = apart
 	return 1
@@ -702,7 +702,7 @@
 		res.Move(src.loc)
 		result = res.amount
 	else
-		del res
+		qdel(res)
 	return result
 
 
@@ -780,7 +780,7 @@
 	if(src.resources[material] < res_max_amount)
 		var/count = 0
 		src.overlays += "fab-load-[material]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
-		while(src.resources[material] < res_max_amount && stack)
+		while(src.resources[material] < res_max_amount && stack && stack.amount > 0)
 			src.resources[material] += amnt
 			stack.use(1)
 			count++

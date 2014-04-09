@@ -10,7 +10,7 @@
 	anchored = 1.0
 	input_dir = WEST
 	output_dir = SOUTH
-	req_one_access = list(access_mining_station, access_chemistry, access_bar, access_research, access_ce, access_virology)
+	req_access = list(access_mineral_storeroom)
 	var/stk_types = list()
 	var/stk_amt   = list()
 	var/stack_list[0] //Key: Type.  Value: Instance of type.
@@ -64,7 +64,7 @@
 		var/obj/item/stack/sheet/M = O.refined_type
 		points += O.points
 		return M
-	del(O)//No refined type? Purge it.
+	qdel(O)//No refined type? Purge it.
 	return
 
 /obj/machinery/mineral/ore_redemption/attack_hand(user as mob)
@@ -248,9 +248,9 @@
 		return
 	..()
 
-/obj/machinery/mineral/equipment_locker/proc/RedeemVoucher(voucher, redeemer)
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") in list("Resonator", "Kinetic Accelerator", "Mining Drone", "Cancel")
-	if(!selection || !Adjacent(redeemer) || !voucher)
+/obj/machinery/mineral/equipment_locker/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
+	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Resonator", "Kinetic Accelerator", "Mining Drone")
+	if(!selection || !Adjacent(redeemer) || voucher.gc_destroyed || voucher.loc != redeemer)
 		return
 	switch(selection)
 		if("Resonator")
@@ -260,9 +260,7 @@
 		if("Mining Drone")
 			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
 			new /obj/item/weapon/weldingtool/hugetank(src.loc)
-		if("Cancel")
-			return
-	del(voucher)
+	qdel(voucher)
 
 /obj/machinery/mineral/equipment_locker/ex_act()
 	return
@@ -335,7 +333,7 @@
 		J.target = chosen_beacon
 		try_move_adjacent(J)
 		playsound(src,'sound/effects/sparks4.ogg',50,1)
-		del(src)
+		qdel(src)
 
 /obj/effect/portal/wormhole/jaunt_tunnel
 	name = "jaunt tunnel"
@@ -347,20 +345,20 @@
 	if(istype(M, /obj/effect))
 		return
 	if(istype(M, /atom/movable))
-		do_teleport(M, target, 6)
-		if(isliving(M))
-			var/mob/living/L = M
-			L.Weaken(3)
-			if(ishuman(L))
-				shake_camera(L, 20, 1)
-				spawn(20)
-					if(L)
-						L.visible_message("<span class='danger'>[L.name] vomits from travelling through the [src.name]!</span>")
-						L.nutrition -= 20
-						L.adjustToxLoss(-3)
-						var/turf/T = get_turf(L)
-						T.add_vomit_floor(L)
-						playsound(L, 'sound/effects/splat.ogg', 50, 1)
+		if(do_teleport(M, target, 6))
+			if(isliving(M))
+				var/mob/living/L = M
+				L.Weaken(3)
+				if(ishuman(L))
+					shake_camera(L, 20, 1)
+					spawn(20)
+						if(L)
+							L.visible_message("<span class='danger'>[L.name] vomits from travelling through the [src.name]!</span>")
+							L.nutrition -= 20
+							L.adjustToxLoss(-3)
+							var/turf/T = get_turf(L)
+							T.add_vomit_floor(L)
+							playsound(L, 'sound/effects/splat.ogg', 50, 1)
 
 /**********************Resonator**********************/
 
@@ -413,7 +411,7 @@
 		playsound(src,'sound/effects/sparks4.ogg',50,1)
 		M.gets_drilled()
 		spawn(5)
-			del(src)
+			qdel(src)
 	else
 		var/datum/gas_mixture/environment = proj_turf.return_air()
 		var/pressure = environment.return_pressure()
@@ -431,7 +429,7 @@
 				for(var/mob/living/L in src.loc)
 					L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
 					L.adjustBruteLoss(resonance_damage)
-			del(src)
+			qdel(src)
 
 /**********************Facehugger toy**********************/
 
@@ -515,7 +513,7 @@
 	visible_message("<span class='danger'>[src] is destroyed!</span>")
 	new /obj/effect/decal/cleanable/robot_debris(src.loc)
 	DropOre()
-	del src
+	qdel(src)
 	return
 
 /mob/living/simple_animal/hostile/mining_drone/New()

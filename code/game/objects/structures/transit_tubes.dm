@@ -55,7 +55,7 @@
 
 
 
-/obj/structure/transit_tube_pod/Del()
+/obj/structure/transit_tube_pod/Destroy()
 	for(var/atom/movable/AM in contents)
 		AM.loc = loc
 
@@ -71,7 +71,7 @@ obj/structure/ex_act(severity)
 				AM.loc = loc
 				AM.ex_act(severity++)
 
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if(prob(50))
@@ -79,7 +79,7 @@ obj/structure/ex_act(severity)
 					AM.loc = loc
 					AM.ex_act(severity++)
 
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			return
@@ -154,7 +154,7 @@ obj/structure/ex_act(severity)
 				if(do_after(user, 60) && GM && G && G.affecting == GM)
 					GM.Weaken(5)
 					src.Bumped(GM)
-					del(G)
+					qdel(G)
 				break
 
 /obj/structure/transit_tube/station/proc/open_animation()

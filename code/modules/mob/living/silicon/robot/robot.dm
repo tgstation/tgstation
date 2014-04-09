@@ -7,6 +7,7 @@
 	health = 100
 	var/sight_mode = 0
 	var/custom_name = ""
+	designation = "Default" //used for displaying the prefix & getting the current module of cyborg
 
 //Hud stuff
 
@@ -71,7 +72,7 @@
 	robot_modules_background.layer = 19	//Objects that appear on screen are on layer 20, UI should be just below it.
 
 	ident = rand(1, 999)
-	updatename("Default")
+	updatename()
 	updateicon()
 
 	if(!cell)
@@ -116,7 +117,7 @@
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 //Improved /N
-/mob/living/silicon/robot/Del()
+/mob/living/silicon/robot/Destroy()
 	if(mmi && mind)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)	mmi.loc = T
@@ -124,16 +125,17 @@
 		mmi = null
 	..()
 
+
 /mob/living/silicon/robot/proc/pick_module()
 	if(module)
 		return
-	var/mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
+	designation = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
 	var/animation_length=0
 	if(module)
 		return
-	switch(mod)
+	updatename()
+	switch(designation)
 		if("Standard")
-			updatename(mod)
 			module = new /obj/item/weapon/robot_module/standard(src)
 			hands.icon_state = "standard"
 			icon_state = "robot"
@@ -141,7 +143,6 @@
 			feedback_inc("cyborg_standard",1)
 
 		if("Service")
-			updatename(mod)
 			module = new /obj/item/weapon/robot_module/butler(src)
 			hands.icon_state = "service"
 			var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Bro", "Butler", "Kent", "Rich")
@@ -164,7 +165,6 @@
 			feedback_inc("cyborg_service",1)
 
 		if("Miner")
-			updatename(mod)
 			module = new /obj/item/weapon/robot_module/miner(src)
 			hands.icon_state = "miner"
 			icon_state = "minerborg"
@@ -173,7 +173,6 @@
 			feedback_inc("cyborg_miner",1)
 
 		if("Medical")
-			updatename(mod)
 			module = new /obj/item/weapon/robot_module/medical(src)
 			hands.icon_state = "medical"
 			icon_state = "mediborg"
@@ -183,7 +182,6 @@
 			feedback_inc("cyborg_medical",1)
 
 		if("Security")
-			updatename(mod)
 			module = new /obj/item/weapon/robot_module/security(src)
 			hands.icon_state = "security"
 			icon_state = "secborg"
@@ -194,7 +192,6 @@
 			feedback_inc("cyborg_security",1)
 
 		if("Engineering")
-			updatename(mod)
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			hands.icon_state = "engineer"
 			icon_state = "engiborg"
@@ -203,7 +200,6 @@
 			feedback_inc("cyborg_engineering",1)
 
 		if("Janitor")
-			updatename(mod)
 			module = new /obj/item/weapon/robot_module/janitor(src)
 			hands.icon_state = "janitor"
 			icon_state = "janiborg"
@@ -214,7 +210,9 @@
 	overlays -= "eyes" //Takes off the eyes that it started with
 
 	transform_animation(animation_length)
+	notify_ai(2)
 	updateicon()
+	SetEmagged(emagged) // Update emag status and give/take emag modules.
 
 /mob/living/silicon/robot/proc/transform_animation(animation_length)
 	if(!animation_length)
@@ -227,13 +225,13 @@
 	notransform = 0
 	icon = 'icons/mob/robots.dmi'
 
-/mob/living/silicon/robot/proc/updatename(var/prefix as text)
+/mob/living/silicon/robot/proc/updatename()
 
 	var/changed_name = ""
 	if(custom_name)
 		changed_name = custom_name
 	else
-		changed_name = "[(prefix ? "[prefix] " : "")]Cyborg-[num2text(ident)]"
+		changed_name = "[(designation ? "[designation] " : "")]Cyborg-[num2text(ident)]"
 	real_name = changed_name
 	name = real_name
 	if(camera)
@@ -244,6 +242,18 @@
 	set category = "Robot Commands"
 	set name = "Show Alerts"
 	robot_alerts()
+
+//for borg hotkeys, here module refers to borg inv slot, not core module
+/mob/living/silicon/robot/verb/cmd_toggle_module(module as num)
+	set name = "Toggle Module"
+	set hidden = 1
+	toggle_module(module)
+
+/mob/living/silicon/robot/verb/cmd_unequip_module()
+	set name = "Unequip Module"
+	set hidden = 1
+	uneq_active()
+
 
 /mob/living/silicon/robot/proc/robot_alerts()
 	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
@@ -927,7 +937,7 @@
 				for(var/A in tile)
 					if(istype(A, /obj/effect))
 						if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
-							del(A)
+							qdel(A)
 					else if(istype(A, /obj/item))
 						var/obj/item/cleaned_item = A
 						cleaned_item.clean_blood()
@@ -953,7 +963,7 @@
 /mob/living/silicon/robot/proc/self_destruct()
 	if(emagged)
 		if(mmi)
-			del(mmi)
+			qdel(mmi)
 		explosion(src.loc,1,2,4,flame_range = 2)
 	else
 		explosion(src.loc,-1,0,2)
@@ -969,7 +979,7 @@
 	scrambledcodes = 1
 	//Disconnect it's camera so it's not so easily tracked.
 	if(src.camera)
-		del(src.camera)
+		qdel(src.camera)
 		src.camera = null
 		// I'm trying to get the Cyborg to not be listed in the camera list
 		// Instead of being listed as "deactivated". The downside is that I'm going
@@ -1066,7 +1076,7 @@
 	if (cell) //Sanity check.
 		cell.loc = T
 		cell = null
-	del(src)
+	qdel(src)
 
 /mob/living/silicon/robot/syndicate
 	icon_state = "syndie_bloodhound"
@@ -1074,12 +1084,23 @@
 	scrambledcodes = 1
 	modtype = "Synd"
 	faction = "syndicate"
+	designation = "Syndicate"
 
 /mob/living/silicon/robot/syndicate/New(loc)
 	..()
 	cell.maxcharge = 25000
 	cell.charge = 25000
-	updatename("Syndicate")
 	radio = new /obj/item/device/radio/borg/syndicate(src)
 	module = new /obj/item/weapon/robot_module/syndicate(src)
 	laws = new /datum/ai_laws/syndicate_override()
+
+/mob/living/silicon/robot/proc/notify_ai(var/notifytype, var/oldname, var/newname)
+	if(!connected_ai)
+		return
+	switch(notifytype)
+		if(1) //New Cyborg
+			connected_ai << "<br><br><span class='notice'>NOTICE - New cyborg connection detected: <a href='byond://?src=\ref[connected_ai];track2=\ref[connected_ai];track=\ref[src]'>[name]</a></span><br>"
+		if(2) //New Module
+			connected_ai << "<br><br><span class='notice'>NOTICE - Cyborg module change detected: [name] has loaded the [designation] module.</span><br>"
+		if(3) //New Name
+			connected_ai << "<br><br><span class='notice'>NOTICE - Cyborg reclassification detected: [oldname] is now designated as [newname].</span><br>"

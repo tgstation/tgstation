@@ -91,9 +91,30 @@
 
 /obj/item/proc/transfer_soul(var/choice as text, var/target, var/mob/U as mob).
 	switch(choice)
+		if("FORCE")
+			if(!iscarbon(target))		//TO-DO: Add sacrifice stoning for non-organics, just because you have no body doesnt mean you dont have a soul
+				return 0
+			var/mob/living/carbon/T = target
+			var/obj/item/device/soulstone/C = src
+			if(T.client != null)
+				if(C.contents.len)
+					return 0
+				else
+					for(var/obj/item/W in T)
+						T.unEquip(W)
+				init_shade(C, T, U)
+				//qdel T		//Gib instead
+				return 1
+			return 0
 		if("VICTIM")
 			var/mob/living/carbon/human/T = target
 			var/obj/item/device/soulstone/C = src
+			if(ticker.mode.name == "cult" && T.mind == ticker.mode:sacrifice_target)
+				if(iscultist(U))
+					U << "\red The Geometer of blood wants this mortal sacrificed with the rune."
+				else
+					U << "\red The soul stone doesn't work for no apparent reason."
+				return 0
 			if(C.imprinted != "empty")
 				U << "\red <b>Capture failed!</b>: \black The soul stone has already been imprinted with [C.imprinted]'s mind!"
 			else
@@ -108,30 +129,8 @@
 						else
 							for(var/obj/item/W in T)
 								T.unEquip(W)
-							new /obj/effect/decal/remains/human(T.loc) //Spawns a skeleton
-							T.invisibility = 101
-							var/atom/movable/overlay/animation = new /atom/movable/overlay( T.loc )
-							animation.icon_state = "blank"
-							animation.icon = 'icons/mob/mob.dmi'
-							animation.master = T
-							flick("dust-h", animation)
-							del(animation)
-							var/mob/living/simple_animal/shade/S = new /mob/living/simple_animal/shade( T.loc )
-							S.loc = C //put shade in stone
-							S.status_flags |= GODMODE //So they won't die inside the stone somehow
-							S.canmove = 0//Can't move out of the soul stone
-							S.name = "Shade of [T.real_name]"
-							S.real_name = "Shade of [T.real_name]"
-							if (T.client)
-								T.client.mob = S
-							S.cancel_camera()
-							C.icon_state = "soulstone2"
-							C.name = "Soul Stone: [S.real_name]"
-							S << "Your soul has been captured! You are now bound to [U.name]'s will, help them suceed in their goals at all costs."
-							U << "\blue <b>Capture successful!</b>: \black [T.real_name]'s soul has been ripped from their body and stored within the soul stone."
-							U << "The soulstone has been imprinted with [S.real_name]'s mind, it will no longer react to other souls."
-							C.imprinted = "[S.name]"
-							del T
+							init_shade(C, T, U, vic = 1)
+							qdel(T)
 		if("SHADE")
 			var/mob/living/simple_animal/shade/T = target
 			var/obj/item/device/soulstone/C = src
@@ -150,7 +149,8 @@
 						T.health = T.maxHealth
 						C.icon_state = "soulstone2"
 						T << "Your soul has been recaptured by the soul stone, its arcane energies are reknitting your ethereal form"
-						U << "\blue <b>Capture successful!</b>: \black [T.name]'s has been recaptured and stored within the soul stone."
+						if(U != T)
+							U << "\blue <b>Capture successful!</b>: \black [T.name]'s has been recaptured and stored within the soul stone."
 		if("CONSTRUCT")
 			var/obj/structure/constructshell/T = target
 			var/obj/item/device/soulstone/C = src
@@ -167,11 +167,11 @@
 							else
 								ticker.mode.cult+=Z.mind
 							ticker.mode.update_cult_icons_added(Z.mind)
-						del(T)
+						qdel(T)
 						Z << "<B>You are a Juggernaut. Though slow, your shell can withstand extreme punishment, create shield walls and even deflect energy weapons, and rip apart enemies and walls alike.</B>"
 						Z << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
 						Z.cancel_camera()
-						del(C)
+						qdel(C)
 
 					if("Wraith")
 						var/mob/living/simple_animal/construct/wraith/Z = new /mob/living/simple_animal/construct/wraith (get_turf(T.loc))
@@ -182,11 +182,11 @@
 							else
 								ticker.mode.cult+=Z.mind
 							ticker.mode.update_cult_icons_added(Z.mind)
-						del(T)
+						qdel(T)
 						Z << "<B>You are a Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</B>"
 						Z << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
 						Z.cancel_camera()
-						del(C)
+						qdel(C)
 
 					if("Artificer")
 						var/mob/living/simple_animal/construct/builder/Z = new /mob/living/simple_animal/construct/builder (get_turf(T.loc))
@@ -197,11 +197,37 @@
 							else
 								ticker.mode.cult+=Z.mind
 							ticker.mode.update_cult_icons_added(Z.mind)
-						del(T)
+						qdel(T)
 						Z << "<B>You are an Artificer. You are incredibly weak and fragile, but you are able to construct fortifications, use magic missile, repair allied constructs (by clicking on them), </B><I>and most important of all create new constructs</I><B> (Use your Artificer spell to summon a new construct shell and Summon Soulstone to create a new soulstone).</B>"
 						Z << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
 						Z.cancel_camera()
-						del(C)
+						qdel(C)
 			else
 				U << "\red <b>Creation failed!</b>: \black The soul stone is empty! Go kill someone!"
 	return
+
+obj/item/proc/init_shade(var/obj/item/device/soulstone/C, var/mob/living/carbon/human/T, var/mob/U as mob, var/vic = 0)
+		new /obj/effect/decal/remains/human(T.loc) //Spawns a skeleton
+		T.invisibility = 101
+		var/atom/movable/overlay/animation = new /atom/movable/overlay( T.loc )
+		animation.icon_state = "blank"
+		animation.icon = 'icons/mob/mob.dmi'
+		animation.master = T
+		flick("dust-h", animation)
+		qdel(animation)
+		var/mob/living/simple_animal/shade/S = new /mob/living/simple_animal/shade( T.loc )
+		S.loc = C //put shade in stone
+		S.status_flags |= GODMODE //So they won't die inside the stone somehow
+		S.canmove = 0//Can't move out of the soul stone
+		S.name = "Shade of [T.real_name]"
+		S.real_name = "Shade of [T.real_name]"
+		S.key = T.key
+		ticker.mode.add_cultist(S.mind,2)
+		S.cancel_camera()
+		C.icon_state = "soulstone2"
+		C.name = "Soul Stone: [S.real_name]"
+		S << "Your soul has been captured! You are now bound to [U.name]'s will, help them suceed in their goals at all costs."
+		C.imprinted = "[S.name]"
+		if(vic)
+				U << "\blue <b>Capture successful!</b>: \black [T.real_name]'s soul has been ripped from their body and stored within the soul stone."
+				U << "The soulstone has been imprinted with [S.real_name]'s mind, it will no longer react to other souls."

@@ -328,10 +328,10 @@
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/poppy
 	lifespan = 25
 	endurance = 10
-	potency = 20
 	maturation = 8
 	production = 6
 	yield = 6
+	potency = 20
 	plant_type = 0
 	oneharvest = 1
 	growthstages = 3
@@ -1039,7 +1039,7 @@
 		return
 	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
 	new /obj/effect/spacevine_controller(user.loc)
-	del(src)
+	qdel(src)
 
 /obj/item/seeds/chillighost
 	name = "pack of ghost chilli seeds"
