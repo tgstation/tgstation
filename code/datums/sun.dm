@@ -89,7 +89,7 @@
 		if(T.x == 1 || T.x==world.maxx || T.y==1 || T.y==world.maxy)		// not obscured if we reach the edge
 			break
 
-		if(T.density)			// if we hit a solid turf, panel is obscured
+		if(T.opacity) // Opaque objects block light.
 			S.obscured = 1
 			return
 
