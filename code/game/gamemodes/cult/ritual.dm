@@ -172,8 +172,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			user << "<span class='notice'>You retrace your steps, carefully undoing the lines of the rune.</span>"
 			qdel(src)
 			return
-		else if(istype(I, /obj/item/weapon/nullrod))
-			user << "<span class='notice'>You disrupt the vile magic with the deadening field of the null rod!</span>"
+		else if(istype(I, /obj/item/weapon/holysword))
+			user << "<span class='notice'>You disrupt the vile magic with the cleansing might of your holy sword!</span>"
 			qdel(src)
 			return
 		return
