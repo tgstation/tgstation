@@ -13,7 +13,7 @@
 		set src in usr
 		attack_self(usr)
 
-	attack_self(mob/user)
+	/obj/item/clothing/shoes/magboots/attack_self(mob/user)
 		if(src.magpulse)
 			src.flags &= ~NOSLIP
 			src.slowdown = SHOES_SLOWDOWN
@@ -40,7 +40,7 @@
 	desc = "Antique magnetic boots that have a lighter magnetic pull, placing less burden on the wearer."
 	name = "antique magboots"
 	icon_state = "CEMag0"
-	attack_self(mob/user)
+	/obj/item/clothing/shoes/magboots/CEboots/attack_self(mob/user)
 		..()
 		if(src.magpulse)
 			icon_state = "CEMag1"
