@@ -9,12 +9,12 @@ class AddIpToSessions extends AbstractMigration
 	 */
     public function up()
     {
-		$this->table('admin_session')
+		$this->table('admin_sessions')
 			->addColumn('IP', 'string', array('limit'=>255,'default' => null))
 			->save();
     }
 	public function down() {
-		$sess = $this->table('admin_session');
+		$sess = $this->table('admin_sessions');
 		if ($sess->hasColumn('IP'))
 			$sess->removeColumn('IP')->save();
 	}
