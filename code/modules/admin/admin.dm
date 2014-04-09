@@ -234,7 +234,7 @@ var/global/floorIsLava = 0
 		return
 	checkSessionKey()
 	var/cid = input("Type computer ID", "CID", 0)
-	usr << link("http://vg13.undo.it/index.php/rapsheet/?s=[sessKey]&cid=[cid]")
+	usr << link("[config.vgws_base_url]/index.php/rapsheet/?s=[sessKey]&cid=[cid]")
 	return
 
 /datum/admins/proc/checkCKEY()
@@ -249,7 +249,7 @@ var/global/floorIsLava = 0
 		return
 	checkSessionKey()
 	var/ckey = lowertext(input("Type player ckey", "ckey", null) as text | null)
-	usr << link("http://vg13.undo.it/index.php/rapsheet/?s=[sessKey]&ckey=[ckey]")
+	usr << link("[config.vgws_base_url]/index.php/rapsheet/?s=[sessKey]&ckey=[ckey]")
 	return
 
 /datum/admins/proc/PlayerNotesPage(page)

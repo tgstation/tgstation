@@ -1678,15 +1678,17 @@
 	else if(href_list["rapsheet"])
 		checkSessionKey()
 		// build the link
-		var/dat = "http://vg13.undo.it/index.php/rapsheet/?s=[sessKey]"
-		if(href_list["rsckey"])
-			dat += "&ckey=[href_list["rsckey"]]"
-		usr << link(dat)
+		//var/dat = "[config.vgws_base_url]/index.php/rapsheet/?s=[sessKey]"
+		//if(href_list["rsckey"])
+		//.	dat += "&ckey=[href_list["rsckey"]]"
+		// usr << link(dat)
+		usr << link(getVGPanel("rapsheet",admin=1,query=list("ckey"=href_list["rsckey"])))
 		return
 
 	else if(href_list["bansheet"])
-		checkSessionKey()
-		usr << link("http://vg13.undo.it/index.php/rapsheet/?s=[sessKey]")
+		//checkSessionKey()
+		//usr << link("[config.vgws_base_url]/index.php/rapsheet/?s=[sessKey]")
+		usr << link(getVGPanel("rapsheet",admin=1))
 		return
 
 	else if(href_list["traitor"])

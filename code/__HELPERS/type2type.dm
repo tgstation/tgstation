@@ -107,6 +107,20 @@ proc/tg_list2text(list/list, glue=",")
 		output += (i!=1? glue : null)+(!isnull(list["[list[i]]"])?"[list["[list[i]]"]]":"[list[i]]")
 	return output
 
+// HTTP GET URL query builder thing.
+// list("a"="b","c"="d") -> ?a=b&c=d
+/proc/buildurlquery(list/list,sep="&")
+	if(!istype(list) || !list.len)
+		return
+	var/output
+	var/i=0
+	var/start
+	var/qmark="?" // God damnit byond
+	for(var/key in list)
+		start = i ? sep : qmark
+		output += "[start][key]=[list[key]]"
+		i++
+	return output
 
 //Converts a text string into a list by splitting the string at each seperator found in text (discarding the seperator)
 //Returns an empty list if the text cannot be split, or the split text in a list.
