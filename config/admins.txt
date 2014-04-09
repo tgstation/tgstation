@@ -7,5 +7,5 @@
 # NOTE: if the rank-name cannot be found in admin_ranks.txt, they will not be adminned! ~Carn #
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
-keta = Host
+kagura_Demury = Host
 darkscroll = Game Master

@@ -1,9 +1,9 @@
-<h1>Добро пожаловать на сервер "EGC Roanoak"!</h1>
+<h1>Добро пожаловать на Пушистую станцию!</h1>
 
 -<i>Этот сервер работает на билде<a href="http://nanotrasen.com/">/tg/station13</a>, модификации кода SS13</i>
 <br><br>
 <strong><a href="https://github.com/keta-ss13/EGC--RoanOak-">Багтрекер</a></strong>
 <br>
-<strong>Форум будет скоро...</strong>
+<strong><a href="http://furry-station.ru/">Форум</a></strong></strong>
 <br><br>
 Это РП сервер, не забудьте настроить персонажа, а также не забывайте отыргывать роль. По любым вопросам обращайтесь в ahelp (кнопка f1)

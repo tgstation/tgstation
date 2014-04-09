@@ -1,5 +1,5 @@
 ## Server name: This appears at the top of the screen in-game. In this case it will read "tgstation: station_name" where station_name is the randomly generated name of the station for the round. Remove the # infront of SERVERNAME and replace 'tgstation' with the name of your choice
-SERVERNAME [RU] Furry Server(Old Furry Station)
+SERVERNAME [RU] Furry Station(YES! We are BACK!)
 
 # Lobby time: This is the amount of time between rounds that players have to setup their characters and be ready.
 LOBBY_COUNTDOWN 120
@@ -111,10 +111,10 @@ GUEST_BAN
 SERVER 5.19.246.14:2506
 
 ## forum address
-# FORUMURL http://justanotherday.example.com
+FORUMURL http://furry-station.ru/
 
 ## Wiki address
-WIKIURL http://wiki.ss13.ru/
+WIKIURL http://furry-station.ru/wiki
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
 # BANAPPEALS http://justanotherday.example.com
@@ -137,7 +137,7 @@ ALLOW_HOLIDAYS
 #USEIRCBOT
 
 ##Defines the ticklag for the world.  0.9 is the normal one, 0.5 is smoother.
-TICKLAG 0.7
+TICKLAG 0.6
 
 ## Defines if Tick Compensation is used.  It results in a minor slowdown of movement of all mobs, but attempts to result in a level movement speed across all ticks.  Recommended if tickrate is lowered.
 TICKCOMP 0
