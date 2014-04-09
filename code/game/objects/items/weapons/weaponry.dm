@@ -38,7 +38,7 @@
 
 obj/item/weapon/holysword
 	name = "holy sword"
-	desc = "A sword blessed by many of the gods of Law and Justice. These holy blades are granted to the preachers, priests, and chaplain of any religion who ventures forth into space, to protect themselves against the horrors of the Nar-Sie Cul
+	desc = "A sword blessed by many of the gods of Law and Justice. These holy blades are granted to the preachers, priests, and chaplain of any religion who ventures forth into space, to protect themselves against the horrors of the Nar-Sie Cult."
 	icon_state = "holysword"
 	item_state = "holysword"
 	slot_flags = SLOT_BELT
@@ -47,7 +47,7 @@ obj/item/weapon/holysword
 	damtype = "fire"
 	throw_speed = 3
 	throw_range = 7
-	throw_force = 15
+	throwforce = 15
 	w_class = 3
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("pierced", "smited", "banished", "exorcised", "slashed")
@@ -57,7 +57,7 @@ obj/item/weapon/holysword
 
 	suicide_act(mob/user)
 		viewers(user) << "<span class='suicide'>[user] stabs \himself with [src.name] in the chest! It looks like \his soul is burning.</span>"
-		return(BURNLOSS)
+		return(FIRELOSS)
 
 
 
