@@ -96,24 +96,35 @@
 /obj/structure/stool/bed/chair/comfy
 	name = "comfy chair"
 	desc = "It looks comfy."
+	icon_state = "comfychair"
+	var/chaircolor = rgb(255,255,255)
+
+/obj/structure/stool/bed/chair/comfy/New()
+	overlays += icon("icons/obj/objects.dmi", "comfychair_feet")
+
+	var/icon/I = new("icons/obj/objects.dmi", "comfychair")
+	I.Blend(chaircolor, ICON_MULTIPLY)
+	src.icon = I
+
+	return ..()
 
 /obj/structure/stool/bed/chair/comfy/brown
-	icon_state = "comfychair_brown"
+	chaircolor = rgb(255,113,0)
 
 /obj/structure/stool/bed/chair/comfy/beige
-	icon_state = "comfychair_beige"
+	chaircolor = rgb(255,253,195)
 
 /obj/structure/stool/bed/chair/comfy/teal
-	icon_state = "comfychair_teal"
+	chaircolor = rgb(0,255,255)
+
+/obj/structure/stool/bed/chair/comfy/black
+	chaircolor = rgb(167,164,153)
+
+/obj/structure/stool/bed/chair/comfy/lime
+	chaircolor = rgb(255,251,0)
 
 /obj/structure/stool/bed/chair/office
 	anchored = 0
-
-/obj/structure/stool/bed/chair/comfy/black
-	icon_state = "comfychair_black"
-
-/obj/structure/stool/bed/chair/comfy/lime
-	icon_state = "comfychair_lime"
 
 /obj/structure/stool/bed/chair/office/Move()
 	..()
