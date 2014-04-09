@@ -6,6 +6,9 @@
  * Rewritten (except for player HTML) by N3X15
  ***********************/
 
+// Uncomment to test the mediaplayer
+//#define DEBUG_MEDIAPLAYER
+
 // Open up WMP and play musique.
 // TODO: Convert to VLC for cross-platform and ogg support. - N3X
 var/const/PLAYER_HTML={"
@@ -49,6 +52,13 @@ function SetMusic(url, time, volume) {
 	// One media source per area.
 	var/obj/machinery/media/media_source = null
 
+#ifdef DEBUG_MEDIAPLAYER
+#define MP_DEBUG owner
+#warning Please comment out #define DEBUG_MEDIAPLAYER before committing.
+#else
+#define MP_DEBUG null
+#endif
+
 /datum/media_manager
 	var/url = ""
 	var/start_time = 0
@@ -75,7 +85,7 @@ function SetMusic(url, time, volume) {
 	proc/send_update()
 		if(!(owner.prefs.toggles & SOUND_STREAMING))
 			return // Nope.
-		//testing("Sending update to WMP...")
+		owner << "\green Sending update to WMP ([url])..."
 		owner << output(list2params(list(url, (world.time - start_time) / 10, volume)), "[window]:SetMusic")
 
 	proc/stop_music()
