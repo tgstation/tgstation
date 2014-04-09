@@ -87,6 +87,8 @@ var/global/loopModeNames=list(
 
 /obj/machinery/media/jukebox/power_change()
 	..()
+	if(emagged && !(stat & (NOPOWER|BROKEN)))
+		playing = 1
 	update_icon()
 
 /obj/machinery/media/jukebox/update_icon()
@@ -136,16 +138,17 @@ var/global/loopModeNames=list(
 
 
 /obj/machinery/media/jukebox/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/card/emag) && !emagged)
-		playlist_id = "emagged"
-		last_reload=world.time
-		playlist=null
+	if(istype(W, /obj/item/weapon/card/emag))
 		current_song=0
-		loop_mode = JUKEMODE_SHUFFLE
-		emagged = 1
-		user.visible_message("[user.name] emags the [src.name].","\red You short out the [src.name].")
-		update_icon()
-		update_music()
+		if(!emagged)
+			playlist_id = "emagged"
+			last_reload=world.time
+			playlist=null
+			loop_mode = JUKEMODE_SHUFFLE
+			emagged = 1
+			user.visible_message("[user.name] emags the [src.name].","\red You short out the [src.name].")
+			update_icon()
+			update_music()
 		return
 
 /obj/machinery/media/jukebox/Topic(href, href_list)
