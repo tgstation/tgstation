@@ -52,12 +52,12 @@ obj/item/weapon/holysword
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("pierced", "smited", "banished", "exorcised", "slashed")
 
-	IsShield()
-		return 1
+obj/item/weapon/holysword/IsShield()
+	return 1
 
-	suicide_act(mob/user)
-		viewers(user) << "<span class='suicide'>[user] stabs \himself with [src.name] in the chest! It looks like \his soul is burning.</span>"
-		return(FIRELOSS)
+obj/item/weapon/holysword/suicide_act(mob/user)
+	viewers(user) << "<span class='suicide'>[user] stabs \himself with [src.name] in the chest! It looks like \his soul is burning.</span>"
+	return(FIRELOSS)
 
 
 
