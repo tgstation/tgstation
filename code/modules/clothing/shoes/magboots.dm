@@ -36,15 +36,15 @@
 			state = "enabled"
 		usr << "Its mag-pulse traction system appears to be [state]."
 
-/obj/item/clothing/shoes/magboots/CEboots
-	desc = "Antique magnetic boots that have a lighter magnetic pull, placing less burden on the wearer."
-	name = "antique magboots"
-	icon_state = "CEMag0"
-	/obj/item/clothing/shoes/magboots/CEboots/attack_self(mob/user)
-		..()
-		if(src.magpulse)
-			icon_state = "CEMag1"
-			src.slowdown = 1
-		else
-			icon_state = "CEMag0"
-		user.update_inv_shoes(0)
+/obj/item/clothing/shoes/magboots/advance
+	desc = "Advanced magnetic boots that have a lighter magnetic pull, placing less burden on the wearer."
+	name = "advanced magboots"
+	icon_state = "advmag0"
+/obj/item/clothing/shoes/magboots/advance/attack_self(mob/user)
+	..()
+	if(src.magpulse)
+		icon_state = "advmag1"
+		src.slowdown = 1
+	else
+		icon_state = "advmag0"
+	user.update_inv_shoes(0)

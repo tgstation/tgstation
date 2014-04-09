@@ -33,9 +33,9 @@ datum/objective_item/steal/jetpack
 	targetitem = /obj/item/weapon/tank/jetpack
 	difficulty = 3
 
-datum/objective_item/steal/CEboots
+datum/objective_item/steal/boots
 	name = "the chief engineer's antique magnetic boots"
-	targetitem =  /obj/item/clothing/shoes/magboots/CEboots
+	targetitem =  /obj/item/clothing/shoes/magboots/advance
 	difficulty = 5
 	excludefromjob = list("Chief Engineer")
 
