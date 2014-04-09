@@ -50,7 +50,7 @@ obj/item/weapon/holysword
 	throw_force = 15
 	w_class = 3
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("pierced", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb = list("pierced", "smited", "banished", "exorcised", "slashed")
 
 	IsShield()
 		return 1
