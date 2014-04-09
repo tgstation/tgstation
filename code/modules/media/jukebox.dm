@@ -146,6 +146,7 @@ var/global/loopModeNames=list(
 			playlist=null
 			loop_mode = JUKEMODE_SHUFFLE
 			emagged = 1
+			playing = 1
 			user.visible_message("[user.name] emags the [src.name].","\red You short out the [src.name].")
 			update_icon()
 			update_music()
