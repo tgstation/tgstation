@@ -6,7 +6,7 @@
 	name = "mecha part"
 	icon = 'icons/mecha/mech_construct.dmi'
 	icon_state = "blank"
-	w_class = 20
+	w_class = 5
 	flags = CONDUCT
 	origin_tech = "programming=2;materials=2"
 	var/construction_time = 100
@@ -88,7 +88,7 @@
 
 /obj/item/mecha_parts/part/gygax_torso
 	name="\improper Gygax torso"
-	desc="A torso part of Gygax. Contains power unit, processing core and life support systems. Has an additional equipment slot."
+	desc="A torso part of Gygax. Contains power unit, processing core and life support systems."
 	icon_state = "gygax_harness"
 	origin_tech = "programming=2;materials=2;biotech=3;engineering=3"
 	construction_time = 300
@@ -120,6 +120,7 @@
 
 /obj/item/mecha_parts/part/gygax_left_leg
 	name="\improper Gygax left leg"
+	desc="A Gygax left leg. Constructed with advanced servomechanisms and actuators to enable faster speed."
 	icon_state = "gygax_l_leg"
 	origin_tech = "programming=2;materials=2;engineering=3"
 	construction_time = 200
@@ -127,6 +128,7 @@
 
 /obj/item/mecha_parts/part/gygax_right_leg
 	name="\improper Gygax right leg"
+	desc="A Gygax right leg. Constructed with advanced servomechanisms and actuators to enable faster speed."
 	icon_state = "gygax_r_leg"
 	origin_tech = "programming=2;materials=2;engineering=3"
 	construction_time = 200
@@ -135,6 +137,7 @@
 /obj/item/mecha_parts/part/gygax_armour
 	gender = PLURAL
 	name="\improper Gygax armour plates"
+	desc="A set of armour plates designed for the Gygax. Designed to effectively deflect damage with a lightweight construction."
 	icon_state = "gygax_armour"
 	origin_tech = "materials=6;combat=4;engineering=5"
 	construction_time = 600
@@ -153,6 +156,7 @@
 
 /obj/item/mecha_parts/part/durand_torso
 	name="\improper Durand torso"
+	desc="A torso part of Durand. Contains power unit, processing core and life support systems within a robust protective frame."
 	icon_state = "durand_harness"
 	origin_tech = "programming=2;materials=3;biotech=3;engineering=3"
 	construction_time = 300
@@ -160,6 +164,7 @@
 
 /obj/item/mecha_parts/part/durand_head
 	name="\improper Durand head"
+	desc="A Durand head. Houses advanced surveilance and targeting sensors."
 	icon_state = "durand_head"
 	origin_tech = "programming=2;materials=3;magnets=3;engineering=3"
 	construction_time = 200
@@ -167,6 +172,7 @@
 
 /obj/item/mecha_parts/part/durand_left_arm
 	name="\improper Durand left arm"
+	desc="A Durand left arm. Data and power sockets are compatible with most exosuit tools and weapons. Packs a really mean punch as well."
 	icon_state = "durand_l_arm"
 	origin_tech = "programming=2;materials=3;engineering=3"
 	construction_time = 200
@@ -174,6 +180,7 @@
 
 /obj/item/mecha_parts/part/durand_right_arm
 	name="\improper Durand right arm"
+	desc="A Durand right arm. Data and power sockets are compatible with most exosuit tools and weapons. Packs a really mean punch as well."
 	icon_state = "durand_r_arm"
 	origin_tech = "programming=2;materials=3;engineering=3"
 	construction_time = 200
@@ -181,6 +188,7 @@
 
 /obj/item/mecha_parts/part/durand_left_leg
 	name="\improper Durand left leg"
+	desc="A Durand left leg. Built particlarly sturdy to support the Durand's heavy weight and defensive needs."
 	icon_state = "durand_l_leg"
 	origin_tech = "programming=2;materials=3;engineering=3"
 	construction_time = 200
@@ -188,6 +196,7 @@
 
 /obj/item/mecha_parts/part/durand_right_leg
 	name="\improper Durand right leg"
+	desc="A Durand right leg. Built particlarly sturdy to support the Durand's heavy weight and defensive needs."
 	icon_state = "durand_r_leg"
 	origin_tech = "programming=2;materials=3;engineering=3"
 	construction_time = 200
@@ -196,6 +205,7 @@
 /obj/item/mecha_parts/part/durand_armour
 	gender = PLURAL
 	name="\improper Durand armour plates"
+	desc="A set of armour plates for the Durand. Built heavy to resist an incredible amount of brute force."
 	icon_state = "durand_armour"
 	origin_tech = "materials=5;combat=4;engineering=5"
 	construction_time = 600
@@ -244,36 +254,42 @@
 
 /obj/item/mecha_parts/part/honker_torso
 	name="\improper H.O.N.K torso"
+	desc="A torso part of H.O.N.K. Contains chuckle unit, bananium core and honk support systems."
 	icon_state = "honker_harness"
 	construction_time = 300
 	construction_cost = list("metal"=35000,"glass"=10000,"bananium"=10000)
 
 /obj/item/mecha_parts/part/honker_head
 	name="\improper H.O.N.K head"
+	desc="A H.O.N.K head. Appears to lack a face plate."
 	icon_state = "honker_head"
 	construction_time = 200
 	construction_cost = list("metal"=15000,"glass"=5000,"bananium"=5000)
 
 /obj/item/mecha_parts/part/honker_left_arm
 	name="\improper H.O.N.K left arm"
+	desc="A H.O.N.K left arm. With unique sockets that accept odd weaponry designed by clown scientists."
 	icon_state = "honker_l_arm"
 	construction_time = 200
 	construction_cost = list("metal"=20000,"bananium"=5000)
 
 /obj/item/mecha_parts/part/honker_right_arm
 	name="\improper H.O.N.K right arm"
+	desc="A H.O.N.K right arm. With unique sockets that accept odd weaponry designed by clown scientists."
 	icon_state = "honker_r_arm"
 	construction_time = 200
 	construction_cost = list("metal"=20000,"bananium"=5000)
 
 /obj/item/mecha_parts/part/honker_left_leg
 	name="\improper H.O.N.K left leg"
+	desc="A H.O.N.K left leg. The foot appears just large enough to fully accomodate a clown shoe."
 	icon_state = "honker_l_leg"
 	construction_time = 200
 	construction_cost = list("metal"=20000,"bananium"=5000)
 
 /obj/item/mecha_parts/part/honker_right_leg
 	name="\improper H.O.N.K right leg"
+	desc="A H.O.N.K right leg. The foot appears just large enough to fully accomodate a clown shoe."
 	icon_state = "honker_r_leg"
 	construction_time = 200
 	construction_cost = list("metal"=20000,"bananium"=5000)
@@ -343,6 +359,7 @@
 
 /obj/item/mecha_parts/part/odysseus_head
 	name="\improper Odysseus head"
+	desc="An Odysseus head. Contains an integrated medical HUD scanner."
 	icon_state = "odysseus_head"
 	construction_time = 100
 	construction_cost = list("metal"=2000,"glass"=10000)
@@ -350,7 +367,7 @@
 
 /obj/item/mecha_parts/part/odysseus_torso
 	name="\improper Odysseus torso"
-	desc="A torso part of Odysseus. Contains power unit, processing core and life support systems."
+	desc="A torso part of Odysseus. Contains power unit, processing core and life support systems along with an attachment port for a mounted sleeper."
 	icon_state = "odysseus_torso"
 	origin_tech = "programming=2;materials=2;biotech=2;engineering=2"
 	construction_time = 180
@@ -358,7 +375,7 @@
 
 /obj/item/mecha_parts/part/odysseus_left_arm
 	name="\improper Odysseus left arm"
-	desc="An Odysseus left arm. Data and power sockets are compatible with most exosuit tools."
+	desc="An Odysseus left arm. Data and power sockets are compatible with specialized medical equipment."
 	icon_state = "odysseus_l_arm"
 	origin_tech = "programming=2;materials=2;engineering=2"
 	construction_time = 120
@@ -366,7 +383,7 @@
 
 /obj/item/mecha_parts/part/odysseus_right_arm
 	name="\improper Odysseus right arm"
-	desc="An Odysseus right arm. Data and power sockets are compatible with most exosuit tools."
+	desc="An Odysseus right arm. Data and power sockets are compatible with specialized medical equipment."
 	icon_state = "odysseus_r_arm"
 	origin_tech = "programming=2;materials=2;engineering=2"
 	construction_time = 120
@@ -374,7 +391,7 @@
 
 /obj/item/mecha_parts/part/odysseus_left_leg
 	name="\improper Odysseus left leg"
-	desc="An Odysseus left leg. Contains somewhat complex servodrives and balance maintaining systems."
+	desc="An Odysseus left leg. Contains complex servodrives and balance maintaining systems to maintain stability for critical patients."
 	icon_state = "odysseus_l_leg"
 	origin_tech = "programming=2;materials=2;engineering=2"
 	construction_time = 130
@@ -382,7 +399,7 @@
 
 /obj/item/mecha_parts/part/odysseus_right_leg
 	name="\improper Odysseus right leg"
-	desc="A Odysseus right leg. Contains somewhat complex servodrives and balance maintaining systems."
+	desc="A Odysseus right leg. Contains complex servodrives and balance maintaining systems to maintain stability for critical patients."
 	icon_state = "odysseus_r_leg"
 	origin_tech = "programming=2;materials=2;engineering=2"
 	construction_time = 130
