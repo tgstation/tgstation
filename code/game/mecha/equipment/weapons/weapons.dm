@@ -44,7 +44,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
 	equip_cooldown = 8
 	name = "\improper CH-PS \"Immolator\" laser"
-	desc="A weapon designed for combat mechs. Shoots basic lasers."
+	desc = "A weapon designed for combat mechs. Shoots basic lasers."
 	icon_state = "mecha_laser"
 	energy_drain = 30
 	projectile = /obj/item/projectile/beam
@@ -53,7 +53,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
 	equip_cooldown = 15
 	name = "\improper CH-LC \"Solaris\" laser cannon"
-	desc="A weapon designed for combat mechs. Shoots heavy lasers."
+	desc = "A weapon designed for combat mechs. Shoots heavy lasers."
 	icon_state = "mecha_laser"
 	energy_drain = 60
 	projectile = /obj/item/projectile/beam/heavylaser
@@ -62,7 +62,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
 	equip_cooldown = 20
 	name = "\improper MKIV ion heavy cannon"
-	desc="A weapon designed for combat mechs. Shoots technology-disabling ion beams. Don't catch yourself in the blast!"
+	desc = "A weapon designed for combat mechs. Shoots technology-disabling ion beams. Don't catch yourself in the blast!"
 	icon_state = "mecha_ion"
 	energy_drain = 120
 	projectile = /obj/item/projectile/ion
@@ -72,7 +72,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
 	equip_cooldown = 30
 	name = "eZ-13 MK2 heavy pulse rifle"
-	desc="A weapon designed for combat mechs. Shoots powerful destructive blasts capable of demolishing the environment."
+	desc = "A weapon designed for combat mechs. Shoots powerful destructive blasts capable of demolishing the environment."
 	icon_state = "mecha_pulse"
 	energy_drain = 120
 	origin_tech = "materials=3;combat=6;powerstorage=4"
@@ -97,7 +97,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
 	name = "\improper PBT \"Pacifier\" mounted taser"
-	desc="A weapon designed for combat mechs. Shoots non-lethal stunning electrodes."
+	desc = "A weapon designed for combat mechs. Shoots non-lethal stunning electrodes."
 	icon_state = "mecha_taser"
 	energy_drain = 20
 	equip_cooldown = 8
@@ -107,7 +107,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker
 	name = "\improper HoNkER BlAsT 5000"
-	desc="Equipment for clown exosuits. Spreads fun and joy to everyone around. Honk!"
+	desc = "Equipment for clown exosuits. Spreads fun and joy to everyone around. Honk!"
 	icon_state = "mecha_honker"
 	energy_drain = 200
 	equip_cooldown = 150
@@ -205,7 +205,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
 	name = "\improper FNX-99 \"Hades\" Carbine"
-	desc="A weapon designed for combat mechs. Fires bullets loaded with a strong incendiary payload."
+	desc = "A weapon designed for combat mechs. Fires bullets loaded with a strong incendiary payload."
 	icon_state = "mecha_carbine"
 	equip_cooldown = 5
 	projectile = /obj/item/projectile/bullet/incendiary/mech
@@ -214,7 +214,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced
 	name = "\improper S.H.H. \"Quietus\" Carbine"
-	desc="A weapon designed for combat mechs. A strange invention for mime assassins, capable of taking down a target without so much as a scream."
+	desc = "A weapon designed for combat mechs. A strange invention for mime assassins, capable of taking down a target without so much as a scream."
 	fire_sound = "sound/weapons/Gunshot_silenced.ogg"
 	icon_state = "mecha_mime"
 	equip_cooldown = 30
@@ -224,7 +224,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
 	name = "\improper LBX AC 10 \"Scattershot\""
-	desc="A weapon designed for combat mechs. Fires a spread of pellets."
+	desc = "A weapon designed for combat mechs. Fires a spread of pellets."
 	icon_state = "mecha_scatter"
 	equip_cooldown = 20
 	projectile = /obj/item/projectile/bullet/midbullet
@@ -266,7 +266,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
 	name = "\improper Ultra AC 2"
-	desc="A weapon designed for combat mechs. Fires a rapid, three-shot burst."
+	desc = "A weapon designed for combat mechs. Fires a rapid, three-shot burst."
 	icon_state = "mecha_uac2"
 	equip_cooldown = 10
 	projectile = /obj/item/projectile/bullet/weakbullet
@@ -310,7 +310,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
 	name = "\improper SRM-8 missile rack"
-	desc="A weapon designed for combat mechs. Launches light explosive missiles."
+	desc = "A weapon designed for combat mechs. Launches light explosive missiles."
 	icon_state = "mecha_missilerack"
 	projectile = /obj/item/missile
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
@@ -353,7 +353,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang
 	name = "\improper SGL-6 grenade launcher"
-	desc="A weapon designed for combat mechs. Launches stunning flashbang grenades."
+	desc = "A weapon designed for combat mechs. Launches stunning flashbang grenades."
 	icon_state = "mecha_grenadelnchr"
 	projectile = /obj/item/weapon/grenade/flashbang
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
@@ -382,7 +382,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang //Because I am a heartless bastard -Sieve //Heartless? for making the poor man's honkblast? - Kaze
 	name = "\improper SOB-3 grenade launcher"
-	desc="A weapon designed for combat mechs. Launches clusterbangs. You monster."
+	desc = "A weapon designed for combat mechs. Launches clusterbangs. You monster."
 	projectiles = 3
 	projectile = /obj/item/weapon/grenade/flashbang/clusterbang
 	projectile_energy_cost = 1600 //getting off cheap seeing as this is 3 times the flashbangs held in the grenade launcher.
@@ -391,7 +391,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar
 	name = "banana mortar"
-	desc="Equipment for clown exosuits. Launches slippery banana peels."
+	desc = "Equipment for clown exosuits. Launches slippery banana peels."
 	icon_state = "mecha_bananamrtr"
 	projectile = /obj/item/weapon/grown/bananapeel
 	fire_sound = 'sound/items/bikehorn.ogg'
@@ -422,7 +422,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar
 	name = "mousetrap mortar"
-	desc="Equipment for clown exosuits. Launches armed mousetraps. Watch your toes!"
+	desc = "Equipment for clown exosuits. Launches armed mousetraps. Watch your toes!"
 	icon_state = "mecha_mousetrapmrtr"
 	projectile = /obj/item/device/assembly/mousetrap
 	fire_sound = 'sound/items/bikehorn.ogg'
