@@ -205,7 +205,7 @@ datum/hSB
 					ID.registered_name = usr.real_name
 					ID.assignment = "Sandbox"
 					ID.access = get_all_accesses()
-					ID.name = "[ID.registered_name]'s ID Card ([ID.assignment])"
+					ID.update_label()
 
 				//
 				// RCD - starts with full clip
