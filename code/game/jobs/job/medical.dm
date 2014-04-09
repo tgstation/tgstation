@@ -19,6 +19,7 @@ Chief Medical Officer
 	default_backpack = /obj/item/weapon/storage/backpack/medic
 	default_satchel = /obj/item/weapon/storage/backpack/satchel_med
 
+	access = list(access_medical, access_morgue, access_genetics, access_heads, access_mineral_storeroom,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
 			access_keycard_auth, access_sec_doors)
 	minimal_access = list(access_medical, access_morgue, access_genetics, access_heads, access_mineral_storeroom,

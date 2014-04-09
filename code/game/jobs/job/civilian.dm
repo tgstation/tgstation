@@ -115,7 +115,7 @@ Quartermaster
 	default_pda = /obj/item/device/pda/quartermaster
 	default_headset = /obj/item/device/radio/headset/headset_cargo
 
-	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
+	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_mineral_storeroom)
 	minimal_access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
 
 /datum/job/qm/equip_items(var/mob/living/carbon/human/H)
@@ -166,8 +166,8 @@ Shaft Miner
 	default_satchel = /obj/item/weapon/storage/backpack/satchel_eng
 	default_storagebox = /obj/item/weapon/storage/box/engineer
 
-	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
-	minimal_access = list(access_mining, access_mint, access_mining_station, access_mailsorting)
+	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_mineral_storeroom)
+	minimal_access = list(access_mining, access_mint, access_mining_station, access_mailsorting, access_mineral_storeroom)
 
 /datum/job/mining/equip_items(var/mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/miner(H), slot_w_uniform)
