@@ -35,3 +35,15 @@
 		if(src.flags&NOSLIP)
 			state = "enabled"
 		usr << "Its mag-pulse traction system appears to be [state]."
+
+/obj/item/clothing/shoes/magboots/CEboots
+	desc = "Ancient Magboots"
+	name = "antique magboots"
+	icon_state = "CEMag0"
+	attack_self(mob/user)
+		..()
+		if(src.magpulse)
+			icon_state = "CEMag1"
+		else
+			icon_state = "CEMag0"
+		user.update_inv_shoes(0)
