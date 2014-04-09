@@ -50,7 +50,6 @@
 	for(var/obj/O in contents)
 		O.emp_act(severity)
 
-
 /obj/item/weapon/gun/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params)//TODO: go over this
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(istype(target, /mob/) && target != user && !(target in user.contents)) //We make sure that it is a mob, it's not us or part of us.
@@ -106,6 +105,7 @@
 		user.update_inv_l_hand(0)
 	else
 		user.update_inv_r_hand(0)
+
 /obj/item/weapon/gun/attack(mob/M as mob, mob/user)
 	if(user.a_intent == "harm") //Flogging
 		..()
