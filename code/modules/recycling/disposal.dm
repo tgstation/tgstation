@@ -106,6 +106,8 @@
 		if(istype(G))	// handle grabbed mob
 			if(ismob(G.affecting))
 				var/mob/GM = G.affecting
+				user.attack_log += "<span class='warning'> [user]([user.ckey]) has attempted to put [GM]([GM.ckey]) in disposals.</span>"
+				GM.attack_log += "<span class='warning'> [user]([user.ckey]) has attempted to put [GM]([GM.ckey]) in disposals.</span>"
 				for (var/mob/V in viewers(usr))
 					V.show_message("[usr] starts putting [GM.name] into the disposal.", 3)
 				if(do_after(usr, 20))
