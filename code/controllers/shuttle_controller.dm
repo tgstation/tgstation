@@ -22,6 +22,8 @@ datum/shuttle_controller
 	var/location = UNDOCKED //
 	var/online = 0
 	var/direction = 1 //-1 = going back to central command, 1 = going to SS13.  Only important for recalling
+	var/recall_count = 0
+	var/area/last_call_loc = null // Stores where the last shuttle call/recall was made from
 
 	var/endtime			// timeofday that shuttle arrives
 	var/timelimit //important when the shuttle gets called for more than shuttlearrivetime
@@ -35,12 +37,16 @@ datum/shuttle_controller
 	// call the shuttle
 	// if not called before, set the endtime to T+600 seconds
 	// otherwise if outgoing, switch to incoming
-	proc/incall(coeff = 1)
+	proc/incall(coeff = 1, var/signal_origin)
 
 		if(endtime)
 			if(direction == -1)
 				setdirection(1)
 		else
+			if(signal_origin && prob(60)) //40% chance the signal tracing will fail
+				last_call_loc = signal_origin
+			else
+				last_call_loc = null
 			settimeleft(SHUTTLEARRIVETIME*coeff)
 			online = 1
 			if(always_fake_recall)
@@ -50,7 +56,7 @@ datum/shuttle_controller
 				else
 					fake_recall = rand(SHUTTLEARRIVETIME / 2, SHUTTLEARRIVETIME - 100)
 
-	proc/recall()
+	proc/recall(var/signal_origin)
 		if(direction == 1)
 			var/timeleft = timeleft()
 			if(timeleft >= SHUTTLEARRIVETIME)
@@ -58,7 +64,18 @@ datum/shuttle_controller
 				direction = 1
 				endtime = null
 				return
-			captain_announce("The emergency shuttle has been recalled.")
+
+			recall_count ++
+
+			if(recall_count > 2 && signal_origin && prob(60)) //40% chance the signal tracing will fail
+				last_call_loc = signal_origin
+			else
+				last_call_loc = null
+
+			if(recall_count == 2)
+				captain_announce("The emergency shuttle has been recalled.\n\nExcessive number of emergency shuttle calls detected. We will attempt to trace any further signals to their source. Results may be viewed on any communications console.")
+			else
+				captain_announce("The emergency shuttle has been recalled.")
 			world << sound('sound/AI/shuttlerecalled.ogg')
 			setdirection(-1)
 			online = 1
