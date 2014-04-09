@@ -37,7 +37,7 @@
  * If this file is named experimental,
  * well treat this implementation as experimental experimental (redundancy intended).
  *
- * REMINDER TO MYSELF: Ignore fireaxe deletion for now.
+ * WARNING, only supports /mob and /obj.
  */
 
 #define DEBUG_OBJECT_POOL 0
@@ -48,9 +48,9 @@ var/list/masterPool
 /proc/setupPool()
 	world << "\red \b Creating Object Pool..."
 
-	masterPool = new /list()
+	masterPool = list()
 
-	initializePool(new /list(\
+	initializePool(list(\
 		/obj/item/weapon/shard,\
 		/obj/item/weapon/shard/plasma,\
 		/obj/structure/grille))
@@ -61,43 +61,50 @@ var/list/masterPool
  * Dynamic pool initialization, mostly used on setupPool()
  *
  * @args
- * A, list of object types.
+ * A, list of object types
  *
- * Example call: initializePool(new /list(/obj/item/weapon/shard))
+ * Example call: initializePool(list(/obj/item/weapon/shard))
  */
-/proc/initializePool(list/A)
-	var/list/Object = new /list()
+/proc/initializePool(const/A)
+	if (istype(A, /list) == 0)
+		return
 
-	for (var/i = 1 to A.len)
-		#if DEBUG_OBJECT_POOL
-		world << "DEBUG_OBJECT_POOL: initializing [A[i]]"
-		#endif
-		for (var/j = 1 to STARTING_OBJECT_POOL_COUNT)
-			var/honk = A[j]
-			Object = Object + new honk()
+	var/list/Objects
 
-		masterPool[A[i]] = Object
+	for (var/objectType in A)
+		Objects = list()
+
+		for (var/i = 1 to STARTING_OBJECT_POOL_COUNT)
+			Objects += new objectType()
+
+		// Don't make reference.
+		masterPool[objectType] = Objects.Copy()
 
 #undef STARTING_OBJECT_POOL_COUNT
 
 /*
  * @args
- * A, type not object instance
- * B, loc
+ * A, object type
+ * B, location to spawn
+ *
+ * @return
+ * -1, if B is not a location
  *
  * Example call: getFromPool(/obj/item/weapon/shard, loc)
  */
-/proc/getFromPool(A, B)
+/proc/getFromPool(const/A, const/B)
+	if (isloc(B) == 0)
+		return -1
+
 	if (isnull(masterPool[A]))
 		#if DEBUG_OBJECT_POOL
 		world << "DEBUG_OBJECT_POOL: new proc has been called ([A])."
 		#endif
+
 		return new A(B)
 
 	var/atom/movable/Object = masterPool[A][1]
-	masterPool[A] = masterPool[A] - Object
-	Object.loc = B
-	. = Object
+	masterPool[A] -= Object
 
 	#if DEBUG_OBJECT_POOL
 	world << "DEBUG_OBJECT_POOL: getFromPool([A]) [length(masterPool[A])]"
@@ -106,28 +113,39 @@ var/list/masterPool
 	if (0 == length(masterPool[A]))
 		masterPool[A] = null
 
+	Object.loc = B
+	return Object
+
 /*
  * @args
- * A, object instance not type
+ * A, object instance
+ *
+ * @return
+ * -1, if A is not a movable atom
  *
  * Example call: returnToPool(src)
  */
-/proc/returnToPool(atom/movable/A)
-	if (isnull(masterPool[A.type]))
-		#if DEBUG_OBJECT_POOL
-		world << "DEBUG_OBJECT_POOL: [A.type] pool is empty, recreating list."
-		#endif
-		masterPool[A.type] = new /list()
+/proc/returnToPool(const/A)
+	if (istype(A, /atom/movable) == 0)
+		return -1
 
 	var/atom/movable/Object = A
-	Object.loc = null
+
+	if (isnull(masterPool[Object.type]))
+		#if DEBUG_OBJECT_POOL
+		world << "DEBUG_OBJECT_POOL: [Object.type] pool is empty, recreating list."
+		#endif
+
+		masterPool[Object.type] = list()
 
 	Object.resetVariables()
 
-	masterPool[A.type] = masterPool[A.type] + Object
+	Object.loc = null
+
+	masterPool[Object.type] += Object
 
 	#if DEBUG_OBJECT_POOL
-	world << "DEBUG_OBJECT_POOL: returnToPool([A.type]) [length(masterPool[A.type])]"
+	world << "DEBUG_OBJECT_POOL: returnToPool([Object.type]) [length(masterPool[Object.type])]"
 	#endif
 
 #undef DEBUG_OBJECT_POOL
