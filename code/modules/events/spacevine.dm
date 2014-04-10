@@ -40,17 +40,17 @@
 /datum/spacevine_mutation/proc/on_cross(obj/effect/spacevine/holder, mob/crosser)
 	return
 
-/datum/spacevine_mutation/oxy_eater
-	name = "oxygen consumption"
-	hue = "#ffff00"
-
 /datum/spacevine_mutation/transparency
-	name = "oxygen consumption"
+	name = "transparency"
 	hue = ""
 
 /datum/spacevine_mutation/transparency/on_grow(obj/effect/spacevine/holder)
 	holder.SetOpacity(0)
 	holder.alpha = 125
+
+/datum/spacevine_mutation/oxy_eater
+	name = "oxygen consumption"
+	hue = "#ffff00"
 
 /datum/spacevine_mutation/oxy_eater/process_mutation(obj/effect/spacevine/holder)
 	var/turf/simulated/floor/T = holder.loc
