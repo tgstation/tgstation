@@ -19,7 +19,7 @@ obj/structure/door_assembly
 	New()
 		base_icon_state = copytext(icon_state,1,lentext(icon_state))
 
-	door_assembly_0
+	/obj/structure/door_assembly/door_assembly_0
 		name = "airlock assembly"
 		icon_state = "door_as_1"
 		airlock_type = /obj/machinery/door/airlock
@@ -27,7 +27,7 @@ obj/structure/door_assembly
 		density = 1
 		state = 1
 
-	door_assembly_com
+	/obj/structure/door_assembly/door_assembly_com
 		name = "command airlock assembly"
 		icon_state = "door_as_com1"
 		glass_base_icon_state = "door_as_gcom"
@@ -43,7 +43,7 @@ obj/structure/door_assembly
 			mineral = "glass"
 			icon_state = "door_as_gcom1"
 
-	door_assembly_sec
+	/obj/structure/door_assembly/door_assembly_sec
 		name = "security airlock assembly"
 		icon_state = "door_as_sec1"
 		glass_base_icon_state = "door_as_gsec"
@@ -59,7 +59,7 @@ obj/structure/door_assembly
 			mineral = "glass"
 			icon_state = "door_as_gsec1"
 
-	door_assembly_eng
+	/obj/structure/door_assembly/door_assembly_eng
 		name = "Engineering Airlock Assembly"
 		icon_state = "door_as_eng1"
 		glass_base_icon_state = "door_as_geng"
@@ -75,7 +75,7 @@ obj/structure/door_assembly
 			mineral = "glass"
 			icon_state = "door_as_geng1"
 
-	door_assembly_min
+	/obj/structure/door_assembly/door_assembly_min
 		name = "Mining Airlock Assembly"
 		icon_state = "door_as_min1"
 		glass_base_icon_state = "door_as_gmin"
@@ -91,7 +91,7 @@ obj/structure/door_assembly
 			mineral = "glass"
 			icon_state = "door_as_gmin1"
 
-	door_assembly_atmo
+	/obj/structure/door_assembly/door_assembly_atmo
 		name = "Atmospherics Airlock Assembly"
 		icon_state = "door_as_atmo1"
 		glass_base_icon_state = "door_as_gatmo"
@@ -107,7 +107,7 @@ obj/structure/door_assembly
 			mineral = "glass"
 			icon_state = "door_as_gatmo1"
 
-	door_assembly_research
+	/obj/structure/door_assembly/door_assembly_research
 		name = "Research Airlock Assembly"
 		icon_state = "door_as_res1"
 		glass_base_icon_state = "door_as_gres"
@@ -123,7 +123,7 @@ obj/structure/door_assembly
 			mineral = "glass"
 			icon_state = "door_as_gres1"
 
-	door_assembly_science
+	/obj/structure/door_assembly/door_assembly_science
 		name = "Science Airlock Assembly"
 		icon_state = "door_as_sci1"
 		glass_base_icon_state = "door_as_gsci"
@@ -139,7 +139,7 @@ obj/structure/door_assembly
 			mineral = "glass"
 			icon_state = "door_as_gsci1"
 
-	door_assembly_med
+	/obj/structure/door_assembly/door_assembly_med
 		name = "Medical Airlock Assembly"
 		icon_state = "door_as_med1"
 		typetext = "medical"
@@ -153,7 +153,7 @@ obj/structure/door_assembly
 			mineral = "glass"
 			icon_state = "door_as_gmed1"
 
-	door_assembly_mai
+	/obj/structure/door_assembly/door_assembly_mai
 		name = "Maintenance Airlock Assembly"
 		icon_state = "door_as_mai1"
 		typetext = "maintenance"
@@ -163,7 +163,7 @@ obj/structure/door_assembly
 		density = 1
 		state = 1
 
-	door_assembly_ext
+	/obj/structure/door_assembly/door_assembly_ext
 		name = "External Airlock Assembly"
 		icon_state = "door_as_ext1"
 		typetext = "external"
@@ -173,7 +173,7 @@ obj/structure/door_assembly
 		density = 1
 		state = 1
 
-	door_assembly_fre
+	/obj/structure/door_assembly/door_assembly_fre
 		name = "Freezer Airlock Assembly"
 		icon_state = "door_as_fre1"
 		typetext = "freezer"
@@ -183,7 +183,7 @@ obj/structure/door_assembly
 		density = 1
 		state = 1
 
-	door_assembly_hatch
+	/obj/structure/door_assembly/door_assembly_hatch
 		name = "Airtight Hatch Assembly"
 		icon_state = "door_as_hatch1"
 		typetext = "hatch"
@@ -193,7 +193,7 @@ obj/structure/door_assembly
 		density = 1
 		state = 1
 
-	door_assembly_mhatch
+	/obj/structure/door_assembly/door_assembly_mhatch
 		name = "Maintenance Hatch Assembly"
 		icon_state = "door_as_mhatch1"
 		typetext = "maintenance_hatch"
@@ -203,7 +203,7 @@ obj/structure/door_assembly
 		density = 1
 		state = 1
 
-	door_assembly_glass
+	/obj/structure/door_assembly/door_assembly_glass
 		name = "Glass Airlock Assembly"
 		icon_state = "door_as_g1"
 		airlock_type = /obj/machinery/door/airlock/glass
@@ -212,7 +212,7 @@ obj/structure/door_assembly
 		state = 1
 		mineral = "glass"
 
-	door_assembly_gold
+	/obj/structure/door_assembly/door_assembly_gold
 		name = "Gold Airlock Assembly"
 		icon_state = "door_as_gold1"
 		airlock_type = /obj/machinery/door/airlock/gold
@@ -221,7 +221,7 @@ obj/structure/door_assembly
 		state = 1
 		mineral = "gold"
 
-	door_assembly_silver
+	/obj/structure/door_assembly/door_assembly_silver
 		name = "Silver Airlock Assembly"
 		icon_state = "door_as_silver1"
 		airlock_type = /obj/machinery/door/airlock/silver
@@ -230,7 +230,7 @@ obj/structure/door_assembly
 		state = 1
 		mineral = "silver"
 
-	door_assembly_diamond
+	/obj/structure/door_assembly/door_assembly_diamond
 		name = "Diamond Airlock Assembly"
 		icon_state = "door_as_diamond1"
 		airlock_type = /obj/machinery/door/airlock/diamond
@@ -239,7 +239,7 @@ obj/structure/door_assembly
 		state = 1
 		mineral = "diamond"
 
-	door_assembly_uranium
+	/obj/structure/door_assembly/door_assembly_uranium
 		name = "Uranium Airlock Assembly"
 		icon_state = "door_as_uranium1"
 		airlock_type = /obj/machinery/door/airlock/uranium
@@ -248,7 +248,7 @@ obj/structure/door_assembly
 		state = 1
 		mineral = "uranium"
 
-	door_assembly_plasma
+	/obj/structure/door_assembly/door_assembly_plasma
 		name = "Plasma Airlock Assembly"
 		icon_state = "door_as_plasma1"
 		airlock_type = /obj/machinery/door/airlock/plasma
@@ -257,7 +257,7 @@ obj/structure/door_assembly
 		state = 1
 		mineral = "plasma"
 
-	door_assembly_clown
+	/obj/structure/door_assembly/door_assembly_clown
 		name = "Bananium Airlock Assembly"
 		desc = "Honk"
 		icon_state = "door_as_clown1"
@@ -267,7 +267,7 @@ obj/structure/door_assembly
 		state = 1
 		mineral = "clown"
 
-	door_assembly_sandstone
+	/obj/structure/door_assembly/door_assembly_sandstone
 		name = "Sandstone Airlock Assembly"
 		icon_state = "door_as_sandstone1"
 		airlock_type = /obj/machinery/door/airlock/sandstone
@@ -276,7 +276,7 @@ obj/structure/door_assembly
 		state = 1
 		mineral = "sandstone"
 
-	door_assembly_highsecurity // Borrowing this until WJohnston makes sprites for the assembly
+	/obj/structure/door_assembly/door_assembly_highsecurity // Borrowing this until WJohnston makes sprites for the assembly
 		name = "High Tech Security Assembly"
 		icon_state = "door_as_highsec1"
 		typetext = "highsecurity"
@@ -286,7 +286,7 @@ obj/structure/door_assembly
 		density = 1
 		state = 1
 
-	door_assembly_vault
+	/obj/structure/door_assembly/door_assembly_vault
 		name = "Vault Door Assembly"
 		icon_state = "door_as_vault1"
 		typetext = "vault"
@@ -296,7 +296,7 @@ obj/structure/door_assembly
 		density = 1
 		state = 1
 
-	door_assembly_shuttle
+	/obj/structure/door_assembly/door_assembly_shuttle
 		name = "Shuttle Airlock Assembly"
 		icon_state = "door_as_shuttle1"
 		typetext = "shuttle"
@@ -305,6 +305,15 @@ obj/structure/door_assembly
 		anchored = 1
 		density = 1
 		state = 1
+
+	/obj/structure/door_assembly/door_assembly_wood
+		name = "Wooden Airlock Assembly"
+		icon_state = "door_as_wood1"
+		airlock_type = /obj/machinery/door/airlock/wood
+		anchored = 1
+		density = 1
+		state = 1
+		mineral = "wood"
 
 /obj/structure/door_assembly/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/pen))

@@ -2,15 +2,15 @@
 	mob_list -= src
 	dead_mob_list -= src
 	living_mob_list -= src
-	//Set the mob up for GC. Mobs have lots of references
 	if(client)
 		for(var/atom/movable/AM in client.screen)
 			qdel(AM)
 		client.screen = list()
-	del(hud_used)
-	spellremove(src)
+	qdel(hud_used)
+	if(mind && mind.current == src)
+		spellremove(src)
 	for(var/infection in viruses)
-		del(infection)
+		qdel(infection)
 	ghostize()
 	..()
 

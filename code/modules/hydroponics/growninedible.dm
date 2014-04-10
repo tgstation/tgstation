@@ -61,8 +61,8 @@
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
 		user.show_message("<span class='notice'>You make planks out of the [src]!</span>", 1)
 		for(var/i=0,i<2,i++)
-			var/obj/item/stack/sheet/wood/NG = new (user.loc)
-			for (var/obj/item/stack/sheet/wood/G in user.loc)
+			var/obj/item/stack/sheet/mineral/wood/NG = new (user.loc)
+			for (var/obj/item/stack/sheet/mineral/wood/G in user.loc)
 				if(G==NG)
 					continue
 				if(G.amount>=G.max_amount)

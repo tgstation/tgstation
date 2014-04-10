@@ -1,6 +1,6 @@
 /tg/station 13 v1.0 - 6 October 2010 [![Build Status](https://travis-ci.org/tgstation/-tg-station.png)](https://travis-ci.org/tgstation/-tg-station)
 
-Website: http://ss13.eu
+Website: http://coderbus.com
 
 Code: https://github.com/tgstation/-tg-station
 

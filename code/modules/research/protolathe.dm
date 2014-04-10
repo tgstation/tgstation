@@ -134,7 +134,7 @@ Note: Must be placed west/left of and R&D console to function.
 		return 1
 	if (O.is_open_container())
 		return
-	if (!istype(O, /obj/item/stack/sheet))
+	if (!istype(O, /obj/item/stack/sheet) || istype(O, /obj/item/stack/sheet/mineral/wood))
 		user << "<span class='warning'>You cannot insert this item into the protolathe!</span>"
 		return 1
 	if (stat)

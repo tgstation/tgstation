@@ -14,7 +14,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	slot_flags = SLOT_ID | SLOT_BELT
 
 	//Main variables
-	var/owner = null
+	var/owner = null // String name of owner
 	var/default_cartridge = 0 // Access level defined by cartridge
 	var/obj/item/weapon/cartridge/cartridge = null //current cartridge
 	var/mode = 0 //Controls what menu the PDA will display. 0 is hub; the rest are either built in or based on cartridge.
@@ -215,6 +215,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(default_cartridge)
 		cartridge = new default_cartridge(src)
 	new /obj/item/weapon/pen(src)
+
+/obj/item/device/pda/proc/update_label()
+	name = "PDA-[owner] ([ownjob])" //Name generalisation
 
 /obj/item/device/pda/proc/can_use(mob/user)
 	if(user && ismob(user))
@@ -472,7 +475,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				id_check(U, 1)
 			if("UpdateInfo")
 				ownjob = id.assignment
-				name = "PDA-[owner] ([ownjob])"
+				update_label()
 			if("Eject")//Ejects the cart, only done from hub.
 				if (!isnull(cartridge))
 					var/turf/T = loc
@@ -848,7 +851,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(!owner)
 			owner = idcard.registered_name
 			ownjob = idcard.assignment
-			name = "PDA-[owner] ([ownjob])"
+			update_label()
 			user << "<span class='notice'>Card scanned.</span>"
 		else
 			//Basic safety check. If either both objects are held by user or PDA is on ground and card is in hand.
