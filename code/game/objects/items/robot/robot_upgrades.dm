@@ -35,6 +35,8 @@
 	R.modtype = "robot"
 	R.updatename("Default")
 	R.status_flags |= CANPUSH
+	R.designation = "Default"
+	R.notify_ai(2)
 	R.updateicon()
 
 	return 1
@@ -51,8 +53,10 @@
 
 /obj/item/borg/upgrade/rename/action(var/mob/living/silicon/robot/R)
 	if(..()) return 0
+	R.notify_ai(3, R.name, heldname)
 	R.name = heldname
 	R.real_name = heldname
+	R.camera.c_tag = heldname
 	R.custom_name = heldname //Required or else if the cyborg's module changes, their name is lost.
 
 	return 1
@@ -75,6 +79,8 @@
 				R.key = ghost.key
 
 	R.stat = CONSCIOUS
+	R.notify_ai(1)
+
 	return 1
 
 

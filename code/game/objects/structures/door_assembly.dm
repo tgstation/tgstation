@@ -296,6 +296,16 @@ obj/structure/door_assembly
 		density = 1
 		state = 1
 
+	/obj/structure/door_assembly/door_assembly_shuttle
+		name = "Shuttle Airlock Assembly"
+		icon_state = "door_as_shuttle1"
+		typetext = "shuttle"
+		icontext = "shuttle"
+		airlock_type = /obj/machinery/door/airlock/shuttle
+		anchored = 1
+		density = 1
+		state = 1
+
 	/obj/structure/door_assembly/door_assembly_wood
 		name = "Wooden Airlock Assembly"
 		icon_state = "door_as_wood1"
@@ -554,7 +564,10 @@ obj/structure/door_assembly
 				door = new src.airlock_type( src.loc )
 			//door.req_access = src.req_access
 			door.electronics = src.electronics
-			door.req_access = src.electronics.conf_access
+			if(src.electronics.use_one_access)
+				door.req_one_access = src.electronics.conf_access
+			else
+				door.req_access = src.electronics.conf_access
 			if(created_name)
 				door.name = created_name
 			src.electronics.loc = door

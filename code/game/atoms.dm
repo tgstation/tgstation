@@ -40,13 +40,6 @@
 /atom/proc/CheckParts()
 	return
 
-/atom/Destroy()
-	if(reagents)
-		reagents.delete()
-		qdel(reagents)
-	invisibility = 101
-	// Do not call ..()
-
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	del(giver)
 	return null

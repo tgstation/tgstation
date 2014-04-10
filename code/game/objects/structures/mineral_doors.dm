@@ -267,3 +267,4 @@
 /obj/structure/mineral_door/resin/CheckHardness()
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 	..()
+

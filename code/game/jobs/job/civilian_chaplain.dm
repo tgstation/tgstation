@@ -1,4 +1,7 @@
 //Due to how large this one is it gets its own file
+/*
+Chaplain
+*/
 /datum/job/chaplain
 	title = "Chaplain"
 	flag = CHAPLAIN
@@ -8,6 +11,9 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+
+	default_pda = /obj/item/device/pda/chaplain
+
 	access = list(access_morgue, access_chapel_office, access_crematorium, access_maint_tunnels)
 	minimal_access = list(access_morgue, access_chapel_office, access_crematorium)
 
@@ -73,11 +79,8 @@
 
 		usr << browse(null, "window=editicon") // Close window
 
-/datum/job/chaplain/equip(var/mob/living/carbon/human/H)
-	if(!H)	return 0
-
+/datum/job/chaplain/equip_items(var/mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/chaplain(H), slot_belt)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
 
 	var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible/booze(H)
@@ -142,4 +145,3 @@
 		dat += "</table></body></html>"
 
 		H << browse(dat, "window=editicon;can_close=0;can_minimize=0;size=250x650")
-	return 1

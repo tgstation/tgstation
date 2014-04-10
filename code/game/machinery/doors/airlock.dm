@@ -271,11 +271,16 @@
 	icon = 'icons/obj/doors/hightechsecurity.dmi'
 	doortype = 33
 
+/obj/machinery/door/airlock/shuttle
+	name = "shuttle airlock"
+	icon = 'icons/obj/doors/doorshuttle.dmi'
+	doortype = 34
+
 /obj/machinery/door/airlock/wood
 	name = "wooden airlock"
 	icon = 'icons/obj/doors/Doorwood.dmi'
 	var/mineral = "wood"
-	doortype = 34
+	doortype = 35
 
 /*
 About the new airlock wires panel:
@@ -941,7 +946,9 @@ About the new airlock wires panel:
 					if(31) new/obj/structure/door_assembly/door_assembly_science( src.loc )
 					if(32) new/obj/structure/door_assembly/door_assembly_science/glass( src.loc )
 					if(33) new/obj/structure/door_assembly/door_assembly_highsecurity(src.loc)
-					if(34) new/obj/structure/door_assembly/door_assembly_wood(src.loc)
+					if(34) new/obj/structure/door_assembly/door_assembly_shuttle(src.loc)
+					if(35) new/obj/structure/door_assembly/door_assembly_wood(src.loc)
+>>>>>>> 8c2b5bf29aaefc6303d446deba494f3d5f8ca728
 				if(emagged)
 					user << "<span class='warning'>You discard the damaged electronics.</span>"
 					qdel(src)
@@ -951,7 +958,11 @@ About the new airlock wires panel:
 				var/obj/item/weapon/airlock_electronics/ae
 				if(!electronics)
 					ae = new/obj/item/weapon/airlock_electronics( src.loc )
-					ae.conf_access = src.req_access
+					if(req_one_access)
+						ae.use_one_access = 1
+						ae.conf_access = src.req_one_access
+					else
+						ae.conf_access = src.req_access
 				else
 					ae = electronics
 					electronics = null
@@ -991,6 +1002,8 @@ About the new airlock wires panel:
 
 /obj/machinery/door/airlock/plasma/attackby(C as obj, mob/user as mob)
 	if(C)
+		message_admins("Plasma airlock ignited by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+		log_game("Plasma airlock ignited by [user.ckey]([user]) in ([x],[y],[z])")
 		ignite(is_hot(C))
 	..()
 

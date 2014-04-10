@@ -16,10 +16,11 @@
 	var/potency = 20
 	var/plant_type = 0
 
-/obj/item/weapon/grown/New(newloc,newpotency)
+/obj/item/weapon/grown/New(newloc, potency = 50)
 	..()
-	pixel_x = rand(-5.0, 5)
-	pixel_y = rand(-5.0, 5)
+	src.potency = potency
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
 
 	transform *= TransformUsingVariable(potency, 100, 0.5)
 
@@ -51,7 +52,9 @@
 	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/wheat)
-
+	
+	New(var/loc, var/potency = 10)
+		..()
 
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -95,6 +98,9 @@
 	throw_range = 3
 	plant_type = 0
 	seed = "/obj/item/seeds/sunflowerseed"
+	
+	New(var/loc, var/potency = 10)
+		..()
 
 /obj/item/weapon/grown/novaflower
 	name = "novaflower"
@@ -113,8 +119,9 @@
 	attack_verb = list("seared", "heated", "whacked", "steamed")
 	New(var/loc, var/potency = 10)
 		..()
-		reagents.add_reagent("nutriment", 1)
-		reagents.add_reagent("capsaicin", round(potency, 1))
+		if(reagents)
+			reagents.add_reagent("nutriment", 1)
+			reagents.add_reagent("capsaicin", round(potency, 1))
 		force = round((5+potency/5), 1)
 
 /obj/item/weapon/grown/nettle // -- Skie
@@ -134,8 +141,9 @@
 	seed = "/obj/item/seeds/nettleseed"
 	New(var/loc, var/potency = 10)
 		..()
-		reagents.add_reagent("nutriment", 1)
-		reagents.add_reagent("sacid", round(potency, 1))
+		if(reagents)
+			reagents.add_reagent("nutriment", 1)
+			reagents.add_reagent("sacid", round(potency, 1))
 		force = round((5+potency/5), 1)
 
 /obj/item/weapon/grown/deathnettle // -- Skie
@@ -156,8 +164,9 @@
 	attack_verb = list("stung")
 	New(var/loc, var/potency = 10)
 		..()
-		reagents.add_reagent("nutriment", 1)
-		reagents.add_reagent("pacid", round(potency, 1))
+		if(reagents)
+			reagents.add_reagent("nutriment", 1)
+			reagents.add_reagent("pacid", round(potency, 1))
 		force = round((5+potency/2.5), 1)
 
 	suicide_act(mob/user)
@@ -174,6 +183,8 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
+	New(var/loc, var/potency = 10)
+		..()
 
 /obj/item/weapon/grown/corncob
 	name = "corn cob"
@@ -185,3 +196,5 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
+	New(var/loc, var/potency = 10)
+		..()

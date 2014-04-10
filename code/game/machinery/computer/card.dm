@@ -278,7 +278,7 @@
 		if ("modify")
 			if (modify)
 				data_core.manifest_modify(modify.registered_name, modify.assignment)
-				modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
+				modify.update_label()
 				modify.loc = loc
 				modify.verb_pickup()
 				modify = null
@@ -408,7 +408,7 @@
 				P.name = "paper- 'Crew Manifest'"
 				printing = null
 	if (modify)
-		modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
+		modify.update_label()
 	updateUsrDialog()
 	return
 
