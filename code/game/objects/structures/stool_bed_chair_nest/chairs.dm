@@ -102,9 +102,7 @@
 
 /obj/structure/stool/bed/chair/comfy/New()
 	//Armrest
-	armrest = new()
-	armrest.icon = "icons/obj/objects.dmi"
-	armrest.icon_state = "comfychair_armrest"
+	armrest = icon("icons/obj/objects.dmi", "comfychair_armrest")
 	armrest.layer = MOB_LAYER + 0.1
 
 	//Feet
