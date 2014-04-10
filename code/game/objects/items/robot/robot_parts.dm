@@ -213,9 +213,10 @@
 			if(!aisync)
 				lawsync = 0
 				O.connected_ai = null
+			else
 				O.notify_ai(1)
-			else if(forced_ai)
-				O.connected_ai = forced_ai
+				if(forced_ai)
+					O.connected_ai = forced_ai
 			if(!lawsync)
 				O.lawupdate = 0
 				O.make_laws()
