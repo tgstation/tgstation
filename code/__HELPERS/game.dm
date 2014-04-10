@@ -186,7 +186,6 @@
 	var/list/range = hear(R, T)
 
 	for(var/atom/movable/A in range)
-		world << "[A.type]"
 		if(ismob(A))
 			var/mob/M = A
 			if(M.client)
