@@ -97,25 +97,18 @@
 	name = "comfy chair"
 	desc = "It looks comfy."
 	icon_state = "comfychair"
-	var/chaircolor = rgb(255,255,255)
+	color = rgb(255,255,255)
 	var/image/armrest = null
 
 /obj/structure/stool/bed/chair/comfy/New()
-
-	//Base icon
-	var/icon/I = new("icons/obj/objects.dmi", "comfychair")
-	I.Blend(chaircolor, ICON_MULTIPLY)
-	src.icon = I
-
 	//Armrest
-	var/icon/armrest_icon = new("icons/obj/objects.dmi", "comfychair_armrest")
-	armrest_icon.Blend(chaircolor, ICON_MULTIPLY)
-
-	armrest = new(armrest_icon)
+	armrest = new()
+	armrest.icon = "icons/obj/objects.dmi"
+	armrest.icon_state = "comfychair_armrest"
 	armrest.layer = MOB_LAYER + 0.1
 
 	//Feet
-	overlays += icon("icons/obj/objects.dmi", "comfychair_feet")
+	overlays += image("icons/obj/objects.dmi", icon_state = "comfychair_feet")
 
 	return ..()
 
@@ -126,19 +119,19 @@
 		overlays -= armrest
 
 /obj/structure/stool/bed/chair/comfy/brown
-	chaircolor = rgb(255,113,0)
+	color = rgb(255,113,0)
 
 /obj/structure/stool/bed/chair/comfy/beige
-	chaircolor = rgb(255,253,195)
+	color = rgb(255,253,195)
 
 /obj/structure/stool/bed/chair/comfy/teal
-	chaircolor = rgb(0,255,255)
+	color = rgb(0,255,255)
 
 /obj/structure/stool/bed/chair/comfy/black
-	chaircolor = rgb(167,164,153)
+	color = rgb(167,164,153)
 
 /obj/structure/stool/bed/chair/comfy/lime
-	chaircolor = rgb(255,251,0)
+	color = rgb(255,251,0)
 
 /obj/structure/stool/bed/chair/office
 	anchored = 0
