@@ -39,7 +39,7 @@
 	buckle_mob(M, user)
 	return
 
-/obj/structure/stool/bed/proc/afterbuckle(mob/M as mob) // Called after somebody buckled / unbuckled
+/obj/structure/stool/bed/proc/afterbuckle() // Called after somebody buckled / unbuckled
 	return
 
 /obj/structure/stool/bed/proc/unbuckle()
@@ -50,7 +50,7 @@
 			buckled_mob.update_canmove()
 			buckled_mob = null
 
-			afterbuckle(null)
+			afterbuckle()
 	return
 
 /obj/structure/stool/bed/proc/manual_unbuckle(mob/user as mob)
@@ -110,7 +110,7 @@
 	src.buckled_mob = M
 	src.add_fingerprint(user)
 
-	afterbuckle(M)
+	afterbuckle()
 	return
 
 /*
