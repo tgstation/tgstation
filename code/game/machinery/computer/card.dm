@@ -257,7 +257,7 @@
 					accesses += "<td style='width:14%' valign='top'>"
 					for(var/A in get_region_accesses(i))
 						if(authenticated == 1)
-							if !(A in head_access)
+							if (!(A in head_access))
 								break
 						if(A in modify.access)
 							accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=0'><font color=\"red\">[replacetext(get_access_desc(A), " ", "&nbsp")]</font></a> "
