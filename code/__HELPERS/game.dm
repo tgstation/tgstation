@@ -150,7 +150,7 @@
 	//debug_mob += O.contents.len
 	if(!recursion_limit)
 		return L
-	for(var/atom/A in O.contents)
+	for(var/atom/movable/A in O.contents)
 
 		if(ismob(A))
 			var/mob/M = A
@@ -185,7 +185,8 @@
 
 	var/list/range = hear(R, T)
 
-	for(var/atom/A in range)
+	for(var/atom/movable/A in range)
+		world << "[A.type]"
 		if(ismob(A))
 			var/mob/M = A
 			if(M.client)
