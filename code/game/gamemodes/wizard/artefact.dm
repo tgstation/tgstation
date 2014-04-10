@@ -69,7 +69,7 @@
 		qdel(src)
 
 /obj/effect/rend/cow/attackby(obj/item/I as obj, mob/user as mob)
-	if(istype(I, /obj/item/weapon/nullrod))
+	if(istype(I, /obj/item/weapon/holysword))
 		visible_message("\red <b>[I] strikes a blow against \the [src], banishing it!</b>")
 		qdel(src)
 		return

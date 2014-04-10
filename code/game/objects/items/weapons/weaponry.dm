@@ -19,7 +19,7 @@
 	user << "<font color='red'> You have <b>BANNED</b> [M]</font>"
 	playsound(loc, 'sound/effects/adminhelp.ogg', 15) //keep it at 15% volume so people don't jump out of their skin too much
 
-
+/*
 /obj/item/weapon/nullrod
 	name = "null rod"
 	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of Nar-Sie's followers."
@@ -35,6 +35,32 @@
 	suicide_act(mob/user)
 		viewers(user) << "<span class='suicide'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>"
 		return (BRUTELOSS|FIRELOSS)
+*/
+obj/item/weapon/holysword
+	name = "holy sword"
+	desc = "A sword blessed by many of the gods of Law and Justice. These holy blades are granted to the preachers, priests, and chaplain of any religion who ventures forth into space, to protect themselves against the horrors of the Nar-Sie Cult."
+	icon_state = "holysword"
+	item_state = "holysword"
+	slot_flags = SLOT_BELT
+	flags = CONDUCT
+	force = 15
+	damtype = "fire"
+	throw_speed = 3
+	throw_range = 7
+	throwforce = 15
+	w_class = 3
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb = list("pierced", "smited", "banished", "exorcised", "slashed")
+
+obj/item/weapon/holysword/IsShield()
+	return 1
+
+obj/item/weapon/holysword/suicide_act(mob/user)
+	viewers(user) << "<span class='suicide'>[user] stabs \himself with [src.name] in the chest! It looks like \his soul is burning.</span>"
+	return(FIRELOSS)
+
+
+
 
 /obj/item/weapon/sord
 	name = "\improper SORD"

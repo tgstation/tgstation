@@ -744,7 +744,7 @@ var/list/sacrificed = list()
 			if (istype(W,/obj/item/weapon/paper/talisman))
 				rad = 4
 				go = 1
-			if (istype(W,/obj/item/weapon/nullrod))
+			if (istype(W,/obj/item/weapon/holysword))
 				rad = 1
 				go = 1
 			if(go)
@@ -753,7 +753,7 @@ var/list/sacrificed = list()
 						R.invisibility=0
 					S=1
 			if(S)
-				if(istype(W,/obj/item/weapon/nullrod))
+				if(istype(W,/obj/item/weapon/holysword))
 					usr << "\red Arcane markings suddenly glow from underneath a thin layer of dust!"
 					return
 				if(istype(W,/obj/effect/rune))
@@ -881,7 +881,7 @@ var/list/sacrificed = list()
 				for(var/mob/living/carbon/C in range(7,src))
 					if (iscultist(C))
 						continue
-					var/obj/item/weapon/nullrod/N = locate() in C
+					var/obj/item/weapon/holysword/N = locate() in C
 					if(N)
 						continue
 					C.ear_deaf += 50
@@ -900,7 +900,7 @@ var/list/sacrificed = list()
 				for(var/mob/living/carbon/C in range(7,usr))
 					if (iscultist(C))
 						continue
-					var/obj/item/weapon/nullrod/N = locate() in C
+					var/obj/item/weapon/holysword/N = locate() in C
 					if(N)
 						continue
 					C.ear_deaf += 30
@@ -921,7 +921,7 @@ var/list/sacrificed = list()
 				for(var/mob/living/carbon/C in viewers(src))
 					if (iscultist(C))
 						continue
-					var/obj/item/weapon/nullrod/N = locate() in C
+					var/obj/item/weapon/holysword/N = locate() in C
 					if(N)
 						continue
 					C.eye_blurry += 50
@@ -943,7 +943,7 @@ var/list/sacrificed = list()
 				for(var/mob/living/carbon/C in view(2,usr))
 					if (iscultist(C))
 						continue
-					var/obj/item/weapon/nullrod/N = locate() in C
+					var/obj/item/weapon/holysword/N = locate() in C
 					if(N)
 						continue
 					C.eye_blurry += 30
@@ -973,7 +973,7 @@ var/list/sacrificed = list()
 				for(var/mob/living/carbon/M in viewers(usr))
 					if(iscultist(M))
 						continue
-					var/obj/item/weapon/nullrod/N = locate() in M
+					var/obj/item/weapon/holysword/N = locate() in M
 					if(N)
 						continue
 					M.take_overall_damage(51,51)
@@ -1044,7 +1044,7 @@ var/list/sacrificed = list()
 				qdel(src)
 			else                        ///When invoked as talisman, stun and mute the target mob.
 				usr.say("Dream sign ''Evil sealing talisman'[pick("'","`")]!")
-				var/obj/item/weapon/nullrod/N = locate() in T
+				var/obj/item/weapon/holysword/N = locate() in T
 				if(N)
 					for(var/mob/O in viewers(T, null))
 						O.show_message(text("\red <B>[] invokes a talisman at [], but they are unaffected!</B>", usr, T), 1)
