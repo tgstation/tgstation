@@ -39,6 +39,9 @@ var/global/datum/controller/occupations/job_master
 		if(J.title == rank)	return J
 	return null
 
+/datum/controller/occupations/proc/GetJobAccess(var/rank)
+	var/datum/job/J = GetJob(rank)
+	return J.get_access()
 
 /datum/controller/occupations/proc/AssignRole(var/mob/new_player/player, var/rank, var/latejoin = 0)
 	Debug("Running AR, Player: [player], Rank: [rank], LJ: [latejoin]")

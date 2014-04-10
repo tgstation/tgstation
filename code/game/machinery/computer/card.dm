@@ -4,7 +4,7 @@
 	name = "identification console"
 	desc = "You can use this to change ID's."
 	icon_state = "id"
-	req_access = list(access_change_ids)
+	req_access = list(access_heads)
 	circuit = /obj/item/weapon/circuitboard/card
 	var/obj/item/weapon/card/id/scan = null
 	var/obj/item/weapon/card/id/modify = null
@@ -12,6 +12,7 @@
 	var/mode = 0.0
 	var/printing = null
 	var/edit_job_target = ""
+	var/list/head_access = null
 
 	//Cooldown for closing positions in seconds
 	//if set to -1: No cooldown... probably a bad idea
@@ -44,7 +45,7 @@
 /obj/machinery/computer/card/attackby(O as obj, user as mob)//TODO:SANITY
 	if(istype(O, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = O
-		if(access_change_ids in idcard.access)
+		if(check_access(idcard))
 			if(!scan)
 				usr.drop_item()
 				idcard.loc = src
@@ -115,7 +116,7 @@
 				if(!(job.title in blacklisted))
 					dat += "<a href='?src=\ref[src];choice=edit_job;job=[job.title]'><b>[job.title]</b></a> ([job.current_positions]/[job.total_positions])<br>"
 		else
-			if(check_access(scan))
+			if(access_change_ids in scan.access)
 			// EDIT SPECIFIC JOB
 				dat = "<a href='?src=\ref[src];choice=return'><i>Return</i></a><hr>"
 				dat += "<h1>[j.title]: [j.current_positions]/[j.total_positions]</h1><hr>"
@@ -198,34 +199,44 @@
 
 
 		var/body
-		if (authenticated && modify)
-			var/carddesc = {"<script type="text/javascript">
-								function markRed(){
-									var nameField = document.getElementById('namefield');
-									nameField.style.backgroundColor = "#FFDDDD";
-								}
-								function markGreen(){
-									var nameField = document.getElementById('namefield');
-									nameField.style.backgroundColor = "#DDFFDD";
-								}
-								function showAll(){
-									var allJobsSlot = document.getElementById('alljobsslot');
-									allJobsSlot.innerHTML = "<a href='#' onclick='hideAll()'>hide</a><br>"+ "[jobs_all]";
-								}
-								function hideAll(){
-									var allJobsSlot = document.getElementById('alljobsslot');
-									allJobsSlot.innerHTML = "<a href='#' onclick='showAll()'>show</a>";
-								}
-							</script>"}
-			carddesc += "<form name='cardcomp' action='?src=\ref[src]' method='get'>"
-			carddesc += "<input type='hidden' name='src' value='\ref[src]'>"
-			carddesc += "<input type='hidden' name='choice' value='reg'>"
-			carddesc += "<b>registered_name:</b> <input type='text' id='namefield' name='reg' value='[target_owner]' style='width:250px; background-color:white;' onchange='markRed()'>"
-			carddesc += "<input type='submit' value='Rename' onclick='markGreen()'>"
-			carddesc += "</form>"
-			carddesc += "<b>Assignment:</b> "
 
-			var/jobs = "<span id='alljobsslot'><a href='#' onclick='showAll()'>[target_rank]</a></span>" //CHECK THIS
+		if (authenticated && modify)
+
+			var/carddesc = text("")
+			var/jobs = text("")
+			if( authenticated == 2)
+				carddesc += {"<script type="text/javascript">
+									function markRed(){
+										var nameField = document.getElementById('namefield');
+										nameField.style.backgroundColor = "#FFDDDD";
+									}
+									function markGreen(){
+										var nameField = document.getElementById('namefield');
+										nameField.style.backgroundColor = "#DDFFDD";
+									}
+									function showAll(){
+										var allJobsSlot = document.getElementById('alljobsslot');
+										allJobsSlot.innerHTML = "<a href='#' onclick='hideAll()'>hide</a><br>"+ "[jobs_all]";
+									}
+									function hideAll(){
+										var allJobsSlot = document.getElementById('alljobsslot');
+										allJobsSlot.innerHTML = "<a href='#' onclick='showAll()'>show</a>";
+									}
+								</script>"}
+				carddesc += "<form name='cardcomp' action='?src=\ref[src]' method='get'>"
+				carddesc += "<input type='hidden' name='src' value='\ref[src]'>"
+				carddesc += "<input type='hidden' name='choice' value='reg'>"
+				carddesc += "<b>registered_name:</b> <input type='text' id='namefield' name='reg' value='[target_owner]' style='width:250px; background-color:white;' onchange='markRed()'>"
+				carddesc += "<input type='submit' value='Rename' onclick='markGreen()'>"
+				carddesc += "</form>"
+				carddesc += "<b>Assignment:</b> "
+
+				jobs += "<span id='alljobsslot'><a href='#' onclick='showAll()'>[target_rank]</a></span>" //CHECK THIS
+
+			else
+				carddesc += "<b>registered_name:</b> [target_owner]</span>"
+				jobs += "<b>Assignment:</b> [target_rank]</span>"
+				jobs += "<br><a href='?src=\ref[src];choice=demote'>Demote</a>"
 
 			var/accesses = ""
 			if(istype(src,/obj/machinery/computer/card/centcom))
@@ -245,6 +256,9 @@
 				for(var/i = 1; i <= 7; i++)
 					accesses += "<td style='width:14%' valign='top'>"
 					for(var/A in get_region_accesses(i))
+						if(authenticated == 1)
+							if !(A in head_access)
+								break
 						if(A in modify.access)
 							accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=0'><font color=\"red\">[replacetext(get_access_desc(A), " ", "&nbsp")]</font></a> "
 						else
@@ -253,6 +267,7 @@
 					accesses += "</td>"
 				accesses += "</tr></table>"
 			body = "[carddesc]<br>[jobs]<br><br>[accesses]" //CHECK THIS
+
 		else
 			body = "<a href='?src=\ref[src];choice=auth'>{Log in}</a> <br><hr>"
 			body += "<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a>"
@@ -305,7 +320,22 @@
 		if ("auth")
 			if ((!( authenticated ) && (scan || (istype(usr, /mob/living/silicon))) && (modify || mode)))
 				if (check_access(scan))
-					authenticated = 1
+					if(access_change_ids in scan.access)
+						authenticated = 2
+					else
+						head_access = null
+						if(access_hop in scan.access)
+							head_access += job_master.GetJobAccess("Head of Personnel")
+						if(access_rd in scan.access)
+							head_access += job_master.GetJobAccess("Research Director")
+						if(access_ce in scan.access)
+							head_access += job_master.GetJobAccess("Chief Engineer")
+						if(access_cmo in scan.access)
+							head_access += job_master.GetJobAccess("Chief Medical Officer")
+						if(access_hos in scan.access)
+							head_access += job_master.GetJobAccess("Head of Security")
+						if(head_access)
+							authenticated = 1
 			else if ((!( authenticated ) && (istype(usr, /mob/living/silicon))) && (!modify))
 				usr << "You can't modify an ID without an ID inserted to modify. Once one is in the modify slot on the computer, you can log in."
 		if ("logout")
@@ -320,14 +350,14 @@
 						if(access_allowed == 1)
 							modify.access += access_type
 		if ("assign")
-			if (authenticated)
+			if (authenticated == 2)
 				var/t1 = href_list["assign_target"]
 				if(t1 == "Custom")
 					var/newJob = reject_bad_name(input("Enter a custom job assignment.", "Assignment", modify ? modify.assignment : "Unassigned"))
 					if(newJob)
 						t1 = newJob
 					else
-						usr << "\red Invalid job name entered."
+						modify.assignment = "Unassigned"
 						return
 				else
 					var/datum/job/jobdatum
@@ -343,6 +373,10 @@
 					modify.access = ( istype(src,/obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : jobdatum.get_access() )
 				if (modify)
 					modify.assignment = t1
+		if ("demote")
+			modify.access -= head_access
+			if(modify.access.len < 1)
+				modify.assignment = "Unassigned"
 		if ("reg")
 			if (authenticated)
 				var/t2 = modify
