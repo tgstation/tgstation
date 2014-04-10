@@ -98,15 +98,32 @@
 	desc = "It looks comfy."
 	icon_state = "comfychair"
 	var/chaircolor = rgb(255,255,255)
+	var/image/armrest = null
 
 /obj/structure/stool/bed/chair/comfy/New()
-	overlays += icon("icons/obj/objects.dmi", "comfychair_feet")
 
+	//Base icon
 	var/icon/I = new("icons/obj/objects.dmi", "comfychair")
 	I.Blend(chaircolor, ICON_MULTIPLY)
 	src.icon = I
 
+	//Armrest
+	var/icon/armrest_icon = new("icons/obj/objects.dmi", "comfychair_armrest")
+	armrest_icon.Blend(chaircolor, ICON_MULTIPLY)
+
+	armrest = new(armrest_icon)
+	armrest.layer = MOB_LAYER + 0.1
+
+	//Feet
+	overlays += icon("icons/obj/objects.dmi", "comfychair_feet")
+
 	return ..()
+
+/obj/structure/stool/bed/chair/comfy/afterbuckle()
+	if(buckled_mob)
+		overlays += armrest
+	else
+		overlays -= armrest
 
 /obj/structure/stool/bed/chair/comfy/brown
 	chaircolor = rgb(255,113,0)
