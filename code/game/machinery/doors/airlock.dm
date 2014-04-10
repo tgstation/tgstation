@@ -948,7 +948,6 @@ About the new airlock wires panel:
 					if(33) new/obj/structure/door_assembly/door_assembly_highsecurity(src.loc)
 					if(34) new/obj/structure/door_assembly/door_assembly_shuttle(src.loc)
 					if(35) new/obj/structure/door_assembly/door_assembly_wood(src.loc)
->>>>>>> 8c2b5bf29aaefc6303d446deba494f3d5f8ca728
 				if(emagged)
 					user << "<span class='warning'>You discard the damaged electronics.</span>"
 					qdel(src)
