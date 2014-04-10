@@ -254,6 +254,24 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "broom"
 
+obj/item/weapon/staff/broom/proc/sweep(turf/simulated/A)
+	for(var/obj/effect/O in A)
+		if(istype(O,/obj/effect/decal/cleanable/ash) || istype(O,/obj/effect/decal/cleanable/dirt) || istype(O,/obj/effect/decal/cleanable/flour) || istype(O,/obj/effect/decal/cleanable/cobweb) || istype(O,/obj/effect/decal/cleanable/cobweb2))
+			qdel(O)
+
+/obj/item/weapon/staff/broom/afterattack(atom/A, mob/user, proximity)
+	if(!proximity) return
+	if(istype(A, /turf/simulated) || istype(A, /obj/effect/decal/cleanable/ash) || istype(A, /obj/effect/decal/cleanable/dirt) || istype(A, /obj/effect/decal/cleanable/flour) || istype(A, /obj/effect/decal/cleanable/cobweb) || istype(A, /obj/effect/decal/cleanable/cobweb2))
+		user.visible_message("<span class='notice'>[user] begins to sweep \the [get_turf(A)].</span>")
+
+		if(do_after(user, 30))
+			if(A)
+				sweep(get_turf(A))
+			user << "<span class='notice'>You have finished sweeping!</span>"
+			return
+	if(istype(A, /obj/effect/decal/cleanable))
+		user << "<span class='notice'>A broom won't clean this mess up.</span>"
+
 /obj/item/weapon/staff/stick
 	name = "stick"
 	desc = "A great tool to drag someone else's drinks across the bar."

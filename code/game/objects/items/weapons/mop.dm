@@ -43,7 +43,7 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 
 
 /obj/effect/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/mop) || istype(I, /obj/item/weapon/soap))
+	if(istype(I, /obj/item/weapon/mop) || istype(I, /obj/item/weapon/soap) || istype(I, /obj/item/weapon/staff/broom))
 		return
 	..()
 
