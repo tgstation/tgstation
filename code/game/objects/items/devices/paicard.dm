@@ -127,9 +127,7 @@
 			if(9) src.overlays += "pai-what"
 
 /obj/item/device/paicard/proc/alertUpdate()
-	var/turf/T = get_turf(src.loc)
-	for (var/mob/M in viewers(T))
-		M.show_message("<span class ='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"", 3, "\blue [src] bleeps electronically.</span>", 2)
+	visible_message("<span class ='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"", 3, "\blue [src] bleeps electronically.</span>", 2)
 
 /obj/item/device/paicard/emp_act(severity)
 	if(pai)
