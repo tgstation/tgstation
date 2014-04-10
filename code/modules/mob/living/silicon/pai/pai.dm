@@ -120,7 +120,7 @@
 	if(prob(20))
 		var/turf/T = get_turf(src.loc)
 		for (var/mob/M in viewers(T))
-			M.show_message("<span class='danger'> A shower of sparks spray from [src]'s inner workings.", 3, "\red You hear and smell the ozone hiss of electrical sparks being expelled violently.</span>", 2)
+			M.show_message("<span class='danger'>A shower of sparks spray from [src]'s inner workings.</span>", 3, "<span class='danger'>You hear and smell the ozone hiss of electrical sparks being expelled violently.</span>", 2)
 		return src.death(0)
 
 	switch(pick(1,2,3))
