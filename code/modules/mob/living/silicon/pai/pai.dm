@@ -109,19 +109,18 @@
 	return 0
 
 /mob/living/silicon/pai/emp_act(severity)
-	// Silence for 2 minutes
 	// 20% chance to kill
+	// Silence for 2 minutes
 		// 33% chance to unbind
 		// 33% chance to change prime directive (based on severity)
 		// 33% chance of no additional effect
 
-	src.silence_time = world.timeofday + 120 * 10		// Silence for 2 minutes
-	src << "<span class ='warning'>Communication circuit overload. Shutting down and reloading communication circuits - speech and messaging functionality will be unavailable until the reboot is complete.</span>"
 	if(prob(20))
-		var/turf/T = get_turf(src.loc)
-		for (var/mob/M in viewers(T))
-			M.show_message("<span class='danger'>A shower of sparks spray from [src]'s inner workings.</span>", 3, "<span class='danger'>You hear and smell the ozone hiss of electrical sparks being expelled violently.</span>", 2)
+		visible_message("<span class='danger'>A shower of sparks spray from [src]'s inner workings.</span>", 3, "<span class='danger'>You hear and smell the ozone hiss of electrical sparks being expelled violently.</span>", 2)
 		return src.death(0)
+
+	silence_time = world.timeofday + 120 * 10		// Silence for 2 minutes
+	src << "<span class ='warning'>Communication circuit overload. Shutting down and reloading communication circuits - speech and messaging functionality will be unavailable until the reboot is complete.</span>"
 
 	switch(pick(1,2,3))
 		if(1)
