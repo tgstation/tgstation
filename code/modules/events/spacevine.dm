@@ -112,9 +112,9 @@
 	if(hitter)
 		var/chance
 		if(I)
-			chance = I.force
+			chance = I.force * 2
 		else
-			chance = 4
+			chance = 8
 		if(prob(chance))
 			qdel(holder)
 	return 1
@@ -169,6 +169,11 @@
 		if(/obj/item/weapon/twohanded/fireaxe) qdel(src)
 		if(/obj/item/weapon/hatchet) qdel(src)
 		if(/obj/item/weapon/melee/energy) qdel(src)
+		if(/obj/item/weapon/scythe)
+			for(var/obj/effect/spacevine/B in orange(src,1))
+				if(prob(80))
+					qdel(B)
+			qdel(src)
 
 		//less effective weapons
 		if(/obj/item/weapon/wirecutters)
