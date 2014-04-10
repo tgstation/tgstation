@@ -92,13 +92,13 @@
 	if(isliving(crosser) && prob(severity))
 		var/mob/living/M = crosser
 		M.adjustBruteLoss(5)
-		M << "<span class='alert'>You cut yourself on all these vines.</span>"
+		M << "<span class='alert'>You cut yourself on the thorny vines.</span>"
 
 /datum/spacevine_mutation/thorns/on_hit(obj/effect/spacevine/holder, hitter)
 	if(ismob(hitter) && prob(severity))
 		var/mob/living/M = hitter
 		M.adjustBruteLoss(5)
-		M << "<span class='alert'>You cut yourself on all these vines.</span>"
+		M << "<span class='alert'>You cut yourself on the thorny vines.</span>"
 
 /datum/spacevine_mutation/woodening
 	name = "hardening"
