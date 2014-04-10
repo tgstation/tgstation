@@ -1033,12 +1033,13 @@
 	growthstages = 4
 	plant_type = 1
 	rarity = 30
+	var/list/mutations = list()
 
 /obj/item/seeds/kudzuseed/attack_self(mob/user as mob)
 	if(istype(user.loc,/turf/space))
 		return
 	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
-	new /obj/effect/spacevine_controller(user.loc)
+	new /obj/effect/spacevine_controller(user.loc, mutations, 1)
 	qdel(src)
 
 /obj/item/seeds/chillighost
