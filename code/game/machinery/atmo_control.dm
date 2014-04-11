@@ -121,8 +121,6 @@ obj/machinery/computer/general_air_control/receive_signal(datum/signal/signal)
 	var/id_tag = signal.data["tag"]
 	if(!id_tag || !sensors.Find(id_tag)) return
 
-	sensor_information = list()
-
 	sensor_information[id_tag] = signal.data
 
 obj/machinery/computer/general_air_control/proc/return_text()
