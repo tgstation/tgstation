@@ -241,51 +241,75 @@
 	if (!N)
 		return
 
+#ifdef ENABLE_TRI_LEVEL
+// Fuck this, for now - N3X
+///// Z-Level Stuff ///// This makes sure that turfs are not changed to space when one side is part of a zone
+	if(N == /turf/space)
+		var/turf/controller = locate(1, 1, src.z)
+		for(var/obj/effect/landmark/zcontroller/c in controller)
+			if(c.down)
+				var/turf/below = locate(src.x, src.y, c.down_target)
+				if((air_master.has_valid_zone(below) || air_master.has_valid_zone(src)) && !istype(below, /turf/space)) // dont make open space into space, its pointless and makes people drop out of the station
+					var/turf/W = src.ChangeTurf(/turf/simulated/floor/open)
+					var/list/temp = list()
+					temp += W
+					c.add(temp,3,1) // report the new open space to the zcontroller
+					return W
+///// Z-Level Stuff
+#endif
+
 	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
 
+	//world << "Replacing [src.type] with [N]"
+
+	if(connections) connections.erase_all()
+
+	if(istype(src,/turf/simulated))
+		//Yeah, we're just going to rebuild the whole thing.
+		//Despite this being called a bunch during explosions,
+		//the zone will only really do heavy lifting once.
+		var/turf/simulated/S = src
+		if(S.zone) S.zone.rebuild()
+
 	if(ispath(N, /turf/simulated/floor))
+		//if the old turf had a zone, connect the new turf to it as well - Cael
+		//Adjusted by SkyMarshal 5/10/13 - The air master will handle the addition of the new turf.
+		//if(zone)
+		//	zone.RemoveTurf(src)
+		//	if(!zone.CheckStatus())
+		//		zone.SetStatus(ZONE_ACTIVE)
 
 		var/turf/simulated/W = new N( locate(src.x, src.y, src.z) )
-		W.copy_air_from(src)
 		//W.Assimilate_Air()
 
 		W.lighting_lumcount += old_lumcount
-		if(old_lumcount != W.lighting_lumcount || !accepts_lighting)
+		if(old_lumcount != W.lighting_lumcount)
 			W.lighting_changed = 1
 			lighting_controller.changed_turfs += W
 
 		if (istype(W,/turf/simulated/floor))
 			W.RemoveLattice()
 
-		//if the old turf had a zone, connect the new turf to it as well - Cael
-		if(src.zone)
-			src.zone.RemoveTurf(src)
-			W.zone = src.zone
-			W.zone.AddTurf(W)
-
-		for(var/turf/simulated/T in orange(src,1))
-			air_master.tiles_to_update.Add(T)
+		if(air_master)
+			air_master.mark_for_update(src)
 
 		W.levelupdate()
 		return W
+
 	else
-		/*if(istype(src, /turf/simulated) && src.zone)
-			src.zone.rebuild = 1*/
+		//if(zone)
+		//	zone.RemoveTurf(src)
+		//	if(!zone.CheckStatus())
+		//		zone.SetStatus(ZONE_ACTIVE)
 
 		var/turf/W = new N( locate(src.x, src.y, src.z) )
 		W.lighting_lumcount += old_lumcount
-		if(old_lumcount != W.lighting_lumcount || !accepts_lighting)
+		if(old_lumcount != W.lighting_lumcount)
 			W.lighting_changed = 1
 			lighting_controller.changed_turfs += W
 
-		if(src.zone)
-			src.zone.RemoveTurf(src)
-			W.zone = src.zone
-			W.zone.AddTurf(W)
-
 		if(air_master)
-			for(var/turf/simulated/T in orange(src,1))
-				air_master.tiles_to_update.Add(T)
+			air_master.mark_for_update(src)
 
 		W.levelupdate()
 		return W

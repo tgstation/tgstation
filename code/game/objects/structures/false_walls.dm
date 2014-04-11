@@ -14,9 +14,9 @@
 	var/minp=16777216;
 	var/maxp=0;
 	for(var/dir in cardinal)
-		var/turf/T=get_turf(get_step(loc,dir))
+		var/turf/simulated/T=get_turf(get_step(loc,dir))
 		var/cp=0
-		if(T && istype(T,/turf/simulated) && T.zone)
+		if(T && istype(T) && T.zone)
 			var/datum/gas_mixture/environment = T.return_air()
 			cp = environment.return_pressure()
 		else

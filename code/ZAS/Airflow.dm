@@ -124,6 +124,7 @@ obj/item/check_airflow_movable(n)
 		if(4,5)
 			if(n < zas_settings.Get(/datum/ZAS_Setting/airflow_medium_pressure)) return 0
 
+/*
 //The main airflow code. Called by zone updates.
 //Zones A and B are air zones. n represents the amount of air moved.
 
@@ -240,7 +241,7 @@ proc/AirflowSpace(zone/A)
 					spawn
 						if(M) M.GotoAirflowDest(n/10)
 						//Sometimes shit breaks, and M isn't there after the spawn.
-
+*/
 
 /atom/movable/var/tmp/turf/airflow_dest
 /atom/movable/var/tmp/airflow_speed = 0

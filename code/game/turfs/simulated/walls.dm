@@ -360,7 +360,7 @@
 			O.layer = 5
 			O.mouse_opacity = 0
 
-/turf/simulated/wall/proc/thermitemelt(mob/user as mob)
+/turf/simulated/wall/proc/thermitemelt(var/mob/user)
 	if(mineral == "diamond")
 		return
 	var/obj/effect/overlay/O = new/obj/effect/overlay( src )
@@ -391,6 +391,21 @@
 
 	spawn(100)
 		if(O)	del(O)
+//	F.sd_LumReset()		//TODO: ~Carn
+	return
+
+// Generic wall melting proc.
+/turf/simulated/wall/proc/melt(var/mob/user)
+	if(mineral == "diamond")
+		return
+
+	src.ChangeTurf(/turf/simulated/floor/plating)
+
+	var/turf/simulated/floor/F = src
+	if(!F)
+		return
+	F.burn_tile()
+	F.icon_state = "wall_thermite"
 //	F.sd_LumReset()		//TODO: ~Carn
 	return
 

@@ -31,10 +31,13 @@ datum/controller/game_controller
 	var/total_cost		= 0
 
 	var/last_thing_processed
+	var/mob/list/expensive_mobs = list()
+	var/rebuild_active_areas = 0
 
 datum/controller/game_controller/New()
 	//There can be only one master_controller. Out with the old and in with the new.
 	if(master_controller != src)
+		log_debug("Rebuilding Master Controller")
 		if(istype(master_controller))
 			Recover()
 			del(master_controller)
@@ -53,15 +56,15 @@ datum/controller/game_controller/New()
 datum/controller/game_controller/proc/setup()
 	world.tick_lag = config.Ticklag
 
+	// notify the other process that we started up
 	socket_talk = new /datum/socket_talk()
-// notify the other process that we started up
 	socket_talk.send_raw("type=startup")
 
 	createRandomZlevel()
 
 	if(!air_master)
 		air_master = new /datum/controller/air_system()
-		air_master.setup()
+		air_master.Setup()
 
 	if(!ticker)
 		ticker = new /datum/controller/gameticker()
@@ -78,7 +81,8 @@ datum/controller/game_controller/proc/setup()
 	for(var/i=0, i<max_secret_rooms, i++)
 		make_mining_asteroid_secret()
 
-	//if(config.socket_talk) spawn keepalive()
+	//if(config.socket_talk)
+	//	keepalive()
 
 	spawn(0)
 		if(ticker)
@@ -136,14 +140,8 @@ datum/controller/game_controller/proc/process()
 				if(!air_processing_killed)
 					timer = world.timeofday
 					last_thing_processed = air_master.type
-					//air_master.tick()
-					//air_cost = (world.timeofday - timer) / 10				// this might make atmos slower
-				//  1. atmos won't process if the game is generally lagged out(no deadlocks)
-				//  2. if the server frequently crashes during atmos processing we will knowif(!kill_air)
-					//src.set_debug_state("Air Master")
 
-					air_master.current_cycle++
-					if(!air_master.tick()) //Runtimed.
+					if(!air_master.Tick()) //Runtimed.
 						air_master.failed_ticks++
 						if(air_master.failed_ticks > 5)
 							world << "<font color='red'><b>RUNTIMES IN ATMOS TICKER.  Killing air simulation!</font></b>"
@@ -152,7 +150,8 @@ datum/controller/game_controller/proc/process()
 							log_admin("ZASALERT: unable run zone/process() -- [air_master.tick_progress]")
 							air_processing_killed = 1
 							air_master.failed_ticks = 0
-				air_cost = (world.timeofday - timer) / 10
+
+					air_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
@@ -241,14 +240,20 @@ datum/controller/game_controller/proc/process()
 			else
 				sleep(10)
 
-/datum/controller/game_controller/proc/processMobs()
-	for (var/mob/Mob in mob_list)
-		if (Mob)
-			last_thing_processed = Mob.type
-			Mob.Life()
+datum/controller/game_controller/proc/processMobs()
+	var/i = 1
+	expensive_mobs.Cut()
+	while(i<=mob_list.len)
+		var/mob/M = mob_list[i]
+		if(M)
+			var/clock = world.timeofday
+			last_thing_processed = M.type
+			M.Life()
+			if((world.timeofday - clock) > 1)
+				expensive_mobs += M
+			i++
 			continue
-
-		mob_list = mob_list - Mob
+		mob_list.Cut(i,i+1)
 
 /datum/controller/game_controller/proc/processDiseases()
 	for (var/datum/disease/Disease in active_diseases)
