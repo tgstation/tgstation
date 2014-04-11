@@ -642,9 +642,9 @@ obj/item/weapon/staff/broom/proc/sweep(turf/simulated/A)
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "ectoplasm"
 
-/obj/item/weapon/research//Makes testing much less of a pain -Sieve
+/obj/item/weapon/research //Makes testing much less of a pain -Sieve
 	name = "research"
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "capacitor"
 	desc = "A debug item for research."
-	origin_tech = "materials=8;programming=8;magnets=8;powerstorage=8;bluespace=8;combat=8;biotech=8;syndicate=8"
+	origin_tech = "materials=8;engineering=8;plasmatech=8;powerstorage=8;bluespace=8;biotech=8;combat=8;magnets=8;programming=8;syndicate=8"
