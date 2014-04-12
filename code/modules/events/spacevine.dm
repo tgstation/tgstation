@@ -25,6 +25,9 @@
 /datum/spacevine_mutation/proc/process_mutation(obj/effect/spacevine/holder)
 	return
 
+/datum/spacevine_mutation/proc/process_temperature(obj/effect/spacevine/holder, temp, volume)
+	return
+
 /datum/spacevine_mutation/proc/on_birth(obj/effect/spacevine/holder)
 	return
 
@@ -40,6 +43,68 @@
 /datum/spacevine_mutation/proc/on_cross(obj/effect/spacevine/holder, mob/crosser)
 	return
 
+/datum/spacevine_mutation/proc/on_chem(obj/effect/spacevine/holder, datum/reagent/R)
+	return
+
+/datum/spacevine_mutation/proc/on_eat(obj/effect/spacevine/holder, mob/living/eater)
+	return
+
+/datum/spacevine_mutation/proc/on_spread(obj/effect/spacevine/holder, turf/target)
+	return
+
+/datum/spacevine_mutation/proc/on_buckle(obj/effect/spacevine/holder, mob/living/buckled)
+	return
+
+/datum/spacevine_mutation/toxity
+	name = "toxity"
+	hue = "ff00ff"
+
+/datum/spacevine_mutation/toxity/on_cross(obj/effect/spacevine/holder, mob/living/crosser)
+	if(issilicon(crosser))
+		return
+	if(prob(severity))
+		if(crosser.client)
+			crosser << "<span class='alert'>You accidently touch the vine and feel a strange sensation.</span>"
+		crosser.adjustToxLoss(5)
+
+/datum/spacevine_mutation/toxity/on_eat(obj/effect/spacevine/holder, mob/living/eater)
+	eater.adjustToxLoss(5)
+
+/datum/spacevine_mutation/expsolive  //OH SHIT IT CAN CHAINREACT RUN!!!
+	name = "explosive"
+	hue = "ffff00"
+
+/datum/spacevine_mutation/expsolive/on_death(obj/effect/spacevine/holder, mob/hitter, obj/item/I)
+	spawn(1)
+		explosion(holder.loc, 0, 0, 2, 0)
+
+/datum/spacevine_mutation/fire_proof
+	name = "fire resist"
+	hue = "ffff88"
+
+/datum/spacevine_mutation/fire_proof/process_temperature(obj/effect/spacevine/holder, temp, volume)
+	return 1
+
+/datum/spacevine_mutation/vine_eating
+	name = "vine eating"
+	hue = "ff7777"
+
+/datum/spacevine_mutation/vine_eating/on_spread(obj/effect/spacevine/holder, turf/target)
+	var/obj/effect/spacevine/prey = locate() in target
+	if(prey)
+		prey.Destroy()
+
+/datum/spacevine_mutation/agressive_spread  //very OP, but im out of other ideas currently
+	name = "agressive spreading"
+	hue = "777777"
+
+/datum/spacevine_mutation/agressive_spread/on_spread(obj/effect/spacevine/holder, turf/target)
+	for(var/atom/A in target)
+		A.ex_act(severity)
+
+/datum/spacevine_mutation/agressive_spread/on_buckle(obj/effect/spacevine/holder, mob/living/buckled)
+	buckled.ex_act(severity)
+
 /datum/spacevine_mutation/transparency
 	name = "transparency"
 	hue = ""
@@ -50,7 +115,7 @@
 
 /datum/spacevine_mutation/oxy_eater
 	name = "oxygen consumption"
-	hue = "#ffff00"
+	hue = "#ffff88"
 
 /datum/spacevine_mutation/oxy_eater/process_mutation(obj/effect/spacevine/holder)
 	var/turf/simulated/floor/T = holder.loc
@@ -59,7 +124,7 @@
 
 /datum/spacevine_mutation/nitro_eater
 	name = "nitrogen consumption"
-	hue = "#ffff00"
+	hue = "#8888ff"
 
 /datum/spacevine_mutation/nitro_eater/process_mutation(obj/effect/spacevine/holder)
 	var/turf/simulated/floor/T = holder.loc
@@ -77,7 +142,7 @@
 
 /datum/spacevine_mutation/plasma_eater
 	name = "toxins consumption"
-	hue = "#dd00dd"
+	hue = "#ffbbff"
 
 /datum/spacevine_mutation/plasma_eater/process_mutation(obj/effect/spacevine/holder)
 	var/turf/simulated/floor/T = holder.loc
@@ -116,7 +181,7 @@
 		else
 			chance = 8
 		if(prob(chance))
-			qdel(holder)
+			holder.Destroy()
 	return 1
 
 
@@ -149,6 +214,21 @@
 				KZ.mutations |= mutations
 		..()
 
+/obj/effect/spacevine/proc/on_chem_effect(datum/reagent/R)
+	var/override = 0
+	for(var/datum/spacevine_mutation/SM in mutations)
+		override += SM.on_chem(src, R)
+	if(!override && istype(R, /datum/reagent/toxin/plantbgone))
+		if(prob(50))
+			Destroy()
+
+/obj/effect/spacevine/proc/eat(mob/eater)
+	var/override = 0
+	for(var/datum/spacevine_mutation/SM in mutations)
+		override += SM.on_eat(src, eater)
+	if(!override)
+		if(prob(10))
+			eater.say("Nom")
 
 /obj/effect/spacevine/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (!W || !user || !W.type) return
@@ -345,6 +425,8 @@
 /obj/effect/spacevine/proc/buckle_mob()
 	if(!buckled_mob && prob(25))
 		for(var/mob/living/carbon/V in src.loc)
+			for(var/datum/spacevine_mutation/SM in mutations)
+				SM.on_buckle(src, V)
 			if((V.stat != DEAD)  && (V.buckled != src)) //if mob not dead or captured
 				V.buckled = src
 				V.loc = src.loc
@@ -356,6 +438,8 @@
 /obj/effect/spacevine/proc/spread()
 	var/direction = pick(cardinal)
 	var/step = get_step(src,direction)
+	for(var/datum/spacevine_mutation/SM in mutations)
+		SM.on_spread(src, step)
 	if(istype(step,/turf/simulated/floor))
 		var/turf/simulated/floor/F = step
 		if(!locate(/obj/effect/spacevine,F))
@@ -400,18 +484,21 @@
 /obj/effect/spacevine/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			qdel(src)
+			Destroy()
 			return
 		if(2.0)
 			if (prob(90))
-				qdel(src)
+				Destroy()
 				return
 		if(3.0)
 			if (prob(50))
-				qdel(src)
+				Destroy()
 				return
 	return
 
-/obj/effect/spacevine/temperature_expose(null, temp, volume) //hotspots kill vines
-	qdel(src)
-
+/obj/effect/spacevine/temperature_expose(null, temp, volume)
+	var/override = 0
+	for(var/datum/spacevine_mutation/SM in mutations)
+		override += SM.process_temperature(src, temp, volume)
+	if(!override)
+		Destroy()
