@@ -13,7 +13,7 @@
 		set src in usr
 		attack_self(usr)
 
-	attack_self(mob/user)
+	/obj/item/clothing/shoes/magboots/attack_self(mob/user)
 		if(src.magpulse)
 			src.flags &= ~NOSLIP
 			src.slowdown = SHOES_SLOWDOWN
@@ -35,3 +35,16 @@
 		if(src.flags&NOSLIP)
 			state = "enabled"
 		usr << "Its mag-pulse traction system appears to be [state]."
+
+/obj/item/clothing/shoes/magboots/advance
+	desc = "Advanced magnetic boots that have a lighter magnetic pull, placing less burden on the wearer."
+	name = "advanced magboots"
+	icon_state = "advmag0"
+/obj/item/clothing/shoes/magboots/advance/attack_self(mob/user)
+	..()
+	if(src.magpulse)
+		icon_state = "advmag1"
+		src.slowdown = 1
+	else
+		icon_state = "advmag0"
+	user.update_inv_shoes(0)
