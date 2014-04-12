@@ -50,6 +50,7 @@
 	spawn_positions = 3
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
+	idtype = /obj/item/weapon/card/id/medical
 	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
 	minimal_access = list(access_medical, access_morgue, access_surgery, access_virology)
 	alt_titles = list("Surgeon","Emergency Physician","Nurse","Virologist")
@@ -114,6 +115,7 @@
 	spawn_positions = 2
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
+	idtype = /obj/item/weapon/card/id/medical
 	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
 	minimal_access = list(access_medical, access_chemistry)
 	alt_titles = list("Pharmacist")
@@ -145,6 +147,7 @@
 	spawn_positions = 2
 	supervisors = "the chief medical officer and research director"
 	selection_color = "#ffeef0"
+	idtype = /obj/item/weapon/card/id/medical
 	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_research)
 	minimal_access = list(access_medical, access_morgue, access_genetics, access_research)
 

@@ -61,6 +61,7 @@
 	spawn_positions = 1
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
+	idtype = /obj/item/weapon/card/id/security
 	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels, access_morgue)
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels)
 	minimal_player_age = 7
@@ -107,7 +108,7 @@
 	spawn_positions = 1
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
-
+	idtype = /obj/item/weapon/card/id/security
 
 	access = list(access_security, access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
 	minimal_access = list(access_security, access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
@@ -170,6 +171,7 @@
 	spawn_positions = 5
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
+	idtype = /obj/item/weapon/card/id/security
 	access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels, access_morgue)
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels)
 	minimal_player_age = 7
