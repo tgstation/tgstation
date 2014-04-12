@@ -35,6 +35,9 @@
 		if (M != user)
 			user.visible_message("<span class='notice'>[user] starts to apply the [src] on [M]./span>", "<span class='notice'>You begin applying the [src] on [M]</span>")
 			if(!do_mob(user, M, 20))	return
+			if (M.stat == 2)
+				user << "<span class='warning'>\The [M] has died. There is nothing more you can do.</span>"
+				return
 			user.visible_message("<span class='info'>[user] applies the [src] on [M]./span>", "<span class='info'>You apply the [src] on [M]</span>")
 		else
 			var/t_himself = "itself"
