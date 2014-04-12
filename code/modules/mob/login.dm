@@ -47,6 +47,20 @@
 	if(isobj(loc))
 		var/obj/Loc=loc
 		Loc.on_log()
-	//set macro to normal incase it was overriden (like cyborg currently does)
+
+	update_interface()
+
+/mob/proc/update_interface()
+	if(client)
+		if(winget(src, "hotkey_toggle", "is-checked"))
+			update_hotkey_mode()
+		else
+			update_normal_mode()
+
+/mob/proc/update_hotkey_mode()
+	winset(src, null, "mainwindow.macro=hotkeymode hotkey_toggle.is-checked=true mapwindow.map.focus=true input.background-color=#F0F0F0")
+
+/mob/proc/update_normal_mode()
 	winset(src, null, "mainwindow.macro=macro hotkey_toggle.is-checked=false input.focus=true input.background-color=#D3B5B5")
+
 
