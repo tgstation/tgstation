@@ -12,7 +12,8 @@
 	var/mode = 0.0
 	var/printing = null
 	var/edit_job_target = ""
-	var/list/head_access = null
+	var/list/region_access = null
+	var/list/head_subordinates = null
 
 	//Cooldown for closing positions in seconds
 	//if set to -1: No cooldown... probably a bad idea
@@ -235,8 +236,7 @@
 
 			else
 				carddesc += "<b>registered_name:</b> [target_owner]</span>"
-				jobs += "<b>Assignment:</b> [target_rank]</span>"
-				jobs += "<br><a href='?src=\ref[src];choice=demote'>Demote</a>"
+				jobs += "<b>Assignment:</b> [target_rank] (<a href='?src=\ref[src];choice=demote'>Demote</a>)</span>"
 
 			var/accesses = ""
 			if(istype(src,/obj/machinery/computer/card/centcom))
@@ -251,14 +251,15 @@
 				accesses += "<table style='width:100%'>"
 				accesses += "<tr>"
 				for(var/i = 1; i <= 7; i++)
+					if(authenticated == 1 && !(i in region_access))
+						continue
 					accesses += "<td style='width:14%'><b>[get_region_accesses_name(i)]:</b></td>"
 				accesses += "</tr><tr>"
 				for(var/i = 1; i <= 7; i++)
+					if(authenticated == 1 && !(i in region_access))
+						continue
 					accesses += "<td style='width:14%' valign='top'>"
 					for(var/A in get_region_accesses(i))
-						if(authenticated == 1)
-							if (!(A in head_access))
-								break
 						if(A in modify.access)
 							accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=0'><font color=\"red\">[replacetext(get_access_desc(A), " ", "&nbsp")]</font></a> "
 						else
@@ -297,6 +298,8 @@
 				modify.loc = loc
 				modify.verb_pickup()
 				modify = null
+				region_access = null
+				head_subordinates = null
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
@@ -323,22 +326,31 @@
 					if(access_change_ids in scan.access)
 						authenticated = 2
 					else
-						head_access = null
+						region_access = list()
+						head_subordinates = list()
 						if(access_hop in scan.access)
-							head_access += job_master.GetJobAccess("Head of Personnel")
+							region_access += 1
+							region_access += 6
+							get_subordinates("Head of Personnel")
 						if(access_rd in scan.access)
-							head_access += job_master.GetJobAccess("Research Director")
+							region_access += 4
+							get_subordinates("Research Director")
 						if(access_ce in scan.access)
-							head_access += job_master.GetJobAccess("Chief Engineer")
+							region_access += 5
+							get_subordinates("Chief Engineer")
 						if(access_cmo in scan.access)
-							head_access += job_master.GetJobAccess("Chief Medical Officer")
+							region_access += 3
+							get_subordinates("Chief Medical Officer")
 						if(access_hos in scan.access)
-							head_access += job_master.GetJobAccess("Head of Security")
-						if(head_access)
+							region_access += 2
+							get_subordinates("Head of Security")
+						if(region_access)
 							authenticated = 1
 			else if ((!( authenticated ) && (istype(usr, /mob/living/silicon))) && (!modify))
 				usr << "You can't modify an ID without an ID inserted to modify. Once one is in the modify slot on the computer, you can log in."
 		if ("logout")
+			region_access = null
+			head_subordinates = null
 			authenticated = 0
 		if("access")
 			if(href_list["allowed"])
@@ -367,16 +379,17 @@
 							jobdatum = J
 							break
 					if(!jobdatum)
-						usr << "\red No log exists for this job."
+						usr << "<span class='error'>No log exists for this job.</span>"
 						return
 
 					modify.access = ( istype(src,/obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : jobdatum.get_access() )
 				if (modify)
 					modify.assignment = t1
 		if ("demote")
-			modify.access -= head_access
-			if(modify.access.len < 1)
+			if(modify.assignment in head_subordinates || modify.assignment == "Assistant")
 				modify.assignment = "Unassigned"
+			else
+				usr << "<span class='error'>You are not authorized to demote this position.</span>"
 		if ("reg")
 			if (authenticated)
 				var/t2 = modify
@@ -386,7 +399,7 @@
 					if(newName)
 						modify.registered_name = newName
 					else
-						usr << "\red Invalid name entered."
+						usr << "<span class='error'>Invalid name entered.</span>"
 						return
 		if ("mode")
 			mode = text2num(href_list["mode_target"])
@@ -446,7 +459,10 @@
 	updateUsrDialog()
 	return
 
-
+/obj/machinery/computer/card/proc/get_subordinates(var/rank)
+	for(var/datum/job/job in job_master.occupations)
+		if(rank in job.department_head)
+			head_subordinates += job.title
 
 /obj/machinery/computer/card/centcom
 	name = "\improper Centcom identification console"

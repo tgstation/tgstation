@@ -4,6 +4,7 @@ Chief Engineer
 /datum/job/chief_engineer
 	title = "Chief Engineer"
 	flag = CHIEF
+	department_head = list("Captain")
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 1
@@ -43,6 +44,7 @@ Station Engineer
 /datum/job/engineer
 	title = "Station Engineer"
 	flag = ENGINEER
+	department_head = list("Chief Engineer")
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 5
@@ -75,6 +77,7 @@ Atmospheric Technician
 /datum/job/atmos
 	title = "Atmospheric Technician"
 	flag = ATMOSTECH
+	department_head = list("Chief Engineer")
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 3
