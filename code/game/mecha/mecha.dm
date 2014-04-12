@@ -751,10 +751,15 @@
 		else
 			return
 		if(src.health<initial(src.health))
-			user << "\blue You repair some damage to [src.name]."
+			user.visible_message("<span class='notice'>[user] starts to repair [src] with the [W]...</span>", "<span class='notice'>You begin repairing [src] with the [W]...</span>")
+			if(!do_mob(user, src, 20))	return
+			if(!(src.health<initial(src.health)))
+				user << "<span class='notice'>The [src.name] is at full integrity.</span>"
+				return
+			user.visible_message("<span class='success'>[user] repairs some of the damage on [src].</span>", "<span class='success'>You repair some of the damage on [src].</span>")
 			src.health += min(10, initial(src.health)-src.health)
 		else
-			user << "The [src.name] is at full integrity"
+			user << "<span class='notice'>The [src.name] is at full integrity.</span>"
 		return
 
 	else if(istype(W, /obj/item/mecha_parts/mecha_tracking))

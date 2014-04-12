@@ -163,6 +163,21 @@
 
 	if(affecting.status == ORGAN_ROBOTIC)
 		if(brute > 0 && affecting.brute_dam > 0 || burn > 0 && affecting.burn_dam > 0)
+			if (H != user)
+				user.visible_message("<span class='notice'>[user] starts to repair [H]...</span>", "<span class='notice'>You begin repairing [H]...</span>")
+				if(!do_mob(user, H, 20))	return
+				user.visible_message("<span class='success'>[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.getDisplayName()]!</span>",\
+									"<span class='success'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.getDisplayName()]</span>")
+			else
+				var/t_himself = "itself"
+				if (user.gender == MALE)
+					t_himself = "himself"
+				else if (user.gender == FEMALE)
+					t_himself = "herself"
+				user.visible_message("<span class='notice'>[user] starts to repair [t_himself]...</span>", "<span class='notice'>You begin repairing yourself...</span>")
+				if(!do_mob(user, H, 80))	return
+				user.visible_message("<span class='success'>[user] fixes some [dam ? "dents on" : "burnt wires in"] [t_himself].</span>",\
+									"<span class='success'>You fix some of the [dam ? "dents on" : "burnt wires in"] your [affecting.getDisplayName()].</span>")
 			affecting.heal_damage(brute,burn,1)
 			H.update_damage_overlays(0)
 			H.updatehealth()
