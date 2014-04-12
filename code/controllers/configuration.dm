@@ -83,6 +83,7 @@
 	var/continuous_round_wiz = 0
 	var/continuous_round_malf = 0
 	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
+	var/mutant_races = 0				//players can choose their mutant race before joining the game
 
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
 	var/alert_desc_blue_upto = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
@@ -375,6 +376,8 @@
 					config.sandbox_autoclose		= 1
 				if("default_laws")
 					config.default_laws				= text2num(value)
+				if("join_with_mutant_race")
+					config.mutant_races				= 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
