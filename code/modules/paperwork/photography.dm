@@ -78,6 +78,11 @@
 		name = "photo[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
 
+/obj/item/weapon/photo/proc/construct(var/inicon, var/inimg, var/indesc, var/inblueprints)
+	icon = inicon
+	img = inimg
+	desc = indesc
+	blueprints = inblueprints
 
 /*
  * Photo album
@@ -117,43 +122,43 @@
 /obj/item/device/camera/siliconcam/ai_camera //camera AI can take pictures with
 	name = "AI photo camera"
 
-	/obj/item/device/camera/siliconcam/ai_camera/verb/picture()
-		set category ="AI Commands"
-		set name = "Take Image"
-		set src in usr
+/obj/item/device/camera/siliconcam/ai_camera/verb/picture()
+	set category ="AI Commands"
+	set name = "Take Image"
+	set src in usr
 
-		toggle_camera_mode()
+	toggle_camera_mode()
 
-	/obj/item/device/camera/siliconcam/ai_camera/verb/viewpicture()
-		set category ="AI Commands"
-		set name = "View Images"
-		set src in usr
+/obj/item/device/camera/siliconcam/ai_camera/verb/viewpicture()
+	set category ="AI Commands"
+	set name = "View Images"
+	set src in usr
 
-		viewpictures()
+	viewpictures()
 
 /obj/item/device/camera/siliconcam/robot_camera //camera cyborgs can take pictures with.. needs it's own because of verb CATEGORY >.>
 	name = "Cyborg photo camera"
 
-	/obj/item/device/camera/siliconcam/robot_camera/verb/picture()
-		set category ="Robot Commands"
-		set name = "Take Image"
-		set src in usr
+/obj/item/device/camera/siliconcam/robot_camera/verb/picture()
+	set category ="Robot Commands"
+	set name = "Take Image"
+	set src in usr
 
-		toggle_camera_mode()
+	toggle_camera_mode()
 
-	/obj/item/device/camera/siliconcam/robot_camera/verb/viewpicture()
-		set category ="Robot Commands"
-		set name = "View Images"
-		set src in usr
+/obj/item/device/camera/siliconcam/robot_camera/verb/viewpicture()
+	set category ="Robot Commands"
+	set name = "View Images"
+	set src in usr
 
-		viewpictures(usr)
+	viewpictures(usr)
 
-	/obj/item/device/camera/siliconcam/robot_camera/verb/borgprinting()
-		set category ="Robot Commands"
-		set name = "Print Image"
-		set src in usr
+/obj/item/device/camera/siliconcam/robot_camera/verb/borgprinting()
+	set category ="Robot Commands"
+	set name = "Print Image"
+	set src in usr
 
-		borgprint()
+	borgprint()
 
 
 /obj/item/device/camera/attack(mob/living/carbon/human/M, mob/user)
@@ -365,9 +370,7 @@ obj/item/device/camera/siliconcam/proc/viewpichelper(var/obj/item/device/camera/
 		if(q.fields["name"] == find)
 			selection = q
 			break  	// just in case some AI decides to take 10 thousand pictures in a round
-	P.icon = selection.fields["icon"]
-	P.img = selection.fields["img"]
-	P.desc = selection.fields["desc"]
+	P.construct(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
 	P.pixel_x = selection.fields["pixel_x"]
 	P.pixel_y = selection.fields["pixel_y"]
 
@@ -443,12 +446,7 @@ obj/item/device/camera/siliconcam/robot_camera/proc/borgprint()
 			selection = q
 			break
 	var/obj/item/weapon/photo/p = new /obj/item/weapon/photo(C.loc)
-	var/icon/I = selection.fields["icon"]
-	var/icon/img = selection.fields["img"]
-	p.icon = I
-	p.img = img
-	p.desc = selection.fields["desc"]
-	p.blueprints = selection.fields["blueprints"]
+	p.construct(selection.fields["icon"], selection.fields["img"], selection.fields["desc"], selection.fields["blueprints"])
 	p.pixel_x = rand(-10, 10)
 	p.pixel_y = rand(-10, 10)
 	C.toner -= 20	 //Cyborgs are very ineffeicient at printing an image

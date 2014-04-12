@@ -796,7 +796,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		photo = user.get_active_hand()
 		user.drop_item()
 		photo.loc = src
-	if(istype(usr,/mob/living/silicon/ai))
+	if(istype(user,/mob/living/silicon/ai))
 		var/list/nametemp = list()
 		var/find
 		var/datum/picture/selection
@@ -816,7 +816,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		P.img = selection.fields["img"]
 		P.desc = selection.fields["desc"]
 		photo = P
-	if(istype(usr,/mob/living/silicon/robot))
+	if(istype(user,/mob/living/silicon/robot))
 		var/list/nametemp = list()
 		var/find
 		var/datum/picture/selection
@@ -837,9 +837,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				selection = q
 				break
 		var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
-		P.icon = selection.fields["icon"]
-		P.img = selection.fields["img"]
-		P.desc = selection.fields["desc"]
+		P.construct(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
 		photo = P
 
 
