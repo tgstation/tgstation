@@ -209,6 +209,7 @@
 	name = "syndicate ID card"
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
+	icon_state = "syndie"
 	assignment = "Syndicate Overlord"
 	access = list(access_syndicate, access_external_airlocks)
 
@@ -226,7 +227,7 @@
 
 /obj/item/weapon/card/id/centcom
 	name = "\improper CentCom. ID"
-	desc = "An ID straight from Cent. Com."
+	desc = "An ID awarded only to the best brown nosers."
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "General"
@@ -240,3 +241,44 @@
 	icon_state = "centcom"
 	desc = "Finders, keepers."
 	access = list(access_salvage_captain)
+
+
+
+/obj/item/weapon/card/id/medical
+	name = "Medical ID"
+	registered_name = "Medic"
+	icon_state = "medical"
+	desc = "A card covered in the blood stains of the wild ride."
+	access = list(access_medical, access_genetics, access_morgue, access_chemistry, access_paramedic, access_virology, access_surgery, access_cmo)
+
+
+/obj/item/weapon/card/id/security
+	name = "Security ID"
+	registered_name = "Officer"
+	icon_state = "security"
+	desc = "Some say these cards are drowned in the tears of assistants, forged in the burning bodies of clowns."
+	access = list(access_sec_doors, access_security, access_brig, access_armory, access_forensics_lockers, access_court, access_hos)
+
+/obj/item/weapon/card/id/research
+	name = "Research ID"
+	registered_name = "Scientist"
+	icon_state = "science"
+	desc = "Pinnical of name technology."
+	access = list(access_research, access_tox, access_tox_storage, access_robotics, access_xenobiology, access_rd)
+
+/obj/item/weapon/card/id/supply
+	name = "Supply ID"
+	registered_name = "Cargonian"
+	icon_state = "cargo"
+	desc = "ROH ROH! HEIL THE QUARTERMASTER!"
+	access = list(access_mailsorting, access_mining, access_mining_station, access_cargo, access_qm)
+
+
+/obj/item/weapon/card/id/engineering
+	name = "Engineering ID"
+	registered_name = "Engineer"
+	icon_state = "engineering"
+	desc = "Shame it's going to be lost in the void of a black hole."
+	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva, access_construction)
+
+
