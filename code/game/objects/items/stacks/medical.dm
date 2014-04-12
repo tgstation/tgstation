@@ -33,21 +33,18 @@
 
 	if (user)
 		if (M != user)
-			user.visible_message( \
-				"\blue [M] has been applied with [src] by [user].", \
-				"\blue You apply \the [src] to [M]." \
-			)
+			user.visible_message("<span class='notice'>[user] starts to apply the [src] on [M]./span>", "<span class='notice'>You begin applying the [src] on [M]</span>")
+			if(!do_mob(user, M, 20))	return
+			user.visible_message("<span class='info'>[user] applies the [src] on [M]./span>", "<span class='info'>You apply the [src] on [M]</span>")
 		else
 			var/t_himself = "itself"
 			if (user.gender == MALE)
 				t_himself = "himself"
 			else if (user.gender == FEMALE)
 				t_himself = "herself"
-
-			user.visible_message( \
-				"\blue [M] applied [src] on [t_himself].", \
-				"\blue You apply \the [src] on yourself." \
-			)
+			user.visible_message("<span class='notice'>[user] starts to apply the [src] on [t_himself]./span>", "<span class='notice'>You begin applying the [src] on yourself.</span>")
+			if(!do_mob(user, M, 60))	return
+			user.visible_message("<span class='info'>[user] applies the [src] on [t_himself]./span>", "<span class='info'>You apply the [src] on yourself.</span>")
 
 	if (istype(M, /mob/living/carbon/human))
 
