@@ -39,29 +39,29 @@
 
 	if(istype(W, /obj/item/weapon/stock_parts/cell) && anchored)
 		if(charging)
-			user << "\red There is already a cell in the charger."
+			user << "<span class='danger'>There is already a cell in the charger.</span>"
 			return
 		else
 			var/area/a = loc.loc // Gets our locations location, like a dream within a dream
 			if(!isarea(a))
 				return
 			if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-				user << "\red The [name] blinks red as you try to insert the cell!"
+				user << "<span class='danger'>The [name] blinks red as you try to insert the cell!</span>"
 				return
 
 			user.drop_item()
 			W.loc = src
 			charging = W
-			user.visible_message("[user] inserts a cell into the charger.", "You insert a cell into the charger.")
+			user.visible_message("<span class='notice'>[user] inserts a cell into the charger.</span>", "<span class='notice'>You insert a cell into the charger.</span>")
 			chargelevel = -1
 			updateicon()
 	else if(istype(W, /obj/item/weapon/wrench))
 		if(charging)
-			user << "\red Remove the cell first!"
+			user << "<span class='danger'>Remove the cell first!</span>"
 			return
 
 		anchored = !anchored
-		user << "You [anchored ? "attach" : "detach"] the cell charger [anchored ? "to" : "from"] the ground"
+		user << "<span class='notice'>You [anchored ? "attach" : "detach"] the cell charger [anchored ? "to" : "from"] the ground</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 
 /obj/machinery/cell_charger/attack_hand(mob/user)
@@ -73,7 +73,7 @@
 	charging.updateicon()
 
 	charging = null
-	user.visible_message("[user] removes the cell from the charger.", "You remove the cell from the charger.")
+	user.visible_message("<span class='notice'>[user] removes the cell from the charger.</span>", "<span class='notice'>You remove the cell from the charger.</span>")
 	chargelevel = -1
 	updateicon()
 
