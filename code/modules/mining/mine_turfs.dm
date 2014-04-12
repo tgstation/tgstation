@@ -631,6 +631,7 @@ var/list/artifact_spawn = list() // Runtime fix for geometry loading before cont
 	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
 
 /turf/unsimulated/mineral/random/New()
+	icon_state = "rock"
 	if (prob(mineralChance) && !mineral)
 		var/mineral_name = pickweight(mineralSpawnChanceList) //temp mineral name
 
@@ -641,20 +642,23 @@ var/list/artifact_spawn = list() // Runtime fix for geometry loading before cont
 			mineral = name_to_mineral[mineral_name]
 			mineral.UpdateTurf(src)
 
+
 	. = ..()
 
 /turf/unsimulated/mineral/random/high_chance
+	icon_state = "rock(high)"
 	mineralChance = 25
 	mineralSpawnChanceList = list(
 		"Uranium" = 10,
-		"Iron" = 30,
+		"Iron"    = 30,
 		"Diamond" = 2,
-		"Gold" = 10,
-		"Silver" = 10,
-		"Plasma" = 25,
+		"Gold"    = 10,
+		"Silver"  = 10,
+		"Plasma"  = 25,
 	)
 
 /turf/unsimulated/mineral/random/high_chance_clown
+	icon_state = "rock(clown)"
 	mineralChance = 40
 	mineralSpawnChanceList = list(
 		"Uranium" = 10,

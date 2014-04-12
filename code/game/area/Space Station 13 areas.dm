@@ -1794,7 +1794,10 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Satellite Lounge"
 	icon_state = "tcomsatlounge"
 
-
+/area/turret_protected/goonroom
+	name = "\improper Goonecode Containment"
+	icon_state = "ai_upload"
+	jammed=2
 
 // Away Missions
 /area/awaymission
