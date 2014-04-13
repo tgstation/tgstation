@@ -321,7 +321,7 @@
 	L.visible_message("\red <b>[L.name]</b> suddenly bursts into flames!")
 	L.on_fire = 1
 	L.update_icon = 1
-	playsound(L.loc, 'bamf.ogg', 50, 0)
+	playsound(L.loc, 'sound/effects/bamf.ogg', 50, 0)
 
 ////////////////////////////////////////////////////////////////////////
 
