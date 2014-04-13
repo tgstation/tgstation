@@ -82,9 +82,8 @@
 
 	if(lawupdate)
 		make_laws()
-		connected_ai = select_active_ai_with_fewest_borgs()
+		connect_ai(select_active_ai_with_fewest_borgs())
 		if(connected_ai)
-			connected_ai.connected_robots += src
 			lawsync()
 			lawupdate = 1
 		else
@@ -125,6 +124,13 @@
 		mmi = null
 	..()
 
+/mob/living/silicon/robot/proc/connect_ai(var/mob/living/silicon/ai/ai = null)
+	if(connected_ai)
+		connected_ai.connected_robots -= src
+		connected_ai = null
+	if(ai)
+		ai.connected_robots += src
+		connected_ai = ai
 
 /mob/living/silicon/robot/proc/pick_module()
 	if(module)
@@ -530,7 +536,7 @@
 					if(prob(50))
 						SetEmagged(1)
 						lawupdate = 0
-						connected_ai = null
+						connect_ai(null)
 						user << "You emag [src]'s interface."
 //						message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
 						log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
@@ -971,8 +977,7 @@
 	return
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
-	if (src.connected_ai)
-		src.connected_ai = null
+	connect_ai(null)
 	lawupdate = 0
 	lockcharge = 0
 	canmove = 1

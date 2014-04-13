@@ -33,8 +33,7 @@ var/const/BORG_WIRE_CAMERA = 16
 
 		if (BORG_WIRE_AI_CONTROL) //Cut the AI wire to reset AI control
 			if(!mended)
-				if (R.connected_ai)
-					R.connected_ai = null
+				R.connect_ai(null)
 
 		if (BORG_WIRE_CAMERA)
 			if(!isnull(R.camera) && !R.scrambledcodes)
@@ -57,7 +56,7 @@ var/const/BORG_WIRE_CAMERA = 16
 			if(!R.emagged)
 				var/new_ai = select_active_ai(R)
 				if(new_ai && (new_ai != R.connected_ai))
-					R.connected_ai = new_ai
+					R.connect_ai(new_ai)
 					R.notify_ai(1)
 
 		if (BORG_WIRE_CAMERA)
