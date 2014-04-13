@@ -145,5 +145,6 @@ TICKCOMP 0
 ## Comment this out to disable automuting
 #AUTOMUTE_ON
 
-## Communication key for receiving data through world/Topic(), you don't want to give this out
+## Communication key for receiving data through world/Topic(), you don't want to give this out. Comms_enabled will be on if it's uncommented AND it's not the default value.
+COMMS_ENABLED
 COMMS_KEY default_pwd
