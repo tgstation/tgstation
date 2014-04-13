@@ -175,7 +175,7 @@
 				else if (user.gender == FEMALE)
 					t_himself = "herself"
 				user.visible_message("<span class='notice'>[user] starts to repair [t_himself]...</span>", "<span class='notice'>You begin repairing yourself...</span>")
-				if(!do_mob(user, H, 80))	return
+				if(!do_mob(user, H, 60))	return
 				user.visible_message("<span class='success'>[user] fixes some [dam ? "dents on" : "burnt wires in"] [t_himself].</span>",\
 									"<span class='success'>You fix some of the [dam ? "dents on" : "burnt wires in"] your [affecting.getDisplayName()].</span>")
 			affecting.heal_damage(brute,burn,1)
