@@ -319,7 +319,9 @@
 
 	L.adjust_fire_stacks(0.5) // Same as walking into fire. Was 100 (goon fire)
 	L.visible_message("\red <b>[L.name]</b> suddenly bursts into flames!")
-	//playsound(L.loc, 'mag_fireballlaunch.ogg', 50, 0)
+	L.on_fire = 1
+	L.update_icon = 1
+	playsound(L.loc, 'bamf.ogg', 50, 0)
 
 ////////////////////////////////////////////////////////////////////////
 

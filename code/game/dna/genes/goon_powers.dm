@@ -144,7 +144,12 @@
 		usr << "\red This will only work on normal organic beings."
 		return
 
-	C.bodytemperature = -1500
+	if (M_RESIST_COLD in C.mutations)
+		C.visible_message("\red A cloud of fine ice crystals engulfs [C.name], but disappears almost instantly!")
+		return
+
+	C.bodytemperature = 0
+	C.adjustFireLoss(20)
 	C.ExtinguishMob()
 
 	C.visible_message("\red A cloud of fine ice crystals engulfs [C]!")
