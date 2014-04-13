@@ -160,6 +160,13 @@
 		s["map_name"] = map_name ? map_name : "Unknown"
 
 		return list2params(s)
+	else if (copytext(T,1,9) == "announce")
+		var/input[] = params2list(T)
+		if(config.comms_allowed)
+			if(input["key"] != config.comms_key)
+				return "Bad Key"
+			else
+				world << "<span class='announce'>New pull request created: [input["announce"]]</span>"
 
 
 /world/Reboot(var/reason)
