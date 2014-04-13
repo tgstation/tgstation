@@ -53,6 +53,80 @@
 		turret.shot_delay = 20
 	src << "<span class='notice'>Turrets upgraded.</span>"
 
+/datum/AI_Module/large/lockdown
+	module_name = "Hostile Station Lockdown"
+	mod_pick_name = "lockdown"
+	description = "Take control of the airlock, blast door and fire control networks, locking them down. Caution! This command also electrifies all airlocks."
+	cost = 40
+	one_time = 1
+
+	power_type = /mob/living/silicon/ai/proc/lockdown
+
+/mob/living/silicon/ai/proc/lockdown()
+	set category = "Malfunction"
+	set name = "Initiate Hostile Lockdown"
+
+	if(usr.stat == 2)
+		usr <<"You cannot disable lockdown because you are dead!"
+		return
+
+	for(var/obj/machinery/firealarm/FA in machines) //activate firealarms
+		spawn()
+			if(FA.lockdownbyai == 0)
+				FA.lockdownbyai = 1
+				FA.alarm()
+	for(var/obj/machinery/door/poddoor/BD in world) //Close blast doors!
+		spawn()
+			BD.close()
+	for(var/obj/machinery/door/airlock/AL in world) //shock-bolt airlocks
+		spawn()
+			if(AL.canAIControl())
+				AL.locked = 0
+				AL.safe = 0
+				AL.close()
+				AL.locked = 1
+				AL.lights = 0
+				AL.secondsElectrified = -1
+				AL.lockdownbyai = 1
+
+	var/obj/machinery/computer/communications/C = locate() in world
+	if(C)
+		C.post_status("alert", "lockdown")
+
+	src.verbs += /mob/living/silicon/ai/proc/disablelockdown
+	usr << "<span class = 'warning'>Lockdown Initiated.</span>"
+
+/mob/living/silicon/ai/proc/disablelockdown()
+	set category = "Malfunction"
+	set name = "Disable Lockdown"
+
+	if(usr.stat == 2)
+		usr <<"You cannot disable lockdown because you are dead!"
+		return
+
+	for(var/obj/machinery/firealarm/FA in machines) //deactivate firealarms
+		spawn()
+			if(FA.lockdownbyai == 1)
+				FA.lockdownbyai = 0
+				FA.reset()
+	for(var/obj/machinery/door/poddoor/BD in world) //Open blast doors!
+		spawn()
+			BD.open()
+	for(var/obj/machinery/door/airlock/AL in world) //unbolt and open airlocks
+		spawn()
+			if(AL.canAIControl() && AL.lockdownbyai == 1)
+
+				AL.locked = 0
+				AL.secondsElectrified = 0
+				AL.open()
+				AL.safe = 1
+				AL.lights = 1
+				AL.lockdownbyai = 0
+
+//	src.verbs -= /mob/living/silicon/ai/proc/disablelockdown
+//	src.verbs += /mob/living/silicon/ai/proc/lockdown
+	usr << "<span class = 'notice'>Lockdown Lifted.</span>"
+
 /datum/AI_Module/large/disable_rcd
 	module_name = "RCD disable"
 	mod_pick_name = "rcd"
