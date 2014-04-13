@@ -40,32 +40,25 @@ datum/controller/game_controller/New()
 			del(master_controller)
 		master_controller = src
 
-	createRandomZlevel()			//probably shouldn't be here!
+datum/controller/game_controller/proc/setup()
+	world.tick_lag = config.Ticklag
+
+	new /datum/controller/event()
+	air_master = new /datum/controller/air_system()
+	air_master.setup()
+	job_master = new /datum/controller/occupations()
+	job_master.SetupOccupations()
+	job_master.LoadJobs("config/jobs.txt")
+	world << "\red \b Job setup complete"
+	ticker = new /datum/controller/gameticker()
+	emergency_shuttle = new /datum/shuttle_controller/emergency_shuttle()
+	supply_shuttle = new /datum/controller/supply_shuttle()
+
+	world << "\red \b Randomizing map..."
+	createRandomZlevel()
 
 	for(var/i=0, i<max_secret_rooms, i++)
 		make_mining_asteroid_secret()
-
-	if(!events)
-		new /datum/controller/event()
-
-	if(!air_master)
-		air_master = new /datum/controller/air_system()
-		air_master.setup()
-
-	if(!job_master)
-		job_master = new /datum/controller/occupations()
-		job_master.SetupOccupations()
-		job_master.LoadJobs("config/jobs.txt")
-		world << "\red \b Job setup complete"
-
-	if(!syndicate_code_phrase)		syndicate_code_phrase	= generate_code_phrase()
-	if(!syndicate_code_response)	syndicate_code_response	= generate_code_phrase()
-	if(!ticker)						ticker = new /datum/controller/gameticker()
-	if(!emergency_shuttle)			emergency_shuttle = new /datum/shuttle_controller/emergency_shuttle()
-	if(!supply_shuttle)				supply_shuttle = new /datum/controller/supply_shuttle()
-
-datum/controller/game_controller/proc/setup()
-	world.tick_lag = config.Ticklag
 
 	setup_objects()
 	setupgenetics()
@@ -76,6 +69,7 @@ datum/controller/game_controller/proc/setup()
 			ticker.pregame()
 
 datum/controller/game_controller/proc/setup_objects()
+
 	world << "\red \b Initializing objects..."
 	sleep(-1)
 	for(var/atom/movable/object in world)

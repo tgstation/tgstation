@@ -27,6 +27,23 @@ var/datum/controller/failsafe/Failsafe
 			if(!master_controller)		new /datum/controller/game_controller()	//replace the missing master_controller! This should never happen.
 			if(!lighting_controller)	new /datum/controller/lighting()		//replace the missing lighting_controller
 
+			if(!events)
+				new /datum/controller/event()
+
+			if(!air_master)
+				air_master = new /datum/controller/air_system()
+				air_master.setup()
+
+			if(!job_master)
+				job_master = new /datum/controller/occupations()
+				job_master.SetupOccupations()
+				job_master.LoadJobs("config/jobs.txt")
+				world << "\red \b Job setup complete"
+
+			if(!ticker)						ticker = new /datum/controller/gameticker()
+			if(!emergency_shuttle)			emergency_shuttle = new /datum/shuttle_controller/emergency_shuttle()
+			if(!supply_shuttle)				supply_shuttle = new /datum/controller/supply_shuttle()
+
 			if(processing)
 				if(master_controller.processing)	//only poke if these overrides aren't in effect
 					if(MC_iteration == controller_iteration)	//master_controller hasn't finished processing in the defined interval
