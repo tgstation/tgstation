@@ -87,7 +87,6 @@
 				AL.locked = 1
 				AL.lights = 0
 				AL.secondsElectrified = -1
-				AL.lockdownbyai = 1
 
 	var/obj/machinery/computer/communications/C = locate() in world
 	if(C)
@@ -114,17 +113,14 @@
 			BD.open()
 	for(var/obj/machinery/door/airlock/AL in world) //unbolt and open airlocks
 		spawn()
-			if(AL.canAIControl() && AL.lockdownbyai == 1)
+			if(AL.canAIControl())
 
 				AL.locked = 0
 				AL.secondsElectrified = 0
 				AL.open()
 				AL.safe = 1
 				AL.lights = 1
-				AL.lockdownbyai = 0
 
-//	src.verbs -= /mob/living/silicon/ai/proc/disablelockdown
-//	src.verbs += /mob/living/silicon/ai/proc/lockdown
 	usr << "<span class = 'notice'>Lockdown Lifted.</span>"
 
 /datum/AI_Module/large/disable_rcd
