@@ -133,7 +133,7 @@ namespace sendkeys_ss13
                 for (int i = 0; i < msg.Length; i++)
                 {
                     msg[i] = Regex.Replace(msg[i], @"[\x02\x1F\x0F\x16]|\x03(\d\d?(,\d\d?)?)?", String.Empty); //Sanitizing color codes
-                    msg[i] = Regex.Replace(msg[i], @"[\\\&\=\;]", " "); //Filtering out some iffy characters
+                    msg[i] = Regex.Replace(msg[i], @"[\\\&\=\;\<\>]", " "); //Filtering out some iffy characters
                     Console.Write(msg[i] + " ");
                 }
                 Console.WriteLine();
