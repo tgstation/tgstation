@@ -35,6 +35,7 @@
 
 	next_move = 1
 	sight |= SEE_SELF
+
 	..()
 
 	if(loc && !isturf(loc))
@@ -48,8 +49,8 @@
 		var/obj/Loc=loc
 		Loc.on_log()
 
-	update_interface()
-
+// Calling update_interface() in /mob/Login() causes the Cyborg to immediately be ghosted; because of winget().
+// Calling it in the overriden Login, such as /mob/living/Login() doesn't cause this.
 /mob/proc/update_interface()
 	if(client)
 		if(winget(src, "hotkey_toggle", "is-checked"))
