@@ -1,4 +1,20 @@
-﻿using System;
+﻿//////////////////////////////////////////////////////////////////
+/////GitHub pull request announcer bot for IRC////////////////////
+/////Made by VistaPOWA for the /tg/station 13 code project.///////
+/////This software is licensed under GPL3.////////////////////////
+/////Prequisites: Meebey's SmartIrc4Net library (incl, under GPL)/
+/////             StarkSoft Proxy library (incl, under GPL)///////
+/////Usage: Edit the config.txt file to match the settings////////
+/////of your server's. Start the executable. Set up a Github hook/
+/////if you hadn't before to send IRC notifications to the////////
+/////channel of your choosing. Leave it running.//////////////////
+/////IT IS PREFERABLE IF YOU RAN THIS LOCALLY. YOUR SERVER'S//////
+/////API/COMMS KEY WILL BE SENT PLAINTEXT! ENSURE THAT THE API////
+/////KEY IS NOT PUBLICALLY AVAILABLE! IF LEAKED, CHANGE IT.///////
+/////Support available @ Rizon's #coderbus, ask for VistaPOWA.////
+//////////////////////////////////////////////////////////////////
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,24 +32,28 @@ namespace sendkeys_ss13
         public static string serverIP = "127.0.0.1";
         public static int serverPort = 11111;
         public static string commskey = "this_is_a_test_key";
-        public static string IRC_bot_name = "testbot_github";
+        public static string Github_bot_name = "testbot_github";
+        public static string IRC_bot_name = "testbot";
+        public static string IRC_server = "test.net";
+        public static int IRC_port = 11111;
+        public static string IRC_channel = "#channel";
 
         public static IrcClient irc = new IrcClient();
         public static void Main(string[]args) 
         {
-            ReadConf(ref serverIP, ref serverPort);
+            ReadConf();
             irc.OnChannelMessage += new IrcEventHandler(OnChannelMessage);
             irc.SupportNonRfc = true;
-            irc.Connect("irc.rizon.net" , 6670);
-            Console.WriteLine("{DBG} Connected to IRC");
-            irc.Login("vista_fun_bot", "vistas_fun_bot");
-            Console.WriteLine("{DBG} Logged in");
-            irc.RfcJoin("#fukkentestchannel");
-            Console.WriteLine("{DBG} Joining #coderbus");
+            irc.Connect(IRC_server , IRC_port);
+            Console.WriteLine("Connected to IRC");
+            irc.Login(IRC_bot_name, IRC_bot_name);
+            Console.WriteLine("Logged in");
+            irc.RfcJoin(IRC_channel);
+            Console.WriteLine("Joining {0}", IRC_channel);
             irc.Listen();
         }
 
-        public static void ReadConf(ref string IP, ref int port)
+        public static void ReadConf()
         {
             if (File.Exists("config.txt"))
             {
@@ -70,17 +90,43 @@ namespace sendkeys_ss13
                 line = reader.ReadLine().Split(' ');
                 if(line[2] != null)
                 {
-                    IRC_bot_name = line[2];
-                    Console.WriteLine("Read IRC bot name: " + IRC_bot_name);
+                    Github_bot_name = line[2];
+                    Console.WriteLine("Read Github bot name: " + Github_bot_name);
                 }
                 else { Console.WriteLine("No botname found."); return; }
+                line = reader.ReadLine().Split(' ');
+                if(line[2] != null)
+                {
+                    IRC_bot_name = line[2];
+                    Console.WriteLine("Read IRC bot name: " + Github_bot_name);
+                }
+                else { Console.WriteLine("No botname found."); return; }
+                line = reader.ReadLine().Split(' ');
+                if (line[2] != null)
+                {
+                    Match match3 = Regex.Match(line[2], @"(.+)\:(\d{1,5})"); //rudimentary port validation
+                    if (match3.Success)
+                    {
+                        IRC_server = Convert.ToString(match3.Groups[1]);
+                        Int32.TryParse(Convert.ToString(match3.Groups[2]), out IRC_port);
+                        Console.WriteLine("Read IRC server: " + IRC_server + ":" + Convert.ToString(IRC_port));
+                    }
+                    else { Console.WriteLine("Server:port invalid."); return; }
+                }
+                line = reader.ReadLine().Split(' ');
+                if (line[2] != null)
+                {
+                    IRC_channel = line[2];
+                    Console.WriteLine("Read channel: " + IRC_channel);
+                }
+                else { Console.WriteLine("No channel found."); return; }
                 reader.Close();
             }
             else { Console.WriteLine("Config file doesn't exist, using defaults"); return; }
         }
         public static void OnChannelMessage(object sender, IrcEventArgs e) 
         {
-            if(e.Data.Nick == IRC_bot_name)
+            if(e.Data.Nick == Github_bot_name)
             {
                 StreamWriter output = new StreamWriter("output.txt");
                 string[] msg = e.Data.Message.Split(' ');
