@@ -146,4 +146,4 @@ TICKCOMP 0
 #AUTOMUTE_ON
 
 ## Communication key for receiving data through world/Topic(), you don't want to give this out
-COMMS_KEY default_pwd
+#COMMS_KEY default_pwd
