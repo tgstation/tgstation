@@ -270,9 +270,7 @@
 					automute_on = 1
 				if("comms_key")
 					comms_key = value
-					if(value == "default_pwd" || length(value) <= 6) //It's the default value or less than 6 characters long, warn badmins
-						message_admins("<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>")
-					else
+					if(value != "default_pwd" && length(value) > 6) //It's the default value or less than 6 characters long, warn badmins
 						comms_allowed = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
