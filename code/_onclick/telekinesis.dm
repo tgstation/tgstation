@@ -45,7 +45,7 @@ var/const/tk_maxrange = 15
 		O.host = user
 		O.focus_object(src)
 	else
-		warning("Strange attack_tk(): TK([TK in user.mutations]) empty hand([!user.get_active_hand()])")
+		WARNING("Strange attack_tk(): TK([TK in user.mutations]) empty hand([!user.get_active_hand()])")
 	return
 
 
@@ -65,7 +65,7 @@ var/const/tk_maxrange = 15
 	desc = "Magic"
 	icon = 'icons/obj/magic.dmi'//Needs sprites
 	icon_state = "2"
-	flags = NOBLUDGEON
+	flags = NOBLUDGEON | ABSTRACT
 	//item_state = null
 	w_class = 10.0
 	layer = 20
@@ -197,4 +197,3 @@ var/const/tk_maxrange = 15
 				var/Z = source:z
 
 */
-

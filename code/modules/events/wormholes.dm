@@ -51,7 +51,6 @@
 	desc = "It looks highly unstable; It could close at any moment."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "anom"
-	failchance = 0
 
 /obj/effect/portal/wormhole/attack_hand(mob/user)
 	teleport(user)

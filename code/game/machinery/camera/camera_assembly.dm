@@ -10,7 +10,7 @@
 	g_amt = 300
 
 	//	Motion, EMP-Proof, X-Ray
-	var/list/obj/item/possible_upgrades = list(/obj/item/device/assembly/prox_sensor, /obj/item/stack/sheet/mineral/plasma, /obj/item/weapon/reagent_containers/food/snacks/grown/carrot)
+	var/list/obj/item/possible_upgrades = list(/obj/item/device/assembly/prox_sensor, /obj/item/stack/sheet/mineral/plasma, /obj/item/device/analyzer)
 	var/list/upgrades = list()
 	var/state = 0
 	var/busy = 0
@@ -48,7 +48,7 @@
 
 			else if(istype(W, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				user << "You unattach the assembly from it's place."
+				user << "You unattach the assembly from its place."
 				anchored = 0
 				update_icon()
 				state = 0
@@ -66,7 +66,7 @@
 			else if(istype(W, /obj/item/weapon/weldingtool))
 
 				if(weld(W, user))
-					user << "You unweld the assembly from it's place."
+					user << "You unweld the assembly from its place."
 					state = 1
 					anchored = 1
 				return

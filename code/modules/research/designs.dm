@@ -67,7 +67,7 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 ///////////////////Computer Boards///////////////////////////////////
 
 datum/design/seccamera
-	name = "Circuit Design (Security)"
+	name = "Computer Design (Security)"
 	desc = "Allows for the construction of circuit boards used to build security camera computers."
 	id = "seccamera"
 	req_tech = list("programming" = 2)
@@ -76,7 +76,7 @@ datum/design/seccamera
 	build_path = /obj/item/weapon/circuitboard/security
 
 datum/design/aicore
-	name = "Circuit Design (AI Core)"
+	name = "AI Design (AI Core)"
 	desc = "Allows for the construction of circuit boards used to build new AI cores."
 	id = "aicore"
 	req_tech = list("programming" = 4, "biotech" = 3)
@@ -85,7 +85,7 @@ datum/design/aicore
 	build_path = /obj/item/weapon/circuitboard/aicore
 
 datum/design/aiupload
-	name = "Circuit Design (AI Upload)"
+	name = "Computer Design (AI Upload)"
 	desc = "Allows for the construction of circuit boards used to build an AI Upload Console."
 	id = "aiupload"
 	req_tech = list("programming" = 4)
@@ -94,7 +94,7 @@ datum/design/aiupload
 	build_path = /obj/item/weapon/circuitboard/aiupload
 
 datum/design/borgupload
-	name = "Circuit Design (Cyborg Upload)"
+	name = "Computer Design (Cyborg Upload)"
 	desc = "Allows for the construction of circuit boards used to build a Cyborg Upload Console."
 	id = "borgupload"
 	req_tech = list("programming" = 4)
@@ -103,7 +103,7 @@ datum/design/borgupload
 	build_path = /obj/item/weapon/circuitboard/borgupload
 
 datum/design/med_data
-	name = "Circuit Design (Medical Records)"
+	name = "Computer Design (Medical Records)"
 	desc = "Allows for the construction of circuit boards used to build a medical records console."
 	id = "med_data"
 	req_tech = list("programming" = 2)
@@ -112,7 +112,7 @@ datum/design/med_data
 	build_path = /obj/item/weapon/circuitboard/med_data
 
 datum/design/operating
-	name = "Circuit Design (Operating Computer)"
+	name = "Computer Design (Operating Computer)"
 	desc = "Allows for the construction of circuit boards used to build an operating computer console."
 	id = "operating"
 	req_tech = list("programming" = 2, "biotech" = 2)
@@ -121,7 +121,7 @@ datum/design/operating
 	build_path = /obj/item/weapon/circuitboard/operating
 
 datum/design/pandemic
-	name = "Circuit Design (PanD.E.M.I.C. 2200)"
+	name = "Computer Design (PanD.E.M.I.C. 2200)"
 	desc = "Allows for the construction of circuit boards used to build a PanD.E.M.I.C. 2200 console."
 	id = "pandemic"
 	req_tech = list("programming" = 2, "biotech" = 2)
@@ -130,7 +130,7 @@ datum/design/pandemic
 	build_path = /obj/item/weapon/circuitboard/pandemic
 
 datum/design/scan_console
-	name = "Circuit Design (DNA Machine)"
+	name = "Computer Design (DNA Machine)"
 	desc = "Allows for the construction of circuit boards used to build a new DNA scanning console."
 	id = "scan_console"
 	req_tech = list("programming" = 2, "biotech" = 3)
@@ -139,7 +139,7 @@ datum/design/scan_console
 	build_path = /obj/item/weapon/circuitboard/scan_consolenew
 
 datum/design/comconsole
-	name = "Circuit Design (Communications)"
+	name = "Computer Design (Communications)"
 	desc = "Allows for the construction of circuit boards used to build a communications console."
 	id = "comconsole"
 	req_tech = list("programming" = 2, "magnets" = 2)
@@ -148,7 +148,7 @@ datum/design/comconsole
 	build_path = /obj/item/weapon/circuitboard/communications
 
 datum/design/idcardconsole
-	name = "Circuit Design (ID Console)"
+	name = "Computer Design (ID Console)"
 	desc = "Allows for the construction of circuit boards used to build an ID computer."
 	id = "idcardconsole"
 	req_tech = list("programming" = 2)
@@ -157,7 +157,7 @@ datum/design/idcardconsole
 	build_path = /obj/item/weapon/circuitboard/card
 
 datum/design/crewconsole
-	name = "Circuit Design (Crew monitoring computer)"
+	name = "Computer Design (Crew monitoring computer)"
 	desc = "Allows for the construction of circuit boards used to build a Crew monitoring computer."
 	id = "crewconsole"
 	req_tech = list("programming" = 3, "magnets" = 2, "biotech" = 2)
@@ -166,7 +166,7 @@ datum/design/crewconsole
 	build_path = /obj/item/weapon/circuitboard/crew
 
 datum/design/teleconsole
-	name = "Circuit Design (Teleporter Console)"
+	name = "Computer Design (Teleporter Console)"
 	desc = "Allows for the construction of circuit boards used to build a teleporter control console."
 	id = "teleconsole"
 	req_tech = list("programming" = 3, "bluespace" = 2)
@@ -175,7 +175,7 @@ datum/design/teleconsole
 	build_path = /obj/item/weapon/circuitboard/teleporter
 
 datum/design/secdata
-	name = "Circuit Design (Security Records Console)"
+	name = "Computer Design (Security Records Console)"
 	desc = "Allows for the construction of circuit boards used to build a security records console."
 	id = "secdata"
 	req_tech = list("programming" = 2)
@@ -184,7 +184,7 @@ datum/design/secdata
 	build_path = /obj/item/weapon/circuitboard/secure_data
 
 datum/design/atmosalerts
-	name = "Circuit Design (Atmosphere Alert)"
+	name = "Computer Design (Atmosphere Alert)"
 	desc = "Allows for the construction of circuit boards used to build an atmosphere alert console.."
 	id = "atmosalerts"
 	req_tech = list("programming" = 2)
@@ -193,7 +193,7 @@ datum/design/atmosalerts
 	build_path = /obj/item/weapon/circuitboard/atmos_alert
 
 datum/design/air_management
-	name = "Circuit Design (Atmospheric Monitor)"
+	name = "Computer Design (Atmospheric Monitor)"
 	desc = "Allows for the construction of circuit boards used to build an Atmospheric Monitor."
 	id = "air_management"
 	req_tech = list("programming" = 2)
@@ -202,7 +202,7 @@ datum/design/air_management
 	build_path = /obj/item/weapon/circuitboard/air_management
 
 datum/design/robocontrol
-	name = "Circuit Design (Robotics Control Console)"
+	name = "Computer Design (Robotics Control Console)"
 	desc = "Allows for the construction of circuit boards used to build a Robotics Control console."
 	id = "robocontrol"
 	req_tech = list("programming" = 4)
@@ -211,7 +211,7 @@ datum/design/robocontrol
 	build_path = /obj/item/weapon/circuitboard/robotics
 
 datum/design/clonecontrol
-	name = "Circuit Design (Cloning Machine Console)"
+	name = "Computer Design (Cloning Machine Console)"
 	desc = "Allows for the construction of circuit boards used to build a new Cloning Machine console."
 	id = "clonecontrol"
 	req_tech = list("programming" = 3, "biotech" = 3)
@@ -220,7 +220,7 @@ datum/design/clonecontrol
 	build_path = /obj/item/weapon/circuitboard/cloning
 
 datum/design/clonepod
-	name = "Circuit Design (Clone Pod)"
+	name = "Machine Design (Clone Pod)"
 	desc = "Allows for the construction of circuit boards used to build a Cloning Pod."
 	id = "clonepod"
 	req_tech = list("programming" = 3, "biotech" = 3)
@@ -229,7 +229,7 @@ datum/design/clonepod
 	build_path = /obj/item/weapon/circuitboard/clonepod
 
 datum/design/clonescanner
-	name = "Circuit Design (Cloning Scanner)"
+	name = "Machine Design (Cloning Scanner)"
 	desc = "Allows for the construction of circuit boards used to build a Cloning Scanner."
 	id = "clonescanner"
 	req_tech = list("programming" = 3, "biotech" = 3)
@@ -238,7 +238,7 @@ datum/design/clonescanner
 	build_path = /obj/item/weapon/circuitboard/clonescanner
 
 datum/design/arcadebattle
-	name = "Circuit Design (Battle Arcade Machine)"
+	name = "Computer Design (Battle Arcade Machine)"
 	desc = "Allows for the construction of circuit boards used to build a new arcade machine."
 	id = "arcademachine"
 	req_tech = list("programming" = 1)
@@ -247,7 +247,7 @@ datum/design/arcadebattle
 	build_path = /obj/item/weapon/circuitboard/arcade/battle
 
 datum/design/orion_trail
-	name = "Circuit Design (Orion Trail Arcade Machine)"
+	name = "Computer Design (Orion Trail Arcade Machine)"
 	desc = "Allows for the construction of circuit boards used to build a new Orion Trail machine."
 	id = "arcademachine"
 	req_tech = list("programming" = 2)
@@ -256,7 +256,7 @@ datum/design/orion_trail
 	build_path = /obj/item/weapon/circuitboard/arcade/orion_trail
 
 datum/design/powermonitor
-	name = "Circuit Design (Power Monitor)"
+	name = "Computer Design (Power Monitor)"
 	desc = "Allows for the construction of circuit boards used to build a new power monitor."
 	id = "powermonitor"
 	req_tech = list("programming" = 2)
@@ -265,7 +265,7 @@ datum/design/powermonitor
 	build_path = /obj/item/weapon/circuitboard/powermonitor
 
 datum/design/solarcontrol
-	name = "Circuit Design (Solar Control)"
+	name = "Computer Design (Solar Control)"
 	desc = "Allows for the construction of circuit boards used to build a solar control console."
 	id = "solarcontrol"
 	req_tech = list("programming" = 2, "powerstorage" = 2)
@@ -274,7 +274,7 @@ datum/design/solarcontrol
 	build_path = /obj/item/weapon/circuitboard/solar_control
 
 datum/design/prisonmanage
-	name = "Circuit Design (Prisoner Management Console)"
+	name = "Computer Design (Prisoner Management Console)"
 	desc = "Allows for the construction of circuit boards used to build a prisoner management console."
 	id = "prisonmanage"
 	req_tech = list("programming" = 2)
@@ -283,7 +283,7 @@ datum/design/prisonmanage
 	build_path = /obj/item/weapon/circuitboard/prisoner
 
 datum/design/mechacontrol
-	name = "Circuit Design (Exosuit Control Console)"
+	name = "Computer Design (Exosuit Control Console)"
 	desc = "Allows for the construction of circuit boards used to build an exosuit control console."
 	id = "mechacontrol"
 	req_tech = list("programming" = 3)
@@ -292,7 +292,7 @@ datum/design/mechacontrol
 	build_path = /obj/item/weapon/circuitboard/mecha_control
 
 datum/design/mechapower
-	name = "Circuit Design (Mech Bay Power Control Console)"
+	name = "Computer Design (Mech Bay Power Control Console)"
 	desc = "Allows for the construction of circuit boards used to build a mech bay power control console."
 	id = "mechapower"
 	req_tech = list("programming" = 2, "powerstorage" = 3)
@@ -301,7 +301,7 @@ datum/design/mechapower
 	build_path = /obj/item/weapon/circuitboard/mech_bay_power_console
 
 datum/design/rdconsole
-	name = "Circuit Design (R&D Console)"
+	name = "Computer Design (R&D Console)"
 	desc = "Allows for the construction of circuit boards used to build a new R&D console."
 	id = "rdconsole"
 	req_tech = list("programming" = 4)
@@ -310,7 +310,7 @@ datum/design/rdconsole
 	build_path = /obj/item/weapon/circuitboard/rdconsole
 
 datum/design/ordercomp
-	name = "Circuit Design (Supply ordering console)"
+	name = "Computer Design (Supply ordering console)"
 	desc = "Allows for the construction of circuit boards used to build a Supply ordering console."
 	id = "ordercomp"
 	req_tech = list("programming" = 2)
@@ -319,7 +319,7 @@ datum/design/ordercomp
 	build_path = /obj/item/weapon/circuitboard/ordercomp
 
 datum/design/supplycomp
-	name = "Circuit Design (Supply shuttle console)"
+	name = "Computer Design (Supply shuttle console)"
 	desc = "Allows for the construction of circuit boards used to build a Supply shuttle console."
 	id = "supplycomp"
 	req_tech = list("programming" = 3)
@@ -328,7 +328,7 @@ datum/design/supplycomp
 	build_path = /obj/item/weapon/circuitboard/supplycomp
 
 datum/design/mining
-	name = "Circuit Design (Outpost Status Display)"
+	name = "Computer Design (Outpost Status Display)"
 	desc = "Allows for the construction of circuit boards used to build an outpost status display console."
 	id = "mining"
 	req_tech = list("programming" = 2)
@@ -337,7 +337,7 @@ datum/design/mining
 	build_path = /obj/item/weapon/circuitboard/mining
 
 datum/design/comm_monitor
-	name = "Circuit Design (Telecommunications Monitoring Console)"
+	name = "Computer Design (Telecommunications Monitoring Console)"
 	desc = "Allows for the construction of circuit boards used to build a telecommunications monitor."
 	id = "comm_monitor"
 	req_tech = list("programming" = 3)
@@ -346,7 +346,7 @@ datum/design/comm_monitor
 	build_path = /obj/item/weapon/circuitboard/comm_monitor
 
 datum/design/comm_server
-	name = "Circuit Design (Telecommunications Server Monitoring Console)"
+	name = "Computer Design (Telecommunications Server Monitoring Console)"
 	desc = "Allows for the construction of circuit boards used to build a telecommunication server browser and monitor."
 	id = "comm_server"
 	req_tech = list("programming" = 3)
@@ -355,7 +355,7 @@ datum/design/comm_server
 	build_path = /obj/item/weapon/circuitboard/comm_server
 
 datum/design/message_monitor
-	name = "Circuit Design (Messaging Monitor Console)"
+	name = "Computer Design (Messaging Monitor Console)"
 	desc = "Allows for the construction of circuit boards used to build a messaging monitor console."
 	id = "message_monitor"
 	req_tech = list("programming" = 5)
@@ -364,7 +364,7 @@ datum/design/message_monitor
 	build_path = /obj/item/weapon/circuitboard/message_monitor
 
 datum/design/comm_traffic
-	name = "Circuit Design (Telecommunications Traffic Control Console)"
+	name = "Computer Design (Telecommunications Traffic Control Console)"
 	desc = "Allows for the construction of circuit boards used to build a telecommunications traffic control console."
 	id = "comm_traffic"
 	req_tech = list("programming" = 3)
@@ -373,7 +373,7 @@ datum/design/comm_traffic
 	build_path = /obj/item/weapon/circuitboard/comm_traffic
 
 datum/design/telesci_console
-	name = "Circuit Design (Telepad Control Console Board)"
+	name = "Computer Design (Telepad Control Console Board)"
 	desc = "Allows for the construction of circuit boards used to build a telescience console."
 	id = "telesci_console"
 	req_tech = list("programming" = 3, "bluespace" = 2)
@@ -382,7 +382,7 @@ datum/design/telesci_console
 	build_path = /obj/item/weapon/circuitboard/telesci_console
 
 datum/design/aifixer
-	name = "Circuit Design (AI Integrity Restorer)"
+	name = "Computer Design (AI Integrity Restorer)"
 	desc = "Allows for the construction of circuit boards used to build an AI Integrity Restorer."
 	id = "aifixer"
 	req_tech = list("programming" = 3, "biotech" = 2)
@@ -533,7 +533,7 @@ datum/design/custom_module
 /////Subspace Telecomms////////////
 ///////////////////////////////////
 datum/design/subspace_receiver
-	name = "Circuit Design (Subspace Receiver)"
+	name = "Machine Design (Subspace Receiver)"
 	desc = "Allows for the construction of Subspace Receiver equipment."
 	id = "s-receiver"
 	req_tech = list("programming" = 2, "engineering" = 2, "bluespace" = 1)
@@ -542,7 +542,7 @@ datum/design/subspace_receiver
 	build_path = /obj/item/weapon/circuitboard/telecomms/receiver
 
 datum/design/telecomms_bus
-	name = "Circuit Design (Bus Mainframe)"
+	name = "Machine Design (Bus Mainframe)"
 	desc = "Allows for the construction of Telecommunications Bus Mainframes."
 	id = "s-bus"
 	req_tech = list("programming" = 2, "engineering" = 2)
@@ -551,7 +551,7 @@ datum/design/telecomms_bus
 	build_path = /obj/item/weapon/circuitboard/telecomms/bus
 
 datum/design/telecomms_hub
-	name = "Circuit Design (Hub Mainframe)"
+	name = "Machine Design (Hub Mainframe)"
 	desc = "Allows for the construction of Telecommunications Hub Mainframes."
 	id = "s-hub"
 	req_tech = list("programming" = 2, "engineering" = 2)
@@ -560,7 +560,7 @@ datum/design/telecomms_hub
 	build_path = /obj/item/weapon/circuitboard/telecomms/hub
 
 datum/design/telecomms_relay
-	name = "Circuit Design (Relay Mainframe)"
+	name = "Machine Design (Relay Mainframe)"
 	desc = "Allows for the construction of Telecommunications Relay Mainframes."
 	id = "s-relay"
 	req_tech = list("programming" = 2, "engineering" = 2, "bluespace" = 2)
@@ -569,7 +569,7 @@ datum/design/telecomms_relay
 	build_path = /obj/item/weapon/circuitboard/telecomms/relay
 
 datum/design/telecomms_processor
-	name = "Circuit Design (Processor Unit)"
+	name = "Machine Design (Processor Unit)"
 	desc = "Allows for the construction of Telecommunications Processor equipment."
 	id = "s-processor"
 	req_tech = list("programming" = 2, "engineering" = 2)
@@ -578,7 +578,7 @@ datum/design/telecomms_processor
 	build_path = /obj/item/weapon/circuitboard/telecomms/processor
 
 datum/design/telecomms_server
-	name = "Circuit Design (Server Mainframe)"
+	name = "Machine Design (Server Mainframe)"
 	desc = "Allows for the construction of Telecommunications Servers."
 	id = "s-server"
 	req_tech = list("programming" = 2, "engineering" = 2)
@@ -587,7 +587,7 @@ datum/design/telecomms_server
 	build_path = /obj/item/weapon/circuitboard/telecomms/server
 
 datum/design/subspace_broadcaster
-	name = "Circuit Design (Subspace Broadcaster)"
+	name = "Machine Design (Subspace Broadcaster)"
 	desc = "Allows for the construction of Subspace Broadcasting equipment."
 	id = "s-broadcaster"
 	req_tech = list("programming" = 2, "engineering" = 2, "bluespace" = 1)
@@ -622,7 +622,7 @@ datum/design/paicard
 ///////////////////////////////////
 
 datum/design/ripley_main
-	name = "Circuit Design (APLU \"Ripley\" Central Control module)"
+	name = "Exosuit Design (APLU \"Ripley\" Central Control module)"
 	desc = "Allows for the construction of a \"Ripley\" Central Control module."
 	id = "ripley_main"
 	req_tech = list("programming" = 3)
@@ -631,7 +631,7 @@ datum/design/ripley_main
 	build_path = /obj/item/weapon/circuitboard/mecha/ripley/main
 
 datum/design/ripley_peri
-	name = "Circuit Design (APLU \"Ripley\" Peripherals Control module)"
+	name = "Exosuit Design (APLU \"Ripley\" Peripherals Control module)"
 	desc = "Allows for the construction of a  \"Ripley\" Peripheral Control module."
 	id = "ripley_peri"
 	req_tech = list("programming" = 3)
@@ -640,7 +640,7 @@ datum/design/ripley_peri
 	build_path = /obj/item/weapon/circuitboard/mecha/ripley/peripherals
 
 datum/design/odysseus_main
-	name = "Circuit Design (\"Odysseus\" Central Control module)"
+	name = "Exosuit Design (\"Odysseus\" Central Control module)"
 	desc = "Allows for the construction of a \"Odysseus\" Central Control module."
 	id = "odysseus_main"
 	req_tech = list("programming" = 3,"biotech" = 2)
@@ -649,7 +649,7 @@ datum/design/odysseus_main
 	build_path = /obj/item/weapon/circuitboard/mecha/odysseus/main
 
 datum/design/odysseus_peri
-	name = "Circuit Design (\"Odysseus\" Peripherals Control module)"
+	name = "Exosuit Design (\"Odysseus\" Peripherals Control module)"
 	desc = "Allows for the construction of a \"Odysseus\" Peripheral Control module."
 	id = "odysseus_peri"
 	req_tech = list("programming" = 3,"biotech" = 2)
@@ -658,7 +658,7 @@ datum/design/odysseus_peri
 	build_path = /obj/item/weapon/circuitboard/mecha/odysseus/peripherals
 
 datum/design/gygax_main
-	name = "Circuit Design (\"Gygax\" Central Control module)"
+	name = "Exosuit Design (\"Gygax\" Central Control module)"
 	desc = "Allows for the construction of a \"Gygax\" Central Control module."
 	id = "gygax_main"
 	req_tech = list("programming" = 4)
@@ -667,7 +667,7 @@ datum/design/gygax_main
 	build_path = /obj/item/weapon/circuitboard/mecha/gygax/main
 
 datum/design/gygax_peri
-	name = "Circuit Design (\"Gygax\" Peripherals Control module)"
+	name = "Exosuit Design (\"Gygax\" Peripherals Control module)"
 	desc = "Allows for the construction of a \"Gygax\" Peripheral Control module."
 	id = "gygax_peri"
 	req_tech = list("programming" = 4)
@@ -676,7 +676,7 @@ datum/design/gygax_peri
 	build_path = /obj/item/weapon/circuitboard/mecha/gygax/peripherals
 
 datum/design/gygax_targ
-	name = "Circuit Design (\"Gygax\" Weapons & Targeting Control module)"
+	name = "Exosuit Design (\"Gygax\" Weapons & Targeting Control module)"
 	desc = "Allows for the construction of a \"Gygax\" Weapons & Targeting Control module."
 	id = "gygax_targ"
 	req_tech = list("programming" = 4, "combat" = 2)
@@ -685,7 +685,7 @@ datum/design/gygax_targ
 	build_path = /obj/item/weapon/circuitboard/mecha/gygax/targeting
 
 datum/design/durand_main
-	name = "Circuit Design (\"Durand\" Central Control module)"
+	name = "Exosuit Design (\"Durand\" Central Control module)"
 	desc = "Allows for the construction of a \"Durand\" Central Control module."
 	id = "durand_main"
 	req_tech = list("programming" = 4)
@@ -694,7 +694,7 @@ datum/design/durand_main
 	build_path = /obj/item/weapon/circuitboard/mecha/durand/main
 
 datum/design/durand_peri
-	name = "Circuit Design (\"Durand\" Peripherals Control module)"
+	name = "Exosuit Design (\"Durand\" Peripherals Control module)"
 	desc = "Allows for the construction of a \"Durand\" Peripheral Control module."
 	id = "durand_peri"
 	req_tech = list("programming" = 4)
@@ -703,7 +703,7 @@ datum/design/durand_peri
 	build_path = /obj/item/weapon/circuitboard/mecha/durand/peripherals
 
 datum/design/durand_targ
-	name = "Circuit Design (\"Durand\" Weapons & Targeting Control module)"
+	name = "Exosuit Design (\"Durand\" Weapons & Targeting Control module)"
 	desc = "Allows for the construction of a \"Durand\" Weapons & Targeting Control module."
 	id = "durand_targ"
 	req_tech = list("programming" = 4, "combat" = 2)
@@ -712,7 +712,7 @@ datum/design/durand_targ
 	build_path = /obj/item/weapon/circuitboard/mecha/durand/targeting
 
 datum/design/honker_main
-	name = "Circuit Design (\"H.O.N.K\" Central Control module)"
+	name = "Exosuit Design (\"H.O.N.K\" Central Control module)"
 	desc = "Allows for the construction of a \"H.O.N.K\" Central Control module."
 	id = "honker_main"
 	req_tech = list("programming" = 3)
@@ -721,7 +721,7 @@ datum/design/honker_main
 	build_path = /obj/item/weapon/circuitboard/mecha/honker/main
 
 datum/design/honker_peri
-	name = "Circuit Design (\"H.O.N.K\" Peripherals Control module)"
+	name = "Exosuit Design (\"H.O.N.K\" Peripherals Control module)"
 	desc = "Allows for the construction of a \"H.O.N.K\" Peripheral Control module."
 	id = "honker_peri"
 	req_tech = list("programming" = 3)
@@ -730,7 +730,7 @@ datum/design/honker_peri
 	build_path = /obj/item/weapon/circuitboard/mecha/honker/peripherals
 
 datum/design/honker_targ
-	name = "Circuit Design (\"H.O.N.K\" Weapons & Targeting Control module)"
+	name = "Exosuit Design (\"H.O.N.K\" Weapons & Targeting Control module)"
 	desc = "Allows for the construction of a \"H.O.N.K\" Weapons & Targeting Control module."
 	id = "honker_targ"
 	req_tech = list("programming" = 3)
@@ -1223,7 +1223,7 @@ datum/design/light_replacer
 ////////////////////////////////////////
 
 datum/design/smes
-	name = "SMES Board"
+	name = "Machine Design (SMES Board)"
 	desc = "The circuit board for a SMES."
 	id = "smes"
 	req_tech = list("programming" = 4, "power" = 5, "engineering" = 4)
@@ -1232,7 +1232,7 @@ datum/design/smes
 	build_path = /obj/item/weapon/circuitboard/smes
 
 datum/design/turbine_computer
-	name = "Power Turbine Console Board"
+	name = "Computer Design (Power Turbine Console Board)"
 	desc = "The circuit board for a power turbine console."
 	id = "power_turbine_console"
 	req_tech = list("programming" = 4, "power" = 4, "engineering" = 4)
@@ -1241,7 +1241,7 @@ datum/design/turbine_computer
 	build_path = /obj/item/weapon/circuitboard/turbine_computer
 
 datum/design/power_compressor
-	name = "Power Compressor Board"
+	name = "Machine Design (Power Compressor Board)"
 	desc = "The circuit board for a power compressor."
 	id = "power_compressor"
 	req_tech = list("programming" = 4, "power" = 5, "engineering" = 4)
@@ -1250,7 +1250,7 @@ datum/design/power_compressor
 	build_path = /obj/item/weapon/circuitboard/power_compressor
 
 datum/design/power_turbine
-	name = "Power Turbine Board"
+	name = "Machine Design (Power Turbine Board)"
 	desc = "The circuit board for a power turbine."
 	id = "power_turbine"
 	req_tech = list("programming" = 4, "power" = 4, "engineering" = 5)
@@ -1259,7 +1259,7 @@ datum/design/power_turbine
 	build_path = /obj/item/weapon/circuitboard/power_turbine
 
 datum/design/teleport_station
-	name = "Teleportation Station Board"
+	name = "Machine Design (Teleportation Station Board)"
 	desc = "The circuit board for a teleportation station."
 	id = "tele_station"
 	req_tech = list("programming" = 4, "bluespace" = 4, "engineering" = 4)
@@ -1268,7 +1268,7 @@ datum/design/teleport_station
 	build_path = /obj/item/weapon/circuitboard/teleporter_station
 
 datum/design/teleport_hub
-	name = "Teleportation Hub Board"
+	name = "Machine Design (Teleportation Hub Board)"
 	desc = "The circuit board for a teleportation hub."
 	id = "tele_hub"
 	req_tech = list("programming" = 3, "bluespace" = 5, "materials" = 4, "engineering" = 5)
@@ -1277,7 +1277,7 @@ datum/design/teleport_hub
 	build_path = /obj/item/weapon/circuitboard/teleporter_hub
 
 datum/design/telepad
-	name = "Telepad Board"
+	name = "Machine Design (Telepad Board)"
 	desc = "The circuit board for a telescience telepad."
 	id = "telepad"
 	req_tech = list("programming" = 4, "bluespace" = 4, "materials" = 3, "engineering" = 3)
@@ -1286,7 +1286,7 @@ datum/design/telepad
 	build_path = /obj/item/weapon/circuitboard/telesci_pad
 
 datum/design/sleeper
-	name = "Sleeper Board"
+	name = "Machine Design (Sleeper Board)"
 	desc = "The circuit board for a sleeper."
 	id = "sleeper"
 	req_tech = list("programming" = 3, "biotech" = 2, "materials" = 3, "engineering" = 3)
@@ -1295,7 +1295,7 @@ datum/design/sleeper
 	build_path = /obj/item/weapon/circuitboard/sleeper
 
 datum/design/cryotube
-	name = "Cryotube Board"
+	name = "Machine Design (Cryotube Board)"
 	desc = "The circuit board for a cryotube."
 	id = "cryotube"
 	req_tech = list("programming" = 4, "biotech" = 3, "engineering" = 4)
@@ -1304,7 +1304,7 @@ datum/design/cryotube
 	build_path = /obj/item/weapon/circuitboard/cryo_tube
 
 datum/design/thermomachine
-	name = "Freezer/Heater Board"
+	name = "Machine Design (Freezer/Heater Board)"
 	desc = "The circuit board for a freezer/heater."
 	id = "thermomachine"
 	req_tech = list("programming" = 3, "plasmatech" = 3)
@@ -1313,7 +1313,7 @@ datum/design/thermomachine
 	build_path = /obj/item/weapon/circuitboard/thermomachine
 
 datum/design/biogenerator
-	name = "Biogenerator Board"
+	name = "Machine Design (Biogenerator Board)"
 	desc = "The circuit board for a biogenerator."
 	id = "biogenerator"
 	req_tech = list("programming" = 3, "biotech" = 2, "materials" = 3)
@@ -1322,7 +1322,7 @@ datum/design/biogenerator
 	build_path = /obj/item/weapon/circuitboard/biogenerator
 
 datum/design/hydroponics
-	name = "Hydroponics Tray Board"
+	name = "Machine Design (Hydroponics Tray Board)"
 	desc = "The circuit board for a hydroponics tray."
 	id = "hydro_tray"
 	req_tech = list("programming" = 1, "biotech" = 1)
@@ -1331,7 +1331,7 @@ datum/design/hydroponics
 	build_path = /obj/item/weapon/circuitboard/hydroponics
 
 datum/design/microwave
-	name = "Microwave Board"
+	name = "Machine Design (Microwave Board)"
 	desc = "The circuit board for a microwave."
 	id = "microwave"
 	req_tech = list("programming" = 1)
@@ -1340,7 +1340,7 @@ datum/design/microwave
 	build_path = /obj/item/weapon/circuitboard/microwave
 
 datum/design/chem_dispenser
-	name = "Portable Chem Dispenser Board"
+	name = "Machine Design (Portable Chem Dispenser Board)"
 	desc = "The circuit board for a portable chem dispenser."
 	id = "chem_dispenser"
 	req_tech = list("programming" = 4, "biotech" = 3, "engineering" = 4, "materials" = 4, "plasmatech" = 3)
@@ -1349,7 +1349,7 @@ datum/design/chem_dispenser
 	build_path = /obj/item/weapon/circuitboard/chem_dispenser
 
 datum/design/destructive_analyzer
-	name = "Destructive Analyzer Board"
+	name = "Machine Design (Destructive Analyzer Board)"
 	desc = "The circuit board for a destructive analyzer."
 	id = "destructive_analyzer"
 	req_tech = list("programming" = 2, "magnets" = 2, "engineering" = 2)
@@ -1358,7 +1358,7 @@ datum/design/destructive_analyzer
 	build_path = /obj/item/weapon/circuitboard/destructive_analyzer
 
 datum/design/protolathe
-	name = "Protolathe Board"
+	name = "Machine Design (Protolathe Board)"
 	desc = "The circuit board for a protolathe."
 	id = "protolathe"
 	req_tech = list("programming" = 2, "engineering" = 2)
@@ -1367,7 +1367,7 @@ datum/design/protolathe
 	build_path = /obj/item/weapon/circuitboard/protolathe
 
 datum/design/circuit_imprinter
-	name = "Circuit Imprinter Board"
+	name = "Machine Design (Circuit Imprinter Board)"
 	desc = "The circuit board for a circuit imprinter."
 	id = "circuit_imprinter"
 	req_tech = list("programming" = 2, "engineering" = 2)
@@ -1376,7 +1376,7 @@ datum/design/circuit_imprinter
 	build_path = /obj/item/weapon/circuitboard/circuit_imprinter
 
 datum/design/autolathe
-	name = "Autolathe Board"
+	name = "Machine Design (Autolathe Board)"
 	desc = "The circuit board for an autolathe."
 	id = "autolathe"
 	req_tech = list("programming" = 2, "engineering" = 2)
@@ -1385,7 +1385,7 @@ datum/design/autolathe
 	build_path = /obj/item/weapon/circuitboard/autolathe
 
 datum/design/rdservercontrol
-	name = "R&D Server Control Console Board"
+	name = "Computer Design (R&D Server Control Console Board)"
 	desc = "The circuit board for an R&D Server Control Console."
 	id = "rdservercontrol"
 	req_tech = list("programming" = 3)
@@ -1394,7 +1394,7 @@ datum/design/rdservercontrol
 	build_path = /obj/item/weapon/circuitboard/rdservercontrol
 
 datum/design/rdserver
-	name = "R&D Server Board"
+	name = "Machine Design (R&D Server Board)"
 	desc = "The circuit board for an R&D Server."
 	id = "rdserver"
 	req_tech = list("programming" = 3)
@@ -1403,7 +1403,7 @@ datum/design/rdserver
 	build_path = /obj/item/weapon/circuitboard/rdserver
 
 datum/design/mechfab
-	name = "Exosuit Fabricator Board"
+	name = "Machine Design (Exosuit Fabricator Board)"
 	desc = "The circuit board for an Exosuit Fabricator."
 	id = "mechfab"
 	req_tech = list("programming" = 3, "engineering" = 3)
@@ -1413,7 +1413,7 @@ datum/design/mechfab
 
 
 datum/design/cyborgrecharger
-	name = "Cyborg Recharger Board"
+	name = "Machine Design (Cyborg Recharger Board)"
 	desc = "The circuit board for a Cyborg Recharger."
 	id = "cyborgrecharger"
 	req_tech = list("powerstorage" = 3, "engineering" = 3)
@@ -1422,7 +1422,7 @@ datum/design/cyborgrecharger
 	build_path = /obj/item/weapon/circuitboard/cyborgrecharger
 
 datum/design/mech_recharger
-	name = "Mechbay Recharger Board"
+	name = "Machine Design (Mechbay Recharger Board)"
 	desc = "The circuit board for a Mechbay Recharger."
 	id = "mech_recharger"
 	req_tech = list("programming" = 3, "powerstorage" = 4, "engineering" = 4)
@@ -1431,7 +1431,7 @@ datum/design/mech_recharger
 	build_path = /obj/item/weapon/circuitboard/mech_recharger
 
 datum/design/vendor
-	name = "Vendor Board"
+	name = "Machine Design (Vendor Board)"
 	desc = "The circuit board for a Vendor."
 	id = "vendor"
 	req_tech = list("programming" = 1)
@@ -1445,7 +1445,7 @@ datum/design/vendor
 /////////////////////////////////////////
 
 datum/design/pacman
-	name = "PACMAN-type Generator Board"
+	name = "Machine Design (PACMAN-type Generator Board)"
 	desc = "The circuit board that for a PACMAN-type portable generator."
 	id = "pacman"
 	req_tech = list("programming" = 3, "plasmatech" = 3, "powerstorage" = 3, "engineering" = 3)
@@ -1455,7 +1455,7 @@ datum/design/pacman
 	build_path = /obj/item/weapon/circuitboard/pacman
 
 datum/design/superpacman
-	name = "SUPERPACMAN-type Generator Board"
+	name = "Machine Design (SUPERPACMAN-type Generator Board)"
 	desc = "The circuit board that for a SUPERPACMAN-type portable generator."
 	id = "superpacman"
 	req_tech = list("programming" = 3, "powerstorage" = 4, "engineering" = 4)
@@ -1465,7 +1465,7 @@ datum/design/superpacman
 	build_path = /obj/item/weapon/circuitboard/pacman/super
 
 datum/design/mrspacman
-	name = "MRSPACMAN-type Generator Board"
+	name = "Machine Design (MRSPACMAN-type Generator Board)"
 	desc = "The circuit board that for a MRSPACMAN-type portable generator."
 	id = "mrspacman"
 	req_tech = list("programming" = 3, "powerstorage" = 5, "engineering" = 5)

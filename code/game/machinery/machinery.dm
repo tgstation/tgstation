@@ -204,7 +204,7 @@ Class Procs:
 		return 1
 	if(usr.restrained() || usr.lying || usr.stat)
 		return 1
-	if(!(ishuman(usr) || issilicon(usr) || (ismonkey(usr) && ticker && ticker.mode.name == "monkey")))
+	if(!(ishuman(usr) || issilicon(usr)))
 		usr << "<span class='notice'>You don't have the dexterity to do this!</span>"
 		return 1
 
@@ -245,7 +245,7 @@ Class Procs:
 		return 1
 	if ( ! (istype(usr, /mob/living/carbon/human) || \
 			istype(usr, /mob/living/silicon) || \
-			istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
+			istype(usr, /mob/living/carbon/monkey)) )
 		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return 1
 /*
