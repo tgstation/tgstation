@@ -166,7 +166,7 @@
 			if(input["key"] != config.comms_key)
 				return "Bad Key"
 			else
-				world << "<span class='announce'>New pull request created: [input["announce"]]</span>"
+				world << "<span class='announce'>[input["announce"]]</span>"
 
 
 /world/Reboot(var/reason)
