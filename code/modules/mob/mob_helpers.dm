@@ -100,11 +100,6 @@
 		return 1
 	return 0
 
-/proc/isaiorborg(A)
-	if(istype(A, /mob/living/silicon/ai) || istype(A, /mob/living/silicon/robot))
-		return 1
-	return 0
-
 /proc/isliving(A)
 	if(istype(A, /mob/living))
 		return 1
@@ -419,3 +414,7 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 
 /mob/proc/has_mutation(var/mutation)
 	return mutation in src.mutations ? 1 : 0
+
+/proc/get_both_hands(mob/living/carbon/M)
+	var/list/hands = list(M.l_hand, M.r_hand)
+	return hands

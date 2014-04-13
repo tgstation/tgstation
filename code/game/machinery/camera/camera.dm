@@ -49,8 +49,17 @@
 		deactivate()
 
 /obj/machinery/camera/Destroy()
+	deactivate(null, 0) //kick anyone viewing out
+	if(assembly)
+		qdel(assembly)
+		assembly = null
 	if(istype(bug))
 		bug.bugged_cameras -= src.c_tag
+		if(bug.current == src)
+			bug.current = null
+		bug = null
+	qdel(wires)
+	cameranet.removeCamera(src) //Will handle removal from the camera network and the chunks, so we don't need to worry about that
 	..()
 
 /obj/machinery/camera/emp_act(severity)
@@ -113,6 +122,8 @@
 	deactivate(user,0)
 
 /obj/machinery/camera/attackby(W as obj, mob/living/user as mob)
+	var/msg = "<span class='notice'>You attach [W] into the assembly inner circuits.</span>"
+	var/msg2 = "<span class='notice'>The camera already has that upgrade!</span>"
 
 	// DECONSTRUCTION
 	if(istype(W, /obj/item/weapon/screwdriver))
@@ -128,11 +139,38 @@
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && wires.CanDeconstruct())
 		if(weld(W, user))
-			if(assembly)
-				assembly.loc = src.loc
-				assembly.state = 1
+			user << "You unweld the camera leaving it as just a frame screwed to the wall."
+			if(!assembly)
+				assembly = new()
+			assembly.loc = src.loc
+			assembly.state = 1
+			assembly.dir = src.dir
+			assembly.update_icon()
+			assembly = null
 			qdel(src)
+			return
+	else if(istype(W, /obj/item/device/analyzer) && panel_open) //XRay
+		if(!isXRay())
+			upgradeXRay()
+			qdel(W)
+			user << "[msg]"
+		else
+			user << "[msg2]"
 
+	else if(istype(W, /obj/item/stack/sheet/mineral/plasma) && panel_open)
+		if(!isEmpProof())
+			upgradeEmpProof()
+			user << "[msg]"
+			qdel(W)
+		else
+			user << "[msg2]"
+	else if(istype(W, /obj/item/device/assembly/prox_sensor) && panel_open)
+		if(!isMotion())
+			upgradeMotion()
+			user << "[msg]"
+			qdel(W)
+		else
+			user << "[msg2]"
 
 	// OTHER
 	else if ((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/device/pda)) && isliving(user))
@@ -193,7 +231,7 @@
 		status = !( src.status )
 		if (!(src.status))
 			if(user)
-				visible_message("\red [user] has deactivated [src]!")
+				visible_message("\red [user] deactivates [src]!")
 				add_hiddenprint(user)
 			else
 				visible_message("\red \The [src] deactivates!")
@@ -202,10 +240,10 @@
 
 		else
 			if(user)
-				visible_message("\red [user] has reactivated [src]!")
+				visible_message("\red [user] reactivates [src]!")
 				add_hiddenprint(user)
 			else
-				visible_message("\red \the [src] reactivates!")
+				visible_message("\red \The [src] reactivates!")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			icon_state = initial(icon_state)
 
@@ -289,7 +327,7 @@
 		return 0
 
 	// Do after stuff here
-	user << "<span class='notice'>You start to weld the [src]..</span>"
+	user << "<span class='notice'>You start to weld [src].</span>"
 	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	WT.eyecheck(user)
 	busy = 1

@@ -142,15 +142,13 @@
 
 /obj/machinery/computer/telecomms/traffic/proc/create_log(var/entry, var/mob/user)
 	var/id = null
-	if(isaiorborg(user))
+	if(issilicon(user))
 		id = "System Administrator"
-	else if(ispAI(user))
-		id = "[user.name] (pAI)"
 	else
 		if(auth)
 			id = "[auth.registered_name] ([auth.assignment])"
 		else
-			error("There is a null auth while the user isn't a silicon! ([user.name], [user.type])")
+			ERROR("There is a null auth while the user isn't a silicon! ([user.name], [user.type])")
 			return
 	access_log += "\[[get_timestamp()]\] [id] [entry]"
 

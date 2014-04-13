@@ -4,7 +4,6 @@
 	icon_state = "shuttle"
 	var/auth_need = 3.0
 	var/list/authorized = list(  )
-	paiallowed = 0
 
 
 	attackby(var/obj/item/weapon/card/W as obj, var/mob/user as mob)

@@ -2,17 +2,21 @@
 	mob_list -= src
 	dead_mob_list -= src
 	living_mob_list -= src
-	//Set the mob up for GC. Mobs have lots of references
 	if(client)
 		for(var/atom/movable/AM in client.screen)
 			qdel(AM)
 		client.screen = list()
-	del(hud_used)
-	spellremove(src)
+	qdel(hud_used)
+	if(mind && mind.current == src)
+		spellremove(src)
 	for(var/infection in viruses)
-		del(infection)
+		qdel(infection)
 	ghostize()
 	..()
+
+/mob/proc/sac_act(var/obj/effect/rune/R, var/mob/victim as mob)
+	return
+
 
 var/next_mob_id = 0
 /mob/New()
@@ -799,3 +803,4 @@ var/list/slot_equipment_priority = list( \
 	resting = max(resting + amount,0)
 	update_canmove()
 	return
+

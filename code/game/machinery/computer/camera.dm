@@ -26,20 +26,14 @@
 				return
 
 			if (!network)
-				world.log << "A computer lacks a network at [x],[y],[z]."
+				ERROR("A computer lacks a network at [x],[y],[z].")
 				return
 			if (!(istype(network,/list)))
-				world.log << "The computer at [x],[y],[z] has a network that is not a list!"
+				ERROR("The computer at [x],[y],[z] has a network that is not a list!")
 				return
 
 			if(..())
 				return
-
-			if(ispAI(usr))
-				if(paired != usr)
-					user.reset_view()
-					user.unset_machine()
-					return
 
 			var/list/L = list()
 			for (var/obj/machinery/camera/C in cameranet.cameras)
@@ -62,41 +56,33 @@
 
 			var/t = input(user, "Which camera should you change to?") as null|anything in D
 			if(!t)
-				if(!isAI(user))
-					user.reset_view()
 				user.unset_machine()
 				return 0
 
 			var/obj/machinery/camera/C = D[t]
 
 			if(t == "Cancel")
-				if(!isAI(user))
-					user.reset_view()
 				user.unset_machine()
 				return 0
 
 			if(C)
-				if(isAI(user))
-					var/mob/living/silicon/ai/A = user
-					A.eyeobj.setLoc(get_turf(C))
-					A.client.eye = A.eyeobj
-				if(ispAI(user))
-					var/mob/living/silicon/pai/A = user
-					A.switchCamera(C)
-				else if ((get_dist(user, src) > 1) || (user.machine != src)|| user.blinded || !( C.can_use() ))
-					src.current = null
+				if ((get_dist(user, src) > 1 || user.machine != src || user.blinded || !( C.can_use() )) && (!istype(user, /mob/living/silicon/ai)))
+					if(!C.can_use() && !isAI(user))
+						src.current = null
 					return 0
 				else
-					src.current = C
-					use_power(50)
-				spawn(5)
-					attack_hand(user)
+					if(isAI(user))
+						var/mob/living/silicon/ai/A = user
+						A.eyeobj.setLoc(get_turf(C))
+						A.client.eye = A.eyeobj
+					else
+						src.current = C
+						use_power(50)
+
+					spawn(5)
+						attack_hand(user)
 			return
-		else
-			if(!isAI(user))
-				user.reset_view()
-			user.unset_machine()
-			return
+
 
 
 /obj/machinery/computer/security/telescreen
@@ -107,7 +93,6 @@
 	network = list("thunder")
 	density = 0
 	circuit = null
-	paiallowed = 0 //2retro
 
 /obj/machinery/computer/security/telescreen/update_icon()
 	icon_state = initial(icon_state)
@@ -129,7 +114,6 @@
 	name = "security camera monitor"
 	desc = "An old TV hooked into the stations camera network."
 	icon_state = "security_det"
-	paiallowed = 0 //2retro
 
 
 /obj/machinery/computer/security/mining

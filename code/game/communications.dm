@@ -76,6 +76,7 @@ Radio:
 1443 - Confession Intercom
 1349 - Miners
 1347 - Cargo techs
+1447 - AI Private
 
 Devices:
 1451 - tracking implant
@@ -108,6 +109,7 @@ var/list/radiochannels = list(
 	"Syndicate" = 1213,
 	"Supply" = 1347,
 	"Service" = 1349,
+	"AI Private" = 1447,
 )
 //depenging helpers
 var/const/SYND_FREQ = 1213 //nuke op frequency, coloured dark brown in chat window
@@ -119,6 +121,7 @@ var/const/MED_FREQ = 1355 //medical, coloured blue in chat window
 var/const/ENG_FREQ = 1357 //engineering, coloured orange in chat window
 var/const/SEC_FREQ = 1359 //security, coloured red in chat window
 var/const/DSQUAD_FREQ = 1441 //death squad frequency, coloured grey in chat window
+var/const/AIPRIV_FREQ = 1447 //AI private, colored magenta in chat window
 
 #define TRANSMISSION_WIRE	0
 #define TRANSMISSION_RADIO	1

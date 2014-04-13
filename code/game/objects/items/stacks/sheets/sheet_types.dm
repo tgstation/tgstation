@@ -98,14 +98,16 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	new/datum/stack_recipe("drying rack", /obj/machinery/smartfridge/drying_rack, 10, time = 15, one_per_turf = 1, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/wood
+/obj/item/stack/sheet/mineral/wood
 	name = "wooden plank"
 	desc = "One can only guess that this is a bunch of wood."
 	singular_name = "wood plank"
 	icon_state = "sheet-wood"
+	icon = 'icons/obj/items.dmi'
 	origin_tech = "materials=1;biotech=1"
+	sheettype = "wood"
 
-/obj/item/stack/sheet/wood/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/mineral/wood/New(var/loc, var/amount=null)
 	recipes = wood_recipes
 	return ..()
 

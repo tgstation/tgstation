@@ -2034,7 +2034,7 @@ datum/chemical_reaction/pestkiller
 	name = "Aloe"
 	id = "aloe"
 	result = "aloe"
-	required_reagents = list("cream" = 1, "whiskey" = 1, "watermelonjuice" = 1)
+	required_reagents = list("irishcream" = 1, "watermelonjuice" = 1)
 	result_amount = 2
 
 /datum/chemical_reaction/andalusia
