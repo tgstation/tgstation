@@ -221,6 +221,7 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	idtype = /obj/item/weapon/card/id/clown
 	access = list(access_clown, access_theatre, access_maint_tunnels)
 	minimal_access = list(access_clown, access_theatre)
 
@@ -255,6 +256,7 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	idtype = /obj/item/weapon/card/id/mime
 	access = list(access_mime, access_theatre, access_maint_tunnels)
 	minimal_access = list(access_mime, access_theatre)
 
