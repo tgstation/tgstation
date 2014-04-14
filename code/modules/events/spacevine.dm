@@ -91,16 +91,17 @@
 
 /datum/spacevine_mutation/vine_eating/on_spread(obj/effect/spacevine/holder, turf/target)
 	var/obj/effect/spacevine/prey = locate() in target
-	if(prey)
+	if(prey && !prey.mutations.Find(src))  //Eat all vines that are not of the same origin
 		prey.Destroy()
 
-/datum/spacevine_mutation/agressive_spread  //very OP, but im out of other ideas currently
-	name = "agressive spreading"
+/datum/spacevine_mutation/aggressive_spread  //very OP, but im out of other ideas currently
+	name = "aggressive spreading"
 	hue = "777777"
 
-/datum/spacevine_mutation/agressive_spread/on_spread(obj/effect/spacevine/holder, turf/target)
+/datum/spacevine_mutation/aggressive_spread/on_spread(obj/effect/spacevine/holder, turf/target)
 	for(var/atom/A in target)
-		A.ex_act(severity)
+		if(!istype(A, /obj/effect))
+			A.ex_act(severity)  //To not be the same as self-eating vine
 
 /datum/spacevine_mutation/agressive_spread/on_buckle(obj/effect/spacevine/holder, mob/living/buckled)
 	buckled.ex_act(severity)
