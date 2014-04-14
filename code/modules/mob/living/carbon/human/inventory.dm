@@ -43,7 +43,7 @@
 				return 0
 			if(!w_uniform)
 				if(!disable_warning)
-					src << "\red You need a jumpsuit before you can attach this [name]."
+					src << "\red You need a jumpsuit before you can attach this [I.name]."
 				return 0
 			if( !(I.slot_flags & SLOT_BELT) )
 				return
@@ -77,7 +77,7 @@
 				return 0
 			if(!w_uniform)
 				if(!disable_warning)
-					src << "\red You need a jumpsuit before you can attach this [name]."
+					src << "\red You need a jumpsuit before you can attach this [I.name]."
 				return 0
 			if( !(I.slot_flags & SLOT_ID) )
 				return 0
@@ -89,7 +89,7 @@
 				return 0
 			if(!w_uniform)
 				if(!disable_warning)
-					src << "\red You need a jumpsuit before you can attach this [name]."
+					src << "\red You need a jumpsuit before you can attach this [I.name]."
 				return 0
 			if(I.slot_flags & SLOT_DENYPOCKET)
 				return
@@ -102,7 +102,7 @@
 				return 0
 			if(!w_uniform)
 				if(!disable_warning)
-					src << "\red You need a jumpsuit before you can attach this [name]."
+					src << "\red You need a jumpsuit before you can attach this [I.name]."
 				return 0
 			if(I.slot_flags & SLOT_DENYPOCKET)
 				return 0
@@ -116,7 +116,7 @@
 				return 0
 			if(!wear_suit)
 				if(!disable_warning)
-					src << "\red You need a suit before you can attach this [name]."
+					src << "\red You need a suit before you can attach this [I.name]."
 				return 0
 			if(!wear_suit.allowed)
 				if(!disable_warning)
@@ -124,7 +124,7 @@
 				return 0
 			if(I.w_class > 4)
 				if(!disable_warning)
-					usr << "The [name] is too big to attach."  //should be src?
+					usr << "The [I.name] is too big to attach."  //should be src?
 				return 0
 			if( istype(I, /obj/item/device/pda) || istype(I, /obj/item/weapon/pen) || is_type_in_list(I, wear_suit.allowed) )  //ugly and un-polymorphic.
 				return 1
