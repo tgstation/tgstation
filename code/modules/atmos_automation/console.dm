@@ -105,6 +105,7 @@
 		return out
 
 	Topic(href,href_list)
+		if(..()) return
 		if(href_list["on"])
 			on = !on
 			updateUsrDialog()
