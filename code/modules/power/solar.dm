@@ -47,6 +47,8 @@ var/list/solars_list = list()
 		S.glass_type = /obj/item/stack/sheet/glass
 		S.anchored = 1
 	S.loc = src
+	if(S.glass_type == /obj/item/stack/sheet/rglass) //if the panel is in reinforced glass
+		health *= 2 								 //this need to be placed here, because panels already on the map don't have an assembly linked to
 	update_icon()
 
 
@@ -106,21 +108,32 @@ var/list/solars_list = list()
 	if(obscured)
 		sunfrac = 0
 		return
-	var/p_angle = abs((360+adir)%360 - (360+sun.angle)%360)
+
+	//find the smaller angle between the direction the panel is facing and the direction of the sun (the sign is not important here)
+	var/p_angle = min(abs(adir - sun.angle), 360 - abs(adir - sun.angle))
+
 	if(p_angle > 90)			// if facing more than 90deg from sun, zero output
 		sunfrac = 0
 		return
-	sunfrac = cos(p_angle) ** 2
 
+	sunfrac = cos(p_angle) ** 2
+	//isn't the power recieved from the incoming light proportionnal to cos(p_angle) (Lambert's cosine law) rather than cos(p_angle)^2 ?
 
 /obj/machinery/power/solar/process()//TODO: remove/add this from machines to save on processing as needed ~Carn PRIORITY
-	if(stat & BROKEN)	return
-	if(!control)	return
+	if(stat & BROKEN)
+		return
+	if(!sun || !control) //if there's no sun or the panel is not linked to a solar control computer, no need to proceed
+		return
 
 	if(adir != ndir)
-		adir = (360+adir+dd_range(-10,10,ndir-adir))%360
+		adir = (360 + adir + dd_range(-12,12,((ndir - adir + 180) % 360 + 360) % 360 - 180)) % 360 //12 been the (absolute) max angle the sun can move between two updates
 		update_icon()
 		update_solar_exposure()
+
+/* The expression "((ndir - adir + 180) % 360 + 360) % 360 - 180)" get the smaller (in absolute value) signed angle between
+   the direction the panel is facing and the direction of the sun
+   That way the solar panel will take the shortest way to it's new position and won't backtrack when getting from, for example, 355° to 1°.
+   "(ndir - adir + 180) % 360 + 360) % 360" is basically "(ndir - adir) % 360" but in N, rather than in Z*/
 
 	if(obscured)	return
 
@@ -147,17 +160,20 @@ var/list/solars_list = list()
 /obj/machinery/power/solar/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			qdel(src)
 			if(prob(15))
 				new /obj/item/weapon/shard( src.loc )
+			qdel(src)
 			return
+
 		if(2.0)
 			if (prob(25))
 				new /obj/item/weapon/shard( src.loc )
 				qdel(src)
 				return
+
 			if (prob(50))
 				broken()
+
 		if(3.0)
 			if (prob(25))
 				broken()
@@ -268,8 +284,8 @@ var/list/solars_list = list()
 	var/lastgen = 0
 	var/track = 0			// 0= off  1=timed  2=auto (tracker)
 	var/trackrate = 600		// 300-900 seconds
-	var/trackdir = 1		// 0 =CCW, 1=CW
 	var/nexttime = 0
+	var/timed_last_updated = 0
 
 
 /obj/machinery/power/solar_control/New()
@@ -364,7 +380,6 @@ var/list/solars_list = list()
 		src.attack_hand(user)
 	return
 
-
 /obj/machinery/power/solar_control/process()
 	lastgen = gen
 	gen = 0
@@ -372,10 +387,13 @@ var/list/solars_list = list()
 	if(stat & (NOPOWER | BROKEN))
 		return
 
-	if(track==1 && nexttime < world.timeofday && trackrate)
-		nexttime = world.timeofday + 3600/abs(trackrate)
-		cdir = (cdir+trackrate/abs(trackrate)+360)%360
-		set_panels(cdir)
+	if(track==1 && trackrate)
+		if(nexttime <= world.timeofday) 							//every time we need to increase/decrease the angle by 1°...
+			nexttime = world.timeofday + 36000/abs(trackrate)
+			cdir = (cdir + trackrate/abs(trackrate) + 360) % 360 	//... do it
+		if(world.timeofday - timed_last_updated >= 600)				//update the panels every minute or so,
+			timed_last_updated = world.timeofday
+			set_panels(cdir)
 
 	src.updateDialog()
 
@@ -410,10 +428,10 @@ var/list/solars_list = list()
 				set_panels(cdir)
 		if(href_list["tdir"])
 			src.trackrate = dd_range(-7200,7200,src.trackrate+text2num(href_list["tdir"]))
-			if(src.trackrate) nexttime = world.timeofday + 3600/abs(trackrate)
+			if(src.trackrate) nexttime = world.timeofday + 36000/abs(trackrate)
 
 	if(href_list["track"])
-		if(src.trackrate) nexttime = world.timeofday + 3600/abs(trackrate)
+		if(src.trackrate) nexttime = world.timeofday + 36000/abs(trackrate)
 		track = text2num(href_list["track"])
 		if(powernet && (track == 2))
 			for(var/obj/machinery/power/tracker/T in powernet.nodes)
