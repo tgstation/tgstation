@@ -31,10 +31,7 @@
 /obj/item/clothing/shoes/magboots/examine()
 	set src in view()
 	..()
-	var/state = "disabled"
-	if(src.flags&NOSLIP)
-		state = "enabled"
-	usr << "Its mag-pulse traction system appears to be [state]."
+	usr << "Its mag-pulse traction system appears to be [magpulse ? "enabled" : "disabled"]."
 
 
 /obj/item/clothing/shoes/magboots/advance
