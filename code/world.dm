@@ -166,8 +166,11 @@
 			if(input["key"] != config.comms_key)
 				return "Bad Key"
 			else
-				world << "<span class='announce'>[input["announce"]]</span>"
-
+				#define CHAT_PULLR 2048
+				for(var/client/C in clients)
+					if(C.prefs && (C.prefs.toggles & CHAT_PULLR))
+						C << "<span class='announce'>PR: [input["announce"]]</span>"
+				#undef CHAT_PULLR
 
 /world/Reboot(var/reason)
 #ifdef dellogging

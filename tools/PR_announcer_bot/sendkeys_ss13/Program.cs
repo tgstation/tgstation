@@ -38,6 +38,9 @@ namespace sendkeys_ss13
         public static int IRC_port = 11111;
         public static string IRC_channel = "#channel";
 
+        public static string[] merge_archive;
+        public static bool mergeflag = false;
+
         public static IrcClient irc = new IrcClient();
         public static void Main(string[]args) 
         {
@@ -67,7 +70,11 @@ namespace sendkeys_ss13
                         serverIP = line[2];
                         Console.WriteLine("Read IP: " + serverIP);
                     }
-                    else { Console.WriteLine("IP cannot be validated."); return; }
+                    else 
+                    { 
+                        Console.WriteLine("IP cannot be validated."); 
+                        return; 
+                    }
                 }
                 line = reader.ReadLine().Split(' ');
                 if (line[2] != null)
@@ -78,7 +85,11 @@ namespace sendkeys_ss13
                         serverPort = Convert.ToInt32(line[2]);
                         Console.WriteLine("Read port: " + serverPort);
                     }
-                    else { Console.WriteLine("Port cannot be validated."); return; }
+                    else 
+                    {
+                        Console.WriteLine("Port cannot be validated.");
+                        return; 
+                    }
                 }
                 line = reader.ReadLine().Split(' ');
                 if (line[2] != null)
@@ -86,21 +97,33 @@ namespace sendkeys_ss13
                     commskey = line[2];
                     Console.WriteLine("Commskey read.");
                 }
-                else { Console.WriteLine("No Commskey!"); return; }
+                else 
+                { 
+                    Console.WriteLine("No Commskey!"); 
+                    return; 
+                }
                 line = reader.ReadLine().Split(' ');
-                if(line[2] != null)
+                if (line[2] != null)
                 {
                     Github_bot_name = line[2];
                     Console.WriteLine("Read Github bot name: " + Github_bot_name);
                 }
-                else { Console.WriteLine("No botname found."); return; }
+                else 
+                { 
+                    Console.WriteLine("No botname found."); 
+                    return; 
+                }
                 line = reader.ReadLine().Split(' ');
-                if(line[2] != null)
+                if (line[2] != null)
                 {
                     IRC_bot_name = line[2];
                     Console.WriteLine("Read IRC bot name: " + Github_bot_name);
                 }
-                else { Console.WriteLine("No botname found."); return; }
+                else 
+                { 
+                    Console.WriteLine("No botname found."); 
+                    return; 
+                }
                 line = reader.ReadLine().Split(' ');
                 if (line[2] != null)
                 {
@@ -111,7 +134,11 @@ namespace sendkeys_ss13
                         Int32.TryParse(Convert.ToString(match3.Groups[2]), out IRC_port);
                         Console.WriteLine("Read IRC server: " + IRC_server + ":" + Convert.ToString(IRC_port));
                     }
-                    else { Console.WriteLine("Server:port invalid."); return; }
+                    else
+                    {
+                        Console.WriteLine("Server:port invalid.");
+                        return;
+                    }
                 }
                 line = reader.ReadLine().Split(' ');
                 if (line[2] != null)
@@ -119,10 +146,18 @@ namespace sendkeys_ss13
                     IRC_channel = line[2];
                     Console.WriteLine("Read channel: " + IRC_channel);
                 }
-                else { Console.WriteLine("No channel found."); return; }
+                else 
+                { 
+                    Console.WriteLine("No channel found."); 
+                    return; 
+                }
                 reader.Close();
             }
-            else { Console.WriteLine("Config file doesn't exist, using defaults"); return; }
+            else 
+            {
+                Console.WriteLine("Config file doesn't exist, using defaults"); 
+                return; 
+            }
         }
         public static void OnChannelMessage(object sender, IrcEventArgs e) 
         {
@@ -134,19 +169,36 @@ namespace sendkeys_ss13
                 {
                     msg[i] = Regex.Replace(msg[i], @"[\x02\x1F\x0F\x16]|\x03(\d\d?(,\d\d?)?)?", String.Empty); //Sanitizing color codes
                     msg[i] = Regex.Replace(msg[i], @"[\\\&\=\;\<\>]", " "); //Filtering out some iffy characters
-                    Console.Write(msg[i] + " ");
                 }
-                Console.WriteLine();
-                if (msg[2] == "opened")
+                if (msg[2] == "closed")
                 {
+                    merge_archive = msg;
+                    mergeflag = true;
+                    output.Close();
+                }
+                else if ((msg[2] == "opened" || mergeflag) && msg[1] != "meant:") //Either we open a new PR or a PR was closed in the last message. Also protection from Whibyl's correction thingy!
+                {
+                    if(msg[2] == "pushed")
+                    {
+                        msg = merge_archive; //We copy the "close" message and replace "close" with merge! The players won't know what him 'em!
+                        msg[2] = "merged";
+                    }
+                    mergeflag = false;
+                    merge_archive = null;
+                    string URL = ShortenURL(msg[msg.Length - 1]);
+                    msg[5] = "<a href=" + URL + ">" + msg[5] + "</a>";
+                    msg[0] = ""; //Stripping the useless string parts.
+                    msg[msg.Length - 1] = "";
                     byte[] PACKETS = CreatePacket(msg);
                     PACKETS[1] = 0x83;
                     int len = 0;
-                    for (int i = 0; i < msg.Length; i++)
+                    for (int i = 1; i < msg.Length; i++)
                     {
-                        len += msg[i].Length + 1;
+                        len += msg[i].Length + 1; //The length of the word and the space following it.
+                        Console.Write(msg[i] + " ");
                     }
-                    len += 14 + commskey.Length + 6;
+                    len -= 1; //Compensating for the lack of space at the end.
+                    len += 14 + commskey.Length + 6; //Argument names + Commskey length + 6 null bytes
                     PACKETS[3] = (byte) len;
                                 
                     StringBuilder test = new StringBuilder();
@@ -161,8 +213,30 @@ namespace sendkeys_ss13
                     server.Connect(ip);
                     server.Send(PACKETS);
                     output.Close();
+                    Console.WriteLine("- sent ;)");
+                    Console.WriteLine();
+                }
+                else 
+                {
+                    mergeflag = false;
+                    merge_archive = null;
+                    output.Close();
                 }
             }
+        }
+        private static string ShortenURL(string URL) //derived from GitIoSharp by dimapasko
+        {
+            WebRequest request = WebRequest.Create("http://git.io");
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.Method = "POST";
+            byte[] packet = Encoding.ASCII.GetBytes("url=" + URL);
+            request.ContentLength = packet.Length;
+            using(Stream stream = request.GetRequestStream())
+            {
+                stream.Write(packet, 0, packet.Length);
+            }
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            return Convert.ToString(new Uri(response.Headers[HttpResponseHeader.Location]));
         }
 
         private static byte[] CreatePacket(string[] msg)
@@ -173,9 +247,12 @@ namespace sendkeys_ss13
             packet.Append((char)x83);
             packet.Append((char)'\x00',6);
             packet.Append("?announce=");
-            for (int i = 0; i < msg.Length; i++)
+            for (int i = 1; i < msg.Length; i++)
             {
-                packet.Append(msg[i] + " ");
+                if(i == msg.Length - 1)
+                    packet.Append(msg[i]);
+                else 
+                    packet.Append(msg[i] + " ");
             }
             packet.Append("&key=");
             packet.Append(commskey);
