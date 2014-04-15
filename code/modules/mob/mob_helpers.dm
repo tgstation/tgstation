@@ -191,7 +191,7 @@ proc/isorgan(A)
 		else
 			t = text("[]*", t)
 		p++
-	return t
+	return sanitize(t)
 
 
 /proc/stutter(n)
