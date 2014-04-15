@@ -42,12 +42,34 @@ namespace sendkeys_ss13
         public static bool mergeflag = false;
 
         public static IrcClient irc = new IrcClient();
+
+        public static int IRCReconnectAttempt = 0;
         public static void Main(string[]args) 
         {
             ReadConf();
             irc.OnChannelMessage += new IrcEventHandler(OnChannelMessage);
             irc.SupportNonRfc = true;
-            irc.Connect(IRC_server , IRC_port);
+            try
+            {
+                irc.Connect(IRC_server, IRC_port);
+                IRCReconnectAttempt = 0;
+            }
+            catch (Exception)
+            {
+                IRCReconnectAttempt++;
+                if (IRCReconnectAttempt <= 3)
+                {
+                    Console.WriteLine("IRC server is unavaible at the moment. Reconnect attempt {0}...", IRCReconnectAttempt);
+                    System.Threading.Thread.Sleep(3000); //Reconnecting after 5 seconds.
+                    Main(args);
+                }
+                else
+                {
+                    Console.WriteLine("IRC server unreachable. Please check your configuration file.");
+                    Console.ReadLine();
+                    return;
+                }
+            }
             Console.WriteLine("Connected to IRC");
             irc.Login(IRC_bot_name, IRC_bot_name);
             Console.WriteLine("Logged in");
@@ -159,17 +181,25 @@ namespace sendkeys_ss13
                 return; 
             }
         }
+
         public static void OnChannelMessage(object sender, IrcEventArgs e) 
         {
-            if(e.Data.Nick == Github_bot_name)
+            if (e.Data.Nick == Github_bot_name)
             {
-                StreamWriter output = new StreamWriter("output.txt");
-                string[] msg = e.Data.Message.Split(' ');
-                for (int i = 0; i < msg.Length; i++)
-                {
-                    msg[i] = Regex.Replace(msg[i], @"[\x02\x1F\x0F\x16]|\x03(\d\d?(,\d\d?)?)?", String.Empty); //Sanitizing color codes
-                    msg[i] = Regex.Replace(msg[i], @"[\\\&\=\;\<\>]", " "); //Filtering out some iffy characters
-                }
+                    string[] msg = e.Data.Message.Split(' ');
+                    for (int i = 0; i < msg.Length; i++)
+                    {
+                        msg[i] = Regex.Replace(msg[i], @"[\x02\x1F\x0F\x16]|\x03(\d\d?(,\d\d?)?)?", String.Empty); //Sanitizing color codes
+                        msg[i] = Regex.Replace(msg[i], @"[\\\&\=\;\<\>]", " "); //Filtering out some iffy characters
+                    }
+                    FormMessage(msg);
+            }
+        }
+
+        private static void FormMessage(string[] msg, bool ShortenedURL = false)
+        {
+            using (StreamWriter output = new StreamWriter("output.txt"))
+            {
                 if (msg[2] == "closed")
                 {
                     merge_archive = msg;
@@ -178,45 +208,40 @@ namespace sendkeys_ss13
                 }
                 else if ((msg[2] == "opened" || mergeflag) && msg[1] != "meant:") //Either we open a new PR or a PR was closed in the last message. Also protection from Whibyl's correction thingy!
                 {
-                    if(msg[2] == "pushed")
+                    if (msg[2] == "pushed")
                     {
                         msg = merge_archive; //We copy the "close" message and replace "close" with merge! The players won't know what him 'em!
                         msg[2] = "merged";
                     }
                     mergeflag = false;
                     merge_archive = null;
-                    string URL = ShortenURL(msg[msg.Length - 1]);
+                    string URL = msg[msg.Length - 1];
+                    if(!ShortenedURL)
+                        URL = ShortenURL(URL);
                     msg[5] = "<a href=" + URL + ">" + msg[5] + "</a>";
-                    msg[0] = ""; //Stripping the useless string parts.
-                    msg[msg.Length - 1] = "";
+                    msg[0] = ""; //Repo name
+                    msg[msg.Length - 1] = ""; //The URL itself
+                    msg[msg.Length - 2] = ""; //Branch info
                     byte[] PACKETS = CreatePacket(msg);
                     PACKETS[1] = 0x83;
                     int len = 0;
-                    for (int i = 1; i < msg.Length; i++)
+                    for (int i = 1; i < msg.Length - 1; i++)
                     {
                         len += msg[i].Length + 1; //The length of the word and the space following it.
                         Console.Write(msg[i] + " ");
                     }
                     len -= 1; //Compensating for the lack of space at the end.
                     len += 14 + commskey.Length + 6; //Argument names + Commskey length + 6 null bytes
-                    PACKETS[3] = (byte) len;
-                                
+                    PACKETS[3] = (byte)len;
                     StringBuilder test = new StringBuilder();
                     for (int i = 0; i < PACKETS.Length; i++)
                     {
                         test.Append(Convert.ToString(PACKETS[i]));
                     }
                     output.WriteLine(Convert.ToString(test));
-                    Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                    IPEndPoint ip = new IPEndPoint(IPAddress.Parse(serverIP), serverPort);
-
-                    server.Connect(ip);
-                    server.Send(PACKETS);
-                    output.Close();
-                    Console.WriteLine("- sent ;)");
-                    Console.WriteLine();
+                    SendPacket(output, PACKETS);
                 }
-                else 
+                else
                 {
                     mergeflag = false;
                     merge_archive = null;
@@ -224,6 +249,41 @@ namespace sendkeys_ss13
                 }
             }
         }
+
+        public static int ServerReconnectAttempt = 0;
+        private static void SendPacket(StreamWriter output, byte[] PACKETS)
+        {
+            Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            IPEndPoint ip = new IPEndPoint(IPAddress.Parse(serverIP), serverPort);
+            try
+            {
+                server.Connect(ip);
+                server.Send(PACKETS);
+                Console.WriteLine("- sent ;)");
+                output.Close();
+                Console.WriteLine();
+            }
+            catch (Exception)
+            {
+                ServerReconnectAttempt++;
+                if(ServerReconnectAttempt <= 5)
+                {
+                    Console.WriteLine("Server is not available at the moment. Reconnect attempt {0}...", ServerReconnectAttempt);
+                    System.Threading.Thread.Sleep(5000); //Reconnecting after 5 seconds.
+                    SendPacket(output, PACKETS);
+                }
+                else
+                {
+                    output.Close();
+                    Console.WriteLine("Server appears to be down for good. Press ENTER when you have restarted the server to continue.");
+                    Console.ReadLine();
+                    ServerReconnectAttempt = 0;
+                    SendPacket(output, PACKETS);
+                }
+            }
+        }
+
+        public static int GitReconnectAttempt = 0;
         private static string ShortenURL(string URL) //derived from GitIoSharp by dimapasko
         {
             WebRequest request = WebRequest.Create("http://git.io");
@@ -231,10 +291,31 @@ namespace sendkeys_ss13
             request.Method = "POST";
             byte[] packet = Encoding.ASCII.GetBytes("url=" + URL);
             request.ContentLength = packet.Length;
-            using(Stream stream = request.GetRequestStream())
+            try
             {
-                stream.Write(packet, 0, packet.Length);
+                using (Stream stream = request.GetRequestStream())
+                {
+                    stream.Write(packet, 0, packet.Length);
+                    GitReconnectAttempt = 0;
+                }
             }
+            catch (Exception)
+            {
+                GitReconnectAttempt++;
+                if (GitReconnectAttempt <= 3)
+                {
+                    Console.WriteLine("Git.IO is not available at the moment. Reconnect attempt {0}...", GitReconnectAttempt);
+                    System.Threading.Thread.Sleep(3000); //Attempt to reconnect after 3 seconds.
+                    ShortenURL(URL);
+                }
+                else
+                {
+                    Console.WriteLine("Git.IO is down. Returning long URL.");
+                    GitReconnectAttempt = 0; //Reset counter
+                    return URL;
+                }
+            }
+            
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             return Convert.ToString(new Uri(response.Headers[HttpResponseHeader.Location]));
         }
@@ -242,14 +323,11 @@ namespace sendkeys_ss13
         private static byte[] CreatePacket(string[] msg)
         {
             StringBuilder packet = new StringBuilder();
-            packet.Append((char)'\x00');
-            byte x83 = 0x83 ;
-            packet.Append((char)x83);
-            packet.Append((char)'\x00',6);
+            packet.Append((char)'\x00', 8); //packet[1] is 0x83, packet[3] contain length
             packet.Append("?announce=");
-            for (int i = 1; i < msg.Length; i++)
+            for (int i = 1; i < msg.Length - 1; i++)
             {
-                if(i == msg.Length - 1)
+                if(i == msg.Length - 2)
                     packet.Append(msg[i]);
                 else 
                     packet.Append(msg[i] + " ");
