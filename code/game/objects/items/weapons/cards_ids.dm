@@ -263,7 +263,7 @@
 	name = "Research ID"
 	registered_name = "Scientist"
 	icon_state = "science"
-	desc = "Pinnical of name technology."
+	desc = "Pinnacle of name technology."
 	access = list(access_research, access_tox, access_tox_storage, access_robotics, access_xenobiology, access_rd)
 
 /obj/item/weapon/card/id/supply
