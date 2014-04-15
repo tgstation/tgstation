@@ -711,9 +711,10 @@ atom/proc/GetTypeInAllContents(typepath)
 	var/user_loc = user.loc
 	var/target_loc = target.loc
 	var/holding = user.get_active_hand()
+	var/zone = user.zone_sel.selecting
 	sleep(time)
 	if(!user || !target) return 0
-	if ( user.loc == user_loc && target.loc == target_loc && user.get_active_hand() == holding && !( user.stat ) && ( !user.stunned && !user.weakened && !user.paralysis && !user.lying ) )
+	if ( user.loc == user_loc && target.loc == target_loc && user.get_active_hand() == holding && zone == user.zone_sel.selecting && !( user.stat ) && ( !user.stunned && !user.weakened && !user.paralysis && !user.lying ) )
 		return 1
 	else
 		return 0

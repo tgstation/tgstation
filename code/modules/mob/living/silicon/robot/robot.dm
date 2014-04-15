@@ -414,11 +414,15 @@
 			user << "<span class='warning'>[src] is already in good condition.</span>"
 			return
 		if (WT.remove_fuel(0))
+			user.visible_message("<span class='notice'>[user] starts to repair [src] with the [W]...</span>", "<span class='notice'>You begin repairing [src] with the [W]...</span>")
+			if(!do_mob(user, src, 20))	return
+			if (src.health >= src.maxHealth)
+				user << "<span class='notice'>[src] is already in good condition.</span>"
+				return
+			user.visible_message("<span class='success'>[user] fixes some dents on [src].</span>", "<span class='success'>You fix some of the dents on [src]</span>")
 			adjustBruteLoss(-30)
 			updatehealth()
 			add_fingerprint(user)
-			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red [user] has fixed some of the dents on [src]!"), 1)
 		else
 			user << "Need more welding fuel!"
 			return
