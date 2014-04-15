@@ -1,262 +1,4 @@
 # DMITool Difference Report: C:\Users\Rob\Documents\Projects\Baystation12\icons C:\Users\Rob\Documents\Projects\vgstation13\icons
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\effects\ArynLights.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\ArynLights.dmi
- + 0000
- + 0001
- + 0002
- + 0003
- + 0010
- + 0011
- + 0012
- + 0013
- + 0020
- + 0021
- + 0022
- + 0023
- + 0030
- + 0031
- + 0032
- + 0033
- + 0100
- + 0101
- + 0102
- + 0103
- + 0110
- + 0111
- + 0112
- + 0113
- + 0120
- + 0121
- + 0122
- + 0123
- + 0130
- + 0131
- + 0132
- + 0133
- + 0200
- + 0201
- + 0202
- + 0203
- + 0210
- + 0211
- + 0212
- + 0213
- + 0220
- + 0221
- + 0222
- + 0223
- + 0230
- + 0231
- + 0232
- + 0233
- + 0300
- + 0301
- + 0302
- + 0303
- + 0310
- + 0311
- + 0312
- + 0313
- + 0320
- + 0321
- + 0322
- + 0323
- + 0330
- + 0331
- + 0332
- + 0333
- + 1000
- + 1001
- + 1002
- + 1003
- + 1010
- + 1011
- + 1012
- + 1013
- + 1020
- + 1021
- + 1022
- + 1023
- + 1030
- + 1031
- + 1032
- + 1033
- + 1100
- + 1101
- + 1102
- + 1103
- + 1110
- + 1111
- + 1112
- + 1113
- + 1120
- + 1121
- + 1122
- + 1123
- + 1130
- + 1131
- + 1132
- + 1133
- + 1200
- + 1201
- + 1202
- + 1203
- + 1210
- + 1211
- + 1212
- + 1213
- + 1220
- + 1221
- + 1222
- + 1223
- + 1230
- + 1231
- + 1232
- + 1233
- + 1300
- + 1301
- + 1302
- + 1303
- + 1310
- + 1311
- + 1312
- + 1313
- + 1320
- + 1321
- + 1322
- + 1323
- + 1330
- + 1331
- + 1332
- + 1333
- + 2000
- + 2001
- + 2002
- + 2003
- + 2010
- + 2011
- + 2012
- + 2013
- + 2020
- + 2021
- + 2022
- + 2023
- + 2030
- + 2031
- + 2032
- + 2033
- + 2100
- + 2101
- + 2102
- + 2103
- + 2110
- + 2111
- + 2112
- + 2113
- + 2120
- + 2121
- + 2122
- + 2123
- + 2130
- + 2131
- + 2132
- + 2133
- + 2200
- + 2201
- + 2202
- + 2203
- + 2210
- + 2211
- + 2212
- + 2213
- + 2220
- + 2221
- + 2222
- + 2223
- + 2230
- + 2231
- + 2232
- + 2233
- + 2300
- + 2301
- + 2302
- + 2303
- + 2310
- + 2311
- + 2312
- + 2313
- + 2320
- + 2321
- + 2322
- + 2323
- + 2330
- + 2331
- + 2332
- + 2333
- + 3000
- + 3001
- + 3002
- + 3003
- + 3010
- + 3011
- + 3012
- + 3013
- + 3020
- + 3021
- + 3022
- + 3023
- + 3030
- + 3031
- + 3032
- + 3033
- + 3100
- + 3101
- + 3102
- + 3103
- + 3110
- + 3111
- + 3112
- + 3113
- + 3120
- + 3121
- + 3122
- + 3123
- + 3130
- + 3131
- + 3132
- + 3133
- + 3200
- + 3201
- + 3202
- + 3203
- + 3210
- + 3211
- + 3212
- + 3213
- + 3220
- + 3221
- + 3222
- + 3223
- + 3230
- + 3231
- + 3232
- + 3233
- + 3300
- + 3301
- + 3302
- + 3303
- + 3310
- + 3311
- + 3312
- + 3313
- + 3320
- + 3321
- + 3322
- + 3323
- + 3330
- + 3331
- + 3332
- + 3333
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\effects\blood.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\blood.dmi
  - armorblood2
@@ -277,7 +19,6 @@
  - gibbl5
  - helmetblood2
  - maskblood2
- - mucus
  - shoeblood2
  - suitblood2
  - uniformblood2
@@ -422,6 +163,7 @@
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\AI.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\AI.dmi
  - ai-banned
+ - ai-fuzz
  - ai-ravensdale
  - ai-ravensdale-crash
  + ai-red
@@ -633,6 +375,10 @@
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\corgi_head.dmi
  - cardborg_h
  - cardborg_h2
+ - fedora
+ - fedora2
+ - fez
+ - fez2
  - hardhat0_reindeer
  - hardhat0_reindeer2
  - paper_words
@@ -753,6 +499,7 @@
  - headset2
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\eyes.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\eyes.dmi
+ + 3d
  - arjun_chopra2
  - bigsunglasses2
  - blindfold2
@@ -865,6 +612,8 @@
  - amp2
  - bandana2
  - bearpelt2
+ - beaver_hat
+ - beaver_hat2
  - beret2
  - beret_badge2
  - bio2
@@ -876,12 +625,16 @@
  - bio_virology2
  - bluesoft2
  - bluesoft_flipped2
+ - boater_hat
+ - boater_hat2
  - bombsuit2
  - bombsuit2_white
  - bombsuitOld2
  - bombsuitsec2
  + bombsuitsecold
  - bowler2
+ - bowler_hat
+ - bowler_hat2
  - bunny2
  - cake02
  - cake12
@@ -918,6 +671,10 @@
  - ert_medical2
  - ert_security
  - ert_security2
+ - fedora
+ - fedora2
+ - fez
+ - fez2
  - flat_cap2
  - gladiator2
  - greenbandana2
@@ -942,6 +699,8 @@
  - headslime2
  - helmet2
  - hgpiratecap2
+ - hopcap
+ - hopcap2
  - hosberet2
  - hoscap2
  - kitty2
@@ -1080,6 +839,7 @@
  - yuki_matsuda_1up2
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\hud.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\hud.dmi
+ + hudblank
  - vampire
  - vampthrall
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\human.dmi
@@ -1120,6 +880,10 @@
  - torso_f_s
  - torso_m_l
  - torso_m_s
+ + undershirt1_s
+ + undershirt2_s
+ + undershirt3_s
+ + undershirt4_s
  - underwear1_f_l
  - underwear1_m_l
  - underwear2_f_l
@@ -1196,6 +960,8 @@
  - hair_emo_l
  - hair_f_l
  - hair_feather_l
+ - hair_flair
+ + hair_flair_s
  - hair_gelled_l
  - hair_halfbang_alt_l
  - hair_halfbang_l
@@ -1386,6 +1152,10 @@
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\mask.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\mask.dmi
  - balaclava2
+ - bluntoff
+ - bluntoff2
+ - blunton
+ - blunton2
  - breath2
  - breathdown2
  - cigaroff2
@@ -1395,6 +1165,10 @@
  - clown2
  - cobpipeoff2
  - cobpipeon2
+ - dbluntoff
+ - dbluntoff2
+ - dblunton
+ - dblunton2
  - death2
  - facehugger2
  - facehugger2_inactive
@@ -1432,6 +1206,8 @@
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\mob.dmi
  - greytide
  - greytide_head
+ - shade: shade: 10 frames, 1 directions
+ + shade: shade: 1 frames, 1 directions
  - vampire
  - vampire2
  - vampthrall
@@ -1536,6 +1312,8 @@
  - sepia slime extract
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\suit.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\suit.dmi
+ - HoP_Coat
+ - HoP_Coat2
  - apron2
  - apronchef2
  - armor2
@@ -1749,15 +1527,19 @@
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\uniform.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\uniform.dmi
  + ana_uniform_s
+ + aqua_d_s
  - aqua_l
+ + atmos_d_s
  - atmos_l
  - ba_suit_l
+ + black_d_s
  - black_l
  - black_suit_fem_l
  - black_suit_l
  - blackf_l
  - blackshorts_l
  - blackskirt_l
+ + blue_d_s
  - blue_l
  - blue_pyjamas_l
  - blueshorts_l
@@ -1768,22 +1550,31 @@
  - bride_red_l
  - bride_white_l
  - bridesmaid_l
+ + brown_d_s
  - brown_l
  - callum_suit_l
+ + captain_d_s
  - captain_fly_l
  - captain_l
+ + cargo_d_s
  - cargo_l
  - cargotech_l
  - cdc_jumpsuit_l
  - centcom_l
  - chapblack_l
+ + chef_d_s
  - chef_l
  - chemist_new_l
+ + chemistrywhite_d_s
  - chemistrywhite_l
+ + chief_d_s
  - chief_l
  - clown_l
+ + cmo_d_s
  - cmo_l
+ + darkblue_d_s
  - darkblue_l
+ + darkred_d_s
  - darkred_l
  + detective2_s
  - detective_l
@@ -1797,31 +1588,39 @@
  - dress_pink_l
  - dress_rd_l
  - dress_saloon_l
+ + engine_d_s
  - engine_l
  - forensicsred_l
  - geneticist_new_l
+ + geneticswhite_d_s
  - geneticswhite_l
  + gentlesuit
  - gladiator_l
  - golem_l
+ + green_d_s
  - green_l
  - green_suit_l
  - greenshorts_l
+ + grey_d_s
  - grey_l
  - greyshorts_l
+ + hop_d_s
  - hop_l
  + hopwhimsy_s
  + hos_corporate_s
  - hosblueclothes_l
  - hosdnavyclothes_l
+ + hosred_d_s
  - hosred_l
  - hosred_old_l
  - hostanclothes_l
  - huresource_l
+ + hydroponics_d_s
  - hydroponics_l
  - internalaffairs_l
  - jane_sid_suit_down_l
  - jane_sid_suit_l
+ + janitor_d_s
  - janitor_l
  - jensen_l
  - jeremy_wolf_1_l
@@ -1832,21 +1631,29 @@
  - lawyer_blue_l
  - lawyer_purp_l
  - lawyer_red_l
+ + lightblue_d_s
  - lightblue_l
+ + lightbrown_d_s
  - lightbrown_l
+ + lightgreen_d_s
  - lightgreen_l
+ + lightpurple_d_s
  - lightpurple_l
+ + lightred_d_s
  - lightred_l
  + lilith_uniform_s
  + lillian_dress
  + mai_yang_s
  - mailman_l
  - mankini_l
+ + maroon_d_s
  - maroon_l
+ + medical_d_s
  - medical_l
  + medical_short_s
  + milohachert_s
  - mime_l
+ + miner_d_s
  - miner_l
  - nurse_l
  - nursesuit_l
@@ -1856,6 +1663,7 @@
  - officertanclothes_l
  - olddressuniform_l
  - oldman_l
+ + orange_d_s
  - orange_l
  - orderly_l
  - overalls_l
@@ -1864,6 +1672,7 @@
  - paramedic_l_old
  - paramedic_s
  - paramedic_s_old
+ + pink_d_s
  - pink_l
  - pirate_l
  - plaid_blue_l
@@ -1874,11 +1683,14 @@
  - psyche_l
  - psysuit_l
  - purple_cheer_l
+ + purple_d_s
  - purple_l
+ + qm_d_s
  - qm_l
  - rainbow_l
  + rdalt
  - really_black_suit_l
+ + red_d_s
  - red_l
  - red_pyjamas_l
  - red_suit_l
@@ -1887,6 +1699,7 @@
  - redshorts_l
  - retpoluniform_l
  - robotics2_l
+ + robotics_d_s
  - robotics_l
  - roman_l
  - roman_s
@@ -1898,6 +1711,7 @@
  - scrubsgreen_l
  - scrubspurple_l
  + sec_corporate_s
+ + secred_d_s
  - secred_l
  - sexyclown_l
  - sexymime_l
@@ -1918,25 +1732,44 @@
  - teal_suit_l
  - tian_dress_l
  - tourist_l
+ + toxinswhite_d_s
  - toxinswhite_l
  - vice_l
  - virologist_new_l
+ + virologywhite_d_s
  - virologywhite_l
  - vox-casual-1_l
  - vox-casual-2_l
  - waiter_l
  + warden_corporate_s
+ + warden_d_s
  - warden_l
  - wardenblueclothes_l
  - wardendnavy_l
  - wardentanclothes_l
  - white_cheer_l
+ + white_d_s
  - white_l
  - white_suit_l
  - wyatt_uniform_l
  - yellow_cheer_l
+ + yellow_d_s
  - yellow_l
+ + yellowgreen_d_s
  - yellowgreen_l
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\human_races\r_diona.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\human_races\r_diona.dmi
+ - groin
+ + groin_f
+ + groin_m
+ - head
+ + head_f
+ + head_m
+ - torso
+ + torso_f
+ + torso_f_fat
+ + torso_m
+ + torso_m_fat
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\aibots.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\aibots.dmi
  - mining_drone
@@ -1967,6 +1800,11 @@
  - maltesefalcon
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\bureaucracy.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\bureaucracy.dmi
+ + cpaper
+ + cpaper_words
+ + paper_bin2
+ + paper_stack
+ + paper_stack_words
  + paper_stamp-intaff
  + stamp-intaff
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\card.dmi
@@ -1982,6 +1820,7 @@
  - beakernoreact: beakernoreact: 12 frames, 1 directions
  + beakernoreact: beakernoreact: 18 frames, 1 directions
  - beakernoreactlarge
+ - bottle-charcoal
  - oldbeakerbluespace
  - oldbeakernoreact
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\closet.dmi
@@ -2054,6 +1893,7 @@
  - antibody
  - handtv
  - mining
+ - soundsynth
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\drinks.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\drinks.dmi
  - icetea
@@ -2065,6 +1905,7 @@
  - benedict
  - berrymuffin
  - booberrymuffin
+ - busta_nut
  - cburger
  + cheeseburger
  - chocolatebarunwrapped
@@ -2081,7 +1922,9 @@
  - condi_soysauce
  - condi_sugar
  - copypasta
+ - faggot
  - icecreamsandwich
+ + meatball
  - meatbun
  - meatsteak
  - notasandwich
@@ -2099,22 +1942,22 @@
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\gate.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\gate.dmi
  C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\gate.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 146, in compare
+  File "tools/ByondTools/src/DMITool.py", line 146, in compare
     theirsDMI.loadAll()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 194, in loadAll
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\ByondTools\src\byond\DMI\__init__.py", line 194, in loadAll
     self.load(flags)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 197, in load
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\ByondTools\src\byond\DMI\__init__.py", line 197, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
  C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\gate.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 162, in compare
+  File "tools/ByondTools/src/DMITool.py", line 162, in compare
     mineDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 191, in loadMetadata
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\ByondTools\src\byond\DMI\__init__.py", line 191, in loadMetadata
     self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 197, in load
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\ByondTools\src\byond\DMI\__init__.py", line 197, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
@@ -2154,6 +1997,9 @@ OSError: cannot identify image file
  - kineticgun
  - kineticgun0
  - kineticgun100
+ - kineticgun20
+ - kineticgun60
+ - kineticgun80
  - mini-uzi-16
  - mini-uzi-16-e
  - mini-uzi-e
@@ -2179,6 +2025,12 @@ OSError: cannot identify image file
  - pistol-silencer-e
  - polywand
  - polywand-drained
+ - radgun
+ - radgun0
+ - radgun100
+ - radgun25
+ - radgun50
+ - radgun75
  - revivewand
  - revivewand-drained
  + rocket
@@ -2240,6 +2092,18 @@ OSError: cannot identify image file
  - novaflower-grow3
  - novaflower-harvest
  - portaseeder
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\inflatable.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\inflatable.dmi
+ + door_closed
+ + door_closing
+ + door_open
+ + door_opening
+ + folded
+ + folded_door
+ + folded_door_torn
+ + folded_wall
+ + folded_wall_torn
+ + wall
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\items.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\items.dmi
  - Jaunter
@@ -2262,6 +2126,7 @@ OSError: cannot identify image file
  - rpd
  - rsf
  - rsf_gray
+ - sheet-charcoal
  - sheet-phazon
  - sheetcentcom
  - sheetcmo
@@ -2275,9 +2140,17 @@ OSError: cannot identify image file
  - mcleaverblood
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\library.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\library.dmi
+ + bookMedical
  + bookSupermatter
  + evabook
  + pipingbook
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\mediwall.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\mediwall.dmi
+ + brute_wall
+ + burn_wall
+ + medical_wall_open
+ + oxygen_wall
+ + toxin_wall
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\mining.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\mining.dmi
  - Gibtonite active
@@ -2289,7 +2162,11 @@ OSError: cannot identify image file
  - xeno_warning
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\module.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\module.dmi
+ - gooncode
  - planning frame
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\nvg_hud_full.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\nvg_hud_full.dmi
+ + nvg_hud
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\objects.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\objects.dmi
  - borgcharger
@@ -2404,9 +2281,11 @@ OSError: cannot identify image file
  - laser: laser: 1 frames, 8 directions
  + laser: laser: 1 frames, 4 directions
  - purple_laser
+ - rad
  - red_1
  - red_laser
  - scatterlaser
+ + stun
  - u_laser: u_laser: 2 frames, 8 directions
  + u_laser: u_laser: 2 frames, 4 directions
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\radio.dmi
@@ -2462,6 +2341,7 @@ OSError: cannot identify image file
  - engisecurecrate
  - engisecurecrateopen
  - gadget_bag
+ + inf_box
  - largebox
  - largebox-deployed
  - scicrate
@@ -2498,23 +2378,11 @@ OSError: cannot identify image file
  - reinftable_dir2
  - reinftable_dir3
  - reinftable_middle
- + rtableflip0
- + rtableflip1+
- + rtableflip1-
- + rtableflip2
  - table_dir
  - table_dir2
  - table_dir3
- + tableflip0
- + tableflip1+
- + tableflip1-
- + tableflip2
  + up
  + up-f
- + woodflip0
- + woodflip1+
- + woodflip1-
- + woodflip2
  - woodtable
  - woodtable_1tileendtable
  - woodtable_1tilethick
@@ -2522,6 +2390,16 @@ OSError: cannot identify image file
  - woodtable_dir2
  - woodtable_dir3
  - woodtable_middle
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\surgery.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\surgery.dmi
+ + scalpel_laser1_off
+ + scalpel_laser1_on
+ + scalpel_laser2_off
+ + scalpel_laser2_on
+ + scalpel_laser3_off
+ + scalpel_laser3_on
+ + scalpel_manager_off
+ + scalpel_manager_on
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\syringe.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\syringe.dmi
  - combat_hypo
@@ -2535,6 +2413,9 @@ OSError: cannot identify image file
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\telescience.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\telescience.dmi
  - gps-p
+--- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\trash.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\trash.dmi
+ - busta_nut
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\vehicles.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\vehicles.dmi
  - gokart0
@@ -2543,9 +2424,27 @@ OSError: cannot identify image file
  - jani_keys
  - magic_keys
  - pussywagon_destroyed
+ - pussywagon_upgraded
  - wizmobile
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\vending.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\vending.dmi
+ - hats
+ - hats-broken
+ - hats-off
+ - hats-panel
+ - shoes
+ - shoes-broken
+ - shoes-off
+ - shoes-panel
+ + smartfridge-panel
+ + smartfridge_chem
+ + smartfridge_virology
+ + smartfridge_virology-broken
+ + smartfridge_virology-off
+ - suits
+ - suits-broken
+ - suits-off
+ - suits-panel
  - theater
  - theater-broken
  - theater-deny
@@ -2691,14 +2590,21 @@ OSError: cannot identify image file
  + swatbelt
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\glasses.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\glasses.dmi
+ + 3d
  + swatgoggles
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\hats.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\hats.dmi
+ - beaver_hat
+ - boater_hat
  + bombsuitsecold
+ - bowler_hat
  - ert_commander
  - ert_engineer
  - ert_medical
  - ert_security
+ - fedora
+ - fez
+ - hopcap
  - paramedic-eva-helmet
  - paramedicsoft
  - paramedicsoft_flipped
@@ -2714,6 +2620,11 @@ OSError: cannot identify image file
  - vox-pressure-specops
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\masks.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\masks.dmi
+ - bluntbutt
+ - bluntoff
+ - blunton
+ - dbluntoff
+ - dblunton
  + snorkel
  + swatclava
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\shoes.dmi
@@ -2722,6 +2633,7 @@ OSError: cannot identify image file
  - roman
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\suits.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\suits.dmi
+ - HoP_Coat
  - atmosfiresuit
  + bombsuitsecold
  - paramedic-eva
@@ -2827,39 +2739,31 @@ OSError: cannot identify image file
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes\large.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi
  C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 146, in compare
+  File "tools/ByondTools/src/DMITool.py", line 146, in compare
     theirsDMI.loadAll()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 194, in loadAll
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\ByondTools\src\byond\DMI\__init__.py", line 194, in loadAll
     self.load(flags)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 197, in load
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\ByondTools\src\byond\DMI\__init__.py", line 197, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
  C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 162, in compare
+  File "tools/ByondTools/src/DMITool.py", line 162, in compare
     mineDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 191, in loadMetadata
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\ByondTools\src\byond\DMI\__init__.py", line 191, in loadMetadata
     self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 197, in load
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\ByondTools\src\byond\DMI\__init__.py", line 197, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\Testing\Zone.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\Testing\Zone.dmi
- + assigned
- + block
- + created
- + fullblock
- + invalid
- + mark
- + merged
- + zoneblock
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\turf\areas.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\areas.dmi
+ + Tactical
+ + engine_eva
  - honk
  - radiation
  - xenocell1
@@ -2914,6 +2818,25 @@ OSError: cannot identify image file
  + platebotc
  + vault
  - vaultfull
+ + white_1
+ + white_2
+ + white_a
+ + white_b
+ + white_c
+ + white_cmo
+ + white_d
+ + white_ex
+ + white_halfo
+ + white_halfp
+ + white_p
+ + whiteblue_ex
+ + whitebluegreencorners
+ + whitegreen_v
+ + whitehall_m
+ + whitered_a
+ + whitered_b
+ + whitered_c
+ + whitered_w
  + yellowpatch
  + yellowpatch_inv
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\turf\shuttle.dmi
@@ -2930,8 +2853,11 @@ OSError: cannot identify image file
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\space.dmi
  - debug-east
  - debug-north
+ - end01
 --- C:\Users\Rob\Documents\Projects\Baystation12\icons\turf\walls.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\walls.dmi
+ - rock(clown)
+ - rock(high)
  - rock_Gibtonite
  - rock_Gibtonite_active
  - rock_Phazon

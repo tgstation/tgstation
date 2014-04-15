@@ -22,9 +22,7 @@
 	spreadChance = 0
 
 /obj/effect/glowshroom/New()
-
 	..()
-
 	dir = CalcDir()
 
 	if(!floor)
@@ -43,7 +41,7 @@
 
 	spawn(delay)
 		SetLuminosity(round(potency/10))
-		Spread()
+		// Spread() - Methinks this is broken - N3X
 
 /obj/effect/glowshroom/proc/Spread()
 	//set background = 1

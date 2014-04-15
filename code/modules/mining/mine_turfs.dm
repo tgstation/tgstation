@@ -175,9 +175,9 @@ var/list/artifact_spawn = list() // Runtime fix for geometry loading before cont
 					target_turf.MineralSpread()
 
 /turf/unsimulated/mineral/proc/UpdateMineral()
+	icon_state = "rock"
 	if(!mineral)
 		name = "\improper Rock"
-		icon_state = "rock"
 		return
 	name = "\improper [mineral.display_name] deposit"
 	icon_state = "rock_[mineral.name]"
