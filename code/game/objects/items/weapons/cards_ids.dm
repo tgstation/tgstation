@@ -289,7 +289,7 @@
 	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers, access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting, access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway)
 
 /obj/item/weapon/card/id/cmo
-	name = "Cheif Medical Officer ID"
+	name = "Chief Medical Officer ID"
 	registered_name = "CMO"
 	icon_state = "CMO"
 	desc = "It gives off the faint smell of chloral, mixed with a backdraft of shittery."
@@ -303,7 +303,7 @@
 	access = list(access_rd, access_heads, access_tox, access_genetics, access_morgue, access_tox_storage, access_teleporter, access_sec_doors, access_research, access_robotics, access_xenobiology, access_ai_upload, access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway)
 
 /obj/item/weapon/card/id/ce
-	name = "Cheif Engineer ID"
+	name = "Chief Engineer ID"
 	registered_name = "CE"
 	icon_state = "CE"
 	desc = "The card has a faint aroma of autism."
