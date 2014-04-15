@@ -697,7 +697,7 @@ atom/proc/GetTypeInAllContents(typepath)
 	else
 		return 0
 
-/proc/do_after(var/mob/user as mob, delay as num, var/numticks = 5, var/needhand = 1)
+/proc/do_after(mob/user, delay, numticks = 5, needhand = 1)
 	if(!user || isnull(user))
 		return 0
 	if(numticks == 0)
@@ -719,11 +719,10 @@ atom/proc/GetTypeInAllContents(typepath)
 
 		if(needhand)	//Sometimes you don't want the user to have to keep their active hand
 			if(!holdingnull)
-				if(holding && !(user.get_active_hand() == holding))
+				if(holding)
 					return 0
-			else
-				if(!user.get_active_hand() == holding)
-					return
+			if(user.get_active_hand() != holding)
+				return 0
 
 	return 1
 
