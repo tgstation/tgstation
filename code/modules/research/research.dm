@@ -123,12 +123,13 @@ research holder datum.
 	return
 
 /datum/research/proc/AddDesign2Known(var/datum/design/D)
-	for(var/datum/design/known in known_designs)
-		if(D.id == known.id)
-			if(D.reliability_mod > known.reliability_mod)
-				known.reliability_mod = D.reliability_mod
-			return
-	known_designs += D
+	if(!(D in known_designs))
+		for(var/datum/design/known in known_designs)
+			if(D.id == known.id)
+				if(D.reliability_mod > known.reliability_mod)
+					known.reliability_mod = D.reliability_mod
+				return
+		known_designs += D
 	return
 
 //Refreshes known_tech and known_designs list. Then updates the reliability vars of the designs in the known_designs list.
