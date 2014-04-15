@@ -212,10 +212,10 @@
 			O.locked = panel_locked
 			if(!aisync)
 				lawsync = 0
-				O.connected_ai = null
-				O.notify_ai(1)
+				O.connect_ai(null)
 			else if(forced_ai)
-				O.connected_ai = forced_ai
+				O.connect_ai(forced_ai)
+				O.notify_ai(1)
 			if(!lawsync)
 				O.lawupdate = 0
 				O.make_laws()

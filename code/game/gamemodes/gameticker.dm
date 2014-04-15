@@ -114,6 +114,9 @@ var/global/datum/controller/gameticker/ticker
 	else
 		src.mode.announce()
 
+	if(!syndicate_code_phrase)		syndicate_code_phrase	= generate_code_phrase()
+	if(!syndicate_code_response)	syndicate_code_response	= generate_code_phrase()
+
 	supply_shuttle.process() 		//Start the supply shuttle regenerating points
 	master_controller.process()		//Start master_controller.process()
 	lighting_controller.process()	//Start processing DynamicAreaLighting updates
@@ -337,7 +340,8 @@ var/global/datum/controller/gameticker/ticker
 				if (is_special_character(robo) && robo.mind)
 					vsrobolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"
 					continue
-				robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"
+				if (robo.mind)
+					robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"
 			world << "[robolist]"
 			world << "[vsrobolist]"
 	for (var/mob/living/silicon/robot/robo in mob_list)

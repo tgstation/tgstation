@@ -374,7 +374,7 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 	if(issilicon(M))
 		if(isrobot(M)) //For cyborgs, returns 1 if the cyborg has a law 0 and special_role. Returns 0 if the borg is merely slaved to an AI traitor.
 			var/mob/living/silicon/robot/R = M
-			if(R.emagged || R.syndicate) //Count as antags
+			if((R.emagged == 1) || R.syndicate) //Count as antags
 				return 1
 			if(R.mind && R.mind.special_role && R.laws && R.laws.zeroth).
 				if(R.connected_ai)

@@ -13,4 +13,5 @@
 	name = "medical mask"
 	icon_state = "medical"
 	item_state = "m_mask"
+	body_parts_covered = 0
 	permeability_coefficient = 0.01
