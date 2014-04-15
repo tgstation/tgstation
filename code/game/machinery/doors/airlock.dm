@@ -1034,7 +1034,7 @@ About the new airlock wires panel:
 					A.icon_state = "door_electronics_smoke"
 					operating = 0
 
-				src = null
+				del(src)
 				return
 		else if(arePowerSystemsOn() && !(stat & NOPOWER))
 			user << "\blue The airlock's motors resist your efforts to force it."
