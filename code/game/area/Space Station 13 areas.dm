@@ -1372,6 +1372,10 @@ proc/process_ghost_teleport_locs()
 	name = "AI Upload Access"
 	icon_state = "ai_foyer"
 
+/area/minisat
+	name = "\improper MiniSat Reception"
+	icon_state = "yellow"
+
 /area/turret_protected/ai
 	name = "\improper AI Chamber"
 	icon_state = "ai_chamber"
