@@ -15,7 +15,6 @@ AI
 
 /datum/job/ai/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
-	return 1
 
 /datum/job/ai/config_check()
 	if(config && config.allow_ai)
@@ -38,7 +37,4 @@ Cyborg
 
 /datum/job/cyborg/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
-
-	H.Robotize()
-
-	return 1
+	return H.Robotize()

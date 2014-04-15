@@ -273,7 +273,7 @@ var/global/datum/controller/occupations/job_master
 	return 1
 
 //Gives the player the stuff he should have with his rank
-/datum/controller/occupations/proc/EquipRank(var/mob/living/carbon/human/H, var/rank, var/joined_late = 0)
+/datum/controller/occupations/proc/EquipRank(var/mob/living/H, var/rank, var/joined_late = 0)
 	var/datum/job/job = GetJob(rank)
 
 	H.job = rank
@@ -295,7 +295,9 @@ var/global/datum/controller/occupations/job_master
 		H.mind.assigned_role = rank
 
 	if(job)
-		job.equip(H)
+		var/new_mob = job.equip(H)
+		if(ismob(new_mob))
+			H = new_mob
 		job.apply_fingerprints(H)
 
 	H << "<b>You are the [rank].</b>"
