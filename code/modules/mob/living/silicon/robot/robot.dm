@@ -1363,14 +1363,18 @@
 	else
 		triesleft--
 
+	lockcharge = 1  //Locks borg until it select an icon to avoid secborgs running around with a standard sprite
+
 	var/icontype = input("Select an icon! [triesleft>0 ? "You have [triesleft] more chances." : "This is your last try."]", "Robot", null, null) in module_sprites
 
 	if(icontype)
 		icon_state = module_sprites[icontype]
+		lockcharge = null
 	else
 		src << "Something is badly wrong with the sprite selection. Harass a coder."
 		icon_state = module_sprites[1]
 		base_icon = icon_state
+		lockcharge = null
 		return
 
 	overlays -= "eyes"

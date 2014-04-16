@@ -85,7 +85,7 @@ This is to cycle sounds forward
 	switch(sound_flag)
 		if(0)
 			sound_flag += 1
-			usr << "Sound switched to Bwoink!"
+			usr << "Sound switched to Bubbles!"
 			return
 		if(1)
 			sound_flag += 1
@@ -157,7 +157,7 @@ And backwards
 			return
 		if(2)
 			sound_flag -= 1
-			usr << "Sound switched to Bwoink!"
+			usr << "Sound switched to Bubbles!"
 			return
 		if(3)
 			sound_flag -= 1
@@ -223,7 +223,7 @@ If you can make this smaller, please do.
 
 			if(1)
 				spam_flag = world.timeofday
-				playsound(get_turf(src), 'sound/effects/adminhelp.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/effects/bubbles.ogg', 50, 1)
 				return
 
 			if(2)
