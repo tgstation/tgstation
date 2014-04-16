@@ -135,7 +135,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	return
 
 /obj/effect/proc_holder/spell/proc/start_recharge()
-	while(charge_counter < charge_max)
+	while(charge_counter < charge_max && isnull(gc_destroyed))
 		sleep(1)
 		charge_counter++
 

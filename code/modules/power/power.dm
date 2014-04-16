@@ -419,7 +419,7 @@
 				if(S.powernet == src)
 					S.restore()				// and restore some of the power that was used
 				else
-					error("[S.name] (\ref[S]) had a [S.powernet ? "different (\ref[S.powernet])" : "null"] powernet to our powernet (\ref[src]).")
+					error("[S.name] (\ref[S]) had a [S.powernet ? "different (\ref[S.powernet])" : "null"] powernet to our powernet (\ref[src]).") //this line is a faggot and using the normal ERROR proc breaks it
 					nodes.Remove(S)
 
 /datum/powernet/proc/get_electrocute_damage()

@@ -163,7 +163,7 @@
 					assailant.visible_message("<span class='danger'>[assailant] has tightened \his grip on [affecting]'s neck!</span>")
 					add_logs(assailant, affecting, "strangled")
 
-					assailant.next_move = world.time + 10
+					assailant.changeNext_move(10)
 					affecting.losebreath += 1
 				else
 					assailant.visible_message("<span class='warning'>[assailant] was unable to tighten \his grip on [affecting]'s neck!</span>")

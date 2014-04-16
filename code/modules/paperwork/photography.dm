@@ -86,7 +86,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "album"
 	item_state = "briefcase"
-	can_hold = list("/obj/item/weapon/photo",)
+	can_hold = list(/obj/item/weapon/photo)
 
 
 /*
@@ -323,7 +323,7 @@
 
 	P.show(usr)
 	usr << P.desc
-	qdel(src)    //so 10 thousdand pictures items are not left in memory should an AI take them and then view them all.
+	qdel(P)    //so 10 thousdand pictures items are not left in memory should an AI take them and then view them all.
 
 /obj/item/device/camera/afterattack(atom/target, mob/user, flag)
 	if(!on || !pictures_left || ismob(target.loc)) return

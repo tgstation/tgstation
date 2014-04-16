@@ -64,7 +64,7 @@ for reference:
 	var/maxhealth = 100.0
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/stack/sheet/wood))
+		if (istype(W, /obj/item/stack/sheet/mineral/wood))
 			if (src.health < src.maxhealth)
 				visible_message("\red [user] begins to repair the [src]!")
 				if(do_after(user,20))
@@ -84,9 +84,9 @@ for reference:
 				else
 			if (src.health <= 0)
 				visible_message("\red <B>The barricade is smashed apart!</B>")
-				new /obj/item/stack/sheet/wood(get_turf(src))
-				new /obj/item/stack/sheet/wood(get_turf(src))
-				new /obj/item/stack/sheet/wood(get_turf(src))
+				new /obj/item/stack/sheet/mineral/wood(get_turf(src))
+				new /obj/item/stack/sheet/mineral/wood(get_turf(src))
+				new /obj/item/stack/sheet/mineral/wood(get_turf(src))
 				qdel(src)
 			..()
 
@@ -100,17 +100,17 @@ for reference:
 				src.health -= 25
 				if (src.health <= 0)
 					visible_message("\red <B>The barricade is blown apart!</B>")
-					new /obj/item/stack/sheet/wood(get_turf(src))
-					new /obj/item/stack/sheet/wood(get_turf(src))
-					new /obj/item/stack/sheet/wood(get_turf(src))
+					new /obj/item/stack/sheet/mineral/wood(get_turf(src))
+					new /obj/item/stack/sheet/mineral/wood(get_turf(src))
+					new /obj/item/stack/sheet/mineral/wood(get_turf(src))
 					qdel(src)
 				return
 
 	meteorhit()
 		visible_message("\red <B>The barricade is smashed apart!</B>")
-		new /obj/item/stack/sheet/wood(get_turf(src))
-		new /obj/item/stack/sheet/wood(get_turf(src))
-		new /obj/item/stack/sheet/wood(get_turf(src))
+		new /obj/item/stack/sheet/mineral/wood(get_turf(src))
+		new /obj/item/stack/sheet/mineral/wood(get_turf(src))
+		new /obj/item/stack/sheet/mineral/wood(get_turf(src))
 		qdel(src)
 		return
 

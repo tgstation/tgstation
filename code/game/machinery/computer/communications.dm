@@ -350,6 +350,11 @@
 	switch(src.state)
 		if(STATE_DEFAULT)
 			if (src.authenticated)
+				if(emergency_shuttle.recall_count > 1)
+					if(emergency_shuttle.last_call_loc)
+						dat += "<BR>Latest emergency signal trace attempt successful.<BR>Last signal origin: <b>[format_text(emergency_shuttle.last_call_loc.name)]</b>.<BR>"
+					else
+						dat += "<BR>Latest emergency signal trace attempt failed.<BR>"
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=logout'>Log Out</A> \]<BR>"
 				dat += "<BR><B>General Functions</B>"
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=messagelist'>Message List</A> \]"
@@ -439,6 +444,12 @@
 	var/dat = ""
 	switch(src.aistate)
 		if(STATE_DEFAULT)
+			if(emergency_shuttle.recall_count > 1)
+				if(emergency_shuttle.last_call_loc)
+					dat += "<BR>Latest emergency signal trace attempt successful.<BR>Last signal origin: <b>[format_text(emergency_shuttle.last_call_loc.name)]</b>.<BR>"
+				else
+					dat += "<BR>Latest emergency signal trace attempt failed.<BR>"
+
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-messagelist'>Message List</A> \]"
 			if(emergency_shuttle.location==0 && !emergency_shuttle.online)
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-callshuttle'>Call Emergency Shuttle</A> \]"
@@ -519,11 +530,12 @@
 		user << "The emergency shuttle is already on its way."
 		return
 
+	var/area/signal_origin = get_area(user)
 	if (seclevel2num(get_security_level()) == SEC_LEVEL_RED) // There is a serious threat we gotta move no time to give them five minutes.
-		emergency_shuttle.incall(0.6)
+		emergency_shuttle.incall(0.6, signal_origin)
 		captain_announce("The emergency shuttle has been called. Red Alert state confirmed: Dispatching priority shuttle. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
 	else
-		emergency_shuttle.incall()
+		emergency_shuttle.incall(1, signal_origin)
 		captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
 
 	log_game("[key_name(user)] has called the shuttle.")
@@ -547,7 +559,8 @@
 
 
 	if(emergency_shuttle.direction != -1 && emergency_shuttle.online) //check that shuttle isn't already heading to centcom
-		emergency_shuttle.recall()
+		var/area/signal_origin = get_area(user)
+		emergency_shuttle.recall(signal_origin)
 		log_game("[key_name(user)] has recalled the shuttle.")
 		message_admins("[key_name_admin(user)] has recalled the shuttle.", 1)
 	return
