@@ -267,7 +267,7 @@
 	update_icon()
 
 	if (!glass)
-		opacity = 1
+		src.SetOpacity(1)
 
 	// TODO: analyze this proc
 	update_nearby_tiles()
