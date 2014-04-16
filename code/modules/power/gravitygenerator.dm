@@ -316,7 +316,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 				charge_count -= 2
 
 			if(charge_count % 4 == 0 && prob(75)) // Let them know it is charging/discharging.
-				playsound(src.loc, 'sound/effects/EMPulse.ogg', 75, 1)
+				playsound(src.loc, 'sound/effects/EMPulse.ogg', 100, 1)
 
 			updateDialog()
 			if(prob(25)) // To help stop "Your clothes feel warm" spam.
@@ -354,7 +354,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		var/turf/their_turf = get_turf(M)
 		if(M.client && their_turf.z == our_turf.z)
 			shake_camera(M, 15, 1)
-			M.playsound_local(our_turf, 'sound/machines/signal.ogg', 100)
+			M.playsound_local(our_turf, 'sound/effects/alert.ogg', 100, 1, 0.5)
 
 /obj/machinery/gravity_generator/main/proc/gravity_in_level()
 	var/turf/T = get_turf(src)
