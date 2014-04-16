@@ -135,25 +135,12 @@ research holder datum.
 //Refreshes known_tech and known_designs list. Then updates the reliability vars of the designs in the known_designs list.
 //Input/Output: n/a
 /datum/research/proc/RefreshResearch()
-	var/list/CMTLs=list() // Calculated Max Tech Levels
 	for(var/datum/tech/PT in possible_tech)
-		if(!(PT.id in CMTLs))
-			CMTLs[PT.id]=0
 		if(TechHasReqs(PT))
 			AddTech2Known(PT)
 	for(var/datum/design/PD in possible_designs)
-		for(var/id in PD.req_tech)
-			// If calculated max_level is less than the required tech level of this design,
-			// Update calculated max techlevel
-			if(CMTLs[id] < PD.req_tech[id])
-				CMTLs[id] = PD.req_tech[id]
 		if(DesignHasReqs(PD))
 			AddDesign2Known(PD)
-	//testing("--- CMTLs calculated.")
-	//for(var/datum/tech/T in possible_tech)
-	//	// If CMTL != MTL, bitch.
-	//	if(CMTLs[T.id] != T.max_level)
-	//		testing("CMTL != MTL for [T.id]: [CMTLs[T.id]] != [T.max_level]")
 	for(var/datum/tech/T in known_tech)
 		T = between(1,T.level,20)
 	for(var/datum/design/D in known_designs)

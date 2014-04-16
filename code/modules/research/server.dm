@@ -55,15 +55,18 @@
 			health = min(100, health + 1)
 		if(T0C to (T20C + 20))
 			health = between(0, health, 100)
-		if((T20C + 20) to (T0C + 70))
+		if((T20C + 20) to INFINITY)
 			health = max(0, health - 1)
 	if(health <= 0)
 		griefProtection() //I dont like putting this in process() but it's the best I can do without re-writing a chunk of rd servers.
 		files.known_designs = list()
+		var/changed=0
 		for(var/datum/tech/T in files.known_tech)
 			if(prob(1))
-				T.level--
-		files.RefreshResearch()
+				T.level = 0 // This never happens, so make it dramatic. T.level--
+				changed=1
+		if(changed)
+			files.RefreshResearch()
 	if(delay)
 		delay--
 	else
