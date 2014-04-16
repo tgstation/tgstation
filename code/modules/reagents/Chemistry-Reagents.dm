@@ -1495,8 +1495,8 @@ datum
 				else if(istype(O,/obj/effect/glowshroom)) //even a small amount is enough to kill it
 					qdel(O)
 				else if(istype(O,/obj/effect/spacevine))
-					if(prob(50)) qdel(O) //Kills kudzu too.
-				// Damage that is done to growing plants is separately at code/game/machinery/hydroponics at obj/item/hydroponics
+					var/obj/effect/spacevine/SV = O
+					SV.on_chem_effect(src)
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 				src = null

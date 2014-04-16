@@ -91,9 +91,9 @@
 	//Equip headset
 	H.equip_to_slot_or_del(new src.default_headset(H), slot_ears)
 
-	return 1
-
 /datum/job/proc/apply_fingerprints(var/mob/living/carbon/human/H)
+	if(!istype(H))
+		return
 	if(H.back)
 		H.back.add_fingerprint(H,1)	//The 1 sets a flag to ignore gloves
 		for(var/obj/item/I in H.back.contents)

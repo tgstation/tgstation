@@ -56,6 +56,11 @@ var/list/skin_tones = list(
 	"african2"
 	)
 
+var/list/mutant_races = list(
+	"human",
+	"lizard",
+	)
+
 proc/age2agedescription(age)
 	switch(age)
 		if(0 to 1)			return "infant"

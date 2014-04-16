@@ -23,9 +23,6 @@
 	var/mutantrace = null  //The type of mutant race the player is if applicable (i.e. potato-man)
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
 
-/datum/dna/New()
-	if(!blood_type)	blood_type = random_blood_type()
-
 /datum/dna/proc/generate_uni_identity(mob/living/carbon/character)
 	. = ""
 	var/list/L = new /list(DNA_UNI_IDENTITY_BLOCKS)
@@ -69,7 +66,7 @@
 	if(!istype(owner, /mob/living/carbon/monkey) && !istype(owner, /mob/living/carbon/human))
 		return
 	if(!owner.dna)
-		owner.dna = new /datum/dna()
+		create_dna(owner)
 
 	if(real_name)
 		owner.real_name = real_name
@@ -116,7 +113,7 @@
 	if(!istype(character, /mob/living/carbon/monkey) && !istype(character, /mob/living/carbon/human))
 		return
 	if(!character.dna)
-		character.dna = new /datum/dna()
+		create_dna(character)
 	if(blood_type)
 		character.dna.blood_type = blood_type
 		character.dna.real_name = character.real_name
@@ -124,6 +121,9 @@
 	character.dna.struc_enzymes = character.dna.generate_struc_enzymes(character)
 	character.dna.unique_enzymes = character.dna.generate_unique_enzymes(character)
 	return character.dna
+
+/proc/create_dna(mob/living/carbon/C) //don't use this unless you're about to use hardset_dna or ready_dna
+	C.dna = new /datum/dna()
 
 /////////////////////////// DNA DATUM
 

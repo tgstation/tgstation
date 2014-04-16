@@ -1,6 +1,6 @@
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper
 	name = "mounted sleeper"
-	desc = "Mounted Sleeper. (Can be attached to: Medical Exosuits)"
+	desc = "Equipment for medical exosuits. A mounted sleeper that stabilizes patients and can inject reagents in the exosuit's reserves."
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	origin_tech = "programming=2;biotech=3"
@@ -243,6 +243,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/tool/cable_layer
 	name = "cable layer"
+	desc = "Equipment for engineering exosuits. Lays cable along the exosuit's path."
 	icon_state = "mecha_wire"
 	var/datum/event/event
 	var/turf/old_turf
@@ -389,8 +390,8 @@
 		return 1
 
 /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun
-	name = "syringe gun"
-	desc = "Exosuit-mounted chem synthesizer with syringe gun. Reagents inside are held in stasis, so no reactions will occur. (Can be attached to: Medical Exosuits)"
+	name = "exosuit syringe gun"
+	desc = "Equipment for medical exosuits. A chem synthesizer with syringe gun. Reagents inside are held in stasis, so no reactions will occur."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "syringegun"
 	var/list/syringes
