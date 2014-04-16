@@ -719,7 +719,7 @@ atom/proc/GetTypeInAllContents(typepath)
 
 		if(needhand)	//Sometimes you don't want the user to have to keep their active hand
 			if(!holdingnull)
-				if(holding)
+				if(!holding)
 					return 0
 			if(user.get_active_hand() != holding)
 				return 0
