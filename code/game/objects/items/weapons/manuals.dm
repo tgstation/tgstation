@@ -728,7 +728,7 @@
 			</head>
 
 			<body>
-			<iframe width='100%' height='97%' src="[config.wikiurl]/index.php?title=[page_link]&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+			<iframe width='100%' height='97%' src="[config.wikiurl]/index.php?title=[page_link]&printable=yes&remove_links=1&cc=1" frameborder="0" id="main_frame"></iframe>
 			</body>
 
 			</html>
