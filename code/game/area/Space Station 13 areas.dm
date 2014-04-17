@@ -1532,6 +1532,14 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Derelict Solar Control"
 	icon_state = "engine"
 
+/area/derelict/atmos
+	name = "\improper Derelict Atmospherics"
+	icon_state = "atmos"
+
+/area/derelict/research
+	name = "\improper Derelict Research"
+	icon_state = "toxins"
+
 /area/derelict/crew_quarters
 	name = "\improper Derelict Crew Quarters"
 	icon_state = "fitness"
@@ -1798,6 +1806,8 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Goonecode Containment"
 	icon_state = "ai_upload"
 	jammed=2
+
+
 
 // Away Missions
 /area/awaymission
