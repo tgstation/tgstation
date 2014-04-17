@@ -367,6 +367,9 @@ var/MAX_EXPLOSION_RANGE = 14
 #define M_PSY_RESIST    204		// Block remoteview
 #define M_SUPER_FART    205		// Duh
 
+// Bustanuts
+#define M_HARDCORE      300
+
 //disabilities
 #define NEARSIGHTED		1
 #define EPILEPSY		2

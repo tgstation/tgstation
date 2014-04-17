@@ -96,7 +96,7 @@ datum
 		muhhardcores
 			name = "Hardcores"
 			id = "bustanut"
-			description = "Concenctrated feelings of being hardcore"
+			description = "Concentrated hardcore beliefs."
 			reagent_state = LIQUID
 			color = "#FFF000"
 			custom_metabolism = 0.01
