@@ -56,7 +56,7 @@
 	icon_state = "blshell"
 	caliber = "shotgun"
 	projectile_type = /obj/item/projectile/bullet
-	m_amt = 6500
+	m_amt = 4000
 
 
 /obj/item/ammo_casing/shotgun/buckshot

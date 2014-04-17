@@ -8,15 +8,15 @@
 For the materials datum, it assumes you need reagents unless specified otherwise. To designate a material that isn't a reagent,
 you use one of the material IDs below. These are NOT ids in the usual sense (they aren't defined in the object or part of a datum),
 they are simply references used as part of a "has materials?" type proc. They all start with a $ to denote that they aren't reagents.
-The currently supporting non-reagent materials:
-- $metal (/obj/item/stack/metal). One sheet = 3750 units.
-- $glass (/obj/item/stack/glass). One sheet = 3750 units.
-- $plasma (/obj/item/stack/plasma). One sheet = 3750 units.
-- $silver (/obj/item/stack/silver). One sheet = 3750 units.
-- $gold (/obj/item/stack/gold). One sheet = 3750 units.
-- $uranium (/obj/item/stack/uranium). One sheet = 3750 units.
-- $diamond (/obj/item/stack/diamond). One sheet = 3750 units.
-- $clown (/obj/item/stack/clown). One sheet = 3750 units. ("Bananium")
+The currently supporting non-reagent materials. All material amounts are set as the define MINERAL_MATERIAL_AMOUNT, which defaults to 2000
+- $metal (/obj/item/stack/metal).
+- $glass (/obj/item/stack/glass).
+- $plasma (/obj/item/stack/plasma).
+- $silver (/obj/item/stack/silver).
+- $gold (/obj/item/stack/gold).
+- $uranium (/obj/item/stack/uranium).
+- $diamond (/obj/item/stack/diamond).
+- $clown (/obj/item/stack/clown).
 (Insert new ones here)
 
 Don't add new keyword/IDs if they are made from an existing one (such as rods which are made from metal). Only add raw materials.
@@ -369,7 +369,7 @@ datum/design/comm_traffic
 	id = "comm_traffic"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "sacid" = 20)
+	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/comm_traffic
 
 datum/design/telesci_console
@@ -378,7 +378,7 @@ datum/design/telesci_console
 	id = "telesci_console"
 	req_tech = list("programming" = 3, "bluespace" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "sacid" = 20)
+	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/telesci_console
 
 datum/design/aifixer
@@ -941,7 +941,7 @@ datum/design/tech_disk
 
 datum/design/RPED
 	name = "Rapid Part Exchange Device"
-	desc = "Special mechanical module made to store, sort, and apply standart machine parts."
+	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	id = "rped"
 	req_tech = list("engineering" = 3,
 					"materials" = 3)
@@ -1088,6 +1088,8 @@ datum/design/super_matter_bin
 	materials = list("$metal" = 80)
 	reliability = 75
 	build_path = /obj/item/weapon/stock_parts/matter_bin/super
+
+
 
 datum/design/telesci_gps
 	name = "GPS Device"
@@ -1425,7 +1427,7 @@ datum/design/mech_recharger
 	id = "mech_recharger"
 	req_tech = list("programming" = 3, "powerstorage" = 4, "engineering" = 4)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "sacid" = 20)
+	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mech_recharger
 
 datum/design/vendor
@@ -1434,7 +1436,7 @@ datum/design/vendor
 	id = "vendor"
 	req_tech = list("programming" = 1)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "sacid" = 20)
+	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/vendor
 
 
@@ -1503,7 +1505,7 @@ datum/design/mmi
 	id = "mmi"
 	req_tech = list("programming" = 2, "biotech" = 3)
 	build_type = PROTOLATHE | MECHFAB
-	materials = list("$metal" = 500, "$glass" = 250)
+	materials = list("$metal" = 1000, "$glass" = 500)
 	reliability = 76
 	build_path = /obj/item/device/mmi
 	category = "Misc"
@@ -1514,7 +1516,7 @@ datum/design/mmi_radio
 	id = "mmi_radio"
 	req_tech = list("programming" = 2, "biotech" = 4)
 	build_type = PROTOLATHE | MECHFAB
-	materials = list("$metal" = 600, "$glass" = 250)
+	materials = list("$metal" = 1200, "$glass" = 500)
 	reliability = 74
 	build_path = /obj/item/device/mmi/radio_enabled
 	category = "Misc"
@@ -1525,7 +1527,7 @@ datum/design/synthetic_flash
 	id = "sflash"
 	req_tech = list("magnets" = 3, "combat" = 2)
 	build_type = MECHFAB
-	materials = list("$metal" = 400, "$glass" = 400)
+	materials = list("$metal" = 750, "$glass" = 750)
 	reliability = 76
 	build_path = /obj/item/device/flash/synthetic
 	category = "Misc"
@@ -1536,7 +1538,7 @@ datum/design/bluespacebeaker
 	id = "bluespacebeaker"
 	req_tech = list("bluespace" = 2, "materials" = 6)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 1500, "$plasma" = 15000, "$diamond" = 2500)
+	materials = list("$metal" = 3000, "$plasma" = 3000, "$diamond" = 500)
 	reliability = 76
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/bluespace
 	category = "Misc"
@@ -1547,7 +1549,7 @@ datum/design/noreactbeaker
 	id = "splitbeaker"
 	req_tech = list("materials" = 2)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 1500)
+	materials = list("$metal" = 3000)
 	reliability = 76
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreact
 	category = "Misc"
@@ -1562,7 +1564,7 @@ datum/design/nuclear_gun
 	id = "nuclear_gun"
 	req_tech = list("combat" = 3, "materials" = 5, "powerstorage" = 3)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 5000, "$glass" = 1000, "$uranium" = 20000)
+	materials = list("$metal" = 5000, "$glass" = 1000, "$uranium" = 2000)
 	reliability = 76
 	build_path = /obj/item/weapon/gun/energy/gun/nuclear
 	locked = 1
@@ -1573,7 +1575,7 @@ datum/design/stunrevolver
 	id = "stunrevolver"
 	req_tech = list("combat" = 3, "materials" = 3, "powerstorage" = 2)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 10000, "$glass" = 10000)
+	materials = list("$metal" = 4000)
 	build_path = /obj/item/weapon/gun/energy/stunrevolver
 	locked = 1
 
@@ -1583,7 +1585,7 @@ datum/design/lasercannon
 	id = "lasercannon"
 	req_tech = list("combat" = 4, "materials" = 3, "powerstorage" = 3)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 10000, "$glass" = 10000, "$diamond" = 10000)
+	materials = list("$metal" = 10000, "$glass" = 2000, "$diamond" = 2000)
 	build_path = /obj/item/weapon/gun/energy/lasercannon
 	locked = 1
 
@@ -1613,7 +1615,7 @@ datum/design/rapidsyringe
 	id = "rapidsyringe"
 	req_tech = list("combat" = 3, "materials" = 3, "engineering" = 3, "biotech" = 2)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 10000, "$glass" = 10000)
+	materials = list("$metal" = 5000, "$glass" = 1000)
 	build_path = /obj/item/weapon/gun/syringe/rapidsyringe
 /*
 datum/design/largecrossbow
@@ -1631,7 +1633,7 @@ datum/design/temp_gun
 	id = "temp_gun"
 	req_tech = list("combat" = 3, "materials" = 4, "powerstorage" = 3, "magnets" = 2)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 5000, "$glass" = 500, "$silver" = 5000)
+	materials = list("$metal" = 5000, "$glass" = 500, "$silver" = 3000)
 	build_path = /obj/item/weapon/gun/energy/temperature
 	locked = 1
 
@@ -1641,7 +1643,7 @@ datum/design/flora_gun
 	id = "flora_gun"
 	req_tech = list("materials" = 2, "biotech" = 3, "powerstorage" = 3)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 1000, "$glass" = 250, "radium" = 20)
+	materials = list("$metal" = 2000, "$glass" = 500, "radium" = 20)
 	build_path = /obj/item/weapon/gun/energy/floragun
 
 datum/design/large_grenade
@@ -1650,7 +1652,7 @@ datum/design/large_grenade
 	id = "large_Grenade"
 	req_tech = list("combat" = 3, "materials" = 2)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 1800)
+	materials = list("$metal" = 3000)
 	reliability = 79
 	build_path = /obj/item/weapon/grenade/chem_grenade/large
 
@@ -1660,7 +1662,7 @@ datum/design/smg
 	id = "smg"
 	req_tech = list("combat" = 4, "materials" = 3)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 10000, "$silver" = 10000, "$diamond" = 1000)
+	materials = list("$metal" = 8000, "$silver" = 2000, "$diamond" = 1000)
 	build_path = /obj/item/weapon/gun/projectile/automatic
 	locked = 1
 
@@ -1670,7 +1672,7 @@ datum/design/xray
 	id = "xray"
 	req_tech = list("combat" = 6, "materials" = 5, "biotech" = 5, "powerstorage" = 4)
 	build_type = PROTOLATHE
-	materials = list("$gold" = 25000,"$uranium" = 50000, "$metal" = 4000)
+	materials = list("$gold" = 5000,"$uranium" = 10000, "$metal" = 4000)
 	build_path = /obj/item/weapon/gun/energy/xray
 	locked = 1
 
@@ -1680,7 +1682,7 @@ datum/design/ionrifle
 	id = "ionrifle"
 	req_tech = list("combat" = 5, "materials" = 4, "magnets" = 4)
 	build_type = PROTOLATHE
-	materials = list("$silver" = 20000, "$metal" = 24000, "$uranium" = 5000)
+	materials = list("$silver" = 4000, "$metal" = 6000, "$uranium" = 1000)
 	build_path = /obj/item/weapon/gun/energy/ionrifle
 	locked = 1
 
@@ -1708,7 +1710,7 @@ datum/design/stunshell
 	id = "stunshell"
 	req_tech = list("combat" = 3, "materials" = 3)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 1000)
+	materials = list("$metal" = 200)
 	build_path = /obj/item/ammo_casing/shotgun/stunshell
 
 /////////////////////////////////////////
@@ -1739,7 +1741,7 @@ datum/design/plasmacutter
 	id = "plasmacutter"
 	req_tech = list("materials" = 4, "plasmatech" = 3, "engineering" = 3)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 1500, "$glass" = 500, "$plasma" = 500)
+	materials = list("$metal" = 1500, "$glass" = 500, "$gold" = 500, "$plasma" = 500)
 	reliability = 79
 	build_path = /obj/item/weapon/pickaxe/plasmacutter
 
@@ -1758,7 +1760,7 @@ datum/design/drill_diamond
 	id = "drill_diamond"
 	req_tech = list("materials" = 6, "powerstorage" = 4, "engineering" = 4)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 10000, "$glass" = 10000, "$diamond" = 10000) //Yes, a whole diamond is needed.
+	materials = list("$metal" = 3000, "$glass" = 1000, "$diamond" = 3750) //Yes, a whole diamond is needed.
 	reliability = 79
 	build_path = /obj/item/weapon/pickaxe/diamonddrill
 
@@ -1781,7 +1783,7 @@ datum/design/bag_holding
 	id = "bag_holding"
 	req_tech = list("bluespace" = 4, "materials" = 6)
 	build_type = PROTOLATHE
-	materials = list("$gold" = 15000, "$diamond" = 7500, "$uranium" = 1000)
+	materials = list("$gold" = 3000, "$diamond" = 1500, "$uranium" = 250)
 	reliability = 80
 	build_path = /obj/item/weapon/storage/backpack/holding
 
@@ -1791,7 +1793,7 @@ datum/design/bluespace_crystal
 	id = "bluespace_crystal"
 	req_tech = list("bluespace" = 4, "materials" = 6)
 	build_type = PROTOLATHE
-	materials = list("$diamond" = 7500, "$plasma" = 7500)
+	materials = list("$diamond" = 1500, "$plasma" = 1500)
 	reliability = 100
 	build_path = /obj/item/bluespace_crystal/artificial
 
@@ -1900,9 +1902,9 @@ datum/design/night_vision_goggles
 	id = "night_visision_goggles"
 	req_tech = list("magnets" = 4)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 100, "$glass" = 100, "$uranium" = 5000)
+	materials = list("$metal" = 100, "$glass" = 100, "$uranium" = 1000)
 	build_path = /obj/item/clothing/glasses/night
-	
+
 datum/design/magboots
 	name = "Magnetic Boots"
 	desc = "Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle."

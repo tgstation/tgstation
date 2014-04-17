@@ -90,7 +90,7 @@
 	icon_state = "gygax_harness"
 	origin_tech = "programming=2;materials=2;biotech=3;engineering=3"
 	construction_time = 300
-	construction_cost = list("metal"=20000,"glass"=10000,"diamond"=8000)
+	construction_cost = list("metal"=20000,"glass"=10000,"diamond"=2000)
 
 /obj/item/mecha_parts/part/gygax_head
 	name = "\improper Gygax head"
@@ -106,7 +106,7 @@
 	icon_state = "gygax_l_arm"
 	origin_tech = "programming=2;materials=2;engineering=3"
 	construction_time = 200
-	construction_cost = list("metal"=15000, "diamond"=2000)
+	construction_cost = list("metal"=15000, "diamond"=1000)
 
 /obj/item/mecha_parts/part/gygax_right_arm
 	name = "\improper Gygax right arm"
@@ -114,7 +114,7 @@
 	icon_state = "gygax_r_arm"
 	origin_tech = "programming=2;materials=2;engineering=3"
 	construction_time = 200
-	construction_cost = list("metal"=15000, "diamond"=2000)
+	construction_cost = list("metal"=15000, "diamond"=1000)
 
 /obj/item/mecha_parts/part/gygax_left_leg
 	name = "\improper Gygax left leg"
@@ -139,7 +139,7 @@
 	icon_state = "gygax_armour"
 	origin_tech = "materials=6;combat=4;engineering=5"
 	construction_time = 600
-	construction_cost = list("metal"=25000,"diamond"=12000)
+	construction_cost = list("metal"=25000,"diamond"=10000)
 
 
 //////////// Durand
@@ -158,7 +158,7 @@
 	icon_state = "durand_harness"
 	origin_tech = "programming=2;materials=3;biotech=3;engineering=3"
 	construction_time = 300
-	construction_cost = list("metal"=25000,"glass"=10000,"silver"=30000)
+	construction_cost = list("metal"=25000,"glass"=10000,"silver"=10000)
 
 /obj/item/mecha_parts/part/durand_head
 	name = "\improper Durand head"
@@ -166,7 +166,7 @@
 	icon_state = "durand_head"
 	origin_tech = "programming=2;materials=3;magnets=3;engineering=3"
 	construction_time = 200
-	construction_cost = list("metal"=10000,"glass"=15000,"silver"=5000)
+	construction_cost = list("metal"=10000,"glass"=15000,"silver"=2000)
 
 /obj/item/mecha_parts/part/durand_left_arm
 	name = "\improper Durand left arm"
@@ -190,7 +190,7 @@
 	icon_state = "durand_l_leg"
 	origin_tech = "programming=2;materials=3;engineering=3"
 	construction_time = 200
-	construction_cost = list("metal"=15000,"silver"=6000)
+	construction_cost = list("metal"=15000,"silver"=4000)
 
 /obj/item/mecha_parts/part/durand_right_leg
 	name = "\improper Durand right leg"
@@ -198,7 +198,7 @@
 	icon_state = "durand_r_leg"
 	origin_tech = "programming=2;materials=3;engineering=3"
 	construction_time = 200
-	construction_cost = list("metal"=15000,"silver"=6000)
+	construction_cost = list("metal"=15000,"silver"=4000)
 
 /obj/item/mecha_parts/part/durand_armour
 	gender = PLURAL
