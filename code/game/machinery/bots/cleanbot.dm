@@ -139,7 +139,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 			if(!src.oddbutton)
 				src.emagged = 2 //Cleanbots are odd, this is here to ensure the "compromised" status updates properly.
 				src.oddbutton = 1
-				usr << "<span class='warning'>You corrpt [src]'s cleaning software.</span>"
+				usr << "<span class='warning'>You corrupt [src]'s cleaning software.</span>"
 			src.updateUsrDialog()
 
 /obj/machinery/bot/cleanbot/attackby(obj/item/weapon/W, mob/user as mob)

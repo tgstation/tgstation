@@ -156,7 +156,7 @@
 /obj/machinery/bot/proc/hack(mob/user)
 	var/hack
 	if(is_special_character(user) && issilicon(user))
-		hack = "Operating System Inegrity: <A href='?src=\ref[src];operation=hack'>[src.emagged ? "Compromised" : "Normal"]</A><BR>"
+		hack = "Operating System Integrity: <A href='?src=\ref[src];operation=hack'>[src.emagged ? "Compromised" : "Normal"]</A><BR>"
 	return hack
 
 /obj/machinery/bot/attack_ai(mob/user as mob)

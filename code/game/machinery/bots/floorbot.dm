@@ -150,7 +150,7 @@
 		if("hack")
 			if(!src.emagged)
 				src.emagged = 2
-				usr << "<span class='warning'>You corrpt [src]'s construction protocols.</span>"
+				usr << "<span class='warning'>You corrupt [src]'s construction protocols.</span>"
 			src.updateUsrDialog()
 		if("bridgemode")
 			switch(src.targetdirection)
