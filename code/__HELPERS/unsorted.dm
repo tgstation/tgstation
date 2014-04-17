@@ -718,7 +718,7 @@ atom/proc/GetTypeInAllContents(typepath)
 	else
 		return 0
 
-/proc/do_after(var/mob/user as mob, delay as num, var/numticks = 5, var/needhand = 1)
+/proc/do_after(mob/user, delay, numticks = 5, needhand = 1)
 	if(!user || isnull(user))
 		return 0
 	if(numticks == 0)
@@ -727,6 +727,9 @@ atom/proc/GetTypeInAllContents(typepath)
 	var/delayfraction = round(delay/numticks)
 	var/turf/T = user.loc
 	var/holding = user.get_active_hand()
+	var/holdingnull = 1
+	if(holding)
+		holdingnull = 0
 
 	for(var/i = 0, i<numticks, i++)
 		sleep(delayfraction)
@@ -734,8 +737,13 @@ atom/proc/GetTypeInAllContents(typepath)
 
 		if(!user || user.stat || user.weakened || user.stunned || !(user.loc == T))
 			return 0
-		if(needhand && !(user.get_active_hand() == holding))	//Sometimes you don't want the user to have to keep their active hand
-			return 0
+
+		if(needhand)	//Sometimes you don't want the user to have to keep their active hand
+			if(!holdingnull)
+				if(!holding)
+					return 0
+			if(user.get_active_hand() != holding)
+				return 0
 
 	return 1
 
