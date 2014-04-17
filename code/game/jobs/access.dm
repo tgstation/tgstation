@@ -425,10 +425,9 @@ var/global/list/all_jobs
 
 	// Rebuild cache.
 	all_jobs=list()
-
-	// TODO:  Have a SILICON flag on the job or someshit so we don't have this static list. - N3X
-	for(var/jobtype in typesof(/datum/job) - list(/datum/job,/datum/job/ai,/datum/job/cyborg,/datum/job/mommi))
+	for(var/jobtype in typesof(/datum/job) - /datum/job)
 		var/datum/job/jobdatum = new jobtype
+		if(jobdatum.info_flag & JINFO_SILICON) continue
 		all_jobs.Add(jobdatum.title)
 	return all_jobs
 
