@@ -81,6 +81,7 @@
 
 /obj/machinery/bot/cleanbot/interact(mob/user as mob)
 	var/dat
+	dat += hack(user)
 	dat += text({"
 <TT><B>Automatic Station Cleaner v1.0</B></TT><BR><BR>
 Status: []<BR>
@@ -133,6 +134,12 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		if("oddbutton")
 			src.oddbutton = !src.oddbutton
 			usr << "<span class='notice'>You press the weird button.</span>"
+			src.updateUsrDialog()
+		if("hack")
+			if(!src.oddbutton)
+				src.emagged = 2 //Cleanbots are odd, this is here to ensure the "compromised" status updates properly.
+				src.oddbutton = 1
+				usr << "<span class='warning'>You corrpt [src]'s cleaning software.</span>"
 			src.updateUsrDialog()
 
 /obj/machinery/bot/cleanbot/attackby(obj/item/weapon/W, mob/user as mob)

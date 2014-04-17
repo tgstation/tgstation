@@ -104,6 +104,7 @@
 	if (.)
 		return
 	var/dat
+	dat += hack(user)
 	dat += "<TT><B>Automatic Medical Unit v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
 	dat += "Maintenance panel panel is [src.open ? "opened" : "closed"]<BR>"
@@ -177,6 +178,10 @@
 	else if ((href_list["togglevoice"]) && (!src.locked || issilicon(usr)))
 		src.shut_up = !src.shut_up
 
+	else if (href_list["operation"])
+		if(!src.emagged)
+			src.emagged = 2
+			usr << "<span class='warning'>You reconfigure [src]'s reagent processor circuits.</span>"
 	src.updateUsrDialog()
 	return
 

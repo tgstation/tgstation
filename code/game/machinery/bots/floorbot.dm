@@ -75,6 +75,7 @@
 
 /obj/machinery/bot/floorbot/interact(mob/user as mob)
 	var/dat
+	dat += hack(user)
 	dat += "<TT><B>Automatic Station Floor Repairer v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A><BR>"
 	dat += "Maintenance panel panel is [src.open ? "opened" : "closed"]<BR>"
@@ -145,6 +146,11 @@
 			src.updateUsrDialog()
 		if("make")
 			src.maketiles = !src.maketiles
+			src.updateUsrDialog()
+		if("hack")
+			if(!src.emagged)
+				src.emagged = 2
+				usr << "<span class='warning'>You corrpt [src]'s construction protocols.</span>"
 			src.updateUsrDialog()
 		if("bridgemode")
 			switch(src.targetdirection)
