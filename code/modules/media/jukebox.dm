@@ -131,6 +131,7 @@ var/global/loopModeNames=list(
 		return
 	if(stat & BROKEN && playlist!=null)
 		user.visible_message("\red <b>[user.name] smacks the side of \the [src.name].</b>","\red You hammer the side of \the [src.name].")
+		stat &= ~BROKEN
 		playlist=null
 		playing=emagged
 		update_icon()
