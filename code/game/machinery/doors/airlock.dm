@@ -993,7 +993,7 @@ About the new airlock wires panel:
 			beingcrowbarred = 1 //derp, Agouri
 		else
 			beingcrowbarred = 0
-		if( beingcrowbarred && (density && welded && !operating && src.p_open && (!src.arePowerSystemsOn() || stat & NOPOWER) && !src.locked) )
+		if( beingcrowbarred && (operating == -1 || density && welded && !operating && src.p_open && (!src.arePowerSystemsOn() || stat & NOPOWER) && !src.locked) )
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
 			// TODO: refactor the called proc
@@ -1031,7 +1031,7 @@ About the new airlock wires panel:
 					A.loc = loc
 
 				if (operating == -1)
-					A.icon_state = "door_electronics_smoke"
+					A.icon_state = "door_electronics_smoked"
 					operating = 0
 
 				del(src)
@@ -1135,7 +1135,7 @@ About the new airlock wires panel:
 				S.victim = L
 
 				spawn (20)
-					S = null
+					del(S)
 
 				L.emote("scream")
 
