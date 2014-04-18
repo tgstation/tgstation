@@ -184,6 +184,9 @@ Auto Patrol: []"},
 			if(!src.emagged)
 				src.emagged = 2
 				usr << "<span class='warning'>You disable [src]'s combat inhibitor.</span>"
+			else
+				src.emagged = 0
+				usr << "<span class='notice'>You restore [src]'s combat inhibitor.</span>"
 			src.updateUsrDialog()
 
 /obj/machinery/bot/ed209/attackby(obj/item/weapon/W as obj, mob/user as mob)

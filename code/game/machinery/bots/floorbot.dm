@@ -151,6 +151,9 @@
 			if(!src.emagged)
 				src.emagged = 2
 				usr << "<span class='warning'>You corrupt [src]'s construction protocols.</span>"
+			else
+				src.emagged = 0
+				usr << "<span class='notice'>You detect errors in [src] and reset its programming.</span>"
 			src.updateUsrDialog()
 		if("bridgemode")
 			switch(src.targetdirection)

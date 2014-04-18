@@ -155,8 +155,9 @@
 
 /obj/machinery/bot/proc/hack(mob/user)
 	var/hack
-	if(is_special_character(user) && issilicon(user))
-		hack = "Operating System Integrity: <A href='?src=\ref[src];operation=hack'>[src.emagged ? "Compromised" : "Normal"]</A><BR>"
+	if(issilicon(user))
+		hack += "[src.emagged ? "Software compromised! Unit may exhibit dangerous or erratic behavior." : "Unit operating normally. Release safety lock?"]<BR>"
+		hack += "Harm Prevention Safety System: <A href='?src=\ref[src];operation=hack'>[src.emagged ? "DANGER" : "Engaged"]</A><BR>"
 	return hack
 
 /obj/machinery/bot/attack_ai(mob/user as mob)

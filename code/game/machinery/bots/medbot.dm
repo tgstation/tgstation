@@ -181,7 +181,10 @@
 	else if (href_list["operation"])
 		if(!src.emagged)
 			src.emagged = 2
-			usr << "<span class='warning'>You reconfigure [src]'s reagent processor circuits.</span>"
+			usr << "<span class='warning'>You corrupt [src]'s reagent processor circuits.</span>"
+		else
+			src.emagged = 0
+			usr << "<span class='notice'>You reset [src]'s reagent circuits.</span>"
 	src.updateUsrDialog()
 	return
 
