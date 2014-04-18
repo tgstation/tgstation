@@ -97,11 +97,12 @@
 /datum/spacevine_mutation/aggressive_spread  //very OP, but im out of other ideas currently
 	name = "aggressive spreading"
 	hue = "777777"
+	severity = 3
 
 /datum/spacevine_mutation/aggressive_spread/on_spread(obj/effect/spacevine/holder, turf/target)
 	for(var/atom/A in target)
 		if(!istype(A, /obj/effect))
-			A.ex_act(3)  //To not be the same as self-eating vine
+			A.ex_act(severity)  //To not be the same as self-eating vine
 
 /datum/spacevine_mutation/agressive_spread/on_buckle(obj/effect/spacevine/holder, mob/living/buckled)
 	buckled.ex_act(severity)
