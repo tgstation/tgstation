@@ -824,10 +824,11 @@ ________________________________________________________________________________
 		else if(istype(I, /obj/item/weapon/reagent_containers/glass))//If it's a glass beaker.
 			var/total_reagent_transfer//Keep track of this stuff.
 			for(var/reagent_id in reagent_list)
-				var/datum/reagent/R = I.reagents.has_reagent(reagent_id)//Mostly to pull up the name of the reagent after calculating. Also easier to use than writing long proc paths.
-				if(R&&reagents.get_reagent_amount(reagent_id)<r_maxamount+(reagent_id == "radium"?(a_boost*a_transfer):0)&&R.volume>=a_transfer)//Radium is always special.
+				var/datum/reagent/R = I.reagents.get_reagent(reagent_id)//Mostly to pull up the name of the reagent after calculating. Also easier to use than writing long proc paths.
+				var/ourvolume = reagents.get_reagent_amount(reagent_id) // Why weren't you doing this? -- N3X
+				if(R&&ourvolume<r_maxamount+(reagent_id == "radium"?(a_boost*a_transfer):0)&&R.volume>=a_transfer)//Radium is always special.
 					//Here we determine how much reagent will actually transfer if there is enough to transfer or there is a need of transfer. Minimum of max amount available (using a_transfer) or amount needed.
-					var/amount_to_transfer = min( (r_maxamount+(reagent_id == "radium"?(a_boost*a_transfer):0)-reagents.get_reagent_amount(reagent_id)) ,(round(R.volume/a_transfer))*a_transfer)//In the end here, we round the amount available, then multiply it again.
+					var/amount_to_transfer = min( (r_maxamount+(reagent_id == "radium"?(a_boost*a_transfer):0)-ourvolume) ,(round(R.volume/a_transfer))*a_transfer)//In the end here, we round the amount available, then multiply it again.
 					R.volume -= amount_to_transfer//Remove from reagent volume. Don't want to delete the reagent now since we need to perserve the name.
 					reagents.add_reagent(reagent_id, amount_to_transfer)//Add to suit. Reactions are not important.
 					total_reagent_transfer += amount_to_transfer//Add to total reagent trans.
