@@ -113,6 +113,15 @@
 /obj/proc/unlinkFrom(var/mob/user, var/obj/buffer)
 	return 0
 
+/obj/proc/canLink(var/obj/O)
+	return 0
+
+/obj/proc/isLinkedWith(var/obj/O)
+	return 0
+
+/obj/proc/getLink(var/idx)
+	return null
+
 /obj/proc/format_tag(var/label,var/varname, var/act="set_tag")
 	var/value = vars[varname]
 	if(!value || value=="")
@@ -166,8 +175,7 @@ a {
 	user << browse(dat, "window=mtcomputer")
 	user.set_machine(src)
 	onclose(user, "mtcomputer")
-/obj/proc/canLink(var/obj/O)
-	return 0
+
 /obj/proc/update_icon()
 	return
 
