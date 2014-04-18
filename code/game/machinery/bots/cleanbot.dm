@@ -110,7 +110,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	src.add_fingerprint(usr)
 	switch(href_list["operation"])
 		if("start")
-			if (src.on)
+			if (src.on && !src.emagged)
 				turn_off()
 			else
 				turn_on()
@@ -139,8 +139,12 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 			if(!src.oddbutton)
 				src.emagged = 2 //Cleanbots are odd, this is here to ensure the "compromised" status updates properly.
 				src.oddbutton = 1
+				src.hacked = 1
 				usr << "<span class='warning'>You corrupt [src]'s cleaning software.</span>"
+			else if(!src.hacked)
+				usr << "<span class='userdanger'>[src] does not seem to respond to your repair code!</span>"
 			else
+				src.hacked = 0
 				src.emagged = 0
 				src.oddbutton = 0
 				usr << "<span class='notice'>[src]'s software has been reset!</span>"

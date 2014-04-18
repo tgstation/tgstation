@@ -134,7 +134,7 @@
 	src.add_fingerprint(usr)
 	switch(href_list["operation"])
 		if("start")
-			if (src.on)
+			if (src.on && !src.emagged)
 				turn_off()
 			else
 				turn_on()
@@ -150,9 +150,13 @@
 		if("hack")
 			if(!src.emagged)
 				src.emagged = 2
+				src.hacked = 1
 				usr << "<span class='warning'>You corrupt [src]'s construction protocols.</span>"
+			else if(!src.hacked)
+				usr << "<span class='userdanger'>[src] is not responding to reset commands!</span>"
 			else
 				src.emagged = 0
+				src.hacked = 0
 				usr << "<span class='notice'>You detect errors in [src] and reset its programming.</span>"
 			src.updateUsrDialog()
 		if("bridgemode")

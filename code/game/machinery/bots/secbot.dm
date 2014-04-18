@@ -136,7 +136,7 @@ Auto Patrol: []"},
 		return
 	usr.set_machine(src)
 	if((href_list["power"]) && (src.allowed(usr)))
-		if(src.on)
+		if (src.on && !src.emagged)
 			turn_off()
 		else
 			turn_on()
@@ -159,9 +159,13 @@ Auto Patrol: []"},
 		if("hack")
 			if(!src.emagged)
 				src.emagged = 2
+				src.hacked = 1
 				usr << "<span class='warning'>You overload [src]'s target identification system.</span>"
+			else if(!src.hacked)
+				usr << "<span class='userdanger'>[src] refuses to accept your authority!</span>"
 			else
 				src.emagged = 0
+				src.hacked = 0
 				usr << "<span class='notice'>You reboot [src] and restore the target identification.</span>"
 			src.updateUsrDialog()
 

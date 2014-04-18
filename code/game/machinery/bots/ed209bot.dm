@@ -160,7 +160,7 @@ Auto Patrol: []"},
 		else if((lasercolor == "r") && (istype(H.wear_suit, /obj/item/clothing/suit/bluetag)))
 			return
 	if ((href_list["power"]) && (src.allowed(usr)))
-		if (src.on)
+		if (src.on && !src.emagged)
 			turn_off()
 		else
 			turn_on()
@@ -183,9 +183,13 @@ Auto Patrol: []"},
 		if("hack")
 			if(!src.emagged)
 				src.emagged = 2
+				src.hacked = 1
 				usr << "<span class='warning'>You disable [src]'s combat inhibitor.</span>"
+			else if(!src.hacked)
+				usr << "<span class='userdanger'>[src] ignores your attempts to restrict it!</span>"
 			else
 				src.emagged = 0
+				src.hacked = 0
 				usr << "<span class='notice'>You restore [src]'s combat inhibitor.</span>"
 			src.updateUsrDialog()
 
