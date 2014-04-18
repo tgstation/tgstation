@@ -42,7 +42,7 @@
 /proc/hear(var/range, var/atom/source)
 
 	var/lum = source.luminosity
-	source.luminosity = 6
+	source.luminosity = range - 1
 
 	var/list/heard = view(range, source)
 	source.luminosity = lum
