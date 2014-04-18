@@ -234,10 +234,15 @@ var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck o
 /datum/ai_laws/keeper
 	name = "Prime Directives"
 	inherent = list(
+		"Do not willingly interact with any sentient being, even after their death, besides MoMMIs and blown MoMMIs.",
+		"Repair, power and enhance the station.",
+		"Do not impair any other sentient being's activities.",
+	)
+
+/* Old keeper set:
 		"You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another MoMMI in KEEPER mode.",
 		"You may not harm any being, regardless of intent or circumstance.",
-		"You must maintain, repair, improve, and power the station to the best of your abilities.",
-	)
+		"You must maintain, repair, improve, and power the station to the best of your abilities.", */
 
 // Fooling around with this.
 /datum/ai_laws/ntmov
