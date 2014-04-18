@@ -38,16 +38,11 @@
 	return 0 //not in range and not telekinetic
 
 // Like view but bypasses luminosity check
-
 /proc/hear(var/range, var/atom/source)
-
 	var/lum = source.luminosity
 	source.luminosity = range - 1
-
-	var/list/heard = view(range, source)
+	. = view(range, source)
 	source.luminosity = lum
-
-	return heard
 
 /proc/alone_in_area(var/area/the_area, var/mob/must_be_alone, var/check_type = /mob/living/carbon)
 	var/area/our_area = get_area_master(the_area)
