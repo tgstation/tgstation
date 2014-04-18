@@ -161,7 +161,7 @@ obj/structure/windoor_assembly/Destroy()
 						src.name = "Wired Windoor Assembly"
 
 			//Adding airlock electronics for access. Step 6 complete.
-			else if(istype(W, /obj/item/weapon/circuitboard/airlock))
+			else if(istype(W, /obj/item/weapon/circuitboard/airlock) && W:icon_state != "door_electronics_smoked")
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 100, 1)
 				user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
 

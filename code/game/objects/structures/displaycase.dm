@@ -10,7 +10,7 @@
 	var/turf/T=get_turf(src)
 	switch(state)
 		if(0)
-			if(istype(W, /obj/item/weapon/circuitboard/airlock))
+			if(istype(W, /obj/item/weapon/circuitboard/airlock) && W:icon_state != "door_electronics_smoked")
 				user.drop_item()
 				circuit=W
 				circuit.loc=src
