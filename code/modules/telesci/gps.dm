@@ -74,3 +74,7 @@ var/list/GPS_list = list()
 /obj/item/device/gps/paramedic
 	icon_state = "gps-p"
 	gpstag = "PMD0"
+
+/obj/item/device/gps/mommi
+	icon_state = "gps-m"
+	gpstag = "MMI0"
