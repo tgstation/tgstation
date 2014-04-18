@@ -662,10 +662,10 @@ var/list/slot_equipment_priority = list( \
                 canmove = 1
         if(buckled)
                 lying = 90 * bed
+                anchored = buckled
         else
                 if((ko || resting) && !lying)
                         fall(ko)
-        anchored = buckled
         canmove = !(ko || resting || stunned || buckled)
         density = !lying
         update_transform()

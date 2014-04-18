@@ -592,6 +592,7 @@
 	throw_speed = 3
 	throw_range = 5
 	var/loaded = 1
+	var/malfunctioning = 0
 
 /obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
 	if(!loaded)
@@ -600,13 +601,17 @@
 		if(istype(target, /mob/living/simple_animal))
 			var/mob/living/simple_animal/M = target
 			if(M.stat == DEAD)
-				M.faction = "lazarus"
+				M.faction = "neutral"
 				M.revive()
 				if(istype(target, /mob/living/simple_animal/hostile))
 					var/mob/living/simple_animal/hostile/H = M
-					H.friends += user
-					H.attack_same = 1 //No invincible army of completely loyal mobs
-					log_game("[user] has revived hostile mob [target] with a lazarus injector")
+					if(malfunctioning)
+						M.faction = "lazarus"
+						H.friends += user
+						H.attack_same = 1
+						log_game("[user] has revived hostile mob [target] with a malfunctioning lazarus injector")
+					else
+						H.attack_same = 0
 				loaded = 0
 				user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
 				playsound(src,'sound/effects/refill.ogg',50,1)
@@ -619,10 +624,16 @@
 			user << "<span class='info'>[src] is only effective on lesser beings.</span>"
 			return
 
+/obj/item/weapon/lazarus_injector/emp_act()
+	if(!malfunctioning)
+		malfunctioning = 1
+
 /obj/item/weapon/lazarus_injector/examine()
 	..()
 	if(!loaded)
 		usr << "<span class='info'>[src] is empty.</span>"
+	if(malfunctioning)
+		usr << "<span class='info'>The display on [src] seems to be flickering.</span>"
 
 /**********************Mining Scanner**********************/
 /obj/item/device/mining_scanner
@@ -659,6 +670,15 @@
 				spawn(30)
 					if(C)
 						C.images -= I
+
+//Debug item to identify all ore spread quickly
+/obj/item/device/mining_scanner/admin
+
+/obj/item/device/mining_scanner/admin/attack_self(mob/user)
+	for(var/turf/simulated/mineral/M in world)
+		if(M.scan_state)
+			M.icon_state = M.scan_state
+	del(src)
 
 /**********************Xeno Warning Sign**********************/
 /obj/structure/sign/xeno_warning_mining
