@@ -97,6 +97,7 @@
 /datum/spacevine_mutation/aggressive_spread  //very OP, but im out of other ideas currently
 	name = "aggressive spreading"
 	hue = "777777"
+	severity = 3
 
 /datum/spacevine_mutation/aggressive_spread/on_spread(obj/effect/spacevine/holder, turf/target)
 	for(var/atom/A in target)
