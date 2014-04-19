@@ -439,7 +439,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "spbox"
 	storage_slots = 8
-	can_hold = list("/obj/item/toy/snappop")
+	can_hold = list(/obj/item/toy/snappop)
 	New()
 		..()
 		for(var/i=1; i <= storage_slots; i++)
