@@ -239,7 +239,7 @@
 
 	add_logs(user, M, "attacked", object="[src.name]")
 	
-	if(istype(M, /mob/living/carbon/human)
+	if(istype(M, /mob/living/carbon/human))
 	
 		var/mob/living/carbon/human/H = M ///////////////////////////////////// /Let's have this ready for later.
 
