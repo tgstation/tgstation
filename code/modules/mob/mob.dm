@@ -2,10 +2,6 @@
 	mob_list -= src
 	dead_mob_list -= src
 	living_mob_list -= src
-	if(client)
-		for(var/atom/movable/AM in client.screen)
-			qdel(AM)
-		client.screen = list()
 	qdel(hud_used)
 	if(mind && mind.current == src)
 		spellremove(src)
