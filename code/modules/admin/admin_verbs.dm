@@ -103,7 +103,8 @@ var/list/admin_verbs_fun = list(
 	/client/proc/toggle_random_events,
 	/client/proc/set_ooc,
 	/client/proc/editappear,
-	/client/proc/commandname
+	/client/proc/commandname,
+	/client/proc/gib_money // /vg/
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/

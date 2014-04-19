@@ -1026,23 +1026,7 @@
 	icon_state = "spawner"
 	potency = 10
 	New()
-		switch(rand(1,100))//(potency) //It wants to use the default potency instead of the new, so it was always 10. Will try to come back to this later - Cheridan
-			if(0 to 10)
-				new/obj/item/weapon/spacecash/(src.loc)
-			if(11 to 20)
-				new/obj/item/weapon/spacecash/c10(src.loc)
-			if(21 to 30)
-				new/obj/item/weapon/spacecash/c20(src.loc)
-			if(31 to 40)
-				new/obj/item/weapon/spacecash/c50(src.loc)
-			if(41 to 50)
-				new/obj/item/weapon/spacecash/c100(src.loc)
-			if(51 to 60)
-				new/obj/item/weapon/spacecash/c200(src.loc)
-			if(61 to 80)
-				new/obj/item/weapon/spacecash/c500(src.loc)
-			else
-				new/obj/item/weapon/spacecash/c1000(src.loc)
+		dispense_cash(rand(1,100)*10,src.loc)//(potency) //It wants to use the default potency instead of the new, so it was always 10. Will try to come back to this later - Cheridan
 		spawn(5) //Workaround to keep harvesting from working weirdly.
 			del(src)
 

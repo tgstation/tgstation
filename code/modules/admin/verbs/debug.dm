@@ -1124,3 +1124,12 @@ Pressure: [env.return_pressure()]"}
 		F << "[key],[type_instances[key]]"
 
 	usr << "\blue Dumped to instances.csv."
+
+/client/proc/gib_money()
+	set category = "Fun"
+	set name = "Dispense Money"
+	set desc = "Honk"
+
+	var/response = input(src,"How much moneys?") as num
+	if( response < 1) return
+	dispense_cash(response, mob.loc)

@@ -44,8 +44,7 @@
 			return "\[NO TAGS\]"
 		var/str=""
 		if(artist!="")
-			str += "[artist]"
-			str += " - "
+			str += "[artist] - "
 		if(title!="")
 			str += "\"[title]\""
 		else
