@@ -45,9 +45,7 @@
 		var/str=""
 		if(artist!="")
 			str += "[artist]"
-		else
-			str += "Unattributed"
-		str += " - "
+			str += " - "
 		if(title!="")
 			str += "\"[title]\""
 		else
