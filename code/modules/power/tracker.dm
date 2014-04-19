@@ -27,8 +27,8 @@
 
 /obj/machinery/power/tracker/connect_to_network()
 	..()
-	if(powernet && !solars_list.Find(src))	//if connected and not already in solar_list...
-		solars_list.Add(src)				//... add it
+	if(powernet)	//if connected and not already in solar_list...
+		solars_list |= src				//... add it
 
 /obj/machinery/power/tracker/proc/Make(var/obj/item/solar_assembly/S)
 	if(!S)

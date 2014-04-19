@@ -34,8 +34,8 @@ var/list/solars_list = list()
 
 /obj/machinery/power/solar/connect_to_network()
 	..()
-	if(powernet && !solars_list.Find(src)) //if connected and not already in solar_list...
-		solars_list.Add(src)			   //... add it
+	if(powernet) //if connected and not already in solar_list...
+		solars_list |= src			   //... add it
 
 
 /obj/machinery/power/solar/proc/Make(var/obj/item/solar_assembly/S)
@@ -122,16 +122,6 @@ var/list/solars_list = list()
 		return
 	if(!sun || !control) //if there's no sun or the panel is not linked to a solar control computer, no need to proceed
 		return
-
-	if(adir != ndir)
-		adir = (360 + adir + dd_range(-12,12,((ndir - adir + 180) % 360 + 360) % 360 - 180)) % 360 //12 been the (absolute) max angle the sun can move between two updates
-		update_icon()
-		update_solar_exposure()
-
-/* The expression "((ndir - adir + 180) % 360 + 360) % 360 - 180)" get the smaller (in absolute value) signed angle between
-   the direction the panel is facing and the direction of the sun
-   That way the solar panel will take the shortest way to it's new position and won't backtrack when getting from, for example, 355° to 1°.
-   "(ndir - adir + 180) % 360 + 360) % 360" is basically "(ndir - adir) % 360" but in N, rather than in Z*/
 
 	if(obscured)	return
 
@@ -278,7 +268,7 @@ var/list/solars_list = list()
 	idle_power_usage = 250
 	var/id = 0
 	var/cdir = 0
-	var/targetdir = 0		// target angle in manual tracking (since it updates every real minute)
+	var/targetdir = 0		// target angle in manual tracking (since it updates every game minute)
 	var/gen = 0
 	var/lastgen = 0
 	var/track = 0			// 0= off  1=timed  2=auto (tracker)
@@ -298,8 +288,8 @@ var/list/solars_list = list()
 
 /obj/machinery/power/solar_control/connect_to_network()
 	..()
-	if(powernet && !solars_list.Find(src)) //if connected and not already in solar_list...
-		solars_list.Add(src)			   //... add it
+	if(powernet) //if connected and not already in solar_list...
+		solars_list |= src //... add it
 
 /obj/machinery/power/solar_control/initialize()
 	..()
@@ -338,7 +328,7 @@ var/list/solars_list = list()
 		if(2)
 			t += "<A href='?src=\ref[src];track=0'>Off</A> <A href='?src=\ref[src];track=1'>Timed</A> <span class='linkOn'>Auto</span><BR>"
 
-	t += "Tracking Rate: [rate_control(src,"tdir","[trackrate] deg/h ([trackrate<0 ? "CCW" : "CW"])",5,30,180)]</div><BR>"
+	t += "Tracking Rate: [rate_control(src,"tdir","[trackrate] deg/h ([trackrate<0 ? "CCW" : "CW"])",1,30,180)]</div><BR>"
 	t += "<A href='?src=\ref[src];close=1'>Close</A>"
 
 	var/datum/browser/popup = new(user, "solar", name)
@@ -386,9 +376,7 @@ var/list/solars_list = list()
 		return
 
 	if(track==1 && trackrate)
-		if((nexttime - world.timeofday) > 131072)  //midnight rollover
-			nexttime -= MIDNIGHT_ROLLOVER
-		if(nexttime <= world.timeofday) 									//every time we need to increase/decrease the angle by 1°...
+		if(nexttime <= world.time) //every time we need to increase/decrease the angle by 1°...
 			targetdir = (targetdir + trackrate/abs(trackrate) + 360) % 360 	//... do it
 			nexttime += 36000/abs(trackrate) //reset the counter for the next 1°
 
@@ -422,11 +410,13 @@ var/list/solars_list = list()
 		if(href_list["cdir"])
 			src.cdir = dd_range(0,359,(360+src.cdir+text2num(href_list["cdir"]))%360)
 			src.targetdir = src.cdir
+			if(track == 2) //manual update, so losing auto-tracking
+				track = 0
 			spawn(1)
 				set_panels(cdir)
 		if(href_list["tdir"])
 			src.trackrate = dd_range(-7200,7200,src.trackrate+text2num(href_list["tdir"]))
-			if(src.trackrate) nexttime = world.timeofday + 36000/abs(trackrate)
+			if(src.trackrate) nexttime = world.time + 36000/abs(trackrate)
 
 	if(href_list["track"])
 		track = text2num(href_list["track"])
@@ -435,9 +425,9 @@ var/list/solars_list = list()
 				if(powernet.nodes[T])
 					T.set_angle(sun.angle)
 					break
-		if (track == 1) //begin manual tracking
+		else if (track == 1) //begin manual tracking
 			src.targetdir = src.cdir
-			if(src.trackrate) nexttime = world.timeofday + 36000/abs(trackrate)
+			if(src.trackrate) nexttime = world.time + 36000/abs(trackrate)
 			set_panels(targetdir)
 
 	src.updateUsrDialog()
@@ -451,7 +441,10 @@ var/list/solars_list = list()
 			if(get_dist(S, src) < SOLAR_MAX_DIST)
 				if(!S.control)
 					S.control = src
-				S.ndir = cdir
+				S.adir = cdir //instantly rotates the panel
+				S.update_icon() //and
+				S.update_solar_exposure() //update it
+
 	update_icon()
 
 

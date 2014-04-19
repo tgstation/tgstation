@@ -14,19 +14,15 @@
 	rate = rand(50,200)/100			// 50% - 200% of standard rotation
 	if(prob(50))					// same chance to rotate clockwise than counter-clockwise
 		rate = -rate
-	solar_next_update = world.timeofday	// init the timer
+	solar_next_update = world.time	// init the timer
 	angle = rand (0,360)			// the station position to the sun is randomised at round start
 
 // calculate the sun's position given the time of day
 // at the standard rate (100%) the angle is increase/decreased by 6 degrees every minute.
-// a full rotation thus take a (real time) hour in that case
-
+// a full rotation thus take a game hour in that case
 /datum/sun/proc/calc_position()
 
-	if((solar_next_update - world.timeofday) > 131072) //midnight rollover
-		solar_next_update -= MIDNIGHT_ROLLOVER
-
-	if(world.timeofday < solar_next_update) //if less than 60 secondes have passed, do nothing
+	if(world.time < solar_next_update) //if less than 60 game secondes have passed, do nothing
 		return;
 
 	angle = (360 + angle + rate * 6) % 360	 // increase/decrease the angle to the sun, adjusted by the rate
