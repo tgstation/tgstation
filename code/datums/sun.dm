@@ -1,10 +1,12 @@
+#define SOLAR_UPDATE_TIME 600 //duration between two updates of the whole sun/solars positions
+
 /datum/sun
 	var/angle
 	var/dx
 	var/dy
 	var/rate
 	var/list/solars			// for debugging purposes, references solars_list at the constructor
-	var/solar_last_update	// last time the sun position was checked and adjusted
+	var/solar_next_update	// last time the sun position was checked and adjusted
 
 /datum/sun/New()
 
@@ -12,7 +14,7 @@
 	rate = rand(50,200)/100			// 50% - 200% of standard rotation
 	if(prob(50))					// same chance to rotate clockwise than counter-clockwise
 		rate = -rate
-	solar_last_update = world.timeofday	// init the timer
+	solar_next_update = world.timeofday	// init the timer
 	angle = rand (0,360)			// the station position to the sun is randomised at round start
 
 // calculate the sun's position given the time of day
@@ -20,13 +22,16 @@
 // a full rotation thus take a (real time) hour in that case
 
 /datum/sun/proc/calc_position()
-	if(world.timeofday - solar_last_update < 600) //if less than (about) 60 secondes have passed, do nothing
+
+	if((solar_next_update - world.timeofday) > 131072) //midnight rollover
+		solar_next_update -= MIDNIGHT_ROLLOVER
+
+	if(world.timeofday < solar_next_update) //if less than 60 secondes have passed, do nothing
 		return;
 
-	angle = (360 + angle + rate*(world.timeofday - solar_last_update)/100) % 360	 // increase/decrease the angle to the sun, adjusted by the rate
+	angle = (360 + angle + rate * 6) % 360	 // increase/decrease the angle to the sun, adjusted by the rate
 
-
-	solar_last_update = world.timeofday // since we updated the angle, set the proper time for the next loop
+	solar_next_update += SOLAR_UPDATE_TIME // since we updated the angle, set the proper time for the next loop
 
 	// now calculate and cache the (dx,dy) increments for line drawing
 
@@ -57,6 +62,11 @@
 			var/obj/machinery/power/tracker/T = M
 			T.set_angle(angle)
 
+		// Solar Control
+		else if(istype(M, /obj/machinery/power/solar_control))
+			var/obj/machinery/power/solar_control/C = M
+			C.tracker_update() //update manual tracker
+
 		// Solar Panel
 		else if(istype(M, /obj/machinery/power/solar))
 			var/obj/machinery/power/solar/S = M
@@ -65,7 +75,6 @@
 
 
 // for a solar panel, trace towards sun to see if we're in shadow
-
 /datum/sun/proc/occlusion(var/obj/machinery/power/solar/S)
 
 	var/ax = S.x		// start at the solar panel

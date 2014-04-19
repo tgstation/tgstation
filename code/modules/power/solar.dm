@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 #define SOLAR_MAX_DIST 40
 #define SOLARGENRATE 1500
 
@@ -25,20 +23,19 @@ var/list/solars_list = list()
 	var/turn_angle = 0
 	var/obj/machinery/power/solar_control/control = null
 
-/obj/machinery/power/solar/New(var/turf/loc, var/obj/item/solar_assembly/S, var/process = 1)
+/obj/machinery/power/solar/New(var/turf/loc, var/obj/item/solar_assembly/S)
 	..(loc)
 	Make(S)
-	connect_to_network(process)
-
+	connect_to_network()
 
 /obj/machinery/power/solar/disconnect_from_network()
 	..()
 	solars_list.Remove(src)
 
-/obj/machinery/power/solar/connect_to_network(var/process)
+/obj/machinery/power/solar/connect_to_network()
 	..()
-	if(process)
-		solars_list.Add(src)
+	if(powernet && !solars_list.Find(src)) //if connected and not already in solar_list...
+		solars_list.Add(src)			   //... add it
 
 
 /obj/machinery/power/solar/proc/Make(var/obj/item/solar_assembly/S)
@@ -57,6 +54,7 @@ var/list/solars_list = list()
 
 	if(istype(W, /obj/item/weapon/crowbar))
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		user << "<span class='notice'>You begin to take the glass off the solar panel...</span>"
 		if(do_after(user, 50))
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)
@@ -280,12 +278,12 @@ var/list/solars_list = list()
 	idle_power_usage = 250
 	var/id = 0
 	var/cdir = 0
+	var/targetdir = 0		// target angle in manual tracking (since it updates every real minute)
 	var/gen = 0
 	var/lastgen = 0
 	var/track = 0			// 0= off  1=timed  2=auto (tracker)
 	var/trackrate = 600		// 300-900 seconds
-	var/nexttime = 0
-	var/timed_last_updated = 0
+	var/nexttime = 0		// time for a panel to rotate of 1° in manual tracking
 
 
 /obj/machinery/power/solar_control/New()
@@ -300,8 +298,8 @@ var/list/solars_list = list()
 
 /obj/machinery/power/solar_control/connect_to_network()
 	..()
-	if(powernet)
-		solars_list.Add(src)
+	if(powernet && !solars_list.Find(src)) //if connected and not already in solar_list...
+		solars_list.Add(src)			   //... add it
 
 /obj/machinery/power/solar_control/initialize()
 	..()
@@ -388,21 +386,24 @@ var/list/solars_list = list()
 		return
 
 	if(track==1 && trackrate)
-		if(nexttime <= world.timeofday) 							//every time we need to increase/decrease the angle by 1°...
-			nexttime = world.timeofday + 36000/abs(trackrate)
-			cdir = (cdir + trackrate/abs(trackrate) + 360) % 360 	//... do it
-		if(world.timeofday - timed_last_updated >= 600)				//update the panels every minute or so,
-			timed_last_updated = world.timeofday
-			set_panels(cdir)
+		if((nexttime - world.timeofday) > 131072)  //midnight rollover
+			nexttime -= MIDNIGHT_ROLLOVER
+		if(nexttime <= world.timeofday) 									//every time we need to increase/decrease the angle by 1°...
+			targetdir = (targetdir + trackrate/abs(trackrate) + 360) % 360 	//... do it
+			nexttime += 36000/abs(trackrate) //reset the counter for the next 1°
 
 	src.updateDialog()
 
 
 // called by solar tracker when sun position changes
+// or called by the sun controller for manual tracking updates
 /obj/machinery/power/solar_control/proc/tracker_update(var/angle)
-	if(track != 2 || stat & (NOPOWER | BROKEN))
+	if(stat & (NOPOWER | BROKEN) || track == 0)
 		return
-	cdir = angle
+	if (track == 2)
+		cdir = angle
+	else if (track == 1 && trackrate) //if manual tracking...
+		cdir = targetdir			  //...the current direction is the targetted one (and rotates panels to it)
 	set_panels(cdir)
 	src.updateDialog()
 
@@ -417,13 +418,10 @@ var/list/solars_list = list()
 		usr.unset_machine()
 		return
 
-	if(href_list["dir"])
-		cdir = text2num(href_list["dir"])
-		set_panels(cdir)
-
 	if(href_list["rate control"])
 		if(href_list["cdir"])
 			src.cdir = dd_range(0,359,(360+src.cdir+text2num(href_list["cdir"]))%360)
+			src.targetdir = src.cdir
 			spawn(1)
 				set_panels(cdir)
 		if(href_list["tdir"])
@@ -431,15 +429,17 @@ var/list/solars_list = list()
 			if(src.trackrate) nexttime = world.timeofday + 36000/abs(trackrate)
 
 	if(href_list["track"])
-		if(src.trackrate) nexttime = world.timeofday + 36000/abs(trackrate)
 		track = text2num(href_list["track"])
 		if(powernet && (track == 2))
 			for(var/obj/machinery/power/tracker/T in powernet.nodes)
 				if(powernet.nodes[T])
-					cdir = T.sun_angle
+					T.set_angle(sun.angle)
 					break
+		if (track == 1) //begin manual tracking
+			src.targetdir = src.cdir
+			if(src.trackrate) nexttime = world.timeofday + 36000/abs(trackrate)
+			set_panels(targetdir)
 
-	set_panels(cdir)
 	src.updateUsrDialog()
 	return
 
