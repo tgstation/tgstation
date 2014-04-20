@@ -120,11 +120,15 @@ Class Procs:
 	return ..()
 
 /obj/machinery/proc/addAtProcessing()
-	myArea = loc.loc
+	if (use_power)
+		myArea = loc.loc
+
 	machines += src
 
 /obj/machinery/proc/removeAtProcessing()
-	myArea = null
+	if (myArea)
+		myArea = null
+
 	machines -= src
 
 /obj/machinery/Destroy()
