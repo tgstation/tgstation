@@ -180,7 +180,6 @@
 		//new /datum/data/mining_equipment("Laser pointer",       /obj/item/device/laser_pointer, 				                   250),
 		new /datum/data/mining_equipment("Point card",    		/obj/item/weapon/card/mining_point_card,               			   500),
 		new /datum/data/mining_equipment("Lazarus injector",    /obj/item/weapon/lazarus_injector,                                1000),
-		new /datum/data/mining_equipment("Space cash",    		/obj/item/weapon/spacecash/c1000,                    			  5000),
 		new /datum/data/mining_equipment("Sonic jackhammer",    /obj/item/weapon/pickaxe/jackhammer,                               500),
 		new /datum/data/mining_equipment("Mining drone",        /mob/living/simple_animal/hostile/mining_drone/,                   500),
 		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 250),

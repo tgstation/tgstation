@@ -7,6 +7,7 @@
 /proc/get_money_account(var/account_number, var/pin=0, var/security_level = 0, var/pin_needed=1, var/from_z=-1)
 	for(var/obj/machinery/account_database/DB in machines)
 		if(from_z != -1 && DB.z != from_z) continue
+		if((DB.stat & NOPOWER) || !DB.activated ) continue
 		var/datum/money_account/acct = DB.get_account(account_number,pin,security_level,pin_needed,from_z)
 		if(!acct) continue
 		return acct

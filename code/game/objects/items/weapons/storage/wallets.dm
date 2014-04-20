@@ -77,14 +77,12 @@
 	var/item1_type = pick(/obj/item/weapon/spacecash,
 		/obj/item/weapon/spacecash/c10,
 		/obj/item/weapon/spacecash/c100,
-		/obj/item/weapon/spacecash/c500,
 		/obj/item/weapon/spacecash/c1000)
 	var/item2_type
 	if(prob(50))
 		item2_type = pick(/obj/item/weapon/spacecash,
 		/obj/item/weapon/spacecash/c10,
 		/obj/item/weapon/spacecash/c100,
-		/obj/item/weapon/spacecash/c500,
 		/obj/item/weapon/spacecash/c1000)
 	var/item3_type = pick( /obj/item/weapon/coin/silver, /obj/item/weapon/coin/silver, /obj/item/weapon/coin/gold, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/iron )
 

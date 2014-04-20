@@ -1,6 +1,5 @@
 var/global/list/moneytypes=list(
 	/obj/item/weapon/spacecash/c1000 = 1000,
-	/obj/item/weapon/spacecash/c500  = 500, // Might get rid of this.
 	/obj/item/weapon/spacecash/c100  = 100,
 	/obj/item/weapon/spacecash/c10   = 10,
 	/obj/item/weapon/spacecash       = 1,
@@ -64,11 +63,6 @@ var/global/list/moneytypes=list(
 /obj/item/weapon/spacecash/c100
 	icon_state = "cash100"
 	worth = 100
-	stack_color = "#663200"
-
-/obj/item/weapon/spacecash/c500
-	icon_state = "cash500"
-	worth = 500
 	stack_color = "#663200"
 
 /obj/item/weapon/spacecash/c1000
