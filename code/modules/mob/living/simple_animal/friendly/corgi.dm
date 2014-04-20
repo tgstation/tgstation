@@ -144,7 +144,9 @@
 
 					if( ! ( item_to_add.type in allowed_types ) )
 						usr << "You set [item_to_add] on [src]'s back, but \he shakes it off!"
-						usr.drop_item()
+						if(!usr.drop_item())
+							usr << "<span class='notice'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>"
+							return
 						item_to_add.loc = loc
 						if(prob(25))
 							step_rand(item_to_add)
@@ -305,17 +307,21 @@
 
 	if(valid)
 		if(usr)
+			if(!usr.drop_item())
+				usr << "<span class='notice'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>"
+				return 0
 			usr.visible_message("[usr] puts [item_to_add] on [real_name]'s head.  [src] looks at [usr] and barks once.",
 				"You put [item_to_add] on [real_name]'s head.  [src] gives you a peculiar look, then wags \his tail once and barks.",
 				"You hear a friendly-sounding bark.")
-			usr.drop_item()
 		item_to_add.loc = src
 		src.inventory_head = item_to_add
 		regenerate_icons()
 
 	else
+		if(!usr.drop_item())
+			usr << "<span class='notice'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>"
+			return 0
 		usr << "You set [item_to_add] on [src]'s head, but \he shakes it off!"
-		usr.drop_item()
 		item_to_add.loc = loc
 		if(prob(25))
 			step_rand(item_to_add)

@@ -541,7 +541,9 @@
 			user << "<font color='blue'>The unit already contains a suit.</font>"
 			return
 		user << "You load the [S.name] into the storage compartment."
-		user.drop_item()
+		if(!user.drop_item())
+			user << "<span class='notice'>\The [S] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
+			return
 		S.loc = src
 		src.SUIT = S
 		src.update_icon()
@@ -555,7 +557,9 @@
 			user << "<font color='blue'>The unit already contains a helmet.</font>"
 			return
 		user << "You load the [H.name] into the storage compartment."
-		user.drop_item()
+		if(!user.drop_item())
+			user << "<span class='notice'>\The [H] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
+			return
 		H.loc = src
 		src.HELMET = H
 		src.update_icon()
@@ -569,7 +573,9 @@
 			user << "<font color='blue'>The unit already contains a mask.</font>"
 			return
 		user << "You load the [M.name] into the storage compartment."
-		user.drop_item()
+		if(!user.drop_item())
+			user << "<span class='notice'>\The [M] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
+			return
 		M.loc = src
 		src.MASK = M
 		src.update_icon()

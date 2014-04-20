@@ -190,7 +190,9 @@ LINEN BINS
 		user << "<span class='notice'>You put [I] in [src].</span>"
 		update_icon()
 	else if(amount && !hidden && I.w_class < 4)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
-		user.drop_item()
+		if(!user.drop_item())
+			user << "<span class='notice'>\The [I] is stuck to your hand, you cannot hide it among the sheets!</span>"
+			return
 		I.loc = src
 		hidden = I
 		user << "<span class='notice'>You hide [I] among the sheets.</span>"
