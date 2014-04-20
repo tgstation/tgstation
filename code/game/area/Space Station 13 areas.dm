@@ -52,9 +52,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/list/related			// the other areas of the same type as this
 //	var/list/lights				// list of all lights on this area
 	var/list/all_doors = list()		//Added by Strumpetplaya - Alarm Change - Contains a list of doors adjacent to this area
-	var/air_doors_activated = 0
 
-	var/jammed = 0 // No teleporting for you. 2 = SUPER JAMMED, inaccessible even to telecrystals.
+	// /vg/: Bitmap of subsystems asking for firedoors.
+	var/door_alerts=0
+
+	var/doors_down=0
+
+	// /vg/: No teleporting for you. 2 = SUPER JAMMED, inaccessible even to telecrystals.
+	var/jammed = 0
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
@@ -319,6 +324,63 @@ proc/process_ghost_teleport_locs()
 	requires_power = 0
 	lighting_use_dynamic = 0
 	luminosity=1
+
+/area/shuttle/salvage
+	name = "\improper Salvage Ship"
+	icon_state = "yellow"
+	requires_power = 0
+
+/area/shuttle/salvage/start
+	name = "\improper Middle of Nowhere"
+	icon_state = "yellow"
+
+/area/shuttle/salvage/arrivals
+	name = "\improper Space Station Auxiliary Docking"
+	icon_state = "yellow"
+
+/area/shuttle/salvage/derelict
+	name = "\improper Derelict Station"
+	icon_state = "yellow"
+
+/area/shuttle/salvage/djstation
+	name = "\improper Ruskie DJ Station"
+	icon_state = "yellow"
+
+/area/shuttle/salvage/north
+	name = "\improper North of the Station"
+	icon_state = "yellow"
+
+/area/shuttle/salvage/east
+	name = "\improper East of the Station"
+	icon_state = "yellow"
+
+/area/shuttle/salvage/south
+	name = "\improper South of the Station"
+	icon_state = "yellow"
+
+/area/shuttle/salvage/commssat
+	name = "\improper The Communications Satellite"
+	icon_state = "yellow"
+
+/area/shuttle/salvage/mining
+	name = "\improper South-West of the Mining Asteroid"
+	icon_state = "yellow"
+
+/area/shuttle/salvage/abandoned_ship
+	name = "\improper Abandoned Ship"
+	icon_state = "yellow"
+
+/area/shuttle/salvage/clown_asteroid
+	name = "\improper Clown Asteroid"
+	icon_state = "yellow"
+
+/area/shuttle/salvage/trading_post
+	name = "\improper Trading Post"
+	icon_state = "yellow"
+
+/area/shuttle/salvage/transit
+	name = "\improper hyperspace"
+	icon_state = "shuttle"
 
 /area/airtunnel1/      // referenced in airtunnel.dm:759
 
@@ -1470,6 +1532,14 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Derelict Solar Control"
 	icon_state = "engine"
 
+/area/derelict/atmos
+	name = "\improper Derelict Atmospherics"
+	icon_state = "atmos"
+
+/area/derelict/research
+	name = "\improper Derelict Research"
+	icon_state = "toxins"
+
 /area/derelict/crew_quarters
 	name = "\improper Derelict Crew Quarters"
 	icon_state = "fitness"
@@ -1509,6 +1579,10 @@ proc/process_ghost_teleport_locs()
 /area/derelict/singularity_engine
 	name = "\improper Derelict Singularity Engine"
 	icon_state = "engine"
+
+/area/derelict/research
+	name = "\improper Derelict Research"
+	icon_state = "toxmisc"
 
 //Construction
 
@@ -1727,6 +1801,11 @@ proc/process_ghost_teleport_locs()
 /area/tcommsat/lounge
 	name = "\improper Satellite Lounge"
 	icon_state = "tcomsatlounge"
+
+/area/turret_protected/goonroom
+	name = "\improper Goonecode Containment"
+	icon_state = "ai_upload"
+	jammed=2
 
 
 

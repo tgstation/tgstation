@@ -1,0 +1,46 @@
+
+<!-- 
+Title: Syndicate Uplink, uses some javascript to change nanoUI up a bit.
+Used In File(s): \code\game\objects\items\devices\uplinks.dm
+ -->
+{{:~syndicateMode()}}
+<H2><span class="white">{{:welcome}}</span></H2>
+<br>
+<div class="item">
+	<div class="itemLabelNarrow">
+		<b>Functions</b>:
+	</div>
+	<div class="itemContent">
+		{{:~link('Close', 'gear', {'lock' : "1"}, null, 'fixedLeft')}}
+	</div>
+</div>
+<br>
+<div class="item">
+        <div class="itemLabel">
+                <b>Tele-Crystals</b>:
+        </div>
+        <div class="itemContent">
+                {{:crystals}}
+        </div>
+</div>
+<H2><span class="white">Request items:</span></H2><br>
+<span class="white"><i>Each item costs a number of tele-crystals as indicated by the number following their name.</i></span>
+
+<br><br>
+{{for nano_items}}
+<div class="item">
+	<H3><span class="white">{{:Category}}</span></H3>
+</div>
+	{{for items}}
+<div class="item">
+		{{:~link( Name, 'gear', {'buy_item' : obj_path, 'cost' : Cost}, Cost > ~root.crystals ? 'disabled' : null, null)}} -<span class="white"> {{:Cost}}</span>
+</div>
+	{{/for}}
+<br>
+
+{{/for}}
+
+<div class="item">
+                {{:~link('Buy Random (??)' , 'gear', {'buy_item' : 'random'}, null, 'fixedLeftWidest')}}
+</div>
+

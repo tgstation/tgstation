@@ -416,7 +416,7 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 			new_character.disabilities |= NEARSIGHTED
 
 		if(client.prefs.disabilities & DISABILITY_FLAG_FAT)
-			new_character.mutations += FAT
+			new_character.mutations += M_FAT
 			new_character.overeatduration = 600 // Max overeat
 
 		if(client.prefs.disabilities & DISABILITY_FLAG_EPILEPTIC)

@@ -35,6 +35,9 @@
 /obj/item/weapon/melee/baton/proc/deductcharge(var/chrgdeductamt)
 	if(bcell)
 		if(bcell.use(chrgdeductamt))
+			if(bcell.charge < hitcost)
+				status = 0
+				update_icon()
 			return 1
 		else
 			status = 0
@@ -81,12 +84,12 @@
 	return
 
 /obj/item/weapon/melee/baton/attack_self(mob/user)
-	if(status && (CLUMSY in user.mutations) && prob(50))
+	if(status && (M_CLUMSY in user.mutations) && prob(50))
 		user << "\red You grab the [src] on the wrong side."
 		user.Weaken(stunforce*3)
 		deductcharge(hitcost)
 		return
-	if(bcell && bcell.charge > hitcost)
+	if(bcell && bcell.charge >= hitcost)
 		status = !status
 		user << "<span class='notice'>[src] is now [status ? "on" : "off"].</span>"
 		playsound(loc, "sparks", 75, 1, -1)
@@ -100,7 +103,7 @@
 	add_fingerprint(user)
 
 /obj/item/weapon/melee/baton/attack(mob/M, mob/user)
-	if(status && (CLUMSY in user.mutations) && prob(50))
+	if(status && (M_CLUMSY in user.mutations) && prob(50))
 		user << "<span class='danger'>You accidentally hit yourself with [src]!</span>"
 		user.Weaken(stunforce*3)
 		deductcharge(hitcost)

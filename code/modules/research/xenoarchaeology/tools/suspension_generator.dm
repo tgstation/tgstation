@@ -81,48 +81,32 @@
 
 	dat += "<hr>"
 	if(!locked)
-
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\tools\suspension_generator.dm:84: dat += "<b>Select field mode</b><br>"
-		dat += {"<b>Select field mode</b><br>
-			[field_type=="carbon"?"<b>":""			]<A href='?src=\ref[src];select_field=carbon'>Diffracted carbon dioxide laser</A></b><br>
-			[field_type=="nitrogen"?"<b>":""		]<A href='?src=\ref[src];select_field=nitrogen'>Nitrogen tracer field</A></b><br>
-			[field_type=="potassium"?"<b>":""		]<A href='?src=\ref[src];select_field=potassium'>Potassium refrigerant cloud</A></b><br>
-			[field_type=="mercury"?"<b>":""	]<A href='?src=\ref[src];select_field=mercury'>Mercury dispersion wave</A></b><br>
-			[field_type=="iron"?"<b>":""		]<A href='?src=\ref[src];select_field=iron'>Iron wafer conduction field</A></b><br>
-			[field_type=="calcium"?"<b>":""	]<A href='?src=\ref[src];select_field=calcium'>Calcium binary deoxidiser</A></b><br>
-			[field_type=="plasma"?"<b>":""	]<A href='?src=\ref[src];select_field=chlorine'>Chlorine diffusion emissions</A></b><br>
-			[field_type=="plasma"?"<b>":""	]<A href='?src=\ref[src];select_field=plasma'>Plasma saturated field</A></b><br>"}
-		// END AUTOFIX
+		dat += "<b>Select field mode</b><br>"
+		dat += "[field_type=="carbon"?"<b>":""			]<A href='?src=\ref[src];select_field=carbon'>Diffracted carbon dioxide laser</A></b><br>"
+		dat += "[field_type=="nitrogen"?"<b>":""		]<A href='?src=\ref[src];select_field=nitrogen'>Nitrogen tracer field</A></b><br>"
+		dat += "[field_type=="potassium"?"<b>":""		]<A href='?src=\ref[src];select_field=potassium'>Potassium refrigerant cloud</A></b><br>"
+		dat += "[field_type=="mercury"?"<b>":""	]<A href='?src=\ref[src];select_field=mercury'>Mercury dispersion wave</A></b><br>"
+		dat += "[field_type=="iron"?"<b>":""		]<A href='?src=\ref[src];select_field=iron'>Iron wafer conduction field</A></b><br>"
+		dat += "[field_type=="calcium"?"<b>":""	]<A href='?src=\ref[src];select_field=calcium'>Calcium binary deoxidiser</A></b><br>"
+		dat += "[field_type=="plasma"?"<b>":""	]<A href='?src=\ref[src];select_field=chlorine'>Chlorine diffusion emissions</A></b><br>"
+		dat += "[field_type=="plasma"?"<b>":""	]<A href='?src=\ref[src];select_field=plasma'>Plasma saturated field</A></b><br>"
 	else
-
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\tools\suspension_generator.dm:94: dat += "<br>"
-		dat += {"<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>"}
-		// END AUTOFIX
-
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\tools\suspension_generator.dm:102: dat += "<hr>"
-	dat += {"<hr>
-		<font color='blue'><b>Always wear safety gear and consult a field manual before operation.</b></font><br>"}
-	// END AUTOFIX
+		dat += "<br>"
+		dat += "<br>"
+		dat += "<br>"
+		dat += "<br>"
+		dat += "<br>"
+		dat += "<br>"
+		dat += "<br>"
+		dat += "<br>"
+	dat += "<hr>"
+	dat += "<font color='blue'><b>Always wear safety gear and consult a field manual before operation.</b></font><br>"
 	if(!locked)
 		dat += "<A href='?src=\ref[src];lock=1'>Lock console</A><br>"
 	else
 		dat += "<br>"
-
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\tools\suspension_generator.dm:108: dat += "<A href='?src=\ref[src];refresh=1'>Refresh console</A><br>"
-	dat += {"<A href='?src=\ref[src];refresh=1'>Refresh console</A><br>
-		<A href='?src=\ref[src];close=1'>Close console</A>"}
-	// END AUTOFIX
+	dat += "<A href='?src=\ref[src];refresh=1'>Refresh console</A><br>"
+	dat += "<A href='?src=\ref[src];close=1'>Close console</A>"
 	user << browse(dat, "window=suspension;size=500x400")
 	onclose(user, "suspension")
 
@@ -173,6 +157,8 @@
 	if(!open)
 		interact(user)
 	else if(cell)
+		if(isobserver(user))
+			return 0
 		cell.loc = loc
 		cell.add_fingerprint(user)
 		cell.updateicon()
@@ -325,7 +311,7 @@
 	del(suspension_field)
 	icon_state = "suspension2"
 
-/obj/machinery/suspension_gen/Del()
+/obj/machinery/suspension_gen/Destroy()
 	//safety checks: clear the field and drop anything it's holding
 	deactivate()
 	..()
@@ -347,7 +333,7 @@
 	density = 1
 	var/field_type = "chlorine"
 
-/obj/effect/suspension_field/Del()
+/obj/effect/suspension_field/Destroy()
 	for(var/obj/I in src)
 		I.loc = src.loc
 	..()

@@ -32,6 +32,7 @@
 	slot_flags = SLOT_BELT
 	item_state = "syringe_kit"
 	m_amt = 50000
+	w_type = RECYK_METAL
 	throwforce = 2
 	w_class = 1.0
 	throw_speed = 4

@@ -128,7 +128,7 @@ datum/pipeline
 		var/datum/gas_mixture/air_sample = air.remove_ratio(mingle_volume/air.volume)
 		air_sample.volume = mingle_volume
 
-		if(istype(target) && target.zone)
+		if(istype(target) && target.zone && !iscatwalk(target))
 			//Have to consider preservation of group statuses
 			var/datum/gas_mixture/turf_copy = new
 
@@ -149,10 +149,12 @@ datum/pipeline
 			air.merge(air_sample)
 			//turf_air already modified by equalize_gases()
 
-		if(istype(target) && !target.processing)
+		/*
+		if(istype(target) && !target.processing && !iscatwalk(target))
 			if(target.air)
 				if(target.air.check_tile_graphic())
 					target.update_visuals(target.air)
+		*/
 		if(network)
 			network.update = 1
 

@@ -11,6 +11,7 @@
 	var/searching = 0
 	var/askDelay = 10 * 60 * 1
 	//var/mob/living/carbon/brain/brainmob = null
+	var/list/ghost_volunteers[0]
 	req_access = list(access_robotics)
 	locked = 0
 	mecha = null//This does not appear to be used outside of reference in mecha.dm.
@@ -21,19 +22,31 @@
 			//Start the process of searching for a new user.
 			user << "\blue You carefully locate the manual activation switch and start the positronic brain's boot process."
 			icon_state = "posibrain-searching"
+			ghost_volunteers.Cut()
 			src.searching = 1
 			src.request_player()
-			spawn(600) reset_search()
+			spawn(600)
+				if(ghost_volunteers.len)
+					var/mob/dead/observer/O = pick(ghost_volunteers)
+					if(istype(O) && O.client && O.key)
+						transfer_personality(O)
+				reset_search()
 
 	proc/request_player()
 		for(var/mob/dead/observer/O in player_list)
-			if(O.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
-				continue
-			if(jobban_isbanned(O, "pAI"))
-				continue
-			if(O.client)
-				if(O.client.prefs.be_special & BE_PAI)
-					question(O.client)
+			if(O.client && O.client.prefs.be_special & BE_PAI)
+				if(check_observer(O))
+					O << "<span class=\"recruit\">\A [src] has been activated. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)</span>"
+					//question(O.client)
+
+	proc/check_observer(var/mob/dead/observer/O)
+		if(O.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
+			return 0
+		if(jobban_isbanned(O, "pAI"))
+			return 0
+		if(O.client)
+			return 1
+		return 0
 
 	proc/question(var/client/C)
 		spawn(0)
@@ -75,6 +88,30 @@
 		var/turf/T = get_turf_or_move(src.loc)
 		for (var/mob/M in viewers(T))
 			M.show_message("\blue The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?")
+
+	Topic(href,href_list)
+		if("signup" in href_list)
+			var/mob/dead/observer/O = locate(href_list["signup"])
+			if(!O) return
+			volunteer(O)
+
+	proc/volunteer(var/mob/dead/observer/O)
+		if(!searching)
+			O << "Not looking for a ghost, yet."
+			return
+		if(!istype(O))
+			O << "\red NO."
+			return
+		if(O in ghost_volunteers)
+			O << "\blue Removed from registration list."
+			ghost_volunteers.Remove(O)
+			return
+		if(!check_observer(O))
+			O << "\red You cannot be \a [src]."
+			return
+		O.<< "\blue You've been added to the list of ghosts that may become this [src].  Click again to unvolunteer."
+		ghost_volunteers.Add(O)
+
 
 /obj/item/device/mmi/posibrain/examine()
 
@@ -135,3 +172,11 @@
 	if(try_handling_mommi_construction(O,user))
 		return
 	..()
+
+/obj/item/device/mmi/posibrain/attack_ghost(var/mob/dead/observer/O)
+	if(searching)
+		volunteer(O)
+	else
+		var/turf/T = get_turf_or_move(src.loc)
+		for (var/mob/M in viewers(T))
+			M.show_message("\blue The positronic brain pings softly.")

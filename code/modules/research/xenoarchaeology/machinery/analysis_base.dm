@@ -104,6 +104,7 @@
 
 //this proc should be overriden by each individual machine
 /obj/machinery/anomaly/attack_hand(var/mob/user as mob)
+	if(..()) return
 	if(stat & (NOPOWER|BROKEN))
 		return
 	user.machine = src
@@ -176,7 +177,7 @@ obj/machinery/anomaly/proc/FinishScan()
 		src.visible_message("\blue \icon[src] makes a low buzzing noise.", 2)
 
 obj/machinery/anomaly/Topic(href, href_list)
-	..()
+	if(..()) return
 	usr.set_machine(src)
 	if(href_list["close"])
 		usr << browse(null, "window=anomaly")

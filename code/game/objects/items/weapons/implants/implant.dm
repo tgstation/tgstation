@@ -44,7 +44,7 @@
 		icon_state = "implant_melted"
 		malfunction = MALFUNCTION_PERMANENT
 
-	Del()
+	Destroy()
 		if(part)
 			part.implants.Remove(src)
 		..()

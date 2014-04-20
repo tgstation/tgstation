@@ -12,6 +12,7 @@
 	var/obj/item/weapon/circuitboard/airlock/electronics = null
 	explosion_resistance = 5
 	air_properties_vary_with_direction = 1
+	ghost_read=0
 
 
 /obj/machinery/door/window/update_nearby_tiles(need_rebuild)
@@ -33,7 +34,7 @@
 		src.base_state = src.icon_state
 	return
 
-/obj/machinery/door/window/Del()
+/obj/machinery/door/window/Destroy()
 	density = 0
 	playsound(src, "shatter", 70, 1)
 	..()
@@ -127,7 +128,7 @@
 /obj/machinery/door/window/proc/take_damage(var/damage)
 	src.health = max(0, src.health - damage)
 	if (src.health <= 0)
-		new /obj/item/weapon/shard(src.loc)
+		getFromPool(/obj/item/weapon/shard, loc)
 		var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
 		CC.amount = 2
 		src.density = 0
@@ -154,7 +155,6 @@
 	//..() //Does this really need to be here twice? The parent proc doesn't even do anything yet. - Nodrak
 	return
 
-
 /obj/machinery/door/window/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
 	return src.attack_hand(user)
@@ -167,7 +167,7 @@
 		playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 75, 1)
 		visible_message("\red <B>[user] smashes against the [src.name].</B>", 1)
 		if (src.health <= 0)
-			new /obj/item/weapon/shard(src.loc)
+			getFromPool(/obj/item/weapon/shard, loc)
 			var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
 			CC.amount = 2
 			src.density = 0
@@ -208,7 +208,7 @@
 		playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 75, 1)
 		visible_message("\red <B>[src] was hit by [I].</B>")
 		if (src.health <= 0)
-			new /obj/item/weapon/shard(src.loc)
+			getFromPool(/obj/item/weapon/shard, loc)
 			var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
 			CC.amount = 2
 			src.density = 0
@@ -240,7 +240,7 @@
 	icon_state = "leftsecure"
 	base_state = "leftsecure"
 	req_access = list(access_security)
-	var/id = null
+	var/id_tag = null
 	health = 300.0 //Stronger doors for prison (regular window door health is 200)
 
 

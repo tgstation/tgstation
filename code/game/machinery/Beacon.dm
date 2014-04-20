@@ -20,7 +20,7 @@
 
 		hide(T.intact)
 
-	Del()
+	Destroy()
 		if(Beacon)
 			del(Beacon)
 		..()

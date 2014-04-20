@@ -22,7 +22,7 @@
 		name = "[mineralType] door"
 		update_nearby_tiles(need_rebuild=1)
 
-	Del()
+	Destroy()
 		update_nearby_tiles()
 		..()
 
@@ -138,7 +138,7 @@
 				var/ore = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
 				for(var/i = 3, i <= oreAmount, i++)
 					new ore(get_turf(src))
-		del(src)
+		qdel(src)
 
 	ex_act(severity = 1)
 		switch(severity)

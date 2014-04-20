@@ -37,6 +37,7 @@
 
 /obj/machinery/iv_drip/MouseDrop(over_object, src_location, over_location)
 	..()
+	if(isobserver(usr)) return
 	if(usr.stat) // Stop interacting with shit while dead pls
 		return
 	if(isanimal(usr))
@@ -54,6 +55,7 @@
 
 
 /obj/machinery/iv_drip/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(isobserver(user)) return
 	if(user.stat)
 		return
 	if (istype(W, /obj/item/weapon/reagent_containers))
@@ -107,7 +109,7 @@
 			if(!istype(T)) return
 			if(!T.dna)
 				return
-			if(NOCLONE in T.mutations)
+			if(M_NOCLONE in T.mutations)
 				return
 
 			// If the human is losing too much blood, beep.
@@ -124,6 +126,7 @@
 				update_icon()
 
 /obj/machinery/iv_drip/attack_hand(mob/user as mob)
+	if(isobserver(usr)) return
 	if(user.stat) return
 	if(src.beaker)
 		src.beaker.loc = get_turf(src)

@@ -77,8 +77,8 @@ var/intercom_range_display_status = 0
 	for(var/obj/machinery/camera/C in cameranet.cameras)
 		CL += C
 
-	var/output = {"<B>CAMERA ANNOMALITIES REPORT</B><HR>
-<B>The following annomalities have been detected. The ones in red need immediate attention: Some of those in black may be intentional.</B><BR><ul>"}
+	var/output = {"<B>CAMERA ANOMALIES REPORT</B><HR>
+<B>The following anomalies have been detected. The ones in red need immediate attention: Some of those in black may be intentional.</B><BR><ul>"}
 
 	for(var/obj/machinery/camera/C1 in CL)
 		for(var/obj/machinery/camera/C2 in CL)
@@ -94,7 +94,7 @@ var/intercom_range_display_status = 0
 			if(!(locate(/obj/structure/grille,T)))
 				var/window_check = 0
 				for(var/obj/structure/window/W in T)
-					if (W.dir == turn(C1.dir,180) || W.dir in list(5,6,9,10) )
+					if (W.dir == turn(C1.dir,180) || W.is_fulltile() )
 						window_check = 1
 						break
 				if(!window_check)
@@ -314,3 +314,20 @@ var/global/movement_disabled_exception //This is the client that calls the proc,
 		movement_disabled_exception = usr.ckey
 	else
 		message_admins("[src.ckey] used 'Disable all movement', restoring all movement.")*/
+
+/////////////////
+// /vg/
+/////////////////
+//This proc is intended to detect lag problems relating to fucking virology.
+var/global/blood_virus_spreading_disabled = 0
+/client/proc/disable_bloodvirii()
+	set category = "Mapping"
+	set name = "Disable Blood Virus Spreading"
+
+	//usr << "\red Proc disabled."
+
+	blood_virus_spreading_disabled = !blood_virus_spreading_disabled
+	if(blood_virus_spreading_disabled)
+		message_admins("[src.ckey] disabled findAirborneVirii.")
+	else
+		message_admins("[src.ckey] enabled findAirborneVirii.")

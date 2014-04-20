@@ -28,8 +28,9 @@
 		explode()
 		return 0
 
-	if(charge < amount)	return 0
-	charge = (charge - amount)
+	if(charge < amount)
+		return 0
+	charge = max(0,charge - amount)
 	return 1
 
 // recharge the cell
@@ -130,17 +131,17 @@
 
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 				return
 			if (prob(50))
 				corrupt()
 		if(3.0)
 			if (prob(25))
-				del(src)
+				qdel(src)
 				return
 			if (prob(25))
 				corrupt()

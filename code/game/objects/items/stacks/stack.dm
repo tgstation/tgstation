@@ -8,6 +8,7 @@
  * Stacks
  */
 /obj/item/stack
+	gender = PLURAL
 	origin_tech = "materials=1"
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
@@ -21,7 +22,7 @@
 		src.amount=amount
 	return
 
-/obj/item/stack/Del()
+/obj/item/stack/Destroy()
 	if (src && usr && usr.machine==src)
 		usr << browse(null, "window=stack")
 	..()

@@ -22,7 +22,7 @@
 		if(G.cell)
 			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
-					G.cell.charge -= 2500
+					G.cell.use(2500)
 					visible_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>")
 					M.attack_log += text("\[[time_stamp()]\] <font color='red'>Stungloved [src.name] ([src.ckey])</font>")
 					src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stungloved by [M.name] ([M.ckey])</font>")
@@ -51,7 +51,7 @@
 			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
 			var/armor_block = run_armor_check(affecting, "melee")
 
-			if(HULK in M.mutations)			damage += 5
+			if(M_HULK in M.mutations)			damage += 5
 
 			playsound(loc, "punch", 25, 1, -1)
 
@@ -95,12 +95,17 @@
 			return 1
 
 		if("grab")
-			if(M == src)	return 0
-			if(w_uniform)	w_uniform.add_fingerprint(M)
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, M, src)
+			if(M == src || anchored)
+				return 0
+			if(w_uniform)
+				w_uniform.add_fingerprint(M)
 
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
+			if(buckled)
+				M << "<span class='notice'>You cannot grab [src], \he is buckled in!</span>"
+			if(!G)	//the grab will delete itself in New if affecting is anchored
+				return
 			M.put_in_active_hand(G)
-
 			grabbed_by += G
 			G.synch()
 			LAssailant = M
@@ -135,7 +140,7 @@
 
 			log_attack("[M.name] ([M.ckey]) [M.species.attack_verb]ed [src.name] ([src.ckey])")
 
-			var/damage = rand(0, M.species.max_hurt_damage)//BS12 EDIT
+			var/damage = rand(0, 5)//BS12 EDIT
 			if(!damage)
 				if(M.species.attack_verb == "punch")
 					playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
@@ -149,7 +154,7 @@
 			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
 			var/armor_block = run_armor_check(affecting, "melee")
 
-			if(HULK in M.mutations)			damage += 5
+			if(M_HULK in M.mutations)			damage += 5
 
 
 			if(M.species.attack_verb == "punch")
@@ -163,7 +168,8 @@
 				visible_message("\red <B>[M] has weakened [src]!</B>")
 				apply_effect(2, WEAKEN, armor_block)
 
-			if(M.species.attack_verb != "punch")	damage += 5
+			if(M.species.punch_damage)
+				damage += M.species.punch_damage
 			apply_damage(damage, BRUTE, affecting, armor_block)
 
 

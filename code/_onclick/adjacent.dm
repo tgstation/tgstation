@@ -46,7 +46,7 @@
 			continue // could not leave T0 in that direction
 
 		var/turf/T1 = get_step(T0,d)
-		if(!T1 || T1.density || !T1.ClickCross(get_dir(T1,T0) & get_dir(T1,src), border_only = 0))
+		if(!T1 || T1.density || !T1.ClickCross(get_dir(T1,T0) | get_dir(T1,src), border_only = 0))
 			continue // couldn't enter or couldn't leave T1
 
 		if(!src.ClickCross(get_dir(src,T1), border_only = 1, target_atom = target))
@@ -102,7 +102,7 @@
 	This is defined as any dense ON_BORDER object, or any dense object without throwpass.
 	The border_only flag allows you to not objects (for source and destination squares)
 */
-/turf/proc/ClickCross(var/target_dir, var/border_only, var/target_atom = null)
+/turf/proc/ClickCross(var/target_dir, var/border_only, var/atom/target_atom = null)
 	for(var/obj/O in src)
 		if( !O.density || O == target_atom || O.throwpass) continue // throwpass is used for anything you can click through
 
@@ -122,3 +122,16 @@
 
 	Since I don't want to complicate the click code rework by messing with unrelated systems it won't be changed here.
 */
+
+/**
+	/vg/: Hack for full windows on top of panes.
+**/
+/obj/structure/window/full/Adjacent(var/atom/neighbor)
+	for(var/obj/structure/window/W in loc)
+		if(W)
+			W.throwpass=1
+	.=..()
+	for(var/obj/structure/window/W in loc)
+		if(W)
+			W.throwpass=0
+	return .

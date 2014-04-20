@@ -241,6 +241,8 @@ var/syndicate_elite_shuttle_timeleft = 0
 
 		var/area/syndicate_mothership/elite_squad/elite_squad = locate()
 		if(elite_squad)
+			if(elite_squad.master)
+				elite_squad=elite_squad.master
 			elite_squad.readyalert()//Trigger alarm for the spec ops area.
 		syndicate_elite_shuttle_moving_to_station = 1
 

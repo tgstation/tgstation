@@ -15,6 +15,7 @@
 	desc = "theres something alien about this"
 	icon = 'icons/mob/alien.dmi'
 //	unacidable = 1 //Aliens won't ment their own.
+	w_type=NOT_RECYCLABLE
 
 
 /*
@@ -29,7 +30,7 @@
 	opacity = 1
 	anchored = 1
 	var/health = 200
-	//var/mob/living/affecting = null
+	var/turf/linked_turf
 
 	wall
 		name = "resin wall"
@@ -45,18 +46,19 @@
 
 /obj/effect/alien/resin/New()
 	..()
-	var/turf/T = get_turf(src)
-	T.thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
+	linked_turf = get_turf(src)
+	linked_turf.thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 
-/obj/effect/alien/resin/Del()
-	var/turf/T = get_turf(src)
-	T.thermal_conductivity = initial(T.thermal_conductivity)
+/obj/effect/alien/resin/Destroy()
+	if(linked_turf)
+		linked_turf.thermal_conductivity = initial(linked_turf.thermal_conductivity)
 	..()
+
 
 /obj/effect/alien/resin/proc/healthcheck()
 	if(health <=0)
 		density = 0
-		del(src)
+		qdel(src)
 	return
 
 /obj/effect/alien/resin/bullet_act(var/obj/item/projectile/Proj)
@@ -105,11 +107,16 @@
 	return
 
 /obj/effect/alien/resin/attack_hand()
-	if (HULK in usr.mutations)
+	if (M_HULK in usr.mutations)
 		usr << "\blue You easily destroy the [name]."
 		for(var/mob/O in oviewers(src))
 			O.show_message("\red [usr] destroys the [name]!", 1)
 		health = 0
+	else
+		usr << "\blue You claw at the [name]."
+		for(var/mob/O in oviewers(src))
+			O.show_message("\red [usr] claws at the [name]!", 1)
+		health -= rand(5,10)
 	healthcheck()
 	return
 
@@ -188,14 +195,28 @@
 	desc = "Weird purple octopus-like thing."
 	luminosity = NODERANGE
 	var/node_range = NODERANGE
+	var/list/obj/effect/alien/weeds/spawns
+
+/obj/effect/alien/weeds/node/Destroy()
+	for(var/obj/effect/alien/weeds/W in spawns)
+		if(W.linked_node == src)
+			W.linked_node = null
+	..()
+
+/obj/effect/alien/weeds/Destroy()
+	if(linked_node)
+		linked_node.spawns.Remove(src)
+	..()
 
 /obj/effect/alien/weeds/node/New()
+	spawns = new()
 	..(src.loc, src)
 
 
-/obj/effect/alien/weeds/New(pos, node)
+/obj/effect/alien/weeds/New(pos, var/obj/effect/alien/weeds/node/node)
 	..()
 	linked_node = node
+	linked_node.spawns.Add(src)
 	if(istype(loc, /turf/space))
 		del(src)
 		return
@@ -248,13 +269,13 @@ Alien plants should do something if theres a lot of poison
 /obj/effect/alien/weeds/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 		if(3.0)
 			if (prob(5))
-				del(src)
+				qdel(src)
 	return
 
 /obj/effect/alien/weeds/attackby(var/obj/item/weapon/W, var/mob/user)
@@ -277,7 +298,7 @@ Alien plants should do something if theres a lot of poison
 
 /obj/effect/alien/weeds/proc/healthcheck()
 	if(health <= 0)
-		del(src)
+		qdel(src)
 
 
 /obj/effect/alien/weeds/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)

@@ -11,7 +11,7 @@ obj/machinery/atmospherics/binary/passive_gate
 	var/target_pressure = ONE_ATMOSPHERE
 
 	var/frequency = 0
-	var/id = null
+	var/id_tag = null
 	var/datum/radio_frequency/radio_connection
 
 	update_icon()
@@ -77,7 +77,7 @@ obj/machinery/atmospherics/binary/passive_gate
 			signal.source = src
 
 			signal.data = list(
-				"tag" = id,
+				"tag" = id_tag,
 				"device" = "AGP",
 				"power" = on,
 				"target_output" = target_pressure,
@@ -103,7 +103,7 @@ obj/machinery/atmospherics/binary/passive_gate
 			set_frequency(frequency)
 
 	receive_signal(datum/signal/signal)
-		if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
+		if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 			return 0
 
 		if("power" in signal.data)

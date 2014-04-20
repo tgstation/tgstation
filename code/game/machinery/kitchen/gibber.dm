@@ -294,7 +294,7 @@ obj/machinery/gibber/New()
 		B.loc = src.loc
 		B.throw_at(Tx,2,3)
 		if(isalien(victim))
-			new /obj/effect/decal/cleanable/blood/xeno/xgibs(Tx,2)
+			new /obj/effect/decal/cleanable/blood/gibs/xeno(Tx,2)
 		else
 			new /obj/effect/decal/cleanable/blood/gibs(Tx,2)
 	del(victim)

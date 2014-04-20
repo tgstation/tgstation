@@ -16,8 +16,10 @@
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
 	g_amt = 3750
+	w_type = RECYK_GLASS
 	origin_tech = "materials=1"
 	var/created_window = /obj/structure/window/basic
+	var/full_window = /obj/structure/window/full/basic
 
 /obj/item/stack/sheet/glass/cyborg
 	g_amt = 0
@@ -74,7 +76,7 @@
 					user << "\red There are too many windows in this location."
 					return 1
 				directions-=win.dir
-				if(!(win.ini_dir in cardinal))
+				if(win.is_fulltile())
 					user << "\red Can't let you do that."
 					return 1
 
@@ -100,13 +102,10 @@
 			if(src.amount < 2)
 				user << "\red You need more glass to do that."
 				return 1
-			if(locate(/obj/structure/window) in user.loc)
-				user << "\red There is a window in the way."
+			if(locate(/obj/structure/window/full) in user.loc)
+				user << "\red There is a full window in the way."
 				return 1
-			var/obj/structure/window/W
-			W = new created_window( user.loc, 0 )
-			W.dir = SOUTHWEST
-			W.ini_dir = SOUTHWEST
+			var/obj/structure/window/W = new full_window( user.loc, 0 )
 			W.anchored = 0
 			src.use(2)
 	return 0
@@ -122,6 +121,7 @@
 	icon_state = "sheet-rglass"
 	g_amt = 3750
 	m_amt = 1875
+	w_type = RECYK_GLASS
 	origin_tech = "materials=2"
 
 /obj/item/stack/sheet/rglass/cyborg
@@ -155,7 +155,7 @@
 					user << "\red There are too many windows in this location."
 					return 1
 				directions-=win.dir
-				if(!(win.ini_dir in cardinal))
+				if(win.is_fulltile())
 					user << "\red Can't let you do that."
 					return 1
 
@@ -184,7 +184,7 @@
 			if(src.amount < 2)
 				user << "\red You need more glass to do that."
 				return 1
-			if(locate(/obj/structure/window) in user.loc)
+			if(locate(/obj/structure/window/full) in user.loc)
 				user << "\red There is a window in the way."
 				return 1
 			var/obj/structure/window/W
@@ -277,7 +277,7 @@
 				G.attackby(NG, user)
 				usr << "You add the newly-formed glass to the stack. It now contains [NG.amount] sheets."
 			//SN src = null
-			del(src)
+			returnToPool(src)
 			return
 	return ..()
 
@@ -312,13 +312,15 @@
 	icon_state = "sheet-plasmaglass"
 	//g_amt = 7500
 	g_amt=CC_PER_SHEET_GLASS
+	w_type = RECYK_GLASS
 	origin_tech = "materials=3;plasmatech=2"
 	created_window = /obj/structure/window/plasmabasic
+	full_window = /obj/structure/window/full/plasmabasic
 
-/obj/item/stack/sheet/glass/plasmaglass/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-	rec.addMaterial("plasma",1)
-	rec.addMaterial("glass", 1)
-	return 1
+/obj/item/stack/sheet/glass/plasmaglass/recycle(var/datum/materials/rec)
+	rec.addAmount("plasma",1)
+	rec.addAmount("glass", 1)
+	return RECYK_GLASS
 
 /obj/item/stack/sheet/glass/plasmaglass/attack_self(mob/user as mob)
 	construct_window(user)
@@ -349,13 +351,15 @@
 	icon_state = "sheet-plasmarglass"
 	g_amt=CC_PER_SHEET_GLASS
 	m_amt = 1875
+	w_type = RECYK_GLASS
 	origin_tech = "materials=4;plasmatech=2"
 	created_window = /obj/structure/window/plasmareinforced
+	full_window = /obj/structure/window/full/plasmareinforced
 
-/obj/item/stack/sheet/glass/plasmaglass/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-	rec.addMaterial("plasma",1)
-	rec.addMaterial("glass", 1)
-	rec.addMaterial("iron",  0.5)
+/obj/item/stack/sheet/glass/plasmaglass/recycle(var/datum/materials/rec)
+	rec.addAmount("plasma",1)
+	rec.addAmount("glass", 1)
+	rec.addAmount("iron",  0.5)
 	return 1
 
 /obj/item/stack/sheet/glass/plasmarglass/attack_self(mob/user as mob)

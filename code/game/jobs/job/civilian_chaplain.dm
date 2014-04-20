@@ -6,25 +6,27 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the head of personnel"
+	supervisors = "the head of personnel's father, the head of personnel's son, and the holy ghost."
 	selection_color = "#dddddd"
 	access = list(access_morgue, access_chapel_office, access_crematorium, access_maint_tunnels)
 	minimal_access = list(access_morgue, access_chapel_office, access_crematorium)
-	alt_titles = list("Counselor")
+	alt_titles = list("Bishop","Inquisitor")
 
+	pdaslot=slot_belt
+	pdatype=/obj/item/device/pda/chaplain
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 
 		var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible(H) //BS12 EDIT
-		H.equip_to_slot_or_drop(B, slot_l_hand)
-		H.equip_to_slot_or_drop(new /obj/item/clothing/under/rank/chaplain(H), slot_w_uniform)
-		H.equip_to_slot_or_drop(new /obj/item/device/pda/chaplain(H), slot_belt)
-		H.equip_to_slot_or_drop(new /obj/item/clothing/shoes/black(H), slot_shoes)
+		H.equip_or_collect(B, slot_l_hand)
+		H.equip_or_collect(new /obj/item/clothing/under/rank/chaplain(H), slot_w_uniform)
+		//H.equip_or_collect(new /obj/item/device/pda/chaplain(H), slot_belt)
+		H.equip_or_collect(new /obj/item/clothing/shoes/black(H), slot_shoes)
 		if(H.backbag == 1)
-			H.equip_to_slot_or_drop(new H.species.survival_gear(H), slot_r_hand)
+			H.equip_or_collect(new H.species.survival_gear(H), slot_r_hand)
 		else
-			H.equip_to_slot_or_drop(new H.species.survival_gear(H.back), slot_in_backpack)
+			H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
 		spawn(0)
 			var/religion_name = "Christianity"
 			var/new_religion = copytext(sanitize(input(H, "You are the crew services officer. Would you like to change your religion? Default is Christianity, in SPACE.", "Name change", religion_name)),1,MAX_NAME_LEN)

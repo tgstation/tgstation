@@ -119,7 +119,7 @@ proc/add_ghostlogs(var/mob/user, var/obj/target, var/what_done, var/admin=1, var
 		var/mob/M=target
 		M.attack_log += "\[[time_stamp()]\] GHOST: <font color='orange'>Has been [what_done] by [subject_text] [addition]</font>"
 	if(admin)
-		message_admins("GHOST: [subject_text] [what_done] [target_text] [addition]")
+		//message_admins("GHOST: [subject_text] [what_done] [target_text] [addition]")
 		if(isAdminGhost(user))
 			log_adminghost("[subject_text] [what_done] [target_text] [addition]")
 		else

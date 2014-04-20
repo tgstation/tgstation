@@ -49,7 +49,7 @@ Class Variables:
 Class Procs:
    New()                     'game/machinery/machine.dm'
 
-   Del()                     'game/machinery/machine.dm'
+   Destroy()                     'game/machinery/machine.dm'
 
    auto_use_power()            'game/machinery/machine.dm'
       This proc determines how power mode power is deducted by the machine.
@@ -95,6 +95,8 @@ Class Procs:
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
 
+	w_type = NOT_RECYCLABLE
+
 	var/stat = 0
 	var/emagged = 0
 	var/use_power = 1
@@ -116,7 +118,7 @@ Class Procs:
 	..()
 	machines += src
 
-/obj/machinery/Del()
+/obj/machinery/Destroy()
 	machines -= src
 	..()
 
@@ -141,15 +143,15 @@ Class Procs:
 /obj/machinery/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(25))
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -198,6 +200,66 @@ Class Procs:
 		log_adminghost("[key_name(usr)] screwed with [src] ([href])!")
 
 	src.add_fingerprint(usr)
+
+	var/obj/item/device/multitool/P = get_multitool(usr)
+	if(P && istype(P))
+		var/update_mt_menu=0
+		var/re_init=0
+
+		if("set_tag" in href_list)
+			if(!(href_list["set_tag"] in vars))
+				usr << "\red Something went wrong: Unable to find [href_list["set_tag"]] in vars!"
+				return 1
+			var/current_tag = src.vars[href_list["set_tag"]]
+			var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag", src, current_tag) as null|text),1,MAX_MESSAGE_LEN)
+			if(newid)
+				vars[href_list["set_tag"]] = newid
+				re_init=1
+
+		if("unlink" in href_list)
+			var/obj/O = locate(href_list["unlink"])
+			if(!O)
+				return 1
+			if(!canLink(O))
+				usr << "\red You can't link with that device."
+				return 1
+
+			if(unlinkFrom(usr, O))
+				usr << "\blue A green light flashes on \the [P], confirming the link was removed."
+			else
+				usr << "\red A red light flashes on \the [P].  It appears something went wrong when unlinking the two devices."
+			update_mt_menu=1
+
+		if("link" in href_list)
+			var/obj/O = locate(href_list["unlink"])
+			if(!O)
+				return 1
+			if(!canLink(O))
+				usr << "\red You can't link with that device."
+				return 1
+
+			if(linkWith(usr, O))
+				usr << "\blue A green light flashes on \the [P], confirming the link was removed."
+			else
+				usr << "\red A red light flashes on \the [P].  It appears something went wrong when unlinking the two devices."
+			update_mt_menu=1
+
+		if("buffer" in href_list)
+			P.buffer = src
+			usr << "\blue A green light flashes, and the device appears in the multitool buffer."
+			update_mt_menu=1
+
+		if("flush" in href_list)
+			usr << "\blue A green light flashes, and the device disappears from the multitool buffer."
+			P.buffer = null
+			update_mt_menu=1
+
+		if(re_init)
+			initialize()
+		if(update_mt_menu)
+			//usr.set_machine(src)
+			update_multitool_menu(usr)
+			return 1
 	return 0
 
 /obj/machinery/attack_ai(mob/user as mob)

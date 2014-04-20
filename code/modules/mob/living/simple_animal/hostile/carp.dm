@@ -10,10 +10,10 @@
 	speak_chance = 0
 	turns_per_move = 5
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/carpmeat
-	response_help = "pets the"
-	response_disarm = "gently pushes aside the"
-	response_harm = "hits the"
-	speed = 4
+	response_help = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm = "hits"
+	speed = -1
 	maxHealth = 25
 	health = 25
 
@@ -34,8 +34,6 @@
 	max_n2 = 0
 	minbodytemp = 0
 
-	break_stuff_probability = 2
-
 	faction = "carp"
 
 /mob/living/simple_animal/hostile/carp/Process_Spacemove(var/check_drift = 0)
@@ -48,8 +46,16 @@
 
 /mob/living/simple_animal/hostile/carp/AttackingTarget()
 	. =..()
-	var/mob/living/L = .
+	var/mob/living/carbon/L = .
 	if(istype(L))
 		if(prob(15))
 			L.Weaken(3)
 			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
+
+/mob/living/simple_animal/hostile/carp/holocarp
+	icon_state = "holocarp"
+	icon_living = "holocarp"
+
+/mob/living/simple_animal/hostile/carp/holocarp/Die()
+	del(src)
+	return

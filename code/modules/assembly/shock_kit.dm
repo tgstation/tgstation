@@ -8,7 +8,7 @@
 	w_class = 5.0
 	flags = FPRINT | TABLEPASS| CONDUCT
 
-/obj/item/assembly/shock_kit/Del()
+/obj/item/assembly/shock_kit/Destroy()
 	del(part1)
 	del(part2)
 	..()

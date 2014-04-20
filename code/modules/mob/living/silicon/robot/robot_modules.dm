@@ -196,6 +196,7 @@
 
 		src.modules += new /obj/item/weapon/tray/robotray(src)
 		src.modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
+		src.modules += new /obj/item/device/soundsynth(src)
 		src.emag = new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
 
 		var/datum/reagents/R = new/datum/reagents(50)
@@ -218,6 +219,7 @@
 		src.modules += new /obj/item/weapon/storage/bag/ore(src)
 		src.modules += new /obj/item/weapon/pickaxe/borgdrill(src)
 		src.modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
+		src.modules += new /obj/item/device/mining_scanner(src)
 //		src.modules += new /obj/item/weapon/shovel(src) Uneeded due to buffed drill
 		return
 

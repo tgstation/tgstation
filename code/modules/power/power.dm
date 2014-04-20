@@ -9,7 +9,7 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 
-/obj/machinery/power/Del()
+/obj/machinery/power/Destroy()
 	disconnect_from_network()
 	..()
 
@@ -55,7 +55,7 @@
 // increment the power usage stats for an area
 
 /obj/machinery/proc/use_power(var/amount, var/chan = -1) // defaults to power_channel
-	var/area/A = src.loc.loc		// make sure it's in an area
+	var/area/A = get_area(src)		// make sure it's in an area
 	if(!A || !isarea(A) || !A.master)
 		return
 	if(chan == -1)

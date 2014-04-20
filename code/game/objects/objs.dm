@@ -1,8 +1,4 @@
 /obj
-	//var/datum/module/mod		//not used
-	var/m_amt = 0	// metal
-	var/g_amt = 0	// glass
-	var/w_amt = 0	// waster amounts
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/reliability = 100	//Used by SOME devices to determine how reliable they are.
 	var/crit_fail = 0
@@ -16,15 +12,21 @@
 	var/damtype = "brute"
 	var/force = 0
 
+	// What reagents should be logged when transferred TO this object?
+	// Reagent ID => friendly name
+	var/list/reagents_to_log=list()
+/obj/Destroy()
+	machines -= src
+	processing_objects -= src
+	..()
 /obj/item/proc/is_used_on(obj/O, mob/user)
 
-
-/obj/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
+/obj/recycle(var/datum/materials/rec)
 	if (src.m_amt == 0 && src.g_amt == 0)
-		return 0
-	rec.addMaterial("iron",src.m_amt/CC_PER_SHEET_METAL)
-	rec.addMaterial("glass",src.g_amt/CC_PER_SHEET_GLASS)
-	return 1
+		return NOT_RECYCLABLE
+	rec.addAmount("iron",src.m_amt/CC_PER_SHEET_METAL)
+	rec.addAmount("glass",src.g_amt/CC_PER_SHEET_GLASS)
+	return w_type
 
 /obj/proc/process()
 	processing_objects.Remove(src)
@@ -105,22 +107,21 @@
 /obj/proc/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
 	return "<b>NO MULTITOOL_MENU!</b>"
 
-/obj/proc/format_tag(var/label,var/varname)
+/obj/proc/linkWith(var/mob/user, var/obj/buffer)
+	return 0
+
+/obj/proc/unlinkFrom(var/mob/user, var/obj/buffer)
+	return 0
+
+/obj/proc/format_tag(var/label,var/varname, var/act="set_tag")
 	var/value = vars[varname]
 	if(!value || value=="")
 		value="-----"
-	return "<b>[label]:</b> <a href=\"?src=\ref[src];set_tag=[varname]\">[value]</a>"
+	return "<b>[label]:</b> <a href=\"?src=\ref[src];[act]=[varname]\">[value]</a>"
+
 
 /obj/proc/update_multitool_menu(mob/user as mob)
-	var/obj/item/device/multitool/P
-	if(isrobot(user) || ishuman(user))
-		P=user.get_active_hand()
-	else if(isAI(user))
-		var/mob/living/silicon/ai/AI=user
-		P = AI.aiMulti
-	else if(isAdminGhost(user))
-		var/mob/living/silicon/ai/AI=user
-		P = AI.aiMulti
+	var/obj/item/device/multitool/P = get_multitool(user)
 
 	if(!istype(P))
 		return 0
@@ -154,8 +155,10 @@ a {
 			else
 				id=P.buffer:id_tag
 			dat += "<p><b>MULTITOOL BUFFER:</b> [P.buffer] ([id])"
-			if(!istype(P.buffer, /obj/machinery/telecomms))
-				dat += " <a href='?src=\ref[src];link=1'>\[Link\]</a> <a href='?src=\ref[src];flush=1'>\[Flush\]</a>"
+			if(canLink(P.buffer))
+				dat += " <a href='?src=\ref[src];link=1'>\[Link\]</a> "
+			if(P.buffer)
+				dat += "<a href='?src=\ref[src];flush=1'>\[Flush\]</a>"
 			dat += "</p>"
 		else
 			dat += "<p><b>MULTITOOL BUFFER:</b> <a href='?src=\ref[src];buffer=1'>\[Add Machine\]</a></p>"
@@ -163,7 +166,8 @@ a {
 	user << browse(dat, "window=mtcomputer")
 	user.set_machine(src)
 	onclose(user, "mtcomputer")
-
+/obj/proc/canLink(var/obj/O)
+	return 0
 /obj/proc/update_icon()
 	return
 
@@ -197,4 +201,7 @@ a {
 		var/rendered = "<span class='game say'><span class='name'>[M.name]: </span> <span class='message'>[text]</span></span>"
 		mo.show_message(rendered, 2)
 		*/
+	return
+
+/obj/proc/container_resist()
 	return

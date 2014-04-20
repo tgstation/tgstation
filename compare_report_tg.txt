@@ -4,10 +4,14 @@
  + blag
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\effects\160x160.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\160x160.dmi
+ - Singularity
  - emfield_s5
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\effects\224x224.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\224x224.dmi
  - emfield_s7
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\effects\288x288.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\288x288.dmi
+ - singularity_s9old
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\effects\96x96.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\96x96.dmi
  - emfield_s3
@@ -21,17 +25,41 @@
  + floor6-old
  + floor7-old
  + gib1-old
+ - gib1_flesh
  + gib2-old
+ - gib2_flesh
  + gib3-old
+ - gib3_flesh
  + gib4-old
  + gib5-old
+ - gib5_flesh
  + gib6-old
+ - gib6_flesh
+ - gibarm_flesh
+ - gibdown1_flesh
+ - gibleg_flesh
+ - gibmid2_flesh
+ - gibmid3_flesh
+ - gibtorso_flesh
+ - gibup1_flesh
  + ltrails_1
  + ltrails_2
  - metroid_gib1
  - metroid_gib2
  - metroid_gib3
  - metroid_gib4
+ - mfloor1
+ - mfloor2
+ - mfloor3
+ - mfloor4
+ - mfloor5
+ - mfloor6
+ - mfloor7
+ - mgibbl1
+ - mgibbl2
+ - mgibbl3
+ - mgibbl4
+ - mgibbl5
  - mucus
  + splatter1
  + splatter2
@@ -46,18 +74,23 @@
  + vomit_2-old
  + vomit_3-old
  + vomit_4-old
+ - writing1
+ - writing2
+ - writing3
+ - writing4
+ - writing5
  + xltrails
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\effects\chemsmoke.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\chemsmoke.dmi
+ + old
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\effects\effects.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\effects.dmi
  - 
- + acid
- + anom
- + bhole2
- + bhole3
- + electricity2
  - energynet: energynet: 10 frames, 1 directions
  + energynet: energynet: 4 frames, 1 directions
- + spidereggUnused
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\effects\fire.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\fire.dmi
+ - ash
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\effects\genetics.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\genetics.dmi
  - adamantine_female_l
@@ -72,6 +105,7 @@
  - cold_s
  - coldfire_l
  - coldfire_s
+ - fire_l
  - firefat_s
  - golem_female_l
  - golem_female_s
@@ -81,8 +115,11 @@
  - golemfat_female_s
  - golemfat_male_l
  - golemfat_male_s
+ - horns_s
+ - hulk_f_l
  - hulk_fat_l
  - hulk_fat_s
+ - hulk_m_l
  - jelly_female_l
  - jelly_female_s
  - jelly_male_l
@@ -91,6 +128,7 @@
  - jellyfat_female_s
  - jellyfat_male_l
  - jellyfat_male_s
+ - lasereyes_l
  - lizard_female_l
  - lizard_female_s
  - lizard_male_l
@@ -108,6 +146,8 @@
  - plantfat_female_s
  - plantfat_male_l
  - plantfat_male_s
+ - seizureman_l
+ - seizureman_s
  - shadow_female_l
  - shadow_female_s
  - shadow_male_l
@@ -124,6 +164,8 @@
  - slimefat_female_s
  - slimefat_male_l
  - slimefat_male_s
+ - telekinesishead_l
+ - telekinesisheadfat_l
  - zombie_l
  - zombie_s
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\effects\ss13_dark_alpha6.dmi
@@ -138,6 +180,9 @@
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\effects\tile_effects.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\tile_effects.dmi
  - plasma-orange
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\effects\water.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\water.dmi
+ + wet_floor_static
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mecha\mecha.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mecha\mecha.dmi
  - earth
@@ -151,11 +196,17 @@
  - titan-open
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mecha\mecha_equipment.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mecha\mecha_equipment.dmi
+ + mecha_carbine
  - mecha_phase_array
+ - mecha_wholegen: mecha_wholegen: 1 frames, 1 directions
+ + mecha_wholegen: mecha_wholegen: 4 frames, 1 directions
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mecha\mech_bay.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mecha\mech_bay.dmi
  - recharge_floor
  - recharge_floor_asteroid
+ - recharge_port: recharge_port: 1 frames, 1 directions
+ + recharge_port: recharge_port: 1 frames, 4 directions
+ + recharge_port-o
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mecha\mech_construct.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mecha\mech_construct.dmi
  - phazon_phase_array
@@ -206,10 +257,15 @@
  - ai-triumvirate
  - ai-triumvirate-malf
  + holo3
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\alien.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\alien.dmi
+ - alien_l
+ - aliend_l
+ - alienh_l
+ - alienq_l
+ - aliens_l
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\animal.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\animal.dmi
- + bat
- + bat_dead
  - brainslug
  - brainslug_dead
  - drone0
@@ -217,84 +273,212 @@
  - drone2
  - drone3
  - drone_dead
- + heart-ani2
  - mouse_brown_sleep
  - mouse_gray_sleep
  - mouse_white_sleep
- + otherthing
- + otherthing-dead
- + pug
- + pug_dead
- + viscerator
- + viscerator_attack
+ - scarybat
+ - scarybat-dance
+ - scarybat-dead
+ - spaceworm10
+ - spaceworm12
+ - spaceworm3
+ - spaceworm5
+ - spaceworm6
+ - spaceworm9
+ - spacewormdead
+ - spacewormhead0
+ - spacewormhead1
+ - spacewormheaddead
+ - spacewormtail
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\augments.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\augments.dmi
+ + chest_s
+ + head_s
+ + l_arm_s
+ + l_leg_s
+ + r_arm_s
+ + r_leg_s
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\back.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\back.dmi
+ - anesthetic2
+ - backpack2
+ - bandolier2
+ - brokenpack2
+ - cape
+ - cape2
+ - captainpack2
+ - clownpack2
+ - cshotgun2
+ - cultpack2
+ - dshotgun2
+ - electropack02
+ - electropack12
+ - engiepack2
+ - fireaxe02
  - hfrequency0
  - hfrequency2
+ - holdingpack2
+ - ionrifle2
+ - jetpack-black-on2
+ - jetpack-black2
+ + jetpack-mini
+ + jetpack-mini-on
+ - jetpack-on2
  - jetpack-red
  - jetpack-red-on
  - jetpack-red-on2
  - jetpack-red2
+ - jetpack-void-on2
+ - jetpack-void2
+ - jetpack2
+ - katana2
+ - medicalpack2
+ - medicalsatchel2
  + mjollnir0
- + mjollnir02
+ - oxygen2
+ - oxygen_f2
+ - oxygen_fr2
+ - riot2
+ + roman_shield
+ - satchel-cap2
+ - satchel-chem2
+ - satchel-eng2
+ - satchel-gen: satchel-gen: 1 frames, 1 directions
+ + satchel-gen: satchel-gen: 1 frames, 4 directions
+ - satchel-med2
+ - satchel-norm2
+ - satchel-sec2
+ - satchel-tox2
+ - satchel-vir2
+ - satchel2
+ - satchel_hyd2
+ - scythe
+ + scythe0
+ - securitypack2
  + sheet
- + sheet2
  + sheetblue
- + sheetblue2
  + sheetbrown
- + sheetbrown2
  + sheetcaptain
- + sheetcaptain2
  + sheetce
- + sheetce2
  + sheetcentcom
- + sheetcentcom2
  + sheetclown
- + sheetclown2
  + sheetcmo
- + sheetcmo2
  + sheetcult
- + sheetcult2
  + sheetgreen
- + sheetgreen2
  + sheethop
- + sheethop2
  + sheethos
- + sheethos2
  + sheetmedical
- + sheetmedical2
  + sheetmime
- + sheetmime2
  + sheetorange
- + sheetorange2
  + sheetpurple
- + sheetpurple2
  + sheetqm
- + sheetqm2
  + sheetrainbow
- + sheetrainbow2
  + sheetrd
- + sheetrd2
  + sheetred
- + sheetred2
  + sheetsyndie
- + sheetsyndie2
  + sheetwiz
  + sheetyellow
- + sheetyellow2
- + spearglass0
- + spearglass02
+ - shotgun2
+ - spearglass02
  + staffofanimation
- + staffofanimation2
+ - staffofchange2
+ + staffofhealing
  - toddler
  + waterbackpack
- + waterbackpack2
+ - welderpack2
+ - witch2
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\belt.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\belt.dmi
+ - baton2
+ - champion2
+ - classic_baton2
+ - dpickaxe2
+ - electronic2
+ - electronic_12
+ - electronic_22
+ - electronic_32
+ - electronic_42
+ - electronic_52
+ - emergency2
+ - emergency_double2
+ - emergency_engi2
+ - gpickaxe2
+ - gun2
+ - gun_12
+ - gun_22
+ - gun_32
+ - handcuff2
+ - handcuff_12
+ - handcuff_22
+ - handcuff_32
+ - handcuff_42
+ - handcuff_52
+ - healthanalyzer2
+ - healthanalyzer_12
+ - healthanalyzer_22
+ - healthanalyzer_32
+ - healthanalyzer_42
+ - healthanalyzer_52
  - holobadge
  - holobadge2
+ - injector: injector: 1 frames, 1 directions
+ + injector: injector: 1 frames, 4 directions
+ - jackhammer2
+ - katana2
+ - medical2
  + military
- + military2
+ - pen2
+ - pen_12
+ - pen_22
+ - pen_32
+ - pen_42
+ - pen_52
+ - pickaxe2
+ - security2
+ - soulstonebelt: soulstonebelt: 1 frames, 1 directions
+ + soulstonebelt: soulstonebelt: 1 frames, 4 directions
+ - spickaxe2
+ - suspenders2
+ - template2
+ - utility2
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\belt_mirror.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\belt_mirror.dmi
+ - baton2
+ - classic_baton2
+ - electronic2
+ - electronic_12
+ - electronic_22
+ - electronic_32
+ - electronic_42
+ - electronic_52
+ - em_oxtank2
+ - gun2
+ - gun_12
+ - gun_22
+ - gun_32
+ - handcuff2
+ - handcuff_12
+ - handcuff_22
+ - handcuff_32
+ - handcuff_42
+ - handcuff_52
+ - healthanalyzer2
+ - healthanalyzer_12
+ - healthanalyzer_22
+ - healthanalyzer_32
+ - healthanalyzer_42
+ - healthanalyzer_52
+ - injector: injector: 1 frames, 1 directions
+ + injector: injector: 1 frames, 4 directions
+ - pen2
+ - pen_12
+ - pen_22
+ - pen_32
+ - pen_42
+ - pen_52
+ - suspenders2
+ - template2
+ - utility2
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\blob.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\blob.dmi
  + blob_core_glow
@@ -302,28 +486,14 @@
  + blob_damaged_glow
  + blob_factory_glow
  + blob_glow
+ + blob_head
  + blob_idle_glow
  + blob_node_glow
  + blob_resource_glow
---- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\corgi_back.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\corgi_back.dmi
- + cardborg
- + cardborg2
- + fire_extinguisher0
- + fire_extinguisher02
- + fire_extinguisher1
- + fire_extinguisher12
- + oxygen
- + oxygen2
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\corgi_head.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\corgi_head.dmi
  - bunnycrap
  - bunnycrap2
- + cardborg_h
- + cardborg_h2
- + paper_words
- + paper_words2
- + wizard-fake2
  - wizard2-fake
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\dam_human.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\dam_human.dmi
@@ -361,24 +531,12 @@
  - 33-2
  + blank
  + blank2
- + chest2_01
- + chest2_02
- + chest2_03
- + chest2_10
- + chest2_20
- + chest2_30
  + chest_01
  + chest_02
  + chest_03
  + chest_10
  + chest_20
  + chest_30
- + head2_01
- + head2_02
- + head2_03
- + head2_10
- + head2_20
- + head2_30
  + head_01
  + head_02
  + head_03
@@ -387,92 +545,151 @@
  + head_30
  - human
  - human-2
- + l_arm2_01
- + l_arm2_02
- + l_arm2_03
- + l_arm2_10
- + l_arm2_20
- + l_arm2_30
  + l_arm_01
  + l_arm_02
  + l_arm_03
  + l_arm_10
  + l_arm_20
  + l_arm_30
- + l_leg2_01
- + l_leg2_02
- + l_leg2_03
- + l_leg2_10
- + l_leg2_20
- + l_leg2_30
  + l_leg_01
  + l_leg_02
  + l_leg_03
  + l_leg_10
  + l_leg_20
  + l_leg_30
- + r_arm2_01
- + r_arm2_02
- + r_arm2_03
- + r_arm2_10
- + r_arm2_20
- + r_arm2_30
  + r_arm_01
  + r_arm_02
  + r_arm_03
  + r_arm_10
  + r_arm_20
  + r_arm_30
- + r_leg2_01
- + r_leg2_02
- + r_leg2_03
- + r_leg2_10
- + r_leg2_20
- + r_leg2_30
  + r_leg_01
  + r_leg_02
  + r_leg_03
  + r_leg_10
  + r_leg_20
  + r_leg_30
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\ears.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\ears.dmi
+ - earmuffs2
+ - earset2
+ - headset2
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\eyes.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\eyes.dmi
  - arjun_chopra
  - arjun_chopra2
+ - bigsunglasses2
+ - blindfold2
  - book_berner_1
  - book_berner_12
+ - gglasses2
+ - gglasses_thin2
+ - glasses2
+ - glasses_thin2
+ - healthhud2
+ - hipster_glasses2
  - ian_colm_1
  - ian_colm_12
  - ian_colm_1up
  - ian_colm_1up2
+ - jensenshades2
+ - laforge2
+ - material2
+ - meson2
+ - monocle2
+ - monocle2_old
+ - night2
+ - purple2
+ - rwelding-g
+ - rwelding-gup
+ - securityhud2
+ - sun2
+ - sun_thin2
+ - sunhud2
+ - thermal2
+ - thermalimplants2
+ - thermoncle2
  - uzenwa_sissra_1
  - uzenwa_sissra_12
+ - welding-g2
+ - welding-gup2
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\feet.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\feet.dmi
  - atmosmagboots0
  - atmosmagboots02
  - atmosmagboots1
  - atmosmagboots12
+ - black2
+ - blue2
  - boots-vox
  - boots-vox2
+ - boots2
+ - brown2
+ - chef2
+ - clown2
+ - cowboy2
+ - cult2
+ - detective2
+ - galoshes2
+ - green2
+ - jackboots2
+ - laceups2
  - leather
  - leather2
- + roman
- + roman2
+ - magboots-old02
+ - magboots-old12
+ - magboots02
+ - magboots12
+ - mime2
+ - orange12
+ - orange2
+ - purple2
+ - rain_bow2
+ - red2
+ - roman2
+ - s-ninja2
+ - secshoes2
  - slippers
  - slippers2
  - slippers_worn
  - slippers_worn2
  - swat
  - swat2
+ - tourist2
+ - white2
+ - wizard2
+ - yellow2
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\hands.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\hands.dmi
  - ashley_rifler_1
  - ashley_rifler_12
+ - bgloves2
+ - bluegloves2
+ - boxing2
+ - boxingblue2
+ - boxinggreen2
+ - boxingyellow2
+ - browngloves2
  - chal_appara_1
  - chal_appara_12
+ - egloves2
+ - ggloves2
  - gloves-vox
  - gloves-vox2
+ - graygloves2
+ - greengloves2
+ - lgloves2
+ - lightbrowngloves2
+ - orangegloves2
+ - purplegloves2
+ - r_hands2
+ - rainbowgloves2
+ - redgloves2
+ - s-ninja2
+ - s-ninjak2
+ - s-ninjan2
+ - swat_gl2
+ - ygloves2
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\head.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\head.dmi
  - alice_mccrea_1
@@ -480,17 +697,63 @@
  - alice_mccrea_1up
  - alice_mccrea_1up2
  + ambrosiadeus
- + ambrosiadeus2
  + ambrosiavulgaris
- + ambrosiavulgaris2
  - amp
  - amp2
+ - bandana2
+ - bearpelt2
+ - beret2
+ - beret_badge2
+ - bio2
+ - bio_cmo2
+ - bio_general2
+ - bio_janitor2
+ - bio_scientist2
+ - bio_security2
+ - bio_virology2
+ + blacksoft
+ + blacksoft_flipped
+ - bluesoft2
+ - bluesoft_flipped2
+ + bluetaghelm
+ - bombsuit2
+ - bombsuit2_white
+ - bombsuitOld2
+ - bombsuitsec2
+ - bowler2
+ - brucehachert
+ - bunny2
+ - cake02
+ - cake12
+ - capcap2
+ - capspace2
+ - captain2
+ - cardborg_h2
+ - cargosoft2
+ - cargosoft_flipped2
+ - centcom2
  - centcomcaptain
  - centcomcaptain2
  - centcomofficerberet
  - centcomofficerberet2
+ - cespace_helmet2
+ - chaplain_hood2
+ - chef2
+ - chickenhead2
+ - corpsoft
+ - corpsoft_flipped
+ - cowboy2
+ - cueball2
+ - cult_helmet2
+ - cult_hoodalt2
+ - culthood2
+ - deathsquad2
+ - dermal2
+ - detective2
+ - e_beret_badge
  - edvin_telephosphor_1
  - edvin_telephosphor_12
+ - engspace_helmet2
  - enos_adlai_1
  - enos_adlai_12
  - ert_commander
@@ -501,14 +764,49 @@
  - ert_medical2
  - ert_security
  - ert_security2
+ + fedora
+ - flat_cap2
+ - gentcap
+ - gladiator2
+ - greenbandana2
+ - greensoft2
+ - greensoft_flipped2
+ - greysoft2
+ - greysoft_flipped2
  - hairflower
  - hairflower2
+ - hardhat0_dblue2
+ - hardhat0_orange2
+ - hardhat0_pumpkin2
+ - hardhat0_red2
+ + hardhat0_reindeer
+ - hardhat0_white2
+ - hardhat0_yellow2
+ - hardhat1_dblue2
+ - hardhat1_orange2
+ - hardhat1_pumpkin2
+ - hardhat1_red2
+ + hardhat1_reindeer
+ - hardhat1_white2
+ - hardhat1_yellow2
  + harebell
- + harebell2
+ - hasturhood2
+ - headslime2
+ - helmet2
+ - hgpiratecap2
+ - hosberet2
+ - hoscap2
+ - kitty2
+ - kittyinner2
  - krinn_hat
  - krinn_hat2
+ - magus2
+ - mailman2
+ - marisa2
+ - metroid2
+ - mimesoft2
+ - mimesoft_flipped2
  + moonflower
- + moonflower2
  - neilpatterson0_hat
  - neilpatterson0_hat2
  - neilpatterson1_hat
@@ -518,47 +816,136 @@
  - norah_briggs_1up
  - norah_briggs_1up2
  + novaflower
- + novaflower2
+ - nun_hood2
+ - nursehat2
+ - nymph
+ - officerberet2
+ - orangesoft2
+ - orangesoft_flipped2
+ - paper2
  + paper_words
- + paper_words2
  - paramedic-eva-helmet
  - paramedic-eva-helmet2
+ - paramedicsoft
+ - paramedicsoft2
+ - paramedicsoft_flipped
+ - paramedicsoft_flipped2
+ - petehat2
+ - pirate2
+ - plaguedoctor2
+ - policehelm2
  + poppy
- + poppy2
+ - purplesoft2
+ - purplesoft_flipped2
+ - pwig2
+ - rad2
+ - rainbowsoft2
+ - rainbowsoft_flipped2
+ - redcoat2
+ - redsoft2
+ - redsoft_flipped2
+ + redtaghelm
+ - redwizard2
+ - rig-old2
  - rig0-atmos
  - rig0-atmos2
+ - rig0-atmos_gold
+ - rig0-atmos_gold2
  + rig0-atmospherics
- + rig0-atmospherics2
+ - rig0-engineering2
+ - rig0-ert_commander
+ - rig0-ert_engineer
+ - rig0-ert_medical
+ - rig0-ert_security
+ - rig0-medical2
+ - rig0-mining2
+ - rig0-sec2
  - rig0-sec2TG
  - rig0-sec2old
  - rig0-secTG
  - rig0-secold
+ - rig0-syndi2
+ - rig0-syndie-human
+ - rig0-syndie-skrell
+ - rig0-syndie-taj
+ - rig0-syndie-unathi
+ - rig0-taj-helmet
+ - rig0-white2
+ - rig0-wiz2
  - rig1-atmos
  - rig1-atmos2
  + rig1-atmospherics
- + rig1-atmospherics2
+ - rig1-engineering2
+ - rig1-ert_commander
+ - rig1-ert_engineer
+ - rig1-ert_medical
+ - rig1-ert_security
+ - rig1-medical2
+ - rig1-mining2
+ - rig1-sec2
  - rig1-sec2TG
  - rig1-sec2old
  - rig1-secTG
  - rig1-secold
- + roman
- + roman2
- + roman_c
- + roman_c2
+ - rig1-syndi2
+ - rig1-syndie-human
+ - rig1-syndie-skrell
+ - rig1-syndie-taj
+ - rig1-syndie-unathi
+ - rig1-taj-helmet
+ - rig1-white2
+ - rig1-wiz2
+ - riot2
+ - roman2
+ - roman_c2
+ - s-ninja2
+ - santahat2
+ - secsoft2
+ - secsoft_flipped2
+ - security2
+ - skrell_helmet_black
+ - skrell_helmet_white
+ - sombrero2
+ - space2
  + sunflower
- + sunflower2
  - surgcap_blue
  - surgcap_blue2
  - surgcap_green
  - surgcap_green2
  - surgcap_purple
  - surgcap_purple2
+ - swat-alt2
+ - swat2
+ - syndicate-helm-black-blue2
+ - syndicate-helm-black-engie12
+ - syndicate-helm-black-engie2
+ - syndicate-helm-black-green2
+ - syndicate-helm-black-med2
+ - syndicate-helm-black-orange2
+ - syndicate-helm-black-red2
+ - syndicate-helm-black2
+ - syndicate-helm-blue2
+ - syndicate-helm-green-dark2
+ - syndicate-helm-green2
+ - syndicate-helm-orange2
+ - syndicate-helm-orange_light12
+ - syndicate-helm-orange_light2
+ - syndicate2
  - taryn_kifer_1
  - taryn_kifer_12
+ - thunderdome2
+ - tophat2
+ - unathi_breacher
  - unathi_helm_cheap
  - unathi_helm_cheap2
+ - ushankadown2
+ - ushankaup2
+ - viking2
+ - violetwizard2
+ - void2
  - vox-carapace
  - vox-carapace2
+ - vox-medic
  - vox-pressure
  - vox-pressure-engineer
  - vox-pressure-engineer2
@@ -573,64 +960,61 @@
  - vox-pressure-specops
  - vox-pressure-specops2
  - vox-pressure2
+ - vox-stealth
+ - wardenberet2
+ - welding2
+ - weldingup2
+ - witch2
+ - wizard-fake2
+ - wizard2
+ - xenom2
+ - xenos2
+ - xmashat2
+ - yellowsoft2
+ - yellowsoft_flipped2
  - yuki_matsuda_1
  - yuki_matsuda_12
  - yuki_matsuda_1up
  - yuki_matsuda_1up2
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\hud.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\hud.dmi
+ - hudbrainworm
  + hudcentcom
  + hudheadofsecurityOld
+ - hudheadrevolutionary
  + hudincarcerated
  + hudno_id
  + hudsecurityofficerOld
+ - hudsyndicate
+ - vampire
+ - vampthrall
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\human.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\human.dmi
  - 
- + adamantine_f_l
  + adamantine_f_s
- + adamantine_m_l
  + adamantine_m_s
- + african1_f_l
  + african1_f_s
- + african1_m_l
  + african1_m_s
- + african2_f_l
  + african2_f_s
- + african2_m_l
  + african2_m_s
- + albino_f_l
  + albino_f_s
- + albino_m_l
  + albino_m_s
- + arab_f_l
  + arab_f_s
- + arab_m_l
  + arab_m_s
- + asian1_f_l
  + asian1_f_s
- + asian1_m_l
  + asian1_m_s
- + asian2_f_l
  + asian2_f_s
- + asian2_m_l
  + asian2_m_s
  + body_cloaked
  - body_f_l
  - body_f_s
  - body_m_l
  - body_m_s
- + caucasian1_f_l
  + caucasian1_f_s
- + caucasian1_m_l
  + caucasian1_m_s
- + caucasian2_f_l
  + caucasian2_f_s
- + caucasian2_m_l
  + caucasian2_m_s
- + caucasian3_f_l
  + caucasian3_f_s
- + caucasian3_m_l
  + caucasian3_m_s
  - chest_f_l
  - chest_f_s
@@ -638,15 +1022,11 @@
  - chest_m_s
  - fatbody_l
  - fatbody_s
- + fly_f_l
  + fly_f_s
- + fly_m_l
  + fly_m_s
  - ghost: ghost: 1 frames, 1 directions
  + ghost: ghost: 1 frames, 4 directions
- + golem_f_l
  + golem_f_s
- + golem_m_l
  + golem_m_s
  - groin_f_l
  - groin_f_s
@@ -656,13 +1036,10 @@
  - head_f_s
  - head_m_l
  - head_m_s
- + indian_f_l
+ - husk_l
  + indian_f_s
- + indian_m_l
  + indian_m_s
- + jelly_f_L
  + jelly_f_s
- + jelly_m_l
  + jelly_m_s
  - l_arm_l
  - l_arm_s
@@ -672,22 +1049,14 @@
  - l_hand_s
  - l_leg_l
  - l_leg_s
- + latino_f_l
  + latino_f_s
- + latino_m_l
  + latino_m_s
- + lizard_f_l
  + lizard_f_s
- + lizard_m_l
  + lizard_m_s
- + mediterranean_f_l
  + mediterranean_f_s
- + mediterranean_m_l
  + mediterranean_m_s
  + plant_dead
- + plant_f_l
  + plant_f_s
- + plant_m_l
  + plant_m_s
  - r_arm_l
  - r_arm_s
@@ -697,15 +1066,10 @@
  - r_hand_s
  - r_leg_l
  - r_leg_s
- + shadow_f_l
  + shadow_f_s
- + shadow_m_l
  + shadow_m_s
- + skeleton_l
  + skeleton_s
- + slime_f_l
  + slime_f_s
- + slime_m_l
  + slime_m_s
  - torso_f_l
  - torso_f_s
@@ -735,54 +1099,127 @@
  - underwear6_f_s
  - underwear6_m_l
  - underwear6_m_s
- + zombie_l
  + zombie_s
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\human_face.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\human_face.dmi
- + debrained_l
- + debrained_s
+ - bald_l
+ - debrained_l
  - ears_plain_l
  - ears_plain_s
- + facial_fiveoclock_l
- + facial_fiveoclock_s
- + facial_fumanchu_l
- + facial_fumanchu_s
+ - eyes_l
+ - facial_abe_l
+ - facial_chaplin_l
+ - facial_chin_l
+ - facial_dwarf_l
+ - facial_elvis_l
+ - facial_fiveoclock_l
+ - facial_fullbeard_l
+ - facial_fumanchu_l
  - facial_goatee_l
  - facial_goatee_s
+ - facial_gt_l
+ - facial_hip_l
+ - facial_hogan_l
+ - facial_jensen_l
+ - facial_longbeard_l
  - facial_moustache_l
  - facial_moustache_s
  - facial_mutton_l
  - facial_mutton_s
+ - facial_neckbeard_l
  - facial_pencilstache_l
  - facial_pencilstache_s
  - facial_robotnik_l
  - facial_robotnik_s
+ - facial_selleck_l
  - facial_sideburns_l
  - facial_sideburns_s
  - facial_smallstache_l
  - facial_smallstache_s
+ - facial_vandyke_l
+ - facial_watson_l
+ - facial_wise_l
  - grey_eyes_l
  - grey_eyes_s
+ - hair_a_l
+ - hair_afro2_l
+ - hair_afro_l
+ - hair_b_l
+ - hair_bangs_s
+ - hair_bedhead_l
+ - hair_bedheadv2_l
+ - hair_bedheadv3_l
+ - hair_beehive_l
+ - hair_bigafro_l
+ - hair_bobcurl_l
+ - hair_bobcut_l
+ - hair_bowlcut_l
+ - hair_braid_l
+ - hair_buzzcut_l
+ - hair_c_l
  - hair_clean_l
  - hair_clean_s
- + hair_lbangs_l
- + hair_lbangs_s
+ - hair_combover_l
+ - hair_crewcut_l
+ - hair_curls_l
+ - hair_d_l
+ - hair_devilock_l
+ - hair_dreads_l
+ - hair_e_l
+ - hair_emo_l
+ - hair_f_l
+ - hair_feather_l
+ - hair_flair
+ - hair_gelled_l
+ - hair_gentle_s
+ - hair_halfbang_alt_l
+ - hair_halfbang_l
+ - hair_hbraid_s
+ - hair_himecut_l
+ - hair_hitop_l
+ - hair_jensen_l
+ - hair_kagami_l
+ - hair_kusanagi_l
+ - hair_lbangs_l
  - hair_long_l
  - hair_long_s
+ - hair_longest_l
+ - hair_longfringe_l
  - hair_messy_l
  - hair_messy_s
  - hair_mohawk_l
  - hair_mohawk_s
+ - hair_odango_l
+ - hair_ombre_l
+ - hair_pa_l
+ - hair_part_l
+ - hair_parted_l
  - hair_plait_l
  - hair_plait_s
+ - hair_pompadour_l
+ - hair_ponytail3_l
+ - hair_ponytail_l
+ - hair_quiff_l
  - hair_rattail_l
  - hair_rattail_s
+ - hair_sargeant_l
  - hair_shaggy_l
  - hair_shaggy_s
+ - hair_skinhead_l
+ - hair_spikey_l
+ - hair_stail_s
  - hair_straight_l
  - hair_straight_s
  - hair_tajspiky_l
  - hair_tajspiky_s
+ - hair_tbraid_s
+ - hair_updo_l
+ - hair_vlong_l
+ - hair_vlongfringe_l
+ - lips_black_l
+ - lips_jade_l
+ - lips_purple_l
+ - lips_red_l
  - skrell_clothhair_f_l
  - skrell_clothhair_f_s
  - skrell_clothhair_m_l
@@ -813,44 +1250,57 @@
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_lefthand.dmi
  - DONGS
  - altair_locket
+ + arm_blade
  + atmo_hardsuit
  + atmo_helm
+ - atmos_gold_hardsuit
+ - atmos_gold_helm
  - atmos_hardsuit
  - atmos_helm
  - autoinjector
  - b_shoesold
+ - banana_peel
  - bl_shoesold
  + bomb
  - browncane
  - bucklerOLD
  - butcher_knife
+ + camera_bug
  - canister
  - caphat
  - centhat
  - coil
- - coil-wire
- + coil_blue
- + coil_red
+ - coil_cyan
+ - coil_green
+ - coil_orange
+ - coil_pink
+ - coil_white
+ - coil_yellow
  - coolant-c
  - crossbow-solid
+ - cuff_blue
+ - cuff_cyan
+ - cuff_green
+ - cuff_orange
+ - cuff_pink
+ - cuff_red
+ - cuff_white
+ - cuff_yellow
  - cultpack
  + dodgeball
  - dualsaber1
- + dualsaberblue1
- + dualsabergreen1
- + dualsaberpurple1
- + dualsaberrainbow1
- + dualsaberred1
  - emergency_double
+ + fedora
  - firstaid-advanced
  - foamcrossbow
  - focus
+ - folded
+ + fork
  - fr_jacket
  - harpoon
  - hfrequency0
  - hfrequency1
  - holidaypriest
- + hypo
  - kobskull
  - medibottle
  + mimesuit
@@ -859,23 +1309,26 @@
  + mjollnir1
  - muzzle
  - nursesuit
+ - nymph
+ - o2
  + orange-id
  - oxygen-c
+ - pizzabox1
  - plasticbag
  - pneumatic
  - pneumatic-tank
  - quarrel
  + razor
- + roman_shield
- + saw
+ + rdwhimsy
+ + restock_unit
+ - rpd
  - saw3
- + spearglass0
- + spearglass1
- + staffofanimation
  - stool
- + swordrainbow
- - telebaton0
- - telebaton1
+ - sunflower
+ - telebaton_0
+ - telebaton_1
+ + torch_off
+ + torch_on
  - toysword0
  - toysword1
  - ty_necklace
@@ -901,44 +1354,56 @@
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_righthand.dmi
  - DONGS
  - altair_locket
+ + arm_blade
  + atmo_hardsuit
  + atmo_helm
+ - atmos_gold_hardsuit
+ - atmos_gold_helm
  - atmos_hardsuit
  - atmos_helm
  - autoinjector
  - b_shoesold
+ - banana_peel
  - bl_shoesold
  + bomb
  - browncane
  - bucklerOLD
  - butcher_knife
+ + camera_bug
  - canister
  - caphat
  - centhat
  - coil
- - coil-wire
- + coil_blue
- + coil_red
+ - coil_cyan
+ - coil_green
+ - coil_orange
+ - coil_pink
+ - coil_white
+ - coil_yellow
  - coolant-c
  - crossbow-solid
+ - cuff_blue
+ - cuff_cyan
+ - cuff_green
+ - cuff_orange
+ - cuff_pink
+ - cuff_red
+ - cuff_white
+ - cuff_yellow
  - cultpack
  + dodgeball
  - dualsaber1
- + dualsaberblue1
- + dualsabergreen1
- + dualsaberpurple1
- + dualsaberrainbow1
- + dualsaberred1
  - emergency_double
+ + fedora
  - firstaid-advanced
  - foamcrossbow
  - focus
+ - folded
  - fr_jacket
  - harpoon
  - hfrequency0
  - hfrequency1
  - holidaypriest
- + hypo
  - kobskull
  - medibottle
  + mister
@@ -946,25 +1411,29 @@
  + mjollnir1
  - muzzle
  - nursesuit
+ - nymph
+ - o2
  - o_shoes1old
  - o_shoesold
  + orange-id
  - oxygen-c
+ - pizzabox1
  - plasticbag
  - pneumatic
  - pneumatic-tank
  - quarrel
  + razor
- + roman_shield
- + saw
+ + rdwhimsy
+ + restock_unit
+ - rpd
  - saw3
- + spearglass0
- + spearglass1
- + staffofanimation
  - stool
- + swordrainbow
- - telebaton0
- - telebaton1
+ - sunflower
+ - telebaton_0
+ - telebaton_1
+ + tommygun
+ + torch_off
+ + torch_on
  - toysword0
  - toysword1
  - ty_necklace
@@ -987,106 +1456,210 @@
  - warden
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\mask.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\mask.dmi
+ - balaclava2
+ - breath2
  - breathdown
  - breathdown2
- + gag
- + gag2
+ - cigaroff2
+ - cigaron2
+ - cigoff2
+ - cigon2
+ - clown2
+ - cobpipeoff2
+ - death2
+ - facehugger2
+ - facehugger2_inactive
+ - facehugger_dead2
+ - fake-moustache2
+ - gas_alt2
+ - gas_mask2
  + hailer_black
- + hailer_black2
  + hailer_blue
- + hailer_blue2
  + hailer_red
- + hailer_red2
  + hailer_white
- + hailer_white2
  - holomask-cord
  - holomask-cord2
- - pipeoff
+ - horsehead2
+ + hosmask
+ - luchador2
+ - luchag2
+ - luchar2
+ - medical2
+ - mime2
+ - monkeymask2
+ - muzzle2
+ + officermask
+ - owl2
+ - pig2
  - pipeoff2
- - pipeon
  - pipeon2
+ - plaguedoctor2
+ - s-ninja2
+ - sexyclown2
+ - sexymime2
+ + spliffoff
+ + spliffon
+ - sterile2
+ - swat2
  - tooth-necklace
  - tooth-necklace2
  - ty_necklace
  - ty_necklace2
  - voxmask
  - voxmask2
+ + wardenmask
  + weldingmask
- + weldingmask2
  + weldingmaskup
- + weldingmaskup2
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\mob.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\mob.dmi
+ - cult_l
+ + ghost_black
+ + ghost_blue
+ + ghost_cyan
+ + ghost_dblue
+ + ghost_dcyan
+ + ghost_dgreen
+ + ghost_dpink
+ + ghost_dred
+ + ghost_dyellow
+ + ghost_green
+ + ghost_grey
+ + ghost_pink
+ + ghost_red
+ + ghost_yellow
  - greytide
  - greytide_head
+ - handcuff2
+ - id2
+ - legcuff2
+ - vampire
+ - vampire2
+ - vampthrall
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\monkey.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\monkey.dmi
  - b_mask
  - b_mask2
+ - balaclava2
  + breath
- + breath2
+ - cigaroff2
+ - cigaron2
+ - cigoff2
+ - cigon2
+ - clown2
+ - cobpipeoff2
+ - cobpipeon2
+ - death2
+ - facehugger2
+ - facehugger2_dead
+ - fake-moustache2
  + gag
- + gag2
+ - gas_alt2
+ - gas_mask2
+ - handcuff2
+ - horsehead2
+ - luchador2
+ - luchag2
+ - luchar2
  - m_mask
  - m_mask2
+ - medical2
+ - mime2
+ - monkey0
+ - mrsmuggles0
+ - muggles0
+ - muzzle2
+ - nymph1
+ - owl2
+ - plaguedoctor2
  - punpun0
  - punpun1
+ - rathen0
+ - s-ninja2
+ - s_mask2
+ - sexyclown2
+ - sexymime2
  - skrellkey0
  - skrellkey1
  - stokkey0
  - stokkey1
+ - swat2
  - tajkey0
  - tajkey1
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\OnFire.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\OnFire.dmi
+ - Lying
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\robots.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\robots.dmi
+ - Brobot
  - Engiseer
  - Engiseer-old
+ - Miner
+ - Service
+ - Service2
+ - bloodhound
+ + brobot
  - droid
  - droid-combat
  - droid-combat-roll
  - droid-combat-shield
  - droid-medical
  - droid-miner
+ + engiborg
  - engineerrobot
  - eyes-Brobot
  - eyes-Engineering
  - eyes-Engiseer
  - eyes-Hydrobot
+ - eyes-Miner
  - eyes-Miner_old
  - eyes-Security
+ - eyes-bloodhound
  - eyes-droid
  - eyes-droid-combat
  - eyes-droid-medical
  - eyes-droid-miner
+ + eyes-engiborg
  - eyes-engineerrobot
+ + eyes-janiborg
  - eyes-janitorrobot
  - eyes-keeper
  - eyes-keeper-emagged
+ - eyes-landmate
  - eyes-marina
+ + eyes-mediborg
  - eyes-medicalrobot
+ + eyes-minerborg
  - eyes-mommi
  - eyes-mommi-emagged
  - eyes-mommi-emaggedold
  - eyes-mommiold
- - eyes-mopgearrex: eyes-mopgearrex: 4 frames, 4 directions
- + eyes-mopgearrex: eyes-mopgearrex: 1 frames, 4 directions
+ - eyes-mopgearrex
  - eyes-robot
  - eyes-robot_old
+ + eyes-secborg
  - eyes-securityrobot
  + eyes-standard
- - eyes-surgeon: eyes-surgeon: 3 frames, 4 directions
- + eyes-surgeon: eyes-surgeon: 1 frames, 4 directions
+ - eyes-surgeon
+ + eyes-syndie_bloodhound
  - eyes-toiletbot: eyes-toiletbot: 3 frames, 4 directions
  + eyes-toiletbot: eyes-toiletbot: 1 frames, 4 directions
  + eyes_old
+ + janiborg
  - janitorrobot
  - keeper
+ - keeper-park
+ - landmate
  - marina
  - marina-heavyshading
  - marina-noshading
+ + mediborg
  - medicalrobot
+ + minerborg
  - mommi
+ - mommi-park
  - mommiold
+ - mopgearrex
+ + ninjaborg
  + ov-opencover +c
  + ov-opencover +w
  + ov-opencover -c
@@ -1098,10 +1671,25 @@
  - rowtree-medical
  - rowtree-security
  - securityrobot
+ + service_female
+ + service_male
  - spiderbot-chassis
  - spiderbot-chassis-mmi
  - spiderbot-chassis-posi
  - spiderbot-smashed
+ - surgeon
+ + syndie_bloodhound
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\robot_transformations.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\robot_transformations.dmi
+ + brobot
+ + engiborg
+ + janiborg
+ + maximillion
+ + mediborg
+ + minerborg
+ + secborg
+ + service_female
+ + service_male
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\screen_alien.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\screen_alien.dmi
  + act_drop
@@ -1290,6 +1878,13 @@
  + r_leg
  + reinforce
  + selector
+ + sting_blind
+ + sting_cryo
+ + sting_extract
+ + sting_lsd
+ + sting_mute
+ + sting_poison
+ + sting_transform
  + temp-2
  + temp-3
  + temp-4
@@ -1463,20 +2058,52 @@
  + zone_sel
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\suit.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\suit.dmi
+ - aeneasrinil
+ - aeneasrinil_open
+ - apron2
+ - apronchef2
+ - armor2
+ - armor_reflec2
  - armorsec
  - armorsec2
+ - bedsheet2
  - bio
  - bio2
+ - bio_cmo2
+ - bio_general2
+ - bio_janitor2
+ - bio_scientist2
+ - bio_security2
+ - bio_virology2
+ - bluetag2
+ - bombsuit2
+ - bombsuit2_white
  - bombsuitOld
  - bombsuitOld2
  - bombsuitsec
  - bombsuitsec2
+ - bombvest2
+ - bulletproof2
+ - caparmor2
  + capcarapace
- + capcarapace2
  - capjacket
  - capjacket2
+ - captunic2
+ - cardborg2
+ - centcom2
+ - cespace_suit2
+ - chaplain_hoodie2
+ - chef2
+ - chickensuit2
+ - cult_armour2
+ - cultrobes2
+ - cultrobesalt2
+ - deathsquad2
+ - detective-armor2
+ - detective2
  - deus_blueshield
  - deus_blueshield2
+ - engspace_suit2
  - ert_commander
  - ert_commander2
  - ert_engineer
@@ -1485,6 +2112,8 @@
  - ert_medical2
  - ert_security
  - ert_security2
+ - fire2
+ - firesuit2
  - forensics_blue
  - forensics_blue2
  - forensics_red
@@ -1493,58 +2122,156 @@
  - fr_jacket2
  - fr_jacket_open
  - fr_jacket_open2
+ - gentlecoat
+ - golem2
+ - hastur2
+ - hazard2
+ - heavy2
+ - hgpirate2
+ - holidaypriest2
+ - hos2
+ - hosbluejacket2
+ - hosdnavyjacket2
+ - hostanjacket2
  - ia_jacket
  - ia_jacket2
  - ia_jacket_open
  - ia_jacket_open2
+ - ianshirt2
+ - imperium_monk2
+ - jensencoat2
+ - judge2
+ - justice2
+ - labcoat2
  - labcoat_burnt
  - labcoat_burntZ
  - labcoat_burnt_open
  - labcoat_burnt_openZ
+ - labcoat_chem2
+ - labcoat_chem_open2
+ - labcoat_cmo2
+ - labcoat_cmo_open2
+ - labcoat_gen2
+ - labcoat_gen_open2
+ - labcoat_open2
+ - labcoat_tox2
+ - labcoat_tox_open2
+ - labcoat_vir2
+ - labcoat_vir_open2
+ - labgreen2
+ - labgreen_open2
+ - magusblue2
+ - magusred2
  - mantle-unathi
  - mantle-unathi2
+ - marisa2
+ - monkeysuit2
+ + nerdshirt
+ - nun2
  - officebluejacket
  + officerbluejacket
+ - officerbluejacket2
+ - officerdnavyjacket2
+ - officertanjacket2
+ - oldcaparmor2
+ - overalls2
  - paramedic-eva
  - paramedic-eva2
  - paramedic-vest
  - paramedic-vest-old
  - paramedic-vest2
  - paramedic-vest2-old
+ - pirate2
+ - plaguedoctor2
+ - poncho2
  - psyamp
  - psyamp2
+ - rad2
  - rad_old
  - rad_old2
+ - reactive2
+ - reactiveoff2
+ - redtag2
+ - redwizard2
  - rig-atmos
  - rig-atmos2
+ - rig-atmos_gold
+ - rig-atmos_gold2
  + rig-atmospherics
- + rig-atmospherics2
+ - rig-engineering2
+ - rig-medical2
+ - rig-mining2
  - rig-old
  - rig-old2
+ - rig-sec2
  - rig-sec2TG
  - rig-secTG
  - rig-soghun
  - rig-soghun2
+ - rig-syndi2
+ - rig-syndie-human
+ - rig-syndie-skrell
+ - rig-syndie-taj
+ - rig-syndie-unathi
+ - rig-taj
  - rig-unathi-cheap
  - rig-unathi-cheap2
+ - rig-white2
+ - rig-wiz2
+ - riot2
  - robe-unathi
  - robe-unathi2
+ - s-ninja2
+ - s-ninja2-old
+ - s-ninjak2
+ - s-ninjakf2
+ - s-ninjan2
+ - s-ninjanf2
  - s-ninjas
  - s-ninjas2
  - s-ninjasf
  - s-ninjasf2
+ - santa2
+ - skrell_suit_black
+ - skrell_suit_white
+ - space2
+ - straight_jacket2
  - stripper_g_over
  - stripper_g_over2
  - stripper_p_over
  - stripper_p_over2
+ - suitjacket_blue2
+ - suitjacket_blue_open2
+ - suitjacket_purp2
  - surgeon
  - surgeon2
  + surgical
- + surgical2
+ - suspenders2
+ - swat2
+ - syndicate-black-blue2
+ - syndicate-black-engie2
+ - syndicate-black-green2
+ - syndicate-black-med2
+ - syndicate-black-orange2
+ - syndicate-black-red2
+ - syndicate-black2
+ - syndicate-blue2
+ - syndicate-green-dark2
+ - syndicate-green2
+ - syndicate-orange2
+ - syndicate2
+ - tdgreen2
+ - tdred2
+ - thermal2
+ - unathi_breacher
+ - vest
+ - vest2
  - violetwizard
  - violetwizard2
+ - void2
  - vox-carapace
  - vox-carapace2
+ - vox-medic
  - vox-pressure
  - vox-pressure-engineer
  - vox-pressure-engineer2
@@ -1558,6 +2285,15 @@
  - vox-pressure-security2
  - vox-pressure-specops
  - vox-pressure2
+ - vox-stealth
+ - warden_jacket2
+ - wardenbluejacket2
+ - wardendnavyjacket2
+ - wardentanjacket2
+ - webbing2
+ - wizard-fake2
+ - wizard2
+ - xenos2
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\talk.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\talk.dmi
  - 
@@ -1571,6 +2307,11 @@
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\ties.dmi
  - altair_locket
  - altair_locket2
+ - bluetie2
+ - bronze2
+ - cargo2
+ - engie2
+ - gold2
  - holobadge
  - holobadge-cord
  - holobadge-cord2
@@ -1579,8 +2320,17 @@
  - holster2
  - holster_low
  - holster_low2
+ - horribletie2
+ - hydro2
  - konaahirano
  - konaahirano2
+ - med2
+ - medgreen2
+ - red2
+ - redtie2
+ - rnd2
+ - silver2
+ - stethoscope2
  - unathiharness0
  - unathiharness02
  - unathiharness1
@@ -1591,59 +2341,50 @@
  - vest_black2
  - vest_brown
  - vest_brown2
+ + waistcoat
  - webbing
  - webbing2
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\underwear.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\underwear.dmi
- + female_babyblue_l
  + female_babyblue_s
- + female_babydoll_l
  + female_babydoll_s
- + female_black_l
  + female_black_s
- + female_blue_l
  + female_blue_s
- + female_green_l
  + female_green_s
- + female_kinky_l
  + female_kinky_s
- + female_pink_l
  + female_pink_s
- + female_red_l
  + female_red_s
- + female_tankini_l
  + female_tankini_s
- + female_thong_l
  + female_thong_s
- + female_white_l
  + female_white_s
  + female_yellow_s
- + male_black_l
  + male_black_s
- + male_blackalt_l
  + male_blackalt_s
- + male_blue_l
  + male_blue_s
- + male_green_l
  + male_green_s
- + male_grey_l
  + male_grey_s
- + male_greyalt_l
  + male_greyalt_s
- + male_hearts_l
  + male_hearts_s
- + male_kinky_l
  + male_kinky_s
- + male_mankini_l
  + male_mankini_s
- + male_red_l
  + male_red_s
- + male_stripe_l
  + male_stripe_s
- + male_white_l
  + male_white_s
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\uniform.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\uniform.dmi
+ - aqua_l
+ - atmos_l
+ - ba_suit_l
+ - black_l
+ - black_suit_fem_l
+ - black_suit_l
+ - blackf_l
+ - blackshorts_l
+ - blackskirt_l
+ - blue_l
+ - blue_pyjamas_l
+ - blueshorts_l
+ - bluesuit_l
  - bride_blue_l
  - bride_blue_s
  - bride_orange_l
@@ -1656,12 +2397,28 @@
  - bride_white_s
  - bridesmaid_l
  - bridesmaid_s
+ - brown_l
  - callum_suit_l
  - callum_suit_s
  - captain_fly_l
  - captain_fly_s
+ - captain_l
+ - cargo_l
+ - cargotech_l
  - cdc_jumpsuit_l
  - cdc_jumpsuit_s
+ - centcom_l
+ - chapblack_l
+ - chef_l
+ - chemist_new_l
+ - chemistrywhite_l
+ - chief_l
+ - clown_l
+ - cmo_l
+ - darkblue_l
+ - darkred_l
+ - detective_l
+ - director_l
  - dispatch_l
  - dispatch_s
  - dress_cap_l
@@ -1680,54 +2437,123 @@
  - dress_rd_s
  - dress_saloon_l
  - dress_saloon_s
- + female_l
+ - engine_l
  + female_s
+ - forensicsred_l
+ - geneticist_new_l
+ - geneticswhite_l
+ - gladiator_l
+ - golem_l
+ - green_l
+ - green_suit_l
+ - greenshorts_l
+ - grey_l
+ - greyshorts_l
+ - hop_l
+ - hosblueclothes_l
+ - hosdnavyclothes_l
+ - hosred_l
+ - hosred_old_l
+ - hostanclothes_l
  - huresource_l
  - huresource_s
+ - hydroponics_l
  - internalaffairs_l
  - internalaffairs_s
  - jane_sid_suit_down_l
  - jane_sid_suit_down_s
  - jane_sid_suit_l
  - jane_sid_suit_s
+ - janitor_l
+ - jensen_l
  - jeremy_wolf_1_l
  - jeremy_wolf_1_s
+ - johnny_l
  - jumpsuitdown_l
  - jumpsuitdown_s
+ - kilt_l
+ - lawyer_black_l
+ - lawyer_blue_l
+ - lawyer_purp_l
+ - lawyer_red_l
+ - lightblue_l
+ - lightbrown_l
+ - lightgreen_l
+ - lightpurple_l
+ - lightred_l
+ - mailman_l
  - mankini_l
  - mankini_s
+ - maroon_l
+ - medical_l
+ - mime_l
+ - miner_l
  - nurse_l
  - nurse_s
+ - nursesuit_l
+ - officer_l
+ - officerblueclothes_l
+ - officerdnavyclothes_l
+ - officertanclothes_l
  - olddressuniform_l
  - olddressuniform_s
  - oldman_l
  - oldman_s
+ - orange_l
  - orderly_l
  - orderly_s
+ - overalls_l
+ - owl_l
  - paramedic_l
  - paramedic_l_old
  - paramedic_s
  - paramedic_s_old
+ - pink_l
+ - pirate_l
  - plaid_blue_l
  - plaid_blue_s
  - plaid_purple_l
  - plaid_purple_s
  - plaid_red_l
  - plaid_red_s
+ - psyche_l
  - psysuit_l
  - psysuit_s
  - purple_cheer_l
  - purple_cheer_s
+ - purple_l
+ - qm_l
+ - rainbow_l
+ + rdwhimsy_s
+ - really_black_suit_l
+ - red_l
+ - red_pyjamas_l
+ - red_suit_l
+ - redcoat_l
  - redshirt2_l
  - redshirt2_s
+ - redshorts_l
  - retpoluniform_l
  - retpoluniform_s
- + roman_l
- + roman_s
+ - robotics2_l
+ - robotics_l
+ - roman_l
+ - schoolgirl_l
+ - scientist_new_l
+ - scratch_l
+ - scrubsblue_l
+ - scrubsgreen_l
+ - scrubspurple_l
+ - secred_l
+ - sexyclown_l
+ - sexymime_l
+ - sl_suit_l
+ - soviet_l
  - stripper_g_l
  - stripper_g_s
  - stripper_p_l
  - stripper_p_s
+ - sundress_l
  - swim_black_l
  - swim_black_s
  - swim_blue_l
@@ -1738,20 +2564,36 @@
  - swim_purp_s
  - swim_red_l
  - swim_red_s
+ - syndicate_l
+ - tactifool_l
+ - teal_suit_l
  - tian_dress_l
  - tian_dress_s
+ - tourist_l
+ - toxinswhite_l
+ - vice_l
+ - virologist_new_l
+ - virologywhite_l
  - vox-casual-1_l
  - vox-casual-1_s
  - vox-casual-2_l
  - vox-casual-2_s
+ - waiter_l
+ - warden_l
+ - wardenblueclothes_l
+ - wardendnavy_l
+ - wardentanclothes_l
  - white_cheer_l
  - white_cheer_s
+ - white_l
  - white_suit_l
  - white_suit_s
  - wyatt_uniform_l
  - wyatt_uniform_s
  - yellow_cheer_l
  - yellow_cheer_s
+ - yellow_l
+ - yellowgreen_l
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\mob\zone_sel.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\zone_sel.dmi
  - l_foot
@@ -1774,6 +2616,12 @@
  + pai-off
  + pai-sad
  + pai-what
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\airlock_machines.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\airlock_machines.dmi
+ - access_button_build
+ - airlock_control_build0
+ - airlock_control_build1
+ - airlock_control_build2
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\ammo.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\ammo.dmi
  + 12mm-10
@@ -1809,6 +2657,7 @@
  - darts-3
  - darts-4
  - darts-5
+ + drum45
  + gshell-live
  - s-casing: s-casing: 1 frames, 4 directions
  + s-casing: s-casing: 1 frames, 8 directions
@@ -1834,6 +2683,12 @@
  + uzi45-8
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\assemblies.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\assemblies.dmi
+ + bigred
+ + bombcore
+ + clown-bomb-active
+ + clown-bomb-active-wires
+ + clown-bomb-inactive
+ + clown-bomb-inactive-wires
  + mmi_alien
  + mmi_alien_dead
  - posibrain
@@ -1843,6 +2698,10 @@
  + syndicate-bomb-active-wires
  + syndicate-bomb-inactive
  + syndicate-bomb-inactive-wires
+ + training-bomb-active
+ + training-bomb-active-wires
+ + training-bomb-inactive
+ + training-bomb-inactive-wires
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\atmos.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmos.dmi
  - aircond0
@@ -1850,6 +2709,9 @@
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\basketball.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\basketball.dmi
  + dodgeball
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\biogenerator.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\biogenerator.dmi
+ + biogen-empty-o
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\bureaucracy.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\bureaucracy.dmi
  + labeler_refill
@@ -1860,24 +2722,50 @@
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\card.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\card.dmi
  - centcom_old
+ - demote_chip
  + orange
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\chemical.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\chemical.dmi
- + beakerbluespace
- + beakernoreact
+ - beakerbluespace: beakerbluespace: 6 frames, 1 directions
+ + beakerbluespace: beakerbluespace: 4 frames, 1 directions
+ - beakerbluespacelarge
+ - beakernoreact: beakernoreact: 12 frames, 1 directions
+ + beakernoreact: beakernoreact: 18 frames, 1 directions
+ - beakernoreactlarge
+ - booze_dispenser
  - lid_beaker
+ - lid_beakerbluespace
  - lid_beakerlarge
+ - lid_beakernoreact
  - lid_bottle
  - lid_vial
+ + minidispenser
+ + minidispenser-o
+ - oldbeakerbluespace
+ - oldbeakernoreact
+ - soda_dispenser
  + waitlight
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\cigarettes.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\cigarettes.dmi
+ - cig filter
+ - cig paper
+ + cig_filter
+ + cig_paper
+ + cig_paper_pack
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\cloning.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\cloning.dmi
+ + pod_0_maintenance
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\closet.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\closet.dmi
- - cabinet_closed
- - cabinet_open
+ + atmos
  + critter
  + critteropen
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\computer.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\computer.dmi
+ - aac
+ - aac0
+ - aac_active
+ - aacb
  - alert:00
  - alert:10
  + alert:O
@@ -1898,10 +2786,49 @@
  + tcstationb
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\contraband.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\contraband.dmi
+ - bsposter1
+ - bsposter10
+ - bsposter11
+ - bsposter12
+ - bsposter13
+ - bsposter14
+ - bsposter15
+ - bsposter16
+ - bsposter17
+ - bsposter18
+ - bsposter19
+ - bsposter2
+ - bsposter20
+ - bsposter21
+ - bsposter22
+ - bsposter23
+ - bsposter24
+ - bsposter25
+ - bsposter26
+ - bsposter27
+ - bsposter28
+ - bsposter29
+ - bsposter3
+ - bsposter4
+ - bsposter5
+ - bsposter6
+ - bsposter7
+ - bsposter8
+ - bsposter9
+ - goldstar
  + poster11
+ + poster12
+ + poster13
+ + poster14
+ + poster15
+ + poster16
+ + poster17
+ + poster18
+ + poster19
+ + poster20
+ + poster21
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\Cryogenic2.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\Cryogenic2.dmi
- - 
  - body_scanner_0
  - body_scanner_1
  - body_scannerconsole
@@ -1935,12 +2862,14 @@
  - cryo_bottom_1
  - dither
  - dna_computer
+ + freezer-o
  - freezer_0
  - freezer_0old
  - freezer_1old
  - freezerold
  - freezerswitch(OFF)
  - freezerswitch(ON)
+ + heater-o
  - oxygen-c
  - oxygen-corig
  - plasma-c
@@ -1952,11 +2881,14 @@
  - scanner_0old
  - scanner_1
  - scanner_1old
+ + scanner_maintenance
  + scanner_occupied
  + scanner_open
+ + scanner_open_maintenance
  - scannerconsole
  - securitycamera
  + sleeper
+ + sleeper-o
  + sleeper-open
  - sleeper_0
  - sleeper_0-r
@@ -1975,18 +2907,35 @@
  - syndipod_1-r
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\cryogenics.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\cryogenics.dmi
+ + cell-o
+ - cell-occupied: cell-occupied: 5 frames, 1 directions
+ + cell-occupied: cell-occupied: 5 frames, 4 directions
+ - cell-off: cell-off: 1 frames, 1 directions
+ + cell-off: cell-off: 1 frames, 4 directions
+ - cell-on: cell-on: 5 frames, 1 directions
+ + cell-on: cell-on: 5 frames, 4 directions
+ + cell-open
  - cellold0
  - cellold1
  - cellold2
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\decals.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\decals.dmi
+ - direction_eng
+ - direction_evac
+ - direction_med
+ - direction_sci
+ - direction_sec
  - lifestar
+ + maltesefalcon-left
+ + maltesefalcon-right
  + map-left-MS
  + map-right-MS
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\device.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\device.dmi
+ - antibody
  - bunsen0
  - bunsen1
+ + camera_bug
  - dest_tagger
  - eftpos
  - forensic0-old
@@ -2081,19 +3030,34 @@
  + dicebag
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\drinks.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\drinks.dmi
+ - (mdr)grapejuice
  - absinthebottle
+ - absintheglass
  - barflask
+ - bigteacup
  - brownstar
+ - curacaoglass
  - detflask
+ - emeraldglass
+ - grapejuice
+ - grapesoda
+ - grenadinebottle
+ - grenadineglass
  - hot_coco
- + icedteaglass
  - icetea
  - kiraspecial
  - lemonade
+ - lemonadeglass
+ - lemonjuice
  - milkshake
+ - pwinebottle
+ - pwineglass
  - rewriter
+ - sdreamglass
  - teacup
  + teaglass
+ - vacuumflask
+ - waterbottle
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\economy.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\economy.dmi
  + coin__heads
@@ -2145,8 +3109,22 @@
  + berrymuffin
  - boiledrice
  + booberrymuffin
+ + cburger
  + chocolatebarunwrapped
+ + condi_cornoil
+ + condi_empty
+ + condi_empty2
+ + condi_frostoil
+ + condi_greygoo
+ + condi_hotsauce
+ + condi_ketchup
+ + condi_mixed
+ + condi_pepper
+ + condi_salt
+ + condi_soysauce
+ + condi_sugar
  + copypasta
+ - dionaroast
  - enchiladasold
  - honeycomb
  + hotdog
@@ -2158,17 +3136,32 @@
  + notasandwich
  - rice
  - rpudding
+ - sandwich_filling
+ - sandwich_top
+ + sashimi
  - spellburgerold
+ + spidereggs
+ + spidereggsham
+ + spiderleg
+ + spiderlegcooked
+ + spidermeat
+ + spidermeatbread
+ + spidermeatslice
+ - stuffing
  + sugarcookie
+ - tofurkey
  + wrap
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\grenade.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\grenade.dmi
  - chemg_primed
+ - ex_grenade
+ - ex_grenade_active
+ - ex_grenade_ass
+ - ex_grenade_locked
+ - ex_grenade_primed
  - large_grenade_primed
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\gun.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\gun.dmi
- + c20r-0-e
- + c20r-e
  - dartgun-0
  - dartgun-1
  - dartgun-2
@@ -2176,42 +3169,75 @@
  - dartgun-4
  - dartgun-5
  - dartgun-empty
- + deagle-e
- + deaglecamo-e
- + deagleg-e
- + detective_gold
- + detective_leopard
- + detective_panther
- + detective_peacemaker
- + mini-uzi-16
- + mini-uzi-16-e
- + mini-uzi-e
- + pistol-e
- + pistol-silencer-e
  - pneumatic
  - pneumatic-tank
  - pulse: pulse: 4 frames, 1 directions
  + pulse: pulse: 1 frames, 1 directions
- + saber-18
- + saber-18-e
- + saber-e
- + staffofanimation
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\harvest.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\harvest.dmi
  - 
+ + coffee_arabica
+ + coffee_robusta
  + crunchy
+ + gatfruit
  + glassy
  + grassclump
+ - mtear
+ - mtearp
  + mushy
  - plastellium
  - rice
  + rubbery
+ - shand
+ - shandp
  + slippery
  + soybeansOld
+ + stobacco_leaves
+ + tea_aspera_leaves
+ + tea_astra_leaves
+ + tobacco_leaves
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\hydroponics.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\hydroponics.dmi
  - ambrowip
+ + coffeea-dead
+ + coffeea-grow1
+ + coffeea-grow2
+ + coffeea-grow3
+ + coffeea-grow4
+ + coffeea-grow5
+ + coffeea-harvest
+ + coffeer-dead
+ + coffeer-grow1
+ + coffeer-grow2
+ + coffeer-grow3
+ + coffeer-grow4
+ + coffeer-grow5
+ + coffeer-harvest
  + corn-dead
+ + drying_rack
+ + drying_rack_drying
+ + drying_rack_filled
+ + drying_rack_on
+ + gatfruit-dead
+ + gatfruit-grow1
+ + gatfruit-grow2
+ + gatfruit-harvest
+ + hoses-0
+ + hoses-1
+ + hoses-10
+ + hoses-11
+ + hoses-12
+ + hoses-13
+ + hoses-14
+ + hoses-15
+ + hoses-2
+ + hoses-3
+ + hoses-4
+ + hoses-5
+ + hoses-6
+ + hoses-7
+ + hoses-8
+ + hoses-9
  + killertomato-dead
  - koibean-dead
  - koibean-grow1
@@ -2222,6 +3248,11 @@
  - koibean-grow6
  - koibean-harvest
  + mister
+ - mtear-grow1
+ - mtear-grow2
+ - mtear-grow3
+ - mtear-grow4
+ - mtear-harvest
  + novaflower-dead
  - plastellium-dead
  - plastellium-grow1
@@ -2234,8 +3265,36 @@
  - rice-grow4
  - rice-harvest
  - seedbag
+ - shand-grow1
+ - shand-grow2
+ - shand-grow3
+ - shand-harvest
  - soybean-grow5
  - soybean-grow6
+ + stobacco-dead
+ + stobacco-grow1
+ + stobacco-grow2
+ + stobacco-grow3
+ + stobacco-harvest
+ + teaaspera-dead
+ + teaaspera-grow1
+ + teaaspera-grow2
+ + teaaspera-grow3
+ + teaaspera-grow4
+ + teaaspera-grow5
+ + teaaspera-harvest
+ + teaastra-dead
+ + teaastra-grow1
+ + teaastra-grow2
+ + teaastra-grow3
+ + teaastra-grow4
+ + teaastra-grow5
+ + teaastra-harvest
+ + tobacco-dead
+ + tobacco-grow1
+ + tobacco-grow2
+ + tobacco-grow3
+ + tobacco-harvest
  + waterbackpack
  + xpod-dead
  + xpod-grow1
@@ -2256,6 +3315,7 @@
  - coin_diamond
  - coin_gold
  - coin_iron
+ - coin_phazon
  - coin_plasma
  - coin_silver
  - coin_string_overlay
@@ -2264,11 +3324,9 @@
  - gift1
  - gift2
  - gift3
- + nanoimplant
- + nanoimplant0
- + paint_violet
- + razor
  - rpd
+ - rsf
+ - rsf_gray
  - sheet-adamantine
  - sheet-clown
  - sheet-diamond
@@ -2282,12 +3340,6 @@
  - sheet-sandstone
  - sheet-silver
  - sheet-uranium
- + sheetcentcom
- + sheetcmo
- + sheetcult
- + sheetqm
- + sheetsyndie
- + sheetwiz
  - spacecash
  - spacecash10
  - spacecash100
@@ -2301,32 +3353,18 @@
  - traumakit
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\janitor.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\janitor.dmi
- + 4no_raisins
- + candy
- + cart
- + cart_garbage
- + cart_mop
- + cart_replacer
- + cart_sign1
- + cart_sign2
- + cart_sign3
- + cart_sign4
- + cart_spray
- + cheesie_honkers
- + chips
- + pistachios_pack
- + plate
- + popcorn
- + semki_pack
- + snack_bowl
- + sosjerky
- + syndi_cakes
- + trashbag0
- + trashbag1
- + trashbag2
- + trashbag3
- + tray
- + waffles
+ + cola
+ + dr_gibb
+ + energy_drink
+ + ice_tea_can
+ + lemon-lime
+ + purple_can
+ + sodawater
+ + space-up
+ + space_mountain_wind
+ + starkist
+ + thirteen_loko
+ + tonic
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\kitchen.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\kitchen.dmi
  + icecream_blue
@@ -2338,6 +3376,7 @@
  + icecream_vat
  - mcleaver
  - mcleaverblood
+ + mw-o
  - pfork
  - pknife
  - pspoon
@@ -2346,7 +3385,16 @@
  - analysis
  - anomaly
  + bookInfections
+ + bookbag
+ + bookblind
+ + bookcharge
  + bookempty
+ + bookfireball
+ + bookforcewall
+ + bookhorses
+ + bookknock
+ + bookmindswap
+ + booksmoke
  - chemistry
  - excavation
  - fax
@@ -2358,8 +3406,13 @@
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\lighting.dmi
  + slime
  + slime-on
+ + torch
+ + torch-empty
+ + torch-on
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\mining.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\mining.dmi
+ - Gibtonite ore 3: Gibtonite ore 3: 4 frames, 1 directions
+ + Gibtonite ore 3: Gibtonite ore 3: 4 frames, 4 directions
  + Phazon
  - Phazon ore
  - boulder1
@@ -2383,6 +3436,7 @@
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\module.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\module.dmi
  + airalarm_electronics
+ - planning frame
  + secmodschematic
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\objects.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\objects.dmi
@@ -2393,7 +3447,10 @@
  + borgdecon3
  - boxingbell: boxingbell: 1 frames, 1 directions
  + boxingbell: boxingbell: 1 frames, 4 directions
+ - coolanttank
+ - nymph
  + paint sprayer
+ - psychbed
  + servicebell
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\pda.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pda.dmi
@@ -2463,7 +3520,8 @@
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipe-item.dmi
  - cap
  - cap-f
- - dvalve
+ - dual-port vent
+ - injector
  - insulated_manifold
  - insulated_manifold4w
  - manifold4w
@@ -2485,17 +3543,31 @@
  + circ2-p
  + circ2-run
  + circ2-slow
+ + intact-b
+ + intact-b-f
+ + intact-c
+ + intact-c-f
+ + intact-g
+ + intact-g-f
+ + intact-p
+ + intact-p-f
+ + intact-r
+ + intact-r-f
+ + intact-y
+ + intact-y-f
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\power.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\power.dmi
+ + smes-o
  - teg: teg: 1 frames, 4 directions
  + teg: teg: 1 frames, 1 directions
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\projectiles.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\projectiles.dmi
- + blue_laser
- + green_laser
- + purple_laser
- + red_1
- + red_laser
+ - heavylaser: heavylaser: 1 frames, 8 directions
+ + heavylaser: heavylaser: 1 frames, 4 directions
+ - laser: laser: 1 frames, 8 directions
+ + laser: laser: 1 frames, 4 directions
+ - u_laser: u_laser: 2 frames, 8 directions
+ + u_laser: u_laser: 2 frames, 4 directions
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\radio.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\radio.dmi
  - intercom-frame
@@ -2514,6 +3586,9 @@
  - vial50
  - vial75
  - vial80
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\recycling.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\recycling.dmi
+ - new_conveyor1
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\robotics.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\robotics.dmi
  - fab-load-phazon
@@ -2532,15 +3607,28 @@
  - seed-alien3
  - seed-alien4
  - seed-appleold
+ + seed-coffeea
+ + seed-coffeer
+ + seed-gatfruit
  - seed-grapesLARGE
  - seed-greengrapesLARGE
  - seed-rice
+ + seed-stobacco
+ + seed-teaaspera
+ + seed-teaastra
+ + seed-tobacco
  + seed-xpod
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\stationobjs.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\stationobjs.dmi
  - coinpress0
  - coinpress1
+ + controller-o
+ + controller-old
+ + controller-p-old
  + dresser
+ - glassbox20
+ - glassbox21
+ - glassbox2b
  + minibar_left
  + minibar_right
  - morgue0: morgue0: 1 frames, 4 directions
@@ -2549,6 +3637,8 @@
  + morgue1: morgue1: 1 frames, 1 directions
  - morgue2: morgue2: 1 frames, 4 directions
  + morgue2: morgue2: 1 frames, 1 directions
+ + morgue3
+ + morgue4
  - morguet: morguet: 1 frames, 4 directions
  + morguet: morguet: 1 frames, 1 directions
  - nboard00: nboard00: 1 frames, 1 directions
@@ -2563,6 +3653,9 @@
  + nboard04: nboard04: 1 frames, 4 directions
  - nboard05: nboard05: 1 frames, 1 directions
  + nboard05: nboard05: 1 frames, 4 directions
+ + tele-o
+ + tele0-old
+ + tele1-old
  - telescreen: telescreen: 1 frames, 1 directions
  + telescreen: telescreen: 1 frames, 4 directions
  + telescreenOld
@@ -2576,12 +3669,6 @@
  - wrecharger1
  - wrecharger2
  - wrecharger3
---- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\statue.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\statue.dmi
- + corgi
- + human_female
- + human_male
- + monkey
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\status_display.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\status_display.dmi
  - ai_beer
@@ -2592,13 +3679,26 @@
  + ai_sal
  - ai_tribunal
  - ai_tribunal_malf
+ + entertainment_xmas
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\stock_parts.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\stock_parts.dmi
+ - box_glass
+ - box_glass_circuit
+ - capacitor2_adv
+ - capacitor2_basic
+ - capacitor2_super
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\storage.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\storage.dmi
  - advfirstaid
  + animate_largebins
  - critter
  - critteropen
+ - engicrate
+ - engicrateopen
+ - engisecurecrate
+ - engisecurecrateopen
  - excavation
+ - gadget_bag
  + giftcloset
  + giftcrate
  + giftcrate1
@@ -2608,6 +3708,8 @@
  + giftcrate5
  - idOld
  + largebino
+ - largebox
+ - largebox-deployed
  - largemetal
  - largemetalg
  - largemetalopen
@@ -2620,6 +3722,10 @@
  + pdabox
  - plasticcrate
  - plasticcrateopen
+ - scicrate
+ - scicrateopen
+ - scisecurecrate
+ - scisecurecrateopen
  - solution_trays
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\structures.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\structures.dmi
@@ -2665,16 +3771,6 @@
  - reinf_tabledir
  - reinf_tabledir2
  - reinf_tabledir3
- + reinftable
- + reinftable_1tileendtable
- + reinftable_1tilethick
- + reinftable_dir
- + reinftable_dir2
- + reinftable_dir3
- + reinftable_middle
- + table_dir
- + table_dir2
- + table_dir3
  - tabledir
  - tabledir2
  - tabledir3
@@ -2685,13 +3781,68 @@
  - wood_tabledir
  - wood_tabledir2
  - wood_tabledir3
- + woodtable
- + woodtable_1tileendtable
- + woodtable_1tilethick
- + woodtable_dir
- + woodtable_dir2
- + woodtable_dir3
- + woodtable_middle
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\suitstorage.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\suitstorage.dmi
+ + broken
+ + close
+ - derpplaceholder
+ + helm
+ + human
+ + open
+ + suit
+ - suitstorage000000100
+ - suitstorage000000101
+ - suitstorage000001100
+ - suitstorage000010100
+ - suitstorage000010101
+ - suitstorage000011100
+ - suitstorage000100000
+ - suitstorage000100001
+ - suitstorage000100010
+ - suitstorage000100011
+ - suitstorage000100100
+ - suitstorage000100101
+ - suitstorage000100110
+ - suitstorage000100111
+ - suitstorage001000100
+ - suitstorage001000101
+ - suitstorage001010100
+ - suitstorage001010101
+ - suitstorage001011100
+ - suitstorage001011101
+ - suitstorage010000100
+ - suitstorage010000101
+ - suitstorage010001100
+ - suitstorage010001101
+ - suitstorage010010100
+ - suitstorage010010101
+ - suitstorage010011100
+ - suitstorage010011101
+ - suitstorage010100100
+ - suitstorage010100101
+ - suitstorage100000100
+ - suitstorage100000101
+ - suitstorage100001100
+ - suitstorage100001101
+ - suitstorage100010100
+ - suitstorage100010101
+ - suitstorage100011100
+ - suitstorage100011101
+ - suitstorage100100100
+ - suitstorage100100101
+ - suitstorage110000100
+ - suitstorage110000101
+ - suitstorage110001100
+ - suitstorage110001101
+ - suitstorage110010100
+ - suitstorage110010101
+ - suitstorage110011100
+ - suitstorage110011101
+ - suitstorage110100100
+ - suitstorage110100101
+ + super
+ + uv
+ + uvhuman
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\surgery.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\surgery.dmi
  - autoclave
@@ -2700,9 +3851,15 @@
  + brain-old
  - brain1
  - brain2
+ + chest
  - fixovein
  - fixovein_old
+ + head
+ + l_arm
+ + l_leg
  + optable
+ + r_arm
+ + r_leg
  + saw-old
  - saw3
  - stabslash
@@ -2715,15 +3872,17 @@
  - autoinjector0
  - autoinjector1
  - broken
- + combat_hypo
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\tank.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\tank.dmi
  - emergency_nitrogen
+ + jetpack-mini
+ + jetpack-mini-on
  - jetpack-red
  - jetpack-red-on
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\telescience.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\telescience.dmi
- + bluespace_crystal
+ - gps-p
+ + pad-idle-o
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\terminals.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\terminals.dmi
  - atm
@@ -2731,15 +3890,153 @@
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\toy.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\toy.dmi
  + AI
+ + deck_nanotrasen_empty
+ + deck_nanotrasen_full
+ + deck_nanotrasen_half
+ + deck_nanotrasen_low
+ + deck_syndicate_empty
+ + deck_syndicate_full
+ + deck_syndicate_half
+ + deck_syndicate_low
+ + nanotrasen_hand1
+ + nanotrasen_hand2
+ + nanotrasen_hand3
+ + nanotrasen_hand4
+ + nanotrasen_hand5
+ + nuketoy
+ + nuketoycool
+ + nuketoyidle
+ + sc_ 6 of Diamonds_syndicate
+ + sc_10 of Clubs_nanotrasen
+ + sc_10 of Clubs_syndicate
+ + sc_10 of Diamonds_nanotrasen
+ + sc_10 of Diamonds_syndicate
+ + sc_10 of Hearts_nanotrasen
+ + sc_10 of Hearts_syndicate
+ + sc_10 of Spades_nanotrasen
+ + sc_10 of Spades_syndicate
+ + sc_2 of Clubs_nanotrasen
+ + sc_2 of Clubs_syndicate
+ + sc_2 of Diamonds_nanotrasen
+ + sc_2 of Diamonds_syndicate
+ + sc_2 of Hearts_nanotrasen
+ + sc_2 of Hearts_syndicate
+ + sc_2 of Spades_nanotrasen
+ + sc_2 of Spades_syndicate
+ + sc_3 of Clubs_nanotrasen
+ + sc_3 of Clubs_syndicate
+ + sc_3 of Diamonds_nanotrasen
+ + sc_3 of Diamonds_syndicate
+ + sc_3 of Hearts_nanotrasen
+ + sc_3 of Hearts_syndicate
+ + sc_3 of Spades_nanotrasen
+ + sc_3 of Spades_syndicate
+ + sc_4 of Clubs_nanotrasen
+ + sc_4 of Clubs_syndicate
+ + sc_4 of Diamonds_nanotrasen
+ + sc_4 of Diamonds_syndicate
+ + sc_4 of Hearts_nanotrasen
+ + sc_4 of Hearts_syndicate
+ + sc_4 of Spades_nanotrasen
+ + sc_4 of Spades_syndicate
+ + sc_5 of Clubs_nanotrasen
+ + sc_5 of Clubs_syndicate
+ + sc_5 of Diamonds_nanotrasen
+ + sc_5 of Diamonds_syndicate
+ + sc_5 of Hearts_nanotrasen
+ + sc_5 of Hearts_syndicate
+ + sc_5 of Spades_nanotrasen
+ + sc_5 of Spades_syndicate
+ + sc_6 of Clubs_nanotrasen
+ + sc_6 of Clubs_syndicate
+ + sc_6 of Diamonds_nanotrasen
+ + sc_6 of Hearts_nanotrasen
+ + sc_6 of Hearts_syndicate
+ + sc_6 of Spades_nanotrasen
+ + sc_6 of Spades_syndicate
+ + sc_7 of Clubs_nanotrasen
+ + sc_7 of Clubs_syndicate
+ + sc_7 of Diamonds_nanotrasen
+ + sc_7 of Diamonds_syndicate
+ + sc_7 of Hearts_nanotrasen
+ + sc_7 of Hearts_syndicate
+ + sc_7 of Spades_nanotrasen
+ + sc_7 of Spades_syndicate
+ + sc_8 of Clubs_nanotrasen
+ + sc_8 of Clubs_syndicate
+ + sc_8 of Diamonds_nanotrasen
+ + sc_8 of Diamonds_syndicate
+ + sc_8 of Hearts_nanotrasen
+ + sc_8 of Hearts_syndicate
+ + sc_8 of Spades_nanotrasen
+ + sc_8 of Spades_syndicate
+ + sc_9 of Clubs_nanotrasen
+ + sc_9 of Clubs_syndicate
+ + sc_9 of Diamonds_nanotrasen
+ + sc_9 of Diamonds_syndicate
+ + sc_9 of Hearts_nanotrasen
+ + sc_9 of Hearts_syndicate
+ + sc_9 of Spades_nanotrasen
+ + sc_9 of Spades_syndicate
+ + sc_Ace of Clubs_nanotrasen
+ + sc_Ace of Clubs_syndicate
+ + sc_Ace of Diamonds_nanotrasen
+ + sc_Ace of Diamonds_syndicate
+ + sc_Ace of Hearts_nanotrasen
+ + sc_Ace of Hearts_syndicate
+ + sc_Ace of Spades_nanotrasen
+ + sc_Ace of Spades_syndicate
+ + sc_Jack of Clubs_nanotrasen
+ + sc_Jack of Clubs_syndicate
+ + sc_Jack of Diamonds_nanotrasen
+ + sc_Jack of Diamonds_syndicate
+ + sc_Jack of Hearts_nanotrasen
+ + sc_Jack of Hearts_syndicate
+ + sc_Jack of Spades_nanotrasen
+ + sc_Jack of Spades_syndicate
+ + sc_Kind of Diamonds_syndicate
+ + sc_King of Clubs_nanotrasen
+ + sc_King of Clubs_syndicate
+ + sc_King of Diamonds_nanotrasen
+ + sc_King of Hearts_nanotrasen
+ + sc_King of Hearts_syndicate
+ + sc_King of Spades_nanotrasen
+ + sc_King of Spades_syndicate
+ + sc_Queen of Clubs_nanotrasen
+ + sc_Queen of Clubs_syndicate
+ + sc_Queen of Diamonds_nanotrasen
+ + sc_Queen of Diamonds_syndicate
+ + sc_Queen of Hearts_nanotrasen
+ + sc_Queen of Hearts_syndicate
+ + sc_Queen of Spades_nanotrasen
+ + sc_Queen of Spades_syndicate
+ + singlecard_down_nanotrasen
+ + singlecard_down_syndicate
+ + syndicate_hand1
+ + syndicate_hand2
+ + syndicate_hand3
+ + syndicate_hand4
+ + syndicate_hand5
  - therapyblue
  - therapygreen
  - therapyorange
  - therapypurple
  - therapyred
  - therapyyellow
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\turrets.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\turrets.dmi
+ + syndieturret0
+ + syndieturret1
+ + syndieturret2
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\vehicles.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\vehicles.dmi
+ - gokart0
+ - gokart1
+ - gokart_keys
+ - jani_keys
+ - magic_keys
  - pussywagon_destroyed
+ - wizmobile
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\vending.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\vending.dmi
  - Theater
@@ -2755,11 +4052,14 @@
  + sustenance
  + sustenance-broken
  + sustenance-off
- + theater
- + theater-broken
- + theater-deny
- + theater-off
- + theater-panel
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\vending_restock.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\vending_restock.dmi
+ + refill_booze
+ + refill_cola
+ + refill_costume
+ + refill_joe
+ + refill_smoke
+ + refill_snack
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\virology.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\virology.dmi
  - centrifuge
@@ -2769,6 +4069,7 @@
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\weapons.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\weapons.dmi
  - Paddle_wield
+ + arm_blade
  - bolt
  - butcherknife
  - crossbow
@@ -2809,10 +4110,15 @@
  + mjollnir1
  - paddle_lefthand
  - paddle_righthand
+ + proboscis
  - quill
- + roman_shield
- + spearglass0
- + spearglass1
+ + sting_blind
+ + sting_cryo
+ + sting_extract
+ + sting_lsd
+ + sting_mute
+ + sting_poison
+ + sting_transform
  - stun baton
  - stun baton_active
  - stun baton_nocell
@@ -2873,42 +4179,76 @@
  - intact_on_old
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\atmospherics\pipe_manifold.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\pipe_manifold.dmi
+ + manifold-b
+ + manifold-b-f
+ + manifold-c
+ + manifold-c-f
+ + manifold-f
+ + manifold-g
+ + manifold-g-f
+ + manifold-p
+ + manifold-p-f
+ + manifold-r
+ + manifold-r-f
+ + manifold-y
+ + manifold-y-f
+ + manifold4w-b
+ + manifold4w-b-f
+ + manifold4w-c
+ + manifold4w-c-f
+ + manifold4w-f
+ + manifold4w-g
+ + manifold4w-g-f
+ + manifold4w-p
+ + manifold4w-p-f
+ + manifold4w-r
+ + manifold4w-r-f
+ + manifold4w-y
+ + manifold4w-y-f
  - manifold4w_con
  - manifold4w_ex
+ + manifold_10_1
+ + manifold_10_4
+ + manifold_12_1
+ + manifold_12_2
+ + manifold_1_10
+ + manifold_1_12
+ + manifold_1_6
+ + manifold_2_12
+ + manifold_2_5
+ + manifold_2_9
+ + manifold_3_4
+ + manifold_3_8
+ + manifold_4_10
+ + manifold_4_3
+ + manifold_4_9
+ + manifold_5_2
+ + manifold_5_8
+ + manifold_6_1
+ + manifold_6_8
+ + manifold_8_3
+ + manifold_8_5
+ + manifold_8_6
+ + manifold_9_2
+ + manifold_9_4
+ - manifold_con
+ - manifold_con_ex
+ - manifold_ex
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\atmospherics\portables_connector.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\portables_connector.dmi
  - 
  - exposed_old
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\atmospherics\red_pipe.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\red_pipe.dmi
- - manifold
- - manifold-f
- - manifold4w
- - manifold4w-f
- - manifold_10_1
- - manifold_10_4
- - manifold_12_1
- - manifold_12_2
- - manifold_1_10
- - manifold_1_12
- - manifold_1_6
- - manifold_2_12
- - manifold_2_5
- - manifold_2_9
- - manifold_3_4
- - manifold_3_8
- - manifold_4_10
- - manifold_4_3
- - manifold_4_9
- - manifold_5_2
- - manifold_5_8
- - manifold_6_1
- - manifold_6_8
- - manifold_8_3
- - manifold_8_5
- - manifold_8_6
- - manifold_9_2
- - manifold_9_4
+ + 
+ + exposed
+ + exposed-f
+ + exposed01
+ + exposed01-f
+ + exposed10
+ + exposed10-f
+ + intact
+ + intact-f
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\atmospherics\red_white_pipe_tank.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\red_white_pipe_tank.dmi
  + 
@@ -2939,28 +4279,64 @@
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\clothing\hats.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\hats.dmi
  - amp
+ + blacksoft
+ + blacksoft_flipped
+ + bluetaghelm
  - centcomcaptain
  - centcomofficerberet
+ - corpsoft
+ - corpsoft_flipped
+ - detective2
+ - e_beret_badge
  - ert_commander
  - ert_engineer
  - ert_medical
  - ert_security
+ + fedora
+ - gentcap
  - hairflower
+ + hardhat0_reindeer
+ + hardhat1_reindeer
+ + kittyinner
  - krinn_hat
  - paramedic-eva-helmet
+ - paramedicsoft
+ - paramedicsoft_flipped
+ + redtaghelm
  - rig0-atmos
+ - rig0-atmos_gold
  + rig0-atmospherics
+ - rig0-ert_commander
+ - rig0-ert_engineer
+ - rig0-ert_medical
+ - rig0-ert_security
  - rig0-secTG
+ - rig0-syndie-human
+ - rig0-syndie-skrell
+ - rig0-syndie-taj
+ - rig0-syndie-unathi
+ - rig0-taj-helmet
  - rig1-atmos
  + rig1-atmospherics
+ - rig1-ert_commander
+ - rig1-ert_engineer
+ - rig1-ert_medical
+ - rig1-ert_security
  - rig1-secTG
- + roman
- + roman_c
+ - rig1-syndie-human
+ - rig1-syndie-skrell
+ - rig1-syndie-taj
+ - rig1-syndie-unathi
+ - rig1-taj-helmet
+ - skrell_helmet_black
+ - skrell_helmet_white
  - surgcap_blue
  - surgcap_green
  - surgcap_purple
+ - unathi_breacher
  - unathi_helm_cheap
  - vox-carapace
+ - vox-medic
  - vox-pressure
  - vox-pressure-engineer
  - vox-pressure-medical
@@ -2968,23 +4344,24 @@
  - vox-pressure-science
  - vox-pressure-security
  - vox-pressure-specops
+ - vox-stealth
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\clothing\masks.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\masks.dmi
  - breathdown
- + gag
- + hailer_black
- + hailer_blue
- + hailer_red
- + hailer_white
+ + hosmask
+ + officermask
+ + roach
+ + spliffoff
+ + spliffon
  - tooth-necklace
  - voxmask
+ + wardenmask
  + weldingmask
  + weldingmaskup
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\clothing\shoes.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\shoes.dmi
  - boots-vox
  - leather
- + roman
  - slippers
  - slippers_worn
  - swat
@@ -2992,8 +4369,10 @@
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\suits.dmi
  - armalis_armour
  - armorsec
+ - atmosfiresuit
  + capcarapace
  - capjacket
+ - detective2
  - ert_commander
  - ert_engineer
  - ert_medical
@@ -3002,22 +4381,35 @@
  - forensics_red
  - fr_jacket
  - fr_jacket_open
+ - gentlecoat
  - ia_jacket
  - ia_jacket_open
  - mantle-unathi
+ + nerdshirt
  - paramedic-eva
  - paramedic-vest
  - paramedic-vest-old
  - psyamp
  - rig-atmos
+ - rig-atmos_gold
  + rig-atmospherics
  - rig-secTG
  - rig-soghun
+ - rig-syndie-human
+ - rig-syndie-skrell
+ - rig-syndie-taj
+ - rig-syndie-unathi
+ - rig-taj
  - rig-unathi-cheap
  - robe-unathi
  - s-ninjas
  - s-ninjasf
+ - skrell_suit_black
+ - skrell_suit_white
+ - unathi_breacher
+ - vest
  - vox-carapace
+ - vox-medic
  - vox-pressure
  - vox-pressure-engineer
  - vox-pressure-medical
@@ -3025,6 +4417,7 @@
  - vox-pressure-science
  - vox-pressure-security
  - vox-pressure-specops
+ - vox-stealth
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\clothing\ties.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\ties.dmi
  - holobadge
@@ -3035,6 +4428,7 @@
  - unathiharness2
  - vest_black
  - vest_brown
+ + waistcoat
  - webbing
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\clothing\uniforms.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\uniforms.dmi
@@ -3045,6 +4439,7 @@
  - bride_white
  - callum_suit
  - captain_fly
+ - detective2
  - dispatch
  - dress_cap
  - dress_fire
@@ -3055,6 +4450,9 @@
  - dress_rd
  - dress_saloon
  - dress_yellow
+ - gentlesuit
+ - hopwhimsy
+ - hos_corporate
  - huresource
  - internalaffairs
  - mankini
@@ -3062,12 +4460,16 @@
  - oldman
  - orderly
  - paramedic
+ - paramedic_old
  - plaid_blue
  - plaid_purple
  - plaid_red
+ - polsuit
  - psysuit
+ - rdalt
+ + rdwhimsy
  - redshirt2
- + roman
+ - sec_corporate
  - stripper_g
  - stripper_p
  - swim_black
@@ -3077,6 +4479,7 @@
  - swim_red
  - vox-casual-1
  - vox-casual-2
+ - warden_corporate
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\doors\blastdoor.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\doors\blastdoor.dmi
  + closed
@@ -3099,6 +4502,9 @@
  + closing
  + open
  + opening
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\flora\pinetrees.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\flora\pinetrees.dmi
+ + festivus_pole
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\flora\plants.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\flora\plants.dmi
  + applebush
@@ -3130,6 +4536,7 @@
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\machines\antimatter.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\machines\antimatter.dmi
  - control_critical
+ + core
  - core0
  - core1
  - coreshield_1
@@ -3145,7 +4552,6 @@
  - coreshield_7
  - coreshield_8
  - coreshield_9
- - jar-new
  - shield_11
  - shield_12
  - shield_13
@@ -3153,17 +4559,16 @@
  - shield_15
  - shield_3
  - shield_7
---- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\machines\particle_accelerator.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\machines\particle_accelerator.dmi
- + control_boxp3
- + emitter_centerp3
- + emitter_leftp3
- + emitter_rightp3
- + end_capp3
- + fuel_chamberp3
- + power_boxp3
+ + shielding
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\machines\mining_machines.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\machines\mining_machines.dmi
+ - unloader: unloader: 3 frames, 1 directions
+ + unloader: unloader: 3 frames, 4 directions
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\machines\research.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\machines\research.dmi
+ - circuit_imprinter_link
+ - d_analyzer_link
+ - protolathe_link
  + tdoppler
  + tdoppler-broken
  + tdoppler-off
@@ -3176,27 +4581,30 @@
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\pipes\large.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi
  C:\Users\Rob\Documents\Projects\tgstation\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 133, in compare
-    theirsDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 165, in loadMetadata
-    self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 173, in load
+  File "tools/OpenBYOND/src/DMITool.py", line 146, in compare
+    theirsDMI.loadAll()
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 194, in loadAll
+    self.load(flags)
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 197, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
  C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
-  File "tools/OpenBYOND/src/DMITool.py", line 149, in compare
+  File "tools/OpenBYOND/src/DMITool.py", line 162, in compare
     mineDMI.loadMetadata()
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 165, in loadMetadata
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 191, in loadMetadata
     self.load(flags | DMILoadFlags.NoImages)
-  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 173, in load
+  File "C:\Users\Rob\Documents\Projects\vgstation13\tools\OpenBYOND\src\com\byond\DMI\__init__.py", line 197, in load
     self.img = Image.open(self.filename)
   File "C:\Python33\lib\site-packages\PIL\Image.py", line 1996, in open
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
+--- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\pipes\transit_tube.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\transit_tube.dmi
+ + Block
 --- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\power_cond\power_cond_blue.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\power_cond\power_cond_blue.dmi
  + 0-1
@@ -3271,669 +4679,3 @@ OSError: cannot identify image file
  + 8-9-f
  + 9-10
  + 9-10-f
---- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\power_cond\power_cond_cyan.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\power_cond\power_cond_cyan.dmi
- + 0-1
- + 0-1-f
- + 0-10
- + 0-10-f
- + 0-2
- + 0-2-f
- + 0-4
- + 0-4-f
- + 0-5
- + 0-5-f
- + 0-6
- + 0-6-f
- + 0-8
- + 0-8-f
- + 0-9
- + 0-9-f
- + 1-10
- + 1-10-f
- + 1-2
- + 1-2-f
- + 1-4
- + 1-4-f
- + 1-5
- + 1-5-f
- + 1-6
- + 1-6-f
- + 1-8
- + 1-8-f
- + 1-9
- + 1-9-f
- + 2-10
- + 2-10-f
- + 2-4
- + 2-4-f
- + 2-5
- + 2-5-f
- + 2-6
- + 2-6-f
- + 2-8
- + 2-8-f
- + 2-9
- + 2-9-f
- + 4-10
- + 4-10-f
- + 4-5
- + 4-5-f
- + 4-6
- + 4-8
- + 4-8-f
- + 4-9
- + 4-9-f
- + 5-10
- + 5-10-f
- + 5-6
- + 5-6-f
- + 5-8
- + 5-8-f
- + 5-9
- + 5-9-f
- + 6-10
- + 6-10-f
- + 6-8
- + 6-8-f
- + 6-9
- + 6-9-f
- + 8-10
- + 8-10-f
- + 8-9
- + 8-9-f
- + 9-10
- + 9-10-f
---- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\power_cond\power_cond_green.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\power_cond\power_cond_green.dmi
- + 0-1
- + 0-1-f
- + 0-10
- + 0-10-f
- + 0-2
- + 0-2-f
- + 0-4
- + 0-4-f
- + 0-5
- + 0-5-f
- + 0-6
- + 0-6-f
- + 0-8
- + 0-8-f
- + 0-9
- + 0-9-f
- + 1-10
- + 1-10-f
- + 1-2
- + 1-2-f
- + 1-4
- + 1-4-f
- + 1-5
- + 1-5-f
- + 1-6
- + 1-6-f
- + 1-8
- + 1-8-f
- + 1-9
- + 1-9-f
- + 2-10
- + 2-10-f
- + 2-4
- + 2-4-f
- + 2-5
- + 2-5-f
- + 2-6
- + 2-6-f
- + 2-8
- + 2-8-f
- + 2-9
- + 2-9-f
- + 4-10
- + 4-10-f
- + 4-5
- + 4-5-f
- + 4-6
- + 4-6-f
- + 4-8
- + 4-8-f
- + 4-9
- + 4-9-f
- + 5-10
- + 5-10-f
- + 5-6
- + 5-6-f
- + 5-8
- + 5-8-f
- + 5-9
- + 5-9-f
- + 6-10
- + 6-10-f
- + 6-8
- + 6-8-f
- + 6-9
- + 6-9-f
- + 8-10
- + 8-10-f
- + 8-9
- + 8-9-f
- + 9-10
- + 9-10-f
---- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\power_cond\power_cond_heavy.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\power_cond\power_cond_heavy.dmi
- + 0-1
- + 0-2
- + 0-4
- + 0-8
- + 1-2
- + 1-2-4
- + 1-2-4-8
- + 1-2-8
- + 1-4
- + 1-4-8
- + 1-8
- + 2-4
- + 2-8
- + 4-8
- + node
---- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\power_cond\power_cond_orange.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\power_cond\power_cond_orange.dmi
- + 0-1
- + 0-1-f
- + 0-10
- + 0-10-f
- + 0-2
- + 0-2-f
- + 0-4
- + 0-4-f
- + 0-5
- + 0-5-f
- + 0-6
- + 0-6-f
- + 0-8
- + 0-8-f
- + 0-9
- + 0-9-f
- + 1-10
- + 1-10-f
- + 1-2
- + 1-2-f
- + 1-4
- + 1-4-f
- + 1-5
- + 1-5-f
- + 1-6
- + 1-6-f
- + 1-8
- + 1-8-f
- + 1-9
- + 1-9-f
- + 2-10
- + 2-10-f
- + 2-4
- + 2-4-f
- + 2-5
- + 2-5-f
- + 2-6
- + 2-6-f
- + 2-8
- + 2-8-f
- + 2-9
- + 2-9-f
- + 4-10
- + 4-10-f
- + 4-5
- + 4-5-f
- + 4-6
- + 4-6-f
- + 4-8
- + 4-8-f
- + 4-9
- + 4-9-f
- + 5-10
- + 5-10-f
- + 5-6
- + 5-6-f
- + 5-8
- + 5-8-f
- + 5-9
- + 5-9-f
- + 6-10
- + 6-10-f
- + 6-8
- + 6-8-f
- + 6-9
- + 6-9-f
- + 8-10
- + 8-10-f
- + 8-9
- + 8-9-f
- + 9-10
- + 9-10-f
---- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\power_cond\power_cond_pink.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\power_cond\power_cond_pink.dmi
- + 0-1
- + 0-1-f
- + 0-10
- + 0-10-f
- + 0-2
- + 0-2-f
- + 0-4
- + 0-4-f
- + 0-5
- + 0-5-f
- + 0-6
- + 0-6-f
- + 0-8
- + 0-8-f
- + 0-9
- + 0-9-f
- + 1-10
- + 1-10-f
- + 1-2
- + 1-2-f
- + 1-4
- + 1-4-f
- + 1-5
- + 1-5-f
- + 1-6
- + 1-6-f
- + 1-8
- + 1-8-f
- + 1-9
- + 1-9-f
- + 2-10
- + 2-10-f
- + 2-4
- + 2-4-f
- + 2-5
- + 2-5-f
- + 2-6
- + 2-6-f
- + 2-8
- + 2-8-f
- + 2-9
- + 2-9-f
- + 4-10
- + 4-10-f
- + 4-5
- + 4-5-f
- + 4-6
- + 4-6-f
- + 4-8
- + 4-8-f
- + 4-9
- + 4-9-f
- + 5-10
- + 5-10-f
- + 5-6
- + 5-6-f
- + 5-8
- + 5-8-f
- + 5-9
- + 5-9-f
- + 6-10
- + 6-10-f
- + 6-8
- + 6-8-f
- + 6-9
- + 6-9-f
- + 8-10
- + 8-10-f
- + 8-9
- + 8-9-f
- + 9-10
- + 9-10-f
---- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\power_cond\power_cond_red.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\power_cond\power_cond_red.dmi
- + 0-1
- + 0-1-f
- + 0-10
- + 0-10-f
- + 0-2
- + 0-2-f
- + 0-4
- + 0-4-f
- + 0-5
- + 0-5-f
- + 0-6
- + 0-6-f
- + 0-8
- + 0-8-f
- + 0-9
- + 0-9-f
- + 1-10
- + 1-10-f
- + 1-2
- + 1-2-f
- + 1-4
- + 1-4-f
- + 1-5
- + 1-5-f
- + 1-6
- + 1-6-f
- + 1-8
- + 1-8-f
- + 1-9
- + 1-9-f
- + 2-10
- + 2-10-f
- + 2-4
- + 2-4-f
- + 2-5
- + 2-5-f
- + 2-6
- + 2-6-f
- + 2-8
- + 2-8-f
- + 2-9
- + 2-9-f
- + 4-10
- + 4-10-f
- + 4-5
- + 4-5-f
- + 4-6
- + 4-6-f
- + 4-8
- + 4-8-f
- + 4-9
- + 4-9-f
- + 5-10
- + 5-10-f
- + 5-6
- + 5-6-f
- + 5-8
- + 5-8-f
- + 5-9
- + 5-9-f
- + 6-10
- + 6-10-f
- + 6-8
- + 6-8-f
- + 6-9
- + 6-9-f
- + 8-10
- + 8-10-f
- + 8-9
- + 8-9-f
- + 9-10
- + 9-10-f
---- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\power_cond\power_cond_white.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\power_cond\power_cond_white.dmi
- + 0-1
- + 0-1-f
- + 0-10
- + 0-10-f
- + 0-2
- + 0-2-f
- + 0-4
- + 0-4-f
- + 0-5
- + 0-5-f
- + 0-6
- + 0-6-f
- + 0-8
- + 0-8-f
- + 0-9
- + 0-9-f
- + 1-10
- + 1-10-f
- + 1-2
- + 1-2-f
- + 1-4
- + 1-4-f
- + 1-5
- + 1-5-f
- + 1-6
- + 1-6-f
- + 1-8
- + 1-8-f
- + 1-9
- + 1-9-f
- + 2-10
- + 2-10-f
- + 2-4
- + 2-4-f
- + 2-5
- + 2-5-f
- + 2-6
- + 2-6-f
- + 2-8
- + 2-8-f
- + 2-9
- + 2-9-f
- + 4-10
- + 4-10-f
- + 4-5
- + 4-5-f
- + 4-6
- + 4-6-f
- + 4-8
- + 4-8-f
- + 4-9
- + 4-9-f
- + 5-10
- + 5-10-f
- + 5-6
- + 5-6-f
- + 5-8
- + 5-8-f
- + 5-9
- + 5-9-f
- + 6-10
- + 6-10-f
- + 6-8
- + 6-8-f
- + 6-9
- + 6-9-f
- + 8-10
- + 8-10-f
- + 8-9
- + 8-9-f
- + 9-10
- + 9-10-f
---- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\power_cond\power_cond_yellow.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\power_cond\power_cond_yellow.dmi
- + 0-1
- + 0-1-f
- + 0-10
- + 0-10-f
- + 0-2
- + 0-2-f
- + 0-4
- + 0-4-f
- + 0-5
- + 0-5-f
- + 0-6
- + 0-6-f
- + 0-8
- + 0-8-f
- + 0-9
- + 0-9-f
- + 1-10
- + 1-10-f
- + 1-2
- + 1-2-f
- + 1-4
- + 1-4-f
- + 1-5
- + 1-5-f
- + 1-6
- + 1-6-f
- + 1-8
- + 1-8-f
- + 1-9
- + 1-9-f
- + 2-10
- + 2-10-f
- + 2-4
- + 2-4-f
- + 2-5
- + 2-5-f
- + 2-6
- + 2-6-f
- + 2-8
- + 2-8-f
- + 2-9
- + 2-9-f
- + 4-10
- + 4-10-f
- + 4-5
- + 4-5-f
- + 4-6
- + 4-6-f
- + 4-8
- + 4-8-f
- + 4-9
- + 4-9-f
- + 5-10
- + 5-10-f
- + 5-6
- + 5-6-f
- + 5-8
- + 5-8-f
- + 5-9
- + 5-9-f
- + 6-10
- + 6-10-f
- + 6-8
- + 6-8-f
- + 6-9
- + 6-9-f
- + 8-10
- + 8-10-f
- + 8-9
- + 8-9-f
- + 9-10
- + 9-10-f
---- C:\Users\Rob\Documents\Projects\tgstation\icons\obj\power_cond\power_local.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\power_cond\power_local.dmi
- + 0-1
- + 0-10
- + 0-2
- + 0-4
- + 0-5
- + 0-6
- + 0-8
- + 0-9
- + 1-10
- + 1-2
- + 1-4
- + 1-5
- + 1-6
- + 1-8
- + 1-9
- + 2-10
- + 2-4
- + 2-5
- + 2-6
- + 2-8
- + 2-9
- + 4-10
- + 4-5
- + 4-6
- + 4-8
- + 4-9
- + 5-10
- + 5-6
- + 5-8
- + 5-9
- + 6-10
- + 6-8
- + 6-9
- + 8-10
- + 8-9
- + 9-10
---- C:\Users\Rob\Documents\Projects\tgstation\icons\turf\areas.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\areas.dmi
- - anog
- - anolab
- - anomaly
- - anosample
- - anospectro
- - honk
- - iso1
- - iso2
- - iso3
- + meeting
- - radiation
- + telesci
- - xenocell1
- - xenocell2
- - xenocell3
- - xenocell4
- - xenocell5
- - xenocell6
---- C:\Users\Rob\Documents\Projects\tgstation\icons\turf\floors.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\floors.dmi
- - 1
- - 17
- - 22
- - bcarpet01
- - bcarpet02
- - bcarpet03
- - bcarpet04
- - bcarpet05
- - bcarpet06
- - bcarpet07
- - bcarpet08
- - bcarpet09
- - checker
- - concrete
- - enginebot
- - enginedelivery
- - engineloadingarea
- - enginewarn
- - enginewarncorner
- - rampbottom
- - ramptop
- + recharge_floor
- + recharge_floor_asteroid
- - snow
- - vault-border
---- C:\Users\Rob\Documents\Projects\tgstation\icons\turf\shuttle.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\shuttle.dmi
- - vcorner1
- - vcorner2
- - vcorner3
- - vcorner4
- - vfloor
- - vwall0
- - vwall1
- - vwall12
- - vwall2
- - vwall3
- - vwall4
- - vwall8
- - vwall_f10
- - vwall_f5
- - vwall_f6
- - vwall_f9
- - vwallc1
- - vwallc2
- - vwallc3
- - vwallc4
---- C:\Users\Rob\Documents\Projects\tgstation\icons\turf\space.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\space.dmi
- - debug-east
- - debug-north
---- C:\Users\Rob\Documents\Projects\tgstation\icons\turf\walls.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\walls.dmi
- - fakewindows2: fakewindows2: 1 frames, 4 directions
- + fakewindows2: fakewindows2: 1 frames, 8 directions
- - overlay_archaeo1
- - overlay_archaeo2
- - overlay_archaeo3
- - overlay_excv1_1
- - overlay_excv1_2
- - overlay_excv1_3
- - overlay_excv2_1
- - overlay_excv2_2
- - overlay_excv2_3
- - overlay_excv3_1
- - overlay_excv3_2
- - overlay_excv3_3
- - overlay_excv4_1
- - overlay_excv4_2
- - overlay_excv4_3
- - rock_Archaeo
- - rock_Phazon

@@ -5,6 +5,7 @@
 	var/stopper = 1 // stops throwers
 	invisibility = 101 // nope cant see this shit
 	anchored = 1
+	w_type=NOT_RECYCLABLE
 
 /obj/effect/step_trigger/proc/Trigger(var/atom/movable/A)
 	return 0

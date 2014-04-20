@@ -14,6 +14,8 @@
 
 
 /datum/game_mode/traitor/changeling/pre_setup()
+	if(istype(ticker.mode, /datum/game_mode/mixed))
+		mixed = 1
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 

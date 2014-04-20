@@ -47,7 +47,7 @@
 		user << "\red You don't have the dexterity to do this!"
 		return
 
-	if ((CLUMSY in user.mutations) && prob(50))
+	if ((M_CLUMSY in user.mutations) && prob(50))
 		user << "\red The rod slips out of your hand and hits your head."
 		user.take_organ_damage(10)
 		user.Paralyse(20)
@@ -153,6 +153,7 @@ obj/item/weapon/wirerod
 	throwforce = 10
 	w_class = 3
 	m_amt = 1875
+	w_type = RECYK_METAL
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 
 obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)

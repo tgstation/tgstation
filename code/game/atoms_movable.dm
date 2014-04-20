@@ -1,8 +1,12 @@
 /atom/movable
+	// Recycling shit
+	var/m_amt = 0	         // metal (CC)
+	var/g_amt = 0	         // glass (CC)
+	var/w_type = NOT_RECYCLABLE  // Waste category for sorters. See setup.dm
+
 	layer = 3
 	var/last_move = null
 	var/anchored = 0
-	// var/elevation = 2    - not used anywhere
 	var/move_speed = 10
 	var/l_move_time = 1
 	var/m_flag = 1
@@ -22,7 +26,7 @@
 		src.last_move = get_dir(A, src.loc)
 	return
 
-/atom/movable/proc/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
+/atom/movable/proc/recycle(var/datum/materials/rec)
 	return 0
 
 /atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes)
@@ -30,11 +34,10 @@
 		src.throw_impact(A)
 		src.throwing = 0
 
-	spawn( 0 )
-		if ((A && yes))
-			A.last_bumped = world.time
-			A.Bumped(src)
-		return
+	if ((A && yes))
+		A.last_bumped = world.time
+		A.Bumped(src)
+	return
 	..()
 	return
 
@@ -68,7 +71,7 @@
 	src.throwing = 1
 
 	if(usr)
-		if(HULK in usr.mutations)
+		if(M_HULK in usr.mutations)
 			src.throwing = 2 // really strong throw!
 
 	var/dist_x = abs(target.x - src.x)
@@ -153,7 +156,7 @@
 
 	//done throwing, either because it hit something or it finished moving
 	src.throwing = 0
-	if(isobj(src)) src:throw_impact(get_turf(src),speed)
+	if(isobj(src)) src.throw_impact(get_turf(src),speed)
 
 
 //Overlays
@@ -162,8 +165,7 @@
 	anchored = 1
 
 /atom/movable/overlay/New()
-	for(var/x in src.verbs)
-		src.verbs -= x
+	verbs.Cut()
 	return
 
 /atom/movable/overlay/attackby(a, b)
@@ -180,3 +182,10 @@
 	if (src.master)
 		return src.master.attack_hand(a, b, c)
 	return
+
+/////////////////////////////
+// SINGULOTH PULL REFACTOR
+/////////////////////////////
+/atom/movable/proc/canSingulothPull(var/obj/machinery/singularity/singulo)
+	return 1
+

@@ -9,7 +9,7 @@
 			src.nutrition -= HUNGER_FACTOR/10
 			if(src.m_intent == "run")
 				src.nutrition -= HUNGER_FACTOR/10
-		if((FAT in src.mutations) && src.m_intent == "run" && src.bodytemperature <= 360)
+		if((M_FAT in src.mutations) && src.m_intent == "run" && src.bodytemperature <= 360)
 			src.bodytemperature += 2
 
 /mob/living/carbon/relaymove(var/mob/user, direction)
@@ -52,6 +52,14 @@
 				N.show_message(text("\red <B>[M] bursts out of [src]!</B>"), 2)
 	. = ..()
 
+/mob/living/carbon/proc/share_contact_diseases(var/mob/M)
+	for(var/datum/disease/D in viruses)
+		if(D.spread_by_touch())
+			M.contract_disease(D, 0, 1, CONTACT_HANDS)
+	for(var/datum/disease/D in M.viruses)
+		if(D.spread_by_touch())
+			contract_disease(D, 0, 1, CONTACT_HANDS)
+
 /mob/living/carbon/attack_hand(mob/M as mob)
 	if(!istype(M, /mob/living/carbon)) return
 	if (hasorgans(M))
@@ -61,35 +69,13 @@
 		if(temp && !temp.is_usable())
 			M << "\red You can't use your [temp.display_name]"
 			return
-
-	for(var/datum/disease/D in viruses)
-
-		if(D.spread_by_touch())
-
-			M.contract_disease(D, 0, 1, CONTACT_HANDS)
-
-	for(var/datum/disease/D in M.viruses)
-
-		if(D.spread_by_touch())
-
-			contract_disease(D, 0, 1, CONTACT_HANDS)
-
+	share_contact_diseases(M)
 	return
 
 
 /mob/living/carbon/attack_paw(mob/M as mob)
 	if(!istype(M, /mob/living/carbon)) return
-
-	for(var/datum/disease/D in viruses)
-
-		if(D.spread_by_touch())
-			M.contract_disease(D, 0, 1, CONTACT_HANDS)
-
-	for(var/datum/disease/D in M.viruses)
-
-		if(D.spread_by_touch())
-			contract_disease(D, 0, 1, CONTACT_HANDS)
-
+	share_contact_diseases(M)
 	return
 
 /mob/living/carbon/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0)
@@ -139,10 +125,10 @@
 	if(istext(selhand))
 		selhand = lowertext(selhand)
 
-	if(selhand == "right" || selhand == "r")
-		selhand = 0
-	if(selhand == "left" || selhand == "l")
-		selhand = 1
+		if(selhand == "right" || selhand == "r")
+			selhand = 0
+		if(selhand == "left" || selhand == "l")
+			selhand = 1
 
 	if(selhand != src.hand)
 		swap_hand()
@@ -190,7 +176,7 @@
 				src.show_message(text("\t []My [] is [].",status=="OK"?"\blue ":"\red ",org.display_name,status),1)
 			if((SKELETON in H.mutations) && (!H.w_uniform) && (!H.wear_suit))
 				H.play_xylophone()
-		else
+		else if(lying) // /vg/: For hugs. This is how update_icon figgers it out, anyway.  - N3X15
 			var/t_him = "it"
 			if (src.gender == MALE)
 				t_him = "him"
@@ -210,6 +196,21 @@
 				"\blue [M] shakes [src] trying to wake [t_him] up!", \
 				"\blue You shake [src] trying to wake [t_him] up!", \
 				)
+		// BEGIN HUGCODE - N3X
+		else
+			if (istype(src,/mob/living/carbon/human) && src:w_uniform)
+				var/mob/living/carbon/human/H = src
+				H.w_uniform.add_fingerprint(M)
+			playsound(get_turf(src), 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+			M.visible_message( \
+				"\blue [M] gives [src] a [pick("hug","warm embrace")].", \
+				"\blue You hug [src].", \
+				)
+			if(prob(10))
+				src.emote("fart")
+			reagents.add_reagent("paracetamol", 1)
+			share_contact_diseases(M)
+
 
 /mob/living/carbon/proc/eyecheck()
 	return 0
@@ -335,24 +336,6 @@
 //Throwing stuff
 
 /mob/living/carbon/proc/toggle_throw_mode()
-	var/obj/item/W = get_active_hand()
-	if( !W )//Not holding anything
-		if( client && (TK in mutations) )
-			if(ishuman(src))
-				var/mob/living/carbon/human/H = src
-				if(H.remoteview_target)
-					H << "\red Your mind is too busy remote viewing."
-					return
-			var/obj/item/tk_grab/O = new(src)
-			put_in_active_hand(O)
-			O.host = src
-		return
-
-	if( istype(W,/obj/item/tk_grab) )
-		if(hand)	del(l_hand)
-		else		del(r_hand)
-		return
-
 	if (src.in_throw_mode)
 		throw_mode_off()
 	else
@@ -366,20 +349,29 @@
 	src.in_throw_mode = 1
 	src.throw_icon.icon_state = "act_throw_on"
 
-/mob/living/carbon/proc/throw_item(atom/target)
+/mob/proc/throw_item(var/atom/target,var/atom/movable/what=null)
+	return
+
+/mob/living/carbon/throw_item(var/atom/target,var/atom/movable/what=null)
 	src.throw_mode_off()
 	if(usr.stat || !target)
 		return
+
+	if(!istype(loc,/turf))
+		src << "\red You can't do that now!"
+		return
+
 	if(target.type == /obj/screen) return
 
 	var/atom/movable/item = src.get_active_hand()
+	if(what)
+		item=what
 
 	if(!item) return
 
 	if (istype(item, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = item
 		item = G.throw() //throw the person instead of the grab
-		del(G)
 		if(ismob(item))
 			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 			var/turf/end_T = get_turf(target)
@@ -404,8 +396,9 @@
 	update_icons()
 
 //	if (istype(usr, /mob/living/carbon/monkey)) //Check if a monkey is throwing. Modify/remove this line as required.
+	var/turf/T=get_turf(loc)
 	if(istype(item, /obj/item))
-		item.loc = src.loc
+		item.loc = T
 		if(src.client)
 			src.client.screen -= item
 		if(istype(item, /obj/item))
@@ -417,10 +410,17 @@
 		src.visible_message("\red [src] has thrown [item].")
 
 		if(!src.lastarea)
-			src.lastarea = get_area(src.loc)
+			src.lastarea = get_area(T)
 		if((istype(src.loc, /turf/space)) || (src.lastarea.has_gravity == 0))
-			src.inertia_dir = get_dir(target, src)
-			step(src, inertia_dir)
+			var/mob/space_obj=src
+			// If we're being held, make the guy holding us move.
+			if(istype(loc,/obj/item/weapon/holder))
+				var/obj/item/weapon/holder/Ho=loc
+				// Who holds the holder?
+				if(ismob(Ho.loc))
+					space_obj=Ho.loc
+			space_obj.inertia_dir = get_dir(target, src)
+			step(space_obj, inertia_dir)
 
 
 /*
@@ -504,6 +504,15 @@
 			return method ? ">250" : "extremely weak and fast, patient's artery feels like a thread"
 //			output for machines^	^^^^^^^output for people^^^^^^^^^
 
+/mob/living/carbon/verb/mob_sleep()
+	set name = "Sleep"
+	set category = "IC"
+
+	if(usr.sleeping)
+		usr << "\red You are already sleeping"
+		return
+	if(alert(src,"You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
+		usr.sleeping = 20 //Short nap
 
 //Brain slug proc for voluntary removal of control.
 /mob/living/carbon/proc/release_control()
@@ -548,7 +557,7 @@
 		B.host_brain << "\red <B><FONT size=3>Horrific, burning agony lances through you, ripping a soundless scream from your trapped mind!</FONT></B>"
 
 //Check for brain worms in head.
-/mob/living/carbon/proc/has_brain_worms()
+/mob/proc/has_brain_worms()
 
 	for(var/I in contents)
 		if(istype(I,/mob/living/simple_animal/borer))

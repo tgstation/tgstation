@@ -59,5 +59,29 @@
 	damage_type = TOX
 	weaken = 5
 
+/obj/item/projectile/energy/rad
+	name = "rad"
+	icon_state = "rad"
+	damage = 30
+	damage_type = BURN
+	nodamage = 0
+	weaken = 10
+	stutter = 10
 
+	on_hit(var/atom/hit)
+		if(ishuman(hit))
 
+			var/mob/living/carbon/human/H = hit
+
+			if(H.gender == MALE)
+				H.name = pick(first_names_male)
+			else
+				H.name = pick(first_names_female)
+
+			H.name += " [pick(last_names)]"
+			H.real_name = H.name
+
+			scramble(1, H, 100) // Scramble all UIs
+			scramble(null, H, 5) // Scramble SEs, 5% chance for each block
+
+			H.apply_effect((rand(50, 250)),IRRADIATE)

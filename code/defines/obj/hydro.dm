@@ -103,30 +103,6 @@
 	plant_type = 2
 	growthstages = 3
 
-/obj/item/seeds/replicapod
-	name = "pack of replica pod seeds"
-	desc = "These seeds grow into replica pods. They say these are used to harvest humans."
-	icon_state = "seed-replicapod"
-	mypath = "/obj/item/seeds/replicapod"
-	species = "replicapod"
-	plantname = "Replica Pod"
-	productname = "/mob/living/carbon/human" //verrry special -- Urist
-	lifespan = 50 //no idea what those do
-	endurance = 8
-	maturation = 10
-	production = 10
-	yield = 1 //seeds if there isn't a dna inside
-	oneharvest = 1
-	potency = 30
-	plant_type = 0
-	growthstages = 6
-	var/list/ui = null //for storing the guy
-	var/list/se = null
-	var/ckey = null
-	var/realName = null
-	var/datum/mind/mind = null
-	gender = MALE
-
 /obj/item/seeds/grapeseed
 	name = "pack of grape seeds"
 	desc = "These seeds grow into grape vines."
@@ -177,6 +153,40 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 1
+
+/obj/item/seeds/shandseed
+	name = "pack of s'rendarr's hand seeds"
+	desc = "These seeds grow into a helpful herb called S'Rendarr's Hand, native to Ahdomai."
+	icon_state = "seed-shand"
+	mypath = "/obj/item/seeds/shandseed"
+	species = "shand"
+	plantname = "S'Rendarr's Hand"
+	productname = "/obj/item/stack/medical/bruise_pack/tajaran"
+	lifespan = 50
+	endurance = 25
+	maturation = 3
+	production = 5
+	yield = 4
+	potency = 10
+	plant_type = 0
+	growthstages = 3
+
+/obj/item/seeds/mtearseed
+	name = "pack of messa's tear seeds"
+	desc = "These seeds grow into a helpful herb called Messa's Tear, native to Ahdomai."
+	icon_state = "seed-mtear"
+	mypath = "/obj/item/seeds/mtearseed"
+	species = "mtear"
+	plantname = "Messa's Tear"
+	productname = "/obj/item/stack/medical/ointment/tajaran"
+	lifespan = 50
+	endurance = 25
+	maturation = 3
+	production = 5
+	yield = 4
+	potency = 10
+	plant_type = 0
+	growthstages = 3
 
 /obj/item/seeds/berryseed
 	name = "pack of berry seeds"
@@ -1433,7 +1443,7 @@
 	name = "weed-spray"
 	icon_state = "weedspray"
 	item_state = "spray"
-	flags = TABLEPASS | OPENCONTAINER | FPRINT | USEDELAY
+	flags = TABLEPASS | OPENCONTAINER | FPRINT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 4
 	w_class = 2.0
@@ -1452,7 +1462,7 @@
 	name = "pest-spray"
 	icon_state = "pestspray"
 	item_state = "spray"
-	flags = TABLEPASS | OPENCONTAINER | FPRINT | USEDELAY
+	flags = TABLEPASS | OPENCONTAINER | FPRINT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 4
 	w_class = 2.0
@@ -1471,11 +1481,12 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "hoe"
 	item_state = "hoe"
-	flags = FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags = FPRINT | TABLEPASS | CONDUCT | NOBLUDGEON
 	force = 5.0
 	throwforce = 7.0
 	w_class = 2.0
 	m_amt = 50
+	w_type = RECYK_METAL
 	attack_verb = list("slashed", "sliced", "cut", "clawed")
 
 // *************************************

@@ -734,7 +734,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if("Toggle Door")
 				if(cartridge && cartridge.access_remote_door)
 					for(var/obj/machinery/door/poddoor/M in world)
-						if(M.id == cartridge.remote_door_id)
+						if(M.id_tag == cartridge.remote_door_id)
 							if(M.density)
 								M.open()
 							else
@@ -1170,10 +1170,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	del(src)
 	return
 
-/obj/item/device/pda/Del()
+/obj/item/device/pda/Destroy()
 	PDAs -= src
 	if (src.id)
 		src.id.loc = get_turf(src.loc)
+	if(src.pai)
+		src.pai.loc = get_turf(src.loc)
 	..()
 
 /obj/item/device/pda/clown/HasEntered(AM as mob|obj) //Clown PDA is slippery.

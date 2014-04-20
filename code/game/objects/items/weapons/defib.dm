@@ -37,7 +37,7 @@
 			icon_state = "defibpaddleout_low"
 
 /obj/item/weapon/melee/defibrilator/attack_self(mob/user as mob)
-	if(status && (CLUMSY in user.mutations) && prob(50))
+	if(status && (M_CLUMSY in user.mutations) && prob(50))
 		spark_system.attach(user)
 		spark_system.set_up(5, 0, src)
 		spark_system.start()
@@ -123,7 +123,7 @@
 						spark_system.start()
 					if(prob(30))
 						tobehealed = health + threshhold
-						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabalizers
+						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabilizers
 						H.adjustOxyLoss(tobehealed)
 				else if(uni || armor)
 					if(prob(30))
@@ -131,17 +131,17 @@
 						spark_system.start()
 					if(prob(60))
 						tobehealed = health + threshhold
-						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabalizers
+						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabilizers
 						H.adjustOxyLoss(tobehealed)
 				else
 					if(prob(90))
 						tobehealed = health + threshhold
-						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabalizers
+						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabilizers
 						H.adjustOxyLoss(tobehealed)
 				H.updatehealth() //forces a health update, otherwise the oxyloss adjustment wouldnt do anything
 				M.visible_message("\red [M]'s body convulses a bit.")
 				var/datum/organ/external/temp = H.get_organ("head")
-				if(H.health > -100 && !(temp.status & ORGAN_DESTROYED) && !(NOCLONE in H.mutations) && !H.suiciding)
+				if(H.health > -100 && !(temp.status & ORGAN_DESTROYED) && !(M_NOCLONE in H.mutations) && !H.suiciding && (H.brain_op_stage < 4))
 					viewers(M) << "\blue [src] beeps: Resuscitation successful."
 					spawn(0)
 						H.stat = 1

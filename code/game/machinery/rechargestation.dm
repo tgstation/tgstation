@@ -21,7 +21,7 @@
 		component_parts += new /obj/item/weapon/stock_parts/matter_bin
 		RefreshParts()
 
-	Del()
+	Destroy()
 		src.go_out()
 		..()
 
@@ -29,12 +29,12 @@
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				del(src)
+				qdel(src)
 				return
 			if(2.0)
 				if (prob(50))
 					new /obj/item/weapon/circuitboard/recharge_station(src.loc)
-					del(src)
+					qdel(src)
 					return
 			if(3.0)
 				if (prob(25))

@@ -199,6 +199,7 @@
 	layer = 2.44 //Just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
 	var/_color = "red"
 	var/obj/structure/powerswitch/power_switch
+	var/obj/item/device/powersink/attached // holding this here for qdel
 
 /obj/structure/cable/yellow
 	_color = "yellow"

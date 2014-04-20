@@ -26,6 +26,7 @@
 	throwforce = 7.0
 	w_class = 2.0
 	m_amt = 150
+	w_type = RECYK_METAL
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
@@ -47,6 +48,7 @@
 	throw_range = 5
 	g_amt = 0
 	m_amt = 75
+	w_type = RECYK_METAL
 	attack_verb = list("stabbed")
 
 	suicide_act(mob/user)
@@ -86,7 +88,7 @@
 	if(!istype(M))	return ..()
 	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
 		return ..()
-	if((CLUMSY in user.mutations) && prob(50))
+	if((M_CLUMSY in user.mutations) && prob(50))
 		M = user
 	return eyestab(M,user)
 
@@ -105,6 +107,7 @@
 	throw_range = 9
 	w_class = 2.0
 	m_amt = 80
+	w_type = RECYK_METAL
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("pinched", "nipped")
 
@@ -145,6 +148,7 @@
 	//Cost to make in the autolathe
 	m_amt = 70
 	g_amt = 30
+	w_type = RECYK_MISC
 
 	//R&D tech level
 	origin_tech = "engineering=1"
@@ -245,7 +249,8 @@
 		location.hotspot_expose(700, 5)
 
 
-/obj/item/weapon/weldingtool/afterattack(obj/O as obj, mob/user as mob)
+/obj/item/weapon/weldingtool/afterattack(obj/O as obj, mob/user as mob, proximity)
+	if(!proximity) return
 	if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && !src.welding)
 		O.reagents.trans_to(src, max_fuel)
 		user << "\blue Welder refueled"
@@ -268,9 +273,10 @@
 				L.IgniteMob()
 	return
 
-/obj/item/weapon/weldingtool/attack_self(mob/user)
-	toggle(user)
 
+/obj/item/weapon/weldingtool/attack_self(mob/user as mob)
+	toggle()
+	return
 
 //Returns the amount of fuel in the welder
 /obj/item/weapon/weldingtool/proc/get_fuel()
@@ -357,33 +363,36 @@
 /obj/item/weapon/weldingtool/proc/eyecheck(mob/user as mob)
 	if(!iscarbon(user))	return 1
 	var/safety = user:eyecheck()
-	switch(safety)
-		if(1)
-			usr << "\red Your eyes sting a little."
-			user.eye_stat += rand(1, 2)
-			if(user.eye_stat > 12)
-				user.eye_blurry += rand(3,6)
-		if(0)
-			usr << "\red Your eyes burn."
-			user.eye_stat += rand(2, 4)
-			if(user.eye_stat > 10)
-				user.eye_blurry += rand(4,10)
-		if(-1)
-			usr << "\red Your thermals intensify the welder's glow. Your eyes itch and burn severely."
-			user.eye_blurry += rand(12,20)
-			user.eye_stat += rand(12, 16)
-	if(user.eye_stat > 10 && safety < 2)
-		user << "\red Your eyes are really starting to hurt. This can't be good for you!"
-	if (prob(user.eye_stat - 25 + 1))
-		user << "\red You go blind!"
-		user.sdisabilities |= BLIND
-	else if (prob(user.eye_stat - 15 + 1))
-		user << "\red You go blind!"
-		user.eye_blind = 5
-		user.eye_blurry = 5
-		user.disabilities |= NEARSIGHTED
-		spawn(100)
-			user.disabilities &= ~NEARSIGHTED
+	if(istype(user, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
+		var/datum/organ/internal/eyes/E = H.internal_organs["eyes"]
+		switch(safety)
+			if(1)
+				usr << "\red Your eyes sting a little."
+				E.damage += rand(1, 2)
+				if(E.damage > 12)
+					user.eye_blurry += rand(3,6)
+			if(0)
+				usr << "\red Your eyes burn."
+				E.damage += rand(2, 4)
+				if(E.damage > 10)
+					E.damage += rand(4,10)
+			if(-1)
+				usr << "\red Your thermals intensify the welder's glow. Your eyes itch and burn severely."
+				user.eye_blurry += rand(12,20)
+				E.damage += rand(12, 16)
+		if(E.damage > 10 && safety < 2)
+			user << "\red Your eyes are really starting to hurt. This can't be good for you!"
+		if (E.damage >= E.min_broken_damage)
+			user << "\red You go blind!"
+			user.sdisabilities |= BLIND
+		else if (E.damage >= E.min_bruised_damage)
+			user << "\red You go blind!"
+			user.eye_blind = 5
+			user.eye_blurry = 5
+			user.disabilities |= NEARSIGHTED
+			spawn(100)
+				user.disabilities &= ~NEARSIGHTED
 	return
 
 
@@ -436,6 +445,7 @@
 	item_state = "crowbar"
 	w_class = 2.0
 	m_amt = 50
+	w_type = RECYK_METAL
 	origin_tech = "engineering=1"
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 
@@ -472,6 +482,7 @@
 	icon_state = "kit"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 2.0
+	w_type = RECYK_MISC
 	origin_tech = "combat=2"
 	var/open = 0
 

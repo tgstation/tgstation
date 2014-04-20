@@ -14,6 +14,7 @@
 	var/list/syringes = new/list()
 	var/max_syringes = 1
 	m_amt = 2000
+	w_type = RECYK_METAL
 
 /obj/item/weapon/gun/syringe/examine()
 	set src in view()

@@ -135,7 +135,7 @@
 /mob/living/carbon/alien/proc/handle_mutations_and_radiation()
 
 	if(getFireLoss())
-		if((mHeatres in mutations) || prob(5))
+		if((M_RESIST_HEAT in mutations) || prob(5))
 			adjustFireLoss(-1)
 
 	// Aliens love radiation nom nom nom

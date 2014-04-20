@@ -14,7 +14,7 @@
 	New()
 		return
 
-	Del()
+	Destroy()
 		if(master)
 			master.vines -= src
 			master.growth_queue -= src
@@ -60,7 +60,7 @@
 		spawn_biomass_piece(src.loc)
 		processing_objects.Add(src)
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -142,15 +142,15 @@
 /obj/effect/biomass/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(90))
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 				return
 	return
 

@@ -131,7 +131,7 @@ obj/effect/liquid/proc/apply_calculated_effect()
 obj/effect/liquid/Move()
 	return 0
 
-obj/effect/liquid/Del()
+obj/effect/liquid/Destroy()
 	src.controller.liquid_objects.Remove(src)
 	..()
 
@@ -168,7 +168,7 @@ turf/space/can_leave_liquid(from_direction)
 
 turf/simulated/floor/can_accept_liquid(from_direction)
 	for(var/obj/structure/window/W in src)
-		if(W.dir in list(5,6,9,10))
+		if(W.is_fulltile())
 			return 0
 		if(W.dir & from_direction)
 			return 0
@@ -179,7 +179,7 @@ turf/simulated/floor/can_accept_liquid(from_direction)
 
 turf/simulated/floor/can_leave_liquid(to_direction)
 	for(var/obj/structure/window/W in src)
-		if(W.dir in list(5,6,9,10))
+		if(W.is_fulltile())
 			return 0
 		if(W.dir & to_direction)
 			return 0

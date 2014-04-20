@@ -43,11 +43,19 @@
 	cable_list += src
 
 
-/obj/structure/cable/Del()						// called when a cable is deleted
+/obj/structure/cable/Destroy()						// called when a cable is deleted
 	if(!defer_powernet_rebuild)					// set if network will be rebuilt manually
 		if(powernet)
 			powernet.cut_cable(src)				// update the powernets
 	cable_list -= src
+	if(istype(attached))
+		attached.SetLuminosity(0)
+		attached.icon_state = "powersink0"
+		attached.mode = 0
+		processing_objects.Remove(attached)
+		attached.anchored = 0
+		attached.attached = null
+	attached = null
 	..()													// then go ahead and delete the cable
 
 /obj/structure/cable/hide(var/i)
@@ -67,10 +75,7 @@
 /obj/structure/cable/proc/get_powernet()			//TODO: remove this as it is obsolete
 	return powernet
 
-/obj/structure/cable/attack_hand(mob/user)
-	if(ishuman(user))
-		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("WIRE",src,user:wear_suit)
+/obj/structure/cable/attack_tk(mob/user)
 	return
 
 /obj/structure/cable/attackby(obj/item/W, mob/user)
@@ -96,7 +101,7 @@
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red [user] cuts the cable.", 1)
 
-		var/message = "A wire has been cut"
+		var/message = "A wire has been cut "
 		var/atom/A = user
 		if(A)
 			var/turf/Z = get_turf(A)
@@ -154,16 +159,16 @@
 /obj/structure/cable/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 		if(2.0)
 			if (prob(50))
 				new/obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1, _color)
-				del(src)
+				qdel(src)
 
 		if(3.0)
 			if (prob(25))
 				new/obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1, _color)
-				del(src)
+				qdel(src)
 	return
 
 // the cable coil object, used for laying cable
@@ -181,8 +186,8 @@
 	w_class = 2.0
 	throw_speed = 2
 	throw_range = 5
-	m_amt = 50
-	g_amt = 20
+	m_amt = CC_PER_SHEET_METAL
+	w_type = RECYK_METAL
 	flags = TABLEPASS | USEDELAY | FPRINT | CONDUCT
 	slot_flags = SLOT_BELT
 	item_state = "coil_red"

@@ -9,6 +9,7 @@
 	var/obj/item/target = null
 	var/creator = null
 	anchored = 1.0
+	w_type=NOT_RECYCLABLE
 
 /obj/effect/portal/Bumped(mob/M as mob|obj)
 	spawn(0)
@@ -24,7 +25,7 @@
 
 /obj/effect/portal/New()
 	spawn(300)
-		del(src)
+		qdel(src)
 		return
 	return
 

@@ -46,8 +46,10 @@ VOICE='nitech_us_clb_arctic_hts' # DEFAULT, bored US female (occasionally comes 
 # What we do with SoX:
 SOX_ARGS  = 'stretch 1.1'
 SOX_ARGS += ' chorus 0.7 0.9 55 0.4 0.25 2 -t'
-SOX_ARGS += ' echo 0.8 0.88 6.0 0.4'
+SOX_ARGS += ' phaser 0.9 0.85 4 0.23 1.3 -s'
+SOX_ARGS += ' echos 0.8 0.5 100 0.25 10 0.25'
 SOX_ARGS += ' bass -40'
+SOX_ARGS += ' highpass 22 highpass 22'
 SOX_ARGS += ' norm'
 
 # Have to do the trimming seperately.

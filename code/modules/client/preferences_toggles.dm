@@ -17,14 +17,23 @@
 	prefs.save_preferences()
 	feedback_add_details("admin_verb","TGS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/toggle_ghost_radio()
+	set name = "Enable/Disable GhostRadio"
+	set category = "Preferences"
+	set desc = ".Toggle between hearing all radio chatter, or only from nearby speakers"
+	prefs.toggles ^= CHAT_GHOSTRADIO
+	src << "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTRADIO) ? "hear all radio chat in the world" : "only hear from nearby speakers"]."
+	prefs.save_preferences()
+	feedback_add_details("admin_verb","TGR")
+
 /client/proc/toggle_hear_radio()
 	set name = "Show/Hide RadioChatter"
 	set category = "Preferences"
-	set desc = "Toggle seeing radiochatter from nearby radios and speakers"
+	set desc = "Toggle seeing radiochatter from radios and speakers"
 	if(!holder) return
 	prefs.toggles ^= CHAT_RADIO
 	prefs.save_preferences()
-	usr << "You will [(prefs.toggles & CHAT_RADIO) ? "now" : "no longer"] see radio chatter from nearby radios or speakers"
+	usr << "You will [(prefs.toggles & CHAT_RADIO) ? "now" : "no longer"] see radio chatter from radios or speakers"
 	feedback_add_details("admin_verb","THR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggleadminhelpsound()
@@ -136,3 +145,51 @@
 	prefs.save_preferences()
 	src << "You will [(prefs.be_special & role_flag) ? "now" : "no longer"] be considered for [role] events (where possible)."
 	feedback_add_details("admin_verb","TBeSpecial") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+
+/client/verb/change_ui()
+	set name = "Change UI"
+	set category = "Preferences"
+	set desc = "Configure your user interface"
+
+	if(!ishuman(usr))
+		usr << "This only for human"
+		return
+
+	var/UI_style_new = input(usr, "Select a style, we recommend White for customization") in list("White", "Midnight", "Orange", "old")
+	if(!UI_style_new) return
+
+	var/UI_style_alpha_new = input(usr, "Select a new alpha(transparence) parametr for UI, between 50 and 255") as num
+	if(!UI_style_alpha_new | !(UI_style_alpha_new <= 255 && UI_style_alpha_new >= 50)) return
+
+	var/UI_style_color_new = input(usr, "Choose your UI color, dark colors are not recommended!") as color|null
+	if(!UI_style_color_new) return
+
+	//update UI
+	var/list/icons = usr.hud_used.adding + usr.hud_used.other +usr.hud_used.hotkeybuttons
+	icons.Add(usr.zone_sel)
+
+	for(var/obj/screen/I in icons)
+		if(I.color && I.alpha)
+			I.icon = ui_style2icon(UI_style_new)
+			I.color = UI_style_color_new
+			I.alpha = UI_style_alpha_new
+
+	if(alert("Like it? Save changes?",,"Yes", "No") == "Yes")
+		prefs.UI_style = UI_style_new
+		prefs.UI_style_alpha = UI_style_alpha_new
+		prefs.UI_style_color = UI_style_color_new
+		prefs.save_preferences()
+		usr << "UI was saved"
+
+/client/verb/toggle_media()
+	set name = "Hear/Silence Streaming"
+	set category = "Preferences"
+	set desc = "Toggle hearing streaming media (radios, jukeboxes, etc)"
+
+	prefs.toggles ^= SOUND_STREAMING
+	prefs.save_preferences()
+	usr << "You will [(prefs.toggles & SOUND_STREAMING) ? "now" : "no longer"] hear streamed media."
+	// Restart.
+	media.stop_music()
+	media.update_music()

@@ -122,7 +122,7 @@ display round(lastgen) and plasmatank amount
 	sheet_name = sheet.name
 	RefreshParts()
 
-/obj/machinery/power/port_gen/pacman/Del()
+/obj/machinery/power/port_gen/pacman/Destroy()
 	DropFuel()
 	..()
 

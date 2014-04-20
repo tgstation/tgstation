@@ -12,8 +12,6 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 	var/comments
 	var/ready = 0
 
-
-
 /datum/paiController
 	var/list/pai_candidates = list()
 	var/list/asked = list()
@@ -21,6 +19,13 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 	var/askDelay = 10 * 60 * 1	// One minute [ms * sec * min]
 
 	Topic(href, href_list[])
+		if("signup" in href_list)
+			var/mob/dead/observer/O = locate(href_list["signup"])
+			if(!O) return
+			if(!check_recruit(O)) return
+			recruitWindow(O)
+			return
+
 		if(href_list["download"])
 			var/datum/paiCandidate/candidate = locate(href_list["candidate"])
 			var/obj/item/device/paicard/card = locate(href_list["device"])
@@ -195,20 +200,18 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 
 	proc/requestRecruits()
 		for(var/mob/dead/observer/O in player_list)
-			if(jobban_isbanned(O, "pAI"))
-				continue
-			if(asked.Find(O.key))
-				if(world.time < asked[O.key] + askDelay)
-					continue
-				else
-					asked.Remove(O.key)
-			if(O.client)
-				var/hasSubmitted = 0
-				for(var/datum/paiCandidate/c in paiController.pai_candidates)
-					if(c.key == O.key)
-						hasSubmitted = 1
-				if(!hasSubmitted && (O.client.prefs.be_special & BE_PAI))
-					question(O.client)
+			if(O.client && O.client.prefs.be_special & BE_PAI)
+				if(check_recruit(O))
+					O << "<span class=\"recruit\">A pAI card is looking for personalities. (<a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)</span>"
+					//question(O.client)
+	proc/check_recruit(var/mob/dead/observer/O)
+		if(jobban_isbanned(O, "pAI"))
+			return 0
+		if(O.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
+			return 0
+		if(O.client)
+			return 1
+		return 0
 
 	proc/question(var/client/C)
 		spawn(0)

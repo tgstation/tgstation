@@ -33,10 +33,13 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	w_class = 2
 	g_amt = 25
 	m_amt = 75
+	w_type = RECYK_ELECTRONIC
 
 	var/const/TRANSMISSION_DELAY = 5 // only 2/second/radio
 	var/const/FREQ_LISTENING = 1
 		//FREQ_BROADCASTING = 2
+
+	var/always_talk=0 // ALWAYS catch signals. Useful for covert listening devices.
 
 /obj/item/device/radio
 	var/datum/radio_frequency/radio_connection
@@ -243,6 +246,24 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 	   //#### Grab the connection datum ####//
 		var/datum/radio_frequency/connection = null
+		/* NEW
+		//testing("[src]: talk_into([M], [message], [channel])")
+		if(channel == "headset")
+			channel = null
+		if(channel) // If a channel is specified, look for it.
+			if(channels && channels.len > 0)
+				if (channel == "department")
+					//world << "DEBUG: channel=\"[channel]\" switching to \"[channels[1]]\""
+					channel = channels[1]
+				connection = secure_radio_connections[channel]
+				if (!channels[channel]) // if the channel is turned off, don't broadcast
+					return
+			else
+				// If we were to send to a channel we don't have, drop it.
+				return
+		else // If a channel isn't specified, send to common.
+		*/
+		// OLD
 		if(channel && channels && channels.len > 0)
 			if (channel == "department")
 				//world << "DEBUG: channel=\"[channel]\" switching to \"[channels[1]]\""
@@ -810,3 +831,11 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/off
 	listening = 0
+
+/obj/item/device/radio/Destroy()
+	if(radio_connection)
+		radio_connection.remove_listener(src)
+	if(isrobot(src.loc))
+		var/mob/living/silicon/robot/R = src.loc
+		R.radio = null
+	..()

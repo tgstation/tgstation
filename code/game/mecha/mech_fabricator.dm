@@ -128,7 +128,8 @@
 						/obj/item/borg/upgrade/jetpack
 						),
 	"Misc"=list(
-						/obj/item/mecha_parts/mecha_tracking
+						/obj/item/mecha_parts/mecha_tracking,
+						/obj/item/mecha_parts/janicart_upgrade
 						)
 	)
 
@@ -189,7 +190,7 @@
 	if(time_coeff!=diff)
 		time_coeff = diff
 
-/obj/machinery/mecha_part_fabricator/Del()
+/obj/machinery/mecha_part_fabricator/Destroy()
 	for(var/atom/A in src)
 		del A
 	..()
@@ -489,17 +490,17 @@
 
 
 /obj/machinery/mecha_part_fabricator/proc/sync(silent=null)
-	if(!silent)
-		temp = "Updating local R&D database..."
-		src.updateUsrDialog()
-		sleep(30) //only sleep if called by user
+	var/new_data=0
 	for(var/obj/machinery/computer/rdconsole/RDC in get_area(src))
+		if(!RDC) continue
 		if(!RDC.sync)
 			continue
 		for(var/datum/tech/T in RDC.files.known_tech)
-			files.AddTech2Known(T)
+			if(T)
+				files.AddTech2Known(T)
 		for(var/datum/design/D in RDC.files.known_designs)
-			files.AddDesign2Known(D)
+			if(D)
+				files.AddDesign2Known(D)
 		files.RefreshResearch()
 		var/i = src.convert_designs()
 		var/tech_output = update_tech()
@@ -509,8 +510,9 @@
 			temp += "<a href='?src=\ref[src];clear_temp=1'>Return</a>"
 			src.updateUsrDialog()
 		if(i || tech_output)
-			src.visible_message("\icon[src] <b>[src]</b> beeps, \"Succesfully synchronized with R&D server. New data processed.\"")
-	return
+			new_data=1
+	if(new_data)
+		src.visible_message("\icon[src] <b>[src]</b> beeps, \"Succesfully synchronized with R&D server. New data processed.\"")
 
 /obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(var/obj/item/part as obj,var/resource as text, var/roundto=1)
 	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
@@ -642,7 +644,10 @@
 		return update_queue_on_page()
 	if(href_list["sync"])
 		queue = list()
-		src.sync()
+		temp = "Updating local R&D database..."
+		src.updateUsrDialog()
+		spawn(30)
+			src.sync()
 		return update_queue_on_page()
 	if(href_list["part_desc"])
 		var/obj/part = filter.getObj("part_desc")

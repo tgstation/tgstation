@@ -66,7 +66,8 @@ var/global/list/uneatable = list(
 	switch(severity)
 		if(1.0)
 			if(prob(25))
-				del(src)
+				investigate_log("has been destroyed by an explosion.","singulo")
+				qdel(src)
 				return
 			else
 				energy += 50
@@ -74,6 +75,9 @@ var/global/list/uneatable = list(
 			energy += round((rand(20,60)/2),1)
 			return
 	return
+
+/obj/machinery/singularity/bullet_act(obj/item/projectile/P)
+	return 0 //Will there be an impact? Who knows.  Will we see it? No.
 
 
 /obj/machinery/singularity/Bump(atom/A)
@@ -190,6 +194,7 @@ var/global/list/uneatable = list(
 
 /obj/machinery/singularity/proc/check_energy()
 	if(energy <= 0)
+		investigate_log("collapsed.","singulo")
 		del(src)
 		return 0
 	switch(energy)//Some of these numbers might need to be changed up later -Mport
@@ -221,15 +226,8 @@ var/global/list/uneatable = list(
 
 		// Movable atoms only
 		if(dist > consume_range && istype(X, /atom/movable))
-			if(((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))|| (src.current_size >= 9))
+			if(canPull(X))
 				step_towards(X,src)
-			else if(istype(X,/mob/living/carbon/human))
-				var/mob/living/carbon/human/H = X
-				if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
-					var/obj/item/clothing/shoes/magboots/M = H.shoes
-					if(M.magpulse)
-						continue
-				step_towards(H,src)
 		// Turf and movable atoms
 		else if(dist <= consume_range && (isturf(X) || istype(X, /atom/movable)))
 			consume(X)
@@ -238,25 +236,36 @@ var/global/list/uneatable = list(
 		defer_powernet_rebuild = 0
 	return
 
+// Singulo optimization:
+// Jump out whenever we've made a decision.
+/obj/machinery/singularity/proc/canPull(var/atom/movable/A)
+	// If we're big enough, stop checking for this and that and JUST EAT.
+	if(current_size >= 9)
+		return 1
+	else
+		if(A && !A:anchored)
+			if(A.canSingulothPull(src))
+				return 1
+	return 0
+
 
 /obj/machinery/singularity/proc/consume(var/atom/A)
 	var/gain = 0
 	if(is_type_in_list(A, uneatable))
 		return 0
 	if (istype(A,/mob/living))//Mobs get gibbed
+		var/mob/living/M = A
 		gain = 20
-		if(istype(A,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = A
+		if(istype(M,/mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
 			if(H.mind)
-
-				if((H.mind.assigned_role == "Station Engineer") || (H.mind.assigned_role == "Chief Engineer") )
-					gain = 100
-
-				if(H.mind.assigned_role == "Clown")
-					gain = rand(-300, 300) // HONK
-
-		spawn()
-			A:gib()
+				switch(H.mind.assigned_role)
+					if("Station Engineer","Chief Engineer")
+						gain = 100
+					if("Clown")
+						gain = rand(-300, 300) // HONK
+		M.gib()
+		// Why
 		sleep(1)
 	else if(istype(A,/obj/))
 
@@ -264,7 +273,6 @@ var/global/list/uneatable = list(
 			var/dist = max((current_size - 2),1)
 			explosion(src.loc,(dist),(dist*2),(dist*4))
 			return
-
 		if(istype(A, /obj/machinery/singularity))//Welp now you did it
 			var/obj/machinery/singularity/S = A
 			src.energy += (S.energy/2)//Absorb most of it
@@ -274,13 +282,11 @@ var/global/list/uneatable = list(
 			return//Quits here, the obj should be gone, hell we might be
 
 		if((teleport_del) && (!istype(A, /obj/machinery)))//Going to see if it does not lag less to tele items over to Z 2
-			var/obj/O = A
-			O.x = 2
-			O.y = 2
-			O.z = 2
+			qdel(A)
 		else
 			A.ex_act(1.0)
-			if(A) del(A)
+			if(A)
+				qdel(A)
 		gain = 2
 	else if(isturf(A))
 		var/turf/T = A
@@ -480,9 +486,9 @@ var/global/list/uneatable = list(
 
 /obj/machinery/singularity/narsie/large/New()
 	..()
-	world << "<font size='28' color='red'><b>NAR-SIE HAS RISEN</b></font>"
+	world << "<font size='15' color='red'><b>[uppertext(name)] HAS RISEN</b></font>"
 	if(emergency_shuttle)
-		emergency_shuttle.incall(0.5) // Cannot recall
+		emergency_shuttle.incall(0.3) // Cannot recall
 
 /obj/machinery/singularity/narsie/process()
 	eat()
@@ -492,14 +498,31 @@ var/global/list/uneatable = list(
 	if(prob(25))
 		mezzer()
 
+
+/obj/machinery/singularity/narsie/Bump(atom/A)//you dare stand before a god?!
+	consume(A)
+
+/obj/machinery/singularity/narsie/Bumped(atom/A)
+	consume(A)
+
+/obj/machinery/singularity/narsie/mezzer()
+	for(var/mob/living/carbon/M in oviewers(8, src))
+		if(M.stat == CONSCIOUS)
+			if(!iscultist(M))
+				M << "\red You feel your sanity crumble away in an instant as you gaze upon [src.name]..."
+				M.apply_effect(3, STUN)
+
+
 /obj/machinery/singularity/narsie/consume(var/atom/A) //Has its own consume proc because it doesn't need energy and I don't want BoHs to explode it. --NEO
 	if(is_type_in_list(A, uneatable))
 		return 0
-	if (istype(A,/mob/living))//Mobs get gibbed
-		A:gib()
+	if(istype(A,/mob/living/))
+		var/mob/living/C = A
+		C.dust() // Changed from gib(), just for less lag.
 	else if(istype(A,/obj/))
 		A:ex_act(1.0)
-		if(A) del(A)
+		if(A)
+			qdel(A)
 	else if(isturf(A))
 		var/turf/T = A
 		if(T.intact)
@@ -553,12 +576,13 @@ var/global/list/uneatable = list(
 		//no living humans, follow a ghost instead.
 
 /obj/machinery/singularity/narsie/proc/acquire(var/mob/food)
-	target << "\blue <b>NAR-SIE HAS LOST INTEREST IN YOU</b>"
+	var/capname=uppertext(name)
+	target << "\blue <b>[capname] HAS LOST INTEREST IN YOU</b>"
 	target = food
 	if(ishuman(target))
-		target << "\red <b>NAR-SIE HUNGERS FOR YOUR SOUL</b>"
+		target << "\red <b>[capname] HUNGERS FOR YOUR SOUL</b>"
 	else
-		target << "\red <b>NAR-SIE HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL</b>"
+		target << "\red <b>[capname] HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL</b>"
 
 //Wizard narsie
 
@@ -575,3 +599,68 @@ var/global/list/uneatable = list(
 	if(defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 0
 	return
+
+/////////////////////////////////////////////////
+// MR. CLEAN
+/////////////////////////////////////////////////
+
+var/global/mr_clean_targets=list(
+	/obj/effect/decal/cleanable,
+	/obj/effect/decal/mecha_wreckage,
+	/obj/effect/decal/remains,
+	/obj/effect/spacevine,
+	/obj/effect/spacevine_controller,
+	/obj/effect/biomass,
+	/obj/effect/biomass_controller,
+	/obj/effect/rune,
+	/obj/effect/blob,
+	/obj/effect/spider,
+)
+/obj/machinery/singularity/narsie/large/clean // Mr. Clean
+	name = "Mr. Clean"
+	desc = "This universe is dirty.  Time to change that."
+	icon = 'icons/obj/mrclean.dmi'
+	icon_state = ""
+
+/obj/machinery/singularity/narsie/large/clean/update_icon()
+	overlays = 0
+	if(target && !isturf(target))
+		overlays += "eyes"
+
+/obj/machinery/singularity/narsie/large/clean/acquire(var/mob/food)
+	..()
+	update_icon()
+
+/obj/machinery/singularity/narsie/large/clean/consume(var/atom/A)
+	if(is_type_in_list(A, uneatable))
+		return 0
+	if(istype(A,/mob/living/))
+		var/mob/living/C = A
+		if(isrobot(C))
+			var/mob/living/silicon/robot/R=C
+			if(R.mmi)
+				del(R.mmi) // Nuke MMI
+		del(C) // Just delete it.
+	else if(is_type_in_list(A, mr_clean_targets))
+		qdel(A)
+	else if(isturf(A))
+		var/turf/T = A
+		T.clean_blood()
+		if(T.intact)
+			for(var/obj/O in T.contents)
+				if(O.level != 1)
+					continue
+				if(O.invisibility == 101)
+					src.consume(O)
+		//A:ChangeTurf(/turf/space)
+	return
+
+// Mr. Clean just follows the dirt and grime.
+/obj/machinery/singularity/narsie/large/clean/pickcultist()
+	var/list/targets = list()
+	for(var/obj/effect/E in world)
+		if(is_type_in_list(E, mr_clean_targets) && E.z == src.z)
+			targets += E
+	if(targets.len)
+		acquire(pick(targets))
+		return

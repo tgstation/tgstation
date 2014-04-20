@@ -80,6 +80,7 @@ research holder datum.
 //Checks to see if design has all the required pre-reqs.
 //Input: datum/design; Output: 0/1 (false/true)
 /datum/research/proc/DesignHasReqs(var/datum/design/D)
+	return 1 // N3X:  Killing this.
 	if(D.req_tech.len == 0)
 		return 1
 	var/matches = 0
@@ -122,36 +123,24 @@ research holder datum.
 	return
 
 /datum/research/proc/AddDesign2Known(var/datum/design/D)
-	for(var/datum/design/known in known_designs)
-		if(D.id == known.id)
-			if(D.reliability_mod > known.reliability_mod)
-				known.reliability_mod = D.reliability_mod
-			return
-	known_designs += D
+	if(!(D in known_designs))
+		for(var/datum/design/known in known_designs)
+			if(D.id == known.id)
+				if(D.reliability_mod > known.reliability_mod)
+					known.reliability_mod = D.reliability_mod
+				return
+		known_designs += D
 	return
 
 //Refreshes known_tech and known_designs list. Then updates the reliability vars of the designs in the known_designs list.
 //Input/Output: n/a
 /datum/research/proc/RefreshResearch()
-	var/list/CMTLs=list() // Calculated Max Tech Levels
 	for(var/datum/tech/PT in possible_tech)
-		if(!(PT.id in CMTLs))
-			CMTLs[PT.id]=0
 		if(TechHasReqs(PT))
 			AddTech2Known(PT)
 	for(var/datum/design/PD in possible_designs)
-		for(var/id in PD.req_tech)
-			// If calculated max_level is less than the required tech level of this design,
-			// Update calculated max techlevel
-			if(CMTLs[id] < PD.req_tech[id])
-				CMTLs[id] = PD.req_tech[id]
 		if(DesignHasReqs(PD))
 			AddDesign2Known(PD)
-	//testing("--- CMTLs calculated.")
-	//for(var/datum/tech/T in possible_tech)
-	//	// If CMTL != MTL, bitch.
-	//	if(CMTLs[T.id] != T.max_level)
-	//		testing("CMTL != MTL for [T.id]: [CMTLs[T.id]] != [T.max_level]")
 	for(var/datum/tech/T in known_tech)
 		T = between(1,T.level,20)
 	for(var/datum/design/D in known_designs)
@@ -296,6 +285,7 @@ datum/tech/robotics
 	w_class = 1.0
 	m_amt = 30
 	g_amt = 10
+	w_type = RECYK_ELECTRONIC
 	var/datum/tech/stored
 
 /obj/item/weapon/disk/tech_disk/New()

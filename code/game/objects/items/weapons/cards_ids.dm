@@ -67,6 +67,7 @@
 	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "id"
 	item_state = "card-id"
+	var/mining_points = 0 //For redeeming at mining equipment lockers
 	var/access = list()
 	var/registered_name = "Unknown" // The name registered_name on the card
 	slot_flags = SLOT_ID
@@ -74,7 +75,7 @@
 	var/blood_type = "\[UNSET\]"
 	var/dna_hash = "\[UNSET\]"
 	var/fingerprint_hash = "\[UNSET\]"
-
+	var/bans = null
 	//alt titles are handled a bit weirdly in order to unobtrusively integrate into existing ID system
 	var/assignment = null	//can be alt title or the actual job
 	var/rank = null			//actual job
@@ -91,7 +92,8 @@
 /obj/item/weapon/card/id/attack_self(mob/user as mob)
 	for(var/mob/O in viewers(user, null))
 		O.show_message(text("[] shows you: \icon[] []: assignment: []", user, src, src.name, src.assignment), 1)
-
+	if(mining_points)
+		user << "There's [mining_points] mining equipment redemption points loaded onto this card."
 	src.add_fingerprint(user)
 	return
 
@@ -142,7 +144,7 @@
 	access = list(access_maint_tunnels, access_syndicate, access_external_airlocks)
 	origin_tech = "syndicate=3"
 	var/registered_user=null
-	
+
 /obj/item/weapon/card/id/syndicate/New(mob/user as mob)
 	..()
 	if(!isnull(user)) // Runtime prevention on laggy starts or where users log out because of lag at round start.
@@ -150,7 +152,7 @@
 	else
 		registered_name = "Agent Card"
 	assignment = "Agent"
-	name = "[registered_name]'s ID Card ([assignment])"		
+	name = "[registered_name]'s ID Card ([assignment])"
 
 /obj/item/weapon/card/id/syndicate/afterattack(var/obj/item/weapon/O as obj, mob/user as mob)
 	if(istype(O, /obj/item/weapon/card/id))
@@ -180,7 +182,7 @@
 		registered_user = user
 	else if(!registered_user || registered_user == user)
 
-		if(!registered_user) registered_user = user  // 
+		if(!registered_user) registered_user = user  //
 
 		switch(alert("Would you like to display the ID, or retitle it?","Choose.","Rename","Show"))
 			if("Rename")
@@ -231,3 +233,10 @@
 	New()
 		access = get_all_centcom_access()
 		..()
+
+/obj/item/weapon/card/id/salvage_captain
+	name = "Captain's ID"
+	registered_name = "Captain"
+	icon_state = "centcom"
+	desc = "Finders, keepers."
+	access = list(access_salvage_captain)

@@ -363,7 +363,7 @@
 	if ((!subject.ckey) || (!subject.client))
 		scantemp = "Error: Mental interface failure."
 		return
-	if (NOCLONE in subject.mutations)
+	if (M_NOCLONE in subject.mutations)
 		scantemp = "Error: Mental interface failure."
 		return
 	if (!isnull(find_record(subject.ckey)))

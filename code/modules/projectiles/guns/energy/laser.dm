@@ -6,6 +6,7 @@
 	fire_sound = 'sound/weapons/Laser.ogg'
 	w_class = 3.0
 	m_amt = 2000
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "combat=3;magnets=2"
 	projectile_type = "/obj/item/projectile/beam"
 
@@ -35,7 +36,7 @@ obj/item/weapon/gun/energy/laser/retro
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -69,7 +70,7 @@ obj/item/weapon/gun/energy/laser/retro
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -147,7 +148,7 @@ obj/item/weapon/gun/energy/laser/retro
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -184,7 +185,7 @@ obj/item/weapon/gun/energy/laser/retro
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 

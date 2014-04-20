@@ -127,6 +127,7 @@
 	w_class = 3.0
 	g_amt = 10
 	m_amt = 10
+	w_type = RECYK_MISC
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7.0
 
@@ -577,3 +578,13 @@
 	force = 5
 	w_class = 4.0
 	slot_flags = SLOT_BACK
+
+
+/*
+ * OMG THEIF
+ */
+/obj/item/toy/gooncode
+	name = "Goonecode"
+	desc = "The holy grail of all programmers."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "gooncode"

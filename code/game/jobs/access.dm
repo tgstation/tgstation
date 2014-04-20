@@ -64,6 +64,7 @@
 /var/const/access_gateway = 62
 /var/const/access_sec_doors = 63 // Security front doors
 /var/const/access_psychiatrist = 64 // Psychiatrist's office
+/var/const/access_salvage_captain = 65 // Salvage ship captain's quarters
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -415,13 +416,18 @@
 		if(access_cent_captain)
 			return "Code Gold"
 
+// Cache - N3X
+var/global/list/all_jobs
 /proc/get_all_jobs()
-	var/list/all_jobs = list()
-	var/list/all_datums = typesof(/datum/job)
-	all_datums.Remove(list(/datum/job,/datum/job/ai,/datum/job/cyborg))
-	var/datum/job/jobdatum
-	for(var/jobtype in all_datums)
-		jobdatum = new jobtype
+	// Have cache?  Use cache.
+	if(all_jobs)
+		return all_jobs
+
+	// Rebuild cache.
+	all_jobs=list()
+	for(var/jobtype in typesof(/datum/job) - /datum/job)
+		var/datum/job/jobdatum = new jobtype
+		if(jobdatum.info_flag & JINFO_SILICON) continue
 		all_jobs.Add(jobdatum.title)
 	return all_jobs
 

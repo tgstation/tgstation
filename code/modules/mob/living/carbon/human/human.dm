@@ -32,6 +32,11 @@
 	set_species("Vox")
 	..()
 
+/mob/living/carbon/human/skellington/New()
+	h_style = "Bald"
+	set_species("Skellington")
+	..()
+
 /mob/living/carbon/human/diona/New()
 	species = new /datum/species/diona(src)
 	..()
@@ -40,11 +45,6 @@
 
 	if(!species)
 		set_species()
-
-	if(species.language)
-		var/datum/language/L = all_languages[species.language]
-		if(L)
-			languages += L
 
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
@@ -102,8 +102,8 @@
 					slime.UpdateFeed()
 			return
 
-		if(istype(tmob, /mob/living/carbon/human) && (FAT in tmob.mutations))
-			if(prob(40) && !(FAT in src.mutations))
+		if(istype(tmob, /mob/living/carbon/human) && (M_FAT in tmob.mutations))
+			if(prob(40) && !(M_FAT in src.mutations))
 				src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 				now_pushing = 0
 				return
@@ -131,11 +131,10 @@
 
 			if (!AM.anchored)
 				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/structure/window))
-					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-						for(var/obj/structure/window/win in get_step(AM,t))
-							now_pushing = 0
-							return
+				if (istype(AM, /obj/structure/window/full))
+					for(var/obj/structure/window/win in get_step(AM,t))
+						now_pushing = 0
+						return
 				step(AM, t)
 			now_pushing = 0
 		return
@@ -171,6 +170,9 @@
 		if (istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)&&wear_suit:s_initialized)
 			stat("Energy Charge", round(wear_suit:cell:charge/100))
 
+	if(istype(loc, /obj/spacepod)) // Spacdpods!
+		var/obj/spacepod/S = loc
+		stat("Spacepod Charge", "[istype(S.battery) ? "[(S.battery.charge / S.battery.maxcharge) * 100]" : "No cell detected"]")
 
 /mob/living/carbon/human/ex_act(severity)
 	if(!blinded)
@@ -280,23 +282,6 @@
 	return
 
 
-/mob/living/carbon/human/hand_p(mob/M as mob)
-	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-	var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
-	var/armor = run_armor_check(affecting, "melee")
-	apply_damage(rand(1,2), BRUTE, affecting, armor)
-	if(armor >= 2)	return
-
-	for(var/datum/disease/D in M.viruses)
-		if(istype(D, /datum/disease/jungle_fever))
-			var/mob/living/carbon/human/H = src
-			src = null
-			src = H.monkeyize()
-			contract_disease(D,1,0)
-	return
-
-
-
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
@@ -305,8 +290,7 @@
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
-		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
-		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
+		add_logs(M, src, "attacked", admin=0)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 		var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
@@ -314,6 +298,14 @@
 		apply_damage(damage, BRUTE, affecting, armor)
 		if(armor >= 2)	return
 
+
+/mob/living/carbon/human/proc/is_loyalty_implanted(mob/living/carbon/human/M)
+	for(var/L in M.contents)
+		if(istype(L, /obj/item/weapon/implant/loyalty))
+			for(var/datum/organ/external/O in M.organs)
+				if(L in O.implants)
+					return 1
+	return 0
 
 /mob/living/carbon/human/attack_slime(mob/living/carbon/slime/M as mob)
 	if(M.Victim) return // can't attack while eating!
@@ -434,7 +426,7 @@
 /mob/living/carbon/human/HasEntered(var/atom/movable/AM)
 	var/obj/machinery/bot/mulebot/MB = AM
 	if(istype(MB))
-		MB.RunOverCreature(src,"#A10808")
+		MB.RunOverCreature(src,species.blood_color)
 
 		var/damage = rand(5,15)
 		apply_damage(2*damage, BRUTE, "head")
@@ -497,7 +489,7 @@
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name()
 	var/datum/organ/external/head/head = get_organ("head")
-	if( !head || head.disfigured || (head.status & ORGAN_DESTROYED) || !real_name || (HUSK in mutations) )	//disfigured. use id-name if possible
+	if( !head || head.disfigured || (head.status & ORGAN_DESTROYED) || !real_name || (M_HUSK in mutations) )	//disfigured. use id-name if possible
 		return "Unknown"
 	return real_name
 
@@ -527,7 +519,7 @@
 			var/obj/item/clothing/gloves/G = gloves
 			siemens_coeff = G.siemens_coefficient
 	//If they have shock immunity mutation
-	if(mShock in src.mutations)
+	if(M_NO_SHOCK in src.mutations)
 		siemens_coeff = 0
 	return ..(shock_damage,source,siemens_coeff)
 
@@ -947,7 +939,7 @@
 		remoteview_target = null
 		return
 
-	if(!(mMorph in mutations))
+	if(!(M_MORPH in mutations))
 		src.verbs -= /mob/living/carbon/human/proc/morph
 		return
 
@@ -1026,7 +1018,7 @@
 		remoteview_target = null
 		return
 
-	if(!(mRemotetalk in src.mutations))
+	if(!(M_REMOTE_TALK in src.mutations))
 		src.verbs -= /mob/living/carbon/human/proc/remotesay
 		return
 	var/list/creatures = list()
@@ -1037,7 +1029,7 @@
 		return
 
 	var/say = input ("What do you wish to say")
-	if(mRemotetalk in target.mutations)
+	if(M_REMOTE_TALK in target.mutations)
 		target.show_message("\blue You hear [src.real_name]'s voice: [say]")
 	else
 		target.show_message("\blue You hear a voice that seems to echo around the room: [say]")
@@ -1054,7 +1046,7 @@
 		reset_view(0)
 		return
 
-	if(!(mRemote in src.mutations))
+	if(!(M_REMOTE_VIEW in src.mutations))
 		remoteview_target = null
 		reset_view(0)
 		src.verbs -= /mob/living/carbon/human/proc/remoteobserve
@@ -1077,6 +1069,8 @@
 		if(!ishuman(h)) continue //Can't see non humans with your fancy human mind.
 		var/turf/temp_turf = get_turf(h)
 		if((temp_turf.z != 1 && temp_turf.z != 5) || h.stat!=CONSCIOUS) //Not on mining or the station. Or dead
+			continue
+		if(M_PSY_RESIST in h.mutations)
 			continue
 		creatures += h
 
@@ -1120,8 +1114,10 @@
 	var/datum/organ/external/head/h = organs_by_name["head"]
 	h.disfigured = 0
 
-	vessel.add_reagent("blood",560-vessel.total_volume)
-	fixblood()
+	if(species && !(species.flags & NO_BLOOD))
+		vessel.add_reagent("blood",560-vessel.total_volume)
+		fixblood()
+
 	for (var/obj/item/weapon/organ/head/H in world)
 		if(H.brainmob)
 			if(H.brainmob.real_name == src.real_name)
@@ -1192,6 +1188,7 @@
 		return 0 //already bloodied with this blood. Cannot add more.
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 	src.update_inv_gloves()	//handles bloody hands overlays and updating
+	verbs += /mob/living/carbon/human/proc/bloody_doodle
 	return 1 //we applied blood to the item
 
 /mob/living/carbon/human/clean_blood()
@@ -1356,7 +1353,13 @@ mob/living/carbon/human/yank_out_object()
 	if(species && (species.name && species.name == new_species))
 		return
 
+	if(species && species.language)
+		remove_language(species.language)
+
 	species = all_species[new_species]
+
+	if(species.language)
+		add_language(species.language)
 
 	see_in_dark = species.darksight
 	if(see_in_dark > 2)
@@ -1375,3 +1378,67 @@ mob/living/carbon/human/yank_out_object()
 	else
 		return 0
 
+/mob/living/carbon/human/proc/bloody_doodle()
+	set category = "IC"
+	set name = "Write in blood"
+	set desc = "Use blood on your hands to write a short message on the floor or a wall, murder mystery style."
+
+	if (src.stat)
+		return
+
+	if (usr != src)
+		return 0 //something is terribly wrong
+
+	if (!bloody_hands)
+		verbs -= /mob/living/carbon/human/proc/bloody_doodle
+
+	if (src.gloves)
+		src << "<span class='warning'>Your [src.gloves] are getting in the way.</span>"
+		return
+
+	var/turf/simulated/T = src.loc
+	if (!istype(T)) //to prevent doodling out of mechs and lockers
+		src << "<span class='warning'>You cannot reach the floor.</span>"
+		return
+
+	var/direction = input(src,"Which way?","Tile selection") as anything in list("Here","North","South","East","West")
+	if (direction != "Here")
+		T = get_step(T,text2dir(direction))
+	if (!istype(T))
+		src << "<span class='warning'>You cannot doodle there.</span>"
+		return
+
+	var/num_doodles = 0
+	for (var/obj/effect/decal/cleanable/blood/writing/W in T)
+		num_doodles++
+	if (num_doodles > 4)
+		src << "<span class='warning'>There is no space to write on!</span>"
+		return
+
+	var/max_length = bloody_hands * 30 //tweeter style
+
+	var/message = stripped_input(src,"Write a message. It cannot be longer than [max_length] characters.","Blood writing", "")
+
+	if (message)
+		var/used_blood_amount = round(length(message) / 30, 1)
+		bloody_hands = max(0, bloody_hands - used_blood_amount) //use up some blood
+
+		if (length(message) > max_length)
+			message += "-"
+			src << "<span class='warning'>You ran out of blood to write with!</span>"
+
+		var/obj/effect/decal/cleanable/blood/writing/W = new(T)
+		W.basecolor = (hand_blood_color) ? hand_blood_color : "#A10808"
+		W.update_icon()
+		W.message = message
+		W.add_fingerprint(src)
+
+/mob/living/carbon/human/canSingulothPull(var/obj/machinery/singularity/singulo)
+	if(!..())
+		return 0
+
+	if(istype(shoes,/obj/item/clothing/shoes/magboots))
+		var/obj/item/clothing/shoes/magboots/M = shoes
+		if(M.magpulse)
+			return 0
+	return 1

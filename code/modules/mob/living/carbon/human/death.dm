@@ -20,7 +20,10 @@
 			E.droplimb(1,1)
 
 	flick("gibbed-h", animation)
-	hgibs(loc, viruses, dna)
+	if(species)
+		hgibs(loc, viruses, dna, species.flesh_color, species.blood_color)
+	else
+		hgibs(loc, viruses, dna)
 
 	spawn(15)
 		if(animation)	del(animation)
@@ -122,7 +125,7 @@
 	return
 
 /mob/living/carbon/human/proc/ChangeToHusk()
-	if(HUSK in mutations)	return
+	if(M_HUSK in mutations)	return
 
 	if(f_style)
 		f_style = "Shaved"		//we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
@@ -130,7 +133,7 @@
 		h_style = "Bald"
 	update_hair(0)
 
-	mutations.Add(HUSK)
+	mutations.Add(M_HUSK)
 	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
 	update_body(0)
 	update_mutantrace()
@@ -138,5 +141,5 @@
 
 /mob/living/carbon/human/proc/Drain()
 	ChangeToHusk()
-	mutations |= NOCLONE
+	mutations |= M_NOCLONE
 	return

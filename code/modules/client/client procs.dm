@@ -239,35 +239,22 @@
 	if(inactivity > duration)	return inactivity
 	return 0
 
+/client/verb/resend_resources()
+	set name = "Resend Resources"
+	set desc = "Re-send resources for NanoUI. May help those with NanoUI issues."
+	set category = "Preferences"
+
+	usr << "\blue Re-sending NanoUI resources.  This may result in lag."
+	nanomanager.send_resources(src)
+
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
+//	preload_vox() //Causes long delays with initial start window and subsequent windows when first logged in.
+
+	// Send NanoUI resources to this client
+	nanomanager.send_resources(src)
+
 	getFiles(
-		'nano/js/libraries.min.js',
-		//'nano/js/libraries/1-jquery.js',
-		//'nano/js/libraries/2-jsviews.js',
-		//'nano/js/libraries/3-jquery.timers.js',
-		'nano/js/nano_update.js',
-		'nano/js/nano_config.js',
-		'nano/js/nano_base_helpers.js',
-		'nano/css/shared.css',
-		'nano/css/icons.css',
-		'nano/templates/chem_dispenser.tmpl',
-		'nano/templates/apc.tmpl',
-		'nano/templates/ame.tmpl',
-		'nano/templates/atmos_control.tmpl',
-		'nano/templates/cryo.tmpl',
-		'nano/templates/air_alarm.tmpl',
-		'nano/templates/telescience_console.tmpl',
-		'nano/templates/dna_modifier.tmpl',
-		'nano/images/uiBackground.png',
-		'nano/images/uiIcons16.png',
-		'nano/images/uiIcons24.png',
-		'nano/images/uiBackground-Syndicate.png',
-		'nano/images/uiLinkPendingIcon.gif',
-		'nano/images/uiMaskBackground.png',
-		'nano/images/uiNoticeBackground.jpg',
-		'nano/images/uiTitleFluff.png',
-		'nano/images/uiTitleFluff-Syndicate.png',
 		'html/search.js',
 		'html/panels.css',
 		'icons/pda_icons/pda_atmos.png',

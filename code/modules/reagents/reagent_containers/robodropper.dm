@@ -24,8 +24,19 @@
 
 
 			var/trans = 0
+			if(isobj(target))
+				// /vg/: Logging transfers of bad things
+				if(target.reagents_to_log.len)
+					var/list/badshit=list()
+					for(var/bad_reagent in target.reagents_to_log)
+						if(reagents.has_reagent(bad_reagent))
+							badshit += reagents_to_log[bad_reagent]
+					if(badshit.len)
+						var/hl="\red <b>([english_list(badshit)])</b> \black"
+						message_admins("[user.name] ([user.ckey]) added [reagents.get_reagent_ids(1)] to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+						log_game("[user.name] ([user.ckey]) added [reagents.get_reagent_ids(1)] to \a [target] with [src].")
 
-			if(ismob(target))
+			else if(ismob(target))
 				if(istype(target , /mob/living/carbon/human))
 					var/mob/living/carbon/human/victim = target
 

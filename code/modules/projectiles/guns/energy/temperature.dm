@@ -5,11 +5,11 @@
 	desc = "A gun that changes temperatures."
 	var/temperature = T20C
 	var/current_temperature = T20C
-	charge_cost = 100
+	charge_cost = 90
 	origin_tech = "combat=3;materials=4;powerstorage=3;magnets=2"
 
 	projectile_type = "/obj/item/projectile/temp"
-	cell_type = "/obj/item/weapon/cell/crap"
+	cell_type = "/obj/item/weapon/cell/temperaturegun"
 
 
 	New()
@@ -17,7 +17,7 @@
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -62,12 +62,11 @@
 
 	process()
 		switch(temperature)
-			if(0 to 100) charge_cost = 1000
-			if(100 to 250) charge_cost = 500
-			if(251 to 300) charge_cost = 100
-			if(301 to 400) charge_cost = 500
-			if(401 to 500) charge_cost = 1000
-
+			if(0 to 100) charge_cost = 300
+			if(100 to 250) charge_cost = 180
+			if(251 to 300) charge_cost = 90
+			if(301 to 400) charge_cost = 180
+			if(401 to 500) charge_cost = 300
 		if(current_temperature != temperature)
 			var/difference = abs(current_temperature - temperature)
 			if(difference >= 10)

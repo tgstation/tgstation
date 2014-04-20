@@ -36,6 +36,8 @@
 
 	var/friendc = 0      // track if Friend Computer mode
 
+	var/spookymode=0 // Ghosts.
+
 	maptext_height = 26
 	maptext_width = 32
 
@@ -49,9 +51,12 @@
 
 
 	// timed process
-
 	process()
 		if(stat & NOPOWER)
+			remove_display()
+			return
+		if(spookymode)
+			spookymode = 0
 			remove_display()
 			return
 		update()
@@ -206,6 +211,8 @@
 	anchored = 1
 	density = 0
 
+	var/spookymode=0 // Ghosts
+
 	var/mode = 0	// 0 = Blank
 					// 1 = AI emoticon
 					// 2 = Blue screen of death
@@ -217,6 +224,10 @@
 
 	process()
 		if(stat & NOPOWER)
+			overlays.Cut()
+			return
+		if(spookymode)
+			spookymode = 0
 			overlays.Cut()
 			return
 

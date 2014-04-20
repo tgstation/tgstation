@@ -124,6 +124,7 @@ var/global/list/RPD_recipes=list(
 	throw_range = 5
 	w_class = 3.0
 	m_amt = 50000
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
 	var/working = 0
@@ -397,6 +398,10 @@ var/global/list/RPD_recipes=list(
 
 
 /obj/item/weapon/pipe_dispenser/afterattack(atom/A, mob/user)
+	if(!in_range(A,user))
+		return
+	if(loc != user)
+		return
 	if(!isrobot(user) && !ishuman(user))
 		return 0
 	if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
@@ -408,8 +413,11 @@ var/global/list/RPD_recipes=list(
 				// Avoid spewing errors about invalid mode -2 when clicking on stuff that aren't pipes.
 				user << "\The [src]'s error light flickers.  Perhaps you need to only use it on pipes and pipe meters?"
 				return 0
-			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			var/obj/machinery/atmospherics/pipe/P = A
+			if(!(paint_color in P.available_colors))
+				user << "\red This [P] can't be painted [paint_color]. Available colors: [english_list(P.available_colors)]"
+				return 0
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			P._color = paint_color
 			user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
 			P.update_icon()

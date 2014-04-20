@@ -83,11 +83,15 @@
 
 	var/list/TLV = list()
 
+/obj/machinery/alarm/xenobio
+	preset = AALARM_PRESET_HUMAN
+	req_one_access = list(access_rd, access_atmospherics, access_engine_equip, access_xenobiology)
+	req_access = list()
 
 /obj/machinery/alarm/server
 	preset = AALARM_PRESET_SERVER
-	req_access = list(access_rd, access_atmospherics, access_engine_equip)
-
+	req_one_access = list(access_rd, access_atmospherics, access_engine_equip)
+	req_access = list()
 
 /obj/machinery/alarm/vox
 	preset = AALARM_PRESET_VOX
@@ -112,9 +116,9 @@
 	switch(preset)
 		if(AALARM_PRESET_VOX) // Same as usual, s/nitrogen/oxygen
 			TLV["nitrogen"] = 		list(16, 19, 135, 140) // Vox use same partial pressure values for N2 as humans do for O2.
-			TLV["oxygen"] =			list(-1.0, -1.0, 1, 2) // Under 1 kPa (PP), vox don't notice squat (vox_oxygen_max)
+			TLV["oxygen"] =			list(-1.0, -1.0, 0.5, 1.0) // Under 1 kPa (PP), vox don't notice squat (vox_oxygen_max)
 		if(AALARM_PRESET_SERVER) // Cold as fuck.
-			TLV["oxygen"] =			list(-1.0, -1.0,-1.0,-1.0) // Partial pressure, kpa
+			TLV["oxygen"] =			list(-1.0, -1.0,-1.0,-1.0)
 			TLV["carbon_dioxide"] = list(-1.0, -1.0,   5,  10) // Partial pressure, kpa
 			TLV["plasma"] =			list(-1.0, -1.0, 0.2, 0.5) // Partial pressure, kpa
 			TLV["other"] =			list(-1.0, -1.0, 0.5, 1.0) // Partial pressure, kpa
@@ -465,60 +469,11 @@
 
 /obj/machinery/alarm/proc/air_doors_close(manual)
 	var/area/A = get_area(src)
-	if(!A.master.air_doors_activated)
-		A.master.air_doors_activated = 1
-		for(var/obj/machinery/door/E in A.master.all_doors)
-			if(istype(E,/obj/machinery/door/firedoor))
-				if(!E:blocked)
-					if(E.operating)
-						E:nextstate = CLOSED
-					else if(!E.density)
-						spawn(0)
-							E.close()
-				continue
-
-/*				if(istype(E, /obj/machinery/door/airlock))
-				if((!E:arePowerSystemsOn()) || (E.stat & NOPOWER) || E:air_locked) continue
-				if(!E.density)
-					spawn(0)
-						E.close()
-						spawn(10)
-							if(E.density)
-								E:air_locked = E.req_access
-								E:req_access = list(ACCESS_ENGINE, ACCESS_ATMOSPHERICS)
-								E.update_icon()
-				else if(E.operating)
-					spawn(10)
-						E.close()
-						if(E.density)
-							E:air_locked = E.req_access
-							E:req_access = list(ACCESS_ENGINE, ACCESS_ATMOSPHERICS)
-							E.update_icon()
-				else if(!E:locked) //Don't lock already bolted doors.
-					E:air_locked = E.req_access
-					E:req_access = list(ACCESS_ENGINE, ACCESS_ATMOSPHERICS)
-					E.update_icon()*/
+	A.master.CloseFirelocks()
 
 /obj/machinery/alarm/proc/air_doors_open(manual)
 	var/area/A = get_area(loc)
-	if(A.master.air_doors_activated)
-		A.master.air_doors_activated = 0
-		for(var/obj/machinery/door/E in A.master.all_doors)
-			if(istype(E, /obj/machinery/door/firedoor))
-				if(!E:blocked)
-					if(E.operating)
-						E:nextstate = OPEN
-					else if(E.density)
-						spawn(0)
-							E.open()
-				continue
-
-/*				if(istype(E, /obj/machinery/door/airlock))
-				if((!E:arePowerSystemsOn()) || (E.stat & NOPOWER)) continue
-				if(!isnull(E:air_locked)) //Don't mess with doors locked for other reasons.
-					E:req_access = E:air_locked
-					E:air_locked = null
-					E.update_icon()*/
+	A.master.OpenFirelocks()
 
 
 
@@ -622,13 +577,14 @@
 
 	var/data[0]
 	data["air"]=ui_air_status()
-	data["alarmActivated"]=alarmActivated || local_danger_level==2
+	data["alarmActivated"]=alarmActivated //|| local_danger_level==2
 	data["sensors"]=TLV
 
 	// Locked when:
 	//   Not sent from atmos console AND
-	//   Not silicon AND locked.
-	data["locked"]=!fromAtmosConsole && (!(istype(user, /mob/living/silicon)) && locked)
+	//   Not silicon AND locked AND
+	//   NOT adminghost.
+	data["locked"]=!fromAtmosConsole && (!(istype(user, /mob/living/silicon)) && locked) && !isAdminGhost(user)
 
 	data["rcon"]=rcon_setting
 	data["target_temp"] = target_temperature - T0C
@@ -971,20 +927,6 @@
 		usr << "It is not wired."
 	if (buildstage < 1)
 		usr << "The circuit is missing."
-/*
-/*
-AIR ALARM CIRCUIT
-Just a object used in constructing air alarms
-*/
-/obj/item/weapon/airalarm_electronics
-	name = "air alarm electronics"
-	icon = 'icons/obj/doors/door_assembly.dmi'
-	icon_state = "door_electronics"
-	desc = "Looks like a circuit. Probably is."
-	w_class = 2.0
-	m_amt = 50
-	g_amt = 50
-*/
 
 /*
 AIR ALARM ITEM
@@ -997,6 +939,8 @@ Code shamelessly copied from apc_frame
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarm_bitem"
 	flags = FPRINT | TABLEPASS| CONDUCT
+	m_amt = 2*CC_PER_SHEET_METAL
+	w_type = RECYK_METAL
 
 /obj/item/alarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
@@ -1050,6 +994,14 @@ FIRE ALARM
 	var/last_process = 0
 	var/wiresexposed = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
+
+	var/area/master_area
+
+/obj/machinery/firealarm/New()
+	var/area/A = get_area_master(src)
+	if (!( istype(A, /area) ))
+		return
+	master_area=A
 
 /obj/machinery/firealarm/update_icon()
 
@@ -1195,13 +1147,11 @@ FIRE ALARM
 		return
 
 	user.set_machine(src)
-	var/area/A = src.loc
 	var/d1
 	var/d2
 	if (istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon))
-		A = A.loc
 
-		if (A.fire)
+		if (master_area.fire)
 			d1 = text("<A href='?src=\ref[];reset=1'>Reset - Lockdown</A>", src)
 		else
 			d1 = text("<A href='?src=\ref[];alarm=1'>Alarm - Lockdown</A>", src)
@@ -1215,8 +1165,7 @@ FIRE ALARM
 		user << browse(dat, "window=firealarm")
 		onclose(user, "firealarm")
 	else
-		A = A.loc
-		if (A.fire)
+		if (master_area.fire)
 			d1 = text("<A href='?src=\ref[];reset=1'>[]</A>", src, stars("Reset - Lockdown"))
 		else
 			d1 = text("<A href='?src=\ref[];alarm=1'>[]</A>", src, stars("Alarm - Lockdown"))
@@ -1265,22 +1214,14 @@ FIRE ALARM
 /obj/machinery/firealarm/proc/reset()
 	if (!( src.working ))
 		return
-	var/area/A = src.loc
-	A = A.loc
-	if (!( istype(A, /area) ))
-		return
-	A.firereset()
+	master_area.firereset()
 	update_icon()
 	return
 
 /obj/machinery/firealarm/proc/alarm()
 	if (!( src.working ))
 		return
-	var/area/A = src.loc
-	A = A.loc
-	if (!( istype(A, /area) ))
-		return
-	A.firealert()
+	master_area.firealert()
 	update_icon()
 	//playsound(get_turf(src), 'sound/ambience/signal.ogg', 75, 0)
 	return
@@ -1307,20 +1248,7 @@ FIRE ALARM
 			src.overlays += image('icons/obj/monitors.dmi', "overlay_green")
 
 	update_icon()
-/*
-/*
-FIRE ALARM CIRCUIT
-Just a object used in constructing fire alarms
-*/
-/obj/item/weapon/firealarm_electronics
-	name = "fire alarm electronics"
-	icon = 'icons/obj/doors/door_assembly.dmi'
-	icon_state = "door_electronics"
-	desc = "A circuit. It has a label on it, it says \"Can handle heat levels up to 40 degrees celsius!\""
-	w_class = 2.0
-	m_amt = 50
-	g_amt = 50
-*/
+
 
 /*
 FIRE ALARM ITEM
@@ -1333,6 +1261,8 @@ Code shamelessly copied from apc_frame
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire_bitem"
 	flags = FPRINT | TABLEPASS| CONDUCT
+	m_amt=2*CC_PER_SHEET_METAL
+	w_type = RECYK_METAL
 
 /obj/item/firealarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
@@ -1382,6 +1312,14 @@ Code shamelessly copied from apc_frame
 	idle_power_usage = 2
 	active_power_usage = 6
 
+	var/area/master_area
+
+/obj/machinery/partyalarm/New()
+	var/area/A = get_area_master(src)
+	if (!( istype(A, /area) ))
+		return
+	master_area=A
+
 /obj/machinery/partyalarm/attack_paw(mob/user as mob)
 	return attack_hand(user)
 
@@ -1390,15 +1328,10 @@ Code shamelessly copied from apc_frame
 		return
 
 	user.machine = src
-	var/area/A = get_area(src)
-	ASSERT(isarea(A))
-	if(A.master)
-		A = A.master
 	var/d1
 	var/d2
 	if (istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon/ai))
-
-		if (A.party)
+		if (master_area.party)
 			d1 = text("<A href='?src=\ref[];reset=1'>No Party :(</A>", src)
 		else
 			d1 = text("<A href='?src=\ref[];alarm=1'>PARTY!!!</A>", src)
@@ -1412,7 +1345,7 @@ Code shamelessly copied from apc_frame
 		user << browse(dat, "window=partyalarm")
 		onclose(user, "partyalarm")
 	else
-		if (A.fire)
+		if (master_area.fire)
 			d1 = text("<A href='?src=\ref[];reset=1'>[]</A>", src, stars("No Party :("))
 		else
 			d1 = text("<A href='?src=\ref[];alarm=1'>[]</A>", src, stars("PARTY!!!"))
@@ -1430,21 +1363,13 @@ Code shamelessly copied from apc_frame
 /obj/machinery/partyalarm/proc/reset()
 	if (!( working ))
 		return
-	var/area/A = get_area(src)
-	ASSERT(isarea(A))
-	if(A.master)
-		A = A.master
-	A.partyreset()
+	master_area.partyreset()
 	return
 
 /obj/machinery/partyalarm/proc/alarm()
 	if (!( working ))
 		return
-	var/area/A = get_area(src)
-	ASSERT(isarea(A))
-	if(A.master)
-		A = A.master
-	A.partyalert()
+	master_area.partyalert()
 	return
 
 /obj/machinery/partyalarm/Topic(href, href_list)

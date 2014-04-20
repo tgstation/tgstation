@@ -32,10 +32,14 @@
 	name = "Hivebot"
 	desc = "A smallish robot, this one is armed!"
 	ranged = 1
+	retreat_distance = 5
+	minimum_distance = 5
 
 /mob/living/simple_animal/hostile/hivebot/rapid
 	ranged = 1
 	rapid = 1
+	retreat_distance = 5
+	minimum_distance = 5
 
 /mob/living/simple_animal/hostile/hivebot/strong
 	name = "Strong Hivebot"
@@ -47,7 +51,7 @@
 /mob/living/simple_animal/hostile/hivebot/Die()
 	..()
 	visible_message("<b>[src]</b> blows apart!")
-	new /obj/effect/decal/cleanable/blood/robot(src.loc)
+	new /obj/effect/decal/cleanable/blood/gibs/robot(src.loc)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
@@ -76,7 +80,7 @@
 
 	New()
 		..()
-		var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
+		var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 		smoke.set_up(5, 0, src.loc)
 		smoke.start()
 		visible_message("\red <B>The [src] warps in!</B>")

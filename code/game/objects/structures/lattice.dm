@@ -24,7 +24,7 @@
 			L = locate(/obj/structure/lattice, get_step(src, dir))
 			L.updateOverlays()
 
-/obj/structure/lattice/Del()
+/obj/structure/lattice/Destroy()
 	for (var/dir in cardinal)
 		var/obj/structure/lattice/L
 		if(locate(/obj/structure/lattice, get_step(src, dir)))
@@ -39,10 +39,10 @@
 /obj/structure/lattice/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
-			del(src)
+			qdel(src)
 			return
 		if(3.0)
 			return
@@ -51,6 +51,7 @@
 
 /obj/structure/lattice/attackby(obj/item/C as obj, mob/user as mob)
 
+	// /vg/ - Rods for catwalks - N3X
 	if (istype(C, /obj/item/stack/tile/plasteel) || istype(C, /obj/item/stack/rods))
 		var/turf/T = get_turf(src)
 		T.attackby(C, user) //BubbleWrap - hand this off to the underlying turf instead

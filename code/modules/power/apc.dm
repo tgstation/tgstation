@@ -24,12 +24,13 @@
 	anchored = 1
 	use_power = 0
 	req_access = list(access_engine_equip)
+	var/spooky=0
 	var/area/area
 	var/areastring = null
 	var/obj/item/weapon/cell/cell
 	var/start_charge = 90				// initial cell charge %
 	var/cell_type = 2500				// 0=no cell, 1=regular, 2=high-cap (x5) <- old, now it's just 0=no cell, otherwise dictate cellcapacity by changing this value. 1 used to be 1000, 2 was 2500
-	var/opened = 0 //0=closed, 1=opened, 2=cover removed
+	var/opened = 0                      //0=closed, 1=opened, 2=cover removed
 	var/shorted = 0
 	var/lighting = 3
 	var/equipment = 3
@@ -77,21 +78,37 @@
 	src.tdir = dir		// to fix Vars bug
 	dir = SOUTH
 
-	pixel_x = (src.tdir & 3)? 0 : (src.tdir == 4 ? 24 : -24)
-	pixel_y = (src.tdir & 3)? (src.tdir ==1 ? 24 : -24) : 0
+	if(src.tdir & 3)
+		pixel_x = 0
+		pixel_y = (src.tdir == 1 ? 24 : -24)
+	else
+		pixel_x = (src.tdir == 4 ? 24 : -24)
+		pixel_y = 0
+
+	// No name set?
+	if(name == initial(name))
+		// Let's get one.
+
+		// Grab the area we're in.
+		var/area/A = get_area(src)
+
+		// Set name if we're in an area.
+		if(A)
+			name = "[A.name] APC"
+		// Otherwise, bitch to the coders.
+		else
+			log_admin("APC tried to spawn in a location without an area. [formatJumpTo(get_turf(src))]")
+
 	if (building==0)
 		init()
 	else
 		area = src.loc.loc:master
 		opened = 1
 		operating = 0
-		name = "[area.name] APC"
 		stat |= MAINT
 		src.update_icon()
 		spawn(5)
 			src.update()
-
-
 
 /obj/machinery/power/apc/proc/make_terminal()
 	// create a terminal object at the same position as original turf loc
@@ -148,34 +165,54 @@
 			else
 				usr << "The cover is closed."
 
-
-// update the APC icon to show the three base states
-// also add overlays for indicator lights
 /obj/machinery/power/apc/update_icon()
+	overlays = null
 
-	overlays.Cut()
-	if(opened)
-		var/basestate = "apc[ cell ? "2" : "1" ]"	// if opened, show cell if it's inserted
-		if (opened==1)
-			if (stat & (MAINT|BROKEN))
-				icon_state = "apcmaint" //disassembled APC cannot hold cell
+	if (opened)
+		// 2 = has cell
+		// 1 = no cell
+		var/basestate = "apc[cell ? "2" : "1"]"
+
+		if (opened == 1)
+			if (stat & (BROKEN | MAINT))
+				// Disassembled APC cannot hold cell.
+				icon_state = "apcmaint"
 			else
 				icon_state = basestate
 		else if (opened == 2)
 			icon_state = "[basestate]-nocover"
+
+		return
 	else if (stat & BROKEN)
 		icon_state = "apc-b"
-	else if(emagged || malfai)
+		return
+	else if (emagged || malfai || spooky)
 		icon_state = "apcemag"
-	else if(wiresexposed)
+		return
+	else if (wiresexposed)
 		icon_state = "apcewires"
-	else
-		icon_state = "apc0"
-		// if closed, update overlays for channel status
-		if(!(stat & (BROKEN|MAINT)))
-			overlays.Add("apcox-[locked]","apco3-[charging]")	// 0=blue 1=red // 0=red, 1=yellow/black 2=green
-			if(operating)
-				overlays.Add("apco0-[equipment]","apco1-[lighting]","apco2-[environ]")	// 0=red, 1=green, 2=blue
+		return
+
+	icon_state = "apc0"
+
+	if ((stat & (BROKEN | MAINT)) == 0)
+		overlays = new/list()
+		// 0 = green
+		// 1 = red
+		//
+		// 0 = red
+		// 1 = blue
+		// 2 = green
+		overlays.Add("apcox-[locked]", "apco3-[charging]")
+
+		if (operating)
+			// 0 = red
+			// 1 = yellow
+			// 2 = green
+			// 3 = blue
+			overlays.Add("apco0-[equipment]", "apco1-[lighting]", "apco2-[environ]")
+
+	return
 
 // Used in process so it doesn't update the icon too much
 /obj/machinery/power/apc/proc/queue_icon_update()
@@ -187,12 +224,20 @@
 			update_icon()
 			updating_icon = 0
 
-//attack with an item - open/close cover, insert cell, or (un)lock interface
+/obj/machinery/power/apc/proc/spookify()
+	if(spooky) return // Fuck you we're already spooky
+	spooky=1
+	update_icon()
+	spawn(10)
+		spooky=0
+		update_icon()
 
+//attack with an item - open/close cover, insert cell, or (un)lock interface
 /obj/machinery/power/apc/attackby(obj/item/W, mob/user)
 
 	if (istype(user, /mob/living/silicon) && get_dist(src,user)>1)
 		return src.attack_hand(user)
+	src.add_fingerprint(user)
 	if (istype(W, /obj/item/weapon/crowbar) && opened)
 		if (has_electronics==1)
 			if (terminal)
@@ -431,29 +476,31 @@
 //		return
 	if(!user)
 		return
-	src.add_fingerprint(user)
-	if(usr == user && opened)
-		if(cell)
-			if(issilicon(user) && !isMoMMI(user)) // MoMMIs can hold one item in their tool slot.
-				cell.loc=src.loc // Drop it, whoops.
-			else
-				user.put_in_hands(cell)
-			cell.add_fingerprint(user)
-			cell.updateicon()
+	if(!isobserver(user))
+		src.add_fingerprint(user)
+		if(usr == user && opened)
+			if(cell)
+				if(issilicon(user) && !isMoMMI(user)) // MoMMIs can hold one item in their tool slot.
+					cell.loc=src.loc // Drop it, whoops.
+				else
+					user.put_in_hands(cell)
 
-			src.cell = null
-			user.visible_message("\red [user.name] removes the power cell from [src.name]!", "You remove the power cell.")
-			//user << "You remove the power cell."
-			charging = 0
-			src.update_icon()
-		return
-	if(stat & (BROKEN|MAINT))
-		return
+				cell.add_fingerprint(user)
+				cell.updateicon()
 
-	if(ishuman(user))
-		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("APC",src,user:wear_suit)
+				src.cell = null
+				user.visible_message("\red [user.name] removes the power cell from [src.name]!", "You remove the power cell.")
+				//user << "You remove the power cell."
+				charging = 0
+				src.update_icon()
 			return
+		if(stat & (BROKEN|MAINT))
+			return
+
+		if(ishuman(user))
+			if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
+				call(/obj/item/clothing/gloves/space_ninja/proc/drain)("APC",src,user:wear_suit)
+				return
 	// do APC interaction
 	user.set_machine(src)
 	src.interact(user)
@@ -484,7 +531,7 @@
 	if(!user)
 		return
 
-	if(wiresexposed /*&& (!istype(user, /mob/living/silicon))*/) //Commented out the typecheck to allow engiborgs to repair damaged apcs.
+	if(wiresexposed)
 		wires.Interact(user)
 
 	return ui_interact(user)
@@ -504,8 +551,7 @@
 	else
 		return 0 // 0 = User is not a Malf AI
 
-
-/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main")
+/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(!user)
 		return
 
@@ -518,7 +564,7 @@
 		"chargingStatus" = charging,
 		"totalLoad" = lastused_equip + lastused_light + lastused_environ,
 		"coverLocked" = coverlocked,
-		"siliconUser" = istype(user, /mob/living/silicon),
+		"siliconUser" = istype(user, /mob/living/silicon) || isAdminGhost(user), // Allow aghosts to fuck with APCs
 		"malfStatus" = get_malf_status(user),
 
 		"powerChannels" = list(
@@ -555,19 +601,18 @@
 		)
 	)
 
-	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, ui_key)
+	// update the ui if it exists, returns null if no ui is passed/found
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)
 		// the ui does not exist, so we'll create a new one
-		ui = new(user, src, ui_key, "apc.tmpl", "[area.name] - APC", 500, data["siliconUser"] ? 465 : 390)
-		// When the UI is first opened this is the data it will use
+        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
+		ui = new(user, src, ui_key, "apc.tmpl", "[area.name] - APC", 520, data["siliconUser"] ? 465 : 440)
+		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
+		// open the new ui window
 		ui.open()
-		// Auto update every Master Controller tick
+		// auto update every Master Controller tick
 		ui.set_auto_update(1)
-	else
-		// The UI is already open so push the new data to it
-		ui.push_data(data)
-		return
 
 /obj/machinery/power/apc/proc/report()
 	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_equip+lastused_light+lastused_environ]) : [cell? cell.percent() : "N/C"] ([charging])"
@@ -600,8 +645,11 @@
 		return 0
 	if ( ! (istype(user, /mob/living/carbon/human) || \
 			istype(user, /mob/living/silicon) || \
+			istype(user, /mob/dead/observer) || \
 			istype(user, /mob/living/carbon/monkey) /*&& ticker && ticker.mode.name == "monkey"*/) )
 		user << "\red You don't have the dexterity to use this [src]!"
+		nanomanager.close_user_uis(user, src)
+
 		return 0
 	if(user.restrained())
 		user << "\red You must have free hands to use this [src]"
@@ -621,12 +669,20 @@
 			)                                                            \
 		)
 			if(!loud)
-				user << "\red \The [src] has AI control disabled!"
-				user << browse(null, "window=apc")
-				user.unset_machine()
+				user << "\red \The [src] have AI control disabled!"
+				nanomanager.close_user_uis(user, src)
+
+			return 0
+	else if(isobserver(user))
+		if(malfhack && istype(malfai) && !isAdminGhost(user))
+			if(!loud)
+				user << "\red \The [src] have AI control disabled!"
+				nanomanager.close_user_uis(user, src)
 			return 0
 	else
 		if ((!in_range(src, user) || !istype(src.loc, /turf)))
+			nanomanager.close_user_uis(user, src)
+
 			return 0
 
 	var/mob/living/carbon/human/H = user
@@ -802,7 +858,7 @@
 				cell.corrupt()
 				src.malfhack = 1
 				update_icon()
-				var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
+				var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 				smoke.set_up(3, 0, src.loc)
 				smoke.attach(src)
 				smoke.start()
@@ -835,7 +891,6 @@
 		return
 	if(!area.requires_power)
 		return
-
 
 	/*
 	if (equipment > 1) // off=0, off auto=1, on=2, on auto=3
@@ -985,7 +1040,6 @@
 		area.poweralert(0, src)
 
 	// update icon & area power if anything changed
-
 	if(last_lt != lighting || last_eq != equipment || last_en != environ)
 		queue_icon_update()
 		update()
@@ -1036,10 +1090,10 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 
 	switch(severity)
 		if(1.0)
-			//set_broken() //now Del() do what we need
+			//set_broken() //now Destroy() do what we need
 			if (cell)
 				cell.ex_act(1.0) // more lags woohoo
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
@@ -1085,7 +1139,7 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 					L.broken()
 					sleep(1)
 
-/obj/machinery/power/apc/Del()
+/obj/machinery/power/apc/Destroy()
 	if(malfai && operating)
 		if (ticker.mode.config_tag == "malfunction")
 			if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))

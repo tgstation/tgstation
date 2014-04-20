@@ -1,0 +1,83 @@
+<h3>Tank Status</h3>
+<div class="item">
+	<div class="itemLabel">
+		Tank Label:
+	</div>
+	<div class="itemContent">		
+		<div style="float: left; width: 180px;">{{:name}}</div> {{:~link('Relabel', 'pencil', {'relabel' : 1}, (canLabel) ? null : 'disabled')}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Tank Pressure:
+	</div>
+	<div class="itemContent">		
+		{{:tankPressure}} kPa
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Port Status:
+	</div>
+	<div class="itemContent">		
+		{{:portConnected ? '<span class="good">Connected</span>' : '<span class="average">Disconnected</span>'}}
+	</div>
+</div>
+
+<h3>Holding Tank Status</h3>
+{{if hasHoldingTank}}
+	<div class="item">
+		<div class="itemLabel">
+			Tank Label:
+		</div>
+		<div class="itemContent">		
+			<div style="float: left; width: 180px;">{{:holdingTank.name}}</div> {{:~link('Eject', 'eject', {'remove_tank' : 1})}}
+		</div>
+	</div>
+
+	<div class="item">
+		<div class="itemLabel">
+			Tank Pressure:
+		</div>
+		<div class="itemContent">		
+			{{:holdingTank.tankPressure}} kPa
+		</div>
+	</div>
+{{else}}		
+	<div class="item"><span class="average"><i>No holding tank inserted.</i></span></div>
+	<div class="item">&nbsp;</div>
+{{/if}}
+
+
+<h3>Release Valve Status</h3>
+<div class="item">
+	<div class="itemLabel">
+		Release Pressure:
+	</div>
+	<div class="itemContent">
+		{{:~displayBar(releasePressure, minReleasePressure, maxReleasePressure)}}			
+		<div style="clear: both; padding-top: 4px;">
+			{{:~link('-', null, {'pressure_adj' : -1000}, (releasePressure > minReleasePressure) ? null : 'disabled')}}
+			{{:~link('-', null, {'pressure_adj' : -100}, (releasePressure > minReleasePressure) ? null : 'disabled')}}
+			{{:~link('-', null, {'pressure_adj' : -10}, (releasePressure > minReleasePressure) ? null : 'disabled')}}
+			{{:~link('-', null, {'pressure_adj' : -1}, (releasePressure > minReleasePressure) ? null : 'disabled')}}				
+			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:releasePressure}} kPa&nbsp;</div>
+			{{:~link('+', null, {'pressure_adj' : 1}, (releasePressure < maxReleasePressure) ? null : 'disabled')}}
+			{{:~link('+', null, {'pressure_adj' : 10}, (releasePressure < maxReleasePressure) ? null : 'disabled')}}
+			{{:~link('+', null, {'pressure_adj' : 100}, (releasePressure < maxReleasePressure) ? null : 'disabled')}}
+			{{:~link('+', null, {'pressure_adj' : 1000}, (releasePressure < maxReleasePressure) ? null : 'disabled')}}		
+		</div>
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Release Valve:
+	</div>
+	<div class="itemContent">
+		{{:~link('Open', 'unlocked', {'toggle' : 1}, valveOpen ? 'selected' : null)}}{{:~link('Close', 'locked', {'toggle' : 1}, valveOpen ? null : 'selected')}}
+	</div>
+</div>
+

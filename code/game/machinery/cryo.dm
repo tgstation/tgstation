@@ -28,7 +28,7 @@
 
 	initialize_directions = dir
 
-/obj/machinery/atmospherics/unary/cryo_cell/Del()
+/obj/machinery/atmospherics/unary/cryo_cell/Destroy()
 	go_out()
 	var/obj/item/weapon/reagent_containers/glass/B = beaker
 	if(beaker)
@@ -320,7 +320,7 @@
 		var/has_clonexa = occupant.reagents.get_reagent_amount("clonexadone") >= 1
 		var/has_cryo_medicine = has_cryo || has_clonexa
 		if(beaker && !has_cryo_medicine)
-			beaker.reagents.trans_to(occupant, 1, 10)
+			beaker.reagents.trans_to(occupant, 1, 1)
 			beaker.reagents.reaction(occupant)
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/heat_gas_contents()

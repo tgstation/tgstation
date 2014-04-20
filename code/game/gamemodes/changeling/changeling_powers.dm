@@ -82,11 +82,11 @@
 		src << "<span class='warning'>[T] is not compatible with our biology.</span>"
 		return
 
-	if(NOCLONE in T.mutations)
+	if(M_NOCLONE in T.mutations)
 		src << "<span class='warning'>This creature's DNA is ruined beyond useability!</span>"
 		return
 
-	if(!G.killing)
+	if(!G.state == GRAB_KILL)
 		src << "<span class='warning'>We must have a tighter grip to absorb this creature.</span>"
 		return
 
@@ -204,6 +204,10 @@
 
 	var/datum/changeling/changeling = changeling_power(1,0,0)
 	if(!changeling)	return
+
+	if(src.has_brain_worms())
+		src << "<span class='warning'>We cannot perform this ability at the present time!</span>"
+		return
 
 	var/mob/living/carbon/C = src
 	changeling.chem_charges--
@@ -755,7 +759,7 @@ var/list/datum/dna/hivemind_bank = list()
 
 	var/mob/living/carbon/T = changeling_sting(40,/mob/proc/changeling_transformation_sting)
 	if(!T)	return 0
-	if((HUSK in T.mutations) || (!ishuman(T) && !ismonkey(T)))
+	if((M_HUSK in T.mutations) || (!ishuman(T) && !ismonkey(T)))
 		src << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
 		return 0
 	T.visible_message("<span class='warning'>[T] transforms!</span>")

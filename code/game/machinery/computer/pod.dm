@@ -4,7 +4,7 @@
 	name = "Pod Launch Control"
 	desc = "A controll for launching pods. Some people prefer firing Mechas."
 	icon_state = "computer_generic"
-	var/id = 1.0
+	var/id_tag = 1.0
 	var/obj/machinery/mass_driver/connected = null
 	var/timing = 0.0
 	var/time = 30.0
@@ -15,7 +15,7 @@
 	..()
 	spawn( 5 )
 		for(var/obj/machinery/mass_driver/M in world)
-			if(M.id == id)
+			if(M.id_tag == id_tag)
 				connected = M
 			else
 		return
@@ -31,19 +31,19 @@
 		return
 
 	for(var/obj/machinery/door/poddoor/M in world)
-		if(M.id == id)
+		if(M.id_tag == id_tag)
 			M.open()
 			return
 	sleep(20)
 
 	for(var/obj/machinery/mass_driver/M in world)
-		if(M.id == id)
+		if(M.id_tag == id_tag)
 			M.power = connected.power
 			M.drive()
 
 	sleep(50)
 	for(var/obj/machinery/door/poddoor/M in world)
-		if(M.id == id)
+		if(M.id_tag == id_tag)
 			M.close()
 			return
 	return
@@ -56,7 +56,7 @@
 			if(stat & BROKEN)
 				user << "\blue The broken glass falls out."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( loc )
-				new /obj/item/weapon/shard( loc )
+				getFromPool(/obj/item/weapon/shard, loc)
 
 				//generate appropriate circuitboard. Accounts for /pod/old computer types
 				var/obj/item/weapon/circuitboard/pod/M = null
@@ -71,7 +71,7 @@
 
 				for (var/obj/C in src)
 					C.loc = loc
-				M.id = id
+				M.id_tag = id_tag
 				A.circuit = M
 				A.state = 3
 				A.icon_state = "3"
@@ -94,7 +94,7 @@
 
 				for (var/obj/C in src)
 					C.loc = loc
-				M.id = id
+				M.id_tag = id_tag
 				A.circuit = M
 				A.state = 4
 				A.icon_state = "4"
@@ -180,7 +180,7 @@
 			time = min(max(round(time), 0), 120)
 		if(href_list["door"])
 			for(var/obj/machinery/door/poddoor/M in world)
-				if(M.id == id)
+				if(M.id_tag == id_tag)
 					if(M.density)
 						M.open()
 					else

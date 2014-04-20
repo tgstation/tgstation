@@ -33,7 +33,7 @@
 	max_n2 = 0
 	minbodytemp = 0
 
-	break_stuff_probability = 2
+	environment_smash = 1
 
 	faction = "scarybat"
 	var/mob/living/owner
@@ -50,6 +50,11 @@
 	. = ..()
 	if(.)
 		emote("flutters towards [.]")
+
+/mob/living/simple_animal/hostile/scarybat/Found(var/atom/A)//This is here as a potential override to pick a specific target if available
+	if(istype(A) && A == owner)
+		return 0
+	return ..()
 
 /mob/living/simple_animal/hostile/scarybat/AttackingTarget()
 	. =..()

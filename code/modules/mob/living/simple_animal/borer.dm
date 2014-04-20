@@ -185,7 +185,7 @@
 	if(chemicals < 50)
 		src << "You don't have enough chemicals!"
 
-	var/chem = input("Select a chemical to secrete.", "Chemicals") in list("bicaridine","tramadol","hyperzine")
+	var/chem = input("Select a chemical to secrete.", "Chemicals") in list("bicaridine","tramadol","hyperzine","alkysine")
 
 	if(chemicals < 50 || !host || controlling || !src || stat) //Sanity check.
 		return
@@ -211,9 +211,6 @@
 
 	src << "You begin disconnecting from [host]'s synapses and prodding at their internal ear canal."
 
-	if(!host.stat)
-		host << "An odd, uncomfortable pressure begins to build inside your skull, behind your ear..."
-
 	spawn(200)
 
 		if(!host || !src) return
@@ -223,8 +220,6 @@
 			return
 
 		src << "You wiggle out of [host]'s ear and plop to the ground."
-		if(!host.stat)
-			host << "Something slimy wiggles out of your ear and plops to the ground!"
 
 		detatch()
 
@@ -274,18 +269,25 @@ mob/living/simple_animal/borer/proc/detatch()
 
 	var/list/choices = list()
 	for(var/mob/living/carbon/C in view(1,src))
-		if(C.stat != 2)
+		if(C.stat != 2 && src.Adjacent(C))
 			choices += C
 
 	var/mob/living/carbon/M = input(src,"Who do you wish to infest?") in null|choices
 
 	if(!M || !src) return
 
+	if(!(src.Adjacent(M))) return
+
 	if(M.has_brain_worms())
 		src << "You cannot infest someone who is already infested!"
 		return
 
-	M << "Something slimy begins probing at the opening of your ear canal..."
+	if(istype(M,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+		if(H.check_head_coverage(HIDEEARS))
+			src << "You cannot get through that host's protective gear."
+			return
+
 	src << "You slither up [M] and begin probing at their ear canal..."
 
 	if(!do_after(src,50))
@@ -304,10 +306,7 @@ mob/living/simple_animal/borer/proc/detatch()
 
 	if(M in view(1, src))
 		src << "You wiggle into [M]'s ear."
-		if(!M.stat)
-			M << "Something disgusting and slimy wiggles into your ear!"
-
-			src.perform_infestation(M)
+		src.perform_infestation(M)
 
 		return
 	else

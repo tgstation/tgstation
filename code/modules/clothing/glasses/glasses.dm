@@ -92,6 +92,9 @@
 	icon_action_button = "action_welding_g"
 	var/up = 0
 
+/obj/item/clothing/glasses/welding/proc/getMask()
+	return global_hud.darkMask
+
 /obj/item/clothing/glasses/welding/attack_self()
 	toggle()
 
@@ -123,6 +126,9 @@
 	icon_state = "rwelding-g"
 	item_state = "rwelding-g"
 	icon_action_button = "action_welding_g"
+
+/obj/item/clothing/glasses/welding/superior/getMask()
+	return null
 
 /obj/item/clothing/glasses/sunglasses/blindfold
 	name = "blindfold"

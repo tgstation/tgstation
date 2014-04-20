@@ -178,16 +178,14 @@
 			H.viruses += D
 			break
 	spawn(rand(1500, 3000)) //Delayed announcements to keep the crew on their toes.
-		command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-		for(var/mob/M in player_list)
-			M << sound('sound/AI/outbreak7.ogg')
+		biohazard_alert()
 
 /proc/alien_infestation(var/spawncount = 1) // -- TLE
 	//command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
 	//world << sound('sound/AI/aliens.ogg')
 	var/list/vents = list()
 	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in machines)
-		if(temp_vent.loc.z == 1 && !temp_vent.welded && temp_vent.network)
+		if(temp_vent.loc.z == 1 && !temp_vent.welded && temp_vent.network && temp_vent.canSpawnMice)
 			if(temp_vent.network.normal_members.len > 50) // Stops Aliens getting stuck in small networks. See: Security, Virology
 				vents += temp_vent
 

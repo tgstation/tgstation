@@ -31,7 +31,7 @@ obj/structure/windoor_assembly/New(dir=NORTH)
 	src.ini_dir = src.dir
 	update_nearby_tiles(need_rebuild=1)
 
-obj/structure/windoor_assembly/Del()
+obj/structure/windoor_assembly/Destroy()
 	density = 0
 	update_nearby_tiles()
 	..()

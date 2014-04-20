@@ -22,7 +22,7 @@
 	if(loc)
 		environment = loc.return_air()
 
-	if (stat != DEAD) //still breathing
+	if (stat != DEAD && !istype(src,/mob/living/carbon/monkey/diona)) //still breathing
 		//First, resolve location and get a breath
 		if(air_master.current_cycle%4==2)
 			//Only try to take a breath every 4 seconds, unless suffocating
@@ -73,8 +73,11 @@
 		G.process()
 
 	if(!client && stat == CONSCIOUS)
-		if(prob(33) && canmove && isturf(loc))
+
+		if(prob(33) && canmove && isturf(loc) && !pulledby) //won't move if being pulled
+
 			step(src, pick(cardinal))
+
 		if(prob(1))
 			emote(pick("scratch","jump","roll","tail"))
 
@@ -109,15 +112,15 @@
 	proc/handle_mutations_and_radiation()
 
 		if(getFireLoss())
-			if((mHeatres in mutations) || prob(50))
+			if((M_RESIST_HEAT in mutations) || prob(50))
 				switch(getFireLoss())
 					if(1 to 50)
 						adjustFireLoss(-1)
 					if(51 to 100)
 						adjustFireLoss(-5)
 
-		if ((HULK in mutations) && health <= 25)
-			mutations.Remove(HULK)
+		if ((M_HULK in mutations) && health <= 25)
+			mutations.Remove(M_HULK)
 			src << "\red You suddenly feel very weak."
 			Weaken(3)
 			emote("collapse")
@@ -169,6 +172,8 @@
 
 	// Separate proc so we can jump out of it when we've succeeded in spreading disease.
 	proc/findAirborneVirii()
+		if(blood_virus_spreading_disabled)
+			return 0
 		for(var/obj/effect/decal/cleanable/blood/B in get_turf(src))
 			if(B.virus2.len)
 				for (var/ID in B.virus2)
@@ -248,8 +253,7 @@
 							block = 1
 
 					if(!block)
-
-						for(var/obj/effect/effect/chem_smoke/smoke in view(1, src))
+						for(var/obj/effect/effect/smoke/chem/smoke in view(1, src))
 							if(smoke.reagents.total_volume)
 								smoke.reagents.reaction(src, INGEST)
 								spawn(5)
@@ -413,7 +417,7 @@
 			if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
 				pressure_alert = -1
 			else
-				if( !(COLD_RESISTANCE in mutations) )
+				if( !(M_RESIST_COLD in mutations) )
 					adjustBruteLoss( LOW_PRESSURE_DAMAGE )
 					pressure_alert = -2
 				else
@@ -434,7 +438,7 @@
 
 	proc/handle_chemicals_in_body()
 
-		if(istype(src,/mob/living/carbon/monkey/diona)) //Filthy check. Dionaea nymphs need light or they get sad.
+		if(alien) //Diona nymphs are the only alien monkey currently.
 			var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 			if(isturf(loc)) //else, there's considered to be no light
 				var/turf/T = loc
@@ -449,11 +453,11 @@
 			if(nutrition > 500)
 				nutrition = 500
 			if(light_amount > 2) //if there's enough light, heal
-				heal_overall_damage(1,1)
+				adjustBruteLoss(-1)
 				adjustToxLoss(-1)
 				adjustOxyLoss(-1)
 
-		if(reagents) reagents.metabolize(src)
+		if(reagents) reagents.metabolize(src,alien)
 
 		if (drowsyness)
 			drowsyness--
@@ -563,7 +567,7 @@
 
 	proc/handle_regular_hud_updates()
 
-		if (stat == 2 || (XRAY in mutations))
+		if (stat == 2 || (M_XRAY in mutations))
 			sight |= SEE_TURFS
 			sight |= SEE_MOBS
 			sight |= SEE_OBJS

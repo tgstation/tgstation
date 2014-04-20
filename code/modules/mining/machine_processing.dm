@@ -80,30 +80,29 @@ a.notsmelting {
 					<th># Sheets</th>
 					<th>Controls</th>
 				</tr>"}
-	for(var/ore_id in machine.ore)
-		var/datum/material/ore_info=machine.ore[ore_id]
+	for(var/ore_id in machine.ore.storage)
+		var/datum/material/ore_info=machine.ore.getMaterial(ore_id)
 		if(ore_info.stored)
 			// Can't do squat unless we have at least one.
 			if(ore_info.stored<1)
-				if(ore_info.selected)
+				if(ore_id in machine.selected)
 					machine.on=0
-				ore_info.selected=0
-				machine.ore[ore_id]=ore_info
+					machine.selected -= ore_id
 			dat += {"
 			<tr>
 				<td class="clmName">[ore_info.name]</td>
 				<td>[ore_info.stored]</td>
 				<td>
 					<a href="?src=\ref[src];toggle_select=[ore_id]" "}
-			if (ore_info.selected)
+			if(ore_id in machine.selected)
 				dat += "class=\"smelting\">Smelting"
 			else
 				dat += "class=\"notsmelting\">Not smelting"
 			dat += "</a></td></tr>"
 			nloaded++
 		else
-			ore_info.selected=0
-			machine.ore[ore_id]=ore_info
+			if(ore_id in machine.selected)
+				machine.selected -= ore_id
 	if(nloaded)
 		dat += {"
 			</table>
@@ -131,11 +130,12 @@ a.notsmelting {
 	src.add_fingerprint(usr)
 	if(href_list["toggle_select"])
 		var/ore_id=href_list["toggle_select"]
-		if (!(ore_id in machine.ore))
+		if (!(ore_id in machine.ore.storage))
 			error("Unknown ore ID [ore_id]!")
-		var/datum/material/ore_info=machine.ore[ore_id]
-		ore_info.selected = !ore_info.selected
-		machine.ore[ore_id]=ore_info
+		if(ore_id in machine.selected)
+			machine.selected -= ore_id
+		else
+			machine.selected += ore_id
 	if(href_list["set_on"])
 		if (href_list["set_on"] == "on")
 			machine.on = 1
@@ -143,88 +143,6 @@ a.notsmelting {
 			machine.on = 0
 	src.updateUsrDialog()
 	return
-
-/*************************** ORES *********************************/
-
-/datum/material
-	var/name=""
-	var/processed_name=""
-	var/id=""
-	var/stored=0
-	var/selected=0
-	var/cc_per_sheet=CC_PER_SHEET_MISC
-	var/oretype=null
-	var/sheettype=null
-	var/cointype=null
-
-/datum/material/New()
-	if(processed_name=="")
-		processed_name=name
-
-/datum/material/iron
-	name="Iron"
-	id="iron"
-	cc_per_sheet=CC_PER_SHEET_METAL
-	oretype=/obj/item/weapon/ore/iron
-	sheettype=/obj/item/stack/sheet/metal
-	cointype=/obj/item/weapon/coin/iron
-
-/datum/material/glass
-	name="Sand"
-	processed_name="Glass"
-	id="glass"
-	cc_per_sheet=CC_PER_SHEET_GLASS
-	oretype=/obj/item/weapon/ore/glass
-	sheettype=/obj/item/stack/sheet/glass
-
-/datum/material/diamond
-	name="Diamond"
-	id="diamond"
-	oretype=/obj/item/weapon/ore/diamond
-	sheettype=/obj/item/stack/sheet/mineral/diamond
-	cointype=/obj/item/weapon/coin/diamond
-
-/datum/material/plasma
-	name="Plasma"
-	id="plasma"
-	oretype=/obj/item/weapon/ore/plasma
-	sheettype=/obj/item/stack/sheet/mineral/plasma
-	cointype=/obj/item/weapon/coin/plasma
-
-/datum/material/gold
-	name="Gold"
-	id="gold"
-	oretype=/obj/item/weapon/ore/gold
-	sheettype=/obj/item/stack/sheet/mineral/gold
-	cointype=/obj/item/weapon/coin/gold
-
-/datum/material/silver
-	name="Silver"
-	id="silver"
-	oretype=/obj/item/weapon/ore/silver
-	sheettype=/obj/item/stack/sheet/mineral/silver
-	cointype=/obj/item/weapon/coin/silver
-
-/datum/material/uranium
-	name="Uranium"
-	id="uranium"
-	oretype=/obj/item/weapon/ore/uranium
-	sheettype=/obj/item/stack/sheet/mineral/uranium
-	cointype=/obj/item/weapon/coin/uranium
-
-/datum/material/clown
-	name="Bananium"
-	id="clown"
-	oretype=/obj/item/weapon/ore/clown
-	sheettype=/obj/item/stack/sheet/mineral/clown
-	cointype=/obj/item/weapon/coin/clown
-
-/datum/material/phazon
-	name="Phazon"
-	id="phazon"
-	oretype=/obj/item/weapon/ore/phazon
-	sheettype=/obj/item/stack/sheet/mineral/phazon
-	cointype=/obj/item/weapon/coin/phazon
 
 /**********************Mineral processing unit**************************/
 
@@ -238,8 +156,9 @@ a.notsmelting {
 	var/obj/machinery/mineral/output = null
 	var/obj/machinery/mineral/CONSOLE = null
 
-	var/list/ore=list()
+	var/datum/materials/ore
 	var/list/recipes=list()
+	var/list/selected[0]
 	var/on = 0 //0 = off, 1 =... oh you know!
 
 /obj/machinery/mineral/processing_unit/New()
@@ -251,31 +170,21 @@ a.notsmelting {
 		for (var/dir in cardinal)
 			src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
 			if(src.output) break
+
 		processing_objects.Add(src)
 
-		for(var/oredata in typesof(/datum/material) - /datum/material)
-			var/datum/material/ore_datum = new oredata
-			ore[ore_datum.id]=ore_datum
+		ore = new
 
 		for(var/recipetype in typesof(/datum/smelting_recipe) - /datum/smelting_recipe)
-			var/datum/smelting_recipe/recipe= new recipetype
+			var/datum/smelting_recipe/recipe = new recipetype
 			// Sanity
 			for(var/ingredient in recipe.ingredients)
-				if(!(ingredient in ore))
+				if(!(ingredient in ore.storage))
 					warning("Unknown ingredient [ingredient] in recipe [recipe.name]!")
 			recipes += recipe
 
 		return
 	return
-
-/obj/machinery/mineral/processing_unit/proc/addMaterial(var/ore_id,var/amount)
-	if(!(ore_id in ore))
-		warning("addMaterial(): Unknown material [ore_id]!")
-		return
-	var/datum/material/po=ore[ore_id]
-	po.stored += amount
-	ore[ore_id]=po
-
 
 /obj/machinery/mineral/processing_unit/process()
 	if (src.output && src.input)
@@ -301,11 +210,7 @@ a.notsmelting {
 
 						// Take ingredients
 						for(var/ore_id in recipe.ingredients)
-							// Oh how I wish ore[ore_id].stored-- worked.
-							var/datum/material/po=ore[ore_id]
-							po.stored--
-							ore[ore_id]=po
-
+							ore.removeAmount(ore_id,1)
 						// Spawn yield
 						new recipe.yieldtype(output.loc)
 
@@ -321,44 +226,32 @@ a.notsmelting {
 					on=0
 
 					// Take one of every ore selected
-					for(var/ore_id in ore)
-						var/datum/material/po=ore[ore_id]
-						if(po.stored>0 && po.selected)
-							po.stored--
-							ore[ore_id]=po
+					for(var/ore_id in ore.storage)
+						if(ore.getAmount(ore_id)>0 && ore_id in selected)
+							ore.removeAmount(ore_id,1)
+
 					// Spawn slag
 					new /obj/item/weapon/ore/slag(output.loc)
 					break
 
 		// Collect ore even if not on.
 		for (i = 0; i < 10; i++)
-			var/obj/item/O
-			O = locate(/obj/item, input.loc)
-			if (O)
-				for(var/ore_id in ore)
-					var/datum/material/po=ore[ore_id]
-					if (istype(O,po.oretype))
-						po.stored++
-						ore[ore_id]=po
-						O.loc = null
-						del(O)
-						break
-				if(O)
-					O.loc = src.output.loc
-			else
-				break
+			var/obj/item/I = locate(/obj/item, input.loc)
+			if(istype(I,/obj/item/weapon/ore))
+				var/obj/item/weapon/ore/O=I
+				var/datum/material/po=ore.getMaterial(O.material)
+				if (po.oretype && istype(O,po.oretype))
+					po.stored++
+					qdel(O)
+					continue
+			if(I)
+				I.loc = src.output.loc
 	return
 
 /////////////////////////////////////////////////
 // Recycling Furnace
 /obj/machinery/mineral/processing_unit/recycle
 	name = "recycling furnace"
-	var/list/ALLOWED_TYPES=list(
-		/obj/item,
-		/obj/machinery/portable_atmospherics/canister,
-		/obj/structure/closet
-	)
-
 
 /obj/machinery/mineral/processing_unit/recycle/process()
 	if (src.output && src.input)
@@ -385,9 +278,7 @@ a.notsmelting {
 						// Take ingredients
 						for(var/ore_id in recipe.ingredients)
 							// Oh how I wish ore[ore_id].stored-- worked.
-							var/datum/material/po=ore[ore_id]
-							po.stored--
-							ore[ore_id]=po
+							ore.removeAmount(ore_id,1)
 
 						// Spawn yield
 						new recipe.yieldtype(output.loc)
@@ -404,27 +295,20 @@ a.notsmelting {
 					on=0
 
 					// Take one of every ore selected
-					for(var/ore_id in ore)
-						var/datum/material/po=ore[ore_id]
-						if(po.stored>0 && po.selected)
-							po.stored--
-							ore[ore_id]=po
+					for(var/ore_id in ore.storage)
+						var/amount=ore.getAmount(ore_id)
+						if(amount>0 && ore_id in selected)
+							ore.removeAmount(ore_id,1)
 					// Spawn slag
 					new /obj/item/weapon/ore/slag(output.loc)
 					break
 
 		for (i = 0; i < 10; i++)
-			var/obj/O
+			var/atom/movable/O
 			for(O in input.loc.contents)
-				var/allowed=0
-				for(var/T in ALLOWED_TYPES)
-					if(istype(O,T))
-						allowed=1
-						break
-				if(O && allowed)
-					if (O.recycle(src))
-						//O.loc=null
-						del(O)
+				if(O && O.w_type!=NOT_RECYCLABLE && O.w_type!=RECYK_BIOLOGICAL)
+					if (O.recycle(ore))
+						qdel(O)
 						break
 				if(O && istype(O,/obj/item))
 					O.loc = src.output.loc
@@ -496,30 +380,29 @@ a.notsmelting {
 				<th># Sheets</th>
 				<th>Controls</th>
 			</tr>"}
-	for(var/ore_id in machine.ore)
-		var/datum/material/ore_info=machine.ore[ore_id]
+	for(var/ore_id in machine.ore.storage)
+		var/datum/material/ore_info=machine.ore.getMaterial(ore_id)
 		if(ore_info.stored)
 			// Can't do squat unless we have at least one.
 			if(ore_info.stored<1)
-				if(ore_info.selected)
+				if(ore_id in machine.selected)
 					machine.on=0
-				ore_info.selected=0
-				machine.ore[ore_id]=ore_info
+					machine.selected -= ore_id
 			html += {"
 			<tr>
 				<td class="clmName">[ore_info.name]</td>
 				<td>[ore_info.stored]</td>
 				<td>
 					<a href="?src=\ref[src];toggle_select=[ore_id]" "}
-			if (ore_info.selected)
+			if (ore_id in machine.selected)
 				html += "class=\"smelting\">Smelting"
 			else
 				html += "class=\"notsmelting\">Not smelting"
 			html += "</a></td></tr>"
 			nloaded++
 		else
-			ore_info.selected=0
-			machine.ore[ore_id]=ore_info
+			if(ore_id in machine.selected)
+				machine.selected -= ore_id
 	if(nloaded)
 		html += {"
 			</table>

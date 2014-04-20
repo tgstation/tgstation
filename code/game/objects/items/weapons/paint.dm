@@ -10,6 +10,7 @@ var/global/list/cached_icons = list()
 	item_state = "paintcan"
 	m_amt = 200
 	g_amt = 0
+	w_type = RECYK_METAL
 	w_class = 3.0
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10,20,30,50,70)

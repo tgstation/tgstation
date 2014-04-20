@@ -114,6 +114,11 @@ var/list/valid_secondary_effect_types = list(\
 #define TRIGGER_NITRO 12
 
 /obj/machinery/artifact/process()
+
+	var/turf/L = loc
+	if(isnull(L) || !istype(L)) 	// We're inside a container or on null turf, either way stop processing effects
+		return
+
 	if(my_effect)
 		my_effect.process()
 	if(secondary_effect)
@@ -338,10 +343,10 @@ var/list/valid_secondary_effect_types = list(\
 
 /obj/machinery/artifact/ex_act(severity)
 	switch(severity)
-		if(1.0) del src
+		if(1.0) qdel(src)
 		if(2.0)
 			if (prob(50))
-				del src
+				qdel(src)
 			else
 				if(my_effect.trigger == TRIGGER_FORCE || my_effect.trigger == TRIGGER_HEAT)
 					my_effect.ToggleActivate()

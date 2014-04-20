@@ -70,6 +70,21 @@ emp_act
 				protection += C.armor[type]
 	return protection
 
+/mob/living/carbon/human/proc/check_head_coverage(var/hidemask=0)
+	for(var/obj/item/clothing/C in get_all_slots())
+		if(!C) continue
+		if(C.body_parts_covered & HEAD && (hidemask==0 || C.flags_inv & hidemask))
+			return 1
+
+
+/mob/living/carbon/human/proc/check_body_part_coverage(var/body_part_flags=0)
+	if(!body_part_flags)
+		return 0
+	for(var/obj/item/clothing/C in get_all_slots())
+		if(!C) continue
+		if(C.body_parts_covered & body_part_flags)
+			return 1
+	return 0
 
 /mob/living/carbon/human/proc/check_shields(var/damage = 0, var/attack_text = "the attack")
 	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the prob(50-d/3)
@@ -113,6 +128,9 @@ emp_act
 	for(var/datum/organ/external/O  in organs)
 		if(O.status & ORGAN_DESTROYED)	continue
 		O.emp_act(severity)
+		for(var/datum/organ/internal/I  in O.internal_organs)
+			if(I.robotic == 0)	continue
+			I.emp_act(severity)
 	..()
 
 
@@ -279,7 +297,7 @@ emp_act
 				b_loss = b_loss/1.5
 				f_loss = f_loss/1.5
 
-			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
+			if (!is_on_ears(/obj/item/clothing/ears/earmuffs))
 				ear_damage += 30
 				ear_deaf += 120
 			if (prob(70) && !shielded)
@@ -289,7 +307,7 @@ emp_act
 			b_loss += 30
 			if (prob(getarmor(null, "bomb")))
 				b_loss = b_loss/2
-			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
+			if (!is_on_ears(/obj/item/clothing/ears/earmuffs))
 				ear_damage += 15
 				ear_deaf += 60
 			if (prob(50) && !shielded)

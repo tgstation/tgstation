@@ -1,3 +1,4 @@
+
 /obj/item/weapon/extinguisher
 	name = "fire extinguisher"
 	desc = "A traditional red fire extinguisher."
@@ -11,18 +12,20 @@
 	throw_speed = 2
 	throw_range = 10
 	force = 10.0
-	m_amt = 90
+	m_amt = 90 // TODO: Check against autolathe.
+	w_type = RECYK_METAL
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
-	var/list/reagents_to_log=list(
-		"fuel"=    "welder fuel",
-		"plasma"=  "plasma",
-		"pacid"=   "polytrinic acid",
-		"sacid"=   "sulphuric acid"
-	)
 	var/max_water = 50
 	var/last_use = 1.0
 	var/safety = 1
 	var/sprite_name = "fire_extinguisher"
+
+	reagents_to_log=list(
+		"fuel"  =  "welder fuel",
+		"plasma"=  "plasma",
+		"pacid" =  "polytrinic acid",
+		"sacid" =  "sulphuric acid"
+	)
 
 /obj/item/weapon/extinguisher/mini
 	name = "fire extinguisher"
@@ -87,6 +90,9 @@
 			return
 		if(locate(/obj) in src)
 			user << "There's already something crammed into the nozzle."
+			return
+		if(isrobot(user) && !isMoMMI(user)) // MoMMI's can but borgs can't
+			user << "You're a robot. No."
 			return
 		user.drop_item()
 		W.loc=src
@@ -191,7 +197,7 @@
 				for(var/b=0, b<5, b++)
 					step_towards(W,my_target)
 					if(!W || !W.reagents) return
-					W.reagents.reaction(get_turf(W))
+					W.reagents.reaction(get_turf(W), TOUCH)
 					for(var/atom/atm in get_turf(W))
 						if(!W) return
 						W.reagents.reaction(atm, TOUCH)                      // Touch, since we sprayed it.

@@ -9,6 +9,7 @@
 	w_class = 5.0
 	g_amt = 2500
 	m_amt = 10000
+	w_type = RECYK_ELECTRONIC
 	var/code = 2
 
 /obj/item/device/radio/electropack/attack_hand(mob/user as mob)
@@ -16,6 +17,15 @@
 		user << "<span class='notice'>You need help taking this off!</span>"
 		return
 	..()
+
+/obj/item/device/radio/electropack/Destroy()
+	if(istype(src.loc, /obj/item/assembly/shock_kit))
+		var/obj/item/assembly/shock_kit/S = src.loc
+		if(S.part1 == src)
+			S.part1 = null
+		else if(S.part2 == src)
+			S.part2 = null
+		master = null
 
 /obj/item/device/radio/electropack/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()

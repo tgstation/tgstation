@@ -51,7 +51,7 @@
 						projectile.loc = get_step_to(projectile,target)
 					else
 						var/turf/T = get_step_to(projectile,target)
-						var/obj/structure/stool/bed/chair/janicart/JC = locate() in T
+						var/obj/structure/stool/bed/chair/vehicle/JC = locate() in T
 						if(JC && istype(JC) && prob(75))
 							projectile.loc = T
 						else
@@ -62,7 +62,10 @@
 					else
 						step(projectile,dir)
 
-				if(!proj_lingering && projectile.loc == current_loc) //if it didn't move since last time
+				if(!projectile) // step and step_to sleeps so we'll have to check again.
+					break
+
+				if(!target || (!proj_lingering && projectile.loc == current_loc)) //if it didn't move since last time
 					del(projectile)
 					break
 

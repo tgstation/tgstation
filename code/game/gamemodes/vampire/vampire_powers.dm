@@ -213,7 +213,7 @@
 		M.current.visible_message("\red [M.current.name] lets out an ear piercing shriek!", "\red You let out a loud shriek.", "\red You hear a loud painful shriek!")
 		for(var/mob/living/carbon/C in ohearers(4, M.current))
 			if(C == M.current) continue
-			if(ishuman(C) && C:ears && istype(C:ears, /obj/item/clothing/ears/earmuffs)) continue
+			if(ishuman(C) && C:is_on_ears(/obj/item/clothing/ears/earmuffs)) continue
 			if(!C.vampire_affected(M)) continue
 			C << "<span class='warning'><font size='3'><b>You hear a ear piercing shriek and your senses dull!</font></b></span>"
 			C.Weaken(8)
@@ -222,9 +222,7 @@
 			C.Stun(8)
 			C.make_jittery(150)
 		for(var/obj/structure/window/W in oview(3))
-			new W.shardtype(W.loc)
-			if(W.reinf) new /obj/item/stack/rods(W.loc)
-			del(W)
+			W.destroy()
 		playsound(M.current.loc, 'sound/effects/creepyshriek.ogg', 100, 1)
 		M.current.remove_vampire_blood(30)
 		M.current.verbs -= /client/proc/vampire_screech

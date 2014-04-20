@@ -90,6 +90,9 @@
 		if(welded)
 			return 0
 
+		// New GC does this sometimes
+		if(!loc) return
+
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/environment_pressure = environment.return_pressure()
 
@@ -101,7 +104,7 @@
 			if(pressure_checks&2)
 				pressure_delta = min(pressure_delta, (air_contents.return_pressure() - internal_pressure_bound))
 
-			if(pressure_delta > 0)
+			if(pressure_delta > 0.1)
 				if(air_contents.temperature > 0)
 					var/transfer_moles = pressure_delta*environment.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
 
@@ -119,7 +122,7 @@
 			if(pressure_checks&2)
 				pressure_delta = min(pressure_delta, (internal_pressure_bound - air_contents.return_pressure()))
 
-			if(pressure_delta > 0)
+			if(pressure_delta > 0.1)
 				if(environment.temperature > 0)
 					var/transfer_moles = pressure_delta*air_contents.volume/(environment.temperature * R_IDEAL_GAS_EQUATION)
 
@@ -197,7 +200,7 @@
 			pump_direction = 0
 			handled=1
 
-		if("stabalize" in signal.data)
+		if("stabilize" in signal.data)
 			pressure_checks |= 1
 			pump_direction = 1
 			handled=1
@@ -298,52 +301,15 @@
 		update_icon()
 
 	interact(mob/user as mob)
-		var/obj/item/device/multitool/P = get_multitool(user)
-		var/dat = {"<html>
-	<head>
-		<title>[name] Access</title>
-		<style type="text/css">
-html,body {
-	font-family:courier;
-	background:#999999;
-	color:#333333;
-}
+		update_multitool_menu(user)
 
-a {
-	color:#000000;
-	text-decoration:none;
-	border-bottom:1px solid black;
-}
-		</style>
-	</head>
-	<body>
-		<h3>[name]</h3>
+	multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
+		return {"
 		<ul>
 			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[1439]">Reset</a>)</li>
-			<li><b>ID Tag:</b> <a href="?src=\ref[src];set_tag=1">[id_tag]</a></li>
+			<li>[format_tag("ID Tag","id_tag","set_id")]</li>
 		</ul>
-"}
-		if(P)
-			if(P.buffer)
-				var/id="???"
-				if(istype(P.buffer, /obj/machinery/telecomms))
-					id=P.buffer:id
-				else if(P.buffer.vars.Find("id_tag"))
-					id=P.buffer:id_tag
-				else if(P.buffer.vars.Find("id"))
-					id=P.buffer:id
-				else
-					id="\[???\]"
-				dat += "<p><b>MULTITOOL BUFFER:</b> [P.buffer] ([id])"
-				if(istype(P.buffer, /obj/machinery/embedded_controller/radio))
-					dat += " <a href='?src=\ref[src];link=1'>\[Link\]</a> <a href='?src=\ref[src];flush=1'>\[Flush\]</a>"
-				dat += "</p>"
-			else
-				dat += "<p><b>MULTITOOL BUFFER:</b> <a href='?src=\ref[src];buffer=1'>\[Add Machine\]</a></p>"
-		dat += "</body></html>"
-
-		user << browse(dat, "window=vent_pump")
-		onclose(user, "vent_pump")
+		"}
 
 	attackby(var/obj/item/W as obj, var/mob/user as mob)
 		if(istype(W, /obj/item/weapon/weldingtool))
@@ -367,7 +333,7 @@ a {
 				user << "\blue You need more welding fuel to complete this task."
 				return 1
 		if(istype(W, /obj/item/device/multitool))
-			interact(user)
+			update_multitool_menu(user)
 			return 1
 		if (!istype(W, /obj/item/weapon/wrench))
 			return ..()
@@ -394,7 +360,7 @@ a {
 			new /obj/item/pipe(loc, make_from=src)
 			del(src)
 
-/obj/machinery/atmospherics/unary/vent_pump/Del()
+/obj/machinery/atmospherics/unary/vent_pump/Destroy()
 	if(initial_loc)
 		initial_loc.air_vent_info -= id_tag
 		initial_loc.air_vent_names -= id_tag
@@ -410,6 +376,8 @@ a {
 			return
 
 	var/obj/item/device/multitool/P = get_multitool(usr)
+	if(!P || !istype(P))
+		return
 
 	if("set_id" in href_list)
 		var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id_tag) as null|text),1,MAX_MESSAGE_LEN)
@@ -429,17 +397,4 @@ a {
 				frequency = newfreq
 				initialize()
 
-	if(href_list["unlink"])
-		P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
-
-	if(href_list["link"])
-		P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
-
-	if(href_list["buffer"])
-		P.buffer = src
-
-	if(href_list["flush"])
-		P.buffer = null
-
-	usr.set_machine(src)
-	updateUsrDialog()
+	update_multitool_menu(usr)

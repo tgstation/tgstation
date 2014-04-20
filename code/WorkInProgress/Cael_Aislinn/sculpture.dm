@@ -22,10 +22,8 @@
 
 /mob/living/simple_animal/sculpture/proc/GrabMob(var/mob/living/target)
 	if(target && target != src && ishuman(target))
-		G = new /obj/item/weapon/grab(target)
-		G.assailant = src
-		G.layer = 20
-		G.affecting = target
+		G = new /obj/item/weapon/grab(src, target)
+		G.loc=src
 		target.grabbed_by += G
 		G.synch()
 		target.LAssailant = src
@@ -34,13 +32,12 @@
 		visible_message("\red [src] has grabbed [target]!")
 		target << "\red <b>You feel something suddenly grab you around the neck from behind!</b> Everything goes black..."
 
-		G.state = 3
-		G.killing = 1
+		G.state = GRAB_KILL
 
 		desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid. [G ? "\red The sculpture is holding [G.affecting] in a vice-like grip." : ""]"
 		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been grabbed by SCP-173, and is being strangled!</font>")
 		log_admin("[target] ([target.ckey]) has been grabbed and is being strangled by SCP-173.")
-		message_admins("Alert: [target.real_name] has been grabbed and is being strangled by SCP-173. Set var/allow_escape = 1 to allow this player to escape temporarily, or var/hibernate = 1 to disable it entirely.")
+		message_admins("Alert: [target.real_name] has been grabbed and is being strangled by SCP-173.") //Set var/allow_escape = 1 to allow this player to escape temporarily, or var/hibernate = 1 to disable it entirely.
 
 /mob/living/simple_animal/sculpture/proc/Escape()
 	var/list/turfs = new/list()
@@ -49,7 +46,7 @@
 			continue
 		else if(istype(thisturf, /turf/simulated/wall))
 			continue
-		else if(istype(thisturf, /turf/simulated/mineral))
+		else if(istype(thisturf, /turf/unsimulated/mineral))
 			continue
 		else if(istype(thisturf, /turf/simulated/shuttle/wall))
 			continue
@@ -73,12 +70,11 @@
 		desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid."
 
 	//if we are sent into forced hibernation mode, allow our victim to escape
-	if(hibernate && G && G.killing == 1)
+	if(hibernate && G && G.state == GRAB_KILL)
 		if(G)
 			G.affecting << "\red You suddenly feel the grip around your neck being loosened!"
-			visible_message("\red [src] suddenly loosens it's grip!")
-			G.killing = 0
-			G.state = 1
+			visible_message("\red [src] suddenly loosens it's grip due to hibernate!")
+			G.state = GRAB_AGGRESSIVE
 		return
 
 	//
@@ -87,8 +83,7 @@
 		if(G)
 			G.affecting << "\red You suddenly feel the grip around your neck being loosened!"
 			visible_message("\red [src] suddenly loosens it's grip!")
-			G.killing = 0
-			G.state = 1
+			G.state = GRAB_AGGRESSIVE
 			if(!observed)
 				Escape()
 		observed = 1
@@ -96,6 +91,10 @@
 	//can't do anything in space at all
 	if(istype(get_turf(src), /turf/space) || hibernate)
 		return
+
+	// Grabbing
+	if(G)
+		G.process()
 
 	for(var/mob/living/M in view(7, src))
 		if(M.stat || M == src)
@@ -136,7 +135,7 @@
 	//see if we're able to do stuff
 	if(!observed || in_darkness)
 		if(G)
-			if(prob(random_escape_chance))
+			if(prob(1))
 				//chance to allow the stranglee to escape
 				allow_escape = 1
 			if(G.affecting.stat == 2)
@@ -162,31 +161,31 @@
 					conscious.Add(M)
 
 			//pick the nearest valid conscious target
-			var/mob/living/carbon/target_mob
+			var/mob/living/carbon/target
 			for(var/mob/living/carbon/M in conscious)
-				if(!target_mob || get_dist(src, M) < get_dist(src, target_mob))
-					target_mob = M
+				if(!target || get_dist(src, M) < get_dist(src, target))
+					target = M
 
-			if(!target_mob)
+			if(!target)
 				//get an unconscious mob
 				for(var/mob/living/carbon/M in incapacitated)
-					if(!target_mob || get_dist(src, M) < get_dist(src, target_mob))
-						target_mob = M
-			if(target_mob)
+					if(!target || get_dist(src, M) < get_dist(src, target))
+						target = M
+			if(target)
 				var/turf/target_turf
 				if(in_darkness)
 					//move to right behind them
-					target_turf = get_step(target_mob, src)
+					target_turf = get_step(target, src)
 				else
 					//move to them really really fast and knock them down
-					target_turf = get_turf(target_mob)
+					target_turf = get_turf(target)
 
 				//rampage along a path to get to them, in the blink of an eye
-				var/turf/next_turf = get_step_towards(src, target_mob)
-				var/num_turfs = get_dist(src,target_mob)
+				var/turf/next_turf = get_step_towards(src, target)
+				var/num_turfs = get_dist(src,target)
 				while(get_turf(src) != target_turf && num_turfs > 0)
 					for(var/obj/structure/window/W in next_turf)
-						W.ex_act(2)
+						W.destroy()
 					for(var/obj/structure/table/O in next_turf)
 						O.ex_act(1)
 					for(var/obj/structure/grille/G in next_turf)
@@ -194,15 +193,15 @@
 					if(!next_turf.CanPass(src, next_turf))
 						break
 					src.loc = next_turf
-					src.dir = get_dir(src, target_mob)
-					next_turf = get_step(src, get_dir(next_turf,target_mob))
+					src.dir = get_dir(src, target)
+					next_turf = get_step(src, get_dir(next_turf,target))
 					num_turfs--
 
 				//if we reached them, knock them down and start strangling them
 				if(get_turf(src) == target_turf)
-					target_mob.Stun(1)
-					target_mob.Paralyse(1)
-					GrabMob(target_mob)
+					target.Stun(1)
+					target.Paralyse(1)
+					GrabMob(target)
 
 			//if we're not strangling anyone, take a stroll
 			if(!G && prob(10))
@@ -212,7 +211,7 @@
 						continue
 					else if(istype(thisturf, /turf/simulated/wall))
 						continue
-					else if(istype(thisturf, /turf/simulated/mineral))
+					else if(istype(thisturf, /turf/unsimulated/mineral))
 						continue
 					else if(istype(thisturf, /turf/simulated/shuttle/wall))
 						continue
@@ -226,7 +225,7 @@
 				var/num_turfs = get_dist(src,target_turf)
 				while(get_turf(src) != target_turf && num_turfs > 0)
 					for(var/obj/structure/window/W in next_turf)
-						W.ex_act(2)
+						W.destroy()
 					for(var/obj/structure/table/O in next_turf)
 						O.ex_act(1)
 					for(var/obj/structure/grille/G in next_turf)
@@ -234,16 +233,16 @@
 					if(!next_turf.CanPass(src, next_turf))
 						break
 					src.loc = next_turf
-					src.dir = get_dir(src, target_mob)
+					src.dir = get_dir(src, target)
 					next_turf = get_step(src, get_dir(next_turf,target_turf))
 					num_turfs--
-	else if(G)
-		//we can't move while observed, so we can't effectively strangle any more
-		//our grip is still rock solid, but the victim has a chance to escape
-		G.affecting << "\red You suddenly feel the grip around your neck being loosened!"
-		visible_message("\red [src] suddenly loosens it's grip!")
-		G.state = 1
-		G.killing = 0
+
+//	else if(G)
+//		//we can't move while observed, so we can't effectively strangle any more //since victim is observer this means no strangling
+//		//our grip is still rock solid, but the victim has a chance to escape
+//		G.affecting << "\red You suddenly feel the grip around your neck being loosened!"
+//		visible_message("\red [src] suddenly loosens it's grip due to being observed!")
+//		G.state = GRAB_AGGRESSIVE
 
 /mob/living/simple_animal/sculpture/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	..()

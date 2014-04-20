@@ -12,18 +12,13 @@
 	icon_state ="bookEngineering"
 	author = "Engineering Encyclopedia"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
 	title = "Station Repairs and Construction"
-	/*dat = {"
-
-		<html><head>
-		</head>
-
-		<body>
-		<iframe width='100%' height='97%' src="http://wiki.nanotrasen.com/index.php?title=Guide_to_construction&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
-		</body>
-
+	dat = {"
+		<html>
+			<body>
+				<iframe width='100%' height='100%' src="http://ss13.nexisonline.net/w/index.php?title=Guide_to_Construction&printable=yes"></iframe>
+			</body>
 		</html>
-
-		"}*/
+		"}
 
 /obj/item/weapon/book/manual/engineering_particle_accelerator
 	name = "Particle Accelerator User's Guide"
@@ -32,7 +27,7 @@
 	title = "Particle Accelerator User's Guide"
 //big pile of shit below.
 
-	/*dat = {"<html>
+	dat = {"<html>
 				<head>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
@@ -65,7 +60,7 @@
 				</ol>
 
 				</body>
-				</html>"}*/
+				</html>"}
 
 
 /obj/item/weapon/book/manual/engineering_hacking
@@ -73,20 +68,14 @@
 	icon_state ="bookHacking"
 	author = "Engineering Encyclopedia"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
 	title = "Hacking"
-//big pile of shit below.
 
-	/*dat = {"
-
-		<html><head>
-		</head>
-
-		<body>
-		<iframe width='100%' height='97%' src="http://wiki.nanotrasen.com/index.php?title=Hacking&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
-		</body>
-
+	dat = {"
+		<html>
+			<body>
+				<iframe width="100%" height="100%" src="http://ss13.nexisonline.net/w/index.php?title=Hacking&printable=yes"></iframe>
+			</body>
 		</html>
-
-		"}*/
+		"}
 
 /obj/item/weapon/book/manual/engineering_singularity_safety
 	name = "Singularity Safety in Special Circumstances"
@@ -95,7 +84,7 @@
 	title = "Singularity Safety in Special Circumstances"
 //big pile of shit below.
 
-	/*dat = {"<html>
+	dat = {"<html>
 				<head>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
@@ -134,7 +123,7 @@
 				Step one: <b>GET THE FUCK OUT OF THERE!!! FORGET THE WOMEN AND CHILDREN, SAVE YOURSELF!!!</b><br>
 				</body>
 				</html>
-				"}*/
+				"}
 
 /obj/item/weapon/book/manual/hydroponics_pod_people
 	name = "The Human Harvest - From seed to market"
@@ -178,7 +167,7 @@
 	title = "Cloning techniques of the 26th century"
 //big pile of shit below.
 
-	/*dat = {"<html>
+	dat = {"<html>
 				<head>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
@@ -246,7 +235,7 @@
 
 				</body>
 				</html>
-				"}*/
+				"}
 
 
 /obj/item/weapon/book/manual/ripley_build_and_repair
@@ -330,8 +319,7 @@
 	icon_state = "rdbook"
 	author = "Dr. L. Ight"
 	title = "Research and Development 101"
-	/*dat = {"
-	<html>
+	dat = {"<html>
 				<head>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
@@ -373,7 +361,7 @@
 				Many machines produces from circuit boards and inserted into a machine frame require a variety of parts to construct. These are parts like capacitors, batteries, matter bins, and so forth. As your knowledge of science improves, more advanced versions are unlocked. If you use these parts when constructing something, its attributes may be improved. For example, if you use an advanced matter bin when constructing an autolathe (rather then a regular one), it'll hold more materials. Experiment around with stock parts of various qualities to see how they affect the end results! Be warned, however: Tier 3 and higher stock parts don't have 100% reliability and their low reliability may affect the reliability of the end machine.
 				</body>
 				</html>
-			"}*/
+			"}
 
 
 /obj/item/weapon/book/manual/robotics_cyborgs
@@ -381,12 +369,12 @@
 	icon_state = "borgbook"
 	author = "XISC"
 	title = "Cyborgs for Dummies"
-	/*dat = {"<html>
+	dat = {"<html>
 				<head>
 				<style>
 				h1 {font-size: 21px; margin: 15px 0px 5px;}
 				h2 {font-size: 18px; margin: 15px 0px 5px;}
-        h3 {font-size: 15px; margin: 15px 0px 5px;}
+				h3 {font-size: 15px; margin: 15px 0px 5px;}
 				li {margin: 2px 0px 2px 15px;}
 				ul {list-style: none; margin: 5px; padding: 0px;}
 				ol {margin: 5px; padding: 0px 15px;}
@@ -576,7 +564,7 @@
 
         </body>
 		</html>
-		"}*/
+		"}
 
 /obj/item/weapon/book/manual/security_space_law
 	name = "Space Law"
@@ -585,16 +573,12 @@
 	author = "Nanotrasen"
 	title = "Space Law"
 	dat = {"
-
-		<html><head>
-		</head>
-
-		<body>
-		<iframe width='100%' height='97%' src="http://wiki.nanotrasen.com/index.php?title=Space_Law&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
-		</body>
+		<html>
+			<body>
+				<iframe width="100%" height="100%" src="http://ss13.nexisonline.net/w/index.php?title=Space_Law&printable=yes"></iframe>
+			</body>
 
 		</html>
-
 		"}
 
 /obj/item/weapon/book/manual/engineering_guide
@@ -602,17 +586,13 @@
 	icon_state ="bookEngineering2"
 	author = "Engineering Encyclopedia"
 	title = "Engineering Textbook"
-	/*dat = {"
-
-		<html><head>
-		</head>
-
-		<body>
-		<iframe width='100%' height='97%' src="http://wiki.nanotrasen.com/index.php?title=Guide_to_engineering&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>		</body>
-
+	dat = {"
+		<html>
+			<body>
+				<iframe width="100%" height="100%" src="http://ss13.nexisonline.net/w/index.php?title=Guide_to_Engineering&printable=yes"></iframe>
+			</body>
 		</html>
-
-		"}*/
+		"}
 
 
 /obj/item/weapon/book/manual/chef_recipes
@@ -620,7 +600,7 @@
 	icon_state = "cooked_book"
 	author = "Lord Frenrir Cageth"
 	title = "Chef Recipes"
-	/*dat = {"<html>
+	dat = {"<html>
 				<head>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
@@ -636,13 +616,13 @@
 				Here is a guide on basic food recipes and also how to not poison your customers accidentally.
 
 				<h2>Burger:<h2>
-				Put 1 meat and 1 flour into the microwave and turn it on. Then wait.
+				Put 1 meat and 5 flour into the microwave and turn it on. Then wait.
 
 				<h2>Bread:<h2>
-				Put 3 flour into the microwave and then wait.
+				Put 15 flour into the microwave and then wait.
 
 				<h2>Waffles:<h2>
-				Add 2 flour and 2 egg to the microwave and then wait.
+				Add 10 flour and 2 egg to the microwave and then wait.
 
 				<h2>Popcorn:<h2>
 				Add 1 corn to the microwave and wait.
@@ -651,13 +631,13 @@
 				Put 1 meat, 1 unit of salt and 1 unit of pepper into the microwave and wait.
 
 				<h2>Meat Pie:<h2>
-				Put 1 meat and 2 flour into the microwave and wait.
+				Put 1 meat and 10 flour into the microwave and wait.
 
 				<h2>Boiled Spagetti:<h2>
 				Put 1 spagetti and 5 units of water into the microwave and wait.
 
 				<h2>Donuts:<h2>
-				Add 1 egg and 1 flour to the microwave and wait.
+				Add 1 egg and 5 flour to the microwave and wait.
 
 				<h2>Fries:<h2>
 				Add one potato to the processor and wait.
@@ -665,7 +645,7 @@
 
 				</body>
 				</html>
-			"}*/
+			"}
 
 /obj/item/weapon/book/manual/barman_recipes
 	name = "Barman Recipes"
@@ -766,32 +746,10 @@
 	icon_state ="bookNuclear"
 	author = "Syndicate"
 	title = "Fission Mailed: Nuclear Sabotage 101"
-	/*dat = {"<html>
-			Nuclear Explosives 101:<br>
-			Hello and thank you for choosing the Syndicate for your nuclear information needs.<br>
-			Today's crash course will deal with the operation of a Fusion Class Nanotrasen made Nuclear Device.<br>
-			First and foremost, DO NOT TOUCH ANYTHING UNTIL THE BOMB IS IN PLACE.<br>
-			Pressing any button on the compacted bomb will cause it to extend and bolt itself into place.<br>
-			If this is done to unbolt it one must completely log in which at this time may not be possible.<br>
-			To make the nuclear device functional:<br>
-			<li>Place the nuclear device in the designated detonation zone.</li>
-			<li>Extend and anchor the nuclear device from its interface.</li>
-			<li>Insert the nuclear authorisation disk into slot.</li>
-			<li>Type numeric authorisation code into the keypad. This should have been provided. Note: If you make a mistake press R to reset the device.
-			<li>Press the E button to log onto the device.</li>
-			You now have activated the device. To deactivate the buttons at anytime for example when you've already prepped the bomb for detonation	remove the auth disk OR press the R on the keypad.<br>
-			Now the bomb CAN ONLY be detonated using the timer. Manual detonation is not an option.<br>
-			Note: Nanotrasen is a pain in the neck.<br>
-			Toggle off the SAFETY.<br>
-			Note: You wouldn't believe how many Syndicate Operatives with doctorates have forgotten this step.<br>
-			So use the - - and + + to set a det time between 5 seconds and 10 minutes.<br>
-			Then press the timer toggle button to start the countdown.<br>
-			Now remove the auth. disk so that the buttons deactivate.<br>
-			Note: THE BOMB IS STILL SET AND WILL DETONATE<br>
-			Now before you remove the disk if you need to move the bomb you can:<br>
-			Toggle off the anchor, move it, and re-anchor.<br><br>
-			Good luck. Remember the order:<br>
-			<b>Disk, Code, Safety, Timer, Disk, RUN!</b><br>
-			Intelligence Analysts believe that normal Nanotrasen procedure is for the Captain to secure the nuclear authorisation disk.<br>
-			Good luck!
-			</html>"}*/
+	dat = {"
+		<html>
+			<body>
+				<iframe width="%100" height="100%" src="http://ss13.nexisonline.net/w/index.php?title=Nuclear_Agent&printable=yes"></iframe>
+			</body>
+		</html>
+		"}

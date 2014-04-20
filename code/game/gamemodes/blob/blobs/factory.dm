@@ -73,7 +73,7 @@
 	Die()
 		del(src)
 
-	Del()
+	Destroy()
 		if(factory)
 			factory.spores -= src
 		..()

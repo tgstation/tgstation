@@ -22,6 +22,9 @@
 		var/obj/mecha/Mech = O
 		if( Mech.occupant )
 			turretTargets |= Mech
+	// /vg/ vehicles
+	else if( istype(O, /obj/structure/stool/bed/chair/vehicle) )
+		turretTargets |= O
 	else if(istype(O,/mob/living/simple_animal))
 		turretTargets |= O
 	return 1
@@ -31,6 +34,9 @@
 		return master.Exited(O)
 
 	if( ismob(O) && !issilicon(O) )
+		turretTargets -= O
+	// /vg/ vehicles
+	else if( istype(O, /obj/structure/stool/bed/chair/vehicle) )
 		turretTargets -= O
 	else if( istype(O, /obj/mecha) )
 		turretTargets -= O
@@ -139,6 +145,11 @@
 			var/obj/mecha/ME = T
 			if( ME.occupant )
 				return 1
+		// /vg/ vehicles
+		else if( istype(T, /obj/structure/stool/bed/chair/vehicle) )
+			var/obj/structure/stool/bed/chair/vehicle/V = T
+			if(V.buckled_mob)
+				return 1
 		else if(istype(T,/mob/living/simple_animal))
 			var/mob/living/simple_animal/A = T
 			if( !A.stat )
@@ -156,6 +167,12 @@
 	for(var/obj/mecha/M in protected_area.turretTargets)
 		if(M.occupant)
 			new_targets += M
+
+	// /vg/ vehicles
+	for(var/obj/structure/stool/bed/chair/vehicle/V in protected_area.turretTargets)
+		if(V.buckled_mob)
+			new_targets += V
+
 	for(var/mob/living/simple_animal/M in protected_area.turretTargets)
 		if(!M.stat)
 			new_targets += M
@@ -311,7 +328,7 @@
 	sleep(3)
 	flick("explosion", src)
 	spawn(13)
-		del(src)
+		qdel(src)
 
 /obj/machinery/turretid
 	name = "Turret deactivation control"
@@ -325,6 +342,8 @@
 	var/control_area //can be area name, path or nothing.
 	var/ailock = 0 // AI cannot use this
 	req_access = list(access_ai_upload)
+
+	ghost_read=0
 
 /obj/machinery/turretid/New()
 	..()

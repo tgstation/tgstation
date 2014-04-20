@@ -1,3 +1,42 @@
+/mob/living/carbon/human/verb/quick_equip()
+	set name = "quick-equip"
+	set hidden = 1
+
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		var/obj/item/I = H.get_active_hand()
+		if(!I)
+			H << "<span class='notice'>You are not holding anything to equip.</span>"
+			return
+		if(H.equip_to_appropriate_slot(I))
+			if(hand)
+				update_inv_l_hand(0)
+			else
+				update_inv_r_hand(0)
+		else
+			H << "\red You are unable to equip that."
+
+/mob/living/carbon/human/proc/get_all_slots()
+	return list(
+		back,
+		wear_mask,
+		handcuffed,
+		legcuffed,
+		l_hand,
+		r_hand,
+		belt,
+		wear_id,
+		ears,
+		glasses,
+		gloves,
+		head,
+		shoes,
+		wear_suit,
+		w_uniform,
+		l_store,
+		r_store,
+		s_store)
+
 /mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/W, list/slots, act_on_fail = 1)
 	for (var/slot in slots)
 		if (equip_to_slot_if_possible(W, slots[slot], 0))
@@ -9,6 +48,15 @@
 			W.loc=get_turf(src) // I think.
 	return null
 
+/mob/living/carbon/human/proc/is_on_ears(var/typepath)
+	return istype(ears,typepath)
+
+/mob/living/carbon/human/proc/is_in_hands(var/typepath)
+	if(istype(l_hand,typepath))
+		return l_hand
+	if(istype(r_hand,typepath))
+		return r_hand
+	return 0
 
 // Return the item currently in the slot ID
 /mob/living/carbon/human/get_item_by_slot(slot_id)
@@ -136,7 +184,7 @@
 			update_hair(0)	//rebuild hair
 		success = 1
 		update_inv_head()
-	else if (W == ears)
+	else if(W == ears)
 		ears = null
 		success = 1
 		update_inv_ears()
@@ -224,52 +272,41 @@
 		src.r_hand = null
 		update_inv_r_hand()
 
-	W.loc = src
 	switch(slot)
 		if(slot_back)
 			src.back = W
-			W.equipped(src, slot)
 			update_inv_back(redraw_mob)
 		if(slot_wear_mask)
 			src.wear_mask = W
 			if((wear_mask.flags & BLOCKHAIR) || (wear_mask.flags & BLOCKHEADHAIR))
 				update_hair(redraw_mob)	//rebuild hair
-			W.equipped(src, slot)
 			update_inv_wear_mask(redraw_mob)
 		if(slot_handcuffed)
 			src.handcuffed = W
 			update_inv_handcuffed(redraw_mob)
 		if(slot_legcuffed)
 			src.legcuffed = W
-			W.equipped(src, slot)
 			update_inv_legcuffed(redraw_mob)
 		if(slot_l_hand)
 			src.l_hand = W
-			W.equipped(src, slot)
 			update_inv_l_hand(redraw_mob)
 		if(slot_r_hand)
 			src.r_hand = W
-			W.equipped(src, slot)
 			update_inv_r_hand(redraw_mob)
 		if(slot_belt)
 			src.belt = W
-			W.equipped(src, slot)
 			update_inv_belt(redraw_mob)
 		if(slot_wear_id)
 			src.wear_id = W
-			W.equipped(src, slot)
 			update_inv_wear_id(redraw_mob)
 		if(slot_ears)
-			src.ears = W
-			W.equipped(src, slot)
+			ears = W
 			update_inv_ears(redraw_mob)
 		if(slot_glasses)
 			src.glasses = W
-			W.equipped(src, slot)
 			update_inv_glasses(redraw_mob)
 		if(slot_gloves)
 			src.gloves = W
-			W.equipped(src, slot)
 			update_inv_gloves(redraw_mob)
 		if(slot_head)
 			src.head = W
@@ -277,43 +314,38 @@
 				update_hair(redraw_mob)	//rebuild hair
 			if(istype(W,/obj/item/clothing/head/kitty))
 				W.update_icon(src)
-			W.equipped(src, slot)
 			update_inv_head(redraw_mob)
 		if(slot_shoes)
 			src.shoes = W
-			W.equipped(src, slot)
 			update_inv_shoes(redraw_mob)
 		if(slot_wear_suit)
 			src.wear_suit = W
-			W.equipped(src, slot)
 			update_inv_wear_suit(redraw_mob)
 		if(slot_w_uniform)
 			src.w_uniform = W
-			W.equipped(src, slot)
 			update_inv_w_uniform(redraw_mob)
 		if(slot_l_store)
 			src.l_store = W
-			W.equipped(src, slot)
 			update_inv_pockets(redraw_mob)
 		if(slot_r_store)
 			src.r_store = W
-			W.equipped(src, slot)
 			update_inv_pockets(redraw_mob)
 		if(slot_s_store)
 			src.s_store = W
-			W.equipped(src, slot)
 			update_inv_s_store(redraw_mob)
 		if(slot_in_backpack)
 			if(src.get_active_hand() == W)
 				src.u_equip(W)
 			W.loc = src.back
+			return
 		else
-			src << "\red You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it..."
+			src << "\red You are trying to equip this item to an unsupported inventory slot. Report this to a coder!"
 			return
 
 	W.layer = 20
+	W.equipped(src, slot)
+	W.loc = src
 
-	return
 
 /obj/effect/equip_e
 	name = "equip e"
@@ -645,7 +677,7 @@ It can still be worn/put on as normal.
 			for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
 				var/datum/organ/external/o = target.get_organ(organ)
 				if (o && o.status & ORGAN_SPLINTED)
-					var/obj/item/W = new /obj/item/stack/medical/splint/single()
+					var/obj/item/W = new /obj/item/stack/medical/splint(amount=1)
 					o.status &= ~ORGAN_SPLINTED
 					if (W)
 						W.loc = target.loc
