@@ -118,7 +118,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 	if(overlays.len != overlays_standing.len)
 		overlays.Cut()
 
-		for(var/image/thing in overlays_standing)
+		for(var/thing in overlays_standing)
 			if(thing)	overlays += thing
 
 	update_transform()
