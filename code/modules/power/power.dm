@@ -55,7 +55,7 @@
 // increment the power usage stats for an area
 
 /obj/machinery/proc/use_power(var/amount, var/chan = -1) // defaults to power_channel
-	var/area/A = src.myArea
+	var/area/A = getArea()
 
 	if(!A || !isarea(A) || !A.master)
 		return
