@@ -109,6 +109,10 @@ MASS SPECTROMETER
 		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
 
 	user.show_message(text("<span class='notice'>Analyzing Results for []:\n\t Overall Status: []</span>", M, mob_status), 1)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.dna)// Show target's species, if they have one
+			user.show_message("<span class='notice'>Species: <b>[H.dna.species.name]</b></span>", 1)
 	user.show_message(text("<span class='notice'>\t Damage Specifics: <font color='blue'>[]</font>-<font color='green'>[]</font>-<font color='#FF8000'>[]</font>-<font color='red'>[]</font></span>", oxy_loss, tox_loss, fire_loss, brute_loss), 1)
 
 	user.show_message("<span class='notice'>Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FF8000'>Burn</font>/<font color='red'>Brute</font></span>", 1)

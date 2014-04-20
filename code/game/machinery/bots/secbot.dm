@@ -621,9 +621,6 @@ Auto Patrol: []"},
 		if(istype(perp:wear_suit, /obj/item/clothing/suit/wizrobe))
 			threatcount += 2
 
-		if(perp.dna && perp.dna.mutantrace && perp.dna.mutantrace != "none")
-			threatcount += 2
-
 		//Agent cards lower threatlevel.
 		if(perp.wear_id && istype(perp:wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
 			threatcount -= 2

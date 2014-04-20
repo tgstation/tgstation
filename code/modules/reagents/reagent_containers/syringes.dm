@@ -59,6 +59,12 @@
 					return
 
 				if(ismob(target))	//Blood!
+					if(ishuman(target))
+						var/mob/living/carbon/human/H = target
+						if(H.dna)
+							if(NOBLOOD in H.dna.species.specflags)
+								user << "<span class='notice'>You are unable to locate any blood.</span>"
+								return
 					if(reagents.has_reagent("blood"))
 						user << "<span class='notice'>There is already a blood sample in this syringe.</span>"
 						return

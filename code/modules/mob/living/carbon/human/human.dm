@@ -333,14 +333,22 @@
 	if(istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank))
 		dat += "<BR><A href='?src=\ref[src];internal=1'>[internal ? "Disable Internals" : "Set Internals"]</A>"
 
-	if(w_uniform)	//we checked already, but a different place.
+	if(dna)
+		if(dna.species.nojumpsuit)
+			dat += "<BR><B>ID:</B> <A href='?src=\ref[src];item=[slot_wear_id]'>[(wear_id && !(wear_id.flags&ABSTRACT)) ? wear_id : "Nothing"]</A>"
+	else if(w_uniform)
 		dat += "<BR><B>ID:</B> <A href='?src=\ref[src];item=[slot_wear_id]'>[(wear_id && !(wear_id.flags&ABSTRACT)) ? wear_id : "Nothing"]</A>"
 
 	if(handcuffed)
 		dat += "<BR><A href='?src=\ref[src];item=[slot_handcuffed]'>Handcuffed</A>"
 	if(legcuffed)
 		dat += "<BR><A href='?src=\ref[src];item=[slot_legcuffed]'>Legcuffed</A>"
-	if(w_uniform)
+
+	if(dna)
+		if(dna.species.nojumpsuit)
+			dat += "<BR><BR><A href='?src=\ref[src];pockets=left'>Left Pocket ([(l_store && !(l_store.flags&ABSTRACT)) ? "Full" : "Empty"])</A>"
+			dat += " - <A href='?src=\ref[src];pockets=right'>Right Pocket ([(r_store && !(r_store.flags&ABSTRACT)) ? "Full" : "Empty"])</A>"
+	else if(w_uniform)
 		dat += "<BR><BR><A href='?src=\ref[src];pockets=left'>Left Pocket ([(l_store && !(l_store.flags&ABSTRACT)) ? "Full" : "Empty"])</A>"
 		dat += " - <A href='?src=\ref[src];pockets=right'>Right Pocket ([(r_store && !(r_store.flags&ABSTRACT)) ? "Full" : "Empty"])</A>"
 

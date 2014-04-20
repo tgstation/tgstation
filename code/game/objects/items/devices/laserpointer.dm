@@ -81,10 +81,10 @@
 	if(user.has_mutation(HULK))
 		user << "<span class='warning'>Your meaty finger is too large for the button!</span>"
 		return
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		if(C.is_mutantrace("adamantine"))
-			user << "<span class='warning'>Your metal fingers can't press the button!</span>"
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna && NOGUNS in H.dna.species.specflags)
+			user << "<span class='warning'>Your fingers can't press the button!</span>"
 			return
 
 	add_fingerprint(user)

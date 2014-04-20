@@ -199,8 +199,12 @@ proc/wabbajack(mob/living/M)
 					var/mob/living/carbon/human/H = new_mob
 					ready_dna(H)
 					if(H.dna)
-						H.dna.mutantrace = pick("lizard","golem","slime","plant","fly","shadow","adamantine","skeleton",8;"")
-						H.update_body()
+						var/list/randspecies = list()
+						for(var/t in typesof(/datum/species)) // returns a bunch of types
+							var/datum/species/temp = new t()
+							randspecies += "[temp.type]"
+						var/datum/species/new_species = pick(randspecies)
+						H.dna.species = new new_species()
 				else
 					return
 
