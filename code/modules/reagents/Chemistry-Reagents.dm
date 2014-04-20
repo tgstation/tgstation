@@ -351,6 +351,7 @@ datum
 						human.dna.mutantrace = "slime"
 						human.update_body()
 						human.update_hair()
+						human.update_mutcolor()
 				..()
 				return
 

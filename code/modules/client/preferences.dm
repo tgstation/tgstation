@@ -54,6 +54,7 @@ datum/preferences
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/mutant_race = "human"			//Mutant race
+	var/mutant_color = "000"			//Mutant race skin color
 
 		//Mob preview
 	var/icon/preview_icon_front = null
@@ -174,7 +175,7 @@ datum/preferences
 				dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><BR>"
 
 
-				dat += "</td><td valign='top' width='28%'>"
+				dat += "</td><td valign='top' width='21%'>"
 
 				dat += "<h3>Hair Style</h3>"
 
@@ -182,7 +183,7 @@ datum/preferences
 				dat += "<span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
 
 
-				dat += "</td><td valign='top' width='28%'>"
+				dat += "</td><td valign='top' width='21%'>"
 
 				dat += "<h3>Facial Hair Style</h3>"
 
@@ -190,12 +191,17 @@ datum/preferences
 				dat += "<span style='border: 1px solid #161616; background-color: #[facial_hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a><BR>"
 
 
-				dat += "</td><td valign='top'>"
+				dat += "</td><td valign='top' width='21%'>"
 
 				dat += "<h3>Eye Color</h3>"
 
 				dat += "<span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
 
+				dat += "</td><td valign='top' width='21%'>"
+
+				dat += "<h3>Mutant Color</h3>"  // even if choosing your mutantrace is off, this is here in case you gain one during a round
+
+				dat += "<span style='border: 1px solid #161616; background-color: #[mutant_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>Change</a><BR>"
 
 				dat += "</td></tr></table>"
 
@@ -208,6 +214,7 @@ datum/preferences
 				dat += "<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</a><br>"
 				dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'>[(toggles & CHAT_GHOSTEARS) ? "Nearest Creatures" : "All Speech"]</a><br>"
 				dat += "<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'>[(toggles & CHAT_GHOSTSIGHT) ? "Nearest Creatures" : "All Emotes"]</a><br>"
+				dat += "<b>Pull requests:</b> <a href='?_src_=prefs;preference=pull_requests'>[(toggles & CHAT_PULLR) ? "Yes" : "No"]</a><br>"
 
 				if(config.allow_Metadata)
 					dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'> Edit </a><br>"
@@ -622,6 +629,15 @@ datum/preferences
 						if(new_mutant_race)
 							mutant_race = new_mutant_race
 
+					if("mutant_color")
+						var/new_mutantcolor = input(user, "Choose your character's mutant race skin color:", "Character Preference") as color|null
+						if(new_mutantcolor)
+							var/temp_hsv = RGBtoHSV(new_mutantcolor)
+							if(ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright
+								mutant_color = sanitize_hexcolor(new_mutantcolor)
+							else
+								user << "<font color='red'>Invalid color. Your color is not bright enough.</font>"
+
 					if("s_tone")
 						var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in skin_tones
 						if(new_s_tone)
@@ -685,6 +701,9 @@ datum/preferences
 					if("ghost_sight")
 						toggles ^= CHAT_GHOSTSIGHT
 
+					if("pull_requests")
+						toggles ^= CHAT_PULLR
+
 					if("save")
 						save_preferences()
 						save_character()
@@ -732,6 +751,7 @@ datum/preferences
 		character.eye_color = eye_color
 		character.hair_color = hair_color
 		character.facial_hair_color = facial_hair_color
+		character.mutant_color = mutant_color
 
 		character.skin_tone = skin_tone
 		character.hair_style = hair_style
@@ -742,6 +762,7 @@ datum/preferences
 			backbag = 1 //Same as above
 		character.backbag = backbag
 
+		character.update_mutcolor()
 		/*
 		//Debugging report to track down a bug, which randomly assigned the plural gender to people.
 		if(character.gender in list(PLURAL, NEUTER))

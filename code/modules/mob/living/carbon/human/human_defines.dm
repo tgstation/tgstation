@@ -7,6 +7,9 @@
 	var/facial_hair_color = "000"
 	var/facial_hair_style = "Shaved"
 
+	// Mutant race skin color
+	var/mutant_color = "FFF"
+
 	//Eye colour
 	var/eye_color = "000"
 
@@ -34,7 +37,7 @@
 	var/obj/item/l_store = null
 	var/obj/item/s_store = null
 
-	var/base_icon_state = "caucasian1_m"
+	var/icon/base_icon_state = "caucasian1_m"
 
 	var/list/organs = list() //Gets filled up in the constructor (human.dm, New() proc, line 24. I'm sick and tired of missing comments. -Agouri
 

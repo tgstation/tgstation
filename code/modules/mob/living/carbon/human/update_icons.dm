@@ -86,7 +86,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 /mob/living/carbon/human/proc/update_base_icon_state()
 	var/race = dna ? dna.mutantrace : null
 	switch(race)
-		if("lizard","golem","slime","shadow","adamantine","fly","plant")
+		if("lizard","golem","slime","shadow","adamantine","fly","plant","jelly")
 			base_icon_state = "[dna.mutantrace]_[(gender == FEMALE) ? "f" : "m"]"
 		if("skeleton")
 			base_icon_state = "skeleton"
@@ -100,6 +100,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 /mob/living/carbon/human/proc/apply_overlay(cache_index)
 	var/image/I = overlays_standing[cache_index]
+
 	if(I)
 		overlays += I
 
@@ -117,7 +118,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 	if(overlays.len != overlays_standing.len)
 		overlays.Cut()
 
-		for(var/thing in overlays_standing)
+		for(var/image/thing in overlays_standing)
 			if(thing)	overlays += thing
 
 	update_transform()
@@ -145,9 +146,13 @@ Please contact me on #coderbus IRC. ~Carnie x
 	//Reset our hair
 	remove_overlay(HAIR_LAYER)
 
-	//mutants don't have hair. masks and helmets can obscure our hair too.
-	if( (HUSK in mutations) || (dna && dna.mutantrace) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) )
+	//mutants don't have hair (besides slime people). masks and helmets can obscure our hair too.
+	if(dna && dna.mutantrace)
+		if(dna.mutantrace != "slime")
+			return
+	else if( (HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) )
 		return
+
 
 	//base icons
 	var/datum/sprite_accessory/S
@@ -156,9 +161,17 @@ Please contact me on #coderbus IRC. ~Carnie x
 	if(facial_hair_style)
 		S = facial_hair_styles_list[facial_hair_style]
 		if(S)
-			var/image/img_facial_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
+			var/image/img_facial_s
+			var/new_color
 
-			var/new_color = "#" + facial_hair_color
+			img_facial_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
+
+			if(dna && dna.mutantrace == "slime")
+				new_color = "#" + mutant_color
+				img_facial_s.alpha = 125
+			else
+				new_color = "#" + facial_hair_color
+
 			img_facial_s.color = new_color
 
 			standing	+= img_facial_s
@@ -170,8 +183,16 @@ Please contact me on #coderbus IRC. ~Carnie x
 		S = hair_styles_list[hair_style]
 		if(S)
 			var/image/img_hair_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
+			var/new_color
 
-			var/new_color = "#" + hair_color
+			img_hair_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
+
+			if(dna && dna.mutantrace == "slime")
+				new_color = "#" + mutant_color
+				img_hair_s.alpha = 125
+			else
+				new_color = "#" + facial_hair_color
+
 			img_hair_s.color = new_color
 
 			standing	+= img_hair_s
@@ -208,6 +229,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 	remove_overlay(BODY_LAYER)
 
 	update_base_icon_state()
+
 	icon_state = "[base_icon_state]_s"
 
 	var/list/standing	= list()
@@ -217,21 +239,25 @@ Please contact me on #coderbus IRC. ~Carnie x
 		standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[lip_style]_s", "layer" = -BODY_LAYER)
 
 	//Eyes
-	if(!dna || dna.mutantrace != "skeleton")
-		var/image/img_eyes_s = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes_s", "layer" = -BODY_LAYER)
+	if(dna)
+		if(!dna.mutantrace || dna.mutantrace == "lizard" || dna.mutantrace == "plant" || dna.mutantrace == "jelly")
+			var/image/img_eyes_s
+			if(dna.mutantrace == "jelly") // jellies have special eyes
+				img_eyes_s = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "jelleyes_s", "layer" = -BODY_LAYER)
+			else
+				img_eyes_s = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes_s", "layer" = -BODY_LAYER)
 
-		var/new_color = "#" + eye_color
+			var/new_color = "#" + eye_color
 
-		img_eyes_s.color = new_color
+			img_eyes_s.color = new_color
 
-		standing	+= img_eyes_s
+			standing	+= img_eyes_s
 
 	//Underwear
 	if(underwear)
 		var/datum/sprite_accessory/underwear/U = underwear_all[underwear]
 		if(U)
 			standing	+= image("icon"=U.icon, "icon_state"="[U.icon_state]_s", "layer"=-BODY_LAYER)
-
 
 	if(standing.len)
 		overlays_standing[BODY_LAYER]	= standing
@@ -274,7 +300,14 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	apply_overlay(AUGMENTS_LAYER)
 
+/mob/living/carbon/human/proc/update_mutcolor() // this will only run at initialization, mutant race changes, and icon regenerations, rather than constantly.
+	if(dna && dna.mutantrace != "human")
+		var/icon/temp_icon = new /icon('icons/mob/human.dmi', "[dna.mutantrace]_[gender]_s")
+		switch(dna.mutantrace)
+			if("lizard","golem","slime","plant","jelly") // mutantraces on this list can have custom skin colors
+				temp_icon.Blend("#[mutant_color]", ICON_MULTIPLY)
 
+		icon = temp_icon
 
 /* --------------------------------------- */
 //For legacy support.
@@ -305,6 +338,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 	update_transform()
 	//Hud Stuff
 	update_hud()
+	// Mutantrace color
+	update_mutcolor()
 
 /* --------------------------------------- */
 //vvvvvv UPDATE_INV PROCS vvvvvv
@@ -322,6 +357,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 		var/t_color = w_uniform.item_color
 		if(!t_color)		t_color = icon_state
 		var/image/standing	= image("icon"='icons/mob/uniform.dmi', "icon_state"="[t_color]_s", "layer"=-UNIFORM_LAYER)
+
 		overlays_standing[UNIFORM_LAYER]	= standing
 
 		var/G = (gender == FEMALE) ? "f" : "m"
@@ -532,7 +568,6 @@ Please contact me on #coderbus IRC. ~Carnie x
 		if(wear_mask.blood_DNA && !istype(wear_mask, /obj/item/clothing/mask/cigarette))
 			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
 
-
 	apply_overlay(FACEMASK_LAYER)
 
 
@@ -627,6 +662,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 		overlays_standing[L_HAND_LAYER] = image("icon"='icons/mob/items_lefthand.dmi', "icon_state"="[t_state]", "layer"=-L_HAND_LAYER)
 
 	apply_overlay(L_HAND_LAYER)
+
 
 //Human Overlays Indexes/////////
 #undef BODY_LAYER
