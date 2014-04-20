@@ -224,10 +224,8 @@
 			src.icon_state = "r_wall"
 			relativewall_neighbours()	//call smoothwall stuff
 			user << "<span class='notice'>You repair the last of the damage.</span>"
-			if (MS.amount > 1)
-				MS.amount--
-			else
-				qdel(MS)
+			MS.use(1)
+
 
 	//APC
 	else if( istype(W,/obj/item/apc_frame) )
