@@ -86,7 +86,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 /mob/living/carbon/human/proc/update_base_icon_state()
 	var/race = dna ? dna.mutantrace : null
 	switch(race)
-		if("lizard","golem","slime","shadow","adamantine","fly","plant","jelly")
+		if("lizard","golem","slime","shadow","adamantine","fly","plant","jelly","pod")
 			base_icon_state = "[dna.mutantrace]_[(gender == FEMALE) ? "f" : "m"]"
 		if("skeleton")
 			base_icon_state = "skeleton"
@@ -240,7 +240,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	//Eyes
 	if(dna)
-		if(!dna.mutantrace || dna.mutantrace == "lizard" || dna.mutantrace == "plant" || dna.mutantrace == "jelly")
+		if(!dna.mutantrace || dna.mutantrace == "lizard" || dna.mutantrace == "plant" || dna.mutantrace == "jelly" || dna.mutantrace == "pod")
 			var/image/img_eyes_s
 			if(dna.mutantrace == "jelly") // jellies have special eyes
 				img_eyes_s = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "jelleyes_s", "layer" = -BODY_LAYER)
@@ -304,7 +304,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 	if(dna && dna.mutantrace != "human")
 		var/icon/temp_icon = new /icon('icons/mob/human.dmi', "[dna.mutantrace]_[gender]_s")
 		switch(dna.mutantrace)
-			if("lizard","golem","slime","plant","jelly") // mutantraces on this list can have custom skin colors
+			if("lizard","golem","slime","plant","jelly","pod") // mutantraces on this list can have custom skin colors
 				temp_icon.Blend("#[mutant_color]", ICON_MULTIPLY)
 
 		icon = temp_icon
