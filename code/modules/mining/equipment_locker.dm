@@ -261,7 +261,7 @@
 				var/datum/money_account/acct = get_card_account(inserted_id,require_pin=1)
 				if(acct.charge(prize.cost,linked_account,"Purchased [prize.name]"))
 					new prize.equipment_path(src.loc)
-	if(href_list["purchase"])
+	if(href_list["link"])
 		if(istype(inserted_id))
 			if(access_qm in inserted_id.GetAccess())
 				if(linked_account == station_account)
