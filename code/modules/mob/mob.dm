@@ -2,15 +2,15 @@
 	mob_list -= src
 	dead_mob_list -= src
 	living_mob_list -= src
-	//Set the mob up for GC. Mobs have lots of references
 	if(client)
 		for(var/atom/movable/AM in client.screen)
 			qdel(AM)
 		client.screen = list()
-	del(hud_used)
-	spellremove(src)
+	qdel(hud_used)
+	if(mind && mind.current == src)
+		spellremove(src)
 	for(var/infection in viruses)
-		del(infection)
+		qdel(infection)
 	ghostize()
 	..()
 
@@ -593,6 +593,8 @@ var/list/slot_equipment_priority = list( \
 			if(master_controller)
 				stat(null,"MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[controller_iteration])")
 				stat(null,"Air-[master_controller.air_cost]\t#[global_activeturfs]")
+				stat(null,"Turfs-[master_controller.air_turfs]\tGroups-[master_controller.air_groups]")
+				stat(null,"SC-[master_controller.air_superconductivity]\tHP-[master_controller.air_highpressure]\tH-[master_controller.air_hotspots]")
 				stat(null,"Sun-[master_controller.sun_cost]")
 				stat(null,"Mob-[master_controller.mobs_cost]\t#[mob_list.len]")
 				stat(null,"Dis-[master_controller.diseases_cost]\t#[active_diseases.len]")
@@ -662,10 +664,10 @@ var/list/slot_equipment_priority = list( \
                 canmove = 1
         if(buckled)
                 lying = 90 * bed
+                anchored = buckled
         else
                 if((ko || resting) && !lying)
                         fall(ko)
-        anchored = buckled
         canmove = !(ko || resting || stunned || buckled)
         density = !lying
         update_transform()

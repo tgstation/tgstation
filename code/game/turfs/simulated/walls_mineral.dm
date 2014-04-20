@@ -128,3 +128,11 @@
 		if(shocked)
 			shock()
 */
+
+/turf/simulated/wall/mineral/wood
+	name = "wooden wall"
+	desc = "A wall with wooden plating."
+	icon_state = "wood0"
+	walltype = "wood"
+	mineral = "wood"
+	hardness = 70

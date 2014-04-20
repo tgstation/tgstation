@@ -831,7 +831,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				/obj/item/stack/sheet/mineral/plasma = list("plasma" = 20),
 				/obj/item/stack/sheet/metal = list("iron" = 20),
 				/obj/item/stack/sheet/plasteel = list("iron" = 20, "plasma" = 20),
-				/obj/item/stack/sheet/wood = list("carbon" = 20),
+				/obj/item/stack/sheet/mineral/wood = list("carbon" = 20),
 				/obj/item/stack/sheet/glass = list("silicon" = 20),
 				/obj/item/stack/sheet/rglass = list("silicon" = 20, "iron" = 20),
 				/obj/item/stack/sheet/mineral/uranium = list("uranium" = 20),

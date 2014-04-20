@@ -706,6 +706,9 @@
 	name = "kudzu pod"
 	desc = "<I>Pueraria Virallis</I>: An invasive species with vines that rapidly creep and wrap around whatever they contact."
 	icon_state = "kudzupod"
+	var/list/mutations = list()
+	var/mutating = 0
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)

@@ -272,3 +272,9 @@
 	icon_state = ""
 	mineral = "sandstone"
 //------------wtf?------------end
+
+/obj/structure/falsewall/wood
+	name = "wooden wall"
+	desc = "A wall with wooden plating."
+	icon_state = ""
+	mineral = "wood"
