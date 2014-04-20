@@ -149,9 +149,10 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	//mutants don't have hair (besides slime people). masks and helmets can obscure our hair too.
 	if(dna && dna.mutantrace)
-		if(dna.mutantrace != "slime")
+		if(check_mutrace("slime") == 0)
 			return
-	else if( (HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) )
+
+	if( (HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) )
 		return
 
 
@@ -167,7 +168,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 			img_facial_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
 
-			if(dna && dna.mutantrace == "slime")
+			if(check_mutrace("slime") == 1)
 				new_color = "#" + mutant_color
 				img_facial_s.alpha = 125
 			else
@@ -188,7 +189,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 			img_hair_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
 
-			if(dna && dna.mutantrace == "slime")
+			if(check_mutrace("slime") == 1)
 				new_color = "#" + mutant_color
 				img_hair_s.alpha = 125
 			else
@@ -241,9 +242,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	//Eyes
 	if(dna)
-		if(dna.mutantrace in mutants_with_eyes)
+		if((!dna.mutantrace) || (dna.mutantrace in mutants_with_eyes))
 			var/image/img_eyes_s
-			if(dna.mutantrace == "jelly") // jellies have special eyes
+			if(check_mutrace("jelly") == 1) // jellies have special eyes
 				img_eyes_s = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "jelleyes_s", "layer" = -BODY_LAYER)
 			else
 				img_eyes_s = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes_s", "layer" = -BODY_LAYER)

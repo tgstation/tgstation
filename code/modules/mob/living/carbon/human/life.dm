@@ -741,7 +741,7 @@
 	proc/handle_chemicals_in_body()
 		if(reagents) reagents.metabolize(src)
 
-		if(dna && dna.mutantrace == "pod") //couldn't think of a better place to place it, since it handles nutrition -- Urist
+		if(check_mutrace("pod") == 1) //couldn't think of a better place to place it, since it handles nutrition -- Urist
 			var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 			if(isturf(loc)) //else, there's considered to be no light
 				var/turf/T = loc
@@ -757,7 +757,7 @@
 				adjustToxLoss(-1)
 				adjustOxyLoss(-1)
 
-		if(dna && dna.mutantrace == "shadow")
+		if(check_mutrace("shadow") == 1)
 			var/light_amount = 0
 			if(isturf(loc))
 				var/turf/T = loc
@@ -795,7 +795,7 @@
 			if(overeatduration > 1)
 				overeatduration -= 2 //doubled the unfat rate
 
-		if(dna && dna.mutantrace == "pod")
+		if(check_mutrace("pod") == 1)
 			if(nutrition < 200)
 				take_overall_damage(2,0)
 

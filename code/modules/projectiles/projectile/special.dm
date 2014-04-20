@@ -83,8 +83,8 @@
 
 	on_hit(var/atom/target, var/blocked = 0)
 		if(iscarbon(target))
-			var/mob/living/carbon/M = target
-			if(check_dna_integrity(M) && M.dna.mutantrace == "plant") //Plantmen possibly get mutated and damaged by the rays.
+			var/mob/living/carbon/human/M = target
+			if(check_dna_integrity(M) && M.check_mutrace("plant","pod") == 1) //Plantmen possibly get mutated and damaged by the rays.
 				if(prob(15))
 					M.apply_effect((rand(30,80)),IRRADIATE)
 					M.Weaken(5)
@@ -117,9 +117,9 @@
 	nodamage = 1
 	flag = "energy"
 
-	on_hit(mob/living/carbon/target, var/blocked = 0)
+	on_hit(mob/living/carbon/human/target, var/blocked = 0)
 		if(iscarbon(target))
-			if(ishuman(target) && target.dna && target.dna.mutantrace == "plant")	//These rays make plantmen fat.
+			if(check_dna_integrity(target) && target.check_mutrace("plant","pod") == 1)	//These rays make plantmen fat.
 				target.nutrition = min(target.nutrition+30, 500)
 			else
 				target.show_message("\blue The radiation beam dissipates harmlessly through your body.")

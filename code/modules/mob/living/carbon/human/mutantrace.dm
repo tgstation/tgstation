@@ -8,12 +8,18 @@ var/global/list/colored_mutraces = list( // these mutantraces are affected by mu
 )
 
 var/global/list/mutants_with_eyes = list( // these mutantraces have eyes
-	"null",
 	"lizard",
 	"plant",
 	"pod",
 	"jelly",
 )
+
+/mob/living/carbon/human/proc/check_mutrace(var/mutneeded = "mut1", var/mutneededalt = "mut2")
+	if(dna)
+		if(dna.mutantrace == mutneeded || dna.mutantrace == mutneededalt)
+			return 1
+
+	return 0
 
 /mob/living/carbon/human/proc/update_mutcolor() // this will only run at initialization, mutant race changes, and icon regenerations, rather than constantly.
 	if(dna && dna.mutantrace != "human")
