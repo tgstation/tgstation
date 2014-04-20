@@ -80,21 +80,22 @@ Please contact me on #coderbus IRC. ~Carnie x
 #define FIRE_LAYER				1		//If you're on fire
 #define TOTAL_LAYERS			22		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 //////////////////////////////////
+
 /mob/living/carbon/human
 	var/list/overlays_standing[TOTAL_LAYERS]
 
 /mob/living/carbon/human/proc/update_base_icon_state()
-	var/race = dna ? dna.mutantrace : null
-	switch(race)
-		if("lizard","golem","slime","shadow","adamantine","fly","plant","jelly","pod")
+	//var/race = dna ? dna.mutantrace : null
+	if(dna && dna.mutantrace)
+		if(dna.mutantrace != "skeleton")
 			base_icon_state = "[dna.mutantrace]_[(gender == FEMALE) ? "f" : "m"]"
-		if("skeleton")
-			base_icon_state = "skeleton"
 		else
-			if(HUSK in mutations)
-				base_icon_state = "husk"
-			else
-				base_icon_state = "[skin_tone]_[(gender == FEMALE) ? "f" : "m"]"
+			base_icon_state = "skeleton"
+	else
+		if(HUSK in mutations)
+			base_icon_state = "husk"
+		else
+			base_icon_state = "[skin_tone]_[(gender == FEMALE) ? "f" : "m"]"
 	icon_state = "[base_icon_state]_s"
 
 
@@ -240,7 +241,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	//Eyes
 	if(dna)
-		if(!dna.mutantrace || dna.mutantrace == "lizard" || dna.mutantrace == "plant" || dna.mutantrace == "jelly" || dna.mutantrace == "pod")
+		if(dna.mutantrace in mutants_with_eyes)
 			var/image/img_eyes_s
 			if(dna.mutantrace == "jelly") // jellies have special eyes
 				img_eyes_s = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "jelleyes_s", "layer" = -BODY_LAYER)
@@ -299,15 +300,6 @@ Please contact me on #coderbus IRC. ~Carnie x
 		overlays_standing[AUGMENTS_LAYER]	= standing
 
 	apply_overlay(AUGMENTS_LAYER)
-
-/mob/living/carbon/human/proc/update_mutcolor() // this will only run at initialization, mutant race changes, and icon regenerations, rather than constantly.
-	if(dna && dna.mutantrace != "human")
-		var/icon/temp_icon = new /icon('icons/mob/human.dmi', "[dna.mutantrace]_[gender]_s")
-		switch(dna.mutantrace)
-			if("lizard","golem","slime","plant","jelly","pod") // mutantraces on this list can have custom skin colors
-				temp_icon.Blend("#[mutant_color]", ICON_MULTIPLY)
-
-		icon = temp_icon
 
 /* --------------------------------------- */
 //For legacy support.
