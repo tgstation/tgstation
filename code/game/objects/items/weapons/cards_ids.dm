@@ -67,7 +67,6 @@
 	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "id"
 	item_state = "card-id"
-	var/mining_points = 0 //For redeeming at mining equipment lockers
 	var/access = list()
 	var/registered_name = "Unknown" // The name registered_name on the card
 	slot_flags = SLOT_ID
@@ -92,8 +91,6 @@
 /obj/item/weapon/card/id/attack_self(mob/user as mob)
 	for(var/mob/O in viewers(user, null))
 		O.show_message(text("[] shows you: \icon[] []: assignment: []", user, src, src.name, src.assignment), 1)
-	if(mining_points)
-		user << "There's [mining_points] mining equipment redemption points loaded onto this card."
 	src.add_fingerprint(user)
 	return
 
@@ -102,6 +99,15 @@
 
 /obj/item/weapon/card/id/GetID()
 	return src
+
+/obj/item/weapon/card/id/proc/GetBalance(var/format=0)
+	var/amt = 0
+	var/datum/money_account/acct = get_card_account(src)
+	if(acct)
+		amt = acct.money
+	if(format)
+		amt = "$[num2septext(amt)]"
+	return amt
 // vgedit: We have different wallets.
 /*
 /obj/item/weapon/card/id/attackby(obj/item/weapon/W as obj, mob/user as mob)

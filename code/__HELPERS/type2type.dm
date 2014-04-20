@@ -293,3 +293,15 @@ proc/tg_list2text(list/list, glue=",")
 		if("old")		return 'icons/mob/screen1_old.dmi'
 		if("Orange")	return 'icons/mob/screen1_Orange.dmi'
 		else			return 'icons/mob/screen1_Midnight.dmi'
+
+/proc/num2septext(var/theNum, var/sigFig = 7,var/sep=",") // default sigFig (1,000,000)
+	var/finalNum = num2text(theNum, sigFig)
+
+	// Start from the end, or from the decimal point
+	var/end = findtextEx(finalNum, ".") || length(finalNum) + 1
+
+	// Moving towards start of string, insert comma every 3 characters
+	for(var/pos = end - 3, pos > 1, pos -= 3)
+		finalNum = copytext(finalNum, 1, pos) + sep + copytext(finalNum, pos)
+
+	return finalNum
