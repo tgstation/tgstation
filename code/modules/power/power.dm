@@ -55,15 +55,20 @@
 // increment the power usage stats for an area
 
 /obj/machinery/proc/use_power(var/amount, var/chan = -1) // defaults to power_channel
-	var/area/A = getArea()
+	var/A = getArea()
 
-	if(!A || !isarea(A) || !A.master)
+	if(!A || !isarea(A))
 		return
 
-	if(chan == -1)
+	var/area/B = A
+
+	if (!B.master)
+		return
+
+	if (-1 == chan)
 		chan = power_channel
 
-	A.master.use_power(amount, chan)
+	B.master.use_power(amount, chan)
 
 /obj/machinery/proc/power_change()		// called whenever the power settings of the containing area change
 										// by default, check equipment channel & set flag
