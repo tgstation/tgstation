@@ -188,7 +188,7 @@ emp_act
 
 			if("chest")	//Easier to score a stun but lasts less time
 				if(stat == CONSCIOUS && prob(I.force + 10))
-					if(Iforce > 0)
+					if(Iforce >= 5)
 						visible_message("<span class='danger'>[src] has been knocked down!</span>", \
 										"<span class='userdanger'>[src] has been knocked down!</span>")
 						apply_effect(5, WEAKEN, armor)
