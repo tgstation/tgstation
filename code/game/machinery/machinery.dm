@@ -113,16 +113,31 @@ Class Procs:
 	var/global/gl_uid = 1
 	var/custom_aghost_alerts=0
 	var/panel_open = 0
+	var/myArea
 
 /obj/machinery/New()
-	..()
+	addAtProcessing()
+	return ..()
+
+/obj/machinery/proc/addAtProcessing()
+	if (use_power)
+		myArea = loc.loc
+
 	machines += src
 
-/obj/machinery/Destroy()
+/obj/machinery/proc/removeAtProcessing()
+	if (myArea)
+		myArea = null
+
 	machines -= src
+
+/obj/machinery/Destroy()
+	if (src in machines)
+		removeAtProcessing()
+
 	..()
 
-/obj/machinery/process()//If you dont use process or power why are you here
+/obj/machinery/process() // If you dont use process or power why are you here
 	return PROCESS_KILL
 
 /obj/machinery/emp_act(severity)

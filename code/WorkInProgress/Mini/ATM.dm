@@ -61,13 +61,21 @@ log transactions
 		if(ticks_left_locked_down <= 0)
 			number_incorrect_tries = 0
 
-	for(var/obj/item/weapon/spacecash/S in src)
-		S.loc = src.loc
-		if(prob(50))
-			playsound(loc, 'sound/items/polaroid1.ogg', 50, 1)
-		else
-			playsound(loc, 'sound/items/polaroid2.ogg', 50, 1)
-		break
+	if(authenticated_account)
+		var/turf/T = get_turf(src)
+		if(istype(T) && locate(/obj/item/weapon/spacecash) in T)
+			var/list/cash_found = list()
+			for(var/obj/item/weapon/spacecash/S in T)
+				cash_found+=S
+			if(cash_found.len>0)
+				if(prob(50))
+					playsound(loc, 'sound/items/polaroid1.ogg', 50, 1)
+				else
+					playsound(loc, 'sound/items/polaroid2.ogg', 50, 1)
+				var/amount = count_cash(cash_found)
+				for(var/obj/item/weapon/spacecash/S in cash_found)
+					qdel(S)
+				authenticated_account.charge(-amount,null,"Credit deposit",terminal_id=machine_id)
 
 /obj/machinery/atm/proc/reconnect_database()
 	for(var/obj/machinery/account_database/DB in world) //Hotfix until someone finds out why it isn't in 'machines'
@@ -87,7 +95,7 @@ log transactions
 	else if(authenticated_account)
 		if(istype(I,/obj/item/weapon/spacecash))
 			//consume the money
-			authenticated_account.money += I:worth
+			authenticated_account.money += I:worth * I:amount
 			if(prob(50))
 				playsound(loc, 'sound/items/polaroid1.ogg', 50, 1)
 			else

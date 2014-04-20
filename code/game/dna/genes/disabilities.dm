@@ -8,6 +8,7 @@
 
 /datum/dna/gene/disability
 	name="DISABILITY"
+	genetype = GENETYPE_BAD
 
 	// Mutation to give (or 0)
 	var/mutation=0
@@ -83,6 +84,7 @@
 	activation_message="You feel lightheaded."
 	deactivation_message = "You no longer feel lightheaded."
 	mutation=M_CLUMSY
+	flags = GENE_UNNATURAL // Clown-specific.
 
 	New()
 		block=CLUMSYBLOCK
@@ -92,6 +94,7 @@
 	activation_message="You twitch."
 	deactivation_message = "You stop twitching."
 	disability=TOURETTES
+	flags = GENE_UNNATURAL // Game-wrecking
 
 	New()
 		block=TWITCHBLOCK
@@ -110,6 +113,7 @@
 	activation_message="You can't seem to see anything."
 	deactivation_message = "You can see again."
 	sdisability=BLIND
+	flags = GENE_UNNATURAL
 
 	New()
 		block=BLINDBLOCK
@@ -119,6 +123,7 @@
 	activation_message="It's kinda quiet."
 	deactivation_message = "You can hear again."
 	sdisability=DEAF
+	flags = GENE_UNNATURAL
 
 	New()
 		block=DEAFBLOCK

@@ -290,6 +290,13 @@
 					return 0
 		return 1
 
+	proc/FuckUpGenes(var/mob/living/carbon/human/H)
+		// 20% of players have bad genetic mutations.
+		if(prob(20))
+			H.dna.GiveRandomSE(notflags = GENE_UNNATURAL,genetype = GENETYPE_BAD)
+			if(prob(10)) // 10% of those have a good mut.
+				H.dna.GiveRandomSE(notflags = GENE_UNNATURAL,genetype = GENETYPE_GOOD)
+
 
 	proc/AttemptLateSpawn(rank)
 		if (src != usr)
@@ -320,7 +327,7 @@
 			data_core.manifest_inject(character)
 			ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
 			AnnounceArrival(character, rank)
-
+			FuckUpGenes(character)
 		else
 			character.Robotize()
 		del(src)

@@ -170,3 +170,13 @@
 // Used below, simple injection modifier.
 /proc/probinj(var/pr, var/inj)
 	return prob(pr+inj*pr)
+
+
+/proc/query_genes(var/notflags = 0, var/flags = 0, var/genetype = -1)
+	. = list()
+	for(var/datum/dna/gene/gene in dna_genes)
+		if(!gene.block) continue
+		if(genetype>-1 && gene.genetype!=genetype) continue
+		if(flags!=0 && !(gene.flags & flags)) continue
+		if(notflags!=0 && (gene.flags & notflags)) continue
+		. += gene.block

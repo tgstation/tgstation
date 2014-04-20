@@ -158,7 +158,7 @@
 	fluffitems = list(
 		/obj/structure/table/woodentable=2,
 		/obj/structure/reagent_dispensers/beerkeg=1,
-		/obj/item/weapon/spacecash/c500=4,
+		/obj/item/weapon/spacecash/c1000=2,
 		/obj/item/weapon/reagent_containers/food/drinks/shaker=1,
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/wine=3,
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey=3,

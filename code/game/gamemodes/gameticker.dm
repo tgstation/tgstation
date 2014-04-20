@@ -301,7 +301,7 @@ var/global/datum/controller/gameticker/ticker
 				else if(!player.mind.assigned_role)
 					continue
 				else
-					player.create_character()
+					player.FuckUpGenes(player.create_character())
 					del(player)
 
 

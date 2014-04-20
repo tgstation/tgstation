@@ -54,7 +54,13 @@ var/global/list/bad_blocks[0]
 
 // Skip checking if it's already active.
 // Used for genes that check for value rather than a binary on/off.
-#define GENE_ALWAYS_ACTIVATE 1
+#define GENE_ALWAYS_ACTIVATE   1
+
+// One of the genes that can't be handed out at roundstart
+#define GENE_UNNATURAL         2
+
+#define GENETYPE_BAD  0
+#define GENETYPE_GOOD 1
 
 /datum/dna
 	// READ-ONLY, GETS OVERWRITTEN
@@ -96,6 +102,9 @@ var/global/list/bad_blocks[0]
 	new_dna.UpdateUI()
 	new_dna.UpdateSE()
 	return new_dna
+
+/datum/dna/proc/GiveRandomSE(var/notflags = 0, var/flags = 0, var/genetype = -1)
+	SetSEState(pick(query_genes(notflags,flags,genetype)), 1)
 
 ///////////////////////////////////////
 // UNIQUE IDENTITY

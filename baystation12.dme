@@ -934,6 +934,7 @@
 #include "code\modules\Economy\Economy_TradeDestinations.dm"
 #include "code\modules\Economy\EFTPOS.dm"
 #include "code\modules\Economy\Job_Departments.dm"
+#include "code\modules\Economy\utils.dm"
 #include "code\modules\events\alien_infestation.dm"
 #include "code\modules\events\blob.dm"
 #include "code\modules\events\bluespaceanomaly.dm"
