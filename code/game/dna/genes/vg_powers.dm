@@ -8,14 +8,15 @@ Obviously, requires DNA2.
 /mob/living/carbon/human/var/hulk_time=0
 
 // In decaseconds.
-#define HULK_DURATION 300
-#define HULK_COOLDOWN 600
+#define HULK_DURATION 300 // How long the effects last
+#define HULK_COOLDOWN 600 // How long they must wait to hulk out.
 
 /datum/dna/gene/basic/grant_spell/hulk
 	name = "Hulk"
 	desc = "Allows the subject to become the motherfucking Hulk."
 	activation_messages = list("Your muscles hurt.")
 	deactivation_messages = list("Your muscles quit tensing.")
+	flags = GENE_UNNATURAL // Do NOT spawn on roundstart.
 
 	spelltype = /obj/effect/proc_holder/spell/targeted/hulk
 

@@ -1,5 +1,6 @@
 /datum/dna/gene/monkey
 	name="Monkey"
+	flags = GENE_UNNATURAL
 
 /datum/dna/gene/monkey/New()
 	block=MONKEYBLOCK
