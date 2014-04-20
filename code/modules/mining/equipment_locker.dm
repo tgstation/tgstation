@@ -21,7 +21,7 @@
 	var/datum/materials/materials = new
 	var/stack_amt = 50 //amount to stack before releasing
 	var/obj/item/weapon/card/id/inserted_id
-	var/points = 0
+	var/credits = 0
 
 /obj/machinery/mineral/ore_redemption/initialize()
 	for (var/dir in cardinal)
@@ -44,7 +44,7 @@
 	if(processed_sheet)
 		var/datum/material/mat = materials.getMaterial(O.material)
 		mat.stored += processed_sheet.amount //Stack the sheets
-		points += mat.value * processed_sheet.amount // Gimme my fucking points
+		credits += mat.value * processed_sheet.amount // Gimme my fucking credits
 		qdel(O)
 
 /obj/machinery/mineral/ore_redemption/process()
@@ -64,14 +64,14 @@
 				for(var/mat_id in B.materials.storage)
 					var/datum/material/mat = B.materials.getMaterial(mat_id)
 					materials.addAmount(mat_id,mat.stored)
-					points += mat.value * mat.stored // Gimme my fucking points
+					credits += mat.value * mat.stored // Gimme my fucking credits
 					mat.stored=0
 
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(var/obj/item/weapon/ore/O)
 	if(O.material)
 		var/datum/material/mat = materials.getMaterial(O.material)
 		var/obj/item/stack/sheet/M = new mat.sheettype(src)
-		//points += mat.value // Old behavior
+		//credits += mat.value // Old behavior
 		return M
 	del(O)//No refined type? Purge it.
 	return
@@ -86,10 +86,10 @@
 
 	dat += text("<b>Ore Redemption Machine</b><br><br>")
 	dat += text("This machine only accepts ore. Gibtonite and Slag are not accepted.<br><br>")
-	dat += text("Current unclaimed points: [points]<br>")
+	dat += text("Current unclaimed credits: $[num2septext(credits)]<br>")
 
 	if(istype(inserted_id))
-		dat += text("You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];choice=eject'>Eject ID.</A><br>")
+		dat += "You have [inserted_id.GetBalance(format=1)] credits in your bank account. <A href='?src=\ref[src];choice=eject'>Eject ID.</A><br>"
 		dat += text("<A href='?src=\ref[src];choice=claim'>Claim points.</A><br>")
 	else
 		dat += text("No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID.</A><br>")
@@ -126,9 +126,12 @@
 				inserted_id.verb_pickup()
 				inserted_id = null
 			if(href_list["choice"] == "claim")
-				inserted_id.mining_points += points
-				points = 0
-				src << "Points transferred."
+				var/datum/money_account/acct = get_card_account(inserted_id)
+				if(acct.charge(-credits,null,"Claimed mining credits."))
+					credits = 0
+					usr << "\blue Credits transferred."
+				else
+					usr << "\red Failed to claim credits."
 		else if(href_list["choice"] == "insert")
 			var/obj/item/weapon/card/id/I = usr.get_active_hand()
 			if(istype(I))
@@ -185,6 +188,7 @@
 		new /datum/data/mining_equipment("Kinetic accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,                  1000),
 		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide,                      2000),
 	)
+	var/datum/money_account/linked_account // Department account.
 
 /datum/data/mining_equipment/
 	var/equipment_name = "generic"
@@ -199,6 +203,8 @@
 /obj/machinery/mineral/equipment_locker/attack_hand(user as mob)
 	if(..())
 		return
+	if(!linked_account)
+		linked_account = department_accounts["Cargo"]
 	interact(user)
 
 /obj/machinery/mineral/equipment_locker/interact(mob/user)
@@ -206,7 +212,16 @@
 	dat += text("<b>Mining Equipment Locker</b><br><br>")
 
 	if(istype(inserted_id))
-		dat += "You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];choice=eject'>Eject ID.</A><br>"
+		dat += "You have [inserted_id.GetBalance(format=1)] in your account. <A href='?src=\ref[src];choice=eject'>Eject ID.</A><br />"
+		if(access_qm in inserted_id.GetAccess())
+			dat += "Pays to: <a href='?src=\ref[src];choice=link'>"
+			if(linked_account == station_account)
+				dat += "Station Account"
+			else if(linked_account == department_accounts["Cargo"])
+				dat += "Cargo Account"
+			else
+				dat += "Personal Account"
+			dat += "</a><br />"
 	else
 		dat += "No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID.</A><br>"
 
@@ -241,10 +256,20 @@
 			var/datum/data/mining_equipment/prize = locate(href_list["purchase"])
 			if (!prize || !(prize in prize_list))
 				return 1
-			if(prize.cost > inserted_id.mining_points)
-			else
-				inserted_id.mining_points -= prize.cost
-				new prize.equipment_path(src.loc)
+			var/balance=inserted_id.GetBalance()
+			if(prize.cost <= balance)
+				var/datum/money_account/acct = get_card_account(inserted_id,require_pin=1)
+				if(acct.charge(prize.cost,linked_account,"Purchased [prize.name]"))
+					new prize.equipment_path(src.loc)
+	if(href_list["purchase"])
+		if(istype(inserted_id))
+			if(access_qm in inserted_id.GetAccess())
+				if(linked_account == station_account)
+					linked_account = department_accounts["Cargo"]
+				else if(linked_account == department_accounts["Cargo"])
+					linked_account = get_card_account(inserted_id)
+				else
+					linked_account = station_account
 	updateUsrDialog()
 	return
 
@@ -293,8 +318,8 @@
 /**********************Mining Point Card**********************/
 
 /obj/item/weapon/card/mining_point_card
-	name = "mining point card"
-	desc = "A small card preloaded with mining points. Swipe your ID card over it to transfer the points, then discard."
+	name = "gift card"
+	desc = "A small card preloaded with credits. Swipe your ID card over it to transfer the credits, then discard."
 	icon_state = "data"
 	var/points = 500
 
@@ -302,16 +327,19 @@
 	if(istype(I, /obj/item/weapon/card/id))
 		if(points)
 			var/obj/item/weapon/card/id/C = I
-			C.mining_points += points
-			user << "<span class='info'>You transfer [points] points to [C].</span>"
-			points = 0
+			var/datum/money_account/acct = get_card_account(I)
+			if(acct.charge(-points,null,"Redeemed gift card."))
+				user << "<span class='info'>You transfer [points] credits to [C].</span>"
+				points = 0
+			else
+				user << "<span class='warning'>Unable to transfer credits.</span>"
 		else
 			user << "<span class='info'>There's no points left on [src].</span>"
 	..()
 
 /obj/item/weapon/card/mining_point_card/examine()
 	..()
-	usr << "There's [points] points on the card."
+	usr << "There's [points] credits on the card."
 
 /**********************Jaunter**********************/
 
