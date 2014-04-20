@@ -262,7 +262,7 @@ datum/controller/game_controller/proc/processMobs()
 			Disease.process()
 			continue
 
-		active_diseases = active_diseases - Disease
+		active_diseases -= Disease
 
 /datum/controller/game_controller/proc/processMachines()
 	for (var/obj/machinery/Machinery in machines)
@@ -276,7 +276,7 @@ datum/controller/game_controller/proc/processMobs()
 
 					continue
 
-		machines = machines - Machinery
+		Machinery.removeAtProcessing()
 
 /datum/controller/game_controller/proc/processObjects()
 	for (var/obj/Object in processing_objects)
@@ -285,7 +285,7 @@ datum/controller/game_controller/proc/processMobs()
 			Object.process()
 			continue
 
-		processing_objects = processing_objects - Object
+		processing_objects -= Object
 
 /datum/controller/game_controller/proc/processPipenets()
 	last_thing_processed = /datum/pipe_network
@@ -295,7 +295,7 @@ datum/controller/game_controller/proc/processMobs()
 			Pipe_Network.process()
 			continue
 
-		pipe_networks = pipe_networks - Pipe_Network
+		pipe_networks -= Pipe_Network
 
 /datum/controller/game_controller/proc/processPowernets()
 	last_thing_processed = /datum/powernet
@@ -305,7 +305,7 @@ datum/controller/game_controller/proc/processMobs()
 			Powernet.reset()
 			continue
 
-		powernets = powernets - Powernet
+		powernets -= Powernet
 
 /datum/controller/game_controller/proc/processNano()
 	for (var/datum/nanoui/Nanoui in nanomanager.processing_uis)
@@ -313,7 +313,7 @@ datum/controller/game_controller/proc/processMobs()
 			Nanoui.process()
 			continue
 
-		nanomanager.processing_uis = nanomanager.processing_uis - Nanoui
+		nanomanager.processing_uis -= Nanoui
 
 /datum/controller/game_controller/proc/processEvents()
 	last_thing_processed = /datum/event
@@ -323,7 +323,7 @@ datum/controller/game_controller/proc/processMobs()
 			Event.process()
 			continue
 
-		events = events - Event
+		events -= Event
 
 	checkEvent()
 
