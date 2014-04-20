@@ -142,7 +142,7 @@ proc/trigger_armed_response_team(var/force = 0)
 	sleep(600 * 5)
 	send_emergency_team = 0 // Can no longer join the ERT.
 
-	var/area/security/nuke_storage/nukeloc = locate()//To find the nuke in the vault
+	var/area/storage/nuke_storage/nukeloc = locate()//To find the nuke in the vault
 	var/obj/machinery/nuclearbomb/nuke = locate() in nukeloc
 	if(!nuke)
 		nuke = locate() in world

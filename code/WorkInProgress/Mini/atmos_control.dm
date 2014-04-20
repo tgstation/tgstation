@@ -27,12 +27,12 @@
 /obj/machinery/computer/atmoscontrol/xeno
 	name = "\improper Xenobiology Atmospherics Computer"
 	filter=list(
-		/area/toxins/xenobiology/specimen_1,
-		/area/toxins/xenobiology/specimen_2,
-		/area/toxins/xenobiology/specimen_3,
-		/area/toxins/xenobiology/specimen_4,
-		/area/toxins/xenobiology/specimen_5,
-		/area/toxins/xenobiology/specimen_6
+		/area/science/xenobiology/specimen_1,
+		/area/science/xenobiology/specimen_2,
+		/area/science/xenobiology/specimen_3,
+		/area/science/xenobiology/specimen_4,
+		/area/science/xenobiology/specimen_5,
+		/area/science/xenobiology/specimen_6
 	)
 	req_one_access = list(access_xenobiology,access_ce)
 

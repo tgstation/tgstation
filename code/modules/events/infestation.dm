@@ -32,7 +32,7 @@
 			spawn_area_type = /area/crew_quarters/kitchen
 			locstring = "the kitchen"
 		if(LOC_ATMOS)
-			spawn_area_type = /area/atmos
+			spawn_area_type = /area/engineering/atmos
 			locstring = "atmospherics"
 		if(LOC_INCIN)
 			spawn_area_type = /area/maintenance/incinerator
@@ -47,7 +47,7 @@
 			spawn_area_type = /area/hydroponics
 			locstring = "hydroponics"
 		if(LOC_VAULT)
-			spawn_area_type = /area/security/nuke_storage
+			spawn_area_type = /area/storage/nuke_storage
 			locstring = "the vault"
 		if(LOC_CONSTR)
 			spawn_area_type = /area/construction
