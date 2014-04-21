@@ -23,7 +23,7 @@ var/const/FALLOFF_SOUNDS = 1
 var/const/SURROUND_CAP = 7
 
 /mob/proc/playsound_local(var/turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1)
-	if(!src.client || (ear_deaf > 0 && stat != DEAD)) return
+	if(!src.client || ear_deaf > 0) return
 	soundin = get_sfx(soundin)
 
 	var/sound/S = sound(soundin)

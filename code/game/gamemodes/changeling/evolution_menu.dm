@@ -347,8 +347,6 @@ var/list/sting_paths
 		return
 	if(!mind.changeling)
 		mind.changeling = new /datum/changeling(gender)
-	if(!mind.changeling)
-		return
 	if(!sting_paths)
 		sting_paths = init_paths(/obj/effect/proc_holder/changeling)
 	if(mind.changeling.purchasedpowers)
