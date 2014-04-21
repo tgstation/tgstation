@@ -154,10 +154,15 @@ obj/effect/proc_holder/changeling/sting/LSD
 	add_logs(user, target, "stung", object="LSD sting")
 	spawn(rand(300,600))
 		if(target)
+<<<<<<< HEAD
 			if(target.hallucination <= 500)
 				target.hallucination += 200
 			else
 				target.hallucination = 700
+=======
+			target.stuttering += 200
+			target.jitteriness += 50
+>>>>>>> parent of a12d6ba... Tweaked the stats more
 	feedback_add_details("changeling_powers","HS")
 	return 1
 
