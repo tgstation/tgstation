@@ -131,7 +131,7 @@
 				inserted_id = null
 			if(href_list["choice"] == "claim")
 				var/datum/money_account/acct = get_card_account(inserted_id)
-				if(acct.charge(-credits,null,"Claimed mining credits."))
+				if(acct.charge(-credits,null,"Claimed mining credits.",dest_name = "Ore Redemption"))
 					credits = 0
 					usr << "\blue Credits transferred."
 				else
@@ -331,7 +331,7 @@
 		if(points)
 			var/obj/item/weapon/card/id/C = I
 			var/datum/money_account/acct = get_card_account(I)
-			if(acct.charge(-points,null,"Redeemed gift card."))
+			if(acct.charge(-points,null,"Redeemed gift card.",dest_name = "Gift Card"))
 				user << "<span class='info'>You transfer [points] credits to [C].</span>"
 				points = 0
 			else
