@@ -154,10 +154,10 @@ obj/effect/proc_holder/changeling/sting/LSD
 	add_logs(user, target, "stung", object="LSD sting")
 	spawn(rand(300,600))
 		if(target)
-			target.stuttering += 200
-			target.jitteriness += 50
-			target.dizziness += 150
-			target.confused += 150
+			if(target.hallucination <= 500)
+				target.hallucination += 200
+			else
+				target.hallucination = 700
 	feedback_add_details("changeling_powers","HS")
 	return 1
 
