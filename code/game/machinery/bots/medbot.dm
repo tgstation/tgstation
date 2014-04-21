@@ -219,8 +219,7 @@
 	if(open && !locked)
 		if(user) user << "<span class='warning'>You short out [src]'s reagent synthesis circuits.</span>"
 		spawn(0)
-			for(var/mob/O in hearers(src, null))
-				O.show_message(""<span class='userdanger'>[src] buzzes oddly!</span>", 1)
+			src.visible_message("<span class='userdanger'>[src] buzzes oddly!</span>", 1)
 		flick("medibot_spark", src)
 		src.patient = null
 		if(user) src.oldpatient = user
