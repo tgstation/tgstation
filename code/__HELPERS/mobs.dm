@@ -59,8 +59,6 @@ var/list/skin_tones = list(
 var/list/mutant_races = list(
 	"human",
 	"lizard",
-	//"plant",
-	//"jelly",
 	)
 
 proc/age2agedescription(age)
