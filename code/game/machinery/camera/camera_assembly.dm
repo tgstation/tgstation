@@ -6,8 +6,8 @@
 	w_class = 2
 	anchored = 0
 
-	m_amt = 700
-	g_amt = 300
+	m_amt = 400
+	g_amt = 250
 
 	//	Motion, EMP-Proof, X-Ray
 	var/list/obj/item/possible_upgrades = list(/obj/item/device/assembly/prox_sensor, /obj/item/stack/sheet/mineral/plasma, /obj/item/device/analyzer)

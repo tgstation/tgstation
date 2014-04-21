@@ -79,7 +79,7 @@
 /obj/structure/stool/bed/proc/buckle_mob(mob/M as mob, mob/user as mob)
 	if (!ticker)
 		user << "You can't buckle anyone in before the game starts."
-	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || user.lying || user.stat || M.buckled || istype(user, /mob/living/silicon/pai) )
+	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || user.lying || user.stat || M.buckled || istype(user, /mob/living/silicon/pai) || M.anchored)
 		return
 
 	if (istype(M, /mob/living/carbon/slime))

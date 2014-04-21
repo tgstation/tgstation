@@ -237,6 +237,7 @@ Mime
 	selection_color = "#dddddd"
 
 	default_pda = /obj/item/device/pda/mime
+	default_backpack = /obj/item/weapon/storage/backpack/mime
 
 	access = list(access_theatre, access_maint_tunnels)
 	minimal_access = list(access_theatre)
