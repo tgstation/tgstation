@@ -39,7 +39,7 @@
 
 			apply_damage(damage, BRUTE, affecting, armor_block)
 			if (damage >= 25)
-				visible_message("<span class='danger'>[M] has wounded [src]!</span>"
+				visible_message("<span class='danger'>[M] has wounded [src]!</span>", \
 					"<span class='userdanger'>[M] has wounded [src]!</span>")
 				apply_effect(4, WEAKEN, armor_block)
 			updatehealth()
