@@ -805,6 +805,7 @@ client
 				H.dna.mutantrace = new_mutantrace
 				H.update_body()
 				H.update_hair()
+				H.update_mutcolor()
 
 		else if(href_list["adjustDamage"] && href_list["mobToDamage"])
 			if(!check_rights(0))	return

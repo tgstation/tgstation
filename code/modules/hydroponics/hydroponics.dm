@@ -910,8 +910,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 		//dna stuff
 		hardset_dna(podman, ui, se, null, !prob(potency) ? "pod" : null)	//makes sure podman has dna and sets the dna's ui/se/mutantrace/real_name etc variables
-		if(podman.dna.mutantrace == "pod")
-			podman.update_mutcolor()
 
 	else //else, one packet of seeds. maybe two
 		var/seed_count = 1

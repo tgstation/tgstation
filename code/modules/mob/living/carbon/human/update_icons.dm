@@ -56,6 +56,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 */
 
 //Human Overlays Indexes/////////
+#define MUTANTRACE_LAYER		23		// mutantrace colors... these are on a seperate layer in order to prvent
 #define BODY_LAYER				22		//underwear, eyes, lips(makeup)
 #define MUTATIONS_LAYER			21		//Tk headglows etc.
 #define AUGMENTS_LAYER			20
@@ -78,7 +79,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 #define L_HAND_LAYER			3
 #define R_HAND_LAYER			2		//Having the two hands seperate seems rather silly, merge them together? It'll allow for code to be reused on mobs with arbitarily many hands
 #define FIRE_LAYER				1		//If you're on fire
-#define TOTAL_LAYERS			22		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+#define TOTAL_LAYERS			23		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 //////////////////////////////////
 
 /mob/living/carbon/human
@@ -96,6 +97,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 			base_icon_state = "husk"
 		else
 			base_icon_state = "[skin_tone]_[(gender == FEMALE) ? "f" : "m"]"
+
 	icon_state = "[base_icon_state]_s"
 
 
@@ -170,7 +172,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 			if(check_mutrace("slime") == 1)
 				new_color = "#" + mutant_color
-				img_facial_s.alpha = 125
+				img_facial_s.alpha = 175
 			else
 				new_color = "#" + facial_hair_color
 
@@ -191,7 +193,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 			if(check_mutrace("slime") == 1)
 				new_color = "#" + mutant_color
-				img_hair_s.alpha = 125
+				img_hair_s.alpha = 175
 			else
 				new_color = "#" + facial_hair_color
 
@@ -211,6 +213,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 	var/list/standing	= list()
 
 	var/g = (gender == FEMALE) ? "f" : "m"
+
 	for(var/mut in mutations)
 		switch(mut)
 			if(HULK)
@@ -226,6 +229,25 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	apply_overlay(MUTATIONS_LAYER)
 
+/mob/living/carbon/human/proc/update_mutcolor()
+	remove_overlay(MUTANTRACE_LAYER)
+
+	var/image/standing
+
+	var/g = (gender == FEMALE) ? "f" : "m"
+
+	if(dna)
+		var/image/mut_base
+		//var/icon/temp_icon = new /icon('icons/mob/human.dmi', "[dna.mutantrace]_[gender]_s")
+		if(dna.mutantrace in colored_mutraces)
+			mut_base = image("icon"='icons/mob/human.dmi', "icon_state"="[dna.mutantrace]_[g]_s", "layer"=-MUTANTRACE_LAYER)
+			mut_base.color = "#[mutant_color]"
+			standing = mut_base
+
+	if(standing)
+		overlays_standing[MUTANTRACE_LAYER]	= standing
+
+	apply_overlay(MUTANTRACE_LAYER)
 
 /mob/living/carbon/human/proc/update_body()
 	remove_overlay(BODY_LAYER)
@@ -265,7 +287,6 @@ Please contact me on #coderbus IRC. ~Carnie x
 		overlays_standing[BODY_LAYER]	= standing
 
 	apply_overlay(BODY_LAYER)
-
 
 /mob/living/carbon/human/update_fire()
 
@@ -331,7 +352,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 	update_transform()
 	//Hud Stuff
 	update_hud()
-	// Mutantrace color
+	// Mutantrace colors
 	update_mutcolor()
 
 /* --------------------------------------- */
@@ -658,6 +679,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 
 //Human Overlays Indexes/////////
+#undef MUTANTRACE_LAYER
 #undef BODY_LAYER
 #undef MUTATIONS_LAYER
 #undef DAMAGE_LAYER

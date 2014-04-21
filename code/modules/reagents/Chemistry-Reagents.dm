@@ -346,7 +346,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(ishuman(M))
 					var/mob/living/carbon/human/human = M
-					if(human.dna && !human.dna.mutantrace)
+					if(human.dna && human.dna.mutantrace != "slime")
 						M << "\red Your flesh rapidly mutates!"
 						human.dna.mutantrace = "slime"
 						human.update_body()

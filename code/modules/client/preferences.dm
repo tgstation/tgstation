@@ -762,7 +762,6 @@ datum/preferences
 			backbag = 1 //Same as above
 		character.backbag = backbag
 
-		character.update_mutcolor()
 		/*
 		//Debugging report to track down a bug, which randomly assigned the plural gender to people.
 		if(character.gender in list(PLURAL, NEUTER))
