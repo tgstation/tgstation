@@ -306,7 +306,7 @@
 		src.client.screen -= item
 
 	//actually throw it!
-	if(item)
+	if(item && !istype(item, /obj/item/tk_grab))
 		item.layer = initial(item.layer)
 		src.visible_message("\red [src] has thrown [item].")
 
