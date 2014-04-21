@@ -147,14 +147,15 @@ obj/effect/proc_holder/changeling/sting/LSD
 	desc = "Causes terror in the target."
 	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung.  The effect occurs after 30 to 60 seconds."
 	sting_icon = "sting_lsd"
-	chemical_cost = 5
+	chemical_cost = 15
 	dna_cost = 1
 
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(var/mob/user, var/mob/living/carbon/target)
 	add_logs(user, target, "stung", object="LSD sting")
 	spawn(rand(300,600))
 		if(target)
-			target.hallucination += 400
+			target.stuttering += 200
+			target.jitteriness += 50
 	feedback_add_details("changeling_powers","HS")
 	return 1
 
