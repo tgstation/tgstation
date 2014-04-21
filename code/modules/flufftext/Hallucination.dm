@@ -166,7 +166,7 @@ mob/living/carbon/proc/handle_hallucinations()
 			if(71 to 72)
 				//Fake death
 //				src.sleeping_willingly = 1
-				src.dizyness += 100
+				src.dizziness += 100
 				src.jitteriness += 100
 				src.confused += 200
 				//hal_crit = 1
