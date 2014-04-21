@@ -425,7 +425,7 @@
 	else
 		src.icon_state = "medibots"
 		C.visible_message("<span class='danger'>[src] is trying to inject [src.patient]!</span>", \
-			<span class='userdanger'>[src] is trying to inject [src.patient]!</span>")
+			"<span class='userdanger'>[src] is trying to inject [src.patient]!</span>")
 		
 		spawn(30)
 			if ((get_dist(src, src.patient) <= 1) && (src.on))
@@ -435,7 +435,7 @@
 				else
 					src.patient.reagents.add_reagent(reagent_id,src.injection_amount)
 				C.visible_message("<span class='danger'>[src] injects [src.patient] with the syringe!</span>", \
-					<span class='userdanger'>[src] injects [src.patient] with the syringe!</span>")
+					"<span class='userdanger'>[src] injects [src.patient] with the syringe!</span>")
 
 			src.icon_state = "medibot[src.on]"
 			src.currently_healing = 0
