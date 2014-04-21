@@ -527,7 +527,7 @@ datum
 				// N3X: Caching shit.
 				// Only cache if not using get (since we only track bools)
 				if(reagent in amount_cache)
-					return amount_cache[reagent] > max(0,amount)
+					return amount_cache[reagent] >= max(0,amount)
 				return 0
 
 			get_reagent(var/reagent, var/amount = -1)
