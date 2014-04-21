@@ -167,6 +167,8 @@
 		user.Paralyse(2)
 		return
 
+	if(issilicon(M)) return // Checks if we are hitting a silicon
+
 	add_logs(user, M, "attacked", object="[src.name]")
 
 	var/t = user:zone_sel.selecting
