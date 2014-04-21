@@ -22,7 +22,7 @@
 	processing_objects += src
 
 /obj/structure/transit_tube/station/Destroy()
-	proccessing_objects -= src
+	processing_objects -= src
 	..()
 
 // Stations which will send the tube in the opposite direction after their stop.
@@ -116,7 +116,7 @@
 
 /obj/structure/transit_tube/station/pod_stopped(obj/structure/transit_tube_pod/pod, from_dir)
 	pod_moving = 1
-	spawn(0)
+	spawn(5)
 		launch_cooldown = world.time + cooldown_delay
 		open_animation()
 		sleep(OPEN_DURATION + 2)
