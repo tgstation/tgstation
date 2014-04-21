@@ -123,7 +123,7 @@
 //Clonepod
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/mrace)
+/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/mrace, var/mcolor)
 	if(panel_open)
 		return 0
 	if(mess || attempting)
@@ -202,6 +202,8 @@
 	else
 		H.facial_hair_style = "Shaved"
 	H.hair_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
+	H.mutant_color = mcolor
+	H.update_mutcolor()
 
 	H.suiciding = 0
 	src.attempting = 0
