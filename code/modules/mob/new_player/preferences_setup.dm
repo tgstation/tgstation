@@ -158,7 +158,7 @@ datum/preferences
 					clothes_s.Blend(new /icon('icons/mob/head.dmi', "beret"), ICON_OVERLAY)
 					clothes_s.Blend(new /icon('icons/mob/suit.dmi', "suspenders"), ICON_OVERLAY)
 					if(backbag == 2)
-						clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)
+						clothes_s.Blend(new /icon('icons/mob/back.dmi', "mimepack"), ICON_OVERLAY)
 					if(backbag == 3)
 						clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-norm"), ICON_OVERLAY)
 
