@@ -789,20 +789,19 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 /obj/machinery/newscaster/proc/AttachPhoto(mob/user as mob)
 	if(photo)
 		photo.loc = src.loc
-		if(!issilicon(user))
-			user.put_in_inactive_hand(photo)
+		user.put_in_inactive_hand(photo)
 		photo = null
 	if(istype(user.get_active_hand(), /obj/item/weapon/photo))
 		photo = user.get_active_hand()
 		user.drop_item()
 		photo.loc = src
-	if(istype(user,/mob/living/silicon/ai))
+	if(istype(usr,/mob/living/silicon/ai))
 		var/list/nametemp = list()
 		var/find
 		var/datum/picture/selection
 		var/mob/living/silicon/ai/tempAI = user
 		if(tempAI.aicamera.aipictures.len == 0)
-			usr << "<span class='userdanger'>No images saved</span>"
+			usr << "<FONT COLOR=red><B>No images saved</B>"
 			return
 		for(var/datum/picture/t in tempAI.aicamera.aipictures)
 			nametemp += t.fields["name"]
@@ -815,29 +814,6 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		P.icon = selection.fields["icon"]
 		P.img = selection.fields["img"]
 		P.desc = selection.fields["desc"]
-		photo = P
-	if(istype(user,/mob/living/silicon/robot))
-		var/list/nametemp = list()
-		var/find
-		var/datum/picture/selection
-		var/mob/living/silicon/robot/R = user
-		var/obj/item/device/camera/siliconcam/targetcam = null
-		if(R.connected_ai)
-			targetcam = R.connected_ai.aicamera
-		else
-			targetcam = R.aicamera
-		if(targetcam.aipictures.len == 0)
-			usr << "<span class='userdanger'>No images saved</span>"
-			return
-		for(var/datum/picture/t in targetcam.aipictures)
-			nametemp += t.fields["name"]
-		find = input("Select image (numbered in order taken)") in nametemp
-		for(var/datum/picture/q in targetcam.aipictures)
-			if(q.fields["name"] == find)
-				selection = q
-				break
-		var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
-		P.construct(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
 		photo = P
 
 
