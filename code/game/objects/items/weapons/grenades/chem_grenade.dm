@@ -14,7 +14,7 @@
 	var/list/allowed_containers = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle)
 	var/affected_area = 3
 	var/obj/item/device/assembly_holder/nadeassembly = null
-
+	var/assemblyattacher
 
 /obj/item/weapon/grenade/chem_grenade/New()
 	create_reagents(1000)
@@ -28,13 +28,13 @@
 
 /obj/item/weapon/grenade/chem_grenade/attack_self(mob/user)
 	if(stage == READY &&  !active)
-		var/turf/bombturf = get_turf(src)
-		var/area/A = get_area(bombturf)
-		message_admins("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
-		log_game("[key_name(usr)] has primed a [name] for detonation at [A.name] ([bombturf.x],[bombturf.y],[bombturf.z]).")
 		if(nadeassembly)
 			nadeassembly.attack_self(user)
 		else if(clown_check(user))
+			var/turf/bombturf = get_turf(src)
+			var/area/A = get_area(bombturf)
+			message_admins("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name] ([bombturf.x],[bombturf.y],[bombturf.z]).")
 			user << "<span class='warning'>You prime the [name]! [det_time / 10] second\s!</span>"
 			active = 1
 			icon_state = initial(icon_state) + "_active"
@@ -86,6 +86,7 @@
 		nadeassembly = A
 		A.master = src
 		A.loc = src
+		assemblyattacher = user.ckey
 
 		stage = WIRED
 		icon_state = initial(icon_state) + "_ass"
@@ -145,21 +146,28 @@
 	if(stage != READY)
 		return
 
-	var/has_reagents = 0
-	for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
-		if(G.reagents.total_volume)
+	var/has_reagents
+	for(var/obj/item/I in beakers)
+		if(I.reagents.total_volume)
 			has_reagents = 1
 
 	if(!has_reagents)
 		playsound(loc, 'sound/items/Screwdriver2.ogg', 50, 1)
 		return
 
+	if(nadeassembly)
+		var/mob/M = get_mob_by_ckey(assemblyattacher)
+		var/mob/last = get_mob_by_ckey(nadeassembly.fingerprintslast)
+		var/turf/T = get_turf(src)
+		var/area/A = get_area(T)
+		message_admins("grenade primed by an assembly, attached by [M.key]/[M]<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>(?)</A> and last touched by [last.key]/[last]<A HREF='?_src_=holder;adminmoreinfo=\ref[last]'>(?)</A> ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[A.name] (JMP)</a>.")
+		log_game("grenade primed by an assembly, attached by [M.key]/[M] and last touched by [last.key]/[last] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at [A.name] ([T.x], [T.y], [T.z])")
+
 	playsound(loc, 'sound/effects/bamf.ogg', 50, 1)
 
 	update_mob()
 
-	for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
-		G.reagents.trans_to(src, G.reagents.total_volume)
+	mix_reagents()
 
 	if(reagents.total_volume)	//The possible reactions didnt use up all reagents.
 		var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
@@ -167,16 +175,18 @@
 		steam.attach(src)
 		steam.start()
 
-		for(var/atom/A in view(affected_area, loc))
-			if(A == src)
-				continue
-			reagents.reaction(A, 1, 10)
+	for(var/atom/A in view(affected_area, loc))
+		if(A == src)
+			continue
+		reagents.reaction(A, 1, 10)
 
 	invisibility = INVISIBILITY_MAXIMUM		//Why am i doing this?
 	spawn(50)		   //To make sure all reagents can work
 		qdel(src)	   //correctly before deleting the grenade.
 
-
+/obj/item/weapon/grenade/chem_grenade/proc/mix_reagents()
+	for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
+		G.reagents.trans_to(src, G.reagents.total_volume)
 
 //Large chem grenades accept slime cores and use the appropriately.
 /obj/item/weapon/grenade/chem_grenade/large
@@ -188,56 +198,19 @@
 	origin_tech = "combat=3;materials=3"
 	affected_area = 4
 
-/obj/item/weapon/grenade/chem_grenade/large/prime()
-	if(stage != READY)
-		return
+/obj/item/weapon/grenade/chem_grenade/large/mix_reagents()
+	for(var/obj/item/slime_extract/S in beakers)
+		if(S.Uses)
+			for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
+				G.reagents.trans_to(S, G.reagents.total_volume)
 
-	var/has_reagents = 0
-	var/obj/item/slime_extract/valid_core = null
+			//If there is still a core (sometimes it's used up)
+			//and there are reagents left, behave normally
 
-	for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
-		if(!istype(G)) continue
-		if(G.reagents.total_volume) has_reagents = 1
-	for(var/obj/item/slime_extract/E in beakers)
-		if(!istype(E)) continue
-		if(E.Uses) valid_core = E
-		if(E.reagents.total_volume) has_reagents = 1
-
-	if(!has_reagents)
-		playsound(loc, 'sound/items/Screwdriver2.ogg', 50, 1)
-		return
-
-	playsound(loc, 'sound/effects/bamf.ogg', 50, 1)
-
-	update_mob()
-
-	if(valid_core)
-		for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
-			G.reagents.trans_to(valid_core, G.reagents.total_volume)
-
-		//If there is still a core (sometimes it's used up)
-		//and there are reagents left, behave normally
-
-		if(valid_core && valid_core.reagents && valid_core.reagents.total_volume)
-			valid_core.reagents.trans_to(src,valid_core.reagents.total_volume)
-	else
-		for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
-			G.reagents.trans_to(src, G.reagents.total_volume)
-
-	if(reagents.total_volume)	//The possible reactions didnt use up all reagents.
-		var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
-		steam.set_up(10, 0, get_turf(src))
-		steam.attach(src)
-		steam.start()
-
-		for(var/atom/A in view(affected_area, loc))
-			if( A == src ) continue
-			reagents.reaction(A, 1, 10)
-
-	invisibility = INVISIBILITY_MAXIMUM //Why am i doing this?
-	spawn(50)		   //To make sure all reagents can work
-		qdel(src)	   //correctly before deleting the grenade.
-
+			if(S && S.reagents && S.reagents.total_volume)
+				S.reagents.trans_to(src,S.reagents.total_volume)
+			return
+	..()
 
 	//I tried to just put it in the allowed_containers list but
 	//if you do that it must have reagents.  If you're going to
