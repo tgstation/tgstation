@@ -64,30 +64,31 @@
 		user << "<span class='notice'>You [anchored ? "attach" : "detach"] the cell charger [anchored ? "to" : "from"] the ground</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 
+/obj/machinery/cell_charger/proc/removecell()
+	charging.updateicon()
+	charging = null
+	chargelevel = -1
+	updateicon()
+
 /obj/machinery/cell_charger/attack_hand(mob/user)
 	if(!charging)
 		return
 
 	user.put_in_hands(charging)
 	charging.add_fingerprint(user)
-	charging.updateicon()
 
-	charging = null
 	user.visible_message("<span class='notice'>[user] removes the cell from the charger.</span>", "<span class='notice'>You remove the cell from the charger.</span>")
-	chargelevel = -1
-	updateicon()
+
+	removecell()
 
 /obj/machinery/cell_charger/attack_tk(mob/user)
 	if(!charging)
 		return
 
 	charging.loc = loc
-	charging.updateicon()
 	user << "<span class='notice'>You telekinetically remove [charging] from [src].</span>"
 
-	charging = null
-	chargelevel = -1
-	updateicon()
+	removecell()
 
 /obj/machinery/cell_charger/attack_ai(mob/user)
 	return
