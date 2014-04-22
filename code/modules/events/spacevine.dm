@@ -57,7 +57,7 @@
 
 /datum/spacevine_mutation/toxity
 	name = "toxity"
-	hue = "ff00ff"
+	hue = "#ff00ff"
 
 /datum/spacevine_mutation/toxity/on_cross(obj/effect/spacevine/holder, mob/living/crosser)
 	if(issilicon(crosser))
@@ -72,7 +72,7 @@
 
 /datum/spacevine_mutation/expsolive  //OH SHIT IT CAN CHAINREACT RUN!!!
 	name = "explosive"
-	hue = "ffff00"
+	hue = "#ffff00"
 
 /datum/spacevine_mutation/expsolive/on_death(obj/effect/spacevine/holder, mob/hitter, obj/item/I)
 	sleep(10)
@@ -80,14 +80,14 @@
 
 /datum/spacevine_mutation/fire_proof
 	name = "fire resist"
-	hue = "ffff88"
+	hue = "#ffff88"
 
 /datum/spacevine_mutation/fire_proof/process_temperature(obj/effect/spacevine/holder, temp, volume)
 	return 1
 
 /datum/spacevine_mutation/vine_eating
 	name = "vine eating"
-	hue = "ff7777"
+	hue = "#ff7777"
 
 /datum/spacevine_mutation/vine_eating/on_spread(obj/effect/spacevine/holder, turf/target)
 	var/obj/effect/spacevine/prey = locate() in target
@@ -96,7 +96,7 @@
 
 /datum/spacevine_mutation/aggressive_spread  //very OP, but im out of other ideas currently
 	name = "aggressive spreading"
-	hue = "777777"
+	hue = "#777777"
 	severity = 3
 
 /datum/spacevine_mutation/aggressive_spread/on_spread(obj/effect/spacevine/holder, turf/target)
