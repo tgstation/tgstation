@@ -204,11 +204,6 @@ update_flag
 			healthcheck()
 	..()
 
-/obj/machinery/portable_atmospherics/canister/meteorhit(var/obj/O as obj)
-	src.health = 0
-	healthcheck()
-	return
-
 /obj/machinery/portable_atmospherics/canister/ex_act(severity)
 	switch(severity)
 		if(1.0)

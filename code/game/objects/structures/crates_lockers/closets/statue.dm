@@ -121,12 +121,6 @@
 	for(var/mob/M in src)
 		shatter(M)
 
-/obj/structure/closet/statue/meteorhit(obj/O as obj)
-	if(O.icon_state == "flaming")
-		for(var/mob/M in src)
-			M.meteorhit(O)
-			shatter(M)
-
 /obj/structure/closet/statue/attackby(obj/item/I as obj, mob/user as mob)
 	health -= I.force
 	visible_message("\red [user] strikes [src] with [I].")

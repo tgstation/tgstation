@@ -28,9 +28,6 @@ Note: Must be placed within 3 tiles of the R&D Console
 		T += S.rating
 	decon_mod = T
 
-/obj/machinery/r_n_d/destructive_analyzer/meteorhit()
-	qdel(src)
-	return
 
 /obj/machinery/r_n_d/destructive_analyzer/proc/ConvertReqString2List(var/list/source_list)
 	var/list/temp_list = params2list(source_list)

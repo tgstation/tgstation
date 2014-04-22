@@ -95,7 +95,7 @@
 
 /obj/effect/meteor/Bump(atom/A)
 	if (A)
-		A.meteorhit(src)
+		A.ex_act(2)
 		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
 	if (--src.hits <= 0)
 
