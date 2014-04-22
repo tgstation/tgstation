@@ -27,3 +27,6 @@
 //1 = standard hud
 //2 = reduced hud (just hands and intent switcher)
 //3 = no hud (for screenshots)
+
+#define MINERAL_MATERIAL_AMOUNT 2000
+//The amount of materials you get from a sheet of mineral like iron/diamond/glass etc

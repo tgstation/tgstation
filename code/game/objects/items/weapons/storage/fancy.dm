@@ -110,7 +110,7 @@
 	storage_slots = 6
 	icon_type = "crayon"
 	can_hold = list(
-		"/obj/item/toy/crayon"
+		/obj/item/toy/crayon
 	)
 
 /obj/item/weapon/storage/fancy/crayons/New()
