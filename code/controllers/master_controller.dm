@@ -11,6 +11,11 @@ var/global/last_tick_duration = 0
 var/global/air_processing_killed = 0
 var/global/pipe_processing_killed = 0
 
+#ifdef PROFILE_MACHINES
+// /type = time this tick
+var/list/machine_profiling=list()
+#endif
+
 datum/controller/game_controller
 	var/processing = 0
 	var/breather_ticks = 2		//a somewhat crude attempt to iron over the 'bumps' caused by high-cpu use by letting the MC have a breather for this many ticks after every loop
@@ -265,17 +270,23 @@ datum/controller/game_controller/proc/processMobs()
 		active_diseases -= Disease
 
 /datum/controller/game_controller/proc/processMachines()
+#ifdef PROFILE_MACHINES
+	machine_profiling.Cut()
+#endif
 	for (var/obj/machinery/Machinery in machines)
 		if (Machinery && Machinery.loc)
 			last_thing_processed = Machinery.type
-
+			var/start = world.timeofday
 			if(Machinery.process() != PROCESS_KILL)
 				if (Machinery) // Why another check?
 					if (Machinery.use_power)
 						Machinery.auto_use_power()
-
+#ifdef PROFILE_MACHINES
+					if(!(Machinery.type in machine_profiling))
+						machine_profiling[Machinery.type] = 0
+					machine_profiling[Machinery.type] += world.timeofday - start
+#endif
 					continue
-
 		Machinery.removeAtProcessing()
 
 /datum/controller/game_controller/proc/processObjects()
