@@ -329,7 +329,7 @@
 	icon = 'icons/obj/food.dmi'
 	icon_state = "monkeycubebox"
 	storage_slots = 7
-	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/monkeycube")
+	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/monkeycube)
 	New()
 		..()
 		for(var/i = 1; i <= 5; i++)
@@ -439,7 +439,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "spbox"
 	storage_slots = 8
-	can_hold = list("/obj/item/toy/snappop")
+	can_hold = list(/obj/item/toy/snappop)
 	New()
 		..()
 		for(var/i=1; i <= storage_slots; i++)
@@ -483,7 +483,7 @@
 	item_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
 	storage_slots=21
-	can_hold = list("/obj/item/weapon/light/tube", "/obj/item/weapon/light/bulb")
+	can_hold = list(/obj/item/weapon/light/tube, /obj/item/weapon/light/bulb)
 	max_combined_w_class = 21
 	use_to_pickup = 1 // for picking up broken bulbs, not that most people will try
 

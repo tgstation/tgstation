@@ -204,7 +204,7 @@ Class Procs:
 		return 1
 	if(usr.restrained() || usr.lying || usr.stat)
 		return 1
-	if(!(ishuman(usr) || issilicon(usr) || (ismonkey(usr) && ticker && ticker.mode.name == "monkey")))
+	if(!(ishuman(usr) || issilicon(usr)))
 		usr << "<span class='notice'>You don't have the dexterity to do this!</span>"
 		return 1
 
@@ -245,7 +245,7 @@ Class Procs:
 		return 1
 	if ( ! (istype(usr, /mob/living/carbon/human) || \
 			istype(usr, /mob/living/silicon) || \
-			istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
+			istype(usr, /mob/living/carbon/monkey)) )
 		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return 1
 /*
@@ -313,9 +313,10 @@ Class Procs:
 
 /obj/machinery/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
 	if(istype(W))
-		user << "<span class='notice'>Now [anchored ? "un" : ""]securing [name]</span>"
+		user << "<span class='notice'>Now [anchored ? "un" : ""]securing [name].</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, time))
+			user << "<span class='notice'>You've [anchored ? "un" : ""]secured [name].</span>"
 			anchored = !anchored
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		return 1

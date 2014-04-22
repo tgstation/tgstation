@@ -169,11 +169,12 @@ emp_act
 		switch(hit_area)
 			if("head")	//Harder to score a stun but if you do it lasts a bit longer
 				if(stat == CONSCIOUS && prob(I.force))
-					visible_message("<span class='danger'>[src] has been knocked unconscious!</span>", \
-									"<span class='userdanger'>[src] has been knocked unconscious!</span>")
-					apply_effect(20, PARALYZE, armor)
-					if(src != user && I.damtype == BRUTE)
-						ticker.mode.remove_revolutionary(mind)
+					if(Iforce >= 5)
+						visible_message("<span class='danger'>[src] has been knocked unconscious!</span>", \
+										"<span class='userdanger'>[src] has been knocked unconscious!</span>")
+						apply_effect(20, PARALYZE, armor)
+						if(src != user && I.damtype == BRUTE)
+							ticker.mode.remove_revolutionary(mind)
 
 				if(bloody)	//Apply blood
 					if(wear_mask)
@@ -188,9 +189,10 @@ emp_act
 
 			if("chest")	//Easier to score a stun but lasts less time
 				if(stat == CONSCIOUS && prob(I.force + 10))
-					visible_message("<span class='danger'>[src] has been knocked down!</span>", \
-									"<span class='userdanger'>[src] has been knocked down!</span>")
-					apply_effect(5, WEAKEN, armor)
+					if(Iforce >= 5)
+						visible_message("<span class='danger'>[src] has been knocked down!</span>", \
+										"<span class='userdanger'>[src] has been knocked down!</span>")
+						apply_effect(5, WEAKEN, armor)
 
 				if(bloody)
 					if(wear_suit)

@@ -645,6 +645,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 					D = new type(0, null)
 			if(!D)
 				return
+			replicator_cooldown(50)
 			var/list/data = list("viruses"=list(D))
 			var/name = sanitize(input(usr,"Name:","Name the culture",D.name))
 			if(!name || name == " ") name = D.name
@@ -652,7 +653,6 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 			B.desc = "A small bottle. Contains [D.agent] culture in synthblood medium."
 			B.reagents.add_reagent("blood",20,data)
 			src.updateUsrDialog()
-			replicator_cooldown(50)
 		else
 			src.temp_html = "The replicator is not ready yet."
 		src.updateUsrDialog()
@@ -831,7 +831,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				/obj/item/stack/sheet/mineral/plasma = list("plasma" = 20),
 				/obj/item/stack/sheet/metal = list("iron" = 20),
 				/obj/item/stack/sheet/plasteel = list("iron" = 20, "plasma" = 20),
-				/obj/item/stack/sheet/wood = list("carbon" = 20),
+				/obj/item/stack/sheet/mineral/wood = list("carbon" = 20),
 				/obj/item/stack/sheet/glass = list("silicon" = 20),
 				/obj/item/stack/sheet/rglass = list("silicon" = 20, "iron" = 20),
 				/obj/item/stack/sheet/mineral/uranium = list("uranium" = 20),

@@ -45,8 +45,9 @@
 	for(var/mob/new_player/player in player_list)
 		if((player.client)&&(player.ready))
 			playerC++
-	if(playerC < required_players)
-		return 0
+	if(!Debug2)
+		if(playerC < required_players)
+			return 0
 	antag_candidates = get_players_for_role(antag_flag)
 	if(!Debug2)
 		if(antag_candidates.len < required_enemies)
