@@ -29,16 +29,21 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 
 /obj/item/weapon/mop/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
-	if(istype(A, /obj/effect/rune) ||istype(A, /turf/simulated) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
-		if(reagents.total_volume < 1)
-			user << "<span class='notice'>Your mop is dry!</span>"
-			return
 
-		user.visible_message("<span class='warning'>[user] begins to clean \the [get_turf(A)].</span>")
+	if(reagents.total_volume < 1)
+		user << "<span class='notice'>Your mop is dry!</span>"
+		return
+
+	var/turf/simulated/floor = A
+	if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
+		floor = A.loc
+	A = null
+
+	if(istype(floor))
+		user.visible_message("<span class='warning'>[user] begins to clean \the [floor].</span>")
 
 		if(do_after(user, 40))
-			if(A)
-				clean(get_turf(A))
+			clean(floor)
 			user << "<span class='notice'>You have finished mopping!</span>"
 
 
