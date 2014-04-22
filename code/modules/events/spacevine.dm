@@ -76,7 +76,7 @@
 
 /datum/spacevine_mutation/expsolive/on_death(obj/effect/spacevine/holder, mob/hitter, obj/item/I)
 	sleep(10)
-	explosion(holder.loc, 0, 0, 2, 0)
+	explosion(holder.loc, 0, 0, 2, 0, 0)
 
 /datum/spacevine_mutation/fire_proof
 	name = "fire resist"
