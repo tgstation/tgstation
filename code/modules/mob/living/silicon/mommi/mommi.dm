@@ -310,6 +310,9 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		else if(U.locked)
 			usr << "The upgrade is locked and cannot be used yet!"
 		else
+			if(istype(U, /obj/item/borg/upgrade/reset))
+				usr << "<span class='warning'>No.</span>"
+				return
 			if(U.action(src))
 				usr << "You apply the upgrade to [src]!"
 				usr.drop_item()
