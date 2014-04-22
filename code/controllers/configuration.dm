@@ -53,7 +53,7 @@
 
 	var/server
 	var/banappeals
-	var/wikiurl = "http://www.ss13.eu/wiki" // Default wiki link.
+	var/wikiurl = "http://www.tgstation13.org/wiki" // Default wiki link.
 	var/forumurl
 
 	var/forbid_singulo_possession = 0
