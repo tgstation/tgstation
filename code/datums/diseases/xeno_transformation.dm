@@ -10,6 +10,7 @@
 	cure_chance = 5
 	agent = "Rip-LEY Alien Microbes"
 	affected_species = list("Human")
+	severity = "Major"
 	var/gibbed = 0
 
 /datum/disease/xeno_transformation/stage_act()
