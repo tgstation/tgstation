@@ -162,8 +162,8 @@
 		return list2params(s)
 	else if (copytext(T,1,9) == "announce")
 		var/input[] = params2list(T)
-		if(config.comms_allowed)
-			if(input["key"] != config.comms_key)
+		if(global.comms_allowed)
+			if(input["key"] != global.comms_key)
 				return "Bad Key"
 			else
 				#define CHAT_PULLR 2048
