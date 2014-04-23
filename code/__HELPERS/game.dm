@@ -199,7 +199,7 @@
 			listeners += A
 
 	// Don't include if the player is not connected.
-	for (var/mob/Mob in hear)
+	for (var/mob/Mob in listeners)
 		if (isnull(Mob.client))
 			listeners -= Mob
 
