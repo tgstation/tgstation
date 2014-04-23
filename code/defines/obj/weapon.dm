@@ -188,24 +188,48 @@
 
 /obj/item/weapon/legcuffs/beartrap/Crossed(AM as mob|obj)
 	if(armed)
-		if(ishuman(AM))
-			if(isturf(src.loc))
+		if(isturf(src.loc))
+		
+			if(ishuman(AM))
 				var/mob/living/carbon/H = AM
 				if(H.m_intent == "run")
 					armed = 0
+					icon_state = "beartrap0"
+					playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
 					H.legcuffed = src
 					src.loc = H
 					H.update_inv_legcuffed(0)
-					H << "\red <B>You step on \the [src]!</B>"
+					H.visible_message("<span class='danger'>[H] steps on \the [src].</span>", \
+							"<span class='userdanger'>You step on \the [src]!</span>")
 					feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
-					for(var/mob/O in viewers(H, null))
-						if(O == H)
-							continue
-						O.show_message("\red <B>[H] steps on \the [src].</B>", 1)
-		if(isanimal(AM) && !istype(AM, /mob/living/simple_animal/parrot) && !istype(AM, /mob/living/simple_animal/construct) && !istype(AM, /mob/living/simple_animal/shade) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
-			armed = 0
-			var/mob/living/simple_animal/SA = AM
-			SA.health -= 20
+					H.health -= 20
+
+			if(isalien(AM))
+				armed = 0
+				icon_state = "beartrap0"
+				playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
+				var/mob/living/carbon/alien/A = AM
+				visible_message("<span class='danger'>[A] steps on \the [src]!</span>")
+				A.health -= 20
+				A.Stun(5)
+			
+			if(ismonkey(AM)
+				armed = 0
+				icon_state = "beartrap0"
+				playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
+				var/mob/living/carbon/monkey/M = AM
+				visible_message("<span class='danger'>[SA] steps on \the [src]!</span>")
+				M.health -= 20
+				M.Stun(5)
+			
+			if(isanimal(AM) && !istype(AM, /mob/living/simple_animal/parrot) && !istype(AM, /mob/living/simple_animal/construct) && !istype(AM, /mob/living/simple_animal/shade) && !istype(AM, /mob/living/simple_animal/hostile/viscerator) && !istype(AM, /mob/living/simple_animal/hostile/carp) && !istype(AM, /mob/living/simple_animal/hostile/retaliate/bat))
+				armed = 0
+				icon_state = "beartrap0"
+				playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
+				var/mob/living/simple_animal/SA = AM
+				visible_message("<span class='danger'>[SA] steps on \the [src]!</span>")
+				SA.health -= 20
+				SA.Stun(5)
 	..()
 
 
