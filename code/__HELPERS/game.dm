@@ -132,66 +132,65 @@
 			turfs += T
 	return turfs
 
+/proc/recursive_mob_check(const/atom/movable/O, const/list/listeners = list(), const/repeat = 3)
+	if (!isobj(O) && !ismob(O))
+		CRASH("1st argument must be a movable atom, value : [O]")
 
+	if (!islist(listeners))
+		CRASH("2nd argument must be a list, value : [listeners]")
 
-//var/debug_mob = 0
+	if (!isnum(repeat))
+		CRASH("3rd argument must be a num, value : [repeat]")
 
-// Will recursively loop through an atom's contents and check for mobs, then it will loop through every atom in that atom's contents.
-// It will keep doing this until it checks every content possible. This will fix any problems with mobs, that are inside objects,
-// being unable to hear people due to being in a box within a bag.
+	var/list/ma = listeners.Copy()
 
-/proc/recursive_mob_check(var/atom/O,  var/list/L = list(), var/recursion_limit = 3, var/client_check = 1, var/sight_check = 1, var/include_radio = 1)
+	if (!repeat)
+		return ma
 
-	//debug_mob += O.contents.len
-	if(!recursion_limit)
-		return L
-	for(var/atom/movable/A in O.contents)
+	for(var/atom/movable/Movable in O.contents)
+		if(ismob(Movable))
+			ma += Movable
+		else if(istype(Movable, /obj/item/device/radio))
+			ma += Movable
+		else
+			ma = recursive_mob_check(Movable, ma, repeat - 1)
 
-		if(ismob(A))
-			var/mob/M = A
-			if(client_check && !M.client)
-				L = recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
+	return ma
+
+/proc/get_listeners_in_view(const/dist, const/atom/movable/center)
+	if (!isnum(dist))
+		CRASH("1st argument must be a num, value : [dist]")
+
+	if (!isobj(center) && !ismob(center))
+		CRASH("2nd argument must be an obj or mob, value : [center]")
+
+	var/turf/T = get_turf(center)
+
+	if (!T)
+		return list()
+
+	var/list/listeners = list()
+	var/list/te = hear(dist, T)
+
+	for(var/atom/movable/Movable in te)
+		if(ismob(Movable))
+			var/mob/M = Movable
+
+			if (istype(M, /mob/dead))
+				listeners += M
 				continue
-			if(sight_check && !isInSight(A, O))
-				continue
-			L |= M
-			//world.log << "[recursion_limit] = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
 
-		else if(include_radio && istype(A, /obj/item/device/radio))
-			if(sight_check && !isInSight(A, O))
-				continue
-			L |= A
+			listeners += M
+			listeners = recursive_mob_check(M, listeners)
+		else if(istype(Movable, /obj/item/device/radio))
+			listeners += Movable
 
-		L = recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
+	// Don't include if the player is not connected.
+	for (var/mob/Mob in listeners)
+		if (isnull(Mob.client))
+			listeners -= Mob
 
-	return L
-
-// The old system would loop through lists for a total of 5000 per function call, in an empty server.
-// This new system will loop at around 1000 in an empty server.
-
-/proc/get_mobs_in_view(var/R, var/atom/source)
-	// Returns a list of mobs in range of R from source. Used in radio and say code.
-
-	var/turf/T = get_turf(source)
-	var/list/hear = list()
-
-	if(!T)
-		return hear
-
-	var/list/range = hear(R, T)
-
-	for(var/atom/movable/A in range)
-		if(ismob(A))
-			var/mob/M = A
-			if(M.client)
-				hear += M
-			//world.log << "Start = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
-		else if(istype(A, /obj/item/device/radio))
-			hear += A
-
-		hear = recursive_mob_check(A, hear, 3, 1, 0, 1)
-
-	return hear
+	return listeners
 
 /proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios)
 
