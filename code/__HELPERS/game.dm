@@ -146,27 +146,27 @@
 	if(!recursion_limit)
 		return L
 
-	for(var/atom/movable/A in O.contents)
-		if(ismob(A))
-			var/mob/M = A
+	for(var/atom/movable/Movable in A.contents)
+		if(ismob(Movable))
+			var/mob/M = Movable
 
 			if(client_check && !M.client)
-				L = recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
+				L = recursive_mob_check(M, L, recursion_limit - 1, client_check, sight_check, include_radio)
 				continue
 
-			if(sight_check && !isInSight(A, O))
+			if(sight_check && !isInSight(M, Movable))
 				continue
 
 			L |= M
 			//world.log << "[recursion_limit] = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
 
-		else if(include_radio && istype(A, /obj/item/device/radio))
-			if(sight_check && !isInSight(A, O))
+		else if(include_radio && istype(Movable, /obj/item/device/radio))
+			if(sight_check && !isInSight(Movable, A))
 				continue
 
-			L |= A
+			L |= Movable
 
-		L = recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
+		L = recursive_mob_check(Movable, L, recursion_limit - 1, client_check, sight_check, include_radio)
 
 	return L
 
