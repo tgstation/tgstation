@@ -196,7 +196,7 @@
 			listeners += M
 			listeners = recursive_mob_check(A, listeners, 3, 1, 0, 1)
 		else if(istype(A, /obj/item/device/radio))
-			listeners += A
+			listeners |= A
 
 	// Don't include if the player is not connected.
 	for (var/mob/Mob in listeners)
