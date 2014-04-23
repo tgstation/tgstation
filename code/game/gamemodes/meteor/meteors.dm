@@ -6,6 +6,8 @@
 
 /var/list/meteorsB = list(/obj/effect/meteor/meaty=5, /obj/effect/meteor/meaty/xeno=1)
 
+/var/list/meteorsC = list(/obj/effect/meteor/dust) //for space dust event
+
 
 /proc/meteor_wave(var/number = 50) //this proc's unused now.
 	if(!ticker || wavesecret)
@@ -82,6 +84,7 @@
 	density = 1
 	anchored = 1
 	var/hits = 4
+	var/hitpwr = 2 //Level of ex_act to be called on hit.
 	var/dest
 	pass_flags = PASSTABLE
 	var/heavy = 0
@@ -95,6 +98,7 @@
 	icon_state = "dust"
 	pass_flags = PASSTABLE | PASSGRILLE
 	hits = 1
+	hitpwr = 3
 	meteorsound = 'sound/weapons/throwtap.ogg'
 	meteordrop = /obj/item/weapon/ore/glass
 
@@ -125,7 +129,7 @@
 	meteordrop = /obj/item/weapon/ore/uranium
 
 /obj/effect/meteor/meaty
-	name = "meateor"
+	name = "meaty ore"
 	icon_state = "meateor"
 	desc = "Just... don't think too hard about where this thing came from."
 	hits = 2
@@ -140,9 +144,13 @@
 	meteorgibs = /obj/effect/gibspawner/xeno
 
 
+/obj/effect/meteor/New()
+	..()
+	SpinAnimation()
+
 /obj/effect/meteor/Bump(atom/A)
 	if(A)
-		A.ex_act(2)
+		A.ex_act(hitpwr)
 		playsound(src.loc, meteorsound, 40, 1)
 	if(--src.hits <= 0)
 		make_debris()

@@ -1,11 +1,11 @@
 /datum/round_event_control/meteor_wave/meaty
-	name = "Meateor Wave"
+	name = "Meaty Ore Wave"
 	typepath = /datum/round_event/meteor_wave/meaty
 	weight = 1
 	max_occurrences = 1
 
 /datum/round_event/meteor_wave/meaty/announce()
-	command_alert("Meateors have been detected on collision course with the station.", "Oh Crap, Get The Mop.")
+	command_alert("Meaty ores have been detected on collision course with the station.", "Oh Crap, Get The Mop.")
 	world << sound('sound/AI/meteors.ogg')
 
 
