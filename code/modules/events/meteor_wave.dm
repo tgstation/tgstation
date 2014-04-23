@@ -15,4 +15,4 @@
 
 /datum/round_event/meteor_wave/tick()
 	if(IsMultiple(activeFor, 3))
-		spawn_meteors(5)
+		spawn_meteors(5, meteorsA) //meteor list types defined in gamemode/meteor/meteors.dm

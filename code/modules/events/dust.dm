@@ -1,7 +1,7 @@
 /datum/round_event_control/dust
 	name = "Minor Space Dust"
 	typepath = /datum/round_event/dust
-	weight = 600
+	weight = 300
 	max_occurrences = 10000
 	earliest_start = 0
 
