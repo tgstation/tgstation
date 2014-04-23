@@ -184,12 +184,15 @@
 	for(var/atom/movable/A in range)
 		if(ismob(A))
 			var/mob/M = A
-			if(M.client)
-				hear |= M
-				hear = recursive_mob_check(A, hear, 3, 1, 0, 1)
-			//world.log << "Start = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
+			hear |= M
+			hear = recursive_mob_check(A, hear, 3, 1, 0, 1)
 		else if(istype(A, /obj/item/device/radio))
 			hear |= A
+
+	// Don't include if the player is not connected.
+	for (var/mob/Mob in hear)
+		if (isnull(Mob.client))
+			hear ^= Mob
 
 	return hear
 
