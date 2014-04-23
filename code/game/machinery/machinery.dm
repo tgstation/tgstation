@@ -307,7 +307,7 @@ Class Procs:
 	if(panel_open && istype(W))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		dir = pick(WEST,EAST,SOUTH,NORTH)
-		user << "<span class='notice'>You clumsily rotate [name].</span>"
+		user << "<span class='notice'>You clumsily rotate [src].</span>"
 		return 1
 	return 0
 
