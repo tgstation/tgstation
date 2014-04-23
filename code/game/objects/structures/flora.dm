@@ -78,6 +78,10 @@
 	icon = 'icons/obj/plants.dmi'
 	icon_state = "plant-26"
 
+// /vg/
+/obj/structure/flora/pottedplant/random/New()
+	icon_state = "plant-[rand(1,26)]"
+
 //newbushes
 
 /obj/structure/flora/ausbushes

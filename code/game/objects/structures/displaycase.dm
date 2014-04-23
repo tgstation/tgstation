@@ -81,6 +81,12 @@
 	req_access=list(access_captain)
 	update_icon()
 
+/obj/structure/displaycase/lamarr/New()
+	occupant=new /obj/item/clothing/mask/facehugger/lamarr(src)
+	locked=1
+	req_access=list(access_rd)
+	update_icon()
+
 /obj/structure/displaycase/examine()
 	..()
 	usr << "\blue Peering through the glass, you see that it contains:"
@@ -156,8 +162,6 @@
 		occupant_overlay = image(occupant_icon)
 		occupant_overlay.pixel_x=8
 		occupant_overlay.pixel_y=8
-		//occupant_overlay.Shift(NORTH, 8)
-		//occupant_overlay.Shift(EAST, 8)
 		if(locked)
 			occupant_overlay.alpha=128//ChangeOpacity(0.5)
 		//underlays += occupant_overlay
