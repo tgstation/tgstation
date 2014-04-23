@@ -141,32 +141,16 @@
 // being unable to hear people due to being in a box within a bag.
 
 /proc/recursive_mob_check(mob/A, var/list/L = list(), var/recursion_limit = 3, var/client_check = 1, var/sight_check = 1, var/include_radio = 1)
-
-	//debug_mob += O.contents.len
 	if(!recursion_limit)
 		return L
 
 	for(var/atom/movable/Movable in A.contents)
 		if(ismob(Movable))
-			var/mob/M = Movable
-
-			if(client_check && !M.client)
-				L = recursive_mob_check(M, L, recursion_limit - 1, client_check, sight_check, include_radio)
-				continue
-
-			if(sight_check && !isInSight(M, Movable))
-				continue
-
-			L |= M
-			//world.log << "[recursion_limit] = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
-
+			L += Movable
 		else if(include_radio && istype(Movable, /obj/item/device/radio))
-			if(sight_check && !isInSight(Movable, A))
-				continue
-
-			L |= Movable
-
-		L = recursive_mob_check(Movable, L, recursion_limit - 1, client_check, sight_check, include_radio)
+			L += Movable
+		else
+			L = recursive_mob_check(Movable, L, recursion_limit - 1, client_check, sight_check, include_radio)
 
 	return L
 
@@ -196,7 +180,7 @@
 			listeners += M
 			listeners = recursive_mob_check(A, listeners, 3, 1, 0, 1)
 		else if(istype(A, /obj/item/device/radio))
-			listeners |= A
+			listeners += A
 
 	// Don't include if the player is not connected.
 	for (var/mob/Mob in listeners)
