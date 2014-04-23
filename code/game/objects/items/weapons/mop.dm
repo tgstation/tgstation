@@ -34,16 +34,16 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 		user << "<span class='notice'>Your mop is dry!</span>"
 		return
 
-	var/turf/simulated/floor = A
+	var/turf/simulated/turf = A
 	if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
-		floor = A.loc
+		turf = A.loc
 	A = null
 
-	if(istype(floor))
-		user.visible_message("<span class='warning'>[user] begins to clean \the [floor].</span>")
+	if(istype(turf))
+		user.visible_message("<span class='warning'>[user] begins to clean \the [turf].</span>")
 
 		if(do_after(user, 40))
-			clean(floor)
+			clean(turf)
 			user << "<span class='notice'>You have finished mopping!</span>"
 
 
