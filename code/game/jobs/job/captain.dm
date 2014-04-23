@@ -4,6 +4,7 @@ Captain
 /datum/job/captain
 	title = "Captain"
 	flag = CAPTAIN
+	department_head = list("Centcom")
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 1
@@ -45,8 +46,6 @@ Captain
 
 	world << "<b>[H.real_name] is the captain!</b>"
 
-	return 1
-
 /datum/job/captain/get_access()
 	return get_all_accesses()
 
@@ -56,6 +55,7 @@ Head of Personnel
 /datum/job/hop
 	title = "Head of Personnel"
 	flag = HOP
+	department_head = list("Captain")
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 1
@@ -93,4 +93,3 @@ Head of Personnel
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ids(H), slot_l_hand)
 	else
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ids(H.back), slot_in_backpack)
-	return 1

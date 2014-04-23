@@ -17,3 +17,7 @@
 /mob/camera/Destroy()
 	..()
 	del(src)
+
+/mob/camera/Login()
+	..()
+	update_interface()

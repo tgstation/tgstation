@@ -22,7 +22,7 @@
 	var/rarity = 0					//How rare the plant is. Used for giving points to cargo when shipping off to Centcom.
 	var/list/mutatelist = list()	//The type of plants that this plant can mutate into.
 
-/obj/item/seeds/New()
+/obj/item/seeds/New(loc, parent)
 	..()
 	pixel_x = rand(-8, 8)
 	pixel_y = rand(-8, 8)
@@ -1033,12 +1033,26 @@
 	growthstages = 4
 	plant_type = 1
 	rarity = 30
+	var/list/mutations = list()
+	var/mutating
+
+/obj/item/seeds/kudzuseed/New(loc, obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod/parent)
+	..()
+	if(parent)
+		mutations = parent.mutations
+		mutating = parent.mutating
+
+/obj/item/seeds/kudzuseed/harvest()
+	var/list/prod = ..()
+	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod/K in prod)
+		K.mutations = mutations
+		K.mutating = prob(15)
 
 /obj/item/seeds/kudzuseed/attack_self(mob/user as mob)
 	if(istype(user.loc,/turf/space))
 		return
 	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
-	new /obj/effect/spacevine_controller(user.loc)
+	new /obj/effect/spacevine_controller(user.loc, mutations)
 	qdel(src)
 
 /obj/item/seeds/chillighost
