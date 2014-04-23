@@ -97,12 +97,24 @@
 /obj/item/clothing/suit/space/rig/mining
 	icon_state = "rig-mining"
 	name = "mining hardsuit"
-	desc = "A special suit that protects against hazardous, low pressure environments. Has reinforced plating."
+	desc = "A special suit that protects against hazardous, low pressure environments. Has reinforced plating, and an auto-injector for use with pills."
 	item_state = "mining_hardsuit"
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 50, bio = 100, rad = 50)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/pickaxe)
 
-
+/obj/item/clothing/suit/space/rig/mining/attackby(obj/item/I as obj, mob/user as mob)
+	if(istype(I, /obj/item/weapon/reagent_containers/pill) && isliving(loc))
+		var/obj/item/weapon/reagent_containers/pill/P = I
+		var/mob/living/L = loc
+		user.unEquip(P)
+		loc << "<span class='notice'>You insert [I] into the suit and feel a tiny prick.</span>"
+		if(P.reagents.total_volume)
+			P.reagents.reaction(L, INGEST)
+			P.reagents.trans_to(L, P.reagents.total_volume)
+		qdel(P)
+		return
+	else
+		..()
 
 //Syndicate rig
 /obj/item/clothing/head/helmet/space/rig/syndi
