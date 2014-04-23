@@ -174,27 +174,27 @@
  */
 /proc/get_listeners_in_view(var/R, var/atom/source)
 	var/turf/T = get_turf(source)
-	var/list/hear = list()
+	var/list/listeners = list()
 
 	if(!T)
-		return hear
+		return listeners
 
 	var/list/range = hear(R, T)
 
 	for(var/atom/movable/A in range)
 		if(ismob(A))
 			var/mob/M = A
-			hear |= M
-			hear = recursive_mob_check(A, hear, 3, 1, 0, 1)
+			listeners |= M
+			listeners = recursive_mob_check(A, listeners, 3, 1, 0, 1)
 		else if(istype(A, /obj/item/device/radio))
-			hear |= A
+			listeners |= A
 
 	// Don't include if the player is not connected.
 	for (var/mob/Mob in hear)
 		if (isnull(Mob.client))
-			hear ^= Mob
+			listeners ^= Mob
 
-	return hear
+	return listeners
 
 /proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios)
 
