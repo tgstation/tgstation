@@ -184,12 +184,11 @@
 		if(ismob(A))
 			var/mob/M = A
 			if(M.client)
-				hear += M
+				hear |= M
+				hear = recursive_mob_check(A, hear, 3, 1, 0, 1)
 			//world.log << "Start = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
 		else if(istype(A, /obj/item/device/radio))
-			hear += A
-
-		hear = recursive_mob_check(A, hear, 3, 1, 0, 1)
+			hear |= A
 
 	return hear
 
