@@ -178,6 +178,9 @@
 		if(ismob(Movable))
 			var/mob/M = Movable
 
+			if (istype(M, /mob/camera))
+				continue
+
 			if (istype(M, /mob/dead))
 				listeners += M
 				continue
