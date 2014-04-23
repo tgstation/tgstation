@@ -136,7 +136,7 @@ var/list/department_radio_keys = list(
 	*/
 
 	var/italics = 0
-	var/message_range = 0
+	var/message_range = null
 	var/message_mode = null
 	var/datum/language/speaking = null //For use if a specific language is being spoken.
 
@@ -467,8 +467,8 @@ var/list/department_radio_keys = list(
 
 	var/list/listening
 
-	listening = get_listeners_in_view(message_range, src)
-	//var/list/onscreen = get_listeners_in_view(7, src)
+	listening = get_mobs_in_view(message_range, src)
+	//var/list/onscreen = get_mobs_in_view(7, src)
 	for(var/mob/M in player_list)
 		if (!M.client)
 			continue //skip monkeys and leavers
