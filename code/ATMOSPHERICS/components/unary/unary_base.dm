@@ -37,15 +37,17 @@
 
 		..()
 
-	initialize()
-		src.disconnect(src)
+	initialize(infiniteloop = 0)
+		if(!infiniteloop)
+			src.disconnect(src)
 
 		var/node_connect = dir
 
 		for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
 			if(target.initialize_directions & get_dir(target,src))
 				node = target
-				target.initialize()
+				if(!infiniteloop)
+					target.initialize(1)
 				break
 		build_network()
 
@@ -90,8 +92,8 @@
 
 	disconnect(obj/machinery/atmospherics/reference)
 		if(reference==node)
-			node.disconnect(src)
-			del(network)
 			node = null
+			reference.disconnect(src)
+			del(network)
 
 		return null
