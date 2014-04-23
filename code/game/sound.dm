@@ -30,6 +30,20 @@ var/list/page_sound = list('sound/effects/pageturn1.ogg', 'sound/effects/pagetur
 			if(T && T.z == turf_source.z)
 				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff)
 
+/proc/playsoundE(var/atom/movable/source, soundin, vol as num, vary, extrarange as num, falloff)
+
+	soundin = get_sfx(soundin) // same sound for everyone
+
+	if(isarea(source))
+		error("[source] is an area and is trying to make the sound: [soundin]")
+		return
+
+	var/frequency = get_rand_frequency() // Same frequency for everybody
+	var/turf/turf_source = get_turf(source)
+
+	for (var/mob/Mob in get_listeners_in_view(world.view + extrarange, source, 0))
+		Mob.playsound_local(turf_source, soundin, vol, vary, frequency, falloff)
+
 var/const/FALLOFF_SOUNDS = 1
 var/const/SURROUND_CAP = 7
 
