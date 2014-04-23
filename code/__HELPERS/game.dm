@@ -145,6 +145,10 @@
 	//debug_mob += O.contents.len
 	if(!recursion_limit)
 		return L
+
+	if (istype(A, /mob/dead))
+		return L + A
+
 	for(var/atom/movable/A in O.contents)
 
 		if(ismob(A))
