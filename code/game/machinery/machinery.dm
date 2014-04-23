@@ -232,7 +232,11 @@ Class Procs:
 				re_init=1
 
 		if("unlink" in href_list)
-			var/obj/O = locate(href_list["unlink"])
+			var/idx = text2num(href_list["unlink"])
+			if (!idx)
+				return 1
+
+			var/obj/O = getLink(idx)
 			if(!O)
 				return 1
 			if(!canLink(O))
@@ -246,17 +250,20 @@ Class Procs:
 			update_mt_menu=1
 
 		if("link" in href_list)
-			var/obj/O = locate(href_list["unlink"])
+			var/obj/O = P.buffer
 			if(!O)
 				return 1
 			if(!canLink(O))
 				usr << "\red You can't link with that device."
 				return 1
+			if (isLinkedWith(O))
+				usr << "\red A red light flashes on \the [P]. The two devices are already linked between them."
+				return 1
 
 			if(linkWith(usr, O))
 				usr << "\blue A green light flashes on \the [P], confirming the link was removed."
 			else
-				usr << "\red A red light flashes on \the [P].  It appears something went wrong when unlinking the two devices."
+				usr << "\red A red light flashes on \the [P].  It appears something went wrong when linking the two devices."
 			update_mt_menu=1
 
 		if("buffer" in href_list)

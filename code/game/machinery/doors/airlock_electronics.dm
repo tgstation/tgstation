@@ -26,7 +26,11 @@
 	attack_self(mob/user as mob)
 		if (!ishuman(user) && !isrobot(user))
 			return ..(user)
-
+		
+		// Can't manipulate it when broken (e.g. emagged)
+		if (icon_state == "door_electronics_smoked")
+			return
+		
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.getBrainLoss() >= 60)
@@ -70,7 +74,7 @@
 
 	Topic(href, href_list)
 		..()
-		if (usr.stat || usr.restrained() || (!ishuman(usr) && !isrobot(usr)))
+		if (usr.stat || usr.restrained() || (!ishuman(usr) && !isrobot(usr)) || icon_state == "door_electronics_smoked")
 			return
 		if (href_list["close"])
 			usr << browse(null, "window=airlock")

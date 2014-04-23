@@ -165,6 +165,13 @@
 
 /obj/machinery/telecomms/canLink(var/obj/O)
 	return istype(O,/obj/machinery/telecomms)
+
+/obj/machinery/telecomms/isLinkedWith(var/obj/O)
+	return O != null && O in links
+
+/obj/machinery/telecomms/getLink(var/idx)
+	return (idx >= 1 && idx <= links.len) ? links[idx] : null
+
 // Off-Site Relays
 //
 // You are able to send/receive signals from the station's z level (changeable in the STATION_Z #define) if
@@ -356,6 +363,9 @@
 
 		temp = "<font color = #666633>-% Successfully linked with \ref[O] [O.name] %-</font color>"
 		return 1
+	else if (O == src)
+		temp = "<font color = #666633>-% This machine can't be linked with itself %-</font color>"
+		return 0
 	else
 		temp = "<font color = #666633>-% Unable to acquire buffer %-</font color>"
 		return 0
