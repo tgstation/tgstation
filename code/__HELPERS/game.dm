@@ -132,28 +132,20 @@
 			turfs += T
 	return turfs
 
-
-/**
- * recursive_mob_check
- *
- * @args
- * O, source to be mob checked
- * repeat, a number
- *
- * @return
- * a list of movable atom objects inside of object contents based on repeat var.
- */
-/proc/recursive_mob_check(const/atom/movable/O, const/repeat = 3)
+/proc/recursive_mob_check(const/atom/movable/O, const/list/listeners = list(), const/repeat = 3)
 	if (!isobj(O) && !ismob(O))
-		CRASH("1st argument must be a movable atom.")
+		CRASH("1st argument must be a movable atom, value : [O]")
+
+	if (!islist(listeners))
+		CRASH("2nd argument must be a list, value : [listeners]")
 
 	if (!isnum(repeat))
-		CRASH("2nd argument must be a num.")
+		CRASH("3rd argument must be a num, value : [repeat]")
+
+	var/list/ma = listeners.Copy()
 
 	if (!repeat)
-		return list()
-
-	var/list/ma = list()
+		return ma
 
 	for(var/atom/movable/Movable in O.contents)
 		if(ismob(Movable))
@@ -161,26 +153,16 @@
 		else if(istype(Movable, /obj/item/device/radio))
 			ma += Movable
 		else
-			ma = recursive_mob_check(Movable, repeat - 1)
+			ma = recursive_mob_check(Movable, ma, repeat - 1)
 
 	return ma
 
-/**
- * get_listeners_in_view
- *
- * @args
- * dist, a number
- * center, a movable atom on the map
- *
- * @return
- * a list of movable atom that can listen in the view of B
- */
 /proc/get_listeners_in_view(const/dist, const/atom/movable/center)
 	if (!isnum(dist))
-		CRASH("1st argument must be a movable atom.")
+		CRASH("1st argument must be a num, value : [dist]")
 
-	if (!isobj(center) || !ismob(center))
-		CRASH("2nd argument must be an obj or mob.")
+	if (!isobj(center) && !ismob(center))
+		CRASH("2nd argument must be an obj or mob, value : [center]")
 
 	var/turf/T = get_turf(center)
 
@@ -188,8 +170,9 @@
 		return list()
 
 	var/list/listeners = list()
+	var/list/te = hear(dist, T)
 
-	for(var/atom/movable/Movable in hear(dist, T))
+	for(var/atom/movable/Movable in te)
 		if(ismob(Movable))
 			var/mob/M = Movable
 
@@ -198,7 +181,7 @@
 				continue
 
 			listeners += M
-			listeners |= recursive_mob_check(M)
+			listeners = recursive_mob_check(M, listeners)
 		else if(istype(Movable, /obj/item/device/radio))
 			listeners += Movable
 
