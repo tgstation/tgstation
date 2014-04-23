@@ -157,12 +157,15 @@
 
 	return ma
 
-/proc/get_listeners_in_view(const/dist, const/atom/movable/center)
+/proc/get_listeners_in_view(const/dist, const/atom/movable/center, const/rmb = 1)
 	if (!isnum(dist))
 		CRASH("1st argument must be a num, value : [dist]")
 
 	if (!isobj(center) && !ismob(center))
 		CRASH("2nd argument must be an obj or mob, value : [center]")
+
+	if (!isnum(rmb))
+		CRASH("2nd argument must be a num, value : [rmb]")
 
 	var/turf/T = get_turf(center)
 
@@ -170,9 +173,8 @@
 		return list()
 
 	var/list/listeners = list()
-	var/list/te = hear(dist, T)
 
-	for(var/atom/movable/Movable in te)
+	for(var/atom/movable/Movable in hear(dist, T))
 		if(ismob(Movable))
 			var/mob/M = Movable
 
@@ -181,7 +183,9 @@
 				continue
 
 			listeners += M
-			listeners = recursive_mob_check(M, listeners)
+
+			if (rmb)
+				listeners = recursive_mob_check(M, listeners)
 		else if(istype(Movable, /obj/item/device/radio))
 			listeners += Movable
 
