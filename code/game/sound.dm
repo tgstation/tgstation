@@ -13,13 +13,13 @@ var/list/page_sound = list('sound/effects/pageturn1.ogg', 'sound/effects/pagetur
 	if (!isobj(source) && !ismob(source))
 		CRASH("1st argument must be a movable atom, value : [source]")
 
-	soundin = get_sfx(soundin) // Same sound for everyone
+	var/soundinn = get_sfx(soundin) // Same sound for everyone
 
 	var/frequency = get_rand_frequency() // Same frequency for everybody
 	var/turf/turf_source = get_turf(source)
 
 	for (var/mob/Mob in getListenersInView(source, world.view + extrarange, 0))
-		Mob.playsound_local(turf_source, soundin, vol, vary, frequency, falloff)
+		Mob.playsound_local(turf_source, soundinn, vol, vary, frequency, falloff)
 
 /proc/playsound(var/atom/source, soundin, vol as num, vary, extrarange as num, falloff)
 
