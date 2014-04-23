@@ -166,12 +166,13 @@
 
 	return L
 
-// The old system would loop through lists for a total of 5000 per function call, in an empty server.
-// This new system will loop at around 1000 in an empty server.
-
-/proc/get_mobs_in_view(var/R, var/atom/source)
-	// Returns a list of mobs in range of R from source. Used in radio and say code.
-
+/**
+ * Returns a list of moveable atoms in range of R from source. Used in radio and say code.
+ *
+ * The old system would loop through lists for a total of 5000 per function call, in an empty server.
+ * This new system will loop at around 1000 in an empty server.
+ */
+/proc/get_listeners_in_view(var/R, var/atom/source)
 	var/turf/T = get_turf(source)
 	var/list/hear = list()
 

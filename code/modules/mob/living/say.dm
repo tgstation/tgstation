@@ -467,8 +467,8 @@ var/list/department_radio_keys = list(
 
 	var/list/listening
 
-	listening = get_mobs_in_view(message_range, src)
-	//var/list/onscreen = get_mobs_in_view(7, src)
+	listening = get_listeners_in_view(message_range, src)
+	//var/list/onscreen = get_listeners_in_view(7, src)
 	for(var/mob/M in player_list)
 		if (!M.client)
 			continue //skip monkeys and leavers
