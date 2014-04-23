@@ -18,7 +18,7 @@ var/list/page_sound = list('sound/effects/pageturn1.ogg', 'sound/effects/pagetur
 	var/frequency = get_rand_frequency() // Same frequency for everybody
 	var/turf/turf_source = get_turf(source)
 
-	for (var/mob/Mob in get_listeners_in_view(source, world.view + extrarange, 0))
+	for (var/mob/Mob in getListenersInView(source, world.view + extrarange, 0))
 		Mob.playsound_local(turf_source, soundin, vol, vary, frequency, falloff)
 
 /proc/playsound(var/atom/source, soundin, vol as num, vary, extrarange as num, falloff)
