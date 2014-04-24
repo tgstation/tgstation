@@ -335,7 +335,7 @@
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
 
-		if("harm", "disarm")
+		if("hurt", "disarm")
 			var/damage = rand(15, 30)
 			visible_message("\red <B>[M] has slashed at [src]!</B>")
 			adjustBruteLoss(damage)
