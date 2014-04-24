@@ -188,24 +188,53 @@
 
 /obj/item/weapon/legcuffs/beartrap/Crossed(AM as mob|obj)
 	if(armed)
-		if(ishuman(AM))
-			if(isturf(src.loc))
+		if(isturf(src.loc))
+			if(ishuman(AM))
 				var/mob/living/carbon/H = AM
 				if(H.m_intent == "run")
 					armed = 0
-					H.legcuffed = src
-					src.loc = H
-					H.update_inv_legcuffed(0)
-					H << "\red <B>You step on \the [src]!</B>"
-					feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
-					for(var/mob/O in viewers(H, null))
-						if(O == H)
-							continue
-						O.show_message("\red <B>[H] steps on \the [src].</B>", 1)
-		if(isanimal(AM) && !istype(AM, /mob/living/simple_animal/parrot) && !istype(AM, /mob/living/simple_animal/construct) && !istype(AM, /mob/living/simple_animal/shade) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
-			armed = 0
-			var/mob/living/simple_animal/SA = AM
-			SA.health -= 20
+					icon_state = "beartrap0"
+					playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
+					if(H.lying)
+						H.visible_message("<span class='danger'>[H] triggers \the [src].</span>", \
+								"<span class='userdanger'>You trigger \the [src]!</span>")
+						H.apply_damage(20,BRUTE,"chest")
+					else
+						H.legcuffed = src
+						src.loc = H
+						H.update_inv_legcuffed(0)
+						H.visible_message("<span class='danger'>[H] steps on \the [src].</span>", \
+								"<span class='userdanger'>You step on \the [src]!</span>")
+						H.apply_damage(20,BRUTE,(pick("l_leg", "r_leg")))
+						feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
+
+			if(isalien(AM))
+				armed = 0
+				icon_state = "beartrap0"
+				playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
+				var/mob/living/carbon/alien/A = AM
+				A.visible_message("<span class='danger'>[A] triggers \the [src]!</span>", \
+						"<span class='userdanger'>[A] triggers \the [src]!</span>")
+				A.adjustBruteLoss(20)
+				A.Stun(5)
+
+			if(ismonkey(AM)
+				armed = 0
+				icon_state = "beartrap0"
+				playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
+				var/mob/living/carbon/monkey/M = AM
+				M.visible_message("<span class='danger'>[M] triggers \the [src]!</span>", \
+						"<span class='userdanger'>[M] triggers \the [src]!</span>")
+				M.adjustBruteLoss(20)
+				M.Stun(5)	
+						
+			if(isanimal(AM) && !istype(AM, /mob/living/simple_animal/parrot) && !istype(AM, /mob/living/simple_animal/construct) && !istype(AM, /mob/living/simple_animal/shade) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
+				armed = 0
+				icon_state = "beartrap0"
+				playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
+				var/mob/living/simple_animal/SA = AM
+				visible_message("<span class='danger'>[SA] triggers \the [src]!</span>")
+				SA.health -= 20
 	..()
 
 
