@@ -37,6 +37,7 @@ namespace sendkeys_ss13
         public static string IRC_server = "test.net";
         public static int IRC_port = 11111;
         public static string IRC_channel = "#channel";
+        public static string NickServAuth = null;
 
         public static string[] merge_archive;
         public static bool mergeflag = false;
@@ -57,10 +58,10 @@ namespace sendkeys_ss13
             catch (Exception)
             {
                 IRCReconnectAttempt++;
-                if (IRCReconnectAttempt <= 3)
+                if (IRCReconnectAttempt <= 5)
                 {
                     Console.WriteLine("IRC server is unavaible at the moment. Reconnect attempt {0}...", IRCReconnectAttempt);
-                    System.Threading.Thread.Sleep(3000); //Reconnecting after 5 seconds.
+                    System.Threading.Thread.Sleep(5000); //Reconnecting after 5 seconds.
                     Main(args);
                 }
                 else
@@ -71,7 +72,17 @@ namespace sendkeys_ss13
                 }
             }
             Console.WriteLine("Connected to IRC");
-            irc.Login(IRC_bot_name, IRC_bot_name);
+            try
+            {
+                irc.Login(IRC_bot_name, IRC_bot_name);
+            }
+            catch (Exception)
+            {
+                irc.Login(IRC_bot_name + "_1", IRC_bot_name + "_1");
+                Console.WriteLine("Bot name is already taken, trying alternate...");
+            }
+            if (NickServAuth != null)
+                irc.SendMessage(SendType.Message, "NickServ", "identify " + NickServAuth);
             Console.WriteLine("Logged in");
             irc.RfcJoin(IRC_channel);
             Console.WriteLine("Joining {0}", IRC_channel);
@@ -83,10 +94,10 @@ namespace sendkeys_ss13
             if (File.Exists("config.txt"))
             {
                 StreamReader reader = new StreamReader("config.txt");
-                string[] line = reader.ReadLine().Split(' ');
+                string[] line = ReadLine_exception(reader);
                 if (line[2] != null)
                 {
-                    Match match1 = Regex.Match(line[2], @"(\d{1,3}.?){4}"); //rudimentary IP validation
+                    Match match1 = Regex.Match(line[2], @"^(\d{1,3}.?){4}$"); //rudimentary IP validation
                     if (match1.Success)
                     {
                         serverIP = line[2];
@@ -95,13 +106,12 @@ namespace sendkeys_ss13
                     else 
                     { 
                         Console.WriteLine("IP cannot be validated."); 
-                        return; 
                     }
                 }
-                line = reader.ReadLine().Split(' ');
+                line = ReadLine_exception(reader);
                 if (line[2] != null)
                 {
-                    Match match2 = Regex.Match(line[2], @"\d{1,5}"); //rudimentary port validation
+                    Match match2 = Regex.Match(line[2], @"^\d{1,5}$"); //rudimentary port validation
                     if (match2.Success && (Convert.ToInt32(line[2]) < 65535))
                     {
                         serverPort = Convert.ToInt32(line[2]);
@@ -110,10 +120,9 @@ namespace sendkeys_ss13
                     else 
                     {
                         Console.WriteLine("Port cannot be validated.");
-                        return; 
                     }
                 }
-                line = reader.ReadLine().Split(' ');
+                line = ReadLine_exception(reader);
                 if (line[2] != null)
                 {
                     commskey = line[2];
@@ -122,9 +131,8 @@ namespace sendkeys_ss13
                 else 
                 { 
                     Console.WriteLine("No Commskey!"); 
-                    return; 
                 }
-                line = reader.ReadLine().Split(' ');
+                line = ReadLine_exception(reader);
                 if (line[2] != null)
                 {
                     Github_bot_name = line[2];
@@ -133,23 +141,21 @@ namespace sendkeys_ss13
                 else 
                 { 
                     Console.WriteLine("No botname found."); 
-                    return; 
                 }
-                line = reader.ReadLine().Split(' ');
+                line = ReadLine_exception(reader);
                 if (line[2] != null)
                 {
                     IRC_bot_name = line[2];
-                    Console.WriteLine("Read IRC bot name: " + Github_bot_name);
+                    Console.WriteLine("Read IRC bot name: " + IRC_bot_name);
                 }
                 else 
                 { 
                     Console.WriteLine("No botname found."); 
-                    return; 
                 }
-                line = reader.ReadLine().Split(' ');
+                line = ReadLine_exception(reader);
                 if (line[2] != null)
                 {
-                    Match match3 = Regex.Match(line[2], @"(.+)\:(\d{1,5})"); //rudimentary port validation
+                    Match match3 = Regex.Match(line[2], @"^(.+)\:(\d{1,5})$"); //rudimentary port validation
                     if (match3.Success)
                     {
                         IRC_server = Convert.ToString(match3.Groups[1]);
@@ -159,10 +165,9 @@ namespace sendkeys_ss13
                     else
                     {
                         Console.WriteLine("Server:port invalid.");
-                        return;
                     }
                 }
-                line = reader.ReadLine().Split(' ');
+                line = ReadLine_exception(reader);
                 if (line[2] != null)
                 {
                     IRC_channel = line[2];
@@ -171,7 +176,16 @@ namespace sendkeys_ss13
                 else 
                 { 
                     Console.WriteLine("No channel found."); 
-                    return; 
+                }
+                line = ReadLine_exception(reader);
+                if (line[2] != null && line[2] != "_NONE_")
+                {
+                    NickServAuth = line[2];
+                    Console.WriteLine("Read Nickserv auth");
+                }
+                else
+                {
+                    Console.WriteLine("No NickServ auth chosen.");
                 }
                 reader.Close();
             }
@@ -180,6 +194,21 @@ namespace sendkeys_ss13
                 Console.WriteLine("Config file doesn't exist, using defaults"); 
                 return; 
             }
+        }
+
+        private static string[] ReadLine_exception(StreamReader reader)
+        {
+            string[] readline = null;
+            try
+            {
+                readline = reader.ReadLine().Split(' ');
+            }
+            catch (Exception)
+            {
+                readline[3] = "Error, couldn't read all lines of config file! Are you sure the config file has the right format?";
+                return readline;
+            }
+            return readline;
         }
 
         public static void OnChannelMessage(object sender, IrcEventArgs e) 
@@ -260,6 +289,7 @@ namespace sendkeys_ss13
                 server.Connect(ip);
                 server.Send(PACKETS);
                 Console.WriteLine("- sent ;)");
+                ServerReconnectAttempt = 0;
                 output.Close();
                 Console.WriteLine();
             }
@@ -269,7 +299,7 @@ namespace sendkeys_ss13
                 if(ServerReconnectAttempt <= 5)
                 {
                     Console.WriteLine("Server is not available at the moment. Reconnect attempt {0}...", ServerReconnectAttempt);
-                    System.Threading.Thread.Sleep(5000); //Reconnecting after 5 seconds.
+                    System.Threading.Thread.Sleep(15000); //Reconnecting after 15 seconds.
                     SendPacket(output, PACKETS);
                 }
                 else
