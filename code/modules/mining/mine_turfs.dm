@@ -364,20 +364,16 @@ var/list/artifact_spawn = list() // Runtime fix for geometry loading before cont
 					M.Stun(5)
 			M.apply_effect(25, IRRADIATE)
 
-	var/turf/unsimulated/floor/asteroid/N = ChangeTurf(/turf/unsimulated/floor/asteroid)
-	N.fullUpdateMineralOverlays()
-
 	if(rand(1,500) == 1)
 		visible_message("<span class='notice'>An old dusty crate was buried within!</span>")
 		DropAbandonedCrate()
 
+	var/turf/unsimulated/floor/asteroid/N = ChangeTurf(/turf/unsimulated/floor/asteroid)
+	N.fullUpdateMineralOverlays()
+
 /turf/unsimulated/mineral/proc/DropAbandonedCrate()
-	// 50% chance of being empty.
-	if(prob(50))
-		new /obj/structure/closet/crate/secure/loot(src)
-	else
-		var/crate_type = pick(valid_abandoned_crate_types)
-		new crate_type(src)
+	var/crate_type = pick(valid_abandoned_crate_types)
+	new crate_type(src)
 
 /turf/unsimulated/mineral/proc/excavate_find(var/prob_clean = 0, var/datum/find/F)
 	//with skill and luck, players can cleanly extract finds

@@ -55,6 +55,36 @@ var/global/list/moneytypes=list(
 		stack.color=stack_color
 		overlays += stack
 
+/obj/item/weapon/spacecash/proc/collect_from(var/obj/item/weapon/spacecash/cash)
+	if(cash.worth == src.worth)
+		var/taking = min(100-src.amount,cash.amount)
+		cash.amount -= taking
+		src.amount += taking
+		if(cash.amount <= 0)
+			qdel(cash)
+		return taking
+	return 0
+
+/obj/item/weapon/spacecash/afterattack(atom/A as mob|obj, mob/user as mob)
+	if (istype(A, /turf) \
+	 || istype(A, /obj/structure/table) \
+	 || istype(A, /obj/structure/rack) \
+	 )
+		var/turf/T = get_turf(A)
+		var/collected = 0
+		for(var/obj/item/weapon/spacecash/cash in T)
+			if(cash.worth == src.worth)
+				collected += collect_from(cash)
+		if(collected)
+			update_icon()
+			user << "\blue You add [collected] chips to your stack of cash."
+	else if(istype(A,/obj/item/weapon/spacecash))
+		var/obj/item/weapon/spacecash/cash = A
+		var/collected = src.collect_from(cash)
+		if(collected)
+			update_icon()
+			user << "\blue You add [collected] chips to your stack of cash."
+
 /obj/item/weapon/spacecash/c10
 	icon_state = "cash10"
 	worth = 10
@@ -63,7 +93,7 @@ var/global/list/moneytypes=list(
 /obj/item/weapon/spacecash/c100
 	icon_state = "cash100"
 	worth = 100
-	stack_color = "#663200"
+	stack_color = "#084407"
 
 /obj/item/weapon/spacecash/c1000
 	icon_state = "cash1000"

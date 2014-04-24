@@ -43,7 +43,7 @@
 
 // Mek MoMMI
 /datum/job_objective/make_mommi
-	completion_payment=150
+	completion_payment=350
 	per_unit=1
 
 /datum/job_objective/make_mommi/get_description()

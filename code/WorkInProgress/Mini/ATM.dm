@@ -75,7 +75,7 @@ log transactions
 				var/amount = count_cash(cash_found)
 				for(var/obj/item/weapon/spacecash/S in cash_found)
 					qdel(S)
-				authenticated_account.charge(-amount,null,"Credit deposit",terminal_id=machine_id)
+				authenticated_account.charge(-amount,null,"Credit deposit",terminal_id=machine_id,dest_name = "Terminal")
 
 /obj/machinery/atm/proc/reconnect_database()
 	for(var/obj/machinery/account_database/DB in world) //Hotfix until someone finds out why it isn't in 'machines'

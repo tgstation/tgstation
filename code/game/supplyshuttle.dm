@@ -3,7 +3,7 @@
 #define SUPPLY_STATIONZ 1       //Z-level of the Station.
 #define SUPPLY_STATION_AREATYPE "/area/supply/station" //Type of the supply shuttle area for station
 #define SUPPLY_DOCK_AREATYPE "/area/supply/dock"	//Type of the supply shuttle area for dock
-
+#define SUPPLY_TAX 10 // Credits to charge per order.
 var/datum/controller/supply_shuttle/supply_shuttle = new()
 
 var/list/mechtoys = list(
@@ -99,6 +99,7 @@ var/list/mechtoys = list(
 	var/hacked = 0
 	var/can_order_contraband = 0
 	var/last_viewed_group = "categories"
+	var/datum/money_account/current_acct
 
 /obj/machinery/computer/ordercomp
 	name = "Supply ordering console"
@@ -108,6 +109,7 @@ var/list/mechtoys = list(
 	var/temp = null
 	var/reqtime = 0 //Cooldown for requisitions - Quarxink
 	var/last_viewed_group = "categories"
+	var/datum/money_account/current_acct
 
 /*
 /obj/effect/marker/supplymarker
@@ -122,6 +124,7 @@ var/list/mechtoys = list(
 /datum/supply_order
 	var/ordernum
 	var/datum/supply_packs/object = null
+	var/datum/money_account/account = null
 	var/orderedby = null
 	var/comment = null
 
@@ -129,14 +132,13 @@ var/list/mechtoys = list(
 	var/processing = 1
 	var/processing_interval = 300
 	var/iteration = 0
-	//supply points
-	var/points = 50
-	var/points_per_process = 1
-	var/points_per_slip = 2
-	var/points_per_crate = 5
-	var/plasma_per_point = 2 // 2 plasma for 1 point
+	//supply points have been replaced with MONEY MONEY MONEY - N3X
+	var/credits_per_slip = 2
+	var/credits_per_crate = 5
+	var/credits_per_plasma = 0.5 // 2 plasma for 1 point
 	//control
 	var/ordernum
+	var/list/centcomm_orders = list()
 	var/list/shoppinglist = list()
 	var/list/requestlist = list()
 	var/list/supply_packs = list()
@@ -161,7 +163,6 @@ var/list/mechtoys = list(
 			while(1)
 				if(processing)
 					iteration++
-					points += points_per_process
 
 					if(moving == 1)
 						var/ticksleft = (eta_timeofday - world.timeofday)
@@ -233,6 +234,21 @@ var/list/mechtoys = list(
 			if(.(B))
 				return 1
 
+	proc/SellObjToOrders(var/atom/A,var/in_crate)
+
+		// Per-unit orders run last so they don't steal shit.
+		var/list/deferred_order_checks=list()
+		var/order_idx=0
+		for(var/datum/centcomm_order/O in centcomm_orders)
+			order_idx++
+			if(istype(O,/datum/centcomm_order/per_unit))
+				deferred_order_checks += order_idx
+			if(O.CheckShuttleObject(A,in_crate))
+				return
+		for(var/oid in deferred_order_checks)
+			var/datum/centcomm_order/O = centcomm_orders[oid]
+			if(O.CheckShuttleObject(A,in_crate))
+				return
 	//Sellin
 	proc/sell()
 		var/shuttle_at
@@ -242,38 +258,38 @@ var/list/mechtoys = list(
 		var/area/shuttle = locate(shuttle_at)
 		if(!shuttle)	return
 
-		var/plasma_count = 0
+		var/datum/money_account/cargo_acct = department_accounts["Cargo"]
 
 		for(var/atom/movable/MA in shuttle)
 			if(MA.anchored)	continue
 
 			// Must be in a crate!
 			if(istype(MA,/obj/structure/closet/crate))
-				points += points_per_crate
+				cargo_acct.money += credits_per_crate
 				var/find_slip = 1
 
-				for(var/atom in MA)
-					// Sell manifests
-					var/atom/A = atom
+				for(var/atom/A in MA)
 					if(find_slip && istype(A,/obj/item/weapon/paper/manifest))
 						var/obj/item/weapon/paper/slip = A
 						if(slip.stamped && slip.stamped.len) //yes, the clown stamp will work. clown is the highest authority on the station, it makes sense
-							points += points_per_slip
+							cargo_acct.money += credits_per_slip
 							find_slip = 0
 						continue
 
-					// Sell plasma
-					if(istype(A, /obj/item/stack/sheet/mineral/plasma))
-						var/obj/item/stack/sheet/mineral/plasma/P = A
-						plasma_count += P.amount
+					SellObjToOrders(A,0)
 
 					// Delete it. (Fixes github #473)
-					qdel(A)
+					if(A) qdel(A)
+			else
+				SellObjToOrders(MA,1)
+
+			// PAY UP BITCHES
+			for(var/datum/centcomm_order/O in centcomm_orders)
+				if(O.CheckFulfilled())
+					O.Pay()
+					centcomm_orders -= O
 			//world << "deleting [MA]/[MA.type] it was [!MA.anchored ? "not ": ""] anchored"
 			qdel(MA)
-
-		if(plasma_count)
-			points += Floor(plasma_count / plasma_per_point)
 
 	//Buyin
 	proc/buy()
@@ -370,6 +386,7 @@ var/list/mechtoys = list(
 /obj/machinery/computer/ordercomp/attack_hand(var/mob/user as mob)
 	if(..())
 		return
+	current_acct = user.get_worn_id_account()
 	user.set_machine(src)
 	var/dat
 	if(temp)
@@ -377,7 +394,7 @@ var/list/mechtoys = list(
 	else
 		dat += {"<BR><B>Supply shuttle</B><HR>
 		Location: [supply_shuttle.moving ? "Moving to station ([supply_shuttle.eta] Mins.)":supply_shuttle.at_station ? "Station":"Dock"]<BR>
-		<HR>Supply points: [supply_shuttle.points]<BR>
+		<HR>Supply points: [current_acct.fmtBalance()]<BR>
 		<BR>\n<A href='?src=\ref[src];order=categories'>Request items</A><BR><BR>
 		<A href='?src=\ref[src];vieworders=1'>View approved orders</A><BR><BR>
 		<A href='?src=\ref[src];viewrequests=1'>View requests</A><BR><BR>
@@ -402,7 +419,7 @@ var/list/mechtoys = list(
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\supplyshuttle.dm:383: temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
-			temp = {"<b>Supply points: [supply_shuttle.points]</b><BR>
+			temp = {"<b>Supply points: [current_acct.fmtBalance()]</b><BR>
 				<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><HR><BR><BR>
 				<b>Select a category</b><BR><BR>"}
 			// END AUTOFIX
@@ -413,14 +430,14 @@ var/list/mechtoys = list(
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\supplyshuttle.dm:390: temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
-			temp = {"<b>Supply points: [supply_shuttle.points]</b><BR>
+			temp = {"<b>Supply points: [current_acct.fmtBalance()]</b><BR>
 				<A href='?src=\ref[src];order=categories'>Back to all categories</A><HR><BR><BR>
 				<b>Request from: [last_viewed_group]</b><BR><BR>"}
 			// END AUTOFIX
 			for(var/supply_name in supply_shuttle.supply_packs )
 				var/datum/supply_packs/N = supply_shuttle.supply_packs[supply_name]
 				if(N.hidden || N.contraband || N.group != last_viewed_group) continue								//Have to send the type instead of a reference to
-				temp += "<A href='?src=\ref[src];doorder=[supply_name]'>[supply_name]</A> Cost: [N.cost]<BR>"		//the obj because it would get caught by the garbage
+				temp += "<A href='?src=\ref[src];doorder=[supply_name]'>[supply_name]</A> Cost: $[num2septext(N.cost)]<BR>"		//the obj because it would get caught by the garbage
 
 	else if (href_list["doorder"])
 		if(world.time < reqtime)
@@ -512,15 +529,19 @@ var/list/mechtoys = list(
 
 	if(..())
 		return
+
+	current_acct = user.get_worn_id_account()
+
 	user.set_machine(src)
 	post_signal("supply")
+
 	var/dat
 	if (temp)
 		dat = temp
 	else
 		dat += {"<BR><B>Supply shuttle</B><HR>
 		\nLocation: [supply_shuttle.moving ? "Moving to station ([supply_shuttle.eta] Mins.)":supply_shuttle.at_station ? "Station":"Away"]<BR>
-		<HR>\nSupply points: [supply_shuttle.points]<BR>\n<BR>
+		<HR>\nAvailable Credits: [current_acct.fmtBalance()]<BR>\n<BR>
 		[supply_shuttle.moving ? "\n*Must be away to order items*<BR>\n<BR>":supply_shuttle.at_station ? "\n*Must be away to order items*<BR>\n<BR>":"\n<A href='?src=\ref[src];order=categories'>Order items</A><BR>\n<BR>"]
 		[supply_shuttle.moving ? "\n*Shuttle already called*<BR>\n<BR>":supply_shuttle.at_station ? "\n<A href='?src=\ref[src];send=1'>Send away</A><BR>\n<BR>":"\n<A href='?src=\ref[src];send=1'>Send to station</A><BR>\n<BR>"]
 		\n<A href='?src=\ref[src];viewrequests=1'>View requests</A><BR>\n<BR>
@@ -569,6 +590,7 @@ var/list/mechtoys = list(
 	return
 
 /obj/machinery/computer/supplycomp/Topic(href, href_list)
+
 	if(!supply_shuttle)
 		world.log << "## ERROR: Eek. The supply_shuttle controller datum is missing somehow."
 		return
@@ -604,7 +626,7 @@ var/list/mechtoys = list(
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\supplyshuttle.dm:567: temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
-			temp = {"<b>Supply points: [supply_shuttle.points]</b><BR>
+			temp = {"<b>Available credits: [current_acct.fmtBalance()]</b><BR>
 				<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><HR><BR><BR>
 				<b>Select a category</b><BR><BR>"}
 			// END AUTOFIX
@@ -615,7 +637,7 @@ var/list/mechtoys = list(
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\supplyshuttle.dm:574: temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
-			temp = {"<b>Supply points: [supply_shuttle.points]</b><BR>
+			temp = {"<b>Available credits: [current_acct.fmtBalance()]</b><BR>
 				<A href='?src=\ref[src];order=categories'>Back to all categories</A><HR><BR><BR>
 				<b>Request from: [last_viewed_group]</b><BR><BR>"}
 			// END AUTOFIX
@@ -650,12 +672,20 @@ var/list/mechtoys = list(
 
 		var/idname = "*None Provided*"
 		var/idrank = "*None Provided*"
+		var/datum/money_account/account
 		if(ishuman(usr))
 			var/mob/living/carbon/human/H = usr
 			idname = H.get_authentification_name()
 			idrank = H.get_assignment()
+			var/obj/item/weapon/card/id/I=H.get_idcard()
+			if(I)
+				account = get_card_account(I)
+			else
+				usr << "\red Please wear an ID with an associated bank account."
+				return
 		else if(issilicon(usr))
 			idname = usr.real_name
+			account = station_account
 
 		supply_shuttle.ordernum++
 		var/obj/item/weapon/paper/reqform = new /obj/item/weapon/paper(loc)
@@ -687,6 +717,7 @@ var/list/mechtoys = list(
 		O.ordernum = supply_shuttle.ordernum
 		O.object = P
 		O.orderedby = idname
+		O.account = account
 		supply_shuttle.requestlist += O
 
 
@@ -700,15 +731,19 @@ var/list/mechtoys = list(
 		var/ordernum = text2num(href_list["confirmorder"])
 		var/datum/supply_order/O
 		var/datum/supply_packs/P
-		temp = "Invalid Request"
+		var/datum/money_account/A
+		var/datum/money_account/cargo_acct = department_accounts["Cargo"]
+		temp = "Invalid Request. <br /><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 		for(var/i=1, i<=supply_shuttle.requestlist.len, i++)
 			var/datum/supply_order/SO = supply_shuttle.requestlist[i]
 			if(SO.ordernum == ordernum)
 				O = SO
 				P = O.object
-				if(supply_shuttle.points >= P.cost)
+				A = SO.account
+				if(A && A.money >= P.cost + SUPPLY_TAX)
 					supply_shuttle.requestlist.Cut(i,i+1)
-					supply_shuttle.points -= P.cost
+					A.charge(P.cost,null,"Supply Order #[SO.ordernum]",dest_name = "CentComm")
+					A.charge(SUPPLY_TAX,cargo_acct,"Order Tax")
 					supply_shuttle.shoppinglist += O
 
 					// AUTOFIXED BY fix_string_idiocy.py
@@ -720,7 +755,7 @@ var/list/mechtoys = list(
 
 					// AUTOFIXED BY fix_string_idiocy.py
 					// C:\Users\Rob\Documents\Projects\vgstation13\code\game\supplyshuttle.dm:661: temp = "Not enough supply points.<BR>"
-					temp = {"Not enough supply points.<BR>
+					temp = {"Not enough credit.<BR>
 						<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"}
 					// END AUTOFIX
 				break

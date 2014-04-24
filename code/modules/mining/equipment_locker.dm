@@ -33,6 +33,10 @@
 
 /obj/machinery/mineral/ore_redemption/attackby(var/obj/item/weapon/W, var/mob/user)
 	if(istype(W,/obj/item/weapon/card/id))
+		// N3X - Fixes people's IDs getting eaten when a new card is inserted
+		if(istype(inserted_id))
+			user << "\red There is already an ID card within the machine."
+			return
 		var/obj/item/weapon/card/id/I = usr.get_active_hand()
 		if(istype(I))
 			usr.drop_item()
@@ -90,7 +94,7 @@
 
 	if(istype(inserted_id))
 		dat += "You have [inserted_id.GetBalance(format=1)] credits in your bank account. <A href='?src=\ref[src];choice=eject'>Eject ID.</A><br>"
-		dat += text("<A href='?src=\ref[src];choice=claim'>Claim points.</A><br>")
+		dat += "<A href='?src=\ref[src];choice=claim'>Claim points.</A><br>"
 	else
 		dat += text("No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID.</A><br>")
 
@@ -127,7 +131,7 @@
 				inserted_id = null
 			if(href_list["choice"] == "claim")
 				var/datum/money_account/acct = get_card_account(inserted_id)
-				if(acct.charge(-credits,null,"Claimed mining credits."))
+				if(acct.charge(-credits,null,"Claimed mining credits.",dest_name = "Ore Redemption"))
 					credits = 0
 					usr << "\blue Credits transferred."
 				else
@@ -327,7 +331,7 @@
 		if(points)
 			var/obj/item/weapon/card/id/C = I
 			var/datum/money_account/acct = get_card_account(I)
-			if(acct.charge(-points,null,"Redeemed gift card."))
+			if(acct.charge(-points,null,"Redeemed gift card.",dest_name = "Gift Card"))
 				user << "<span class='info'>You transfer [points] credits to [C].</span>"
 				points = 0
 			else
