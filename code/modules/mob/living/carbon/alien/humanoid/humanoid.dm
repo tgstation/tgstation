@@ -235,6 +235,7 @@
 		updatehealth()
 
 /mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M as mob)
+	//M.changeNext_move(10)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return

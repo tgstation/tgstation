@@ -728,8 +728,8 @@ var/list/slot_equipment_priority = list( \
 		if (W)
 			W.attack_self(src)
 			update_inv_r_hand()
-	if(next_move < world.time)
-		next_move = world.time + 2
+	//if(next_move < world.time)
+	//	next_move = world.time + 2
 	return
 
 /*
