@@ -200,13 +200,14 @@
 								"<span class='userdanger'>You trigger \the [src]!</span>")
 						H.apply_damage(20,BRUTE,"chest")
 					else
-						H.legcuffed = src
-						src.loc = H
-						H.update_inv_legcuffed(0)
 						H.visible_message("<span class='danger'>[H] steps on \the [src].</span>", \
 								"<span class='userdanger'>You step on \the [src]!</span>")
 						H.apply_damage(20,BRUTE,(pick("l_leg", "r_leg")))
-						feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
+						if(!H.legcuffed) //beartrap can't cuff you leg if there's already a beartrap or legcuffs.
+							H.legcuffed = src
+							src.loc = H
+							H.update_inv_legcuffed(0)
+							feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
 
 			if(isalien(AM))
 				armed = 0
