@@ -249,6 +249,7 @@
 	g_amt = MINERAL_MATERIAL_AMOUNT
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
+	var/cooldown = 0
 
 	suicide_act(mob/user)
 		viewers(user) << pick("<span class='suicide'>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</span>", \
@@ -310,7 +311,20 @@
 		playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
-			if(!H.shoes)
-				H << "<span class='userdanger'>You step in the broken glass!</span>"
-				H.apply_damage(5,BRUTE,(pick("l_leg", "r_leg")))
-				H.Weaken(3)
+			if(H.lying)
+				if(cooldown < world.time - 10)
+					H.visible_message("<span class='danger'>[H] is injured by the broken glass!</span>", \
+							"<span class='userdanger'>You're injured the broken glass!</span>")
+					H.apply_damage(5,BRUTE,(pick("l_leg", "r_leg", "chest", "groin", "head", "r_hand", "l_hand")))
+					cooldown = world.time
+			else
+				if(!H.shoes)
+					if(cooldown < world.time - 10)
+						H.visible_message("<span class='danger'>[H] steps in the broken glass!</span>", \
+								"<span class='userdanger'>You step in the broken glass!</span>")
+						H.apply_damage(5,BRUTE,(pick("l_leg", "r_leg")))
+						H.Weaken(3)
+						cooldown = world.time
+		if(prob(20))
+			qdel(src)
+		
