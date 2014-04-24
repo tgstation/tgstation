@@ -72,7 +72,7 @@
 
 /datum/spacevine_mutation/expsolive  //OH SHIT IT CAN CHAINREACT RUN!!!
 	name = "explosive"
-	hue = "#ffff00"
+	hue = "#ff0000"
 
 /datum/spacevine_mutation/expsolive/on_death(obj/effect/spacevine/holder, mob/hitter, obj/item/I)
 	sleep(10)
@@ -80,14 +80,14 @@
 
 /datum/spacevine_mutation/fire_proof
 	name = "fire resist"
-	hue = "#ffff88"
+	hue = "#ff8888"
 
 /datum/spacevine_mutation/fire_proof/process_temperature(obj/effect/spacevine/holder, temp, volume)
 	return 1
 
 /datum/spacevine_mutation/vine_eating
 	name = "vine eating"
-	hue = "#ff7777"
+	hue = "#ff7700"
 
 /datum/spacevine_mutation/vine_eating/on_spread(obj/effect/spacevine/holder, turf/target)
 	var/obj/effect/spacevine/prey = locate() in target
@@ -96,7 +96,7 @@
 
 /datum/spacevine_mutation/aggressive_spread  //very OP, but im out of other ideas currently
 	name = "aggressive spreading"
-	hue = "#777777"
+	hue = "#333333"
 	severity = 3
 
 /datum/spacevine_mutation/aggressive_spread/on_spread(obj/effect/spacevine/holder, turf/target)
@@ -121,8 +121,9 @@
 
 /datum/spacevine_mutation/oxy_eater/process_mutation(obj/effect/spacevine/holder)
 	var/turf/simulated/floor/T = holder.loc
-	var/datum/gas_mixture/GM = T.air
-	GM.oxygen = max(0, GM.oxygen - severity * 0.5 * holder.energy)
+	if(istype(T))
+		var/datum/gas_mixture/GM = T.air
+		GM.oxygen = max(0, GM.oxygen - severity * 0.5 * holder.energy)
 
 /datum/spacevine_mutation/nitro_eater
 	name = "nitrogen consumption"
@@ -130,8 +131,9 @@
 
 /datum/spacevine_mutation/nitro_eater/process_mutation(obj/effect/spacevine/holder)
 	var/turf/simulated/floor/T = holder.loc
-	var/datum/gas_mixture/GM = T.air
-	GM.nitrogen = max(0, GM.nitrogen - severity * 0.5 * holder.energy)
+	if(istype(T))
+		var/datum/gas_mixture/GM = T.air
+		GM.nitrogen = max(0, GM.nitrogen - severity * 0.5 * holder.energy)
 
 /datum/spacevine_mutation/carbondioxide_eater
 	name = "CO2 consumption"
@@ -139,8 +141,9 @@
 
 /datum/spacevine_mutation/carbondioxide_eater/process_mutation(obj/effect/spacevine/holder)
 	var/turf/simulated/floor/T = holder.loc
-	var/datum/gas_mixture/GM = T.air
-	GM.carbon_dioxide = max(0, GM.carbon_dioxide - severity * 0.5 * holder.energy)
+	if(istype(T))
+		var/datum/gas_mixture/GM = T.air
+		GM.carbon_dioxide = max(0, GM.carbon_dioxide - severity * 0.5 * holder.energy)
 
 /datum/spacevine_mutation/plasma_eater
 	name = "toxins consumption"
@@ -148,8 +151,9 @@
 
 /datum/spacevine_mutation/plasma_eater/process_mutation(obj/effect/spacevine/holder)
 	var/turf/simulated/floor/T = holder.loc
-	var/datum/gas_mixture/GM = T.air
-	GM.toxins = max(0, GM.toxins - severity * 0.5 * holder.energy)
+	if(istype(T))
+		var/datum/gas_mixture/GM = T.air
+		GM.toxins = max(0, GM.toxins - severity * 0.5 * holder.energy)
 
 /datum/spacevine_mutation/thorns
 	name = "thorns"
@@ -214,6 +218,7 @@
 			if(!master.vines.len)
 				var/obj/item/seeds/kudzuseed/KZ = new(loc)
 				KZ.mutations |= mutations
+		mutations = list()
 		..()
 
 /obj/effect/spacevine/proc/on_chem_effect(datum/reagent/R)
