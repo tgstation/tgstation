@@ -6,35 +6,47 @@ var/global/datum/getrev/revdata = new()
 	var/date
 	var/showinfo
 
-	New()
-		if(fexists("config/git_host.txt"))
-			project_href = file2text("config/git_host.txt")
-		else
-			project_href = "https://www.github.com/tgstation/-tg-station"
-		var/list/head_log = file2list(".git/logs/HEAD", "\n")
-		for(var/line=head_log.len, line>=1, line--)
-			if(head_log[line])
-				var/list/last_entry = text2list(head_log[line], " ")
-				if(last_entry.len < 2)	continue
-				revision = last_entry[2]
-				// Get date/time
-				if(last_entry.len >= 5)
-					var/unix_time = text2num(last_entry[5])
-					if(unix_time)
-						date = unix2date(unix_time)
-				break
+/datum/getrev/New()
+	if(fexists("config/git_host.txt"))
+		project_href = file2text("config/git_host.txt")
+	else
+		project_href = "https://www.github.com/tgstation/-tg-station"
+	var/list/head_log = file2list(".git/logs/HEAD", "\n")
+	for(var/line=head_log.len, line>=1, line--)
+		if(head_log[line])
+			var/list/last_entry = text2list(head_log[line], " ")
+			if(last_entry.len < 2)	continue
+			revision = last_entry[2]
+			// Get date/time
+			if(last_entry.len >= 5)
+				var/unix_time = text2num(last_entry[5])
+				if(unix_time)
+					date = unix2date(unix_time)
+			break
 
-		showinfo = "<b>Server Revision:</b> "
-		if(revision)
-			showinfo += "<a href='[project_href]/commit/[revision]'><BR>[(date ? date : "No Date")]<BR>[revision]</a>"
-		else
-			showinfo += "*unknown*"
-		showinfo += "<p>-<a href='[project_href]/issues/new'>Report Bugs Here-</a><br><i>Please provide as much info as possible<br>Copy/paste the revision date and hash into your issue report if possible, thanks</i> :)</p>"
+	showinfo = "<b>Server Revision:</b> "
+	if(revision)
+		showinfo += "<A href='?src=\ref[src];project_open=1'><BR>[(date ? date : "No Date")]<BR>[revision]</A>"
+	else
+		showinfo += "*unknown*"
+	showinfo += "<p>-<A href='?src=\ref[src];new_issue_open=1'>Report Bugs Here-</A><br><i>Please provide as much info as possible<br>Copy/paste the revision date and hash into your issue report if possible, thanks</i> :)</p>"
 
-		world.log << "Running /tg/ revision:"
-		world.log << date
-		world.log << revision
-		return
+	world.log << "Running /tg/ revision:"
+	world.log << date
+	world.log << revision
+	return
+
+/datum/getrev/Topic(href, href_list)
+	..()
+	if(href_list["project_open"])
+		if(alert(usr, "This will open the project in your browser. Are you sure?",,"Yes","No")=="No")
+			return
+		usr << link("[project_href]/commit/[revision]")
+	else if(href_list["new_issue_open"])
+		if(alert(usr, "This will open the issue tracker in your browser. Are you sure?",,"Yes","No")=="No")
+			return
+		usr << link("[project_href]/issues/new")
+
 
 client/verb/showrevinfo()
 	set category = "OOC"

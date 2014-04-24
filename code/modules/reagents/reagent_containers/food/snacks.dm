@@ -46,6 +46,9 @@
 		qdel(src)
 		return 0
 	if(istype(M, /mob/living/carbon))
+		if(!canconsume(M, user))
+			return 0
+
 		if(M == user)								//If you're eating it yourself.
 			var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
 			if(wrapped)
@@ -194,7 +197,6 @@
 		if(iscorgi(M))
 			if(bitecount == 0 || prob(50))
 				M.emote("nibbles away at the [src]")
-				M.say(pick("wow", "such taste", "much food", "very eat"))
 			bitecount++
 			if(bitecount >= 5)
 				var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where the [src] was")

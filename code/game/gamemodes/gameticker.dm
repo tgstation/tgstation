@@ -45,7 +45,7 @@ var/global/datum/controller/gameticker/ticker
 		if(config)
 			pregame_timeleft = config.lobby_countdown
 		else
-			error("configuration was null when retrieving the lobby_countdown value.")
+			ERROR("configuration was null when retrieving the lobby_countdown value.")
 			pregame_timeleft = 120
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
 		world << "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds"
@@ -142,6 +142,7 @@ var/global/datum/controller/gameticker/ticker
 
 	if(!admins.len)
 		send2irc("Server", "Round just started with no admins online!")
+	auto_toggle_ooc(0) // Turn it off
 
 	if(config.sql_enabled)
 		spawn(3000)
@@ -156,7 +157,7 @@ var/global/datum/controller/gameticker/ticker
 	//Plus it provides an easy way to make cinematics for other events. Just use this as a template
 	proc/station_explosion_cinematic(var/station_missed=0, var/override = null)
 		if( cinematic )	return	//already a cinematic in progress!
-
+		auto_toggle_ooc(1) // Turn it on
 		//initialise our cinematic screen object
 		cinematic = new(src)
 		cinematic.icon = 'icons/effects/station_explosion.dmi'
@@ -286,7 +287,7 @@ var/global/datum/controller/gameticker/ticker
 
 		if(!mode.explosion_in_progress && mode.check_finished())
 			current_state = GAME_STATE_FINISHED
-
+			auto_toggle_ooc(1) // Turn it on
 			spawn
 				declare_completion()
 

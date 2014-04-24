@@ -17,8 +17,8 @@
 	icon_state = "welding"
 	flags = HEADCOVERSEYES | HEADCOVERSMOUTH
 	item_state = "welding"
-	m_amt = 3000
-	g_amt = 1000
+	m_amt = 1750
+	g_amt = 400
 //	var/up = 0
 	flash_protect = 2
 	tint = 2

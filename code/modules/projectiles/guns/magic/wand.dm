@@ -35,6 +35,13 @@
 		shoot_with_empty_chamber(user)
 		return
 	if(target == user)
+		if(no_den_usage)
+			var/area/A = get_area(user)
+			if(istype(A, /area/wizard_station))
+				user << "<span class='warning'>You know better than to violate the security of The Den, best wait until you leave to use [src].<span>"
+				return
+			else
+				no_den_usage = 0
 		zap_self(user)
 	else
 		..()
@@ -92,6 +99,7 @@
 	ammo_type = /obj/item/ammo_casing/magic/teleport
 	icon_state = "telewand"
 	max_charges = 10 //10, 5, 5, 4
+	no_den_usage = 1
 
 /obj/item/weapon/gun/magic/wand/teleport/zap_self(mob/living/user as mob)
 	do_teleport(user, user, 10)
@@ -107,6 +115,7 @@
 	ammo_type = /obj/item/ammo_casing/magic/door
 	icon_state = "doorwand"
 	max_charges = 20 //20, 10, 10, 7
+	no_den_usage = 1
 
 /obj/item/weapon/gun/magic/wand/door/zap_self()
 	return
