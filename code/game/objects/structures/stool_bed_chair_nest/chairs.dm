@@ -101,7 +101,7 @@
 	var/image/armrest = null
 
 /obj/structure/stool/bed/chair/comfy/New()
-	armrest = icon("icons/obj/objects.dmi", "comfychair_armrest")
+	armrest = image("icons/obj/objects.dmi", "comfychair_armrest")
 	armrest.layer = MOB_LAYER + 0.1
 
 	return ..()
