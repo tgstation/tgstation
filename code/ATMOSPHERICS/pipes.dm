@@ -197,28 +197,13 @@ Regular pipe
 
 /obj/machinery/atmospherics/pipe/simple/update_icon()
 	if(node1&&node2)
-		var/C = ""
-		switch(pipe_color)
-			if ("red") C = "-r"
-			if ("blue") C = "-b"
-			if ("cyan") C = "-c"
-			if ("green") C = "-g"
-			if ("yellow") C = "-y"
-			if ("purple") C = "-p"
-		icon_state = "intact[C][invisibility ? "-f" : "" ]"
-
-		//var/node1_direction = get_dir(src, node1)
-		//var/node2_direction = get_dir(src, node2)
-
-		//dir = node1_direction|node2_direction
-
+		icon_state = "intact[invisibility ? "-f" : "" ]"
 	else
 		if(!node1&&!node2)
 			qdel(src) //TODO: silent deleting looks weird
 		var/have_node1 = node1?1:0
 		var/have_node2 = node2?1:0
 		icon_state = "exposed[have_node1][have_node2][invisibility ? "-f" : "" ]"
-
 
 /obj/machinery/atmospherics/pipe/simple/initialize()
 	normalize_dir()
@@ -229,8 +214,9 @@ Regular pipe
 		if(direction&initialize_directions)
 			if (!node1_dir)
 				node1_dir = direction
-			else if (!node2_dir)
+			else
 				node2_dir = direction
+				break
 
 	for(var/obj/machinery/atmospherics/target in get_step(src,node1_dir))
 		if(target.initialize_directions & get_dir(target,src))
@@ -241,11 +227,9 @@ Regular pipe
 			node2 = target
 			break
 
-
 	var/turf/T = src.loc			// hide if turf is not intact
 	hide(T.intact)
 	update_icon()
-	//update_icon()
 
 /obj/machinery/atmospherics/pipe/simple/disconnect(obj/machinery/atmospherics/reference)
 	if(reference == node1)
@@ -262,70 +246,54 @@ Regular pipe
 
 	return null
 
-/obj/machinery/atmospherics/pipe/simple/scrubbers
-	name="Scrubbers pipe"
-	pipe_color="red"
-	icon_state = ""
-
-/obj/machinery/atmospherics/pipe/simple/supply
-	name="Air supply pipe"
-	pipe_color="blue"
-	icon_state = ""
-
-/obj/machinery/atmospherics/pipe/simple/supplymain
-	name="Main air supply pipe"
-	pipe_color="purple"
-	icon_state = ""
-
 /obj/machinery/atmospherics/pipe/simple/general
-	name="Pipe"
-	pipe_color=""
-	icon_state = ""
-
-/obj/machinery/atmospherics/pipe/simple/yellow
-	name="Pipe"
-	pipe_color="yellow"
-	icon_state = ""
-
-/obj/machinery/atmospherics/pipe/simple/scrubbers/visible
-	level = 2
-	icon_state = "intact-r"
-
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden
-	level = 1
-	icon_state = "intact-r-f"
-
-/obj/machinery/atmospherics/pipe/simple/supply/visible
-	level = 2
-	icon_state = "intact-b"
-
-/obj/machinery/atmospherics/pipe/simple/supply/hidden
-	level = 1
-	icon_state = "intact-b-f"
-
-/obj/machinery/atmospherics/pipe/simple/supplymain/visible
-	level = 2
-	icon_state = "intact-p"
-
-/obj/machinery/atmospherics/pipe/simple/supplymain/hidden
-	level = 1
-	icon_state = "intact-p-f"
+	name="pipe"
 
 /obj/machinery/atmospherics/pipe/simple/general/visible
 	level = 2
-	icon_state = "intact"
 
 /obj/machinery/atmospherics/pipe/simple/general/hidden
 	level = 1
-	icon_state = "intact-f"
+
+/obj/machinery/atmospherics/pipe/simple/scrubbers
+	name="scrubbers pipe"
+	color=rgb(255,0,0)
+
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible
+	level = 2
+
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden
+	level = 1
+
+/obj/machinery/atmospherics/pipe/simple/supply
+	name="air supply pipe"
+	color=rgb(0,0,255)
+
+/obj/machinery/atmospherics/pipe/simple/supply/visible
+	level = 2
+
+/obj/machinery/atmospherics/pipe/simple/supply/hidden
+	level = 1
+
+/obj/machinery/atmospherics/pipe/simple/supplymain
+	name="main air supply pipe"
+	color=rgb(130,43,272)
+
+/obj/machinery/atmospherics/pipe/simple/supplymain/visible
+	level = 2
+
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden
+	level = 1
+
+/obj/machinery/atmospherics/pipe/simple/yellow
+	name="pipe"
+	color=rgb(255,198,0)
 
 /obj/machinery/atmospherics/pipe/simple/yellow/visible
 	level = 2
-	icon_state = "intact-y"
 
 /obj/machinery/atmospherics/pipe/simple/yellow/hidden
 	level = 1
-	icon_state = "intact-y-f"
 
 /obj/machinery/atmospherics/pipe/simple/insulated
 	icon = 'icons/obj/atmospherics/red_pipe.dmi'
