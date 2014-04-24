@@ -218,7 +218,7 @@
 				A.adjustBruteLoss(20)
 				A.Stun(5)
 
-			if(ismonkey(AM)
+			if(ismonkey(AM))
 				armed = 0
 				icon_state = "beartrap0"
 				playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
