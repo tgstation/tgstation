@@ -38,30 +38,27 @@
 
 			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 			return 1
-		else if( istype(M, /mob/living/carbon/human) )
 
-			for(var/mob/O in viewers(world.view, user))
-				O.show_message("\red [user] attempts to feed [M] [src].", 1)
-			if(!do_mob(user, M)) return
-			for(var/mob/O in viewers(world.view, user))
-				O.show_message("\red [user] feeds [M] [src].", 1)
-			add_logs(user, M, "fed", object="[reagentlist(src)]")
-			if(reagents.total_volume)
-				reagents.reaction(M, INGEST)
-				spawn(5)
-					reagents.trans_to(M, gulp_size)
+		for(var/mob/O in viewers(world.view, user))
+			O.show_message("\red [user] attempts to feed [M] [src].", 1)
+		if(!do_mob(user, M)) return
+		for(var/mob/O in viewers(world.view, user))
+			O.show_message("\red [user] feeds [M] [src].", 1)
+		add_logs(user, M, "fed", object="[reagentlist(src)]")
+		if(reagents.total_volume)
+			reagents.reaction(M, INGEST)
+			spawn(5)
+				reagents.trans_to(M, gulp_size)
 
-			if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
-				var/mob/living/silicon/robot/bro = user
-				bro.cell.use(30)
-				var/refill = R.get_master_reagent_id()
-				spawn(600)
-					R.add_reagent(refill, fillevel)
+		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
+			var/mob/living/silicon/robot/bro = user
+			bro.cell.use(30)
+			var/refill = R.get_master_reagent_id()
+			spawn(600)
+				R.add_reagent(refill, fillevel)
 
-			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
-			return 1
-
-		return 0
+		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+		return 1
 
 
 	afterattack(obj/target, mob/user , proximity)
