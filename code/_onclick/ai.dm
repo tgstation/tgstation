@@ -15,7 +15,7 @@
 		return
 
 	if(control_disabled || stat) return
-	next_move = world.time + 9
+	//next_move = world.time + 9
 
 	if(ismob(A))
 		ai_actual_track(A)
@@ -51,7 +51,7 @@
 
 	if(world.time <= next_move)
 		return
-	next_move = world.time + 9
+	//next_move = world.time + 9
 
 	if(aicamera.in_camera_mode)
 		aicamera.camera_mode_off()

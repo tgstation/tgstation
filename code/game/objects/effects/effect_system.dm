@@ -149,8 +149,7 @@ steam.start() -- spawns the effect
 
 /obj/effect/effect/sparks/New()
 	..()
-
-	playsoundE(src, "sparks", 100, 1)
+	playsound(get_turf(src), "sparks", 100, 1)
 	var/turf/T = src.loc
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)
@@ -877,7 +876,7 @@ steam.start() -- spawns the effect
 			for(var/mob/O in oviewers(user))
 				if ((O.client && !( O.blinded )))
 					O << "\red [user] smashes through the foamed metal."
-
+			user.changeNext_move(8)
 			del(src)
 		else
 			user << "\blue You hit the metal foam but bounce off it."

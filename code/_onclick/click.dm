@@ -63,7 +63,7 @@
 
 	if(next_move > world.time) // in the year 2000...
 		return
-
+	//world << "next_move is [next_move] and world.time is [world.time]"
 	if(istype(loc,/obj/mecha))
 		if(!locate(/turf) in list(A,A.loc)) // Prevents inventory from being drilled
 			return
@@ -81,9 +81,9 @@
 	var/obj/item/W = get_active_hand()
 
 	if(W == A)
-		next_move = world.time + 6
+		/*next_move = world.time + 6
 		if(W.flags&USEDELAY)
-			next_move += 5
+			next_move += 5*/
 		W.attack_self(src)
 		if(hand)
 			update_inv_l_hand(0)
@@ -95,21 +95,25 @@
 	// operate two levels deep here (item in backpack in src; NOT item in box in backpack in src)
 	if(A == loc || (A in loc) || (A in contents) || (A.loc in contents))
 
-		// faster access to objects already on you
+		/*/ faster access to objects already on you
 		if(A in contents)
 			next_move = world.time + 6 // on your person
 		else
 			next_move = world.time + 8 // in a box/bag or in your square
-
+		*/
 		// No adjacency needed
 		if(W)
+			/*
 			if(W.flags&USEDELAY)
 				next_move += 5
+			*/
 
 			var/resolved = A.attackby(W,src)
 			if(!resolved && A && W)
 				W.afterattack(A,src,1,params) // 1 indicates adjacency
 		else
+			if(ismob(A))
+				changeNext_move(10)
 			UnarmedAttack(A)
 		return
 
@@ -118,31 +122,42 @@
 
 	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
 	if(isturf(A) || isturf(A.loc) || (A.loc && isturf(A.loc.loc)))
-		next_move = world.time + 10
-
+		//next_move = world.time + 10
 		if(A.Adjacent(src)) // see adjacent.dm
 			if(W)
-				if(W.flags&USEDELAY)
+				/*if(W.flags&USEDELAY)
 					next_move += 5
-
+				*/
 				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
+				if(ismob(A))
+					changeNext_move(10)
 				var/resolved = A.attackby(W,src)
 				if(!resolved && A && W)
 					W.afterattack(A,src,1,params) // 1: clicking something Adjacent
 			else
+				if(ismob(A))
+					changeNext_move(10)
 				UnarmedAttack(A, 1)
 			return
 		else // non-adjacent click
 			if(W)
+				if(ismob(A))
+					changeNext_move(10)
 				W.afterattack(A,src,0,params) // 0: not Adjacent
 			else
+				if(ismob(A))
+					changeNext_move(10)
 				RangedAttack(A, params)
 
 	return
 
+/mob/proc/changeNext_move(num)
+	next_move = world.time + num
+
 // Default behavior: ignore double clicks, consider them normal clicks instead
 /mob/proc/DblClickOn(var/atom/A, var/params)
-	ClickOn(A,params)
+	//ClickOn(A,params)
+	return
 
 
 /*
@@ -156,6 +171,8 @@
 	in human click code to allow glove touches only at melee range.
 */
 /mob/proc/UnarmedAttack(var/atom/A, var/proximity_flag)
+	if(ismob(A))
+		changeNext_move(10)
 	return
 
 /*
@@ -167,13 +184,21 @@
 	animals lunging, etc.
 */
 /mob/proc/RangedAttack(var/atom/A, var/params)
+	src << "ranged attack"
+	if(ishuman(src))
+		src << "human"
+		if(istype(src:gloves, /obj/item/clothing/gloves/yellow/power))
+			src << "are powergloves"
+			if(a_intent == "hurt")
+				src << "ranged attack powerglove"
+				PowerGlove(A)
+		else
+			src << src:gloves.type
 	if(!mutations.len) return
-	if(ishuman(src) && (istype(src:gloves, /obj/item/clothing/gloves/yellow/power)) && a_intent == "hurt")
-		PowerGlove(A)
 	if((M_LASER in mutations) && a_intent == "harm")
 		LaserEyes(A) // moved into a proc below
 	else if(M_TK in mutations)
-		switch(get_dist(src,A))
+		/*switch(get_dist(src,A))
 			if(0)
 				;
 			if(1 to 5) // not adjacent may mean blocked by window
@@ -184,6 +209,7 @@
 				next_move += 10
 			else
 				return
+		*/
 		A.attack_tk(src)
 /*
 	Restrained ClickOn
@@ -265,7 +291,8 @@
 	return
 
 /mob/living/LaserEyes(atom/A)
-	next_move = world.time + 6
+	//next_move = world.time + 6
+	changeNext_move(4)
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(A)
 

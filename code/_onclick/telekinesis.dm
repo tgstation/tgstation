@@ -108,8 +108,9 @@ var/const/tk_maxrange = 15
 			return
 
 		var/d = get_dist(user, target)
-		if(focus) d = max(d,get_dist(user,focus)) // whichever is further
-		switch(d)
+		if(focus)
+			d = max(d,get_dist(user,focus)) // whichever is further
+		/*switch(d)
 			if(0)
 				;
 			if(1 to 5) // not adjacent may mean blocked by window
@@ -121,7 +122,10 @@ var/const/tk_maxrange = 15
 				user.next_move += 10
 			else
 				user << "\blue Your mind won't reach that far."
-				return
+				return*/
+		if(d > tk_maxrange)
+			user << "<span class='warning'>Your mind won't reach that far.</span>"
+			return
 
 		if(!focus)
 			focus_object(target, user)
