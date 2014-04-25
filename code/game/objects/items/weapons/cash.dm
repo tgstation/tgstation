@@ -3,6 +3,8 @@ var/global/list/moneytypes=list(
 	/obj/item/weapon/spacecash/c100  = 100,
 	/obj/item/weapon/spacecash/c10   = 10,
 	/obj/item/weapon/spacecash       = 1,
+	// /obj/item/weapon/coin/plasma       = 0.1,
+	// /obj/item/weapon/coin/iron       = 0.01,
 )
 
 /obj/item/weapon/spacecash

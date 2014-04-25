@@ -22,24 +22,30 @@
 
 /mob/living/carbon/human/RangedAttack(var/atom/A)
 	if(!gloves && !mutations.len) return
-	var/obj/item/clothing/gloves/G = gloves
-	if((M_LASER in mutations) && a_intent == "harm")
-		LaserEyes(A) // moved into a proc below
-
-	else if(istype(G) && G.Touch(A,0)) // for magic gloves
-		return
-
-	else if(M_TK in mutations)
-		switch(get_dist(src,A))
-			if(1 to 5) // not adjacent may mean blocked by window
-				next_move += 2
-			if(5 to 7)
-				next_move += 5
-			if(8 to 15)
-				next_move += 10
-			if(16 to 128)
+	if(gloves)
+		var/obj/item/clothing/gloves/G = gloves
+		if(istype(G, /obj/item/clothing/gloves/yellow/power))
+			if(a_intent == "hurt")
+				PowerGlove(A)
 				return
-		A.attack_tk(src)
+		else if(istype(G) && G.Touch(A,0)) // for magic gloves
+			return
+	if(mutations.len)
+		if((M_LASER in mutations) && a_intent == "hurt")
+			LaserEyes(A) // moved into a proc below
+
+		else if(M_TK in mutations)
+			/*switch(get_dist(src,A))
+				if(1 to 5) // not adjacent may mean blocked by window
+					Next_move += 2
+				if(5 to 7)
+					Next_move += 5
+				if(8 to 15)
+					Next_move += 10
+				if(16 to 128)
+					return
+			*/
+			A.attack_tk(src)
 
 /*
 	Animals & All Unspecified

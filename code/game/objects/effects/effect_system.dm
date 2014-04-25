@@ -876,7 +876,7 @@ steam.start() -- spawns the effect
 			for(var/mob/O in oviewers(user))
 				if ((O.client && !( O.blinded )))
 					O << "\red [user] smashes through the foamed metal."
-
+			user.changeNext_move(8)
 			del(src)
 		else
 			user << "\blue You hit the metal foam but bounce off it."

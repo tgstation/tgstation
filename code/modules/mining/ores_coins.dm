@@ -175,13 +175,13 @@
 	material="gold"
 	name = "Gold coin"
 	icon_state = "coin_gold"
-	credits = 10
+	credits = 5
 
 /obj/item/weapon/coin/silver
 	material="silver"
 	name = "Silver coin"
 	icon_state = "coin_silver"
-	credits = 5
+	credits = 1
 
 /obj/item/weapon/coin/diamond
 	material="diamond"
@@ -193,13 +193,13 @@
 	material="iron"
 	name = "Iron coin"
 	icon_state = "coin_iron"
-	credits = 1
+	credits = 0.01
 
 /obj/item/weapon/coin/plasma
 	material="plasma"
 	name = "Solid plasma coin"
 	icon_state = "coin_plasma"
-	credits = 5
+	credits = 0.1
 
 /obj/item/weapon/coin/uranium
 	material="uranium"

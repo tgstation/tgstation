@@ -301,6 +301,12 @@
 	icon_opened = "engisecurecrateopen"
 	icon_closed = "engisecurecrate"
 
+/obj/structure/closet/crate/secure/plasma/prefilled
+	var/count=10
+/obj/structure/closet/crate/secure/plasma/prefilled/New()
+	for(var/i=0;i<count;i++)
+		new /obj/item/weapon/tank/plasma(src)
+
 /obj/structure/closet/crate/hydroponics/prespawned
 	//This exists so the prespawned hydro crates spawn with their contents.
 /*	name = "Hydroponics crate"
