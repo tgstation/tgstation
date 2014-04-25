@@ -247,7 +247,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		if("ai-callshuttle")
 			src.aistate = STATE_CALLSHUTTLE
 		if("ai-callshuttle2")
-			call_shuttle_proc(usr, href_list["ai-callshuttle2"])
+			call_shuttle_proc(usr, href_list["call"])
 			src.aistate = STATE_DEFAULT
 		if("ai-messagelist")
 			src.aicurrmsg = 0
@@ -441,8 +441,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	popup.set_content(dat)
 	popup.open()
 
-
-/obj/machinery/computer/communications/proc/get_call_shuttle_form()
+/obj/machinery/computer/communications/proc/get_javascript_header(var/form_id)
 	var/dat = {"<script type="text/javascript">
 						function getLength(){
 							var reasonField = document.getElementById('reasonfield');
@@ -453,20 +452,30 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 								reasonField.style.backgroundColor = "#FFDDDD";
 							}
 						}
+						function submit() {
+							document.getElementById('[form_id]').submit();
+						}
 					</script>"}
+	return dat
 
-	dat += "<form name='callshuttle' action='?src=\ref[src]' method='get' style='display: inline'>"
+/obj/machinery/computer/communications/proc/get_call_shuttle_form(var/ai_interface = 0)
+	var/form_id = "callshuttle"
+	var/dat = get_javascript_header(form_id)
+	dat += "<form name='callshuttle' id='[form_id]' action='?src=\ref[src]' method='get' style='display: inline'>"
 	dat += "<input type='hidden' name='src' value='\ref[src]'>"
-	dat += "<input type='hidden' name='operation' value='callshuttle2'>"
+	dat += "<input type='hidden' name='operation' value='[ai_interface ? "ai-callshuttle2" : "callshuttle2"]'>"
 	dat += "<b>Nature of emergency:</b><BR> <input type='text' id='reasonfield' name='call' style='width:250px; background-color:#FFDDDD; onkeydown='getLength() onkeyup='getLength()' onkeypress='getLength()'>"
-	dat += "<BR>Are you sure you want to call the shuttle? \[ <input type='submit' value='Call '></form> \]"
+	dat += "<BR>Are you sure you want to call the shuttle? \[ <a href='#' onclick='submit()'>Call</a> \]"
 	return dat
 
 /obj/machinery/computer/communications/proc/get_cancel_shuttle_form()
-	var/dat = "<form name='cancelshuttle' action='?src=\ref[src]' method='get' style='display: inline'>"
+	var/form_id = "cancelshuttle"
+	var/dat = get_javascript_header(form_id)
+	dat += "<form name='cancelshuttle' id='[form_id]' action='?src=\ref[src]' method='get' style='display: inline'>"
 	dat += "<input type='hidden' name='src' value='\ref[src]'>"
 	dat += "<input type='hidden' name='operation' value='cancelshuttle2'>"
-	dat += "<BR>Are you sure you want to cancel the shuttle? \[ <input type='submit' value='Cancel'></form> \]"
+
+	dat += "<BR>Are you sure you want to cancel the shuttle? \[ <a href='#' onclick='submit()'>Cancel</a> \]"
 	return dat
 
 /obj/machinery/computer/communications/proc/interact_ai(var/mob/living/silicon/ai/user as mob)
@@ -486,7 +495,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-changeseclevel'>Change Alert Level</A> \]"
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-emergencyaccess'>Emergency Maintenance Access</A> \]"
 		if(STATE_CALLSHUTTLE)
-			dat += get_call_shuttle_form()
+			dat += get_call_shuttle_form(1)
 		if(STATE_MESSAGELIST)
 			dat += "Messages:"
 			for(var/i = 1; i<=src.messagetitle.len; i++)
