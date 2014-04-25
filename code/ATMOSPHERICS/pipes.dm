@@ -286,13 +286,30 @@ Regular pipe
 	level = 1
 
 /obj/machinery/atmospherics/pipe/simple/yellow
-	name="pipe"
 	color=rgb(255,198,0)
 
 /obj/machinery/atmospherics/pipe/simple/yellow/visible
 	level = 2
 
 /obj/machinery/atmospherics/pipe/simple/yellow/hidden
+	level = 1
+
+/obj/machinery/atmospherics/pipe/simple/cyan
+	color=rgb(0,256,249)
+
+/obj/machinery/atmospherics/pipe/simple/cyan/visible
+	level = 2
+
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden
+	level = 1
+
+/obj/machinery/atmospherics/pipe/simple/green
+	color=rgb(30,256,0)
+
+/obj/machinery/atmospherics/pipe/simple/green/visible
+	level = 2
+
+/obj/machinery/atmospherics/pipe/simple/green/hidden
 	level = 1
 
 /obj/machinery/atmospherics/pipe/simple/insulated
@@ -582,7 +599,7 @@ Pipe Manifolds
 */
 /obj/machinery/atmospherics/pipe/manifold
 	icon = 'icons/obj/atmospherics/pipe_manifold.dmi'
-	icon_state = "manifold-f"
+	icon_state = "manifold_center"
 
 	name = "pipe manifold"
 	desc = "A manifold composed of regular pipes"
@@ -675,37 +692,43 @@ Pipe Manifolds
 	..()
 
 /obj/machinery/atmospherics/pipe/manifold/update_icon()
-	if(node1&&node2&&node3)
-		var/C = ""
-		switch(pipe_color)
-			if ("red") C = "-r"
-			if ("blue") C = "-b"
-			if ("cyan") C = "-c"
-			if ("green") C = "-g"
-			if ("yellow") C = "-y"
-			if ("purple") C = "-p"
-		icon_state = "manifold[C][invisibility ? "-f" : ""]"
+	if(!node1 && !node2 && !node3) //Remove us if we ain't connected to anything.
+		qdel(src)
+		return
 
-	else
-		var/connected = 0
-		var/unconnected = 0
-		var/connect_directions = (NORTH|SOUTH|EAST|WEST)&(~dir)
+	var/connected = 0
+	var/image/img
+	var/invis = invisibility ? "-f" : ""
 
-		if(node1)
-			connected |= get_dir(src, node1)
-		if(node2)
-			connected |= get_dir(src, node2)
-		if(node3)
-			connected |= get_dir(src, node3)
+	icon_state = "manifold_center[invis]"
 
-		unconnected = (~connected)&(connect_directions)
+	overlays.Cut()
 
-		icon_state = "manifold_[connected]_[unconnected]"
+	//Add non-broken pieces
+	if(node1)
+		img = image('icons/obj/atmospherics/pipe_manifold.dmi', icon_state="manifold_full[invis]", dir=get_dir(src,node1))
+		overlays += img
 
-		if(!connected)
-			qdel(src)
+		connected |= img.dir
 
-	return
+	if(node2)
+		img = image('icons/obj/atmospherics/pipe_manifold.dmi', icon_state="manifold_full[invis]", dir=get_dir(src,node2))
+		overlays += img
+
+		connected |= img.dir
+
+	if(node3)
+		img = image('icons/obj/atmospherics/pipe_manifold.dmi', icon_state="manifold_full[invis]", dir=get_dir(src,node3))
+		overlays += img
+
+		connected |= img.dir
+
+	//Add broken pieces
+	var/unconnected = (~connected) & initialize_directions
+	for(var/direction in cardinal)
+		if(unconnected & direction)
+			img = image('icons/obj/atmospherics/pipe_manifold.dmi', icon_state="manifold_broken[invis]", dir=direction)
+			overlays += img
 
 /obj/machinery/atmospherics/pipe/manifold/initialize()
 	var/connect_directions = (NORTH|SOUTH|EAST|WEST)&(~dir)
@@ -744,70 +767,70 @@ Pipe Manifolds
 
 	var/turf/T = src.loc			// hide if turf is not intact
 	hide(T.intact)
-	//update_icon()
 	update_icon()
 
-/obj/machinery/atmospherics/pipe/manifold/scrubbers
-	name="Scrubbers pipe"
-	pipe_color="red"
-	icon_state = ""
-
-/obj/machinery/atmospherics/pipe/manifold/supply
-	name="Air supply pipe"
-	pipe_color="blue"
-	icon_state = ""
-
-/obj/machinery/atmospherics/pipe/manifold/supplymain
-	name="Main air supply pipe"
-	pipe_color="purple"
-	icon_state = ""
-
 /obj/machinery/atmospherics/pipe/manifold/general
-	name="Air supply pipe"
-	pipe_color="gray"
-	icon_state = ""
-
-/obj/machinery/atmospherics/pipe/manifold/yellow
-	name="Air supply pipe"
-	pipe_color="yellow"
-	icon_state = ""
-
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible
-	level = 2
-	icon_state = "manifold-r"
-
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden
-	level = 1
-	icon_state = "manifold-r-f"
-
-/obj/machinery/atmospherics/pipe/manifold/supply/visible
-	level = 2
-	icon_state = "manifold-b"
-
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden
-	level = 1
-	icon_state = "manifold-b-f"
-
-/obj/machinery/atmospherics/pipe/manifold/supplymain/visible
-	level = 2
-	icon_state = "manifold-p"
-
-/obj/machinery/atmospherics/pipe/manifold/supplymain/hidden
-	level = 1
-	icon_state = "manifold-p-f"
+	name="pipe"
 
 /obj/machinery/atmospherics/pipe/manifold/general/visible
 	level = 2
-	icon_state = "manifold"
 
 /obj/machinery/atmospherics/pipe/manifold/general/hidden
 	level = 1
-	icon_state = "manifold-f"
+
+/obj/machinery/atmospherics/pipe/manifold/scrubbers
+	name="scrubbers pipe"
+	color=rgb(255,0,0)
+
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible
+	level = 2
+
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden
+	level = 1
+
+/obj/machinery/atmospherics/pipe/manifold/supply
+	name="air supply pipe"
+	color=rgb(0,0,255)
+
+/obj/machinery/atmospherics/pipe/manifold/supply/visible
+	level = 2
+
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden
+	level = 1
+
+/obj/machinery/atmospherics/pipe/manifold/supplymain
+	name="main air supply pipe"
+	color=rgb(130,43,272)
+
+/obj/machinery/atmospherics/pipe/manifold/supplymain/visible
+	level = 2
+
+/obj/machinery/atmospherics/pipe/manifold/supplymain/hidden
+	level = 1
+
+/obj/machinery/atmospherics/pipe/manifold/yellow
+	color=rgb(255,198,0)
 
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible
 	level = 2
-	icon_state = "manifold-y"
 
 /obj/machinery/atmospherics/pipe/manifold/yellow/hidden
 	level = 1
-	icon_state = "manifold-y-f"
+
+/obj/machinery/atmospherics/pipe/manifold/cyan
+	color=rgb(0,256,249)
+
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible
+	level = 2
+
+/obj/machinery/atmospherics/pipe/manifold/cyan/hidden
+	level = 1
+
+/obj/machinery/atmospherics/pipe/manifold/green
+	color=rgb(30,256,0)
+
+/obj/machinery/atmospherics/pipe/manifold/green/visible
+	level = 2
+
+/obj/machinery/atmospherics/pipe/manifold/green/hidden
+	level = 1
