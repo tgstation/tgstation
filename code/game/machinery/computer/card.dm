@@ -1,5 +1,9 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
+//Keeps track of the time for the ID console. Having it as a global variable prevents people from dismantling/reassembling it to
+//increase the slots of many jobs.
+var/time_last_changed_position = 0
+
 /obj/machinery/computer/card
 	name = "identification console"
 	desc = "You can use this to change ID's."
@@ -19,8 +23,6 @@
 	//if set to -1: No cooldown... probably a bad idea
 	//if set to 0: Not able to close "original" positions. You can only close positions that you have opened before
 	var/change_position_cooldown = 280
-	//Keeps track of the time
-	var/time_last_changed_position = 0
 	//Jobs you cannot open new positions for
 	var/list/blacklisted = list(
 		"AI",
