@@ -23,20 +23,20 @@ Chief Engineer
 	default_storagebox = /obj/item/weapon/storage/box/engineer
 
 	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
-			            access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
-			            access_heads, access_construction, access_sec_doors,
-			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_mineral_storeroom)
+						access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
+						access_heads, access_construction, access_sec_doors,
+						access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_mineral_storeroom)
 	minimal_access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
-			            access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
-			            access_heads, access_construction, access_sec_doors,
-			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_mineral_storeroom)
+						access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
+						access_heads, access_construction, access_sec_doors,
+						access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_mineral_storeroom)
 
 /datum/job/chief_engineer/equip_items(var/mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chief_engineer(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/hardhat/white(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(H), slot_belt)
-	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
+	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow(H), slot_gloves)
 
 /*
 Station Engineer
@@ -70,6 +70,7 @@ Station Engineer
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(H), slot_belt)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/hardhat(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/device/t_scanner(H), slot_r_store)
+	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow(H), slot_gloves)
 
 /*
 Atmospheric Technician
