@@ -787,6 +787,7 @@
 #include "code\modules\atmos_automation\statements.dm"
 #include "code\modules\atmos_automation\implementation\digital_valves.dm"
 #include "code\modules\atmos_automation\implementation\injectors.dm"
+#include "code\modules\atmos_automation\implementation\scrubbers.dm"
 #include "code\modules\atmos_automation\implementation\sensors.dm"
 #include "code\modules\atmos_automation\implementation\vent_pump.dm"
 #include "code\modules\awaymissions\bluespaceartillery.dm"
