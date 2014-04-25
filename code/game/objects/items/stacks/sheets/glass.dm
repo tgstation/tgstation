@@ -311,20 +311,10 @@
 		playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
-			if(H.lying)
-				if(cooldown < world.time - 10)
-					H.visible_message("<span class='danger'>[H] is injured by the broken glass!</span>", \
-							"<span class='userdanger'>You're injured the broken glass!</span>")
-					H.apply_damage(5,BRUTE,(pick("l_leg", "r_leg", "chest", "groin", "head", "r_hand", "l_hand")))
+			if(!H.shoes)
+				H.apply_damage(5,BRUTE,(pick("l_leg", "r_leg")))
+				H.Weaken(3)
+				if(cooldown < world.time - 10) //cooldown to avoid message spam.
+					H.visible_message("<span class='danger'>[H] steps in the broken glass!</span>", \
+							"<span class='userdanger'>You step in the broken glass!</span>")
 					cooldown = world.time
-			else
-				if(!H.shoes)
-					if(cooldown < world.time - 10)
-						H.visible_message("<span class='danger'>[H] steps in the broken glass!</span>", \
-								"<span class='userdanger'>You step in the broken glass!</span>")
-						H.apply_damage(5,BRUTE,(pick("l_leg", "r_leg")))
-						H.Weaken(3)
-						cooldown = world.time
-		if(prob(20))
-			qdel(src)
-		
