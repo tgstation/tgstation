@@ -159,4 +159,6 @@ obj/machinery/atmospherics/trinary
 			del(network3)
 			node3 = null
 
+		update_icon()
+
 		return null

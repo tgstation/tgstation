@@ -94,7 +94,10 @@ Regular pipe
 	level = 1
 
 /obj/machinery/atmospherics/pipe/simple/New()
+	color = pipe_color
+
 	..()
+
 	switch(dir)
 		if(SOUTH || NORTH)
 			initialize_directions = SOUTH|NORTH
@@ -617,6 +620,8 @@ Pipe Manifolds
 	layer = 2.4 //under wires with their 2.44
 
 /obj/machinery/atmospherics/pipe/manifold/New()
+	color = pipe_color
+
 	switch(dir)
 		if(NORTH)
 			initialize_directions = EAST|SOUTH|WEST
