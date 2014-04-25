@@ -109,8 +109,12 @@
 			*/
 
 			var/resolved = A.attackby(W,src)
+			if(ismob(A) || istype(A, /obj/mecha) || isturf(A))
+				changeNext_move(10)
 			if(!resolved && A && W)
 				W.afterattack(A,src,1,params) // 1 indicates adjacency
+			else
+				changeNext_move(10)
 		else
 			if(ismob(A))
 				changeNext_move(10)
@@ -129,11 +133,13 @@
 					next_move += 5
 				*/
 				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-				if(ismob(A))
+				if(ismob(A) || istype(A, /obj/mecha) || isturf(A))
 					changeNext_move(10)
 				var/resolved = A.attackby(W,src)
 				if(!resolved && A && W)
 					W.afterattack(A,src,1,params) // 1: clicking something Adjacent
+				else
+					changeNext_move(10)
 			else
 				if(ismob(A))
 					changeNext_move(10)
@@ -184,18 +190,8 @@
 	animals lunging, etc.
 */
 /mob/proc/RangedAttack(var/atom/A, var/params)
-	src << "ranged attack"
-	if(ishuman(src))
-		src << "human"
-		if(istype(src:gloves, /obj/item/clothing/gloves/yellow/power))
-			src << "are powergloves"
-			if(a_intent == "hurt")
-				src << "ranged attack powerglove"
-				PowerGlove(A)
-		else
-			src << src:gloves.type
 	if(!mutations.len) return
-	if((M_LASER in mutations) && a_intent == "harm")
+	if((M_LASER in mutations) && a_intent == "hurt")
 		LaserEyes(A) // moved into a proc below
 	else if(M_TK in mutations)
 		/*switch(get_dist(src,A))
