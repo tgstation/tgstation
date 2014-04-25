@@ -112,6 +112,18 @@
 		name = "Ponytail 3"
 		icon_state = "hair_ponytail3"
 
+	side_tail
+		name = "Side Pony"
+		icon_state = "hair_sidetail"
+
+	side_tail2
+		name = "Side Pony 2"
+		icon_state = "hair_sidetail2"
+
+	side_tail3
+		name = "Side Pony 3"
+		icon_state = "hair_stail"
+
 	oneshoulder
 		name = "One Shoulder"
 		icon_state = "hair_oneshoulder"
@@ -315,18 +327,6 @@
 	bun
 		name = "Bun Head"
 		icon_state = "hair_bun"
-
-	side_tail
-		name = "Side Pony"
-		icon_state = "hair_sidetail"
-
-	side_tail2
-		name = "Side Tail2"
-		icon_state = "hair_sidetail2"
-
-	side_tail3
-		name = "Side Tail3"
-		icon_state = "hair_stail"
 
 /////////////////////////////
 // Facial Hair Definitions //
