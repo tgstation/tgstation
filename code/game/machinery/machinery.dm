@@ -113,7 +113,7 @@ Class Procs:
 	var/global/gl_uid = 1
 	var/custom_aghost_alerts=0
 	var/panel_open = 0
-	var/myArea
+	var/area/myArea
 
 /obj/machinery/New()
 	addAtProcessing()
@@ -121,7 +121,7 @@ Class Procs:
 
 /obj/machinery/proc/addAtProcessing()
 	if (use_power)
-		myArea = loc.loc
+		myArea = get_area_master(src)
 
 	machines += src
 
