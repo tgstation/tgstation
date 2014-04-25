@@ -109,8 +109,12 @@
 			*/
 
 			var/resolved = A.attackby(W,src)
+			if(ismob(A) || istype(A, /obj/mecha) || isturf(A))
+				changeNext_move(10)
 			if(!resolved && A && W)
 				W.afterattack(A,src,1,params) // 1 indicates adjacency
+			else
+				changeNext_move(10)
 		else
 			if(ismob(A))
 				changeNext_move(10)
