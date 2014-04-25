@@ -49,7 +49,7 @@
 			continue // could not leave T0 in that direction
 
 		var/turf/T1 = get_step(T0,d)
-		if(!T1 || T1.density || !T1.ClickCross(get_dir(T1,T0), border_only = 0) || !T1.ClickCross(get_dir(T1,src), border_only = 0))
+		if(!T1 || T1.density || !T1.ClickCross(get_dir(T1,T0) | get_dir(T1,src), border_only = 0)) //let's check both directions at once
 			continue // couldn't enter or couldn't leave T1
 
 		if(!src.ClickCross(get_dir(src,T1), border_only = 1, target_atom = target))
@@ -112,8 +112,8 @@
 			continue // throwpass is used for anything you can click through (or the firedoor special case, see above)
 
 		if( O.flags&ON_BORDER) // windows have throwpass but are on border, check them first
-			if( O.dir == target_dir || (O.dir in list(5,6,9,10)) ) // full tile windows are just diagonals mechanically
-				return 0
+			if( O.dir & target_dir || O.dir & (O.dir-1) ) // full tile windows are just diagonals mechanically
+				return 0								  //O.dir&(O.dir-1) is false for any cardinal direction, but true for diagonal ones
 
 		else if( !border_only ) // dense, not on border, cannot pass over
 			return 0
