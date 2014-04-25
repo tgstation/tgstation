@@ -127,4 +127,6 @@ obj/machinery/atmospherics/binary
 			del(network2)
 			node2 = null
 
+		update_icon()
+
 		return null
