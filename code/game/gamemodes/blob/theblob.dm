@@ -152,7 +152,7 @@
 /obj/effect/blob/attackby(var/obj/item/weapon/W, var/mob/user)
 	user.changeNext_move(8)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
-	src.visible_message("<span class='danger'>The [src.name] has been attacked with \the [W][(user ? " by [user]." : ".")]!</span>")
+	src.visible_message("<span class='danger'>The [src.name] has been attacked with \the [W][(user ? " by [user]" : "")]!</span>")
 	var/damage = 0
 	switch(W.damtype)
 		if("fire")
