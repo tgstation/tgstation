@@ -140,9 +140,6 @@
 // It will keep doing this until it checks every content possible. This will fix any problems with mobs, that are inside objects,
 // being unable to hear people due to being in a box within a bag.
 
-#ifndef USE_BROKEN_RECURSIVE_MOBCHECK
-#warning Using laggy recursive_mob_check
-// Bay's fixed edition (LAGGY)
 /proc/recursive_mob_check(var/atom/O,  var/list/L = list(), var/recursion_limit = 3, var/client_check = 1, var/sight_check = 1, var/include_radio = 1)
 
 	//debug_mob += O.contents.len
@@ -168,35 +165,7 @@
 		L = recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
 
 	return L
-#else
-#warning Using broken recursive_mob_check
-// /tg/'s broken edition.
-/proc/recursive_mob_check(var/atom/O,  var/list/L = list(), var/recursion_limit = 3, var/client_check = 1, var/sight_check = 1, var/include_radio = 1)
 
-	//debug_mob += O.contents.len
-	if(!recursion_limit)
-		return L
-	for(var/atom/A in O.contents)
-
-		if(ismob(A))
-			var/mob/M = A
-			if(client_check && !M.client)
-				L = recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
-				continue
-			if(sight_check && !isInSight(A, O))
-				continue
-			L |= M
-			//world.log << "[recursion_limit] = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
-
-		else if(include_radio && istype(A, /obj/item/device/radio))
-			if(sight_check && !isInSight(A, O))
-				continue
-			L |= A
-
-		if(isobj(A) || ismob(A))
-			L = recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
-	return L
-#endif
 // The old system would loop through lists for a total of 5000 per function call, in an empty server.
 // This new system will loop at around 1000 in an empty server.
 
