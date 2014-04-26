@@ -358,9 +358,6 @@ var/const/POS_HEADER = {"<html>
 	return ..()
 
 /obj/machinery/pos/attack_hand(var/mob/user)
-	if(logged_in && user != logged_in)
-		user << "\red Someone's already using this."
-		return
 	user.set_machine(src)
 	var/logindata=""
 	if(logged_in)
@@ -393,8 +390,12 @@ var/const/POS_HEADER = {"<html>
 
 /obj/machinery/pos/Topic(var/href, var/list/href_list)
 	if(..(href,href_list)) return
+	if("logout" in href_list)
+		if(alert(src, "You sure you want to log out?", "Confirm", "Yes", "No")!="Yes") return
+		logged_in=null
+		screen=POS_SCREEN_LOGIN
 	if(usr != logged_in)
-		usr << "\red Buzz."
+		usr << "\red [logged_in.name] is already logged in.  You cannot use this machine until they log out."
 		return
 	if("act" in href_list)
 		switch(href_list["act"])
@@ -467,10 +468,6 @@ var/const/POS_HEADER = {"<html>
 		var/line_item/LI = products[pid]
 		LI.price = newprice
 		products[pid]=LI
-	else if("logout" in href_list)
-		if(alert(src, "You sure?", "Confirm", "Yes", "No")!="Yes") return
-		logged_in=null
-		screen=POS_SCREEN_LOGIN
 	src.attack_hand(usr)
 
 /obj/machinery/pos/attackby(var/atom/movable/A, var/mob/user)
@@ -480,6 +477,7 @@ var/const/POS_HEADER = {"<html>
 		if(!logged_in)
 			user.visible_message("\blue The machine beeps, and logs you in","You hear a beep.")
 			logged_in = user
+			screen=POS_SCREEN_ORDER
 		else
 			if(!linked_account)
 				visible_message("\red The machine buzzes, and flashes \"NO LINKED ACCOUNT\" on the screen.","You hear a buzz.")

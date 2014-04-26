@@ -182,6 +182,36 @@
 		return 0
 	return 1
 
+// /vg/ - Generic Access Checks.
+// Allows more flexible access checks.
+/proc/can_access(var/list/L, var/list/req_access=null,var/list/req_one_access=null)
+	// No perms set?  He's in.
+	if(!req_access  && !req_one_access)
+		return 1
+	// Fucked permissions set?  He's in.
+	if(!istype(req_access, /list))
+		return 1
+	// Blank permissions set?  He's in.
+	if(!req_access.len && (!req_one_access || !req_one_access.len))
+		return 1
+
+	// User doesn't have any accesses?  Fuck off.
+	if(!L)	return 0
+	if(!istype(L, /list))	return 0
+
+	// Doesn't have a req_access
+	for(var/req in req_access)
+		if(!(req in L)) //doesn't have this access
+			return 0
+
+	// If he has at least one req_one access, he's in.
+	if(req_one_access && req_one_access.len)
+		for(var/req in req_one_access)
+			if(req in L) //has an access from the single access list
+				return 1
+		return 0
+	return 1
+
 /proc/get_centcom_access(job)
 	switch(job)
 		if("VIP Guest")
