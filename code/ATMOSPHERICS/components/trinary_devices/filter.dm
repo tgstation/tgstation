@@ -9,7 +9,6 @@
 
 	can_unwrench = 1
 
-	var/on = 0
 	var/temp = null
 
 	var/target_pressure = ONE_ATMOSPHERE
@@ -40,44 +39,7 @@ Filter types:
 		initialize()
 
 /obj/machinery/atmospherics/trinary/filter/update_icon()
-	if(!(stat & NOPOWER) && on && node1 && node2 && node3)
-		icon_state = "on"
-	else
-		on = 0
-		icon_state = "off"
-
-	var/image/img
-	var/connected = 0
-	overlays.Cut()
-
-	//Add non-broken pieces
-	if(node1)
-		img = image('icons/obj/atmospherics/filter.dmi', icon_state="intact", dir=get_dir(src,node1))
-		img.color = node1.pipe_color
-		overlays += img
-
-		connected |= img.dir
-
-	if(node2)
-		img = image('icons/obj/atmospherics/filter.dmi', icon_state="intact", dir=get_dir(src,node2))
-		img.color = node2.pipe_color
-		overlays += img
-
-		connected |= img.dir
-
-	if(node3)
-		img = image('icons/obj/atmospherics/filter.dmi', icon_state="intact", dir=get_dir(src,node3))
-		img.color = node3.pipe_color
-		overlays += img
-
-		connected |= img.dir
-
-	//Add broken pieces
-	var/unconnected = (~connected) & initialize_directions
-	for(var/direction in cardinal)
-		if(unconnected & direction)
-			img = image('icons/obj/atmospherics/filter.dmi', icon_state="broken", dir=direction)
-			overlays += img
+	update_trinary_icon('icons/obj/atmospherics/filter.dmi')
 
 /obj/machinery/atmospherics/trinary/filter/power_change()
 	var/old_stat = stat
