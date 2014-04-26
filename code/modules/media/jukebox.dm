@@ -61,7 +61,7 @@ var/global/loopModeNames=list(
 	name = "Jukebox"
 	desc = "A jukebox used for parties and shit."
 	icon = 'icons/obj/jukebox.dmi'
-	icon_state = "jukebox2-unpowered"
+	icon_state = "jukebox2"
 	density = 1
 
 	anchored = 1
