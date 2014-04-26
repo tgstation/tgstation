@@ -36,7 +36,7 @@
 		return 1
 	return 0
 
-	/obj/machinery/smartfridge/secure/medbay
+/obj/machinery/smartfridge/secure/medbay
 	name = "\improper Refrigerated Medicine Storage"
 	desc = "A refrigerated storage unit for storing medicine and chemicals."
 	icon_state = "smartfridge" //To fix the icon in the map editor.
@@ -52,7 +52,7 @@
 		return 1
 	return 0
 
-	/obj/machinery/smartfridge/chemistry
+/obj/machinery/smartfridge/chemistry
 	name = "\improper Smart Chemical Storage"
 	desc = "A refrigerated storage unit for medicine and chemical storage."
 
@@ -61,7 +61,7 @@
 		return 1
 	return 0
 
-	/obj/machinery/smartfridge/drinks
+/obj/machinery/smartfridge/drinks
 	name = "\improper Drink Showcase"
 	desc = "A refrigerated storage unit for tasty tasty alcohol."
 
