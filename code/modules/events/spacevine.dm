@@ -55,11 +55,19 @@
 /datum/spacevine_mutation/proc/on_buckle(obj/effect/spacevine/holder, mob/living/buckled)
 	return
 
-/datum/spacevine_mutation/toxity
-	name = "toxity"
+/datum/spacevine_mutation/light
+	name = "light"
+	hue = "#ffff00"
+
+/datum/spacevine_mutation/light/on_grow(obj/effect/spacevine/holder)
+	if(prob(10*severity))
+		holder.luminosity = 4
+
+/datum/spacevine_mutation/toxicity
+	name = "toxicity"
 	hue = "#ff00ff"
 
-/datum/spacevine_mutation/toxity/on_cross(obj/effect/spacevine/holder, mob/living/crosser)
+/datum/spacevine_mutation/toxicity/on_cross(obj/effect/spacevine/holder, mob/living/crosser)
 	if(issilicon(crosser))
 		return
 	if(prob(severity))
@@ -67,14 +75,14 @@
 			crosser << "<span class='alert'>You accidently touch the vine and feel a strange sensation.</span>"
 		crosser.adjustToxLoss(5)
 
-/datum/spacevine_mutation/toxity/on_eat(obj/effect/spacevine/holder, mob/living/eater)
+/datum/spacevine_mutation/toxicity/on_eat(obj/effect/spacevine/holder, mob/living/eater)
 	eater.adjustToxLoss(5)
 
-/datum/spacevine_mutation/expsolive  //OH SHIT IT CAN CHAINREACT RUN!!!
+/datum/spacevine_mutation/explosive  //OH SHIT IT CAN CHAINREACT RUN!!!
 	name = "explosive"
 	hue = "#ff0000"
 
-/datum/spacevine_mutation/expsolive/on_death(obj/effect/spacevine/holder, mob/hitter, obj/item/I)
+/datum/spacevine_mutation/explosive/on_death(obj/effect/spacevine/holder, mob/hitter, obj/item/I)
 	sleep(10)
 	explosion(holder.loc, 0, 0, 2, 0, 0)
 
