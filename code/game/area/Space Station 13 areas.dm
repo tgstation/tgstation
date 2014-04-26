@@ -1367,7 +1367,7 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Xenobiology Specimen Cage 6"
 	icon_state = "xenocell6"
 
-/area/assembly/robotics
+/area/science/robotics
 	name = "\improper Robotics Lab"
 	icon_state = "ass_line"
 
