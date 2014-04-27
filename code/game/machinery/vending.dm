@@ -821,13 +821,13 @@
 	product_slogans = "Dress for success!;Suited and booted!;It's show time!;Why leave style up to fate? Use AutoDrobe!"
 	vend_delay = 15
 	vend_reply = "Thank you for using AutoDrobe!"
-	products = list(/obj/item/clothing/suit/chickensuit = 3,/obj/item/clothing/head/chicken = 3,/obj/item/clothing/under/gladiator = 3,
+	products = list(/obj/item/clothing/suit/chickensuit = 3,/obj/item/clothing/head/chicken = 3,/obj/item/clothing/suit/monkeysuit = 3,/obj/item/clothing/head/monkey = 3,,/obj/item/clothing/suit/xenosuit = 3,/obj/item/clothing/head/xeno = 3,/obj/item/clothing/under/gladiator = 3,
 					/obj/item/clothing/head/helmet/gladiator = 3,/obj/item/clothing/under/gimmick/rank/captain/suit = 3,/obj/item/clothing/head/flatcap = 3,/obj/item/clothing/glasses/gglasses = 3,/obj/item/clothing/shoes/jackboots = 3,
-					/obj/item/clothing/under/schoolgirl = 3,/obj/item/clothing/head/kitty = 3,/obj/item/clothing/under/blackskirt = 3,/obj/item/clothing/head/beret = 3,
+					/obj/item/clothing/under/schoolgirl = 3,/obj/item/clothing/head/kitty = 3,/obj/item/clothing/under/blackskirt = 3,/obj/item/clothing/head/beret = 3,/obj/item/clothing/suit/hastur = 3,/obj/item/clothing/head/hasturhood = 3
 					/obj/item/clothing/suit/wcoat = 3,/obj/item/clothing/under/suit_jacket = 3,/obj/item/clothing/head/that = 3,/obj/item/clothing/head/cueball = 3,
 					/obj/item/clothing/under/scratch = 3,/obj/item/clothing/under/kilt = 3,/obj/item/clothing/head/beret = 3,/obj/item/clothing/suit/wcoat = 3,
 					/obj/item/clothing/glasses/monocle =3,/obj/item/clothing/head/bowlerhat = 3,/obj/item/weapon/cane = 3,/obj/item/clothing/under/sl_suit = 3,
-					/obj/item/clothing/mask/fakemoustache = 3,/obj/item/clothing/suit/bio_suit/plaguedoctorsuit = 3,/obj/item/clothing/head/plaguedoctorhat = 3,
+					/obj/item/clothing/mask/fakemoustache = 3,/obj/item/clothing/suit/bio_suit/plaguedoctorsuit = 3,/obj/item/clothing/head/plaguedoctorhat = 3,/obj/item/clothing/mask/gas/plaguedoctor = 3
 					/obj/item/clothing/under/owl = 3,/obj/item/clothing/mask/gas/owl_mask = 3,/obj/item/clothing/suit/apron = 3,/obj/item/clothing/under/waiter = 3,
 					/obj/item/clothing/under/pirate = 3,/obj/item/clothing/suit/pirate = 3,/obj/item/clothing/head/pirate = 3,/obj/item/clothing/head/bandana = 3,
 					/obj/item/clothing/head/bandana = 3,/obj/item/clothing/under/soviet = 3,/obj/item/clothing/head/ushanka = 3,/obj/item/clothing/suit/imperium_monk = 3,
