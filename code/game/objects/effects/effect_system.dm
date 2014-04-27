@@ -35,8 +35,10 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	return
 
 /datum/effect/effect/proc/fadeOut(var/atom/A, var/frames = 16)
+	if(A.alpha == 0) //Handle already transparent case
+		return
 	if(frames == 0)
-		frames = 1
+		frames = 1 //We will just assume that by 0 frames, the coder meant "during one frame".
 	var/step = A.alpha / frames
 	for(var/i = 0, i < frames, i++)
 		A.alpha -= step
