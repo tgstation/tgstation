@@ -124,7 +124,7 @@
 			return
 
 //window placing begin
-	else if( istype(W,/obj/item/stack/sheet/rglass) || istype(W,/obj/item/stack/sheet/glass) )
+	else if( istype(W,/obj/item/stack/sheet/rglass) || istype(W,/obj/item/stack/sheet/glass))
 		var/dir_to_set = 1
 		if(loc == user.loc)
 			dir_to_set = user.dir
@@ -155,10 +155,15 @@
 					user << "<span class='notice'>There is already a window facing this way there.</span>"
 					return
 			var/obj/structure/window/WD
+
 			if(istype(W,/obj/item/stack/sheet/rglass))
 				WD = new/obj/structure/window/reinforced(loc,1) //reinforced window
 			else
-				WD = new/obj/structure/window/basic(loc,0) //normal window
+				var/obj/item/stack/sheet/glass/G = W
+				if(!ispath(G.created_window))
+					WD = new/obj/structure/window/basic(loc,0) //normal window
+				else
+					WD = new G.created_window(loc,0)
 			WD.dir = dir_to_set
 			WD.ini_dir = dir_to_set
 			WD.anchored = 0
