@@ -234,7 +234,7 @@ var/list/advance_cures = 	list(
 	switch(level_sev)
 
 		if(-INFINITY to 0)
-			severity = "Non-Threat"
+			severity = NON_THREAT
 		if(1)
 			severity = "Minor"
 		if(2)
