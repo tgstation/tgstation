@@ -272,7 +272,7 @@ datum/gas_mixture/proc/check_combustability(obj/effect/decal/cleanable/liquid_fu
 	if(oxygen && (toxins || fuel || liquid))
 		if(liquid)
 			return 1
-		if (toxins >= 0.1)
+		if (toxins >= MOLES_PLASMA_VISIBLE)
 			return 1
 		if(fuel && fuel.moles >= 0.1)
 			return 1
