@@ -88,7 +88,7 @@
 		data["alarm"] = "\ref[current]"
 
 	var/list/alarms=list()
-	for(var/obj/machinery/alarm/alarm in sortAtom(machines))
+	for(var/obj/machinery/alarm/alarm in (machines)) // removing sortAtom because nano updates it just enough for the lag to happen
 		if(!is_in_filter(alarm.alarm_area.type))
 			continue // NO ACCESS 4 U
 
