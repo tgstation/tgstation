@@ -9,6 +9,8 @@
 #define SCANNER 1
 #define PANDEMIC 2
 
+#define NON_THREAT "Non_Threat"
+
 /*
 
 IMPORTANT NOTE: Please delete the diseases by using cure() proc or del() instruction.
