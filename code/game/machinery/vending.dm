@@ -827,7 +827,7 @@
 					/obj/item/clothing/suit/wcoat = 3,/obj/item/clothing/under/suit_jacket = 3,/obj/item/clothing/head/that = 3,/obj/item/clothing/head/cueball = 3,
 					/obj/item/clothing/under/scratch = 3,/obj/item/clothing/under/kilt = 3,/obj/item/clothing/head/beret = 3,/obj/item/clothing/suit/wcoat = 3,
 					/obj/item/clothing/glasses/monocle =3,/obj/item/clothing/head/bowlerhat = 3,/obj/item/weapon/cane = 3,/obj/item/clothing/under/sl_suit = 3,
-					/obj/item/clothing/mask/fakemoustache = 3,/obj/item/clothing/suit/bio_suit/plaguedoctorsuit = 3,/obj/item/clothing/head/plaguedoctorhat = 3,/obj/item/clothing/mask/gas/plaguedoctor = 3
+					/obj/item/clothing/mask/fakemoustache = 3,/obj/item/clothing/suit/bio_suit/plaguedoctorsuit = 3,/obj/item/clothing/head/plaguedoctorhat = 3,/obj/item/clothing/mask/gas/plaguedoctor = 3,
 					/obj/item/clothing/under/owl = 3,/obj/item/clothing/mask/gas/owl_mask = 3,/obj/item/clothing/suit/apron = 3,/obj/item/clothing/under/waiter = 3,
 					/obj/item/clothing/under/pirate = 3,/obj/item/clothing/suit/pirate = 3,/obj/item/clothing/head/pirate = 3,/obj/item/clothing/head/bandana = 3,
 					/obj/item/clothing/head/bandana = 3,/obj/item/clothing/under/soviet = 3,/obj/item/clothing/head/ushanka = 3,/obj/item/clothing/suit/imperium_monk = 3,
