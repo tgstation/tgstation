@@ -352,6 +352,14 @@ var/const/POS_HEADER = {"<html>
 		</form>"}
 	return dat
 
+/obj/machinery/pos/update_icon()
+	overlays = 0
+	if(stat & (NOPOWER|BROKEN)) return
+	if(logged_in)
+		overlays += "pos-working"
+	else
+		overlays += "pos-standby"
+
 /obj/machinery/pos/attack_robot(var/mob/user)
 	if(isMoMMI(user))
 		return attack_hand(user)
@@ -394,6 +402,9 @@ var/const/POS_HEADER = {"<html>
 		if(alert(src, "You sure you want to log out?", "Confirm", "Yes", "No")!="Yes") return
 		logged_in=null
 		screen=POS_SCREEN_LOGIN
+		update_icon()
+		src.attack_hand(usr)
+		return
 	if(usr != logged_in)
 		usr << "\red [logged_in.name] is already logged in.  You cannot use this machine until they log out."
 		return
@@ -478,18 +489,25 @@ var/const/POS_HEADER = {"<html>
 			user.visible_message("\blue The machine beeps, and logs you in","You hear a beep.")
 			logged_in = user
 			screen=POS_SCREEN_ORDER
+			update_icon()
+			src.attack_hand(usr)
 		else
 			if(!linked_account)
 				visible_message("\red The machine buzzes, and flashes \"NO LINKED ACCOUNT\" on the screen.","You hear a buzz.")
+				flick(src,"pos-error")
 				return
-			if(!credits_needed)
-				user.visible_message("\blue The machine buzzes.","\red You hear a buzz.")
+			if(screen!=POS_SCREEN_FINALIZE)
+				visible_message("\blue The machine buzzes.","\red You hear a buzz.")
+				flick(src,"pos-error")
+				return
 			var/datum/money_account/acct = get_card_account(I)
 			if(!acct)
 				visible_message("\red The machine buzzes, and flashes \"NO ACCOUNT\" on the screen.","You hear a buzz.")
+				flick(src,"pos-error")
 				return
 			if(credits_needed > acct.money)
 				visible_message("\red The machine buzzes, and flashes \"NOT ENOUGH FUNDS\" on the screen.","You hear a buzz.")
+				flick(src,"pos-error")
 				return
 			visible_message("\blue The machine beeps, and begins printing a receipt","You hear a beep.")
 			PrintReceipt()
@@ -500,9 +518,12 @@ var/const/POS_HEADER = {"<html>
 	else if(istype(A,/obj/item/weapon/spacecash))
 		if(!linked_account)
 			visible_message("\red The machine buzzes, and flashes \"NO LINKED ACCOUNT\" on the screen.","You hear a buzz.")
+			flick(src,"pos-error")
 			return
-		if(!logged_in || !credits_needed)
-			user.visible_message("\blue The machine buzzes.","\red You hear a buzz.")
+		if(!logged_in || screen!=POS_SCREEN_FINALIZE)
+			visible_message("\blue The machine buzzes.","\red You hear a buzz.")
+			flick(src,"pos-error")
+			return
 		var/obj/item/weapon/spacecash/C=A
 		credits_held += C.worth*C.amount
 		if(credits_held >= credits_needed)
