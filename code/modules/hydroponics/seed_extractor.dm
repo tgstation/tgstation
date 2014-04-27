@@ -6,7 +6,7 @@
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/F = O
 		while(t_amount < t_max)
-			var/obj/item/seeds/t_prod = new F.seed(O.loc)
+			var/obj/item/seeds/t_prod = new F.seed(O.loc, O)
 			t_prod.lifespan = F.lifespan
 			t_prod.endurance = F.endurance
 			t_prod.maturation = F.maturation
@@ -14,14 +14,14 @@
 			t_prod.yield = F.yield
 			t_prod.potency = F.potency
 			t_amount++
-		del(O)
+		qdel(O)
 		return 1
 
 	else if(istype(O, /obj/item/weapon/grown/))
 		var/obj/item/weapon/grown/F = O
 		if(F.seed)
 			while(t_amount < t_max)
-				var/obj/item/seeds/t_prod = new F.seed(O.loc)
+				var/obj/item/seeds/t_prod = new F.seed(O.loc, O)
 				t_prod.lifespan = F.lifespan
 				t_prod.endurance = F.endurance
 				t_prod.maturation = F.maturation
@@ -29,7 +29,7 @@
 				t_prod.yield = F.yield
 				t_prod.potency = F.potency
 				t_amount++
-			del(O)
+			qdel(O)
 			return 1
 		else return 0
 
@@ -55,7 +55,7 @@
 obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(isrobot(user))
 		return
-	
+
 	if (istype(O,/obj/item/weapon/storage/bag/plants))
 		var/obj/item/weapon/storage/P = O
 		var/loaded = 0
@@ -112,9 +112,9 @@ datum/seed_pile/New(var/name, var/life, var/endur, var/matur, var/prod, var/yie,
 obj/machinery/seed_extractor/interact(mob/user as mob)
 	if (stat)
 		return 0
-	
+
 	var/dat = "<b>Stored seeds:</b><br>"
-	
+
 	if (contents.len == 0)
 		dat += "<font color='red'>No seeds</font>"
 	else

@@ -118,7 +118,7 @@
 		user << "\blue Locked In"
 		new droptype( user.loc )
 		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
-		del(src)
+		qdel(src)
 	return
 
 /obj/item/device/sbeacondrop/bomb
@@ -203,7 +203,7 @@
 		return
 
 
-	Del()
+	Destroy()
 		if(active) Deactivate()
 		..()
 

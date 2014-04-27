@@ -472,6 +472,6 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		b.dat = O:info
 		b.name = "Print Job #" + "[rand(100, 999)]"
 		b.icon_state = "book[rand(1,7)]"
-		del(O)
+		qdel(O)
 	else
 		..()

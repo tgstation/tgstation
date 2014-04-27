@@ -16,12 +16,11 @@
 	var/potency = 20
 	var/plant_type = 0
 
-/obj/item/weapon/grown/New(newloc,newpotency)
-	if (!isnull(newpotency))
-		potency = newpotency
+/obj/item/weapon/grown/New(newloc, potency = 50)
 	..()
-	pixel_x = rand(-5.0, 5)
-	pixel_y = rand(-5.0, 5)
+	src.potency = potency
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
 
 	transform *= TransformUsingVariable(potency, 100, 0.5)
 
@@ -53,22 +52,24 @@
 	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/wheat)
-
+	
+	New(var/loc, var/potency = 10)
+		..()
 
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
 		user.show_message("<span class='notice'>You make planks out of the [src]!</span>", 1)
 		for(var/i=0,i<2,i++)
-			var/obj/item/stack/sheet/wood/NG = new (user.loc)
-			for (var/obj/item/stack/sheet/wood/G in user.loc)
+			var/obj/item/stack/sheet/mineral/wood/NG = new (user.loc)
+			for (var/obj/item/stack/sheet/mineral/wood/G in user.loc)
 				if(G==NG)
 					continue
 				if(G.amount>=G.max_amount)
 					continue
 				G.attackby(NG, user)
 				usr << "You add the newly-formed wood to the stack. It now contains [NG.amount] planks."
-		del(src)
+		qdel(src)
 		return
 	if(is_type_in_list(W,accepted))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/leaf = W
@@ -77,8 +78,8 @@
 			var/obj/item/device/flashlight/flare/torch/T = new /obj/item/device/flashlight/flare/torch(user.loc)
 			usr.unEquip(W)
 			usr.put_in_active_hand(T)
-			del(leaf)
-			del(src)
+			qdel(leaf)
+			qdel(src)
 			return
 		else
 			usr << "\red You must dry this first."
@@ -96,7 +97,10 @@
 	throw_speed = 1
 	throw_range = 3
 	plant_type = 0
-	seed = "/obj/item/seeds/sunflower"
+	seed = "/obj/item/seeds/sunflowerseed"
+	
+	New(var/loc, var/potency = 10)
+		..()
 
 /obj/item/weapon/grown/novaflower
 	name = "novaflower"
@@ -111,14 +115,14 @@
 	throw_speed = 1
 	throw_range = 3
 	plant_type = 0
-	seed = "/obj/item/seeds/novaflower"
+	seed = "/obj/item/seeds/novaflowerseed"
 	attack_verb = list("seared", "heated", "whacked", "steamed")
-	New()
+	New(var/loc, var/potency = 10)
 		..()
-		spawn(5)	//So potency can be set in the proc that creates these crops
+		if(reagents)
 			reagents.add_reagent("nutriment", 1)
 			reagents.add_reagent("capsaicin", round(potency, 1))
-			force = round((5+potency/5), 1)
+		force = round((5+potency/5), 1)
 
 /obj/item/weapon/grown/nettle // -- Skie
 	desc = "It's probably <B>not</B> wise to touch it with bare hands..."
@@ -135,12 +139,12 @@
 	plant_type = 1
 	origin_tech = "combat=1"
 	seed = "/obj/item/seeds/nettleseed"
-	New()
+	New(var/loc, var/potency = 10)
 		..()
-		spawn(5)	//So potency can be set in the proc that creates these crops
+		if(reagents)
 			reagents.add_reagent("nutriment", 1)
 			reagents.add_reagent("sacid", round(potency, 1))
-			force = round((5+potency/5), 1)
+		force = round((5+potency/5), 1)
 
 /obj/item/weapon/grown/deathnettle // -- Skie
 	desc = "The \red glowing \black nettle incites \red<B> rage</B>\black in you just from looking at it!"
@@ -158,12 +162,12 @@
 	seed = "/obj/item/seeds/deathnettleseed"
 	origin_tech = "combat=3"
 	attack_verb = list("stung")
-	New()
+	New(var/loc, var/potency = 10)
 		..()
-		spawn(5)	//So potency can be set in the proc that creates these crops
+		if(reagents)
 			reagents.add_reagent("nutriment", 1)
 			reagents.add_reagent("pacid", round(potency, 1))
-			force = round((5+potency/2.5), 1)
+		force = round((5+potency/2.5), 1)
 
 	suicide_act(mob/user)
 		viewers(user) << "<span class='suicide'>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</span>"
@@ -179,6 +183,8 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
+	New(var/loc, var/potency = 10)
+		..()
 
 /obj/item/weapon/grown/corncob
 	name = "corn cob"
@@ -190,3 +196,5 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
+	New(var/loc, var/potency = 10)
+		..()

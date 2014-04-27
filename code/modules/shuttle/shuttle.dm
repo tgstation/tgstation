@@ -8,6 +8,8 @@ datum/shuttle_manager
 datum/shuttle_manager/New(var/area, var/delay) //Create a new shuttle manager for the shuttle starting area, "area" and with a movement delay of tickstomove
 	location = area
 	tickstomove = delay
+	var/area/A = locate(location)
+	A.has_gravity = 1
 
 
 datum/shuttle_manager/proc/move_shuttle(var/override_delay)
@@ -49,6 +51,9 @@ datum/shuttle_manager/proc/move_shuttle(var/override_delay)
 
 		fromArea.move_contents_to(toArea)
 		location = toArea.type
+
+		fromArea.has_gravity = 0
+		toArea.has_gravity = 1
 
 		for(var/obj/machinery/door/D in toArea) //Close any doors on the shuttle
 			spawn(0)

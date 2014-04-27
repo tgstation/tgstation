@@ -55,5 +55,5 @@
 		new corpse (src.loc)
 	if(weapon1)
 		new weapon1 (src.loc)
-	del src
+	qdel(src)
 	return

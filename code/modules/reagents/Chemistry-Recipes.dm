@@ -465,8 +465,8 @@ silicate
 	name = "Mix Virus"
 	id = "mixvirus"
 	result = "blood"
-	required_reagents = list("virusfood" = 5)
-	required_catalysts = list("blood" = 5)
+	required_reagents = list("virusfood" = 1)
+	required_catalysts = list("blood" = 1)
 	var/level_min = 0
 	var/level_max = 2
 
@@ -807,7 +807,7 @@ datum/chemical_reaction/pestkiller
 						M.client.screen += blueeffect
 						sleep(20)
 						M.client.screen -= blueeffect
-						del(blueeffect)
+						qdel(blueeffect)
 /datum/chemical_reaction/slimecrit
 	name = "Slime Crit"
 	id = "m_tele"
@@ -1802,6 +1802,13 @@ datum/chemical_reaction/pestkiller
 	required_reagents = list ("beer" = 1, "ale" = 2)
 	result_amount = 3
 
+/datum/chemical_reaction/greenbeer
+	name = "Green Beer"
+	id = "greenbeer"
+	result = "greenbeer"
+	required_reagents = list("greencrayonpowder" = 1, "beer" = 10)
+	result_amount = 10
+
 /datum/chemical_reaction/hooch
 	name = "Hooch"
 	id = "hooch"
@@ -2027,7 +2034,7 @@ datum/chemical_reaction/pestkiller
 	name = "Aloe"
 	id = "aloe"
 	result = "aloe"
-	required_reagents = list("cream" = 1, "whiskey" = 1, "watermelonjuice" = 1)
+	required_reagents = list("irishcream" = 1, "watermelonjuice" = 1)
 	result_amount = 2
 
 /datum/chemical_reaction/andalusia

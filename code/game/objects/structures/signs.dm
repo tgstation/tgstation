@@ -8,20 +8,20 @@
 /obj/structure/sign/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
-			del(src)
+			qdel(src)
 			return
 		if(3.0)
-			del(src)
+			qdel(src)
 			return
 		else
 	return
 
 
 /obj/structure/sign/blob_act()
-	del(src)
+	qdel(src)
 	return
 
 
@@ -87,15 +87,15 @@
 	desc = "A warning sign which reads 'NO SMOKING'"
 	icon_state = "nosmoking2"
 
-/obj/structure/sign/redcross
+/obj/structure/sign/bluecross
 	name = "medbay"
 	desc = "The Intergalactic symbol of Medical institutions. You'll probably get help here.'"
-	icon_state = "redcross"
+	icon_state = "bluecross"
 
-/obj/structure/sign/greencross
+/obj/structure/sign/bluecross_2
 	name = "medbay"
 	desc = "The Intergalactic symbol of Medical institutions. You'll probably get help here.'"
-	icon_state = "greencross"
+	icon_state = "bluecross2"
 
 /obj/structure/sign/goldenplaque
 	name = "The Most Robust Men Award for Robustness"

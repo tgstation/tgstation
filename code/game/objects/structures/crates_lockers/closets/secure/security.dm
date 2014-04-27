@@ -16,6 +16,7 @@
 		else
 			new /obj/item/weapon/storage/backpack/satchel_cap(src)
 		new /obj/item/clothing/suit/captunic(src)
+		new /obj/item/clothing/under/captainformal(src)
 		new /obj/item/clothing/head/helmet/cap(src)
 		new /obj/item/clothing/under/rank/captain(src)
 		new /obj/item/clothing/suit/armor/vest/capcarapace(src)
@@ -25,8 +26,6 @@
 		new /obj/item/device/radio/headset/heads/captain(src)
 		new /obj/item/clothing/gloves/captain(src)
 		new /obj/item/weapon/gun/energy/gun(src)
-		new /obj/item/clothing/under/captainformal(src)
-		new /obj/item/clothing/head/helmet/HoS/dermal(src)
 		return
 
 
@@ -73,19 +72,13 @@
 	New()
 		..()
 		sleep(2)
-		if(prob(50))
-			new /obj/item/weapon/storage/backpack/security(src)
-		else
-			new /obj/item/weapon/storage/backpack/satchel_sec(src)
 		new /obj/item/clothing/suit/armor/vest(src)
-		new /obj/item/clothing/under/rank/head_of_security/jensen(src)
 		new /obj/item/clothing/suit/armor/hos/jensen(src)
 		new /obj/item/clothing/head/helmet/HoS/dermal(src)
 		new /obj/item/weapon/cartridge/hos(src)
 		new /obj/item/device/radio/headset/heads/hos(src)
 		new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 		new /obj/item/weapon/shield/riot(src)
-		new /obj/item/clothing/mask/gas/sechailer(src)
 		new /obj/item/clothing/mask/gas/sechailer/hos(src)
 		new /obj/item/weapon/storage/lockbox/loyalty(src)
 		new /obj/item/weapon/storage/box/flashbangs(src)
@@ -93,10 +86,7 @@
 		new /obj/item/weapon/melee/baton/loaded(src)
 		new /obj/item/weapon/gun/energy/gun(src)
 		new /obj/item/weapon/storage/belt/security(src)
-		new /obj/item/clothing/under/hosformalfem(src)
-		new /obj/item/clothing/under/hosformalmale(src)
 		return
-
 
 
 /obj/structure/closet/secure_closet/warden
@@ -113,10 +103,6 @@
 	New()
 		..()
 		sleep(2)
-		if(prob(50))
-			new /obj/item/weapon/storage/backpack/security(src)
-		else
-			new /obj/item/weapon/storage/backpack/satchel_sec(src)
 		new /obj/item/clothing/suit/armor/vest(src)
 		new /obj/item/clothing/under/rank/warden(src)
 		new /obj/item/clothing/suit/armor/vest/warden(src)
@@ -147,10 +133,6 @@
 	New()
 		..()
 		sleep(2)
-		if(prob(50))
-			new /obj/item/weapon/storage/backpack/security(src)
-		else
-			new /obj/item/weapon/storage/backpack/satchel_sec(src)
 		new /obj/item/clothing/suit/armor/vest(src)
 		new /obj/item/clothing/head/helmet(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
@@ -198,7 +180,7 @@
 /obj/structure/closet/secure_closet/security/med
 
 	New()
-		new /obj/item/clothing/tie/armband/medgreen(src)
+		new /obj/item/clothing/tie/armband/medblue(src)
 		new /obj/item/device/encryptionkey/headset_med(src)
 		..()
 		return
@@ -246,7 +228,7 @@
 
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections"
-	req_access = list(access_captain)
+	req_access = list(access_hos)
 
 	New()
 		..()
@@ -313,3 +295,19 @@
 				icon_state = icon_closed
 		else
 			icon_state = icon_opened
+
+
+ /obj/structure/closet/secure_closet/ammunitionlocker
+ 	name = "ammunition locker"
+ 	req_access = list(access_armory)
+
+/obj/structure/closet/secure_closet/ammunitionlocker/New()
+ 		new /obj/item/ammo_casing/shotgun/beanbag(src)
+ 		new /obj/item/ammo_casing/shotgun/beanbag(src)
+ 		new /obj/item/ammo_casing/shotgun/beanbag(src)
+ 		new /obj/item/ammo_casing/shotgun/beanbag(src)
+ 		new /obj/item/ammo_casing/shotgun/beanbag(src)
+ 		new /obj/item/ammo_casing/shotgun/beanbag(src)
+ 		new /obj/item/ammo_casing/shotgun/beanbag(src)
+ 		new /obj/item/ammo_casing/shotgun/beanbag(src)
+

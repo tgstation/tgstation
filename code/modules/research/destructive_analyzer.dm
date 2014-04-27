@@ -29,7 +29,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	decon_mod = T
 
 /obj/machinery/r_n_d/destructive_analyzer/meteorhit()
-	del(src)
+	qdel(src)
 	return
 
 /obj/machinery/r_n_d/destructive_analyzer/proc/ConvertReqString2List(var/list/source_list)

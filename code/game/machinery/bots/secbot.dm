@@ -682,7 +682,7 @@ Auto Patrol: []"},
 	s.start()
 
 	new /obj/effect/decal/cleanable/oil(src.loc)
-	del(src)
+	qdel(src)
 
 /obj/machinery/bot/secbot/attack_alien(var/mob/living/carbon/alien/user as mob)
 	..()
@@ -702,12 +702,12 @@ Auto Patrol: []"},
 		return
 
 	if(S.secured)
-		del(S)
+		qdel(S)
 		var/obj/item/weapon/secbot_assembly/A = new /obj/item/weapon/secbot_assembly
 		user.put_in_hands(A)
 		user << "<span class='notice'>You add the signaler to the helmet.</span>"
 		user.unEquip(src, 1)
-		del(src)
+		qdel(src)
 	else
 		return
 
@@ -733,7 +733,7 @@ Auto Patrol: []"},
 		user << "<span class='notice'>You add the prox sensor to [src]!</span>"
 		overlays += "hs_eye"
 		name = "helmet/signaler/prox sensor assembly"
-		del(I)
+		qdel(I)
 
 	else if(((istype(I, /obj/item/robot_parts/l_arm)) || (istype(I, /obj/item/robot_parts/r_arm))) && (build_step == 2))
 		user.drop_item()
@@ -741,7 +741,7 @@ Auto Patrol: []"},
 		user << "<span class='notice'>You add the robot arm to [src]!</span>"
 		name = "helmet/signaler/prox sensor/robot arm assembly"
 		overlays += "hs_arm"
-		del(I)
+		qdel(I)
 
 	else if((istype(I, /obj/item/weapon/melee/baton)) && (build_step >= 3))
 		user.drop_item()
@@ -750,8 +750,8 @@ Auto Patrol: []"},
 		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot
 		S.loc = get_turf(src)
 		S.name = created_name
-		del(I)
-		del(src)
+		qdel(I)
+		qdel(src)
 
 	else if(istype(I, /obj/item/weapon/pen))
 		var/t = copytext(stripped_input(user, "Enter new robot name", name, created_name),1,MAX_NAME_LEN)
@@ -766,7 +766,7 @@ Auto Patrol: []"},
 			new /obj/item/device/assembly/signaler(get_turf(src))
 			new /obj/item/clothing/head/helmet(get_turf(src))
 			user << "<span class='notice'>You disconnect the signaler from the helmet.</span>"
-			del(src)
+			qdel(src)
 
 		else if(build_step == 2)
 			overlays -= "hs_eye"

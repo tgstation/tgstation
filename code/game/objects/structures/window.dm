@@ -22,39 +22,39 @@
 	if(health <= 0)
 		new /obj/item/weapon/shard(loc)
 		new /obj/item/stack/rods(loc)
-		del(src)
+		qdel(src)
 	return
 
 
 /obj/structure/window/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			new /obj/item/weapon/shard(loc)
 			if(reinf) new /obj/item/stack/rods(loc)
-			del(src)
+			qdel(src)
 			return
 		if(3.0)
 			if(prob(50))
 				new /obj/item/weapon/shard(loc)
 				if(reinf) new /obj/item/stack/rods(loc)
-				del(src)
+				qdel(src)
 				return
 
 
 /obj/structure/window/blob_act()
 	new /obj/item/weapon/shard(loc)
 	if(reinf) new /obj/item/stack/rods(loc)
-	del(src)
+	qdel(src)
 
 
 /obj/structure/window/meteorhit()
 	//world << "glass at [x],[y],[z] Mhit"
 	new /obj/item/weapon/shard( loc )
 	if(reinf) new /obj/item/stack/rods( loc)
-	del(src)
+	qdel(src)
 
 /obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
@@ -94,7 +94,7 @@
 	if(health <= 0)
 		new /obj/item/weapon/shard(loc)
 		if(reinf) new /obj/item/stack/rods(loc)
-		del(src)
+		qdel(src)
 
 /obj/structure/window/attack_tk(mob/user as mob)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
@@ -112,8 +112,9 @@
 		if(reinf)
 			var/obj/item/stack/rods/R = new (loc)
 			R.add_fingerprint(user)
-		del(src)
+		qdel(src)
 	else
+		user.changeNext_move(8)
 		user.visible_message("<span class='notice'>[user] knocks on [src].</span>")
 		add_fingerprint(user)
 		playsound(loc, 'sound/effects/Glasshit.ogg', 50, 1)
@@ -126,12 +127,13 @@
 /obj/structure/window/proc/attack_generic(mob/user as mob, damage = 0)	//used by attack_alien, attack_animal, and attack_slime
 	if(!can_be_reached(user))
 		return
+	user.changeNext_move(8)
 	health -= damage
 	if(health <= 0)
 		user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
 		new /obj/item/weapon/shard(loc)
 		if(reinf) new /obj/item/stack/rods(loc)
-		del(src)
+		qdel(src)
 	else	//for nicer text~
 		user.visible_message("<span class='danger'>[user] smashes into [src]!</span>")
 		playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
@@ -190,9 +192,10 @@
 				G = new (user.loc)
 				G.add_fingerprint(user)
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		src.Del(1)
+		qdel(src)
 	else
 		if(I.damtype == BRUTE || I.damtype == BURN)
+			user.changeNext_move(8)
 			hit(I.force)
 			if(health <= 7)
 				anchored = 0
@@ -227,7 +230,7 @@
 		else
 			new /obj/item/weapon/shard(loc)
 			if(reinf) new /obj/item/stack/rods(loc)
-		del(src)
+		qdel(src)
 		return
 
 
@@ -304,12 +307,12 @@
 	return
 
 
-/obj/structure/window/Del(quiet)
+/obj/structure/window/Destroy()
 	density = 0
 	air_update_turf(1)
-	if(!quiet)playsound(src, "shatter", 70, 1)
+	if(anchored)playsound(src, "shatter", 70, 1)
 	update_nearby_icons()
-	loc = null //garbage collect
+	..()
 
 
 /obj/structure/window/Move()

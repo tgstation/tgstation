@@ -169,11 +169,11 @@ proc/recursive_mob_check(var/atom/O,var/client_check=1,var/sight_check=1,var/inc
 			found_mobs |= A
 
 		for(var/atom/B in A)
-			if(!(B in processed_list))
+			if(!processed_list[B])
 				processing_list |= B
 
-		processing_list -= A
-		processed_list |= A
+		processing_list.Cut(1, 2)
+		processed_list[A] = A
 
 	return found_mobs
 
@@ -189,10 +189,8 @@ proc/get_mobs_in_view(var/R, var/atom/source)
 
 	var/list/range = hear(R, T)
 
-	for(var/atom/A in range)
-
-		if(istype(A, /obj/item/device/radio) || ismob(A))
-			hear |= recursive_mob_check(A, 1, 0, 1)
+	for(var/atom/movable/A in range)
+		hear |= recursive_mob_check(A, 1, 0, 1)
 
 	return hear
 

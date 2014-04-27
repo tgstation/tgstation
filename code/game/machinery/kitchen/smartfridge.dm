@@ -267,7 +267,7 @@ obj/machinery/smartfridge/drying_rack/load() //For updating the filled overlay
 		else
 			var/dried = S.dried_type
 			new dried(src.loc)
-			del S
+			qdel(S)
 		return 1
 	return 0
 

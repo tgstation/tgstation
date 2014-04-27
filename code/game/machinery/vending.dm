@@ -57,6 +57,13 @@
 		last_slogan = world.time + rand(0, slogan_delay)
 		power_change()
 
+/obj/machinery/vending/Destroy()
+	qdel(wires)
+	wires = null
+	qdel(coin)
+	coin = null
+	..()
+
 /obj/machinery/vending/initialize()
 	build_inventory(products)
 	build_inventory(contraband, 1)
@@ -73,11 +80,11 @@
 /obj/machinery/vending/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if(prob(50))
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if(prob(25))
@@ -88,7 +95,7 @@
 	if(prob(75))
 		malfunction()
 	else
-		del(src)
+		qdel(src)
 
 
 /obj/machinery/vending/proc/build_inventory(list/productlist, hidden=0, req_coin=0, start_empty = null)
@@ -222,12 +229,12 @@
 	if(premium.len > 0)
 		dat += "<b>Coin slot:</b> "
 		if (coin)
-			dat += "[coin]&nbsp;&nbsp;<a href='byond://?src=\ref[src];remove_coin=1'>Remove</A>"
+			dat += "[coin]&nbsp;&nbsp;<a href='byond://?src=\ref[src];remove_coin=1'>Remove</a>"
 		else
 			dat += "<i>No coin</i>&nbsp;&nbsp;<span class='linkOff'>Remove</span>"
 
 	if(!panel_open)//Vending machines do not dispense items when they are unscrewed
-		dat += "<h3>Select an Item</h3>"
+		dat += "<h3>Select an item</h3>"
 		dat += "<div class='statusDisplay'>"
 		if(product_records.len == 0)
 			dat += "<font color = 'red'>No product loaded!</font>"
@@ -243,10 +250,10 @@
 			for (var/datum/data/vending_product/R in display_records)
 				dat += "<li>"
 				if(R.amount > 0)
-					dat += "<a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</A> "
+					dat += "<a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</a> "
 				else
-					dat += "<span class='linkOff'>Sold Out</span> "
-				dat += "<FONT color = '[R.display_color]'><B>[R.product_name]</B>:</font>"
+					dat += "<span class='linkOff'>Sold out</span> "
+				dat += "<font color = '[R.display_color]'><b>[sanitize(R.product_name)]</b>:</font>"
 				dat += " <b>[R.amount]</b>"
 				dat += "</li>"
 			dat += "</ul>"
@@ -327,12 +334,20 @@
 				return
 			if(coin.string_attached)
 				if(prob(50))
-					usr << "<span class='notice'>You successfully pull the coin out before [src] could swallow it.</span>"
+					if(usr.put_in_hands(coin))
+						usr << "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>"
+						coin = null
+					else
+						usr << "<span class='notice'>You couldn't pull [coin] out because your hands are full.</span>"
+						qdel(coin)
+						coin = null
 				else
-					usr << "<span class='notice'>You weren't able to pull the coin out fast enough, the machine ate it, string and all.</span>"
-					del(coin)
+					usr << "<span class='notice'>You weren't able to pull [coin] out fast enough, the machine ate it, string and all.</span>"
+					qdel(coin)
+					coin = null
 			else
-				del(coin)
+				qdel(coin)
+				coin = null
 		else if (!(R in product_records))
 			vend_ready = 1
 			message_admins("Vending machine exploit attempted by [key_name(usr, usr.client)]!")
@@ -699,7 +714,7 @@
 	icon_deny = "sec-deny"
 	req_access_txt = "1"
 	products = list(/obj/item/weapon/handcuffs = 8,/obj/item/weapon/grenade/flashbang = 4,/obj/item/device/flash = 5,
-					/obj/item/weapon/reagent_containers/food/snacks/donut/normal = 12,/obj/item/weapon/storage/box/evidence = 6)
+					/obj/item/weapon/reagent_containers/food/snacks/donut/normal = 12,/obj/item/weapon/storage/box/evidence = 6,/obj/item/device/flashlight/seclite = 4)
 	contraband = list(/obj/item/clothing/glasses/sunglasses = 2,/obj/item/weapon/storage/fancy/donut_box = 2)
 
 /obj/machinery/vending/hydronutrients
@@ -833,9 +848,6 @@
 					/obj/item/weapon/stock_parts/cell = 8, /obj/item/weapon/weldingtool = 8,/obj/item/clothing/head/welding = 8,
 					/obj/item/weapon/light/tube = 10,/obj/item/clothing/suit/fire = 4, /obj/item/weapon/stock_parts/scanning_module = 5,/obj/item/weapon/stock_parts/micro_laser = 5,
 					/obj/item/weapon/stock_parts/matter_bin = 5,/obj/item/weapon/stock_parts/manipulator = 5,/obj/item/weapon/stock_parts/console_screen = 5)
-	// There was an incorrect entry (cablecoil/power).  I improvised to cablecoil/heavyduty.
-	// Another invalid entry, /obj/item/weapon/circuitry.  I don't even know what that would translate to, removed it.
-	// The original products list wasn't finished.  The ones without given quantities became quantity 5.  -Sayu
 
 //This one's from bay12
 /obj/machinery/vending/robotics
@@ -848,5 +860,3 @@
 					/obj/item/weapon/stock_parts/cell/high = 12, /obj/item/device/assembly/prox_sensor = 3,/obj/item/device/assembly/signaler = 3,/obj/item/device/healthanalyzer = 3,
 					/obj/item/weapon/scalpel = 2,/obj/item/weapon/circular_saw = 2,/obj/item/weapon/tank/anesthetic = 2,/obj/item/clothing/mask/breath/medical = 5,
 					/obj/item/weapon/screwdriver = 5,/obj/item/weapon/crowbar = 5)
-	//everything after the power cell had no amounts, I improvised.  -Sayu
-

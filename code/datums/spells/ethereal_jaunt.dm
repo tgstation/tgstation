@@ -50,8 +50,8 @@
 							break
 			target.canmove = 1
 			target.client.eye = target
-			del(animation)
-			del(holder)
+			qdel(animation)
+			qdel(holder)
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_disappear(var/atom/movable/overlay/animation, var/mob/living/target)
 	animation.icon_state = "liquify"
@@ -74,7 +74,7 @@
 	density = 0
 	anchored = 1
 
-/obj/effect/dummy/spell_jaunt/Del()
+/obj/effect/dummy/spell_jaunt/Destroy()
 	// Eject contents if deleted somehow
 	for(var/atom/movable/AM in src)
 		AM.loc = get_turf(src)

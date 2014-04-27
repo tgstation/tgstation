@@ -13,7 +13,7 @@
 	desc = "HOLY SHEET! That is a lot of glass."
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
-	g_amt = 3750
+	g_amt = MINERAL_MATERIAL_AMOUNT
 	origin_tech = "materials=1"
 
 
@@ -120,8 +120,8 @@
 	desc = "Glass which seems to have rods or something stuck in them."
 	singular_name = "reinforced glass sheet"
 	icon_state = "sheet-rglass"
-	g_amt = 3750
-	m_amt = 1875
+	g_amt = MINERAL_MATERIAL_AMOUNT
+	m_amt = 1000
 	origin_tech = "materials=2"
 
 /obj/item/stack/sheet/rglass/cyborg
@@ -246,7 +246,7 @@
 	force = 5.0
 	throwforce = 10.0
 	item_state = "shard-glass"
-	g_amt = 3750
+	g_amt = MINERAL_MATERIAL_AMOUNT
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
@@ -302,7 +302,7 @@
 					continue
 				G.attackby(NG, user)
 				user << "<span class='notice'>You add the newly-formed glass to the stack. It now contains [NG.amount] sheet\s.</span>"
-			del(src)
+			qdel(src)
 	..()
 
 /obj/item/weapon/shard/Crossed(var/mob/AM)

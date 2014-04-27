@@ -43,12 +43,12 @@
 				playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 				if(do_after(user, 20))
 					user << "<span class='notice'>You pry the frame apart.</span>"
-					new /obj/item/stack/sheet/wood(loc, 4)
-					del(src)
+					new /obj/item/stack/sheet/mineral/wood(loc, 4)
+					qdel(src)
 
 		if(1)
-			if(istype(I, /obj/item/stack/sheet/wood))
-				var/obj/item/stack/sheet/wood/W = I
+			if(istype(I, /obj/item/stack/sheet/mineral/wood))
+				var/obj/item/stack/sheet/mineral/wood/W = I
 				W.use(2)
 				user << "<span class='notice'>You add a shelf.</span>"
 				state = 2
@@ -83,7 +83,7 @@
 				else
 					playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 					user << "<span class='notice'>You pry the shelf out.</span>"
-					new /obj/item/stack/sheet/wood(loc, 1)
+					new /obj/item/stack/sheet/mineral/wood(loc, 1)
 					state = 1
 					icon_state = "bookempty"
 			else
@@ -108,20 +108,20 @@
 	switch(severity)
 		if(1.0)
 			for(var/obj/item/weapon/book/b in contents)
-				del(b)
-			del(src)
+				qdel(b)
+			qdel(src)
 		if(2.0)
 			for(var/obj/item/weapon/book/b in contents)
 				if(prob(50))
 					b.loc = (get_turf(src))
 				else
-					del(b)
-			del(src)
+					qdel(b)
+			qdel(src)
 		if(3.0)
 			if(prob(50))
 				for(var/obj/item/weapon/book/b in contents)
 					b.loc = (get_turf(src))
-				del(src)
+				qdel(src)
 
 
 /obj/structure/bookcase/update_icon()

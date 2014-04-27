@@ -8,6 +8,7 @@
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
 razharas = Game Master
+Niknakflak = Game Master
 rolan7 = Game Master
 quarxink = Game Master
 adrix89 = Game Master
@@ -55,3 +56,6 @@ rumia29 = Game Master
 bobylein = Game Master
 sirbayer = Game Master
 hornygranny = Game Master
+yota = Game Master
+firecage = Game Master
+donkieyo = Game Master

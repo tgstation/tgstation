@@ -96,7 +96,7 @@
 	icon_state = "bottle16"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 30)
+		reagents.add_reagent("eznutriment", 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z
 	name = "bottle of Left 4 Zed"
@@ -104,8 +104,7 @@
 	icon_state = "bottle18"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 28)
-		reagents.add_reagent("radium", 2)
+		reagents.add_reagent("left4zednutriment", 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh
 	name = "bottle of Robust Harvest"
@@ -113,5 +112,4 @@
 	icon_state = "bottle15"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 20)
-		reagents.add_reagent("diethylamine", 10)
+		reagents.add_reagent("robustharvestnutriment", 30)

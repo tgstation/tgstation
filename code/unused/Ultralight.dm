@@ -223,7 +223,7 @@ atom
 				ul_Illuminate()
 		return
 
-	Del()
+	Delete()
 		if(ul_IsLuminous())
 			ul_Extinguish()
 

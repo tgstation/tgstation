@@ -73,5 +73,5 @@
 								M.client.screen += blueeffect
 								sleep(20)
 								M.client.screen -= blueeffect
-								del(blueeffect)
-			del(newAnomaly)
+								qdel(blueeffect)
+			qdel(newAnomaly)

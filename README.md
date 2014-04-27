@@ -1,6 +1,6 @@
 /tg/station 13 v1.0 - 6 October 2010 [![Build Status](https://travis-ci.org/tgstation/-tg-station.png)](https://travis-ci.org/tgstation/-tg-station)
 
-Website: http://ss13.eu
+Website: http://www.tgstation13.org
 
 Code: https://github.com/tgstation/-tg-station
 
@@ -8,7 +8,7 @@ IRC: irc://irc.rizon.net/coderbus
 
 # DOWNLOADING
 
-There are a number of ways to download the source code. Some are described here, an alternative all-inclusive guide is also located at http://wiki.ss13.eu/index.php/Downloading_the_source_code
+There are a number of ways to download the source code. Some are described here, an alternative all-inclusive guide is also located at http://www.tgstation13.org/wiki/index.php/Downloading_the_source_code
 
 Option 1: Download the source code as a zip by clicking the ZIP button in the
 code tab of https://github.com/tgstation/-tg-station
@@ -24,7 +24,7 @@ Then you simply search for the -tg-station repository and click the big clone
 button.
 
 Option 3:
-Follow this: http://wiki.ss13.eu/index.php/Setting_up_git
+Follow this: http://www.tgstation13.org/wiki/index.php/Setting_up_git
 (It's recommended that you use git-scm, as above, rather than the git CLI
 suggested by the guide)
 
@@ -88,7 +88,7 @@ the new version.
 
 The SQL backend for the library and stats tracking requires a 
 MySQL server.  Your server details go in /config/dbconfig.txt, and the SQL 
-schema is in /SQL/tgstation_schema.sql.  More detailed setup instructions are located here: http://wiki.ss13.eu/index.php/Downloading_the_source_code#Setting_up_the_database
+schema is in /SQL/tgstation_schema.sql.  More detailed setup instructions are located here: http://www.tgstation13.org/wiki/index.php/Downloading_the_source_code#Setting_up_the_database
 
 #IRC BOT SETUP
 
@@ -106,11 +106,19 @@ As a goal to increase code maintainability we are going to be requiring all pull
 
 But first we want to make it clear over what powers the maintainers have over your pull request, so you do not get any surprises when submitting pull requests and it is closed for a reason you did not suspect.
 
+**Project Leads**
+
+Project Leads, which are elected by the maintainers and members of the project, have complete control over what goes through and what is reverted. They are encouraged to take control in what features are added to the game. Project Leads can also act as Project Managers when needed.
+
+**Project Managers**
+
+Project Managers are responsible for recruiting and firing maintainers, enforcing coding standards, and reverting changes that should have not been committed. Project Managers are assigned by Project Leads. On things that Project Managers disagree on they are to refer to the Project Leads for advice. It is encouraged that if you do not want to waste time working on a feature, that might be denied, that you ask a Project Manager first.
+
+**Maintainers**
+
 Maintainers are quality control. If a proposed pull request does not meet the mentioned quality specifications then it can be closed if you fail to satisfy them. Maintainers are required to give a reason for closing the pull request.
 
 Maintainers can revert your changes if they feel they are not worth maintaining or if they did not live up to the quality specifications.
-
-Headcoders, which are elected by the maintainers and members of the project, have complete control over what goes through and what is reverted. They are encouraged to take control in what features are added to the game. It is encouraged that if you do not want to waste time working on a feature, that might be denied, that you ask a head coder first.
 
 **Specification**
 
@@ -158,11 +166,11 @@ You are expected to document all your changes in the pull request, failing to do
 
 If you are proposing multiple changes, which change many different aspects of the code, you are to section them off into different pull requests in order to easily review them and to deny/accept the changes that are deemed acceptable.
 
-If your pull request is accepted, the code you add is no longer yours but everyones, everyone is free to work on it but you are also free to object to any changes being made, which will be noted by a headcoder.
+If your pull request is accepted, the code you add is no longer yours but everyones, everyone is free to work on it but you are also free to object to any changes being made, which will be noted by a Project Lead.
 
 **Getting Started**
 
-We have a [list of guides on the wiki](http://wiki.ss13.eu/index.php/Guides#Development_and_Contribution_Guides) which will help you get started contributing to /tg/station with git and Dream Maker.
+We have a [list of guides on the wiki](http://www.tgstation13.org/wiki/index.php/Guides#Development_and_Contribution_Guides) which will help you get started contributing to /tg/station with git and Dream Maker.
 
 For beginners, it is recommended you work on small projects, at first. There is an easy list of issues which are [contributor friendly, here](https://github.com/tgstation/-tg-station/issues?labels=Contributor+Friendly&page=1&state=open).
 

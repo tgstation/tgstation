@@ -26,8 +26,8 @@
 				src.meattype = 1
 				for(var/mob/O in viewers(src, null))
 					O.show_message(text("\red [user] has forced [G.affecting] onto the spike, killing them instantly!"))
-				del(G.affecting)
-				del(G)
+				qdel(G.affecting)
+				qdel(G)
 
 			else
 				user << "\red The spike already has something on it, finish collecting its meat first!"
@@ -39,8 +39,8 @@
 				src.meattype = 2
 				for(var/mob/O in viewers(src, null))
 					O.show_message(text("\red [user] has forced [G.affecting] onto the spike, killing them instantly!"))
-				del(G.affecting)
-				del(G)
+				qdel(G.affecting)
+				qdel(G)
 			else
 				user << "\red The spike already has something on it, finish collecting its meat first!"
 		else

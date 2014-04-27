@@ -10,3 +10,7 @@
 	for(var/mob/M in player_list)
 		if(!istype(M,/mob/new_player))
 			M << command
+	if(title == "")
+		news_network.SubmitArticle(text, "Centcom Official", "Central Command", null)
+	else
+		news_network.SubmitArticle(title + "<br><br>" + text, "Centcom Official", "Central Command", null)

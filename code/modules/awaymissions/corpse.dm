@@ -66,7 +66,6 @@
 		M.equip_to_slot_or_del(new src.corpseback(M), slot_back)
 	if(src.corpseid == 1)
 		var/obj/item/weapon/card/id/W = new(M)
-		W.name = "[M.real_name]'s ID Card ([corpseidjob])"
 		var/datum/job/jobdatum
 		for(var/jobtype in typesof(/datum/job))
 			var/datum/job/J = new jobtype
@@ -83,8 +82,9 @@
 		if(corpseidjob)
 			W.assignment = corpseidjob
 		W.registered_name = M.real_name
+		W.update_label()
 		M.equip_to_slot_or_del(W, slot_wear_id)
-	del(src)
+	qdel(src)
 
 /obj/effect/landmark/corpse/AICorpse/createCorpse() //Creates a corrupted AI
 	var/A = locate(/mob/living/silicon/ai) in loc //variable A looks for an AI at the location of the landmark
@@ -97,7 +97,7 @@
 	M.real_name = src.name
 	M.aiPDA.toff = 1 //turns the AI's PDA messenger off, stopping it showing up on player PDAs
 	M.death() //call the AI's death proc
-	del(src)
+	qdel(src)
 
 /obj/effect/landmark/corpse/slimeCorpse
 	var/mobcolour = "grey"
@@ -111,13 +111,13 @@
 	var/mob/living/carbon/slime/M = new(src.loc) //variable M is a new slime at the location of the landmark
 	M.colour = src.mobcolour //slime colour is set by landmark's mobcolour var
 	M.adjustToxLoss(9001) //kills the slime, death() doesn't update its icon correctly
-	del(src)
+	qdel(src)
 
 /obj/effect/landmark/corpse/facehugCorpse/createCorpse() //Creates a squashed facehugger
 	var/obj/item/clothing/mask/facehugger/O = new(src.loc) //variable O is a new facehugger at the location of the landmark
 	O.name = src.name
 	O.Die() //call the facehugger's death proc
-	del(src)
+	qdel(src)
 
 
 // I'll work on making a list of corpses people request for maps, or that I think will be commonly used. Syndicate operatives for example.

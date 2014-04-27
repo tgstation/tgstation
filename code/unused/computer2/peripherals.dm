@@ -17,7 +17,7 @@
 //			var/setup_id = "\ref[src]"
 //			src.id = copytext(setup_id,4,(length(setup_id)-1) )
 
-	Del()
+	Delete()
 		if(host)
 			host.peripherals.Remove(src)
 		..()

@@ -1,4 +1,3 @@
-
 /datum/wires/alarm
 	holder_type = /obj/machinery/alarm
 	wire_count = 5
@@ -12,7 +11,7 @@ var/const/AALARM_WIRE_AALARM = 16
 
 /datum/wires/alarm/CanUse(var/mob/living/L)
 	var/obj/machinery/alarm/A = holder
-	if(A.wiresexposed)
+	if(A.panel_open)
 		return 1
 	return 0
 

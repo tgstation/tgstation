@@ -113,8 +113,8 @@
 				newSaber.item_color = "rainbow"
 			user.unEquip(W)
 			user.unEquip(src)
-			del(W)
-			del(src)
+			qdel(W)
+			qdel(src)
 	else if(istype(W, /obj/item/device/multitool))
 		if(hacked == 0)
 			hacked = 1
@@ -180,7 +180,7 @@
 	spark_system.attach(src)
 
 /obj/item/weapon/melee/energy/blade/dropped()
-	del(src)
+	qdel(src)
 
 /obj/item/weapon/melee/energy/blade/proc/throw()
-	del(src)
+	qdel(src)

@@ -20,6 +20,10 @@
 	icon_closed = "red"
 
 /obj/structure/closet/wardrobe/red/New()
+	new /obj/item/weapon/storage/backpack/security(src)
+	new /obj/item/weapon/storage/backpack/security(src)
+	new /obj/item/weapon/storage/backpack/satchel_sec(src)
+	new /obj/item/weapon/storage/backpack/satchel_sec(src)
 	new /obj/item/clothing/under/rank/security(src)
 	new /obj/item/clothing/under/rank/security(src)
 	new /obj/item/clothing/under/rank/security(src)
@@ -34,6 +38,16 @@
 	new /obj/item/clothing/head/beret/sec(src)
 	return
 
+/obj/structure/closet/wardrobe/hos
+	name = "head of security wardrobe"
+	icon_state = "red"
+	icon_closed = "red"
+
+/obj/structure/closet/wardrobe/hos/New()
+	new /obj/item/clothing/under/hosformalfem(src)
+	new /obj/item/clothing/under/hosformalmale(src)
+	new /obj/item/clothing/under/rank/head_of_security/jensen(src)
+	return
 
 /obj/structure/closet/wardrobe/pink
 	name = "pink wardrobe"

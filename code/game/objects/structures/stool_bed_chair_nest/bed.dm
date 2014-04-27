@@ -18,10 +18,9 @@
 	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
 	icon_state = "abed"
 
-/obj/structure/stool/bed/Del()
+/obj/structure/stool/bed/Destroy()
 	unbuckle()
 	..()
-	return
 
 /obj/structure/stool/bed/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
@@ -33,7 +32,7 @@
 /obj/structure/stool/bed/attack_animal(var/mob/living/simple_animal/M)//No more buckling hostile mobs to chairs to render them immobile forever
 	if(M.environment_smash)
 		new /obj/item/stack/sheet/metal(src.loc)
-		del(src)
+		qdel(src)
 
 /obj/structure/stool/bed/MouseDrop_T(mob/M as mob, mob/user as mob)
 	if(!istype(M)) return
@@ -80,7 +79,7 @@
 /obj/structure/stool/bed/proc/buckle_mob(mob/M as mob, mob/user as mob)
 	if (!ticker)
 		user << "You can't buckle anyone in before the game starts."
-	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || user.lying || user.stat || M.buckled || istype(user, /mob/living/silicon/pai) )
+	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || user.lying || user.stat || M.buckled || istype(user, /mob/living/silicon/pai) || M.anchored)
 		return
 
 	if (istype(M, /mob/living/carbon/slime))

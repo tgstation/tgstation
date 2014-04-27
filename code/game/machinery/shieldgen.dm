@@ -15,7 +15,7 @@
 	..()
 	air_update_turf(1)
 
-/obj/machinery/shield/Del()
+/obj/machinery/shield/Destroy()
 	opacity = 0
 	density = 0
 	air_update_turf(1)
@@ -47,7 +47,7 @@
 
 	if (src.health <= 0)
 		visible_message("\blue The [src] dissapates")
-		del(src)
+		qdel(src)
 		return
 
 	opacity = 1
@@ -60,7 +60,7 @@
 
 	if(src.health <= 0)
 		visible_message("\blue The [src] dissapates")
-		del(src)
+		qdel(src)
 		return
 
 	opacity = 1
@@ -72,7 +72,7 @@
 	..()
 	if(health <=0)
 		visible_message("\blue The [src] dissapates")
-		del(src)
+		qdel(src)
 		return
 	opacity = 1
 	spawn(20) if(src) opacity = 0
@@ -81,25 +81,25 @@
 	switch(severity)
 		if(1.0)
 			if (prob(75))
-				del(src)
+				qdel(src)
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 		if(3.0)
 			if (prob(25))
-				del(src)
+				qdel(src)
 	return
 
 /obj/machinery/shield/emp_act(severity)
 	switch(severity)
 		if(1)
-			del(src)
+			qdel(src)
 		if(2)
 			if(prob(50))
-				del(src)
+				qdel(src)
 
 /obj/machinery/shield/blob_act()
-	del(src)
+	qdel(src)
 
 
 /obj/machinery/shield/hitby(AM as mob|obj)
@@ -121,7 +121,7 @@
 	//Handle the destruction of the shield
 	if (src.health <= 0)
 		visible_message("\blue The [src] dissapates")
-		del(src)
+		qdel(src)
 		return
 
 	//The shield becomes dense to absorb the blow.. purely asthetic.
@@ -152,9 +152,9 @@
 		var/locked = 0
 		var/shield_range = 4
 
-/obj/machinery/shieldgen/Del()
+/obj/machinery/shieldgen/Destroy()
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
-		del(shield_tile)
+		qdel(shield_tile)
 	..()
 
 
@@ -176,13 +176,13 @@
 	update_icon()
 
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
-		del(shield_tile)
+		qdel(shield_tile)
 	deployed_shields.Cut()
 
 /obj/machinery/shieldgen/process()
 	if(malfunction && active)
 		if(deployed_shields.len && prob(5))
-			del(pick(deployed_shields))
+			qdel(pick(deployed_shields))
 
 	return
 
@@ -190,7 +190,7 @@
 	if(health <= 30)
 		src.malfunction = 1
 	if(health <= 0)
-		del(src)
+		qdel(src)
 	update_icon()
 	return
 
@@ -516,14 +516,14 @@
 		T2 = T
 		if(locate(/obj/machinery/shieldwall) in T)
 			F = (locate(/obj/machinery/shieldwall) in T)
-			del(F)
+			qdel(F)
 
 		if(locate(/obj/machinery/shieldwallgen) in T)
 			G = (locate(/obj/machinery/shieldwallgen) in T)
 			if(!G.active)
 				break
 
-/obj/machinery/shieldwallgen/Del()
+/obj/machinery/shieldwallgen/Destroy()
 	src.cleanup(1)
 	src.cleanup(2)
 	src.cleanup(4)
@@ -569,11 +569,11 @@
 /obj/machinery/shieldwall/process()
 	if(needs_power)
 		if(isnull(gen_primary)||isnull(gen_secondary))
-			del(src)
+			qdel(src)
 			return
 
 		if(!(gen_primary.active)||!(gen_secondary.active))
-			del(src)
+			qdel(src)
 			return
 //
 		if(prob(50))

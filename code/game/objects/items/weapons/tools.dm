@@ -107,6 +107,7 @@
 	m_amt = 80
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("pinched", "nipped")
+	hitsound = 'sound/items/Wirecutter.ogg'
 
 /obj/item/weapon/wirecutters/New()
 	if(prob(50))
@@ -223,7 +224,7 @@
 			user << "<span class='warning'>That was stupid of you.</span>"
 			explosion(O.loc, -1, 0, 2, flame_range = 2)
 			if(O)
-				del(O)
+				qdel(O)
 			return
 
 	if(welding)

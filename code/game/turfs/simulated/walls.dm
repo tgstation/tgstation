@@ -89,6 +89,7 @@
 		dismantle_wall()
 
 /turf/simulated/wall/attack_paw(mob/user as mob)
+	user.changeNext_move(8)
 	if ((HULK in user.mutations))
 		if (prob(hardness))
 			usr << text("\blue You smash through the wall.")
@@ -102,6 +103,7 @@
 	return src.attack_hand(user)
 
 /turf/simulated/wall/attack_animal(var/mob/living/simple_animal/M)
+	M.changeNext_move(8)
 	if(M.environment_smash >= 2)
 		if(istype(src, /turf/simulated/wall/r_wall))
 			if(M.environment_smash == 3)
@@ -115,6 +117,7 @@
 			return
 
 /turf/simulated/wall/attack_hand(mob/user as mob)
+	user.changeNext_move(8)
 	if (HULK in user.mutations)
 		if (prob(hardness))
 			usr << text("\blue You smash through the wall.")
@@ -132,7 +135,7 @@
 	return
 
 /turf/simulated/wall/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
+	user.changeNext_move(8)
 	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
@@ -294,7 +297,7 @@
 	user << "<span class='warning'>The thermite melts through the wall.</span>"
 
 	spawn(100)
-		if(O)	del(O)
+		if(O)	qdel(O)
 //	F.sd_LumReset()		//TODO: ~Carn
 	return
 

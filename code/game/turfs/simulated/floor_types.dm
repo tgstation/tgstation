@@ -39,16 +39,8 @@
 /turf/simulated/floor/vault
 	icon_state = "rockvault"
 
-	New(location,type)
-		..()
-		icon_state = "[type]vault"
-
 /turf/simulated/wall/vault
 	icon_state = "rockvault"
-
-	New(location,type)
-		..()
-		icon_state = "[type]vault"
 
 /turf/simulated/floor/engine
 	name = "reinforced floor"

@@ -49,7 +49,7 @@
 			if("Drone")
 				new_xeno = new /mob/living/carbon/alien/humanoid/drone(loc)
 		if(mind)	mind.transfer_to(new_xeno)
-		del(src)
+		qdel(src)
 		return
 	else
 		src << "\red You are not fully grown."

@@ -36,7 +36,7 @@
 		spawn(1) //DEBUG
 			starting.icon_state = "[newicon]"
 
-/obj/effect/rift/Del()
+/obj/effect/rift/Delete()
 	for(var/obj/effect/biomass/biomass in linkedBiomass)
 		del(biomass)
 	..()
