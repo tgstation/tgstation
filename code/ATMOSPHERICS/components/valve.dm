@@ -37,14 +37,10 @@ connect the networks together for a more efficient transfer
 	normalize_dir()
 	icon_state = "mvalve_off"
 
-	world << "Update icon nopipes"
-
 	overlays.Cut()
 	if(animation)
-		world << "Add animation overlay mvalve_[open][!open]"
-		overlays += image('icons/obj/atmospherics/binary_devices.dmi', icon_state = "mvalve_[open][!open]", dir = EAST)
+		overlays += image('icons/obj/atmospherics/binary_devices.dmi', icon_state = "mvalve_[open][!open]")
 	else if(open)
-		world << "Add open overlay"
 		overlays += image('icons/obj/atmospherics/binary_devices.dmi', icon_state = "mvalve_on")
 
 /obj/machinery/atmospherics/valve/update_icon(var/animation)
@@ -273,20 +269,53 @@ connect the networks together for a more efficient transfer
 //
 /obj/machinery/atmospherics/valve/digital
 	name = "digital valve"
-	desc = "A digitally controlled valve."
-	icon = 'icons/obj/atmospherics/digital_valve.dmi'
+	desc = "A digitally controlled valve. Has a button for use with human fingers."
+	icon_state = "dvalve_on"
 
 	var/frequency = 0
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
+/obj/machinery/atmospherics/valve/digital/New()
+	..()
+	power_change()
+
+/obj/machinery/atmospherics/valve/digital/initialize()
+	..()
+	power_change()
+
+/obj/machinery/atmospherics/valve/digital/power_change()
+	..()
+	update_icon_nopipes()
+
+/obj/machinery/atmospherics/valve/digital/update_icon_nopipes(var/animation)
+	normalize_dir()
+
+	if(stat & NOPOWER)
+		icon_state = "dvalve_nopower"
+		overlays.Cut()
+		return
+
+	icon_state = "dvalve_off"
+
+	overlays.Cut()
+	if(animation)
+		overlays += image('icons/obj/atmospherics/binary_devices.dmi', icon_state = "dvalve_[open][!open]")
+	else if(open)
+		overlays += image('icons/obj/atmospherics/binary_devices.dmi', icon_state = "dvalve_on")
+
 /obj/machinery/atmospherics/valve/digital/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
 
 /obj/machinery/atmospherics/valve/digital/attack_hand(mob/user as mob)
-	if(!src.allowed(user))
-		user << "\red Access denied."
+	if(stat & NOPOWER)
+		user << "<span class='notice'>It appears to be powered down.</span>"
 		return
+
+	if(!src.allowed(user))
+		user << "<span class='warning'>Access denied.</span>"
+		return
+
 	..()
 
 //Radio remote control
@@ -303,6 +332,9 @@ connect the networks together for a more efficient transfer
 		set_frequency(frequency)
 
 /obj/machinery/atmospherics/valve/digital/receive_signal(datum/signal/signal)
+	if(stat & NOPOWER)
+		return 0
+
 	if(!signal.data["tag"] || (signal.data["tag"] != id))
 		return 0
 
