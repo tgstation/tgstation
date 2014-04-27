@@ -102,6 +102,7 @@
 
 	process()
 		..()
+		CHECK_DISABLED(scrubbers)
 		if(stat & (NOPOWER|BROKEN))
 			return
 		if (!node)

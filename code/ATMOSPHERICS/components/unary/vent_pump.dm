@@ -79,6 +79,7 @@
 
 	process()
 		..()
+		CHECK_DISABLED(vents)
 		if(stat & (NOPOWER|BROKEN))
 			return
 		if (!node)

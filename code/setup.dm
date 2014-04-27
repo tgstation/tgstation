@@ -3,6 +3,14 @@
 #define DEBUG
 #define PROFILE_MACHINES // Disable when not debugging.
 
+#ifdef PROFILE_MACHINES
+#define CHECK_DISABLED(TYPE) if(disable_##TYPE) return
+var/global/disable_scrubbers = 0
+var/global/disable_vents     = 0
+#else
+#define CHECK_DISABLED(TYPE) /* DO NOTHINK */
+#endif
+
 #define PI 3.1415
 
 #define R_IDEAL_GAS_EQUATION	8.31 //kPa*L/(K*mol)
