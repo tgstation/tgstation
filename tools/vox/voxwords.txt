@@ -809,7 +809,5 @@ wiggle
 voxtest = Ass Blast U.S.A.
 # Beepsky's famous emag line:
 voxtest2 = Fuck your cunt you shit eating cocksucker. Man, eat a dong, fucking ass-ramming shit-fuck. Eat penises in your fuck face, and shit out abortions of fuck, and do shit in your ass, you cockfuck shit monkey ass-wanker from the depths of shit!
-# Out with the old, in with the new:
-#vox_login = Hello! The automatic diagnostic and announcement system welcomes you to the Black Mesa research facility.  Remember: Have a secure day.
 vox_420 = Smoke weed every day.
-
+voxtest3 = You.  You got what I neeeeeeeed.  But you say he's just a friend. But you say he's just a friend.

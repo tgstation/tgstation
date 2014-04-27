@@ -34,26 +34,37 @@ THE SOFTWARE.
 ###############################################
 
 ##Voice you want to use 
+#VOICE='rab_diphone'
 # This is the nitech-made ARCTIC voice, tut on how to install: 
 # http://ubuntuforums.org/showthread.php?t=751169 ("Installing the enhanced CMU Arctic voices" section)
 #VOICE='nitech_us_bdl_arctic_hts'
 #VOICE='nitech_us_jmk_arctic_hts'
 #VOICE='nitech_us_awb_arctic_hts'
-#VOICE='nitech_us_slt_arctic_hts' # less bored US female
-VOICE='nitech_us_clb_arctic_hts' # DEFAULT, bored US female (occasionally comes up with british pronunciations?!)
+VOICE='nitech_us_slt_arctic_hts' # DEFAULT, less bored US female
+#VOICE='nitech_us_clb_arctic_hts' # OLD default: bored US female (occasionally comes up with british pronunciations?!)
 #VOICE='nitech_us_rms_arctic_hts'
 
+#PHONESET='mrpa'
+PHONESET=''
+
 # What we do with SoX:
-SOX_ARGS  = 'stretch 1.1'
+SOX_ARGS  = '' 
+SOX_ARGS += ' pitch -500'  # Lol I male now
+SOX_ARGS += ' stretch 1.2' # Starts the gravelly sound, lowers pitch a bit.
+#SOX_ARGS += ' synth tri fmod 60'
+SOX_ARGS += ' synth sine amod 60' # Now REALLY gravelly.
+#SOX_ARGS += ' synth tri amod 60'
 SOX_ARGS += ' chorus 0.7 0.9 55 0.4 0.25 2 -t'
 SOX_ARGS += ' phaser 0.9 0.85 4 0.23 1.3 -s'
-SOX_ARGS += ' echos 0.8 0.5 100 0.25 10 0.25'
+SOX_ARGS += ' compand 0.01,1 -90,-90,-70,-70,-60,-20,0,0 -5 -20' # Dynamic range compression.
+SOX_ARGS += ' echos 0.8 0.5 100 0.25 10 0.25' # Good with stretch, otherwise sounds like bees.
 SOX_ARGS += ' bass -40'
 SOX_ARGS += ' highpass 22 highpass 22'
+#SOX_ARGS += ' delay 0.5'
 SOX_ARGS += ' norm'
 
 # Have to do the trimming seperately.
-PRE_SOX_ARGS = 'trim 0 -0.2' # Trim off last 0.2s.
+PRE_SOX_ARGS = 'trim 0 -0.1' # Trim off last 0.1s.
 
 # Shit we shouldn't change or overwrite. (Boops, pauses, etc)
 preexisting=[
@@ -91,6 +102,7 @@ def cmd(command):
 	try:
 		#if subprocess.call(command,shell=True) != 0:
 		output = subprocess.check_output(command,stderr=subprocess.STDOUT,shell=True)
+		logging.debug(output)
 		return True
 	except Exception as e:
 		logging.error(output)
@@ -102,6 +114,12 @@ class Pronunciation:
 		self.syllables=[]
 		self.name=[]
 		self.type='n'
+		self.phoneConv = {
+			'mrpa': {
+				'ae': 'a',
+				'ih': 'i',
+			}
+		}
 		# DMU phonemes + pau
 		self.validPhonemes=[
 			'aa',
@@ -175,6 +193,10 @@ class Pronunciation:
 				if phoneme not in self.validPhonemes:
 					logging.error('INVALID PHONEME "{0}" IN LEX ENTRY "{1}"'.format(phoneme,self.name))
 					sys.exit(1)
+				if PHONESET in self.phoneConv:
+					phoneset = self.phoneConv[PHONESET]
+					if phoneme in phoneset:
+						phoneme = phoneset[phoneme]
 				phonemes += [phoneme]
 			self.syllables += [(phonemes, stressLevel)]
 		logging.info('Parsed {0} as {1}.'.format(pronunciation,repr(self.syllables)))
