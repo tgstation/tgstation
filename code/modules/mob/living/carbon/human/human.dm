@@ -5,46 +5,44 @@
 	voice_name = "unknown"
 	icon = 'icons/mob/human.dmi'
 	icon_state = "body_m_s"
-	var/list/hud_list = list()
+	var/list/hud_list[9]
 	var/datum/species/species //Contains icon generation and language information, set during New().
+	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
 
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
 
-/mob/living/carbon/human/skrell/New()
+/mob/living/carbon/human/skrell/New(var/new_loc)
 	h_style = "Skrell Male Tentacles"
-	set_species("Skrell")
-	..()
+	..(new_loc, "Skrell")
 
-/mob/living/carbon/human/tajaran/New()
+/mob/living/carbon/human/tajaran/New(var/new_loc)
 	h_style = "Tajaran Ears"
-	set_species("Tajaran")
-	..()
+	..(new_loc, "Tajaran")
 
-/mob/living/carbon/human/unathi/New()
+/mob/living/carbon/human/unathi/New(var/new_loc)
 	h_style = "Unathi Horns"
-	set_species("Unathi")
-	..()
+	..(new_loc, "Unathi")
 
-/mob/living/carbon/human/vox/New()
+/mob/living/carbon/human/vox/New(var/new_loc)
 	h_style = "Short Vox Quills"
-	set_species("Vox")
-	..()
+	..(new_loc, "Vox")
 
-/mob/living/carbon/human/skellington/New()
+/mob/living/carbon/human/diona/New(var/new_loc)
+	..(new_loc, "Diona")
+
+/mob/living/carbon/human/skellington/New(var/new_loc)
 	h_style = "Bald"
-	set_species("Skellington")
-	..()
+	..(new_loc, "Skellington")
 
-/mob/living/carbon/human/diona/New()
-	species = new /datum/species/diona(src)
-	..()
-
-/mob/living/carbon/human/New()
+/mob/living/carbon/human/New(var/new_loc, var/new_species = null)
 
 	if(!species)
-		set_species()
+		if(new_species)
+			set_species(new_species)
+		else
+			set_species()
 
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
@@ -54,8 +52,16 @@
 		dna = new /datum/dna(null)
 		dna.species=species.name
 
-	for(var/i=0;i<7;i++) // 2 for medHUDs and 5 for secHUDs
-		hud_list += image('icons/mob/hud.dmi', src, "hudunknown")
+	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudhealth100")
+	hud_list[STATUS_HUD]      = image('icons/mob/hud.dmi', src, "hudhealthy")
+	hud_list[ID_HUD]          = image('icons/mob/hud.dmi', src, "hudunknown")
+	hud_list[WANTED_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[IMPLOYAL_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[IMPCHEM_HUD]     = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[IMPTRACK_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[STATUS_HUD_OOC]  = image('icons/mob/hud.dmi', src, "hudhealthy")
+
 
 	..()
 
@@ -63,7 +69,6 @@
 		dna.real_name = real_name
 
 	prev_gender = gender // Debug for plural genders
-	make_organs()
 	make_blood()
 
 /mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)
@@ -618,6 +623,7 @@
 										modified = 1
 
 										spawn()
+											hud_updateflag |= 1 << WANTED_HUD
 											if(istype(usr,/mob/living/carbon/human))
 												var/mob/living/carbon/human/U = usr
 												U.handle_regular_hud_updates()
@@ -712,10 +718,10 @@
 									counter++
 								if(istype(usr,/mob/living/carbon/human))
 									var/mob/living/carbon/human/U = usr
-									R.fields[text("com_[counter]")] = text("Made by [U.get_authentification_name()] ([U.get_assignment()]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], 2557<BR>[t1]")
+									R.fields[text("com_[counter]")] = text("Made by [U.get_authentification_name()] ([U.get_assignment()]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [game_year]<BR>[t1]")
 								if(istype(usr,/mob/living/silicon/robot))
 									var/mob/living/silicon/robot/U = usr
-									R.fields[text("com_[counter]")] = text("Made by [U.name] ([U.braintype]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], 2557<BR>[t1]")
+									R.fields[text("com_[counter]")] = text("Made by [U.name] ([U.modtype] [U.braintype]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [game_year]<BR>[t1]")
 
 	if (href_list["medical"])
 		if(hasHUD(usr,"medical"))
@@ -742,6 +748,8 @@
 								if(setmedical != "Cancel")
 									R.fields["p_stat"] = setmedical
 									modified = 1
+									if(PDA_Manifest.len)
+										PDA_Manifest.Cut()
 
 									spawn()
 										if(istype(usr,/mob/living/carbon/human))
@@ -839,10 +847,18 @@
 									counter++
 								if(istype(usr,/mob/living/carbon/human))
 									var/mob/living/carbon/human/U = usr
-									R.fields[text("com_[counter]")] = text("Made by [U.get_authentification_name()] ([U.get_assignment()]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], 2557<BR>[t1]")
+									R.fields[text("com_[counter]")] = text("Made by [U.get_authentification_name()] ([U.get_assignment()]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [game_year]<BR>[t1]")
 								if(istype(usr,/mob/living/silicon/robot))
 									var/mob/living/silicon/robot/U = usr
-									R.fields[text("com_[counter]")] = text("Made by [U.name] ([U.braintype]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], 2557<BR>[t1]")
+									R.fields[text("com_[counter]")] = text("Made by [U.name] ([U.modtype] [U.braintype]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [game_year]<BR>[t1]")
+
+	if (href_list["lookitem"])
+		var/obj/item/I = locate(href_list["lookitem"])
+		I.examine()
+
+	if (href_list["lookmob"])
+		var/mob/M = locate(href_list["lookmob"])
+		M.examine()
 	..()
 	return
 
@@ -1105,9 +1121,11 @@
 		O.status &= ~ORGAN_BROKEN
 		O.status &= ~ORGAN_BLEEDING
 		O.status &= ~ORGAN_SPLINTED
+		O.status &= ~ORGAN_CUT_AWAY
 		O.status &= ~ORGAN_ATTACHABLE
 		if (!O.amputated)
 			O.status &= ~ORGAN_DESTROYED
+			O.destspawn = 0
 		O.wounds.Cut()
 		O.heal_damage(1000,1000,1,1)
 
@@ -1187,15 +1205,17 @@
 	if(blood_DNA[M.dna.unique_enzymes])
 		return 0 //already bloodied with this blood. Cannot add more.
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
+	hand_blood_color = blood_color
 	src.update_inv_gloves()	//handles bloody hands overlays and updating
 	verbs += /mob/living/carbon/human/proc/bloody_doodle
 	return 1 //we applied blood to the item
 
-/mob/living/carbon/human/clean_blood()
+/mob/living/carbon/human/clean_blood(var/clean_feet)
 	.=..()
-	if(istype(feet_blood_DNA, /list) && feet_blood_DNA.len)
+	if(clean_feet && !shoes && istype(feet_blood_DNA, /list) && feet_blood_DNA.len)
+		feet_blood_color = null
 		del(feet_blood_DNA)
-		del(feet_blood_color)
+		update_inv_shoes(1)
 		return 1
 
 mob/living/carbon/human/yank_out_object()
@@ -1339,7 +1359,7 @@ mob/living/carbon/human/yank_out_object()
 	else
 		usr << "\blue [self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)]."
 
-/mob/living/carbon/human/proc/set_species(var/new_species,var/on_spawn=0)
+/mob/living/carbon/human/proc/set_species(var/new_species, var/force_organs)
 
 	if(!dna)
 		if(!new_species)
@@ -1358,6 +1378,9 @@ mob/living/carbon/human/yank_out_object()
 
 	species = all_species[new_species]
 
+	if(force_organs || !organs || !organs.len)
+		species.create_organs(src)
+
 	if(species.language)
 		add_language(species.language)
 
@@ -1374,6 +1397,7 @@ mob/living/carbon/human/yank_out_object()
 		update_icons()
 
 	if(species)
+		species.handle_post_spawn(src)
 		return 1
 	else
 		return 0

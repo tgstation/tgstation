@@ -76,6 +76,28 @@ proc/age2agedescription(age)
 		if(70 to INFINITY)	return "elderly"
 		else				return "unknown"
 
+proc/RoundHealth(health)
+	switch(health)
+		if(100 to INFINITY)
+			return "health100"
+		if(70 to 100)
+			return "health80"
+		if(50 to 70)
+			return "health60"
+		if(30 to 50)
+			return "health40"
+		if(18 to 30)
+			return "health25"
+		if(5 to 18)
+			return "health10"
+		if(1 to 5)
+			return "health1"
+		if(-99 to 0)
+			return "health0"
+		else
+			return "health-100"
+	return "0"
+
 /*
 Proc for attack log creation, because really why not
 1 argument is the actor

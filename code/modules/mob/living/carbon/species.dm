@@ -50,6 +50,61 @@
 	var/blood_color = "#A10808" //Red.
 	var/flesh_color = "#FFC896" //Pink.
 
+/datum/species/proc/create_organs(var/mob/living/carbon/human/H) //Handles creation of mob organs.
+	//This is a basic humanoid limb setup.
+	H.organs = list()
+	H.organs_by_name["chest"] = new/datum/organ/external/chest()
+	H.organs_by_name["groin"] = new/datum/organ/external/groin(H.organs_by_name["chest"])
+	H.organs_by_name["head"] = new/datum/organ/external/head(H.organs_by_name["chest"])
+	H.organs_by_name["l_arm"] = new/datum/organ/external/l_arm(H.organs_by_name["chest"])
+	H.organs_by_name["r_arm"] = new/datum/organ/external/r_arm(H.organs_by_name["chest"])
+	H.organs_by_name["r_leg"] = new/datum/organ/external/r_leg(H.organs_by_name["groin"])
+	H.organs_by_name["l_leg"] = new/datum/organ/external/l_leg(H.organs_by_name["groin"])
+	H.organs_by_name["l_hand"] = new/datum/organ/external/l_hand(H.organs_by_name["l_arm"])
+	H.organs_by_name["r_hand"] = new/datum/organ/external/r_hand(H.organs_by_name["r_arm"])
+	H.organs_by_name["l_foot"] = new/datum/organ/external/l_foot(H.organs_by_name["l_leg"])
+	H.organs_by_name["r_foot"] = new/datum/organ/external/r_foot(H.organs_by_name["r_leg"])
+
+	H.internal_organs = list()
+	H.internal_organs_by_name["heart"] = new/datum/organ/internal/heart(H)
+	H.internal_organs_by_name["lungs"] = new/datum/organ/internal/lungs(H)
+	H.internal_organs_by_name["liver"] = new/datum/organ/internal/liver(H)
+	H.internal_organs_by_name["kidney"] = new/datum/organ/internal/kidney(H)
+	H.internal_organs_by_name["brain"] = new/datum/organ/internal/brain(H)
+	H.internal_organs_by_name["eyes"] = new/datum/organ/internal/eyes(H)
+
+	for(var/name in H.organs_by_name)
+		H.organs += H.organs_by_name[name]
+
+	for(var/datum/organ/external/O in H.organs)
+		O.owner = H
+
+	/*
+	if(flags & IS_SYNTHETIC)
+		for(var/datum/organ/external/E in H.organs)
+			if(E.status & ORGAN_CUT_AWAY || E.status & ORGAN_DESTROYED) continue
+			E.status |= ORGAN_ROBOT
+		for(var/datum/organ/internal/I in H.internal_organs)
+			I.mechanize()
+	*/
+
+	return
+
+/datum/species/proc/handle_post_spawn(var/mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
+	return
+
+/datum/species/proc/handle_death(var/mob/living/carbon/human/H) //Handles any species-specific death events (such as dionaea nymph spawns).
+	/*
+	if(flags & IS_SYNTHETIC)
+		//H.make_jittery(200) //S-s-s-s-sytem f-f-ai-i-i-i-i-lure-ure-ure-ure
+		H.h_style = ""
+		spawn(100)
+			//H.is_jittery = 0
+			//H.jitteriness = 0
+			H.update_hair()
+	*/
+	return
+
 /datum/species/proc/say_filter(mob/M, message, datum/language/speaking)
 	return message
 

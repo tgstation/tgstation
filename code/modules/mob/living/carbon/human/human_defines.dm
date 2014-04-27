@@ -53,6 +53,9 @@
 
 	var/failed_last_breath = 0 //This is used to determine if the mob failed a breath. If they did fail a brath, they will attempt to breathe each tick, otherwise just once per 4 ticks.
 
+	var/last_dam = -1	//Used for determining if we need to process all organs or just some or even none.
+	var/list/bad_external_organs = list()// organs we check until they are good.
+
 	var/xylophone = 0 //For the spoooooooky xylophone cooldown
 
 	var/mob/remoteview_target = null

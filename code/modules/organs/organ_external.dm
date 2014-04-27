@@ -12,6 +12,7 @@
 	var/burn_dam = 0
 	var/max_damage = 0
 	var/max_size = 0
+	var/last_dam = -1
 
 	var/display_name
 	var/list/wounds = list()
@@ -193,7 +194,9 @@ This function completely restores a damaged organ to perfect condition.
 */
 /datum/organ/external/proc/rejuvenate()
 	damage_state = "00"
-	status = 0
+	// Robotic organs stay robotic.  Fix because right click rejuvinate makes IPC's organs organic.
+	// N3X: Use bitmask to exclude shit we don't want.
+	status=status & (ORGAN_ROBOT|ORGAN_PEG)
 	perma_injury = 0
 	brute_dam = 0
 	burn_dam = 0
@@ -221,8 +224,8 @@ This function completely restores a damaged organ to perfect condition.
 			if(W.amount == 1 && W.started_healing())
 				W.open_wound(damage)
 				if(prob(25))
-					owner.visible_message("\red The wound on [owner.name]'s [display_name] widens with a nasty ripping noise.",\
-					"\red The wound on your [display_name] widens with a nasty ripping noise.",\
+					owner.visible_message("\red The wound on [owner.name]'s [display_name] widens with a nasty ripping voice.",\
+					"\red The wound on your [display_name] widens with a nasty ripping voice.",\
 					"You hear a nasty ripping noise, as if flesh is being torn apart.")
 				return
 
@@ -265,6 +268,19 @@ This function completely restores a damaged organ to perfect condition.
 			   PROCESSING & UPDATING
 ****************************************************/
 
+//Determines if we even need to process this organ.
+
+/datum/organ/external/proc/need_process()
+	if(status && status & (ORGAN_ROBOT|ORGAN_PEG)) // If it's robotic OR PEG, that's fine it will have a status.
+		return 1
+	if(brute_dam || burn_dam)
+		return 1
+	if(last_dam != brute_dam + burn_dam) // Process when we are fully healed up.
+		last_dam = brute_dam + burn_dam
+		return 1
+	last_dam = brute_dam + burn_dam
+	return 0
+
 /datum/organ/external/process()
 	// Process wounds, doing healing etc. Only do this every few ticks to save processing power
 	if(owner.life_tick % wound_update_accuracy == 0)
@@ -295,7 +311,6 @@ This function completely restores a damaged organ to perfect condition.
 		perma_injury = 0
 
 	update_germs()
-	update_icon()
 	return
 
 //Updating germ levels. Handles organ germ levels and necrosis.
@@ -304,10 +319,10 @@ This function completely restores a damaged organ to perfect condition.
 #define GANGREN_LEVEL_TERMINAL	2500
 #define GERM_TRANSFER_AMOUNT	germ_level/500
 /datum/organ/external/proc/update_germs()
-	if(status & (ORGAN_ROBOT|ORGAN_PEG)) //how does robot limb have da germs?
-		if(germ_level > 0)
-			germ_level = 0
+	if(status & (ORGAN_ROBOT|ORGAN_PEG|ORGAN_DESTROYED)) //how does robot limb have da germs?
+		germ_level = 0
 		return
+
 	if(germ_level > 0 && owner.bodytemperature >= 170)	//cryo stops germs from moving and doing their bad stuffs
 		//Syncing germ levels with external wounds
 		for(var/datum/wound/W in wounds)
@@ -899,6 +914,9 @@ obj/item/weapon/organ/head
 	var/mob/living/carbon/brain/brainmob
 	var/brain_op_stage = 0
 
+/obj/item/weapon/organ/head/posi
+	name = "robotic head"
+
 obj/item/weapon/organ/head/New(loc, mob/living/carbon/human/H)
 	if(istype(H))
 		src.icon_state = H.gender == MALE? "head_m" : "head_f"
@@ -971,7 +989,7 @@ obj/item/weapon/organ/head/attackby(obj/item/weapon/W as obj, mob/user as mob)
 		switch(brain_op_stage)
 			if(1)
 				for(var/mob/O in (oviewers(brainmob) - user))
-					O.show_message("\red [brainmob] has \his skull sawed open with [W] by [user].", 1)
+					O.show_message("\red [brainmob] has \his head sawed open with [W] by [user].", 1)
 				brainmob << "\red [user] begins to saw open your head with [W]!"
 				user << "\red You saw [brainmob]'s head open with [W]!"
 

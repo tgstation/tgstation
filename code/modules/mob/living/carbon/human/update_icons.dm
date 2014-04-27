@@ -337,13 +337,12 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 	if(f_style)
 		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[f_style]
-		if(facial_hair_style)
-			if(src.species.name in facial_hair_style.species_allowed)
-				var/icon/facial_s = new/icon("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s")
-				if(facial_hair_style.do_colouration)
-					facial_s.Blend(rgb(r_facial, g_facial, b_facial), ICON_ADD)
+		if(facial_hair_style && src.species.name in facial_hair_style.species_allowed)
+			var/icon/facial_s = new/icon("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s")
+			if(facial_hair_style.do_colouration)
+				facial_s.Blend(rgb(r_facial, g_facial, b_facial), ICON_ADD)
 
-				face_standing.Blend(facial_s, ICON_OVERLAY)
+			face_standing.Blend(facial_s, ICON_OVERLAY)
 
 	if(h_style && !(head && (head.flags & BLOCKHEADHAIR)))
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
@@ -367,6 +366,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 	var/add_image = 0
 	var/g = "m"
 	if(gender == FEMALE)	g = "f"
+	// DNA2 - Drawing underlays.
 	for(var/datum/dna/gene/gene in dna_genes)
 		if(!gene.block)
 			continue
@@ -542,6 +542,10 @@ proc/get_damage_icon_part(damage_state, body_part)
 			overlays_standing[ID_LAYER]	= null
 	else
 		overlays_standing[ID_LAYER]	= null
+
+	hud_updateflag |= 1 << ID_HUD
+	hud_updateflag |= 1 << WANTED_HUD
+
 	if(update_icons)   update_icons()
 
 /mob/living/carbon/human/update_inv_gloves(var/update_icons=1)
