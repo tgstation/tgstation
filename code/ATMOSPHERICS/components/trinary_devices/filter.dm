@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/trinary/filter
 	icon = 'icons/obj/atmospherics/filter.dmi'
-	icon_state = "intact_off"
+	icon_state = "off"
 	density = 1
 
 	name = "gas filter"

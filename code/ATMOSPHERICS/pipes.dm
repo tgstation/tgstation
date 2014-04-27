@@ -70,7 +70,7 @@ Regular pipe
 */
 /obj/machinery/atmospherics/pipe/simple
 	icon = 'icons/obj/pipes.dmi'
-	icon_state = "intact-f"
+	icon_state = "intact"
 
 	name = "pipe"
 	desc = "A one meter section of regular pipe"
@@ -260,7 +260,7 @@ Regular pipe
 
 /obj/machinery/atmospherics/pipe/simple/scrubbers
 	name="scrubbers pipe"
-	color=rgb(255,0,0)
+	pipe_color=rgb(255,0,0)
 
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible
 	level = 2
@@ -270,7 +270,7 @@ Regular pipe
 
 /obj/machinery/atmospherics/pipe/simple/supply
 	name="air supply pipe"
-	color=rgb(0,0,255)
+	pipe_color=rgb(0,0,255)
 
 /obj/machinery/atmospherics/pipe/simple/supply/visible
 	level = 2
@@ -280,7 +280,7 @@ Regular pipe
 
 /obj/machinery/atmospherics/pipe/simple/supplymain
 	name="main air supply pipe"
-	color=rgb(130,43,272)
+	pipe_color=rgb(130,43,272)
 
 /obj/machinery/atmospherics/pipe/simple/supplymain/visible
 	level = 2
@@ -289,7 +289,7 @@ Regular pipe
 	level = 1
 
 /obj/machinery/atmospherics/pipe/simple/yellow
-	color=rgb(255,198,0)
+	pipe_color=rgb(255,198,0)
 
 /obj/machinery/atmospherics/pipe/simple/yellow/visible
 	level = 2
@@ -298,7 +298,7 @@ Regular pipe
 	level = 1
 
 /obj/machinery/atmospherics/pipe/simple/cyan
-	color=rgb(0,256,249)
+	pipe_color=rgb(0,256,249)
 
 /obj/machinery/atmospherics/pipe/simple/cyan/visible
 	level = 2
@@ -307,7 +307,7 @@ Regular pipe
 	level = 1
 
 /obj/machinery/atmospherics/pipe/simple/green
-	color=rgb(30,256,0)
+	pipe_color=rgb(30,256,0)
 
 /obj/machinery/atmospherics/pipe/simple/green/visible
 	level = 2
@@ -602,7 +602,7 @@ Pipe Manifolds
 */
 /obj/machinery/atmospherics/pipe/manifold
 	icon = 'icons/obj/atmospherics/pipe_manifold.dmi'
-	icon_state = "manifold_center"
+	icon_state = "manifold"
 
 	name = "pipe manifold"
 	desc = "A manifold composed of regular pipes"
@@ -785,7 +785,7 @@ Pipe Manifolds
 
 /obj/machinery/atmospherics/pipe/manifold/scrubbers
 	name="scrubbers pipe"
-	color=rgb(255,0,0)
+	pipe_color=rgb(255,0,0)
 
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible
 	level = 2
@@ -795,7 +795,7 @@ Pipe Manifolds
 
 /obj/machinery/atmospherics/pipe/manifold/supply
 	name="air supply pipe"
-	color=rgb(0,0,255)
+	pipe_color=rgb(0,0,255)
 
 /obj/machinery/atmospherics/pipe/manifold/supply/visible
 	level = 2
@@ -805,7 +805,7 @@ Pipe Manifolds
 
 /obj/machinery/atmospherics/pipe/manifold/supplymain
 	name="main air supply pipe"
-	color=rgb(130,43,272)
+	pipe_color=rgb(130,43,272)
 
 /obj/machinery/atmospherics/pipe/manifold/supplymain/visible
 	level = 2
@@ -814,7 +814,7 @@ Pipe Manifolds
 	level = 1
 
 /obj/machinery/atmospherics/pipe/manifold/yellow
-	color=rgb(255,198,0)
+	pipe_color=rgb(255,198,0)
 
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible
 	level = 2
@@ -823,7 +823,7 @@ Pipe Manifolds
 	level = 1
 
 /obj/machinery/atmospherics/pipe/manifold/cyan
-	color=rgb(0,256,249)
+	pipe_color=rgb(0,256,249)
 
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible
 	level = 2
@@ -832,7 +832,7 @@ Pipe Manifolds
 	level = 1
 
 /obj/machinery/atmospherics/pipe/manifold/green
-	color=rgb(30,256,0)
+	pipe_color=rgb(30,256,0)
 
 /obj/machinery/atmospherics/pipe/manifold/green/visible
 	level = 2

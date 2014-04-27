@@ -13,11 +13,9 @@ Thus, the two variables affect pump operation are set in New():
 */
 
 /obj/machinery/atmospherics/binary/pump
-	icon = 'icons/obj/atmospherics/pump.dmi'
-	icon_state = "intact_off"
-
 	name = "gas pump"
 	desc = "A pump"
+	icon_state = "pump_off"
 
 	can_unwrench = 1
 
@@ -28,25 +26,12 @@ Thus, the two variables affect pump operation are set in New():
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
-/obj/machinery/atmospherics/binary/pump/update_icon()
+/obj/machinery/atmospherics/binary/pump/update_icon_nopipes()
 	if(stat & NOPOWER)
-		icon_state = "intact_off"
+		icon_state = "pump_off"
+		return
 
-	icon_state = "intact_[on?"on":"off"]"
-
-	//Add a pipe as underlay
-	//Ideally its color would be src.color but that would color the pump too
-	underlays.Cut()
-
-	var/state
-	if(node1&&node2)
-		state = "intact"
-	else
-		state = "exposed[node1?1:0][node2?1:0]"
-
-	var/image/img = image('icons/obj/pipes.dmi', icon_state=state, dir=src.dir)
-	img.color = src.pipe_color
-	underlays += img
+	icon_state = "pump_[on?"on":"off"]"
 
 /obj/machinery/atmospherics/binary/pump/process()
 	//..()
