@@ -17,6 +17,11 @@
 //	var/silicate = 0 // number of units of silicate
 //	var/icon/silicateIcon = null // the silicated icon
 
+/obj/structure/window/examine()
+	..()
+	if(!anchored)
+		usr << "<span class='notice'>\the [src] appears to be loose.</span>"
+
 /obj/structure/window/bullet_act(var/obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
