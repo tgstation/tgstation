@@ -35,12 +35,13 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	return
 
 /datum/effect/effect/proc/fadeOut(var/atom/A, var/frames = 16)
+	if(frames == 0)
+		frames = 1
 	var/step = A.alpha / frames
 	for(var/i = 0, i < frames, i++)
 		A.alpha -= step
 		sleep(world.tick_lag)
 	return
-
 
 /obj/effect/effect/water/New()
 	..()
