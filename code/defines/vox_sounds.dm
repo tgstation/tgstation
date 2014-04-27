@@ -759,6 +759,7 @@ var/list/vox_sounds = list(
 	"vox_420" = 'sound/vox_fem/vox_420.ogg',
 	"voxtest" = 'sound/vox_fem/voxtest.ogg',
 	"voxtest2" = 'sound/vox_fem/voxtest2.ogg',
+	"voxtest3" = 'sound/vox_fem/voxtest3.ogg',
 	"w" = 'sound/vox_fem/w.ogg',
 	"walk" = 'sound/vox_fem/walk.ogg',
 	"wall" = 'sound/vox_fem/wall.ogg',
