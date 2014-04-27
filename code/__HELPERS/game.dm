@@ -19,7 +19,7 @@
 		else if(istype(Movable, /obj/item/device/radio))
 			ma += Movable
 		else
-			ma = recursive_mob_check(Movable, ma, repeat - 1)
+			ma = recursiveMobCheck(Movable, ma, repeat - 1)
 
 	return ma
 
@@ -54,8 +54,11 @@
 			listeners += M
 
 			if (rmb)
-				listeners = recursive_mob_check(M, listeners)
-		else if(istype(Movable, /obj/item/device/radio))
+				listeners = recursiveMobCheck(M, listeners)
+		else if (istype(Movable, /obj/item/device/radio))
+			listeners += Movable
+
+		else if (istype(Movable, /obj/item/device/mmi))
 			listeners += Movable
 
 	// Don't include if the player is not connected.
