@@ -61,7 +61,8 @@ var/list/masterPool
 	initializePool(list(\
 		/obj/item/weapon/shard,\
 		/obj/item/weapon/shard/plasma,\
-		/obj/structure/grille))
+		/obj/structure/grille,\
+		/obj/effect/effect/sparks))
 
 	world << "\red \b Object Pool Creation Complete!"
 
