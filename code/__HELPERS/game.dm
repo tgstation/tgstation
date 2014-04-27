@@ -14,9 +14,11 @@
 		return ma
 
 	for(var/atom/movable/Movable in O.contents)
-		if(ismob(Movable))
+		if (ismob(Movable))
 			ma += Movable
-		else if(istype(Movable, /obj/item/device/radio))
+		else if (istype(Movable, /obj/item/device/radio))
+			ma += Movable
+		else if (istype(Movable, /obj/item/device/mmi))
 			ma += Movable
 		else
 			ma = recursiveMobCheck(Movable, ma, repeat - 1)
