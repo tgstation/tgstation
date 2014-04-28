@@ -86,7 +86,7 @@ datum/shuttle_controller
 	proc/timeleft()
 		if(online)
 			var/timeleft = round((endtime - world.timeofday)/10 ,1)
-			if(timeleft > MIDNIGHT_ROLLOVER) // midnight rollover protection
+			if(timeleft > (MIDNIGHT_ROLLOVER/10)) // midnight rollover protection
 				endtime -= MIDNIGHT_ROLLOVER // subtract 24 hours from endtime
 				timeleft = round((endtime - world.timeofday)/10 ,1) // recalculate timeleft
 			if(direction == 1)
