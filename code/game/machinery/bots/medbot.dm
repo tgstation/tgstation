@@ -104,6 +104,7 @@
 	if (.)
 		return
 	var/dat
+	dat += hack(user)
 	dat += "<TT><B>Automatic Medical Unit v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
 	dat += "Maintenance panel panel is [src.open ? "opened" : "closed"]<BR>"
@@ -143,7 +144,7 @@
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if ((href_list["power"]) && (src.allowed(usr)))
-		if (src.on)
+		if (src.on && !src.emagged)
 			turn_off()
 		else
 			turn_on()
@@ -177,6 +178,17 @@
 	else if ((href_list["togglevoice"]) && (!src.locked || issilicon(usr)))
 		src.shut_up = !src.shut_up
 
+	else if (href_list["operation"])
+		if(!src.emagged)
+			src.emagged = 2
+			src.hacked = 1
+			usr << "<span class='warning'>You corrupt [src]'s reagent processor circuits.</span>"
+		else if(!src.hacked)
+			usr << "<span class='userdanger'>[src] seems damaged and does not respond to reprogramming!</span>"
+		else
+			src.hacked = 0
+			src.emagged = 0
+			usr << "<span class='notice'>You reset [src]'s reagent circuits.</span>"
 	src.updateUsrDialog()
 	return
 
