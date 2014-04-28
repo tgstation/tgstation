@@ -17,8 +17,6 @@
 		var/datum/surgery/S = new path()
 		surgeries_list[S.name] = S
 
-	init_subtypes(/datum/table_recipe, table_recipes)
-
 /* // Uncomment to debug chemical reaction list.
 /client/verb/debug_chemical_list()
 

@@ -9,6 +9,7 @@
 	var/last_bumped = 0
 	var/pass_flags = 0
 	var/throwpass = 0
+	var/datum/crafting_holder/craft_holder = null
 
 	///Chemistry.
 	var/datum/reagents/reagents = null

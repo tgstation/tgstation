@@ -114,6 +114,7 @@
 #include "code\datums\ai_laws.dm"
 #include "code\datums\browser.dm"
 #include "code\datums\computerfiles.dm"
+#include "code\datums\crafting.dm"
 #include "code\datums\datacore.dm"
 #include "code\datums\datumvars.dm"
 #include "code\datums\disease.dm"

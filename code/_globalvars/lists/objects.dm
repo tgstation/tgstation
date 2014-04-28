@@ -11,4 +11,3 @@ var/global/list/active_diseases = list()
 var/global/list/chemical_reactions_list				//list of all /datum/chemical_reaction datums. Used during chemical reactions
 var/global/list/chemical_reagents_list				//list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
 var/global/list/surgeries_list = list()				//list of all surgeries by name, associated with their path.
-var/global/list/table_recipes = list()				//list of all table craft recipes
