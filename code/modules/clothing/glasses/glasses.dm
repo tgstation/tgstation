@@ -201,3 +201,10 @@
 	desc = "A set of implantable lenses designed to augment your vision"
 	icon_state = "thermalimplants"
 	item_state = "syringe_kit"
+
+/obj/item/clothing/glasses/simonglasses
+	name = "Simon's Glasses"
+	desc = "Just who the hell do you think I am?"
+	icon_state = "simonglasses"
+	item_state = "simonglasses"
+	cover_hair = 1

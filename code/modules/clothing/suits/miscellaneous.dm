@@ -349,3 +349,9 @@
 	icon_state = "swim_red"
 	_color = "swim_red"
 	siemens_coefficient = 1
+
+/obj/item/clothing/suit/simonjacket
+	name = "Simon's Jacket"
+	desc = "Now you too can pierce the heavens"
+	icon_state = "simonjacket"
+	item_state = "simonjacket"
