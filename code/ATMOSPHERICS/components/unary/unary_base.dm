@@ -20,9 +20,6 @@
 
 	air_contents.volume = 200
 
-	if(level == 2)
-		showpipe = 1
-
 //Separate this because we don't need to update pipe icons if we just are going to change the state
 /obj/machinery/atmospherics/unary/proc/update_icon_nopipes()
 	return
@@ -47,7 +44,6 @@
 
 /obj/machinery/atmospherics/unary/hide(var/intact)
 	showpipe = !intact
-
 	update_icon()
 
 	..(intact)
@@ -86,6 +82,9 @@
 				target.initialize(1)
 			break
 	build_network()
+
+	if(level == 2)
+		showpipe = 1
 
 	update_icon()
 
