@@ -142,20 +142,19 @@ steam.start() -- spawns the effect
 
 /obj/effect/effect/sparks
 	name = "sparks"
+	desc = "it's a spark what do you need to know?"
 	icon_state = "sparks"
-	var/amount = 6.0
 	anchored = 1.0
 	mouse_opacity = 0
 
+	var/amount = 6.0
+
 /obj/effect/effect/sparks/New()
 	..()
-	playsound(get_turf(src), "sparks", 100, 1)
-	var/turf/T = src.loc
+	var/turf/T = loc
+
 	if (istype(T, /turf))
-		T.hotspot_expose(1000,100)
-	spawn (100)
-		delete()
-	return
+		T.hotspot_expose(1000, 100)
 
 /obj/effect/effect/sparks/Destroy()
 	var/turf/T = src.loc
@@ -172,42 +171,36 @@ steam.start() -- spawns the effect
 	return
 
 /datum/effect/effect/system/spark_spread
-	var/total_sparks = 0 // To stop it being spammed and lagging!
-
 	set_up(n = 3, c = 0, loca)
-		if(n > 10)
-			n = 10
-		number = n
+		number = n > 10 ? 10 : n
 		cardinals = c
-		if(istype(loca, /turf/))
+
+		if (istype(loca, /turf/))
 			location = loca
 		else
 			location = get_turf(loca)
 
 	start()
-		var/i = 0
-		for(i=0, i<src.number, i++)
-			if(src.total_sparks > 20)
-				return
-			spawn(0)
-				if(holder)
-					src.location = get_turf(holder)
-				var/obj/effect/effect/sparks/sparks = new /obj/effect/effect/sparks(src.location)
-				src.total_sparks++
+		for (var/i = 1 to number)
+			spawn()
+				if (holder)
+					location = get_turf(holder)
+
+				var/obj/effect/effect/sparks/sparks = getFromPool(/obj/effect/effect/sparks, location)
+				playsound(location, "sparks", 100, 1)
 				var/direction
-				if(src.cardinals)
+
+				if (cardinals)
 					direction = pick(cardinal)
 				else
 					direction = pick(alldirs)
-				for(i=0, i<pick(1,2,3), i++)
+
+				for (var/j = 0, j < pick(1, 2, 3), j++)
 					sleep(5)
-					step(sparks,direction)
-				spawn(20)
-					if(sparks)
-						if(sparks) sparks.delete()
-					src.total_sparks--
+					step(sparks, direction)
 
-
+				sleep(20)
+				returnToPool(sparks)
 
 /////////////////////////////////////////////
 //// SMOKE SYSTEMS
