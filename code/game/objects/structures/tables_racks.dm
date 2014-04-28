@@ -35,12 +35,20 @@
 			var/obj/structure/table/T = locate(/obj/structure/table,get_step(src,direction))
 			T.update_icon()
 
+	craft_holder = new craft_holder()
+	craft_holder.recipes = crafting_master.all_crafting_recipes
+
 /obj/structure/table/Destroy()
 	for(var/direction in list(1,2,4,8,5,6,9,10))
 		if(locate(/obj/structure/table,get_step(src,direction)))
 			var/obj/structure/table/T = locate(/obj/structure/table,get_step(src,direction))
 			T.update_icon()
 	..()
+
+/obj/structure/table/MouseDrop(atom/over)
+	if(usr.stat || usr.lying || !Adjacent(usr) || (over != usr))
+		return
+	craft_holder.interact(usr)
 
 /obj/structure/table/update_icon()
 	spawn(2) //So it properly updates when deleting
