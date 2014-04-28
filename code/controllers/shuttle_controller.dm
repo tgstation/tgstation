@@ -86,7 +86,10 @@ datum/shuttle_controller
 	proc/timeleft()
 		if(online)
 			var/timeleft = round((endtime - world.timeofday)/10 ,1)
-			if(direction == 1 || direction == 2)
+			if(timeleft > MIDNIGHT_ROLLOVER) // midnight rollover protection
+				endtime -= MIDNIGHT_ROLLOVER // subtract 24 hours from endtime
+				timeleft = round((endtime - world.timeofday)/10 ,1) // recalculate timeleft
+			if(direction == 1)
 				return timeleft
 			else
 				return SHUTTLEARRIVETIME-timeleft
@@ -146,11 +149,9 @@ datum/shuttle_controller
 			if(!online)
 				return
 			var/timeleft = timeleft()
-			if(timeleft > 1e5)		// midnight rollover protection
-				timeleft = 0
 			if(location == UNDOCKED)
 				if(direction == -1)
-					if(timeleft >= timelimit)
+					if(timeleft >= timelimit) // Shuttle reaches CentCom after being recalled.
 						online = 0
 						direction = 1
 						endtime = null
