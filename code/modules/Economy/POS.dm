@@ -121,7 +121,7 @@ var/const/POS_HEADER = {"<html>
 #define POS_SCREEN_SETTINGS 6
 /obj/machinery/pos
 	icon = 'icons/obj/machines/pos.dmi'
-	icon_state = "pos1"
+	icon_state = "pos"
 	density = 0
 	name = "point of sale"
 	desc = "Also known as a cash register, or, more commonly, \"robbery magnet\"."
@@ -147,6 +147,7 @@ var/const/POS_HEADER = {"<html>
 		linked_account = department_accounts[department]
 	else
 		linked_account = station_account
+	update_icon()
 
 /obj/machinery/pos/proc/AddToOrder(var/name, var/units)
 	if(!(name in products))
