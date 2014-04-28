@@ -1060,6 +1060,10 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Vault"
 	icon_state = "nuke_storage"
 
+/area/ai_monitored/nuke_storage
+	name = "\improper Vault"
+	icon_state = "nuke_storage"
+
 /area/security/checkpoint
 	name = "\improper Security Checkpoint"
 	icon_state = "checkpoint1"
