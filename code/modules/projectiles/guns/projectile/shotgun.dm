@@ -26,12 +26,16 @@
 	return
 
 /obj/item/weapon/gun/projectile/shotgun/attack_self(mob/living/user)
-	if(recentpump)	return
-	pump(user)
-	recentpump = 1
-	spawn(10)
-		recentpump = 0
-	return
+	if(user.get_inactive_hand())
+		user << "<span class='warning'>You need both hands to pump \the [src]!</span>"
+		return
+	else
+		if(recentpump)        return
+		pump(user)
+		recentpump = 1
+		spawn(10)
+			recentpump = 0
+		return
 
 
 /obj/item/weapon/gun/projectile/shotgun/proc/pump(mob/M)
