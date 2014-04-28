@@ -28,7 +28,9 @@
 	internal_organs += new /obj/item/organ/brain
 
 	for(var/i=0;i<7;i++) // 2 for medHUDs and 5 for secHUDs
-		hud_list += image('icons/mob/hud.dmi', src, "hudunknown")
+		var/image/I = image('icons/mob/hud.dmi', src, "hudunknown")
+		I.transform = matrix(-lying, MATRIX_ROTATE)
+		hud_list += I
 
 	..()
 
