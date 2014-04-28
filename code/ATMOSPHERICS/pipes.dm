@@ -17,8 +17,12 @@
 /obj/machinery/atmospherics/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if (istype(W, /obj/item/device/analyzer) && get_dist(user, src) <= 1)
 		atmosanalyzer_scan(parent.air, user)
-	else
-		return ..()
+		return 1
+
+	if(istype(W,/obj/item/device/pipe_painter))
+		return
+
+	return ..()
 
 /obj/machinery/atmospherics/pipe/proc/pipeline_expansion()
 	return null
