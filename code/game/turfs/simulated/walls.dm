@@ -282,6 +282,7 @@
 /turf/simulated/wall/proc/thermitemelt(mob/user as mob)
 	if(mineral == "diamond")
 		return
+
 	overlays = list()
 	var/obj/effect/overlay/O = new/obj/effect/overlay( src )
 	O.name = "thermite"
@@ -292,6 +293,8 @@
 	O.opacity = 1
 	O.density = 1
 	O.layer = 5
+
+	playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
 	if(thermite >= 50)
 		var/turf/simulated/floor/F = ChangeTurf(/turf/simulated/floor/plating)
