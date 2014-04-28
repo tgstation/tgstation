@@ -8992,7 +8992,7 @@
 "dqV" = (/obj/machinery/atmospherics/unary/vent_scrubber{dir = 1; on = 1},/turf/simulated/floor{icon_state = "dark"},/area/turret_protected/ai)
 "dqW" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/wall/r_wall,/area/turret_protected/ai)
 "dqX" = (/obj/machinery/light_switch{pixel_y = 28},/turf/simulated/floor/bluegrid,/area/turret_protected/ai)
-"dqY" = (/obj/machinery/camera/motion{c_tag = "AI Chamber South"; dir = 1; network = list("RD","MiniSat")},/turf/simulated/floor/bluegrid,/area/turret_protected/ai)
+"dqY" = (/obj/machinery/camera{c_tag = "AI Chamber North"; dir = 2; network = list("MiniSat","RD"); pixel_x = 0; pixel_y = 0},/turf/simulated/floor/bluegrid,/area/turret_protected/ai)
 "dqZ" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 1; on = 1},/turf/simulated/floor{icon_state = "dark"},/area/turret_protected/ai)
 "dra" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/machinery/light/small{dir = 4},/obj/machinery/atmospherics/pipe/simple/supply/hidden{req_access_txt = 1},/obj/machinery/camera{c_tag = "MiniSat Exterior North West"; dir = 8; network = list("MiniSat"); pixel_x = 0; pixel_y = 0},/turf/simulated/floor/plating,/area/aisat)
 "drb" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor,/area/assembly/chargebay)
