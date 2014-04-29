@@ -332,7 +332,7 @@
 		usr.visible_message("\red <b>[usr.name]</b> takes a huge leap!")
 		playsound(usr.loc, 'sound/weapons/thudswoosh.ogg', 50, 1)
 		var/prevLayer = usr.layer
-		usr.layer = 15
+		usr.layer = 9
 
 		for(var/i=0, i<10, i++)
 			step(usr, usr.dir)

@@ -112,15 +112,16 @@ Please contact me on #coderbus IRC. ~Carn x
 #define SUIT_STORE_LAYER		13
 #define BACK_LAYER				14
 #define HAIR_LAYER				15		//TODO: make part of head layer?
-#define FACEMASK_LAYER			16
-#define HEAD_LAYER				17
-#define HANDCUFF_LAYER			18
-#define LEGCUFF_LAYER			19
-#define L_HAND_LAYER			20
-#define R_HAND_LAYER			21
-#define TAIL_LAYER				22		//bs12 specific. this hack is probably gonna come back to haunt me
-#define TARGETED_LAYER			23		//BS12: Layer for the target overlay from weapon targeting system
-#define TOTAL_LAYERS			24
+#define GLASSES_OVER_HAIR_LAYER	16
+#define FACEMASK_LAYER			17
+#define HEAD_LAYER				18
+#define HANDCUFF_LAYER			19
+#define LEGCUFF_LAYER			20
+#define L_HAND_LAYER			21
+#define R_HAND_LAYER			22
+#define TAIL_LAYER				23		//bs12 specific. this hack is probably gonna come back to haunt me
+#define TARGETED_LAYER			24		//BS12: Layer for the target overlay from weapon targeting system
+#define TOTAL_LAYERS			25
 //////////////////////////////////
 
 /mob/living/carbon/human
@@ -571,7 +572,12 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 /mob/living/carbon/human/update_inv_glasses(var/update_icons=1)
 	if(glasses)
-		overlays_standing[GLASSES_LAYER]	= image("icon" = ((glasses.icon_override) ? glasses.icon_override : 'icons/mob/eyes.dmi'), "icon_state" = "[glasses.icon_state]")
+
+		if(glasses.cover_hair)
+			overlays_standing[GLASSES_OVER_HAIR_LAYER]	= image("icon" = ((glasses.icon_override) ? glasses.icon_override : 'icons/mob/eyes.dmi'), "icon_state" = "[glasses.icon_state]")
+		else
+			overlays_standing[GLASSES_LAYER]	= image("icon" = ((glasses.icon_override) ? glasses.icon_override : 'icons/mob/eyes.dmi'), "icon_state" = "[glasses.icon_state]")
+
 	else
 		overlays_standing[GLASSES_LAYER]	= null
 	if(update_icons)   update_icons()
