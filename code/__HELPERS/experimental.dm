@@ -48,7 +48,7 @@
  * WARNING, only supports /mob and /obj.
  */
 
-#define DEBUG_OBJECT_POOL 0
+#define DEBUG_OBJECT_POOL 1
 #define STARTING_OBJECT_POOL_COUNT 20
 
 var/list/masterPool
@@ -63,6 +63,8 @@ var/list/masterPool
 		/obj/item/weapon/shard/plasma,\
 		/obj/structure/grille,\
 		/obj/effect/effect/sparks))
+
+	initializePool(typesof(/obj/item/projectile/beam))
 
 	world << "\red \b Object Pool Creation Complete!"
 
@@ -96,15 +98,9 @@ var/list/masterPool
  * A, object type
  * B, location to spawn
  *
- * @return
- * -1, if B is not a location
- *
  * Example call: getFromPool(/obj/item/weapon/shard, loc)
  */
 /proc/getFromPool(const/A, const/B)
-	if (isloc(B) == 0)
-		return -1
-
 	if (isnull(masterPool[A]))
 		#if DEBUG_OBJECT_POOL
 		world << "DEBUG_OBJECT_POOL: new proc has been called ([A])."
@@ -164,4 +160,9 @@ var/list/masterPool
  *
  * Example: see, code\game\objects\structures\grille.dm
  */
-/atom/movable/proc/resetVariables()
+/atom/movable
+	proc/resetVariables()
+		density = initial(density)
+		icon = initial(icon)
+		icon_state = initial(icon_state)
+		dir = initial(dir)
