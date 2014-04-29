@@ -10,6 +10,11 @@
  */
 var/list/beam_master = list()
 
+// Special laser the captains gun uses
+/obj/item/projectile/beam/captain
+	name = "captain laser"
+	damage = 40
+
 /obj/item/projectile/beam/lightning
 	invisibility = 101
 	name = "lightning"
@@ -186,11 +191,6 @@ var/list/beam_master = list()
 	flag = "laser"
 	eyeblur = 4
 	var/frequency = 1
-
-	// Special laser the captains gun uses
-	captain
-		name = "captain laser"
-		damage = 40
 
 	process()
 		var/reference = "\ref[src]" //So we do not have to recalculate it a ton
