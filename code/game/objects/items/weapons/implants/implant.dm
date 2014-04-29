@@ -337,7 +337,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		var/mob/living/carbon/human/H = M
 		if(M == user)
 			user << "<span class='notice'>You feel quite stupid for doing that.</span>"
-			if(isliving(user)
+			if(isliving(user))
 				user:brainloss += 10
 			return
 		if(locate(/obj/item/weapon/implant/traitor) in H.contents || locate(/obj/item/weapon/implant/traitor) in H.contents)
