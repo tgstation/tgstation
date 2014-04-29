@@ -152,11 +152,8 @@
 	on = !on
 	update_icon()
 	if(on)
-		if (M.loc == loc)
-			wash(M)
-			check_heat(M)
 		for (var/atom/movable/G in loc)
-			G.clean_blood()
+			Crossed(G)
 
 
 /obj/machinery/shower/attackby(obj/item/I, mob/user)
