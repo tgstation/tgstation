@@ -49,7 +49,6 @@
 /obj/structure/table/MouseDrop(atom/over)
 	if(usr.stat || usr.lying || !Adjacent(usr) || (over != usr))
 		return
-	world << "craft holder interact is attempting to be called"
 	craft_holder.interact(usr)
 
 /obj/structure/table/update_icon()
