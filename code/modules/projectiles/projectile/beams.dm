@@ -205,6 +205,9 @@ var/list/beam_master = list()
 				return
 			step_towards(src, current) //Move~
 
+			if (isnull(loc))
+				return
+
 			if(kill_count < 1)
 				//del(src)
 				returnToPool(src)

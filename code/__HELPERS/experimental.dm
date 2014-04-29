@@ -48,7 +48,7 @@
  * WARNING, only supports /mob and /obj.
  */
 
-#define DEBUG_OBJECT_POOL 0
+#define DEBUG_OBJECT_POOL 1
 #define MAINTAINING_OBJECT_POOL_COUNT 20
 
 var/list/masterPool = list()
@@ -100,11 +100,10 @@ var/list/masterPool = list()
 
 	if (isnull(masterPool[Object.type]))
 		#if DEBUG_OBJECT_POOL
-		world << "DEBUG_OBJECT_POOL: [Object.type] pool is empty, recreating list."
+		world << "DEBUG_OBJECT_POOL: [Object.type] pool is empty, recreating pool."
 		#endif
 
 		masterPool[Object.type] = list()
-	// A way to limit
 	else if (length(masterPool[Object.type]) > MAINTAINING_OBJECT_POOL_COUNT)
 		#if DEBUG_OBJECT_POOL
 		world << "DEBUG_OBJECT_POOL: returnToPool([Object.type]) exceeds [num2text(MAINTAINING_OBJECT_POOL_COUNT)] discarding..."

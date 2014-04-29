@@ -109,7 +109,7 @@
 
 	Bump(atom/A as mob|obj|turf|area)
 		if(A == firer)
-			loc = A.loc
+			//loc = A.loc
 			return 0 //cannot shoot yourself
 
 		if(bumped)	return 0
@@ -198,6 +198,7 @@
 			if(!istype(src, /obj/item/projectile/beam/lightning))
 				density = 0
 				invisibility = 101
+			//del(src)
 			returnToPool(src)
 		return 1
 
@@ -215,6 +216,7 @@
 		if(kill_count < 1)
 			//del(src)
 			returnToPool(src)
+			return
 		kill_count--
 		spawn while(src)
 			if((!( current ) || loc == current))
