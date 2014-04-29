@@ -11,21 +11,25 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/snackbar/update_icon()
 	var/icon/I = icon('icons/obj/food.dmi', "snackbar")
-	I += mix_color_from_reagents(reagents.reagent_list)
+	if(reagents.reagent_list)
+		I += mix_color_from_reagents(reagents.reagent_list)
 	src.icon = I
 
 /obj/item/weapon/reagent_containers/food/snacks/snackbar/proc/update_name()
-	var/newname = ""
-	var/i = 0
-	for(var/datum/reagent/r in reagents.reagent_list)
-		i++
-		if(i == 1)
-			newname += "[r.name]"
-		else if(i == reagents.reagent_list.len)
-			newname += " and [r.name]"
-		else
-			newname += ", [r.name]"
-	name = lowertext("[newname] snack bar")
+	if(reagents.reagent_list)
+		var/newname = ""
+		var/i = 0
+		for(var/datum/reagent/r in reagents.reagent_list)
+			i++
+			if(i == 1)
+				newname += "[r.name]"
+			else if(i == reagents.reagent_list.len)
+				newname += " and [r.name]"
+			else
+				newname += ", [r.name]"
+		name = lowertext("[newname] snack bar")
+	else
+		name = "snack bar"
 
 
 //Instances for mapping
