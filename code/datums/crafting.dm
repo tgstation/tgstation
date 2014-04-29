@@ -1,4 +1,4 @@
-var/global/datum/crafting_controller/crafting_master = new()
+var/global/datum/crafting_controller/crafting_master
 
 /datum/crafting_recipe
 	var/name = ""
@@ -11,7 +11,8 @@ var/global/datum/crafting_controller/crafting_master = new()
 	var/can_be_deconstructed = 0
 
 /datum/crafting_recipe/New()
-	crafting_master.all_crafting_recipes.Add(src)
+	spawn(10)
+		crafting_master.all_crafting_recipes |= src
 
 //////////////////////////////////////
 //                                  //
@@ -112,8 +113,7 @@ var/global/datum/crafting_controller/crafting_master = new()
 	var/list/all_crafting_recipes = list()
 
 /datum/crafting_controller/New()
-	for(var/datum/crafting_recipe/A in typesof(/datum/crafting_recipe))
-		all_crafting_recipes.Add(new A())
+	init_subtypes(/datum/crafting_recipe, all_crafting_recipes)
 
 /datum/crafting_controller/proc/add_family(name, list/members)
 	var/list/family = members
@@ -150,7 +150,9 @@ var/global/datum/crafting_controller/crafting_master = new()
 
 /datum/crafting_holder/New(atom/location)
 	location.craft_holder = src
-	crafting_master.all_crafting_points |= src
+	holder = location
+	spawn(10)
+		crafting_master.all_crafting_points |= src
 
 /datum/crafting_holder/proc/add_recipe(recipe)
 	recipes |= recipe
@@ -189,8 +191,7 @@ var/global/datum/crafting_controller/crafting_master = new()
 	qdel(target)
 	return result
 
-/datum/crafting_holder/proc/check_contents(datum/crafting_recipe/R)
-	var/list/holder_contents = check_holder()
+/datum/crafting_holder/proc/check_contents(datum/crafting_recipe/R, list/holder_contents)
 	main_loop:
 		for(var/A in R.reqs)
 			for(var/B in holder_contents)
@@ -242,11 +243,11 @@ var/global/datum/crafting_controller/crafting_master = new()
 
 /datum/crafting_holder/proc/construct_item(mob/user, datum/crafting_recipe/R)
 	var/list/holder_contents = check_holder()
-	if(check_contents(R) && check_tools(user, R))
+	if(check_contents(R, holder_contents) && check_tools(user, R, holder_contents))
 		if(do_after(user, R.time))
-			if(!check_contents(R) || !check_tools(user, R, holder_contents))
+			if(!check_contents(R, holder_contents) || !check_tools(user, R, holder_contents))
 				return 0
-			var/list/parts = del_reqs(R)
+			var/list/parts = del_reqs(R, holder_contents)
 			var/atom/movable/I = new R.result_path
 			for(var/A in parts)
 				if(istype(A, /obj/item))
@@ -323,7 +324,7 @@ var/global/datum/crafting_controller/crafting_master = new()
 		dat += "Construction inprogress...</div>"
 	else
 		for(var/datum/crafting_recipe/R in recipes)
-			if(check_contents(R))
+			if(check_contents(R, holder_contents))
 				dat += "<A href='?src=\ref[src];make=\ref[R]'>[R.name]</A><BR>"
 		dat += "</div>"
 
