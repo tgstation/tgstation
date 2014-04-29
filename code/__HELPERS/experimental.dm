@@ -48,7 +48,7 @@
  * WARNING, only supports /mob and /obj.
  */
 
-#define DEBUG_OBJECT_POOL 1
+#define DEBUG_OBJECT_POOL 0
 #define MAINTAINING_OBJECT_POOL_COUNT 20
 
 var/list/masterPool = list()
