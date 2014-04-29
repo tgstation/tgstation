@@ -26,3 +26,13 @@
 		else
 			newname += ", [r.name]"
 	name = lowertext("[newname] snack bar")
+
+
+//Instances for mapping
+/obj/item/weapon/reagent_containers/food/snacks/snackbar/nutriment
+	name = "nutriment snack bar"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 10)
+		update_icon()
+		update_name()
