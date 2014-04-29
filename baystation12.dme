@@ -503,6 +503,7 @@
 #include "code\game\machinery\kitchen\monkeyrecycler.dm"
 #include "code\game\machinery\kitchen\processor.dm"
 #include "code\game\machinery\kitchen\smartfridge.dm"
+#include "code\game\machinery\kitchen\snackbarmachine.dm"
 #include "code\game\machinery\pipe\construction.dm"
 #include "code\game\machinery\pipe\pipe_dispenser.dm"
 #include "code\game\machinery\telecomms\broadcaster.dm"
