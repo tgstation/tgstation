@@ -292,7 +292,7 @@
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(A)
 
-	var/obj/item/projectile/beam/LE = new /obj/item/projectile/beam( loc )
+	var/obj/item/projectile/beam/LE = getFromPool(/obj/item/projectile/beam, loc)
 	LE.icon = 'icons/effects/genetics.dmi'
 	LE.icon_state = "eyelasers"
 	playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
@@ -333,7 +333,7 @@
 	"You hear the loud crackle of electricity!")
 	var/datum/powernet/PN = cable.get_powernet()
 	var/available = 0
-	var/obj/item/projectile/beam/lightning/L = new /obj/item/projectile/beam/lightning/( get_turf(src) )
+	var/obj/item/projectile/beam/lightning/L = getFromPool(/obj/item/projectile/beam/lightning, loc)
 	if(PN)
 		available = PN.avail
 		L.damage = PN.get_electrocute_damage()
@@ -359,7 +359,8 @@
 		s.set_up(5, 1, src)
 		s.start()
 	if(L.damage <= 0)
-		del(L)
+		//del(L)
+		returnToPool(L)
 	if(L)
 		playsound(get_turf(src), 'sound/effects/eleczap.ogg', 75, 1)
 		L.tang = L.adjustAngle(get_angle(U,T))

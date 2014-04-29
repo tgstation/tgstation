@@ -49,62 +49,18 @@
  */
 
 #define DEBUG_OBJECT_POOL 0
-#define STARTING_OBJECT_POOL_COUNT 20
+#define MAINTAINING_OBJECT_POOL_COUNT 20
 
-var/list/masterPool
-
-/proc/setupPool()
-	world << "\red \b Creating Object Pool..."
-
-	masterPool = list()
-
-	initializePool(list(\
-		/obj/item/weapon/shard,\
-		/obj/item/weapon/shard/plasma,\
-		/obj/structure/grille,\
-		/obj/effect/effect/sparks))
-
-	world << "\red \b Object Pool Creation Complete!"
-
-/*
- * Dynamic pool initialization, mostly used on setupPool()
- *
- * @args
- * A, list of object types
- *
- * Example call: initializePool(list(/obj/item/weapon/shard))
- */
-/proc/initializePool(const/A)
-	if (istype(A, /list) == 0)
-		return
-
-	var/list/Objects
-
-	for (var/objectType in A)
-		Objects = list()
-
-		for (var/i = 1 to STARTING_OBJECT_POOL_COUNT)
-			Objects += new objectType()
-
-		// Don't make reference.
-		masterPool[objectType] = Objects.Copy()
-
-#undef STARTING_OBJECT_POOL_COUNT
+var/list/masterPool = list()
 
 /*
  * @args
  * A, object type
  * B, location to spawn
  *
- * @return
- * -1, if B is not a location
- *
  * Example call: getFromPool(/obj/item/weapon/shard, loc)
  */
 /proc/getFromPool(const/A, const/B)
-	if (isloc(B) == 0)
-		return -1
-
 	if (isnull(masterPool[A]))
 		#if DEBUG_OBJECT_POOL
 		world << "DEBUG_OBJECT_POOL: new proc has been called ([A])."
@@ -119,7 +75,7 @@ var/list/masterPool
 	world << "DEBUG_OBJECT_POOL: getFromPool([A]) [length(masterPool[A])]"
 	#endif
 
-	if (0 == length(masterPool[A]))
+	if (!length(masterPool[A]))
 		masterPool[A] = null
 
 	Object.loc = B
@@ -135,28 +91,33 @@ var/list/masterPool
  * Example call: returnToPool(src)
  */
 /proc/returnToPool(const/A)
-	if (istype(A, /atom/movable) == 0)
+	if (!istype(A, /atom/movable))
 		return -1
 
 	var/atom/movable/Object = A
+	Object.resetVariables()
+	Object.loc = null
 
 	if (isnull(masterPool[Object.type]))
 		#if DEBUG_OBJECT_POOL
-		world << "DEBUG_OBJECT_POOL: [Object.type] pool is empty, recreating list."
+		world << "DEBUG_OBJECT_POOL: [Object.type] pool is empty, recreating pool."
 		#endif
 
 		masterPool[Object.type] = list()
+	else if (length(masterPool[Object.type]) > MAINTAINING_OBJECT_POOL_COUNT)
+		#if DEBUG_OBJECT_POOL
+		world << "DEBUG_OBJECT_POOL: returnToPool([Object.type]) exceeds [num2text(MAINTAINING_OBJECT_POOL_COUNT)] discarding..."
+		#endif
 
-	Object.resetVariables()
-
-	Object.loc = null
-
-	masterPool[Object.type] += Object
+		return
 
 	#if DEBUG_OBJECT_POOL
 	world << "DEBUG_OBJECT_POOL: returnToPool([Object.type]) [length(masterPool[Object.type])]"
 	#endif
 
+	masterPool[Object.type] += Object
+
+#undef MAINTAINING_OBJECT_POOL_COUNT
 #undef DEBUG_OBJECT_POOL
 
 /*
@@ -164,4 +125,10 @@ var/list/masterPool
  *
  * Example: see, code\game\objects\structures\grille.dm
  */
-/atom/movable/proc/resetVariables()
+/atom/movable
+	proc/resetVariables()
+		name = initial(name)
+		density = initial(density)
+		icon = initial(icon)
+		icon_state = initial(icon_state)
+		dir = initial(dir)

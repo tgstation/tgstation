@@ -32,6 +32,9 @@
 	flag = "energy"
 	var/temperature = 300
 
+	resetVariables()
+		temperature = initial(temperature)
+		return ..()
 
 	on_hit(var/atom/target, var/blocked = 0)//These two could likely check temp protection on the mob
 		if(istype(target, /mob/living))
@@ -147,6 +150,10 @@
 	flag = "energy"
 	var/range = 2
 
+	resetVariables()
+		range = initial(range)
+		return ..()
+
 obj/item/projectile/kinetic/New()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf, /turf))
@@ -193,10 +200,12 @@ obj/item/projectile/kinetic/New()
 			// Now we bump as a bullet, if the atom is a non-turf.
 			if(!isturf(A))
 				..(A)
-			qdel(src) // Comment this out if you want to shoot through the asteroid, ERASER-style.
+			//qdel(src) // Comment this out if you want to shoot through the asteroid, ERASER-style.
+			returnToPool(src) // Comment this out if you want to shoot through the asteroid, ERASER-style.
 			return 1
 	else
-		qdel(src)
+		//qdel(src)
+		returnToPool(src)
 		return 0
 
 /obj/item/effect/kinetic_blast
