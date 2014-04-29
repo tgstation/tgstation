@@ -321,6 +321,15 @@ other types of metals and chemistry for reagents).
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/condimaster
 
+/datum/design/snackbarmachine
+	name = "Circuit Design (SnackBar Machine)"
+	desc = "Allows for the cosntruction of circuit boards used to build SnackBar Machines"
+	id="snackbarmachine"
+	req_tech = list ("engineering" = 3, "biotech" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/snackbar_machine
+
 /datum/design/clonecontrol
 	name = "Circuit Design (Cloning Machine Console)"
 	desc = "Allows for the construction of circuit boards used to build a new Cloning Machine console."

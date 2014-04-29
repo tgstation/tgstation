@@ -285,6 +285,9 @@
 	component_parts += new /obj/item/weapon/stock_parts/console_screen
 	RefreshParts()
 
+	var/image/overlay = image('icons/obj/chemical.dmi', src, "[icon_state]_overlay")
+	overlays += overlay
+
 /obj/machinery/chem_master/ex_act(severity)
 	switch(severity)
 		if(1.0)
@@ -322,7 +325,7 @@
 		B.loc = src
 		user << "You add the beaker to the machine!"
 		src.updateUsrDialog()
-		icon_state = "mixer1"
+		update_icon()
 
 	else if(istype(B, /obj/item/weapon/storage/pill_bottle))
 
@@ -458,7 +461,7 @@
 				beaker:loc = src.loc
 				beaker = null
 				reagents.clear_reagents()
-				icon_state = "mixer0"
+				update_icon()
 		else if (href_list["createpill"] || href_list["createpill_multiple"])
 			var/count = 1
 			if (href_list["createpill_multiple"]) count = isgoodnumber(input("Select the number of pills to make.", 10, pillamount) as num)
@@ -634,6 +637,21 @@
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"
 	condi = 1
+
+/obj/machinery/chem_master/update_icon()
+	if(beaker)
+		icon_state = "mixer1"
+	else
+		icon_state = "mixer0"
+
+	var/image/overlay = image('icons/obj/chemical.dmi', src, "[icon_state]_overlay")
+	if(reagents.total_volume)
+		overlay.icon += mix_color_from_reagents(reagents.reagent_list)
+	overlays.Cut()
+	overlays += overlay
+
+/obj/machinery/chem_master/on_reagent_change()
+	update_icon()
 
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
