@@ -149,6 +149,10 @@ steam.start() -- spawns the effect
 
 	var/amount = 6.0
 
+	resetVariables()
+		amount = initial(amount)
+		return ..()
+
 /obj/effect/effect/sparks/New()
 	..()
 	var/turf/T = loc
@@ -864,12 +868,12 @@ steam.start() -- spawns the effect
 		return
 
 	attack_hand(var/mob/user)
+		user.changeNext_move(10)
 		if ((M_HULK in user.mutations) || (prob(75 - metal*25)))
 			user << "\blue You smash through the metal foam wall."
 			for(var/mob/O in oviewers(user))
 				if ((O.client && !( O.blinded )))
 					O << "\red [user] smashes through the foamed metal."
-			user.changeNext_move(8)
 			del(src)
 		else
 			user << "\blue You hit the metal foam but bounce off it."
@@ -877,7 +881,7 @@ steam.start() -- spawns the effect
 
 
 	attackby(var/obj/item/I, var/mob/user)
-
+		user.changeNext_move(10)
 		if (istype(I, /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/G = I
 			G.affecting.loc = src.loc

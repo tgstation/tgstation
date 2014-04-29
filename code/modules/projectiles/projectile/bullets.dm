@@ -14,6 +14,10 @@
 			return 1
 		return 0
 
+	resetVariables()
+		embed = initial(embed)
+		return ..()
+
 /obj/item/projectile/bullet/weakbullet
 	damage = 10
 	stun = 5

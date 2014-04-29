@@ -1,17 +1,20 @@
+/*
+ * Use: Caches beam state images and holds turfs that had these images overlaid.
+ * Structure:
+ * beam_master
+ *     icon_states/dirs of beams
+ *         image for that beam
+ *     references for fired beams
+ *         icon_states/dirs for each placed beam image
+ *             turfs that have that icon_state/dir
+ */
 var/list/beam_master = list()
-//Use: Caches beam state images and holds turfs that had these images overlaid.
-//Structure:
-//beam_master
-//    icon_states/dirs of beams
-//        image for that beam
-//    references for fired beams
-//        icon_states/dirs for each placed beam image
-//            turfs that have that icon_state/dir
 
-//Special laser the captains gun uses
+// Special laser the captains gun uses
 /obj/item/projectile/beam/captain
 	name = "captain laser"
 	damage = 40
+
 /obj/item/projectile/beam/lightning
 	invisibility = 101
 	name = "lightning"
@@ -26,6 +29,7 @@ var/list/beam_master = list()
 	layer = 3
 	var/turf/last = null
 	kill_count = 6
+
 	proc/adjustAngle(angle)
 		angle = round(angle) + 45
 		if(angle > 180)
@@ -159,7 +163,8 @@ var/list/beam_master = list()
 					if(src.loc != current)
 						tang = adjustAngle(get_angle(src.loc,current))
 					icon_state = "[tang]"
-			del(src)
+			//del(src)
+			returnToPool(src)
 		return
 	/*cleanup(reference) //Waits .3 seconds then removes the overlay.
 		//world << "setting invisibility"
@@ -172,6 +177,11 @@ var/list/beam_master = list()
 			M.playsound_local(src, "explosion", 50, 1)
 		..()
 
+	resetVariables()
+		tang = initial(tang)
+		last = initial(last)
+		return ..()
+
 /obj/item/projectile/beam
 	name = "laser"
 	icon_state = "laser"
@@ -181,6 +191,7 @@ var/list/beam_master = list()
 	flag = "laser"
 	eyeblur = 4
 	var/frequency = 1
+
 	process()
 		var/reference = "\ref[src]" //So we do not have to recalculate it a ton
 		var/first = 1 //So we don't make the overlay in the same tile as the firer
@@ -189,12 +200,18 @@ var/list/beam_master = list()
 			if((!( current ) || loc == current)) //If we pass our target
 				current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
 			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
-				del(src) //Delete if it passes the world edge
+				//del(src) //Delete if it passes the world edge
+				returnToPool(src)
 				return
 			step_towards(src, current) //Move~
 
+			if (isnull(loc))
+				return
+
 			if(kill_count < 1)
-				del(src)
+				//del(src)
+				returnToPool(src)
+				return
 			kill_count--
 
 			if(!bumped && !isturf(original))
@@ -233,16 +250,19 @@ var/list/beam_master = list()
 		var/reference = "\ref[src]" //So we do not have to recalculate it a ton
 		var/first = 1 //So we don't make the overlay in the same tile as the firer
 		if(!dir)
-			del(src)
+			//del(src)
+			returnToPool(src)
 		spawn while(src) //Move until we hit something
 			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
-				del(src) //Delete if it passes the world edge
+				//del(src) //Delete if it passes the world edge
+				returnToPool(src)
 				return
 			var/turf/T = get_step(src, dir)
 			step_towards(src, T) //Move~
 
 			if(kill_count < 1)
-				del(src)
+				//del(src)
+				returnToPool(src)
 			kill_count--
 
 			if(!bumped && !isturf(original))
@@ -292,6 +312,10 @@ var/list/beam_master = list()
 				for(var/turf/T in turfs)
 					T.overlays -= beam_master[laser_state]
 		return
+
+	resetVariables()
+		frequency = initial(frequency)
+		return ..()
 
 /obj/item/projectile/beam/practice
 	name = "laser"
