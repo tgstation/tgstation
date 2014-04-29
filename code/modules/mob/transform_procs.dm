@@ -198,10 +198,10 @@
 
 	var/mob/living/silicon/robot/mommi/O = new /mob/living/silicon/robot/mommi( loc )
 
-	// cyborgs produced by Robotize get an automatic power cell
+	// MoMMIs produced by Robotize get an automatic power cell
 	O.cell = new(O)
-	O.cell.maxcharge = 7500
-	O.cell.charge = 7500
+	O.cell.maxcharge = 15000
+	O.cell.charge = 15000
 
 
 	O.gender = gender
