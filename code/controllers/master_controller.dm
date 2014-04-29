@@ -229,6 +229,10 @@ datum/controller/game_controller/proc/process()
 				ticker.process()
 				ticker_cost = (world.timeofday - timer) / 10
 
+				// Object Pool
+				if (masterPool.len > 20)
+					masterPool.len = 20
+
 				// GC
 				timer = world.timeofday
 				last_thing_processed = garbage.type
