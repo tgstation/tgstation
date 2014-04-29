@@ -6,7 +6,7 @@
 	icon_state = "mixer0"
 	use_power = 1
 	idle_power_usage = 20
-	var/beaker = null
+	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/mode = 0
 	var/opened = 0
 	var/useramount = 30 // Last used amount
