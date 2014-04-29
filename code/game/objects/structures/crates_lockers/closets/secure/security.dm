@@ -187,6 +187,7 @@
 		new /obj/item/clothing/glasses/sunglasses/sechud(src)
 		new /obj/item/taperoll/police(src)
 		new /obj/item/device/hailer(src) //wonder if vg would spam this
+		new /obj/item/clothing/gloves/black(src)
 		return
 
 
