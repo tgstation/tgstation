@@ -162,6 +162,7 @@ var/list/masterPool
  */
 /atom/movable
 	proc/resetVariables()
+		name = initial(name)
 		density = initial(density)
 		icon = initial(icon)
 		icon_state = initial(icon_state)

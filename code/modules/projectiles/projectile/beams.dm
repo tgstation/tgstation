@@ -10,11 +10,6 @@
  */
 var/list/beam_master = list()
 
-//Special laser the captains gun uses
-/obj/item/projectile/beam/captain
-	name = "captain laser"
-	damage = 40
-
 /obj/item/projectile/beam/lightning
 	invisibility = 101
 	name = "lightning"
@@ -163,7 +158,8 @@ var/list/beam_master = list()
 					if(src.loc != current)
 						tang = adjustAngle(get_angle(src.loc,current))
 					icon_state = "[tang]"
-			del(src)
+			//del(src)
+			returnToPool(src)
 		return
 	/*cleanup(reference) //Waits .3 seconds then removes the overlay.
 		//world << "setting invisibility"
@@ -190,6 +186,11 @@ var/list/beam_master = list()
 	flag = "laser"
 	eyeblur = 4
 	var/frequency = 1
+
+	// Special laser the captains gun uses
+	captain
+		name = "captain laser"
+		damage = 40
 
 	process()
 		var/reference = "\ref[src]" //So we do not have to recalculate it a ton
@@ -245,16 +246,19 @@ var/list/beam_master = list()
 		var/reference = "\ref[src]" //So we do not have to recalculate it a ton
 		var/first = 1 //So we don't make the overlay in the same tile as the firer
 		if(!dir)
-			del(src)
+			//del(src)
+			returnToPool(src)
 		spawn while(src) //Move until we hit something
 			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
-				del(src) //Delete if it passes the world edge
+				//del(src) //Delete if it passes the world edge
+				returnToPool(src)
 				return
 			var/turf/T = get_step(src, dir)
 			step_towards(src, T) //Move~
 
 			if(kill_count < 1)
-				del(src)
+				//del(src)
+				returnToPool(src)
 			kill_count--
 
 			if(!bumped && !isturf(original))
