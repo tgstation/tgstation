@@ -191,11 +191,6 @@
 /obj/item/clothing/head/fedora/OnMobLife(var/mob/living/carbon/human/wearer)
 	if(!istype(wearer)) return
 	if(wearer.head == src)
-		// And now you get fucked.
-		wearer.reagents.add_reagent("nutriment",     100) // Fat
-		wearer.reagents.add_reagent("toxin",         10) // Dying
-		wearer.reagents.add_reagent("spiritbreaker", 10) // Screaming
-		wearer.reagents.add_reagent("mercury",       10) // Idiot
 		if(prob(1))
 			wearer << "<span class=\"warning\">You feel positively euphoric!</span>"
 
@@ -205,7 +200,8 @@
 	set category = "Object"
 	set desc = "Show that CIS SCUM who's boss."
 
-	usr << "You tip your fedora"
+	usr << "You tip your fedora."
+	usr.visible_message("[usr] tips his fedora.")
 
 /obj/item/clothing/head/fez
 	name = "\improper fez"

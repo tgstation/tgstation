@@ -181,6 +181,9 @@
 /obj/item/weapon/gun/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
 	//Suicide handling.
 	if (M == user && user.zone_sel.selecting == "mouth" && !mouthshoot)
+		if(istype(M.wear_mask, /obj/item/clothing/mask/happy))
+			M << "<span class='sinister'>BUT WHY? I'M SO HAPPY!</span>"
+			return
 		mouthshoot = 1
 		M.visible_message("\red [user] sticks their gun in their mouth, ready to pull the trigger...")
 		if(!do_after(user, 40))
