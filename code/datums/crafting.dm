@@ -337,8 +337,11 @@ var/global/datum/crafting_controller/crafting_master
 	if(usr.stat || !holder.Adjacent(usr) || usr.lying)
 		return
 	if(href_list["make"])
-		var/datum/crafting_recipe/TR = locate(href_list["make"])
+		if(busy)
+			return
 		busy = 1
+		interact(usr)
+		var/datum/crafting_recipe/TR = locate(href_list["make"])
 		if(construct_item(usr, TR))
 			usr << "<span class='notice'>[TR.name] constructed.</span>"
 		else
