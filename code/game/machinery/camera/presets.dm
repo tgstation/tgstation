@@ -16,6 +16,8 @@
 	upgradeXRay()
 
 // MOTION
+/obj/machinery/camera/motion
+	name = "motion-sensitive security camera"
 
 /obj/machinery/camera/motion/New()
 	..()
