@@ -321,7 +321,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/condimaster
 
-/datum/design/condimaster
+/datum/design/snackbarmachine
 	name = "Circuit Design (SnackBar Machine)"
 	desc = "Allows for the cosntruction of circuit boards used to build SnackBar Machines"
 	id="snackbarmachine"
