@@ -208,6 +208,7 @@ var/list/beam_master = list()
 			if(kill_count < 1)
 				//del(src)
 				returnToPool(src)
+				return
 			kill_count--
 
 			if(!bumped && !isturf(original))

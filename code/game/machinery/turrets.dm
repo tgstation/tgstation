@@ -242,7 +242,7 @@
 			if(3)
 				A = getFromPool(/obj/item/projectile/beam/pulse, loc)
 			if(4)
-				A = new /obj/item/projectile/change( loc )
+				A = getFromPool(/obj/item/projectile/change, loc)
 			if(5)
 				A = getFromPool(/obj/item/projectile/beam/lastertag/blue, loc)
 			if(6)
