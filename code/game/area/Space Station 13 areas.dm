@@ -671,31 +671,31 @@ proc/process_ghost_teleport_locs()
 //Maintenance
 
 /area/maintenance/fpmaint
-	name = "Atmospherics Maintenance"
+	name = "Fore Port Maintenance"
 	icon_state = "fpmaint"
 
 /area/maintenance/fpmaint2
-	name = "EVA Maintenance"
+	name = "Fore Port Maintenance"
 	icon_state = "fpmaint"
 
 /area/maintenance/fpmaint3
-	name = "Arrivals North Maintenance"
+	name = "Fore Port Maintenance"
 	icon_state = "fpmaint"
 
 /area/maintenance/fsmaint
-	name = "Dormitory Maintenance"
+	name = "Fore Starboard Maintenance"
 	icon_state = "fsmaint"
 
 /area/maintenance/fsmaint2
-	name = "Bar Maintenance"
+	name = "Fore Starboard Maintenance"
 	icon_state = "fsmaint"
 
 /area/maintenance/asmaint
-	name = "Medbay Maintenance"
+	name = "Aft Starboard Maintenance"
 	icon_state = "asmaint"
 
 /area/maintenance/asmaint2
-	name = "Science Maintenance"
+	name = "Aft Starboard Maintenance"
 	icon_state = "asmaint"
 
 /area/maintenance/asmaint3
@@ -703,11 +703,11 @@ proc/process_ghost_teleport_locs()
 	icon_state = "asmaint"
 
 /area/maintenance/apmaint
-	name = "Cargo Maintenance"
+	name = "Aft Port Maintenance"
 	icon_state = "apmaint"
 
 /area/maintenance/maintcentral
-	name = "Bridge Maintenance"
+	name = "Central Maintenance"
 	icon_state = "maintcentral"
 
 /area/maintenance/fore
@@ -719,11 +719,11 @@ proc/process_ghost_teleport_locs()
 	icon_state = "smaint"
 
 /area/maintenance/port
-	name = "Locker Room Maintenance"
+	name = "Port Maintenance"
 	icon_state = "pmaint"
 
 /area/maintenance/aft
-	name = "Engineering Maintenance"
+	name = "Aft Maintenance"
 	icon_state = "amaint"
 
 /area/maintenance/atmos
