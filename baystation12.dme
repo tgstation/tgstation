@@ -915,7 +915,6 @@
 #include "code\modules\flufftext\vgshit.dm"
 #include "code\modules\food\recipes_microwave.dm"
 #include "code\modules\genetics\side_effects.dm"
-#include "code\modules\genetics2\sectors.dm"
 #include "code\modules\library\lib_items.dm"
 #include "code\modules\library\lib_machines.dm"
 #include "code\modules\library\lib_readme.dm"
