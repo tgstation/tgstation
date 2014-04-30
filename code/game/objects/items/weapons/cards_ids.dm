@@ -215,6 +215,7 @@
 	name = "syndicate ID card"
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
+	icon_state = "syndie"
 	assignment = "Syndicate Overlord"
 	access = list(access_syndicate, access_external_airlocks)
 
@@ -232,7 +233,7 @@
 
 /obj/item/weapon/card/id/centcom
 	name = "\improper CentCom. ID"
-	desc = "An ID straight from Cent. Com."
+	desc = "An ID awarded only to the best brown nosers."
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "General"
@@ -246,3 +247,85 @@
 	icon_state = "centcom"
 	desc = "Finders, keepers."
 	access = list(access_salvage_captain)
+
+
+
+/obj/item/weapon/card/id/medical
+	name = "Medical ID"
+	registered_name = "Medic"
+	icon_state = "medical"
+	desc = "A card covered in the blood stains of the wild ride."
+	access = list(access_medical, access_genetics, access_morgue, access_chemistry, access_paramedic, access_virology, access_surgery, access_cmo)
+
+
+/obj/item/weapon/card/id/security
+	name = "Security ID"
+	registered_name = "Officer"
+	icon_state = "security"
+	desc = "Some say these cards are drowned in the tears of assistants, forged in the burning bodies of clowns."
+	access = list(access_sec_doors, access_security, access_brig, access_armory, access_forensics_lockers, access_court, access_hos)
+
+/obj/item/weapon/card/id/research
+	name = "Research ID"
+	registered_name = "Scientist"
+	icon_state = "science"
+	desc = "Pinnacle of name technology."
+	access = list(access_research, access_tox, access_tox_storage, access_robotics, access_xenobiology, access_rd)
+
+/obj/item/weapon/card/id/supply
+	name = "Supply ID"
+	registered_name = "Cargonian"
+	icon_state = "cargo"
+	desc = "ROH ROH! HEIL THE QUARTERMASTER!"
+	access = list(access_mailsorting, access_mining, access_mining_station, access_cargo, access_qm)
+
+
+/obj/item/weapon/card/id/engineering
+	name = "Engineering ID"
+	registered_name = "Engineer"
+	icon_state = "engineering"
+	desc = "Shame it's going to be lost in the void of a black hole."
+	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva, access_construction)
+
+/obj/item/weapon/card/id/hos
+	name = "Head of Security ID"
+	registered_name = "HoS"
+	icon_state = "HoS"
+	desc = "An ID awarded to only the most robust shits in the buisness."
+	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers, access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting, access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway)
+
+/obj/item/weapon/card/id/cmo
+	name = "Chief Medical Officer ID"
+	registered_name = "CMO"
+	icon_state = "CMO"
+	desc = "It gives off the faint smell of chloral, mixed with a backdraft of shittery."
+	access = list(access_medical, access_morgue, access_genetics, access_heads, access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce, access_keycard_auth, access_sec_doors, access_paramedic)
+
+/obj/item/weapon/card/id/rd
+	name = "Research Director ID"
+	registered_name = "RD"
+	icon_state = "RD"
+	desc = "If you put your ear to the card, you can faintly hear screaming, glomping, and mechs. What the fuck."
+	access = list(access_rd, access_heads, access_tox, access_genetics, access_morgue, access_tox_storage, access_teleporter, access_sec_doors, access_research, access_robotics, access_xenobiology, access_ai_upload, access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway)
+
+/obj/item/weapon/card/id/ce
+	name = "Chief Engineer ID"
+	registered_name = "CE"
+	icon_state = "CE"
+	desc = "The card has a faint aroma of autism."
+	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_teleporter, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva, access_heads, access_construction, access_sec_doors, access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_ai_upload)
+
+/obj/item/weapon/card/id/clown
+	name = "Pink ID"
+	registered_name = "HONK!"
+	icon_state = "clown"
+	desc = "Even looking at the card strikes you with deep fear."
+	access = list(access_clown, access_theatre, access_maint_tunnels)
+
+
+/obj/item/weapon/card/id/mime
+	name = "Black and White ID"
+	registered_name = "..."
+	icon_state = "mime"
+	desc = "..."
+	access = list(access_clown, access_theatre, access_maint_tunnels)

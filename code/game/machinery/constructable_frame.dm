@@ -368,6 +368,18 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/micro_laser" = 2,
 							"/obj/item/weapon/stock_parts/console_screen" = 2)
 
+/obj/item/weapon/circuitboard/snackbar_machine
+	name = "Circuit Board (SnackBar Machine)"
+	build_path = "/obj/machinery/snackbar_machine"
+	board_type = "machine"
+	origin_tech = "engineering=3;biotech=4"
+	frame_desc = "Requires 2 manipulator, 2 scanning modules, 2 micro-lasers, and 2 console screens."
+	req_components = list (
+							"/obj/item/weapon/stock_parts/manipulator" = 2,
+							"/obj/item/weapon/stock_parts/scanning_module" = 2,
+							"/obj/item/weapon/stock_parts/micro_laser" = 2,
+							"/obj/item/weapon/stock_parts/console_screen" = 2)
+
 /obj/item/weapon/circuitboard/recharge_station
 	name = "Circuit Board (Cyborg Recharging Station)"
 	build_path = "/obj/machinery/recharge_station"

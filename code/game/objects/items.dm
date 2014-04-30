@@ -764,3 +764,6 @@
 // /vg/ Affects wearers.
 /obj/item/proc/OnMobLife(var/mob/holder)
 	return
+
+/obj/item/proc/OnMobDeath(var/mob/holder)
+	return
