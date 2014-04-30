@@ -537,7 +537,10 @@ var/global/list/uneatable = list(
 
 	if(istype(A,/mob/living/))
 		var/mob/living/C = A
-		C.dust()
+		for (var/mob/V in viewers(C))
+			V.show_message("<span class='danger'>[C.name]'s flesh rips from their bones!</span>")
+		new/obj/effect/decal/remains/human(C.loc)
+		C.gib()
 
 	if(isturf(A))
 		var/turf/T = A
