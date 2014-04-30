@@ -470,7 +470,7 @@ Manual Tracking Direction:"}
 		if(src.trackrate) nexttime = world.time + 6000/trackrate
 		track = text2num(href_list["track"])
 		if(powernet && (track == 2))
-			if(!solars_list.Find(src,1,0))
+			if(!solars_list.Find(src,1,0) || !(locate(src) in solars_list) || !(src in solars_list))
 				solars_list.Add(src)
 			for(var/obj/machinery/power/tracker/T in get_solars_powernet())
 				if(powernet.nodes[T])
