@@ -70,6 +70,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		else if(heart.damage >= heart.min_broken_damage && heart.damage < INFINITY)
 			blood_volume *= 0.3
 
+		vesel.update_total()
+
 		//Effects of bloodloss
 		switch(blood_volume)
 			if(BLOOD_VOLUME_SAFE to 10000)
