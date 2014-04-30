@@ -13,7 +13,7 @@
 	var/energy = 100
 	var/max_energy = 100
 	var/amount = 30
-	var/beaker = null
+	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/recharged = 0
 	var/opened = 0
 	var/custom = 0
@@ -111,15 +111,15 @@
 
 	var beakerContents[0]
 	var beakerCurrentVolume = 0
-	if(beaker && beaker:reagents && beaker:reagents.reagent_list.len)
-		for(var/datum/reagent/R in beaker:reagents.reagent_list)
+	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
+		for(var/datum/reagent/R in beaker.reagents.reagent_list)
 			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
 			beakerCurrentVolume += R.volume
 	data["beakerContents"] = beakerContents
 
 	if (beaker)
 		data["beakerCurrentVolume"] = beakerCurrentVolume
-		data["beakerMaxVolume"] = beaker:volume
+		data["beakerMaxVolume"] = beaker.volume
 	else
 		data["beakerCurrentVolume"] = null
 		data["beakerMaxVolume"] = null
@@ -251,7 +251,7 @@
 	icon_state = "mixer0"
 	use_power = 1
 	idle_power_usage = 20
-	var/beaker = null
+	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/obj/item/weapon/storage/pill_bottle/loaded_pill_bottle = null
 	var/mode = 0
 	var/condi = 0
@@ -395,7 +395,7 @@
 		return
 
 	if(beaker)
-		var/datum/reagents/R = beaker:reagents
+		var/datum/reagents/R = beaker.reagents
 		if (href_list["analyze"])
 			var/dat = ""
 			if(!condi)
@@ -458,7 +458,7 @@
 			return
 		else if (href_list["eject"])
 			if(beaker)
-				beaker:loc = src.loc
+				beaker.loc = src.loc
 				beaker = null
 				reagents.clear_reagents()
 				update_icon()
@@ -560,13 +560,14 @@
 	var/dat = ""
 	if(!beaker)
 		dat = "Please insert beaker.<BR>"
-		if(src.loaded_pill_bottle)
-			dat += "<A href='?src=\ref[src];ejectp=1'>Eject Pill Bottle \[[loaded_pill_bottle.contents.len]/[loaded_pill_bottle.storage_slots]\]</A><BR><BR>"
-		else
-			dat += "No pill bottle inserted.<BR><BR>"
+		if(!condi)
+			if(src.loaded_pill_bottle)
+				dat += "<A href='?src=\ref[src];ejectp=1'>Eject Pill Bottle \[[loaded_pill_bottle.contents.len]/[loaded_pill_bottle.storage_slots]\]</A><BR><BR>"
+			else
+				dat += "No pill bottle inserted.<BR><BR>"
 		dat += "<A href='?src=\ref[src];close=1'>Close</A>"
 	else
-		var/datum/reagents/R = beaker:reagents
+		var/datum/reagents/R = beaker.reagents
 		dat += "<A href='?src=\ref[src];eject=1'>Eject beaker and Clear Buffer</A><BR>"
 		if(src.loaded_pill_bottle)
 			dat += "<A href='?src=\ref[src];ejectp=1'>Eject Pill Bottle \[[loaded_pill_bottle.contents.len]/[loaded_pill_bottle.storage_slots]\]</A><BR><BR>"
@@ -604,7 +605,7 @@
 					<A href='?src=\ref[src];removecustom=[N.id]'>(Custom)</A><BR>"}
 				// END AUTOFIX
 		else
-			dat += "Empty<BR>"
+			dat += "Buffer is empty.<BR>"
 		if(!condi)
 
 			// AUTOFIXED BY fix_string_idiocy.py
@@ -770,7 +771,7 @@
 		src.updateUsrDialog()
 		return
 	else if (href_list["eject"])
-		beaker:loc = src.loc
+		beaker.loc = src.loc
 		beaker = null
 		icon_state = "mixer0"
 		src.updateUsrDialog()
