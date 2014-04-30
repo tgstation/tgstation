@@ -342,7 +342,7 @@ Atmospheric Tanks
 */
 /obj/machinery/atmospherics/pipe/tank
 	icon = 'icons/obj/atmospherics/pipe_tank.dmi'
-	icon_state = "intact"
+	icon_state = "generic"
 
 	name = "pressure tank"
 	desc = "A large vessel containing pressurized gas."
@@ -385,13 +385,18 @@ Atmospheric Tanks
 	return list(node1)
 
 /obj/machinery/atmospherics/pipe/tank/update_icon()
+
+	var/state
 	if(node1)
-		icon_state = "intact"
-
-		dir = get_dir(src, node1)
-
+		state = "pipe_intact"
 	else
-		icon_state = "exposed"
+		state = "pipe_exposed"
+
+	var/image/img = image('icons/obj/atmospherics/pipe_tank.dmi', icon_state=state, dir=initialize_directions)
+	img.color = node1.pipe_color
+
+	underlays.Cut()
+	underlays += img
 
 /obj/machinery/atmospherics/pipe/tank/initialize()
 
@@ -437,7 +442,7 @@ CO2 Tank
 Plasma Tank
 */
 /obj/machinery/atmospherics/pipe/tank/toxins
-	icon = 'icons/obj/atmospherics/orange_pipe_tank.dmi'
+	icon_state = "orange"
 	name = "pressure tank (Plasma)"
 
 /obj/machinery/atmospherics/pipe/tank/toxins/New()
@@ -453,7 +458,7 @@ Plasma Tank
 Plasma + Oxygen Tank
 */
 /obj/machinery/atmospherics/pipe/tank/oxygen_agent_b
-	icon = 'icons/obj/atmospherics/red_orange_pipe_tank.dmi'
+	icon_state = "orange_2"
 	name = "pressure tank (Oxygen + Plasma)"
 
 /obj/machinery/atmospherics/pipe/tank/oxygen_agent_b/New()
@@ -472,7 +477,7 @@ Plasma + Oxygen Tank
 Oxygen Tank
 */
 /obj/machinery/atmospherics/pipe/tank/oxygen
-	icon = 'icons/obj/atmospherics/blue_pipe_tank.dmi'
+	icon_state = "blue"
 	name = "pressure tank (Oxygen)"
 
 /obj/machinery/atmospherics/pipe/tank/oxygen/New()
@@ -488,7 +493,7 @@ Oxygen Tank
 Nitrogen Tank
 */
 /obj/machinery/atmospherics/pipe/tank/nitrogen
-	icon = 'icons/obj/atmospherics/red_pipe_tank.dmi'
+	icon_state = "red"
 	name = "pressure tank (Nitrogen)"
 
 /obj/machinery/atmospherics/pipe/tank/nitrogen/New()
@@ -504,7 +509,7 @@ Nitrogen Tank
 Air Tank
 */
 /obj/machinery/atmospherics/pipe/tank/air
-	icon = 'icons/obj/atmospherics/red_pipe_tank.dmi'
+	icon_state = "grey"
 	name = "pressure tank (Air)"
 
 /obj/machinery/atmospherics/pipe/tank/air/New()
