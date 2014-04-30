@@ -1,4 +1,5 @@
 /obj/machinery/atmospherics/trinary
+	icon = 'icons/obj/atmospherics/trinary_devices.dmi'
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH|WEST
 	use_power = 1
@@ -36,12 +37,11 @@
 	air2.volume = 200
 	air3.volume = 200
 
-/obj/machinery/atmospherics/trinary/proc/update_trinary_icon(var/iconfile)
-	if(!(stat & NOPOWER) && on && node1 && node2 && node3)
-		icon_state = "on"
-	else
-		on = 0
-		icon_state = "off"
+/obj/machinery/atmospherics/trinary/proc/update_icon_nopipes()
+	return
+
+/obj/machinery/atmospherics/trinary/update_icon()
+	update_icon_nopipes()
 
 	var/image/img
 	var/connected = 0
@@ -49,21 +49,21 @@
 
 	//Add non-broken pieces
 	if(node1)
-		img = image(iconfile, icon_state="intact", dir=get_dir(src,node1))
+		img = image('icons/obj/atmospherics/trinary_devices.dmi', icon_state="intact", dir=get_dir(src,node1))
 		img.color = node1.pipe_color
 		overlays += img
 
 		connected |= img.dir
 
 	if(node2)
-		img = image(iconfile, icon_state="intact", dir=get_dir(src,node2))
+		img = image('icons/obj/atmospherics/trinary_devices.dmi', icon_state="intact", dir=get_dir(src,node2))
 		img.color = node2.pipe_color
 		overlays += img
 
 		connected |= img.dir
 
 	if(node3)
-		img = image(iconfile, icon_state="intact", dir=get_dir(src,node3))
+		img = image('icons/obj/atmospherics/trinary_devices.dmi', icon_state="intact", dir=get_dir(src,node3))
 		img.color = node3.pipe_color
 		overlays += img
 
@@ -73,7 +73,7 @@
 	var/unconnected = (~connected) & initialize_directions
 	for(var/direction in cardinal)
 		if(unconnected & direction)
-			img = image(iconfile, icon_state="broken", dir=direction)
+			img = image('icons/obj/atmospherics/trinary_devices.dmi', icon_state="broken", dir=direction)
 			overlays += img
 
 // Housekeeping and pipe network stuff below

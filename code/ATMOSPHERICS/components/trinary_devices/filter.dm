@@ -1,6 +1,5 @@
 /obj/machinery/atmospherics/trinary/filter
-	icon = 'icons/obj/atmospherics/filter.dmi'
-	icon_state = "off"
+	icon_state = "filter_off"
 	density = 1
 
 	name = "gas filter"
@@ -38,8 +37,13 @@ Filter types:
 	if(radio_controller)
 		initialize()
 
-/obj/machinery/atmospherics/trinary/filter/update_icon()
-	update_trinary_icon('icons/obj/atmospherics/filter.dmi')
+/obj/machinery/atmospherics/trinary/mixer/update_icon_nopipes()
+	if(!(stat & NOPOWER) && on && node1 && node2 && node3)
+		icon_state = "filter_on"
+		return
+
+	on = 0
+	icon_state = "filter_off"
 
 /obj/machinery/atmospherics/trinary/filter/power_change()
 	var/old_stat = stat

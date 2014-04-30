@@ -1,6 +1,5 @@
 /obj/machinery/atmospherics/trinary/mixer
-	icon = 'icons/obj/atmospherics/mixer.dmi'
-	icon_state = "off"
+	icon_state = "mixer_off"
 	density = 1
 
 	name = "gas mixer"
@@ -15,8 +14,13 @@
 
 //node 3 is the outlet, nodes 1 & 2 are intakes
 
-/obj/machinery/atmospherics/trinary/mixer/update_icon()
-	update_trinary_icon('icons/obj/atmospherics/mixer.dmi')
+/obj/machinery/atmospherics/trinary/mixer/update_icon_nopipes()
+	if(!(stat & NOPOWER) && on && node1 && node2 && node3)
+		icon_state = "mixer_on"
+		return
+
+	on = 0
+	icon_state = "mixer_off"
 
 /obj/machinery/atmospherics/trinary/mixer/power_change()
 	var/old_stat = stat
