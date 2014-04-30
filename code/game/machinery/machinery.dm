@@ -233,7 +233,7 @@ Class Procs:
 	return 1
 
 /mob/living/silicon/robot/canUseTopic()
-	if(stat || lockcharge || stunned)
+	if(stat || lockcharge || stunned || weakened)
 		return
 	return 1
 
