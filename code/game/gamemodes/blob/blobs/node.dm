@@ -29,3 +29,17 @@
 		qdel(src)
 		return
 	return
+
+/obj/effect/blob/node/minicore
+	name = "blob core"
+	icon_state = "blob_core"
+	health = 200
+
+/obj/effect/blob/node/minicore/Life()
+	..()
+	for(var/b_dir in alldirs)
+		if(!prob(5))
+			continue
+		var/obj/effect/blob/normal/B = locate() in get_step(src, b_dir)
+		if(B)
+			B.change_to(/obj/effect/blob/shield)
