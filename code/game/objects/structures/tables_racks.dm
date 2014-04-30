@@ -35,9 +35,7 @@
 			var/obj/structure/table/T = locate(/obj/structure/table,get_step(src,direction))
 			T.update_icon()
 
-	craft_holder = new /datum/crafting_holder(src)
-	spawn(10)
-		craft_holder.recipes = crafting_master.all_crafting_recipes
+	craft_holder = new /datum/crafting_holder(src, "table")
 
 /obj/structure/table/Destroy()
 	for(var/direction in list(1,2,4,8,5,6,9,10))

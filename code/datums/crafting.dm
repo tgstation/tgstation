@@ -11,8 +11,11 @@ var/global/datum/crafting_controller/crafting_master
 	var/can_be_deconstructed = 0
 
 /datum/crafting_recipe/New()
-	spawn(10)
-		crafting_master.all_crafting_recipes |= src
+	crafting_master.all_crafting_recipes[name] = src
+
+/datum/crafting_recipe/table/New()
+	..()
+	crafting_master.add_recipe_to_family("table", src)
 
 //////////////////////////////////////
 //                                  //
@@ -20,7 +23,7 @@ var/global/datum/crafting_controller/crafting_master
 //                                  //
 //////////////////////////////////////
 
-/datum/crafting_recipe/IED
+/datum/crafting_recipe/table/IED
 	name = "IED"
 	result_path = /obj/item/weapon/grenade/iedcasing
 	reqs = list(/obj/item/weapon/handcuffs/cable = 1,
@@ -30,7 +33,7 @@ var/global/datum/crafting_controller/crafting_master
 	/datum/reagent/fuel = 10)
 	time = 80
 
-/datum/crafting_recipe/stunprod
+/datum/crafting_recipe/table/stunprod
 	name = "Stunprod"
 	result_path = /obj/item/weapon/melee/baton/cattleprod
 	reqs = list(/obj/item/weapon/handcuffs/cable = 1,
@@ -40,7 +43,7 @@ var/global/datum/crafting_controller/crafting_master
 	time = 80
 	parts = list(/obj/item/weapon/stock_parts/cell = 1)
 
-/datum/crafting_recipe/ed209
+/datum/crafting_recipe/table/ed209
 	name = "ED209"
 	result_path = /obj/machinery/bot/ed209
 	reqs = list(/obj/item/robot_parts/robot_suit = 1,
@@ -57,7 +60,7 @@ var/global/datum/crafting_controller/crafting_master
 	tools = list(/obj/item/weapon/weldingtool, /obj/item/weapon/screwdriver)
 	time = 120
 
-/datum/crafting_recipe/secbot
+/datum/crafting_recipe/table/secbot
 	name = "Secbot"
 	result_path = /obj/machinery/bot/secbot
 	reqs = list(/obj/item/device/assembly/signaler = 1,
@@ -68,7 +71,7 @@ var/global/datum/crafting_controller/crafting_master
 	tools = list(/obj/item/weapon/weldingtool)
 	time = 120
 
-/datum/crafting_recipe/cleanbot
+/datum/crafting_recipe/table/cleanbot
 	name = "Cleanbot"
 	result_path = /obj/machinery/bot/cleanbot
 	reqs = list(/obj/item/weapon/reagent_containers/glass/bucket = 1,
@@ -76,7 +79,7 @@ var/global/datum/crafting_controller/crafting_master
 	/obj/item/robot_parts/r_arm = 1)
 	time = 80
 
-/datum/crafting_recipe/floorbot
+/datum/crafting_recipe/table/floorbot
 	name = "Floorbot"
 	result_path = /obj/machinery/bot/floorbot
 	reqs = list(/obj/item/weapon/storage/toolbox/mechanical = 1,
@@ -85,7 +88,7 @@ var/global/datum/crafting_controller/crafting_master
 	/obj/item/robot_parts/r_arm = 1)
 	time = 80
 
-/datum/crafting_recipe/medbot
+/datum/crafting_recipe/table/medbot
 	name = "Medbot"
 	result_path = /obj/machinery/bot/medbot
 	reqs = list(/obj/item/device/healthanalyzer = 1,
@@ -94,7 +97,7 @@ var/global/datum/crafting_controller/crafting_master
 	/obj/item/robot_parts/r_arm = 1)
 	time = 80
 
-/datum/crafting_recipe/flamethrower
+/datum/crafting_recipe/table/flamethrower
 	name = "Flamethrower"
 	result_path = /obj/item/weapon/flamethrower
 	reqs = list(/obj/item/weapon/weldingtool = 1,
@@ -113,46 +116,91 @@ var/global/datum/crafting_controller/crafting_master
 	var/list/all_crafting_recipes = list()
 
 /datum/crafting_controller/New()
-	init_subtypes(/datum/crafting_recipe, all_crafting_recipes)
+	crafting_master = src
+	add_family("table")
+	add_family("forge")
+	for(var/A in typesof(/datum/crafting_recipe))
+		if(A == /datum/crafting_recipe)
+			continue
+		var/datum/crafting_recipe/CR = new A()
+		all_crafting_recipes[CR.name] = CR
 
-/datum/crafting_controller/proc/add_family(name, list/members)
-	var/list/family = members
-	families.Add(name = family)
+/datum/crafting_controller/proc/add_global_recipe(datum/crafting_recipe/CR)
+	all_crafting_recipes[CR.name] = CR
 
-/datum/crafting_controller/proc/add_member(family_name, member)
-	var/list/family = families[family_name]
-	family.Add(member)
+/datum/crafting_controller/proc/remove_global_recipe(datum/crafting_recipe/CR)
+	all_crafting_recipes[CR.name] = null
+	all_crafting_recipes.Remove(CR.name)
 
-/datum/crafting_controller/proc/add_recipe_to_family(family_name, datum/recipe)
-	var/list/family = families[family_name]
-	for(var/datum/crafting_holder/A in family)
-		A.add_recipe(recipe)
+/datum/crafting_controller/proc/add_family(name, list/members, list/recipes)
+	var/datum/crafting_family/family = new(name, members, recipes)
+	families[name] = family
 
-/datum/crafting_controller/proc/remove_recipe_from_family(family_name, datum/recipe)
-	var/list/family = families[family_name]
-	for(var/datum/crafting_holder/A in family)
-		A.remove_recipe(recipe)
+/datum/crafting_controller/proc/get_family_by_name(name)
+	return families[name]
+
+/datum/crafting_controller/proc/add_member_to_family(family_name, member)
+	var/datum/crafting_family/family = families[family_name]
+	family.add_member(member)
+
+/datum/crafting_controller/proc/add_recipe_to_family(family_name, datum/crafting_recipe/recipe)
+	var/datum/crafting_family/family = families[family_name]
+	family.add_recipe(recipe)
+
+/datum/crafting_controller/proc/remove_recipe_from_family(family_name, datum/crafting_recipe/recipe)
+	var/datum/crafting_family/family = families[family_name]
+	family.remove_recipe(recipe)
 
 /datum/crafting_controller/proc/remove_member(family_name, member)
-	var/list/family = families[family_name]
-	family.Remove(member)
+	var/datum/crafting_family/family = families[family_name]
+	family.remove_member(member)
 
 /datum/crafting_controller/proc/remove_family(family_name)
-	var/list/family = families[family_name]
-	families.Remove(family)
-	families.Remove(family_name)
+	var/datum/crafting_family/family = families[family_name]
+	del(family)
+
+/datum/crafting_family
+	var/name
+	var/list/recipes
+	var/list/members
+
+/datum/crafting_family/New(new_name, list/new_members = list(), list/new_recipes = list())
+	name = new_name
+	recipes = new_recipes
+	members = new_members
+
+/datum/crafting_family/proc/add_member(datum/crafting_holder/member)
+	members |= member
+	member.family = src
+
+/datum/crafting_family/proc/remove_member(datum/crafting_holder/member)
+	members -= member
+	member.family = null
+
+/datum/crafting_family/proc/add_recipe(datum/crafting_recipe/recipe)
+	recipes[recipe.name] = recipe
+
+/datum/crafting_family/proc/remove_recipe(datum/crafting_recipe/recipe)
+	recipes[recipe.name] = null
+	recipes.Remove(recipe.name)
+
 
 /datum/crafting_holder
 	var/name
 	var/atom/holder
 	var/recipes
 	var/busy
+	var/datum/crafting_family/family
 
-/datum/crafting_holder/New(atom/location)
+/datum/crafting_holder/New(atom/location, family_name)
 	location.craft_holder = src
 	holder = location
 	spawn(10)
 		crafting_master.all_crafting_points |= src
+		if(family_name)
+			family = crafting_master.get_family_by_name(family_name)
+		if(family)
+			recipes = family.recipes
 
 /datum/crafting_holder/proc/add_recipe(recipe)
 	recipes |= recipe
@@ -323,7 +371,8 @@ var/global/datum/crafting_controller/crafting_master
 	if(busy)
 		dat += "Construction inprogress...</div>"
 	else
-		for(var/datum/crafting_recipe/R in recipes)
+		for(var/A in recipes)
+			var/datum/crafting_recipe/R = recipes[A]
 			if(check_contents(R, holder_contents))
 				dat += "<A href='?src=\ref[src];make=\ref[R]'>[R.name]</A><BR>"
 		dat += "</div>"
