@@ -507,7 +507,8 @@
 							return
 						CM.visible_message("<span class='danger'>[CM] manages to break [CM.handcuffed]!</span>" , \
 										"<span class='notice'>You successfully break [CM.handcuffed]!</span>")
-						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+						if(ishuman(CM))
+							CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 						qdel(CM.handcuffed)
 						CM.handcuffed = null
 						CM.update_inv_handcuffed(0)
@@ -541,7 +542,8 @@
 							return
 						CM.visible_message("<span class='danger'>[CM] manages to break [CM.legcuffed]!</span>", \
 											"<span class='notice'>You successfully break [CM.legcuffed].</span>")
-						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+						if(ishuman(CM))
+							CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 						qdel(CM.legcuffed)
 						CM.legcuffed = null
 						CM.update_inv_legcuffed(0)
