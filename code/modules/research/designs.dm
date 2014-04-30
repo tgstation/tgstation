@@ -1827,7 +1827,7 @@ datum/design/security_hud
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = /obj/item/clothing/glasses/hud/security
-	locked = 1
+	
 datum/design/security_hud_night
 	name = "Night Vision Security HUD"
 	desc = "A heads-up display which provides id data and vision in complete darkness."
@@ -1836,7 +1836,6 @@ datum/design/security_hud_night
 	build_type = PROTOLATHE
 	materials = list("$metal" = 200, "$glass" = 200, "$uranium" = 1000, "$gold" = 350)
 	build_path = /obj/item/clothing/glasses/hud/security/night
-	locked = 1
 
 /////////////////////////////////////////
 //////////////////Test///////////////////
