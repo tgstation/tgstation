@@ -40,8 +40,8 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 	if(!cell)
 		cell = new /obj/item/weapon/cell(src)
-		cell.maxcharge = 7500
-		cell.charge = 7500
+		cell.maxcharge = 15000
+		cell.charge = 15000
 	..()
 	module = new /obj/item/weapon/robot_module/mommi(src)
 	laws = new mommi_base_law_type

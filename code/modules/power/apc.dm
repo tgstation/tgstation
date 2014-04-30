@@ -651,6 +651,7 @@
 /obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
 	if(!user)
 		return
+	user.changeNext_move(8)
 	user.visible_message("\red [user.name] slashes at the [src.name]!", "\blue You slash at the [src.name]!")
 	playsound(get_turf(src), 'sound/weapons/slash.ogg', 100, 1)
 
