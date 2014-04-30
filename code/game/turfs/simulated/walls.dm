@@ -92,11 +92,13 @@
 	user.changeNext_move(8)
 	if ((HULK in user.mutations))
 		if (prob(hardness))
+			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 			usr << text("\blue You smash through the wall.")
 			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1)
 			return
 		else
+			playsound(src, 'sound/effects/bang.ogg', 50, 1)
 			usr << text("\blue You punch the wall.")
 			return
 
@@ -108,10 +110,12 @@
 		if(istype(src, /turf/simulated/wall/r_wall))
 			if(M.environment_smash == 3)
 				dismantle_wall(1)
+				playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 				M << "<span class='info'>You smash through the wall.</span>"
 			else
 				M << "<span class='info'>This wall is far too strong for you to destroy.</span>"
 		else
+			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 			M << "<span class='info'>You smash through the wall.</span>"
 			dismantle_wall(1)
 			return
@@ -120,11 +124,13 @@
 	user.changeNext_move(8)
 	if (HULK in user.mutations)
 		if (prob(hardness))
+			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 			usr << text("\blue You smash through the wall.")
 			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1)
 			return
 		else
+			playsound(src, 'sound/effects/bang.ogg', 50, 1)
 			usr << text("\blue You punch the wall.")
 			return
 
