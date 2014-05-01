@@ -489,7 +489,7 @@
 				friends_near += M
 		if (nutrition < get_hunger_nutrition()) t += 10
 		if (nutrition < get_starve_nutrition()) t += 10
-		if (prob(100) && prob(t))
+		if (prob(2) && prob(t))
 			var/phrases = list()
 			if (Target) phrases += "[Target]... looks tasty..."
 			if (nutrition < get_starve_nutrition())
