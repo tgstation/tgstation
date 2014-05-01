@@ -21,7 +21,7 @@
 		if(L)
 			return
 		var/obj/item/stack/rods/R = C
-		user << "\blue Constructing support lattice ..."
+		user << "<span class='notice'>Constructing support lattice ...</span>"
 		playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 		ReplaceWithLattice()
 		R.use(1)
@@ -37,7 +37,7 @@
 			S.use(1)
 			return
 		else
-			user << "\red The plating is going to need some support."
+			user << "<span class='danger'>The plating is going to need some support.</span>"
 	return
 
 
@@ -45,7 +45,7 @@
 
 /turf/space/Entered(atom/movable/A as mob|obj)
 	if(movement_disabled)
-		usr << "\red Movement is admin-disabled." //This is to identify lag problems
+		usr << "<span class='danger'>Movement is admin-disabled.</span>" //This is to identify lag problems
 		return
 	..()
 	if ((!(A) || src != A.loc))	return
@@ -71,7 +71,7 @@
 				if(istype(A, /mob/living))
 					var/mob/living/MM = A
 					if(MM.client && !MM.stat)
-						MM << "\red Something you are carrying is preventing you from leaving. Don't play stupid; you know exactly what it is."
+						MM << "<span class='danger'>Something you are carrying is preventing you from leaving. Don't play stupid; you know exactly what it is.</span>"
 						if(MM.x <= TRANSITIONEDGE)
 							MM.inertia_dir = 4
 						else if(MM.x >= world.maxx -TRANSITIONEDGE)

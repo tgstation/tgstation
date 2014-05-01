@@ -102,17 +102,17 @@ datum/shuttle_manager/proc/move_shuttle(var/override_delay)
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(!allowed(usr))
-		usr << "\red Access denied."
+		usr << "<span class='danger'>Access denied.</span>"
 		return
 	if(href_list["move"])
 		if(id in shuttles)
 			var/datum/shuttle_manager/s = shuttles[id]
 			if (s.move_shuttle())
-				usr << "\blue Shuttle recieved message and will be sent shortly."
+				usr << "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>"
 			else
-				usr << "\blue Shuttle is already moving."
+				usr << "<span class='notice'>Shuttle is already moving.</span>"
 		else
-			usr << "\red Invalid shuttle requested."
+			usr << "<span class='danger'>Invalid shuttle requested.</span>"
 
 
 /obj/machinery/computer/shuttle/attackby(I as obj, user as mob)

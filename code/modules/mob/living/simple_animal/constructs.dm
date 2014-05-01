@@ -38,7 +38,7 @@
 	new /obj/item/weapon/ectoplasm (src.loc)
 	for(var/mob/M in viewers(src, null))
 		if((M.client && !( M.blinded )))
-			M.show_message("\red [src] collapses in a shattered heap. ")
+			M.show_message("<span class='danger'>[src] collapses in a shattered heap. </span>")
 	ghostize()
 	qdel(src)
 	return
@@ -112,10 +112,10 @@
 			if ((M.client && !( M.blinded )))
 				M.show_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>")
 	else
-		usr << "\red This weapon is ineffective, it does no damage."
+		usr << "<span class='danger'>This weapon is ineffective, it does no damage.</span>"
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
-				M.show_message("\red [user] gently taps [src] with [O]. ")
+				M.show_message("<span class='danger'>[user] gently taps [src] with [O]. </span>")
 
 /mob/living/simple_animal/construct/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj)
@@ -162,12 +162,12 @@
 		else
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [O] bounces harmlessly off of [src]. ")
+					M.show_message("<span class='danger'>\b [O] bounces harmlessly off of [src]. </span>")
 	else
-		usr << "\red This weapon is ineffective, it does no damage."
+		usr << "<span class='danger'>This weapon is ineffective, it does no damage.</span>"
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
-				M.show_message("\red [user] gently taps [src] with [O]. ")
+				M.show_message("<span class='danger'>[user] gently taps [src] with [O]. </span>")
 
 
 /mob/living/simple_animal/construct/armoured/bullet_act(var/obj/item/projectile/P)
@@ -287,12 +287,12 @@
 		else
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [O] bounces harmlessly off of [src]. ")
+					M.show_message("<span class='danger'>\b [O] bounces harmlessly off of [src]. </span>")
 	else
-		usr << "\red This weapon is ineffective, it does no damage."
+		usr << "<span class='danger'>This weapon is ineffective, it does no damage.</span>"
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
-				M.show_message("\red [user] gently taps [src] with [O]. ")
+				M.show_message("<span class='danger'>[user] gently taps [src] with [O]. </span>")
 
 
 
@@ -307,7 +307,7 @@
 	if (istype(usr,/mob/living/simple_animal/constructbehemoth))
 
 		if(usr.energy<300)
-			usr << "\red You do not have enough power stored!"
+			usr << "<span class='danger'>You do not have enough power stored!</span>"
 			return
 
 		if(usr.stat)

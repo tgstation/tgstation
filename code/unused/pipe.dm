@@ -98,7 +98,7 @@ var/linenums = 0
 				P.rupture()
 				//Commenting this out because it spams on endlessly
 				//for (var/mob/M in viewers(P))
-					//M.show_message("\red The pipe has ruptured!", 3)
+					//M.show_message("<span class='danger'>The pipe has ruptured!</span>", 3)
 				//so this is changed to pipe rupturing instead of explosions
 			//i.e. it ruptures if the pressure over 15000%
 			//and temperature over 8000K
@@ -391,13 +391,13 @@ var/linenums = 0
 		if(!(stat & BROKEN))
 			return
 		if (W:weldfuel < 2)
-			user << "\blue You need more welding fuel to complete this task."
+			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 			return
 		W:weldfuel -= 2
 		stat &= ~BROKEN
 		update()
 		for (var/mob/M in viewers(src))
-			M.show_message("\red The pipe has been mended by [user.name] with the weldingtool.", 3, "\red You hear welding.", 2)
+			M.show_message("<span class='danger'>The pipe has been mended by [user.name] with the weldingtool.", 3, "\red You hear welding.</span>", 2)
 		return
 
 /obj/machinery/pipes/ex_act(severity)
@@ -1419,7 +1419,7 @@ var/linenums = 0
 	attack_hand(user)
 
 /obj/machinery/valve/mvalve/attack_ai(mob/user)
-	user << "\red You are unable to use this as it is physically operated."
+	user << "<span class='danger'>You are unable to use this as it is physically operated.</span>"
 	return
 
 /obj/machinery/valve/mvalve/attack_hand(mob/user)

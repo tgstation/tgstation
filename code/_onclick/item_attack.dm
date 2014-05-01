@@ -36,7 +36,7 @@
 		"<span class='userdanger'>[src] has been attacked with [I][showname]</span>")
 	if(!showname && user)
 		if(user.client)
-			user << "\red <B>You attack [src] with [I]. </B>"
+			user << "<span class='userdanger'>You attack [src] with [I]. </span>"
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.

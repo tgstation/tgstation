@@ -414,7 +414,7 @@ obj/structure/door_assembly
 
 			if(mineral && mineral != "glass")
 				mineral = null //I know this is stupid, but until we change glass to a boolean it's how this code works.
-			user << "\blue You change the paintjob on the airlock assembly."
+			user << "<span class='notice'>You change the paintjob on the airlock assembly.</span>"
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && !anchored )
 		var/obj/item/weapon/weldingtool/WT = W
@@ -424,7 +424,7 @@ obj/structure/door_assembly
 
 			if(do_after(user, 40))
 				if(!src || !WT.isOn()) return
-				user << "\blue You've dissasembled the airlock assembly."
+				user << "<span class='notice'>You've dissasembled the airlock assembly.</span>"
 				new /obj/item/stack/sheet/metal(get_turf(src), 4)
 				if (mineral)
 					if (mineral == "glass")
@@ -435,7 +435,7 @@ obj/structure/door_assembly
 						new M(get_turf(src))
 				qdel(src)
 		else
-			user << "\blue You need more welding fuel to dissassemble the airlock assembly."
+			user << "<span class='notice'>You need more welding fuel to dissassemble the airlock assembly.</span>"
 			return
 
 	else if(istype(W, /obj/item/weapon/wrench) && !anchored )
@@ -444,7 +444,7 @@ obj/structure/door_assembly
 
 		if(do_after(user, 40))
 			if(!src) return
-			user << "\blue You've secured the airlock assembly."
+			user << "<span class='notice'>You've secured the airlock assembly.</span>"
 			src.name = "Secured Airlock Assembly"
 			src.anchored = 1
 
@@ -453,7 +453,7 @@ obj/structure/door_assembly
 		user.visible_message("[user] unsecures the airlock assembly from the floor.", "You start to unsecure the airlock assembly from the floor.")
 		if(do_after(user, 40))
 			if(!src) return
-			user << "\blue You've unsecured the airlock assembly."
+			user << "<span class='notice'>You've unsecured the airlock assembly.</span>"
 			src.name = "Airlock Assembly"
 			src.anchored = 0
 
@@ -464,7 +464,7 @@ obj/structure/door_assembly
 			if(!src) return
 			coil.use(1)
 			src.state = 1
-			user << "\blue You've wired the airlock assembly."
+			user << "<span class='notice'>You've wired the airlock assembly.</span>"
 			src.name = "Wired Airlock Assembly"
 
 	else if(istype(W, /obj/item/weapon/wirecutters) && state == 1 )
@@ -473,7 +473,7 @@ obj/structure/door_assembly
 
 		if(do_after(user, 40))
 			if(!src) return
-			user << "\blue You've cut the wires from the airlock assembly."
+			user << "<span class='notice'>You've cut the wires from the airlock assembly.</span>"
 			new/obj/item/stack/cable_coil(get_turf(user), 1)
 			src.state = 0
 			src.name = "Secured Airlock Assembly"
@@ -486,7 +486,7 @@ obj/structure/door_assembly
 
 		if(do_after(user, 40))
 			if(!src) return
-			user << "\blue You've installed the airlock electronics."
+			user << "<span class='notice'>You've installed the airlock electronics.</span>"
 			src.state = 2
 			src.name = "Near finished Airlock Assembly"
 			src.electronics = W
@@ -501,7 +501,7 @@ obj/structure/door_assembly
 
 		if(do_after(user, 40))
 			if(!src) return
-			user << "\blue You've removed the airlock electronics."
+			user << "<span class='notice'>You've removed the airlock electronics.</span>"
 			src.state = 1
 			src.name = "Wired Airlock Assembly"
 			var/obj/item/weapon/airlock_electronics/ae
@@ -519,7 +519,7 @@ obj/structure/door_assembly
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 					user.visible_message("[user] adds [G.name] to the airlock assembly.", "You start to install [G.name] into the airlock assembly.")
 					if(do_after(user, 40))
-						user << "\blue You've installed reinforced glass windows into the airlock assembly."
+						user << "<span class='notice'>You've installed reinforced glass windows into the airlock assembly.</span>"
 						G.use(1)
 						mineral = "glass"
 						name = "Near finished Window Airlock Assembly"
@@ -541,7 +541,7 @@ obj/structure/door_assembly
 						playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 						user.visible_message("[user] adds [G.name] to the airlock assembly.", "You start to install [G.name] into the airlock assembly.")
 						if(do_after(user, 40))
-							user << "\blue You've installed [M] plating into the airlock assembly."
+							user << "<span class='notice'>You've installed [M] plating into the airlock assembly.</span>"
 							G.use(2)
 							mineral = "[M]"
 							name = "Near finished [M] Airlock Assembly"
@@ -552,11 +552,11 @@ obj/structure/door_assembly
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && state == 2 )
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
-		user << "\blue You start finishing the airlock."
+		user << "<span class='notice'>You start finishing the airlock.</span>"
 
 		if(do_after(user, 40))
 			if(!src) return
-			user << "\blue You've finished the airlock."
+			user << "<span class='notice'>You've finished the airlock.</span>"
 			var/obj/machinery/door/airlock/door
 			if(mineral == "glass")
 				door = new src.glass_type( src.loc )

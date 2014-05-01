@@ -664,9 +664,9 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	..()
 	if ((in_range(src, usr) || loc == usr))
 		if (b_stat)
-			usr.show_message("\blue \the [src] can be attached and modified!")
+			usr.show_message("<span class='notice'>\the [src] can be attached and modified!</span>")
 		else
-			usr.show_message("\blue \the [src] can not be modified or attached!")
+			usr.show_message("<span class='notice'>\the [src] can not be modified or attached!</span>")
 	return
 
 /obj/item/device/radio/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -677,9 +677,9 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	b_stat = !( b_stat )
 	if(!istype(src, /obj/item/device/radio/beacon))
 		if (b_stat)
-			user.show_message("\blue The radio can now be attached and modified!")
+			user.show_message("<span class='notice'>The radio can now be attached and modified!</span>")
 		else
-			user.show_message("\blue The radio can no longer be modified or attached!")
+			user.show_message("<span class='notice'>The radio can no longer be modified or attached!</span>")
 		updateDialog()
 			//Foreach goto(83)
 		add_fingerprint(user)

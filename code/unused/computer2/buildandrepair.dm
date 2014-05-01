@@ -26,37 +26,37 @@
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20))
-					user << "\blue You wrench the frame into place."
+					user << "<span class='notice'>You wrench the frame into place.</span>"
 					src.anchored = 1
 					src.state = 1
 			if(istype(P, /obj/item/weapon/weldingtool))
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				if(do_after(user, 20))
-					user << "\blue You deconstruct the frame."
+					user << "<span class='notice'>You deconstruct the frame.</span>"
 					new /obj/item/stack/sheet/metal( src.loc, 5 )
 					del(src)
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20))
-					user << "\blue You unfasten the frame."
+					user << "<span class='notice'>You unfasten the frame.</span>"
 					src.anchored = 0
 					src.state = 0
 			if(istype(P, /obj/item/weapon/motherboard) && !mainboard)
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				user << "\blue You place the mainboard inside the frame."
+				user << "<span class='notice'>You place the mainboard inside the frame.</span>"
 				src.icon_state = "1"
 				src.mainboard = P
 				user.drop_item()
 				P.loc = src
 			if(istype(P, /obj/item/weapon/screwdriver) && mainboard)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				user << "\blue You screw the mainboard into place."
+				user << "<span class='notice'>You screw the mainboard into place.</span>"
 				src.state = 2
 				src.icon_state = "2"
 			if(istype(P, /obj/item/weapon/crowbar) && mainboard)
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				user << "\blue You remove the mainboard."
+				user << "<span class='notice'>You remove the mainboard.</span>"
 				src.state = 1
 				src.icon_state = "0"
 				mainboard.loc = src.loc
@@ -64,7 +64,7 @@
 		if(2)
 			if(istype(P, /obj/item/weapon/screwdriver) && mainboard && (!peripherals.len))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				user << "\blue You unfasten the mainboard."
+				user << "<span class='notice'>You unfasten the mainboard.</span>"
 				src.state = 1
 				src.icon_state = "1"
 
@@ -73,13 +73,13 @@
 					user.drop_item()
 					src.peripherals.Add(P)
 					P.loc = src
-					user << "\blue You add [P] to the frame."
+					user << "<span class='notice'>You add [P] to the frame.</span>"
 				else
-					user << "\red There is no more room for peripheral cards."
+					user << "<span class='danger'>There is no more room for peripheral cards.</span>"
 
 			if(istype(P, /obj/item/weapon/crowbar) && src.peripherals.len)
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				user << "\blue You remove the peripheral boards."
+				user << "<span class='notice'>You remove the peripheral boards.</span>"
 				for(var/obj/item/weapon/peripheral/W in src.peripherals)
 					W.loc = src.loc
 					src.peripherals.Remove(W)
@@ -90,13 +90,13 @@
 					if(do_after(user, 20))
 						P:amount -= 5
 						if(!P:amount) del(P)
-						user << "\blue You add cables to the frame."
+						user << "<span class='notice'>You add cables to the frame.</span>"
 						src.state = 3
 						src.icon_state = "3"
 		if(3)
 			if(istype(P, /obj/item/weapon/wirecutters))
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-				user << "\blue You remove the cables."
+				user << "<span class='notice'>You remove the cables.</span>"
 				src.state = 2
 				src.icon_state = "2"
 				var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( src.loc )
@@ -109,11 +109,11 @@
 				user.drop_item()
 				src.hd = P
 				P.loc = src
-				user << "\blue You connect the drive to the cabling."
+				user << "<span class='notice'>You connect the drive to the cabling.</span>"
 
 			if(istype(P, /obj/item/weapon/crowbar) && src.hd)
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				user << "\blue You remove the hard drive."
+				user << "<span class='notice'>You remove the hard drive.</span>"
 				src.hd.loc = src.loc
 				src.hd = null
 
@@ -122,19 +122,19 @@
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
 						P:use(2)
-						user << "\blue You put in the glass panel."
+						user << "<span class='notice'>You put in the glass panel.</span>"
 						src.state = 4
 						src.icon_state = "4"
 		if(4)
 			if(istype(P, /obj/item/weapon/crowbar))
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				user << "\blue You remove the glass panel."
+				user << "<span class='notice'>You remove the glass panel.</span>"
 				src.state = 3
 				src.icon_state = "3"
 				new /obj/item/stack/sheet/glass( src.loc, 2 )
 			if(istype(P, /obj/item/weapon/screwdriver))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				user << "\blue You connect the monitor."
+				user << "<span class='notice'>You connect the monitor.</span>"
 				var/obj/machinery/computer2/C= new /obj/machinery/computer2( src.loc )
 				C.setup_drive_size = 0
 				C.icon_state = src.created_icon_state

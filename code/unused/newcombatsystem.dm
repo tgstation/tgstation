@@ -72,17 +72,17 @@
 /obj/item/weapon/training/attack(target as mob, mob/user as mob)
 	var/target_area = attack_location(user.zone_sel.selecting)
 	for(var/mob/O in viewers(src,7))
-		O << "\red \b [user.name] attacks [target.name] in the [target_area] with [src.name]!"
+		O << "<span class='danger'>\b [user.name] attacks [target.name] in the [target_area] with [src.name]!</span>"
 	if(!target.stat && target.zone_sel.selecting == target_area) //parrying occurs here
 		if(istype(target.r_hand,/obj/item/weapon/training)
 			if(prob(target.r_hand:chance_parry))
 				for(var/mob/O in viewers(src,7))
-					O << "\red \b [target.name] deftly parries the attack with [target.r_hand.name]!"
+					O << "<span class='danger'>\b [target.name] deftly parries the attack with [target.r_hand.name]!</span>"
 					return
 		if(istype(target.l_hand,/obj/item/weapon/training)
 			if(prob(target.l_hand:chance_parry))
 				for(var/mob/O in viewers(src,7))
-					O << "\red \b [target.name] deftly parries the attack with [target.l_hand.name]!"
+					O << "<span class='danger'>\b [target.name] deftly parries the attack with [target.l_hand.name]!</span>"
 					return
 	target.adjustBruteLoss(-src.force)
 

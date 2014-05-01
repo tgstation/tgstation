@@ -32,7 +32,7 @@
 				src.verbs -= /client/proc/authorize
 				src.authenticated = account
 				src << "Key authorized: Hello [html_encode(account)]!"
-				src << "\blue[auth_motd]"
+				src << "<span class='notice'>[auth_motd]</span>"
 				success = 1
 
 		if (!success)
@@ -40,7 +40,7 @@
 			src << "Failed to authenticate your key."
 			src << "If you have not already authorize it at http://byond.lljk.net/ - your BYOND key is [src.key]."
 			src << "Try again using the <b>Authorize</b> command, sometimes the server will hiccup and not correctly authorize."
-			src << "\blue[no_auth_motd]"
+			src << "<span class='notice'>[no_auth_motd]</span>"
 		src.authenticating = 0
 */
 
@@ -48,7 +48,7 @@
 /client/proc/beta_tester_auth()
 	set name = "Tester?"
 	/*if(istester(src))
-		src << "\blue <B>Key accepted as beta tester</B>"
+		src << "<span class='notice'><B>Key accepted as beta tester</B></span>"
 	else
 		src << "\red<B>Key not accepted as beta tester. You may only observe the rounds. */
 
@@ -62,7 +62,7 @@
 		src.goon = goon_keylist[src.ckey]
 		src.verbs -= /client/proc/goonauth
 		src << "Key authorized: Hello [goon_keylist[src.ckey]]!"
-		src << "\blue[auth_motd]"
+		src << "<span class='notice'>[auth_motd]</span>"
 		return
 
 	if (config.enable_authentication)	//so that this verb isn't used when its goon only
@@ -70,7 +70,7 @@
 			src.goon = src.authenticated
 			src.verbs -= /client/proc/goonauth
 			src << "Key authorized: Hello [src.goon]!"
-			src << "\blue[auth_motd]"
+			src << "<span class='notice'>[auth_motd]</span>"
 		else
 			src << "Please authorize first"
 		return
@@ -98,14 +98,14 @@
 				src.verbs -= /client/proc/goonauth
 				src.goon = account
 				src << "Key authorized: Hello [html_encode(account)]!"
-				src << "\blue[auth_motd]"
+				src << "<span class='notice'>[auth_motd]</span>"
 				success = 1
 				goon_key(src.ckey, account)
 
 		if (!success)
 			src.verbs += /client/proc/goonauth
 			//src << "Failed"
-			src << "\blue[no_auth_motd]"
+			src << "<span class='notice'>[no_auth_motd]</span>"
 
 		src.authenticating = 0
 

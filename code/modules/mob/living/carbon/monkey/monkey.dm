@@ -70,7 +70,7 @@
 
 /mob/living/carbon/monkey/meteorhit(obj/O as obj)
 	for(var/mob/M in viewers(src, null))
-		M.show_message(text("\red [] has been hit by []", src, O), 1)
+		M.show_message(text("<span class='danger'>[] has been hit by []</span>", src, O), 1)
 	if (health > 0)
 		var/shielded = 0
 		adjustBruteLoss(30)
@@ -158,7 +158,7 @@
 
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 				for(var/mob/O in viewers(src, null))
-					O.show_message(text("\red [] has grabbed [name] passively!", M), 1)
+					O.show_message(text("<span class='danger'>[] has grabbed [name] passively!</span>", M), 1)
 			else
 				if (!( paralysis ))
 					if (prob(25))
@@ -188,7 +188,7 @@
 		if ("help")
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
+					O.show_message(text("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>"), 1)
 
 		if ("harm")
 			if ((prob(95) && health > 0))
@@ -226,7 +226,7 @@
 
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\red [] has grabbed [name] passively!", M), 1)
+				O.show_message(text("<span class='danger'>[] has grabbed [name] passively!</span>", M), 1)
 
 		if ("disarm")
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)

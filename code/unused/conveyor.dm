@@ -101,13 +101,13 @@
 		var/mob/M = locate() in src.loc
 		if(M)
 			if (M == user)
-				src.visible_message("\blue [M] ties \himself to the conveyor.")
+				src.visible_message("<span class='notice'>[M] ties \himself to the conveyor.</span>")
 				// note don't check for lying if self-tying
 			else
 				if(M.lying)
-					user.visible_message("\blue [M] has been tied to the conveyor by [user].", "\blue You tie [M] to the converyor!")
+					user.visible_message("<span class='notice'>[M] has been tied to the conveyor by [user].", "\blue You tie [M] to the converyor!</span>")
 				else
-					user << "\blue [M] must be lying down to be tied to the converyor!"
+					user << "<span class='notice'>[M] must be lying down to be tied to the converyor!</span>"
 					return
 			M.buckled = src
 			src.add_fingerprint(user)
@@ -123,9 +123,9 @@
 			M.buckled = null
 			src.add_fingerprint(user)
 			if (M == user)
-				src.visible_message("\blue [M] cuts \himself free from the conveyor.")
+				src.visible_message("<span class='notice'>[M] cuts \himself free from the conveyor.</span>")
 			else
-				src.visible_message("\blue [M] had been cut free from the conveyor by [user].")
+				src.visible_message("<span class='notice'>[M] had been cut free from the conveyor by [user].</span>")
 			return
 
 	if(isrobot(user))

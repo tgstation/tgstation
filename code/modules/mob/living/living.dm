@@ -17,7 +17,7 @@
 		src.adjustOxyLoss(src.health + 200)
 		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss()
 		if(!whispered)
-			src << "\blue You have given up life and succumbed to death."
+			src << "<span class='notice'>You have given up life and succumbed to death.</span>"
 		death()
 
 /mob/living/proc/InCritical()
@@ -361,7 +361,7 @@
 							var/obj/item/weapon/grab/G = pick(M.grabbed_by)
 							if (istype(G, /obj/item/weapon/grab))
 								for(var/mob/O in viewers(M, null))
-									O.show_message(text("\red [] has been pulled from []'s grip by []", G.affecting, G.assailant, src), 1)
+									O.show_message(text("<span class='danger'>[] has been pulled from []'s grip by []</span>", G.affecting, G.assailant, src), 1)
 								//G = null
 								qdel(G)
 						else

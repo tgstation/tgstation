@@ -661,7 +661,7 @@
 			return
 
 		M.stop_pulling()
-		M << "\blue You slipped on the [name]!"
+		M << "<span class='notice'>You slipped on the [name]!</span>"
 		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 		M.Stun(8)
 		M.Weaken(5)

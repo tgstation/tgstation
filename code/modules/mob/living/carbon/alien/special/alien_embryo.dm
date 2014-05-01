@@ -49,25 +49,25 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				affected_mob << "\red Your throat feels sore."
+				affected_mob << "<span class='danger'>Your throat feels sore.</span>"
 			if(prob(1))
-				affected_mob << "\red Mucous runs down the back of your throat."
+				affected_mob << "<span class='danger'>Mucous runs down the back of your throat.</span>"
 		if(4)
 			if(prob(1))
 				affected_mob.emote("sneeze")
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(2))
-				affected_mob << "\red Your muscles ache."
+				affected_mob << "<span class='danger'>Your muscles ache.</span>"
 				if(prob(20))
 					affected_mob.take_organ_damage(1)
 			if(prob(2))
-				affected_mob << "\red Your stomach hurts."
+				affected_mob << "<span class='danger'>Your stomach hurts.</span>"
 				if(prob(20))
 					affected_mob.adjustToxLoss(1)
 					affected_mob.updatehealth()
 		if(5)
-			affected_mob << "\red You feel something tearing its way out of your stomach..."
+			affected_mob << "<span class='danger'>You feel something tearing its way out of your stomach...</span>"
 			affected_mob.adjustToxLoss(10)
 			affected_mob.updatehealth()
 			if(prob(50))

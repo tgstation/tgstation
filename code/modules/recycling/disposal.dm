@@ -130,7 +130,7 @@
 					GM.client.eye = src
 				GM.loc = src
 				for (var/mob/C in viewers(src))
-					C.show_message("\red [GM.name] has been placed in \the [src] by [user].", 3)
+					C.show_message("<span class='danger'>[GM.name] has been placed in \the [src] by [user].</span>", 3)
 				qdel(G)
 		return
 
@@ -233,11 +233,11 @@
 // human interact with machine
 /obj/machinery/disposal/attack_hand(mob/user as mob)
 	if(user && user.loc == src)
-		usr << "\red You cannot reach the controls from inside."
+		usr << "<span class='danger'>You cannot reach the controls from inside.</span>"
 		return
 	/*
 	if(mode==-1)
-		usr << "\red The disposal units power is disabled."
+		usr << "<span class='danger'>The disposal units power is disabled.</span>"
 		return
 	*/
 	interact(user, 0)
@@ -289,11 +289,11 @@
 	if(..())
 		return
 	if(usr.loc == src)
-		usr << "\red You cannot reach the controls from inside."
+		usr << "<span class='danger'>You cannot reach the controls from inside.</span>"
 		return
 
 	if(mode==-1 && !href_list["eject"]) // only allow ejecting if mode is -1
-		usr << "\red \The [src]'s power is disabled."
+		usr << "<span class='danger'>\The [src]'s power is disabled.</span>"
 		return
 	..()
 	usr.set_machine(src)

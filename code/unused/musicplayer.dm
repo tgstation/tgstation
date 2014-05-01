@@ -3,10 +3,10 @@
 	set name = "Music Toggle"
 	if(src.be_music == 0)
 		src.be_music = 1
-		src << "\blue Music toggled on!"
+		src << "<span class='notice'>Music toggled on!</span>"
 		return
 	src.be_music = 0
-	src << "\blue Music toggled off!"
+	src << "<span class='notice'>Music toggled off!</span>"
 
 // This checks a var on each area and plays that var
 /area/Entered(mob/A as mob)

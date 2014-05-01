@@ -166,9 +166,9 @@ Auto Patrol: []"},
 			if(emagged)
 				user << "<span class='warning'>ERROR</span>"
 			if(open)
-				user << "\red Please close the access panel before locking it."
+				user << "<span class='danger'>Please close the access panel before locking it.</span>"
 			else
-				user << "\red Access denied."
+				user << "<span class='danger'>Access denied.</span>"
 	else
 		..()
 		if(!istype(W, /obj/item/weapon/screwdriver) && !istype(W, /obj/item/weapon/weldingtool) && (W.force) && (!src.target)) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
@@ -178,10 +178,10 @@ Auto Patrol: []"},
 /obj/machinery/bot/secbot/Emag(mob/user as mob)
 	..()
 	if(open && !locked)
-		if(user) user << "\red You short out [src]'s target assessment circuits."
+		if(user) user << "<span class='danger'>You short out [src]'s target assessment circuits.</span>"
 		spawn(0)
 			for(var/mob/O in hearers(src, null))
-				O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
+				O.show_message("<span class='userdanger'>[src] buzzes oddly!</span>", 1)
 		src.target = null
 		if(user) src.oldtarget_name = user.name
 		src.last_found = world.time
@@ -238,7 +238,7 @@ Auto Patrol: []"},
 					maxstuns--
 					if(maxstuns <= 0)
 						target = null
-					visible_message("\red <B>[src.target] has been stunned by [src]!</B>")
+					visible_message("<span class='userdanger'>[src.target] has been stunned by [src]!</span>")
 
 					mode = SECBOT_PREP_ARREST
 					src.anchored = 1
@@ -265,7 +265,7 @@ Auto Patrol: []"},
 				if(!src.target.handcuffed && !src.arrest_type)
 					playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 					mode = SECBOT_ARREST
-					visible_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>")
+					visible_message("<span class='userdanger'>[src] is trying to put handcuffs on [src.target]!</span>")
 
 					spawn(60)
 						if(get_dist(src, src.target) <= 1)
@@ -664,7 +664,7 @@ Auto Patrol: []"},
 /obj/machinery/bot/secbot/explode()
 
 	walk_to(src,0)
-	src.visible_message("\red <B>[src] blows apart!</B>", 1)
+	src.visible_message("<span class='userdanger'>[src] blows apart!</span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/secbot_assembly/Sa = new /obj/item/weapon/secbot_assembly(Tsec)

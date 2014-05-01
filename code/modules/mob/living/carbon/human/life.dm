@@ -125,11 +125,11 @@
 	proc/handle_disabilities()
 		if (disabilities & EPILEPSY)
 			if ((prob(1) && paralysis < 1))
-				src << "\red You have a seizure!"
+				src << "<span class='danger'>You have a seizure!</span>"
 				for(var/mob/O in viewers(src, null))
 					if(O == src)
 						continue
-					O.show_message(text("\red <B>[src] starts having a seizure!"), 1)
+					O.show_message(text("<span class='danger'><B>[src] starts having a seizure!</span>"), 1)
 				Paralyse(10)
 				Jitter(1000)
 		if (disabilities & COUGHING)
@@ -170,7 +170,7 @@
 		if ((HULK in mutations) && health <= 25)
 			mutations.Remove(HULK)
 			update_mutations()		//update our mutation overlays
-			src << "\red You suddenly feel very weak."
+			src << "<span class='danger'>You suddenly feel very weak.</span>"
 			Weaken(3)
 			emote("collapse")
 
@@ -178,7 +178,7 @@
 			if (radiation > 100)
 				radiation = 100
 				Weaken(10)
-				src << "\red You feel weak."
+				src << "<span class='danger'>You feel weak.</span>"
 				emote("collapse")
 
 			if (radiation < 0)
@@ -198,7 +198,7 @@
 						if(prob(5))
 							radiation -= 5
 							Weaken(3)
-							src << "\red You feel weak."
+							src << "<span class='danger'>You feel weak.</span>"
 							emote("collapse")
 						if(prob(15))
 							if(!( hair_style == "Shaved") || !(hair_style == "Bald"))
@@ -213,7 +213,7 @@
 						radiation -= 3
 						adjustToxLoss(3)
 						if(prob(1))
-							src << "\red You mutate!"
+							src << "<span class='danger'>You mutate!</span>"
 							randmutb(src)
 							domutcheck(src,null)
 							emote("gasp")
@@ -409,10 +409,10 @@
 		if( (abs(310.15 - breath.temperature) > 50) && !(COLD_RESISTANCE in mutations)) // Hot air hurts :(
 			if(breath.temperature < 260.15)
 				if(prob(20))
-					src << "\red You feel your face freezing and an icicle forming in your lungs!"
+					src << "<span class='danger'>You feel your face freezing and an icicle forming in your lungs!</span>"
 			else if(breath.temperature > 360.15)
 				if(prob(20))
-					src << "\red You feel your face burning and a searing heat in your lungs!"
+					src << "<span class='danger'>You feel your face burning and a searing heat in your lungs!</span>"
 
 			switch(breath.temperature)
 				if(-INFINITY to 120)
@@ -772,13 +772,13 @@
 		//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 		if(FAT in mutations)
 			if(overeatduration < 100)
-				src << "\blue You feel fit again!"
+				src << "<span class='notice'>You feel fit again!</span>"
 				mutations -= FAT
 				update_inv_w_uniform(0)
 				update_inv_wear_suit()
 		else
 			if(overeatduration > 500)
-				src << "\red You suddenly feel blubbery!"
+				src << "<span class='danger'>You suddenly feel blubbery!</span>"
 				mutations |= FAT
 				update_inv_w_uniform(0)
 				update_inv_wear_suit()
@@ -1208,7 +1208,7 @@
 					Stun(5)
 
 					for(var/mob/O in viewers(world.view, src))
-						O.show_message(text("<b>\red [] throws up!</b>", src), 1)
+						O.show_message(text("<span class='userdanger'>[] throws up!</span>", src), 1)
 					playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
 					var/turf/location = loc

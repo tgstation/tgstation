@@ -89,14 +89,14 @@ the blender or the processor: Processor items are solid objects and Blender resu
 	if (src.stat != 0) //NOPOWER etc
 		return
 	if(src.processing)
-		usr << "\red The blender is in the process of blending."
+		usr << "<span class='danger'>The blender is in the process of blending.</span>"
 		return
 	if(!src.container)
-		usr << "\red The blender doesn't have an attached container!"
+		usr << "<span class='danger'>The blender doesn't have an attached container!</span>"
 		return
 	playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
 	src.processing = 1
-	usr << "\blue You turn on the blender."
+	usr << "<span class='notice'>You turn on the blender.</span>"
 	use_power(250)
 	for(var/obj/O in src.contents)
 		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans))	 //  Mass balance law

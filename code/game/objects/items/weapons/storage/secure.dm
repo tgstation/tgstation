@@ -55,21 +55,21 @@
 			if (istype(W, /obj/item/weapon/screwdriver))
 				if (do_after(user, 20))
 					src.open =! src.open
-					user.show_message(text("\blue You [] the service panel.", (src.open ? "open" : "close")))
+					user.show_message(text("<span class='notice'>You [] the service panel.", (src.open ? "open" : "close</span>")))
 				return
 			if ((istype(W, /obj/item/device/multitool)) && (src.open == 1)&& (!src.l_hacking))
-				user.show_message(text("\red Now attempting to reset internal memory, please hold."), 1)
+				user.show_message(text("<span class='danger'>Now attempting to reset internal memory, please hold.</span>"), 1)
 				src.l_hacking = 1
 				if (do_after(usr, 100))
 					if (prob(40))
 						src.l_setshort = 1
 						src.l_set = 0
-						user.show_message(text("\red Internal memory reset.  Please give it a few seconds to reinitialize."), 1)
+						user.show_message(text("<span class='danger'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>"), 1)
 						sleep(80)
 						src.l_setshort = 0
 						src.l_hacking = 0
 					else
-						user.show_message(text("\red Unable to reset internal memory."), 1)
+						user.show_message(text("<span class='danger'>Unable to reset internal memory.</span>"), 1)
 						src.l_hacking = 0
 				else	src.l_hacking = 0
 				return
@@ -160,7 +160,7 @@
 
 	attack_hand(mob/user as mob)
 		if ((src.loc == user) && (src.locked == 1))
-			usr << "\red [src] is locked and cannot be opened!"
+			usr << "<span class='danger'>[src] is locked and cannot be opened!</span>"
 		else if ((src.loc == user) && (!src.locked))
 			playsound(src.loc, "rustle", 50, 1, -5)
 			if (user.s_active)
@@ -178,7 +178,7 @@
 	//I consider this worthless but it isn't my code so whatever.  Remove or uncomment.
 	/*attack(mob/M as mob, mob/living/user as mob)
 		if ((CLUMSY in user.mutations) && prob(50))
-			user << "\red The [src] slips out of your hand and hits your head."
+			user << "<span class='danger'>The [src] slips out of your hand and hits your head.</span>"
 			user.take_organ_damage(10)
 			user.Paralyse(2)
 			return
@@ -195,7 +195,7 @@
 				if (H.stat < 2 && H.health < 50 && prob(90))
 				// ******* Check
 					if (istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80))
-						H << "\red The helmet protects you from being hit hard in the head!"
+						H << "<span class='danger'>The helmet protects you from being hit hard in the head!</span>"
 						return
 					var/time = rand(2, 6)
 					if (prob(75))
@@ -204,9 +204,9 @@
 						H.Stun(time)
 					if(H.stat != 2)	H.stat = 1
 					for(var/mob/O in viewers(H, null))
-						O.show_message(text("\red <B>[] has been knocked unconscious!</B>", H), 1, "\red You hear someone fall.", 2)
+						O.show_message(text("<span class='danger'><B>[] has been knocked unconscious!</B>", H), 1, "\red You hear someone fall.</span>", 2)
 				else
-					H << text("\red [] tried to knock you unconcious!",user)
+					H << text("<span class='danger'>[] tried to knock you unconcious!</span>",user)
 					H.eye_blurry += 3
 
 		return*/

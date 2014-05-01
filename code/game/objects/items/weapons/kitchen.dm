@@ -59,11 +59,11 @@
 	if (src.icon_state == "forkloaded") //This is a poor way of handling it, but a proper rewrite of the fork to allow for a more varied foodening can happen when I'm in the mood. --NEO
 		if(M == user)
 			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\blue [] eats a delicious forkful of omelette!", user), 1)
+				O.show_message(text("<span class='notice'>[] eats a delicious forkful of omelette!</span>", user), 1)
 				M.reagents.add_reagent("nutriment", 1)
 		else
 			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\blue [] feeds [] a delicious forkful of omelette!", user, M), 1)
+				O.show_message(text("<span class='notice'>[] feeds [] a delicious forkful of omelette!</span>", user, M), 1)
 				M.reagents.add_reagent("nutriment", 1)
 		src.icon_state = "fork"
 		return
@@ -388,7 +388,7 @@
 /*/obj/item/weapon/tray/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/kitchen/utensil/fork))
 		if (W.icon_state == "forkloaded")
-			user << "\red You already have omelette on your fork."
+			user << "<span class='danger'>You already have omelette on your fork.</span>"
 			return
 		W.icon = 'icons/obj/kitchen.dmi'
 		W.icon_state = "forkloaded"

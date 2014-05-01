@@ -162,12 +162,12 @@
 	//Begin code phrase.
 	killer << "The Syndicate provided you with the following information on how to identify their agents:"
 	if(prob(80))
-		killer << "\red Code Phrase: \black [syndicate_code_phrase]"
+		killer << "<span class='danger'>Code Phrase: \black [syndicate_code_phrase]</span>"
 		killer.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
 	else
 		killer << "Unfortunately, the Syndicate did not provide you with a code phrase."
 	if(prob(80))
-		killer << "\red Code Response: \black [syndicate_code_response]"
+		killer << "<span class='danger'>Code Response: \black [syndicate_code_response]</span>"
 		killer.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
 	else
 		killer << "Unfortunately, the Syndicate did not provide you with a code response."
@@ -297,12 +297,12 @@
 	if(!safety)//If they are not a rev. Can be added on to.
 		traitor_mob << "The Syndicate provided you with the following information on how to identify other agents:"
 		if(prob(80))
-			traitor_mob << "\red Code Phrase: \black [syndicate_code_phrase]"
+			traitor_mob << "<span class='danger'>Code Phrase: \black [syndicate_code_phrase]</span>"
 			traitor_mob.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
 		else
 			traitor_mob << "Unfortunetly, the Syndicate did not provide you with a code phrase."
 		if(prob(80))
-			traitor_mob << "\red Code Response: \black [syndicate_code_response]"
+			traitor_mob << "<span class='danger'>Code Response: \black [syndicate_code_response]</span>"
 			traitor_mob.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
 		else
 			traitor_mob << "Unfortunately, the Syndicate did not provide you with a code response."

@@ -56,7 +56,7 @@ This system could be expanded to migrate all of our current mutations to. Maybe.
 		required = 2
 
 		get_mutation(var/mob/living/carbon/M)
-			M << "\blue You feel a searing heat inside your eyes!"
+			M << "<span class='notice'>You feel a searing heat inside your eyes!</span>"
 			M.mutations.Add(LASER)
 
 	Healing
@@ -66,7 +66,7 @@ This system could be expanded to migrate all of our current mutations to. Maybe.
 		required = 2
 
 		get_mutation(var/mob/living/carbon/M)
-			M << "\blue You feel a pleasant warmth pulse throughout your body..."
+			M << "<span class='notice'>You feel a pleasant warmth pulse throughout your body...</span>"
 			M.mutations.Add(HEAL)
 
 /* /datum/mutationreq :

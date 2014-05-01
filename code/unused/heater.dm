@@ -186,16 +186,16 @@
 			if (src.c_status)
 				src.anchored = initial(src.anchored)
 				src.c_status = 0
-				user.show_message("\blue You have disconnected the heater.", 1)
+				user.show_message("<span class='notice'>You have disconnected the heater.</span>", 1)
 				if(con)
 					con.connected = null
 			else
 				if (con && !con.connected)
 					src.anchored = 1
 					src.c_status = 3
-					user.show_message("\blue You have connected the heater.", 1)
+					user.show_message("<span class='notice'>You have connected the heater.</span>", 1)
 					con.connected = src
 				else
-					user.show_message("\blue There is no connector here to attach the heater to.", 1)
+					user.show_message("<span class='notice'>There is no connector here to attach the heater to.</span>", 1)
 	return
 

@@ -347,7 +347,7 @@ datum
 				if(ishuman(M))
 					var/mob/living/carbon/human/human = M
 					if(human.dna && !human.dna.mutantrace)
-						M << "\red Your flesh rapidly mutates!"
+						M << "<span class='danger'>Your flesh rapidly mutates!</span>"
 						human.dna.mutantrace = "slime"
 						human.update_body()
 						human.update_hair()
@@ -1396,7 +1396,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(prob(10))
-					M << "\red Your insides are burning!"
+					M << "<span class='danger'>Your insides are burning!</span>"
 					M.adjustToxLoss(rand(20,60)*REM)
 				else if(prob(40))
 					M.heal_organ_damage(5*REM,0)
@@ -1700,7 +1700,7 @@ datum
 						var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
 						I.desc = "Looks like this was \an [O] some time ago."
 						for(var/mob/M in viewers(5, O))
-							M << "\red \the [O] melts."
+							M << "<span class='danger'>\the [O] melts.</span>"
 						qdel(O)
 
 		toxin/acid/polyacid
