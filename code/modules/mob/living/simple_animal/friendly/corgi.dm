@@ -60,7 +60,7 @@
 			if( O.force )
 				usr << "<span class='danger'>[src] is wearing too much armor. You can't cause \him any damage.</span>"
 				for (var/mob/M in viewers(src, null))
-					M.show_message("<span class='danger'>\b [user] hits [src] with [O], however [src] is too armored.</span>")
+					M.show_message("<span class='userdanger'> [user] hits [src] with [O], however [src] is too armored.</span>")
 			else
 				usr << "<span class='danger'>[src] is wearing too much armor. You can't reach \his skin.</span>"
 				for (var/mob/M in viewers(src, null))

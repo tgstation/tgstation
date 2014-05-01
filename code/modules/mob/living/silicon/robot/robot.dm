@@ -555,7 +555,7 @@
 						src << "<span class='danger'>ERRORERRORERROR</span>"
 						src << "<b>Obey these laws:</b>"
 						laws.show_laws(src)
-						src << "<span class='danger'>\b ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</span>"
+						src << "<span class='userdanger'> ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</span>"
 						updateicon()
 					else
 						user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."

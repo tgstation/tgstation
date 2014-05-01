@@ -116,16 +116,16 @@
 					U << "<span class='danger'>The soul stone doesn't work for no apparent reason.</span>"
 				return 0
 			if(C.imprinted != "empty")
-				U << "<span class='danger'><b>Capture failed!</b>: \black The soul stone has already been imprinted with [C.imprinted]'s mind!</span>"
+				U << "<span class='userdanger'>lack The soul stone has already been imprinted with [C.imprinted]'s mind!</span>"
 			else
 				if (T.stat == 0)
-					U << "<span class='danger'><b>Capture failed!</b>: \black Kill or maim the victim first!</span>"
+					U << "<span class='userdanger'>lack Kill or maim the victim first!</span>"
 				else
 					if(T.client == null)
-						U << "<span class='danger'><b>Capture failed!</b>: \black The soul has already fled it's mortal frame.</span>"
+						U << "<span class='userdanger'>lack The soul has already fled it's mortal frame.</span>"
 					else
 						if(C.contents.len)
-							U << "<span class='danger'><b>Capture failed!</b>: \black The soul stone is full! Use or free an existing soul to make room.</span>"
+							U << "<span class='userdanger'>lack The soul stone is full! Use or free an existing soul to make room.</span>"
 						else
 							for(var/obj/item/W in T)
 								T.unEquip(W)
@@ -135,13 +135,13 @@
 			var/mob/living/simple_animal/shade/T = target
 			var/obj/item/device/soulstone/C = src
 			if (T.stat == DEAD)
-				U << "<span class='danger'><b>Capture failed!</b>: \black The shade has already been banished!</span>"
+				U << "<span class='userdanger'>lack The shade has already been banished!</span>"
 			else
 				if(C.contents.len)
-					U << "<span class='danger'><b>Capture failed!</b>: \black The soul stone is full! Use or free an existing soul to make room.</span>"
+					U << "<span class='userdanger'>lack The soul stone is full! Use or free an existing soul to make room.</span>"
 				else
 					if(T.name != C.imprinted)
-						U << "<span class='danger'><b>Capture failed!</b>: \black The soul stone has already been imprinted with [C.imprinted]'s mind!</span>"
+						U << "<span class='userdanger'>lack The soul stone has already been imprinted with [C.imprinted]'s mind!</span>"
 					else
 						T.loc = C //put shade in stone
 						T.status_flags |= GODMODE
@@ -203,7 +203,7 @@
 						Z.cancel_camera()
 						qdel(C)
 			else
-				U << "<span class='danger'><b>Creation failed!</b>: \black The soul stone is empty! Go kill someone!</span>"
+				U << "<span class='userdanger'>lack The soul stone is empty! Go kill someone!</span>"
 	return
 
 obj/item/proc/init_shade(var/obj/item/device/soulstone/C, var/mob/living/carbon/human/T, var/mob/U as mob, var/vic = 0)
