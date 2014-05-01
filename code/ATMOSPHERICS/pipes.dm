@@ -716,7 +716,6 @@ Pipe Manifolds
 		qdel(src)
 		return
 
-	var/connected = 0
 	var/image/img
 	var/invis = invisibility ? "-f" : ""
 
@@ -729,26 +728,13 @@ Pipe Manifolds
 		img = image('icons/obj/atmospherics/pipe_manifold.dmi', icon_state="manifold_full[invis]", dir=get_dir(src,node1))
 		overlays += img
 
-		connected |= img.dir
-
 	if(node2)
 		img = image('icons/obj/atmospherics/pipe_manifold.dmi', icon_state="manifold_full[invis]", dir=get_dir(src,node2))
 		overlays += img
 
-		connected |= img.dir
-
 	if(node3)
 		img = image('icons/obj/atmospherics/pipe_manifold.dmi', icon_state="manifold_full[invis]", dir=get_dir(src,node3))
 		overlays += img
-
-		connected |= img.dir
-
-	//Add broken pieces
-	var/unconnected = (~connected) & initialize_directions
-	for(var/direction in cardinal)
-		if(unconnected & direction)
-			img = image('icons/obj/atmospherics/pipe_manifold.dmi', icon_state="manifold_broken[invis]", dir=direction)
-			overlays += img
 
 /obj/machinery/atmospherics/pipe/manifold/initialize()
 	var/connect_directions = (NORTH|SOUTH|EAST|WEST)&(~dir)
