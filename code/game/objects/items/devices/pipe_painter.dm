@@ -16,8 +16,10 @@
 		"purple"	= rgb(130,43,255)
 	)
 	var/mode = "grey"
-
 	var/on = 1
+
+	m_amt = 5000
+	g_amt = 2000
 
 /obj/item/device/pipe_painter/afterattack(atom/A, mob/user as mob)
 	if(!on)
