@@ -4,7 +4,7 @@ This should ideally have /unary/ as parent, why doesn't it? //Donkie
 */
 /obj/machinery/atmospherics/portables_connector
 	icon = 'icons/obj/atmospherics/unary_devices.dmi'
-	icon_state = "connector_intact" //Only for mapping purposes, so mappers can see direction
+	icon_state = "connector_map" //Only for mapping purposes, so mappers can see direction
 
 	name = "connector port"
 	desc = "For connecting portables devices related to atmospherics control."

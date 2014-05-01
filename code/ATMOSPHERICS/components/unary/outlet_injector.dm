@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/unary/outlet_injector
-	icon_state = "inje_off"
+	icon_state = "inje_map"
 	use_power = 1
 
 	name = "air injector"
@@ -15,6 +15,9 @@
 	var/datum/radio_frequency/radio_connection
 
 	level = 1
+
+/obj/machinery/atmospherics/unary/outlet_injector/on
+	on = 1
 
 /obj/machinery/atmospherics/unary/outlet_injector/update_icon_nopipes()
 	if(!node || !on || stat & (NOPOWER|BROKEN))
