@@ -348,6 +348,7 @@ Status: []<BR>"},
 			user << "\red Access denied."
 
 	else
+		user.changeNext_move(10)
 		// if the turret was attacked with the intention of harming it:
 		src.health -= W.force * 0.5
 		if (src.health <= 0)
