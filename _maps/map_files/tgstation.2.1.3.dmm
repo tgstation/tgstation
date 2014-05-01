@@ -4868,7 +4868,7 @@
 "bPF" = (/obj/machinery/computer/general_air_control{frequency = 1441; name = "Tank Monitor"; sensors = list("n2_sensor" = "Nitrogen", "o2_sensor" = "Oxygen", "co2_sensor" = "Carbon Dioxide", "tox_sensor" = "Toxins", "n2o_sensor" = "Nitrous Oxide", "waste_sensor" = "Gas Mix Tank")},/obj/machinery/requests_console{department = "Atmospherics"; departmentType = 4; name = "Atmos RC"; pixel_x = 30; pixel_y = 0},/turf/simulated/floor{icon_state = "caution"; dir = 4},/area/atmos)
 "bPG" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 1},/obj/machinery/firealarm{dir = 2; pixel_y = 24},/turf/simulated/floor{icon_state = "white"},/area/medical/research{name = "Research Division"})
 "bPH" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden,/turf/simulated/floor{dir = 10; icon_state = "whitehall"},/area/medical/research{name = "Research Division"})
-"bPI" = (/obj/structure/closet/crate,/turf/simulated/floor,/area/atmos)
+"bPI" = (/obj/structure/closet/crate,/obj/item/device/pipe_painter,/turf/simulated/floor,/area/atmos)
 "bPJ" = (/obj/structure/disposalpipe/sortjunction{dir = 2; icon_state = "pipe-j2s"; sortType = 12},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 8},/turf/simulated/floor{icon_state = "white"},/area/medical/genetics)
 "bPK" = (/obj/machinery/light{dir = 1},/obj/machinery/atmospherics/pipe/manifold/supply/hidden,/turf/simulated/floor{dir = 8; icon_state = "whiteblue"},/area/medical/research{name = "Research Division"})
 "bPL" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 4; initialize_directions = 11},/turf/simulated/floor{dir = 9; icon_state = "whitehall"},/area/medical/research{name = "Research Division"})
