@@ -8,7 +8,8 @@
 			maxHealth = 150
 			revive()
 			regenerate_icons()
-			name = "[colour] [is_adult ? "adult" : "baby"] slime ([rand(1, 1000)])"
+			number = rand(1, 1000)
+			name = "[colour] [is_adult ? "adult" : "baby"] slime ([number])"
 			return
 
 	if(stat == DEAD)	return
