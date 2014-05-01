@@ -122,7 +122,7 @@
 
 	for (var/mob/living/S in living_mob_list)
 		if(S.robot_talk_understand && (S.robot_talk_understand == robot_talk_understand)) // This SHOULD catch everything caught by the one below, but I'm not going to change it.
-			if(istype(S , /mob/living/silicon/ai))
+			if(istype(S , /mob/living/silicon/ai) && !isMoMMI(src))
 				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src]'><span class='name'>[name]</span></a> <span class='message'>[message_a]</span></span></i>"
 				S.show_message(renderedAI, 2)
 			else if(istype(S , /mob/dead/observer) && S.stat == DEAD)
