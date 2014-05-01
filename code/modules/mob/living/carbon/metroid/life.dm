@@ -254,7 +254,7 @@
 /mob/living/carbon/slime/proc/handle_nutrition()
 
 	if (prob(15))
-		--nutrition
+		nutrition -= 1 + is_adult
 
 	if(nutrition <= 0)
 		nutrition = 0
@@ -535,7 +535,7 @@
 			for (var/M in friends_near)
 				phrases += "[M]... friend..."
 				if (nutrition < get_hunger_nutrition())
-					phrases += "[M]... Feed me..."
+					phrases += "[M]... feed me..."
 			say (pick(phrases))
 
 /mob/living/carbon/slime/proc/get_max_nutrition() // Can't go above it
