@@ -422,9 +422,9 @@
 
 					else if(iscarbon(L))
 
-						if(istype(L, /mob/living/carbon/human)) //Ignore slime(wo)men
+						if(istype(L, /mob/living/carbon/human) && dna) //Ignore slime(wo)men
 							var/mob/living/carbon/human/H = L
-							if(H.check_mutrace("slime") == 1)
+							if(src.type in H.dna.species.ignored_by)
 								continue
 
 						if(!is_adult) //Non-starving diciplined adult slimes wont eat things

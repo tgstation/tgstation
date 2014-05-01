@@ -368,10 +368,10 @@
 		return
 
 	var/datum/data/record/R = new()
-	if(subject.dna)
-		R.fields["mrace"] = subject.dna.mutantrace
+	if(subject.dna.species)
+		R.fields["mrace"] = subject.dna.species.type
 	else
-		R.fields["mrace"] = null
+		R.fields["mrace"] = /datum/species/human
 	R.fields["ckey"] = subject.ckey
 	R.fields["name"] = subject.real_name
 	R.fields["id"] = copytext(md5(subject.real_name), 2, 6)
@@ -379,7 +379,7 @@
 	R.fields["UI"] = subject.dna.uni_identity
 	R.fields["SE"] = subject.dna.struc_enzymes
 	R.fields["blood_type"] = subject.dna.blood_type
-	R.fields["mcolor"] = subject.mutant_color
+	R.fields["mcolor"] = subject.dna.mutant_color
 
 	//Add an implant if needed
 	var/obj/item/weapon/implant/health/imp = locate(/obj/item/weapon/implant/health, subject)

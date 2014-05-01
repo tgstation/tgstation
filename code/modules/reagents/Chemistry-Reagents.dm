@@ -67,6 +67,10 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!istype(M, /mob/living))
 					return //Noticed runtime errors from pacid trying to damage ghosts, this should fix. --NEO
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if(H.dna && H.dna.species) // mutantrace-specific reactions to chemicals
+						H.dna.species.handle_chemicals(id)
 				holder.remove_reagent(src.id, REAGENTS_METABOLISM) //By default it slowly disappears.
 				return
 
@@ -342,7 +346,7 @@ datum
 			reagent_state = LIQUID
 			color = "#13BC5E" // rgb: 19, 188, 94
 
-			on_mob_life(var/mob/living/M as mob)
+			/*on_mob_life(var/mob/living/M as mob) 	// this is now handled in /datum/races/human
 				if(!M) M = holder.my_atom
 				if(ishuman(M))
 					var/mob/living/carbon/human/human = M
@@ -353,7 +357,7 @@ datum
 						human.update_hair()
 						human.update_mutcolor()
 				..()
-				return
+				return*/
 
 		aslimetoxin
 			name = "Advanced Mutation Toxin"
@@ -1505,11 +1509,6 @@ datum
 					var/mob/living/carbon/C = M
 					if(!C.wear_mask) // If not wearing a mask
 						C.adjustToxLoss(2) // 4 toxic damage per application, doubled for some reason
-					if(ishuman(M))
-						var/mob/living/carbon/human/H = M
-						if(H.dna)
-							if(H.dna.mutantrace == "plant" || H.dna.mutantrace == "pod") //plantmen take a LOT of damage
-								H.adjustToxLoss(10)
 
 		toxin/plantbgone/weedkiller
 			name = "Weed Killer"
@@ -1532,11 +1531,6 @@ datum
 					var/mob/living/carbon/C = M
 					if(!C.wear_mask) // If not wearing a mask
 						C.adjustToxLoss(2) // 4 toxic damage per application, doubled for some reason
-					if(ishuman(M))
-						var/mob/living/carbon/human/H = M
-						if(H.dna)
-							if(H.dna.mutantrace == "fly") //Botanists can now genocide plant and fly people alike.
-								H.adjustToxLoss(10)
 
 		toxin/stoxin
 			name = "Sleep Toxin"

@@ -8,7 +8,8 @@
 	..()
 
 /mob/living/carbon/human/spawn_gibs()
-	hgibs(loc, viruses, dna)
+	if(dna)
+		hgibs(loc, viruses, dna)
 
 /mob/living/carbon/human/spawn_dust()
 	new /obj/effect/decal/remains/human(loc)
@@ -31,6 +32,9 @@
 		update_canmove()
 		if(client) blind.layer = 0
 
+	if(dna)
+		dna.species.spec_death(gibbed)
+
 	tod = worldtime2text()		//weasellos time of death patch
 	if(mind)	mind.store_memory("Time of death: [tod]", 0)
 	if(ticker && ticker.mode)
@@ -40,11 +44,9 @@
 	return ..(gibbed)
 
 /mob/living/carbon/human/proc/makeSkeleton()
-	if(!check_dna_integrity(src) || (dna.mutantrace == "skeleton"))	return
-	dna.mutantrace = "skeleton"
+	if(!check_dna_integrity(src))	return
 	status_flags |= DISFIGURED
-	update_hair()
-	update_body()
+	dna.species = new /datum/species/skeleton(src)
 	return 1
 
 /mob/living/carbon/proc/ChangeToHusk()

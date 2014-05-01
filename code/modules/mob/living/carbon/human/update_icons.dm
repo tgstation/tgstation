@@ -56,7 +56,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 */
 
 //Human Overlays Indexes/////////
-#define MUTANTRACE_LAYER		23		// mutantrace colors... these are on a seperate layer in order to prvent
+#define SPECIES_LAYER			23		// mutantrace colors... these are on a seperate layer in order to prvent
 #define BODY_LAYER				22		//underwear, eyes, lips(makeup)
 #define MUTATIONS_LAYER			21		//Tk headglows etc.
 #define AUGMENTS_LAYER			20
@@ -87,11 +87,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 /mob/living/carbon/human/proc/update_base_icon_state()
 	//var/race = dna ? dna.mutantrace : null
-	if(dna && dna.mutantrace)
-		if(dna.mutantrace != "skeleton")
-			base_icon_state = "[dna.mutantrace]_[(gender == FEMALE) ? "f" : "m"]"
-		else
-			base_icon_state = "skeleton"
+	if(dna)
+		base_icon_state = dna.species.update_base_icon_state()
 	else
 		if(HUSK in mutations)
 			base_icon_state = "husk"
@@ -149,63 +146,11 @@ Please contact me on #coderbus IRC. ~Carnie x
 	//Reset our hair
 	remove_overlay(HAIR_LAYER)
 
-	//mutants don't have hair (besides slime people). masks and helmets can obscure our hair too.
-	if(dna && dna.mutantrace)
-		if(check_mutrace("slime") == 0)
-			return
-
 	if( (HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) )
 		return
 
-
-	//base icons
-	var/datum/sprite_accessory/S
-	var/list/standing	= list()
-
-	if(facial_hair_style)
-		S = facial_hair_styles_list[facial_hair_style]
-		if(S)
-			var/image/img_facial_s
-			var/new_color
-
-			img_facial_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
-
-			if(check_mutrace("slime") == 1)
-				new_color = "#" + mutant_color
-				img_facial_s.alpha = 175
-			else
-				new_color = "#" + facial_hair_color
-
-			img_facial_s.color = new_color
-
-			standing	+= img_facial_s
-
-	//Applies the debrained overlay if there is no brain
-	if(!getorgan(/obj/item/organ/brain))
-		standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained_s", "layer" = -HAIR_LAYER)
-	else if(hair_style)
-		S = hair_styles_list[hair_style]
-		if(S)
-			var/image/img_hair_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
-			var/new_color
-
-			img_hair_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
-
-			if(check_mutrace("slime") == 1)
-				new_color = "#" + mutant_color
-				img_hair_s.alpha = 175
-			else
-				new_color = "#" + facial_hair_color
-
-			img_hair_s.color = new_color
-
-			standing	+= img_hair_s
-
-	if(standing.len)
-		overlays_standing[HAIR_LAYER]	= standing
-
-	apply_overlay(HAIR_LAYER)
-
+	if(dna)
+		dna.species.handle_hair()
 
 /mob/living/carbon/human/update_mutations()
 	remove_overlay(MUTATIONS_LAYER)
@@ -230,63 +175,21 @@ Please contact me on #coderbus IRC. ~Carnie x
 	apply_overlay(MUTATIONS_LAYER)
 
 /mob/living/carbon/human/proc/update_mutcolor()
-	remove_overlay(MUTANTRACE_LAYER)
-
-	var/image/standing
-
-	var/g = (gender == FEMALE) ? "f" : "m"
-
-	if(dna)
-		var/image/mut_base
-		//var/icon/temp_icon = new /icon('icons/mob/human.dmi', "[dna.mutantrace]_[gender]_s")
-		if(dna.mutantrace in colored_mutraces)
-			mut_base = image("icon"='icons/mob/human.dmi', "icon_state"="[dna.mutantrace]_[g]_s", "layer"=-MUTANTRACE_LAYER)
-			mut_base.color = "#[mutant_color]"
-			standing = mut_base
-
-	if(standing)
-		overlays_standing[MUTANTRACE_LAYER]	= standing
-
-	apply_overlay(MUTANTRACE_LAYER)
+	if(dna && !(HUSK in mutations))
+		dna.species.update_color()
 
 /mob/living/carbon/human/proc/update_body()
 	remove_overlay(BODY_LAYER)
 
-	update_base_icon_state()
+	if(dna)
+		base_icon_state = dna.species.update_base_icon_state()
+	else
+		update_base_icon_state()
 
 	icon_state = "[base_icon_state]_s"
 
-	var/list/standing	= list()
-
-	//Mouth	(lipstick!)
-	if(lip_style)
-		standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[lip_style]_s", "layer" = -BODY_LAYER)
-
-	//Eyes
-	if(dna)
-		if((!dna.mutantrace) || (dna.mutantrace in mutants_with_eyes))
-			var/image/img_eyes_s
-			if(check_mutrace("jelly") == 1) // jellies have special eyes
-				img_eyes_s = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "jelleyes_s", "layer" = -BODY_LAYER)
-			else
-				img_eyes_s = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes_s", "layer" = -BODY_LAYER)
-
-			var/new_color = "#" + eye_color
-
-			img_eyes_s.color = new_color
-
-			standing	+= img_eyes_s
-
-	//Underwear
-	if(underwear)
-		var/datum/sprite_accessory/underwear/U = underwear_all[underwear]
-		if(U)
-			standing	+= image("icon"=U.icon, "icon_state"="[U.icon_state]_s", "layer"=-BODY_LAYER)
-
-	if(standing.len)
-		overlays_standing[BODY_LAYER]	= standing
-
-	apply_overlay(BODY_LAYER)
+	if(dna)	// didn't want to have a duplicate if(dna) here, but due to the ordering of the code this was the only way
+		dna.species.handle_body()
 
 /mob/living/carbon/human/update_fire()
 
@@ -374,14 +277,15 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 		overlays_standing[UNIFORM_LAYER]	= standing
 
-		var/G = (gender == FEMALE) ? "f" : "m"
-		if(G == "f" && U.fitted == 1)
-			var/index = "[t_color]_s"
-			var/icon/female_uniform_icon = female_uniform_icons[index]
-			if(!female_uniform_icon ) 	//Create standing/laying icons if they don't exist
-				generate_uniform(index,t_color)
-			standing	= image("icon"=female_uniform_icons["[t_color]_s"], "layer"=-UNIFORM_LAYER)
-			overlays_standing[UNIFORM_LAYER]	= standing
+		if(dna && dna.species.sexes)
+			var/G = (gender == FEMALE) ? "f" : "m"
+			if(G == "f" && U.fitted == 1)
+				var/index = "[t_color]_s"
+				var/icon/female_uniform_icon = female_uniform_icons[index]
+				if(!female_uniform_icon ) 	//Create standing/laying icons if they don't exist
+					generate_uniform(index,t_color)
+				standing	= image("icon"=female_uniform_icons["[t_color]_s"], "layer"=-UNIFORM_LAYER)
+				overlays_standing[UNIFORM_LAYER]	= standing
 
 		if(w_uniform.blood_DNA)
 			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="uniformblood")
@@ -425,6 +329,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 		if(gloves.blood_DNA)
 			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
+
 	else
 		if(blood_DNA)
 			overlays_standing[GLOVES_LAYER]	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
@@ -679,7 +584,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 
 //Human Overlays Indexes/////////
-#undef MUTANTRACE_LAYER
+#undef SPECIES_LAYER
 #undef BODY_LAYER
 #undef MUTATIONS_LAYER
 #undef DAMAGE_LAYER

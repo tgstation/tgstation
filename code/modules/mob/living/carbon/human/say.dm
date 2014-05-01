@@ -22,24 +22,8 @@
 					return
 
 		if(dna)
-			if(dna.mutantrace == "lizard")
-				if(copytext(message, 1, 2) != "*")
-					message = replacetext(message, "s", stutter("ss"))
+			message = dna.species.handle_speech(message)
 
-			if(dna.mutantrace == "fly")
-				if(copytext(message, 1, 2) != "*")
-					message = replacetext(message, "z", stutter("zz"))
-
-			/*if(dna.mutantrace == "slime" && prob(5))
-				if(copytext(message, 1, 2) != "*")
-					if(copytext(message, 1, 2) == ";")
-						message = ";"
-					else
-						message = ""
-					message += "SKR"
-					var/imax = rand(5,20)
-					for(var/i = 0,i<imax,i++)
-						message += "E"*/
 		if(viruses.len)
 			for(var/datum/disease/pierrot_throat/D in viruses)
 				var/list/temp_message = text2list(message, " ") //List each word in the message

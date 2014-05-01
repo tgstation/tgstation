@@ -131,6 +131,12 @@
 
 	O.gender = (deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
 	O.dna = dna
+
+	if(!dna.species)
+		O.dna.species = new /datum/species/human(O)
+	else
+		O.dna.species = new dna.species.type(O)
+
 	dna = null
 	if (newname) //if there's a name as an argument, always take that one over the current name
 		O.real_name = newname

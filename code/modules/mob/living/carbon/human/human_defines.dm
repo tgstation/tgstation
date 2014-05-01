@@ -7,9 +7,6 @@
 	var/facial_hair_color = "000"
 	var/facial_hair_style = "Shaved"
 
-	// Mutant race skin color
-	var/mutant_color = "FFF"
-
 	//Eye colour
 	var/eye_color = "000"
 

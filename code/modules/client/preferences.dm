@@ -53,8 +53,8 @@ datum/preferences
 	var/facial_hair_color = "000"		//Facial hair color
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
-	var/mutant_race = "human"			//Mutant race
-	var/mutant_color = "000"			//Mutant race skin color
+	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
+	var/mutant_color = "FFF"			//Mutant race skin color
 
 		//Mob preview
 	var/icon/preview_icon_front = null
@@ -166,9 +166,9 @@ datum/preferences
 				dat += "<table width='100%'><tr><td width='24%' valign='top'>"
 
 				if(config.mutant_races)
-					dat += "<b>Mutant Race:</b><BR><a href='?_src_=prefs;preference=mutant_race;task=input'>[mutant_race]</a><BR>"
+					dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
 				else
-					dat += "<b>Mutant Race:</b> human<BR>"
+					dat += "<b>Species:</b> Human<BR>"
 				dat += "<b>Blood Type:</b> [blood_type]<BR>"
 				dat += "<b>Skin Tone:</b><BR><a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
 				dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
@@ -199,7 +199,7 @@ datum/preferences
 
 				dat += "</td><td valign='top' width='21%'>"
 
-				dat += "<h3>Mutant Color</h3>"  // even if choosing your mutantrace is off, this is here in case you gain one during a round
+				dat += "<h3>Alien Color</h3>"  // even if choosing your mutantrace is off, this is here in case you gain one during a round
 
 				dat += "<span style='border: 1px solid #161616; background-color: #[mutant_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>Change</a><BR>"
 
@@ -624,13 +624,26 @@ datum/preferences
 						if(new_eyes)
 							eye_color = sanitize_hexcolor(new_eyes)
 
-					if("mutant_race")
-						var/new_mutant_race = input(user, "Choose your character's mutant race:", "Character Preference")  as null|anything in mutant_races
-						if(new_mutant_race)
-							mutant_race = new_mutant_race
+					if("species")
+						var/list/choices = list()
+						for(var/t in typesof(/datum/species)) // looks through the mutantraces
+							var/datum/species/temp = new t()
+							if(!temp.roundstart) continue    // if it is not a roundstart species, skip it
+							choices[temp.name] = temp.type
+
+						var/result = input(user, "Select a species", "Species Selection") as null|anything in choices
+
+						if(result)
+							var/newtype = choices[result]
+							pref_species = new newtype()
+							if(!config.mutant_colors)
+								mutant_color = pref_species.default_color
 
 					if("mutant_color")
-						var/new_mutantcolor = input(user, "Choose your character's mutant race skin color:", "Character Preference") as color|null
+						if(!config.mutant_colors)
+							user << "<font color='red'>Alien colors are disabled.</font>"
+							return
+						var/new_mutantcolor = input(user, "Choose your character's alien skin color:", "Character Preference") as color|null
 						if(new_mutantcolor)
 							var/temp_hsv = RGBtoHSV(new_mutantcolor)
 							if(ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright
@@ -739,10 +752,15 @@ datum/preferences
 
 		character.real_name = real_name
 		character.name = character.real_name
+
 		if(character.dna)
 			character.dna.real_name = character.real_name
-			if(mutant_race != "human" && config.mutant_races)
-				character.dna.mutantrace = mutant_race
+			if(pref_species != /datum/species/human && config.mutant_races)
+				character.dna.species = new pref_species.type(character)
+			else
+				character.dna.species = new /datum/species/human(character)
+			character.dna.mutant_color = mutant_color
+			character.update_mutcolor()
 
 		character.gender = gender
 		character.age = age
@@ -751,7 +769,6 @@ datum/preferences
 		character.eye_color = eye_color
 		character.hair_color = hair_color
 		character.facial_hair_color = facial_hair_color
-		character.mutant_color = mutant_color
 
 		character.skin_tone = skin_tone
 		character.hair_style = hair_style
