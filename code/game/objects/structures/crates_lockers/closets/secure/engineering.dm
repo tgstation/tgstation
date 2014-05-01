@@ -21,7 +21,7 @@
 		new /obj/item/clothing/head/hardhat/white(src)
 		new /obj/item/clothing/head/welding(src)
 		new /obj/item/clothing/gloves/yellow(src)
-		new /obj/item/clothing/shoes/brown(src)
+		new /obj/item/clothing/shoes/sneakers/brown(src)
 		new /obj/item/weapon/cartridge/ce(src)
 		new /obj/item/device/radio/headset/heads/ce(src)
 		new /obj/item/weapon/storage/toolbox/mechanical(src)
@@ -106,7 +106,7 @@
 		else
 			new /obj/item/weapon/storage/backpack/satchel_eng(src)
 		new /obj/item/clothing/under/rank/engineer(src)
-		new /obj/item/clothing/shoes/orange(src)
+		new /obj/item/clothing/shoes/sneakers/orange(src)
 		new /obj/item/weapon/storage/toolbox/mechanical(src)
 //		new /obj/item/weapon/cartridge/engineering(src)
 		new /obj/item/device/radio/headset/headset_eng(src)
