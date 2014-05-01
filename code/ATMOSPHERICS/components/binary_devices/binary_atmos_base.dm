@@ -32,18 +32,11 @@
 	air2.volume = 200
 
 //Separate this because we don't need to update pipe icons if we just are going to change the state
-/obj/machinery/atmospherics/binary/proc/update_icon_nopipes(var/animation)
-	/*normalize_dir()
-	icon_state = "mvalve_off"
+/obj/machinery/atmospherics/binary/proc/update_icon_nopipes()
+	return
 
-	overlays.Cut()
-	if(animation)
-		overlays += image('icons/obj/atmospherics/binary_devices.dmi', icon_state = "mvalve_[open][!open]")
-	else if(open)
-		overlays += image('icons/obj/atmospherics/binary_devices.dmi', icon_state = "mvalve_on")*/
-
-/obj/machinery/atmospherics/binary/update_icon(var/animation)
-	update_icon_nopipes(animation)
+/obj/machinery/atmospherics/binary/update_icon()
+	update_icon_nopipes()
 
 	var/image/img
 	var/connected = 0

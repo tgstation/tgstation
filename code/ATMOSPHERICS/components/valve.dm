@@ -33,7 +33,7 @@ connect the networks together for a more efficient transfer
 	open = 1
 
 //Separate this because we don't need to update pipe icons if we just are going to crank the handle
-/obj/machinery/atmospherics/valve/proc/update_icon_nopipes(var/animation)
+/obj/machinery/atmospherics/valve/proc/update_icon_nopipes(var/animation = 0)
 	normalize_dir()
 	icon_state = "mvalve_off"
 
@@ -43,8 +43,8 @@ connect the networks together for a more efficient transfer
 	else if(open)
 		overlays += image('icons/obj/atmospherics/binary_devices.dmi', icon_state = "mvalve_on")
 
-/obj/machinery/atmospherics/valve/update_icon(var/animation)
-	update_icon_nopipes(animation)
+/obj/machinery/atmospherics/valve/update_icon()
+	update_icon_nopipes()
 
 	var/image/img
 	var/connected = 0
