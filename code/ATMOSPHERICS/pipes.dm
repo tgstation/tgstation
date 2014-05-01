@@ -860,3 +860,207 @@ Pipe Manifolds
 
 /obj/machinery/atmospherics/pipe/manifold/green/hidden
 	level = 1
+
+/*
+4-way manifold
+*/
+/obj/machinery/atmospherics/pipe/manifold4w
+	icon = 'icons/obj/atmospherics/pipe_manifold.dmi'
+	icon_state = "manifold4w"
+
+	name = "4-way pipe manifold"
+	desc = "A manifold composed of regular pipes"
+
+	volume = 140
+
+	initialize_directions = NORTH|SOUTH|EAST|WEST
+
+	var/obj/machinery/atmospherics/node1
+	var/obj/machinery/atmospherics/node2
+	var/obj/machinery/atmospherics/node3
+	var/obj/machinery/atmospherics/node4
+
+	level = 1
+	layer = 2.4 //under wires with their 2.44
+
+/obj/machinery/atmospherics/pipe/manifold4w/New()
+	color = pipe_color
+
+	..()
+
+/obj/machinery/atmospherics/pipe/manifold4w/hide(var/i)
+	if(level == 1 && istype(loc, /turf/simulated))
+		invisibility = i ? 101 : 0
+	update_icon()
+
+/obj/machinery/atmospherics/pipe/manifold4w/pipeline_expansion()
+	return list(node1, node2, node3, node4)
+
+/obj/machinery/atmospherics/pipe/manifold4w/process()
+	if(!parent)
+		..()
+	else
+		. = PROCESS_KILL
+
+/obj/machinery/atmospherics/pipe/manifold4w/Destroy()
+	if(node1)
+		node1.disconnect(src)
+	if(node2)
+		node2.disconnect(src)
+	if(node3)
+		node3.disconnect(src)
+	if(node4)
+		node4.disconnect(src)
+
+	..()
+
+/obj/machinery/atmospherics/pipe/manifold4w/disconnect(obj/machinery/atmospherics/reference)
+	if(reference == node1)
+		if(istype(node1, /obj/machinery/atmospherics/pipe))
+			del(parent)
+		node1 = null
+
+	if(reference == node2)
+		if(istype(node2, /obj/machinery/atmospherics/pipe))
+			del(parent)
+		node2 = null
+
+	if(reference == node3)
+		if(istype(node3, /obj/machinery/atmospherics/pipe))
+			del(parent)
+		node3 = null
+
+	if(reference == node4)
+		if(istype(node4, /obj/machinery/atmospherics/pipe))
+			del(parent)
+		node4 = null
+
+	update_icon()
+
+	..()
+
+/obj/machinery/atmospherics/pipe/manifold4w/update_icon()
+	if(!node1 && !node2 && !node3 && !node4) //Remove us if we ain't connected to anything.
+		qdel(src)
+		return
+
+	var/image/img
+	var/invis = invisibility ? "-f" : ""
+
+	icon_state = "manifold4w_center[invis]"
+
+	overlays.Cut()
+
+	//Add non-broken pieces
+	if(node1)
+		img = image('icons/obj/atmospherics/pipe_manifold.dmi', icon_state="manifold_full[invis]", dir=NORTH)
+		overlays += img
+
+	if(node2)
+		img = image('icons/obj/atmospherics/pipe_manifold.dmi', icon_state="manifold_full[invis]", dir=SOUTH)
+		overlays += img
+
+	if(node3)
+		img = image('icons/obj/atmospherics/pipe_manifold.dmi', icon_state="manifold_full[invis]", dir=EAST)
+		overlays += img
+
+	if(node4)
+		img = image('icons/obj/atmospherics/pipe_manifold.dmi', icon_state="manifold_full[invis]", dir=WEST)
+		overlays += img
+
+/obj/machinery/atmospherics/pipe/manifold4w/initialize()
+	for(var/obj/machinery/atmospherics/target in get_step(src,NORTH))
+		if(target.initialize_directions & SOUTH)
+			node1 = target
+			break
+
+	for(var/obj/machinery/atmospherics/target in get_step(src,SOUTH))
+		if(target.initialize_directions & NORTH)
+			node2 = target
+			break
+
+	for(var/obj/machinery/atmospherics/target in get_step(src,EAST))
+		if(target.initialize_directions & WEST)
+			node3 = target
+			break
+
+	for(var/obj/machinery/atmospherics/target in get_step(src,WEST))
+		if(target.initialize_directions & EAST)
+			node4 = target
+			break
+
+	var/turf/T = src.loc			// hide if turf is not intact
+	hide(T.intact)
+	update_icon()
+
+/obj/machinery/atmospherics/pipe/manifold4w/general
+	name="pipe"
+
+/obj/machinery/atmospherics/pipe/manifold4w/general/visible
+	level = 2
+
+/obj/machinery/atmospherics/pipe/manifold4w/general/hidden
+	level = 1
+
+/obj/machinery/atmospherics/pipe/manifold4w/scrubbers
+	name="scrubbers pipe"
+	pipe_color=rgb(255,0,0)
+	color=rgb(255,0,0)
+
+/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/visible
+	level = 2
+
+/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden
+	level = 1
+
+/obj/machinery/atmospherics/pipe/manifold4w/supply
+	name="air supply pipe"
+	pipe_color=rgb(0,0,255)
+	color=rgb(0,0,255)
+
+/obj/machinery/atmospherics/pipe/manifold4w/supply/visible
+	level = 2
+
+/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden
+	level = 1
+
+/obj/machinery/atmospherics/pipe/manifold4w/supplymain
+	name="main air supply pipe"
+	pipe_color=rgb(130,43,272)
+	color=rgb(130,43,272)
+
+/obj/machinery/atmospherics/pipe/manifold4w/supplymain/visible
+	level = 2
+
+/obj/machinery/atmospherics/pipe/manifold4w/supplymain/hidden
+	level = 1
+
+/obj/machinery/atmospherics/pipe/manifold4w/yellow
+	pipe_color=rgb(255,198,0)
+	color=rgb(255,198,0)
+
+/obj/machinery/atmospherics/pipe/manifold4w/yellow/visible
+	level = 2
+
+/obj/machinery/atmospherics/pipe/manifold4w/yellow/hidden
+	level = 1
+
+/obj/machinery/atmospherics/pipe/manifold4w/cyan
+	pipe_color=rgb(0,256,249)
+	color=rgb(0,256,249)
+
+/obj/machinery/atmospherics/pipe/manifold4w/cyan/visible
+	level = 2
+
+/obj/machinery/atmospherics/pipe/manifold4w/cyan/hidden
+	level = 1
+
+/obj/machinery/atmospherics/pipe/manifold4w/green
+	pipe_color=rgb(30,256,0)
+	color=rgb(30,256,0)
+
+/obj/machinery/atmospherics/pipe/manifold4w/green/visible
+	level = 2
+
+/obj/machinery/atmospherics/pipe/manifold4w/green/hidden
+	level = 1
