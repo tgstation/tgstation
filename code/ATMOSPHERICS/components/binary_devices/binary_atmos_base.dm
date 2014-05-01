@@ -14,6 +14,8 @@
 	var/datum/pipe_network/network1
 	var/datum/pipe_network/network2
 
+	var/showpipe = 1
+
 /obj/machinery/atmospherics/binary/New()
 	..()
 	switch(dir)
@@ -38,31 +40,37 @@
 /obj/machinery/atmospherics/binary/update_icon()
 	update_icon_nopipes()
 
-	var/image/img
-	var/connected = 0
 	underlays.Cut()
-
-	//Add non-broken pieces
-	if(node1)
-		img = image('icons/obj/atmospherics/binary_devices.dmi', icon_state="pipe_intact", dir=get_dir(src,node1))
-		img.color = node1.pipe_color
-		underlays += img
-
-		connected |= img.dir
-
-	if(node2)
-		img = image('icons/obj/atmospherics/binary_devices.dmi', icon_state="pipe_intact", dir=get_dir(src,node2))
-		img.color = node2.pipe_color
-		underlays += img
-
-		connected |= img.dir
-
-	//Add broken pieces
-	var/unconnected = (~connected) & initialize_directions
-	for(var/direction in cardinal)
-		if(unconnected & direction)
-			img = image('icons/obj/atmospherics/binary_devices.dmi', icon_state="pipe_exposed", dir=direction)
+	if(showpipe)
+		var/image/img
+		var/connected = 0
+		//Add non-broken pieces
+		if(node1)
+			img = image('icons/obj/atmospherics/binary_devices.dmi', icon_state="pipe_intact", dir=get_dir(src,node1))
+			img.color = node1.pipe_color
 			underlays += img
+
+			connected |= img.dir
+
+		if(node2)
+			img = image('icons/obj/atmospherics/binary_devices.dmi', icon_state="pipe_intact", dir=get_dir(src,node2))
+			img.color = node2.pipe_color
+			underlays += img
+
+			connected |= img.dir
+
+		//Add broken pieces
+		var/unconnected = (~connected) & initialize_directions
+		for(var/direction in cardinal)
+			if(unconnected & direction)
+				img = image('icons/obj/atmospherics/binary_devices.dmi', icon_state="pipe_exposed", dir=direction)
+				underlays += img
+
+/obj/machinery/atmospherics/binary/hide(var/intact)
+	showpipe = !intact
+	update_icon()
+
+	..(intact)
 
 // Housekeeping and pipe network stuff below
 /obj/machinery/atmospherics/binary/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
@@ -109,6 +117,9 @@
 		if(target.initialize_directions & get_dir(target,src))
 			node2 = target
 			break
+
+	if(level == 2)
+		showpipe = 1
 
 	update_icon()
 
