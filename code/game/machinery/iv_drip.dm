@@ -2,7 +2,7 @@
 	name = "\improper IV drip"
 	icon = 'icons/obj/iv_drip.dmi'
 	anchored = 0
-	density = 1
+	density = 0 //Tired of these blocking up the station
 
 
 /obj/machinery/iv_drip/var/mob/living/carbon/human/attached = null
@@ -58,6 +58,14 @@
 	if(isobserver(user)) return
 	if(user.stat)
 		return
+	if(istype(W, /obj/item/weapon/wrench))
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
+		new /obj/item/stack/sheet/metal(src.loc,2)
+		if(src.beaker)
+			src.beaker.loc = get_turf(src)
+			src.beaker = null
+		user << "\blue You dismantle \the [name]."
+		del(src)
 	if (istype(W, /obj/item/weapon/reagent_containers))
 		if(!isnull(src.beaker))
 			user << "There is already a reagent container loaded!"
