@@ -233,7 +233,6 @@
 	has_siding=0
 
 
-
 /turf/simulated/floor/plating/ironsand/New()
 	..()
 	name = "Iron Sand"
