@@ -39,7 +39,8 @@
 			state = "pipe_exposed"
 
 		var/image/img = image('icons/obj/atmospherics/binary_devices.dmi', icon_state=state, dir=initialize_directions)
-		img.color = node.pipe_color
+		if(node)
+			img.color = node.pipe_color
 		underlays += img
 
 /obj/machinery/atmospherics/unary/hide(var/intact)
