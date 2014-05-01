@@ -17,7 +17,7 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 				"ironsand8", "ironsand9", "ironsand10", "ironsand11",
 				"ironsand12", "ironsand13", "ironsand14", "ironsand15")
 var/list/wood_icons = list("wood","wood-broken")
-
+var/image/list/w_overlays = list("wet" = image('icons/effects/water.dmi',icon_state = "wet_floor"))
 /turf/simulated/floor
 
 	//Note to coders, the 'intact' var can no longer be used to determine if the floor is a plating or not.
@@ -35,7 +35,6 @@ var/list/wood_icons = list("wood","wood-broken")
 	var/burnt = 0
 	var/mineral = "metal"
 	var/obj/item/stack/tile/floor_tile = new/obj/item/stack/tile/plasteel
-
 
 /turf/simulated/floor/New()
 	..()
@@ -558,3 +557,26 @@ turf/simulated/floor/proc/update_icon()
 					broken = 0
 				else
 					user << "\blue You need more welding fuel to complete this task."
+
+/turf/simulated/proc/wet(delay = 800)
+	if(wet >= 1) return
+	wet = 1
+	if(wet_overlay)
+		overlays -= wet_overlay
+		wet_overlay = null
+	wet_overlay = w_overlays["wet"]
+	overlays += wet_overlay
+	spawn() dry(delay)
+
+/turf/simulated/proc/dry(delay = 800)
+	if(drying || wet >= 2)
+		return
+	drying = 1
+	spawn(delay)
+		if (!istype(src)) return
+		if(wet >= 2) return
+		wet = 0
+		drying = 0
+		if(wet_overlay)
+			overlays -= wet_overlay
+			wet_overlay = null
