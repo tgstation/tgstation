@@ -15,33 +15,28 @@
 	I.attack(src, user)
 
 /mob/living/proc/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if(H.dna)	H.dna.species.attacked_by(I, user, def_zone)
+	apply_damage(I.force, I.damtype)
+	if(I.damtype == "brute")
+		if(prob(33) && I.force)
+			var/turf/location = src.loc
+			if(istype(location, /turf/simulated))
+				location.add_blood_floor(src)
 
-	else
-		apply_damage(I.force, I.damtype)
-		if(I.damtype == "brute")
-			if(prob(33) && I.force)
-				var/turf/location = src.loc
-				if(istype(location, /turf/simulated))
-					location.add_blood_floor(src)
+	var/showname = "."
+	if(user)
+		showname = " by [user]!"
+	if(!(user in viewers(I, null)))
+		showname = "."
 
-		var/showname = "."
-		if(user)
-			showname = " by [user]!"
-		if(!(user in viewers(I, null)))
-			showname = "."
-
-		if(I.attack_verb && I.attack_verb.len)
-			src.visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] with [I][showname]</span>",
-			"<span class='userdanger'>[src] has been [pick(I.attack_verb)] with [I][showname]</span>")
-		else if(I.force)
-			src.visible_message("<span class='danger'>[src] has been attacked with [I][showname]</span>",
-			"<span class='userdanger'>[src] has been attacked with [I][showname]</span>")
-		if(!showname && user)
-			if(user.client)
-				user << "\red <B>You attack [src] with [I]. </B>"
+	if(I.attack_verb && I.attack_verb.len)
+		src.visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] with [I][showname]</span>",
+		"<span class='userdanger'>[src] has been [pick(I.attack_verb)] with [I][showname]</span>")
+	else if(I.force)
+		src.visible_message("<span class='danger'>[src] has been attacked with [I][showname]</span>",
+		"<span class='userdanger'>[src] has been attacked with [I][showname]</span>")
+	if(!showname && user)
+		if(user.client)
+			user << "\red <B>You attack [src] with [I]. </B>"
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.

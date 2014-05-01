@@ -214,7 +214,6 @@ datum/preferences
 				dat += "<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</a><br>"
 				dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'>[(toggles & CHAT_GHOSTEARS) ? "Nearest Creatures" : "All Speech"]</a><br>"
 				dat += "<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'>[(toggles & CHAT_GHOSTSIGHT) ? "Nearest Creatures" : "All Emotes"]</a><br>"
-				dat += "<b>Pull requests:</b> <a href='?_src_=prefs;preference=pull_requests'>[(toggles & CHAT_PULLR) ? "Yes" : "No"]</a><br>"
 
 				if(config.allow_Metadata)
 					dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'> Edit </a><br>"
@@ -625,23 +624,18 @@ datum/preferences
 							eye_color = sanitize_hexcolor(new_eyes)
 
 					if("species")
-						var/list/choices = list()
-						for(var/t in typesof(/datum/species)) // looks through the mutantraces
-							var/datum/species/temp = new t()
-							if(!temp.roundstart) continue    // if it is not a roundstart species, skip it
-							choices[temp.name] = temp.type
 
-						var/result = input(user, "Select a species", "Species Selection") as null|anything in choices
+						var/result = input(user, "Select a species", "Species Selection") as null|anything in roundstart_species
 
 						if(result)
-							var/newtype = choices[result]
+							var/newtype = roundstart_species[result]
 							pref_species = new newtype()
 							if(!config.mutant_colors)
 								mutant_color = pref_species.default_color
 
 					if("mutant_color")
 						if(!config.mutant_colors)
-							user << "<font color='red'>Alien colors are disabled.</font>"
+							user << "<span class='danger'>Alien colors are disabled.</span>"
 							return
 						var/new_mutantcolor = input(user, "Choose your character's alien skin color:", "Character Preference") as color|null
 						if(new_mutantcolor)
@@ -649,7 +643,7 @@ datum/preferences
 							if(ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright
 								mutant_color = sanitize_hexcolor(new_mutantcolor)
 							else
-								user << "<font color='red'>Invalid color. Your color is not bright enough.</font>"
+								user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
 
 					if("s_tone")
 						var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in skin_tones

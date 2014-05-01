@@ -47,6 +47,25 @@
 
 	..(message)
 
+/mob/living/carbon/human/say_quote(text)
+	if(!text)
+		return "says, \"...\"";	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
+	var/ending = copytext(text, length(text))
+	if (src.stuttering)
+		return "stammers, \"[text]\"";
+	if(isliving(src))
+		var/mob/living/L = src
+		if (L.getBrainLoss() >= 60)
+			return "gibbers, \"[text]\"";
+	if (ending == "?")
+		return "asks, \"[text]\"";
+	if (ending == "!")
+		return "exclaims, \"[text]\"";
+
+	if(dna)
+		return "[dna.species.say_mod], \"[text]\"";
+
+	return "says, \"[text]\"";
 
 /mob/living/carbon/human/proc/forcesay(list/append)
 	if(stat == CONSCIOUS)

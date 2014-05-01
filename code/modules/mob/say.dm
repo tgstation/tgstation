@@ -80,11 +80,6 @@
 	if (ending == "!")
 		return "exclaims, \"[text]\"";
 
-	if(istype(src,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = src
-		if(H.dna)
-			return "[H.dna.species.say_mod], \"[text]\"";
-
 	return "says, \"[text]\"";
 
 /mob/proc/emote(var/act)

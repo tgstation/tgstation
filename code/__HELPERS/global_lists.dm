@@ -15,7 +15,9 @@
 		if(spath == /datum/species)
 			continue
 		var/datum/species/S = new spath()
-		species_list[S.id] = S
+		if(S.roundstart)
+			roundstart_species[S.name] = S.type
+		species_list[S.id] = S.type
 
 	//Surgeries
 	for(var/path in typesof(/datum/surgery))

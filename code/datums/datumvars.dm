@@ -794,19 +794,14 @@ client
 				usr << "This can only be done to instances of type /mob/living/carbon/human"
 				return
 
-			var/list/choices = list()
-			for(var/t in typesof(/datum/species)) // returns a bunch of types
-				var/datum/species/temp = new t()
-				choices[temp.id] = temp.type
-
-			var/result = input(usr, "Please choose a new species","Species") as null|anything in choices
+			var/result = input(usr, "Please choose a new species","Species") as null|anything in species_list
 
 			if(!H)
 				usr << "Mob doesn't exist anymore"
 				return
 
 			if(result)
-				var/newtype = choices[result]
+				var/newtype = species_list[result]
 				H.dna.species = new newtype(H)
 				H.regenerate_icons()
 
