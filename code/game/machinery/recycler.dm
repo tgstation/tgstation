@@ -19,12 +19,11 @@ var/const/SAFETY_COOLDOWN = 100
 	..()
 	update_icon()
 
-/obj/machinery/recycler/examine()
-	set src in view()
+/obj/machinery/recycler/examine(mob/user)
 	..()
-	usr << "The power light is [(stat & NOPOWER) ? "off" : "on"]."
-	usr << "The safety-mode light is [safety_mode ? "on" : "off"]."
-	usr << "The safety-sensors status light is [emagged ? "off" : "on"]."
+	user << "The power light is [(stat & NOPOWER) ? "off" : "on"]."
+	user << "The safety-mode light is [safety_mode ? "on" : "off"]."
+	user << "The safety-sensors status light is [emagged ? "off" : "on"]."
 
 /obj/machinery/recycler/power_change()
 	..()

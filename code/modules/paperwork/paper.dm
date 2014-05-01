@@ -48,20 +48,18 @@
 	icon_state = "paper"
 
 
-/obj/item/weapon/paper/examine()
-	set src in oview(1)
-
-	if(is_blind(usr))
+/obj/item/weapon/paper/examine(mob/user)
+	if(is_blind(user))
 		return
-	if(in_range(usr, src))
-		if( !(ishuman(usr) || isobserver(usr) || issilicon(usr)) )
-			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
+	if(in_range(user, src))
+		if( !(ishuman(user) || isobserver(user) || issilicon(user)) )
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
 			onclose(usr, "[name]")
 		else
-			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]")
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]")
 			onclose(usr, "[name]")
 	else
-		usr << "<span class='notice'>It is too far away.</span>"
+		user << "<span class='notice'>It is too far away.</span>"
 
 
 /obj/item/weapon/paper/verb/rename()
@@ -80,7 +78,7 @@
 
 
 /obj/item/weapon/paper/attack_self(mob/user)
-	examine()
+	user.examine(src)
 	if(rigged && (events.holiday == "April Fool's Day"))
 		if(spam_flag == 0)
 			spam_flag = 1
@@ -252,7 +250,7 @@
 			return
 
 		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
-		
+
 		if(t != null)	//No input from the user means nothing needs to be added
 			if(id!="end")
 				addtofield(text2num(id), t) // He wants to edit a field, let him.

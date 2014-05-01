@@ -6,13 +6,6 @@
 	layer = 2.1
 	anchored = 1
 
-
-	examine()
-		set src in view(2)
-		..()
-		return
-
-
 	New(location,main = "#FFFFFF", var/type = "rune")
 		..()
 		loc = location

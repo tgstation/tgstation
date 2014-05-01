@@ -206,6 +206,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
+	singular_name = "cable piece"
 
 	suicide_act(mob/user)
 		if(locate(/obj/structure/stool) in user.loc)
@@ -247,16 +248,6 @@
 	else
 		icon_state = "coil_[item_color]"
 		name = "cable coil"
-
-/obj/item/stack/cable_coil/examine()
-	set src in view(1)
-
-	if(amount == 1)
-		usr << "A short piece of power cable."
-	else if(amount == 2)
-		usr << "A piece of power cable."
-	else
-		usr << "A coil of power cable. There are [amount] lengths of cable in the coil."
 
 /obj/item/stack/cable_coil/verb/make_restraint()
 	set name = "Make Cable Restraints"

@@ -122,12 +122,11 @@
 						line1 = ""
 				update_display(line1, line2)
 
-	examine()
-		set src in view()
+	examine(mob/user)
 		. = ..()
 		switch(mode)
 			if(1,2,4)
-				usr << "The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp>"
+				user << "The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp>"
 
 
 	proc/set_message(m1, m2)

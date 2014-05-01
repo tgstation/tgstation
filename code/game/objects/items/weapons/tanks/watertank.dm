@@ -18,14 +18,6 @@
 	..()
 	create_reagents(volume)
 	noz = make_noz()
-	return
-
-/obj/item/weapon/watertank/examine()
-	set src in usr
-	..()
-	for(var/datum/reagent/R in reagents.reagent_list)
-		usr << "[round(R.volume)] units of [R.name] left."
-	return
 
 /obj/item/weapon/watertank/ui_action_click()
 	if (usr.get_item_by_slot(slot_back) == src)

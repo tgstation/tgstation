@@ -205,19 +205,33 @@ its easier to just keep the beam vertical.
 
 
 //All atoms
-/atom/verb/examine()
-	set name = "Examine"
-	set category = "IC"
-	set src in oview(12)	//make it work from farther away
+/atom/proc/examine(mob/user)
+	//This reformat names to get a/an properly working on item descriptions when they are bloody
+	var/determiner = "This is"
+	if(src.gender == PLURAL)
+		determiner = "These are"
+	var/f_name = "\a [src]."
+	if(src.blood_DNA)
+		if(gender == PLURAL)
+			f_name = "some "
+		else
+			f_name = "a "
+		f_name += "<span class='danger'>bloody</span> [name]!"
 
-	if (!( usr ))
-		return
-	usr << "\icon[src]That's \a [src]." //changed to "That's" from "This is" because "This is some metal sheets" sounds dumb compared to "That's some metal sheets" ~Carn
+	user << "\icon[src][determiner] [f_name]"
+
 	if(desc)
-		usr << desc
+		user << desc
 	// *****RM
-	//usr << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
-	return
+	//user << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
+
+	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
+		user << "It contains:"
+		if(reagents.reagent_list.len)
+			for(var/datum/reagent/R in reagents.reagent_list)
+				user << "[R.volume] units of [R.name]"
+		else
+			user << "Nothing."
 
 /atom/proc/relaymove()
 	return

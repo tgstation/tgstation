@@ -36,13 +36,13 @@
 
 	..()
 
-/obj/item/weapon/tank/examine()
+/obj/item/weapon/tank/examine(mob/user)
 	var/obj/icon = src
 	..()
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
-	if (!in_range(src, usr))
-		if (icon == src) usr << "\blue If you want any more information you'll need to get closer."
+	if (!in_range(src, user))
+		if (icon == src) user << "<span class='notice'>If you want any more information you'll need to get closer.</span>"
 		return
 
 	var/celsius_temperature = src.air_contents.temperature-T0C
@@ -61,9 +61,7 @@
 	else
 		descriptive = "furiously hot"
 
-	usr << "\blue It feels [descriptive]"
-
-	return
+	user << "<span class='notice'>It feels [descriptive].</span>"
 
 /obj/item/weapon/tank/blob_act()
 	if(prob(50))

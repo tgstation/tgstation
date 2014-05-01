@@ -23,12 +23,11 @@
 		return
 
 
-	examine()
-		set src in usr
+	examine(mob/user)
 		..()
 		if(air_contents.oxygen < 10)
-			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
-			playsound(usr, 'sound/effects/alert.ogg', 50, 1)
+			user << text("<span class='userdanger'>The meter on the [src.name] indicates you are almost out of air!</span>")
+			playsound(user, 'sound/effects/alert.ogg', 50, 1)
 
 
 /obj/item/weapon/tank/oxygen/yellow
@@ -69,12 +68,11 @@
 	icon_state = "oxygen"
 
 
-	examine()
-		set src in usr
+	examine(mob/user)
 		..()
-		if(air_contents.oxygen < 1 && loc==usr)
-			usr << "\red <B>The meter on the [src.name] indicates you are almost out of air!</B>"
-			usr << sound('sound/effects/alert.ogg')
+		if(air_contents.oxygen < 1 && loc==user)
+			user << text("<span class='userdanger'>The meter on the [src.name] indicates you are almost out of air!</span>")
+			playsound(user, 'sound/effects/alert.ogg', 50, 1)
 
 /obj/item/weapon/tank/air/New()
 	..()
@@ -139,12 +137,11 @@
 		return
 
 
-	examine()
-		set src in usr
+	examine(mob/user)
 		..()
-		if(air_contents.oxygen < 0.2 && loc==usr)
-			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
-			usr << sound('sound/effects/alert.ogg')
+		if(air_contents.oxygen < 0.2 && loc==user)
+			user << text("<span class='userdanger'>The meter on the [src.name] indicates you are almost out of air!</span>")
+			playsound(user, 'sound/effects/alert.ogg', 50, 1)
 
 /obj/item/weapon/tank/emergency_oxygen/engi
 	name = "extended-capacity emergency oxygen tank"

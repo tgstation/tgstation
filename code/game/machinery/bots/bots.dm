@@ -41,15 +41,13 @@
 	if(!locked && open)
 		emagged = 2
 
-/obj/machinery/bot/examine()
-	set src in view()
+/obj/machinery/bot/examine(mob/user)
 	..()
 	if (src.health < maxhealth)
 		if (src.health > maxhealth/3)
-			usr << "<span class='warning'>[src]'s parts look loose.</span>"
+			user << "<span class='warning'>[src]'s parts look loose.</span>"
 		else
-			usr << "<span class='danger'>[src]'s parts look very loose!</span>"
-	return
+			user << "<span class='danger'>[src]'s parts look very loose!</span>"
 
 /obj/machinery/bot/attack_alien(var/mob/living/carbon/alien/user as mob)
 	src.health -= rand(15,30)*brute_dam_coeff

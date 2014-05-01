@@ -557,6 +557,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		user << "You take the last paper out of the pack, and throw the pack away."
 		qdel(src)
 
-/obj/item/weapon/rollingpaperpack/examine()
+/obj/item/weapon/rollingpaperpack/examine(mob/user)
 	..()
-	usr << "There are [src.papers] left"
+	user << "There are [src.papers] left"

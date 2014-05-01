@@ -69,7 +69,7 @@
 		if(href_list["read"])
 			var/obj/item/weapon/paper/P = locate(href_list["read"])
 			if(istype(P) && P.loc == src)
-				P.examine()
+				usr.examine(P)
 
 		//Update everything
 		attack_self(usr)

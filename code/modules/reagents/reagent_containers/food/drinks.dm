@@ -100,20 +100,18 @@
 
 		return
 
-	examine()
-		set src in view()
+	examine(mob/user)
 		..()
-		if (!(usr in range(0)) && usr!=src.loc) return
 		if(!reagents || reagents.total_volume==0)
-			usr << "\blue \The [src] is empty!"
+			user << "<span class='notice'>\The [src] is empty!</span>"
 		else if (reagents.total_volume<=src.volume/4)
-			usr << "\blue \The [src] is almost empty!"
+			user << "<span class='notice'>\The [src] is almost empty!</span>"
 		else if (reagents.total_volume<=src.volume*0.66)
-			usr << "\blue \The [src] is half full!"
+			user << "<span class='notice'>\The [src] is half full!</span>"
 		else if (reagents.total_volume<=src.volume*0.90)
-			usr << "\blue \The [src] is almost full!"
+			user << "<span class='notice'>\The [src] is almost full!</span>"
 		else
-			usr << "\blue \The [src] is full!"
+			user << "<span class='notice'>\The [src] is full!</span>"
 
 
 ////////////////////////////////////////////////////////////////////////////////
