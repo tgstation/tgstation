@@ -415,8 +415,6 @@
 		var/who = speech_buffer[1] // Who said it?
 		var/phrase = speech_buffer[2] // What did they say?
 		if ((findtext(phrase, num2text(number)) || findtext(phrase, "slimes"))) // Talking to us
-			if (findtext(phrase, "friend")) // Debug TODO: remove
-				++Friends[who]
 			if (findtext(phrase, "hello") || findtext(phrase, "hi"))
 				to_say = pick("Hello...", "Hi...")
 			else if (findtext(phrase, "follow"))
@@ -469,9 +467,6 @@
 						to_say = "Yes... Staying..."
 					else
 						to_say = "No... I won't stay..."
-			else if (findtext(phrase, "kill")) // TODO: remove, because it's pure cheating
-				if (Friends[who] > 5)
-					rabid = 1
 		speech_buffer = list()
 
 	//Speech starts here
@@ -538,7 +533,7 @@
 			if (!slimes_near)
 				phrases += "Lonely..."
 			for (var/M in friends_near)
-				phrases += "[M]... friend... [Friends[M]]..." // Debug info TODO: remove
+				phrases += "[M]... friend..."
 				if (nutrition < get_hunger_nutrition())
 					phrases += "[M]... Feed me..."
 			say (pick(phrases))
