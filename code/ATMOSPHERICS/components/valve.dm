@@ -10,7 +10,7 @@ connect the networks together for a more efficient transfer
 
 /obj/machinery/atmospherics/valve
 	icon = 'icons/obj/atmospherics/binary_devices.dmi'
-	icon_state = "mvalve_off"
+	icon_state = "mvalve_map"
 
 	name = "manual valve"
 	desc = "A valve which can only be cranked by the strength of mortal hands."
@@ -270,7 +270,7 @@ connect the networks together for a more efficient transfer
 /obj/machinery/atmospherics/valve/digital
 	name = "digital valve"
 	desc = "A digitally controlled valve. Has a button for use with human fingers."
-	icon_state = "dvalve_on"
+	icon_state = "dvalve_map"
 
 	var/frequency = 0
 	var/id = null

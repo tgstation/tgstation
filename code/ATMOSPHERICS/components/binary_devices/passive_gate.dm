@@ -8,7 +8,7 @@ Passive gate is similar to the regular pump except:
 */
 
 /obj/machinery/atmospherics/binary/passive_gate
-	icon_state = "passgate_off"
+	icon_state = "passgate_map"
 
 	name = "passive gate"
 	desc = "A one-way air valve that does not require power"

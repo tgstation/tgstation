@@ -15,7 +15,7 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/binary/pump
 	name = "gas pump"
 	desc = "A pump"
-	icon_state = "pump_off"
+	icon_state = "pump_map"
 
 	can_unwrench = 1
 
@@ -169,4 +169,3 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/binary/pump/on
 	on = 1
-	icon_state = "intact_on"
