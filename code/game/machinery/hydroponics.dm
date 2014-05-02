@@ -697,7 +697,10 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				user.client.screen -= O
 			O.dropped(user)
 			updateicon()
-
+			if(istype(0, /obj/item/seeds/replicapod))
+				var/obj/item/seeds/replicapod/RP = O
+				if(!RP.source)
+					RP.request_player()
 		else
 			user << "\red The [src] already has seeds in it!"
 

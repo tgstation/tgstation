@@ -78,24 +78,28 @@ var/global/list/hasbeendiona = list() // Stores ckeys and a timestamp for ghost 
 		return
 	//This is fucking dumb but i was butthurt for removing it outright
 	else // If no sample was injected or revival is not allowed, we grab an interested observer.
-		request_player()
-	user << "<span class='notice'>You start carefully unwrapping leaves from the pod.</span>"
-	spawn(300) //If we don't have a ghost or the ghost is now unplayed, we just give the harvester some seeds.
-		if(!found_player.len)
-			harvest_failure(user)
-			return
+		var/delay = 300
+		if(!found_player || !found_player.len)
+			request_player()
 		else
-			shuffle(found_player)
-			var/client/C = pick(found_player)
-			if(!transfer_personality(C, 1))
+			delay = 0
+		spawn(delay) //If we don't have a ghost or the ghost is now unplayed, we just give the harvester some seeds.
+			if(!found_player.len)
 				harvest_failure(user)
+				return
+			else
+				shuffle(found_player)
+				var/client/C = pick(found_player)
+				if(!transfer_personality(C, 1))
+					harvest_failure(user)
+
 
 /obj/item/seeds/replicapod/proc/harvest_failure(mob/user)
 	parent.visible_message("The pod has formed badly, and all you can do is salvage some of the seeds.")
 	var/seed_count = 1
 	if(prob(yield * parent.yieldmod * 20))
 		seed_count++
-		for(var/i=0,i<seed_count,i++)
+	for(var/i=0,i<seed_count,i++)
 		new /obj/item/seeds/replicapod(user.loc)
 
 	parent.update_tray()
