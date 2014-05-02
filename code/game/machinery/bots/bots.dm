@@ -13,6 +13,7 @@
 	var/brute_dam_coeff = 1.0
 	var/open = 0//Maint panel
 	var/locked = 1
+	var/hacked = 0 //Used to differentiate between being hacked by silicons and emagged by humans.
 	//var/emagged = 0 //Urist: Moving that var to the general /bot tree as it's used by most bots
 
 
@@ -153,6 +154,12 @@
 		if (was_on)
 			turn_on()
 
+/obj/machinery/bot/proc/hack(mob/user)
+	var/hack
+	if(issilicon(user))
+		hack += "[src.emagged ? "Software compromised! Unit may exhibit dangerous or erratic behavior." : "Unit operating normally. Release safety lock?"]<BR>"
+		hack += "Harm Prevention Safety System: <A href='?src=\ref[src];operation=hack'>[src.emagged ? "DANGER" : "Engaged"]</A><BR>"
+	return hack
 
 /obj/machinery/bot/attack_ai(mob/user as mob)
 	src.attack_hand(user)

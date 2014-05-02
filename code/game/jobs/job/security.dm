@@ -10,6 +10,7 @@ Head of Shitcurity
 /datum/job/hos
 	title = "Head of Security"
 	flag = HOS
+	department_head = list("Captain")
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 1
@@ -58,6 +59,7 @@ Warden
 /datum/job/warden
 	title = "Warden"
 	flag = WARDEN
+	department_head = list("Head of Security")
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 1
@@ -103,6 +105,7 @@ Detective
 /datum/job/detective
 	title = "Detective"
 	flag = DETECTIVE
+	department_head = list("Head of Security")
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 1
@@ -146,6 +149,7 @@ Security Officer
 /datum/job/officer
 	title = "Security Officer"
 	flag = OFFICER
+	department_head = list("Head of Security")
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 5

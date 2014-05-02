@@ -104,6 +104,7 @@
 	if (.)
 		return
 	var/dat
+	dat += hack(user)
 	dat += "<TT><B>Automatic Medical Unit v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
 	dat += "Maintenance panel panel is [src.open ? "opened" : "closed"]<BR>"
@@ -143,7 +144,7 @@
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if ((href_list["power"]) && (src.allowed(usr)))
-		if (src.on)
+		if (src.on && !src.emagged)
 			turn_off()
 		else
 			turn_on()
@@ -177,6 +178,17 @@
 	else if ((href_list["togglevoice"]) && (!src.locked || issilicon(usr)))
 		src.shut_up = !src.shut_up
 
+	else if (href_list["operation"])
+		if(!src.emagged)
+			src.emagged = 2
+			src.hacked = 1
+			usr << "<span class='warning'>You corrupt [src]'s reagent processor circuits.</span>"
+		else if(!src.hacked)
+			usr << "<span class='userdanger'>[src] seems damaged and does not respond to reprogramming!</span>"
+		else
+			src.hacked = 0
+			src.emagged = 0
+			usr << "<span class='notice'>You reset [src]'s reagent circuits.</span>"
 	src.updateUsrDialog()
 	return
 
@@ -219,8 +231,7 @@
 	if(open && !locked)
 		if(user) user << "<span class='warning'>You short out [src]'s reagent synthesis circuits.</span>"
 		spawn(0)
-			for(var/mob/O in hearers(src, null))
-				O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
+			src.visible_message("<span class='userdanger'>[src] buzzes oddly!</span>", 1)
 		flick("medibot_spark", src)
 		src.patient = null
 		if(user) src.oldpatient = user
@@ -425,7 +436,9 @@
 		return
 	else
 		src.icon_state = "medibots"
-		visible_message("\red <B>[src] is trying to inject [src.patient]!</B>")
+		C.visible_message("<span class='danger'>[src] is trying to inject [src.patient]!</span>", \
+			"<span class='userdanger'>[src] is trying to inject [src.patient]!</span>")
+		
 		spawn(30)
 			if ((get_dist(src, src.patient) <= 1) && (src.on))
 				if((reagent_id == "internal_beaker") && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
@@ -433,7 +446,8 @@
 					src.reagent_glass.reagents.reaction(src.patient, 2)
 				else
 					src.patient.reagents.add_reagent(reagent_id,src.injection_amount)
-				visible_message("\red <B>[src] injects [src.patient] with the syringe!</B>")
+				C.visible_message("<span class='danger'>[src] injects [src.patient] with the syringe!</span>", \
+					"<span class='userdanger'>[src] injects [src.patient] with the syringe!</span>")
 
 			src.icon_state = "medibot[src.on]"
 			src.currently_healing = 0
@@ -457,7 +471,7 @@
 
 /obj/machinery/bot/medbot/explode()
 	src.on = 0
-	visible_message("\red <B>[src] blows apart!</B>", 1)
+	visible_message("<span class='userdanger'>[src] blows apart!</span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/weapon/storage/firstaid(Tsec)

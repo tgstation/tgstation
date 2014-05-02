@@ -350,8 +350,13 @@ datum
 				if(!M) M = holder.my_atom
 				if(ishuman(M))
 					var/mob/living/carbon/human/human = M
+<<<<<<< HEAD
 					if(human.dna && human.dna.mutantrace != "slime")
 						M << "\red Your flesh rapidly mutates!"
+=======
+					if(human.dna && !human.dna.mutantrace)
+						M << "<span class='danger'>Your flesh rapidly mutates!</span>"
+>>>>>>> upstream/master
 						human.dna.mutantrace = "slime"
 						human.update_body()
 						human.update_hair()
@@ -1401,7 +1406,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(prob(10))
-					M << "\red Your insides are burning!"
+					M << "<span class='danger'>Your insides are burning!</span>"
 					M.adjustToxLoss(rand(20,60)*REM)
 				else if(prob(40))
 					M.heal_organ_damage(5*REM,0)
@@ -1692,10 +1697,10 @@ datum
 			reaction_obj(var/obj/O, var/volume)
 				if((istype(O,/obj/item) || istype(O,/obj/effect/glowshroom)) && prob(meltprob * 3))
 					if(!O.unacidable)
-						var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
+						var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(get_turf(O))
 						I.desc = "Looks like this was \an [O] some time ago."
 						for(var/mob/M in viewers(5, O))
-							M << "\red \the [O] melts."
+							M << "<span class='danger'> \the [O] melts.</span>"
 						qdel(O)
 
 		toxin/acid/polyacid
@@ -1938,6 +1943,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(prob(5))
 					M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
+				..()
 				return
 
 		frostoil

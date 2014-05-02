@@ -4,6 +4,7 @@ Chief Medical Officer
 /datum/job/cmo
 	title = "Chief Medical Officer"
 	flag = CMO
+	department_head = list("Captain")
 	department_flag = MEDSCI
 	faction = "Station"
 	total_positions = 1
@@ -40,6 +41,7 @@ Medical Doctor
 /datum/job/doctor
 	title = "Medical Doctor"
 	flag = DOCTOR
+	department_head = list("Chief Medical Officer")
 	department_flag = MEDSCI
 	faction = "Station"
 	total_positions = 5
@@ -68,6 +70,7 @@ Chemist
 /datum/job/chemist
 	title = "Chemist"
 	flag = CHEMIST
+	department_head = list("Chief Medical Officer")
 	department_flag = MEDSCI
 	faction = "Station"
 	total_positions = 2
@@ -92,6 +95,7 @@ Geneticist
 /datum/job/geneticist
 	title = "Geneticist"
 	flag = GENETICIST
+	department_head = list("Chief Medical Officer", "Research Director")
 	department_flag = MEDSCI
 	faction = "Station"
 	total_positions = 2
@@ -117,6 +121,7 @@ Virologist
 /datum/job/virologist
 	title = "Virologist"
 	flag = VIROLOGIST
+	department_head = list("Chief Medical Officer")
 	department_flag = MEDSCI
 	faction = "Station"
 	total_positions = 1

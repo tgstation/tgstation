@@ -838,6 +838,10 @@ proc/process_ghost_teleport_locs()
 		name = "\improper Chief Engineer's office"
 		icon_state = "engine_control"
 
+	secure_construction
+		name = "\improper Secure Construction Area"
+		icon_state = "engine"
+
 	gravity_generator
 		name = "Gravity Generator Room"
 		icon_state = "blue"
@@ -1053,6 +1057,10 @@ proc/process_ghost_teleport_locs()
 */
 
 /area/security/nuke_storage
+	name = "\improper Vault"
+	icon_state = "nuke_storage"
+
+/area/ai_monitored/nuke_storage
 	name = "\improper Vault"
 	icon_state = "nuke_storage"
 
@@ -1380,8 +1388,12 @@ proc/process_ghost_teleport_locs()
 	name = "\improper AI Satellite"
 	icon_state = "ai"
 
+/area/aisat
+	name = "\improper AI Satellite Exterior"
+	icon_state = "storage"
+
 /area/turret_protected/aisat_interior
-	name = "\improper AI Satellite"
+	name = "\improper AI Satellite Antechamber"
 	icon_state = "ai"
 
 /area/turret_protected/AIsatextFP
