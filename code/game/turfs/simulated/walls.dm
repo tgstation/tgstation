@@ -93,13 +93,13 @@
 	if ((HULK in user.mutations))
 		if (prob(hardness))
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-			usr << text("\blue You smash through the wall.")
+			usr << text("<span class='notice'>You smash through the wall.</span>")
 			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1)
 			return
 		else
 			playsound(src, 'sound/effects/bang.ogg', 50, 1)
-			usr << text("\blue You punch the wall.")
+			usr << text("<span class='notice'>You punch the wall.</span>")
 			return
 
 	return src.attack_hand(user)
@@ -111,12 +111,12 @@
 			if(M.environment_smash == 3)
 				dismantle_wall(1)
 				playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-				M << "<span class='info'>You smash through the wall.</span>"
+				M << "<span class='notice'>You smash through the wall.</span>"
 			else
-				M << "<span class='info'>This wall is far too strong for you to destroy.</span>"
+				M << "<span class='warning'>This wall is far too strong for you to destroy.</span>"
 		else
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-			M << "<span class='info'>You smash through the wall.</span>"
+			M << "<span class='notice'>You smash through the wall.</span>"
 			dismantle_wall(1)
 			return
 
@@ -125,16 +125,16 @@
 	if (HULK in user.mutations)
 		if (prob(hardness))
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-			usr << text("\blue You smash through the wall.")
+			usr << text("<span class='notice'>You smash through the wall.</span>")
 			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1)
 			return
 		else
 			playsound(src, 'sound/effects/bang.ogg', 50, 1)
-			usr << text("\blue You punch the wall.")
+			usr << text("<span class='notice'>You punch the wall.</span>")
 			return
 
-	user << "\blue You push the wall but nothing happens!"
+	user << "<span class='notice'>You push the wall but nothing happens!</span>"
 	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
 	src.add_fingerprint(user)
 	..()
