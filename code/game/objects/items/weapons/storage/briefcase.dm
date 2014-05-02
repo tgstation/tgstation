@@ -28,7 +28,7 @@
 		user.take_organ_damage(10)
 		user.Paralyse(2)
 		return
-
+	if(issilicon(M)) return // Checks if we are hitting a silicon
 	add_logs(user, M, "attacked", object="[src.name]")
 
 	if (M.stat < 2 && M.health < 50 && prob(90))
