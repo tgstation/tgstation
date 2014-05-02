@@ -113,8 +113,6 @@
 	if(isturf(A) || isturf(A.loc) || (A.loc && isturf(A.loc.loc)))
 		if(A.Adjacent(src)) // see adjacent.dm
 			if(W)
-				if(W.preattack(A,src,1,params))	//Weapon attack override,return 1 to exit
-					return
 				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
 				var/resolved = A.attackby(W,src)
 				if(!resolved && A && W)
@@ -126,8 +124,6 @@
 			return
 		else // non-adjacent click
 			if(W)
-				if(W.preattack(A,src,0,params))	//Weapon attack override,return 1 to exit
-					return
 				W.afterattack(A,src,0,params) // 0: not Adjacent
 			else
 				RangedAttack(A, params)
