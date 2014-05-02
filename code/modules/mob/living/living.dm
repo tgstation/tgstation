@@ -509,6 +509,8 @@
 										"<span class='notice'>You successfully break [CM.handcuffed]!</span>")
 						if(ishuman(CM))
 							CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+						else
+							playsound(CM, 'sound/voice/hiss5.ogg', 40, 1, 1)  //Alien roars when breaking free.
 						qdel(CM.handcuffed)
 						CM.handcuffed = null
 						CM.update_inv_handcuffed(0)
@@ -544,6 +546,8 @@
 											"<span class='notice'>You successfully break [CM.legcuffed].</span>")
 						if(ishuman(CM))
 							CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+						else
+							playsound(CM, 'sound/voice/hiss5.ogg', 40, 1, 1)
 						qdel(CM.legcuffed)
 						CM.legcuffed = null
 						CM.update_inv_legcuffed(0)
