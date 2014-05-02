@@ -25,7 +25,7 @@
 	if(!on)
 		return
 
-	if(!istype(A,/obj/machinery/atmospherics/pipe/simple) && !istype(A,/obj/machinery/atmospherics/pipe/manifold))
+	if(!istype(A,/obj/machinery/atmospherics/pipe/simple) && !istype(A,/obj/machinery/atmospherics/pipe/manifold) && !istype(A,/obj/machinery/atmospherics/pipe/manifold4w))
 		return
 
 	var/obj/machinery/atmospherics/pipe/P = A
@@ -50,6 +50,17 @@
 			pipe.node2.update_icon()
 		if(pipe.node3)
 			pipe.node3.update_icon()
+	else if(istype(A,/obj/machinery/atmospherics/pipe/manifold4w))
+		var/obj/machinery/atmospherics/pipe/manifold4w/pipe = A
+
+		if(pipe.node1)
+			pipe.node1.update_icon()
+		if(pipe.node2)
+			pipe.node2.update_icon()
+		if(pipe.node3)
+			pipe.node3.update_icon()
+		if(pipe.node4)
+			pipe.node4.update_icon()
 
 	on = 0
 	spawn(PIPE_PAINTER_DELAY)
