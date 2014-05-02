@@ -123,7 +123,13 @@
 			continue
 		break
 	if(!ghostpicked || !istype(ghostpicked))
-		picked = affected_mob.key
+		var/list/candidates = get_alien_candidates()
+		if(!candidates.len)
+			picked = affected_mob.key
+		else
+			for(var/mob/dead/observer/O in candidates)
+				O << "<span class=\"recruit\">[affected_mob] is about to burst from \a [src]!. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)</span>"
+
 	else
 		picked = ghostpicked.key
 	if(!picked)
