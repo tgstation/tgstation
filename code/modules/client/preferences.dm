@@ -168,11 +168,8 @@ datum/preferences
 				if(config.mutant_races)
 					dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
 				else
-<<<<<<< HEAD
 					dat += "<b>Species:</b> Human<BR>"
-=======
-					dat += "<b>Mutant Race:</b> Human<BR>"
->>>>>>> upstream/master
+
 				dat += "<b>Blood Type:</b> [blood_type]<BR>"
 				dat += "<b>Skin Tone:</b><BR><a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
 				dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
@@ -712,15 +709,10 @@ datum/preferences
 
 					if("ghost_sight")
 						toggles ^= CHAT_GHOSTSIGHT
-<<<<<<< HEAD
 
 					if("pull_requests")
 						toggles ^= CHAT_PULLR
 
-=======
-					if("pull_requests")
-						toggles ^= CHAT_PULLR
->>>>>>> upstream/master
 					if("save")
 						save_preferences()
 						save_character()

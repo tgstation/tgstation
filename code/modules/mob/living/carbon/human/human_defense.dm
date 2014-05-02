@@ -127,8 +127,6 @@ emp_act
 		return dna.species.spec_attacked_by(I,user,def_zone,affecting,hit_area,src.a_intent,target_limb,target_area)
 
 	else
-<<<<<<< HEAD
-
 		if((user != src) && check_shields(I.force, "the [I.name]"))
 			return 0
 
@@ -173,70 +171,16 @@ emp_act
 								H.update_inv_gloves()	//updates on-mob overlays for bloody hands and/or bloody gloves
 
 
-			switch(hit_area)
-				if("head")	//Harder to score a stun but if you do it lasts a bit longer
-					if(stat == CONSCIOUS && prob(I.force))
-=======
-		return 0
-
-	var/armor = run_armor_check(affecting, "melee", "<span class='warning'>Your armour has protected your [hit_area].</span>", "<span class='warning'>Your armour has softened a hit to your [hit_area].</span>")
-	if(armor >= 100)	return 0
-	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
-
-	apply_damage(I.force, I.damtype, affecting, armor , I)
-
-	var/bloody = 0
-	if(((I.damtype == BRUTE) && prob(25 + (I.force * 2))))
-		if(affecting.status == ORGAN_ORGANIC)
-			I.add_blood(src)	//Make the weapon bloody, not the person.
-			if(prob(I.force * 2))	//blood spatter!
-				bloody = 1
-				var/turf/location = loc
-				if(istype(location, /turf/simulated))
-					location.add_blood(src)
-				if(ishuman(user))
-					var/mob/living/carbon/human/H = user
-					if(get_dist(H, src) <= 1)	//people with TK won't get smeared with blood
-						if(H.wear_suit)
-							H.wear_suit.add_blood(src)
-							H.update_inv_wear_suit(0)	//updates mob overlays to show the new blood (no refresh)
-						else if(H.w_uniform)
-							H.w_uniform.add_blood(src)
-							H.update_inv_w_uniform(0)	//updates mob overlays to show the new blood (no refresh)
-						if (H.gloves)
-							var/obj/item/clothing/gloves/G = H.gloves
-							G.add_blood(H)
-						else
-							H.add_blood(H)
-						H.update_inv_gloves()	//updates on-mob overlays for bloody hands and/or bloody gloves
-
-
 		switch(hit_area)
 			if("head")	//Harder to score a stun but if you do it lasts a bit longer
 				if(stat == CONSCIOUS && prob(I.force))
 					if(Iforce >= 5)
->>>>>>> upstream/master
 						visible_message("<span class='danger'>[src] has been knocked unconscious!</span>", \
 										"<span class='userdanger'>[src] has been knocked unconscious!</span>")
 						apply_effect(20, PARALYZE, armor)
 						if(src != user && I.damtype == BRUTE)
 							ticker.mode.remove_revolutionary(mind)
 
-<<<<<<< HEAD
-					if(bloody)	//Apply blood
-						if(wear_mask)
-							wear_mask.add_blood(src)
-							update_inv_wear_mask(0)
-						if(head)
-							head.add_blood(src)
-							update_inv_head(0)
-						if(glasses && prob(33))
-							glasses.add_blood(src)
-							update_inv_glasses(0)
-
-				if("chest")	//Easier to score a stun but lasts less time
-					if(stat == CONSCIOUS && prob(I.force + 10))
-=======
 				if(bloody)	//Apply blood
 					if(wear_mask)
 						wear_mask.add_blood(src)
@@ -251,36 +195,12 @@ emp_act
 			if("chest")	//Easier to score a stun but lasts less time
 				if(stat == CONSCIOUS && prob(I.force + 10))
 					if(Iforce >= 5)
->>>>>>> upstream/master
 						visible_message("<span class='danger'>[src] has been knocked down!</span>", \
 										"<span class='userdanger'>[src] has been knocked down!</span>")
 						apply_effect(5, WEAKEN, armor)
 
-<<<<<<< HEAD
-					if(bloody)
-						if(wear_suit)
-							wear_suit.add_blood(src)
-							update_inv_wear_suit(0)
-						if(w_uniform)
-							w_uniform.add_blood(src)
-							update_inv_w_uniform(0)
-
-			if(Iforce > 10 || Iforce >= 5 && prob(33))
-				forcesay(hit_appends)	//forcesay checks stat already.
-=======
-				if(bloody)
-					if(wear_suit)
-						wear_suit.add_blood(src)
-						update_inv_wear_suit(0)
-					if(w_uniform)
-						w_uniform.add_blood(src)
-						update_inv_w_uniform(0)
-
 		if(Iforce > 10 || Iforce >= 5 && prob(33))
 			forcesay(hit_appends)	//forcesay checks stat already.
->>>>>>> upstream/master
-
-
 
 /mob/living/carbon/human/emp_act(severity)
 	var/informed = 0
