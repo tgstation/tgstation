@@ -40,7 +40,10 @@
 			return 1
 //		if(!check_drift && J.allow_thrust(0.01, src))
 //			return 1
-
+	if(istype(shoes, /obj/item/clothing/shoes/magboots)) //&& (src:shoes:flags & NOSLIP)))
+		var/obj/item/clothing/shoes/magboots/B = shoes
+		if((B.flags & NOSLIP) && istype(src.loc,/turf/simulated/floor) && (!has_gravity(src.loc)))
+			return 1
 	//If no working jetpack then use the other checks
 	if(..())	return 1
 	return 0

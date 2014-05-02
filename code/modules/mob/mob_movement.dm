@@ -362,9 +362,9 @@
 		if(istype(turf,/turf/space))
 			continue
 
-		if(istype(src,/mob/living/carbon/human/))  // Only humans can wear magboots, so we give them a chance to.
-			if((istype(turf,/turf/simulated/floor)) && (!has_gravity(src)) && !(istype(src:shoes, /obj/item/clothing/shoes/magboots) && (src:shoes:flags & NOSLIP)))
-				continue
+		//if(istype(src,/mob/living/carbon/human/))  // Only humans can wear magboots, so we give them a chance to.
+			//if((istype(turf,/turf/simulated/floor)) && (!has_gravity(src)) && !(istype(src:shoes, /obj/item/clothing/shoes/magboots) && (src:shoes:flags & NOSLIP)))
+				//continue
 
 
 		else
