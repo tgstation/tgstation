@@ -346,24 +346,6 @@ datum
 			reagent_state = LIQUID
 			color = "#13BC5E" // rgb: 19, 188, 94
 
-			/*on_mob_life(var/mob/living/M as mob) 	// this is now handled in /datum/races/human
-				if(!M) M = holder.my_atom
-				if(ishuman(M))
-					var/mob/living/carbon/human/human = M
-<<<<<<< HEAD
-					if(human.dna && human.dna.mutantrace != "slime")
-						M << "\red Your flesh rapidly mutates!"
-=======
-					if(human.dna && !human.dna.mutantrace)
-						M << "<span class='danger'>Your flesh rapidly mutates!</span>"
->>>>>>> upstream/master
-						human.dna.mutantrace = "slime"
-						human.update_body()
-						human.update_hair()
-						human.update_mutcolor()
-				..()
-				return*/
-
 		aslimetoxin
 			name = "Advanced Mutation Toxin"
 			id = "amutationtoxin"
