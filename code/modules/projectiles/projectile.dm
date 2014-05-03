@@ -58,9 +58,7 @@
 		if(!isliving(target))	return 0
 		if(isanimal(target))	return 0
 		var/mob/living/L = target
-		if(ishuman(L))
-			var/mob/living/carbon/human/H = L
-			H.dna.species.on_hit(type)
+		L.on_hit(type)
 		return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, blocked)
 
 	proc/vol_by_damage()

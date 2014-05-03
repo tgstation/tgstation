@@ -36,6 +36,11 @@ emp_act
 				protection += C.armor[type]
 	return protection
 
+/mob/living/carbon/human/on_hit(proj_type)
+	if(dna)
+		dna.species.on_hit(proj_type)
+	return
+
 /mob/living/carbon/human/bullet_act(var/obj/item/projectile/P, var/def_zone)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
