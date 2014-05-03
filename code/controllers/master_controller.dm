@@ -270,24 +270,32 @@ datum/controller/game_controller/proc/processMobs()
 		active_diseases -= Disease
 
 /datum/controller/game_controller/proc/processMachines()
-#ifdef PROFILE_MACHINES
+	#ifdef PROFILE_MACHINES
 	machine_profiling.Cut()
-#endif
+	#endif
+
 	for (var/obj/machinery/Machinery in machines)
 		if (Machinery && Machinery.loc)
 			last_thing_processed = Machinery.type
+
+			#ifdef PROFILE_MACHINES
 			var/start = world.timeofday
-			if(Machinery.process() != PROCESS_KILL)
-				if (Machinery) // Why another check?
-					if (Machinery.use_power)
-						Machinery.auto_use_power()
-#ifdef PROFILE_MACHINES
-					if(!(Machinery.type in machine_profiling))
-						machine_profiling[Machinery.type] = 0
-					machine_profiling[Machinery.type] += world.timeofday - start
-#endif
-					continue
-		Machinery.removeAtProcessing()
+			#endif
+
+			if(PROCESS_KILL == Machinery.process())
+				Machinery.removeAtProcessing()
+				continue
+
+			if (Machinery && Machinery.use_power)
+				Machinery.auto_use_power()
+
+			#ifdef PROFILE_MACHINES
+			if(!(Machinery.type in machine_profiling))
+				machine_profiling[Machinery.type] = 0
+
+			machine_profiling[Machinery.type] += world.timeofday - start
+			#endif
+
 
 /datum/controller/game_controller/proc/processObjects()
 	for (var/obj/Object in processing_objects)
