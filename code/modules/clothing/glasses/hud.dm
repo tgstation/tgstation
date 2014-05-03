@@ -60,8 +60,9 @@
 		for(var/mob/living/carbon/human/patient in view(M))
 			var/foundVirus = 0
 			for(var/datum/disease/D in patient.viruses)
-				if(!D.hidden[SCANNER])
-					foundVirus++
+				if(!D.hidden[SCANNER])  
+					if(D.severity != "Non-Threat")  //The medHUD ignores harmless viruses.
+						foundVirus++
 			if(!C) continue
 
 			holder = patient.hud_list[HEALTH_HUD]

@@ -27,6 +27,7 @@ Bonus
 	stage_speed = 0
 	transmittable = 1
 	level = 3
+	severity = 4
 
 /datum/symptom/vomit/Activate(var/datum/disease/advance/A)
 	..()
@@ -78,6 +79,7 @@ Bonus
 	stage_speed = -1
 	transmittable = 1
 	level = 4
+	severity = 5
 
 /datum/symptom/vomit/blood/Vomit(var/mob/living/M)
 

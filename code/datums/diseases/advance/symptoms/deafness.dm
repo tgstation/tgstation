@@ -23,6 +23,7 @@ Bonus
 	stage_speed = -1
 	transmittable = -3
 	level = 4
+	severity = 3
 
 /datum/symptom/deafness/Activate(var/datum/disease/advance/A)
 	..()

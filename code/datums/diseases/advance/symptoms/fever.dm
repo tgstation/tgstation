@@ -23,6 +23,7 @@ Bonus
 	stage_speed = 3
 	transmittable = 2
 	level = 2
+	severity = 2
 
 /datum/symptom/fever/Activate(var/datum/disease/advance/A)
 	..()

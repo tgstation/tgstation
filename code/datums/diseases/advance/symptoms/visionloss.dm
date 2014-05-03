@@ -23,6 +23,7 @@ Bonus
 	stage_speed = -4
 	transmittable = -3
 	level = 5
+	severity = 4
 
 /datum/symptom/visionloss/Activate(var/datum/disease/advance/A)
 	..()
