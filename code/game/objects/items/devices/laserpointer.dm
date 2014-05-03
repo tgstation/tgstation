@@ -83,7 +83,7 @@
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.dna && "noguns" in H.dna.species.specflags)
+		if(H.dna && NOGUNS in H.dna.species.specflags)
 			user << "<span class='warning'>Your fingers can't press the button!</span>"
 			return
 

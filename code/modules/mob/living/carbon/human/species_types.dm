@@ -2,7 +2,7 @@
 	name = "Human"
 	id = "human"
 	roundstart = 1
-	specflags = list("eyecolor","hair","facehair","lips")
+	specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
 	use_skintones = 1
 
 	handle_chemicals(chem)
@@ -18,7 +18,7 @@
 	say_mod = "hisses"
 	default_color = "00FF00"
 	roundstart = 1
-	specflags = list("mutcolor","eyecolor","lips")
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -35,7 +35,7 @@
 	name = "Plant"
 	id = "plant"
 	default_color = "59CE00"
-	specflags = list("mutcolor","eyecolor")
+	specflags = list(MUTCOLORS,EYECOLOR)
 	attack_verb = "slice"
 	attack_sound = 'sound/weapons/slice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -119,7 +119,7 @@
 	default_color = "00FFFF"
 	darksight = 3
 	invis_sight = SEE_INVISIBLE_LEVEL_ONE
-	specflags = list("mutcolor","eyecolor","hair","facehair")
+	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR)
 	hair_color = "mutcolor"
 	hair_alpha = 150
 	ignored_by = list(/mob/living/carbon/slime)
@@ -131,13 +131,13 @@
 	default_color = "00FF90"
 	say_mod = "chirps"
 	eyes = "jelleyes"
-	specflags = list("mutcolor","eyecolor")
+	specflags = list(MUTCOLORS,EYECOLOR)
 
 /datum/species/golem
 	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
 	name = "Golem"
 	id = "golem"
-	specflags = list("nobreath","resists_heat","resists_cold","noguns","noblood","rad_immune")
+	specflags = list(NOBREATH,HEATRES,COLDRES,NOGUNS,NOBLOOD,RADIMMUNE)
 	speedmod = 3
 	armor = 55
 	punchmod = 5

@@ -37,18 +37,18 @@ datum/preferences
 				preview_icon.Blend(new /icon(S.icon, "[S.icon_state]_s"), ICON_OVERLAY)
 
 		var/icon/eyes_s = new/icon()
-		if("eyecolor" in pref_species.specflags)
+		if(EYECOLOR in pref_species.specflags)
 			eyes_s = new/icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = "[pref_species.eyes]_s")
 			eyes_s.Blend("#[eye_color]", ICON_MULTIPLY)
 
 		S = hair_styles_list[hair_style]
-		if(S && ("hair" in pref_species.specflags))
+		if(S && (HAIR in pref_species.specflags))
 			var/icon/hair_s = new/icon("icon" = S.icon, "icon_state" = "[S.icon_state]_s")
 			hair_s.Blend("#[hair_color]", ICON_MULTIPLY)
 			eyes_s.Blend(hair_s, ICON_OVERLAY)
 
 		S = facial_hair_styles_list[facial_hair_style]
-		if(S && ("facehair" in pref_species.specflags))
+		if(S && (FACEHAIR in pref_species.specflags))
 			var/icon/facial_s = new/icon("icon" = S.icon, "icon_state" = "[S.icon_state]_s")
 			facial_s.Blend("#[facial_hair_color]", ICON_MULTIPLY)
 			eyes_s.Blend(facial_s, ICON_OVERLAY)

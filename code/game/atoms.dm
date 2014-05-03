@@ -254,7 +254,7 @@ var/list/blood_splatter_icons = list()
 /atom/proc/add_blood(mob/living/carbon/M)
 	if(ishuman(M) && M.dna)
 		var/mob/living/carbon/human/H = M
-		if("noblood" in H.dna.species.specflags)
+		if(NOBLOOD in H.dna.species.specflags)
 			return 0
 	if(rejects_blood())
 		return 0

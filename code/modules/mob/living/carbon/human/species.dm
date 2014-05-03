@@ -51,8 +51,7 @@
 	var/invis_sight = SEE_INVISIBLE_LIVING
 	var/darksight = 2
 
-	// SPECIES FLAGS: "mutcolors", "hair", "facehair", "eyecolor", "lips", "resists_cold", "resists_heat", "rad_immune",
-	// "nobreath", "noguns", "noblood", "nonflammable"
+	// species flags. these can be found in flags.dm
 	var/list/specflags = list()
 
 	var/attack_verb = "punch"	// punch-specific attack verb
@@ -86,7 +85,7 @@
 
 		var/g = (owner.gender == FEMALE) ? "f" : "m"
 
-		if("mutcolor" in specflags)
+		if(MUTCOLORS in specflags)
 			var/image/spec_base
 			spec_base = image("icon" = 'icons/mob/human.dmi', "icon_state" = "[owner.dna.species.id]_[g]_s", "layer" = -SPECIES_LAYER)
 			if(!config.mutant_colors)
@@ -105,7 +104,7 @@
 		var/datum/sprite_accessory/S
 		var/list/standing	= list()
 
-		if(owner.facial_hair_style && "facehair" in specflags)
+		if(owner.facial_hair_style && FACEHAIR in specflags)
 			S = facial_hair_styles_list[owner.facial_hair_style]
 			if(S)
 				var/image/img_facial_s
@@ -130,7 +129,7 @@
 		if(!owner.getorgan(/obj/item/organ/brain))
 			standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained_s", "layer" = -HAIR_LAYER)
 
-		else if(owner.hair_style && "hair" in specflags)
+		else if(owner.hair_style && HAIR in specflags)
 			S = hair_styles_list[owner.hair_style]
 			if(S)
 				var/image/img_hair_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
@@ -164,11 +163,11 @@
 		var/list/standing	= list()
 
 		// lipstick
-		if(owner.lip_style && "lips" in specflags)
+		if(owner.lip_style && LIPS in specflags)
 			standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[owner.lip_style]_s", "layer" = -BODY_LAYER)
 
 		// eyes
-		if("eyecolor" in specflags)
+		if(EYECOLOR in specflags)
 			var/image/img_eyes_s = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "[eyes]_s", "layer" = -BODY_LAYER)
 			img_eyes_s.color = "#" + owner.eye_color
 			standing	+= img_eyes_s
@@ -386,7 +385,7 @@
 			else									owner.fire.icon_state = "fire0"
 
 		if(owner.bodytemp)
-			if(!("resists_fire" in specflags))
+			if(!(HEATRES in specflags))
 				switch(owner.bodytemperature) //310.055 optimal body temp
 					if(370 to INFINITY)		owner.bodytemp.icon_state = "temp4"
 					if(350 to 370)			owner.bodytemp.icon_state = "temp3"
@@ -395,7 +394,7 @@
 				if(320 to 335)			owner.bodytemp.icon_state = "temp1"
 				if(300 to 320)			owner.bodytemp.icon_state = "temp0"
 				if(295 to 300)			owner.bodytemp.icon_state = "temp-1"
-			if(!("resists_cold" in specflags))
+			if(!(COLDRES in specflags))
 				switch(owner.bodytemperature)
 					if(280 to 295)			owner.bodytemp.icon_state = "temp-2"
 					if(260 to 280)			owner.bodytemp.icon_state = "temp-3"
@@ -415,7 +414,7 @@
 			owner.Weaken(3)
 			owner.emote("collapse")
 
-		if (owner.radiation && !("rad_immune" in specflags))
+		if (owner.radiation && !(RADIMMUNE in specflags))
 			if (owner.radiation > 100)
 				owner.radiation = 100
 				owner.Weaken(10)
@@ -442,7 +441,7 @@
 							owner << "\red You feel weak."
 							owner.emote("collapse")
 						if(prob(15))
-							if(!( owner.hair_style == "Shaved") || !(owner.hair_style == "Bald") || "hair" in specflags)
+							if(!( owner.hair_style == "Shaved") || !(owner.hair_style == "Bald") || HAIR in specflags)
 								owner << "<span class='danger'>Your hair starts to fall out in clumps...<span>"
 								spawn(50)
 									owner.facial_hair_style = "Shaved"
@@ -745,7 +744,7 @@
 	proc/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
 		owner.apply_damage(I.force, I.damtype)
 		if(I.damtype == "brute")
-			if(prob(33) && I.force && !("noblood" in specflags))
+			if(prob(33) && I.force && !(NOBLOOD in specflags))
 				var/turf/location = owner.loc
 				if(istype(location, /turf/simulated))
 					location.add_blood_floor(owner)
@@ -887,7 +886,7 @@
 				owner.oxygen_alert = max(owner.oxygen_alert, 1)
 				return 0
 			if(owner.health >= config.health_threshold_crit)
-				if("nobreath" in specflags)	return 1
+				if(NOBREATH in specflags)	return 1
 				owner.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 				owner.failed_last_breath = 1
 			else
@@ -916,7 +915,7 @@
 		//var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*0.5 // The default pressure value
 
 		if(O2_pp < safe_oxygen_min) // Too little oxygen
-			if(!("nobreath" in specflags) || (owner.health <= config.health_threshold_crit))
+			if(!(NOBREATH in specflags) || (owner.health <= config.health_threshold_crit))
 				if(prob(20))
 					spawn(0) owner.emote("gasp")
 				if(O2_pp > 0)
@@ -944,7 +943,7 @@
 		breath.carbon_dioxide += oxygen_used
 
 		//CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2, this will hurt you, but only once per 4 ticks, instead of once per tick.
-		if(CO2_pp > safe_co2_max && !("nobreath" in specflags))
+		if(CO2_pp > safe_co2_max && !(NOBREATH in specflags))
 			if(!owner.co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
 				owner.co2overloadtime = world.time
 			else if(world.time - owner.co2overloadtime > 120)
@@ -958,7 +957,7 @@
 		else
 			owner.co2overloadtime = 0
 
-		if(Toxins_pp > safe_toxins_max && !("nobreath" in specflags)) // Too much toxins
+		if(Toxins_pp > safe_toxins_max && !(NOBREATH in specflags)) // Too much toxins
 			var/ratio = (breath.toxins/safe_toxins_max) * 10
 			//adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
 			if(owner.reagents)
@@ -967,7 +966,7 @@
 		else
 			owner.toxins_alert = 0
 
-		if(breath.trace_gases.len && !("nobreath" in specflags))	// If there's some other shit in the air lets deal with it here.
+		if(breath.trace_gases.len && !(NOBREATH in specflags))	// If there's some other shit in the air lets deal with it here.
 			for(var/datum/gas/sleeping_agent/SA in breath.trace_gases)
 				var/SA_pp = (SA.moles/breath.total_moles())*breath_pressure
 				if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
@@ -983,15 +982,15 @@
 		return 1
 
 	proc/handle_temperature(datum/gas_mixture/breath) // called by human/life, handles temperatures
-		if( (abs(310.15 - breath.temperature) > 50) && !(COLD_RESISTANCE in owner.mutations) && !("resists_cold" in specflags)) // Hot air hurts :(
+		if( (abs(310.15 - breath.temperature) > 50) && !(COLD_RESISTANCE in owner.mutations) && !(COLDRES in specflags)) // Hot air hurts :(
 			if(breath.temperature < 260.15)
 				if(prob(20))
 					owner << "\red You feel your face freezing and an icicle forming in your lungs!"
-			else if(breath.temperature > 360.15 && !("resists_heat" in specflags))
+			else if(breath.temperature > 360.15 && !(HEATRES in specflags))
 				if(prob(20))
 					owner << "\red You feel your face burning and a searing heat in your lungs!"
 
-			if(!("resists_cold" in specflags)) // COLD DAMAGE
+			if(!(COLDRES in specflags)) // COLD DAMAGE
 				switch(breath.temperature)
 					if(-INFINITY to 120)
 						owner.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head")
@@ -1003,7 +1002,7 @@
 						owner.apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head")
 						owner.fire_alert = max(owner.fire_alert, 1)
 
-			if(!("resists_heat" in specflags)) // HEAT DAMAGE
+			if(!(HEATRES in specflags)) // HEAT DAMAGE
 				switch(breath.temperature)
 					if(360 to 400)
 						owner.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head")
@@ -1042,7 +1041,7 @@
 					owner.bodytemperature += min((1-thermal_protection) * ((loc_temp - owner.bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
 
 		// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
-		if(owner.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !("resists_heat" in specflags))
+		if(owner.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !(HEATRES in specflags))
 			//Body temperature is too hot.
 			owner.fire_alert = max(owner.fire_alert, 1)
 			switch(owner.bodytemperature)
@@ -1060,7 +1059,7 @@
 						owner.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
 						owner.fire_alert = max(owner.fire_alert, 2)
 
-		else if(owner.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !("resists_cold" in specflags))
+		else if(owner.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(COLDRES in specflags))
 			owner.fire_alert = max(owner.fire_alert, 1)
 			if(!istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 				switch(owner.bodytemperature)
@@ -1081,7 +1080,7 @@
 		var/adjusted_pressure = owner.calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
 		switch(adjusted_pressure)
 			if(HAZARD_HIGH_PRESSURE to INFINITY)
-				if(!("resists_heat" in specflags))
+				if(!(HEATRES in specflags))
 					owner.adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
 					owner.pressure_alert = 2
 				else
@@ -1093,7 +1092,7 @@
 			if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
 				owner.pressure_alert = -1
 			else
-				if((COLD_RESISTANCE in owner.mutations) || ("resists_cold" in specflags))
+				if((COLD_RESISTANCE in owner.mutations) || (COLDRES in specflags))
 					owner.pressure_alert = -1
 				else
 					owner.adjustBruteLoss( LOW_PRESSURE_DAMAGE )
@@ -1106,7 +1105,7 @@
 	//////////
 
 	proc/handle_fire()
-		if("resists_heat" in specflags || "nonflammable" in specflags)
+		if(HEATRES in specflags || NOFIRE in specflags)
 			return
 		if(owner.fire_stacks < 0)
 			owner.fire_stacks++ //If we've doused ourselves in water to avoid fire, dry off slowly
@@ -1121,7 +1120,7 @@
 		location.hotspot_expose(700, 50, 1)
 
 	proc/IgniteMob()
-		if(owner.fire_stacks > 0 && !owner.on_fire && !("resists_heat" in specflags) && !("nonflammable" in specflags))
+		if(owner.fire_stacks > 0 && !owner.on_fire && !(HEATRES in specflags) && !(NOFIRE in specflags))
 			owner.on_fire = 1
 			owner.AddLuminosity(3)
 			owner.update_fire()
