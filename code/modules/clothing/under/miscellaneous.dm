@@ -386,3 +386,10 @@
 	icon_state = "spants"
 	_color = "simonpants"
 	item_state = "spants"
+
+/obj/item/clothing/under/batmansuit
+	name = "batsuit"
+	desc = "You are the night."
+	icon_state = "bmuniform"
+	_color = "bmuniform"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
