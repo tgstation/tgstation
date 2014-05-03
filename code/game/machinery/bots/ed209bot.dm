@@ -753,11 +753,6 @@ Auto Patrol: []"},
 			M:loc = T
 */
 
-/obj/machinery/bot/ed209/proc/speak(var/message)
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span>",2)
-	return
-
 /obj/machinery/bot/ed209/explode()
 	walk_to(src,0)
 	src.visible_message("\red <B>[src] blows apart!</B>", 1)

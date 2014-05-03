@@ -457,14 +457,6 @@
 	reagent_id = null
 	return
 
-
-/obj/machinery/bot/medbot/proc/speak(var/message)
-	if((!src.on) || (!message))
-		return
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span>",2)
-	return
-
 /obj/machinery/bot/medbot/bullet_act(var/obj/item/projectile/Proj)
 	if(Proj.flag == "taser")
 		src.stunned = min(stunned+10,20)
