@@ -290,7 +290,7 @@
 						var/message = pick("Hey, you! Hold on, I'm coming.","Wait! I want to help!","You appear to be injured!")
 						src.speak(message)
 						src.last_newpatient_speak = world.time
-					src.visible_message("<b>[src]</b> points at [C.name]!")
+					src.visible_message("<span class='name'>[src]</span> points at [C.name]!")
 				break
 			else
 				continue
@@ -438,7 +438,7 @@
 		src.icon_state = "medibots"
 		C.visible_message("<span class='danger'>[src] is trying to inject [src.patient]!</span>", \
 			"<span class='userdanger'>[src] is trying to inject [src.patient]!</span>")
-		
+
 		spawn(30)
 			if ((get_dist(src, src.patient) <= 1) && (src.on))
 				if((reagent_id == "internal_beaker") && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
@@ -461,7 +461,8 @@
 /obj/machinery/bot/medbot/proc/speak(var/message)
 	if((!src.on) || (!message))
 		return
-	visible_message("[src] beeps, \"[message]\"")
+	for(var/mob/O in hearers(src, null))
+		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"",2)
 	return
 
 /obj/machinery/bot/medbot/bullet_act(var/obj/item/projectile/Proj)
