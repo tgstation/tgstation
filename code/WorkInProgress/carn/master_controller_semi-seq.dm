@@ -42,7 +42,7 @@ datum/controller/game_controller/New()
 	if(!job_master)
 		job_master = new /datum/controller/occupations()
 		if(job_master.SetupOccupations())
-			world << "<span class='userdanger'> Job setup complete</span>"
+			world << "<span class='danger'>\b Job setup complete</span>"
 			job_master.LoadJobs("config/jobs.txt")
 
 	if(!tension_master)				tension_master = new /datum/tension()
@@ -68,24 +68,24 @@ datum/controller/game_controller/proc/setup()
 			ticker.pregame()
 
 datum/controller/game_controller/proc/setup_objects()
-	world << "<span class='userdanger'> Initializing objects</span>"
+	world << "<span class='danger'>\b Initializing objects</span>"
 	sleep(-1)
 	for(var/obj/object in world)
 		object.initialize()
 
-	world << "<span class='userdanger'> Initializing pipe networks</span>"
+	world << "<span class='danger'>\b Initializing pipe networks</span>"
 	sleep(-1)
 	for(var/obj/machinery/atmospherics/machine in world)
 		machine.build_network()
 
-	world << "<span class='userdanger'> Initializing atmos machinery.</span>"
+	world << "<span class='danger'>\b Initializing atmos machinery.</span>"
 	sleep(-1)
 	for(var/obj/machinery/atmospherics/unary/vent_pump/T in world)
 		T.broadcast_status()
 	for(var/obj/machinery/atmospherics/unary/vent_scrubber/T in world)
 		T.broadcast_status()
 
-	world << "<span class='userdanger'> Initializations complete.</span>"
+	world << "<span class='danger'>\b Initializations complete.</span>"
 	sleep(-1)
 
 

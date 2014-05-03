@@ -577,7 +577,7 @@ var/list/sacrificed = list()
 				usr.whisper("[input]")
 			for(var/datum/mind/H in ticker.mode.cult)
 				if (H.current)
-					H.current << "<span class='userdanger'> [input]</span>"
+					H.current << "<span class='danger'>\b [input]</span>"
 			return 1
 
 /////////////////////////////////////////FIFTEENTH RUNE

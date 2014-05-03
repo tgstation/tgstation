@@ -48,7 +48,7 @@
 	if(..())
 		return
 	if (src.z > 1)
-		usr << "<span class='userdanger'>lack You're too far away from the station!</span>"
+		usr << "<span class='danger'><b>Unable to establish a connection</b>: \black You're too far away from the station!</span>"
 		return
 	usr.set_machine(src)
 
@@ -323,7 +323,7 @@
 	if(..())
 		return
 	if (src.z > 6)
-		user << "<span class='userdanger'>lack You're too far away from the station!</span>"
+		user << "<span class='danger'><b>Unable to establish a connection</b>: \black You're too far away from the station!</span>"
 		return
 
 	user.set_machine(src)

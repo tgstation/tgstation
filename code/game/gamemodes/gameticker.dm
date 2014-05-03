@@ -332,7 +332,7 @@ var/global/datum/controller/gameticker/ticker
 
 		if (aiPlayer.connected_robots.len)
 			var/robolist = "<b>[aiPlayer.real_name]'s loyal minions were:</b> "
-			var/vsrobolist = "<span class='userdanger'>lack</span>"
+			var/vsrobolist = "<span class='danger'><b>[aiPlayer.real_name]'s disloyal minions were:</b> \black</span>"
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
 				if (is_special_character(robo) && robo.mind)
 					vsrobolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"

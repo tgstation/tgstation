@@ -406,13 +406,13 @@ ________________________________________________________________________________
 			U.gib()
 			return 0
 		if(!istype(U:head, /obj/item/clothing/head/helmet/space/space_ninja))
-			U << "<span class='userdanger'>lack UNABLE TO LOCATE HEAD GEAR\nABORTING...</span>"
+			U << "<span class='danger'><B>ERROR</B>: 100113 \black UNABLE TO LOCATE HEAD GEAR\nABORTING...</span>"
 			return 0
 		if(!istype(U:shoes, /obj/item/clothing/shoes/space_ninja))
-			U << "<span class='userdanger'>lack UNABLE TO LOCATE FOOT GEAR\nABORTING...</span>"
+			U << "<span class='danger'><B>ERROR</B>: 122011 \black UNABLE TO LOCATE FOOT GEAR\nABORTING...</span>"
 			return 0
 		if(!istype(U:gloves, /obj/item/clothing/gloves/space_ninja))
-			U << "<span class='userdanger'>lack UNABLE TO LOCATE HAND GEAR\nABORTING...</span>"
+			U << "<span class='danger'><B>ERROR</B>: 110223 \black UNABLE TO LOCATE HAND GEAR\nABORTING...</span>"
 			return 0
 
 		affecting = U
@@ -1525,7 +1525,7 @@ ________________________________________________________________________________
 		else if(s_initialized)
 			U << "<span class='userdanger'>Please report this bug.</span>"
 		else
-			U << "<span class='userdanger'>lack You cannot use this function at this time.</span>"
+			U << "<span class='danger'><B>ERROR</B>: \black You cannot use this function at this time.</span>"
 	return
 
 //=======//DEINITIALIZE//=======//
@@ -1539,7 +1539,7 @@ ________________________________________________________________________________
 		if(alert("Are you certain you wish to remove the suit? This will take time and remove all abilities.",,"Yes","No")=="No")
 			return
 		if(s_busy||flush)
-			U << "<span class='userdanger'>lack You cannot use this function at this time.</span>"
+			U << "<span class='danger'><B>ERROR</B>: \black You cannot use this function at this time.</span>"
 			return
 		s_busy = 1
 		for(var/i = 0,i<7,i++)
@@ -1855,7 +1855,7 @@ ________________________________________________________________________________
 				U.electrocute_act(damage, src,0.1,1)//The last argument is a safety for the human proc that checks for gloves.
 				cell.charge -= damage
 			else
-				A << "<span class='userdanger'>lack Not enough energy remaining.</span>"
+				A << "<span class='danger'><b>ERROR</b>: \black Not enough energy remaining.</span>"
 
 		if("Message")
 			var/obj/item/device/pda/P = locate(href_list["target"])
@@ -1931,7 +1931,7 @@ ________________________________________________________________________________
 									return
 							sleep(s_delay)
 					else
-						U << "<span class='userdanger'>lack Unable to initiate mode.</span>"
+						U << "<span class='danger'><b>ERROR<b>: \black Unable to initiate mode.</span>"
 				else
 					U << browse(null, "window=spideros")
 					s_busy = 0
@@ -1953,7 +1953,7 @@ ________________________________________________________________________________
 					t_disk.loc = T
 					t_disk = null
 				else
-					U << "<span class='userdanger'>lack Could not eject disk.</span>"
+					U << "<span class='danger'><b>ERROR<b>: \black Could not eject disk.</span>"
 
 		if("Copy to Disk")
 			var/datum/tech/current_data = locate(href_list["target"])
@@ -1974,7 +1974,7 @@ ________________________________________________________________________________
 					pai.loc = T
 					pai = null
 				else
-					U << "<span class='userdanger'>lack Could not eject pAI card.</span>"
+					U << "<span class='danger'><b>ERROR<b>: \black Could not eject pAI card.</span>"
 
 		if("Override AI Laws")
 			var/law_zero = A.laws.zeroth//Remembers law zero, if there is one.
@@ -1995,7 +1995,7 @@ ________________________________________________________________________________
 						if(AI==A)
 							switch(i)
 								if(0)
-									A << "<span class='userdanger'>lack purge procedure detected. \nNow hacking host...</span>"
+									A << "<span class='danger'><b>WARNING</b>: \black purge procedure detected. \nNow hacking host...</span>"
 									U << "<span class='danger'><b>WARNING</b>: HACKING AT��TEMP� IN PR0GRESs!</span>"
 									spideros = 0
 									k_unlock = 0
@@ -2067,9 +2067,9 @@ ________________________________________________________________________________
 
 			ai_holo_process()//Move to initialize
 		else
-			AI << "<span class='userdanger'>lack Image feed in progress.</span>"
+			AI << "<span class='danger'>ERROR: \black Image feed in progress.</span>"
 	else
-		AI << "<span class='userdanger'>lack Unable to project image.</span>"
+		AI << "<span class='danger'>ERROR: \black Unable to project image.</span>"
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_process()
@@ -2134,7 +2134,7 @@ ________________________________________________________________________________
 			if(s_control)
 				I:transfer_ai("NINJASUIT","AICARD",src,U)
 			else
-				U << "<span class='userdanger'>lack Remote access channel disabled.</span>"
+				U << "<span class='danger'><b>ERROR</b>: \black Remote access channel disabled.</span>"
 			return//Return individually so that ..() can run properly at the end of the proc.
 		else if(istype(I, /obj/item/device/paicard) && !pai)//If it's a pai card.
 			U:drop_item()
@@ -2189,7 +2189,7 @@ ________________________________________________________________________________
 					TD.stored = null
 					U << "<span class='notice'>Data analyzed and updated. Disk erased.</span>"
 				else
-					U << "<span class='userdanger'>lack Procedure interrupted. Process terminated.</span>"
+					U << "<span class='danger'><b>ERROR</b>: \black Procedure interrupted. Process terminated.</span>"
 			else
 				I.loc = src
 				t_disk = I
@@ -2661,7 +2661,7 @@ It is possible to destroy the net by the occupant or someone else.
 					for(var/mob/O in viewers(src, 3))
 						O.show_message(text("[] was recovered from the energy net!", M.name), 1, text("You hear a grunt."), 2)
 					if(!isnull(master))//As long as they still exist.
-						master << "<span class='userdanger'>lack unable to initiate transport protocol. Procedure terminated.</span>"
+						master << "<span class='danger'><b>ERROR</b>: \black unable to initiate transport protocol. Procedure terminated.</span>"
 				qdel(src)
 			return
 
@@ -2675,7 +2675,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 		if(isnull(M)||M.loc!=loc)//If mob is gone or not at the location.
 			if(!isnull(master))//As long as they still exist.
-				master << "<span class='userdanger'>lack unable to locate \the [mob_name]. Procedure terminated.</span>"
+				master << "<span class='danger'><b>ERROR</b>: \black unable to locate \the [mob_name]. Procedure terminated.</span>"
 			qdel(src)//Get rid of the net.
 			return
 

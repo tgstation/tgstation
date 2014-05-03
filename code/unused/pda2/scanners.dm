@@ -38,7 +38,7 @@
 
 			var/dat = "<span class='notice'>Analyzing Results for [C]:\n</span>"
 			dat += "<span class='notice'>\t Overall Status: [C.stat > 1 ? "dead" : "[C.health]% healthy"]\n</span>"
-			dat += "<span class='notice'>\t Damage Specifics: [C.getOxyLoss() > 50 ? "<span class='userdanger'>lue"][C.getBruteLoss()]\n</span></span>"
+			dat += "<span class='notice'>\t Damage Specifics: [C.getOxyLoss() > 50 ? "<span class='danger'>" : "\blue"][C.getOxyLoss()]-[C.getToxLoss() > 50 ? "\red" : "\blue"][C.getToxLoss()]-[C.getFireLoss() > 50 ? "\red" : "\blue"][C.getFireLoss()]-[C.getBruteLoss() > 50 ? "\red" : "\blue"][C.getBruteLoss()]\n</span></span>"
 			dat += "<span class='notice'>\t Key: Suffocation/Toxin/Burns/Brute\n</span>"
 			dat += "<span class='notice'>\t Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)</span>"
 			if(C.virus)

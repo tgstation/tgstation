@@ -214,13 +214,13 @@ That prevents a few funky behaviors.
 					if("AICARD")
 						var/obj/item/device/aicard/C = src
 						if(C.contents.len)//If there is an AI on card.
-							U << "<span class='userdanger'>lack Existing AI found on this terminal. Remove existing AI to install a new one.</span>"
+							U << "<span class='danger'><b>Transfer failed</b>: \black Existing AI found on this terminal. Remove existing AI to install a new one.</span>"
 						else
 							if (ticker.mode.name == "AI malfunction")
 								var/datum/game_mode/malfunction/malf = ticker.mode
 								for (var/datum/mind/malfai in malf.malf_ai)
 									if (T.mind == malfai)
-										U << "<span class='userdanger'>lack Remote transfer interface disabled.</span>"//Do ho ho ho~
+										U << "<span class='danger'><b>ERROR</b>: \black Remote transfer interface disabled.</span>"//Do ho ho ho~
 										return
 							new /obj/structure/AIcore/deactivated(T.loc)//Spawns a deactivated terminal at AI location.
 							T.aiRestorePowerRoutine = 0//So the AI initially has power.
@@ -237,16 +237,16 @@ That prevents a few funky behaviors.
 					if("NINJASUIT")
 						var/obj/item/clothing/suit/space/space_ninja/C = src
 						if(C.AI)//If there is an AI on card.
-							U << "<span class='userdanger'>lack Existing AI found on this terminal. Remove existing AI to install a new one.</span>"
+							U << "<span class='danger'><b>Transfer failed</b>: \black Existing AI found on this terminal. Remove existing AI to install a new one.</span>"
 						else
 							if (ticker.mode.name == "AI malfunction")
 								var/datum/game_mode/malfunction/malf = ticker.mode
 								for (var/datum/mind/malfai in malf.malf_ai)
 									if (T.mind == malfai)
-										U << "<span class='userdanger'>lack Remote transfer interface disabled.</span>"
+										U << "<span class='danger'><b>ERROR</b>: \black Remote transfer interface disabled.</span>"
 										return
 							if(T.stat)//If the ai is dead/dying.
-								U << "<span class='userdanger'>lack [T.name] data core is corrupted. Unable to install.</span>"
+								U << "<span class='danger'><b>ERROR</b>: \black [T.name] data core is corrupted. Unable to install.</span>"
 							else
 								new /obj/structure/AIcore/deactivated(T.loc)
 								T.aiRestorePowerRoutine = 0
@@ -323,11 +323,11 @@ That prevents a few funky behaviors.
 								T.occupier.cancel_camera()
 								T.occupier = null
 							else if (C.contents.len)
-								U << "<span class='userdanger'>lack Artificial intelligence detected on terminal.</span>"
+								U << "<span class='danger'><b>ERROR</b>: \black Artificial intelligence detected on terminal.</span>"
 							else if (T.active)
-								U << "<span class='userdanger'>lack Reconstruction in progress.</span>"
+								U << "<span class='danger'><b>ERROR</b>: \black Reconstruction in progress.</span>"
 							else if (!T.occupier)
-								U << "<span class='userdanger'>lack Unable to locate artificial intelligence.</span>"
+								U << "<span class='danger'><b>ERROR</b>: \black Unable to locate artificial intelligence.</span>"
 					if("NINJASUIT")
 						var/obj/item/clothing/suit/space/space_ninja/C = src
 						if(!T.contents.len)
@@ -347,7 +347,7 @@ That prevents a few funky behaviors.
 						else
 							if(!C.AI && T.occupier && !T.active)
 								if (T.occupier.stat)
-									U << "<span class='userdanger'>lack [T.occupier.name] data core is corrupted. Unable to install.</span>"
+									U << "<span class='danger'><b>ERROR</b>: \black [T.occupier.name] data core is corrupted. Unable to install.</span>"
 								else
 									T.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
 									T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-full")
@@ -357,11 +357,11 @@ That prevents a few funky behaviors.
 									T.occupier.cancel_camera()
 									T.occupier = null
 							else if (C.AI)
-								U << "<span class='userdanger'>lack Artificial intelligence detected on terminal.</span>"
+								U << "<span class='danger'><b>ERROR</b>: \black Artificial intelligence detected on terminal.</span>"
 							else if (T.active)
-								U << "<span class='userdanger'>lack Reconstruction in progress.</span>"
+								U << "<span class='danger'><b>ERROR</b>: \black Reconstruction in progress.</span>"
 							else if (!T.occupier)
-								U << "<span class='userdanger'>lack Unable to locate artificial intelligence.</span>"
+								U << "<span class='danger'><b>ERROR</b>: \black Unable to locate artificial intelligence.</span>"
 			if("NINJASUIT")//Ninjasuit
 				var/obj/item/clothing/suit/space/space_ninja/T = target
 				switch(interaction)
@@ -374,7 +374,7 @@ That prevents a few funky behaviors.
 
 							if(A)//If the host AI card is not empty.
 								if(A_T)//If there is an AI on the target card.
-									U << "<span class='userdanger'>lack [A_T.name] already installed. Remove [A_T.name] to install a new one.</span>"
+									U << "<span class='danger'><b>ERROR</b>: \black [A_T.name] already installed. Remove [A_T.name] to install a new one.</span>"
 								else
 									A.loc = C//Throw them into the target card. Since they are already on a card, transfer is easy.
 									C.name = "inteliCard - [A.name]"
@@ -385,7 +385,7 @@ That prevents a few funky behaviors.
 									U << "<span class='notice'><b>SUCCESS</b>: \black [A.name] ([rand(1000,9999)].exe) removed from host and stored within local memory.</span>"
 							else//If host AI is empty.
 								if(C.flush)//If the other card is flushing.
-									U << "<span class='userdanger'>lack AI flush is in progress, cannot execute transfer protocol.</span>"
+									U << "<span class='danger'><b>ERROR</b>: \black AI flush is in progress, cannot execute transfer protocol.</span>"
 								else
 									if(A_T&&!A_T.stat)//If there is an AI on the target card and it's not inactive.
 										A_T.loc = T//Throw them into suit.
@@ -397,7 +397,7 @@ That prevents a few funky behaviors.
 										A_T << "You have been uploaded to a mobile storage device."
 										U << "<span class='notice'><b>SUCCESS</b>: \black [A_T.name] ([rand(1000,9999)].exe) removed from local memory and installed to host.</span>"
 									else if(A_T)//If the target AI is dead. Else just go to return since nothing would happen if both are empty.
-										U << "<span class='userdanger'>lack [A_T.name] data core is corrupted. Unable to install.</span>"
+										U << "<span class='danger'><b>ERROR</b>: \black [A_T.name] data core is corrupted. Unable to install.</span>"
 	else
-		U << "<span class='userdanger'>lack AI flush is in progress, cannot execute transfer protocol.</span>"
+		U << "<span class='danger'><b>ERROR</b>: \black AI flush is in progress, cannot execute transfer protocol.</span>"
 	return

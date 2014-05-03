@@ -162,7 +162,7 @@
 		else
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='userdanger'> [O] bounces harmlessly off of [src]. </span>")
+					M.show_message("<span class='danger'>\b [O] bounces harmlessly off of [src]. </span>")
 	else
 		usr << "<span class='danger'>This weapon is ineffective, it does no damage.</span>"
 		for(var/mob/M in viewers(src, null))
@@ -287,7 +287,7 @@
 		else
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='userdanger'> [O] bounces harmlessly off of [src]. </span>")
+					M.show_message("<span class='danger'>\b [O] bounces harmlessly off of [src]. </span>")
 	else
 		usr << "<span class='danger'>This weapon is ineffective, it does no damage.</span>"
 		for(var/mob/M in viewers(src, null))

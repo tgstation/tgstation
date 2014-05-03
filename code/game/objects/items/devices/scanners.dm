@@ -131,7 +131,7 @@ MASS SPECTROMETER
 
 	// Damage descriptions
 
-	user.show_message(text("<span class='notice'>[] | [] | [] | []</span>", oxy_loss > 50 ? "<span class='userdanger'>lue" : "Subject brute-force injury status O.K</span>"), 1)
+	user.show_message(text("<span class='notice'>[] | [] | [] | []</span>", oxy_loss > 50 ? "<span class='danger'>Severe oxygen deprivation detected\blue" : "Subject bloodstream oxygen level normal", tox_loss > 50 ? "\red Dangerous amount of toxins detected\blue" : "Subject bloodstream toxin level minimal", fire_loss > 50 ? "\red Severe burn damage detected\blue" : "Subject burn injury status O.K", brute_loss > 50 ? "\red Severe anatomical damage detected\blue" : "Subject brute-force injury status O.K</span>"), 1)
 
 	if(M.getStaminaLoss())
 		user.show_message(text("<span class='info'>Subject appears to be suffering from fatigue.</span>"), 1)
