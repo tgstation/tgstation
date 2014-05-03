@@ -141,17 +141,12 @@
 	speedmod = 3
 	armor = 55
 	punchmod = 5
+	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_head, slot_w_uniform)
+	nojumpsuit = 1
 
 /datum/species/golem/adamantine
 	name = "Adamantine Golem"
 	id = "adamantine"
-
-	auto_equip()
-		owner.equip_to_slot_or_del(new /obj/item/clothing/under/golem(owner), slot_w_uniform)
-		owner.equip_to_slot_or_del(new /obj/item/clothing/suit/golem(owner), slot_wear_suit)
-		owner.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem(owner), slot_shoes)
-		owner.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/golem(owner), slot_wear_mask)
-		owner.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem(owner), slot_gloves)
 
 /datum/species/fly
 	// Humans turned into fly-like abominations in teleporter accidents.

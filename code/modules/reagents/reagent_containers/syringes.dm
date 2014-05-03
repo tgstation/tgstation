@@ -62,7 +62,7 @@
 					if(ishuman(target))
 						var/mob/living/carbon/human/H = target
 						if(H.dna)
-							if("noblood" in H.dna.species.specflags)
+							if(NOBLOOD in H.dna.species.specflags)
 								user << "<span class='notice'>You are unable to locate any blood.</span>"
 								return
 					if(reagents.has_reagent("blood"))

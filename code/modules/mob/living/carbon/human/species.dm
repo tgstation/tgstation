@@ -38,6 +38,9 @@
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
 	var/use_skintones = 0	// does it use skintones or not? (spoiler alert this is only used by humans)
 
+	var/list/no_equip = list()	// slots the race can't equip stuff to
+	var/nojumpsuit = 0	// this is sorta... weird. it basically lets you equip stuff that usually needs jumpsuits without one, like belts and pockets and ids
+
 	var/say_mod = "says"	// affects the speech message
 
 	var/speedmod = 0	// this affects the race's speed. positive numbers make it move slower, negative numbers make it move faster
@@ -192,8 +195,163 @@
 		return
 
 	proc/auto_equip()
-		// meant to handle the equipping of species-specific gear. at the moment, only adamantine golems use this (which will soon become obsolete)
+		// handles the equipping of species-specific gear
 		return
+
+	proc/can_equip(var/obj/item/I, var/slot, var/disable_warning)
+		if(slot in no_equip)
+			if(!(type in I.species_exception))
+				return 0
+
+		switch(slot)
+			if(slot_l_hand)
+				if(owner.l_hand)
+					return 0
+				return 1
+			if(slot_r_hand)
+				if(owner.r_hand)
+					return 0
+				return 1
+			if(slot_wear_mask)
+				if(owner.wear_mask)
+					return 0
+				if( !(I.slot_flags & SLOT_MASK) )
+					return 0
+				return 1
+			if(slot_back)
+				if(owner.back)
+					return 0
+				if( !(I.slot_flags & SLOT_BACK) )
+					return 0
+				return 1
+			if(slot_wear_suit)
+				if(owner.wear_suit)
+					return 0
+				if( !(I.slot_flags & SLOT_OCLOTHING) )
+					return 0
+				return 1
+			if(slot_gloves)
+				if(owner.gloves)
+					return 0
+				if( !(I.slot_flags & SLOT_GLOVES) )
+					return 0
+				return 1
+			if(slot_shoes)
+				if(owner.shoes)
+					return 0
+				if( !(I.slot_flags & SLOT_FEET) )
+					return 0
+				return 1
+			if(slot_belt)
+				if(owner.belt)
+					return 0
+				if(!owner.w_uniform && !nojumpsuit)
+					if(!disable_warning)
+						owner << "\red You need a jumpsuit before you can attach this [I.name]."
+					return 0
+				if( !(I.slot_flags & SLOT_BELT) )
+					return
+				return 1
+			if(slot_glasses)
+				if(owner.glasses)
+					return 0
+				if( !(I.slot_flags & SLOT_EYES) )
+					return 0
+				return 1
+			if(slot_head)
+				if(owner.head)
+					return 0
+				if( !(I.slot_flags & SLOT_HEAD) )
+					return 0
+				return 1
+			if(slot_ears)
+				if(owner.ears)
+					return 0
+				if( !(I.slot_flags & SLOT_EARS) )
+					return 0
+				return 1
+			if(slot_w_uniform)
+				if(owner.w_uniform)
+					return 0
+				if( !(I.slot_flags & SLOT_ICLOTHING) )
+					return 0
+				return 1
+			if(slot_wear_id)
+				if(owner.wear_id)
+					return 0
+				if(!owner.w_uniform && !nojumpsuit)
+					if(!disable_warning)
+						owner << "\red You need a jumpsuit before you can attach this [I.name]."
+					return 0
+				if( !(I.slot_flags & SLOT_ID) )
+					return 0
+				return 1
+			if(slot_l_store)
+				if(I.flags & NODROP) //Pockets aren't visible, so you can't move NODROP items into them.
+					return 0
+				if(owner.l_store)
+					return 0
+				if(!owner.w_uniform && !nojumpsuit)
+					if(!disable_warning)
+						owner << "\red You need a jumpsuit before you can attach this [I.name]."
+					return 0
+				if(I.slot_flags & SLOT_DENYPOCKET)
+					return
+				if( I.w_class <= 2 || (I.slot_flags & SLOT_POCKET) )
+					return 1
+			if(slot_r_store)
+				if(I.flags & NODROP)
+					return 0
+				if(owner.r_store)
+					return 0
+				if(!owner.w_uniform && !nojumpsuit)
+					if(!disable_warning)
+						owner << "\red You need a jumpsuit before you can attach this [I.name]."
+					return 0
+				if(I.slot_flags & SLOT_DENYPOCKET)
+					return 0
+				if( I.w_class <= 2 || (I.slot_flags & SLOT_POCKET) )
+					return 1
+				return 0
+			if(slot_s_store)
+				if(I.flags & NODROP)
+					return 0
+				if(owner.s_store)
+					return 0
+				if(!owner.wear_suit)
+					if(!disable_warning)
+						owner << "\red You need a suit before you can attach this [I.name]."
+					return 0
+				if(!owner.wear_suit.allowed)
+					if(!disable_warning)
+						owner << "You somehow have a suit with no defined allowed items for suit storage, stop that."
+					return 0
+				if(I.w_class > 4)
+					if(!disable_warning)
+						owner << "The [I.name] is too big to attach."  //should be src?
+					return 0
+				if( istype(I, /obj/item/device/pda) || istype(I, /obj/item/weapon/pen) || is_type_in_list(I, owner.wear_suit.allowed) )
+					return 1
+				return 0
+			if(slot_handcuffed)
+				if(owner.handcuffed)
+					return 0
+				if(!istype(I, /obj/item/weapon/handcuffs))
+					return 0
+				return 1
+			if(slot_legcuffed)
+				if(owner.legcuffed)
+					return 0
+				if(!istype(I, /obj/item/weapon/legcuffs))
+					return 0
+				return 1
+			if(slot_in_backpack)
+				if (owner.back && istype(owner.back, /obj/item/weapon/storage/backpack))
+					var/obj/item/weapon/storage/backpack/B = owner.back
+					if(B.contents.len < B.storage_slots && I.w_class <= B.max_w_class)
+						return 1
+				return 0
+		return 0 //Unsupported slot
 
 	proc/handle_chemicals(var/chem)
 		return
