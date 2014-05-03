@@ -250,7 +250,6 @@
 
 	if(contents.len >= storage_capacity)
 		return -1
-
 	if(include_mobs && isliving(AM))
 		var/mob/living/L = AM
 		if(L.buckled)
@@ -325,7 +324,9 @@
 	if(opened)
 		if(isrobot(user))
 			return
-		user.drop_item()
+		if(!user.drop_item()) //couldn't drop the item
+			user << "<span class='notice'>\The [W] is stuck to your hand, you cannot put it in \the [src]!</span>"
+			return
 		if(W)
 			W.loc = src.loc
 	else if(istype(W, /obj/item/weapon/packageWrap))
