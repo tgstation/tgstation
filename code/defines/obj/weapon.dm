@@ -186,7 +186,7 @@
 		icon_state = "beartrap[armed]"
 		user << "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>"
 
-/obj/item/weapon/legcuffs/beartrap/proc/triggered(target as mob)
+/obj/item/weapon/legcuffs/beartrap/proc/triggered(mob/living/target)
 	armed = 0
 	icon_state = "beartrap0"
 	playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
