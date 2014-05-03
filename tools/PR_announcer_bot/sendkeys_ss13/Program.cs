@@ -235,13 +235,9 @@ namespace sendkeys_ss13
                     if (msg[3] == "Merge") //Someone is merging something
                     {
                         mergedPR = msg[6];
-                        Console.WriteLine("merge happening");
                         if (merge_archive != null)
                         {
                             string currentPR = merge_archive[5].Substring(0, merge_archive[5].Length - 1); //PR no. without : at the end
-                            Console.WriteLine(currentPR);
-                            Console.WriteLine(lastPR);
-                            Console.WriteLine(mergedPR);
                             if (currentPR == mergedPR && currentPR != lastPR) //Check if the last closed message's PR number is the same PR number as the merge one.
                             {
                                 mergeflag = true;
@@ -259,9 +255,6 @@ namespace sendkeys_ss13
                         if (mergedPR != null)
                         {
                             string currentPR = msg[5].Substring(0, msg[5].Length - 1);
-                            Console.WriteLine(currentPR);
-                            Console.WriteLine(lastPR);
-                            Console.WriteLine(mergedPR);
                             if (currentPR == mergedPR && currentPR != lastPR) //Check if the current closed message's PR number 
                             {
                                 mergeflag = true;
