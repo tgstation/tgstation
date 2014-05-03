@@ -44,7 +44,7 @@
 /*/mob/living/simple_animal/crab/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/wirecutters))
 		if(prob(50))
-			user << "<span class='danger'>\b This kills the crab.</span>"
+			user << "<span class='userdanger'>This kills the crab.</span>"
 			health -= 20
 			Die()
 		else
@@ -69,7 +69,7 @@
 			health -= O.force
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='danger'>\b [src] has been attacked with [O] by [user]. </span>")
+					M.show_message("<span class='userdanger'>[src] has been attacked with [O] by [user]. </span>")
 		else
 			usr << "<span class='danger'>This weapon is ineffective, it does no damage.</span>"
 			for(var/mob/M in viewers(src, null))
