@@ -292,7 +292,8 @@ datum/controller/game_controller/proc/processMobs()
 			#ifdef PROFILE_MACHINES
 			if(!(Machinery.type in machine_profiling))
 				machine_profiling[Machinery.type] = 0
-				machine_profiling[Machinery.type] += world.timeofday - start
+
+			machine_profiling[Machinery.type] += world.timeofday - start
 			#endif
 
 
