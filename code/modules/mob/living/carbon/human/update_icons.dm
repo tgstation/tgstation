@@ -580,6 +580,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 	else
 		overlays_standing[GLASSES_LAYER]	= null
+		overlays_standing[GLASSES_OVER_HAIR_LAYER]	= null
 	if(update_icons)   update_icons()
 
 /mob/living/carbon/human/update_inv_ears(var/update_icons=1)
