@@ -65,20 +65,25 @@
 /obj/machinery/power/smes/proc/make_terminal()
 	if (usr.loc == loc)
 		usr << "<span class=\"warning\">Terminal creation aborted, you must not be on the same tile with SME.</span>
-		return 1
+		return 2
 
-	var/tempDir = get_dir(usr, src)
+	playsound(get_turf(src), 'sound/items/zip.ogg', 100, 1)
 
-	switch(tempDir)
-		if (NORTHEAST, SOUTHEAST)
-			tempDir = EAST
-		if (NORTHWEST, SOUTHWEST)
-			tempDir = WEST
+	if(do_after(user, 100))
+		var/tempDir = get_dir(usr, src)
 
-	terminal = new /obj/machinery/power/terminal(get_step(src, tempDir))
-	terminal.dir = usr.dir
-	terminal.master = src
-	return 0
+		switch(tempDir)
+			if (NORTHEAST, SOUTHEAST)
+				tempDir = EAST
+			if (NORTHWEST, SOUTHWEST)
+				tempDir = WEST
+
+		terminal = new /obj/machinery/power/terminal(get_step(src, tempDir))
+		terminal.dir = usr.dir
+		terminal.master = src
+		return 0
+
+	return 1
 
 /obj/machinery/power/smes/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob) //these can only be moved by being reconstructed, solves having to remake the powernet.
 	if(istype(W, /obj/item/weapon/screwdriver))
