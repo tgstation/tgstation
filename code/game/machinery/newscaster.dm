@@ -1137,7 +1137,7 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 		src.scanned_user = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
 	else if (isobserver(user))
 		src.scanned_user = "Space-Time Anomaly #[rand(0,9)][rand(0,9)][rand(0,9)]"
-	if(masterController && masterController.client && get_dist(masterController,src)<=1)
+//	if(masterController && masterController.client && get_dist(masterController,src)<=1)
 //		masterController << "\red You were booted from \the [src] by [scanned_user]."
 	masterController = user
 //	masterController << "\icon[src] \blue Welcome back, [scanned_user]!"
