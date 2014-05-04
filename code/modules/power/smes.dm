@@ -93,6 +93,13 @@
 			del(src)
 			return 1
 		else if(istype(W, /obj/item/weapon/cable_coil) && !terminal)
+			var/obj/item/weapon/cable_coil/CC = W
+
+			if (CC.amount < 10)
+				usr << "<span class=\"notice\">You need 10 wires to make a terminal.</span>"
+				return
+
+			CC.use(10)
 			user.visible_message(\
 				"\red [user.name] has added cables to the SMES!",\
 				"You added cables the SMES.")
