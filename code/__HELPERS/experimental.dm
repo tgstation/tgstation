@@ -132,7 +132,7 @@ var/list/masterPool = list()
 	proc/resetVariables()
 		var/list/exclude = list("locs", "parent_type", "vars", "verbs", "type") // Read-only or compile-time vars
 		exclude += args // Explicit var exclusion
-		var/list/varsCopy = vars.Copy() - exclude
+		var/list/varsCopy = vars - exclude
 		var/key
 
 		for (key in varsCopy)
