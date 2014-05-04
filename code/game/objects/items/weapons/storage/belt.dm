@@ -131,6 +131,11 @@
 		"/obj/item/taperoll/police",
 		"/obj/item/weapon/gun/energy/taser"
 		)
+/obj/item/weapon/storage/belt/security/batmanbelt
+	name = "batbelt"
+	desc = "For all your crime-fighting bat needs."
+	icon_state = "bmbelt"
+	item_state = "bmbelt"
 
 /obj/item/weapon/storage/belt/soulstone
 	name = "soul stone belt"

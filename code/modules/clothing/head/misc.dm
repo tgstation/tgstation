@@ -244,3 +244,11 @@
 	flags = FPRINT | TABLEPASS | BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	siemens_coefficient = 2.0
+
+/obj/item/clothing/head/batman
+	name = "bathelmet"
+	desc = "No one cares who you are until you put on the mask."
+	icon_state = "bmhead"
+	item_state = "bmhead"
+	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | BLOCKHAIR
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE

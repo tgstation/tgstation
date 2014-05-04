@@ -84,6 +84,10 @@
 	_color = "hosred"
 	siemens_coefficient = 0.7
 
+/obj/item/clothing/shoes/jackboots/batmanboots
+	name = "batboots"
+	desc = "Criminal stomping boots for fighting crime and looking good."
+
 /obj/item/clothing/shoes/cult
 	name = "boots"
 	desc = "A pair of boots worn by the followers of Nar-Sie."
