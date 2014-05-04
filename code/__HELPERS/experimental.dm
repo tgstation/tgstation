@@ -48,7 +48,9 @@
  * WARNING, only supports /mob and /obj.
  */
 
-#define DEBUG_OBJECT_POOL 0
+// Comment out to show debug messages.
+//#define DEBUG_OBJECT_POOL
+
 #define MAINTAINING_OBJECT_POOL_COUNT 20
 
 var/list/masterPool = list()
@@ -119,7 +121,10 @@ var/list/masterPool = list()
 	#endif
 
 #undef MAINTAINING_OBJECT_POOL_COUNT
+
+#ifdef DEBUG_OBJECT_POOL
 #undef DEBUG_OBJECT_POOL
+#endif
 
 /*
  * Override this if the object variables needed to reset.
