@@ -63,6 +63,9 @@
 	return
 
 /obj/machinery/power/smes/proc/make_terminal(const/mob/user)
+	if (ismob(user))
+		CRASH("/obj/machinery/power/smes/proc/make_terminal:ARG1, user is not a valid mob.")
+
 	if (user.loc == loc)
 		user << "<span class=\"warning\">Terminal creation aborted, you must not be on the same tile with SME.</span>"
 		return 2
@@ -111,7 +114,7 @@
 			var/obj/item/weapon/cable_coil/CC = W
 
 			if (CC.amount < 10)
-				usr << "<span class=\"notice\">You need 10 length cable coil to make a terminal.</span>"
+				user << "<span class=\"notice\">You need 10 length cable coil to make a terminal.</span>"
 				return
 
 			if (make_terminal(user))
