@@ -105,7 +105,7 @@
 			var/obj/item/weapon/cable_coil/CC = W
 
 			if (CC.amount < 10)
-				usr << "<span class=\"notice\">You need 10 wires to make a terminal.</span>"
+				usr << "<span class=\"notice\">You need 10 length cable coil to make a terminal.</span>"
 				return
 
 			if (make_terminal())
