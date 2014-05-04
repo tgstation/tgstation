@@ -26,6 +26,8 @@
 	..()
 
 /obj/machinery/door/window/Bumped(atom/movable/AM as mob|obj)
+	if(operating)
+		return
 	if (!( ismob(AM) ))
 		var/obj/machinery/bot/bot = AM
 		if(istype(bot))
@@ -43,15 +45,27 @@
 		return
 	if (!( ticker ))
 		return
-	if (src.operating)
+	var/mob/M = AM
+	if(!M.restrained())
+		bumpopen(M)
+	return
+
+/obj/machinery/door/windoor/bumpopen(mob/user as mob)
+	if(operating)
 		return
-	if (src.density && src.allowed(AM))
-		open()
-		if(src.check_access(null))
-			sleep(50)
-		else //secure doors close faster
-			sleep(20)
-		close()
+	src.add_fingerprint(user)
+	if(!src.requiresID())
+		user = null
+
+	if(density & allowed(user))
+			open()
+			if(src.check_access(null))
+				sleep(50)
+			else //secure doors close faster
+				sleep(20)
+			close()
+		else
+			flick(text("[]deny", src.base_state), src)
 	return
 
 /obj/machinery/door/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -82,6 +96,8 @@
 		return 0
 	if (!ticker)
 		return 0
+	if (stat & NOPOWER)
+		return 0
 	if(!src.operating) //in case of emag
 		src.operating = 1
 	flick(text("[]opening", src.base_state), src)
@@ -100,7 +116,7 @@
 	return 1
 
 /obj/machinery/door/window/close()
-	if (src.operating || emagged)
+	if (src.operating || emagged || (stat & NOPOWER))
 		return 0
 	src.operating = 1
 	flick(text("[]closing", src.base_state), src)
@@ -303,4 +319,3 @@
 	dir = SOUTH
 	icon_state = "rightsecure"
 	base_state = "rightsecure"
-
