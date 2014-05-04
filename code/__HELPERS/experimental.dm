@@ -64,7 +64,7 @@ var/list/masterPool = list()
  */
 /proc/getFromPool(const/A, const/B)
 	if (isnull(masterPool[A]))
-		#if DEBUG_OBJECT_POOL
+		#ifdef DEBUG_OBJECT_POOL
 		world << "DEBUG_OBJECT_POOL: new proc has been called ([A])."
 		#endif
 
@@ -74,7 +74,7 @@ var/list/masterPool = list()
 	masterPool[A] -= Object
 	var/objectLength = length(masterPool[A])
 
-	#if DEBUG_OBJECT_POOL
+	#ifdef DEBUG_OBJECT_POOL
 	world << "DEBUG_OBJECT_POOL: getFromPool([A]) [objectLength] left."
 	#endif
 
@@ -102,13 +102,13 @@ var/list/masterPool = list()
 
 	switch(length(masterPool[Object.type]))
 		if (MAINTAINING_OBJECT_POOL_COUNT to 1.#INF)
-			#if DEBUG_OBJECT_POOL
+			#ifdef DEBUG_OBJECT_POOL
 			world << "DEBUG_OBJECT_POOL: returnToPool([Object.type]) exceeds [num2text(MAINTAINING_OBJECT_POOL_COUNT)] discarding..."
 			#endif
 
 			return
 		if (0)
-			#if DEBUG_OBJECT_POOL
+			#ifdef DEBUG_OBJECT_POOL
 			world << "DEBUG_OBJECT_POOL: [Object.type] pool is empty, recreating pool."
 			#endif
 
@@ -116,7 +116,7 @@ var/list/masterPool = list()
 
 	masterPool[Object.type] += Object
 
-	#if DEBUG_OBJECT_POOL
+	#ifdef DEBUG_OBJECT_POOL
 	world << "DEBUG_OBJECT_POOL: returnToPool([Object.type]) [length(masterPool[Object.type])] left."
 	#endif
 
