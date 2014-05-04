@@ -253,6 +253,8 @@ var/global/list/possible_items = list()
 datum/objective/steal
 	var/datum/objective_item/targetinfo = null //Save the chosen item datum so we can access it later.
 	var/obj/item/steal_target = null //Needed for custom objectives (they're just items, not datums).
+	var/faction //Exchange objectives: Which side are we on?
+	var/datum/mind/otheragent //Exchange objectives: The mind of the other party
 	dangerrating = 5 //Overridden by the individual item's difficulty, but defaults to 5 for custom objectives.
 
 datum/objective/steal/New()
@@ -308,8 +310,6 @@ datum/objective/steal/check_completion()
 				return 1
 	return 0
 
-
-
 var/global/list/possible_items_special = list()
 datum/objective/steal/special //ninjas are so special they get their own subtype good for them
 
@@ -321,6 +321,33 @@ datum/objective/steal/special/New()
 
 datum/objective/steal/special/find_target()
 	return set_target(pick(possible_items_special))
+
+
+
+datum/objective/steal/exchange
+	dangerrating = 10
+
+datum/objective/steal/exchange/proc/set_faction(faction,otheragent)
+	if(faction == "red")
+		explanation_text = "Acquire the blue secret documents held by [otheragent], the Syndicate Agent"
+		targetinfo = new/datum/objective_item/unique/docs_blue
+	if(faction == "blue")
+		explanation_text = "Acquire the red secret documents held by [otheragent], the Syndicate Agent"
+		targetinfo = new/datum/objective_item/unique/docs_red
+	steal_target = targetinfo.targetitem
+
+
+datum/objective/steal/exchange/backstab
+	dangerrating = 3
+
+datum/objective/steal/exchange/backstab/set_faction(faction)
+	if(faction == "red")
+		explanation_text = "Do not give up or lose the red secret documents."
+		targetinfo = new/datum/objective_item/unique/docs_red
+	if(faction == "blue")
+		explanation_text = "Do not give up or lose the blue secret documents."
+		targetinfo = new/datum/objective_item/unique/docs_blue
+	steal_target = targetinfo.targetitem
 
 
 
