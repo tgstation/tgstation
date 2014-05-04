@@ -208,3 +208,10 @@
 	icon_state = "simonglasses"
 	item_state = "simonglasses"
 	cover_hair = 1
+
+/obj/item/clothing/glasses/kaminaglasses
+	name = "Kamina's Glasses"
+	desc = "I'm going to tell you something important now, so you better dig the wax out of those huge ears of yours and listen! The reputation of Team Gurren echoes far and wide. When they talk about its badass leader - the man of indomitable spirit and masculinity - they're talking about me! The mighty Kamina!"
+	icon_state = "kaminaglasses"
+	item_state = "kaminaglasses"
+	cover_hair = 1
