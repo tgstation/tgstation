@@ -517,7 +517,6 @@ var/list/department_radio_keys = list(
 
 	var/speech_bubble_test = say_test(message)
 	var/image/speech_bubble = image('icons/mob/talk.dmi',src,"h[speech_bubble_test]")
-	spawn(30) del(speech_bubble)
 
 	for(var/mob/M in hearers(5, src))
 		if(M != src && is_speaking_radio)
@@ -557,7 +556,7 @@ var/list/department_radio_keys = list(
 					deaf_message = "<span class='notice'>You cannot hear yourself!</span>"
 					deaf_type = 2 // Since you should be able to hear yourself without looking
 				M:show_message(rendered, 2, deaf_message, deaf_type)
-				M << speech_bubble
+				M.addSpeechBubble(speech_bubble)
 
 	if (length(heard_b))
 		var/message_b
@@ -584,10 +583,10 @@ var/list/department_radio_keys = list(
 					else
 						rendered2 = "<span class='game say'><span class='name'>[voice_name]</span></span> <a href='byond://?src=\ref[MM];follow2=\ref[MM];follow=\ref[src]'>(Follow)</a> <span class='message'>[message_b]</span></span>"
 					MM:show_message(rendered2, 2)
+					MM.addSpeechBubble(speech_bubble)
 					continue
 			if(hascall(M,"show_message"))
 				M:show_message(rendered, 2)
-				M << speech_bubble
 
 			/*
 			if(M.client)
@@ -616,6 +615,12 @@ var/list/department_radio_keys = list(
 			O.catchMessage(message, src)
 
 	log_say("[name]/[key] : [message]")
+
+/mob/proc/addSpeechBubble(image/speech_bubble)
+	if(client)
+		client.images += speech_bubble
+		spawn(30)
+			client.images -= speech_bubble
 
 /obj/effect/speech_bubble
 	var/mob/parent
