@@ -53,7 +53,7 @@
 	if(!location)
 		return
 
-	for(var/obj/machinery/account_database/DB in machines) //Hotfix until someone finds out why it isn't in 'machines'
+	for(var/obj/machinery/account_database/DB in world) //Hotfix until someone finds out why it isn't in 'machines'
 		if(DB.z == location.z)
 			linked_db = DB
 			break
