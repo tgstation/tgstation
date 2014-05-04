@@ -221,8 +221,9 @@
 		visible_message("<span class='danger'>\The [src] has been hit by [user] with [I].</span>")
 		if (src.health <= 0)
 			new /obj/item/weapon/shard(src.loc)
-			var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
-			CC.amount = 2
+			new /obj/item/weapon/shard(src.loc)
+			new /obj/item/stack/rods(src.loc, 2)
+			new /obj/item/stack/cable_coil(src.loc, 2)
 			src.density = 0
 			qdel(src)
 		return
