@@ -64,7 +64,7 @@
 
 /obj/machinery/power/smes/proc/make_terminal()
 	if (usr.loc == loc)
-		usr << "<span class=\"warning\">Abort terminal creation, you must not be on the same tile with SME.</span>
+		usr << "<span class=\"warning\">Terminal creation aborted, you must not be on the same tile with SME.</span>
 		return 1
 
 	var/tempDir = get_dir(usr, src)
