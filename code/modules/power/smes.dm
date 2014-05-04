@@ -64,7 +64,7 @@
 
 /obj/machinery/power/smes/proc/make_terminal(const/mob/user)
 	if (ismob(user))
-		CRASH("/obj/machinery/power/smes/proc/make_terminal:ARG1, user is not a valid mob.")
+		CRASH("User is not a valid mob.")
 
 	if (user.loc == loc)
 		user << "<span class=\"warning\">Terminal creation aborted, you must not be on the same tile with SME.</span>"
