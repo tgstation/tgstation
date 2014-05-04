@@ -71,7 +71,6 @@
 		return 2
 
 	playsound(get_turf(src), 'sound/items/zip.ogg', 100, 1)
-	user << "<span class=\"notice\">You start adding cable to the SME.</span>"
 
 	if(do_after(user, 100))
 		var/tempDir = get_dir(user, src)
@@ -116,8 +115,10 @@
 			var/obj/item/weapon/cable_coil/CC = W
 
 			if (CC.amount < 10)
-				user << "<span class=\"notice\">You need 10 length cable coil to make a terminal.</span>"
+				user << "<span class=\"warning\">You need 10 length cable coil to make a terminal.</span>"
 				return
+
+			user << "<span class=\"notice\">You start adding cable to the SME.</span>"
 
 			if (make_terminal(user))
 				return
