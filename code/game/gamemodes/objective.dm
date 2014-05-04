@@ -329,11 +329,10 @@ datum/objective/steal/exchange
 
 datum/objective/steal/exchange/proc/set_faction(faction,otheragent)
 	if(faction == "red")
-		explanation_text = "Acquire the blue secret documents held by [otheragent], the Syndicate Agent"
 		targetinfo = new/datum/objective_item/unique/docs_blue
-	if(faction == "blue")
-		explanation_text = "Acquire the red secret documents held by [otheragent], the Syndicate Agent"
+	else if(faction == "blue")
 		targetinfo = new/datum/objective_item/unique/docs_red
+	explanation_text = "Acquire [targetinfo.name] held by [otheragent], the Syndicate Agent"
 	steal_target = targetinfo.targetitem
 
 
@@ -342,11 +341,10 @@ datum/objective/steal/exchange/backstab
 
 datum/objective/steal/exchange/backstab/set_faction(faction)
 	if(faction == "red")
-		explanation_text = "Do not give up or lose the red secret documents."
 		targetinfo = new/datum/objective_item/unique/docs_red
-	if(faction == "blue")
-		explanation_text = "Do not give up or lose the blue secret documents."
+	else if(faction == "blue")
 		targetinfo = new/datum/objective_item/unique/docs_blue
+	explanation_text = "Do not give up or lose [targetinfo.name]."
 	steal_target = targetinfo.targetitem
 
 

@@ -134,12 +134,12 @@ datum/objective_item/slime/check_special_completion(var/obj/item/slime_extract/E
 
 //Unique Objectives
 datum/objective_item/unique/docs_red
-	name = "the red secret documents"
+	name = "the \"Red\" secret documents"
 	targetitem = /obj/item/documents/syndicate/red
 	difficulty = 10
 
 datum/objective_item/unique/docs_blue
-	name = "the blue secret documents"
+	name = "the \"Blue\" secret documents"
 	targetitem = /obj/item/documents/syndicate/blue
 	difficulty = 10
 

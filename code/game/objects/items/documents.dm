@@ -19,9 +19,11 @@
 	desc = "\"Top Secret\" documents printed on special copy-protected paper. It details sensitive Syndicate operational intelligence."
 
 /obj/item/documents/syndicate/red
-	name = "secret documents (Red)"
+	name = "'Red' secret documents"
+	desc = "\"Top Secret\" documents printed on special copy-protected paper. It details sensitive Syndicate operational intelligence. These documents are marked \"Red\"."
 	icon_state = "docs_red"
 
 /obj/item/documents/syndicate/blue
-	name = "secret documents (Blue)"
+	name = "'Blue' secret documents"
+	desc = "\"Top Secret\" documents printed on special copy-protected paper. It details sensitive Syndicate operational intelligence. These documents are marked \"Blue\"."
 	icon_state = "docs_blue"
