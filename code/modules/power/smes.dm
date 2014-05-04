@@ -63,12 +63,21 @@
 	return
 
 /obj/machinery/power/smes/proc/make_terminal()
-	// create a terminal object at the same position as original turf loc
-	// wires will attach to this
-	var/tempLoc = get_step(src.loc, WEST)
-	terminal = new/obj/machinery/power/terminal(tempLoc)
-	terminal.dir = EAST
+	if (usr.loc == loc)
+		return 1
+
+	var/tempLoc = get_dir(usr, src)
+
+	switch(tempDir)
+		if (NORTHEAST, SOUTHEAST)
+			tempDir = EAST
+		if (NORTHWEST, SOUTHWEST)
+			tempDir = WEST
+
+	terminal = new /obj/machinery/power/terminal(get_step(src, tempDir))
+	terminal.dir = usr.dir
 	terminal.master = src
+	return 0
 
 /obj/machinery/power/smes/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob) //these can only be moved by being reconstructed, solves having to remake the powernet.
 	if(istype(W, /obj/item/weapon/screwdriver))
@@ -99,11 +108,13 @@
 				usr << "<span class=\"notice\">You need 10 wires to make a terminal.</span>"
 				return
 
+			if (make_terminal())
+				return
+
 			CC.use(10)
 			user.visible_message(\
 				"\red [user.name] has added cables to the SMES!",\
 				"You added cables the SMES.")
-			make_terminal()
 			terminal.connect_to_network()
 			src.stat = 0
 		else if(istype(W, /obj/item/weapon/wirecutters) && terminal)
