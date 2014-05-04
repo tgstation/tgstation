@@ -749,9 +749,6 @@ var/list/mechtoys = list(
 				O = SO
 				P = O.object
 				A = SO.account
-				world << "Account Money: [A.money]"
-				world << "Cost: [P.cost]"
-				world << "SO: [SO]"
 				if(A && A.money >= P.cost + SUPPLY_TAX)
 					supply_shuttle.requestlist.Cut(i,i+1)
 					A.charge(P.cost,null,"Supply Order #[SO.ordernum]",dest_name = "CentComm")

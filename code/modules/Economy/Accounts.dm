@@ -377,4 +377,4 @@ var/global/list/all_money_accounts = list()
 			return D
 
 /obj/machinery/account_database/process()
-	return 0
+	return PROCESS_KILL
