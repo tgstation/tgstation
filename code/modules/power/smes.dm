@@ -62,15 +62,15 @@
 
 	return
 
-/obj/machinery/power/smes/proc/make_terminal()
-	if (usr.loc == loc)
-		usr << "<span class=\"warning\">Terminal creation aborted, you must not be on the same tile with SME.</span>"
+/obj/machinery/power/smes/proc/make_terminal(const/mob/user)
+	if (user.loc == loc)
+		user << "<span class=\"warning\">Terminal creation aborted, you must not be on the same tile with SME.</span>"
 		return 2
 
 	playsound(get_turf(src), 'sound/items/zip.ogg', 100, 1)
 
 	if(do_after(user, 100))
-		var/tempDir = get_dir(usr, src)
+		var/tempDir = get_dir(user, src)
 
 		switch(tempDir)
 			if (NORTHEAST, SOUTHEAST)
@@ -79,7 +79,7 @@
 				tempDir = WEST
 
 		terminal = new /obj/machinery/power/terminal(get_step(src, tempDir))
-		terminal.dir = usr.dir
+		terminal.dir = user.dir
 		terminal.master = src
 		return 0
 
@@ -114,7 +114,7 @@
 				usr << "<span class=\"notice\">You need 10 length cable coil to make a terminal.</span>"
 				return
 
-			if (make_terminal())
+			if (make_terminal(user))
 				return
 
 			CC.use(10)
