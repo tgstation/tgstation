@@ -177,11 +177,6 @@ var/list/beam_master = list()
 			M.playsound_local(src, "explosion", 50, 1)
 		..()
 
-	resetVariables()
-		tang = initial(tang)
-		last = initial(last)
-		return ..()
-
 /obj/item/projectile/beam
 	name = "laser"
 	icon_state = "laser"
@@ -312,10 +307,6 @@ var/list/beam_master = list()
 				for(var/turf/T in turfs)
 					T.overlays -= beam_master[laser_state]
 		return
-
-	resetVariables()
-		frequency = initial(frequency)
-		return ..()
 
 /obj/item/projectile/beam/practice
 	name = "laser"

@@ -16,20 +16,6 @@
 	// Reagent ID => friendly name
 	var/list/reagents_to_log=list()
 
-	resetVariables()
-		origin_tech = initial(origin_tech)
-		reliability = initial(reliability)
-		crit_fail = initial(crit_fail)
-		unacidable = initial(unacidable)
-		throwforce = initial(throwforce)
-		attack_verb = initial(attack_verb)
-		sharp = initial(sharp)
-		in_use = initial(in_use)
-		damtype = initial(damtype)
-		force = initial(force)
-		reagents_to_log = initial(reagents_to_log)
-		return ..()
-
 /obj/Destroy()
 	machines -= src
 	processing_objects -= src

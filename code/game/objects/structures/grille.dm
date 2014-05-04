@@ -12,11 +12,6 @@
 	var/health = 10
 	var/destroyed = 0
 
-	resetVariables()
-		destroyed = initial(destroyed)
-		health = initial(health)
-		return ..()
-
 /obj/structure/grille/fence/east_west
 	//width=80
 	//height=42

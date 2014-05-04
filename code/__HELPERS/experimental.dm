@@ -48,7 +48,9 @@
  * WARNING, only supports /mob and /obj.
  */
 
-#define DEBUG_OBJECT_POOL 0
+// Uncomment to show debug messages.
+//#define DEBUG_OBJECT_POOL
+
 #define MAINTAINING_OBJECT_POOL_COUNT 20
 
 var/list/masterPool = list()
@@ -62,7 +64,7 @@ var/list/masterPool = list()
  */
 /proc/getFromPool(const/A, const/B)
 	if (isnull(masterPool[A]))
-		#if DEBUG_OBJECT_POOL
+		#ifdef DEBUG_OBJECT_POOL
 		world << "DEBUG_OBJECT_POOL: new proc has been called ([A])."
 		#endif
 
@@ -70,12 +72,13 @@ var/list/masterPool = list()
 
 	var/atom/movable/Object = masterPool[A][1]
 	masterPool[A] -= Object
+	var/objectLength = length(masterPool[A])
 
-	#if DEBUG_OBJECT_POOL
-	world << "DEBUG_OBJECT_POOL: getFromPool([A]) [length(masterPool[A])]"
+	#ifdef DEBUG_OBJECT_POOL
+	world << "DEBUG_OBJECT_POOL: getFromPool([A]) [objectLength] left."
 	#endif
 
-	if (!length(masterPool[A]))
+	if (!objectLength)
 		masterPool[A] = null
 
 	Object.loc = B
@@ -98,37 +101,45 @@ var/list/masterPool = list()
 	Object.resetVariables()
 	Object.loc = null
 
-	if (isnull(masterPool[Object.type]))
-		#if DEBUG_OBJECT_POOL
-		world << "DEBUG_OBJECT_POOL: [Object.type] pool is empty, recreating pool."
-		#endif
+	switch(length(masterPool[Object.type]))
+		if (MAINTAINING_OBJECT_POOL_COUNT to 1.#INF)
+			#ifdef DEBUG_OBJECT_POOL
+			world << "DEBUG_OBJECT_POOL: returnToPool([Object.type]) exceeds [num2text(MAINTAINING_OBJECT_POOL_COUNT)] discarding..."
+			#endif
 
-		masterPool[Object.type] = list()
-	else if (length(masterPool[Object.type]) > MAINTAINING_OBJECT_POOL_COUNT)
-		#if DEBUG_OBJECT_POOL
-		world << "DEBUG_OBJECT_POOL: returnToPool([Object.type]) exceeds [num2text(MAINTAINING_OBJECT_POOL_COUNT)] discarding..."
-		#endif
+			return
+		if (0)
+			#ifdef DEBUG_OBJECT_POOL
+			world << "DEBUG_OBJECT_POOL: [Object.type] pool is empty, recreating pool."
+			#endif
 
-		return
-
-	#if DEBUG_OBJECT_POOL
-	world << "DEBUG_OBJECT_POOL: returnToPool([Object.type]) [length(masterPool[Object.type])]"
-	#endif
+			masterPool[Object.type] = list()
 
 	masterPool[Object.type] += Object
 
+	#ifdef DEBUG_OBJECT_POOL
+	world << "DEBUG_OBJECT_POOL: returnToPool([Object.type]) [length(masterPool[Object.type])] left."
+	#endif
+
 #undef MAINTAINING_OBJECT_POOL_COUNT
+
+#ifdef DEBUG_OBJECT_POOL
 #undef DEBUG_OBJECT_POOL
+#endif
 
 /*
  * Override this if the object variables needed to reset.
  *
- * Example: see, code\game\objects\structures\grille.dm
+ * Example: see, code\game\objects\items\stacks\sheets\glass.dm
+ *				 @/obj/item/weapon/shard
+ *				 @resetVariables()
  */
 /atom/movable
 	proc/resetVariables()
-		name = initial(name)
-		density = initial(density)
-		icon = initial(icon)
-		icon_state = initial(icon_state)
-		dir = initial(dir)
+		var/list/exclude = list("loc", "locs", "parent_type", "vars", "verbs", "type") // Read-only or compile-time vars and whatevs.
+		exclude += args // Explicit var exclusion
+		var/list/varsCopy = vars - exclude
+		var/key
+
+		for (key in varsCopy)
+			vars[key] = initial(vars[key])
