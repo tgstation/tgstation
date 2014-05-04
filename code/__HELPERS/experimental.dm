@@ -124,7 +124,9 @@ var/list/masterPool = list()
 /*
  * Override this if the object variables needed to reset.
  *
- * Example: see, code\game\objects\structures\grille.dm
+ * Example: see, code\game\objects\items\stacks\sheets\glass.dm
+ *				 @/obj/item/weapon/shard
+ *				 @resetVariables()
  */
 /atom/movable
 	proc/resetVariables()
