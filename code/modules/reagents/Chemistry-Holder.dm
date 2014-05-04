@@ -374,7 +374,7 @@ datum
 					var/datum/reagent/R = A
 					if (R.id == reagent)
 						reagent_list -= A
-						del(A)
+						R.holder = null
 						total_dirty=1
 						break
 
