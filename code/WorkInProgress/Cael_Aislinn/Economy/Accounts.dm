@@ -62,7 +62,7 @@ var/global/list/all_money_accounts = list()
 	//create a new account
 	var/datum/money_account/M = new()
 	M.owner_name = new_owner_name
-	M.remote_access_pin = rand(1111, 111111)
+	M.remote_access_pin = rand(1000, 9999)
 	M.money = starting_funds
 
 	//create an entry in the account transaction log for when it was created
