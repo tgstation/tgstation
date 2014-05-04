@@ -1109,11 +1109,11 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 /obj/machinery/newscaster/proc/scan_user(mob/user)
 	if(masterController)
-		if(masterController == user) return // Don't log in twice.
-		if(get_dist(masterController,src)<=1)
-			if(!isobserver(masterController))
-				user << "\red Wait for [masterController] to finish and move away."
-				return
+		if(masterController != user)
+			if(get_dist(masterController,src)<=1)
+				if(!isobserver(masterController))
+					user << "\red Wait for [masterController] to finish and move away."
+					return
 	if(istype(user,/mob/living/carbon/human))                       //User is a human
 		var/mob/living/carbon/human/human_user = user
 		if(human_user.wear_id)                                      //Newscaster scans you
@@ -1138,9 +1138,9 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	else if (isobserver(user))
 		src.scanned_user = "Space-Time Anomaly #[rand(0,9)][rand(0,9)][rand(0,9)]"
 	if(masterController && masterController.client && get_dist(masterController,src)<=1)
-		masterController << "\red You were booted from \the [src] by [scanned_user]."
+//		masterController << "\red You were booted from \the [src] by [scanned_user]."
 	masterController = user
-	masterController << "\icon[src] \blue Welcome back, [scanned_user]!"
+//	masterController << "\icon[src] \blue Welcome back, [scanned_user]!"
 
 /obj/machinery/newscaster/proc/print_paper()
 	feedback_inc("newscaster_newspapers_printed",1)
