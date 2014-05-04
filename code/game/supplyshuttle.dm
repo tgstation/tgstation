@@ -456,12 +456,20 @@ var/list/mechtoys = list(
 
 		var/idname = "*None Provided*"
 		var/idrank = "*None Provided*"
+		var/datum/money_account/account
 		if(ishuman(usr))
 			var/mob/living/carbon/human/H = usr
 			idname = H.get_authentification_name()
 			idrank = H.get_assignment()
+			var/obj/item/weapon/card/id/I=H.get_idcard()
+			if(I)
+				account = get_card_account(I)
+			else
+				usr << "\red Please wear an ID with an associated bank account."
+				return
 		else if(issilicon(usr))
 			idname = usr.real_name
+			account = station_account
 
 		supply_shuttle.ordernum++
 		var/obj/item/weapon/paper/reqform = new /obj/item/weapon/paper(loc)
@@ -493,6 +501,7 @@ var/list/mechtoys = list(
 		O.ordernum = supply_shuttle.ordernum
 		O.object = P
 		O.orderedby = idname
+		O.account = account
 		supply_shuttle.requestlist += O
 
 
@@ -740,6 +749,9 @@ var/list/mechtoys = list(
 				O = SO
 				P = O.object
 				A = SO.account
+				world << "Account Money: [A.money]"
+				world << "Cost: [P.cost]"
+				world << "SO: [SO]"
 				if(A && A.money >= P.cost + SUPPLY_TAX)
 					supply_shuttle.requestlist.Cut(i,i+1)
 					A.charge(P.cost,null,"Supply Order #[SO.ordernum]",dest_name = "CentComm")
