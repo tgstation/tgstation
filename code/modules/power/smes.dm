@@ -63,9 +63,6 @@
 	return
 
 /obj/machinery/power/smes/proc/make_terminal(const/mob/user)
-	if (ismob(user))
-		CRASH("user is not a valid mob.")
-
 	if (user.loc == loc)
 		user << "<span class=\"warning\">Terminal creation aborted, you must not be on the same tile with SME.</span>"
 		return 2
