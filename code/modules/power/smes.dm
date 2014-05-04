@@ -71,6 +71,7 @@
 		return 2
 
 	playsound(get_turf(src), 'sound/items/zip.ogg', 100, 1)
+	user << "<span class=\"notice\">You start adding cable to the SME.</span>"
 
 	if(do_after(user, 100))
 		var/tempDir = get_dir(user, src)
@@ -86,6 +87,7 @@
 		terminal.master = src
 		return 0
 
+	user << "<span class=\"warning\">You moved!</span>
 	return 1
 
 /obj/machinery/power/smes/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob) //these can only be moved by being reconstructed, solves having to remake the powernet.
