@@ -99,6 +99,7 @@ var/list/masterPool = list()
 
 	var/atom/movable/Object = A
 	Object.resetVariables()
+	Object.loc = null
 
 	switch(length(masterPool[Object.type]))
 		if (MAINTAINING_OBJECT_POOL_COUNT to 1.#INF)
@@ -135,7 +136,7 @@ var/list/masterPool = list()
  */
 /atom/movable
 	proc/resetVariables()
-		var/list/exclude = list("locs", "parent_type", "vars", "verbs", "type") // Read-only or compile-time vars
+		var/list/exclude = list("loc", "locs", "parent_type", "vars", "verbs", "type") // Read-only or compile-time vars and whatevs.
 		exclude += args // Explicit var exclusion
 		var/list/varsCopy = vars - exclude
 		var/key
