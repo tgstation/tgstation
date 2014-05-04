@@ -86,7 +86,7 @@
 		terminal.master = src
 		return 0
 
-	user << "<span class=\"warning\">You moved!</span>
+	user << "<span class=\"warning\">You moved!</span>"
 	return 1
 
 /obj/machinery/power/smes/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob) //these can only be moved by being reconstructed, solves having to remake the powernet.
