@@ -240,6 +240,7 @@
 			module_sprites["Antique"] = "engineerrobot"
 			module_sprites["Engiseer"] = "Engiseer"
 			module_sprites["Landmate"] = "landmate"
+			module_sprites["Wall-E"] = "wall-e"
 
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
