@@ -64,7 +64,7 @@
 
 /obj/machinery/power/smes/proc/make_terminal()
 	if (usr.loc == loc)
-		usr << "<span class=\"warning\">Terminal creation aborted, you must not be on the same tile with SME.</span>
+		usr << "<span class=\"warning\">Terminal creation aborted, you must not be on the same tile with SME.</span>"
 		return 2
 
 	playsound(get_turf(src), 'sound/items/zip.ogg', 100, 1)
