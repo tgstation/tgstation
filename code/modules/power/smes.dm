@@ -66,7 +66,7 @@
 	if (usr.loc == loc)
 		return 1
 
-	var/tempLoc = get_dir(usr, src)
+	var/tempDir = get_dir(usr, src)
 
 	switch(tempDir)
 		if (NORTHEAST, SOUTHEAST)
