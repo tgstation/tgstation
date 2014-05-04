@@ -149,10 +149,6 @@ steam.start() -- spawns the effect
 
 	var/amount = 6.0
 
-	resetVariables()
-		amount = initial(amount)
-		return ..()
-
 /obj/effect/effect/sparks/New()
 	..()
 	var/turf/T = loc

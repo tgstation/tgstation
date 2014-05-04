@@ -48,7 +48,7 @@
  * WARNING, only supports /mob and /obj.
  */
 
-#define DEBUG_OBJECT_POOL 0
+#define DEBUG_OBJECT_POOL 1
 #define MAINTAINING_OBJECT_POOL_COUNT 20
 
 var/list/masterPool = list()
@@ -70,12 +70,13 @@ var/list/masterPool = list()
 
 	var/atom/movable/Object = masterPool[A][1]
 	masterPool[A] -= Object
+	var/objectLength = length(masterPool[A])
 
 	#if DEBUG_OBJECT_POOL
-	world << "DEBUG_OBJECT_POOL: getFromPool([A]) [length(masterPool[A])]"
+	world << "DEBUG_OBJECT_POOL: getFromPool([A]) [objectLength] left."
 	#endif
 
-	if (!length(masterPool[A]))
+	if (!objectLength)
 		masterPool[A] = null
 
 	Object.loc = B
@@ -96,26 +97,26 @@ var/list/masterPool = list()
 
 	var/atom/movable/Object = A
 	Object.resetVariables()
-	Object.loc = null
 
-	if (isnull(masterPool[Object.type]))
-		#if DEBUG_OBJECT_POOL
-		world << "DEBUG_OBJECT_POOL: [Object.type] pool is empty, recreating pool."
-		#endif
+	switch(length(masterPool[Object.type]))
+		if (MAINTAINING_OBJECT_POOL_COUNT to 1.#INF)
+			#if DEBUG_OBJECT_POOL
+			world << "DEBUG_OBJECT_POOL: returnToPool([Object.type]) exceeds [num2text(MAINTAINING_OBJECT_POOL_COUNT)] discarding..."
+			#endif
 
-		masterPool[Object.type] = list()
-	else if (length(masterPool[Object.type]) > MAINTAINING_OBJECT_POOL_COUNT)
-		#if DEBUG_OBJECT_POOL
-		world << "DEBUG_OBJECT_POOL: returnToPool([Object.type]) exceeds [num2text(MAINTAINING_OBJECT_POOL_COUNT)] discarding..."
-		#endif
+			return
+		if (0)
+			#if DEBUG_OBJECT_POOL
+			world << "DEBUG_OBJECT_POOL: [Object.type] pool is empty, recreating pool."
+			#endif
 
-		return
-
-	#if DEBUG_OBJECT_POOL
-	world << "DEBUG_OBJECT_POOL: returnToPool([Object.type]) [length(masterPool[Object.type])]"
-	#endif
+			masterPool[Object.type] = list()
 
 	masterPool[Object.type] += Object
+
+	#if DEBUG_OBJECT_POOL
+	world << "DEBUG_OBJECT_POOL: returnToPool([Object.type]) [length(masterPool[Object.type])] left."
+	#endif
 
 #undef MAINTAINING_OBJECT_POOL_COUNT
 #undef DEBUG_OBJECT_POOL
@@ -127,8 +128,10 @@ var/list/masterPool = list()
  */
 /atom/movable
 	proc/resetVariables()
-		name = initial(name)
-		density = initial(density)
-		icon = initial(icon)
-		icon_state = initial(icon_state)
-		dir = initial(dir)
+		var/list/exclude = list("locs", "parent_type", "vars", "verbs", "type") // Read-only or compile-time vars
+		exclude += args // Explicit var exclusion
+		var/list/varsCopy = vars.Copy() - exclude
+		var/key
+
+		for (key in varsCopy)
+			vars[key] = initial(vars[key])

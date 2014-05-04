@@ -237,6 +237,10 @@
 /*
  * Glass shards - TODO: Move this into code/game/object/item/weapons
  */
+/obj/item/weapon/shard
+	resetVariables()
+		..("pixel_y", "pixel_x", "icon_state")
+
 /obj/item/weapon/shard/Bump()
 
 	spawn( 0 )
