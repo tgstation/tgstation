@@ -71,8 +71,8 @@
 	if(!owner.dna)
 		create_dna(owner, mrace)
 
-	if(mrace && !owner.dna.species)
-		owner.dna.species = new mrace(owner)
+	if(mrace)
+		owner.dna.species = new mrace.type(owner)
 
 	if(mcolor)
 		owner.dna.mutant_color = mcolor
