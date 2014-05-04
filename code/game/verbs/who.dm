@@ -2,7 +2,7 @@
 	set name = "Who"
 	set category = "OOC"
 
-	var/msg = "<b>Current Players:</b>\n"
+	var/msg = "\n<b>Current Players:</b>\n"
 
 	var/list/Lines = list()
 
@@ -45,12 +45,12 @@
 	for (var/line in sortList(Lines))
 		msg += "[line]\n"
 
-	msg += "<b>Total Players: [length(Lines)]</b>"
+	msg += "<b>Total Players: [length(Lines)]</b>\n"
 	src << msg
 
-/client/verb/staffwho()
+/client/verb/adminwho()
 	set category = "Admin"
-	set name = "Staff Who"
+	set name = "Adminwho"
 
 	var/aNames = ""
 	var/mNames = ""
@@ -106,4 +106,4 @@
 					mNames += "\t[C] is a [C.holder.rank]\n"
 					numModsOnline++
 
-	src << "<b>Current Admins ([numAdminsOnline]):</b>\n" + aNames + "\n<b>Current Moderators ([numModsOnline]):</b>\n" + mNames
+	src << "\n<b>Current Admins ([numAdminsOnline]):</b>\n" + aNames + "\n<b>Current Moderators ([numModsOnline]):</b>\n" + mNames + "\n"

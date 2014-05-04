@@ -99,7 +99,6 @@ var/list/masterPool = list()
 
 	var/atom/movable/Object = A
 	Object.resetVariables()
-	Object.loc = null
 
 	switch(length(masterPool[Object.type]))
 		if (MAINTAINING_OBJECT_POOL_COUNT to 1.#INF)
@@ -108,7 +107,7 @@ var/list/masterPool = list()
 			#endif
 
 			return
-		if (0)
+		if (0) // In a numeric context (like a mathematical operation), null evaluates to 0.
 			#ifdef DEBUG_OBJECT_POOL
 			world << "DEBUG_OBJECT_POOL: [Object.type] pool is empty, recreating pool."
 			#endif
@@ -143,3 +142,5 @@ var/list/masterPool = list()
 
 		for (key in varsCopy)
 			vars[key] = initial(vars[key])
+
+		vars["loc"] = null // Making sure the loc is null not a compile-time var value.
