@@ -62,13 +62,29 @@
 
 	return
 
-/obj/machinery/power/smes/proc/make_terminal()
-	// create a terminal object at the same position as original turf loc
-	// wires will attach to this
-	var/tempLoc = get_step(src.loc, WEST)
-	terminal = new/obj/machinery/power/terminal(tempLoc)
-	terminal.dir = EAST
-	terminal.master = src
+/obj/machinery/power/smes/proc/make_terminal(const/mob/user)
+	if (user.loc == loc)
+		user << "<span class=\"warning\">Terminal creation aborted, you must not be on the same tile with SME.</span>"
+		return 2
+
+	playsound(get_turf(src), 'sound/items/zip.ogg', 100, 1)
+
+	if(do_after(user, 100))
+		var/tempDir = get_dir(user, src)
+
+		switch(tempDir)
+			if (NORTHEAST, SOUTHEAST)
+				tempDir = EAST
+			if (NORTHWEST, SOUTHWEST)
+				tempDir = WEST
+
+		terminal = new /obj/machinery/power/terminal(get_step(src, tempDir))
+		terminal.dir = user.dir
+		terminal.master = src
+		return 0
+
+	user << "<span class=\"warning\">You moved!</span>"
+	return 1
 
 /obj/machinery/power/smes/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob) //these can only be moved by being reconstructed, solves having to remake the powernet.
 	if(istype(W, /obj/item/weapon/screwdriver))
@@ -93,10 +109,21 @@
 			del(src)
 			return 1
 		else if(istype(W, /obj/item/weapon/cable_coil) && !terminal)
+			var/obj/item/weapon/cable_coil/CC = W
+
+			if (CC.amount < 10)
+				user << "<span class=\"warning\">You need 10 length cable coil to make a terminal.</span>"
+				return
+
+			user << "<span class=\"notice\">You start adding cable to the SME.</span>"
+
+			if (make_terminal(user))
+				return
+
+			CC.use(10)
 			user.visible_message(\
 				"\red [user.name] has added cables to the SMES!",\
 				"You added cables the SMES.")
-			make_terminal()
 			terminal.connect_to_network()
 			src.stat = 0
 		else if(istype(W, /obj/item/weapon/wirecutters) && terminal)
