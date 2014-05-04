@@ -48,7 +48,7 @@
  * WARNING, only supports /mob and /obj.
  */
 
-// Comment out to show debug messages.
+// Uncomment to show debug messages.
 //#define DEBUG_OBJECT_POOL
 
 #define MAINTAINING_OBJECT_POOL_COUNT 20
