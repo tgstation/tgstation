@@ -39,7 +39,7 @@
 
 
 /obj/item/weapon/gun/syringe/afterattack(obj/target, mob/user , flag)
-	if(!isturf(target.loc) || target == user) return
+	if(/*!isturf(target.loc) || */target == user) return
 	..()
 
 /obj/item/weapon/gun/syringe/can_fire()
