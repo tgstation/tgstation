@@ -239,8 +239,8 @@
 			qdel(src)
 		return
 	
-	if(istype(I, /obj/item/weapon/crowbar)
-		if(stat & NOPOWER))
+	if(istype(I, /obj/item/weapon/crowbar))
+		if(stat & NOPOWER)
 			if(src.density)
 				open(2)
 			else
