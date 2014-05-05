@@ -25,23 +25,31 @@
 	playsound(src, "shatter", 70, 1)
 	..()
 
+
+/obj/machinery/door/window/proc/open_and_close()
+	open()
+	if(src.check_access(null))
+		sleep(50)
+	else //secure doors close faster
+		sleep(20)
+	close()
+
 /obj/machinery/door/window/Bumped(atom/movable/AM as mob|obj)
-	if(operating)
+	if( operating || !src.density )
 		return
 	if (!( ismob(AM) ))
 		var/obj/machinery/bot/bot = AM
 		if(istype(bot))
-			if(density && src.check_access(bot.botcard))
-				open()
-				sleep(50)
-				close()
+			if(src.check_access(bot.botcard))
+				open_and_close()
+			else
+				flick(text("[]deny", src.base_state), src)
 		else if(istype(AM, /obj/mecha))
 			var/obj/mecha/mecha = AM
-			if(density)
-				if(mecha.occupant && src.allowed(mecha.occupant))
-					open()
-					sleep(50)
-					close()
+			if(mecha.occupant && src.allowed(mecha.occupant))
+				open_and_close()
+			else
+				flick(text("[]deny", src.base_state), src)
 		return
 	if (!( ticker ))
 		return
@@ -51,21 +59,16 @@
 	return
 
 /obj/machinery/door/windoor/bumpopen(mob/user as mob)
-	if(operating)
+	if( operating || !src.density )
 		return
 	src.add_fingerprint(user)
 	if(!src.requiresID())
 		user = null
 
-	if(density & allowed(user))
-			open()
-			if(src.check_access(null))
-				sleep(50)
-			else //secure doors close faster
-				sleep(20)
-			close()
-		else
-			flick(text("[]deny", src.base_state), src)
+	if(allowed(user))
+			open_and_close()
+	else
+		flick(text("[]deny", src.base_state), src)
 	return
 
 /obj/machinery/door/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
