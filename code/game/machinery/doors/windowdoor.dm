@@ -66,7 +66,7 @@
 		user = null
 
 	if(allowed(user))
-			open_and_close()
+		open_and_close()
 	else
 		flick(text("[]deny", src.base_state), src)
 	return
@@ -100,7 +100,7 @@
 	if (!ticker)
 		return 0
 	if(forced < 2)
-		if(stat & NOPOWER) || emagged)
+		if( (stat & NOPOWER) || emagged )
 			return 0
 	if(!src.operating) //in case of emag
 		src.operating = 1
