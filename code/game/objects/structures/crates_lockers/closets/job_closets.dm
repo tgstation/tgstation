@@ -36,7 +36,7 @@
  * Chef
  */
 /obj/structure/closet/chefcloset
-	name = "chef's closet"
+	name = "\proper chef's closet"
 	desc = "It's a storage unit for foodservice garments."
 	icon_state = "black"
 	icon_closed = "black"
