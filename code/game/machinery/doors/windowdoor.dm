@@ -91,13 +91,14 @@
 	else
 		return 1
 
-/obj/machinery/door/window/open()
+/obj/machinery/door/window/open(var/forced=0)
 	if (src.operating == 1) //doors can still open when emag-disabled
 		return 0
 	if (!ticker)
 		return 0
-	if (stat & NOPOWER)
-		return 0
+	if(forced < 2)
+		if(stat & NOPOWER) || emagged)
+			return 0
 	if(!src.operating) //in case of emag
 		src.operating = 1
 	flick(text("[]opening", src.base_state), src)
@@ -115,9 +116,12 @@
 		src.operating = 0
 	return 1
 
-/obj/machinery/door/window/close()
-	if (src.operating || emagged || (stat & NOPOWER))
+/obj/machinery/door/window/close(var/forced=0)
+	if (src.operating)
 		return 0
+	if(forced < 2)
+		if(emagged || (stat & NOPOWER))
+			return 0
 	src.operating = 1
 	flick(text("[]closing", src.base_state), src)
 	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
@@ -208,11 +212,12 @@
 			visible_message("\blue The glass door was sliced open by [user]!")
 		flick("[src.base_state]spark", src)
 		sleep(6)
-		open()
+		open(2)
+		emagged = 1
 		return 1
 
-	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
-	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
+	//If it's a weapon, smash windoor. Unless it's a crowbar, an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
+	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card)) && !istype(I, /obj/item/weapon/crowbar)
 		user.changeNext_move(8)
 		var/aforce = I.force
 		if(I.damtype == BRUTE || I.damtype == BURN)
@@ -227,7 +232,15 @@
 			src.density = 0
 			qdel(src)
 		return
-
+	
+	if(istype(I, /obj/item/weapon/crowbar)
+		if(stat & NOPOWER))
+			if(src.density)
+				open(2)
+			else
+				close(2)
+		else
+			user << "<span class='warning'> The [src.name]'s motors resist your efforts to force it.</span>"
 
 	src.add_fingerprint(user)
 	if (!src.requiresID())
