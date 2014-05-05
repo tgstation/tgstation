@@ -802,7 +802,7 @@ client
 
 			if(result)
 				var/newtype = species_list[result]
-				H.dna.species = new newtype(H)
+				H.dna.species = new newtype()
 				H.regenerate_icons()
 
 		else if(href_list["adjustDamage"] && href_list["mobToDamage"])

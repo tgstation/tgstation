@@ -38,7 +38,7 @@ emp_act
 
 /mob/living/carbon/human/on_hit(proj_type)
 	if(dna)
-		dna.species.on_hit(proj_type)
+		dna.species.on_hit(proj_type, src)
 	return
 
 /mob/living/carbon/human/bullet_act(var/obj/item/projectile/P, var/def_zone)
@@ -129,7 +129,7 @@ emp_act
 	var/target_area = parse_zone(target_limb.name)
 
 	if(dna)	// allows your species to affect the attacked_by code
-		return dna.species.spec_attacked_by(I,user,def_zone,affecting,hit_area,src.a_intent,target_limb,target_area)
+		return dna.species.spec_attacked_by(I,user,def_zone,affecting,hit_area,src.a_intent,target_limb,target_area,src)
 
 	else
 		if((user != src) && check_shields(I.force, "the [I.name]"))

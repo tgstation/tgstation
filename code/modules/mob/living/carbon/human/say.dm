@@ -22,7 +22,7 @@
 					return
 
 		if(dna)
-			message = dna.species.handle_speech(message)
+			message = dna.species.handle_speech(message,src)
 
 		if(viruses.len)
 			for(var/datum/disease/pierrot_throat/D in viruses)

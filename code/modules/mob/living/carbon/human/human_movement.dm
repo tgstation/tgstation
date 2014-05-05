@@ -1,6 +1,6 @@
 /mob/living/carbon/human/movement_delay()
 	if(dna)
-		. += dna.species.movement_delay()
+		. += dna.species.movement_delay(src)
 
 	. += ..()
 	. += config.human_delay

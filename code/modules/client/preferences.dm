@@ -752,9 +752,9 @@ datum/preferences
 		if(character.dna)
 			character.dna.real_name = character.real_name
 			if(pref_species != /datum/species/human && config.mutant_races)
-				character.dna.species = new pref_species.type(character)
+				character.dna.species = new pref_species.type()
 			else
-				character.dna.species = new /datum/species/human(character)
+				character.dna.species = new /datum/species/human()
 			character.dna.mutant_color = mutant_color
 			character.update_mutcolor()
 

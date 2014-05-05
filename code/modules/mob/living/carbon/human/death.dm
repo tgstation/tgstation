@@ -33,7 +33,7 @@
 		if(client) blind.layer = 0
 
 	if(dna)
-		dna.species.spec_death(gibbed)
+		dna.species.spec_death(gibbed,src)
 
 	tod = worldtime2text()		//weasellos time of death patch
 	if(mind)	mind.store_memory("Time of death: [tod]", 0)

@@ -32,7 +32,7 @@
 		if(istype(character, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = character
 			if(!H.dna.species)
-				H.dna.species = new /datum/species/human(H)
+				H.dna.species = new /datum/species/human()
 			L[DNA_HAIR_STYLE_BLOCK] = construct_block(hair_styles_list.Find(H.hair_style), hair_styles_list.len)
 			L[DNA_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.hair_color)
 			L[DNA_FACIAL_HAIR_STYLE_BLOCK] = construct_block(facial_hair_styles_list.Find(H.facial_hair_style), facial_hair_styles_list.len)
@@ -72,7 +72,7 @@
 		create_dna(owner, mrace)
 
 	if(mrace)
-		owner.dna.species = new mrace.type(owner)
+		owner.dna.species = new mrace.type()
 
 	if(mcolor)
 		owner.dna.mutant_color = mcolor
@@ -128,7 +128,7 @@
 
 /proc/create_dna(mob/living/carbon/C, datum/species/S) //don't use this unless you're about to use hardset_dna or ready_dna
 	C.dna = new /datum/dna()
-	if(S)	C.dna.species = new S(C)	// do not remove; this is here to prevent runtimes
+	if(S)	C.dna.species = new S()	// do not remove; this is here to prevent runtimes
 
 /////////////////////////// DNA DATUM
 

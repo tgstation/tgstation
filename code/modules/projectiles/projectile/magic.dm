@@ -204,7 +204,7 @@ proc/wabbajack(mob/living/M)
 							var/datum/species/temp = new t()
 							randspecies += "[temp.type]"
 						var/datum/species/new_species = pick(randspecies)
-						H.dna.species = new new_species(H)
+						H.dna.species = new new_species()
 				else
 					return
 

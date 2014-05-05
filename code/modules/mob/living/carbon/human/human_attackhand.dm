@@ -3,7 +3,7 @@
 		return
 
 	if(dna)
-		dna.species.spec_attack_hand(M)
+		dna.species.spec_attack_hand(M, src)
 
 	return
 

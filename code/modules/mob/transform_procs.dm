@@ -133,9 +133,9 @@
 	O.dna = dna
 
 	if(!dna.species)
-		O.dna.species = new /datum/species/human(O)
+		O.dna.species = new /datum/species/human()
 	else
-		O.dna.species = new dna.species.type(O)
+		O.dna.species = new dna.species.type()
 
 	dna = null
 	if (newname) //if there's a name as an argument, always take that one over the current name

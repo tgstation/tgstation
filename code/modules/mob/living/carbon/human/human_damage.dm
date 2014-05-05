@@ -168,7 +168,7 @@ mob/living/carbon/human/proc/hat_fall_prob()
 		return 1
 
 	if(dna && dna.species)	// if you have a species, it will run the apply_damage code there instead
-		dna.species.apply_damage(damage, damagetype, def_zone, blocked)
+		dna.species.apply_damage(damage, damagetype, def_zone, blocked, src)
 	else // if not... well, this is the default code *SHRUG*
 		blocked = (100-blocked)/100
 		if(blocked <= 0)	return 0

@@ -100,7 +100,7 @@
 	handle_regular_hud_updates()
 
 	if(dna)
-		dna.species.spec_life() // for mutantraces
+		dna.species.spec_life(src) // for mutantraces
 
 	// Grabbing
 	for(var/obj/item/weapon/grab/G in src)
@@ -168,11 +168,11 @@
 
 	proc/handle_mutations_and_radiation()
 		if(dna)
-			dna.species.handle_mutations_and_radiation()
+			dna.species.handle_mutations_and_radiation(src)
 
 	proc/breathe()
 		if(dna)
-			dna.species.breathe()
+			dna.species.breathe(src)
 
 		return
 
@@ -201,14 +201,14 @@
 
 	proc/handle_environment(datum/gas_mixture/environment)
 		if(dna)
-			dna.species.handle_environment(environment)
+			dna.species.handle_environment(environment, src)
 
 		return
 
 ///FIRE CODE
 	handle_fire()
 		if(dna)
-			dna.species.handle_fire()
+			dna.species.handle_fire(src)
 
 		if(..())
 			return
@@ -219,13 +219,13 @@
 
 	IgniteMob()
 		if(dna)
-			dna.species.IgniteMob()
+			dna.species.IgniteMob(src)
 		else
 			..()
 
 	ExtinguishMob()
 		if(dna)
-			dna.species.ExtinguishMob()
+			dna.species.ExtinguishMob(src)
 		else
 			..()
 
@@ -445,7 +445,7 @@
 
 	proc/handle_chemicals_in_body()
 		if(dna)
-			dna.species.handle_chemicals_in_body()
+			dna.species.handle_chemicals_in_body(src)
 
 		return //TODO: DEFERRED
 
@@ -685,8 +685,8 @@
 				if(!client.adminobs)			reset_view(null)
 
 		if(dna)
-			dna.species.handle_vision()
-			dna.species.handle_hud_icons()
+			dna.species.handle_vision(src)
+			dna.species.handle_hud_icons(src)
 
 		return 1
 

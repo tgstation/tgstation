@@ -5,11 +5,11 @@
 	specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
 	use_skintones = 1
 
-	handle_chemicals(chem)
+	handle_chemicals(chem, mob/living/carbon/human/H)
 		if(chem == "mutationtoxin")
-			owner << "\red Your flesh rapidly mutates!"
-			owner.dna.species = new /datum/species/slime(owner)
-			owner.regenerate_icons()
+			H << "\red Your flesh rapidly mutates!"
+			H.dna.species = new /datum/species/slime()
+			H.regenerate_icons()
 
 /datum/species/lizard
 	// Reptilian humanoids with scaled skin and tails.
@@ -42,29 +42,29 @@
 	burnmod = 1.25
 	heatmod = 1.5
 
-	handle_chemicals(chem)
+	handle_chemicals(chem, mob/living/carbon/human/H)
 		if(chem == "plantbgone")
-			owner.adjustToxLoss(2)
+			H.adjustToxLoss(2)
 
-	on_hit(proj_type)
+	on_hit(proj_type, mob/living/carbon/human/H)
 		switch(proj_type)
 			if(/obj/item/projectile/energy/floramut)
 				if(prob(15))
-					owner.apply_effect((rand(30,80)),IRRADIATE)
-					owner.Weaken(5)
-					for (var/mob/V in viewers(owner))
-						V.show_message("\red [owner] writhes in pain as \his vacuoles boil.", 3, "\red You hear the crunching of leaves.", 2)
+					H.apply_effect((rand(30,80)),IRRADIATE)
+					H.Weaken(5)
+					for (var/mob/V in viewers(H))
+						V.show_message("\red [H] writhes in pain as \his vacuoles boil.", 3, "\red You hear the crunching of leaves.", 2)
 					if(prob(80))
-						randmutb(owner)
-						domutcheck(owner,null)
+						randmutb(H)
+						domutcheck(H,null)
 					else
-						randmutg(owner)
-						domutcheck(owner,null)
+						randmutg(H)
+						domutcheck(H,null)
 				else
-					owner.adjustFireLoss(rand(5,15))
-					owner.show_message("\red The radiation beam singes you!")
+					H.adjustFireLoss(rand(5,15))
+					H.show_message("\red The radiation beam singes you!")
 			if(/obj/item/projectile/energy/florayield)
-				owner.nutrition = min(owner.nutrition+30, 500)
+				H.nutrition = min(H.nutrition+30, 500)
 		return
 
 /datum/species/plant/pod
@@ -72,24 +72,24 @@
 	name = "Podperson"
 	id = "pod"
 
-	spec_life()
+	spec_life(mob/living/carbon/human/H)
 		var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
-		if(isturf(owner.loc)) //else, there's considered to be no light
-			var/turf/T = owner.loc
+		if(isturf(H.loc)) //else, there's considered to be no light
+			var/turf/T = H.loc
 			var/area/A = T.loc
 			if(A)
 				if(A.lighting_use_dynamic)	light_amount = min(10,T.lighting_lumcount) - 5
 				else						light_amount =  5
-			owner.nutrition += light_amount
-			if(owner.nutrition > 500)
-				owner.nutrition = 500
+			H.nutrition += light_amount
+			if(H.nutrition > 500)
+				H.nutrition = 500
 			if(light_amount > 2) //if there's enough light, heal
-				owner.heal_overall_damage(1,1)
-				owner.adjustToxLoss(-1)
-				owner.adjustOxyLoss(-1)
+				H.heal_overall_damage(1,1)
+				H.adjustToxLoss(-1)
+				H.adjustOxyLoss(-1)
 
-		if(owner.nutrition < 200)
-			owner.take_overall_damage(2,0)
+		if(H.nutrition < 200)
+			H.take_overall_damage(2,0)
 
 /datum/species/shadow
 	// Humans cursed to stay in the darkness, lest their life forces drain. They regain health in shadow and die in light.
@@ -99,18 +99,18 @@
 	sexes = 0
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
 
-	spec_life()
+	spec_life(mob/living/carbon/human/H)
 		var/light_amount = 0
-		if(isturf(owner.loc))
-			var/turf/T = owner.loc
+		if(isturf(H.loc))
+			var/turf/T = H.loc
 			var/area/A = T.loc
 			if(A)
 				if(A.lighting_use_dynamic)	light_amount = T.lighting_lumcount
 				else						light_amount =  10
 			if(light_amount > 2) //if there's enough light, start dying
-				owner.take_overall_damage(1,1)
+				H.take_overall_damage(1,1)
 			else if (light_amount < 2) //heal in the dark
-				owner.heal_overall_damage(1,1)
+				H.heal_overall_damage(1,1)
 
 /datum/species/slime
 	// Humans mutated by slime mutagen, produced from green slimes. They are not targetted by slimes.
@@ -154,9 +154,9 @@
 	id = "fly"
 	say_mod = "buzzes"
 
-	handle_chemicals(chem)
+	handle_chemicals(chem, mob/living/carbon/human/H)
 		if(chem == "pestkiller")
-			owner.adjustToxLoss(2)
+			H.adjustToxLoss(2)
 
 	handle_speech(message)
 		if(copytext(message, 1, 2) != "*")

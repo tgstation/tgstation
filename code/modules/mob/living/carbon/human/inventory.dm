@@ -1,6 +1,6 @@
 /mob/living/carbon/human/can_equip(obj/item/I, slot, disable_warning = 0)
 	if(dna)
-		return dna.species.can_equip(I, slot, disable_warning)
+		return dna.species.can_equip(I, slot, disable_warning, src)
 	else
 		switch(slot)
 			if(slot_l_hand)

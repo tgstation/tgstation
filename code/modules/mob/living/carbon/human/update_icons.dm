@@ -88,7 +88,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 /mob/living/carbon/human/proc/update_base_icon_state()
 	//var/race = dna ? dna.mutantrace : null
 	if(dna)
-		base_icon_state = dna.species.update_base_icon_state()
+		base_icon_state = dna.species.update_base_icon_state(src)
 	else
 		if(HUSK in mutations)
 			base_icon_state = "husk"
@@ -150,7 +150,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 		return
 
 	if(dna)
-		dna.species.handle_hair()
+		dna.species.handle_hair(src)
 
 /mob/living/carbon/human/update_mutations()
 	remove_overlay(MUTATIONS_LAYER)
@@ -176,20 +176,20 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 /mob/living/carbon/human/proc/update_mutcolor()
 	if(dna && !(HUSK in mutations))
-		dna.species.update_color()
+		dna.species.update_color(src)
 
 /mob/living/carbon/human/proc/update_body()
 	remove_overlay(BODY_LAYER)
 
 	if(dna)
-		base_icon_state = dna.species.update_base_icon_state()
+		base_icon_state = dna.species.update_base_icon_state(src)
 	else
 		update_base_icon_state()
 
 	icon_state = "[base_icon_state]_s"
 
 	if(dna)	// didn't want to have a duplicate if(dna) here, but due to the ordering of the code this was the only way
-		dna.species.handle_body()
+		dna.species.handle_body(src)
 
 /mob/living/carbon/human/update_fire()
 
