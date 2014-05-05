@@ -223,7 +223,7 @@
 		return 1
 
 	//If it's a weapon, smash windoor. Unless it's a crowbar, an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
-	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card)) && !istype(I, /obj/item/weapon/crowbar)
+	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card) && !istype(I, /obj/item/weapon/crowbar))
 		user.changeNext_move(8)
 		var/aforce = I.force
 		if(I.damtype == BRUTE || I.damtype == BURN)
