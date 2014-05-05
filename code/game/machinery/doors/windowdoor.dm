@@ -206,6 +206,8 @@
 	//Emags and ninja swords? You may pass.
 	if (src.density && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
 		src.operating = -1
+		flick("[src.base_state]spark", src)
+		sleep(6)
 		if(istype(I, /obj/item/weapon/melee/energy/blade))
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
@@ -213,9 +215,10 @@
 			playsound(src.loc, "sparks", 50, 1)
 			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 			visible_message("\blue The glass door was sliced open by [user]!")
-		flick("[src.base_state]spark", src)
-		sleep(6)
-		open(2)
+			open(2)
+			emagged = 1
+			return 1
+		open()
 		emagged = 1
 		return 1
 
