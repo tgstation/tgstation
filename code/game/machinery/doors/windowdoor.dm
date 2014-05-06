@@ -58,7 +58,7 @@
 		bumpopen(M)
 	return
 
-/obj/machinery/door/windoor/bumpopen(mob/user as mob)
+/obj/machinery/door/window/bumpopen(mob/user as mob)
 	if( operating || !src.density )
 		return
 	src.add_fingerprint(user)
