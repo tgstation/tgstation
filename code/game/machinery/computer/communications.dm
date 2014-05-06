@@ -11,6 +11,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	circuit = /obj/item/weapon/circuitboard/communications
 	var/prints_intercept = 1
 	var/authenticated = 0
+	var/auth_id = "Unknown" //Who is currently logged in?
 	var/list/messagetitle = list()
 	var/list/messagetext = list()
 	var/currmsg = 0
@@ -69,8 +70,12 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			if (I && istype(I))
 				if(src.check_access(I))
 					authenticated = 1
-				if((20 in I.access) || src.emagged)
+				if((20 in I.access))
 					authenticated = 2
+					auth_id = "[I.registered_name] ([I.assignment])"
+				if(src.emagged)
+					authenticated = 2
+					auth_id = "Unknown"
 		if("logout")
 			authenticated = 0
 
@@ -110,7 +115,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				var/input = stripped_input(usr, "Please choose a message to announce to the station crew.", "What?")
 				if(!input || !(usr in view(1,src)))
 					return
-				captain_announce(input)//This should really tell who is, IE HoP, CE, HoS, RD, Captain
+				priority_announce(input, null, 'sound/misc/announce.ogg', "Captain", auth_id)
 				log_say("[key_name(usr)] has made a captain announcement: [input]")
 				message_admins("[key_name_admin(usr)] has made a captain announcement.", 1)
 				message_cooldown = 1
@@ -359,6 +364,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 						dat += "<BR>Latest emergency signal trace attempt successful.<BR>Last signal origin: <b>[format_text(emergency_shuttle.last_call_loc.name)]</b>.<BR>"
 					else
 						dat += "<BR>Latest emergency signal trace attempt failed.<BR>"
+				dat += "Logged in as: [auth_id]"
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=logout'>Log Out</A> \]<BR>"
 				dat += "<BR><B>General Functions</B>"
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=messagelist'>Message List</A> \]"
@@ -371,7 +377,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=status'>Set Status Display</A> \]"
 				if (src.authenticated==2)
 					dat += "<BR><BR><B>Captain Functions</B>"
-					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make a Priority Announcement</A> \]"
+					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make a Captain's Announcement</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=changeseclevel'>Change Alert Level</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=emergencyaccess'>Emergency Maintenance Access</A> \]"
 					if(src.emagged == 0)
@@ -573,14 +579,13 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	var/emergency_reason = "\nNature of emergency:\n\n[call_reason]"
 	if (seclevel2num(get_security_level()) == SEC_LEVEL_RED) // There is a serious threat we gotta move no time to give them five minutes.
 		emergency_shuttle.incall(0.6, signal_origin)
-		captain_announce("The emergency shuttle has been called. Red Alert state confirmed: Dispatching priority shuttle. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.[emergency_reason]")
+		priority_announce("The emergency shuttle has been called. Red Alert state confirmed: Dispatching priority shuttle. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.[emergency_reason]", null, 'sound/AI/shuttlecalled.ogg', "Priority")
 	else
 		emergency_shuttle.incall(1, signal_origin)
-		captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.[emergency_reason]")
+		priority_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.[emergency_reason]", null, 'sound/AI/shuttlecalled.ogg', "Priority")
 
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle.", 1)
-	world << sound('sound/AI/shuttlecalled.ogg')
 
 	return
 

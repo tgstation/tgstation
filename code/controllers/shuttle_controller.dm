@@ -73,10 +73,9 @@ datum/shuttle_controller
 				last_call_loc = null
 
 			if(recall_count == 2)
-				captain_announce("The emergency shuttle has been recalled.\n\nExcessive number of emergency shuttle calls detected. We will attempt to trace any further signals to their source. Results may be viewed on any communications console.")
+				priority_announce("The emergency shuttle has been recalled.\n\nExcessive number of emergency shuttle calls detected. We will attempt to trace any further signals to their source. Results may be viewed on any communications console.", null, 'sound/AI/shuttlerecalled.ogg')
 			else
-				captain_announce("The emergency shuttle has been recalled.")
-			world << sound('sound/AI/shuttlerecalled.ogg')
+				priority_announce("The emergency shuttle has been recalled.", null, 'sound/AI/shuttlerecalled.ogg', "Priority")
 			setdirection(-1)
 			online = 1
 
@@ -130,8 +129,7 @@ datum/shuttle_controller
 				incall(SHUTTLEAUTOCALLTIMER) //X minutes! If they want to recall, they have X-(X-5) minutes to do so
 				log_game("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
 				message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.", 1)
-				captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
-				world << sound('sound/AI/shuttlecalled.ogg')
+				priority_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.", null, 'sound/AI/shuttlecalled.ogg', "Priority")
 
 	proc/move_shuttles()
 		var/datum/shuttle_manager/s
@@ -165,14 +163,13 @@ datum/shuttle_controller
 					location = DOCKED
 					settimeleft(SHUTTLELEAVETIME)
 					send2irc("Server", "The Emergency Shuttle has docked with the station.")
-					captain_announce("The Emergency Shuttle has docked with the station. You have [round(timeleft()/60,1)] minutes to board the Emergency Shuttle.")
-					world << sound('sound/AI/shuttledock.ogg')
+					priority_announce("The Emergency Shuttle has docked with the station. You have [round(timeleft()/60,1)] minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
 			else if(timeleft <= 0) //Nothing happens if time's not up and the ship's docked or later
 				if(location == DOCKED)
 					move_shuttles()
 					location = TRANSIT
 					settimeleft(SHUTTLETRANSITTIME)
-					captain_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.")
+					priority_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
 				else if(location == TRANSIT)
 					move_shuttles()
 					//message_admins("Shuttles have attempted to move to Centcom")
