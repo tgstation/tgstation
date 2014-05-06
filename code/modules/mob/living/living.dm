@@ -514,45 +514,45 @@ mob/living/proc/cuff_break(obj/item/I, mob/living/carbon/C)
 			return
 		if(CM.canmove && (CM.last_special <= world.time))
 			if(CM.handcuffed || CM.legcuffed)
-				C.changeNext_move(100)
-				C.last_special = world.time + 100
-				if(C.handcuffed)
-					var/obj/item/weapon/handcuffs/CF = C.handcuffed
+				CM.changeNext_move(100)
+				CM.last_special = world.time + 100
+				if(CM.handcuffed)
+					var/obj/item/weapon/handcuffs/CF = CM.handcuffed
 				else
-					var/obj/item/weapon/legcuffs/CF = C.legcuffed
+					var/obj/item/weapon/legcuffs/CF = CM.legcuffed
 				var/breakouttime = 600
 				var/displaytime = 2 
 				if(istype(CF))
 					breakouttime = CF.breakouttime
 					displaytime = breakouttime / 600
 
-				if(isalienadult(C) || HULK in usr.mutations)
-					C.visible_message("<span class='warning'>[C] is trying to break [CF]!</span>", \
+				if(isalienadult(CM) || HULK in usr.mutations)
+					CM.visible_message("<span class='warning'>[CM] is trying to break [CF]!</span>", \
 							"<span class='warning'>You attempt to break [CF]. (This will take around 5 seconds and you need to stand still.)</span>")
 					spawn(0)
-						if(do_after(C, 50))
-							if(!CF || C.buckled)
+						if(do_after(CM, 50))
+							if(!CF || CM.buckled)
 								return
-							cuff_break(CF, C)				
+							cuff_break(CF, CM)				
 				else
 			
 					C.visible_message("<span class='warning'>[usr] attempts to remove [CF]!</span>", \
 							"<span class='notice'>You attempt to remove [CF]. (This will take around [displaytime] minutes and you need to stand still.)</span>")
 					spawn(0)
 						if(do_after(C, breakouttime))
-							if(!CF || C.buckled)
+							if(!CF || CM.buckled)
 								return 
-							C.visible_message("<span class='danger'>[C] manages to remove [CF]!</span>", \
+							CM.visible_message("<span class='danger'>[CM] manages to remove [CF]!</span>", \
 									"<span class='notice'>You successfully remove [CF].</span>")
 
-							if(C.handcuffed)
-								C.handcuffed.loc = usr.loc
-								C.update_inv_handcuffed(0)
-								C.handcuffed = null
+							if(CM.handcuffed)
+								CM.handcuffed.loc = usr.loc
+								CM.update_inv_handcuffed(0)
+								CM.handcuffed = null
 							else
-								C.legcuffed.loc = usr.loc
-								C.update_inv_legcuffed(0)
-								C.legcuffed = null
+								CM.legcuffed.loc = usr.loc
+								CM.update_inv_legcuffed(0)
+								CM.legcuffed = null
 
 
 /mob/living/proc/get_visible_name()
