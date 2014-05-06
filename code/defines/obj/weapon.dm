@@ -186,43 +186,30 @@
 		icon_state = "beartrap[armed]"
 		user << "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>"
 
-/obj/item/weapon/legcuffs/beartrap/proc/triggered(mob/living/target)
-	armed = 0
-	icon_state = "beartrap0"
-	playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
-	if(iscarbon(target))
-		var/mob/living/carbon/C = target
-		C.visible_message("<span class='danger'>[C] triggers \the [src].</span>", \
-				"<span class='userdanger'>You trigger \the [src]!</span>")
 
 /obj/item/weapon/legcuffs/beartrap/Crossed(AM as mob|obj)
-	if(armed)
-		if(isturf(src.loc))
+	if(armed && isturf(src.loc))
+		if( (iscarbon(AM) || isanimal(AM)) && !istype(AM, /mob/living/simple_animal/parrot) && !istype(AM, /mob/living/simple_animal/construct) && !istype(AM, /mob/living/simple_animal/shade) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
+			armed = 0
+			icon_state = "beartrap0"
+			playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
+			AM.visible_message("<span class='danger'>[AM] triggers \the [src].</span>", \
+					"<span class='userdanger'>You trigger \the [src]!</span>")
+		
 			if(ishuman(AM))
 				var/mob/living/carbon/H = AM
-				if(H.m_intent == "run")
-					triggered(H)
-					if(H.lying)
-						H.apply_damage(20,BRUTE,"chest")
-					else
-						H.apply_damage(20,BRUTE,(pick("l_leg", "r_leg")))
-						if(!H.legcuffed) //beartrap can't cuff you leg if there's already a beartrap or legcuffs.
-							H.legcuffed = src
-							src.loc = H
-							H.update_inv_legcuffed(0)
-							feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
+				if(H.lying)
+					H.apply_damage(20,BRUTE,"chest")
+				else
+					H.apply_damage(20,BRUTE,(pick("l_leg", "r_leg")))
+				if(!H.legcuffed) //beartrap can't cuff you leg if there's already a beartrap or legcuffs.
+					H.legcuffed = src
+					src.loc = H
+					H.update_inv_legcuffed(0)
+					feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
 
-			if(isalien(AM) || ismonkey(AM))
-				var/mob/living/carbon/A = AM
-				triggered(A)
-				A.adjustBruteLoss(20)
-				A.Stun(5)
-						
-			if(isanimal(AM) && !istype(AM, /mob/living/simple_animal/parrot) && !istype(AM, /mob/living/simple_animal/construct) && !istype(AM, /mob/living/simple_animal/shade) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
-				var/mob/living/simple_animal/SA = AM
-				triggered(SA)
-				visible_message("<span class='danger'>[SA] triggers \the [src]!</span>")
-				SA.health -= 20
+			else
+				AM.apply_damage(20,BRUTE)
 	..()
 
 
