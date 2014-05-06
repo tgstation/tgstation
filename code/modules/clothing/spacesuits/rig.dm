@@ -183,3 +183,19 @@
 	item_state = "sec_hardsuit"
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank, /obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
 	armor = list(melee = 30, bullet = 15, laser = 30,energy = 10, bomb = 10, bio = 100, rad = 50)
+
+/obj/item/clothing/head/helmet/space/rig/command
+	name = "command hardsuit helmet"
+	desc = "A NT Command Staff's helmet that protects against harardous, low pressure environments. Has reinforced armor and radioation protection."
+	icon_state = "rig0-command"
+	item_state = "command_helm"
+	item_color = "command"
+	armor = list(melee = 20, bullet = 10, laser = 15,energy = 10, bomb = 10, bio = 100, rad = 100)
+
+/obj/item/clothing/suit/space/rig/command
+	icon_state = "rig-command"
+	name = "command hardsuit"
+	desc = "A NT Command Staff's hardsuit that protects against harardous, low pressure environments. Has reinforced armor and radioation protection."
+	item_state = "command_hardsuit"
+	slowdown = 1
+	armor = list(melee = 20, bullet = 10, laser = 15,energy = 10, bomb = 10, bio = 100, rad = 100)

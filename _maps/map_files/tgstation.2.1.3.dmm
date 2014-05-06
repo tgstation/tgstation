@@ -1602,7 +1602,7 @@
 "aEP" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor{icon_state = "dark"},/area/ai_monitored/storage/eva)
 "aEQ" = (/obj/machinery/atmospherics/pipe/manifold{pipe_color = "blue"; icon_state = "manifold-b-f"; level = 1; name = "pipe manifold"},/turf/simulated/floor{icon_state = "dark"},/area/ai_monitored/storage/eva)
 "aER" = (/obj/item/stack/sheet/plasteel{amount = 10},/obj/structure/table,/turf/simulated/floor{dir = 4; icon_state = "warning"},/area/ai_monitored/storage/eva)
-"aES" = (/obj/machinery/suit_storage_unit/standard_unit,/turf/simulated/floor{icon_state = "vault"; dir = 8},/area/ai_monitored/storage/eva)
+"aES" = (/obj/machinery/suit_storage_unit/command_unit,/turf/simulated/floor{icon_state = "vault"; dir = 8},/area/ai_monitored/storage/eva)
 "aET" = (/obj/machinery/door/firedoor/border_only,/turf/simulated/floor{dir = 8; icon_state = "bluecorner"},/area/hallway/primary/fore)
 "aEU" = (/obj/machinery/door/firedoor/border_only,/turf/simulated/floor,/area/hallway/primary/fore)
 "aEV" = (/obj/machinery/door/firedoor/border_only,/turf/simulated/floor{icon_state = "bluecorner"},/area/hallway/primary/fore)
