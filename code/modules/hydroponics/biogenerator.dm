@@ -223,11 +223,9 @@
 		if("rh")
 			if (check_cost(25/efficiency)) return 0
 			else new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh(src.loc)
-		if("ez5") //It's not an elegant method, but it's safe and easy. -Cheridan
+		if("ez5")
 			if (check_cost(50/efficiency)) return 0
 			else
-				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez(src.loc)
-				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez(src.loc)
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez(src.loc)
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez(src.loc)
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez(src.loc)
@@ -237,13 +235,9 @@
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z(src.loc)
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z(src.loc)
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z(src.loc)
-				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z(src.loc)
-				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z(src.loc)
 		if("rh5")
 			if (check_cost(125/efficiency)) return 0
 			else
-				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh(src.loc)
-				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh(src.loc)
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh(src.loc)
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh(src.loc)
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh(src.loc)
