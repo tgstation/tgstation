@@ -190,10 +190,11 @@
 /obj/item/weapon/legcuffs/beartrap/Crossed(AM as mob|obj)
 	if(armed && isturf(src.loc))
 		if( (iscarbon(AM) || isanimal(AM)) && !istype(AM, /mob/living/simple_animal/parrot) && !istype(AM, /mob/living/simple_animal/construct) && !istype(AM, /mob/living/simple_animal/shade) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
+			var/mob/living/L = AM
 			armed = 0
 			icon_state = "beartrap0"
 			playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
-			AM.visible_message("<span class='danger'>[AM] triggers \the [src].</span>", \
+			L.visible_message("<span class='danger'>[L] triggers \the [src].</span>", \
 					"<span class='userdanger'>You trigger \the [src]!</span>")
 		
 			if(ishuman(AM))
@@ -209,7 +210,7 @@
 					feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
 
 			else
-				AM.apply_damage(20,BRUTE)
+				L.apply_damage(20,BRUTE)
 	..()
 
 
