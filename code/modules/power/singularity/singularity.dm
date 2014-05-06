@@ -537,7 +537,7 @@ var/global/list/uneatable = list(
 
 	if(istype(A,/mob/living/))
 		var/mob/living/C = A
-		new/obj/effect/decal/remains/human(C.loc)
+		C.spawn_dust()
 		C.gib()
 
 	if(isturf(A))
