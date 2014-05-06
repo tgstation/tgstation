@@ -186,7 +186,7 @@
 
 /obj/item/clothing/head/helmet/space/rig/command
 	name = "command hardsuit helmet"
-	desc = "A NT Command Staff's helmet that protects against harardous, low pressure environments. Has reinforced armor and radioation protection."
+	desc = "A NT Command Staff's helmet that protects against harardous, low pressure environments. Has reinforced armor and radiation protection."
 	icon_state = "rig0-command"
 	item_state = "command_helm"
 	item_color = "command"
@@ -195,7 +195,7 @@
 /obj/item/clothing/suit/space/rig/command
 	icon_state = "rig-command"
 	name = "command hardsuit"
-	desc = "A NT Command Staff's hardsuit that protects against harardous, low pressure environments. Has reinforced armor and radioation protection."
+	desc = "A NT Command Staff's hardsuit that protects against harardous, low pressure environments. Has reinforced armor and radiation protection."
 	item_state = "command_hardsuit"
 	slowdown = 1
 	armor = list(melee = 20, bullet = 10, laser = 15,energy = 10, bomb = 10, bio = 100, rad = 100)
