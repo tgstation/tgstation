@@ -253,8 +253,6 @@ var/global/list/possible_items = list()
 datum/objective/steal
 	var/datum/objective_item/targetinfo = null //Save the chosen item datum so we can access it later.
 	var/obj/item/steal_target = null //Needed for custom objectives (they're just items, not datums).
-	var/faction //Exchange objectives: Which side are we on?
-	var/datum/mind/otheragent //Exchange objectives: The mind of the other party
 	dangerrating = 5 //Overridden by the individual item's difficulty, but defaults to 5 for custom objectives.
 
 datum/objective/steal/New()
@@ -326,6 +324,8 @@ datum/objective/steal/special/find_target()
 
 datum/objective/steal/exchange
 	dangerrating = 10
+	var/faction //Exchange objectives: Which side are we on?
+	var/datum/mind/otheragent //Exchange objectives: The mind of the other party
 
 datum/objective/steal/exchange/proc/set_faction(faction,otheragent)
 	if(faction == "red")
