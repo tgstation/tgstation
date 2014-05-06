@@ -67,31 +67,6 @@
 // SPEECH MANIPULATORS //
 /////////////////////////
 
-/* Duplicate
-// WAS: /datum/bioEffect/stutter
-/datum/dna/gene/disability/stutter
-	name = "Stutter"
-	desc = "Hinders nerve transmission to and from the speech center of the brain, resulting in faltering speech."
-	activation_message = "Y-you f.. feel a.. a bit n-n-nervous."
-	deactivation_message = "You don't feel nervous anymore."
-
-	New()
-		..()
-		block=STUTTERBLOCK
-
-	OnMobLife(var/mob/owner)
-		if (prob(10))
-			owner:stuttering = max(10, owner:stuttering)
-
-/datum/dna/gene/disability/speech
-	can_activate(var/mob/M, var/flags)
-		// Can only activate one of these at a time.
-		if(is_type_in_list(/datum/dna/gene/disability/speech,M.active_genes))
-			return 0
-		return ..(M,flags)
-*/
-
-
 // WAS: /datum/bioEffect/smile
 /datum/dna/gene/disability/speech/smile
 	name = "Smile"
