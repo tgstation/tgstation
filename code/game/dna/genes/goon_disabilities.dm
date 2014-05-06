@@ -91,21 +91,60 @@
 		return ..(M,flags)
 */
 
-/* Figure out what the fuck this one does.
+
 // WAS: /datum/bioEffect/smile
 /datum/dna/gene/disability/speech/smile
 	name = "Smile"
-	desc = "Causes the speech center of the subject's brain to produce large amounts of seratonin when engaged."
-	activation_message = "You feel like you want to smile and smile and smile forever :)"
-	deactivation_message = "You don't feel like smiling anymore. :("
+	desc = "Causes the speech center of the subject's brain to produce large amounts of seratonin and a chemical resembling ecstacy when engaged."
+	activation_message = "You feel so happy. Nothing can be wrong with anything :)"
+	deactivation_message = "Everything is terrible again. :("
 
 	New()
 		..()
 		block=SMILEBLOCK
 
 	OnSay(var/mob/M, var/message)
+		//Time for a friendly game of SS13
+		message = replacetext(message,"stupid","smart")
+		message = replacetext(message,"retard","genius")
+		message = replacetext(message,"unrobust","robust")
+		message = replacetext(message,"dumb","smart")
+		message = replacetext(message,"awful","great")
+		message = replacetext(message,"gay",pick("nice","ok","alright"))
+		message = replacetext(message,"horrible","fun")
+		message = replacetext(message,"terrible","terribly fun")
+		message = replacetext(message,"terrifying","wonderful")
+		message = replacetext(message,"gross","cool")
+		message = replacetext(message,"disgusting","amazing")
+		message = replacetext(message,"loser","winner")
+		message = replacetext(message,"useless","useful")
+		message = replacetext(message,"oh god","cheese and crackers")
+		message = replacetext(message,"jesus","gee wiz")
+		message = replacetext(message,"weak","strong")
+		message = replacetext(message,"kill","hug")
+		message = replacetext(message,"murder","tease")
+		message = replacetext(message,"ugly","beutiful")
+		message = replacetext(message,"douchbag","nice guy")
+		message = replacetext(message,"whore","lady")
+		message = replacetext(message,"nerd","smart guy")
+		message = replacetext(message,"moron","fun person")
+		message = replacetext(message,"IT'S LOOSE","EVERYTHING IS FINE, STOP RUNNING")
+		message = replacetext(message,"rape","hug fight")
+		message = replacetext(message,"idiot","genius")
+		message = replacetext(message,"fat","thin")
+		message = replacetext(message,"beer","water with ice")
+		message = replacetext(message,"drink","water")
+		message = replacetext(message,"feminist","empowered woman")
+		message = replacetext(message,"i hate you","you're mean")
+		message = replacetext(message,"nigger","african american")
+		message = replacetext(message,"jew","jewish")
+		message += "[pick(":)",":^)",":*)")]"
+		if(prob(30))
+			message += " check your privlidge."
 		return message
-
+		
+		
+/*
 // WAS: /datum/bioEffect/elvis
 /datum/dna/gene/disability/speech/elvis
 	name = "Elvis"
@@ -171,7 +210,7 @@
 		block=SWEDEBLOCK
 
 	OnSay(var/mob/M, var/message)
-		// svedish
+		// svedish!
 		message = replacetext(message,"w","v")
 		if(prob(30))
 			message += " Bork[pick("",", bork",", bork, bork")]!"
