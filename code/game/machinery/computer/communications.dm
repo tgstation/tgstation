@@ -70,9 +70,9 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			if (I && istype(I))
 				if(src.check_access(I))
 					authenticated = 1
-				if((20 in I.access))
-					authenticated = 2
 					auth_id = "[I.registered_name] ([I.assignment])"
+					if((20 in I.access))
+						authenticated = 2
 				if(src.emagged)
 					authenticated = 2
 					auth_id = "Unknown"
