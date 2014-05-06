@@ -533,7 +533,6 @@ mob/living/proc/cuff_break(obj/item/I, mob/living/carbon/C)
 						if(do_after(C, 50))
 							if(!CF || C.buckled)
 								return
-							C.visible_message([C] breaks free from [CF]!)
 							cuff_break(CF, C)				
 				else
 			
