@@ -5,8 +5,8 @@
 	specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
 	use_skintones = 1
 
-	handle_chemicals(chem, mob/living/carbon/human/H)
-		if(chem == "mutationtoxin")
+	handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+		if(chem.id == "mutationtoxin")
 			H << "\red Your flesh rapidly mutates!"
 			H.dna.species = new /datum/species/slime()
 			H.regenerate_icons()
@@ -42,8 +42,8 @@
 	burnmod = 1.25
 	heatmod = 1.5
 
-	handle_chemicals(chem, mob/living/carbon/human/H)
-		if(chem == "plantbgone")
+	handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+		if(chem.id == "plantbgone")
 			H.adjustToxLoss(2)
 
 	on_hit(proj_type, mob/living/carbon/human/H)
@@ -154,8 +154,8 @@
 	id = "fly"
 	say_mod = "buzzes"
 
-	handle_chemicals(chem, mob/living/carbon/human/H)
-		if(chem == "pestkiller")
+	handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+		if(chem.id == "pestkiller")
 			H.adjustToxLoss(2)
 
 	handle_speech(message)
