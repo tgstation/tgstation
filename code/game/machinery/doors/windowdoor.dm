@@ -99,8 +99,11 @@
 		return 0
 	if (!ticker)
 		return 0
+	if(!forced)
+		if(stat & NOPOWER)
+			return 0
 	if(forced < 2)
-		if( (stat & NOPOWER) || emagged )
+		if(emagged)
 			return 0
 	if(!src.operating) //in case of emag
 		src.operating = 1
@@ -122,8 +125,11 @@
 /obj/machinery/door/window/close(var/forced=0)
 	if (src.operating)
 		return 0
+	if(!forced)
+		if(stat & NOPOWER)
+			return 0
 	if(forced < 2)
-		if(emagged || (stat & NOPOWER))
+		if(emagged)
 			return 0
 	src.operating = 1
 	flick(text("[]closing", src.base_state), src)
