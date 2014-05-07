@@ -66,8 +66,8 @@
 	set category = "Malfunction"
 	set name = "Initiate Hostile Lockdown"
 
-	if(usr.stat == 2)
-		usr <<"You cannot start a lockdown because you are dead!"
+	if(src.stat == 2)
+		src <<"You cannot begin a lockdown because you are dead!"
 		return
 
 	for(var/obj/machinery/firealarm/FA in machines) //activate firealarms
@@ -93,14 +93,14 @@
 		C.post_status("alert", "lockdown")
 
 	src.verbs += /mob/living/silicon/ai/proc/disablelockdown
-	usr << "<span class = 'warning'>Lockdown Initiated.</span>"
+	src << "<span class = 'warning'>Lockdown Initiated.</span>"
 
 /mob/living/silicon/ai/proc/disablelockdown()
 	set category = "Malfunction"
 	set name = "Disable Lockdown"
 
-	if(usr.stat == 2)
-		usr <<"You cannot disable lockdown because you are dead!"
+	if(src.stat == 2)
+		src <<"You cannot disable lockdown because you are dead!"
 		return
 
 	for(var/obj/machinery/firealarm/FA in machines) //deactivate firealarms
@@ -121,7 +121,7 @@
 				AL.safe = 1
 				AL.lights = 1
 
-	usr << "<span class = 'notice'>Lockdown Lifted.</span>"
+	src << "<span class = 'notice'>Lockdown Lifted.</span>"
 
 /datum/AI_Module/large/disable_rcd
 	module_name = "RCD disable"
