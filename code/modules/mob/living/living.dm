@@ -440,10 +440,14 @@ mob/living/proc/cuff_break(obj/item/I, mob/living/carbon/C)
 		
 mob/living/proc/cuff_resist(obj/item/I, mob/living/carbon/C)
 	var/breakouttime = 600
-	var/displaytime = 2 
-	if(istype(I, /obj/item/weapon/handcuffs) || istype(I, /obj/item/weapon/legcuffs))
-		breakouttime = I.breakouttime
-		displaytime = breakouttime / 600
+	var/displaytime = 1 
+	if(istype(I, /obj/item/weapon/handcuffs))
+		var/item/weapon/handcuffs/HC = I
+		breakouttime = HC.breakouttime
+	else if(istype(I, /obj/item/weapon/legcuffs))
+		var/item/weapon/legcuffs/LC = I
+		breakouttime = LC.breakouttime
+	displaytime = breakouttime / 600
 
 	if(isalienadult(C) || HULK in usr.mutations)
 		C.visible_message("<span class='warning'>[C] is trying to break [I]!</span>", \
