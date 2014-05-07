@@ -190,10 +190,8 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 			T.MakeSlippery()
 
 	if(src.oddbutton && prob(5))
-		visible_message("Something flies out of [src]. He seems to be acting oddly.")
-		var/obj/effect/decal/cleanable/blood/gibs/gib = new /obj/effect/decal/cleanable/blood/gibs(src.loc)
-		//gib.streak(list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
-		src.oldtarget = gib
+		visible_message("<span class='danger'>[src] whirs and bubbles violently, before releasing a plume of froth!</span>")
+		new /obj/effect/effect/foam(src.loc)
 	if(!src.target || src.target == null)
 		for (var/obj/effect/decal/cleanable/D in view(7,src))
 			for(var/T in src.target_types)
@@ -322,7 +320,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 /obj/machinery/bot/cleanbot/proc/clean(var/obj/effect/decal/cleanable/target)
 	src.anchored = 1
 	src.icon_state = "cleanbot-c"
-	visible_message("\red [src] begins to clean up [target]")
+	visible_message("<span class='danger'>[src] begins to clean up [target]</span>")
 	src.cleaning = 1
 	spawn(50)
 		src.cleaning = 0
@@ -333,7 +331,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 
 /obj/machinery/bot/cleanbot/explode()
 	src.on = 0
-	src.visible_message("\red <B>[src] blows apart!</B>", 1)
+	src.visible_message("<span class='danger'><B>[src] blows apart!</B></span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/weapon/reagent_containers/glass/bucket(Tsec)
