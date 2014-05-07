@@ -288,9 +288,9 @@ obj/structure/windoor_assembly/Destroy()
 	if(!air_master) return 0
 
 	var/turf/simulated/source = loc
-	var/turf/simulated/target = get_step(source,dir)
+//	var/turf/simulated/target = get_step(source,dir)
 
 	if(istype(source)) air_master.mark_for_update(source)
-	if(istype(target)) air_master.mark_for_update(target)
+//	if(istype(target)) air_master.mark_for_update(target)
 
 	return 1

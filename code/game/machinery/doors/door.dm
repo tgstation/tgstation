@@ -350,18 +350,18 @@
 	if(!air_master) return 0
 
 	var/turf/simulated/source = loc
-	var/turf/simulated/north = get_step(source,NORTH)
+/*	var/turf/simulated/north = get_step(source,NORTH)
 	var/turf/simulated/south = get_step(source,SOUTH)
 	var/turf/simulated/east = get_step(source,EAST)
-	var/turf/simulated/west = get_step(source,WEST)
+	var/turf/simulated/west = get_step(source,WEST)*/
 
 	update_heat_protection(loc)
 
 	if(istype(source)) air_master.mark_for_update(source)
-	if(istype(north)) air_master.mark_for_update(north)
+/*	if(istype(north)) air_master.mark_for_update(north)
 	if(istype(south)) air_master.mark_for_update(south)
 	if(istype(east)) air_master.mark_for_update(east)
-	if(istype(west)) air_master.mark_for_update(west)
+	if(istype(west)) air_master.mark_for_update(west)*/
 
 	if(width > 1)
 		var/turf/simulated/next_turf = src
