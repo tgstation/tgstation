@@ -58,7 +58,7 @@
 		user << "\red \The [src]'s firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept \the [mmi]."
 		return TRUE
 	*/
-	if(jobban_isbanned(user, "Cyborg"))
+	if(jobban_isbanned(user, "MoMMI"))
 		user << "\red \The [src] lets out an annoyed buzz."
 		return TRUE
 
