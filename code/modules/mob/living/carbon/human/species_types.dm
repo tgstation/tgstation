@@ -10,6 +10,8 @@
 			H << "\red Your flesh rapidly mutates!"
 			H.dna.species = new /datum/species/slime()
 			H.regenerate_icons()
+			H.reagents.del_reagent(chem.type)
+			return 1
 
 /datum/species/lizard
 	// Reptilian humanoids with scaled skin and tails.
@@ -44,7 +46,9 @@
 
 	handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 		if(chem.id == "plantbgone")
-			H.adjustToxLoss(2)
+			H.adjustToxLoss(3)
+			H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
+			return 1
 
 	on_hit(proj_type, mob/living/carbon/human/H)
 		switch(proj_type)
@@ -156,7 +160,9 @@
 
 	handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 		if(chem.id == "pestkiller")
-			H.adjustToxLoss(2)
+			H.adjustToxLoss(3)
+			H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
+			return 1
 
 	handle_speech(message)
 		if(copytext(message, 1, 2) != "*")

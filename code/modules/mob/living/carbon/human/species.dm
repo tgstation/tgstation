@@ -352,7 +352,7 @@
 		return 0 //Unsupported slot
 
 	proc/handle_chemicals(var/datum/reagent/chem, var/mob/living/carbon/human/H)
-		return
+		return 0
 
 	proc/handle_speech(var/message, var/mob/living/carbon/human/H)
 		return message

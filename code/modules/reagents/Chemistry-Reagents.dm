@@ -67,10 +67,6 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!istype(M, /mob/living))
 					return //Noticed runtime errors from pacid trying to damage ghosts, this should fix. --NEO
-				if(ishuman(M))
-					var/mob/living/carbon/human/H = M
-					if(H.dna && H.dna.species) // mutantrace-specific reactions to chemicals
-						H.dna.species.handle_chemicals(src, H)
 				holder.remove_reagent(src.id, REAGENTS_METABOLISM) //By default it slowly disappears.
 				return
 
