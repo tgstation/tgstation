@@ -442,7 +442,7 @@ mob/living/proc/cuff_resist(obj/item/I, mob/living/carbon/C)
 		
 	var/breakouttime = 600
 	var/displaytime = 2 
-	if(istype(I))
+	if(istype(I, obj/item/weapon/handcuffs) || istype(I, obj/item/weapon/legcuffs))
 		breakouttime = I.breakouttime
 		displaytime = breakouttime / 600
 
@@ -456,7 +456,7 @@ mob/living/proc/cuff_resist(obj/item/I, mob/living/carbon/C)
 				cuff_break(I, C)				
 	else
 			
-		CM.visible_message("<span class='warning'>[usr] attempts to remove [I]!</span>", \
+		C.visible_message("<span class='warning'>[usr] attempts to remove [I]!</span>", \
 				"<span class='notice'>You attempt to remove [I]. (This will take around [displaytime] minutes and you need to stand still.)</span>")
 		spawn(0)
 			if(do_after(C, breakouttime))
