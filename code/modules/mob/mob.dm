@@ -501,6 +501,8 @@ var/list/slot_equipment_priority = list( \
 					if(what && Adjacent(usr))
 						unEquip(what)
 			else
+				if(isrobot(usr)) // Borgs can't give people their items...
+					return
 				what = usr.get_active_hand()
 				if(what && (what.flags & NODROP))
 					usr << "<span class='notice'>You can't put \the [what.name] on [src], it's stuck to your hand!</span>"
