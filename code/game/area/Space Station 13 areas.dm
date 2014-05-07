@@ -738,6 +738,11 @@ proc/process_ghost_teleport_locs()
 	name = "Recycling"
 	icon_state = "disposal"
 
+/area/maintenance/secdisposal
+	name = "Security Disposals"
+	icon_state = "secdisp"
+
+
 //Hallway
 
 /area/hallway/primary/fore
