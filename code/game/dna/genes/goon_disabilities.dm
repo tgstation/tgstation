@@ -122,7 +122,7 @@
 		message = replacetext(message,"penis","privates")
 		message = replacetext(message,"cunt","privates")
 		message = replacetext(message,"dick","jerk")
-		message = replacetext(message,"vagina","privates)
+		message = replacetext(message,"vagina","privates")
 //		message += "[pick(":)",":^)",":*)")]"             : ^ (
 		if(prob(30))
 			message += " check your privilege."
