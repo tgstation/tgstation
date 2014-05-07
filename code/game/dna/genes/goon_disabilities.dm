@@ -113,9 +113,13 @@
 		message = replacetext(message,"i hate you","you're mean")
 		message = replacetext(message,"nigger","african american")
 		message = replacetext(message,"jew","jewish")
-		message += "[pick(":)",":^)",":*)")]"
+		message = replacetext(message,"shit","shiz")
+		message = replacetext(message,"crap","poo")
+		message = replacetext(message,"slut","tease")
+		message = replacetext(message,"ass","butt")
+//		message += "[pick(":)",":^)",":*)")]"             : ^ (
 		if(prob(30))
-			message += " check your privlidge."
+			message += " check your privilege."
 		return message
 		
 		
