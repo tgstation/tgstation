@@ -24,11 +24,10 @@
 		new /obj/item/clothing/head/helmet/swat(src)
 		new /obj/item/clothing/shoes/brown(src)
 		new /obj/item/device/radio/headset/heads/captain(src)
+		new /obj/item/weapon/tank/jetpack/oxygen(src)
 		new /obj/item/clothing/gloves/captain(src)
 		new /obj/item/weapon/gun/energy/gun(src)
 		return
-
-
 
 /obj/structure/closet/secure_closet/hop
 	name = "\proper head of personnel's locker"

@@ -35,6 +35,35 @@
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space
 	MASK_TYPE = /obj/item/clothing/mask/breath
 
+/obj/machinery/suit_storage_unit/captain
+	SUIT_TYPE = /obj/item/clothing/suit/space/captain
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/capspace
+	MASK_TYPE = /obj/item/clothing/mask/gas
+
+/obj/machinery/suit_storage_unit/engine
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig
+	MASK_TYPE = /obj/item/clothing/mask/breath
+
+ /obj/machinery/suit_storage_unit/ce
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/elite
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/elite
+	MASK_TYPE = /obj/item/clothing/mask/breath
+
+/obj/machinery/suit_storage_unit/security
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/security
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/security
+	MASK_TYPE = /obj/item/clothing/mask/gas/sechailer
+
+/obj/machinery/suit_storage_unit/atmos
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/atmos
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/atmos
+	MASK_TYPE = /obj/item/clothing/mask/gas
+
+/obj/machinery/suit_storage_unit/mining
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/mining
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/mining
+	MASK_TYPE = /obj/item/clothing/mask/breath
 
 /obj/machinery/suit_storage_unit/New()
 	src.update_icon()
@@ -108,10 +137,10 @@
 		return
 	if(src.panelopen) //The maintenance panel is open. Time for some shady stuff
 		dat+= "<HEAD><TITLE>Suit storage unit: Maintenance panel</TITLE></HEAD>"
-		dat+= "<Font color ='black'><B>Maintenance panel controls</B></font><HR>"
-		dat+= "<font color ='grey'>The panel is ridden with controls, button and meters, labeled in strange signs and symbols that <BR>you cannot understand. Probably the manufactoring world's language.<BR> Among other things, a few controls catch your eye.<BR><BR>"
-		dat+= text("<font color ='black'>A small dial with a \"ë\" symbol embroidded on it. It's pointing towards a gauge that reads []</font>.<BR> <font color='blue'><A href='?src=\ref[];toggleUV=1'> Turn towards []</A><BR>",(src.issuperUV ? "15nm" : "185nm"),src,(src.issuperUV ? "185nm" : "15nm") )
-		dat+= text("<font color ='black'>A thick old-style button, with 2 grimy LED lights next to it. The [] LED is on.</font><BR><font color ='blue'><A href='?src=\ref[];togglesafeties=1'>Press button</a></font>",(src.safetieson? "<font color='green'><B>GREEN</B></font>" : "<font color='red'><B>RED</B></font>"),src)
+		dat+= "<B>Maintenance panel controls</B><HR>"
+		dat+= "The panel is ridden with controls, button and meters, labeled in strange signs and symbols that <BR>you cannot understand. Probably the manufactoring world's language.<BR> Among other things, a few controls catch your eye.<BR><BR>"
+		dat+= text("A small dial with a \"ë\" symbol embroidded on it. It's pointing towards a gauge that reads [].<BR> <A href='?src=\ref[];toggleUV=1'> Turn towards []</A><BR>",(src.issuperUV ? "15nm" : "185nm"),src,(src.issuperUV ? "185nm" : "15nm") )
+		dat+= text("A thick old-style button, with 2 grimy LED lights next to it. The [] LED is on.<BR><A href='?src=\ref[];togglesafeties=1'>Press button</a>",(src.safetieson? "<font color='green'><B>GREEN</B></font>" : "<font color='red'><B>RED</B></font>"),src)
 		dat+= text("<HR><BR><A href='?src=\ref[];mach_close=suit_storage_unit'>Close panel</A>", user)
 		//user << browse(dat, "window=ssu_m_panel;size=400x500")
 		//onclose(user, "ssu_m_panel")
@@ -125,21 +154,21 @@
 	else
 		if(!src.isbroken)
 			dat+= "<HEAD><TITLE>Suit storage unit</TITLE></HEAD>"
-			dat+= "<font color='blue'><font size = 4><B>U-Stor-It Suit Storage Unit, model DS1900</B></FONT><BR>"
+			dat+= "<font size = 4><B>U-Stor-It Suit Storage Unit, model DS1900</B></FONT><BR>"
 			dat+= "<B>Welcome to the Unit control panel.</B><HR>"
-			dat+= text("<font color='black'>Helmet storage compartment: <B>[]</B></font><BR>",(src.HELMET ? HELMET.name : "</font><font color ='grey'>No helmet detected.") )
+			dat+= text("Helmet storage compartment: <B>[]</B><BR>",(src.HELMET ? HELMET.name : "<font color ='grey'>No helmet detected.</font>") )
 			if(HELMET && src.isopen)
 				dat+=text("<A href='?src=\ref[];dispense_helmet=1'>Dispense helmet</A><BR>",src)
-			dat+= text("<font color='black'>Suit storage compartment: <B>[]</B></font><BR>",(src.SUIT ? SUIT.name : "</font><font color ='grey'>No exosuit detected.") )
+			dat+= text("Suit storage compartment: <B>[]</B><BR>",(src.SUIT ? SUIT.name : "<font color ='grey'>No exosuit detected.</font>") )
 			if(SUIT && src.isopen)
 				dat+=text("<A href='?src=\ref[];dispense_suit=1'>Dispense suit</A><BR>",src)
-			dat+= text("<font color='black'>Breathmask storage compartment: <B>[]</B></font><BR>",(src.MASK ? MASK.name : "</font><font color ='grey'>No breathmask detected.") )
+			dat+= text("Breathmask storage compartment: <B>[]</B><BR>",(src.MASK ? MASK.name : "<font color ='grey'>No breathmask detected.</font>") )
 			if(MASK && src.isopen)
 				dat+=text("<A href='?src=\ref[];dispense_mask=1'>Dispense mask</A><BR>",src)
 			if(src.OCCUPANT)
 				dat+= "<HR><B><font color ='red'>WARNING: Biological entity detected inside the Unit's storage. Please remove.</B></font><BR>"
 				dat+= "<A href='?src=\ref[src];eject_guy=1'>Eject extra load</A>"
-			dat+= text("<HR><font color='black'>Unit is: [] - <A href='?src=\ref[];toggle_open=1'>[] Unit</A></font> ",(src.isopen ? "Open" : "Closed"),src,(src.isopen ? "Close" : "Open"))
+			dat+= text("<HR>Unit is: [] - <A href='?src=\ref[];toggle_open=1'>[] Unit</A> ",(src.isopen ? "Open" : "Closed"),src,(src.isopen ? "Close" : "Open"))
 			if(src.isopen)
 				dat+="<HR>"
 			else
@@ -151,18 +180,22 @@
 			//onclose(user, "Suit Storage Unit")
 		else //Ohhhh shit it's dirty or broken! Let's inform the guy.
 			dat+= "<HEAD><TITLE>Suit storage unit</TITLE></HEAD>"
-			dat+= "<font color='maroon'><B>Unit chamber is too contaminated to continue usage. Please call for a qualified individual to perform maintenance.</font></B><BR><BR>"
+			dat+= "<B>Unit chamber is too contaminated to continue usage. Please call for a qualified individual to perform maintenance.</B><BR><BR>"
 			dat+= text("<HR><A href='?src=\ref[];mach_close=suit_storage_unit'>Close control panel</A>", user)
 			//user << browse(dat, "window=suit_storage_unit;size=400x500")
 			//onclose(user, "suit_storage_unit")
 
-	user << browse(dat, "window=suit_storage_unit;size=400x500")
-	onclose(user, "suit_storage_unit")
+	var/datum/browser/popup = new(user, "suit_storage_unit", "Suit Storage Unit", 440, 500)
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 	return
 
 
 /obj/machinery/suit_storage_unit/Topic(href, href_list) //I fucking HATE this proc
 	if(..())
+		return
+	if(usr == src.OCCUPANT) //No unlocking yourself out!
 		return
 	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
 		usr.set_machine(src)
@@ -454,12 +487,10 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/verb/move_inside()
-	set name = "Hide in Suit Storage Unit"
-	set category = "Object"
-	set src in oview(1)
-
-	if (usr.stat != 0)
+/obj/machinery/suit_storage_unit/MouseDrop_T(mob/M as mob, mob/user as mob)
+	if(!istype(M))
+		return
+	if (user.stat != 0)
 		return
 	if (!src.isopen)
 		usr << "<font color='red'>The unit's doors are shut.</font>"
@@ -471,20 +502,16 @@
 		usr << "<font color='red'>It's too cluttered inside for you to fit in!</font>"
 		return
 	visible_message("[usr] starts squeezing into the suit storage unit!", 3)
-	if(do_after(usr, 10))
-		usr.stop_pulling()
-		usr.client.perspective = EYE_PERSPECTIVE
-		usr.client.eye = src
-		usr.loc = src
-//		usr.metabslow = 1
+	if(do_after(user, 10))
+		user.stop_pulling()
+		user.client.perspective = EYE_PERSPECTIVE
+		user.client.eye = src
+		user.loc = src
 		src.OCCUPANT = usr
 		src.isopen = 0 //Close the thing after the guy gets inside
 		src.update_icon()
 
-//		for(var/obj/O in src)
-//			qdel(O)
-
-		src.add_fingerprint(usr)
+		src.add_fingerprint(user)
 		src.updateUsrDialog()
 		return
 	else
