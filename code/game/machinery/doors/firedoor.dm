@@ -263,23 +263,6 @@
 		else
 			return !density*/
 
-/*
-	update_nearby_tiles(need_rebuild)
-		if(!air_master) return 0
-
-		var/turf/simulated/source = loc
-		var/turf/simulated/destination = get_step(source,dir)
-
-		update_heat_protection(loc)
-
-		if (istype(source))
-			air_master.mark_for_update(source)
-
-		if (istype(destination))
-			air_master.mark_for_update(destination)
-		return 1
-*/
-
 /obj/machinery/door/firedoor/multi_tile
 	icon = 'icons/obj/doors/DoorHazard2x1.dmi'
 	width = 2
