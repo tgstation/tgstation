@@ -742,6 +742,9 @@ proc/process_ghost_teleport_locs()
 	name = "Security Disposals"
 	icon_state = "secdisp"
 
+/area/maintenance/auxcharge
+	name = "Auxiliary Cyborg Recharge"
+	icon_state = "auxcharge"
 
 //Hallway
 
