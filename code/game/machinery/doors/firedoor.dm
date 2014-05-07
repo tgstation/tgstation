@@ -71,6 +71,7 @@
 	power_change()
 		if(powered(ENVIRON))
 			stat &= ~NOPOWER
+			latetoggle()
 		else
 			stat |= NOPOWER
 		return
@@ -198,20 +199,13 @@
 				if(alarmed)
 					nextstate = CLOSED
 
+	open()
+		..()
+		latetoggle()
 
-	process()
-		if(operating || stat & NOPOWER || !nextstate)
-			return
-		switch(nextstate)
-			if(OPEN)
-				spawn()
-					open()
-			if(CLOSED)
-				spawn()
-					close()
-		nextstate = null
-		return
-
+	close()
+		..()
+		latetoggle()
 
 	door_animate(animation)
 		switch(animation)
@@ -234,7 +228,17 @@
 				overlays += "welded_open"
 		return
 
+/obj/machinery/door/firedoor/proc/latetoggle()
+	if(operating || stat & NOPOWER || !nextstate)
+		return
 
+	switch(nextstate)
+		if(OPEN)
+			nextstate = null
+			open()
+		if(CLOSED)
+			nextstate = null
+			close()
 
 /obj/machinery/door/firedoor/border_only
 //These are playing merry hell on ZAS.  Sorry fellas :(
