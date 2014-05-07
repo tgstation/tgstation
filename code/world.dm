@@ -114,6 +114,8 @@
 //		world << "End of Topic() call."
 //		..()
 
+var/world_topic_spam_protect_ip = "0.0.0.0"
+var/world_topic_spam_protect_time = world.timeofday
 
 /world/Topic(T, addr, master, key)
 	diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
@@ -160,6 +162,62 @@
 		s["map_name"] = map_name ? map_name : "Unknown"
 
 		return list2params(s)
+
+	else if(copytext(T,1,9) == "adminmsg") //Ported from Ccomp5950's admin-pm from IRC system for use by #adminbus's bot.
+		/*
+			We got an adminmsg from IRC bot lets split the input then validate the input.
+			expected output:
+				1. adminmsg = ckey of person the message is to
+				2. msg = contents of message, parems2list requires
+				3. validatationkey = the key the bot has, it should match the gameservers commspassword in it's configuration.
+				4. sender = the ircnick that send the message.
+		*/
+
+
+		var/input[] = params2list(T)
+		if(input["key"] != global.comms_key)
+			if(world_topic_spam_protect_ip == addr && abs(world_topic_spam_protect_time - world.time) < 50)
+
+				spawn(50)
+					world_topic_spam_protect_time = world.time
+					return "Bad Key (Throttled)"
+
+			world_topic_spam_protect_time = world.time
+			world_topic_spam_protect_ip = addr
+
+			return "Bad Key"
+
+		var/client/C
+
+		for(var/client/K in clients)
+			if(K.ckey == input["adminmsg"])
+				C = K
+				break
+		if(!C)
+			return "No client with that name on server."
+
+		var/prefix_mess = ""
+		var/suffix_mess = ""
+
+		if(!C.holder)
+			prefix_mess = "<font color='red' size='4'><b>-- Administrator private message --</b></font>"
+			suffix_mess = "<font color='red'><i>Click on the administrator's name to reply.</i></font>"
+
+		var/message =	"<font color='red'>Admin PM from <b>[input["sender"]]</b>: [input["msg"]]</font>"
+		var/amessage =  "<font color='blue'><b>PM: IRC-[input["sender"]]-&gt;[key_name(C)]: [input["msg"]]</b></font>"
+
+		C << 'sound/effects/adminhelp.ogg'
+		C << prefix_mess
+		C << message
+		C << suffix_mess
+
+
+		for(var/client/A in clients)
+			if(A != C)
+				if(A.holder)
+					A << amessage
+
+		return "Message Successful"
 	else if (copytext(T,1,9) == "announce")
 		var/input[] = params2list(T)
 		if(global.comms_allowed)
