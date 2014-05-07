@@ -1027,7 +1027,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 				air_master.mark_for_update(T2)*/
 
 	for(var/obj/O in doors)
-		O.update_nearby_tiles()
+		O:update_nearby_tiles()
 
 
 
@@ -1184,7 +1184,7 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 				air_master.mark_for_update(T1)*/
 
 	for(var/obj/O in doors)
-		O.update_nearby_tiles()
+		O:update_nearby_tiles()
 
 
 
