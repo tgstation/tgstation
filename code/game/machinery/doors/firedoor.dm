@@ -272,8 +272,11 @@
 
 		update_heat_protection(loc)
 
-		if(istype(source)) air_master.tiles_to_update += source
-		if(istype(destination)) air_master.tiles_to_update += destination
+		if (istype(source))
+			air_master.mark_for_update(source)
+
+		if (istype(destination))
+			air_master.mark_for_update(destination)
 		return 1
 
 

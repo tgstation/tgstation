@@ -357,11 +357,11 @@
 
 	update_heat_protection(loc)
 
-	if(istype(source)) air_master.tiles_to_update += source
-	if(istype(north)) air_master.tiles_to_update += north
-	if(istype(south)) air_master.tiles_to_update += south
-	if(istype(east)) air_master.tiles_to_update += east
-	if(istype(west)) air_master.tiles_to_update += west
+	if(istype(source)) air_master.mark_for_update(source)
+	if(istype(north)) air_master.mark_for_update(north)
+	if(istype(south)) air_master.mark_for_update(south)
+	if(istype(east)) air_master.mark_for_update(east)
+	if(istype(west)) air_master.mark_for_update(west)
 
 	if(width > 1)
 		var/turf/simulated/next_turf = src
@@ -374,9 +374,9 @@
 
 			update_heat_protection(next_turf)
 
-			if(istype(north)) air_master.tiles_to_update |= north
-			if(istype(south)) air_master.tiles_to_update |= south
-			if(istype(east)) air_master.tiles_to_update |= east
+			if(istype(north)) air_master.mark_for_update(north)
+			if(istype(south)) air_master.mark_for_update(south)
+			if(istype(east)) air_master.mark_for_update(east)
 	update_freelok_sight()
 	return 1
 
