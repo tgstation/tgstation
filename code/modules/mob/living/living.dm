@@ -442,9 +442,11 @@ mob/living/proc/cuff_resist(obj/item/I, mob/living/carbon/C)
 	var/breakouttime = 600
 	var/displaytime = 1 
 	if(istype(I, /obj/item/weapon/handcuffs))
-		breakouttime = C.handcuffed.breakouttime
+		var/obj/item/weapon/handcuffs/HC = C.handcuffed
+		breakouttime = HC.breakouttime
 	else if(istype(I, /obj/item/weapon/legcuffs))
-		breakouttime = C.legcuffed.breakouttime
+		var/obj/item/weapon/legcuffs/LC = C.legcuffed
+		breakouttime = LC.breakouttime
 	displaytime = breakouttime / 600
 
 	if(isalienadult(C) || HULK in usr.mutations)
