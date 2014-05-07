@@ -27,7 +27,7 @@
 
 //Looks like copy/pasted code... I doubt 'need_rebuild' is even used here - Nodrak
 /obj/machinery/shield/proc/update_nearby_tiles(need_rebuild)
-	if(!air_master)
+	if(isnull(air_master))
 		return 0
 
 	air_master.mark_for_update(get_turf(src))
