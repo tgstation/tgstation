@@ -188,6 +188,23 @@
 /mob/living/carbon/alien/getTrail()
 	return "xltrails"
 
+/mob/living/carbon/alien/cuff_break(obj/item/I, mob/living/carbon/C)
+
+	playsound(C, 'sound/voice/hiss5.ogg', 40, 1, 1)  //Alien roars when breaking free.
+	
+	C.visible_message("<span class='danger'>[C] manages to break [I]!</span>", \
+			"<span class='notice'>You successfully break [I].</span>")
+
+	qdel(I)
+
+	if(C.handcuffed)
+
+		C.update_inv_handcuffed(0)
+		C.handcuffed = null
+	else
+		C.update_inv_legcuffed(0)
+		C.legcuffed = null
+
 /*----------------------------------------
 Proc: AddInfectionImages()
 Des: Gives the client of the alien an image on each infected mob.
