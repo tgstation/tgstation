@@ -103,7 +103,7 @@
 		message = replacetext(message,"whore","lady")
 		message = replacetext(message,"nerd","smart guy")
 		message = replacetext(message,"moron","fun person")
-		message = replacetext(message,"IT'S LOOSE","EVERYTHING IS FINE, STOP RUNNING")
+		message = replacetext(message,"IT'S LOOSE","EVERYTHING IS FINE")
 		message = replacetext(message,"rape","hug fight")
 		message = replacetext(message,"idiot","genius")
 		message = replacetext(message,"fat","thin")
@@ -118,6 +118,11 @@
 		message = replacetext(message,"slut","tease")
 		message = replacetext(message,"ass","butt")
 		message = replacetext(message,"damn","dang")
+		message = replacetext(message,"fuck","")
+		message = replacetext(message,"penis","privates")
+		message = replacetext(message,"cunt","privates")
+		message = replacetext(message,"dick","jerk")
+		message = replacetext(message,"vagina","privates)
 //		message += "[pick(":)",":^)",":*)")]"             : ^ (
 		if(prob(30))
 			message += " check your privilege."
