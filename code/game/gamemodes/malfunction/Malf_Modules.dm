@@ -67,7 +67,7 @@
 	set name = "Initiate Hostile Lockdown"
 
 	if(usr.stat == 2)
-		usr <<"You cannot disable lockdown because you are dead!"
+		usr <<"You cannot start a lockdown because you are dead!"
 		return
 
 	for(var/obj/machinery/firealarm/FA in machines) //activate firealarms
