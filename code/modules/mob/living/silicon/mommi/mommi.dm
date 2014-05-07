@@ -82,6 +82,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	switch(icontype)
 		if("Basic")		subtype = "mommi"
 		if("Keeper")	subtype = "keeper"
+		if("RepairBot")	subtype = "repairbot"
 		else			subtype = "replicator"
 	updateicon()
 	var/answer = input("Is this what you want?", "Mobile MMI", null) in list("Yes", "No")
