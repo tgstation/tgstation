@@ -71,7 +71,12 @@
 	#ifdef ZLEVELS
 	for(var/d = 1, d < 64, d *= 2)
 	#else
-	for(var/d = 1, d < 16, d *= 2)
+	//for(var/d = 1, d < 16, d *= 2)
+	var/d
+	var/index
+
+	for (index = 1, index <= cardinal.len, index++)
+		d = cardinal[index]
 	#endif
 
 		var/turf/unsim = get_step(src, d)
