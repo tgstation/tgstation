@@ -117,6 +117,7 @@
 		message = replacetext(message,"crap","poo")
 		message = replacetext(message,"slut","tease")
 		message = replacetext(message,"ass","butt")
+		message = replacetext(message,"damn","dang")
 //		message += "[pick(":)",":^)",":*)")]"             : ^ (
 		if(prob(30))
 			message += " check your privilege."
