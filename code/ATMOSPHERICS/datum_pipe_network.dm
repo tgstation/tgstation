@@ -54,7 +54,6 @@ datum/pipe_network
 		for(var/datum/pipeline/line_member in giver.line_members)
 			line_member.network = src
 
-		del(giver)
 
 		update_network_gases()
 		return 1
