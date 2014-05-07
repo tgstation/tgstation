@@ -422,7 +422,7 @@
     return null
 
 
-mob/living/proc/cuff_break(obj/item/I, mob/living/carbon/C)
+/mob/living/proc/cuff_break(obj/item/I, mob/living/carbon/C)
 
 	C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		
@@ -438,7 +438,7 @@ mob/living/proc/cuff_break(obj/item/I, mob/living/carbon/C)
 		C.legcuffed = null
 		
 		
-mob/living/proc/cuff_resist(obj/item/I, mob/living/carbon/C)
+/mob/living/proc/cuff_resist(obj/item/I, mob/living/carbon/C)
 	var/breakouttime = 600
 	var/displaytime = 1 
 	if(istype(I, /obj/item/weapon/handcuffs))
