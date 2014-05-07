@@ -8010,7 +8010,7 @@
 "cYb" = (/turf/simulated/floor/airless{dir = 10; icon_state = "warning"},/area/tcommsat/chamber)
 "cYc" = (/obj/structure/grille,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/derelict/bridge/access)
 "cYd" = (/turf/simulated/floor/airless{dir = 6; icon_state = "warning"},/area/tcommsat/chamber)
-"cYe" = (/obj/structure/table/woodentable,/obj/item/weapon/tray,/obj/item/weapon/reagent_containers/food/snacks/burger/spell,/turf/unsimulated/floor{dir = 10; icon_state = "carpetside"},/area/wizard_station)
+"cYe" = (/obj/structure/table/woodentable,/obj/item/weapon/storage/bag/tray,/obj/item/weapon/reagent_containers/food/snacks/burger/spell,/turf/unsimulated/floor{dir = 10; icon_state = "carpetside"},/area/wizard_station)
 "cYf" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/tcommsat/chamber)
 "cYg" = (/obj/machinery/door/airlock/hatch,/turf/simulated/floor,/area/tcommsat/chamber)
 "cYh" = (/turf/simulated/floor{dir = 9; icon_state = "warning"},/area/tcommsat/chamber)

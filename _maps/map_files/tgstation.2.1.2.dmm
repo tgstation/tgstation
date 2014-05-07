@@ -6497,7 +6497,7 @@
 "cuW" = (/obj/structure/table,/obj/item/device/sbeacondrop/bomb,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/syndicate_station/start)
 "cuX" = (/obj/structure/bookcase{name = "bookcase (Tactics)"},/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
 "cuY" = (/obj/item/device/radio/intercom{desc = "Talk through this. Evilly"; freerange = 1; frequency = 1213; name = "Syndicate Intercom"; pixel_x = 32; subspace_transmission = 1; syndie = 1},/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
-"cuZ" = (/obj/structure/table/woodentable,/obj/item/weapon/tray,/obj/item/weapon/reagent_containers/food/snacks/burger/spell,/turf/unsimulated/floor{dir = 10; icon_state = "carpetside"},/area/wizard_station)
+"cuZ" = (/obj/structure/table/woodentable,/obj/item/weapon/storage/bag/tray,/obj/item/weapon/reagent_containers/food/snacks/burger/spell,/turf/unsimulated/floor{dir = 10; icon_state = "carpetside"},/area/wizard_station)
 "cva" = (/turf/unsimulated/floor{dir = 2; icon_state = "carpetside"},/area/wizard_station)
 "cvb" = (/obj/structure/table/woodentable,/obj/effect/landmark{name = "Teleport-Scroll"},/turf/unsimulated/floor{dir = 6; icon_state = "carpetside"},/area/wizard_station)
 "cvc" = (/obj/machinery/recharger{pixel_y = 4},/obj/effect/landmark{name = "tdome2"},/turf/unsimulated/floor{name = "plating"},/area/tdome/tdome2)
