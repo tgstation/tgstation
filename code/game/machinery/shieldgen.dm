@@ -13,7 +13,7 @@
 /obj/machinery/shield/New()
 	src.dir = pick(1,2,3,4)
 	..()
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles()
 
 /obj/machinery/shield/Destroy()
 	opacity = 0
@@ -26,8 +26,8 @@
 	else return ..()
 
 //Looks like copy/pasted code... I doubt 'need_rebuild' is even used here - Nodrak
-/obj/machinery/shield/proc/update_nearby_tiles(need_rebuild)
-	if(isnull(air_master))
+/obj/machinery/shield/proc/update_nearby_tiles()
+	if (isnull(air_master))
 		return 0
 
 	air_master.mark_for_update(get_turf(src))

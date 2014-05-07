@@ -276,10 +276,10 @@
 		usr << "It is fastened to the floor therefore you can't rotate it!"
 		return 0
 
-	update_nearby_tiles(need_rebuild=1) //Compel updates before
+	update_nearby_tiles() //Compel updates before
 	dir = turn(dir, 90)
 //	updateSilicate()
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles()
 	ini_dir = dir
 	return
 
@@ -293,10 +293,10 @@
 		usr << "It is fastened to the floor therefore you can't rotate it!"
 		return 0
 
-	update_nearby_tiles(need_rebuild=1) //Compel updates before
+	update_nearby_tiles() //Compel updates before
 	dir = turn(dir, 270)
 //	updateSilicate()
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles()
 	ini_dir = dir
 	return
 
@@ -324,7 +324,7 @@
 
 	ini_dir = dir
 
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles()
 	update_nearby_icons()
 
 	return
@@ -340,15 +340,15 @@
 
 
 /obj/structure/window/Move()
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles()
 	..()
 	dir = ini_dir
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles()
 
 
 //This proc has to do with airgroups and atmos, it has nothing to do with smoothwindows, that's update_nearby_tiles().
-/obj/structure/window/proc/update_nearby_tiles(need_rebuild)
-	if(isnull(air_master))
+/obj/structure/window/proc/update_nearby_tiles()
+	if (isnull(air_master))
 		return 0
 
 	air_master.mark_for_update(get_turf(src))

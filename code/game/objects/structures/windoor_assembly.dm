@@ -29,7 +29,7 @@ obj/structure/windoor_assembly
 obj/structure/windoor_assembly/New(dir=NORTH)
 	..()
 	src.ini_dir = src.dir
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles()
 
 obj/structure/windoor_assembly/Destroy()
 	density = 0
@@ -257,12 +257,12 @@ obj/structure/windoor_assembly/Destroy()
 		usr << "It is fastened to the floor; therefore, you can't rotate it!"
 		return 0
 	if(src.state != "01")
-		update_nearby_tiles(need_rebuild=1) //Compel updates before
+		update_nearby_tiles() //Compel updates before
 
 	src.dir = turn(src.dir, 270)
 
 	if(src.state != "01")
-		update_nearby_tiles(need_rebuild=1)
+		update_nearby_tiles()
 
 	src.ini_dir = src.dir
 	update_icon()
@@ -284,8 +284,8 @@ obj/structure/windoor_assembly/Destroy()
 	update_icon()
 	return
 
-/obj/structure/windoor_assembly/proc/update_nearby_tiles(need_rebuild)
-	if(isnull(air_master))
+/obj/structure/windoor_assembly/proc/update_nearby_tiles()
+	if (isnull(air_master))
 		return 0
 
 	air_master.mark_for_update(get_turf(src))

@@ -303,7 +303,7 @@
 			bound_width = world.icon_size
 			bound_height = width * world.icon_size
 
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles()
 	return
 
 /obj/machinery/door/Destroy()
@@ -346,8 +346,8 @@
 /obj/machinery/door/proc/requiresID()
 	return 1
 
-/obj/machinery/door/proc/update_nearby_tiles(need_rebuild)
-	if(isnull(air_master))
+/obj/machinery/door/proc/update_nearby_tiles()
+	if (isnull(air_master))
 		return 0
 
 	var/T

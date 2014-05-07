@@ -832,14 +832,14 @@ steam.start() -- spawns the effect
 
 	New()
 		..()
-		update_nearby_tiles(1)
+		update_nearby_tiles()
 
 
 
 	Destroy()
 
 		density = 0
-		update_nearby_tiles(1)
+		update_nearby_tiles()
 		..()
 
 	proc/updateicon()
@@ -902,8 +902,8 @@ steam.start() -- spawns the effect
 		return !density
 
 
-	proc/update_nearby_tiles(need_rebuild)
-		if(isnull(air_master))
+	proc/update_nearby_tiles()
+		if (isnull(air_master))
 			return 0
 
 		air_master.mark_for_update(get_turf(src))

@@ -20,7 +20,7 @@
 		..()
 		icon_state = mineralType
 		name = "[mineralType] door"
-		update_nearby_tiles(need_rebuild=1)
+		update_nearby_tiles()
 
 	Destroy()
 		update_nearby_tiles()
@@ -155,8 +155,8 @@
 				CheckHardness()
 		return
 
-	proc/update_nearby_tiles(need_rebuild) //Copypasta from airlock code
-		if(isnull(air_master))
+	proc/update_nearby_tiles() //Copypasta from airlock code
+		if (isnull(air_master))
 			return 0
 
 		air_master.mark_for_update(get_turf(src))
