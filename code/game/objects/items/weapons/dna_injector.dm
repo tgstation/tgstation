@@ -1068,3 +1068,23 @@
 	New()
 		block = MELTBLOCK
 		..()
+
+/obj/item/weapon/dnainjector/smile
+	name = "DNA-Injector (Smile)"
+	desc = ":)"
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 14
+	New()
+		block = SMILEBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antismile
+	name = "DNA-Injector (Anti-Smile)"
+	desc = ":("
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 14
+	New()
+		block = SMILEBLOCK
+		..()
