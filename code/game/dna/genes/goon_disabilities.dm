@@ -154,11 +154,12 @@
 		
 		if(prob(50))
 			return ""
-			M.emote(pick("rambles to themselves", "begins to drunkingly sway about, randomly talking to themselves.") //PLS
-		return message
+			M.emote(pick("rambles to themselves","begins talking to themselves.") //PLS
+		else
+			return message
 	
 	OnMobLife(var/mob/M)
-		switch(pick(1,2)
+		switch(pick(1,2))
 			if(1)
 				var/list/dancemoves = list("funky", "fancy", "stylish", "20'th century", "groovy", "funkadelic", "groovetastic", "salacious")
 				var/dancemoves = pick(dancemoves)
