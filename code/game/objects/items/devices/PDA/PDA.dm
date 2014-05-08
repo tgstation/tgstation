@@ -166,6 +166,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	note = "Congratulations, you have chosen the Thinktronic 5230 Personal Data Assistant Deluxe Special Max Turbo Limited Edition!"
 
 /obj/item/device/pda/chef
+	default_cartridge = /obj/item/weapon/cartridge/chef
 	icon_state = "pda-chef"
 
 /obj/item/device/pda/bar

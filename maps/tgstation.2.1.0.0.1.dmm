@@ -1711,7 +1711,7 @@
 "aGU" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/structure/disposalpipe/junction{dir = 4},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/turf/simulated/floor/plating,/area/maintenance/fsmaint2)
 "aGV" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{dir = 1},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/disposalpipe/sortjunction{dir = 4; sortType = 19},/turf/simulated/floor/plating,/area/maintenance/fsmaint2)
 "aGW" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/table,/obj/item/weapon/reagent_containers/food/snacks/snackbar/nutriment,/turf/simulated/floor{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
-"aGX" = (/obj/structure/table,/turf/simulated/floor{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
+"aGX" = (/obj/structure/table,/obj/item/weapon/cartridge/chef,/turf/simulated/floor{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
 "aGY" = (/obj/machinery/camera{c_tag = "Kitchen Cold Room"},/obj/structure/table,/obj/item/weapon/reagent_containers/glass/beaker{pixel_x = 5},/turf/simulated/floor{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
 "aGZ" = (/obj/machinery/door/window/southleft{name = "Kitchen Delivery"; req_access_txt = "28"},/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor{icon_state = "delivery"},/area/crew_quarters/kitchen)
 "aHa" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 8},/turf/simulated/floor{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
