@@ -32,6 +32,9 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	if(severity == 1) // Very sturdy.
 		set_broken()
 
+/obj/machinery/gravity_generator/blob_act()
+	set_broken()
+
 /obj/machinery/gravity_generator/meteorhit()
 	return
 
@@ -294,10 +297,8 @@ var/const/GRAV_NEEDS_WRENCH = 3
 			message_admins("The gravity generator was brought offline with no backup generator. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
 
 	update_icon()
-	update_list()
+	update_list(alert)
 	src.updateUsrDialog()
-	if(alert)
-		shake_everyone()
 
 // Charge/Discharge and turn on/off gravity when you reach 0/100 percent.
 // Also emit radiation and handle the overlays.
@@ -348,15 +349,19 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		L.apply_effect(20, IRRADIATE)
 
 // Shake everyone on the z level to let them know that gravity was enagaged/disenagaged.
-/obj/machinery/gravity_generator/main/proc/shake_everyone()
+// Update their gravity floatness
+/obj/machinery/gravity_generator/main/proc/check_everyone(var/alert)
+	if(!ticker)
+		return
 	var/turf/our_turf = get_turf(src)
-	for(var/mob/M in player_list)
+	for(var/mob/M in mob_list)
 		var/turf/their_turf = get_turf(M)
-		if(M.client && their_turf.z == our_turf.z)
+		M.update_gravity(M.mob_has_gravity(their_turf))
+		if(alert && M.client && their_turf.z == our_turf.z)
 			shake_camera(M, 15, 1)
 			M.playsound_local(our_turf, 'sound/effects/alert.ogg', 100, 1, 0.5)
 
-/obj/machinery/gravity_generator/main/proc/gravity_in_level()
+/obj/machinery/gravity_generator/main/proc/gravity_in_level(var/alert)
 	var/turf/T = get_turf(src)
 	if(!T)
 		return 0
@@ -364,7 +369,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		return length(gravity_generators["[T.z]"])
 	return 0
 
-/obj/machinery/gravity_generator/main/proc/update_list()
+/obj/machinery/gravity_generator/main/proc/update_list(var/alert)
 	var/turf/T = get_turf(src.loc)
 	if(T)
 		if(!gravity_generators["[T.z]"])
@@ -373,6 +378,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 			gravity_generators["[T.z]"] |= src
 		else
 			gravity_generators["[T.z]"] -= src
+	check_everyone(alert)
 
 // Misc
 

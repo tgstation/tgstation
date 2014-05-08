@@ -107,20 +107,15 @@
 
 	var/loopsanity = 100
 	if(ismob(M))
-		if(!M:lastarea)
-			M:lastarea = get_area(M.loc)
-		if(!has_gravity(M))
-			inertial_drift(M)
-
-	/*
-		if(M.flags & NOGRAV)
-			inertial_drift(M)
-	*/
-
-
-
+		var/mob/O = M
+		if(!O.lastarea)
+			O.lastarea = get_area(O.loc)
+		var/has_gravity = O.mob_has_gravity(src)
+		O.update_gravity(has_gravity)
+		if(!has_gravity)
+			inertial_drift(O)
 		else if(!istype(src, /turf/space))
-			M:inertia_dir = 0
+			O.inertia_dir = 0
 	..()
 	var/objects = 0
 	for(var/atom/A as mob|obj|turf|area in range(1))
