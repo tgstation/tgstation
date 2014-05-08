@@ -150,7 +150,7 @@
 		message = replacetext(message,"out of","outta")
 		message = replacetext(message,"thanks","thank you very much")
 		message = replacetext(message,"what are you","whatcha")
-		message = replacetext(message,"yes",pick("sure", "yea")
+		message = replacetext(message,"yes",pick("sure", "yea"))
 		
 		if(prob(50))
 			return ""
