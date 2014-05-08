@@ -746,6 +746,10 @@ proc/process_ghost_teleport_locs()
 	name = "Auxiliary Cyborg Recharge"
 	icon_state = "auxcharge"
 
+/area/maintenance/ghettobar
+	name = "Ghetto Bar"
+	icon_state = "ghettobar"
+
 //Hallway
 
 /area/hallway/primary/fore
