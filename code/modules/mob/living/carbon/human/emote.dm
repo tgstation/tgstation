@@ -205,9 +205,8 @@
 					m_type = 2
 
 		if ("deathgasp")
-/*			if (M_ELVIS in M.mutations)
+			if(M_ELVIS in mutations)
 				message = "<B>[src]<B> has left the building..."
-*/
 			message = "<B>[src]</B> seizes up and falls limp, \his eyes dead and lifeless..."
 			m_type = 1
 			
