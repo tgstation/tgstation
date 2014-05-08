@@ -831,7 +831,7 @@
 		if(armor >= 100)	return 0
 		var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
-		apply_damage(I.force, I.damtype, affecting, armor , I)
+		apply_damage(I.force, I.damtype, affecting, armor, H)
 
 		var/bloody = 0
 		if(((I.damtype == BRUTE) && prob(25 + (I.force * 2))))
@@ -921,7 +921,7 @@
 
 		return
 
-	proc/apply_damage(var/damage = 0, var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0, var/mob/living/carbon/human/H)
+	proc/apply_damage(var/damage, var/damagetype = BRUTE, var/def_zone = null, var/blocked, var/mob/living/carbon/human/H)
 		blocked = (100-(blocked+armor))/100
 		if(blocked <= 0)	return 0
 
@@ -944,6 +944,14 @@
 				H.damageoverlaytemp = 20
 				if(organ.take_damage(0, damage*burnmod))
 					H.update_damage_overlays(0)
+			if(TOX)
+				H.adjustToxLoss(damage * blocked)
+			if(OXY)
+				H.adjustOxyLoss(damage * blocked)
+			if(CLONE)
+				H.adjustCloneLoss(damage * blocked)
+			if(STAMINA)
+				H.adjustStaminaLoss(damage * blocked)
 
 	proc/on_hit(var/obj/item/projectile/proj_type, var/mob/living/carbon/human/H)
 		// called when hit by a projectile
@@ -1221,10 +1229,10 @@
 						H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
 						H.fire_alert = max(H.fire_alert, 1)
 					if(120 to 200)
-						apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
+						H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
 						H.fire_alert = max(H.fire_alert, 1)
 					if(-INFINITY to 120)
-						apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
+						H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
 						H.fire_alert = max(H.fire_alert, 1)
 
 		// Account for massive pressure differences.  Done by Polymorph

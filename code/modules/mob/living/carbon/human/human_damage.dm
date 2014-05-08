@@ -163,37 +163,38 @@ mob/living/carbon/human/proc/hat_fall_prob()
 
 
 /mob/living/carbon/human/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0)
-	if((damagetype != BRUTE) && (damagetype != BURN))
-		..(damage, damagetype, def_zone, blocked)
-		return 1
-
-	if(dna && dna.species)	// if you have a species, it will run the apply_damage code there instead
+	if(dna)	// if you have a species, it will run the apply_damage code there instead
 		dna.species.apply_damage(damage, damagetype, def_zone, blocked, src)
-	else // if not... well, this is the default code *SHRUG*
-		blocked = (100-blocked)/100
-		if(blocked <= 0)	return 0
+	else
+		if((damagetype != BRUTE) && (damagetype != BURN))
+			..(damage, damagetype, def_zone, blocked)
+			return 1
 
-		var/obj/item/organ/limb/organ = null
-		if(isorgan(def_zone))
-			organ = def_zone
 		else
-			if(!def_zone)	def_zone = ran_zone(def_zone)
-			organ = get_organ(check_zone(def_zone))
-		if(!organ)	return 0
+			blocked = (100-blocked)/100
+			if(blocked <= 0)	return 0
 
-		damage = (damage * blocked)
+			var/obj/item/organ/limb/organ = null
+			if(isorgan(def_zone))
+				organ = def_zone
+			else
+				if(!def_zone)	def_zone = ran_zone(def_zone)
+				organ = get_organ(check_zone(def_zone))
+			if(!organ)	return 0
 
-		switch(damagetype)
-			if(BRUTE)
-				damageoverlaytemp = 20
-				if(organ.take_damage(damage, 0))
-					update_damage_overlays(0)
-			if(BURN)
-				damageoverlaytemp = 20
-				if(organ.take_damage(0, damage))
-					update_damage_overlays(0)
+			damage = (damage * blocked)
 
-	// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().
+			switch(damagetype)
+				if(BRUTE)
+					damageoverlaytemp = 20
+					if(organ.take_damage(damage, 0))
+						update_damage_overlays(0)
+				if(BURN)
+					damageoverlaytemp = 20
+					if(organ.take_damage(0, damage))
+						update_damage_overlays(0)
 
-	updatehealth()
+		// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().
+
+		updatehealth()
 	return 1
