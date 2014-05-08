@@ -132,7 +132,7 @@
 // WAS: /datum/bioEffect/elvis
 /datum/dna/gene/disability/speech/elvis
 	name = "Elvis"
-	desc = "Forces the language center of the subject's brain to talk like the King of Rock and Roll."
+	desc = "Forces the language center and primary motor cortex of the subject's brain to talk and act like the King of Rock and Roll."
 	activation_message = "You feel pretty good, honeydoll."
 	deactivation_message = "You feel a little less conversation would be great."
 
