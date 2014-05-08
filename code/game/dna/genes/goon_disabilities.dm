@@ -154,9 +154,8 @@
 		
 		if(prob(50))
 			return ""
-			M.emote(pick("rambles to themselves", "begins to drunkingly sway about, randomly talking to themselves."//PLS
-		else
-			return message
+			M.emote(pick("rambles to themselves", "begins to drunkingly sway about, randomly talking to themselves.") //PLS
+		return message
 	
 	OnMobLife(var/mob/M)
 		switch(pick(1,2)
