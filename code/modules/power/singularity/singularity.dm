@@ -537,7 +537,8 @@ var/global/list/uneatable = list(
 
 	if(istype(A,/mob/living/))
 		var/mob/living/C = A
-		C.dust()
+		C.spawn_dust()
+		C.gib()
 
 	if(isturf(A))
 		var/turf/T = A

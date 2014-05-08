@@ -95,7 +95,7 @@
 
 
 /obj/structure/closet/secure_closet/CMO
-	name = "chief medical officer's locker"
+	name = "\proper chief medical officer's locker"
 	req_access = list(access_cmo)
 	icon_state = "cmosecure1"
 	icon_closed = "cmosecure"

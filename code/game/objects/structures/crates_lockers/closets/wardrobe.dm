@@ -39,7 +39,7 @@
 	return
 
 /obj/structure/closet/wardrobe/hos
-	name = "head of security wardrobe"
+	name = "\proper head of security's wardrobe"
 	icon_state = "red"
 	icon_closed = "red"
 
@@ -200,7 +200,7 @@
 
 
 /obj/structure/closet/wardrobe/pjs
-	name = "Pajama wardrobe"
+	name = "pajama wardrobe"
 	icon_state = "white"
 	icon_closed = "white"
 

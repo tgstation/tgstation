@@ -193,6 +193,7 @@ obj/item/weapon/twohanded/
 	force_wielded = 34
 	wieldsound = 'sound/weapons/saberon.ogg'
 	unwieldsound = 'sound/weapons/saberoff.ogg'
+	hitsound = "swing_hit"
 	flags = NOSHIELD
 	origin_tech = "magnets=3;syndicate=4"
 	item_color = "green"
@@ -229,15 +230,18 @@ obj/item/weapon/twohanded/
 	else
 		return 0
 
-/obj/item/weapon/twohanded/dualsaber/wield() //Specific wield () hulk checks due to reflect_chance var for balance issues
-	wielded = 1
+/obj/item/weapon/twohanded/dualsaber/wield() //Specific wield () hulk checks due to reflect_chance var for balance issues and switches hitsounds.
+	..()
 	var/mob/living/M = loc
 	if(istype(loc, /mob/living))
 		if (HULK in M.mutations)
 			loc << "<span class='warning'>You lack the grace to wield this to its full extent.</span>"
-	force = force_wielded
-	name = "[initial(name)] (Wielded)"
-	update_icon()
+	hitsound = 'sound/weapons/blade1.ogg' 
+
+
+/obj/item/weapon/twohanded/dualsaber/unwield() //Specific unwield () to switch hitsounds.
+	..()
+	hitsound = "swing_hit"
 
 /obj/item/weapon/twohanded/dualsaber/IsReflect()
 	if(wielded)

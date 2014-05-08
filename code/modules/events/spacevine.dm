@@ -55,11 +55,19 @@
 /datum/spacevine_mutation/proc/on_buckle(obj/effect/spacevine/holder, mob/living/buckled)
 	return
 
-/datum/spacevine_mutation/toxity
-	name = "toxity"
-	hue = "ff00ff"
+/datum/spacevine_mutation/light
+	name = "light"
+	hue = "#ffff00"
 
-/datum/spacevine_mutation/toxity/on_cross(obj/effect/spacevine/holder, mob/living/crosser)
+/datum/spacevine_mutation/light/on_grow(obj/effect/spacevine/holder)
+	if(prob(10*severity))
+		holder.luminosity = 4
+
+/datum/spacevine_mutation/toxicity
+	name = "toxicity"
+	hue = "#ff00ff"
+
+/datum/spacevine_mutation/toxicity/on_cross(obj/effect/spacevine/holder, mob/living/crosser)
 	if(issilicon(crosser))
 		return
 	if(prob(severity))
@@ -67,27 +75,27 @@
 			crosser << "<span class='alert'>You accidently touch the vine and feel a strange sensation.</span>"
 		crosser.adjustToxLoss(5)
 
-/datum/spacevine_mutation/toxity/on_eat(obj/effect/spacevine/holder, mob/living/eater)
+/datum/spacevine_mutation/toxicity/on_eat(obj/effect/spacevine/holder, mob/living/eater)
 	eater.adjustToxLoss(5)
 
-/datum/spacevine_mutation/expsolive  //OH SHIT IT CAN CHAINREACT RUN!!!
+/datum/spacevine_mutation/explosive  //OH SHIT IT CAN CHAINREACT RUN!!!
 	name = "explosive"
-	hue = "ffff00"
+	hue = "#ff0000"
 
-/datum/spacevine_mutation/expsolive/on_death(obj/effect/spacevine/holder, mob/hitter, obj/item/I)
-	spawn(1)
-		explosion(holder.loc, 0, 0, 2, 0)
+/datum/spacevine_mutation/explosive/on_death(obj/effect/spacevine/holder, mob/hitter, obj/item/I)
+	sleep(10)
+	explosion(holder.loc, 0, 0, 2, 0, 0)
 
 /datum/spacevine_mutation/fire_proof
 	name = "fire resist"
-	hue = "ffff88"
+	hue = "#ff8888"
 
 /datum/spacevine_mutation/fire_proof/process_temperature(obj/effect/spacevine/holder, temp, volume)
 	return 1
 
 /datum/spacevine_mutation/vine_eating
 	name = "vine eating"
-	hue = "ff7777"
+	hue = "#ff7700"
 
 /datum/spacevine_mutation/vine_eating/on_spread(obj/effect/spacevine/holder, turf/target)
 	var/obj/effect/spacevine/prey = locate() in target
@@ -96,7 +104,7 @@
 
 /datum/spacevine_mutation/aggressive_spread  //very OP, but im out of other ideas currently
 	name = "aggressive spreading"
-	hue = "777777"
+	hue = "#333333"
 	severity = 3
 
 /datum/spacevine_mutation/aggressive_spread/on_spread(obj/effect/spacevine/holder, turf/target)
@@ -104,7 +112,7 @@
 		if(!istype(A, /obj/effect))
 			A.ex_act(severity)  //To not be the same as self-eating vine
 
-/datum/spacevine_mutation/agressive_spread/on_buckle(obj/effect/spacevine/holder, mob/living/buckled)
+/datum/spacevine_mutation/aggressive_spread/on_buckle(obj/effect/spacevine/holder, mob/living/buckled)
 	buckled.ex_act(severity)
 
 /datum/spacevine_mutation/transparency
@@ -121,8 +129,9 @@
 
 /datum/spacevine_mutation/oxy_eater/process_mutation(obj/effect/spacevine/holder)
 	var/turf/simulated/floor/T = holder.loc
-	var/datum/gas_mixture/GM = T.air
-	GM.oxygen = max(0, GM.oxygen - severity * 0.5 * holder.energy)
+	if(istype(T))
+		var/datum/gas_mixture/GM = T.air
+		GM.oxygen = max(0, GM.oxygen - severity * holder.energy)
 
 /datum/spacevine_mutation/nitro_eater
 	name = "nitrogen consumption"
@@ -130,8 +139,9 @@
 
 /datum/spacevine_mutation/nitro_eater/process_mutation(obj/effect/spacevine/holder)
 	var/turf/simulated/floor/T = holder.loc
-	var/datum/gas_mixture/GM = T.air
-	GM.nitrogen = max(0, GM.nitrogen - severity * 0.5 * holder.energy)
+	if(istype(T))
+		var/datum/gas_mixture/GM = T.air
+		GM.nitrogen = max(0, GM.nitrogen - severity * holder.energy)
 
 /datum/spacevine_mutation/carbondioxide_eater
 	name = "CO2 consumption"
@@ -139,8 +149,9 @@
 
 /datum/spacevine_mutation/carbondioxide_eater/process_mutation(obj/effect/spacevine/holder)
 	var/turf/simulated/floor/T = holder.loc
-	var/datum/gas_mixture/GM = T.air
-	GM.carbon_dioxide = max(0, GM.carbon_dioxide - severity * 0.5 * holder.energy)
+	if(istype(T))
+		var/datum/gas_mixture/GM = T.air
+		GM.carbon_dioxide = max(0, GM.carbon_dioxide - severity * holder.energy)
 
 /datum/spacevine_mutation/plasma_eater
 	name = "toxins consumption"
@@ -148,8 +159,9 @@
 
 /datum/spacevine_mutation/plasma_eater/process_mutation(obj/effect/spacevine/holder)
 	var/turf/simulated/floor/T = holder.loc
-	var/datum/gas_mixture/GM = T.air
-	GM.toxins = max(0, GM.toxins - severity * 0.5 * holder.energy)
+	if(istype(T))
+		var/datum/gas_mixture/GM = T.air
+		GM.toxins = max(0, GM.toxins - severity * holder.energy)
 
 /datum/spacevine_mutation/thorns
 	name = "thorns"
@@ -214,6 +226,7 @@
 			if(!master.vines.len)
 				var/obj/item/seeds/kudzuseed/KZ = new(loc)
 				KZ.mutations |= mutations
+		mutations = list()
 		..()
 
 /obj/effect/spacevine/proc/on_chem_effect(datum/reagent/R)
@@ -231,6 +244,7 @@
 	if(!override)
 		if(prob(10))
 			eater.say("Nom")
+		Destroy()
 
 /obj/effect/spacevine/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (!W || !user || !W.type) return

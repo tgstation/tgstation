@@ -167,7 +167,7 @@ datum/preferences
 				if(config.mutant_races)
 					dat += "<b>Mutant Race:</b><BR><a href='?_src_=prefs;preference=mutant_race;task=input'>[mutant_race]</a><BR>"
 				else
-					dat += "<b>Mutant Race:</b> human<BR>"
+					dat += "<b>Mutant Race:</b> Human<BR>"
 				dat += "<b>Blood Type:</b> [blood_type]<BR>"
 				dat += "<b>Skin Tone:</b><BR><a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
 				dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
@@ -257,7 +257,7 @@ datum/preferences
 		dat += "</center>"
 
 		//user << browse(dat, "window=preferences;size=560x560")
-		var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 580, 580)
+		var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 580, 600)
 		popup.set_content(dat)
 		popup.open(0)
 
