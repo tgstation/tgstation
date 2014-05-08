@@ -351,6 +351,12 @@
 				return 0
 		return 0 //Unsupported slot
 
+	proc/before_equip_job(var/datum/job/J, var/mob/living/carbon/human/H)
+		return
+
+	proc/after_equip_job(var/datum/job/J, var/mob/living/carbon/human/H)
+		return
+
 	proc/handle_chemicals(var/datum/reagent/chem, var/mob/living/carbon/human/H)
 		return 0
 
