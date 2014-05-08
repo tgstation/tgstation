@@ -152,13 +152,10 @@
 		message = replacetext(message,"what are you","whatcha")
 		message = replacetext(message,"yes",pick("sure", "yea")
 		
-/*		if(prob(50))
+		if(prob(50))
 			return ""
-			M.emote(pick("rambles to themselves","begins talking to themselves.") //PLS
+			M.emote(pick("rambles to themselves","begins talking to themselves.")) //PLS
 
-This is broken. -Heredth
-
-*/
 	OnMobLife(var/mob/M)
 		switch(pick(1,2))
 			if(1)
