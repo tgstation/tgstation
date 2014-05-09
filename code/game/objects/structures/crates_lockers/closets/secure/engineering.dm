@@ -26,7 +26,6 @@
 		new /obj/item/device/radio/headset/heads/ce(src)
 		new /obj/item/weapon/storage/toolbox/mechanical(src)
 		new /obj/item/clothing/suit/hazardvest(src)
-		new /obj/item/clothing/shoes/magboots/advance(src)
 		new /obj/item/weapon/airlock_painter(src)
 		new /obj/item/clothing/mask/gas(src)
 		new /obj/item/device/multitool(src)
