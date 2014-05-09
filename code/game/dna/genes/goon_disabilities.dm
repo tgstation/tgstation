@@ -151,6 +151,8 @@
 		message = replacetext(message,"thanks","thank you very much")
 		message = replacetext(message,"what are you","whatcha")
 		message = replacetext(message,"yes",pick("sure", "yea"))
+		message = replacetext(message,"faggot","square")
+		message = replacetext(message,"muh valids","getting my kicks")
 		
 		if(prob(50))
 			return ""
@@ -159,7 +161,7 @@
 	OnMobLife(var/mob/M)
 		switch(pick(1,2))
 			if(1)
-				var/list/dancetypes = list("funky", "fancy", "stylish", "20'th century", "groovy", "funkadelic", "groovetastic", "salacious")
+				var/list/dancetypes = list("swinging", "fancy", "stylish", "20'th century", "jivin'", "rock and roller", "cool", "salacious", "bashing")
 				var/dancemoves = pick(dancetypes)
 				M.visible_message("[M] busts out some [dancemoves] moves!")
 			if(2)
