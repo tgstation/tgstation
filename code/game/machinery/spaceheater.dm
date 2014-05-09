@@ -27,18 +27,13 @@
 			overlays  += "sheater-open"
 		return
 
-	examine()
-		set src in oview(12)
-		if (!( usr ))
-			return
+	examine(mob/user)
 		..()
-
-		usr << "The heater is [on ? "on" : "off"] and the hatch is [open ? "open" : "closed"]."
+		user << "The heater is [on ? "on" : "off"] and the hatch is [open ? "open" : "closed"]."
 		if(open)
-			usr << "The power cell is [cell ? "installed" : "missing"]."
+			user << "The power cell is [cell ? "installed" : "missing"]."
 		else
-			usr << "The charge meter reads [cell ? round(cell.percent(),1) : 0]%"
-		return
+			user << "The charge meter reads [cell ? round(cell.percent(),1) : 0]%"
 
 	emp_act(severity)
 		if(stat & (BROKEN|NOPOWER))

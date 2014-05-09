@@ -301,11 +301,10 @@
 		else
 			return ..()
 
-	examine()
-		set src in oview(1)
+	examine(mob/user)
 		..()
 		if(welded)
-			usr << "It seems welded shut."
+			user << "It seems welded shut."
 
 	power_change()
 		if(powered(power_channel))

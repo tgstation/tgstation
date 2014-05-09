@@ -658,15 +658,13 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		return get_mobs_in_view(canhear_range, src)
 
 
-/obj/item/device/radio/examine()
-	set src in view()
-
+/obj/item/device/radio/examine(mob/user)
 	..()
-	if ((in_range(src, usr) || loc == usr))
+	if ((in_range(src, user) || loc == user))
 		if (b_stat)
-			usr.show_message("\blue \the [src] can be attached and modified!")
+			user.show_message("<span class='notice'>\The [src] can be attached and modified.</span>")
 		else
-			usr.show_message("\blue \the [src] can not be modified or attached!")
+			user.show_message("<span class='notice'>\The [src] can not be modified or attached.</span>")
 	return
 
 /obj/item/device/radio/attackby(obj/item/weapon/W as obj, mob/user as mob)

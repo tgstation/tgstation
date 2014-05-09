@@ -28,10 +28,9 @@
 	user.update_inv_shoes(0)	//so our mob-overlays update
 
 
-/obj/item/clothing/shoes/magboots/examine()
-	set src in view()
+/obj/item/clothing/shoes/magboots/examine(mob/user)
 	..()
-	usr << "Its mag-pulse traction system appears to be [magpulse ? "enabled" : "disabled"]."
+	user << "Its mag-pulse traction system appears to be [magpulse ? "enabled" : "disabled"]."
 
 
 /obj/item/clothing/shoes/magboots/advance

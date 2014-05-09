@@ -33,15 +33,12 @@
 	brainmob << "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>"
 
 
-/obj/item/organ/brain/examine()
-	set src in oview(12)
-	if(!usr)	return
-
+/obj/item/organ/brain/examine(mob/user)
 	..()
 	if(brainmob && brainmob.client)
-		usr << "You can feel the small spark of life still left in this one."
+		user << "You can feel the small spark of life still left in this one."
 	else
-		usr << "This one seems particularly lifeless. Perhaps it will regain some of it's luster later.."
+		user << "This one seems particularly lifeless. Perhaps it will regain some of its luster later."
 
 
 /obj/item/organ/brain/attack(mob/living/carbon/M, mob/user)

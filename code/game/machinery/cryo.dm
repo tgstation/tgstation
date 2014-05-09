@@ -85,19 +85,19 @@
 	open_machine()
 	return
 
-/obj/machinery/atmospherics/unary/cryo_cell/examine()
+/obj/machinery/atmospherics/unary/cryo_cell/examine(mob/user)
 	..()
 
-	if(in_range(usr, src))
-		usr << "You can just about make out some loose objects floating in the murk:"
+	if(in_range(user, src))
+		user << "You can just about make out some loose objects floating in the murk:"
 		for(var/obj/O in src)
 			if(O != beaker)
-				usr << O.name
+				user << O.name
 		for(var/mob/M in src)
 			if(M != occupant)
-				usr << M.name
+				user << M.name
 	else
-		usr << "<span class='notice'>Too far away to view contents.</span>"
+		user << "<span class='notice'>Too far away to view contents.</span>"
 
 /obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user)
 	ui_interact(user)

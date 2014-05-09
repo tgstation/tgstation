@@ -33,7 +33,7 @@
 
 
 /obj/item/weapon/photo/attack_self(mob/user)
-	examine()
+	user.examine(src)
 
 
 /obj/item/weapon/photo/attackby(obj/item/weapon/P, mob/user)
@@ -45,15 +45,12 @@
 	..()
 
 
-/obj/item/weapon/photo/examine()
-	set src in oview(1)
-	if(is_blind(usr))	return
+/obj/item/weapon/photo/examine(mob/user)
+	..()
+	if(is_blind(user))	return
 
-	if(in_range(usr, src))
-		show(usr)
-		usr << desc
-	else
-		usr << "<span class='notice'>It is too far away.</span>"
+	if(in_range(user, src))
+		show(user)
 
 
 /obj/item/weapon/photo/proc/show(mob/user)

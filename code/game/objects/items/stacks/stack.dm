@@ -26,19 +26,17 @@
 		usr << browse(null, "window=stack")
 	..()
 
-/obj/item/stack/examine()
-	set src in view(1)
+/obj/item/stack/examine(mob/user)
 	..()
 	if(src.singular_name)
 		if(src.amount>1)
-			usr << "There are [src.amount] [src.singular_name]\s in the stack."
+			user << "There are [src.amount] [src.singular_name]\s in the stack."
 		else
-			usr << "There is [src.amount] [src.singular_name] in the stack."
+			user << "There is [src.amount] [src.singular_name] in the stack."
 	else if(src.amount>1)
-		usr << "There are [src.amount] in the stack."
+		user << "There are [src.amount] in the stack."
 	else
-		usr << "There is [src.amount] in the stack."
-	return
+		user << "There is [src.amount] in the stack."
 
 /obj/item/stack/attack_self(mob/user as mob)
 	interact(user)

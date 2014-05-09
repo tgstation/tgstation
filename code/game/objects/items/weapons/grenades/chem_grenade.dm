@@ -20,8 +20,7 @@
 	create_reagents(1000)
 
 
-/obj/item/weapon/grenade/chem_grenade/examine()
-	set src in usr
+/obj/item/weapon/grenade/chem_grenade/examine(mob/user)
 	display_timer = (stage == READY && !nadeassembly)	//show/hide the timer based on assembly state
 	..()
 

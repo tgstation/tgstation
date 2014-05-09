@@ -12,12 +12,9 @@
 	var/max_grenades = 3
 	m_amt = 2000
 
-	examine()
-		set src in view()
+	examine(mob/user)
 		..()
-		if(!(usr in view(2)) && usr != loc)
-			return
-		usr << "[grenades] / [max_grenades] grenades."
+		user << "[grenades] / [max_grenades] grenades loaded."
 
 	attackby(obj/item/I as obj, mob/user as mob)
 

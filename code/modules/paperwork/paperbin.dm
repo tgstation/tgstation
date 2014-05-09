@@ -74,13 +74,12 @@
 	update_icon()
 
 
-/obj/item/weapon/paper_bin/examine()
-	set src in oview(1)
+/obj/item/weapon/paper_bin/examine(mob/user)
 	..()
 	if(amount)
-		usr << "It contains " + (amount > 1 ? "[amount] papers" : " one paper")+"."
+		user << "It contains " + (amount > 1 ? "[amount] papers" : " one paper")+"."
 	else
-		usr << "It doesn't contain anything."
+		user << "It doesn't contain anything."
 
 
 /obj/item/weapon/paper_bin/update_icon()

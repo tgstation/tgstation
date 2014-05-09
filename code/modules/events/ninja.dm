@@ -2244,21 +2244,20 @@ ________________________________________________________________________________
 				U.drop_item()
 	return 0
 
-/obj/item/clothing/suit/space/space_ninja/examine()
-	set src in view()
+/obj/item/clothing/suit/space/space_ninja/examine(mob/user)
 	..()
 	if(s_initialized)
-		var/mob/living/carbon/human/U = affecting
-		if(s_control)
-			U << "All systems operational. Current energy capacity: <B>[cell.charge]</B>."
-			if(!kamikaze)
-				U << "The CLOAK-tech device is <B>[s_active?"active":"inactive"]</B>."
+		if(user == affecting)
+			if(s_control)
+				user << "All systems operational. Current energy capacity: <B>[cell.charge]</B>."
+				if(!kamikaze)
+					user << "The CLOAK-tech device is <B>[s_active?"active":"inactive"]</B>."
+				else
+					user << "<span class='userdanger'>KAMIKAZE MODE ENGAGED!</span>"
+				user << "There are <B>[s_bombs]</B> smoke bomb\s remaining."
+				user << "There are <B>[a_boost]</B> adrenaline booster\s remaining."
 			else
-				U << "\red KAMIKAZE MODE ENGAGED!"
-			U << "There are <B>[s_bombs]</B> smoke bombs remaining."
-			U << "There are <B>[a_boost]</B> adrenaline boosters remaining."
-		else
-			U <<  "�rr�R �a��a�� No-�-� f��N� 3RR�r"
+				user <<  "�rr�R �a��a�� No-�-� f��N� 3RR�r"
 
 /*
 ===================================================================================
@@ -2503,12 +2502,10 @@ ________________________________________________________________________________
 	U << "You <b>[candrain?"disable":"enable"]</b> special interaction."
 	candrain=!candrain
 
-/obj/item/clothing/gloves/space_ninja/examine()
-	set src in view()
+/obj/item/clothing/gloves/space_ninja/examine(mob/user)
 	..()
 	if(flags & NODROP)
-		var/mob/living/carbon/human/U = loc
-		U << "The energy drain mechanism is: <B>[candrain?"active":"inactive"]</B>."
+		user << "The energy drain mechanism is: <B>[candrain?"active":"inactive"]</B>."
 
 /*
 ===================================================================================
@@ -2608,8 +2605,7 @@ ________________________________________________________________________________
 			U.sight &= ~SEE_TURFS
 			U << "Switching mode to <B>Scouter</B>."
 
-/obj/item/clothing/mask/gas/voice/space_ninja/examine()
-	set src in view()
+/obj/item/clothing/mask/gas/voice/space_ninja/examine(mob/user)
 	..()
 
 	var/mode
@@ -2622,8 +2618,8 @@ ________________________________________________________________________________
 			mode = "Thermal Scanner"
 		if(3)
 			mode = "Meson Scanner"
-	usr << "<B>[mode]</B> is active."//Leaving usr here since it may be on the floor or on a person.
-	usr << "Voice mimicking algorithm is set <B>[!vchange?"inactive":"active"]</B>."
+	user << "<B>[mode]</B> is active."//Leaving usr here since it may be on the floor or on a person.
+	user << "Voice mimicking algorithm is set <B>[!vchange?"inactive":"active"]</B>."
 
 /*
 ===================================================================================

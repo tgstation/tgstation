@@ -86,13 +86,9 @@ display round(lastgen) and plasmatank amount
 	if(!anchored)
 		return
 
-/obj/machinery/power/port_gen/examine()
-	set src in oview(1)
+/obj/machinery/power/port_gen/examine(mob/user)
 	..()
-	if(active)
-		usr << "It is running."
-	else
-		usr << "It isn't running."
+	user << "It is[active?"n't":""] running."
 
 /obj/machinery/power/port_gen/pacman
 	name = "\improper P.A.C.M.A.N.-type portable generator"
@@ -144,10 +140,10 @@ display round(lastgen) and plasmatank amount
 	power_gen = round(initial(power_gen) * temp_rating * 2)
 	consumption = consumption_coeff
 
-/obj/machinery/power/port_gen/pacman/examine()
+/obj/machinery/power/port_gen/pacman/examine(mob/user)
 	..()
-	usr << "\blue The generator has [sheets] units of [sheet_name] fuel left, producing [power_gen] per cycle."
-	if(crit_fail) usr << "\red The generator seems to have broken down."
+	user << "<span class='notice'>The generator has [sheets] units of [sheet_name] fuel left, producing [power_gen] per cycle.</span>"
+	if(crit_fail) user << "<span class='danger'>The generator seems to have broken down.</span>"
 
 /obj/machinery/power/port_gen/pacman/HasFuel()
 	if(sheets >= 1 / (time_per_sheet / power_output) - sheet_left)

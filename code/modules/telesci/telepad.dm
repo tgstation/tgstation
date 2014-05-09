@@ -120,9 +120,10 @@
 /obj/item/weapon/rcs/New()
 	..()
 	processing_objects.Add(src)
-/obj/item/weapon/rcs/examine()
-	desc = "Use this to send crates and closets to cargo telepads. There are [rcharges] charges left."
+
+/obj/item/weapon/rcs/examine(mob/user)
 	..()
+	user << "There are [rcharges] charge\s left."
 
 /obj/item/weapon/rcs/Destroy()
 	processing_objects.Remove(src)

@@ -146,11 +146,9 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		for(var/mob/living/silicon/ai/AI in player_list)
 			AI.client.images += blood
 
-	examine()
-		set src in view(2)
-
-		if(!iscultist(usr))
-			usr << "A strange collection of symbols drawn in blood."
+	examine(mob/user)
+		if(!iscultist(user))
+			user << "A strange collection of symbols drawn in blood."
 			return
 			/* Explosions... really?
 			if(desc && !usr.stat)
@@ -160,9 +158,9 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				qdel(src)
 			*/
 		if(!desc)
-			usr << "A spell circle drawn in blood. It reads: <i>[word1] [word2] [word3]</i>."
+			user << "A spell circle drawn in blood. It reads: <i>[word1] [word2] [word3]</i>."
 		else
-			usr << "Explosive Runes inscription in blood. It reads: <i>[desc]</i>."
+			user << "Explosive Runes inscription in blood. It reads: <i>[desc]</i>."
 
 		return
 
@@ -696,13 +694,12 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			user << "You copy the translation notes from your tome."
 
 
-	examine()
-		set src in usr
+	examine(mob/user)
 		..()
-		if(!iscultist(usr))
-			usr << "An old, dusty tome with frayed edges and a sinister looking cover."
+		if(!iscultist(user))
+			user << "An old, dusty tome with frayed edges and a sinister looking cover."
 		else
-			usr << "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of. Most of these are useless, though."
+			user << "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of."
 
 /obj/item/weapon/tome/imbued //admin tome, spawns working runes without waiting
 	w_class = 2.0

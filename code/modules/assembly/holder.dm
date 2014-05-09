@@ -57,15 +57,13 @@
 			master.update_icon()
 
 
-	examine()
-		set src in view()
+	examine(mob/user)
 		..()
-		if ((in_range(src, usr) || src.loc == usr))
-			if (src.secured)
-				usr << "\The [src] is ready!"
+		if ((in_range(src, user) || src.loc == user))
+			if(secured)
+				user << "\The [src] is secured and ready to be used."
 			else
-				usr << "\The [src] can be attached!"
-		return
+				user << "\The [src] can be attached to other things."
 
 
 	HasProximity(atom/movable/AM as mob|obj)
