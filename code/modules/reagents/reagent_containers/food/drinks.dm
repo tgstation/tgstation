@@ -16,6 +16,7 @@
 		else gulp_size = max(round(reagents.total_volume / 5), 5)
 
 	attack_self(mob/user as mob)
+		attack(user,user)
 		return
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
