@@ -129,12 +129,11 @@
 		return message
 		
 		
-/*
 // WAS: /datum/bioEffect/elvis
 /datum/dna/gene/disability/speech/elvis
 	name = "Elvis"
-	desc = "Forces the language center of the subject's brain to drawl out sentences in a funky manner."
-	activation_message = "You feel funky."
+	desc = "Forces the language center and primary motor cortex of the subject's brain to talk and act like the King of Rock and Roll."
+	activation_message = "You feel pretty good, honeydoll."
 	deactivation_message = "You feel a little less conversation would be great."
 
 	New()
@@ -142,8 +141,32 @@
 		block=ELVISBLOCK
 
 	OnSay(var/mob/M, var/message)
-		return message
-*/
+		message = replacetext(message,"im not","I ain't")
+		message = replacetext(message,"i'm not","I aint")
+		message = replacetext(message,"girl",pick("honey","baby","baby doll"))
+		message = replacetext(message,"man",pick("son","buddy","brother"))
+		message = replacetext(message,"no","naw")
+		message = replacetext(message,"security","police")
+		message = replacetext(message,"out of","outta")
+		message = replacetext(message,"thanks","thank you very much")
+		message = replacetext(message,"what are you","whatcha")
+		message = replacetext(message,"yes",pick("sure", "yea"))
+		message = replacetext(message,"faggot","square")
+		message = replacetext(message,"muh valids","getting my kicks")
+		
+		if(prob(50))
+			return ""
+			M.emote(pick("rambles to themselves","begins talking to themselves.")) //PLS
+
+	OnMobLife(var/mob/M)
+		switch(pick(1,2))
+			if(1)
+				var/list/dancetypes = list("swinging", "fancy", "stylish", "20'th century", "jivin'", "rock and roller", "cool", "salacious", "bashing")
+				var/dancemoves = pick(dancetypes)
+				M.visible_message("[M] busts out some [dancemoves] moves!")
+			if(2)
+				M.emote(pick("rambles to themselves", "rotates their hips", "gyrates their hips", "taps their foot", "dances to an imaginary song", "jiggles their legs", "waves their arms around"))
+			
 
 // WAS: /datum/bioEffect/chav
 /datum/dna/gene/disability/speech/chav
