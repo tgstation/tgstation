@@ -1,4 +1,6 @@
-/proc/priority_announce(var/text, var/title = "", var/sound = 'sound/AI/attention.ogg', var/type, var/auth_id)
+/proc/priority_announce(var/text, var/title = "", var/sound = 'sound/AI/attention.ogg', var/type)
+	if(!text)
+		return
 
 	var/announcement
 
@@ -6,16 +8,16 @@
 		announcement += "<h1 class='alert'>Priority Announcement</h1>"
 
 	else if(type == "Captain")
-		news_network.SubmitArticle(text, auth_id, "Captain's Announcements", null)
+		news_network.SubmitArticle(text, "Captain's Announcements", "Station Announcements", null)
 		announcement += "<h1 class='alert'>Captain Announces</h1>"
 
 	else
 		if (title && length(title) > 0)
 			announcement += "<br><h2 class='alert'>[html_encode(title)]</h2>"
 		if(title == "")
-			news_network.SubmitArticle(text, "Central Command", "Central Command Updates", null)
+			news_network.SubmitArticle(text, "Central Command Update", "Station Announcements", null)
 		else
-			news_network.SubmitArticle(title + "<br><br>" + text, "Central Command", "Central Command Updates", null)
+			news_network.SubmitArticle(title + "<br><br>" + text, "Central Command", "Station Announcements", null)
 		announcement += "<h1 class='alert'>[command_name()] Update</h1>"
 
 	announcement += "<br><span class='alert'>[html_encode(text)]</span><br>"

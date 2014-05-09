@@ -19,6 +19,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	var/state = STATE_DEFAULT
 	var/aistate = STATE_DEFAULT
 	var/message_cooldown = 0
+	var/ai_message_cooldown = 0
 	var/centcom_message_cooldown = 0
 	var/tmp_alertlevel = 0
 	var/const/STATE_DEFAULT = 1
@@ -115,7 +116,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				var/input = stripped_input(usr, "Please choose a message to announce to the station crew.", "What?")
 				if(!input || !(usr in view(1,src)))
 					return
-				priority_announce(input, null, 'sound/misc/announce.ogg', "Captain", auth_id)
+				priority_announce(input, null, 'sound/misc/announce.ogg', "Captain")
 				log_say("[key_name(usr)] has made a captain announcement: [input]")
 				message_admins("[key_name_admin(usr)] has made a captain announcement.", 1)
 				message_cooldown = 1
@@ -278,7 +279,17 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			src.aistate = STATE_MESSAGELIST
 		if("ai-status")
 			src.aistate = STATE_STATUSDISPLAY
-
+		if("ai-announce")
+			if(ai_message_cooldown)	return
+			var/input = stripped_input(usr, "Please choose a message to announce to the station crew.", "What?")
+			if(!input)
+				return
+			priority_announce(input, null, null, "Priority")
+			log_say("[key_name(usr)] has made a priority announcement: [input]")
+			message_admins("[key_name_admin(usr)] has made a priority announcement.", 1)
+			ai_message_cooldown = 1
+			spawn(600)//One minute cooldown
+				ai_message_cooldown = 0
 		if("ai-securitylevel")
 			src.tmp_alertlevel = text2num( href_list["newalertlevel"] )
 			if(!tmp_alertlevel) tmp_alertlevel = 0
@@ -493,11 +504,17 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 					dat += "<BR>Latest emergency signal trace attempt successful.<BR>Last signal origin: <b>[format_text(emergency_shuttle.last_call_loc.name)]</b>.<BR>"
 				else
 					dat += "<BR>Latest emergency signal trace attempt failed.<BR>"
-
+			if(authenticated)
+				dat += "Current login: [auth_id]"
+			else
+				dat += "Current login: None"
+			dat += "<BR><BR><B>General Functions</B>"
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-messagelist'>Message List</A> \]"
 			if(emergency_shuttle.location==0 && !emergency_shuttle.online)
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-callshuttle'>Call Emergency Shuttle</A> \]"
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-status'>Set Status Display</A> \]"
+			dat += "<BR><BR><B>Special Functions</B>"
+			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-announce'>Make a Priority Announcement</A> \]"
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-changeseclevel'>Change Alert Level</A> \]"
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-emergencyaccess'>Emergency Maintenance Access</A> \]"
 		if(STATE_CALLSHUTTLE)

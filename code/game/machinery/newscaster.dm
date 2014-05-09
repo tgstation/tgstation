@@ -44,8 +44,7 @@
 	var/datum/feed_message/wanted_issue
 
 /datum/feed_network/New()
-	CreateFeedChannel("Central Command Updates", "Central Command", 1)
-	CreateFeedChannel("Captain's Announcements", "SS13", 1)
+	CreateFeedChannel("Station Announcements", "SS13", 1)
 
 /datum/feed_network/proc/CreateFeedChannel(var/channel_name, var/author, var/locked, var/adminChannel = 0)
 	var/datum/feed_channel/newChannel = new /datum/feed_channel
