@@ -1612,13 +1612,17 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(!data) data = 1
+				data++
 				switch(data)
-					if(1 to 50)
+					if(1 to 10)
+						M.confused += 2
+						M.drowsyness += 2
+					if(10 to 50)
 						M.sleeping += 1
 					if(51 to INFINITY)
 						M.sleeping += 1
-						M.adjustToxLoss(data - 50)
-				data++
+						M.adjustToxLoss((data - 50)*REM)
+				holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
 				..()
 				return
 

@@ -19,10 +19,8 @@
 		return
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
-		var/datum/reagents/R = src.reagents
-		var/fillevel = gulp_size
 
-		if(!R.total_volume || !R)
+		if(!reagents || !reagents.total_volume)
 			user << "<span class='alert'> None of [src] left, oh no!</span>"
 			return 0
 
@@ -42,6 +40,7 @@
 		for(var/mob/O in viewers(world.view, user))
 			O.show_message("\red [user] attempts to feed [M] [src].", 1)
 		if(!do_mob(user, M)) return
+		if(!reagents.total_volume) return // The drink might be empty after the delay, such as by spam-feeding
 		for(var/mob/O in viewers(world.view, user))
 			O.show_message("\red [user] feeds [M] [src].", 1)
 		add_logs(user, M, "fed", object="[reagentlist(src)]")
@@ -49,13 +48,6 @@
 			reagents.reaction(M, INGEST)
 			spawn(5)
 				reagents.trans_to(M, gulp_size)
-
-		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
-			var/mob/living/silicon/robot/bro = user
-			bro.cell.use(30)
-			var/refill = R.get_master_reagent_id()
-			spawn(600)
-				R.add_reagent(refill, fillevel)
 
 		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 		return 1

@@ -12,51 +12,51 @@
 			switch(reagents.get_master_reagent_id())
 				if("beer")
 					icon_state = "beerglass"
-					name = "Beer glass"
+					name = "glass of beer"
 					desc = "A freezing pint of beer"
 				if("beer2")
 					icon_state = "beerglass"
-					name = "Beer glass"
+					name = "glass of beer"
 					desc = "A freezing pint of beer"
 				if("greenbeer")
 					icon_state = "greenbeerglass"
-					name = "Green beer glass"
+					name = "glass of green beer"
 					desc = "A freezing pint of green beer. Festive."
 				if("ale")
 					icon_state = "aleglass"
-					name = "Ale glass"
+					name = "glass of ale"
 					desc = "A freezing pint of delicious Ale"
 				if("milk")
 					icon_state = "glass_white"
-					name = "Glass of milk"
+					name = "glass of milk"
 					desc = "White and nutritious goodness!"
 				if("cream")
 					icon_state  = "glass_white"
-					name = "Glass of cream"
+					name = "glass of cream"
 					desc = "Ewwww..."
 				if("hot_coco")
 					icon_state  = "chocolateglass"
-					name = "Glass of chocolate"
+					name = "glass of chocolate"
 					desc = "Tasty"
 				if("lemonjuice")
 					icon_state  = "lemonglass"
-					name = "Glass of lemon"
+					name = "glass of lemon juice"
 					desc = "Sour..."
 				if("holywater")
 					icon_state  = "glass_clear"
-					name = "Glass of Holy Water"
+					name = "glass of Holy Water"
 					desc = "A glass of holy water."
 				if("potato")
 					icon_state = "glass_brown"
-					name = "Glass of Potato juice"
+					name = "glass of potato juice"
 					desc = "Bleh..."
 				if("watermelonjuice")
 					icon_state = "glass_red"
-					name = "Glass of Watermelon juice"
+					name = "glass of watermelon juice"
 					desc = "A glass of watermelon juice."
 				if("cola")
 					icon_state  = "glass_brown"
-					name = "Glass of Space Cola"
+					name = "glass of space Cola"
 					desc = "A glass of refreshing Space Cola"
 				if("nuka_cola")
 					icon_state = "nuka_colaglass"
@@ -64,63 +64,63 @@
 					desc = "Don't cry, Don't raise your eye, It's only nuclear wasteland"
 				if("orangejuice")
 					icon_state = "glass_orange"
-					name = "Glass of Orange juice"
+					name = "glass of orange juice"
 					desc = "Vitamins! Yay!"
 				if("tomatojuice")
 					icon_state = "glass_red"
-					name = "Glass of Tomato juice"
+					name = "glass of tomato juice"
 					desc = "Are you sure this is tomato juice?"
 				if("blood")
 					icon_state = "glass_red"
-					name = "Glass of Tomato juice"
+					name = "glass of tomato juice"
 					desc = "Are you sure this is tomato juice?"
 				if("limejuice")
 					icon_state = "glass_green"
-					name = "Glass of Lime juice"
+					name = "glass of lime juice"
 					desc = "A glass of sweet-sour lime juice."
 				if("whiskey")
 					icon_state = "whiskeyglass"
-					name = "Glass of whiskey"
+					name = "glass of whiskey"
 					desc = "The silky, smokey whiskey goodness inside the glass makes the drink look very classy."
 				if("gin")
 					icon_state = "ginvodkaglass"
-					name = "Glass of gin"
+					name = "glass of gin"
 					desc = "A crystal clear glass of Griffeater gin."
 				if("vodka")
 					icon_state = "ginvodkaglass"
-					name = "Glass of vodka"
+					name = "glass of vodka"
 					desc = "The glass contain wodka. Xynta."
 				if("goldschlager")
 					icon_state = "ginvodkaglass"
-					name = "Glass of goldschlager"
+					name = "glass of Goldschlager"
 					desc = "100 proof that teen girls will drink anything with gold in it."
 				if("wine")
 					icon_state = "wineglass"
-					name = "Glass of wine"
+					name = "glass of wine"
 					desc = "A very classy looking drink."
 				if("cognac")
 					icon_state = "cognacglass"
-					name = "Glass of cognac"
+					name = "glass of cognac"
 					desc = "Damn, you feel like some kind of French aristocrat just by holding this."
 				if ("kahlua")
 					icon_state = "kahluaglass"
-					name = "Glass of RR coffee Liquor"
+					name = "glass of RR Coffee Liquor"
 					desc = "DAMN, THIS THING LOOKS ROBUST"
 				if("vermouth")
 					icon_state = "vermouthglass"
-					name = "Glass of Vermouth"
+					name = "glass of vermouth"
 					desc = "You wonder why you're even drinking this straight."
 				if("tequilla")
 					icon_state = "tequillaglass"
-					name = "Glass of Tequilla"
+					name = "glass of tequilla"
 					desc = "Now all that's missing is the weird colored shades!"
 				if("patron")
 					icon_state = "patronglass"
-					name = "Glass of Patron"
+					name = "glass of patron"
 					desc = "Drinking patron in the bar, with all the subpar ladies."
 				if("rum")
 					icon_state = "rumglass"
-					name = "Glass of Rum"
+					name = "glass of rum"
 					desc = "Now you want to Pray for a pirate suit, don't you?"
 				if("gintonic")
 					icon_state = "gintonicglass"
@@ -213,7 +213,7 @@
 				if("vodkatonic")
 					icon_state = "vodkatonicglass"
 					name = "Vodka and Tonic"
-					desc = "For when a gin and tonic isn't russian enough."
+					desc = "For when a gin and tonic isn't Russian enough."
 				if("manhattan")
 					icon_state = "manhattanglass"
 					name = "Manhattan"
@@ -221,7 +221,7 @@
 				if("manhattan_proj")
 					icon_state = "proj_manhattanglass"
 					name = "Manhattan Project"
-					desc = "A scienitst drink of choice, for thinking how to blow up the station."
+					desc = "A scientist drink of choice, for thinking how to blow up the station."
 				if("ginfizz")
 					icon_state = "ginfizzglass"
 					name = "Gin Fizz"
@@ -281,11 +281,11 @@
 				if("berryjuice")
 					icon_state = "berryjuice"
 					name = "Glass of berry juice"
-					desc = "Berry juice. Or maybe its jam. Who cares?"
+					desc = "Berry juice. Or maybe it's jam. Who cares?"
 				if("poisonberryjuice")
 					icon_state = "poisonberryjuice"
-					name = "Glass of poison berry juice"
-					desc = "A glass of deadly juice."
+					name = "Glass of berry juice"
+					desc = "Berry juice. Or maybe it's poison. Who cares?"
 				if("carrotjuice")
 					icon_state = "carrotjuice"
 					name = "Glass of  carrot juice"
