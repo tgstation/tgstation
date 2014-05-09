@@ -206,8 +206,11 @@
 
 		if ("deathgasp")
 			if(M_ELVIS in mutations)
-				message = "<B>[src]<B> has left the building..."
-			message = "<B>[src]</B> seizes up and falls limp, \his eyes dead and lifeless..."
+				message = "<B>[src]</B> has left the building..."
+			if(M_HARDCORE in mutations)
+				message = "<B>[src]</B> whispers with his final breath, <i>"i told u i was hardcore.."</i>
+			else
+				message = "<B>[src]</B> seizes up and falls limp, \his eyes dead and lifeless..."
 			m_type = 1
 			
 		if ("giggle")
