@@ -114,7 +114,7 @@
 			A.fired()
 */
 	proc/Emit()
-		var/obj/item/projectile/beam/emitter/A = getFromPool(/obj/item/projectile/beam/emitter, loc)
+		var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter(src.loc)
 		A.frequency = frequency
 		A.damage = mega_energy * 500
 		playsound(get_turf(src), 'sound/weapons/emitter.ogg', 25, 1)

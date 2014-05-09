@@ -192,12 +192,10 @@ obj/item/projectile/kinetic/New()
 			// Now we bump as a bullet, if the atom is a non-turf.
 			if(!isturf(A))
 				..(A)
-			//qdel(src) // Comment this out if you want to shoot through the asteroid, ERASER-style.
-			returnToPool(src) // Comment this out if you want to shoot through the asteroid, ERASER-style.
+			qdel(src) // Comment this out if you want to shoot through the asteroid, ERASER-style.
 			return 1
 	else
-		//qdel(src)
-		returnToPool(src)
+		qdel(src)
 		return 0
 
 /obj/item/effect/kinetic_blast
