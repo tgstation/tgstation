@@ -80,7 +80,7 @@
 			BD.close()
 	for(var/obj/machinery/door/airlock/AL in world) //shock-bolt airlocks
 		spawn()
-			if(AL.canAIControl())
+			if(AL.canAIControl() && !AL.stat) //Must be powered and have working AI wire.
 				AL.locked = 0
 				AL.safe = 0
 				AL.close()
@@ -113,7 +113,7 @@
 			BD.open()
 	for(var/obj/machinery/door/airlock/AL in world) //unbolt and open airlocks
 		spawn()
-			if(AL.canAIControl())
+			if(AL.canAIControl() && !AL.stat)
 
 				AL.locked = 0
 				AL.secondsElectrified = 0
