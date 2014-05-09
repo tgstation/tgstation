@@ -376,6 +376,8 @@ var/MAX_EXPLOSION_RANGE = 14
 #define M_PSY_RESIST    204		// Block remoteview
 #define M_SUPER_FART    205		// Duh
 #define M_SMILE         206		// :)
+#define M_ELVIS         207		// You ain't nothin' but a hound dog.
+
 // Bustanuts
 #define M_HARDCORE      300
 
