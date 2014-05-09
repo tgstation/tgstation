@@ -261,7 +261,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\newscaster.dm:234: dat+="Creating new Feed Message..."
 				dat += {"Creating new Feed Message...
-					<HR><B><A href='?src=\ref[src];set_channel_receiving=1'>Receiving Channel</A>:</B> [src.channel_name]<BR>" //MAR
+					<HR><B><A href='?src=\ref[src];set_channel_receiving=1'>Receiving Channel</A>:</B> [src.channel_name]<BR>"
 					<B>Message Author:</B> <FONT COLOR='green'>[src.scanned_user]</FONT><BR>
 					<B><A href='?src=\ref[src];set_new_message=1'>Message Body</A>:</B> [src.msg] <BR>
 					<B><A href='?src=\ref[src];set_attachment=1'>Attach Photo</A>:</B>  [(src.photo ? "Photo Attached" : "No Photo")]</BR>
