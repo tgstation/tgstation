@@ -299,3 +299,6 @@
                                                 return
                         step(AM, t)
                 now_pushing = null
+
+/mob/living/silicon/put_in_hand_check()
+	return 0
