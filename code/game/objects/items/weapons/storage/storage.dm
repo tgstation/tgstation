@@ -322,8 +322,8 @@
 	..()
 
 	// /vg/ #11: Recursion.
-	if(istype(W,/obj/item/weapon/implanter/compressed))
-		return
+	/*if(istype(W,/obj/item/weapon/implanter/compressed))
+		return*/
 
 	if(isrobot(user) && !isMoMMI(user))
 		user << "\blue You're a robot. No."
