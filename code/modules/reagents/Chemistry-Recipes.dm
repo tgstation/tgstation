@@ -325,6 +325,13 @@ datum
 			required_reagents = list("carbon" = 1, "hydrogen" = 1, "anti_toxin" = 1)
 			result_amount = 2
 
+		inacusiate
+			name = "inacusiate"
+			id = "inacusiate"
+			result = "inacusiate"
+			required_reagents = list("water" = 1, "carbon" = 1, "anti_toxin" = 1)
+			result_amount = 3
+
 		ethylredoxrazine
 			name = "Ethylredoxrazine"
 			id = "ethylredoxrazine"
