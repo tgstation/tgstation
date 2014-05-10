@@ -22,7 +22,8 @@
 	#ifdef ZLEVELS
 	for(var/d = 1, d < 64, d *= 2)
 	#else
-	for(var/d = 1, d < 16, d *= 2)
+	//for(var/d = 1, d < 16, d *= 2)
+	for(var/d = 1, d < 10, d *= 2)
 	#endif
 
 		var/turf/unsim = get_step(src, d)
@@ -71,7 +72,8 @@
 	#ifdef ZLEVELS
 	for(var/d = 1, d < 64, d *= 2)
 	#else
-	for(var/d = 1, d < 16, d *= 2)
+	//for(var/d = 1, d < 16, d *= 2)
+	for(var/d = 1, d < 10, d *= 2)
 	#endif
 
 		var/turf/unsim = get_step(src, d)

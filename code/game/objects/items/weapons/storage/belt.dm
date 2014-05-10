@@ -195,4 +195,8 @@
 		"/obj/item/device/mining_scanner",
 		"/obj/item/weapon/crowbar",
 		"/obj/item/weapon/storage/box/excavation",
+		"/obj/item/weapon/gun/energy/kinetic_accelerator",
+		"/obj/item/weapon/resonator",
+		"/obj/item/device/wormhole_jaunter",
+		"/obj/item/weapon/lazarus_injector",
 		"/obj/item/weapon/anobattery")
