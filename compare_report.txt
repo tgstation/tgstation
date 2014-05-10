@@ -1,5 +1,5 @@
-# DMITool Difference Report: C:\Users\Rob\Documents\Projects\Baystation12\icons C:\Users\Rob\Documents\Projects\vgstation13\icons
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\effects\blood.dmi
+# DMITool Difference Report: C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons C:\Users\Rob\Documents\Projects\vgstation13\icons
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\effects\blood.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\blood.dmi
  - armorblood2
  - bloodyhands2
@@ -34,11 +34,11 @@
  - xgibbl3
  - xgibbl4
  - xgibbl5
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\effects\chemsmoke.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\effects\chemsmoke.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\chemsmoke.dmi
  - : : 3 frames, 1 directions
  + : : 3 frames, 4 directions
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\effects\effects.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\effects\effects.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\effects.dmi
  - acid
  - anom
@@ -46,22 +46,32 @@
  - bhole3
  - electricity2
  - spidereggUnused
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\effects\genetics.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\effects\genetics.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\genetics.dmi
  - cold_l
  - cold_s
  - coldfire_l
  - coldfire_s
  - horns_s
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\effects\tile_effects.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\effects\tile_effects.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\tile_effects.dmi
  + phoron
  - plasma
  - plasma-orange
  + plasma-purple
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\effects\warning_stripes.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\effects\warning_stripes.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\effects\warning_stripes.dmi
  + 
+ - 0
+ - 1
+ - 2
+ - 3
+ - 4
+ - 5
+ - 6
+ - 7
+ - 8
+ - 9
  + E
  + E-corner
  + N
@@ -96,13 +106,13 @@
  - plasma
  - unloading
  - zoo
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mecha\mecha_equipment.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mecha\mecha_equipment.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mecha\mecha_equipment.dmi
  - mecha_phase_array
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mecha\mech_construct.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mecha\mech_construct.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mecha\mech_construct.dmi
  - phazon_phase_array
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mecha\mech_construction.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mecha\mech_construction.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mecha\mech_construction.dmi
  - phazon_0
  - phazon_1
@@ -121,7 +131,7 @@
  - phazon_7
  - phazon_8
  - phazon_9
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\misc\beach.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\misc\beach.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\misc\beach.dmi
  + beach
  + beachcorner
@@ -147,23 +157,24 @@
  + fullgrass4
  + seadeep
  + seashallow
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\misc\debug_group.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\misc\debug_group.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\misc\debug_group.dmi
  + blue
  + green
  + red
  + yellow
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\misc\fullscreen.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\misc\fullscreen.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\misc\fullscreen.dmi
- - title: title: 8 frames, 1 directions
+ - title: title: 23 frames, 1 directions
  + title: title: 5 frames, 1 directions
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\misc\fullscreen_halloween.dmi
+ - titleold
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\misc\fullscreen_halloween.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\misc\fullscreen_halloween.dmi
  + title
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\misc\fullscreen_original.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\misc\fullscreen_original.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\misc\fullscreen_original.dmi
  + title
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\AI.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\AI.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\AI.dmi
  - ai-banned
  - ai-fuzz
@@ -173,7 +184,7 @@
  - ai-searif
  - ai-serithi
  - ai-serithi-crash
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\animal.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\animal.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\animal.dmi
  - Basilisk
  - Basilisk_alert
@@ -235,7 +246,7 @@
  - scarybat-dead
  - viscerator
  - viscerator_attack
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\back.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\back.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\back.dmi
  - anesthetic2
  - backpack2
@@ -298,9 +309,10 @@
  - staffofchange2
  - welderpack2
  - witch2
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\belt.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\belt.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\belt.dmi
  - baton2
+ - bmbelt
  - champion2
  - classic_baton2
  - dpickaxe2
@@ -352,19 +364,19 @@
  + swatbelt
  - template2
  - utility2
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\belt_mirror.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\belt_mirror.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\belt_mirror.dmi
  + fluff_rbelt
  + fluff_rbelt2
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\blob.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\blob.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\blob.dmi
  - blob_resource
  - blobpod
  - marker
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\collar.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\collar.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\collar.dmi
  + bombsuitsec
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\corgi_back.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\corgi_back.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\corgi_back.dmi
  - cardborg
  - cardborg2
@@ -374,7 +386,7 @@
  - fire_extinguisher12
  - oxygen
  - oxygen2
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\corgi_head.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\corgi_head.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\corgi_head.dmi
  - cardborg_h
  - cardborg_h2
@@ -387,8 +399,9 @@
  - paper_words
  - paper_words2
  - wizard-fake2
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\custom-synthetic.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\custom-synthetic.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\custom-synthetic.dmi
+ + danny220-ai
  + djsnapshot-Combat
  + djsnapshot-Combat-shield
  + djsnapshot-Engineering
@@ -474,7 +487,7 @@
  + sydrec-openpanel +c
  + sydrec-openpanel +w
  + sydrec-openpanel -c
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\dam_human.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\dam_human.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\dam_human.dmi
  - 00-2
  - 01-2
@@ -493,7 +506,7 @@
  - 32-2
  - 33-2
  - human-2
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\dam_mask.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\dam_mask.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\dam_mask.dmi
  - chest2
  - diaper2
@@ -509,12 +522,12 @@
  - r_foot2
  - r_hand2
  - r_leg2
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\ears.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\ears.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\ears.dmi
  - earmuffs2
  - earset2
  - headset2
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\eyes.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\eyes.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\eyes.dmi
  + 3d
  - arjun_chopra2
@@ -532,6 +545,8 @@
  - ian_colm_1up
  - ian_colm_1up2
  - jensenshades2
+ - kaminaglasses
+ - kaminaglasses2
  - laforge2
  - material2
  - meson2
@@ -540,6 +555,8 @@
  - night2
  - purple2
  - securityhud2
+ - simonglasses
+ - simonglasses2
  - sun2
  - sun_thin2
  - sunhud2
@@ -550,7 +567,7 @@
  - uzenwa_sissra_12
  - welding-g2
  - welding-gup2
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\feet.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\feet.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\feet.dmi
  - atmosmagboots02
  - atmosmagboots12
@@ -586,6 +603,8 @@
  - roman2
  - s-ninja2
  - secshoes2
+ - simonshoes
+ - simonshoes2
  - slippers2
  - slippers_worn2
  - swat2
@@ -593,13 +612,14 @@
  - white2
  - wizard2
  - yellow2
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\gimmick_head.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\gimmick_head.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\gimmick_head.dmi
  - santahat2
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\hands.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\hands.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\hands.dmi
  - bgloves2
  - bluegloves2
+ - bmgloves
  - boxing2
  - boxingblue2
  - boxinggreen2
@@ -622,7 +642,7 @@
  - s-ninjan2
  - swat_gl2
  - ygloves2
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\head.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\head.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\head.dmi
  - alice_mccrea_12
  - alice_mccrea_1up2
@@ -642,6 +662,7 @@
  - bio_virology2
  - bluesoft2
  - bluesoft_flipped2
+ - bmhead
  - boater_hat
  - boater_hat2
  - bombsuit2
@@ -677,6 +698,7 @@
  - dermal2
  - detective2: detective2: 1 frames, 1 directions
  + detective2: detective2: 1 frames, 4 directions
+ + drone
  - edvin_telephosphor_12
  - engspace_helmet2
  - enos_adlai_12
@@ -855,12 +877,12 @@
  - yellowsoft_flipped2
  - yuki_matsuda_12
  - yuki_matsuda_1up2
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\hud.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\hud.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\hud.dmi
  + hudblank
  - vampire
  - vampthrall
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\human.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\human.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\human.dmi
  - body_f_l
  - body_m_l
@@ -914,7 +936,7 @@
  - underwear5_m_l
  - underwear6_f_l
  - underwear6_m_l
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\human_face.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\human_face.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\human_face.dmi
  - bald_l
  + blank_eyes
@@ -1048,7 +1070,7 @@
  - soghun_shortspines_l
  - vox_eyes_l
  - vox_shortquills_l
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\items_lefthand.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\items_lefthand.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_lefthand.dmi
  - Gibtonite ore
  - atmos_gold_hardsuit
@@ -1071,6 +1093,7 @@
  - cuff_red
  - cuff_white
  - cuff_yellow
+ + drone
  - dualsaberblue1
  - dualsabergreen1
  - dualsaberpurple1
@@ -1116,7 +1139,7 @@
  - vox-pressure-security
  - vox-pressure-specops
  - wand
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\items_righthand.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\items_righthand.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\items_righthand.dmi
  - Gibtonite ore
  - atmos_gold_hardsuit
@@ -1139,6 +1162,7 @@
  - cuff_red
  - cuff_white
  - cuff_yellow
+ + drone
  - dualsaberblue1
  - dualsabergreen1
  - dualsaberpurple1
@@ -1182,7 +1206,7 @@
  - vox-pressure-science
  - vox-pressure-specops
  - wand
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\mask.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\mask.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\mask.dmi
  - balaclava2
  - bluntoff
@@ -1209,6 +1233,8 @@
  - fake-moustache2
  - gas_alt2
  - gas_mask2
+ - happiest
+ - happiest_flash
  - holomask-cord2
  - horsehead2
  + konaahirano
@@ -1235,7 +1261,7 @@
  - tooth-necklace2
  - ty_necklace2
  - voxmask2
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\mob.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\mob.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\mob.dmi
  - greytide
  - greytide_head
@@ -1244,7 +1270,7 @@
  - vampire
  - vampire2
  - vampthrall
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\monkey.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\monkey.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\monkey.dmi
  - balaclava2
  - cigaroff2
@@ -1280,7 +1306,7 @@
  - stokkey0
  - swat2
  - tajkey0
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\robots.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\robots.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\robots.dmi
  - Engiseer
  - Engiseer-old
@@ -1294,28 +1320,35 @@
  - eyes-keeper
  - eyes-keeper-emagged
  - eyes-marina
+ - eyes-mechaduster
  - eyes-medicalrobot
  - eyes-mommi
  - eyes-mommi-emagged
  - eyes-mommi-emaggedold
  - eyes-mommiold
+ + eyes-repairbot
  - eyes-securityrobot
+ - eyes-wall-e
  - keeper
  - keeper-park
  - marina
  - marina-heavyshading
  - marina-noshading
+ - mechaduster
  - mommi
  - mommi-park
  - mommiold
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\screen1_robot.dmi
+ + repairbot
+ - replicator
+ - wall-e
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\screen1_robot.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\screen1_robot.dmi
  - sight
  - sight+a
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\screen1_White.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\screen1_White.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\screen1_White.dmi
  + template
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\slimes.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\slimes.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\slimes.dmi
  - bluespace adult slime
  - bluespace adult slime eat
@@ -1346,7 +1379,7 @@
  - sepia baby slime dead-nocore
  - sepia baby slime eat
  - sepia slime extract
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\suit.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\suit.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\suit.dmi
  - HoP_Coat
  - HoP_Coat2
@@ -1484,6 +1517,8 @@
  - s-ninjas2
  - s-ninjasf2
  - santa2
+ - simonjacket
+ - simonjacket2
  - space2
  - straight_jacket2
  - stripper_g_over2
@@ -1534,7 +1569,7 @@
  - wizard-fake2
  - wizard2
  - xenos2
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\ties.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\ties.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\ties.dmi
  - altair_locket2
  - bluetie2
@@ -1560,7 +1595,7 @@
  - vest_black2
  - vest_brown2
  - webbing2
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\uniform.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\uniform.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\uniform.dmi
  + ana_uniform_s
  + aqua_d_s
@@ -1580,6 +1615,7 @@
  - blue_pyjamas_l
  - blueshorts_l
  - bluesuit_l
+ - bmuniform_s
  - bride_blue_l
  - bride_orange_l
  - bride_purple_l
@@ -1753,6 +1789,8 @@
  - secred_l
  - sexyclown_l
  - sexymime_l
+ - simonpants_l
+ - simonpants_s
  - sl_suit_l
  + solara_dress_s
  - soviet_l
@@ -1796,7 +1834,7 @@
  - yellow_l
  + yellowgreen_d_s
  - yellowgreen_l
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\mob\human_races\r_diona.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\mob\human_races\r_diona.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\human_races\r_diona.dmi
  - groin
  + groin_f
@@ -1809,17 +1847,17 @@
  + torso_f_fat
  + torso_m
  + torso_m_fat
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\aibots.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\aibots.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\aibots.dmi
  - mining_drone
  - mining_drone_offense
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\airlock_machines.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\airlock_machines.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\airlock_machines.dmi
  - access_button_build
  - airlock_control_build0
  - airlock_control_build1
  - airlock_control_build2
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\ammo.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\ammo.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\ammo.dmi
  + 
  + 45-1
@@ -1830,28 +1868,43 @@
  + 45-6
  + 45-7
  + dart
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\atmos.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\atmos.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmos.dmi
  - aircond0
  - aircond1
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\barsigns.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\barsigns.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\barsigns.dmi
  - maltesefalcon
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\bureaucracy.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\bureaucracy.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\bureaucracy.dmi
  + cpaper
  + cpaper_words
  + paper_bin2
  + paper_stack
  + paper_stack_words
+ + paper_stamp-circle
+ + paper_stamp-dots
  + paper_stamp-intaff
+ + paper_stamp-x
  + stamp-intaff
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\card.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\card.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\card.dmi
+ - CE
+ - CMO
+ - HoS
+ - RD
+ - cargo
+ - clown
  - demote_chip
+ - engineering
  + guest
  + guest_invalid
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\chemical.dmi
+ - medical
+ - mime
+ - research
+ - security
+ - syndie
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\chemical.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\chemical.dmi
  - beakerbluespace: beakerbluespace: 6 frames, 1 directions
  + beakerbluespace: beakerbluespace: 4 frames, 1 directions
@@ -1860,9 +1913,13 @@
  + beakernoreact: beakernoreact: 18 frames, 1 directions
  - beakernoreactlarge
  - bottle-charcoal
+ - mixer0_overlay
+ - mixer1: mixer1: 1 frames, 1 directions
+ + mixer1: mixer1: 8 frames, 1 directions
+ - mixer1_overlay
  - oldbeakerbluespace
  - oldbeakernoreact
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\closet.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\closet.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\closet.dmi
  + secureatm
  + secureatm1
@@ -1870,14 +1927,14 @@
  + secureatmbrokenopen
  + secureatmoff
  + secureatmopen
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\coatrack.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\coatrack.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\coatrack.dmi
  + coat_cmo
  + coat_det
  + coat_lab
  - coatrack2
  - coatrack3
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\computer.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\computer.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\computer.dmi
  - aac
  - aac0
@@ -1885,7 +1942,7 @@
  - aacb
  + guest
  + syndicam
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\contraband.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\contraband.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\contraband.dmi
  + bsposter38
  + bsposter39
@@ -1900,13 +1957,13 @@
  + bsposter48
  + bsposter49
  - goldstar
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\Cryogenic2.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\Cryogenic2.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\Cryogenic2.dmi
  + body_scanner_0-r
  + body_scanner_1-r
  + cryo_rear
  + cryo_rear-r
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\custom_items.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\custom_items.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\custom_items.dmi
  + aeneasrinil
  + aeneasrinil_open
@@ -1939,21 +1996,21 @@
  + solara_dress
  + williamhackett
  + yuri_kornienkovich_flask
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\decals.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\decals.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\decals.dmi
  + maltesefalcon-left
  + maltesefalcon-right
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\device.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\device.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\device.dmi
  - antibody
  - handtv
  - mining
  - soundsynth
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\drinks.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\drinks.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\drinks.dmi
  - icetea
  - tea
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\food.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\food.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\food.dmi
  - appendixburger
  - beans
@@ -1984,6 +2041,7 @@
  - meatsteak
  - notasandwich
  - sashimi
+ - snackbar
  - spidereggs
  - spidereggsham
  - spiderleg
@@ -1994,9 +2052,9 @@
  - sugarcookie
  + taco
  - wrap
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\gate.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\gate.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\gate.dmi
- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\gate.dmi: Received error, continuing: Traceback (most recent call last):
+ C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\gate.dmi: Received error, continuing: Traceback (most recent call last):
   File "tools/ByondTools/src/DMITool.py", line 146, in compare
     theirsDMI.loadAll()
   File "C:\Users\Rob\Documents\Projects\vgstation13\tools\ByondTools\src\byond\DMI\__init__.py", line 194, in loadAll
@@ -2018,7 +2076,7 @@ OSError: cannot identify image file
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\grenade.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\grenade.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\grenade.dmi
  - ex_grenade
  - ex_grenade_active
@@ -2031,7 +2089,7 @@ OSError: cannot identify image file
  - improvised_grenade_wired
  - syndicate
  - syndicate_active
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\gun.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\gun.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\gun.dmi
  - c20r-0-e
  - c20r-e
@@ -2113,13 +2171,13 @@ OSError: cannot identify image file
  + toxgun25
  + toxgun50
  + toxgun75
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\harvest.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\harvest.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\harvest.dmi
  - ghostchilipepper
  - koibeans
  - moonflower
  - novaflower
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\hydroponics.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\hydroponics.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\hydroponics.dmi
  - chilighost-dead
  - chilighost-grow1
@@ -2147,7 +2205,7 @@ OSError: cannot identify image file
  - novaflower-grow3
  - novaflower-harvest
  - portaseeder
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\inflatable.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\inflatable.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\inflatable.dmi
  + door_closed
  + door_closing
@@ -2159,10 +2217,12 @@ OSError: cannot identify image file
  + folded_wall
  + folded_wall_torn
  + wall
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\items.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\items.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\items.dmi
  - Jaunter
  - coin_phazon
+ + coin_phoron
+ - coin_plasma
  - cuff_blue
  - cuff_cyan
  - cuff_green
@@ -2184,30 +2244,39 @@ OSError: cannot identify image file
  - rsf_gray
  - sheet-charcoal
  - sheet-phazon
+ + sheet-phoron
+ + sheet-phoronglass
+ + sheet-phoronrglass
+ - sheet-plasma
+ - sheet-plasmaglass
+ - sheet-plasmarglass
  - sheetcentcom
  - sheetcmo
  - sheetcult
  - sheetqm
  - sheetsyndie
  - sheetwiz
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\kitchen.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\janitor.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\janitor.dmi
+ + lid_bucket
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\kitchen.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\kitchen.dmi
  - mcleaver
  - mcleaverblood
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\library.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\library.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\library.dmi
  + bookMedical
  + bookSupermatter
  + evabook
  + pipingbook
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\mediwall.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\mediwall.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\mediwall.dmi
  + brute_wall
  + burn_wall
  + medical_wall_open
  + oxygen_wall
  + toxin_wall
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\mining.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\mining.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\mining.dmi
  - Gibtonite active
  - Gibtonite ore
@@ -2215,29 +2284,45 @@ OSError: cannot identify image file
  - Gibtonite ore 3
  + Phazon
  - Phazon ore
+ + Phoron ore
+ - Plasma ore
  - xeno_warning
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\module.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\module.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\module.dmi
  - gooncode
  - planning frame
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\nvg_hud_full.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\nvg_hud_full.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\nvg_hud_full.dmi
  + nvg_hud
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\objects.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\objects.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\objects.dmi
  - borgcharger
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\paper.dmi
+ + drone
+ + phoron-1
+ + phoron-2
+ + phoron-3
+ + phoron-4
+ + phoron-5
+ - plasma-1
+ - plasma-2
+ - plasma-3
+ - plasma-4
+ - plasma-5
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\paper.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\paper.dmi
  - paper_stamped_cap
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipe-item.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\pipe-item.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipe-item.dmi
  - dual-port vent
  - dvalve
  - injector
  - insulated_manifold
  - insulated_manifold4w
+ + m_filter
+ + m_mixer
+ + t_mixer
  - thermalplate
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\pipes.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes.dmi
  + intact-b
  + intact-b-f
@@ -2251,7 +2336,7 @@ OSError: cannot identify image file
  + intact-r-f
  + intact-y
  + intact-y-f
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\podwindows.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\podwindows.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\podwindows.dmi
  + window
  + window0
@@ -2270,7 +2355,7 @@ OSError: cannot identify image file
  + window7
  + window8
  + window9
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\power.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\power.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\power.dmi
  + coil
  + coil1
@@ -2299,7 +2384,7 @@ OSError: cannot identify image file
  - coil_yellow
  - coil_yellow1
  - coil_yellow2
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\power_cond_white.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\power_cond_white.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\power_cond_white.dmi
  - 0-1-f
  - 0-10-f
@@ -2346,7 +2431,7 @@ OSError: cannot identify image file
  - 8-10-f
  - 8-9-f
  - 9-10-f
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\projectiles.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\projectiles.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\projectiles.dmi
  - blue_laser
  - green_laser
@@ -2363,22 +2448,22 @@ OSError: cannot identify image file
  + stun
  - u_laser: u_laser: 2 frames, 8 directions
  + u_laser: u_laser: 2 frames, 4 directions
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\radio.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\radio.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\radio.dmi
  - intercom-frame
  - intercom-open
  - intercom-p-open
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\recycling.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\recycling.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\recycling.dmi
  - new_conveyor1
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\robotics.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\robotics.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\robotics.dmi
  - fab-load-phazon
  - mommispawner-building
  - mommispawner-idle
  - mommispawner-nopower
  - mommispawner-recharging
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\seeds.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\seeds.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\seeds.dmi
  - seed-chilighost
  - seed-koibean
@@ -2386,12 +2471,18 @@ OSError: cannot identify image file
  + seed-mtear
  - seed-novaflower
  + seed-shand
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\shards.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\shards.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\shards.dmi
+ + phoronlarge
+ + phoronmedium
+ + phoronsmall
+ - plasmalarge
+ - plasmamedium
+ - plasmasmall
  + shrapnellarge
  + shrapnelmedium
  + shrapnelsmall
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\stationobjs.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\stationobjs.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\stationobjs.dmi
  - glassbox20
  - glassbox21
@@ -2401,14 +2492,14 @@ OSError: cannot identify image file
  - wooden_tv_broken: wooden_tv_broken: 1 frames, 1 directions
  + wooden_tv_broken: wooden_tv_broken: 3 frames, 1 directions
  - wrecharger3
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\stock_parts.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\stock_parts.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\stock_parts.dmi
  - box_glass
  - box_glass_circuit
  - capacitor2_adv
  - capacitor2_basic
  - capacitor2_super
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\storage.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\storage.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\storage.dmi
  + cashbag
  - engicrate
@@ -2419,11 +2510,15 @@ OSError: cannot identify image file
  + inf_box
  - largebox
  - largebox-deployed
+ + phoroncrate
+ + phoroncrateopen
+ - plasmacrate
+ - plasmacrateopen
  - scicrate
  - scicrateopen
  - scisecurecrate
  - scisecurecrateopen
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\structures.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\structures.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\structures.dmi
  + down
  + down-f
@@ -2532,7 +2627,7 @@ OSError: cannot identify image file
  - woodtable_dir2
  - woodtable_dir3
  - woodtable_middle
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\surgery.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\surgery.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\surgery.dmi
  + scalpel_laser1_off
  + scalpel_laser1_on
@@ -2542,25 +2637,22 @@ OSError: cannot identify image file
  + scalpel_laser3_on
  + scalpel_manager_off
  + scalpel_manager_on
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\syringe.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\syringe.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\syringe.dmi
  - combat_hypo
  - lazarus_empty
  - lazarus_hypo
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\tank.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\tank.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\tank.dmi
  - emergency_nitrogen
  - jetpack-red
  - jetpack-red-on
  + phoron
  - plasma
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\telescience.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\telescience.dmi
- - gps-p
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\trash.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\trash.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\trash.dmi
  - busta_nut
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\vehicles.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\vehicles.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\vehicles.dmi
  - gokart0
  - gokart1
@@ -2570,7 +2662,7 @@ OSError: cannot identify image file
  - pussywagon_destroyed
  - pussywagon_upgraded
  - wizmobile
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\vending.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\vending.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\vending.dmi
  - hats
  - hats-broken
@@ -2594,7 +2686,7 @@ OSError: cannot identify image file
  - theater-deny
  - theater-off
  - theater-panel
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\weapons.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\weapons.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\weapons.dmi
  - Paddle_wield
  - butcherknife
@@ -2630,11 +2722,11 @@ OSError: cannot identify image file
  - stunprod_active
  - stunprod_nocell
  - wiredrod
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\xenoarchaeology.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\xenoarchaeology.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\xenoarchaeology.dmi
  - ano_scanner
  + flashgun
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\assemblies\new_assemblies.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\assemblies\new_assemblies.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\assemblies\new_assemblies.dmi
  - anomaly core
  - anomaly core_left
@@ -2642,7 +2734,7 @@ OSError: cannot identify image file
  - voice
  - voice_left
  - voice_right
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\atmospherics\cold_sink.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\atmospherics\cold_sink.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\cold_sink.dmi
  + exposed
  - hoff
@@ -2658,7 +2750,17 @@ OSError: cannot identify image file
  - on_cool
  - on_heat
  - on_idle
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\atmospherics\pipe_manifold.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\atmospherics\m_filter.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\m_filter.dmi
+ + 
+ + intact_off
+ + intact_on
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\atmospherics\m_mixer.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\m_mixer.dmi
+ + 
+ + intact_off
+ + intact_on
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\atmospherics\pipe_manifold.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\pipe_manifold.dmi
  + manifold-b
  + manifold-b-f
@@ -2713,7 +2815,7 @@ OSError: cannot identify image file
  - manifold_con
  - manifold_con_ex
  - manifold_ex
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\atmospherics\red_pipe.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\atmospherics\red_pipe.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\red_pipe.dmi
  + 
  + exposed
@@ -2724,21 +2826,33 @@ OSError: cannot identify image file
  + exposed10-f
  + intact
  + intact-f
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\atmospherics\vent_scrubber.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\atmospherics\t_mixer.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\t_mixer.dmi
+ + 
+ + intact_off
+ + intact_on
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\atmospherics\vent_scrubber.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\atmospherics\vent_scrubber.dmi
  - hon1
  - on1
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\belts.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\clothing\belts.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\belts.dmi
+ - bmbelt
  + inflatable
  + swatbelt
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\glasses.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\clothing\glasses.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\glasses.dmi
  + 3d
+ - kaminaglasses
+ - simonglasses
  + swatgoggles
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\hats.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\clothing\gloves.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\gloves.dmi
+ - bmgloves
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\clothing\hats.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\hats.dmi
  - beaver_hat
+ - bmhead
  - boater_hat
  + bombsuitsecold
  - bowler_hat
@@ -2762,20 +2876,23 @@ OSError: cannot identify image file
  - vox-pressure-science
  - vox-pressure-security
  - vox-pressure-specops
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\masks.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\clothing\masks.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\masks.dmi
  - bluntbutt
  - bluntoff
  - blunton
  - dbluntoff
  - dblunton
+ - happiest
+ - happiest_flash
  + snorkel
  + swatclava
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\shoes.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\clothing\shoes.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\shoes.dmi
  + flippers
  - roman
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\suits.dmi
+ - simonshoes
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\clothing\suits.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\suits.dmi
  - HoP_Coat
  - atmosfiresuit
@@ -2784,6 +2901,7 @@ OSError: cannot identify image file
  - paramedic-vest
  - paramedic-vest-old
  - rig-atmos_gold
+ - simonjacket
  + swatarmor
  - vox-pressure-engineer
  - vox-pressure-medical
@@ -2791,15 +2909,17 @@ OSError: cannot identify image file
  - vox-pressure-science
  - vox-pressure-security
  - vox-pressure-specops
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\clothing\uniforms.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\clothing\uniforms.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\clothing\uniforms.dmi
+ - bmuniform
  - paramedic
  - paramedic_old
  - roman
  + science
+ - spants
  + swatunder
  - toxins
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\doors\DoorHazard2x1.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\doors\DoorHazard2x1.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\doors\DoorHazard2x1.dmi
  - door_closed: door_closed: 1 frames, 1 directions
  + door_closed: door_closed: 1 frames, 4 directions
@@ -2811,7 +2931,7 @@ OSError: cannot identify image file
  + door_opening
  + welded
  + welded_open
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\doors\Doorphoron.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\doors\Doorphoron.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\doors\Doorphoron.dmi
  + door_closed
  + door_closing
@@ -2826,7 +2946,16 @@ OSError: cannot identify image file
  + o_door_opening
  + panel_open
  + welded
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\doors\rapid_pdoor.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\doors\mineral_doors.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\doors\mineral_doors.dmi
+ + phoron
+ + phoronclosing
+ + phoronopen
+ - plasma
+ - plasmaclosing
+ - plasmaopen
+ - plasmaopening
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\doors\rapid_pdoor.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\doors\rapid_pdoor.dmi
  - pdoor0: pdoor0: 5 frames, 1 directions
  + pdoor0: pdoor0: 5 frames, 4 directions
@@ -2836,11 +2965,11 @@ OSError: cannot identify image file
  + pdoorc0: pdoorc0: 6 frames, 4 directions
  - pdoorc1: pdoorc1: 6 frames, 1 directions
  + pdoorc1: pdoorc1: 6 frames, 4 directions
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\flora\pinetrees.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\flora\pinetrees.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\flora\pinetrees.dmi
  - 
  - festivus_pole
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\machines\antimatter.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\machines\antimatter.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\machines\antimatter.dmi
  - control_critical
  + core
@@ -2867,13 +2996,13 @@ OSError: cannot identify image file
  - shield_3
  - shield_7
  + shielding
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\machines\mining_machines.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\machines\mining_machines.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\machines\mining_machines.dmi
  - mining
  - mining-deny
  - mining-off
  - ore_redemption
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\machines\particle_accelerator.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\machines\particle_accelerator.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\machines\particle_accelerator.dmi
  - control_boxp3
  - emitter_centerp3
@@ -2882,24 +3011,24 @@ OSError: cannot identify image file
  - end_capp3
  - fuel_chamberp3
  - power_boxp3
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\machines\research.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\machines\research.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\machines\research.dmi
  - circuit_imprinter_link
  - d_analyzer_link
  - protolathe_link
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes\disposal.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\pipes\disposal.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\disposal.dmi
  + pipe-d
  + pipe-u
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes\heat.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\pipes\heat.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\heat.dmi
  - intact-f
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes\junction.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\pipes\junction.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\junction.dmi
  - intact-f
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes\large.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\pipes\large.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\obj\pipes\large.dmi
- C:\Users\Rob\Documents\Projects\Baystation12\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
+ C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\obj\pipes\large.dmi: Received error, continuing: Traceback (most recent call last):
   File "tools/ByondTools/src/DMITool.py", line 146, in compare
     theirsDMI.loadAll()
   File "C:\Users\Rob\Documents\Projects\vgstation13\tools\ByondTools\src\byond\DMI\__init__.py", line 194, in loadAll
@@ -2921,7 +3050,7 @@ OSError: cannot identify image file
     raise IOError("cannot identify image file")
 OSError: cannot identify image file
 
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\turf\areas.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\turf\areas.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\areas.dmi
  + Tactical
  + engine_eva
@@ -2933,8 +3062,9 @@ OSError: cannot identify image file
  - xenocell4
  - xenocell5
  - xenocell6
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\turf\floors.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\turf\floors.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\floors.dmi
+ - arcadecarpet
  - checker
  - concrete
  - dark blue corner
@@ -3000,7 +3130,7 @@ OSError: cannot identify image file
  + whitered_w
  + yellowpatch
  + yellowpatch_inv
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\turf\shuttle.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\turf\shuttle.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\shuttle.dmi
  + door0
  + door1
@@ -3010,12 +3140,12 @@ OSError: cannot identify image file
  + swall_floor_f5
  + swall_floor_f6
  + swall_floor_f9
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\turf\space.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\turf\space.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\space.dmi
  - debug-east
  - debug-north
  - end01
---- C:\Users\Rob\Documents\Projects\Baystation12\icons\turf\walls.dmi
+--- C:\Users\Rob\Documents\Projects\Baystation12-Zuhayr\icons\turf\walls.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\turf\walls.dmi
  + phoron0
  + phoron1

@@ -128,6 +128,10 @@ var/global/list/all_money_accounts = list()
 							//1 - require manual login / account number and pin
 							//2 - require card and manual login
 
+/datum/money_account/New()
+	..()
+	security_level = pick (0,1) //Stealing is now slightly viable
+
 /datum/transaction
 	var/target_name = ""
 	var/purpose = ""

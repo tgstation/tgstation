@@ -134,6 +134,9 @@
 	if(istype(I) && imp)
 		var/obj/item/weapon/implant/compressed/c = imp
 		if (c.scanned)
+			if(istype(I,/obj/item/weapon/storage))
+				..()
+				return
 			user << "\red Something is already scanned inside the implant!"
 			return
 		if(user)

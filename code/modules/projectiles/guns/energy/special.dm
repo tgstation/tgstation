@@ -193,6 +193,7 @@ obj/item/weapon/gun/energy/staff/focus
 	item_state = "kineticgun"
 	projectile_type = "/obj/item/projectile/kinetic"
 	cell_type = "/obj/item/weapon/cell/crap"
+	charge_cost = 50
 	var/overheat = 0
 	var/recent_reload = 1
 /*

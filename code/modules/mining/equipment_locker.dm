@@ -286,6 +286,7 @@
 			usr.drop_item()
 			I.loc = src
 			inserted_id = I
+		return
 	..()
 
 /obj/machinery/mineral/equipment_locker/proc/RedeemVoucher(voucher, redeemer)

@@ -36,6 +36,8 @@
 	new /obj/item/weapon/shovel(src)
 	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/clothing/glasses/meson(src)
+	new /obj/item/device/gps/mining(src)
+	new /obj/item/weapon/storage/belt/mining(src)
 
 
 /**********************Shuttle Computer**************************/

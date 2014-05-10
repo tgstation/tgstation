@@ -1068,3 +1068,43 @@
 	New()
 		block = MELTBLOCK
 		..()
+
+/obj/item/weapon/dnainjector/smile
+	name = "DNA-Injector (Smile)"
+	desc = ":)"
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 14
+	New()
+		block = SMILEBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antismile
+	name = "DNA-Injector (Anti-Smile)"
+	desc = ":("
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 14
+	New()
+		block = SMILEBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/elvis
+	name = "DNA-Injector (Elvis)"
+	desc = "Tell the folks back home this is the promised land calling"
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 14
+	New()
+		block = ELVISBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antielvis
+	name = "DNA-Injector (Anti-Elvis)"
+	desc = "And the poor boy is on the line."
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 14
+	New()
+		block = ELVISBLOCK
+		..()

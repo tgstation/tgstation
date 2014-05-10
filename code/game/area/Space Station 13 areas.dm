@@ -738,6 +738,18 @@ proc/process_ghost_teleport_locs()
 	name = "Recycling"
 	icon_state = "disposal"
 
+/area/maintenance/secdisposal
+	name = "Security Disposals"
+	icon_state = "secdisp"
+
+/area/maintenance/auxcharge
+	name = "Auxiliary Cyborg Recharge"
+	icon_state = "auxcharge"
+
+/area/maintenance/ghettobar
+	name = "Ghetto Bar"
+	icon_state = "ghettobar"
+
 //Hallway
 
 /area/hallway/primary/fore
