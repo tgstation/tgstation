@@ -67,6 +67,7 @@
 
 
 /obj/structure/lamarr/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	user.changeNext_move(8)
 	src.health -= W.force
 	src.healthcheck()
 	..()
@@ -76,6 +77,7 @@
 	return src.attack_hand(user)
 
 /obj/structure/lamarr/attack_hand(mob/user as mob)
+	user.changeNext_move(8)
 	if (src.destroyed)
 		return
 	else
