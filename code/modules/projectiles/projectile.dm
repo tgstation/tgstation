@@ -92,13 +92,20 @@
 			def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 			if(silenced)
 				playsound(loc, hitsound, 5, 1, -1)
-				M << "<span class='userdanger'>You've been shot by \a [src] in \the [parse_zone(def_zone)]!</span>"
+				if(iscarbon(M))
+					M << "<span class='userdanger'>You've been shot by \a [src] in \the [parse_zone(def_zone)]!</span>"
+				else
+					M << "<span class='userdanger'>You've been shot by \a [src]!</span>"
 			else
 				if(hitsound)
 					var/volume = vol_by_damage()
 					playsound(loc, hitsound, volume, 1, -1)
-				M.visible_message("<span class='danger'>[M] is hit by \a [src] in the [parse_zone(def_zone)]!", \
+				if(iscarbon(M))
+					M.visible_message("<span class='danger'>[M] is hit by \a [src] in the [parse_zone(def_zone)]!", \
 									"<span class='userdanger'>[M] is hit by \a [src] in the [parse_zone(def_zone)]!")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+				else
+					M.visible_message("<span class='danger'>[M] is hit by \a [src]!", \
+									"<span class='userdanger'>[M] is hit by \a [src]!")
 			add_logs(firer, M, "shot", object="[src]", addition=reagent_note)
 
 
