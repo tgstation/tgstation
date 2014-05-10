@@ -522,7 +522,7 @@
 		visible_message("[user] starts squeezing into the suit storage unit!", 3)
 	else
 		visible_message("[user] starts putting [M.name] into the Suit Storage Unit.", 3)
-	if(do_after(user, 10))
+	if(do_mob(user, M, 10))
 		user.stop_pulling()
 		if(M.client)
 			M.client.perspective = EYE_PERSPECTIVE
