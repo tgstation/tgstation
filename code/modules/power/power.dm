@@ -186,8 +186,8 @@
 // if unmarked==1, only return those with no powernet
 /proc/power_list(var/turf/T, var/source, var/d, var/unmarked=0, var/cable_only = 0)
 	. = list()
-	var/fdir = (!d)? 0 : turn(d, 180)			// the opposite direction to d (or 0 if d==0)
-//	world.log << "d=[d] fdir=[fdir]"
+	//var/fdir = (!d)? 0 : turn(d, 180)			// the opposite direction to d (or 0 if d==0)
+
 	for(var/AM in T)
 		if(AM == source)	continue			//we don't want to return source
 
@@ -203,7 +203,7 @@
 			var/obj/structure/cable/C = AM
 
 			if(!unmarked || !C.powernet)
-				if(C.d1 == fdir || C.d2 == fdir)
+				if(C.d1 == d || C.d2 == d)
 					. += C
 	return .
 
@@ -237,7 +237,7 @@
 			var/obj/structure/cable/C = P
 			if(C.powernet != PN) //add it to the powernet, if it isn't already there
 				PN.add_cable(C)
-			worklist |= C.get_marked_connections() //get adjacents power objects, with or without a powernet
+			worklist |= C.get_connections() //get adjacents power objects, with or without a powernet
 
 		else if(P.anchored && istype(P,/obj/machinery/power))
 			var/obj/machinery/power/M = P
