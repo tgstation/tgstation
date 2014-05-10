@@ -1790,6 +1790,21 @@ datum
 				..()
 				return
 
+		inacusiate
+			name = "Inacusiate"
+			id = "inacusiate"
+			description = "Rapidly heals ear damage"
+			reagent_state = LIQUID
+			color = "#6600FF" // rgb: 100, 165, 255
+			overdose = REAGENTS_OVERDOSE
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				M.ear_damage = 0
+				M.ear_deaf = 0
+				..()
+				return
+
 		peridaxon
 			name = "Peridaxon"
 			id = "peridaxon"
