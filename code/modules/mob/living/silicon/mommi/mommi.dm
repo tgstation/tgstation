@@ -78,7 +78,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 
 /mob/living/silicon/robot/mommi/choose_icon()
-	var/icontype = input("Select an icon!", "Mobile MMI", null) in list("Basic", "Keeper", "Replicator")
+	var/icontype = input("Select an icon!", "Mobile MMI", null) in list("Basic", "Keeper", "RepairBot", "Replicator")
 	switch(icontype)
 		if("Basic")		subtype = "mommi"
 		if("Keeper")	subtype = "keeper"
