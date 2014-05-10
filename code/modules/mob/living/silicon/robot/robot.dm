@@ -202,6 +202,7 @@
 			module_sprites["Bro"] = "Brobot"
 			module_sprites["Rich"] = "maximillion"
 			module_sprites["Default"] = "Service2"
+			module_sprites["R2-D2"] = "r2d2"
 
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
@@ -211,6 +212,7 @@
 			module_sprites["Basic"] = "Miner_old"
 			module_sprites["Advanced Droid"] = "droid-miner"
 			module_sprites["Treadhead"] = "Miner"
+			module_sprites["Wall-A"] = "wall-a"
 
 		if("Medical")
 			module = new /obj/item/weapon/robot_module/medical(src)
@@ -222,6 +224,7 @@
 			module_sprites["Needles"] = "medicalrobot"
 			module_sprites["Standard"] = "surgeon"
 			module_sprites["Marina"] = "marina"
+			module_sprites["Eve"] = "eve"
 
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
