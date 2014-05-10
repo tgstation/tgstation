@@ -503,6 +503,7 @@
 				phrases += "I want to eat..."
 			phrases += "Rawr..."
 			phrases += "Blop..."
+			phrases += "Blorble..."
 			if (rabid || attacked)
 				phrases += "Hrr..."
 				phrases += "Nhuu..."
