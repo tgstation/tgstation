@@ -49,8 +49,12 @@
 	D.name = "small parcel - 'EFTPOS access code'"
 
 /obj/item/device/eftpos/proc/reconnect_database()
-	for(var/obj/machinery/account_database/DB in world)
-		if(DB.z == src.z)
+	var/turf/location = get_turf(src)
+	if(!location)
+		return
+
+	for(var/obj/machinery/account_database/DB in world) //Hotfix until someone finds out why it isn't in 'machines'
+		if(DB.z == location.z)
 			linked_db = DB
 			break
 

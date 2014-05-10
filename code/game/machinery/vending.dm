@@ -362,12 +362,22 @@
 			if(istype(usr, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H=usr
 				var/obj/item/weapon/card/card = null
+				var/obj/item/device/pda/pda = null
 				if(istype(H.wear_id,/obj/item/weapon/card))
 					card=H.wear_id
 				else if(istype(H.get_active_hand(),/obj/item/weapon/card))
 					card=H.get_active_hand()
+				else if(istype(H.wear_id,/obj/item/device/pda))
+					pda=H.wear_id
+					if(pda.id)
+						card=pda.id
+				else if(istype(H.get_active_hand(),/obj/item/device/pda))
+					pda=H.get_active_hand()
+					if(pda.id)
+						card=pda.id
 				if(card)
 					connect_account(card)
+			src.updateUsrDialog()
 			return
 
 		else if ((href_list["togglevoice"]) && (src.panel_open))
@@ -558,7 +568,8 @@
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua = 5,/obj/item/weapon/reagent_containers/food/drinks/beer = 6,
 					/obj/item/weapon/reagent_containers/food/drinks/ale = 6,/obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice = 4,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice = 4,/obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice = 4,
-					/obj/item/weapon/reagent_containers/food/drinks/bottle/cream = 4,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/tonic = 8,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/cream = 4,/obj/item/weapon/reagent_containers/food/drinks/milk = 4,
+					/obj/item/weapon/reagent_containers/food/drinks/soymilk = 4,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/tonic = 8,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola = 8, /obj/item/weapon/reagent_containers/food/drinks/soda_cans/sodawater = 15,
 					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 30,/obj/item/weapon/reagent_containers/food/drinks/ice = 9)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/tea = 10)

@@ -163,8 +163,7 @@ var/list/beam_master = list()
 					if(src.loc != current)
 						tang = adjustAngle(get_angle(src.loc,current))
 					icon_state = "[tang]"
-			//del(src)
-			returnToPool(src)
+			del(src)
 		return
 	/*cleanup(reference) //Waits .3 seconds then removes the overlay.
 		//world << "setting invisibility"
@@ -195,17 +194,12 @@ var/list/beam_master = list()
 			if((!( current ) || loc == current)) //If we pass our target
 				current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
 			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
-				//del(src) //Delete if it passes the world edge
-				returnToPool(src)
+				del(src) //Delete if it passes the world edge
 				return
 			step_towards(src, current) //Move~
 
-			if (isnull(loc))
-				return
-
 			if(kill_count < 1)
-				//del(src)
-				returnToPool(src)
+				del(src)
 				return
 			kill_count--
 
@@ -245,19 +239,16 @@ var/list/beam_master = list()
 		var/reference = "\ref[src]" //So we do not have to recalculate it a ton
 		var/first = 1 //So we don't make the overlay in the same tile as the firer
 		if(!dir)
-			//del(src)
-			returnToPool(src)
+			del(src)
 		spawn while(src) //Move until we hit something
 			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
-				//del(src) //Delete if it passes the world edge
-				returnToPool(src)
+				del(src) //Delete if it passes the world edge
 				return
 			var/turf/T = get_step(src, dir)
 			step_towards(src, T) //Move~
 
 			if(kill_count < 1)
-				//del(src)
-				returnToPool(src)
+				del(src)
 			kill_count--
 
 			if(!bumped && !isturf(original))

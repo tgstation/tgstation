@@ -1428,7 +1428,7 @@
 					client.screen += global_hud.darkMask
 					masked = 1
 
-			if(!masked && istype(glasses, /obj/item/clothing/glasses/welding) )
+			if(!masked && istype(glasses, /obj/item/clothing/glasses/welding) && !istype(glasses, /obj/item/clothing/glasses/welding/superior))
 				var/obj/item/clothing/glasses/welding/O = glasses
 				if(!O.up && tinted_weldhelh)
 					client.screen += global_hud.darkMask

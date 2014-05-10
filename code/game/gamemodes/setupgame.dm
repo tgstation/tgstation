@@ -74,7 +74,9 @@
 	TOXICFARTBLOCK = getAssignedBlock("TOXICFART",  numsToAssign, good=1)
 	STRONGBLOCK    = getAssignedBlock("STRONG",     numsToAssign, good=1)
 	HORNSBLOCK     = getAssignedBlock("HORNS",      numsToAssign)
-
+	SMILEBLOCK     = getAssignedBlock("SMILE",      numsToAssign)
+	ELVISBLOCK     = getAssignedBlock("ELVIS",      numsToAssign)
+	
 	// Powers
 	SOBERBLOCK     = getAssignedBlock("SOBER",      numsToAssign, good=1)
 	PSYRESISTBLOCK = getAssignedBlock("PSYRESIST",  numsToAssign, DNA_HARD_BOUNDS, good=1)

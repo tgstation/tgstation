@@ -34,6 +34,7 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/attack_self(mob/user)
+	attack(user,user)
 	return
 
 

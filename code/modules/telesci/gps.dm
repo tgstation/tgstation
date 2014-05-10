@@ -74,3 +74,8 @@ var/list/GPS_list = list()
 /obj/item/device/gps/paramedic
 	icon_state = "gps-p"
 	gpstag = "PMD0"
+
+/obj/item/device/gps/mining
+	desc = "A more rugged looking GPS device. Useful for finding miners. Or their corpses."
+	icon_state = "gps-m"
+	gpstag = "MIN0"
