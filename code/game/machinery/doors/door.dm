@@ -303,7 +303,7 @@
 			bound_width = world.icon_size
 			bound_height = width * world.icon_size
 
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles()
 	return
 
 /obj/machinery/door/Destroy()
@@ -346,38 +346,15 @@
 /obj/machinery/door/proc/requiresID()
 	return 1
 
-/obj/machinery/door/proc/update_nearby_tiles(need_rebuild)
-	if(!air_master) return 0
+/obj/machinery/door/proc/update_nearby_tiles()
+	if (isnull(air_master))
+		return 0
 
-	var/turf/simulated/source = loc
-	var/turf/simulated/north = get_step(source,NORTH)
-	var/turf/simulated/south = get_step(source,SOUTH)
-	var/turf/simulated/east = get_step(source,EAST)
-	var/turf/simulated/west = get_step(source,WEST)
+	var/T
+	for (T in locs)
+		update_heat_protection(T)
+		air_master.mark_for_update(T)
 
-	update_heat_protection(loc)
-
-	if(istype(source)) air_master.tiles_to_update += source
-	if(istype(north)) air_master.tiles_to_update += north
-	if(istype(south)) air_master.tiles_to_update += south
-	if(istype(east)) air_master.tiles_to_update += east
-	if(istype(west)) air_master.tiles_to_update += west
-
-	if(width > 1)
-		var/turf/simulated/next_turf = src
-		var/step_dir = turn(dir, 180)
-		for(var/current_step = 2, current_step <= width, current_step++)
-			next_turf = get_step(src, step_dir)
-			north = get_step(next_turf, step_dir)
-			east = get_step(next_turf, turn(step_dir, 90))
-			south = get_step(next_turf, turn(step_dir, -90))
-
-			update_heat_protection(next_turf)
-
-			if(istype(north)) air_master.tiles_to_update |= north
-			if(istype(south)) air_master.tiles_to_update |= south
-			if(istype(east)) air_master.tiles_to_update |= east
-	update_freelok_sight()
 	return 1
 
 /obj/machinery/door/proc/update_heat_protection(var/turf/simulated/source)
