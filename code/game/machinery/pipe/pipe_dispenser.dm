@@ -126,6 +126,9 @@ Nah
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return
 
+	if(!iscarbon(usr))
+		return
+
 	if (!istype(pipe) || get_dist(usr, src) > 1 || get_dist(src,pipe) > 1 )
 		return
 

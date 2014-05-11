@@ -60,6 +60,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/MouseDrop(obj/over_object as obj, src_location, over_location)
 	var/mob/M = usr
+	if(!iscarbon(M))
+		return
 	if((!istype(over_object, /obj/screen)) && src.loc == M)
 		return attack_self(M)
 	return

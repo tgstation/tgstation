@@ -391,6 +391,9 @@ var/global/mulebot_count = 0
 	if(user.stat)
 		return
 
+	if(!iscarbon(user))
+		return
+
 	if (!on || !istype(C)|| C.anchored || get_dist(user, src) > 1 || get_dist(src,C) > 1 )
 		return
 

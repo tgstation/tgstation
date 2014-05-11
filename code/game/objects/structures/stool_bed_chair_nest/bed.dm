@@ -35,7 +35,7 @@
 		qdel(src)
 
 /obj/structure/stool/bed/MouseDrop_T(mob/M as mob, mob/user as mob)
-	if(!istype(M)) return
+	if(!iscarbon(M)) return
 	buckle_mob(M, user)
 	return
 
