@@ -233,6 +233,7 @@
 			module_sprites["Red Knight"] = "Security"
 			module_sprites["Black Knight"] = "securityrobot"
 			module_sprites["Bloodhound"] = "bloodhound"
+			module_sprites["Securitron"] = "securitron"
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
