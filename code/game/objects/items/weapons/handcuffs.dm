@@ -104,14 +104,18 @@
 /obj/item/weapon/handcuffs/cyborg/attack(mob/living/carbon/C, mob/user)
 	if(isrobot(user))
 		if(!C.handcuffed)
-			var/turf/user_loc = user.loc
-			var/turf/C_loc = C.loc
 			playsound(loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 			C.visible_message("<span class='danger'>[user] is trying to put handcuffs on [C]!</span>", \
 								"<span class='userdanger'>[user] is trying to put handcuffs on [C]!</span>")
-			if(do_after(user, 30))
-				if(!C || C.handcuffed)
+			if(do_mob(user, C, 30))
+				if(C.handcuffed)
 					return
-				if(user_loc == user.loc && C_loc == C.loc)
-					C.handcuffed = new /obj/item/weapon/handcuffs(C)
-					C.update_inv_handcuffed(0)
+				C.handcuffed = new /obj/item/weapon/handcuffs(C)
+				C.update_inv_handcuffed(0)
+		else
+			C.visible_message("<span class='danger'>[user] tries to remove [C]'s handcuffs.</span>", \
+							"<span class='notice'>[user] tries to remove [C]'s handcuffs.</span>")
+			if(do_mob(user, C, 30))
+				if(!C.handcuffed)
+					return
+				C.unEquip(C.handcuffed)

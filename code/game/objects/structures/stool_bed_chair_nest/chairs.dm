@@ -70,7 +70,6 @@
 		return
 
 /obj/structure/stool/bed/chair/MouseDrop_T(mob/M as mob, mob/user as mob)
-	if(!iscarbon(M)) return
 	buckle_mob(M, user)
 	return
 
