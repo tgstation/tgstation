@@ -263,6 +263,15 @@
 /mob/living/simple_animal/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj)
 		return
+	if(Proj.silenced)
+		playsound(loc, Proj.hitsound, 5, 1, -1)
+		src << "<span class='userdanger'>You've been shot by \a [Proj]!</span>"
+	else
+		if(Proj.hitsound)
+			var/volume = Proj.vol_by_damage()
+			playsound(loc, Proj.hitsound, volume, 1, -1)
+		visible_message("<span class='danger'>[src] is hit by \a [Proj]!</span>", \
+						"<span class='userdanger'>[src] is hit by \a [Proj]!</span>")
 	if((Proj.damage_type != STAMINA))
 		adjustBruteLoss(Proj.damage)
 		Proj.on_hit(src, 0)

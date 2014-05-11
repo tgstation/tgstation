@@ -121,9 +121,8 @@
 	if(!Proj)
 		return
 	if(Proj.damage_type == BURN || Proj.damage_type == BRUTE)
-		adjustBruteLoss(Proj.damage)
-	Proj.on_hit(src, 0)
-	return 0
+		return ..(Proj)
+	return
 
 
 

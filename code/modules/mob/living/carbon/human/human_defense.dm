@@ -60,7 +60,7 @@ emp_act
 	if(check_shields(P.damage, "the [P.name]"))
 		P.on_hit(src, 100, def_zone)
 		return 2
-	return (..(P , def_zone))
+	return (..(P , def_zone, 1))
 
 /mob/living/carbon/human/proc/check_reflect(var/def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on reflect_chance var of the object
 	if(wear_suit && istype(wear_suit, /obj/item/))
