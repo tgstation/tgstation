@@ -214,7 +214,7 @@ obj/item/weapon/twohanded/
 /obj/item/weapon/twohanded/dualsaber/attack(target as mob, mob/living/user as mob)
 	..()
 	if((CLUMSY in user.mutations) && (wielded) && prob(40))
-		Impale(user)
+		impale(user)
 		return
 	if((wielded) && prob(50))
 		spawn(0)
@@ -222,7 +222,7 @@ obj/item/weapon/twohanded/
 				user.dir = i
 				sleep(1)
 
-/obj/item/weapon/twohanded/dualsaber/proc/Impale(mob/living/user as mob)
+/obj/item/weapon/twohanded/dualsaber/proc/impale(mob/living/user as mob)
 	user << "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on the [src].</span>"
 	if (force_wielded)
 		user.take_organ_damage(20,25)
