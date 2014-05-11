@@ -194,6 +194,7 @@
 			module_sprites["Basic"] = "robot_old"
 			module_sprites["Android"] = "droid"
 			module_sprites["Default"] = "robot"
+			module_sprites["Booty"] = "booty-blue"
 
 		if("Service")
 			module = new /obj/item/weapon/robot_module/butler(src)
@@ -203,6 +204,8 @@
 			module_sprites["Rich"] = "maximillion"
 			module_sprites["Default"] = "Service2"
 			module_sprites["R2-D2"] = "r2d2"
+			module_sprites["Booty Girl"] = "booty-flower"
+			module_sprites["Booty Green"] = "booty-green"
 
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
@@ -225,6 +228,7 @@
 			module_sprites["Standard"] = "surgeon"
 			module_sprites["Marina"] = "marina"
 			module_sprites["Eve"] = "eve"
+			module_sprites["Booty"] = "booty-white"
 
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
@@ -233,6 +237,7 @@
 			module_sprites["Red Knight"] = "Security"
 			module_sprites["Black Knight"] = "securityrobot"
 			module_sprites["Bloodhound"] = "bloodhound"
+			module_sprites["Booty"] = "booty-red"
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
@@ -244,6 +249,7 @@
 			module_sprites["Engiseer"] = "Engiseer"
 			module_sprites["Landmate"] = "landmate"
 			module_sprites["Wall-E"] = "wall-e"
+			module_sprites["Booty"] = "booty-yellow"
 
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
