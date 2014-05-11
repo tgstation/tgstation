@@ -23,7 +23,7 @@ datum/shuttle_manager/proc/move_shuttle(var/override_delay, var/override_diskche
 			var/area/SHUTTLE = locate(location)
 			if(SHUTTLE.GetTypeInAllContents(/obj/item/weapon/disk/nuclear))
 				for(var/mob/MOB in SHUTTLE)
-					MOB << "<span class='warning'>Unauthorized cargo detected. Aborting launch.</span>."
+					MOB << "<span class='warning'>Unauthorized cargo detected. Aborting launch.</span>"
 				moving = 0
 				return
 
