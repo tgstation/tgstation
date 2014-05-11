@@ -423,7 +423,7 @@
 		else
 			user << "\red This weapon is ineffective, it does no damage."
 			user.visible_message("<span class='warning'>[user] gently taps [src] with [O].</span>",\
-							"<span class='warning'>This weapon is ineffective, it does no damage..</span>")
+							"<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 
 /mob/living/simple_animal/movement_delay()
 	var/tally = 0 //Incase I need to add stuff other than "speed" later
