@@ -103,20 +103,6 @@
 			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 			adjustBruteLoss(damage)
 
-/mob/living/simple_animal/construct/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(O.force)
-		var/damage = O.force
-		if(O.damtype == BURN || O.damtype == BRUTE)
-			adjustBruteLoss(damage)
-		for(var/mob/M in viewers(src, null))
-			if ((M.client && !( M.blinded )))
-				M.show_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>")
-	else
-		usr << "\red This weapon is ineffective, it does no damage."
-		for(var/mob/M in viewers(src, null))
-			if ((M.client && !( M.blinded )))
-				M.show_message("\red [user] gently taps [src] with [O]. ")
-
 /mob/living/simple_animal/construct/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj)
 		return
@@ -149,25 +135,8 @@
 	environment_smash = 2
 	attack_sound = 'sound/weapons/punch3.ogg'
 	status_flags = 0
+	force_threshold = 11
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
-
-/mob/living/simple_animal/construct/armoured/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(O.force)
-		if(O.force >= 11)
-			if(O.damtype == BURN || O.damtype == BRUTE)
-				adjustBruteLoss(O.force)
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>")
-		else
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [O] bounces harmlessly off of [src]. ")
-	else
-		usr << "\red This weapon is ineffective, it does no damage."
-		for(var/mob/M in viewers(src, null))
-			if ((M.client && !( M.blinded )))
-				M.show_message("\red [user] gently taps [src] with [O]. ")
 
 
 /mob/living/simple_animal/construct/armoured/bullet_act(var/obj/item/projectile/P)
@@ -271,29 +240,9 @@
 	speed = 5
 	environment_smash = 2
 	attack_sound = 'sound/weapons/punch4.ogg'
+	force_threshold = 11
 	var/energy = 0
 	var/max_energy = 1000
-
-/mob/living/simple_animal/construct/behemoth/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(O.force)
-		if(O.force >= 11)
-			var/damage = O.force
-			if (O.damtype == STAMINA)
-				damage = 0
-			adjustBruteLoss(damage)
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>")
-		else
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [O] bounces harmlessly off of [src]. ")
-	else
-		usr << "\red This weapon is ineffective, it does no damage."
-		for(var/mob/M in viewers(src, null))
-			if ((M.client && !( M.blinded )))
-				M.show_message("\red [user] gently taps [src] with [O]. ")
-
 
 
 ////////////////Powers//////////////////
