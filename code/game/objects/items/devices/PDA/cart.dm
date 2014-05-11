@@ -53,6 +53,11 @@
 		icon_state = "cart-chem"
 		access_reagent_scanner = 1
 
+	chef
+		name = "ChefBuddy Cartridge"
+		icon_state = "cart-chef"
+		access_reagent_scanner = 1
+
 	security
 		name = "R.O.B.U.S.T. Cartridge"
 		icon_state = "cart-s"
