@@ -77,7 +77,7 @@ other types of metals and chemistry for reagents).
 ///////////////////Computer Boards///////////////////////////////////
 
 /datum/design/seccamera
-	name = "Circuit Design (Security)"
+	name = "Circuit Design (Security Cameras)"
 	desc = "Allows for the construction of circuit boards used to build security camera computers."
 	id = "seccamera"
 	req_tech = list("programming" = 2)
@@ -1533,14 +1533,14 @@ other types of metals and chemistry for reagents).
 	materials = list("$metal" = 8000, "$glass" = 2000)
 	build_path = /obj/item/device/robotanalyzer
 
-/datum/design/defibrilator
-	name = "Defibrilator"
-	desc = "A handheld emergency defibrilator, used to bring people back from the brink of death or put them there."
-	id = "defibrilatorr"
+/datum/design/defibrillator
+	name = "Defibrillator"
+	desc = "A handheld emergency defibrillator, used to bring people back from the brink of death or put them there."
+	id = "defibrillator"
 	req_tech = list("magnets" = 3, "materials" = 4, "biotech" = 4)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 9000, "$silver" = 250, "$glass" = 10000)
-	build_path = /obj/item/weapon/melee/defibrilator
+	build_path = /obj/item/weapon/melee/defibrillator
 
 /datum/design/healthanalyzer
 	name = "Health Analyzer"
@@ -1879,7 +1879,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/superior_welding_goggles
 	name = "Superior Welding Goggles"
-	desc = "Welding goggles made from more expensive materials, strangely smells like potatoes."
+	desc = "Welding goggles made from more expensive materials, strangely smells like potatoes. Allows for better vision than normal goggles.."
 	id = "superior_welding_goggles"
 	req_tech = list("materials" = 3, "engineering" = 3)
 	build_type = PROTOLATHE

@@ -202,6 +202,7 @@
 			module_sprites["Bro"] = "Brobot"
 			module_sprites["Rich"] = "maximillion"
 			module_sprites["Default"] = "Service2"
+			module_sprites["R2-D2"] = "r2d2"
 
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
@@ -211,6 +212,7 @@
 			module_sprites["Basic"] = "Miner_old"
 			module_sprites["Advanced Droid"] = "droid-miner"
 			module_sprites["Treadhead"] = "Miner"
+			module_sprites["Wall-A"] = "wall-a"
 
 		if("Medical")
 			module = new /obj/item/weapon/robot_module/medical(src)
@@ -222,6 +224,7 @@
 			module_sprites["Needles"] = "medicalrobot"
 			module_sprites["Standard"] = "surgeon"
 			module_sprites["Marina"] = "marina"
+			module_sprites["Eve"] = "eve"
 
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
@@ -230,6 +233,7 @@
 			module_sprites["Red Knight"] = "Security"
 			module_sprites["Black Knight"] = "securityrobot"
 			module_sprites["Bloodhound"] = "bloodhound"
+			module_sprites["Securitron"] = "securitron"
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
@@ -248,6 +252,7 @@
 			module_sprites["Mopbot"]  = "janitorrobot"
 			module_sprites["Mop Gear Rex"] = "mopgearrex"
 			module_sprites["Mechaduster"] = "mechaduster"
+			module_sprites["HAN-D"] = "han-d"
 
 		if("Combat")
 			module = new /obj/item/weapon/robot_module/combat(src)
@@ -1267,7 +1272,7 @@
 				for(var/A in tile)
 					if(istype(A, /obj/effect))
 						if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
-							del(A)
+							qdel(A)
 					else if(istype(A, /obj/item))
 						var/obj/item/cleaned_item = A
 						cleaned_item.clean_blood()

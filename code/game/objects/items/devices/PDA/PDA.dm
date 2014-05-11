@@ -358,11 +358,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				// END AUTOFIX
 				//dat += "<li><a href='byond://?src=\red[src];choice=chatroom'><img src=pda_chatroom.png> Nanotrasen Relay Chat</a></li>"
 
+				dat += "<li><a href='byond://?src=\ref[src];choice=41'><img src=pda_notes.png> View Crew Manifest</a></li>"
+
 				if (cartridge)
 					if (cartridge.access_clown)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Honk'><img src=pda_honk.png> Honk Synthesizer</a></li>"
-					if (cartridge.access_manifest)
-						dat += "<li><a href='byond://?src=\ref[src];choice=41'><img src=pda_notes.png> View Crew Manifest</a></li>"
 					if(cartridge.access_status_display)
 						dat += "<li><a href='byond://?src=\ref[src];choice=42'><img src=pda_status.png> Set Status Display</a></li>"
 					dat += "</ul>"
@@ -557,6 +557,16 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += " <img src=pda_locked.png>"
 					dat += "</li>"
 
+			if (41) //Allows everyone to access crew
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\cart.dm:281: menu = "<h4><img src=pda_notes.png> Crew Manifest</h4>"
+				dat += {"<h4><img src=pda_notes.png> Crew Manifest</h4>
+					Entries cannot be modified from this terminal.<br><br>"}
+				// END AUTOFIX
+				if(data_core)
+					dat += data_core.get_manifest(1) // make it monochrome
+				dat += "<br>"
 
 
 			else//Else it links to the cart menu proc. Although, it really uses menu hub 4--menu 4 doesn't really exist as it simply redirects to hub.
@@ -625,6 +635,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				mode = 3
 			if("4")//Redirects to hub
 				mode = 0
+			if("41")
+				mode = 41
 			if("chatroom") // chatroom hub
 				mode = 5
 

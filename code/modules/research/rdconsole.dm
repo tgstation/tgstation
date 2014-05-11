@@ -71,7 +71,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	return return_name
 
 /obj/machinery/computer/rdconsole/proc/CallMaterialName(var/ID)
-	var/datum/reagent/temp_reagent
 	var/return_name = null
 	if (copytext(ID, 1, 2) == "$")
 		return_name = copytext(ID, 2)
@@ -94,12 +93,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				return_name = "Bananium"
 	else
 		for(var/R in typesof(/datum/reagent) - /datum/reagent)
-			temp_reagent = null
-			temp_reagent = new R()
-			if(temp_reagent.id == ID)
-				return_name = temp_reagent.name
-				del(temp_reagent)
-				temp_reagent = null
+			var/datum/reagent/T = new R()
+			if(T.id == ID)
+				return_name = T.name
 				break
 	return return_name
 

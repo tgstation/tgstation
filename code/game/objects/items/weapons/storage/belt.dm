@@ -166,3 +166,37 @@
 	can_hold = list(
 		"/obj/item/clothing/mask/luchador"
 		)
+
+
+/obj/item/weapon/storage/belt/mining
+	name = "mining gear belt"
+	desc = "Can hold various mining gear like pickaxes or drills."
+	icon_state = "miningbelt"
+	item_state = "mining"
+	w_class = 4 //Lets it hold mining satchels.
+	max_w_class = 4
+	max_combined_w_class = 28
+	can_hold = list(
+		"/obj/item/weapon/storage/bag/ore",
+		"/obj/item/weapon/shovel",
+		"/obj/item/weapon/storage/box/samplebags",
+		"/obj/item/device/core_sampler",
+		"/obj/item/device/beacon_locator",
+		"/obj/item/device/radio/beacon",
+		"/obj/item/device/gps",
+		"/obj/item/device/measuring_tape",
+		"/obj/item/device/flashlight",
+		"/obj/item/weapon/pickaxe",
+		"/obj/item/device/depth_scanner",
+		"/obj/item/weapon/paper",
+		"/obj/item/weapon/pen",
+		"/obj/item/clothing/glasses",
+		"/obj/item/weapon/wrench",
+		"/obj/item/device/mining_scanner",
+		"/obj/item/weapon/crowbar",
+		"/obj/item/weapon/storage/box/excavation",
+		"/obj/item/weapon/gun/energy/kinetic_accelerator",
+		"/obj/item/weapon/resonator",
+		"/obj/item/device/wormhole_jaunter",
+		"/obj/item/weapon/lazarus_injector",
+		"/obj/item/weapon/anobattery")
