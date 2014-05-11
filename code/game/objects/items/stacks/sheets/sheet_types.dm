@@ -88,6 +88,10 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	flags = FPRINT | TABLEPASS | CONDUCT
 	origin_tech = "materials=1"
 
+/obj/item/stack/sheet/metal/recycle(var/datum/materials/rec)
+	rec.addAmount("iron",1*amount)
+	return 1
+
 // Diet metal.
 /obj/item/stack/sheet/metal/cyborg
 	m_amt = 0
@@ -117,6 +121,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	throwforce = 15.0
 	flags = FPRINT | TABLEPASS | CONDUCT
 	origin_tech = "materials=2"
+	w_type = RECYK_METAL
 
 /obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
 		recipes = plasteel_recipes

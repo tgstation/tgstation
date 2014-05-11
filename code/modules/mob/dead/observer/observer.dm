@@ -262,6 +262,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		resting = 1
 		var/mob/dead/observer/ghost = ghostize(0)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
 		ghost.timeofdeath = world.time // Because the living mob won't have a time of death and we want the respawn timer to work properly.
+		if(ghost.client)
+			ghost.client.time_died_as_mouse = world.time //We don't want people spawning infinite mice on the station
 	return
 
 // Check for last poltergeist activity.
