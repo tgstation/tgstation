@@ -114,6 +114,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			module_sprites["Basic"] = "mommi"
 			module_sprites["Keeper"] = "keeper"
 			module_sprites["Replicator"] = "replicator"
+			module_sprites["RepairBot"] = "repairbot"
 
 	//Custom_sprite check and entry
 	if (custom_sprite == 1)
