@@ -2039,7 +2039,7 @@
 "aNk" = (/turf/simulated/floor{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
 "aNl" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
 "aNm" = (/obj/machinery/chem_master/condimaster,/turf/simulated/floor{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
-"aNn" = (/obj/machinery/door/window/eastright{name = "Hydroponics Delivery"; req_access_txt = "35"},/turf/simulated/floor{icon_state = "delivery"},/area/hydroponics)
+"aNn" = (/obj/machinery/door/window/eastright{name = "Hydroponics Delivery"; req_access_txt = "35"},/obj/structure/window/reinforced,/turf/simulated/floor{icon_state = "delivery"},/area/hydroponics)
 "aNo" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 4; on = 1},/obj/structure/sink{pixel_y = 30},/turf/simulated/floor{icon_state = "hydrofloor"},/area/hydroponics)
 "aNp" = (/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 4},/turf/simulated/floor{icon_state = "hydrofloor"},/area/hydroponics)
 "aNq" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/closet/secure_closet/hydroponics,/turf/simulated/floor{icon_state = "hydrofloor"},/area/hydroponics)
