@@ -526,7 +526,7 @@ var/list/slot_equipment_priority = list( \
 	if(M != usr)	return
 	if(usr == src)	return
 	if(!Adjacent(usr))	return
-	if(!isAI(M))	return
+	if(isAI(M))	return
 	show_inv(usr)
 
 
