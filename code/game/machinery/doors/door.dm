@@ -355,7 +355,7 @@
 
 	for (T in L)
 		if (!isturf(T))
-			return 0
+			continue
 
 		update_heat_protection(T)
 		air_master.mark_for_update(T)

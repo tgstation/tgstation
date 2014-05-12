@@ -31,10 +31,8 @@
 		return 0
 	var/turf/T = loc
 
-	if (!isturf(T))
-		return 0
-
-	air_master.mark_for_update(T)
+	if (isturf(T))
+		air_master.mark_for_update(T)
 
 	return 1
 
