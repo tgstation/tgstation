@@ -157,7 +157,7 @@
 		if(prob(10))
 			return ""
 			M.visible_message("[M] [pick("rambles to themselves.","begins talking to themselves.")]")
-			M.emote(pick("rambles to themselves","begins talking to themselves.")) //PLS
+
 
 	OnMobLife(var/mob/M)
 		switch(pick(1,2))
@@ -168,9 +168,8 @@
 					M.visible_message("[M] busts out some [dancemoves] moves!")
 			if(2)
 				if(prob(20))
-					M.emote(pick("rambles to themselves", "rotates their hips", "gyrates their hips", "taps their foot", "dances to an imaginary song", "jiggles their legs", "waves their arms around"))
-				else
-					return
+					M.visible_message(pick("rambles to themselves", "rotates their hips", "gyrates their hips", "taps their foot", "dances to an imaginary song", "jiggles their legs", "waves their arms around"))
+
 
 // WAS: /datum/bioEffect/chav
 /datum/dna/gene/disability/speech/chav
