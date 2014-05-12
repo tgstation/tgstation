@@ -351,7 +351,11 @@
 		return 0
 
 	var/T
+
 	for (T in locs)
+		if (!isturf(T))
+			return 0
+
 		update_heat_protection(T)
 		air_master.mark_for_update(T)
 

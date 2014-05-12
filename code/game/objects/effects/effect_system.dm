@@ -906,7 +906,10 @@ steam.start() -- spawns the effect
 		if (isnull(air_master))
 			return 0
 
-		air_master.mark_for_update(get_turf(src))
+		if (!isturf(loc))
+			return 0
+
+		air_master.mark_for_update(loc)
 
 		return 1
 
