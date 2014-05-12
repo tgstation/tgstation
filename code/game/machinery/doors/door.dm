@@ -351,7 +351,11 @@
 		return 0
 
 	var/T
-	for (T in locs)
+
+	for (T in locs.Copy())
+		if (!isturf(T))
+			continue
+
 		update_heat_protection(T)
 		air_master.mark_for_update(T)
 
