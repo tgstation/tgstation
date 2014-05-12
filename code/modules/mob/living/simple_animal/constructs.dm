@@ -131,10 +131,10 @@
 
 
 
-/mob/living/simple_animal/construct/armoured
+/mob/living/simple_animal/construct/armored
 	name = "Juggernaut"
 	real_name = "Juggernaut"
-	desc = "A possessed suit of armour driven by the will of the restless dead"
+	desc = "A possessed suit of armor driven by the will of the restless dead"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "behemoth"
 	icon_living = "behemoth"
@@ -144,14 +144,14 @@
 	harm_intent_damage = 0
 	melee_damage_lower = 30
 	melee_damage_upper = 30
-	attacktext = "smashes their armoured gauntlet into"
+	attacktext = "smashes their armored gauntlet into"
 	speed = 3
 	environment_smash = 2
 	attack_sound = 'sound/weapons/punch3.ogg'
 	status_flags = 0
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
 
-/mob/living/simple_animal/construct/armoured/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/mob/living/simple_animal/construct/armored/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(O.force)
 		if(O.force >= 11)
 			if(O.damtype == BURN || O.damtype == BRUTE)
@@ -170,7 +170,7 @@
 				M.show_message("\red [user] gently taps [src] with [O]. ")
 
 
-/mob/living/simple_animal/construct/armoured/bullet_act(var/obj/item/projectile/P)
+/mob/living/simple_animal/construct/armored/bullet_act(var/obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		var/reflectchance = 80 - round(P.damage/3)
 		if(prob(reflectchance))
