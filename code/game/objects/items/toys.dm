@@ -310,26 +310,26 @@
 	attack_verb = list("attacked", "struck", "hit")
 	var/hacked = 0
 
-	/obj/item/toy/sword/attack_self(mob/user as mob)
-		active = !( active )
-		if (active)
-			user << "\blue You extend the plastic blade with a quick flick of your wrist."
-			playsound(user, 'sound/weapons/saberon.ogg', 20, 1)
-			if(hacked)
-				icon_state = "swordrainbow"
-				item_state = "swordrainbow"
-			else
-				icon_state = "swordblue"
-				item_state = "swordblue"
-			w_class = 4
+/obj/item/toy/sword/attack_self(mob/user as mob)
+	active = !( active )
+	if (active)
+		user << "\blue You extend the plastic blade with a quick flick of your wrist."
+		playsound(user, 'sound/weapons/saberon.ogg', 20, 1)
+		if(hacked)
+			icon_state = "swordrainbow"
+			item_state = "swordrainbow"
 		else
-			user << "\blue You push the plastic blade back down into the handle."
-			playsound(user, 'sound/weapons/saberoff.ogg', 20, 1)
-			icon_state = "sword0"
-			item_state = "sword0"
-			w_class = 2
-		add_fingerprint(user)
-		return
+			icon_state = "swordblue"
+			item_state = "swordblue"
+		w_class = 4
+	else
+		user << "\blue You push the plastic blade back down into the handle."
+		playsound(user, 'sound/weapons/saberoff.ogg', 20, 1)
+		icon_state = "sword0"
+		item_state = "sword0"
+		w_class = 2
+	add_fingerprint(user)
+	return
 
 // Copied from /obj/item/weapon/melee/energy/sword/attackby
 /obj/item/toy/sword/attackby(obj/item/weapon/W, mob/living/user)
@@ -418,12 +418,12 @@
 	var/uses = 30 //0 for unlimited uses
 	var/instant = 0
 	var/colourName = "red" //for updateIcon purposes
-	/obj/item/toy/crayon/suicide_act(mob/user)
-		user.visible_message("<span class='suicide'>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</span>")
-		return (BRUTELOSS|OXYLOSS)
-	/obj/item/toy/crayon/New()
-		..()
-		name = "[colourName] crayon" //Makes crayons identifiable in things like grinders
+/obj/item/toy/crayon/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</span>")
+	return (BRUTELOSS|OXYLOSS)
+/obj/item/toy/crayon/New()
+	..()
+	name = "[colourName] crayon" //Makes crayons identifiable in things like grinders
 /*
  * Snap pops
  */
@@ -434,15 +434,15 @@
 	icon_state = "snappop"
 	w_class = 1
 
-	/obj/item/toy/snappop/throw_impact(atom/hit_atom)
-		..()
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(3, 1, src)
-		s.start()
-		new /obj/effect/decal/cleanable/ash(src.loc)
-		src.visible_message("<span class='suicide'> The [src.name] explodes!","</span> You hear a snap!")
-		playsound(src, 'sound/effects/snap.ogg', 50, 1)
-		qdel(src)
+/obj/item/toy/snappop/throw_impact(atom/hit_atom)
+	..()
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(3, 1, src)
+	s.start()
+	new /obj/effect/decal/cleanable/ash(src.loc)
+	src.visible_message("<span class='suicide'> The [src.name] explodes!","</span> You hear a snap!")
+	playsound(src, 'sound/effects/snap.ogg', 50, 1)
+	qdel(src)
 
 /obj/item/toy/snappop/Crossed(H as mob|obj)
 	if((ishuman(H))) //i guess carp and shit shouldn't set them off
