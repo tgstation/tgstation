@@ -75,7 +75,7 @@
 
 /obj/item/borg/sight/hud/sec
 	name = "security hud"
-	icon = 'icons/obj/clothing/glasses.dmi'
+	icon = 'icons/mob/robot_items.dmi'
 	icon_state = "securityhud"
 
 	New()
