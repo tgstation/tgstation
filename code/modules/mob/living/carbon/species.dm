@@ -50,6 +50,17 @@
 	var/blood_color = "#A10808" //Red.
 	var/flesh_color = "#FFC896" //Pink.
 
+	var/w_uniform_icons = null
+	var/gloves_icons = null
+	var/glasses_icons = null
+	var/ears_icons
+	var/shoes_icons = null
+	var/head_icons = null
+	var/belt_icons = null
+	var/wear_suit_icons = null
+	var/wear_mask_icons = null
+	var/back_icons = null
+
 /datum/species/proc/create_organs(var/mob/living/carbon/human/H) //Handles creation of mob organs.
 	//This is a basic humanoid limb setup.
 	H.organs = list()
@@ -237,6 +248,8 @@
 
 	blood_color = "#2299FC"
 	flesh_color = "#808D11"
+
+// 	w_uniform_icons = 'icons/mob/species/vox_w_uniform.dmi' //ALIENUNIFORM
 
 	equip(var/mob/living/carbon/human/H)
 		// Unequip existing suits and hats.
