@@ -121,14 +121,14 @@
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7.0
 
-	examine()
+	/obj/item/toy/gun/examine()
 		set src in usr
 
 		src.desc = text("There are [] cap\s left. Looks almost like the real thing! Ages 8 and up.", src.bullets)
 		..()
 		return
 
-	attackby(obj/item/toy/ammo/gun/A as obj, mob/user as mob)
+	/obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A as obj, mob/user as mob)
 
 		if (istype(A, /obj/item/toy/ammo/gun))
 			if (src.bullets >= 7)
@@ -149,7 +149,7 @@
 			return 1
 		return
 
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+	/obj/item/toy/gun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 		if (flag)
 			return
 		if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
@@ -193,13 +193,13 @@
 	attack_verb = list("attacked", "struck", "hit")
 	var/bullets = 5
 
-	examine()
+	/obj/item/toy/crossbow/examine()
 		set src in view(2)
 		..()
 		if (bullets)
 			usr << "\blue It is loaded with [bullets] foam darts!"
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	/obj/item/toy/crossbow/attackby(obj/item/I as obj, mob/user as mob)
 		if(istype(I, /obj/item/toy/ammo/crossbow))
 			if(bullets <= 4)
 				user.drop_item()
@@ -210,7 +210,7 @@
 				usr << "\red It's already fully loaded."
 
 
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+	/obj/item/toy/crossbow/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 		if(!isturf(target.loc) || target == user) return
 		if(flag) return
 
@@ -258,7 +258,7 @@
 				O.show_message(text("\red [] realized they were out of ammo and starting scrounging for some!", user), 1)
 
 
-	attack(mob/M as mob, mob/user as mob)
+	/obj/item/toy/crossbow/attack(mob/M as mob, mob/user as mob)
 		src.add_fingerprint(user)
 
 // ******* Check
@@ -310,7 +310,7 @@
 	attack_verb = list("attacked", "struck", "hit")
 	var/hacked = 0
 
-	attack_self(mob/user as mob)
+	/obj/item/toy/sword/attack_self(mob/user as mob)
 		active = !( active )
 		if (active)
 			user << "\blue You extend the plastic blade with a quick flick of your wrist."
@@ -418,10 +418,10 @@
 	var/uses = 30 //0 for unlimited uses
 	var/instant = 0
 	var/colourName = "red" //for updateIcon purposes
-	suicide_act(mob/user)
-		viewers(user) << "<span class='suicide'>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</span>"
+	/obj/item/toy/crayon/suicide_act(mob/user)
+		user.visible_message("<span class='suicide'>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</span>")
 		return (BRUTELOSS|OXYLOSS)
-	New()
+	/obj/item/toy/crayon/New()
 		..()
 		name = "[colourName] crayon" //Makes crayons identifiable in things like grinders
 /*
@@ -434,13 +434,13 @@
 	icon_state = "snappop"
 	w_class = 1
 
-	throw_impact(atom/hit_atom)
+	/obj/item/toy/snappop/throw_impact(atom/hit_atom)
 		..()
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
 		new /obj/effect/decal/cleanable/ash(src.loc)
-		src.visible_message("\red The [src.name] explodes!","\red You hear a snap!")
+		src.visible_message("<span class='suicide'> The [src.name] explodes!","</span> You hear a snap!")
 		playsound(src, 'sound/effects/snap.ogg', 50, 1)
 		qdel(src)
 

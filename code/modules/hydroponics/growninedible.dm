@@ -52,7 +52,7 @@
 	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/wheat)
-	
+
 	New(var/loc, var/potency = 10)
 		..()
 
@@ -98,7 +98,7 @@
 	throw_range = 3
 	plant_type = 0
 	seed = "/obj/item/seeds/sunflowerseed"
-	
+
 	New(var/loc, var/potency = 10)
 		..()
 
@@ -169,8 +169,8 @@
 			reagents.add_reagent("pacid", round(potency, 1))
 		force = round((5+potency/2.5), 1)
 
-	suicide_act(mob/user)
-		viewers(user) << "<span class='suicide'>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</span>"
+	/obj/item/weapon/grown/deathnettle/suicide_act(mob/user)
+		user.visible_message("<span class='suicide'>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</span>")
 		return (BRUTELOSS|TOXLOSS)
 
 /obj/item/weapon/grown/bananapeel
