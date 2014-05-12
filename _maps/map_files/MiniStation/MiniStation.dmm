@@ -193,7 +193,7 @@
 "adK" = (/obj/structure/sign/securearea{desc = "A warning sign which reads 'HIGH VOLTAGE'"; icon_state = "shock"; name = "HIGH VOLTAGE"},/turf/simulated/wall,/area/medical/research{name = "Research Division"})
 "adL" = (/obj/structure/sink{icon_state = "sink"; dir = 8; pixel_x = -12; pixel_y = 2},/turf/simulated/floor{icon_state = "white"},/area/medical/research{name = "Research Division"})
 "adM" = (/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/simulated/floor{icon_state = "white"},/area/medical/research{name = "Research Division"})
-"adN" = (/obj/machinery/mineral/equipment_locker,/turf/simulated/floor{icon_state = "browncorner"; dir = 8},/area/quartermaster/storage)
+"adN" = (/obj/machinery/mineral/equipment_vendor,/turf/simulated/floor{icon_state = "browncorner"; dir = 8},/area/quartermaster/storage)
 "adO" = (/obj/effect/landmark/start{name = "Cargo Technician"},/turf/simulated/floor,/area/quartermaster/storage)
 "adP" = (/obj/effect/landmark/start{name = "Cargo Tech"},/turf/simulated/floor,/area/quartermaster/storage)
 "adQ" = (/obj/structure/dispenser/oxygen,/turf/simulated/floor,/area/quartermaster/storage)
