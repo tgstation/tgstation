@@ -288,9 +288,11 @@ obj/structure/windoor_assembly/Destroy()
 	if (isnull(air_master))
 		return 0
 
-	if (!isturf(loc))
+	var/turf/T = loc
+
+	if (!isturf(T))
 		return 0
 
-	air_master.mark_for_update(loc)
+	air_master.mark_for_update(T)
 
 	return 1
