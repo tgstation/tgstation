@@ -18,6 +18,16 @@
 			return
 
 	. = src.say_dead(message)
+	
+/mob/dead/observer/say_quote(var/text)
+	var/ending = copytext(text, length(text))
+
+	if (ending == "?")
+		return "[src.speakQuestion], \"[text]\"";
+	else if (ending == "!")
+		return "[src.speakExclamation], \"[text]\"";
+
+	return "[src.speakStatement], \"[text]\"";
 
 
 /mob/dead/observer/emote(var/act, var/type, var/message)
