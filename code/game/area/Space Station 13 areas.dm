@@ -1403,6 +1403,10 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Telescience"
 	icon_state = "toxmisc"
 
+/area/science/podbay
+	name = "\improper Pod Bay"
+	icon_state = "toxmisc"
+
 /area/science/server
 	name = "\improper Server Room"
 	icon_state = "server"
