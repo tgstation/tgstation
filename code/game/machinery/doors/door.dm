@@ -350,10 +350,9 @@
 	if (isnull(air_master))
 		return 0
 
-	var/list/L = locs.Copy()
 	var/T
 
-	for (T in L)
+	for (T in locs.Copy())
 		if (!isturf(T))
 			continue
 

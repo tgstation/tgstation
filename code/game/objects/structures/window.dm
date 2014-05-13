@@ -351,7 +351,7 @@
 	if (isnull(air_master))
 		return 0
 
-	var/turf/T = loc
+	var/T = get_turf(src)
 
 	if (isturf(T))
 		air_master.mark_for_update(T)
