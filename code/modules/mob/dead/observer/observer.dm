@@ -31,9 +31,6 @@
 	universal_speak = 1
 	var/atom/movable/following = null
 	
-	var/speakStatement = pick("whines", "cries", "spooks", "complains", "drones", "mutters")
-	var/speakExclamation = pick("screams", "screeches", "howls")
-	var/speakQuestion = pick("moans", "gripes", "grumps", "murmurs", "mumbles", "bleats")
 
 
 /mob/dead/observer/New(var/mob/body=null, var/flags=1)
