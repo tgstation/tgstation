@@ -61,7 +61,8 @@
 		// Solar Control
 		else if(istype(M, /obj/machinery/power/solar_control))
 			var/obj/machinery/power/solar_control/C = M
-			C.tracker_update() //update manual tracker
+			if(C.track == 1) //if manual tracking...
+				C.tracker_update() //...update the position (not passing an angle, it is handled internally for manual tracking)
 
 		// Solar Panel
 		else if(istype(M, /obj/machinery/power/solar))

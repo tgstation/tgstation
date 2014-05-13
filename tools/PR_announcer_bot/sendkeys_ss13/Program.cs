@@ -37,9 +37,12 @@ namespace sendkeys_ss13
         public static string IRC_server = "test.net";
         public static int IRC_port = 11111;
         public static string IRC_channel = "#channel";
+        public static string NickServAuth = null;
 
         public static string[] merge_archive;
         public static bool mergeflag = false;
+        public static string mergedPR = "";
+        public static string lastPR = "";
 
         public static IrcClient irc = new IrcClient();
 
@@ -57,10 +60,10 @@ namespace sendkeys_ss13
             catch (Exception)
             {
                 IRCReconnectAttempt++;
-                if (IRCReconnectAttempt <= 3)
+                if (IRCReconnectAttempt <= 5)
                 {
                     Console.WriteLine("IRC server is unavaible at the moment. Reconnect attempt {0}...", IRCReconnectAttempt);
-                    System.Threading.Thread.Sleep(3000); //Reconnecting after 5 seconds.
+                    System.Threading.Thread.Sleep(5000); //Reconnecting after 5 seconds.
                     Main(args);
                 }
                 else
@@ -71,7 +74,17 @@ namespace sendkeys_ss13
                 }
             }
             Console.WriteLine("Connected to IRC");
-            irc.Login(IRC_bot_name, IRC_bot_name);
+            try
+            {
+                irc.Login(IRC_bot_name, IRC_bot_name);
+            }
+            catch (Exception)
+            {
+                irc.Login(IRC_bot_name + "_1", IRC_bot_name + "_1");
+                Console.WriteLine("Bot name is already taken, trying alternate...");
+            }
+            if (NickServAuth != null)
+                irc.SendMessage(SendType.Message, "NickServ", "identify " + NickServAuth);
             Console.WriteLine("Logged in");
             irc.RfcJoin(IRC_channel);
             Console.WriteLine("Joining {0}", IRC_channel);
@@ -83,10 +96,10 @@ namespace sendkeys_ss13
             if (File.Exists("config.txt"))
             {
                 StreamReader reader = new StreamReader("config.txt");
-                string[] line = reader.ReadLine().Split(' ');
+                string[] line = ReadLine_exception(reader);
                 if (line[2] != null)
                 {
-                    Match match1 = Regex.Match(line[2], @"(\d{1,3}.?){4}"); //rudimentary IP validation
+                    Match match1 = Regex.Match(line[2], @"^(\d{1,3}.?){4}$"); //rudimentary IP validation
                     if (match1.Success)
                     {
                         serverIP = line[2];
@@ -95,13 +108,12 @@ namespace sendkeys_ss13
                     else 
                     { 
                         Console.WriteLine("IP cannot be validated."); 
-                        return; 
                     }
                 }
-                line = reader.ReadLine().Split(' ');
+                line = ReadLine_exception(reader);
                 if (line[2] != null)
                 {
-                    Match match2 = Regex.Match(line[2], @"\d{1,5}"); //rudimentary port validation
+                    Match match2 = Regex.Match(line[2], @"^\d{1,5}$"); //rudimentary port validation
                     if (match2.Success && (Convert.ToInt32(line[2]) < 65535))
                     {
                         serverPort = Convert.ToInt32(line[2]);
@@ -110,10 +122,9 @@ namespace sendkeys_ss13
                     else 
                     {
                         Console.WriteLine("Port cannot be validated.");
-                        return; 
                     }
                 }
-                line = reader.ReadLine().Split(' ');
+                line = ReadLine_exception(reader);
                 if (line[2] != null)
                 {
                     commskey = line[2];
@@ -122,9 +133,8 @@ namespace sendkeys_ss13
                 else 
                 { 
                     Console.WriteLine("No Commskey!"); 
-                    return; 
                 }
-                line = reader.ReadLine().Split(' ');
+                line = ReadLine_exception(reader);
                 if (line[2] != null)
                 {
                     Github_bot_name = line[2];
@@ -133,23 +143,21 @@ namespace sendkeys_ss13
                 else 
                 { 
                     Console.WriteLine("No botname found."); 
-                    return; 
                 }
-                line = reader.ReadLine().Split(' ');
+                line = ReadLine_exception(reader);
                 if (line[2] != null)
                 {
                     IRC_bot_name = line[2];
-                    Console.WriteLine("Read IRC bot name: " + Github_bot_name);
+                    Console.WriteLine("Read IRC bot name: " + IRC_bot_name);
                 }
                 else 
                 { 
                     Console.WriteLine("No botname found."); 
-                    return; 
                 }
-                line = reader.ReadLine().Split(' ');
+                line = ReadLine_exception(reader);
                 if (line[2] != null)
                 {
-                    Match match3 = Regex.Match(line[2], @"(.+)\:(\d{1,5})"); //rudimentary port validation
+                    Match match3 = Regex.Match(line[2], @"^(.+)\:(\d{1,5})$"); //rudimentary port validation
                     if (match3.Success)
                     {
                         IRC_server = Convert.ToString(match3.Groups[1]);
@@ -159,10 +167,9 @@ namespace sendkeys_ss13
                     else
                     {
                         Console.WriteLine("Server:port invalid.");
-                        return;
                     }
                 }
-                line = reader.ReadLine().Split(' ');
+                line = ReadLine_exception(reader);
                 if (line[2] != null)
                 {
                     IRC_channel = line[2];
@@ -171,7 +178,16 @@ namespace sendkeys_ss13
                 else 
                 { 
                     Console.WriteLine("No channel found."); 
-                    return; 
+                }
+                line = ReadLine_exception(reader);
+                if (line[2] != null && line[2] != "_NONE_")
+                {
+                    NickServAuth = line[2];
+                    Console.WriteLine("Read Nickserv auth");
+                }
+                else
+                {
+                    Console.WriteLine("No NickServ auth chosen.");
                 }
                 reader.Close();
             }
@@ -180,6 +196,21 @@ namespace sendkeys_ss13
                 Console.WriteLine("Config file doesn't exist, using defaults"); 
                 return; 
             }
+        }
+
+        private static string[] ReadLine_exception(StreamReader reader)
+        {
+            string[] readline = null;
+            try
+            {
+                readline = reader.ReadLine().Split(' ');
+            }
+            catch (Exception)
+            {
+                readline[3] = "Error, couldn't read all lines of config file! Are you sure the config file has the right format?";
+                return readline;
+            }
+            return readline;
         }
 
         public static void OnChannelMessage(object sender, IrcEventArgs e) 
@@ -195,57 +226,74 @@ namespace sendkeys_ss13
                     FormMessage(msg);
             }
         }
-
         private static void FormMessage(string[] msg, bool ShortenedURL = false)
         {
             using (StreamWriter output = new StreamWriter("output.txt"))
             {
-                if (msg[2] == "closed")
+                if (msg.Length >= 4)
                 {
-                    merge_archive = msg;
-                    mergeflag = true;
-                    output.Close();
-                }
-                else if ((msg[2] == "opened" || mergeflag) && msg[1] != "meant:") //Either we open a new PR or a PR was closed in the last message. Also protection from Whibyl's correction thingy!
-                {
-                    if (msg[2] == "pushed")
+                    if (msg[3] == "Merge") //Someone is merging something
                     {
-                        msg = merge_archive; //We copy the "close" message and replace "close" with merge! The players won't know what him 'em!
-                        msg[2] = "merged";
+                        mergedPR = msg[6];
+                        if (merge_archive != null)
+                        {
+                            string currentPR = merge_archive[5].Substring(0, merge_archive[5].Length - 1); //PR no. without : at the end
+                            if (currentPR == mergedPR && currentPR != lastPR) //Check if the last closed message's PR number is the same PR number as the merge one.
+                            {
+                                mergeflag = true;
+                                msg = merge_archive;
+                                msg[2] = "merged";
+                                lastPR = mergedPR;
+                                mergedPR = null;
+                                merge_archive = null;
+                            }
+                        }
                     }
-                    mergeflag = false;
-                    merge_archive = null;
-                    string URL = msg[msg.Length - 1];
-                    if(!ShortenedURL)
-                        URL = ShortenURL(URL);
-                    msg[5] = "<a href=" + URL + ">" + msg[5] + "</a>";
-                    msg[0] = ""; //Repo name
-                    msg[msg.Length - 1] = ""; //The URL itself
-                    msg[msg.Length - 2] = ""; //Branch info
-                    byte[] PACKETS = CreatePacket(msg);
-                    PACKETS[1] = 0x83;
-                    int len = 0;
-                    for (int i = 1; i < msg.Length - 1; i++)
+                    if (msg[2] == "closed")
                     {
-                        len += msg[i].Length + 1; //The length of the word and the space following it.
-                        Console.Write(msg[i] + " ");
+                        merge_archive = msg;
+                        if (mergedPR != null)
+                        {
+                            string currentPR = msg[5].Substring(0, msg[5].Length - 1);
+                            if (currentPR == mergedPR && currentPR != lastPR) //Check if the current closed message's PR number 
+                            {
+                                mergeflag = true;
+                                msg[2] = "merged";
+                                lastPR = mergedPR;
+                                mergedPR = null;
+                                merge_archive = null;
+                            }
+                        }
                     }
-                    len -= 1; //Compensating for the lack of space at the end.
-                    len += 14 + commskey.Length + 6; //Argument names + Commskey length + 6 null bytes
-                    PACKETS[3] = (byte)len;
-                    StringBuilder test = new StringBuilder();
-                    for (int i = 0; i < PACKETS.Length; i++)
+                    if ((msg[2] == "opened" || mergeflag) && msg[1] != "meant:") //Either we open a new PR or a PR was closed in the last message. Also protection from Whibyl's correction thingy!
                     {
-                        test.Append(Convert.ToString(PACKETS[i]));
+                        mergeflag = false;
+                        string URL = msg[msg.Length - 1];
+                        if (!ShortenedURL)
+                            URL = ShortenURL(URL);
+                        msg[5] = "<a href=" + URL + ">" + msg[5] + "</a>";
+                        msg[0] = ""; //Repo name
+                        msg[msg.Length - 1] = ""; //The URL itself
+                        msg[msg.Length - 2] = ""; //Branch info
+                        byte[] PACKETS = CreatePacket(msg);
+                        PACKETS[1] = 0x83;
+                        int len = 0;
+                        for (int i = 1; i < msg.Length - 1; i++)
+                        {
+                            len += msg[i].Length + 1; //The length of the word and the space following it.
+                            Console.Write(msg[i] + " ");
+                        }
+                        len -= 1; //Compensating for the lack of space at the end.
+                        len += 14 + commskey.Length + 6; //Argument names + Commskey length + 6 null bytes
+                        PACKETS[3] = (byte)len;
+                        StringBuilder test = new StringBuilder();
+                        for (int i = 0; i < PACKETS.Length; i++)
+                        {
+                            test.Append(Convert.ToString(PACKETS[i]));
+                        }
+                        output.WriteLine(Convert.ToString(test));
+                        SendPacket(output, PACKETS);
                     }
-                    output.WriteLine(Convert.ToString(test));
-                    SendPacket(output, PACKETS);
-                }
-                else
-                {
-                    mergeflag = false;
-                    merge_archive = null;
-                    output.Close();
                 }
             }
         }
@@ -260,6 +308,7 @@ namespace sendkeys_ss13
                 server.Connect(ip);
                 server.Send(PACKETS);
                 Console.WriteLine("- sent ;)");
+                ServerReconnectAttempt = 0;
                 output.Close();
                 Console.WriteLine();
             }
@@ -269,7 +318,7 @@ namespace sendkeys_ss13
                 if(ServerReconnectAttempt <= 5)
                 {
                     Console.WriteLine("Server is not available at the moment. Reconnect attempt {0}...", ServerReconnectAttempt);
-                    System.Threading.Thread.Sleep(5000); //Reconnecting after 5 seconds.
+                    System.Threading.Thread.Sleep(15000); //Reconnecting after 15 seconds.
                     SendPacket(output, PACKETS);
                 }
                 else

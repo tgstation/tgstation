@@ -82,6 +82,7 @@
 	var/continuous_round_rev = 0			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
 	var/continuous_round_wiz = 0
 	var/continuous_round_malf = 0
+	var/shuttle_refuel_delay = 12000
 	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
 	var/mutant_races = 0				//players can choose their mutant race before joining the game
 
@@ -101,9 +102,6 @@
 
 	var/rename_cyborg = 0
 	var/ooc_during_round = 0
-
-	var/comms_key = "default_pwd" //Server API key
-	var/comms_allowed = 0 //By default, the server does not allow messages to be sent to it, unless the key is strong enough (this is to prevent misconfigured servers from becoming victims)
 
 	//Used for modifying movement speed for mobs.
 	//Unversal modifiers
@@ -270,9 +268,9 @@
 				if("automute_on")
 					automute_on = 1
 				if("comms_key")
-					comms_key = value
+					global.comms_key = value
 					if(value != "default_pwd" && length(value) > 6) //It's the default value or less than 6 characters long, warn badmins
-						comms_allowed = 1
+						global.comms_allowed = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
@@ -336,6 +334,8 @@
 					config.continuous_round_wiz		= 1
 				if("continuous_round_malf")
 					config.continuous_round_malf	= 1
+				if("shuttle_refuel_delay")
+					config.shuttle_refuel_delay     = text2num(value)
 				if("show_game_type_odds")
 					config.show_game_type_odds		= 1
 				if("ghost_interaction")

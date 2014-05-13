@@ -304,7 +304,7 @@
 /obj/structure/window/Destroy()
 	density = 0
 	air_update_turf(1)
-	if(anchored)playsound(src, "shatter", 70, 1)
+	playsound(src, "shatter", 70, 1)
 	update_nearby_icons()
 	..()
 

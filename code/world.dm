@@ -143,7 +143,7 @@
 		s["host"] = host ? host : null
 
 		var/admins = 0
-		for(var/client/C in admins)
+		for(var/client/C in clients)
 			if(C.holder)
 				if(C.holder.fakekey)
 					continue	//so stealthmins aren't revealed by the hub
@@ -162,8 +162,8 @@
 		return list2params(s)
 	else if (copytext(T,1,9) == "announce")
 		var/input[] = params2list(T)
-		if(config.comms_allowed)
-			if(input["key"] != config.comms_key)
+		if(global.comms_allowed)
+			if(input["key"] != global.comms_key)
 				return "Bad Key"
 			else
 				#define CHAT_PULLR 2048

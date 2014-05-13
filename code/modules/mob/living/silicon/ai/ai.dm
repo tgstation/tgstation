@@ -244,10 +244,10 @@ var/list/ai_list = list()
 			usr << "Wireless control is disabled!"
 			return
 
-	var/confirm = alert("Are you sure you want to call the shuttle?", "Confirm Shuttle Call", "Yes", "No")
+	var/reason = input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call") as text
 
-	if(confirm == "Yes")
-		call_shuttle_proc(src)
+	if(length(trim(reason)) > 0)
+		call_shuttle_proc(src, reason)
 
 	// hack to display shuttle timer
 	if(emergency_shuttle.online)
