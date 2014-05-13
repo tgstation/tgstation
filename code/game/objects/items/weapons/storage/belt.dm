@@ -168,6 +168,16 @@
 		)
 
 
+/obj/item/weapon/storage/belt/skull
+	name = "trophy-belt" //FATALITY
+	desc = "Excellent for holding the heads of your fallen foes."
+	icon_state = "utilitybelt"
+	item_state = "utility"
+	can_hold = list(
+ 		"/datum/organ/external/head"
+ 		)
+
+
 /obj/item/weapon/storage/belt/mining
 	name = "mining gear belt"
 	desc = "Can hold various mining gear like pickaxes or drills."
