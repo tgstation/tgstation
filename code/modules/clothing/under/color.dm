@@ -32,7 +32,7 @@
 	item_state = "gy_suit"
 	_color = "grey"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
-//	species_fit = list("Vox") //ALIENUNIFORM
+	species_fit = list("Vox")
 
 /obj/item/clothing/under/color/orange
 	name = "orange jumpsuit"

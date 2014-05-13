@@ -179,6 +179,7 @@
 	icon_state = "red_suit"
 	item_state = "r_suit"
 	_color = "red_suit"
+	species_fit = list("Vox")
 
 /obj/item/clothing/under/blackskirt
 	name = "black skirt"
