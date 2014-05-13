@@ -39,6 +39,7 @@
 	var/list/allowed = null //suit storage stuff.
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 	var/icon_override = null  //Used to override hardcoded clothing dmis in human clothing proc.
+	var/list/species_fit = null //This object has a different appearance when worn by these species
 
 /obj/item/Destroy()
 	if(istype(src.loc, /mob))

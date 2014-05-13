@@ -504,6 +504,11 @@ proc/get_damage_icon_part(damage_state, body_part)
 		else
 			standing.icon	= 'icons/mob/uniform.dmi'
 
+		var/obj/item/I = w_uniform
+		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
+			if(species.w_uniform_icons)
+				standing.icon = species.w_uniform_icons
+
 		if(w_uniform.icon_override)
 			standing.icon	= w_uniform.icon_override
 
@@ -553,6 +558,12 @@ proc/get_damage_icon_part(damage_state, body_part)
 		var/t_state = gloves.item_state
 		if(!t_state)	t_state = gloves.icon_state
 		var/image/standing	= image("icon" = ((gloves.icon_override) ? gloves.icon_override : 'icons/mob/hands.dmi'), "icon_state" = "[t_state]")
+
+		var/obj/item/I = gloves
+		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
+			if(species.gloves_icons)
+				standing.icon = species.gloves_icons
+
 		if(gloves.blood_DNA)
 			var/image/bloodsies	= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "bloodyhands")
 			bloodsies.color = gloves.blood_color
@@ -571,11 +582,17 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 /mob/living/carbon/human/update_inv_glasses(var/update_icons=1)
 	if(glasses)
+		var/image/standing = image("icon" = ((glasses.icon_override) ? glasses.icon_override : 'icons/mob/eyes.dmi'), "icon_state" = "[glasses.icon_state]")
+
+		var/obj/item/I = glasses
+		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
+			if(species.glasses_icons)
+				standing.icon = species.glasses_icons
 
 		if(glasses.cover_hair)
-			overlays_standing[GLASSES_OVER_HAIR_LAYER]	= image("icon" = ((glasses.icon_override) ? glasses.icon_override : 'icons/mob/eyes.dmi'), "icon_state" = "[glasses.icon_state]")
+			overlays_standing[GLASSES_OVER_HAIR_LAYER]	= standing
 		else
-			overlays_standing[GLASSES_LAYER]	= image("icon" = ((glasses.icon_override) ? glasses.icon_override : 'icons/mob/eyes.dmi'), "icon_state" = "[glasses.icon_state]")
+			overlays_standing[GLASSES_LAYER]	= standing
 
 	else
 		overlays_standing[GLASSES_LAYER]	= null
@@ -584,7 +601,14 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 /mob/living/carbon/human/update_inv_ears(var/update_icons=1)
 	if(ears)
-		overlays_standing[EARS_LAYER] = image("icon" = ((ears.icon_override) ? ears.icon_override : 'icons/mob/ears.dmi'), "icon_state" = "[ears.icon_state]")
+		var/image/standing = image("icon" = ((ears.icon_override) ? ears.icon_override : 'icons/mob/ears.dmi'), "icon_state" = "[ears.icon_state]")
+
+		var/obj/item/I = ears
+		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
+			if(species.ears_icons)
+				standing.icon = species.ears_icons
+
+		overlays_standing[EARS_LAYER] = standing
 	else
 		overlays_standing[EARS_LAYER] = null
 	if(update_icons)   update_icons()
@@ -592,6 +616,12 @@ proc/get_damage_icon_part(damage_state, body_part)
 /mob/living/carbon/human/update_inv_shoes(var/update_icons=1)
 	if(shoes)
 		var/image/standing	= image("icon" = ((shoes.icon_override) ? shoes.icon_override : 'icons/mob/feet.dmi'), "icon_state" = "[shoes.icon_state]")
+
+		var/obj/item/I = shoes
+		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
+			if(species.shoes_icons)
+				standing.icon = species.shoes_icons
+
 		if(shoes.blood_DNA)
 			var/image/bloodsies = image("icon" = 'icons/effects/blood.dmi', "icon_state" = "shoeblood")
 			bloodsies.color = shoes.blood_color
@@ -620,6 +650,12 @@ proc/get_damage_icon_part(damage_state, body_part)
 			standing	= image("icon" = head:mob)
 		else
 			standing	= image("icon" = ((head.icon_override) ? head.icon_override : 'icons/mob/head.dmi'), "icon_state" = "[head.icon_state]")
+
+		var/obj/item/I = head
+		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
+			if(species.head_icons)
+				standing.icon = species.head_icons
+
 		if(head.blood_DNA)
 			var/image/bloodsies = image("icon" = 'icons/effects/blood.dmi', "icon_state" = "helmetblood")
 			bloodsies.color = head.blood_color
@@ -634,7 +670,14 @@ proc/get_damage_icon_part(damage_state, body_part)
 		belt.screen_loc = ui_belt	//TODO
 		var/t_state = belt.item_state
 		if(!t_state)	t_state = belt.icon_state
-		overlays_standing[BELT_LAYER]	= image("icon" = ((belt.icon_override) ? belt.icon_override : 'icons/mob/belt.dmi'), "icon_state" = "[t_state]")
+		var/image/standing = image("icon" = ((belt.icon_override) ? belt.icon_override : 'icons/mob/belt.dmi'), "icon_state" = "[t_state]")
+
+		var/obj/item/I = belt
+		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
+			if(species.belt_icons)
+				standing.icon = species.belt_icons
+
+		overlays_standing[BELT_LAYER]	= standing
 	else
 		overlays_standing[BELT_LAYER]	= null
 	if(update_icons)   update_icons()
@@ -649,6 +692,11 @@ proc/get_damage_icon_part(damage_state, body_part)
 			drop_from_inventory(handcuffed)
 			drop_l_hand()
 			drop_r_hand()
+
+		var/obj/item/I = wear_suit
+		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
+			if(species.wear_suit_icons)
+				standing.icon = species.wear_suit_icons
 
 		if(wear_suit.blood_DNA)
 			var/obj/item/clothing/suit/S = wear_suit
@@ -677,6 +725,12 @@ proc/get_damage_icon_part(damage_state, body_part)
 	if( wear_mask && ( istype(wear_mask, /obj/item/clothing/mask) || istype(wear_mask, /obj/item/clothing/tie) ) )
 		wear_mask.screen_loc = ui_mask	//TODO
 		var/image/standing	= image("icon" = ((wear_mask.icon_override) ? wear_mask.icon_override : 'icons/mob/mask.dmi'), "icon_state" = "[wear_mask.icon_state]")
+
+		var/obj/item/I = wear_mask
+		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
+			if(species.wear_mask_icons)
+				standing.icon = species.wear_mask_icons
+
 		if( !istype(wear_mask, /obj/item/clothing/mask/cigarette) && wear_mask.blood_DNA )
 			var/image/bloodsies = image("icon" = 'icons/effects/blood.dmi', "icon_state" = "maskblood")
 			bloodsies.color = wear_mask.blood_color
@@ -690,7 +744,14 @@ proc/get_damage_icon_part(damage_state, body_part)
 /mob/living/carbon/human/update_inv_back(var/update_icons=1)
 	if(back)
 		back.screen_loc = ui_back	//TODO
-		overlays_standing[BACK_LAYER]	= image("icon" = ((back.icon_override) ? back.icon_override : 'icons/mob/back.dmi'), "icon_state" = "[back.icon_state]")
+		var/image/standing	= image("icon" = ((back.icon_override) ? back.icon_override : 'icons/mob/back.dmi'), "icon_state" = "[back.icon_state]")
+
+		var/obj/item/I = back
+		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
+			if(species.back_icons)
+				standing.icon = species.back_icons
+
+		overlays_standing[BACK_LAYER]	= standing
 	else
 		overlays_standing[BACK_LAYER]	= null
 	if(update_icons)   update_icons()
