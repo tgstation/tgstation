@@ -626,7 +626,7 @@ About the new airlock wires panel:
 		..()
 	if(!isAdminGhost(usr))
 		if(usr.stat || usr.restrained()|| usr.small)
-			testing("Returning: Not adminghost, stat=[usr.stat], restrained=[usr.restrained()], small=[usr.small]")
+			//testing("Returning: Not adminghost, stat=[usr.stat], restrained=[usr.restrained()], small=[usr.small]")
 			return
 	add_fingerprint(usr)
 	if(href_list["close"])
@@ -637,7 +637,7 @@ About the new airlock wires panel:
 
 	var/am_in_range=in_range(src, usr)
 	var/turf_ok = istype(src.loc, /turf)
-	testing("in range: [am_in_range], turf ok: [turf_ok]")
+	//testing("in range: [am_in_range], turf ok: [turf_ok]")
 	if(am_in_range && turf_ok)
 		usr.set_machine(src)
 		if(p_open)
