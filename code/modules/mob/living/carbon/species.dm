@@ -249,7 +249,8 @@
 	blood_color = "#2299FC"
 	flesh_color = "#808D11"
 
-// 	w_uniform_icons = 'icons/mob/species/vox_w_uniform.dmi' //ALIENUNIFORM
+	w_uniform_icons = 'icons/mob/species/vox_w_uniform.dmi'
+	shoes_icons = 'icons/mob/species/vox_shoes.dmi'
 
 	equip(var/mob/living/carbon/human/H)
 		// Unequip existing suits and hats.
