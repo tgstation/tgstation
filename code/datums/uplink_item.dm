@@ -419,7 +419,7 @@ var/list/uplink_items = list()
 // POINTLESS BADASSERY
 
 /datum/uplink_item/badass
-	category = "(Pointless) Badassery"
+	category = "Badassery"
 
 /datum/uplink_item/badass/bundle
 	name = "Syndicate Bundle"
@@ -432,6 +432,12 @@ var/list/uplink_items = list()
 	desc = "A useless red balloon with the syndicate logo on it, which can blow the deepest of covers."
 	item = /obj/item/toy/syndicateballoon
 	cost = 10
+
+/datum/uplink_item/badass/trophybelt
+ 	name = "Trophy Belt"
+ 	desc = "A belt for holding the heads you've collected."
+ 	item = /obj/item/weapon/storage/belt/skull
+ 	cost = 2
 
 /datum/uplink_item/badass/random
 	name = "Random Item"
