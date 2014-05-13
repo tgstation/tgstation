@@ -106,19 +106,11 @@
 	return
 
 /obj/machinery/suit_storage_unit/power_change()
-	if( powered() )
-		src.ispowered = 1
-		stat &= ~NOPOWER
-		src.update_icon()
-	else
-		spawn(rand(0, 15))
-			src.ispowered = 0
-			stat |= NOPOWER
-			src.islocked = 0
-			src.isopen = 1
-			src.dump_everything()
-			src.update_icon()
-
+	..()
+	ispowered = !(stat & NOPOWER)
+	if((stat & NOPOWER) && isopen)
+		dump_everything()
+	update_icon()
 
 /obj/machinery/suit_storage_unit/ex_act(severity)
 	switch(severity)
@@ -341,12 +333,12 @@
 /obj/machinery/suit_storage_unit/proc/toggle_open(mob/user as mob)
 	if(src.islocked || src.isUV)
 		user << "<font color='red'>Unable to open unit.</font>"
-		return
+		return 0
 	if(src.OCCUPANT)
 		src.eject_occupant(user)
-		return  // eject_occupant opens the door, so we need to return
+		return 1  // eject_occupant opens the door, so we need to return
 	src.isopen = !src.isopen
-	return
+	return 1
 
 
 /obj/machinery/suit_storage_unit/proc/toggle_lock(mob/user as mob)
@@ -540,11 +532,16 @@
 
 /obj/machinery/suit_storage_unit/attackby(obj/item/I as obj, mob/user as mob)
 	if(!src.ispowered)
+		if(istype(I, /obj/item/weapon/crowbar) && !isopen)
+			if(toggle_open(user))
+				dump_everything()
+				user << text("<span class='notice'>You pry the [src] open.</span>")
+				update_icon()
 		return
 	if(istype(I, /obj/item/weapon/screwdriver))
 		src.panelopen = !src.panelopen
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
-		user << text("<font color='blue'>You [] the unit's maintenance panel.</font>",(src.panelopen ? "open up" : "close") )
+		user << text("<span class='notice'>You [] the unit's maintenance panel.</span>",(src.panelopen ? "open up" : "close") )
 		src.updateUsrDialog()
 		return
 	if ( istype(I, /obj/item/weapon/grab) )
@@ -556,7 +553,7 @@
 			return
 		var/obj/item/clothing/suit/space/S = I
 		if(src.SUIT)
-			user << "<font color='blue'>The unit already contains a suit.</font>"
+			user << "<span class='notice'>The unit already contains a suit.</span>"
 			return
 		if(!user.drop_item())
 			user << "<span class='notice'>\The [S] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
@@ -612,9 +609,6 @@
 		user << "You load the [ITEM.name] into the storage compartment."
 		ITEM.loc = src
 		src.STORAGE = ITEM
-		src.update_icon()
-		src.updateUsrDialog()
-		return
 	src.update_icon()
 	src.updateUsrDialog()
 	return
