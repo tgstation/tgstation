@@ -205,6 +205,9 @@ datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid, forc
 			else
 				total_fuel += liquid.amount
 
+		if (0 == total_fuel) // Fix zburn /0 runtime
+			return 0
+
 		//Calculate the firelevel.
 		var/firelevel = calculate_firelevel(liquid)
 

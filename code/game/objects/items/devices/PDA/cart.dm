@@ -53,6 +53,11 @@
 		icon_state = "cart-chem"
 		access_reagent_scanner = 1
 
+	chef
+		name = "ChefBuddy Cartridge"
+		icon_state = "cart-chef"
+		access_reagent_scanner = 1
+
 	security
 		name = "R.O.B.U.S.T. Cartridge"
 		icon_state = "cart-s"
@@ -276,7 +281,7 @@ Code:
 [radio:code]
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=1'>+</a>
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=5'>+</a><br>"}
-			if (41) //crew manifest
+			/*if (41) //crew manifest
 
 
 				// AUTOFIXED BY fix_string_idiocy.py
@@ -286,7 +291,7 @@ Code:
 				// END AUTOFIX
 				if(data_core)
 					menu += data_core.get_manifest(1) // make it monochrome
-				menu += "<br>"
+				menu += "<br>"*/
 
 
 			if (42) //status displays

@@ -25,7 +25,7 @@
 	..()
 	cell=new/obj/item/weapon/cell()
 	cell.charge=0
-	teles_left = rand(8,12)
+	teles_left = rand(12,14)
 	x_off = rand(-10,10)
 	y_off = rand(-10,10)
 	initialize()
@@ -228,8 +228,9 @@
 			if(!telepad.amplifier || A.jammed==SUPER_JAMMED)
 				src.visible_message("\red \icon[src] [src] turns on and the lights dim.  You can see a faint shape, but it loses focus and the telepad shuts off with a buzz.  Perhaps you need more signal strength?", "\icon[src]\red You hear something buzz.")
 				return
-			del(telepad.amplifier)
-			src.visible_message("\icon[src]\blue You hear something shatter.","\icon[src]\blue You hear something shatter.")
+			if(prob(25))
+				del(telepad.amplifier)
+				src.visible_message("\icon[src]\blue You hear something shatter.","\icon[src]\blue You hear something shatter.")
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, telepad)
 		s.start()
@@ -324,7 +325,7 @@
 		return 1
 
 	if(href_list["recal"])
-		teles_left = rand(9,12)
+		teles_left = rand(12,14)
 		x_off = rand(-10,10)
 		y_off = rand(-10,10)
 		sparks()

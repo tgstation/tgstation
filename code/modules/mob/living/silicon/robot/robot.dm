@@ -233,6 +233,7 @@
 			module_sprites["Red Knight"] = "Security"
 			module_sprites["Black Knight"] = "securityrobot"
 			module_sprites["Bloodhound"] = "bloodhound"
+			module_sprites["Securitron"] = "securitron"
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
@@ -251,6 +252,7 @@
 			module_sprites["Mopbot"]  = "janitorrobot"
 			module_sprites["Mop Gear Rex"] = "mopgearrex"
 			module_sprites["Mechaduster"] = "mechaduster"
+			module_sprites["HAN-D"] = "han-d"
 
 		if("Combat")
 			module = new /obj/item/weapon/robot_module/combat(src)

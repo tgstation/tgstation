@@ -144,7 +144,7 @@
 		message = replacetext(message,"im not","I ain't")
 		message = replacetext(message,"i'm not","I aint")
 		message = replacetext(message,"girl",pick("honey","baby","baby doll"))
-		message = replacetext(message,"man",pick("son","buddy","brother"))
+		message = replacetext(message,"man",pick("son","buddy","brother", "pal", "friendo"))
 		message = replacetext(message,"no","naw")
 		message = replacetext(message,"security","police")
 		message = replacetext(message,"out of","outta")
@@ -154,19 +154,22 @@
 		message = replacetext(message,"faggot","square")
 		message = replacetext(message,"muh valids","getting my kicks")
 		
-		if(prob(50))
+		if(prob(10))
 			return ""
-			M.emote(pick("rambles to themselves","begins talking to themselves.")) //PLS
+			M.visible_message("[M] [pick("rambles to themselves.","begins talking to themselves.")]")
+
 
 	OnMobLife(var/mob/M)
 		switch(pick(1,2))
 			if(1)
-				var/list/dancetypes = list("swinging", "fancy", "stylish", "20'th century", "jivin'", "rock and roller", "cool", "salacious", "bashing")
-				var/dancemoves = pick(dancetypes)
-				M.visible_message("[M] busts out some [dancemoves] moves!")
+				if(prob(20))
+					var/list/dancetypes = list("swinging", "fancy", "stylish", "20'th century", "jivin'", "rock and roller", "cool", "salacious", "bashing")
+					var/dancemoves = pick(dancetypes)
+					M.visible_message("[M] busts out some [dancemoves] moves!")
 			if(2)
-				M.emote(pick("rambles to themselves", "rotates their hips", "gyrates their hips", "taps their foot", "dances to an imaginary song", "jiggles their legs", "waves their arms around"))
-			
+				if(prob(20))
+					M.visible_message(pick("rambles to themselves", "rotates their hips", "gyrates their hips", "taps their foot", "dances to an imaginary song", "jiggles their legs", "waves their arms around"))
+
 
 // WAS: /datum/bioEffect/chav
 /datum/dna/gene/disability/speech/chav

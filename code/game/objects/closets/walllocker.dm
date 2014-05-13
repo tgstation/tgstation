@@ -51,8 +51,8 @@
 	dir = EAST
 
 /obj/structure/closet/walllocker/defiblocker/
-	name = "emergency defibrilator locker"
-	desc = "A wall mounted locker with a handheld defibrilator"
+	name = "emergency defibrillator locker"
+	desc = "A wall mounted locker with a handheld defibrillator"
 	icon = 'icons/obj/closet.dmi'
 	icon_state = "medical_wall"
 	icon_opened = "medical_wall_open"
@@ -66,23 +66,23 @@
 			usr << "<spawn class='notice'>It's empty."
 			return
 		else
-			usr << "<spawn class='notice'>You pull out an emergency defibrilator from \the [src]."
-			new /obj/item/weapon/melee/defibrilator(src.loc)
+			usr << "<spawn class='notice'>You pull out an emergency defibrillator from \the [src]."
+			new /obj/item/weapon/melee/defibrillator(src.loc)
 			amount = 0
 			update_icon()
 	if(!amount)
 		usr << "<spawn class='notice'>It's empty."
 		return
 	if(amount)
-		usr << "<spawn class='notice'>You take out an emergency defibrilator from \the [src]."
-		//new /obj/item/weapon/melee/defibrilator(src.loc)
-		usr.put_in_hands(new /obj/item/weapon/melee/defibrilator())
+		usr << "<spawn class='notice'>You take out an emergency defibrillator from \the [src]."
+		//new /obj/item/weapon/melee/defibrillator(src.loc)
+		usr.put_in_hands(new /obj/item/weapon/melee/defibrillator())
 		amount = 0
 		update_icon()
 	return
 
 /obj/structure/closet/walllocker/defiblocker/attackby(obj/item/weapon/G as obj, mob/user as mob)
-	if(istype(G, /obj/item/weapon/melee/defibrilator))
+	if(istype(G, /obj/item/weapon/melee/defibrillator))
 		if(amount)
 			usr << "<spawn class='notice'>The locker is full."
 			return

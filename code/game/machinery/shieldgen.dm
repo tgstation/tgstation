@@ -30,10 +30,12 @@
 	if (isnull(air_master))
 		return 0
 
-	air_master.mark_for_update(get_turf(src))
+	var/T = loc
+
+	if (isturf(T))
+		air_master.mark_for_update(T)
 
 	return 1
-
 
 /obj/machinery/shield/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(!istype(W)) return
