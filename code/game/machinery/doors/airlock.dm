@@ -626,6 +626,7 @@ About the new airlock wires panel:
 		..()
 	if(!isAdminGhost(usr))
 		if(usr.stat || usr.restrained()|| usr.small)
+			testing("Returning: Not adminghost, stat=[usr.stat], restrained=[usr.restrained()], small=[usr.small]")
 			return
 	add_fingerprint(usr)
 	if(href_list["close"])
@@ -634,39 +635,34 @@ About the new airlock wires panel:
 			usr.unset_machine()
 			return
 
-	if((in_range(src, usr) && istype(src.loc, /turf)))
+	var/am_in_range=in_range(src, usr)
+	var/turf_ok = istype(src.loc, /turf)
+	testing("in range: [am_in_range], turf ok: [turf_ok]")
+	if(am_in_range && turf_ok)
 		usr.set_machine(src)
-		if(!p_open)
-			if(!issilicon(usr))
-				if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
-					testing("Not silicon, not using a multitool.")
-					return
-
-			if("set_tag" in href_list)
-				if(!(href_list["set_tag"] in vars))
-					usr << "\red Something went wrong: Unable to find [href_list["set_tag"]] in vars!"
-					return 1
-				var/current_tag = src.vars[href_list["set_tag"]]
-				var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag", src, current_tag) as null|text),1,MAX_MESSAGE_LEN)
-				if(newid)
-					vars[href_list["set_tag"]] = newid
-					initialize()
-
-			if("set_freq" in href_list)
-				var/newfreq=frequency
-				if(href_list["set_freq"]!="-1")
-					newfreq=text2num(href_list["set_freq"])
-				else
-					newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, frequency) as null|num
-				if(newfreq)
-					if(findtext(num2text(newfreq), "."))
-						newfreq *= 10 // shift the decimal one place
-					if(newfreq < 10000)
-						frequency = newfreq
+		if(p_open)
+			var/obj/item/device/multitool/P = get_multitool(usr)
+			if(P && istype(P))
+				if("set_id" in href_list)
+					var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id_tag) as null|text),1,MAX_MESSAGE_LEN)
+					if(newid)
+						id_tag = newid
 						initialize()
+				if("set_freq" in href_list)
+					var/newfreq=frequency
+					if(href_list["set_freq"]!="-1")
+						newfreq=text2num(href_list["set_freq"])
+					else
+						newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, frequency) as null|num
+					if(newfreq)
+						if(findtext(num2text(newfreq), "."))
+							newfreq *= 10 // shift the decimal one place
+						if(newfreq < 10000)
+							frequency = newfreq
+							initialize()
 
-			usr.set_machine(src)
-			update_multitool_menu(usr)
+				usr.set_machine(src)
+				update_multitool_menu(usr)
 
 
 	if(isAdminGhost(usr) || (istype(usr, /mob/living/silicon) && src.canAIControl()))

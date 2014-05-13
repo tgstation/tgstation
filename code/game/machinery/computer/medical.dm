@@ -16,10 +16,6 @@
 	var/temp = null
 	var/printing = null
 
-/obj/machinery/computer/med_data/New()
-	#warning Deleting /obj/machinery/computer/med_data to fix features.  Remove if eliminated as suspect.
-	del(src)
-
 /obj/machinery/computer/med_data/attack_ai(user as mob)
 	src.add_hiddenprint(user)
 	return src.attack_hand(user)
