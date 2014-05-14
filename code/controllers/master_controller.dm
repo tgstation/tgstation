@@ -11,6 +11,19 @@ var/global/last_tick_duration = 0
 var/global/air_processing_killed = 0
 var/global/pipe_processing_killed = 0
 
+var/list/near = list()
+var/highest = 0
+
+/client/proc/dumpmch()
+	set category = "Debug"
+	set name = "Dump muh mch"
+	var/temp
+	for (var/M in highest)
+		temp = null
+		for (var/S in M)
+			temp += "[S],"
+		usr << temp
+
 #ifdef PROFILE_MACHINES
 // /type = time this tick
 var/list/machine_profiling=list()
@@ -289,11 +302,18 @@ datum/controller/game_controller/proc/processMobs()
 			if (Machinery && Machinery.use_power)
 				Machinery.auto_use_power()
 
+			var/end = world.timeofday
+			var/timeUsed = end - start
+
+			if (timeUsed > highest)
+				highest = timeUsed
+				near.Add(Machinery = list(highest, Machinery.x, Machinery.y, Machinery.z, Machinery.type))
+
 			#ifdef PROFILE_MACHINES
 			if(!(Machinery.type in machine_profiling))
 				machine_profiling[Machinery.type] = 0
 
-			machine_profiling[Machinery.type] += world.timeofday - start
+			machine_profiling[Machinery.type] += end - start
 			#endif
 
 
