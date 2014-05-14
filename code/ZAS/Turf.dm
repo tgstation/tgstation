@@ -6,22 +6,27 @@
 /turf/var/datum/gas_mixture/air
 
 /turf/simulated/proc/set_graphic(const/newGraphics)
-	var/list/overlayGraphics
+	if (!isnum(newGraphics))
+		return
 
-	if (isnum(newGraphics))
-		overlayGraphics = list()
-
-		if (GRAPHICS_PLASMA & newGraphics)
-			overlayGraphics += plmaster
-
-		if (GRAPHICS_N2O & newGraphics)
-			overlayGraphics += slmaster
-
-	if (gasGraphics)
+	if (!newGraphics) // Clear overlay, or simply 0.
 		overlays -= gasGraphics
 		gasGraphics = null
+		return
 
-	if (overlayGraphics && overlayGraphics.len)
+	var/list/overlayGraphics = list()
+
+	if (GRAPHICS_PLASMA & newGraphics)
+		overlayGraphics += plmaster
+
+	if (GRAPHICS_N2O & newGraphics)
+		overlayGraphics += slmaster
+
+	if (overlayGraphics.len)
+		if (gasGraphics)
+			overlays -= gasGraphics
+			gasGraphics = null
+
 		overlays += overlayGraphics
 		gasGraphics = overlayGraphics.Copy()
 
