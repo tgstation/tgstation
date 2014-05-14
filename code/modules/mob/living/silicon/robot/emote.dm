@@ -84,8 +84,8 @@
 				return
 			message = "<B>[src]</B> [input]"
 
-		if ("deathgasp")
-			message = "<B>[src]</B> shudders violently for a moment, then becomes motionless, its eyes slowly darkening."
+		if ("dedye")
+			message = "\red<B>[src]</B> shudders violently for a moment, then becomes motionless, its eyes slowly darkening."
 			m_type = 1
 
 		if ("flap")

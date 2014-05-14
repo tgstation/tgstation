@@ -13,8 +13,8 @@
 	var/message
 
 	switch(act) //Alphabetical please
-		if ("deathgasp")
-			message = "<B>[src]</B> lets out a waning guttural screech, green blood bubbling from its maw..."
+		if ("dedye")
+			message = "\red<B>[src]</B> lets out a waning guttural screech, green blood bubbling from its maw..."
 			m_type = 2
 
 		if ("gnarl")

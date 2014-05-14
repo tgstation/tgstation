@@ -21,7 +21,7 @@
 /mob/living/silicon/robot/death(gibbed)
 	if(stat == DEAD)	return
 	if(!gibbed)
-		emote("deathgasp")
+		emote("dedye")
 	stat = DEAD
 	update_canmove()
 	if(camera)

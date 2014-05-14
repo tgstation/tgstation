@@ -72,7 +72,7 @@
 	return dat
 
 /obj/item/weapon/implant/explosive/trigger(emote, mob/source)
-	if(emote == "deathgasp")
+	if(emote == "dedye")
 		activate("death")
 
 /obj/item/weapon/implant/explosive/activate(var/cause)
@@ -109,7 +109,7 @@
 	create_reagents(50)
 
 /obj/item/weapon/implant/chem/trigger(emote, mob/source)
-	if(emote == "deathgasp")
+	if(emote == "dedye")
 		activate(reagents.total_volume)
 
 /obj/item/weapon/implant/chem/activate(var/cause)
