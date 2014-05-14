@@ -65,7 +65,7 @@
 				message = "<B>[src]</B> dances around happily."
 				m_type = 1
 
-		if ("deathgasp")
+		if ("dedye")
 			message = "\red<B>[src]</B> seizes up and falls limp, its eyes dead and lifeless..."
 			m_type = 1
 
