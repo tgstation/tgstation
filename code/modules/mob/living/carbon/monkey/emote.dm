@@ -14,8 +14,8 @@
 	var/message
 
 	switch(act) //Ooh ooh ah ah keep this alphabetical ooh ooh ah ah!
-		if ("deathgasp")
-			message = "<b>[src]</b> lets out a faint chimper as it collapses and stops moving..."
+		if ("dedye")
+			message = "\red<b>[src]</b> lets out a faint chimper as it collapses and stops moving..."
 			m_type = 1
 
 		if ("gnarl")
