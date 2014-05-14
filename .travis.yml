@@ -17,4 +17,4 @@ install:
   - cd ..
 
 script:
-  - DreamMaker tgstation.dme
+  - bash ./tests/map_test.sh
