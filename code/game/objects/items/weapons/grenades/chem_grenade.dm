@@ -18,7 +18,7 @@
 
 /obj/item/weapon/grenade/chem_grenade/New()
 	create_reagents(1000)
-	name = initial(name) + " casing" // By adding the " casing" part here we can use initial(name) to get the final name, making it nice to say "large grenade" when it is a large grenade.
+	name = "[initial(name)] casing" // By adding the " casing" part here we can use initial(name) to get the final name, making it nice to say "large grenade" when it is a large grenade.
 
 
 /obj/item/weapon/grenade/chem_grenade/examine()
@@ -51,14 +51,11 @@
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(stage == WIRED)
 			if(beakers.len)
-				user << "<span class='notice'>You lock the " + initial(name) +" assembly.</span>"
+				stage_change(READY)
+				user << "<span class='notice'>You lock the [initial(name)] assembly.</span>"
 				playsound(loc, 'sound/items/Screwdriver.ogg', 25, -3)
-				name = initial(name)
-				desc = "A custom made " + initial(name) +"."
-				icon_state = initial(icon_state) +"_locked"
-				stage = READY
 			else
-				user << "<span class='notice'>You need to add at least one beaker before locking the " + initial(name) +" assembly.</span>"
+				user << "<span class='notice'>You need to add at least one beaker before locking the [initial(name)] assembly.</span>"
 		else if(stage == READY && !nadeassembly)
 			det_time = det_time == 50 ? 30 : 50	//toggle between 30 and 50
 			user << "<span class='notice'>You modify the time delay. It's set for [det_time / 10] second\s.</span>"
@@ -71,7 +68,7 @@
 			return
 		else
 			if(I.reagents.total_volume)
-				user << "<span class='notice'>You add [I] to the " + initial(name) +" assembly.</span>"
+				user << "<span class='notice'>You add [I] to the [initial(name)] assembly.</span>"
 				user.drop_item()
 				I.loc = src
 				beakers += I
@@ -91,48 +88,51 @@
 		A.loc = src
 		assemblyattacher = user.ckey
 
-		stage = WIRED
-		name = "unsecured " + initial(name)
-		desc = "An unsecured " + initial(name) +" assembly."
-		icon_state = initial(icon_state) + "_ass"
-		user << "<span class='notice'>You add [A] to the " + initial(name) +" assembly!</span>"
+		stage_change(WIRED)
+		user << "<span class='notice'>You add [A] to the [initial(name)] assembly!</span>"
 
 	else if(stage == EMPTY && istype(I, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = I
 		C.use(1)
 		det_time = 50 // In case the cable_coil was removed and readded.
-		stage = WIRED
-		name = "unsecured " + initial(name)
-		desc = "An unsecured " + initial(name) +" assembly."
-		icon_state = initial(icon_state) + "_ass"
-		user << "<span class='notice'>You rig the " + initial(name) +" assembly.</span>"
+		stage_change(WIRED)
+		user << "<span class='notice'>You rig the [initial(name)] assembly.</span>"
 
 	else if(stage == READY && istype(I, /obj/item/weapon/wirecutters))
-		user << "<span class='notice'>You unlock the " + initial(name) +" assembly.</span>"
-		name = "unsecured " + initial(name)
-		desc = "An unsecured " + initial(name) +" assembly."
-		icon_state = initial(icon_state) + "_ass"
-		stage = WIRED
+		stage_change(WIRED)
+		user << "<span class='notice'>You unlock the [initial(name)] assembly.</span>"
 
 	else if(stage == WIRED && istype(I, /obj/item/weapon/wrench))
 		if(beakers.len)
 			for(var/obj/O in beakers)
 				O.loc = get_turf(src)
 			beakers = list()
-			user << "<span class='notice'>You open the " + initial(name) +" assembly and remove the payload.</span>"
+			user << "<span class='notice'>You open the [initial(name)] assembly and remove the payload.</span>"
 			return // First use of the wrench remove beakers, then use the wrench to remove the activation mechanism.
-		stage = EMPTY
 		if(nadeassembly)
 			nadeassembly.loc = get_turf(src)
 			nadeassembly.master = null
 			nadeassembly = null
 		else // If "nadeassembly = null && stage == WIRED", then it most have been cable_coil that was used.
 			new /obj/item/stack/cable_coil(get_turf(src),1)
-		user << "<span class='notice'>You remove the activation mechanism from the " + initial(name) +" assembly.</span>"
-		name = initial(name) + " casing"
+		stage_change(EMPTY)
+		user << "<span class='notice'>You remove the activation mechanism from the [initial(name)] assembly.</span>"
+
+
+/obj/item/weapon/grenade/chem_grenade/stage_change(var/N)
+	stage = N
+	if (stage == EMPTY)
+		name = "[initial(name)] casing"
 		desc = initial(desc)
 		icon_state = initial(icon_state)
-
+	else if (stage == WIRED)
+		name = "unsecured [initial(name)]"
+		desc = "An unsecured [initial(name)] assembly."
+		icon_state = "[initial(name)]_ass"
+	else if (stage == READY)
+		name = initial(name)
+		desc = "A custom made [initial(name)]."
+		icon_state = "[initial(name)]_locked"
 
 
 //assembly stuff
@@ -232,7 +232,7 @@
 	//make a special case you might as well do it explicitly. -Sayu
 /obj/item/weapon/grenade/chem_grenade/large/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/slime_extract) && stage == WIRED)
-		user << "<span class='notice'>You add [I] to the " + initial(name) +" assembly.</span>"
+		user << "<span class='notice'>You add [I] to the [initial(name)] assembly.</span>"
 		user.drop_item()
 		I.loc = src
 		beakers += I
