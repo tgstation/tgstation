@@ -16,7 +16,7 @@
 	user.update_canmove()
 
 	if(user.stat != DEAD)
-		user.emote("deathgasp")
+		user.emote("dedye")
 		user.tod = worldtime2text()
 
 	spawn(800)
