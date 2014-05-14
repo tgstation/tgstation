@@ -72,9 +72,7 @@
 
 	for(var/obj/machinery/firealarm/FA in machines) //activate firealarms
 		spawn()
-			if(FA.lockdownbyai == 0)
-				FA.lockdownbyai = 1
-				FA.alarm()
+			FA.alarm()
 	for(var/obj/machinery/door/poddoor/BD in world) //Close blast doors!
 		spawn()
 			BD.close()
@@ -105,9 +103,7 @@
 
 	for(var/obj/machinery/firealarm/FA in machines) //deactivate firealarms
 		spawn()
-			if(FA.lockdownbyai == 1)
-				FA.lockdownbyai = 0
-				FA.reset()
+			FA.reset()
 	for(var/obj/machinery/door/poddoor/BD in world) //Open blast doors!
 		spawn()
 			BD.open()
