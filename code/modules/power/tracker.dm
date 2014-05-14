@@ -26,9 +26,10 @@
 	solars_list.Remove(src)
 
 /obj/machinery/power/tracker/connect_to_network()
-	..()
+	var/to_return = ..()
 	if(powernet)	//if connected and not already in solar_list...
 		solars_list |= src				//... add it
+	return to_return
 
 /obj/machinery/power/tracker/proc/Make(var/obj/item/solar_assembly/S)
 	if(!S)

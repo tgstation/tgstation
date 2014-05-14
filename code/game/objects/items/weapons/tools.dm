@@ -49,10 +49,10 @@
 	attack_verb = list("stabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
-	suicide_act(mob/user)
-		viewers(user) << pick("<span class='suicide'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
-							"<span class='suicide'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>")
-		return(BRUTELOSS)
+/obj/item/weapon/screwdriver/suicide_act(mob/user)
+	user.visible_message(pick("<span class='suicide'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='suicide'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>"))
+	return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/New()
 	switch(pick("red","blue","purple","brown","green","cyan","yellow"))
