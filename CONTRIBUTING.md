@@ -5,9 +5,9 @@
 
 Hello and welcome to /tg/station's contributing page. You are here because you are curious or interested in contributing. Thanks for being interested. Everyone is free to contribute to this project as long as they follow the simple guidelines and specifications below.
 
-At /tg/station, we have a goal to increase code maintainability and to do that we are going to be requiring all pull requests to hold up to those specifications. This is in order for all of us to benefit, instead of having to fix the same bug more than once because of duplicated code.
+At /tg/station, we have a goal to increase code maintainability and to do that we are going to be requiring all pull requests to hold up to the specifications mentioned below. This is in order for all of us to benefit, instead of having to fix the same bug more than once because of duplicated code.
 
-But first we want to make it clear how you can contribute if contributing is a new experience for you and what powers the team has over your pull request, so you do not get any surprises when submitting pull requests and it is closed for a reason you did not anticpate.
+But first we want to make it clear how you can contribute, if contributing is a new experience for you, and what powers the team has over your pull request so you do not get any surprises when submitting pull requests, and it is closed for a reason you did not anticipate.
 
 ##Getting Started
 
