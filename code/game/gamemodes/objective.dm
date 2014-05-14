@@ -521,7 +521,7 @@ datum/objective/steal
 			var/tmp_obj = new O.typepath
 			var/custom_name = tmp_obj:name
 			del(tmp_obj)
-			O.name = copytext(sanitize(input("Enter target name:", "Objective target", custom_name) as text|null),1,MAX_MESSAGE_LEN)
+			O.name = copytext(sanitize(input("Enter target name:", "Objective target", custom_name) as text|null),1,MAX_NAME_LEN)
 			if (!O.name) return
 			steal_target = O
 			explanation_text = "Steal [O.name]."
