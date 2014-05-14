@@ -221,7 +221,11 @@ var/global/list/uneatable = list(
 	// Let's just make this one loop.
 	var/atom/X
 
-	for(X in orange(grav_pull,src) - uneatable)
+	for(X in orange(grav_pull, src))
+		// N3X: Move this up here since get_dist is slow.
+		if(is_type_in_list(X, uneatable))
+			continue
+
 		var/dist = get_dist(X, src)
 
 		// Movable atoms only
@@ -242,7 +246,7 @@ var/global/list/uneatable = list(
 	if(current_size >= 9)
 		return 1
 	else
-		if(A && !A:anchored)
+		if(A && !A.anchored)
 			if(A.canSingulothPull(src))
 				return 1
 	return 0
