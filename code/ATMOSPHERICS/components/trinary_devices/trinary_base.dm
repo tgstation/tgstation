@@ -40,41 +40,41 @@
 /obj/machinery/atmospherics/trinary/proc/update_icon_nopipes()
 	return
 
-/obj/machinery/atmospherics/trinary/update_icon()
-	update_icon_nopipes()
+/obj/machinery/atmospherics/trinary/icon_addintact(var/obj/machinery/atmospherics/node, var/connected)
+	var/image/img = image('icons/obj/atmospherics/trinary_devices.dmi', icon_state="intact", dir=get_dir(src,node))
+	img.color = node.pipe_color
+	overlays += img
 
+	return connected | img.dir
+
+/obj/machinery/atmospherics/trinary/icon_addbroken(var/connected)
 	var/image/img
-	var/connected = 0
-	overlays.Cut()
-
-	//Add non-broken pieces
-	if(node1)
-		img = image('icons/obj/atmospherics/trinary_devices.dmi', icon_state="intact", dir=get_dir(src,node1))
-		img.color = node1.pipe_color
-		overlays += img
-
-		connected |= img.dir
-
-	if(node2)
-		img = image('icons/obj/atmospherics/trinary_devices.dmi', icon_state="intact", dir=get_dir(src,node2))
-		img.color = node2.pipe_color
-		overlays += img
-
-		connected |= img.dir
-
-	if(node3)
-		img = image('icons/obj/atmospherics/trinary_devices.dmi', icon_state="intact", dir=get_dir(src,node3))
-		img.color = node3.pipe_color
-		overlays += img
-
-		connected |= img.dir
-
-	//Add broken pieces
 	var/unconnected = (~connected) & initialize_directions
 	for(var/direction in cardinal)
 		if(unconnected & direction)
 			img = image('icons/obj/atmospherics/trinary_devices.dmi', icon_state="broken", dir=direction)
 			overlays += img
+
+/obj/machinery/atmospherics/trinary/update_icon()
+	update_icon_nopipes()
+
+	var/connected = 0
+	overlays.Cut()
+
+	//Add non-broken pieces
+	if(node1)
+		connected = icon_addintact(node1, connected)
+
+	if(node2)
+		connected = icon_addintact(node2, connected)
+
+	if(node3)
+		connected = icon_addintact(node3, connected)
+
+	world << connected
+
+	//Add broken pieces
+	icon_addbroken(connected)
 
 // Housekeeping and pipe network stuff below
 /obj/machinery/atmospherics/trinary/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)

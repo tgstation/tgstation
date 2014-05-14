@@ -46,31 +46,18 @@ connect the networks together for a more efficient transfer
 /obj/machinery/atmospherics/valve/update_icon()
 	update_icon_nopipes()
 
-	var/image/img
 	var/connected = 0
 	underlays.Cut()
 
 	//Add non-broken pieces
 	if(node1)
-		img = image('icons/obj/atmospherics/binary_devices.dmi', icon_state="pipe_intact", dir=get_dir(src,node1))
-		img.color = node1.pipe_color
-		underlays += img
-
-		connected |= img.dir
+		connected = icon_addintact(node1, connected)
 
 	if(node2)
-		img = image('icons/obj/atmospherics/binary_devices.dmi', icon_state="pipe_intact", dir=get_dir(src,node2))
-		img.color = node2.pipe_color
-		underlays += img
-
-		connected |= img.dir
+		connected = icon_addintact(node2, connected)
 
 	//Add broken pieces
-	var/unconnected = (~connected) & initialize_directions
-	for(var/direction in cardinal)
-		if(unconnected & direction)
-			img = image('icons/obj/atmospherics/binary_devices.dmi', icon_state="pipe_exposed", dir=direction)
-			underlays += img
+	icon_addbroken(connected)
 
 /obj/machinery/atmospherics/valve/New()
 	..()
