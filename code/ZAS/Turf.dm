@@ -10,8 +10,10 @@
 		return
 
 	if (!newGraphics) // Clear overlay, or simply 0.
-		overlays -= gasGraphics
-		gasGraphics = null
+		if (gasGraphics)
+			overlays -= gasGraphics
+			gasGraphics = null
+
 		return
 
 	var/list/overlayGraphics = list()
