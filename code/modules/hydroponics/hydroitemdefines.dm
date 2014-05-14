@@ -78,11 +78,13 @@
 
 
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient
-
 	name = "bottle of nutrient"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
+	volume = 50
 	w_class = 1.0
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(1,2,5,10,15,25,50)
 
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient/New()
 	..()
@@ -94,22 +96,25 @@
 	name = "bottle of E-Z-Nutrient"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
+
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez/New()
 	..()
-	reagents.add_reagent("eznutriment", 30)
+	reagents.add_reagent("eznutriment", 50)
 
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z
 	name = "bottle of Left 4 Zed"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle18"
+
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z/New()
 	..()
-	reagents.add_reagent("left4zednutriment", 30)
+	reagents.add_reagent("left4zednutriment", 50)
 
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh
 	name = "bottle of Robust Harvest"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
+
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh/New()
 	..()
-	reagents.add_reagent("robustharvestnutriment", 30)
+	reagents.add_reagent("robustharvestnutriment", 50)
