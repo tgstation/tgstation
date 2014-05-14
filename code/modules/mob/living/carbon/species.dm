@@ -52,15 +52,15 @@
 
 	var/uniform_icons = 'icons/mob/uniform.dmi'
 	var/fat_uniform_icons = 'icons/mob/uniform_fat.dmi'
-	var/gloves_icons = 'icons/mob/hands.dmi'
-	var/glasses_icons = 'icons/mob/eyes.dmi'
-	var/ears_icons = 'icons/mob/ears.dmi'
-	var/shoes_icons = 'icons/mob/feet.dmi'
-	var/head_icons = 'icons/mob/head.dmi'
-	var/belt_icons = 'icons/mob/belt.dmi'
+	var/gloves_icons    = 'icons/mob/hands.dmi'
+	var/glasses_icons   = 'icons/mob/eyes.dmi'
+	var/ears_icons      = 'icons/mob/ears.dmi'
+	var/shoes_icons     = 'icons/mob/feet.dmi'
+	var/head_icons      = 'icons/mob/head.dmi'
+	var/belt_icons      = 'icons/mob/belt.dmi'
 	var/wear_suit_icons = 'icons/mob/suit.dmi'
 	var/wear_mask_icons = 'icons/mob/mask.dmi'
-	var/back_icons = 'icons/mob/back.dmi'
+	var/back_icons      = 'icons/mob/back.dmi'
 
 /datum/species/proc/create_organs(var/mob/living/carbon/human/H) //Handles creation of mob organs.
 	//This is a basic humanoid limb setup.
@@ -257,6 +257,7 @@
 
 	uniform_icons = 'icons/mob/species/vox/uniform.dmi'
 	shoes_icons = 'icons/mob/species/vox/shoes.dmi'
+	wear_mask_icons = 'icons/mob/species/vox/masks.dmi'
 
 	equip(var/mob/living/carbon/human/H)
 		// Unequip existing suits and hats.
