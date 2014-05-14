@@ -194,11 +194,8 @@
 	anchored = 1
 	layer = 5  					// They were appearing under mobs which is a little weird - Ostaf
 	use_power = 2
-	idle_power_usage = 2
-	active_power_usage = 20
 	power_channel = LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	var/on = 0					// 1 if on, 0 if off
-	var/on_gs = 0
 	var/brightness = 8			// luminosity when on, also used in power calculation
 	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 	var/flickering = 0
@@ -244,17 +241,18 @@
 /obj/machinery/light/New()
 	..()
 
-	spawn(2)
-		switch(fitting)
-			if("tube")
+	spawn (2)
+		switch (fitting)
+			if ("tube")
 				brightness = 8
-				if(prob(2))
+
+				if (prob(2))
 					broken(1)
-			if("bulb")
+			if ("bulb")
 				brightness = 4
-				if(prob(5))
+				if (prob(5))
 					broken(1)
-		spawn(1)
+		spawn (1)
 			update(0)
 
 /obj/machinery/light/Destroy()
@@ -265,7 +263,6 @@
 	..()
 
 /obj/machinery/light/update_icon()
-
 	switch(status)		// set icon_states
 		if(LIGHT_OK)
 			icon_state = "[base_state][on]"
@@ -278,58 +275,53 @@
 		if(LIGHT_BROKEN)
 			icon_state = "[base_state]-broken"
 			on = 0
-	return
 
 // update the icon_state and luminosity of the light depending on its state
-/obj/machinery/light/proc/update(var/trigger = 1)
-
+/obj/machinery/light/proc/update(const/trigger = 1)
 	update_icon()
-	if(on)
-		if(luminosity != brightness)
-			switchcount++
-			if(rigged)
-				if(status == LIGHT_OK && trigger)
 
+	if (on)
+		if (luminosity != brightness)
+			switchcount++
+
+			if (rigged)
+				if ((LIGHT_OK == status) && trigger)
 					log_admin("LOG: Rigged light explosion, last touched by [fingerprintslast]")
 					message_admins("LOG: Rigged light explosion, last touched by [fingerprintslast]")
-
 					explode()
-			else if( prob( min(60, switchcount*switchcount*0.01) ) )
-				if(status == LIGHT_OK && trigger)
+			else if (prob(min(60, switchcount * switchcount * 0.01)))
+				if ((LIGHT_OK == status) && trigger)
 					status = LIGHT_BURNED
-					icon_state = "[base_state]-burned"
+					luminosity = 0
 					on = 0
-					SetLuminosity(0)
+					icon_state = "[base_state]-burned"
 			else
 				use_power = 2
-				SetLuminosity(brightness)
+				luminosity = brightness
+
 	else
-		use_power = 1
-		SetLuminosity(0)
-
-	active_power_usage = (luminosity * 10)
-	if(on != on_gs)
-		on_gs = on
-
+		use_power = 0
+		luminosity = 0
 
 // attempt to set the light's on/off status
 // will not switch on if broken/burned/empty
 /obj/machinery/light/proc/seton(var/s)
-	on = (s && status == LIGHT_OK)
+	on = (s && (LIGHT_OK == status))
 	update()
 
 // examine verb
 /obj/machinery/light/examine()
 	set src in oview(1)
+
 	if(usr && !usr.stat)
-		switch(status)
-			if(LIGHT_OK)
+		switch (status)
+			if (LIGHT_OK)
 				usr << "[desc] It is turned [on? "on" : "off"]."
-			if(LIGHT_EMPTY)
+			if (LIGHT_EMPTY)
 				usr << "[desc] The [fitting] has been removed."
-			if(LIGHT_BURNED)
+			if (LIGHT_BURNED)
 				usr << "[desc] The [fitting] is burnt out."
-			if(LIGHT_BROKEN)
+			if (LIGHT_BROKEN)
 				usr << "[desc] The [fitting] has been smashed."
 
 
@@ -597,9 +589,9 @@
 
 #define LIGHTING_POWER_FACTOR 20		//20W per unit luminosity
 
-/obj/machinery/light/process()//TODO: remove/add this from machines to save on processing as needed ~Carn PRIORITY
-	if(on)
-		use_power(luminosity * LIGHTING_POWER_FACTOR, LIGHT)
+/obj/machinery/light/process() //TODO: remove/add this from machines to save on processing as needed ~Carn PRIORITY
+	if (on)
+		active_power_usage = LIGHTING_POWER_FACTOR * luminosity
 
 // called when area power state changes
 /obj/machinery/light/power_change()
