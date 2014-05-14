@@ -32,7 +32,7 @@
 			m_type = 1
 
 		if ("blink_r")
-			message = "<B>\red[src]</B> blinks rapidly."
+			message = "<B>[src]</B> blinks rapidly."
 			m_type = 1
 
 		if ("blush")
@@ -85,7 +85,7 @@
 				message = "<B>[src]</B>\red makes a strong noise."
 				m_type = 2
 
-		if ("deathgasp")
+		if ("dedye")
 			message = "\red<B>[src]</B> seizes up and falls limp, \his eyes dead and lifeless..."
 			m_type = 1
 
