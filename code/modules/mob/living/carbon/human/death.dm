@@ -26,7 +26,7 @@
 			M.go_out()
 
 	if(!gibbed)
-		emote("deathgasp") //let the world KNOW WE ARE DEAD
+		emote("dedye") //let the world KNOW WE ARE DEAD
 
 		update_canmove()
 		if(client) blind.layer = 0
