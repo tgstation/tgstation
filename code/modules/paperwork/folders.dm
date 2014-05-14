@@ -78,9 +78,9 @@
 	desc = "A folder stamped \"Top Secret - Property of Nanotrasen Corporation. Unauthorized distribution is punishable by death.\""
 
 /obj/item/weapon/folder/documents/New()
-		..()
-		new /obj/item/documents/nanotrasen(src)
-		update_icon()
+	..()
+	new /obj/item/documents/nanotrasen(src)
+	update_icon()
 
 /obj/item/weapon/folder/syndicate
 	name = "folder- 'TOP SECRET'"
@@ -90,14 +90,14 @@
 	icon_state = "folder_sred"
 
 /obj/item/weapon/folder/syndicate/red/New()
-		..()
-		new /obj/item/documents/syndicate/red(src)
-		update_icon()
+	..()
+	new /obj/item/documents/syndicate/red(src)
+	update_icon()
 
 /obj/item/weapon/folder/syndicate/blue
 	icon_state = "folder_sblue"
 
 /obj/item/weapon/folder/syndicate/blue/New()
-		..()
-		new /obj/item/documents/syndicate/blue(src)
-		update_icon()
+	..()
+	new /obj/item/documents/syndicate/blue(src)
+	update_icon()
