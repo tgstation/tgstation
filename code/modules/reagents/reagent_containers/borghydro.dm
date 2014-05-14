@@ -198,4 +198,4 @@ Borg Shaker
 	charge_cost = 20 //Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
 	recharge_time = 3
 
-	reagent_ids = list("beer2", "mutagen")
+	reagent_ids = list("beer2")
