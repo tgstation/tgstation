@@ -1,17 +1,25 @@
 #CONTRIBUTING
-Everyone is free to contribute to this project as long as they follow these simple guidelines and specifications.
+
 
 ##Introduction
 
-As a goal to increase code maintainability we are going to be requiring all pull requests to hold up to the standards mentioned below. This is in order for all of us to benefit, instead of having to fix the same bug more than once because of duplicated code.
+Hello and welcome to /tg/station's contributing page. You are here because you are curious or interested in contributing. Thanks for being interested. Everyone is free to contribute to this project as long as they follow the simple guidelines and specifications below.
 
-But first we want to make it clear over what powers the maintainers have over your pull request, so you do not get any surprises when submitting pull requests and it is closed for a reason you did not suspect.
+At /tg/station, we have a goal to increase code maintainability and to do that we are going to be requiring all pull requests to hold up to those specifications. This is in order for all of us to benefit, instead of having to fix the same bug more than once because of duplicated code.
+
+But first we want to make it clear how you can contribute if contributing is a new experience for you and what powers the team has over your pull request, so you do not get any surprises when submitting pull requests and it is closed for a reason you did not anticpate.
 
 ##Getting Started
+
+At /tg/station we do not have a list of goals and features to add, we instead allow freedom for contributors to suggest and create their ideas for the game. That does not mean we aren't determined to squash bugs, which unfortunately pop up a lot due to the deep complexity of the game.
+
+Here are some useful getting started guides, if you want to contribute or if you want to know what challenges you can tackle with zero knowledge about the game's code structure.
 
 We have a [list of guides on the wiki](http://www.tgstation13.org/wiki/index.php/Guides#Development_and_Contribution_Guides) which will help you get started contributing to /tg/station with git and Dream Maker.
 
 For beginners, it is recommended you work on small projects, at first. There is an easy list of issues which are [contributor friendly, here](https://github.com/tgstation/-tg-station/issues?labels=Contributor+Friendly&page=1&state=open).
+
+You can of course, as always, ask for help at [#coderbus](irc://irc.rizon.net/coderbus) on irc.rizon.net. We are just here to have fun and help so do not expect professional support please.
 
 ##Meet the Team
 
@@ -31,7 +39,9 @@ Maintainers can revert your changes if they feel they are not worth maintaining 
 
 ##Specification
 
-* As BYOND's Dream Maker is an object oriented language, code must be object oriented when possible in order to be more flexible when adding content to it.
+As mentioned before, you are expected to follow these specifications in order to make everyone's lives easier, it will also save you and us time, with having to make the changes and us having to tell you what to change. Thank you for reading this section.
+
+* As BYOND's Dream Maker is an object oriented language, code must be object oriented when possible in order to be more flexible when adding content to it. If you are unfamiliar with this concept, it is highly recommended you look it up.
 
 * You must write BYOND code with absolute pathing, like so:
 
@@ -53,9 +63,17 @@ Maintainers can revert your changes if they feel they are not worth maintaining 
 
 * You must not use colons to override safety checks on an object's variable/function, instead of using proper type casting.
 
-* It is rarely allowed to put type paths in a text format, as they is no compile errors if the type path no longer exists.
+* It is rarely allowed to put type paths in a text format, as they is no compile errors if the type path no longer exists. Here is an example:
 
-* You must use tabs to indent your code.
+```C++
+//Good
+var/path_type = /obj/item/weapon/baseball_bat
+
+//Bad
+var/path_type = "/obj/item/weapon/baseball_bat"
+```
+
+* You must use tabs to indent your code, NOT SPACES.
 
 * Hacky code, such as adding specific checks, is highly discouraged and only allowed when there is no other option. You can avoid hacky code by using object oriented methodologies, such as overriding a function (called procs in DM) or sectioning code into functions and then overriding them as required.
 
@@ -69,10 +87,10 @@ Maintainers can revert your changes if they feel they are not worth maintaining 
 
 ##Other Requirements/Information
 
-Pull requests will sometimes take a while before they are looked at by a maintainer, the bigger the change the more time it will take before they are accepted into the code. 
+Pull requests will sometimes take a while before they are looked at by a maintainer, the bigger the change the more time it will take before they are accepted into the code. Every team member is a volunteer who is giving up their own time to help maintain and contribute, so please be nice.
 
-You are expected to document all your changes in the pull request, failing to do so will risk delaying it. On the other hand you can speed up the process by making the pull request readable and easy to understand, with diagrams or before/after data.
+You are expected to document all your changes in the pull request, failing to do so will risk delaying it as we will have to question why you made the change. On the other hand you can speed up the process by making the pull request readable and easy to understand, with diagrams or before/after data.
 
-If you are proposing multiple changes, which change many different aspects of the code, you are to section them off into different pull requests in order to easily review them and to deny/accept the changes that are deemed acceptable.
+If you are proposing multiple changes, which change many different aspects of the code, you are expected to section them off into different pull requests in order to make it easier to review them and to deny/accept the changes that are deemed acceptable.
 
 If your pull request is accepted, the code you add is no longer exclusively yours but everyones, everyone is free to work on it but you are also free to object to any changes being made, which will be noted by a Project Lead or Project Manager.
