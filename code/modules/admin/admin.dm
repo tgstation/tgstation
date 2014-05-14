@@ -442,9 +442,11 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=energeticflux'>Spawn a flux wave anomaly</A><BR>
 			<A href='?src=\ref[src];secretsfun=bluespaceanomaly'>Spawn a bluespace anomaly</A><BR>
 			<A href='?src=\ref[src];secretsfun=timeanomalies'>Spawn wormholes</A><BR>
-			<A href='?src=\ref[src];secretsfun=goblob'>Spawn blob</A><BR>
+			<A href='?src=\ref[src];secretsfun=npcblob'>Spawn an NPC blob</A><BR>
+			<A href='?src=\ref[src];secretsfun=goblob'>Spawn a blob overmind</A><BR>
 			<A href='?src=\ref[src];secretsfun=aliens'>Trigger an Alien infestation</A><BR>
 			<A href='?src=\ref[src];secretsfun=alien_silent'>Spawn an Alien silently</A><BR>
+			<A href='?src=\ref[src];secretsfun=brand'>Trigger a brand intelligence event</A><BR>
 			<A href='?src=\ref[src];secretsfun=spiders'>Trigger a Spider infestation</A><BR>
 			<A href='?src=\ref[src];secretsfun=spaceninja'>Send in a space ninja</A><BR>
 			<A href='?src=\ref[src];secretsfun=carp'>Trigger an Carp migration</A><BR>
