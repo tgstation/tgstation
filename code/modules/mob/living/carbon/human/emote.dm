@@ -30,7 +30,7 @@
 
 		if ("choke")
 			if (miming)
-				message = "<B>[src]</B> clutches \his throat desperately!"
+				message = "\red<B>[src]</B> clutches \his throat desperately!"
 			else
 				..(act)
 
@@ -47,18 +47,18 @@
 
 		if ("collapse")
 			Paralyse(2)
-			message = "<B>[src]</B> collapses!"
+			message = "\red<B>[src]</B> collapses!"
 			m_type = 2
 
 		if ("cough")
 			if (miming)
-				message = "<B>[src]</B> appears to cough!"
+				message = "\red<B>[src]</B> appears to cough!"
 			else
 				if (!muzzled)
-					message = "<B>[src]</B> coughs!"
+					message = "\red<B>[src]</B> coughs!"
 					m_type = 2
 				else
-					message = "<B>[src]</B> makes a strong noise."
+					message = "\red<B>[src]</B> makes a strong noise."
 					m_type = 2
 
 		if ("cry")
@@ -123,7 +123,7 @@
 
 		if ("gasp")
 			if (miming)
-				message = "<B>[src]</B> appears to be gasping!"
+				message = "\red<B>[src]</B> appears to be gasping!"
 			else
 				..(act)
 
@@ -135,13 +135,13 @@
 
 		if ("groan")
 			if (miming)
-				message = "<B>[src]</B> appears to groan!"
+				message = "\red<B>[src]</B> appears to groan!"
 			else
 				if (!muzzled)
-					message = "<B>[src]</B> groans!"
+					message = "\red<B>[src]</B> groans!"
 					m_type = 2
 				else
-					message = "<B>[src]</B> makes a loud noise."
+					message = "\red<B>[src]</B> makes a loud noise."
 					m_type = 2
 
 		if ("grumble")
@@ -234,7 +234,7 @@
 			m_type = 2
 
 		if ("pale")
-			message = "<B>[src]</B> goes pale for a second."
+			message = "\red<B>[src]</B> goes pale for a second."
 			m_type = 1
 
 		if ("raise")
@@ -260,7 +260,7 @@
 
 		if ("scream")
 			if (miming)
-				message = "<B>[src]</B> acts out a scream!"
+				message = "\red<B>[src]</B> acts out a scream!"
 			else
 				..(act)
 
@@ -290,7 +290,7 @@
 
 		if ("sneeze")
 			if (miming)
-				message = "<B>[src]</B> sneezes."
+				message = "\red<B>[src]</B> sneezes."
 			else
 				..(act)
 
@@ -316,7 +316,7 @@
 				m_type = 2
 
 		if ("help") //This can stay at the bottom.
-			src << "Help for human emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, cry, custom, dance, dap, deathgasp, drool, eyebrow, faint, frown, flap, gasp, giggle, glare-(none)/mob, grin, groan, grumble, handshake, hug-(none)/mob, johnny, jump, laugh, look-(none)/mob, me, moan, mumble, nod, pale, point-(atom), raise, salute, scream, shake, shiver, shrug, sigh, signal-#1-10, smile, sneeze, sniff, snore, stare-(none)/mob, tremble, twitch, twitch_s, wave, whimper, wink, yawn"
+			src << "Help for human emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blush, bow-(none)/mob, burp, chuckle, clap, cry, custom, dance, dap, eyebrow, frown, flap, giggle, glare-(none)/mob, grin, grumble, handshake, hug-(none)/mob, johnny, jump, laugh, look-(none)/mob, me, moan, mumble, nod, point-(atom), raise, salute, shiver, shrug, sigh, signal-#1-10, smile, sniff, snore, stare-(none)/mob, tremble, twitch_s, wave, whimper, wink, yawn"
 
 		else
 			..(act)
@@ -345,4 +345,3 @@
 		else if (m_type & 2)
 			for (var/mob/O in hearers(src.loc, null))
 				O.show_message(message, m_type)
-
