@@ -119,7 +119,7 @@
 		user << "<span class='notice'>You remove the activation mechanism from the [initial(name)] assembly.</span>"
 
 
-/obj/item/weapon/grenade/chem_grenade/stage_change(var/N)
+/obj/item/weapon/grenade/chem_grenade/proc/stage_change(var/N)
 	stage = N
 	if (stage == EMPTY)
 		name = "[initial(name)] casing"
@@ -128,11 +128,11 @@
 	else if (stage == WIRED)
 		name = "unsecured [initial(name)]"
 		desc = "An unsecured [initial(name)] assembly."
-		icon_state = "[initial(name)]_ass"
+		icon_state = "[initial(icon_state)]_ass"
 	else if (stage == READY)
 		name = initial(name)
 		desc = "A custom made [initial(name)]."
-		icon_state = "[initial(name)]_locked"
+		icon_state = "[initial(icon_state)]_locked"
 
 
 //assembly stuff
