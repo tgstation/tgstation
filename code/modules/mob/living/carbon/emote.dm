@@ -32,7 +32,7 @@
 			m_type = 1
 
 		if ("blink_r")
-			message = "<B>[src]</B> blinks rapidly."
+			message = "<B>\red[src]</B> blinks rapidly."
 			m_type = 1
 
 		if ("blush")
@@ -63,7 +63,7 @@
 			if (!muzzled)
 				..(act)
 			else
-				message = "<B>[src]</B> makes a strong noise."
+				message = "<B>\red[src]</B> makes a strong noise."
 				m_type = 2
 
 		if ("chuckle")
@@ -82,11 +82,11 @@
 			if (!muzzled)
 				..(act)
 			else
-				message = "<B>[src]</B> makes a strong noise."
+				message = "<B>[src]</B>\red makes a strong noise."
 				m_type = 2
 
 		if ("deathgasp")
-			message = "<B>[src]</B> seizes up and falls limp, \his eyes dead and lifeless..."
+			message = "\red<B>[src]</B> seizes up and falls limp, \his eyes dead and lifeless..."
 			m_type = 1
 
 		if ("flap")
@@ -98,7 +98,7 @@
 			if (!muzzled)
 				..(act)
 			else
-				message = "<B>[src]</B> makes a weak noise."
+				message = "<B>[src]</B>\red makes a weak noise."
 				m_type = 2
 
 		if ("giggle")
@@ -122,7 +122,7 @@
 			if (!muzzled)
 				..(act)
 			else
-				message = "<B>[src]</B> makes a very loud noise."
+				message = "<B>[src]</B>\red makes a very loud noise."
 				m_type = 2
 
 		if ("shake")
@@ -133,7 +133,7 @@
 			if (!muzzled)
 				..(act)
 			else
-				message = "<B>[src]</B> makes a strange noise."
+				message = "<B>[src]</B>\red makes a strange noise."
 				m_type = 2
 
 		if ("sigh")
@@ -170,7 +170,7 @@
 				..(act)
 
 		if ("help")
-			src << "Help for emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, giggle, glare-(none)/mob, grin, jump, laugh, look, me, nod, point-atom, scream, shake, sigh, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, wink, yawn"
+			src << "Help for emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blush, bow-(none)/mob, burp, chuckle, clap, dance, flap, frown, giggle, glare-(none)/mob, grin, jump, laugh, look, me, nod, point-atom, sigh, sit, smile, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch_s, wave, whimper, wink, yawn"
 
 		else
 			..(act)
