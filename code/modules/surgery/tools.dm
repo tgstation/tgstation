@@ -50,10 +50,10 @@
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("drilled")
 
-	suicide_act(mob/user)
-		viewers(user) << pick("<span class='suicide'>[user] is pressing [src] to \his temple and activating it! It looks like \he's trying to commit suicide.</span>", \
-							"<span class='suicide'>[user] is pressing [src] to \his chest and activating it! It looks like \he's trying to commit suicide.</span>")
-		return (BRUTELOSS)
+/obj/item/weapon/scalpel/suicide_act(mob/user)
+	user.visible_message(pick("<span class='suicide'>[user] is pressing [src] to \his temple and activating it! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='suicide'>[user] is pressing [src] to \his chest and activating it! It looks like \he's trying to commit suicide.</span>"))
+	return (BRUTELOSS)
 
 
 /obj/item/weapon/scalpel
@@ -73,11 +73,11 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
-	suicide_act(mob/user)
-		viewers(user) << pick("<span class='suicide'>[user] is slitting \his wrists with [src]! It looks like \he's trying to commit suicide.</span>", \
-							"<span class='suicide'>[user] is slitting \his throat with [src]! It looks like \he's trying to commit suicide.</span>", \
-							"<span class='suicide'>[user] is slitting \his stomach open with [src]! It looks like \he's trying to commit seppuku.</span>")
-		return (BRUTELOSS)
+/obj/item/weapon/scalpel/suicide_act(mob/user)
+	user.visible_message(pick("<span class='suicide'>[user] is slitting \his wrists with [src]! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='suicide'>[user] is slitting \his throat with [src]! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='suicide'>[user] is slitting \his stomach open with [src]! It looks like \he's trying to commit seppuku.</span>"))
+	return (BRUTELOSS)
 
 
 /obj/item/weapon/circular_saw
