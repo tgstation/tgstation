@@ -159,7 +159,7 @@
 				var/construct_class = alert(U, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")
 				switch(construct_class)
 					if("Juggernaut")
-						var/mob/living/simple_animal/construct/armoured/Z = new /mob/living/simple_animal/construct/armoured (get_turf(T.loc))
+						var/mob/living/simple_animal/construct/armored/Z = new /mob/living/simple_animal/construct/armored (get_turf(T.loc))
 						Z.key = A.key
 						if(iscultist(U))
 							if(ticker.mode.name == "cult")

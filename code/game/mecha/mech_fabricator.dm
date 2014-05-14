@@ -20,12 +20,12 @@
 	var/list/resources = list(
 										"metal"=0,
 										"glass"=0,
-										"gold"=0,
-										"silver"=0,
+										"bananium"=0,
 										"diamond"=0,
+										"gold"=0,
 										"plasma"=0,
-										"uranium"=0,
-										"bananium"=0
+										"silver"=0,
+										"uranium"=0
 										)
 	var/res_max_amount = 200000
 	var/datum/research/files
@@ -73,7 +73,7 @@
 						/obj/item/mecha_parts/part/gygax_right_arm,
 						/obj/item/mecha_parts/part/gygax_left_leg,
 						/obj/item/mecha_parts/part/gygax_right_leg,
-						/obj/item/mecha_parts/part/gygax_armour
+						/obj/item/mecha_parts/part/gygax_armor
 					),
 	"Durand"=list(
 						/obj/item/mecha_parts/chassis/durand,
@@ -83,7 +83,7 @@
 						/obj/item/mecha_parts/part/durand_right_arm,
 						/obj/item/mecha_parts/part/durand_left_leg,
 						/obj/item/mecha_parts/part/durand_right_leg,
-						/obj/item/mecha_parts/part/durand_armour
+						/obj/item/mecha_parts/part/durand_armor
 					),
 	"H.O.N.K"=list(
 						/obj/item/mecha_parts/chassis/honker,
@@ -291,7 +291,7 @@
 /*
 	New()
 		..()
-		src.add_part_to_set("Test",list("result"="/obj/item/mecha_parts/part/gygax_armour","time"=600,"metal"=75000,"diamond"=10000))
+		src.add_part_to_set("Test",list("result"="/obj/item/mecha_parts/part/gygax_armor","time"=600,"metal"=75000,"diamond"=10000))
 		src.add_part_to_set("Test",list("result"="/obj/item/mecha_parts/part/ripley_left_arm","time"=200,"metal"=25000))
 		src.remove_part_set("Gygax")
 		return
