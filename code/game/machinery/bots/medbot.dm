@@ -104,6 +104,7 @@
 	if (.)
 		return
 	var/dat
+	dat += hack(user)
 	dat += "<TT><B>Automatic Medical Unit v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
 	dat += "Maintenance panel panel is [src.open ? "opened" : "closed"]<BR>"
@@ -143,7 +144,7 @@
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if ((href_list["power"]) && (src.allowed(usr)))
-		if (src.on)
+		if (src.on && !src.emagged)
 			turn_off()
 		else
 			turn_on()
@@ -177,6 +178,17 @@
 	else if ((href_list["togglevoice"]) && (!src.locked || issilicon(usr)))
 		src.shut_up = !src.shut_up
 
+	else if (href_list["operation"])
+		if(!src.emagged)
+			src.emagged = 2
+			src.hacked = 1
+			usr << "<span class='warning'>You corrupt [src]'s reagent processor circuits.</span>"
+		else if(!src.hacked)
+			usr << "<span class='userdanger'>[src] seems damaged and does not respond to reprogramming!</span>"
+		else
+			src.hacked = 0
+			src.emagged = 0
+			usr << "<span class='notice'>You reset [src]'s reagent circuits.</span>"
 	src.updateUsrDialog()
 	return
 
@@ -278,7 +290,7 @@
 						var/message = pick("Hey, you! Hold on, I'm coming.","Wait! I want to help!","You appear to be injured!")
 						src.speak(message)
 						src.last_newpatient_speak = world.time
-					src.visible_message("<b>[src]</b> points at [C.name]!")
+					src.visible_message("<span class='name'>[src]</span> points at [C.name]!")
 				break
 			else
 				continue
@@ -426,7 +438,7 @@
 		src.icon_state = "medibots"
 		C.visible_message("<span class='danger'>[src] is trying to inject [src.patient]!</span>", \
 			"<span class='userdanger'>[src] is trying to inject [src.patient]!</span>")
-		
+
 		spawn(30)
 			if ((get_dist(src, src.patient) <= 1) && (src.on))
 				if((reagent_id == "internal_beaker") && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
@@ -443,13 +455,6 @@
 
 //	src.speak(reagent_id)
 	reagent_id = null
-	return
-
-
-/obj/machinery/bot/medbot/proc/speak(var/message)
-	if((!src.on) || (!message))
-		return
-	visible_message("[src] beeps, \"[message]\"")
 	return
 
 /obj/machinery/bot/medbot/bullet_act(var/obj/item/projectile/Proj)

@@ -216,6 +216,9 @@ Des: Removes all infected images from the alien.
 				qdel(I)
 	return
 
+/mob/living/carbon/alien/canBeHandcuffed()
+	return 1
+
 #undef HEAT_DAMAGE_LEVEL_1
 #undef HEAT_DAMAGE_LEVEL_2
 #undef HEAT_DAMAGE_LEVEL_3

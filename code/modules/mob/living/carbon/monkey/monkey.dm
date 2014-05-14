@@ -372,6 +372,8 @@
 /mob/living/carbon/monkey/IsAdvancedToolUser()//Unless its monkey mode monkeys cant use advanced tools
 	return 0
 
+/mob/living/carbon/monkey/canBeHandcuffed()
+	return 1
 /mob/living/carbon/monkey/SpeciesCanConsume()
 	return 1 // Monkeys can eat, drink, and be forced to do so
 

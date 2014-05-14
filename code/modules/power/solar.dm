@@ -33,10 +33,10 @@ var/list/solars_list = list()
 	solars_list.Remove(src)
 
 /obj/machinery/power/solar/connect_to_network()
-	..()
+	var/to_return = ..()
 	if(powernet) //if connected and not already in solar_list...
 		solars_list |= src			   //... add it
-
+	return to_return
 
 /obj/machinery/power/solar/proc/Make(var/obj/item/solar_assembly/S)
 	if(!S)
@@ -287,9 +287,10 @@ var/list/solars_list = list()
 	solars_list.Remove(src)
 
 /obj/machinery/power/solar_control/connect_to_network()
-	..()
+	var/to_return = ..()
 	if(powernet) //if connected and not already in solar_list...
 		solars_list |= src //... add it
+	return to_return
 
 /obj/machinery/power/solar_control/initialize()
 	..()
@@ -375,7 +376,7 @@ var/list/solars_list = list()
 	if(stat & (NOPOWER | BROKEN))
 		return
 
-	if(track==1 && trackrate)
+	if(track==1 && trackrate) //manual tracking and set a rotation speed
 		if(nexttime <= world.time) //every time we need to increase/decrease the angle by 1°...
 			targetdir = (targetdir + trackrate/abs(trackrate) + 360) % 360 	//... do it
 			nexttime += 36000/abs(trackrate) //reset the counter for the next 1°
@@ -388,10 +389,10 @@ var/list/solars_list = list()
 /obj/machinery/power/solar_control/proc/tracker_update(var/angle)
 	if(stat & (NOPOWER | BROKEN) || track == 0)
 		return
-	if (track == 2)
+	if (track == 2) // auto-tracking (called by tracker.dm /set_angle)
 		cdir = angle
-	else if (track == 1 && trackrate) //if manual tracking...
-		cdir = targetdir			  //...the current direction is the targetted one (and rotates panels to it)
+	else if (trackrate) //else we're manual tracking. If we set a rotation speed...
+		cdir = targetdir //...the current direction is the targetted one (and rotates panels to it)
 	set_panels(cdir)
 	src.updateDialog()
 
