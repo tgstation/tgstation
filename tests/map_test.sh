@@ -1,6 +1,5 @@
 #!/bin/bash
 dme=tgstation.dme
-index=0
 exitcode=0
 
 compile(){
