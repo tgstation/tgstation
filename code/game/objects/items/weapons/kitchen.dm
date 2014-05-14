@@ -82,11 +82,11 @@
 	force = 10.0
 	throwforce = 10.0
 
-	suicide_act(mob/user)
-		viewers(user) << pick("<span class='suicide'>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
-							"<span class='suicide'>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
-							"<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>")
-		return (BRUTELOSS)
+/obj/item/weapon/kitchen/utensil/knife/suicide_act(mob/user)
+	user.visible_message(pick("<span class='suicide'>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='suicide'>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>"))
+	return (BRUTELOSS)
 
 /obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
 	if ((CLUMSY in user.mutations) && prob(50))
@@ -114,11 +114,11 @@
 	origin_tech = "materials=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-	suicide_act(mob/user)
-		viewers(user) << pick("<span class='suicide'>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
-							"<span class='suicide'>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
-							"<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>")
-		return (BRUTELOSS)
+/obj/item/weapon/kitchenknife/suicide_act(mob/user)
+	user.visible_message(pick("<span class='suicide'>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='suicide'>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>"))
+	return (BRUTELOSS)
 
 /obj/item/weapon/kitchenknife/ritual
 	name = "ritual knife"
@@ -238,13 +238,13 @@
 			return //it always returns, but I feel like adding an extra return just for safety's sakes. EDIT; Oh well I won't :3
 
 	add_logs(user, M, "attacked", object="[src.name]")
-	
+
 	if(istype(M, /mob/living/carbon/human))
-	
+
 		var/mob/living/carbon/human/H = M ///////////////////////////////////// /Let's have this ready for later.
 
 		if(prob(50))
-			playsound(M, 'sound/items/trayhit1.ogg', 50, 1)	
+			playsound(M, 'sound/items/trayhit1.ogg', 50, 1)
 		else
 			playsound(M, 'sound/items/trayhit2.ogg', 50, 1)
 
@@ -277,8 +277,8 @@
 					H.head.add_blood(H)
 				if (H.glasses && prob(33))
 					H.glasses.add_blood(H)
-		
-		
+
+
 			M.visible_message("<span class='danger'>[user] slams [M] in the face with the tray!</span>", \
 				"<span class='userdanger'>[user] slams [M] in the face with the tray, against your mask!</span>")
 
@@ -304,7 +304,7 @@
 					M.Weaken(2)
 					return
 		return
-		
+
 	else
 		..()
 

@@ -207,12 +207,12 @@
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 
-	suicide_act(mob/user)
-		if(locate(/obj/structure/stool) in user.loc)
-			viewers(user) << "<span class='suicide'>[user] is making a noose with the [src.name]! It looks like \he's trying to commit suicide.</span>"
-		else
-			viewers(user) << "<span class='suicide'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>"
-		return(OXYLOSS)
+/obj/item/stack/cable_coil/suicide_act(mob/user)
+	if(locate(/obj/structure/stool) in user.loc)
+		user.visible_message("<span class='suicide'>[user] is making a noose with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	else
+		user.visible_message("<span class='suicide'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	return(OXYLOSS)
 
 /obj/item/stack/cable_coil/attack(mob/living/carbon/human/H, mob/user)
 	if(!istype(H))
