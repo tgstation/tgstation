@@ -16,7 +16,8 @@ namespace MapAtmosFixer
         Vent,
         Mixer,
         Filter,
-        Injector
+        Injector,
+        Temp
     }
 
     internal static class Mapatmosfixer
@@ -92,6 +93,10 @@ namespace MapAtmosFixer
                     return Objtype.Filter;
                 case "/obj/machinery/atmospherics/trinary/mixer":
                     return Objtype.Mixer;
+                case "/obj/machinery/atmospherics/unary/heat_reservoir/heater":
+                    return Objtype.Temp;
+                case "/obj/machinery/atmospherics/unary/cold_sink/freezer":
+                    return Objtype.Temp;
                 case "/obj/machinery/atmospherics/unary/outlet_injector":
                     return Objtype.Injector;
                 default:
@@ -235,6 +240,18 @@ namespace MapAtmosFixer
                 string name = g2[1].Value;
                 string value = g2[2].Value.Trim(new[] {'"'});
 
+                //Removes icon_state from heaters/freezers
+                if (objtype == Objtype.Temp)
+                {
+                    if (name == "icon_state")
+                    {
+                        tags.RemoveAt(i);
+                        i--;
+                    }
+                    continue;
+                }
+
+                //General removal of tags we shouldn't have
                 if (name == "pipe_color" || name == "color" || name == "level" ||
                     (objtype != Objtype.Pump && name == "name")
                     || (objtype == Objtype.Pump && name == "icon_state"))
@@ -244,6 +261,7 @@ namespace MapAtmosFixer
                     continue;
                 }
 
+                //Processes icon_state into correct path
                 if (name == "icon_state")
                 {
                     ProcessIconstate(ref path, value, objtype);
@@ -252,6 +270,7 @@ namespace MapAtmosFixer
                     continue;
                 }
 
+                //Fixes up injector
                 if (objtype == Objtype.Injector && name == "on")
                 {
                     path = "/obj/machinery/atmospherics/unary/outlet_injector/on";
@@ -272,8 +291,8 @@ namespace MapAtmosFixer
         {
             //Dirty shit, don't read this
             if (line.Contains("/obj/machinery/atmospherics/portables_connector") &&
-                !line.Contains("/turf/simulated/floor/plating") &&
-                !line.Contains("/obj/machinery/atmospherics/portables_connector/visible"))// Makes sure we don't update same line twice
+                //!line.Contains("/turf/simulated/floor/plating") &&                        // Most of the time connectors on plating want to be visible..
+                !line.Contains("/obj/machinery/atmospherics/portables_connector/visible"))  // Makes sure we don't update same line twice
             {
                 line = line.Replace("/obj/machinery/atmospherics/portables_connector",
                     "/obj/machinery/atmospherics/portables_connector/visible");
