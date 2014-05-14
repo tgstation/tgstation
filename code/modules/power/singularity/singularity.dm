@@ -492,6 +492,7 @@ var/global/list/uneatable = list(
 /obj/machinery/singularity/narsie/large/New()
 	..()
 	world << "<font size='15' color='red'><b>NAR-SIE HAS RISEN</b></font>"
+	world << pick(sound('sound/hallucinations/im_here1.ogg'), sound('sound/hallucinations/im_here2.ogg'))
 	if(emergency_shuttle)
 		emergency_shuttle.incall(0.3) // Cannot recall
 
