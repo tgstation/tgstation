@@ -132,7 +132,7 @@
 				observer.alpha = 127
 
 				if(client.prefs.be_random_name)
-					client.prefs.real_name = random_name(client.prefs.gender)
+					client.prefs.real_name = random_name(client.prefs.gender,client.prefs.species)
 				observer.real_name = client.prefs.real_name
 				observer.name = observer.real_name
 				if(!client.holder && !config.antag_hud_allowed)           // For new ghosts we remove the verb from even showing up if it's not allowed.
@@ -391,10 +391,10 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 
 		var/datum/language/chosen_language
 		if(client.prefs.language)
-			chosen_language = all_languages["[client.prefs.language]"]
+			chosen_language = all_languages[client.prefs.language]
 		if(chosen_language)
 			if(is_alien_whitelisted(src, client.prefs.language) || !config.usealienwhitelist || !(chosen_language.flags & WHITELISTED))
-				new_character.add_language("client.prefs.language")
+				new_character.add_language(client.prefs.language)
 		if(ticker.random_players || appearance_isbanned(src)) //disabling ident bans for now
 			new_character.gender = pick(MALE, FEMALE)
 			client.prefs.real_name = random_name(new_character.gender)

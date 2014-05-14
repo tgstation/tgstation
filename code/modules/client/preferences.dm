@@ -890,7 +890,7 @@ datum/preferences
 			if("random")
 				switch(href_list["preference"])
 					if("name")
-						real_name = random_name(gender)
+						real_name = random_name(gender,species)
 					if("age")
 						age = rand(AGE_MIN, AGE_MAX)
 					if("hair")
@@ -1297,7 +1297,7 @@ datum/preferences
 
 	proc/copy_to(mob/living/carbon/human/character, safety = 0)
 		if(be_random_name)
-			real_name = random_name(gender)
+			real_name = random_name(gender,species)
 
 		if(config.humans_need_surnames)
 			var/firstspace = findtext(real_name, " ")

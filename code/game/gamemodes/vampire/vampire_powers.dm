@@ -196,7 +196,7 @@
 	if(!M) return
 	if(M.current.vampire_power(50, 0))
 		M.current.visible_message("<span class='warning'>[M.current.name] transforms!</span>")
-		M.current.client.prefs.real_name = random_name(M.current.gender)
+		M.current.client.prefs.real_name = M.current.generate_name() //random_name(M.current.gender)
 		M.current.client.prefs.randomize_appearance_for(M.current)
 		M.current.regenerate_icons()
 		M.current.remove_vampire_blood(50)

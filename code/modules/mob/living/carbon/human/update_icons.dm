@@ -506,8 +506,8 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 		var/obj/item/I = w_uniform
 		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
-			if(species.w_uniform_icons)
-				standing.icon = species.w_uniform_icons
+			if(species.uniform_icons)
+				standing.icon = species.uniform_icons
 
 		if(w_uniform.icon_override)
 			standing.icon	= w_uniform.icon_override

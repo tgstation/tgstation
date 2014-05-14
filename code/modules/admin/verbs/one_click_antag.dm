@@ -500,21 +500,12 @@ client/proc/one_click_antag()
 	new_vox.h_style = "Short Vox Quills"
 	new_vox.regenerate_icons()
 
-	var/sounds = rand(2,10)
-	var/i = 0
-	var/newname = ""
-
-	while(i<=sounds)
-		i++
-		newname += pick(list("ti","hi","ki","ya","ta","ha","ka","ya","chi","cha","kah"))
-
-	new_vox.real_name = capitalize(newname)
-	new_vox.name = new_vox.real_name
 	new_vox.age = rand(12,20)
 
 	new_vox.dna.ready_dna(new_vox) // Creates DNA.
 	new_vox.dna.mutantrace = "vox"
 	new_vox.set_species("Vox") // Actually makes the vox! How about that.
+	new_vox.generate_name()
 	new_vox.add_language("Vox-pidgin")
 	new_vox.mind_initialize()
 	new_vox.mind.assigned_role = "MODE"

@@ -16,6 +16,9 @@
 		living_mob_list += src
 	..()
 
+/mob/proc/generate_name()
+	return name
+
 /mob/proc/Cell()
 	set category = "Admin"
 	set hidden = 1

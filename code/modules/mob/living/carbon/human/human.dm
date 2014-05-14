@@ -1304,6 +1304,11 @@ mob/living/carbon/human/yank_out_object()
 
 	return(visible_implants)
 
+/mob/living/carbon/human/generate_name()
+	name = species.makeName(gender,src)
+	real_name = name
+	return name
+
 /mob/living/carbon/human/proc/handle_embedded_objects()
 
 	for(var/datum/organ/external/organ in src.organs)
