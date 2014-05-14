@@ -44,7 +44,7 @@
 			m_type = 2
 
 		if ("choke")
-			message = "<B>[src]</B> chokes!"
+			message = "\red<B>[src]</B> chokes!"
 			m_type = 2
 
 		if ("chuckle")
@@ -53,11 +53,11 @@
 
 		if ("collapse")
 			Paralyse(2)
-			message = "<B>[src]</B> collapses!"
+			message = "\red<B>[src]</B> collapses!"
 			m_type = 2
 
 		if ("cough")
-			message = "<B>[src]</B> coughs!"
+			message = "\red<B>[src]</B> coughs!"
 			m_type = 2
 
 		if ("dance")
@@ -66,15 +66,15 @@
 				m_type = 1
 
 		if ("deathgasp")
-			message = "<B>[src]</B> seizes up and falls limp, its eyes dead and lifeless..."
+			message = "\red<B>[src]</B> seizes up and falls limp, its eyes dead and lifeless..."
 			m_type = 1
 
 		if ("drool")
-			message = "<B>[src]</B> drools."
+			message = "\red<B>[src]</B> drools."
 			m_type = 1
 
 		if ("faint")
-			message = "<B>[src]</B> faints."
+			message = "\red<B>[src]</B> faints."
 			if(src.sleeping)
 				return //Can't faint while asleep
 			src.sleeping += 10 //Short-short nap
@@ -90,7 +90,7 @@
 			m_type = 1
 
 		if ("gasp")
-			message = "<B>[src]</B> gasps!"
+			message = "\red<B>[src]</B> gasps!"
 			m_type = 2
 
 		if ("giggle")
@@ -174,7 +174,7 @@
 			m_type = 1
 
 		if ("scream")
-			message = "<B>[src]</B> screams!"
+			message = "\red<B>[src]</B> screams!"
 			m_type = 2
 
 		if ("shake")
@@ -194,7 +194,7 @@
 			m_type = 1
 
 		if ("sneeze")
-			message = "<B>[src]</B> sneezes."
+			message = "\red<B>[src]</B> sneezes."
 			m_type = 2
 
 		if ("sniff")
@@ -252,7 +252,7 @@
 			m_type = 2
 
 		if ("help")
-			src << "Help for emotes. You can use these emotes with say \"*emote\":\n\naflap, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, giggle, glare-(none)/mob, grin, jump, laugh, look, me, nod, point-atom, scream, shake, sit, sigh, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, yawn"
+			src << "Help for emotes. You can use these emotes with say \"*emote\":\n\naflap, blush, bow-(none)/mob, burp, chuckle, clap, dance, flap, frown, giggle, glare-(none)/mob, grin, jump, laugh, look, me, nod, point-atom, shake, sit, sigh, smile, snore, stare-(none)/mob, sulk, sway, tremble, twitch_s, wave, whimper, yawn"
 
 		else
 			src << "\blue Unusable emote '[act]'. Say *help for a list."
