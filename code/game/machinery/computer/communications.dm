@@ -111,17 +111,8 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				usr << "You need to swipe your ID."
 
 		if("announce")
-			if(src.authenticated==2)
-				if(message_cooldown)	return
-				var/input = stripped_input(usr, "Please choose a message to announce to the station crew.", "What?")
-				if(!input || !(usr in view(1,src)))
-					return
-				priority_announce(input, null, 'sound/misc/announce.ogg', "Captain")
-				log_say("[key_name(usr)] has made a captain announcement: [input]")
-				message_admins("[key_name_admin(usr)] has made a captain announcement.", 1)
-				message_cooldown = 1
-				spawn(600)//One minute cooldown
-					message_cooldown = 0
+			if(src.authenticated==2 && !message_cooldown)
+				make_announcement(usr)
 
 		if("callshuttle")
 			src.state = STATE_DEFAULT
@@ -280,16 +271,8 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		if("ai-status")
 			src.aistate = STATE_STATUSDISPLAY
 		if("ai-announce")
-			if(ai_message_cooldown)	return
-			var/input = stripped_input(usr, "Please choose a message to announce to the station crew.", "What?")
-			if(!input)
-				return
-			priority_announce(input, null, null, "Priority")
-			log_say("[key_name(usr)] has made a priority announcement: [input]")
-			message_admins("[key_name_admin(usr)] has made a priority announcement.", 1)
-			ai_message_cooldown = 1
-			spawn(600)//One minute cooldown
-				ai_message_cooldown = 0
+			if(!ai_message_cooldown)
+				make_announcement(usr, 1)
 		if("ai-securitylevel")
 			src.tmp_alertlevel = text2num( href_list["newalertlevel"] )
 			if(!tmp_alertlevel) tmp_alertlevel = 0
@@ -570,6 +553,24 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	dat += "<BR><BR>\[ [(src.aistate != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=ai-main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
 	return dat
 
+/obj/machinery/computer/communications/proc/make_announcement(var/mob/living/user, var/is_silicon)
+	var/input = stripped_input(user, "Please choose a message to announce to the station crew.", "What?")
+	if(!input)
+		return
+	if(is_silicon)
+		priority_announce(input, null, null, "Priority")
+		ai_message_cooldown = 1
+		spawn(600)//One minute cooldown
+			ai_message_cooldown = 0
+	else
+		if(!(user in view(1,src)))
+			return
+		priority_announce(input, null, 'sound/misc/announce.ogg', "Captain")
+		message_cooldown = 1
+		spawn(600)//One minute cooldown
+			message_cooldown = 0
+	log_say("[key_name(user)] has made a priority announcement: [input]")
+	message_admins("[key_name_admin(user)] has made a priority announcement.", 1)
 
 /proc/call_shuttle_proc(var/mob/user, var/call_reason)
 	if ((!( ticker ) || emergency_shuttle.location))
