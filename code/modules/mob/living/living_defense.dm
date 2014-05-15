@@ -16,8 +16,16 @@
 /mob/living/proc/getarmor(var/def_zone, var/type)
 	return 0
 
-
-/mob/living/bullet_act(obj/item/projectile/P, def_zone)
+/mob/living/bullet_act(obj/item/projectile/P, def_zone, var/has_limbs)
+	if(P.silenced)
+		playsound(loc, P.hitsound, 5, 1, -1)
+		src << "<span class='userdanger'>You've been shot by \a [P][has_limbs ? " in the [parse_zone(def_zone)]!" : "!"]</span>"
+	else
+		if(P.hitsound)
+			var/volume = P.vol_by_damage()
+			playsound(loc, P.hitsound, volume, 1, -1)
+		visible_message("<span class='danger'>[src] is hit by \a [P][has_limbs ? " in the [parse_zone(def_zone)]!" : "!"]</span>", \
+						"<span class='userdanger'>[src] is hit by \a [P][has_limbs ? " in the [parse_zone(def_zone)]!" : "!"]</span>")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 	var/armor = run_armor_check(def_zone, P.flag)
 	if(!P.nodamage)
 		apply_damage(P.damage, P.damage_type, def_zone, armor)

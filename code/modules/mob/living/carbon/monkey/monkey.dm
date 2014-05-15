@@ -79,7 +79,8 @@
 		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 	return
 
-//mob/living/carbon/monkey/bullet_act(var/obj/item/projectile/Proj)taken care of in living
+/mob/living/carbon/monkey/bullet_act(var/obj/item/projectile/P, var/def_zone)
+	return (..(P , def_zone, 1))
 
 /mob/living/carbon/monkey/attack_paw(mob/M as mob)
 	..()
