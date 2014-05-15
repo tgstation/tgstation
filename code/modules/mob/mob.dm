@@ -487,6 +487,8 @@ var/list/slot_equipment_priority = list( \
 
 	if(!usr.stat && usr.canmove && !usr.restrained() && Adjacent(usr))
 		if(href_list["item"])
+			if(!iscarbon(usr))
+				return
 			var/slot = text2num(href_list["item"])
 			var/obj/item/what = get_item_by_slot(slot)
 
@@ -516,7 +518,7 @@ var/list/slot_equipment_priority = list( \
 	if(M != usr)	return
 	if(usr == src)	return
 	if(!Adjacent(usr))	return
-	if(istype(M, /mob/living/silicon/ai))	return
+	if(isAI(M))	return
 	show_inv(usr)
 
 
