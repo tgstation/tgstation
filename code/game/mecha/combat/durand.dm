@@ -87,6 +87,4 @@
 	max_temperature = 30000
 	infra_luminosity = 8
 	force = 40
-	var/defence = 0
-	var/defence_deflect = 35
 	wreckage = /obj/effect/decal/mecha_wreckage/durand/old
