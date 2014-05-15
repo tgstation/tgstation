@@ -18,7 +18,7 @@ var/highest = 0
 	set category = "Debug"
 	set name = "Dump muh mch"
 	var/temp
-	for (var/M in highest)
+	for (var/M in near)
 		temp = null
 		for (var/S in M)
 			temp += "[S],"
