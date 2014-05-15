@@ -63,6 +63,7 @@
 	SUIT_TYPE = /obj/item/clothing/suit/space/rig/atmos
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/atmos
 	MASK_TYPE = /obj/item/clothing/mask/gas
+	STORAGE_TYPE = /obj/item/weapon/watertank/atmos
 
 /obj/machinery/suit_storage_unit/mining
 	SUIT_TYPE = /obj/item/clothing/suit/space/rig/mining
@@ -347,61 +348,38 @@
 	src.updateUsrDialog()
 
 	var/i //our counter
-	for(i=0,i<4,++i)
-		sleep(50)
-		if(src.OCCUPANT)
-			var/burndamage = rand(6,10)
-			if(src.issuperUV)
-				burndamage = rand(28,35)
-			if(iscarbon(OCCUPANT))
-				OCCUPANT.take_organ_damage(0,burndamage)
-				OCCUPANT.emote("scream")
-			else
-				OCCUPANT.take_organ_damage(burndamage)
-		if(i==3) //End of the cycle
-			if(!src.issuperUV)
-				for(var/obj/item/ITEM in src)
-					ITEM.clean_blood()
-				if(istype(STORAGE, /obj/item/weapon/reagent_containers/food))
-					src.STORAGE = null //ew why would you put food in here
-			else //It was supercycling, destroy everything
-				src.HELMET = null
-				src.SUIT = null
-				src.MASK = null
-				src.STORAGE = null
-				visible_message("<font color='red'>With a loud whining noise, the Suit Storage Unit's door grinds open. Puffs of ashen smoke come out of its chamber.</font>", 3)
-				src.isbroken = 1
-				src.isopen = 1
-				src.islocked = 0
-				src.eject_occupant(OCCUPANT) //Mixing up these two lines causes bug. DO NOT DO IT.
-			src.isUV = 0 //Cycle ends
-	src.update_icon()
-	src.updateUsrDialog()
-	return
-
-/*	spawn(200) //Let's clean dat shit after 20 secs  //Eh, this doesn't work
-		if(src.HELMET)
-			HELMET.clean_blood()
-		if(src.SUIT)
-			SUIT.clean_blood()
-		if(src.MASK)
-			MASK.clean_blood()
-		src.isUV = 0 //Cycle ends
+	spawn(0)
+		for(i=0,i<4,++i)
+			sleep(50)
+			if(src.OCCUPANT)
+				var/burndamage = rand(6,10)
+				if(src.issuperUV)
+					burndamage = rand(28,35)
+				if(iscarbon(OCCUPANT))
+					OCCUPANT.take_organ_damage(0,burndamage)
+					OCCUPANT.emote("scream")
+				else
+					OCCUPANT.take_organ_damage(burndamage)
+			if(i==3) //End of the cycle
+				if(!src.issuperUV)
+					for(var/obj/item/ITEM in src)
+						ITEM.clean_blood()
+					if(istype(STORAGE, /obj/item/weapon/reagent_containers/food))
+						del(STORAGE)
+				else //It was supercycling, destroy everything
+					src.HELMET = null
+					src.SUIT = null
+					src.MASK = null
+					del(STORAGE)
+					visible_message("<font color='red'>With a loud whining noise, the Suit Storage Unit's door grinds open. Puffs of ashen smoke come out of its chamber.</font>", 3)
+					src.isbroken = 1
+					src.isopen = 1
+					src.islocked = 0
+					src.eject_occupant(OCCUPANT) //Mixing up these two lines causes bug. DO NOT DO IT.
+				src.isUV = 0 //Cycle ends
 		src.update_icon()
 		src.updateUsrDialog()
-
-	var/i
-	for(i=0,i<4,i++) //Gradually give the guy inside some damaged based on the intensity
-		spawn(50)
-			if(src.OCCUPANT)
-				if(src.issuperUV)
-					OCCUPANT.take_organ_damage(0,40)
-					user << "Test. You gave him 40 damage"
-				else
-					OCCUPANT.take_organ_damage(0,8)
-					user << "Test. You gave him 8 damage"
-	return*/
-
+		return
 
 /obj/machinery/suit_storage_unit/proc/cycletimeleft()
 	if(src.cycletime_left >= 1)
