@@ -123,6 +123,16 @@ Please contact me on #coderbus IRC. ~Carnie x
 	update_transform()
 
 
+/mob/living/carbon/human/update_transform()
+	if(lying != lying_prev)
+		for(var/i = 1, i <= hud_list.len, i++)
+			var/image/HUD_image = hud_list[i]
+			if(HUD_image)
+				var/image_rotation = -lying - -lying_prev
+				var/matrix/anti_transform = turn(HUD_image.transform, image_rotation)
+				animate(HUD_image, transform = anti_transform, time = 2, easing = BOUNCE_EASING|EASE_OUT)
+	..()
+
 //DAMAGE OVERLAYS
 //constructs damage icon for each organ from mask * damage field and saves it in our overlays_ lists
 /mob/living/carbon/human/update_damage_overlays()
