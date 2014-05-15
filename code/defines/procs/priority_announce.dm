@@ -8,7 +8,7 @@
 		announcement += "<h1 class='alert'>Priority Announcement</h1>"
 
 	else if(type == "Captain")
-		news_network.SubmitArticle(text, "Captain's Announcements", "Station Announcements", null)
+		news_network.SubmitArticle(text, "Captain's Announcement", "Station Announcements", null)
 		announcement += "<h1 class='alert'>Captain Announces</h1>"
 
 	else
