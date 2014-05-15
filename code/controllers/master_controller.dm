@@ -14,7 +14,7 @@ var/global/pipe_processing_killed = 0
 var/list/near = list()
 var/highest = 0
 
-/client/verb/dumpmch()
+/client/proc/dumpmch()
 	set category = "Debug"
 	set name = "Dump muh mch"
 	var/temp
