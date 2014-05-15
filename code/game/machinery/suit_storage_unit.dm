@@ -277,19 +277,19 @@
 		src.safetieson = !src.safetieson
 
 
-/obj/machinery/suit_storage_unit/proc/dispense_helmet(mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/dispense_helmet()
 	eject(HELMET)
 	HELMET = null
 
-/obj/machinery/suit_storage_unit/proc/dispense_suit(mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/dispense_suit()
 	eject(SUIT)
 	SUIT = null
 
-/obj/machinery/suit_storage_unit/proc/dispense_mask(mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/dispense_mask()
 	eject(MASK)
 	MASK = null
 
-/obj/machinery/suit_storage_unit/proc/eject_storage(mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/eject_storage()
 	eject(STORAGE)
 	STORAGE = null
 
@@ -298,7 +298,7 @@
 
 /obj/machinery/suit_storage_unit/proc/dump_everything()
 	for(var/obj/item/ITEM in src)
-		ITEM.loc = src.loc
+		eject(ITEM)
 	src.SUIT = null
 	src.HELMET = null
 	src.MASK = null
