@@ -447,13 +447,13 @@
 	if (user.stat != 0)
 		return
 	if (!src.isopen)
-		usr << "<font color='red'>The unit's doors are shut.</font>"
+		user << "<font color='red'>The unit's doors are shut.</font>"
 		return
 	if (!src.ispowered || src.isbroken)
-		usr << "<font color='red'>The unit is not operational.</font>"
+		user << "<font color='red'>The unit is not operational.</font>"
 		return
 	if ( (src.OCCUPANT) || (src.HELMET) || (src.SUIT) || (src.STORAGE))
-		usr << "<font color='red'>It's too cluttered inside to fit in!</font>"
+		user << "<font color='red'>It's too cluttered inside to fit in!</font>"
 		return
 	if(M == user)
 		visible_message("[user] starts squeezing into the suit storage unit!", 3)
