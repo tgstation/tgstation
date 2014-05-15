@@ -801,7 +801,7 @@
 		if (bufferOption == "saveUI")
 			if(src.connected.occupant && src.connected.occupant.dna)
 				var/datum/dna2/record/databuf=new
-				databuf.types = DNA2_BUF_UE
+				databuf.types = DNA2_BUF_UI // DNA2_BUF_UE
 				databuf.dna = src.connected.occupant.dna.Clone()
 				if(ishuman(connected.occupant))
 					databuf.dna.real_name=connected.occupant.name
@@ -851,7 +851,7 @@
 			src.connected.locked = 1//lock it
 			nanomanager.update_uis(src) // update all UIs attached to src
 
-			sleep(10*2) // sleep for 2 seconds
+			sleep(2 SECONDS)
 
 			irradiating = 0
 			src.connected.locked = lock_state
@@ -891,14 +891,9 @@
 				if(success)
 					I.loc = src.loc
 					I.name += " ([buf.name])"
-					//src.temphtml = "Injector created."
 					src.injector_ready = 0
 					spawn(300)
 						src.injector_ready = 1
-				//else
-					//src.temphtml = "Error in injector creation."
-			//else
-				//src.temphtml = "Replicator not ready yet."
 			return 1
 
 		if (bufferOption == "loadDisk")

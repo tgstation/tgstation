@@ -70,6 +70,7 @@
 		M.radiation += rand(5,20)
 
 	if (!(M_NOCLONE in M.mutations)) // prevents drained people from having their DNA changed
+		// UI in syringe.
 		if (buf.types & DNA2_BUF_UI)
 			if (!block) //isolated block?
 				M.UpdateAppearance(buf.dna.UI.Copy())

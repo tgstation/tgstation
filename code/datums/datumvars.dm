@@ -419,7 +419,23 @@ client
 
 		else
 			html += "[name] = <span class='value'>[value]</span>"
-
+			/*
+			// Bitfield stuff
+			if(round(value)==value) // Require integers.
+				var/idx=0
+				var/bit=0
+				var/bv=0
+				html += "<div class='value binary'>"
+				for(var/block=0;block<8;block++)
+					html += " <span class='block'>"
+					for(var/i=0;i<4;i++)
+						idx=(block*4)+i
+						bit=1 << idx
+						bv=value & bit
+						html += "<a href='?_src_=vars;togbit=[idx];var=[name];subject=\ref[DA]' title='bit [idx] ([bit])'>[bv?1:0]</a>"
+					html += "</span>"
+				html += "</div>"
+			*/
 		html += "</li>"
 
 		return html
@@ -456,6 +472,20 @@ client
 			return
 
 		modify_variables(D, href_list["varnameedit"], 1)
+
+	else if(href_list["togbit"])
+		if(!check_rights(R_VAREDIT))	return
+
+		var/atom/D = locate(href_list["subject"])
+		if(!istype(D,/datum) && !istype(D,/client))
+			usr << "This can only be used on instances of types /client or /datum"
+			return
+		if(!(href_list["var"] in D.vars))
+			usr << "Unable to find variable specified."
+			return
+		var/value = D.vars[href_list["var"]]
+		value ^= 1 << text2num(href_list["togbit"])
+		D.vars[href_list["var"]] = value
 
 	else if(href_list["varnamechange"] && href_list["datumchange"])
 		if(!check_rights(R_VAREDIT))	return
