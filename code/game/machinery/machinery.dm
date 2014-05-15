@@ -176,15 +176,12 @@ Class Procs:
 		del(src)
 
 /obj/machinery/proc/auto_use_power()
-	if (!powered(power_channel))
+	if(!powered(power_channel))
 		return 0
-
-	switch (use_power)
-		if (1)
-			use_power(idle_power_usage, power_channel)
-		if (2)
-			use_power(active_power_usage, power_channel)
-
+	if(src.use_power == 1)
+		use_power(idle_power_usage,power_channel)
+	else if(src.use_power >= 2)
+		use_power(active_power_usage,power_channel)
 	return 1
 
 /obj/machinery/Topic(href, href_list)
