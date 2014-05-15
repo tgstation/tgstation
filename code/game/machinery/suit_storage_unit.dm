@@ -95,14 +95,14 @@
 		overlays += "super"
 	if(isopen)
 		overlays += "open"
-	if(SUIT && isopen)
-		overlays += "suit"
-	if(HELMET && isopen)
-		overlays += "helm"
-	if(STORAGE && isopen)
-		overlays += "storage"
-	if(isbroken && isopen)
-		overlays += "broken"
+		if(SUIT)
+			overlays += "suit"
+		if(HELMET)
+			overlays += "helm"
+		if(STORAGE)
+			overlays += "storage"
+		if(isbroken)
+			overlays += "broken"
 	return
 
 /obj/machinery/suit_storage_unit/power_change()
@@ -278,53 +278,31 @@
 
 
 /obj/machinery/suit_storage_unit/proc/dispense_helmet(mob/user as mob)
-	if(!src.HELMET)
-		return //Do I even need this sanity check? Nyoro~n
-	else
-		src.HELMET.loc = src.loc
-		src.HELMET = null
-		return
-
+	eject(HELMET)
+	HELMET = null
 
 /obj/machinery/suit_storage_unit/proc/dispense_suit(mob/user as mob)
-	if(!src.SUIT)
-		return
-	else
-		src.SUIT.loc = src.loc
-		src.SUIT = null
-		return
-
+	eject(SUIT)
+	SUIT = null
 
 /obj/machinery/suit_storage_unit/proc/dispense_mask(mob/user as mob)
-	if(!src.MASK)
-		return
-	else
-		src.MASK.loc = src.loc
-		src.MASK = null
-		return
+	eject(MASK)
+	MASK = null
 
 /obj/machinery/suit_storage_unit/proc/eject_storage(mob/user as mob)
-	if(!src.STORAGE)
-		return
-	else
-		src.STORAGE.loc = src.loc
-		src.STORAGE = null
-		return
+	eject(STORAGE)
+	STORAGE = null
+
+/obj/machinery/suit_storage_unit/proc/eject(atom/movable/ITEM)
+	ITEM.loc = src.loc
 
 /obj/machinery/suit_storage_unit/proc/dump_everything()
-	src.islocked = 0 //locks go free
-	if(src.SUIT)
-		src.SUIT.loc = src.loc
-		src.SUIT = null
-	if(src.HELMET)
-		src.HELMET.loc = src.loc
-		src.HELMET = null
-	if(src.MASK)
-		src.MASK.loc = src.loc
-		src.MASK = null
-	if(src.STORAGE)
-		src.STORAGE.loc = src.loc
-		src.STORAGE = null
+	for(var/obj/item/ITEM in src)
+		ITEM.loc = src.loc
+	src.SUIT = null
+	src.HELMET = null
+	src.MASK = null
+	src.STORAGE = null
 	if(src.OCCUPANT)
 		src.eject_occupant(OCCUPANT)
 	return
@@ -369,7 +347,7 @@
 	src.updateUsrDialog()
 
 	var/i //our counter
-	for(i=0,i<4,i++)
+	for(i=0,i<4,++i)
 		sleep(50)
 		if(src.OCCUPANT)
 			var/burndamage = rand(6,10)
@@ -382,26 +360,15 @@
 				OCCUPANT.take_organ_damage(burndamage)
 		if(i==3) //End of the cycle
 			if(!src.issuperUV)
-				if(src.HELMET)
-					HELMET.clean_blood()
-				if(src.SUIT)
-					SUIT.clean_blood()
-				if(src.MASK)
-					MASK.clean_blood()
-				if(src.STORAGE)
-					if(istype(STORAGE, /obj/item/weapon/reagent_containers/food))
-						src.STORAGE = null //ew why would you put food in here
-					else
-						STORAGE.clean_blood()
+				for(var/obj/item/ITEM in src)
+					ITEM.clean_blood()
+				if(istype(STORAGE, /obj/item/weapon/reagent_containers/food))
+					src.STORAGE = null //ew why would you put food in here
 			else //It was supercycling, destroy everything
-				if(src.HELMET)
-					src.HELMET = null
-				if(src.SUIT)
-					src.SUIT = null
-				if(src.MASK)
-					src.MASK = null
-				if(src.STORAGE)
-					src.STORAGE = null
+				src.HELMET = null
+				src.SUIT = null
+				src.MASK = null
+				src.STORAGE = null
 				visible_message("<font color='red'>With a loud whining noise, the Suit Storage Unit's door grinds open. Puffs of ashen smoke come out of its chamber.</font>", 3)
 				src.isbroken = 1
 				src.isopen = 1
@@ -558,7 +525,7 @@
 		if(!user.drop_item())
 			user << "<span class='notice'>\The [S] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
 			return
-		user << "You load the [S.name] into the storage compartment."
+		user << "You load the [S.name] into the suit storage compartment."
 		S.loc = src
 		src.SUIT = S
 		src.update_icon()
@@ -574,7 +541,7 @@
 		if(!user.drop_item())
 			user << "<span class='notice'>\The [H] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
 			return
-		user << "You load the [H.name] into the storage compartment."
+		user << "You load the [H.name] into the helmet storage compartment."
 		H.loc = src
 		src.HELMET = H
 		src.update_icon()
@@ -590,7 +557,7 @@
 		if(!user.drop_item())
 			user << "<span class='notice'>\The [M] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
 			return
-		user << "You load the [M.name] into the storage compartment."
+		user << "You load the [M.name] into the mask storage compartment."
 		M.loc = src
 		src.MASK = M
 		src.update_icon()
@@ -606,7 +573,7 @@
 		if(!user.drop_item())
 			user << "<span class='notice'>\The [ITEM] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
 			return
-		user << "You load the [ITEM.name] into the storage compartment."
+		user << "You load the [ITEM.name] into the auxiliary storage compartment."
 		ITEM.loc = src
 		src.STORAGE = ITEM
 	src.update_icon()
