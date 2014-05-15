@@ -13,6 +13,7 @@
 /obj/item/weapon/storage/book/bible
 	name = "bible"
 	desc = "Apply to head repeatedly."
+	icon = 'icons/obj/storage.dmi'
 	icon_state ="bible"
 	var/mob/affecting = null
 	var/deity_name = "Christ"
@@ -29,6 +30,9 @@
 	new /obj/item/weapon/spacecash(src)
 	new /obj/item/weapon/spacecash(src)
 	new /obj/item/weapon/spacecash(src)
+
+/obj/item/weapon/storage/book/bible/attack_self(mob/user)
+	return
 
 /obj/item/weapon/storage/book/bible/proc/bless(mob/living/carbon/M as mob)
 	if(ishuman(M))
