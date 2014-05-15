@@ -307,7 +307,7 @@ datum/controller/game_controller/proc/processMobs()
 
 			if (timeUsed > highest)
 				highest = timeUsed
-				near.Add(Machinery = list(highest, Machinery.loc, Machinery.type))
+				near.Add(Machinery = list(highest, Machinery.x, Machine.y, Machine.z, Machinery.type))
 
 			#ifdef PROFILE_MACHINES
 			if(!(Machinery.type in machine_profiling))
