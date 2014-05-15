@@ -1168,7 +1168,10 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 		if(statpanel("Status"))	//not looking at that panel
 			stat(null, "Location:\t([x], [y], [z])")
-			stat(null, "CPU:\t[world.cpu]")
+			var/muh_cpu = world.cpu
+			if (muh_cpu > 100)
+				nearr += list(list("[worldtime2text()]", muh_cpu, master_controller.last_thing_processed))
+			stat(null, "CPU:\t[muh_cpu]")
 			stat(null, "Instances:\t[world.contents.len]")
 
 			if(master_controller)
