@@ -921,8 +921,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	name = "Religious Supplies Crate"
 	contains = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
-					/obj/item/weapon/storage/bible/booze,
-					/obj/item/weapon/storage/bible/booze,
+					/obj/item/weapon/storage/book/bible/booze,
+					/obj/item/weapon/storage/book/bible/booze,
 					/obj/item/clothing/suit/chaplain_hoodie,
 					/obj/item/clothing/head/chaplain_hood,
 					/obj/item/clothing/suit/chaplain_hoodie,
