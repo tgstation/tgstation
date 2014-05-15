@@ -123,6 +123,9 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/sliceable))
+		user << "<span class='notice'>You can't put that much food inside [src].</span>"
+		return 0
 	if(istype(W,/obj/item/weapon/storage))
 		..() // -> item/attackby()
 		return 0
