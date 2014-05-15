@@ -12,17 +12,32 @@ var/global/air_processing_killed = 0
 var/global/pipe_processing_killed = 0
 
 var/list/near = list()
-var/highest = 0
+var/list/nearr = list()
 
 /client/proc/dumpmch()
 	set category = "Debug"
 	set name = "Dump muh mch"
 	var/temp
-	for (var/M in near)
+
+	usr << "--------"
+	for (var/x = 1 to near.len)
 		temp = null
-		for (var/S in near[M])
-			temp += "[S],"
+		for (var/y = 1 to length(near[x]))
+			temp += "[near[x][y]], "
 		usr << temp
+
+	usr << "/--------/"
+
+	for (var/x = 1 to nearr.len)
+		temp = null
+		for (var/y = 1 to length(nearr[x]))
+			temp += "[nearr[x][y]], "
+		usr << temp
+
+	// This list get too big fast so use only after the feature cooldowned.
+	nearr = list()
+
+	usr << "--------"
 
 #ifdef PROFILE_MACHINES
 // /type = time this tick
@@ -305,9 +320,8 @@ datum/controller/game_controller/proc/processMobs()
 			var/end = world.timeofday
 			var/timeUsed = end - start
 
-			if (timeUsed > highest)
-				highest = timeUsed
-				near.Add(Machinery = list(highest, Machinery.x, Machinery.y, Machinery.z, Machinery.type))
+			if (timeUsed > 1)
+				near += list(list("[worldtime2text()]", timeUsed, Machinery.x, Machinery.y, Machinery.z, Machinery.type))
 
 			#ifdef PROFILE_MACHINES
 			if(!(Machinery.type in machine_profiling))
