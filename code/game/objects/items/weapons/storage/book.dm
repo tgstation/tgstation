@@ -91,7 +91,7 @@
 							playsound(src.loc, "punch", 25, 1, -1)
 							message_halt = 1
 					else
-						src << "<span class='warning'>[src.deity_name] refuses to heal this metalic taint!</span>"
+						src << "<span class='warning'>[src.deity_name] refuses to heal this metallic taint!</span>"
 						return
 
 
