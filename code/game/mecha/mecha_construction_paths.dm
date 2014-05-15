@@ -865,12 +865,12 @@
 
 /datum/construction/mecha/durand_chassis
 	steps = list(list("key"=/obj/item/mecha_parts/part/durand_torso),//1
-					 list("key"=/obj/item/mecha_parts/part/durand_left_arm),//2
-					 list("key"=/obj/item/mecha_parts/part/durand_right_arm),//3
-					 list("key"=/obj/item/mecha_parts/part/durand_left_leg),//4
-					 list("key"=/obj/item/mecha_parts/part/durand_right_leg),//5
-					 list("key"=/obj/item/mecha_parts/part/durand_head)
-					)
+				 list("key"=/obj/item/mecha_parts/part/durand_left_arm),//2
+				 list("key"=/obj/item/mecha_parts/part/durand_right_arm),//3
+				 list("key"=/obj/item/mecha_parts/part/durand_left_leg),//4
+				 list("key"=/obj/item/mecha_parts/part/durand_right_leg),//5
+				 list("key"=/obj/item/mecha_parts/part/durand_head)
+				)
 
 	custom_action(step, atom/used_atom, mob/user)
 		user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
