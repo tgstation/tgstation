@@ -20,7 +20,7 @@ var/highest = 0
 	var/temp
 	for (var/M in near)
 		temp = null
-		for (var/S in M)
+		for (var/S in near[M])
 			temp += "[S],"
 		usr << temp
 
