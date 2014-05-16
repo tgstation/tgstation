@@ -84,6 +84,15 @@
 	item_state = "sunglasses"
 	darkness_view = -1
 
+
+/obj/item/clothing/glasses/virussunglasses
+	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes."
+	name = "sunglasses"
+	icon_state = "sun"
+	item_state = "sunglasses"
+	darkness_view = -1
+
+
 /obj/item/clothing/glasses/welding
 	name = "welding goggles"
 	desc = "Protects the eyes from welders, approved by the mad scientist association."
