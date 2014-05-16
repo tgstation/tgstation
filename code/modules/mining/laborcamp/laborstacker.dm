@@ -91,26 +91,26 @@
 				usr.drop_item()
 				I.loc = src
 				inserted_id = I
-			else usr << "\red No valid ID."
+			else usr << "<span class='danger'>No valid ID.</span>"
 		if(check_auth()) //Sanity check against hef spoofs
 			if(href_list["choice"] == "station")
 				var/datum/shuttle_manager/s = shuttles["laborcamp"]
 				if(s.location == /area/shuttle/laborcamp/outpost)
 					if(alone_in_area(get_area(loc), usr))
 						if (s.move_shuttle(0)) // No delay, to stop people from getting on while it is departing.
-							usr << "\blue Shuttle recieved message and will be sent shortly."
+							usr << "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>"
 						else
-							usr << "\blue Shuttle is already moving."
+							usr << "<span class='notice'>Shuttle is already moving.</span>"
 					else
-						usr << "\red Prisoners are only allowed to be released while alone."
+						usr << "<span class='danger'>Prisoners are only allowed to be released while alone.</span>"
 				else
-					usr << "\blue Shuttle is already on-station."
+					usr << "<span class='notice'>Shuttle is already on-station.</span>"
 			if(href_list["choice"] == "release")
 				if(alone_in_area(get_area(loc), usr))
 					if(release_door.density)
 						release_door.open()
 				else
-					usr << "\red Prisoners are only allowed to be released while alone."
+					usr << "<span class='danger'>Prisoners are only allowed to be released while alone.</span>"
 		src.updateUsrDialog()
 	return
 

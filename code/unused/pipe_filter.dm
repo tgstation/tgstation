@@ -109,33 +109,33 @@
 		return ..()
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(bypassed)
-			user.show_message(text("\red Remove the foreign wires first!"), 1)
+			user.show_message(text("<span class='danger'>Remove the foreign wires first!</span>"), 1)
 			return
 		src.add_fingerprint(user)
-		user.show_message(text("\red Now []securing the access system panel...", (src.locked) ? "un" : "re"), 1)
+		user.show_message(text("<span class='danger'>Now []securing the access system panel...", (src.locked) ? "un" : "re</span>"), 1)
 		sleep(30)
 		locked =! locked
-		user.show_message(text("\red Done!"),1)
+		user.show_message(text("<span class='danger'>Done!</span>"),1)
 		src.updateicon()
 		return
 	if(istype(W, /obj/item/stack/cable_coil) && !bypassed)
 		if(src.locked)
-			user.show_message(text("\red You must remove the panel first!"),1)
+			user.show_message(text("<span class='danger'>You must remove the panel first!</span>"),1)
 			return
 		var/obj/item/stack/cable_coil/C = W
 		if(C.use(4))
-			user.show_message(text("\red You unravel some cable.."),1)
+			user.show_message(text("<span class='danger'>You unravel some cable..</span>"),1)
 		else
-			user.show_message(text("\red Not enough cable! <I>(Requires four pieces)</I>"),1)
+			user.show_message(text("<span class='danger'>Not enough cable! <I>(Requires four pieces)</I></span>"),1)
 		src.add_fingerprint(user)
-		user.show_message(text("\red Now bypassing the access system... <I>(This may take a while)</I>"), 1)
+		user.show_message(text("<span class='danger'>Now bypassing the access system... <I>(This may take a while)</I></span>"), 1)
 		sleep(100)
 		bypassed = 1
 		src.updateicon()
 		return
 	if(istype(W, /obj/item/weapon/wirecutters) && bypassed)
 		src.add_fingerprint(user)
-		user.show_message(text("\red Now removing the bypass wires... <I>(This may take a while)</I>"), 1)
+		user.show_message(text("<span class='danger'>Now removing the bypass wires... <I>(This may take a while)</I></span>"), 1)
 		sleep(50)
 		bypassed = 0
 		src.updateicon()
@@ -144,7 +144,7 @@
 		emagged++
 		src.add_fingerprint(user)
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red [] has shorted out the [] with an electromagnetic card!", user, src), 1)
+			O.show_message(text("<span class='danger'>[] has shorted out the [] with an electromagnetic card!</span>", user, src), 1)
 		src.overlays += image('icons/obj/pipes2.dmi', "filter-spark")
 		sleep(6)
 		src.updateicon()
@@ -204,7 +204,7 @@
 				src.f_mask ^= text2num(href_list["tg"])
 				src.updateicon()
 		else
-			usr.see("\red Access Denied ([src.name] operation restricted to authorized atmospheric technicians.)")
+			usr.see("<span class='danger'>Access Denied ([src.name] operation restricted to authorized atmospheric technicians.)</span>")
 		AutoUpdateAI(src)
 		src.updateUsrDialog()
 		src.add_fingerprint(usr)

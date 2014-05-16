@@ -52,4 +52,4 @@ var/global/list/ANTIGENS = list("[ANTIGEN_A]" = "A", "[ANTIGEN_B]" = "B", "[ANTI
 		// iterate over the list of antigens and see what matches
 		var/code = ""
 		for(var/V in ANTIGENS) if(text2num(V) & M.antibodies) code += ANTIGENS[V]
-		user << text("\blue [src] The antibody scanner displays a cryptic set of data: [code]")
+		user << text("<span class='notice'>[src] The antibody scanner displays a cryptic set of data: [code]</span>")

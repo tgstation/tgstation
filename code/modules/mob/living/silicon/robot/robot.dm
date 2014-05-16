@@ -342,7 +342,7 @@
 
 /mob/living/silicon/robot/meteorhit(obj/O as obj)
 	for(var/mob/M in viewers(src, null))
-		M.show_message(text("\red [src] has been hit by [O]"), 1)
+		M.show_message(text("<span class='danger'>[src] has been hit by [O]</span>"), 1)
 		//Foreach goto(19)
 	if (health > 0)
 		adjustBruteLoss(30)
@@ -418,7 +418,7 @@
 			updatehealth()
 			add_fingerprint(user)
 			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red [user] has fixed some of the dents on [src]!"), 1)
+				O.show_message(text("<span class='danger'>[user] has fixed some of the dents on [src]!</span>"), 1)
 		else
 			user << "Need more welding fuel!"
 			return
@@ -428,7 +428,7 @@
 		adjustFireLoss(-30)
 		updatehealth()
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red [user] has fixed some of the burnt wires on [src]!"), 1)
+			O.show_message(text("<span class='danger'>[user] has fixed some of the burnt wires on [src]!</span>"), 1)
 		coil.use(1)
 
 	else if (istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
@@ -477,13 +477,13 @@
 
 	else if(istype(W, /obj/item/weapon/wrench) && opened && !cell) //Deconstruction. The flashes break from the fall, to prevent this from being a ghetto reset module.
 		if(!lockcharge)
-			user << "\red <b>[src]'s bolts spark! Maybe you should lock them down first!</b>"
+			user << "<span class='userdanger'>[src]'s bolts spark! Maybe you should lock them down first!</span>"
 			spark_system.start()
 			return
 		else
 			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 			if(do_after(user, 50) && !cell)
-				user.visible_message("\red [user] deconstructs [src]!", "\blue You unfasten the securing bolts, and [src] falls to pieces!")
+				user.visible_message("<span class='danger'>[user] deconstructs [src]!", "<span class='notice'>You unfasten the securing bolts, and [src] falls to pieces!</span></span>")
 				deconstruct()
 
 	else if(istype(W, /obj/item/device/encryptionkey/) && opened)
@@ -503,7 +503,7 @@
 				user << "You [ locked ? "lock" : "unlock"] [src]'s cover."
 				updateicon()
 			else
-				user << "\red Access denied."
+				user << "<span class='danger'>Access denied.</span>"
 
 	else if(istype(W, /obj/item/weapon/card/emag))		// trying to unlock with an emag card
 		if(user != src)//To prevent syndieborgs from emagging themselves
@@ -540,22 +540,22 @@
 						var/time = time2text(world.realtime,"hh:mm:ss")
 						lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
 						set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
-						src << "\red ALERT: Foreign software detected."
+						src << "<span class='danger'>ALERT: Foreign software detected.</span>"
 						sleep(5)
-						src << "\red Initiating diagnostics..."
+						src << "<span class='danger'>Initiating diagnostics...</span>"
 						sleep(20)
-						src << "\red SynBorg v1.7 loaded."
+						src << "<span class='danger'>SynBorg v1.7 loaded.</span>"
 						sleep(5)
-						src << "\red LAW SYNCHRONISATION ERROR"
+						src << "<span class='danger'>LAW SYNCHRONISATION ERROR</span>"
 						sleep(5)
-						src << "\red Would you like to send a report to NanoTraSoft? Y/N"
+						src << "<span class='danger'>Would you like to send a report to NanoTraSoft? Y/N</span>"
 						sleep(10)
-						src << "\red > N"
+						src << "<span class='danger'>> N</span>"
 						sleep(20)
-						src << "\red ERRORERRORERROR"
+						src << "<span class='danger'>ERRORERRORERROR</span>"
 						src << "<b>Obey these laws:</b>"
 						laws.show_laws(src)
-						src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands."
+						src << "<span class='userdanger'>ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</span>"
 						updateicon()
 					else
 						user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
@@ -610,7 +610,7 @@
 		if ("help")
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O.show_message(text("\blue [M] caresses [src]'s plating with its scythe like arm."), 1)
+					O.show_message(text("<span class='notice'>[M] caresses [src]'s plating with its scythe like arm.</span>"), 1)
 
 		if ("grab")
 			if (M == src || anchored)
@@ -623,7 +623,7 @@
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
+					O.show_message(text("<span class='danger'>[] has grabbed [] passively!</span>", M, src), 1)
 
 		if ("harm")
 			var/damage = rand(10, 20)
@@ -638,7 +638,7 @@
 
 				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
-					O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
+					O.show_message(text("<span class='userdanger'>[] has slashed at []!</span>", M, src), 1)
 				if(prob(8))
 					flick("noise", flash)
 				adjustBruteLoss(damage)
@@ -647,7 +647,7 @@
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] took a swipe at []!</B>", M, src), 1)
+						O.show_message(text("<span class='userdanger'>[] took a swipe at []!</span>", M, src), 1)
 
 		if ("disarm")
 			if(!(lying))
@@ -658,12 +658,12 @@
 					playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
-							O.show_message(text("\red <B>[] has forced back []!</B>", M, src), 1)
+							O.show_message(text("<span class='userdanger'>[] has forced back []!</span>", M, src), 1)
 				else
 					playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
-							O.show_message(text("\red <B>[] attempted to force back []!</B>", M, src), 1)
+							O.show_message(text("<span class='userdanger'>[] attempted to force back []!</span>", M, src), 1)
 	return
 
 
@@ -679,7 +679,7 @@
 
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O.show_message(text("\red <B>The [M.name] glomps []!</B>", src), 1)
+				O.show_message(text("<span class='userdanger'>The [M.name] glomps []!</span>", src), 1)
 
 		var/damage = rand(1, 3)
 
@@ -710,7 +710,7 @@
 
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>The [M.name] has electrified []!</B>", src), 1)
+						O.show_message(text("<span class='userdanger'>The [M.name] has electrified []!</span>", src), 1)
 
 				flick("noise", flash)
 
@@ -733,7 +733,7 @@
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+			O.show_message("<span class='danger'><B>[M]</B> [M.attacktext] [src]!</span>", 1)
 		add_logs(M, src, "attacked", admin=0)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
@@ -957,7 +957,7 @@
 								cleaned_human.shoes.clean_blood()
 								cleaned_human.update_inv_shoes(0)
 							cleaned_human.clean_blood()
-							cleaned_human << "\red [src] cleans your face!"
+							cleaned_human << "<span class='danger'>[src] cleans your face!</span>"
 		return
 
 /mob/living/silicon/robot/proc/self_destruct()

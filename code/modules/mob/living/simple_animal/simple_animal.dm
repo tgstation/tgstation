@@ -255,7 +255,7 @@
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>\The [M]</B> [M.attacktext] [src]!", 1)
+			O.show_message("<span class='danger'><B>\The [M]</B> [M.attacktext] [src]!</span>", 1)
 		add_logs(M, src, "attacked", admin=0)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
@@ -277,7 +277,7 @@
 			if (health > 0)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message("\blue [M] [response_help] [src].")
+						O.show_message("<span class='notice'>[M] [response_help] [src].</span>")
 
 		if("grab")
 			if (M == src || anchored)
@@ -295,13 +295,13 @@
 
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
+					O.show_message(text("<span class='danger'>[] has grabbed [] passively!</span>", M, src), 1)
 
 		if("harm", "disarm")
 			adjustBruteLoss(harm_intent_damage)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O.show_message("\red [M] [response_harm] [src]!")
+					O.show_message("<span class='danger'>[M] [response_harm] [src]!</span>")
 
 	return
 
@@ -313,7 +313,7 @@
 
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
+					O.show_message(text("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>"), 1)
 		if ("grab")
 			if(M == src || anchored)
 				return
@@ -330,11 +330,11 @@
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
+					O.show_message(text("<span class='danger'>[] has grabbed [] passively!</span>", M, src), 1)
 
 		if("harm", "disarm")
 			var/damage = rand(15, 30)
-			visible_message("\red <B>[M] has slashed at [src]!</B>")
+			visible_message("<span class='userdanger'>[M] has slashed at [src]!</span>")
 			adjustBruteLoss(damage)
 
 	return
@@ -343,13 +343,13 @@
 
 	switch(L.a_intent)
 		if("help")
-			visible_message("\blue [L] rubs it's head against [src]")
+			visible_message("<span class='notice'>[L] rubs it's head against [src]</span>")
 
 
 		else
 
 			var/damage = rand(5, 10)
-			visible_message("\red <B>[L] bites [src]!</B>")
+			visible_message("<span class='userdanger'>[L] bites [src]!</span>")
 
 			if(stat != DEAD)
 				L.amount_grown = min(L.amount_grown + damage, L.max_grown)
@@ -363,7 +363,7 @@
 
 	if(M.Victim) return // can't attack while eating!
 
-	visible_message("\red <B>[M.name] glomps [src]!</B>")
+	visible_message("<span class='userdanger'>[M.name] glomps [src]!</span>")
 
 	var/damage = rand(1, 3)
 
@@ -392,16 +392,16 @@
 							qdel(MED)
 						for(var/mob/M in viewers(src, null))
 							if ((M.client && !( M.blinded )))
-								M.show_message("\blue [user] applies [MED] on [src]")
+								M.show_message("<span class='notice'>[user] applies [MED] on [src]</span>")
 						return
 					else
-						user << "\blue [MED] won't help at all."
+						user << "<span class='notice'>[MED] won't help at all.</span>"
 						return
 			else
-				user << "\blue [src] is at full health."
+				user << "<span class='notice'>[src] is at full health.</span>"
 				return
 		else
-			user << "\blue [src] is dead, medical items won't bring it back to life."
+			user << "<span class='notice'>[src] is dead, medical items won't bring it back to life.</span>"
 			return
 	else if(meat_type && (stat == DEAD))	//if the animal has a meat, and if it is dead.
 		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))

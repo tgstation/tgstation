@@ -300,7 +300,7 @@
 	name = "Unidentified Foreign Body"
 	stage = 4
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob << "\red You feel something tearing its way out of your stomach..."
+		mob << "<span class='danger'>You feel something tearing its way out of your stomach...</span>"
 		mob.adjustToxLoss(10)
 		mob.updatehealth()
 		if(prob(40))
@@ -395,7 +395,7 @@
 	name = "Flemmingtons"
 	stage = 1
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob << "\red Mucous runs down the back of your throat."
+		mob << "<span class='danger'>Mucous runs down the back of your throat.</span>"
 
 /datum/disease2/effect/greater/killertoxins
 	name = "Toxification syndrome"
@@ -427,7 +427,7 @@
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.suiciding = 1
 		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
-		viewers(mob) << "\red <b>[mob.name] is holding \his breath. It looks like \he's trying to commit suicide.</b>"
+		viewers(mob) << "<span class='userdanger'>[mob.name] is holding \his breath. It looks like \he's trying to commit suicide.</span>"
 		mob.adjustOxyLoss(175 - mob.getToxLoss() - mob.getFireLoss() - mob.getBruteLoss() - mob.getOxyLoss())
 		mob.updatehealth()
 		spawn(200) //in case they get revived by cryo chamber or something stupid like that, let them suicide again in 20 seconds
@@ -456,7 +456,7 @@
 	name = "Flemmingtons"
 	stage = 1
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob << "\red Mucous runs down the back of your throat."
+		mob << "<span class='danger'>Mucous runs down the back of your throat.</span>"
 
 /datum/disease2/effect/lesser/radian
 	name = "Radian's syndrome"
@@ -489,7 +489,7 @@
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		var/obj/item/organ/limb/org = mob.organs["r_arm"]
 		org.take_damage(3,0,0,0)
-		mob << "\red You feel a sting in your right arm."*/
+		mob << "<span class='danger'>You feel a sting in your right arm.</span>"*/
 
 /datum/disease2/effect/lesser/hungry
 	name = "Appetiser Effect"

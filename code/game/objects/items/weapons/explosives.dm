@@ -64,7 +64,7 @@
 	user << "Planting explosives..."
 	if(ismob(target))
 		add_logs(user, target, "tried to plant explosives on", object="[name]")
-		user.visible_message("\red [user.name] is trying to plant some kind of explosive on [target.name]!")
+		user.visible_message("<span class='danger'>[user.name] is trying to plant some kind of explosive on [target.name]!</span>")
 
 
 	if(do_after(user, 50) && in_range(user, target))
@@ -74,7 +74,7 @@
 
 		if (ismob(target))
 			add_logs(user, target, "planted [name] on")
-			user.visible_message("\red [user.name] finished planting an explosive on [target.name]!")
+			user.visible_message("<span class='danger'>[user.name] finished planting an explosive on [target.name]!</span>")
 			message_admins("[key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) planted C4 on [key_name(target)](<A HREF='?_src_=holder;adminmoreinfo=\ref[target]'>?</A>) with [timer] second fuse",0,1)
 			log_game("[key_name(user)] planted C4 on [key_name(target)] with [timer] second fuse")
 

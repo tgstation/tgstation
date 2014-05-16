@@ -31,7 +31,7 @@
 		spawn(5)
 			del(B)
 			M.canmove = 1
-		M << text("\blue Your eyes cry out in pain!")
+		M << text("<span class='notice'>Your eyes cry out in pain!</span>")
 		M.disabilities |= NEARSIGHTED
 		spawn(300)
 			M.disabilities &= ~NEARSIGHTED
@@ -477,7 +477,7 @@
 
 	usr.say("BIRUZ BENNAR")
 
-	usr << text("\blue You feel strong! You feel pressure building behind your eyes!")
+	usr << text("<span class='notice'>You feel strong! You feel pressure building behind your eyes!</span>")
 	if (!(HULK in usr.mutations))
 		usr.mutations.Add(HULK)
 	if (!(LASER in usr.mutations))

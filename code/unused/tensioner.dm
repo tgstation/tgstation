@@ -235,7 +235,7 @@ var/global/datum/tension/tension_master
 			return //This shouldnt happen
 
 		if(!usr.client.holder)
-			message_admins("\red [key_name(usr)] tried to use the tensioner without authorization.")
+			message_admins("<span class='danger'>[key_name(usr)] tried to use the tensioner without authorization.</span>")
 			log_admin("[key_name(usr)] tried to use the tensioner without authorization.")
 			return
 
@@ -620,7 +620,7 @@ var/global/datum/tension/tension_master
 	/*
 		if (emergency_shuttle.direction == 1 && emergency_shuttle.online == 1)
 			emergency_shuttle.recall()
-			world << "\blue <B>Alert: The shuttle is going back!</B>"
+			world << "<span class='notice'><B>Alert: The shuttle is going back!</B></span>"
 
 		var/syndicate_commando_number = syndicate_commandos_possible //for selecting a leader
 
@@ -672,7 +672,7 @@ var/global/datum/tension/tension_master
 					//So they don't forget their code or mission.
 
 
-					new_syndicate_commando << "\blue You are an Elite Syndicate. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of the Syndicate. \nYour current mission is: \red<B> [input]</B>"
+					new_syndicate_commando << "<span class='notice'>You are an Elite Syndicate. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of the Syndicate. \nYour current mission is: \red<B> [input]</B></span>"
 
 					numagents--
 

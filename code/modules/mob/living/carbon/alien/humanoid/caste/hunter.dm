@@ -65,7 +65,7 @@
 			update_icons()
 			src << "\green You are now invisible."
 			for(var/mob/O in oviewers(src, null))
-				O.show_message(text("\red <B>[src] fades into the surroundings!</B>"), 1)
+				O.show_message(text("<span class='userdanger'>[src] fades into the surroundings!</span>"), 1)
 			spawn(250)
 				if(!isnull(src))//Don't want the game to runtime error when the mob no-longer exists.
 					alien_invis = 0.0

@@ -442,12 +442,12 @@ var/global/list/uneatable = list(
 			if (istype(M,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
 				if(istype(H.glasses,/obj/item/clothing/glasses/meson))
-					H << "\blue You look directly into The [src.name], good thing you had your protective eyewear on!"
+					H << "<span class='notice'>You look directly into The [src.name], good thing you had your protective eyewear on!</span>"
 					return
-		M << "\red You look directly into The [src.name] and feel weak."
+		M << "<span class='danger'>You look directly into The [src.name] and feel weak.</span>"
 		M.apply_effect(3, STUN)
 		for(var/mob/O in viewers(M, null))
-			O.show_message(text("\red <B>[] stares blankly at The []!</B>", M, src), 1)
+			O.show_message(text("<span class='userdanger'>[] stares blankly at The []!</span>", M, src), 1)
 	return
 
 
@@ -528,7 +528,7 @@ var/global/list/uneatable = list(
 	for(var/mob/living/carbon/M in oviewers(8, src))
 		if(M.stat == CONSCIOUS)
 			if(!iscultist(M))
-				M << "\red You feel your sanity crumble away in an instant as you gaze upon [src.name]..."
+				M << "<span class='danger'>You feel your sanity crumble away in an instant as you gaze upon [src.name]...</span>"
 				M.apply_effect(3, STUN)
 
 
@@ -592,12 +592,12 @@ var/global/list/uneatable = list(
 		//no living humans, follow a ghost instead.
 
 /obj/machinery/singularity/narsie/proc/acquire(var/mob/food)
-	target << "\blue <b>NAR-SIE HAS LOST INTEREST IN YOU</b>"
+	target << "<span class='notice'><b>NAR-SIE HAS LOST INTEREST IN YOU</b></span>"
 	target = food
 	if(ishuman(target))
-		target << "\red <b>NAR-SIE HUNGERS FOR YOUR SOUL</b>"
+		target << "<span class='userdanger'>NAR-SIE HUNGERS FOR YOUR SOUL</span>"
 	else
-		target << "\red <b>NAR-SIE HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL</b>"
+		target << "<span class='userdanger'>NAR-SIE HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL</span>"
 
 //Wizard narsie
 

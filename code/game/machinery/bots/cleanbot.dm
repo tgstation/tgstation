@@ -25,6 +25,8 @@
 	health = 25
 	maxhealth = 25
 	var/cleaning = 0
+	var/screwloose = 0
+	var/oddbutton = 0
 	var/blood = 1
 	var/list/target_types = list()
 	var/obj/effect/decal/cleanable/target
@@ -79,7 +81,6 @@
 
 /obj/machinery/bot/cleanbot/interact(mob/user as mob)
 	var/dat
-	dat += hack(user)
 	dat += text({"
 <TT><B>Automatic Station Cleaner v1.0</B></TT><BR><BR>
 Status: []<BR>
@@ -90,12 +91,12 @@ text("<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>"))
 		dat += text({"<BR>Cleans Blood: []<BR>"}, text("<A href='?src=\ref[src];operation=blood'>[src.blood ? "Yes" : "No"]</A>"))
 		dat += text({"<BR>Patrol station: []<BR>"}, text("<A href='?src=\ref[src];operation=patrol'>[src.should_patrol ? "Yes" : "No"]</A>"))
 	//	dat += text({"<BR>Beacon frequency: []<BR>"}, text("<A href='?src=\ref[src];operation=freq'>[src.beacon_freq]</A>"))
-/*	if(src.open && !src.locked)
+	if(src.open && !src.locked)
 		dat += text({"
 Odd looking screw twiddled: []<BR>
 Weird button pressed: []"},
 text("<A href='?src=\ref[src];operation=screw'>[src.screwloose ? "Yes" : "No"]</A>"),
-text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"]</A>"))*/
+text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"]</A>"))
 
 	user << browse("<HEAD><TITLE>Cleaner v1.0 controls</TITLE></HEAD>[dat]", "window=autocleaner")
 	onclose(user, "autocleaner")
@@ -108,7 +109,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	src.add_fingerprint(usr)
 	switch(href_list["operation"])
 		if("start")
-			if (src.on && !src.emagged)
+			if (src.on)
 				turn_off()
 			else
 				turn_on()
@@ -121,29 +122,17 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 			src.patrol_path = null
 			src.updateUsrDialog()
 		if("freq")
-			var/freq = text2num(input("Select frequency for  navigation beacons", "Frequency", num2text(beacon_freq / 10))) * 10
+			var/freq = text2num(input("Select frequency for  navigation beacons", "Frequnecy", num2text(beacon_freq / 10))) * 10
 			if (freq > 0)
 				src.beacon_freq = freq
 			src.updateUsrDialog()
-/*		if("screw")
+		if("screw")
 			src.screwloose = !src.screwloose
 			usr << "<span class='notice>You twiddle the screw.</span>"
 			src.updateUsrDialog()
 		if("oddbutton")
 			src.oddbutton = !src.oddbutton
 			usr << "<span class='notice'>You press the weird button.</span>"
-			src.updateUsrDialog() */
-		if("hack")
-			if(!src.emagged)
-				src.emagged = 2
-				src.hacked = 1
-				usr << "<span class='warning'>You corrupt [src]'s cleaning software.</span>"
-			else if(!src.hacked)
-				usr << "<span class='userdanger'>[src] does not seem to respond to your repair code!</span>"
-			else
-				src.hacked = 0
-				src.emagged = 0
-				usr << "<span class='notice'>[src]'s software has been reset!</span>"
 			src.updateUsrDialog()
 
 /obj/machinery/bot/cleanbot/attackby(obj/item/weapon/W, mob/user as mob)
@@ -164,8 +153,9 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 /obj/machinery/bot/cleanbot/Emag(mob/user as mob)
 	..()
 	if(open && !locked)
-		if(user) user << "<span class='notice'>[src] buzzes and beeps.</span>"
-		src.emagged = 2
+		if(user) user << "<span class='notice'>The [src] buzzes and beeps.</span>"
+		src.oddbutton = 1
+		src.screwloose = 1
 
 /obj/machinery/bot/cleanbot/process()
 	set background = BACKGROUND_ENABLED
@@ -176,18 +166,19 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		return
 	var/list/cleanbottargets = list()
 
-	if(!src.emagged && prob(5))
+	if(!src.screwloose && !src.oddbutton && prob(5))
 		visible_message("[src] makes an excited beeping booping sound!")
 
-	if(src.emagged && prob(10)) //Wets floors randomly
+	if(src.screwloose && prob(5))
 		if(istype(loc,/turf/simulated))
 			var/turf/simulated/T = src.loc
 			T.MakeSlippery()
 
-	if(src.emagged && prob(5)) //Spawns foam!
-		visible_message("<span class='danger'>[src] whirs and bubbles violently, before releasing a plume of froth!</span>")
-		new /obj/effect/effect/foam(src.loc)
-		
+	if(src.oddbutton && prob(5))
+		visible_message("Something flies out of [src]. He seems to be acting oddly.")
+		var/obj/effect/decal/cleanable/blood/gibs/gib = new /obj/effect/decal/cleanable/blood/gibs(src.loc)
+		//gib.streak(list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
+		src.oldtarget = gib
 	if(!src.target || src.target == null)
 		for (var/obj/effect/decal/cleanable/D in view(7,src))
 			for(var/T in src.target_types)
@@ -327,7 +318,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 
 /obj/machinery/bot/cleanbot/explode()
 	src.on = 0
-	src.visible_message("<span class='danger'><B>[src] blows apart!</B></span>", 1)
+	src.visible_message("<span class='userdanger'>[src] blows apart!</span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/weapon/reagent_containers/glass/bucket(Tsec)

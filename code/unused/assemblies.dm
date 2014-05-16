@@ -141,7 +141,7 @@
 	return
 
 /obj/effect/decal/ash/attack_hand(mob/user as mob)
-	usr << "\blue The ashes slip through your fingers."
+	usr << "<span class='notice'>The ashes slip through your fingers.</span>"
 	del(src)
 	return
 
@@ -164,9 +164,9 @@
 		return
 	src.status = !( src.status )
 	if (src.status)
-		user.show_message("\blue The timer is now secured!", 1)
+		user.show_message("<span class='notice'>The timer is now secured!</span>", 1)
 	else
-		user.show_message("\blue The timer is now unsecured!", 1)
+		user.show_message("<span class='notice'>The timer is now unsecured!</span>", 1)
 	src.part2.secured = src.status
 	src.add_fingerprint(user)
 	return
@@ -195,9 +195,9 @@
 	if (( istype(W, /obj/item/weapon/screwdriver) ))
 		src.status = !( src.status )
 		if (src.status)
-			user.show_message("\blue The analyzer is now secured!", 1)
+			user.show_message("<span class='notice'>The analyzer is now secured!</span>", 1)
 		else
-			user.show_message("\blue The analyzer is now unsecured!", 1)
+			user.show_message("<span class='notice'>The analyzer is now unsecured!</span>", 1)
 		src.part2.secured = src.status
 		src.add_fingerprint(user)
 	if(( istype(W, /obj/item/clothing/suit/armor/vest) ) && src.status)
@@ -292,13 +292,13 @@
 		return
 	if (( istype(W, /obj/item/weapon/screwdriver) ))
 		if (!src.status && (!part1||!part2||!part3))
-			user << "\red You cannot finish the assembly, not all components are in place!"
+			user << "<span class='danger'>You cannot finish the assembly, not all components are in place!</span>"
 			return
 		src.status = !( src.status )
 		if (src.status)
-			user.show_message("\blue The armor is now secured!", 1)
+			user.show_message("<span class='notice'>The armor is now secured!</span>", 1)
 		else
-			user.show_message("\blue The armor is now unsecured!", 1)
+			user.show_message("<span class='notice'>The armor is now unsecured!</span>", 1)
 		src.add_fingerprint(user)
 
 /obj/item/assembly/a_i_a/Delete()
@@ -339,9 +339,9 @@
 		return
 	src.status = !( src.status )
 	if (src.status)
-		user.show_message("\blue The signaler is now secured!", 1)
+		user.show_message("<span class='notice'>The signaler is now secured!</span>", 1)
 	else
-		user.show_message("\blue The signaler is now unsecured!", 1)
+		user.show_message("<span class='notice'>The signaler is now unsecured!</span>", 1)
 	src.part1.b_stat = !( src.status )
 	src.add_fingerprint(user)
 	return
@@ -395,9 +395,9 @@
 		return
 	src.status = !( src.status )
 	if (src.status)
-		user.show_message("\blue The proximity sensor is now secured!", 1)
+		user.show_message("<span class='notice'>The proximity sensor is now secured!</span>", 1)
 	else
-		user.show_message("\blue The proximity sensor is now unsecured!", 1)
+		user.show_message("<span class='notice'>The proximity sensor is now unsecured!</span>", 1)
 	src.part1.b_stat = !( src.status )
 	src.add_fingerprint(user)
 	return
@@ -456,9 +456,9 @@
 		return
 	src.status = !( src.status )
 	if (src.status)
-		user.show_message("\blue The infrared laser is now secured!", 1)
+		user.show_message("<span class='notice'>The infrared laser is now secured!</span>", 1)
 	else
-		user.show_message("\blue The infrared laser is now unsecured!", 1)
+		user.show_message("<span class='notice'>The infrared laser is now unsecured!</span>", 1)
 	src.part1.b_stat = !( src.status )
 	src.add_fingerprint(user)
 	return
@@ -545,9 +545,9 @@
 		return
 	src.status = !( src.status )
 	if (src.status)
-		user.show_message("\blue The proximity sensor is now secured! The igniter now works!", 1)
+		user.show_message("<span class='notice'>The proximity sensor is now secured! The igniter now works!</span>", 1)
 	else
-		user.show_message("\blue The proximity sensor is now unsecured! The igniter will not work.", 1)
+		user.show_message("<span class='notice'>The proximity sensor is now unsecured! The igniter will not work.</span>", 1)
 	src.part2.secured = src.status
 	src.add_fingerprint(user)
 	return
@@ -592,9 +592,9 @@
 		return
 	src.status = !( src.status )
 	if (src.status)
-		user.show_message("\blue The radio is now secured! The igniter now works!", 1)
+		user.show_message("<span class='notice'>The radio is now secured! The igniter now works!</span>", 1)
 	else
-		user.show_message("\blue The radio is now unsecured! The igniter will not work.", 1)
+		user.show_message("<span class='notice'>The radio is now unsecured! The igniter will not work.</span>", 1)
 	src.part2.secured = src.status
 	src.part1.b_stat = !( src.status )
 	src.add_fingerprint(user)
@@ -703,11 +703,11 @@
 		src.status = 1
 		bombers += "[key_name(user)] welded a prox bomb. Temp: [src.part3.air_contents.temperature-T0C]"
 		message_admins("[key_name_admin(user)] welded a prox bomb. Temp: [src.part3.air_contents.temperature-T0C]")
-		user.show_message("\blue A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.", 1)
+		user.show_message("<span class='notice'>A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.</span>", 1)
 	else
 		src.status = 0
 		bombers += "[key_name(user)] unwelded a prox bomb. Temp: [src.part3.air_contents.temperature-T0C]"
-		user << "\blue The hole has been closed."
+		user << "<span class='notice'>The hole has been closed.</span>"
 	src.part2.secured = src.status
 	src.add_fingerprint(user)
 	return
@@ -792,12 +792,12 @@
 		src.status = 1
 		bombers += "[key_name(user)] welded a time bomb. Temp: [src.part3.air_contents.temperature-T0C]"
 		message_admins("[key_name_admin(user)] welded a time bomb. Temp: [src.part3.air_contents.temperature-T0C]")
-		user.show_message("\blue A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.", 1)
+		user.show_message("<span class='notice'>A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.</span>", 1)
 	else
 		if(src)
 			src.status = 0
 			bombers += "[key_name(user)] unwelded a time bomb. Temp: [src.part3.air_contents.temperature-T0C]"
-			user << "\blue The hole has been closed."
+			user << "<span class='notice'>The hole has been closed.</span>"
 	src.part2.secured = src.status
 	src.add_fingerprint(user)
 	return
@@ -871,11 +871,11 @@
 		src.status = 1
 		bombers += "[key_name(user)] welded a radio bomb. Temp: [src.part3.air_contents.temperature-T0C]"
 		message_admins("[key_name_admin(user)] welded a radio bomb. Temp: [src.part3.air_contents.temperature-T0C]")
-		user.show_message("\blue A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.", 1)
+		user.show_message("<span class='notice'>A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.</span>", 1)
 	else
 		src.status = 0
 		bombers += "[key_name(user)] unwelded a radio bomb. Temp: [src.part3.air_contents.temperature-T0C]"
-		user << "\blue The hole has been closed."
+		user << "<span class='notice'>The hole has been closed.</span>"
 	src.part2.secured = src.status
 	src.part1.b_stat = !( src.status )
 	src.add_fingerprint(user)
@@ -919,11 +919,11 @@
 		src.status = 1
 		bombers += "[key_name(user)] welded a suicide bomb. Temp: [src.part4.air_contents.temperature-T0C]"
 		message_admins("[key_name_admin(user)] welded a suicide bomb. Temp: [src.part4.air_contents.temperature-T0C]")
-		user.show_message("\blue A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.", 1)
+		user.show_message("<span class='notice'>A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.</span>", 1)
 	else
 		src.status = 0
 		bombers += "[key_name(user)] unwelded a suicide bomb. Temp: [src.part4.air_contents.temperature-T0C]"
-		user << "\blue The hole has been closed."
+		user << "<span class='notice'>The hole has been closed.</span>"
 //	src.part3.status = src.status
 	src.add_fingerprint(user)
 	return

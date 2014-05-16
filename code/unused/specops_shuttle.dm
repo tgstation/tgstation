@@ -58,7 +58,7 @@ var/specops_shuttle_timeleft = 0
 	if (specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return
 
 	if (!specops_can_move())
-		usr << "\red The Special Operations shuttle is unable to leave."
+		usr << "<span class='danger'>The Special Operations shuttle is unable to leave.</span>"
 		return
 
 	//Begin Marauder launchpad.
@@ -153,7 +153,7 @@ var/specops_shuttle_timeleft = 0
 
 	for(var/turf/T in get_area_turfs(end_location) )
 		var/mob/M = locate(/mob) in T
-		M << "\red You have arrived to [station_name]. Commence operation!"
+		M << "<span class='danger'>You have arrived to [station_name]. Commence operation!</span>"
 
 /proc/specops_can_move()
 	if(specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return 0
@@ -170,17 +170,17 @@ var/specops_shuttle_timeleft = 0
 
 /obj/machinery/computer/specops_shuttle/attackby(I as obj, user as mob)
 	if(istype(I,/obj/item/weapon/card/emag))
-		user << "\blue The electronic systems in this console are far too advanced for your primitive hacking peripherals."
+		user << "<span class='notice'>The electronic systems in this console are far too advanced for your primitive hacking peripherals.</span>"
 	else
 		return attack_hand(user)
 
 /obj/machinery/computer/specops_shuttle/attack_hand(var/mob/user as mob)
 	if(!allowed(user))
-		user << "\red Access Denied."
+		user << "<span class='danger'>Access Denied.</span>"
 		return
 
 	if (sent_strike_team == 0)
-		usr << "\red The strike team has not yet deployed."
+		usr << "<span class='danger'>The strike team has not yet deployed.</span>"
 		return
 
 	if(..())
@@ -214,17 +214,17 @@ var/specops_shuttle_timeleft = 0
 	if (href_list["sendtodock"])
 		if(!specops_shuttle_at_station|| specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return
 
-		usr << "\blue Central Command will not allow the Special Operations shuttle to return."
+		usr << "<span class='notice'>Central Command will not allow the Special Operations shuttle to return.</span>"
 		return
 
 	else if (href_list["sendtostation"])
 		if(specops_shuttle_at_station || specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return
 
 		if (!specops_can_move())
-			usr << "\red The Special Operations shuttle is unable to leave."
+			usr << "<span class='danger'>The Special Operations shuttle is unable to leave.</span>"
 			return
 
-		usr << "\blue The Special Operations shuttle will arrive on [station_name] in [(SPECOPS_MOVETIME/10)] seconds."
+		usr << "<span class='notice'>The Special Operations shuttle will arrive on [station_name] in [(SPECOPS_MOVETIME/10)] seconds.</span>"
 
 		temp += "Shuttle departing.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 		updateUsrDialog()

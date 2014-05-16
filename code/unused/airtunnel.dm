@@ -310,7 +310,7 @@ obj/machinery/computer/airtunnel/attack_ai(user as mob)
 	if(..())
 		return
 	if ((!( src.d1 ) || !( src.d2 )))
-		usr << "\red Error: Cannot interface with door security!"
+		usr << "<span class='danger'>Error: Cannot interface with door security!</span>"
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf)) || (istype(usr, /mob/living/silicon))))
 		usr.machine = src
