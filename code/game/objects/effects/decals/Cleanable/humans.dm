@@ -172,6 +172,27 @@ var/global/list/image/splatter_cache=list()
 	random_icon_states = list("gibmid1", "gibmid2", "gibmid3")
 
 
+
+
+
+
+/obj/effect/decal/cleanable/blood/viralsputum
+	name = "viral sputum"
+	desc = "It's black and nasty."
+	basecolor="#030303"
+	icon = 'icons/mob/robots.dmi'
+	icon_state = "floor1"
+	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
+
+	Del()
+		for(var/datum/disease/D in viruses)
+			D.cure(0)
+		..()
+
+
+
+
+
 /obj/effect/decal/cleanable/blood/gibs/proc/streak(var/list/directions)
 	spawn (0)
 		var/direction = pick(directions)

@@ -374,6 +374,39 @@
 		viewers(user) << "\red <b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b>"
 		return (BRUTELOSS|OXYLOSS)
 
+
+
+
+/*
+ * Snap pops viral shit
+ */
+/obj/item/toy/snappop/virus
+	name = "unstable goo"
+	desc = "Your palm is oozing this stuff!"
+	icon = 'icons/mob/slimes.dmi'
+	icon_state = "red slime extract"
+	throwforce = 30.0
+	throw_speed = 10
+	throw_range = 30
+	w_class = 1
+
+
+	throw_impact(atom/hit_atom)
+		..()
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		s.set_up(3, 1, src)
+		s.start()
+		new /obj/effect/decal/cleanable/ash(src.loc)
+		src.visible_message("\red The [src.name] explodes!","\red You hear a bang!")
+
+
+		playsound(src, 'sound/effects/snap.ogg', 50, 1)
+		del(src)
+
+
+
+
+
 /*
  * Snap pops
  */
