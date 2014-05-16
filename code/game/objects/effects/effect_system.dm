@@ -147,17 +147,24 @@ steam.start() -- spawns the effect
 	anchored = 1.0
 	mouse_opacity = 0
 
-	var/amount = 6.0
+	var/inertia_dir = 0
+	var/energy = 0
 
-/obj/effect/effect/sparks/New()
+/obj/effect/effect/sparks/New(var/travel_dir)
 	..()
-	var/turf/T = loc
 
+/obj/effect/effect/sparks/proc/start(var/travel_dir, var/max_energy=3)
+	inertia_dir=travel_dir
+	energy=rand(1,max_energy)
+	processing_objects.Add(src)
+	var/turf/T = loc
 	if (istype(T, /turf))
 		T.hotspot_expose(1000, 100)
 
 /obj/effect/effect/sparks/Destroy()
+	processing_objects.Remove(src)
 	var/turf/T = src.loc
+
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)
 	..()
@@ -170,37 +177,40 @@ steam.start() -- spawns the effect
 		T.hotspot_expose(1000,100)
 	return
 
-/datum/effect/effect/system/spark_spread
-	set_up(n = 3, c = 0, loca)
-		number = n > 10 ? 10 : n
-		cardinals = c
+/obj/effect/effect/sparks/process()
+	if(energy==0)
+		processing_objects.Remove(src)
+		returnToPool(src)
+		return
+	else
+		step(src,inertia_dir)
+	energy--
 
-		if (istype(loca, /turf/))
-			location = loca
-		else
-			location = get_turf(loca)
+/datum/effect/effect/system/spark_spread/set_up(var/n = 3, var/use_cardinals = 0, loca)
+	number = min(10,n)
+	cardinals = use_cardinals
 
-	start()
-		for (var/i = 1 to number)
-			spawn()
-				if (holder)
-					location = get_turf(holder)
+	if (istype(loca, /turf/))
+		location = loca
+	else
+		location = get_turf(loca)
 
-				var/obj/effect/effect/sparks/sparks = getFromPool(/obj/effect/effect/sparks, location)
-				playsound(location, "sparks", 100, 1)
-				var/direction
+/datum/effect/effect/system/spark_spread/start()
+	if (holder)
+		location = get_turf(holder)
 
-				if (cardinals)
-					direction = pick(cardinal)
-				else
-					direction = pick(alldirs)
+	var/list/directions
+	if (cardinals)
+		directions = cardinal.Copy()
+	else
+		directions = alldirs.Copy()
 
-				for (var/j = 0, j < pick(1, 2, 3), j++)
-					sleep(5)
-					step(sparks, direction)
-
-				sleep(20)
-				returnToPool(sparks)
+	playsound(location, "sparks", 100, 1)
+	for (var/i = 1 to number)
+		var/nextdir=pick_n_take(directions)
+		if(nextdir)
+			var/obj/effect/effect/sparks/sparks = getFromPool(/obj/effect/effect/sparks, location)
+			sparks.start(nextdir)
 
 /////////////////////////////////////////////
 //// SMOKE SYSTEMS
