@@ -170,6 +170,7 @@
 	icon_state = "tray"
 	desc = "A metal tray to lay food on."
 	force = 8
+	hitsound = 'sound/items/trayhit1.ogg'
 	throwforce = 10.0
 	throw_speed = 3
 	throw_range = 5
