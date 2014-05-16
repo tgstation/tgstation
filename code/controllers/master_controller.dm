@@ -35,7 +35,7 @@ var/list/nearr = list()
 		usr << temp
 
 	// This list get too big fast so use only after the feature cooldowned.
-	nearr = list()
+	//nearr = list()
 
 	usr << "--------"
 
