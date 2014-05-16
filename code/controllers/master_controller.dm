@@ -321,7 +321,7 @@ datum/controller/game_controller/proc/processMobs()
 			var/timeUsed = end - start
 
 			if (timeUsed > 1)
-				near += list(list("[worldtime2text()]", timeUsed, Machinery.x, Machinery.y, Machinery.z, Machinery.type, "\ref[src]"))
+				near += list(list("[worldtime2text()]", timeUsed, Machinery.x, Machinery.y, Machinery.z, Machinery.type))
 
 			#ifdef PROFILE_MACHINES
 			if(!(Machinery.type in machine_profiling))
