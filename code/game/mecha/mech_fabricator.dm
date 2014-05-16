@@ -127,6 +127,10 @@
 						/obj/item/borg/upgrade/tasercooler,
 						/obj/item/borg/upgrade/jetpack
 						),
+
+	"Space Pod" = list(
+						/obj/item/pod_parts/core
+						),
 	"Misc"=list(
 						/obj/item/mecha_parts/mecha_tracking,
 						/obj/item/mecha_parts/janicart_upgrade
