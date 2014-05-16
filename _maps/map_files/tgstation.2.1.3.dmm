@@ -9098,7 +9098,7 @@
 "dsX" = (/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plating,/area/engine/engineering)
 "dsY" = (/obj/machinery/bot/floorbot{on = 0},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor{icon_state = "vault"; dir = 8},/area/turret_protected/aisat_interior)
 "dsZ" = (/obj/machinery/bot/cleanbot{on = 0},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor{icon_state = "vault"; dir = 8},/area/turret_protected/aisat_interior)
-"dta" = (/obj/machinery/light,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/turretid{control_area = "\improper AI Satellite Antechamber"; enabled = 0; icon_state = "motion0"; name = "Antechamber Turret Control"; pixel_x = 0; pixel_y = -24; req_access = list(65)},/turf/simulated/floor,/area/aisat)
+"dta" = (/obj/machinery/light,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/turretid{control_area = "\improper AI Satellite Antechamber"; enabled = 1; icon_state = "motion3"; name = "Antechamber Turret Control"; pixel_x = 0; pixel_y = -24; req_access = list(65)},/turf/simulated/floor,/area/aisat)
 "dtb" = (/obj/structure/transit_tube{tag = "icon-E-NW"; icon_state = "E-NW"},/turf/space,/area)
 "dtc" = (/obj/item/weapon/mop,/turf/unsimulated/floor{icon_state = "freezerfloor"; dir = 2},/area/syndicate_mothership)
 "dtd" = (/obj/structure/table/woodentable,/obj/item/device/paicard,/turf/unsimulated/floor{icon_state = "grimy"},/area/syndicate_mothership)
