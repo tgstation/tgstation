@@ -68,7 +68,7 @@
 			if(pai.master_dna)
 				return
 			if(!istype(usr, /mob/living/carbon))
-				usr << "<font color=blue>You don't have any DNA, or your DNA is incompatible with this device.</font>"
+				usr << "<span class='notice'>You don't have any DNA, or your DNA is incompatible with this device.</span>"
 			else
 				var/mob/living/carbon/M = usr
 				pai.master = M.real_name
@@ -127,7 +127,7 @@
 /obj/item/device/paicard/proc/alertUpdate()
 	var/turf/T = get_turf(src.loc)
 	for (var/mob/M in viewers(T))
-		M.show_message("<span class='notice'>[src] flashes a message across its screen, \"Additional personalities available for download.\"", 3, "\blue [src] bleeps electronically.</span>", 2)
+		M.show_message("<span class='notice'>[src] flashes a message across its screen, \"Additional personalities available for download.\"</span>", 3, "<span class='notice'>[src] bleeps electronically.</span>", 2)
 
 /obj/item/device/paicard/emp_act(severity)
 	if(pai)

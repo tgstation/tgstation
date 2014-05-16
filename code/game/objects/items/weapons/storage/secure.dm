@@ -204,7 +204,7 @@
 						H.Stun(time)
 					if(H.stat != 2)	H.stat = 1
 					for(var/mob/O in viewers(H, null))
-						O.show_message(text("<span class='danger'><B>[] has been knocked unconscious!</B>", H), 1, "\red You hear someone fall.</span>", 2)
+						O.show_message(text("<span class='userdanger'>[] has been knocked unconscious!</span>", H), 1, "<span class='danger'>You hear someone fall.</span>", 2)
 				else
 					H << text("<span class='danger'>[] tried to knock you unconcious!</span>",user)
 					H.eye_blurry += 3

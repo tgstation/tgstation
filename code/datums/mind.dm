@@ -495,12 +495,12 @@ datum/mind
 				if("clear")
 					if(src in ticker.mode.revolutionaries)
 						ticker.mode.revolutionaries -= src
-						current << "<span class='danger'><FONT size = 3><B>You have been brainwashed! You are no longer a revolutionary!</B></FONT></span>"
+						current << "<span class='userdangerdanger'><FONT size = 3>You have been brainwashed! You are no longer a revolutionary!</FONT></span>"
 						ticker.mode.update_rev_icons_removed(src)
 						special_role = null
 					if(src in ticker.mode.head_revolutionaries)
 						ticker.mode.head_revolutionaries -= src
-						current << "<span class='danger'><FONT size = 3><B>You have been brainwashed! You are no longer a head revolutionary!</B></FONT></span>"
+						current << "<span class='userdangerdanger'><FONT size = 3>You have been brainwashed! You are no longer a head revolutionary!</FONT></span>"
 						ticker.mode.update_rev_icons_removed(src)
 						special_role = null
 					message_admins("[key_name_admin(usr)] has de-rev'ed [current].")
@@ -510,9 +510,9 @@ datum/mind
 					if(src in ticker.mode.head_revolutionaries)
 						ticker.mode.head_revolutionaries -= src
 						ticker.mode.update_rev_icons_removed(src)
-						current << "<span class='danger'><FONT size = 3><B>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</B></FONT></span>"
+						current << "<span class='userdanger'><FONT size = 3>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</FONT></span>"
 					else if(!(src in ticker.mode.revolutionaries))
-						current << "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>"
+						current << "<span class='danger'><FONT size = 3>You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>"
 					else
 						return
 					ticker.mode.revolutionaries += src
@@ -525,9 +525,9 @@ datum/mind
 					if(src in ticker.mode.revolutionaries)
 						ticker.mode.revolutionaries -= src
 						ticker.mode.update_rev_icons_removed(src)
-						current << "<span class='danger'><FONT size = 3><B>You have proved your devotion to revoltion! Yea are a head revolutionary now!</B></FONT></span>"
+						current << "<span class='userdanger'><FONT size = 3>You have proved your devotion to revoltion! Yea are a head revolutionary now!</FONT></span>"
 					else if(!(src in ticker.mode.head_revolutionaries))
-						current << "<span class='danger'><FONT size = 3><B>You are a member of the revolutionaries' leadership now!</B></FONT></span>"
+						current << "<span class='userdanger'><FONT size = 3>You are a member of the revolutionaries' leadership now!</FONT></span>"
 					else
 						return
 					if (ticker.mode.head_revolutionaries.len>0)
@@ -592,7 +592,7 @@ datum/mind
 						var/datum/game_mode/cult/cult = ticker.mode
 						if (istype(cult))
 							cult.memorize_cult_objectives(src)
-						current << "<span class='danger'><FONT size = 3><B>You have been brainwashed! You are no longer a cultist!</B></FONT></span>"
+						current << "<span class='userdanger'><FONT size = 3>You have been brainwashed! You are no longer a cultist!</FONT></span>"
 						memory = ""
 						message_admins("[key_name_admin(usr)] has de-cult'ed [current].")
 						log_admin("[key_name(usr)] has de-cult'ed [current].")
@@ -630,7 +630,7 @@ datum/mind
 						ticker.mode.wizards -= src
 						special_role = null
 						current.spellremove(current)
-						current << "<span class='danger'><FONT size = 3><B>You have been brainwashed! You are no longer a wizard!</B></FONT></span>"
+						current << "<span class='userdanger'><FONT size = 3>You have been brainwashed! You are no longer a wizard!</FONT></span>"
 						log_admin("[key_name(usr)] has de-wizard'ed [current].")
 				if("wizard")
 					if(!(src in ticker.mode.wizards))
@@ -648,7 +648,7 @@ datum/mind
 					ticker.mode.name_wizard(current)
 				if("autoobjectives")
 					ticker.mode.forge_wizard_objectives(src)
-					usr << "<span class='notice'>The objectives for wizard [key] have been generated. You can edit them and anounce manually.</span>"
+					usr << "<span class='notice'>The objectives for wizard [key] have been generated. You can edit them and announce manually.</span>"
 
 		else if (href_list["changeling"])
 			switch(href_list["changeling"])
@@ -659,7 +659,7 @@ datum/mind
 						current.remove_changeling_powers()
 						if(changeling)
 							del(changeling)
-						current << "<FONT color='red' size = 3><B>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</B></FONT>"
+						current << "<span class='userdanger'><FONT size = 3>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</FONT></span>"
 						message_admins("[key_name_admin(usr)] has de-changeling'ed [current].")
 						log_admin("[key_name(usr)] has de-changeling'ed [current].")
 				if("changeling")
@@ -667,7 +667,7 @@ datum/mind
 						ticker.mode.changelings += src
 						current.make_changeling()
 						special_role = "Changeling"
-						current << "<B><font color='red'>Your powers are awoken. A flash of memory returns to us...we are a changeling!</font></B>"
+						current << "<span class='userdanger'>Your powers are awoken. A flash of memory returns to us...we are a changeling!</span>"
 						message_admins("[key_name_admin(usr)] has changeling'ed [current].")
 						log_admin("[key_name(usr)] has changeling'ed [current].")
 				if("autoobjectives")
@@ -693,7 +693,7 @@ datum/mind
 						special_role = null
 						for (var/datum/objective/nuclear/O in objectives)
 							objectives-=O
-						current << "<span class='danger'><FONT size = 3><B>You have been brainwashed! You are no longer a syndicate operative!</B></FONT></span>"
+						current << "<span class='userdanger'><FONT size = 3>You have been brainwashed! You are no longer a syndicate operative!</FONT></span>"
 						message_admins("[key_name_admin(usr)] has de-nuke op'ed [current].")
 						log_admin("[key_name(usr)] has de-nuke op'ed [current].")
 				if("nuclear")
@@ -744,7 +744,7 @@ datum/mind
 					if(src in ticker.mode.traitors)
 						ticker.mode.traitors -= src
 						special_role = null
-						current << "<span class='danger'><FONT size = 3><B>You have been brainwashed! You are no longer a traitor!</B></FONT></span>"
+						current << "<span class='userdanger'><FONT size = 3>You have been brainwashed! You are no longer a traitor!</FONT></span>"
 						message_admins("[key_name_admin(usr)] has de-traitor'ed [current].")
 						log_admin("[key_name(usr)] has de-traitor'ed [current].")
 						if(isAI(current))
@@ -837,7 +837,7 @@ datum/mind
 						A.show_laws()
 						A.icon_state = "ai"
 
-						A << "<span class='danger'><FONT size = 3><B>You have been patched! You are no longer malfunctioning!</B></FONT></span>"
+						A << "<span class='userdanger'><FONT size = 3>You have been patched! You are no longer malfunctioning!</FONT></span>"
 						message_admins("[key_name_admin(usr)] has de-malf'ed [A].")
 						log_admin("[key_name(usr)] has de-malf'ed [A].")
 

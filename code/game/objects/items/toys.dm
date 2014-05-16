@@ -65,7 +65,7 @@
 
 /obj/item/toy/balloon/throw_impact(atom/hit_atom)
 	if(src.reagents.total_volume >= 1)
-		src.visible_message("<span class='danger'>The [src] bursts!","You hear a pop and a splash.</span>")
+		src.visible_message("<span class='danger'>The [src] bursts!</span>","You hear a pop and a splash.")
 		src.reagents.reaction(get_turf(hit_atom))
 		for(var/atom/A in get_turf(hit_atom))
 			src.reagents.reaction(A)
@@ -162,7 +162,7 @@
 		playsound(user, 'sound/weapons/Gunshot.ogg', 100, 1)
 		src.bullets--
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("<span class='danger'><B>[] fires the [src] at []!</B>", user, target), 1, "\red You hear a gunshot</span>", 2)
+			O.show_message(text("<span class='userdanger'>[] fires the [src] at []!</span>", user, target), 1, "<span class='danger'>You hear a gunshot</span>", 2)
 
 /obj/item/toy/ammo/gun
 	name = "ammo-caps"
@@ -267,7 +267,7 @@
 
 			for(var/mob/O in viewers(M, null))
 				if(O.client)
-					O.show_message(text("<span class='danger'><B>[] casually lines up a shot with []'s head and pulls the trigger!</B>", user, M), 1, "\red You hear the sound of foam against skull</span>", 2)
+					O.show_message(text("<span class='userdanger'>[] casually lines up a shot with []'s head and pulls the trigger!</span>", user, M), 1, "<span class='danger'>You hear the sound of foam against skull</span>", 2)
 					O.show_message(text("<span class='danger'>[] was hit in the head by the foam dart!</span>", M), 1)
 
 			playsound(user.loc, 'sound/items/syringeproj.ogg', 50, 1)
@@ -275,7 +275,7 @@
 			src.bullets--
 		else if (M.lying && src.bullets == 0)
 			for(var/mob/O in viewers(M, null))
-				if (O.client)	O.show_message(text("<span class='danger'><B>[] casually lines up a shot with []'s head, pulls the trigger, then realizes they are out of ammo and drops to the floor in search of some!</B>", user, M), 1, "\red You hear someone fall</span>", 2)
+				if (O.client)	O.show_message(text("<span class='userdanger'>[] casually lines up a shot with []'s head, pulls the trigger, then realizes they are out of ammo and drops to the floor in search of some!</span>", user, M), 1, "<span class='danger'>You hear someone fall</span>", 2)
 			user.Weaken(5)
 		return
 
@@ -440,7 +440,7 @@
 		s.set_up(3, 1, src)
 		s.start()
 		new /obj/effect/decal/cleanable/ash(src.loc)
-		src.visible_message("<span class='danger'>The [src.name] explodes!","\red You hear a snap!</span>")
+		src.visible_message("<span class='danger'>The [src.name] explodes!</span>","<span class = 'danger'>You hear a snap!</span>")
 		playsound(src, 'sound/effects/snap.ogg', 50, 1)
 		qdel(src)
 

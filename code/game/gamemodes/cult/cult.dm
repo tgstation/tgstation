@@ -236,7 +236,7 @@
 	if(cult_mind in cult)
 		cult -= cult_mind
 		cult_mind.current.verbs -= /mob/living/proc/cult_innate_comm
-		cult_mind.current << "<span class='danger'><FONT size = 3><B>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</B></FONT></span>"
+		cult_mind.current << "<span class='userdanger'><FONT size = 3>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</FONT></span>"
 		cult_mind.memory = ""
 		cult_mind.cult_words = initial(cult_mind.cult_words)
 		update_cult_icons_removed(cult_mind)
@@ -331,11 +331,11 @@
 	if(!check_cult_victory())
 		feedback_set_details("round_end_result","win - cult win")
 		feedback_set("round_end_result",acolytes_survived)
-		world << "<span class='danger'><FONT size = 3><B> The cult wins! It has succeeded in serving its dark masters!</B></FONT></span>"
+		world << "<span class='userdanger'><FONT size = 3>The cult wins! It has succeeded in serving its dark masters!</FONT></span>"
 	else
 		feedback_set_details("round_end_result","loss - staff stopped the cult")
 		feedback_set("round_end_result",acolytes_survived)
-		world << "<span class='danger'><FONT size = 3><B> The staff managed to stop the cult!</B></FONT></span>"
+		world << "<span class='userdanger'><FONT size = 3>The staff managed to stop the cult!</FONT></span>"
 
 	var/text = "<b>Cultists escaped:</b> [acolytes_survived]"
 
