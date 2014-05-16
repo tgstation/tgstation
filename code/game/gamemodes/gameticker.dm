@@ -1,4 +1,5 @@
 var/global/datum/controller/gameticker/ticker
+var/round_start_time = 0
 
 #define GAME_STATE_PREGAME		1
 #define GAME_STATE_SETTING_UP	2
@@ -64,19 +65,19 @@ var/global/datum/controller/gameticker/ticker
 		src.hide_mode = 1
 	var/list/datum/game_mode/runnable_modes
 	if((master_mode=="random") || (master_mode=="secret"))
-		runnable_modes = config.get_runnable_modes()
-		if (runnable_modes.len==0)
-			current_state = GAME_STATE_PREGAME
-			world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
-			return 0
-		if(secret_force_mode != "secret")
-			for (var/datum/game_mode/M in runnable_modes)
-				if (M.config_tag && M.config_tag == secret_force_mode)
-					src.mode = M
-					break
-			if	(!src.mode)
-				message_admins("<span class='notice'>Unable to force secret [secret_force_mode].</span>", 1)
+		if((master_mode=="secret") && (secret_force_mode != "secret"))
+			var/datum/game_mode/smode = config.pick_mode(secret_force_mode)
+			if (!smode.can_start())
+				message_admins("<span class='notice'>Unable to force secret [secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.</span>", 1)
+			else
+				src.mode = smode
+
 		if(!src.mode)
+			runnable_modes = config.get_runnable_modes()
+			if (runnable_modes.len==0)
+				current_state = GAME_STATE_PREGAME
+				world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
+				return 0
 			src.mode = pickweight(runnable_modes)
 
 	else
@@ -114,6 +115,8 @@ var/global/datum/controller/gameticker/ticker
 	else
 		src.mode.announce()
 
+	round_start_time = world.time
+
 	supply_shuttle.process() 		//Start the supply shuttle regenerating points
 	master_controller.process()		//Start master_controller.process()
 	lighting_controller.process()	//Start processing DynamicAreaLighting updates
@@ -133,11 +136,11 @@ var/global/datum/controller/gameticker/ticker
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
 				qdel(S)
-		world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
+		world << "<span class='notice'><B>Enjoy the game!</B></span>"
 		world << sound('sound/AI/welcome.ogg') // Skie
 		//Holiday Round-start stuff	~Carn
 		if(events.holiday)
-			world << "<font color='blue'>and...</font>"
+			world << "<span class='notice'>and...</span>"
 			world << "<h4>Happy [events.holiday] Everybody!</h4>"
 
 	if(!admins.len)
@@ -332,7 +335,7 @@ var/global/datum/controller/gameticker/ticker
 
 		if (aiPlayer.connected_robots.len)
 			var/robolist = "<b>[aiPlayer.real_name]'s loyal minions were:</b> "
-			var/vsrobolist = "<span class='userdanger'>[aiPlayer.real_name]'s disloyal minions were:</span>"
+			var/vsrobolist = "<span class='userdanger'><b>[aiPlayer.real_name]'s disloyal minions were:</span>"
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
 				if (is_special_character(robo) && robo.mind)
 					vsrobolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"

@@ -249,11 +249,12 @@
 	g_amt = MINERAL_MATERIAL_AMOUNT
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
+	var/cooldown = 0
 
-	suicide_act(mob/user)
-		viewers(user) << pick("<span class='suicide'>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</span>", \
-							"<span class='suicide'>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</span>")
-		return (BRUTELOSS)
+/obj/item/weapon/shard/suicide_act(mob/user)
+	user.visible_message(pick("<span class='suicide'>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='suicide'>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</span>"))
+	return (BRUTELOSS)
 
 
 /obj/item/weapon/shard/New()
@@ -311,6 +312,9 @@
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
 			if(!H.shoes)
-				H << "<span class='userdanger'>You step in the broken glass!</span>"
 				H.apply_damage(5,BRUTE,(pick("l_leg", "r_leg")))
 				H.Weaken(3)
+				if(cooldown < world.time - 10) //cooldown to avoid message spam.
+					H.visible_message("<span class='danger'>[H] steps in the broken glass!</span>", \
+							"<span class='userdanger'>You step in the broken glass!</span>")
+					cooldown = world.time

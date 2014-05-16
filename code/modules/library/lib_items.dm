@@ -210,7 +210,9 @@
 	if(carved)
 		if(!store)
 			if(I.w_class < 3)
-				user.drop_item()
+				if(!user.drop_item())
+					user << "<span class='notice'>\The [I] is stuck to your hand, you cannot put it in [title]!</span>"
+					return
 				I.loc = src
 				store = I
 				user << "<span class='notice'>You put [I] in [title].</span>"

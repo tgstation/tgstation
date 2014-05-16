@@ -105,7 +105,7 @@
 
 /obj/machinery/bot/secbot/interact(mob/user as mob)
 	var/dat
-
+	dat += hack(user)
 	dat += text({"
 <TT><B>Automatic Security Unit v1.3</B></TT><BR><BR>
 Status: []<BR>
@@ -136,7 +136,7 @@ Auto Patrol: []"},
 		return
 	usr.set_machine(src)
 	if((href_list["power"]) && (src.allowed(usr)))
-		if(src.on)
+		if (src.on && !src.emagged)
 			turn_off()
 		else
 			turn_on()
@@ -156,6 +156,18 @@ Auto Patrol: []"},
 			auto_patrol = !auto_patrol
 			mode = SECBOT_IDLE
 			updateUsrDialog()
+		if("hack")
+			if(!src.emagged)
+				src.emagged = 2
+				src.hacked = 1
+				usr << "<span class='warning'>You overload [src]'s target identification system.</span>"
+			else if(!src.hacked)
+				usr << "<span class='userdanger'>[src] refuses to accept your authority!</span>"
+			else
+				src.emagged = 0
+				src.hacked = 0
+				usr << "<span class='notice'>You reboot [src] and restore the target identification.</span>"
+			src.updateUsrDialog()
 
 /obj/machinery/bot/secbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
@@ -261,7 +273,7 @@ Auto Patrol: []"},
 				mode = SECBOT_HUNT
 				return
 
-			if(istype(src.target,/mob/living/carbon))
+			if(iscarbon(target) && target.canBeHandcuffed())
 				if(!src.target.handcuffed && !src.arrest_type)
 					playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 					mode = SECBOT_ARREST
@@ -654,12 +666,6 @@ Auto Patrol: []"},
 			var/turf/T = get_turf(src)
 			M:loc = T
 */
-
-/obj/machinery/bot/secbot/proc/speak(var/message)
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"",2)
-	return
-
 
 /obj/machinery/bot/secbot/explode()
 

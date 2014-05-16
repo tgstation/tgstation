@@ -44,10 +44,13 @@
 		var/mob/living/carbon/C = src
 		var/mob/living/carbon/D = M
 		D.dna = C.dna
+		updateappearance(D)
 	else
+		if(istype(M, /mob/living/carbon/human))
+			src.client.prefs.copy_to(M)
 		ready_dna(M)
 
-	if(mind)
+	if(mind && istype(M, /mob/living))
 		mind.transfer_to(M)
 	else
 		M.key = key

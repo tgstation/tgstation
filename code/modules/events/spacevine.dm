@@ -112,7 +112,7 @@
 		if(!istype(A, /obj/effect))
 			A.ex_act(severity)  //To not be the same as self-eating vine
 
-/datum/spacevine_mutation/agressive_spread/on_buckle(obj/effect/spacevine/holder, mob/living/buckled)
+/datum/spacevine_mutation/aggressive_spread/on_buckle(obj/effect/spacevine/holder, mob/living/buckled)
 	buckled.ex_act(severity)
 
 /datum/spacevine_mutation/transparency

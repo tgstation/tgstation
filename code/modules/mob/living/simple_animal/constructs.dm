@@ -36,9 +36,7 @@
 /mob/living/simple_animal/construct/Die()
 	..()
 	new /obj/item/weapon/ectoplasm (src.loc)
-	for(var/mob/M in viewers(src, null))
-		if((M.client && !( M.blinded )))
-			M.show_message("<span class='danger'>[src] collapses in a shattered heap. </span>")
+	visible_message("<span class='danger'>[src] collapses in a shattered heap.</span>")
 	ghostize()
 	qdel(src)
 	return
@@ -91,14 +89,14 @@
 	if(istype(M, /mob/living/simple_animal/construct/builder))
 		health += 5
 		M.emote("mends some of \the <EM>[src]'s</EM> wounds.")
-	else
+	else if(src != M)
 		if(M.melee_damage_upper <= 0)
 			M.emote("[M.friendly] \the <EM>[src]</EM>")
 		else
 			if(M.attack_sound)
 				playsound(loc, M.attack_sound, 50, 1, 1)
-			for(var/mob/O in viewers(src, null))
-				O.show_message("<span class='attack'>\The <EM>[M]</EM> [M.attacktext] \the <EM>[src]</EM>!</span>", 1)
+			visible_message("<span class='danger'>\The <EM>[M]</EM> [M.attacktext] \the <EM>[src]</EM>!</span>", \
+					"<span class='userdanger'>\The <EM>[M]</EM> [M.attacktext] \the <EM>[src]</EM>!</span>")
 			add_logs(M, src, "attacked", admin=0)
 			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 			adjustBruteLoss(damage)
@@ -108,14 +106,11 @@
 		var/damage = O.force
 		if(O.damtype == BURN || O.damtype == BRUTE)
 			adjustBruteLoss(damage)
-		for(var/mob/M in viewers(src, null))
-			if ((M.client && !( M.blinded )))
-				M.show_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>")
+		visible_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>", \
+				"<span class='userdanger'>[src] has been attacked with [O] by [user]!</span>")
 	else
 		usr << "<span class='danger'>This weapon is ineffective, it does no damage.</span>"
-		for(var/mob/M in viewers(src, null))
-			if ((M.client && !( M.blinded )))
-				M.show_message("<span class='danger'>[user] gently taps [src] with [O]. </span>")
+		visible_message("<span class='danger'>[user] gently taps [src] with [O].</span>")
 
 /mob/living/simple_animal/construct/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj)
@@ -156,18 +151,13 @@
 		if(O.force >= 11)
 			if(O.damtype == BURN || O.damtype == BRUTE)
 				adjustBruteLoss(O.force)
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>")
+			visible_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>", \
+					"<span class='userdanger'>[src] has been attacked with [O] by [user]!</span>")
 		else
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='userdanger'>[O] bounces harmlessly off of [src]. </span>")
+			visible_message("<span class='danger'>[O] bounces harmlessly off of [src].</span>")
 	else
-		usr << "<span class='danger'>This weapon is ineffective, it does no damage.</span>"
-		for(var/mob/M in viewers(src, null))
-			if ((M.client && !( M.blinded )))
-				M.show_message("<span class='danger'>[user] gently taps [src] with [O]. </span>")
+		usr << "<span class='danger'> This weapon is ineffective, it does no damage.</span>"
+		visible_message("<span class='danger'>[user] gently taps [src] with [O].</span>")
 
 
 /mob/living/simple_animal/construct/armoured/bullet_act(var/obj/item/projectile/P)
@@ -281,18 +271,13 @@
 			if (O.damtype == STAMINA)
 				damage = 0
 			adjustBruteLoss(damage)
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>")
+			visible_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>", \
+					"<span class='userdanger'>[src] has been attacked with [O] by [user]!</span>")
 		else
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='userdanger'>[O] bounces harmlessly off of [src]. </span>")
+			visible_message("<span class='danger'>[O] bounces harmlessly off of [src].</span>")
 	else
 		usr << "<span class='danger'>This weapon is ineffective, it does no damage.</span>"
-		for(var/mob/M in viewers(src, null))
-			if ((M.client && !( M.blinded )))
-				M.show_message("<span class='danger'>[user] gently taps [src] with [O]. </span>")
+		visible_message("<span class='danger'>[user] gently taps [src] with [O].</span>")
 
 
 
@@ -307,7 +292,7 @@
 	if (istype(usr,/mob/living/simple_animal/constructbehemoth))
 
 		if(usr.energy<300)
-			usr << "<span class='danger'>You do not have enough power stored!</span>"
+			usr << "\red You do not have enough power stored!"
 			return
 
 		if(usr.stat)

@@ -70,7 +70,10 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 			user << "<span class='notice'>There are no seeds in \the [O.name].</span>"
 		return
 
-	user.drop_item()
+	if(!user.drop_item()) //couldn't drop the item
+		user << "<span class='notice'>\The [O] is stuck to your hand, you cannot put it in the seed extractor!</span>"
+		return
+
 	if(O && O.loc)
 		O.loc = src.loc
 

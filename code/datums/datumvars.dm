@@ -405,7 +405,7 @@ client
 	if(href_list["Vars"])
 		debug_variables(locate(href_list["Vars"]))
 
-	if(href_list["datumrefresh"])
+	else if(href_list["datumrefresh"])
 		var/datum/DAT = locate(href_list["datumrefresh"])
 		if(!istype(DAT, /datum))
 			return

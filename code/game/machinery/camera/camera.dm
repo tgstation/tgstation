@@ -14,6 +14,7 @@
 	var/c_tag_order = 999
 	var/status = 1.0
 	anchored = 1.0
+	var/start_active = 0 //If it ignores the random chance to start broken on round start
 	var/invuln = null
 	var/obj/item/device/camera_bug/bug = null
 	var/obj/item/weapon/camera_assembly/assembly = null
@@ -45,7 +46,7 @@
 	..()
 
 /obj/machinery/camera/initialize()
-	if(z == 1 && prob(3))
+	if(z == 1 && prob(3) && !start_active)
 		deactivate()
 
 /obj/machinery/camera/Destroy()

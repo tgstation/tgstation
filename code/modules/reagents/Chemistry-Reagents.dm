@@ -649,11 +649,14 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				src = null
-				if(volume >= 5)
-					if(istype(T, /turf/simulated/wall))
-						T:thermite = 1
-						T.overlays.Cut()
-						T.overlays = image('icons/effects/effects.dmi',icon_state = "thermite")
+				if(volume >= 1 && istype(T, /turf/simulated/wall))
+					var/turf/simulated/wall/Wall = T
+					if(istype(Wall, /turf/simulated/wall/r_wall))
+						Wall.thermite = Wall.thermite+(volume*2.5)
+					else
+						Wall.thermite = Wall.thermite+(volume*10)
+					Wall.overlays = list()
+					Wall.overlays += image('icons/effects/effects.dmi',"thermite")
 				return
 
 			on_mob_life(var/mob/living/M as mob)
@@ -1697,10 +1700,10 @@ datum
 			reaction_obj(var/obj/O, var/volume)
 				if((istype(O,/obj/item) || istype(O,/obj/effect/glowshroom)) && prob(meltprob * 3))
 					if(!O.unacidable)
-						var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
+						var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(get_turf(O))
 						I.desc = "Looks like this was \an [O] some time ago."
 						for(var/mob/M in viewers(5, O))
-							M << "<span class='danger'>\the [O] melts.</span>"
+							M << "<span class='danger'> \the [O] melts.</span>"
 						qdel(O)
 
 		toxin/acid/polyacid

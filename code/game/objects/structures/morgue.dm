@@ -11,7 +11,7 @@
  */
 
 /obj/structure/morgue
-	name = "morgue"
+	name = "Morgue"
 	desc = "Used to keep bodies in until someone fetches them."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morgue1"

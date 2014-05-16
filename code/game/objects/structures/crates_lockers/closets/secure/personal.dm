@@ -21,7 +21,7 @@
 	..()
 	contents.Cut()
 	new /obj/item/clothing/under/color/white( src )
-	new /obj/item/clothing/shoes/white( src )
+	new /obj/item/clothing/shoes/sneakers/white( src )
 	return
 
 
