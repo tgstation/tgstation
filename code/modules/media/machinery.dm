@@ -61,6 +61,6 @@
 	..()
 	update_media_source()
 
-/obj/machinery/media/proc/Destroy()
+/obj/machinery/media/Destroy()
 	disconnect_media_source()
 	..()

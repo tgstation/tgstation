@@ -1,4 +1,4 @@
-body 
+﻿body 
 { 
 	padding: 0;
 	margin: 0;
@@ -303,4 +303,20 @@ div.notice
 {
 	width: 100%;
 	clear: both;
+}
+
+a.nobg, a.nobg:link, a.nobg:visited, a.nobg:active
+{ 
+	color: #ffffff; 
+	text-decoration: none;
+	background: transparent;
+	border: none;
+	padding: 0px;
+	margin: 0px;
+	cursor:default;
+	font-weight:bold;
+}
+a.nobg:hover 
+{ 
+	color:#40628a;
 }
