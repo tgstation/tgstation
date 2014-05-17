@@ -1,3 +1,7 @@
+
+
+
+
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 // Added spess ghoasts/cameras to this so they don't add to the lag. - N3X
@@ -237,8 +241,8 @@ var/global/list/uneatable = list(
 
 					if(pick(0,1))
 						step_towards(X,src)
-						if(prob(10))
-							consume(X) //sometimes you get unlucky, gravitation corona effect or some such
+						//if(prob(10))
+						//	consume(X) //sometimes you get unlucky, gravitation corona effect or some such.......... (apparently players dont want to die, who knew?)
 
 
 				else
@@ -326,6 +330,9 @@ var/global/list/uneatable = list(
 					continue
 				if(O.invisibility == 101)
 					src.consume(O)
+
+
+		//////////////////////////////////////////////////////////////////////////////////////break this up
 		T.ChangeTurf(/turf/space)
 		gain = 2
 	src.energy += gain
