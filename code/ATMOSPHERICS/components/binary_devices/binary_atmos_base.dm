@@ -44,7 +44,7 @@ obj/machinery/atmospherics/binary
 
 		return null
 
-	Del()
+	Destroy()
 		loc = null
 
 		if(node1)

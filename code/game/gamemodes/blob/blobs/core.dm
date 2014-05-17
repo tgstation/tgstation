@@ -18,21 +18,19 @@
 	..(loc, h)
 
 
-/obj/effect/blob/core/Del()
+/obj/effect/blob/core/Destroy()
 	blob_cores -= src
 	if(overmind)
-		del(overmind)
+		qdel(overmind)
 	processing_objects.Remove(src)
 	..()
-	return
 
 /obj/effect/blob/core/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return
 
 /obj/effect/blob/core/update_icon()
 	if(health <= 0)
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
-		Delete()
+		qdel(src)
 		return
 	// update_icon is called when health changes so... call update_health in the overmind
 	if(overmind)
@@ -71,7 +69,7 @@
 	overmind_get_delay = world.time + 300 // 30 seconds
 
 	if(overmind)
-		del(overmind)
+		qdel(overmind)
 
 	var/client/C = null
 	var/list/candidates = list()

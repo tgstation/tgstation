@@ -40,4 +40,7 @@
 
 	preload_rsc = PRELOAD_RSC
 
+	/////////////////////////////////////////////
+	// /vg/: MEDIAAAAAAAA
+	// Set on login.
 	var/datum/media_manager/media = null

@@ -1,4 +1,5 @@
 var/global/datum/controller/gameticker/ticker
+var/round_start_time = 0
 
 #define GAME_STATE_PREGAME		1
 #define GAME_STATE_SETTING_UP	2
@@ -45,7 +46,7 @@ var/global/datum/controller/gameticker/ticker
 		if(config)
 			pregame_timeleft = config.lobby_countdown
 		else
-			error("configuration was null when retrieving the lobby_countdown value.")
+			ERROR("configuration was null when retrieving the lobby_countdown value.")
 			pregame_timeleft = 120
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
 		world << "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds"
@@ -64,19 +65,19 @@ var/global/datum/controller/gameticker/ticker
 		src.hide_mode = 1
 	var/list/datum/game_mode/runnable_modes
 	if((master_mode=="random") || (master_mode=="secret"))
-		runnable_modes = config.get_runnable_modes()
-		if (runnable_modes.len==0)
-			current_state = GAME_STATE_PREGAME
-			world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
-			return 0
-		if(secret_force_mode != "secret")
-			for (var/datum/game_mode/M in runnable_modes)
-				if (M.config_tag && M.config_tag == secret_force_mode)
-					src.mode = M
-					break
-			if	(!src.mode)
-				message_admins("\blue Unable to force secret [secret_force_mode].", 1)
+		if((master_mode=="secret") && (secret_force_mode != "secret"))
+			var/datum/game_mode/smode = config.pick_mode(secret_force_mode)
+			if (!smode.can_start())
+				message_admins("\blue Unable to force secret [secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.", 1)
+			else
+				src.mode = smode
+
 		if(!src.mode)
+			runnable_modes = config.get_runnable_modes()
+			if (runnable_modes.len==0)
+				current_state = GAME_STATE_PREGAME
+				world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
+				return 0
 			src.mode = pickweight(runnable_modes)
 
 	else
@@ -94,12 +95,15 @@ var/global/datum/controller/gameticker/ticker
 	job_master.DivideOccupations() 				//Distribute jobs
 	if (!src.mode.pre_setup_before_jobs)	can_continue = src.mode.pre_setup()
 
-	if(!can_continue)
-		del(mode)
-		current_state = GAME_STATE_PREGAME
-		world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
-		job_master.ResetOccupations()
-		return 0
+	if(!Debug2)
+		if(!can_continue)
+			del(mode)
+			current_state = GAME_STATE_PREGAME
+			world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
+			job_master.ResetOccupations()
+			return 0
+	else
+		world << "<span class='notice'>DEBUG: Bypassing prestart checks..."
 
 	if(hide_mode)
 		var/list/modes = new
@@ -110,6 +114,8 @@ var/global/datum/controller/gameticker/ticker
 		world << "<B>Possibilities:</B> [english_list(modes)]"
 	else
 		src.mode.announce()
+
+	round_start_time = world.time
 
 	supply_shuttle.process() 		//Start the supply shuttle regenerating points
 	master_controller.process()		//Start master_controller.process()
@@ -129,7 +135,7 @@ var/global/datum/controller/gameticker/ticker
 		for(var/obj/effect/landmark/start/S in landmarks_list)
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
-				del(S)
+				qdel(S)
 		world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
 		world << sound('sound/AI/welcome.ogg') // Skie
 		//Holiday Round-start stuff	~Carn
@@ -139,6 +145,7 @@ var/global/datum/controller/gameticker/ticker
 
 	if(!admins.len)
 		send2irc("Server", "Round just started with no admins online!")
+	auto_toggle_ooc(0) // Turn it off
 
 	if(config.sql_enabled)
 		spawn(3000)
@@ -153,7 +160,7 @@ var/global/datum/controller/gameticker/ticker
 	//Plus it provides an easy way to make cinematics for other events. Just use this as a template
 	proc/station_explosion_cinematic(var/station_missed=0, var/override = null)
 		if( cinematic )	return	//already a cinematic in progress!
-
+		auto_toggle_ooc(1) // Turn it on
 		//initialise our cinematic screen object
 		cinematic = new(src)
 		cinematic.icon = 'icons/effects/station_explosion.dmi'
@@ -234,8 +241,8 @@ var/global/datum/controller/gameticker/ticker
 		//Otherwise if its a verb it will continue on afterwards.
 		sleep(300)
 
-		if(cinematic)	del(cinematic)		//end the cinematic
-		if(temp_buckle)	del(temp_buckle)	//release everybody
+		if(cinematic)	qdel(cinematic)		//end the cinematic
+		if(temp_buckle)	qdel(temp_buckle)	//release everybody
 		return
 
 
@@ -248,7 +255,7 @@ var/global/datum/controller/gameticker/ticker
 					player.AIize()
 				else
 					player.create_character()
-					del(player)
+					qdel(player)
 			else
 				player.new_player_panel()
 
@@ -283,7 +290,7 @@ var/global/datum/controller/gameticker/ticker
 
 		if(!mode.explosion_in_progress && mode.check_finished())
 			current_state = GAME_STATE_FINISHED
-
+			auto_toggle_ooc(1) // Turn it on
 			spawn
 				declare_completion()
 

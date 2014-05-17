@@ -53,6 +53,7 @@ datum/preferences
 	var/facial_hair_color = "000"		//Facial hair color
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
+	var/mutant_race = "human"			//Mutant race
 
 		//Mob preview
 	var/icon/preview_icon_front = null
@@ -165,6 +166,10 @@ datum/preferences
 
 				dat += "<table width='100%'><tr><td width='24%' valign='top'>"
 
+				if(config.mutant_races)
+					dat += "<b>Mutant Race:</b><BR><a href='?_src_=prefs;preference=mutant_race;task=input'>[mutant_race]</a><BR>"
+				else
+					dat += "<b>Mutant Race:</b> Human<BR>"
 				dat += "<b>Blood Type:</b> [blood_type]<BR>"
 				dat += "<b>Skin Tone:</b><BR><a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
 				dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
@@ -205,6 +210,7 @@ datum/preferences
 				dat += "<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</a><br>"
 				dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'>[(toggles & CHAT_GHOSTEARS) ? "Nearest Creatures" : "All Speech"]</a><br>"
 				dat += "<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'>[(toggles & CHAT_GHOSTSIGHT) ? "Nearest Creatures" : "All Emotes"]</a><br>"
+				dat += "<b>Pull requests:</b> <a href='?_src_=prefs;preference=pull_requests'>[(toggles & CHAT_PULLR) ? "Yes" : "No"]</a><br>"
 
 				if(config.allow_Metadata)
 					dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'> Edit </a><br>"
@@ -253,7 +259,7 @@ datum/preferences
 		dat += "</center>"
 
 		//user << browse(dat, "window=preferences;size=560x560")
-		var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 580, 580)
+		var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 580, 600)
 		popup.set_content(dat)
 		popup.open(0)
 
@@ -614,6 +620,11 @@ datum/preferences
 						if(new_eyes)
 							eye_color = sanitize_hexcolor(new_eyes)
 
+					if("mutant_race")
+						var/new_mutant_race = input(user, "Choose your character's mutant race:", "Character Preference")  as null|anything in mutant_races
+						if(new_mutant_race)
+							mutant_race = new_mutant_race
+
 					if("s_tone")
 						var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in skin_tones
 						if(new_s_tone)
@@ -676,7 +687,8 @@ datum/preferences
 
 					if("ghost_sight")
 						toggles ^= CHAT_GHOSTSIGHT
-
+					if("pull_requests")
+						toggles ^= CHAT_PULLR
 					if("save")
 						save_preferences()
 						save_character()
@@ -714,6 +726,8 @@ datum/preferences
 		character.name = character.real_name
 		if(character.dna)
 			character.dna.real_name = character.real_name
+			if(mutant_race != "human" && config.mutant_races)
+				character.dna.mutantrace = mutant_race
 
 		character.gender = gender
 		character.age = age

@@ -58,7 +58,7 @@
 				M.speak_chance = 15
 			else
 				explosion(upriser.loc, -1, 1, 2, 4, 0)
-				del(upriser)
+				qdel(upriser)
 
 		kill()
 		return

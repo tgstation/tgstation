@@ -13,22 +13,22 @@
 /obj/structure/reagent_dispensers/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(5))
-				del(src)
+				qdel(src)
 				return
 		else
 	return
 
 /obj/structure/reagent_dispensers/blob_act()
 	if(prob(50))
-		del(src)
+		qdel(src)
 
 /obj/structure/reagent_dispensers/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	return
@@ -72,17 +72,17 @@
 /obj/structure/reagent_dispensers/watertank/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
 				new /obj/effect/effect/water(src.loc)
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(5))
 				new /obj/effect/effect/water(src.loc)
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -90,7 +90,7 @@
 /obj/structure/reagent_dispensers/watertank/blob_act()
 	if(prob(50))
 		new /obj/effect/effect/water(src.loc)
-		del(src)
+		qdel(src)
 
 /obj/structure/reagent_dispensers/fueltank
 	name = "fueltank"
@@ -118,7 +118,7 @@
 /obj/structure/reagent_dispensers/fueltank/ex_act()
 	explosion(src.loc,-1,0,2, flame_range = 2)
 	if(src)
-		del(src)
+		qdel(src)
 
 
 /obj/structure/reagent_dispensers/fueltank/fire_act()
@@ -164,7 +164,7 @@
 /obj/structure/reagent_dispensers/water_cooler/attackby(var/obj/item/I, var/mob/user)
 	if(istype(I, /obj/item/weapon/paper))
 		user.drop_item()
-		del I
+		qdel(I)
 		cups++
 		return
 	else

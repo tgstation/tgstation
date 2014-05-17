@@ -164,7 +164,7 @@
 				if(prob(electricity_level))
 					explosion(loc, 0, 1, 2, 3) // ooo dat shit EXPLODES son
 					spawn(2)
-						del(src)
+						qdel(src)
 		*/
 
 		updateicon()
@@ -197,7 +197,7 @@
 	name = "magnetic control console"
 	icon = 'icons/obj/airlock_machines.dmi' // uses an airlock machine icon, THINK GREEN HELP THE ENVIRONMENT - RECYCLING!
 	icon_state = "airlock_control_standby"
-	density = 1
+	density = 0
 	anchored = 1.0
 	use_power = 1
 	idle_power_usage = 45
@@ -208,7 +208,7 @@
 	var/autolink = 0 // if set to 1, can't probe for other magnets!
 
 	var/pathpos = 1 // position in the path
-	var/path = "NULL" // text path of the magnet
+	var/path = "w;e;e;w;s;n;n;s" // text path of the magnet
 	var/speed = 1 // lowest = 1, highest = 10
 	var/list/rpath = list() // real path of the magnet, used in iterator
 

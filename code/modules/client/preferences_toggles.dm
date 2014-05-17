@@ -55,6 +55,15 @@
 	src << "You will [(prefs.toggles & CHAT_PRAYER) ? "now" : "no longer"] see prayerchat."
 	feedback_add_details("admin_verb","TP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/togglePRs()
+	set name = "Show/Hide Pull Request Announcements"
+	set category = "Preferences"
+	set desc = "Toggles receiving a notification when new pull requests are created."
+	prefs.toggles ^= CHAT_PULLR
+	prefs.save_preferences()
+	src << "You will [(prefs.toggles & CHAT_PULLR) ? "now" : "no longer"] see new pull request announcements."
+	feedback_add_details("admin_verb","TPullR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/verb/toggletitlemusic()
 	set name = "Hear/Silence LobbyMusic"
 	set category = "Preferences"
@@ -79,11 +88,14 @@
 	prefs.save_preferences()
 	if(prefs.toggles & SOUND_MIDI)
 		src << "You will now hear any sounds uploaded by admins."
+		if(admin_sound)
+			src << admin_sound
 	else
-		var/sound/break_sound = sound(null, repeat = 0, wait = 0, channel = 777)
-		break_sound.priority = 250
-		src << break_sound	//breaks the client's sound output on channel 777
 		src << "You will no longer hear sounds uploaded by admins; any currently playing midis have been disabled."
+		if(admin_sound && !(admin_sound.status & SOUND_PAUSED))
+			admin_sound.status |= SOUND_PAUSED
+			src << admin_sound
+			admin_sound.status ^= SOUND_PAUSED
 	feedback_add_details("admin_verb","TMidi") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/listen_ooc()

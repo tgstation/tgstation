@@ -177,4 +177,4 @@ obj/item/projectile/kinetic/New()
 
 /obj/item/effect/kinetic_blast/New()
 	spawn(4)
-		del(src)
+		qdel(src)

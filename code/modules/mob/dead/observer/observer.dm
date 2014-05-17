@@ -58,10 +58,11 @@ Works together with spawning an observer, noted above.
 
 /mob/proc/ghostize(var/can_reenter_corpse = 1)
 	if(key)
-		var/mob/dead/observer/ghost = new(src)	//Transfer safety to observer spawning proc.
-		ghost.can_reenter_corpse = can_reenter_corpse
-		ghost.key = key
-		return ghost
+		if(!cmptext(copytext(key,1,2),"@")) //aghost
+			var/mob/dead/observer/ghost = new(src)	//Transfer safety to observer spawning proc.
+			ghost.can_reenter_corpse = can_reenter_corpse
+			ghost.key = key
+			return ghost
 
 /*
 This is the proc mobs get to turn into a ghost. Forked from ghostize due to compatibility issues.
@@ -202,7 +203,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 					loc = T
 				pos = loc
 				sleep(15)
-			following = null
+			if (target == following) following = null
 
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak

@@ -54,7 +54,7 @@
 	B.item_state = "melted"
 	new /obj/item/weapon/paper/sc_safehint_paper_bible(B)
 	new /obj/item/weapon/pen(B)
-	del(src)
+	qdel(src)
 
 /*
  * Guns - I'm making these specifically so that I dont spawn a pile of fully loaded weapons on the map.
@@ -191,7 +191,7 @@ var/sc_safecode5 = "[rand(0,9)]"
 	else if(istype(A,/obj/))
 		var/obj/O = A
 		O.ex_act(1.0)
-		if(O) del(O)
+		if(O) qdel(O)
 	else if(isturf(A))
 		var/turf/T = A
 		if(T.intact)

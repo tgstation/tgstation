@@ -28,7 +28,7 @@
 		for (var/obj/item/I in H)
 			if (istype(I, /obj/item/weapon/implant))
 				continue
-			del(I)
+			qdel(I)
 
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/kilt(H), slot_w_uniform)
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(H), slot_ears)
@@ -38,12 +38,12 @@
 		H.equip_to_slot_or_del(new /obj/item/weapon/pinpointer(H.loc), slot_l_store)
 
 		var/obj/item/weapon/card/id/W = new(H)
-		W.name = "[H.real_name]'s ID Card"
 		W.icon_state = "centcom"
 		W.access = get_all_accesses()
 		W.access += get_all_centcom_access()
 		W.assignment = "Highlander"
 		W.registered_name = H.real_name
+		W.update_label(H.real_name)
 		H.equip_to_slot_or_del(W, slot_wear_id)
 
 	message_admins("\blue [key_name_admin(usr)] used THERE CAN BE ONLY ONE!", 1)

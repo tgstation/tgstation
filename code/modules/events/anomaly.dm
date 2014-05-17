@@ -37,4 +37,4 @@
 
 /datum/round_event/anomaly/end()
 	if(newAnomaly)//Kill the anomaly if it still exists at the end.
-		del(newAnomaly)
+		qdel(newAnomaly)

@@ -1,9 +1,18 @@
-/mob/Del()//This makes sure that mobs with clients/keys are not just deleted from the game.
+/mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	mob_list -= src
 	dead_mob_list -= src
 	living_mob_list -= src
+	qdel(hud_used)
+	if(mind && mind.current == src)
+		spellremove(src)
+	for(var/infection in viruses)
+		qdel(infection)
 	ghostize()
 	..()
+
+/mob/proc/sac_act(var/obj/effect/rune/R, var/mob/victim as mob)
+	return
+
 
 var/next_mob_id = 0
 /mob/New()
@@ -126,7 +135,7 @@ var/next_mob_id = 0
 				var/list/temp = list(  )
 				temp += L.container
 				//L = null
-				del(L)
+				qdel(L)
 				return temp
 			else
 				return L.container
@@ -151,25 +160,25 @@ var/next_mob_id = 0
 
 	return 0
 
-/mob/proc/put_in_any_hand_if_possible(obj/item/W as obj, del_on_fail = 0, disable_warning = 1, redraw_mob = 1)
-	if(equip_to_slot_if_possible(W, slot_l_hand, del_on_fail, disable_warning, redraw_mob))
+/mob/proc/put_in_any_hand_if_possible(obj/item/W as obj, qdel_on_fail = 0, disable_warning = 1, redraw_mob = 1)
+	if(equip_to_slot_if_possible(W, slot_l_hand, qdel_on_fail, disable_warning, redraw_mob))
 		return 1
-	else if(equip_to_slot_if_possible(W, slot_r_hand, del_on_fail, disable_warning, redraw_mob))
+	else if(equip_to_slot_if_possible(W, slot_r_hand, qdel_on_fail, disable_warning, redraw_mob))
 		return 1
 	return 0
 
 //This is a SAFE proc. Use this instead of equip_to_splot()!
-//set del_on_fail to have it delete W if it fails to equip
+//set qdel_on_fail to have it delete W if it fails to equip
 //set disable_warning to disable the 'you are unable to equip that' warning.
 //unset redraw_mob to prevent the mob from being redrawn at the end.
-/mob/proc/equip_to_slot_if_possible(obj/item/W as obj, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1)
+/mob/proc/equip_to_slot_if_possible(obj/item/W as obj, slot, qdel_on_fail = 0, disable_warning = 0, redraw_mob = 1)
 	if(!istype(W)) return 0
 	if(!W.mob_can_equip(src, slot, disable_warning))
-		if(del_on_fail)
-			del(W)
+		if(qdel_on_fail)
+			qdel(W)
 		else
 			if(!disable_warning)
-				src << "\red You are unable to equip that." //Only print if del_on_fail is false
+				src << "\red You are unable to equip that." //Only print if qdel_on_fail is false
 		return 0
 	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
 	return 1
@@ -207,7 +216,7 @@ var/list/slot_equipment_priority = list( \
 	if(!istype(W)) return 0
 
 	for(var/slot in slot_equipment_priority)
-		if(equip_to_slot_if_possible(W, slot, 0, 1, 1)) //del_on_fail = 0; disable_warning = 0; redraw_mob = 1
+		if(equip_to_slot_if_possible(W, slot, 0, 1, 1)) //qdel_on_fail = 0; disable_warning = 0; redraw_mob = 1
 			return 1
 
 	return 0
@@ -258,8 +267,6 @@ var/list/slot_equipment_priority = list( \
 		if (W)
 			W.attack_self(src)
 			update_inv_r_hand(0)
-	if(next_move < world.time)
-		next_move = world.time + 2
 	return
 
 /*
@@ -339,7 +346,7 @@ var/list/slot_equipment_priority = list( \
 	var/mob/new_player/M = new /mob/new_player()
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
-		del(M)
+		qdel(M)
 		return
 
 	M.key = key
@@ -484,26 +491,9 @@ var/list/slot_equipment_priority = list( \
 			var/obj/item/what = get_item_by_slot(slot)
 
 			if(what)
-				if(what.flags & NODROP)
-					usr << "<span class='notice'>You can't remove \the [what.name], it appears to be stuck!</span>"
-					return
-				visible_message("<span class='danger'>[usr] tries to remove [src]'s [what.name].</span>", \
-								"<span class='userdanger'>[usr] tries to remove [src]'s [what.name].</span>")
-				what.add_fingerprint(usr)
-				if(do_mob(usr, src, STRIP_DELAY))
-					if(what && Adjacent(usr))
-						unEquip(what)
+				usr.stripPanelUnequip(src,what,slot)
 			else
-				what = usr.get_active_hand()
-				if(what && (what.flags & NODROP))
-					usr << "<span class='notice'>You can't put \the [what.name] on [src], it's stuck to your hand!</span>"
-					return
-				if(what && what.mob_can_equip(src, slot, 1))
-					visible_message("<span class='notice'>[usr] tries to put [what] on [src].</span>")
-					if(do_mob(usr, src, STRIP_DELAY * 0.5))
-						if(what && Adjacent(usr))
-							usr.unEquip(what)
-							equip_to_slot_if_possible(what, slot, 0, 1)
+				usr.stripPanelEquip(src,what,slot)
 
 	if(usr.machine == src)
 		if(Adjacent(usr))
@@ -511,6 +501,15 @@ var/list/slot_equipment_priority = list( \
 		else
 			usr << browse(null,"window=mob\ref[src]")
 
+// The src mob is trying to strip an item from someone
+// Defined in living.dm
+/mob/proc/stripPanelUnequip(obj/item/what, mob/who)
+	return
+
+// The src mob is trying to place an item on someone
+// Defined in living.dm
+/mob/proc/stripPanelEquip(obj/item/what, mob/who)
+	return
 
 /mob/MouseDrop(mob/M)
 	..()
@@ -582,6 +581,8 @@ var/list/slot_equipment_priority = list( \
 			if(master_controller)
 				stat(null,"MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[controller_iteration])")
 				stat(null,"Air-[master_controller.air_cost]\t#[global_activeturfs]")
+				stat(null,"Turfs-[master_controller.air_turfs]\tGroups-[master_controller.air_groups]")
+				stat(null,"SC-[master_controller.air_superconductivity]\tHP-[master_controller.air_highpressure]\tH-[master_controller.air_hotspots]")
 				stat(null,"Sun-[master_controller.sun_cost]")
 				stat(null,"Mob-[master_controller.mobs_cost]\t#[mob_list.len]")
 				stat(null,"Dis-[master_controller.diseases_cost]\t#[active_diseases.len]")
@@ -589,6 +590,7 @@ var/list/slot_equipment_priority = list( \
 				stat(null,"Obj-[master_controller.objects_cost]\t#[processing_objects.len]")
 				stat(null,"Net-[master_controller.networks_cost]\tPnet-[master_controller.powernets_cost]")
 				stat(null,"NanoUI-[master_controller.nano_cost]\t#[nanomanager.processing_uis.len]")
+				stat(null,"GC-[master_controller.gc_cost]\t#[garbage.destroyed.len]-#dels[garbage.dels]")
 				stat(null,"Tick-[master_controller.ticker_cost]\tALL-[master_controller.total_cost]")
 			else
 				stat(null,"MasterController-ERROR")
@@ -606,6 +608,8 @@ var/list/slot_equipment_priority = list( \
 
 	if(mind)
 		add_spells_to_statpanel(mind.spell_list)
+		if(mind.changeling)
+			add_stings_to_statpanel(mind.changeling.purchasedpowers)
 	add_spells_to_statpanel(mob_spell_list)
 
 /mob/proc/add_spells_to_statpanel(var/list/spells)
@@ -618,6 +622,11 @@ var/list/slot_equipment_priority = list( \
 					statpanel("[S.panel]","[S.charge_counter]/[S.charge_max]",S)
 				if("holdervar")
 					statpanel("[S.panel]","[S.holder_var_type] [S.holder_var_amount]",S)
+
+/mob/proc/add_stings_to_statpanel(var/list/stings)
+	for(var/obj/effect/proc_holder/changeling/S in stings)
+		if(S.chemical_cost >=0 && S.can_be_used_by(src))
+			statpanel("[S.panel]",((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""),S)
 
 // facing verbs
 /mob/proc/canface()
@@ -643,10 +652,10 @@ var/list/slot_equipment_priority = list( \
                 canmove = 1
         if(buckled)
                 lying = 90 * bed
+                anchored = buckled
         else
                 if((ko || resting) && !lying)
                         fall(ko)
-        anchored = buckled
         canmove = !(ko || resting || stunned || buckled)
         density = !lying
         update_transform()
@@ -784,3 +793,4 @@ var/list/slot_equipment_priority = list( \
 	resting = max(resting + amount,0)
 	update_canmove()
 	return
+

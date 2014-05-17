@@ -10,7 +10,7 @@
 			return 0
 		if(i > 1)
 			newshot()
-	user.next_move = world.time + 4
+	user.changeNext_move(4)
 	update_icon()
 	return 1
 
@@ -33,7 +33,7 @@
 		return 0
 	if(targloc == curloc)			//Fire the projectile
 		user.bullet_act(BB)
-		del(BB)
+		qdel(BB)
 		return 1
 	BB.loc = get_turf(user)
 	BB.starting = get_turf(user)

@@ -12,7 +12,7 @@
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.remove_fuel(15))
 			new refined_type(get_turf(src.loc))
-			del(src)
+			qdel(src)
 		else
 			user << "<span class='info'>Not enough fuel to smelt [src].</span>"
 	..()
@@ -21,7 +21,7 @@
 	name = "Uranium ore"
 	icon_state = "Uranium ore"
 	origin_tech = "materials=5"
-	points = 20
+	points = 18
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 
 /obj/item/weapon/ore/iron
@@ -43,16 +43,16 @@
 		var/sandAmt = 1 // The sand we're holding
 		for(var/obj/item/weapon/ore/glass/sandToConvert in location) // The sand on the floor
 			sandAmt += 1
-			del(sandToConvert)
+			qdel(sandToConvert)
 		var/obj/item/stack/sheet/mineral/newSandstone = new /obj/item/stack/sheet/mineral/sandstone(location)
 		newSandstone.amount = sandAmt
-		del(src)
+		qdel(src)
 
 /obj/item/weapon/ore/plasma
 	name = "Plasma ore"
 	icon_state = "Plasma ore"
 	origin_tech = "materials=2"
-	points = 40
+	points = 36
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 
 /obj/item/weapon/ore/plasma/attackby(obj/item/I as obj, mob/user as mob)
@@ -68,28 +68,28 @@
 	name = "Silver ore"
 	icon_state = "Silver ore"
 	origin_tech = "materials=3"
-	points = 20
+	points = 18
 	refined_type = /obj/item/stack/sheet/mineral/silver
 
 /obj/item/weapon/ore/gold
 	name = "Gold ore"
 	icon_state = "Gold ore"
 	origin_tech = "materials=4"
-	points = 20
+	points = 18
 	refined_type = /obj/item/stack/sheet/mineral/gold
 
 /obj/item/weapon/ore/diamond
 	name = "Diamond ore"
 	icon_state = "Diamond ore"
 	origin_tech = "materials=6"
-	points = 40
+	points = 36
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 
 /obj/item/weapon/ore/clown
 	name = "Bananium ore"
 	icon_state = "Clown ore"
 	origin_tech = "materials=4"
-	points = 30
+	points = 27
 	refined_type = /obj/item/stack/sheet/mineral/clown
 
 /obj/item/weapon/ore/slag
@@ -158,7 +158,7 @@
 				explosion(src.loc,1,2,5,adminlog = notify_admins)
 			if(quality == 1)
 				explosion(src.loc,-1,1,3,adminlog = notify_admins)
-			del(src)
+			qdel(src)
 
 /obj/item/weapon/ore/New()
 	pixel_x = rand(0,16)-8
@@ -232,7 +232,7 @@
 
 		if(CC.amount <= 0)
 			user << "\blue This cable coil appears to be empty."
-			del(CC)
+			qdel(CC)
 			return
 
 		overlays += image('icons/obj/economy.dmi',"coin_string_overlay")

@@ -20,13 +20,13 @@
 		if(1.0)
 			explosion(get_turf(src), 1, 2, 3, 5)//Should likely be larger but this works fine for now I guess
 			if(src)
-				del(src)
+				qdel(src)
 			return
 		if(2.0)
 			if(prob((fuel/10)-stability))
 				explosion(get_turf(src), 1, 2, 3, 5)
 				if(src)
-					del(src)
+					qdel(src)
 				return
 			stability -= 40
 		if(3.0)

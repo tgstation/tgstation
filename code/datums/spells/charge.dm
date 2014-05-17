@@ -38,14 +38,14 @@
 				var/obj/item/weapon/spellbook/oneuse/I = item
 				if(prob(80))
 					user.visible_message("<span class='warning'>[I] catches fire!</span>")
-					del(I)
+					qdel(I)
 				else
 					I.used = 0
 					charged_item = I
 					break
 			else if(istype(item, /obj/item/weapon/gun/magic))
 				var/obj/item/weapon/gun/magic/I = item
-				if(prob(80))
+				if(prob(80) && !I.can_charge)
 					I.max_charges--
 				if(I.max_charges <= 0)
 					I.max_charges = 0

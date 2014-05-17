@@ -90,14 +90,14 @@ datum/airlock_maker
 
 		if("cancel" in href_list)
 			usr << browse(null,"window=airlockmaker")
-			del linked
-			del src
+			qdel(linked)
+			qdel(src)
 			return
 
 		if("done" in href_list)
 			usr << browse(null,"window=airlockmaker")
 			var/turf/t_loc = linked.loc
-			del linked
+			qdel(linked)
 			if(!istype(t_loc))
 				return
 

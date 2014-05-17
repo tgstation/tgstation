@@ -116,7 +116,7 @@
 	if (.)
 		return
 	var/dat
-
+	dat += hack(user)
 	dat += text({"
 <TT><B>Automatic Security Unit v2.5</B></TT><BR><BR>
 Status: []<BR>
@@ -160,7 +160,7 @@ Auto Patrol: []"},
 		else if((lasercolor == "r") && (istype(H.wear_suit, /obj/item/clothing/suit/bluetag)))
 			return
 	if ((href_list["power"]) && (src.allowed(usr)))
-		if (src.on)
+		if (src.on && !src.emagged)
 			turn_off()
 		else
 			turn_on()
@@ -180,6 +180,18 @@ Auto Patrol: []"},
 			auto_patrol = !auto_patrol
 			mode = SECBOT_IDLE
 			updateUsrDialog()
+		if("hack")
+			if(!src.emagged)
+				src.emagged = 2
+				src.hacked = 1
+				usr << "<span class='warning'>You disable [src]'s combat inhibitor.</span>"
+			else if(!src.hacked)
+				usr << "<span class='userdanger'>[src] ignores your attempts to restrict it!</span>"
+			else
+				src.emagged = 0
+				src.hacked = 0
+				usr << "<span class='notice'>You restore [src]'s combat inhibitor.</span>"
+			src.updateUsrDialog()
 
 /obj/machinery/bot/ed209/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
@@ -231,8 +243,6 @@ Auto Patrol: []"},
 			continue
 		if (istype(C, /mob/living/carbon/human))
 			threatlevel = src.assess_perp(C)
-		else if ((istype(C, /mob/living/carbon/monkey)) && (C.client) && (ticker.mode.name == "monkey"))
-			threatlevel = 4
 		//src.speak(C.real_name + text(": threat: []", threatlevel))
 		if (threatlevel < 4 )
 			continue
@@ -319,7 +329,7 @@ Auto Patrol: []"},
 				mode = SECBOT_HUNT
 				return
 
-			if(istype(src.target,/mob/living/carbon))
+			if(iscarbon(target) && target.canBeHandcuffed())
 				if (!src.target.handcuffed && !src.arrest_type)
 					playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 					mode = SECBOT_ARREST
@@ -638,8 +648,6 @@ Auto Patrol: []"},
 
 		if (istype(C, /mob/living/carbon/human))
 			src.threatlevel = src.assess_perp(C)
-		else if ((istype(C, /mob/living/carbon/monkey)) && (C.client) && (ticker.mode.name == "monkey"))
-			src.threatlevel = 4
 
 		if (!src.threatlevel)
 			continue
@@ -745,11 +753,6 @@ Auto Patrol: []"},
 			M:loc = T
 */
 
-/obj/machinery/bot/ed209/proc/speak(var/message)
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"",2)
-	return
-
 /obj/machinery/bot/ed209/explode()
 	walk_to(src,0)
 	src.visible_message("\red <B>[src] blows apart!</B>", 1)
@@ -791,7 +794,7 @@ Auto Patrol: []"},
 	s.start()
 
 	new /obj/effect/decal/cleanable/oil(src.loc)
-	del(src)
+	qdel(src)
 
 
 /obj/machinery/bot/ed209/proc/shootAt(var/mob/target)
@@ -897,7 +900,7 @@ Auto Patrol: []"},
 		if(0,1)
 			if(istype(W, /obj/item/robot_parts/l_leg) || istype(W, /obj/item/robot_parts/r_leg))
 				user.drop_item()
-				del(W)
+				qdel(W)
 				build_step++
 				user << "<span class='notice'>You add the robot leg to [src].</span>"
 				name = "legs/frame assembly"
@@ -915,7 +918,7 @@ Auto Patrol: []"},
 				lasercolor = "b"
 			if(lasercolor || istype(W, /obj/item/clothing/suit/armor/vest))
 				user.drop_item()
-				del(W)
+				qdel(W)
 				build_step++
 				user << "<span class='notice'>You add the armor to [src].</span>"
 				name = "vest/legs/frame assembly"
@@ -944,7 +947,7 @@ Auto Patrol: []"},
 						return
 
 			user.drop_item()
-			del(W)
+			qdel(W)
 			build_step++
 			user << "<span class='notice'>You add the helmet to [src].</span>"
 			name = "covered and shielded frame assembly"
@@ -954,7 +957,7 @@ Auto Patrol: []"},
 		if(5)
 			if(isprox(W))
 				user.drop_item()
-				del(W)
+				qdel(W)
 				build_step++
 				user << "<span class='notice'>You add the prox sensor to [src].</span>"
 				name = "covered, shielded and sensored frame assembly"
@@ -994,7 +997,7 @@ Auto Patrol: []"},
 			src.item_state = "[lasercolor]ed209_taser"
 			src.icon_state = "[lasercolor]ed209_taser"
 			user.drop_item()
-			del(W)
+			qdel(W)
 
 		if(8)
 			if(istype(W, /obj/item/weapon/screwdriver))
@@ -1014,9 +1017,9 @@ Auto Patrol: []"},
 				var/turf/T = get_turf(src)
 				new /obj/machinery/bot/ed209(T,created_name,lasercolor)
 				user.drop_item()
-				del(W)
+				qdel(W)
 				user.unEquip(src, 1)
-				del(src)
+				qdel(src)
 
 
 /obj/machinery/bot/ed209/bullet_act(var/obj/item/projectile/Proj)
@@ -1043,9 +1046,9 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/ed209/bluetag/New()//If desired, you spawn red and bluetag bots easily
 	new /obj/machinery/bot/ed209(get_turf(src),null,"b")
-	del(src)
+	qdel(src)
 
 
 /obj/machinery/bot/ed209/redtag/New()
 	new /obj/machinery/bot/ed209(get_turf(src),null,"r")
-	del(src)
+	qdel(src)

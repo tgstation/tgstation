@@ -39,7 +39,7 @@
 		connect_to_network()
 		src.directwired = 1
 
-/obj/machinery/power/emitter/Del()
+/obj/machinery/power/emitter/Destroy()
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
 		message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Emitter deleted at ([x],[y],[z])")

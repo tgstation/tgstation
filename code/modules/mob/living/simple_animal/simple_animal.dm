@@ -352,8 +352,8 @@
 			visible_message("\red <B>[L] bites [src]!</B>")
 
 			if(stat != DEAD)
-				adjustBruteLoss(damage)
 				L.amount_grown = min(L.amount_grown + damage, L.max_grown)
+				adjustBruteLoss(damage)
 
 
 /mob/living/simple_animal/attack_slime(mob/living/carbon/slime/M as mob)
@@ -389,7 +389,7 @@
 						adjustBruteLoss(-MED.heal_brute)
 						MED.amount -= 1
 						if(MED.amount <= 0)
-							del(MED)
+							qdel(MED)
 						for(var/mob/M in viewers(src, null))
 							if ((M.client && !( M.blinded )))
 								M.show_message("\blue [user] applies [MED] on [src]")
@@ -519,7 +519,7 @@
 /mob/living/simple_animal/proc/harvest()
 	new meat_type (get_turf(src))
 	if(prob(95))
-		del(src)
+		qdel(src)
 		return
 	gib()
 	return

@@ -17,6 +17,12 @@
 /area
 	var/global/global_uid = 0
 	var/uid
+	var/list/ambientsounds = list('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg',\
+									'sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg',\
+									'sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg',\
+									'sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg',\
+									'sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg',\
+									'sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
 
 /area/New()
 	icon_state = ""
@@ -249,30 +255,28 @@
 
 
 /area/Entered(A)
-	var/musVolume = 25
-	var/sound = 'sound/ambience/ambigen1.ogg'
+	var/area/newarea
+	var/area/oldarea
+
+	if(istype(A,/mob))
+		var/mob/M = A
+
+		if(!M.lastarea)
+			M.lastarea = get_area_master(M)
+		newarea = get_area_master(M)
+		oldarea = M.lastarea
+
+		if(newarea==oldarea) return
+
+		M.lastarea = src
+
+		// /vg/ - EVENTS!
+		CallHook("MobAreaChange", list("mob" = M, "new" = newarea, "old" = oldarea))
 
 	if(!istype(A,/mob/living))	return
 
 	var/mob/living/L = A
 	if(!L.ckey)	return
-
-	if(!L.lastarea)
-		L.lastarea = get_area(L.loc)
-		if(L.lastarea.master)
-			L.lastarea = L.lastarea.master
-	var/area/newarea = get_area(L.loc)
-	if(newarea.master)
-		newarea = newarea.master
-	var/area/oldarea = L.lastarea
-	if((oldarea.has_gravity == 0) && (newarea.has_gravity == 1) && (L.m_intent == "run")) // Being ready when you change areas gives you a chance to avoid falling all together.
-		thunk(L)
-
-	L.lastarea = newarea
-
-	// /vg/ - EVENTS!
-	CallHook("MobAreaChange", list("mob" = L, "new" = newarea, "old" = oldarea))
-
 	// Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
 	if(!(L && L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))	return
 
@@ -281,58 +285,27 @@
 		L << sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
 
 	if(prob(35))
-
-		if(istype(src, /area/chapel))
-			sound = pick('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg')
-		else if(istype(src, /area/medical/morgue))
-			sound = pick('sound/ambience/ambimo1.ogg','sound/ambience/ambimo2.ogg','sound/ambience/title2.ogg')
-		else if(type == /area)
-			sound = pick('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg',)
-		else if(istype(src, /area/engine))
-			sound = pick('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg')
-		else if(istype(src, /area/AIsattele) || istype(src, /area/turret_protected/ai) || istype(src, /area/turret_protected/ai_upload) || istype(src, /area/turret_protected/ai_upload_foyer))
-			sound = pick('sound/ambience/ambimalf.ogg')
-		else if(istype(src, /area/mine/explored) || istype(src, /area/mine/unexplored))
-			sound = pick('sound/ambience/ambimine.ogg')
-			musVolume = 25
-		else if(istype(src, /area/tcommsat) || istype(src, /area/turret_protected/tcomwest) || istype(src, /area/turret_protected/tcomeast) || istype(src, /area/turret_protected/tcomfoyer) || istype(src, /area/turret_protected/tcomsat))
-			sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
-		else
-			sound = pick('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
+		var/sound = pick(ambientsounds)
 
 		if(!L.client.played)
-			L << sound(sound, repeat = 0, wait = 0, volume = musVolume, channel = 1)
+			L << sound(sound, repeat = 0, wait = 0, volume = 25, channel = 1)
 			L.client.played = 1
 			spawn(600)			//ewww - this is very very bad
 				if(L.&& L.client)
 					L.client.played = 0
 
-/area/proc/gravitychange(var/gravitystate = 0)
-
-	has_gravity = gravitystate
-
-	if(gravitystate)
-		for(var/mob/living/carbon/human/M in contents)
-			thunk(M)
-
 /area/proc/mob_activate(var/mob/living/L)
 	return
 
-/area/proc/thunk(mob)
-	if(istype(mob,/mob/living/carbon/human/))  // Only humans can wear magboots, so we give them a chance to.
-		if((istype(mob:shoes, /obj/item/clothing/shoes/magboots) && (mob:shoes.flags & NOSLIP)))
-			return
-
-	if(istype(get_turf(mob), /turf/space)) // Can't fall onto nothing.
-		return
-
-	if((istype(mob,/mob/living/carbon/human/)) && (mob:m_intent == "run")) // Only clumbsy humans can fall on their asses.
-		mob:AdjustStunned(5)
-		mob:AdjustWeakened(5)
-
-	else if (istype(mob,/mob/living/carbon/human/))
-		mob:AdjustStunned(2)
-		mob:AdjustWeakened(2)
-
-	mob << "Gravity!"
-
+/proc/has_gravity(var/atom/AT)
+	var/area/A = get_area(AT)
+	var/turf/T = get_turf(AT)
+	if(istype(T, /turf/space)) // Turf never has gravity
+		return 0
+	else if(A && A.has_gravity) // Areas which always has gravity
+		return 1
+	else
+		// There's a gravity generator on our z level
+		if(T && gravity_generators["[T.z]"] && length(gravity_generators["[T.z]"]))
+			return 1
+	return 0

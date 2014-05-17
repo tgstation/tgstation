@@ -105,7 +105,7 @@
 
 /obj/machinery/bot/secbot/interact(mob/user as mob)
 	var/dat
-
+	dat += hack(user)
 	dat += text({"
 <TT><B>Automatic Security Unit v1.3</B></TT><BR><BR>
 Status: []<BR>
@@ -136,7 +136,7 @@ Auto Patrol: []"},
 		return
 	usr.set_machine(src)
 	if((href_list["power"]) && (src.allowed(usr)))
-		if(src.on)
+		if (src.on && !src.emagged)
 			turn_off()
 		else
 			turn_on()
@@ -156,6 +156,18 @@ Auto Patrol: []"},
 			auto_patrol = !auto_patrol
 			mode = SECBOT_IDLE
 			updateUsrDialog()
+		if("hack")
+			if(!src.emagged)
+				src.emagged = 2
+				src.hacked = 1
+				usr << "<span class='warning'>You overload [src]'s target identification system.</span>"
+			else if(!src.hacked)
+				usr << "<span class='userdanger'>[src] refuses to accept your authority!</span>"
+			else
+				src.emagged = 0
+				src.hacked = 0
+				usr << "<span class='notice'>You reboot [src] and restore the target identification.</span>"
+			src.updateUsrDialog()
 
 /obj/machinery/bot/secbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
@@ -261,7 +273,7 @@ Auto Patrol: []"},
 				mode = SECBOT_HUNT
 				return
 
-			if(istype(src.target,/mob/living/carbon))
+			if(iscarbon(target) && target.canBeHandcuffed())
 				if(!src.target.handcuffed && !src.arrest_type)
 					playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 					mode = SECBOT_ARREST
@@ -655,12 +667,6 @@ Auto Patrol: []"},
 			M:loc = T
 */
 
-/obj/machinery/bot/secbot/proc/speak(var/message)
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"",2)
-	return
-
-
 /obj/machinery/bot/secbot/explode()
 
 	walk_to(src,0)
@@ -682,7 +688,7 @@ Auto Patrol: []"},
 	s.start()
 
 	new /obj/effect/decal/cleanable/oil(src.loc)
-	del(src)
+	qdel(src)
 
 /obj/machinery/bot/secbot/attack_alien(var/mob/living/carbon/alien/user as mob)
 	..()
@@ -702,12 +708,12 @@ Auto Patrol: []"},
 		return
 
 	if(S.secured)
-		del(S)
+		qdel(S)
 		var/obj/item/weapon/secbot_assembly/A = new /obj/item/weapon/secbot_assembly
 		user.put_in_hands(A)
 		user << "<span class='notice'>You add the signaler to the helmet.</span>"
 		user.unEquip(src, 1)
-		del(src)
+		qdel(src)
 	else
 		return
 
@@ -733,7 +739,7 @@ Auto Patrol: []"},
 		user << "<span class='notice'>You add the prox sensor to [src]!</span>"
 		overlays += "hs_eye"
 		name = "helmet/signaler/prox sensor assembly"
-		del(I)
+		qdel(I)
 
 	else if(((istype(I, /obj/item/robot_parts/l_arm)) || (istype(I, /obj/item/robot_parts/r_arm))) && (build_step == 2))
 		user.drop_item()
@@ -741,7 +747,7 @@ Auto Patrol: []"},
 		user << "<span class='notice'>You add the robot arm to [src]!</span>"
 		name = "helmet/signaler/prox sensor/robot arm assembly"
 		overlays += "hs_arm"
-		del(I)
+		qdel(I)
 
 	else if((istype(I, /obj/item/weapon/melee/baton)) && (build_step >= 3))
 		user.drop_item()
@@ -750,8 +756,8 @@ Auto Patrol: []"},
 		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot
 		S.loc = get_turf(src)
 		S.name = created_name
-		del(I)
-		del(src)
+		qdel(I)
+		qdel(src)
 
 	else if(istype(I, /obj/item/weapon/pen))
 		var/t = copytext(stripped_input(user, "Enter new robot name", name, created_name),1,MAX_NAME_LEN)
@@ -766,7 +772,7 @@ Auto Patrol: []"},
 			new /obj/item/device/assembly/signaler(get_turf(src))
 			new /obj/item/clothing/head/helmet(get_turf(src))
 			user << "<span class='notice'>You disconnect the signaler from the helmet.</span>"
-			del(src)
+			qdel(src)
 
 		else if(build_step == 2)
 			overlays -= "hs_eye"

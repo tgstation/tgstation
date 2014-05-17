@@ -26,7 +26,7 @@
 	connected_parts = list()
 	..()
 
-/obj/machinery/particle_accelerator/control_box/Del()
+/obj/machinery/particle_accelerator/control_box/Destroy()
 	if(active)
 		toggle_power()
 	..()

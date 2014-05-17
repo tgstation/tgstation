@@ -46,12 +46,12 @@
 
 		// teehee
 		if ("delete")
-			del(src)
+			qdel(src)
 
 		//If you want to re-add fire, just add "fire" = 15 to the pick list.
 		/*if ("fire")
 			new /obj/structure/closet/firecloset(src.loc)
-			del(src)*/
+			qdel(src)*/
 
 /obj/structure/closet/emcloset/legacy/New()
 	new /obj/item/weapon/tank/oxygen(src)
@@ -168,7 +168,7 @@
 	sleep(2)
 	new /obj/item/clothing/suit/bomb_suit( src )
 	new /obj/item/clothing/under/color/black( src )
-	new /obj/item/clothing/shoes/black( src )
+	new /obj/item/clothing/shoes/sneakers/black( src )
 	new /obj/item/clothing/head/bomb_hood( src )
 
 
@@ -184,7 +184,7 @@
 	sleep(2)
 	new /obj/item/clothing/suit/bomb_suit/security( src )
 	new /obj/item/clothing/under/rank/security( src )
-	new /obj/item/clothing/shoes/brown( src )
+	new /obj/item/clothing/shoes/sneakers/brown( src )
 	new /obj/item/clothing/head/bomb_hood/security( src )
 
 /*

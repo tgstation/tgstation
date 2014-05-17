@@ -102,7 +102,7 @@
 	for(var/obj/effect/landmark/A in landmarks_list)
 		if(A.name == "Syndicate-Spawn")
 			synd_spawn += get_turf(A)
-			del(A)
+			qdel(A)
 			continue
 
 	var/obj/effect/landmark/uplinklocker = locate("landmark*Syndicate-Uplink")	//i will be rewriting this shortly
@@ -197,7 +197,7 @@
 	synd_mob.equip_to_slot_or_del(R, slot_ears)
 
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate(synd_mob), slot_w_uniform)
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(synd_mob), slot_shoes)
+	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(synd_mob), slot_shoes)
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(synd_mob), slot_wear_suit)
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(synd_mob), slot_gloves)
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/swat(synd_mob), slot_head)
@@ -333,7 +333,7 @@
 		text += "(Syndicates used [TC_uses] TC) [purchases]"
 
 		if(TC_uses==0 && station_was_nuked && !is_operatives_are_dead())
-			text += "<IMG CLASS=icon SRC=\ref['icons/BadAss.dmi'] ICONSTATE='badass'>"
+			text += "<BIG><IMG CLASS=icon SRC=\ref['icons/BadAss.dmi'] ICONSTATE='badass'></BIG>"
 
 		world << text
 	return 1

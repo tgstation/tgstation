@@ -96,7 +96,7 @@
 				spawn(50)
 					if(M)
 						explosion(get_turf(M), 0,1,1,0)
-						del(M)
+						qdel(M)
 			else src << "<span class='notice'>Out of uses.</span>"
 	else src << "<span class='notice'>That's not a machine.</span>"
 

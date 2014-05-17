@@ -15,7 +15,7 @@
 	..()
 	processing_objects += src
 
-/obj/item/device/radio/intercom/Del()
+/obj/item/device/radio/intercom/Destroy()
 	processing_objects -= src
 	..()
 

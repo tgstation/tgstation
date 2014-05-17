@@ -80,7 +80,7 @@
 	custom_action(step, atom/used_atom, mob/user)
 		user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
 		holder.overlays += used_atom.icon_state+"+o"
-		del used_atom
+		qdel(used_atom)
 		return 1
 
 	action(atom/used_atom,mob/user as mob)
@@ -93,8 +93,7 @@
 		const_holder.icon_state = "ripley0"
 		const_holder.density = 1
 		const_holder.overlays.len = 0
-		spawn()
-			del src
+		qdel(src)
 		return
 
 
@@ -196,7 +195,7 @@
 			if(10)
 				if(diff==FORWARD)
 					user.visible_message("[user] installs the central control module into [holder].", "You install the central computer mainboard into [holder].")
-					del used_atom
+					qdel(used_atom)
 					holder.icon_state = "ripley5"
 				else
 					user.visible_message("[user] disconnects the wiring of [holder].", "You disconnect the wiring of [holder].")
@@ -212,7 +211,7 @@
 			if(8)
 				if(diff==FORWARD)
 					user.visible_message("[user] installs the peripherals control module into [holder].", "You install the peripherals control module into [holder].")
-					del used_atom
+					qdel(used_atom)
 					holder.icon_state = "ripley7"
 				else
 					user.visible_message("[user] unfastens the mainboard.", "You unfasten the mainboard.")
@@ -291,7 +290,7 @@
 	custom_action(step, atom/used_atom, mob/user)
 		user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
 		holder.overlays += used_atom.icon_state+"+o"
-		del used_atom
+		qdel(used_atom)
 		return 1
 
 	action(atom/used_atom,mob/user as mob)
@@ -303,8 +302,7 @@
 		const_holder.icon = 'icons/mecha/mech_construction.dmi'
 		const_holder.icon_state = "gygax0"
 		const_holder.density = 1
-		spawn()
-			del src
+		del(src)
 		return
 
 
@@ -430,7 +428,7 @@
 			if(16)
 				if(diff==FORWARD)
 					user.visible_message("[user] installs the central control module into [holder].", "You install the central computer mainboard into [holder].")
-					del used_atom
+					qdel(used_atom)
 					holder.icon_state = "gygax5"
 				else
 					user.visible_message("[user] disconnects the wiring of [holder].", "You disconnect the wiring of [holder].")
@@ -446,7 +444,7 @@
 			if(14)
 				if(diff==FORWARD)
 					user.visible_message("[user] installs the peripherals control module into [holder].", "You install the peripherals control module into [holder].")
-					del used_atom
+					qdel(used_atom)
 					holder.icon_state = "gygax7"
 				else
 					user.visible_message("[user] unfastens the mainboard.", "You unfasten the mainboard.")
@@ -462,7 +460,7 @@
 			if(12)
 				if(diff==FORWARD)
 					user.visible_message("[user] installs the weapon control module into [holder].", "You install the weapon control module into [holder].")
-					del used_atom
+					qdel(used_atom)
 					holder.icon_state = "gygax9"
 				else
 					user.visible_message("[user] unfastens the peripherals control module.", "You unfasten the peripherals control module.")
@@ -478,7 +476,7 @@
 			if(10)
 				if(diff==FORWARD)
 					user.visible_message("[user] installs advanced scanner module to [holder].", "You install advanced scanner module to [holder].")
-					del used_atom
+					qdel(used_atom)
 					holder.icon_state = "gygax11"
 				else
 					user.visible_message("[user] unfastens the weapon control module.", "You unfasten the weapon control module.")
@@ -494,7 +492,7 @@
 			if(8)
 				if(diff==FORWARD)
 					user.visible_message("[user] installs advanced capacitor to [holder].", "You install advanced capacitor to [holder].")
-					del used_atom
+					qdel(used_atom)
 					holder.icon_state = "gygax13"
 				else
 					user.visible_message("[user] unfastens the advanced scanner module.", "You unfasten the advanced scanner module.")
@@ -533,7 +531,7 @@
 			if(3)
 				if(diff==FORWARD)
 					user.visible_message("[user] installs Gygax Armour Plates to [holder].", "You install Gygax Armour Plates to [holder].")
-					del used_atom
+					qdel(used_atom)
 					holder.icon_state = "gygax18"
 				else
 					user.visible_message("[user] cuts internal armor layer from [holder].", "You cut the internal armor layer from [holder].")
@@ -571,7 +569,7 @@
 	custom_action(step, atom/used_atom, mob/user)
 		user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
 		holder.overlays += used_atom.icon_state+"+o"
-		del used_atom
+		qdel(used_atom)
 		return 1
 
 	action(atom/used_atom,mob/user as mob)
@@ -583,8 +581,7 @@
 		const_holder.icon = 'icons/mecha/mech_construction.dmi'
 		const_holder.icon_state = "fireripley0"
 		const_holder.density = 1
-		spawn()
-			del src
+		del(src)
 		return
 
 
@@ -691,7 +688,7 @@
 			if(11)
 				if(diff==FORWARD)
 					user.visible_message("[user] installs the central control module into [holder].", "You install the central computer mainboard into [holder].")
-					del used_atom
+					qdel(used_atom)
 					holder.icon_state = "fireripley5"
 				else
 					user.visible_message("[user] disconnects the wiring of [holder].", "You disconnect the wiring of [holder].")
@@ -707,7 +704,7 @@
 			if(9)
 				if(diff==FORWARD)
 					user.visible_message("[user] installs the peripherals control module into [holder].", "You install the peripherals control module into [holder].")
-					del used_atom
+					qdel(used_atom)
 					holder.icon_state = "fireripley7"
 				else
 					user.visible_message("[user] unfastens the mainboard.", "You unfasten the mainboard.")
@@ -799,15 +796,14 @@
 	custom_action(step, atom/used_atom, mob/user)
 		user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
 		holder.overlays += used_atom.icon_state+"+o"
-		del used_atom
+		qdel(used_atom)
 		return 1
 
 	spawn_result()
 		var/obj/item/mecha_parts/chassis/const_holder = holder
 		const_holder.construct = new /datum/construction/mecha/honker(const_holder)
 		const_holder.density = 1
-		spawn()
-			del src
+		del(src)
 		return
 
 
@@ -841,19 +837,19 @@
 		switch(step)
 			if(10)
 				user.visible_message("[user] installs the central control module into [holder].", "You install the central control module into [holder].")
-				del used_atom
+				qdel(used_atom)
 			if(8)
 				user.visible_message("[user] installs the peripherals control module into [holder].", "You install the peripherals control module into [holder].")
-				del used_atom
+				qdel(used_atom)
 			if(6)
 				user.visible_message("[user] installs the weapon control module into [holder].", "You install the weapon control module into [holder].")
-				del used_atom
+				qdel(used_atom)
 			if(4)
 				user.visible_message("[user] puts clown wig and mask on [holder].", "You put clown wig and mask on [holder].")
-				del used_atom
+				qdel(used_atom)
 			if(2)
 				user.visible_message("[user] puts clown boots on [holder].", "You put clown boots on [holder].")
-				del used_atom
+				qdel(used_atom)
 		return 1
 
 	spawn_result()
@@ -873,7 +869,7 @@
 	custom_action(step, atom/used_atom, mob/user)
 		user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
 		holder.overlays += used_atom.icon_state+"+o"
-		del used_atom
+		qdel(used_atom)
 		return 1
 
 	action(atom/used_atom,mob/user as mob)
@@ -885,8 +881,7 @@
 		const_holder.icon = 'icons/mecha/mech_construction.dmi'
 		const_holder.icon_state = "durand0"
 		const_holder.density = 1
-		spawn()
-			del src
+		del src
 		return
 
 /datum/construction/reversible/mecha/durand
@@ -1012,7 +1007,7 @@
 			if(16)
 				if(diff==FORWARD)
 					user.visible_message("[user] installs the central control module into [holder].", "You install the central computer mainboard into [holder].")
-					del used_atom
+					qdel(used_atom)
 					holder.icon_state = "durand5"
 				else
 					user.visible_message("[user] disconnects the wiring of [holder].", "You disconnect the wiring of [holder].")
@@ -1028,7 +1023,7 @@
 			if(14)
 				if(diff==FORWARD)
 					user.visible_message("[user] installs the peripherals control module into [holder].", "You install the peripherals control module into [holder].")
-					del used_atom
+					qdel(used_atom)
 					holder.icon_state = "durand7"
 				else
 					user.visible_message("[user] unfastens the mainboard.", "You unfasten the mainboard.")
@@ -1044,7 +1039,7 @@
 			if(12)
 				if(diff==FORWARD)
 					user.visible_message("[user] installs the weapon control module into [holder].", "You install the weapon control module into [holder].")
-					del used_atom
+					qdel(used_atom)
 					holder.icon_state = "durand9"
 				else
 					user.visible_message("[user] unfastens the peripherals control module.", "You unfasten the peripherals control module.")
@@ -1060,7 +1055,7 @@
 			if(10)
 				if(diff==FORWARD)
 					user.visible_message("[user] installs advanced scanner module to [holder].", "You install advanced scanner module to [holder].")
-					del used_atom
+					qdel(used_atom)
 					holder.icon_state = "durand11"
 				else
 					user.visible_message("[user] unfastens the weapon control module.", "You unfasten the weapon control module.")
@@ -1076,7 +1071,7 @@
 			if(8)
 				if(diff==FORWARD)
 					user.visible_message("[user] installs advanced capacitor to [holder].", "You install advanced capacitor to [holder].")
-					del used_atom
+					qdel(used_atom)
 					holder.icon_state = "durand13"
 				else
 					user.visible_message("[user] unfastens the advanced scanner module.", "You unfasten the advanced scanner module.")
@@ -1115,7 +1110,7 @@
 			if(3)
 				if(diff==FORWARD)
 					user.visible_message("[user] installs Durand Armour Plates to [holder].", "You install Durand Armour Plates to [holder].")
-					del used_atom
+					qdel(used_atom)
 					holder.icon_state = "durand18"
 				else
 					user.visible_message("[user] cuts internal armor layer from [holder].", "You cut the internal armor layer from [holder].")
@@ -1155,7 +1150,7 @@
 	custom_action(step, atom/used_atom, mob/user)
 		user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
 		holder.overlays += used_atom.icon_state+"+o"
-		del used_atom
+		qdel(used_atom)
 		return 1
 
 	action(atom/used_atom,mob/user as mob)
@@ -1176,7 +1171,7 @@
 	custom_action(step, atom/used_atom, mob/user)
 		user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
 		holder.overlays += used_atom.icon_state+"+o"
-		del used_atom
+		qdel(used_atom)
 		return 1
 
 	action(atom/used_atom,mob/user as mob)
@@ -1188,8 +1183,7 @@
 		const_holder.icon = 'icons/mecha/mech_construction.dmi'
 		const_holder.icon_state = "odysseus0"
 		const_holder.density = 1
-		spawn()
-			del src
+		del src
 		return
 
 
@@ -1291,7 +1285,7 @@
 			if(10)
 				if(diff==FORWARD)
 					user.visible_message("[user] installs the central control module into [holder].", "You install the central computer mainboard into [holder].")
-					del used_atom
+					qdel(used_atom)
 					holder.icon_state = "odysseus5"
 				else
 					user.visible_message("[user] disconnects the wiring of [holder].", "You disconnect the wiring of [holder].")
@@ -1307,7 +1301,7 @@
 			if(8)
 				if(diff==FORWARD)
 					user.visible_message("[user] installs the peripherals control module into [holder].", "You install the peripherals control module into [holder].")
-					del used_atom
+					qdel(used_atom)
 					holder.icon_state = "odysseus7"
 				else
 					user.visible_message("[user] unfastens the mainboard.", "You unfasten the mainboard.")

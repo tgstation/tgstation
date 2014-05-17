@@ -124,7 +124,7 @@
 					if(W.loc == my_target) break
 					sleep(2)
 
-		if((istype(usr.loc, /turf/space)) || (usr.lastarea && usr.lastarea.has_gravity == 0))
+		if(!has_gravity(user))
 			user.inertia_dir = get_dir(target, user)
 			step(user, user.inertia_dir)
 	else

@@ -49,13 +49,13 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 /obj/structure/plasticflaps/ex_act(severity)
 	switch(severity)
 		if (1)
-			del(src)
+			qdel(src)
 		if (2)
 			if (prob(50))
-				del(src)
+				qdel(src)
 		if (3)
 			if (prob(5))
-				del(src)
+				qdel(src)
 
 /obj/structure/plasticflaps/mining //A specific type for mining that doesn't allow airflow because of them damn crates
 	name = "airtight plastic flaps"
@@ -67,7 +67,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 			T.blocks_air = 1
 		..()
 
-	Del() //lazy hack to set the turf to allow air to pass if it's a simulated floor
+	Destroy() //lazy hack to set the turf to allow air to pass if it's a simulated floor //wow this is terrible
 		var/turf/T = get_turf(loc)
 		if(T)
 			if(istype(T, /turf/simulated/floor))
@@ -121,6 +121,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	var/points_per_process = 1
 	var/points_per_slip = 2
 	var/points_per_crate = 5
+	var/points_per_intel = 100
 	var/plasma_per_point = 0.2 //5 points per plasma sheet due to increased rarity
 	var/centcom_message = "" // Remarks from Centcom on how well you checked the last order.
 	// Unique typepaths for unusual things we've already sent CentComm, associated with their potencies
@@ -228,6 +229,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 		if(!shuttle)	return
 
 		var/plasma_count = 0
+		var/intel_count = 0
 		var/crate_count = 0
 
 		centcom_message = ""
@@ -287,6 +289,10 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 						var/obj/item/stack/sheet/mineral/plasma/P = A
 						plasma_count += P.amount
 
+					// Sell syndicate intel
+					if(istype(A, /obj/item/documents/syndicate))
+						intel_count += 1
+
 					if(istype(A, /obj/item/seeds))
 						var/obj/item/seeds/S = A
 						if(S.rarity == 0) // Mundane species
@@ -303,14 +309,18 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 							discoveredPlants[S.type] = S.potency
 							centcom_message += "<font color=green>+[S.rarity]</font>: New species discovered: \"[capitalize(S.species)]\".  Excellent work.<BR>"
 							points += S.rarity // That's right, no bonus for potency.  Send a crappy sample first to "show improvement" later
-			del(MA)
+			qdel(MA)
 
 		if(plasma_count)
-			centcom_message += "<font color=green>+[round(plasma_count/plasma_per_point)]</font>: Received [plasma_count] units of exotic material.<BR>"
+			centcom_message += "<font color=green>+[round(plasma_count/plasma_per_point)]</font>: Received [plasma_count] unit(s) of exotic material.<BR>"
 			points += round(plasma_count / plasma_per_point)
 
+		if(intel_count)
+			centcom_message += "<font color=green>+[round(intel_count*points_per_intel)]</font>: Received [intel_count] article(s) of enemy intelligence.<BR>"
+			points += round(intel_count*points_per_intel)
+
 		if(crate_count)
-			centcom_message += "<font color=green>+[round(crate_count*points_per_crate)]</font>: Received [crate_count] crates.<BR>"
+			centcom_message += "<font color=green>+[round(crate_count*points_per_crate)]</font>: Received [crate_count] crate(s).<BR>"
 			points += crate_count * points_per_crate
 
 	//Buyin
@@ -387,7 +397,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 				// If it has multiple items, there's a 1% of each going missing... Not for secure crates or those large wooden ones, though.
 				if(contains.len > 1 && prob(1) && !findtext(SP.containertype,"/secure/") && !findtext(SP.containertype,"/largecrate/"))
 					slip.erroneous |= MANIFEST_ERROR_ITEM // This item was not included in the shipment!
-					del(B2) // Lost in space... or the loading dock.
+					qdel(B2) // Lost in space... or the loading dock.
 
 			//manifest finalisation
 			slip.info += "</ul><br>"

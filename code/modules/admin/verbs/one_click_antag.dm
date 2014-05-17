@@ -277,12 +277,12 @@ client/proc/one_click_antag()
 		for (var/obj/effect/landmark/A in /area/syndicate_station/start)//Because that's the only place it can BE -Sieve
 			if (A.name == "Syndicate-Gear-Closet")
 				new /obj/structure/closet/syndicate/personal(A.loc)
-				del(A)
+				qdel(A)
 				continue
 
 			if (A.name == "Syndicate-Bomb")
 				new /obj/effect/spawner/newbomb/timer/syndicate(A.loc)
-				del(A)
+				qdel(A)
 				continue
 
 		for(var/datum/mind/synd_mind in ticker.mode.syndicates)
@@ -363,7 +363,7 @@ client/proc/one_click_antag()
 					candidates.Remove(theghost)
 
 				if(!theghost)
-					del(new_syndicate_commando)
+					qdel(new_syndicate_commando)
 					break
 
 				new_syndicate_commando.key = theghost.key
@@ -392,11 +392,7 @@ client/proc/one_click_antag()
 	//First we spawn a dude.
 	var/mob/living/carbon/human/new_character = new(pick(latejoin))//The mob being spawned.
 
-	new_character.gender = pick(MALE,FEMALE)
-
-	var/datum/preferences/A = new()
-	A.copy_to(new_character)
-
+	G_found.client.prefs.copy_to(new_character)
 	ready_dna(new_character)
 	new_character.key = G_found.key
 
