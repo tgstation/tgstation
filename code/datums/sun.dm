@@ -44,24 +44,24 @@
 	nextTime *= 2
 
 	// Now calculate and cache the (dx,dy) increments for line drawing.
-	var/s = sin(angle)
-	var/c = cos(angle)
+	var/si = sin(angle)
+	var/co = cos(angle)
 
-	if (!c)
+	if (!co)
 		dx = 0
-		dy = s
-	else if (abs(s) < abs(c))
-		dx = s / abs(c)
-		dy = c / abs(c)
+		dy = si
+	else if (abs(si) < abs(co))
+		dx = si / abs(co)
+		dy = co / abs(co)
 	else
-		dx = s / abs(s)
-		dy = c / abs(s)
+		dx = si / abs(si)
+		dy = co / abs(si)
 
-	var/obj/machinery/power/solars/S
+	var/obj/machinery/power/solar/S
 
 	for (S in solars_list)
 		if (!S.powernet)
-			solar_list.Remove(S)
+			solars_list.Remove(S)
 
 		if (S.control)
 			occlusion(S)
