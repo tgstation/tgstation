@@ -333,8 +333,9 @@ var/global/list/uneatable = list(
 
 
 		//////////////////////////////////////////////////////////////////////////////////////break this up
-		T.ChangeTurf(/turf/space)
-		gain = 2
+		if(pick(1,0))
+			T.ChangeTurf(/turf/space)
+			gain = 3
 	src.energy += gain
 	return
 
