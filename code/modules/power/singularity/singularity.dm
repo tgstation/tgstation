@@ -138,7 +138,7 @@ var/global/list/uneatable = list(
 			icon_state = "singularity_s1"
 			pixel_x = 0
 			pixel_y = 0
-			grav_pull = 4
+			grav_pull = 3
 			consume_range = 0
 			dissipate_delay = 10
 			dissipate_track = 0
@@ -149,7 +149,7 @@ var/global/list/uneatable = list(
 			icon_state = "singularity_s3"
 			pixel_x = -32
 			pixel_y = -32
-			grav_pull = 6
+			grav_pull = 5
 			consume_range = 1
 			dissipate_delay = 5
 			dissipate_track = 0
@@ -161,7 +161,7 @@ var/global/list/uneatable = list(
 				icon_state = "singularity_s5"
 				pixel_x = -64
 				pixel_y = -64
-				grav_pull = 8
+				grav_pull = 7
 				consume_range = 2
 				dissipate_delay = 4
 				dissipate_track = 0
@@ -173,7 +173,7 @@ var/global/list/uneatable = list(
 				icon_state = "singularity_s7"
 				pixel_x = -96
 				pixel_y = -96
-				grav_pull = 10
+				grav_pull = 9
 				consume_range = 3
 				dissipate_delay = 10
 				dissipate_track = 0
@@ -184,7 +184,7 @@ var/global/list/uneatable = list(
 			icon_state = "singularity_s9"
 			pixel_x = -128
 			pixel_y = -128
-			grav_pull = 10
+			grav_pull = 11
 			consume_range = 4
 			dissipate = 0 //It cant go smaller due to e loss
 	if(current_size == allowed_size)
@@ -232,8 +232,14 @@ var/global/list/uneatable = list(
 
 		var/dist = get_dist(X, src)
 
+
+
+
+
 		// Movable atoms only
 		if(dist > consume_range && istype(X, /atom/movable))
+
+
 			if(canPull(X))
 			/////////////////////////////////////////////////////////////////////////////////////////////////////////////test
 				//world << "<font size='1' color='red'><b>[X.type]/b></font>" //debugging
