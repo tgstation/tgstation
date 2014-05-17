@@ -62,6 +62,7 @@
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
+	var/media_base_url = "" // http://ss13.nexisonline.net/media.
 
 	//game_options.txt configs
 	var/force_random_names = 0
@@ -121,7 +122,7 @@
 
 	var/sandbox_autoclose = 0 // close the sandbox panel after spawning an item, potentially reducing griff
 
-	var/default_laws = 0 //Controls what laws the AI spawns with.
+	var/default_laws = 0 //Controls what laws the AI spawns with
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -262,6 +263,8 @@
 					Tickcomp = 1
 				if("automute_on")
 					automute_on = 1
+				if("media_base_url")
+					media_base_url = value
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

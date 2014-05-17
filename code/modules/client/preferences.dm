@@ -81,6 +81,8 @@ datum/preferences
 	var/metadata = ""
 
 	var/unlock_content = 0
+		// Media volume
+	var/volume = 50
 
 /datum/preferences/New(client/C)
 	blood_type = random_blood_type()

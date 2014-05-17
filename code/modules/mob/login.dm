@@ -48,3 +48,4 @@
 		var/obj/Loc=loc
 		Loc.on_log()
 
+	CallHook("Login", list("client" = src.client, "mob" = src))

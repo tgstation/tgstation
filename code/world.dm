@@ -46,6 +46,7 @@
 	appearance_loadbanfile()
 	jobban_updatelegacybans()
 	LoadBans()
+	SetupHooks()
 	investigate_reset()
 
 	if(config && config.server_name != null && config.server_suffix && world.port > 0)

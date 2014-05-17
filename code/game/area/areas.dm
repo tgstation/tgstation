@@ -259,12 +259,19 @@
 
 	if(!L.lastarea)
 		L.lastarea = get_area(L.loc)
+		if(L.lastarea.master)
+			L.lastarea = L.lastarea.master
 	var/area/newarea = get_area(L.loc)
+	if(newarea.master)
+		newarea = newarea.master
 	var/area/oldarea = L.lastarea
 	if((oldarea.has_gravity == 0) && (newarea.has_gravity == 1) && (L.m_intent == "run")) // Being ready when you change areas gives you a chance to avoid falling all together.
 		thunk(L)
 
 	L.lastarea = newarea
+
+	// /vg/ - EVENTS!
+	CallHook("MobAreaChange", list("mob" = L, "new" = newarea, "old" = oldarea))
 
 	// Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
 	if(!(L && L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))	return

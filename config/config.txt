@@ -144,3 +144,7 @@ TICKCOMP 0
 
 ## Comment this out to disable automuting
 #AUTOMUTE_ON
+##Media URL
+##The base URL of your media library. DO NOT ADD THE SLASH AT THE END!
+##Must be publically accessible.
+http://ss13.nexisonline.net/media
