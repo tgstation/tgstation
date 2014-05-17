@@ -387,3 +387,14 @@ proc/isInSight(var/atom/A, var/atom/B)
 	var/dest_y = src_y + distance*cos(rotation);
 
 	return new /datum/projectile_data(src_x, src_y, time, distance, power_x, power_y, dest_x, dest_y)
+
+/proc/mobs_in_area(var/area/the_area, var/client_needed=0, var/moblist=mob_list)
+	var/list/mobs_found[0]
+	var/area/our_area = get_area_master(the_area)
+	for(var/mob/M in moblist)
+		if(client_needed && !M.client)
+			continue
+		if(our_area != get_area_master(M))
+			continue
+		mobs_found += M
+	return mobs_found

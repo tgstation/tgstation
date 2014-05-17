@@ -62,6 +62,7 @@
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
+	var/media_base_url = "" // http://ss13.nexisonline.net/media
 
 	//game_options.txt configs
 	var/force_random_names = 0
@@ -271,6 +272,8 @@
 					global.comms_key = value
 					if(value != "default_pwd" && length(value) > 6) //It's the default value or less than 6 characters long, warn badmins
 						global.comms_allowed = 1
+				if("media_base_url")
+					media_base_url = value
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
