@@ -314,12 +314,3 @@
 		spawn(50)
 			if(O)	qdel(O)
 	return
-
-/turf/simulated/wall/meteorhit(obj/M as obj)
-	if (prob(15))
-		dismantle_wall()
-	else if(prob(70))
-		ChangeTurf(/turf/simulated/floor/plating)
-	else
-		ReplaceWithLattice()
-	return 0
