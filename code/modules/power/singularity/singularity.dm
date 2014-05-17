@@ -231,9 +231,36 @@ var/global/list/uneatable = list(
 		// Movable atoms only
 		if(dist > consume_range && istype(X, /atom/movable))
 			if(canPull(X))
-				step_towards(X,src)
+			/////////////////////////////////////////////////////////////////////////////////////////////////////////////test
+				//world << "<font size='1' color='red'><b>[X.type]/b></font>" //debugging
+				if(istype(X, /mob))
+
+					if(pick(0,1))
+						step_towards(X,src)
+						if(prob(10))
+							consume(X) //sometimes you get unlucky, gravitation corona effect or some such
+
+
+				else
+
+
+				//some sort of event horizon effect yea? it all makes sense.....shhhh....it all makes sense....
+					if(pick(0,1))
+						var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+						s.set_up(1, 1, X.loc)
+						s.start()
+						consume(X)
+
+
+
+
+
+				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 		// Turf and movable atoms
 		else if(dist <= consume_range && (isturf(X) || istype(X, /atom/movable)))
+
 			consume(X)
 
 	if(defer_powernet_rebuild != 2)
