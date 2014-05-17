@@ -36,7 +36,7 @@
 
 			T.set_angle(angle)
 
-	lastAngleUpdate = angle
+	lastAngle = angle
 
 	if (!round(time / nextTime))
 		return
