@@ -16,6 +16,7 @@
 #include "code\setup.dm"
 #include "code\stylesheet.dm"
 #include "code\world.dm"
+#include "code\game\machinery\kinetic_accelerator.dm"
 #include "code\__HELPERS\experimental.dm"
 #include "code\__HELPERS\files.dm"
 #include "code\__HELPERS\game.dm"
