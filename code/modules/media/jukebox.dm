@@ -175,7 +175,7 @@ var/global/loopModeNames=list(
 		current_song=0
 		if(!emagged)
 			playlist_id = "emagged"
-			last_reload=world.realtime
+			last_reload=world.time
 			playlist=null
 			loop_mode = JUKEMODE_SHUFFLE
 			emagged = 1
@@ -213,7 +213,7 @@ var/global/loopModeNames=list(
 			usr << "\red You must wait 60 seconds between playlist reloads."
 			return
 		playlist_id=href_list["playlist"]
-		last_reload=world.realtime
+		last_reload=world.time
 		playlist=null
 		current_song=0
 		update_music()
@@ -263,7 +263,7 @@ var/global/loopModeNames=list(
 		var/datum/song_info/song
 		if(current_song)
 			song = playlist[current_song]
-		if(!current_song || (song && world.realtime >= media_start_time + song.length))
+		if(!current_song || (song && world.time >= media_start_time + song.length))
 			current_song=1
 			switch(loop_mode)
 				if(JUKEMODE_SHUFFLE)
@@ -280,7 +280,7 @@ var/global/loopModeNames=list(
 	if(current_song && playing)
 		var/datum/song_info/song = playlist[current_song]
 		media_url = song.url
-		media_start_time = world.realtime
+		media_start_time = world.time
 		visible_message("<span class='notice'>\icon[src] \The [src] begins to play [song.display()].</span>","<em>You hear music.</em>")
 		//visible_message("<span class='notice'>\icon[src] \The [src] warbles: [song.length/10]s @ [song.url]</notice>")
 	else
