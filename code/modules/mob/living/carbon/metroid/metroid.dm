@@ -68,7 +68,7 @@
 
 /mob/living/carbon/slime/regenerate_icons()
 	icon_state = "[colour] [is_adult ? "adult" : "baby"] slime"
-	overlays.Cut()
+	overlays = 0
 	if (mood)
 		overlays += image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]")
 	..()
@@ -290,7 +290,8 @@
 		updatehealth()
 
 /mob/living/carbon/slime/attack_paw(mob/living/carbon/monkey/M as mob)
-	if(!(istype(M, /mob/living/carbon/monkey))) return // Fix for aliens receiving double messages when attacking other aliens.
+	if(!(istype(M, /mob/living/carbon/monkey)))
+		return // Fix for aliens receiving double messages when attacking other aliens.
 
 	if (!ticker)
 		M << "You cannot attack people before the game has started."

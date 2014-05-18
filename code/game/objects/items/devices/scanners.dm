@@ -314,8 +314,8 @@ MASS SPECTROMETER
 	throw_range = 7
 	m_amt = 30
 	g_amt = 20
-	
-	attack(mob/living/M as mob, mob/living/user as mob)
+
+/obj/item/device/slime_scanner/attack(mob/living/M as mob, mob/living/user as mob)
 		if (!isslime(M))
 			user << "This device can only scan slimes!"
 			return

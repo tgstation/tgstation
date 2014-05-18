@@ -193,9 +193,11 @@
 
 	else if(src.health < config.health_threshold_crit)
 
-		if(!src.reagents.has_reagent("inaprovaline")) src.adjustOxyLoss(10)
+		if(!src.reagents.has_reagent("inaprovaline"))
+			src.adjustOxyLoss(10)
 
-		if(src.stat != DEAD) src.stat = UNCONSCIOUS
+		if(src.stat != DEAD)
+			src.stat = UNCONSCIOUS
 
 	if(prob(30))
 		adjustOxyLoss(-1)
@@ -367,7 +369,8 @@
 
 			if (Target)
 				target_patience = rand(5,7)
-				if (is_adult) target_patience += 3
+				if (is_adult)
+					target_patience += 3
 
 		if(!Target) // If we have no target, we are wandering or following orders
 			if (Leader)
@@ -388,7 +391,8 @@
 				else if(canmove && isturf(loc) && prob(33))
 					step(src, pick(cardinal))
 		else if(!AIproc)
-			spawn() AIprocess()
+			spawn()
+				AIprocess()
 
 /mob/living/carbon/slime/proc/handle_speech_and_mood()
 	//Mood starts here
@@ -523,7 +527,6 @@
 			if (Victim)
 				phrases += "Nom..."
 				phrases += "Tasty..."
-			if (amount_grown > 8 && !is_adult) phrases += "Soon I'll evolve..."
 			if (powerlevel > 3) phrases += "Bzzz..."
 			if (powerlevel > 5) phrases += "Zap..."
 			if (powerlevel > 8) phrases += "Zap... Bzz..."
