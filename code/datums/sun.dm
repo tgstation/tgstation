@@ -7,9 +7,10 @@
 
 	// Replacement for var/counter to force the sun to move every X IC minutes.
 	// To prevent excess server load the server only updates the sun's sight lines by minute(s).
-	// 600 value = 1 minute.
-	var/nextTime = 600
+	// 600 = 1 minute.
+	var/updatePer = 600
 
+	var/nextTime
 	var/lastAngle = 0
 
 /datum/sun/New()
@@ -18,6 +19,8 @@
 
 	if (prob(50))
 		rate = -rate
+
+	nextTime = updatePer
 
 /*
  * Calculate the sun's position given the time of day.
@@ -41,7 +44,7 @@
 	if (!round(time / nextTime))
 		return
 
-	nextTime *= 2
+	nextTime += updatePer
 
 	// Now calculate and cache the (dx,dy) increments for line drawing.
 	var/si = sin(angle)

@@ -1,3 +1,7 @@
+
+
+
+
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 // Added spess ghoasts/cameras to this so they don't add to the lag. - N3X
@@ -134,7 +138,7 @@ var/global/list/uneatable = list(
 			icon_state = "singularity_s1"
 			pixel_x = 0
 			pixel_y = 0
-			grav_pull = 4
+			grav_pull = 3
 			consume_range = 0
 			dissipate_delay = 10
 			dissipate_track = 0
@@ -145,7 +149,7 @@ var/global/list/uneatable = list(
 			icon_state = "singularity_s3"
 			pixel_x = -32
 			pixel_y = -32
-			grav_pull = 6
+			grav_pull = 5
 			consume_range = 1
 			dissipate_delay = 5
 			dissipate_track = 0
@@ -157,7 +161,7 @@ var/global/list/uneatable = list(
 				icon_state = "singularity_s5"
 				pixel_x = -64
 				pixel_y = -64
-				grav_pull = 8
+				grav_pull = 7
 				consume_range = 2
 				dissipate_delay = 4
 				dissipate_track = 0
@@ -169,7 +173,7 @@ var/global/list/uneatable = list(
 				icon_state = "singularity_s7"
 				pixel_x = -96
 				pixel_y = -96
-				grav_pull = 10
+				grav_pull = 9
 				consume_range = 3
 				dissipate_delay = 10
 				dissipate_track = 0
@@ -180,7 +184,7 @@ var/global/list/uneatable = list(
 			icon_state = "singularity_s9"
 			pixel_x = -128
 			pixel_y = -128
-			grav_pull = 10
+			grav_pull = 11
 			consume_range = 4
 			dissipate = 0 //It cant go smaller due to e loss
 	if(current_size == allowed_size)
@@ -228,12 +232,45 @@ var/global/list/uneatable = list(
 
 		var/dist = get_dist(X, src)
 
+
+
+
+
 		// Movable atoms only
 		if(dist > consume_range && istype(X, /atom/movable))
+
+
 			if(canPull(X))
-				step_towards(X,src)
+			/////////////////////////////////////////////////////////////////////////////////////////////////////////////test
+				//world << "<font size='1' color='red'><b>[X.type]/b></font>" //debugging
+				if(istype(X, /mob))
+
+					if(pick(0,1))
+						step_towards(X,src)
+						//if(prob(10))
+						//	consume(X) //sometimes you get unlucky, gravitation corona effect or some such.......... (apparently players dont want to die, who knew?)
+
+
+				else
+
+
+				//some sort of event horizon effect yea? it all makes sense.....shhhh....it all makes sense....
+					if(pick(0,1))
+						var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+						s.set_up(1, 1, X.loc)
+						s.start()
+						consume(X)
+
+
+
+
+
+				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 		// Turf and movable atoms
 		else if(dist <= consume_range && (isturf(X) || istype(X, /atom/movable)))
+
 			consume(X)
 
 	if(defer_powernet_rebuild != 2)
@@ -299,8 +336,12 @@ var/global/list/uneatable = list(
 					continue
 				if(O.invisibility == 101)
 					src.consume(O)
-		T.ChangeTurf(/turf/space)
-		gain = 2
+
+
+		//////////////////////////////////////////////////////////////////////////////////////break this up
+		if(pick(1,0))
+			T.ChangeTurf(/turf/space)
+			gain = 3
 	src.energy += gain
 	return
 
