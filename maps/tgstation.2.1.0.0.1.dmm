@@ -6618,7 +6618,7 @@
 "cxn" = (/obj/machinery/computer/general_air_control/atmos_automation/burnchamber,/obj/effect/decal/warning_stripes{icon_state = "old"; dir = 5},/turf/simulated/floor{icon_state = "dark"},/area/engineering/burn_chamber)
 "cxo" = (/obj/machinery/door_control{desc = "Lets all the hot gas out very quickly."; id_tag = "Burn Chamber Vent"; name = "Burn Chamber Vent"; pixel_x = -7; pixel_y = 32; req_access_txt = "0"},/obj/machinery/ignition_switch{id_tag = "Burn Chamber Igniter"; pixel_x = 6; pixel_y = 32},/turf/simulated/floor,/area/engineering/burn_chamber)
 "cxp" = (/obj/machinery/atmospherics/binary/pump{name = "Hot Fill Pump"},/turf/simulated/floor/plating,/area/engineering/burn_chamber)
-"cxq" = (/obj/machinery/atmospherics/pipe/simple/general/hidden,/obj/machinery/atmospherics/binary/pump{name = "Cold Fill Pump"},/turf/simulated/floor/plating,/area/engineering/burn_chamber)
+"cxq" = (/obj/machinery/atmospherics/binary/pump{name = "Cold Fill Pump"},/turf/simulated/floor/plating,/area/engineering/burn_chamber)
 "cxr" = (/obj/machinery/power/smes,/obj/machinery/light{dir = 8},/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor,/area/engineering/engine)
 "cxs" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/machinery/atmospherics/unary/vent_scrubber{dir = 4; on = 1},/turf/simulated/floor,/area/engineering/engine)
 "cxt" = (/obj/machinery/atmospherics/pipe/simple/insulated/hidden{dir = 1},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/floor{icon_state = "red"; dir = 4},/area/engineering/engine)
