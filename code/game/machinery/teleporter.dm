@@ -12,8 +12,12 @@
 
 /obj/machinery/computer/teleporter/New()
 	src.id = "[rand(1000, 9999)]"
+	link_power_station()
 	..()
 	return
+
+/obj/machinery/computer/teleporter/initialize()
+	link_power_station()
 
 /obj/machinery/computer/teleporter/proc/link_power_station()
 	if(power_station)
@@ -198,6 +202,9 @@
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	RefreshParts()
 
+/obj/machinery/teleport/hub/initialize()
+	link_power_station()
+
 /obj/machinery/teleport/hub/RefreshParts()
 	var/A = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
@@ -214,10 +221,9 @@
 	return power_station
 
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
-	spawn()
-		if(power_station && power_station.engaged && !panel_open)
-			teleport(M)
-			use_power(5000)
+	if(power_station && power_station.engaged && !panel_open)
+		teleport(M)
+		use_power(5000)
 	return
 
 /obj/machinery/teleport/hub/attackby(obj/item/W, mob/user)
@@ -237,18 +243,16 @@
 		visible_message("<span class='notice'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
 		return
 	if (istype(M, /atom/movable))
-		if(prob(30 - (accurate * 10))) //oh dear a problem
-			do_teleport(M, com.target)
-			if(ishuman(M))//don't remove people from the round randomly you jerks
-				var/mob/living/carbon/human/human = M
-				if(human.dna && !human.dna.mutantrace)
-					M  << "<span class='danger'>You hear a buzzing in your ears.</span>"
-					human.dna.mutantrace = "fly"
-					human.update_body()
-					human.update_hair()
-				human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
-		else
-			do_teleport(M, com.target)
+		if(do_teleport(M, com.target))
+			if(prob(30 - (accurate * 10))) //oh dear a problem
+				if(ishuman(M))//don't remove people from the round randomly you jerks
+					var/mob/living/carbon/human/human = M
+					if(human.dna && !human.dna.mutantrace)
+						M  << "<span class='danger'>You hear a buzzing in your ears.</span>"
+						human.dna.mutantrace = "fly"
+						human.update_body()
+						human.update_hair()
+					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
 	return
 
 /obj/machinery/teleport/hub/update_icon()
@@ -282,6 +286,10 @@
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	RefreshParts()
+	link_console_and_hub()
+
+/obj/machinery/teleport/station/initialize()
+	link_console_and_hub()
 
 /obj/machinery/teleport/station/RefreshParts()
 	var/E

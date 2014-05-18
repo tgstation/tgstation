@@ -1019,12 +1019,13 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/under/rank/clown,
 					/obj/item/weapon/bikehorn,
 					/obj/item/clothing/under/mime,
-					/obj/item/clothing/shoes/black,
+					/obj/item/clothing/shoes/sneakers/black,
 					/obj/item/clothing/gloves/white,
 					/obj/item/clothing/mask/gas/mime,
 					/obj/item/clothing/head/beret,
 					/obj/item/clothing/suit/suspenders,
-					/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing)
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing,
+					/obj/item/weapon/storage/backpack/mime)
 	cost = 10
 	containertype = /obj/structure/closet/crate/secure
 	containername = "standard costumes"

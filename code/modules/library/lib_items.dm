@@ -43,12 +43,12 @@
 				playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 				if(do_after(user, 20))
 					user << "<span class='notice'>You pry the frame apart.</span>"
-					new /obj/item/stack/sheet/wood(loc, 4)
+					new /obj/item/stack/sheet/mineral/wood(loc, 4)
 					qdel(src)
 
 		if(1)
-			if(istype(I, /obj/item/stack/sheet/wood))
-				var/obj/item/stack/sheet/wood/W = I
+			if(istype(I, /obj/item/stack/sheet/mineral/wood))
+				var/obj/item/stack/sheet/mineral/wood/W = I
 				W.use(2)
 				user << "<span class='notice'>You add a shelf.</span>"
 				state = 2
@@ -83,7 +83,7 @@
 				else
 					playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 					user << "<span class='notice'>You pry the shelf out.</span>"
-					new /obj/item/stack/sheet/wood(loc, 1)
+					new /obj/item/stack/sheet/mineral/wood(loc, 1)
 					state = 1
 					icon_state = "bookempty"
 			else
@@ -210,7 +210,9 @@
 	if(carved)
 		if(!store)
 			if(I.w_class < 3)
-				user.drop_item()
+				if(!user.drop_item())
+					user << "<span class='notice'>\The [I] is stuck to your hand, you cannot put it in [title]!</span>"
+					return
 				I.loc = src
 				store = I
 				user << "<span class='notice'>You put [I] in [title].</span>"

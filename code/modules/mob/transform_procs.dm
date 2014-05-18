@@ -304,6 +304,7 @@
 
 	O.loc = loc
 	O.job = "Cyborg"
+	O.notify_ai(1)
 
 	O.mmi = new /obj/item/device/mmi(O)
 	O.mmi.transfer_identity(src)//Does not transfer key/client.

@@ -26,10 +26,10 @@
 				return
 
 			if (!network)
-				world.log << "A computer lacks a network at [x],[y],[z]."
+				ERROR("A computer lacks a network at [x],[y],[z].")
 				return
 			if (!(istype(network,/list)))
-				world.log << "The computer at [x],[y],[z] has a network that is not a list!"
+				ERROR("The computer at [x],[y],[z] has a network that is not a list!")
 				return
 
 			if(..())

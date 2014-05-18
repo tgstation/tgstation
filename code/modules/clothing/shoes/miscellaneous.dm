@@ -7,7 +7,7 @@
 	flags = NOSLIP
 	origin_tech = "syndicate=3"
 
-/obj/item/clothing/shoes/mime
+/obj/item/clothing/shoes/sneakers/mime
 	name = "mime shoes"
 	icon_state = "mime"
 	item_color = "mime"

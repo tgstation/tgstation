@@ -292,8 +292,9 @@ AI MODULES
 		laws += line
 
 	if(!laws.len) //Failsafe if something goes wrong with silicon_laws.txt.
-		warning("ERROR: empty custom board created, empty custom board deleted. Please check silicon_laws.txt.")
+		WARNING("ERROR: empty custom board created, empty custom board deleted. Please check silicon_laws.txt. (this may be intended by the server host)")
 		qdel(src)
+
 
 /****************** T.Y.R.A.N.T. *****************/
 

@@ -28,9 +28,6 @@ Note: Must be placed within 3 tiles of the R&D Console
 		T += S.rating
 	decon_mod = T
 
-/obj/machinery/r_n_d/destructive_analyzer/meteorhit()
-	qdel(src)
-	return
 
 /obj/machinery/r_n_d/destructive_analyzer/proc/ConvertReqString2List(var/list/source_list)
 	var/list/temp_list = params2list(source_list)
@@ -69,9 +66,11 @@ Note: Must be placed within 3 tiles of the R&D Console
 		if (temp_tech.len == 0)
 			user << "<span class='warning'> You cannot deconstruct this item!</span>"
 			return
+		if(!user.drop_item())
+			user << "<span class='notice'>\The [O] is stuck to your hand, you cannot put it in the analyzer!</span>"
+			return
 		busy = 1
 		loaded_item = O
-		user.drop_item()
 		O.loc = src
 		user << "<span class='notice'>You add the [O.name] to the machine!</span>"
 		flick("d_analyzer_la", src)

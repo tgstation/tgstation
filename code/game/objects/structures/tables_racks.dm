@@ -708,7 +708,9 @@ Destroy type values:
 		return
 	if(isrobot(user))
 		return
-	user.drop_item()
+	if(!user.drop_item())
+		user << "<span class='notice'>\The [O] is stuck to your hand, you cannot put it in the rack!</span>"
+		return
 	if (O.loc != src.loc)
 		step(O, get_dir(O, src))
 	return
@@ -722,12 +724,11 @@ Destroy type values:
 
 	if(isrobot(user))
 		return
-	user.drop_item()
+	if(!user.drop_item())
+		user << "<span class='notice'>\The [W] is stuck to your hand, you cannot put it in the rack!</span>"
+		return
 	if(W && W.loc)	W.loc = src.loc
 	return 1
-
-/obj/structure/rack/meteorhit(obj/O as obj)
-	qdel(src)
 
 
 /obj/structure/rack/attack_hand(mob/user)

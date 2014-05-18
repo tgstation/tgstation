@@ -15,6 +15,7 @@ var/bomb_set
 	var/safety = 1.0
 	var/obj/item/weapon/disk/nuclear/auth = null
 	use_power = 0
+	var/previous_level = ""
 
 /obj/machinery/nuclearbomb/New()
 	..()
@@ -117,11 +118,15 @@ var/bomb_set
 					src.icon_state = "nuclearbomb2"
 					if(!src.safety)
 						bomb_set = 1//There can still be issues with this reseting when there are multiple bombs. Not a big deal tho for Nuke/N
+						src.previous_level = "[get_security_level()]"
+						set_security_level("delta")
 					else
 						bomb_set = 0
+						set_security_level("[previous_level]")
 				else
 					src.icon_state = "nuclearbomb1"
 					bomb_set = 0
+					set_security_level("[previous_level]")
 			if (href_list["safety"])
 				src.safety = !( src.safety )
 				src.icon_state = "nuclearbomb1"

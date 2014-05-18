@@ -45,12 +45,6 @@
 		qdel(src)
 
 
-/obj/structure/displaycase/meteorhit(obj/O as obj)
-		new /obj/item/weapon/shard( src.loc )
-		new /obj/item/weapon/gun/energy/laser/captain( src.loc )
-		qdel(src)
-
-
 /obj/structure/displaycase/proc/healthcheck()
 	if (src.health <= 0)
 		if (!( src.destroyed ))

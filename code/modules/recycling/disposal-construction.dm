@@ -171,24 +171,6 @@
 			return
 
 		var/obj/structure/disposalpipe/CP = locate() in T
-		if(ptype>=6 && ptype <= 8) // Disposal or outlet
-			if(CP) // There's something there
-				if(!istype(CP,/obj/structure/disposalpipe/trunk))
-					user << "The [nicetype] requires a trunk underneath it in order to work."
-					return
-			else // Nothing under, fuck.
-				user << "The [nicetype] requires a trunk underneath it in order to work."
-				return
-		else
-			if(CP)
-				update()
-				var/pdir = CP.dpdir
-				if(istype(CP, /obj/structure/disposalpipe/broken))
-					pdir = CP.dir
-				if(pdir & dpdir)
-					user << "There is already a [nicetype] at that location."
-					return
-
 
 		if(istype(I, /obj/item/weapon/wrench))
 			if(anchored)
@@ -200,6 +182,23 @@
 					density = 1
 				user << "You detach the [nicetype] from the underfloor."
 			else
+				if(ptype>=6 && ptype <= 8) // Disposal or outlet
+					if(CP) // There's something there
+						if(!istype(CP,/obj/structure/disposalpipe/trunk))
+							user << "The [nicetype] requires a trunk underneath it in order to work."
+							return
+					else // Nothing under, fuck.
+						user << "The [nicetype] requires a trunk underneath it in order to work."
+						return
+				else
+					if(CP)
+						update()
+						var/pdir = CP.dpdir
+						if(istype(CP, /obj/structure/disposalpipe/broken))
+							pdir = CP.dir
+						if(pdir & dpdir)
+							user << "There is already a [nicetype] at that location."
+							return
 				anchored = 1
 				if(ispipe)
 					level = 1 // We don't want disposal bins to disappear under the floors

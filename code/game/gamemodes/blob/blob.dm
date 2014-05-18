@@ -111,7 +111,7 @@ var/list/blob_nodes = list()
 		if(B)
 			B.max_occurrences = 0 // disable the event
 	else
-		error("Events variable is null in blob gamemode post setup.")
+		ERROR("Events variable is null in blob gamemode post setup.")
 
 	spawn(10)
 		start_state = new /datum/station_state()
@@ -156,10 +156,7 @@ var/list/blob_nodes = list()
 			return
 
 		if (1)
-			command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-			for(var/mob/M in player_list)
-				if(!istype(M,/mob/new_player))
-					M << sound('sound/AI/outbreak5.ogg')
+			priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/AI/outbreak5.ogg')
 			return
 
 	return

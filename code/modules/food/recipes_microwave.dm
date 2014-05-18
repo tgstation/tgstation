@@ -54,6 +54,7 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/burger/human/HB = ..(container)
 		HB.name = human_name+HB.name
 		HB.job = human_job
+		return HB
 
 	reagents = list("flour" = 5)
 	items = list(
