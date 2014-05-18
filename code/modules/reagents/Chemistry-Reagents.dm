@@ -218,7 +218,7 @@ datum
 					T.MakeSlippery()
 
 				for(var/mob/living/carbon/slime/M in T)
-					M.adjustToxLoss(rand(15,20))
+					M.apply_water()
 
 				var/hotspot = (locate(/obj/effect/hotspot) in T)
 				if(hotspot && !istype(T, /turf/space))

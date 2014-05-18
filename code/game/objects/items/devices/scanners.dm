@@ -301,3 +301,47 @@ MASS SPECTROMETER
 	icon_state = "adv_spectrometer"
 	details = 1
 	origin_tech = "magnets=4;biotech=2"
+
+/obj/item/device/slime_scanner
+	name = "slime scanner"
+	icon_state = "adv_spectrometer"
+	item_state = "analyzer"
+	origin_tech = "biotech=1"
+	w_class = 2.0
+	flags = CONDUCT
+	throwforce = 0
+	throw_speed = 3
+	throw_range = 7
+	m_amt = 30
+	g_amt = 20
+
+/obj/item/device/slime_scanner/attack(mob/living/M as mob, mob/living/user as mob)
+	if (!isslime(M))
+		user << "<B>This device can only scan slimes!</B>"
+		return
+	var/mob/living/carbon/slime/T = M
+	user.show_message("Slime scan results:")
+	user.show_message(text("[T.colour] [] slime", T.is_adult ? "adult" : "baby"))
+	user.show_message(text("Nutrition: [T.nutrition]/[]", T.get_max_nutrition()))
+	if (T.nutrition < T.get_starve_nutrition())
+		user.show_message("<span class='alert'>Warning: slime is starving!</span>")
+	else if (T.nutrition < T.get_hunger_nutrition())
+		user.show_message("<span class='warning'>Warning: slime is hungry</span>")
+	user.show_message("Electric change strength: [T.powerlevel]")
+	user.show_message("Health: [T.health]")
+	if (T.slime_mutation[4] == T.colour)
+		user.show_message("This slime does not evolve any further")
+	else
+		if (T.slime_mutation[3] == T.slime_mutation[4])
+			if (T.slime_mutation[2] == T.slime_mutation[1])
+				user.show_message(text("Possible mutation: []", T.slime_mutation[3]))
+				user.show_message("Genetic destability: [T.mutation_chance/2]% chance of mutation on splitting")
+			else
+				user.show_message(text("Possible mutations: [], [], [] (x2)", T.slime_mutation[1], T.slime_mutation[2], T.slime_mutation[3]))
+				user.show_message("Genetic destability: [T.mutation_chance]% chance of mutation on splitting")
+		else
+			user.show_message(text("Possible mutations: [], [], [], []", T.slime_mutation[1], T.slime_mutation[2], T.slime_mutation[3], T.slime_mutation[4]))
+			user.show_message("Genetic destability: [T.mutation_chance]% chance of mutation on splitting")
+	if (T.cores > 1)
+		user.show_message("Anomalious slime core amount detected")
+	user.show_message("Growth progress: [T.amount_grown]/10")

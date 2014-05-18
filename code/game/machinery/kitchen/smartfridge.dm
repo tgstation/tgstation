@@ -300,7 +300,16 @@ obj/machinery/smartfridge/drying_rack/load() //For updating the filled overlay
 /obj/machinery/smartfridge/extract/accept_check(var/obj/item/O as obj)
 	if(istype(O,/obj/item/slime_extract))
 		return 1
+	if(istype(O,/obj/item/device/slime_scanner))
+		return 1
 	return 0
+
+/obj/machinery/smartfridge/extract/New()
+	..()
+	var/obj/item/device/slime_scanner/I = new /obj/item/device/slime_scanner(src)
+	load(I)
+	var/obj/item/device/slime_scanner/T = new /obj/item/device/slime_scanner(src)
+	load(T)
 
 // -----------------------------
 // Chemistry Medical Smartfridge
