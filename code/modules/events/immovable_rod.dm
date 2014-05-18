@@ -94,6 +94,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 	else if (istype(clong, /mob))
 		if(clong.density || prob(10))
-			clong.meteorhit(src)
+			clong.ex_act(2)
 	else
 		qdel(src)

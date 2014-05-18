@@ -730,9 +730,6 @@ Destroy type values:
 	if(W && W.loc)	W.loc = src.loc
 	return 1
 
-/obj/structure/rack/meteorhit(obj/O as obj)
-	qdel(src)
-
 
 /obj/structure/rack/attack_hand(mob/user)
 	if(HULK in user.mutations)
