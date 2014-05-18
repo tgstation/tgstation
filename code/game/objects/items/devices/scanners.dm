@@ -317,7 +317,7 @@ MASS SPECTROMETER
 
 /obj/item/device/slime_scanner/attack(mob/living/M as mob, mob/living/user as mob)
 	if (!isslime(M))
-		user << "This device can only scan slimes!"
+		user << "<B>This device can only scan slimes!</B>"
 		return
 	var/mob/living/carbon/slime/T = M
 	user.show_message("Slime scan results:")
