@@ -611,10 +611,14 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 	stage = 3
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		var/mob/living/carbon/human/H = mob
-		mob.reagents.add_reagent("dexalinp", 200)
-		mob.reagents.add_reagent("leporazine", 200)
-		mob.reagents.add_reagent("bicaridine", 200)
-		mob.reagents.add_reagent("dermaline", 200)
+		if (mob.reagents.get_reagent_amount("dexalinp") < 10)
+			mob.reagents.add_reagent("dexalinp", 4)
+		if (mob.reagents.get_reagent_amount("leporazine") < 10)
+			mob.reagents.add_reagent("leporazine", 4)
+		if (mob.reagents.get_reagent_amount("bicaridine") < 10)
+			mob.reagents.add_reagent("bicaridine", 4)
+		if (mob.reagents.get_reagent_amount("dermaline") < 10)
+			mob.reagents.add_reagent("dermaline", 4)
 		mob.emote("me",1,"exhales slowly.")
 
 		var/datum/organ/external/chest/chest = H.get_organ("chest")
@@ -838,4 +842,5 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 	stage = 1
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob << "<span class = 'notice'> You feel optimistic!</span>"
-		mob.reagents.add_reagent("tricordazine", 1)
+		if (mob.reagents.get_reagent_amount("tricordazine") < 1)
+			mob.reagents.add_reagent("tricordazine", 1)
