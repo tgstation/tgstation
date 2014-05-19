@@ -158,38 +158,6 @@
 	throw_speed = 3
 	throw_range = 7
 	w_class = 3.0
-	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked") //I think the rollingpin attackby will end up ignoring this anyway.
-
-/obj/item/weapon/kitchen/rollingpin/attack(mob/living/M as mob, mob/living/user as mob)
-	if ((CLUMSY in user.mutations) && prob(50))
-		user << "<span class='danger'>The [src] slips out of your hand and hits your head.</span>"
-		user.take_organ_damage(10)
-		user.Paralyse(2)
-		return
-
-	add_logs(user, M, "attacked", object="[src.name]")
-
-	var/t = user:zone_sel.selecting
-	if (t == "head")
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if (H.stat < 2 && H.health < 50 && prob(90))
-				// ******* Check
-				if (istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80))
-					H << "<span class='danger'> The helmet protects you from being hit hard in the head!</span>"
-					return
-				var/time = rand(2, 6)
-				if (prob(75))
-					H.Paralyse(time)
-				else
-					H.Stun(time)
-				if(H.stat != 2)	H.stat = 1
-				user.visible_message("<span class='danger'>[H] has been knocked unconscious!</span>", "<span class='userdanger'>You knock [H] unconscious!</span>")
-				return
-			else
-				H.visible_message("<span class='danger'> [user] tried to knock [H] unconscious!</span>", "<span class='danger'> [user] tried to knock you unconscious!</span>")
-				H.eye_blurry += 3
-
-	return ..()
+	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
 /* Trays moved to /obj/item/weapon/storage/bag */
