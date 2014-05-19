@@ -14,7 +14,7 @@
 		if(C!=src && !istype(C,/mob/living/carbon/slime) && Adjacent(C))
 			choices += C
 
-	var/mob/living/carbon/M = input(src,"Who do you wish to feed on?") in null|choices
+	var/mob/living/M = input(src,"Who do you wish to feed on?") in null|choices
 	if(!M) return
 	if(Adjacent(M))
 
@@ -42,12 +42,13 @@
 
 
 
-/mob/living/carbon/slime/proc/Feedon(var/mob/living/carbon/M)
+/mob/living/carbon/slime/proc/Feedon(var/mob/living/M)
 	Victim = M
 	src.loc = M.loc
 	canmove = 0
 	anchored = 1
 	var/lastnut = nutrition
+	var/fed_succesfully = 0
 	//if(M.client) M << "\red You legs become paralyzed!"
 	if(is_adult)
 		icon_state = "[colour] adult slime eat"
@@ -70,40 +71,22 @@
 				"You feel extremely weak!", \
 				"A sharp, deep pain bathes every inch of your body!")]"
 
+			if(Victim)
+				for(var/mob/living/carbon/slime/slime in view(1,M))
+					if(slime.Victim == M && slime != src)
+						slime.Feedstop()
+
 			if(istype(M, /mob/living/carbon))
 				Victim.adjustCloneLoss(rand(5,6))
 				Victim.adjustToxLoss(rand(1,2))
 				if(Victim.health <= 0)
 					Victim.adjustToxLoss(rand(2,4))
 
-				// Heal yourself
-				adjustToxLoss(-10)
-				adjustOxyLoss(-10)
-				adjustBruteLoss(-10)
-				adjustFireLoss(-10)
-				adjustCloneLoss(-10)
+				fed_succesfully = 1
 
-				if(Victim)
-					for(var/mob/living/carbon/slime/slime in view(1,M))
-						if(slime.Victim == M && slime != src)
-							slime.Feedstop()
-
-				nutrition += rand(15,30)
-				if(nutrition >= lastnut + 50)
-					if(prob(80))
-						lastnut = nutrition
-						powerlevel++
-						if(powerlevel > 10)
-							powerlevel = 10
-
-				if (nutrition > get_max_nutrition())
-					if (amount_grown < 10)
-						nutrition -= 20
-						++amount_grown
-					nutrition = min(nutrition, get_max_nutrition())
-
-				Victim.updatehealth()
-				updatehealth()
+			else if(istype(M, /mob/living/simple_animal))
+				Victim.adjustBruteLoss(is_adult ? rand(7, 15) : rand(2, 10))
+				fed_succesfully = 1
 
 			else
 				if(prob(25))
@@ -111,6 +94,26 @@
 					"This subject does not have a life energy", "This subject is empty", \
 					"I am not satisified", "I can not feed from this subject", \
 					"I do not feel nourished", "This subject is not food")]...</i>"
+
+			if(fed_succesfully)
+				//I have no idea why this is not in handle_nutrition()
+				nutrition += rand(15,30)
+				if(nutrition >= lastnut + 50)
+					if(prob(80))
+						lastnut = nutrition
+						powerlevel++
+						if(powerlevel > 10)
+							powerlevel = 10
+							adjustToxLoss(-10)
+
+				//Heal yourself.
+				adjustOxyLoss(-10)
+				adjustBruteLoss(-10)
+				adjustFireLoss(-10)
+				adjustCloneLoss(-10)
+				
+				updatehealth()
+				Victim.updatehealth()
 
 			sleep(rand(15,45))
 

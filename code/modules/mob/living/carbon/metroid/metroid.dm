@@ -275,6 +275,7 @@
 			O.show_message("<span class='warning'> <B>[M]</B> [M.attacktext] [src]!</span>", 1)
 		add_logs(M, src, "attacked", admin=0)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		attacked += 10
 		adjustBruteLoss(damage)
 		updatehealth()
 
