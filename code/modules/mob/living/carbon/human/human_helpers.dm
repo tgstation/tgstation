@@ -2,8 +2,6 @@
 /mob/living/carbon/human/restrained()
 	if (handcuffed)
 		return 1
-	if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
-		return 1
 	return 0
 
 /mob/living/carbon/human/canBeHandcuffed()
