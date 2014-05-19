@@ -541,8 +541,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 	remove_overlay(BACK_LAYER)
 
 	if(back)
+		back.screen_loc = ui_back
 		if(client && hud_used && hud_used.hud_shown)
-			back.screen_loc = ui_back	//TODO
 			client.screen += back
 
 		overlays_standing[BACK_LAYER]	= image("icon"='icons/mob/back.dmi', "icon_state"="[back.icon_state]", "layer"=-BACK_LAYER)
