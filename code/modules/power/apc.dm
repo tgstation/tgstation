@@ -1183,13 +1183,8 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 
 	return val
 
+
 // damage and destruction acts
-
-/obj/machinery/power/apc/meteorhit(var/obj/O as obj)
-
-	set_broken()
-	return
-
 /obj/machinery/power/apc/emp_act(severity)
 	if(cell)
 		cell.emp_act(severity)

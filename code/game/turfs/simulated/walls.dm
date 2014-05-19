@@ -288,30 +288,29 @@
 /turf/simulated/wall/proc/thermitemelt(mob/user as mob)
 	if(mineral == "diamond")
 		return
+
+	overlays = list()
 	var/obj/effect/overlay/O = new/obj/effect/overlay( src )
-	O.name = "Thermite"
+	O.name = "thermite"
 	O.desc = "Looks hot."
 	O.icon = 'icons/effects/fire.dmi'
 	O.icon_state = "2"
 	O.anchored = 1
+	O.opacity = 1
 	O.density = 1
 	O.layer = 5
 
-	var/turf/simulated/floor/F = ChangeTurf(/turf/simulated/floor/plating)
-	F.burn_tile()
-	F.icon_state = "wall_thermite"
-	user << "<span class='warning'>The thermite melts through the wall.</span>"
+	playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
-	spawn(100)
-		if(O)	qdel(O)
-//	F.sd_LumReset()		//TODO: ~Carn
-	return
-
-/turf/simulated/wall/meteorhit(obj/M as obj)
-	if (prob(15))
-		dismantle_wall()
-	else if(prob(70))
-		ChangeTurf(/turf/simulated/floor/plating)
+	if(thermite >= 50)
+		var/turf/simulated/floor/F = ChangeTurf(/turf/simulated/floor/plating)
+		F.burn_tile()
+		F.icon_state = "wall_thermite"
+		F.add_hiddenprint(user)
+		spawn(max(100,300-thermite))
+			if(O)	qdel(O)
 	else
-		ReplaceWithLattice()
-	return 0
+		thermite = 0
+		spawn(50)
+			if(O)	qdel(O)
+	return

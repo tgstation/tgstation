@@ -19,35 +19,35 @@ proc/mutation_table(var/colour)
 			slime_mutation[3] = "gold"
 			slime_mutation[4] = "gold"
 		if("orange")
-			slime_mutation[1] = "red"
-			slime_mutation[2] = "red"
-			slime_mutation[3] = "dark purple"
-			slime_mutation[4] = "yellow"
+			slime_mutation[1] = "dark purple"
+			slime_mutation[2] = "yellow"
+			slime_mutation[3] = "red"
+			slime_mutation[4] = "red"
 		if("blue")
 			slime_mutation[1] = "dark blue"
-			slime_mutation[2] = "pink"
+			slime_mutation[2] = "silver"
 			slime_mutation[3] = "pink"
-			slime_mutation[4] = "silver"
+			slime_mutation[4] = "pink"
 		//Tier 3
 		if("dark blue")
 			slime_mutation[1] = "purple"
-			slime_mutation[2] = "cerulean"
-			slime_mutation[3] = "blue"
+			slime_mutation[2] = "blue"
+			slime_mutation[3] = "cerulean"
 			slime_mutation[4] = "cerulean"
 		if("dark purple")
 			slime_mutation[1] = "purple"
-			slime_mutation[2] = "sepia"
-			slime_mutation[3] = "orange"
+			slime_mutation[2] = "orange"
+			slime_mutation[3] = "sepia"
 			slime_mutation[4] = "sepia"
 		if("yellow")
 			slime_mutation[1] = "metal"
-			slime_mutation[2] = "bluespace"
-			slime_mutation[3] = "orange"
+			slime_mutation[2] = "orange"
+			slime_mutation[3] = "bluespace"
 			slime_mutation[4] = "bluespace"
 		if("silver")
 			slime_mutation[1] = "metal"
-			slime_mutation[2] = "pyrite"
-			slime_mutation[3] = "blue"
+			slime_mutation[2] = "blue"
+			slime_mutation[3] = "pyrite"
 			slime_mutation[4] = "pyrite"
 		//Tier 4
 		if("pink")

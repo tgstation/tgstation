@@ -137,6 +137,12 @@
 				return
 		return
 
+/obj/item/weapon/storage/secure/can_be_inserted(obj/item/W, stop_messages = 0)
+	if(locked)
+		return 0
+	return ..()
+
+
 // -----------------------------
 //        Secure Briefcase
 // -----------------------------

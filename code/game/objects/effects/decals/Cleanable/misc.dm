@@ -17,11 +17,15 @@
 	anchored = 1
 
 /obj/effect/decal/cleanable/greenglow
+	name = "green glow"
 
-	New()
-		..()
-		spawn(1200)// 2 minutes
-			qdel(src)
+/obj/effect/decal/cleanable/greenglow/New()
+	..()
+	spawn(1200)// 2 minutes
+		qdel(src)
+
+/obj/effect/decal/cleanable/greenglow/ex_act()
+	return
 
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"

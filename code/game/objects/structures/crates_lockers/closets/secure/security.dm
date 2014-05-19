@@ -22,13 +22,11 @@
 		new /obj/item/clothing/suit/armor/vest/capcarapace(src)
 		new /obj/item/weapon/cartridge/captain(src)
 		new /obj/item/clothing/head/helmet/swat(src)
-		new /obj/item/clothing/shoes/brown(src)
+		new /obj/item/clothing/shoes/sneakers/brown(src)
 		new /obj/item/device/radio/headset/heads/captain(src)
 		new /obj/item/clothing/gloves/captain(src)
 		new /obj/item/weapon/gun/energy/gun(src)
 		return
-
-
 
 /obj/structure/closet/secure_closet/hop
 	name = "\proper head of personnel's locker"
@@ -47,7 +45,7 @@
 		new /obj/item/clothing/head/hopcap(src)
 		new /obj/item/weapon/cartridge/hop(src)
 		new /obj/item/device/radio/headset/heads/hop(src)
-		new /obj/item/clothing/shoes/brown(src)
+		new /obj/item/clothing/shoes/sneakers/brown(src)
 		new /obj/item/weapon/storage/box/ids(src)
 		new /obj/item/weapon/storage/box/ids(src)
 		new /obj/item/clothing/suit/armor/vest(src)
@@ -203,7 +201,7 @@
 		new /obj/item/clothing/suit/det_suit(src)
 		new /obj/item/clothing/gloves/black(src)
 		new /obj/item/clothing/head/det_hat(src)
-		new /obj/item/clothing/shoes/brown(src)
+		new /obj/item/clothing/shoes/sneakers/brown(src)
 		new /obj/item/weapon/storage/box/evidence(src)
 		new /obj/item/weapon/clipboard(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
@@ -248,7 +246,7 @@
 
 	New()
 		new /obj/item/clothing/under/color/orange( src )
-		new /obj/item/clothing/shoes/orange( src )
+		new /obj/item/clothing/shoes/sneakers/orange( src )
 		return
 
 
@@ -260,7 +258,7 @@
 	New()
 		..()
 		sleep(2)
-		new /obj/item/clothing/shoes/brown(src)
+		new /obj/item/clothing/shoes/sneakers/brown(src)
 		new /obj/item/weapon/paper/Court (src)
 		new /obj/item/weapon/paper/Court (src)
 		new /obj/item/weapon/paper/Court (src)

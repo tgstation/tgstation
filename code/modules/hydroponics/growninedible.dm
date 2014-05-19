@@ -52,9 +52,9 @@
 	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/wheat)
-	
-	New(var/loc, var/potency = 10)
-		..()
+
+/obj/item/weapon/grown/log/New(var/loc, var/potency = 10)
+	..()
 
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -98,9 +98,9 @@
 	throw_range = 3
 	plant_type = 0
 	seed = "/obj/item/seeds/sunflowerseed"
-	
-	New(var/loc, var/potency = 10)
-		..()
+
+/obj/item/weapon/grown/sunflower/New(var/loc, var/potency = 10)
+	..()
 
 /obj/item/weapon/grown/novaflower
 	name = "novaflower"
@@ -117,12 +117,12 @@
 	plant_type = 0
 	seed = "/obj/item/seeds/novaflowerseed"
 	attack_verb = list("seared", "heated", "whacked", "steamed")
-	New(var/loc, var/potency = 10)
-		..()
-		if(reagents)
-			reagents.add_reagent("nutriment", 1)
-			reagents.add_reagent("capsaicin", round(potency, 1))
-		force = round((5+potency/5), 1)
+/obj/item/weapon/grown/novaflower/New(var/loc, var/potency = 10)
+	..()
+	if(reagents)
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("capsaicin", round(potency, 1))
+	force = round((5+potency/5), 1)
 
 /obj/item/weapon/grown/nettle // -- Skie
 	desc = "It's probably <B>not</B> wise to touch it with bare hands..."
@@ -139,12 +139,12 @@
 	plant_type = 1
 	origin_tech = "combat=1"
 	seed = "/obj/item/seeds/nettleseed"
-	New(var/loc, var/potency = 10)
-		..()
-		if(reagents)
-			reagents.add_reagent("nutriment", 1)
-			reagents.add_reagent("sacid", round(potency, 1))
-		force = round((5+potency/5), 1)
+/obj/item/weapon/grown/nettle/New(var/loc, var/potency = 10)
+	..()
+	if(reagents)
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("sacid", round(potency, 1))
+	force = round((5+potency/5), 1)
 
 /obj/item/weapon/grown/deathnettle // -- Skie
 	desc = "The \red glowing \black nettle incites \red<B> rage</B>\black in you just from looking at it!"
@@ -162,16 +162,16 @@
 	seed = "/obj/item/seeds/deathnettleseed"
 	origin_tech = "combat=3"
 	attack_verb = list("stung")
-	New(var/loc, var/potency = 10)
-		..()
-		if(reagents)
-			reagents.add_reagent("nutriment", 1)
-			reagents.add_reagent("pacid", round(potency, 1))
-		force = round((5+potency/2.5), 1)
+/obj/item/weapon/grown/deathnettle/New(var/loc, var/potency = 10)
+	..()
+	if(reagents)
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("pacid", round(potency, 1))
+	force = round((5+potency/2.5), 1)
 
-	suicide_act(mob/user)
-		viewers(user) << "<span class='suicide'>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</span>"
-		return (BRUTELOSS|TOXLOSS)
+/obj/item/weapon/grown/deathnettle/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	return (BRUTELOSS|TOXLOSS)
 
 /obj/item/weapon/grown/bananapeel
 	name = "banana peel"
@@ -183,8 +183,8 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	New(var/loc, var/potency = 10)
-		..()
+/obj/item/weapon/grown/bananapeel/New(var/loc, var/potency = 10)
+	..()
 
 /obj/item/weapon/grown/corncob
 	name = "corn cob"
@@ -196,5 +196,5 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	New(var/loc, var/potency = 10)
-		..()
+/obj/item/weapon/grown/corncob/New(var/loc, var/potency = 10)
+	..()

@@ -65,10 +65,10 @@
 				return
 
 
-		viewers(src) << pick("\red <b>[src] is attempting to bite \his tongue off! It looks like \he's trying to commit suicide.</b>", \
+		visible_message(pick("\red <b>[src] is attempting to bite \his tongue off! It looks like \he's trying to commit suicide.</b>", \
 							"\red <b>[src] is jamming \his thumbs into \his eye sockets! It looks like \he's trying to commit suicide.</b>", \
 							"\red <b>[src] is twisting \his own neck! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[src] is holding \his breath! It looks like \he's trying to commit suicide.</b>")
+							"\red <b>[src] is holding \his breath! It looks like \he's trying to commit suicide.</b>"))
 		adjustOxyLoss(max(175 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
 
