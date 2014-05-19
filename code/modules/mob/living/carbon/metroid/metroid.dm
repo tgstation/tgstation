@@ -68,7 +68,7 @@
 
 /mob/living/carbon/slime/regenerate_icons()
 	icon_state = "[colour] [is_adult ? "adult" : "baby"] slime"
-	overlays = 0
+	overlays.len = 0
 	if (mood)
 		overlays += image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]")
 	..()

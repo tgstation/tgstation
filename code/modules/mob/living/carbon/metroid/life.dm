@@ -324,18 +324,17 @@
 
 				for(var/mob/living/L in view(7,src))
 
-					if(isslime(L) || L.stat == DEAD || isanimal(L)) // Ignore other slimes, dead mobs, and simple_animals
+					if(isslime(L) || L.stat == DEAD) // Ignore other slimes and dead mobs
 						continue
 
 					if(L in Friends) // No eating friends!
 						continue
 
-					if(issilicon(L)) // They can't eat silicons, but they can glomp them in defence
-						if (rabid || attacked)
-							targets += L // Possible target found!
+					if(issilicon(L) && (rabid || attacked)) // They can't eat silicons, but they can glomp them in defence
+						targets += L // Possible target found!
 
-					if(!iscarbon(L))
-						continue
+					if(isanimal(L) && (rabid || attacked)) //Simple_Animals only get retaliated against.
+						targets += L
 
 					if(istype(L, /mob/living/carbon/human)) // Ignore slime(wo)men
 						var/mob/living/carbon/human/H = L
