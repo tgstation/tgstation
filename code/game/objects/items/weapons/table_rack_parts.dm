@@ -27,7 +27,7 @@
 			user << "<span class='notice'>You need at least 4 rods to do that.</span>"
 
 /obj/item/weapon/table_parts/attack_self(mob/user as mob)
-	user << "<span class='notice'>Constructing table..</span>
+	user << "<span class='notice'>Constructing table..</span>"
 	if (do_after(user, 50))
 		new /obj/structure/table( user.loc )
 		user.drop_item()
