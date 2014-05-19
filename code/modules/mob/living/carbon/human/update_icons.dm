@@ -494,11 +494,6 @@ Please contact me on #coderbus IRC. ~Carnie x
 		var/image/standing	= image("icon"='icons/mob/suit.dmi', "icon_state"="[wear_suit.icon_state]", "layer"=-SUIT_LAYER)
 		overlays_standing[SUIT_LAYER]	= standing
 
-		if(istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
-			unEquip(handcuffed)
-			drop_l_hand()
-			drop_r_hand()
-
 		if(wear_suit.blood_DNA)
 			var/obj/item/clothing/suit/S = wear_suit
 			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="[S.blood_overlay_type]blood")
