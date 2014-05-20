@@ -15,6 +15,22 @@
 	var/lawcheck[1]
 	var/ioncheck[1]
 
+/mob/living/silicon/attack_hand(mob/living/carbon/human/user)
+	if (user.a_intent == "harm")
+		add_logs(user, src, "punched")
+
+		if(HULK in user.mutations)
+			var/damage = rand(5,10)
+			adjustBruteLoss(damage)
+			playsound(src.loc, 'sound/effects/bang.ogg', 20, 1)
+			src.visible_message("<span class='danger'>[user] punches [src]!</span>", \
+								"<span class='userdanger'>[user] punches [src]!</span>")
+
+		else
+			playsound(src.loc, 'sound/effects/bang.ogg', 10, 1)
+			src.visible_message("<span class='danger'>[user] punches [src], but doesn't leave a dent.</span>", \
+								"<span class='danger'>[user] punches [src], but doesn't leave a dent.!</span>")
+
 /mob/living/silicon/proc/cancelAlarm()
 	return
 
