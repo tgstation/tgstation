@@ -71,7 +71,7 @@
 				"A sharp, deep pain bathes every inch of your body!")]"
 
 			if(istype(M, /mob/living/carbon))
-				Victim.adjustCloneLoss(rand(1,10))
+				Victim.adjustCloneLoss(rand(5,6))
 				Victim.adjustToxLoss(rand(1,2))
 				if(Victim.health <= 0)
 					Victim.adjustToxLoss(rand(2,4))
@@ -88,7 +88,7 @@
 						if(slime.Victim == M && slime != src)
 							slime.Feedstop()
 
-				nutrition += rand(10,25)
+				nutrition += rand(15,30)
 				if(nutrition >= lastnut + 50)
 					if(prob(80))
 						lastnut = nutrition
@@ -96,12 +96,11 @@
 						if(powerlevel > 10)
 							powerlevel = 10
 
-				if(is_adult)
-					if(nutrition > 1200)
-						nutrition = 1200
-				else
-					if(nutrition > 1000)
-						nutrition = 1000
+				if (nutrition > get_max_nutrition())
+					if (amount_grown < 10)
+						nutrition -= 20
+						++amount_grown
+					nutrition = min(nutrition, get_max_nutrition())
 
 				Victim.updatehealth()
 				updatehealth()
@@ -139,7 +138,11 @@
 					if(Victim.LAssailant && Victim.LAssailant != Victim)
 						if(prob(50))
 							if(!(Victim.LAssailant in Friends))
-								Friends.Add(Victim.LAssailant) // no idea why i was using the |= operator
+								Friends[Victim.LAssailant] = 1
+								//Friends.Add(Victim.LAssailant) // no idea why i was using the |= operator
+							else
+								++Friends[Victim.LAssailant]
+
 
 			if(M.client && istype(src, /mob/living/carbon/human))
 				if(prob(85))
@@ -179,7 +182,7 @@
 			maxHealth = 200
 			amount_grown = 0
 			regenerate_icons()
-			name = text("[colour] [is_adult ? "adult" : "baby"] slime ([rand(1, 1000)])")
+			name = text("[colour] [is_adult ? "adult" : "baby"] slime ([number])")
 		else
 			src << "<i>I am not ready to evolve yet...</i>"
 	else
@@ -204,13 +207,14 @@
 			var/new_powerlevel = round(powerlevel / 4)
 			for(var/i=1,i<=4,i++)
 				var/mob/living/carbon/slime/M = new /mob/living/carbon/slime/(loc)
-				if(prob(70))
-					M.colour = colour
-				else
+				if(prob(mutation_chance))
 					M.colour = slime_mutation[rand(1,4)]
+				else
+					M.colour = colour
 				if(ckey)	M.nutrition = new_nutrition //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
 				M.powerlevel = new_powerlevel
 				if(i != 1) step_away(M,src)
+				M.Friends = Friends.Copy()
 				babies += M
 				feedback_add_details("slime_babies_born","slimebirth_[replacetext(M.colour," ","_")]")
 

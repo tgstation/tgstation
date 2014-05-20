@@ -158,48 +158,19 @@
 	throw_speed = 3
 	throw_range = 7
 	w_class = 3.0
-	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked") //I think the rollingpin attackby will end up ignoring this anyway.
-
-/obj/item/weapon/kitchen/rollingpin/attack(mob/living/M as mob, mob/living/user as mob)
-	if ((CLUMSY in user.mutations) && prob(50))
-		user << "<span class='danger'>The [src] slips out of your hand and hits your head.</span>"
-		user.take_organ_damage(10)
-		user.Paralyse(2)
-		return
-
-	add_logs(user, M, "attacked", object="[src.name]")
-
-	var/t = user:zone_sel.selecting
-	if (t == "head")
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if (H.stat < 2 && H.health < 50 && prob(90))
-				// ******* Check
-				if (istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80))
-					H << "<span class='danger'> The helmet protects you from being hit hard in the head!</span>"
-					return
-				var/time = rand(2, 6)
-				if (prob(75))
-					H.Paralyse(time)
-				else
-					H.Stun(time)
-				if(H.stat != 2)	H.stat = 1
-				user.visible_message("<span class='danger'>[H] has been knocked unconscious!</span>", "<span class='userdanger'>You knock [H] unconscious!</span>")
-				return
-			else
-				H.visible_message("<span class='danger'> [user] tried to knock [H] unconscious!</span>", "<span class='danger'> [user] tried to knock you unconscious!</span>")
-				H.eye_blurry += 3
-
-	return ..()
+	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
 /*
  * Trays - Agouri
  */
+
 /obj/item/weapon/tray
 	name = "tray"
 	icon = 'icons/obj/food.dmi'
 	icon_state = "tray"
 	desc = "A metal tray to lay food on."
+	force = 8
+	hitsound = 'sound/items/trayhit1.ogg'
 	throwforce = 10.0
 	throw_speed = 3
 	throw_range = 5
@@ -210,104 +181,6 @@
 	var/max_carry = 10 // w_class = 1 -- takes up 1
 					   // w_class = 2 -- takes up 3
 					   // w_class = 3 -- takes up 5
-
-/obj/item/weapon/tray/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-
-	// Drop all the things. All of them.
-	overlays.Cut()
-	for(var/obj/item/I in carrying)
-		I.loc = M.loc
-		carrying.Remove(I)
-		if(isturf(I.loc))
-			spawn()
-				for(var/i = 1, i <= rand(1,2), i++)
-					if(I)
-						step(I, pick(NORTH,SOUTH,EAST,WEST))
-						sleep(rand(2,4))
-
-
-	if((CLUMSY in user.mutations) && prob(50))              //What if he's a clown?
-		user << "<span class='danger'> You accidentally slam yourself with the [src]!</span>"
-		user.Weaken(1)
-		user.take_organ_damage(2)
-		if(prob(50))
-			playsound(M, 'sound/items/trayhit1.ogg', 50, 1)
-			return
-		else
-			playsound(M, 'sound/items/trayhit2.ogg', 50, 1) //sound playin'
-			return //it always returns, but I feel like adding an extra return just for safety's sakes. EDIT; Oh well I won't :3
-
-	add_logs(user, M, "attacked", object="[src.name]")
-
-	if(istype(M, /mob/living/carbon/human))
-
-		var/mob/living/carbon/human/H = M ///////////////////////////////////// /Let's have this ready for later.
-
-		if(prob(50))
-			playsound(M, 'sound/items/trayhit1.ogg', 50, 1)
-		else
-			playsound(M, 'sound/items/trayhit2.ogg', 50, 1)
-
-
-		if(prob(33))
-			src.add_blood(H)
-			var/turf/location = H.loc
-			if (istype(location, /turf/simulated)) //Addin' blood! At least on the floor.
-				location.add_blood(H)
-
-		if(!(user.zone_sel.selecting == ("eyes" || "head"))) //////////////hitting anything else other than the eyes
-
-			H.visible_message("<span class='danger'>[user] slams [H] with the tray!</span>", \
-					"<span class='userdanger'>[user] slams [H] with the tray!</span>")
-
-			if(prob(15))
-				M.Weaken(3)
-				M.take_organ_damage(3)
-				return
-			else
-				M.take_organ_damage(5)
-				return
-
-
-		if((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES))
-			if(prob(33))
-				if (H.wear_mask)
-					H.wear_mask.add_blood(H) //adding blood on the items.
-				if (H.head)
-					H.head.add_blood(H)
-				if (H.glasses && prob(33))
-					H.glasses.add_blood(H)
-
-
-			M.visible_message("<span class='danger'>[user] slams [M] in the face with the tray!</span>", \
-				"<span class='userdanger'>[user] slams [M] in the face with the tray, against your mask!</span>")
-
-			if(prob(10))
-				M.Stun(rand(1,3))
-				M.take_organ_damage(3)
-				return
-			else
-				M.take_organ_damage(5)
-				return
-
-		else //No eye or head protection, tough luck!
-
-			M.visible_message("<span class='danger'>[user] slams [M] in the face with the tray!</span>", \
-					"<span class='userdanger'>[user] slams [M] in the face with the tray!</span>")
-			if(prob(30))
-				M.Stun(rand(2,4))
-				M.take_organ_damage(4)
-				return
-			else
-				M.take_organ_damage(8)
-				if(prob(30))
-					M.Weaken(2)
-					return
-		return
-
-	else
-		..()
-
 
 /*
 ===============~~~~~================================~~~~~====================
@@ -374,48 +247,3 @@
 					if(I)
 						step(I, pick(NORTH,SOUTH,EAST,WEST))
 						sleep(rand(2,4))
-
-
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////
-//Enough with the violent stuff, here's what happens if you try putting food on it
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-/*/obj/item/weapon/tray/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/kitchen/utensil/fork))
-		if (W.icon_state == "forkloaded")
-			user << "\red You already have omelette on your fork."
-			return
-		W.icon = 'icons/obj/kitchen.dmi'
-		W.icon_state = "forkloaded"
-		viewers(3,user) << "[user] takes a piece of omelette with his fork!"
-		reagents.remove_reagent("nutriment", 1)
-		if (reagents.total_volume <= 0)
-			qdel(src)*/
-
-
-/*			if (prob(33))
-						var/turf/location = H.loc
-						if (istype(location, /turf/simulated))
-							location.add_blood(H)
-					if (H.wear_mask)
-						H.wear_mask.add_blood(H)
-					if (H.head)
-						H.head.add_blood(H)
-					if (H.glasses && prob(33))
-						H.glasses.add_blood(H)
-					if (istype(user, /mob/living/carbon/human))
-						var/mob/living/carbon/human/user2 = user
-						if (user2.gloves)
-							user2.gloves.add_blood(H)
-						else
-							user2.add_blood(H)
-						if (prob(15))
-							if (user2.wear_suit)
-								user2.wear_suit.add_blood(H)
-							else if (user2.w_uniform)
-								user2.w_uniform.add_blood(H)*/
