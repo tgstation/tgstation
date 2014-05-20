@@ -9,6 +9,10 @@
 #define JUKEMODE_PLAY_ONCE   3 // Play, then stop.
 #define JUKEMODE_COUNT       3
 
+#define JUKEBOX_SCREEN_MAIN     1 // Default
+#define JUKEBOX_SCREEN_PAYMENT  2
+#define JUKEBOX_SCREEN_SETTINGS 3
+
 #define JUKEBOX_RELOAD_COOLDOWN 600 // 60s
 
 // Represents a record returned.
@@ -44,11 +48,14 @@
 			return "\[NO TAGS\]"
 		var/str=""
 		if(artist!="")
-			str += "[artist] - "
+			str += artist+" - "
 		if(title!="")
 			str += "\"[title]\""
 		else
 			str += "Untitled"
+		// Only show album if we have to.
+		if(album!="" && artist == "")
+			str += " ([album])"
 		return str
 
 
@@ -79,10 +86,29 @@ var/global/loopModeNames=list(
 
 	var/list/playlist
 	var/current_song  = 0
+	var/next_song     = 0
+	var/selected_song = 0
 	var/autoplay      = 0
 	var/last_reload   = 0
 
+	var/screen = JUKEBOX_SCREEN_MAIN
+
+	var/credits_held   = 0
+	var/credits_needed = 0
+	var/change_cost    = 10
+	var/list/change_access  = list()
+	var/datum/money_account/linked_account
+	var/department
+
 	var/state_base = "jukebox2"
+
+/obj/machinery/media/jukebox/New(loc)
+	..(loc)
+	if(department)
+		linked_account = department_accounts[department]
+	else
+		linked_account = station_account
+	update_icon()
 
 /obj/machinery/media/jukebox/attack_ai(var/mob/user)
 	attack_hand(user)
@@ -126,33 +152,110 @@ var/global/loopModeNames=list(
 		playing=emagged
 		update_icon()
 		return
+
+	var/t = "<div class=\"navbar\">"
+	t += "<a href=\"?src=\ref[src];screen=[JUKEBOX_SCREEN_MAIN]\">Main</a>"
+	if(allowed(user))
+		t += " | <a href=\"?src=\ref[src];screen=[JUKEBOX_SCREEN_SETTINGS]\">Settings</a>"
+	t += "</div>"
+	switch(screen)
+		if(JUKEBOX_SCREEN_MAIN)    t += ScreenMain(user)
+		if(JUKEBOX_SCREEN_PAYMENT) t += ScreenPayment(user)
+		if(JUKEBOX_SCREEN_SETTINGS) t += ScreenSettings(user)
+
+	user.set_machine(src)
+	var/datum/browser/popup = new (user,"jukebox",name,420,700)
+	popup.set_content(t)
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
+	popup.open()
+
+/obj/machinery/media/jukebox/proc/ScreenMain(var/mob/user)
 	var/t = "<h1>Jukebox Interface</h1>"
 	t += "<b>Power:</b> <a href='?src=\ref[src];power=1'>[playing?"On":"Off"]</a><br />"
 	t += "<b>Play Mode:</b> <a href='?src=\ref[src];mode=1'>[loopModeNames[loop_mode]]</a><br />"
 	if(playlist == null)
 		t += "\[DOWNLOADING PLAYLIST, PLEASE WAIT\]"
 	else
-		if(check_reload())
-			t += "<b>Playlist:</b> "
-			for(var/plid in playlists)
-				t += "<a href='?src=\ref[src];playlist=[plid]'>[playlists[plid]]</a>"
+		if(req_access.len == 0 || allowed(user))
+			if(check_reload())
+				t += "<b>Playlist:</b> "
+				for(var/plid in playlists)
+					t += "<a href='?src=\ref[src];playlist=[plid]'>[playlists[plid]]</a>"
+			else
+				t += "<i>Please wait before changing playlists.</i>"
 		else
-			t += "<i>Please wait before changing playlists.</i>"
+			t += "<i>You cannot change the playlist.</i>"
 		t += "<br />"
 		if(current_song)
 			var/datum/song_info/song=playlist[current_song]
 			t += "<b>Current song:</b> [song.artist] - [song.title]<br />"
+		if(next_song)
+			var/datum/song_info/song=playlist[next_song]
+			t += "<b>Up next:</b> [song.artist] - [song.title]<br />"
 		t += "<table class='prettytable'><tr><th colspan='2'>Artist - Title</th><th>Album</th></tr>"
 		var/i
+		var/can_change=!next_song
+		if(change_access.len > 0) // Permissions
+			if(can_access(user.GetAccess(),req_access=change_access))
+				can_change = 1
+
 		for(i = 1,i <= playlist.len,i++)
 			var/datum/song_info/song=playlist[i]
-			t += "<tr><th>#[i]</th><td><A href='?src=\ref[src];song=[i]' class='nobg'>[song.displaytitle()]</A></td><td>[song.album]</td></tr>"
+			t += "<tr><th>#[i]</th><td>"
+			if(can_change) t += "<A href='?src=\ref[src];song=[i]' class='nobg'>"
+			t += song.displaytitle()
+			if(can_change) t += "</A>"
+			t += "</td><td>[song.album]</td></tr>"
 		t += "</table>"
-	user.set_machine(src)
-	var/datum/browser/popup = new (user,"jukebox",name,420,700)
-	popup.set_content(t)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
-	popup.open()
+	return t
+
+/obj/machinery/media/jukebox/proc/ScreenPayment(var/mob/user)
+	var/t = "<h1>Pay for Song</h1>"
+	var/datum/song_info/song=playlist[selected_song]
+	t += {"
+	<center>
+		<p>You've selected <b>[song.displaytitle()]</b>.</p>
+		<p><b>Swipe ID card</b> or <b>insert cash</b> to play this song next! ($[num2septext(change_cost)])</p>
+		\[ <a href='?src=\ref[src];cancelbuy=1'>Cancel</a> \]
+	</center>"}
+	return t
+
+/obj/machinery/media/jukebox/proc/ScreenSettings(var/mob/user)
+	var/dat={"<h1>Settings</h1>
+		<form action="?src=\ref[src]" method="get">
+		<input type="hidden" name="src" value="\ref[src]" />
+		<fieldset>
+			<legend>Banking</legend>
+			<div>
+				<b>Payable Account:</b> <input type="textbox" name="payableto" value="[linked_account.account_number]" />
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>Pricing</legend>
+			<div>
+				<b>Change Song:</b> $<input type="textbox" name="set_change_cost" value="[change_cost]" />
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>Access</legend>
+			<p>Permissions required to change song:</p>
+			<div>
+				<input type="radio" name="lock" id="lock_none" value=""[change_access == list() ? " checked='selected'":""] /> <label for="lock_none">None</label>
+			</div>
+			<div>
+				<input type="radio" name="lock" id="lock_bar" value="[access_bar]"[change_access == list(access_bar) ? " checked='selected'":""] /> <label for="lock_bar">Bar</label>
+			</div>
+			<div>
+				<input type="radio" name="lock" id="lock_head" value="[access_heads]"[change_access == list(access_heads) ? " checked='selected'":""] /> <label for="lock_head">Any Head</label>
+			</div>
+			<div>
+				<input type="radio" name="lock" id="lock_cap" value="[access_captain]"[change_access == list(access_captain) ? " checked='selected'":""] /> <label for="lock_cap">Captain</label>
+			</div>
+		</fieldset>
+		<input type="submit" name="act" value="Save Settings" />
+		</form>"}
+	return dat
+
 
 
 /obj/machinery/media/jukebox/attackby(obj/item/W, mob/user)
@@ -178,6 +281,56 @@ var/global/loopModeNames=list(
 			playing = emagged
 			update_music()
 			update_icon()
+	else if(istype(W,/obj/item/weapon/card/id))
+		if(!selected_song || screen!=JUKEBOX_SCREEN_PAYMENT)
+			visible_message("\blue The machine buzzes.","\red You hear a buzz.")
+			return
+		var/obj/item/weapon/card/id/I = W
+		if(!linked_account)
+			visible_message("\red The machine buzzes, and flashes \"NO LINKED ACCOUNT\" on the screen.","You hear a buzz.")
+			return
+		var/datum/money_account/acct = get_card_account(I)
+		if(!acct)
+			visible_message("\red The machine buzzes, and flashes \"NO ACCOUNT\" on the screen.","You hear a buzz.")
+			return
+		if(credits_needed > acct.money)
+			visible_message("\red The machine buzzes, and flashes \"NOT ENOUGH FUNDS\" on the screen.","You hear a buzz.")
+			return
+		visible_message("\blue The machine beeps happily.","You hear a beep.")
+		acct.charge(credits_needed,linked_account,"Song selection at [myArea.name]'s [name].")
+		credits_needed = 0
+
+		successful_purchase()
+
+		attack_hand(user)
+	else if(istype(W,/obj/item/weapon/spacecash))
+		if(!selected_song || screen!=JUKEBOX_SCREEN_PAYMENT)
+			visible_message("\blue The machine buzzes.","\red You hear a buzz.")
+			return
+		if(!linked_account)
+			visible_message("\red The machine buzzes, and flashes \"NO LINKED ACCOUNT\" on the screen.","You hear a buzz.")
+			return
+		var/obj/item/weapon/spacecash/C=W
+		credits_held += C.worth*C.amount
+		if(credits_held >= credits_needed)
+			visible_message("\blue The machine beeps happily.","You hear a beep.")
+			credits_held -= credits_needed
+			credits_needed=0
+			screen=POS_SCREEN_ORDER
+			if(credits_held)
+				var/obj/item/weapon/storage/box/B = new(loc)
+				dispense_cash(credits_held,B)
+				B.name="change"
+				B.desc="A box of change."
+			credits_held=0
+
+			successful_purchase()
+		attack_hand(user)
+
+/obj/machinery/media/jukebox/proc/successful_purchase()
+		next_song = selected_song
+		selected_song = 0
+		screen = JUKEBOX_SCREEN_MAIN
 
 /obj/machinery/media/jukebox/Topic(href, href_list)
 	if(isobserver(usr) && !isAdminGhost(usr))
@@ -193,6 +346,26 @@ var/global/loopModeNames=list(
 		update_music()
 		update_icon()
 
+	if("screen" in href_list)
+		screen=text2num(href_list["screen"])
+
+	if("act" in href_list)
+		switch(href_list["act"])
+			if("Save Settings")
+				var/datum/money_account/new_linked_account = get_money_account(text2num(href_list["payableto"]),z)
+				if(!new_linked_account)
+					usr << "\red Unable to link new account. Aborting."
+					return
+
+				change_cost = max(0,text2num(href_list["set_change_cost"]))
+				linked_account = new_linked_account
+				if("lock" in href_list && href_list["lock"] != "")
+					change_access = list(text2num(href_list["lock"]))
+				else
+					change_access = list()
+
+				screen=POS_SCREEN_SETTINGS
+
 	if (href_list["playlist"])
 		if(!check_reload())
 			usr << "\red You must wait 60 seconds between playlist reloads."
@@ -200,14 +373,27 @@ var/global/loopModeNames=list(
 		playlist_id=href_list["playlist"]
 		last_reload=world.time
 		playlist=null
-		current_song=0
+		current_song = 0
+		next_song = 0
+		selected_song = 0
 		update_music()
 		update_icon()
 
 	if (href_list["song"])
-		current_song=Clamp(text2num(href_list["song"]),1,playlist.len)
-		update_music()
-		update_icon()
+		selected_song=Clamp(text2num(href_list["song"]),1,playlist.len)
+		if(!change_cost)
+			next_song = selected_song
+			selected_song = 0
+			update_music()
+			update_icon()
+		else
+			usr << "\red Swipe card or insert $[num2septext(change_cost)] to set this song."
+			screen = JUKEBOX_SCREEN_PAYMENT
+			credits_needed=change_cost
+
+	if (href_list["cancelbuy"])
+		selected_song=0
+		screen = JUKEBOX_SCREEN_MAIN
 
 	if (href_list["mode"])
 		loop_mode = (loop_mode % JUKEMODE_COUNT) + 1
@@ -250,15 +436,19 @@ var/global/loopModeNames=list(
 			song = playlist[current_song]
 		if(!current_song || (song && world.time >= media_start_time + song.length))
 			current_song=1
-			switch(loop_mode)
-				if(JUKEMODE_SHUFFLE)
-					current_song=rand(1,playlist.len)
-				if(JUKEMODE_REPEAT_SONG)
-					current_song=current_song
-				if(JUKEMODE_PLAY_ONCE)
-					playing=0
-					update_icon()
-					return
+			if(next_song)
+				current_song = next_song
+				next_song = 0
+			else
+				switch(loop_mode)
+					if(JUKEMODE_SHUFFLE)
+						current_song=rand(1,playlist.len)
+					if(JUKEMODE_REPEAT_SONG)
+						current_song=current_song
+					if(JUKEMODE_PLAY_ONCE)
+						playing=0
+						update_icon()
+						return
 			update_music()
 
 /obj/machinery/media/jukebox/update_music()
@@ -280,6 +470,9 @@ var/global/loopModeNames=list(
 	return
 
 /obj/machinery/media/jukebox/bar
+	department = "Civilian"
+	req_access = list(access_bar)
+
 	playlist_id="bar"
 	// Must be defined on your server.
 	playlists=list(
@@ -295,6 +488,7 @@ var/global/loopModeNames=list(
 	desc = "A jukebox used for parties at Mount Olympus and shit."
 
 	state_base = "superjuke"
+	change_cost = 0
 
 	playlist_id="bar"
 	// Must be defined on your server.
