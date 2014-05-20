@@ -189,14 +189,6 @@
  * Misc
  */
 
-/obj/item/clothing/suit/straight_jacket
-	name = "straight jacket"
-	desc = "A suit that completely restrains the wearer."
-	icon_state = "straight_jacket"
-	item_state = "straight_jacket"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-
 /obj/item/clothing/suit/ianshirt
 	name = "worn shirt"
 	desc = "A worn out, curiously comfortable t-shirt with a picture of Ian. You wouldn't go so far as to say it feels like being hugged when you wear it but it's pretty close. Good for sleeping in."
