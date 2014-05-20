@@ -232,3 +232,18 @@
 		src.time = time
 		src.one_per_turf = one_per_turf
 		src.on_floor = on_floor
+
+
+/obj/item/stack/cyborg
+	var/source = null // Link to our storage
+	var/price // How much we use per item
+
+/obj/item/stack/cyborg/New(var/storage, var/cost)
+	source = storage
+	price = cost
+
+/obj/item/stack/cyborg/Destroy()
+	return // They're not supposed to run out
+
+/obj/item/stack/cyborg/proc/use(var/amount)
+	source.use_charge(amount * price)

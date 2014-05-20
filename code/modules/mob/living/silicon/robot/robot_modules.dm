@@ -240,3 +240,30 @@
 		modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
 		modules += new /obj/item/weapon/crowbar(src)
 		emag = null
+
+/datum/robot_energy_storage
+	var/name = "Generic energy storage"
+	var/max_energy = 30000
+	var/energy = 30000
+
+/datum/robot_energy_storage/New()
+	return
+
+/datum/robot_energy_storage/proc/use_charge(var/amount)
+	if (energy > amount)
+		energy -= amount
+		return 1
+	else
+		return 0
+
+/datum/robot_energy_storage/proc/add_charge(var/amount)
+	energy = min(energy + amount, max_energy)
+
+/datum/robot_energy_storage/metal
+	name = "Metal TODO"
+
+/datum/robot_energy_storage/glass
+	name = "Glass TODO"
+
+/datum/robot_energy_storage/reagent
+	name = "TODO"
