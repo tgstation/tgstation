@@ -234,7 +234,6 @@
 			module_sprites["Black Knight"] = "securityrobot"
 			module_sprites["Bloodhound"] = "bloodhound"
 			module_sprites["Securitron"] = "securitron"
-			module_sprites["Bladewolf"] = "bladewolf"
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
@@ -258,6 +257,7 @@
 		if("Combat")
 			module = new /obj/item/weapon/robot_module/combat(src)
 			module_sprites["Combat Android"] = "droid-combat"
+			module_sprites["Bladewolf"] = "bladewolf"
 			channels = list("Security" = 1)
 
 	//Custom_sprite check and entry
