@@ -306,7 +306,7 @@ area
 			//show the dark overlay so areas, not yet in a lighting subarea, won't be bright as day and look silly.
 				SetLightLevel(4)
 
-#undef LIGHTING_LAYER
+//#undef LIGHTING_LAYER
 #undef LIGHTING_CIRCULAR
 //#undef LIGHTING_ICON
 #define LIGHTING_MAX_LUMINOSITY_STATIC	8	//Maximum luminosity to reduce lag.
