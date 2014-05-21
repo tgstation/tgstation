@@ -41,6 +41,15 @@ var/global/list/uneatable = list(
 	var/teleport_del = 0
 	var/last_warning
 
+
+	var/maxeat = 8
+
+	var/eatlimit = 8
+
+
+
+
+
 /obj/machinery/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
 	//CARN: admin-alert for chuckle-fuckery.
 	admin_investigate_setup()
@@ -223,7 +232,7 @@ var/global/list/uneatable = list(
 
 
 	var/countit = 0
-	var/eatlimit = 6
+
 
 
 
@@ -353,7 +362,7 @@ var/global/list/uneatable = list(
 
 			else
 
-				if((countit <= eatlimit) || current_size == 1) //are you allowed to eat? being fat causes lag
+				if((countit < eatlimit) || current_size == 1) //are you allowed to eat? being fat causes lag
 
 
 
@@ -592,20 +601,47 @@ var/global/list/uneatable = list(
 	return 1
 
 
+
+
+
+
+
+
+
+
+
+
 /obj/machinery/singularity/proc/can_move(var/turf/T)
 	if(!T)
+		eatlimit = maxeat
 		return 0
 	if((locate(/obj/machinery/containment_field) in T)||(locate(/obj/machinery/shieldwall) in T))
+		eatlimit = 0
 		return 0
 	else if(locate(/obj/machinery/field_generator) in T)
 		var/obj/machinery/field_generator/G = locate(/obj/machinery/field_generator) in T
 		if(G && G.active)
+			eatlimit = 0
 			return 0
 	else if(locate(/obj/machinery/shieldwallgen) in T)
 		var/obj/machinery/shieldwallgen/S = locate(/obj/machinery/shieldwallgen) in T
 		if(S && S.active)
+			eatlimit = 0
 			return 0
+	eatlimit = maxeat
 	return 1
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /obj/machinery/singularity/proc/event()
