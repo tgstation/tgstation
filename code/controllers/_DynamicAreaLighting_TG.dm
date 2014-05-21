@@ -207,10 +207,10 @@ turf
 	var/lighting_lumcount = 0
 	var/lighting_changed = 0
 	var/accepts_lighting = 1
-	accepts_lighting = 0 // Don't apply overlays.
 
 turf/space
 	lighting_lumcount = 4		//starlight
+	accepts_lighting = 0 // Don't apply overlays.
 
 turf/proc/update_lumcount(amount)
 	lighting_lumcount += amount
