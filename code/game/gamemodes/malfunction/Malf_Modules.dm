@@ -7,6 +7,7 @@
 	var/engaged = 0
 	var/cost = 5
 	var/one_time = 0
+	var/cooldown = 0
 
 	var/power_type
 
@@ -69,6 +70,8 @@
 	if(src.stat == 2)
 		src <<"You cannot begin a lockdown because you are dead!"
 		return
+	if(cooldown)
+		return
 
 	for(var/obj/machinery/firealarm/FA in machines) //activate firealarms
 		spawn()
@@ -92,6 +95,9 @@
 
 	src.verbs += /mob/living/silicon/ai/proc/disablelockdown
 	src << "<span class = 'warning'>Lockdown Initiated.</span>"
+	cooldown = 1
+	spawn(30) 
+	cooldown = 0
 
 /mob/living/silicon/ai/proc/disablelockdown()
 	set category = "Malfunction"
@@ -99,6 +105,8 @@
 
 	if(src.stat == 2)
 		src <<"You cannot disable lockdown because you are dead!"
+		return
+	if(cooldown)
 		return
 
 	for(var/obj/machinery/firealarm/FA in machines) //deactivate firealarms
@@ -118,6 +126,9 @@
 				AL.lights = 1
 
 	src << "<span class = 'notice'>Lockdown Lifted.</span>"
+	cooldown = 1
+	spawn(30) 
+	cooldown = 0
 
 /datum/AI_Module/large/disable_rcd
 	module_name = "RCD disable"
