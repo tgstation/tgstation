@@ -34,7 +34,7 @@ datum/controller/lighting/New()
 datum/controller/lighting/proc/process()
 	processing = 1
 	spawn(0)
-		set background = 1
+		set background = BACKGROUND_ENABLED
 		while(1)
 			if(processing && (world.cpu <= max_cpu_use))
 				iteration++
@@ -68,7 +68,7 @@ datum/controller/lighting/proc/process()
 datum/controller/lighting/proc/Initialize(var/z_level)
 	processing = 0
 	spawn(-1)
-		set background = 1
+		set background = BACKGROUND_ENABLED
 		for(var/i=1, i<=lights.len, i++)
 			var/datum/light_source/L = lights[i]
 			if(L.check())
