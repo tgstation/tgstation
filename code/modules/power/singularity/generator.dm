@@ -28,6 +28,7 @@
 		log_admin("New singularity made, all touchers. [prints]. Last touched by [fingerprintslast].")
 
 	new /obj/machinery/singularity/(get_turf(src), 50)
+	qdel(src)
 
 /obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))

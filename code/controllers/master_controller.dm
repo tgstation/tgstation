@@ -311,6 +311,7 @@ datum/controller/game_controller/proc/processMobs()
 			#endif
 
 			if(PROCESS_KILL == Machinery.process())
+				Machinery.inMachineList = 0
 				Machinery.removeAtProcessing()
 				continue
 

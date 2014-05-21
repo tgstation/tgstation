@@ -34,6 +34,7 @@ var/global/list/uncollectable_vars=list(
 	"y",
 	"z",
 )
+
 /datum/controller/garbage_collector
 	var/list/queue=list()
 	var/list/destroyed=list()
@@ -82,19 +83,21 @@ var/global/list/uncollectable_vars=list(
 		destroyed.Add("\ref[A]")
 		queue.Remove(A)
 
-	proc/process()
-		for(var/i=0;i<min(waiting,GC_COLLECTIONS_PER_TICK);i++)
-			if(waiting)
-				Pop()
-				waiting--
-		for(var/i=0;i<min(destroyed.len,GC_COLLECTIONS_PER_TICK);i++)
-			if(destroyed.len)
-				var/refID=destroyed[1]
-				var/atom/A = locate(refID)
-				if(A && A.gc_destroyed && A.gc_destroyed >= world.time - GC_COLLECTION_TIMEOUT)
-					// Something's still referring to the qdel'd object.  Kill it.
-					del(A)
-				destroyed.Remove(refID)
+/datum/controller/garbage_collector/proc/process()
+	for (var/i = 0, ++i <= min(waiting, GC_COLLECTIONS_PER_TICK))
+		if (waiting--)
+			Pop()
+
+	for (var/i = 0, ++i <= min(destroyed.len, GC_COLLECTIONS_PER_TICK))
+		if (destroyed.len)
+			var/refID = destroyed[1]
+			var/atom/A = locate(refID)
+
+			if (A && A.gc_destroyed && A.gc_destroyed >= world.timeofday - GC_COLLECTION_TIMEOUT)
+				// Something's still referring to the qdel'd object. Kill it.
+				del A
+
+			destroyed.Remove(refID)
 
 /**
 * NEVER USE THIS FOR ANYTHING OTHER THAN /atom/movable
