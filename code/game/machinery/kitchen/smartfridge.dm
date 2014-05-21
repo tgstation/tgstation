@@ -60,15 +60,6 @@
 			if(accept_check(G))
 				load(G)
 				loaded++
-	else if(istype(O, /obj/item/weapon/tray))
-		var/obj/item/weapon/tray/T = O
-		for(var/obj/item/snack in T)
-			if(contents.len >= max_n_of_items)
-				break
-			if(accept_check(snack))
-				T.carrying -= snack
-				load(snack)
-				loaded++
 	else
 		user << "<span class='notice'>\The [src] smartly refuses [O].</span>"
 		updateUsrDialog()

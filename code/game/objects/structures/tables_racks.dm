@@ -559,6 +559,19 @@
 	if (istype(I, /obj/item/weapon/wrench))
 		table_destroy(2, user)
 		return
+	
+	if (istype(I, /obj/item/weapon/storage/bag/tray))
+		var/obj/item/weapon/storage/bag/tray/T = I
+		if(T.contents.len > 0) // If the tray isn't empty
+			var/list/obj/item/oldContents = T.contents.Copy()
+			T.quick_empty()
+			
+			for(var/obj/item/C in oldContents)
+				C.loc = src.loc
+			
+			user.visible_message("<span class='notice'>[user] empties [I] on [src].</span>")
+			return
+		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 
 	if(isrobot(user))
 		return
