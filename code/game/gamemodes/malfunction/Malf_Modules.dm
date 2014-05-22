@@ -73,21 +73,20 @@
 	if(malf_cooldown)
 		return
 
-	for(var/obj/machinery/firealarm/FA in machines) //activate firealarms
+	var/obj/machinery/door/airlock/AL
+	for(var/obj/machinery/door/D in portals)
 		spawn()
-			FA.alarm()
-	for(var/obj/machinery/door/poddoor/BD in portals) //Close blast doors!
-		spawn()
-			BD.close()
-	for(var/obj/machinery/door/airlock/AL in portals) //shock-bolt airlocks
-		spawn()
-			if(AL.canAIControl() && !AL.stat) //Must be powered and have working AI wire.
-				AL.locked = 0
-				AL.safe = 0
-				AL.close()
-				AL.locked = 1
-				AL.lights = 0
-				AL.secondsElectrified = -1
+			if(istype(D, /obj/machinery/door/airlock))
+				AL = D
+				if(AL.canAIControl() && !AL.stat) //Must be powered and have working AI wire.
+					AL.locked = 0 //For airlocks that were bolted open.
+					AL.safe = 0 //DOOR CRUSH
+					AL.close()
+					AL.locked = 1 //Bolt it!
+					AL.lights = 0 //Stealth bolt for a classic AI door trap.
+					AL.secondsElectrified = -1  //Shock it!
+			else
+				D.close() //Close ALL the doors!
 
 	var/obj/machinery/computer/communications/C = locate() in machines
 	if(C)
@@ -109,21 +108,19 @@
 	if(malf_cooldown)
 		return
 
-	for(var/obj/machinery/firealarm/FA in machines) //deactivate firealarms
+	var/obj/machinery/door/airlock/AL
+	for(var/obj/machinery/door/D in portals)
 		spawn()
-			FA.reset()
-	for(var/obj/machinery/door/poddoor/BD in portals) //Open blast doors!
-		spawn()
-			BD.open()
-	for(var/obj/machinery/door/airlock/AL in portals) //unbolt and open airlocks
-		spawn()
-			if(AL.canAIControl() && !AL.stat)
-
-				AL.locked = 0
-				AL.secondsElectrified = 0
-				AL.open()
-				AL.safe = 1
-				AL.lights = 1
+			if(istype(D, /obj/machinery/door/airlock))
+				AL = D
+				if(AL.canAIControl() && !AL.stat) //Must be powered and have working AI wire.
+					AL.locked = 0
+					AL.secondsElectrified = 0
+					AL.open()
+					AL.safe = 1
+					AL.lights = 1 //Essentially reset the airlock to normal.
+			else
+				D.open() //Open everything!
 
 	src << "<span class = 'notice'>Lockdown Lifted.</span>"
 	malf_cooldown = 1
