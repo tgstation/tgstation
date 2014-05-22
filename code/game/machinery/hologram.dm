@@ -174,10 +174,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	qdel(src)
 	return
 
-/obj/machinery/hologram/meteorhit()
-	qdel(src)
-	return
-
 /obj/machinery/hologram/holopad/Destroy()
 	if(hologram)
 		clear_holo()

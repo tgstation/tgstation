@@ -146,7 +146,9 @@ FLOOR SAFES
 	if(open)
 		if(I.w_class + space <= maxspace)
 			space += I.w_class
-			user.drop_item()
+			if(!user.drop_item())
+				user << "<span class='notice'>\The [I] is stuck to your hand, you cannot put it in the safe!</span>"
+				return
 			I.loc = src
 			user << "<span class='notice'>You put [I] in [src].</span>"
 			updateUsrDialog()
@@ -163,12 +165,7 @@ FLOOR SAFES
 obj/structure/safe/blob_act()
 	return
 
-
 obj/structure/safe/ex_act(severity)
-	return
-
-
-obj/structure/safe/meteorhit(obj/O as obj)
 	return
 
 

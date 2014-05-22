@@ -41,6 +41,8 @@ namespace sendkeys_ss13
 
         public static string[] merge_archive;
         public static bool mergeflag = false;
+        public static string mergedPR = "";
+        public static string lastPR = "";
 
         public static IrcClient irc = new IrcClient();
 
@@ -224,57 +226,74 @@ namespace sendkeys_ss13
                     FormMessage(msg);
             }
         }
-
         private static void FormMessage(string[] msg, bool ShortenedURL = false)
         {
             using (StreamWriter output = new StreamWriter("output.txt"))
             {
-                if (msg[2] == "closed")
+                if (msg.Length >= 4)
                 {
-                    merge_archive = msg;
-                    mergeflag = true;
-                    output.Close();
-                }
-                else if ((msg[2] == "opened" || mergeflag) && msg[1] != "meant:") //Either we open a new PR or a PR was closed in the last message. Also protection from Whibyl's correction thingy!
-                {
-                    if (msg[2] == "pushed")
+                    if (msg[3] == "Merge" && msg[1] != "meant:") //Someone is merging something
                     {
-                        msg = merge_archive; //We copy the "close" message and replace "close" with merge! The players won't know what him 'em!
-                        msg[2] = "merged";
+                        mergedPR = msg[6];
+                        if (merge_archive != null)
+                        {
+                            string currentPR = merge_archive[5].Substring(0, merge_archive[5].Length - 1); //PR no. without : at the end
+                            if (currentPR == mergedPR && currentPR != lastPR) //Check if the last closed message's PR number is the same PR number as the merge one.
+                            {
+                                mergeflag = true;
+                                msg = merge_archive;
+                                msg[2] = "merged";
+                                lastPR = mergedPR;
+                                mergedPR = null;
+                                merge_archive = null;
+                            }
+                        }
                     }
-                    mergeflag = false;
-                    merge_archive = null;
-                    string URL = msg[msg.Length - 1];
-                    if(!ShortenedURL)
-                        URL = ShortenURL(URL);
-                    msg[5] = "<a href=" + URL + ">" + msg[5] + "</a>";
-                    msg[0] = ""; //Repo name
-                    msg[msg.Length - 1] = ""; //The URL itself
-                    msg[msg.Length - 2] = ""; //Branch info
-                    byte[] PACKETS = CreatePacket(msg);
-                    PACKETS[1] = 0x83;
-                    int len = 0;
-                    for (int i = 1; i < msg.Length - 1; i++)
+                    if (msg[2] == "closed" && msg[1] != "meant:")
                     {
-                        len += msg[i].Length + 1; //The length of the word and the space following it.
-                        Console.Write(msg[i] + " ");
+                        merge_archive = msg;
+                        if (mergedPR != null)
+                        {
+                            string currentPR = msg[5].Substring(0, msg[5].Length - 1);
+                            if (currentPR == mergedPR && currentPR != lastPR) //Check if the current closed message's PR number 
+                            {
+                                mergeflag = true;
+                                msg[2] = "merged";
+                                lastPR = mergedPR;
+                                mergedPR = null;
+                                merge_archive = null;
+                            }
+                        }
                     }
-                    len -= 1; //Compensating for the lack of space at the end.
-                    len += 14 + commskey.Length + 6; //Argument names + Commskey length + 6 null bytes
-                    PACKETS[3] = (byte)len;
-                    StringBuilder test = new StringBuilder();
-                    for (int i = 0; i < PACKETS.Length; i++)
+                    if ((msg[2] == "opened" || mergeflag) && msg[1] != "meant:") //Either we open a new PR or a PR was closed in the last message. Also protection from Whibyl's correction thingy!
                     {
-                        test.Append(Convert.ToString(PACKETS[i]));
+                        mergeflag = false;
+                        string URL = msg[msg.Length - 1];
+                        if (!ShortenedURL)
+                            URL = ShortenURL(URL);
+                        msg[5] = "<a href=" + URL + ">" + msg[5] + "</a>";
+                        msg[0] = ""; //Repo name
+                        msg[msg.Length - 1] = ""; //The URL itself
+                        msg[msg.Length - 2] = ""; //Branch info
+                        byte[] PACKETS = CreatePacket(msg);
+                        PACKETS[1] = 0x83;
+                        int len = 0;
+                        for (int i = 1; i < msg.Length - 1; i++)
+                        {
+                            len += msg[i].Length + 1; //The length of the word and the space following it.
+                            Console.Write(msg[i] + " ");
+                        }
+                        len -= 1; //Compensating for the lack of space at the end.
+                        len += 14 + commskey.Length + 6; //Argument names + Commskey length + 6 null bytes
+                        PACKETS[3] = (byte)len;
+                        StringBuilder test = new StringBuilder();
+                        for (int i = 0; i < PACKETS.Length; i++)
+                        {
+                            test.Append(Convert.ToString(PACKETS[i]));
+                        }
+                        output.WriteLine(Convert.ToString(test));
+                        SendPacket(output, PACKETS);
                     }
-                    output.WriteLine(Convert.ToString(test));
-                    SendPacket(output, PACKETS);
-                }
-                else
-                {
-                    mergeflag = false;
-                    merge_archive = null;
-                    output.Close();
                 }
             }
         }

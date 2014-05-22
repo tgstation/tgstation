@@ -3,7 +3,7 @@
 
 /obj/machinery/mineral/ore_redemption
 	name = "ore redemption machine"
-	desc = "A machine that accepts ore and instantly transforms it into workable material sheets, but cannot produce alloys such as Plasteel. Points for ore are generated based on type and can be redeemed at a mining equipment locker."
+	desc = "A machine that accepts ore and instantly transforms it into workable material sheets, but cannot produce alloys such as Plasteel. Points for ore are generated based on type and can be redeemed at a mining equipment vendor."
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "ore_redemption"
 	density = 1
@@ -145,11 +145,11 @@
 /obj/machinery/mineral/ore_redemption/ex_act()
 	return //So some chucklefuck doesn't ruin miners reward with an explosion
 
-/**********************Mining Equipment Locker**************************/
+/**********************Mining Equipment Vendor**************************/
 
-/obj/machinery/mineral/equipment_locker
-	name = "mining equipment locker"
-	desc = "An equipment locker for miners, points collected at an ore redemption machine can be spent here."
+/obj/machinery/mineral/equipment_vendor
+	name = "mining equipment vendor"
+	desc = "An equipment vendor for miners, points collected at an ore redemption machine can be spent here."
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "mining"
 	density = 1
@@ -184,14 +184,14 @@
 	src.equipment_path = path
 	src.cost = cost
 
-/obj/machinery/mineral/equipment_locker/attack_hand(user as mob)
+/obj/machinery/mineral/equipment_vendor/attack_hand(user as mob)
 	if(..())
 		return
 	interact(user)
 
-/obj/machinery/mineral/equipment_locker/interact(mob/user)
+/obj/machinery/mineral/equipment_vendor/interact(mob/user)
 	var/dat
-	dat += text("<b>Mining Equipment Locker</b><br><br>")
+	dat += text("<b>Mining Equipment vendor</b><br><br>")
 
 	if(istype(inserted_id))
 		dat += "You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];choice=eject'>Eject ID.</A><br>"
@@ -203,10 +203,10 @@
 		dat += "<tr><td>[prize.equipment_name]</td><td>[prize.cost]</td><td><A href='?src=\ref[src];purchase=\ref[prize]'>Purchase</A></td></tr>"
 	dat += "</table>"
 
-	user << browse("[dat]", "window=mining_equipment_locker")
+	user << browse("[dat]", "window=mining_equipment_vendor")
 	return
 
-/obj/machinery/mineral/equipment_locker/Topic(href, href_list)
+/obj/machinery/mineral/equipment_vendor/Topic(href, href_list)
 	if(..())
 		return
 	if(href_list["choice"])
@@ -234,7 +234,7 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/mineral/equipment_locker/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/mineral/equipment_vendor/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/mining_voucher))
 		RedeemVoucher(I, user)
 		return
@@ -248,7 +248,7 @@
 		return
 	..()
 
-/obj/machinery/mineral/equipment_locker/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
+/obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
 	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Resonator", "Kinetic Accelerator", "Mining Drone")
 	if(!selection || !Adjacent(redeemer) || voucher.gc_destroyed || voucher.loc != redeemer)
 		return
@@ -262,16 +262,16 @@
 			new /obj/item/weapon/weldingtool/hugetank(src.loc)
 	qdel(voucher)
 
-/obj/machinery/mineral/equipment_locker/ex_act()
+/obj/machinery/mineral/equipment_vendor/ex_act()
 	return
 
-/**********************Mining Equipment Locker Items**************************/
+/**********************Mining Equipment Vendor Items**************************/
 
 /**********************Mining Equipment Voucher**********************/
 
 /obj/item/weapon/mining_voucher
 	name = "mining voucher"
-	desc = "A token to redeem a piece of equipment. Use it on a mining equipment locker."
+	desc = "A token to redeem a piece of equipment. Use it on a mining equipment vendor."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "mining_voucher"
 	w_class = 1

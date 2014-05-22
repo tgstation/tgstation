@@ -9,10 +9,9 @@
 	endWhen			= 66
 
 /datum/round_event/meteor_wave/announce()
-	command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
-	world << sound('sound/AI/meteors.ogg')
+	priority_announce("Meteors have been detected on collision course with the station.", "Meteor Alert", 'sound/AI/meteors.ogg')
 
 
 /datum/round_event/meteor_wave/tick()
 	if(IsMultiple(activeFor, 3))
-		spawn_meteors(5)
+		spawn_meteors(5, meteorsA) //meteor list types defined in gamemode/meteor/meteors.dm

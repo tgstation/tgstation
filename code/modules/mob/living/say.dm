@@ -288,6 +288,16 @@ var/list/department_radio_keys = list(
 				P.speech_buffer.Remove(pick(P.speech_buffer))
 			P.speech_buffer.Add(html_decode(message))
 
+		if(isslime(A)) //Slimes answering to people
+			if (A == src)
+				continue
+
+			var/mob/living/carbon/slime/S = A
+			if (src in S.Friends)
+				S.speech_buffer = list()
+				S.speech_buffer.Add(src)
+				S.speech_buffer.Add(lowertext(html_decode(message)))
+
 		if(istype(A, /obj/)) //radio in pocket could work, radio in backpack wouldn't --rastaf0
 			var/obj/O = A
 			spawn (0)

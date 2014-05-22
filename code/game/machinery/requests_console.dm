@@ -283,6 +283,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		for(var/mob/M in player_list)
 			if(!istype(M,/mob/new_player))
 				M << "<b><font size = 3><font color = red>[department] announcement:</font color> [message]</font size></b>"
+		news_network.SubmitArticle(message, department, "Station Announcements", null)
 		announceAuth = 0
 		message = ""
 		screen = 0

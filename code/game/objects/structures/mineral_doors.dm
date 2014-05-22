@@ -268,3 +268,6 @@
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 	..()
 
+/obj/structure/mineral_door/resin/BlockSuperconductivity()
+	if(opacity)
+		return 1
