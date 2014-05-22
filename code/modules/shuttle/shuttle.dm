@@ -1,21 +1,32 @@
-var/obj/list/shuttles = list(("escape" = new /datum/shuttle_manager(/area/shuttle/escape/centcom, 0)), ("pod1" =  new /datum/shuttle_manager(/area/shuttle/escape_pod1/station, 0)), ("pod2" = new /datum/shuttle_manager(/area/shuttle/escape_pod2/station, 0)), ("pod3" = new /datum/shuttle_manager(/area/shuttle/escape_pod3/station, 0)), ("pod4" = new /datum/shuttle_manager(/area/shuttle/escape_pod4/station, 0)), ("mining" = new /datum/shuttle_manager(/area/shuttle/mining/station, 10)), ("laborcamp" = new /datum/shuttle_manager(/area/shuttle/laborcamp/station, 10)), ("ferry" = new /datum/shuttle_manager(/area/shuttle/transport1/centcom, 0)))
+var/obj/list/shuttles = list(("escape" = new /datum/shuttle_manager(/area/shuttle/escape/centcom, 0)), ("pod1" =  new /datum/shuttle_manager(/area/shuttle/escape_pod1/station, 0)), ("pod2" = new /datum/shuttle_manager(/area/shuttle/escape_pod2/station, 0)), ("pod3" = new /datum/shuttle_manager(/area/shuttle/escape_pod3/station, 0)), ("pod4" = new /datum/shuttle_manager(/area/shuttle/escape_pod4/station, 0)), ("mining" = new /datum/shuttle_manager(/area/shuttle/mining/station, 10, 1)), ("laborcamp" = new /datum/shuttle_manager(/area/shuttle/laborcamp/station, 10, 1)), ("ferry" = new /datum/shuttle_manager(/area/shuttle/transport1/centcom, 0)))
 		//Pre-made shuttles should have non-number keys, so that buildable shuttles can use numbered keys without allowing 'I build a shuttle console with the escape number as its ID.'
 datum/shuttle_manager
 	var/tickstomove = 10 //How long does it take to move the shuttle?
 	var/moving = 0 //Is it moving?
 	var/area/shuttle/location //The current location of the actual shuttle
+	var/check_disk // Should we prevent the shuttle from moving if the nuke disk is in board?
 
-datum/shuttle_manager/New(var/area, var/delay) //Create a new shuttle manager for the shuttle starting area, "area" and with a movement delay of tickstomove
+datum/shuttle_manager/New(var/area, var/delay, var/block_disk) //Create a new shuttle manager for the shuttle starting area, "area" and with a movement delay of tickstomove
 	location = area
 	tickstomove = delay
+	check_disk = block_disk
 	var/area/A = locate(location)
 	A.has_gravity = 1
 
 
-datum/shuttle_manager/proc/move_shuttle(var/override_delay)
+datum/shuttle_manager/proc/move_shuttle(var/override_delay, var/override_diskcheck)
 	if(moving)	return 0
 	moving = 1
 	spawn(override_delay == null ? tickstomove*10 : override_delay)
+		//Check for disk if check_disk is 1
+		if(check_disk && !override_diskcheck)
+			var/area/SHUTTLE = locate(location)
+			if(SHUTTLE.GetTypeInAllContents(/obj/item/weapon/disk/nuclear))
+				for(var/mob/MOB in SHUTTLE)
+					MOB << "<span class='warning'>Unauthorized cargo detected. Aborting launch.</span>"
+				moving = 0
+				return
+
 		var/area/shuttle/fromArea
 		var/area/shuttle/toArea
 		fromArea = locate(location) //the location of the shuttle
@@ -108,11 +119,11 @@ datum/shuttle_manager/proc/move_shuttle(var/override_delay)
 		if(id in shuttles)
 			var/datum/shuttle_manager/s = shuttles[id]
 			if (s.move_shuttle())
-				usr << "\blue Shuttle recieved message and will be sent shortly."
+				usr << "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>"
 			else
-				usr << "\blue Shuttle is already moving."
+				usr << "<span class='notice'>Shuttle is already moving.</span>"
 		else
-			usr << "\red Invalid shuttle requested."
+			usr << "<span class='warning'>Invalid shuttle requested.</span>"
 
 
 /obj/machinery/computer/shuttle/attackby(I as obj, user as mob)
