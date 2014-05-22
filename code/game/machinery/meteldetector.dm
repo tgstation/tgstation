@@ -15,14 +15,19 @@
 	ghost_read=0
 	ghost_write=0
 	density = 1
-	req_access = list(access_security, access_forensics_lockers)
+	var/idmode = 0
+	var/scanmode = 0
+	var/senset = 0
+
+
+	req_access = list(access_security)
 
 
 
 /obj/machinery/detector/proc/assess_perp(mob/living/carbon/human/perp as mob)
 	var/threatcount = 0
 
-	if(src.emagged == 2) return 10 //Everyone is a criminal!
+	if(src.emagged == 2) return 10
 
 	if(!src.allowed(perp))
 
@@ -44,35 +49,103 @@
 			&& !istype(perp:belt, /obj/item/weapon/gun/energy/laser/practice))
 				threatcount += 2
 
+		if(istype(perp:back, /obj/item/weapon/gun) || istype(perp:belt, /obj/item/weapon/melee))
+			if(!istype(perp:back, /obj/item/weapon/gun/energy/laser/bluetag) \
+			&& !istype(perp:back, /obj/item/weapon/gun/energy/laser/redtag) \
+			&& !istype(perp:back, /obj/item/weapon/gun/energy/laser/practice))
+				threatcount += 2
+
+
+
+		if(istype(perp:s_store, /obj/item/weapon/gun) || istype(perp:belt, /obj/item/weapon/melee))
+			if(!istype(perp:s_store, /obj/item/weapon/gun/energy/laser/bluetag) \
+			&& !istype(perp:s_store, /obj/item/weapon/gun/energy/laser/redtag) \
+			&& !istype(perp:s_store, /obj/item/weapon/gun/energy/laser/practice))
+				threatcount += 2
+
+
+		if(scanmode)
+			//
+			if(istype(perp:l_store, /obj/item/weapon/gun) || istype(perp:belt, /obj/item/weapon/melee))
+				if(!istype(perp:l_store, /obj/item/weapon/gun/energy/laser/bluetag) \
+				&& !istype(perp:l_store, /obj/item/weapon/gun/energy/laser/redtag) \
+				&& !istype(perp:l_store, /obj/item/weapon/gun/energy/laser/practice))
+					threatcount += 2
+
+
+			if(istype(perp:r_store, /obj/item/weapon/gun) || istype(perp:belt, /obj/item/weapon/melee))
+				if(!istype(perp:r_store, /obj/item/weapon/gun/energy/laser/bluetag) \
+				&& !istype(perp:r_store, /obj/item/weapon/gun/energy/laser/redtag) \
+				&& !istype(perp:r_store, /obj/item/weapon/gun/energy/laser/practice))
+					threatcount += 2
+
+
+
+			if (perp.back && istype(perp.back, /obj/item/weapon/storage/backpack))
+				//
+				var/obj/item/weapon/storage/backpack/B = perp.back
+							//
+				for(var/things in B.contents)
+					//
+					if(istype(things, /obj/item/weapon/gun) || istype(perp:belt, /obj/item/weapon/melee))
+						if(!istype(things, /obj/item/weapon/gun/energy/laser/bluetag) \
+						&& !istype(things, /obj/item/weapon/gun/energy/laser/redtag) \
+						&& !istype(things, /obj/item/weapon/gun/energy/laser/practice))
+							threatcount += 2
+
+
+
+
+
+		if(idmode)
+			//
+			if(!perp:wear_id)
+				threatcount += 4
+
+		else
+
+			if(!perp:wear_id)
+				threatcount += 2
+
+
 		if(istype(perp:wear_suit, /obj/item/clothing/suit/wizrobe))
 			threatcount += 2
 
 		if(perp.dna && perp.dna.mutantrace && perp.dna.mutantrace != "none")
 			threatcount += 2
 
+
+
+
+
 		//Agent cards lower threatlevel.
-		if(perp.wear_id && istype(perp:wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
-			threatcount -= 2
-
-	if(1)
-		for (var/datum/data/record/E in data_core.general)
-			var/perpname = perp.name
-			if(perp.wear_id)
-				var/obj/item/weapon/card/id/id = perp.wear_id.GetID()
-				if(id)
-					perpname = id.registered_name
-
-			if(E.fields["name"] == perpname)
-				for (var/datum/data/record/R in data_core.security)
-					if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
-						threatcount = 4
-						break
-
-	return threatcount
+		//if(perp.wear_id && istype(perp:wear_id.GetID(), /obj/item/weapon/card/id/syndicate)) ///////////////nah, i dont think so
+		//	threatcount -= 2
 
 
 
 
+	var/passperpname = ""
+	for (var/datum/data/record/E in data_core.general)
+		var/perpname = perp.name
+
+		if(perp.wear_id)
+			var/obj/item/weapon/card/id/id = perp.wear_id.GetID()
+
+			if(id)
+				perpname = id.registered_name
+		else
+			perpname = "Unknown"
+		passperpname = perpname
+		if(E.fields["name"] == perpname)
+			for (var/datum/data/record/R in data_core.security)
+				if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
+					threatcount = 4
+					break
+
+	var/list/retlist = list(threatcount, passperpname)
+
+	return retlist
 
 
 
@@ -85,10 +158,9 @@
 //		src.sd_SetLuminosity(2)
 	else
 		stat |= ~NOPOWER
-		icon_state = "[base_state]1-p"
+		icon_state = "[base_state]1"
 //		src.sd_SetLuminosity(0)
 
-//Don't want to render prison breaks impossible
 /obj/machinery/detector/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wirecutters))
 		add_fingerprint(user)
@@ -98,18 +170,98 @@
 		if (!src.disable)
 			user.visible_message("\red [user] has connected the detector array!", "\red You connect the detector array!")
 
-//Let the AI trigger them directly.
-/obj/machinery/detector/attack_ai()
-	if (src.anchored)
-		return src.flash()
-	else
+
+
+
+
+
+/obj/machinery/detector/Topic(href, href_list)
+	if(..()) return
+
+	if(usr) usr.set_machine(src)
+
+	if (href_list["idmode"])
+
+		if(idmode)
+			idmode = 0
+			//
+
+		else
+			idmode = 1
+
+
+
+	if (href_list["scanmode"])
+
+		if(scanmode)
+			scanmode = 0
+			//
+
+		else
+			scanmode = 1
+
+
+	if (href_list["senmode"])
+
+		if(senset)
+			senset = 0
+			//
+
+		else
+			senset = 1
+
+	src.updateUsrDialog()
+	return
+
+
+
+.
+
+/obj/machinery/detector/attack_hand(mob/user as mob)
+
+	if(src.allowed(user))
+
+
+		user.set_machine(src)
+
+		if(!src.anchored)
+			return
+
+		var/dat = "<h4>"
+
+		if(idmode == 0)
+			dat += "Citizens must carry ID: <A href='?src=\ref[src];idmode=1'>Turn On</A><BR><BR>"
+		else
+			dat += "Citizens must carry ID: <A href='?src=\ref[src];idmode=1'>Turn Off</A><BR><BR>"
+
+
+		if(scanmode == 0)
+			dat += "Intrusive Scan: <A href='?src=\ref[src];scanmode=1'>Turn On</A><BR><BR>"
+		else
+			dat += "Intrusive Scan: <A href='?src=\ref[src];scanmode=1'>Turn Off</A><BR><BR>"
+
+
+
+		if(senset == 0)
+			dat += "DeMil Alerts: <A href='?src=\ref[src];senmode=1'>Turn On</A><BR><BR>"
+		else
+			dat += "DeMil Alerts: <A href='?src=\ref[src];senmode=1'>Turn Off</A><BR><BR>"
+
+
+		user << browse("<TITLE>Mr. V.A.L.I.D. Portable Threat Detector</TITLE><h3>Menu:</h3><BR><BR>[dat]</h4></ul>", "window=detector;size=575x300")
+		onclose(user, "detector")
 		return
+
+	else:
+
+		src.visible_message("<span class = 'warning'>ACCESS DENIED!</span>")
+
 
 /obj/machinery/detector/proc/flash()
 	if (!(powered()))
 		return
 
-	if ((src.disable) || (src.last_read && world.time < src.last_read + 30))
+	if ((src.disable) || (src.last_read && world.time < src.last_read + 20))
 		return
 
 
@@ -118,15 +270,33 @@
 		if(isobserver(O)) continue
 		if (get_dist(src, O) > src.range)
 			continue
+		var/list/ourretlist = src.assess_perp(O)
 
-		if (src.assess_perp(O) >= 4)
-			src.visible_message("<span class = 'warning'>Theat Detected! Subject: [O.name]</span>")////
+	//	src.visible_message("<span class = 'warning'>Test2! Subject: [src.assess_perp(O)[1]]</span>")////
+		var/dudesthreat = ourretlist[1]
+		var/dudesname = ourretlist[2]
+	//	src.visible_message("<span class = 'warning'>Test3! Subject: [dudesname]</span>")////
+		if (dudesthreat >= 4)
+			src.visible_message("<span class = 'warning'>Theat Detected! Subject: [dudesname]</span>")////
 			playsound(get_turf(src), 'sound/machines/info.ogg', 100, 1)
 			flick("[base_state]_flash", src)
 			src.last_read = world.time
 			use_power(1000)
 			//world << "<font size='1' color='red'><b>Theat Detected! Subject:[O.name]/b></font>" //debugging
+		else if(dudesthreat <= 3 && dudesthreat != 0 && senset)
+			playsound(get_turf(src), 'sound/machines/info.ogg', 100, 1)
+			flick("[base_state]_flash", src)
+			src.last_read = world.time
+			use_power(1000)
+			src.visible_message("<span class = 'warning'>Additional screening required! Subject: [dudesname]</span>")
+			//
 
+		else
+			playsound(get_turf(src), 'sound/machines/info.ogg', 100, 1)
+			flick("[base_state]_flash", src)
+			src.last_read = world.time
+			use_power(1000)
+			src.visible_message("<span class = 'notice'> Subject: [dudesname] clear.</span>")
 
 
 
@@ -145,7 +315,7 @@
 		return
 
 	if(istype(AM, /mob/living/carbon))
-		//var/mob/living/carbon/M = AM
+
 		if ((src.anchored))
 			src.flash()
 
@@ -160,47 +330,6 @@
 
 		else if (src.anchored)
 			user.show_message(text("\red [src] is now secured."))
-		src.overlays += "[base_state]-s"
+			src.overlays += "[base_state]-s"
 
 
-
-
-/*
-/obj/machinery/detector_button/attack_ai(mob/user as mob)
-	src.add_hiddenprint(user)
-	return src.attack_hand(user)
-
-/obj/machinery/detector_button/attack_paw(mob/user as mob)
-	return src.attack_hand(user)
-
-/obj/machinery/detector_button/attackby(obj/item/weapon/W, mob/user as mob)
-	return src.attack_hand(user)
-
-/obj/machinery/detector_button/attack_hand(mob/user as mob)
-
-	if(stat & (NOPOWER|BROKEN))
-		return
-	if(active)
-		return
-
-	use_power(5)
-
-	active = 1
-	icon_state = "launcheract"
-
-	for(var/obj/machinery/detector/M in world)
-		if(M.id_tag == src.id_tag)
-			spawn()
-				M.flash()
-
-	sleep(50)
-
-	icon_state = "launcherbtt"
-	active = 0
-
-	return
-
-
-
-
-*/
