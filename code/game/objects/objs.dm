@@ -84,10 +84,10 @@
 				else if (ishuman(M))
 					if(istype(M.l_hand, /obj/item/tk_grab) || istype(M.r_hand, /obj/item/tk_grab))
 						is_in_use = 1
-						src.attack_hand(usr)
+						src.attack_hand(M)
 			else // EVERYTHING FROM HERE DOWN MUST BE NEARBY
 				is_in_use = 1
-				attack_hand(usr)
+				attack_hand(M)
 		in_use = is_in_use
 
 /obj/proc/updateDialog()
