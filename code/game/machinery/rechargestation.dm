@@ -157,6 +157,8 @@
 		if(occupier.module && occupier.module.modules)
 			var/list/um = occupier.contents|occupier.module.modules // Makes single list of active (occupier.contents) and inactive (occupier.module.modules) modules
 			var/coeff = recharge_speed / 200
+			for (var/datum/robot_energy_storage/st in occupier.module.storages)
+				st.energy = min(st.max_energy, st.energy + recharge_speed * 5)
 			for(var/obj/O in um)
 				//General
 				if(istype(O,/obj/item/device/flash))

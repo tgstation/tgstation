@@ -404,16 +404,19 @@
 	return
 
 
-/obj/item/weapon/storage/toolbox/mechanical/attackby(var/obj/item/stack/tile/plasteel/T, mob/user as mob) // TODO: test how it works with borgs
+/obj/item/weapon/storage/toolbox/mechanical/attackby(var/obj/item/stack/tile/plasteel/T, mob/user as mob)
 	if(!istype(T, /obj/item/stack/tile/plasteel))
 		..()
 		return
 	if(src.contents.len >= 1)
 		user << "<span class='notice'>They wont fit in as there is already stuff inside.</span>"
 		return
+	if (T.get_amount() < 10)
+		user << "You need at least 10 floor tiles for this"
+		return
 	if(user.s_active)
 		user.s_active.close(user)
-	qdel(T)
+	T.use(10)
 	var/obj/item/weapon/toolbox_tiles/B = new /obj/item/weapon/toolbox_tiles
 	user.put_in_hands(B)
 	user << "<span class='notice'>You add the tiles into the empty toolbox. They protrude from the top.</span>"
