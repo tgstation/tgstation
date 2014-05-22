@@ -84,7 +84,7 @@
 // Like Del(), but for qdel.
 // Called BEFORE qdel moves shit.
 /atom/proc/Destroy()
-	gc_destroyed=world.time
+	gc_destroyed = world.timeofday
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	return null
