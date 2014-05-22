@@ -73,7 +73,7 @@
 
 				if(/obj/item/stack/sheet/metal, /obj/item/stack/sheet/metal/cyborg)
 					if(!anchored)
-						if(S.amount < 2)
+						if(S.get_amount() < 2)
 							user << "<span class='warning'>You need at least two sheets to create a false wall.</span>"
 							return
 						S.use(2)
@@ -82,10 +82,10 @@
 						transfer_fingerprints_to(F)
 						qdel(src)
 					else
-						if(S.amount < 2) return ..()
+						if(S.get_amount() < 2) return ..()
 						user << "<span class='notice'>Now adding plating...</span>"
 						if (do_after(user,40))
-							if(!src || !S || S.amount < 2) return
+							if(!src || !S || S.get_amount() < 2) return
 							S.use(2)
 							user << "<span class='notice'>You added the plating!</span>"
 							var/turf/Tsrc = get_turf(src)

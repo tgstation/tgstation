@@ -15,7 +15,8 @@
 /obj/item/stack/tile/plasteel/cyborg
 	desc = "The ground you walk on" //Not the usual floor tile desc as that refers to throwing, Cyborgs can't do that - RR
 	m_amt = 0 // All other Borg versions of items have no Metal or Glass - RR
-	max_amount = 50
+	is_cyborg = 1
+	cost = 125
 
 /obj/item/stack/tile/plasteel/New(var/loc, var/amount=null)
 	..()
@@ -28,7 +29,7 @@
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 
-		if(amount < 4)
+		if(get_amount() < 4)
 			user << "\red You need at least four tiles to do this."
 			return
 

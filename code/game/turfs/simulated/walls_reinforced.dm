@@ -77,6 +77,9 @@
 			//REPAIRING (replacing the outer grille for cosmetic damage)
 			else if( istype(W, /obj/item/stack/rods) )
 				var/obj/item/stack/rods/O = W
+				if (O.get_amount() < 1)
+					user << "There are not enough rods"
+					return
 				src.d_state = 0
 				src.icon_state = "r_wall"
 				relativewall_neighbours()	//call smoothwall stuff
@@ -213,6 +216,10 @@
 	//REPAIRING
 	else if( istype(W, /obj/item/stack/sheet/metal) && d_state )
 		var/obj/item/stack/sheet/metal/MS = W
+
+		if (MS.get_amount() < 1)
+			user << "There is not enough metal"
+			return
 
 		user << "<span class='notice'>You begin patching-up the wall with \a [MS].</span>"
 

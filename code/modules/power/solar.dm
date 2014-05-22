@@ -217,9 +217,9 @@ var/list/solars_list = list()
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			return 1
 
-		if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
+		if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass)) // TODO: feedback message
 			var/obj/item/stack/sheet/S = W
-			if(S.amount >= 2)
+			if(S.get_amount() >= 2)
 				glass_type = W.type
 				S.use(2)
 				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)

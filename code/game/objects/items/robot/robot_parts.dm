@@ -104,10 +104,14 @@
 /obj/item/robot_parts/robot_suit/attackby(obj/item/W as obj, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/stack/sheet/metal) && !l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
+		var/obj/item/stack/sheet/metal/M = W
+		if (M.get_amount() < 1)
+			user << "There is not enough metal"
+			return
 		var/obj/item/weapon/ed209_assembly/B = new /obj/item/weapon/ed209_assembly
 		B.loc = get_turf(src)
 		user << "You armed the robot frame"
-		W:use(1)
+		M.use(1)
 		if (user.get_inactive_hand()==src)
 			user.unEquip(src)
 			user.put_in_inactive_hand(B)

@@ -461,15 +461,16 @@ turf/simulated/floor/proc/update_icon()
 	if(istype(C, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = C
 		if (is_plating())
-			if (R.amount >= 2)
+			if (R.get_amount() < 2)
+				user << "There are not enough rods, you need at least two"
+				return
+			else
 				user << "\blue Reinforcing the floor..."
-				if(do_after(user, 30) && R && R.amount >= 2 && is_plating())
+				if(do_after(user, 30) && R && R.get_amount() >= 2 && is_plating())
 					ChangeTurf(/turf/simulated/floor/engine)
 					playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
 					R.use(2)
 					return
-			else
-				user << "\red You need more rods."
 		else
 			user << "\red You must remove the plating first."
 		return

@@ -17,10 +17,13 @@
 /turf/space/attackby(obj/item/C as obj, mob/user as mob)
 
 	if (istype(C, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = C
+		if (R.get_amount() < 1)
+			user << "There are not enough rods"
+			return
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
 			return
-		var/obj/item/stack/rods/R = C
 		user << "\blue Constructing support lattice ..."
 		playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 		ReplaceWithLattice()
@@ -31,6 +34,9 @@
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
 			var/obj/item/stack/tile/plasteel/S = C
+			if (S.get_amount() < 1)
+				user << "There are not enough tiles"
+				return
 			qdel(L)
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 			S.build(src)

@@ -120,6 +120,10 @@
 
 //window placing begin
 	else if( istype(W,/obj/item/stack/sheet/rglass) || istype(W,/obj/item/stack/sheet/glass) )
+		var/obj/item/stack/ST = W
+		if (ST.get_amount() < 1)
+			user << "There is not enough glass"
+			return
 		var/dir_to_set = 1
 		if(loc == user.loc)
 			dir_to_set = user.dir
@@ -158,7 +162,6 @@
 			WD.ini_dir = dir_to_set
 			WD.anchored = 0
 			WD.state = 0
-			var/obj/item/stack/ST = W
 			ST.use(1)
 			user << "<span class='notice'>You place the [WD] on [src].</span>"
 		return

@@ -26,10 +26,10 @@
 
 	if(istype(O,/obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = O
-		M.amount--
-		if(M.amount <= 0)
-			user.unEquip(M, 1)
-			qdel(M)
+		if (M.get_amount() < 1)
+			user << "There is not enough metal"
+			return
+		M.use(1)
 		amount--
 		var/obj/item/stack/tile/light/L = new (user.loc)
 		L.add_fingerprint(user)

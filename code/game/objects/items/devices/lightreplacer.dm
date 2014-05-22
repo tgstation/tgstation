@@ -71,22 +71,20 @@
 	..()
 	usr << "It has [uses] lights remaining."
 
-/obj/item/device/lightreplacer/attackby(obj/item/W, mob/user)
+/obj/item/device/lightreplacer/attackby(obj/item/W, mob/user) // TODO: test carefully
 	if(istype(W,  /obj/item/weapon/card/emag) && emagged == 0)
 		Emag()
 		return
 
 	if(istype(W, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = W
-		if(G.amount - decrement >= 0 && uses < max_uses)
-			var/remaining = max(G.amount - decrement, 0)
-			if(!remaining && !(G.amount - decrement) == 0)
+		if(G.get_amount() - decrement >= 0 && uses < max_uses)
+			var/remaining = max(G.get_amount() - decrement, 0)
+			if(!remaining && !(G.get_amount() - decrement) == 0)
 				user << "There isn't enough glass."
 				return
-			G.amount = remaining
-			if(!G.amount)
-				user.drop_item()
-				qdel(G)
+			G.use(decrement)
+			//G.amount = remaining
 			AddUses(increment)
 			user << "You insert a piece of glass into the [src.name]. You have [uses] lights remaining."
 			return

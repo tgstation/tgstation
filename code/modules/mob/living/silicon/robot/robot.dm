@@ -317,6 +317,8 @@
 			if(internal)
 				stat("Internal Atmosphere Info", internal.name)
 				stat("Tank Pressure", internal.air_contents.return_pressure())
+			for (var/datum/robot_energy_storage/st in module.storages)
+				stat("[st.name]", st.energy)
 
 /mob/living/silicon/robot/restrained()
 	return 0

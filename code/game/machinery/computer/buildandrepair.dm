@@ -353,12 +353,13 @@
 				A.add_fingerprint(user)
 
 			if(istype(P, /obj/item/stack/sheet/glass))
-				if(P:amount >= 2)
+				var/obj/item/stack/sheet/glass/G = P
+				if(G.get_amount() >= 2)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "<span class='notice'>You start to put in the glass panel.</span>"
 					if(do_after(user, 20))
-						if(P)
-							P:use(2)
+						if(G && G.get_amount() >= 2)
+							G.use(2)
 							user << "<span class='notice'>You've put in the glass panel.</span>"
 							src.state = 4
 							src.icon_state = "4"

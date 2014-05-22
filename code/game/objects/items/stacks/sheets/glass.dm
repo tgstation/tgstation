@@ -16,6 +16,10 @@
 	g_amt = MINERAL_MATERIAL_AMOUNT
 	origin_tech = "materials=1"
 
+/obj/item/stack/sheet/glass/cyborg
+	g_amt = 0
+	is_cyborg = 1
+	cost = 500
 
 /obj/item/stack/sheet/glass/attack_self(mob/user as mob)
 	construct_window(user)
@@ -34,7 +38,10 @@
 		new_tile.add_fingerprint(user)
 		src.use(1)
 	else if( istype(W, /obj/item/stack/rods) )
-		var/obj/item/stack/rods/V  = W
+		var/obj/item/stack/rods/V = W
+		if (V.get_amount() < 1)
+			user << "There are not enough rods"
+			return
 		var/obj/item/stack/sheet/rglass/RG = new (user.loc)
 		RG.add_fingerprint(user)
 		RG.add_to_stacks(user)
@@ -55,7 +62,7 @@
 		user << "\red You don't have the dexterity to do this!"
 		return 0
 	var/title = "Sheet-Glass"
-	title += " ([src.amount] sheet\s left)"
+	title += " ([src.get_amount()] sheet\s left)"
 	switch(alert(title, "Would you like full tile glass or one direction?", "One Direction", "Full Window", "Cancel", null))
 		if("One Direction")
 			if(!src)	return 1
@@ -95,7 +102,7 @@
 		if("Full Window")
 			if(!src)	return 1
 			if(src.loc != user)	return 1
-			if(src.amount < 2)
+			if(src.get_amount() < 2)
 				user << "\red You need more glass to do that."
 				return 1
 			if(locate(/obj/structure/window) in user.loc)
@@ -127,10 +134,25 @@
 /obj/item/stack/sheet/rglass/cyborg
 	name = "reinforced glass"
 	desc = "Glass which seems to have rods or something stuck in them."
-	singular_name = "reinforced glass sheet"
-	icon_state = "sheet-rglass"
 	g_amt = 0
 	m_amt = 0
+	var/datum/robot_energy_storage/metsource
+	var/datum/robot_energy_storage/glasource
+	var/metcost = 250
+	var/glacost = 500
+
+/obj/item/stack/sheet/rglass/cyborg/get_amount()
+	return min(round(metsource.energy / metcost), round(glasource.energy / glacost))
+
+/obj/item/stack/sheet/rglass/cyborg/use(var/amount) // Requires special checks, because it uses two storages
+	metsource.use_charge(amount * metcost)
+	glasource.use_charge(amount * glacost)
+	return
+
+/obj/item/stack/sheet/rglass/cyborg/add(var/amount)
+	metsource.add_charge(amount * metcost)
+	glasource.add_charge(amount * glacost)
+	return
 
 /obj/item/stack/sheet/rglass/attack_self(mob/user as mob)
 	construct_window(user)
@@ -142,7 +164,7 @@
 		user << "\red You don't have the dexterity to do this!"
 		return 0
 	var/title = "Sheet Reinf. Glass"
-	title += " ([src.amount] sheet\s left)"
+	title += " ([src.get_amount()] sheet\s left)"
 	switch(input(title, "Would you like full tile glass a one direction glass pane or a windoor?") in list("One Direction", "Full Window", "Windoor", "Cancel"))
 		if("One Direction")
 			if(!src)	return 1
@@ -182,7 +204,7 @@
 		if("Full Window")
 			if(!src)	return 1
 			if(src.loc != user)	return 1
-			if(src.amount < 2)
+			if(src.get_amount() < 2)
 				user << "<span class='warning'>You need more glass to do that.</span>"
 				return 1
 			if(locate(/obj/structure/window) in user.loc)
@@ -208,7 +230,7 @@
 				user << "<span class='warning'>There is already a windoor in that location.</span>"
 				return 1
 
-			if(src.amount < 5)
+			if(src.get_amount() < 5)
 				user << "<span class='warning'>You need more glass to do that.</span>"
 				return 1
 

@@ -102,7 +102,7 @@
 		var/obj/item/stack/tile/plasteel/T = W
 		if(src.amount >= 50)
 			return
-		var/loaded = min(50-src.amount, T.amount)
+		var/loaded = min(50-src.amount, T.get_amount())
 		T.use(loaded)
 		src.amount += loaded
 		user << "<span class='notice'>You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles.</span>"
@@ -404,7 +404,7 @@
 	return
 
 
-/obj/item/weapon/storage/toolbox/mechanical/attackby(var/obj/item/stack/tile/plasteel/T, mob/user as mob)
+/obj/item/weapon/storage/toolbox/mechanical/attackby(var/obj/item/stack/tile/plasteel/T, mob/user as mob) // TODO: test how it works with borgs
 	if(!istype(T, /obj/item/stack/tile/plasteel))
 		..()
 		return

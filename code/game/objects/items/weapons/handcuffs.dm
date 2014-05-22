@@ -91,6 +91,9 @@
 	..()
 	if(istype(I, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = I
+		if (R.get_amount() < 1)
+			user << "There are not enough rods"
+			return
 		var/obj/item/weapon/wirerod/W = new /obj/item/weapon/wirerod
 		R.use(1)
 

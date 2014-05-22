@@ -9,7 +9,7 @@
 	var/list/modules = list()
 	var/obj/item/emag = null
 	var/obj/item/borg/upgrade/jetpack = null
-
+	var/list/storages = list()
 
 /obj/item/weapon/robot_module/emp_act(severity)
 	if(modules)
@@ -45,6 +45,8 @@
 
 
 /obj/item/weapon/robot_module/proc/respawn_consumable(var/mob/living/silicon/robot/R)
+	for (var/datum/robot_energy_storage/st in storages)
+		st.energy = min(st.max_energy, st.energy + 500)
 	return
 
 /obj/item/weapon/robot_module/proc/rebuild()//Rebuilds the list so it's possible to add/remove items from the module
@@ -108,16 +110,24 @@
 		modules += new /obj/item/device/t_scanner(src)
 		modules += new /obj/item/device/analyzer(src)
 
+		var/datum/robot_energy_storage/metal/metstore = new /datum/robot_energy_storage/metal(src)
+		var/datum/robot_energy_storage/glass/glastore = new /datum/robot_energy_storage/glass(src)
+
 		var/obj/item/stack/sheet/metal/cyborg/M = new /obj/item/stack/sheet/metal/cyborg(src)
-		M.amount = 50
+		M.source = metstore
 		modules += M
 
+		var/obj/item/stack/sheet/glass/cyborg/Q = new /obj/item/stack/sheet/glass/cyborg(src)
+		Q.source = glastore
+		modules += Q
+
 		var/obj/item/stack/sheet/rglass/cyborg/G = new /obj/item/stack/sheet/rglass/cyborg(src)
-		G.amount = 50
+		G.metsource = metstore
+		G.glasource = glastore
 		modules += G
 
 		var/obj/item/stack/rods/cyborg/R = new /obj/item/stack/rods/cyborg(src)
-		R.amount = 50
+		R.source = metstore
 		modules += R
 
 		var/obj/item/stack/cable_coil/W = new /obj/item/stack/cable_coil(src)
@@ -125,17 +135,15 @@
 		modules += W
 
 		var/obj/item/stack/tile/plasteel/cyborg/F = new /obj/item/stack/tile/plasteel/cyborg(src) //"Plasteel" is the normal metal floor tile, Don't be confused - RR
-		F.amount = 50
-		modules += F //'F' for floor tile - RR
+		F.source = metstore
+		modules += F //'F' for floor tile - RR(src)
 
+		storages += metstore
+		storages += glastore
 
 	respawn_consumable(var/mob/living/silicon/robot/R)
 		var/list/what = list (
-			/obj/item/stack/sheet/metal,
-			/obj/item/stack/sheet/rglass,
-			/obj/item/stack/rods,
 			/obj/item/stack/cable_coil,
-			/obj/item/stack/tile/plasteel/cyborg,
 		)
 		for(var/T in what)
 			if(!(locate(T) in modules))
@@ -143,6 +151,7 @@
 				var/O = new T(src)
 				modules += O
 				O:amount = 1
+		..()
 
 
 /obj/item/weapon/robot_module/security
@@ -250,7 +259,7 @@
 	return
 
 /datum/robot_energy_storage/proc/use_charge(var/amount)
-	if (energy > amount)
+	if (energy >= amount)
 		energy -= amount
 		return 1
 	else
@@ -260,10 +269,10 @@
 	energy = min(energy + amount, max_energy)
 
 /datum/robot_energy_storage/metal
-	name = "Metal TODO"
+	name = "Metal Synthesizer"
 
 /datum/robot_energy_storage/glass
-	name = "Glass TODO"
+	name = "Glass Synthesizer"
 
 /datum/robot_energy_storage/reagent
-	name = "TODO"
+	name = "Reagent Synthesizer"

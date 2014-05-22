@@ -361,6 +361,9 @@
 /obj/item/weapon/weldingtool/proc/flamethrower_rods(obj/item/I, mob/user)
 	if(!status)
 		var/obj/item/stack/rods/R = I
+		if (R.get_amount() < 1)
+			user << "There are not enough rods"
+			return
 		R.use(1)
 		var/obj/item/weapon/flamethrower/F = new /obj/item/weapon/flamethrower(user.loc)
 		user.unEquip(src)
