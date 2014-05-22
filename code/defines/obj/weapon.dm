@@ -175,9 +175,9 @@
 	desc = "A trap used to catch bears and other legged creatures."
 	var/armed = 0
 
-	suicide_act(mob/user)
-		viewers(user) << "<span class='suicide'>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</span>"
-		return (BRUTELOSS)
+/obj/item/weapon/legcuffs/beartrap/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</span>")
+	return (BRUTELOSS)
 
 /obj/item/weapon/legcuffs/beartrap/attack_self(mob/user as mob)
 	..()
@@ -186,26 +186,31 @@
 		icon_state = "beartrap[armed]"
 		user << "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>"
 
+
 /obj/item/weapon/legcuffs/beartrap/Crossed(AM as mob|obj)
-	if(armed)
-		if(ishuman(AM))
-			if(isturf(src.loc))
+	if(armed && isturf(src.loc))
+		if( (iscarbon(AM) || isanimal(AM)) && !istype(AM, /mob/living/simple_animal/parrot) && !istype(AM, /mob/living/simple_animal/construct) && !istype(AM, /mob/living/simple_animal/shade) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
+			var/mob/living/L = AM
+			armed = 0
+			icon_state = "beartrap0"
+			playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
+			L.visible_message("<span class='danger'>[L] triggers \the [src].</span>", \
+					"<span class='userdanger'>You trigger \the [src]!</span>")
+		
+			if(ishuman(AM))
 				var/mob/living/carbon/H = AM
-				if(H.m_intent == "run")
-					armed = 0
+				if(H.lying)
+					H.apply_damage(20,BRUTE,"chest")
+				else
+					H.apply_damage(20,BRUTE,(pick("l_leg", "r_leg")))
+				if(!H.legcuffed) //beartrap can't cuff you leg if there's already a beartrap or legcuffs.
 					H.legcuffed = src
 					src.loc = H
 					H.update_inv_legcuffed(0)
-					H << "\red <B>You step on \the [src]!</B>"
 					feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
-					for(var/mob/O in viewers(H, null))
-						if(O == H)
-							continue
-						O.show_message("\red <B>[H] steps on \the [src].</B>", 1)
-		if(isanimal(AM) && !istype(AM, /mob/living/simple_animal/parrot) && !istype(AM, /mob/living/simple_animal/construct) && !istype(AM, /mob/living/simple_animal/shade) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
-			armed = 0
-			var/mob/living/simple_animal/SA = AM
-			SA.health -= 20
+
+			else
+				L.apply_damage(20,BRUTE)
 	..()
 
 
@@ -369,14 +374,6 @@
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
-/obj/item/weapon/scythe/afterattack(atom/A, mob/user as mob, proximity)
-	if(!proximity) return
-	if(istype(A, /obj/effect/spacevine))
-		for(var/obj/effect/spacevine/B in orange(A,1))
-			if(prob(80))
-				qdel(B)
-		qdel(A)
-
 /*
 /obj/item/weapon/cigarpacket
 	name = "Pete's Cuban Cigars"
@@ -405,7 +402,7 @@
 	icon_state = "RPED"
 	item_state = "RPED"
 	w_class = 5
-	can_hold = list("/obj/item/weapon/stock_parts")
+	can_hold = list(/obj/item/weapon/stock_parts)
 	storage_slots = 14
 	use_to_pickup = 1
 	allow_quick_gather = 1

@@ -1,5 +1,5 @@
 /obj/structure/lamarr
-	name = "Lab Cage"
+	name = "lab cage"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "labcage1"
 	desc = "A glass lab container for storing interesting creatures."
@@ -35,12 +35,6 @@
 
 /obj/structure/lamarr/blob_act()
 	if (prob(75))
-		new /obj/item/weapon/shard( src.loc )
-		Break()
-		qdel(src)
-
-
-/obj/structure/lamarr/meteorhit(obj/O as obj)
 		new /obj/item/weapon/shard( src.loc )
 		Break()
 		qdel(src)

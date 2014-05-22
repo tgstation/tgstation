@@ -53,7 +53,7 @@
 /mob/living/simple_animal/hostile/tree/Die()
 	..()
 	visible_message("\red <b>[src]</b> is hacked into pieces!")
-	new /obj/item/stack/sheet/wood(loc)
+	new /obj/item/stack/sheet/mineral/wood(loc)
 	qdel(src)
 
 /mob/living/simple_animal/hostile/tree/festivus

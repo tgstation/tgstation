@@ -20,8 +20,12 @@ REVIVAL_BRAIN_LIFE -1
 
 ### RENAMING ###
 
-# Whether cyborgs can rename themselves at roundstart or when built.  Has no effect on roboticists renaming cyborgs the normal way.  Set to 0 to disable self-renaming.
+#Uncomment to allow cyborgs to rename themselves at roundstart.  Has no effect on roboticists renaming cyborgs the normal way.
 #RENAME_CYBORG
+
+### OOC DURING ROUND ###
+#Comment this out if you want OOC to be automatically disabled during the round, it will be enabled during the lobby and after the round end results.
+OOC_DURING_ROUND
 
 ### MOB MOVEMENT ###
 
@@ -101,6 +105,8 @@ PROBABILITY SANDBOX 0
 #CONTINUOUS_ROUND_WIZ
 #CONTINUOUS_ROUND_MALF
 
+## The amount of time it takes for the emergency shuttle to be called, from round start.
+SHUTTLE_REFUEL_DELAY 12000
 
 ## Variables calculate how number of antagonists will scale to population.
 ## Used as (Antagonists = Population / Coeff)
@@ -180,3 +186,6 @@ SEC_START_BRIG
 ## Set to 1 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
 ## Set to 2 for "random", silicons will start with a random lawset picked from (at the time of writing): P.A.L.A.D.I.N., Corporate, Asimov. More can be added by changing the law datum paths in ai_laws.dm.
 DEFAULT_LAWS 1
+
+## Uncoment to give players the choice of their mutantrace before they join the game
+#JOIN_WITH_MUTANT_RACE

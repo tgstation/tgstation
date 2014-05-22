@@ -1,7 +1,7 @@
 /atom
 	layer = 2
 	var/level = 2
-	var/flags = null
+	var/flags = 0
 	var/list/fingerprints
 	var/list/fingerprintshidden
 	var/fingerprintslast = null
@@ -39,13 +39,6 @@
 
 /atom/proc/CheckParts()
 	return
-
-/atom/Destroy()
-	if(reagents)
-		reagents.delete()
-		qdel(reagents)
-	invisibility = 101
-	// Do not call ..()
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	del(giver)
@@ -86,9 +79,6 @@
 		return flags & INSERT_CONTAINER
 */
 
-
-/atom/proc/meteorhit(obj/meteor as obj)
-	return
 
 /atom/proc/allow_drop()
 	return 1

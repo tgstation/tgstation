@@ -279,7 +279,6 @@
 	ExtinguishMob()
 	fire_stacks = 0
 	suiciding = 0
-	buckled = initial(src.buckled)
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
 		C.handcuffed = initial(C.handcuffed)
@@ -581,3 +580,31 @@
 /mob/living/proc/Exhaust()
 	src << "<span class='notice'>You're too exhausted to keep going...</span>"
 	Weaken(5)
+
+// The src mob is trying to strip an item from someone
+// Override if a certain type of mob should be behave differently when stripping items (can't, for example)
+/mob/living/stripPanelUnequip(mob/who, obj/item/what, where)
+	if(what.flags & NODROP)
+		src << "<span class='notice'>You can't remove \the [what.name], it appears to be stuck!</span>"
+		return
+	visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
+					"<span class='userdanger'>[src] tries to remove [who]'s [what.name].</span>")
+	what.add_fingerprint(src)
+	if(do_mob(src, who, STRIP_DELAY))
+		if(what && Adjacent(who))
+			who.unEquip(what)
+
+// The src mob is trying to place an item on someone
+// Override if a certain mob should be behave differently when placing items (can't, for example)
+/mob/living/stripPanelEquip(mob/who, obj/item/what, where)
+	what = src.get_active_hand()
+	if(what && (what.flags & NODROP))
+		src << "<span class='notice'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>"
+		return
+	if(what && what.mob_can_equip(who, where, 1))
+		visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>")
+		if(do_mob(src, who, STRIP_DELAY * 0.5))
+			if(what && Adjacent(who))
+				src.unEquip(what)
+				who.equip_to_slot_if_possible(what, where, 0, 1)
+

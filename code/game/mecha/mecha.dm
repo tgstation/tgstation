@@ -68,7 +68,8 @@
 	var/max_equip = 3
 	var/datum/events/events
 
-	var/stepsound = 'sound/mecha/mechturn.ogg'
+	var/stepsound = 'sound/mecha/mechstep.ogg'
+	var/turnsound = 'sound/mecha/mechturn.ogg'
 
 
 /obj/mecha/New()
@@ -310,8 +311,8 @@
 
 /obj/mecha/proc/mechturn(direction)
 	dir = direction
-	if(stepsound)
-		playsound(src,stepsound,40,1)
+	if(turnsound)
+		playsound(src,turnsound,40,1)
 	return 1
 
 /obj/mecha/proc/mechstep(direction)
@@ -333,8 +334,7 @@
 		if(istype(O, /obj/effect/portal)) //derpfix
 			src.anchored = 0
 			O.Crossed(src)
-			spawn(0)//countering portal teleport spawn(0), hurr
-				src.anchored = 1
+			src.anchored = 1
 		else if(!O.anchored)
 			step(obstacle,src.dir)
 		else //I have no idea why I disabled this
@@ -613,10 +613,6 @@
 /obj/mecha/blob_act()
 	take_damage(30, "brute")
 	return
-
-//TODO
-/obj/mecha/meteorhit()
-	return ex_act(rand(1,3))//should do for now
 
 /obj/mecha/emp_act(severity)
 	if(get_charge())

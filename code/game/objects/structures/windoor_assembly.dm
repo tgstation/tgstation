@@ -12,7 +12,7 @@
 obj/structure/windoor_assembly
 	icon = 'icons/obj/doors/windoor.dmi'
 
-	name = "Windoor Assembly"
+	name = "windoor Assembly"
 	icon_state = "l_windoor_assembly01"
 	anchored = 0
 	density = 0
@@ -102,9 +102,9 @@ obj/structure/windoor_assembly/Destroy()
 					user << "\blue You've secured the windoor assembly!"
 					src.anchored = 1
 					if(src.secure)
-						src.name = "Secure Anchored Windoor Assembly"
+						src.name = "secure anchored windoor assembly"
 					else
-						src.name = "Anchored Windoor Assembly"
+						src.name = "anchored windoor assembly"
 
 			//Unwrenching an unsecure assembly un-anchors it. Step 4 undone
 			else if(istype(W, /obj/item/weapon/wrench) && anchored)
@@ -116,9 +116,9 @@ obj/structure/windoor_assembly/Destroy()
 					user << "\blue You've unsecured the windoor assembly!"
 					src.anchored = 0
 					if(src.secure)
-						src.name = "Secure Windoor Assembly"
+						src.name = "secure windoor assembly"
 					else
-						src.name = "Windoor Assembly"
+						src.name = "windoor assembly"
 
 			//Adding plasteel makes the assembly a secure windoor assembly. Step 2 (optional) complete.
 			else if(istype(W, /obj/item/stack/sheet/plasteel) && !secure)
@@ -135,9 +135,9 @@ obj/structure/windoor_assembly/Destroy()
 					user << "\blue You reinforce the windoor."
 					src.secure = "secure_"
 					if(src.anchored)
-						src.name = "Secure Anchored Windoor Assembly"
+						src.name = "secure anchored windoor assembly"
 					else
-						src.name = "Secure Windoor Assembly"
+						src.name = "secure windoor assembly"
 
 			//Adding cable to the assembly. Step 5 complete.
 			else if(istype(W, /obj/item/stack/cable_coil) && anchored)
@@ -150,9 +150,9 @@ obj/structure/windoor_assembly/Destroy()
 					user << "\blue You wire the windoor!"
 					src.state = "02"
 					if(src.secure)
-						src.name = "Secure Wired Windoor Assembly"
+						src.name = "secure wired windoor assembly"
 					else
-						src.name = "Wired Windoor Assembly"
+						src.name = "wired windoor assembly"
 			else
 				..()
 
@@ -170,9 +170,9 @@ obj/structure/windoor_assembly/Destroy()
 					new/obj/item/stack/cable_coil(get_turf(user), 1)
 					src.state = "01"
 					if(src.secure)
-						src.name = "Secure Wired Windoor Assembly"
+						src.name = "secure wired windoor assembly"
 					else
-						src.name = "Wired Windoor Assembly"
+						src.name = "wired windoor assembly"
 
 			//Adding airlock electronics for access. Step 6 complete.
 			else if(istype(W, /obj/item/weapon/airlock_electronics))
@@ -185,7 +185,7 @@ obj/structure/windoor_assembly/Destroy()
 					user.drop_item()
 					W.loc = src
 					user << "\blue You've installed the airlock electronics!"
-					src.name = "Near finished Windoor Assembly"
+					src.name = "near finished windoor assembly"
 					src.electronics = W
 				else
 					W.loc = src.loc
@@ -201,7 +201,7 @@ obj/structure/windoor_assembly/Destroy()
 				if(do_after(user, 40))
 					if(!src) return
 					user << "\blue You've removed the airlock electronics!"
-					src.name = "Wired Windoor Assembly"
+					src.name = "wired windoor assembly"
 					var/obj/item/weapon/airlock_electronics/ae
 					if (!electronics) //This shouldnt happen, but if it does, lets not crash and runtime.
 						ae = new/obj/item/weapon/airlock_electronics( src.loc )
@@ -238,7 +238,10 @@ obj/structure/windoor_assembly/Destroy()
 						windoor.dir = src.dir
 						windoor.density = 0
 
-						windoor.req_access = src.electronics.conf_access
+						if(src.electronics.use_one_access)
+							windoor.req_one_access = src.electronics.conf_access
+						else
+							windoor.req_access = src.electronics.conf_access
 						windoor.electronics = src.electronics
 						src.electronics.loc = windoor
 						windoor.close()

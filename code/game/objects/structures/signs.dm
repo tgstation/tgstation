@@ -51,7 +51,7 @@
 	icon_state = "shock"
 
 /obj/structure/sign/examroom
-	name = "\improper EXAM"
+	name = "\improper EXAM ROOM"
 	desc = "A guidance sign which reads 'EXAM ROOM'"
 	icon_state = "examroom"
 
@@ -61,8 +61,8 @@
 	icon_state = "space"
 
 /obj/structure/sign/deathsposal
-	name = "\improper DISPOSAL LEADS TO SPACE"
-	desc = "A warning sign which reads 'DISPOSAL LEADS TO SPACE'"
+	name = "\improper DISPOSAL: LEADS TO SPACE"
+	desc = "A warning sign which reads 'DISPOSAL: LEADS TO SPACE'"
 	icon_state = "deathsposal"
 
 /obj/structure/sign/pods

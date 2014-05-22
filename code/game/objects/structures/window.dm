@@ -50,12 +50,6 @@
 	qdel(src)
 
 
-/obj/structure/window/meteorhit()
-	//world << "glass at [x],[y],[z] Mhit"
-	new /obj/item/weapon/shard( loc )
-	if(reinf) new /obj/item/stack/rods( loc)
-	qdel(src)
-
 /obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
@@ -310,7 +304,7 @@
 /obj/structure/window/Destroy()
 	density = 0
 	air_update_turf(1)
-	if(anchored)playsound(src, "shatter", 70, 1)
+	playsound(src, "shatter", 70, 1)
 	update_nearby_icons()
 	..()
 

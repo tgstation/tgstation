@@ -52,11 +52,12 @@
 /obj/machinery/biogenerator/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/reagent_containers/glass) && !panel_open)
 		if(beaker)
-			user << "<span class='warning'>The biogenerator already occuped.</span>"
+			user << "<span class='warning'>A container is already loaded into the machine.</span>"
 		else
 			user.unEquip(O)
 			O.loc = src
 			beaker = O
+			user << "<span class='notice'>You add the container to the machine.</span>"
 			updateUsrDialog()
 	else if(processing)
 		user << "<span class='warning'>The biogenerator is currently processing.</span>"
@@ -152,7 +153,7 @@
 			dat += "Leather Satchel: <A href='?src=\ref[src];action=create;item=satchel'>Make</A> ([400/efficiency])<BR>"
 			dat += "</div>"
 		else
-			dat += "<div class='statusDisplay'>No beaker inside, please insert beaker.</div>"
+			dat += "<div class='statusDisplay'>No container inside, please insert container.</div>"
 
 	var/datum/browser/popup = new(user, "biogen", name, 350, 520)
 	popup.set_content(dat)
@@ -222,11 +223,9 @@
 		if("rh")
 			if (check_cost(25/efficiency)) return 0
 			else new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh(src.loc)
-		if("ez5") //It's not an elegant method, but it's safe and easy. -Cheridan
+		if("ez5")
 			if (check_cost(50/efficiency)) return 0
 			else
-				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez(src.loc)
-				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez(src.loc)
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez(src.loc)
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez(src.loc)
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez(src.loc)
@@ -236,13 +235,9 @@
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z(src.loc)
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z(src.loc)
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z(src.loc)
-				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z(src.loc)
-				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z(src.loc)
 		if("rh5")
 			if (check_cost(125/efficiency)) return 0
 			else
-				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh(src.loc)
-				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh(src.loc)
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh(src.loc)
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh(src.loc)
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh(src.loc)

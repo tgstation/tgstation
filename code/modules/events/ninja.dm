@@ -171,7 +171,7 @@
 		Ninja.internals.icon_state = "internal1"
 
 	if(Ninja.mind != Mind)			//something has gone wrong!
-		error("The ninja wasn't assigned the right mind. ;(")
+		ERROR("The ninja wasn't assigned the right mind. ;ç;")
 
 	success_spawn = 1
 
@@ -2736,11 +2736,6 @@ It is possible to destroy the net by the occupant or someone else.
 		return
 
 	blob_act()
-		health-=50
-		healthcheck()
-		return
-
-	meteorhit()
 		health-=50
 		healthcheck()
 		return

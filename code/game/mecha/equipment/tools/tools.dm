@@ -1,5 +1,6 @@
 /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp
 	name = "hydraulic clamp"
+	desc = "Equipment for engineering exosuits. Lifts objects and loads them into cargo."
 	icon_state = "mecha_clamp"
 	equip_cooldown = 15
 	energy_drain = 10
@@ -65,8 +66,8 @@
 		return 1
 
 /obj/item/mecha_parts/mecha_equipment/tool/drill
-	name = "drill"
-	desc = "This is the drill that'll pierce the heavens! (Can be attached to: Combat and Engineering Exosuits)"
+	name = "exosuit drill"
+	desc = "Equipment for engineering and combat exosuits. This is the drill that'll pierce the heavens!"
 	icon_state = "mecha_drill"
 	equip_cooldown = 30
 	energy_drain = 10
@@ -124,8 +125,8 @@
 		return 0
 
 /obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill
-	name = "diamond drill"
-	desc = "This is an upgraded version of the drill that'll pierce the heavens! (Can be attached to: Combat and Engineering Exosuits)"
+	name = "diamond-tipped exosuit drill"
+	desc = "Equipment for engineering and combat exosuits. This is an upgraded version of the drill that'll pierce the heavens!"
 	icon_state = "mecha_diamond_drill"
 	origin_tech = "materials=4;engineering=3"
 	construction_cost = list("metal"=10000,"diamond"=6500)
@@ -184,8 +185,8 @@
 		return 0
 
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher
-	name = "extinguisher"
-	desc = "Exosuit-mounted extinguisher (Can be attached to: Engineering exosuits)"
+	name = "exosuit extinguisher"
+	desc = "Equipment for engineering exosuits. A rapid-firing high capacity fire extinguisher."
 	icon_state = "mecha_exting"
 	equip_cooldown = 5
 	energy_drain = 0
@@ -256,14 +257,14 @@
 
 /obj/item/mecha_parts/mecha_equipment/tool/rcd
 	name = "mounted RCD"
-	desc = "An exosuit-mounted Rapid Construction Device. (Can be attached to: Any exosuit)"
+	desc = "An exosuit-mounted Rapid Construction Device."
 	icon_state = "mecha_rcd"
 	origin_tech = "materials=4;bluespace=3;magnets=4;powerstorage=4"
 	equip_cooldown = 10
 	energy_drain = 250
 	range = MELEE|RANGED
 	construction_time = 1200
-	construction_cost = list("metal"=30000,"plasma"=25000,"silver"=20000,"gold"=20000)
+	construction_cost = list("metal"=30000,"gold"=20000,"plasma"=25000,"silver"=20000)
 	var/mode = 0 //0 - deconstruct, 1 - wall or floor, 2 - airlock.
 	var/disabled = 0 //malf
 
@@ -360,7 +361,7 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/teleporter
-	name = "teleporter"
+	name = "mounted teleporter"
 	desc = "An exosuit module that allows exosuits to teleport to any position in view."
 	icon_state = "mecha_teleport"
 	origin_tech = "bluespace=10"
@@ -380,7 +381,7 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/wormhole_generator
-	name = "wormhole generator"
+	name = "mounted wormhole generator"
 	desc = "An exosuit module that allows generating of small quasi-stable wormholes."
 	icon_state = "mecha_wholegen"
 	origin_tech = "bluespace=3"
@@ -420,7 +421,6 @@
 		P.target = target_turf
 		P.creator = null
 		P.icon = 'icons/obj/objects.dmi'
-		P.failchance = 0
 		P.icon_state = "anom"
 		P.name = "wormhole"
 		var/turf/T = get_turf(target)
@@ -433,7 +433,7 @@
 		return
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult
-	name = "gravitational catapult"
+	name = "mounted gravitational catapult"
 	desc = "An exosuit mounted Gravitational Catapult."
 	icon_state = "mecha_teleport"
 	origin_tech = "bluespace=2;magnets=3"
@@ -625,14 +625,14 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid
-	name = "repair droid"
-	desc = "Automated repair droid. Scans exosuit for damage and repairs it. Can fix almost all types of external or internal damage."
+	name = "exosuit repair droid"
+	desc = "An automated repair droid for exosuits. Scans for damage and repairs it. Can fix almost all types of external or internal damage."
 	icon_state = "repair_droid"
 	origin_tech = "magnets=3;programming=3"
 	equip_cooldown = 20
 	energy_drain = 100
 	range = 0
-	construction_cost = list("metal"=10000,"gold"=1000,"silver"=2000,"glass"=5000)
+	construction_cost = list("metal"=10000,"glass"=5000,"gold"=1000,"silver"=2000)
 	var/health_boost = 2
 	var/datum/global_iterator/pr_repair_droid
 	var/icon/droid_overlay
@@ -715,14 +715,14 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay
-	name = "energy relay"
-	desc = "Wirelessly drains energy from any available power channel in area. The performance index is quite low."
+	name = "exosuit energy relay"
+	desc = "An exosuit module that wirelessly drains energy from any available power channel in area. The performance index is quite low."
 	icon_state = "tesla"
 	origin_tech = "magnets=4;syndicate=2"
 	equip_cooldown = 10
 	energy_drain = 0
 	range = 0
-	construction_cost = list("metal"=10000,"gold"=2000,"silver"=3000,"glass"=2000)
+	construction_cost = list("metal"=10000,"glass"=2000,"gold"=2000,"silver"=3000)
 	var/datum/global_iterator/pr_energy_relay
 	var/coeff = 100
 	var/list/use_channels = list(EQUIP,ENVIRON,LIGHT)
@@ -827,14 +827,14 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/generator
-	name = "plasma converter"
-	desc = "Generates power using solid plasma as fuel. Pollutes the environment."
+	name = "exosuit plasma converter"
+	desc = "An exosuit module that generates power using solid plasma as fuel. Pollutes the environment."
 	icon_state = "tesla"
 	origin_tech = "plasmatech=2;powerstorage=2;engineering=1"
 	equip_cooldown = 10
 	energy_drain = 0
 	range = MELEE
-	construction_cost = list("metal"=10000,"silver"=500,"glass"=1000)
+	construction_cost = list("metal"=10000,"glass"=1000,"silver"=500)
 	var/datum/global_iterator/pr_mech_generator
 	var/coeff = 100
 	var/obj/item/stack/sheet/fuel
@@ -968,10 +968,10 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear
 	name = "exonuclear reactor"
-	desc = "Generates power using uranium. Pollutes the environment."
+	desc = "An exosuit module that generates power using uranium as fuel. Pollutes the environment."
 	icon_state = "tesla"
 	origin_tech = "powerstorage=3;engineering=3"
-	construction_cost = list("metal"=10000,"silver"=500,"glass"=1000)
+	construction_cost = list("metal"=10000,"glass"=1000,"silver"=500)
 	max_fuel = 50000
 	fuel_per_cycle_idle = 10
 	fuel_per_cycle_active = 30
@@ -1005,6 +1005,7 @@
 //This is pretty much just for the death-ripley so that it is harmless
 /obj/item/mecha_parts/mecha_equipment/tool/safety_clamp
 	name = "\improper KILL CLAMP"
+	desc = "They won't know what clamped them!"
 	icon_state = "mecha_clamp"
 	equip_cooldown = 15
 	energy_drain = 0

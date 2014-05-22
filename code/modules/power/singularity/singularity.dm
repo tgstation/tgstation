@@ -54,20 +54,21 @@ var/global/list/uneatable = list(
 /obj/machinery/singularity/blob_act(severity)
 	return
 
-
 /obj/machinery/singularity/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			if(prob(25))
-				investigate_log("has been destroyed by an explosion.","singulo")
+			if(current_size <= 3)
+				investigate_log("has been destroyed by a heavy explosion.","singulo")
 				qdel(src)
 				return
 			else
-				energy += 50
-		if(2.0 to 3.0)
-			energy += round((rand(20,60)/2),1)
-			return
+				energy -= round(((energy+1)/2),1)
+		if(2.0)
+			energy -= round(((energy+1)/3),1)
+		if(3.0)
+			energy -= round(((energy+1)/4),1)
 	return
+
 
 /obj/machinery/singularity/bullet_act(obj/item/projectile/P)
 	return 0 //Will there be an impact? Who knows.  Will we see it? No.
@@ -491,6 +492,7 @@ var/global/list/uneatable = list(
 /obj/machinery/singularity/narsie/large/New()
 	..()
 	world << "<font size='15' color='red'><b>NAR-SIE HAS RISEN</b></font>"
+	world << pick(sound('sound/hallucinations/im_here1.ogg'), sound('sound/hallucinations/im_here2.ogg'))
 	if(emergency_shuttle)
 		emergency_shuttle.incall(0.3) // Cannot recall
 
@@ -536,7 +538,8 @@ var/global/list/uneatable = list(
 
 	if(istype(A,/mob/living/))
 		var/mob/living/C = A
-		C.dust()
+		C.spawn_dust()
+		C.gib()
 
 	if(isturf(A))
 		var/turf/T = A

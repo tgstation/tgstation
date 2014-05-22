@@ -32,9 +32,6 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	if(severity == 1) // Very sturdy.
 		set_broken()
 
-/obj/machinery/gravity_generator/meteorhit()
-	return
-
 /obj/machinery/gravity_generator/update_icon()
 	..()
 	icon_state = "[get_status()]_[sprite_number]"
@@ -139,7 +136,10 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		var/obj/machinery/gravity_generator/part/part = new(T)
 		if(count == 5) // Middle
 			middle = part
-		part.sprite_number = count;
+		if(count <= 3) // Their sprite is the top part of the generator
+			part.density = 0
+			part.layer = MOB_LAYER + 0.1
+		part.sprite_number = count
 		part.main_part = src
 		parts += part
 		part.update_icon()
@@ -316,7 +316,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 				charge_count -= 2
 
 			if(charge_count % 4 == 0 && prob(75)) // Let them know it is charging/discharging.
-				playsound(src.loc, 'sound/effects/EMPulse.ogg', 75, 1)
+				playsound(src.loc, 'sound/effects/EMPulse.ogg', 100, 1)
 
 			updateDialog()
 			if(prob(25)) // To help stop "Your clothes feel warm" spam.
@@ -354,7 +354,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		var/turf/their_turf = get_turf(M)
 		if(M.client && their_turf.z == our_turf.z)
 			shake_camera(M, 15, 1)
-			M.playsound_local(our_turf, 'sound/machines/signal.ogg', 100)
+			M.playsound_local(our_turf, 'sound/effects/alert.ogg', 100, 1, 0.5)
 
 /obj/machinery/gravity_generator/main/proc/gravity_in_level()
 	var/turf/T = get_turf(src)

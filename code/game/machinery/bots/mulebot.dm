@@ -416,9 +416,6 @@ var/global/mulebot_count = 0
 
 	if(get_dist(C, src) > 1 || load || !on)
 		return
-	for(var/obj/structure/plasticflaps/P in src.loc)//Takes flaps into account
-		if(!CanPass(C,P))
-			return
 	mode = 1
 
 	// if a create, close before loading

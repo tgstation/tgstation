@@ -1,10 +1,15 @@
 /var/const/meteor_wave_delay = 625 //minimum wait between waves in tenths of seconds
 //set to at least 100 unless you want evarr ruining every round
 
-/var/const/meteors_in_wave = 50
-/var/const/meteors_in_small_wave = 10
+/var/list/meteorsA = list(/obj/effect/meteor/dust=3, /obj/effect/meteor/medium=8, /obj/effect/meteor/big=3, \
+						  /obj/effect/meteor/flaming=1, /obj/effect/meteor/irradiated=3)
 
-/proc/meteor_wave(var/number = meteors_in_wave)
+/var/list/meteorsB = list(/obj/effect/meteor/meaty=5, /obj/effect/meteor/meaty/xeno=1)
+
+/var/list/meteorsC = list(/obj/effect/meteor/dust) //for space dust event
+
+
+/proc/meteor_wave(var/number = 50) //this proc's unused now.
 	if(!ticker || wavesecret)
 		return
 
@@ -15,12 +20,13 @@
 	spawn(meteor_wave_delay)
 		wavesecret = 0
 
-/proc/spawn_meteors(var/number = meteors_in_small_wave)
+
+/proc/spawn_meteors(var/number = 10, var/list/meteortypes)
 	for(var/i = 0; i < number; i++)
 		spawn(0)
-			spawn_meteor()
+			spawn_meteor(meteortypes)
 
-/proc/spawn_meteor()
+/proc/spawn_meteor(var/list/meteortypes)
 
 	var/startx
 	var/starty
@@ -29,7 +35,6 @@
 	var/turf/pickedstart
 	var/turf/pickedgoal
 	var/max_i = 10//number of tries to spawn meteor.
-
 
 	do
 		switch(pick(1,2,3,4))
@@ -58,90 +63,149 @@
 		pickedgoal = locate(endx, endy, 1)
 		max_i--
 		if(max_i<=0) return
-
 	while (!istype(pickedstart, /turf/space) || pickedstart.loc.name != "Space" ) //FUUUCK, should never happen.
 
 
-	var/obj/effect/meteor/M
-	switch(rand(1, 100))
-
-		if(1 to 10)
-			M = new /obj/effect/meteor/big( pickedstart )
-		if(11 to 75)
-			M = new /obj/effect/meteor( pickedstart )
-		if(76 to 100)
-			M = new /obj/effect/meteor/small( pickedstart )
+	var/Me = pickweight(meteortypes)
+	var/obj/effect/meteor/M = new Me(pickedstart)
 
 	M.dest = pickedgoal
 	spawn(0)
 		walk_towards(M, M.dest, 1)
-
 	return
+
+
 
 /obj/effect/meteor
-	name = "meteor"
+	name = "the concept of meteor"
+	desc = "You should probably run instead of gawking at this."
 	icon = 'icons/obj/meteor.dmi'
-	icon_state = "flaming"
+	icon_state = "small"
 	density = 1
-	anchored = 1.0
-	var/hits = 1
+	anchored = 1
+	var/hits = 4
+	var/hitpwr = 2 //Level of ex_act to be called on hit.
 	var/dest
 	pass_flags = PASSTABLE
+	var/heavy = 0
+	var/meteorsound = 'sound/effects/meteorimpact.ogg'
 
-/obj/effect/meteor/small
-	name = "small meteor"
-	icon_state = "smallf"
+	var/meteordrop = /obj/item/weapon/ore/iron
+	var/dropamt = 2
+
+/obj/effect/meteor/dust
+	name = "space dust"
+	icon_state = "dust"
 	pass_flags = PASSTABLE | PASSGRILLE
+	hits = 1
+	hitpwr = 3
+	meteorsound = 'sound/weapons/throwtap.ogg'
+	meteordrop = /obj/item/weapon/ore/glass
 
-/obj/effect/meteor/Bump(atom/A)
-	if (A)
-		A.meteorhit(src)
-		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
-	if (--src.hits <= 0)
-
-		//Prevent meteors from blowing up the singularity's containment.
-		//Changing emitter and generator ex_act would result in them being bomb and C4 proof.
-		if(!istype(A,/obj/machinery/power/emitter) && \
-			!istype(A,/obj/machinery/field/generator) && \
-			prob(15))
-			explosion(src.loc, 4, 5, 6, 7, 0)
-		qdel(src)
-
-
-/obj/effect/meteor/ex_act(severity)
-	if (severity < 4)
-		qdel(src)
-	return
+/obj/effect/meteor/medium
+	name = "meteor"
+	dropamt = 3
 
 /obj/effect/meteor/big
 	name = "big meteor"
-	hits = 5
+	icon_state = "large"
+	hits = 7
+	heavy = 1
+	dropamt = 4
 
-	ex_act(severity)
-		return
+/obj/effect/meteor/flaming
+	name = "flaming meteor"
+	icon_state = "flaming"
+	hits = 3
+	heavy = 1
+	meteorsound = 'sound/effects/bamf.ogg'
+	meteordrop = /obj/item/weapon/ore/plasma
 
-	Bump(atom/A)
-		//Prevent meteors from blowing up the singularity's containment.
-		//Changing emitter and generator ex_act would result in them being bomb and C4 proof
-		if(!istype(A,/obj/machinery/power/emitter) && \
-			!istype(A,/obj/machinery/field/generator))
-			if(--src.hits <= 0)
-				qdel(src) //Dont blow up singularity containment if we get stuck there.
+/obj/effect/meteor/irradiated
+	name = "glowing meteor"
+	icon_state = "glowing"
+	hits = 4
+	heavy = 1
+	meteordrop = /obj/item/weapon/ore/uranium
 
-		if (A)
-			for(var/mob/M in player_list)
-				var/turf/T = get_turf(M)
-				if(!T || T.z != src.z)
-					continue
-				var/dist = get_dist(M.loc, src.loc)
-				shake_camera(M, dist > 20 ? 3 : 5, dist > 20 ? 1 : 3)
-				M.playsound_local(src.loc, 'sound/effects/meteorimpact.ogg', 50, 1, get_rand_frequency(), 10)
-			explosion(src.loc, 0, 1, 2, 3, 0)
+/obj/effect/meteor/meaty
+	name = "meaty ore"
+	icon_state = "meateor"
+	desc = "Just... don't think too hard about where this thing came from."
+	hits = 2
+	heavy = 1
+	meteorsound = 'sound/effects/blobattack.ogg'
+	meteordrop = /obj/item/weapon/reagent_containers/food/snacks/meat
+	var/meteorgibs = /obj/effect/gibspawner/generic
 
-		if (--src.hits <= 0)
-			if(prob(15) && !istype(A, /obj/structure/grille))
-				explosion(src.loc, 1, 2, 3, 4, 0)
-			qdel(src)
+/obj/effect/meteor/meaty/xeno
+	color = "#5EFF00"
+	meteordrop = /obj/item/weapon/reagent_containers/food/snacks/xenomeat
+	meteorgibs = /obj/effect/gibspawner/xeno
+
+
+/obj/effect/meteor/New()
+	..()
+	SpinAnimation()
+
+/obj/effect/meteor/Bump(atom/A)
+	if(A)
+		A.ex_act(hitpwr)
+		playsound(src.loc, meteorsound, 40, 1)
+	if(--src.hits <= 0)
+		make_debris()
+		meteor_effect(heavy)
+		qdel(src)
+
+
+/obj/effect/meteor/ex_act()
+	return
+
+
+/obj/effect/meteor/proc/meteor_effect(var/sound=1)
+	if(sound)
+		for(var/mob/M in player_list)
+			var/turf/T = get_turf(M)
+			if(!T || T.z != src.z)
+				continue
+			var/dist = get_dist(M.loc, src.loc)
+			shake_camera(M, dist > 20 ? 3 : 5, dist > 20 ? 1 : 3)
+			M.playsound_local(src.loc, meteorsound, 50, 1, get_rand_frequency(), 10)
+
+
+/obj/effect/meteor/medium/meteor_effect()
+	..(heavy)
+	explosion(src.loc, 1, 2, 3, 4, 0)
+
+
+/obj/effect/meteor/big/meteor_effect()
+	..(heavy)
+	explosion(src.loc, 0, 1, 2, 3, 0)
+
+
+/obj/effect/meteor/flaming/meteor_effect()
+	..(heavy)
+	explosion(src.loc, 0, 1, 2, 3, 0, 0, 5)
+
+
+/obj/effect/meteor/irradiated/meteor_effect()
+	..(heavy)
+	explosion(src.loc, 0, 0, 4, 3, 0)
+	new /obj/effect/decal/cleanable/greenglow(get_turf(src))
+	for(var/mob/living/L in view(5, src))
+		L.apply_effect(40, IRRADIATE)
+
+
+
+/obj/effect/meteor/proc/make_debris()
+	for(var/throws = dropamt, throws > 0, throws--)
+		var/obj/item/O = new meteordrop(get_turf(src))
+		O.throw_at(dest, 5, 10)
+
+/obj/effect/meteor/meaty/make_debris()
+	..()
+	new meteorgibs(get_turf(src))
+
 
 /obj/effect/meteor/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/pickaxe))

@@ -13,16 +13,12 @@
 	directwired = 1
 	use_power = 0
 
+	var/id = 0
 	var/sun_angle = 0		// sun angle as set by sun datum
 
 /obj/machinery/power/tracker/New(var/turf/loc, var/obj/item/solar_assembly/S)
 	..(loc)
-	if(!S)
-		S = new /obj/item/solar_assembly(src)
-		S.glass_type = /obj/item/stack/sheet/glass
-		S.tracker = 1
-		S.anchored = 1
-	S.loc = src
+	Make(S)
 	connect_to_network()
 
 /obj/machinery/power/tracker/disconnect_from_network()
@@ -30,8 +26,19 @@
 	solars_list.Remove(src)
 
 /obj/machinery/power/tracker/connect_to_network()
-	..()
-	solars_list.Add(src)
+	var/to_return = ..()
+	if(powernet)	//if connected and not already in solar_list...
+		solars_list |= src				//... add it
+	return to_return
+
+/obj/machinery/power/tracker/proc/Make(var/obj/item/solar_assembly/S)
+	if(!S)
+		S = new /obj/item/solar_assembly(src)
+		S.glass_type = /obj/item/stack/sheet/glass
+		S.tracker = 1
+		S.anchored = 1
+	S.loc = src
+	update_icon()
 
 // called by datum/sun/calc_position() as sun's angle changes
 /obj/machinery/power/tracker/proc/set_angle(var/angle)
@@ -49,11 +56,11 @@
 				if(get_dist(C, src) < SOLAR_MAX_DIST)
 					C.tracker_update(angle)
 
-
 /obj/machinery/power/tracker/attackby(var/obj/item/weapon/W, var/mob/user)
 
 	if(istype(W, /obj/item/weapon/crowbar))
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		user << "<span class='notice'>You begin to take the glass off the solar tracker...</span>"
 		if(do_after(user, 50))
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)

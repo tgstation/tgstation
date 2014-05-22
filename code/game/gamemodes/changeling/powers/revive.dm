@@ -1,7 +1,6 @@
 /obj/effect/proc_holder/changeling/revive
 	name = "Regenerate"
 	desc = "We regenerate, healing all damage from our form."
-	chemical_cost = 10
 	req_stat = DEAD
 
 //Revive from regenerative stasis

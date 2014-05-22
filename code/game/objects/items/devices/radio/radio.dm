@@ -494,6 +494,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 					freq_text = "Service"
 				if(SUPP_FREQ)
 					freq_text = "Supply"
+				if(AIPRIV_FREQ)
+					freq_text = "AI Private"
 			//There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
 
 			if(!freq_text)
@@ -520,7 +522,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				part_a = "<span class='suppradio'><span class='name'>"
 			else if (display_freq==DSQUAD_FREQ)
 				part_a = "<span class='dsquadradio'><span class='name'>"
-
+			else if (display_freq==AIPRIV_FREQ)
+				part_a = "<span class='aiprivradio'><span class='name'>"
 			var/quotedmsg = M.say_quote(message)
 
 			//This following recording is intended for research and feedback in the use of department radio channels.

@@ -55,19 +55,19 @@ atom/proc/add_fibers(mob/living/carbon/human/M)
 		if(!istype(H.dna, /datum/dna))
 			return 0
 		if(H.gloves)
-			if(fingerprintslast != H.key)
+			if(fingerprintslast != H.ckey)
 				fingerprintshidden += text("\[[time_stamp()]\] (Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
-				fingerprintslast = H.key
+				fingerprintslast = H.ckey
 			return 0
 		if(!( fingerprints ))
-			if(fingerprintslast != H.key)
+			if(fingerprintslast != H.ckey)
 				fingerprintshidden += text("\[[time_stamp()]\] Real name: [], Key: []",H.real_name, H.key)
-				fingerprintslast = H.key
+				fingerprintslast = H.ckey
 			return 1
 	else
-		if(fingerprintslast != M.key)
+		if(fingerprintslast != M.ckey)
 			fingerprintshidden += text("\[[time_stamp()]\] Real name: [], Key: []",M.real_name, M.key)
-			fingerprintslast = M.key
+			fingerprintslast = M.ckey
 	return
 
 //Set ignoregloves to add prints irrespective of the mob having gloves on.
@@ -90,9 +90,9 @@ atom/proc/add_fibers(mob/living/carbon/human/M)
 		//Now, deal with gloves.
 		if(!ignoregloves)
 			if(H.gloves && H.gloves != src)
-				if(fingerprintslast != H.key)
+				if(fingerprintslast != H.ckey)
 					fingerprintshidden += text("\[[]\](Wearing gloves). Real name: [], Key: []",time_stamp(), H.real_name, H.key)
-					fingerprintslast = H.key
+					fingerprintslast = H.ckey
 				H.gloves.add_fingerprint(M)
 
 			//Deal with gloves the pass finger/palm prints.
@@ -103,9 +103,9 @@ atom/proc/add_fibers(mob/living/carbon/human/M)
 					return 0
 
 		//More adminstuffz
-		if(fingerprintslast != H.key)
+		if(fingerprintslast != H.ckey)
 			fingerprintshidden += text("\[[]\]Real name: [], Key: []",time_stamp(), H.real_name, H.key)
-			fingerprintslast = H.key
+			fingerprintslast = H.ckey
 
 		//Make the list if it does not exist.
 		if(!fingerprints)
@@ -120,9 +120,9 @@ atom/proc/add_fibers(mob/living/carbon/human/M)
 		return 1
 	else
 		//Smudge up dem prints some
-		if(fingerprintslast != M.key)
+		if(fingerprintslast != M.ckey)
 			fingerprintshidden += text("\[[]\]Real name: [], Key: []",time_stamp(), M.real_name, M.key)
-			fingerprintslast = M.key
+			fingerprintslast = M.ckey
 
 	return
 

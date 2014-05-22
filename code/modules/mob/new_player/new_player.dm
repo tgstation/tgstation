@@ -330,6 +330,8 @@
 		var/mob/living/carbon/human/new_character = new(loc)
 		new_character.lastarea = get_area(loc)
 
+		create_dna(new_character)
+
 		if(config.force_random_names || appearance_isbanned(src))
 			client.prefs.random_character()
 			client.prefs.real_name = random_name(gender)
