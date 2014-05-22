@@ -114,7 +114,6 @@
 //		world << "End of Topic() call."
 //		..()
 
-
 /world/Topic(T, addr, master, key)
 	diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
 
@@ -160,6 +159,35 @@
 		s["map_name"] = map_name ? map_name : "Unknown"
 
 		return list2params(s)
+
+	else if(copytext(T,1,9) == "adminmsg") //Ported from Ccomp5950's admin-pm from IRC system for use by #adminbus's bot.
+		/*
+			We got an adminmsg from IRC bot lets split the input then validate the input.
+			expected output:
+				1. adminmsg = ckey of person the message is to
+				2. msg = contents of message, parems2list requires
+				3. validatationkey = the key the bot has, it should match the gameservers comms_key in it's configuration.
+				4. sender = the ircnick that send the message.
+		*/
+
+		var/input[] = params2list(T)
+		if(global.comms_allowed)
+			if(input["key"] != global.comms_key)
+				return "Bad Key"
+			else
+				//These are here for the purpose of erroring to the IRC channel properly, otherwise this should be under the adminircpm proc
+				var/client/C
+				for(var/client/K in clients)
+					if(K.ckey == input["adminmsg"])
+						C = K
+						break
+				if(!C)
+					return "No client with that name on server."
+
+				adminircpm(C, input["sender"], input["msg"])
+
+				return "Message Successful"
+
 	else if (copytext(T,1,9) == "announce")
 		var/input[] = params2list(T)
 		if(global.comms_allowed)
@@ -207,6 +235,28 @@
 						C << "\red You have been inactive for more than 10 minutes and have been disconnected."
 						del(C)
 #undef INACTIVITY_KICK
+
+/world/proc/adminircpm(who, sentby, ircmessage) //This is it's own proc due to issues with accessing the client cmd_admin_pm proc from the world/topic(). Not sure how else to do this.
+	var/client/C
+	if(istype(who,/client))
+		C = who
+
+	if(!C)
+		return //No client on the server, can't adminPM them
+
+	var/message = "<font color='red'>Admin PM from-<b>[sentby]</b>: [ircmessage]</font>"
+	var/amessage = "<font color='blue'><b>PM: IRC-[sentby]-&gt;[key_name(C)]: [ircmessage]</b></font>"
+
+	C << 'sound/effects/adminhelp.ogg'
+	C << "<font color='red' size='3'><b>-- Administrator private message --</b></font>"
+	C << message
+	C << "<font color='red'><i>Click on the administrator's name to reply.</i></font>"
+
+
+	for(var/client/A in clients)//So admins can see replies from IRC to other players
+		if(A != C)
+			if(A.holder)
+				A << amessage
 
 
 /world/proc/load_mode()
