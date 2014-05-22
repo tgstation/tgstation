@@ -37,21 +37,21 @@
 		var/obj/item/stack/light_w/new_tile = new(user.loc)
 		new_tile.add_fingerprint(user)
 		src.use(1)
-	else if( istype(W, /obj/item/stack/rods) )
+	else if(istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/V = W
-		if (V.get_amount() < 1)
-			user << "There are not enough rods"
+		if (V.use(1) && src.get_amount() > 1)
+			var/obj/item/stack/sheet/rglass/RG = new (user.loc)
+			RG.add_fingerprint(user)
+			RG.add_to_stacks(user)
+			var/obj/item/stack/sheet/glass/G = src
+			src = null
+			var/replace = (user.get_inactive_hand()==G)
+			G.use(1)
+			if (!G && !RG && replace)
+				user.put_in_hands(RG)
+		else
+			user << "<span class='warning'>You need at least one rod and one sheet of glass to do that.</span>"
 			return
-		var/obj/item/stack/sheet/rglass/RG = new (user.loc)
-		RG.add_fingerprint(user)
-		RG.add_to_stacks(user)
-		V.use(1)
-		var/obj/item/stack/sheet/glass/G = src
-		src = null
-		var/replace = (user.get_inactive_hand()==G)
-		G.use(1)
-		if (!G && !RG && replace)
-			user.put_in_hands(RG)
 	else
 		return ..()
 

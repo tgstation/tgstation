@@ -77,14 +77,14 @@
 			//REPAIRING (replacing the outer grille for cosmetic damage)
 			else if( istype(W, /obj/item/stack/rods) )
 				var/obj/item/stack/rods/O = W
-				if (O.get_amount() < 1)
-					user << "There are not enough rods"
+				if (O.use(1))
+					src.d_state = 0
+					src.icon_state = "r_wall"
+					relativewall_neighbours()	//call smoothwall stuff
+					user << "<span class='notice'>You replace the outer grille.</span>"
+				else
+					user << "<span class='warning'>You need at least one rod for that.</span>"
 					return
-				src.d_state = 0
-				src.icon_state = "r_wall"
-				relativewall_neighbours()	//call smoothwall stuff
-				user << "<span class='notice'>You replace the outer grille.</span>"
-				O.use(1)
 				return
 
 		if(2)
@@ -218,7 +218,7 @@
 		var/obj/item/stack/sheet/metal/MS = W
 
 		if (MS.get_amount() < 1)
-			user << "There is not enough metal"
+			user << "<span class='warning'>You need at least one sheet of metal for that.</span>"
 			return
 
 		user << "<span class='notice'>You begin patching-up the wall with \a [MS].</span>"
@@ -226,12 +226,11 @@
 		sleep( max(20*d_state,100) )	//time taken to repair is proportional to the damage! (max 10 seconds)
 		if( !istype(src, /turf/simulated/wall/r_wall) || !user || !MS || !T )	return
 
-		if( user.loc == T && user.get_active_hand() == MS && d_state )
+		if( user.loc == T && user.get_active_hand() == MS && d_state && MS.use(1))
 			src.d_state = 0
 			src.icon_state = "r_wall"
 			relativewall_neighbours()	//call smoothwall stuff
 			user << "<span class='notice'>You repair the last of the damage.</span>"
-			MS.use(1)
 
 
 	//APC

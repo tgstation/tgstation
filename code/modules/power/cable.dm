@@ -471,7 +471,7 @@ obj/structure/cable/proc/avail()
 	is_cyborg = 1
 	m_amt = 0
 	g_amt = 0
-	cost = 1
+	cost = 600
 
 /obj/item/stack/cable_coil/suicide_act(mob/user)
 	if(locate(/obj/structure/stool) in user.loc)

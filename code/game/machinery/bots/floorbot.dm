@@ -102,11 +102,14 @@
 		var/obj/item/stack/tile/plasteel/T = W
 		if(src.amount >= 50)
 			return
-		var/loaded = min(50-src.amount, T.get_amount())
+		var/loaded = min(50 - src.amount, T.get_amount())
 		T.use(loaded)
 		src.amount += loaded
-		user << "<span class='notice'>You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles.</span>"
-		src.updateicon()
+		if (loaded > 0)
+			user << "<span class='notice'>You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles.</span>"
+			src.updateicon()
+		else
+			user << "<span class='warning'>You need at least one floor tile for that.</span>"
 	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(src.allowed(usr) && !open && !emagged)
 			src.locked = !src.locked

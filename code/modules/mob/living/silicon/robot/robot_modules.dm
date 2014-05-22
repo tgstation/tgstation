@@ -279,7 +279,6 @@
 
 /datum/robot_energy_storage/wire
 	name = "Wire Synthesizer"
-	max_energy = 50
 
 /datum/robot_energy_storage/reagent
 	name = "Reagent Synthesizer"

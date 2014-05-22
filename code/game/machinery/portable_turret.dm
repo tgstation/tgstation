@@ -652,10 +652,9 @@
 		if(1)
 			if(istype(I, /obj/item/stack/sheet/metal))
 				var/obj/item/stack/sheet/metal/M = I
-				if(M.get_amount() >= 2) //requires 2 metal sheets
+				if(M.use(2)) //requires 2 metal sheets
 					user << "<span class='notice'>You add some metal armor to the interior frame.</span>"
 					build_step = 2
-					M.use(2)
 					icon_state = "turret_frame2"
 				else
 					user << "<span class='warning'>You need two sheets of metal for that.</span>"

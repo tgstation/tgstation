@@ -175,10 +175,10 @@
 	return
 
 /obj/item/stack/proc/add(var/amount)
-	if (!is_cyborg)
-		src.amount += amount
-	else
+	if (is_cyborg)
 		source.add_charge(amount * cost)
+	else
+		src.amount += amount
 
 /obj/item/stack/proc/add_to_stacks(mob/usr as mob)
 	var/obj/item/stack/oldsrc = src
@@ -215,13 +215,10 @@
 		var/obj/item/stack/S = W
 		if (S.amount >= max_amount)
 			return 1
-		if (!S.is_cyborg)
+		if (S.is_cyborg)
 			var/to_transfer as num
-			if (user.get_inactive_hand()==src)
-				to_transfer = 1
-			else
-				to_transfer = min(src.amount, S.max_amount-S.amount)
-			S.amount+=to_transfer
+			to_transfer = min(src.amount, round((S.source.max_energy - S.source.energy) / S.cost))
+			S.add(to_transfer)
 			if (S && usr.machine==S)
 				spawn(0) S.interact(usr)
 			src.use(to_transfer)
@@ -229,8 +226,11 @@
 				spawn(0) src.interact(usr)
 		else
 			var/to_transfer as num
-			to_transfer = min(src.amount, round((S.source.max_energy - S.source.energy) / S.cost))
-			S.add(to_transfer)
+			if (user.get_inactive_hand()==src)
+				to_transfer = 1
+			else
+				to_transfer = min(src.amount, S.max_amount-S.amount)
+			S.amount+=to_transfer
 			if (S && usr.machine==S)
 				spawn(0) S.interact(usr)
 			src.use(to_transfer)

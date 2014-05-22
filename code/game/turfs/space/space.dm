@@ -18,32 +18,32 @@
 
 	if (istype(C, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = C
-		if (R.get_amount() < 1)
-			user << "There are not enough rods"
-			return
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
 			return
-		user << "\blue Constructing support lattice ..."
-		playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
-		ReplaceWithLattice()
-		R.use(1)
+		if (R.use(1))
+			user << "<span class='notice'>Constructing support lattice...</span>"
+			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+			ReplaceWithLattice()
+		else
+			user << "<span class='warning'>You need at least one rod for that.</span>"
+			return
 		return
 
 	if (istype(C, /obj/item/stack/tile/plasteel))
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
 			var/obj/item/stack/tile/plasteel/S = C
-			if (S.get_amount() < 1)
-				user << "There are not enough tiles"
+			if (S.use(1))
+				qdel(L)
+				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+				S.build(src)
+			else
+				user << "<span class='warning'>You need at least one floor tile for that.</span>"
 				return
-			qdel(L)
-			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
-			S.build(src)
-			S.use(1)
 			return
 		else
-			user << "\red The plating is going to need some support."
+			user << "<span class='danger'>The plating is going to need some support.</span>"
 	return
 
 

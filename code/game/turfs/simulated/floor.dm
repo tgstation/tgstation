@@ -197,13 +197,13 @@ turf/simulated/floor/proc/update_icon()
 	break_tile()
 
 /turf/simulated/floor/is_plasteel_floor()
-	if(istype(floor_tile,/obj/item/stack/tile/plasteel))
+	if(istype(floor_tile, /obj/item/stack/tile/plasteel))
 		return 1
 	else
 		return 0
 
 /turf/simulated/floor/is_light_floor()
-	if(istype(floor_tile,/obj/item/stack/tile/light))
+	if(istype(floor_tile, /obj/item/stack/tile/light))
 		return 1
 	else
 		return 0
@@ -322,7 +322,7 @@ turf/simulated/floor/proc/update_icon()
 	intact = 1
 	SetLuminosity(0)
 	if(T)
-		if(istype(T,/obj/item/stack/tile/plasteel))
+		if(istype(T, /obj/item/stack/tile/plasteel))
 			floor_tile = T
 			if (icon_regular_floor)
 				icon_state = icon_regular_floor

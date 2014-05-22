@@ -105,17 +105,17 @@
 	..()
 	if(istype(W, /obj/item/stack/sheet/metal) && !l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
 		var/obj/item/stack/sheet/metal/M = W
-		if (M.get_amount() < 1)
-			user << "There is not enough metal"
+		if (M.use(1))
+			var/obj/item/weapon/ed209_assembly/B = new /obj/item/weapon/ed209_assembly
+			B.loc = get_turf(src)
+			user << "You armed the robot frame"
+			if (user.get_inactive_hand()==src)
+				user.unEquip(src)
+				user.put_in_inactive_hand(B)
+			qdel(src)
+		else
+			user << "<span class='warning'>You need one sheet of metal to do that.</span>"
 			return
-		var/obj/item/weapon/ed209_assembly/B = new /obj/item/weapon/ed209_assembly
-		B.loc = get_turf(src)
-		user << "You armed the robot frame"
-		M.use(1)
-		if (user.get_inactive_hand()==src)
-			user.unEquip(src)
-			user.put_in_inactive_hand(B)
-		qdel(src)
 	if(istype(W, /obj/item/robot_parts/l_leg))
 		if(src.l_leg)	return
 		user.drop_item()
