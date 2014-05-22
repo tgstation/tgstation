@@ -7,7 +7,6 @@
 	var/engaged = 0
 	var/cost = 5
 	var/one_time = 0
-	var/cooldown = 0
 
 	var/power_type
 
@@ -70,16 +69,17 @@
 	if(src.stat == 2)
 		src <<"You cannot begin a lockdown because you are dead!"
 		return
-	if(cooldown)
+
+	if(malf_cooldown)
 		return
 
 	for(var/obj/machinery/firealarm/FA in machines) //activate firealarms
 		spawn()
 			FA.alarm()
-	for(var/obj/machinery/door/poddoor/BD in world) //Close blast doors!
+	for(var/obj/machinery/door/poddoor/BD in portals) //Close blast doors!
 		spawn()
 			BD.close()
-	for(var/obj/machinery/door/airlock/AL in world) //shock-bolt airlocks
+	for(var/obj/machinery/door/airlock/AL in portals) //shock-bolt airlocks
 		spawn()
 			if(AL.canAIControl() && !AL.stat) //Must be powered and have working AI wire.
 				AL.locked = 0
@@ -89,15 +89,15 @@
 				AL.lights = 0
 				AL.secondsElectrified = -1
 
-	var/obj/machinery/computer/communications/C = locate() in world
+	var/obj/machinery/computer/communications/C = locate() in machines
 	if(C)
 		C.post_status("alert", "lockdown")
 
 	src.verbs += /mob/living/silicon/ai/proc/disablelockdown
 	src << "<span class = 'warning'>Lockdown Initiated.</span>"
-	cooldown = 1
-	spawn(30) 
-	cooldown = 0
+	malf_cooldown = 1
+	spawn(30)
+	malf_cooldown = 0
 
 /mob/living/silicon/ai/proc/disablelockdown()
 	set category = "Malfunction"
@@ -106,16 +106,16 @@
 	if(src.stat == 2)
 		src <<"You cannot disable lockdown because you are dead!"
 		return
-	if(cooldown)
+	if(malf_cooldown)
 		return
 
 	for(var/obj/machinery/firealarm/FA in machines) //deactivate firealarms
 		spawn()
 			FA.reset()
-	for(var/obj/machinery/door/poddoor/BD in world) //Open blast doors!
+	for(var/obj/machinery/door/poddoor/BD in portals) //Open blast doors!
 		spawn()
 			BD.open()
-	for(var/obj/machinery/door/airlock/AL in world) //unbolt and open airlocks
+	for(var/obj/machinery/door/airlock/AL in portals) //unbolt and open airlocks
 		spawn()
 			if(AL.canAIControl() && !AL.stat)
 
@@ -126,9 +126,9 @@
 				AL.lights = 1
 
 	src << "<span class = 'notice'>Lockdown Lifted.</span>"
-	cooldown = 1
-	spawn(30) 
-	cooldown = 0
+	malf_cooldown = 1
+	spawn(30)
+	malf_cooldown = 0
 
 /datum/AI_Module/large/disable_rcd
 	module_name = "RCD disable"
