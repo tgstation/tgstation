@@ -76,16 +76,15 @@
 
 			if(!M in nearby) // NOT NEARBY
 				// AIs/Robots can do shit from afar.
-				if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot))
+				if (isAI(M) || isrobot(M))
 					is_in_use = 1
 					src.attack_ai(M)
 
 				// check for TK users
-				else if (istype(usr, /mob/living/carbon/human))
-					if(istype(usr.l_hand, /obj/item/tk_grab) || istype(usr.r_hand, /obj/item/tk_grab))
-						if(usr.client && usr.machine==src)
-							is_in_use = 1
-							src.attack_hand(usr)
+				else if (ishuman(M))
+					if(istype(M.l_hand, /obj/item/tk_grab) || istype(M.r_hand, /obj/item/tk_grab))
+						is_in_use = 1
+						src.attack_hand(usr)
 			else // EVERYTHING FROM HERE DOWN MUST BE NEARBY
 				is_in_use = 1
 				attack_hand(usr)
