@@ -424,7 +424,8 @@
 
 /mob/living/proc/cuff_break(obj/item/I, mob/living/carbon/C)
 
-	C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+	if(HULK in usr.mutations)
+		C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		
 	C.visible_message("<span class='danger'>[C] manages to break [I]!</span>", \
 				"<span class='notice'>You successfully break [I].</span>")
