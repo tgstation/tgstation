@@ -41,7 +41,7 @@
 
 		lastAngle = angle
 
-	if (!round(time / nextTime))
+	if (world.time < nextTime)
 		return
 
 	nextTime += updatePer
