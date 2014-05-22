@@ -150,11 +150,7 @@
 
 	var/i
 	while (!i)
-		var/randomname
-		if (O.gender == MALE)
-			randomname = capitalize(pick(first_names_male) + " " + capitalize(pick(last_names)))
-		else
-			randomname = capitalize(pick(first_names_female) + " " + capitalize(pick(last_names)))
+		var/randomname = O.species.makeName(O.gender,O)
 		if (findname(randomname))
 			continue
 		else
