@@ -1444,3 +1444,11 @@ mob/verb/yank_out_object()
 		if(!pinned.len)
 			anchored = 0
 	return 1
+
+// Mobs tell access what access levels it has.
+/mob/proc/GetAccess()
+	return list()
+
+// Skip over all the complex list checks.
+/mob/proc/hasFullAccess()
+	return 0

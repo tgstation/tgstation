@@ -516,3 +516,10 @@
 	if(!ticker.mode.name == "monkey")	return 0
 	return 1
 
+// Get ALL accesses available.
+/mob/living/carbon/monkey/GetAccess()
+	var/list/ACL=list()
+	var/obj/item/I = get_active_hand()
+	if(istype(I))
+		ACL |= I.GetAccess()
+	return ACL

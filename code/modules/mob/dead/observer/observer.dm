@@ -30,7 +30,7 @@
 	var/antagHUD = 0
 	universal_speak = 1
 	var/atom/movable/following = null
-	
+
 
 
 /mob/dead/observer/New(var/mob/body=null, var/flags=1)
@@ -92,6 +92,12 @@
 		name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 	real_name = name
 	..()
+
+/mob/dead/observer/hasFullAccess()
+	return isAdminGhost(src)
+
+/mob/dead/observer/GetAccess()
+	return isAdminGhost(src) ? get_all_accesses() : list()
 
 /mob/dead/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/tome))

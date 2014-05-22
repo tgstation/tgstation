@@ -621,3 +621,54 @@
 	desc = "The holy grail of all programmers."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "gooncode"
+	
+	
+	
+
+/obj/item/toy/minimeteor
+	name = "Mini Meteor™"
+	desc = "Relive the horror of a meteor shower! SweetMeat-eor. Co is not responsible for any injury caused by Mini Meteor™"
+	icon = 'icons/obj/meteor.dmi'
+	icon_state = "flaming"
+
+	attack_self(mob/user as mob)
+		playsound(user, 'sound/effects/bamf.ogg', 20, 1)
+
+/obj/item/device/whisperphone
+	name = "whipserphone"
+	desc = "A device used to project your voice. Quietly."
+	icon_state = "megaphone"
+	item_state = "radio"
+	w_class = 1.0
+	flags = FPRINT | TABLEPASS | CONDUCT
+
+	var/spamcheck = 0
+
+/obj/item/device/megaphone/attack_self(mob/living/user as mob)
+	if (user.client)
+		if(user.client.prefs.muted & MUTE_IC)
+			src << "\red You cannot speak in IC (muted)."
+			return
+	if(!ishuman(user))
+		user << "\red You don't know how to use this!"
+		return
+	if(user:miming || user.silent)
+		user << "\red You find yourself unable to speak at all."
+		return
+	if(spamcheck)
+		user << "\red \The [src] needs to recharge!"
+		return
+
+	var/message = copytext(sanitize(input(user, "'Shout' a message?", "Whisperphone", null)  as text),1,MAX_MESSAGE_LEN)
+	if(!message)
+		return
+	message = capitalize(message)
+	if ((src.loc == user && usr.stat == 0))
+
+		for(var/mob/O in (viewers(user)))
+			O.show_message("<B>[user]</B> broadcasts, <i>\"[message]\"</i>",2) 
+		spamcheck = 1
+		spawn(20)
+			spamcheck = 0
+		return
+

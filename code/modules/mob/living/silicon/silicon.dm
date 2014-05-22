@@ -11,6 +11,12 @@
 	var/list/alarm_types_show = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
 	var/list/alarm_types_clear = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
 
+/mob/living/silicon/hasFullAccess()
+	return 1
+
+/mob/living/silicon/GetAccess()
+	return get_all_accesses()
+
 /mob/living/silicon/proc/cancelAlarm()
 	return
 
@@ -145,8 +151,8 @@
 	if (bot.connected_ai == ai)
 		return 1
 	return 0
-	
-	
+
+
 // this function shows the health of the pAI in the Status panel
 /mob/living/silicon/proc/show_system_integrity()
 	if(!src.stat)
@@ -154,25 +160,25 @@
 	else
 		stat(null, text("Systems nonfunctional"))
 
-	
+
 // This is a pure virtual function, it should be overwritten by all subclasses
 /mob/living/silicon/proc/show_malf_ai()
 	return 0
 
-	
+
 // this function displays the station time in the status panel
 /mob/living/silicon/proc/show_station_time()
 	stat(null, "Station Time: [worldtime2text()]")
-	
-	
+
+
 // this function displays the shuttles ETA in the status panel if the shuttle has been called
 /mob/living/silicon/proc/show_emergency_shuttle_eta()
 	if(emergency_shuttle.online && emergency_shuttle.location < 2)
 		var/timeleft = emergency_shuttle.timeleft()
 		if (timeleft)
 			stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-				
-				
+
+
 // This adds the basic clock, shuttle recall timer, and malf_ai info to all silicon lifeforms
 /mob/living/silicon/Stat()
 	..()
@@ -182,7 +188,7 @@
 		show_emergency_shuttle_eta()
 		show_system_integrity()
 		show_malf_ai()
-		
+
 // this function displays the stations manifest in a separate window
 /mob/living/silicon/proc/show_station_manifest()
 	var/dat
