@@ -55,13 +55,12 @@
 		if(1)
 			if(istype(P, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = P
-				if(C.amount >= 5)
+				if(C.get_amount() >= 5)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "<span class='notice'>You start to add cables to the frame.</span>"
 					if(do_after(user, 20))
 						if(C)
-							C.amount -= 5
-							if(!C.amount) qdel(C)
+							C.use(5)
 							user << "<span class='notice'>You add cables to the frame.</span>"
 							state = 2
 							icon_state = "box_1"
@@ -138,6 +137,9 @@
 						success=1
 						if(istype(P, /obj/item/stack/cable_coil))
 							var/obj/item/stack/cable_coil/CP = P
+							if (CP.get_amount() < 1)
+								user << "You need more cable!"
+								return
 							var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src, 1, CP.item_color)
 							if(CP.use(1))
 								components += CC

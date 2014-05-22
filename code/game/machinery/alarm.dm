@@ -807,15 +807,13 @@ table tr:first-child th:first-child { border: none;}
 
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/cable = W
-				if(cable.amount < 5)
+				if(cable.get_amount() < 5)
 					user << "You need more cable!"
 					return
 
 				user << "You start wiring the air alarm!"
 				spawn(20)
-					cable.amount -= 5
-					if(!cable.amount)
-						qdel(cable)
+					cable.use(5)
 
 					user << "You wire the air alarm!"
 					wires.wires_status = 0
@@ -1000,13 +998,11 @@ FIRE ALARM
 			if(1)
 				if(istype(W, /obj/item/stack/cable_coil))
 					var/obj/item/stack/cable_coil/coil = W
-					if(coil.amount < 5)
+					if(coil.get_amount() < 5)
 						user << "<span class='warning'>You need more cable for this!</span>"
 						return
 
-					coil.amount -= 5
-					if(!coil.amount)
-						qdel(coil)
+					coil.use(5)
 
 					buildstage = 2
 					user << "<span class='notice'>You wire \the [src]!</span>"

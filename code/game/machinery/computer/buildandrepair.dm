@@ -330,13 +330,12 @@
 				src.icon_state = "1"
 			if(istype(P, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = P
-				if(C.amount >= 5)
+				if(C.get_amount() >= 5)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "<span class='notice'>You start adding cables to the frame.</span>"
 					if(do_after(user, 20))
-						if(C && C.amount >= 5)
-							C.amount -= 5
-							if(C.amount <= 0) qdel(C)
+						if(C && C.get_amount() >= 5)
+							C.use(5)
 							user << "<span class='notice'>You've added cables to the frame.</span>"
 							src.state = 3
 							src.icon_state = "3"

@@ -967,6 +967,9 @@ Auto Patrol: []"},
 		if(6)
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/coil = W
+				if (coil.get_amount() < 1)
+					user << "Not enough cable!"
+					return
 				var/turf/T = get_turf(user)
 				user << "<span class='notice'>You start to wire [src]...</span>"
 				sleep(40)

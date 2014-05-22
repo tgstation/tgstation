@@ -29,7 +29,7 @@
 	add_fingerprint(user)
 	if(istype(W,/obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
-		if(CC.amount < 5)
+		if(CC.get_amount() < 5)
 			user << "\b There is not enough wire in this coil. You need 5 lengths."
 			return
 		CC.use(5)

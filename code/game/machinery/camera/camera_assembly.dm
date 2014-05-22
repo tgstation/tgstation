@@ -58,6 +58,9 @@
 			// State 2
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = W
+				if(C.get_amount() < 2)
+					user << "You need more cable!"
+					return
 				if(C.use(2))
 					user << "You add wires to the assembly."
 					state = 3

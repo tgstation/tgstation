@@ -157,19 +157,21 @@
 			return
 	return
 
-/obj/item/stack/proc/use(var/amount)
-	if (!is_cyborg)
-		src.amount-=amount
-		if (src.get_amount() <= 0)
+/obj/item/stack/proc/use(var/amount) // return 0 = borked; return 1 = used precisely; return 2 = leftovers
+	if (is_cyborg)
+		. = source.use_charge(amount * cost)
+	else
+		if (src.amount < amount)
+			return 0
+		src.amount -= amount
+		if (src.amount <= 0)
 			var/oldsrc = src
 			src = null //dont kill proc after del()
 			if(usr)
 				usr.unEquip(oldsrc, 1)
 			qdel(oldsrc)
 			return 1
-		return 0
-	else
-		source.use_charge(amount * cost)
+		return 2
 	return
 
 /obj/item/stack/proc/add(var/amount)

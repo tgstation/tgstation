@@ -45,8 +45,6 @@
 
 
 /obj/item/weapon/robot_module/proc/respawn_consumable(var/mob/living/silicon/robot/R)
-	for (var/datum/robot_energy_storage/st in storages)
-		st.energy = min(st.max_energy, st.energy + 500)
 	return
 
 /obj/item/weapon/robot_module/proc/rebuild()//Rebuilds the list so it's possible to add/remove items from the module
@@ -112,6 +110,7 @@
 
 		var/datum/robot_energy_storage/metal/metstore = new /datum/robot_energy_storage/metal(src)
 		var/datum/robot_energy_storage/glass/glastore = new /datum/robot_energy_storage/glass(src)
+		var/datum/robot_energy_storage/wire/wirestore = new /datum/robot_energy_storage/wire(src)
 
 		var/obj/item/stack/sheet/metal/cyborg/M = new /obj/item/stack/sheet/metal/cyborg(src)
 		M.source = metstore
@@ -130,8 +129,8 @@
 		R.source = metstore
 		modules += R
 
-		var/obj/item/stack/cable_coil/W = new /obj/item/stack/cable_coil(src)
-		W.amount = 50
+		var/obj/item/stack/cable_coil/cyborg/W = new /obj/item/stack/cable_coil/cyborg(src)
+		W.source = wirestore
 		modules += W
 
 		var/obj/item/stack/tile/plasteel/cyborg/F = new /obj/item/stack/tile/plasteel/cyborg(src) //"Plasteel" is the normal metal floor tile, Don't be confused - RR
@@ -140,6 +139,7 @@
 
 		storages += metstore
 		storages += glastore
+		storages += wirestore
 
 	respawn_consumable(var/mob/living/silicon/robot/R)
 		var/list/what = list (
@@ -253,15 +253,18 @@
 /datum/robot_energy_storage
 	var/name = "Generic energy storage"
 	var/max_energy = 30000
-	var/energy = 30000
+	var/energy
 
 /datum/robot_energy_storage/New()
+	energy = max_energy
 	return
 
 /datum/robot_energy_storage/proc/use_charge(var/amount)
 	if (energy >= amount)
 		energy -= amount
-		return 1
+		if (energy == 0)
+			return 1
+		return 2
 	else
 		return 0
 
@@ -273,6 +276,10 @@
 
 /datum/robot_energy_storage/glass
 	name = "Glass Synthesizer"
+
+/datum/robot_energy_storage/wire
+	name = "Wire Synthesizer"
+	max_energy = 50
 
 /datum/robot_energy_storage/reagent
 	name = "Reagent Synthesizer"

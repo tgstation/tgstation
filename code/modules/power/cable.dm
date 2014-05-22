@@ -146,6 +146,9 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	else if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = W
+		if (coil.get_amount() < 1)
+			user << "Not enough cable"
+			return
 		coil.cable_join(src, user)
 
 	else if(istype(W, /obj/item/device/multitool))
@@ -464,6 +467,12 @@ obj/structure/cable/proc/avail()
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 
+/obj/item/stack/cable_coil/cyborg
+	is_cyborg = 1
+	m_amt = 0
+	g_amt = 0
+	cost = 1
+
 /obj/item/stack/cable_coil/suicide_act(mob/user)
 	if(locate(/obj/structure/stool) in user.loc)
 		user.visible_message("<span class='suicide'>[user] is making a noose with the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -515,12 +524,15 @@ obj/structure/cable/proc/avail()
 /obj/item/stack/cable_coil/examine()
 	set src in view(1)
 
-	if(amount == 1)
-		usr << "A short piece of power cable."
-	else if(amount == 2)
-		usr << "A piece of power cable."
+	if (is_cyborg)
+		usr << "A cable synthesizer. Currently has energy for [get_amount()] lengths of cable."
 	else
-		usr << "A coil of power cable. There are [amount] lengths of cable in the coil."
+		if(get_amount() == 1)
+			usr << "A short piece of power cable."
+		else if(get_amount() == 2)
+			usr << "A piece of power cable."
+		else
+			usr << "A coil of power cable. There are [get_amount()] lengths of cable in the coil."
 
 
 /obj/item/stack/cable_coil/verb/make_restraint()
@@ -544,7 +556,7 @@ obj/structure/cable/proc/avail()
 // Items usable on a cable coil :
 //   - Wirecutters : cut them duh !
 //   - Cable coil : merge cables
-/obj/item/stack/cable_coil/attackby(obj/item/weapon/W, mob/user)
+/obj/item/stack/cable_coil/attackby(obj/item/weapon/W, mob/user) // TODO
 	..()
 	if( istype(W, /obj/item/weapon/wirecutters) && src.amount > 1)
 		src.amount--
@@ -573,6 +585,7 @@ obj/structure/cable/proc/avail()
 			return
 
 //remove cables from the stack
+/* This is probably reduntant
 /obj/item/stack/cable_coil/use(var/used)
 	if(src.amount < used)
 		return 0
@@ -586,6 +599,10 @@ obj/structure/cable/proc/avail()
 		amount -= used
 		update_icon()
 		return 1
+*/
+/obj/item/stack/cable_coil/use(var/used)
+	..()
+	update_icon()
 
 //add cables to the stack
 /obj/item/stack/cable_coil/proc/give(var/extra)

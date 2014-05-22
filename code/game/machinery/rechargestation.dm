@@ -158,7 +158,7 @@
 			var/list/um = occupier.contents|occupier.module.modules // Makes single list of active (occupier.contents) and inactive (occupier.module.modules) modules
 			var/coeff = recharge_speed / 200
 			for (var/datum/robot_energy_storage/st in occupier.module.storages)
-				st.energy = min(st.max_energy, st.energy + recharge_speed * 5)
+				st.energy = min(st.max_energy, st.energy + recharge_speed * 5) // TODO: think on how to do it
 			for(var/obj/O in um)
 				//General
 				if(istype(O,/obj/item/device/flash))
@@ -167,9 +167,6 @@
 						O:times_used = 0
 						O:icon_state = "flash"
 				// Engineering
-				if(istype(O,/obj/item/stack/cable_coil))
-					if(O:amount < 50)
-						O:amount += coeff
 				// Security
 				if(istype(O,/obj/item/weapon/gun/energy/taser/cyborg))
 					if(O:power_supply.charge < O:power_supply.maxcharge)

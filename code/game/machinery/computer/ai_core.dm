@@ -63,11 +63,11 @@
 				state = 1
 				icon_state = "1"
 			if(istype(P, /obj/item/stack/cable_coil))
-				if(P:amount >= 5)
+				var/obj/item/stack/cable_coil/C = P
+				if(C.get_amount() >= 5)
 					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
-						P:amount -= 5
-						if(!P:amount) qdel(P)
+						C.use(5)
 						user << "<span class='notice'>You add cables to the frame.</span>"
 						state = 3
 						icon_state = "3"
