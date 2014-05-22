@@ -114,6 +114,8 @@ Class Procs:
 	var/panel_open = 0
 	var/area/myArea
 
+	var/inMachineList = 1 // For debugging.
+
 /obj/machinery/New()
 	addAtProcessing()
 	return ..()
