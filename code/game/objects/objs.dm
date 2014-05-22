@@ -8,6 +8,7 @@
 	var/list/attack_verb = list() //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/sharp = 0 // whether this object cuts
 	var/in_use = 0 // If we have a user using us, this will be set on. We will check if the user has stopped using us, and thus stop updating and LAGGING EVERYTHING!
+	var/list/mob/_using = list() // All mobs dicking with us.
 
 	var/damtype = "brute"
 	var/force = 0
@@ -68,24 +69,26 @@
 	if(in_use)
 		var/is_in_use = 0
 		var/list/nearby = viewers(1, src)
-		for(var/mob/M in nearby)
-			if ((M.client && M.machine == src))
-				is_in_use = 1
-				src.attack_hand(M)
-		if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot))
-			if (!(usr in nearby))
-				if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
+		for(var/mob/M in _using.Copy()) // Only check things actually messing with us.
+			if (!M || !M.client || M.machine != src)
+				_using.Remove(M)
+				continue
+
+			if(!M in nearby) // NOT NEARBY
+				// AIs/Robots can do shit from afar.
+				if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot))
 					is_in_use = 1
-					src.attack_ai(usr)
+					src.attack_ai(M)
 
-		// check for TK users
-
-		if (istype(usr, /mob/living/carbon/human))
-			if(istype(usr.l_hand, /obj/item/tk_grab) || istype(usr.r_hand, /obj/item/tk_grab/))
-				if(!(usr in nearby))
-					if(usr.client && usr.machine==src)
-						is_in_use = 1
-						src.attack_hand(usr)
+				// check for TK users
+				else if (istype(usr, /mob/living/carbon/human))
+					if(istype(usr.l_hand, /obj/item/tk_grab) || istype(usr.r_hand, /obj/item/tk_grab))
+						if(usr.client && usr.machine==src)
+							is_in_use = 1
+							src.attack_hand(usr)
+			else // EVERYTHING FROM HERE DOWN MUST BE NEARBY
+				is_in_use = 1
+				attack_hand(usr)
 		in_use = is_in_use
 
 /obj/proc/updateDialog()
@@ -93,14 +96,18 @@
 	if(in_use)
 		var/list/nearby = viewers(1, src)
 		var/is_in_use = 0
-		for(var/mob/M in nearby)
-			if ((M.client && M.machine == src))
-				is_in_use = 1
-				src.interact(M)
-		var/ai_in_use = AutoUpdateAI(src)
-
-		if(!ai_in_use && !is_in_use)
-			in_use = 0
+		for(var/mob/M in _using.Copy()) // Only check things actually messing with us.
+			// Not actually using the fucking thing?
+			if (!M || !M.client || M.machine != src)
+				_using.Remove(M)
+				continue
+			// Not robot or AI, and not nearby?
+			if(!isAI(M) && !isrobot(M) && !(M in nearby))
+				_using.Remove(M)
+				continue
+			is_in_use = 1
+			src.interact(M)
+		in_use = is_in_use
 
 /obj/proc/interact(mob/user)
 	return
@@ -181,7 +188,9 @@ a {
 	return
 
 /mob/proc/unset_machine()
-	src.machine = null
+	if(machine)
+		machine._using -= src
+		machine = null
 
 /mob/proc/set_machine(var/obj/O)
 	if(src.machine)
@@ -189,6 +198,7 @@ a {
 	src.machine = O
 	if(istype(O))
 		O.in_use = 1
+		O._using += src
 
 /obj/item/proc/updateSelfDialog()
 	var/mob/M = src.loc
