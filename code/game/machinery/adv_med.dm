@@ -240,11 +240,13 @@
 		use_power = 0
 		return
 
-	switch (isnull(occupant))
-		if (1)
-			use_power = 1
-		if (0)
+	if (connected)
+		if (connected.occupant)
 			use_power = 2
+		else
+			use_power = 1
+	else
+		use_power = 1
 
 /*
 	if(stat & (NOPOWER|BROKEN))
