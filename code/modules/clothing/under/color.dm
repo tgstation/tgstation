@@ -144,30 +144,25 @@
 	_color = "darkred"
 	flags = FPRINT | TABLEPASS
 
-/obj/item/clothing/under/color/blackpants
+/obj/item/clothing/under/blackpants
 	name = "black pants"
-	icon_state = "blackpants"
-	item_state = "blackpants"
-	_color = "black"
+	icon_state = "blpants"
+	_color = "blpants"
 	flags = FPRINT | TABLEPASS
 
-/obj/item/clothing/under/color/redpants
+/obj/item/clothing/under/redpants
 	name = "red pants"
-	icon_state = "redpants"
-	item_state = "redpants"
-	_color = "red"
+	icon_state = "rpants"
+	_color = "rpants"
 	flags = FPRINT | TABLEPASS
 
-/obj/item/clothing/under/color/bluepants
+/obj/item/clothing/under/bluepants
 	name = "blue pants"
-	icon_state = "bluepants"
-	item_state = "bluepants"
-	_color = "blue"
+	icon_state = "bpants"
+	_color = "bpants"
 	flags = FPRINT | TABLEPASS
 
-/obj/item/clothing/under/color/greypants
+/obj/item/clothing/under/greypants
 	name = "grey pants"
-	icon_state = "greypants"
-	item_state = "greypants"
-	_color = "grey"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	icon_state = "gpants"
+	_color = "gpants"
