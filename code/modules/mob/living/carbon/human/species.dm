@@ -88,7 +88,10 @@
 
 		if(MUTCOLORS in specflags)
 			var/image/spec_base
-			spec_base = image("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.dna.species.id]_[g]_s", "layer" = -SPECIES_LAYER)
+			if(sexes)
+				spec_base = image("icon" = 'icons/mob/human.dmi', "icon_state" = "[id]_[g]_s", "layer" = -SPECIES_LAYER)
+			else
+				spec_base = image("icon" = 'icons/mob/human.dmi', "icon_state" = "[id]_s", "layer" = -SPECIES_LAYER)
 			if(!config.mutant_colors)
 				H.dna.mutant_color = default_color
 			spec_base.color = "#[H.dna.mutant_color]"
