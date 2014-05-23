@@ -73,13 +73,7 @@
 
 			var/mob/living/carbon/human/H = hit
 
-			if(H.gender == MALE)
-				H.name = pick(first_names_male)
-			else
-				H.name = pick(first_names_female)
-
-			H.name += " [pick(last_names)]"
-			H.real_name = H.name
+			H.generate_name()
 
 			scramble(1, H, 100) // Scramble all UIs
 			scramble(null, H, 5) // Scramble SEs, 5% chance for each block

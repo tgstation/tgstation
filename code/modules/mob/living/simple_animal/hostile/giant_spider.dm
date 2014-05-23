@@ -22,8 +22,8 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "hits"
 	stop_automated_movement_when_pulled = 0
-	maxHealth = 75 // Was 200
-	health = 75 // 150/2
+	maxHealth = 200 // Was 75
+	health = 200
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	heat_damage_per_tick = 20
@@ -43,8 +43,8 @@
 	icon_state = "nurse"
 	icon_living = "nurse"
 	icon_dead = "nurse_dead"
-	maxHealth = 40
-	health = 40
+	maxHealth = 75 // 40
+	health = 75
 	melee_damage_lower = 5
 	melee_damage_upper = 10
 	poison_per_bite = 10
@@ -60,8 +60,8 @@
 	icon_state = "hunter"
 	icon_living = "hunter"
 	icon_dead = "hunter_dead"
-	maxHealth = 60 // Was 120
-	health = 60
+	maxHealth = 120 // Was 60
+	health = 120
 	melee_damage_lower = 10
 	melee_damage_upper = 20
 	poison_per_bite = 5

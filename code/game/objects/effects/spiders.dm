@@ -104,6 +104,9 @@
 		pixel_x = rand(6,-6)
 		pixel_y = rand(6,-6)
 		processing_objects.Add(src)
+		//50% chance to grow up
+		if(prob(50))
+			amount_grown = 1
 
 /obj/effect/spider/spiderling/Bump(atom/user)
 	if(istype(user, /obj/structure/table))

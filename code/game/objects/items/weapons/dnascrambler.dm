@@ -34,12 +34,7 @@
 				user << "\red You failed to inject [M.name]."
 
 	proc/injected(var/mob/living/carbon/target, var/mob/living/carbon/user)
-		if(target.gender == MALE)
-			target.name = pick(first_names_male)
-		else
-			target.name = pick(first_names_female)
-
-		target.name += " [pick(last_names)]"
+		target.generate_name()
 		target.real_name = target.name
 
 		scramble(1, target, 100)

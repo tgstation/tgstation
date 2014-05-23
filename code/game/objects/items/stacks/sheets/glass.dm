@@ -218,6 +218,8 @@
 			WD = new /obj/structure/windoor_assembly(user.loc)
 			WD.state = "01"
 			WD.anchored = 0
+			WD.dir = user.dir
+			WD.ini_dir = WD.dir
 			src.use(5)
 			switch(user.dir)
 				if(SOUTH)
@@ -241,11 +243,8 @@
 /*
  * Glass shards - TODO: Move this into code/game/object/item/weapons
  */
-/obj/item/weapon/shard
-	resetVariables()
-		var/list/exclude = list("pixel_y", "pixel_x", "icon_state")
-		exclude += args
-		..(exclude)
+/obj/item/weapon/shard/resetVariables()
+	..("pixel_y", "pixel_x", "icon_state", args)
 
 /obj/item/weapon/shard/Bump()
 

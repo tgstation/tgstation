@@ -209,6 +209,7 @@
 			new /obj/machinery/constructable_frame/machine_frame(T)
 		del(src)
 	if(user.a_intent == "hurt")
+		user.changeNext_move(10)
 		src.health -= W.force
 		src.healthcheck()
 		..()
@@ -238,6 +239,7 @@
 			update_icon()
 	else
 		if(user.a_intent == "hurt")
+			user.changeNext_move(10)
 			user.visible_message("\red [user.name] kicks \the [src]!", \
 				"\red You kick \the [src]!", \
 				"You hear glass crack.")
