@@ -151,8 +151,9 @@
 	src.health = max(0, src.health - damage)
 	if (src.health <= 0)
 		new /obj/item/weapon/shard(src.loc)
-		var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
-		CC.amount = 2
+		new /obj/item/weapon/shard(src.loc)
+		new /obj/item/stack/rods(src.loc, 2)
+		new /obj/item/stack/cable_coil(src.loc, 2)
 		src.density = 0
 		qdel(src)
 		return
@@ -187,15 +188,10 @@
 		if(src.operating)
 			return
 		user.changeNext_move(8)
-		src.health = max(0, src.health - 25)
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-		visible_message("\red <B>[user] smashes against the [src.name].</B>")
-		if (src.health <= 0)
-			new /obj/item/weapon/shard(src.loc)
-			var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
-			CC.amount = 2
-			src.density = 0
-			qdel(src)
+		user.visible_message("<span class='danger'>[user] smashes against the [src.name].</span>", \
+					"<span class='userdanger'>[user] smashes against the [src.name].</span>")
+		take_damage(25)
 	else
 		return src.attack_hand(user)
 
@@ -220,40 +216,33 @@
 			spark_system.start()
 			playsound(src.loc, "sparks", 50, 1)
 			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-			visible_message("\blue The glass door was sliced open by [user]!")
+			visible_message("<span class='warning'> The glass door was sliced open by [user]!</span>")
 			open(2)
 			emagged = 1
 			return 1
 		open()
 		emagged = 1
 		return 1
-
-	//If it's a weapon, smash windoor. Unless it's a crowbar, an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
-	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card) && !istype(I, /obj/item/weapon/crowbar))
-		user.changeNext_move(8)
-		var/aforce = I.force
-		if(I.damtype == BRUTE || I.damtype == BURN)
-			src.health = max(0, src.health - aforce)
-		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-		visible_message("<span class='danger'>\The [src] has been hit by [user] with [I].</span>")
-		if (src.health <= 0)
-			new /obj/item/weapon/shard(src.loc)
-			new /obj/item/weapon/shard(src.loc)
-			new /obj/item/stack/rods(src.loc, 2)
-			new /obj/item/stack/cable_coil(src.loc, 2)
-			src.density = 0
-			qdel(src)
-		return
 	
-	if(istype(I, /obj/item/weapon/crowbar))
+	//If windoor is unpowered, crowbar, fireaxe and armblade can force it.
+	if(istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe) || istype(I, /obj/item/weapon/melee/arm_blade) )
 		if(stat & NOPOWER)
 			if(src.density)
 				open(2)
 			else
 				close(2)
-		else
-			user << "<span class='warning'> The [src.name]'s motors resist your efforts to force it.</span>"
+			return
 
+	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
+	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card) )
+		user.changeNext_move(8)
+		var/aforce = I.force
+		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+		visible_message("<span class='danger'>\The [src] has been hit by [user] with [I].</span>")
+		if(I.damtype == BURN || I.damtype == BRUTE)
+			take_damage(aforce)
+		return
+	
 	src.add_fingerprint(user)
 	if (!src.requiresID())
 		//don't care who they are or what they have, act as if they're NOTHING
