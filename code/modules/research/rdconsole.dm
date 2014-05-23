@@ -116,20 +116,21 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	return
 
 //Have it automatically push research to the centcom server so wild griffins can't fuck up R&D's work --NEO
-/obj/machinery/computer/rdconsole/proc/griefProtection()
+//This is really redundant and not needed --Sieve
+/*/obj/machinery/computer/rdconsole/proc/griefProtection()
 	for(var/obj/machinery/r_n_d/server/centcom/C in world)
 		for(var/datum/tech/T in files.known_tech)
 			C.files.AddTech2Known(T)
 		for(var/datum/design/D in files.known_designs)
 			C.files.AddDesign2Known(D)
-		C.files.RefreshResearch()
+		C.files.RefreshResearch()*/
 
 
 /obj/machinery/computer/rdconsole/New()
 	..()
 	files = new /datum/research(src) //Setup the research data holder.
 	if(!id)
-		for(var/obj/machinery/r_n_d/server/centcom/S in world)
+		for(var/obj/machinery/r_n_d/server/centcom/S in machines)
 			S.initialize()
 			break
 
@@ -186,7 +187,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			screen = 1.2
 			files.AddTech2Known(t_disk.stored)
 			updateUsrDialog()
-			griefProtection() //Update centcom too
+//			griefProtection() //Update centcom too
 
 	else if(href_list["clear_tech"]) //Erase data on the technology disk.
 		t_disk.stored = null
@@ -209,7 +210,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			screen = 1.4
 			files.AddDesign2Known(d_disk.blueprint)
 			updateUsrDialog()
-			griefProtection() //Update centcom too
+//			griefProtection() //Update centcom too
 
 	else if(href_list["clear_design"]) //Erases data on the design disk.
 		d_disk.blueprint = null
@@ -300,21 +301,21 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(!sync)
 			usr << "\red You must connect to the network first!"
 		else
-			griefProtection() //Putting this here because I dont trust the sync process
+//			griefProtection() //Putting this here because I dont trust the sync process
 			spawn(30)
 				if(src)
-					for(var/obj/machinery/r_n_d/server/S in world)
+					for(var/obj/machinery/r_n_d/server/S in machines)//No reason to check the entire damn world for machines that are already in a list -Sieve
 						var/server_processed = 0
 						if(S.disabled)
 							continue
-						if((id in S.id_with_upload) || istype(S, /obj/machinery/r_n_d/server/centcom))
+						if( ((id in S.id_with_upload) || istype(S, /obj/machinery/r_n_d/server/centcom)) && files.checksum != S.files.checksum)
 							for(var/datum/tech/T in files.known_tech)
 								S.files.AddTech2Known(T)
 							for(var/datum/design/D in files.known_designs)
 								S.files.AddDesign2Known(D)
 							S.files.RefreshResearch()
 							server_processed = 1
-						if(((id in S.id_with_download) && !istype(S, /obj/machinery/r_n_d/server/centcom)) || S.hacked)
+						if( (((id in S.id_with_download) && !istype(S, /obj/machinery/r_n_d/server/centcom)) || S.hacked) && files.checksum != S.files.checksum)
 							for(var/datum/tech/T in S.files.known_tech)
 								files.AddTech2Known(T)
 							for(var/datum/design/D in S.files.known_designs)
@@ -550,7 +551,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				linked_imprinter = null
 
 	else if(href_list["reset"]) //Reset the R&D console's database.
-		griefProtection()
+//		griefProtection()
 		var/choice = alert("R&D Console Database Reset", "Are you sure you want to reset the R&D console's database? Data lost cannot be recovered.", "Continue", "Cancel")
 		if(choice == "Continue")
 			screen = 0.0
@@ -572,7 +573,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	user.set_machine(src)
 	var/dat = ""
-	files.RefreshResearch()
+//	files.RefreshResearch()//WHY
 	switch(screen) //A quick check to make sure you get the right screen when a device is disconnected.
 		if(2 to 2.9)
 			if(screen == 2.3)

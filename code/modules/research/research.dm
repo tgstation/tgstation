@@ -51,6 +51,7 @@ research holder datum.
 	var/list/known_tech = list()				//List of locally known tech.
 	var/list/possible_designs = list()		//List of all designs (at base reliability).
 	var/list/known_designs = list()			//List of available designs (at base reliability).
+	var/checksum									//Checksum of contained data
 
 /datum/research/New()		//Insert techs into possible_tech here. Known_tech automatically updated.
 	for(var/T in typesof(/datum/tech) - /datum/tech)
@@ -137,6 +138,7 @@ research holder datum.
 		T = Clamp(T.level, 1, 20)
 	for(var/datum/design/D in known_designs)
 		D.CalcReliability(known_tech)
+	generate_checksum()
 	return
 
 //Refreshes the levels of a given tech.
@@ -158,6 +160,18 @@ research holder datum.
 						D.reliability = min(100, D.reliability + rand(1,3))
 						if(I.crit_fail)
 							D.reliability = min(100, D.reliability + rand(3, 5))
+
+
+//Sieve
+/datum/research/proc/generate_checksum()//Creates what's essentially a checksum to compare data packets
+	var/list/holder = list()
+	for(var/datum/tech/T in known_tech)
+		holder.Add("[T.id][T.level]")//Only adding the relevant bits
+	for(var/datum/design/D in known_designs)
+		holder.Add("[D.id][D.reliability]")
+	checksum = md5(list2params(holder))
+//Problem with this method is that if the entries of the list are re-ordered it will appear different
+//In this usage, it shouldn't be too problematic (List isn't re-ordered for any known reason, and at worst causes extraneous updates)
 
 
 /***************************************************************
