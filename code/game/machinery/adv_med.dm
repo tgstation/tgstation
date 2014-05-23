@@ -240,11 +240,8 @@
 		use_power = 0
 		return
 
-	if (connected)
-		if (connected.occupant)
-			use_power = 2
-		else
-			use_power = 1
+	if (connected && connected.occupant)
+		use_power = 2
 	else
 		use_power = 1
 
