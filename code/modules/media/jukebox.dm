@@ -260,7 +260,7 @@ var/global/loopModeNames=list(
 
 /obj/machinery/media/jukebox/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/card/emag))
-		current_song=0
+		current_song = 0
 		if(!emagged)
 			playlist_id = "emagged"
 			last_reload=world.time
@@ -316,7 +316,7 @@ var/global/loopModeNames=list(
 			visible_message("\blue The machine beeps happily.","You hear a beep.")
 			credits_held -= credits_needed
 			credits_needed=0
-			screen=POS_SCREEN_ORDER
+			screen=JUKEBOX_SCREEN_MAIN
 			if(credits_held)
 				var/obj/item/weapon/storage/box/B = new(loc)
 				dispense_cash(credits_held,B)
