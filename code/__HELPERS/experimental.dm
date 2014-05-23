@@ -49,7 +49,7 @@
  */
 
 // Uncomment to show debug messages.
-//#define DEBUG_OBJECT_POOL
+#define DEBUG_OBJECT_POOL
 
 #define MAINTAINING_OBJECT_POOL_COUNT 20
 
@@ -106,7 +106,7 @@ var/list/exclude = list("loc", "locs", "parent_type", "vars", "verbs", "type")
 	switch (length(masterPool[O.type]))
 		if (MAINTAINING_OBJECT_POOL_COUNT to 1.#INF)
 			#ifdef DEBUG_OBJECT_POOL
-			world << "DEBUG_OBJECT_POOL: returnToPool([O.type]) exceeds [num2text(MAINTAINING_OBJECT_POOL_COUNT)] discarding..."
+			world << "DEBUG_OBJECT_POOL: returnToPool([O.type]) exceeds [MAINTAINING_OBJECT_POOL_COUNT] discarding..."
 			#endif
 
 			return
@@ -136,9 +136,8 @@ var/list/exclude = list("loc", "locs", "parent_type", "vars", "verbs", "type")
  *				 /obj/item/weapon/shard/resetVariables()
  */
 /atom/movable/proc/resetVariables()
-	if (args.len)
-		var/list/exclude = global.exclude + args // Explicit var exclusion
-
+	var/list/exclude = global.exclude + args // Explicit var exclusion.
+	world << "[exclude.len]"
 	var/key
 
 	for (key in vars)
