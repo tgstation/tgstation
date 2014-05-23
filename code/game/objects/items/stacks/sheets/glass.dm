@@ -241,11 +241,11 @@
 /*
  * Glass shards - TODO: Move this into code/game/object/item/weapons
  */
-/obj/item/weapon/shard
-	resetVariables()
-		var/list/exclude = list("pixel_y", "pixel_x", "icon_state")
-		exclude += args
-		..(exclude)
+/obj/item/weapon/shard/resetVariables()
+	if (args.len)
+		return ..("pixel_y", "pixel_x", "icon_state", args)
+
+	..("pixel_y", "pixel_x", "icon_state")
 
 /obj/item/weapon/shard/Bump()
 

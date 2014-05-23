@@ -45,7 +45,7 @@
  * If this file is named experimental,
  * well treat this implementation as experimental experimental (redundancy intended).
  *
- * WARNING, only supports /mob and /obj.
+ * WARNING, only supports /atom/movable (/mob and /obj)
  */
 
 // Uncomment to show debug messages.
@@ -55,6 +55,9 @@
 
 var/list/masterPool = list()
 
+// Read-only or compile-time vars and special exceptions.
+var/list/exclude = list("loc", "locs", "parent_type", "vars", "verbs", "type")
+
 /*
  * @args
  * A, object type
@@ -62,7 +65,7 @@ var/list/masterPool = list()
  *
  * Example call: getFromPool(/obj/item/weapon/shard, loc)
  */
-/proc/getFromPool(const/A, const/B)
+proc/getFromPool(const/A, const/B)
 	if (isnull(masterPool[A]))
 		#ifdef DEBUG_OBJECT_POOL
 		world << "DEBUG_OBJECT_POOL: new proc has been called ([A])."
@@ -70,8 +73,8 @@ var/list/masterPool = list()
 
 		return new A(B)
 
-	var/atom/movable/Object = masterPool[A][1]
-	masterPool[A] -= Object
+	var/atom/movable/O = masterPool[A][1]
+	masterPool[A].Remove(O)
 	var/objectLength = length(masterPool[A])
 
 	#ifdef DEBUG_OBJECT_POOL
@@ -81,8 +84,8 @@ var/list/masterPool = list()
 	if (!objectLength)
 		masterPool[A] = null
 
-	Object.loc = B
-	return Object
+	O.loc = B
+	return O
 
 /*
  * @args
@@ -93,31 +96,31 @@ var/list/masterPool = list()
  *
  * Example call: returnToPool(src)
  */
-/proc/returnToPool(const/A)
+proc/returnToPool(const/A)
 	if (!istype(A, /atom/movable))
 		return -1
 
-	var/atom/movable/Object = A
-	Object.resetVariables()
+	var/atom/movable/O = A
+	O.resetVariables()
 
-	switch(length(masterPool[Object.type]))
+	switch (length(masterPool[O.type]))
 		if (MAINTAINING_OBJECT_POOL_COUNT to 1.#INF)
 			#ifdef DEBUG_OBJECT_POOL
-			world << "DEBUG_OBJECT_POOL: returnToPool([Object.type]) exceeds [num2text(MAINTAINING_OBJECT_POOL_COUNT)] discarding..."
+			world << "DEBUG_OBJECT_POOL: returnToPool([O.type]) exceeds [num2text(MAINTAINING_OBJECT_POOL_COUNT)] discarding..."
 			#endif
 
 			return
 		if (0) // In a numeric context (like a mathematical operation), null evaluates to 0.
 			#ifdef DEBUG_OBJECT_POOL
-			world << "DEBUG_OBJECT_POOL: [Object.type] pool is empty, recreating pool."
+			world << "DEBUG_OBJECT_POOL: [O.type] pool is empty, recreating pool."
 			#endif
 
-			masterPool[Object.type] = list()
+			masterPool[O.type] = list()
 
-	masterPool[Object.type] += Object
+	masterPool[O.type].Add(O)
 
 	#ifdef DEBUG_OBJECT_POOL
-	world << "DEBUG_OBJECT_POOL: returnToPool([Object.type]) [length(masterPool[Object.type])] left."
+	world << "DEBUG_OBJECT_POOL: returnToPool([O.type]) [length(masterPool[O.type])] left."
 	#endif
 
 #undef MAINTAINING_OBJECT_POOL_COUNT
@@ -130,17 +133,18 @@ var/list/masterPool = list()
  * Override this if the object variables needed to reset.
  *
  * Example: see, code\game\objects\items\stacks\sheets\glass.dm
- *				 @/obj/item/weapon/shard
- *				 @resetVariables()
+ *				 /obj/item/weapon/shard/resetVariables()
  */
-/atom/movable
-	proc/resetVariables()
-		var/list/exclude = list("loc", "locs", "parent_type", "vars", "verbs", "type") // Read-only or compile-time vars and whatevs.
-		exclude += args // Explicit var exclusion
-		var/list/varsCopy = vars - exclude
-		var/key
+/atom/movable/proc/resetVariables()
+	if (args.len)
+		var/list/exclude = global.exclude + args // Explicit var exclusion
 
-		for (key in varsCopy)
-			vars[key] = initial(vars[key])
+	var/key
 
-		vars["loc"] = null // Making sure the loc is null not a compile-time var value.
+	for (key in vars)
+		if (key in exclude)
+			continue
+
+		vars[key] = initial(vars[key])
+
+	vars["loc"] = null // Making sure the loc is null not a compile-time var value.
