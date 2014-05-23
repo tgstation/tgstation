@@ -76,7 +76,7 @@
 							trail.icon_state = proj_trail_icon_state
 							trail.density = 0
 							spawn(proj_trail_lifespan)
-								del(trail)
+								trail.loc = null
 
 				current_loc = projectile.loc
 
