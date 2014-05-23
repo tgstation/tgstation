@@ -355,3 +355,9 @@
 	desc = "Now you too can pierce the heavens"
 	icon_state = "simonjacket"
 	item_state = "simonjacket"
+
+/obj/item/clothing/suit/kaminacape
+	name = "Kamina's Cape"
+	desc = "Don't believe in yourself, dumbass. Believe in me. Believe in the Kamina who believes in you."
+	icon_state = "kaminacape"
+	item_state = "kaminacape"

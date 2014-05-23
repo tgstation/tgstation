@@ -143,3 +143,31 @@
 	icon_state = "darkred"
 	_color = "darkred"
 	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/under/color/blackpants
+	name = "black pants"
+	icon_state = "blackpants"
+	item_state = "blackpants"
+	_color = "black"
+	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/under/color/redpants
+	name = "red pants"
+	icon_state = "redpants"
+	item_state = "redpants"
+	_color = "red"
+	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/under/color/bluepants
+	name = "blue pants"
+	icon_state = "bluepants"
+	item_state = "bluepants"
+	_color = "blue"
+	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/under/color/greypants
+	name = "grey pants"
+	icon_state = "greypants"
+	item_state = "greypants"
+	_color = "grey"
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
