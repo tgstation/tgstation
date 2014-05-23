@@ -219,15 +219,17 @@ var/list/solars_list = list()
 
 		if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass)) // TODO: feedback message
 			var/obj/item/stack/sheet/S = W
-			if(S.get_amount() >= 2)
+			if(S.use(2))
 				glass_type = W.type
-				S.use(2)
 				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 				user.visible_message("<span class='notice'>[user] places the glass on the solar assembly.</span>")
 				if(tracker)
 					new /obj/machinery/power/tracker(get_turf(src), src)
 				else
 					new /obj/machinery/power/solar(get_turf(src), src)
+			else
+				user << "<span class='warning'>You need at least two sheets of glass for that.</span>"
+				return
 			return 1
 
 	if(!tracker)

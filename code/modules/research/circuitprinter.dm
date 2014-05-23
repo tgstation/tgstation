@@ -117,7 +117,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 	busy = 1
 	use_power(max(1000, (3750*amount/10)))
-	user << "<span class='notice'>You add [amount] sheets to the [src.name].</span>"
+	user << "<span class='notice'>You add [amount] sheets to the [src.name].</span>" // TODO: isn't this supposed to be a constant?
 	if(istype(stack, /obj/item/stack/sheet/glass))
 		g_amount += amount * 3750
 	else if(istype(stack, /obj/item/stack/sheet/mineral/gold))

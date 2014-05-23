@@ -119,10 +119,10 @@
 			return
 
 //window placing begin
-	else if( istype(W,/obj/item/stack/sheet/rglass) || istype(W,/obj/item/stack/sheet/glass) )
+	else if(istype(W, /obj/item/stack/sheet/rglass) || istype(W, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/ST = W
 		if (ST.get_amount() < 1)
-			user << "There is not enough glass"
+			user << "<span class='warning'>You need at least one sheet of glass for that.</span>"
 			return
 		var/dir_to_set = 1
 		if(loc == user.loc)

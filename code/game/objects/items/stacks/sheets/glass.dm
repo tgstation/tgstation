@@ -128,12 +128,10 @@
 	singular_name = "reinforced glass sheet"
 	icon_state = "sheet-rglass"
 	g_amt = MINERAL_MATERIAL_AMOUNT
-	m_amt = 1000
+	m_amt = MINERAL_MATERIAL_AMOUNT / 2
 	origin_tech = "materials=2"
 
 /obj/item/stack/sheet/rglass/cyborg
-	name = "reinforced glass"
-	desc = "Glass which seems to have rods or something stuck in them."
 	g_amt = 0
 	m_amt = 0
 	var/datum/robot_energy_storage/metsource

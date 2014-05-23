@@ -76,7 +76,7 @@
 		Emag()
 		return
 
-	if(istype(W, /obj/item/stack/sheet/glass))
+	if(istype(W, /obj/item/stack/sheet/glass)) // TODO: make it better
 		var/obj/item/stack/sheet/glass/G = W
 		if(G.get_amount() - decrement >= 0 && uses < max_uses)
 			var/remaining = max(G.get_amount() - decrement, 0)
