@@ -85,7 +85,7 @@
 					AL.locked = 1 //Bolt it!
 					AL.lights = 0 //Stealth bolt for a classic AI door trap.
 					AL.secondsElectrified = -1  //Shock it!
-			else
+			else if(!D.stat) //So that only powered doors are closed.
 				D.close() //Close ALL the doors!
 
 	var/obj/machinery/computer/communications/C = locate() in machines
@@ -119,7 +119,7 @@
 					AL.open()
 					AL.safe = 1
 					AL.lights = 1 //Essentially reset the airlock to normal.
-			else
+			else if(!D.stat) //Opens only powered doors.
 				D.open() //Open everything!
 
 	src << "<span class = 'notice'>Lockdown Lifted.</span>"
