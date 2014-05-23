@@ -926,6 +926,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	req_access = null
 	req_access_txt = "29"
 
+/obj/machinery/computer/rdconsole/robotics/initialize()
+	..()
+	for(var/obj/machinery/mecha_part_fabricator/M in area_contents(get_area(src)))
+		M.consoles.Add(src)//Adds itself to the mechfabs internal lists
+	return
+
 /obj/machinery/computer/rdconsole/core
 	name = "Core R&D Console"
 	id = 1
