@@ -85,20 +85,20 @@ var/global/loopModeNames=list(
 	var/playlist_id = ""
 
 	var/list/playlist
-	var/current_song  = 0
-	var/next_song     = 0
-	var/selected_song = 0
-	var/autoplay      = 0
-	var/last_reload   = 0
+	var/current_song  = 0 // 0, or whatever song is currently playing.
+	var/next_song     = 0 // 0, or a song someone has purchased.  Played after current song completes.
+	var/selected_song = 0 // 0 or the song someone has selected for purchase
+	var/autoplay      = 0 // Start playing after spawn?
+	var/last_reload   = 0 // Reload cooldown.
 
 	var/screen = JUKEBOX_SCREEN_MAIN
 
-	var/credits_held   = 0
-	var/credits_needed = 0
-	var/change_cost    = 10
-	var/list/change_access  = list()
+	var/credits_held   = 0 // Cash currently held
+	var/credits_needed = 0 // Credits needed to complete purchase.
+	var/change_cost    = 10 // Current cost to change songs.
+	var/list/change_access  = list() // Access required to change songs
 	var/datum/money_account/linked_account
-	var/department
+	var/department // Department that gets the money
 
 	var/state_base = "jukebox2"
 
@@ -384,8 +384,9 @@ var/global/loopModeNames=list(
 		if(!change_cost)
 			next_song = selected_song
 			selected_song = 0
-			update_music()
-			update_icon()
+			if(!current_song)
+				update_music()
+				update_icon()
 		else
 			usr << "\red Swipe card or insert $[num2septext(change_cost)] to set this song."
 			screen = JUKEBOX_SCREEN_PAYMENT
