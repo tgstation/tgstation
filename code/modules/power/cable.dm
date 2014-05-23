@@ -243,13 +243,60 @@ obj/structure/cable/proc/avail()
 // Cable laying helpers
 ////////////////////////////////////////////////
 
+//handles merging diagonally matching cables
+//for info : direction^3 is flipping horizontally, direction^12 is flipping vertically
+/obj/structure/cable/proc/mergeDiagonalsNetworks(var/direction)
+
+	//search for and merge diagonally matching cables from the first direction component (north/south)
+	var/turf/T  = get_step(src, direction&3)//go north/south
+
+	for(var/obj/structure/cable/C in T)
+
+		if(!C)
+			continue
+
+		if(src == C)
+			continue
+
+		if(C.d1 == (direction^3) || C.d2 == (direction^3)) //we've got a diagonally matching cable
+			if(!C.powernet) //if the matching cable somehow got no powernet, make him one (should not happen for cables)
+				var/datum/powernet/newPN = new()
+				newPN.add_cable(C)
+
+			if(powernet) //if we already have a powernet, then merge the two powernets
+				merge_powernets(powernet,C.powernet)
+			else
+				C.powernet.add_cable(src) //else, we simply connect to the matching cable powernet
+
+	//the same from the second direction component (east/west)
+	T  = get_step(src, direction&12)//go east/west
+
+	for(var/obj/structure/cable/C in T)
+
+		if(!C)
+			continue
+
+		if(src == C)
+			continue
+		if(C.d1 == (direction^12) || C.d2 == (direction^12)) //we've got a diagonally matching cable
+			if(!C.powernet) //if the matching cable somehow got no powernet, make him one (should not happen for cables)
+				var/datum/powernet/newPN = new()
+				newPN.add_cable(C)
+
+			if(powernet) //if we already have a powernet, then merge the two powernets
+				merge_powernets(powernet,C.powernet)
+			else
+				C.powernet.add_cable(src) //else, we simply connect to the matching cable powernet
+
 // merge with the powernets of power objects in the given direction
 /obj/structure/cable/proc/mergeConnectedNetworks(var/direction)
-	var/turf/TB
+
 	var/fdir = (!direction)? 0 : turn(direction, 180) //flip the direction, to match with the source position on its turf
+
 	if(!(d1 == direction || d2 == direction)) //if the cable is not pointed in this direction, do nothing
 		return
-	TB = get_step(src, direction)
+
+	var/turf/TB  = get_step(src, direction)
 
 	for(var/obj/structure/cable/C in TB)
 
@@ -278,7 +325,7 @@ obj/structure/cable/proc/avail()
 	for(var/AM in loc)
 		if(istype(AM,/obj/structure/cable))
 			var/obj/structure/cable/C = AM
-			if(C.d1 == 0 && d1==0) //only connected if they are both "nodes"
+			if(C.d1 == d1 || C.d2 == d1 || C.d1 == d2 || C.d2 == d2) //only connected if they have a common direction
 				if(C.powernet == powernet)	continue
 				if(C.powernet)
 					merge_powernets(powernet, C.powernet)
@@ -305,28 +352,40 @@ obj/structure/cable/proc/avail()
 // Powernets handling helpers
 //////////////////////////////////////////////
 
-/obj/structure/cable/proc/get_connections()
-	. = list()	// this will be a list of all connected power objects without a powernet
-	var/turf/T = loc
-
-	if(d1)	T = get_step(src, d1)
-	if(T)	. += power_list(T, src, d1, 1) //only returns these with no powernets
-
-	T = get_step(src, d2)
-	if(T)	. += power_list(T, src, d2, 1) //only returns these with no powernets
-
-	return .
-
-// will get both marked and unmarked connections (i.e with or without powernets)
-/obj/structure/cable/proc/get_marked_connections()
+//if powernetless_only = 1, will only get connections without powernet
+/obj/structure/cable/proc/get_connections(var/powernetless_only = 0)
 	. = list()	// this will be a list of all connected power objects
-	var/turf/T = loc
+	var/turf/T
 
-	if(d1)	T = get_step(src, d1)
-	if(T)	. += power_list(T, src, d1, 0)
+	//get matching cables from the first direction
+	if(d1) //if not a node cable
+		T = get_step(src, d1)
+		if(T)
+			. += power_list(T, src, turn(d1, 180), powernetless_only) //get adjacents matching cables
 
+	if(d1&(d1-1)) //diagonal direction, must check the 4 possibles adjacents tiles
+		T = get_step(src,d1&3) // go north/south
+		if(T)
+			. += power_list(T, src, d1 ^ 3, powernetless_only) //get diagonally matching cables
+		T = get_step(src,d1&12) // go east/west
+		if(T)
+			. += power_list(T, src, d1 ^ 12, powernetless_only) //get diagonally matching cables
+
+	. += power_list(loc, src, d1, powernetless_only) //get on turf matching cables
+
+	//do the same on the second direction (which can't be 0)
 	T = get_step(src, d2)
-	if(T)	. += power_list(T, src, d2, 0)
+	if(T)
+		. += power_list(T, src, turn(d2, 180), powernetless_only) //get adjacents matching cables
+
+	if(d2&(d2-1)) //diagonal direction, must check the 4 possibles adjacents tiles
+		T = get_step(src,d2&3) // go north/south
+		if(T)
+			. += power_list(T, src, d2 ^ 3, powernetless_only) //get diagonally matching cables
+		T = get_step(src,d2&12) // go east/west
+		if(T)
+			. += power_list(T, src, d2 ^ 12, powernetless_only) //get diagonally matching cables
+	. += power_list(loc, src, d2, powernetless_only) //get on turf matching cables
 
 	return .
 
@@ -347,15 +406,13 @@ obj/structure/cable/proc/avail()
 // cut the cable's powernet at this cable and updates the powergrid
 /obj/structure/cable/proc/cut_cable_from_powernet()
 	var/turf/T1 = loc
+	var/list/P_list
 	if(!T1)	return
+	if(d1)
+		T1 = get_step(T1, d1)
+		P_list = power_list(T1, src, turn(d1,180),0,cable_only = 1)	// what adjacently joins on to cut cable...
 
-	var/turf/T2
-	if(d2)	T2 = get_step(T1, d2)
-	if(d1)	T1 = get_step(T1, d1)
-
-
-	var/list/P_list = power_list(T1, src, d1,0,cable_only = 1)	// what joins on to cut cable...
-	P_list += power_list(T2, src, d2,0, cable_only = 1) //...in both directions
+	P_list += power_list(loc, src, d1, 0, cable_only = 1)//... and on turf
 
 
 	if(P_list.len == 0)//if nothing in both list, then the cable was a lone cable, just delete it and its powernet
@@ -366,25 +423,12 @@ obj/structure/cable/proc/avail()
 				P.disconnect_from_network() //remove from current network (and delete powernet)
 		return
 
-
-	var/i
-	var/obj/structure/cable/Cable_i
-
-	//removes every adjacents cables, from the powernet, except the first found (to save processing)
-	//that way we'll know if there was a loop somewhere
-	for (i = 2, i <= P_list.len, i++)
-		Cable_i = P_list[i]
-		powernet.remove_cable(Cable_i)
-
 	// remove the cut cable from its turf and powernet, so that it doesn't get count in propagate_network worklist
 	loc = null
 	powernet.remove_cable(src) //remove the cut cable from its powernet
 
-	for (i = 2, i <= P_list.len, i++) // propagate network to every powernetless adjacents cables
-		Cable_i = P_list[i]
-		if(Cable_i.powernet == null) //if not null, there was a loop and the cable is already part of a powernet
-			var/datum/powernet/newPN = new()
-			propagate_network(P_list[i], newPN)
+	var/datum/powernet/newPN = new()// creates a new powernet...
+	propagate_network(P_list[1], newPN)//... and propagates it to the other side of the cable
 
 	// Disconnect machines connected to nodes
 	if(d1 == 0) // if we cut a node (O-X) cable
@@ -577,7 +621,7 @@ obj/structure/cable/proc/avail()
 			dirn = get_dir(F, user)
 
 		for(var/obj/structure/cable/LC in F)
-			if((LC.d1 == dirn && LC.d2 == 0 ) || ( LC.d2 == dirn && LC.d1 == 0))
+			if(LC.d2 == dirn && LC.d1 == 0)
 				user << "There's already a cable at that position."
 				return
 
@@ -597,6 +641,9 @@ obj/structure/cable/proc/avail()
 
 		C.mergeConnectedNetworks(C.d2) //merge the powernet with adjacents powernets
 		C.mergeConnectedNetworksOnTurf() //merge the powernet with on turf powernets
+
+		if(C.d2 & (C.d2 - 1))// if the cable is layed diagonally, check the others 2 possible directions
+			C.mergeDiagonalsNetworks(C.d2)
 
 
 		use(1)
@@ -660,6 +707,9 @@ obj/structure/cable/proc/avail()
 			NC.mergeConnectedNetworks(NC.d2) //merge the powernet with adjacents powernets
 			NC.mergeConnectedNetworksOnTurf() //merge the powernet with on turf powernets
 
+			if(NC.d2 & (NC.d2 - 1))// if the cable is layed diagonally, check the others 2 possible directions
+				NC.mergeDiagonalsNetworks(NC.d2)
+
 			use(1)
 
 			if (NC.shock(user, 50))
@@ -701,6 +751,12 @@ obj/structure/cable/proc/avail()
 		C.mergeConnectedNetworks(C.d1) //merge the powernets...
 		C.mergeConnectedNetworks(C.d2) //...in the two new cable directions
 		C.mergeConnectedNetworksOnTurf()
+
+		if(C.d1 & (C.d1 - 1))// if the cable is layed diagonally, check the others 2 possible directions
+			C.mergeDiagonalsNetworks(C.d1)
+
+		if(C.d2 & (C.d2 - 1))// if the cable is layed diagonally, check the others 2 possible directions
+			C.mergeDiagonalsNetworks(C.d2)
 
 		use(1)
 

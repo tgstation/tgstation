@@ -21,6 +21,7 @@
 	var/allow_quick_empty	//Set this variable to allow the object to have the 'empty' verb, which dumps all the contents on the floor.
 	var/allow_quick_gather	//Set this variable to allow the object to have the 'toggle mode' verb, which quickly collects all items from a tile.
 	var/collection_mode = 1;  //0 = pick one at a time, 1 = pick all on tile, 2 = pick all of a type
+	var/preposition = "in" // You put things 'in' a bag, but trays need 'on'.
 
 
 /obj/item/weapon/storage/MouseDrop(obj/over_object)
@@ -218,7 +219,7 @@
 
 	if(W.w_class > max_w_class)
 		if(!stop_messages)
-			usr << "<span class='notice'>[W] is too big for this [src].</span>"
+			usr << "<span class='notice'>[W] is too big for [src].</span>"
 		return 0
 
 	var/sum_w_class = W.w_class
@@ -262,11 +263,11 @@
 		if(!prevent_warning && !istype(W, /obj/item/weapon/gun/energy/crossbow))
 			for(var/mob/M in viewers(usr, null))
 				if(M == usr)
-					usr << "<span class='notice'>You put [W] into [src].</span>"
+					usr << "<span class='notice'>You put [W] [preposition]to [src].</span>"
 				else if(in_range(M, usr)) //If someone is standing close enough, they can tell what it is...
-					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>")
+					M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>")
 				else if(W && W.w_class >= 3.0) //Otherwise they can only see large or normal items from a distance...
-					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>")
+					M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>")
 
 		orient2hud(usr)
 		if(usr.s_active)
@@ -321,12 +322,6 @@
 	if(!can_be_inserted(W))
 		return 0
 
-	if(istype(W, /obj/item/weapon/tray))	//THIS ISN'T HOW OOP WORKS
-		var/obj/item/weapon/tray/T = W
-		if(T.calc_carry() > 0)
-			user << "<span class='notice'>[T] won't fit in [src]."
-			return 1
-
 	handle_item_insertion(W)
 	return 1
 
@@ -376,7 +371,7 @@
 		if(0)
 			usr << "[src] now picks up one item at a time."
 
-
+// Empty all the contents onto the current turf
 /obj/item/weapon/storage/verb/quick_empty()
 	set name = "Empty Contents"
 	set category = "Object"
@@ -384,8 +379,13 @@
 	if((!ishuman(usr) && (loc != usr)) || usr.stat || usr.restrained())
 		return
 
+	do_quick_empty()
+
+// Empty all the contents onto the current turf, without checking the user's status.
+/obj/item/weapon/storage/proc/do_quick_empty()
 	var/turf/T = get_turf(src)
-	hide_from(usr)
+	if(usr)
+		hide_from(usr)
 	for(var/obj/item/I in contents)
 		remove_from_storage(I, T)
 

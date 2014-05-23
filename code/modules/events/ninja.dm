@@ -2740,11 +2740,6 @@ It is possible to destroy the net by the occupant or someone else.
 		healthcheck()
 		return
 
-	meteorhit()
-		health-=50
-		healthcheck()
-		return
-
 	hitby(AM as mob|obj)
 		..()
 		for(var/mob/O in viewers(src, null))

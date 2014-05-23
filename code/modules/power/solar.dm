@@ -138,13 +138,6 @@ var/list/solars_list = list()
 	return
 
 
-/obj/machinery/power/solar/meteorhit()
-	if(stat & !BROKEN)
-		broken()
-	else
-		qdel(src)
-
-
 /obj/machinery/power/solar/ex_act(severity)
 	switch(severity)
 		if(1.0)
@@ -457,11 +450,6 @@ var/list/solars_list = list()
 /obj/machinery/power/solar_control/proc/broken()
 	stat |= BROKEN
 	update_icon()
-
-
-/obj/machinery/power/solar_control/meteorhit()
-	broken()
-	return
 
 
 /obj/machinery/power/solar_control/ex_act(severity)

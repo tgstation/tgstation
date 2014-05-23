@@ -28,8 +28,6 @@
 		new /obj/item/weapon/gun/energy/gun(src)
 		return
 
-
-
 /obj/structure/closet/secure_closet/hop
 	name = "\proper head of personnel's locker"
 	req_access = list(access_hop)
