@@ -218,6 +218,8 @@
 			WD = new /obj/structure/windoor_assembly(user.loc)
 			WD.state = "01"
 			WD.anchored = 0
+			WD.dir = user.dir
+			WD.ini_dir = WD.dir
 			src.use(5)
 			switch(user.dir)
 				if(SOUTH)

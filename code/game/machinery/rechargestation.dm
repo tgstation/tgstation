@@ -205,7 +205,9 @@
 							// Engineering
 							if(istype(O,/obj/item/stack/sheet/metal) || istype(O,/obj/item/stack/sheet/rglass) || istype(O,/obj/item/stack/sheet/glass) || istype(O,/obj/item/weapon/cable_coil))
 								if(O:amount < 50)
-									O:amount += 1
+									O:amount += 2
+								if(O:amount > 50)
+									O:amount = 50
 							// Security
 							if(istype(O,/obj/item/device/flash))
 								if(O:broken)
@@ -231,6 +233,14 @@
 								var/obj/item/weapon/reagent_containers/glass/bottle/robot/B = O
 								if(B.reagent && (B.reagents.get_reagent_amount(B.reagent) < B.volume))
 									B.reagents.add_reagent(B.reagent, 2)
+							if(istype(O,/obj/item/stack/medical/bruise_pack) || istype(O,/obj/item/stack/medical/ointment))
+								if(O:amount < O:max_amount)
+									O:amount += 2
+								if(O:amount > O:max_amount)
+									O:amount = O:max_amount
+							if(istype(O,/obj/item/weapon/melee/defibrillator))
+								var/obj/item/weapon/melee/defibrillator/D = O
+								D.charges = initial(D.charges)
 							//Janitor
 							if(istype(O, /obj/item/device/lightreplacer))
 								var/obj/item/device/lightreplacer/LR = O

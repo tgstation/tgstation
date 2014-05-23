@@ -257,6 +257,7 @@
 		if("Combat")
 			module = new /obj/item/weapon/robot_module/combat(src)
 			module_sprites["Combat Android"] = "droid-combat"
+			module_sprites["Bladewolf"] = "bladewolf"
 			channels = list("Security" = 1)
 
 	//Custom_sprite check and entry
