@@ -579,6 +579,7 @@
 			if("main")
 				left_part = output_available_resources()+"<hr>"
 				left_part += "<a href='?src=\ref[src];sync=1'>Sync with R&D servers</a><hr>"
+				left_part += "<a href='?src=\ref[src];async=1'>Auto-Sync [async ? "Enabled" : "Disabled"]</a><hr>"
 				for(var/part_set in part_sets)
 					left_part += "<a href='?src=\ref[src];part_set=[part_set]'>[part_set]</a> - \[<a href='?src=\ref[src];partset_to_queue=[part_set]'>Add all parts to queue\]<br>"
 			if("parts")
