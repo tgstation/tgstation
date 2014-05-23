@@ -236,7 +236,7 @@
 	return
 
 /obj/machinery/body_scanconsole/process()
-	if (stat & (BROKEN | NOPOWER | MAINT | EMPED)
+	if (stat & (BROKEN | NOPOWER | MAINT | EMPED))
 		use_power = 0
 		return
 
