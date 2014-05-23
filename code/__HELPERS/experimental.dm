@@ -137,7 +137,7 @@ var/list/exclude = list("loc", "locs", "parent_type", "vars", "verbs", "type")
  */
 /atom/movable/proc/resetVariables()
 	var/list/exclude = global.exclude + args // Explicit var exclusion.
-	world << "[exclude.len]"
+
 	var/key
 
 	for (key in vars)
