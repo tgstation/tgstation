@@ -49,7 +49,7 @@
  */
 
 // Uncomment to show debug messages.
-//#define DEBUG_OBJECT_POOL
+#define DEBUG_OBJECT_POOL
 
 #define MAINTAINING_OBJECT_POOL_COUNT 20
 
@@ -65,7 +65,7 @@ var/list/exclude = list("loc", "locs", "parent_type", "vars", "verbs", "type")
  *
  * Example call: getFromPool(/obj/item/weapon/shard, loc)
  */
-proc/getFromPool(const/A, const/B)
+/proc/getFromPool(const/A, const/B)
 	if (isnull(masterPool[A]))
 		#ifdef DEBUG_OBJECT_POOL
 		world << "DEBUG_OBJECT_POOL: new proc has been called ([A])."
@@ -74,7 +74,7 @@ proc/getFromPool(const/A, const/B)
 		return new A(B)
 
 	var/atom/movable/O = masterPool[A][1]
-	masterPool[A].Remove(O)
+	masterPool[A] -= O
 	var/objectLength = length(masterPool[A])
 
 	#ifdef DEBUG_OBJECT_POOL
@@ -96,7 +96,7 @@ proc/getFromPool(const/A, const/B)
  *
  * Example call: returnToPool(src)
  */
-proc/returnToPool(const/A)
+/proc/returnToPool(const/A)
 	if (!istype(A, /atom/movable))
 		return -1
 
@@ -117,7 +117,7 @@ proc/returnToPool(const/A)
 
 			masterPool[O.type] = list()
 
-	masterPool[O.type].Add(O)
+	masterPool[O.type] += O
 
 	#ifdef DEBUG_OBJECT_POOL
 	world << "DEBUG_OBJECT_POOL: returnToPool([O.type]) [length(masterPool[O.type])] left."
