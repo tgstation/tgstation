@@ -90,19 +90,6 @@
 			user.visible_message("<span class='warning'>[user] forces the door to open with \his [src]!</span>", "<span class='warning'>We force the door to open.</span>", "<span class='warning'>You hear a metal screeching sound.</span>")
 			A.open(1)
 
-	else if(istype(target, /obj/machinery/door/window))
-		var/obj/machinery/door/window/W = target
-
-		if(!W.requiresID() || W.allowed(user)) 
-			return
-
-		if(!(W.stat & NOPOWER))
-			user << "<span class='notice'>[W]'s motors resist our efforts to force it.</span>"
-			return
-		else
-			user.visible_message("<span class='warning'>[user] forces the door to open with \his [src]!</span>", "<span class='warning'>We force the door to open.</span>", "<span class='warning'>You hear a glass screeching sound.</span>")
-			W.open(1)
-
 //Space Suit & Helmet
 /obj/effect/proc_holder/changeling/organic_space_suit
 	name = "Organic Space Suit"
