@@ -131,7 +131,9 @@
 
 /obj/proc/check_access(obj/item/I)
 	set_up_access()
-	var/list/ACL = I.GetAccess()
+	var/list/ACL = list()
+	if(I)
+		ACL=I.GetAccess()
 	return can_access(ACL,req_access,req_one_access)
 
 
