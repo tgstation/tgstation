@@ -366,8 +366,9 @@
 		if(ENVIRON)
 			master.used_environ += amount
 
+/area/Entered(atom/movable/A, atom/OldLoc)
+	A.areaMaster = get_area_master(src)
 
-/area/Entered(A)
 	var/musVolume = 25
 	var/sound = 'sound/ambience/ambigen1.ogg'
 	var/area/newarea
