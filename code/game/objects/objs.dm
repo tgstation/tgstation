@@ -18,9 +18,11 @@
 	var/list/reagents_to_log=list()
 
 /obj/Destroy()
-	machines -= src
-	processing_objects -= src
+	if (src in processing_objects)
+		processing_objects.Remove(src)
+
 	..()
+
 /obj/item/proc/is_used_on(obj/O, mob/user)
 
 /obj/recycle(var/datum/materials/rec)
@@ -32,7 +34,6 @@
 
 /obj/proc/process()
 	processing_objects.Remove(src)
-	return 0
 
 /obj/assume_air(datum/gas_mixture/giver)
 	if(loc)

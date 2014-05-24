@@ -144,16 +144,8 @@
 	if(((world.timeofday - last_tick) > 30) || ((world.timeofday - last_tick) < 0))
 		last_tick = world.timeofday
 
-		if(!src.loc)
-			on = 0
-		else
-			var/area/A = src.loc.loc
-			if(!A || !isarea(A) || !A.master)
-				on = 0
-			else
-				on = A.master.powered(EQUIP) // set "on" to the power status
+		on = areaMaster.powered(EQUIP) // set "on" to the power status
 		update_icon()
-
 
 /obj/item/weapon/intercom_electronics
 	name = "intercom electronics"
