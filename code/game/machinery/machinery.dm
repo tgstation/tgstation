@@ -261,7 +261,7 @@ Class Procs:
 				usr << "\red You can't link with that device."
 				return 1
 			if (isLinkedWith(O))
-				usr << "\red A red light flashes on \the [P]. The two devices are already linked between them."
+				usr << "\red A red light flashes on \the [P]. The two devices are already linked."
 				return 1
 
 			if(linkWith(usr, O))

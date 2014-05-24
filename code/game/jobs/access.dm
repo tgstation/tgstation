@@ -96,6 +96,8 @@
 //returns 1 if this mob has sufficient access to use this object
 /obj/proc/allowed(var/mob/M)
 	set_up_access()
+	if(!M)
+		return 0 // I guess?  This seems to happen when AIs use something.
 	if(M.hasFullAccess()) // AI, robots, adminghosts, etc.
 		return 1
 	var/list/ACL = M.GetAccess()

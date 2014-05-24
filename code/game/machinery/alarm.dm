@@ -860,7 +860,7 @@
 					user << "It does nothing"
 					return
 				else
-					if(allowed(usr) && !wires.IsIndexCut(AALARM_WIRE_IDSCAN))
+					if(allowed(user) && !wires.IsIndexCut(AALARM_WIRE_IDSCAN))
 						locked = !locked
 						user << "\blue You [ locked ? "lock" : "unlock"] the Air Alarm interface."
 						updateUsrDialog()
