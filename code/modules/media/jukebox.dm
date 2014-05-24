@@ -297,7 +297,7 @@ var/global/loopModeNames=list(
 			visible_message("\red The machine buzzes, and flashes \"NOT ENOUGH FUNDS\" on the screen.","You hear a buzz.")
 			return
 		visible_message("\blue The machine beeps happily.","You hear a beep.")
-		acct.charge(credits_needed,linked_account,"Song selection at [myArea.name]'s [name].")
+		acct.charge(credits_needed,linked_account,"Song selection at [mchArea.name]'s [name].")
 		credits_needed = 0
 
 		successful_purchase()

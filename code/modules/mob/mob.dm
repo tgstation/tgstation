@@ -707,8 +707,7 @@ var/list/slot_equipment_priority = list( \
 			if (L.master == src)
 				var/list/temp = list(  )
 				temp += L.container
-				//L = null
-				del(L)
+				L.loc = null
 				return temp
 			else
 				return L.container

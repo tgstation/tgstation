@@ -34,10 +34,11 @@
 	else
 		return 0
 
-// returns true if the area has power on given channel (or doesn't require power).
-// defaults to power_channel
-
-/obj/machinery/proc/powered(var/chan = -1)
+/*
+ * Returns true if the area has power on given channel (or doesn't require power).
+ * Defaults to power_channel.
+ */
+/obj/machinery/proc/powered(var/chan = power_channel)
 
 	if(!src.loc)
 		return 0
@@ -45,30 +46,20 @@
 	if(!use_power)
 		return 1
 
-	var/area/A = src.loc.loc		// make sure it's in an area
-	if(!A || !isarea(A) || !A.master)
-		return 0					// if not, then not powered
-	if(chan == -1)
-		chan = power_channel
-	return A.master.powered(chan)	// return power status of the area
+	if (!mchArea || !mchArea.master)
+		return 0 // If not, then not powered.
 
-// increment the power usage stats for an area
+	return mchArea.master.powered(chan) // Return power status of the area.
 
-/obj/machinery/proc/use_power(var/amount, var/chan = -1) // defaults to power_channel
-	var/A = getArea()
-
-	if(!A || !isarea(A))
+/*
+ * Increment the power usage stats for an area.
+ * Defaults to power_channel.
+ */
+/obj/machinery/proc/use_power(const/amount, var/chan = power_channel)
+	if (!mchArea || !mchArea.master)
 		return
 
-	var/area/B = A
-
-	if (!B.master)
-		return
-
-	if (-1 == chan)
-		chan = power_channel
-
-	B.master.use_power(amount, chan)
+	mchArea.master.use_power(amount, chan)
 
 /obj/machinery/proc/power_change()		// called whenever the power settings of the containing area change
 										// by default, check equipment channel & set flag

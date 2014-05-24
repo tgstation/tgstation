@@ -75,7 +75,7 @@
 	set category = "Object"
 	set name = "Eject DNA Scanner"
 
-	if (usr.stat != 0)
+	if (usr.stat != 0 || istype(usr, /mob/living/simple_animal))
 		return
 
 	eject_occupant()
