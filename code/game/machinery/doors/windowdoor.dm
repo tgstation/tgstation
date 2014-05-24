@@ -183,18 +183,36 @@
 /obj/machinery/door/window/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
 
-/obj/machinery/door/window/attack_paw(mob/user as mob)
-	if(istype(user, /mob/living/carbon/alien/humanoid) || istype(user, /mob/living/carbon/slime/))
-		if(src.operating)
-			return
-		user.changeNext_move(8)
-		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-		user.visible_message("<span class='danger'>[user] smashes against the [src.name].</span>", \
-					"<span class='userdanger'>[user] smashes against the [src.name].</span>")
-		take_damage(25)
-	else
-		return src.attack_hand(user)
+/obj/machinery/door/window/proc/attack_generic(mob/user as mob, damage = 0)
+	if(src.operating)
+		return
+	user.changeNext_move(8)
+	playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+	user.visible_message("<span class='danger'>[user] smashes against the [src.name].</span>", \
+				"<span class='userdanger'>[user] smashes against the [src.name].</span>")
+	take_damage(damage)
 
+/obj/machinery/door/window/attack_alien(mob/user as mob)
+	if(islarva(user))
+		return
+	attack_generic(user, 25)
+
+/obj/machinery/door/window/attack_animal(mob/user as mob)
+	if(!isanimal(user))
+		return
+	var/mob/living/simple_animal/M = user
+	if(M.melee_damage_upper <= 0)
+		return
+	attack_generic(M, M.melee_damage_upper)
+
+
+/obj/machinery/door/window/attack_slime(mob/living/carbon/slime/user as mob)
+	if(!user.is_adult)
+		return
+	attack_generic(user, 25)
+
+/obj/machinery/door/window/attack_paw(mob/user as mob)
+		return src.attack_hand(user)
 
 /obj/machinery/door/window/attack_hand(mob/user as mob)
 	return src.attackby(user, user)
