@@ -46,9 +46,7 @@
 	if(!use_power)
 		return 1
 
-	var/area/A = mchArea // Make sure it's in an area.
-
-	if (!A || !A.master)
+	if (!mchArea || !mchArea.master)
 		return 0 // If not, then not powered.
 
 	return A.master.powered(chan) // Return power status of the area.
@@ -58,9 +56,7 @@
  * Defaults to power_channel.
  */
 /obj/machinery/proc/use_power(const/amount, var/chan = power_channel)
-	var/area/A = mchArea
-
-	if (!A || !A.master)
+	if (!mchArea || !mchArea.master)
 		return
 
 	A.master.use_power(amount, chan)
