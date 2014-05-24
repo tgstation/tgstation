@@ -13,9 +13,15 @@
 
 	var/atom/A = O
 
-	while (!isarea(A))
-		if (istype(A))
-			A = A.loc
+	for (var/i = 0, ++i <= 20)
+		if (isarea(A))
+			return A
+
+		switch (istype(A))
+			if (1)
+				A = A.loc
+			if (0)
+				return
 
 	return A
 
