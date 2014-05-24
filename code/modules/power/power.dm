@@ -49,7 +49,7 @@
 	if (!mchArea || !mchArea.master)
 		return 0 // If not, then not powered.
 
-	return A.master.powered(chan) // Return power status of the area.
+	return mchArea.master.powered(chan) // Return power status of the area.
 
 /*
  * Increment the power usage stats for an area.
@@ -59,7 +59,7 @@
 	if (!mchArea || !mchArea.master)
 		return
 
-	A.master.use_power(amount, chan)
+	mchArea.master.use_power(amount, chan)
 
 /obj/machinery/proc/power_change()		// called whenever the power settings of the containing area change
 										// by default, check equipment channel & set flag
