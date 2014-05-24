@@ -340,7 +340,7 @@
 		power = 1	// IVE GOT THE POWER!
 		if(PN) //runtime errors fixer. They were caused by PN.newload trying to access missing network in case of working on stored power.
 			storedpower += shieldload
-			PN.newload += shieldload //uses powernet power.
+			PN.load += shieldload //uses powernet power.
 //		message_admins("[PN.load]", 1)
 //		use_power(250) //uses APC power
 

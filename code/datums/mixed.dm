@@ -1,15 +1,13 @@
 /datum/powernet
 	var/list/cables = list()	// all cables & junctions
-	var/list/nodes = list()		// all APCs & sources
+	var/list/nodes = list()		// all connected machines
 
-	var/newload = 0				// increased by every machines each tick then becomes...
-	var/load = 0				// ...the current load on the powernet
-	var/newavail = 0			// increased by every machines each tick then becomes...
+	var/load = 0				// the current load on the powernet, increased by each machine at processing
+	var/newavail = 0			// what available power was gathered last tick, then becomes...
 	var/avail = 0				//...the current available power in the powernet
-	var/viewload = 0			//the load as it appears on the power console (gradually updated)
-	var/number = 0				//Unused //TODEL
-	var/perapc = 0				// per-apc avilability
-	var/netexcess = 0			//excess power on the powernet (typically avail-load)
+	var/viewload = 0			// the load as it appears on the power console (gradually updated)
+	var/number = 0				// Unused //TODEL
+	var/netexcess = 0			// excess power on the powernet (typically avail-load)
 
 /*Powernet procs :
 
