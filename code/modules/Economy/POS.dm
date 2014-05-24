@@ -169,8 +169,10 @@ var/const/POS_HEADER = {"<html>
 	var/receipt = {"[RECEIPT_HEADER]<div>POINT OF SALE #[id]<br />
 			Paying to: [linked_account.owner_name]<br />
 			Cashier: [logged_in]<br />"}
-	if(myArea)
-		receipt += myArea.name
+
+	if (mchArea)
+		receipt += mchArea.name
+
 	receipt += "</div>"
 	receipt += {"<br />
 		<div>[worldtime2text()], [current_date_string]</div>
@@ -219,8 +221,10 @@ var/const/POS_HEADER = {"<html>
 			POINT OF SALE #[id]<br />
 			Paying to: [linked_account.owner_name]<br />
 			Cashier: [logged_in]<br />"}
-	if(myArea)
-		receipt += myArea.name
+
+	if (mchArea)
+		receipt += mchArea.name
+
 	receipt += "</fieldset>"
 	receipt += {"<fieldset><legend>Order Data</legend>
 		<form action="?src=\ref[src]" method="get">

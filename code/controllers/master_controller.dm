@@ -312,7 +312,7 @@ datum/controller/game_controller/proc/processMobs()
 
 			if(PROCESS_KILL == Machinery.process())
 				Machinery.inMachineList = 0
-				Machinery.removeAtProcessing()
+				machines.Remove(Machinery)
 				continue
 
 			if (Machinery && Machinery.use_power)

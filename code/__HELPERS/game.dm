@@ -7,17 +7,21 @@
 	src:Topic(href, href_list)
 	return null
 
-/proc/get_area(O)
-	var/atom/location = O
-	var/i
-	for(i=1, i<=20, i++)
-		if(isarea(location))
-			return location
-		else if (istype(location))
-			location = location.loc
-		else
-			return null
-	return 0
+/proc/get_area(const/atom/O)
+	if (isnull(O))
+		return
+
+	var/atom/A = O
+
+	for (var/i = 0, ++i <= 20)
+		if (isarea(A))
+			return A
+
+		switch (istype(A))
+			if (1)
+				A = A.loc
+			if (0)
+				return
 
 /proc/get_area_master(O)
 	var/area/A = get_area(O)
