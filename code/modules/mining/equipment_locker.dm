@@ -518,7 +518,7 @@
 
 /**********************Mining drone**********************/
 
-/mob/living/simple_animal/hostile/mining_drone/
+/mob/living/simple_animal/hostile/mining_drone
 	name = "nanotrasen minebot"
 	desc = "A small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife."
 	icon = 'icons/obj/aibots.dmi'
