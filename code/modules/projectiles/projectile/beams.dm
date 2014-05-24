@@ -114,7 +114,7 @@ var/list/beam_master = list()
 					del(X)
 				break
 		spawn
-			while(src) //Move until we hit something
+			while(loc) //Move until we hit something
 				if(first)
 					icon = midicon
 				if((!( current ) || loc == current)) //If we pass our target
@@ -188,10 +188,10 @@ var/list/beam_master = list()
 	var/frequency = 1
 
 	process()
+		var/lastposition = loc
 		var/reference = "\ref[src]" //So we do not have to recalculate it a ton
 		var/first = 1 //So we don't make the overlay in the same tile as the firer
-		spawn while(src) //Move until we hit something
-
+		spawn while(loc) //Move until we hit something
 			if((!( current ) || loc == current)) //If we pass our target
 				current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
 			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
@@ -202,6 +202,9 @@ var/list/beam_master = list()
 
 			if(isnull(loc))
 				return
+			if(lastposition == loc)
+				kill_count = 0
+			lastposition = loc
 			if(kill_count < 1)
 				//del(src)
 				returnToPool(src)
@@ -241,12 +244,13 @@ var/list/beam_master = list()
 		cleanup(reference)
 		return
 	dumbfire(var/dir)
+		var/lastposition = loc
 		var/reference = "\ref[src]" //So we do not have to recalculate it a ton
 		var/first = 1 //So we don't make the overlay in the same tile as the firer
 		if(!dir)
 			//del(src)
 			returnToPool(src)
-		spawn while(src) //Move until we hit something
+		spawn while(loc) //Move until we hit something
 			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
 				//del(src) //Delete if it passes the world edge
 				returnToPool(src)
@@ -255,6 +259,9 @@ var/list/beam_master = list()
 			step_towards(src, T) //Move~
 			if(isnull(loc))
 				return
+			if(lastposition == loc)
+				kill_count = 0
+			lastposition = loc
 			if(kill_count < 1)
 				//del(src)
 				returnToPool(src)
