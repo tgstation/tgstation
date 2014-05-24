@@ -330,18 +330,17 @@
 			RA.updateicon()
 
 /area/proc/usage(var/chan)
-	var/used = 0
-	switch(chan)
-		if(LIGHT)
-			used += master.used_light
-		if(EQUIP)
-			used += master.used_equip
-		if(ENVIRON)
-			used += master.used_environ
-		if(TOTAL)
-			used += master.used_light + master.used_equip + master.used_environ
+	switch (chan)
+		if (LIGHT)
+			return master.used_light
+		if (EQUIP)
+			return master.used_equip
+		if (ENVIRON)
+			return master.used_environ
+		if (TOTAL)
+			return master.used_light + master.used_equip + master.used_environ
 
-	return used
+	return 0
 
 /area/proc/clear_usage()
 
