@@ -231,9 +231,9 @@ var/global/list/uneatable = list(
 					step_towards(H,src)
 
 				if(current_size >= 5)
-					var/list/handlist = list(H.l_hand, H.r_hand)
+					var/list/handlist = get_both_hands()
 					for(var/obj/item/hand in handlist)
-						if(prob(current_size * 5) && hand.w_class <= 2 && H.unEquip(hand))
+						if(prob(current_size * 5) && hand.w_class >= 5 - round((current_size / 3)) && H.unEquip(hand))
 							step_towards(hand, src)
 							H << "<span class='warning'>\The [src] pulls \the [hand] from your grip!</span>"
 
