@@ -112,31 +112,22 @@ Class Procs:
 	var/global/gl_uid = 1
 	var/custom_aghost_alerts=0
 	var/panel_open = 0
-	var/area/myArea
 
 	var/inMachineList = 1 // For debugging.
+	var/area/mchArea
 
 /obj/machinery/New()
-	addAtProcessing()
+	mchArea = get_src(area)
+	machines.Add(src)
 	return ..()
-
-/obj/machinery/proc/addAtProcessing()
-	if (use_power)
-		myArea = get_area_master(src)
-
-	machines += src
-
-/obj/machinery/proc/removeAtProcessing()
-	if (myArea)
-		myArea = null
-
-	machines -= src
 
 /obj/machinery/Destroy()
 	if (src in machines)
-		removeAtProcessing()
+		machines.Remove(src)
 
-	..()
+	mchArea = null
+
+	return ..()
 
 /obj/machinery/process() // If you dont use process or power why are you here
 	return PROCESS_KILL

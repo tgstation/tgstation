@@ -31,14 +31,6 @@
 		. = i
 		i = findtext(A, B, i + 1)
 
-/obj/machinery/proc/getArea()
-	var/area/A = loc.loc
-
-	if (A != myArea)
-		myArea = A
-
-	. = myArea
-
 /**
  * Object pooling.
  *
