@@ -31,6 +31,7 @@ var/global/list/uneatable = list(
 	var/target = null //its target. moves towards the target if it has one
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/teleport_del = 0
+	var/sizes_to_number = list("1" = 0, "3" = 1, "5" = 2, "7" = 3, "9" = 4) //so i dont have to mess around with weirdass formulas to get this done.
 	var/last_warning
 
 /obj/machinery/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
@@ -231,9 +232,10 @@ var/global/list/uneatable = list(
 					step_towards(H,src)
 
 				if(current_size >= 5)
-					var/list/handlist = get_both_hands()
+					var/list/handlist = list(H.l_hand, H.r_hand)
 					for(var/obj/item/hand in handlist)
-						if(prob(current_size * 5) && hand.w_class >= 5 - round((current_size / 3)) && H.unEquip(hand))
+						if(prob(current_size * 5) && hand.w_class >= 5 - sizes_to_number["[current_size]"]  && H.unEquip(hand))
+							H.unEquip(hand)
 							step_towards(hand, src)
 							H << "<span class='warning'>\The [src] pulls \the [hand] from your grip!</span>"
 
