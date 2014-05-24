@@ -117,7 +117,7 @@ Class Procs:
 	var/area/mchArea
 
 /obj/machinery/New()
-	mchArea = get_src(area)
+	mchArea = get_src(src)
 	machines.Add(src)
 	return ..()
 
