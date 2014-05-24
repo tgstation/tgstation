@@ -2,7 +2,7 @@
 
 #MAPROOT='../../_maps/map_files/'
 MAPROOT='../maps/'
-MAPFILE=$MAPROOT'tgstation.2.1.0.0.1.dmm'
+MAPFILE=$MAPROOT'tgstation.dmm'
 
 git show HEAD:$MAPFILE > tmp.dmm
 java -jar MapPatcher.jar -clean tmp.dmm $MAPFILE $MAPFILE
