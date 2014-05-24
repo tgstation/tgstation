@@ -23,8 +23,6 @@
 			if (0)
 				return
 
-	return A
-
 /proc/get_area_master(O)
 	var/area/A = get_area(O)
 	if(A && A.master)
