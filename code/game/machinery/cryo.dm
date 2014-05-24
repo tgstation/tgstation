@@ -398,7 +398,7 @@
 			return
 		go_out()//and release him from the eternal prison.
 	else
-		if (usr.stat != 0)
+		if (usr.stat != 0 || istype(/mob/living/simple_animal))
 			return
 		go_out()
 	add_fingerprint(usr)
