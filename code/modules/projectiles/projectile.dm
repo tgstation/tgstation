@@ -188,7 +188,7 @@
 			returnToPool(src)
 			return
 		kill_count--
-		spawn while(src)
+		spawn while(loc)
 			if((!( current ) || loc == current))
 				current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
 			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
@@ -196,12 +196,12 @@
 				returnToPool(src)
 				return
 			step_towards(src, current)
-			sleep(1)
 			if(!bumped && !isturf(original))
 				if(loc == get_turf(original))
 					if(!(original in permutated))
 						Bump(original)
 						sleep(1)
+			sleep(1)
 		return
 	proc/dumbfire(var/dir) // for spacepods, go snowflake go
 		if(!dir)
@@ -211,15 +211,15 @@
 			//del(src)
 			returnToPool(src)
 		kill_count--
-		spawn while(src)
+		spawn while(loc)
 			var/turf/T = get_step(src, dir)
 			step_towards(src, T)
-			sleep(1)
 			if(!bumped && !isturf(original))
 				if(loc == get_turf(original))
 					if(!(original in permutated))
 						Bump(original)
 						sleep(1)
+			sleep(1)
 		return
 
 /obj/item/projectile/test //Used to see if you can hit them.
@@ -249,7 +249,7 @@
 		yo = targloc.y - curloc.y
 		xo = targloc.x - curloc.x
 		target = targloc
-		while(src) //Loop on through!
+		while(loc) //Loop on through!
 			if(result)
 				return (result - 1)
 			if((!( target ) || loc == target))
