@@ -51,7 +51,6 @@
 	anchored = 1.0
 	req_access = list(access_crematorium)
 	var/on = 0
-	var/area/area = null
 	var/otherarea = null
 	var/id = 1
 

@@ -1,76 +1,85 @@
 /obj/machinery/power
 	name = null
 	icon = 'icons/obj/power.dmi'
+
 	anchored = 1.0
-	var/datum/powernet/powernet = null
-	var/directwired = 1		// by default, power machines are connected by a cable in a neighbouring turf
-							// if set to 0, requires a 0-X cable on this turf
 	use_power = 0
 	idle_power_usage = 0
 	active_power_usage = 0
+
+	var/datum/powernet/powernet
+
+	// By default, power machines are connected by a cable in a neighbouring turf.
+	// If set to 0, requires a 0-X cable on this turf.
+	var/directwired = 1
 
 /obj/machinery/power/Destroy()
 	disconnect_from_network()
 	..()
 
-// common helper procs for all power machines
-/obj/machinery/power/proc/add_avail(var/amount)
-	if(powernet)
+/*
+ * Common helper procs for all power machines.
+ */
+/obj/machinery/power/proc/add_avail(const/amount)
+	if (powernet)
 		powernet.newavail += amount
 
-/obj/machinery/power/proc/add_load(var/amount)
-	if(powernet)
+/obj/machinery/power/proc/add_load(const/amount)
+	if (powernet)
 		powernet.newload += amount
 
 /obj/machinery/power/proc/surplus()
-	if(powernet)
+	if (powernet)
 		return powernet.avail-powernet.load
-	else
-		return 0
+
+	return 0
 
 /obj/machinery/power/proc/avail()
-	if(powernet)
+	if (powernet)
 		return powernet.avail
-	else
-		return 0
+
+	return 0
 
 /*
  * Returns true if the area has power on given channel (or doesn't require power).
  * Defaults to power_channel.
  */
-/obj/machinery/proc/powered(var/chan = power_channel)
-
-	if(!src.loc)
+/obj/machinery/proc/powered(chan = power_channel)
+	if (!src.loc)
 		return 0
 
-	if(!use_power)
+	if (!use_power)
 		return 1
 
-	if (!mchArea || !mchArea.master)
+	if (isnull(areaMaster))
 		return 0 // If not, then not powered.
 
-	return mchArea.master.powered(chan) // Return power status of the area.
+	return areaMaster.powered(chan) // Return power status of the area.
 
 /*
  * Increment the power usage stats for an area.
  * Defaults to power_channel.
  */
-/obj/machinery/proc/use_power(const/amount, var/chan = power_channel)
-	if (!mchArea || !mchArea.master)
+/obj/machinery/proc/use_power(const/amount, chan = power_channel)
+	if (!src.loc)
+		return 0
+
+	if (isnull(areaMaster))
 		return
 
-	mchArea.master.use_power(amount, chan)
+	areaMaster.use_power(amount, chan)
 
-/obj/machinery/proc/power_change()		// called whenever the power settings of the containing area change
-										// by default, check equipment channel & set flag
-										// can override if needed
-	if(powered(power_channel))
-		stat &= ~NOPOWER
-	else
-
-		stat |= NOPOWER
-	return
-
+/*
+ * Called whenever the power settings of the containing area change.
+ * By default, check equipment channel & set flag.
+ * Can override if needed.
+ */
+/obj/machinery/proc/power_change()
+	switch (powered(power_channel))
+		if (1)
+			stat &= ~NOPOWER
+		if (0)
+			stat |= NOPOWER
 
 // the powernet datum
 // each contiguous network of cables & nodes
