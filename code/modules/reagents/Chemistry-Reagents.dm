@@ -826,7 +826,8 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				src = null
-				if(!istype(T, /turf/space))
+				// Only add one dirt per turf.  Was causing people to crash.
+				if(!istype(T, /turf/space) && !(locate(/obj/effect/decal/cleanable/dirt) in T))
 					new /obj/effect/decal/cleanable/dirt(T)
 
 		chlorine
