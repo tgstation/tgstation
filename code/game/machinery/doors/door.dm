@@ -258,10 +258,7 @@
 	operating = 1
 	door_animate("closing")
 
-	if (!istype(src, /obj/machinery/door/firedoor))
-		layer = 3.1
-	else
-		layer = 3.0
+	layer = 3.0
 
 	density = 1
 	update_icon()
