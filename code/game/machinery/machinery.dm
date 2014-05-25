@@ -114,18 +114,14 @@ Class Procs:
 	var/panel_open = 0
 
 	var/inMachineList = 1 // For debugging.
-	var/area/mchArea
 
 /obj/machinery/New()
-	mchArea = get_area(src)
 	machines.Add(src)
 	return ..()
 
 /obj/machinery/Destroy()
 	if (src in machines)
 		machines.Remove(src)
-
-	mchArea = null
 
 	return ..()
 

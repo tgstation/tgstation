@@ -44,15 +44,12 @@
 
 
 /obj/machinery/power/apc
-	name = "area power controller"
 	desc = "A control terminal for the area electrical systems."
-
 	icon_state = "apc0"
 	anchored = 1
 	use_power = 0
 	req_access = list(access_engine_equip)
 	var/spooky=0
-	var/areastring = null
 	var/obj/item/weapon/cell/cell
 	var/start_charge = 90				// initial cell charge %
 	var/cell_type = 2500				// 0=no cell, 1=regular, 2=high-cap (x5) <- old, now it's just 0=no cell, otherwise dictate cellcapacity by changing this value. 1 used to be 1000, 2 was 2500
@@ -118,16 +115,15 @@
 		pixel_x = (src.tdir == 4 ? 24 : -24)
 		pixel_y = 0
 
-	switch (isnull(area))
-		if (1)
-			log_admin("APC tried to spawn in a location without an area. [formatJumpTo(get_turf(src))]")
+	switch (isnull(areaMaster))
 		if (0)
-			name = "[area.name] APC"
+			name = "[areaMaster.name] APC"
+		if (1) // Mapping issue.
+			log_admin("APC tried to spawn in a location without an area. [formatJumpTo(get_turf(src))]")
 
 	if (building==0)
 		init()
 	else
-		area = src.loc.loc:master
 		opened = 1
 		operating = 0
 		stat |= MAINT
@@ -150,14 +146,7 @@
 		cell.maxcharge = cell_type	// cell_type is maximum charge (old default was 1000 or 2500 (values one and two respectively)
 		cell.charge = start_charge * cell.maxcharge / 100.0 		// (convert percentage to actual value)
 
-	var/area/A = src.loc.loc
-
-	//if area isn't specified use current
-	if(isarea(A) && src.areastring == null)
-		src.area = A
-	else
-		src.area = get_area_name(areastring)
-	name = "\improper [area.name] APC"
+	name = "[areaMaster.name] APC"
 	update_icon()
 
 	make_terminal()
@@ -741,7 +730,7 @@
 	if (!ui)
 		// the ui does not exist, so we'll create a new one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "apc.tmpl", "[area.name] - APC", 520, data["siliconUser"] ? 465 : 440)
+		ui = new(user, src, ui_key, "apc.tmpl", "[areaMaster.name] - APC", 520, data["siliconUser"] ? 465 : 440)
 		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
 		// open the new ui window
@@ -750,23 +739,23 @@
 		ui.set_auto_update(1)
 
 /obj/machinery/power/apc/proc/report()
-	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_equip+lastused_light+lastused_environ]) : [cell? cell.percent() : "N/C"] ([charging])"
+	return "[areaMaster.name] : [equipment]/[lighting]/[environ] ([lastused_equip+lastused_light+lastused_environ]) : [cell? cell.percent() : "N/C"] ([charging])"
 
 /obj/machinery/power/apc/proc/update()
 	if(operating && !shorted)
-		area.power_light = (lighting > 1)
-		area.power_equip = (equipment > 1)
-		area.power_environ = (environ > 1)
+		areaMaster.power_light = (lighting > 1)
+		areaMaster.power_equip = (equipment > 1)
+		areaMaster.power_environ = (environ > 1)
 //		if (area.name == "AI Chamber")
 //			spawn(10)
 //				world << " [area.name] [area.power_equip]"
 	else
-		area.power_light = 0
-		area.power_equip = 0
-		area.power_environ = 0
+		areaMaster.power_light = 0
+		areaMaster.power_equip = 0
+		areaMaster.power_environ = 0
 //		if (area.name == "AI Chamber")
 //			world << "[area.power_equip]"
-	area.power_change()
+	areaMaster.power_change()
 
 /obj/machinery/power/apc/proc/isWireCut(var/wireIndex)
 	return wires.IsIndexCut(wireIndex)
@@ -1024,7 +1013,7 @@
 
 	if(stat & (BROKEN|MAINT))
 		return
-	if(!area.requires_power)
+	if(!areaMaster.requires_power)
 		return
 
 	/*
@@ -1037,10 +1026,10 @@
 
 	area.calc_lighting() */
 
-	lastused_light = area.usage(LIGHT)
-	lastused_equip = area.usage(EQUIP)
-	lastused_environ = area.usage(ENVIRON)
-	area.clear_usage()
+	lastused_light = areaMaster.usage(LIGHT)
+	lastused_equip = areaMaster.usage(EQUIP)
+	lastused_environ = areaMaster.usage(ENVIRON)
+	areaMaster.clear_usage()
 
 	lastused_total = lastused_light + lastused_equip + lastused_environ
 
@@ -1108,24 +1097,24 @@
 			equipment = autoset(equipment, 0)
 			lighting = autoset(lighting, 0)
 			environ = autoset(environ, 0)
-			area.poweralert(0, src)
+			areaMaster.poweralert(0, src)
 		else if(cell.percent() < 15 && longtermpower < 0)	// <15%, turn off lighting & equipment
 			equipment = autoset(equipment, 2)
 			lighting = autoset(lighting, 2)
 			environ = autoset(environ, 1)
-			area.poweralert(0, src)
+			areaMaster.poweralert(0, src)
 		else if(cell.percent() < 30 && longtermpower < 0)			// <30%, turn off equipment
 			equipment = autoset(equipment, 2)
 			lighting = autoset(lighting, 1)
 			environ = autoset(environ, 1)
-			area.poweralert(0, src)
+			areaMaster.poweralert(0, src)
 		else									// otherwise all can be on
 			equipment = autoset(equipment, 1)
 			lighting = autoset(lighting, 1)
 			environ = autoset(environ, 1)
-			area.poweralert(1, src)
+			areaMaster.poweralert(1, src)
 			if(cell.percent() > 75)
-				area.poweralert(1, src)
+				areaMaster.poweralert(1, src)
 
 		// now trickle-charge the cell
 
@@ -1172,7 +1161,7 @@
 		equipment = autoset(equipment, 0)
 		lighting = autoset(lighting, 0)
 		environ = autoset(environ, 0)
-		area.poweralert(0, src)
+		areaMaster.poweralert(0, src)
 
 	// update icon & area power if anything changed
 	if(last_lt != lighting || last_eq != equipment || last_en != environ)
@@ -1268,7 +1257,7 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 	if( cell && cell.charge>=20)
 		cell.use(20);
 		spawn(0)
-			for(var/area/A in area.related)
+			for(var/area/A in areaMaster.related)
 				for(var/obj/machinery/light/L in A)
 					L.on = 1
 					L.broken()
@@ -1279,10 +1268,10 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 		if (ticker.mode.config_tag == "malfunction")
 			if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
 				ticker.mode:apcs--
-	area.power_light = 0
-	area.power_equip = 0
-	area.power_environ = 0
-	area.power_change()
+	areaMaster.power_light = 0
+	areaMaster.power_equip = 0
+	areaMaster.power_environ = 0
+	areaMaster.power_change()
 	if(occupant)
 		malfvacate(1)
 	..()

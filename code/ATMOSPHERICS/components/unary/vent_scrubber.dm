@@ -8,7 +8,6 @@
 
 	level = 1
 
-	var/area/initial_loc
 	var/id_tag = null
 	var/frequency = 1439
 	var/datum/radio_frequency/radio_connection
@@ -28,17 +27,14 @@
 	var/radio_filter_out
 	var/radio_filter_in
 	New()
-		initial_loc = get_area(loc)
-		if (initial_loc.master)
-			initial_loc = initial_loc.master
-		area_uid = initial_loc.uid
+		..()
+		area_uid = areaMaster.uid
 		if (!id_tag)
 			assign_uid()
 			id_tag = num2text(uid)
 		if(ticker && ticker.current_state == 3)//if the game is running
 			src.initialize()
 			src.broadcast_status()
-		..()
 
 	update_icon()
 		var/hidden=""
@@ -84,11 +80,11 @@
 				"filter_n2" = scrub_N2,
 				"sigtype" = "status"
 			)
-			if(!initial_loc.air_scrub_names[id_tag])
-				var/new_name = "[initial_loc.name] Air Scrubber #[initial_loc.air_scrub_names.len+1]"
-				initial_loc.air_scrub_names[id_tag] = new_name
+			if(!areaMaster.air_scrub_names[id_tag])
+				var/new_name = "[areaMaster.name] Air Scrubber #[areaMaster.air_scrub_names.len+1]"
+				areaMaster.air_scrub_names[id_tag] = new_name
 				src.name = new_name
-			initial_loc.air_scrub_info[id_tag] = signal.data
+			areaMaster.air_scrub_info[id_tag] = signal.data
 			radio_connection.post_signal(src, signal, radio_filter_out)
 
 			return 1
@@ -348,8 +344,6 @@
 	update_multitool_menu(usr)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/Destroy()
-	if(initial_loc)
-		initial_loc.air_scrub_info -= id_tag
-		initial_loc.air_scrub_names -= id_tag
+	areaMaster.air_scrub_info.Remove(id_tag)
+	areaMaster.air_scrub_names.Remove(id_tag)
 	..()
-	return

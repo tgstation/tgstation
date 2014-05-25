@@ -51,20 +51,23 @@
 	if (!use_power)
 		return 1
 
-	if (isnull(area) || isnull(area.master))
+	if (isnull(areaMaster))
 		return 0 // If not, then not powered.
 
-	return area.master.powered(chan) // Return power status of the area.
+	return areaMaster.powered(chan) // Return power status of the area.
 
 /*
  * Increment the power usage stats for an area.
  * Defaults to power_channel.
  */
 /obj/machinery/proc/use_power(const/amount, chan = power_channel)
-	if (isnull(area) || isnull(area.master))
+	if (!src.loc)
+		return 0
+
+	if (isnull(areaMaster))
 		return
 
-	area.master.use_power(amount, chan)
+	areaMaster.use_power(amount, chan)
 
 /*
  * Called whenever the power settings of the containing area change.
