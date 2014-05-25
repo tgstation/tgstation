@@ -459,7 +459,7 @@
 						AM.throw_at(target, 5, 1)
 
 			H.vent_gas(loc)
-			del(H)
+			qdel(H)
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 		if (istype(mover,/obj/item) && mover.throwing)
@@ -602,7 +602,7 @@
 
 		if(other.has_fat_guy)
 			has_fat_guy = 1
-		del(other)
+		qdel(other)
 
 
 	// called when player tries to move while in a pipe
@@ -658,7 +658,7 @@
 				for(var/atom/movable/AM in H)
 					AM.loc = T
 					AM.pipe_eject(0)
-				del(H)
+				qdel(H)
 				..()
 				return
 
@@ -754,7 +754,7 @@
 						if(AM)
 							AM.throw_at(target, 100, 1)
 				H.vent_gas(T)
-				del(H)
+				qdel(H)
 
 		else	// no specified direction, so throw in random direction
 
@@ -770,7 +770,7 @@
 							AM.throw_at(target, 5, 1)
 
 				H.vent_gas(T)	// all gas vent to turf
-				del(H)
+				qdel(H)
 
 		return
 
@@ -798,7 +798,7 @@
 				for(var/atom/movable/AM in H)
 					AM.loc = T
 					AM.pipe_eject(0)
-				del(H)
+				qdel(H)
 				return
 
 			// otherwise, do normal expel from turf
@@ -1271,7 +1271,7 @@
 				spawn(5)
 					AM.throw_at(target, 3, 1)
 			H.vent_gas(src.loc)
-			del(H)
+			qdel(H)
 
 		return
 
