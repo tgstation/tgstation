@@ -634,10 +634,12 @@ var/list/artifact_spawn = list() // Runtime fix for geometry loading before cont
 		if(!name_to_mineral)
 			SetupMinerals()
 
-		if (mineral_name && mineral_name in name_to_mineral)
-			mineral = name_to_mineral[mineral_name]
-			mineral.UpdateTurf(src)
-
+		if (mineral_name)
+			if(mineral_name in name_to_mineral)
+				mineral = name_to_mineral[mineral_name]
+				mineral.UpdateTurf(src)
+			else
+				warning("Unknown mineral ID: [mineral_name]")
 
 	. = ..()
 
@@ -664,7 +666,7 @@ var/list/artifact_spawn = list() // Runtime fix for geometry loading before cont
 		"Silver"  = 5,
 		"Plasma"  = 25,
 		"Clown"   = 15,
-		"Phazite" = 10
+		"Phazon"  = 10
 	)
 
 /turf/unsimulated/mineral/random/Destroy()
