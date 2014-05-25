@@ -496,7 +496,7 @@
 /obj/machinery/mecha_part_fabricator/proc/sync(silent=null)
 	var/new_data=0
 	var/found = 0
-	for(var/obj/machinery/computer/rdconsole/RDC in areaMaster.contents)
+	for(var/obj/machinery/computer/rdconsole/RDC in area_contents(areaMaster))
 		if(!RDC) continue
 		if(!RDC.sync)
 			continue
