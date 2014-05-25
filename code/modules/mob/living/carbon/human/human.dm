@@ -204,22 +204,6 @@
 	apply_damage(rand(20,30), BRUTE, affecting, run_armor_check(affecting, "melee"))
 	return
 
-/mob/living/carbon/human/meteorhit(O as obj)
-	for(var/mob/M in viewers(src, null))
-		if ((M.client && !( M.blinded )))
-			M.show_message("\red [src] has been hit by [O]", 1)
-	if (health > 0)
-		var/obj/item/organ/limb/affecting = get_organ(pick("chest", "chest", "chest", "head"))
-		if(!affecting)	return
-		if (istype(O, /obj/effect/immovablerod))
-			if(affecting.take_damage(101, 0))
-				update_damage_overlays(0)
-		else
-			if(affecting.take_damage((istype(O, /obj/effect/meteor/small) ? 10 : 25), 30))
-				update_damage_overlays(0)
-		updatehealth()
-	return
-
 
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)

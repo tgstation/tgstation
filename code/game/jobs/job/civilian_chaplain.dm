@@ -27,7 +27,7 @@ Chaplain
 	//Bible itemstates
 	var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "bible", "bible", "syringe_kit", "syringe_kit", "syringe_kit", "syringe_kit", "syringe_kit", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon")
 
-/datum/job/chaplain/proc/setupbiblespecifics(var/obj/item/weapon/storage/bible/B, var/mob/living/carbon/human/H)
+/datum/job/chaplain/proc/setupbiblespecifics(var/obj/item/weapon/storage/book/bible/B, var/mob/living/carbon/human/H)
 	switch(B.icon_state)
 		if("honk1","honk2")
 			new /obj/item/weapon/grown/bananapeel(B)
@@ -62,7 +62,7 @@ Chaplain
 		var/iconi = text2num(href_list["seticon"])
 
 		var/biblename = biblenames[iconi]
-		var/obj/item/weapon/storage/bible/B = locate(href_list["bible"])
+		var/obj/item/weapon/storage/book/bible/B = locate(href_list["bible"])
 
 		B.icon_state = biblestates[iconi]
 		B.item_state = bibleitemstates[iconi]
@@ -82,9 +82,9 @@ Chaplain
 
 /datum/job/chaplain/equip_items(var/mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
 
-	var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible/booze(H)
+	var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible/booze(H)
 	spawn(0)
 		var/religion_name = "Christianity"
 		var/new_religion = copytext(sanitize(input(H, "You are the Chaplain. Would you like to change your religion? Default is Christianity, in SPACE.", "Name change", religion_name)),1,MAX_NAME_LEN)

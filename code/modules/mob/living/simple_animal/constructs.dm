@@ -36,9 +36,7 @@
 /mob/living/simple_animal/construct/Die()
 	..()
 	new /obj/item/weapon/ectoplasm (src.loc)
-	for(var/mob/M in viewers(src, null))
-		if((M.client && !( M.blinded )))
-			M.show_message("\red [src] collapses in a shattered heap. ")
+	visible_message("<span class='danger'>[src] collapses in a shattered heap.</span>")
 	ghostize()
 	qdel(src)
 	return
@@ -91,14 +89,14 @@
 	if(istype(M, /mob/living/simple_animal/construct/builder))
 		health += 5
 		M.emote("mends some of \the <EM>[src]'s</EM> wounds.")
-	else
+	else if(src != M)
 		if(M.melee_damage_upper <= 0)
 			M.emote("[M.friendly] \the <EM>[src]</EM>")
 		else
 			if(M.attack_sound)
 				playsound(loc, M.attack_sound, 50, 1, 1)
-			for(var/mob/O in viewers(src, null))
-				O.show_message("<span class='attack'>\The <EM>[M]</EM> [M.attacktext] \the <EM>[src]</EM>!</span>", 1)
+			visible_message("<span class='danger'>\The <EM>[M]</EM> [M.attacktext] \the <EM>[src]</EM>!</span>", \
+					"<span class='userdanger'>\The <EM>[M]</EM> [M.attacktext] \the <EM>[src]</EM>!</span>")
 			add_logs(M, src, "attacked", admin=0)
 			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 			adjustBruteLoss(damage)

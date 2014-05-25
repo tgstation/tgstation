@@ -506,10 +506,6 @@
 /obj/machinery/gun_turret/emp_act() //Can't emp an mechanical turret.
 	return
 
-/obj/machinery/gun_turret/meteorhit()
-	die()
-	return
-
 /obj/machinery/gun_turret/update_icon()
 	if(state > 2 || state < 0) //someone fucked up the vars so fix them
 		take_damage(0)

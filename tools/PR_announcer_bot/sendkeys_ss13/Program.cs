@@ -232,7 +232,7 @@ namespace sendkeys_ss13
             {
                 if (msg.Length >= 4)
                 {
-                    if (msg[3] == "Merge") //Someone is merging something
+                    if (msg[3] == "Merge" && msg[1] != "meant:") //Someone is merging something
                     {
                         mergedPR = msg[6];
                         if (merge_archive != null)
@@ -249,7 +249,7 @@ namespace sendkeys_ss13
                             }
                         }
                     }
-                    if (msg[2] == "closed")
+                    if (msg[2] == "closed" && msg[1] != "meant:")
                     {
                         merge_archive = msg;
                         if (mergedPR != null)

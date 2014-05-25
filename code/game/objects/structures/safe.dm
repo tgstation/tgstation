@@ -165,12 +165,7 @@ FLOOR SAFES
 obj/structure/safe/blob_act()
 	return
 
-
 obj/structure/safe/ex_act(severity)
-	return
-
-
-obj/structure/safe/meteorhit(obj/O as obj)
 	return
 
 

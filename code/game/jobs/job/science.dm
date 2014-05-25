@@ -30,7 +30,7 @@ Research Director
 			            access_tech_storage, access_minisat)
 
 /datum/job/rd/equip_items(var/mob/living/carbon/human/H)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/brown(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/research_director(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/labcoat(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/weapon/clipboard(H), slot_l_hand)
@@ -58,7 +58,7 @@ Scientist
 
 /datum/job/scientist/equip_items(var/mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/scientist(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/white(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/labcoat/science(H), slot_wear_suit)
 
 /*
@@ -83,6 +83,6 @@ Roboticist
 
 /datum/job/roboticist/equip_items(var/mob/living/carbon/human/H)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/roboticist(H), slot_w_uniform)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
 		H.equip_to_slot_or_del(new /obj/item/clothing/suit/labcoat(H), slot_wear_suit)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/toolbox/mechanical(H), slot_l_hand)
