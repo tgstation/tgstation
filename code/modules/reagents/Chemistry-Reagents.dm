@@ -1356,7 +1356,7 @@ datum
 
 			reaction_obj(var/obj/O, var/volume)
 				if(istype(O,/obj/effect/decal/cleanable))
-					del(O)
+					qdel(O)
 				else
 					if(O)
 						O.clean_blood()

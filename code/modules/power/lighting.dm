@@ -604,8 +604,7 @@
 // called when area power state changes
 /obj/machinery/light/power_change()
 	spawn(10)
-		var/area/A = get_area_master(src)
-		seton(A.lightswitch && A.power_light)
+		seton(areaMaster.lightswitch && areaMaster.power_light)
 
 // called when on fire
 

@@ -38,19 +38,26 @@
 	power_change()		// all machines set to current power level, also updates lighting icon
 	InitializeLighting()
 
+/*
+ * Added to fix mech fabs 05/2013 ~Sayu.
+ * This is necessary due to lighting subareas.
+ * If you were to go in assuming that things in the same logical /area have
+ * the parent /area object... well, you would be mistaken.
+ * If you want to find machines, mobs, etc, in the same logical area,
+ * you will need to check all the related areas.
+ * This returns a master contents list to assist in that.
+ */
+/proc/area_contents(const/area/A)
+	if (!isarea(A))
+		return
 
-// Added to fix mech fabs 05/2013 ~Sayu
-// This is necessary due to lighting subareas.  If you were to go in assuming that things in
-// the same logical /area have the parent /area object... well, you would be mistaken.  If you
-// want to find machines, mobs, etc, in the same logical area, you will need to check all the
-// related areas.  This returns a master contents list to assist in that.
-
-/proc/area_contents(var/area/A)
-	if(!istype(A)) return null
 	var/list/contents = list()
+
 	for(var/area/LSA in A.related)
-		contents += LSA.contents
+		contents |= LSA.contents
+
 	return contents
+
 /area/proc/poweralert(var/state, var/obj/source as obj)
 	if (state != poweralm)
 		poweralm = state
@@ -320,8 +327,9 @@
 
 	return 0
 
-// called when power status changes
-
+/*
+ * Called when power status changes.
+ */
 /area/proc/power_change()
 	for(var/area/RA in related)
 		for(var/obj/machinery/M in RA)	// for each machine in the area
@@ -329,7 +337,7 @@
 		if (fire || eject || party)
 			RA.updateicon()
 
-/area/proc/usage(var/chan)
+/area/proc/usage(const/chan)
 	switch (chan)
 		if (LIGHT)
 			return master.used_light
@@ -343,13 +351,12 @@
 	return 0
 
 /area/proc/clear_usage()
-
 	master.used_equip = 0
 	master.used_light = 0
 	master.used_environ = 0
 
-/area/proc/use_power(var/amount, var/chan)
-	switch(chan)
+/area/proc/use_power(const/amount, const/chan)
+	switch (chan)
 		if(EQUIP)
 			master.used_equip += amount
 		if(LIGHT)
@@ -357,26 +364,17 @@
 		if(ENVIRON)
 			master.used_environ += amount
 
-/area/proc/use_battery_power(var/amount, var/chan)
-	switch(chan)
-		if(EQUIP)
-			master.used_equip += amount
-		if(LIGHT)
-			master.used_light += amount
-		if(ENVIRON)
-			master.used_environ += amount
+/area/Entered(atom/movable/Obj, atom/OldLoc)
+	var/area/oldAreaMaster = Obj.areaMaster
+	Obj.areaMaster = master
 
-/area/Entered(atom/movable/A, atom/OldLoc)
-	var/area/oldAreaMaster = A.areaMaster
-	A.areaMaster = get_area_master(src)
-
-	if (!ismob(A))
+	if (!ismob(Obj))
 		return
 
-	var/mob/M = A
+	var/mob/M = Obj
 
 	// /vg/ - EVENTS!
-	CallHook("MobAreaChange", list("mob" = M, "new" = A.areaMaster, "old" = oldAreaMaster))
+	CallHook("MobAreaChange", list("mob" = M, "new" = Obj.areaMaster, "old" = oldAreaMaster))
 
 	// Being ready when you change areas gives you a chance to avoid falling all together.
 	if (!oldAreaMaster.has_gravity && M.areaMaster.has_gravity && M.m_intent == "run")

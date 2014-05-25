@@ -202,11 +202,12 @@
 	open()
 		..()
 		latetoggle()
+		layer = 2.6
 
 	close()
 		..()
 		latetoggle()
-
+		layer = 3.1
 	door_animate(animation)
 		switch(animation)
 			if("opening")
