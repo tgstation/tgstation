@@ -16,6 +16,8 @@
 	var/moved_recently = 0
 	var/mob/pulledby = null
 
+	var/area/area
+
 /atom/movable/Move()
 	var/atom/A = src.loc
 	. = ..()

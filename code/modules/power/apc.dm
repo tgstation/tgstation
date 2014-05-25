@@ -52,7 +52,6 @@
 	use_power = 0
 	req_access = list(access_engine_equip)
 	var/spooky=0
-	var/area/area
 	var/areastring = null
 	var/obj/item/weapon/cell/cell
 	var/start_charge = 90				// initial cell charge %
@@ -119,19 +118,11 @@
 		pixel_x = (src.tdir == 4 ? 24 : -24)
 		pixel_y = 0
 
-	// No name set?
-	if(name == initial(name))
-		// Let's get one.
-
-		// Grab the area we're in.
-		var/area/A = get_area(src)
-
-		// Set name if we're in an area.
-		if(A)
-			name = "[A.name] APC"
-		// Otherwise, bitch to the coders.
-		else
+	switch (isnull(area))
+		if (1)
 			log_admin("APC tried to spawn in a location without an area. [formatJumpTo(get_turf(src))]")
+		if (0)
+			name = "[area.name] APC"
 
 	if (building==0)
 		init()

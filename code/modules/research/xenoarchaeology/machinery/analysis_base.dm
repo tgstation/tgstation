@@ -67,8 +67,6 @@
 	else
 		use_power = 1
 
-	auto_use_power()
-
 	//Add 3000 joules when active.  This is about 0.6 degrees per tick.
 	//May need adjustment
 	if(use_power == 1)
