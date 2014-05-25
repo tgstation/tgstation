@@ -159,8 +159,8 @@ VOX HEIST ROUNDTYPE
 
 	if(prob(25))
 		raid_objectives += new /datum/objective/heist/kidnap
-	raid_objectives += new /datum/objective/heist/loot
-	raid_objectives += new /datum/objective/heist/salvage
+	raid_objectives += new /datum/objective/steal/heist
+	raid_objectives += new /datum/objective/steal/salvage
 	raid_objectives += new /datum/objective/heist/inviolate_crew
 	raid_objectives += new /datum/objective/heist/inviolate_death
 
