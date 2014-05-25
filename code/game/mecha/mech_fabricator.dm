@@ -184,16 +184,6 @@
 	..()
 	return
 
-//Re-implemented auto-sync now that it's not ungodly laggy -Sieve
-/obj/machinery/mecha_part_fabricator/process()
-	..()
-	if(async)
-		if(async > 101)//Once every 10 seconds at most
-			sync()
-			async = 1
-		async++
-	return
-
 /obj/machinery/mecha_part_fabricator/proc/operation_allowed(mob/M)
 	if(isrobot(M) || isAI(M))
 		return 1
@@ -579,9 +569,9 @@
 			if("main")
 				left_part = output_available_resources()+"<hr>"
 				left_part += "<a href='?src=\ref[src];sync=1'>Sync with R&D servers</a><hr>"
-				left_part += "<a href='?src=\ref[src];async=1'>Auto-Sync [async ? "Enabled" : "Disabled"]</a><hr>"
+//				left_part += "<a href='?src=\ref[src];async=1'>Auto-Sync [async ? "Enabled" : "Disabled"]</a><hr>"
 				for(var/part_set in part_sets)
-					left_part += "<a href='?src=\ref[src];part_set=[part_set]'>[part_set]</a> - \[<a href='?src=\ref[src];partset_to_queue=[part_set]'>Add all parts to queue\]<br>"
+					left_part += "<a href='?src=\ref[src];part_set=[part_set]'>[part_set]</a> - \[<a href='?src=\ref[src];partset_to_queue=[part_set]'>Add all parts to queue</a>\]<br>"
 			if("parts")
 				left_part += output_parts_list(part_set)
 				left_part += "<hr><a href='?src=\ref[src];screen=main'>Return</a>"
@@ -678,7 +668,7 @@
 		return update_queue_on_page()
 	if(href_list["async"])
 		async = !async
-		return update_queue_on_page()
+		return updateUsrDialog()
 	if(href_list["part_desc"])
 		var/obj/part = filter.getObj("part_desc")
 		if(part)

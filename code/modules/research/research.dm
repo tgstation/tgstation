@@ -148,6 +148,7 @@ research holder datum.
 		if(KT.id == ID)
 			if(KT.level <= level)
 				KT.level = max((KT.level + 1), (level - 1))
+	generate_checksum()
 	return
 
 /datum/research/proc/UpdateDesigns(var/obj/item/I, var/list/temp_tech)
@@ -160,6 +161,8 @@ research holder datum.
 						D.reliability = min(100, D.reliability + rand(1,3))
 						if(I.crit_fail)
 							D.reliability = min(100, D.reliability + rand(3, 5))
+	generate_checksum()
+	return
 
 
 //Sieve

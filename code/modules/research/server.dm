@@ -60,7 +60,7 @@
 		if((T20C + 20) to (T0C + 70))
 			health = max(0, health - 1)
 	if(health <= 0)
-		/*griefProtection() This seems to get called twice before running any code that deletes/damages the server or it's files anwyay.
+		/*griefProtection() This seems to get called twice before running any code that deletes/damages the server or its files anwyay.
 							refreshParts and the hasReq procs that get called by this are laggy and do not need to be called by every server on the map every tick */
 		var/updateRD = 0
 		files.known_designs = list()
@@ -95,7 +95,7 @@
 
 //Backup files to centcom to help admins recover data after greifer attacks
 /obj/machinery/r_n_d/server/proc/griefProtection()
-	if(files.checksum != backup.files.checksum)
+	if(backup && files.checksum != backup.files.checksum)
 		for(var/datum/tech/T in files.known_tech)
 			backup.files.AddTech2Known(T)
 		for(var/datum/design/D in files.known_designs)
@@ -238,6 +238,7 @@
 	else if(href_list["reset_tech"])
 		var/choice = alert("Technology Data Reset", "Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Continue", "Cancel")
 		if(choice == "Continue")
+			temp_server.griefProtection()
 			for(var/datum/tech/T in temp_server.files.known_tech)
 				if(T.id == href_list["reset_tech"])
 					T.level = 1
@@ -247,6 +248,7 @@
 	else if(href_list["reset_design"])
 		var/choice = alert("Design Data Deletion", "Are you sure you want to delete this design? If you still have the prerequisites for the design, it'll reset to its base reliability. Data lost cannot be recovered.", "Continue", "Cancel")
 		if(choice == "Continue")
+			temp_server.griefProtection()
 			for(var/datum/design/D in temp_server.files.known_designs)
 				if(D.id == href_list["reset_design"])
 					temp_server.files.known_designs -= D
