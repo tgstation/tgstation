@@ -86,7 +86,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		if(isrobot(user)) //Don't put your module items in there!
 			if(isMoMMI(user))
 				var/mob/living/silicon/robot/mommi/mommi = user
-				if(mommi.is_in_modules(O))
+				if(mommi.is_in_modules(O,permit_sheets=1))
 					user << "\red You cannot insert something that is part of you."
 					return
 			else
