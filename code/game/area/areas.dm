@@ -38,7 +38,7 @@
 	power_change()		// all machines set to current power level, also updates lighting icon
 	InitializeLighting()
 
-
+/*
 // Added to fix mech fabs 05/2013 ~Sayu
 // This is necessary due to lighting subareas.  If you were to go in assuming that things in
 // the same logical /area have the parent /area object... well, you would be mistaken.  If you
@@ -51,6 +51,8 @@
 	for(var/area/LSA in A.related)
 		contents += LSA.contents
 	return contents
+*/
+
 /area/proc/poweralert(var/state, var/obj/source as obj)
 	if (state != poweralm)
 		poweralm = state
