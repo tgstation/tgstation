@@ -421,7 +421,6 @@
 				visible_message("<span class='danger'>[O] bounces harmlessly off of [src].</span>",\
 								"<span class='userdanger'>[O] bounces harmlessly off of [src].</span>")
 		else
-			user << "\red This weapon is ineffective, it does no damage."
 			user.visible_message("<span class='warning'>[user] gently taps [src] with [O].</span>",\
 							"<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 
