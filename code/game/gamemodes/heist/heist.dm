@@ -169,6 +169,9 @@ VOX HEIST ROUNDTYPE
 	for(var/datum/objective/heist/O in raid_objectives)
 		O.choose_target()
 
+	for(var/datum/objective/steal/O in raid_objectives)
+		O.find_target()
+
 	return raid_objectives
 
 /datum/game_mode/heist/proc/greet_vox(var/datum/mind/raider)

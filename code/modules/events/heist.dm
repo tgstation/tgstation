@@ -158,6 +158,9 @@ var/global/list/datum/mind/raiders = list()  //Antags.
 	for(var/datum/objective/heist/O in raid_objectives)
 		O.choose_target()
 
+	for(var/datum/objective/steal/O in raid_objectives)
+		O.find_target()
+
 	return raid_objectives
 
 /datum/event/heist/proc/greet_vox(var/datum/mind/raider)
