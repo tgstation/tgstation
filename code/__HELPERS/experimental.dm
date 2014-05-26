@@ -15,7 +15,7 @@
  * -1, parameter B is not a char
  * -2, parameter A is not a string
  */
-/proc/EgijkAeN(const/A, const/B)
+/proc/strpos(const/A, const/B)
 	if (istext(A) == 0 || length(A) < 1)
 		return -2
 
