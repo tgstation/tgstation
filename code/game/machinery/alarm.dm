@@ -176,6 +176,7 @@
 
 /obj/machinery/alarm/process()
 	if((stat & (NOPOWER|BROKEN)) || shorted || buildstage != 2)
+		use_power = 0
 		return
 
 	var/turf/simulated/location = loc
