@@ -44,8 +44,8 @@
 	icon_state = "alarm0"
 	anchored = 1
 	use_power = 1
-	idle_power_usage = 4
-	active_power_usage = 8
+	idle_power_usage = 100
+	active_power_usage = 200
 	power_channel = ENVIRON
 	req_one_access = list(access_atmospherics, access_engine_equip)
 	var/frequency = 1439
@@ -183,7 +183,7 @@
 
 	var/datum/gas_mixture/environment = location.return_air()
 
-	//Handle temperature adjustment here.
+	// Handle temperature adjustment here.
 	if(environment.temperature < target_temperature - 2 || environment.temperature > target_temperature + 2 || regulating_temperature)
 		//If it goes too far, we should adjust ourselves back before stopping.
 		if(get_danger_level(target_temperature, TLV["temperature"]))
@@ -200,37 +200,38 @@
 		if(target_temperature < T0C + MIN_TEMPERATURE)
 			target_temperature = T0C + MIN_TEMPERATURE
 
-		var/datum/gas_mixture/gas = location.remove_air(0.25*environment.total_moles)
+		var/datum/gas_mixture/gas = location.remove_air(0.25 * environment.total_moles)
 		var/heat_capacity = gas.heat_capacity()
-		var/energy_used = max( abs( heat_capacity*(gas.temperature - target_temperature) ), MAX_ENERGY_CHANGE)
+		var/energy_used = max(abs(heat_capacity * (gas.temperature - target_temperature)), MAX_ENERGY_CHANGE)
 
-		//Use power.  Assuming that each power unit represents 1000 watts....
-		use_power(energy_used/1000, ENVIRON)
-
-		//We need to cool ourselves.
-		if(environment.temperature > target_temperature)
-			gas.temperature -= energy_used/heat_capacity
+		// We need to cool ourselves.
+		if (environment.temperature > target_temperature)
+			gas.temperature -= energy_used / heat_capacity
 		else
-			gas.temperature += energy_used/heat_capacity
+			gas.temperature += energy_used / heat_capacity
 
 		environment.merge(gas)
 
-		if(abs(environment.temperature - target_temperature) <= 0.5)
+		if (abs(environment.temperature - target_temperature) <= 0.5)
 			regulating_temperature = 0
 			visible_message("\The [src] clicks quietly as it stops [environment.temperature > target_temperature ? "cooling" : "heating"] the room.",\
 			"You hear a click as a faint electronic humming stops.")
 
 	var/old_level = local_danger_level
 	var/new_danger = calculate_local_danger_level(environment)
-	if(new_danger < old_level)
+
+	if (new_danger < old_level)
 		danger_averted_confidence++
+		use_power = 1
+
 	// Only change danger level if:
 	// we're going up a level
 	// OR if we're going down a level and have sufficient confidence (prevents spamming update_icon).
 	if (old_level < new_danger || (danger_averted_confidence >= 5 && new_danger < old_level))
 		setDangerLevel(new_danger)
 		update_icon()
-		danger_averted_confidence=0 // Reset counter.
+		danger_averted_confidence = 0 // Reset counter.
+		use_power = 2
 
 	if (mode==AALARM_MODE_CYCLE && environment.return_pressure()<ONE_ATMOSPHERE*0.05)
 		mode=AALARM_MODE_FILL
@@ -254,7 +255,7 @@
 
 /obj/machinery/alarm/proc/calculate_local_danger_level(const/datum/gas_mixture/environment)
 	if (wires.IsIndexCut(AALARM_WIRE_AALARM))
-		return 2 // MAXIMUM ALARM (With gravelly voice) - N3X
+		return 2 // MAXIMUM ALARM (With gravelly voice) - N3X.
 
 	if (isnull(environment))
 		return 0
