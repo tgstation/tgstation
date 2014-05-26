@@ -308,7 +308,7 @@
 	//actually throw it!
 	if(item)
 		item.layer = initial(item.layer)
-		src.visible_message("\red [src] has thrown [item].")
+		src.visible_message("\red [src] has thrown the [item].")
 
 		if(!src.lastarea)
 			src.lastarea = get_area(src.loc)
