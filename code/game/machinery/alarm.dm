@@ -252,13 +252,11 @@
 		updateDialog()
 	return
 
-/obj/machinery/alarm/proc/calculate_local_danger_level()
+/obj/machinery/alarm/proc/calculate_local_danger_level(const/datum/gas_mixture/environment)
 	if(wires.IsIndexCut(AALARM_WIRE_AALARM))
 		return 2 // MAXIMUM ALARM (With gravelly voice) - N3X
 	var/turf/simulated/location = loc
 	if(!istype(location))	return//returns if loc is not simulated
-
-	var/datum/gas_mixture/environment = location.return_air()
 
 	var/partial_pressure = R_IDEAL_GAS_EQUATION*environment.temperature/environment.volume
 	var/environment_pressure = environment.return_pressure()
