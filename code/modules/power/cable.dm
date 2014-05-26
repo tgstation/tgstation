@@ -40,7 +40,7 @@
 	var/turf/T = src.loc			// hide if turf is not intact
 
 	if(level==1) hide(T.intact)
-	cable_list += src
+	cable_list.Add(src)
 
 
 /obj/structure/cable/Destroy()						// called when a cable is deleted
@@ -116,7 +116,7 @@
 				message += " - Cut By: [M.real_name] ([M.key]) (<A HREF='?_src_=holder;adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>)"
 				log_game("[M.real_name] ([M.key]) cut a wire in [my_area.name] ([T.x],[T.y],[T.z])")
 		message_admins(message, 0, 1)
-		del(src)
+		qdel(src)
 
 		return	// not needed, but for clarity
 
@@ -337,7 +337,7 @@
 		if (C.shock(user, 50))
 			if (prob(50)) //fail
 				new/obj/item/weapon/cable_coil(C.loc, 1, C._color)
-				del(C)
+				qdel(C)
 		//src.laying = 1
 		//last = C
 
@@ -397,7 +397,7 @@
 			if (NC.shock(user, 50))
 				if (prob(50)) //fail
 					new/obj/item/weapon/cable_coil(NC.loc, 1, NC._color)
-					del(NC)
+					qdel(NC)
 
 			return
 	else if(C.d1 == 0)		// exisiting cable doesn't point at our position, so see if it's a stub
@@ -436,7 +436,7 @@
 		if (C.shock(user, 50))
 			if (prob(50)) //fail
 				new/obj/item/weapon/cable_coil(C.loc, 2, C._color)
-				del(C)
+				qdel(C)
 
 		return
 
