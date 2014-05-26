@@ -464,12 +464,10 @@
 	frequency.post_signal(src, alert_signal)
 
 /obj/machinery/alarm/proc/air_doors_close(manual)
-	var/area/A = get_area(src)
-	A.master.CloseFirelocks()
+	areaMaster.CloseFirelocks()
 
 /obj/machinery/alarm/proc/air_doors_open(manual)
-	var/area/A = get_area(loc)
-	A.master.OpenFirelocks()
+	areaMaster.OpenFirelocks()
 
 
 
