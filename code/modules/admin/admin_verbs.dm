@@ -475,7 +475,7 @@ var/list/admin_verbs_mod = list(
 	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 #define MAX_WARNS 3
-#define AUTOBANTIME 15
+#define AUTOBANTIME 90
 
 /client/proc/warn(warned_ckey)
 	var/reason = "Autobanning due to too many formal warnings"
@@ -496,8 +496,11 @@ var/list/admin_verbs_mod = list(
 		return
 
 	if(++D.warns >= MAX_WARNS)					//uh ohhhh...you'reee iiiiin trouuuubble O:)
-		var/bantime = (++D.warnbans * AUTOBANTIME)
-		D.warns = 1
+		var/bantime = AUTOBANTIME//= (++D.warnbans * AUTOBANTIME)
+		D.warns = 0
+		++D.warnbans
+		for(var/i = 1; i < D.warnbans; i++)
+			bantime *= 2
 		ban_unban_log_save("[ckey] warned [warned_ckey], resulting in a [bantime] minute autoban.")
 		if(C)
 			message_admins("[key_name_admin(src)] has warned [key_name_admin(C)] resulting in a [bantime] minute ban.")
