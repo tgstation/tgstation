@@ -20,8 +20,8 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 
 	//remove out adminhelp verb temporarily to prevent spamming of admins.
 	src.verbs -= /client/verb/adminhelp
-	spawn(1200)
-		src.verbs += /client/verb/adminhelp	// 2 minute cool-down for adminhelps
+	spawn(100)
+		src.verbs += /client/verb/adminhelp	// 10 second cool-down for adminhelps
 
 	//clean the input msg
 	if(!msg)	return
