@@ -407,9 +407,19 @@
 			Cable.powernet = net1
 			net1.cables += Cable
 
-	del(net2)
+	net2.garbageCollect()
 	return net1
 
+/datum/powernet/proc/garbageCollect()
+	if(nodes.len)
+		for(var/obj/machinery/power/N in nodes)
+			N.powernet = null
+		nodes.Cut()
+	if(cables.len)
+		for(var/obj/structure/cable/C in cables)
+			C.powernet = null
+		cables.Cut()
+	powernets -= src
 
 /obj/machinery/power/proc/connect_to_network()
 	var/turf/T = src.loc
