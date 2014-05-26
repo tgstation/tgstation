@@ -221,7 +221,7 @@
 			"You hear a click as a faint electronic humming stops.")
 
 	var/old_level = local_danger_level
-	var/new_danger = calculate_local_danger_level()
+	var/new_danger = calculate_local_danger_level(environment)
 	if(new_danger < old_level)
 		danger_averted_confidence++
 	// Only change danger level if:
