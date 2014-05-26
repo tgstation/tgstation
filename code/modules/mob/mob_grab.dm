@@ -205,8 +205,8 @@
 
 
 /obj/item/weapon/grab/dropped()
-	del(src)
+	qdel(src)
 
 /obj/item/weapon/grab/Destroy()
-	del(hud)
+	qdel(hud)
 	..()
