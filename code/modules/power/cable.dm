@@ -23,45 +23,46 @@
 		..()
 	return
 
-// the power cable object
-
+/**
+ * The power cable object.
+ */
 /obj/structure/cable/New()
 	..()
 
-
-	// ensure d1 & d2 reflect the icon_state for entering and exiting cable
-
+	// Ensure d1 & d2 reflect the icon_state for entering and exiting cable.
 	var/dash = findtext(icon_state, "-")
+	d1 = text2num(copytext(icon_state, 1, dash))
+	d2 = text2num(copytext(icon_state, dash + 1))
 
-	d1 = text2num( copytext( icon_state, 1, dash ) )
+	var/turf/T = src.loc // Hide if turf is not intact.
 
-	d2 = text2num( copytext( icon_state, dash+1 ) )
+	if (level==1)
+		hide(T.intact)
 
-	var/turf/T = src.loc			// hide if turf is not intact
-
-	if(level==1) hide(T.intact)
 	cable_list.Add(src)
 
+/obj/structure/cable/Destroy() // Called when a cable is deleted.
+	if (!defer_powernet_rebuild) // Set if network will be rebuilt manually.
+		if (powernet)
+			powernet.cut_cable(src) // Update the powernets
 
-/obj/structure/cable/Destroy()						// called when a cable is deleted
-	if(!defer_powernet_rebuild)					// set if network will be rebuilt manually
-		if(powernet)
-			powernet.cut_cable(src)				// update the powernets
-	cable_list -= src
-	if(istype(attached))
+	cable_list.Remove(src)
+
+	if (istype(attached))
 		attached.SetLuminosity(0)
 		attached.icon_state = "powersink0"
 		attached.mode = 0
 		processing_objects.Remove(attached)
 		attached.anchored = 0
 		attached.attached = null
+
 	attached = null
-	..()													// then go ahead and delete the cable
+	..() // Then go ahead and delete the cable.
 
 /obj/structure/cable/hide(var/i)
-
-	if(level == 1 && istype(loc, /turf))
+	if (level == 1 && istype(loc, /turf))
 		invisibility = i ? 101 : 0
+
 	updateicon()
 
 /obj/structure/cable/proc/updateicon()
