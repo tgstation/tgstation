@@ -644,7 +644,7 @@
 
 	var/spamcheck = 0
 
-/obj/item/device/megaphone/attack_self(mob/living/user as mob)
+/obj/item/device/whisperphone/attack_self(mob/living/user as mob)
 	if (user.client)
 		if(user.client.prefs.muted & MUTE_IC)
 			src << "\red You cannot speak in IC (muted)."
