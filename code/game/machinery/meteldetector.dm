@@ -265,38 +265,57 @@
 		return
 
 
-
+	var/maxthreat = 0
+	var/sndstr = ""
 	for (var/mob/O in viewers(src, null))
 		if(isobserver(O)) continue
 		if (get_dist(src, O) > src.range)
 			continue
 		var/list/ourretlist = src.assess_perp(O)
-
-	//	src.visible_message("<span class = 'warning'>Test2! Subject: [src.assess_perp(O)[1]]</span>")////
 		var/dudesthreat = ourretlist[1]
 		var/dudesname = ourretlist[2]
-	//	src.visible_message("<span class = 'warning'>Test3! Subject: [dudesname]</span>")////
+
+
+
 		if (dudesthreat >= 4)
-			src.visible_message("<span class = 'warning'>Theat Detected! Subject: [dudesname]</span>")////
-			playsound(get_turf(src), 'sound/machines/info.ogg', 100, 1)
-			flick("[base_state]_flash", src)
+
+			if(maxthreat < 2)
+				sndstr = "sound/machines/alert.ogg"
+				maxthreat = 2
+
+
+
 			src.last_read = world.time
 			use_power(1000)
-			//world << "<font size='1' color='red'><b>Theat Detected! Subject:[O.name]/b></font>" //debugging
+			src.visible_message("<span class = 'warning'>Theat Detected! Subject: [dudesname]</span>")////
+
+
 		else if(dudesthreat <= 3 && dudesthreat != 0 && senset)
-			playsound(get_turf(src), 'sound/machines/info.ogg', 100, 1)
-			flick("[base_state]_flash", src)
+
+			if(maxthreat < 1)
+				sndstr = "sound/machines/domore.ogg"
+				maxthreat = 1
+
+
 			src.last_read = world.time
 			use_power(1000)
 			src.visible_message("<span class = 'warning'>Additional screening required! Subject: [dudesname]</span>")
-			//
+
 
 		else
-			playsound(get_turf(src), 'sound/machines/info.ogg', 100, 1)
-			flick("[base_state]_flash", src)
+
+			if(maxthreat == 0)
+				sndstr = "sound/machines/info.ogg"
+
+
+
 			src.last_read = world.time
 			use_power(1000)
 			src.visible_message("<span class = 'notice'> Subject: [dudesname] clear.</span>")
+
+
+	flick("[base_state]_flash", src)
+	playsound(get_turf(src), sndstr, 100, 1)
 
 
 
