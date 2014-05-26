@@ -298,7 +298,7 @@
 			dat += "The speaker switch is [shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
 
 	user << browse(dat, "window=vending")
-	onclose(user, "")
+	onclose(user, "vending")
 	return
 
 
