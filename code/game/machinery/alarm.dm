@@ -297,11 +297,12 @@
 				return 1
 	return 0
 
-/obj/machinery/alarm/proc/get_danger_level(var/current_value, var/list/danger_levels)
-	if((current_value >= danger_levels[4] && danger_levels[4] > 0) || current_value <= danger_levels[1])
+/obj/machinery/alarm/proc/get_danger_level(const/current_value, const/list/danger_levels)
+	if ((current_value >= danger_levels[4] && danger_levels[4] > 0) || current_value <= danger_levels[1])
 		return 2
-	if((current_value >= danger_levels[3] && danger_levels[3] > 0) || current_value <= danger_levels[2])
+	if ((current_value >= danger_levels[3] && danger_levels[3] > 0) || current_value <= danger_levels[2])
 		return 1
+
 	return 0
 
 /obj/machinery/alarm/update_icon()
