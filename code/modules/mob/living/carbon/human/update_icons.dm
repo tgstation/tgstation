@@ -136,7 +136,7 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/update_icons()
 	lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
 	update_hud()		//TODO: remove the need for this
-	overlays.Cut()
+	overlays.len = 0
 
 	var/stealth = 0
 	//cloaking devices. //TODO: get rid of this :<
@@ -154,7 +154,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	else
 		icon = stand_icon
 		for(var/image/I in overlays_standing)
-			overlays += I
+			overlays.Add(I)
 
 	if(lying)
 		var/matrix/M = matrix()
