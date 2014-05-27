@@ -23,7 +23,8 @@ mob/living/carbon/proc/dream()
 		for(var/i = rand(1,4),i > 0, i--)
 			var/good = pick(dreams)
 			var/bad = pick(nightmeres)
-			var/dream = pick(good,bad)
+			var/dream = "nothing is there"
+			dream = pick(good,bad)
 			if(dream = good)
 				src << "\blue <i>... [good] ...</i>"
 			else
