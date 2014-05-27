@@ -196,7 +196,7 @@
 			playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
 			L.visible_message("<span class='danger'>[L] triggers \the [src].</span>", \
 					"<span class='userdanger'>You trigger \the [src]!</span>")
-		
+
 			if(ishuman(AM))
 				var/mob/living/carbon/H = AM
 				if(H.lying)
@@ -278,6 +278,8 @@
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "table_parts"
+	var/table_type = "table"
+	var/construct_delay = 50
 	m_amt = 3750
 	flags = CONDUCT
 	attack_verb = list("slammed", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
@@ -287,6 +289,8 @@
 	desc = "Hard table parts. Well...harder..."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "reinf_tableparts"
+	table_type = "reinforced"
+	construct_delay = 100
 	m_amt = 7500
 	flags = CONDUCT
 
@@ -294,12 +298,14 @@
 	name = "wooden table parts"
 	desc = "Keep away from fire."
 	icon_state = "wood_tableparts"
+	table_type = "wood"
 	flags = null
 
 /obj/item/weapon/table_parts/wood/poker
 	name = "poker table parts"
 	desc = "Keep away from fire, and keep near seedy dealers."
 	icon_state = "poker_tableparts"
+	table_type = "poker"
 	flags = null
 
 /obj/item/weapon/module

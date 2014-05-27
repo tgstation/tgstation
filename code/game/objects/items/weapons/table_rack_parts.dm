@@ -29,12 +29,27 @@
 
 /obj/item/weapon/table_parts/attack_self(mob/user as mob)
 	user << "<span class='notice'>Constructing table..</span>"
-	if (do_after(user, 50))
-		new /obj/structure/table( user.loc )
-		user.drop_item()
-		qdel(src)
-		return
-
+	if (do_after(user, construct_delay))
+		if(table_type == "table")
+			new /obj/structure/table( user.loc )
+			user.drop_item()
+			qdel(src)
+			return
+		else if(table_type == "reinforced")
+			new /obj/structure/table/reinforced( user.loc )
+			user.drop_item()
+			qdel(src)
+			return
+		else if(table_type == "wood")
+			new /obj/structure/table/woodentable( user.loc )
+			user.drop_item()
+			qdel(src)
+			return
+		else if(table_type == "poker")
+			new /obj/structure/table/woodentable/poker( user.loc )
+			user.drop_item()
+			qdel(src)
+			return
 
 /*
  * Reinforced Table Parts
@@ -44,14 +59,6 @@
 		new /obj/item/stack/sheet/metal( user.loc )
 		new /obj/item/stack/rods( user.loc )
 		qdel(src)
-
-/obj/item/weapon/table_parts/reinforced/attack_self(mob/user as mob)
-	user << "<span class='notice'>Constructing table..</span>"
-	if (do_after(user, 100))
-		new /obj/structure/table/reinforced( user.loc )
-		user.drop_item()
-		qdel(src)
-		return
 
 /*
  * Wooden Table Parts
@@ -73,14 +80,6 @@
 
 		qdel(src)
 
-/obj/item/weapon/table_parts/wood/attack_self(mob/user as mob)
-	user << "<span class='notice'>Constructing table..</span>"
-	if (do_after(user, 50))
-		new /obj/structure/table/woodentable( user.loc )
-		user.drop_item()
-		qdel(src)
-		return
-
 
 /*
  * Poker Table Parts
@@ -91,15 +90,6 @@
 		new /obj/item/stack/sheet/mineral/wood( user.loc )
 		new /obj/item/stack/tile/grass( user.loc )
 		qdel(src)
-
-/obj/item/weapon/table_parts/wood/poker/attack_self(mob/user as mob)
-	user << "<span class='notice'>Constructing table..</span>"
-	if (do_after(user, 50))
-		new /obj/structure/table/woodentable/poker( user.loc )
-		user.drop_item()
-		qdel(src)
-		return
-
 
 /*
  * Rack Parts
