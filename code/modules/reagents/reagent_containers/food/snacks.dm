@@ -143,19 +143,6 @@
 			istype(W, /obj/item/weapon/hatchet) \
 		)
 		inaccurate = 1
-	else if(W.w_class <= 2 && istype(src,/obj/item/weapon/reagent_containers/food/snacks/sliceable/store))
-		if(contents.len)
-			return 0
-		if(!iscarbon(user))
-			return 0
-		user << "<span class='notice'>You slip [W] inside [src].</span>"
-		user.unEquip(W)
-		if ((user.client && user.s_active != src))
-			user.client.screen -= W
-		W.dropped(user)
-		add_fingerprint(user)
-		contents += W
-		return 1 // no afterattack here
 	else
 		return 0 // --- this is everything that is NOT a slicing implement, and which is not being slipped into food; allow afterattack ---
 
@@ -1772,6 +1759,22 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store
 	w_class = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/attackby(obj/item/weapon/W, mob/user)
+	if(W.w_class <= 2)
+		if(contents.len)
+			return 0
+		if(!iscarbon(user))
+			return 0
+		user << "<span class='notice'>You slip [W] inside [src].</span>"
+		user.unEquip(W)
+		if ((user.client && user.s_active != src))
+			user.client.screen -= W
+		W.dropped(user)
+		add_fingerprint(user)
+		contents += W
+		return 1 // no afterattack here
+	else ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/meatbread
 	name = "meatbread loaf"
