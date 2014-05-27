@@ -11,7 +11,7 @@ mob/living/carbon/proc/dream()
 		"a shaft miner","a psychologist","the chemist","the geneticist","the virologist","the roboticist","the chef","the bartender",
 		"the chaplain","the librarian","a mouse","an ert member","a beach","the holodeck","a smokey room","a mouse","the bar",
 		"the rain","the ai core","the mining station","the research station","a beaker of strange liquid","a team","a man with a bad haircut",
-		"the moons of jupiter","an old malfunctioning AI","a ship full of spiders","bork",a chicken","a supernova","lockers","ninjas",
+		"the moons of jupiter","an old malfunctioning AI","a ship full of spiders","bork","a chicken","a supernova","lockers","ninjas",
 		"chickens","the oven","euphoria","space god"
 		)
 	var/list/nightmeres = list(
