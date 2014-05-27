@@ -1758,7 +1758,6 @@
 	w_class = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store
-	w_class = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/attackby(obj/item/weapon/W, mob/user)
 	if(W.w_class <= 2)
