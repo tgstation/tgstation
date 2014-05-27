@@ -160,6 +160,8 @@
 		return
 	visible_message("[user] puts [L.name] into the DNA Scanner.", 3)
 	put_in(L)
+	if(user.pulling == L)
+		user.pulling = null
 
 /obj/machinery/dna_scannernew/attackby(var/obj/item/weapon/item as obj, var/mob/user as mob)
 	if (istype(item, /obj/item/weapon/screwdriver))

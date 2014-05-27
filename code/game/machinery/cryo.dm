@@ -74,6 +74,8 @@
 			visible_message("[user] climbs into the cryo cell.", 3)
 		else
 			visible_message("[user] puts [L.name] into the cryo cell.", 3)
+			if(user.pulling == L)
+				user.pulling = null
 
 /obj/machinery/atmospherics/unary/cryo_cell/process()
 	..()

@@ -202,6 +202,8 @@
 		for(var/obj/OO in src)
 			OO.loc = src.loc
 		src.add_fingerprint(user)
+		if(user.pulling == L)
+			user.pulling = null
 		return
 	return
 
