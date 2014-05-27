@@ -30,26 +30,10 @@
 /obj/item/weapon/table_parts/attack_self(mob/user as mob)
 	user << "<span class='notice'>Constructing table..</span>"
 	if (do_after(user, construct_delay))
-		if(table_type == "table")
-			new /obj/structure/table( user.loc )
-			user.drop_item()
-			qdel(src)
-			return
-		else if(table_type == "reinforced")
-			new /obj/structure/table/reinforced( user.loc )
-			user.drop_item()
-			qdel(src)
-			return
-		else if(table_type == "wood")
-			new /obj/structure/table/woodentable( user.loc )
-			user.drop_item()
-			qdel(src)
-			return
-		else if(table_type == "poker")
-			new /obj/structure/table/woodentable/poker( user.loc )
-			user.drop_item()
-			qdel(src)
-			return
+		new table_type( user.loc )
+		user.drop_item()
+		qdel(src)
+		return
 
 /*
  * Reinforced Table Parts

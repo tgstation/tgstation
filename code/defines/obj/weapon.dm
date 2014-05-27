@@ -278,7 +278,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "table_parts"
-	var/table_type = "table"
+	var/table_type = /obj/structure/table
 	var/construct_delay = 50
 	m_amt = 3750
 	flags = CONDUCT
@@ -289,7 +289,7 @@
 	desc = "Hard table parts. Well...harder..."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "reinf_tableparts"
-	table_type = "reinforced"
+	table_type = /obj/structure/table/reinforced
 	construct_delay = 100
 	m_amt = 7500
 	flags = CONDUCT
@@ -298,14 +298,14 @@
 	name = "wooden table parts"
 	desc = "Keep away from fire."
 	icon_state = "wood_tableparts"
-	table_type = "wood"
+	table_type = /obj/structure/table/woodentable
 	flags = null
 
 /obj/item/weapon/table_parts/wood/poker
 	name = "poker table parts"
 	desc = "Keep away from fire, and keep near seedy dealers."
 	icon_state = "poker_tableparts"
-	table_type = "poker"
+	table_type = /obj/structure/table/woodentable/poker
 	flags = null
 
 /obj/item/weapon/module
