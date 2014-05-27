@@ -998,7 +998,9 @@ About the new airlock wires panel:
 
 				var/obj/structure/door_assembly/DA = new assembly_type(loc)
 				DA.anchored = 1
-
+				DA.fingerprints += src.fingerprints
+				DA.fingerprintshidden += src.fingerprintshidden
+				DA.fingerprintslast = user.ckey
 				if (mineral)
 					DA.glass = mineral
 				// TODO: check DA.glass
