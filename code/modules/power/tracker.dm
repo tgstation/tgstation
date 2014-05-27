@@ -13,7 +13,6 @@
 	directwired = 1
 	use_power = 0
 
-	var/id = 0
 	var/sun_angle = 0		// sun angle as set by sun datum
 
 /obj/machinery/power/tracker/New(var/turf/loc, var/obj/item/solar_assembly/S)

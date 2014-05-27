@@ -4,7 +4,6 @@
 	icon_state = "explosive"
 	req_access = list(access_brig)
 	circuit = "/obj/item/weapon/circuitboard/prisoner"
-	var/id = 0.0
 	var/temp = null
 	var/status = 0
 	var/timeleft = 60

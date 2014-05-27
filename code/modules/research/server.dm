@@ -3,6 +3,7 @@
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "server"
 	var/datum/research/files
+	var/obj/machinery/r_n_d/server/centcom/backup//Since it's going to be called constantly, no need to search for it EVERY DAMN TICK
 	var/health = 100
 	var/list/id_with_upload = list()		//List of R&D consoles with upload to server access.
 	var/list/id_with_download = list()	//List of R&D consoles with download from server access.
@@ -36,6 +37,7 @@
 
 /obj/machinery/r_n_d/server/initialize()
 	if(!files) files = new /datum/research(src)
+	if(!backup) backup = locate(/obj/machinery/r_n_d/server/centcom,machines)
 	var/list/temp_list
 	if(!id_with_upload.len)
 		temp_list = list()
@@ -93,12 +95,12 @@
 
 //Backup files to centcom to help admins recover data after greifer attacks
 /obj/machinery/r_n_d/server/proc/griefProtection()
-	for(var/obj/machinery/r_n_d/server/centcom/C in world)
+	if(files.checksum != backup.files.checksum)
 		for(var/datum/tech/T in files.known_tech)
-			C.files.AddTech2Known(T)
+			backup.files.AddTech2Known(T)
 		for(var/datum/design/D in files.known_designs)
-			C.files.AddDesign2Known(D)
-		C.files.RefreshResearch()
+			backup.files.AddDesign2Known(D)
+		backup.files.RefreshResearch()
 
 /obj/machinery/r_n_d/server/proc/produce_heat(heat_amt)
 	if(!(stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
@@ -151,7 +153,7 @@
 	..()
 	var/list/no_id_servers = list()
 	var/list/server_ids = list()
-	for(var/obj/machinery/r_n_d/server/S in world)
+	for(var/obj/machinery/r_n_d/server/S in machines)
 		switch(S.server_id)
 			if(-1)
 				continue
@@ -201,20 +203,20 @@
 		temp_server = null
 		consoles = list()
 		servers = list()
-		for(var/obj/machinery/r_n_d/server/S in world)
+		for(var/obj/machinery/r_n_d/server/S in machines)
 			if(S.server_id == text2num(href_list["access"]) || S.server_id == text2num(href_list["data"]) || S.server_id == text2num(href_list["transfer"]))
 				temp_server = S
 				break
 		if(href_list["access"])
 			screen = 1
-			for(var/obj/machinery/computer/rdconsole/C in world)
+			for(var/obj/machinery/computer/rdconsole/C in machines)
 				if(C.sync)
 					consoles += C
 		else if(href_list["data"])
 			screen = 2
 		else if(href_list["transfer"])
 			screen = 3
-			for(var/obj/machinery/r_n_d/server/S in world)
+			for(var/obj/machinery/r_n_d/server/S in machines)
 				if(S == src)
 					continue
 				servers += S
@@ -264,7 +266,7 @@
 		if(0) //Main Menu
 			dat += "Connected Servers:<BR><BR>"
 
-			for(var/obj/machinery/r_n_d/server/S in world)
+			for(var/obj/machinery/r_n_d/server/S in machines)
 				if(istype(S, /obj/machinery/r_n_d/server/centcom) && !badmin)
 					continue
 				dat += "[S.name] || "

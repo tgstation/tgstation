@@ -29,7 +29,6 @@
 										)
 	var/res_max_amount = 200000
 	var/datum/research/files
-	var/id
 	var/sync = 0
 	var/part_set
 	var/obj/being_built
@@ -37,6 +36,7 @@
 	var/processing_queue = 0
 	var/screen = "main"
 	var/temp
+	var/list/consoles = list()//Holds consoles to exchange info with
 	var/list/part_sets = list( //set names must be unique
 	"Cyborg"=list(
 						/obj/item/robot_parts/robot_suit,
@@ -499,15 +499,19 @@
 		sleep(30) //only sleep if called by user
 
 	var/found = 0
-	for(var/obj/machinery/computer/rdconsole/RDC in area_contents(get_area(src)))
+	if(consoles.len == 0)
+		for(var/obj/machinery/computer/rdconsole/RDC in area_contents(get_area(src)))
+			consoles.Add(RDC)
+	for(var/obj/machinery/computer/rdconsole/RDC in consoles)
 		if(!RDC.sync)
 			continue
 		found = 1
-		for(var/datum/tech/T in RDC.files.known_tech)
-			files.AddTech2Known(T)
-		for(var/datum/design/D in RDC.files.known_designs)
-			files.AddDesign2Known(D)
-		files.RefreshResearch()
+		if(files.checksum != RDC.files.checksum)
+			for(var/datum/tech/T in RDC.files.known_tech)
+				files.AddTech2Known(T)
+			for(var/datum/design/D in RDC.files.known_designs)
+				files.AddDesign2Known(D)
+			files.RefreshResearch()
 		var/i = src.convert_designs()
 		var/tech_output = update_tech()
 		if(!silent)

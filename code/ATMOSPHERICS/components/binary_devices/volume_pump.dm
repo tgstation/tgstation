@@ -25,7 +25,6 @@ obj/machinery/atmospherics/binary/volume_pump
 	var/transfer_rate = 200
 
 	var/frequency = 0
-	var/id = null
 	var/datum/radio_frequency/radio_connection
 
 	on

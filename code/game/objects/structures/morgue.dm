@@ -162,13 +162,16 @@
 	var/obj/structure/c_tray/connected = null
 	anchored = 1.0
 	var/cremating = 0
-	var/id = 1
+	var/id
 	var/locked = 0
 
 /obj/structure/crematorium/New()
 	connected = new(src)
 	connected.connected = src
+	if(ticker)
+		pre_process()
 	..()
+	return
 
 /obj/structure/crematorium/Destroy()
 	open()
@@ -176,6 +179,20 @@
 		qdel(connected)
 		connected = null
 	..()
+
+/obj/structure/crematorium/initialize()
+	..()
+	if(!ticker)
+		pre_process()
+
+/obj/structure/crematorium/proc/pre_process()
+	if(id)
+		for(var/obj/machinery/button/B in machines)
+			if(id == B.id)
+				for(var/T in B.minion_types)
+					if(istype(src,T))
+						B.minions += src
+	return
 
 /obj/structure/crematorium/update_icon()
 	if(!connected || connected.loc != src)
@@ -332,14 +349,3 @@
 				B << text("\red [] stuffs [] into []!", user, O, src)
 			//Foreach goto(99)
 	return
-
-/obj/machinery/crema_switch/attack_hand(mob/user as mob)
-	if(src.allowed(usr))
-		for (var/obj/structure/crematorium/C in world)
-			if (C.id == id)
-				if (!C.cremating)
-					C.cremate(user)
-	else
-		usr << "\red Access denied."
-	return
-
