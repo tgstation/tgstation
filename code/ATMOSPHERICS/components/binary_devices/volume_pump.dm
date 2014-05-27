@@ -48,7 +48,7 @@ obj/machinery/atmospherics/binary/volume_pump
 //		..()
 		if(stat & (NOPOWER|BROKEN))
 			return
-		if(!on)
+		if(!on || !transfer_rate < 1)
 			return 0
 
 // Pump mechanism just won't do anything if the pressure is too high/too low
