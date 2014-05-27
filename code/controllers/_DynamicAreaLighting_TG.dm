@@ -138,7 +138,7 @@ atom/movable/New()
 		trueLuminosity = luminosity * luminosity
 		light = new(src)
 
-	areaMaster = get_area(src)
+	areaMaster = get_area_master(src)
 
 //Objects with opacity will trigger nearby lights to update at next lighting process.
 atom/movable/Destroy()
