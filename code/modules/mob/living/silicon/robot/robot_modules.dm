@@ -125,6 +125,7 @@
 		src.modules += new /obj/item/borg/sight/meson(src)
 		src.emag = new /obj/item/borg/stun(src)
 		src.modules += new /obj/item/weapon/rcd/borg(src)
+		src.modules += new /obj/item/weapon/pipe_dispenser(src) //What could possibly go wrong?
 		src.modules += new /obj/item/weapon/extinguisher(src)
 //		src.modules += new /obj/item/device/flashlight(src)
 		src.modules += new /obj/item/weapon/weldingtool/largetank(src)
@@ -140,9 +141,21 @@
 		M.amount = 50
 		src.modules += M
 
-		var/obj/item/stack/sheet/rglass/cyborg/G = new /obj/item/stack/sheet/rglass/cyborg(src)
+		var/obj/item/stack/tile/plasteel/F = new /obj/item/stack/tile/plasteel(src)
+		F.amount = 50
+		src.modules += F
+
+		var/obj/item/stack/rods/O = new /obj/item/stack/rods(src)
+		O.amount = 50
+		src.modules += O
+
+		var/obj/item/stack/sheet/glass/cyborg/G = new /obj/item/stack/sheet/glass/cyborg(src)
 		G.amount = 50
 		src.modules += G
+
+		var/obj/item/stack/sheet/rglass/cyborg/R = new /obj/item/stack/sheet/rglass/cyborg(src)
+		R.amount = 50
+		src.modules += R
 
 		var/obj/item/weapon/cable_coil/W = new /obj/item/weapon/cable_coil(src)
 		W.amount = 50
@@ -155,6 +168,9 @@
 	respawn_consumable(var/mob/living/silicon/robot/R)
 		var/list/what = list (
 			/obj/item/stack/sheet/metal,
+			/obj/item/stack/tile/plasteel,
+			/obj/item/stack/rods,
+			/obj/item/stack/sheet/glass,
 			/obj/item/stack/sheet/rglass,
 			/obj/item/weapon/cable_coil,
 		)
