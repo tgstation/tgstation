@@ -547,6 +547,7 @@
 		// Needed for M_TOXIC_FART
 		if("fart")
 			if(world.time-lastFart >= 600)
+				var/list/farts = list("farts","passes wind","toots","tries to fart, but nothing happens.","farts with the force of one thousand suns"
 				message = "<b>[src]</b> [pick("passes wind","farts")]."
 				m_type = 2
 
