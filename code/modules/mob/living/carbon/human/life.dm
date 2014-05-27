@@ -450,7 +450,8 @@
 		var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
 		//var/safe_oxygen_max = 140 // Maximum safe partial pressure of O2, in kPa (Not used for now)
 		var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
-		var/safe_toxins_max = 0.005
+		var/safe_toxins_max = 0.5
+		var/safe_toxins_mask = 5
 		var/SA_para_min = 1
 		var/SA_sleep_min = 5
 		var/oxygen_used = 0
@@ -528,9 +529,16 @@
 		if(Toxins_pp > safe_toxins_max) // Too much toxins
 			var/ratio = (breath.toxins/safe_toxins_max) * 10
 			//adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
-			if(reagents)
-				reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
-			toxins_alert = max(toxins_alert, 1)
+			if(wear_mask)
+				if(wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)
+					if(breath.toxins > safe_toxins_mask)
+						ratio = (breath.toxins/safe_toxins_mask) * 10
+					else
+						ratio = 0
+			if(ratio)
+				if(reagents)
+					reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
+				toxins_alert = max(toxins_alert, 1)
 		else if(O2_pp > vox_oxygen_max && species.name == "Vox") //Oxygen is toxic to vox.
 			var/ratio = (breath.oxygen/vox_oxygen_max) * 1000
 			adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
