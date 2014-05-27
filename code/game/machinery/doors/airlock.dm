@@ -945,6 +945,9 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/attackby(obj/item/I as obj, mob/user as mob)
+	if(isAI(user) || isobserver(user))
+		return attack_ai(user)
+
 	if (!istype(user, /mob/living/silicon))
 		if (isElectrified())
 			// TODO: analyze the called proc
