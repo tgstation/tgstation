@@ -37,9 +37,6 @@
 	..()
 	return
 
-//process()
-	//return
-
 /obj/machinery/door/Bumped(atom/AM)
 	if(operating || emagged) return
 	if(ismob(AM))

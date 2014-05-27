@@ -4,7 +4,6 @@
 	icon_state = "computer_generic"
 	var/obj/machinery/mass_driver/connected = null
 	var/title = "Mass Driver Controls"
-	var/id = 1
 	var/timing = 0
 	var/time = 30
 	var/range = 4

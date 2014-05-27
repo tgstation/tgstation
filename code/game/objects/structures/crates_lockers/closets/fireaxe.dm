@@ -31,6 +31,7 @@
 					update_icon()
 				return
 			else if(istype(O, /obj/item/weapon))
+				user.changeNext_move(8)
 				var/obj/item/weapon/W = O
 				if(src.smashed || src.localopened)
 					if(localopened)

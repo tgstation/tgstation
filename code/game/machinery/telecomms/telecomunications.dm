@@ -20,7 +20,6 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	var/traffic = 0 // value increases as traffic increases
 	var/netspeed = 5 // how much traffic to lose per tick (50 gigabytes/second * netspeed)
 	var/list/autolinkers = list() // list of text/number values to link with
-	var/id = "NULL" // identification string
 	var/network = "NULL" // the network of the machinery
 
 	var/list/freq_listening = list() // list of frequencies to tune into: if none, will listen to all
