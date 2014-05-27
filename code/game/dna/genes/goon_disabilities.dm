@@ -143,12 +143,9 @@
 	OnSay(var/mob/M, var/message)
 		message = replacetext(message,"im not","I ain't")
 		message = replacetext(message,"i'm not","I aint")
-		message = replacetext(message,"girl",pick("honey","baby","baby doll"))
-		message = replacetext(message," man ",pick("son","buddy","brother", "pal", "friendo"))
-		message = replacetext(message," no ","naw")
-		message = replacetext(message,"security","police")
+		message = replacetext(message," girl ",pick(" honey "," baby "," baby doll "))
+		message = replacetext(message," man ",pick(" son "," buddy "," brother ", " pal ", " friendo "))
 		message = replacetext(message,"out of","outta")
-		message = replacetext(message,"thanks","thank you very much")
 		message = replacetext(message,"thank you","thank you, thank you very much")
 		message = replacetext(message,"what are you","whatcha")
 		message = replacetext(message,"yes",pick("sure", "yea"))
@@ -156,7 +153,7 @@
 		message = replacetext(message,"muh valids","getting my kicks")
 		message = replacetext(message," vox ","bird")
 		
-		if(prob(10))
+		if(prob(5))
 			return ""
 			M.visible_message("<b>[M]</b> [pick("rambles to themselves.","begins talking to themselves.")]")
 		else
@@ -165,12 +162,12 @@
 	OnMobLife(var/mob/M)
 		switch(pick(1,2))
 			if(1)
-				if(prob(20))
+				if(prob(15))
 					var/list/dancetypes = list("swinging", "fancy", "stylish", "20'th century", "jivin'", "rock and roller", "cool", "salacious", "bashing", "smashing")
 					var/dancemoves = pick(dancetypes)
 					M.visible_message("<b>[M]</b> busts out some [dancemoves] moves!")
 			if(2)
-				if(prob(20))
+				if(prob(15))
 					M.visible_message("<b>[M]</b> [pick("jiggles their hips", "rotates their hips", "gyrates their hips", "taps their foot", "dances to an imaginary song", "jiggles their legs", "snaps their fingers")]")
 
 
