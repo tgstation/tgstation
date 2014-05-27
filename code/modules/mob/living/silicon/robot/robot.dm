@@ -690,7 +690,7 @@
 			else if(mmi && wiresexposed && wires.IsAllCut())
 				//Cell is out, wires are exposed, remove MMI, produce damaged chassis, baleet original mob.
 				user << "You jam the crowbar into the robot and begin levering [mmi]."
-				if(do_after(user,3 SECONDS))
+				if (do_after(user,3))
 					user << "You damage some parts of the chassis, but eventually manage to rip out [mmi]!"
 					var/obj/item/robot_parts/robot_suit/C = new/obj/item/robot_parts/robot_suit(loc)
 					C.l_leg = new/obj/item/robot_parts/l_leg(C)
