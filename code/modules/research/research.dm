@@ -164,9 +164,8 @@ research holder datum.
 	generate_checksum()
 	return
 
-
-//Sieve
-/datum/research/proc/generate_checksum()//Creates what's essentially a checksum to compare data packets
+//Creates what's essentially a checksum to compare data packets
+/datum/research/proc/generate_checksum()
 	var/list/holder = list()
 	for(var/datum/tech/T in known_tech)
 		holder.Add("[T.id][T.level]")//Only adding the relevant bits

@@ -60,8 +60,6 @@
 		if((T20C + 20) to (T0C + 70))
 			health = max(0, health - 1)
 	if(health <= 0)
-		/*griefProtection() This seems to get called twice before running any code that deletes/damages the server or its files anwyay.
-							refreshParts and the hasReq procs that get called by this are laggy and do not need to be called by every server on the map every tick */
 		var/updateRD = 0
 		files.known_designs = list()
 		for(var/datum/tech/T in files.known_tech)
@@ -95,7 +93,7 @@
 
 //Backup files to centcom to help admins recover data after greifer attacks
 /obj/machinery/r_n_d/server/proc/griefProtection()
-	if(backup && files.checksum != backup.files.checksum)
+	if(backup && files.checksum != backup.files.checksum)//Does absolutely nothing if there's no Centcomm backup
 		for(var/datum/tech/T in files.known_tech)
 			backup.files.AddTech2Known(T)
 		for(var/datum/design/D in files.known_designs)
