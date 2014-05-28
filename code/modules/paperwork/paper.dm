@@ -28,8 +28,8 @@
 	var/spam_flag = 0
 
 	var/const/deffont = "Verdana"
-	var/const/signfont = "Lucida Handwriting"
-	var/const/crayonfont = "Comic Sans MS"
+	//var/const/signfont = "Lucida Handwriting"
+	//var/const/crayonfont = "Comic Sans MS"
 
 
 /obj/item/weapon/paper/New()
@@ -48,6 +48,38 @@
 	icon_state = "paper"
 
 
+/obj/item/weapon/paper/proc/Display(var/client/c=null,var/stars=0,var/infolinks=0)
+	if(c==null) return
+
+	//"<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>"
+
+	var/info_shown = info
+	if(info_links) info_shown = info_links
+	if(stars) info_shown = stars(info_shown)
+
+	var/text = {"<html><head><style type="text/css">
+
+    @font-face {
+      font-family: 'scriptinaregular';
+      src: url('scriptina.eot'); /* IE9 Compat Modes */
+      src: url('scriptina.eot?#iefix') format('embedded-opentype'); /* IE6-IE8 */}
+
+    @font-face {
+      font-family: 'eraserregular';
+      src: url('EraserRegular.eot');
+      src: url('EraserRegular.eot?#iefix') format('embedded-opentype');
+
+	.signature				{font-family: 'scriptinaregular'}
+	.crayon					{font-family: 'eraserregular'}
+
+	</style><TITLE>[name]</TITLE></head><body>[info_shown]<HR>[stamps]</body></html>	"}
+
+	c << browse_rsc('EraserRegular-webfont.eot',"EraserRegular.eot")
+	c << browse_rsc('scriptina-webfont.eot',"scriptina.eot")
+	c << browse(text, "window=[name]")
+
+
+
 /obj/item/weapon/paper/examine()
 	set src in oview(1)
 
@@ -55,10 +87,10 @@
 		return
 	if(in_range(usr, src))
 		if( !(ishuman(usr) || isobserver(usr) || issilicon(usr)) )
-			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
+			Display(usr,1)
 			onclose(usr, "[name]")
 		else
-			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]")
+			Display(usr)
 			onclose(usr, "[name]")
 	else
 		usr << "<span class='notice'>It is too far away.</span>"
@@ -96,10 +128,10 @@
 	else //cyborg or AI not seeing through a camera
 		dist = get_dist(src, user)
 	if(dist < 2)
-		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]")
+		Display(usr)
 		onclose(usr, "[name]")
 	else
-		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
+		Display(usr,1)
 		onclose(usr, "[name]")
 
 
@@ -146,7 +178,7 @@
 	var/i = 0
 	for(i=1,i<=fields,i++)
 		addtofield(i, "<font face=\"[deffont]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
-	info_links = info_links + "<font face=\"[deffont]\"><A href='?src=\ref[src];write=end'>write</A></font>"
+	info_links = info_links + "<font face=\"[deffont]\"><A href='?src=\ref[src];write=end'>write</A>[fields==null&&info==null ? " <A href='?src=\ref[src];help=1'>\[help\]</A>" : ""]</font>"
 
 
 /obj/item/weapon/paper/proc/clearpaper()
@@ -175,7 +207,7 @@
 	t = replacetext(t, "\[/u\]", "</U>")
 	t = replacetext(t, "\[large\]", "<font size=\"4\">")
 	t = replacetext(t, "\[/large\]", "</font>")
-	t = replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[user.real_name]</i></font>")
+	t = replacetext(t, "\[sign\]", "<span class='signature'>[user.real_name]</span>")
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
 
 	if(!iscrayon)
@@ -195,7 +227,7 @@
 		t = replacetext(t, "\[list\]", "")
 		t = replacetext(t, "\[/list\]", "")
 
-		t = "<font face=\"[crayonfont]\" color=[P.colour]><b>[t]</b></font>"
+		t = "<span class='crayon'><font color=[P.colour]><b>[t]</b></font></span>"
 
 //	t = replacetext(t, "#", "") // Junk converted to nothing!
 
@@ -222,7 +254,7 @@
 		\[i\] - \[/i\] : Makes the text <i>italic</i>.<br>
 		\[u\] - \[/u\] : Makes the text <u>underlined</u>.<br>
 		\[large\] - \[/large\] : Increases the <font size = \"4\">size</font> of the text.<br>
-		\[sign\] : Inserts a <font face=\"[signfont]\"><i>signature</i></font> of your name in a foolproof way.<br>
+		\[sign\] : Inserts a foolproof personal <span class='signature'>Signature</span>.<br>
 		\[field\] : Inserts an invisible field which lets you start type from there. Useful for forms.<br>
 		<br>
 		<b><center>Pen exclusive commands</center></b><br>
@@ -237,6 +269,9 @@
 	..()
 	if(usr.stat || usr.restrained())
 		return
+
+	if(href_list["help"])
+		src.openhelp(usr)
 
 	if(href_list["write"])
 		var/id = href_list["write"]
@@ -260,7 +295,7 @@
 				info += t // Oh, he wants to edit to the end of the file, let him.
 				updateinfolinks()
 
-			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>", "window=[name]") // Update the window
+			Display(usr,0,1)
 			update_icon()
 
 
@@ -275,7 +310,7 @@
 		clown = 1
 
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
-		user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>", "window=[name]")
+		Display(usr,0,1)
 		return
 
 	else if(istype(P, /obj/item/weapon/stamp))
@@ -303,6 +338,8 @@
 		user << "<span class='notice'>You stamp the paper with your rubber stamp.</span>"
 
 	add_fingerprint(user)
+
+
 
 
 /*

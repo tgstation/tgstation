@@ -49,7 +49,7 @@
 			P = new /obj/item/weapon/paper
 			if(events.holiday == "April Fool's Day")
 				if(prob(30))
-					P.info = "<font face=\"[P.crayonfont]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
+					P.info = "<span class='crayon'><font color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font></span>"
 					P.rigged = 1
 					P.updateinfolinks()
 
