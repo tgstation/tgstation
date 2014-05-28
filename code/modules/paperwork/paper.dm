@@ -28,7 +28,7 @@
 	var/spam_flag = 0
 
 	var/const/deffont = "Verdana"
-	var/const/signfont = "Times New Roman"
+	var/const/signfont = "Lucida Handwriting"
 	var/const/crayonfont = "Comic Sans MS"
 
 
@@ -222,7 +222,7 @@
 		\[i\] - \[/i\] : Makes the text <i>italic</i>.<br>
 		\[u\] - \[/u\] : Makes the text <u>underlined</u>.<br>
 		\[large\] - \[/large\] : Increases the <font size = \"4\">size</font> of the text.<br>
-		\[sign\] : Inserts a signature of your name in a foolproof way.<br>
+		\[sign\] : Inserts a <font face=\"[signfont]\"><i>signature</i></font> of your name in a foolproof way.<br>
 		\[field\] : Inserts an invisible field which lets you start type from there. Useful for forms.<br>
 		<br>
 		<b><center>Pen exclusive commands</center></b><br>
