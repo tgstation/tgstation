@@ -206,6 +206,7 @@
 
 		if ("deathgasp")
 			if(M_ELVIS in mutations)
+				src.emote("fart")
 				message = "<B>[src]</B> has left the building..."
 			if(M_HARDCORE in mutations)
 				message = "<B>[src]</B> whispers with his final breath, <i>'i told u i was hardcore..'</i>"
