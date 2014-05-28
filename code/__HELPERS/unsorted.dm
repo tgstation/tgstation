@@ -1246,12 +1246,21 @@ proc/get_mob_with_client_list()
 	else return zone
 
 
-/proc/get_turf(turf/location)
-	while(location)
-		if(isturf(location))
-			return location
-		location = location.loc
-	return null
+/proc/get_turf(const/atom/O)
+	if (isnull(O) || isarea(O))
+		return
+
+	var/atom/A = O
+
+	for (var/i = 0, ++i <= 20)
+		if (isturf(A))
+			return A
+
+		switch (istype(A))
+			if (1)
+				A = A.loc
+			if (0)
+				return
 
 /proc/get(atom/loc, type)
 	while(loc)
