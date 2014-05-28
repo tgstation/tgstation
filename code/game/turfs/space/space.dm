@@ -46,7 +46,7 @@
 				user << "\blue You build a catwalk!"
 				R.use(2)
 				ChangeTurf(/turf/simulated/floor/plating/airless/catwalk)
-				del(L)
+				qdel(L)
 				return
 
 		user << "\blue Constructing support lattice ..."
