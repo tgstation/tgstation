@@ -21,19 +21,9 @@ mob/living/carbon/proc/dream()
 		)
 	spawn(0)
 		for(var/i = rand(1,4),i > 0, i--)
-			var/good = pick(dreams)
-			var/bad = pick(nightmeres)
-			var/dream = pick(good,bad)
-			switch(dream)
-				if(good)
-					src << "\blue <i>... [good] ...</i>"
-					return
-				if(bad)
-					src << "\red <i>... [bad] ...</i>"
-					return
-				else
-					src << "<span class='sinister'>nothing is there....</span>"
-					return
+			var/dream_image = pick(dreams)
+			dreams -= dream_image
+			src << "\blue <i>... [dream_image] ...</i>"
 			sleep(rand(40,70))
 			if(paralysis <= 0)
 				dreaming = 0
