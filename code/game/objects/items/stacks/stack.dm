@@ -169,7 +169,6 @@
 		src = null //dont kill proc after del()
 		if(usr)
 			usr.before_take_item(oldsrc)
-			usr.drop_item(src)
 		qdel(oldsrc)
 	return
 
