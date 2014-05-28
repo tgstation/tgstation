@@ -778,6 +778,8 @@
 #include "code\modules\admin\verbs\ticklag.dm"
 #include "code\modules\admin\verbs\tripAI.dm"
 #include "code\modules\admin\verbs\vox_raiders.dm"
+#include "code\modules\admin\verbs\SDQL_2\SDQL_2.dm"
+#include "code\modules\admin\verbs\SDQL_2\SDQL_2_parser.dm"
 #include "code\modules\assembly\assembly.dm"
 #include "code\modules\assembly\bomb.dm"
 #include "code\modules\assembly\helpers.dm"
