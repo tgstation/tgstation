@@ -367,9 +367,10 @@
 			loc = F
 			F.weldtool = src
 			add_fingerprint(user)
+			user << "<span class='notice'>You add a rod to a welder, starting to build a flamethrower.</span>"
 			user.put_in_hands(F)
 		else
-			user << "<span class='warning'>You need at least one rod for that.</span>"
+			user << "<span class='warning'>You need one rod to start building a flamethrower.</span>"
 			return
 
 /obj/item/weapon/weldingtool/largetank

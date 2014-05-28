@@ -24,15 +24,13 @@
 			user.unEquip(src, 1)
 			qdel(src)
 
-	if(istype(O,/obj/item/stack/sheet/metal))
+	if(istype(O, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = O
-		if (M.get_amount() < 1)
-			user << "There is not enough metal"
+		if (M.use(1))
+			use(1)
+			var/obj/item/stack/tile/light/L = new (user.loc)
+			user << "<span class='notice'>You make a light tile.</span>"
+			L.add_fingerprint(user)
+		else
+			user << "<span class='warning'>You need one metal sheet to finish the light tile.</span>"
 			return
-		M.use(1)
-		amount--
-		var/obj/item/stack/tile/light/L = new (user.loc)
-		L.add_fingerprint(user)
-		if(amount <= 0)
-			user.unEquip(src, 1)
-			qdel(src)

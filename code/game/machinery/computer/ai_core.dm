@@ -88,11 +88,14 @@
 				if(G.get_amount() >= 2)
 					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
-						if (G && G.get_amount() >= 2)
+						if (G.get_amount() >= 2 && state == 3)
 							G.use(2)
 							user << "<span class='notice'>You put in the glass panel.</span>"
 							state = 4
 							icon_state = "4"
+				else
+					user << "<span class='warning'>You need two sheets of reinforced glass to insert them into AI core.</span>
+					return
 
 			if(istype(P, /obj/item/weapon/aiModule/core/full)) //Allows any full core boards to be applied to AI cores.
 				var/obj/item/weapon/aiModule/core/M = P

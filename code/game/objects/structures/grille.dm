@@ -154,7 +154,7 @@
 					user << "<span class='notice'>There is already a window facing this way there.</span>"
 					return
 			var/obj/structure/window/WD
-			if(istype(W,/obj/item/stack/sheet/rglass))
+			if(istype(W, /obj/item/stack/sheet/rglass))
 				WD = new/obj/structure/window(loc,1) //reinforced window
 			else
 				WD = new/obj/structure/window(loc,0) //normal window

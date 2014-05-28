@@ -20,13 +20,14 @@
 		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
+			user << "<span class='warning'>There is already a lattice.</span>
 			return
 		if (R.use(1))
 			user << "<span class='notice'>Constructing support lattice...</span>"
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 			ReplaceWithLattice()
 		else
-			user << "<span class='warning'>You need at least one rod for that.</span>"
+			user << "<span class='warning'>You need one rod to build lattice.</span>"
 			return
 		return
 
@@ -37,13 +38,14 @@
 			if (S.use(1))
 				qdel(L)
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+				user << "<span class='notice'>You build a floor.</span>"
 				S.build(src)
 			else
-				user << "<span class='warning'>You need at least one floor tile for that.</span>"
+				user << "<span class='warning'>You need one floor tile to build a floor.</span>"
 				return
 			return
 		else
-			user << "<span class='danger'>The plating is going to need some support.</span>"
+			user << "<span class='danger'>The plating is going to need some support. Place metal rods first.</span>"
 	return
 
 

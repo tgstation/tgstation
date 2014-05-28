@@ -141,19 +141,6 @@
 		storages += glastore
 		storages += wirestore
 
-	respawn_consumable(var/mob/living/silicon/robot/R)
-		var/list/what = list (
-			/obj/item/stack/cable_coil,
-		)
-		for(var/T in what)
-			if(!(locate(T) in modules))
-				modules -= null
-				var/O = new T(src)
-				modules += O
-				O:amount = 1
-		..()
-
-
 /obj/item/weapon/robot_module/security
 	name = "security robot module"
 
@@ -253,6 +240,7 @@
 /datum/robot_energy_storage
 	var/name = "Generic energy storage"
 	var/max_energy = 30000
+	var/recharge_rate = 1000
 	var/energy
 
 /datum/robot_energy_storage/New()
@@ -278,6 +266,8 @@
 	name = "Glass Synthesizer"
 
 /datum/robot_energy_storage/wire
+	max_energy = 50
+	recharge_rate = 2
 	name = "Wire Synthesizer"
 
 /datum/robot_energy_storage/reagent

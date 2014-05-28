@@ -24,7 +24,7 @@
 			user << "<span class='notice'>You reinforce the [name].</span>"
 			qdel(src)
 		else
-			user << "<span class='warning'>You need at least four rods for that.</span>"
+			user << "<span class='warning'>You need four rods to reinforce table parts.</span>"
 			return
 
 /obj/item/weapon/table_parts/attack_self(mob/user as mob)

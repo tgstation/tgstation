@@ -76,18 +76,17 @@
 		Emag()
 		return
 
-	if(istype(W, /obj/item/stack/sheet/glass)) // TODO: make it better
+	if(istype(W, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = W
-		if(G.get_amount() - decrement >= 0 && uses < max_uses)
-			var/remaining = max(G.get_amount() - decrement, 0)
-			if(!remaining && !(G.get_amount() - decrement) == 0)
-				user << "There isn't enough glass."
-				return
-			G.use(decrement)
-			//G.amount = remaining
-			AddUses(increment)
-			user << "You insert a piece of glass into the [src.name]. You have [uses] lights remaining."
+		if(uses >= max_uses)
+			user << "span class='warning'>[src.name] is full."
 			return
+		else if(G.use(decrement))
+			AddUses(increment)
+			user << "<span class='notice'>You insert a piece of glass into the [src.name]. You have [uses] lights remaining.</span>"
+			return
+		else
+			user << "<span class='warning'>You need one sheet of glass to replace lights.</span>"
 
 	if(istype(W, /obj/item/weapon/light))
 		var/obj/item/weapon/light/L = W

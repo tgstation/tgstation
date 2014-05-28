@@ -108,13 +108,13 @@
 		if (M.use(1))
 			var/obj/item/weapon/ed209_assembly/B = new /obj/item/weapon/ed209_assembly
 			B.loc = get_turf(src)
-			user << "You armed the robot frame"
+			user << "<span class='notice'>You armed the robot frame.</span>"
 			if (user.get_inactive_hand()==src)
 				user.unEquip(src)
 				user.put_in_inactive_hand(B)
 			qdel(src)
 		else
-			user << "<span class='warning'>You need one sheet of metal to do that.</span>"
+			user << "<span class='warning'>You need one sheet of metal to start building ED-209.</span>"
 			return
 	if(istype(W, /obj/item/robot_parts/l_leg))
 		if(src.l_leg)	return

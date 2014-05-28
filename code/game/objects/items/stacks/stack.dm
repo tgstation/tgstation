@@ -37,6 +37,12 @@
 /obj/item/stack/examine()
 	set src in view(1)
 	..()
+	if (is_cyborg)
+		if(src.singular_name)
+			usr << "There is enough energy for [src.get_amount()] [src.singular_name]\s."
+		else
+			usr << "There is enough energy for [src.get_amount()]."
+		return
 	if(src.singular_name)
 		if(src.get_amount()>1)
 			usr << "There are [src.get_amount()] [src.singular_name]\s in the stack."

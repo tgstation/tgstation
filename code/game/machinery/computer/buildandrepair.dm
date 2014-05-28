@@ -354,13 +354,13 @@
 			if(istype(P, /obj/item/stack/sheet/glass))
 				var/obj/item/stack/sheet/glass/G = P
 				if(G.get_amount() < 2)
-					user << "<span class='warning'>You need at least two glass sheets for that.</span>"
+					user << "<span class='warning'>You need two glass sheets to continue construction.</span>"
 					return
 				else
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "<span class='notice'>You start to put in the glass panel.</span>"
 					if(do_after(user, 20))
-						if(G && G.get_amount() >= 2) // TODO: test what happens if I do it quickly a few times
+						if(G.get_amount() >= 2 && state == 3)
 							G.use(2)
 							user << "<span class='notice'>You've put in the glass panel.</span>"
 							src.state = 4

@@ -109,7 +109,7 @@
 			user << "<span class='notice'>You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles.</span>"
 			src.updateicon()
 		else
-			user << "<span class='warning'>You need at least one floor tile for that.</span>"
+			user << "<span class='warning'>You need at least one floor tile to put it into floorbot.</span>"
 	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(src.allowed(usr) && !open && !emagged)
 			src.locked = !src.locked
@@ -412,19 +412,19 @@
 		..()
 		return
 	if(src.contents.len >= 1)
-		user << "<span class='notice'>They wont fit in as there is already stuff inside.</span>"
+		user << "<span class='alert'>They won't fit in, as there is already stuff inside.</span>"
 		return
-	if (T.get_amount() < 10)
-		user << "You need at least 10 floor tiles for this"
+	if(T.use(10))
+		if(user.s_active)
+			user.s_active.close(user)
+		var/obj/item/weapon/toolbox_tiles/B = new /obj/item/weapon/toolbox_tiles
+		user.put_in_hands(B)
+		user << "<span class='notice'>You add the tiles into the empty toolbox. They protrude from the top.</span>"
+		user.unEquip(src, 1)
+		qdel(src)
+	else
+		user << "<span class='alert'>You need 10 floor tiles to start building a floorbot.</span>"
 		return
-	if(user.s_active)
-		user.s_active.close(user)
-	T.use(10)
-	var/obj/item/weapon/toolbox_tiles/B = new /obj/item/weapon/toolbox_tiles
-	user.put_in_hands(B)
-	user << "<span class='notice'>You add the tiles into the empty toolbox. They protrude from the top.</span>"
-	user.unEquip(src, 1)
-	qdel(src)
 
 /obj/item/weapon/toolbox_tiles/attackby(var/obj/item/W, mob/user as mob)
 	..()

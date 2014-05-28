@@ -98,7 +98,7 @@
 			user << "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>"
 			qdel(src)
 		else
-			user << "<span class='warning'>You need at least one rod for that.</span>"
+			user << "<span class='warning'>You need one rod to make a wired rod.</span>"
 			return
 
 /obj/item/weapon/handcuffs/cyborg/attack(mob/living/carbon/C, mob/user)
