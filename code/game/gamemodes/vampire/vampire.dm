@@ -295,7 +295,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 			blood = min(10, H.vessel.get_reagent_amount("blood"))// if they have less than 10 blood, give them the remnant else they get 10 blood
 			src.mind.vampire.bloodtotal += blood
 			src.mind.vampire.bloodusable += blood
-			H.adjustCloneLoss(5) // beep boop 10 damage
+			H.adjustCloneLoss(10) // beep boop 10 damage
 		else
 			blood = min(5, H.vessel.get_reagent_amount("blood"))// The dead only give 5 bloods
 			src.mind.vampire.bloodtotal += blood
