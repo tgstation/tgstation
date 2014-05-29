@@ -20,7 +20,7 @@
 		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
-			user << "<span class='warning'>There is already a lattice.</span>
+			user << "<span class='warning'>There is already a lattice.</span>"
 			return
 		if (R.use(1))
 			user << "<span class='notice'>Constructing support lattice...</span>"

@@ -29,14 +29,14 @@
 	add_fingerprint(user)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
-		if(CC.get_amount() < 5)
-			user << "\b There is not enough wire in this coil. You need 5 lengths."
+		if (get_amount() < 1 || CC.get_amount() < 5)
+			user << "<span class='warning>You need five lengths of coil and one sheet of glass to make wired glass.</span>"
 			return
 		CC.use(5)
-		user << "\blue You attach wire to the [name]."
+		use(1)
+		user << "<span class='notice'>You attach wire to the [name].</span>"
 		var/obj/item/stack/light_w/new_tile = new(user.loc)
 		new_tile.add_fingerprint(user)
-		src.use(1)
 	else if(istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/V = W
 		if (V.get_amount() > 1 && src.get_amount() > 1)

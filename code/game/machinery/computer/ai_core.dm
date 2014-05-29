@@ -67,10 +67,14 @@
 				if(C.get_amount() >= 5)
 					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
-						C.use(5)
-						user << "<span class='notice'>You add cables to the frame.</span>"
-						state = 3
-						icon_state = "3"
+						if (C.get_amount() >= 5 && state == 3)
+							C.use(5)
+							user << "<span class='notice'>You add cables to the frame.</span>"
+							state = 3
+							icon_state = "3"
+				else
+					user << "<span class='warning'>You need five lengths of cable to wire the AI core.</span>"
+					return
 		if(3)
 			if(istype(P, /obj/item/weapon/wirecutters))
 				if (brain)
@@ -94,7 +98,7 @@
 							state = 4
 							icon_state = "4"
 				else
-					user << "<span class='warning'>You need two sheets of reinforced glass to insert them into AI core.</span>
+					user << "<span class='warning'>You need two sheets of reinforced glass to insert them into AI core.</span>"
 					return
 
 			if(istype(P, /obj/item/weapon/aiModule/core/full)) //Allows any full core boards to be applied to AI cores.

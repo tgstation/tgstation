@@ -621,11 +621,15 @@ obj/structure/cable/proc/avail()
 	if(!isturf(user.loc))
 		return
 
-	if(get_dist(F,user) > 1) //too far
+	if(get_amount() < 1) // Out of cable
+		user << "There is no cable left."
+		return
+
+	if(get_dist(F,user) > 1) // Too far
 		user << "You can't lay cable at a place that far away."
 		return
 
-	if(F.intact)		// if floor is intact, complain
+	if(F.intact)		// Ff floor is intact, complain
 		user << "You can't lay cable there unless the floor tiles are removed."
 		return
 

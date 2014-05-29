@@ -458,13 +458,16 @@ obj/structure/door_assembly
 			src.anchored = 0
 
 	else if(istype(W, /obj/item/stack/cable_coil) && state == 0 && anchored )
-		var/obj/item/stack/cable_coil/coil = W
+		var/obj/item/stack/cable_coil/C = W
+		if (C.get_amount() < 1)
+			user << "<span class='warning'>You need one length of cable to wire the airlock assembly.</span>"
+			return
 		user.visible_message("[user] wires the airlock assembly.", "You start to wire the airlock assembly.")
 		if(do_after(user, 40))
-			if(!src) return
-			coil.use(1)
+			if(C.get_amount() < 1 || state != 0) return
+			C.use(1)
 			src.state = 1
-			user << "\blue You've wired the airlock assembly."
+			user << "<span class='notice'>You've wired the airlock assembly.</span>"
 			src.name = "wired airlock assembly"
 
 	else if(istype(W, /obj/item/weapon/wirecutters) && state == 1 )
