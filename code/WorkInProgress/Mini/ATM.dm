@@ -11,7 +11,7 @@ log transactions
 #define CHANGE_SECURITY_LEVEL 1
 #define TRANSFER_FUNDS 2
 #define VIEW_TRANSACTION_LOGS 3
-#define PRINT_DELAY 60
+#define PRINT_DELAY 100
 
 /obj/item/weapon/card/id/var/money = 2000
 
@@ -328,7 +328,7 @@ log transactions
 			if("balance_statement")
 				if(authenticated_account)
 					if(world.timeofday < lastprint + PRINT_DELAY)
-						usr << "<span class='notice'>The [src.name] flashes and error on its display.</span>"
+						usr << "<span class='notice'>The [src.name] flashes an error on its display.</span>"
 						return
 					lastprint = world.timeofday
 					var/obj/item/weapon/paper/R = new(src.loc)
