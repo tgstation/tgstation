@@ -356,7 +356,7 @@
 /obj/machinery/mecha_part_fabricator/proc/build_part(var/obj/item/part)
 	if(!part) return
 	
-	 // critical exploit prevention, do not remove unless you replace it -walter0o
+	 // critical exploit prevention, do not remove unless you replace it
 	if( !(locate(part, src.contents)) || !(part.vars.Find("construction_time")) || !(part.vars.Find("construction_cost")) ) // these 3 are the current requirements for an object being buildable by the mech_fabricator
 		return
 	
@@ -609,9 +609,9 @@
 	return
 
 /obj/machinery/mecha_part_fabricator/proc/exploit_prevention(var/obj/Part, mob/user as mob, var/desc_exploit)
-// critical exploit prevention, feel free to improve or replace this, but do not remove it -walter0o
+// critical exploit prevention, feel free to improve or replace this, but do not remove it
 	
-	if(!Part || !user || !istype(Part) || !istype(user)) // sanity
+	if(!istype(Part) || !istype(user)) // sanity
 		return 1
 	
 	if( !(locate(Part, src.contents)) || !(Part.vars.Find("construction_time")) || !(Part.vars.Find("construction_cost")) ) // these 3 are the current requirements for an object being buildable by the mech_fabricator
@@ -638,7 +638,7 @@
 	if(href_list["part"])
 		var/obj/part = filter.getObj("part")
 		
-		// critical exploit prevention, do not remove unless you replace it -walter0o
+		// critical exploit prevention, do not remove unless you replace it
 		if(src.exploit_prevention(part, usr))
 			return
 		
@@ -649,7 +649,7 @@
 	if(href_list["add_to_queue"])
 		var/obj/part = filter.getObj("add_to_queue")
 		
-		// critical exploit prevention, do not remove unless you replace it -walter0o
+		// critical exploit prevention, do not remove unless you replace it
 		if(src.exploit_prevention(part, usr))
 			return
 			
@@ -694,7 +694,7 @@
 	if(href_list["part_desc"])
 		var/obj/part = filter.getObj("part_desc")
 		
-		// critical exploit prevention, do not remove unless you replace it -walter0o
+		// critical exploit prevention, do not remove unless you replace it
 		if(src.exploit_prevention(part, usr, 1))
 			return
 		
