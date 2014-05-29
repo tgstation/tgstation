@@ -1299,7 +1299,7 @@ datum/preferences
 		if(be_random_name)
 			real_name = random_name(gender,species)
 
-		if(config.humans_need_surnames)
+		if(config.humans_need_surnames && species == "Human")
 			var/firstspace = findtext(real_name, " ")
 			var/name_length = length(real_name)
 			if(!firstspace)	//we need a surname

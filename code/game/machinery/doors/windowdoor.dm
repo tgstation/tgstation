@@ -28,7 +28,7 @@
 	..()
 
 /obj/machinery/door/window/Bumped(atom/movable/AM as mob|obj)
-	if (!( ismob(AM) ))
+	if (!ismob(AM))
 		var/obj/machinery/bot/bot = AM
 		if(istype(bot))
 			if(density && src.check_access(bot.botcard))
@@ -49,6 +49,7 @@
 		return
 	if (src.density && src.allowed(AM))
 		open()
+		// What.
 		if(src.check_access(null))
 			sleep(50)
 		else //secure doors close faster

@@ -1471,3 +1471,13 @@ mob/living/carbon/human/yank_out_object()
 		if(M.magpulse)
 			return 0
 	return 1
+
+// Get ALL accesses available.
+/mob/living/carbon/human/GetAccess()
+	var/list/ACL=list()
+	var/obj/item/I = get_active_hand()
+	if(istype(I))
+		ACL |= I.GetAccess()
+	if(wear_id)
+		ACL |= wear_id.GetAccess()
+	return ACL

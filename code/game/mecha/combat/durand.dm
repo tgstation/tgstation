@@ -33,7 +33,6 @@
 	. = ..()
 	return
 
-
 /obj/mecha/combat/durand/verb/defence_mode()
 	set category = "Exosuit Interface"
 	set name = "Toggle defence mode"
@@ -43,10 +42,16 @@
 		return
 	defence = !defence
 	if(defence)
+		icon_state = 0
+		if(!istype(src,/obj/mecha/combat/durand/old))
+			flick("durand-lockdown-a",src)
+			icon_state = "durand-lockdown"
 		deflect_chance = defence_deflect
 		src.occupant_message("<font color='blue'>You enable [src] defence mode.</font>")
 	else
 		deflect_chance = initial(deflect_chance)
+		if(!istype(src,/obj/mecha/combat/durand/old))
+			icon_state = reset_icon()
 		src.occupant_message("<font color='red'>You disable [src] defence mode.</font>")
 	src.log_message("Toggled defence mode.")
 	return

@@ -187,40 +187,45 @@
 
 	anchored = 1
 	density = 0
+	layer = 2
 	var/health = 15
 	var/obj/effect/alien/weeds/node/linked_node = null
+
+/obj/effect/alien/weeds/Destroy()
+	if(linked_node)
+		linked_node.connected_weeds.Remove(src)
+		linked_node = null
+	..()
 
 /obj/effect/alien/weeds/node
 	icon_state = "weednode"
 	name = "purple sac"
 	desc = "Weird purple octopus-like thing."
+	layer = 3
 	luminosity = NODERANGE
 	var/node_range = NODERANGE
-	var/list/obj/effect/alien/weeds/spawns
+	var/list/obj/effect/alien/weeds/connected_weeds
 
 /obj/effect/alien/weeds/node/Destroy()
-	for(var/obj/effect/alien/weeds/W in spawns)
-		if(W.linked_node == src)
-			W.linked_node = null
-	..()
-
-/obj/effect/alien/weeds/Destroy()
-	if(linked_node)
-		linked_node.spawns.Remove(src)
+	for(var/obj/effect/alien/weeds/W in connected_weeds)
+		W.linked_node = null
 	..()
 
 /obj/effect/alien/weeds/node/New()
-	spawns = new()
+	connected_weeds = new()
 	..(src.loc, src)
 
-
-/obj/effect/alien/weeds/New(pos, var/obj/effect/alien/weeds/node/node)
+/obj/effect/alien/weeds/New(pos, var/obj/effect/alien/weeds/node/N)
 	..()
-	linked_node = node
-	linked_node.spawns.Add(src)
+
 	if(istype(loc, /turf/space))
-		del(src)
+		qdel(src)
 		return
+	
+	linked_node = N
+	if(linked_node)
+		linked_node.connected_weeds.Add(src)
+	
 	if(icon_state == "weeds")icon_state = pick("weeds", "weeds1", "weeds2")
 	spawn(rand(150, 200))
 		if(src)
@@ -246,16 +251,17 @@ Alien plants should do something if theres a lot of poison
 	if (istype(U, /turf/space))
 		del(src)
 		return
-
+	
+	if(!linked_node || (get_dist(linked_node, src) > linked_node.node_range) )
+		return
+	
 	direction_loop:
 		for(var/dirn in cardinal)
+			
 			var/turf/T = get_step(src, dirn)
 
 			if (!istype(T) || T.density || locate(/obj/effect/alien/weeds) in T || istype(T.loc, /area/arrival) || istype(T, /turf/space))
 				continue
-
-			if(!linked_node || get_dist(linked_node, src) > linked_node.node_range)
-				return
 
 	//		if (locate(/obj/movable, T)) // don't propogate into movables
 	//			continue

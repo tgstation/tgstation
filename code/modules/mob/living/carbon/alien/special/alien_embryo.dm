@@ -157,7 +157,7 @@ Des: Removes all infection images from aliens and places an infection image on a
 		if(alien.client)
 			for(var/image/I in alien.client.images)
 				if(dd_hasprefix_case(I.icon_state, "infected"))
-					del(I)
+					alien.client.images -= I
 			for(var/mob/living/L in mob_list)
 				if(iscorgi(L) || iscarbon(L))
 					if(L.status_flags & XENO_HOST)

@@ -19,7 +19,7 @@ filed a bug report: http://www.byond.com/forum/?post=1507331
 They closed it with "Not a Bug".
 
 So, here we are.  The only way to edit DMIs that big 
-is with third-party tools like OpenBYOND.
+is with third-party tools like BYONDTools.
 
 How to Compile
 --------------

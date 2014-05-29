@@ -5,14 +5,14 @@
 /mob/living/silicon/robot/mommi/get_active_hand()
 	return module_active
 
-/mob/living/silicon/robot/mommi/proc/is_in_modules(obj/item/W)
+/mob/living/silicon/robot/mommi/proc/is_in_modules(obj/item/W, var/permit_sheets=0)
 	if(istype(W, src.module.emag.type))
 		return src.module.emag
 	// Exact matching for stacks (so we can load machines)
 	if(istype(W, /obj/item/stack/sheet))
 		for(var/obj/item/stack/sheet/S in src.module.modules)
 			if(S.type==W.type)
-				return S
+				return permit_sheets ? 0 : S
 	else
 		return locate(W) in src.module.modules
 

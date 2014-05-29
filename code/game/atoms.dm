@@ -84,7 +84,7 @@
 // Like Del(), but for qdel.
 // Called BEFORE qdel moves shit.
 /atom/proc/Destroy()
-	gc_destroyed=world.time
+	gc_destroyed = world.timeofday
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	return null
@@ -199,7 +199,7 @@ its easier to just keep the beam vertical.
 	//Maxdistance is the longest range the beam will persist before it gives up.
 	var/EndTime=world.time+time
 	var/broken = 0
-	var/obj/item/projectile/beam/lightning/light = new
+	var/obj/item/projectile/beam/lightning/light = getFromPool(/obj/item/projectile/beam/lightning)
 	while(BeamTarget&&world.time<EndTime&&get_dist(src,BeamTarget)<maxdistance&&z==BeamTarget.z)
 
 	//If the BeamTarget gets deleted, the time expires, or the BeamTarget gets out

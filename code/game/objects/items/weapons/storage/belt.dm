@@ -173,9 +173,11 @@
 	desc = "Excellent for holding the heads of your fallen foes."
 	icon_state = "utilitybelt"
 	item_state = "utility"
+	max_w_class = 4
+	max_combined_w_class = 28
 	can_hold = list(
- 		"/datum/organ/external/head"
- 		)
+ 		"/obj/item/weapon/organ/head"
+ 	)
 
 
 /obj/item/weapon/storage/belt/mining

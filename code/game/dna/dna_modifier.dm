@@ -75,7 +75,7 @@
 	set category = "Object"
 	set name = "Eject DNA Scanner"
 
-	if (usr.stat != 0)
+	if (usr.stat != 0 || istype(usr, /mob/living/simple_animal))
 		return
 
 	eject_occupant()
@@ -160,6 +160,8 @@
 		return
 	visible_message("[user] puts [L.name] into the DNA Scanner.", 3)
 	put_in(L)
+	if(user.pulling == L)
+		user.pulling = null
 
 /obj/machinery/dna_scannernew/attackby(var/obj/item/weapon/item as obj, var/mob/user as mob)
 	if (istype(item, /obj/item/weapon/screwdriver))
@@ -289,6 +291,11 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "scanner"
 	density = 1
+
+	anchored = 1
+	idle_power_usage = 200
+	active_power_usage = 400
+
 	var/selected_ui_block = 1.0
 	var/selected_ui_subblock = 1.0
 	var/selected_se_block = 1.0
@@ -299,15 +306,16 @@
 	var/radiation_intensity = 1.0
 	var/list/datum/dna2/record/buffers[3]
 	var/irradiating = 0
-	var/injector_ready = 0	//Quick fix for issue 286 (screwdriver the screen twice to restore injector)	-Pete
-	var/obj/machinery/dna_scannernew/connected = null
-	var/obj/item/weapon/disk/data/disk = null
-	var/selected_menu_key = null
-	anchored = 1
-	use_power = 1
-	idle_power_usage = 10
-	active_power_usage = 400
-	var/waiting_for_user_input=0 // Fix for #274 (Mash create block injector without answering dialog to make unlimited injectors) - N3X
+
+	// Quick fix for issue 286 (screwdriver the screen twice to restore injector) -Pete.
+	var/injector_ready = 0
+
+	var/obj/machinery/dna_scannernew/connected
+	var/obj/item/weapon/disk/data/disk
+	var/selected_menu_key
+
+	// Fix for #274 (Mash create block injector without answering dialog to make unlimited injectors) - N3X.
+	var/waiting_for_user_input = 0
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver))
@@ -415,14 +423,25 @@
 		src.disk = W
 		user << "You insert [W]."
 		nanomanager.update_uis(src) // update all UIs attached to src()
+
+/obj/machinery/computer/scan_consolenew/process()
+	if (stat & (BROKEN | NOPOWER | MAINT | EMPED))
+		use_power = 0
+		return
+
+	if (connected && connected.occupant)
+		use_power = 2
+	else
+		use_power = 1
+
 /*
-/obj/machinery/computer/scan_consolenew/process() //not really used right now
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!( src.status )) //remove this
 		return
 	return
 */
+
 /obj/machinery/computer/scan_consolenew/attack_paw(user as mob)
 	ui_interact(user)
 

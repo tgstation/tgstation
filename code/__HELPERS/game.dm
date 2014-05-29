@@ -7,23 +7,27 @@
 	src:Topic(href, href_list)
 	return null
 
-/proc/get_area(O)
-	var/atom/location = O
-	var/i
-	for(i=1, i<=20, i++)
-		if(isarea(location))
-			return location
-		else if (istype(location))
-			location = location.loc
-		else
-			return null
-	return 0
+/proc/get_area(const/atom/O)
+	if (isnull(O))
+		return
 
-/proc/get_area_master(O)
+	var/atom/A = O
+
+	for (var/i = 0, ++i <= 20)
+		if (isarea(A))
+			return A
+
+		switch (istype(A))
+			if (1)
+				A = A.loc
+			if (0)
+				return
+
+/proc/get_area_master(const/O)
 	var/area/A = get_area(O)
-	if(A && A.master)
-		A = A.master
-	return A
+
+	if (isarea(A))
+		return A.master
 
 /proc/get_area_name(N) //get area by its name
 	for(var/area/A in world)
@@ -184,10 +188,10 @@
 		if(ismob(A))
 			var/mob/M = A
 			if(M.client)
-				hear += M
+				hear.Add(M)
 			//world.log << "Start = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
 		else if(istype(A, /obj/item/device/radio))
-			hear += A
+			hear.Add(A)
 
 		hear = recursive_mob_check(A, hear, 3, 1, 0, 1)
 

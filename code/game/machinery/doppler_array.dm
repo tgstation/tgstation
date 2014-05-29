@@ -9,10 +9,12 @@ var/list/doppler_arrays = list()
 	var/list/bangs = list()
 
 /obj/machinery/computer/bhangmeter/New()
+	..()
 	doppler_arrays += src
 
 /obj/machinery/computer/bhangmeter/Destroy()
 	doppler_arrays -= src
+	..()
 
 /obj/machinery/computer/bhangmeter/process()
 	return PROCESS_KILL

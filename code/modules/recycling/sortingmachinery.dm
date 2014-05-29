@@ -323,7 +323,8 @@
 		if(doFlushIn>0)
 			if(doFlushIn==1 || num_contents>=50)
 				//testing("[src] FLUSHING")
-				src.flush()
+				spawn(0)
+					src.flush()
 			doFlushIn--
 
 

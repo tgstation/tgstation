@@ -614,14 +614,14 @@ var/list/artifact_spawn = list() // Runtime fix for geometry loading before cont
 /turf/unsimulated/mineral/random
 	name = "Mineral deposit"
 	var/mineralSpawnChanceList = list(
-		"Uranium" = 5,
-		"Iron" = 50,
-		"Diamond" = 1,
-		"Gold" = 5,
-		"Silver" = 5,
-		"Plasma" = 25,
+		"Iron"      = 50,
+		"Plasma"    = 25,
+		"Uranium"   = 5,
+		"Gold"      = 5,
+		"Silver"    = 5,
 		"Gibtonite" = 5,
-		"Cave" = 1
+		"Diamond"   = 1,
+		"Cave"      = 1
 	)
 	//Currently, Adamantine won't spawn as it has no uses. -Durandan
 	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
@@ -634,10 +634,12 @@ var/list/artifact_spawn = list() // Runtime fix for geometry loading before cont
 		if(!name_to_mineral)
 			SetupMinerals()
 
-		if (mineral_name && mineral_name in name_to_mineral)
-			mineral = name_to_mineral[mineral_name]
-			mineral.UpdateTurf(src)
-
+		if (mineral_name)
+			if(mineral_name in name_to_mineral)
+				mineral = name_to_mineral[mineral_name]
+				mineral.UpdateTurf(src)
+			else
+				warning("Unknown mineral ID: [mineral_name]")
 
 	. = ..()
 
@@ -664,7 +666,7 @@ var/list/artifact_spawn = list() // Runtime fix for geometry loading before cont
 		"Silver"  = 5,
 		"Plasma"  = 25,
 		"Clown"   = 15,
-		"Phazite" = 10
+		"Phazon"  = 10
 	)
 
 /turf/unsimulated/mineral/random/Destroy()

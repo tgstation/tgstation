@@ -351,7 +351,6 @@ Auto Patrol: []"},
 
 
 		if(SECBOT_PATROL)		// patrol mode
-
 			patrol_step()
 			spawn(5)
 				if(mode == SECBOT_PATROL)
@@ -606,6 +605,7 @@ Auto Patrol: []"},
 			else if((src.idcheck) && (istype(C, /mob/living/carbon/monkey)))
 				src.threatlevel = 4
 
+		/*
 		else if(istype(M, /mob/living/simple_animal/hostile))
 			if(M.stat == DEAD)
 				continue
@@ -616,6 +616,7 @@ Auto Patrol: []"},
 			if(M.faction == "neutral")
 				continue
 			src.threatlevel = 4
+		*/
 
 		if(!src.threatlevel)
 			continue

@@ -945,6 +945,9 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/attackby(obj/item/I as obj, mob/user as mob)
+	if(isAI(user) || isobserver(user))
+		return attack_ai(user)
+
 	if (!istype(user, /mob/living/silicon))
 		if (isElectrified())
 			// TODO: analyze the called proc
@@ -998,7 +1001,9 @@ About the new airlock wires panel:
 
 				var/obj/structure/door_assembly/DA = new assembly_type(loc)
 				DA.anchored = 1
-
+				DA.fingerprints += src.fingerprints
+				DA.fingerprintshidden += src.fingerprintshidden
+				DA.fingerprintslast = user.ckey
 				if (mineral)
 					DA.glass = mineral
 				// TODO: check DA.glass

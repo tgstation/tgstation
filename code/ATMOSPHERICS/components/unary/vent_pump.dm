@@ -6,7 +6,6 @@
 	desc = "Has a valve and pump attached to it"
 	use_power = 1
 
-	var/area/initial_loc
 	level = 1
 	var/area_uid
 	var/id_tag = null
@@ -44,17 +43,14 @@
 			icon_state = "in"
 
 	New()
-		initial_loc = get_area(loc)
-		if (initial_loc.master)
-			initial_loc = initial_loc.master
-		area_uid = initial_loc.uid
+		..()
+		area_uid = areaMaster.uid
 		if (!id_tag)
 			assign_uid()
 			id_tag = num2text(uid)
 		if(ticker && ticker.current_state == 3)//if the game is running
 			src.initialize()
 			src.broadcast_status()
-		..()
 
 	high_volume
 		name = "Large Air Vent"
@@ -168,11 +164,11 @@
 				"sigtype" = "status"
 			)
 
-			if(!initial_loc.air_vent_names[id_tag])
-				var/new_name = "[initial_loc.name] Vent Pump #[initial_loc.air_vent_names.len+1]"
-				initial_loc.air_vent_names[id_tag] = new_name
-				src.name = new_name
-			initial_loc.air_vent_info[id_tag] = signal.data
+			if(!areaMaster.air_vent_names[id_tag])
+				var/new_name = "[areaMaster.name] Vent Pump #[areaMaster.air_vent_names.len+1]"
+				areaMaster.air_vent_names[id_tag] = new_name
+				name = new_name
+			areaMaster.air_vent_info[id_tag] = signal.data
 
 			radio_connection.post_signal(src, signal, radio_filter_out)
 
@@ -362,11 +358,9 @@
 			del(src)
 
 /obj/machinery/atmospherics/unary/vent_pump/Destroy()
-	if(initial_loc)
-		initial_loc.air_vent_info -= id_tag
-		initial_loc.air_vent_names -= id_tag
+	areaMaster.air_vent_info.Remove(id_tag)
+	areaMaster.air_vent_names.Remove(id_tag)
 	..()
-	return
 
 /obj/machinery/atmospherics/unary/vent_pump/Topic(href, href_list)
 	if(..())

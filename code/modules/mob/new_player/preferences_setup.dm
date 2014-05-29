@@ -139,9 +139,9 @@ datum/preferences
 
 
 	proc/update_preview_icon(var/for_observer=0)		//seriously. This is horrendous.
-		del(preview_icon_front)
-		del(preview_icon_side)
-		del(preview_icon)
+		preview_icon_front = null
+		preview_icon_side = null
+		preview_icon = null
 
 		var/g = "m"
 		if(gender == FEMALE)	g = "f"
@@ -429,5 +429,5 @@ datum/preferences
 		preview_icon_front = new(preview_icon, dir = SOUTH)
 		preview_icon_side = new(preview_icon, dir = WEST)
 
-		del(eyes_s)
-		del(clothes_s)
+		eyes_s = null
+		clothes_s = null

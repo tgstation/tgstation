@@ -74,6 +74,8 @@
 			visible_message("[user] climbs into the cryo cell.", 3)
 		else
 			visible_message("[user] puts [L.name] into the cryo cell.", 3)
+			if(user.pulling == L)
+				user.pulling = null
 
 /obj/machinery/atmospherics/unary/cryo_cell/process()
 	..()
@@ -398,7 +400,7 @@
 			return
 		go_out()//and release him from the eternal prison.
 	else
-		if (usr.stat != 0)
+		if (usr.stat != 0 || istype(usr, /mob/living/simple_animal))
 			return
 		go_out()
 	add_fingerprint(usr)

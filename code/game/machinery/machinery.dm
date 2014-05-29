@@ -112,29 +112,18 @@ Class Procs:
 	var/global/gl_uid = 1
 	var/custom_aghost_alerts=0
 	var/panel_open = 0
-	var/area/myArea
+
+	var/inMachineList = 1 // For debugging.
 
 /obj/machinery/New()
-	addAtProcessing()
+	machines.Add(src)
 	return ..()
-
-/obj/machinery/proc/addAtProcessing()
-	if (use_power)
-		myArea = get_area_master(src)
-
-	machines += src
-
-/obj/machinery/proc/removeAtProcessing()
-	if (myArea)
-		myArea = null
-
-	machines -= src
 
 /obj/machinery/Destroy()
 	if (src in machines)
-		removeAtProcessing()
+		machines.Remove(src)
 
-	..()
+	return ..()
 
 /obj/machinery/process() // If you dont use process or power why are you here
 	return PROCESS_KILL
@@ -259,7 +248,7 @@ Class Procs:
 				usr << "\red You can't link with that device."
 				return 1
 			if (isLinkedWith(O))
-				usr << "\red A red light flashes on \the [P]. The two devices are already linked between them."
+				usr << "\red A red light flashes on \the [P]. The two devices are already linked."
 				return 1
 
 			if(linkWith(usr, O))

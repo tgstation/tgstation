@@ -496,7 +496,7 @@
 /obj/machinery/mecha_part_fabricator/proc/sync(silent=null)
 	var/new_data=0
 	var/found = 0
-	for(var/obj/machinery/computer/rdconsole/RDC in area_contents(get_area(src)))
+	for(var/obj/machinery/computer/rdconsole/RDC in area_contents(areaMaster))
 		if(!RDC) continue
 		if(!RDC.sync)
 			continue
@@ -766,6 +766,10 @@
 		sleep(10)
 		if(stack && stack.amount)
 			while(material.stored < res_max_amount && stack)
+				if(stack.amount < 0 || !stack)
+					user.drop_item(stack)
+					qdel(stack)
+					break
 				material.stored += amnt
 				stack.use(1)
 				count++

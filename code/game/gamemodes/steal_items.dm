@@ -2,121 +2,155 @@
 //
 // Separated into datums so we can prevent roles from getting certain objectives.
 
-#define THEFT_FLAG_SPECIAL 1
+#define THEFT_SPECIAL         1
 
 /datum/theft_objective
 	var/name=""
 	var/typepath=/atom
 	var/list/protected_jobs=list()
+
+	// Permissible areas for the items to be in.
+	// No areas = all areas permitted.
+	var/list/areas = list()
 	var/flags=0
+
+/datum/theft_objective/proc/get_contents(var/obj/O)
+	var/list/L = list()
+
+	if(istype(O,/obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S=O
+		L += S.return_inv()
+
+	else if(istype(O,/obj/item/weapon/gift))
+		var/obj/item/weapon/gift/G = O
+		L += G.gift
+		if(istype(G.gift, /obj/item/weapon/storage))
+			L += get_contents(G.gift)
+
+	else if(istype(O,/obj/item/smallDelivery))
+		var/obj/item/smallDelivery/D = O
+		L += D.wrapped
+		if(istype(D.wrapped, /obj/item/weapon/storage)) //this should never happen
+			L += get_contents(D.wrapped)
+	return L
 
 /datum/theft_objective/proc/check_completion(var/datum/mind/owner)
 	if(!owner.current)
 		return 0
-	if(!isliving(owner.current))
-		return 0
-	var/list/all_items = owner.current.get_contents()
-	for(var/obj/I in all_items) //Check for items
-		if(istype(I, typepath))
-			//Stealing the cheap autoinjector doesn't count
-			if(istype(I, /obj/item/weapon/reagent_containers/hypospray/autoinjector))
-				continue
-			return 1
+	var/list/all_items = list()
+	if(isliving(owner.current))
+		all_items = owner.current.get_contents()
+	if(areas.len)
+		for(var/areatype in areas)
+			var/area/area = locate(areatype)
+			for(var/obj/O in area)
+				all_items += O
+				all_items += get_contents(O)
+	if(all_items.len)
+		for(var/obj/I in all_items) //Check for items
+			if(istype(I, typepath))
+				//Stealing the cheap autoinjector doesn't count
+				if(istype(I, /obj/item/weapon/reagent_containers/hypospray/autoinjector))
+					continue
+				if(areas.len)
+					if(!is_type_in_list(get_area_master(I),areas))
+						continue
+				return 1
 	return 0
 
 
-/datum/theft_objective/antique_laser_gun
+/datum/theft_objective/traitor/antique_laser_gun
 	name = "the captain's antique laser gun"
 	typepath = /obj/item/weapon/gun/energy/laser/captain
 	protected_jobs = list("Captain")
 
-/datum/theft_objective/hand_tele
+/datum/theft_objective/traitor/hand_tele
 	name = "a hand teleporter"
 	typepath = /obj/item/weapon/hand_tele
 	protected_jobs = list("Captain")
 
-/datum/theft_objective/rcd
+/datum/theft_objective/traitor/rcd
 	name = "an RCD"
 	typepath = /obj/item/weapon/rcd
 	protected_jobs = list("Chief Engineer")
 
-/datum/theft_objective/rpd
+/datum/theft_objective/traitor/rpd
 	name = "an RPD"
 	typepath = /obj/item/weapon/pipe_dispenser
 	protected_jobs = list("Chief Engineer")
 
-/datum/theft_objective/jetpack
+/datum/theft_objective/traitor/jetpack
 	name = "a jetpack"
 	typepath = /obj/item/weapon/tank/jetpack
 
-/datum/theft_objective/cap_jumpsuit
+/datum/theft_objective/traitor/cap_jumpsuit
 	name = "the captain's jumpsuit"
 	typepath = /obj/item/clothing/under/rank/captain
 	protected_jobs = list("Captain")
 
-/datum/theft_objective/ai
+/datum/theft_objective/traitor/ai
 	name = "a functional AI"
 	typepath = /obj/item/device/aicard
 
-/datum/theft_objective/magboots
+/datum/theft_objective/traitor/magboots
 	name = "a pair of magboots"
 	typepath = /obj/item/clothing/shoes/magboots
 	protected_jobs = list("Station Engineer", "Atmospheric Technician", "Chief Engineer")
 
-/datum/theft_objective/blueprints
+/datum/theft_objective/traitor/blueprints
 	name = "the station blueprints"
 	typepath = /obj/item/blueprints
 	protected_jobs = list("Chief Engineer")
 
-/datum/theft_objective/voidsuit
+/datum/theft_objective/traitor/voidsuit
 	name = "a nasa voidsuit"
 	typepath = /obj/item/clothing/suit/space/nasavoid
 	protected_jobs = list("Research Director")
 
-/datum/theft_objective/slime_extract
+/datum/theft_objective/traitor/slime_extract
 	name = "a sample of slime extract"
 	typepath = /obj/item/slime_extract
 
-/datum/theft_objective/corgi
+/datum/theft_objective/traitor/corgi
 	name = "a piece of corgi meat"
 	typepath = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
 
-/datum/theft_objective/rd_jumpsuit
+/datum/theft_objective/traitor/rd_jumpsuit
 	name = "the research director's jumpsuit"
 	typepath = /obj/item/clothing/under/rank/research_director
 	protected_jobs = list("Research Director")
 
-/datum/theft_objective/ce_jumpsuit
+/datum/theft_objective/traitor/ce_jumpsuit
 	name = "the chief engineer's jumpsuit"
 	typepath = /obj/item/clothing/under/rank/chief_engineer
 	protected_jobs = list("Chief Engineer")
 
-/datum/theft_objective/cmo_jumpsuit
+/datum/theft_objective/traitor/cmo_jumpsuit
 	name = "the chief medical officer's jumpsuit"
 	typepath = /obj/item/clothing/under/rank/chief_medical_officer
 	protected_jobs = list("Chief Medical Officer")
 
-/datum/theft_objective/hos_jumpsuit
+/datum/theft_objective/traitor/hos_jumpsuit
 	name = "the head of security's jumpsuit"
 	typepath = /obj/item/clothing/under/rank/head_of_security
 	protected_jobs = list("Head of Security")
 
-/datum/theft_objective/hop_jumpsuit
+/datum/theft_objective/traitor/hop_jumpsuit
 	name = "the head of personnel's jumpsuit"
 	typepath = /obj/item/clothing/under/rank/head_of_personnel
 	protected_jobs = list("Head of Personnel")
 
-/datum/theft_objective/hypospray
+/datum/theft_objective/traitor/hypospray
 	name = "a hypospray"
 	typepath = /obj/item/weapon/reagent_containers/hypospray
 	protected_jobs = list("Chief Medical Officer")
 
-/datum/theft_objective
+/datum/theft_objective/traitor/pinpointer
 	name = "the captain's pinpointer"
 	typepath = /obj/item/weapon/pinpointer
 	protected_jobs = list("Captain")
 
-/datum/theft_objective
+/datum/theft_objective/traitor/ablative
 	name = "an ablative armor vest"
 	typepath = /obj/item/clothing/suit/armor/laserproof
 
@@ -139,34 +173,48 @@
 /datum/theft_objective/number/check_completion(var/datum/mind/owner)
 	if(!owner.current)
 		return 0
-	if(!isliving(owner.current))
-		return 0
-	var/list/all_items = owner.current.get_contents()
-	var/found_amount=0.0
-	for(var/obj/item/I in all_items)
-		if(istype(I, typepath))
-			found_amount += getAmountStolen(I)
-	return found_amount >= required_amount
+	var/list/all_items = list()
+	if(isliving(owner.current))
+		all_items = owner.current.get_contents()
+	if(areas.len)
+		for(var/areatype in areas)
+			var/area/area = locate(areatype)
+			for(var/obj/O in area)
+				all_items += O
+				all_items += get_contents(O)
+	if(all_items.len)
+		var/found_amount = 0
+		for(var/obj/I in all_items) //Check for items
+			if(istype(I, typepath))
+				//Stealing the cheap autoinjector doesn't count
+				if(istype(I, /obj/item/weapon/reagent_containers/hypospray/autoinjector))
+					continue
+				if(areas.len)
+					if(!is_type_in_list(get_area_master(I),areas))
+						continue
+				found_amount += getAmountStolen(I)
+		return found_amount >= required_amount
+	return 0
 
 /datum/theft_objective/number/proc/getAmountStolen(var/obj/item/I)
 	return I:amount
 
-/datum/theft_objective/number/plasma_gas
+/datum/theft_objective/number/traitor/plasma_gas
 	name = "moles of plasma (full tank)"
 	typepath = /obj/item/weapon/tank
 	min=28
 	max=28
 
-/datum/theft_objective/number/plasma_gas/getAmountStolen(var/obj/item/I)
+/datum/theft_objective/number/traitor/plasma_gas/getAmountStolen(var/obj/item/I)
 	return I:air_contents:toxins
 
-/datum/theft_objective/number/coins
+/datum/theft_objective/number/traitor/coins
 	name = "credits of coins (in bag)"
 	min=1000
 	max=5000
 	step=500
 
-/datum/theft_objective/number/coins/check_completion(var/datum/mind/owner)
+/datum/theft_objective/number/traitor/coins/check_completion(var/datum/mind/owner)
 	if(!owner.current)
 		return 0
 	if(!isliving(owner.current))
@@ -183,8 +231,8 @@
 ////////////////////////////////
 // SPECIAL OBJECTIVES
 ////////////////////////////////
-/datum/theft_objective/special
-	flags = THEFT_FLAG_SPECIAL
+/datum/objective/steal/special
+	target_category = "special"
 
 /datum/theft_objective/special/nuke_gun
 	name = "nuclear gun"
@@ -203,7 +251,7 @@
 	typepath = /obj/item/weapon/cell/hyper
 
 /datum/theft_objective/number/special
-	flags = THEFT_FLAG_SPECIAL
+	flags = THEFT_SPECIAL
 
 /datum/theft_objective/number/special/diamonds
 	name = "diamonds"

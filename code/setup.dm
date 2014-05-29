@@ -567,12 +567,12 @@ var/list/liftable_structures = list(\
 
 #define INVISIBILITY_MAXIMUM 100
 
-//Object specific defines
-#define CANDLE_LUM 3 //For how bright candles are
+// Object specific defines.
+#define CANDLE_LUM 2 //For how bright candles are.
 
 
-//Some mob defines below
-#define AI_CAMERA_LUMINOSITY 6
+// Some mob defines below.
+#define AI_CAMERA_LUMINOSITY 5
 
 #define BORGMESON 1
 #define BORGTHERM 2
@@ -858,3 +858,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 ////////////////
 // job.info_flags
 #define JINFO_SILICON 1 // Silicon job
+
+// The default value for all uses of set background. Set background can cause gradual lag and is recommended you only turn this on if necessary.
+// 1 will enable set background. 0 will disable set background.
+#define BACKGROUND_ENABLED 0

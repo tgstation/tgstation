@@ -826,7 +826,8 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				src = null
-				if(!istype(T, /turf/space))
+				// Only add one dirt per turf.  Was causing people to crash.
+				if(!istype(T, /turf/space) && !(locate(/obj/effect/decal/cleanable/dirt) in T))
 					new /obj/effect/decal/cleanable/dirt(T)
 
 		chlorine
@@ -1356,7 +1357,7 @@ datum
 
 			reaction_obj(var/obj/O, var/volume)
 				if(istype(O,/obj/effect/decal/cleanable))
-					del(O)
+					qdel(O)
 				else
 					if(O)
 						O.clean_blood()
@@ -1365,7 +1366,7 @@ datum
 					T.overlays.Cut()
 					T.clean_blood()
 					for(var/obj/effect/decal/cleanable/C in src)
-						del(C)
+						qdel(C)
 
 					for(var/mob/living/carbon/slime/M in T)
 						M.adjustToxLoss(rand(5,10))

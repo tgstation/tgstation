@@ -42,9 +42,10 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		cell = new /obj/item/weapon/cell(src)
 		cell.maxcharge = 15000
 		cell.charge = 15000
-	..()
+	..(loc,startup_sound='sound/misc/interference.ogg')
 	module = new /obj/item/weapon/robot_module/mommi(src)
 	laws = new mommi_base_law_type
+
 	// Don't sync if we're a KEEPER.
 	if(!istype(laws,/datum/ai_laws/keeper))
 		connected_ai = select_active_ai_with_fewest_borgs()
@@ -72,9 +73,6 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	// Sanity check
 	if(connected_ai && keeper)
 		world << "\red ASSERT FAILURE: connected_ai && keeper in mommi.dm"
-
-	//playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
-	playsound(loc, 'sound/misc/interference.ogg', 75, 1)
 
 
 /mob/living/silicon/robot/mommi/choose_icon()
@@ -401,16 +399,15 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			overlays += "ov-openpanel +c"
 		else
 			overlays += "ov-openpanel -c"
+
 	// Put our eyes just on top of the lighting, so it looks emissive in maint tunnels.
-	if(layer==MOB_LAYER)
-		overlays+=image(icon,"eyes-[subtype][emagged?"-emagged":""]",LIGHTING_LAYER+1)
-		if(anchored)
-			overlays+=image(icon,"[subtype]-park", LIGHTING_LAYER+1)
-	else
-		overlays+=image(icon,"eyes-[subtype][emagged?"-emagged":""]",TURF_LAYER+0.2) // Fixes floating eyes
-		if(anchored)
-			overlays+=image(icon,"[subtype]-park", TURF_LAYER+0.2)
-	return
+	var/overlay_layer = LIGHTING_LAYER+1
+	if(layer != MOB_LAYER)
+		overlay_layer=TURF_LAYER+0.2
+
+	overlays += image(icon,"eyes-[subtype][emagged?"-emagged":""]",overlay_layer)
+	if(anchored)
+		overlays += image(icon,"[subtype]-park",overlay_layer)
 
 
 
