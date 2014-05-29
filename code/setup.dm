@@ -378,6 +378,11 @@ var/MAX_EXPLOSION_RANGE = 14
 #define M_SMILE         206		// :)
 #define M_ELVIS         207		// You ain't nothin' but a hound dog.
 
+// /vg/ muts
+#define M_LOUD		208		// CAUSES INTENSE YELLING
+#define M_WHISPER	209		// causes quiet whispering
+#define M_DIZZY		210		// Trippy.
+
 // Bustanuts
 #define M_HARDCORE      300
 
