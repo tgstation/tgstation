@@ -1767,13 +1767,11 @@
 			return 0
 		user << "<span class='notice'>You slip [W] inside [src].</span>"
 		user.unEquip(W)
-		if ((user.client && user.s_active != src))
-			user.client.screen -= W
-		W.dropped(user)
 		add_fingerprint(user)
 		contents += W
 		return 1 // no afterattack here
-	else ..()
+	else
+		..()
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/meatbread
 	name = "meatbread loaf"
