@@ -222,7 +222,7 @@
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
-		user.visible_message("\red [user]'s hand slips, sawwing through the bone in [target]'s [affected.display_name] with \the [tool]!", \
-		"\red Your hand slips, sawwing through the bone in [target]'s [affected.display_name] with \the [tool]!")
+		user.visible_message("\red [user]'s hand slips, sawing through the bone in [target]'s [affected.display_name] with \the [tool]!", \
+		"\red Your hand slips, sawing through the bone in [target]'s [affected.display_name] with \the [tool]!")
 		affected.createwound(CUT, 30)
 		affected.fracture()
