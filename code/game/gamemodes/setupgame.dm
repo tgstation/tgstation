@@ -92,6 +92,16 @@
 	POLYMORPHBLOCK = getAssignedBlock("POLYMORPH",  numsToAssign, DNA_HARDER_BOUNDS, good=1)
 
 	//
+	// /vg/ Blocks
+	/////////////////////////////////////////////
+	
+	// Disabilities
+	LOUDBLOCK      = getAssignedBlock("LOUD",       numsToAssign)
+	WHISPERBLOCK   = getAssignedBlock("WHISPER",    numsToAssign)
+	DIZZYBLOCK     = getAssignedBlock("DIZZY",      numsToAssign)
+	
+	
+	//
 	// Static Blocks
 	/////////////////////////////////////////////.
 
