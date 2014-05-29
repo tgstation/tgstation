@@ -48,7 +48,7 @@
 /mob/proc/vampire_can_reach(mob/M as mob, active_range = 1)
 	if(M.loc == src.loc) return 1 //target and source are in the same thing
 	if(!isturf(src.loc) || !isturf(M.loc)) return 0 //One is inside, the other is outside something.
-	if(AStar(src.loc, M.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, active_range)) //If a path exists, good!
+	if(Adjacent(M))//if(AStar(src.loc, M.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, active_range)) //If a path exists, good!
 		return 1
 	return 0
 
@@ -58,7 +58,7 @@
 	var/datum/vampire/vampire = mind.vampire
 	if(!vampire) return
 	var/list/victims = list()
-	for(var/mob/living/carbon/C in oview(active_range))
+	for(var/mob/living/carbon/C in view(active_range))
 		victims += C
 	var/mob/living/carbon/T = input(src, "Victim?") as null|anything in victims
 
@@ -180,7 +180,7 @@
 		if(istype(M.current:glasses, /obj/item/clothing/glasses/sunglasses/blindfold))
 			M.current << "<span class='warning'>You're blindfolded!</span>"
 			return
-		for(var/mob/living/carbon/C in oview(1))
+		for(var/mob/living/carbon/C in view(1))
 			if(!C.vampire_affected(M)) continue
 			if(!M.current.vampire_can_reach(C, 1)) continue
 			C.Stun(8)
@@ -211,7 +211,7 @@
 	if(!M) return
 	if(M.current.vampire_power(30, 0))
 		M.current.visible_message("\red [M.current.name] lets out an ear piercing shriek!", "\red You let out a loud shriek.", "\red You hear a loud painful shriek!")
-		for(var/mob/living/carbon/C in ohearers(4, M.current))
+		for(var/mob/living/carbon/C in hearers(4, M.current))
 			if(C == M.current) continue
 			if(ishuman(C) && C:is_on_ears(/obj/item/clothing/ears/earmuffs)) continue
 			if(!C.vampire_affected(M)) continue
@@ -221,7 +221,7 @@
 			C.stuttering = 20
 			C.Stun(8)
 			C.make_jittery(150)
-		for(var/obj/structure/window/W in oview(3))
+		for(var/obj/structure/window/W in view(4))
 			W.destroy()
 		playsound(M.current.loc, 'sound/effects/creepyshriek.ogg', 100, 1)
 		M.current.remove_vampire_blood(30)
