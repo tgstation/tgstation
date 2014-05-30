@@ -115,9 +115,6 @@ datum/shuttle_controller
 	proc/autoshuttlecall()
 		var/callshuttle = 1
 
-		if(ticker && ticker.mode && (ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction"))
-			return  //No point looping shuttle_caller_list if the gamemode bans shuttle calls
-
 		for(var/SC in shuttle_caller_list)
 			if(istype(SC,/mob/living/silicon/ai))
 				var/mob/living/silicon/ai/AI = SC
