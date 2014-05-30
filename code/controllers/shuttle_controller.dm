@@ -125,7 +125,7 @@ datum/shuttle_controller
 					continue
 			if(istype(SC,/obj/machinery/computer/communications))
 				var/obj/machinery/computer/communications/C = SC
-				if(C.stat & (NOPOWER|BROKEN))
+				if(C.stat & BROKEN)
 					continue
 			var/turf/T = get_turf(SC)
 			if(T && T.z == 1)
