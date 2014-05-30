@@ -49,7 +49,7 @@
 		var/datum/material/mat = materials.getMaterial(O.material)
 		mat.stored += processed_sheet.amount //Stack the sheets
 		credits += mat.value * processed_sheet.amount // Gimme my fucking credits
-		qdel(O)
+	qdel(O)
 
 /obj/machinery/mineral/ore_redemption/process()
 	var/turf/T = get_turf(input)
@@ -77,7 +77,6 @@
 		var/obj/item/stack/sheet/M = new mat.sheettype(src)
 		//credits += mat.value // Old behavior
 		return M
-	del(O)//No refined type? Purge it.
 	return
 
 /obj/machinery/mineral/ore_redemption/attack_hand(user as mob)
@@ -519,7 +518,7 @@
 
 /**********************Mining drone**********************/
 
-/mob/living/simple_animal/hostile/mining_drone/
+/mob/living/simple_animal/hostile/mining_drone
 	name = "nanotrasen minebot"
 	desc = "A small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife."
 	icon = 'icons/obj/aibots.dmi'

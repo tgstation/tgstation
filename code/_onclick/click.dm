@@ -109,14 +109,14 @@
 			*/
 
 			var/resolved = A.attackby(W,src)
-			if(ismob(A) || istype(A, /obj/mecha) || isturf(A))
+			if(ismob(A) || istype(A, /obj/mecha) || isturf(A) || istype(W, /obj/item/weapon/grab))
 				changeNext_move(10)
 			if(!resolved && A && W)
 				W.afterattack(A,src,1,params) // 1 indicates adjacency
 			else
 				changeNext_move(10)
 		else
-			if(ismob(A))
+			if(ismob(A) || istype(W, /obj/item/weapon/grab))
 				changeNext_move(10)
 			UnarmedAttack(A)
 		return
@@ -133,7 +133,7 @@
 					next_move += 5
 				*/
 				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-				if(ismob(A) || istype(A, /obj/mecha) || isturf(A))
+				if(ismob(A) || istype(A, /obj/mecha) || isturf(A) || istype(W, /obj/item/weapon/grab))
 					changeNext_move(10)
 				var/resolved = A.attackby(W,src)
 				if(!resolved && A && W)
@@ -141,7 +141,7 @@
 				else
 					changeNext_move(10)
 			else
-				if(ismob(A))
+				if(ismob(A) || istype(W, /obj/item/weapon/grab))
 					changeNext_move(10)
 				UnarmedAttack(A, 1)
 			return
@@ -292,7 +292,7 @@
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(A)
 
-	var/obj/item/projectile/beam/LE = new /obj/item/projectile/beam(loc)
+	var/obj/item/projectile/beam/LE = getFromPool(/obj/item/projectile/beam, loc)
 	LE.icon = 'icons/effects/genetics.dmi'
 	LE.icon_state = "eyelasers"
 	playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
@@ -333,7 +333,7 @@
 	"You hear the loud crackle of electricity!")
 	var/datum/powernet/PN = cable.get_powernet()
 	var/available = 0
-	var/obj/item/projectile/beam/lightning/L = new /obj/item/projectile/beam/lightning/(get_turf(src))
+	var/obj/item/projectile/beam/lightning/L = getFromPool(/obj/item/projectile/beam/lightning, loc)
 	if(PN)
 		available = PN.avail
 		L.damage = PN.get_electrocute_damage()
@@ -359,7 +359,8 @@
 		s.set_up(5, 1, src)
 		s.start()
 	if(L.damage <= 0)
-		del(L)
+		returnToPool(L)
+		//del(L)
 	if(L)
 		playsound(get_turf(src), 'sound/effects/eleczap.ogg', 75, 1)
 		L.tang = L.adjustAngle(get_angle(U,T))

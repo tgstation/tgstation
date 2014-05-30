@@ -80,6 +80,12 @@
 /obj/screen/grab/attackby()
 	return
 
+/obj/screen/grab/Destroy()
+	if(master)
+		var/obj/item/weapon/grab/G = master
+		if(G.assailant)
+			G.assailant.client.images -= src
+	..()
 
 /obj/screen/storage
 	name = "storage"

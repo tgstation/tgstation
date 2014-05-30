@@ -3,6 +3,7 @@
 	mouse_opacity = 2 //This makes it easier to hit hostile mobs, you only need to click on their tile, and is set back to 1 when they die
 	stop_automated_movement_when_pulled = 0
 	environment_smash = 1 //Set to 1 to break closets,tables,racks, etc; 2 for walls; 3 for rwalls
+
 	var/stance = HOSTILE_STANCE_IDLE	//Used to determine behavior
 	var/atom/target // /vg/ edit:  Removed type specification so spiders can target doors.
 	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction, or 2, to only ever attack our own faction
@@ -117,7 +118,8 @@
 			return 0
 		return 1
 	if(isobj(the_target))
-		if(the_target.type in wanted_objects)
+		//if(the_target.type in wanted_objects)
+		if(is_type_in_list(the_target,wanted_objects))
 			return 1
 		if(istype(the_target, /obj/mecha) && search_objects < 2)
 			var/obj/mecha/M = the_target

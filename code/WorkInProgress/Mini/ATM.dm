@@ -11,6 +11,7 @@ log transactions
 #define CHANGE_SECURITY_LEVEL 1
 #define TRANSFER_FUNDS 2
 #define VIEW_TRANSACTION_LOGS 3
+#define PRINT_DELAY 100
 
 /obj/item/weapon/card/id/var/money = 2000
 
@@ -33,6 +34,7 @@ log transactions
 	var/obj/item/weapon/card/held_card
 	var/editing_security_level = 0
 	var/view_screen = NO_SCREEN
+	var/lastprint = 0 // Printer needs time to cooldown
 
 /obj/machinery/atm/New()
 	..()
@@ -325,6 +327,10 @@ log transactions
 						usr << "\icon[src]<span class='warning'>You don't have enough funds to do that!</span>"
 			if("balance_statement")
 				if(authenticated_account)
+					if(world.timeofday < lastprint + PRINT_DELAY)
+						usr << "<span class='notice'>The [src.name] flashes an error on its display.</span>"
+						return
+					lastprint = world.timeofday
 					var/obj/item/weapon/paper/R = new(src.loc)
 					R.name = "Account balance: [authenticated_account.owner_name]"
 					R.info = {"<b>NT Automated Teller Account Statement</b><br><br>

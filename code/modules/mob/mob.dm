@@ -707,8 +707,7 @@ var/list/slot_equipment_priority = list( \
 			if (L.master == src)
 				var/list/temp = list(  )
 				temp += L.container
-				//L = null
-				del(L)
+				L.loc = null
 				return temp
 			else
 				return L.container
@@ -1444,3 +1443,11 @@ mob/verb/yank_out_object()
 		if(!pinned.len)
 			anchored = 0
 	return 1
+
+// Mobs tell access what access levels it has.
+/mob/proc/GetAccess()
+	return list()
+
+// Skip over all the complex list checks.
+/mob/proc/hasFullAccess()
+	return 0

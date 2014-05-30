@@ -93,7 +93,11 @@
 
 	var/pressure_delta = 10000
 
-	pressure_delta = min(pressure_delta, (internal_pressure - environment_pressure))
+	// External pressure bound
+	pressure_delta = min(pressure_delta, (max_external_pressure - environment_pressure))
+
+	// Internal pressure bound (screwed up calc, won't be used anyway)
+	//pressure_delta = min(pressure_delta, (internal_pressure - environment_pressure))
 
 	if(pressure_delta > 0.1)
 		var/transfer_moles = pressure_delta*environment.volume/(pumped.temperature * R_IDEAL_GAS_EQUATION)

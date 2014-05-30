@@ -18,6 +18,9 @@
 		reagents = R
 		R.my_atom = src
 
+	hear_talk(mob/M as mob, message)
+		if(detonator)
+			detonator.hear_talk(M, message)
 	attack_self(mob/user as mob)
 		if(!stage || stage==1)
 			if(detonator)

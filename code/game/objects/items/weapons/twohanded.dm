@@ -222,6 +222,7 @@ obj/item/weapon/twohanded/
  */
 /obj/item/weapon/twohanded/hfrequency
 	icon_state = "hfrequency0"
+	item_state = "hfrequency0"
 	name = "high-frequency blade"
 	desc = "Keep hands off blade at all times."
 	slot_flags = SLOT_BACK

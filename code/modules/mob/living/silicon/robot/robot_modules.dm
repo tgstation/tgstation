@@ -74,12 +74,46 @@
 		src.modules += new /obj/item/weapon/reagent_containers/robodropper(src)
 		src.modules += new /obj/item/weapon/reagent_containers/syringe(src)
 		src.modules += new /obj/item/weapon/extinguisher/mini(src)
+		src.modules += new /obj/item/weapon/circular_saw
+		src.modules += new /obj/item/weapon/scalpel
+		src.modules += new /obj/item/weapon/bonesetter
+		src.modules += new /obj/item/weapon/bonegel
+		src.modules += new /obj/item/weapon/FixOVein
+		src.modules += new /obj/item/weapon/surgicaldrill
+		src.modules += new /obj/item/weapon/cautery
+		src.modules += new /obj/item/weapon/hemostat
+		src.modules += new /obj/item/weapon/retractor
 		src.emag = new /obj/item/weapon/reagent_containers/spray(src)
 
 		src.emag.reagents.add_reagent("pacid", 250)
 		src.emag.name = "Polyacid spray"
+
+		var/obj/item/stack/medical/bruise_pack/B = new /obj/item/stack/medical/bruise_pack(src)
+		B.max_amount = 15
+		B.amount = 15
+		src.modules += B
+
+		var/obj/item/stack/medical/ointment/O = new /obj/item/stack/medical/ointment(src)
+		O.max_amount = 15
+		O.amount = 15
+		src.modules += O
+
 		return
 
+	respawn_consumable(var/mob/living/silicon/robot/R)
+		var/list/what = list (
+			/obj/item/stack/medical/bruise_pack,
+			/obj/item/stack/medical/ointment,
+		)
+		for (var/T in what)
+			if (!(locate(T) in src.modules))
+				src.modules -= null
+				var/O = new T(src)
+				if(istype(O,/obj/item/stack/medical))
+					O:max_amount = 15
+				src.modules += O
+				O:amount = 1
+		return
 
 
 /obj/item/weapon/robot_module/engineering
@@ -91,6 +125,7 @@
 		src.modules += new /obj/item/borg/sight/meson(src)
 		src.emag = new /obj/item/borg/stun(src)
 		src.modules += new /obj/item/weapon/rcd/borg(src)
+		src.modules += new /obj/item/weapon/pipe_dispenser(src) //What could possibly go wrong?
 		src.modules += new /obj/item/weapon/extinguisher(src)
 //		src.modules += new /obj/item/device/flashlight(src)
 		src.modules += new /obj/item/weapon/weldingtool/largetank(src)
@@ -106,9 +141,21 @@
 		M.amount = 50
 		src.modules += M
 
-		var/obj/item/stack/sheet/rglass/cyborg/G = new /obj/item/stack/sheet/rglass/cyborg(src)
+		var/obj/item/stack/tile/plasteel/F = new /obj/item/stack/tile/plasteel(src)
+		F.amount = 50
+		src.modules += F
+
+		var/obj/item/stack/rods/O = new /obj/item/stack/rods(src)
+		O.amount = 50
+		src.modules += O
+
+		var/obj/item/stack/sheet/glass/cyborg/G = new /obj/item/stack/sheet/glass/cyborg(src)
 		G.amount = 50
 		src.modules += G
+
+		var/obj/item/stack/sheet/rglass/cyborg/R = new /obj/item/stack/sheet/rglass/cyborg(src)
+		R.amount = 50
+		src.modules += R
 
 		var/obj/item/weapon/cable_coil/W = new /obj/item/weapon/cable_coil(src)
 		W.amount = 50
@@ -121,6 +168,9 @@
 	respawn_consumable(var/mob/living/silicon/robot/R)
 		var/list/what = list (
 			/obj/item/stack/sheet/metal,
+			/obj/item/stack/tile/plasteel,
+			/obj/item/stack/rods,
+			/obj/item/stack/sheet/glass,
 			/obj/item/stack/sheet/rglass,
 			/obj/item/weapon/cable_coil,
 		)

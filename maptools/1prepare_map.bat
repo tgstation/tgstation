@@ -1,4 +1,4 @@
-set MAPFILE_TG=tgstation.2.1.0.0.1.dmm
+set MAPFILE_TG=tgstation.dmm
 set MAPFILE_VG=vgstation.dmm
 
 cd ../maps
