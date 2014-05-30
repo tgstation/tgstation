@@ -1753,7 +1753,7 @@
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
 
-// sliceable is just an organization type path, it doesn't have any additional code or variables tied to it.
+//sliceable only changes w class, storage is handled by sliceable/store
 /obj/item/weapon/reagent_containers/food/snacks/sliceable
 	w_class = 3
 
