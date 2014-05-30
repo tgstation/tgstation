@@ -111,21 +111,26 @@ datum/shuttle_controller
 		endtime = world.timeofday + (SHUTTLEARRIVETIME*10 - ticksleft)
 		return
 
-	//calls the shuttle if there's no AI or comms console,
+	//calls the shuttle if there's no live active AI or powered non broken comms console,
 	proc/autoshuttlecall()
 		var/callshuttle = 1
+
+		if(ticker && ticker.mode && (ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction"))
+			return  //No point looping shuttle_caller_list if the gamemode bans shuttle calls
+
 		for(var/SC in shuttle_caller_list)
 			if(istype(SC,/mob/living/silicon/ai))
 				var/mob/living/silicon/ai/AI = SC
 				if(AI.stat || !AI.client)
 					continue
+			if(istype(SC,/obj/machinery/computer/communications))
+				var/obj/machinery/computer/communications/C = SC
+				if(C.stat & (NOPOWER|BROKEN))
+					continue
 			var/turf/T = get_turf(SC)
 			if(T && T.z == 1)
-				callshuttle = 0 //if there's an alive AI or a communication console on the station z level, we don't call the shuttle
+				callshuttle = 0 //if there's an alive AI or a powered non broken communication console on the station z level, we don't call the shuttle
 				break
-
-			if(ticker && ticker.mode && (ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction"))
-				callshuttle = 0
 
 		if(callshuttle)
 			if(!online && direction == 1) //we don't call the shuttle if it's already coming
