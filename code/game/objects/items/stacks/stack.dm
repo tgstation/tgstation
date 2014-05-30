@@ -211,11 +211,8 @@
 	..()
 	if (istype(W, src.type))
 		var/obj/item/stack/S = W
-		if (S.amount >= max_amount)
-			return 1
 		if (S.is_cyborg)
-			var/to_transfer as num
-			to_transfer = min(src.amount, round((S.source.max_energy - S.source.energy) / S.cost))
+			var/to_transfer = min(src.amount, round((S.source.max_energy - S.source.energy) / S.cost))
 			S.add(to_transfer)
 			if (S && usr.machine==S)
 				spawn(0) S.interact(usr)
@@ -223,6 +220,8 @@
 			if (src && usr.machine==src)
 				spawn(0) src.interact(usr)
 		else
+			if (S.amount >= max_amount)
+				return 1
 			var/to_transfer as num
 			if (user.get_inactive_hand()==src)
 				to_transfer = 1

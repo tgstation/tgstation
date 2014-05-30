@@ -565,7 +565,12 @@ obj/structure/cable/proc/avail()
 		src.update_icon()
 		return
 
-	else if( istype(W, /obj/item/stack/cable_coil) )
+	else if(istype(W, /obj/item/stack/cable_coil/cyborg))
+		var/obj/item/stack/cable_coil/cyborg/C = W
+		var/to_transfer = min(src.amount, round((C.source.max_energy - C.source.energy) / C.cost))
+		C.add(to_transfer)
+		src.use(to_transfer)
+	else if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = W
 		if(C.amount >= MAXCOIL)
 			user << "The coil is too long, you cannot add any more cable to it."

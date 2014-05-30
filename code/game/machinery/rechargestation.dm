@@ -152,13 +152,13 @@
 			else
 				occupier.cell.charge = min(occupier.cell.charge + recharge_speed, occupier.cell.maxcharge)
 
-/obj/machinery/recharge_station/proc/restock_modules() // TODO
+/obj/machinery/recharge_station/proc/restock_modules()
 	if(occupier)
 		if(occupier.module && occupier.module.modules)
 			var/list/um = occupier.contents|occupier.module.modules // Makes single list of active (occupier.contents) and inactive (occupier.module.modules) modules
 			var/coeff = recharge_speed / 200
 			for (var/datum/robot_energy_storage/st in occupier.module.storages)
-				st.energy = min(st.max_energy, st.energy + coeff * st.recharge_rate) // TODO: think on how to do it
+				st.energy = min(st.max_energy, st.energy + coeff * st.recharge_rate)
 			for(var/obj/O in um)
 				//General
 				if(istype(O,/obj/item/device/flash))
