@@ -66,7 +66,7 @@ var/global/loopModeNames=list(
 )
 /obj/machinery/media/jukebox
 	name = "Jukebox"
-	desc = "A jukebox used for parties and shit."
+	desc = "A bastion of goodwill, peace, and hope."
 	icon = 'icons/obj/jukebox.dmi'
 	icon_state = "jukebox2"
 	density = 1
@@ -486,7 +486,7 @@ var/global/loopModeNames=list(
 // Also for debugging.
 /obj/machinery/media/jukebox/superjuke
 	name = "Super Juke"
-	desc = "A jukebox used for parties at Mount Olympus and shit."
+	desc = "The ultimate jukebox. Your brain begins to liquify from simply looking at it."
 
 	state_base = "superjuke"
 	change_cost = 0

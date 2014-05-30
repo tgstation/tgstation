@@ -1,6 +1,7 @@
 /turf/space
 	icon = 'icons/turf/space.dmi'
 	name = "\proper space"
+	desc = "The final frontier."
 	icon_state = "0"
 
 	temperature = TCMB
