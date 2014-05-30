@@ -481,7 +481,10 @@ turf/simulated/floor/proc/update_icon()
 		if(is_plating())
 			if(!broken && !burnt)
 				var/obj/item/stack/tile/T = C
-				floor_tile = new T.type
+				if(istype(T, /obj/item/stack/tile/plasteel/cyborg))
+					floor_tile = new /obj/item/stack/tile/plasteel
+				else
+					floor_tile = new T.type
 				intact = 1
 				if(istype(T,/obj/item/stack/tile/light))
 					var/obj/item/stack/tile/light/L = T
