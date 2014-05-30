@@ -116,8 +116,8 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		amount = min(stack.amount, round((max_material_amount-TotalMaterials())/stack.perunit))
 
 	busy = 1
-	use_power(max(1000, (3750*amount/10)))
-	user << "<span class='notice'>You add [amount] sheets to the [src.name].</span>" // TODO: isn't this supposed to be a constant?
+	use_power(max(1000, (MINERAL_MATERIAL_AMOUNT*amount/10)))
+	user << "<span class='notice'>You add [amount] sheets to the [src.name].</span>"
 	if(istype(stack, /obj/item/stack/sheet/glass))
 		g_amount += amount * MINERAL_MATERIAL_AMOUNT
 	else if(istype(stack, /obj/item/stack/sheet/mineral/gold))

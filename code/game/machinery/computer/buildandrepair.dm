@@ -334,7 +334,7 @@
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "<span class='notice'>You start adding cables to the frame.</span>"
 					if(do_after(user, 20))
-						if(C.get_amount() >= 5 && state == 3)
+						if(C.get_amount() >= 5 && state == 2)
 							C.use(5)
 							user << "<span class='notice'>You've added cables to the frame.</span>"
 							state = 3
