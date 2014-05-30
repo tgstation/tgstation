@@ -269,6 +269,3 @@
 	max_energy = 50
 	recharge_rate = 2
 	name = "Wire Synthesizer"
-
-/datum/robot_energy_storage/reagent
-	name = "Reagent Synthesizer"
