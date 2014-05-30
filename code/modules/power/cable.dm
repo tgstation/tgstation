@@ -601,8 +601,9 @@ obj/structure/cable/proc/avail()
 		return 1
 */
 /obj/item/stack/cable_coil/use(var/used)
-	..()
+	. = ..()
 	update_icon()
+	return
 
 //add cables to the stack
 /obj/item/stack/cable_coil/proc/give(var/extra)

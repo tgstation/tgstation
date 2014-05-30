@@ -18,12 +18,9 @@
 	var/datum/robot_energy_storage/source
 	var/cost = 1 // How much energy from storage it costs
 
-/obj/item/stack/New(var/loc, var/amount=null, var/source=null)
+/obj/item/stack/New(var/loc, var/amount=null)
 	..()
-	if (source)
-		is_cyborg = 1
-		src.source = source
-	else if (amount)
+	if (amount)
 		src.amount = amount
 	return
 
@@ -163,22 +160,17 @@
 			return
 	return
 
-/obj/item/stack/proc/use(var/amount) // return 0 = borked; return 1 = used precisely; return 2 = leftovers
+/obj/item/stack/proc/use(var/used) // return 0 = borked; return 1 = had enough
 	if (is_cyborg)
-		. = source.use_charge(amount * cost)
-	else
-		if (src.amount < amount)
-			return 0
-		src.amount -= amount
-		if (src.amount <= 0)
-			var/oldsrc = src
-			src = null //dont kill proc after del()
-			if(usr)
-				usr.unEquip(oldsrc, 1)
-			qdel(oldsrc)
-			return 1
-		return 2
-	return
+		return source.use_charge(used * cost)
+	if (amount < used)
+		return 0
+	amount -= used
+	if (amount <= 0)
+		if(usr)
+			usr.unEquip(src, 1)
+		qdel(src)
+	return 1
 
 /obj/item/stack/proc/add(var/amount)
 	if (is_cyborg)
