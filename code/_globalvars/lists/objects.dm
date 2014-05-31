@@ -5,6 +5,7 @@ var/global/list/shuttle_caller_list = list()  		//list of all communication cons
 
 //items that ask to be called every cycle
 var/global/list/machines = list()
+var/global/list/pre_process = list()
 var/global/list/processing_objects = list()
 var/global/list/active_diseases = list()
 

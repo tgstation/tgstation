@@ -25,7 +25,6 @@ obj/machinery/atmospherics/binary/pump
 	var/target_pressure = ONE_ATMOSPHERE
 
 	var/frequency = 0
-	var/id = null
 	var/datum/radio_frequency/radio_connection
 
 	on

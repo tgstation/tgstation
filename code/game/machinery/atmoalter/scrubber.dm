@@ -29,7 +29,6 @@
 	volume_rate = 5000
 
 	var/global/gid = 1
-	var/id = 0
 	New()
 		..()
 		id = gid

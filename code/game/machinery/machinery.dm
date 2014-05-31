@@ -103,6 +103,7 @@ Class Procs:
 		//EQUIP,ENVIRON or LIGHT
 	var/list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
 	var/uid
+	var/id//ID for reference by buttons and the like
 	var/global/gl_uid = 1
 	var/panel_open = 0
 	var/state_open = 0
@@ -113,6 +114,8 @@ Class Procs:
 /obj/machinery/New()
 	..()
 	machines += src
+	if(ticker)
+		pre_process()
 
 /obj/machinery/Destroy()
 	machines.Remove(src)
@@ -120,6 +123,11 @@ Class Procs:
 
 /obj/machinery/process()//If you dont use process or power why are you here
 	return PROCESS_KILL
+
+/obj/machinery/initialize()
+	..()
+	if(!ticker)
+		pre_process()
 
 /obj/machinery/emp_act(severity)
 	if(use_power && stat == 0)
@@ -360,3 +368,12 @@ Class Procs:
 				user << "<span class='notice'>    [C.name]</span>"
 		return 1
 	return 0
+
+/obj/machinery/proc/pre_process()//Runs exactly one time on the next tick after an object is created, currently only used for buttons
+	if(id)
+		for(var/obj/machinery/button/B in machines)
+			if(id == B.id)
+				for(var/T in B.minion_types)
+					if(istype(src,T))
+						B.minions += src
+	return

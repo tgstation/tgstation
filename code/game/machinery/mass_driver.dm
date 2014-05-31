@@ -9,9 +9,7 @@
 	active_power_usage = 50
 	var/power = 1
 	var/code = 1
-	var/id = 1
 	var/drive_range = 50	//this is mostly irrelevant since current mass drivers throw into space, but you could make a lower-range mass driver for interstation transport or something I guess.
-
 
 /obj/machinery/mass_driver/proc/drive(amount)
 	if(stat & (BROKEN|NOPOWER))
@@ -30,7 +28,6 @@
 			spawn(0)
 				O.throw_at(target, drive_range * power, power)
 	flick("mass_driver1", src)
-
 
 /obj/machinery/mass_driver/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))

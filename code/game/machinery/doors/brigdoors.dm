@@ -21,7 +21,6 @@
 	req_access = list(access_brig)
 	anchored = 1.0    		// can't pick it up
 	density = 0       		// can walk through it.
-	var/id = null     		// id of door it controls.
 	var/releasetime = 0		// when world.time reaches it - release the prisoneer
 	var/timelength = 0		// the length of time this door will be set for
 	var/timing = 1    		// boolean, true/1 timer is on, false/0 means it's not timing
@@ -38,11 +37,11 @@
 		pixel_y = ((src.dir & 3)? (src.dir ==1 ? 24 : -32) : (0))
 
 		spawn(20)
-			for(var/obj/machinery/door/window/brigdoor/M in world)
+			for(var/obj/machinery/door/window/brigdoor/M in machines)
 				if (M.id == src.id)
 					targets += M
 
-			for(var/obj/machinery/flasher/F in world)
+			for(var/obj/machinery/flasher/F in machines)
 				if(F.id == src.id)
 					targets += F
 

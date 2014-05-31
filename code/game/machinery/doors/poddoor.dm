@@ -4,14 +4,12 @@
 	icon = 'icons/obj/doors/blastdoor.dmi'
 	icon_state = "closed"
 	explosion_resistance = 25
-	var/id = 1
 	var/auto_close = 0 // Time in seconds to automatically close when opened, 0 if it doesn't.
 
 /obj/machinery/door/poddoor/preopen
 	icon_state = "open"
 	density = 0
 	opacity = 0
-
 
 /obj/machinery/door/poddoor/Bumped(atom/AM)
 	if(density)

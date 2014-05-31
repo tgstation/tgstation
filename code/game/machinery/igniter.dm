@@ -3,8 +3,8 @@
 	desc = "It's useful for igniting plasma."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "igniter1"
-	var/id = null
 	var/on = 1.0
+	var/holder = 1//Yuck
 	anchored = 1.0
 	use_power = 1
 	idle_power_usage = 2
@@ -26,12 +26,12 @@
 	src.icon_state = text("igniter[]", src.on)
 	return
 
-/obj/machinery/igniter/process()	//ugh why is this even in process()?
+/obj/machinery/igniter/process()
 	if (src.on && !(stat & NOPOWER) )
 		var/turf/location = src.loc
 		if (isturf(location))
 			location.hotspot_expose(1000,500,1)
-	return 1
+	..()
 
 /obj/machinery/igniter/New()
 	..()
@@ -50,7 +50,6 @@
 	desc = "A wall-mounted ignition device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "migniter"
-	var/id = null
 	var/disable = 0
 	var/last_spark = 0
 	var/base_state = "migniter"
@@ -117,41 +116,3 @@
 	ignite()
 	..(severity)
 
-/obj/machinery/ignition_switch/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
-
-/obj/machinery/ignition_switch/attack_paw(mob/user as mob)
-	return src.attack_hand(user)
-
-/obj/machinery/ignition_switch/attackby(obj/item/weapon/W, mob/user as mob)
-	return src.attack_hand(user)
-
-/obj/machinery/ignition_switch/attack_hand(mob/user as mob)
-
-	if(stat & (NOPOWER|BROKEN))
-		return
-	if(active)
-		return
-
-	use_power(5)
-
-	active = 1
-	icon_state = "launcheract"
-
-	for(var/obj/machinery/sparker/M in world)
-		if (M.id == src.id)
-			spawn( 0 )
-				M.ignite()
-
-	for(var/obj/machinery/igniter/M in world)
-		if(M.id == src.id)
-			use_power(50)
-			M.on = !( M.on )
-			M.icon_state = text("igniter[]", M.on)
-
-	sleep(50)
-
-	icon_state = "launcherbtt"
-	active = 0
-
-	return

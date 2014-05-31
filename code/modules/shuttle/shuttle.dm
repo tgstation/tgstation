@@ -82,7 +82,6 @@ datum/shuttle_manager/proc/move_shuttle(var/override_delay)
 	icon_state = "shuttle"
 	req_access = list( )
 	circuit = /obj/item/weapon/circuitboard/shuttle
-	var/id
 
 /obj/machinery/computer/shuttle/attack_hand(user as mob)
 	if(..(user))

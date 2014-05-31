@@ -63,7 +63,6 @@
 	density = 1
 	circuit = /obj/item/weapon/circuitboard/turbine_computer
 	var/obj/machinery/power/compressor/compressor
-	var/id = 0
 
 // the inlet stage of the gas turbine electricity generator
 

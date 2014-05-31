@@ -284,7 +284,6 @@ obj/machinery/atmospherics/valve
 					radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
 
 		var/frequency = 0
-		var/id = null
 		var/datum/radio_frequency/radio_connection
 
 		initialize()

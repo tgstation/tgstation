@@ -30,6 +30,7 @@ datum/controller/game_controller
 	var/networks_cost	= 0
 	var/powernets_cost	= 0
 	var/nano_cost		= 0
+	var/pre_process_cost	= 0
 	var/events_cost		= 0
 	var/ticker_cost		= 0
 	var/gc_cost			= 0
@@ -160,6 +161,13 @@ datum/controller/game_controller/proc/process()
 
 				sleep(breather_ticks)
 
+				//PRE_PROCESS
+				timer = world.timeofday
+				process_pre_process()
+				pre_process_cost = (world.timeofday - timer) / 10
+
+				sleep(breather_ticks)
+
 				//MACHINES
 				timer = world.timeofday
 				process_machines()
@@ -213,7 +221,7 @@ datum/controller/game_controller/proc/process()
 				gc_cost = (world.timeofday - timer) / 10
 
 				//TIMING
-				total_cost = air_cost + sun_cost + mobs_cost + diseases_cost + machines_cost + objects_cost + networks_cost + powernets_cost + nano_cost + events_cost + ticker_cost + gc_cost
+				total_cost = air_cost + sun_cost + mobs_cost + diseases_cost + machines_cost + objects_cost + networks_cost + powernets_cost + nano_cost + pre_process_cost + events_cost + ticker_cost + gc_cost
 
 				var/end_time = world.timeofday
 				if(end_time < start_time)
@@ -313,6 +321,16 @@ datum/controller/game_controller/proc/process_nano()
 			i++
 			continue
 		nanomanager.processing_uis.Cut(i,i+1)
+
+datum/controller/game_controller/proc/process_pre_process()
+	var/i = 1
+	while(i <= pre_process.len)
+		var/obj/machinery/M = pre_process[i]
+		if(M)
+			last_thing_processed = M.type
+			M.pre_process()
+			i++
+	pre_process = list()
 
 datum/controller/game_controller/proc/Recover()		//Mostly a placeholder for now.
 	var/msg = "## DEBUG: [time2text(world.timeofday)] MC restarted. Reports:\n"

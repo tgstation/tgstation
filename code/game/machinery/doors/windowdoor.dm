@@ -14,7 +14,6 @@
 
 /obj/machinery/door/window/New()
 	..()
-
 	if (src.req_access && src.req_access.len)
 		src.icon_state = "[src.icon_state]"
 		src.base_state = src.icon_state
@@ -24,7 +23,6 @@
 	density = 0
 	playsound(src, "shatter", 70, 1)
 	..()
-
 
 /obj/machinery/door/window/proc/open_and_close()
 	open()
@@ -251,6 +249,24 @@
 				close(2)
 			return
 
+	//If windoor is unpowered, crowbar, fireaxe and armblade can force it.
+	if(istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe) || istype(I, /obj/item/weapon/melee/arm_blade) )
+		if(stat & NOPOWER)
+			if(src.density)
+				open(2)
+			else
+				close(2)
+			return
+
+	//If windoor is unpowered, crowbar, fireaxe and armblade can force it.
+	if(istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe) || istype(I, /obj/item/weapon/melee/arm_blade) )
+		if(stat & NOPOWER)
+			if(src.density)
+				open(2)
+			else
+				close(2)
+			return
+
 	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
 	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card) )
 		user.changeNext_move(8)
@@ -260,7 +276,7 @@
 		if(I.damtype == BURN || I.damtype == BRUTE)
 			take_damage(aforce)
 		return
-	
+
 	src.add_fingerprint(user)
 	if (!src.requiresID())
 		//don't care who they are or what they have, act as if they're NOTHING
@@ -285,7 +301,6 @@
 	icon_state = "leftsecure"
 	base_state = "leftsecure"
 	req_access = list(access_security)
-	var/id = null
 	health = 300.0 //Stronger doors for prison (regular window door health is 200)
 
 
