@@ -220,16 +220,13 @@ var/bomb_set
 	w_class = 1.0
 
 /obj/item/weapon/disk/nuclear/New()
+	..()
 	processing_objects.Add(src)
 
 /obj/item/weapon/disk/nuclear/process()
 	var/turf/disk_loc = get_turf(src)
 	if(disk_loc.z > 2)
-		while(!istype(disk_loc)) //Stop looping when temploc becomes a turf.
-			if(ismob(disk_loc))
-				disk_loc << "<span class='danger'>You can't help but feel that you just lost something back there...</span>"
-				break
-			disk_loc = disk_loc.loc
+		get(src, /mob) << "<span class='danger'>You can't help but feel that you just lost something back there...</span>"
 		Destroy()
 
 /obj/item/weapon/disk/nuclear/Destroy()
@@ -238,7 +235,7 @@ var/bomb_set
 		transfer_fingerprints_to(NEWDISK)
 		message_admins("[src] has been destroyed.  Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z]).")
 		log_game("[src] has been destroyed.  Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z]).")
-		Del(src) //Needed to clear all references to it
+		del(src) //Needed to clear all references to it
 	else
 		ERROR("[src] was supposed to be destroyed, but we were unable to locate a blobstart landmark to spawn a new one.")
 	return 1 // Cancel destruction.
