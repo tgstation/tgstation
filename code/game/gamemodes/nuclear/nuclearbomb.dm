@@ -223,11 +223,15 @@ var/bomb_set
 	processing_objects.Add(src)
 
 /obj/item/weapon/disk/nuclear/process()
-	var/turf/disk_loc = get_turf(src)
-	if(disk_loc.z >2)
-		for(var/mob/MOB in disk_loc)
-			MOB << "<span class='danger'>You can't help but feel that you just lost something back there...</span>"
-		qdel(src)
+	var/mob/disk_bearer = null
+	var/turf/disk_loc = loc
+	while(!istype(disk_loc)) //Stop looping when temploc becomes a turf.
+		if(ismob(disk_loc))
+			disk_bearer = disk_loc
+		disk_loc = disk_loc.loc
+	if(disk_loc.z >2) //If any Zlevel that isn't the Station or Centcom
+		disk_bearer << "<span class='danger'>You can't help but feel that you just lost something back there...</span>"
+		Destroy()
 
 /obj/item/weapon/disk/nuclear/Destroy()
 	if(blobstart.len > 0)
