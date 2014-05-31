@@ -407,7 +407,8 @@
 			Cable.powernet = net1
 			net1.cables += Cable
 
-	net2.garbageCollect()
+	del(net2)
+	//net2.garbageCollect()
 	return net1
 
 /datum/powernet/proc/garbageCollect()
