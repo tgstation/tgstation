@@ -450,6 +450,7 @@
 	C.tod = worldtime2text()
 
 	spawn(rand(800,1200))
+		src << "<span class='warning'>We are now ready to regenerate.</span>"
 		src.verbs += /mob/proc/changeling_returntolife
 	feedback_add_details("changeling_powers","FD")
 	return 1
