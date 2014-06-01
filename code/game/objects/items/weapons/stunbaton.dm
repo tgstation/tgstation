@@ -38,7 +38,7 @@
 		if(bcell.charge < (hitcost+chrgdeductamt)) // If after the deduction the baton doesn't have enough charge for a stun hit it turns off.
 			status = 0
 			update_icon()
-			user << "<span class='warning'>[src] is out of charge.</span>"
+			usr << "<span class='warning'>[src] is out of charge.</span>"
 		if(bcell.use(chrgdeductamt))
 			return 1
 		else
@@ -62,10 +62,11 @@
 
 /obj/item/weapon/melee/baton/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/stock_parts/cell))
+		var/obj/item/weapon/stock_parts/cell/C = W
 		if(bcell)
 			user << "<span class='notice'>[src] already has a cell.</span>"
 		else
-			if(W.maxcharge < hitcost)
+			if(C.maxcharge < hitcost)
 				user << "<span class='notice'>[src] requires a higher capacity cell.</span>"
 				return
 			user.drop_item()
