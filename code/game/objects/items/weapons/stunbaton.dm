@@ -38,7 +38,7 @@
 		if(bcell.charge < (hitcost+chrgdeductamt)) // If after the deduction the baton doesn't have enough charge for a stun hit it turns off.
 			status = 0
 			update_icon()
-			usr << "<span class='warning'>[src] is out of charge.</span>"
+			playsound(loc, "sparks", 75, 1, -1)
 		if(bcell.use(chrgdeductamt))
 			return 1
 		else
