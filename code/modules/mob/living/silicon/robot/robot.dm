@@ -786,6 +786,8 @@
 				user << "\red Access denied."
 
 	else if(istype(W, /obj/item/weapon/card/emag))		// trying to unlock with an emag card
+		if(src == user || isMoMMI(user))
+			user << "<span class='warning'>Your utility claw can't maneuver \the [W] into the slot!</span>"
 		if(!opened)//Cover is closed
 			if(locked)
 				if(prob(90))
@@ -812,7 +814,7 @@
 					connected_ai = null
 					user << "You emag [src]'s interface."
 //					message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
-					log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
+					log_game("[key_name(user)] emagged [isMoMMI(src) ? "MoMMI" : "cyborg"] [key_name(src)].  Laws overridden.")
 					clear_supplied_laws()
 					clear_inherent_laws()
 					laws = new /datum/ai_laws/syndicate_override
