@@ -404,10 +404,46 @@
 
 
 /mob/living/carbon/human/Topic(href, href_list)
-	..()
-	//strip panel
-	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr))
+	if(canUseTopic(src))
+		if(href_list["item"])
+			var/obscuring = null
+			var/slot = text2num(href_list["item"])
+			switch(slot)
+				if(slot_wear_mask)
+					if(head && head.flags_inv & HIDEMASK)
+						obscuring = head
+				if(slot_glasses)
+					if(head && head.flags_inv & HIDEEYES)
+						obscuring = head
+				if(slot_ears)
+					if(head && head.flags_inv & HIDEEARS)
+						obscuring = head
+				if(slot_gloves)
+					if(wear_suit && wear_suit.flags_inv & HIDEGLOVES)
+						obscuring = wear_suit
+				if(slot_shoes)
+					if(wear_suit && wear_suit.flags_inv & HIDESHOES)
+						obscuring = wear_suit
+				if(slot_s_store)
+					if(wear_suit && wear_suit.flags_inv & HIDESUITSTORAGE)
+						obscuring = wear_suit
+				if(slot_w_uniform)
+					if(wear_suit && wear_suit.flags_inv & HIDEJUMPSUIT)
+						obscuring = wear_suit
+				if(slot_belt)
+					if(wear_suit && wear_suit.flags_inv & HIDEJUMPSUIT)
+						obscuring = wear_suit
+				if(slot_wear_id)
+					if(wear_suit && wear_suit.flags_inv & HIDEJUMPSUIT)
+						obscuring = wear_suit
+			if(obscuring)
+				usr << "<span class='warning'>[obscuring] is in the way. Remove that first.</span>"
+				return
+
 		if(href_list["pockets"])
+			if(wear_suit && wear_suit.flags_inv & HIDEJUMPSUIT)
+				usr << "<span class='warning'>[wear_suit] is in the way. Remove that first.</span>"
+				return
 
 			var/pocket_side = href_list["pockets"]
 			var/pocket_id = (pocket_side == "right" ? slot_r_store : slot_l_store)
@@ -436,12 +472,13 @@
 				// Update strip window
 				if(usr.machine == src && in_range(src, usr))
 					show_inv(usr)
-
-
-
 			else
 				// Display a warning if the user mocks up
 				src << "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>"
+
+		..()
+		return
+
 
 	if(href_list["criminal"])
 		if(istype(usr, /mob/living/carbon/human))
